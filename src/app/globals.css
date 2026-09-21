@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+/* ── 品牌色系 · 与 src/lib/theme.ts 的 BRAND 保持一致 ── */
+:root {
+  --primary:       #6055f5;
+  --primary-dark:  #4c41d9;
+  --primary-light: rgba(96, 85, 245, 0.08);
+  --page-bg:       #f5f6fa;
+  --ink:           #1f2233;
+  --ink3:          #8a8fa3;
+  --border:        #e8eaf2;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--ink);
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+               'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-size: 13px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #dcdfea; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ink3); }
+
+/* 确保 antd message 提示高于自定义浮层 */
+.ant-message { z-index: 999999 !important; }
+.ant-tag { border-radius: 6px; }
