@@ -335,7 +335,7 @@ function OfficeInner() {
 
   const RUN_STATUS: Record<string, { c: string; t: string }> = { running: { c: 'processing', t: '运行中 / 中断' }, completed: { c: 'success', t: '完成' }, failed: { c: 'error', t: '中断' }, stopped: { c: 'warning', t: '已停产' } };
   const historyDrawer = (
-    <Drawer title="任务历史" open={historyOpen} onClose={() => setHistoryOpen(false)} width={Math.min(560, typeof window !== 'undefined' ? window.innerWidth : 560)}>
+    <Drawer title="任务历史" open={historyOpen} onClose={() => setHistoryOpen(false)} size={Math.min(560, typeof window !== 'undefined' ? window.innerWidth : 560)}>
       {historyHint && <div style={{ padding: '10px 12px', borderRadius: 10, background: '#fffbe6', border: '1px solid #ffe58f', fontSize: 13, marginBottom: 12 }}>{historyHint}</div>}
       {!historyHint && history.length === 0 && <div style={{ color: BRAND.ink3, textAlign: 'center', marginTop: 40 }}>还没有任务记录。下达的每个总任务都会留在这里。</div>}
       {history.map(h => (

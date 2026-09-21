@@ -72,7 +72,7 @@ export default function JournalUrlPage() {
           ]} />
       </Panel>
 
-      <Drawer title={active ? `${active.company}${active.unit ? ` · ${active.unit}` : ''}` : ''} open={!!active} onClose={() => setActive(null)} width={820}>
+      <Drawer title={active ? `${active.company}${active.unit ? ` · ${active.unit}` : ''}` : ''} open={!!active} onClose={() => setActive(null)} size={820}>
         {active && (
           <>
             {active.raw_data?.searchQueries?.length > 0 && <div style={{ fontSize: 12, color: '#888', marginBottom: 12 }}>Search Queries: {active.raw_data.searchQueries.join(', ')}</div>}

@@ -73,7 +73,7 @@ export default function JournalJobPage() {
           ]} />
       </Panel>
 
-      <Drawer title={active ? `日志 #${active.id} · ${active.company || ''}` : ''} open={!!active} onClose={() => setActive(null)} width={920}>
+      <Drawer title={active ? `日志 #${active.id} · ${active.company || ''}` : ''} open={!!active} onClose={() => setActive(null)} size={920}>
         {detailLoading ? <div style={{ textAlign: 'center', marginTop: 80 }}><Spin /></div> : active && (
           <>
             <a href={active.target_url} target="_blank" rel="noreferrer" style={{ wordBreak: 'break-all' }}>{active.target_url}</a>

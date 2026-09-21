@@ -553,7 +553,7 @@ export default function SpacePage() {
       )}
 
       {/* ══════ 评分报告 ══════ */}
-      <Drawer open={!!openSub} onClose={() => setOpenSub(null)} width={Math.min(760, typeof window !== 'undefined' ? window.innerWidth : 760)} title={null} closable={false} styles={{ body: { padding: 0, background: '#f5f6ff' } }}>
+      <Drawer open={!!openSub} onClose={() => setOpenSub(null)} size={Math.min(760, typeof window !== 'undefined' ? window.innerWidth : 760)} title={null} closable={false} styles={{ body: { padding: 0, background: '#f5f6ff' } }}>
         {openSub && (
           <div className="lab" style={{ minHeight: '100%', padding: 22 }}>
             <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
