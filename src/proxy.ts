@@ -14,8 +14,8 @@ export async function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // Protect /admin routes
-  if (pathname.startsWith('/admin')) {
+  // Protect /admin and /office (虚拟工厂) routes
+  if (pathname.startsWith('/admin') || pathname.startsWith('/office')) {
     const token = req.cookies.get('auth_token')?.value;
 
     if (!token) {
@@ -38,14 +38,14 @@ export async function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // Redirect root to the company library (which will be intercepted if not logged in)
+  // 首页落在虚拟工厂（未登录会被上面的规则拦到 /login）
   if (pathname === '/') {
-    return NextResponse.redirect(new URL('/admin/db-company', req.url));
+    return NextResponse.redirect(new URL('/office', req.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/:path*', '/'],
+  matcher: ['/admin/:path*', '/office/:path*', '/office', '/api/:path*', '/'],
 };

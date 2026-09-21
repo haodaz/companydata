@@ -165,6 +165,20 @@ function AdminLayoutGuard({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
+        {/* 虚拟工厂入口 */}
+        <div style={{ padding: '0 12px 6px 16px' }}>
+          <div onClick={() => router.push('/office')} style={{
+            display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px', borderRadius: 10, cursor: 'pointer',
+            background: BRAND.gradient, color: '#fff', boxShadow: '0 4px 12px rgba(96,85,245,0.25)',
+          }}>
+            <img src="/factory/pixel_nexus.png" alt="" style={{ width: 34, height: 34, borderRadius: 8, objectFit: 'cover', imageRendering: 'pixelated', border: '2px solid rgba(255,255,255,0.5)' }} />
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.2 }}>进入虚拟工厂</div>
+              <div style={{ fontSize: 10.5, opacity: 0.85, marginTop: 2 }}>给 AI 员工下达总任务</div>
+            </div>
+          </div>
+        </div>
+
         {/* 导航项（分组） */}
         <div style={{ padding: '4px 12px 8px 16px', flex: 1, overflowY: 'auto' }}>
           {NAV_GROUPS.map(group => {
