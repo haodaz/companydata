@@ -4,7 +4,7 @@ import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Select, Tooltip } from 'antd';
 import { DatabaseOutlined, LogoutOutlined, PartitionOutlined, TeamOutlined } from '@ant-design/icons';
-import { ModelProvider, useModel, MODEL_OPTIONS } from '@/lib/model-context';
+import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
 import { UserProvider, useUser } from '@/lib/user-context';
 import { BRAND } from '@/lib/theme';
 import { Logo, BRAND_NAME } from '@/components/brand/Logo';
@@ -64,7 +64,7 @@ function OfficeShell({ children }: { children: React.ReactNode }) {
         <div style={{ flex: 1 }} />
 
         <Select className="cd-office-model" size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 190 }}
-          popupMatchSelectWidth={210} options={MODEL_OPTIONS.map(m => ({ value: m.id, label: m.label }))} />
+          popupMatchSelectWidth={250} options={MODEL_OPTIONS.map(m => ({ value: m.id, label: <span>{m.label}<ModelBadge text={m.badge} /></span> }))} />
         <div className="cd-office-admin" onClick={() => router.push('/admin/db-company')} style={{
           display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, cursor: 'pointer', whiteSpace: 'nowrap',
           fontSize: 13, color: BRAND.ink2, border: `1px solid ${BRAND.border}`,

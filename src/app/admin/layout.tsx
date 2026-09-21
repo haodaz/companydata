@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { ApiOutlined, UserOutlined, SwapOutlined, DownOutlined, GlobalOutlined, LogoutOutlined, LinkOutlined, BankOutlined, ReadOutlined, FileSearchOutlined, FileTextOutlined, BarChartOutlined, SafetyCertificateOutlined, MenuOutlined } from '@ant-design/icons';
-import { ModelProvider, useModel, MODEL_OPTIONS } from '@/lib/model-context';
+import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
 import { UserProvider, useUser } from '@/lib/user-context';
 import { BRAND } from '@/lib/theme';
 import { Logo, BRAND_NAME, BRAND_TAGLINE } from '@/components/brand/Logo';
@@ -83,7 +83,7 @@ function ModelSwitcher() {
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <span style={{ width: 7, height: 7, borderRadius: '50%', background: providerColor, flexShrink: 0 }} />
                 {m.label}
-                {m.id === 'gpt-6-astra' && <span style={{ fontSize: 10, color: '#e8590c', background: '#fff4e6', borderRadius: 6, padding: '1px 5px', marginLeft: 4, fontWeight: 500, lineHeight: '16px' }}>很贵🥹🥹</span>}
+                <ModelBadge text={m.badge} />
               </div>
               <div style={{ fontSize: 10, color: '#bbb', marginTop: 1, paddingLeft: 13 }}>{m.provider} · {m.modelName}</div>
             </div>
