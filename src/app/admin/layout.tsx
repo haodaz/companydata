@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { ApiOutlined, UserOutlined, SwapOutlined, DownOutlined, GlobalOutlined, LogoutOutlined, LinkOutlined, BankOutlined, ReadOutlined, FileSearchOutlined, FileTextOutlined, BarChartOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
+import { ApiOutlined, UserOutlined, SwapOutlined, DownOutlined, GlobalOutlined, LogoutOutlined, LinkOutlined, BankOutlined, ReadOutlined, FileSearchOutlined, FileTextOutlined, BarChartOutlined, SafetyCertificateOutlined, MenuOutlined } from '@ant-design/icons';
 import { ModelProvider, useModel, MODEL_OPTIONS } from '@/lib/model-context';
 import { UserProvider, useUser } from '@/lib/user-context';
 import { BRAND } from '@/lib/theme';
@@ -121,6 +121,10 @@ function AdminLayoutGuard({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user, logout } = useUser();
   const [isInIframe, setIsInIframe] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // 切换页面后收起手机抽屉
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   useEffect(() => {
     // Detect if we're rendered inside an iframe (e.g., Drawer preview)
@@ -146,12 +150,45 @@ function AdminLayoutGuard({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div style={{ display: 'flex', height: '100vh', background: BRAND.pageBg }}>
+    <div className="cd-admin" style={{ display: 'flex', height: '100dvh', background: BRAND.pageBg }}>
       <style>{`
         .pc-nav-item:not(.pc-nav-active):hover { background: #f5f5fb !important; color: ${BRAND.ink} !important; }
+        .cd-topbar, .cd-side-mask { display: none; }
+        .cd-content { padding: 24px 28px; }
+        /* 手机：侧栏收成抽屉，顶部出汉堡菜单 */
+        @media (max-width: 768px) {
+          .cd-admin { flex-direction: column; }
+          .cd-topbar {
+            display: flex; align-items: center; gap: 10px; flex-shrink: 0; height: calc(52px + env(safe-area-inset-top));
+            padding: env(safe-area-inset-top) 12px 0; background: #fff; border-bottom: 1px solid ${BRAND.border};
+          }
+          .cd-side {
+            position: fixed; z-index: 1001; top: 0; bottom: 0; left: 0; width: 264px !important; max-width: 82vw;
+            transform: translateX(-105%); transition: transform .25s ease; box-shadow: 8px 0 32px rgba(20,22,40,.18);
+            padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom);
+          }
+          .cd-side.cd-open { transform: translateX(0); }
+          .cd-side-mask.cd-open { display: block; position: fixed; inset: 0; z-index: 1000; background: rgba(20,22,40,.42); }
+          .cd-content { padding: 14px 12px calc(24px + env(safe-area-inset-bottom)); }
+        }
       `}</style>
+
+      {/* 手机顶栏 */}
+      <div className="cd-topbar">
+        <div onClick={() => setMenuOpen(true)} aria-label="打开菜单" role="button"
+          style={{ width: 38, height: 38, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, color: BRAND.ink2, background: '#f5f6fa' }}>
+          <MenuOutlined />
+        </div>
+        <Logo size={28} />
+        <div style={{ flex: 1, minWidth: 0, fontSize: 15, fontWeight: 700, color: BRAND.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {NAV_WITH_AUTH.find(n => n.key === activeKey)?.label || BRAND_NAME}
+        </div>
+        <div onClick={() => router.push('/office')} style={{ padding: '6px 12px', borderRadius: 999, fontSize: 12, fontWeight: 700, color: '#fff', background: BRAND.gradient }}>虚拟工厂</div>
+      </div>
+      <div className={`cd-side-mask${menuOpen ? ' cd-open' : ''}`} onClick={() => setMenuOpen(false)} />
+
       {/* 左侧导航 */}
-      <div style={{
+      <div className={`cd-side${menuOpen ? ' cd-open' : ''}`} style={{
         width: 216, flexShrink: 0, background: '#fff',
         borderRight: `1px solid ${BRAND.border}`,
         display: 'flex', flexDirection: 'column',
@@ -230,7 +267,7 @@ function AdminLayoutGuard({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* 右侧内容区 */}
-      <div style={{ flex: 1, overflow: 'auto', padding: '24px 28px' }}>
+      <div className="cd-content" style={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'auto' }}>
         {children}
       </div>
     </div>

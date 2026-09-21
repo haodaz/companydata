@@ -208,8 +208,8 @@ export default function TokenUsagePage() {
 
       {/* 统计卡片 */}
       {stats && (
-        <Row gutter={12} style={{ marginBottom: 24 }}>
-          <Col span={4}>
+        <Row gutter={[12, 12]} style={{ marginBottom: 24 }}>
+          <Col xs={12} md={4}>
             <Card size="small" style={{ borderRadius: 12, borderTop: '3px solid #6055f5' }}>
               <Statistic
                 title={<span style={{ fontSize: 13, color: '#8c8c8c' }}>检索任务数</span>}
@@ -219,7 +219,7 @@ export default function TokenUsagePage() {
               />
             </Card>
           </Col>
-          <Col span={8}>
+          <Col xs={12} md={8}>
             <Card size="small" style={{ borderRadius: 12, borderTop: '3px solid #fa8c16' }}>
               <Statistic
                 title={<span style={{ fontSize: 13, color: '#8c8c8c' }}>总 Token 消耗</span>}
@@ -232,7 +232,7 @@ export default function TokenUsagePage() {
               />
             </Card>
           </Col>
-          <Col span={4}>
+          <Col xs={12} md={4}>
             <Card size="small" style={{ borderRadius: 12, borderTop: '3px solid #52c41a' }}>
               <Statistic
                 title={<span style={{ fontSize: 13, color: '#8c8c8c' }}>AI 模型成本</span>}
@@ -242,7 +242,7 @@ export default function TokenUsagePage() {
               />
             </Card>
           </Col>
-          <Col span={4}>
+          <Col xs={12} md={4}>
             <Card size="small" style={{ borderRadius: 12, borderTop: '3px solid #ff4d4f' }}>
               <Statistic
                 title={<span style={{ fontSize: 13, color: '#8c8c8c' }}>数据供应链</span>}
@@ -252,7 +252,7 @@ export default function TokenUsagePage() {
               />
             </Card>
           </Col>
-          <Col span={4}>
+          <Col xs={24} md={4}>
             <Card size="small" style={{ borderRadius: 12, borderTop: '3px solid #1890ff' }}>
               <Statistic
                 title={<span style={{ fontSize: 13, color: '#8c8c8c' }}>综合总成本</span>}

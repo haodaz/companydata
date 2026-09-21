@@ -407,7 +407,7 @@ export default function ToolJobPage() {
             </Space>
           )}
         </div>
-        <div style={{ display: 'flex', gap: 24, flex: 1, minHeight: 0 }}>
+        <div className="cd-split" style={{ flex: 1, minHeight: 0 }}>
           {/* 左：目标 + 日志 */}
           <div style={{ flex: '0 0 380px', display: 'flex', flexDirection: 'column', gap: 16, minHeight: 0 }}>
             <Card title="提取目标" variant="borderless" size="small" style={{ borderRadius: 12 }}>
@@ -602,7 +602,7 @@ export default function ToolJobPage() {
         </div>
 
         <Card variant="borderless" style={{ borderRadius: 12 }}>
-          <Table dataSource={taskUrls || []} columns={urlColumns} rowKey="id" pagination={false} size="small"
+          <Table dataSource={taskUrls || []} columns={urlColumns} rowKey="id" pagination={false} size="small" scroll={{ x: 820 }}
             locale={{ emptyText: <Empty description="还没有 URL。先用「URL 获取工具」找到校招页面，再点「从信息源库选择」。" /> }} />
         </Card>
 

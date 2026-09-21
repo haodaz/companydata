@@ -190,7 +190,7 @@ export default function CompanyDetailPage() {
             <Tabs items={[
               {
                 key: 'jobs', label: `校招岗位（${jobs.length}）`,
-                children: <Table rowKey="id" size="small" dataSource={jobs} columns={jobColumns} pagination={{ pageSize: 15, size: 'small', showSizeChanger: false }}
+                children: <Table rowKey="id" size="small" scroll={{ x: 900 }} dataSource={jobs} columns={jobColumns} pagination={{ pageSize: 15, size: 'small', showSizeChanger: false }}
                   locale={{ emptyText: <Empty description={<span>还没有岗位。先<a onClick={() => router.push(toolUrlHref)}>找校招 URL</a>，再到<a onClick={() => router.push('/admin/tool-job')}>校招岗位提取</a>里跑任务。</span>} /> }} />,
               },
               {
@@ -201,7 +201,7 @@ export default function CompanyDetailPage() {
                       {URL_TYPE_ORDER.map(t => { const n = urls.filter(u => u.type === t).length; return n ? <Tag key={t} color={URL_TYPES[t].color}>{URL_TYPES[t].label} {n}</Tag> : null; })}
                       <Button type="link" size="small" icon={<ApiOutlined />} onClick={() => router.push('/admin/tool-job')}>送去提取岗位</Button>
                     </Space>
-                    <Table rowKey="id" size="small" dataSource={urls} columns={urlColumns} pagination={{ pageSize: 15, size: 'small', showSizeChanger: false }}
+                    <Table rowKey="id" size="small" scroll={{ x: 640 }} dataSource={urls} columns={urlColumns} pagination={{ pageSize: 15, size: 'small', showSizeChanger: false }}
                       locale={{ emptyText: <Empty description={<span>还没有信息源。<a onClick={() => router.push(toolUrlHref)}>用 URL 获取工具检索</a></span>} /> }} />
                   </>
                 ),

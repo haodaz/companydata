@@ -7,6 +7,7 @@ import { ArrowLeftOutlined, LoadingOutlined, MessageOutlined, SendOutlined, Thun
 import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
 import { BRAND } from '@/lib/theme';
+import { useIsMobile } from '@/lib/use-mobile';
 import { FACTORY_AGENTS, AGENT_MAP, type AgentId, type FactoryAgent } from '@/lib/factory-agents';
 import { SEGMENT_LABELS } from '@/lib/company-fields';
 import { subtypeLabel, urlTypeMeta } from '@/lib/url-types';
@@ -38,6 +39,7 @@ function EmployeesInner() {
   const params = useSearchParams();
   const { currentModel } = useModel();
   const { user } = useUser();
+  const mobile = useIsMobile();
 
   const [agentId, setAgentId] = useState<AgentId | null>(null);
   const [chats, setChats] = useState<Partial<Record<AgentId, ChatMessage[]>>>({});
@@ -184,7 +186,7 @@ function EmployeesInner() {
             {list.map((c, i) => (
               <div key={i} style={row}>
                 <span style={{ width: 20, color: BRAND.ink4 }}>{i + 1}</span>
-                <b style={{ width: 150, flexShrink: 0 }}>{c.name}</b>
+                <b style={{ width: mobile ? 92 : 150, flexShrink: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.name}</b>
                 <Tag color={SEGMENT_LABELS[c.segment]?.color} style={{ margin: 0 }}>{SEGMENT_LABELS[c.segment]?.label}</Tag>
                 <span style={{ color: BRAND.ink3, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={c.reasoning}>{c.industry} · {c.reasoning}</span>
                 {c.existing_id && <Tag style={{ margin: 0 }}>已在库</Tag>}
@@ -261,9 +263,9 @@ function EmployeesInner() {
   // ══════════ 单聊 ══════════
   if (agent) {
     return (
-      <div style={{ maxWidth: 1180, margin: '0 auto', padding: '20px 24px', height: 'calc(100vh - 60px)', display: 'flex', gap: 20 }}>
+      <div style={{ position: 'absolute', inset: 0, maxWidth: 1180, margin: '0 auto', padding: mobile ? 0 : '20px 24px', display: 'flex', gap: 20 }}>
         {/* 员工名片 */}
-        <aside style={{ width: 280, flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <aside style={{ width: 280, flexShrink: 0, display: mobile ? 'none' : 'flex', flexDirection: 'column', gap: 12 }}>
           <Button type="text" icon={<ArrowLeftOutlined />} onClick={() => { setAgentId(null); router.replace('/office/employees'); }} style={{ alignSelf: 'flex-start' }}>全部员工</Button>
           <div style={{ background: '#fff', borderRadius: 18, border: `1px solid ${BRAND.border}`, overflow: 'hidden', boxShadow: BRAND.shadow }}>
             <img src={agent.portrait} alt={agent.name} style={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
@@ -277,14 +279,24 @@ function EmployeesInner() {
         </aside>
 
         {/* 对话 */}
-        <section style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', background: '#fff', borderRadius: 18, border: `1px solid ${BRAND.border}`, boxShadow: BRAND.shadow, overflow: 'hidden' }}>
-          <div style={{ flex: 1, overflowY: 'auto', padding: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <section style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', background: '#fff', borderRadius: mobile ? 0 : 18, border: mobile ? 'none' : `1px solid ${BRAND.border}`, boxShadow: mobile ? 'none' : BRAND.shadow, overflow: 'hidden' }}>
+          {mobile && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderBottom: `1px solid ${BRAND.borderSoft}`, flexShrink: 0 }}>
+              <Button type="text" icon={<ArrowLeftOutlined />} onClick={() => { setAgentId(null); router.replace('/office/employees'); }} />
+              <img src={agent.portrait} alt="" style={{ width: 38, height: 38, borderRadius: 19, objectFit: 'cover', objectPosition: 'top' }} />
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontSize: 15, fontWeight: 800, color: BRAND.ink, lineHeight: 1.2 }}>{agent.name}</div>
+                <div style={{ fontSize: 11, fontWeight: 600, color: agent.color }}>{agent.title} · {agent.station}</div>
+              </div>
+            </div>
+          )}
+          <div style={{ flex: 1, overflowY: 'auto', padding: mobile ? '14px 12px' : 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
             {[{ role: 'assistant', content: agent.greeting } as ChatMessage, ...msgs].map((m, i) => (
               <div key={i} style={{ display: 'flex', gap: 10, flexDirection: m.role === 'user' ? 'row-reverse' : 'row' }}>
                 {m.role === 'assistant'
                   ? <img src={agent.portrait} alt="" style={{ width: 36, height: 36, borderRadius: 18, objectFit: 'cover', objectPosition: 'top', flexShrink: 0 }} />
                   : <div style={{ width: 36, height: 36, borderRadius: 10, background: BRAND.primarySoft, color: BRAND.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, flexShrink: 0 }}>{(user?.email || '我').slice(0, 1).toUpperCase()}</div>}
-                <div style={{ maxWidth: '82%', minWidth: 0 }}>
+                <div style={{ maxWidth: mobile ? '86%' : '82%', minWidth: 0 }}>
                   <div style={{ padding: '10px 14px', borderRadius: 14, fontSize: 14, lineHeight: 1.75, whiteSpace: 'pre-wrap', wordBreak: 'break-word', background: m.role === 'user' ? BRAND.primary : '#f4f5fa', color: m.role === 'user' ? '#fff' : BRAND.ink }}>{m.content}</div>
                   {(m.working || (m.progress?.length ?? 0) > 0) && (
                     <div style={{ marginTop: 8, padding: '8px 12px', borderRadius: 10, background: '#f8fafc', border: `1px dashed ${BRAND.border}`, fontSize: 12, fontFamily: 'ui-monospace, monospace', color: BRAND.ink2, lineHeight: 1.8 }}>
@@ -300,14 +312,14 @@ function EmployeesInner() {
             <div ref={endRef} />
           </div>
 
-          <div style={{ borderTop: `1px solid ${BRAND.borderSoft}`, padding: '12px 16px 16px' }}>
-            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>
-              {agent.quickPrompts.map(q => <Tag key={q} icon={<ThunderboltOutlined />} onClick={() => !busy && send(q)} style={{ cursor: busy ? 'not-allowed' : 'pointer', borderRadius: 999, padding: '2px 10px' }}>{q}</Tag>)}
+          <div style={{ borderTop: `1px solid ${BRAND.borderSoft}`, padding: mobile ? '10px 12px 12px' : '12px 16px 16px', flexShrink: 0 }}>
+            <div style={mobile ? { display: 'flex', gap: 6, marginBottom: 10, overflowX: 'auto', scrollbarWidth: 'none', margin: '0 -12px 10px', padding: '0 12px' } : { display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>
+              {agent.quickPrompts.map(q => <Tag key={q} icon={<ThunderboltOutlined />} onClick={() => !busy && send(q)} style={{ cursor: busy ? 'not-allowed' : 'pointer', borderRadius: 999, padding: '3px 10px', flexShrink: 0, margin: 0 }}>{q}</Tag>)}
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
               <Input.TextArea value={input} onChange={e => setInput(e.target.value)} autoSize={{ minRows: 1, maxRows: 5 }} disabled={busy}
-                placeholder={`给 ${agent.name} 派活，或者问它问题…（Enter 发送，Shift+Enter 换行）`} style={{ borderRadius: 12, fontSize: 14 }}
-                onPressEnter={e => { if (!e.shiftKey) { e.preventDefault(); send(input); } }} />
+                placeholder={mobile ? `给 ${agent.name} 派活，或者问它问题…` : `给 ${agent.name} 派活，或者问它问题…（Enter 发送，Shift+Enter 换行）`} style={{ borderRadius: 12, fontSize: 16 }}
+                onPressEnter={e => { if (!e.shiftKey && !mobile) { e.preventDefault(); send(input); } }} />
               <Button type="primary" icon={<SendOutlined />} loading={busy} onClick={() => send(input)} style={{ height: 'auto', borderRadius: 12 }} />
             </div>
           </div>
@@ -318,12 +330,12 @@ function EmployeesInner() {
 
   // ══════════ 花名册 ══════════
   return (
-    <div style={{ maxWidth: 1280, margin: '0 auto', padding: '28px 24px 48px' }}>
+    <div style={{ maxWidth: 1280, margin: '0 auto', padding: mobile ? '16px 12px 28px' : '28px 24px 48px' }}>
       <div style={{ marginBottom: 20 }}>
         <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: BRAND.ink }}>AI 员工</h1>
         <p style={{ margin: '6px 0 0', fontSize: 13, color: BRAND.ink3 }}>每位员工负责工厂里的一道工序。点开可以单独对话——问它问题，或者直接给它派活，它会调用平台的真实能力去做，产出直接入库。</p>
       </div>
-      <div style={{ display: 'grid', gap: 20, gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))' }}>
+      <div style={{ display: 'grid', gap: mobile ? 12 : 20, gridTemplateColumns: mobile ? 'repeat(2, 1fr)' : 'repeat(auto-fill, minmax(270px, 1fr))' }}>
         {FACTORY_AGENTS.map(a => (
           <div key={a.id} onClick={() => setAgentId(a.id)} className="cd-agent-card"
             style={{ background: '#fff', borderRadius: 18, border: `1px solid ${BRAND.border}`, overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'transform .2s, box-shadow .2s' }}>
@@ -334,12 +346,12 @@ function EmployeesInner() {
               </div>
               <div style={{ position: 'absolute', left: 10, bottom: 10, padding: '3px 9px', borderRadius: 8, background: a.color, color: '#fff', fontSize: 11, fontWeight: 700 }}>{a.station}</div>
             </div>
-            <div style={{ padding: 16, display: 'flex', flexDirection: 'column', flex: 1 }}>
-              <div style={{ fontSize: 17, fontWeight: 800, color: BRAND.ink }}>{a.name}</div>
-              <div style={{ fontSize: 11.5, fontWeight: 700, color: BRAND.ink3, letterSpacing: 0.5, marginBottom: 8 }}>{a.title} · {a.titleEn.toUpperCase()}</div>
+            <div style={{ padding: mobile ? 10 : 16, display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <div style={{ fontSize: mobile ? 15 : 17, fontWeight: 800, color: BRAND.ink }}>{a.name}</div>
+              <div style={{ fontSize: 11.5, fontWeight: 700, color: BRAND.ink3, letterSpacing: 0.5, marginBottom: 8 }}>{mobile ? a.title : `${a.title} · ${a.titleEn.toUpperCase()}`}</div>
               <div style={{ fontSize: 12.5, color: BRAND.ink2, lineHeight: 1.7, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{a.description}</div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, margin: '12px 0 14px' }}>{a.skills.map(s => <Tag key={s} style={{ margin: 0, fontSize: 11 }}>{s}</Tag>)}</div>
-              <Button type="primary" block icon={<MessageOutlined />} style={{ marginTop: 'auto', borderRadius: 10, fontWeight: 600 }}>开始对话</Button>
+              {!mobile && <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, margin: '12px 0 14px' }}>{a.skills.map(s => <Tag key={s} style={{ margin: 0, fontSize: 11 }}>{s}</Tag>)}</div>}
+              <Button type="primary" block icon={<MessageOutlined />} size={mobile ? 'small' : 'middle'} style={{ marginTop: mobile ? 10 : 'auto', borderRadius: 10, fontWeight: 600 }}>{mobile ? '对话' : '开始对话'}</Button>
             </div>
           </div>
         ))}

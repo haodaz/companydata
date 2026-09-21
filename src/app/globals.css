@@ -36,3 +36,13 @@ body {
 /* 确保 antd message 提示高于自定义浮层 */
 .ant-message { z-index: 999999 !important; }
 .ant-tag { border-radius: 6px; }
+
+/* 多栏工具页（URL 获取 / 岗位提取单 URL 视图）：手机上改为上下堆叠 */
+.cd-split { display: flex; gap: 24px; }
+@media (max-width: 768px) {
+  .cd-split { flex-direction: column !important; height: auto !important; gap: 14px; }
+  .cd-split > * { flex: 1 1 auto !important; width: 100%; min-width: 0; }
+  .cd-split-tall { min-height: 360px; }
+  /* iOS 输入框小于 16px 会自动放大页面 */
+  input, textarea, .ant-select-selection-search-input { font-size: 16px !important; }
+}

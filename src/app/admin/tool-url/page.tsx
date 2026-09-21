@@ -159,7 +159,7 @@ function ToolUrlInner() {
   const extractable = foundUrls.filter(u => u.type === 'campus' || u.type === 'job').length;
 
   return (
-    <div style={{ display: 'flex', gap: '24px', height: '100%' }}>
+    <div className="cd-split" style={{ height: '100%' }}>
       {/* -------------------- 左侧控制面板与日志 -------------------- */}
       <div style={{ flex: '0 0 450px', display: 'flex', flexDirection: 'column', gap: '16px', minHeight: 0 }}>
         <PageHeader
@@ -208,7 +208,7 @@ function ToolUrlInner() {
       </div>
 
       {/* -------------------- 右侧报告 -------------------- */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+      <div className="cd-split-tall" style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
         <Card title="2. 汇总报告" variant="borderless"
           style={{ borderRadius: 12, flex: 1, boxShadow: '0 4px 12px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column' }}
           styles={{ body: { flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' } }}>

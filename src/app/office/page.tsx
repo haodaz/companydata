@@ -10,6 +10,7 @@ import {
 import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
 import { BRAND } from '@/lib/theme';
+import { useIsMobile } from '@/lib/use-mobile';
 import { AGENT_MAP, FACTORY_AGENTS, FACTORY_STAGES, type AgentId, type FactoryStage } from '@/lib/factory-agents';
 import {
   planTask, buildCompanyList, ensureCompany, profileCompany, findAndSaveCampusUrls, pickUrlsToExtract,
@@ -67,6 +68,7 @@ function OfficeInner() {
   const params = useSearchParams();
   const { currentModel } = useModel();
   const { user } = useUser();
+  const mobile = useIsMobile();
 
   const [task, setTask] = useState('');
   const [status, setStatus] = useState<RunStatus>('idle');
@@ -292,21 +294,23 @@ function OfficeInner() {
   // ══════════ 空闲：下达总任务 ══════════
   if (status === 'idle' && items.length === 0) {
     return (
-      <div style={{ maxWidth: 980, margin: '0 auto', padding: '32px 20px 48px' }}>
-        <div style={{ background: '#fff', borderRadius: 24, border: `1px solid ${BRAND.border}`, boxShadow: BRAND.shadow, padding: '28px 36px 32px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <img src="/factory/office_hero.png" alt="虚拟工厂" style={{ width: 250, height: 250, objectFit: 'contain' }} />
-          <h1 style={{ margin: '4px 0 0', fontSize: 24, fontWeight: 800, color: BRAND.ink }}>给 AI 工厂下达一个总任务</h1>
-          <p style={{ margin: '8px 0 20px', fontSize: 14, color: BRAND.ink3, maxWidth: 560, lineHeight: 1.7 }}>
+      <div style={{ maxWidth: 980, margin: '0 auto', padding: mobile ? '14px 12px 28px' : '32px 20px 48px' }}>
+        <div style={{ background: '#fff', borderRadius: 24, border: `1px solid ${BRAND.border}`, boxShadow: BRAND.shadow, padding: mobile ? '12px 16px 20px' : '28px 36px 32px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+          <img src="/factory/office_hero.png" alt="虚拟工厂" style={{ width: mobile ? 168 : 250, height: mobile ? 168 : 250, objectFit: 'contain' }} />
+          <h1 style={{ margin: '4px 0 0', fontSize: mobile ? 20 : 24, fontWeight: 800, color: BRAND.ink }}>给 AI 工厂下达一个总任务</h1>
+          <p style={{ margin: mobile ? '6px 0 14px' : '8px 0 20px', fontSize: mobile ? 13 : 14, color: BRAND.ink3, maxWidth: 560, lineHeight: 1.7 }}>
             一句话说清要哪些企业、要什么数据。厂长 Max 负责排产，AI 员工按「建名单 → 企业画像 → 寻源 → 抓取与提炼 → 质检」逐道工序协作，产出直接进入正式数据库。
           </p>
           <Input.TextArea value={task} onChange={e => setTask(e.target.value)} autoSize={{ minRows: 3, maxRows: 6 }} maxLength={1000}
-            placeholder="例如：采集 腾讯、宝洁、上汽大众 的 2027 届校招和实习岗位" style={{ fontSize: 15, borderRadius: 14, padding: '12px 16px', maxWidth: 720 }}
+            placeholder="例如：采集 腾讯、宝洁、上汽大众 的 2027 届校招和实习岗位" style={{ fontSize: 16, borderRadius: 14, padding: '12px 16px', maxWidth: 720 }}
             onPressEnter={e => { if (e.metaKey || e.ctrlKey) run(task); }} />
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'center', marginTop: 12, maxWidth: 760 }}>
-            {PRESETS.map(p => <Tag key={p} onClick={() => setTask(p)} style={{ cursor: 'pointer', padding: '3px 10px', borderRadius: 999, fontSize: 12 }}>{p}</Tag>)}
+          <div style={mobile
+            ? { display: 'flex', gap: 6, marginTop: 12, width: 'calc(100% + 32px)', margin: '12px -16px 0', padding: '0 16px', overflowX: 'auto', scrollbarWidth: 'none' }
+            : { display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'center', marginTop: 12, maxWidth: 760 }}>
+            {PRESETS.map(p => <Tag key={p} onClick={() => setTask(p)} style={{ cursor: 'pointer', padding: '4px 12px', borderRadius: 999, fontSize: 12, flexShrink: 0, margin: 0 }}>{p}</Tag>)}
           </div>
-          <Button type="primary" size="large" icon={<RocketOutlined />} onClick={() => run(task)} style={{ marginTop: 20, height: 48, minWidth: 240, borderRadius: 14, fontSize: 16, fontWeight: 700 }}>下达任务，开工</Button>
-          <div style={{ marginTop: 10, fontSize: 12, color: BRAND.ink4 }}>单次最多 8 家企业 · ⌘/Ctrl + Enter 快速下达 · 已有画像和信息源的企业会自动复用，不重复消耗 Token</div>
+          <Button type="primary" size="large" icon={<RocketOutlined />} onClick={() => run(task)} style={{ marginTop: mobile ? 16 : 20, height: 50, minWidth: 240, width: mobile ? '100%' : undefined, borderRadius: 14, fontSize: 16, fontWeight: 700 }}>下达任务，开工</Button>
+          <div style={{ marginTop: 10, fontSize: 12, color: BRAND.ink4, lineHeight: 1.6 }}>单次最多 8 家企业{mobile ? '' : ' · ⌘/Ctrl + Enter 快速下达'} · 已有画像和信息源的企业自动复用，不重复消耗 Token</div>
         </div>
 
         <div style={{ marginTop: 28 }}>
@@ -314,13 +318,13 @@ function OfficeInner() {
             <span style={{ fontSize: 13, fontWeight: 700, color: BRAND.ink2 }}>在岗 AI 员工 · {FACTORY_AGENTS.length}</span>
             <a onClick={() => router.push('/office/employees')} style={{ fontSize: 12 }}><MessageOutlined /> 和单个 AI 员工对话 →</a>
           </div>
-          <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))' }}>
+          <div style={{ display: 'grid', gap: mobile ? 8 : 10, gridTemplateColumns: mobile ? 'repeat(4, 1fr)' : 'repeat(auto-fill, minmax(120px, 1fr))' }}>
             {FACTORY_AGENTS.map(a => (
               <Tooltip key={a.id} title={a.description}>
                 <div onClick={() => router.push(`/office/employees?agent=${a.id}`)} style={{ background: '#fff', borderRadius: 14, border: `1px solid ${BRAND.border}`, padding: '10px 8px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', cursor: 'pointer' }}>
-                  <img src={a.pixel} alt={a.name} style={{ width: 64, height: 64, borderRadius: 12, objectFit: 'cover', imageRendering: 'pixelated' }} />
-                  <div style={{ marginTop: 6, fontSize: 13, fontWeight: 700, color: BRAND.ink }}>{a.name}</div>
-                  <div style={{ fontSize: 11, color: BRAND.ink3, lineHeight: 1.4 }}>{a.title}</div>
+                  <img src={a.pixel} alt={a.name} style={{ width: mobile ? 48 : 64, height: mobile ? 48 : 64, borderRadius: 12, objectFit: 'cover', imageRendering: 'pixelated' }} />
+                  <div style={{ marginTop: 6, fontSize: mobile ? 12 : 13, fontWeight: 700, color: BRAND.ink, whiteSpace: 'nowrap' }}>{a.name}</div>
+                  <div style={{ fontSize: mobile ? 10 : 11, color: BRAND.ink3, lineHeight: 1.4 }}>{mobile ? a.title.split(' · ')[0] : a.title}</div>
                 </div>
               </Tooltip>
             ))}
@@ -337,11 +341,11 @@ function OfficeInner() {
     : status === 'completed' ? { c: 'success', t: '任务完成' } : status === 'stopped' ? { c: 'warning', t: '已停产' } : { c: 'error', t: '任务中断' };
 
   return (
-    <div style={{ maxWidth: 1240, margin: '0 auto', padding: '20px 24px 48px', display: 'flex', flexDirection: 'column', gap: 18 }}>
+    <div style={{ maxWidth: 1240, margin: '0 auto', padding: mobile ? '12px 12px 28px' : '20px 24px 48px', display: 'flex', flexDirection: 'column', gap: mobile ? 14 : 18 }}>
       {/* 总控台 */}
-      <div style={{ background: '#fff', borderRadius: 18, border: `1px solid ${BRAND.border}`, boxShadow: BRAND.shadow, padding: 18, display: 'flex', gap: 16, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-        <img src={AGENT_MAP.chief.pixel} alt="Max" style={{ width: 72, height: 72, borderRadius: 14, objectFit: 'cover', imageRendering: 'pixelated', flexShrink: 0 }} />
-        <div style={{ flex: 1, minWidth: 280 }}>
+      <div style={{ background: '#fff', borderRadius: 18, border: `1px solid ${BRAND.border}`, boxShadow: BRAND.shadow, padding: mobile ? 14 : 18, display: 'flex', gap: mobile ? 12 : 16, alignItems: 'flex-start', flexWrap: 'wrap' }}>
+        <img src={AGENT_MAP.chief.pixel} alt="Max" style={{ width: mobile ? 48 : 72, height: mobile ? 48 : 72, borderRadius: 14, objectFit: 'cover', imageRendering: 'pixelated', flexShrink: 0 }} />
+        <div style={{ flex: 1, minWidth: mobile ? 0 : 280 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, flexWrap: 'wrap' }}>
             <Tag color={statusTag.c} icon={isRunning ? <LoadingOutlined /> : undefined} style={{ margin: 0, fontWeight: 600 }}>{statusTag.t}</Tag>
             {plan && <span style={{ fontSize: 15, fontWeight: 800, color: BRAND.ink }}>{plan.title}</span>}
@@ -353,7 +357,7 @@ function OfficeInner() {
           {report && <div style={{ marginTop: 8, fontSize: 13, color: '#065f46', background: '#ecfdf5', border: '1px solid #a7f3d0', borderRadius: 10, padding: '8px 12px', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}><b>质检员 Nova：</b>{report}</div>}
           {isRunning && lastLog && <div style={{ marginTop: 8, fontSize: 12, fontFamily: 'ui-monospace, monospace', color: BRAND.ink3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}><span style={{ color: BRAND.primary, fontWeight: 700 }}>[{lastLog.source}]</span> {lastLog.message}</div>}
         </div>
-        <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
+        <div style={{ display: 'flex', gap: 8, flexShrink: 0, width: mobile ? '100%' : undefined }} className={mobile ? 'cd-run-actions' : undefined}>
           {isRunning
             ? <Button danger icon={<StopOutlined />} onClick={() => { abortRef.current = true; message.info('收到，当前这一步做完就停'); }}>停产</Button>
             : <>
@@ -362,6 +366,8 @@ function OfficeInner() {
             </>}
         </div>
       </div>
+
+      {mobile && <style>{`.cd-run-actions > * { flex: 1; }`}</style>}
 
       {/* 工序 */}
       {FACTORY_STAGES.map((stage, idx) => {
@@ -377,11 +383,11 @@ function OfficeInner() {
                 <DownOutlined style={{ fontSize: 12, marginTop: -2, color: active ? '#6366f1' : '#9ca3af' }} />
               </div>
             )}
-            <section style={{ borderRadius: 18, padding: 16, border: `1px solid ${active ? '#c7d2fe' : finished ? '#a7f3d0' : BRAND.border}`, background: active ? 'rgba(238,242,255,0.6)' : 'rgba(255,255,255,0.85)' }}>
+            <section style={{ borderRadius: 18, padding: mobile ? 12 : 16, border: `1px solid ${active ? '#c7d2fe' : finished ? '#a7f3d0' : BRAND.border}`, background: active ? 'rgba(238,242,255,0.6)' : 'rgba(255,255,255,0.85)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: stageItems.length ? 12 : 0 }}>
                 <span style={{ width: 28, height: 28, borderRadius: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 12, fontWeight: 800, background: finished ? '#10b981' : active ? '#6366f1' : '#d1d5db' }}>{finished ? <CheckOutlined /> : idx + 1}</span>
                 <span style={{ fontSize: 15, fontWeight: 800, color: BRAND.ink }}>{stage.label}</span>
-                <span style={{ fontSize: 12, color: BRAND.ink3 }}>{stage.desc}</span>
+                {!mobile && <span style={{ fontSize: 12, color: BRAND.ink3 }}>{stage.desc}</span>}
                 <div style={{ flex: 1 }} />
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                   {stage.agents.map(id => (
@@ -392,7 +398,7 @@ function OfficeInner() {
                   <span style={{ fontSize: 12, color: BRAND.ink4, fontWeight: 600 }}>{!planned ? '本次不排产' : stageItems.length ? `${stageItems.filter(i => i.status === 'done' || i.status === 'skipped').length}/${stageItems.length}` : '待开工'}</span>
                 </div>
               </div>
-              {stageItems.length > 0 && <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' }}>{stageItems.map(renderItem)}</div>}
+              {stageItems.length > 0 && <div style={{ display: 'grid', gap: mobile ? 10 : 12, gridTemplateColumns: mobile ? '1fr' : 'repeat(auto-fill, minmax(250px, 1fr))' }}>{stageItems.map(renderItem)}</div>}
             </section>
           </div>
         );

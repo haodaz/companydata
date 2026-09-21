@@ -7,10 +7,10 @@ import React from 'react';
 export const BRAND_NAME = '智能企业数据工厂';
 export const BRAND_TAGLINE = '企业 · 校招 · 实习';
 
-export function Logo({ size = 40, animated = false, style }: { size?: number; animated?: boolean; style?: React.CSSProperties }) {
+export function Logo({ size = 40, animated = false, style, className }: { size?: number; animated?: boolean; style?: React.CSSProperties; className?: string }) {
   const uid = React.useId().replace(/:/g, '');
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" style={{ display: 'block', flexShrink: 0, ...style }} aria-label={BRAND_NAME}>
+    <svg className={className} width={size} height={size} viewBox="0 0 64 64" style={{ display: 'block', flexShrink: 0, ...style }} aria-label={BRAND_NAME}>
       <defs>
         <linearGradient id={`lg-bg-${uid}`} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#7b6dff" />
