@@ -231,7 +231,7 @@ export default function SpacePage() {
         </div>
 
         <div style={{ flex: '1 1 420px', minWidth: 0 }}>
-          <div className="lab-mono lab-cap">AI CORE PROFILE{space.is_demo ? ' · DEMO' : ''}</div>
+          <div className="lab-mono lab-cap">AI CORE PROFILE</div>
           <h1 style={{ margin: '4px 0 2px', fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: 800, lineHeight: 1.3 }}>{jd.company} · {jd.title}</h1>
           <div style={{ fontSize: 13, color: 'var(--ink3)' }}>
             {jd.job_req_id && <>职位 ID {jd.job_req_id} · </>}{jd.location}

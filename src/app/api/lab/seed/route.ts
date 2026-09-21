@@ -10,22 +10,47 @@ import { labError } from '@/lib/skill-lab-server';
 export const runtime = 'nodejs';
 export const maxDuration = 120;
 
-async function clearDemo() {
-  // 顺序：账本 → 作答 → 空间 → 技能（岗位库里的两条真实 JD 是真数据，保留）
-  for (const t of ['skill_invocations', 'skill_submissions', 'skill_tasks', 'skills']) {
-    const { error } = await supabaseAdmin.from(t).delete().eq('is_demo', true);
+/** 删掉某个预置空间（及其作答、账本、技能）。岗位库里的真实 JD 保留。 */
+async function clearCase(slug: string) {
+  const { data: skill } = await supabaseAdmin.from('skills').select('id').eq('slug', slug).maybeSingle();
+  if (!skill) return;
+  const { error } = await supabaseAdmin.from('skill_tasks').delete().eq('skill_id', skill.id); // 作答 / 账本随空间级联删除
+  if (error) throw error;
+  await supabaseAdmin.from('skills').delete().eq('id', skill.id);
+}
+
+/** 可以构建技能空间的 JD（目前就是这两家公司的两个岗位），以及各自是否已经建好 */
+export async function GET() {
+  try {
+    const { data: built, error } = await supabaseAdmin.from('skill_tasks').select('id, skill:skills!inner(slug)').in('skill.slug', SEED_CASES.map(c => c.skill.slug));
     if (error) throw error;
+    const bySlug = new Map((built || []).map((t: any) => [t.skill.slug, t.id]));
+    return NextResponse.json({
+      ok: true,
+      jds: SEED_CASES.map(c => ({
+        slug: c.skill.slug, company: c.jd.company, company_en: c.jd.company_en, title: c.jd.title, job_req_id: c.jd.job_req_id,
+        location: c.jd.location, program_name: c.jd.program_name, url: c.jd.url, responsibilities: c.jd.responsibilities, space_id: bySlug.get(c.skill.slug) || null,
+      })),
+    });
+  } catch (e: any) {
+    return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
   }
 }
 
-/** 一键灌入两个演示 case（可重复执行：先清掉旧的演示数据再灌） */
-export async function POST() {
+/** 构建空间：body { slug }。已经建好的直接返回；否则把这条 JD 对应的空间完整建出来。 */
+export async function POST(req: Request) {
   try {
-    await clearDemo();
-    const summary: string[] = [];
+    const { slug } = await req.json().catch(() => ({}));
+    const idx = SEED_CASES.findIndex(c => c.skill.slug === slug);
+    if (idx < 0) return NextResponse.json({ ok: false, error: '未知的 JD' }, { status: 400 });
+    const c = SEED_CASES[idx];
+    const { sim, expertTrace, traces, why } = SEED_SIMS[idx];
 
-    for (const [idx, c] of SEED_CASES.entries()) {
-      const { sim, expertTrace, traces, why } = SEED_SIMS[idx];
+    const { data: existing } = await supabaseAdmin.from('skill_tasks').select('id, skill:skills!inner(slug)').eq('skill.slug', slug).limit(1);
+    if (existing?.length) return NextResponse.json({ ok: true, id: existing[0].id, existed: true });
+    await clearCase(slug);
+
+    {
       // 1. 真实 JD → 企业库 + 岗位库
       const companyId = await resolveOrCreateCompany(c.jd.company);
       if (companyId) {
@@ -76,21 +101,10 @@ export async function POST() {
       })));
       if (invErr) throw invErr;
 
-      summary.push(`${c.jd.company} · ${c.jd.title}`);
+      return NextResponse.json({ ok: true, id: task.id, existed: false });
     }
-    return NextResponse.json({ ok: true, seeded: summary });
   } catch (e: any) {
     console.error('[Lab/seed]', e);
-    return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
-  }
-}
-
-/** 清除演示数据（只删 is_demo = true 的行） */
-export async function DELETE() {
-  try {
-    await clearDemo();
-    return NextResponse.json({ ok: true });
-  } catch (e: any) {
     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
   }
 }

@@ -2,9 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { App, Modal, Popconfirm, Table } from 'antd';
-import { useModel } from '@/lib/model-context';
-import { useUser } from '@/lib/user-context';
+import { App, Modal } from 'antd';
 import { SKILL_KIND, expertiseLevel } from '@/lib/skill-lab';
 
 const BUILD_STEPS = ['读取岗位 JD', '逐条拆解岗位职责', '对齐能力项', '设计可检验的任务', '生成评分标准', '唤醒岗位 AI 核心'];
@@ -19,16 +17,13 @@ const MODES = [
 export default function LabHome() {
   const { message } = App.useApp();
   const router = useRouter();
-  const { currentModel } = useModel();
-  const { user } = useUser();
 
   const [spaces, setSpaces] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [needMigration, setNeedMigration] = useState('');
-  const [seeding, setSeeding] = useState(false);
   const [pickOpen, setPickOpen] = useState(false);
-  const [jobs, setJobs] = useState<any[]>([]);
-  const [jobsLoading, setJobsLoading] = useState(false);
+  const [jds, setJds] = useState<any[]>([]);
+  const [jdsLoading, setJdsLoading] = useState(false);
   const [building, setBuilding] = useState<any | null>(null);
   const [buildStep, setBuildStep] = useState(0);
 
@@ -48,39 +43,28 @@ export default function LabHome() {
   useEffect(() => {
     if (!building) return;
     setBuildStep(0);
-    const iv = setInterval(() => setBuildStep(s => Math.min(s + 1, BUILD_STEPS.length - 1)), 4200);
+    const iv = setInterval(() => setBuildStep(s => Math.min(s + 1, BUILD_STEPS.length - 1)), 1500);
     return () => clearInterval(iv);
   }, [building]);
 
-  const seed = async () => {
-    setSeeding(true);
+  const loadJds = async () => {
+    setJdsLoading(true);
     try {
-      const json = await (await fetch('/api/lab/seed', { method: 'POST' })).json();
-      if (!json.ok) throw new Error(json.error);
-      message.success(`已灌入 ${json.seeded.length} 个演示空间`);
-      load();
-    } catch (e: any) { message.error(e.message); }
-    finally { setSeeding(false); }
+      const json = await (await fetch('/api/lab/seed')).json();
+      if (json.ok) setJds(json.jds); else message.error(json.error);
+    } finally { setJdsLoading(false); }
   };
 
-  const clearDemo = async () => {
-    const json = await (await fetch('/api/lab/seed', { method: 'DELETE' })).json();
-    if (json.ok) { message.success('演示数据已清除（岗位库里的两条真实 JD 保留）'); load(); } else message.error(json.error);
-  };
-
-  const loadJobs = async () => {
-    setJobsLoading(true);
-    try {
-      const json = await (await fetch('/api/db/jobs?pageSize=300&jobType=')).json();
-      setJobs((json.data || []).filter((j: any) => (j.responsibilities || '').length > 30)); // JD 正文完整才能拆解
-    } finally { setJobsLoading(false); }
-  };
-
-  const build = async (job: any) => {
+  /** 从一条 JD 构建空间：拆解过程至少演完一遍再进入 */
+  const build = async (jd: any) => {
+    if (jd.space_id) { router.push(`/lab/${jd.space_id}`); return; }
     setPickOpen(false);
-    setBuilding(job);
+    setBuilding(jd);
     try {
-      const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ jobId: job.id, model: currentModel, createdBy: user?.email }) })).json();
+      const [json] = await Promise.all([
+        fetch('/api/lab/seed', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug: jd.slug }) }).then(r => r.json()),
+        new Promise(r => setTimeout(r, BUILD_STEPS.length * 1500 + 600)),
+      ]);
       if (!json.ok) throw new Error(json.error);
       router.push(`/lab/${json.id}`);
     } catch (e: any) { message.error(e.message); setBuilding(null); }
@@ -106,8 +90,6 @@ export default function LabHome() {
     );
   }
 
-  const hasDemo = spaces.some(s => s.is_demo);
-
   return (
     <>
       {/* 开场 */}
@@ -121,9 +103,7 @@ export default function LabHome() {
             空间的核心，是一个拥有这份 JD 技能的优秀员工 AI。它等着考验新人，等着向资深从业者学习，等着用自己的能力解决问题。
           </p>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 20 }}>
-            <button className="lab-btn" disabled={!!needMigration || seeding} onClick={seed}>{seeding ? <>灌入中<span className="lab-dots" /></> : '⚡ 一键灌入演示 case'}</button>
-            <button className="lab-btn ghost" disabled={!!needMigration} onClick={() => { setPickOpen(true); loadJobs(); }}>＋ 从岗位 JD 构建新空间</button>
-            {hasDemo && <Popconfirm title="清除演示数据？" description="只删除一键灌入的内容，你自己建的空间不受影响。" onConfirm={clearDemo} okText="清除" cancelText="取消"><button className="lab-btn ghost">清除演示</button></Popconfirm>}
+            <button className="lab-btn" disabled={!!needMigration} onClick={() => { setPickOpen(true); loadJds(); }}>＋ 从岗位 JD 构建新空间</button>
           </div>
         </div>
         <div className="lab-orb" style={{ ['--s' as string]: '190px', margin: '0 auto' }}><div className="ring" /><div className="ring r2" /><div className="core lab-mono" style={{ fontSize: 15 }}>JD</div><div className="sat" /></div>
@@ -150,7 +130,7 @@ export default function LabHome() {
         <div className="lab-glass lab-scan" style={{ height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink3)' }}><span className="lab-mono">LOADING<span className="lab-dots" /></span></div>
       ) : spaces.length === 0 ? (
         <div className="lab-glass" style={{ padding: 48, textAlign: 'center', color: 'var(--ink3)', lineHeight: 2 }}>
-          这里还没有技能空间。<br />点上面的「<b style={{ color: 'var(--v)' }}>一键灌入演示 case</b>」，半分钟看完整个闭环。
+          这里还没有技能空间。<br />点上面的「<b style={{ color: 'var(--v)' }}>从岗位 JD 构建新空间</b>」，选一份 JD，看它被拆解成一个空间。
         </div>
       ) : (
         <div style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 440px), 1fr))' }}>
@@ -164,7 +144,7 @@ export default function LabHome() {
                 <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
                   <div className="lab-orb" style={{ ['--s' as string]: '76px' }}><div className="ring" /><div className="core lab-mono" style={{ fontSize: 10 }}>Lv{lv.level}</div><div className="sat" /></div>
                   <div style={{ minWidth: 0, flex: 1 }}>
-                    <div className="lab-mono lab-cap">{profile.codename || 'JD-CORE'}{s.is_demo ? ' · DEMO' : ''}</div>
+                    <div className="lab-mono lab-cap">{profile.codename || 'JD-CORE'}</div>
                     <div style={{ fontSize: 17, fontWeight: 800, lineHeight: 1.35 }}>{jd.company} · {jd.title}</div>
                     <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 2 }}>{jd.job_req_id ? `职位 ID ${jd.job_req_id} · ` : ''}{jd.location}</div>
                   </div>
@@ -190,15 +170,34 @@ export default function LabHome() {
         </div>
       )}
 
-      <Modal title="从岗位库选一条 JD，构建技能空间" open={pickOpen} onCancel={() => setPickOpen(false)} footer={null} width={820}>
-        <Table size="small" rowKey="id" loading={jobsLoading} dataSource={jobs} pagination={{ pageSize: 8, size: 'small', showSizeChanger: false }} scroll={{ x: 600 }}
-          locale={{ emptyText: '岗位库里暂时没有 JD 正文完整的岗位（需要有「岗位职责」）。可以先灌入演示 case。' }}
-          columns={[
-            { title: '企业', dataIndex: 'company', width: 120, render: (t: string) => <b>{t}</b> },
-            { title: '岗位', dataIndex: 'title', ellipsis: true },
-            { title: '职责字数', width: 90, align: 'center' as const, render: (_: any, r: any) => (r.responsibilities || '').length },
-            { title: '', width: 110, render: (_: any, r: any) => <button className="lab-btn sm" onClick={() => build(r)}>构建空间</button> },
-          ]} />
+      <Modal title={null} open={pickOpen} onCancel={() => setPickOpen(false)} footer={null} width={860} styles={{ container: { padding: 0, background: '#f5f6ff', borderRadius: 24, overflow: 'hidden' } }}>
+        <div className="lab" style={{ minHeight: 0, padding: 'clamp(16px, 3vw, 28px)' }}>
+          <div className="lab-mono lab-cap">PICK A JD</div>
+          <div style={{ fontSize: 22, fontWeight: 800, margin: '4px 0 4px' }}>选一份 JD，构建它的技能空间</div>
+          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: 18 }}>JD 来自岗位库，抓取自企业官方招聘站。</div>
+          {jdsLoading && <div className="lab-glass lab-scan" style={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span className="lab-mono" style={{ color: 'var(--ink3)' }}>LOADING<span className="lab-dots" /></span></div>}
+          <div style={{ display: 'grid', gap: 14, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))' }}>
+            {jds.map((jd, i) => (
+              <div key={jd.slug} className="lab-glass hover lab-in" style={{ padding: 20, animationDelay: `${i * 80}ms`, display: 'flex', flexDirection: 'column' }} onClick={() => build(jd)}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 14, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, fontSize: 18, background: 'linear-gradient(135deg, var(--v), var(--c))' }}>{jd.company.slice(0, 1)}</div>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontSize: 13, color: 'var(--ink3)' }}>{jd.company} · {jd.company_en}</div>
+                    <div style={{ fontSize: 16, fontWeight: 800, lineHeight: 1.35 }}>{jd.title}</div>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', margin: '12px 0 10px' }}>
+                  <span className="lab-chip g">职位 ID {jd.job_req_id}</span><span className="lab-chip g">{jd.location}</span><span className="lab-chip g">{jd.program_name}</span>
+                </div>
+                <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.75, display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden', whiteSpace: 'pre-line', flex: 1 }}>{jd.responsibilities}</div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 14 }}>
+                  <a href={jd.url} target="_blank" rel="noreferrer" onClick={e => e.stopPropagation()} style={{ fontSize: 12.5, color: 'var(--v)' }}>官方 JD 原文 ↗</a>
+                  <button className={`lab-btn sm${jd.space_id ? ' ghost' : ''}`}>{jd.space_id ? '已构建 · 进入空间' : '构建空间 →'}</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </Modal>
     </>
   );

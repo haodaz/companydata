@@ -50,7 +50,7 @@
 - **解决问题**：把真实问题交给 AI 核心，按专家的做法给方案
 - **错位时空**：技能每被调用一次记一笔账（何时、何地、谁、产出了什么）
 
-需要先执行 `supabase/migrations/002_skill_lab.sql`。首页「一键灌入演示 case」会写入两个预置空间
+需要先执行 `supabase/migrations/002_skill_lab.sql`。首页「从岗位 JD 构建新空间」目前可选两份 JD，选中后构建出对应的预置空间
 （字节跳动 · 数据分析师-番茄小说；Unilever · UFLP Marketing），两条 JD 抓取自企业官方招聘站，题目情境与数据为虚构练习材料。
 代码：`src/lib/skill-lab*.ts`、`src/lib/skill-sim.ts`、`src/lib/agents/skill-lab.ts`、`src/components/lab/SimRunner.tsx`、`src/app/lab/`、`src/app/api/lab/`。
 
