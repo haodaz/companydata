@@ -2,10 +2,10 @@
 
 import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { App, Button, Input, Tag, Tooltip } from 'antd';
+import { App, Button, Drawer, Input, Popconfirm, Tag, Tooltip } from 'antd';
 import {
   CheckOutlined, CloseOutlined, DownOutlined, LoadingOutlined, MinusOutlined, PlusOutlined, ReloadOutlined,
-  RocketOutlined, StopOutlined, CodeOutlined, UpOutlined, MessageOutlined,
+  RocketOutlined, StopOutlined, CodeOutlined, UpOutlined, MessageOutlined, HistoryOutlined, DeleteOutlined,
 } from '@ant-design/icons';
 import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
@@ -83,6 +83,11 @@ function OfficeInner() {
   const logsRef = useRef<LogLine[]>([]);
   const abortRef = useRef(false);
   const autoStarted = useRef(false);
+  const runIdRef = useRef<string | null>(null);
+  const [historyOpen, setHistoryOpen] = useState(false);
+  const [history, setHistory] = useState<any[]>([]);
+  const [historyHint, setHistoryHint] = useState('');
+  const [viewingHistory, setViewingHistory] = useState(false);
 
   const isRunning = status === 'planning' || status === 'running';
 
@@ -94,6 +99,33 @@ function OfficeInner() {
   const putItems = (next: WorkItem[]) => { itemsRef.current = next; setItems(next); };
   const addItems = (more: WorkItem[]) => putItems([...itemsRef.current, ...more]);
   const setItem = (key: string, p: Partial<WorkItem>) => putItems(itemsRef.current.map(i => i.key === key ? { ...i, ...p } : i));
+
+  // ── 任务历史：每次总任务都在数据库留痕（表 factory_runs，没建表时静默降级为只存本机） ──
+  const saveRun = (patch: Record<string, unknown>) => {
+    if (!runIdRef.current) return;
+    fetch('/api/office/runs', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: runIdRef.current, items: itemsRef.current, logs: logsRef.current.slice(-300), ...patch }) }).catch(() => {});
+  };
+
+  const loadHistory = async () => {
+    const json = await (await fetch('/api/office/runs')).json().catch(() => ({ runs: [] }));
+    setHistory(json.runs || []);
+    setHistoryHint(json.needMigration ? '任务历史的表还没建：请在 Supabase 执行 supabase/migrations/002_skill_lab.sql' : '');
+  };
+
+  const openRun = async (runId: string) => {
+    const json = await (await fetch(`/api/office/runs?id=${runId}`)).json();
+    if (!json.ok) { message.error(json.error); return; }
+    const r = json.run;
+    setTask(r.task); setPlan(r.plan); putItems((r.items || []).map((i: WorkItem) => i.status === 'working' ? { ...i, status: 'failed', summary: '未完成' } : i));
+    logsRef.current = r.logs || []; setLogs(logsRef.current); setReport(r.report || '');
+    setStatus(r.status === 'running' ? 'stopped' : r.status); setFinishedAt(new Date(r.finished_at || r.started_at).toLocaleString('zh-CN'));
+    setViewingHistory(true); setHistoryOpen(false);
+  };
+
+  const deleteRun = async (runId: string) => {
+    await fetch(`/api/office/runs?id=${runId}`, { method: 'DELETE' });
+    loadHistory();
+  };
 
   // 打开页面时恢复上一次的产线现场（只读）
   useEffect(() => {
@@ -121,8 +153,11 @@ function OfficeInner() {
 
     abortRef.current = false;
     putItems([]); logsRef.current = []; setLogs([]); setReport(''); setPlan(null); setFinishedAt(undefined);
-    setStatus('planning');
+    setStatus('planning'); setViewingHistory(false);
     const model = currentModel;
+    runIdRef.current = null;
+    fetch('/api/office/runs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ task: text, model, createdBy: user?.email }) })
+      .then(r => r.json()).then(j => { if (j.ok) runIdRef.current = j.id; }).catch(() => {});
     const stopped = () => abortRef.current;
     let thePlan: FactoryPlan | null = null;
     let finalStatus: RunStatus = 'completed';
@@ -135,6 +170,7 @@ function OfficeInner() {
       setPlan(thePlan);
       log('Max', thePlan.briefing || '排产完成。');
       setStatus('running');
+      saveRun({ title: thePlan.title, plan: thePlan });
 
       // ── 工序 1：建名单 ──
       const companies: FactoryCompany[] = [];
@@ -151,6 +187,7 @@ function OfficeInner() {
         }
         setItem(listKey, { status: 'done', summary: `${companies.length} 家企业已建档：${companies.map(c => c.name).join('、')}`, link: '/admin/db-company' });
         log('Scout', `${companies.length} 家企业已进入企业库。`);
+        saveRun({ companies_count: companies.length });
       } catch (e: any) {
         setItem(listKey, { status: 'failed', summary: e.message });
         throw e;
@@ -180,6 +217,7 @@ function OfficeInner() {
         });
       }
       if (stopped()) throw new Error('已停止');
+      saveRun({});
 
       // ── 工序 3：寻源 ──
       const toExtract: { url: string; company: string; company_id: number; hint: string }[] = [];
@@ -202,6 +240,7 @@ function OfficeInner() {
         });
       }
       if (stopped()) throw new Error('已停止');
+      saveRun({});
 
       // ── 工序 4：抓取与提炼 ──
       let jobsSaved = 0;
@@ -220,6 +259,7 @@ function OfficeInner() {
             const r = await extractUrl(l, { model, scope: thePlan.scope, ctl: { aborted: stopped }, emit: m => { setItem(key, { summary: m }); log(/Thorne|提炼|岗位/.test(m) ? 'Dr. Thorne' : 'Kelly', `[${l.company}] ${m}`); } });
             jobsSaved += r.saved;
             setItem(key, { status: 'done', summary: `提炼 ${r.jobs} 个岗位 / 项目，${r.saved} 个已入库`, link: '/admin/db-job' });
+            saveRun({ jobs_saved: jobsSaved });
           } catch (e: any) { failed++; setItem(key, { status: 'failed', summary: e.message }); }
         }
         await setJobTaskStatus(taskId, stopped() ? 'draft' : failed === taskLogs.length ? 'failed' : 'completed');
@@ -244,6 +284,7 @@ function OfficeInner() {
 
     setReport(finalReport);
     setStatus(finalStatus);
+    saveRun({ status: finalStatus, report: finalReport });
     saveSnapshot(finalStatus, finalReport, thePlan, text);
   };
 
@@ -259,7 +300,7 @@ function OfficeInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
-  const reset = () => { putItems([]); logsRef.current = []; setLogs([]); setPlan(null); setReport(''); setStatus('idle'); setFinishedAt(undefined); try { localStorage.removeItem(STORAGE_KEY); } catch { /* noop */ } };
+  const reset = () => { setViewingHistory(false); putItems([]); logsRef.current = []; setLogs([]); setPlan(null); setReport(''); setStatus('idle'); setFinishedAt(undefined); try { localStorage.removeItem(STORAGE_KEY); } catch { /* noop */ } };
 
   const renderItem = (it: WorkItem) => {
     const s = STATUS_STYLE[it.status];
@@ -291,6 +332,28 @@ function OfficeInner() {
     );
   };
 
+
+  const RUN_STATUS: Record<string, { c: string; t: string }> = { running: { c: 'processing', t: '运行中 / 中断' }, completed: { c: 'success', t: '完成' }, failed: { c: 'error', t: '中断' }, stopped: { c: 'warning', t: '已停产' } };
+  const historyDrawer = (
+    <Drawer title="任务历史" open={historyOpen} onClose={() => setHistoryOpen(false)} width={Math.min(560, typeof window !== 'undefined' ? window.innerWidth : 560)}>
+      {historyHint && <div style={{ padding: '10px 12px', borderRadius: 10, background: '#fffbe6', border: '1px solid #ffe58f', fontSize: 13, marginBottom: 12 }}>{historyHint}</div>}
+      {!historyHint && history.length === 0 && <div style={{ color: BRAND.ink3, textAlign: 'center', marginTop: 40 }}>还没有任务记录。下达的每个总任务都会留在这里。</div>}
+      {history.map(h => (
+        <div key={h.id} onClick={() => openRun(h.id)} style={{ padding: '12px 14px', borderRadius: 12, border: `1px solid ${BRAND.border}`, marginBottom: 10, cursor: 'pointer', background: '#fff' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <Tag color={RUN_STATUS[h.status]?.c} style={{ margin: 0 }}>{RUN_STATUS[h.status]?.t || h.status}</Tag>
+            <b style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{h.title || '（未完成排产）'}</b>
+            <Popconfirm title="删除这条记录？" description="只删除任务痕迹，已入库的数据不受影响。" onConfirm={e => { e?.stopPropagation(); deleteRun(h.id); }} onCancel={e => e?.stopPropagation()} okText="删除" cancelText="取消">
+              <DeleteOutlined onClick={e => e.stopPropagation()} style={{ color: BRAND.ink4 }} />
+            </Popconfirm>
+          </div>
+          <div style={{ fontSize: 13, color: BRAND.ink2, margin: '6px 0', lineHeight: 1.6 }}>{h.task}</div>
+          <div style={{ fontSize: 12, color: BRAND.ink3 }}>{new Date(h.started_at).toLocaleString('zh-CN')} · {h.companies_count} 家企业 · 入库 {h.jobs_saved} 个岗位{h.created_by ? ` · ${h.created_by.split('@')[0]}` : ''}</div>
+        </div>
+      ))}
+    </Drawer>
+  );
+
   // ══════════ 空闲：下达总任务 ══════════
   if (status === 'idle' && items.length === 0) {
     return (
@@ -310,9 +373,11 @@ function OfficeInner() {
             {PRESETS.map(p => <Tag key={p} onClick={() => setTask(p)} style={{ cursor: 'pointer', padding: '4px 12px', borderRadius: 999, fontSize: 12, flexShrink: 0, margin: 0 }}>{p}</Tag>)}
           </div>
           <Button type="primary" size="large" icon={<RocketOutlined />} onClick={() => run(task)} style={{ marginTop: mobile ? 16 : 20, height: 50, minWidth: 240, width: mobile ? '100%' : undefined, borderRadius: 14, fontSize: 16, fontWeight: 700 }}>下达任务，开工</Button>
+          <Button type="link" icon={<HistoryOutlined />} onClick={() => { setHistoryOpen(true); loadHistory(); }} style={{ marginTop: 6 }}>任务历史</Button>
           <div style={{ marginTop: 10, fontSize: 12, color: BRAND.ink4, lineHeight: 1.6 }}>单次最多 8 家企业{mobile ? '' : ' · ⌘/Ctrl + Enter 快速下达'} · 已有画像和信息源的企业自动复用，不重复消耗 Token</div>
         </div>
 
+        {historyDrawer}
         <div style={{ marginTop: 28 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10, padding: '0 4px' }}>
             <span style={{ fontSize: 13, fontWeight: 700, color: BRAND.ink2 }}>在岗 AI 员工 · {FACTORY_AGENTS.length}</span>
@@ -361,6 +426,7 @@ function OfficeInner() {
           {isRunning
             ? <Button danger icon={<StopOutlined />} onClick={() => { abortRef.current = true; message.info('收到，当前这一步做完就停'); }}>停产</Button>
             : <>
+              <Button icon={<HistoryOutlined />} onClick={() => { setHistoryOpen(true); loadHistory(); }}>历史</Button>
               <Button icon={<ReloadOutlined />} onClick={() => run(task)}>再跑一次</Button>
               <Button type="primary" icon={<PlusOutlined />} onClick={reset}>新的总任务</Button>
             </>}
@@ -368,6 +434,9 @@ function OfficeInner() {
       </div>
 
       {mobile && <style>{`.cd-run-actions > * { flex: 1; }`}</style>}
+
+      {historyDrawer}
+      {viewingHistory && <div style={{ fontSize: 12.5, color: BRAND.ink3, marginTop: -8 }}>正在查看历史任务的现场（只读）。点「再跑一次」会按同样的总任务重新开工。</div>}
 
       {/* 工序 */}
       {FACTORY_STAGES.map((stage, idx) => {

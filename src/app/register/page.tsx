@@ -37,7 +37,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <AuthShell title="创建新账号" subtitle="首个注册的账号为管理员，其余为普通权限">
+    <AuthShell title="创建新账号" subtitle="注册后即可进入工厂，给 AI 员工下达任务">
       <Form name="register" onFinish={onFinish} layout="vertical" size="large" requiredMark={false}>
         <Form.Item name="email" label="邮箱" rules={[{ required: true, message: '请输入邮箱' }, { type: 'email', message: '请输入有效的邮箱格式' }]}>
           <Input prefix={<UserOutlined style={{ color: BRAND.ink4 }} />} placeholder="name@company.com" autoComplete="username" />
