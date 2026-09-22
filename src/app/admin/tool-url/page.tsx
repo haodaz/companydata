@@ -2,7 +2,8 @@
 
 import React, { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Card, Input, Button, Typography, Space, Timeline, Alert, Tag, Radio, App } from 'antd';
+import { Card, Input, Button, Typography, Space, Timeline, Alert, Tag, Radio, App, Segmented } from 'antd';
+import { BatchUrlFinder } from '@/components/admin/BatchUrlFinder';
 import { PageHeader } from '@/components/admin/PageHeader';
 import { SearchOutlined, GlobalOutlined, LoadingOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { useModel } from '@/lib/model-context';
@@ -35,6 +36,7 @@ function ToolUrlInner() {
   const [picked, setPicked] = useState<PickedCompany | null>(null);
   const [unit, setUnit] = useState('');
   const [searchType, setSearchType] = useState<SearchType>('campus');
+  const [tab, setTab] = useState<'single' | 'batch'>('single');
 
   const [isRunning, setIsRunning] = useState(false);
   const [events, setEvents] = useState<TimelineEvent[]>([]);
@@ -158,6 +160,17 @@ function ToolUrlInner() {
 
   const extractable = foundUrls.filter(u => u.type === 'campus' || u.type === 'job').length;
 
+  const modeSwitch = <Segmented value={tab} onChange={v => setTab(v as 'single' | 'batch')} options={[{ value: 'single', label: '单家检索' }, { value: 'batch', label: '批处理' }]} />;
+
+  if (tab === 'batch') {
+    return (
+      <div style={{ maxWidth: 1480, margin: '0 auto' }}>
+        <PageHeader icon={<GlobalOutlined />} title="URL 获取工具 · 批处理" description="一次给一批企业，逐家检索校招 / 实习（可选企业官网），全部自动落库。" extra={modeSwitch} />
+        <BatchUrlFinder />
+      </div>
+    );
+  }
+
   return (
     <div className="cd-split" style={{ height: '100%' }}>
       {/* -------------------- 左侧控制面板与日志 -------------------- */}
@@ -166,6 +179,7 @@ function ToolUrlInner() {
           icon={<GlobalOutlined />}
           title="URL 获取工具"
           description="输入企业名，联网检索官方信息源，按类别存入信息源库；库里没有的企业自动建档。"
+          extra={modeSwitch}
           style={{ marginBottom: 0 }}
         />
 

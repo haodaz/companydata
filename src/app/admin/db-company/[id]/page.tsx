@@ -3,13 +3,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Button, Card, Col, Descriptions, Empty, Form, Input, InputNumber, Modal, Popconfirm, Row, Select, Space, Spin, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
-import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, GlobalOutlined, LinkOutlined, ThunderboltOutlined, ApiOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, GlobalOutlined, LinkOutlined, ThunderboltOutlined, ApiOutlined, CheckCircleOutlined, CloseCircleOutlined, LockOutlined } from '@ant-design/icons';
 import { EntityHero } from '@/components/admin/EntityHero';
 import { useModel } from '@/lib/model-context';
 import { BRAND } from '@/lib/theme';
 import { COMPANY_EDIT_FIELDS, COMPANY_TYPE_LABELS, COMPANY_TYPE_OPTIONS, SEGMENT_LABELS, SEGMENT_OPTIONS, KIND_LABELS, KIND_OPTIONS } from '@/lib/company-fields';
 import { JOB_STATUS, JOB_TYPE_LABELS, RECRUIT_SEASON_LABELS, REMOTE_TYPE_LABELS } from '@/lib/job-fields';
-import { REVIEW_STATUS } from '@/lib/review-status';
+import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { URL_TYPE_ORDER, URL_TYPES, subtypeLabel, urlTypeMeta } from '@/lib/url-types';
 
 const { Text, Paragraph } = Typography;
@@ -31,12 +31,13 @@ export default function CompanyDetailPage() {
   const [editOpen, setEditOpen] = useState(false);
   const [form] = Form.useForm();
   const [report, setReport] = useState<any>(null);
+  const [note, setNote] = useState('');
 
   const load = useCallback(async () => {
     try {
       const json = await (await fetch(`/api/db/companies/${id}`)).json();
       if (!json.success) throw new Error(json.error);
-      setCompany(json.company); setUrls(json.urls); setJobs(json.jobs); setJournals(json.journals);
+      setCompany(json.company); setUrls(json.urls); setJobs(json.jobs); setJournals(json.journals); setNote(json.company?.human_review_note || '');
     } catch (e: any) { message.error(`加载失败: ${e.message}`); }
     finally { setLoading(false); }
   }, [id]);
@@ -53,6 +54,12 @@ export default function CompanyDetailPage() {
       load();
     } catch (e: any) { message.error(`AI 补全失败: ${e.message}`); }
     finally { setEnriching(false); }
+  };
+
+  const review = async (body: Record<string, any>, ok: string) => {
+    const json = await (await fetch(`/api/db/companies/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json();
+    if (!json.success) { message.error(json.error); return; }
+    message.success(ok); load();
   };
 
   const openEdit = () => { form.setFieldsValue(company); setEditOpen(true); };
@@ -142,6 +149,7 @@ export default function CompanyDetailPage() {
           {company.industry && <Tag color="purple">{company.industry}{company.sub_industry ? ` · ${company.sub_industry}` : ''}</Tag>}
           {company.fortune_global_rank && <Tag color="gold">世界 500 强 #{company.fortune_global_rank}{company.ranking_year ? `（${company.ranking_year}）` : ''}</Tag>}
           {company.stock_code && <Tag>{company.stock_code}</Tag>}
+          {company.human_review_status ? <Tag color={REVIEW_STATUS[company.human_review_status]?.color}>{REVIEW_STATUS[company.human_review_status]?.label}</Tag> : <Tag>未审核</Tag>}
           {(company.tags || []).map((t: string) => <Tag key={t}>{t}</Tag>)}
         </>}
         metrics={[
@@ -153,6 +161,21 @@ export default function CompanyDetailPage() {
 
       <Row gutter={16}>
         <Col xs={24} xl={9}>
+          <Card title="人工审核" size="small" style={{ marginBottom: 16 }}
+            extra={company.human_review_status ? <Tag color={REVIEW_STATUS[company.human_review_status]?.color}>{REVIEW_STATUS[company.human_review_status]?.label}</Tag> : <Tag>未审核</Tag>}>
+            <Space wrap style={{ marginBottom: 10 }}>
+              <Button type="primary" size="small" icon={<CheckCircleOutlined />} onClick={() => review({ human_review_status: 'complete', human_review_note: note }, '已审核通过')}>审核通过</Button>
+              <Button danger size="small" icon={<CloseCircleOutlined />} onClick={() => review({ human_review_status: 'rejected', human_review_note: note }, '已标记不通过')}>不通过</Button>
+              <Select size="small" style={{ width: 120 }} placeholder="其他状态" value={null} options={REVIEW_STATUS_OPTIONS.filter(o => !['complete', 'rejected'].includes(o.value))} onChange={v => v && review({ human_review_status: v, human_review_note: note }, '审核状态已更新')} />
+            </Space>
+            <Input.TextArea rows={2} placeholder="审核备注（随审核操作一起保存）" value={note} onChange={e => setNote(e.target.value)} />
+            <div style={{ fontSize: 12, color: BRAND.ink4, marginTop: 8, lineHeight: 1.7 }}>
+              通过 / 不通过 / 隐藏后，AI 补全不再覆盖这家企业；人工编辑过的字段会锁定 <LockOutlined style={{ color: BRAND.warning }} />。
+              {(company.human_locked_fields || []).length > 0 && <div>已锁定：{(company.human_locked_fields as string[]).map(k => COMPANY_EDIT_FIELDS.find(f => f.key === k)?.label || k).join('、')} <a onClick={() => review({ unlock: company.human_locked_fields }, '已解除全部锁定')}>解除</a></div>}
+              {company.human_review_at && <div>上次审核 {new Date(company.human_review_at).toLocaleString('zh-CN')}</div>}
+            </div>
+          </Card>
+
           <Card title="校招入口" size="small" style={{ marginBottom: 16 }}
             extra={!company.campus_url && <Button type="link" size="small" onClick={() => router.push(toolUrlHref)}>去检索 →</Button>}>
             <Descriptions column={1} size="small" styles={{ label: { width: 100 } }}>

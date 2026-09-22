@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Input, Table, Tag, Space, Select, Typography, Popconfirm, Dropdown, Progress, Tooltip, Checkbox, App } from 'antd';
-import { ReadOutlined, DownloadOutlined, CheckCircleOutlined, DeleteOutlined, DownOutlined, RocketOutlined, ExperimentOutlined, GlobalOutlined, HomeOutlined, SafetyCertificateOutlined, SolutionOutlined } from '@ant-design/icons';
+import { Button, Input, Table, Tag, Space, Select, Typography, Popconfirm, Dropdown, Progress, Tooltip, Checkbox, App, Alert } from 'antd';
+import { ReadOutlined, DownloadOutlined, CheckCircleOutlined, DeleteOutlined, DownOutlined, RocketOutlined, ExperimentOutlined, GlobalOutlined, HomeOutlined, SafetyCertificateOutlined, SolutionOutlined, ThunderboltOutlined, FileUnknownOutlined } from '@ant-design/icons';
 import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import { StatCards } from '@/components/admin/StatCards';
 import { exportToCsv } from '@/lib/export-csv';
@@ -11,6 +11,7 @@ import { JOB_FIELDS, JOB_STATUS, JOB_TYPE_LABELS, RECRUIT_SEASON_LABELS, REMOTE_
 import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { SEGMENT_LABELS } from '@/lib/company-fields';
 import { BRAND } from '@/lib/theme';
+import { useModel } from '@/lib/model-context';
 
 const { Text } = Typography;
 
@@ -19,6 +20,9 @@ const toOptions = (m: Record<string, string>) => Object.entries(m).map(([value, 
 export default function DbJobPage() {
   const { message } = App.useApp();
   const router = useRouter();
+  const { currentModel } = useModel();
+  const [enrich, setEnrich] = useState<{ done: number; total: number; filled: number; failed: number; current: string } | null>(null);
+  const enrichStop = useRef(false);
   const [data, setData] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const [stats, setStats] = useState<Record<string, number>>({});
@@ -27,11 +31,11 @@ export default function DbJobPage() {
   const [pageSize, setPageSize] = useState(50);
   const [selected, setSelected] = useState<React.Key[]>([]);
   const [exporting, setExporting] = useState(false);
-  const [filters, setFilters] = useState({ search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false });
+  const [filters, setFilters] = useState({ search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false, missingJd: false });
 
   const query = useCallback((extra: Record<string, string> = {}) => new URLSearchParams({
     search: filters.search, jobType: filters.jobType, season: filters.season, remote: filters.remote,
-    status: filters.status, review: filters.review, overseas: filters.overseas ? '1' : '', ...extra,
+    status: filters.status, review: filters.review, overseas: filters.overseas ? '1' : '', missingJd: filters.missingJd ? '1' : '', ...extra,
   }), [filters]);
 
   const load = useCallback(async () => {
@@ -58,6 +62,32 @@ export default function DbJobPage() {
     const json = await (await fetch(`/api/db/jobs?ids=${selected.join(',')}`, { method: 'DELETE' })).json();
     if (!json.success) { message.error(json.error); return; }
     message.success(`已删除 ${json.deleted} 条`); setSelected([]); load();
+  };
+
+  /** AI 补全 JD：打开每条岗位的详情页重新提取，只填空字段。selected 为空时补当前筛选下缺 JD 的全部岗位 */
+  const runEnrich = async () => {
+    let ids: number[] = selected as number[];
+    if (!ids.length) {
+      const json = await (await fetch(`/api/db/jobs?${query({ exportAll: 'true', missingJd: '1' })}`)).json();
+      ids = (json.data || []).filter((j: any) => j.link).map((j: any) => j.id);
+      if (!ids.length) { message.info('当前筛选下没有「缺 JD 且有详情链接」的岗位'); return; }
+    }
+    enrichStop.current = false;
+    let filled = 0, failed = 0;
+    const reasons: Record<string, number> = {};
+    for (let i = 0; i < ids.length && !enrichStop.current; i += 4) {
+      const batch = ids.slice(i, i + 4);
+      setEnrich({ done: i, total: ids.length, filled, failed, current: `第 ${i + 1}–${Math.min(i + 4, ids.length)} 条` });
+      try {
+        const json = await (await fetch('/api/db/jobs/enrich', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: batch, model: currentModel }) })).json();
+        if (!json.success) throw new Error(json.error);
+        for (const r of json.results) { if (r.status === 'filled') filled++; else { failed++; reasons[r.reason || r.status] = (reasons[r.reason || r.status] || 0) + 1; } }
+      } catch (e: any) { failed += batch.length; reasons[e.message] = (reasons[e.message] || 0) + batch.length; }
+    }
+    setEnrich(null); setSelected([]);
+    const why = Object.entries(reasons).map(([k, v]) => `${k} ${v}`).join('，');
+    message.success(`补全完成：${filled} 条补到了新信息${failed ? `，${failed} 条未补（${why}）` : ''}`, 8);
+    load();
   };
 
   /** 导出当前筛选条件下的全部岗位 */
@@ -141,6 +171,7 @@ export default function DbJobPage() {
         { label: '远程', value: stats.remote || 0, icon: <HomeOutlined />, color: '#16a34a' },
         { label: '面向留学生', value: stats.overseas || 0, icon: <GlobalOutlined />, color: '#2f54eb' },
         { label: '审核通过', value: stats.reviewed || 0, icon: <SafetyCertificateOutlined />, color: '#16a34a' },
+        { label: '缺 JD 正文', value: stats.missing_jd || 0, icon: <FileUnknownOutlined />, color: '#dc2626', hint: '可用「AI 补全 JD」' },
       ]} />
 
       <Panel padding={16}>
@@ -153,6 +184,10 @@ export default function DbJobPage() {
           <Select value={filters.status} style={{ width: 110 }} onChange={v => setFilter({ status: v })} options={[{ value: '', label: '全部状态' }, ...Object.entries(JOB_STATUS).map(([value, m]) => ({ value, label: m.label }))]} />
           <Select value={filters.review} style={{ width: 120 }} onChange={v => setFilter({ review: v })} options={[{ value: '', label: '全部审核' }, { value: 'none', label: '未审核' }, ...REVIEW_STATUS_OPTIONS]} />
           <Checkbox checked={filters.overseas} onChange={e => setFilter({ overseas: e.target.checked })}>只看面向留学生</Checkbox>
+          <Checkbox checked={filters.missingJd} onChange={e => setFilter({ missingJd: e.target.checked })}>只看缺 JD</Checkbox>
+          <Tooltip title={selected.length ? `打开选中 ${selected.length} 条岗位的详情页重新提取，只填空字段` : '打开当前筛选下所有「缺 JD 且有详情链接」的岗位详情页重新提取，只填空字段'}>
+            <Button icon={<ThunderboltOutlined />} loading={!!enrich} onClick={runEnrich}>AI 补全 JD{selected.length ? `（${selected.length}）` : ''}</Button>
+          </Tooltip>
           <div style={{ flex: 1 }} />
           {selected.length > 0 && (
             <Space>
@@ -172,6 +207,8 @@ export default function DbJobPage() {
             </Space>
           )}
         </div>
+        {enrich && <Alert type="info" style={{ marginBottom: 12 }} action={<Button size="small" onClick={() => { enrichStop.current = true; }}>停止</Button>}
+          message={<div><div style={{ marginBottom: 4 }}>AI 补全中（{currentModel}）：{enrich.current} · 已补 {enrich.filled} · 未补 {enrich.failed}</div><Progress percent={Math.round((enrich.done / enrich.total) * 100)} size="small" /></div>} />}
         <Table
           rowKey="id" size="small" loading={loading} dataSource={data} columns={columns} scroll={{ x: 1900 }}
           rowSelection={{ selectedRowKeys: selected, onChange: setSelected }}

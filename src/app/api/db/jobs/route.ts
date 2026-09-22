@@ -25,6 +25,7 @@ export async function GET(request: Request) {
     if (get('status')) query = query.eq('status', get('status'));
     if (get('overseas') === '1') query = query.eq('accepts_overseas_students', true);
     if (get('companyId')) query = query.eq('company_id', parseInt(get('companyId')));
+    if (get('missingJd') === '1') query = query.or('responsibilities.is.null,responsibilities.eq.');
     if (get('review') === 'none') query = query.is('human_review_status', null);
     else if (get('review')) query = query.eq('human_review_status', get('review'));
 
@@ -33,8 +34,8 @@ export async function GET(request: Request) {
 
     let stats: Record<string, number> | undefined;
     if (searchParams.get('withStats') === '1') {
-      stats = { total: 0, open: 0, graduate: 0, intern: 0, program: 0, remote: 0, overseas: 0, reviewed: 0 };
-      const { data: all } = await supabaseAdmin.from('jobs').select('job_type, status, remote_type, accepts_overseas_students, human_review_status').limit(100000);
+      stats = { total: 0, open: 0, graduate: 0, intern: 0, program: 0, remote: 0, overseas: 0, reviewed: 0, missing_jd: 0 };
+      const { data: all } = await supabaseAdmin.from('jobs').select('job_type, status, remote_type, accepts_overseas_students, human_review_status, responsibilities').limit(100000);
       for (const r of all || []) {
         stats.total++;
         if (r.status === 'open') stats.open++;
@@ -42,6 +43,7 @@ export async function GET(request: Request) {
         if (r.remote_type === 'remote') stats.remote++;
         if (r.accepts_overseas_students) stats.overseas++;
         if (r.human_review_status === 'complete') stats.reviewed++;
+        if (!r.responsibilities) stats.missing_jd++;
       }
     }
 

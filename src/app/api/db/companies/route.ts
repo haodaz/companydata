@@ -16,6 +16,9 @@ export async function GET(request: Request) {
 
     let query = supabaseAdmin.from('companies').select('*', { count: 'exact' }).order('id', { ascending: false });
     if (search) query = query.or(orIlike(['name', 'name_en', 'industry'], search));
+    const review = searchParams.get('review') || '';
+    if (review === 'none') query = query.is('human_review_status', null);
+    else if (review) query = query.eq('human_review_status', review);
     if (segment === 'none') query = query.is('segment', null);
     else if (segment) query = query.eq('segment', segment);
     if (industry) query = query.eq('industry', industry);
@@ -34,9 +37,9 @@ export async function GET(request: Request) {
     // 顶部统计：各 segment 数量
     let stats: Record<string, number> | undefined;
     if (searchParams.get('withStats') === '1') {
-      stats = { total: 0 };
-      const { data: all } = await supabaseAdmin.from('companies').select('segment').limit(50000);
-      for (const r of all || []) { stats.total++; const k = r.segment || 'none'; stats[k] = (stats[k] || 0) + 1; }
+      stats = { total: 0, reviewed: 0 };
+      const { data: all } = await supabaseAdmin.from('companies').select('segment, human_review_status').limit(50000);
+      for (const r of all || []) { stats.total++; const k = r.segment || 'none'; stats[k] = (stats[k] || 0) + 1; if (r.human_review_status === 'complete') stats.reviewed++; }
     }
 
     return NextResponse.json({
@@ -83,6 +86,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, created: created.length, skipped: rows.size - fresh.length, data: created });
   } catch (error: any) {
     console.error('[Companies] POST error:', error);
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  }
+}
+
+/** 批量审核：{ ids: number[], human_review_status } */
+export async function PATCH(request: Request) {
+  try {
+    const { ids, human_review_status } = await request.json();
+    if (!Array.isArray(ids) || !ids.length) return NextResponse.json({ success: false, error: 'Missing ids' }, { status: 400 });
+    const now = new Date().toISOString();
+    const { error } = await supabaseAdmin.from('companies').update({ human_review_status, human_review_at: now, updated_at: now }).in('id', ids);
+    if (error) throw error;
+    return NextResponse.json({ success: true, updated: ids.length });
+  } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }

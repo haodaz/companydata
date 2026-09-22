@@ -45,7 +45,7 @@ function extractLinks(markdown: string, baseUrl: string): { text: string; url: s
   return Array.from(unique.entries()).map(([url, text]) => ({ text, url }));
 }
 
-async function fetchJinaUrl(url: string): Promise<string | null> {
+export async function fetchJinaUrl(url: string): Promise<string | null> {
   try {
     const response = await fetch(`https://r.jina.ai/${url}`, {
       headers: { 'Accept': 'text/markdown', 'X-Timeout': '20' },

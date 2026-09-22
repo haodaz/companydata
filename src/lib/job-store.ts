@@ -90,6 +90,8 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
       bulk.push(row);
     }
   }
+  // 新写入的岗位默认「待审核」；已有记录（无锁定字段）整行覆盖，但不动它的审核状态
+  for (const row of bulk) if (!existing.has(row.dedupe_key)) row.human_review_status = 'review';
   for (let i = 0; i < bulk.length; i += 200) {
     const { error } = await supabaseAdmin.from('jobs').upsert(bulk.slice(i, i + 200), { onConflict: 'dedupe_key' });
     if (error) throw error;

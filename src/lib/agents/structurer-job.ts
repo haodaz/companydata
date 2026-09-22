@@ -5,7 +5,7 @@
 import { generateContent } from '@/lib/llm-client';
 import { logTokenUsage } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
-import { jobSchemaForPrompt } from '@/lib/job-fields';
+import { jobSchemaForPrompt, JOB_FIELDS } from '@/lib/job-fields';
 
 export interface StructuredJobsResult {
   ai_summary: string;
@@ -72,4 +72,37 @@ ${jobSchemaForPrompt()}
     console.error('Structurer Agent Error:', error);
     return null;
   }
+}
+
+/** 求职最关键的字段：这些还缺时，触发联网检索补全 */
+export const JOB_SEARCH_TRIGGER_FIELDS = ['responsibilities', 'overview', 'application_end_date_str', 'location', 'education_requirement', 'graduation_year', 'link', 'program_name', 'job_type'];
+
+/**
+ * 联网检索补全岗位字段：知道企业 + 岗位名，去官方渠道找这条岗位的信息，只返回找到的字段，并附来源链接。
+ */
+export async function searchJobFields(job: { name: string; company: string; program_name?: string | null; location?: string | null; source_url?: string | null }, missing: string[], modelId: string = 'gemini-3.8-flash'): Promise<{ fields: Record<string, any>; sources: Record<string, string> }> {
+  const { searchJson } = await import('@/lib/agents/search-llm');
+  const wanted = JOB_FIELDS.filter(f => missing.includes(f.key));
+  const prompt = `
+    You are a recruiting-data researcher. Use web search to find the OFFICIAL posting of this job and fill in the missing fields.
+
+    Company: ${job.company}
+    Job title: ${job.name}
+    ${job.program_name ? `Programme: ${job.program_name}` : ''}${job.location ? `\nLocation hint: ${job.location}` : ''}${job.source_url ? `\nThe job was found on: ${job.source_url}` : ''}
+    Today's date: ${new Date().toISOString().slice(0, 10)}
+
+    Search the company's own careers / campus site, its official WeChat articles or official announcements. Third-party boards (BOSS直聘, 智联, 牛客, 实习僧, LinkedIn...) may be used ONLY to locate the official page, never as the source of facts.
+    Only report values you actually found for THIS job (same company, same title / programme). Use null when not found. Never invent deadlines, salaries or URLs.
+
+    Fields to fill (key // meaning. instruction):
+${wanted.map(f => `      "${f.key}": <${f.kind === 'number' ? 'number' : f.kind === 'boolean' ? 'boolean' : f.kind === 'string[]' ? 'string[]' : 'string'} | null> // ${f.label}. ${f.hint}`).join('\n')}
+
+    Return ONLY a JSON object:
+    { "fields": { <key>: <value> ... }, "sources": { "<key>": "<url where you found it>" }, "official_url": "<the official job / programme page if found, else null>" }
+  `;
+  const { parsed } = await searchJson(prompt, modelId, { tool_name: 'structurer-job', task_name: `Search Job Fields · ${job.name}`, institution: job.company });
+  const fields = parsed?.fields && typeof parsed.fields === 'object' ? parsed.fields : {};
+  if (parsed?.official_url && typeof parsed.official_url === 'string' && /^https?:\/\//i.test(parsed.official_url) && !fields.link) fields.link = parsed.official_url;
+  const sources = parsed?.sources && typeof parsed.sources === 'object' ? parsed.sources : {};
+  return { fields, sources };
 }

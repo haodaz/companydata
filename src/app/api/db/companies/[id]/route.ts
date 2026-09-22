@@ -32,8 +32,21 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
   try {
     const id = parseInt((await params).id);
     const body = await req.json();
-    const updates: Record<string, any> = { updated_at: new Date().toISOString() };
-    for (const k of COMPANY_EDITABLE_KEYS) if (body[k] !== undefined) updates[k] = body[k] === '' ? null : body[k];
+    const now = new Date().toISOString();
+    const updates: Record<string, any> = { updated_at: now };
+    const { data: current } = await supabaseAdmin.from('companies').select('*').eq('id', id).single();
+    const locked = new Set<string>(current?.human_locked_fields || []);
+    for (const k of COMPANY_EDITABLE_KEYS) {
+      if (body[k] === undefined) continue;
+      const v = body[k] === '' ? null : body[k];
+      updates[k] = v;
+      // 人工改过的字段锁定，AI 补全不再覆盖
+      if (current && JSON.stringify(v ?? null) !== JSON.stringify(current[k] ?? null)) locked.add(k);
+    }
+    for (const k of body.unlock || []) locked.delete(k);
+    updates.human_locked_fields = Array.from(locked);
+    if (body.human_review_status !== undefined) { updates.human_review_status = body.human_review_status; updates.human_review_at = now; }
+    if (body.human_review_note !== undefined) updates.human_review_note = body.human_review_note;
     if (updates.name === null) return NextResponse.json({ success: false, error: '企业名称不能为空' }, { status: 400 });
 
     const { data, error } = await supabaseAdmin.from('companies').update(updates).eq('id', id).select().single();

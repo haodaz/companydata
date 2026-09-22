@@ -2,12 +2,13 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Input, Table, Tag, Space, Select, Modal, Form, Typography, Tooltip, InputNumber, Alert, Progress, App } from 'antd';
-import { BankOutlined, PlusOutlined, RobotOutlined, ThunderboltOutlined, GlobalOutlined, FlagOutlined, TeamOutlined, ApartmentOutlined, ImportOutlined } from '@ant-design/icons';
+import { Button, Input, Table, Tag, Space, Select, Modal, Form, Typography, Tooltip, InputNumber, Alert, Progress, App, Dropdown } from 'antd';
+import { BankOutlined, PlusOutlined, RobotOutlined, ThunderboltOutlined, GlobalOutlined, FlagOutlined, TeamOutlined, ApartmentOutlined, ImportOutlined, CheckCircleOutlined, DownOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import { StatCards } from '@/components/admin/StatCards';
 import { useModel } from '@/lib/model-context';
 import { SEGMENT_LABELS, SEGMENT_OPTIONS, COMPANY_TYPE_LABELS } from '@/lib/company-fields';
+import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { BRAND } from '@/lib/theme';
 
 const { Text } = Typography;
@@ -34,6 +35,7 @@ export default function DbCompanyPage() {
   const [pageSize, setPageSize] = useState(50);
   const [search, setSearch] = useState('');
   const [segment, setSegment] = useState('');
+  const [review, setReview] = useState('');
   const [selected, setSelected] = useState<React.Key[]>([]);
 
   const [addOpen, setAddOpen] = useState(false);
@@ -54,13 +56,13 @@ export default function DbCompanyPage() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const qs = new URLSearchParams({ page: String(page), pageSize: String(pageSize), search, segment, withStats: '1' });
+      const qs = new URLSearchParams({ page: String(page), pageSize: String(pageSize), search, segment, review, withStats: '1' });
       const json = await (await fetch(`/api/db/companies?${qs}`)).json();
       if (!json.success) throw new Error(json.error);
       setData(json.data); setTotal(json.total); setStats(json.stats || {});
     } catch (e: any) { message.error(`加载失败: ${e.message}`); }
     finally { setLoading(false); }
-  }, [page, pageSize, search, segment]);
+  }, [page, pageSize, search, segment, review]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -107,6 +109,12 @@ export default function DbCompanyPage() {
     if (await createCompanies(companies)) { setAiOpen(false); setAiList([]); }
   };
 
+  const batchReview = async (status: string) => {
+    const json = await (await fetch('/api/db/companies', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: selected, human_review_status: status }) })).json();
+    if (!json.success) { message.error(json.error); return; }
+    message.success(`已标记 ${json.updated} 家为「${REVIEW_STATUS[status]?.label}」`); setSelected([]); load();
+  };
+
   /** 批量 AI 补全：逐家联网检索，只填空字段 */
   const runEnrich = async () => {
     const targets = data.filter(c => selected.includes(c.id));
@@ -148,6 +156,7 @@ export default function DbCompanyPage() {
       title: '校招岗位', width: 100, align: 'center' as const,
       render: (_: any, r: any) => r.counts?.jobs_total ? <span><Text strong style={{ color: BRAND.success }}>{r.counts.jobs_open}</Text><Text type="secondary"> / {r.counts.jobs_total}</Text></span> : <Text type="secondary">0</Text>,
     },
+    { title: '审核', dataIndex: 'human_review_status', width: 90, render: (s: string) => s ? <Tag color={REVIEW_STATUS[s]?.color}>{REVIEW_STATUS[s]?.label || s}</Tag> : <Tag>未审核</Tag> },
     { title: '画像', width: 80, align: 'center' as const, render: (_: any, r: any) => r.profile_updated_at ? <Tag color="success">已补全</Tag> : <Tag>待补全</Tag> },
     {
       title: '操作', width: 150, fixed: 'right' as const,
@@ -179,6 +188,7 @@ export default function DbCompanyPage() {
         { label: '中外合资', value: stats.joint_venture || 0, icon: <ApartmentOutlined />, color: '#d97706' },
         { label: '海外百强', value: stats.overseas_top || 0, icon: <GlobalOutlined />, color: '#2f54eb' },
         { label: '未分类', value: stats.none || 0, icon: <TeamOutlined />, color: '#8a8fa3', hint: '用「AI 补全」自动判定' },
+        { label: '审核通过', value: stats.reviewed || 0, icon: <SafetyCertificateOutlined />, color: '#16a34a' },
       ]} />
 
       <Panel padding={16}>
@@ -186,11 +196,17 @@ export default function DbCompanyPage() {
           <Input.Search placeholder="搜索企业名 / 英文名 / 行业" allowClear style={{ width: 300 }} onSearch={v => { setSearch(v); setPage(1); }} />
           <Select value={segment} style={{ width: 140 }} onChange={v => { setSegment(v); setPage(1); }}
             options={[{ value: '', label: '全部分类' }, ...SEGMENT_OPTIONS, { value: 'none', label: '未分类' }]} />
+          <Select value={review} style={{ width: 120 }} onChange={v => { setReview(v); setPage(1); }} options={[{ value: '', label: '全部审核' }, { value: 'none', label: '未审核' }, ...REVIEW_STATUS_OPTIONS]} />
           <div style={{ flex: 1 }} />
           {selected.length > 0 && (
-            <Tooltip title="逐家联网检索官网、校招官网、行业、分类、总部、规模、简介、校招概况，只填空字段">
-              <Button type="primary" ghost icon={<ThunderboltOutlined />} onClick={runEnrich} disabled={!!enrich}>AI 补全画像（{selected.length} 家）</Button>
-            </Tooltip>
+            <Space>
+              <Text type="secondary">已选 {selected.length} 家</Text>
+              <Button type="primary" ghost icon={<CheckCircleOutlined />} onClick={() => batchReview('complete')}>审核通过</Button>
+              <Dropdown menu={{ items: REVIEW_STATUS_OPTIONS.filter(o => o.value !== 'complete').map(o => ({ key: o.value, label: `审核：${o.label}` })), onClick: ({ key }) => batchReview(key) }}><Button>更多 <DownOutlined /></Button></Dropdown>
+              <Tooltip title="逐家联网检索官网、校招官网、行业、分类、总部、规模、简介、校招概况，只填空字段；审核已定论的跳过">
+                <Button icon={<ThunderboltOutlined />} onClick={runEnrich} disabled={!!enrich}>AI 补全画像</Button>
+              </Tooltip>
+            </Space>
           )}
         </div>
         {enrich && (
