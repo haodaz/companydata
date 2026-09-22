@@ -100,4 +100,11 @@ src/app/api/                       接口（agents = 大模型，db / admin = �
 
 调整要采集的岗位字段：改 `src/lib/job-fields.ts`，并在新的 migration 里给 `jobs` 表加列。
 
+### 与平方数据基础设施的字段对齐（`003_align_fields.sql`）
+
+`companies` / `jobs` 的字段名以数据同事提供的《岗位及公司字段.xlsx》为准（对方有的字段我们都有、同名）；我们多出来的字段保留。
+- 改名（数据保留）：companies `website→official_website`、`description→introduction`、`founded_year→info_founding_year`、`employee_count→company_scale`、`revenue→operating_revenue`、`hq_city→city`、`hq_country→country`；
+  jobs `title→name`、`company→institute_or_company_name`、`qualifications→overview`、`benefits→welfare`、`job_url→link`、`apply_url→application_website`、`posted_date→official_publish_date`、`application_start→application_start_date_str`、`deadline→application_end_date_str`、`salary_min/max→internship_salary_min/max`、`salary_period→salary_unit`（值改为 per_month 等）、`experience_years_min→exp_years`、`experience_requirement→exp_labels`、`skills→skill_labels`、`headcount→number_of_recruits`。
+- 值口径未对齐、留给同步层：对方 `city / country / province` 存行政区划代码，我们存名称；对方公司 `kind` 是法律形态，我们的 `company_type` 是所有制分类，两者并存；岗位 `kind` 按对方枚举由 `job_type` 推导。
+
 > Next.js 16 有破坏性变更，写代码前先看 `node_modules/next/dist/docs/`（见 `AGENTS.md`）。

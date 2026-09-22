@@ -83,7 +83,7 @@ export default function DbCompanyPage() {
   const handleImport = async () => {
     const companies = importText.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(l => {
       const [name, name_en, website] = l.split(/[,，\t]/).map(s => s.trim());
-      return { name, name_en: name_en || undefined, website: /^https?:\/\//i.test(website || '') ? website : undefined, segment: importSegment };
+      return { name, name_en: name_en || undefined, official_website: /^https?:\/\//i.test(website || '') ? website : undefined, segment: importSegment };
     });
     if (!companies.length) { message.warning('请粘贴企业名单'); return; }
     if (await createCompanies(companies)) { setImportOpen(false); setImportText(''); }
@@ -103,7 +103,7 @@ export default function DbCompanyPage() {
   };
 
   const importAiList = async () => {
-    const companies = aiList.filter(c => aiPicked.includes(c._key)).map(({ name, name_en, segment, industry, hq_country, website, jv_partners }) => ({ name, name_en, segment, industry, hq_country, website, jv_partners }));
+    const companies = aiList.filter(c => aiPicked.includes(c._key)).map(({ name, name_en, segment, industry, country, official_website, jv_partners }) => ({ name, name_en, segment, industry, country, official_website, jv_partners }));
     if (await createCompanies(companies)) { setAiOpen(false); setAiList([]); }
   };
 
@@ -137,7 +137,7 @@ export default function DbCompanyPage() {
     { title: '分类', dataIndex: 'segment', width: 100, render: (s: string) => s ? <Tag color={SEGMENT_LABELS[s]?.color}>{SEGMENT_LABELS[s]?.label || s}</Tag> : <Text type="secondary">未分类</Text> },
     { title: '行业', dataIndex: 'industry', width: 130, render: (t: string, r: any) => t ? <span>{t}{r.sub_industry && <span style={{ color: BRAND.ink3 }}> · {r.sub_industry}</span>}</span> : '-' },
     { title: '类型', dataIndex: 'company_type', width: 100, render: (t: string) => COMPANY_TYPE_LABELS[t] || '-' },
-    { title: '总部', width: 140, render: (_: any, r: any) => [r.hq_country, r.hq_city].filter(Boolean).join(' · ') || '-' },
+    { title: '总部', width: 140, render: (_: any, r: any) => [r.country, r.city].filter(Boolean).join(' · ') || '-' },
     { title: '500 强', dataIndex: 'fortune_global_rank', width: 80, align: 'center' as const, render: (n: number) => n ? `#${n}` : '-' },
     {
       title: '校招官网', dataIndex: 'campus_url', width: 90, align: 'center' as const,
@@ -209,7 +209,7 @@ export default function DbCompanyPage() {
           <Form.Item name="name" label="企业名称" rules={[{ required: true, message: '请输入企业名称' }]} help="中文常用名优先；其余信息可以之后用 AI 补全"><Input placeholder="例如：腾讯 / 上汽大众 / Procter & Gamble" /></Form.Item>
           <Form.Item name="name_en" label="英文名"><Input /></Form.Item>
           <Form.Item name="segment" label="目标分类"><Select allowClear options={SEGMENT_OPTIONS} placeholder="可留空，AI 补全时自动判定" /></Form.Item>
-          <Form.Item name="website" label="官网" rules={[{ type: 'url', message: '请输入完整链接' }]}><Input placeholder="https://" /></Form.Item>
+          <Form.Item name="official_website" label="官网" rules={[{ type: 'url', message: '请输入完整链接' }]}><Input placeholder="https://" /></Form.Item>
         </Form>
       </Modal>
 
@@ -236,7 +236,7 @@ export default function DbCompanyPage() {
             { title: '企业', dataIndex: 'name', width: 200, render: (t: string, r: any) => <div><Text strong>{t}</Text>{r.name_en && r.name_en !== t && <div style={{ fontSize: 11, color: BRAND.ink3 }}>{r.name_en}</div>}</div> },
             { title: '分类', dataIndex: 'segment', width: 90, render: (s: string) => <Tag color={SEGMENT_LABELS[s]?.color}>{SEGMENT_LABELS[s]?.label}</Tag> },
             { title: '行业', dataIndex: 'industry', width: 110 },
-            { title: '总部', dataIndex: 'hq_country', width: 80 },
+            { title: '总部', dataIndex: 'country', width: 80 },
             { title: '依据', dataIndex: 'reasoning', ellipsis: true, render: (t: string, r: any) => <Tooltip title={t}><span style={{ fontSize: 12 }}>{r.jv_partners ? `【${r.jv_partners}】` : ''}{t}</span></Tooltip> },
             { title: '', width: 80, render: (_: any, r: any) => r.existing_id ? <Tag>已在库</Tag> : null },
           ]} />

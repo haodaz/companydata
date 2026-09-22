@@ -15,7 +15,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     const { data: company, error } = await supabaseAdmin.from('companies').select('*').eq('id', id).single();
     if (error) throw error;
 
-    const profile = await findCompanyProfile(company.name, company.name_en || '', company.hq_country || '', model || undefined);
+    const profile = await findCompanyProfile(company.name, company.name_en || '', company.country || '', model || undefined);
 
     const updates: Record<string, any> = {};
     const filled: string[] = [];

@@ -7,19 +7,19 @@
  */
 import { supabaseAdmin } from '@/lib/supabase';
 import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
-import { sanitizeJob, jobCompleteness } from '@/lib/job-fields';
+import { sanitizeJob, jobCompleteness, KIND_BY_JOB_TYPE } from '@/lib/job-fields';
 
 const normUrl = (u: string) => u.trim().toLowerCase().replace(/[#?].*$/, '').replace(/\/+$/, '');
 
-export function jobDedupeKey(job: { job_url?: string | null; job_req_id?: string | null; title: string; location?: string | null }, companyId: number | null, company: string, sourceUrl: string) {
-  const own = (job.job_url || '').trim();
+export function jobDedupeKey(job: { link?: string | null; job_req_id?: string | null; name: string; location?: string | null }, companyId: number | null, company: string, sourceUrl: string) {
+  const own = (job.link || '').trim();
   // 列表页上的岗位如果链接就是列表页自己，不算独立链接
   if (own && normUrl(own) !== normUrl(sourceUrl)) {
     // 保留 query：很多 ATS 用 ?gh_jid= / ?jobId= 区分岗位
     return own.trim().toLowerCase().replace(/#.*$/, '').replace(/\/+$/, '');
   }
   const who = companyId ?? (company || '').trim().toLowerCase();
-  const what = (job.job_req_id || job.title).trim().toLowerCase();
+  const what = (job.job_req_id || job.name).trim().toLowerCase();
   return `${who}|${what}|${(job.location || '').trim().toLowerCase()}`;
 }
 
@@ -39,13 +39,17 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
   const rows = new Map<string, any>();
   for (const raw of jobsOf(structuredJson)) {
     const job = sanitizeJob(raw);
-    if (!job.title) continue;
+    if (!job.name) continue;
+    // 对方的枚举字段：AI 没直接给出时，从我们自己的字段推导
+    if (!job.kind && job.job_type) job.kind = KIND_BY_JOB_TYPE[job.job_type] || null;
+    if (!job.accept_foreign && job.visa_sponsorship !== null) job.accept_foreign = job.visa_sponsorship ? 'accepted' : 'not_accepted';
+    if (!job.form_of_play && job.remote_type) job.form_of_play = { remote: 'online', onsite: 'offline', hybrid: 'online_and_offline' }[job.remote_type as string] || null;
     const key = jobDedupeKey(job as any, log.company_id, log.company, log.target_url);
     rows.set(key, {
       ...job,
       dedupe_key: key,
       company_id: log.company_id,
-      company: log.company || '',
+      institute_or_company_name: log.company || '',
       status: 'open',
       source_url: log.target_url,
       source_log_id: log.id,

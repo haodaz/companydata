@@ -4,7 +4,7 @@ import { resolveOrCreateCompany } from '@/lib/company-match';
 
 export const runtime = 'nodejs';
 
-const FILLABLE = ['name_en', 'segment', 'industry', 'hq_country', 'website', 'jv_partners'];
+const FILLABLE = ['name_en', 'segment', 'industry', 'country', 'official_website', 'jv_partners'];
 
 /** 取得企业库 id：没有就建档；Scout 名单带来的基础字段只填空 */
 export async function POST(req: Request) {

@@ -156,8 +156,8 @@ export interface ListedCompany {
   name_en: string | null;
   segment: 'china' | 'joint_venture' | 'overseas_top' | 'other';
   industry: string | null;
-  hq_country: string | null;
-  website: string | null;
+  country: string | null;
+  official_website: string | null;
   jv_partners: string | null;
   reasoning: string;
 }
@@ -178,13 +178,13 @@ export async function findCompanyList(query: string, count: number, modelId: str
     Rules:
     1. Use web search to ground the list in a real, recent ranking or authoritative source when the request implies one (e.g. Fortune Global 500, 中国企业500强, 行业排名). Do NOT invent companies.
     2. "name": the name Chinese students commonly use — Chinese name if one is in common use (腾讯, 宝洁, 上汽大众), otherwise the English name.
-    3. "name_en": official English name. "industry": in Chinese (中文). "hq_country": in Chinese (中文).
-    4. "website": official homepage root URL if you saw it, else null. "jv_partners": for joint ventures, "中方 × 外方", else null.
+    3. "name_en": official English name. "industry": in Chinese (中文). "country": in Chinese (中文).
+    4. "official_website": official homepage root URL if you saw it, else null. "jv_partners": for joint ventures, "中方 × 外方", else null.
     5. "reasoning": one Chinese sentence — why it belongs in the list (rank / position / known campus programme).
     6. No duplicates; list parent brands rather than every subsidiary unless the user asks.
 
     Return ONLY a JSON object:
-    { "companies": [ { "name": "", "name_en": "", "segment": "china", "industry": "", "hq_country": "", "website": null, "jv_partners": null, "reasoning": "" } ] }
+    { "companies": [ { "name": "", "name_en": "", "segment": "china", "industry": "", "country": "", "official_website": null, "jv_partners": null, "reasoning": "" } ] }
   `;
 
   const { parsed, searchQueries } = await searchJson(prompt, modelId, { tool_name: 'finder', task_name: 'Build Company List', institution: query.slice(0, 80) });
@@ -200,8 +200,8 @@ export async function findCompanyList(query: string, count: number, modelId: str
       name_en: str(c.name_en),
       segment: ['china', 'joint_venture', 'overseas_top', 'other'].includes(c.segment) ? c.segment : 'other',
       industry: str(c.industry),
-      hq_country: str(c.hq_country),
-      website: str(c.website) && /^https?:\/\//i.test(c.website) ? c.website.trim() : null,
+      country: str(c.country),
+      official_website: str(c.official_website) && /^https?:\/\//i.test(c.official_website) ? c.official_website.trim() : null,
       jv_partners: str(c.jv_partners),
       reasoning: str(c.reasoning) || '',
     });

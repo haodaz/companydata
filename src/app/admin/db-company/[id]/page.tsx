@@ -7,7 +7,7 @@ import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, GlobalOutlined, LinkOu
 import { EntityHero } from '@/components/admin/EntityHero';
 import { useModel } from '@/lib/model-context';
 import { BRAND } from '@/lib/theme';
-import { COMPANY_EDIT_FIELDS, COMPANY_TYPE_LABELS, COMPANY_TYPE_OPTIONS, SEGMENT_LABELS, SEGMENT_OPTIONS } from '@/lib/company-fields';
+import { COMPANY_EDIT_FIELDS, COMPANY_TYPE_LABELS, COMPANY_TYPE_OPTIONS, SEGMENT_LABELS, SEGMENT_OPTIONS, KIND_LABELS, KIND_OPTIONS } from '@/lib/company-fields';
 import { JOB_STATUS, JOB_TYPE_LABELS, RECRUIT_SEASON_LABELS, REMOTE_TYPE_LABELS } from '@/lib/job-fields';
 import { REVIEW_STATUS } from '@/lib/review-status';
 import { URL_TYPE_ORDER, URL_TYPES, subtypeLabel, urlTypeMeta } from '@/lib/url-types';
@@ -93,7 +93,7 @@ export default function CompanyDetailPage() {
 
   const jobColumns = [
     {
-      title: '岗位 / 项目', dataIndex: 'title',
+      title: '岗位 / 项目', dataIndex: 'name',
       render: (t: string, r: any) => (
         <div style={{ cursor: 'pointer' }} onClick={() => router.push(`/admin/db-job/${r.id}`)}>
           <span style={{ fontWeight: 600, color: BRAND.primary }}>{t}</span>
@@ -105,7 +105,7 @@ export default function CompanyDetailPage() {
     { title: '地点', dataIndex: 'location', width: 170, ellipsis: true, render: (t: string, r: any) => <span>{r.remote_type === 'remote' && <Tag color="green">远程</Tag>}{r.remote_type === 'hybrid' && <Tag color="cyan">{REMOTE_TYPE_LABELS.hybrid}</Tag>}{t || '-'}</span> },
     { title: '届别', dataIndex: 'graduation_year', width: 110, ellipsis: true, render: (t: string) => t || '-' },
     { title: '留学生', dataIndex: 'accepts_overseas_students', width: 80, align: 'center' as const, render: (v: boolean | null) => v === true ? <Tag color="blue">面向</Tag> : v === false ? <Tag>不面向</Tag> : <Text type="secondary">—</Text> },
-    { title: '网申截止', dataIndex: 'deadline', width: 110, render: (d: string) => d ? <span style={{ color: new Date(d) < new Date() ? BRAND.ink4 : BRAND.ink }}>{d}</span> : '-' },
+    { title: '网申截止', dataIndex: 'application_end_date_str', width: 110, render: (d: string) => d ? <span style={{ color: new Date(d) < new Date() ? BRAND.ink4 : BRAND.ink }}>{d}</span> : '-' },
     { title: '状态', dataIndex: 'status', width: 80, render: (s: string) => <Tag color={JOB_STATUS[s]?.color}>{JOB_STATUS[s]?.label || s}</Tag> },
     { title: '审核', dataIndex: 'human_review_status', width: 90, render: (s: string) => s ? <Tag color={REVIEW_STATUS[s]?.color}>{REVIEW_STATUS[s]?.label || s}</Tag> : <Tag>未审核</Tag> },
   ];
@@ -138,6 +138,7 @@ export default function CompanyDetailPage() {
         tags={<>
           {company.segment && <Tag color={SEGMENT_LABELS[company.segment]?.color}>{SEGMENT_LABELS[company.segment]?.label}</Tag>}
           {company.company_type && <Tag>{COMPANY_TYPE_LABELS[company.company_type]}</Tag>}
+          {company.kind && <Tag>{KIND_LABELS[company.kind] || company.kind}</Tag>}
           {company.industry && <Tag color="purple">{company.industry}{company.sub_industry ? ` · ${company.sub_industry}` : ''}</Tag>}
           {company.fortune_global_rank && <Tag color="gold">世界 500 强 #{company.fortune_global_rank}{company.ranking_year ? `（${company.ranking_year}）` : ''}</Tag>}
           {company.stock_code && <Tag>{company.stock_code}</Tag>}
@@ -168,17 +169,24 @@ export default function CompanyDetailPage() {
             extra={company.profile_updated_at
               ? <Popconfirm title="重新检索并覆盖已有字段？" onConfirm={() => runEnrich(true)} okText="覆盖更新" cancelText="取消"><Button type="link" size="small" loading={enriching}>更新于 {new Date(company.profile_updated_at).toLocaleDateString('zh-CN')} · 重新检索</Button></Popconfirm>
               : <Text type="secondary" style={{ fontSize: 12 }}>尚未 AI 补全</Text>}>
-            {company.description
-              ? <Paragraph style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{withSource('description', company.description)}</Paragraph>
+            {company.one_sentence && <div style={{ fontSize: 14, fontWeight: 600, color: BRAND.ink2, marginBottom: 8 }}>{withSource('one_sentence', company.one_sentence)}</div>}
+            {company.introduction
+              ? <Paragraph style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{withSource('introduction', company.introduction)}</Paragraph>
               : <Text type="secondary" style={{ display: 'block', marginBottom: 12 }}>暂无企业简介</Text>}
             <Descriptions column={1} size="small" styles={{ label: { width: 100 } }}>
-              <Descriptions.Item label="官网">{link('website')}</Descriptions.Item>
+              <Descriptions.Item label="官网">{link('official_website')}</Descriptions.Item>
               <Descriptions.Item label="LinkedIn">{link('linkedin_url')}</Descriptions.Item>
-              <Descriptions.Item label="总部">{[val('hq_country'), val('hq_city')].filter(Boolean).length ? withSource('hq_city', [val('hq_country'), val('hq_city')].filter(Boolean).join(' · ')) : <Text type="secondary">—</Text>}</Descriptions.Item>
+              <Descriptions.Item label="总部">{[val('country'), val('province'), val('city')].filter(Boolean).length ? withSource('city', [val('country'), val('province'), val('city')].filter(Boolean).join(' · ')) : <Text type="secondary">—</Text>}</Descriptions.Item>
               <Descriptions.Item label="地址">{text('address')}</Descriptions.Item>
-              <Descriptions.Item label="成立年份">{text('founded_year')}</Descriptions.Item>
-              <Descriptions.Item label="员工规模">{text('employee_count')}</Descriptions.Item>
-              <Descriptions.Item label="营收">{text('revenue')}</Descriptions.Item>
+              <Descriptions.Item label="注册地址">{text('registration_address')}</Descriptions.Item>
+              <Descriptions.Item label="成立年份">{text('info_founding_year')}</Descriptions.Item>
+              <Descriptions.Item label="公司规模">{text('company_scale')}</Descriptions.Item>
+              <Descriptions.Item label="营业收入">{text('operating_revenue')}</Descriptions.Item>
+              <Descriptions.Item label="核心业务">{text('company_specialties')}</Descriptions.Item>
+              <Descriptions.Item label="董事长 / CEO">{[val('chairman'), val('ceo_general_manager')].filter(Boolean).length ? withSource('ceo_general_manager', [val('chairman'), val('ceo_general_manager')].filter(Boolean).join(' / ')) : <Text type="secondary">—</Text>}</Descriptions.Item>
+              <Descriptions.Item label="法定代表人">{text('legal_representative')}</Descriptions.Item>
+              <Descriptions.Item label="注册资本">{text('registered_capital')}</Descriptions.Item>
+              <Descriptions.Item label="信用代码">{text('unified_social_credit_code')}</Descriptions.Item>
               <Descriptions.Item label="别名">{(company.aliases || []).length ? company.aliases.join('、') : <Text type="secondary">—</Text>}</Descriptions.Item>
               <Descriptions.Item label="备注">{text('note')}</Descriptions.Item>
             </Descriptions>
@@ -237,6 +245,7 @@ export default function CompanyDetailPage() {
                         : f.kind === 'number' ? <InputNumber style={{ width: '100%' }} />
                         : f.kind === 'segment' ? <Select allowClear options={SEGMENT_OPTIONS} />
                         : f.kind === 'company_type' ? <Select allowClear options={COMPANY_TYPE_OPTIONS} />
+                        : f.kind === 'kind' ? <Select allowClear options={KIND_OPTIONS} />
                         : f.kind === 'tags' ? <Select mode="tags" tokenSeparators={[',', '，']} open={false} suffixIcon={null} placeholder="输入后回车" />
                         : <Input />}
                     </Form.Item>

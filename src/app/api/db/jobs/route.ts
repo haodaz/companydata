@@ -18,7 +18,7 @@ export async function GET(request: Request) {
       .select('*, company_ref:companies(id, name, name_en, segment, industry)', { count: 'exact' })
       .order('updated_at', { ascending: false });
 
-    if (search) query = query.or(orIlike(['title', 'title_cn', 'company', 'program_name', 'location', 'department'], search));
+    if (search) query = query.or(orIlike(['name', 'title_cn', 'institute_or_company_name', 'program_name', 'location', 'department'], search));
     if (get('jobType')) query = query.in('job_type', get('jobType').split(','));
     if (get('season')) query = query.eq('recruit_season', get('season'));
     if (get('remote')) query = query.eq('remote_type', get('remote'));

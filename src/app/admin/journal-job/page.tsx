@@ -84,10 +84,10 @@ export default function JournalJobPage() {
                 key: 'jobs', label: `岗位（${jobs.length}）`,
                 children: <Table rowKey={(_, i) => String(i)} size="small" dataSource={jobs} pagination={false}
                   columns={[
-                    { title: '岗位 / 项目', dataIndex: 'title', render: (t: string, r: any) => r.job_url ? <a href={r.job_url} target="_blank" rel="noreferrer">{t}</a> : t },
+                    { title: '岗位 / 项目', dataIndex: 'name', render: (t: string, r: any) => r.link ? <a href={r.link} target="_blank" rel="noreferrer">{t}</a> : t },
                     { title: '类型', dataIndex: 'job_type', width: 120, render: (t: string) => t ? <Tag color="orange">{JOB_TYPE_LABELS[t] || t}</Tag> : '-' },
                     { title: '地点', dataIndex: 'location', width: 180, ellipsis: true },
-                    { title: '截止', dataIndex: 'deadline', width: 110 },
+                    { title: '截止', dataIndex: 'application_end_date_str', width: 110 },
                   ]} />,
               },
               { key: 'sub', label: `子页面（${active.sub_pages_fetched?.length || 0}）`, children: (active.sub_pages_fetched || []).map((u: string) => <div key={u} style={{ fontSize: 12, marginBottom: 4 }}><a href={u} target="_blank" rel="noreferrer">{u}</a></div>) },

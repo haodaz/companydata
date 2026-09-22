@@ -3,14 +3,15 @@
  * 联网搜索，只返回搜到的值；是否写入由调用方决定（默认只填空字段）。
  */
 import { searchJson } from '@/lib/agents/search-llm';
-import { COMPANY_TYPE_LABELS, SEGMENT_LABELS, PROFILE_FIELDS } from '@/lib/company-fields';
+import { COMPANY_TYPE_LABELS, SEGMENT_LABELS, PROFILE_FIELDS, KIND_LABELS, CONTINENT_LABELS } from '@/lib/company-fields';
 
 export interface CompanyProfile {
   segment: string | null;
   jv_partners: string | null;
   campus_overview: string | null;
   name_en: string | null;
-  website: string | null;
+  brief_name: string | null;
+  official_website: string | null;
   careers_url: string | null;
   campus_url: string | null;
   linkedin_url: string | null;
@@ -18,13 +19,25 @@ export interface CompanyProfile {
   sub_industry: string | null;
   company_type: string | null;
   stock_code: string | null;
-  founded_year: number | null;
-  employee_count: string | null;
-  revenue: string | null;
-  hq_country: string | null;
-  hq_city: string | null;
+  kind: string | null;
+  info_founding_year: number | null;
+  company_scale: string | null;
+  operating_revenue: string | null;
+  continent: string | null;
+  country: string | null;
+  province: string | null;
+  city: string | null;
+  registration_address: string | null;
+  chairman: string | null;
+  ceo_general_manager: string | null;
+  legal_representative: string | null;
+  registered_capital: string | null;
+  unified_social_credit_code: string | null;
+  company_specialties: string | null;
+  product_area: string | null;
+  one_sentence: string | null;
   address: string | null;
-  description: string | null;
+  introduction: string | null;
   fortune_global_rank: number | null;
   ranking_year: number | null;
   sources: Record<string, string>;
@@ -38,7 +51,7 @@ export async function findCompanyProfile(name: string, nameEn: string, country: 
 
     Find:
     1. "name_en": official English name.
-    2. "website": OFFICIAL main homepage (root domain).
+    2. "official_website": OFFICIAL main homepage (root domain). "brief_name": the common short name (e.g. 腾讯 for 腾讯控股有限公司), null if same as name.
     3. "campus_url": official CAMPUS recruitment / early-careers / graduate & internship portal (for Chinese companies the 校园招聘官网, e.g. campus.xxx.com / join.xxx.com/campus). This is the most important link.
     4. "careers_url": the general careers portal landing page.
     4b. "campus_overview": 3–6 sentences in Chinese (中文) on how this company recruits students: autumn / spring campus seasons and usual timing, internship programmes (incl. remote internships if any), management-trainee or special talent programmes, target degrees / majors, and whether overseas-university students (留学生) are explicitly welcomed.
@@ -49,11 +62,12 @@ export async function findCompanyProfile(name: string, nameEn: string, country: 
     7. "sub_industry": finer segment in Chinese, e.g. 电商 / 云计算 / 新能源汽车.
     8. "company_type": one of "public" | "private" | "state_owned" | "joint_venture" | "foreign" | "startup" | "nonprofit" | "government" (from a mainland-China perspective: "foreign" = multinational headquartered outside mainland China; "joint_venture" = Sino-foreign JV).
     9. "stock_code": primary listing, format "EXCHANGE: TICKER" (e.g. "NASDAQ: AAPL", "HKEX: 0700"); null if not listed.
-    10. "founded_year": integer.
-    11. "employee_count": headcount as text with the year if known (e.g. "约 164,000（2024）").
-    12. "revenue": latest annual revenue as text with currency and fiscal year.
-    13. "hq_country" (中文国家 / 地区名), "hq_city" (original-language city name), "address" (headquarters postal address).
-    14. "description": 3–5 sentence company overview in Chinese (中文): what it does, main products / businesses, market position.
+    10. "info_founding_year": integer.
+    11. "company_scale": headcount as text with the year if known (e.g. "约 164,000（2024）").
+    12. "operating_revenue": latest annual revenue as text with currency and fiscal year.
+    13. "continent": one of asia | europe | america | south_america | africa | oceania. "country" (中文国家 / 地区名), "province" (中文省份，仅中国大陆企业), "city" (original-language city name), "address" (headquarters postal address), "registration_address" (registered address if different, else null).
+    14. "introduction": 3–5 sentence company overview in Chinese (中文): what it does, main products / businesses, market position. "one_sentence": a one-sentence Chinese description (≤ 30 字). "company_specialties": core business areas in Chinese. "product_area": main products / services in Chinese.
+    16. "kind": legal form, one of limited_liability_company | joint_stock_company | foreign_invested_enterprise | state_owned_enterprise | sole_proprietorship | limited_partnership | general_partnership | other. "chairman", "ceo_general_manager", "legal_representative": names if found. "registered_capital" (text with currency), "unified_social_credit_code" (中国企业统一社会信用代码，18 位；找不到为 null).
     15. "fortune_global_rank": latest Fortune Global 500 rank (integer) or null; "ranking_year": the edition year of that ranking.
 
     Rules:
@@ -78,7 +92,8 @@ export async function findCompanyProfile(name: string, nameEn: string, country: 
     segment: str(parsed.segment) && parsed.segment in SEGMENT_LABELS ? parsed.segment : null,
     jv_partners: str(parsed.jv_partners),
     campus_overview: str(parsed.campus_overview),
-    website: url(parsed.website),
+    brief_name: str(parsed.brief_name),
+    official_website: url(parsed.official_website),
     careers_url: url(parsed.careers_url),
     campus_url: url(parsed.campus_url),
     linkedin_url: url(parsed.linkedin_url),
@@ -86,13 +101,25 @@ export async function findCompanyProfile(name: string, nameEn: string, country: 
     sub_industry: str(parsed.sub_industry),
     company_type: str(parsed.company_type) && parsed.company_type in COMPANY_TYPE_LABELS ? parsed.company_type : null,
     stock_code: str(parsed.stock_code),
-    founded_year: int(parsed.founded_year),
-    employee_count: str(parsed.employee_count) ?? (typeof parsed.employee_count === 'number' ? String(parsed.employee_count) : null),
-    revenue: str(parsed.revenue),
-    hq_country: str(parsed.hq_country),
-    hq_city: str(parsed.hq_city),
+    kind: str(parsed.kind) && parsed.kind in KIND_LABELS ? parsed.kind : null,
+    info_founding_year: int(parsed.info_founding_year),
+    company_scale: str(parsed.company_scale) ?? (typeof parsed.company_scale === 'number' ? String(parsed.company_scale) : null),
+    operating_revenue: str(parsed.operating_revenue),
+    continent: str(parsed.continent) && parsed.continent in CONTINENT_LABELS ? parsed.continent : null,
+    country: str(parsed.country),
+    province: str(parsed.province),
+    city: str(parsed.city),
+    registration_address: str(parsed.registration_address),
+    chairman: str(parsed.chairman),
+    ceo_general_manager: str(parsed.ceo_general_manager),
+    legal_representative: str(parsed.legal_representative),
+    registered_capital: str(parsed.registered_capital),
+    unified_social_credit_code: str(parsed.unified_social_credit_code),
+    company_specialties: str(parsed.company_specialties),
+    product_area: str(parsed.product_area),
+    one_sentence: str(parsed.one_sentence),
     address: str(parsed.address),
-    description: str(parsed.description),
+    introduction: str(parsed.introduction),
     fortune_global_rank: int(parsed.fortune_global_rank),
     ranking_year: int(parsed.ranking_year),
     sources: parsed.sources && typeof parsed.sources === 'object' ? parsed.sources : {},

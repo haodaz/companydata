@@ -43,7 +43,7 @@ export async function POST(req: Request) {
 
     if (company_id && !unit) {
       const fill = async (field: string) => supabaseAdmin.from('companies').update({ [field]: targetUrl }).eq('id', company_id).is(field, null);
-      if (normType === 'homepage' && (subtype === 'group' || !subtype) && isRootHomepage(targetUrl)) await fill('website');
+      if (normType === 'homepage' && (subtype === 'group' || !subtype) && isRootHomepage(targetUrl)) await fill('official_website');
       if (normType === 'campus' && (subtype === 'portal' || subtype === 'list')) await fill('campus_url');
       if (normType === 'careers' && subtype === 'portal') await fill('careers_url');
     }

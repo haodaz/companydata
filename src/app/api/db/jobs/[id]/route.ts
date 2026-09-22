@@ -12,7 +12,7 @@ export async function GET(_req: NextRequest, { params }: Ctx) {
     const id = parseInt((await params).id);
     const { data, error } = await supabaseAdmin
       .from('jobs')
-      .select('*, company_ref:companies(id, name, name_en, segment, industry, campus_url, website)')
+      .select('*, company_ref:companies(id, name, name_en, segment, industry, campus_url, official_website)')
       .eq('id', id)
       .single();
     if (error) throw error;
@@ -44,7 +44,7 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
       locked.add(k);
     }
     for (const k of body.unlock || []) locked.delete(k);
-    if (updates.title === null) return NextResponse.json({ success: false, error: '岗位名称不能为空' }, { status: 400 });
+    if (updates.name === null) return NextResponse.json({ success: false, error: '岗位名称不能为空' }, { status: 400 });
 
     if (body.human_review_status !== undefined) { updates.human_review_status = body.human_review_status; updates.human_review_at = now; }
     if (body.human_review_note !== undefined) updates.human_review_note = body.human_review_note;

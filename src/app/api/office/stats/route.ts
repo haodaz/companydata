@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   try {
     const ids = (new URL(req.url).searchParams.get('companyIds') || '').split(',').map(s => parseInt(s)).filter(Number.isFinite);
 
-    let q = supabaseAdmin.from('jobs').select(['id', 'company', 'title', 'job_type', 'status', 'remote_type', 'completeness_score', 'human_review_status', ...JOB_CORE_FIELDS.filter(f => f !== 'title' && f !== 'job_type' && f !== 'remote_type')].join(',')).limit(20000);
+    let q = supabaseAdmin.from('jobs').select(['id', 'institute_or_company_name', 'name', 'job_type', 'status', 'remote_type', 'completeness_score', 'human_review_status', ...JOB_CORE_FIELDS.filter(f => f !== 'title' && f !== 'job_type' && f !== 'remote_type')].join(',')).limit(20000);
     if (ids.length) q = q.in('company_id', ids);
     const { data, error } = await q;
     if (error) throw error;
@@ -21,7 +21,7 @@ export async function GET(req: Request) {
     for (const j of jobs) for (const f of JOB_CORE_FIELDS) if (!filled(j[f])) missing[f] = (missing[f] || 0) + 1;
 
     const byCompany: Record<string, number> = {};
-    for (const j of jobs) byCompany[j.company || '未关联'] = (byCompany[j.company || '未关联'] || 0) + 1;
+    for (const j of jobs) byCompany[j.institute_or_company_name || '未关联'] = (byCompany[j.institute_or_company_name || '未关联'] || 0) + 1;
 
     const count = (fn: (j: any) => boolean) => jobs.filter(fn).length;
     const [companies, urls] = await Promise.all([
@@ -48,7 +48,7 @@ export async function GET(req: Request) {
         low_completeness: count(j => (j.completeness_score || 0) < 40),
         missing_fields: Object.entries(missing).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([key, n]) => ({ key, label: JOB_FIELD_MAP[key]?.label || key, count: n })),
         by_company: Object.entries(byCompany).sort((a, b) => b[1] - a[1]).slice(0, 12).map(([company, n]) => ({ company, count: n })),
-        worst: [...jobs].sort((a, b) => (a.completeness_score || 0) - (b.completeness_score || 0)).slice(0, 5).map(j => ({ id: j.id, title: j.title, company: j.company, score: j.completeness_score || 0 })),
+        worst: [...jobs].sort((a, b) => (a.completeness_score || 0) - (b.completeness_score || 0)).slice(0, 5).map(j => ({ id: j.id, title: j.name, company: j.institute_or_company_name, score: j.completeness_score || 0 })),
       },
     });
   } catch (e: any) {

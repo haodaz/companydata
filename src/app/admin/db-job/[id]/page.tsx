@@ -124,17 +124,17 @@ export default function JobDetailPage() {
       <div style={{ marginBottom: 12, display: 'flex', justifyContent: 'space-between' }}>
         <Button icon={<ArrowLeftOutlined />} type="text" onClick={() => router.back()}>返回</Button>
         <Space>
-          {(job.job_url || job.source_url) && <Button icon={<LinkOutlined />} href={job.job_url || job.source_url} target="_blank">打开原文</Button>}
+          {(job.link || job.source_url) && <Button icon={<LinkOutlined />} href={job.link || job.source_url} target="_blank">打开原文</Button>}
           <Button icon={<EditOutlined />} onClick={openEdit}>编辑字段</Button>
           <Popconfirm title="删除这个岗位？" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><Button danger icon={<DeleteOutlined />} /></Popconfirm>
         </Space>
       </div>
 
       <EntityHero
-        initial={(job.company || job.title || '?').slice(0, 1).toUpperCase()}
-        title={job.title}
+        initial={(job.institute_or_company_name || job.name || '?').slice(0, 1).toUpperCase()}
+        title={job.name}
         subtitle={<span>
-          <a onClick={() => job.company_id && router.push(`/admin/db-company/${job.company_id}`)}>{job.company || '未关联企业'}</a>
+          <a onClick={() => job.company_id && router.push(`/admin/db-company/${job.company_id}`)}>{job.institute_or_company_name || '未关联企业'}</a>
           {job.program_name && ` · ${job.program_name}`}
         </span>}
         tags={<>
@@ -149,7 +149,7 @@ export default function JobDetailPage() {
         </>}
         metrics={[
           { label: '完整度', value: `${job.completeness_score ?? 0}%`, color: (job.completeness_score ?? 0) >= 70 ? BRAND.success : BRAND.warning },
-          { label: '网申截止', value: job.deadline || '—' },
+          { label: '网申截止', value: job.application_end_date_str || '—' },
         ]}
       />
 
@@ -193,7 +193,7 @@ export default function JobDetailPage() {
               <Row gutter={12}>
                 {JOB_FIELDS.filter(f => f.group === group).map(f => (
                   <Col key={f.key} span={f.kind === 'text' || f.kind === 'url' || f.kind === 'string[]' ? 24 : 12}>
-                    <Form.Item name={f.key} label={f.label} rules={[...(f.key === 'title' ? [{ required: true, message: '请输入岗位名称' }] : []), ...(f.kind === 'url' ? [{ type: 'url' as const, message: '请输入完整链接' }] : [])]}>
+                    <Form.Item name={f.key} label={f.label} rules={[...(f.key === 'name' ? [{ required: true, message: '请输入岗位名称' }] : []), ...(f.kind === 'url' ? [{ type: 'url' as const, message: '请输入完整链接' }] : [])]}>
                       {editor(f)}
                     </Form.Item>
                   </Col>

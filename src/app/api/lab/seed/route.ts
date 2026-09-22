@@ -62,11 +62,11 @@ export async function POST(req: Request) {
         if (Object.keys(fill).length) await supabaseAdmin.from('companies').update(fill).eq('id', companyId);
       }
       const jobRow: Record<string, any> = {
-        dedupe_key: c.jd.url.toLowerCase(), company_id: companyId, company: c.jd.company,
-        title: c.jd.title, job_req_id: c.jd.job_req_id, job_type: c.jd.job_type, department: c.jd.department, job_function: c.jd.job_function,
+        dedupe_key: c.jd.url.toLowerCase(), company_id: companyId, institute_or_company_name: c.jd.company,
+        name: c.jd.title, kind: c.jd.job_type === 'graduate' ? 'campus_fulltime' : 'campus_fulltime', job_req_id: c.jd.job_req_id, job_type: c.jd.job_type, department: c.jd.department, job_function: c.jd.job_function,
         program_name: c.jd.program_name, graduation_year: c.jd.graduation_year, location: c.jd.location, country: c.jd.country,
-        responsibilities: c.jd.responsibilities, qualifications: c.jd.qualifications, recruit_process: c.jd.recruit_process,
-        job_url: c.jd.url, source_url: c.jd.source_url, status: 'open', last_seen_at: new Date().toISOString(), updated_at: new Date().toISOString(),
+        responsibilities: c.jd.responsibilities, overview: c.jd.qualifications, recruit_process: c.jd.recruit_process,
+        link: c.jd.url, source_url: c.jd.source_url, status: 'open', last_seen_at: new Date().toISOString(), updated_at: new Date().toISOString(),
       };
       jobRow.completeness_score = jobCompleteness(jobRow);
       const { data: job, error: jobErr } = await supabaseAdmin.from('jobs').upsert(jobRow, { onConflict: 'dedupe_key' }).select('id').single();

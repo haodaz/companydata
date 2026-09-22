@@ -27,10 +27,11 @@ interface ChatMessage {
 }
 
 const FIELD_LABELS: Record<string, string> = {
-  name_en: '英文名', segment: '分类', jv_partners: '合资股东', website: '官网', campus_url: '校招官网', careers_url: '招聘总入口',
+  name_en: '英文名', brief_name: '简称', segment: '分类', jv_partners: '合资股东', official_website: '官网', campus_url: '校招官网', careers_url: '招聘总入口',
   campus_overview: '校招概况', linkedin_url: 'LinkedIn', industry: '行业', sub_industry: '细分行业', company_type: '企业类型',
-  stock_code: '股票代码', founded_year: '成立年份', employee_count: '员工规模', revenue: '营收', hq_country: '总部国家', hq_city: '总部城市',
-  address: '地址', description: '企业简介', fortune_global_rank: '世界 500 强', ranking_year: '榜单年份',
+  kind: '公司类型', stock_code: '股票代码', info_founding_year: '成立年份', company_scale: '公司规模', operating_revenue: '营业收入', continent: '大洲', country: '总部国家', province: '省份', city: '总部城市',
+  registration_address: '注册地址', chairman: '董事长', ceo_general_manager: 'CEO / 总经理', legal_representative: '法定代表人', registered_capital: '注册资本', unified_social_credit_code: '信用代码', company_specialties: '核心业务', product_area: '产品范围', one_sentence: '一句话描述',
+  address: '地址', introduction: '企业简介', fortune_global_rank: '世界 500 强', ranking_year: '榜单年份',
 };
 
 function EmployeesInner() {

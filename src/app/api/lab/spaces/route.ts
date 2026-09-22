@@ -49,16 +49,16 @@ export async function POST(req: Request) {
     const { jobId, model, createdBy } = await req.json();
     if (!jobId) return NextResponse.json({ ok: false, error: '请选择一个岗位' }, { status: 400 });
 
-    const { data: job, error } = await supabaseAdmin.from('jobs').select('id, company, title, job_req_id, location, responsibilities, qualifications, job_url, source_url').eq('id', jobId).single();
+    const { data: job, error } = await supabaseAdmin.from('jobs').select('id, institute_or_company_name, name, job_req_id, location, responsibilities, overview, link, source_url').eq('id', jobId).single();
     if (error) throw error;
-    if (!job.responsibilities && !job.qualifications) return NextResponse.json({ ok: false, error: '这条岗位没有职责 / 要求正文，无法拆解。请选一条 JD 完整的岗位。' }, { status: 400 });
+    if (!job.responsibilities && !job.overview) return NextResponse.json({ ok: false, error: '这条岗位没有职责 / 要求正文，无法拆解。请选一条 JD 完整的岗位。' }, { status: 400 });
 
-    const jd = { company: job.company || '', title: job.title, responsibilities: job.responsibilities || '', qualifications: job.qualifications || '' };
+    const jd = { company: job.institute_or_company_name || '', title: job.name, responsibilities: job.responsibilities || '', qualifications: job.overview || '' };
     const task = await generateTask(jd, null, model || undefined);
 
     const { data: created, error: insErr } = await supabaseAdmin.from('skill_tasks').insert({
       job_id: job.id,
-      jd_snapshot: { ...jd, job_req_id: job.job_req_id, location: job.location, url: job.job_url || job.source_url },
+      jd_snapshot: { ...jd, job_req_id: job.job_req_id, location: job.location, url: job.link || job.source_url },
       ...task,
       created_by: createdBy || '',
     }).select('id').single();

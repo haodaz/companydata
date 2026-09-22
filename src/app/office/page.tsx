@@ -211,7 +211,7 @@ function OfficeInner() {
           log('Alice', `开始补全「${c.name}」的企业画像`);
           try {
             const { filled, profile } = await profileCompany(c.id, model);
-            setItem(key, { status: 'done', summary: `补全 ${filled.length} 个字段${profile.industry ? ` · ${profile.industry}` : ''}${profile.hq_city ? ` · ${profile.hq_city}` : ''}`, link: `/admin/db-company/${c.id}` });
+            setItem(key, { status: 'done', summary: `补全 ${filled.length} 个字段${profile.industry ? ` · ${profile.industry}` : ''}${profile.city ? ` · ${profile.city}` : ''}`, link: `/admin/db-company/${c.id}` });
             log('Alice', `「${c.name}」画像完成，补全 ${filled.length} 个字段。`);
           } catch (e: any) { setItem(key, { status: 'failed', summary: e.message }); log('Alice', `「${c.name}」画像失败：${e.message}`); }
         });

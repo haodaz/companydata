@@ -443,7 +443,7 @@ export default function ToolJobPage() {
                   {jobs.length === 0 && <Empty description="这个页面没有提取到校招 / 实习岗位（看右侧 AI 摘要的说明）" />}
                   {jobs.map((job, i) => (
                     <Card key={i} size="small" type="inner" style={{ borderRadius: 8 }}
-                      title={<Space size={6}><span>{i + 1}. {job.title || '未命名'}</span>{job.job_type && <Tag color="orange">{JOB_TYPE_LABELS[job.job_type] || job.job_type}</Tag>}</Space>}>
+                      title={<Space size={6}><span>{i + 1}. {job.name || '未命名'}</span>{job.job_type && <Tag color="orange">{JOB_TYPE_LABELS[job.job_type] || job.job_type}</Tag>}</Space>}>
                       <table style={{ width: '100%', fontSize: 13, borderCollapse: 'collapse' }}>
                         <tbody>
                           {JOB_FIELDS.filter(f => formatJobValue(f.key, job[f.key])).map((f, idx) => (

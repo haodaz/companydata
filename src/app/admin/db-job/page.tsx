@@ -69,7 +69,7 @@ export default function DbJobPage() {
       if (!json.data.length) { message.warning('当前筛选条件下没有数据'); return; }
       exportToCsv(json.data, [
         { key: 'id', header: 'ID' },
-        { key: 'company', header: '企业' },
+        { key: 'institute_or_company_name', header: '企业' },
         { key: 'company_ref.segment', header: '企业分类', formatter: v => SEGMENT_LABELS[v]?.label || '' },
         { key: 'company_ref.industry', header: '行业' },
         ...JOB_FIELDS.map(f => ({ key: f.key, header: f.label, formatter: (v: any) => formatJobValue(f.key, v) })),
@@ -87,7 +87,7 @@ export default function DbJobPage() {
 
   const columns = [
     {
-      title: '岗位 / 项目', dataIndex: 'title', width: 300, fixed: 'left' as const,
+      title: '岗位 / 项目', dataIndex: 'name', width: 300, fixed: 'left' as const,
       render: (t: string, r: any) => (
         <div style={{ cursor: 'pointer' }} onClick={() => router.push(`/admin/db-job/${r.id}`)}>
           <div style={{ fontWeight: 600, color: BRAND.primary }}>{t}</div>
@@ -96,7 +96,7 @@ export default function DbJobPage() {
       ),
     },
     {
-      title: '企业', dataIndex: 'company', width: 170,
+      title: '企业', dataIndex: 'institute_or_company_name', width: 170,
       render: (t: string, r: any) => (
         <div>
           <a onClick={() => r.company_id && router.push(`/admin/db-company/${r.company_id}`)} style={{ fontWeight: 500 }}>{t || '-'}</a>
@@ -110,14 +110,14 @@ export default function DbJobPage() {
     { title: '届别', dataIndex: 'graduation_year', width: 120, ellipsis: true, render: (t: string) => t || '-' },
     { title: '留学生', dataIndex: 'accepts_overseas_students', width: 80, align: 'center' as const, render: (v: boolean | null) => v === true ? <Tag color="blue">面向</Tag> : v === false ? <Tag>不面向</Tag> : <Text type="secondary">—</Text> },
     { title: '薪资', width: 170, render: (_: any, r: any) => formatSalary(r) || (r.salary_description ? <Tooltip title={r.salary_description}><Text type="secondary">见说明</Text></Tooltip> : '-') },
-    { title: '网申截止', dataIndex: 'deadline', width: 110, render: (d: string) => d ? <span style={{ color: new Date(d) < new Date() ? BRAND.ink4 : BRAND.ink }}>{d}</span> : '-' },
+    { title: '网申截止', dataIndex: 'application_end_date_str', width: 110, render: (d: string) => d ? <span style={{ color: new Date(d) < new Date() ? BRAND.ink4 : BRAND.ink }}>{d}</span> : '-' },
     { title: '完整度', dataIndex: 'completeness_score', width: 100, render: (n: number) => <Progress percent={n || 0} size="small" strokeColor={n >= 70 ? BRAND.success : n >= 40 ? BRAND.warning : BRAND.danger} format={p => `${p}`} /> },
     { title: '状态', dataIndex: 'status', width: 80, render: (s: string) => <Tag color={JOB_STATUS[s]?.color}>{JOB_STATUS[s]?.label || s}</Tag> },
     { title: '审核', dataIndex: 'human_review_status', width: 90, render: (s: string) => s ? <Tag color={REVIEW_STATUS[s]?.color}>{REVIEW_STATUS[s]?.label || s}</Tag> : <Tag>未审核</Tag> },
     { title: '更新', dataIndex: 'updated_at', width: 110, render: (t: string) => <Text type="secondary" style={{ fontSize: 12 }}>{new Date(t).toLocaleDateString('zh-CN')}</Text> },
     {
       title: '链接', width: 70, fixed: 'right' as const,
-      render: (_: any, r: any) => (r.job_url || r.source_url) ? <a href={r.job_url || r.source_url} target="_blank" rel="noreferrer">{r.job_url ? '原文' : '来源'}</a> : '-',
+      render: (_: any, r: any) => (r.link || r.source_url) ? <a href={r.link || r.source_url} target="_blank" rel="noreferrer">{r.link ? '原文' : '来源'}</a> : '-',
     },
   ];
 
