@@ -129,21 +129,34 @@ async function generateOpenAI(
     body.tools = [{ type: 'web_search_preview' }];
   }
 
-  const response = await fetch(`${baseURL}/responses`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify(body),
-  });
-
-  if (!response.ok) {
-    const errBody = await response.text();
-    throw new Error(`OpenAI Responses API error ${response.status}: ${errBody}`);
+  // 到 OpenAI 的连接偶发被重置 / 读超时 / 5xx：最多重试 3 次，间隔递增
+  let data: any = null;
+  let lastErr: any = null;
+  for (let attempt = 0; attempt < 3 && !data; attempt++) {
+    if (attempt) await new Promise(r => setTimeout(r, 5000 * attempt));
+    try {
+      const response = await fetch(`${baseURL}/responses`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify(body),
+      });
+      if (!response.ok) {
+        const errBody = await response.text();
+        const err = new Error(`OpenAI Responses API error ${response.status}: ${errBody}`);
+        if (response.status >= 500 || response.status === 429) { lastErr = err; continue; }
+        throw err;
+      }
+      data = await response.json();
+    } catch (e: any) {
+      lastErr = e;
+      if (!/fetch failed|ECONNRESET|ETIMEDOUT|HeadersTimeout|socket hang up/i.test(String(e?.message) + String(e?.cause?.code) + String(e?.cause?.message))) throw e;
+      console.warn(`[llm-client] OpenAI 网络错误，第 ${attempt + 1} 次重试：${e?.cause?.code || e.message}`);
+    }
   }
-
-  const data = await response.json();
+  if (!data) throw lastErr;
 
   // Extract text from output items
   let text = '';
