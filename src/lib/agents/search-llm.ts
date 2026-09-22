@@ -29,7 +29,7 @@ export async function searchJson(prompt: string, modelId: string, log: Pick<Toke
     usageMetadata = result.response.usageMetadata;
     searchQueries = result.response.candidates?.[0]?.groundingMetadata?.webSearchQueries || [];
   } else {
-    const result = await generateContent(prompt, modelId, { jsonMode: true, webSearch: true });
+    const result = await generateContent(prompt, modelId, { jsonMode: true, webSearch: true, fast: true });
     text = result.text;
     usageMetadata = result.usageMetadata;
   }

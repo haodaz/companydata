@@ -52,7 +52,8 @@ export async function POST(req: Request) {
         if (job.link) {
           const md = await fetchJinaUrl(job.link);
           if (md && md.length >= 200) {
-            const structured = await structureJobData(`### Source: [Job](${job.link})\n\n${md}`, job.institute_or_company_name || '', `目标岗位：${job.name}`, model || undefined, undefined, 'all');
+            // 详情页只取前 60k 字符：足够覆盖一条 JD，也让推理模型在几分钟内返回
+            const structured = await structureJobData(`### Source: [Job](${job.link})\n\n${md.slice(0, 60000)}`, job.institute_or_company_name || '', `目标岗位：${job.name}`, model || undefined, undefined, 'all');
             const list = structured?.jobs || [];
             if (list.length) {
               // 详情页通常只有一个岗位；多个时按名称匹配

@@ -58,7 +58,7 @@ ${jobSchemaForPrompt()}
       }
     `;
 
-    const result = await generateContent(prompt, modelId, { jsonMode: true });
+    const result = await generateContent(prompt, modelId, { jsonMode: true, fast: true });
 
     await logTokenUsage({ tool_name: 'structurer-job', task_name: `Extract Jobs${hint ? ` · ${hint}` : ''}`, institution: company, model_id: modelId, usageMetadata: result.usageMetadata, success: true, batch_id: batchId })
       .catch(e => console.error('Token logging failed', e));

@@ -7,10 +7,6 @@
  */
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { Agent } from 'undici';
-
-// GPT 推理模型处理长 JD 时可能超过 5 分钟才开始返回；Node fetch 默认 5 分钟请求头超时会把它掐断
-const openaiDispatcher = new Agent({ headersTimeout: 600_000, bodyTimeout: 600_000 });
 
 // ──── Singleton clients ────
 
@@ -60,7 +56,7 @@ export function resolveModel(modelId?: string | null): string {
 export async function generateContent(
   prompt: string,
   modelId: string,
-  options?: { jsonMode?: boolean; webSearch?: boolean },
+  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean },
 ): Promise<LLMResponse> {
   const resolvedModelId = resolveModel(modelId);
   if (isOpenAIModel(resolvedModelId)) {
@@ -109,7 +105,7 @@ async function generateGemini(
 async function generateOpenAI(
   prompt: string,
   modelId: string,
-  options?: { jsonMode?: boolean; webSearch?: boolean },
+  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean },
 ): Promise<LLMResponse> {
   const apiKey = process.env.OPENAI_API_KEY || '';
   const baseURL = 'https://api.openai.com/v1';
@@ -118,6 +114,8 @@ async function generateOpenAI(
     model: modelId,
     input: [{ role: 'user', content: prompt }],
   };
+  // 提取 / 检索类任务不需要深度推理：降低推理强度，避免推理模型在长正文上跑超过服务端 5 分钟的请求超时
+  if (options?.fast) body.reasoning = { effort: 'low' };
 
   // JSON mode for Responses API uses text.format
   // NOTE: Web Search and JSON mode CANNOT be used together per OpenAI API.
@@ -132,8 +130,6 @@ async function generateOpenAI(
   }
 
   const response = await fetch(`${baseURL}/responses`, {
-    // @ts-expect-error undici 的 dispatcher 选项，Node fetch 支持但 DOM 类型未收录
-    dispatcher: openaiDispatcher,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
