@@ -17,7 +17,7 @@ export async function GET(_req: NextRequest, { params }: Ctx) {
     const [urls, jobs, journals] = await Promise.all([
       supabaseAdmin.from('url_sources').select('*').eq('company_id', id).order('type').order('created_at', { ascending: false }).limit(500),
       supabaseAdmin.from('jobs')
-        .select('id, name, title_cn, job_type, program_name, recruit_season, location, remote_type, graduation_year, accepts_overseas_students, application_end_date_str, status, human_review_status, completeness_score, job_url, updated_at')
+        .select('id, name, title_cn, job_type, program_name, recruit_season, location, remote_type, graduation_year, accepts_overseas_students, application_end_date_str, status, human_review_status, completeness_score, link, updated_at')
         .eq('company_id', id).order('updated_at', { ascending: false }).limit(1000),
       supabaseAdmin.from('url_journal').select('id, search_type, unit, ai_overview, created_at').eq('company_id', id).order('created_at', { ascending: false }).limit(20),
     ]);

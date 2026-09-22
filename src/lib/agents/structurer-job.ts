@@ -39,7 +39,7 @@ export async function structureJobData(markdown: string, company: string, hint: 
       1. Extract EVERY distinct in-scope opening you can find — both from detailed job posting pages and from list pages (a list row with only title + location still counts; leave unknown fields null).
       2. If the same job appears on a list page AND on its own detail page, output it ONCE, merging the information (detail page wins).
       3. NEVER invent data. If a field is not stated, use null (or [] for arrays). Do not guess salaries, dates or URLs.
-      4. "job_url" must be a URL that literally appears in the markdown (the link of that job, or the "### Source" URL of its detail page).
+      4. "link" must be a URL that literally appears in the markdown (the link of that job, or the "### Source" URL of its detail page).
       5. Follow the language rule given for each field: fields marked 中文 must be written in Chinese; "原文" fields keep the page's language; proper nouns stay in their original language.
       6. Ignore navigation, marketing copy, talent-community sign-ups and expired-posting notices.
       7. If the pages contain NO concrete job opening, return "jobs": [] and explain why in "ai_summary".
