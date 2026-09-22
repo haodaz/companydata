@@ -7,6 +7,10 @@
  */
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { Agent } from 'undici';
+
+// GPT 推理模型处理长 JD 时可能超过 5 分钟才开始返回；Node fetch 默认 5 分钟请求头超时会把它掐断
+const openaiDispatcher = new Agent({ headersTimeout: 600_000, bodyTimeout: 600_000 });
 
 // ──── Singleton clients ────
 
@@ -128,6 +132,8 @@ async function generateOpenAI(
   }
 
   const response = await fetch(`${baseURL}/responses`, {
+    // @ts-expect-error undici 的 dispatcher 选项，Node fetch 支持但 DOM 类型未收录
+    dispatcher: openaiDispatcher,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
