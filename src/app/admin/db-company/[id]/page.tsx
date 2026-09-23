@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Button, Card, Col, Descriptions, Empty, Form, Input, InputNumber, Modal, Popconfirm, Row, Select, Space, Spin, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
-import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, GlobalOutlined, LinkOutlined, ThunderboltOutlined, ApiOutlined, CheckCircleOutlined, CloseCircleOutlined, LockOutlined, ProfileOutlined, EyeOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, GlobalOutlined, LinkOutlined, ThunderboltOutlined, ApiOutlined, CheckCircleOutlined, CloseCircleOutlined, LockOutlined, ProfileOutlined, EyeOutlined, TrophyOutlined } from '@ant-design/icons';
 import { FINANCING_COLUMNS, NEWS_COLUMNS, EXECUTIVE_COLUMNS, formatProfileValue } from '@/components/admin/CompanyRunView';
 import { EntityHero } from '@/components/admin/EntityHero';
 import { useModel } from '@/lib/model-context';
@@ -163,6 +163,7 @@ export default function CompanyDetailPage() {
         <Space>
           <Button icon={<GlobalOutlined />} onClick={() => router.push(toolUrlHref)}>找校招 URL</Button>
           <Button type="primary" ghost icon={<ProfileOutlined />} onClick={() => router.push(toolCompanyHref)}>跑画像流水线</Button>
+          <Tooltip title="赛事雷达：建一个只查这家企业办的比赛的任务"><Button icon={<TrophyOutlined />} onClick={() => router.push(`/admin/tool-competition?company=${encodeURIComponent(company.name)}&companyId=${company.id}`)}>找比赛</Button></Tooltip>
           <Tooltip title="轻量版：一次联网检索只补基础字段；完整画像请用「跑画像流水线」"><Button icon={<ThunderboltOutlined />} loading={enriching} onClick={() => runEnrich(false)}>快速补全</Button></Tooltip>
           <Button icon={<EditOutlined />} onClick={openEdit}>编辑</Button>
           <Popconfirm title="删除这家企业？" description="关联的信息源与岗位会保留，但解除与企业的关联。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消">

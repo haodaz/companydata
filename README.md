@@ -84,6 +84,15 @@
 - **成本**：每次调用记 `token_usage_logs`（tool_name = company-pipeline，institution = 企业名，batch_id = 本次运行），跑完按 batch_id 汇总到日志的 llm_calls / token_total / cost_usd。
 - 舆情、求职者口碑只用联网检索能搜到的公开讨论，标注为观点；不抓 Glassdoor / 看准 / 脉脉。
 
+### 企业赛事雷达（`/admin/tool-competition` + 赛事库 `/admin/db-competition`，migration 006）
+
+奔着奖品去找比赛：给设备 💻 / 给钱 💰 / 给实习 🪪 / 给 offer 🎯 / 给算力 ☁️。和其它工具同一套形态：建任务 → 每条配置一个主题或一家主办企业（奖励导向 / 赛事类型 / 地域 / 只要可报名 / 候选数 / 是否抓官方页）→ 逐条运行，可暂停 / 停止 / 单条重跑，历史与成败累积在任务里。
+
+- 一条检索 = 联网检索候选（`searchCompetitions`）→ 逐条抓官方页原文按 `COMPETITION_FIELDS` 提取（`enrichCompetition`；页面不是这个比赛就改联网补全并丢掉错链接）→ 写入赛事库（新行待审核，已有行只填空、刷新状态与截止）。
+- 单条三栏视图：配置 + 流水日志 / 候选表（展开看全字段，看官方页 Raw Markdown）/ AI 摘要 + JSON。raw 存在 `competition_searches`（raw_candidates / raw_pages / structured_json）。
+- 赛事库：按奖励 / 类型 / 级别 / 状态 / 审核筛选，截止临近标红；抽屉里逐条通过 / 不通过 / 编辑 / 删除，人工改过的字段锁定。学生视角字段：背提价值、求职通道、适合谁 / 怎么打。
+- 字段单一来源 `src/lib/competition-fields.ts`（提示词 schema / 列表 / 编辑 / 完整度 / 清洗）。主办方自动关联企业库（`organizer_company_id`），企业详情页「找比赛」一键建任务。
+
 ## 本地运行
 
 ```bash
@@ -105,7 +114,7 @@ npm run dev -- -p 3003
 ## 目录
 
 ```
-supabase/migrations/               001 基础表 / 002 技能空间 / 003 字段对齐 / 004 审核与来源 / 005 企业画像流水线与子实体
+supabase/migrations/               001 基础表 / 002 技能空间 / 003 字段对齐 / 004 审核与来源 / 005 企业画像流水线与子实体 / 006 赛事雷达
 src/lib/job-fields.ts              岗位字段单一来源（提示词 schema / 详情页 / 导出 / 完整度）
 src/lib/company-fields.ts          企业字段、分类、类型
 src/lib/url-types.ts               信息源分类
