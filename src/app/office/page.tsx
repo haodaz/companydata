@@ -13,7 +13,8 @@ import { BRAND } from '@/lib/theme';
 import { useIsMobile } from '@/lib/use-mobile';
 import { AGENT_MAP, FACTORY_AGENTS, FACTORY_STAGES, type AgentId, type FactoryStage } from '@/lib/factory-agents';
 import {
-  planTask, buildCompanyList, ensureCompany, profileCompany, findAndSaveCampusUrls, pickUrlsToExtract,
+  planTask, buildCompanyList, ensureCompany, profileCompany, profileCompanyFull, findAndSaveCampusUrls, pickUrlsToExtract,
+  createCompetitionTask, addCompetitionItems, setCompetitionTaskStatus, runRadarItem, rewardText,
   createJobTask, addUrlsToTask, setJobTaskStatus, extractUrl, fetchQaStats, qaBriefing,
   type FactoryPlan, type FactoryCompany,
 } from '@/lib/factory-pipeline';
@@ -44,6 +45,8 @@ const PRESETS = [
   '找 5 家汽车行业中外合资企业，补全企业画像，并采集它们的校招项目',
   '宝洁、联合利华、欧莱雅：看看它们在中国的管培生和暑期实习',
   '列出 8 家中国新能源与动力电池龙头，只要名单和企业画像',
+  '给 宁德时代、比亚迪 跑完整画像：融资、动态、管理团队、校招口碑',
+  '找 华为、阿里云、腾讯 办的比赛，奔着送设备和直通 offer 去',
 ];
 
 const STATUS_STYLE: Record<ItemStatus, { border: string; bg: string; footBg: string; footColor: string; label: string }> = {
@@ -196,25 +199,57 @@ function OfficeInner() {
 
       // 后续工序的工单先全部挂出来，让人看得到全貌
       const pending: WorkItem[] = [];
-      if (thePlan.steps.profile) companies.forEach(c => pending.push({ key: `profile:${c.id}`, stage: 'profile', agent: 'profiler', status: 'idle', title: c.name, detail: '补全企业信息与校招概况' }));
+      if (thePlan.steps.profile) companies.forEach(c => pending.push({ key: `profile:${c.id}`, stage: 'profile', agent: 'profiler', status: 'idle', title: c.name, detail: thePlan!.profile_mode === 'full' ? '完整画像流水线：官网 → 工商 / 融资 / 动态舆情 / 管理团队 / 行业 / 校招口碑' : '快速补全：企业信息与校招概况' }));
+      if (thePlan.steps.competitions) companies.forEach(c => pending.push({ key: `competition:${c.id}`, stage: 'competition', agent: 'radar', status: 'idle', title: c.name, detail: `找这家企业办的比赛 · ${rewardText(thePlan!.rewards) || '任意奖励'}${thePlan!.competition_query ? ` · ${thePlan!.competition_query}` : ''}` }));
       if (thePlan.steps.source) companies.forEach(c => pending.push({ key: `source:${c.id}`, stage: 'source', agent: 'finder', status: 'idle', title: c.name, detail: '找校招 / 实习官方入口' }));
       pending.push({ key: 'qa:0', stage: 'qa', agent: 'qa', status: 'idle', title: '产出质检', detail: '盘点本次任务的产出与数据质量' });
       addItems(pending);
 
-      // ── 工序 2：企业画像 ──
+      // ── 工序 2：企业画像（quick = 一次检索；full = 完整流水线） ──
       if (thePlan.steps.profile) {
-        await pool(companies, 2, async c => {
+        const full = thePlan.profile_mode === 'full';
+        await pool(companies, full ? 2 : 2, async c => {
           if (stopped()) return;
           const key = `profile:${c.id}`;
-          if (c.profiled) { setItem(key, { status: 'skipped', summary: '已有画像，直接复用', link: `/admin/db-company/${c.id}` }); return; }
+          if (!full && c.profiled) { setItem(key, { status: 'skipped', summary: '已有画像，直接复用', link: `/admin/db-company/${c.id}` }); return; }
           setItem(key, { status: 'working' });
-          log('Alice', `开始补全「${c.name}」的企业画像`);
+          log('Alice', full ? `开始跑「${c.name}」的完整画像流水线` : `开始补全「${c.name}」的企业画像`);
           try {
-            const { filled, profile } = await profileCompany(c.id, model);
-            setItem(key, { status: 'done', summary: `补全 ${filled.length} 个字段${profile.industry ? ` · ${profile.industry}` : ''}${profile.city ? ` · ${profile.city}` : ''}`, link: `/admin/db-company/${c.id}` });
-            log('Alice', `「${c.name}」画像完成，补全 ${filled.length} 个字段。`);
+            if (full) {
+              const { applied } = await profileCompanyFull(c, model, m => { setItem(key, { summary: m }); log('Alice', `[${c.name}] ${m}`); }, { aborted: stopped });
+              setItem(key, { status: 'done', summary: `新增 ${applied?.filled?.length || 0} 字段 · 融资 ${applied?.financings_saved || 0} / 动态 ${applied?.news_saved || 0} / 高管 ${applied?.executives_saved || 0} · 完整度 ${applied?.completeness_before ?? '-'} → ${applied?.completeness_after ?? '-'}`, link: `/admin/db-company/${c.id}` });
+            } else {
+              const { filled, profile } = await profileCompany(c.id, model);
+              setItem(key, { status: 'done', summary: `补全 ${filled.length} 个字段${profile.industry ? ` · ${profile.industry}` : ''}${profile.city ? ` · ${profile.city}` : ''}`, link: `/admin/db-company/${c.id}` });
+              log('Alice', `「${c.name}」画像完成，补全 ${filled.length} 个字段。`);
+            }
           } catch (e: any) { setItem(key, { status: 'failed', summary: e.message }); log('Alice', `「${c.name}」画像失败：${e.message}`); }
         });
+      }
+      if (stopped()) throw new Error('已停止');
+      saveRun({});
+
+      // ── 工序 3：赛事雷达 ──
+      let competitionsSaved = 0;
+      if (thePlan.steps.competitions && companies.length) {
+        const ctId = await createCompetitionTask(`🏭 ${thePlan.title} · ${new Date().toLocaleDateString('zh-CN')}`, `虚拟工厂总任务：${text.slice(0, 200)}`, model, user?.email || '');
+        const items = await addCompetitionItems(ctId, companies.map(c => ({ query: thePlan!.competition_query, company: c.name, companyId: c.id, rewards: thePlan!.rewards, region: 'all', onlyOpen: true, count: 8, enrich: true })));
+        await setCompetitionTaskStatus(ctId, 'running');
+        let failed = 0;
+        for (const it of items) {
+          if (stopped()) break;
+          const c = companies.find(x => x.id === it.company_id || x.name === it.company);
+          const key = `competition:${c?.id ?? it.id}`;
+          setItem(key, { status: 'working' });
+          try {
+            const r = await runRadarItem(it, model, m => { setItem(key, { summary: m }); log('Leo', `[${it.company}] ${m}`); }, { aborted: stopped });
+            const n = (r.saved?.inserted || 0) + (r.saved?.updated || 0);
+            competitionsSaved += n;
+            const top = r.rows.filter(x => x.fields).slice(0, 2).map(x => x.fields!.name).join('、');
+            setItem(key, { status: r.found ? 'done' : 'failed', summary: r.found ? `${r.found} 场比赛，${n} 条入库${top ? `：${top}` : ''}` : '没找到这家企业办的比赛', link: '/admin/db-competition' });
+          } catch (e: any) { failed++; setItem(key, { status: 'failed', summary: e.message }); log('Leo', `「${it.company}」赛事检索失败：${e.message}`); }
+        }
+        await setCompetitionTaskStatus(ctId, stopped() ? 'draft' : failed === items.length ? 'failed' : 'completed');
       }
       if (stopped()) throw new Error('已停止');
       saveRun({});
@@ -274,7 +309,7 @@ function OfficeInner() {
       finalReport = qaBriefing(stats);
       setItem('qa:0', { status: 'done', summary: `平均完整度 ${stats.avg_completeness}% · 待审核 ${stats.unreviewed}`, link: '/admin/db-job' });
       log('Nova', finalReport.replace(/\n/g, ' '));
-      log('Max', `总任务完成：${companies.length} 家企业，本次新入库 / 更新 ${jobsSaved} 个岗位。`);
+      log('Max', `总任务完成：${companies.length} 家企业，本次新入库 / 更新 ${jobsSaved} 个岗位${thePlan.steps.competitions ? `、${competitionsSaved} 场赛事` : ''}。`);
     } catch (e: any) {
       finalStatus = e.message === '已停止' ? 'stopped' : 'failed';
       log('Max', finalStatus === 'stopped' ? '已按指令停产。已经入库的数据会保留。' : `任务中断：${e.message}`);
@@ -441,7 +476,7 @@ function OfficeInner() {
       {/* 工序 */}
       {FACTORY_STAGES.map((stage, idx) => {
         const stageItems = items.filter(i => i.stage === stage.key);
-        const planned = stage.key === 'list' || stage.key === 'qa' || (plan ? (stage.key === 'profile' ? plan.steps.profile : stage.key === 'source' ? plan.steps.source : plan.steps.extract) : true);
+        const planned = stage.key === 'list' || stage.key === 'qa' || (plan ? (stage.key === 'profile' ? plan.steps.profile : stage.key === 'competition' ? plan.steps.competitions : stage.key === 'source' ? plan.steps.source : plan.steps.extract) : stage.key !== 'competition');
         const active = stageItems.some(i => i.status === 'working');
         const finished = stageItems.length > 0 && stageItems.every(i => i.status === 'done' || i.status === 'skipped' || i.status === 'failed');
         return (

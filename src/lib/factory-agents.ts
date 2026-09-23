@@ -4,10 +4,10 @@
  * 形象素材复用自 myAI（public/factory/）。
  */
 
-export type AgentId = 'chief' | 'scout' | 'profiler' | 'finder' | 'fetcher' | 'structurer' | 'qa';
+export type AgentId = 'chief' | 'scout' | 'profiler' | 'radar' | 'finder' | 'fetcher' | 'structurer' | 'qa';
 
 /** 员工在单聊里能执行的动作（由 /api/office/chat 的大模型判定，前端调用对应接口执行） */
-export type AgentActionType = 'master_task' | 'company_list' | 'profile' | 'campus_urls' | 'extract' | 'stats';
+export type AgentActionType = 'master_task' | 'company_list' | 'profile' | 'competitions' | 'campus_urls' | 'extract' | 'stats';
 
 export interface FactoryAgent {
   id: AgentId;
@@ -52,13 +52,23 @@ export const FACTORY_AGENTS: FactoryAgent[] = [
   },
   {
     id: 'profiler', name: 'Alice', title: '企业画像师', titleEn: 'Company Profiler', station: '画像车间',
-    description: '联网补全企业画像：分类、行业、总部、规模、官网、校招官网，以及一段「校招概况」。每个字段带来源。',
+    description: '两档作业：快速补全（一次联网检索，补基础字段）；完整画像流水线（定位官网 → 抓原文 → 工商 / 融资 / 动态舆情 / 管理团队 / 行业 / 校招口碑六个主题检索 → 写入企业库与子实体）。每个字段带来源。',
     pixel: '/factory/pixel_worker_analysis.png', portrait: '/factory/avatar_alice.png', color: '#2563eb',
-    skills: ['企业基本面', '校招概况', '字段溯源'],
-    greeting: '我是 Alice，企业画像师。给我一个企业名，我把它的档案补齐。',
-    quickPrompts: ['补全 上汽大众 的企业画像', '补全 Procter & Gamble 的企业画像', '企业画像包含哪些字段？'],
+    skills: ['企业基本面', '融资 / 动态 / 管理团队', '校招口碑与舆情', '字段溯源'],
+    greeting: '我是 Alice，企业画像师。给我一个企业名：说「快速补全」我一次检索补基础字段；说「完整画像」我跑整条流水线，把融资、动态、管理团队、口碑舆情都拿回来。',
+    quickPrompts: ['给 宁德时代 跑完整画像', '快速补全 Procter & Gamble 的企业画像', '完整画像和快速补全有什么区别？'],
     action: 'profile',
-    persona: '你是 Alice，企业画像师。你负责把一家企业的基本面和校招概况查清楚、写进档案。细致、客观，只采信能找到来源的信息。',
+    persona: '你是 Alice，企业画像师。你负责把一家企业的基本面、融资、动态、管理团队、校招口碑与舆情查清楚、写进档案。细致、客观，只采信能找到来源的信息。',
+  },
+  {
+    id: 'radar', name: 'Leo', title: '赛事雷达员', titleEn: 'Competition Radar', station: '雷达站',
+    description: '奔着奖品找比赛：企业办的黑客松 / 开发者大赛 / 商业案例赛 / 数据竞赛 / 校园创新赛，按「给设备 / 给钱 / 给实习 / 给 offer」检索，抓官方页提取截止、奖品、求职通道、背提价值，写入赛事库。',
+    pixel: '/factory/pixel_radar.png', portrait: '/factory/avatar_radar.png', color: '#c2410c',
+    skills: ['奖励导向检索', '官方页提取', '背提 / offer 价值判断'],
+    greeting: '我是 Leo，赛事雷达员。想要什么奖励？设备、奖金、实习还是 offer？给我一个主题或一家企业，我把值得打的比赛找出来。',
+    quickPrompts: ['找 送笔记本电脑 的 AI 黑客松', '联合利华 有哪些给实习或 offer 的比赛？', '奔着设备去：国内大厂开发者大赛'],
+    action: 'competitions',
+    persona: '你是 Leo，赛事雷达员。你替学生和团队盯着企业办的比赛，最关心奖品是什么（设备 / 钱 / 实习 / offer）、截止时间、参赛门槛和背提含金量。热情、直接，只报真实找到的赛事。',
   },
   {
     id: 'finder', name: 'Jarvis', title: '寻源侦察员', titleEn: 'Source Scout', station: '寻源车间',
@@ -105,11 +115,12 @@ export const FACTORY_AGENTS: FactoryAgent[] = [
 export const AGENT_MAP: Record<AgentId, FactoryAgent> = Object.fromEntries(FACTORY_AGENTS.map(a => [a.id, a])) as Record<AgentId, FactoryAgent>;
 
 /** 总任务流水线的工序 */
-export interface FactoryStage { key: 'list' | 'profile' | 'source' | 'extract' | 'qa'; label: string; agents: AgentId[]; desc: string }
+export interface FactoryStage { key: 'list' | 'profile' | 'competition' | 'source' | 'extract' | 'qa'; label: string; agents: AgentId[]; desc: string }
 
 export const FACTORY_STAGES: FactoryStage[] = [
   { key: 'list', label: '建名单', agents: ['scout'], desc: '圈定目标企业并建档' },
-  { key: 'profile', label: '企业画像', agents: ['profiler'], desc: '补全企业信息与校招概况' },
+  { key: 'profile', label: '企业画像', agents: ['profiler'], desc: '快速补全，或跑完整画像流水线（融资 / 动态 / 管理团队 / 口碑）' },
+  { key: 'competition', label: '赛事雷达', agents: ['radar'], desc: '找企业办的比赛：设备 / 奖金 / 实习 / offer' },
   { key: 'source', label: '寻源', agents: ['finder'], desc: '找校招 / 实习官方入口' },
   { key: 'extract', label: '抓取与提炼', agents: ['fetcher', 'structurer'], desc: '抓取页面并提取结构化岗位' },
   { key: 'qa', label: '质检', agents: ['qa'], desc: '盘点产出与数据质量' },

@@ -12,7 +12,8 @@ export const maxDuration = 120;
 const ACTION_SPEC: Record<string, string> = {
   master_task: '{"type":"master_task","task":"<完整的总任务描述，交给流水线执行>"} — 用户要你安排采集 / 排产时使用',
   company_list: '{"type":"company_list","query":"<名单描述>","count":<5-30>} — 用户要一份企业名单时使用',
-  profile: '{"type":"profile","company":"<企业名>"} — 用户要补全 / 查看某家企业的画像时使用',
+  profile: '{"type":"profile","company":"<企业名>","mode":"quick"|"full"} — 用户要补全 / 查看某家企业的画像时使用；用户说「完整 / 详细 / 融资 / 管理团队 / 舆情 / 口碑」时 mode=full，否则 quick',
+  competitions: '{"type":"competitions","query":"<检索主题，可空>","company":"<主办企业名，可空>","rewards":["hardware"|"cash"|"internship"|"offer"|"credits", ...]} — 用户要找比赛 / 赛事 / 黑客松 / 大赛，或问哪些比赛送设备 / 给奖金 / 给实习 / 给 offer 时使用；query 和 company 至少一个非空',
   campus_urls: '{"type":"campus_urls","company":"<企业名>"} — 用户要找某家企业的校招 / 实习入口时使用',
   extract: '{"type":"extract","url":"<http(s) 链接>","company":"<企业名，可从上下文或域名推断，推断不出就留空>"} — 用户给了一个页面链接要抓取 / 提取岗位时使用',
   stats: '{"type":"stats"} — 用户要质检简报 / 数据质量 / 库里有多少数据时使用',
@@ -32,7 +33,7 @@ export async function POST(req: Request) {
       ${agent.persona}
       你的工位：${agent.station}。你的职责：${agent.description}
 
-      你所在的「智能企业数据工厂」以企业为个体，采集企业信息、校招项目、应届生岗位、实习（含远程），默认不采社招。目标企业：中国企业、中外合资、海外百强。
+      你所在的「智能企业数据工厂」以企业为个体，采集企业信息（画像 + 融资 / 动态 / 管理团队）、企业赛事、校招项目、应届生岗位、实习（含远程），默认不采社招。目标企业：中国企业、中外合资、海外百强。
       同事：${FACTORY_AGENTS.filter(a => a.id !== agent.id).map(a => `${a.name}（${a.title}）`).join('、')}。
       ${agent.id === 'structurer' || agent.id === 'qa' ? `岗位字段：${JOB_FIELDS.map(f => f.label).join('、')}。核心字段（计入完整度）：${JOB_FIELDS.filter(f => f.core).map(f => f.label).join('、')}。` : ''}
 

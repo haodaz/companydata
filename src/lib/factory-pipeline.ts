@@ -4,6 +4,10 @@
  * 所有产出都落在正式的库里（企业库 / 信息源库 / 岗位库 / 爬取日志），工厂只是另一种操作界面。
  */
 
+import { runCompanyProfile } from '@/lib/company-pipeline-client';
+import { runCompetitionSearch, type RadarRow } from '@/lib/competition-radar-client';
+import { REWARD_LABELS } from '@/lib/competition-fields';
+
 export type Emit = (msg: string) => void;
 export interface RunControl { aborted: () => boolean }
 
@@ -25,7 +29,10 @@ export interface FactoryPlan {
   companies: string[];
   list_query: string;
   list_count: number;
-  steps: { profile: boolean; source: boolean; extract: boolean };
+  steps: { profile: boolean; competitions: boolean; source: boolean; extract: boolean };
+  profile_mode: 'quick' | 'full';
+  rewards: string[];
+  competition_query: string;
   urls_per_company: number;
   hint: string;
   scope: 'campus' | 'all';
@@ -55,6 +62,46 @@ export async function profileCompany(companyId: number, model: string): Promise<
   if (!json.success) throw new Error(json.error || '画像补全失败');
   return { filled: json.filled || [], profile: json.profile || {} };
 }
+
+/** Alice 完整画像流水线：定位官网 → 抓原文 → 提取 → 六主题检索 → 入库。与「企业画像工具」同一条链路，日志挂在 company_crawl_logs（task_id 空）。 */
+export async function profileCompanyFull(c: FactoryCompany, model: string, emit: Emit, ctl?: RunControl): Promise<{ filled: string[]; applied: any; logId: number }> {
+  const created = await post('/api/admin/journal-company', { company: c.name, companyId: c.id, model_id: model });
+  const log = created.log;
+  const r = await runCompanyProfile({ id: log.id, company_id: c.id, company: c.name }, { model, skipFilled: true }, {
+    onEvents: evs => { const last = evs[evs.length - 1]; if (last) emit(last.title.replace(/^[✅❌🏢]\s*/, '')); },
+    onMarkdown: () => {}, onData: () => {},
+    waitIfPaused: async () => !(ctl?.aborted()),
+  });
+  if (r.status === 'failed') throw new Error(r.error);
+  if (r.status === 'aborted') throw new Error('已停止');
+  return { filled: r.applied?.filled || [], applied: r.applied, logId: log.id };
+}
+
+// ── Leo：赛事雷达 ──
+export async function createCompetitionTask(name: string, notes: string, model: string, createdBy: string): Promise<string> {
+  const json = await post('/api/admin/competition-tasks', { name, notes, model_id: model, created_by: createdBy });
+  return json.task.id;
+}
+export async function addCompetitionItems(taskId: string, items: Record<string, unknown>[]): Promise<any[]> {
+  await post('/api/admin/competition-tasks/items', { taskId, items });
+  const json = await (await fetch('/api/admin/competition-tasks')).json();
+  return ((json.tasks || []).find((t: any) => t.id === taskId)?.items || []) as any[];
+}
+export const setCompetitionTaskStatus = (id: string, status: string) => patch('/api/admin/competition-tasks', { id, status });
+
+/** 跑一条检索：联网找候选 → 抓官方页提取 → 写入赛事库；返回入库结果与找到的赛事 */
+export async function runRadarItem(item: any, model: string, emit: Emit, ctl?: RunControl): Promise<{ found: number; saved: any; rows: RadarRow[] }> {
+  let rows: RadarRow[] = [];
+  const r = await runCompetitionSearch(item, model, {
+    onEvents: evs => { const last = evs[evs.length - 1]; if (last) emit(last.title.replace(/^[✅❌🏆]\s*/, '')); },
+    onRows: next => { rows = next; }, onSummary: () => {},
+    waitIfPaused: async () => !(ctl?.aborted()),
+  });
+  if (r.status === 'failed') throw new Error(r.error);
+  if (r.status === 'aborted') throw new Error('已停止');
+  return { found: r.found, saved: r.saved, rows };
+}
+export const rewardText = (types?: string[]) => (types || []).map(t => REWARD_LABELS[t] ? `${REWARD_LABELS[t].emoji}${REWARD_LABELS[t].label}` : t).join(' ');
 
 // ── Jarvis：寻源 + 入库 ──
 export async function findAndSaveCampusUrls(company: FactoryCompany, model: string): Promise<any[]> {
@@ -160,11 +207,13 @@ export async function fetchQaStats(companyIds?: number[]) {
 }
 
 export function qaBriefing(s: Record<string, any>): string {
-  if (!s.jobs) return `共 ${s.companies} 家企业、${s.urls} 条信息源，岗位库里还没有对应的岗位。`;
+  if (!s.jobs) return [`共 ${s.companies} 家企业、${s.urls} 条信息源，岗位库里还没有对应的岗位。`, s.competitions ? `赛事库里相关比赛 ${s.competitions} 场：报名中 ${s.competitions_open}，给设备 ${s.competitions_hardware}，给实习 / offer ${s.competitions_offer}。` : '', s.avg_company_completeness != null ? `企业画像平均完整度 ${s.avg_company_completeness}%。` : ''].filter(Boolean).join('\n');
   const parts = [
     `${s.companies} 家企业 · ${s.urls} 条信息源 · ${s.jobs} 个岗位（校招 ${s.graduate} / 实习 ${s.intern} / 专项 ${s.program}，远程 ${s.remote}，面向留学生 ${s.overseas}）。`,
     `平均完整度 ${s.avg_completeness}%，低于 40% 的有 ${s.low_completeness} 个；待人工审核 ${s.unreviewed} 个。`,
   ];
   if (s.missing_fields?.length) parts.push(`缺得最多的核心字段：${s.missing_fields.slice(0, 4).map((m: any) => `${m.label}（${m.count}）`).join('、')}。`);
+  if (s.competitions) parts.push(`赛事库里与这些企业相关的比赛 ${s.competitions} 场：报名中 ${s.competitions_open}，给设备 ${s.competitions_hardware}，给实习 / offer ${s.competitions_offer}。`);
+  if (s.avg_company_completeness != null) parts.push(`企业画像平均完整度 ${s.avg_company_completeness}%，跑过完整画像流水线的 ${s.companies_crawled} 家。`);
   return parts.join('\n');
 }

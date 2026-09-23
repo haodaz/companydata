@@ -12,7 +12,8 @@ import { FACTORY_AGENTS, AGENT_MAP, type AgentId, type FactoryAgent } from '@/li
 import { SEGMENT_LABELS } from '@/lib/company-fields';
 import { subtypeLabel, urlTypeMeta } from '@/lib/url-types';
 import {
-  buildCompanyList, ensureCompany, profileCompany, findAndSaveCampusUrls, createJobTask, addUrlsToTask,
+  buildCompanyList, ensureCompany, profileCompany, profileCompanyFull, findAndSaveCampusUrls, createJobTask, addUrlsToTask,
+  createCompetitionTask, addCompetitionItems, setCompetitionTaskStatus, runRadarItem, rewardText,
   setJobTaskStatus, extractUrl, fetchQaStats, qaBriefing,
 } from '@/lib/factory-pipeline';
 
@@ -23,7 +24,7 @@ interface ChatMessage {
   progress?: string[];
   working?: boolean;
   /** 作业产出 */
-  result?: { kind: 'companies' | 'urls' | 'profile' | 'jobs' | 'stats'; data: any };
+  result?: { kind: 'companies' | 'urls' | 'profile' | 'profile_full' | 'competitions' | 'jobs' | 'stats'; data: any };
 }
 
 const FIELD_LABELS: Record<string, string> = {
@@ -93,9 +94,35 @@ function EmployeesInner() {
         case 'profile': {
           say(`在企业库里定位「${action.company}」（没有就建档）`);
           const c = await ensureCompany({ name: action.company });
+          if (action.mode === 'full') {
+            say('跑完整画像流水线：定位官网 → 抓原文 → 工商 / 融资 / 动态舆情 / 管理团队 / 行业 / 校招口碑…');
+            const { applied, logId } = await profileCompanyFull(c, currentModel, say);
+            finish(`「${c.name}」完整画像跑完了：新增 ${applied?.filled?.length || 0} 个字段，融资 ${applied?.financings_saved || 0} 条、动态 ${applied?.news_saved || 0} 条、管理团队 ${applied?.executives_saved || 0} 人，完整度 ${applied?.completeness_before ?? '-'} → ${applied?.completeness_after ?? '-'}。`, { kind: 'profile_full', data: { company: c, applied, logId } });
+            return;
+          }
           say('联网检索企业信息与校招概况…');
           const { filled, profile } = await profileCompany(c.id, currentModel);
-          finish(filled.length ? `「${c.name}」的画像补全了 ${filled.length} 个字段（已有的字段我没有动）。` : `「${c.name}」的档案已经比较完整，这次没有新增字段。`, { kind: 'profile', data: { company: c, filled, profile } });
+          finish(filled.length ? `「${c.name}」的画像补全了 ${filled.length} 个字段（已有的字段我没有动）。要融资、动态、管理团队、口碑舆情的话，跟我说「跑完整画像」。` : `「${c.name}」的档案已经比较完整，这次没有新增字段。要更深的融资、动态、管理团队、口碑舆情，跟我说「跑完整画像」。`, { kind: 'profile', data: { company: c, filled, profile } });
+          return;
+        }
+
+        case 'competitions': {
+          const company = String(action.company || '').trim();
+          const query = String(action.query || '').trim();
+          if (!company && !query) throw new Error('要一个主题或一家主办企业');
+          const c = company ? await ensureCompany({ name: company }) : null;
+          const rewards: string[] = Array.isArray(action.rewards) && action.rewards.length ? action.rewards : ['hardware', 'cash', 'internship', 'offer'];
+          say(`建立赛事检索任务：${[company, query].filter(Boolean).join(' · ')} · ${rewardText(rewards)}`);
+          const taskId = await createCompetitionTask(`💬 ${a.name} 单聊 · ${new Date().toLocaleString('zh-CN')}`, '虚拟工厂 AI 员工单聊发起', currentModel, user?.email || '');
+          const items = await addCompetitionItems(taskId, [{ query, company: c?.name || company, companyId: c?.id, rewards, region: 'all', onlyOpen: true, count: 8, enrich: true }]);
+          if (!items.length) throw new Error('任务创建失败');
+          await setCompetitionTaskStatus(taskId, 'running');
+          try {
+            const r = await runRadarItem(items[0], currentModel, say);
+            await setCompetitionTaskStatus(taskId, 'completed');
+            const n = (r.saved?.inserted || 0) + (r.saved?.updated || 0);
+            finish(r.found ? `找到 ${r.found} 场比赛，${n} 条已写入赛事库（待审核）。下面是奖品和截止时间，点开能看官方页。` : '这次没找到符合条件的比赛，换个主题或放宽奖励条件再试。', r.found ? { kind: 'competitions', data: { rows: r.rows.map(x => x.fields || x.candidate), taskId } } : undefined);
+          } catch (e) { await setCompetitionTaskStatus(taskId, 'failed'); throw e; }
           return;
         }
 
@@ -231,6 +258,36 @@ function EmployeesInner() {
             </div>
           ))}
           <div style={foot}><Button size="small" type="primary" onClick={() => router.push(`/admin/db-company/${company.id}`)}>打开企业档案</Button></div>
+        </div>
+      );
+    }
+    if (r.kind === 'profile_full') {
+      const { company, applied } = r.data;
+      return (
+        <div style={box}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', textAlign: 'center', padding: '10px 0' }}>
+            {[['新增字段', applied?.filled?.length || 0], ['融资', applied?.financings_saved || 0], ['动态', applied?.news_saved || 0], ['管理团队', applied?.executives_saved || 0]].map(([k, v]) => (
+              <div key={k as string}><div style={{ fontSize: 18, fontWeight: 800, color: BRAND.ink }}>{v}</div><div style={{ fontSize: 11, color: BRAND.ink3 }}>{k}</div></div>
+            ))}
+          </div>
+          <div style={foot}><Button size="small" type="primary" onClick={() => router.push(`/admin/db-company/${company.id}`)}>打开企业档案</Button><Button size="small" onClick={() => router.push('/admin/journal-company')}>画像日志</Button></div>
+        </div>
+      );
+    }
+    if (r.kind === 'competitions') {
+      const rows: any[] = r.data.rows || [];
+      return (
+        <div style={box}>
+          {rows.slice(0, 8).map((c: any, i: number) => (
+            <div key={i} style={{ ...row, alignItems: 'flex-start' }}>
+              <span style={{ flex: 1, lineHeight: 1.6 }}>
+                <b>{c.official_url ? <a href={c.official_url} target="_blank" rel="noreferrer">{c.name}</a> : c.name}</b>
+                <span style={{ color: BRAND.ink3 }}>{c.organizer ? ` · ${c.organizer}` : ''}{c.registration_deadline_str ? ` · 截止 ${c.registration_deadline_str}` : ''}</span>
+                <div style={{ fontSize: 12, color: BRAND.ink2 }}>{rewardText(c.reward_types)}{c.hardware_prize_detail ? ` · ${c.hardware_prize_detail}` : ''}{c.offer_track_detail ? ` · ${c.offer_track_detail.slice(0, 60)}` : ''}</div>
+              </span>
+            </div>
+          ))}
+          <div style={foot}><Button size="small" type="primary" onClick={() => router.push('/admin/db-competition')}>去赛事库</Button><Button size="small" onClick={() => router.push('/admin/tool-competition')}>查看检索任务</Button></div>
         </div>
       );
     }

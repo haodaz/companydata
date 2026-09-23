@@ -24,6 +24,15 @@ export async function GET(req: Request) {
     for (const j of jobs) byCompany[j.institute_or_company_name || '未关联'] = (byCompany[j.institute_or_company_name || '未关联'] || 0) + 1;
 
     const count = (fn: (j: any) => boolean) => jobs.filter(fn).length;
+    // 赛事 + 企业画像完整度（新表不存在时静默为 0）
+    let cq = supabaseAdmin.from('competitions').select('status, reward_types, offer_track').limit(20000);
+    if (ids.length) cq = cq.in('organizer_company_id', ids);
+    const { data: comps } = await cq;
+    const compRows: any[] = comps || [];
+    let cpq = supabaseAdmin.from('companies').select('completeness_score, profile_crawled_at').limit(50000);
+    if (ids.length) cpq = cpq.in('id', ids);
+    const { data: compRowsC } = await cpq;
+    const scored = (compRowsC || []).filter((c: any) => c.completeness_score != null);
     const [companies, urls] = await Promise.all([
       ids.length ? Promise.resolve({ count: ids.length }) : supabaseAdmin.from('companies').select('id', { count: 'exact', head: true }),
       ids.length ? supabaseAdmin.from('url_sources').select('id', { count: 'exact', head: true }).in('company_id', ids) : supabaseAdmin.from('url_sources').select('id', { count: 'exact', head: true }),
@@ -49,6 +58,12 @@ export async function GET(req: Request) {
         missing_fields: Object.entries(missing).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([key, n]) => ({ key, label: JOB_FIELD_MAP[key]?.label || key, count: n })),
         by_company: Object.entries(byCompany).sort((a, b) => b[1] - a[1]).slice(0, 12).map(([company, n]) => ({ company, count: n })),
         worst: [...jobs].sort((a, b) => (a.completeness_score || 0) - (b.completeness_score || 0)).slice(0, 5).map(j => ({ id: j.id, title: j.name, company: j.institute_or_company_name, score: j.completeness_score || 0 })),
+        competitions: compRows.length,
+        competitions_open: compRows.filter(c => c.status === 'open').length,
+        competitions_hardware: compRows.filter(c => (c.reward_types || []).includes('hardware')).length,
+        competitions_offer: compRows.filter(c => (c.reward_types || []).some((t: string) => t === 'offer' || t === 'internship')).length,
+        avg_company_completeness: scored.length ? Math.round(scored.reduce((a: number, c: any) => a + c.completeness_score, 0) / scored.length) : null,
+        companies_crawled: (compRowsC || []).filter((c: any) => c.profile_crawled_at).length,
       },
     });
   } catch (e: any) {
