@@ -68,7 +68,11 @@ export async function findAndSaveCampusUrls(company: FactoryCompany, model: stri
     type: u.type, subtype: u.subtype, reasoning: u.reasoning,
   }).then(() => { saved++; }).catch(e => { lastError = e; })));
   if (urls.length && !saved) throw new Error(`信息源入库失败：${(lastError as Error | null)?.message || '未知错误'}`);
-  post('/api/db/save-journal', { company: company.name, companyId: company.id, urls, searchQueries: json.search_queries, searchType: 'campus', model, aiOverview: '（虚拟工厂流水线检索，未生成报告）' }).catch(() => {});
+  // 报告与 URL 工具单家检索一致：再调一次大模型把 URL 写成检索报告，报告失败不影响流水线
+  if (urls.length) {
+    const report = await post('/api/agents/finder/report', { company: company.name, unit: '', searchType: 'campus', urls, model }).then(r => r.detailed_report || '').catch((e: Error) => `（报告生成失败：${e.message}）`);
+    post('/api/db/save-journal', { company: company.name, companyId: company.id, urls, searchQueries: json.search_queries, searchType: 'campus', model, aiOverview: report }).catch(() => {});
+  }
   return urls;
 }
 

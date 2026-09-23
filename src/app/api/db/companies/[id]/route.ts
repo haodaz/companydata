@@ -14,15 +14,22 @@ export async function GET(_req: NextRequest, { params }: Ctx) {
     const { data: company, error } = await supabaseAdmin.from('companies').select('*').eq('id', id).single();
     if (error) throw error;
 
-    const [urls, jobs, journals] = await Promise.all([
+    const [urls, jobs, journals, financings, news, executives, profileLogs] = await Promise.all([
       supabaseAdmin.from('url_sources').select('*').eq('company_id', id).order('type').order('created_at', { ascending: false }).limit(500),
       supabaseAdmin.from('jobs')
         .select('id, name, title_cn, job_type, program_name, recruit_season, location, remote_type, graduation_year, accepts_overseas_students, application_end_date_str, status, human_review_status, completeness_score, link, updated_at')
         .eq('company_id', id).order('updated_at', { ascending: false }).limit(1000),
       supabaseAdmin.from('url_journal').select('id, search_type, unit, ai_overview, created_at').eq('company_id', id).order('created_at', { ascending: false }).limit(20),
+      supabaseAdmin.from('company_financings').select('*').eq('company_id', id).eq('if_delete', false).order('publish_date', { ascending: false, nullsFirst: false }).limit(200),
+      supabaseAdmin.from('company_news').select('*').eq('company_id', id).eq('if_delete', false).order('publish_date', { ascending: false, nullsFirst: false }).limit(300),
+      supabaseAdmin.from('company_executives').select('*').eq('company_id', id).eq('if_delete', false).order('id', { ascending: true }).limit(200),
+      supabaseAdmin.from('company_crawl_logs').select('id, task_id, status, fields_filled, financings_saved, news_saved, executives_saved, completeness_before, completeness_after, llm_calls, token_total, cost_usd, model_id, error_message, created_at, finished_at, ai_summary:structured_json->>ai_summary').eq('company_id', id).order('created_at', { ascending: false }).limit(20),
     ]);
 
-    return NextResponse.json({ success: true, company, urls: urls.data || [], jobs: jobs.data || [], journals: journals.data || [] });
+    return NextResponse.json({
+      success: true, company, urls: urls.data || [], jobs: jobs.data || [], journals: journals.data || [],
+      financings: financings.data || [], news: news.data || [], executives: executives.data || [], profileLogs: profileLogs.data || [],
+    });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }

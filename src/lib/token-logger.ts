@@ -16,7 +16,7 @@ const PRICING: Record<string, { input: number; output: number }> = {
 };
 
 export interface TokenUsageParams {
-  tool_name: 'finder' | 'fetcher' | 'structurer-job' | 'company-profile' | 'office-chief' | 'office-chat' | 'skill-lab';
+  tool_name: 'finder' | 'fetcher' | 'structurer-job' | 'company-profile' | 'company-pipeline' | 'office-chief' | 'office-chat' | 'skill-lab';
   task_name: string;      // e.g. "Careers URLs Search", "Extract Jobs"
   institution?: string;   // 企业名或目标 URL（列名沿用院校版）
   model_id: string;

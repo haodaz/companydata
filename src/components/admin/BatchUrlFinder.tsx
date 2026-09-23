@@ -62,6 +62,12 @@ export function BatchUrlFinder() {
     setPickOpen(false); setPicked([]);
   };
 
+  /** 与单家检索一致：URL 入库后再生成一份检索报告写进 URL 日志；报告失败不影响这家的结果 */
+  const saveJournalWithReport = async (c: { id: number; name: string }, urls: any[], searchQueries: string[], searchType: 'campus' | 'homepage') => {
+    const report = await post('/api/agents/finder/report', { company: c.name, unit: '', searchType, urls, model: currentModel }).then(r => r.detailed_report || '').catch((e: Error) => `（报告生成失败：${e.message}）`);
+    await post('/api/db/save-journal', { company: c.name, companyId: c.id, urls, searchQueries, searchType, model: currentModel, aiOverview: report }).catch(() => {});
+  };
+
   const run = async () => {
     const names = [...new Set(text.split(/\r?\n/).map(s => s.trim()).filter(Boolean))];
     if (!names.length) { message.warning('先输入企业名单，每行一家'); return; }
@@ -88,7 +94,7 @@ export function BatchUrlFinder() {
             const urls: any[] = r.urls || [];
             let saved = 0;
             for (const u of urls) { try { await post('/api/db/save-url', { company: c.name, companyId: c.id, unit: u.unit || '', title: u.title, targetUrl: u.url, type: u.type, subtype: u.subtype, reasoning: u.reasoning }); saved++; } catch { /* 单条失败不影响 */ } }
-            if (urls.length) post('/api/db/save-journal', { company: c.name, companyId: c.id, urls, searchQueries: r.search_queries, searchType: 'campus', model: currentModel, aiOverview: '（批处理检索，未生成报告）' }).catch(() => {});
+            if (urls.length) await saveJournalWithReport(c, urls, r.search_queries, 'campus');
             setRow(name, { campus: saved }); notes.push(`校招 ${saved} 条`);
           }
         }
@@ -97,7 +103,7 @@ export function BatchUrlFinder() {
           const urls: any[] = r.urls || [];
           let saved = 0;
           for (const u of urls) { try { await post('/api/db/save-url', { company: c.name, companyId: c.id, unit: u.unit || '', title: u.title, targetUrl: u.url, type: u.type, subtype: u.subtype, reasoning: u.reasoning }); saved++; } catch { /* noop */ } }
-          if (urls.length) post('/api/db/save-journal', { company: c.name, companyId: c.id, urls, searchQueries: r.search_queries, searchType: 'homepage', model: currentModel, aiOverview: '（批处理检索，未生成报告）' }).catch(() => {});
+          if (urls.length) await saveJournalWithReport(c, urls, r.search_queries, 'homepage');
           setRow(name, { homepage: saved }); notes.push(`官网 ${saved} 条`);
         }
         setRow(name, { status: 'done', note: notes.join(' · ') }); ok++;

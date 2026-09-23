@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button, Input, Table, Tag, Space, Select, Modal, Form, Typography, Tooltip, InputNumber, Alert, Progress, App, Dropdown } from 'antd';
-import { BankOutlined, PlusOutlined, RobotOutlined, ThunderboltOutlined, GlobalOutlined, FlagOutlined, TeamOutlined, ApartmentOutlined, ImportOutlined, CheckCircleOutlined, DownOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
+import { BankOutlined, PlusOutlined, RobotOutlined, ThunderboltOutlined, GlobalOutlined, FlagOutlined, TeamOutlined, ApartmentOutlined, ImportOutlined, CheckCircleOutlined, DownOutlined, SafetyCertificateOutlined, ProfileOutlined } from '@ant-design/icons';
 import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import { StatCards } from '@/components/admin/StatCards';
 import { useModel } from '@/lib/model-context';
@@ -157,13 +157,14 @@ export default function DbCompanyPage() {
       render: (_: any, r: any) => r.counts?.jobs_total ? <span><Text strong style={{ color: BRAND.success }}>{r.counts.jobs_open}</Text><Text type="secondary"> / {r.counts.jobs_total}</Text></span> : <Text type="secondary">0</Text>,
     },
     { title: '审核', dataIndex: 'human_review_status', width: 90, render: (s: string) => s ? <Tag color={REVIEW_STATUS[s]?.color}>{REVIEW_STATUS[s]?.label || s}</Tag> : <Tag>未审核</Tag> },
-    { title: '画像', width: 80, align: 'center' as const, render: (_: any, r: any) => r.profile_updated_at ? <Tag color="success">已补全</Tag> : <Tag>待补全</Tag> },
+    { title: '完整度', dataIndex: 'completeness_score', width: 110, render: (n: number, r: any) => n != null ? <Tooltip title={r.profile_crawled_at ? `画像流水线 ${new Date(r.profile_crawled_at).toLocaleDateString('zh-CN')}` : '未跑过画像流水线'}><Progress percent={n} size="small" style={{ width: 80 }} strokeColor={n >= 80 ? BRAND.success : n >= 50 ? '#fa8c16' : '#f5222d'} /></Tooltip> : <Text type="secondary">—</Text> },
+    { title: '子实体', width: 110, align: 'center' as const, render: (_: any, r: any) => r.counts ? <Tooltip title="融资 / 动态 / 高管"><span style={{ fontSize: 12 }}>{r.counts.financings_total || 0} / {r.counts.news_total || 0} / {r.counts.executives_total || 0}</span></Tooltip> : <Text type="secondary">0 / 0 / 0</Text> },
     {
       title: '操作', width: 150, fixed: 'right' as const,
       render: (_: any, r: any) => (
         <Space size={4}>
           <Button type="link" size="small" onClick={() => router.push(`/admin/db-company/${r.id}`)}>档案</Button>
-          <Button type="link" size="small" onClick={() => router.push(`/admin/tool-url?company=${encodeURIComponent(r.name)}&companyId=${r.id}`)}>找 URL</Button>
+          <Button type="link" size="small" onClick={() => router.push(`/admin/tool-company?company=${r.id}&name=${encodeURIComponent(r.name)}`)}>画像</Button>
         </Space>
       ),
     },
@@ -203,8 +204,11 @@ export default function DbCompanyPage() {
               <Text type="secondary">已选 {selected.length} 家</Text>
               <Button type="primary" ghost icon={<CheckCircleOutlined />} onClick={() => batchReview('complete')}>审核通过</Button>
               <Dropdown menu={{ items: REVIEW_STATUS_OPTIONS.filter(o => o.value !== 'complete').map(o => ({ key: o.value, label: `审核：${o.label}` })), onClick: ({ key }) => batchReview(key) }}><Button>更多 <DownOutlined /></Button></Dropdown>
-              <Tooltip title="逐家联网检索官网、校招官网、行业、分类、总部、规模、简介、校招概况，只填空字段；审核已定论的跳过">
-                <Button icon={<ThunderboltOutlined />} onClick={runEnrich} disabled={!!enrich}>AI 补全画像</Button>
+              <Tooltip title="建一个画像任务并打开：定位官网 → 抓取 → 提取 → 分主题检索（工商 / 融资 / 动态舆情 / 管理团队 / 行业 / 校招口碑）→ 只填空入库">
+                <Button type="primary" icon={<ProfileOutlined />} onClick={() => router.push(`/admin/tool-company?companies=${selected.join(',')}`)}>跑画像流水线</Button>
+              </Tooltip>
+              <Tooltip title="轻量版：一次联网检索只补基础字段，只填空；审核已定论的跳过">
+                <Button icon={<ThunderboltOutlined />} onClick={runEnrich} disabled={!!enrich}>快速补全</Button>
               </Tooltip>
             </Space>
           )}

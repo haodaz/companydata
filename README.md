@@ -71,6 +71,19 @@
 **人工审核**（企业、岗位同一套）：待审核 / 通过 / 不通过 / 未更新 / 隐藏；定论后 AI 不再覆盖；人工编辑过的字段锁定。AI 新写入的记录默认「待审核」。
 **URL 获取工具 · 批处理**：粘贴名单或从企业库多选，逐家检索并落库，可暂停 / 停止。
 
+### 企业画像工具（独立于岗位提取，`/admin/tool-company`，migration 005）
+
+一家企业一条流水线：**定位官方页面**（官网 / 关于 / 投资者关系 / 新闻 / 管理团队 / 文化福利，写入信息源库）→ **抓取 raw**（Jina 整页原文保留）→ **官方页面提取**（不联网）→ **分主题联网检索**（基础与工商 / 融资历史 / 近期动态与舆情 / 管理团队 / 行业与赛道 / 校招与雇主口碑，每主题一次）→ **合并入库**（先到先得、只填空；人工锁定字段与审核定论的企业不覆盖）。
+
+- **只有任务这一套 UI**：新建任务 → 从企业库多选 / 粘贴名单 / 加一家 → 启动；单家画像 = 任务里只放一家（企业库、健康看板的「画像」按钮会自动建好单家任务）。可暂停 / 停止 / 单家重跑；「只跑缺的」跳过目标字段已齐且子实体已有记录的主题。
+- 每家企业一个三栏视图（流水日志 / 结构化结果 + Raw Markdown + 各工序原始返回 / AI 逐工序摘要 + 终局 JSON），与院校版师资工具同一形态。
+- **终局 vs raw**：终局字段 = `companies` + 三个子实体 `company_financings` / `company_news` / `company_executives`（字段名按数据同事的字段表，含 external_id / data_source_id / org_id / if_delete / latest_full_sync_task_id 同步字段）；raw 层在 `company_crawl_logs`（raw_markdown、pages_fetched、raw_searches、structured_json），以后加字段可从 raw 重新提炼。
+- **子实体审核**：企业详情页三个 tab 逐条通过 / 不通过 / 软删（if_delete，流水线不复活）；人工编辑过的字段锁定。
+- **完整度**：`computeCompanyCompleteness`（字段按权重 + 三个子实体有无），写在 `companies.completeness_score`。
+- **健康看板** `/admin/health-company`：字段填充率、子实体覆盖、动态新鲜度、完整度分布、审核与分类、最弱企业、成本最高企业。
+- **成本**：每次调用记 `token_usage_logs`（tool_name = company-pipeline，institution = 企业名，batch_id = 本次运行），跑完按 batch_id 汇总到日志的 llm_calls / token_total / cost_usd。
+- 舆情、求职者口碑只用联网检索能搜到的公开讨论，标注为观点；不抓 Glassdoor / 看准 / 脉脉。
+
 ## 本地运行
 
 ```bash
@@ -92,12 +105,15 @@ npm run dev -- -p 3003
 ## 目录
 
 ```
-supabase/migrations/001_init.sql   全部表结构
+supabase/migrations/               001 基础表 / 002 技能空间 / 003 字段对齐 / 004 审核与来源 / 005 企业画像流水线与子实体
 src/lib/job-fields.ts              岗位字段单一来源（提示词 schema / 详情页 / 导出 / 完整度）
 src/lib/company-fields.ts          企业字段、分类、类型
 src/lib/url-types.ts               信息源分类
 src/lib/job-store.ts               岗位入库：去重、下线判定、审核保护
-src/lib/agents/                    finder-pipeline / fetcher / structurer-job / company-profile
+src/lib/agents/                    finder-pipeline / fetcher / structurer-job / company-profile（轻量一次检索）/ company-pipeline（画像流水线）
+src/lib/company-merge.ts           画像值清洗、子实体去重键、多来源合并（前后端共用）
+src/lib/company-store.ts           画像入库：只填空、锁定 / 定论保护、子实体 upsert、完整度、成本汇总
+src/lib/company-pipeline-client.ts 浏览器端编排（单家 / 批处理共用）
 src/app/admin/                     页面
 src/app/api/                       接口（agents = 大模型，db / admin = 数据）
 ```
