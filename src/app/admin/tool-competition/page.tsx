@@ -105,6 +105,12 @@ function ToolCompetitionInner() {
     catch (e) { console.error(e); } finally { setTasksLoading(false); }
   }, []);
   useEffect(() => { fetchTasks(); }, [fetchTasks]);
+  // 任务在别的窗口 / 别人的浏览器里跑时，这里每 8 秒拉一次进度
+  useEffect(() => {
+    if (isRunning || !tasks.some(t => t.status === 'running')) return;
+    const timer = setInterval(fetchTasks, 8000);
+    return () => clearInterval(timer);
+  }, [isRunning, tasks, fetchTasks]);
 
   // 从企业详情带 ?company=&companyId= 进来：建一个只查这家企业的任务
   useEffect(() => {

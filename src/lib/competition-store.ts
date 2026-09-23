@@ -9,7 +9,17 @@ import { COMPETITION_EDITABLE_KEYS, competitionDedupeKey, computeCompetitionComp
 
 export interface UpsertResult { inserted: number; updated: number; skipped: number; ids: number[] }
 
-export async function upsertCompetitions(rows: Record<string, any>[], opts: { searchId?: number | null; sources?: Record<string, Record<string, string>> } = {}): Promise<UpsertResult> {
+/** 主办方 → 企业库 id：整串 → 去掉括号 / 斜杠后的主名 → 检索时指定的主办企业兜底 */
+async function resolveOrganizer(organizer: string | null, fallback?: { id?: number | null; name?: string | null }): Promise<number | null> {
+  if (organizer) {
+    const variants = Array.from(new Set([organizer, organizer.split(/[（(\/、,，]/)[0].trim(), organizer.replace(/（.*?）|\(.*?\)/g, '').trim()].filter(Boolean)));
+    for (const v of variants) { const id = await resolveCompanyId(v); if (id) return id; }
+  }
+  if (fallback?.id && (!organizer || !fallback.name || organizer.toLowerCase().includes(fallback.name.toLowerCase()) || fallback.name.toLowerCase().includes(organizer.split(/[（(\/、,，]/)[0].trim().toLowerCase()))) return fallback.id;
+  return null;
+}
+
+export async function upsertCompetitions(rows: Record<string, any>[], opts: { searchId?: number | null; sources?: Record<string, Record<string, string>>; companyId?: number | null; companyName?: string | null } = {}): Promise<UpsertResult> {
   const clean = rows.map(r => sanitizeCompetition(r)).filter(r => r.name);
   if (!clean.length) return { inserted: 0, updated: 0, skipped: 0, ids: [] };
   const now = new Date().toISOString();
@@ -23,7 +33,7 @@ export async function upsertCompetitions(rows: Record<string, any>[], opts: { se
   for (const r of keyed) {
     if (seen.has(r.dedupe_key)) { result.skipped++; continue; }
     seen.add(r.dedupe_key);
-    const organizer_company_id = r.organizer ? await resolveCompanyId(r.organizer) : null;
+    const organizer_company_id = await resolveOrganizer(r.organizer, { id: opts.companyId, name: opts.companyName });
     const src = opts.sources?.[r.dedupe_key] || opts.sources?.[r.name] || {};
     const cur = byKey.get(r.dedupe_key);
 

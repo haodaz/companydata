@@ -64,7 +64,8 @@ export async function PATCH(request: Request) {
 
     let saved: any = null;
     if (b.save && Array.isArray(b.competitions) && b.competitions.length) {
-      saved = await upsertCompetitions(b.competitions, { searchId: b.id, sources: b.sources || {} });
+      const { data: sr } = await supabaseAdmin.from('competition_searches').select('company, company_id').eq('id', b.id).single();
+      saved = await upsertCompetitions(b.competitions, { searchId: b.id, sources: b.sources || {}, companyId: sr?.company_id, companyName: sr?.company });
       updates.saved = saved.inserted + saved.updated;
     }
     // 跑完（成功 / 失败）按 batch_id 汇总这条检索的调用次数 / token / 费用

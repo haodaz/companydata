@@ -93,6 +93,12 @@ function ToolCompanyInner() {
     finally { setTasksLoading(false); }
   }, []);
   useEffect(() => { fetchTasks(); }, [fetchTasks]);
+  // 任务在别的窗口 / 别人的浏览器里跑时，这里每 8 秒拉一次进度
+  useEffect(() => {
+    if (runner.isRunning || !tasks.some(t => t.status === 'running')) return;
+    const timer = setInterval(fetchTasks, 8000);
+    return () => clearInterval(timer);
+  }, [runner.isRunning, tasks, fetchTasks]);
 
   // 从企业列表 / 详情 / 健康看板带 ?company=ID&name= 或 ?companies=1,2,3 进来：自动建好任务并打开（单家 = 只放一家）
   useEffect(() => {
