@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { App, Drawer, Popconfirm } from 'antd';
 import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
-import { SimRunner, TraceCompare } from '@/components/lab/SimRunner';
+import { SimRunner, SimStage, TraceCompare } from '@/components/lab/SimRunner';
 import { traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tzLabel, type InterviewTurn, type RubricItem } from '@/lib/skill-lab';
 
@@ -267,14 +267,15 @@ export default function SpacePage() {
 
       {/* ── 考验新人 ── */}
       {mode === 'test' && answering && sim && (
-        <div className="lab-in">
-          <div className="lab-glass" style={{ padding: '14px 18px', marginBottom: 14, display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
+        <SimStage title={space.title} role="rookie" onExit={() => setAnswering(false)} header={
+          <div className="lab-stage-fields">
             {field(rookie.name, v => setRookie(r => ({ ...r, name: v })), '新兵姓名')}
             {field(rookie.note, v => setRookie(r => ({ ...r, note: v })), '背景（学校 / 专业）')}
             {field(rookie.location, v => setRookie(r => ({ ...r, location: v })), '所在地（如 伦敦）')}
           </div>
+        }>
           <SimRunner sim={sim} role="rookie" busy={!!busy} onCancel={() => setAnswering(false)} onFinish={trace => submit('human', false, trace)} />
-        </div>
+        </SimStage>
       )}
 
       {mode === 'test' && !(answering && sim) && (
@@ -428,9 +429,9 @@ export default function SpacePage() {
       )}
 
       {mode === 'learn' && learnStep === 1 && sim && (
-        <div className="lab-in" style={{ marginTop: 18 }}>
+        <SimStage title={space.title} role="expert" onExit={() => setLearnStep(0)}>
           <SimRunner sim={sim} role="expert" busy={!!busy} onCancel={() => setLearnStep(0)} onFinish={expertFinished} />
-        </div>
+        </SimStage>
       )}
 
       {/* ── 解决问题 ── */}

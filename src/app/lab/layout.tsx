@@ -78,6 +78,14 @@ const LAB_CSS = `
 
 .lab-input { width: 100%; border: 1px solid var(--line); background: rgba(255,255,255,.85); border-radius: 14px; padding: 12px 14px; font-size: 15px; color: var(--ink); outline: none; resize: vertical; font-family: inherit; line-height: 1.7; transition: box-shadow .2s, border-color .2s; }
 .lab-input:focus { border-color: rgba(106,92,255,.55); box-shadow: 0 0 0 4px rgba(106,92,255,.12); }
+.lab-stage { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; background: #f0f1ff radial-gradient(1200px 600px at 10% -10%, rgba(106,92,255,.18), transparent 60%), radial-gradient(900px 500px at 100% 100%, rgba(18,181,203,.16), transparent 60%); }
+.lab-stage-bar { display: flex; align-items: center; gap: 12px; padding: 10px clamp(12px, 2.5vw, 28px); background: rgba(255,255,255,.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+.lab-stage-body { flex: 1; min-height: 0; overflow: auto; padding: clamp(12px, 2vw, 24px) clamp(12px, 3vw, 40px) 40px; }
+.lab-stage-body > * { max-width: 1480px; margin: 0 auto; }
+.lab-stage-fields { display: flex; gap: 8px; justify-content: flex-end; }
+.lab-stage-fields .lab-input { width: 160px; padding: 6px 10px; font-size: 13px; border-radius: 10px; }
+.bench-split { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 900px) { .bench-split { grid-template-columns: 1fr; } .lab-stage-fields { display: none; } }
 .lab-pre { white-space: pre-wrap; word-break: break-word; line-height: 1.85; font-size: 14px; color: var(--ink2); }
 .lab-wrap { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 24px 28px 64px; }
 @media (max-width: 768px) { .lab-wrap { padding: 14px 12px 40px; } .lab-glass { border-radius: 18px; } .lab-tab { padding: 8px 12px; font-size: 13px; } }

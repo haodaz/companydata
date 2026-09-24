@@ -10,6 +10,21 @@ export const BENCH_CASTING: BenchSpec = {
   brief: '一炉高温合金母合金，浇一组涡轮叶片模壳。目标：抽真空 → 模壳预热 → 升温熔化并保温 → 在温度窗口内浇注 → 安全停机。每一次拨动都会被记录。',
   timeScale: 10,
   maxSeconds: 1500,
+  // 场景：通义万相生成的车间底图（scripts/gen-image.mjs）+ 随状态变化的覆盖层（百分比坐标）
+  scene: {
+    image: '/lab/bench_casting.jpg', credit: '底图由通义万相生成',
+    layers: [
+      { id: 'furnace_glow', kind: 'glow', x: 49.3, y: 50, w: 5.8, h: 10.4, level: 'clamp((temp - 500) / 1100, 0, 1)' },
+      { id: 'shell_glow', kind: 'glow', x: 26, y: 55.2, w: 5, h: 8.9, level: 'clamp((shell - 300) / 700, 0, 1)' },
+      { id: 'door', kind: 'door', x: 46.4, y: 43.8, w: 11.8, h: 21.6, on: 'door == 1', level: 'clamp((temp - 300) / 1200, 0, 1)' },
+      { id: 'haze', kind: 'haze', x: 38, y: 18, w: 28, h: 30, level: 'door == 1 ? clamp((temp - 300) / 900, 0, 1) : 0' },
+      { id: 'pour', kind: 'stream', x: 51.2, y: 50.5, w: 2, h: 9.5, on: 'poured == 1 && pour_t > 0 && t - pour_t < 25' },
+      { id: 'pump', kind: 'pulse', x: 82, y: 62, w: 8, h: 14, on: 'pump == 1 && power == 1', color: '#12b5cb' },
+      { id: 'power_lamp', kind: 'lamp', x: 82.6, y: 44.3, w: 2.2, h: 4, on: 'power == 1', color: '#3ddc97' },
+      { id: 'ro_temp', kind: 'readout', x: 76.5, y: 51.5, w: 9.5, h: 5, text: 'temp', unit: '℃', label: 'T' },
+      { id: 'ro_vac', kind: 'readout', x: 76.5, y: 57, w: 9.5, h: 5, text: 'vac', unit: 'Pa', label: 'P', color: '#7cc8ff' },
+    ],
+  },
   vars: [
     // 熔炼温度：加热功率驱动，真空不足时感应效率低；自然散热
     { id: 'temp', label: '炉温', initial: 25, rate: 'power * heater * 0.06 * (vac < 1000 ? 1 : 0.6) - (temp - 25) * 0.0025', min: 25, max: 1750 },

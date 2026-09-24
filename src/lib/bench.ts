@@ -12,8 +12,22 @@ export interface BenchVar { id: string; label?: string; initial: number; rate?: 
 export interface BenchRule { id: string; label: string; when: string; severity: 'violation' | 'warning'; once?: boolean }
 export interface BenchGoal { id: string; label: string; when: string; hold?: number; after?: string }
 export interface BenchAction { t: number; control: string; value: number }
+/**
+ * 场景层：一张生成的车间底图 + 若干随状态变化的覆盖层（百分比坐标，0–100 × 0–100）。
+ *   glow    热辉光：level 0–1（暗红 → 橙 → 亮黄白）
+ *   lamp    指示灯：on 真 / 假
+ *   door    门扇：open 为真时门扇移开、露出炉膛（膛内亮度由 level 决定）
+ *   stream  金属液流：on 为真时出现（带动画）
+ *   pulse   运转脉冲（泵 / 风机）：on 为真时环状脉动
+ *   readout 数字读数：text 表达式求值后显示，可带单位
+ *   haze    半透明雾 / 烟：level 0–1
+ */
+export interface BenchLayer { id: string; kind: 'glow' | 'lamp' | 'door' | 'stream' | 'pulse' | 'readout' | 'haze'; x: number; y: number; w: number; h: number; level?: string; on?: string; text?: string; unit?: string; digits?: number; color?: string; label?: string }
+export interface BenchScene { image: string; credit?: string; layers: BenchLayer[] }
+
 export interface BenchSpec {
   name: string; brief: string;
+  /** 场景：生成的底图 + 随状态变化的覆盖层；镜头快照拍的就是它 */ scene?: BenchScene;
   /** 每真实 1 秒推进多少模拟秒 */ timeScale: number;
   /** 模拟秒上限 */ maxSeconds: number;
   vars: BenchVar[]; controls: BenchControl[]; gauges: BenchGauge[]; rules: BenchRule[]; goals: BenchGoal[];
@@ -235,9 +249,14 @@ export function sanitizeBenchSpec(raw: any): BenchSpec | null {
     goals: raw.goals.filter((g: any) => g?.id && g?.when).map((g: any) => ({ id: String(g.id), label: String(g.label || g.id), when: String(g.when), hold: g.hold ? Number(g.hold) : undefined, after: g.after ? String(g.after) : undefined })),
     expertScript: Array.isArray(raw.expertScript) ? raw.expertScript.filter((a: any) => a?.control).map((a: any) => ({ t: Number(a.t) || 0, control: String(a.control), value: Number(a.value) || 0 })) : undefined,
   };
+  if (raw.scene && typeof raw.scene.image === 'string' && /^(\/|https?:\/\/)/.test(raw.scene.image) && Array.isArray(raw.scene.layers)) {
+    const KINDS = ['glow', 'lamp', 'door', 'stream', 'pulse', 'readout', 'haze'];
+    spec.scene = { image: raw.scene.image.slice(0, 500), credit: raw.scene.credit ? String(raw.scene.credit).slice(0, 200) : undefined,
+      layers: raw.scene.layers.filter((l: any) => l?.id && KINDS.includes(l.kind)).slice(0, 40).map((l: any) => ({ id: String(l.id), kind: l.kind, x: Number(l.x) || 0, y: Number(l.y) || 0, w: Number(l.w) || 0, h: Number(l.h) || 0, level: l.level ? String(l.level) : undefined, on: l.on ? String(l.on) : undefined, text: l.text ? String(l.text) : undefined, unit: l.unit ? String(l.unit) : undefined, digits: l.digits !== undefined ? Number(l.digits) : undefined, color: l.color ? String(l.color).slice(0, 30) : undefined, label: l.label ? String(l.label).slice(0, 40) : undefined })) };
+  }
   if (!spec.controls.length || !spec.goals.length) return null;
   // 表达式都要能求值
-  try { const st = initBench(spec); const env = benchEnv(spec, st); for (const v of spec.vars) { if (v.rate) evalExpr(v.rate, env); if (v.set) evalExpr(v.set, env); } for (const g of spec.gauges) evalExpr(g.expr, env); for (const r of spec.rules) evalExpr(r.when, env); for (const g of spec.goals) evalExpr(g.when, env); } catch { return null; }
+  try { const st = initBench(spec); const env = benchEnv(spec, st); for (const v of spec.vars) { if (v.rate) evalExpr(v.rate, env); if (v.set) evalExpr(v.set, env); } for (const g of spec.gauges) evalExpr(g.expr, env); for (const r of spec.rules) evalExpr(r.when, env); for (const g of spec.goals) evalExpr(g.when, env); for (const l of spec.scene?.layers || []) { if (l.level) evalExpr(l.level, env); if (l.on) evalExpr(l.on, env); if (l.text) evalExpr(l.text, env); } } catch { return null; }
   return spec;
 }
 

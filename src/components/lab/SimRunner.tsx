@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { Sim, SimReveal, SimStep, SimTrace } from '@/lib/skill-sim';
 import { compareStep, describeStep } from '@/lib/skill-sim';
 import { BenchRunner, SnapshotStrip } from '@/components/lab/BenchRunner';
@@ -244,6 +245,38 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel }: SimRunnerProp
       </div>}
     </div>
   );
+}
+
+/**
+ * 操作舞台：把操作台铺满整个窗口（考验新人 / 向专家学习 时进入），并尝试进入浏览器全屏。
+ * 顶栏：空间名 · 身份 · 全屏切换 · 退出。
+ */
+export function SimStage({ title, role, header, onExit, children }: { title: string; role: 'rookie' | 'expert'; header?: React.ReactNode; onExit: () => void; children: React.ReactNode }) {
+  const [fs, setFs] = useState(false);
+  useEffect(() => {
+    const el = document.documentElement;
+    el.requestFullscreen?.().catch(() => {});
+    const onChange = () => setFs(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', onChange);
+    const prev = document.body.style.overflow; document.body.style.overflow = 'hidden';
+    return () => { document.removeEventListener('fullscreenchange', onChange); document.body.style.overflow = prev; if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {}); };
+  }, []);
+  const toggle = () => { if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {}); else document.documentElement.requestFullscreen?.().catch(() => {}); };
+  // 挂到 .lab 根节点下：绕开页面里 sticky 顶栏的层叠上下文，同时保留 .lab 的 CSS 变量
+  const [host, setHost] = useState<HTMLElement | null>(null);
+  useEffect(() => { setHost((document.querySelector('.lab') as HTMLElement) || document.body); }, []);
+  if (!host) return null;
+  return createPortal(
+    <div className="lab-stage">
+      <div className="lab-stage-bar">
+        <span className="lab-mono" style={{ fontSize: 11, letterSpacing: '.12em', color: role === 'expert' ? '#ffb15f' : 'var(--c)', fontWeight: 700 }}>{role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'}</span>
+        <span style={{ fontWeight: 800, fontSize: 14, color: 'var(--ink)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>{title}</span>
+        <div style={{ flex: 1, minWidth: 0 }}>{header}</div>
+        <button className="lab-btn ghost sm" onClick={toggle}>{fs ? '退出全屏' : '全屏'}</button>
+        <button className="lab-btn ghost sm" onClick={onExit}>退出操作台</button>
+      </div>
+      <div className="lab-stage-body">{children}</div>
+    </div>, host);
 }
 
 /** 操作回放：逐步对照「我的操作 / 专家的操作」 */
