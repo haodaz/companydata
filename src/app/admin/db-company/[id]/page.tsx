@@ -196,15 +196,6 @@ export default function CompanyDetailPage() {
         ]}
       />
 
-      <Card title={`核心产品（${products.length}）`} size="small" style={{ marginBottom: 16 }}
-        extra={<Tooltip title="主打产品 / 产品线 / 品牌 / 自有 App / 服务，来自画像流水线「核心产品」主题；⭐ 为拳头产品"><Text type="secondary" style={{ fontSize: 12 }}>可按列排序</Text></Tooltip>}
-        styles={{ body: { padding: products.length ? 0 : 16 } }}>
-        {products.length
-          ? <Table rowKey="id" size="small" dataSource={products} columns={[...PRODUCT_COLUMNS, entityActionCol('products')]} pagination={false} scroll={{ x: 900 }} />
-          : <Text type="secondary">还没有核心产品。<a onClick={() => router.push(toolCompanyHref)}>跑画像流水线</a>会从官网产品中心 / 年报 / 旗舰店提取。</Text>}
-      </Card>
-
-
       <Row gutter={16}>
         <Col xs={24} xl={9}>
           <Card title="人工审核" size="small" style={{ marginBottom: 16 }}
@@ -282,6 +273,11 @@ export default function CompanyDetailPage() {
         <Col xs={24} xl={15}>
           <Card size="small" styles={{ body: { paddingTop: 4 } }}>
             <Tabs items={[
+              {
+                key: 'products', label: `核心产品（${products.length}）`,
+                children: <Table rowKey="id" size="small" scroll={{ x: 1000 }} dataSource={products} columns={[...PRODUCT_COLUMNS, entityActionCol('products')]} pagination={false}
+                  locale={{ emptyText: <Empty description={<span>还没有核心产品。<a onClick={() => router.push(toolCompanyHref)}>跑画像流水线</a>会从官网产品中心 / 年报 / 旗舰店提取。</span>} /> }} />,
+              },
               {
                 key: 'financings', label: `融资（${financings.length}）`,
                 children: <Table rowKey="id" size="small" scroll={{ x: 760 }} dataSource={financings} columns={[...FINANCING_COLUMNS, entityActionCol('financings')]} pagination={false}
