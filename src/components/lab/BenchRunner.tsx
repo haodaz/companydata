@@ -13,7 +13,7 @@ import { applyControl, benchEnv, evalExpr, finishBench, fmtT, initBench, tickBen
 const TICK_MS = 250, SNAP_EVERY_MS = 5000, SNAP_MAX = 16, SNAP_W = 320, SNAP_H = 180;
 const VW = 1600, VH = 900; // 场景覆盖层坐标系（百分比 × 16 / × 9）
 
-export function BenchRunner({ spec, role, onFinish, onCancel }: { spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void }) {
+export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean }) {
   const stRef = useRef<BenchState>(initBench(spec));
   const panelRef = useRef<SVGSVGElement>(null);
   const sceneRef = useRef<SVGSVGElement>(null);
@@ -146,19 +146,19 @@ export function BenchRunner({ spec, role, onFinish, onCancel }: { spec: BenchSpe
       {spec.controls.map(c => {
         const v = st.controls[c.id]; const done = pressed(c);
         return (
-          <div key={c.id} style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid var(--line)', background: 'rgba(255,255,255,.7)' }}>
+          <div key={c.id} className={hud ? 'hud-card' : undefined} style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid var(--line)', background: 'rgba(255,255,255,.7)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-              <span style={{ fontWeight: 700, fontSize: 13 }}>{c.label}</span>
+              <span className="hud-ink" style={{ fontWeight: 700, fontSize: 13 }}>{c.label}</span>
               {c.kind === 'knob' && <span className="lab-mono" style={{ fontSize: 13, fontWeight: 800, color: 'var(--v)', letterSpacing: 0 }}>{v}{c.unit}</span>}
             </div>
             {c.kind === 'knob' && <input type="range" min={c.min ?? 0} max={c.max ?? 100} step={c.step ?? 1} value={v} disabled={!running} onChange={e => act(c.id, Number(e.target.value))} style={{ width: '100%', accentColor: '#6a5cff' }} />}
             {c.kind === 'switch' && (
               <div style={{ display: 'flex', gap: 6 }}>
-                {[0, 1].map(x => <button key={x} disabled={!running} onClick={() => act(c.id, x)} style={{ flex: 1, padding: '6px 0', borderRadius: 8, border: '1px solid var(--line)', cursor: running ? 'pointer' : 'default', fontWeight: 700, fontSize: 12, background: v === x ? (x ? 'var(--v)' : '#3a3f5e') : 'transparent', color: v === x ? '#fff' : 'var(--ink2)' }}>{x ? '开' : '关'}</button>)}
+                {[0, 1].map(x => <button key={x} disabled={!running} onClick={() => act(c.id, x)} style={{ flex: 1, padding: '6px 0', borderRadius: 8, border: '1px solid var(--line)', cursor: running ? 'pointer' : 'default', fontWeight: 700, fontSize: 12, background: v === x ? (x ? 'var(--v)' : '#3a3f5e') : 'transparent', color: v === x ? '#fff' : hud ? '#c7cbe6' : 'var(--ink2)' }}>{x ? '开' : '关'}</button>)}
               </div>
             )}
             {c.kind === 'button' && <button disabled={!running || done} onClick={() => act(c.id, 1)} style={{ width: '100%', padding: '8px 0', borderRadius: 8, border: 'none', cursor: running && !done ? 'pointer' : 'default', fontWeight: 800, fontSize: 13, background: done ? '#9aa0b8' : 'linear-gradient(135deg,#ff5fa2,#ff8a5f)', color: '#fff' }}>{done ? '已执行' : c.label}</button>}
-            {c.hint && <div style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 5 }}>{c.hint}</div>}
+            {c.hint && <div className="hud-ink3" style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 5 }}>{c.hint}</div>}
           </div>
         );
       })}
@@ -168,12 +168,12 @@ export function BenchRunner({ spec, role, onFinish, onCancel }: { spec: BenchSpe
   // ── 目标 + 事件流 + 按钮 ──
   const side = (
     <>
-      <div style={{ padding: 14, borderRadius: 14, background: 'rgba(23,26,46,.04)', border: '1px solid var(--line)' }}>
+      <div className={hud ? 'hud-card' : undefined} style={{ padding: 14, borderRadius: 14, background: 'rgba(23,26,46,.04)', border: '1px solid var(--line)' }}>
         <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>目标 {goalsDone}/{spec.goals.length}</div>
         {spec.goals.map(g => {
           const done = st.goalDone[g.id] !== null; const hold = g.hold ? Math.min(1, st.goalHold[g.id] / g.hold) : 0;
           return (
-            <div key={g.id} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', fontSize: 12.5, lineHeight: 1.5, marginBottom: 6, color: done ? '#12a150' : 'var(--ink2)' }}>
+            <div key={g.id} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', fontSize: 12.5, lineHeight: 1.5, marginBottom: 6, color: done ? (hud ? '#3ddc97' : '#12a150') : hud ? '#c7cbe6' : 'var(--ink2)' }}>
               <span style={{ width: 16, height: 16, borderRadius: 8, flexShrink: 0, marginTop: 2, background: done ? '#12a150' : 'transparent', border: done ? 'none' : '1.5px solid rgba(106,92,255,.4)', color: '#fff', fontSize: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{done ? '✓' : ''}</span>
               <span style={{ flex: 1 }}>{g.label}{!done && g.hold && hold > 0 ? <span className="lab-mono" style={{ color: 'var(--v)', marginLeft: 6 }}>{Math.round(hold * 100)}%</span> : null}{done ? <span className="lab-mono" style={{ marginLeft: 6, color: 'var(--ink3)' }}>{fmtT(st.goalDone[g.id]!)}</span> : null}</span>
             </div>
@@ -187,11 +187,40 @@ export function BenchRunner({ spec, role, onFinish, onCancel }: { spec: BenchSpe
       </div>
       <div style={{ display: 'flex', gap: 8 }}>
         <button className="lab-btn" disabled={!canFinish} onClick={finish} style={{ flex: 1 }}>{running ? '完成操作 →' : '提交这段操作 →'}</button>
-        <button className="lab-btn ghost" onClick={onCancel}>退出</button>
+        <button className="lab-btn ghost" onClick={() => { if (window.confirm('退出后这次操作不会保存，确定退出？')) onCancel(); }}>退出</button>
       </div>
-      {!canFinish && <div style={{ fontSize: 11.5, color: 'var(--ink3)' }}>至少操作 30 秒（模拟时间）后可提交。1 秒真实时间 = {spec.timeScale} 秒模拟时间。</div>}
+      {!canFinish && <div style={{ fontSize: 11.5, color: hud ? 'rgba(255,255,255,.7)' : 'var(--ink3)' }}>至少操作 30 秒（模拟时间）后可提交。1 秒真实时间 = {spec.timeScale} 秒模拟时间。</div>}
     </>
   );
+
+  // ── 场景视图（底图 + 覆盖层 + 镜头角标） ──
+  const sceneView = scene ? (
+    <div style={{ position: 'relative', borderRadius: hud ? 0 : 16, overflow: 'hidden', background: '#0f1224', aspectRatio: '16 / 9' }}>
+      <img src={scene.image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+      <svg ref={sceneRef} viewBox={`0 0 ${VW} ${VH}`} preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="bench-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18" /></filter>
+          <filter id="bench-blur-sm" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" /></filter>
+        </defs>
+        {scene.layers.map(l => <Layer key={l.id} l={l} level={l.level ? Math.min(1, Math.max(0, ev(l.level))) : 0} on={l.on ? !!ev(l.on) : false} value={l.text ? ev(l.text) : 0} />)}
+      </svg>
+      <div className="lab-mono" style={{ position: 'absolute', left: 12, top: hud ? 34 : 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em' }}>
+        <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
+      </div>
+      {!hud && <div className="lab-mono" style={{ position: 'absolute', right: 12, top: 10, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)' }}>{role === 'expert' ? 'EXPERT' : 'TRAINEE'} · {goalsDone}/{spec.goals.length} · ⛔{violations}</div>}
+    </div>
+  ) : null;
+
+  if (hud && scene) {
+    return (
+      <div className="bench-hud">
+        <img className="bench-hud-blur" src={scene.image} alt="" />
+        <div className="bench-hud-stage">{sceneView}</div>
+        <div className="bench-hud-right">{panel}{side}</div>
+        <div className="bench-hud-bottom">{controls}</div>
+      </div>
+    );
+  }
 
   if (!scene) {
     return (
@@ -208,21 +237,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel }: { spec: BenchSpe
   return (
     <div className="lab-in bench-split">
       <div>
-        <div style={{ position: 'relative', borderRadius: 16, overflow: 'hidden', background: '#0f1224', aspectRatio: '16 / 9' }}>
-          <img src={scene.image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-          <svg ref={sceneRef} viewBox={`0 0 ${VW} ${VH}`} preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <filter id="bench-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18" /></filter>
-              <filter id="bench-blur-sm" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" /></filter>
-            </defs>
-            {scene.layers.map(l => <Layer key={l.id} l={l} level={l.level ? Math.min(1, Math.max(0, ev(l.level))) : 0} on={l.on ? !!ev(l.on) : false} value={l.text ? ev(l.text) : 0} />)}
-          </svg>
-          {/* 镜头角标 */}
-          <div className="lab-mono" style={{ position: 'absolute', left: 12, top: 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em' }}>
-            <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
-          </div>
-          <div className="lab-mono" style={{ position: 'absolute', right: 12, top: 10, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)' }}>{role === 'expert' ? 'EXPERT' : 'TRAINEE'} · {goalsDone}/{spec.goals.length} · ⛔{violations}</div>
-        </div>
+        {sceneView}
         <div style={{ marginTop: 12 }}>{controls}</div>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>

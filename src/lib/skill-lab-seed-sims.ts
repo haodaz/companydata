@@ -193,6 +193,12 @@ export const EXPERT_WHY_B: Record<string, string> = {
 export const SIM_C: Sim = {
   title: '熔炼浇注操作台 · 涡轮叶片试制',
   intro: '你坐在精密铸造工艺工程师的工位上。一炉高温合金、一组涡轮叶片模壳——这次中间那一步不是选选项，是真的把设备开起来。每一次拨动都会被记录。',
+  // 沉浸模式美术（通义万相生成，见 scripts/gen-image.mjs / chroma-key.mjs）：全景 + 各步场景 + NPC 立绘
+  art: {
+    cover: '/lab/casting_hall.jpg',
+    scenes: { check: '/lab/casting_hall.jpg', bench: '/lab/bench_casting.jpg', defect: '/lab/casting_inspect.jpg', fix: '/lab/casting_hall.jpg', final: '/lab/casting_office.jpg' },
+    npcs: { '车间主任': '/lab/npc_supervisor.png', '检验员': '/lab/npc_inspector.png' },
+  },
   steps: [
     {
       id: 'check', type: 'multi', max: 3,

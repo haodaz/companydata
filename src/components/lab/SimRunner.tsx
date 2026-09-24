@@ -78,6 +78,10 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel }: SimRunnerProp
   const value = trace[step.id];
   const set = (v: any) => setTrace(t => ({ ...t, [step.id]: v }));
   const last = idx === sim.steps.length - 1;
+  const art = sim.art;
+  // 沉浸模式：有 NPC 场景的步骤先对话，再提问
+  const [phase, setPhase] = useState<'dialogue' | 'question'>('question');
+  useEffect(() => { setPhase(art && step.scene ? 'dialogue' : 'question'); }, [step, art]);
 
   // 每步的默认值
   useEffect(() => {
@@ -118,22 +122,14 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel }: SimRunnerProp
     set([...cur, id]);
   };
 
-  return (
-    <div className={`lab-glass${busy ? ' lab-scan' : ''}`} style={{ padding: 'clamp(16px, 3vw, 28px)' }}>
-      {/* 进度轨 */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
-        <span className="lab-mono lab-cap" style={{ marginRight: 6, whiteSpace: 'nowrap' }}>{role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
-        {sim.steps.map((s, i) => <span key={s.id} style={{ flex: 1, height: 4, borderRadius: 2, background: i < idx ? 'linear-gradient(90deg,var(--v),var(--c))' : i === idx ? 'var(--v)' : 'rgba(106,92,255,.14)', transition: 'background .4s' }} />)}
-      </div>
-      <div style={{ fontSize: 13, color: 'var(--ink3)', marginBottom: 20 }}>{sim.title}{idx === 0 ? ` —— ${sim.intro}` : ''}</div>
-
-      <div key={step.id} className="lab-in">
-        {step.scene && <Scene scene={step.scene} />}
-        <div style={{ fontSize: 17, fontWeight: 800, marginBottom: 14, lineHeight: 1.5 }}>
-          {step.prompt}
-          {(step.type === 'multi' || step.type === 'drill') && step.max && <span className="lab-mono" style={{ marginLeft: 10, fontSize: 12, color: 'var(--v)' }}>{(value || []).length}/{step.max}</span>}
-        </div>
-
+  const promptEl = (
+    <div style={{ fontSize: 17, fontWeight: 800, marginBottom: 14, lineHeight: 1.5 }}>
+      {step.prompt}
+      {(step.type === 'multi' || step.type === 'drill') && step.max && <span className="lab-mono" style={{ marginLeft: 10, fontSize: 12, color: 'var(--v)' }}>{(value || []).length}/{step.max}</span>}
+    </div>
+  );
+  const body = (
+    <>
         {step.type === 'choose' && (
           <div style={{ display: 'grid', gap: 10 }}>
             {step.options!.map((o, i) => (
@@ -217,6 +213,72 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel }: SimRunnerProp
           </div>
         )}
 
+        {step.type === 'text' && <textarea className="lab-input" rows={9} value={value || ''} onChange={e => set(e.target.value)} placeholder={step.placeholder || '写下你的结论……'} />}
+    </>
+  );
+  const buttons = (
+    <>
+      {!(step.type === 'bench' && !value?.finished) && <div style={{ display: 'flex', gap: 10, marginTop: 22, alignItems: 'center', flexWrap: 'wrap' }}>
+        <button className="lab-btn" disabled={!ready || busy} onClick={next}>
+          {busy ? <>AI 核心处理中<span className="lab-dots" /></> : needsReveal && !confirmed ? '确认操作' : last ? (role === 'expert' ? '操作完毕，接受追问 →' : '操作完毕，请 AI 核心评分 →') : '下一步 →'}
+        </button>
+        {idx > 0 && !busy && <button className="lab-btn ghost" onClick={() => setIdx(i => i - 1)}>上一步</button>}
+        <button className="lab-btn ghost" disabled={busy} onClick={() => { if (window.confirm('退出后这次操作不会保存，确定退出？')) onCancel(); }} style={{ marginLeft: 'auto' }}>退出操作台</button>
+      </div>}
+    </>
+  );
+  const benchDone = step.type === 'bench' && step.bench && value?.finished ? (
+    <div className="lab-in" style={{ padding: '12px 14px', borderRadius: 14, background: 'rgba(18,161,80,.07)', border: '1px solid rgba(18,161,80,.25)' }}>
+      <div style={{ fontWeight: 700, color: '#0d7a3d', marginBottom: 4 }}>这段操作已记录</div>
+      <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{describeStep(step, value)}</div>
+      <SnapshotStrip trace={value as BenchTrace} />
+      <button className="lab-btn ghost" style={{ marginTop: 6 }} onClick={() => set(undefined)}>重新操作</button>
+    </div>
+  ) : null;
+
+  // ── 沉浸模式：全屏场景 + NPC 对话 + 蒙版提问 + 工位 HUD ──
+  if (art) {
+    const bg = art.scenes?.[step.id] || art.cover;
+    const portrait = step.scene ? art.npcs?.[step.scene.who] : undefined;
+    const isBench = step.type === 'bench' && !!step.bench;
+    const benchLive = isBench && phase === 'question' && !value?.finished;
+    return (
+      <div className="lab-game">
+        {!benchLive && <img key={bg} className="lab-game-bg lab-in" src={bg} alt="" />}
+        {!benchLive && <div className="lab-game-vignette" />}
+        <div className="lab-game-progress">
+          <span className="lab-mono">{role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
+          {sim.steps.map((s, i) => <span key={s.id} style={{ flex: 1, height: 4, borderRadius: 2, background: i < idx ? 'linear-gradient(90deg,var(--v),var(--c))' : i === idx ? '#fff' : 'rgba(255,255,255,.25)' }} />)}
+        </div>
+        {phase === 'dialogue' && step.scene && <NpcDialogue key={step.id} scene={step.scene} portrait={portrait} onDone={() => setPhase('question')} cta={isBench ? '开始操作' : undefined} />}
+        {phase === 'question' && !benchLive && (
+          <div className="lab-game-mask">
+            <div className={`lab-game-modal lab-in${busy ? ' lab-scan' : ''}`}>
+              {step.scene && <div className="lab-game-recap" onClick={() => setPhase('dialogue')}><b>{step.scene.who}</b>{step.scene.time ? ` · ${step.scene.time}` : ''}：{step.scene.text}</div>}
+              {promptEl}
+              {benchDone || body}
+              <div style={{ marginTop: 4 }}>{buttons}</div>
+            </div>
+          </div>
+        )}
+        {benchLive && <BenchRunner hud key={step.id} spec={step.bench!} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />}
+      </div>
+    );
+  }
+
+  return (
+    <div className={`lab-glass${busy ? ' lab-scan' : ''}`} style={{ padding: 'clamp(16px, 3vw, 28px)' }}>
+      {/* 进度轨 */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
+        <span className="lab-mono lab-cap" style={{ marginRight: 6, whiteSpace: 'nowrap' }}>{role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
+        {sim.steps.map((s, i) => <span key={s.id} style={{ flex: 1, height: 4, borderRadius: 2, background: i < idx ? 'linear-gradient(90deg,var(--v),var(--c))' : i === idx ? 'var(--v)' : 'rgba(106,92,255,.14)', transition: 'background .4s' }} />)}
+      </div>
+      <div style={{ fontSize: 13, color: 'var(--ink3)', marginBottom: 20 }}>{sim.title}{idx === 0 ? ` —— ${sim.intro}` : ''}</div>
+
+      <div key={step.id} className="lab-in">
+        {step.scene && <Scene scene={step.scene} />}
+        {promptEl}
+        {body}
         {step.type === 'bench' && step.bench && (
           value?.finished ? (
             <div className="lab-in" style={{ padding: '12px 14px', borderRadius: 14, background: 'rgba(18,161,80,.07)', border: '1px solid rgba(18,161,80,.25)' }}>
@@ -233,29 +295,45 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel }: SimRunnerProp
           )
         )}
 
-        {step.type === 'text' && <textarea className="lab-input" rows={9} value={value || ''} onChange={e => set(e.target.value)} placeholder={step.placeholder || '写下你的结论……'} />}
       </div>
 
-      {!(step.type === 'bench' && !value?.finished) && <div style={{ display: 'flex', gap: 10, marginTop: 22, alignItems: 'center', flexWrap: 'wrap' }}>
-        <button className="lab-btn" disabled={!ready || busy} onClick={next}>
-          {busy ? <>AI 核心处理中<span className="lab-dots" /></> : needsReveal && !confirmed ? '确认操作' : last ? (role === 'expert' ? '操作完毕，接受追问 →' : '操作完毕，请 AI 核心评分 →') : '下一步 →'}
-        </button>
-        {idx > 0 && !busy && <button className="lab-btn ghost" onClick={() => setIdx(i => i - 1)}>上一步</button>}
-        <button className="lab-btn ghost" disabled={busy} onClick={onCancel} style={{ marginLeft: 'auto' }}>退出操作台</button>
-      </div>}
+      {buttons}
     </div>
   );
 }
 
+/** NPC 对话：立绘 + 底部对话条（打字机），点一下继续 */
+function NpcDialogue({ scene, portrait, onDone, cta }: { scene: NonNullable<SimStep['scene']>; portrait?: string; onDone: () => void; cta?: string }) {
+  const [n, setN] = useState(0);
+  const done = n >= scene.text.length;
+  useEffect(() => {
+    setN(0);
+    const iv = setInterval(() => setN(v => { if (v >= scene.text.length) { clearInterval(iv); return v; } return v + 1; }), 28);
+    return () => clearInterval(iv);
+  }, [scene.text]);
+  const advance = () => { if (!done) setN(scene.text.length); else onDone(); };
+  return (
+    <div className="lab-game-dialogue" onClick={advance}>
+      {portrait ? <img className="lab-game-npc lab-in" src={portrait} alt={scene.who} /> : <div className="lab-game-npc-fallback">{scene.who.slice(0, 1)}</div>}
+      <div className="lab-game-box">
+        <div className="lab-game-name">{scene.who}{scene.time ? <span className="lab-mono" style={{ marginLeft: 10, fontSize: 11, opacity: .7, letterSpacing: '.08em' }}>{scene.time}</span> : null}</div>
+        <div className={`lab-game-text${done ? '' : ' lab-caret'}`}>{scene.text.slice(0, n)}</div>
+        <div className="lab-game-hint">{done ? (cta ? `${cta} ▶` : '点击继续 ▼') : '点击跳过'}</div>
+      </div>
+    </div>
+  );
+}
+
+/** 进入浏览器全屏：必须在用户手势（点击）里调用 */
+export function enterFullscreen() { try { document.documentElement.requestFullscreen?.().catch(() => {}); } catch { /* 不支持就算了 */ } }
+
 /**
- * 操作舞台：把操作台铺满整个窗口（考验新人 / 向专家学习 时进入），并尝试进入浏览器全屏。
- * 顶栏：空间名 · 身份 · 全屏切换 · 退出。
+ * 操作舞台：把操作台铺满整个窗口（考验新人 / 向专家学习 时进入）。
+ * 顶栏：空间名 · 身份 · 全屏切换 · 退出；immersive 时正文无边距，交给场景铺满。
  */
-export function SimStage({ title, role, header, onExit, children }: { title: string; role: 'rookie' | 'expert'; header?: React.ReactNode; onExit: () => void; children: React.ReactNode }) {
+export function SimStage({ title, role, header, onExit, children, immersive }: { title: string; role: 'rookie' | 'expert'; header?: React.ReactNode; onExit: () => void; children: React.ReactNode; immersive?: boolean }) {
   const [fs, setFs] = useState(false);
   useEffect(() => {
-    const el = document.documentElement;
-    el.requestFullscreen?.().catch(() => {});
     const onChange = () => setFs(!!document.fullscreenElement);
     document.addEventListener('fullscreenchange', onChange);
     const prev = document.body.style.overflow; document.body.style.overflow = 'hidden';
@@ -267,7 +345,7 @@ export function SimStage({ title, role, header, onExit, children }: { title: str
   useEffect(() => { setHost((document.querySelector('.lab') as HTMLElement) || document.body); }, []);
   if (!host) return null;
   return createPortal(
-    <div className="lab-stage">
+    <div className={`lab-stage${immersive ? ' immersive' : ''}`}>
       <div className="lab-stage-bar">
         <span className="lab-mono" style={{ fontSize: 11, letterSpacing: '.12em', color: role === 'expert' ? '#ffb15f' : 'var(--c)', fontWeight: 700 }}>{role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'}</span>
         <span style={{ fontWeight: 800, fontSize: 14, color: 'var(--ink)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>{title}</span>

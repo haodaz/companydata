@@ -84,6 +84,33 @@ const LAB_CSS = `
 .lab-stage-body > * { max-width: 1480px; margin: 0 auto; }
 .lab-stage-fields { display: flex; gap: 8px; justify-content: flex-end; }
 .lab-stage-fields .lab-input { width: 160px; padding: 6px 10px; font-size: 13px; border-radius: 10px; }
+.lab-stage.immersive .lab-stage-body { padding: 0; overflow: hidden; position: relative; }
+.lab-stage.immersive .lab-stage-body > * { max-width: none; margin: 0; }
+.lab-game { position: absolute; inset: 0; overflow: hidden; background: #0f1224; }
+.lab-game-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.lab-game-vignette { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(10,12,30,.55) 100%); pointer-events: none; }
+.lab-game-progress { position: absolute; left: 20px; right: 20px; top: 12px; display: flex; align-items: center; gap: 6px; color: #fff; font-size: 11px; text-shadow: 0 1px 4px rgba(0,0,0,.6); z-index: 3; }
+.lab-game-progress .lab-mono { margin-right: 8px; white-space: nowrap; letter-spacing: .12em; }
+.lab-game-dialogue { position: absolute; inset: 0; cursor: pointer; z-index: 4; }
+.lab-game-npc { position: absolute; left: 4%; bottom: 0; height: 88%; max-width: 46%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 20px 40px rgba(0,0,0,.45)); }
+.lab-game-npc-fallback { position: absolute; left: 6%; bottom: 24%; width: 120px; height: 120px; border-radius: 40px; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: 800; color: #fff; background: linear-gradient(135deg,#ffb15f,#ff5fa2); }
+.lab-game-box { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px clamp(20px, 6vw, 90px) 34px clamp(20px, 30vw, 520px); background: linear-gradient(180deg, rgba(10,12,30,0) 0%, rgba(10,12,30,.82) 30%, rgba(10,12,30,.94) 100%); color: #fff; min-height: 30%; }
+.lab-game-name { display: inline-block; padding: 6px 18px; border-radius: 10px; background: linear-gradient(135deg,var(--v),var(--c)); font-weight: 800; font-size: 15px; margin-bottom: 12px; box-shadow: 0 6px 18px rgba(106,92,255,.4); }
+.lab-game-text { font-size: clamp(16px, 1.6vw, 21px); line-height: 1.9; max-width: 900px; text-shadow: 0 1px 4px rgba(0,0,0,.6); }
+.lab-game-hint { margin-top: 12px; font-size: 12px; color: rgba(255,255,255,.7); letter-spacing: .1em; animation: lab-blink 1.4s infinite; }
+@keyframes lab-blink { 50% { opacity: .35; } }
+.lab-game-mask { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 56px clamp(12px, 4vw, 60px) 24px; background: rgba(10,12,30,.42); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 4; overflow: auto; }
+.lab-game-modal { width: min(100%, 880px); max-height: 100%; overflow: auto; padding: clamp(18px, 2.5vw, 30px); border-radius: 22px; background: rgba(255,255,255,.9); box-shadow: 0 30px 80px rgba(0,0,0,.35); }
+.lab-game-recap { font-size: 13px; color: var(--ink3); line-height: 1.7; margin-bottom: 12px; padding: 8px 12px; border-left: 3px solid var(--c); background: rgba(18,181,203,.06); border-radius: 0 10px 10px 0; cursor: pointer; }
+.bench-hud { position: absolute; inset: 0; overflow: hidden; background: #0f1224; }
+.bench-hud-blur { position: absolute; inset: -40px; width: calc(100% + 80px); height: calc(100% + 80px); object-fit: cover; filter: blur(28px) brightness(.55); }
+.bench-hud-stage { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(100%, 177.78vh); aspect-ratio: 16 / 9; }
+.bench-hud-right { position: absolute; right: 14px; top: 14px; bottom: 14px; width: 340px; display: flex; flex-direction: column; gap: 10px; overflow: auto; z-index: 3; }
+.bench-hud-bottom { position: absolute; left: 14px; right: 368px; bottom: 14px; z-index: 3; }
+.bench-hud .hud-card { background: rgba(15,18,36,.78) !important; border: 1px solid rgba(255,255,255,.12) !important; color: #c7cbe6 !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.bench-hud .hud-card .hud-ink { color: #e6e8f5 !important; }
+.bench-hud .hud-card .hud-ink3 { color: #9aa0b8 !important; }
+@media (max-width: 900px) { .bench-hud-right { position: static; width: auto; } .bench-hud-bottom { position: static; } .bench-hud { overflow: auto; } .bench-hud-stage { position: relative; left: 0; top: 0; transform: none; width: 100%; } .lab-game-npc { max-width: 60%; height: 60%; } .lab-game-box { padding-left: 20px; } }
 .bench-split { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr); gap: 16px; align-items: start; }
 @media (max-width: 900px) { .bench-split { grid-template-columns: 1fr; } .lab-stage-fields { display: none; } }
 .lab-pre { white-space: pre-wrap; word-break: break-word; line-height: 1.85; font-size: 14px; color: var(--ink2); }

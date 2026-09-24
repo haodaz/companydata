@@ -30,7 +30,10 @@ export interface SimStep {
   bench?: BenchSpec;              // bench：虚拟工位设备定义（事件流采集）
 }
 
-export interface Sim { title: string; intro: string; steps: SimStep[] }
+/** 沉浸模式的美术：全景底图、各步骤的场景图、NPC 立绘（按 scene.who 匹配）。有 cover 就进沉浸模式（全屏场景 + NPC 对话 + 蒙版提问 + 工位 HUD） */
+export interface SimArt { cover: string; scenes?: Record<string, string>; npcs?: Record<string, string> }
+
+export interface Sim { title: string; intro: string; steps: SimStep[]; art?: SimArt }
 
 /** 轨迹：stepId → 值。choose: string；multi/drill: string[]；classify / allocate: Record<optionId, string | number>；slider: number；text: string；bench: BenchTrace（事件流） */
 export type SimTrace = Record<string, any>;
@@ -126,7 +129,13 @@ export function sanitizeSim(raw: any): Sim | null {
   });
   if (steps.length < 3) return null;
   if (steps[steps.length - 1].type !== 'text') steps.push({ id: 'final', type: 'text', prompt: '最后，用几句话写下你的结论。' });
-  return { title: String(raw.title || '模拟操作'), intro: String(raw.intro || ''), steps: steps.slice(0, 8) };
+  const sim: Sim = { title: String(raw.title || '模拟操作'), intro: String(raw.intro || ''), steps: steps.slice(0, 8) };
+  const url = (v: any) => typeof v === 'string' && /^(\/|https?:\/\/)/.test(v) ? v.slice(0, 500) : null;
+  if (raw.art && url(raw.art.cover)) {
+    const pick = (o: any) => Object.fromEntries(Object.entries(o && typeof o === 'object' ? o : {}).map(([k, v]) => [String(k).slice(0, 60), url(v)]).filter(([, v]) => v)) as Record<string, string>;
+    sim.art = { cover: url(raw.art.cover)!, scenes: pick(raw.art.scenes), npcs: pick(raw.art.npcs) };
+  }
+  return sim;
 }
 
 /** 清洗一条轨迹，只保留合法的值 */

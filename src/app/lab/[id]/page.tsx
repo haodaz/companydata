@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { App, Drawer, Popconfirm } from 'antd';
 import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
-import { SimRunner, SimStage, TraceCompare } from '@/components/lab/SimRunner';
+import { SimRunner, SimStage, TraceCompare, enterFullscreen } from '@/components/lab/SimRunner';
 import { traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tzLabel, type InterviewTurn, type RubricItem } from '@/lib/skill-lab';
 
@@ -56,6 +56,61 @@ function SolveOutput({ text, fresh }: { text: string; fresh: boolean }) {
   return <div className={`lab-pre${done ? '' : ' lab-caret'}`}>{shown}</div>;
 }
 
+/** 评分报告正文：抽屉和沉浸舞台共用 */
+function ReportBody({ sub, rubric, sim, skill, actions }: { sub: any; rubric: any[]; sim: Sim | null; skill: any; actions?: React.ReactNode }) {
+  return (
+    <>
+            <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+              <ScoreRing score={sub.human_score ?? sub.score} size={92} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="lab-mono lab-cap">COMPETENCY REPORT</div>
+                <div style={{ fontSize: 20, fontWeight: 800 }}>{sub.candidate_name}</div>
+                <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{[sub.candidate_location, sub.candidate_note, fmt(sub.submitted_at)].filter(Boolean).join(' · ')}</div>
+                <span className="lab-chip" style={{ marginTop: 6, color: scoreColor(sub.score) }}>{scoreLevel(sub.score)}</span>
+              </div>
+              {actions}
+            </div>
+            {sub.grading?.summary && <div className="lab-glass" style={{ padding: 16, marginTop: 16, fontSize: 14, lineHeight: 1.8 }}>{sub.grading.summary}</div>}
+
+            <div className="lab-glass" style={{ padding: 18, marginTop: 14 }}>
+              {(sub.grading?.dimensions || []).map((d: any) => {
+                const r = rubric.find(x => x.key === d.key);
+                const pct = r ? (d.score / r.weight) * 100 : 0;
+                return (
+                  <div key={d.key} style={{ marginBottom: 16 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, fontWeight: 700 }}><span>{r?.name || d.key}</span><span className="lab-mono" style={{ letterSpacing: 0 }}>{d.score} / {r?.weight}</span></div>
+                    <div style={{ height: 6, borderRadius: 3, background: 'rgba(106,92,255,.12)', margin: '6px 0 8px', overflow: 'hidden' }}><div style={{ width: `${pct}%`, height: '100%', borderRadius: 3, background: scoreColor(pct), transition: 'width .9s cubic-bezier(.2,.8,.2,1)' }} /></div>
+                    <div style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.7, borderLeft: '3px solid var(--line)', paddingLeft: 10 }}>{d.evidence}</div>
+                    <div style={{ fontSize: 13.5, lineHeight: 1.75, marginTop: 4 }}>{d.comment}</div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div style={{ display: 'grid', gap: 14, gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', marginTop: 14 }}>
+              {sub.grading?.gaps?.length > 0 && <div className="lab-glass" style={{ padding: 16 }}><div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>离胜任还差</div>{sub.grading.gaps.map((g: string) => <div key={g} style={{ fontSize: 13.5, lineHeight: 1.9 }}>· {g}</div>)}</div>}
+              {sub.grading?.suggestions?.length > 0 && <div className="lab-glass" style={{ padding: 16 }}><div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>下一步怎么练</div>{sub.grading.suggestions.map((g: string) => <div key={g} style={{ fontSize: 13.5, lineHeight: 1.9 }}>→ {g}</div>)}</div>}
+            </div>
+
+            {sim && sub.trace ? <>
+              <div className="lab-glass" style={{ padding: 18, marginTop: 14 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 12 }}>
+                  <span className="lab-mono lab-cap">操作回放 · 对照专家</span>
+                  {typeof sub.match === 'number' && <span className="lab-mono" style={{ fontSize: 13, fontWeight: 800, color: 'var(--v)', letterSpacing: 0 }}>吻合度 {sub.match}%</span>}
+                </div>
+                <TraceCompare sim={sim} trace={sub.trace} expertTrace={skill?.expert_trace} expertName={skill?.expert_name} />
+              </div>
+              {sub.trace.final && <div className="lab-glass" style={{ padding: 18, marginTop: 14 }}><div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>最后的结论</div><div className="lab-pre">{sub.trace.final}</div></div>}
+            </> : (
+              <div className="lab-glass" style={{ padding: 18, marginTop: 14 }}>
+                <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>作答原文</div>
+                <div className="lab-pre">{sub.answer}</div>
+              </div>
+            )}
+    </>
+  );
+}
+
 export default function SpacePage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -70,6 +125,9 @@ export default function SpacePage() {
   const [mode, setMode] = useState<Mode>('test');
   const [busy, setBusy] = useState('');             // 正在做什么（AI 核心进入 busy 动效）
   const [openSub, setOpenSub] = useState<any>(null);
+  /** 沉浸模式：评分报告直接在舞台里出（退出后排行榜里照样能看） */
+  const [stageReport, setStageReport] = useState<any>(null);
+  const [runKey, setRunKey] = useState(0);
   const [freshId, setFreshId] = useState('');
 
   // 考验新人
@@ -124,6 +182,7 @@ export default function SpacePage() {
       const json = await post('submit', m === 'ai' ? { mode: 'ai', withSkill } : { mode: 'human', ...rookie, trace });
       setFreshId(json.submission.id);
       await load();
+      if (m === 'human' && trace && sim?.art) { setStageReport(json.submission); setRookie(r => ({ ...r, answer: '' })); return; }
       setOpenSub(json.submission);
       if (m === 'human') { setAnswering(false); setRookie(r => ({ ...r, answer: '' })); }
     } catch (e: any) { message.error(e.message); }
@@ -267,14 +326,31 @@ export default function SpacePage() {
 
       {/* ── 考验新人 ── */}
       {mode === 'test' && answering && sim && (
-        <SimStage title={space.title} role="rookie" onExit={() => setAnswering(false)} header={
+        <SimStage title={space.title} role="rookie" immersive={!!sim.art} onExit={() => { setStageReport(null); setAnswering(false); }} header={
           <div className="lab-stage-fields">
             {field(rookie.name, v => setRookie(r => ({ ...r, name: v })), '新兵姓名')}
             {field(rookie.note, v => setRookie(r => ({ ...r, note: v })), '背景（学校 / 专业）')}
             {field(rookie.location, v => setRookie(r => ({ ...r, location: v })), '所在地（如 伦敦）')}
           </div>
         }>
-          <SimRunner sim={sim} role="rookie" busy={!!busy} onCancel={() => setAnswering(false)} onFinish={trace => submit('human', false, trace)} />
+          {stageReport ? (
+            <div className="lab-game">
+              <img className="lab-game-bg lab-in" src={sim.art?.scenes?.final || sim.art?.cover} alt="" />
+              <div className="lab-game-vignette" />
+              <div className="lab-game-mask">
+                <div className="lab-game-modal lab-in" style={{ width: 'min(100%, 980px)' }}>
+                  <ReportBody sub={stageReport} rubric={rubric} sim={sim} skill={skill} actions={
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <button className="lab-btn ghost sm" onClick={() => { setStageReport(null); setRunKey(k => k + 1); }}>再走一遍</button>
+                      <button className="lab-btn sm" onClick={() => { setStageReport(null); setAnswering(false); }}>退出操作台</button>
+                    </div>
+                  } />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <SimRunner key={runKey} sim={sim} role="rookie" busy={!!busy} onCancel={() => { setStageReport(null); setAnswering(false); }} onFinish={trace => submit('human', false, trace)} />
+          )}
         </SimStage>
       )}
 
@@ -289,7 +365,7 @@ export default function SpacePage() {
 
             {!answering ? (
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 18 }}>
-                <button className="lab-btn" disabled={!!busy} onClick={() => setAnswering(true)}>🎯 {sim ? '让新兵上操作台走一遍' : '让新兵走一遍'}</button>
+                <button className="lab-btn" disabled={!!busy} onClick={() => { if (sim?.art) enterFullscreen(); setAnswering(true); }}>🎯 {sim ? '让新兵上操作台走一遍' : '让新兵走一遍'}</button>
                 <button className="lab-btn ghost" disabled={!!busy} onClick={() => submit('ai', false)}>让通用 AI {sim ? '上台操作' : '裸答'}</button>
                 <button className="lab-btn ghost" disabled={!!busy || !skill} title={skill ? '' : '先让专家来教一遍'} onClick={() => submit('ai', true)}>让 AI 核心亲自{sim ? '操作' : '答'}</button>
               </div>
@@ -357,7 +433,7 @@ export default function SpacePage() {
                 {field(expert.title, v => setExpert(e => ({ ...e, title: v })), '资历（如 前品牌总监 · 12 年）')}
                 {field(expert.location, v => setExpert(e => ({ ...e, location: v })), '所在地')}
               </div>
-              <button className="lab-btn" style={{ marginTop: 14 }} onClick={() => { if (!expert.name.trim()) { message.warning('请填写专家姓名'); return; } setLearnStep(1); }}>开始 →</button>
+              <button className="lab-btn" style={{ marginTop: 14 }} onClick={() => { if (!expert.name.trim()) { message.warning('请填写专家姓名'); return; } if (sim?.art) enterFullscreen(); setLearnStep(1); }}>开始 →</button>
             </>}
 
             {learnStep === 1 && sim && <div style={{ fontSize: 13.5, color: 'var(--v)', fontWeight: 600 }}>操作台已在下方打开 ↓</div>}
@@ -429,7 +505,7 @@ export default function SpacePage() {
       )}
 
       {mode === 'learn' && learnStep === 1 && sim && (
-        <SimStage title={space.title} role="expert" onExit={() => setLearnStep(0)}>
+        <SimStage title={space.title} role="expert" immersive={!!sim.art} onExit={() => setLearnStep(0)}>
           <SimRunner sim={sim} role="expert" busy={!!busy} onCancel={() => setLearnStep(0)} onFinish={expertFinished} />
         </SimStage>
       )}
@@ -557,53 +633,7 @@ export default function SpacePage() {
       <Drawer open={!!openSub} onClose={() => setOpenSub(null)} size={Math.min(760, typeof window !== 'undefined' ? window.innerWidth : 760)} title={null} closable={false} styles={{ body: { padding: 0, background: '#f5f6ff' } }}>
         {openSub && (
           <div className="lab" style={{ minHeight: '100%', padding: 22 }}>
-            <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-              <ScoreRing score={openSub.human_score ?? openSub.score} size={92} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div className="lab-mono lab-cap">COMPETENCY REPORT</div>
-                <div style={{ fontSize: 20, fontWeight: 800 }}>{openSub.candidate_name}</div>
-                <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{[openSub.candidate_location, openSub.candidate_note, fmt(openSub.submitted_at)].filter(Boolean).join(' · ')}</div>
-                <span className="lab-chip" style={{ marginTop: 6, color: scoreColor(openSub.score) }}>{scoreLevel(openSub.score)}</span>
-              </div>
-              <button className="lab-btn ghost sm" onClick={() => setOpenSub(null)}>关闭</button>
-            </div>
-            {openSub.grading?.summary && <div className="lab-glass" style={{ padding: 16, marginTop: 16, fontSize: 14, lineHeight: 1.8 }}>{openSub.grading.summary}</div>}
-
-            <div className="lab-glass" style={{ padding: 18, marginTop: 14 }}>
-              {(openSub.grading?.dimensions || []).map((d: any) => {
-                const r = rubric.find(x => x.key === d.key);
-                const pct = r ? (d.score / r.weight) * 100 : 0;
-                return (
-                  <div key={d.key} style={{ marginBottom: 16 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, fontWeight: 700 }}><span>{r?.name || d.key}</span><span className="lab-mono" style={{ letterSpacing: 0 }}>{d.score} / {r?.weight}</span></div>
-                    <div style={{ height: 6, borderRadius: 3, background: 'rgba(106,92,255,.12)', margin: '6px 0 8px', overflow: 'hidden' }}><div style={{ width: `${pct}%`, height: '100%', borderRadius: 3, background: scoreColor(pct), transition: 'width .9s cubic-bezier(.2,.8,.2,1)' }} /></div>
-                    <div style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.7, borderLeft: '3px solid var(--line)', paddingLeft: 10 }}>{d.evidence}</div>
-                    <div style={{ fontSize: 13.5, lineHeight: 1.75, marginTop: 4 }}>{d.comment}</div>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div style={{ display: 'grid', gap: 14, gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', marginTop: 14 }}>
-              {openSub.grading?.gaps?.length > 0 && <div className="lab-glass" style={{ padding: 16 }}><div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>离胜任还差</div>{openSub.grading.gaps.map((g: string) => <div key={g} style={{ fontSize: 13.5, lineHeight: 1.9 }}>· {g}</div>)}</div>}
-              {openSub.grading?.suggestions?.length > 0 && <div className="lab-glass" style={{ padding: 16 }}><div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>下一步怎么练</div>{openSub.grading.suggestions.map((g: string) => <div key={g} style={{ fontSize: 13.5, lineHeight: 1.9 }}>→ {g}</div>)}</div>}
-            </div>
-
-            {sim && openSub.trace ? <>
-              <div className="lab-glass" style={{ padding: 18, marginTop: 14 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 12 }}>
-                  <span className="lab-mono lab-cap">操作回放 · 对照专家</span>
-                  {typeof openSub.match === 'number' && <span className="lab-mono" style={{ fontSize: 13, fontWeight: 800, color: 'var(--v)', letterSpacing: 0 }}>吻合度 {openSub.match}%</span>}
-                </div>
-                <TraceCompare sim={sim} trace={openSub.trace} expertTrace={skill?.expert_trace} expertName={skill?.expert_name} />
-              </div>
-              {openSub.trace.final && <div className="lab-glass" style={{ padding: 18, marginTop: 14 }}><div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>最后的结论</div><div className="lab-pre">{openSub.trace.final}</div></div>}
-            </> : (
-              <div className="lab-glass" style={{ padding: 18, marginTop: 14 }}>
-                <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>作答原文</div>
-                <div className="lab-pre">{openSub.answer}</div>
-              </div>
-            )}
+            <ReportBody sub={openSub} rubric={rubric} sim={sim} skill={skill} actions={<button className="lab-btn ghost sm" onClick={() => setOpenSub(null)}>关闭</button>} />
           </div>
         )}
       </Drawer>
