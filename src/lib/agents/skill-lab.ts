@@ -11,6 +11,7 @@ import { logTokenUsage } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { skillCardToPrompt, type SkillCard, type RubricItem, type Grading, type InterviewTurn } from '@/lib/skill-lab';
 import { sanitizeSim, sanitizeTrace, type Sim, type SimTrace } from '@/lib/skill-sim';
+import { simulateScript } from '@/lib/bench';
 
 const DEFAULT_MODEL = 'gemini-3.8-flash';
 
@@ -247,10 +248,18 @@ export async function operateSim(task: TaskForGrading, sim: Sim, skill: SkillRef
     ${task.materials || '（无）'}
 
     【操作台】${sim.intro}
-    ${sim.steps.map((s, i) => `步骤 ${i + 1}（id=${s.id}，类型=${s.type}）${s.scene ? `\n  场景：${s.scene.who}${s.scene.time ? ` ${s.scene.time}` : ''}：${s.scene.text}` : ''}\n  要求：${s.prompt}${s.max ? `（最多选 ${s.max} 个）` : ''}${s.total ? `（总量 ${s.total}${s.unit || ''}，各项之和必须等于总量）` : ''}${s.options ? `\n  条目：${s.options.map(o => `${o.id}=${o.label}${o.detail ? `（${o.detail}）` : ''}`).join('；')}` : ''}${s.labels ? `\n  标签：${s.labels.map(l => `${l.id}=${l.label}`).join('；')}` : ''}`).join('\n')}
+    ${sim.steps.map((s, i) => `步骤 ${i + 1}（id=${s.id}，类型=${s.type}）${s.scene ? `\n  场景：${s.scene.who}${s.scene.time ? ` ${s.scene.time}` : ''}：${s.scene.text}` : ''}\n  要求：${s.prompt}${s.max ? `（最多选 ${s.max} 个）` : ''}${s.total ? `（总量 ${s.total}${s.unit || ''}，各项之和必须等于总量）` : ''}${s.options ? `\n  条目：${s.options.map(o => `${o.id}=${o.label}${o.detail ? `（${o.detail}）` : ''}`).join('；')}` : ''}${s.labels ? `\n  标签：${s.labels.map(l => `${l.id}=${l.label}`).join('；')}` : ''}${s.type === 'bench' && s.bench ? `\n  这是一台虚拟设备「${s.bench.name}」：${s.bench.brief}\n  控件：${s.bench.controls.map(c => `${c.id}=${c.label}（${c.kind === 'knob' ? `旋钮 ${c.min ?? 0}–${c.max ?? 100}${c.unit || ''}` : c.kind === 'switch' ? '开关 0/1' : '按钮，value=1 按下'}${c.hint ? `；${c.hint}` : ''}）`).join('；')}\n  目标：${s.bench.goals.map(g => g.label).join('；')}\n  规则（触发即违规）：${s.bench.rules.map(r => r.label).join('；')}\n  时间上限 ${s.bench.maxSeconds} 模拟秒。请给出一段操作脚本：按时间顺序列出每一次拨动 { "t": 模拟秒, "control": 控件 id, "value": 数值 }，要体现先后顺序、分级和等待。` : ''}`).join('\n')}
 
     返回 JSON，key 是步骤 id：
-    - choose → 选项 id；multi / drill → 选项 id 数组；classify → { 条目 id: 标签 id }；allocate → { 条目 id: 数字 }；slider → 数字；text → 你的结论正文（${task.deliverable || '几句话'}）
+    - choose → 选项 id；multi / drill → 选项 id 数组；classify → { 条目 id: 标签 id }；allocate → { 条目 id: 数字 }；slider → 数字；text → 你的结论正文（${task.deliverable || '几句话'}）；bench → 操作脚本数组 [{ "t", "control", "value" }]
   `, modelId, skill ? 'AI Operate (with skill)' : 'AI Operate (bare)');
-  return sanitizeTrace(sim, parseJsonLoose(text));
+  const raw = parseJsonLoose(text);
+  // 虚拟工位：把模型给的操作脚本放进模拟器跑出真实的事件流（和人一样被逐拍采集）
+  for (const s of sim.steps) {
+    if (s.type !== 'bench' || !s.bench || !Array.isArray(raw[s.id])) continue;
+    const actions = (raw[s.id] as any[]).filter(a => a && a.control).map(a => ({ t: Math.max(0, Number(a.t) || 0), control: String(a.control), value: Number(a.value) || 0 }));
+    const until = Math.min(s.bench.maxSeconds, (actions.length ? Math.max(...actions.map(a => a.t)) : 0) + 60);
+    raw[s.id] = simulateScript(s.bench, actions, until);
+  }
+  return sanitizeTrace(sim, raw);
 }

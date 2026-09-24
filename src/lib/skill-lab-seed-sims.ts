@@ -1,8 +1,10 @@
 /**
- * 两个演示空间的「模拟操作台」脚本，以及专家 / 新兵 / AI 在台上留下的操作轨迹。
+ * 三个演示空间的「模拟操作台」脚本，以及专家 / 新兵 / AI 在台上留下的操作轨迹。
  * 最后一步（final）的文字就是 skill-lab-seed.ts 里各人的 answer，灌入时自动并进轨迹。
  */
 import type { Sim, SimTrace } from '@/lib/skill-sim';
+import { simulateScript } from '@/lib/bench';
+import { BENCH_CASTING, CASTING_EXPERT_SCRIPT, CASTING_SCRIPTS } from '@/lib/skill-lab-seed-bench';
 
 // ════════════════ A：指标异动归因 · 数据分析操作台 ════════════════
 export const SIM_A: Sim = {
@@ -182,7 +184,91 @@ export const EXPERT_WHY_B: Record<string, string> = {
   stoploss: '方案还没开始就写什么时候认输，为什么？',
 };
 
+// ════════════════ C：真空熔炼浇注 · 虚拟工位（设备操作被逐拍采集） ════════════════
+/**
+ * 和 A / B 的区别：中间那一步不是选选项，而是一台数字模拟的设备。
+ * 每一次拨动、每一次越线、每一个目标达成、每 5 秒一张面板快照（数字工位的「俯拍镜头」）都进事件流，
+ * 评分看的是过程——先后顺序、温度窗口、违规——而不只是最后那段总结。
+ */
+export const SIM_C: Sim = {
+  title: '熔炼浇注操作台 · 涡轮叶片试制',
+  intro: '你坐在精密铸造工艺工程师的工位上。一炉高温合金、一组涡轮叶片模壳——这次中间那一步不是选选项，是真的把设备开起来。每一次拨动都会被记录。',
+  steps: [
+    {
+      id: 'check', type: 'multi', max: 3,
+      scene: { who: '车间主任', time: '周二 08:10', text: '新叶片首批试制，今天浇第一炉。开炉前你要核对什么？半小时内说清楚。' },
+      prompt: '开炉前你先核对哪些？（最多 3 项）',
+      options: [
+        { id: 'shell_bake', label: '模壳焙烧记录与出炉温度', detail: '焙烧炉记录单' },
+        { id: 'charge', label: '母合金炉料牌号、批次与重量', detail: '合金入库单 + 配料单' },
+        { id: 'leak', label: '炉体真空检漏（压升率）', detail: '上一炉的压升率记录' },
+        { id: 'sim', label: '重新跑一遍 ProCAST 充型模拟' },
+        { id: 'drawing', label: '复核叶片图纸尺寸公差' },
+        { id: 'schedule', label: '确认后续机加工排期' },
+      ],
+    },
+    {
+      id: 'bench', type: 'bench', bench: BENCH_CASTING,
+      scene: { who: '车间主任', time: '09:00', text: '工位交给你。抽真空、烤模壳、化料、保温、浇注、停机——整段过程系统都会记下来，我下午看记录。' },
+      prompt: '在虚拟工位上完成这一炉的熔炼与浇注',
+    },
+    {
+      id: 'defect', type: 'classify',
+      scene: { who: '检验员', time: '周三 10:30', text: '隔壁班组昨天浇的首批 12 片叶片，X 光和荧光结果出来了：4 片叶身有冷隔纹，2 片榫头厚大处有缩松，其余合格。他们的记录显示浇注温度 1 475℃、模壳出炉到浇注隔了 4 分钟。' },
+      prompt: '逐个判断这些因素与本批缺陷的关系',
+      labels: [{ id: 'cause', label: '主因', tone: 'hot' }, { id: 'minor', label: '次要' }, { id: 'no', label: '无关', tone: 'cold' }],
+      options: [
+        { id: 'pour_temp', label: '浇注温度与模壳温度偏低', detail: '冷隔的典型来源' },
+        { id: 'gating', label: '浇注系统与冒口补缩设计', detail: '榫头厚大部位' },
+        { id: 'vac', label: '真空度不足导致氧化夹杂' },
+        { id: 'alloy', label: '母合金化学成分超差' },
+        { id: 'operator', label: '操作工责任心不强' },
+      ],
+    },
+    {
+      id: 'fix', type: 'multi', max: 2,
+      scene: { who: '车间主任', time: '周三 14:00', text: '下一炉周五浇。工艺上你打算改哪两处？' },
+      prompt: '下一炉的工艺调整（最多 2 项）',
+      options: [
+        { id: 'raise_temp', label: '浇注温度目标提到 1 540–1 560℃，模壳出炉到浇注压缩到 60 秒内' },
+        { id: 'riser', label: '榫头处加冒口 / 改冷铁，ProCAST 复算补缩' },
+        { id: 'all_temp', label: '整体把熔炼温度提高 100℃，确保充型' },
+        { id: 'slow_pour', label: '放慢浇注速度，减少卷气' },
+        { id: 'change_alloy', label: '换一批母合金再试' },
+        { id: 'blame', label: '对操作工进行批评教育并加强培训' },
+      ],
+    },
+    { id: 'final', type: 'text', scene: { who: '车间主任', time: '周四 17:00', text: '把你这一炉写成工艺总结，周五评审会上讲。' }, prompt: '写下你的工艺总结（不超过 500 字）', placeholder: '本炉关键参数与先后顺序、缺陷与原因、下一炉调整、需要评审确认的风险……' },
+  ],
+};
+
+/** 专家在虚拟工位上的轨迹：灌入时由专家脚本在模拟器里跑出来（确定性的） */
+const BENCH_EXPERT = simulateScript(BENCH_CASTING, CASTING_EXPERT_SCRIPT, 800);
+const benchRun = (key: keyof typeof CASTING_SCRIPTS) => { const s = CASTING_SCRIPTS[key]; return simulateScript(BENCH_CASTING, s, Math.max(...s.map(a => a.t)) + 40); };
+
+export const EXPERT_TRACE_C: SimTrace = {
+  check: ['shell_bake', 'charge', 'leak'],
+  bench: BENCH_EXPERT,
+  defect: { pour_temp: 'cause', gating: 'cause', vac: 'minor', alloy: 'no', operator: 'no' },
+  fix: ['raise_temp', 'riser'],
+  final: '本炉顺序：电源 → 模壳预热炉 → 关门抽真空，真空到 10 Pa 以下才给功率；功率 30% → 60% → 100% 分三级升，避免冷坩埚热冲击；1 500℃ 附近把功率降到 64% 让炉温在 1 520–1 580℃ 稳住，保温 60 秒（脱气 + 均温）后在 1 540℃ 浇注，模壳 980℃。浇注后功率归零、停泵、断电，全程无违规。\n\n隔壁班组的冷隔和缩松是两回事：冷隔来自 1 475℃ 浇注 + 模壳等了 4 分钟，温度窗口没守住；榫头缩松是补缩问题，和浇注温度关系不大，得改冒口 / 冷铁并用 ProCAST 复算。\n\n下一炉：浇注目标 1 540–1 560℃，模壳出炉到浇注 60 秒内；榫头加冒口后复算。风险：功率台阶如果按新人习惯一上来满功率，坩埚寿命会明显缩短，建议把三级升温写进作业指导书。',
+};
+
+export const TRACES_C: Record<string, SimTrace> = {
+  '孟昭宇（化名）': { check: ['shell_bake', 'charge', 'sim'], bench: benchRun('careful_rookie'), defect: { pour_temp: 'cause', gating: 'minor', vac: 'minor', alloy: 'no', operator: 'no' }, fix: ['raise_temp', 'slow_pour'] },
+  '李承泽（化名）': { check: ['drawing', 'sim', 'schedule'], bench: benchRun('careless_rookie'), defect: { pour_temp: 'minor', gating: 'no', vac: 'minor', alloy: 'cause', operator: 'cause' }, fix: ['all_temp', 'blame'] },
+  'AI 裸答': { check: ['shell_bake', 'charge', 'sim'], bench: benchRun('ai_bare'), defect: { pour_temp: 'cause', gating: 'cause', vac: 'minor', alloy: 'minor', operator: 'no' }, fix: ['all_temp', 'riser'] },
+  'AI + 专家技能': { check: ['shell_bake', 'charge', 'leak'], bench: benchRun('ai_skill'), defect: { pour_temp: 'cause', gating: 'cause', vac: 'minor', alloy: 'no', operator: 'no' }, fix: ['raise_temp', 'riser'] },
+};
+
+export const EXPERT_WHY_C: Record<string, string> = {
+  check: '图纸和排期你一眼没看，为什么先看检漏记录？',
+  bench: '1 500℃ 的时候你为什么把功率从 100 降到 64，而不是直接冲到 1 560 再降？',
+  defect: '两种缺陷出在同一炉，你为什么坚持是两个不相干的原因？',
+};
+
 export const SEED_SIMS = [
   { sim: SIM_A, expertTrace: EXPERT_TRACE_A, traces: TRACES_A, why: EXPERT_WHY_A },
   { sim: SIM_B, expertTrace: EXPERT_TRACE_B, traces: TRACES_B, why: EXPERT_WHY_B },
+  { sim: SIM_C, expertTrace: EXPERT_TRACE_C, traces: TRACES_C, why: EXPERT_WHY_C },
 ];

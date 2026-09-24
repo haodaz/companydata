@@ -3,6 +3,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import type { Sim, SimReveal, SimStep, SimTrace } from '@/lib/skill-sim';
 import { compareStep, describeStep } from '@/lib/skill-sim';
+import { BenchRunner, SnapshotStrip } from '@/components/lab/BenchRunner';
+import type { BenchTrace } from '@/lib/bench';
 
 /** 下钻 / 回复后浮现的数据面板：带动画的对比条 */
 function RevealPanel({ reveal }: { reveal: SimReveal }) {
@@ -94,6 +96,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel }: SimRunnerProp
       case 'classify': return (step.options || []).every(o => value?.[o.id]);
       case 'allocate': return allocated === step.total;
       case 'text': return (value || '').trim().length >= 20;
+      case 'bench': return !!value?.finished;
       default: return true;
     }
   }, [step, value, allocated]);
@@ -213,16 +216,32 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel }: SimRunnerProp
           </div>
         )}
 
+        {step.type === 'bench' && step.bench && (
+          value?.finished ? (
+            <div className="lab-in" style={{ padding: '12px 14px', borderRadius: 14, background: 'rgba(18,161,80,.07)', border: '1px solid rgba(18,161,80,.25)' }}>
+              <div style={{ fontWeight: 700, color: '#0d7a3d', marginBottom: 4 }}>这段操作已记录</div>
+              <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{describeStep(step, value)}</div>
+              <SnapshotStrip trace={value as BenchTrace} />
+              <button className="lab-btn ghost" style={{ marginTop: 6 }} onClick={() => set(undefined)}>重新操作</button>
+            </div>
+          ) : (
+            <div>
+              <div style={{ fontSize: 13.5, color: 'var(--ink2)', lineHeight: 1.75, marginBottom: 12, padding: '10px 14px', borderRadius: 12, background: 'rgba(106,92,255,.06)' }}>{step.bench.brief}</div>
+              <BenchRunner key={step.id} spec={step.bench} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />
+            </div>
+          )
+        )}
+
         {step.type === 'text' && <textarea className="lab-input" rows={9} value={value || ''} onChange={e => set(e.target.value)} placeholder={step.placeholder || '写下你的结论……'} />}
       </div>
 
-      <div style={{ display: 'flex', gap: 10, marginTop: 22, alignItems: 'center', flexWrap: 'wrap' }}>
+      {!(step.type === 'bench' && !value?.finished) && <div style={{ display: 'flex', gap: 10, marginTop: 22, alignItems: 'center', flexWrap: 'wrap' }}>
         <button className="lab-btn" disabled={!ready || busy} onClick={next}>
           {busy ? <>AI 核心处理中<span className="lab-dots" /></> : needsReveal && !confirmed ? '确认操作' : last ? (role === 'expert' ? '操作完毕，接受追问 →' : '操作完毕，请 AI 核心评分 →') : '下一步 →'}
         </button>
         {idx > 0 && !busy && <button className="lab-btn ghost" onClick={() => setIdx(i => i - 1)}>上一步</button>}
         <button className="lab-btn ghost" disabled={busy} onClick={onCancel} style={{ marginLeft: 'auto' }}>退出操作台</button>
-      </div>
+      </div>}
     </div>
   );
 }
@@ -241,6 +260,7 @@ export function TraceCompare({ sim, trace, expertTrace, expertName }: { sim: Sim
             <div style={{ minWidth: 0, flex: 1 }}>
               <div style={{ fontSize: 13, color: 'var(--ink3)' }}>{s.prompt}</div>
               <div style={{ fontSize: 14, lineHeight: 1.75, marginTop: 3 }}>{describeStep(s, trace?.[s.id])}</div>
+              {s.type === 'bench' && trace?.[s.id]?.events && <SnapshotStrip trace={trace[s.id] as BenchTrace} />}
               {expertTrace && m !== 1 && <div style={{ fontSize: 13, lineHeight: 1.75, marginTop: 4, padding: '6px 10px', borderRadius: 10, background: 'rgba(18,161,80,.07)', color: '#0d7a3d' }}><b>{expertName || '专家'}在这一步：</b>{describeStep(s, expertTrace[s.id])}</div>}
               {why && <div className="lab-mono" style={{ fontSize: 11.5, color: 'var(--v)', marginTop: 4, letterSpacing: '.02em' }}>AI 核心在这一步追问过：{why}</div>}
             </div>

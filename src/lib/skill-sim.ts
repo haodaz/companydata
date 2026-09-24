@@ -5,7 +5,9 @@
  *   - 专家的轨迹 → 被 AI 核心记录下来（模仿），并在关键决策点被追问「为什么」
  */
 
-export type SimStepType = 'choose' | 'multi' | 'drill' | 'classify' | 'allocate' | 'slider' | 'text';
+import { benchMatch, benchTimeline, sanitizeBenchSpec, sanitizeBenchTrace, type BenchSpec, type BenchTrace } from '@/lib/bench';
+
+export type SimStepType = 'choose' | 'multi' | 'drill' | 'classify' | 'allocate' | 'slider' | 'text' | 'bench';
 
 /** 操作后浮现的信息（下钻出的数据、同事的回复） */
 export interface SimReveal { title: string; rows?: { label: string; a?: string; b?: string; delta?: string; hot?: boolean }[]; note?: string }
@@ -25,11 +27,12 @@ export interface SimStep {
   unit?: string;                  // allocate / slider 单位
   min?: number; maxValue?: number; // slider 范围
   placeholder?: string;           // text
+  bench?: BenchSpec;              // bench：虚拟工位设备定义（事件流采集）
 }
 
 export interface Sim { title: string; intro: string; steps: SimStep[] }
 
-/** 轨迹：stepId → 值。choose: string；multi/drill: string[]；classify / allocate: Record<optionId, string | number>；slider: number；text: string */
+/** 轨迹：stepId → 值。choose: string；multi/drill: string[]；classify / allocate: Record<optionId, string | number>；slider: number；text: string；bench: BenchTrace（事件流） */
 export type SimTrace = Record<string, any>;
 
 const optLabel = (step: SimStep, id: string) => step.options?.find(o => o.id === id)?.label || id;
@@ -44,6 +47,7 @@ export function describeStep(step: SimStep, value: any): string {
     case 'classify': return (step.options || []).map(o => `${o.label}→${step.labels?.find(l => l.id === value[o.id])?.label || '未标记'}`).join('；');
     case 'allocate': return (step.options || []).map(o => `${o.label} ${value[o.id] || 0}${step.unit || ''}`).join('；');
     case 'slider': return `${value}${step.unit || ''}`;
+    case 'bench': { const m = (value as BenchTrace)?.metrics; return m ? `用时 ${Math.round(m.duration)} 秒 · 目标 ${m.goals_done}/${m.goals_total} · 违规 ${m.violations} · 操作 ${m.actions} 次` : '（未操作）'; }
     default: return String(value);
   }
 }
@@ -51,6 +55,10 @@ export function describeStep(step: SimStep, value: any): string {
 /** 整条轨迹 → 文字记录 */
 export function traceToText(sim: Sim, trace: SimTrace): string {
   return sim.steps.map((s, i) => {
+    if (s.type === 'bench' && s.bench) {
+      const tr = trace[s.id] as BenchTrace | undefined;
+      return `【操作 ${i + 1} · 虚拟工位「${s.bench.name}」】${s.prompt}\n${tr?.events?.length ? benchTimeline(s.bench, tr) : '→ （未操作）'}`;
+    }
     const skipped = s.type === 'multi' || s.type === 'drill' ? (s.options || []).filter(o => !(trace[s.id] || []).includes(o.id)).map(o => o.label) : [];
     return `【操作 ${i + 1}】${s.prompt}\n→ ${describeStep(s, trace[s.id])}${skipped.length ? `\n（没选：${skipped.join('、')}）` : ''}`;
   }).join('\n\n');
@@ -80,6 +88,7 @@ export function compareStep(step: SimStep, mine: any, expert: any): number | nul
       return diff <= 0.15 ? 1 : diff <= 0.4 ? 0.5 : 0;
     }
     case 'slider': { const d = Math.abs(mine - expert); return d <= 10 ? 1 : d <= 25 ? 0.5 : 0; }
+    case 'bench': { if (!step.bench || !mine?.events || !expert?.events) return null; const m = benchMatch(step.bench, mine, expert); return m >= 80 ? 1 : m >= 50 ? 0.5 : 0; }
     default: return null;
   }
 }
@@ -94,11 +103,12 @@ export function traceMatch(sim: Sim, mine: SimTrace, expert?: SimTrace | null): 
 /** 大模型生成的 sim 不一定规整：在这里兜底清洗；清洗后不足 3 步则视为无效 */
 export function sanitizeSim(raw: any): Sim | null {
   if (!raw || !Array.isArray(raw.steps)) return null;
-  const TYPES: SimStepType[] = ['choose', 'multi', 'classify', 'allocate', 'slider', 'text'];
+  const TYPES: SimStepType[] = ['choose', 'multi', 'drill', 'classify', 'allocate', 'slider', 'text', 'bench'];
   const steps: SimStep[] = [];
   raw.steps.forEach((s: any, i: number) => {
     const type = TYPES.includes(s?.type) ? s.type as SimStepType : null;
     if (!type || !s.prompt) return;
+    if (type === 'bench') { const bench = sanitizeBenchSpec(s.bench); if (!bench) return; steps.push({ id: String(s.id || `s${i + 1}`), type, prompt: String(s.prompt), bench, scene: s.scene?.text ? { who: String(s.scene.who || '同事'), time: s.scene.time ? String(s.scene.time) : undefined, text: String(s.scene.text) } : undefined }); return; }
     const options: SimOption[] = (Array.isArray(s.options) ? s.options : []).map((o: any, j: number) => ({ id: String(o.id || `o${j + 1}`), label: String(o.label || '').trim(), detail: o.detail ? String(o.detail) : undefined })).filter((o: SimOption) => o.label);
     if (['choose', 'multi', 'classify', 'allocate'].includes(type) && options.length < 2) return;
     const step: SimStep = { id: String(s.id || `s${i + 1}`), type, prompt: String(s.prompt), options: options.length ? options : undefined };
@@ -130,6 +140,7 @@ export function sanitizeTrace(sim: Sim, raw: any): SimTrace {
     else if (s.type === 'classify') { const m: Record<string, string> = {}; const ls = new Set((s.labels || []).map(l => l.id)); for (const id of ids) if (v && ls.has(v[id])) m[id] = v[id]; out[s.id] = m; }
     else if (s.type === 'allocate') { const m: Record<string, number> = {}; for (const id of ids) m[id] = Math.max(0, Number(v?.[id]) || 0); out[s.id] = m; }
     else if (s.type === 'slider') out[s.id] = Math.min(s.maxValue ?? 100, Math.max(s.min ?? 0, Number(v) || 0));
+    else if (s.type === 'bench') { const tr = sanitizeBenchTrace(v); if (tr) out[s.id] = tr; }
     else out[s.id] = typeof v === 'string' ? v.slice(0, 4000) : '';
   }
   return out;
