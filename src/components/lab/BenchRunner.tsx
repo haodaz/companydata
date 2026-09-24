@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { applyControl, benchEnv, evalExpr, finishBench, fmtT, initBench, tickBench, type BenchSpec, type BenchState, type BenchTrace, type BenchEvent, type BenchLayer } from '@/lib/bench';
+import { HandCam, type HandPose } from '@/components/lab/HandCam';
 
 /**
  * 虚拟工位：数字模拟的设备。
@@ -96,6 +97,29 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
     const dx = bx - ax, dy = by - ay; const len2 = dx * dx + dy * dy || 1;
     return Math.min(100, Math.max(0, ((px - ax) * dx + (py - ay) * dy) / len2 * 100));
   };
+  // ── 摄像头握枪：食指位置 → 场景坐标；捏合且靠近焊枪 = 握住；握着移动 = 沿焊缝走 ──
+  const [cam, setCam] = useState(false);
+  const handRef = useRef<{ x: number; y: number; pinch: boolean; holding: boolean } | null>(null);
+  const seamLayer = scene?.layers.find(l => l.kind === 'seam' && l.control);
+  const onPose = (p: HandPose | null) => {
+    if (!p) { handRef.current = null; return; }
+    const px = p.x * VW, py = p.y * VH;
+    const prev = handRef.current; let holding = !!prev?.holding && p.pinch;
+    if (seamLayer?.control && running) {
+      const l = seamLayer; const ctl = l.control!; const prog = stRef.current.controls[ctl] || 0;
+      const tx = (l.x + l.w * prog / 100) * 16, ty = (l.y + l.h * prog / 100) * 9;
+      if (p.pinch && !holding && Math.hypot(px - tx, py - ty) < 170) holding = true;   // 捏在焊枪附近 = 握住
+      if (holding) {
+        const ax = l.x * 16, ay = l.y * 9, bx = (l.x + l.w) * 16, by = (l.y + l.h) * 9;
+        const dx = bx - ax, dy = by - ay; const len2 = dx * dx + dy * dy || 1;
+        const target = Math.min(100, Math.max(0, ((px - ax) * dx + (py - ay) * dy) / len2 * 100));
+        if (target > prog) act(ctl, prog + (target - prog) * 0.45);            // 平滑，避免手抖成「过快」
+      }
+    }
+    handRef.current = { x: px, y: py, pinch: p.pinch, holding };
+  };
+  const hand = handRef.current;
+
   const onScenePointerMove = (e: React.PointerEvent) => { const l = dragRef.current; if (!l?.control) return; const v = seamProgress(l, e.clientX, e.clientY); if (v !== null) act(l.control, v); };
   const onScenePointerUp = () => { dragRef.current = null; };
 
@@ -224,11 +248,18 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
           <filter id="bench-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18" /></filter>
           <filter id="bench-blur-sm" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" /></filter>
         </defs>
+        {hand && <g pointerEvents="none"><circle cx={hand.x} cy={hand.y} r={hand.holding ? 30 : 22} fill={hand.holding ? 'rgba(255,95,162,.35)' : hand.pinch ? 'rgba(255,209,102,.35)' : 'rgba(18,181,203,.3)'} stroke={hand.holding ? '#ff5fa2' : hand.pinch ? '#ffd166' : '#12b5cb'} strokeWidth={4} /><text x={hand.x} y={hand.y + 9} textAnchor="middle" fontSize={26}>{hand.holding ? '🤏' : hand.pinch ? '🤏' : '☝️'}</text></g>}
         {scene.layers.map(l => <Layer key={l.id} l={l} level={l.level ? Math.min(1, Math.max(0, ev(l.level))) : 0} on={l.on ? !!ev(l.on) : false} value={l.text ? ev(l.text) : 0} progress={l.kind === 'seam' && l.control ? st.controls[l.control] || 0 : 0} onGrab={l.kind === 'seam' && running ? (e => { dragRef.current = l; (e.target as Element).setPointerCapture?.(e.pointerId); const v = l.control ? seamProgress(l, e.clientX, e.clientY) : null; if (v !== null && l.control) act(l.control, v); }) : undefined} />)}
       </svg>
       <div className="lab-mono" style={{ position: 'absolute', left: 12, top: hud ? 34 : 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em' }}>
         <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
       </div>
+      {seamLayer && (
+        <button onClick={() => setCam(v => !v)} style={{ position: 'absolute', left: 12, top: hud ? 58 : 34, padding: '6px 12px', borderRadius: 999, border: '1px solid rgba(255,255,255,.35)', background: cam ? 'linear-gradient(135deg,#ff5fa2,#ff8a5f)' : 'rgba(15,18,36,.7)', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(6px)' }}>
+          {cam ? '📷 摄像头握枪中 · 关闭' : '📷 用摄像头握枪'}
+        </button>
+      )}
+      {cam && <div style={{ position: 'absolute', left: 12, top: hud ? 94 : 68, zIndex: 2 }}><HandCam onPose={onPose} /></div>}
       {!hud && <div className="lab-mono" style={{ position: 'absolute', right: 12, top: 10, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)' }}>{role === 'expert' ? 'EXPERT' : 'TRAINEE'} · {goalsDone}/{spec.goals.length} · ⛔{violations}</div>}
     </div>
   ) : null;
