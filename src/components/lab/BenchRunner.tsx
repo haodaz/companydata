@@ -303,13 +303,14 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
 
 /** 场景覆盖层 */
 function Layer({ l, level, on, value, progress = 0, onGrab }: { l: BenchLayer; level: number; on: boolean; value: number; progress?: number; onGrab?: (e: React.PointerEvent) => void }) {
-  const x = l.x * 16, y = l.y * 9, w = l.w * 16, h = l.h * 9;
+  const x = l.x * 16, y = l.y * 9, w = l.w * 16, h = l.h * 9; const w0 = w, h0 = h;
   const cx = x + w / 2, cy = y + h / 2;
   const heat = (p: number) => p < 0.35 ? `rgba(120,10,0,${Math.min(1, p * 2)})` : p < 0.7 ? '#ff4d00' : p < 0.9 ? '#ffb347' : '#fff3c4';
   switch (l.kind) {
-    case 'glow':
-      // 底图上的观察窗本来就是亮的：冷的时候盖一层深色（冷坩埚），热起来再按温度发光
-      if (level < 0.08) return <ellipse cx={cx} cy={cy} rx={w / 2} ry={h / 2} fill="#23232c" opacity={0.92 - level * 4} />;
+    case 'glow': {
+      // 底图上的观察窗本来就是亮的：冷的时候盖一层深色（冷坩埚），热起来再按温度发光。自动生成的层可能画得很大：限制尺寸
+      const w = Math.min(w0, 230), h = Math.min(h0, 150);
+      if (level < 0.08) return l.cold ? <ellipse cx={cx} cy={cy} rx={w / 2} ry={h / 2} fill="#23232c" opacity={0.92 - level * 4} /> : null;
       return (
         <g>
           {level > 0.3 && <ellipse cx={cx} cy={cy} rx={w} ry={h} fill={heat(level)} opacity={(level - 0.3) * 0.9} filter="url(#bench-blur)" />}
@@ -317,6 +318,7 @@ function Layer({ l, level, on, value, progress = 0, onGrab }: { l: BenchLayer; l
           <ellipse cx={cx} cy={cy} rx={w / 3.2} ry={h / 3.2} fill={level > 0.6 ? '#fff' : heat(Math.min(1, level + 0.25))} opacity={0.4 + level * 0.6} filter="url(#bench-blur-sm)" />
         </g>
       );
+    }
     case 'seam': {
       // 轨迹线段 a → b；已走过的部分画成焊道；手柄（焊枪）在当前进度处；on 时出火花
       const ax = x, ay = y, bx = x + w, by = y + h;

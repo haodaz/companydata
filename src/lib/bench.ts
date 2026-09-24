@@ -27,7 +27,7 @@ export interface BenchAction { t: number; control: string; value: number }
  *   haze    半透明雾 / 烟：level 0–1
  *   seam    轨迹（焊缝）：绑定一个 path 控件，画轨迹、已走过的部分（焊道）、手柄（焊枪），on 为真时手柄处出火花；可以直接在场景里拖
  */
-export interface BenchLayer { id: string; kind: 'glow' | 'lamp' | 'door' | 'stream' | 'pulse' | 'readout' | 'haze' | 'seam'; /** seam：绑定的 path 控件 */ control?: string; x: number; y: number; w: number; h: number; level?: string; on?: string; text?: string; unit?: string; digits?: number; color?: string; label?: string }
+export interface BenchLayer { id: string; kind: 'glow' | 'lamp' | 'door' | 'stream' | 'pulse' | 'readout' | 'haze' | 'seam'; /** seam：绑定的 path 控件 */ control?: string; /** glow：冷态时盖一层深色（炉膛观察窗这类底图本来就亮的地方） */ cold?: boolean; x: number; y: number; w: number; h: number; level?: string; on?: string; text?: string; unit?: string; digits?: number; color?: string; label?: string }
 export interface BenchScene { image: string; credit?: string; layers: BenchLayer[] }
 
 export interface BenchSpec {
@@ -265,7 +265,7 @@ export function sanitizeBenchSpec(raw: any): BenchSpec | null {
   if (raw.scene && typeof raw.scene.image === 'string' && /^(\/|https?:\/\/)/.test(raw.scene.image) && Array.isArray(raw.scene.layers)) {
     const KINDS = ['glow', 'lamp', 'door', 'stream', 'pulse', 'readout', 'haze', 'seam'];
     spec.scene = { image: raw.scene.image.slice(0, 500), credit: raw.scene.credit ? String(raw.scene.credit).slice(0, 200) : undefined,
-      layers: raw.scene.layers.filter((l: any) => l?.id && KINDS.includes(l.kind)).slice(0, 40).map((l: any) => ({ id: String(l.id), kind: l.kind, control: l.control ? String(l.control) : undefined, x: Number(l.x) || 0, y: Number(l.y) || 0, w: Number(l.w) || 0, h: Number(l.h) || 0, level: l.level ? String(l.level) : undefined, on: l.on ? String(l.on) : undefined, text: l.text ? String(l.text) : undefined, unit: l.unit ? String(l.unit) : undefined, digits: l.digits !== undefined ? Number(l.digits) : undefined, color: l.color ? String(l.color).slice(0, 30) : undefined, label: l.label ? String(l.label).slice(0, 40) : undefined })) };
+      layers: raw.scene.layers.filter((l: any) => l?.id && KINDS.includes(l.kind)).slice(0, 40).map((l: any) => ({ id: String(l.id), kind: l.kind, control: l.control ? String(l.control) : undefined, cold: !!l.cold, x: Number(l.x) || 0, y: Number(l.y) || 0, w: Number(l.w) || 0, h: Number(l.h) || 0, level: l.level ? String(l.level) : undefined, on: l.on ? String(l.on) : undefined, text: l.text ? String(l.text) : undefined, unit: l.unit ? String(l.unit) : undefined, digits: l.digits !== undefined ? Number(l.digits) : undefined, color: l.color ? String(l.color).slice(0, 30) : undefined, label: l.label ? String(l.label).slice(0, 40) : undefined })) };
   }
   if (!spec.controls.length || !spec.goals.length) return null;
   // 表达式都要能求值

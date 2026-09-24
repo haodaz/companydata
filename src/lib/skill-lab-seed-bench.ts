@@ -14,8 +14,8 @@ export const BENCH_CASTING: BenchSpec = {
   scene: {
     image: '/lab/bench_casting.jpg', credit: '底图由通义万相生成',
     layers: [
-      { id: 'furnace_glow', kind: 'glow', x: 49.3, y: 50, w: 5.8, h: 10.4, level: 'clamp((temp - 500) / 1100, 0, 1)' },
-      { id: 'shell_glow', kind: 'glow', x: 26, y: 55.2, w: 5, h: 8.9, level: 'clamp((shell - 300) / 700, 0, 1)' },
+      { id: 'furnace_glow', kind: 'glow', cold: true, x: 49.3, y: 50, w: 5.8, h: 10.4, level: 'clamp((temp - 500) / 1100, 0, 1)' },
+      { id: 'shell_glow', kind: 'glow', cold: true, x: 26, y: 55.2, w: 5, h: 8.9, level: 'clamp((shell - 300) / 700, 0, 1)' },
       { id: 'door', kind: 'door', x: 46.4, y: 43.8, w: 11.8, h: 21.6, on: 'door == 1', level: 'clamp((temp - 300) / 1200, 0, 1)' },
       { id: 'haze', kind: 'haze', x: 38, y: 18, w: 28, h: 30, level: 'door == 1 ? clamp((temp - 300) / 900, 0, 1) : 0' },
       { id: 'pour', kind: 'stream', x: 51.2, y: 50.5, w: 2, h: 9.5, on: 'poured == 1 && pour_t > 0 && t - pour_t < 25' },
