@@ -82,9 +82,22 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
   const act = (id: string, value: number) => {
     if (!running) return;
     applyControl(spec, stRef.current, id, value);
-    snapshot();
+    if (spec.controls.find(c => c.id === id)?.kind !== 'path') snapshot();
     bump(v => v + 1);
   };
+
+  // ── 在场景里拖动 path 控件（焊枪沿焊缝）：指针位置投影到轨迹线段上 → 0–100 ──
+  const dragRef = useRef<BenchLayer | null>(null);
+  const seamProgress = (l: BenchLayer, clientX: number, clientY: number) => {
+    const svg = sceneRef.current; if (!svg) return null;
+    const r = svg.getBoundingClientRect();
+    const px = (clientX - r.left) / r.width * VW, py = (clientY - r.top) / r.height * VH;
+    const ax = l.x * 16, ay = l.y * 9, bx = (l.x + l.w) * 16, by = (l.y + l.h) * 9;
+    const dx = bx - ax, dy = by - ay; const len2 = dx * dx + dy * dy || 1;
+    return Math.min(100, Math.max(0, ((px - ax) * dx + (py - ay) * dy) / len2 * 100));
+  };
+  const onScenePointerMove = (e: React.PointerEvent) => { const l = dragRef.current; if (!l?.control) return; const v = seamProgress(l, e.clientX, e.clientY); if (v !== null) act(l.control, v); };
+  const onScenePointerUp = () => { dragRef.current = null; };
 
   const finish = async () => {
     setRunning(false);
@@ -157,6 +170,15 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
                 {[0, 1].map(x => <button key={x} disabled={!running} onClick={() => act(c.id, x)} style={{ flex: 1, padding: '6px 0', borderRadius: 8, border: '1px solid var(--line)', cursor: running ? 'pointer' : 'default', fontWeight: 700, fontSize: 12, background: v === x ? (x ? 'var(--v)' : '#3a3f5e') : 'transparent', color: v === x ? '#fff' : hud ? '#c7cbe6' : 'var(--ink2)' }}>{x ? '开' : '关'}</button>)}
               </div>
             )}
+            {c.kind === 'path' && (
+              <div>
+                <div style={{ height: 8, borderRadius: 4, background: 'rgba(106,92,255,.15)', overflow: 'hidden', marginBottom: 6 }}><div style={{ width: `${v}%`, height: '100%', background: 'linear-gradient(90deg,#ffb15f,#ff5fa2)', transition: 'width .1s' }} /></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
+                  <span className="lab-mono hud-ink3" style={{ fontSize: 11, color: 'var(--ink3)', letterSpacing: 0 }}>{Math.round(v)}%</span>
+                  <input type="range" min={0} max={100} step={0.5} value={v} disabled={!running} onChange={e => act(c.id, Number(e.target.value))} style={{ flex: 1, accentColor: '#ff5fa2' }} title="也可以直接在场景里拖" />
+                </div>
+              </div>
+            )}
             {c.kind === 'button' && <button disabled={!running || done} onClick={() => act(c.id, 1)} style={{ width: '100%', padding: '8px 0', borderRadius: 8, border: 'none', cursor: running && !done ? 'pointer' : 'default', fontWeight: 800, fontSize: 13, background: done ? '#9aa0b8' : 'linear-gradient(135deg,#ff5fa2,#ff8a5f)', color: '#fff' }}>{done ? '已执行' : c.label}</button>}
             {c.hint && <div className="hud-ink3" style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 5 }}>{c.hint}</div>}
           </div>
@@ -197,12 +219,12 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
   const sceneView = scene ? (
     <div style={{ position: 'relative', borderRadius: hud ? 0 : 16, overflow: 'hidden', background: '#0f1224', aspectRatio: '16 / 9' }}>
       <img src={scene.image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-      <svg ref={sceneRef} viewBox={`0 0 ${VW} ${VH}`} preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} xmlns="http://www.w3.org/2000/svg">
+      <svg ref={sceneRef} viewBox={`0 0 ${VW} ${VH}`} preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', touchAction: 'none' }} xmlns="http://www.w3.org/2000/svg" onPointerMove={onScenePointerMove} onPointerUp={onScenePointerUp} onPointerLeave={onScenePointerUp}>
         <defs>
           <filter id="bench-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18" /></filter>
           <filter id="bench-blur-sm" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" /></filter>
         </defs>
-        {scene.layers.map(l => <Layer key={l.id} l={l} level={l.level ? Math.min(1, Math.max(0, ev(l.level))) : 0} on={l.on ? !!ev(l.on) : false} value={l.text ? ev(l.text) : 0} />)}
+        {scene.layers.map(l => <Layer key={l.id} l={l} level={l.level ? Math.min(1, Math.max(0, ev(l.level))) : 0} on={l.on ? !!ev(l.on) : false} value={l.text ? ev(l.text) : 0} progress={l.kind === 'seam' && l.control ? st.controls[l.control] || 0 : 0} onGrab={l.kind === 'seam' && running ? (e => { dragRef.current = l; (e.target as Element).setPointerCapture?.(e.pointerId); const v = l.control ? seamProgress(l, e.clientX, e.clientY) : null; if (v !== null && l.control) act(l.control, v); }) : undefined} />)}
       </svg>
       <div className="lab-mono" style={{ position: 'absolute', left: 12, top: hud ? 34 : 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em' }}>
         <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
@@ -249,7 +271,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
 }
 
 /** 场景覆盖层 */
-function Layer({ l, level, on, value }: { l: BenchLayer; level: number; on: boolean; value: number }) {
+function Layer({ l, level, on, value, progress = 0, onGrab }: { l: BenchLayer; level: number; on: boolean; value: number; progress?: number; onGrab?: (e: React.PointerEvent) => void }) {
   const x = l.x * 16, y = l.y * 9, w = l.w * 16, h = l.h * 9;
   const cx = x + w / 2, cy = y + h / 2;
   const heat = (p: number) => p < 0.35 ? `rgba(120,10,0,${Math.min(1, p * 2)})` : p < 0.7 ? '#ff4d00' : p < 0.9 ? '#ffb347' : '#fff3c4';
@@ -264,6 +286,30 @@ function Layer({ l, level, on, value }: { l: BenchLayer; level: number; on: bool
           <ellipse cx={cx} cy={cy} rx={w / 3.2} ry={h / 3.2} fill={level > 0.6 ? '#fff' : heat(Math.min(1, level + 0.25))} opacity={0.4 + level * 0.6} filter="url(#bench-blur-sm)" />
         </g>
       );
+    case 'seam': {
+      // 轨迹线段 a → b；已走过的部分画成焊道；手柄（焊枪）在当前进度处；on 时出火花
+      const ax = x, ay = y, bx = x + w, by = y + h;
+      const px = ax + (bx - ax) * progress / 100, py = ay + (by - ay) * progress / 100;
+      const ang = Math.atan2(by - ay, bx - ax) * 180 / Math.PI;
+      return (
+        <g style={{ cursor: onGrab ? 'grab' : 'default' }} onPointerDown={onGrab}>
+          <line x1={ax} y1={ay} x2={bx} y2={by} stroke="rgba(0,0,0,.35)" strokeWidth={10} strokeLinecap="round" />
+          <line x1={ax} y1={ay} x2={bx} y2={by} stroke="rgba(255,255,255,.25)" strokeWidth={2} strokeDasharray="10 12" />
+          {progress > 0 && <line x1={ax} y1={ay} x2={px} y2={py} stroke="#8a93a6" strokeWidth={16} strokeLinecap="round" />}
+          {progress > 0 && <line x1={ax} y1={ay} x2={px} y2={py} stroke="#c9d1e0" strokeWidth={8} strokeLinecap="round" strokeDasharray="6 5" opacity={0.8} />}
+          {on && <circle cx={px} cy={py} r={34} fill="#fff3c4" opacity={0.85} filter="url(#bench-blur)" />}
+          {on && [0, 1, 2, 3, 4, 5].map(i => <circle key={i} cx={px} cy={py} r={4} fill="#ffd166"><animate attributeName="cx" values={`${px};${px + Math.cos(i * 1.05) * 60}`} dur={`${0.35 + i * 0.07}s`} repeatCount="indefinite" /><animate attributeName="cy" values={`${py};${py - 20 - Math.sin(i * 1.05) * 50}`} dur={`${0.35 + i * 0.07}s`} repeatCount="indefinite" /><animate attributeName="opacity" values="1;0" dur={`${0.35 + i * 0.07}s`} repeatCount="indefinite" /></circle>)}
+          {/* 焊枪：一根带喷嘴的斜杆，随轨迹方向旋转 */}
+          <g transform={`translate(${px} ${py}) rotate(${ang - 60})`}>
+            <rect x={-8} y={-110} width={16} height={100} rx={6} fill="#2b3040" stroke="#6b7089" strokeWidth={2} />
+            <rect x={-11} y={-40} width={22} height={34} rx={4} fill="#c9a24a" />
+            <polygon points="-6,-6 6,-6 2,6 -2,6" fill="#b87333" />
+          </g>
+          <circle cx={px} cy={py} r={26} fill="transparent" />
+          <text x={px} y={py + 54} textAnchor="middle" fill="#fff" fontSize={16} fontWeight={700} fontFamily="ui-monospace, Menlo, monospace" style={{ textShadow: '0 1px 4px rgba(0,0,0,.6)' }}>{on ? '●' : ''} {Math.round(progress)}%</text>
+        </g>
+      );
+    }
     case 'haze':
       if (level <= 0.02) return null;
       return <rect x={x} y={y} width={w} height={h} fill={l.color || '#dfe6ff'} opacity={level * 0.55} filter="url(#bench-blur)" />;

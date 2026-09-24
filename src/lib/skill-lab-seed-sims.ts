@@ -1,10 +1,10 @@
 /**
- * 三个演示空间的「模拟操作台」脚本，以及专家 / 新兵 / AI 在台上留下的操作轨迹。
+ * 四个演示空间的「模拟操作台」脚本，以及专家 / 新兵 / AI 在台上留下的操作轨迹。
  * 最后一步（final）的文字就是 skill-lab-seed.ts 里各人的 answer，灌入时自动并进轨迹。
  */
 import type { Sim, SimTrace } from '@/lib/skill-sim';
 import { simulateScript } from '@/lib/bench';
-import { BENCH_CASTING, CASTING_EXPERT_SCRIPT, CASTING_SCRIPTS } from '@/lib/skill-lab-seed-bench';
+import { BENCH_CASTING, CASTING_EXPERT_SCRIPT, CASTING_SCRIPTS, BENCH_WELD, WELD_EXPERT_SCRIPT, WELD_SCRIPTS } from '@/lib/skill-lab-seed-bench';
 
 // ════════════════ A：指标异动归因 · 数据分析操作台 ════════════════
 export const SIM_A: Sim = {
@@ -273,8 +273,91 @@ export const EXPERT_WHY_C: Record<string, string> = {
   defect: '两种缺陷出在同一炉，你为什么坚持是两个不相干的原因？',
 };
 
+// ════════════════ D：气保焊平板对接 · 一维「沿焊缝行走」工位（正面摄像头也能接） ════════════════
+export const SIM_D: Sim = {
+  title: '焊接操作台 · 平板对接试板',
+  intro: '你坐在焊接工艺工程师的工位上。今天先亲手焊一块试板——顺序、参数、行走速度全被记录，明天检验结果出来再归因。',
+  art: {
+    cover: '/lab/bench_weld.jpg',
+    scenes: { prep: '/lab/bench_weld.jpg', bench: '/lab/bench_weld.jpg', defect: '/lab/casting_inspect.jpg', fix: '/lab/bench_weld.jpg', final: '/lab/casting_office.jpg' },
+    npcs: { '焊接班组长': '/lab/npc_welder.png', '质检员': '/lab/npc_inspector.png' },
+  },
+  steps: [
+    {
+      id: 'prep', type: 'multi', max: 3,
+      scene: { who: '焊接班组长', time: '周一 08:30', text: '新来的工艺员先上手焊一块试板，6 mm 板对接，CO₂ 气保焊。焊之前你先查什么？' },
+      prompt: '起弧前先核对哪些？（最多 3 项）',
+      options: [
+        { id: 'gas', label: '气瓶压力与流量计（15–20 L/min）', detail: '气不够就是气孔' },
+        { id: 'clean', label: '坡口两侧 20 mm 内的油污、铁锈打磨干净' },
+        { id: 'ground', label: '地线夹紧在工件上，导电嘴、喷嘴无飞溅堵塞' },
+        { id: 'wire', label: '换一盘新焊丝' },
+        { id: 'drawing', label: '复核图纸的整体尺寸公差' },
+        { id: 'overtime', label: '申请加班把明天的活也焊了' },
+      ],
+    },
+    {
+      id: 'bench', type: 'bench', bench: BENCH_WELD,
+      scene: { who: '焊接班组长', time: '09:00', text: '焊枪给你。开气、调参数、起弧、走完、收弧、关机——速度稳住，别停。系统会把你每一下都记下来。' },
+      prompt: '在虚拟工位上焊完这条 200 mm 焊缝',
+    },
+    {
+      id: 'defect', type: 'classify',
+      scene: { who: '质检员', time: '周二 10:00', text: '昨天另一位新人焊的试板外观和 X 光结果出来了：起弧段 30 mm 有密集气孔，中段有一处烧穿，收尾 40 mm 未焊透。记录显示保护气在起弧后 8 秒才打开，中途停顿约 4 秒，末段行走速度超过 9 mm/s。' },
+      prompt: '逐个判断这些因素与该试板缺陷的关系',
+      labels: [{ id: 'cause', label: '主因', tone: 'hot' }, { id: 'minor', label: '次要' }, { id: 'no', label: '无关', tone: 'cold' }],
+      options: [
+        { id: 'gas_late', label: '保护气晚开 / 流量不足', detail: '起弧段气孔' },
+        { id: 'stall', label: '焊枪中途停顿', detail: '中段烧穿' },
+        { id: 'fast', label: '末段行走过快', detail: '未焊透' },
+        { id: 'wire_brand', label: '焊丝牌号' },
+        { id: 'attitude', label: '焊工责任心不强' },
+      ],
+    },
+    {
+      id: 'fix', type: 'multi', max: 2,
+      scene: { who: '焊接班组长', time: '周二 14:00', text: '下一块试板明天焊。工艺上你打算改哪两处？' },
+      prompt: '下一块试板的工艺调整（最多 2 项）',
+      options: [
+        { id: 'pregas', label: '起弧前提前送气 2 秒，流量核到 15–20 L/min' },
+        { id: 'speed', label: '行走速度控制在 4–6 mm/s，要停就先收弧再停' },
+        { id: 'current_up', label: '电流整体提高 60 A 保证熔透' },
+        { id: 'voltage_up', label: '电压拉到 30 V 让电弧更稳' },
+        { id: 'wire_change', label: '换一个品牌的焊丝' },
+        { id: 'blame', label: '对焊工进行批评教育' },
+      ],
+    },
+    { id: 'final', type: 'text', scene: { who: '焊接班组长', time: '周三 17:00', text: '把你这块试板写成一页工艺记录，周五工艺评审要用。' }, prompt: '写下你的工艺记录（不超过 400 字）', placeholder: '顺序、电流电压、行走速度、出现的问题、下一块怎么改……' },
+  ],
+};
+
+const WELD_EXPERT = simulateScript(BENCH_WELD, WELD_EXPERT_SCRIPT, 60);
+const weldRun = (key: keyof typeof WELD_SCRIPTS) => { const s = WELD_SCRIPTS[key]; return simulateScript(BENCH_WELD, s, Math.max(...s.map(a => a.t)) + 20); };
+
+export const EXPERT_TRACE_D: SimTrace = {
+  prep: ['gas', 'clean', 'ground'],
+  bench: WELD_EXPERT,
+  defect: { gas_late: 'cause', stall: 'cause', fast: 'cause', wire_brand: 'no', attitude: 'no' },
+  fix: ['pregas', 'speed'],
+  final: '顺序：电源 → 保护气 → 电流 180 A / 电压 22 V → 起弧 → 5 mm/s 匀速走完 200 mm → 收弧 → 断电、关气。全程无停顿、无过快段、起弧前有气，热输入约 0.8 kJ/mm。\n\n昨天那块试板的三处缺陷是三个动作：气晚开 8 秒 → 起弧段气孔；中途停 4 秒 → 烧穿；末段 9 mm/s → 未焊透。和焊丝牌号、责任心无关，是动作没练到位。\n\n下一块：起弧前提前送气 2 秒并核流量；速度守在 4–6 mm/s，要停先收弧。风险：新人容易用「提高电流」去补速度快造成的未焊透，会把咬边带进来，评审时要说明。',
+};
+
+export const TRACES_D: Record<string, SimTrace> = {
+  '孙一帆（化名）': { prep: ['gas', 'clean', 'wire'], bench: weldRun('forgot_gas'), defect: { gas_late: 'cause', stall: 'cause', fast: 'minor', wire_brand: 'no', attitude: 'no' }, fix: ['pregas', 'current_up'] },
+  '周天佑（化名）': { prep: ['drawing', 'wire', 'overtime'], bench: weldRun('fast_and_stall'), defect: { gas_late: 'minor', stall: 'no', fast: 'minor', wire_brand: 'cause', attitude: 'cause' }, fix: ['current_up', 'blame'] },
+  'AI 裸答': { prep: ['gas', 'clean', 'ground'], bench: weldRun('ai_bare'), defect: { gas_late: 'cause', stall: 'cause', fast: 'cause', wire_brand: 'minor', attitude: 'no' }, fix: ['pregas', 'current_up'] },
+  'AI + 专家技能': { prep: ['gas', 'clean', 'ground'], bench: weldRun('ai_skill'), defect: { gas_late: 'cause', stall: 'cause', fast: 'cause', wire_brand: 'no', attitude: 'no' }, fix: ['pregas', 'speed'] },
+};
+
+export const EXPERT_WHY_D: Record<string, string> = {
+  prep: '换新焊丝你为什么不勾？一盘用到一半的焊丝不会有问题吗？',
+  bench: '你起弧前特意等了两秒才动枪，为什么？',
+  fix: '末段未焊透，为什么不直接把电流提上去？',
+};
+
 export const SEED_SIMS = [
   { sim: SIM_A, expertTrace: EXPERT_TRACE_A, traces: TRACES_A, why: EXPERT_WHY_A },
   { sim: SIM_B, expertTrace: EXPERT_TRACE_B, traces: TRACES_B, why: EXPERT_WHY_B },
   { sim: SIM_C, expertTrace: EXPERT_TRACE_C, traces: TRACES_C, why: EXPERT_WHY_C },
+  { sim: SIM_D, expertTrace: EXPERT_TRACE_D, traces: TRACES_D, why: EXPERT_WHY_D },
 ];

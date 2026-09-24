@@ -6,7 +6,11 @@
  * 前后端共用，纯函数，不依赖 DOM；表达式用自带的小解析器求值，不用 eval。
  */
 
-export interface BenchControl { id: string; label: string; kind: 'knob' | 'switch' | 'button'; min?: number; max?: number; step?: number; unit?: string; initial?: number; hint?: string }
+/**
+ * 控件：knob 旋钮 / switch 开关 / button 按钮 / path 沿轨迹推进（0–100，只进不退，如「焊枪沿焊缝行走」）。
+ * path 是连续动作：中间过程不逐点记事件，只在起步（>0）和走完（100）各记一条；速度等由变量从 dt 推出来。以后接摄像头时，手的位置直接喂给它。
+ */
+export interface BenchControl { id: string; label: string; kind: 'knob' | 'switch' | 'button' | 'path'; min?: number; max?: number; step?: number; unit?: string; initial?: number; hint?: string }
 export interface BenchGauge { id: string; label: string; unit: string; expr: string; min: number; max: number; digits?: number; warn?: string }
 export interface BenchVar { id: string; label?: string; initial: number; rate?: string; set?: string; min?: number; max?: number }
 export interface BenchRule { id: string; label: string; when: string; severity: 'violation' | 'warning'; once?: boolean }
@@ -21,8 +25,9 @@ export interface BenchAction { t: number; control: string; value: number }
  *   pulse   运转脉冲（泵 / 风机）：on 为真时环状脉动
  *   readout 数字读数：text 表达式求值后显示，可带单位
  *   haze    半透明雾 / 烟：level 0–1
+ *   seam    轨迹（焊缝）：绑定一个 path 控件，画轨迹、已走过的部分（焊道）、手柄（焊枪），on 为真时手柄处出火花；可以直接在场景里拖
  */
-export interface BenchLayer { id: string; kind: 'glow' | 'lamp' | 'door' | 'stream' | 'pulse' | 'readout' | 'haze'; x: number; y: number; w: number; h: number; level?: string; on?: string; text?: string; unit?: string; digits?: number; color?: string; label?: string }
+export interface BenchLayer { id: string; kind: 'glow' | 'lamp' | 'door' | 'stream' | 'pulse' | 'readout' | 'haze' | 'seam'; /** seam：绑定的 path 控件 */ control?: string; x: number; y: number; w: number; h: number; level?: string; on?: string; text?: string; unit?: string; digits?: number; color?: string; label?: string }
 export interface BenchScene { image: string; credit?: string; layers: BenchLayer[] }
 
 export interface BenchSpec {
@@ -111,10 +116,17 @@ export function applyControl(spec: BenchSpec, st: BenchState, id: string, value:
   if (!c) return;
   let v = value;
   if (c.kind === 'knob') v = Math.min(c.max ?? 100, Math.max(c.min ?? 0, v));
+  else if (c.kind === 'path') v = Math.min(100, Math.max(st.controls[id], v)); // 只进不退
   else v = v ? 1 : 0;
   const prev = st.controls[id];
   if (prev === v && c.kind !== 'button') return;
   st.controls[id] = v;
+  if (c.kind === 'path') {
+    // 连续动作：只记起步和走完
+    if (prev <= 0 && v > 0) { st.events.push({ t: st.t, kind: 'control', control: id, value: 1, prev: 0, state: { ...st.vars } }); st.maxIdle = Math.max(st.maxIdle, st.t - st.lastActionT); st.lastActionT = st.t; }
+    if (prev < 100 && v >= 100) { st.events.push({ t: st.t, kind: 'control', control: id, value: 100, prev: 1, state: { ...st.vars } }); st.lastActionT = st.t; }
+    return;
+  }
   st.events.push({ t: st.t, kind: 'control', control: id, value: v, prev, state: { ...st.vars } });
   st.maxIdle = Math.max(st.maxIdle, st.t - st.lastActionT); st.lastActionT = st.t;
   if (c.kind === 'knob') { const dir = Math.sign(v - prev); if (dir && st.lastDir[id] && dir !== st.lastDir[id]) st.reversals++; if (dir) st.lastDir[id] = dir; }
@@ -123,7 +135,7 @@ export function applyControl(spec: BenchSpec, st: BenchState, id: string, value:
 /** 推进 dt 模拟秒：积分变量，评估规则与目标 */
 export function tickBench(spec: BenchSpec, st: BenchState, dt: number) {
   st.t += dt;
-  const env = benchEnv(spec, st);
+  const env = benchEnv(spec, st); env.dt = dt;
   const next: Record<string, number> = {};
   for (const v of spec.vars) {
     let val = st.vars[v.id];
@@ -196,6 +208,7 @@ export function controlText(spec: BenchSpec, e: BenchEvent): string {
   if (!c) return `${e.control} → ${e.value}`;
   if (c.kind === 'switch') return `${c.label} ${e.value ? '开' : '关'}`;
   if (c.kind === 'button') return `按下「${c.label}」`;
+  if (c.kind === 'path') return e.value! >= 100 ? `${c.label}走完` : `${c.label}起步`;
   return `${c.label} ${e.prev ?? ''}${c.unit || ''} → ${e.value}${c.unit || ''}`;
 }
 
@@ -243,20 +256,20 @@ export function sanitizeBenchSpec(raw: any): BenchSpec | null {
   const spec: BenchSpec = {
     name: String(raw.name || '虚拟工位'), brief: String(raw.brief || ''), timeScale: Math.max(1, Number(raw.timeScale) || 10), maxSeconds: Math.max(60, Number(raw.maxSeconds) || 900),
     vars: raw.vars.filter((v: any) => v?.id).map((v: any) => ({ id: String(v.id), label: v.label ? String(v.label) : undefined, initial: Number(v.initial) || 0, rate: v.rate ? String(v.rate) : undefined, set: v.set ? String(v.set) : undefined, min: v.min !== undefined ? Number(v.min) : undefined, max: v.max !== undefined ? Number(v.max) : undefined })),
-    controls: raw.controls.filter((c: any) => c?.id && c?.label).map((c: any) => ({ id: String(c.id), label: String(c.label), kind: ['knob', 'switch', 'button'].includes(c.kind) ? c.kind : 'switch', min: c.min !== undefined ? Number(c.min) : 0, max: c.max !== undefined ? Number(c.max) : 100, step: c.step !== undefined ? Number(c.step) : undefined, unit: c.unit ? String(c.unit) : '', initial: Number(c.initial) || 0, hint: c.hint ? String(c.hint) : undefined })),
+    controls: raw.controls.filter((c: any) => c?.id && c?.label).map((c: any) => ({ id: String(c.id), label: String(c.label), kind: ['knob', 'switch', 'button', 'path'].includes(c.kind) ? c.kind : 'switch', min: c.min !== undefined ? Number(c.min) : 0, max: c.max !== undefined ? Number(c.max) : 100, step: c.step !== undefined ? Number(c.step) : undefined, unit: c.unit ? String(c.unit) : '', initial: Number(c.initial) || 0, hint: c.hint ? String(c.hint) : undefined })),
     gauges: (Array.isArray(raw.gauges) ? raw.gauges : []).filter((g: any) => g?.id && g?.expr).map((g: any) => ({ id: String(g.id), label: String(g.label || g.id), unit: String(g.unit || ''), expr: String(g.expr), min: Number(g.min) || 0, max: Number(g.max) || 100, digits: g.digits !== undefined ? Number(g.digits) : undefined, warn: g.warn ? String(g.warn) : undefined })),
     rules: (Array.isArray(raw.rules) ? raw.rules : []).filter((r: any) => r?.id && r?.when).map((r: any) => ({ id: String(r.id), label: String(r.label || r.id), when: String(r.when), severity: r.severity === 'warning' ? 'warning' : 'violation', once: !!r.once })),
     goals: raw.goals.filter((g: any) => g?.id && g?.when).map((g: any) => ({ id: String(g.id), label: String(g.label || g.id), when: String(g.when), hold: g.hold ? Number(g.hold) : undefined, after: g.after ? String(g.after) : undefined })),
     expertScript: Array.isArray(raw.expertScript) ? raw.expertScript.filter((a: any) => a?.control).map((a: any) => ({ t: Number(a.t) || 0, control: String(a.control), value: Number(a.value) || 0 })) : undefined,
   };
   if (raw.scene && typeof raw.scene.image === 'string' && /^(\/|https?:\/\/)/.test(raw.scene.image) && Array.isArray(raw.scene.layers)) {
-    const KINDS = ['glow', 'lamp', 'door', 'stream', 'pulse', 'readout', 'haze'];
+    const KINDS = ['glow', 'lamp', 'door', 'stream', 'pulse', 'readout', 'haze', 'seam'];
     spec.scene = { image: raw.scene.image.slice(0, 500), credit: raw.scene.credit ? String(raw.scene.credit).slice(0, 200) : undefined,
-      layers: raw.scene.layers.filter((l: any) => l?.id && KINDS.includes(l.kind)).slice(0, 40).map((l: any) => ({ id: String(l.id), kind: l.kind, x: Number(l.x) || 0, y: Number(l.y) || 0, w: Number(l.w) || 0, h: Number(l.h) || 0, level: l.level ? String(l.level) : undefined, on: l.on ? String(l.on) : undefined, text: l.text ? String(l.text) : undefined, unit: l.unit ? String(l.unit) : undefined, digits: l.digits !== undefined ? Number(l.digits) : undefined, color: l.color ? String(l.color).slice(0, 30) : undefined, label: l.label ? String(l.label).slice(0, 40) : undefined })) };
+      layers: raw.scene.layers.filter((l: any) => l?.id && KINDS.includes(l.kind)).slice(0, 40).map((l: any) => ({ id: String(l.id), kind: l.kind, control: l.control ? String(l.control) : undefined, x: Number(l.x) || 0, y: Number(l.y) || 0, w: Number(l.w) || 0, h: Number(l.h) || 0, level: l.level ? String(l.level) : undefined, on: l.on ? String(l.on) : undefined, text: l.text ? String(l.text) : undefined, unit: l.unit ? String(l.unit) : undefined, digits: l.digits !== undefined ? Number(l.digits) : undefined, color: l.color ? String(l.color).slice(0, 30) : undefined, label: l.label ? String(l.label).slice(0, 40) : undefined })) };
   }
   if (!spec.controls.length || !spec.goals.length) return null;
   // 表达式都要能求值
-  try { const st = initBench(spec); const env = benchEnv(spec, st); for (const v of spec.vars) { if (v.rate) evalExpr(v.rate, env); if (v.set) evalExpr(v.set, env); } for (const g of spec.gauges) evalExpr(g.expr, env); for (const r of spec.rules) evalExpr(r.when, env); for (const g of spec.goals) evalExpr(g.when, env); for (const l of spec.scene?.layers || []) { if (l.level) evalExpr(l.level, env); if (l.on) evalExpr(l.on, env); if (l.text) evalExpr(l.text, env); } } catch { return null; }
+  try { const st = initBench(spec); const env = benchEnv(spec, st); env.dt = 1; for (const v of spec.vars) { if (v.rate) evalExpr(v.rate, env); if (v.set) evalExpr(v.set, env); } for (const g of spec.gauges) evalExpr(g.expr, env); for (const r of spec.rules) evalExpr(r.when, env); for (const g of spec.goals) evalExpr(g.when, env); for (const l of spec.scene?.layers || []) { if (l.level) evalExpr(l.level, env); if (l.on) evalExpr(l.on, env); if (l.text) evalExpr(l.text, env); } } catch { return null; }
   return spec;
 }
 

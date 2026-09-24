@@ -116,3 +116,108 @@ export const CASTING_SCRIPTS: Record<string, BenchAction[]> = {
     { t: 770, control: 'pump', value: 0 }, { t: 775, control: 'power', value: 0 },
   ],
 };
+
+// ════════════════════════════════════════════════════════════════
+// Case D 的虚拟工位：CO₂ 气体保护焊 · 平板对接（一维「沿焊缝行走」——以后正面摄像头里手的位置可以直接喂给它）
+// 1 真实秒 = 1 模拟秒；焊缝 200 mm，专家 5 mm/s 约 40 秒焊完。
+// ════════════════════════════════════════════════════════════════
+export const BENCH_WELD: BenchSpec = {
+  name: '气保焊平板对接工位',
+  brief: '两块 6 mm 低碳钢板对接，一条 200 mm 焊缝。目标：先开保护气、把电流电压调进窗口 → 起弧 → 匀速走完（3–7 mm/s）→ 收弧后断电关气。焊枪要在场景里拖着走，每一次停顿、每一段过快都会被记录。',
+  timeScale: 1,
+  maxSeconds: 240,
+  vars: [
+    { id: 'torch_prev', initial: 0, set: 'torch' },
+    // 行走速度 mm/s：焊缝 200 mm，1% = 2 mm
+    { id: 'speed', label: '行走速度', initial: 0, set: '(torch - torch_prev) * 2 / dt', min: 0, max: 60 },
+    { id: 'arc', label: '电弧', initial: 0, set: 'power == 1 && torch > 0 && torch < 100 ? 1 : 0' },
+    { id: 'arc_started', initial: 0, set: 'max(arc_started, arc)' },
+    { id: 'gas_at_arc', initial: -1, set: 'arc == 1 && gas_at_arc < 0 ? gas : gas_at_arc' },
+    { id: 'stall', label: '停顿秒数', initial: 0, set: 'arc == 1 && speed < 0.3 ? stall + dt : 0' },
+    { id: 'stall_max', initial: 0, set: 'max(stall_max, stall)' },
+    { id: 'fast_mm', label: '过快焊段', initial: 0, rate: 'arc == 1 && speed > 7 ? speed : 0' },
+    { id: 'slow_s', label: '过慢秒数', initial: 0, rate: 'arc == 1 && speed > 0.3 && speed < 2 ? 1 : 0' },
+    { id: 'done_t', initial: 0, set: 'torch >= 100 && done_t == 0 ? t : done_t' },
+  ],
+  controls: [
+    { id: 'power', label: '焊机电源', kind: 'switch', hint: '总电源' },
+    { id: 'gas', label: '保护气 CO₂', kind: 'switch', hint: '起弧前先开，焊完再关' },
+    { id: 'current', label: '焊接电流', kind: 'knob', min: 80, max: 260, step: 10, unit: 'A', initial: 100, hint: '6 mm 板对接 160–200 A' },
+    { id: 'voltage', label: '电弧电压', kind: 'knob', min: 14, max: 32, step: 1, unit: 'V', initial: 18, hint: '与电流匹配 20–24 V' },
+    { id: 'torch', label: '焊枪行走', kind: 'path', hint: '在场景里拖着焊枪沿焊缝走，3–7 mm/s，不要停' },
+  ],
+  gauges: [
+    { id: 'g_i', label: '焊接电流', unit: 'A', expr: 'current', min: 0, max: 300, warn: 'arc == 1 && (current < 140 || current > 220)' },
+    { id: 'g_u', label: '电弧电压', unit: 'V', expr: 'voltage', min: 0, max: 40, warn: 'arc == 1 && (voltage < 18 || voltage > 26)' },
+    { id: 'g_v', label: '行走速度', unit: 'mm/s', expr: 'speed', min: 0, max: 12, digits: 1, warn: 'arc == 1 && (speed > 7 || speed < 2)' },
+    { id: 'g_q', label: '热输入', unit: 'kJ/mm', expr: 'speed > 0.3 ? current * voltage * 0.001 / speed : 0', min: 0, max: 3, digits: 2 },
+  ],
+  rules: [
+    { id: 'no_gas', label: '没开保护气就起弧（气孔）', when: 'arc == 1 && gas == 0', severity: 'violation' },
+    { id: 'too_fast', label: '行走过快 > 8 mm/s（未焊透）', when: 'arc == 1 && speed > 8', severity: 'violation' },
+    { id: 'stall', label: '焊枪停住超过 2 秒（烧穿）', when: 'stall > 2', severity: 'violation' },
+    { id: 'i_low', label: '电流低于 140 A 起弧（未熔合）', when: 'arc == 1 && current < 140', severity: 'warning', once: true },
+    { id: 'i_high', label: '电流高于 220 A（咬边 / 飞溅）', when: 'arc == 1 && current > 220', severity: 'violation', once: true },
+    { id: 'u_off', label: '电压与电流不匹配', when: 'arc == 1 && (voltage < 18 || voltage > 26)', severity: 'warning', once: true },
+    { id: 'arc_break', label: '焊到一半断电（断弧）', when: 'arc_started == 1 && torch < 100 && power == 0', severity: 'violation', once: true },
+    { id: 'gas_left', label: '焊完 15 秒还没关气', when: 'done_t > 0 && gas == 1 && t - done_t > 15', severity: 'warning', once: true },
+  ],
+  goals: [
+    { id: 'gas_first', label: '起弧前先开保护气', when: 'gas == 1 && arc_started == 0', hold: 1 },
+    { id: 'params', label: '起弧前电流电压进窗口（160–200 A / 20–24 V）', when: 'current >= 160 && current <= 200 && voltage >= 20 && voltage <= 24 && arc_started == 0', hold: 1 },
+    { id: 'arc', label: '起弧', when: 'arc_started == 1' },
+    { id: 'done', label: '焊完整条焊缝', when: 'torch >= 100', after: 'arc' },
+    { id: 'quality', label: '焊道匀速、无烧穿、全程有气', when: 'fast_mm < 20 && stall_max < 2 && gas_at_arc == 1', after: 'done' },
+    { id: 'shutdown', label: '收弧后断电、关气', when: 'torch >= 100 && power == 0 && gas == 0', after: 'done' },
+  ],
+  scene: {
+    image: '/lab/bench_weld.jpg', credit: '底图由通义万相生成',
+    layers: [
+      { id: 'seam', kind: 'seam', control: 'torch', x: 50.1, y: 40, w: 0, h: 28.5, on: 'arc == 1' },
+      { id: 'smoke', kind: 'haze', x: 38, y: 12, w: 24, h: 30, level: 'arc * 0.7', color: '#9aa0b8' },
+      { id: 'power_lamp', kind: 'lamp', x: 16, y: 28.4, w: 1.4, h: 2.5, on: 'power == 1', color: '#3ddc97' },
+      { id: 'gas_pulse', kind: 'pulse', x: 91, y: 21, w: 5, h: 9, on: 'gas == 1', color: '#3ddc97' },
+      { id: 'ro_i', kind: 'readout', x: 6.3, y: 31, w: 6.3, h: 3, text: 'current', unit: 'A', label: 'I' },
+      { id: 'ro_u', kind: 'readout', x: 6.3, y: 34.3, w: 6.3, h: 3, text: 'voltage', unit: 'V', label: 'U', color: '#7cc8ff' },
+    ],
+  },
+};
+
+/** 匀速走完焊缝的脚本片段：从 t0 起以 mmPerS 走，每 0.5 秒一个采样 */
+const walk = (t0: number, mmPerS: number, from = 0, to = 100): BenchAction[] => {
+  const out: BenchAction[] = []; const pctPerS = mmPerS / 2;
+  for (let t = t0, v = from; v < to; t += 0.5) { v = Math.min(to, from + (t - t0) * pctPerS); out.push({ t, control: 'torch', value: v }); if (v >= to) break; }
+  return out;
+};
+
+export const WELD_EXPERT_SCRIPT: BenchAction[] = [
+  { t: 0, control: 'power', value: 1 }, { t: 2, control: 'gas', value: 1 },
+  { t: 4, control: 'current', value: 180 }, { t: 6, control: 'voltage', value: 22 },
+  ...walk(10, 5),
+  { t: 54, control: 'power', value: 0 }, { t: 57, control: 'gas', value: 0 },
+];
+BENCH_WELD.expertScript = WELD_EXPERT_SCRIPT;
+
+export const WELD_SCRIPTS: Record<string, BenchAction[]> = {
+  // 材料硕士：参数会调、速度稳，但忘了开气，焊到一半才想起来
+  forgot_gas: [
+    { t: 0, control: 'power', value: 1 }, { t: 3, control: 'current', value: 170 }, { t: 5, control: 'voltage', value: 22 },
+    ...walk(8, 5), { t: 22, control: 'gas', value: 1 },
+    { t: 52, control: 'power', value: 0 }, { t: 55, control: 'gas', value: 0 },
+  ],
+  // 机械本科：参数没动（100 A / 18 V），一开始走太快，中间停了 4 秒，焊完没关机
+  fast_and_stall: [
+    { t: 0, control: 'power', value: 1 }, { t: 1, control: 'gas', value: 1 },
+    ...walk(4, 10, 0, 50), { t: 14, control: 'torch', value: 50 }, { t: 18, control: 'torch', value: 50 }, ...walk(18, 5, 50, 100),
+  ],
+  // AI 裸答：顺序对、有气、速度可以，但电流给到 240 A（咬边），电压 28 V
+  ai_bare: [
+    { t: 0, control: 'power', value: 1 }, { t: 1, control: 'gas', value: 1 }, { t: 2, control: 'current', value: 240 }, { t: 3, control: 'voltage', value: 28 },
+    ...walk(6, 6), { t: 42, control: 'power', value: 0 }, { t: 44, control: 'gas', value: 0 },
+  ],
+  // AI + 专家技能：和专家一样的顺序与参数，时刻略有出入
+  ai_skill: [
+    { t: 0, control: 'power', value: 1 }, { t: 1.5, control: 'gas', value: 1 }, { t: 3, control: 'current', value: 180 }, { t: 4.5, control: 'voltage', value: 22 },
+    ...walk(8, 5.5), { t: 48, control: 'power', value: 0 }, { t: 50, control: 'gas', value: 0 },
+  ],
+};
