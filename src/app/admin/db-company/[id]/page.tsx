@@ -12,6 +12,7 @@ import { COMPANY_EDIT_FIELDS, COMPANY_TYPE_LABELS, COMPANY_TYPE_OPTIONS, SEGMENT
 import { JOB_STATUS, JOB_TYPE_LABELS, RECRUIT_SEASON_LABELS, REMOTE_TYPE_LABELS } from '@/lib/job-fields';
 import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { URL_TYPE_ORDER, URL_TYPES, subtypeLabel, urlTypeMeta } from '@/lib/url-types';
+import { RELATION_LABELS, type RelatedResult, type RelationKind } from '@/lib/company-related';
 
 const { Text, Paragraph } = Typography;
 
@@ -34,6 +35,7 @@ export default function CompanyDetailPage() {
   const [news, setNews] = useState<any[]>([]);
   const [executives, setExecutives] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
+  const [related, setRelated] = useState<RelatedResult | null>(null);
   const [profileLogs, setProfileLogs] = useState<any[]>([]);
   const [enriching, setEnriching] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
@@ -52,6 +54,7 @@ export default function CompanyDetailPage() {
   }, [id]);
 
   useEffect(() => { load(); }, [load]);
+  useEffect(() => { fetch(`/api/db/companies/${id}/related`).then(r => r.json()).then(j => { if (j.success) setRelated(j.related); }).catch(() => {}); }, [id]);
 
   const runEnrich = async (overwrite: boolean) => {
     setEnriching(true);
@@ -292,6 +295,28 @@ export default function CompanyDetailPage() {
                 key: 'executives', label: `管理团队（${executives.length}）`,
                 children: <Table rowKey="id" size="small" scroll={{ x: 1000 }} dataSource={executives} columns={[...EXECUTIVE_COLUMNS, entityActionCol('executives')]} pagination={false}
                   locale={{ emptyText: <Empty description={<span>还没有管理团队。<a onClick={() => router.push(toolCompanyHref)}>跑画像流水线</a>会从官网与年报提取。</span>} /> }} />,
+              },
+              {
+                key: 'related', label: `关联企业（${related ? (Object.keys(related) as RelationKind[]).reduce((a, k) => a + related[k].length, 0) : '…'}）`,
+                children: !related ? <Spin /> : (Object.keys(RELATION_LABELS) as RelationKind[]).every(k => !related[k].length)
+                  ? <Empty description="还没找到关联企业。行业、核心产品、投资方、管理团队这些字段越全，关联越多。" />
+                  : (
+                    <div>
+                      {(Object.keys(RELATION_LABELS) as RelationKind[]).filter(k => related[k].length).map(k => (
+                        <div key={k} style={{ marginBottom: 14 }}>
+                          <div style={{ fontSize: 12, fontWeight: 600, color: BRAND.ink2, margin: '0 0 6px', borderLeft: `3px solid ${BRAND.primary}`, paddingLeft: 8 }}>
+                            <Tag color={RELATION_LABELS[k].color} style={{ marginRight: 6 }}>{RELATION_LABELS[k].label}</Tag><Text type="secondary" style={{ fontWeight: 400 }}>{RELATION_LABELS[k].desc}</Text>
+                          </div>
+                          <Table rowKey="id" size="small" dataSource={related[k]} pagination={false} showHeader={false}
+                            columns={[
+                              { dataIndex: 'name', width: 260, render: (t: string, r: any) => <a onClick={() => router.push(`/admin/db-company/${r.id}`)} style={{ fontWeight: 600 }}>{t}</a> },
+                              { dataIndex: 'industry', width: 140, render: (t: string, r: any) => <Text type="secondary" style={{ fontSize: 12 }}>{[t, r.city].filter(Boolean).join(' · ') || '-'}</Text> },
+                              { dataIndex: 'reasons', render: (rs: string[]) => <Space size={4} wrap>{rs.map(x => <Tag key={x} style={{ margin: 0, fontSize: 11 }}>{x}</Tag>)}</Space> },
+                            ]} />
+                        </div>
+                      ))}
+                    </div>
+                  ),
               },
               {
                 key: 'jobs', label: `校招岗位（${jobs.length}）`,
