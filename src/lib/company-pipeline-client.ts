@@ -8,7 +8,7 @@ import { PROFILE_TOPICS, hasValue } from '@/lib/company-fields';
 import { mergeBundles, type ProfileBundle } from '@/lib/company-merge';
 
 export interface PipelineEvent { key: string; title: string; status: 'pending' | 'loading' | 'success' | 'error'; color?: string }
-export interface RunOptions { model: string; topics?: string[]; skipFilled?: boolean }
+export interface RunOptions { model: string; topics?: string[]; skipFilled?: boolean; /** 同一家企业的检索主题并发数（默认 4；批跑可到 7） */ topicConcurrency?: number }
 export interface RunSummary { step: string; label: string; text: string }
 export interface RunData extends ProfileBundle { summaries: RunSummary[]; ai_summary: string; topics_run: string[]; topics_skipped: string[]; pipeline_log?: PipelineEvent[] }
 export interface RunCallbacks {
@@ -111,22 +111,25 @@ export async function runCompanyProfile(log: { id: number; company_id: number; c
       if (!(await cb.waitIfPaused())) return { status: 'aborted' };
     }
 
-    // ── 工序 4：主题检索 ──
-    for (let i = 0; i < topicKeys.length; i++) {
-      const def = PROFILE_TOPICS.find(t => t.key === topicKeys[i])!;
-      const soFar = snapshot().profile;
-      const have = (k: string) => hasValue(company[k]) || hasValue(soFar[k]);
+    // ── 工序 4：主题检索（各主题并发；缺失字段按「企业档案 + 官方页提取」判断，合并时先到先得） ──
+    const setEvent = (key: string, updates: Partial<PipelineEvent>) => { const ev = events.find(e => e.key === key); if (ev) { Object.assign(ev, updates); cb.onEvents([...events]); } };
+    const base = snapshot().profile;
+    const have = (k: string) => hasValue(company[k]) || hasValue(base[k]);
+    const entityLabelOf = (e?: string | null) => e === 'financings' ? '融资' : e === 'news' ? '动态' : e === 'executives' ? '高管' : e === 'products' ? '产品' : '';
+    const runTopic = async (topicKey: string, i: number) => {
+      const def = PROFILE_TOPICS.find(t => t.key === topicKey)!;
       const missing = def.fields.filter(k => !have(k));
       const entityHas = def.entity ? (counts[def.entity] || 0) > 0 || (snapshot()[def.entity] || []).length > 0 : true;
+      const evKey = `search-${def.key}`;
       if (opts.skipFilled && missing.length === 0 && entityHas) {
         topicsSkipped.push(def.key);
-        emit({ key: `search-${def.key}`, title: `工序 4.${i + 1} 跳过「${def.label}」: 目标字段已齐${def.entity ? '、子实体已有记录' : ''}`, status: 'success', color: 'gray' });
-        continue;
+        emit({ key: evKey, title: `工序 4.${i + 1} 跳过「${def.label}」: 目标字段已齐${def.entity ? '、子实体已有记录' : ''}`, status: 'success', color: 'gray' });
+        return;
       }
-      const entityLabel = def.entity === 'financings' ? '融资' : def.entity === 'news' ? '动态' : def.entity === 'executives' ? '高管' : def.entity === 'products' ? '产品' : '';
-      emit({ key: `search-${def.key}`, title: `工序 4.${i + 1}: 联网检索「${def.label}」（缺 ${missing.length} 个字段${def.entity ? ` + ${entityLabel}` : ''}）...`, status: 'loading', color: 'blue' });
-      const s = await post('/api/agents/company/search', { topic: def.key, company: { name: log.company, name_en: company.name_en, brief_name: company.brief_name, country: company.country, official_website: company.official_website || soFar.official_website, industry: company.industry || soFar.industry }, missing, model, batchId });
-      if (!s.success) { done({ status: 'error', color: 'red', title: `「${def.label}」检索失败: ${s.error}` }); continue; }
+      const entityLabel = entityLabelOf(def.entity);
+      emit({ key: evKey, title: `工序 4.${i + 1}: 联网检索「${def.label}」（缺 ${missing.length} 个字段${def.entity ? ` + ${entityLabel}` : ''}）...`, status: 'loading', color: 'blue' });
+      const s = await post('/api/agents/company/search', { topic: def.key, company: { name: log.company, name_en: company.name_en, brief_name: company.brief_name, country: company.country, official_website: company.official_website || base.official_website, industry: company.industry || base.industry }, missing, model, batchId });
+      if (!s.success) { setEvent(evKey, { status: 'error', color: 'red', title: `「${def.label}」检索失败: ${s.error}` }); return; }
       const part: Partial<ProfileBundle> = { profile: s.fields, sources: s.sources };
       if (s.entity) (part as any)[s.entity] = s.rows;
       parts.push(part);
@@ -136,8 +139,12 @@ export async function runCompanyProfile(log: { id: number; company_id: number; c
       stepsDone.push(`search:${def.key}`);
       topicsRun.push(def.key);
       const gained = Object.entries(s.fields || {}).filter(([k, v]) => hasValue(v) && !have(k)).length;
-      done({ status: 'success', color: 'green', title: `「${def.label}」完成: 新增字段 ${gained} 个${s.entity ? `，${entityLabel} ${s.rows?.length || 0} 条` : ''}` });
+      setEvent(evKey, { status: 'success', color: 'green', title: `「${def.label}」完成: 新增字段 ${gained} 个${s.entity ? `，${entityLabel} ${s.rows?.length || 0} 条` : ''}` });
       cb.onData(snapshot());
+    };
+    const CONC = opts.topicConcurrency ?? 4;
+    for (let i = 0; i < topicKeys.length; i += CONC) {
+      await Promise.all(topicKeys.slice(i, i + CONC).map((k, j) => runTopic(k, i + j)));
       if (!(await cb.waitIfPaused())) return { status: 'aborted' };
     }
 
