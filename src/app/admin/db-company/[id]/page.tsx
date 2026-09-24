@@ -200,82 +200,57 @@ export default function CompanyDetailPage() {
       />
 
       <Row gutter={16}>
-        <Col xs={24} xl={9}>
-          <Card title="人工审核" size="small" style={{ marginBottom: 16 }}
-            extra={company.human_review_status ? <Tag color={REVIEW_STATUS[company.human_review_status]?.color}>{REVIEW_STATUS[company.human_review_status]?.label}</Tag> : <Tag>未审核</Tag>}>
-            <Space wrap style={{ marginBottom: 10 }}>
-              <Button type="primary" size="small" icon={<CheckCircleOutlined />} onClick={() => review({ human_review_status: 'complete', human_review_note: note }, '已审核通过')}>审核通过</Button>
-              <Button danger size="small" icon={<CloseCircleOutlined />} onClick={() => review({ human_review_status: 'rejected', human_review_note: note }, '已标记不通过')}>不通过</Button>
-              <Select size="small" style={{ width: 120 }} placeholder="其他状态" value={null} options={REVIEW_STATUS_OPTIONS.filter(o => !['complete', 'rejected'].includes(o.value))} onChange={v => v && review({ human_review_status: v, human_review_note: note }, '审核状态已更新')} />
-            </Space>
-            <Input.TextArea rows={2} placeholder="审核备注（随审核操作一起保存）" value={note} onChange={e => setNote(e.target.value)} />
-            <div style={{ fontSize: 12, color: BRAND.ink4, marginTop: 8, lineHeight: 1.7 }}>
-              通过 / 不通过 / 隐藏后，AI 补全不再覆盖这家企业；人工编辑过的字段会锁定 <LockOutlined style={{ color: BRAND.warning }} />。
-              {(company.human_locked_fields || []).length > 0 && <div>已锁定：{(company.human_locked_fields as string[]).map(k => COMPANY_EDIT_FIELDS.find(f => f.key === k)?.label || k).join('、')} <a onClick={() => review({ unlock: company.human_locked_fields }, '已解除全部锁定')}>解除</a></div>}
-              {company.human_review_at && <div>上次审核 {new Date(company.human_review_at).toLocaleString('zh-CN')}</div>}
-            </div>
-          </Card>
-
-          <Card title="校招入口" size="small" style={{ marginBottom: 16 }}
-            extra={!company.campus_url && <Button type="link" size="small" onClick={() => router.push(toolUrlHref)}>去检索 →</Button>}>
-            <Descriptions column={1} size="small" styles={{ label: { width: 100 } }}>
-              <Descriptions.Item label="校招官网">{link('campus_url')}</Descriptions.Item>
-              <Descriptions.Item label="招聘总入口">{link('careers_url')}</Descriptions.Item>
-            </Descriptions>
-            <div style={{ fontSize: 12, color: BRAND.ink3, margin: '12px 0 4px' }}>校招概况</div>
-            {company.campus_overview
-              ? <Paragraph style={{ marginBottom: 0, whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{withSource('campus_overview', company.campus_overview)}</Paragraph>
-              : <Text type="secondary">暂无。点右上角「AI 补全画像」生成。</Text>}
-          </Card>
-
-          <Card title="企业档案与画像" size="small" style={{ marginBottom: 16 }}
-            extra={<Space size={8}>
-              {company.profile_crawled_at && <Text type="secondary" style={{ fontSize: 12 }}>画像流水线 {new Date(company.profile_crawled_at).toLocaleDateString('zh-CN')}</Text>}
-              {company.profile_updated_at
-                ? <Popconfirm title="重新检索并覆盖已有基础字段？" onConfirm={() => runEnrich(true)} okText="覆盖更新" cancelText="取消"><Button type="link" size="small" loading={enriching} style={{ padding: 0 }}>重新检索</Button></Popconfirm>
-                : <Text type="secondary" style={{ fontSize: 12 }}>尚未 AI 补全</Text>}
-            </Space>}>
-            {company.one_sentence && <div style={{ fontSize: 14, fontWeight: 600, color: BRAND.ink2, marginBottom: 8 }}>{withSource('one_sentence', company.one_sentence)}</div>}
-            {company.introduction
-              ? <Paragraph style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{withSource('introduction', company.introduction)}</Paragraph>
-              : <Text type="secondary" style={{ display: 'block', marginBottom: 12 }}>暂无企业简介</Text>}
-            {PROFILE_GROUPS.map(group => {
-              const fields = COMPANY_EDIT_FIELDS.filter(f => f.group === group && !['name', 'one_sentence', 'introduction'].includes(f.key));
-              const filled = fields.filter(f => hasValue(company[f.key]));
-              if (!filled.length) return null;
-              const shortOnes = filled.filter(f => f.kind !== 'text');
-              const longOnes = filled.filter(f => f.kind === 'text');
-              return (
-                <div key={group} style={{ marginTop: 12 }}>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: BRAND.ink2, margin: '0 0 8px', borderLeft: `3px solid ${BRAND.primary}`, paddingLeft: 8, display: 'flex', justifyContent: 'space-between' }}>
-                    <span>{group}</span>
-                    {fields.length > filled.length && <Text type="secondary" style={{ fontWeight: 400 }}>空缺 {fields.length - filled.length} 项</Text>}
-                  </div>
-                  {shortOnes.length > 0 && (
-                    <Descriptions column={1} size="small" styles={{ label: { width: 100 } }}>
-                      {shortOnes.map(f => (
-                        <Descriptions.Item key={f.key} label={f.label}>
-                          {f.kind === 'url' ? link(f.key) : withSource(f.key, formatProfileValue(f.key, company[f.key]))}
-                        </Descriptions.Item>
-                      ))}
-                    </Descriptions>
-                  )}
-                  {longOnes.map(f => (
-                    <div key={f.key} style={{ margin: '8px 0 4px' }}>
-                      <div style={{ fontSize: 12, color: BRAND.ink3, marginBottom: 2 }}>{f.label}{sources[f.key] && <a href={sources[f.key]} target="_blank" rel="noreferrer" style={{ marginLeft: 6, color: BRAND.ink4 }}><LinkOutlined /></a>}</div>
-                      <Paragraph style={{ marginBottom: 0, whiteSpace: 'pre-wrap', lineHeight: 1.7, fontSize: 13 }} ellipsis={{ rows: 3, expandable: true, symbol: '展开' }}>{formatProfileValue(f.key, company[f.key])}</Paragraph>
-                    </div>
-                  ))}
-                </div>
-              );
-            })}
-            {!company.profile_crawled_at && <div style={{ marginTop: 12, fontSize: 12, color: BRAND.ink4 }}>行业位置、融资、动态、管理团队、口碑与舆情等要靠 <a onClick={() => router.push(toolCompanyHref)}>画像流水线</a> 补齐。</div>}
-          </Card>
-        </Col>
-
         <Col xs={24} xl={15}>
           <Card size="small" styles={{ body: { paddingTop: 4 } }}>
             <Tabs items={[
+              {
+                key: 'profile', label: '档案画像',
+                children: (
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginBottom: 8 }}>
+                  {company.profile_crawled_at && <Text type="secondary" style={{ fontSize: 12 }}>画像流水线 {new Date(company.profile_crawled_at).toLocaleDateString('zh-CN')}</Text>}
+                  {company.profile_updated_at
+                  ? <Popconfirm title="重新检索并覆盖已有基础字段？" onConfirm={() => runEnrich(true)} okText="覆盖更新" cancelText="取消"><Button type="link" size="small" loading={enriching} style={{ padding: 0 }}>重新检索</Button></Popconfirm>
+                  : <Text type="secondary" style={{ fontSize: 12 }}>尚未 AI 补全</Text>}
+                    </div>
+                    {company.one_sentence && <div style={{ fontSize: 14, fontWeight: 600, color: BRAND.ink2, marginBottom: 8 }}>{withSource('one_sentence', company.one_sentence)}</div>}
+                    {company.introduction
+                      ? <Paragraph style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{withSource('introduction', company.introduction)}</Paragraph>
+                      : <Text type="secondary" style={{ display: 'block', marginBottom: 12 }}>暂无企业简介</Text>}
+                    {PROFILE_GROUPS.map(group => {
+                      const fields = COMPANY_EDIT_FIELDS.filter(f => f.group === group && !['name', 'one_sentence', 'introduction'].includes(f.key));
+                      const filled = fields.filter(f => hasValue(company[f.key]));
+                      if (!filled.length) return null;
+                      const shortOnes = filled.filter(f => f.kind !== 'text');
+                      const longOnes = filled.filter(f => f.kind === 'text');
+                      return (
+                        <div key={group} style={{ marginTop: 12 }}>
+                          <div style={{ fontSize: 12, fontWeight: 600, color: BRAND.ink2, margin: '0 0 8px', borderLeft: `3px solid ${BRAND.primary}`, paddingLeft: 8, display: 'flex', justifyContent: 'space-between' }}>
+                            <span>{group}</span>
+                            {fields.length > filled.length && <Text type="secondary" style={{ fontWeight: 400 }}>空缺 {fields.length - filled.length} 项</Text>}
+                          </div>
+                          {shortOnes.length > 0 && (
+                            <Descriptions column={1} size="small" styles={{ label: { width: 100 } }}>
+                              {shortOnes.map(f => (
+                                <Descriptions.Item key={f.key} label={f.label}>
+                                  {f.kind === 'url' ? link(f.key) : withSource(f.key, formatProfileValue(f.key, company[f.key]))}
+                                </Descriptions.Item>
+                              ))}
+                            </Descriptions>
+                          )}
+                          {longOnes.map(f => (
+                            <div key={f.key} style={{ margin: '8px 0 4px' }}>
+                              <div style={{ fontSize: 12, color: BRAND.ink3, marginBottom: 2 }}>{f.label}{sources[f.key] && <a href={sources[f.key]} target="_blank" rel="noreferrer" style={{ marginLeft: 6, color: BRAND.ink4 }}><LinkOutlined /></a>}</div>
+                              <Paragraph style={{ marginBottom: 0, whiteSpace: 'pre-wrap', lineHeight: 1.7, fontSize: 13 }} ellipsis={{ rows: 3, expandable: true, symbol: '展开' }}>{formatProfileValue(f.key, company[f.key])}</Paragraph>
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    })}
+                    {!company.profile_crawled_at && <div style={{ marginTop: 12, fontSize: 12, color: BRAND.ink4 }}>行业位置、融资、动态、管理团队、口碑与舆情等要靠 <a onClick={() => router.push(toolCompanyHref)}>画像流水线</a> 补齐。</div>}
+                  </div>
+                ),
+              },
               {
                 key: 'products', label: `核心产品（${products.length}）`,
                 children: <Table rowKey="id" size="small" scroll={{ x: 1000 }} dataSource={products} columns={[...PRODUCT_COLUMNS, entityActionCol('products')]} pagination={false}
@@ -295,28 +270,6 @@ export default function CompanyDetailPage() {
                 key: 'executives', label: `管理团队（${executives.length}）`,
                 children: <Table rowKey="id" size="small" scroll={{ x: 1000 }} dataSource={executives} columns={[...EXECUTIVE_COLUMNS, entityActionCol('executives')]} pagination={false}
                   locale={{ emptyText: <Empty description={<span>还没有管理团队。<a onClick={() => router.push(toolCompanyHref)}>跑画像流水线</a>会从官网与年报提取。</span>} /> }} />,
-              },
-              {
-                key: 'related', label: `关联企业（${related ? (Object.keys(related) as RelationKind[]).reduce((a, k) => a + related[k].length, 0) : '…'}）`,
-                children: !related ? <Spin /> : (Object.keys(RELATION_LABELS) as RelationKind[]).every(k => !related[k].length)
-                  ? <Empty description="还没找到关联企业。行业、核心产品、投资方、管理团队这些字段越全，关联越多。" />
-                  : (
-                    <div>
-                      {(Object.keys(RELATION_LABELS) as RelationKind[]).filter(k => related[k].length).map(k => (
-                        <div key={k} style={{ marginBottom: 14 }}>
-                          <div style={{ fontSize: 12, fontWeight: 600, color: BRAND.ink2, margin: '0 0 6px', borderLeft: `3px solid ${BRAND.primary}`, paddingLeft: 8 }}>
-                            <Tag color={RELATION_LABELS[k].color} style={{ marginRight: 6 }}>{RELATION_LABELS[k].label}</Tag><Text type="secondary" style={{ fontWeight: 400 }}>{RELATION_LABELS[k].desc}</Text>
-                          </div>
-                          <Table rowKey="id" size="small" dataSource={related[k]} pagination={false} showHeader={false}
-                            columns={[
-                              { dataIndex: 'name', width: 260, render: (t: string, r: any) => <a onClick={() => router.push(`/admin/db-company/${r.id}`)} style={{ fontWeight: 600 }}>{t}</a> },
-                              { dataIndex: 'industry', width: 140, render: (t: string, r: any) => <Text type="secondary" style={{ fontSize: 12 }}>{[t, r.city].filter(Boolean).join(' · ') || '-'}</Text> },
-                              { dataIndex: 'reasons', render: (rs: string[]) => <Space size={4} wrap>{rs.map(x => <Tag key={x} style={{ margin: 0, fontSize: 11 }}>{x}</Tag>)}</Space> },
-                            ]} />
-                        </div>
-                      ))}
-                    </div>
-                  ),
               },
               {
                 key: 'jobs', label: `校招岗位（${jobs.length}）`,
@@ -364,6 +317,57 @@ export default function CompanyDetailPage() {
                 ),
               },
             ]} />
+          </Card>
+        </Col>
+
+        <Col xs={24} xl={9}>
+          <Card title="人工审核" size="small" style={{ marginBottom: 16 }}
+            extra={company.human_review_status ? <Tag color={REVIEW_STATUS[company.human_review_status]?.color}>{REVIEW_STATUS[company.human_review_status]?.label}</Tag> : <Tag>未审核</Tag>}>
+            <Space wrap style={{ marginBottom: 10 }}>
+              <Button type="primary" size="small" icon={<CheckCircleOutlined />} onClick={() => review({ human_review_status: 'complete', human_review_note: note }, '已审核通过')}>审核通过</Button>
+              <Button danger size="small" icon={<CloseCircleOutlined />} onClick={() => review({ human_review_status: 'rejected', human_review_note: note }, '已标记不通过')}>不通过</Button>
+              <Select size="small" style={{ width: 120 }} placeholder="其他状态" value={null} options={REVIEW_STATUS_OPTIONS.filter(o => !['complete', 'rejected'].includes(o.value))} onChange={v => v && review({ human_review_status: v, human_review_note: note }, '审核状态已更新')} />
+            </Space>
+            <Input.TextArea rows={2} placeholder="审核备注（随审核操作一起保存）" value={note} onChange={e => setNote(e.target.value)} />
+            <div style={{ fontSize: 12, color: BRAND.ink4, marginTop: 8, lineHeight: 1.7 }}>
+              通过 / 不通过 / 隐藏后，AI 补全不再覆盖这家企业；人工编辑过的字段会锁定 <LockOutlined style={{ color: BRAND.warning }} />。
+              {(company.human_locked_fields || []).length > 0 && <div>已锁定：{(company.human_locked_fields as string[]).map(k => COMPANY_EDIT_FIELDS.find(f => f.key === k)?.label || k).join('、')} <a onClick={() => review({ unlock: company.human_locked_fields }, '已解除全部锁定')}>解除</a></div>}
+              {company.human_review_at && <div>上次审核 {new Date(company.human_review_at).toLocaleString('zh-CN')}</div>}
+            </div>
+          </Card>
+
+          <Card title="校招入口" size="small" style={{ marginBottom: 16 }}
+            extra={!company.campus_url && <Button type="link" size="small" onClick={() => router.push(toolUrlHref)}>去检索 →</Button>}>
+            <Descriptions column={1} size="small" styles={{ label: { width: 100 } }}>
+              <Descriptions.Item label="校招官网">{link('campus_url')}</Descriptions.Item>
+              <Descriptions.Item label="招聘总入口">{link('careers_url')}</Descriptions.Item>
+            </Descriptions>
+            <div style={{ fontSize: 12, color: BRAND.ink3, margin: '12px 0 4px' }}>校招概况</div>
+            {company.campus_overview
+              ? <Paragraph style={{ marginBottom: 0, whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{withSource('campus_overview', company.campus_overview)}</Paragraph>
+              : <Text type="secondary">暂无。点右上角「AI 补全画像」生成。</Text>}
+          </Card>
+
+          <Card title={`关联企业（${related ? (Object.keys(related) as RelationKind[]).reduce((a, k) => a + related[k].length, 0) : "…"}）`} size="small" style={{ marginBottom: 16 }}>
+    {!related ? <Spin /> : (Object.keys(RELATION_LABELS) as RelationKind[]).every(k => !related[k].length)
+      ? <Empty description="还没找到关联企业。行业、核心产品、投资方、管理团队这些字段越全，关联越多。" />
+      : (
+        <div>
+          {(Object.keys(RELATION_LABELS) as RelationKind[]).filter(k => related[k].length).map(k => (
+            <div key={k} style={{ marginBottom: 14 }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: BRAND.ink2, margin: '0 0 6px', borderLeft: `3px solid ${BRAND.primary}`, paddingLeft: 8 }}>
+                <Tag color={RELATION_LABELS[k].color} style={{ marginRight: 6 }}>{RELATION_LABELS[k].label}</Tag><Text type="secondary" style={{ fontWeight: 400 }}>{RELATION_LABELS[k].desc}</Text>
+              </div>
+              <Table rowKey="id" size="small" dataSource={related[k]} pagination={false} showHeader={false}
+                columns={[
+                  { dataIndex: 'name', render: (t: string, r: any) => <div><a onClick={() => router.push(`/admin/db-company/${r.id}`)} style={{ fontWeight: 600, fontSize: 13 }}>{t}</a><div style={{ fontSize: 11, color: BRAND.ink4 }}>{[r.industry, r.city].filter(Boolean).join(' · ')}</div></div> },
+                  { dataIndex: 'reasons', width: 150, render: (rs: string[]) => <Space size={2} wrap>{rs.map(x => <Tag key={x} style={{ margin: 0, fontSize: 11, whiteSpace: 'normal' }}>{x}</Tag>)}</Space> },
+                ]} />
+            </div>
+          ))}
+        </div>
+      )
+    }
           </Card>
         </Col>
       </Row>
