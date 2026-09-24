@@ -212,11 +212,11 @@ export interface BuiltSpace {
   benchAdded: boolean; artCount: number;
 }
 
-export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, progress: Progress = () => {}, opts: { bench?: boolean; art?: boolean } = {}): Promise<BuiltSpace> {
+export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, progress: Progress = () => {}, opts: { bench?: boolean; art?: boolean; hint?: string } = {}): Promise<BuiltSpace> {
   const wantBench = opts.bench !== false, wantArt = opts.art !== false && artAvailable();
 
   progress('拆解职责 · 设计任务与故事线');
-  const task = await generateTask(jd, null, modelId);
+  const task = await generateTask(jd, null, modelId, opts.hint || '');
   let sim = task.sim;
   if (!sim) throw new Error('大模型没有给出可用的故事线，请重试');
 

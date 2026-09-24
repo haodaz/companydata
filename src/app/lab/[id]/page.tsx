@@ -9,7 +9,7 @@ import { SimRunner, SimStage, TraceCompare, enterFullscreen } from '@/components
 import { traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tzLabel, type InterviewTurn, type RubricItem } from '@/lib/skill-lab';
 
-type Mode = 'test' | 'learn' | 'solve' | 'ledger' | 'jd';
+type Mode = 'career' | 'test' | 'learn' | 'solve' | 'ledger' | 'jd';
 
 const MODES: { key: Mode; label: string; icon: string }[] = [
   { key: 'test', label: '考验新人', icon: '🎯' },
@@ -111,6 +111,48 @@ function ReportBody({ sub, rubric, sim, skill, actions }: { sub: any; rubric: an
   );
 }
 
+/** 职业地图：给高中生 / 大学生看的生涯概览（做什么、一天、技能树、进入路径、阶梯、相关职业、适不适合） */
+function CareerPanel({ career: c, onTry }: { career: any; onTry: () => void }) {
+  const Sec = ({ cap, children, style }: { cap: string; children: React.ReactNode; style?: React.CSSProperties }) => <div className="lab-glass" style={{ padding: 20, minWidth: 0, ...style }}><div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>{cap}</div>{children}</div>;
+  return (
+    <div className="lab-in" style={{ display: 'grid', gap: 16 }}>
+      <div className="lab-glass" style={{ padding: 22, background: 'linear-gradient(135deg, rgba(106,92,255,.08), rgba(18,181,203,.08))' }}>
+        <div className="lab-mono lab-cap">CAREER MAP · {c.profession}</div>
+        <div style={{ fontSize: 22, fontWeight: 800, margin: '4px 0 6px' }}>{c.one_liner}</div>
+        <div style={{ fontSize: 13.5, color: 'var(--ink3)', lineHeight: 1.7 }}>下面这些是这个职业公开、公认的常识，由 AI 整理；「亲手试一天」里的任务、操作台和评分是为你生成的体验。典型雇主：{c.typical_employer}。</div>
+        <button className="lab-btn" style={{ marginTop: 12 }} onClick={onTry}>🎯 亲手体验这个职业的一天 →</button>
+      </div>
+      <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', alignItems: 'start' }}>
+        <Sec cap="这个职业在做什么">{(c.what_they_do || []).map((x: string) => <div key={x} style={{ fontSize: 14, lineHeight: 1.9 }}>· {x}</div>)}</Sec>
+        <Sec cap="典型的一天">{(c.day_in_life || []).map((d: any, i: number) => <div key={i} style={{ display: 'flex', gap: 10, fontSize: 13.5, lineHeight: 1.8 }}><span className="lab-mono" style={{ color: 'var(--v)', minWidth: 52, letterSpacing: 0 }}>{d.time}</span><span>{d.activity}</span></div>)}</Sec>
+      </div>
+      <Sec cap="需要的核心技能 · 现在就能怎么练">
+        <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))' }}>
+          {(c.skills || []).map((s: any) => (
+            <div key={s.name} style={{ padding: '12px 14px', borderRadius: 14, border: '1px solid var(--line)', background: 'rgba(255,255,255,.6)' }}>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}><span className={`lab-chip ${s.kind === 'hard' ? 'c' : 'p'}`}>{s.kind === 'hard' ? '硬技能' : '软技能'}</span><b style={{ fontSize: 14.5 }}>{s.name}</b></div>
+              <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.7, marginTop: 6 }}>{s.why}</div>
+              <div style={{ fontSize: 13, lineHeight: 1.7, marginTop: 4 }}>→ {s.how_to_build}</div>
+            </div>
+          ))}
+        </div>
+      </Sec>
+      <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', alignItems: 'start' }}>
+        <Sec cap="怎么进入">{(c.entry_paths || []).map((p: any) => <div key={p.path} style={{ fontSize: 13.5, lineHeight: 1.8, marginBottom: 4 }}><b>{p.path}</b><span style={{ color: 'var(--ink3)' }}> · {p.detail}</span></div>)}</Sec>
+        <Sec cap="成长阶梯">
+          {(c.ladder || []).map((l: any, i: number) => <div key={i} style={{ display: 'flex', gap: 10, padding: '6px 0', borderBottom: '1px solid var(--line)', fontSize: 13.5, lineHeight: 1.7 }}><span className="lab-mono" style={{ color: 'var(--v)', minWidth: 64, letterSpacing: 0 }}>{l.years}</span><div><b>{l.title || l.stage}</b><div style={{ color: 'var(--ink3)', fontSize: 12.5 }}>{l.focus}</div></div></div>)}
+          {c.salary_note && <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.7 }}>💰 {c.salary_note}</div>}
+        </Sec>
+      </div>
+      <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', alignItems: 'start' }}>
+        <Sec cap="你可能适合，如果你……">{(c.fit_signs || []).map((x: string) => <div key={x} style={{ fontSize: 13.5, lineHeight: 1.9, color: '#0d7a3d' }}>✓ {x}</div>)}</Sec>
+        <Sec cap="你可能不适合，如果你……">{(c.misfit_signs || []).map((x: string) => <div key={x} style={{ fontSize: 13.5, lineHeight: 1.9, color: '#b23a48' }}>✗ {x}</div>)}</Sec>
+        <Sec cap="相邻的职业">{(c.related || []).map((r: any) => <div key={r.name} style={{ fontSize: 13.5, lineHeight: 1.8, marginBottom: 4 }}><b>{r.name}</b><span style={{ color: 'var(--ink3)' }}> · {r.difference}</span></div>)}</Sec>
+      </div>
+    </div>
+  );
+}
+
 export default function SpacePage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -123,6 +165,7 @@ export default function SpacePage() {
   const [invs, setInvs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [mode, setMode] = useState<Mode>('test');
+  const openedCareer = useRef(false);
   const [busy, setBusy] = useState('');             // 正在做什么（AI 核心进入 busy 动效）
   const [openSub, setOpenSub] = useState<any>(null);
   /** 沉浸模式：评分报告直接在舞台里出（退出后排行榜里照样能看） */
@@ -155,6 +198,7 @@ export default function SpacePage() {
   }, [id, message]);
 
   useEffect(() => { load(); }, [load]);
+  useEffect(() => { if (space?.jd_snapshot?.career && !openedCareer.current) { openedCareer.current = true; setMode('career'); } }, [space]);
   useEffect(() => { chatEnd.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, [turns]);
 
   const post = async (path: string, body: Record<string, unknown>) => {
@@ -321,7 +365,7 @@ export default function SpacePage() {
 
       {/* ══════ 模式 ══════ */}
       <div className="lab-tabs" style={{ margin: '20px 0 16px' }}>
-        {MODES.map(m => <div key={m.key} className={`lab-tab${mode === m.key ? ' on' : ''}`} onClick={() => setMode(m.key)}><span>{m.icon}</span>{m.label}</div>)}
+        {(jd.career ? [{ key: 'career' as Mode, label: '职业地图', icon: '🧭' }, ...MODES] : MODES).map(m => <div key={m.key} className={`lab-tab${mode === m.key ? ' on' : ''}`} onClick={() => setMode(m.key)}><span>{m.icon}</span>{m.label}</div>)}
       </div>
 
       {/* ── 考验新人 ── */}
@@ -591,6 +635,9 @@ export default function SpacePage() {
           </div>
         </div>
       )}
+
+      {/* ── 职业地图（职业探索空间） ── */}
+      {mode === 'career' && jd.career && <CareerPanel career={jd.career} onTry={() => setMode('test')} />}
 
       {/* ── JD 拆解 ── */}
       {mode === 'jd' && (

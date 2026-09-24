@@ -25,7 +25,7 @@ async function ask(prompt: string, modelId: string, taskName: string, json = tru
 export interface JdInput { company: string; title: string; responsibilities: string; qualifications: string }
 export interface SkillRef { name: string; card: SkillCard }
 
-export async function generateTask(jd: JdInput, skill: SkillRef | null, modelId = DEFAULT_MODEL) {
+export async function generateTask(jd: JdInput, skill: SkillRef | null, modelId = DEFAULT_MODEL, hint = '') {
   const text = await ask(`
     你是一位资深的校招面试官，擅长把岗位 JD 变成「工作样本测试」：让候选人做一件这个岗位入职第一个月真的会做的事。
 
@@ -33,6 +33,7 @@ export async function generateTask(jd: JdInput, skill: SkillRef | null, modelId 
     岗位职责：${jd.responsibilities || '（JD 未提供）'}
     任职要求：${jd.qualifications || '（JD 未提供）'}
     ${skill ? `\n这道题要重点检验下面这项技能，评分标准应体现这位专家的判断规则：\n${skillCardToPrompt(skill.name, skill.card)}\n` : ''}
+    ${hint ? `\n【特别说明】${hint}\n` : ''}
     第一步先「拆解 JD」：逐条读岗位职责，把每一条职责原句对应到一个能力项，并各想一个可以在 1 小时内检验这项能力的任务点子。然后选出最值得检验的 1 条（与给定技能最贴合的那条），把它做成完整任务。
 
     要求：

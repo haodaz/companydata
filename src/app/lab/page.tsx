@@ -8,7 +8,7 @@ import { useModel } from '@/lib/model-context';
 
 const BUILD_STEPS = ['读取岗位 JD', '逐条拆解岗位职责', '对齐能力项', '设计可检验的任务', '生成评分标准', '唤醒岗位 AI 核心'];
 /** 真实构建（任意 JD）的阶段：与服务端 progress 的 phase 文案一致 */
-const BUILD_PHASES = ['读取岗位 JD', '拆解职责 · 设计任务与故事线', '推断技能集 · 设计虚拟工位 · 规划场景', '生成场景与立绘', '唤醒岗位 AI 核心', '完成'];
+const BUILD_PHASES = ['结构化职业 · 推断典型岗位', '读取岗位 JD', '拆解职责 · 设计任务与故事线', '推断技能集 · 设计虚拟工位 · 规划场景', '生成场景与立绘', '唤醒岗位 AI 核心', '完成'];
 
 const MODES = [
   { k: '01', t: '考验新人', d: '让新兵把任务走一遍，AI 核心按岗位标准逐项评分。' },
@@ -35,6 +35,7 @@ export default function LabHome() {
   const [jobs, setJobs] = useState<any[]>([]);
   const [jobsLoading, setJobsLoading] = useState(false);
   const [buildInfo, setBuildInfo] = useState<{ phase: string; detail?: string; error?: string } | null>(null);
+  const [profession, setProfession] = useState('');
   const [buildSince, setBuildSince] = useState(0);
   const [now, setNow] = useState(0);
 
@@ -78,14 +79,14 @@ export default function LabHome() {
     finally { setJobsLoading(false); }
   };
 
-  /** 任意 JD → 岗位 AI 自己生成 技能集草案 + 故事线 + 虚拟工位 + 美术（约 2–4 分钟） */
-  const buildFromJob = async (job: any) => {
+  /** 任意 JD → 岗位 AI 自己生成 技能集草案 + 故事线 + 虚拟工位 + 美术（约 2–4 分钟）；或只给一个职业名 → 职业探索空间 */
+  const buildFromJob = async (job: any | null, prof?: string) => {
     const buildId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
     setPickOpen(false);
-    setBuildInfo({ phase: '读取岗位 JD' }); setBuildSince(Date.now()); setNow(Date.now());
-    setBuilding({ company: job.institute_or_company_name, title: job.name, buildId });
+    setBuildInfo({ phase: prof ? '结构化职业 · 推断典型岗位' : '读取岗位 JD' }); setBuildSince(Date.now()); setNow(Date.now());
+    setBuilding(prof ? { company: '职业探索', title: prof, buildId, career: true } : { company: job.institute_or_company_name, title: job.name, buildId });
     try {
-      const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ jobId: job.id, model: currentModel, buildId }) })).json();
+      const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(prof ? { profession: prof, model: currentModel, buildId } : { jobId: job.id, model: currentModel, buildId }) })).json();
       if (!json.ok) throw new Error(json.error);
       if (!json.benchAdded) message.warning('空间已建好，但这次「虚拟操作空间」没有通过模拟器校验，先以故事线为主。', 8);
       else if (!json.artCount) message.warning('空间已建好，但场景美术没有生成（文生图服务不可用）。', 8);
@@ -132,12 +133,12 @@ export default function LabHome() {
           const secs = Math.max(0, Math.round((now - buildSince) / 1000));
           return (
             <div className="lab-glass lab-scan" style={{ padding: '18px 26px', minWidth: 360, textAlign: 'left' }}>
-              {BUILD_PHASES.slice(0, -1).map((s, i) => (
+              {BUILD_PHASES.slice(building.career ? 0 : 1, -1).map((s, i) => { i += building.career ? 0 : 1; return (
                 <div key={s} className="lab-mono" style={{ fontSize: 13, padding: '4px 0', color: i < cur ? '#12a150' : i === cur ? 'var(--v)' : 'var(--ink3)', fontWeight: i === cur ? 700 : 400 }}>
                   {i < cur ? '✓' : i === cur ? '▸' : '·'} {s}{i === cur && <span className="lab-dots" />}
                   {i === cur && buildInfo?.detail && <div style={{ fontSize: 11.5, color: 'var(--ink3)', fontWeight: 400, paddingLeft: 18 }}>{buildInfo.detail}</div>}
                 </div>
-              ))}
+              ); })}
               <div className="lab-mono" style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 10, letterSpacing: '.08em' }}>{String(Math.floor(secs / 60)).padStart(2, '0')}:{String(secs % 60).padStart(2, '0')} · 岗位 AI 正在自己生成技能集、故事线、虚拟工位和场景，约 2–4 分钟</div>
             </div>
           );
@@ -210,7 +211,7 @@ export default function LabHome() {
                   <div style={{ minWidth: 0, flex: 1 }}>
                     <div className="lab-mono lab-cap">{profile.codename || 'JD-CORE'}</div>
                     <div style={{ fontSize: 17, fontWeight: 800, lineHeight: 1.35 }}>{jd.company} · {jd.title}</div>
-                    <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 2 }}>{jd.job_req_id ? `职位 ID ${jd.job_req_id} · ` : ''}{jd.location}</div>
+                    <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 2 }}>{jd.kind === 'career' ? <span className="lab-chip c" style={{ marginRight: 6 }}>职业探索 · {jd.career?.profession}</span> : jd.job_req_id ? `职位 ID ${jd.job_req_id} · ` : ''}{jd.location}</div>
                   </div>
                 </div>
 
@@ -261,6 +262,14 @@ export default function LabHome() {
                 ))}
               </div>
             )}
+          </div>
+          <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(18,181,203,.4)' }}>
+            <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>ANY CAREER · 职业探索</div>
+            <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>不需要 JD，只给一个职业名：AI 会把它结构化成<b>典型岗位 + 技能树 + 生涯地图</b>，再生成同样的故事线和虚拟操作空间——给高中生 / 大学生亲手体验一个职业的一天。</div>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <input className="lab-input" value={profession} onChange={e => setProfession(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && profession.trim()) buildFromJob(null, profession.trim()); }} placeholder="输入一个职业，如：无人机飞手 / 临床营养师 / 游戏关卡策划 / 汽车工艺工程师" style={{ flex: 1, padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
+              <button className="lab-btn" disabled={!profession.trim()} onClick={() => buildFromJob(null, profession.trim())}>生成探索空间 →</button>
+            </div>
           </div>
           <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>DEMO JDS · 预置示范</div>
           {jdsLoading && <div className="lab-glass lab-scan" style={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span className="lab-mono" style={{ color: 'var(--ink3)' }}>LOADING<span className="lab-dots" /></span></div>}
