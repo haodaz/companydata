@@ -44,3 +44,8 @@ next-env.d.ts
 
 # 技能空间运行时生成的美术
 public/lab/gen/
+
+# 录屏工具的二进制 / 依赖
+scripts/video/ffmpeg
+scripts/video/node_modules/
+scripts/video/package*.json
