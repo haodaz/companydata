@@ -15,7 +15,7 @@ export const maxDuration = 300;
  * PATCH — 更新日志；status = success 时把画像 + 子实体写入企业库，并汇总成本
  */
 
-const LIST_COLUMNS = 'id, task_id, company_id, company, status, steps_done, markdown_len, pages_fetched, fields_filled, financings_saved, news_saved, executives_saved, completeness_before, completeness_after, llm_calls, token_total, cost_usd, model_id, error_message, started_at, finished_at, created_at, updated_at, ai_summary:structured_json->>ai_summary, task:company_tasks(id, name)';
+const LIST_COLUMNS = 'id, task_id, company_id, company, status, steps_done, markdown_len, pages_fetched, fields_filled, financings_saved, news_saved, executives_saved, products_saved, completeness_before, completeness_after, llm_calls, token_total, cost_usd, model_id, error_message, started_at, finished_at, created_at, updated_at, ai_summary:structured_json->>ai_summary, task:company_tasks(id, name)';
 
 export async function GET(request: Request) {
   try {
@@ -92,7 +92,7 @@ export async function PATCH(request: Request) {
         applied = await applyProfileBundle(log.id, log.company_id, log.structured_json);
         const cost = await summarizeCost(log.batch_id);
         await supabaseAdmin.from('company_crawl_logs').update({
-          pushed_to_db: true, fields_filled: applied.filled, financings_saved: applied.financings_saved, news_saved: applied.news_saved, executives_saved: applied.executives_saved,
+          pushed_to_db: true, fields_filled: applied.filled, financings_saved: applied.financings_saved, news_saved: applied.news_saved, executives_saved: applied.executives_saved, products_saved: applied.products_saved,
           completeness_before: applied.completeness_before, completeness_after: applied.completeness_after, ...cost,
         }).eq('id', id);
         applied = { ...applied, ...cost };

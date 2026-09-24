@@ -7,15 +7,16 @@
 import { supabaseAdmin } from '@/lib/supabase';
 import { PIPELINE_FIELDS, computeCompanyCompleteness, hasValue, type SubEntityKey } from '@/lib/company-fields';
 import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
-import { financingKey, newsKey, executiveKey, normalizeFinancing, normalizeNews, normalizeExecutive, normalizeProfileValue, type ProfileBundle } from '@/lib/company-merge';
+import { financingKey, newsKey, executiveKey, productKey, normalizeFinancing, normalizeNews, normalizeExecutive, normalizeProduct, normalizeProfileValue, type ProfileBundle } from '@/lib/company-merge';
 
 export async function subEntityCounts(companyId: number): Promise<Record<SubEntityKey, number>> {
-  const [f, n, e] = await Promise.all([
+  const [f, n, e, p] = await Promise.all([
     supabaseAdmin.from('company_financings').select('id', { count: 'exact', head: true }).eq('company_id', companyId).eq('if_delete', false),
     supabaseAdmin.from('company_news').select('id', { count: 'exact', head: true }).eq('company_id', companyId).eq('if_delete', false),
     supabaseAdmin.from('company_executives').select('id', { count: 'exact', head: true }).eq('company_id', companyId).eq('if_delete', false),
+    supabaseAdmin.from('company_products').select('id', { count: 'exact', head: true }).eq('company_id', companyId).eq('if_delete', false),
   ]);
-  return { financings: f.count || 0, news: n.count || 0, executives: e.count || 0 };
+  return { financings: f.count || 0, news: n.count || 0, executives: e.count || 0, products: p.count || 0 };
 }
 
 export async function refreshCompleteness(companyId: number): Promise<number> {
@@ -73,7 +74,7 @@ async function upsertRows(table: string, companyId: number, logId: number, rows:
   return saved;
 }
 
-export interface ApplyResult { filled: string[]; financings_saved: number; news_saved: number; executives_saved: number; completeness_before: number; completeness_after: number; frozen: boolean }
+export interface ApplyResult { filled: string[]; financings_saved: number; news_saved: number; executives_saved: number; products_saved: number; completeness_before: number; completeness_after: number; frozen: boolean }
 
 export async function applyProfileBundle(logId: number, companyId: number, bundle: ProfileBundle): Promise<ApplyResult> {
   const { data: company, error } = await supabaseAdmin.from('companies').select('*').eq('id', companyId).single();
@@ -104,10 +105,12 @@ export async function applyProfileBundle(logId: number, companyId: number, bundl
   const financings = (bundle.financings || []).map(normalizeFinancing).filter(Boolean) as any[];
   const news = (bundle.news || []).map(normalizeNews).filter(Boolean) as any[];
   const executives = (bundle.executives || []).map(normalizeExecutive).filter(Boolean) as any[];
-  const [fs, ns, es] = await Promise.all([
+  const products = (bundle.products || []).map(normalizeProduct).filter(Boolean) as any[];
+  const [fs, ns, es, ps] = await Promise.all([
     upsertRows('company_financings', companyId, logId, financings, r => financingKey(companyId, r)),
     upsertRows('company_news', companyId, logId, news, r => newsKey(companyId, r)),
     upsertRows('company_executives', companyId, logId, executives, r => executiveKey(companyId, r)),
+    upsertRows('company_products', companyId, logId, products, r => productKey(companyId, r)),
   ]);
 
   // 3. 完整度 + 画像时间
@@ -120,5 +123,5 @@ export async function applyProfileBundle(logId: number, companyId: number, bundl
   const { error: upErr } = await supabaseAdmin.from('companies').update(updates).eq('id', companyId);
   if (upErr) throw new Error(`companies 更新失败: ${upErr.message}`);
 
-  return { filled, financings_saved: fs, news_saved: ns, executives_saved: es, completeness_before: before, completeness_after: after, frozen };
+  return { filled, financings_saved: fs, news_saved: ns, executives_saved: es, products_saved: ps, completeness_before: before, completeness_after: after, frozen };
 }

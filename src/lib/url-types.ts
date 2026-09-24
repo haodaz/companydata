@@ -36,7 +36,7 @@ export const URL_SUBTYPES: Record<UrlType, Record<string, string>> = {
   careers: { portal: '招聘首页', search: '职位列表', ats: 'ATS 招聘站', team: '团队 / 职能招聘页' },
   campus: { portal: '校招官网', graduate: '应届生', intern: '实习', remote_intern: '远程实习', program: '管培 / 专项计划', overseas: '留学生专场', list: '校招职位列表', events: '宣讲与活动', faq: '校招 FAQ / 流程' },
   job: {},
-  about: { about: '关于我们', ir: '投资者关系', culture: '文化与福利', news: '新闻中心', team: '管理团队', locations: '办公地点' },
+  about: { about: '关于我们', ir: '投资者关系', culture: '文化与福利', news: '新闻中心', team: '管理团队', products: '产品中心', locations: '办公地点' },
 };
 
 export function subtypeOptions(type?: string | null) {

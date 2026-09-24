@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Button, Card, Col, Descriptions, Empty, Form, Input, InputNumber, Modal, Popconfirm, Row, Select, Space, Spin, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
 import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, GlobalOutlined, LinkOutlined, ThunderboltOutlined, ApiOutlined, CheckCircleOutlined, CloseCircleOutlined, LockOutlined, ProfileOutlined, EyeOutlined, TrophyOutlined } from '@ant-design/icons';
-import { FINANCING_COLUMNS, NEWS_COLUMNS, EXECUTIVE_COLUMNS, formatProfileValue } from '@/components/admin/CompanyRunView';
+import { FINANCING_COLUMNS, NEWS_COLUMNS, EXECUTIVE_COLUMNS, PRODUCT_COLUMNS, formatProfileValue } from '@/components/admin/CompanyRunView';
 import { EntityHero } from '@/components/admin/EntityHero';
 import { useModel } from '@/lib/model-context';
 import { BRAND } from '@/lib/theme';
@@ -33,6 +33,7 @@ export default function CompanyDetailPage() {
   const [financings, setFinancings] = useState<any[]>([]);
   const [news, setNews] = useState<any[]>([]);
   const [executives, setExecutives] = useState<any[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
   const [profileLogs, setProfileLogs] = useState<any[]>([]);
   const [enriching, setEnriching] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
@@ -45,7 +46,7 @@ export default function CompanyDetailPage() {
       const json = await (await fetch(`/api/db/companies/${id}`)).json();
       if (!json.success) throw new Error(json.error);
       setCompany(json.company); setUrls(json.urls); setJobs(json.jobs); setJournals(json.journals); setNote(json.company?.human_review_note || '');
-      setFinancings(json.financings || []); setNews(json.news || []); setExecutives(json.executives || []); setProfileLogs(json.profileLogs || []);
+      setFinancings(json.financings || []); setNews(json.news || []); setExecutives(json.executives || []); setProfileLogs(json.profileLogs || []); setProducts(json.products || []);
     } catch (e: any) { message.error(`加载失败: ${e.message}`); }
     finally { setLoading(false); }
   }, [id]);
@@ -188,6 +189,7 @@ export default function CompanyDetailPage() {
         </>}
         metrics={[
           { label: '完整度', value: company.completeness_score ?? '—', color: BRAND.primary },
+          { label: '核心产品', value: products.length, color: '#c2410c' },
           { label: '在招岗位', value: openJobs.length, color: BRAND.success },
           { label: '岗位总数', value: jobs.length },
           { label: '信息源', value: urls.length },
@@ -221,6 +223,14 @@ export default function CompanyDetailPage() {
             {company.campus_overview
               ? <Paragraph style={{ marginBottom: 0, whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{withSource('campus_overview', company.campus_overview)}</Paragraph>
               : <Text type="secondary">暂无。点右上角「AI 补全画像」生成。</Text>}
+          </Card>
+
+          <Card title={`核心产品（${products.length}）`} size="small" style={{ marginBottom: 16 }}
+            extra={<Tooltip title="主打产品 / 产品线 / 品牌 / 自有 App / 服务，来自画像流水线「核心产品」主题；⭐ 为拳头产品"><Text type="secondary" style={{ fontSize: 12 }}>可按列排序</Text></Tooltip>}
+            styles={{ body: { padding: products.length ? 0 : 16 } }}>
+            {products.length
+              ? <Table rowKey="id" size="small" dataSource={products} columns={[...PRODUCT_COLUMNS, entityActionCol('products')]} pagination={false} scroll={{ x: 900 }} />
+              : <Text type="secondary">还没有核心产品。<a onClick={() => router.push(toolCompanyHref)}>跑画像流水线</a>会从官网产品中心 / 年报 / 旗舰店提取。</Text>}
           </Card>
 
           <Card title="企业档案与画像" size="small" style={{ marginBottom: 16 }}

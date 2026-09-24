@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button, Card, Empty, Space, Spin, Table, Tabs, Tag, Timeline, Tooltip, Typography } from 'antd';
 import { ArrowLeftOutlined, CodeOutlined, FileTextOutlined, LinkOutlined, PauseCircleOutlined, RocketOutlined, SearchOutlined, StopOutlined, SyncOutlined } from '@ant-design/icons';
 import { BRAND } from '@/lib/theme';
-import { COMPANY_EDIT_FIELDS, FINANCE_ROUND_LABELS, EDUCATION_LABELS, GENDER_LABELS, NEWS_KIND_LABELS, SEGMENT_LABELS, COMPANY_TYPE_LABELS, KIND_LABELS, CONTINENT_LABELS, TYPE_LABEL_LABELS, PIPELINE_FIELDS, hasValue } from '@/lib/company-fields';
+import { COMPANY_EDIT_FIELDS, FINANCE_ROUND_LABELS, EDUCATION_LABELS, GENDER_LABELS, NEWS_KIND_LABELS, SEGMENT_LABELS, COMPANY_TYPE_LABELS, KIND_LABELS, CONTINENT_LABELS, TYPE_LABEL_LABELS, PRODUCT_KIND_LABELS, PRODUCT_STATUS_LABELS, PIPELINE_FIELDS, hasValue } from '@/lib/company-fields';
 import type { PipelineEvent, RunData } from '@/lib/company-pipeline-client';
 
 const { Text } = Typography;
@@ -44,6 +44,16 @@ export const EXECUTIVE_COLUMNS = [
   { title: '性别 / 年龄', width: 90, render: (_: any, r: any) => [r.gender && GENDER_LABELS[r.gender], r.age].filter(Boolean).join(' / ') || '-' },
   { title: '持股', width: 110, render: (_: any, r: any) => [r.share_holding != null ? `${r.share_holding} 万股` : null, r.share_ratio != null ? `${r.share_ratio}%` : null].filter(Boolean).join(' · ') || '-' },
   { title: '任职起始', width: 100, render: (_: any, r: any) => r.start_date || r.start_date_str || '-' },
+  { title: '', width: 40, render: (_: any, r: any) => r.source_url ? <a href={r.source_url} target="_blank" rel="noreferrer"><LinkOutlined /></a> : null },
+];
+
+export const PRODUCT_COLUMNS = [
+  { title: '产品', dataIndex: 'name', width: 200, render: (t: string, r: any) => <span>{r.is_flagship && <Tooltip title="拳头产品">⭐ </Tooltip>}<Text strong>{t}</Text></span>, sorter: (a: any, b: any) => String(a.name).localeCompare(String(b.name)) },
+  { title: '品类', dataIndex: 'category', width: 130, render: (t: string) => t || '-', sorter: (a: any, b: any) => String(a.category || '').localeCompare(String(b.category || '')) },
+  { title: '类型', dataIndex: 'kind', width: 100, render: (k: string) => k ? <Tag color={PRODUCT_KIND_LABELS[k]?.color}>{PRODUCT_KIND_LABELS[k]?.label || k}</Tag> : '-', sorter: (a: any, b: any) => String(a.kind || '').localeCompare(String(b.kind || '')) },
+  { title: '状态', dataIndex: 'status', width: 90, render: (s: string) => <Tag color={PRODUCT_STATUS_LABELS[s]?.color}>{PRODUCT_STATUS_LABELS[s]?.label || s || '未知'}</Tag>, sorter: (a: any, b: any) => String(a.status || '').localeCompare(String(b.status || '')) },
+  { title: '技术关键词', dataIndex: 'tech_keywords', width: 220, render: (t: string[]) => <Space size={2} wrap>{(t || []).map(k => <Tag key={k} style={{ margin: 0 }}>{k}</Tag>)}</Space> },
+  { title: '说明', dataIndex: 'description', ellipsis: true, render: (t: string) => <Tooltip title={t}><span style={{ fontSize: 12 }}>{t || '-'}</span></Tooltip> },
   { title: '', width: 40, render: (_: any, r: any) => r.source_url ? <a href={r.source_url} target="_blank" rel="noreferrer"><LinkOutlined /></a> : null },
 ];
 
@@ -148,6 +158,7 @@ export function CompanyRunView({ log, events, markdown, data, rawSearches, runni
                   { key: 'financings', label: `融资（${data.financings?.length || 0}）`, children: <Table size="small" rowKey={(_, i) => String(i)} dataSource={data.financings || []} columns={FINANCING_COLUMNS} pagination={false} /> },
                   { key: 'news', label: `近期动态（${data.news?.length || 0}）`, children: <Table size="small" rowKey={(_, i) => String(i)} dataSource={data.news || []} columns={NEWS_COLUMNS} pagination={false} /> },
                   { key: 'executives', label: `管理团队（${data.executives?.length || 0}）`, children: <Table size="small" rowKey={(_, i) => String(i)} dataSource={data.executives || []} columns={EXECUTIVE_COLUMNS} pagination={false} scroll={{ x: 900 }} /> },
+                  { key: 'products', label: `核心产品（${data.products?.length || 0}）`, children: <Table size="small" rowKey={(_, i) => String(i)} dataSource={data.products || []} columns={PRODUCT_COLUMNS} pagination={false} scroll={{ x: 900 }} /> },
                 ]} />
               </div>
             ) : (
@@ -190,9 +201,9 @@ export function CompanyRunView({ log, events, markdown, data, rawSearches, runni
                   </div>
                 )}
                 <div style={{ flex: 1, overflowY: 'auto', background: '#1e1e1e', padding: 16 }}>
-                  <div style={{ fontSize: 11, color: '#888', marginBottom: 6 }}>📦 终局 JSON（画像 + 融资 {data.financings?.length || 0} + 动态 {data.news?.length || 0} + 高管 {data.executives?.length || 0}）</div>
+                  <div style={{ fontSize: 11, color: '#888', marginBottom: 6 }}>📦 终局 JSON（画像 + 融资 {data.financings?.length || 0} + 动态 {data.news?.length || 0} + 高管 {data.executives?.length || 0} + 产品 {data.products?.length || 0}）</div>
                   <pre style={{ margin: 0, color: '#d4d4d4', fontSize: 12, fontFamily: 'monospace', whiteSpace: 'pre-wrap' }}>
-                    {JSON.stringify({ profile: data.profile, financings: data.financings, news: data.news, executives: data.executives, sources: data.sources, topics_run: data.topics_run, topics_skipped: data.topics_skipped }, null, 2)}
+                    {JSON.stringify({ profile: data.profile, financings: data.financings, news: data.news, executives: data.executives, products: data.products, sources: data.sources, topics_run: data.topics_run, topics_skipped: data.topics_skipped }, null, 2)}
                   </pre>
                 </div>
               </>

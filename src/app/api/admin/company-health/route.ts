@@ -28,10 +28,11 @@ export async function GET(request: Request) {
     });
 
     // 子实体覆盖 + 动态新鲜度
-    const [fin, news, exe] = await Promise.all([
+    const [fin, news, exe, prod] = await Promise.all([
       supabaseAdmin.from('company_financings').select('company_id').eq('if_delete', false).limit(100000),
       supabaseAdmin.from('company_news').select('company_id, publish_date').eq('if_delete', false).limit(100000),
       supabaseAdmin.from('company_executives').select('company_id').eq('if_delete', false).limit(100000),
+      supabaseAdmin.from('company_products').select('company_id').eq('if_delete', false).limit(100000),
     ]);
     const coverage = (list: any[] | null) => { const s = new Set<number>(); for (const r of list || []) if (ids.has(r.company_id)) s.add(r.company_id); return s.size; };
     const latestNews = new Map<number, string>();
@@ -52,6 +53,7 @@ export async function GET(request: Request) {
       financings: { companies: coverage(fin.data), rows: (fin.data || []).filter(r => ids.has(r.company_id)).length },
       news: { companies: coverage(news.data), rows: (news.data || []).filter(r => ids.has(r.company_id)).length },
       executives: { companies: coverage(exe.data), rows: (exe.data || []).filter(r => ids.has(r.company_id)).length },
+      products: { companies: coverage(prod.data), rows: (prod.data || []).filter(r => ids.has(r.company_id)).length },
     };
 
     // 完整度分布 / 审核 / 分类 / 画像状态

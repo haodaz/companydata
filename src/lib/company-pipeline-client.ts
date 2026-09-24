@@ -97,13 +97,13 @@ export async function runCompanyProfile(log: { id: number; company_id: number; c
       emit({ key: 'extract', title: '工序 3: 从官方页面原文提取画像字段 / 管理团队 / 动态...', status: 'loading', color: 'blue' });
       const ex = await post('/api/agents/company/extract', { company: { name: log.company, name_en: company.name_en }, markdown, model, batchId });
       if (ex.success) {
-        parts.push({ profile: ex.profile, executives: ex.executives, news: ex.news, sources: ex.sources });
+        parts.push({ profile: ex.profile, executives: ex.executives, news: ex.news, products: ex.products, sources: ex.sources });
         if (ex.summary) summaries.push({ step: 'extract', label: '官方页面', text: ex.summary });
         rawSearches.extract = { parsed: ex.raw };
         cb.onRawSearches?.({ ...rawSearches });
         stepsDone.push('extract');
         const filled = Object.values(ex.profile || {}).filter(hasValue).length;
-        done({ status: 'success', color: 'green', title: `工序 3 完成: 画像字段 ${filled} 个、高管 ${ex.executives?.length || 0} 人、动态 ${ex.news?.length || 0} 条` });
+        done({ status: 'success', color: 'green', title: `工序 3 完成: 画像字段 ${filled} 个、高管 ${ex.executives?.length || 0} 人、动态 ${ex.news?.length || 0} 条、产品 ${ex.products?.length || 0} 项` });
         cb.onData(snapshot());
       } else {
         done({ status: 'error', color: 'red', title: `工序 3 失败: ${ex.error}（继续联网检索）` });
@@ -123,7 +123,8 @@ export async function runCompanyProfile(log: { id: number; company_id: number; c
         emit({ key: `search-${def.key}`, title: `工序 4.${i + 1} 跳过「${def.label}」: 目标字段已齐${def.entity ? '、子实体已有记录' : ''}`, status: 'success', color: 'gray' });
         continue;
       }
-      emit({ key: `search-${def.key}`, title: `工序 4.${i + 1}: 联网检索「${def.label}」（缺 ${missing.length} 个字段${def.entity ? ` + ${def.entity === 'financings' ? '融资' : def.entity === 'news' ? '动态' : '高管'}` : ''}）...`, status: 'loading', color: 'blue' });
+      const entityLabel = def.entity === 'financings' ? '融资' : def.entity === 'news' ? '动态' : def.entity === 'executives' ? '高管' : def.entity === 'products' ? '产品' : '';
+      emit({ key: `search-${def.key}`, title: `工序 4.${i + 1}: 联网检索「${def.label}」（缺 ${missing.length} 个字段${def.entity ? ` + ${entityLabel}` : ''}）...`, status: 'loading', color: 'blue' });
       const s = await post('/api/agents/company/search', { topic: def.key, company: { name: log.company, name_en: company.name_en, brief_name: company.brief_name, country: company.country, official_website: company.official_website || soFar.official_website, industry: company.industry || soFar.industry }, missing, model, batchId });
       if (!s.success) { done({ status: 'error', color: 'red', title: `「${def.label}」检索失败: ${s.error}` }); continue; }
       const part: Partial<ProfileBundle> = { profile: s.fields, sources: s.sources };
@@ -135,7 +136,7 @@ export async function runCompanyProfile(log: { id: number; company_id: number; c
       stepsDone.push(`search:${def.key}`);
       topicsRun.push(def.key);
       const gained = Object.entries(s.fields || {}).filter(([k, v]) => hasValue(v) && !have(k)).length;
-      done({ status: 'success', color: 'green', title: `「${def.label}」完成: 新增字段 ${gained} 个${s.entity ? `，${s.entity === 'financings' ? '融资' : s.entity === 'news' ? '动态' : '高管'} ${s.rows?.length || 0} 条` : ''}` });
+      done({ status: 'success', color: 'green', title: `「${def.label}」完成: 新增字段 ${gained} 个${s.entity ? `，${entityLabel} ${s.rows?.length || 0} 条` : ''}` });
       cb.onData(snapshot());
       if (!(await cb.waitIfPaused())) return { status: 'aborted' };
     }
@@ -152,7 +153,7 @@ export async function runCompanyProfile(log: { id: number; company_id: number; c
     if (!saved.ok) return fail(`写日志失败: ${saved.error || '未知错误'}`);
     if (saved.storeError) { done({ status: 'error', color: 'red', title: `入库失败: ${saved.storeError}` }); return { status: 'failed', error: saved.storeError }; }
     const a = saved.applied || {};
-    done({ status: 'success', color: 'green', title: `✅ 完成！${a.frozen ? '（企业审核已定论，画像字段未覆盖）' : `画像新增 ${a.filled?.length || 0} 个字段`}，融资 ${a.financings_saved || 0} / 动态 ${a.news_saved || 0} / 高管 ${a.executives_saved || 0} 条，完整度 ${a.completeness_before ?? '-'} → ${a.completeness_after ?? '-'}，${a.llm_calls || 0} 次调用 · $${(a.cost_usd || 0).toFixed(4)}` });
+    done({ status: 'success', color: 'green', title: `✅ 完成！${a.frozen ? '（企业审核已定论，画像字段未覆盖）' : `画像新增 ${a.filled?.length || 0} 个字段`}，融资 ${a.financings_saved || 0} / 动态 ${a.news_saved || 0} / 高管 ${a.executives_saved || 0} / 产品 ${a.products_saved || 0} 条，完整度 ${a.completeness_before ?? '-'} → ${a.completeness_after ?? '-'}，${a.llm_calls || 0} 次调用 · $${(a.cost_usd || 0).toFixed(4)}` });
     return { status: 'success', applied: a };
   } catch (e: any) {
     return fail(e.message || '处理异常');

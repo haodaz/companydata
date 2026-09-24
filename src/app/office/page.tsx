@@ -217,7 +217,7 @@ function OfficeInner() {
           try {
             if (full) {
               const { applied } = await profileCompanyFull(c, model, m => { setItem(key, { summary: m }); log('Alice', `[${c.name}] ${m}`); }, { aborted: stopped });
-              setItem(key, { status: 'done', summary: `新增 ${applied?.filled?.length || 0} 字段 · 融资 ${applied?.financings_saved || 0} / 动态 ${applied?.news_saved || 0} / 高管 ${applied?.executives_saved || 0} · 完整度 ${applied?.completeness_before ?? '-'} → ${applied?.completeness_after ?? '-'}`, link: `/admin/db-company/${c.id}` });
+              setItem(key, { status: 'done', summary: `新增 ${applied?.filled?.length || 0} 字段 · 融资 ${applied?.financings_saved || 0} / 动态 ${applied?.news_saved || 0} / 高管 ${applied?.executives_saved || 0} / 产品 ${applied?.products_saved || 0} · 完整度 ${applied?.completeness_before ?? '-'} → ${applied?.completeness_after ?? '-'}`, link: `/admin/db-company/${c.id}` });
             } else {
               const { filled, profile } = await profileCompany(c.id, model);
               setItem(key, { status: 'done', summary: `补全 ${filled.length} 个字段${profile.industry ? ` · ${profile.industry}` : ''}${profile.city ? ` · ${profile.city}` : ''}`, link: `/admin/db-company/${c.id}` });

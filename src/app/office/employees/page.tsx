@@ -97,7 +97,7 @@ function EmployeesInner() {
           if (action.mode === 'full') {
             say('跑完整画像流水线：定位官网 → 抓原文 → 工商 / 融资 / 动态舆情 / 管理团队 / 行业 / 校招口碑…');
             const { applied, logId } = await profileCompanyFull(c, currentModel, say);
-            finish(`「${c.name}」完整画像跑完了：新增 ${applied?.filled?.length || 0} 个字段，融资 ${applied?.financings_saved || 0} 条、动态 ${applied?.news_saved || 0} 条、管理团队 ${applied?.executives_saved || 0} 人，完整度 ${applied?.completeness_before ?? '-'} → ${applied?.completeness_after ?? '-'}。`, { kind: 'profile_full', data: { company: c, applied, logId } });
+            finish(`「${c.name}」完整画像跑完了：新增 ${applied?.filled?.length || 0} 个字段，融资 ${applied?.financings_saved || 0} 条、动态 ${applied?.news_saved || 0} 条、管理团队 ${applied?.executives_saved || 0} 人、核心产品 ${applied?.products_saved || 0} 项，完整度 ${applied?.completeness_before ?? '-'} → ${applied?.completeness_after ?? '-'}。`, { kind: 'profile_full', data: { company: c, applied, logId } });
             return;
           }
           say('联网检索企业信息与校招概况…');

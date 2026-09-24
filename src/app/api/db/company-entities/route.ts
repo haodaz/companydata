@@ -10,6 +10,7 @@ const EDITABLE: Record<SubEntityKey, string[]> = {
   financings: ['finance_round', 'finance_round_str', 'finance_amount', 'finance_enterprise', 'publish_date', 'publish_date_str', 'source_url'],
   news: ['description', 'publish_date', 'publish_date_str', 'publish_source', 'source_url', 'kind'],
   executives: ['name', 'title', 'description', 'education', 'gender', 'age', 'is_founder', 'salary', 'share_holding', 'share_ratio', 'start_date', 'start_date_str', 'source_url'],
+  products: ['name', 'category', 'tech_keywords', 'kind', 'status', 'is_flagship', 'description', 'source_url'],
 };
 
 function tableOf(entity: string): { table: string; key: SubEntityKey } | null {
@@ -24,8 +25,8 @@ export async function GET(request: Request) {
     const t = tableOf(sp.get('entity') || '');
     const companyId = parseInt(sp.get('companyId') || '');
     if (!t || !companyId) return NextResponse.json({ success: false, error: 'Missing entity or companyId' }, { status: 400 });
-    const order = t.key === 'executives' ? 'id' : 'publish_date';
-    const { data, error } = await supabaseAdmin.from(t.table).select('*').eq('company_id', companyId).eq('if_delete', false).order(order, { ascending: t.key === 'executives', nullsFirst: false }).limit(500);
+    const order = t.key === 'executives' || t.key === 'products' ? 'id' : 'publish_date';
+    const { data, error } = await supabaseAdmin.from(t.table).select('*').eq('company_id', companyId).eq('if_delete', false).order(order, { ascending: t.key === 'executives' || t.key === 'products', nullsFirst: false }).limit(500);
     if (error) throw error;
     return NextResponse.json({ success: true, data: data || [] });
   } catch (error: any) {

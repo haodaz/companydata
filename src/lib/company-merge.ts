@@ -2,17 +2,20 @@
  * 企业画像流水线的纯函数：值清洗、子实体去重键、多来源合并。
  * 前端（流水线编排）和服务端（入库）共用，不依赖 supabase / LLM。
  */
-import { ARRAY_FIELDS, INT_FIELDS, FINANCE_ROUND_LABELS, EDUCATION_LABELS, GENDER_LABELS, NEWS_KIND_LABELS, SEGMENT_LABELS, COMPANY_TYPE_LABELS, KIND_LABELS, CONTINENT_LABELS, TYPE_LABEL_LABELS, hasValue } from '@/lib/company-fields';
+import { ARRAY_FIELDS, INT_FIELDS, FINANCE_ROUND_LABELS, EDUCATION_LABELS, GENDER_LABELS, NEWS_KIND_LABELS, SEGMENT_LABELS, COMPANY_TYPE_LABELS, KIND_LABELS, CONTINENT_LABELS, TYPE_LABEL_LABELS, PRODUCT_KIND_LABELS, PRODUCT_STATUS_LABELS, hasValue } from '@/lib/company-fields';
 
 export interface Financing { finance_round: string | null; finance_round_str: string | null; finance_amount: string | null; finance_enterprise: string | null; publish_date: string | null; publish_date_str: string | null; source_url: string | null }
 export interface NewsItem { description: string; publish_date: string | null; publish_date_str: string | null; publish_source: string | null; source_url: string | null; kind: string | null }
 export interface Executive { name: string; title: string | null; description: string | null; education: string | null; gender: string | null; age: number | null; is_founder: boolean; salary: string | null; share_holding: number | null; share_ratio: number | null; start_date: string | null; start_date_str: string | null; source_url: string | null }
+
+export interface Product { name: string; category: string | null; tech_keywords: string[]; kind: string | null; status: string; is_flagship: boolean; description: string | null; source_url: string | null }
 
 export interface ProfileBundle {
   profile: Record<string, any>;
   financings: Financing[];
   news: NewsItem[];
   executives: Executive[];
+  products: Product[];
   sources: Record<string, string>;
 }
 
@@ -110,11 +113,24 @@ export function normalizeExecutive(x: any): Executive | null {
   };
 }
 
+export function normalizeProduct(x: any): Product | null {
+  if (!x || typeof x !== 'object') return null;
+  const name = str(x.name);
+  if (!name || name.length > 80) return null;
+  const kind = enumOf(x.kind, PRODUCT_KIND_LABELS);
+  const status = enumOf(x.status, PRODUCT_STATUS_LABELS) || 'unknown';
+  return {
+    name, category: str(x.category), tech_keywords: list(x.tech_keywords).slice(0, 8), kind, status,
+    is_flagship: bool(x.is_flagship), description: str(x.description), source_url: url(x.source_url ?? x.source),
+  };
+}
+
 // ── 去重键 ──
 const norm = (s: string | null | undefined) => (s || '').toLowerCase().replace(/\s+/g, '').replace(/[，,。.;；:：、\-—_()（）【】\[\]"'“”]/g, '');
 export const financingKey = (companyId: number, f: Financing) => `${companyId}|${f.finance_round || norm(f.finance_round_str)}|${f.publish_date || norm(f.publish_date_str) || norm(f.finance_amount)}`;
 export const newsKey = (companyId: number, n: NewsItem) => `${companyId}|${n.source_url ? n.source_url.replace(/[#?].*$/, '') : norm(n.description).slice(0, 60)}`;
 export const executiveKey = (companyId: number, e: Executive) => `${companyId}|${norm(e.name)}`;
+export const productKey = (companyId: number, p: Product) => `${companyId}|${norm(p.name)}`;
 
 /**
  * 同一实体多来源合并：先到先得，空字段由后来的补上；
@@ -146,6 +162,7 @@ export function mergeBundles(parts: Partial<ProfileBundle>[]): ProfileBundle {
   const financings: (Financing | null)[] = [];
   const news: (NewsItem | null)[] = [];
   const executives: (Executive | null)[] = [];
+  const products: (Product | null)[] = [];
   for (const p of parts) {
     for (const [k, v] of Object.entries(p.profile || {})) {
       const nv = normalizeProfileValue(k, v);
@@ -154,11 +171,13 @@ export function mergeBundles(parts: Partial<ProfileBundle>[]): ProfileBundle {
     financings.push(...(p.financings || []).map(normalizeFinancing));
     news.push(...(p.news || []).map(normalizeNews));
     executives.push(...(p.executives || []).map(normalizeExecutive));
+    products.push(...(p.products || []).map(normalizeProduct));
   }
   return {
     profile, sources,
     financings: mergeRows(financings, f => financingKey(0, f), ['finance_enterprise']),
     news: mergeRows(news, n => newsKey(0, n)),
     executives: mergeRows(executives, e => executiveKey(0, e), ['title', 'description']),
+    products: mergeRows(products, p => productKey(0, p), ['description', 'category']).slice(0, 12),
   };
 }

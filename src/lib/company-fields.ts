@@ -130,11 +130,20 @@ export const NEWS_KIND_LABELS: Record<string, { label: string; color: string }> 
   campus: { label: '校招 / 雇主', color: 'orange' }, risk: { label: '负面 / 风险', color: 'red' }, other: { label: '其他', color: 'default' },
 };
 
-/** 子实体表名（与平方对齐的实体：融资 / 近期动态 / 管理团队） */
+/** 核心产品：软硬件 / 在售停产 */
+export const PRODUCT_KIND_LABELS: Record<string, { label: string; color: string }> = {
+  hardware: { label: '硬件', color: 'geekblue' }, software: { label: '软件 / App', color: 'purple' }, service: { label: '服务', color: 'cyan' }, solution: { label: '解决方案', color: 'gold' }, other: { label: '其他', color: 'default' },
+};
+export const PRODUCT_STATUS_LABELS: Record<string, { label: string; color: string }> = {
+  active: { label: '在售', color: 'success' }, discontinued: { label: '停产 / 历史', color: 'default' }, unknown: { label: '未知', color: 'default' },
+};
+
+/** 子实体表名（与平方对齐的实体：融资 / 近期动态 / 管理团队；核心产品是我们新增的） */
 export const SUB_ENTITIES = {
   financings: { table: 'company_financings', label: '融资' },
   news: { table: 'company_news', label: '近期动态' },
   executives: { table: 'company_executives', label: '管理团队' },
+  products: { table: 'company_products', label: '核心产品' },
 } as const;
 export type SubEntityKey = keyof typeof SUB_ENTITIES;
 
@@ -152,6 +161,7 @@ export const PROFILE_TOPICS: { key: string; label: string; desc: string; fields:
   { key: 'financing', label: '融资历史', desc: '各轮融资：轮次 / 金额 / 投资方 / 日期；上市信息', fields: ['stock_code'], entity: 'financings' },
   { key: 'news', label: '近期动态与舆情', desc: '近 12 个月重要动态；负面新闻 / 裁员 / 处罚 / 诉讼等风险摘要', fields: ['public_sentiment', 'growth_signals'], entity: 'news' },
   { key: 'team', label: '管理团队', desc: '董事长 / CEO / 创始人 / 核心高管：职务、简介、学历、持股、任职起始', fields: ['chairman', 'ceo_general_manager', 'cto'], entity: 'executives' },
+  { key: 'products', label: '核心产品', desc: '主打产品 / 产品线 / 品牌 / 自有 App / 服务：品类、技术关键词、软硬件、在售或停产、是否拳头产品（官网产品中心 > 年报 > 旗舰店 > 新闻）', fields: ['product_area'], entity: 'products' },
   { key: 'industry', label: '行业与赛道', desc: '行业位置 / 竞品 / 技术优势 / 研究方向 / 商业档案 / 案例 / 增长信号 / 类型标签', fields: [
     'industry_position', 'tech_advantage', 'research_area', 'business_profile', 'company_case', 'growth_signals', 'type_label',
   ] },
@@ -221,7 +231,7 @@ export const COMPANY_HEALTH_FIELDS: { key: string; label: string; weight: number
   { key: 'ai_comprehensive_evaluate', label: '综合评价', weight: 1, group: '口碑' },
   { key: 'public_sentiment', label: '舆情与风险', weight: 2, group: '口碑' },
 ];
-export const SUB_ENTITY_WEIGHTS: Record<SubEntityKey, number> = { financings: 2, news: 3, executives: 3 };
+export const SUB_ENTITY_WEIGHTS: Record<SubEntityKey, number> = { financings: 2, news: 3, executives: 3, products: 3 };
 
 export function hasValue(v: any): boolean {
   if (v === null || v === undefined) return false;

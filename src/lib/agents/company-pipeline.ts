@@ -10,15 +10,15 @@ import { generateContent } from '@/lib/llm-client';
 import { logTokenUsage } from '@/lib/token-logger';
 import { parseJsonLoose, searchJson } from '@/lib/agents/search-llm';
 import { fetchJinaUrl } from '@/lib/agents/fetcher';
-import { PROFILE_TOPICS, SEGMENT_LABELS, COMPANY_TYPE_LABELS, KIND_LABELS, FINANCE_ROUND_LABELS, EDUCATION_LABELS, NEWS_KIND_LABELS, TYPE_LABEL_LABELS } from '@/lib/company-fields';
+import { PROFILE_TOPICS, SEGMENT_LABELS, COMPANY_TYPE_LABELS, KIND_LABELS, FINANCE_ROUND_LABELS, EDUCATION_LABELS, NEWS_KIND_LABELS, TYPE_LABEL_LABELS, PRODUCT_KIND_LABELS } from '@/lib/company-fields';
 import { str, url } from '@/lib/company-merge';
 
 const TOOL = 'company-pipeline' as const;
 
-export interface LocatedPage { subtype: 'homepage' | 'about' | 'ir' | 'news' | 'team' | 'culture'; url: string; title: string | null }
+export interface LocatedPage { subtype: 'homepage' | 'about' | 'ir' | 'news' | 'team' | 'culture' | 'products'; url: string; title: string | null }
 export interface FetchedPage extends LocatedPage { ok: boolean; len: number; markdown: string }
 
-const PAGE_SUBTYPE_LABEL: Record<LocatedPage['subtype'], string> = { homepage: '官网首页', about: '关于我们', ir: '投资者关系', news: '新闻中心', team: '管理团队', culture: '文化与福利' };
+const PAGE_SUBTYPE_LABEL: Record<LocatedPage['subtype'], string> = { homepage: '官网首页', about: '关于我们', ir: '投资者关系', news: '新闻中心', team: '管理团队', culture: '文化与福利', products: '产品中心' };
 export { PAGE_SUBTYPE_LABEL };
 
 function companyLine(c: { name: string; name_en?: string | null; brief_name?: string | null; country?: string | null; official_website?: string | null; industry?: string | null }) {
@@ -51,6 +51,7 @@ Find (all must be on the company's own official domain or its official investor-
    - "news"    新闻中心 / 媒体报道 / Press releases / Newsroom
    - "team"    管理团队 / 领导层 / Leadership / Board of directors
    - "culture" 企业文化 / 员工福利 / Life at company / 社会责任
+   - "products" 产品中心 / 产品与服务 / 解决方案 / Products（列出主要产品线的总览页）
    At most one page per subtype; skip a subtype if not found. Prefer Chinese-language pages for Chinese companies.
 ${RULES}
 Return ONLY a JSON object: { "official_website", "name_en", "name_cn", "brief_name", "pages": [...], "sources": {} }
@@ -116,6 +117,7 @@ Return ONLY a JSON object:
   "profile": { ${PROFILE_KEYS_FROM_PAGES.map(k => `"${k}"`).join(', ')} },
   "executives": [ { "name", "title", "description", "education", "gender", "age", "is_founder", "start_date", "source_url" } ],
   "news": [ { "description", "publish_date", "publish_source", "source_url", "kind" } ],
+  "products": [ { "name", "category", "tech_keywords", "kind", "status", "is_flagship", "description", "source_url" } ],
   "sources": { "<profile field>": "<page url it came from>" },
   "summary": "..."
 }
@@ -123,6 +125,7 @@ Field notes:
 - profile: values in Chinese unless proper noun / URL / code; null when the pages do not say. "one_sentence" ≤ 30 字; "introduction" 3–5 sentences; "company_scale" headcount text with year; "stock_code" as "EXCHANGE: TICKER"; "continent" one of asia|europe|america|south_america|africa|oceania; "campus_url" / "careers_url" only if linked on the pages.
 - executives: only named people with a leadership role (董事长 / CEO / 总裁 / 创始人 / CFO / CTO / 副总裁 / 董事 / 监事 / 合伙人). "education" one of ${Object.keys(EDUCATION_LABELS).join('|')} or null; "gender" male|female|null; "is_founder" boolean; "start_date" YYYY-MM-DD or YYYY-MM or null; "description" 1–3 sentences in Chinese; "source_url" the page url.
 - news: dated items from the news / press pages, newest first, at most 20, each "description" 1–2 sentences in Chinese; "kind" one of ${Object.keys(NEWS_KIND_LABELS).join('|')}; "publish_date" YYYY-MM-DD; "publish_source" e.g. "官网新闻中心"; "source_url" the article url if present else the page url.
+- products: nameable products / product lines / brands / own apps / services the pages present (核心产品), at most 12, flagship first. "name" as the company writes it; "category" 中文品类 (e.g. 数码钢琴 / 电子鼓 / SaaS 平台 / 咨询服务); "tech_keywords" 2–5 中文 or English technology tags you infer (e.g. 音频 DSP, 嵌入式, 计算机视觉, LLM, 云原生); "kind" one of ${Object.keys(PRODUCT_KIND_LABELS).join('|')}; "status" active|discontinued|unknown; "is_flagship" true for the headline / best-known ones; "description" one sentence 中文 (谁用、解决什么); "source_url" the page url.
 - summary: 3–6 sentences in Chinese describing what the pages contained, what was extracted, and what was missing (like a QA note for a data colleague).
 
 Markdown:
@@ -135,6 +138,7 @@ ${markdown.slice(0, EXTRACT_CAP)}
     profile: parsed.profile && typeof parsed.profile === 'object' ? parsed.profile : {},
     executives: Array.isArray(parsed.executives) ? parsed.executives : [],
     news: Array.isArray(parsed.news) ? parsed.news : [],
+    products: Array.isArray(parsed.products) ? parsed.products : [],
     sources: parsed.sources && typeof parsed.sources === 'object' ? parsed.sources : {},
     summary: str(parsed.summary),
     raw: parsed,
@@ -179,6 +183,13 @@ Return:
 Find this company's MANAGEMENT TEAM (管理团队): chairman, CEO / president, founders, CFO, CTO, key vice presidents, board members (for listed companies use the annual report / IR page).
 Return "executives": up to 15 people, each { "name", "title", "description" (1–3 sentences 中文: background, tenure, previous roles), "education" one of ${Object.keys(EDUCATION_LABELS).join('|')} or null, "gender" male|female|null, "age" integer or null, "is_founder" boolean, "salary" (年薪 text, listed companies only) or null, "share_holding" (万股, number) or null, "share_ratio" (%, number) or null, "start_date" YYYY-MM-DD or YYYY-MM or null, "source_url" }.
 Also "fields": { "chairman", "ceo_general_manager", "cto" } as names.`,
+
+  products: () => `
+Find this company's CORE PRODUCTS (核心产品): the nameable flagship products, product lines, brands, own apps and services — not the generic category. Example for a music-tech company: 数码钢琴、电子鼓、MIDI 键盘、合成器、吉他音箱、数码音频效果器、友鼓助手 App、友乐学 App、美得理 U 录.
+Source priority: official website product center > annual report / prospectus (年报 / 招股书) > official flagship store on Tmall / JD / Amazon > news. Skip third-party directories.
+Return "products": up to 10 items, flagship first, each { "name" (as the company writes it), "category" (中文品类), "tech_keywords" (2–5 technology tags you infer, e.g. 音频 DSP / 嵌入式 / 计算机视觉 / LLM / 云原生), "kind" one of ${Object.keys(PRODUCT_KIND_LABELS).join('|')}, "status" active|discontinued|unknown (include discontinued ones you find, marked as such), "is_flagship" boolean, "description" one sentence 中文 (给谁用、解决什么), "source_url" }.
+Also "fields": { "product_area": 2–3 sentences 中文 summarising the product range (only if you can improve on a one-liner) }.
+Products can be intangible (services, platforms, solutions); include them.`,
 
   industry: () => `
 Describe this company's INDUSTRY POSITION and business profile. All text in Chinese.
