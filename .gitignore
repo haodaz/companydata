@@ -41,3 +41,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .preview-token
+
+# 技能空间运行时生成的美术
+public/lab/gen/

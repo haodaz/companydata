@@ -10,6 +10,11 @@ import { BENCH_CASTING, CASTING_EXPERT_SCRIPT, CASTING_SCRIPTS, BENCH_WELD, WELD
 export const SIM_A: Sim = {
   title: '数据分析操作台 · DAU 异动',
   intro: '你坐在数据分析师的工位上。接下来的每一步，都是这份工作里真实会遇到的决策——没有标准答案的提示，做完才知道专家会怎么做。',
+  art: {
+    cover: '/lab/da_office.jpg',
+    scenes: { first: '/lab/da_office.jpg', drill: '/lab/da_office.jpg', events: '/lab/da_office.jpg', cause: '/lab/da_meeting.jpg', confidence: '/lab/da_meeting.jpg', actions: '/lab/da_meeting.jpg', final: '/lab/da_meeting.jpg' },
+    npcs: { '产品负责人': '/lab/npc_pm.png' },
+  },
   steps: [
     {
       id: 'first', type: 'choose',
@@ -101,6 +106,11 @@ export const EXPERT_WHY_A: Record<string, string> = {
 export const SIM_B: Sim = {
   title: '上市计划操作台 · 无糖气泡茶',
   intro: '你坐在品牌管培生的工位上。50 万、3 个月、华东 20 所高校。每一步都是一次取舍——做完才知道专家会怎么选。',
+  art: {
+    cover: '/lab/brand_office.jpg',
+    scenes: { insight: '/lab/campus_store.jpg', goal: '/lab/brand_office.jpg', focus: '/lab/brand_office.jpg', budget: '/lab/brand_office.jpg', stoploss: '/lab/brand_office.jpg', final: '/lab/brand_office.jpg' },
+    npcs: { '品牌经理': '/lab/npc_brand.png' },
+  },
   steps: [
     {
       id: 'insight', type: 'choose',

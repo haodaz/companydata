@@ -306,7 +306,7 @@ export default function SpacePage() {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{(profile.capabilities || []).map((c: string) => <span key={c} className="lab-chip">{c}</span>)}</div>
               {skill && <div style={{ marginTop: 10, fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.7 }}>
                 <span className={`lab-chip ${skill.kind === 'hard' ? 'c' : 'p'}`} style={{ marginRight: 6 }}>{SKILL_KIND[skill.kind]?.label}</span>
-                「{skill.name}」学自 <b style={{ color: 'var(--ink2)' }}>{skill.expert_name}</b>（{skill.expert_location}）
+                {skill.source === 'jd-draft' ? <>「{skill.name}」是我读完 JD 后自己推断的<b style={{ color: 'var(--ink2)' }}>技能集草案</b>，等待第一位专家来校正</> : <>「{skill.name}」学自 <b style={{ color: 'var(--ink2)' }}>{skill.expert_name}</b>（{skill.expert_location}）</>}
               </div>}
             </div>
             <div>

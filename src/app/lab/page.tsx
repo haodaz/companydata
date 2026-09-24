@@ -4,8 +4,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { App, Modal } from 'antd';
 import { SKILL_KIND, expertiseLevel } from '@/lib/skill-lab';
+import { useModel } from '@/lib/model-context';
 
 const BUILD_STEPS = ['读取岗位 JD', '逐条拆解岗位职责', '对齐能力项', '设计可检验的任务', '生成评分标准', '唤醒岗位 AI 核心'];
+/** 真实构建（任意 JD）的阶段：与服务端 progress 的 phase 文案一致 */
+const BUILD_PHASES = ['读取岗位 JD', '拆解职责 · 设计任务与故事线', '推断技能集 · 设计虚拟工位 · 规划场景', '生成场景与立绘', '唤醒岗位 AI 核心', '完成'];
 
 const MODES = [
   { k: '01', t: '考验新人', d: '让新兵把任务走一遍，AI 核心按岗位标准逐项评分。' },
@@ -26,6 +29,14 @@ export default function LabHome() {
   const [jdsLoading, setJdsLoading] = useState(false);
   const [building, setBuilding] = useState<any | null>(null);
   const [buildStep, setBuildStep] = useState(0);
+  // 任意 JD：岗位库搜索 + 真实构建进度
+  const { currentModel } = useModel();
+  const [jobQ, setJobQ] = useState('');
+  const [jobs, setJobs] = useState<any[]>([]);
+  const [jobsLoading, setJobsLoading] = useState(false);
+  const [buildInfo, setBuildInfo] = useState<{ phase: string; detail?: string; error?: string } | null>(null);
+  const [buildSince, setBuildSince] = useState(0);
+  const [now, setNow] = useState(0);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -43,9 +54,44 @@ export default function LabHome() {
   useEffect(() => {
     if (!building) return;
     setBuildStep(0);
+    if (building.buildId) {
+      // 真实构建：轮询服务端进度
+      const iv = setInterval(async () => {
+        setNow(Date.now());
+        try { const j = await (await fetch(`/api/lab/spaces?build=${building.buildId}`)).json(); if (j.build) setBuildInfo(j.build); } catch { /* 下一拍再试 */ }
+      }, 1500);
+      return () => clearInterval(iv);
+    }
     const iv = setInterval(() => setBuildStep(s => Math.min(s + 1, BUILD_STEPS.length - 1)), 1500);
     return () => clearInterval(iv);
   }, [building]);
+
+  const searchJobs = async (q: string) => {
+    setJobQ(q);
+    if (q.trim().length < 2) { setJobs([]); return; }
+    setJobsLoading(true);
+    try {
+      const json = await (await fetch(`/api/db/jobs?search=${encodeURIComponent(q.trim())}&pageSize=8`)).json();
+      const rows = (json.data || json.items || []) as any[];
+      setJobs(rows.filter(r => r.responsibilities || r.overview));
+    } catch { setJobs([]); }
+    finally { setJobsLoading(false); }
+  };
+
+  /** 任意 JD → 岗位 AI 自己生成 技能集草案 + 故事线 + 虚拟工位 + 美术（约 2–4 分钟） */
+  const buildFromJob = async (job: any) => {
+    const buildId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+    setPickOpen(false);
+    setBuildInfo({ phase: '读取岗位 JD' }); setBuildSince(Date.now()); setNow(Date.now());
+    setBuilding({ company: job.institute_or_company_name, title: job.name, buildId });
+    try {
+      const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ jobId: job.id, model: currentModel, buildId }) })).json();
+      if (!json.ok) throw new Error(json.error);
+      if (!json.benchAdded) message.warning('空间已建好，但这次「虚拟操作空间」没有通过模拟器校验，先以故事线为主。', 8);
+      else if (!json.artCount) message.warning('空间已建好，但场景美术没有生成（文生图服务不可用）。', 8);
+      router.push(`/lab/${json.id}`);
+    } catch (e: any) { message.error(e.message); setBuilding(null); }
+  };
 
   const loadJds = async () => {
     setJdsLoading(true);
@@ -66,6 +112,8 @@ export default function LabHome() {
         new Promise(r => setTimeout(r, BUILD_STEPS.length * 1500 + 600)),
       ]);
       if (!json.ok) throw new Error(json.error);
+      if (!json.benchAdded) message.warning('空间已建好，但这次「虚拟操作空间」没有通过模拟器校验，先以故事线为主。', 8);
+      else if (!json.artCount) message.warning('空间已建好，但场景美术没有生成（文生图服务不可用）。', 8);
       router.push(`/lab/${json.id}`);
     } catch (e: any) { message.error(e.message); setBuilding(null); }
   };
@@ -79,6 +127,21 @@ export default function LabHome() {
           <div className="lab-mono lab-cap">BUILDING SKILL SPACE</div>
           <div style={{ fontSize: 22, fontWeight: 800, marginTop: 6 }}>{building.company} · {building.title}</div>
         </div>
+        {building.buildId ? (() => {
+          const cur = Math.max(0, BUILD_PHASES.indexOf(buildInfo?.phase || ''));
+          const secs = Math.max(0, Math.round((now - buildSince) / 1000));
+          return (
+            <div className="lab-glass lab-scan" style={{ padding: '18px 26px', minWidth: 360, textAlign: 'left' }}>
+              {BUILD_PHASES.slice(0, -1).map((s, i) => (
+                <div key={s} className="lab-mono" style={{ fontSize: 13, padding: '4px 0', color: i < cur ? '#12a150' : i === cur ? 'var(--v)' : 'var(--ink3)', fontWeight: i === cur ? 700 : 400 }}>
+                  {i < cur ? '✓' : i === cur ? '▸' : '·'} {s}{i === cur && <span className="lab-dots" />}
+                  {i === cur && buildInfo?.detail && <div style={{ fontSize: 11.5, color: 'var(--ink3)', fontWeight: 400, paddingLeft: 18 }}>{buildInfo.detail}</div>}
+                </div>
+              ))}
+              <div className="lab-mono" style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 10, letterSpacing: '.08em' }}>{String(Math.floor(secs / 60)).padStart(2, '0')}:{String(secs % 60).padStart(2, '0')} · 岗位 AI 正在自己生成技能集、故事线、虚拟工位和场景，约 2–4 分钟</div>
+            </div>
+          );
+        })() : (
         <div className="lab-glass lab-scan" style={{ padding: '18px 26px', minWidth: 320, textAlign: 'left' }}>
           {BUILD_STEPS.map((s, i) => (
             <div key={s} className="lab-mono" style={{ fontSize: 13, padding: '4px 0', color: i < buildStep ? '#12a150' : i === buildStep ? 'var(--v)' : 'var(--ink3)', fontWeight: i === buildStep ? 700 : 400 }}>
@@ -86,6 +149,7 @@ export default function LabHome() {
             </div>
           ))}
         </div>
+        )}
       </div>
     );
   }
@@ -156,7 +220,8 @@ export default function LabHome() {
                 </div>
 
                 <div style={{ marginTop: 14, fontSize: 12.5, color: 'var(--ink3)', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                  {s.skill ? <><span className={`lab-chip ${s.skill.kind === 'hard' ? 'c' : 'p'}`}>{kind?.label}</span>已向 {s.skill.expert_name}（{s.skill.expert_location}）学习</> : <span className="lab-chip g">只读过 JD，等待第一位专家</span>}
+                  {s.skill ? <><span className={`lab-chip ${s.skill.kind === 'hard' ? 'c' : 'p'}`}>{kind?.label}</span>{s.skill.source === 'jd-draft' ? <>AI 自学草案 · 等待第一位专家校正</> : <>已向 {s.skill.expert_name}（{s.skill.expert_location}）学习</>}</> : <span className="lab-chip g">只读过 JD，等待第一位专家</span>}
+                  {s.features?.immersive && <span className="lab-chip g" style={{ marginLeft: 6 }}>沉浸场景</span>}{s.features?.bench && <span className="lab-chip g" style={{ marginLeft: 4 }}>虚拟工位</span>}
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', textAlign: 'center', marginTop: 16, paddingTop: 14, borderTop: '1px solid var(--line)' }}>
@@ -174,7 +239,30 @@ export default function LabHome() {
         <div className="lab" style={{ minHeight: 0, padding: 'clamp(16px, 3vw, 28px)' }}>
           <div className="lab-mono lab-cap">PICK A JD</div>
           <div style={{ fontSize: 22, fontWeight: 800, margin: '4px 0 4px' }}>选一份 JD，构建它的技能空间</div>
-          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: 18 }}>JD 来自岗位库，抓取自企业官方招聘站。</div>
+          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: 14 }}>JD 来自岗位库，抓取自企业官方招聘站。</div>
+
+          <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(106,92,255,.35)' }}>
+            <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>ANY JD · 岗位 AI 自己生成</div>
+            <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>在岗位库里任选一条 JD：岗位 AI 读完后自己生成 <b>技能集草案</b>、<b>检验故事线</b>、<b>虚拟操作空间</b> 和场景美术（约 2–4 分钟）。</div>
+            <input className="lab-input" value={jobQ} onChange={e => searchJobs(e.target.value)} placeholder="搜企业或岗位名，如：华为 软件 / 比亚迪 工艺 / 字节 运营" style={{ width: '100%', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
+            {jobsLoading && <div className="lab-mono" style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 8 }}>SEARCHING<span className="lab-dots" /></div>}
+            {!jobsLoading && jobQ.trim().length >= 2 && !jobs.length && <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 8 }}>没有找到带职责正文的岗位，换个词试试。</div>}
+            {jobs.length > 0 && (
+              <div style={{ display: 'grid', gap: 8, marginTop: 10, gridTemplateColumns: 'minmax(0, 1fr)' }}>
+                {jobs.map(j => (
+                  <div key={j.id} className="lab-glass hover" style={{ padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer' }} onClick={() => buildFromJob(j)}>
+                    <div style={{ minWidth: 0, flex: 1 }}>
+                      <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{j.institute_or_company_name}{j.location ? ` · ${j.location}` : ''}{j.program_name ? ` · ${j.program_name}` : ''}</div>
+                      <div style={{ fontSize: 15, fontWeight: 800 }}>{j.name}</div>
+                      <div style={{ fontSize: 12, color: 'var(--ink3)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{(j.responsibilities || j.overview || '').replace(/\s+/g, ' ').slice(0, 90)}</div>
+                    </div>
+                    <button className="lab-btn sm">构建空间 →</button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>DEMO JDS · 预置示范</div>
           {jdsLoading && <div className="lab-glass lab-scan" style={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span className="lab-mono" style={{ color: 'var(--ink3)' }}>LOADING<span className="lab-dots" /></span></div>}
           <div style={{ display: 'grid', gap: 14, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))' }}>
             {jds.map((jd, i) => (
