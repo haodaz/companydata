@@ -116,7 +116,9 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
   let best: { spec: BenchSpec; layers: any[]; p: any; violated: string[]; score: number } | null = null;
   const finish = (spec: BenchSpec, layers: any[], p: any): BenchDesign => {
     const stepRaw = p.step || {};
-    const who = String(stepRaw.scene?.who || sim.steps.find(s => s.scene)?.scene?.who || '带教师傅');
+    // NPC 必须是故事线里已有的人物（立绘按名字匹配）；大模型另起名字就换成第一位出场的人
+    const cast = sim.steps.map(s => s.scene?.who).filter((w): w is string => !!w && w !== '你');
+    const who = cast.includes(String(stepRaw.scene?.who)) ? String(stepRaw.scene.who) : (cast[0] || '带教师傅');
     const step: SimStep = { id: 'bench', type: 'bench', prompt: String(stepRaw.prompt || `在「${spec.name}」上完成这段操作`), scene: { who, time: stepRaw.scene?.time ? String(stepRaw.scene.time) : undefined, text: String(stepRaw.scene?.text || '操作台交给你，系统会把你每一步记下来。') }, bench: spec };
     return { step, layers, scenePrompt: String(p.scene_prompt || ''), insertAfter: stepRaw.insert_after ? String(stepRaw.insert_after) : null };
   };

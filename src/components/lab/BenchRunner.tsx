@@ -368,14 +368,17 @@ function Layer({ l, level, on, value, progress = 0, onGrab }: { l: BenchLayer; l
     case 'pulse':
       if (!on) return null;
       return <g>{[0, 1].map(i => <circle key={i} cx={cx} cy={cy} r={Math.min(w, h) / 2} fill="none" stroke={l.color || '#12b5cb'} strokeWidth={4}><animate attributeName="r" values={`${Math.min(w, h) * 0.2};${Math.min(w, h) * 0.6}`} dur="1.2s" begin={`${i * 0.6}s`} repeatCount="indefinite" /><animate attributeName="opacity" values="0.9;0" dur="1.2s" begin={`${i * 0.6}s`} repeatCount="indefinite" /></circle>)}</g>;
-    case 'readout':
+    case 'readout': {
+      // 自动生成的层可能把读数框画得很大：限制尺寸，别盖住控制柜
+      const hh = Math.min(h, 54), ww = Math.min(w, 260);
       return (
         <g>
-          <rect x={x} y={y} width={w} height={h} rx={8} fill="#0b0e1c" stroke="#2a2f4d" strokeWidth={2} />
-          <text x={x + w - 10} y={y + h * 0.68} textAnchor="end" fill={l.color || '#7cf5c9'} fontSize={h * 0.55} fontWeight={800} fontFamily="ui-monospace, Menlo, monospace">{value.toFixed(l.digits ?? 0)}{l.unit ? <tspan fontSize={h * 0.3} fill="#9aa0b8"> {l.unit}</tspan> : null}</text>
-          {l.label && <text x={x + 10} y={y + h * 0.68} fill="#9aa0b8" fontSize={h * 0.3} fontFamily="ui-monospace, Menlo, monospace">{l.label}</text>}
+          <rect x={x} y={y} width={ww} height={hh} rx={8} fill="#0b0e1c" stroke="#2a2f4d" strokeWidth={2} />
+          <text x={x + ww - 10} y={y + hh * 0.68} textAnchor="end" fill={l.color || '#7cf5c9'} fontSize={hh * 0.55} fontWeight={800} fontFamily="ui-monospace, Menlo, monospace">{value.toFixed(l.digits ?? 0)}{l.unit ? <tspan fontSize={hh * 0.3} fill="#9aa0b8"> {l.unit}</tspan> : null}</text>
+          {l.label && <text x={x + 10} y={y + hh * 0.68} fill="#9aa0b8" fontSize={hh * 0.3} fontFamily="ui-monospace, Menlo, monospace">{l.label.slice(0, 6)}</text>}
         </g>
       );
+    }
     default: return null;
   }
 }
