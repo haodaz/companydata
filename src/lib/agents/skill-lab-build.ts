@@ -112,6 +112,14 @@ function benchSpecProblem(raw: any): string {
 export async function designBench(jd: JdInput, task: { title: string; brief: string }, sim: Sim, modelId = DEFAULT_MODEL): Promise<BenchDesign | null> {
   const example = JSON.stringify({ ...BENCH_WELD, scene: undefined, expertScript: BENCH_WELD.expertScript }, null, 0);
   let feedback = '';
+  // 三轮里记住最好的一版：目标全达成但老手脚本撞了规则的，最后兜底把撞上的规则删掉（规则多半写错了）
+  let best: { spec: BenchSpec; layers: any[]; p: any; violated: string[]; score: number } | null = null;
+  const finish = (spec: BenchSpec, layers: any[], p: any): BenchDesign => {
+    const stepRaw = p.step || {};
+    const who = String(stepRaw.scene?.who || sim.steps.find(s => s.scene)?.scene?.who || '带教师傅');
+    const step: SimStep = { id: 'bench', type: 'bench', prompt: String(stepRaw.prompt || `在「${spec.name}」上完成这段操作`), scene: { who, time: stepRaw.scene?.time ? String(stepRaw.scene.time) : undefined, text: String(stepRaw.scene?.text || '操作台交给你，系统会把你每一步记下来。') }, bench: spec };
+    return { step, layers, scenePrompt: String(p.scene_prompt || ''), insertAfter: stepRaw.insert_after ? String(stepRaw.insert_after) : null };
+  };
   for (let attempt = 0; attempt < 3; attempt++) {
     const p = await ask(`
       为「${jd.company} · ${jd.title}」的模拟操作台设计一个「虚拟操作空间」：一台数据定义的模拟设备或工作系统，新人要在上面真的动手操作（拨开关、调旋钮、按按钮、沿轨迹推进），系统逐拍记录事件流并按规则判违规、按目标判达成。
@@ -145,16 +153,27 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
     const until = Math.min(spec.maxSeconds, Math.max(...spec.expertScript.map(a => a.t)) + 60);
     const tr = simulateScript(spec, spec.expertScript, until);
     const m = tr.metrics;
+    const layers = Array.isArray(raw.layers) ? raw.layers : [];
     if (m.goals_done < m.goals_total || m.violations > 0) {
+      const violated = [...new Set(tr.events.filter(e => e.kind === 'rule' && e.severity === 'violation' && e.id).map(e => e.id!))];
+      const score = m.goals_done * 10 - violated.length;
+      if (!best || score > best.score) best = { spec, layers, p, violated, score };
       feedback = `老手脚本在模拟器里的结果：目标 ${m.goals_done}/${m.goals_total}，违规 ${m.violations}。要么脚本没做到，要么规则 / 目标 / 变量动力学写错了。事件流：\n${benchTimeline(spec, tr).slice(0, 2500)}`;
       console.warn(`[build] bench attempt ${attempt + 1}: 目标 ${m.goals_done}/${m.goals_total} 违规 ${m.violations}`);
       continue;
     }
-    const layers = Array.isArray(raw.layers) ? raw.layers : [];
-    const stepRaw = p.step || {};
-    const who = String(stepRaw.scene?.who || sim.steps.find(s => s.scene)?.scene?.who || '带教师傅');
-    const step: SimStep = { id: 'bench', type: 'bench', prompt: String(stepRaw.prompt || `在「${spec.name}」上完成这段操作`), scene: { who, time: stepRaw.scene?.time ? String(stepRaw.scene.time) : undefined, text: String(stepRaw.scene?.text || '操作台交给你，系统会把你每一步记下来。') }, bench: spec };
-    return { step, layers, scenePrompt: String(p.scene_prompt || ''), insertAfter: stepRaw.insert_after ? String(stepRaw.insert_after) : null };
+    return finish(spec, layers, p);
+  }
+  if (best && best.spec.goals.length && best.violated.length) {
+    const tr0 = simulateScript(best.spec, best.spec.expertScript!, Math.min(best.spec.maxSeconds, Math.max(...best.spec.expertScript!.map(a => a.t)) + 60));
+    if (tr0.metrics.goals_done === tr0.metrics.goals_total) {
+      const pruned: BenchSpec = { ...best.spec, rules: best.spec.rules.filter(r => !best!.violated.includes(r.id)) };
+      const tr = simulateScript(pruned, pruned.expertScript!, Math.min(pruned.maxSeconds, Math.max(...pruned.expertScript!.map(a => a.t)) + 60));
+      if (tr.metrics.violations === 0 && tr.metrics.goals_done === tr.metrics.goals_total && pruned.rules.length) {
+        console.warn(`[build] bench 兜底：删掉老手脚本撞上的规则 ${best.violated.join(',')}，保留 ${pruned.rules.length} 条`);
+        return finish(pruned, best.layers, best.p);
+      }
+    }
   }
   return null;
 }
