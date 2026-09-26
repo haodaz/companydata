@@ -192,7 +192,6 @@ export default function CompanyDetailPage() {
           <Button type="primary" ghost icon={<ProfileOutlined />} onClick={() => router.push(toolCompanyHref)}>跑画像流水线</Button>
           <Tooltip title="赛事雷达：建一个只查这家企业办的比赛的任务"><Button icon={<TrophyOutlined />} onClick={() => router.push(`/admin/tool-competition?company=${encodeURIComponent(company.name)}&companyId=${company.id}`)}>找比赛</Button></Tooltip>
           <Tooltip title="轻量版：一次联网检索只补基础字段；完整画像请用「跑画像流水线」"><Button icon={<ThunderboltOutlined />} loading={enriching} onClick={() => runEnrich(false)}>快速补全</Button></Tooltip>
-          <Tooltip title="实体库全部内容 + 深度尽调八个专题，排成一份可打印的报告"><Button type="primary" icon={<FileTextOutlined />} onClick={() => router.push(`/admin/db-company/${company.id}/report`)}>深度画像报告</Button></Tooltip>
           <Tooltip title="投资尽调维度：上市与市值 / 财务 / 股权 / 管线 / BD 交易 / 团队 / 风险 / 校招——八个专题逐个联网检索，结果落库并回填管线 / 持股 / 营收，约 4 分钟"><Button icon={<SearchOutlined />} loading={deepRunning} onClick={runDeep}>深度尽调</Button></Tooltip>
           <Tooltip title="实体库里的全部档案 + 深度尽调八专题，排成一份可打印的报告（PDF / 整页截图）"><Button type="primary" icon={<ProfileOutlined />} onClick={() => router.push(`/admin/db-company/${company.id}/report`)}>深度报告</Button></Tooltip>
           <Button icon={<EditOutlined />} onClick={openEdit}>编辑</Button>
