@@ -3,7 +3,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Button, Card, Col, Descriptions, Empty, Form, Input, InputNumber, Modal, Popconfirm, Row, Select, Space, Spin, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
-import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, GlobalOutlined, LinkOutlined, ThunderboltOutlined, FileTextOutlined, ApiOutlined, CheckCircleOutlined, CloseCircleOutlined, LockOutlined, ProfileOutlined, EyeOutlined, TrophyOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, GlobalOutlined, LinkOutlined, ThunderboltOutlined, FileTextOutlined, ApiOutlined, CheckCircleOutlined, CloseCircleOutlined, LockOutlined, ProfileOutlined, EyeOutlined, TrophyOutlined, SearchOutlined, LoadingOutlined } from '@ant-design/icons';
+import { DEEP_TOPICS } from '@/lib/agents/company-deep-research';
 import { FINANCING_COLUMNS, NEWS_COLUMNS, EXECUTIVE_COLUMNS, PRODUCT_COLUMNS, formatProfileValue } from '@/components/admin/CompanyRunView';
 import { EntityHero } from '@/components/admin/EntityHero';
 import { useModel } from '@/lib/model-context';
@@ -38,6 +39,10 @@ export default function CompanyDetailPage() {
   const [related, setRelated] = useState<RelatedResult | null>(null);
   const [profileLogs, setProfileLogs] = useState<any[]>([]);
   const [enriching, setEnriching] = useState(false);
+  // 深度尽调：八个专题逐个跑，落 company_deep_research，并回填管线 / 持股 / 营收
+  const [deepOpen, setDeepOpen] = useState(false);
+  const [deepRunning, setDeepRunning] = useState(false);
+  const [deepState, setDeepState] = useState<Record<string, { status: 'idle' | 'running' | 'done' | 'failed'; note?: string }>>({});
   const [editOpen, setEditOpen] = useState(false);
   const [form] = Form.useForm();
   const [report, setReport] = useState<any>(null);
@@ -66,6 +71,24 @@ export default function CompanyDetailPage() {
       load();
     } catch (e: any) { message.error(`AI 补全失败: ${e.message}`); }
     finally { setEnriching(false); }
+  };
+
+  const runDeep = async () => {
+    setDeepOpen(true); setDeepRunning(true);
+    const init: Record<string, { status: 'idle' | 'running' | 'done' | 'failed'; note?: string }> = {}; for (const t of DEEP_TOPICS) init[t.key] = { status: 'idle' }; setDeepState(init);
+    let ok = 0;
+    for (const t of DEEP_TOPICS) {
+      setDeepState(s => ({ ...s, [t.key]: { status: 'running' } }));
+      try {
+        const json = await (await fetch(`/api/db/companies/${id}/deep-research`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ topic: t.key, model: currentModel }) })).json();
+        if (!json.success) throw new Error(json.error);
+        const applied = json.applied && !json.applied.error ? Object.entries(json.applied).filter(([, v]) => Number(v) > 0).map(([k, v]) => `${k === 'products' ? '管线入产品表' : k === 'executives' ? '高管持股' : '字段'} +${v}`).join(' · ') : '';
+        setDeepState(s => ({ ...s, [t.key]: { status: 'done', note: `${json.seconds} 秒${applied ? ` · ${applied}` : ''}` } })); ok++;
+      } catch (e: any) { setDeepState(s => ({ ...s, [t.key]: { status: 'failed', note: e.message } })); }
+    }
+    setDeepRunning(false);
+    message.success(`深度尽调完成：${ok} / ${DEEP_TOPICS.length} 个专题已落库`);
+    load();
   };
 
   const review = async (body: Record<string, any>, ok: string) => {
@@ -170,7 +193,8 @@ export default function CompanyDetailPage() {
           <Tooltip title="赛事雷达：建一个只查这家企业办的比赛的任务"><Button icon={<TrophyOutlined />} onClick={() => router.push(`/admin/tool-competition?company=${encodeURIComponent(company.name)}&companyId=${company.id}`)}>找比赛</Button></Tooltip>
           <Tooltip title="轻量版：一次联网检索只补基础字段；完整画像请用「跑画像流水线」"><Button icon={<ThunderboltOutlined />} loading={enriching} onClick={() => runEnrich(false)}>快速补全</Button></Tooltip>
           <Tooltip title="实体库全部内容 + 深度尽调八个专题，排成一份可打印的报告"><Button type="primary" icon={<FileTextOutlined />} onClick={() => router.push(`/admin/db-company/${company.id}/report`)}>深度画像报告</Button></Tooltip>
-          <Tooltip title="投资尽调维度：上市与市值 / 财务 / 股权 / 管线 / BD 交易 / 团队 / 风险 / 校招，连同实体库里的全部档案，排成一份可打印的报告"><Button type="primary" icon={<ProfileOutlined />} onClick={() => router.push(`/admin/db-company/${company.id}/report`)}>深度报告</Button></Tooltip>
+          <Tooltip title="投资尽调维度：上市与市值 / 财务 / 股权 / 管线 / BD 交易 / 团队 / 风险 / 校招——八个专题逐个联网检索，结果落库并回填管线 / 持股 / 营收，约 4 分钟"><Button icon={<SearchOutlined />} loading={deepRunning} onClick={runDeep}>深度尽调</Button></Tooltip>
+          <Tooltip title="实体库里的全部档案 + 深度尽调八专题，排成一份可打印的报告（PDF / 整页截图）"><Button type="primary" icon={<ProfileOutlined />} onClick={() => router.push(`/admin/db-company/${company.id}/report`)}>深度报告</Button></Tooltip>
           <Button icon={<EditOutlined />} onClick={openEdit}>编辑</Button>
           <Popconfirm title="删除这家企业？" description="关联的信息源与岗位会保留，但解除与企业的关联。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消">
             <Button danger icon={<DeleteOutlined />} />
@@ -400,6 +424,16 @@ export default function CompanyDetailPage() {
         </Form>
       </Modal>
 
+      <Modal title={<span><SearchOutlined /> 深度尽调 · {company.name}</span>} open={deepOpen} onCancel={() => { if (!deepRunning) setDeepOpen(false); }} closable={!deepRunning} maskClosable={false} width={560}
+        footer={deepRunning ? null : [<Button key="report" type="primary" onClick={() => router.push(`/admin/db-company/${company.id}/report`)}>看深度报告</Button>, <Button key="close" onClick={() => setDeepOpen(false)}>关闭</Button>]}>
+        <div style={{ fontSize: 12.5, color: '#666', marginBottom: 10 }}>八个专题逐个联网检索，每个 15–60 秒；每个值带来源，找不到写空，不推测。结果落 company_deep_research，管线 / 持股 / 营收顺手回填实体库。</div>
+        {DEEP_TOPICS.map(t => { const st = deepState[t.key] || { status: 'idle' as const }; return (
+          <div key={t.key} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '8px 0', borderBottom: '1px solid #f0f0f5', fontSize: 13 }}>
+            <span style={{ width: 18, textAlign: 'center' }}>{st.status === 'done' ? <CheckCircleOutlined style={{ color: '#16a34a' }} /> : st.status === 'failed' ? <CloseCircleOutlined style={{ color: '#dc2626' }} /> : st.status === 'running' ? <LoadingOutlined style={{ color: BRAND.primary }} /> : <span style={{ color: '#bbb' }}>·</span>}</span>
+            <div style={{ flex: 1 }}><b>{t.label}</b><div style={{ fontSize: 12, color: '#888' }}>{st.note || t.desc}</div></div>
+          </div>
+        ); })}
+      </Modal>
       <Modal title="URL 检索报告" open={!!report} onCancel={() => setReport(null)} footer={null} width={860}>
         <div style={{ maxHeight: '68vh', overflowY: 'auto', whiteSpace: 'pre-wrap', lineHeight: 1.7, fontSize: 13 }}>{report?.ai_overview}</div>
       </Modal>
