@@ -8,7 +8,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { App, Button, Space, Spin, Tag } from 'antd';
-import { ArrowLeftOutlined, PrinterOutlined, LinkOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, PrinterOutlined, LinkOutlined, FilePdfOutlined, PictureOutlined } from '@ant-design/icons';
 import { COMPANY_TYPE_LABELS, SEGMENT_LABELS, KIND_LABELS, FINANCE_ROUND_LABELS, NEWS_KIND_LABELS } from '@/lib/company-fields';
 
 const v = (x: any) => (x && typeof x === 'object' && !Array.isArray(x) && 'value' in x) ? x.value : x;
@@ -90,14 +90,18 @@ export default function CompanyReportPage() {
     ['s8', '八、创始人与管理团队'], ['s9', '九、风险与关键事件'], ['s10', '十、校招与人才'], ['s11', '十一、融资历史'], ['s12', '十二、近期动态'], ['s13', '十三、核心产品'], ['s14', '十四、信息源与口径'],
   ];
 
+  const printMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('print') === '1';
   return (
     <div className="dr">
       <style>{CSS}</style>
+      {printMode && <style>{`.cd-side, .cd-side-mask, .cd-topbar, .dr-toolbar { display: none !important; } .cd-content { padding: 0 !important; margin: 0 !important; max-width: none !important; } .dr-paper { border: none; box-shadow: none; border-radius: 0; }`}</style>}
       <div className="dr-toolbar no-print">
         <Button icon={<ArrowLeftOutlined />} type="text" onClick={() => router.push(`/admin/db-company/${id}`)}>返回档案</Button>
         <Space>
           {hasDeep ? <Tag color={deep.source === 'db' ? 'green' : 'blue'}>深度尽调 · {deep.source === 'db' ? '实体库' : '快照'} · {Object.keys(deep.topics).length} 个专题 · {deep.model}</Tag> : <Tag>尚未跑深度尽调，仅实体库档案</Tag>}
-          <Button icon={<PrinterOutlined />} onClick={() => window.print()}>打印 / 存 PDF</Button>
+          <Button icon={<PrinterOutlined />} onClick={() => window.print()}>打印</Button>
+          <Button type="primary" icon={<FilePdfOutlined />} href={`/api/db/companies/${id}/report-pdf`}>下载 PDF</Button>
+          <Button icon={<PictureOutlined />} href={`/api/db/companies/${id}/report-pdf?format=png`}>网页截图 PNG</Button>
         </Space>
       </div>
 
@@ -230,7 +234,7 @@ export default function CompanyReportPage() {
         </Sec>
 
         <Sec no="11" id="s11" title="融资历史（实体库）">
-          <Table head={['轮次', '金额', '日期', '投资方', '来源']} rows={((d.financings || []) as any[]).slice().sort((a, b) => String(a.publish_date_str || '').localeCompare(String(b.publish_date_str || ''))).map((f: any) => [<b key="r">{f.finance_round_str || FINANCE_ROUND_LABELS?.[f.finance_round] || f.finance_round || '—'}</b>, f.finance_amount || '—', f.publish_date_str || '', f.finance_enterprise || '', <Src key="s" u={f.source_url} />])} widths={[120, 140, 110, undefined, 110]} />
+          <Table head={['轮次', '金额', '日期', '投资方', '来源']} rows={((d.financings || []) as any[]).slice().sort((a, b) => String(a.publish_date_str || '').localeCompare(String(b.publish_date_str || ''))).map((f: any) => [<b key="r">{f.finance_round_str || FINANCE_ROUND_LABELS[f.finance_round] || f.finance_round || '—'}</b>, f.finance_amount || '—', f.publish_date_str || '', f.finance_enterprise || '', <Src key="s" u={f.source_url} />])} widths={[120, 140, 110, undefined, 110]} />
         </Sec>
 
         <Sec no="12" id="s12" title={`近期动态（实体库 ${news.length} 条）`}>
@@ -314,5 +318,5 @@ const CSS = `
 .dr-empty { color: var(--ink3); font-size: 13px; padding: 10px 0; }
 .dr-foot { text-align: center; color: var(--ink3); font-size: 12px; padding-top: 22px; }
 @media (max-width: 900px) { .dr-paper { padding: 24px 18px; } .dr-stats { grid-template-columns: repeat(4, 1fr); } .dr-kv, .dr-grid2, .dr-kpis { grid-template-columns: 1fr; } .dr-cover h1 { font-size: 28px; } }
-@media print { .no-print, aside, nav[aria-label], .ant-layout-sider { display: none !important; } .dr-paper { border: none; box-shadow: none; padding: 0; max-width: none; } .dr-sec { padding: 14px 0; } body { background: #fff; } }
+@media print { .no-print, .cd-side, .cd-side-mask, .cd-topbar, .dr-toolbar { display: none !important; } .cd-content { padding: 0 !important; margin: 0 !important; } .dr-paper { border: none; box-shadow: none; padding: 0; max-width: none; } .dr-sec { padding: 14px 0; } body { background: #fff; } }
 `;
