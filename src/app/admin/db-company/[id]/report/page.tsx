@@ -94,7 +94,7 @@ export default function CompanyReportPage() {
   return (
     <div className="dr">
       <style>{CSS}</style>
-      {printMode && <style>{`.cd-side, .cd-side-mask, .cd-topbar, .dr-toolbar { display: none !important; } .cd-content { padding: 0 !important; margin: 0 !important; max-width: none !important; } .dr-paper { border: none; box-shadow: none; border-radius: 0; }`}</style>}
+      {printMode && <style>{`html, body { height: auto !important; overflow: visible !important; } .cd-admin { display: block !important; height: auto !important; } .cd-side, .cd-side-mask, .cd-topbar, .dr-toolbar { display: none !important; } .cd-content { display: block !important; height: auto !important; min-height: 0 !important; overflow: visible !important; padding: 0 !important; margin: 0 !important; max-width: none !important; } .dr-paper { border: none; box-shadow: none; border-radius: 0; }`}</style>}
       <div className="dr-toolbar no-print">
         <Button icon={<ArrowLeftOutlined />} type="text" onClick={() => router.push(`/admin/db-company/${id}`)}>返回档案</Button>
         <Space>
@@ -318,5 +318,5 @@ const CSS = `
 .dr-empty { color: var(--ink3); font-size: 13px; padding: 10px 0; }
 .dr-foot { text-align: center; color: var(--ink3); font-size: 12px; padding-top: 22px; }
 @media (max-width: 900px) { .dr-paper { padding: 24px 18px; } .dr-stats { grid-template-columns: repeat(4, 1fr); } .dr-kv, .dr-grid2, .dr-kpis { grid-template-columns: 1fr; } .dr-cover h1 { font-size: 28px; } }
-@media print { .no-print, .cd-side, .cd-side-mask, .cd-topbar, .dr-toolbar { display: none !important; } .cd-content { padding: 0 !important; margin: 0 !important; } .dr-paper { border: none; box-shadow: none; padding: 0; max-width: none; } .dr-sec { padding: 14px 0; } body { background: #fff; } }
+@media print { html, body { height: auto !important; overflow: visible !important; } .cd-admin { display: block !important; height: auto !important; } .no-print, .cd-side, .cd-side-mask, .cd-topbar, .dr-toolbar { display: none !important; } .cd-content { display: block !important; height: auto !important; overflow: visible !important; padding: 0 !important; margin: 0 !important; } .dr-paper { border: none; box-shadow: none; padding: 0; max-width: none; } .dr-sec { padding: 14px 0; } body { background: #fff; } }
 `;
