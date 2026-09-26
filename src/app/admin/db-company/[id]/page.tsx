@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Button, Card, Col, Descriptions, Empty, Form, Input, InputNumber, Modal, Popconfirm, Row, Select, Space, Spin, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
-import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, GlobalOutlined, LinkOutlined, ThunderboltOutlined, ApiOutlined, CheckCircleOutlined, CloseCircleOutlined, LockOutlined, ProfileOutlined, EyeOutlined, TrophyOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, GlobalOutlined, LinkOutlined, ThunderboltOutlined, FileTextOutlined, ApiOutlined, CheckCircleOutlined, CloseCircleOutlined, LockOutlined, ProfileOutlined, EyeOutlined, TrophyOutlined } from '@ant-design/icons';
 import { FINANCING_COLUMNS, NEWS_COLUMNS, EXECUTIVE_COLUMNS, PRODUCT_COLUMNS, formatProfileValue } from '@/components/admin/CompanyRunView';
 import { EntityHero } from '@/components/admin/EntityHero';
 import { useModel } from '@/lib/model-context';
@@ -169,6 +169,8 @@ export default function CompanyDetailPage() {
           <Button type="primary" ghost icon={<ProfileOutlined />} onClick={() => router.push(toolCompanyHref)}>跑画像流水线</Button>
           <Tooltip title="赛事雷达：建一个只查这家企业办的比赛的任务"><Button icon={<TrophyOutlined />} onClick={() => router.push(`/admin/tool-competition?company=${encodeURIComponent(company.name)}&companyId=${company.id}`)}>找比赛</Button></Tooltip>
           <Tooltip title="轻量版：一次联网检索只补基础字段；完整画像请用「跑画像流水线」"><Button icon={<ThunderboltOutlined />} loading={enriching} onClick={() => runEnrich(false)}>快速补全</Button></Tooltip>
+          <Tooltip title="实体库全部内容 + 深度尽调八个专题，排成一份可打印的报告"><Button type="primary" icon={<FileTextOutlined />} onClick={() => router.push(`/admin/db-company/${company.id}/report`)}>深度画像报告</Button></Tooltip>
+          <Tooltip title="投资尽调维度：上市与市值 / 财务 / 股权 / 管线 / BD 交易 / 团队 / 风险 / 校招，连同实体库里的全部档案，排成一份可打印的报告"><Button type="primary" icon={<ProfileOutlined />} onClick={() => router.push(`/admin/db-company/${company.id}/report`)}>深度报告</Button></Tooltip>
           <Button icon={<EditOutlined />} onClick={openEdit}>编辑</Button>
           <Popconfirm title="删除这家企业？" description="关联的信息源与岗位会保留，但解除与企业的关联。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消">
             <Button danger icon={<DeleteOutlined />} />

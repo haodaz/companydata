@@ -1,0 +1,1121 @@
+{
+ "company": "诺诚健华医药有限公司",
+ "model": "gpt-5.6-luna",
+ "generatedAt": "2026-09-26T00:02:19.773Z",
+ "topics": {
+  "listing": {
+   "data": {
+    "listings": [
+     {
+      "exchange": "香港交易所",
+      "ticker": "9969",
+      "listed_date": "2020-03-23",
+      "ipo_price": {
+       "value": 8.95,
+       "currency": "HKD",
+       "source": "https://www.innocarepharma.com/news/activity/cn020200323"
+      },
+      "ipo_raised": {
+       "value": 2240000000,
+       "currency": "HKD",
+       "source": "https://www.innocarepharma.com/news/activity/cn020200323"
+      },
+      "board": "主板"
+     },
+     {
+      "exchange": "上海证券交易所",
+      "ticker": "688428",
+      "listed_date": "2022-09-21",
+      "ipo_price": {
+       "value": 11.03,
+       "currency": "CNY",
+       "source": "https://static.cninfo.com.cn/finalpage/2022-09-16/1214602715.PDF"
+      },
+      "ipo_raised": {
+       "value": 2919069800,
+       "currency": "CNY",
+       "source": "https://static.cninfo.com.cn/finalpage/2022-09-16/1214602715.PDF"
+      },
+      "board": "科创板"
+     }
+    ],
+    "market_cap": {
+     "value": 30730000000,
+     "currency": "HKD",
+     "as_of": "2026-09-04",
+     "source": "https://stockanalysis.com/quote/hkg/9969/market-cap/"
+    },
+    "share_price": {
+     "value": 14.51,
+     "currency": "HKD",
+     "as_of": "2026-09-24",
+     "source": "https://stockinvest.us/stock-price/9969.HK"
+    },
+    "total_shares": {
+     "value": 1766621002,
+     "source": "https://www.etnet.com.hk/www/eng/stocks/realtime/quote_ci_brief.php?code=9969"
+    },
+    "controlling_shareholder": null,
+    "sources": {
+     "hong_kong_listing": "https://www.innocarepharma.com/news/activity/cn020200323",
+     "shanghai_listing": "https://www.sse.com.cn/disclosure/announcement/listing/ipo/c/c_20220916_5708969.shtml",
+     "shanghai_ipo_prospectus": "https://static.cninfo.com.cn/finalpage/2022-09-16/1214602715.PDF",
+     "no_controlling_shareholder": "https://static.sse.com.cn/stock/disclosure/announcement/c/202208/001023_20220802_T1S6.pdf"
+    }
+   },
+   "queries": [],
+   "seconds": 15
+  },
+  "financials": {
+   "data": {
+    "periods": [
+     {
+      "period": "截至2023年12月31日年度",
+      "revenue": 738.5,
+      "product_sales": 670.7,
+      "net_profit": -645.6,
+      "rd_expense": 751.2,
+      "cash": 8200,
+      "gross_margin": 82.6,
+      "employees": null,
+      "currency": "人民币百万元",
+      "source": {
+       "revenue": "https://www.innocarepharma.com/en/news/activity/en020240328",
+       "product_sales": "https://www.innocarepharma.com/en/news/activity/en020240328",
+       "net_profit": "https://www.innocarepharma.com/en/news/activity/en020240328",
+       "rd_expense": "https://www.innocarepharma.com/en/news/activity/en020240328",
+       "cash": "https://www.innocarepharma.com/en/news/activity/en020240328",
+       "gross_margin": "https://www.innocarepharma.com/en/news/activity/en020240328"
+      }
+     },
+     {
+      "period": "截至2024年12月31日年度",
+      "revenue": 1009.4,
+      "product_sales": 1000.4,
+      "net_profit": -452.9,
+      "rd_expense": 814,
+      "cash": 7800,
+      "gross_margin": 86.3,
+      "employees": null,
+      "currency": "人民币百万元",
+      "source": {
+       "revenue": "https://www.innocarepharma.com/en/news/activity/en020250327-InnoCare-2024-Results",
+       "product_sales": "https://www.innocarepharma.com/en/news/activity/en020250327-InnoCare-2024-Results",
+       "net_profit": "https://www.innocarepharma.com/en/news/activity/en020250327-InnoCare-2024-Results",
+       "rd_expense": "https://www.innocarepharma.com/en/news/activity/en020250327-InnoCare-2024-Results",
+       "cash": "https://www.innocarepharma.com/uploads/2025-05-13/2024-Annual-Report-EN.pdf",
+       "gross_margin": "https://www.innocarepharma.com/en/news/activity/en020250327-InnoCare-2024-Results"
+      }
+     },
+     {
+      "period": "截至2025年12月31日年度",
+      "revenue": 2374.9,
+      "product_sales": 1442,
+      "net_profit": 644,
+      "rd_expense": 951.6,
+      "cash": 7800,
+      "gross_margin": 92,
+      "employees": null,
+      "currency": "人民币百万元",
+      "source": {
+       "revenue": "https://www.innocarepharma.com/en/news/activity/en020260325-InnoCare-2025-Annual-Results",
+       "product_sales": "https://www.innocarepharma.com/en/news/activity/en020260325-InnoCare-2025-Annual-Results",
+       "net_profit": "https://www.innocarepharma.com/en/news/activity/en020260325-InnoCare-2025-Annual-Results",
+       "rd_expense": "https://www.innocarepharma.com/en/news/activity/en020260325-InnoCare-2025-Annual-Results",
+       "cash": "https://www.innocarepharma.com/en/news/activity/en020260325-InnoCare-2025-Annual-Results",
+       "gross_margin": "https://www.innocarepharma.com/en/news/activity/en020260325-InnoCare-2025-Annual-Results"
+      }
+     },
+     {
+      "period": "截至2026年6月30日六个月（最新中期）",
+      "revenue": 1137.057,
+      "product_sales": 918.1,
+      "net_profit": 239.669,
+      "rd_expense": 497.074,
+      "cash": 8400,
+      "gross_margin": 89.5,
+      "employees": null,
+      "currency": "人民币百万元",
+      "source": {
+       "revenue": "https://financialfilings.com/filings/innocare-pharma-limited/earnings-release/2026/57411854/",
+       "product_sales": "https://financialfilings.com/filings/innocare-pharma-limited/earnings-release/2026/57411854/",
+       "net_profit": "https://financialfilings.com/filings/innocare-pharma-limited/earnings-release/2026/57411854/",
+       "rd_expense": "https://financialfilings.com/filings/innocare-pharma-limited/earnings-release/2026/57411854/",
+       "cash": "https://www.globenewswire.com/de/news-release/2026/08/24/3349911/0/en/innocare-reports-2026-interim-results-sustained-profitability-and-key-milestones-achieved.html",
+       "gross_margin": "https://financialfilings.com/filings/innocare-pharma-limited/earnings-release/2026/57411854/"
+      }
+     }
+    ],
+    "notes": "现金按现金及相关账户结余披露；2026年中期综合毛利率89.5%按披露的毛利人民币1,018.110百万元除以收入人民币1,137.057百万元计算。公开来源中未找到可直接核实的各报告期员工总数，因此员工数均为null。"
+   },
+   "queries": [],
+   "seconds": 30
+  },
+  "shareholding": {
+   "data": {
+    "holders": [
+     {
+      "name": "Jisong Cui（崔霁松）",
+      "role": "联合创始人、执行董事、董事会主席、行政总裁、核心技术人员",
+      "ratio": "5.85%",
+      "as_of": "2025-06-30",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0922/2025092200900.pdf"
+     },
+     {
+      "name": "Yigong Shi（施一公）",
+      "role": "联合创始人、非执行董事；并为 Renbin Zhao（赵仁滨）配偶",
+      "ratio": "6.66%（包括其配偶权益）",
+      "as_of": "2025-06-30",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0922/2025092200900.pdf"
+     },
+     {
+      "name": "Renbin Zhao（赵仁滨）",
+      "role": "执行董事、血液瘤医学研究和临床开发高级副总裁、核心技术人员",
+      "ratio": "6.66%",
+      "as_of": "2025-06-30",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0922/2025092200900.pdf"
+     },
+     {
+      "name": "HHLR Fund, L.P. 及其一致行动人",
+      "role": "主要机构股东",
+      "ratio": "11.8391%",
+      "as_of": "2025-06-30",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0819/2025081901468_c.pdf"
+     },
+     {
+      "name": "Sunny View Holdings Limited 与 Renbin Zhao（赵仁滨）家族",
+      "role": "创始人家族及关联持股主体",
+      "ratio": "8.2106%",
+      "as_of": "2025-06-30",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0819/2025081901468_c.pdf"
+     },
+     {
+      "name": "Sunland BioMed Ltd 与 Jisong Cui（崔霁松）家族",
+      "role": "创始人家族及关联持股主体",
+      "ratio": "7.1827%",
+      "as_of": "2025-06-30",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0819/2025081901468_c.pdf"
+     },
+     {
+      "name": "King Bridge Investments Limited 及其一致行动人",
+      "role": "主要机构股东",
+      "ratio": "7.5402%",
+      "as_of": "2025-06-30",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0819/2025081901468_c.pdf"
+     },
+     {
+      "name": "中国工商银行股份有限公司－中欧医疗健康混合型证券投资基金",
+      "role": "机构投资者",
+      "ratio": "0.7403%",
+      "as_of": "2025-06-30",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0819/2025081901468_c.pdf"
+     },
+     {
+      "name": "中国建设银行股份有限公司－富国精准医疗灵活配置混合型证券投资基金",
+      "role": "机构投资者",
+      "ratio": "0.7138%",
+      "as_of": "2025-06-30",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0819/2025081901468_c.pdf"
+     },
+     {
+      "name": "中国农业银行股份有限公司－鹏华医药科技股票型证券投资基金",
+      "role": "机构投资者",
+      "ratio": "0.5788%",
+      "as_of": "2025-06-30",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0819/2025081901468_c.pdf"
+     },
+     {
+      "name": "中国银行股份有限公司－易方达医疗保健行业混合型证券投资基金",
+      "role": "机构投资者",
+      "ratio": "0.5212%",
+      "as_of": "2025-06-30",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0819/2025081901468_c.pdf"
+     },
+     {
+      "name": "中国建设银行股份有限公司－汇添富创新医药主题混合型证券投资基金",
+      "role": "机构投资者",
+      "ratio": "0.4314%",
+      "as_of": "2025-06-30",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0819/2025081901468_c.pdf"
+     },
+     {
+      "name": "Xiangyang Chen（陈向阳）",
+      "role": "首席技术官、核心技术人员",
+      "ratio": null,
+      "as_of": "2025-12-31",
+      "source": "https://www.innocarepharma.com/uploads/2026-03-26/2025-Annual-Report-CN-A.pdf"
+     },
+     {
+      "name": "傅欣",
+      "role": "首席财务官",
+      "ratio": null,
+      "as_of": "2025-12-31",
+      "source": "https://www.innocarepharma.com/uploads/2026-03-26/2025-Annual-Report-CN-A.pdf"
+     },
+     {
+      "name": "Jisong Cui（崔霁松）成年子女",
+      "role": "创始人家族成员",
+      "ratio": null,
+      "as_of": "2025-12-31",
+      "source": "https://www.innocarepharma.com/uploads/2026-03-26/2025-Annual-Report-CN-A.pdf"
+     },
+     {
+      "name": "The Jisong Cui 2019 Irrevocable Trust",
+      "role": "Jisong Cui（崔霁松）家族信托",
+      "ratio": null,
+      "as_of": "2025-12-31",
+      "source": "https://www.innocarepharma.com/uploads/2026-03-26/2025-Annual-Report-CN-A.pdf"
+     },
+     {
+      "name": "Renbin Zhao（赵仁滨）成年子女",
+      "role": "创始人家族成员",
+      "ratio": null,
+      "as_of": "2025-12-31",
+      "source": "https://www.innocarepharma.com/uploads/2026-03-26/2025-Annual-Report-CN-A.pdf"
+     },
+     {
+      "name": "Grandview Irrevocable Trust",
+      "role": "Renbin Zhao（赵仁滨）家族信托",
+      "ratio": null,
+      "as_of": "2025-12-31",
+      "source": "https://www.innocarepharma.com/uploads/2026-03-26/2025-Annual-Report-CN-A.pdf"
+     }
+    ],
+    "actual_controller": null,
+    "notes": "截至2025年6月30日，公司披露不存在控股股东和实际控制人：任何单一股东持股比例均低于30%，第一大股东 HHLR Fund, L.P. 及其一致行动人合计持股11.8391%，且主要股东之间不存在一致行动关系。2025年半年度报告披露，Jisong Cui（崔霁松）家族相关持股包括其通过 Sunland BioMed Ltd 间接持有79,326,827股、成年子女通过 Stanley Holdings Limited 间接持有25,615,866股并直接持有33,000股、The Jisong Cui 2019 Irrevocable Trust持有20,803,089股，以及Jisong Cui直接持有821,500股；Renbin Zhao（赵仁滨）家族相关持股包括其通过 Sunny View Holdings Limited 间接持有92,460,375股、成年子女通过 Wellesley Hill Holdings Limited 持有27,778,300股、Grandview Irrevocable Trust持有20,436,218股、其配偶施一公直接持有3,900,000股，以及Renbin Zhao直接持有143,000股。2025年年度报告显示，Jisong Cui直接持股变为1,234,000股，Renbin Zhao直接持股变为243,000股；报告未提供上述每一项家族持股对应的单独百分比，因此相关 ratio 使用 null。"
+   },
+   "queries": [],
+   "seconds": 29
+  },
+  "pipeline": {
+   "data": {
+    "approved_products": [
+     {
+      "name": "奥布替尼（宜诺凯）",
+      "generic_name": "orelabrutinib",
+      "target": "BTK",
+      "indications": [
+       "初治慢性淋巴细胞白血病/小淋巴细胞淋巴瘤（TN CLL/SLL）",
+       "复发/难治性慢性淋巴细胞白血病/小淋巴细胞淋巴瘤（r/r CLL/SLL）",
+       "复发/难治性套细胞淋巴瘤（r/r MCL）",
+       "复发/难治性边缘区淋巴瘤（r/r MZL）"
+      ],
+      "approval_dates": [
+       "2020年12月25日（中国，r/r CLL/SLL及r/r MCL）",
+       "2025年（中国，TN CLL/SLL）",
+       "2025年（新加坡，r/r MZL）"
+      ],
+      "regions": [
+       "中国",
+       "新加坡"
+      ],
+      "sales_note": "中国已上市并纳入国家医保；公司披露其在中国和新加坡获批上市。",
+      "source": "https://www.innocarepharma.com/investor/pipeline"
+     },
+     {
+      "name": "坦昔妥单抗",
+      "generic_name": "tafasitamab",
+      "target": "CD19",
+      "indications": [
+       "复发/难治性弥漫性大B细胞淋巴瘤（r/r DLBCL），与来那度胺联用"
+      ],
+      "approval_dates": [
+       "2025年5月（中国大陆）",
+       "2024年及以前/具体日期未披露（香港、澳门、台湾）"
+      ],
+      "regions": [
+       "中国大陆",
+       "香港",
+       "澳门",
+       "台湾",
+       "博鳌",
+       "大湾区"
+      ],
+      "sales_note": "2025年获中国大陆NDA批准；公司称其为中国首个获批用于r/r DLBCL的CD19抗体疗法。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020260325"
+     },
+     {
+      "name": "Zurletrectinib（ICP-723）",
+      "generic_name": "zurletrectinib",
+      "target": "NTRK",
+      "indications": [
+       "NTRK基因融合阳性实体瘤"
+      ],
+      "approval_dates": [
+       "2025年（中国，成人及12岁以上青少年）"
+      ],
+      "regions": [
+       "中国"
+      ],
+      "sales_note": "公司已在中国商业化，属于其首个获批的实体瘤治疗产品。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020260129"
+     }
+    ],
+    "pipeline": [
+     {
+      "name": "奥布替尼（orelabrutinib）",
+      "target": "BTK",
+      "indication": "初治套细胞淋巴瘤（TN MCL）",
+      "stage": "phase 3",
+      "region": "全球",
+      "partner": null,
+      "milestone": "全球III期研究推进中。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "奥布替尼（orelabrutinib）",
+      "target": "BTK",
+      "indication": "边缘区淋巴瘤确证性研究（MZL confirmatory）",
+      "stage": "phase 3",
+      "region": "中国",
+      "partner": null,
+      "milestone": "公司披露中国MZL确证性III期研究正在推进。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "奥布替尼（orelabrutinib）",
+      "target": "BTK",
+      "indication": "原发免疫性血小板减少症（ITP）",
+      "stage": "NDA",
+      "region": "中国",
+      "partner": null,
+      "milestone": "III期关键研究已完成患者入组；公司预计于2026年第二季度提交NDA。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "奥布替尼（orelabrutinib）",
+      "target": "BTK",
+      "indication": "系统性红斑狼疮（SLE）",
+      "stage": "phase 3",
+      "region": "中国",
+      "partner": null,
+      "milestone": "IIb期积极数据于2025年末披露；III期于2026年第一季度启动并开始入组。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "奥布替尼（orelabrutinib）",
+      "target": "BTK",
+      "indication": "原发进展型多发性硬化（PPMS）",
+      "stage": "phase 3",
+      "region": "全球",
+      "partner": "Zenas BioPharma",
+      "milestone": "公司与Zenas于2025年10月签署许可协议，推进全球III期开发。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en0202510082"
+     },
+     {
+      "name": "奥布替尼（orelabrutinib）",
+      "target": "BTK",
+      "indication": "继发进展型多发性硬化（SPMS）",
+      "stage": "phase 3",
+      "region": "全球",
+      "partner": "Zenas BioPharma",
+      "milestone": "美国FDA于2025年2月批准III期试验方案；后续全球III期开发由Zenas推进。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020250327-InnoCare-2024-Results"
+     },
+     {
+      "name": "奥布替尼（orelabrutinib）",
+      "target": "BTK",
+      "indication": "复发/难治性套细胞淋巴瘤（r/r MCL）",
+      "stage": "NDA",
+      "region": "澳大利亚",
+      "partner": null,
+      "milestone": "公司披露已在澳大利亚提交NDA。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020250327-InnoCare-2024-Results"
+     },
+     {
+      "name": "奥布替尼（orelabrutinib）",
+      "target": "BTK",
+      "indication": "复发/难治性边缘区淋巴瘤（r/r MZL）",
+      "stage": "NDA",
+      "region": "新加坡",
+      "partner": null,
+      "milestone": "公司披露已在新加坡提交NDA，后续获批上市。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020250327-InnoCare-2024-Results"
+     },
+     {
+      "name": "坦昔妥单抗（tafasitamab）",
+      "target": "CD19",
+      "indication": "复发/难治性弥漫性大B细胞淋巴瘤（r/r DLBCL）",
+      "stage": "approved",
+      "region": "中国大陆",
+      "partner": "MORPHOSYS AG",
+      "milestone": "中国大陆BLA获优先审评后于2025年5月获批。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020260325"
+     },
+     {
+      "name": "Mesutoclax（ICP-248）",
+      "target": "BCL2",
+      "indication": "初治慢性淋巴细胞白血病/小淋巴细胞淋巴瘤（TN CLL/SLL），与奥布替尼联用",
+      "stage": "phase 3",
+      "region": "中国",
+      "partner": null,
+      "milestone": "III期研究已入组并接近完成。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020260129-InnoCare-announces-2025-preliminary-earnings-estimate"
+     },
+     {
+      "name": "Mesutoclax（ICP-248）",
+      "target": "BCL2",
+      "indication": "既往BTK抑制剂治疗失败的复发/难治性套细胞淋巴瘤（r/r MCL）",
+      "stage": "phase 3",
+      "region": "中国",
+      "partner": null,
+      "milestone": "已进入III期临床研究；公司同时推进注册性开发。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "Mesutoclax（ICP-248）",
+      "target": "BCL2",
+      "indication": "复发/难治性非霍奇金淋巴瘤（r/r NHL）",
+      "stage": "phase 1/2",
+      "region": "中国、美国",
+      "partner": null,
+      "milestone": "处于I/II期开发。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "Mesutoclax（ICP-248）",
+      "target": "BCL2",
+      "indication": "急性髓系白血病（AML）",
+      "stage": "phase 1/2",
+      "region": "中国、全球",
+      "partner": null,
+      "milestone": "中国及全球临床研究正在进行。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020250327-InnoCare-2024-Results"
+     },
+     {
+      "name": "Mesutoclax（ICP-248）",
+      "target": "BCL2",
+      "indication": "骨髓增生异常综合征（MDS）",
+      "stage": "phase 1/2",
+      "region": "中国、全球",
+      "partner": null,
+      "milestone": "中国及全球临床研究正在进行。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "Soficitinib（ICP-332）",
+      "target": "TYK2/JAK1",
+      "indication": "中重度特应性皮炎（AD）",
+      "stage": "phase 3",
+      "region": "中国",
+      "partner": null,
+      "milestone": "III期注册性研究于2025年末完成患者入组，主要疗效分析预计于2026年中完成。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "Soficitinib（ICP-332）",
+      "target": "TYK2/JAK1",
+      "indication": "白癜风",
+      "stage": "phase 3",
+      "region": "中国",
+      "partner": null,
+      "milestone": "已完成II期研究患者入组；2025年披露II期达到主要终点。",
+      "source": "https://www.innocarepharma.com/en/investor/home"
+     },
+     {
+      "name": "Soficitinib（ICP-332）",
+      "target": "TYK2/JAK1",
+      "indication": "结节性痒疹（PN）",
+      "stage": "phase 1/2",
+      "region": "全球",
+      "partner": null,
+      "milestone": "处于临床开发阶段。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "Soficitinib（ICP-332）",
+      "target": "TYK2/JAK1",
+      "indication": "慢性自发性荨麻疹（CSU）",
+      "stage": "phase 1/2",
+      "region": "中国",
+      "partner": null,
+      "milestone": "已进入临床研究。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020260129-InnoCare-announces-2025-preliminary-earnings-estimate"
+     },
+     {
+      "name": "Soficitinib（ICP-332）",
+      "target": "TYK2/JAK1",
+      "indication": "银屑病",
+      "stage": "phase 1/2",
+      "region": "中国",
+      "partner": null,
+      "milestone": "已进入临床研究。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020260129-InnoCare-announces-2025-preliminary-earnings-estimate"
+     },
+     {
+      "name": "ICP-488",
+      "target": "TYK2",
+      "indication": "银屑病",
+      "stage": "phase 3",
+      "region": "中国",
+      "partner": null,
+      "milestone": "III期研究于2026年2月完成患者入组，主要疗效终点分析预计于2026年完成。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "ICP-488",
+      "target": "TYK2",
+      "indication": "皮肤型红斑狼疮（CLE）",
+      "stage": "phase 2",
+      "region": "中国",
+      "partner": null,
+      "milestone": "II期临床试验已获批。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "ICP-488",
+      "target": "TYK2",
+      "indication": "干燥综合征",
+      "stage": "phase 2",
+      "region": "中国",
+      "partner": null,
+      "milestone": "II期临床试验IND申请已提交。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "Zurletrectinib（ICP-723）",
+      "target": "NTRK",
+      "indication": "NTRK基因融合阳性儿童实体瘤",
+      "stage": "NDA",
+      "region": "中国",
+      "partner": null,
+      "milestone": "儿童实体瘤适应症NDA预计于2026年提交。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "ICP-B02（CM355/PRO-203）",
+      "target": "CD20×CD3",
+      "indication": "CD20阳性B细胞恶性肿瘤",
+      "stage": "phase 1",
+      "region": "中国、全球",
+      "partner": "Keymed；Prolium Bioscience",
+      "milestone": "与Keymed共同开发；2025年1月授予Prolium独家许可；Prolium已启动健康受试者SAD研究。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020260325"
+     },
+     {
+      "name": "ICP-B02（CM355/PRO-203）",
+      "target": "CD20×CD3",
+      "indication": "系统性硬化症及其他B细胞驱动自身免疫疾病",
+      "stage": "phase 1/2",
+      "region": "全球（大中华区权益安排未披露）",
+      "partner": "Prolium Bioscience",
+      "milestone": "Prolium预计于2026年第二季度启动系统性硬化症全球I/II期研究。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020260325"
+     },
+     {
+      "name": "ICP-189",
+      "target": "SHP2",
+      "indication": "晚期非小细胞肺癌（NSCLC），与firmonertinib联用",
+      "stage": "phase 1/2",
+      "region": "中国",
+      "partner": "ArriVent BioPharma",
+      "milestone": "公司与ArriVent开展临床开发合作，评估联合治疗的抗肿瘤活性和安全性。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020250327-InnoCare-2024-Results"
+     },
+     {
+      "name": "ICP-189",
+      "target": "SHP2",
+      "indication": "实体瘤",
+      "stage": "phase 1/2",
+      "region": "中国",
+      "partner": null,
+      "milestone": "处于早期临床开发。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020240820"
+     },
+     {
+      "name": "ICP-802",
+      "target": "CD3×CD20",
+      "indication": "非小细胞肺癌（NSCLC）",
+      "stage": "phase 1/2",
+      "region": "中国",
+      "partner": null,
+      "milestone": "处于I/II期开发。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "ICP-490",
+      "target": "E3 Ligase",
+      "indication": "多发性骨髓瘤（MM）",
+      "stage": "phase 1/2",
+      "region": "中国",
+      "partner": null,
+      "milestone": "处于I/II期开发。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "ICP-490",
+      "target": "E3 Ligase",
+      "indication": "非霍奇金淋巴瘤（NHL）",
+      "stage": "phase 1/2",
+      "region": "中国",
+      "partner": null,
+      "milestone": "处于I/II期开发。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "ICP-805",
+      "target": "CCR8",
+      "indication": "血液肿瘤",
+      "stage": "phase 1/2",
+      "region": "中国",
+      "partner": null,
+      "milestone": "处于I/II期开发。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "ICP-805",
+      "target": "CCR8",
+      "indication": "实体瘤",
+      "stage": "phase 1/2",
+      "region": "中国",
+      "partner": null,
+      "milestone": "处于I/II期开发。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "ICP-B794",
+      "target": "B7-H3",
+      "indication": "实体瘤，包括肺癌、食管癌、鼻咽癌、头颈部鳞状细胞癌及前列腺癌等",
+      "stage": "phase 1",
+      "region": "中国",
+      "partner": null,
+      "milestone": "中国IND于2025年7月获批；正在进行I期剂量递增研究。",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0922/2025092200900.pdf"
+     },
+     {
+      "name": "ICP-8794",
+      "target": "B7-H3",
+      "indication": "实体瘤",
+      "stage": "phase 1/2",
+      "region": "中国",
+      "partner": null,
+      "milestone": "公司2025年ESG管线图列为B7-H3 ADC临床项目。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     },
+     {
+      "name": "ICP-B208",
+      "target": "CDH17",
+      "indication": "胃癌、结直肠癌、胰腺导管腺癌及胆管癌等胃肠道实体瘤",
+      "stage": "phase 1",
+      "region": "中国",
+      "partner": null,
+      "milestone": "NMPA于2026年5月批准开展临床研究；2026年7月完成首例患者给药。",
+      "source": "https://www.innocarepharma.com/news/activity/cn020260507-IND-Approval-of-novel-CDH17-targeted-ADC"
+     },
+     {
+      "name": "ICP-538",
+      "target": "VAV1",
+      "indication": "自身免疫性疾病，包括炎症性肠病、系统性红斑狼疮及多发性硬化",
+      "stage": "phase 1",
+      "region": "中国",
+      "partner": null,
+      "milestone": "中国首例健康受试者已完成给药；为靶向VAV1的分子胶降解剂。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020260325"
+     },
+     {
+      "name": "ICP-054（ZB021）",
+      "target": "IL-17AA/AF",
+      "indication": "自身免疫性及炎症性疾病",
+      "stage": "phase 1",
+      "region": "中国；大中华区及东南亚以外地区由合作方负责",
+      "partner": "Zenas BioPharma",
+      "milestone": "IND已提交；2026年5月完成I期首例受试者给药，SAD/MAD数据预计于2026年底获得。Zenas拥有大中华区及东南亚以外地区的开发、生产及商业化独家权利。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020260513-FPI-of-an-Oral-IL-17AA-AF-Inhibitor-ICP-054"
+     },
+     {
+      "name": null,
+      "target": "未披露（口服分子胶降解剂）",
+      "indication": "自身免疫性疾病",
+      "stage": "preclinical",
+      "region": null,
+      "partner": null,
+      "milestone": "公司2025年ESG管线图列为临床前口服分子胶降解剂项目，未披露具体分子代码。",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225162995.PDF"
+     }
+    ]
+   },
+   "queries": [],
+   "seconds": 53
+  },
+  "deals": {
+   "data": {
+    "deals": [
+     {
+      "date": "2026-09-24",
+      "partner": "Eli Lilly and Company",
+      "asset": "最多5项创新性靶点项目",
+      "type": "研发合作及授权许可",
+      "region": "未披露",
+      "upfront": "最高1亿美元首付款和近期里程碑付款",
+      "milestones": "潜在研发及商业化里程碑付款总额约32.5亿美元；另有基于许可产品年度净销售额的个位数百分比分级特许权使用费",
+      "status": "协议已生效，合作进行中",
+      "source": "https://vip.stock.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12620080&stockid=688428"
+     },
+     {
+      "date": "2025-10-08",
+      "partner": "Zenas BioPharma",
+      "asset": "奥布替尼（orelabrutinib）；口服IL-17 AA/AF抑制剂；透脑性口服TYK2抑制剂",
+      "type": "对外许可",
+      "region": "奥布替尼：多发性硬化全球；非肿瘤适应症除大中华区及东南亚以外地区；IL-17 AA/AF抑制剂：除大中华区及东南亚以外地区；透脑性口服TYK2抑制剂：全球",
+      "upfront": "最高1亿美元现金首付款及近期里程碑付款；另发行最多700万股Zenas普通股",
+      "milestones": "总交易金额超过20亿美元；另有临床开发、注册及商业化里程碑付款；授权产品年度净销售额最高达高百分之十几的分级特许权使用费",
+      "status": "协议已签署，合作进行中",
+      "source": "https://www.innocarepharma.com/news/activity/cn0202510082"
+     },
+     {
+      "date": "2025-01-20",
+      "partner": "Prolium Bioscience",
+      "asset": "ICP-B02（CM355，CD20×CD3双特异性抗体）",
+      "type": "对外许可",
+      "region": "全球非肿瘤领域；亚洲以外的全球肿瘤领域",
+      "upfront": "InnoCare与KeyMed合计1750万美元首期及近期付款；其中InnoCare已披露收到625万美元首付款及250万美元近期付款",
+      "milestones": "额外里程碑付款最高5.025亿美元；另有未来产品净销售额分层特许权使用费及Prolium少数股权",
+      "status": "协议已签署，合作进行中",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020250120"
+     },
+     {
+      "date": "2021-08-17",
+      "partner": "Incyte",
+      "asset": "tafasitamab",
+      "type": "引进许可及商业化合作",
+      "region": "大中华区（中国大陆、香港、澳门及台湾地区）",
+      "upfront": "3500万美元",
+      "milestones": "潜在开发及注册里程碑最高4500万美元；潜在销售里程碑最高3750万美元；另有未来产品销售额低至中二十几个百分点的分级特许权使用费",
+      "status": "协议已签署，商业化及开发合作进行中",
+      "source": "https://investor.incyte.com/static-files/5322aa40-4223-4bb6-8286-0f489c19f198"
+     },
+     {
+      "date": "2021-07-13",
+      "partner": "Biogen",
+      "asset": "奥布替尼（orelabrutinib）",
+      "type": "对外许可及开发合作",
+      "region": "多发性硬化：全球；部分自身免疫性疾病：除中国（包括香港、澳门和台湾）以外地区；InnoCare保留肿瘤领域全球权利及部分自身免疫性疾病中国地区权利",
+      "upfront": "1.25亿美元",
+      "milestones": "潜在临床开发及商业里程碑付款最高8.125亿美元；另有未来净销售额低至高十几个百分点的分级特许权使用费",
+      "status": "协议已签署，合作进行中",
+      "source": "https://www.innocarepharma.com/news/activity/cn020210713"
+     },
+     {
+      "date": null,
+      "partner": "合作方A（公开披露未指明名称）",
+      "asset": "IL-15融合蛋白",
+      "type": "引进许可",
+      "region": "全球",
+      "upfront": "200万美元",
+      "milestones": "临床开发、注册申报及商业化里程碑付款，具体金额未披露；另有基于年度净销售额的许可费",
+      "status": "协议状态未披露",
+      "source": "https://pdf.dfcfw.com/pdf/H2_AN202112271537035927_1.pdf"
+     },
+     {
+      "date": "2020-06-01",
+      "partner": "KeyMed Biosciences（康诺亚）",
+      "asset": "CM355及其备选产品；CM369",
+      "type": "共同开发",
+      "region": "全球",
+      "upfront": "CM355项目：北京诺诚健华向康诺亚支付800万元首付款；CM369金额未披露",
+      "milestones": "CM355项目：IND获批且满足约定知识产权条件后支付3200万元；CM369里程碑金额未披露",
+      "status": "CM355及CM369共同开发合作；CM355后续已于2025年授权给Prolium",
+      "source": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=8513627&stockid=688428"
+     }
+    ]
+   },
+   "queries": [],
+   "seconds": 32
+  },
+  "team": {
+   "data": {
+    "founders": [
+     {
+      "name": "Jisong Cui（崔霁松，Jasmine Cui）",
+      "title": "联合创始人、董事会主席、行政总裁（CEO）",
+      "background": "拥有生物学博士学位及博士后研究经历；曾在美国公司担任总经理兼首席科学官；2011年回到中国，2015年创立诺诚健华。",
+      "ownership": "截至2025年12月31日，其本人及近亲属合计披露持有或控制127,012,782股，包括通过Sunland BioMed Ltd间接持有79,326,827股、通过家族信托控制20,803,089股及直接持有1,234,000股；公司披露的相关一致行动人合计持股比例为7.1976%。",
+      "source": "https://www.innocarepharma.com/en/about/team"
+     },
+     {
+      "name": "Yigong Shi（施一公）",
+      "title": "联合创始人、非执行董事、科学顾问委员会主席",
+      "background": "结构生物学家；西湖大学创始校长；中国科学院院士；美国国家科学院外籍院士；曾任清华大学及Princeton University教授。",
+      "ownership": "截至2025年12月31日直接持有公司3,900,000股普通股。",
+      "source": "https://www.innocarepharma.com/about/team"
+     }
+    ],
+    "management": [
+     {
+      "name": "Jisong Cui（崔霁松，Jasmine Cui）",
+      "title": "董事会主席、行政总裁（CEO）",
+      "background": "拥有生物学博士学位及博士后研究经历；曾在美国公司担任总经理兼首席科学官；2011年回到中国，2015年创立诺诚健华。",
+      "source": "https://www.innocarepharma.com/en/about/team"
+     },
+     {
+      "name": "Renbin Zhao（赵仁滨）",
+      "title": "执行董事、血液瘤医学研究和临床开发高级副总裁",
+      "background": null,
+      "source": "https://www.innocarepharma.com/en/about/team"
+     },
+     {
+      "name": "Xiangyang Chen（陈向阳）",
+      "title": "首席技术官（CTO）、核心技术人员",
+      "background": "曾任Albert Einstein College of Medicine生物化学博士后研究员、Pfizer Inc.首席科学家、保诺科技（北京）有限公司医药化学部门主任/高级总监/执行总监及北京诺诚健华化学副总裁；获北京大学应用化学学士学位及Emory University化学博士学位。",
+      "source": "https://m.cnpharm.com/upload/resources/file/2025/03/28/171360.pdf"
+     },
+     {
+      "name": "Xin Fu（傅欣）",
+      "title": "首席财务官（CFO）",
+      "background": "曾任药明巨诺高级副总裁兼首席财务官；此前在Pfizer China担任多个财务及合规领导职位；更早曾任KPMG Huazhen税务经理；获复旦大学会计学学士学位。",
+      "source": "https://m.cnpharm.com/upload/resources/file/2025/03/28/171360.pdf"
+     },
+     {
+      "name": "Shaofeng Chen（陈少峰，Jeff Chen）",
+      "title": "首席商务官（CCO）",
+      "background": null,
+      "source": "https://www.innocarepharma.com/about/team"
+     },
+     {
+      "name": "Qiang Zhou（周强，John Zhou）",
+      "title": "首席医学官（CMO）",
+      "background": null,
+      "source": "https://www.innocarepharma.com/about/team"
+     },
+     {
+      "name": "Nan Gao（高楠，Kevin Gao）",
+      "title": "首席运营官（COO）",
+      "background": null,
+      "source": "https://www.innocarepharma.com/about/team"
+     },
+     {
+      "name": "Ruiqin Liu（刘瑞勤）",
+      "title": "新药研究副总裁",
+      "background": null,
+      "source": "https://www.innocarepharma.com/about/team"
+     },
+     {
+      "name": "Junjian Liu（刘军建）",
+      "title": "生物和大分子高级副总裁",
+      "background": null,
+      "source": "https://www.innocarepharma.com/about/team"
+     },
+     {
+      "name": "Ying Wang（王英，Charles Y. Wang）",
+      "title": "药物安全及药代药动副总裁",
+      "background": null,
+      "source": "https://www.innocarepharma.com/about/team"
+     },
+     {
+      "name": "Xianglong Kong（孔祥龙，Norman Kong）",
+      "title": "药物化学副总裁",
+      "background": null,
+      "source": "https://www.innocarepharma.com/about/team"
+     },
+     {
+      "name": "Boyan Zhang（张伯彦）",
+      "title": "大分子CMC副总裁",
+      "background": null,
+      "source": "https://www.innocarepharma.com/about/team"
+     },
+     {
+      "name": "Wei Zhou（周伟，Carrie Zhou）",
+      "title": "医学研究副总裁",
+      "background": null,
+      "source": "https://www.innocarepharma.com/about/team"
+     },
+     {
+      "name": "Junsu Wang（王俊苏，Jessie Wang）",
+      "title": "总法务顾问",
+      "background": null,
+      "source": "https://www.innocarepharma.com/about/team"
+     },
+     {
+      "name": "Liying Ren（任丽英，Lisa Ren）",
+      "title": "商务拓展副总裁",
+      "background": null,
+      "source": "https://www.innocarepharma.com/about/team"
+     }
+    ],
+    "advisors": [
+     {
+      "name": "Yigong Shi（施一公）",
+      "role": "科学顾问委员会主席；联合创始人",
+      "affiliation": "西湖大学创始校长；中国科学院院士；美国国家科学院外籍院士；清华大学教授",
+      "source": "https://www.innocarepharma.com/about/team"
+     },
+     {
+      "name": "Zhanguo Li（栗占国）",
+      "role": "科学顾问委员会委员",
+      "affiliation": "北京大学教授；北京大学人民医院临床免疫中心/风湿免疫科主任",
+      "source": "https://www.innocarepharma.com/about/team"
+     },
+     {
+      "name": "Arnold J. Levine",
+      "role": "科学顾问委员会委员",
+      "affiliation": "Princeton University高级研究院荣休教授；美国国家科学院成员",
+      "source": "https://www.innocarepharma.com/about/team"
+     },
+     {
+      "name": "Zemin Jason Zhang（张泽民）",
+      "role": "科学顾问委员会委员",
+      "affiliation": "曾任Genentech Inc.生物信息首席科学家；北京大学生命科学学院终身教授；获南开大学遗传学学士学位及Pennsylvania State University生物化学和分子生物学博士学位",
+      "source": "https://static.sse.com.cn/stock/disclosure/announcement/c/202204/001023_20220421_GCWL.pdf"
+     },
+     {
+      "name": "James Deng",
+      "role": "销售与市场顾问委员会成员（ABM）",
+      "affiliation": "曾任Becton Dickinson全球高级副总裁兼大中华区总经理、Novartis Pharma China首席执行官兼总裁及Novartis Pharma US市场副总裁；CEIBS EMBA及Harvard Business School General Management Program毕业生",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020190311"
+     }
+    ]
+   },
+   "queries": [],
+   "seconds": 24
+  },
+  "risks": {
+   "data": {
+    "events": [
+     {
+      "date": "2025-01-21",
+      "kind": "高管/董事变动",
+      "summary": "独立非执行董事Guan Kunliang（管昆良）辞任，原因及继任安排见公司公告；公司随后补足董事会独立非执行董事席位。",
+      "impact": "对公司治理和董事会连续性构成短期关注，但公告未显示对经营造成重大影响。",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0922/2025092200900.pdf"
+     },
+     {
+      "date": "2025-05-01",
+      "kind": "监管批准",
+      "summary": "NMPA批准tafasitamab联合lenalidomide用于成人复发/难治性弥漫性大B细胞淋巴瘤（R/R DLBCL），成为中国首个获批该适应症的CD19抗体疗法。",
+      "impact": "正面：扩充商业化产品组合并推动收入增长；同时带来上市后商业化执行、市场竞争及医保准入风险。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020260325"
+     },
+     {
+      "date": "2025-05-13",
+      "kind": "监管/临床进展",
+      "summary": "公司披露orelabutinib获批一线CLL/SLL适应症；mesutoclax（ICP-248）获批开展中国II期注册性临床试验并获得突破性疗法认定；ICP-B794的IND申请获受理。",
+      "impact": "总体正面，提升管线推进速度；但多项项目仍处于临床阶段，存在疗效、安全性、监管审评及商业化不确定性。",
+      "source": "https://www.innocarepharma.com/news/activity/cn020250513-InnoCare-2025-Q1-Results"
+     },
+     {
+      "date": "2025-08-19",
+      "kind": "财务/经营",
+      "summary": "2025年上半年营业收入同比增长74.3%至人民币731.4百万元，药品销售同比增长53.5%至人民币641.2百万元，期内亏损收窄86.7%至人民币35.6百万元；现金及相关账户余额约人民币77亿元。",
+      "impact": "正面：商业化和现金储备改善；但公司仍录得期内亏损，研发投入及多项临床项目持续带来现金消耗。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020250819-InnoCare-2025-Interim-Results"
+     },
+     {
+      "date": "2025-09-25",
+      "kind": "商业化进展",
+      "summary": "tafasitamab（明诺凯®）在中国多个省市医院开出首批处方，正式进入中国临床应用阶段。",
+      "impact": "正面：标志着新产品开始商业化放量；实际销售仍取决于医生及患者接受度、支付覆盖、渠道建设和竞争格局。",
+      "source": "https://www.innocarepharma.com/news/activity/cn020250925"
+     },
+     {
+      "date": "2025-10-08",
+      "kind": "授权合作",
+      "summary": "与Zenas BioPharma签署全球战略合作及许可协议，涉及orelabutinib及另外两项临床前资产的开发、生产和商业化；交易包含许可安排、里程碑及Zenas股权认购安排。",
+      "impact": "正面：提供全球化和潜在里程碑收入机会；风险在于合作方研发、注册及商业化执行，以及里程碑实现和Zenas股权价值波动。",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2025/1008/2025100801142.pdf"
+     },
+     {
+      "date": "2025-12-11",
+      "kind": "监管批准",
+      "summary": "NMPA批准zurletrectinib（ICP-723）用于治疗携带NTRK基因融合的成人及青少年实体瘤患者。",
+      "impact": "正面：公司第三款获批创新药，并补充实体瘤商业化管线；产品市场规模、竞争及上市后安全性仍存在不确定性。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020251211-Approval-of-Next-Generation-TRK-Inhibitor-Zurletrectinib-in-China"
+     },
+     {
+      "date": "2026-03-25",
+      "kind": "财务/经营",
+      "summary": "公司披露2025年首次实现年度盈利；2025年收入同比大幅增长，tafasitamab和zurletrectinib获批并开始贡献销售，mesutoclax多个注册性研究继续推进。",
+      "impact": "正面：经营从亏损转为盈利，商业化产品增加；盈利可持续性仍依赖产品放量、授权里程碑及临床研发成功。",
+      "source": "https://www.innocarepharma.com/en/news/activity/en020260325"
+     },
+     {
+      "date": "2026-04-23",
+      "kind": "财务风险",
+      "summary": "2026年第一季度营业收入同比增长38.65%，利润同比显著增加，但经营活动现金流同比下降92.53%；公司披露收入增长主要来自药品销售和Zenas许可协议后续里程碑付款。",
+      "impact": "混合：利润和收入改善，但经营现金流明显下降，且当期业绩受一次性或阶段性里程碑收入影响，盈利质量和持续性需关注。",
+      "source": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0423/2026042302088.pdf"
+     },
+     {
+      "date": "2026-05-28",
+      "kind": "分析师观点",
+      "summary": "Morgan Stanley将InnoCare评级由Equal Weight上调至Overweight，但将目标价由HK$19.60下调至HK$17.00；理由包括中国生物科技股估值重置、FY2026创新药收入增长及对外授权势头。",
+      "impact": "正面评级与下调目标价并存，反映分析师看好基本面和授权机会，但对估值或市场风险保持谨慎。",
+      "source": "https://www.tipranks.com/news/the-fly/innocare-pharma-upgraded-to-overweight-from-equal-weight-at-morgan-stanley-thefly-news"
+     },
+     {
+      "date": "2026-06-25",
+      "kind": "内部人士减持计划",
+      "summary": "董事长兼行政总裁崔霁松、执行董事兼高级副总裁赵仁滨及首席技术官陈向阳拟于2026年7月16日至9月30日通过集中竞价减持部分A股，合计上限分别为206,250股、50,000股和62,500股，公告称原因为个人资金需求。",
+      "impact": "轻度负面信号：管理层拟减持可能影响市场情绪，但计划规模相对其直接持股及公司总股本较小，公告称不会导致控制权变更。",
+      "source": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0624/2026062401130_c.pdf"
+     },
+     {
+      "date": "2026-07-21",
+      "kind": "内部人士减持完成",
+      "summary": "公司披露董事、高管减持股份结果公告，涉及此前公布的减持计划。",
+      "impact": "市场可能将其视为管理层套现信号；具体实际减持数量及价格应以结果公告为准。",
+      "source": "https://vip.stock.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/688428.phtml?ftype=0"
+     }
+    ],
+    "sentiment_summary": "整体情绪偏正面但伴随明显执行风险。正面因素包括orelabutinib、tafasitamab和zurletrectinib相继获批，tafasitamab开始商业化，2025年实现年度盈利，以及与Zenas BioPharma的全球授权合作。主要风险包括公司仍高度依赖少数核心产品和里程碑收入，多项临床项目尚未完成，经营现金流波动明显，研发和商业化投入较高，管理层减持可能压制市场情绪，且分析师虽上调评级但下调目标价，显示市场对估值和持续盈利能力仍持谨慎态度。"
+   },
+   "queries": [],
+   "seconds": 26
+  },
+  "campus": {
+   "data": {
+    "campus_url": {
+     "value": "https://www.innocarepharma.com/career/job",
+     "source": "https://www.innocarepharma.com/career/job"
+    },
+    "roles": [
+     {
+      "value": "研发",
+      "source": "https://www.innocarepharma.com/career/job"
+     },
+     {
+      "value": "临床",
+      "source": "https://www.innocarepharma.com/career/job"
+     },
+     {
+      "value": "商业化",
+      "source": "https://www.innocarepharma.com/career/job"
+     },
+     {
+      "value": "职能",
+      "source": "https://www.innocarepharma.com/career/job"
+     },
+     {
+      "value": "生产",
+      "source": "https://www.innocarepharma.com/career/job"
+     }
+    ],
+    "locations": null,
+    "benefits": {
+     "value": [
+      "具有市场竞争力的薪酬",
+      "薪酬根据市场情况、公司及员工个人绩效定期重新评估",
+      "管理及专业双通道职业发展",
+      "年度优秀员工及突出表现奖励",
+      "符合资格的关键岗位核心骨干员工与管理层可获得受限制股份单位或限制性股票",
+      "新员工培训、专业培训、能力培训及管理培训",
+      "外部职业资格、法规及专业技能培训",
+      "健康就医、人才公寓等人才保障"
+     ],
+     "source": [
+      "https://m.cnpharm.com/upload/resources/file/2025/03/28/171360.pdf",
+      "https://www.innocarepharma.com/uploads/2025-04-28/ESG-Report-2024-CN.pdf"
+     ]
+    },
+    "interview_notes": null,
+    "sources": {
+     "campus_recruitment_site": "https://www.innocarepharma.com/career/job",
+     "talent_development": "https://www.innocarepharma.com/career",
+     "annual_report_2024": "https://m.cnpharm.com/upload/resources/file/2025/03/28/171360.pdf",
+     "esg_report_2024": "https://www.innocarepharma.com/uploads/2025-04-28/ESG-Report-2024-CN.pdf"
+    }
+   },
+   "queries": [],
+   "seconds": 15
+  }
+ }
+}
