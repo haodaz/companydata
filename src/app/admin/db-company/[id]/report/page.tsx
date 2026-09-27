@@ -69,6 +69,9 @@ export default function CompanyReportPage() {
     })();
   }, [id, message]);
 
+  // 服务器没有 Chromium 时，「下载 PDF」会跳到这里带 auto=1：数据到齐后自动弹系统打印，用户选"存为 PDF"即可
+  const autoPrint = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('auto') === '1';
+  useEffect(() => { if (autoPrint && !loading && d?.company) { const t = setTimeout(() => window.print(), 1500); return () => clearTimeout(t); } }, [autoPrint, loading, d]);
   const T = (k: string) => deep?.topics?.[k]?.data || {};
   const c = d?.company;
   const pipeline = useMemo(() => (T('pipeline').pipeline || []) as any[], [deep]);
