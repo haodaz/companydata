@@ -17,7 +17,19 @@ export const DEEP_TOPICS: { key: string; label: string; desc: string }[] = [
   { key: 'risks', label: '风险与事件', desc: '近 24 个月监管、临床、交易、诉讼、处罚、高管变动、减持、分析师观点' },
   { key: 'campus', label: '校招', desc: '入口、岗位方向、地点、福利、面经' },
 ];
-export const DEEP_TOPIC_KEYS = DEEP_TOPICS.map(t => t.key);
+/** 投资机构版（2026-09-28）：基金 / 策略 / 案例与退出 / 合伙人 / 生态 / 事件 —— 上市、财务、管线、BD 那套对 VC 不适用 */
+export const DEEP_TOPICS_VC: { key: string; label: string; desc: string }[] = [
+  { key: 'fund', label: '基金与规模', desc: '成立、总部、GP 主体、在管规模、各期基金（名称 / 年份 / 规模 / 币种 / 策略）、LP 类型、基金业协会备案' },
+  { key: 'strategy', label: '投资策略', desc: '阶段、赛道、单笔金额、地域、近 24 个月出手节奏、机构自述的投资主题' },
+  { key: 'portfolio', label: '代表案例与退出', desc: '代表被投企业（轮次 / 年份 / 金额 / 是否领投 / 现状）、IPO 与并购退出、披露的回报' },
+  { key: 'partners', label: '合伙人团队', desc: '创始 / 管理合伙人、合伙人、核心投资人：头衔、分管赛道、履历、代表项目' },
+  { key: 'network', label: '生态与关联', desc: '母公司 / 产业方、关联基金与平台、常见联合投资方、高校 / 校友背景、政府合作' },
+  { key: 'firm_risks', label: '近 24 个月事件', desc: '新基金关账、募资困难、合伙人变动 / 分家、监管处罚、诉讼、LP 纠纷、重大退出或减值、被投上市公司减持' },
+];
+export const isInvestmentFirm = (c: { name?: string | null; industry?: string | null; kind?: string | null } | null | undefined) =>
+  !!c && (c.industry === '投资机构' || /资本|创投|基金|投资(集团|公司|管理)?$|Ventures|Capital|Partners|Fund\b/i.test(String(c.name || '')));
+export const topicsFor = (c: Parameters<typeof isInvestmentFirm>[0]) => (isInvestmentFirm(c) ? DEEP_TOPICS_VC : DEEP_TOPICS);
+export const DEEP_TOPIC_KEYS = [...DEEP_TOPICS, ...DEEP_TOPICS_VC].map(t => t.key);
 
 const RULES = `
 Rules: Only report values you actually found in public sources (official site, exchange filings, annual & interim reports, press releases, reputable financial media). Use null when not found; never guess. Chinese text for narrative fields; keep proper nouns / codes / product names as-is. For every non-null item give "source" (URL). Return ONLY a JSON object.`;
@@ -33,7 +45,15 @@ export function buildDeepPrompt(name: string, key: string): string {
     risks: `Company: ${name}. Find risks and notable events in the past 24 months: regulatory decisions, clinical or product setbacks, terminated deals, litigation, penalties, executive departures, insider selling, major price moves, and analyst views. Return { "events": [ { "date", "kind", "summary", "impact", "source" } ], "sentiment_summary" }`,
     campus: `Company: ${name}. Find campus recruiting / early-career information: campus recruitment site, typical roles for fresh graduates, internship programs, locations, benefits disclosed, candidate interview experiences from public forums. Return { "campus_url": { "value", "source" }, "roles": [ { "value", "source" } ], "locations": [], "benefits": { "value": [], "source" }, "interview_notes", "sources": {} }`,
   };
-  const body = P[key];
+  const V: Record<string, string> = {
+    fund: `Investment firm: ${name}. Find fund facts: founding year, headquarters, GP legal entities, assets under management, each fund raised (name, vintage year, size, currency, strategy), LP types (government guidance funds, corporates, family offices, fund-of-funds, insurers), and regulator registration (中国证券投资基金业协会 备案 / SEC). Return { "founded": { "value", "source" }, "headquarters": { "value", "source" }, "gp_entities": [ { "value", "source" } ], "aum": { "value", "currency", "as_of", "source" }, "funds": [ { "name", "vintage", "size", "currency", "strategy", "source" } ], "lp_types": [ { "value", "source" } ], "registration": { "value", "source" }, "notes" }.`,
+    strategy: `Investment firm: ${name}. Find its investment strategy: stages (angel / early / growth / PE / secondary), sectors, typical ticket size, geography, deal pace in the last 24 months (number of disclosed deals, notable leads), and thesis statements in the firm's own words. Return { "stages": [ { "value", "source" } ], "sectors": [ { "value", "source" } ], "ticket_size": { "value", "currency", "source" }, "geography": { "value", "source" }, "pace_24m": { "deals", "leads", "source" }, "thesis": { "value", "source" }, "notes" }.`,
+    portfolio: `Investment firm: ${name}. Find representative portfolio companies and exits: for each company give Chinese name, English name, sector, the round this firm invested in, year, amount, whether it led, current status (private / IPO with exchange and ticker / acquired by whom), and any disclosed return multiple. Up to 30 companies; prioritise unicorns, IPOs and the last 5 years; do not include the firm's own fundraising. Return { "portfolio": [ { "company", "company_en", "sector", "round", "year", "amount", "lead", "status", "source" } ], "exits": [ { "company", "type", "date", "exchange_or_acquirer", "return", "source" } ], "notes" }.`,
+    partners: `Investment firm: ${name}. Find the founding partners, managing partners, partners and key investment professionals: name (Chinese and English), title, sectors covered, background (education, prior employers), notable deals, and portfolio board seats. Return { "partners": [ { "name", "name_en", "title", "sectors", "background", "notable_deals", "board_seats", "source" } ], "notes" }.`,
+    network: `Investment firm: ${name}. Find its ecosystem: parent group or anchor corporate, affiliated funds / platforms / incubators, frequent co-investors (with example deals), university or alumni affiliation (e.g. Tsinghua-related), and government or industrial partnerships. Return { "parent": { "value", "source" }, "affiliates": [ { "name", "relation", "source" } ], "co_investors": [ { "name", "deals", "source" } ], "affiliations": [ { "value", "source" } ], "partnerships": [ { "value", "source" } ], "notes" }.`,
+    firm_risks: `Investment firm: ${name}. Find notable events and risks in the past 24 months: new fund closings, fundraising difficulties, partner departures or splits, regulatory penalties, litigation, LP disputes, major exits or write-downs, and selling of listed portfolio stakes. Return { "events": [ { "date", "kind", "summary", "impact", "source" } ], "summary", "notes" }.`,
+  };
+  const body = P[key] || V[key];
   if (!body) throw new Error(`未知专题: ${key}`);
   return body + RULES;
 }

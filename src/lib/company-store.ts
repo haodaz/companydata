@@ -48,7 +48,9 @@ async function upsertRows(table: string, companyId: number, logId: number, rows:
   const now = new Date().toISOString();
   let saved = 0;
 
-  const inserts = keyed.filter(r => !byKey.has(r.dedupe_key)).map(r => ({ ...r, human_review_status: 'review', created_at: now, updated_at: now }));
+  // 同一批里去重键相同的只留第一条（否则一次 insert 里两行同键会撞唯一约束，整家企业的落库都失败）
+  const seenKeys = new Set<string>();
+  const inserts = keyed.filter(r => { if (byKey.has(r.dedupe_key) || seenKeys.has(r.dedupe_key)) return false; seenKeys.add(r.dedupe_key); return true; }).map(r => ({ ...r, human_review_status: 'review', created_at: now, updated_at: now }));
   if (inserts.length) {
     const { error } = await supabaseAdmin.from(table).insert(inserts);
     if (error) throw new Error(`${table} 写入失败: ${error.message}`);

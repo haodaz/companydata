@@ -34,6 +34,13 @@ export async function GET(request: Request) {
       for (const r of rel || []) counts.set(r.company_id, r);
     }
 
+    // 已有深度尽调的企业：专题数（列表上打标，否则不知道哪些有报告）
+    const deepCount = new Map<number, number>();
+    if (ids.length) {
+      const { data: deep } = await supabaseAdmin.from('company_deep_research').select('company_id').in('company_id', ids);
+      for (const r of deep || []) deepCount.set(r.company_id, (deepCount.get(r.company_id) || 0) + 1);
+    }
+
     // 顶部统计：各 segment 数量
     let stats: Record<string, number> | undefined;
     if (searchParams.get('withStats') === '1') {
@@ -44,7 +51,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({
       success: true,
-      data: (data || []).map(c => ({ ...c, counts: counts.get(c.id) || null })),
+      data: (data || []).map(c => ({ ...c, counts: counts.get(c.id) || null, deep_topics: deepCount.get(c.id) || 0 })),
       total: count || 0, page, pageSize, stats,
     });
   } catch (error: any) {

@@ -78,6 +78,9 @@ export default function CompanyReportPage() {
   if (!c) return null;
 
   const listing = T('listing'), financials = T('financials'), share = T('shareholding'), pipe = T('pipeline'), deals = T('deals'), team = T('team'), risks = T('risks'), campus = T('campus');
+  // 投资机构版尽调（基金 / 策略 / 案例与退出 / 合伙人 / 生态 / 事件）：只要跑过其中任一专题就按 VC 版式排
+  const fund = T('fund'), strategy = T('strategy'), portfolio = T('portfolio'), partners = T('partners'), network = T('network'), firmRisks = T('firm_risks');
+  const isVC = !!(deep?.topics && ['fund', 'strategy', 'portfolio', 'partners', 'network', 'firm_risks'].some(k => deep.topics[k]));
   const hasDeep = deep?.topics && Object.keys(deep.topics).length > 0;
   const products = (d.products || []) as any[];
   const coreProducts = products.filter(p => !/^临床管线/.test(p.category || ''));
@@ -85,7 +88,10 @@ export default function CompanyReportPage() {
   const today = new Date().toISOString().slice(0, 10);
   const stamp = deep?.generatedAt ? new Date(deep.generatedAt).toLocaleDateString('zh-CN') : today;
   const latestFin = (financials.periods || [])[(financials.periods || []).length - 1];
-  const toc = [
+  const toc = isVC ? [
+    ['s1', '一、机构概况'], ['v2', '二、基金与规模'], ['v3', '三、投资策略'], ['v4', '四、代表案例与退出'], ['v5', '五、合伙人团队'], ['v6', '六、生态与关联'], ['v7', '七、近 24 个月事件'],
+    ['s11', '八、融资历史'], ['s12', '九、近期动态'], ['s13', '十、核心产品 / 服务'], ['s14', '十一、信息源与口径'],
+  ] : [
     ['s1', '一、公司概况'], ['s2', '二、上市与市值'], ['s3', '三、财务'], ['s4', '四、股权结构'], ['s5', '五、已获批产品'], ['s6', '六、临床管线'], ['s7', '七、BD 交易'],
     ['s8', '八、创始人与管理团队'], ['s9', '九、风险与关键事件'], ['s10', '十、校招与人才'], ['s11', '十一、融资历史'], ['s12', '十二、近期动态'], ['s13', '十三、核心产品'], ['s14', '十四、信息源与口径'],
   ];
@@ -131,11 +137,11 @@ export default function CompanyReportPage() {
             <div><b>{(deals.deals || []).length}</b><i>BD 交易</i></div>
             <div><b>{(d.urls || []).length}</b><i>信息源</i></div>
           </div>
-          <div className="dr-meta">画像流水线（官网原文 + 七路联网检索）{hasDeep ? ' + 深度尽调检索（八个专题）' : ''} · 统计口径截至 {stamp} · 全部来自公开信源，每条带来源链接；未找到的写「—」，不推测。</div>
+          <div className="dr-meta">画像流水线（官网原文 + 七路联网检索）{hasDeep ? (isVC ? ' + 投资机构尽调检索（六个专题）' : ' + 深度尽调检索（八个专题）') : ''} · 统计口径截至 {stamp} · 全部来自公开信源，每条带来源链接；未找到的写「—」，不推测。</div>
           <nav className="dr-toc">{toc.map(([k, t]) => <a key={k} href={`#${k}`}>{t}</a>)}</nav>
         </header>
 
-        <Sec no="01" id="s1" title="公司概况">
+        <Sec no="01" id="s1" title={isVC ? "机构概况" : "公司概况"}>
           <KV items={[
             ['成立', c.info_founding_year ? `${c.info_founding_year} 年` : '—'],
             ['总部', [c.country, c.province, c.city].filter(Boolean).join(' · ')],
@@ -159,6 +165,51 @@ export default function CompanyReportPage() {
           </div>
         </Sec>
 
+        {isVC && (<>
+        <Sec no="02" id="v2" title="基金与规模" lead="来自机构官网、基金业协会备案、募资公告与财经媒体；规模为披露口径，币种以原文为准。">
+          <KV items={[
+            ['成立', v(fund.founded) || (c.info_founding_year ? `${c.info_founding_year} 年` : '—')], ['总部', v(fund.headquarters) || [c.country, c.province, c.city].filter(Boolean).join(' · ')],
+            ['在管规模', fund.aum?.value ? <span>{fund.aum.value} {fund.aum.currency || ''} <small>{fund.aum.as_of || ''}</small> <Src u={fund.aum.source} /></span> : '—'],
+            ['GP 主体', (fund.gp_entities || []).map((x: any) => v(x)).filter(Boolean).join('；')], ['LP 类型', (fund.lp_types || []).map((x: any) => v(x)).filter(Boolean).join('、')],
+            ['备案 / 注册', v(fund.registration)], ['说明', fund.notes],
+          ]} />
+          <Table head={['基金', '年份', '规模', '币种', '策略', '来源']} rows={(fund.funds || []).map((f: any) => [<b key="n">{f.name}</b>, f.vintage || '', f.size || '', f.currency || '', f.strategy || '', <Src key="s" u={f.source} />])} />
+        </Sec>
+        <Sec no="03" id="v3" title="投资策略">
+          <KV items={[
+            ['阶段', (strategy.stages || []).map((x: any) => v(x)).filter(Boolean).join(' / ')], ['赛道', (strategy.sectors || []).map((x: any) => v(x)).filter(Boolean).join('、')],
+            ['单笔金额', strategy.ticket_size?.value ? `${strategy.ticket_size.value} ${strategy.ticket_size.currency || ''}` : '—'], ['地域', v(strategy.geography)],
+            ['近 24 个月出手', strategy.pace_24m ? `${strategy.pace_24m.deals ?? '—'} 笔，领投 ${strategy.pace_24m.leads ?? '—'}` : '—'], ['投资主题', v(strategy.thesis)], ['说明', strategy.notes],
+          ]} />
+        </Sec>
+        <Sec no="04" id="v4" title={`代表案例与退出（${(portfolio.portfolio || []).length} 家）`} lead="优先独角兽、已上市与近 5 年项目；轮次 / 金额以公开报道为准。">
+          <Table head={['企业', '赛道', '轮次', '年份', '金额', '领投', '现状', '来源']} rows={(portfolio.portfolio || []).map((x: any) => [<b key="n">{x.company}{x.company_en ? <small style={{ color: '#888' }}> {x.company_en}</small> : null}</b>, x.sector || '', x.round || '', x.year || '', x.amount || '', x.lead ? '领投' : '', x.status || '', <Src key="s" u={x.source} />])} />
+          {(portfolio.exits || []).length > 0 && <><h4 className="dr-h4">退出</h4><Table head={['企业', '方式', '日期', '交易所 / 收购方', '回报', '来源']} rows={(portfolio.exits as any[]).map((x: any) => [<b key="n">{x.company}</b>, x.type || '', x.date || '', x.exchange_or_acquirer || '', x.return || '', <Src key="s" u={x.source} />])} /></>}
+          {portfolio.notes && <p className="dr-note">{portfolio.notes}</p>}
+        </Sec>
+        <Sec no="05" id="v5" title="合伙人团队">
+          {(partners.partners || []).map((f: any, i: number) => (
+            <div key={i} className="dr-card"><div className="dr-product-head"><b>{f.name}</b><span>{f.name_en} {f.title}</span>{f.sectors && <Tag color="purple">{Array.isArray(f.sectors) ? f.sectors.join(' / ') : f.sectors}</Tag>}<Src u={f.source} /></div><p className="dr-small">{f.background}</p>{f.notable_deals && <p className="dr-small"><b>代表项目：</b>{Array.isArray(f.notable_deals) ? f.notable_deals.join('、') : f.notable_deals}</p>}{f.board_seats && <p className="dr-small"><b>董事席位：</b>{Array.isArray(f.board_seats) ? f.board_seats.join('、') : f.board_seats}</p>}</div>
+          ))}
+          <h4 className="dr-h4">实体库管理团队（{(d.executives || []).length} 位）</h4>
+          <Table head={['姓名', '职务', '创始人', '说明', '来源']} rows={(d.executives || []).map((e: any) => [<b key="n">{e.name}</b>, e.title || '', e.is_founder ? '是' : '', e.description || '', <Src key="s" u={e.source_url} />])} />
+        </Sec>
+        <Sec no="06" id="v6" title="生态与关联">
+          <KV items={[['母公司 / 产业方', v(network.parent)], ['高校 / 校友背景', (network.affiliations || []).map((x: any) => v(x)).filter(Boolean).join('；')], ['政府 / 产业合作', (network.partnerships || []).map((x: any) => v(x)).filter(Boolean).join('；')], ['说明', network.notes]]} />
+          {(network.affiliates || []).length > 0 && <><h4 className="dr-h4">关联基金与平台</h4><Table head={['名称', '关系', '来源']} rows={(network.affiliates as any[]).map((x: any) => [<b key="n">{x.name}</b>, x.relation || '', <Src key="s" u={x.source} />])} /></>}
+          {(network.co_investors || []).length > 0 && <><h4 className="dr-h4">常见联合投资方</h4><Table head={['机构', '共同项目', '来源']} rows={(network.co_investors as any[]).map((x: any) => [<b key="n">{x.name}</b>, Array.isArray(x.deals) ? x.deals.join('、') : (x.deals || ''), <Src key="s" u={x.source} />])} /></>}
+        </Sec>
+        <Sec no="07" id="v7" title="近 24 个月事件与风险">
+          <ol className="dr-timeline">
+            {(firmRisks.events || []).map((e: any, i: number) => (
+              <li key={i}><span className="dr-date">{e.date || ''}</span><span className="dr-kind">{e.kind || ''}</span><div><p>{e.summary}</p>{e.impact && <p className="dr-small"><b>影响：</b>{e.impact}</p>}<Src u={e.source} /></div></li>
+            ))}
+          </ol>
+          {firmRisks.summary && <p className="dr-note">{firmRisks.summary}</p>}
+          {c.public_sentiment && <p className="dr-note"><b>实体库舆情摘要：</b>{c.public_sentiment}</p>}
+        </Sec>
+        </>)}
+        {!isVC && (<>
         <Sec no="02" id="s2" title="上市与市值" lead={hasDeep ? '交易所披露、招股说明书与行情站点；市值与股价为检索时点数据，会变动。' : undefined}>
           <Table head={['交易所', '代码', '上市日', '发行价', '募资', '板块', '来源']} rows={(listing.listings || []).map((l: any) => [l.exchange, <b key="t">{l.ticker}</b>, l.listed_date, `${fmt(v(l.ipo_price))} ${l.ipo_price?.currency || ''}`, `${fmt(v(l.ipo_raised))} ${l.ipo_raised?.currency || ''}`, l.board || '', <Src key="s" u={srcOf(l.ipo_price) || srcOf(l.ipo_raised)} />])} />
           <div className="dr-kpis">
@@ -233,6 +284,7 @@ export default function CompanyReportPage() {
           {(d.jobs || []).length > 0 && <Table head={['岗位', '类型', '项目', '地点', '状态']} rows={(d.jobs as any[]).map((j: any) => [<b key="n">{j.name}</b>, j.job_type || '', j.program_name || '', j.location || '', j.status || ''])} />}
         </Sec>
 
+        </>)}
         <Sec no="11" id="s11" title="融资历史（实体库）">
           <Table head={['轮次', '金额', '日期', '投资方', '来源']} rows={((d.financings || []) as any[]).slice().sort((a, b) => String(a.publish_date_str || '').localeCompare(String(b.publish_date_str || ''))).map((f: any) => [<b key="r">{f.finance_round_str || FINANCE_ROUND_LABELS[f.finance_round] || f.finance_round || '—'}</b>, f.finance_amount || '—', f.publish_date_str || '', f.finance_enterprise || '', <Src key="s" u={f.source_url} />])} widths={[120, 140, 110, undefined, 110]} />
         </Sec>
@@ -251,7 +303,7 @@ export default function CompanyReportPage() {
           <Table head={['类型', '页面', '链接']} rows={((d.urls || []) as any[]).map((u: any) => [u.type, u.title || u.subtype || '', <a key="u" href={u.url} target="_blank" rel="noreferrer" className="dr-small">{u.url}</a>])} widths={[90, 200, undefined]} />
           <ul className="dr-list">
             <li>画像流水线：定位官网 → 抓取官方页面原文 → 官方原文结构化 → 七路联网检索（工商 / 融资 / 动态舆情 / 团队 / 核心产品 / 行业 / 校招）→ 归并去重 → 完整度评分。</li>
-            {hasDeep && <li>深度尽调检索：上市与市值 / 财务 / 股权 / 管线 / BD / 团队 / 风险 / 校招八个专题，各一次联网检索；模型 {deep.model}。</li>}
+            {hasDeep && <li>{isVC ? '投资机构尽调检索：基金与规模 / 投资策略 / 代表案例与退出 / 合伙人团队 / 生态与关联 / 近 24 个月事件六个专题' : '深度尽调检索：上市与市值 / 财务 / 股权 / 管线 / BD / 团队 / 风险 / 校招八个专题'}，各一次联网检索；模型 {deep.model}。</li>}
             <li>官方优先：只认企业官网、交易所披露、政府公示与可核实的公开报道；第三方聚合站只作线索。找不到的字段留空，不推测。</li>
             <li>金额以披露币种为准；市值、股价为检索时点数据，会变动。人工审核通过后 AI 补全不再覆盖。</li>
           </ul>

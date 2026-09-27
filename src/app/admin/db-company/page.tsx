@@ -137,7 +137,10 @@ export default function DbCompanyPage() {
       title: '企业', dataIndex: 'name', width: 260, fixed: 'left' as const,
       render: (name: string, r: any) => (
         <div style={{ cursor: 'pointer' }} onClick={() => router.push(`/admin/db-company/${r.id}`)}>
-          <div style={{ fontWeight: 600, color: BRAND.primary }}>{name}</div>
+          <div style={{ fontWeight: 600, color: BRAND.primary, display: 'flex', alignItems: 'center', gap: 6 }}>
+            {name}
+            {r.deep_topics > 0 && <Tag color="purple" style={{ margin: 0, fontSize: 11, lineHeight: '18px', cursor: 'pointer' }} title={`已有深度尽调报告（${r.deep_topics} 个专题），点开看报告`} onClick={e => { e.stopPropagation(); router.push(`/admin/db-company/${r.id}/report`); }}>尽调</Tag>}
+          </div>
           {r.name_en && r.name_en !== name && <div style={{ fontSize: 12, color: BRAND.ink3 }}>{r.name_en}</div>}
         </div>
       ),
