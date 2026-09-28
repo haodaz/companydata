@@ -1,6 +1,6 @@
 /**
  * 技能空间的美术生成（服务端）：通义万相文生图 → 场景底图（jpg）/ NPC 立绘（绿幕抠成透明 png）。
- * 生成的文件落在 public/lab/gen/（已 gitignore），页面用 /lab/gen/<name> 引用。
+ * 生成的文件上传到 Supabase Storage 公开桶 lab-art，页面用公开 URL 引用（开发环境无 Supabase 时回退 public/lab/gen/）。
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -76,12 +76,40 @@ export async function chromaKey(input: Buffer, width = 720): Promise<Buffer> {
 
 export async function toJpeg(input: Buffer, quality = 82): Promise<Buffer> { const S = await sharp(); return S(input).jpeg({ quality }).toBuffer(); }
 
+/**
+ * 生成的图片放 Supabase Storage 的公开桶 lab-art（线上是无状态部署，写 public/ 既不持久也不会进 git）；
+ * 返回公开 URL。没有 Supabase 时回退到本地 public/lab/gen/（仅开发用）。
+ */
+export const LAB_ART_BUCKET = 'lab-art';
 const GEN_DIR = path.join(process.cwd(), 'public', 'lab', 'gen');
-export async function saveLabAsset(buf: Buffer, name: string): Promise<string> {
-  await fs.mkdir(GEN_DIR, { recursive: true });
+let bucketReady: Promise<void> | null = null;
+async function ensureBucket() {
+  if (!bucketReady) bucketReady = (async () => {
+    const { supabaseAdmin } = await import('@/lib/supabase');
+    const { data } = await supabaseAdmin.storage.getBucket(LAB_ART_BUCKET);
+    if (!data) { const { error } = await supabaseAdmin.storage.createBucket(LAB_ART_BUCKET, { public: true, fileSizeLimit: '20MB' }); if (error && !/already exists/i.test(error.message)) throw error; }
+  })().catch(e => { bucketReady = null; throw e; });
+  return bucketReady;
+}
+export async function uploadLabAsset(buf: Buffer, name: string, contentType: string): Promise<string> {
+  const { supabaseAdmin } = await import('@/lib/supabase');
+  await ensureBucket();
   const safe = name.replace(/[^a-zA-Z0-9_.-]/g, '_');
-  await fs.writeFile(path.join(GEN_DIR, safe), buf);
-  return `/lab/gen/${safe}`;
+  const { error } = await supabaseAdmin.storage.from(LAB_ART_BUCKET).upload(safe, buf, { contentType, upsert: true, cacheControl: '31536000' });
+  if (error) throw new Error(`上传美术失败：${error.message}`);
+  return supabaseAdmin.storage.from(LAB_ART_BUCKET).getPublicUrl(safe).data.publicUrl;
+}
+export async function saveLabAsset(buf: Buffer, name: string): Promise<string> {
+  const safe = name.replace(/[^a-zA-Z0-9_.-]/g, '_');
+  const type = safe.endsWith('.png') ? 'image/png' : 'image/jpeg';
+  try { return await uploadLabAsset(buf, safe, type); }
+  catch (e) {
+    if (process.env.NODE_ENV === 'production') throw e;
+    console.warn('[lab-art] 上传 Storage 失败，回退本地：', (e as any)?.message);
+    await fs.mkdir(GEN_DIR, { recursive: true });
+    await fs.writeFile(path.join(GEN_DIR, safe), buf);
+    return `/lab/gen/${safe}`;
+  }
 }
 
 /** 场景底图（16:9 jpg） */
