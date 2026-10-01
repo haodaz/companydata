@@ -256,14 +256,14 @@ export default function LabHome() {
       {/* 这一页只干活：介绍的话都在首页，这里直接是人和入口。页头压一条深色，跟首页接上 */}
       <style>{`
         .sp-head { position: relative; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); width: 100vw; margin-top: -24px; margin-bottom: 22px;
-          background: #0a0c1a radial-gradient(900px 300px at 18% -40%, rgba(106,92,255,.5), transparent 70%), radial-gradient(700px 260px at 86% 140%, rgba(18,181,203,.32), transparent 70%);
+          background: radial-gradient(900px 300px at 18% -40%, rgba(106,92,255,.5), transparent 70%), radial-gradient(700px 260px at 86% 140%, rgba(18,181,203,.32), transparent 70%), #0a0c1a;
           border-bottom: 1px solid rgba(255,255,255,.1); overflow: hidden; }
         .sp-head::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5;
           background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 44px 44px;
           mask-image: radial-gradient(ellipse 70% 100% at 40% 0%, #000 10%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 70% 100% at 40% 0%, #000 10%, transparent 75%); }
         .sp-head-in { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 34px 28px 32px; display: flex; align-items: flex-end; gap: 18px; flex-wrap: wrap; }
       `}</style>
-      <div className="sp-head">
+      <div className="sp-head sp-root">
         <div className="sp-head-in">
           <div style={{ flex: '1 1 340px', minWidth: 0 }}>
             <div className="lab-mono lab-cap" style={{ color: 'rgba(255,255,255,.52)' }}>AI 百业 · 百业空间</div>

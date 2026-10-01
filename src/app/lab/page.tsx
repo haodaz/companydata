@@ -64,6 +64,23 @@ const CSS = `
 .ai100-sec { padding: clamp(44px, 7vw, 86px) 0 0; }
 .ai100-01 { display: grid; gap: clamp(16px, 2.5vw, 40px); grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr); align-items: center; }
 @media (max-width: 860px) { .ai100-01 { grid-template-columns: minmax(0, 1fr); } }
+/* 一个一个换人：原地消融，不滑动 */
+.ai100-faces { position: relative; aspect-ratio: 4 / 3.4; min-height: 320px; cursor: pointer; }
+.ai100-faces .halo { position: absolute; left: 50%; top: 46%; width: 76%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%;
+  background: radial-gradient(circle, rgba(140,126,255,.3), rgba(18,181,203,.12) 55%, transparent 72%); }
+.ai100-faces > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center bottom;
+  opacity: 0; transform: scale(.985); transition: opacity 1s ease, transform 1.6s ease; filter: drop-shadow(0 26px 46px rgba(0,0,0,.6));
+  /* 有几张立绘不是透明底的，会露出一个方框——拿一层椭圆遮罩把边收掉 */
+  mask-image: radial-gradient(ellipse 80% 90% at 50% 48%, #000 66%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 90% at 50% 48%, #000 66%, transparent 100%); }
+.ai100-faces > img.on { opacity: 1; transform: scale(1); }
+.ai100-faces .cap { position: absolute; left: 0; bottom: 0; padding: 12px 16px 10px; border-radius: 14px;
+  background: rgba(9,11,24,.72); border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+.ai100-faces .dots { position: absolute; right: 2px; bottom: 14px; display: flex; flex-direction: column; gap: 5px; }
+.ai100-faces .dots i { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.22); transition: background .4s, height .4s; }
+.ai100-faces .dots i.on { background: #9f91ff; height: 14px; border-radius: 3px; }
+@media (prefers-reduced-motion: reduce) { .ai100-faces > img { transition: none; } }
+
 /* 去背立绘：不套框、不加底，稍微溢出到容器外，人就像站在页面里 */
 .ai100-cut { display: block; width: 112%; max-width: none; margin-right: -12%; filter: drop-shadow(0 26px 50px rgba(0,0,0,.55)); }
 @media (max-width: 860px) { .ai100-cut { width: 100%; margin-right: 0; } }
@@ -155,6 +172,33 @@ const SHOTS = [
   { src: '/lab-landing/shots/npc-brand.jpg', t: '不止动手的行当', d: '50 万、3 个月、一页纸——判断型岗位的空间，考的是决定，不是手速。' },
 ];
 
+/**
+ * 一个一个地换人：十来位数字职人的立绘原地消融交替。
+ * 不滑动、不留按钮——这一段讲的是「人是具体的」，让具体的人自己出现就够了。
+ */
+function FaceReel({ people, onPick }: { people: any[]; onPick: (id: string) => void }) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (people.length < 2) return;
+    const iv = setInterval(() => setI(x => (x + 1) % people.length), 3600);
+    return () => clearInterval(iv);
+  }, [people.length]);
+  if (!people.length) return null;
+  const cur = people[i];
+  return (
+    <div className="ai100-faces" onClick={() => onPick(cur.id)} title={`${cur.name} · ${cur.role}`}>
+      <div className="halo" />
+      {people.map((p, k) => <img key={p.id} src={p.avatar} alt="" loading={k < 2 ? 'eager' : 'lazy'} className={k === i ? 'on' : ''} />)}
+      <div className="cap">
+        <div className="lab-mono" style={{ fontSize: 10.5, letterSpacing: '.12em', color: '#9f91ff' }}>{cur.name}</div>
+        <div style={{ fontSize: 17, fontWeight: 800, color: '#fff', marginTop: 2 }}>{cur.role}</div>
+        <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.6)', marginTop: 2 }}>{cur.profession}</div>
+      </div>
+      <div className="dots">{people.map((p, k) => <i key={p.id} className={k === i ? 'on' : ''} />)}</div>
+    </div>
+  );
+}
+
 /** 概念图：没生成就整块不渲染，别在页面上留一个破图 */
 function Art({ src, alt }: { src: string; alt: string }) {
   const [bad, setBad] = useState(false);
@@ -196,6 +240,18 @@ export default function LabLanding() {
     full.forEach((u, i) => (i % 2 ? b : a).push(u));
     return [a, b];
   }, [d]);
+
+  // 01 的轮播：有立绘的人，一个领域先出一个，凑十来个
+  const faces = useMemo(() => {
+    const ok = spaces.filter(x => x.avatar);
+    const seen = new Set<string>(), out: any[] = [];
+    for (const pass of [0, 1]) for (const x of ok) {
+      if (out.length >= 10 || out.includes(x)) continue;
+      if (pass === 0 && seen.has(x.family)) continue;
+      seen.add(x.family); out.push(x);
+    }
+    return out;
+  }, [spaces]);
 
   // 橱窗：一个领域先出一个人，凑够 8 个；优先有场景底图、有工位的
   const featured = useMemo(() => {
@@ -307,8 +363,9 @@ export default function LabLanding() {
               你打开的不是一门课，是一位已经在岗的同行。
             </p>
           </div>
-          {/* 去背的立绘：人直接站在页面的深色里，不套框 */}
-          <img className="ai100-cut" src="/lab-landing/concept-person.png" alt="散落的抽象资料，向右收拢成一个具体的人" loading="lazy" />
+          {faces.length > 1
+            ? <FaceReel people={faces} onPick={id => router.push(`/lab/${id}`)} />
+            : <img className="ai100-cut" src="/lab-landing/concept-person.png" alt="散落的抽象资料，向右收拢成一个具体的人" loading="lazy" />}
         </div>
       </section>
 

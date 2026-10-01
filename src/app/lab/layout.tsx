@@ -72,16 +72,23 @@ const LAB_CSS = `
 
 /* 顶栏导航：等宽编号 + 会发光的下划线，别套 tag 底色 */
 .lab-nav { display: flex; gap: 2px; margin-left: 14px; }
-.lab-nav-i { position: relative; display: flex; align-items: center; gap: 7px; padding: 9px 14px 10px; border: 0; background: none; cursor: pointer;
+.lab-nav-i { position: relative; display: flex; align-items: center; gap: 7px; padding: 9px 16px 10px; border: 0; background: none; cursor: pointer;
   font-size: 14px; font-weight: 600; white-space: nowrap; color: var(--ink3); transition: color .2s; font-family: inherit; }
-.lab-nav-i .n { font-size: 9.5px; opacity: .55; letter-spacing: .1em; }
 .lab-nav-i:hover { color: var(--ink2); }
 .lab-nav-i.on { color: var(--ink); font-weight: 800; }
-.lab-nav-i.on .n { opacity: 1; color: var(--v); }
 .lab-nav-i i { position: absolute; left: 12px; right: 12px; bottom: 2px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--v), var(--c));
   transform: scaleX(0); transform-origin: left; transition: transform .28s cubic-bezier(.2,.8,.2,1); }
 .lab-nav-i.on i { transform: scaleX(1); box-shadow: 0 0 12px rgba(106,92,255,.9); }
 .lab-nav-i:hover i { transform: scaleX(.4); }
+
+/* 深色顶栏：首页整页深，百业空间只有页头深，顶栏得跟着它俩一起深 */
+.lab:has(.ai100-root) > header, .lab:has(.sp-root) > header {
+  background: rgba(8,10,22,.86) !important; border-bottom-color: rgba(255,255,255,.08) !important; color: #eef0fb;
+  --ink: #eef0fb; --ink2: #c0c5e2; --ink3: #878dae; --line: rgba(255,255,255,.12); }
+.lab:has(.sp-root) > header .lab-btn.ghost { color: #dfe2f5; background: rgba(255,255,255,.08); box-shadow: 0 0 0 1px rgba(255,255,255,.16); }
+.lab:has(.ai100-root) > header .ant-select-selector, .lab:has(.sp-root) > header .ant-select-selector { background: rgba(255,255,255,.1) !important; }
+.lab:has(.ai100-root) > header .ant-select-selection-item, .lab:has(.sp-root) > header .ant-select-selection-item { color: #e7e9f8 !important; }
+.lab:has(.ai100-root) > header .ant-select-arrow, .lab:has(.sp-root) > header .ant-select-arrow { color: #a8aed2 !important; }
 
 /* 模式切换 */
 .lab-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -167,11 +174,11 @@ function Shell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         <nav className="lab-nav">
-          {NAV.map((x, i) => {
+          {NAV.map(x => {
             const on = x.k === '/lab' ? path === '/lab' : path.startsWith(x.k);
             return (
               <button key={x.k} onClick={() => router.push(x.k)} className={`lab-nav-i${on ? ' on' : ''}`}>
-                <span className="lab-mono n">{String(i + 1).padStart(2, '0')}</span>{x.t}
+                {x.t}
                 <i />
               </button>
             );
