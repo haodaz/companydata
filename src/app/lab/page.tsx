@@ -19,12 +19,15 @@ const CSS = `
 @media (max-width: 900px) { .ai100-hero { grid-template-columns: minmax(0, 1fr); } .ai100-hero > .copy { padding-right: 28px; } }
 
 /* 首屏胶片：两列竖版，一列向上一列向下，慢一点才大气 */
-.ai100-hero-strips { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; height: clamp(420px, 52vw, 620px); overflow: hidden;
+.ai100-hero-strips { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: 100%; gap: 14px; height: clamp(420px, 52vw, 620px); overflow: hidden;
   mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent); }
+.ai100-hero-strips > .ai100-live { align-self: center; height: 86%; }
 .ai100-strip { display: flex; flex-direction: column; gap: 14px; animation: ai100-up linear infinite; will-change: transform; }
 .ai100-strip.down { animation-name: ai100-down; }
 .ai100-strip img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 18px; background: rgba(106,92,255,.07);
   border: 1px solid rgba(255,255,255,.9); box-shadow: 0 14px 36px rgba(88,76,220,.16); }
+.ai100-live { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; background: #0f1224;
+  border: 1px solid rgba(255,255,255,.9); box-shadow: 0 18px 46px rgba(88,76,220,.22); }
 @keyframes ai100-up { from { transform: translateY(0); } to { transform: translateY(calc(-50% - 7px)); } }
 @keyframes ai100-down { from { transform: translateY(calc(-50% - 7px)); } to { transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .ai100-strip { animation: none !important; } }
@@ -68,6 +71,19 @@ const CSS = `
 .ai100-card.big .face { width: 68px; height: 68px; }
 .ai100-card.big .ov { padding: 60px 22px 22px; }
 
+.ai100-reel { overflow: hidden; padding: 4px 0 8px;
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.ai100-reel-track { display: flex; gap: 18px; width: max-content; animation: ai100-reel 78s linear infinite; }
+.ai100-reel:hover .ai100-reel-track { animation-play-state: paused; }
+@keyframes ai100-reel { to { transform: translateX(calc(-50% - 9px)); } }
+.ai100-shot { margin: 0; width: clamp(300px, 46vw, 620px); flex-shrink: 0; border-radius: 20px; overflow: hidden; background: rgba(255,255,255,.78);
+  border: 1px solid rgba(255,255,255,.9); box-shadow: 0 14px 44px rgba(88,76,220,.16), 0 0 0 1px var(--line); }
+.ai100-shot img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: top center; }
+.ai100-shot figcaption { padding: 13px 18px 16px; }
+.ai100-shot figcaption b { display: block; font-size: 15.5px; font-weight: 800; margin-bottom: 4px; }
+.ai100-shot figcaption span { font-size: 12.5px; color: var(--ink3); line-height: 1.85; }
+@media (prefers-reduced-motion: reduce) { .ai100-reel-track { animation: none; } }
+
 .ai100-cols { columns: 5; column-gap: 26px; }
 @media (max-width: 1100px) { .ai100-cols { columns: 3; } }
 @media (max-width: 680px) { .ai100-cols { columns: 2; } .ai100-hero-strips { height: 380px; } }
@@ -109,6 +125,14 @@ const VALUE = [
   { who: '对学校 / 培训机构', d: '一份企业官方 JD 进来，几分钟出一个可考核的空间。不用再自己编案例，案例来自真实在招的岗位。' },
   { who: '对企业 / 行业', d: '把老师傅手里说不清的判断变成可追溯、可复用、能异地调用的资产。人会退休，空间不会。' },
   { who: '对一个职业本身', d: '让它被看见。冷门的、新兴的、灵活就业的——收纳师、陪诊师、剧本杀 DM，一样配有自己的空间。' },
+];
+
+/** 空间里直接截的图。手法镜那块是真人摄像头，上页面前已经糊过（scripts/lab-landing-shots.mts） */
+const SHOTS = [
+  { src: '/lab-landing/shots/bench-lap.jpg', t: '虚拟工位 · 第一台主刀', d: '层次、下刀深度、牵开器、器械托盘都是数据定义的。切深了切浅了，事件流当场记一笔。' },
+  { src: '/lab-landing/shots/npc-rehab.jpg', t: '人和场景同框', d: '带教导师站在治疗室里跟你说话——皮温、浮髌试验，问题先来，知识后到。' },
+  { src: '/lab-landing/shots/npc-fire.jpg', t: '故事线里的一刻', d: '班长撬开防盗门的一道缝，下一步归你：现在射流，还是再等一秒。' },
+  { src: '/lab-landing/shots/npc-brand.jpg', t: '不止动手的行当', d: '50 万、3 个月、一页纸——判断型岗位的空间，考的是决定，不是手速。' },
 ];
 
 /** 概念图：没生成就整块不渲染，别在页面上留一个破图 */
@@ -167,11 +191,8 @@ export default function LabLanding() {
     return out;
   }, [spaces]);
 
-  // 沉浸带的背景：优先用工位那种有现场感的底图
-  const stageBg = useMemo(() => {
-    const pick = (re: RegExp) => spaces.find(x => re.test(x.profession) && x.cover)?.cover;
-    return pick(/发动机|火箭|航天/) || pick(/焊|铸|熔炼/) || spaces.find(x => x.cover)?.cover || '';
-  }, [spaces]);
+  // 沉浸带的背景直接用真实工位截图：环境和 HUD 都是产品本身，不是配图
+  const stageBg = '/lab-landing/shots/bench-latte.jpg';
   const stageBg2 = useMemo(() => {
     const used = new Set([stageBg]);
     return spaces.find(x => x.cover && !used.has(x.cover) && /潜水|农业|咖啡|手术|医/.test(x.profession))?.cover
@@ -215,11 +236,14 @@ export default function LabLanding() {
         <div style={{ minWidth: 0 }}>
           {strips ? (
             <div className="ai100-hero-strips">
-              {strips.map((col, i) => (
-                <div key={i} className={`ai100-strip${i % 2 ? ' down' : ''}`} style={{ animationDuration: `${135 + i * 30}s` }}>
-                  {[...col, ...col].map((u, j) => <img key={j} src={u} alt="" loading="lazy" />)}
-                </div>
-              ))}
+              <div className="ai100-strip" style={{ animationDuration: '135s' }}>
+                {[...strips[0], ...strips[0]].map((u, j) => <img key={j} src={u} alt="" loading="lazy" />)}
+              </div>
+              {/* 一格是活的：火箭发动机试车台真在点火，别人都是定格 */}
+              <video className="ai100-live" autoPlay muted loop playsInline preload="metadata" poster="/lab-landing/rocket-poster.jpg">
+                <source src="/lab-landing/rocket.webm" type="video/webm" />
+                <source src="/lab-landing/rocket.mp4" type="video/mp4" />
+              </video>
             </div>
           ) : (
             <div className="lab-glass lab-scan" style={{ height: 'clamp(380px, 46vw, 560px)' }} />
@@ -280,8 +304,7 @@ export default function LabLanding() {
       </section>
 
       {/* ══ 沉浸带：场景图就是环境本身 ══ */}
-      {stageBg && (
-        <div className="ai100-bleed ai100-stage">
+      <div className="ai100-bleed ai100-stage">
           <img src={stageBg} alt="" />
           <div className="veil dark" />
           <div className="in">
@@ -303,8 +326,31 @@ export default function LabLanding() {
               <button className="lab-btn" style={{ height: 50, padding: '0 26px', marginTop: 24 }} onClick={() => router.push('/lab/spaces')}>随便挑一个站进去 →</button>
             </div>
           </div>
+      </div>
+
+      {/* ══ 沉浸感与参与感：真实截图走马灯 ══ */}
+      <section className="ai100-sec">
+        <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>INSIDE A SPACE</div>
+        <h2 className="ai100-h2">为用户营造真实的<span className="ai100-grad">沉浸感与参与感</span></h2>
+        <p className="ai100-lead" style={{ marginBottom: 26 }}>
+          你不是在看别人怎么做。场景里的人直接朝你说话，台子上每一个控件都归你，
+          手上的动作可以由摄像头接进来直接驱动设备——走到哪一步、错在哪一拍，事件流当场记下。
+        </p>
+      </section>
+      <div className="ai100-bleed ai100-reel">
+        <div className="ai100-reel-track">
+          {[0, 1].map(k => (
+            <React.Fragment key={k}>
+              {SHOTS.map(x => (
+                <figure key={`${k}-${x.src}`} className="ai100-shot">
+                  <img src={x.src} alt={x.t} loading="lazy" />
+                  <figcaption><b>{x.t}</b><span>{x.d}</span></figcaption>
+                </figure>
+              ))}
+            </React.Fragment>
+          ))}
         </div>
-      )}
+      </div>
 
       {/* ══ 橱窗：有大有小 ══ */}
       {featured.length > 0 && (
