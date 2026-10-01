@@ -24,7 +24,8 @@ export default function LabHome() {
   const [spaces, setSpaces] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [needMigration, setNeedMigration] = useState('');
-  const [pickOpen, setPickOpen] = useState(false);
+  /** 建空间的两个入口：'jd' 从岗位库的一份 JD 来，'career' 只给一个职业名 */
+  const [pick, setPick] = useState<null | 'jd' | 'career'>(null);
   const [jds, setJds] = useState<any[]>([]);
   const [jdsLoading, setJdsLoading] = useState(false);
   const [building, setBuilding] = useState<any | null>(null);
@@ -82,7 +83,7 @@ export default function LabHome() {
   /** 任意 JD → 岗位 AI 自己生成 技能集草案 + 故事线 + 虚拟工位 + 美术（约 2–4 分钟）；或只给一个职业名 → 职业探索空间 */
   const buildFromJob = async (job: any | null, prof?: string) => {
     const buildId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
-    setPickOpen(false);
+    setPick(null);
     setBuildInfo({ phase: prof ? '结构化职业 · 推断典型岗位' : '读取岗位 JD' }); setBuildSince(Date.now()); setNow(Date.now());
     setBuilding(prof ? { company: '职业探索', title: prof, buildId, career: true } : { company: job.institute_or_company_name, title: job.name, buildId });
     try {
@@ -105,7 +106,7 @@ export default function LabHome() {
   /** 从一条 JD 构建空间：拆解过程至少演完一遍再进入 */
   const build = async (jd: any) => {
     if (jd.space_id) { router.push(`/lab/${jd.space_id}`); return; }
-    setPickOpen(false);
+    setPick(null);
     setBuilding(jd);
     try {
       const [json] = await Promise.all([
@@ -173,7 +174,8 @@ export default function LabHome() {
             ))}
           </div>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 20 }}>
-            <button className="lab-btn" disabled={!!needMigration} onClick={() => { setPickOpen(true); loadJds(); }}>＋ 从岗位 JD 构建新空间</button>
+            <button className="lab-btn" disabled={!!needMigration} onClick={() => { setPick('jd'); loadJds(); }}>＋ 新岗位 · 从一份 JD 建</button>
+            <button className="lab-btn ghost" disabled={!!needMigration} onClick={() => setPick('career')}>＋ 新职业 · 只给一个职业名</button>
           </div>
         </div>
         <div className="lab-orb" style={{ ['--s' as string]: '190px', margin: '0 auto' }}><div className="ring" /><div className="ring r2" /><div className="core lab-mono" style={{ fontSize: 15 }}>JD</div><div className="sat" /></div>
@@ -241,12 +243,13 @@ export default function LabHome() {
         </div>
       )}
 
-      <Modal title={null} open={pickOpen} onCancel={() => setPickOpen(false)} footer={null} width={860} styles={{ container: { padding: 0, background: '#f5f6ff', borderRadius: 24, overflow: 'hidden' } }}>
+      <Modal title={null} open={!!pick} onCancel={() => setPick(null)} footer={null} width={860} styles={{ container: { padding: 0, background: '#f5f6ff', borderRadius: 24, overflow: 'hidden' } }}>
         <div className="lab" style={{ minHeight: 0, padding: 'clamp(16px, 3vw, 28px)' }}>
-          <div className="lab-mono lab-cap">PICK A JD</div>
-          <div style={{ fontSize: 22, fontWeight: 800, margin: '4px 0 4px' }}>选一份 JD，构建它的技能空间</div>
-          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: 14 }}>JD 来自岗位库，抓取自企业官方招聘站。</div>
+          <div className="lab-mono lab-cap">{pick === 'career' ? 'ANY CAREER' : 'PICK A JD'}</div>
+          <div style={{ fontSize: 22, fontWeight: 800, margin: '4px 0 4px' }}>{pick === 'career' ? '输入一个职业，把它变成空间' : '选一份 JD，构建它的技能空间'}</div>
+          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: 14 }}>{pick === 'career' ? '不需要 JD。适合还没有具体岗位、只想先看看这一行在干什么的人。' : 'JD 来自岗位库，抓取自企业官方招聘站。'}</div>
 
+          {pick === 'jd' && <>
           <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(106,92,255,.35)' }}>
             <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>ANY JD · 岗位 AI 自己生成</div>
             <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>在岗位库里任选一条 JD：岗位 AI 读完后自己生成 <b>技能集草案</b>、<b>检验故事线</b>、<b>虚拟操作空间</b> 和场景美术（约 2–4 分钟）。</div>
@@ -267,14 +270,6 @@ export default function LabHome() {
                 ))}
               </div>
             )}
-          </div>
-          <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(18,181,203,.4)' }}>
-            <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>ANY CAREER · 职业探索</div>
-            <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>不需要 JD，只给一个职业名：AI 会把它结构化成<b>典型岗位 + 技能树 + 生涯地图</b>，再生成同样的故事线和虚拟操作空间——给高中生 / 大学生亲手体验一个职业的一天。</div>
-            <div style={{ display: 'flex', gap: 8 }}>
-              <input className="lab-input" value={profession} onChange={e => setProfession(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && profession.trim()) buildFromJob(null, profession.trim()); }} placeholder="输入一个职业，如：无人机飞手 / 临床营养师 / 游戏关卡策划 / 汽车工艺工程师" style={{ flex: 1, padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
-              <button className="lab-btn" disabled={!profession.trim()} onClick={() => buildFromJob(null, profession.trim())}>生成探索空间 →</button>
-            </div>
           </div>
           <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>DEMO JDS · 预置示范</div>
           {jdsLoading && <div className="lab-glass lab-scan" style={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span className="lab-mono" style={{ color: 'var(--ink3)' }}>LOADING<span className="lab-dots" /></span></div>}
@@ -299,6 +294,26 @@ export default function LabHome() {
               </div>
             ))}
           </div>
+          </>}
+
+          {pick === 'career' && <>
+            <div className="lab-glass" style={{ padding: 18, marginBottom: 16, borderColor: 'rgba(18,181,203,.4)' }}>
+              <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 12, lineHeight: 1.75 }}>
+                只给一个职业名，AI 会先把它结构化成<b>典型岗位 + 技能树 + 生涯地图</b>，再生成和 JD 路径同样的故事线与虚拟工位（约 2–4 分钟）。
+                难度比校招题降一档，术语随手解释——没入行的人也能把这个职业最有代表性的一天走完。
+              </div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <input className="lab-input" autoFocus value={profession} onChange={e => setProfession(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && profession.trim()) buildFromJob(null, profession.trim()); }} placeholder="输入一个职业，如：无人机飞手 / 临床营养师 / 游戏关卡策划" style={{ flex: 1, padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
+                <button className="lab-btn" disabled={!profession.trim()} onClick={() => buildFromJob(null, profession.trim())}>生成探索空间 →</button>
+              </div>
+            </div>
+            <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>换一个试试</div>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {['咖啡师', '蛋糕裱花师', '无人机飞手', '临床营养师', '游戏关卡策划', '汽车工艺工程师', '宠物医生', '民航机务维修', '景观设计师', '韣带康复治疗师'].map(t => (
+                <button key={t} className="lab-chip c" style={{ cursor: 'pointer', fontSize: 13, padding: '6px 13px' }} onClick={() => setProfession(t)}>{t}</button>
+              ))}
+            </div>
+          </>}
         </div>
       </Modal>
     </>
