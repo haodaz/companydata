@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Select } from 'antd';
 import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
 import { UserProvider } from '@/lib/user-context';
@@ -136,7 +136,10 @@ const LAB_CSS = `
 
 function Shell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const path = usePathname();
   const { currentModel, setCurrentModel } = useModel();
+  // 自己的导航：首页讲理念，百业空间干活。不跟数据后台的侧边栏混在一起
+  const NAV = [{ k: '/lab', t: '首页' }, { k: '/lab/spaces', t: '百业空间' }];
   return (
     <div className="lab">
       <style>{LAB_CSS}</style>
@@ -146,10 +149,18 @@ function Shell({ children }: { children: React.ReactNode }) {
         <div onClick={() => router.push('/lab')} style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', minWidth: 0 }}>
           <div className="lab-orb" style={{ ['--s' as string]: '34px' }}><div className="ring" /><div className="core" /></div>
           <div style={{ minWidth: 0 }}>
-            <div style={{ fontSize: 16, fontWeight: 800, letterSpacing: 0.5, whiteSpace: 'nowrap' }}>数字技能空间</div>
-            <div className="lab-mono lab-cap">SKILL SPACE · EXPERIMENTAL</div>
+            <div style={{ fontSize: 16, fontWeight: 800, letterSpacing: 0.5, whiteSpace: 'nowrap' }}>AI 百业</div>
+            <div className="lab-mono lab-cap">数字技能空间 · EXPERIMENTAL</div>
           </div>
         </div>
+        <nav style={{ display: 'flex', gap: 4, marginLeft: 10 }}>
+          {NAV.map(x => {
+            const on = x.k === '/lab' ? path === '/lab' : path.startsWith(x.k);
+            return (
+              <button key={x.k} onClick={() => router.push(x.k)} style={{ padding: '7px 14px', borderRadius: 11, border: 0, cursor: 'pointer', fontSize: 14, fontWeight: on ? 800 : 600, whiteSpace: 'nowrap', color: on ? 'var(--v)' : 'var(--ink2)', background: on ? 'rgba(106,92,255,.10)' : 'transparent' }}>{x.t}</button>
+            );
+          })}
+        </nav>
         <div style={{ flex: 1 }} />
         <Select size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 170 }} popupMatchSelectWidth={250}
           options={MODEL_OPTIONS.map(m => ({ value: m.id, label: <span>{m.label}<ModelBadge text={m.badge} /></span> }))} />

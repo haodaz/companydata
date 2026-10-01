@@ -213,6 +213,16 @@ export default function SpacePage() {
 
   useEffect(() => { load(); }, [load]);
   useEffect(() => { if (space?.jd_snapshot?.career && !openedCareer.current) { openedCareer.current = true; setMode('career'); } }, [space]);
+  // ?m=eco / ?go=bench 这类直达：演示、分享链接、首页取图都用得上
+  const [startAt, setStartAt] = useState(0);
+  const goRef = useRef<string | null>(null);
+  useEffect(() => {
+    const u = new URLSearchParams(window.location.search);
+    const m = u.get('m') as Mode | null;
+    if (m) { openedCareer.current = true; setMode(m); }
+    goRef.current = u.get('go');
+    if (goRef.current) { openedCareer.current = true; setMode('test'); }
+  }, []);
   useEffect(() => { chatEnd.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, [turns]);
 
   const post = async (path: string, body: Record<string, unknown>) => {
@@ -227,6 +237,14 @@ export default function SpacePage() {
   const lv = expertiseLevel(skill);
   const rubric: RubricItem[] = space?.rubric || [];
   const sim: Sim | null = space?.sim?.steps?.length ? space.sim : null;
+  useEffect(() => {
+    const go = goRef.current;
+    if (!go || !sim) return;
+    goRef.current = null;
+    const i = go === 'bench' ? sim.steps.findIndex((st: any) => st.type === 'bench') : Number(go) - 1;
+    setStartAt(Math.max(0, i));
+    setAnswering(true);
+  }, [sim]);
   const ranked = useMemo(() => [...subs].sort((a, b) => (b.score ?? 0) - (a.score ?? 0)), [subs]);
   const aiBare = subs.filter(s => s.candidate_type === 'ai' && !s.with_skill_id).slice(-1)[0];
   const aiSkill = subs.filter(s => s.candidate_type === 'ai' && s.with_skill_id).slice(-1)[0];
@@ -448,7 +466,7 @@ export default function SpacePage() {
               </div>
             </div>
           ) : (
-            <SimRunner key={runKey + (demo ? '-demo' : '')} demo={demo || undefined} sim={sim} role="rookie" busy={!!busy} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); }} onFinish={trace => { const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, d ? undefined : trace); }} />
+            <SimRunner key={runKey + (demo ? '-demo' : '')} startAt={startAt} demo={demo || undefined} sim={sim} role="rookie" busy={!!busy} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); }} onFinish={trace => { const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, d ? undefined : trace); }} />
           )}
         </SimStage>
       )}

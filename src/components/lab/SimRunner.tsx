@@ -70,8 +70,8 @@ export interface SimRunnerProps {
 }
 
 /** 模拟操作台：一步一步操作，每一步确认后才推进；下钻 / 询问会浮现新的信息 */
-export function SimRunner({ sim, role, busy, onFinish, onCancel, demo }: SimRunnerProps & { /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace }) {
-  const [idx, setIdx] = useState(0);
+export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt }: SimRunnerProps & { /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace; /** 从第几步开始：演示和取图时直接跳到工位那步 */ startAt?: number }) {
+  const [idx, setIdx] = useState(Math.min(Math.max(0, startAt || 0), sim.steps.length - 1));
   const [trace, setTrace] = useState<SimTrace>(() => {
     if (!demo) return {};
     // bench 那几步不预填，留给工位当场走
