@@ -64,6 +64,15 @@ const CSS = `
 .ai100-sec { padding: clamp(44px, 7vw, 86px) 0 0; }
 .ai100-01 { display: grid; gap: clamp(16px, 2.5vw, 40px); grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr); align-items: center; }
 @media (max-width: 860px) { .ai100-01 { grid-template-columns: minmax(0, 1fr); } }
+/* 它对谁有用：上图下字，身份字大 */
+.ai100-value { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 248px), 1fr)); margin-top: 26px; }
+.ai100-value > div { border-radius: 20px; overflow: hidden; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.1); box-shadow: 0 16px 44px rgba(0,0,0,.4); }
+.ai100-value img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.ai100-value .t { padding: 16px 18px 20px; }
+.ai100-value .who { font-size: 26px; font-weight: 900; letter-spacing: -.3px; color: #fff; line-height: 1.2; }
+.ai100-value .who span { display: block; font-size: 12px; font-weight: 600; color: #9f91ff; letter-spacing: .04em; margin-top: 4px; }
+.ai100-value .d { font-size: 13px; color: var(--ink3); line-height: 1.9; margin-top: 11px; }
+
 /* 一个一个换人：原地消融，不滑动 */
 .ai100-faces { position: relative; aspect-ratio: 4 / 3.4; min-height: 320px; cursor: pointer; }
 .ai100-faces .halo { position: absolute; left: 50%; top: 46%; width: 76%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%;
@@ -158,10 +167,10 @@ const HOW = [
 ];
 
 const VALUE = [
-  { who: '对学生 / 想转行的人', d: '在决定要不要入行之前，先把这一行最有代表性的一天真的走一遍——比看一百篇「XX 专业就业前景」管用。' },
-  { who: '对学校 / 培训机构', d: '一份企业官方 JD 进来，几分钟出一个可考核的空间。不用再自己编案例，案例来自真实在招的岗位。' },
-  { who: '对企业 / 行业', d: '把老师傅手里说不清的判断变成可追溯、可复用、能异地调用的资产。人会退休，空间不会。' },
-  { who: '对一个职业本身', d: '让它被看见。冷门的、新兴的、灵活就业的——收纳师、陪诊师、剧本杀 DM，一样配有自己的空间。' },
+  { k: '学生', sub: '以及想转行的人', img: '/lab-landing/value-student.jpg', d: '在决定要不要入行之前，先把这一行最有代表性的一天真的走一遍——比看一百篇「XX 专业就业前景」管用。' },
+  { k: '学校', sub: '以及培训机构', img: '/lab-landing/value-school.jpg', d: '一份企业官方 JD 进来，几分钟出一个可考核的空间。不用再自己编案例，案例来自真实在招的岗位。' },
+  { k: '企业', sub: '以及整个行业', img: '/lab-landing/value-firm.jpg', d: '把老师傅手里说不清的判断变成可追溯、可复用、能异地调用的资产。人会退休，空间不会。' },
+  { k: '职业', sub: '它自己', img: '/lab-landing/value-career.jpg', d: '让它被看见。冷门的、新兴的、灵活就业的——收纳师、陪诊师、剧本杀 DM，一样配有自己的空间。' },
 ];
 
 /** 空间里直接截的图。手法镜那块是真人摄像头，上页面前已经糊过（scripts/lab-landing-shots.mts） */
@@ -483,11 +492,14 @@ export default function LabLanding() {
       <section className="ai100-sec">
         <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>06 / 价值</div>
         <h2 className="ai100-h2">它对谁有用</h2>
-        <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 296px), 1fr))', marginTop: 24 }}>
+        <div className="ai100-value">
           {VALUE.map((x, i) => (
-            <div key={x.who} className="lab-glass lab-in" style={{ padding: '20px 22px', animationDelay: `${i * 60}ms`, borderLeft: '3px solid rgba(106,92,255,.5)' }}>
-              <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>{x.who}</div>
-              <div style={{ fontSize: 14, color: 'var(--ink2)', lineHeight: 2, marginTop: 8 }}>{x.d}</div>
+            <div key={x.k} className="lab-in" style={{ animationDelay: `${i * 70}ms` }}>
+              <img src={x.img} alt="" loading="lazy" />
+              <div className="t">
+                <div className="who">{x.k}<span>{x.sub}</span></div>
+                <div className="d">{x.d}</div>
+              </div>
             </div>
           ))}
         </div>
