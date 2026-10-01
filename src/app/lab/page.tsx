@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { App, Modal, Popconfirm } from 'antd';
 import { SKILL_KIND, expertiseLevel } from '@/lib/skill-lab';
 import { useModel } from '@/lib/model-context';
+import { familyOf } from '@/lib/career-family';
+import { tagsOf, ALL_TAGS, FEATURE_TAGS } from '@/lib/career-tags';
 
 const BUILD_STEPS = ['读取岗位 JD', '逐条拆解岗位职责', '对齐能力项', '设计可检验的任务', '生成评分标准', '唤醒岗位 AI 核心'];
 /** 真实构建（任意 JD）的阶段：与服务端 progress 的 phase 文案一致 */
@@ -73,6 +75,10 @@ export default function LabHome() {
   const [profession, setProfession] = useState('');
   const [buildSince, setBuildSince] = useState(0);
   const [now, setNow] = useState(0);
+  // 列表筛选：搜一个词 + 选一个领域 + 勾若干标记（标记之间是「或」，人多了只想快速捞出一拨）
+  const [q, setQ] = useState('');
+  const [fam, setFam] = useState('');
+  const [marks, setMarks] = useState<string[]>([]);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -237,6 +243,43 @@ export default function LabHome() {
     );
   }
 
+  // ── 给每个空间算出：可搜的正文、一级领域、标记 ──
+  const enriched = useMemo(() => spaces.map((s: any) => {
+    const jd = s.jd_snapshot || {};
+    const p = s.profile || {};
+    const prof = jd.career?.profession || '';
+    const text = [p.name, p.codename, p.role, p.tagline, (p.capabilities || []).join(' '), jd.company, jd.title, prof, jd.location, s.skill?.name, s.skill?.domain, s.skill?.expert_location]
+      .filter(Boolean).join(' ');
+    // 打标记只认「这人是干什么的」，不拿 tagline 和能力词那堆自由文本去撞——
+    // 不然西点师会因为一句「面糊是有记忆的材料」被打上「高精尖材料」
+    const tags = tagsOf([p.role, prof, jd.title, s.skill?.name, s.skill?.domain].filter(Boolean).join(' '));
+    tags.unshift(jd.kind === 'career' ? '职业探索' : '真实 JD');
+    if (s.features?.immersive) tags.unshift('沉浸场景');
+    if (s.features?.bench) tags.unshift('虚拟工位');
+    return { s, tags, text: text.toLowerCase(), family: familyOf(prof, s.skill?.domain, jd.title, jd.company) };
+  }), [spaces]);
+
+  const famCount = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const e of enriched) m.set(e.family, (m.get(e.family) || 0) + 1);
+    return [...m.entries()].sort((a, b) => b[1] - a[1]);
+  }, [enriched]);
+  const tagCount = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const e of enriched) for (const t of e.tags) m.set(t, (m.get(t) || 0) + 1);
+    return ALL_TAGS.filter(t => m.has(t)).map(t => [t, m.get(t)!] as [string, number]);
+  }, [enriched]);
+
+  const shown = useMemo(() => {
+    const kw = q.trim().toLowerCase();
+    return enriched.filter(e =>
+      (!fam || e.family === fam) &&
+      (!marks.length || marks.some(t => e.tags.includes(t))) &&
+      (!kw || e.text.includes(kw) || e.tags.some(t => t.toLowerCase().includes(kw)) || e.family.includes(kw)));
+  }, [enriched, q, fam, marks]);
+  const filtering = !!(q.trim() || fam || marks.length);
+  const toggleMark = (t: string) => setMarks(l => l.includes(t) ? l.filter(x => x !== t) : [...l, t]);
+
   return (
     <>
       {/* 开场 */}
@@ -285,7 +328,43 @@ export default function LabHome() {
         ))}
       </section>
 
-      <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>SPACES · {spaces.length}</div>
+      {/* 四十来号人之后，列表得能捞：搜一个词、挑一个领域、勾几个标记 */}
+      {spaces.length > 3 && (
+        <div className="lab-glass" style={{ padding: '14px 16px', marginBottom: 14 }}>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+            <input
+              className="lab-input" value={q} onChange={e => setQ(e.target.value)}
+              placeholder="搜人、职业、企业、城市、技能——如：焊 / 星巴克 / 上海 / 潜水"
+              style={{ flex: '1 1 280px', minWidth: 0, padding: '9px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }}
+            />
+            <select
+              value={fam} onChange={e => setFam(e.target.value)}
+              style={{ padding: '9px 12px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 13.5, background: '#fff', color: fam ? 'var(--v)' : 'var(--ink2)', fontWeight: fam ? 700 : 400, outline: 'none', cursor: 'pointer' }}
+            >
+              <option value="">全部行业 · {spaces.length}</option>
+              {famCount.map(([f, n]) => <option key={f} value={f}>{f} · {n}</option>)}
+            </select>
+            {filtering && <button className="lab-btn sm ghost" onClick={() => { setQ(''); setFam(''); setMarks([]); }}>清空</button>}
+          </div>
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 11 }}>
+            {tagCount.map(([t, n]) => {
+              const on = marks.includes(t);
+              const feat = FEATURE_TAGS.includes(t);
+              return (
+                <button
+                  key={t} onClick={() => toggleMark(t)}
+                  className={`lab-chip${on ? (feat ? ' c' : '') : ' g'}`}
+                  style={{ cursor: 'pointer', fontSize: 12.5, padding: '5px 11px', border: on ? '1px solid var(--v)' : undefined, background: on && !feat ? 'rgba(106,92,255,.14)' : undefined, color: on && !feat ? 'var(--v)' : undefined, fontWeight: on ? 700 : 400 }}
+                >
+                  {t}<span className="lab-mono" style={{ opacity: .55, marginLeft: 5 }}>{n}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>SPACES · {shown.length}{filtering ? ` / ${spaces.length}` : ''}</div>
       {loading ? (
         <div className="lab-glass lab-scan" style={{ height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink3)' }}><span className="lab-mono">LOADING<span className="lab-dots" /></span></div>
       ) : spaces.length === 0 ? (
@@ -294,7 +373,7 @@ export default function LabHome() {
         </div>
       ) : (
         <div style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 440px), 1fr))' }}>
-          {spaces.map((s, i) => {
+          {shown.map(({ s, tags: mk }, i) => {
             const jd = s.jd_snapshot || {};
             const kind = SKILL_KIND[s.skill?.kind];
             const profile = s.profile || {};
@@ -333,7 +412,7 @@ export default function LabHome() {
 
                 <div style={{ marginTop: 14, fontSize: 12.5, color: 'var(--ink3)', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                   {s.skill ? <><span className={`lab-chip ${s.skill.kind === 'hard' ? 'c' : 'p'}`}>{kind?.label}</span>{s.skill.source === 'jd-draft' ? <>AI 自学草案 · 等待第一位专家校正</> : <>已向 {s.skill.expert_name}（{s.skill.expert_location}）学习</>}</> : <span className="lab-chip g">只读过 JD，等待第一位专家</span>}
-                  {s.features?.immersive && <span className="lab-chip g" style={{ marginLeft: 6 }}>沉浸场景</span>}{s.features?.bench && <span className="lab-chip g" style={{ marginLeft: 4 }}>虚拟工位</span>}
+                  {mk.filter(t => t !== '真实 JD' && t !== '职业探索').slice(0, 4).map(t => <span key={t} className="lab-chip g" style={{ marginLeft: 2 }}>{t}</span>)}
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', textAlign: 'center', marginTop: 16, paddingTop: 14, borderTop: '1px solid var(--line)' }}>
@@ -344,6 +423,11 @@ export default function LabHome() {
               </div>
             );
           })}
+        </div>
+      )}
+      {!loading && spaces.length > 0 && shown.length === 0 && (
+        <div className="lab-glass" style={{ padding: 40, textAlign: 'center', color: 'var(--ink3)', lineHeight: 2 }}>
+          没有符合条件的数字人。<button className="lab-btn sm ghost" style={{ marginLeft: 10 }} onClick={() => { setQ(''); setFam(''); setMarks([]); }}>清空筛选</button>
         </div>
       )}
 
