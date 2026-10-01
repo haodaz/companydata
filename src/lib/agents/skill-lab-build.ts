@@ -123,7 +123,7 @@ function benchSpecProblem(raw: any): string {
   return bad.length ? ` 具体问题：${bad.slice(0, 6).join('；')}` : '';
 }
 
-export async function designBench(jd: JdInput, task: { title: string; brief: string }, sim: Sim, modelId = DEFAULT_MODEL): Promise<BenchDesign | null> {
+export async function designBench(jd: JdInput, task: { title: string; brief: string }, sim: Sim, modelId = DEFAULT_MODEL, diag: { note: string } = { note: '' }): Promise<BenchDesign | null> {
   const example = JSON.stringify({ ...BENCH_WELD, scene: undefined, expertScript: BENCH_WELD.expertScript }, null, 0);
   // 轨迹工位的样子（咖啡拉花）：只给控件与层，让模型看懂折线轨迹 + 工作面 + 阶段提示怎么配套
   const trackExample = JSON.stringify({
@@ -197,8 +197,8 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
     `, modelId, 'Build · Design Bench');
     const raw = p.bench || {};
     const spec = sanitizeBenchSpec({ ...raw, scene: undefined });
-    if (!spec) { feedback = `控件 / 变量 / 目标缺失，或某个表达式无法求值（检查：只用允许的运算和函数、引用的 id 都存在、字段名拼写）。${benchSpecProblem(raw)}`; console.warn(`[build] bench attempt ${attempt + 1}: ${feedback.slice(0, 300)}`); continue; }
-    if (!spec.expertScript?.length) { feedback = '缺少 expertScript。'; console.warn(`[build] bench attempt ${attempt + 1}: 缺少 expertScript`); continue; }
+    if (!spec) { feedback = `控件 / 变量 / 目标缺失，或某个表达式无法求值（检查：只用允许的运算和函数、引用的 id 都存在、字段名拼写）。${benchSpecProblem(raw)}`; diag.note = `第 ${attempt + 1} 轮：设备定义没通过静态校验。${benchSpecProblem(raw)}`; console.warn(`[build] bench attempt ${attempt + 1}: ${feedback.slice(0, 300)}`); continue; }
+    if (!spec.expertScript?.length) { feedback = '缺少 expertScript。'; diag.note = `第 ${attempt + 1} 轮：没给老手脚本，无法验证这台工位自己做不做得到。`; console.warn(`[build] bench attempt ${attempt + 1}: 缺少 expertScript`); continue; }
     const until = Math.min(spec.maxSeconds, Math.max(...spec.expertScript.map(a => a.t)) + 60);
     const tr = simulateScript(spec, spec.expertScript, until);
     const m = tr.metrics;
@@ -208,21 +208,34 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
       const score = m.goals_done * 10 - violated.length;
       if (!best || score > best.score) best = { spec, layers, p, violated, score };
       feedback = `老手脚本在模拟器里的结果：目标 ${m.goals_done}/${m.goals_total}，违规 ${m.violations}。要么脚本没做到，要么规则 / 目标 / 变量动力学写错了。事件流：\n${benchTimeline(spec, tr).slice(0, 2500)}`;
+      const missed = spec.goals.filter(g => m.time_to_goal[g.id] === null).map(g => g.label);
+      diag.note = `第 ${attempt + 1} 轮：老手脚本自己跑下来只达成 ${m.goals_done}/${m.goals_total} 个目标、违规 ${m.violations} 次${missed.length ? `；做不到的是「${missed.slice(0, 3).join('」「')}」` : ''}。`;
       console.warn(`[build] bench attempt ${attempt + 1}: 目标 ${m.goals_done}/${m.goals_total} 违规 ${m.violations}`);
       continue;
     }
     return finish(spec, layers, p);
   }
-  if (best && best.spec.goals.length && best.violated.length) {
-    const tr0 = simulateScript(best.spec, best.spec.expertScript!, Math.min(best.spec.maxSeconds, Math.max(...best.spec.expertScript!.map(a => a.t)) + 60));
-    if (tr0.metrics.goals_done === tr0.metrics.goals_total) {
-      const pruned: BenchSpec = { ...best.spec, rules: best.spec.rules.filter(r => !best!.violated.includes(r.id)) };
-      const tr = simulateScript(pruned, pruned.expertScript!, Math.min(pruned.maxSeconds, Math.max(...pruned.expertScript!.map(a => a.t)) + 60));
-      if (tr.metrics.violations === 0 && tr.metrics.goals_done === tr.metrics.goals_total && pruned.rules.length) {
-        console.warn(`[build] bench 兜底：删掉老手脚本撞上的规则 ${best.violated.join(',')}，保留 ${pruned.rules.length} 条`);
-        return finish(pruned, best.layers, best.p);
-      }
+  // 兜底：三轮都没谈拢的话，拿最好的那一版，把老手脚本自己都做不到的目标、和它撞上的规则裁掉。
+  // 剩下的是一台自洽的工位：目标少了点，但能真的动手，比完全没有强。
+  if (best?.spec.expertScript?.length) {
+    const run = (sp: BenchSpec) => simulateScript(sp, sp.expertScript!, Math.min(sp.maxSeconds, Math.max(...sp.expertScript!.map(a => a.t)) + 60));
+    const tr0 = run(best.spec);
+    const keep = best.spec.goals.filter(g => tr0.metrics.time_to_goal[g.id] !== null).map(g => g.id);
+    const dropped = best.spec.goals.length - keep.length;
+    const pruned: BenchSpec = {
+      ...best.spec,
+      rules: best.spec.rules.filter(r => !best!.violated.includes(r.id)),
+      // after 指向被裁掉的目标就永远解锁不了，要一并清掉
+      goals: best.spec.goals.filter(g => keep.includes(g.id)).map(g => ({ ...g, after: g.after && keep.includes(g.after) ? g.after : undefined })),
+    };
+    const tr = run(pruned);
+    if (pruned.goals.length >= 2 && pruned.rules.length && tr.metrics.violations === 0 && tr.metrics.goals_done === tr.metrics.goals_total) {
+      const note = `裁掉了老手脚本做不到的 ${dropped} 个目标、撞上的 ${best.violated.length} 条规则，保留 ${pruned.goals.length} 个目标 / ${pruned.rules.length} 条规则`;
+      console.warn(`[build] bench 兜底：${note}`);
+      diag.note = note;
+      return finish(pruned, best.layers, best.p);
     }
+    diag.note = `${diag.note}裁剪后仍然不自洽（剩 ${pruned.goals.length} 个目标），所以没有放进来。`;
   }
   return null;
 }
@@ -265,6 +278,7 @@ export interface BuiltSpace {
   task: Awaited<ReturnType<typeof generateTask>> & { sim: Sim | null };
   skill: { name: string; domain: string; kind: 'hard' | 'soft'; summary: string; card: SkillCard; expert_trace: SimTrace & { _why?: Record<string, string> } };
   benchAdded: boolean; artCount: number; artReused: number;
+  /** 工位没做成 / 或被裁剪过的原因，给前端和日志看 */ benchNote: string;
 }
 
 export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, progress: Progress = () => {}, opts: { bench?: boolean; art?: boolean; hint?: string } = {}): Promise<BuiltSpace> {
@@ -276,9 +290,10 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
   if (!sim) throw new Error('大模型没有给出可用的故事线，请重试');
 
   progress('推断技能集 · 设计虚拟工位 · 规划场景', '三路并行');
+  const benchDiag = { note: '' };
   const [draft, bench, art] = await Promise.all([
     draftSkill(jd, task, sim, modelId),
-    wantBench ? designBench(jd, task, sim, modelId).catch(e => { console.error('[build] bench', e); return null; }) : Promise.resolve(null),
+    wantBench ? designBench(jd, task, sim, modelId, benchDiag).catch(e => { console.error('[build] bench', e); benchDiag.note = `设计工位时出错：${e?.message || e}`; return null; }) : Promise.resolve(null),
     wantArt ? planArt(jd, sim, modelId).catch(e => { console.error('[build] art plan', e); return { family: '', scenes: [], npcs: [] } as ArtPlan; }) : Promise.resolve({ family: '', scenes: [], npcs: [] } as ArtPlan),
   ]);
 
@@ -336,6 +351,6 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
   return {
     task: { ...task, sim },
     skill: { name: draft.name, domain: draft.domain, kind: draft.kind, summary: draft.summary, card: draft.card, expert_trace: { ...trace, _why: draft.why } },
-    benchAdded: !!benchStep, artCount, artReused: reusedCount,
+    benchAdded: !!benchStep, artCount, artReused: reusedCount, benchNote: benchDiag.note,
   };
 }

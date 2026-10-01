@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { App, Modal } from 'antd';
+import { App, Modal, Popconfirm } from 'antd';
 import { SKILL_KIND, expertiseLevel } from '@/lib/skill-lab';
 import { useModel } from '@/lib/model-context';
 
@@ -81,6 +81,17 @@ export default function LabHome() {
   };
 
   /** 任意 JD → 岗位 AI 自己生成 技能集草案 + 故事线 + 虚拟工位 + 美术（约 2–4 分钟）；或只给一个职业名 → 职业探索空间 */
+  /** 删掉一个空间（演示时反复构建用）；预置示范删掉后还能从 JD 弹窗重新构建 */
+  const removeSpace = async (id: string) => {
+    try {
+      const json = await (await fetch(`/api/lab/spaces/${id}`, { method: 'DELETE' })).json();
+      if (!json.ok) throw new Error(json.error || '删除失败');
+      message.success('空间已删除');
+      setSpaces(list => list.filter((x: any) => x.id !== id));
+      loadJds();
+    } catch (e: any) { message.error(e.message); }
+  };
+
   const buildFromJob = async (job: any | null, prof?: string) => {
     const buildId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
     setPick(null);
@@ -89,7 +100,7 @@ export default function LabHome() {
     try {
       const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(prof ? { profession: prof, model: currentModel, buildId } : { jobId: job.id, model: currentModel, buildId }) })).json();
       if (!json.ok) throw new Error(json.error);
-      if (!json.benchAdded) message.warning('空间已建好，但这次「虚拟操作空间」没有通过模拟器校验，先以故事线为主。', 8);
+      if (!json.benchAdded) message.warning(`空间已建好，但这次没做出「虚拟操作空间」，先以故事线为主。${json.benchNote ? `原因：${json.benchNote}` : ''}`, 12);
       else if (!json.artCount) message.warning('空间已建好，但场景美术没有生成（文生图服务不可用）。', 8);
       router.push(`/lab/${json.id}`);
     } catch (e: any) { message.error(e.message); setBuilding(null); }
@@ -114,7 +125,7 @@ export default function LabHome() {
         new Promise(r => setTimeout(r, BUILD_STEPS.length * 1500 + 600)),
       ]);
       if (!json.ok) throw new Error(json.error);
-      if (!json.benchAdded) message.warning('空间已建好，但这次「虚拟操作空间」没有通过模拟器校验，先以故事线为主。', 8);
+      if (!json.benchAdded) message.warning(`空间已建好，但这次没做出「虚拟操作空间」，先以故事线为主。${json.benchNote ? `原因：${json.benchNote}` : ''}`, 12);
       else if (!json.artCount) message.warning('空间已建好，但场景美术没有生成（文生图服务不可用）。', 8);
       router.push(`/lab/${json.id}`);
     } catch (e: any) { message.error(e.message); setBuilding(null); }
@@ -212,7 +223,12 @@ export default function LabHome() {
             const profile = s.profile || {};
             const lv = expertiseLevel(s.skill);
             return (
-              <div key={s.id} className="lab-glass hover lab-in" style={{ padding: 22, animationDelay: `${i * 90}ms`, minWidth: 0 }} onClick={() => router.push(`/lab/${s.id}`)}>
+              <div key={s.id} className="lab-glass hover lab-in" style={{ padding: 22, animationDelay: `${i * 90}ms`, minWidth: 0, position: 'relative' }} onClick={() => router.push(`/lab/${s.id}`)}>
+                <div onClick={e => e.stopPropagation()} style={{ position: 'absolute', right: 12, top: 12, zIndex: 2 }}>
+                  <Popconfirm title="删除这个技能空间？" description={<>作答、账本和蒸馏出的技能会一起删除。<br />预置示范删掉后可以重新构建。</>} onConfirm={() => removeSpace(s.id)} okText="删除" okButtonProps={{ danger: true }} cancelText="取消">
+                    <button title="删除空间" style={{ width: 26, height: 26, borderRadius: 8, border: '1px solid var(--line)', background: 'rgba(255,255,255,.7)', color: 'var(--ink3)', cursor: 'pointer', fontSize: 14, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
+                  </Popconfirm>
+                </div>
                 <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
                   <div className="lab-orb" style={{ ['--s' as string]: '76px' }}><div className="ring" /><div className="core lab-mono" style={{ fontSize: 10 }}>Lv{lv.level}</div><div className="sat" /></div>
                   <div style={{ minWidth: 0, flex: 1 }}>
