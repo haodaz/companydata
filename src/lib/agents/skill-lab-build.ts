@@ -184,10 +184,12 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
       4. 场景 layers 的布局分两种，按工位类型选一种：
          • 设备 / 系统类（正面平视）：画面左侧 1/4 是控制柜（带数字显示屏和指示灯），中间 1/2 是主设备，右侧 1/4 是辅助设备。readout 放 x 5–14、y 25–45；lamp 放 x 15–19、y 25–36；glow / door / stream 放中间 x 35–65、y 30–70；pulse 放右侧 x 80–92、y 35–55；haze 放中上 x 35–65、y 5–35。3–6 层即可。
          • 轨迹类（正俯视的工作面）：工作面在画面中间偏左，cup 层（如果有）给 x 32.5、y 28.9、w 30、h 53.3；轨迹 points 全部落在 x 40–55、y 32–78 这块里；readout 放左上 x 2–11、y 3–14；coach 放 x 50、y 9 与 19。
-      5. scene_prompt：给文生图的中文提示词，和 layers 的布局对得上：
+      5. scene_prompt：给文生图的中文提示词，和 layers 的布局对得上（医疗 / 生物 / 治疗类只画环境与器具，不要人体、器官、标本）：
          • 设备类：以「半写实插画风格，正面平视的固定机位，画面左侧是……，画面中央是……，画面右侧是……」开头
          • 轨迹类：以「半写实插画风格，正上方俯拍视角，画面中央完全空出一大片干净的工作台面，器具分布在四个角落：左上是……，右上是……，右下是……」开头（中间那片台面留给工作面和轨迹，千万不要在提示词里放东西）
          两种都以「明亮干净的光线，没有人物，没有文字，没有logo，16:9」结尾。
+         医疗、生物、养殖、治疗类的岗位特别注意：只画环境与器具（诊床、治疗床、器械盘、模型挂图），
+         绝不要出现人体、身体部位、器官、标本瓶与任何泡在液体里的东西——这类画面既不对也令人不适。
       6. step：这一步在故事线里的位置和台词——scene（who 是故事线里已经出现过的人物，time，text 交代把设备交给新人）、prompt（一句话说明要完成什么）、insert_after（插在故事线哪个步骤 id 之后，通常是第 1 步之后）。
       7. 全部中文；控件 / 变量 id 用英文。
       8. 层只画这台设备 / 这个工作面真的有的东西：没有爐膛就不要 glow、没有爐门就不要 door、没有烟雾就不要 haze。宁可少画几层，也不要把上面焊接例子里的东西搬到一个根本没有它们的工位上。
@@ -251,7 +253,7 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
 // 4. 场景与人物
 // ────────────────────────────────────────────
 /** family = 一级领域（图库按它分桶）；slot = 场景位 / 人物角色（图库按它匹配） */
-export interface ArtPlan { family: string; scenes: { key: string; slot: string; prompt: string; steps: string[] }[]; npcs: { who: string; slot: string; prompt: string }[] }
+export interface ArtPlan { family: string; /** 空间核心那位数字人自己的形象 */ self: string; scenes: { key: string; slot: string; prompt: string; steps: string[] }[]; npcs: { who: string; slot: string; prompt: string }[] }
 const ART_SLOTS = ['办公室', '会议室', '车间', '实验室', '门店', '后厨', '工地', '仓库', '机房', '教室', '诊室', '户外现场', '驾驶舱', '其他'];
 const NPC_SLOTS = ['带教师傅', '主管', '同事', '客户', '质检', '老师', '专家', '其他'];
 
@@ -270,12 +272,15 @@ export async function planArt(jd: JdInput, sim: Sim, modelId = DEFAULT_MODEL): P
     - 人物：每个人物一句外形描述（性别、年龄、发型、职业装束、手里拿着什么、神情），不要写背景；
       每个人物也给一个 slot（他在故事里是什么角色，从这几个里选）：${NPC_SLOTS.join(' / ')}
     slot 和 family 是给素材库做归类用的：领域相近的岗位（会计 ↔ 精算师、咖啡师 ↔ 调酒师）会把同一个地点、同一种角色的图互相复用，所以要选最贴切的那一个。
-    返回 JSON：{ "family": "", "scenes": [ { "key": "<英文短 key>", "slot": "", "prompt": "", "steps": ["<步骤 id>"] } ], "npcs": [ { "who": "<与故事线里完全一致的称呼>", "slot": "", "prompt": "" } ] }
+    - self：这个空间核心那位「从业者数字人」自己的形象——一位正在一线干这行、年轻、状态好的从业者，
+      一句外形描述（性别、年龄、发型、这个职业真实的工作装束与随身器具、神情），不要写背景。他会成为这个空间的头像。
+    返回 JSON：{ "family": "", "self": "", "scenes": [ { "key": "<英文短 key>", "slot": "", "prompt": "", "steps": ["<步骤 id>"] } ], "npcs": [ { "who": "<与故事线里完全一致的称呼>", "slot": "", "prompt": "" } ] }
   `, modelId, 'Build · Plan Art');
   const family = ART_FAMILIES.includes(String(p.family) as any) ? String(p.family) : '其他';
+  const self = String(p.self || '').slice(0, 300);
   const scenes = (Array.isArray(p.scenes) ? p.scenes : []).map((s: any, i: number) => ({ key: String(s.key || `scene${i + 1}`).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 24) || `scene${i + 1}`, slot: ART_SLOTS.includes(String(s.slot)) ? String(s.slot) : '其他', prompt: String(s.prompt || ''), steps: (Array.isArray(s.steps) ? s.steps : []).map(String) })).filter((s: any) => s.prompt).slice(0, 3);
   const npcs = (Array.isArray(p.npcs) ? p.npcs : []).map((n: any) => ({ who: String(n.who || ''), slot: NPC_SLOTS.includes(String(n.slot)) ? String(n.slot) : '其他', prompt: String(n.prompt || '') })).filter((n: any) => n.who && n.prompt && cast.includes(n.who)).slice(0, 3);
-  return { family, scenes, npcs };
+  return { family, self, scenes, npcs };
 }
 
 // ────────────────────────────────────────────
@@ -301,7 +306,7 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
   const [draft, bench, art] = await Promise.all([
     draftSkill(jd, task, sim, modelId),
     wantBench ? designBench(jd, task, sim, modelId, benchDiag).catch(e => { console.error('[build] bench', e); benchDiag.note = `设计工位时出错：${e?.message || e}`; return null; }) : Promise.resolve(null),
-    wantArt ? planArt(jd, sim, modelId).catch(e => { console.error('[build] art plan', e); return { family: '', scenes: [], npcs: [] } as ArtPlan; }) : Promise.resolve({ family: '', scenes: [], npcs: [] } as ArtPlan),
+    wantArt ? planArt(jd, sim, modelId).catch(e => { console.error('[build] art plan', e); return { family: '', self: '', scenes: [], npcs: [] } as ArtPlan; }) : Promise.resolve({ family: '', self: '', scenes: [], npcs: [] } as ArtPlan),
   ]);
 
   // 把虚拟工位插进故事线
@@ -314,7 +319,7 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
   }
 
   // 美术
-  let artCount = 0, reusedCount = 0;
+  let artCount = 0, reusedCount = 0, avatarUrl = '';
   if (wantArt && (art.scenes.length || bench)) {
     progress('生成场景与立绘', `${art.scenes.length} 个场景 · ${art.npcs.length} 位人物${bench ? ' · 1 个工位' : ''}`);
     const tag = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
@@ -322,11 +327,14 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
     // 地点和人物先查素材库：领域相近的岗位（会计 ↔ 精算师）共用同一批办公室与带教师傅，攻不下来再生。
     // 工位底图不走库：它和这台设备强绑，复用到别的工位上就是答非所问。
     const meta = { family: art.family, domain: jd.title, profession: `${jd.company} · ${jd.title}` };
-    const [sceneHits, npcHits, benchUrl] = await Promise.all([
+    const [sceneHits, npcHits, benchUrl, selfHit] = await Promise.all([
       Promise.all(art.scenes.map(s => safe(sceneAssetReusing(s.prompt, `${tag}-${s.key}`, { ...meta, slot: s.slot })))),
       Promise.all(art.npcs.map((n, i) => safe(npcAssetReusing(n.prompt, `${tag}-npc${i + 1}`, { ...meta, slot: n.slot })))),
       bench?.scenePrompt ? safe(makeSceneAsset(bench.scenePrompt, `${tag}-bench`)) : Promise.resolve(null),
+      art.self ? safe(npcAssetReusing(art.self, `${tag}-self`, { ...meta, slot: '从业者本人' })) : Promise.resolve(null),
     ]);
+    // 这个空间核心那位数字人长什么样
+    if (selfHit) { avatarUrl = selfHit.url; if (!selfHit.reused) artCount++; else reusedCount++; }
     const scenes: Record<string, string> = {}; let cover = '';
     art.scenes.forEach((s, i) => { const h = sceneHits[i]; if (!h) return; if (!h.reused) artCount++; else reusedCount++; if (!cover) cover = h.url; for (const id of s.steps) scenes[id] = h.url; });
     const npcs: Record<string, string> = {};
@@ -355,6 +363,7 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
   if (benchStep?.bench?.expertScript?.length) trace[benchStep.id] = simulateScript(benchStep.bench, benchStep.bench.expertScript, Math.min(benchStep.bench.maxSeconds, Math.max(...benchStep.bench.expertScript.map(a => a.t)) + 60));
 
   progress('唤醒岗位 AI 核心');
+  if (avatarUrl) (task as any).profile = { ...(task as any).profile, avatar: avatarUrl };
   return {
     task: { ...task, sim },
     skill: { name: draft.name, domain: draft.domain, kind: draft.kind, summary: draft.summary, card: draft.card, expert_trace: { ...trace, _why: draft.why } },

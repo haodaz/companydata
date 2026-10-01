@@ -6,7 +6,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 const KEY = () => process.env.DASHSCOPE_API_KEY || '';
-const NEG = '文字, 字母, 水印, logo, 低清, 噪点, 畸变, 杂乱, 真人照片';
+// 医疗 / 生物类的提示词很容易路到标本、器官、标本瓶上去，一律堵掉
+const NEG = '文字, 字母, 水印, logo, 低清, 噪点, 畸变, 杂乱, 真人照片, 人体器官, 解剖标本, 标本瓶, 福尔马林, 内脏, 血迹, 血腥, 尸体, 残肢, 断肢, 截肢, 泡在液体里的身体部位, 医学标本, 骨骼标本, 惊悚';
 
 export const artAvailable = () => !!KEY();
 

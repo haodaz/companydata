@@ -54,7 +54,7 @@ export async function generateTask(jd: JdInput, skill: SkillRef | null, modelId 
 
     返回 JSON：
     {
-      "profile": { "codename": "<这个岗位 AI 的代号，英文大写 + 连字符，如 DA-GROWTH>", "tagline": "<它的一句口头禅，15 字以内，体现这个岗位的判断方式>", "capabilities": ["<它具备的能力，4-6 项>"], "can_solve": ["<它能帮人解决的具体问题，3-4 个，写成用户会说的话>"] },
+      "profile": { "codename": "<这个岗位 AI 的代号，英文大写 + 连字符，如 DA-GROWTH>", "role": "<人对它的称呼，2–6 个字的职业称谓，要像人而不是像岗位名，如「拉花师傅」「缝合师」「造箭师」「推拿师傅」>", "tagline": "<它的一句口头禅，15 字以内，体现这个岗位的判断方式>", "capabilities": ["<它具备的能力，4-6 项>"], "can_solve": ["<它能帮人解决的具体问题，3-4 个，写成用户会说的话>"] },
       "jd_breakdown": [ { "duty": "<JD 职责原句，逐字引用>", "capability": "<能力项>", "task_idea": "<可检验的任务点子>", "chosen": true | false } ],
       "title": "<任务标题>",
       "brief": "<情境与要求，2-4 句>",
@@ -82,7 +82,7 @@ export async function generateTask(jd: JdInput, skill: SkillRef | null, modelId 
 
   const list = (v: any) => (Array.isArray(v) ? v.map(String).filter(Boolean).slice(0, 6) : []);
   const profile = {
-    codename: String(p.profile?.codename || 'JD-CORE').toUpperCase().slice(0, 16), tagline: String(p.profile?.tagline || ''),
+    codename: String(p.profile?.codename || 'JD-CORE').toUpperCase().slice(0, 16), role: String(p.profile?.role || '').slice(0, 12), tagline: String(p.profile?.tagline || ''),
     capabilities: list(p.profile?.capabilities).length ? list(p.profile?.capabilities) : jd_breakdown.map((b: any) => b.capability).slice(0, 6),
     can_solve: list(p.profile?.can_solve),
   };
