@@ -268,10 +268,17 @@ export default function LabHome() {
                   </Popconfirm>
                 </div>
                 <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-                  <div className="lab-orb" style={{ ['--s' as string]: '76px' }}><div className="ring" /><div className="core lab-mono" style={{ fontSize: 10 }}>Lv{lv.level}</div><div className="sat" /></div>
+                  <div className="lab-orb" style={{ ['--s' as string]: '76px' }}>
+                    <div className="ring" />
+                    {profile.avatar
+                      ? <div className="core" style={{ overflow: 'hidden', padding: 0 }}><img src={profile.avatar} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '54% 12%' }} /></div>
+                      : <div className="core lab-mono" style={{ fontSize: 10 }}>Lv{lv.level}</div>}
+                    <div className="sat" />
+                  </div>
                   <div style={{ minWidth: 0, flex: 1 }}>
-                    <div className="lab-mono lab-cap">{profile.codename || 'JD-CORE'}</div>
-                    <div style={{ fontSize: 17, fontWeight: 800, lineHeight: 1.35 }}>{jd.company} · {jd.title}</div>
+                    <div className="lab-mono lab-cap">{profile.name || profile.codename || 'JD-CORE'}{profile.name && profile.codename ? ` · ${profile.codename}` : ''}</div>
+                    <div style={{ fontSize: 17, fontWeight: 800, lineHeight: 1.35 }}>{profile.name ? <>{profile.name} <span style={{ color: 'var(--v)' }}>· {profile.role}</span></> : <>{jd.company} · {jd.title}</>}</div>
+                    {profile.name && <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 1 }}>{jd.company} · {jd.title}</div>}
                     <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 2 }}>{jd.kind === 'career' ? <span className="lab-chip c" style={{ marginRight: 6 }}>职业探索 · {jd.career?.profession}</span> : jd.job_req_id ? `职位 ID ${jd.job_req_id} · ` : ''}{jd.location}</div>
                   </div>
                 </div>
