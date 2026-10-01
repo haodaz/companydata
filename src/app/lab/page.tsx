@@ -12,44 +12,71 @@ import { useRouter } from 'next/navigation';
  */
 
 const CSS = `
-.ai100-hero-strips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; height: clamp(360px, 46vw, 540px); overflow: hidden;
-  mask-image: linear-gradient(180deg, transparent, #000 13%, #000 87%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, #000 13%, #000 87%, transparent); }
-.ai100-strip { display: flex; flex-direction: column; gap: 12px; animation: ai100-up linear infinite; will-change: transform; }
+/* 首屏通屏：文案守着容器的左边线，胶片一路铺到屏幕右缘，不留窗框 */
+.ai100-hero { margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); width: 100vw;
+  display: grid; grid-template-columns: minmax(0, 1fr) clamp(300px, 40vw, 720px); gap: clamp(20px, 3vw, 52px); align-items: center; padding: 18px 0 0; }
+.ai100-hero > .copy { min-width: 0; padding-left: max(28px, calc((100vw - 1280px) / 2 + 28px)); }
+@media (max-width: 900px) { .ai100-hero { grid-template-columns: minmax(0, 1fr); } .ai100-hero > .copy { padding-right: 28px; } }
+
+/* 首屏胶片：两列竖版，一列向上一列向下，慢一点才大气 */
+.ai100-hero-strips { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; height: clamp(420px, 52vw, 620px); overflow: hidden;
+  mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent); -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent); }
+.ai100-strip { display: flex; flex-direction: column; gap: 14px; animation: ai100-up linear infinite; will-change: transform; }
 .ai100-strip.down { animation-name: ai100-down; }
-.ai100-strip img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 16px; background: rgba(106,92,255,.07);
-  border: 1px solid rgba(255,255,255,.9); box-shadow: 0 10px 28px rgba(88,76,220,.14); }
-@keyframes ai100-up { from { transform: translateY(0); } to { transform: translateY(calc(-50% - 6px)); } }
-@keyframes ai100-down { from { transform: translateY(calc(-50% - 6px)); } to { transform: translateY(0); } }
+.ai100-strip img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 18px; background: rgba(106,92,255,.07);
+  border: 1px solid rgba(255,255,255,.9); box-shadow: 0 14px 36px rgba(88,76,220,.16); }
+@keyframes ai100-up { from { transform: translateY(0); } to { transform: translateY(calc(-50% - 7px)); } }
+@keyframes ai100-down { from { transform: translateY(calc(-50% - 7px)); } to { transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .ai100-strip { animation: none !important; } }
 
-.ai100-marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-.ai100-marquee > div { display: flex; gap: 34px; width: max-content; animation: ai100-left 46s linear infinite; }
-@keyframes ai100-left { to { transform: translateX(calc(-50% - 17px)); } }
+/* 整页宽的分割带：从 lab-wrap 里挣出去，模块与模块之间要断得干净 */
+.ai100-bleed { margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); width: 100vw; }
+.ai100-band { background: rgba(255,255,255,.72); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 26px 0; margin-top: clamp(44px, 7vw, 80px); margin-bottom: clamp(44px, 7vw, 80px); }
+.ai100-band-in { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
 
-.ai100-h1 { font-size: clamp(34px, 5.4vw, 62px); font-weight: 900; line-height: 1.08; letter-spacing: -0.5px; margin: 12px 0 18px; }
-.ai100-h2 { font-size: clamp(26px, 3.6vw, 44px); font-weight: 900; line-height: 1.16; letter-spacing: -0.3px; margin: 10px 0 14px; }
+/* 整屏沉浸带：场景图是环境本身，不是插在文字旁边的小图 */
+.ai100-stage { position: relative; min-height: min(78vh, 660px); display: flex; align-items: center; overflow: hidden; margin-top: clamp(44px, 7vw, 86px); margin-bottom: clamp(44px, 7vw, 86px); }
+.ai100-stage > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ai100-stage .veil { position: absolute; inset: 0; }
+.ai100-stage .veil.dark { background: linear-gradient(90deg, rgba(10,12,30,.94) 0%, rgba(10,12,30,.82) 40%, rgba(10,12,30,.34) 72%, rgba(10,12,30,.12) 100%); }
+.ai100-stage .veil.light { background: linear-gradient(90deg, rgba(245,246,255,.97) 0%, rgba(245,246,255,.9) 42%, rgba(245,246,255,.3) 76%, rgba(245,246,255,.05) 100%); }
+.ai100-stage .in { position: relative; max-width: 1280px; margin: 0 auto; padding: 56px 28px; width: 100%; }
+
+.ai100-marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.ai100-marquee > div { display: flex; gap: 44px; width: max-content; animation: ai100-left 58s linear infinite; align-items: center; }
+@keyframes ai100-left { to { transform: translateX(calc(-50% - 22px)); } }
+
+.ai100-h1 { font-size: clamp(25px, 4.4vw, 60px); font-weight: 900; line-height: 1.08; letter-spacing: -0.5px; margin: 12px 0 18px; }
+.ai100-h2 { font-size: clamp(26px, 3.6vw, 46px); font-weight: 900; line-height: 1.16; letter-spacing: -0.3px; margin: 10px 0 14px; }
 .ai100-grad { background: linear-gradient(118deg, var(--v), #8f7bff 40%, var(--c)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .ai100-lead { font-size: clamp(15px, 1.5vw, 17.5px); color: var(--ink2); line-height: 2; max-width: 720px; }
 .ai100-sec { padding: clamp(44px, 7vw, 86px) 0 0; }
 
-.ai100-card { position: relative; border-radius: 20px; overflow: hidden; cursor: pointer; background: #e9e8ff; border: 1px solid rgba(255,255,255,.9);
+/* 橱窗：有大有小。图得够大才像一个地方，不是一张缩略图 */
+.ai100-mosaic { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: clamp(140px, 13vw, 182px); gap: 14px; grid-auto-flow: dense; }
+.ai100-mosaic > *:nth-child(1), .ai100-mosaic > *:nth-child(6) { grid-column: span 2; grid-row: span 2; }
+@media (max-width: 900px) { .ai100-mosaic { grid-template-columns: repeat(2, 1fr); } }
+.ai100-card { position: relative; height: 100%; border-radius: 20px; overflow: hidden; cursor: pointer; background: #e9e8ff; border: 1px solid rgba(255,255,255,.9);
   box-shadow: 0 12px 36px rgba(88,76,220,.14); transition: transform .25s, box-shadow .25s; }
 .ai100-card:hover { transform: translateY(-4px); box-shadow: 0 22px 54px rgba(88,76,220,.24); }
-.ai100-card img.bg { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
-.ai100-card .ov { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 16px 14px; color: #fff;
-  background: linear-gradient(180deg, transparent, rgba(12,14,34,.52) 42%, rgba(12,14,34,.9) 100%); }
-.ai100-card .face { position: absolute; left: 14px; top: 14px; width: 54px; height: 54px; border-radius: 50%; object-fit: cover; object-position: 54% 10%;
+.ai100-card img.bg { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.ai100-card:hover img.bg { transform: scale(1.05); }
+.ai100-card .ov { position: absolute; left: 0; right: 0; bottom: 0; padding: 44px 16px 15px; color: #fff;
+  background: linear-gradient(180deg, transparent, rgba(12,14,34,.5) 40%, rgba(12,14,34,.92) 100%); }
+.ai100-card .face { position: absolute; left: 14px; top: 14px; width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: 54% 10%;
   border: 2px solid rgba(255,255,255,.95); box-shadow: 0 6px 18px rgba(20,16,60,.35); }
+.ai100-card.big .face { width: 68px; height: 68px; }
+.ai100-card.big .ov { padding: 60px 22px 22px; }
 
 .ai100-cols { columns: 5; column-gap: 26px; }
 @media (max-width: 1100px) { .ai100-cols { columns: 3; } }
-@media (max-width: 680px) { .ai100-cols { columns: 2; } .ai100-hero-strips { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 680px) { .ai100-cols { columns: 2; } .ai100-hero-strips { height: 380px; } }
 .ai100-cols a { display: block; break-inside: avoid; font-size: 13.5px; color: var(--ink2); padding: 5px 0; cursor: pointer; }
 .ai100-cols a:hover { color: var(--v); }
 `;
 
 const CHECKS = [
-  '资深从业者数字人：一个职业一个人，有手艺、有工位、有自己的判断',
+  '数字职人：一个职业一个人，有手艺、有工位、有自己的判断',
   '专业技能空间：同行、在招岗位、上下游企业，全部来自真实产业数据',
   '在线职业探究 / 能力自测 / 技能演化 / 解决行业问题，四件事在同一个人身上完成',
 ];
@@ -123,9 +150,9 @@ export default function LabLanding() {
   const strips = useMemo(() => {
     const pool: string[] = (d?.tiles || []).filter(Boolean);
     if (pool.length < 6) return null;
-    const cols: string[][] = [[], [], []];
-    pool.forEach((u, i) => cols[i % 3].push(u));
-    return cols.map(c => (c.length >= 5 ? c : [...c, ...c, ...c].slice(0, 5)));
+    const cols: string[][] = [[], []];
+    pool.forEach((u, i) => cols[i % 2].push(u));
+    return cols.map(c => (c.length >= 5 ? c.slice(0, 9) : [...c, ...c, ...c].slice(0, 5)));
   }, [d]);
 
   // 橱窗：一个领域先出一个人，凑够 8 个；优先有场景底图、有工位的
@@ -133,28 +160,39 @@ export default function LabLanding() {
     const ok = spaces.filter(s => s.cover);
     const seen = new Set<string>(), out: any[] = [];
     for (const pass of [0, 1]) for (const s of ok) {
-      if (out.length >= 8 || out.includes(s)) continue;
+      if (out.length >= 10 || out.includes(s)) continue;
       if (pass === 0 && (seen.has(s.family) || !s.hasBench)) continue;
       seen.add(s.family); out.push(s);
     }
     return out;
   }, [spaces]);
 
+  // 沉浸带的背景：优先用工位那种有现场感的底图
+  const stageBg = useMemo(() => {
+    const pick = (re: RegExp) => spaces.find(x => re.test(x.profession) && x.cover)?.cover;
+    return pick(/发动机|火箭|航天/) || pick(/焊|铸|熔炼/) || spaces.find(x => x.cover)?.cover || '';
+  }, [spaces]);
+  const stageBg2 = useMemo(() => {
+    const used = new Set([stageBg]);
+    return spaces.find(x => x.cover && !used.has(x.cover) && /潜水|农业|咖啡|手术|医/.test(x.profession))?.cover
+      || spaces.map(x => x.cover).filter(Boolean).reverse()[0] || '';
+  }, [spaces, stageBg]);
+
   return (
     <>
       <style>{CSS}</style>
 
       {/* ══ 开场 ══ */}
-      <section style={{ display: 'grid', gap: 'clamp(20px, 3vw, 46px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', alignItems: 'center', padding: '14px 0 0' }}>
-        <div className="lab-in" style={{ minWidth: 0 }}>
+      <section className="ai100-hero">
+        <div className="lab-in copy">
           <div className="lab-mono lab-cap">AI 百业 · AI HUNDRED TRADES</div>
           <h1 className="ai100-h1">
-            数字化从业者的技能空间，<br /><span className="ai100-grad" style={{ whiteSpace: 'nowrap' }}>走进千行百业</span>
+            <span style={{ whiteSpace: 'nowrap' }}>AI 技能空间 ＋ 数字职人，</span><br /><span className="ai100-grad" style={{ whiteSpace: 'nowrap' }}>带你走进数智化千行百业</span>
           </h1>
-          <p style={{ fontSize: 'clamp(15px, 1.6vw, 18px)', color: 'var(--ink2)', lineHeight: 1.85, margin: '0 0 24px', maxWidth: 580 }}>
-            资深从业者数字人 × 专业技能空间——在线做职业探究、能力自测、技能演化，以及真正解决行业里的问题。
+          <p style={{ fontSize: 'clamp(15px, 1.6vw, 18px)', color: 'var(--ink2)', lineHeight: 1.85, margin: '0 0 24px', maxWidth: 600 }}>
+            在线做职业探究、能力自测、技能演化，以及真正解决行业里的问题。
           </p>
-          <div style={{ display: 'grid', gap: 9, marginBottom: 26 }}>
+          <div style={{ display: 'grid', gap: 9, marginBottom: 28 }}>
             {CHECKS.map(c => (
               <div key={c} style={{ display: 'flex', gap: 9, alignItems: 'flex-start', fontSize: 14.5, color: 'var(--ink2)', lineHeight: 1.7 }}>
                 <span style={{ flexShrink: 0, width: 18, height: 18, borderRadius: '50%', marginTop: 2, background: 'linear-gradient(120deg, var(--v), var(--c))', color: '#fff', fontSize: 11, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✓</span>
@@ -163,11 +201,11 @@ export default function LabLanding() {
             ))}
           </div>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <button className="lab-btn" style={{ height: 50, padding: '0 26px', fontSize: 15 }} onClick={() => router.push('/lab/spaces')}>走进百业空间 →</button>
-            <button className="lab-btn ghost" style={{ height: 50, padding: '0 24px', fontSize: 15 }} onClick={() => router.push('/lab/spaces?new=career')}>创造一个空间</button>
+            <button className="lab-btn" style={{ height: 52, padding: '0 28px', fontSize: 15 }} onClick={() => router.push('/lab/spaces')}>走进百业空间 →</button>
+            <button className="lab-btn ghost" style={{ height: 52, padding: '0 26px', fontSize: 15 }} onClick={() => router.push('/lab/spaces?new=career')}>创造一个空间</button>
           </div>
-          <div style={{ display: 'flex', gap: 'clamp(22px, 4vw, 46px)', flexWrap: 'wrap', marginTop: 34 }}>
-            <Stat n={n} k="位从业者数字人" />
+          <div style={{ display: 'flex', gap: 'clamp(22px, 4vw, 50px)', flexWrap: 'wrap', marginTop: 36 }}>
+            <Stat n={n} k="位数字职人" />
             <Stat n={famN} k="个一级领域" />
             {t?.served > 0 && <Stat n={t.served} k="人次走过他们的一天" />}
             {t?.places > 0 && <Stat n={t.places} k="个地方用过" />}
@@ -178,40 +216,40 @@ export default function LabLanding() {
           {strips ? (
             <div className="ai100-hero-strips">
               {strips.map((col, i) => (
-                <div key={i} className={`ai100-strip${i % 2 ? ' down' : ''}`} style={{ animationDuration: `${44 + i * 9}s` }}>
+                <div key={i} className={`ai100-strip${i % 2 ? ' down' : ''}`} style={{ animationDuration: `${135 + i * 30}s` }}>
                   {[...col, ...col].map((u, j) => <img key={j} src={u} alt="" loading="lazy" />)}
                 </div>
               ))}
             </div>
           ) : (
-            <div className="lab-glass lab-scan" style={{ height: 'clamp(300px, 40vw, 480px)' }} />
+            <div className="lab-glass lab-scan" style={{ height: 'clamp(380px, 46vw, 560px)' }} />
           )}
         </div>
       </section>
 
-      {/* ══ 这些空间站在真实企业数据上 ══ */}
+      {/* ══ 分割带：这些名字来自真实企业库 ══ */}
       {d?.companies?.length > 12 && (
-        <section style={{ marginTop: 'clamp(26px, 4vw, 48px)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
-            <div style={{ fontSize: 12.5, color: 'var(--ink3)', whiteSpace: 'nowrap' }}>空间里的上下游，来自真实企业库</div>
+        <div className="ai100-bleed ai100-band">
+          <div className="ai100-band-in" style={{ display: 'flex', alignItems: 'center', gap: 26, flexWrap: 'wrap' }}>
+            <div style={{ fontSize: 13, color: 'var(--ink3)', whiteSpace: 'nowrap', fontWeight: 600 }}>空间里的上下游，来自真实企业库</div>
             <div className="ai100-marquee" style={{ flex: '1 1 320px', minWidth: 0 }}>
               <div>
                 {[0, 1].map(k => (
                   <React.Fragment key={k}>
-                    {d.companies.slice(0, 22).map((c: string, i: number) => (
-                      <span key={`${k}-${i}`} style={{ fontSize: 15, fontWeight: 700, color: 'rgba(74,79,106,.52)', whiteSpace: 'nowrap' }}>{c}</span>
+                    {d.companies.slice(0, 20).map((c: string, i: number) => (
+                      <span key={`${k}-${i}`} style={{ fontSize: 17, fontWeight: 800, color: 'rgba(74,79,106,.42)', whiteSpace: 'nowrap', letterSpacing: .3 }}>{c}</span>
                     ))}
                   </React.Fragment>
                 ))}
               </div>
             </div>
           </div>
-        </section>
+        </div>
       )}
 
       {/* ══ 01 落点是人 ══ */}
-      <section className="ai100-sec">
-        <div style={{ display: 'grid', gap: 'clamp(20px, 3.5vw, 54px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', alignItems: 'center' }}>
+      <section>
+        <div style={{ display: 'grid', gap: 'clamp(20px, 3.5vw, 58px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', alignItems: 'center' }}>
           <div>
             <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>01 / 落点</div>
             <h2 className="ai100-h2">技能是抽象的，<br /><span className="ai100-grad">人是具体的</span></h2>
@@ -229,7 +267,7 @@ export default function LabLanding() {
       {/* ══ 02 身上有四样东西 ══ */}
       <section className="ai100-sec">
         <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>02 / 构成</div>
-        <h2 className="ai100-h2">一个数字人身上，有四样东西</h2>
+        <h2 className="ai100-h2">一个数字职人身上，有四样东西</h2>
         <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 232px), 1fr))', marginTop: 24 }}>
           {HAVE.map((x, i) => (
             <div key={x.k} className="lab-glass lab-in" style={{ padding: '20px 22px', animationDelay: `${i * 70}ms` }}>
@@ -241,41 +279,64 @@ export default function LabLanding() {
         </div>
       </section>
 
-      {/* ══ 橱窗：已经在岗的人 ══ */}
+      {/* ══ 沉浸带：场景图就是环境本身 ══ */}
+      {stageBg && (
+        <div className="ai100-bleed ai100-stage">
+          <img src={stageBg} alt="" />
+          <div className="veil dark" />
+          <div className="in">
+            <div style={{ maxWidth: 620, color: '#fff' }}>
+              <div className="lab-mono lab-cap" style={{ color: 'rgba(255,255,255,.65)' }}>VISUALIZED WORKSPACE</div>
+              <h2 className="ai100-h2" style={{ color: '#fff' }}>可视化的职业空间，<br />按这一行真实的样子建起来</h2>
+              <p style={{ fontSize: 'clamp(15px, 1.5vw, 17.5px)', lineHeight: 2, color: 'rgba(255,255,255,.86)', maxWidth: 580 }}>
+                一座空间由三层搭成：<b style={{ color: '#fff' }}>环境</b>——贮箱、试车台、烘焙间，照着这个行当的真实现场生成；
+                <b style={{ color: '#fff' }}>工位</b>——数据定义的虚拟设备，控件、量表、参数窗口、违规判据和合格线都按行业标准建模，还能把摄像头接进来，手上的轨迹直接驱动它；
+                <b style={{ color: '#fff' }}>人</b>——在场的师傅、客户、同事会跟你说话，告诉你这一步为什么不能将就。
+              </p>
+              <button className="lab-btn" style={{ height: 50, padding: '0 26px', marginTop: 24 }} onClick={() => router.push('/lab/spaces')}>随便挑一个站进去 →</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ══ 橱窗：有大有小 ══ */}
       {featured.length > 0 && (
-        <section className="ai100-sec">
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
+        <section>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', marginBottom: 24 }}>
             <div>
               <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>NOW ON DUTY</div>
               <h2 className="ai100-h2">他们已经在各自的工位上</h2>
             </div>
             <button className="lab-btn ghost" onClick={() => router.push('/lab/spaces')}>看全部 {n} 位 →</button>
           </div>
-          <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', marginTop: 24 }}>
-            {featured.map(s => (
-              <div key={s.id} className="ai100-card lab-in" onClick={() => router.push(`/lab/${s.id}`)}>
-                <img className="bg" src={s.cover} alt="" loading="lazy" />
-                {s.avatar && <img className="face" src={s.avatar} alt="" loading="lazy" />}
-                <div className="ov">
-                  <div className="lab-mono" style={{ fontSize: 10.5, opacity: .75, letterSpacing: '.1em' }}>{s.name}</div>
-                  <div style={{ fontSize: 17, fontWeight: 800, lineHeight: 1.3, marginTop: 2 }}>{s.role}</div>
-                  <div style={{ fontSize: 12, opacity: .82, marginTop: 3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.profession}</div>
-                  {s.hasBench && <span style={{ display: 'inline-block', marginTop: 8, padding: '2px 9px', borderRadius: 999, fontSize: 11, fontWeight: 700, background: 'rgba(255,255,255,.22)', backdropFilter: 'blur(6px)' }}>虚拟工位</span>}
+          <div className="ai100-mosaic">
+            {featured.map((s, i) => {
+              const big = i === 0 || i === 5;
+              return (
+                <div key={s.id} className={`ai100-card lab-in${big ? ' big' : ''}`} onClick={() => router.push(`/lab/${s.id}`)}>
+                  <img className="bg" src={s.cover} alt="" loading="lazy" />
+                  {s.avatar && <img className="face" src={s.avatar} alt="" loading="lazy" />}
+                  <div className="ov">
+                    <div className="lab-mono" style={{ fontSize: 10.5, opacity: .75, letterSpacing: '.1em' }}>{s.name}</div>
+                    <div style={{ fontSize: big ? 22 : 17, fontWeight: 800, lineHeight: 1.3, marginTop: 2 }}>{s.role}</div>
+                    <div style={{ fontSize: big ? 13.5 : 12, opacity: .82, marginTop: 3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.profession}</div>
+                    {big && s.tagline && <div style={{ fontSize: 13.5, opacity: .9, marginTop: 8, lineHeight: 1.7 }}>「{s.tagline}」</div>}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
       )}
 
       {/* ══ 03 三个方向 ══ */}
       <section className="ai100-sec">
-        <div style={{ display: 'grid', gap: 'clamp(20px, 3.5vw, 54px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', alignItems: 'center' }}>
+        <div style={{ display: 'grid', gap: 'clamp(20px, 3.5vw, 58px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', alignItems: 'center' }}>
           <Art src="/lab-landing/concept-three.jpg" alt="向下考核、向上学习、平行解决" />
           <div>
             <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>03 / 能力</div>
             <h2 className="ai100-h2">一个在岗的人，能<span className="ai100-grad">向下、向上、向旁边</span>同时发力</h2>
-            <p className="ai100-lead" style={{ marginBottom: 20 }}>这是数字人和「教学视频」最本质的区别：他不是等着被看的内容，他是一个能干活的对象。</p>
+            <p className="ai100-lead" style={{ marginBottom: 20 }}>这是数字职人和「教学视频」最本质的区别：他不是等着被看的内容，他是一个能干活的对象。</p>
             <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))' }}>
               {DO.map(x => (
                 <div key={x.k} className="lab-glass" style={{ padding: '15px 17px' }}>
@@ -289,10 +350,12 @@ export default function LabLanding() {
         </div>
       </section>
 
-      {/* ══ 04 存在空间 ══ */}
-      <section className="ai100-sec">
-        <div style={{ display: 'grid', gap: 'clamp(20px, 3.5vw, 54px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', alignItems: 'center' }}>
-          <div>
+      {/* ══ 04 存在空间：第二条整屏带，浅色 ══ */}
+      <div className="ai100-bleed ai100-stage">
+        {stageBg2 ? <img src={stageBg2} alt="" /> : <img src="/lab-landing/concept-space.jpg" alt="" />}
+        <div className="veil light" />
+        <div className="in">
+          <div style={{ maxWidth: 640 }}>
             <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>04 / 存在空间</div>
             <h2 className="ai100-h2">一个人不是悬在真空里的，<br />他有自己的<span className="ai100-grad">行当</span></h2>
             <p className="ai100-lead">
@@ -301,12 +364,11 @@ export default function LabLanding() {
               环节划分由模型给出，挂在每个环节下面的公司<b>全部来自我们自己的企业库</b>——这一块培训模拟器长不出来，因为它不连真实产业数据。
             </p>
           </div>
-          <Art src="/lab-landing/concept-space.jpg" alt="一个人在行业里的存在空间" />
         </div>
-      </section>
+      </div>
 
       {/* ══ 05 做法 ══ */}
-      <section className="ai100-sec">
+      <section>
         <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>05 / 做法</div>
         <h2 className="ai100-h2">我们怎么把一个职业变成一座空间</h2>
         <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 276px), 1fr))', marginTop: 24 }}>
@@ -352,7 +414,7 @@ export default function LabLanding() {
 
       {/* ══ 07 创造 ══ */}
       <section className="ai100-sec">
-        <div style={{ display: 'grid', gap: 'clamp(20px, 3.5vw, 54px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', alignItems: 'center' }}>
+        <div style={{ display: 'grid', gap: 'clamp(20px, 3.5vw, 58px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', alignItems: 'center' }}>
           <Art src="/lab-landing/concept-create.jpg" alt="从一份 JD 长出一座空间" />
           <div>
             <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>07 / 创造</div>
@@ -371,12 +433,12 @@ export default function LabLanding() {
       </section>
 
       {/* ══ 收尾 ══ */}
-      <section className="lab-glass lab-in" style={{ padding: 'clamp(26px, 5vw, 52px)', margin: 'clamp(44px, 7vw, 86px) 0 10px', textAlign: 'center' }}>
+      <section className="lab-glass lab-in" style={{ padding: 'clamp(26px, 5vw, 56px)', margin: 'clamp(44px, 7vw, 86px) 0 10px', textAlign: 'center' }}>
         <div className="lab-mono lab-cap">NOW LIVING IN AI 百业</div>
-        <div className="ai100-h2" style={{ margin: '10px 0 20px' }}>{n} 位从业者数字人，正在各自的工位上</div>
+        <div className="ai100-h2" style={{ margin: '10px 0 20px' }}>{n} 位数字职人，正在各自的工位上</div>
         {(t?.faces?.length > 0 || spaces.length > 0) && (
           <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 8, margin: '0 auto 24px', maxWidth: 800 }}>
-            {(spaces.map((s: any) => s.avatar).filter(Boolean).length ? spaces.map((s: any) => s.avatar).filter(Boolean) : t.faces).slice(0, 20).map((f: string, i: number) => (
+            {(spaces.map((x: any) => x.avatar).filter(Boolean).length ? spaces.map((x: any) => x.avatar).filter(Boolean) : t.faces).slice(0, 20).map((f: string, i: number) => (
               <img key={i} src={f} alt="" loading="lazy" style={{ width: 50, height: 50, borderRadius: '50%', objectFit: 'cover', objectPosition: '54% 10%', border: '2px solid #fff', boxShadow: '0 4px 14px rgba(60,45,130,.18)' }} />
             ))}
           </div>

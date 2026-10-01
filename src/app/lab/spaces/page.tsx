@@ -258,7 +258,7 @@ export default function LabHome() {
         <div style={{ flex: '1 1 340px', minWidth: 0 }}>
           <div className="lab-mono lab-cap">AI 百业 · 百业空间</div>
           <h1 style={{ margin: '6px 0 6px', fontSize: 'clamp(22px, 3vw, 31px)', fontWeight: 800, letterSpacing: .4 }}>
-            这里住着 <span style={{ color: 'var(--v)' }}>{totals?.spaces ?? spaces.length}</span> 位从业者数字人
+            这里住着 <span style={{ color: 'var(--v)' }}>{totals?.spaces ?? spaces.length}</span> 位数字职人
           </h1>
           {totals && (
             <div style={{ fontSize: 13.5, color: 'var(--ink3)', lineHeight: 1.8 }}>
