@@ -14,7 +14,7 @@ import type { SkillCard } from '@/lib/skill-lab';
 import { sanitizeSim, sanitizeTrace, type Sim, type SimStep, type SimTrace } from '@/lib/skill-sim';
 import { benchTimeline, evalExpr, sanitizeBenchSpec, simulateScript, type BenchSpec } from '@/lib/bench';
 import { BENCH_WELD } from '@/lib/skill-lab-seed-bench';
-import { artAvailable, makeNpcAsset, makeSceneAsset } from '@/lib/lab-art';
+import { ART_FAMILIES, artAvailable, makeSceneAsset, npcAssetReusing, sceneAssetReusing } from '@/lib/lab-art';
 
 const DEFAULT_MODEL = 'gemini-3.8-flash';
 export type Progress = (phase: string, detail?: string) => void;
@@ -230,7 +230,10 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
 // ────────────────────────────────────────────
 // 4. 场景与人物
 // ────────────────────────────────────────────
-export interface ArtPlan { scenes: { key: string; prompt: string; steps: string[] }[]; npcs: { who: string; prompt: string }[] }
+/** family = 一级领域（图库按它分桶）；slot = 场景位 / 人物角色（图库按它匹配） */
+export interface ArtPlan { family: string; scenes: { key: string; slot: string; prompt: string; steps: string[] }[]; npcs: { who: string; slot: string; prompt: string }[] }
+const ART_SLOTS = ['办公室', '会议室', '车间', '实验室', '门店', '后厨', '工地', '仓库', '机房', '教室', '诊室', '户外现场', '驾驶舱', '其他'];
+const NPC_SLOTS = ['带教师傅', '主管', '同事', '客户', '质检', '老师', '专家', '其他'];
 
 export async function planArt(jd: JdInput, sim: Sim, modelId = DEFAULT_MODEL): Promise<ArtPlan> {
   const cast = [...new Set(sim.steps.map(s => s.scene?.who).filter((w): w is string => !!w && w !== '你'))];
@@ -241,13 +244,18 @@ export async function planArt(jd: JdInput, sim: Sim, modelId = DEFAULT_MODEL): P
     人物：${cast.join('、') || '（无）'}
 
     要求：
-    - 场景 2–3 个（按地点合并步骤：办公室 / 会议室 / 车间 / 门店……），每个给出中文文生图提示词：以「半写实插画风格，正面平视的固定机位，」开头，描述地点与陈设，结尾「明亮，没有人物，没有可辨认文字，没有logo，16:9」。steps 列出用这张底图的步骤 id（bench 步骤不要列）。
-    - 人物：每个人物一句外形描述（性别、年龄、发型、职业装束、手里拿着什么、神情），不要写背景。
-    返回 JSON：{ "scenes": [ { "key": "<英文短 key>", "prompt": "", "steps": ["<步骤 id>"] } ], "npcs": [ { "who": "<与故事线里完全一致的称呼>", "prompt": "" } ] }
+    - family：这个岗位属于哪一级领域，从这几个里选一个（原话返回）：${ART_FAMILIES.join(' / ')}
+    - 场景 2–3 个（按地点合并步骤），每个给出中文文生图提示词：以「半写实插画风格，正面平视的固定机位，」开头，描述地点与陈设，结尾「明亮，没有人物，没有可辨认文字，没有logo，16:9」。steps 列出用这张底图的步骤 id（bench 步骤不要列）。
+      每个场景还要给一个 slot（这是什么地方，从这几个里选）：${ART_SLOTS.join(' / ')}
+    - 人物：每个人物一句外形描述（性别、年龄、发型、职业装束、手里拿着什么、神情），不要写背景；
+      每个人物也给一个 slot（他在故事里是什么角色，从这几个里选）：${NPC_SLOTS.join(' / ')}
+    slot 和 family 是给素材库做归类用的：领域相近的岗位（会计 ↔ 精算师、咖啡师 ↔ 调酒师）会把同一个地点、同一种角色的图互相复用，所以要选最贴切的那一个。
+    返回 JSON：{ "family": "", "scenes": [ { "key": "<英文短 key>", "slot": "", "prompt": "", "steps": ["<步骤 id>"] } ], "npcs": [ { "who": "<与故事线里完全一致的称呼>", "slot": "", "prompt": "" } ] }
   `, modelId, 'Build · Plan Art');
-  const scenes = (Array.isArray(p.scenes) ? p.scenes : []).map((s: any, i: number) => ({ key: String(s.key || `scene${i + 1}`).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 24) || `scene${i + 1}`, prompt: String(s.prompt || ''), steps: (Array.isArray(s.steps) ? s.steps : []).map(String) })).filter((s: any) => s.prompt).slice(0, 3);
-  const npcs = (Array.isArray(p.npcs) ? p.npcs : []).map((n: any) => ({ who: String(n.who || ''), prompt: String(n.prompt || '') })).filter((n: any) => n.who && n.prompt && cast.includes(n.who)).slice(0, 3);
-  return { scenes, npcs };
+  const family = ART_FAMILIES.includes(String(p.family) as any) ? String(p.family) : '其他';
+  const scenes = (Array.isArray(p.scenes) ? p.scenes : []).map((s: any, i: number) => ({ key: String(s.key || `scene${i + 1}`).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 24) || `scene${i + 1}`, slot: ART_SLOTS.includes(String(s.slot)) ? String(s.slot) : '其他', prompt: String(s.prompt || ''), steps: (Array.isArray(s.steps) ? s.steps : []).map(String) })).filter((s: any) => s.prompt).slice(0, 3);
+  const npcs = (Array.isArray(p.npcs) ? p.npcs : []).map((n: any) => ({ who: String(n.who || ''), slot: NPC_SLOTS.includes(String(n.slot)) ? String(n.slot) : '其他', prompt: String(n.prompt || '') })).filter((n: any) => n.who && n.prompt && cast.includes(n.who)).slice(0, 3);
+  return { family, scenes, npcs };
 }
 
 // ────────────────────────────────────────────
@@ -256,7 +264,7 @@ export async function planArt(jd: JdInput, sim: Sim, modelId = DEFAULT_MODEL): P
 export interface BuiltSpace {
   task: Awaited<ReturnType<typeof generateTask>> & { sim: Sim | null };
   skill: { name: string; domain: string; kind: 'hard' | 'soft'; summary: string; card: SkillCard; expert_trace: SimTrace & { _why?: Record<string, string> } };
-  benchAdded: boolean; artCount: number;
+  benchAdded: boolean; artCount: number; artReused: number;
 }
 
 export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, progress: Progress = () => {}, opts: { bench?: boolean; art?: boolean; hint?: string } = {}): Promise<BuiltSpace> {
@@ -271,7 +279,7 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
   const [draft, bench, art] = await Promise.all([
     draftSkill(jd, task, sim, modelId),
     wantBench ? designBench(jd, task, sim, modelId).catch(e => { console.error('[build] bench', e); return null; }) : Promise.resolve(null),
-    wantArt ? planArt(jd, sim, modelId).catch(e => { console.error('[build] art plan', e); return { scenes: [], npcs: [] } as ArtPlan; }) : Promise.resolve({ scenes: [], npcs: [] } as ArtPlan),
+    wantArt ? planArt(jd, sim, modelId).catch(e => { console.error('[build] art plan', e); return { family: '', scenes: [], npcs: [] } as ArtPlan; }) : Promise.resolve({ family: '', scenes: [], npcs: [] } as ArtPlan),
   ]);
 
   // 把虚拟工位插进故事线
@@ -284,20 +292,24 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
   }
 
   // 美术
-  let artCount = 0;
+  let artCount = 0, reusedCount = 0;
   if (wantArt && (art.scenes.length || bench)) {
     progress('生成场景与立绘', `${art.scenes.length} 个场景 · ${art.npcs.length} 位人物${bench ? ' · 1 个工位' : ''}`);
     const tag = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
     const safe = <T,>(p: Promise<T>) => p.then(v => v as T | null).catch(e => { console.error('[build] image', e?.message || e); return null; });
-    const [sceneUrls, npcUrls, benchUrl] = await Promise.all([
-      Promise.all(art.scenes.map(s => safe(makeSceneAsset(s.prompt, `${tag}-${s.key}`)))),
-      Promise.all(art.npcs.map((n, i) => safe(makeNpcAsset(n.prompt, `${tag}-npc${i + 1}`)))),
+    // 地点和人物先查素材库：领域相近的岗位（会计 ↔ 精算师）共用同一批办公室与带教师傅，攻不下来再生。
+    // 工位底图不走库：它和这台设备强绑，复用到别的工位上就是答非所问。
+    const meta = { family: art.family, domain: jd.title, profession: `${jd.company} · ${jd.title}` };
+    const [sceneHits, npcHits, benchUrl] = await Promise.all([
+      Promise.all(art.scenes.map(s => safe(sceneAssetReusing(s.prompt, `${tag}-${s.key}`, { ...meta, slot: s.slot })))),
+      Promise.all(art.npcs.map((n, i) => safe(npcAssetReusing(n.prompt, `${tag}-npc${i + 1}`, { ...meta, slot: n.slot })))),
       bench?.scenePrompt ? safe(makeSceneAsset(bench.scenePrompt, `${tag}-bench`)) : Promise.resolve(null),
     ]);
     const scenes: Record<string, string> = {}; let cover = '';
-    art.scenes.forEach((s, i) => { const u = sceneUrls[i]; if (!u) return; artCount++; if (!cover) cover = u; for (const id of s.steps) scenes[id] = u; });
+    art.scenes.forEach((s, i) => { const h = sceneHits[i]; if (!h) return; if (!h.reused) artCount++; else reusedCount++; if (!cover) cover = h.url; for (const id of s.steps) scenes[id] = h.url; });
     const npcs: Record<string, string> = {};
-    art.npcs.forEach((n, i) => { const u = npcUrls[i]; if (u) { npcs[n.who] = u; artCount++; } });
+    art.npcs.forEach((n, i) => { const h = npcHits[i]; if (!h) return; npcs[n.who] = h.url; if (!h.reused) artCount++; else reusedCount++; });
+    if (reusedCount) progress('生成场景与立绘', `复用素材库 ${reusedCount} 张 · 新生成 ${artCount} 张`);
     const benchStep = sim.steps.find(s => s.type === 'bench');
     if (benchStep?.bench && benchUrl) {
       // 场景层的表达式也要过一遍校验
@@ -324,6 +336,6 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
   return {
     task: { ...task, sim },
     skill: { name: draft.name, domain: draft.domain, kind: draft.kind, summary: draft.summary, card: draft.card, expert_trace: { ...trace, _why: draft.why } },
-    benchAdded: !!benchStep, artCount,
+    benchAdded: !!benchStep, artCount, artReused: reusedCount,
   };
 }

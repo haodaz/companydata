@@ -83,7 +83,7 @@ export async function POST(req: Request) {
       }).select('id').single();
       if (insErr) throw insErr;
       setBuild(buildId, { phase: '完成', done: true, id: created.id });
-      return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount });
+      return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount, artReused: built.artReused });
     }
 
     if (!jobId) return NextResponse.json({ ok: false, error: '请选择一个岗位或输入一个职业' }, { status: 400 });
@@ -113,7 +113,7 @@ export async function POST(req: Request) {
     }).select('id').single();
     if (insErr) throw insErr;
     setBuild(buildId, { phase: '完成', done: true, id: created.id });
-    return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount });
+    return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount, artReused: built.artReused });
   } catch (e: any) {
     console.error('[Lab/spaces] POST', e);
     setBuild(buildId, { done: true, error: e?.message || String(e) });

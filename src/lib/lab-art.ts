@@ -121,3 +121,54 @@ export async function makeNpcAsset(prompt: string, name: string): Promise<string
   const full = `半写实插画风格的游戏NPC立绘，${prompt}，正面略侧的半身像，人物完整不裁切，纯正绿色平涂背景，背景没有任何阴影和渐变，没有文字，没有logo，竖构图`;
   return saveLabAsset(await chromaKey(await genImage(full, '900*1440')), `${name}.png`);
 }
+
+// ──────────────────────────────────────────────
+// 美术图库：生成过的底图与立绘登记进 lab_art_assets，领域相近的下一个空间直接复用。
+// 匹配 = kind + family（一级领域）+ slot（场景位 / 人物角色）。
+// 同一组合攒够 POOL 张之后就只复用、不再新生成——既不浪费，也不至于所有空间长一张脸。
+// ──────────────────────────────────────────────
+export const ART_POOL = 3;
+
+/** 一级领域：固定这几个，让「会计 ↔ 精算」「咖啡师 ↔ 调酒师」这种相近职业能落到同一桶里 */
+export const ART_FAMILIES = ['制造与工程', '餐饮零售', '医疗健康', '教育培训', '金融财会', '互联网与科技', '建筑与土木', '交通与物流', '农业与食品', '文化创意', '公共服务', '其他'] as const;
+
+export interface ArtAsset { kind: 'scene' | 'npc'; family: string; slot: string; domain?: string; profession?: string; prompt?: string; url: string }
+
+/** 库里找一张能直接用的：同组合够 POOL 张就随机给一张，不够就返回 null（让调用方去生成新的） */
+export async function findArtAsset(kind: 'scene' | 'npc', family: string, slot: string): Promise<string | null> {
+  if (!family || !slot) return null;
+  try {
+    const { supabaseAdmin } = await import('@/lib/supabase');
+    const { data } = await supabaseAdmin.from('lab_art_assets').select('id, url, uses').eq('kind', kind).eq('family', family).eq('slot', slot).limit(ART_POOL + 5);
+    if (!data || data.length < ART_POOL) return null;
+    const hit = data[Math.floor(Math.random() * data.length)];
+    await supabaseAdmin.from('lab_art_assets').update({ uses: (hit.uses || 1) + 1 }).eq('id', hit.id);
+    return hit.url;
+  } catch (e) { console.warn('[lab-art] 查图库失败，改为新生成：', (e as any)?.message); return null; }
+}
+
+/** 新生成的登记进库（失败不影响构建） */
+export async function registerArtAsset(a: ArtAsset): Promise<void> {
+  if (!a.url || !a.family || !a.slot) return;
+  try {
+    const { supabaseAdmin } = await import('@/lib/supabase');
+    await supabaseAdmin.from('lab_art_assets').upsert({ kind: a.kind, family: a.family, slot: a.slot, domain: a.domain || '', profession: a.profession || '', prompt: (a.prompt || '').slice(0, 2000), url: a.url }, { onConflict: 'url' });
+  } catch (e) { console.warn('[lab-art] 登记图库失败：', (e as any)?.message); }
+}
+
+/** 先查库、没有再生成并登记 */
+export async function sceneAssetReusing(prompt: string, name: string, meta: { family: string; slot: string; domain?: string; profession?: string }): Promise<{ url: string; reused: boolean }> {
+  const hit = await findArtAsset('scene', meta.family, meta.slot);
+  if (hit) return { url: hit, reused: true };
+  const url = await makeSceneAsset(prompt, name);
+  await registerArtAsset({ kind: 'scene', ...meta, prompt, url });
+  return { url, reused: false };
+}
+
+export async function npcAssetReusing(prompt: string, name: string, meta: { family: string; slot: string; domain?: string; profession?: string }): Promise<{ url: string; reused: boolean }> {
+  const hit = await findArtAsset('npc', meta.family, meta.slot);
+  if (hit) return { url: hit, reused: true };
+  const url = await makeNpcAsset(prompt, name);
+  await registerArtAsset({ kind: 'npc', ...meta, prompt, url });
+  return { url, reused: false };
+}
