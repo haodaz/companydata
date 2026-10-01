@@ -7,6 +7,7 @@ import { simulateScript } from '@/lib/bench';
 import { BENCH_CASTING, CASTING_EXPERT_SCRIPT, CASTING_SCRIPTS, BENCH_WELD, WELD_EXPERT_SCRIPT, WELD_SCRIPTS } from '@/lib/skill-lab-seed-bench';
 import { BENCH_LATTE_HEART, BENCH_LATTE_TULIP, BENCH_LATTE_ROSETTA, HEART_EXPERT_SCRIPT, HEART_SCRIPTS, TULIP_EXPERT_SCRIPT, TULIP_SCRIPTS, ROSETTA_EXPERT_SCRIPT, ROSETTA_SCRIPTS } from '@/lib/skill-lab-seed-bench-latte';
 import { BENCH_SUTURE, SUTURE_EXPERT_SCRIPT, SUTURE_SCRIPTS } from '@/lib/skill-lab-seed-bench-surgery';
+import { BENCH_LAPAROTOMY, LAP_EXPERT_SCRIPT, LAP_SCRIPTS } from '@/lib/skill-lab-seed-bench-laparotomy';
 
 // ════════════════ A：指标异动归因 · 数据分析操作台 ════════════════
 export const SIM_A: Sim = {
@@ -610,6 +611,128 @@ export const EXPERT_WHY_F: Record<string, string> = {
   defect: '三个结局，你为什么说是三个动作而不是运气？',
 };
 
+// ════════════════ G：普外科 · 开腹阑尾切除（分层入腹 · 轨迹工位）════════════════
+/** 开腹最见功底的不是切得快，而是每一层用对的方式打开。中间那一步是真的拿起刀和钳。
+ *  全部参数为教学化的简化模型，用于演示过程采集与评估，不构成任何医疗指导。 */
+export const SIM_G: Sim = {
+  title: '手术台 · 开腹阑尾切除',
+  intro: '你是普外科规培第二年的住院医师。今天这台急性阑尾炎由你主刀，带教教授在对面当一助。从切口选择到分层入腹，每一刀都会被记录。',
+  art: {
+    cover: '/lab/or_hall.jpg',
+    scenes: { preop: '/lab/or_hall.jpg', incision: '/lab/or_hall.jpg', bench: '/lab/surgery_field.jpg', find: '/lab/surgery_field.jpg', defect: '/lab/er_room.jpg', orders: '/lab/or_hall.jpg', final: '/lab/or_hall.jpg' },
+    npcs: { '带教教授': '/lab/npc_surgeon.png', '器械护士': '/lab/npc_nurse.png' },
+  },
+  steps: [
+    {
+      id: 'preop', type: 'multi', max: 3,
+      scene: { who: '带教教授', time: '周二 09:10', text: '28 岁男性，转移性右下腹痛 18 小时，麦氏点压痛反跳痛阳性，体温 38.2℃，白细胞 14.6×10⁹/L，超声提示阑尾增粗 11 mm。今天你主刀。切皮之前，哪几件事必须落实？' },
+      prompt: '切皮前你一定要做的三件事（最多 3 项）',
+      options: [
+        { id: 'timeout', label: '三方核查（Time-out）：患者身份、手术部位与侧别、术式', detail: '医疗核心制度' },
+        { id: 'abx', label: '切皮前 30–60 分钟内给预防性抗生素' },
+        { id: 'consent', label: '确认知情同意已签，含中转开腹与并发症告知' },
+        { id: 'mark', label: '术前在右下腹体表标记切口' },
+        { id: 'blood', label: '常规备血 400 ml' },
+        { id: 'ct', label: '再加做一个腹部增强 CT' },
+      ],
+    },
+    {
+      id: 'incision', type: 'choose',
+      scene: { who: '带教教授', time: '09:35', text: '麻醉好了。诊断明确、体型中等、无腹部手术史。你打算怎么进去？' },
+      prompt: '你选择的切口是？',
+      options: [
+        { id: 'mcburney', label: '右下腹麦氏点斜切口——诊断明确的单纯阑尾炎首选，沿肌纤维方向、创伤小' },
+        { id: 'rectus', label: '经右侧腹直肌切口，显露范围大、好延长' },
+        { id: 'midline', label: '下腹正中切口，万一需要探查方便' },
+        { id: 'lap', label: '改腹腔镜三孔法' },
+      ],
+    },
+    {
+      id: 'bench', type: 'bench', bench: BENCH_LAPAROTOMY,
+      scene: { who: '带教教授', time: '09:40', text: '刀给你。记住层次：皮肤皮下用刀，腱膜沿纤维切开，肌层换钳子钝性分离——别拿刀去切，腹膜一定要提起来形成帐篷再剪，刀尖下面就是肠管。' },
+      prompt: '在开腹工位上完成麦氏切口分层入腹',
+    },
+    {
+      id: 'find', type: 'choose',
+      scene: { who: '带教教授', time: '09:58', text: '腹膜打开了，切口里涌出一点浑浊渗液。阑尾没有直接露在视野里。你怎么找？' },
+      prompt: '找阑尾，你的第一个动作是？',
+      options: [
+        { id: 'taenia', label: '先找到盲肠，沿着结肠带向盲肠顶端汇聚处追踪——三条结肠带的交汇点就是阑尾根部' },
+        { id: 'blind', label: '用手指在右下腹盲目探查，摸到条索状物就提出来' },
+        { id: 'extend', label: '先把切口延长 5 cm 扩大显露' },
+        { id: 'convert', label: '中转开腹改正中切口探查' },
+      ],
+    },
+    {
+      id: 'defect', type: 'classify',
+      scene: { who: '带教教授', time: '次周一 08:30', text: '上个月另一位规培医师的三台阑尾，术后都出了状况：一台切口感染，一台术后肠梗阻、再次手术发现小肠浆膜撕裂，一台切口血肿。他的手术记录：肌层「用电刀一路切下去比较快」、腹膜「直接剪开」、止血「出血不多就没管」。逐条判断。' },
+      prompt: '把这三个并发症分别对到具体动作上',
+      labels: [{ id: 'cause', label: '主因', tone: 'hot' }, { id: 'minor', label: '次要' }, { id: 'no', label: '无关', tone: 'cold' }],
+      options: [
+        { id: 'sharp', label: '肌层用电刀锐性切开', detail: '创面大、焦痂多、出血' },
+        { id: 'blind_cut', label: '腹膜没提起就直接剪开', detail: '小肠浆膜撕裂' },
+        { id: 'hemo', label: '各层止血不彻底', detail: '切口血肿' },
+        { id: 'knife', label: '手术刀品牌与刀片批次' },
+        { id: 'patient', label: '患者体型偏胖' },
+        { id: 'luck', label: '运气不好' },
+      ],
+    },
+    {
+      id: 'orders', type: 'multi', max: 3,
+      scene: { who: '带教教授', time: '10:40', text: '关腹了。术后医嘱你开哪几条？' },
+      prompt: '术后处置（最多 3 项）',
+      options: [
+        { id: 'early', label: '术后 6 小时起床活动、早期进食，促进肠功能恢复' },
+        { id: 'abx_stop', label: '单纯性阑尾炎预防性抗生素不超过 24 小时即停' },
+        { id: 'watch', label: '观察体温、切口与腹部体征，警惕切口感染与腹腔脓肿' },
+        { id: 'abx_week', label: '静脉抗生素用满一周' },
+        { id: 'fast', label: '绝对卧床禁食三天，等排气再说' },
+        { id: 'drain', label: '常规放置腹腔引流管' },
+      ],
+    },
+    { id: 'final', type: 'text', scene: { who: '带教教授', time: '11:20', text: '手术记录你来写，我签字。' }, prompt: '写下你的手术记录（不超过 400 字）', placeholder: '术前诊断、麻醉与体位、切口与分层、术中所见、阑尾处理、冲洗止血与关腹、术后医嘱……' },
+  ],
+};
+
+const LAP_RUN = simulateScript(BENCH_LAPAROTOMY, LAP_EXPERT_SCRIPT, 140);
+const lapRun = (k: keyof typeof LAP_SCRIPTS) => { const s = LAP_SCRIPTS[k]; return simulateScript(BENCH_LAPAROTOMY, s, Math.max(...s.map(a => a.t)) + 15); };
+
+export const EXPERT_TRACE_G: SimTrace = {
+  preop: ['timeout', 'abx', 'consent'],
+  incision: 'mcburney',
+  bench: LAP_RUN,
+  find: 'taenia',
+  defect: { sharp: 'cause', blind_cut: 'cause', hemo: 'cause', knife: 'no', patient: 'minor', luck: 'no' },
+  orders: ['early', 'abx_stop', 'watch'],
+  final: '术前诊断：急性阑尾炎。全麻仰卧位，常规消毒铺巾，三方核查无误，切皮前 40 分钟已给预防性抗生素。\\n\\n取右下腹麦氏点斜切口约 5 cm：刀切开皮肤皮下至 10 mm，沿纤维方向切开腹外斜肌腱膜；腹内斜肌与腹横肌以血管钳钝性分离、拉钩牵开，不用锐性；提起腹膜形成帐篷后剪开入腹，未伤及肠管。各层逐一止血。\\n\\n入腹后见少量浑浊渗液。先找到盲肠，沿结肠带向顶端汇聚处追踪至阑尾根部，见阑尾增粗充血、表面脓苔。系膜分束结扎，根部双重结扎后切断，残端消毒。吸净渗液，检查无活动性出血，清点器械敷料无误，逐层关腹。\\n\\n术后：6 小时起床活动、早期进食；单纯性阑尾炎预防性抗生素 24 小时内停；观察体温、切口与腹部体征。\\n\\n上月那三台是三个动作的事：肌层用电刀锐切 → 创面大、焦痂多，切口感染；腹膜没提起直接剪 → 小肠浆膜撕裂、术后肠梗阻；各层止血不彻底 → 切口血肿。和刀片批次无关，体型偏胖至多是次要因素。',
+};
+
+export const TRACES_G: Record<string, SimTrace> = {
+  '钟亦然（化名）': {
+    preop: ['timeout', 'consent', 'mark'], incision: 'mcburney', bench: lapRun('sharp_through'), find: 'taenia',
+    defect: { sharp: 'minor', blind_cut: 'cause', hemo: 'cause', knife: 'no', patient: 'minor', luck: 'no' }, orders: ['watch', 'abx_week', 'fast'],
+  },
+  '汪叙白（化名）': {
+    preop: ['ct', 'blood', 'mark'], incision: 'midline', bench: lapRun('blind_deep'), find: 'blind',
+    defect: { sharp: 'no', blind_cut: 'minor', hemo: 'no', knife: 'minor', patient: 'cause', luck: 'cause' }, orders: ['abx_week', 'fast', 'drain'],
+  },
+  'AI 裸答': {
+    preop: ['timeout', 'abx', 'consent'], incision: 'mcburney', bench: lapRun('ai_bare'), find: 'taenia',
+    defect: { sharp: 'cause', blind_cut: 'cause', hemo: 'cause', knife: 'no', patient: 'cause', luck: 'no' }, orders: ['early', 'watch', 'abx_week'],
+  },
+  'AI + 专家技能': {
+    preop: ['timeout', 'abx', 'consent'], incision: 'mcburney', bench: lapRun('ai_skill'), find: 'taenia',
+    defect: { sharp: 'cause', blind_cut: 'cause', hemo: 'cause', knife: 'no', patient: 'minor', luck: 'no' }, orders: ['early', 'abx_stop', 'watch'],
+  },
+};
+
+export const EXPERT_WHY_G: Record<string, string> = {
+  preop: '体表标记切口你没勾，难道不该标吗？',
+  bench: '肌层你为什么非要换钳子？电刀明明更快。',
+  find: '渗液都出来了，你为什么不先扩大切口看清楚？',
+  defect: '三台不同的并发症，你凭什么说都是动作问题？',
+};
+
 export const SEED_SIMS = [
   { sim: SIM_A, expertTrace: EXPERT_TRACE_A, traces: TRACES_A, why: EXPERT_WHY_A },
   { sim: SIM_B, expertTrace: EXPERT_TRACE_B, traces: TRACES_B, why: EXPERT_WHY_B },
@@ -617,4 +740,5 @@ export const SEED_SIMS = [
   { sim: SIM_D, expertTrace: EXPERT_TRACE_D, traces: TRACES_D, why: EXPERT_WHY_D },
   { sim: SIM_E, expertTrace: EXPERT_TRACE_E, traces: TRACES_E, why: EXPERT_WHY_E },
   { sim: SIM_F, expertTrace: EXPERT_TRACE_F, traces: TRACES_F, why: EXPERT_WHY_F },
+  { sim: SIM_G, expertTrace: EXPERT_TRACE_G, traces: TRACES_G, why: EXPERT_WHY_G },
 ];

@@ -94,7 +94,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
   const trackPts = useRef<Pt[]>([]);
   if (trackLayer && !trackPts.current.length) trackPts.current = layerPath(trackLayer);
   const isLatte = trackLayer?.kind === 'pour';
-  const cupLayer = scene?.layers.find(l => l.kind === 'cup' || l.kind === 'wound');
+  const cupLayer = scene?.layers.find(l => l.kind === 'cup' || l.kind === 'wound' || l.kind === 'incis');
 
   /** 奶泡沉积：每一下实际落点，半径由当时的奶缸高度 / 流量（cup 层的 level 表达式）决定。
    *  高位细流 → 半径近于 0（奶沉到咖啡下面，杯面不留白）；压低加大流量 → 大白斑。 */
@@ -330,7 +330,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
           const startT = track && l.pace ? st.events.find(e => e.kind === 'control' && e.control === l.control)?.t : undefined;
           return <Layer key={l.id} l={l} level={l.level ? Math.min(1, Math.max(0, ev(l.level))) : 0} on={l.on ? !!ev(l.on) : false} value={l.text ? ev(l.text) : 0}
             progress={prog} ghost={startT !== undefined && l.pace ? Math.min(100, (st.t - startT) * l.pace) : undefined}
-            deposits={l.kind === 'cup' || l.kind === 'wound' ? deposits.current : undefined}
+            deposits={l.kind === 'cup' || l.kind === 'wound' || l.kind === 'incis' ? deposits.current : undefined}
             onGrab={track && running ? (e => { dragRef.current = l; (e.target as Element).setPointerCapture?.(e.pointerId); const q = scenePoint(e.clientX, e.clientY); if (q) onTrack(l, q.x, q.y); }) : undefined} />;
         })}
       </svg>
@@ -480,6 +480,54 @@ function Layer({ l, level, on, value, progress = 0, ghost, deposits, onGrab }: {
           </g>
           <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(40,25,12,.45)" strokeWidth={4} />
           <circle cx={cx} cy={cy} r={r * 1.1} fill="none" stroke="rgba(255,255,255,.6)" strokeWidth={5} />
+        </g>
+      );
+    }
+    case 'incis': {
+      // 分层切口：走到哪儿开到哪儿，下到多深就露出哪一层。
+      // 每一层画成一个梭形，越深的层梭形越窄；牵开器把所有梭形一起撕宽。教学示意配色，不做写实。
+      const STRATA = [
+        { to: 3, c: '#e9c6aa', n: '皮肤' },
+        { to: 12, c: '#f0d78d', n: '皮下脂肪' },
+        { to: 16, c: '#e4e0d1', n: '腹外斜肌腻膜' },
+        { to: 24, c: '#b35b52', n: '肌层' },
+        { to: 28, c: '#d6b2a3', n: '腹膜' },
+        { to: 999, c: '#5c2a24', n: '腹腔' },
+      ];
+      const ax = x, ay = y, bx = x + w, by = y + h;
+      const L = Math.hypot(bx - ax, by - ay) || 1;
+      const ux = (bx - ax) / L, uy = (by - ay) / L;
+      const nx = -uy, ny = ux;
+      const px = ax + (bx - ax) * progress / 100, py = ay + (by - ay) * progress / 100;
+      const depth = value || 0;
+      const open = 1 + level * 2.6;                      // 牵开器
+      const reached = STRATA.findIndex(s2 => depth <= s2.to);
+      const top = reached < 0 ? STRATA.length - 1 : reached;
+      /** 从 a 到 b 的梭形 */
+      const lens = (x0: number, y0: number, x1: number, y1: number, half: number) =>
+        `M ${x0} ${y0} Q ${(x0 + x1) / 2 + nx * half} ${(y0 + y1) / 2 + ny * half} ${x1} ${y1} Q ${(x0 + x1) / 2 - nx * half} ${(y0 + y1) / 2 - ny * half} ${x0} ${y0} Z`;
+      const skinR = Math.max(L * 0.72, 230);
+      return (
+        <g pointerEvents="none">
+          <defs>
+            <radialGradient id={`abd-${l.id}`} cx="44%" cy="34%" r="76%">
+              <stop offset="0%" stopColor="#f3d5ba" /><stop offset="60%" stopColor="#e4bd9d" /><stop offset="100%" stopColor="#c89a77" />
+            </radialGradient>
+          </defs>
+          <ellipse cx={cx} cy={cy} rx={skinR} ry={skinR * 0.66} fill="rgba(0,0,0,.3)" filter="url(#bench-blur)" />
+          <ellipse cx={cx} cy={cy} rx={skinR} ry={skinR * 0.64} fill={`url(#abd-${l.id})`} />
+          {progress > 0.5 && STRATA.slice(0, top + 1).map((st, i) => (
+            <path key={st.n} d={lens(ax, ay, px, py, (open * (34 - i * 4.6)))} fill={st.c} opacity={i === top ? 1 : 0.98}
+              stroke={i === 0 ? 'rgba(120,70,50,.55)' : 'none'} strokeWidth={i === 0 ? 2.5 : 0} />
+          ))}
+          {/* 牵开器的两片鈢 */}
+          {level > 0.05 && progress > 6 && [1, -1].map(side => {
+            const mx = (ax + px) / 2 + nx * open * 34 * side, my = (ay + py) / 2 + ny * open * 34 * side;
+            return <g key={side}><rect x={mx - 42} y={my - 7} width={84} height={14} rx={5} fill="#c3c9d4" stroke="#79818f" strokeWidth={2}
+              transform={`rotate(${Math.atan2(uy, ux) * 180 / Math.PI} ${mx} ${my})`} /></g>;
+          })}
+          <text x={cx} y={cy + skinR * 0.64 + 34} textAnchor="middle" fill="#fff" fontSize={22} fontWeight={700}
+            style={{ textShadow: '0 1px 5px rgba(0,0,0,.85)' }}>{progress > 0.5 ? `当前层次：${STRATA[top].n} · ${depth.toFixed(0)} mm` : ''}</text>
         </g>
       );
     }
