@@ -533,7 +533,7 @@ function Layer({ l, level, on, value, progress = 0, ghost, deposits, toolName = 
       return (
         <g style={{ cursor: onGrab ? 'grab' : 'default' }} onPointerDown={onGrab}>
           <g opacity={progress >= 99.5 ? 0.25 : 1}>
-            <path d={d} fill="none" stroke="rgba(10,8,20,.45)" strokeWidth={30} strokeLinecap="round" strokeLinejoin="round" />
+            <path d={d} fill="none" stroke="rgba(10,8,20,.26)" strokeWidth={13} strokeLinecap="round" strokeLinejoin="round" />
             <path d={d} fill="none" stroke="rgba(255,255,255,.75)" strokeWidth={4} strokeDasharray="16 16" strokeLinecap="round" />
           </g>
           <path d={d} pathLength={100} fill="none" stroke="#ffd166" strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={`${Math.max(0.01, progress)} 100`} opacity={0.9} />
@@ -577,50 +577,46 @@ function Layer({ l, level, on, value, progress = 0, ghost, deposits, toolName = 
       );
     }
     case 'incis': {
-      // 分层切口：走到哪儿开到哪儿，下到多深就露出哪一层。
-      // 每一层画成一个梭形，越深的层梭形越窄；牵开器把所有梭形一起撕宽。教学示意配色，不做写实。
+      // 划到哪开到哪，划开了就不合上。
+      // level = 已划开的比例（只进不退）、value = 当前深度 mm、on = 牵开器。教学示意配色，不做写实。
       const STRATA = [
-        { to: 3, c: '#e9c6aa', n: '皮肤' },
-        { to: 12, c: '#f0d78d', n: '皮下脂肪' },
-        { to: 16, c: '#e4e0d1', n: '腹外斜肌腻膜' },
-        { to: 24, c: '#b35b52', n: '肌层' },
-        { to: 28, c: '#d6b2a3', n: '腹膜' },
-        { to: 999, c: '#5c2a24', n: '腹腔' },
+        { to: 3, c: '#e9c6aa', n: '皮肤' }, { to: 12, c: '#f0d78d', n: '皮下脂肪' },
+        { to: 16, c: '#e4e0d1', n: '腹外斜肌腻膜' }, { to: 24, c: '#b35b52', n: '肌层' },
+        { to: 28, c: '#d6b2a3', n: '腹膜' }, { to: 999, c: '#5c2a24', n: '腹腔' },
       ];
       const ax = x, ay = y, bx = x + w, by = y + h;
       const L = Math.hypot(bx - ax, by - ay) || 1;
-      const ux = (bx - ax) / L, uy = (by - ay) / L;
-      const nx = -uy, ny = ux;
-      const px = ax + (bx - ax) * progress / 100, py = ay + (by - ay) * progress / 100;
+      const ux = (bx - ax) / L, uy = (by - ay) / L, nx = -uy, ny = ux;
+      const cutLen = Math.min(1, Math.max(0, level));
+      const ex = ax + (bx - ax) * cutLen, ey = ay + (by - ay) * cutLen;
       const depth = value || 0;
-      const open = 1 + level * 2.6;                      // 牵开器
-      const reached = STRATA.findIndex(s2 => depth <= s2.to);
-      const top = reached < 0 ? STRATA.length - 1 : reached;
-      /** 从 a 到 b 的梭形 */
-      const lens = (x0: number, y0: number, x1: number, y1: number, half: number) =>
-        `M ${x0} ${y0} Q ${(x0 + x1) / 2 + nx * half} ${(y0 + y1) / 2 + ny * half} ${x1} ${y1} Q ${(x0 + x1) / 2 - nx * half} ${(y0 + y1) / 2 - ny * half} ${x0} ${y0} Z`;
-      const skinR = Math.max(L * 0.72, 230);
+      const top = Math.max(0, STRATA.findIndex(s2 => depth <= s2.to));
+      const open = (0.95 + depth / 36 * 1.7) * (on ? 2.2 : 1);
+      const lens = (half: number) =>
+        `M ${ax} ${ay} Q ${(ax + ex) / 2 + nx * half} ${(ay + ey) / 2 + ny * half} ${ex} ${ey} Q ${(ax + ex) / 2 - nx * half} ${(ay + ey) / 2 - ny * half} ${ax} ${ay} Z`;
+      const skinR = Math.max(L * 0.74, 240);
       return (
         <g pointerEvents="none">
-          <defs>
-            <radialGradient id={`abd-${l.id}`} cx="44%" cy="34%" r="76%">
-              <stop offset="0%" stopColor="#f3d5ba" /><stop offset="60%" stopColor="#e4bd9d" /><stop offset="100%" stopColor="#c89a77" />
-            </radialGradient>
-          </defs>
+          <defs><radialGradient id={`abd-${l.id}`} cx="44%" cy="34%" r="76%">
+            <stop offset="0%" stopColor="#f3d5ba" /><stop offset="60%" stopColor="#e4bd9d" /><stop offset="100%" stopColor="#c89a77" />
+          </radialGradient></defs>
           <ellipse cx={cx} cy={cy} rx={skinR} ry={skinR * 0.66} fill="rgba(0,0,0,.3)" filter="url(#bench-blur)" />
           <ellipse cx={cx} cy={cy} rx={skinR} ry={skinR * 0.64} fill={`url(#abd-${l.id})`} />
-          {progress > 0.5 && STRATA.slice(0, top + 1).map((st, i) => (
-            <path key={st.n} d={lens(ax, ay, px, py, (open * (34 - i * 4.6)))} fill={st.c} opacity={i === top ? 1 : 0.98}
-              stroke={i === 0 ? 'rgba(120,70,50,.55)' : 'none'} strokeWidth={i === 0 ? 2.5 : 0} />
+          {cutLen > 0.01 && depth > 0.5 && STRATA.slice(0, top + 1).map((s2, i) => (
+            <path key={s2.n} d={lens(open * 56 * (1 - i * 0.135))} fill={s2.c}
+              stroke={i === 0 ? 'rgba(120,70,50,.6)' : 'none'} strokeWidth={i === 0 ? 2.5 : 0} />
           ))}
-          {/* 牵开器的两片鈢 */}
-          {level > 0.05 && progress > 6 && [1, -1].map(side => {
-            const mx = (ax + px) / 2 + nx * open * 34 * side, my = (ay + py) / 2 + ny * open * 34 * side;
-            return <g key={side}><rect x={mx - 42} y={my - 7} width={84} height={14} rx={5} fill="#c3c9d4" stroke="#79818f" strokeWidth={2}
-              transform={`rotate(${Math.atan2(uy, ux) * 180 / Math.PI} ${mx} ${my})`} /></g>;
+          {on && cutLen > 0.2 && depth > 12 && [1, -1].map(side => {
+            const mx = (ax + ex) / 2 + nx * open * 56 * side, my = (ay + ey) / 2 + ny * open * 56 * side;
+            return <g key={side} transform={`translate(${mx} ${my}) rotate(${Math.atan2(uy, ux) * 180 / Math.PI})`}>
+              <rect x={-52} y={-8} width={104} height={16} rx={6} fill="#c3c9d4" stroke="#79818f" strokeWidth={2} />
+              <rect x={-7} y={side > 0 ? 6 : -26} width={14} height={20} rx={3} fill="#aeb6c4" />
+            </g>;
           })}
-          <text x={cx} y={cy + skinR * 0.64 + 34} textAnchor="middle" fill="#fff" fontSize={22} fontWeight={700}
-            style={{ textShadow: '0 1px 5px rgba(0,0,0,.85)' }}>{progress > 0.5 ? `当前层次：${STRATA[top].n} · ${depth.toFixed(0)} mm` : ''}</text>
+          <text x={cx} y={cy + skinR * 0.64 + 36} textAnchor="middle" fill="#fff" fontSize={23} fontWeight={700}
+            style={{ textShadow: '0 1px 6px rgba(0,0,0,.9)' }}>
+            {cutLen > 0.01 && depth > 0.5 ? `${STRATA[top].n} · ${depth.toFixed(0)} mm${on ? ' · 已牵开' : ''}` : '还没下刀'}
+          </text>
         </g>
       );
     }
