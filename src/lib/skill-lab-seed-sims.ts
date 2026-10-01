@@ -8,6 +8,7 @@ import { BENCH_CASTING, CASTING_EXPERT_SCRIPT, CASTING_SCRIPTS, BENCH_WELD, WELD
 import { BENCH_LATTE_HEART, BENCH_LATTE_TULIP, BENCH_LATTE_ROSETTA, HEART_EXPERT_SCRIPT, HEART_SCRIPTS, TULIP_EXPERT_SCRIPT, TULIP_SCRIPTS, ROSETTA_EXPERT_SCRIPT, ROSETTA_SCRIPTS } from '@/lib/skill-lab-seed-bench-latte';
 import { BENCH_SUTURE, SUTURE_EXPERT_SCRIPT, SUTURE_SCRIPTS } from '@/lib/skill-lab-seed-bench-surgery';
 import { BENCH_LAPAROTOMY, LAP_EXPERT_SCRIPT, LAP_SCRIPTS } from '@/lib/skill-lab-seed-bench-laparotomy';
+import { BENCH_FSW, BENCH_ENGINE, FSW_EXPERT_SCRIPT, FSW_SCRIPTS, ENGINE_EXPERT_SCRIPT, ENGINE_SCRIPTS } from '@/lib/skill-lab-seed-bench-rocket';
 
 // ════════════════ A：指标异动归因 · 数据分析操作台 ════════════════
 export const SIM_A: Sim = {
@@ -733,6 +734,122 @@ export const EXPERT_WHY_G: Record<string, string> = {
   defect: '三台不同的并发症，你凭什么说都是动作问题？',
 };
 
+// ════════════════ H：液氧甲烷火箭 · 造一发、试一台 ════════════════
+/** 两台工位：贮箱纵缝搅拌摩擦焊（手上功夫）+ 发动机试车点火时序（时序与应急）。
+ *  参数为教学化的简化模型，不代表任何型号的真实工艺或试车程序。 */
+export const SIM_H: Sim = {
+  title: '总装厂房 · 从一条焊缝到一次点火',
+  intro: '你是商业航天公司入职第三个月的工艺员。这两周你要经手一发火箭最要命的两处：贮箱的一条纵缝，和一台发动机的第一次点火。',
+  art: {
+    cover: '/lab/rocket_hall.jpg',
+    scenes: { weld_prep: '/lab/rocket_hall.jpg', fsw: '/lab/rocket_fsw.jpg', ndt: '/lab/rocket_hall.jpg', test_prep: '/lab/rocket_teststand.jpg', engine: '/lab/rocket_teststand.jpg', abort: '/lab/rocket_teststand.jpg', final: '/lab/rocket_hall.jpg' },
+    npcs: { '试验总师': '/lab/npc_rocket_lead.png' },
+  },
+  steps: [
+    {
+      id: 'weld_prep', type: 'multi', max: 3,
+      scene: { who: '试验总师', time: '周一 08:30', text: '这块 2219 壁板今天合拢。搅拌摩擦焊机已经调好了，动枪之前你先确认什么？贮箱要装几十吨低温推进剂，漏一点都不行。' },
+      prompt: '起焊前你一定要确认的三件事（最多 3 项）',
+      options: [
+        { id: 'gap', label: '两块壁板的对缝间隙与错边量（贴合不好焊不住）' },
+        { id: 'clean', label: '焊缝两侧的氧化膜与油污清理干净' },
+        { id: 'tool', label: '搅拌头轴肩与针长是否匹配板厚，有无磨损' },
+        { id: 'clamp', label: '工装夹紧力是否足够（焊接反力会把板顶起来）' },
+        { id: 'paint', label: '确认壁板外表面的喷漆方案' },
+        { id: 'schedule', label: '核对后续总装排期' },
+      ],
+    },
+    {
+      id: 'fsw', type: 'bench', bench: BENCH_FSW,
+      scene: { who: '试验总师', time: '09:00', text: '机器交给你。转速、下压量先配死，主轴转起来预热几秒再走——走太快未焊透，走太慢过热飞边，下压不够根部焊不上。整条缝我都会看记录。' },
+      prompt: '在贮箱工位上焊完这条纵缝',
+    },
+    {
+      id: 'ndt', type: 'classify',
+      scene: { who: '试验总师', time: '周三 14:00', text: '上一批壁板的 X 光和相控阵结果出来了：一条缝根部有连续未焊合，一条表面大量飞边且晶粒粗大，还有一条终点留了个贯穿匙孔。他们的记录：下压 0.1 mm、转速 1150 r/min 走 0.9、收尾直接停机抬头。逐条判断。' },
+      prompt: '把这三种缺陷分别对到具体操作上',
+      labels: [{ id: 'cause', label: '主因', tone: 'hot' }, { id: 'minor', label: '次要' }, { id: 'no', label: '无关', tone: 'cold' }],
+      options: [
+        { id: 'plunge', label: '下压量只有 0.1 mm', detail: '根部未焊合' },
+        { id: 'heat', label: '转速拉满又走得慢，热输入过高', detail: '飞边、晶粒粗大' },
+        { id: 'keyhole', label: '收尾直接停机抬头，没有回抽或引出板', detail: '终点匙孔' },
+        { id: 'alloy', label: '2219 铝合金本身可焊性差' },
+        { id: 'weather', label: '当天车间湿度偏高' },
+      ],
+    },
+    {
+      id: 'test_prep', type: 'multi', max: 2,
+      scene: { who: '试验总师', time: '周五 07:00', text: '今天试车。80 吨级液氧甲烷，第一次整机点火。进控制间之前，哪两件必须落实？' },
+      prompt: '试车前的两件事（最多 2 项）',
+      options: [
+        { id: 'abortline', label: '明确中止判据与红线：室压、泵前温度、振动超限谁来喊停、怎么关' },
+        { id: 'purge', label: '管路吹除与气密，确认无泄漏、无残余可燃气' },
+        { id: 'camera', label: '把高速摄像机位调好' },
+        { id: 'weather2', label: '确认当天风向适合排放' },
+        { id: 'press', label: '通知媒体准备报道首次点火' },
+      ],
+    },
+    {
+      id: 'engine', type: 'bench', bench: BENCH_ENGINE,
+      scene: { who: '试验总师', time: '09:30', text: '控制台归你。记住顺序：预冷到位才开阀，燃料必须先于氧化剂——富燃启动，宁可点不着也不能富氧烧穿；升推力分台阶；关机先切氧化剂。差半秒就是两种事故。' },
+      prompt: '在试车台上完成这次点火与关机',
+    },
+    {
+      id: 'abort', type: 'choose',
+      scene: { who: '试验总师', time: '09:38', text: '假设稳态跑到第 12 秒，室压突然从 98 掉到 76，推力同步下降，泵前温度正常，振动没报警。你是指挥，喊什么？' },
+      prompt: '你的处置是？',
+      options: [
+        { id: 'abort', label: '立即按正常关机程序中止：先切氧化剂、再切燃料——掉压原因不明，不赌' },
+        { id: 'throttle_up', label: '加大节流阀把室压推回去，先保住这次试车数据' },
+        { id: 'wait', label: '再观察 5 秒，看是不是测量波动' },
+        { id: 'emergency', label: '直接切断所有阀门与电源紧急停机' },
+      ],
+    },
+    { id: 'final', type: 'text', scene: { who: '试验总师', time: '17:00', text: '写这两周的工艺与试车小结，明天型号例会上讲。' }, prompt: '写下你的小结（不超过 400 字）', placeholder: '焊接参数与依据、焊缝质量、试车时序与关键时刻、异常处置、下一步……' },
+  ],
+};
+
+const FSW_RUN = simulateScript(BENCH_FSW, FSW_EXPERT_SCRIPT, 140);
+const ENG_RUN = simulateScript(BENCH_ENGINE, ENGINE_EXPERT_SCRIPT, 110);
+const fswRunT = (k: keyof typeof FSW_SCRIPTS) => { const s = FSW_SCRIPTS[k]; return simulateScript(BENCH_FSW, s, Math.max(...s.map(a => a.t)) + 20); };
+const engRunT = (k: keyof typeof ENGINE_SCRIPTS) => { const s = ENGINE_SCRIPTS[k]; return simulateScript(BENCH_ENGINE, s, Math.max(...s.map(a => a.t)) + 20); };
+
+export const EXPERT_TRACE_H: SimTrace = {
+  weld_prep: ['gap', 'clean', 'tool'],
+  fsw: FSW_RUN,
+  ndt: { plunge: 'cause', heat: 'cause', keyhole: 'cause', alloy: 'no', weather: 'no' },
+  test_prep: ['abortline', 'purge'],
+  engine: ENG_RUN,
+  abort: 'abort',
+  final: '贮箱纵缝：2219 板厚 8 mm，转速 750 r/min、下压量 0.25 mm、匀速走完 4 米，主轴先原地预热 3 秒再起步，收尾提刀停转。热输入指数全程守在 6–13，焊缝质量 85 分，无根部未焊合。\\n\\n上一批三条缺陷是三个操作：下压 0.1 mm → 根部未焊合；转速拉满又走得慢、热输入爆表 → 飞边与晶粒粗大；收尾直接抬头 → 终点匙孔。和合金可焊性、车间湿度都没关系。\\n\\n试车：氧路预冷到 −170℃ 以下才开主阀；燃料主阀先开、1.5 秒后开氧化剂，再点火——富燃启动，宁可点不着也不能富氧烧穿头部；节流 40 → 70 → 95 三个台阶升到室压 98 bar，混合比 3.4，稳定 20 秒以上；关机先切氧化剂、再切燃料、关点火器。全程零违规。\\n\\n稳态掉压那一下，按中止处理。原因不明的掉压不赌——加节流去追室压，是把一次试车变成一次事故。',
+};
+
+export const TRACES_H: Record<string, SimTrace> = {
+  '闻澈（化名）': {
+    weld_prep: ['gap', 'clean', 'clamp'], fsw: fswRunT('no_preheat'), ndt: { plunge: 'cause', heat: 'cause', keyhole: 'minor', alloy: 'minor', weather: 'no' },
+    test_prep: ['purge', 'camera'], engine: engRunT('rush_precool'), abort: 'wait',
+  },
+  '祁斯年（化名）': {
+    weld_prep: ['paint', 'schedule', 'clean'], fsw: fswRunT('overheat'), ndt: { plunge: 'minor', heat: 'minor', keyhole: 'no', alloy: 'cause', weather: 'cause' },
+    test_prep: ['camera', 'press'], engine: engRunT('ox_first'), abort: 'throttle_up',
+  },
+  'AI 裸答': {
+    weld_prep: ['gap', 'clean', 'tool'], fsw: fswRunT('ai_bare'), ndt: { plunge: 'cause', heat: 'cause', keyhole: 'cause', alloy: 'minor', weather: 'no' },
+    test_prep: ['abortline', 'purge'], engine: engRunT('ai_bare'), abort: 'abort',
+  },
+  'AI + 专家技能': {
+    weld_prep: ['gap', 'clean', 'tool'], fsw: fswRunT('ai_skill'), ndt: { plunge: 'cause', heat: 'cause', keyhole: 'cause', alloy: 'no', weather: 'no' },
+    test_prep: ['abortline', 'purge'], engine: engRunT('ai_skill'), abort: 'abort',
+  },
+};
+
+export const EXPERT_WHY_H: Record<string, string> = {
+  weld_prep: '夹紧力你没勾，焊接反力把板顶起来怎么办？',
+  fsw: '你为什么非要先空转三秒，不能直接走？',
+  engine: '燃料先开一秒半，不怕点不着吗？',
+  abort: '数据这么好看，就为了掉 20 个 bar 你就中止？',
+};
+
 export const SEED_SIMS = [
   { sim: SIM_A, expertTrace: EXPERT_TRACE_A, traces: TRACES_A, why: EXPERT_WHY_A },
   { sim: SIM_B, expertTrace: EXPERT_TRACE_B, traces: TRACES_B, why: EXPERT_WHY_B },
@@ -741,4 +858,5 @@ export const SEED_SIMS = [
   { sim: SIM_E, expertTrace: EXPERT_TRACE_E, traces: TRACES_E, why: EXPERT_WHY_E },
   { sim: SIM_F, expertTrace: EXPERT_TRACE_F, traces: TRACES_F, why: EXPERT_WHY_F },
   { sim: SIM_G, expertTrace: EXPERT_TRACE_G, traces: TRACES_G, why: EXPERT_WHY_G },
+  { sim: SIM_H, expertTrace: EXPERT_TRACE_H, traces: TRACES_H, why: EXPERT_WHY_H },
 ];
