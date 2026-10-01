@@ -94,6 +94,13 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
   const trackPts = useRef<Pt[]>([]);
   if (trackLayer && !trackPts.current.length) trackPts.current = layerPath(trackLayer);
   const isLatte = trackLayer?.kind === 'pour';
+  /** 手里握的到底是什么——摄像头提示、按钮、手法镜都用它 */
+  const holdName = (() => {
+    if (!trackLayer) return '工具';
+    if (trackLayer.kind === 'seam') return '焊枪';
+    const ic = trackLayer.iconBy ? (trackLayer.icons || [])[Math.round(st.controls[trackLayer.iconBy] || 0)] : trackLayer.icon;
+    return ({ needle: '持针器', scalpel: '手术刀', cautery: '电刀', clamp: '血管钳', forceps: '镪子', retractor: '牵开器', torch: '焊枪' } as Record<string, string>)[ic || ''] || '奶缸';
+  })();
   const cupLayer = scene?.layers.find(l => l.kind === 'cup' || l.kind === 'wound' || l.kind === 'incis');
 
   /** 奶泡沉积：每一下实际落点，半径由当时的奶缸高度 / 流量（cup 层的 level 表达式）决定。
@@ -264,10 +271,10 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
         <span>手法镜 · HAND CAM</span>
         <button onClick={() => setCam(false)} style={{ border: 0, background: 'transparent', color: 'inherit', cursor: 'pointer', fontSize: 11 }}>关闭</button>
       </div>
-      <HandCam onPose={onPose} hold="奶缸" width="100%" />
+      <HandCam onPose={onPose} hold={holdName} width="100%" />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6, marginTop: 8 }}>
         {[
-          { k: '奶缸', v: hand?.holding ? '已握住' : hand?.pinch ? '捏住了' : '松开', c: hand?.holding ? '#3ddc97' : '#9aa0b8' },
+          { k: holdName, v: hand?.holding ? '已握住' : hand?.pinch ? '捏住了' : '松开', c: hand?.holding ? '#3ddc97' : '#9aa0b8' },
           { k: '偏离', v: `${devNow.toFixed(1)} mm`, c: devNow > 16 ? '#ff5fa2' : '#7cc8ff' },
           { k: '进度', v: `${Math.round(trackProg)}%`, c: '#ffd166' },
         ].map(x => (
@@ -277,7 +284,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
           </div>
         ))}
       </div>
-      <div className="hud-ink3" style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 7, lineHeight: 1.6 }}>捏住拇指和食指 = 握住奶缸；松开就停在原地（可以趡机调高度和流量）。</div>
+      <div className="hud-ink3" style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 7, lineHeight: 1.6 }}>捏住拇指和食指 = 握住{holdName}；松开就停在原地（可以趡机换器械、调参数）。</div>
     </div>
   ) : null;
 
@@ -342,7 +349,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
       </div>
       {trackLayer && (
         <button onClick={() => setCam(v => !v)} style={{ position: 'absolute', left: 12, top: hud ? 58 : 34, padding: '6px 12px', borderRadius: 999, border: '1px solid rgba(255,255,255,.35)', background: cam ? 'linear-gradient(135deg,#ff5fa2,#ff8a5f)' : 'rgba(15,18,36,.7)', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(6px)' }}>
-          {cam ? `📷 摄像头${isLatte ? '握奶缸' : '握枪'}中 · 关闭` : `📷 用摄像头${isLatte ? '握奶缸' : '握枪'}`}
+          {cam ? `📷 摄像头握${holdName}中 · 关闭` : `📷 用摄像头握${holdName}`}
         </button>
       )}
       {cam && !isLatte && <div style={{ position: 'absolute', left: 12, top: hud ? 94 : 68, zIndex: 2 }}><HandCam onPose={onPose} hold="焊枪" /></div>}
