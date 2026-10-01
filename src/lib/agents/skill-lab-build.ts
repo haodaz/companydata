@@ -207,7 +207,14 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
       const violated = [...new Set(tr.events.filter(e => e.kind === 'rule' && e.severity === 'violation' && e.id).map(e => e.id!))];
       const score = m.goals_done * 10 - violated.length;
       if (!best || score > best.score) best = { spec, layers, p, violated, score };
-      feedback = `老手脚本在模拟器里的结果：目标 ${m.goals_done}/${m.goals_total}，违规 ${m.violations}。要么脚本没做到，要么规则 / 目标 / 变量动力学写错了。事件流：\n${benchTimeline(spec, tr).slice(0, 2500)}`;
+      const unmet = spec.goals.filter(g => m.time_to_goal[g.id] === null);
+      feedback = [
+        `老手脚本在模拟器里的结果：目标 ${m.goals_done}/${m.goals_total}，违规 ${m.violations}。这台工位连你自己的老手都做不到，学生更不可能。`,
+        unmet.length ? `没达成的目标：${unmet.map(g => `「${g.label}」（when: ${g.when}${g.hold ? `, hold: ${g.hold}` : ''}）`).join('；')}` : '',
+        unmet.length ? `这种情况几乎总是量级问题，不是逻辑问题。请反算一遍：要让变量在 T 模拟秒内从 A 变到 B，rate 至少要 (B-A)/T。`
+          + `把 rate 调大、把阈值调进脚本跑得到的范围、或者把 expertScript 拉长（别忘了 maxSeconds 也要够），三者至少改一样。结构不用重写。` : '',
+        `事件流：\n${benchTimeline(spec, tr).slice(0, 2200)}`,
+      ].filter(Boolean).join('\n');
       const missed = spec.goals.filter(g => m.time_to_goal[g.id] === null).map(g => g.label);
       diag.note = `第 ${attempt + 1} 轮：老手脚本自己跑下来只达成 ${m.goals_done}/${m.goals_total} 个目标、违规 ${m.violations} 次${missed.length ? `；做不到的是「${missed.slice(0, 3).join('」「')}」` : ''}。`;
       console.warn(`[build] bench attempt ${attempt + 1}: 目标 ${m.goals_done}/${m.goals_total} 违规 ${m.violations}`);

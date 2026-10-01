@@ -97,13 +97,14 @@ export default function LabHome() {
   const buildFromJob = async (job: any | null, prof?: string) => {
     const buildId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
     setPick(null);
-    setBuildInfo({ phase: prof ? '结构化职业 · 推断典型岗位' : '读取岗位 JD' }); setBuildSince(Date.now()); setNow(Date.now());
+    const startedAt = Date.now();
+    setBuildInfo({ phase: prof ? '结构化职业 · 推断典型岗位' : '读取岗位 JD' }); setBuildSince(startedAt); setNow(startedAt);
     setBuilding(prof ? { company: '职业探索', title: prof, buildId, career: true } : { company: job.institute_or_company_name, title: job.name, buildId });
     try {
       const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(prof ? { profession: prof, model: currentModel, buildId } : { jobId: job.id, model: currentModel, buildId }) })).json();
       if (!json.ok) throw new Error(json.error);
       setBuilding(null);
-      setDone({ ...json, secs: Math.round((Date.now() - buildSince) / 1000), name: prof || job.name, company: prof ? '职业探索' : job.institute_or_company_name, career: !!prof });
+      setDone({ ...json, secs: Math.round((Date.now() - startedAt) / 1000), name: prof || job.name, company: prof ? '职业探索' : job.institute_or_company_name, career: !!prof });
       load();
     } catch (e: any) { message.error(e.message); setBuilding(null); }
   };
