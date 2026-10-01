@@ -94,7 +94,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
   const trackPts = useRef<Pt[]>([]);
   if (trackLayer && !trackPts.current.length) trackPts.current = layerPath(trackLayer);
   const isLatte = trackLayer?.kind === 'pour';
-  const cupLayer = scene?.layers.find(l => l.kind === 'cup');
+  const cupLayer = scene?.layers.find(l => l.kind === 'cup' || l.kind === 'wound');
 
   /** 奶泡沉积：每一下实际落点，半径由当时的奶缸高度 / 流量（cup 层的 level 表达式）决定。
    *  高位细流 → 半径近于 0（奶沉到咖啡下面，杯面不留白）；压低加大流量 → 大白斑。 */
@@ -330,7 +330,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
           const startT = track && l.pace ? st.events.find(e => e.kind === 'control' && e.control === l.control)?.t : undefined;
           return <Layer key={l.id} l={l} level={l.level ? Math.min(1, Math.max(0, ev(l.level))) : 0} on={l.on ? !!ev(l.on) : false} value={l.text ? ev(l.text) : 0}
             progress={prog} ghost={startT !== undefined && l.pace ? Math.min(100, (st.t - startT) * l.pace) : undefined}
-            deposits={l.kind === 'cup' ? deposits.current : undefined}
+            deposits={l.kind === 'cup' || l.kind === 'wound' ? deposits.current : undefined}
             onGrab={track && running ? (e => { dragRef.current = l; (e.target as Element).setPointerCapture?.(e.pointerId); const q = scenePoint(e.clientX, e.clientY); if (q) onTrack(l, q.x, q.y); }) : undefined} />;
         })}
       </svg>
@@ -480,6 +480,46 @@ function Layer({ l, level, on, value, progress = 0, ghost, deposits, onGrab }: {
           </g>
           <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(40,25,12,.45)" strokeWidth={4} />
           <circle cx={cx} cy={cy} r={r * 1.1} fill="none" stroke="rgba(255,255,255,.6)" strokeWidth={5} />
+        </g>
+      );
+    }
+    case 'wound': {
+      // 切口是 x,y → x+w,y+h 这条线。走到哪里就合到哪里：未缝合段还张着，已缝合段收成一条细线。
+      // level = 对合质量（0–1，差就合不拢、颜色更深），value = 边距 mm（决定每一针跨多宽）。教学示意，不画血。
+      const ax = x, ay = y, bx = x + w, by = y + h;
+      const len = Math.hypot(bx - ax, by - ay) || 1;
+      const ux = (bx - ax) / len, uy = (by - ay) / len;       // 沿切口
+      const nx = -uy, ny = ux;                                 // 垂直于切口
+      const px = ax + (bx - ax) * progress / 100, py = ay + (by - ay) * progress / 100;
+      const gap = (1 - level) * 15 + 2;                        // 对合越差，创缘张得越开
+      const bite = Math.max(14, Math.min(64, (value || 5) * 7));
+      const skinR = Math.max(len * 0.62, 190);
+      return (
+        <g pointerEvents="none">
+          <defs>
+            <radialGradient id={`skin-${l.id}`} cx="42%" cy="34%" r="74%">
+              <stop offset="0%" stopColor="#f2d3b8" /><stop offset="62%" stopColor="#e3bb9b" /><stop offset="100%" stopColor="#c99b78" />
+            </radialGradient>
+          </defs>
+          <ellipse cx={cx} cy={cy} rx={skinR} ry={skinR * 0.62} fill="rgba(0,0,0,.28)" filter="url(#bench-blur)" />
+          <ellipse cx={cx} cy={cy} rx={skinR} ry={skinR * 0.6} fill={`url(#skin-${l.id})`} />
+          {/* 还没缝到的那一段：梭形张开 */}
+          <path d={`M ${px} ${py} Q ${(px + bx) / 2 + nx * (gap + 7)} ${(py + by) / 2 + ny * (gap + 7)} ${bx} ${by} Q ${(px + bx) / 2 - nx * (gap + 7)} ${(py + by) / 2 - ny * (gap + 7)} ${px} ${py} Z`} fill="#8c3b2e" opacity={0.92} />
+          <path d={`M ${px} ${py} Q ${(px + bx) / 2 + nx * (gap + 3)} ${(py + by) / 2 + ny * (gap + 3)} ${bx} ${by} Q ${(px + bx) / 2 - nx * (gap + 3)} ${(py + by) / 2 - ny * (gap + 3)} ${px} ${py} Z`} fill="#5f2119" opacity={0.75} />
+          {/* 已缝合的那一段：对合越好线越细 */}
+          {progress > 0.5 && <line x1={ax} y1={ay} x2={px} y2={py} stroke="#b4705a" strokeWidth={2 + (1 - level) * 7} strokeLinecap="round" opacity={0.95} />}
+          {/* 每一针：跨过切口的一段线 + 两端的结 */}
+          {(deposits || []).map((p, i) => {
+            const half = bite / 2;
+            return (
+              <g key={i}>
+                <line x1={p.x - nx * half} y1={p.y - ny * half} x2={p.x + nx * half} y2={p.y + ny * half} stroke="#1f2a44" strokeWidth={4} strokeLinecap="round" />
+                <circle cx={p.x - nx * half} cy={p.y - ny * half} r={3.5} fill="#2b3a5e" />
+                <circle cx={p.x + nx * half} cy={p.y + ny * half} r={3.5} fill="#2b3a5e" />
+                <line x1={p.x - nx * half * 0.5} y1={p.y - ny * half * 0.5} x2={p.x + nx * half * 0.5} y2={p.y + ny * half * 0.5} stroke="#44538a" strokeWidth={2} opacity={0.9} />
+              </g>
+            );
+          })}
         </g>
       );
     }

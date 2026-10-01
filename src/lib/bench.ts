@@ -29,8 +29,9 @@ export interface BenchAction { t: number; control: string; value: number }
  *   pour    注入轨迹（咖啡拉花）：和 seam 一样绑定 path 控件，但轨迹是 points 折线，手柄是奶缸；pace > 0 时还会按推荐速度跑一个引导点（跟着它走）
  *   cup     咖啡杯（俯视）：crema 底色 + 随注入点生长的奶泡图案；level 求值出「此刻落在液面上的奶泡有多大」（0–1，高位细流近于 0 = 奶沉到底下）
  *   coach   阶段提示：on 为真时把 label 显示在场景里（「现在：压低奶缸」）
+ *   wound   创口（教学示意）：x,y → x+w,y+h 是切口线；未缝合段张开，走过的部分随着每一针合拢。level = 对合质量 0–1，text = 边距 mm（决定缝线跨度）
  */
-export interface BenchLayer { id: string; kind: 'glow' | 'lamp' | 'door' | 'stream' | 'pulse' | 'readout' | 'haze' | 'seam' | 'pour' | 'cup' | 'coach'; /** seam / pour：绑定的 path 控件 */ control?: string;
+export interface BenchLayer { id: string; kind: 'glow' | 'lamp' | 'door' | 'stream' | 'pulse' | 'readout' | 'haze' | 'seam' | 'pour' | 'cup' | 'coach' | 'wound'; /** seam / pour：绑定的 path 控件 */ control?: string;
   /** seam / pour：轨迹点（百分比坐标）。给了就沿折线走（可以折返），没给就是 x,y → x+w,y+h 的直线 */ points?: { x: number; y: number }[];
   /** pour：引导点的推荐速度（% 每模拟秒） */ pace?: number;
   /** pour：把「手离轨迹有多远」写进哪个（隐藏）控件，单位 mm */ deviation?: string; /** glow：冷态时盖一层深色（炉膛观察窗这类底图本来就亮的地方） */ cold?: boolean; x: number; y: number; w: number; h: number; level?: string; on?: string; text?: string; unit?: string; digits?: number; color?: string; label?: string }
@@ -334,7 +335,7 @@ export function sanitizeBenchSpec(raw: any): BenchSpec | null {
   // 没有底图也能有场景：轨迹 / 工作面 / 阶段提示这几层是画出来的，生图失败不应该让整台工位报废
   const img = typeof raw.scene?.image === 'string' && /^(\/|https?:\/\/)/.test(raw.scene.image) ? raw.scene.image.slice(0, 500) : '';
   if (raw.scene && Array.isArray(raw.scene.layers)) {
-    const KINDS = ['glow', 'lamp', 'door', 'stream', 'pulse', 'readout', 'haze', 'seam', 'pour', 'cup', 'coach'];
+    const KINDS = ['glow', 'lamp', 'door', 'stream', 'pulse', 'readout', 'haze', 'seam', 'pour', 'cup', 'coach', 'wound'];
     spec.scene = { image: img, credit: raw.scene.credit ? String(raw.scene.credit).slice(0, 200) : undefined,
       layers: raw.scene.layers.filter((l: any) => l?.id && KINDS.includes(l.kind)).slice(0, 40).map((l: any) => ({ id: String(l.id), kind: l.kind, control: l.control ? String(l.control) : undefined, cold: !!l.cold, x: Number(l.x) || 0, y: Number(l.y) || 0, w: Number(l.w) || 0, h: Number(l.h) || 0, level: l.level ? String(l.level) : undefined, on: l.on ? String(l.on) : undefined, text: l.text ? String(l.text) : undefined, unit: l.unit ? String(l.unit) : undefined, digits: l.digits !== undefined ? Number(l.digits) : undefined, color: l.color ? String(l.color).slice(0, 30) : undefined, label: l.label ? String(l.label).slice(0, 80) : undefined, pace: l.pace !== undefined ? Number(l.pace) : undefined, deviation: l.deviation ? String(l.deviation) : undefined, points: Array.isArray(l.points) ? l.points.filter((q: any) => typeof q?.x === 'number' && typeof q?.y === 'number').slice(0, 400).map((q: any) => ({ x: Number(q.x), y: Number(q.y) })) : undefined })) };
   }

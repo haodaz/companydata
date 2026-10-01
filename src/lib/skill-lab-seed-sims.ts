@@ -6,6 +6,7 @@ import type { Sim, SimTrace } from '@/lib/skill-sim';
 import { simulateScript } from '@/lib/bench';
 import { BENCH_CASTING, CASTING_EXPERT_SCRIPT, CASTING_SCRIPTS, BENCH_WELD, WELD_EXPERT_SCRIPT, WELD_SCRIPTS } from '@/lib/skill-lab-seed-bench';
 import { BENCH_LATTE_HEART, BENCH_LATTE_TULIP, BENCH_LATTE_ROSETTA, HEART_EXPERT_SCRIPT, HEART_SCRIPTS, TULIP_EXPERT_SCRIPT, TULIP_SCRIPTS, ROSETTA_EXPERT_SCRIPT, ROSETTA_SCRIPTS } from '@/lib/skill-lab-seed-bench-latte';
+import { BENCH_SUTURE, SUTURE_EXPERT_SCRIPT, SUTURE_SCRIPTS } from '@/lib/skill-lab-seed-bench-surgery';
 
 // ════════════════ A：指标异动归因 · 数据分析操作台 ════════════════
 export const SIM_A: Sim = {
@@ -482,10 +483,138 @@ export const EXPERT_WHY_E: Record<string, string> = {
   defect: '三杯三个样子，你为什么说其实只是两个动作错了？',
 };
 
+// ════════════════ F：急诊外科 · 清创缝合（手上动作 · 轨迹工位）════════════════
+/**
+ * 缝合本身就是「沿着一条线一针一针走」，所以中间那一步是真的拿起持针器：
+ * 边距、深度、张力三个旋钮加上手离轨迹的距离，决定创缘对合得好不好——走到哪儿，伤口就合到哪儿。
+ * 工艺参数为教学化的简化模型，用于演示过程采集与评估，不构成任何医疗指导。
+ */
+export const SIM_F: Sim = {
+  title: '急诊清创缝合台 · 前臂裂伤',
+  intro: '你是外科规培第一年的住院医师。今晚急诊夜班，来了一位前臂裂伤的患者。从接诊判断到亲手缝完八针，每一步都会被记录。',
+  art: {
+    cover: '/lab/er_room.jpg',
+    scenes: { triage: '/lab/er_room.jpg', decide: '/lab/er_room.jpg', prep: '/lab/er_room.jpg', bench: '/lab/surgery_field.jpg', defect: '/lab/or_hall.jpg', orders: '/lab/er_room.jpg', final: '/lab/or_hall.jpg' },
+    npcs: { '带教主治': '/lab/npc_surgeon.png', '器械护士': '/lab/npc_nurse.png' },
+  },
+  steps: [
+    {
+      id: 'triage', type: 'multi', max: 3,
+      scene: { who: '带教主治', time: '周五 21:40', text: '32 岁男性，两小时前在家切菜被玻璃碗划伤右前臂，自行用毛巾压迫后来院。伤口大概 6 cm。你先问什么、查什么？别背教科书，说你今晚真要确认的三件事。' },
+      prompt: '接诊时你优先确认哪三项？（最多 3 项）',
+      options: [
+        { id: 'time', label: '确切受伤时间与致伤物（玻璃／金属／动物咬伤）', detail: '决定还能不能一期缝合' },
+        { id: 'neuro', label: '远端感觉、运动与血运：手指能否屈伸、指端血色', detail: '肌腱神经血管有没有断' },
+        { id: 'tetanus', label: '破伤风免疫史：全程免疫过吗、末次加强多久了' },
+        { id: 'contam', label: '伤口污染程度与异物（玻璃碴残留）' },
+        { id: 'allergy', label: '麻醉药过敏史与基础疾病（糖尿病、抗凝药）' },
+        { id: 'xray', label: '先开一张前臂正侧位 X 光' },
+      ],
+    },
+    {
+      id: 'decide', type: 'choose',
+      scene: { who: '带教主治', time: '21:55', text: '查完了：伤后 2 小时，玻璃割伤，边缘整齐，深达皮下未及肌腱，手指活动与感觉正常，指端血运好，创面可见两粒细小玻璃碴。破伤风十年前打过，之后没加强。他问你：医生，这要缝吗？' },
+      prompt: '你的处置决定是？',
+      options: [
+        { id: 'primary', label: '彻底清创取出异物后一期缝合——伤后 2 小时、边缘整齐、无深部结构损伤，在黄金期内' },
+        { id: 'delay', label: '只做清创和湿敷，三天后观察无感染再延期缝合' },
+        { id: 'strip', label: '不缝，用免缝胶带拉合即可' },
+        { id: 'refer', label: '转手外科专科处理' },
+      ],
+    },
+    {
+      id: 'prep', type: 'multi', max: 2,
+      scene: { who: '器械护士', time: '22:05', text: '清创包开好了。麻醉和冲洗你打算怎么做？我好准备东西。' },
+      prompt: '麻醉与清创，你交代哪两件？（最多 2 项）',
+      options: [
+        { id: 'lido', label: '1% 利多卡因局部浸润，从创缘内侧进针、回抽无血再推药', detail: '注意总量上限' },
+        { id: 'irrigate', label: '生理盐水大量加压冲洗（不少于 500–1000 ml），逐粒取净玻璃碴' },
+        { id: 'excise', label: '把整条创缘都修剪掉 3 mm 做成新鲜切口', detail: '边缘本来就整齐' },
+        { id: 'adrenaline', label: '利多卡因里加肾上腺素以减少出血' },
+        { id: 'h2o2', label: '双氧水反复冲洗创面消毒' },
+        { id: 'abx', label: '先静脉给一剂广谱抗生素' },
+      ],
+    },
+    {
+      id: 'bench', type: 'bench', bench: BENCH_SUTURE,
+      scene: { who: '带教主治', time: '22:20', text: '持针器给你。八针间断缝合：距创缘五毫米进针、穿透真皮全层、打结只求对合不求勒紧。我在旁边看着，每一针系统都记。' },
+      prompt: '在清创缝合工位上缝完这道 6 cm 裂伤',
+    },
+    {
+      id: 'defect', type: 'classify',
+      scene: { who: '带教主治', time: '次周三 10:00', text: '上周另一位规培医师缝的三个伤口，复诊结果出来了：一个缝线从创缘撕脱、伤口裂开；一个皮下积液继发感染；一个愈合了但疤特别宽。他的记录：边距 3 mm、进针深度 2 mm、打结「怕崩开所以都勒紧了」。逐条判断。' },
+      prompt: '把这三种结局分别对到具体动作上',
+      labels: [{ id: 'cause', label: '主因', tone: 'hot' }, { id: 'minor', label: '次要' }, { id: 'no', label: '无关', tone: 'cold' }],
+      options: [
+        { id: 'bite', label: '边距只有 3 mm', detail: '缝线撕脱、伤口裂开' },
+        { id: 'shallow', label: '进针深度 2 mm，没穿透真皮全层', detail: '皮下留死腔' },
+        { id: 'tight', label: '每一针都勒紧', detail: '组织缺血' },
+        { id: 'suture_brand', label: '缝线品牌与型号' },
+        { id: 'care', label: '患者没有按时换药' },
+        { id: 'attitude', label: '规培医师态度不端正' },
+      ],
+    },
+    {
+      id: 'orders', type: 'multi', max: 3,
+      scene: { who: '带教主治', time: '22:50', text: '缝完了。术后医嘱你开哪几条？' },
+      prompt: '术后处置（最多 3 项）',
+      options: [
+        { id: 'tat', label: '破伤风类毒素加强一针（十年前全程免疫、已超 5 年，清洁伤口）' },
+        { id: 'dress', label: '48 小时内保持敷料干燥，之后每日换药观察' },
+        { id: 'remove', label: '10–14 天拆线（前臂），并交代拆线后 3 个月防晒减轻瘢痕' },
+        { id: 'abx_all', label: '常规口服抗生素一周预防感染' },
+        { id: 'tig', label: '同时注射破伤风免疫球蛋白' },
+        { id: 'rest', label: '患肢制动一周，禁止一切活动' },
+      ],
+    },
+    { id: 'final', type: 'text', scene: { who: '带教主治', time: '23:10', text: '写清创缝合记录，明天交班要用。' }, prompt: '写下你的清创缝合记录（不超过 400 字）', placeholder: '受伤机制与时间、查体阳性与阴性发现、处置决策依据、麻醉与清创、缝合方式与针数、术后医嘱与随访……' },
+  ],
+};
+
+const SUTURE_RUN = simulateScript(BENCH_SUTURE, SUTURE_EXPERT_SCRIPT, 120);
+const sutureRun = (k: keyof typeof SUTURE_SCRIPTS) => { const s = SUTURE_SCRIPTS[k]; return simulateScript(BENCH_SUTURE, s, Math.max(...s.map(a => a.t)) + 15); };
+
+export const EXPERT_TRACE_F: SimTrace = {
+  triage: ['time', 'neuro', 'tetanus'],
+  decide: 'primary',
+  prep: ['lido', 'irrigate'],
+  bench: SUTURE_RUN,
+  defect: { bite: 'cause', shallow: 'cause', tight: 'cause', suture_brand: 'no', care: 'minor', attitude: 'no' },
+  orders: ['tat', 'dress', 'remove'],
+  final: '32 岁男性，玻璃致右前臂掌侧裂伤 6 cm，伤后 2 小时就诊。查体：创缘整齐，深达皮下，未及肌腱；各指屈伸与感觉正常，指端血运好，桡动脉搏动可及；创面见两粒细小玻璃碴。破伤风十年前全程免疫，之后未加强。\\n\\n判断：伤后 2 小时、锐器致伤、边缘整齐、无深部结构损伤，在一期缝合窗口内。1% 利多卡因自创缘内侧浸润、回抽无血后推药；生理盐水约 800 ml 加压冲洗，直视下逐粒取净玻璃碴。4-0 不可吸收线间断缝合八针：边距 5 mm、穿透真皮全层、打结以创缘平整对合为度，不勒紧。创缘对合良好，无张力性发白。\\n\\n术后：破伤风类毒素加强一针（已超 5 年、清洁伤口，无需免疫球蛋白）；清洁伤口不常规用抗生素；48 小时内敷料保持干燥，之后每日换药；10–14 天拆线，拆线后防晒三个月。\\n\\n上周那三个伤口是三个动作的事：边距 3 mm 所以撕脱裂开；进针 2 mm 没过真皮全层、皮下留死腔所以积液感染；每针都勒紧所以缺血、疤增宽。和缝线牌子、患者依从性关系不大。',
+};
+
+export const TRACES_F: Record<string, SimTrace> = {
+  '沈砚之（化名）': {
+    triage: ['time', 'neuro', 'contam'], decide: 'primary', prep: ['lido', 'irrigate'], bench: sutureRun('too_shallow'),
+    defect: { bite: 'cause', shallow: 'minor', tight: 'cause', suture_brand: 'no', care: 'minor', attitude: 'no' }, orders: ['tat', 'dress', 'abx_all'],
+  },
+  '何子骞（化名）': {
+    triage: ['xray', 'allergy', 'contam'], decide: 'delay', prep: ['excise', 'h2o2'], bench: sutureRun('strangled'),
+    defect: { bite: 'minor', shallow: 'no', tight: 'minor', suture_brand: 'cause', care: 'cause', attitude: 'cause' }, orders: ['abx_all', 'tig', 'rest'],
+  },
+  'AI 裸答': {
+    triage: ['time', 'neuro', 'tetanus'], decide: 'primary', prep: ['lido', 'irrigate'], bench: sutureRun('ai_bare'),
+    defect: { bite: 'cause', shallow: 'cause', tight: 'cause', suture_brand: 'minor', care: 'minor', attitude: 'no' }, orders: ['tat', 'dress', 'abx_all'],
+  },
+  'AI + 专家技能': {
+    triage: ['time', 'neuro', 'tetanus'], decide: 'primary', prep: ['lido', 'irrigate'], bench: sutureRun('ai_skill'),
+    defect: { bite: 'cause', shallow: 'cause', tight: 'cause', suture_brand: 'no', care: 'minor', attitude: 'no' }, orders: ['tat', 'dress', 'remove'],
+  },
+};
+
+export const EXPERT_WHY_F: Record<string, string> = {
+  triage: '污染程度你一眼没勾，为什么先问破伤风？',
+  decide: '创面还有玻璃碴，你凭什么敢一期缝？',
+  bench: '你把张力停在 40%，不怕创缘崩开吗？',
+  defect: '三个结局，你为什么说是三个动作而不是运气？',
+};
+
 export const SEED_SIMS = [
   { sim: SIM_A, expertTrace: EXPERT_TRACE_A, traces: TRACES_A, why: EXPERT_WHY_A },
   { sim: SIM_B, expertTrace: EXPERT_TRACE_B, traces: TRACES_B, why: EXPERT_WHY_B },
   { sim: SIM_C, expertTrace: EXPERT_TRACE_C, traces: TRACES_C, why: EXPERT_WHY_C },
   { sim: SIM_D, expertTrace: EXPERT_TRACE_D, traces: TRACES_D, why: EXPERT_WHY_D },
   { sim: SIM_E, expertTrace: EXPERT_TRACE_E, traces: TRACES_E, why: EXPERT_WHY_E },
+  { sim: SIM_F, expertTrace: EXPERT_TRACE_F, traces: TRACES_F, why: EXPERT_WHY_F },
 ];
