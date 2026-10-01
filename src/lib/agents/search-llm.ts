@@ -12,7 +12,29 @@ export function parseJsonLoose(text: string): any {
   try { return JSON.parse(clean); } catch { /* 联网检索模式下模型偶尔会在 JSON 前后带说明文字 */ }
   const match = clean.match(/\{[\s\S]*\}/);
   if (!match) { console.error('[parseJsonLoose] no JSON in response:', clean.slice(0, 800)); throw new Error(`大模型未返回有效 JSON${clean ? `（返回开头：${clean.slice(0, 120)}）` : '（返回为空）'}`); }
-  try { return JSON.parse(match[0]); } catch (e: any) { console.error('[parseJsonLoose] invalid JSON:', match[0].slice(0, 800)); throw new Error(`大模型返回的 JSON 无法解析: ${e.message}`); }
+  try { return JSON.parse(match[0]); } catch { /* 再试一次修补 */ }
+  try { return JSON.parse(repairJson(match[0])); } catch (e: any) { console.error('[parseJsonLoose] invalid JSON:', match[0].slice(0, 800)); throw new Error(`大模型返回的 JSON 无法解析: ${e.message}`); }
+}
+
+/**
+ * 模型写长文本时常把真换行直接打进字符串里（JSON 里这是非法的），偶尔还留个尾随逗号。
+ * 这两类就是格式小毛病，内容本身是好的——补一下比整次重跑便宜得多。
+ */
+function repairJson(src: string): string {
+  let out = '', inStr = false, esc = false;
+  for (const ch of src) {
+    if (esc) { out += ch; esc = false; continue; }
+    if (ch === '\\') { out += ch; esc = true; continue; }
+    if (ch === '"') { inStr = !inStr; out += ch; continue; }
+    if (inStr) {
+      if (ch === '\n') { out += '\\n'; continue; }
+      if (ch === '\r') { continue; }
+      if (ch === '\t') { out += '\\t'; continue; }
+      if (ch < ' ') { continue; }
+    }
+    out += ch;
+  }
+  return out.replace(/,(\s*[}\]])/g, '$1');
 }
 
 const GROUNDING_REDIRECT = /^https?:\/\/vertexaisearch\.cloud\.google\.com\/grounding-api-redirect\//i;
