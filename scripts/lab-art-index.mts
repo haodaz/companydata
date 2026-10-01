@@ -23,10 +23,10 @@ const FAMILY: [RegExp, string][] = [
   [/公务|政务|社工|公共/, '公共服务'],
 ];
 const SCENE_SLOT: [RegExp, string][] = [
-  [/office|desk|workstation|办公/, '办公室'], [/meeting|conference|会议/, '会议室'],
-  [/workshop|factory|plant|shop_?floor|车间|产线/, '车间'], [/lab|实验/, '实验室'],
-  [/store|shop|retail|counter|bar|门店|吧台/, '门店'], [/kitchen|后厨|厨房/, '后厨'],
-  [/site|construction|工地/, '工地'], [/warehouse|仓/, '仓库'], [/server|机房/, '机房'],
+  [/offi|desk|workstation|办公/, '办公室'], [/meeting|conference|会议/, '会议室'],
+  [/workshop|factory|plant|shop_?floor|hall|车间|产线|厂房/, '车间'], [/lab|实验|检验|inspect/, '实验室'],
+  [/store|shop|retail|counter|bar|handoff|门店|吧台|出品/, '门店'], [/kitchen|后厨|厨房/, '后厨'],
+  [/site|construction|工地/, '工地'], [/warehouse|仓/, '仓库'], [/server|control_?room|机房|中控/, '机房'],
   [/classroom|教室/, '教室'], [/clinic|诊/, '诊室'], [/field|outdoor|户外/, '户外现场'], [/cockpit|驾驶/, '驾驶舱'],
 ];
 const NPC_SLOT: [RegExp, string][] = [
@@ -49,7 +49,7 @@ for (const t of tasks || []) {
     if (!url || seen.has(url)) continue; seen.add(url);
     // 文件名里的场景 key 才是线索（整条 URL 里的 lab-art 会把 slot 带到「实验室」去）
     const base = String(url).split('/').pop()!.replace(/\.[a-z]+$/i, '').replace(/^[a-z0-9]{8,}-/, '');
-    if (base === 'bench') continue;   // 工位底图和设备强绑，不进共用库
+    if (/^bench/.test(base)) continue;   // 工位底图和设备强绑，不进共用库
     rows.push({ kind: 'scene', family, slot: pick(SCENE_SLOT, `${stepId} ${base}`, '其他'), domain: skill?.domain || '', profession: skill?.name || '', prompt: base, url });
   }
   for (const [who, url] of Object.entries((art.npcs || {}) as Record<string, string>)) {
@@ -61,6 +61,13 @@ for (const t of tasks || []) {
 const uniq = [...new Map(rows.map(r => [r.url, r])).values()];
 for (const r of uniq) console.log(`${r.kind === 'npc' ? '👤' : '🏭'} ${r.family} / ${r.slot}  ← ${r.profession}  ${String(r.url).slice(-40)}`);
 console.log(`\n共 ${uniq.length} 张（场景 ${uniq.filter(r => r.kind === 'scene').length} · 立绘 ${uniq.filter(r => r.kind === 'npc').length}）`);
+// 早先误入库的工位底图清掉：它和具体设备强绑，复用到别的工位上就是答非所问
+const { data: inDb } = await supabaseAdmin.from('lab_art_assets').select('id, url');
+const stale = (inDb || []).filter(r => /\/([a-z0-9]{8,}-)?bench[_.]/.test(r.url));
+if (stale.length) {
+  console.log(`\n库里有 ${stale.length} 张工位底图该清掉：${stale.map(r => r.url.split('/').pop()).join('、')}`);
+  if (!dry) { await supabaseAdmin.from('lab_art_assets').delete().in('id', stale.map(r => r.id)); console.log('已清掉'); }
+}
 if (dry) { console.log('（--dry，没有写库）'); process.exit(0); }
 if (!uniq.length) process.exit(0);
 const { error: upErr } = await supabaseAdmin.from('lab_art_assets').upsert(uniq, { onConflict: 'url' });

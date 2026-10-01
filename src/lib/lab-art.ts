@@ -136,7 +136,8 @@ export interface ArtAsset { kind: 'scene' | 'npc'; family: string; slot: string;
 
 /** 库里找一张能直接用的：同组合够 POOL 张就随机给一张，不够就返回 null（让调用方去生成新的） */
 export async function findArtAsset(kind: 'scene' | 'npc', family: string, slot: string): Promise<string | null> {
-  if (!family || !slot) return null;
+  // 「其他」是个垃圾桶：中控室、备料间、交接台都会落进去，当成同一类复用就是答非所问，宁可重生
+  if (!family || !slot || slot === '其他') return null;
   try {
     const { supabaseAdmin } = await import('@/lib/supabase');
     const { data } = await supabaseAdmin.from('lab_art_assets').select('id, url, uses').eq('kind', kind).eq('family', family).eq('slot', slot).limit(ART_POOL + 5);
