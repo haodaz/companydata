@@ -137,6 +137,10 @@ export interface ArtAsset { kind: 'scene' | 'npc'; family: string; slot: string;
 
 /** 库里找一张能直接用的：同组合够 POOL 张就随机给一张，不够就返回 null（让调用方去生成新的） */
 export async function findArtAsset(kind: 'scene' | 'npc', family: string, slot: string): Promise<string | null> {
+  // 场景不复用。地点感太强了：同样归在「餐饮零售 / 门店」，酒吧吧台和宠物店完全是两回事——
+  // 省下那几张图的钱，换来一个「给狗护理却坐在酒吧里」，不划算。
+  // 人物立绘不一样：一位穿工装的带教师傅放在哪个厂里都成立，继续复用。
+  if (kind === 'scene') return null;
   // 「其他」是个垃圾桶：中控室、备料间、交接台都会落进去，当成同一类复用就是答非所问，宁可重生
   if (!family || !slot || slot === '其他') return null;
   try {
