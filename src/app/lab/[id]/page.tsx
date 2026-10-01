@@ -12,11 +12,11 @@ import { INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tz
 type Mode = 'career' | 'test' | 'learn' | 'solve' | 'ledger' | 'jd';
 
 const MODES: { key: Mode; label: string; icon: string }[] = [
-  { key: 'test', label: '考验新人', icon: '🎯' },
-  { key: 'learn', label: '向专家学习', icon: '🧠' },
-  { key: 'solve', label: '解决问题', icon: '⚡' },
-  { key: 'ledger', label: '错位时空', icon: '🌐' },
-  { key: 'jd', label: 'JD 拆解', icon: '🧬' },
+  { key: 'test', label: '让我考考你', icon: '🎯' },
+  { key: 'learn', label: '我跟谁学的', icon: '🧠' },
+  { key: 'solve', label: '丢个问题给我', icon: '⚡' },
+  { key: 'ledger', label: '我被用在哪里', icon: '🌐' },
+  { key: 'jd', label: '我的来历', icon: '🧬' },
 ];
 
 /** 打字机：新产出逐字浮现 */
@@ -305,6 +305,26 @@ export default function SpacePage() {
   const Label = ({ children }: { children: React.ReactNode }) => <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>{children}</div>;
   const field = (v: string, on: (s: string) => void, ph: string) => <input className="lab-input" style={{ padding: '9px 12px', fontSize: 14 }} value={v} onChange={e => on(e.target.value)} placeholder={ph} />;
 
+  // TA 的近况：向下考过谁 / 向上跟谁学 / 平行替谁解过问题——数字全是账本里真有的
+  const recent: string[] = (() => {
+    const out: string[] = [];
+    const humans = subs.filter((x: any) => x.candidate_type === 'human');
+    const batch = invs.filter((i: any) => i.kind === 'batch').reduce((a: number, i: any) => a + (i.volume || 0), 0);
+    const tested = humans.length + batch;
+    const gaps: Record<string, number> = {};
+    for (const x of humans) for (const g of ((x.grading?.gaps || []) as string[])) gaps[g] = (gaps[g] || 0) + 1;
+    const top = Object.entries(gaps).sort((a, b) => b[1] - a[1])[0];
+    if (tested) out.push(`我考过 ${tested} 个人${top ? (top[1] > 1 ? `，最多人栽在同一处：${top[0]}` : `，有人栽在「${top[0]}」`) : ''}`);
+    if (skill?.expert_name && skill.source !== 'jd-draft') {
+      const rules = skill.card?.rules?.length || 0;
+      const turns = (skill.interview || []).filter((t: any) => t.role === 'expert').length;
+      out.push(`这门手艺是 ${skill.expert_name}（${skill.expert_location}）教我的，学了 ${rules} 条判断、${turns} 轮追问`);
+    } else if (skill) out.push('这身手艺是我读完 JD 自己推断的，还等着第一位从业者来校正我');
+    const solved = invs.filter((i: any) => i.kind === 'solve');
+    if (solved.length) { const last: any = solved[solved.length - 1]; out.push(`${last.actor_location || '外地'}一位同行找过我：${String(last.context || '').replace(/。$/, '')}——我替他答了`); }
+    return out;
+  })();
+
   // 账本指标
   const origin = skill?.distilled_at;
   const spanDays = origin && invs.length ? Math.max(0, Math.round((new Date(invs[invs.length - 1].occurred_at).getTime() - new Date(origin).getTime()) / 86400_000)) : 0;
@@ -322,7 +342,11 @@ export default function SpacePage() {
       <section className={`lab-glass lab-in${busy ? ' lab-scan' : ''}`} style={{ padding: 'clamp(18px, 3vw, 30px)', display: 'flex', gap: 'clamp(18px, 3vw, 36px)', alignItems: 'center', flexWrap: 'wrap' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, flex: '0 0 auto', margin: '0 auto' }}>
           <div className={`lab-orb${busy ? ' busy' : ''}`} style={{ ['--s' as string]: '172px' }}>
-            <div className="ring" /><div className="ring r2" /><div className="core lab-mono" style={{ fontSize: 13 }}>{profile.codename || 'JD-CORE'}</div><div className="sat" />
+            <div className="ring" /><div className="ring r2" />
+            {profile.avatar
+              ? <div className="core" style={{ overflow: 'hidden', padding: 0 }}><img src={profile.avatar} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '54% 12%' }} /></div>
+              : <div className="core lab-mono" style={{ fontSize: 13 }}>{profile.codename || 'JD-CORE'}</div>}
+            <div className="sat" />
           </div>
           <div style={{ textAlign: 'center' }}>
             <div style={{ display: 'flex', gap: 3, justifyContent: 'center' }}>
@@ -334,14 +358,21 @@ export default function SpacePage() {
         </div>
 
         <div style={{ flex: '1 1 420px', minWidth: 0 }}>
-          <div className="lab-mono lab-cap">AI CORE PROFILE</div>
-          <h1 style={{ margin: '4px 0 2px', fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: 800, lineHeight: 1.3 }}>{jd.company} · {jd.title}</h1>
+          <div className="lab-mono lab-cap">{profile.name || 'AI CORE'}{profile.role ? ` · ${profile.role.toUpperCase()}` : ''}</div>
+          <h1 style={{ margin: '4px 0 2px', fontSize: 'clamp(22px, 3.2vw, 30px)', fontWeight: 800, lineHeight: 1.3 }}>
+            {profile.name ? <>{profile.name} <span style={{ color: 'var(--v)' }}>· {profile.role || ''}</span></> : <>{jd.company} · {jd.title}</>}
+          </h1>
           <div style={{ fontSize: 13, color: 'var(--ink3)' }}>
-            {jd.job_req_id && <>职位 ID {jd.job_req_id} · </>}{jd.location}
+            {profile.name ? <>{jd.company} · {jd.title}{jd.location ? ` · ${jd.location}` : ''}</> : <>{jd.job_req_id && <>职位 ID {jd.job_req_id} · </>}{jd.location}</>}
             {jd.url && <> · <a href={jd.url} target="_blank" rel="noreferrer" style={{ color: 'var(--v)' }}>官方 JD 原文 ↗</a></>}
           </div>
           <div style={{ margin: '14px 0', fontSize: 16, fontWeight: 600, color: 'var(--ink2)', minHeight: 26 }}>
             {busy ? <span style={{ color: 'var(--v)' }}>{busy}<span className="lab-dots" /></span> : profile.tagline ? `「${profile.tagline}」` : '我是拥有这份 JD 技能的员工 AI。'}
+          </div>
+
+          {/* TA 自己说的近况：向下考过谁、向上跟谁学、平行替谁解过问题——数字全是账本里真有的 */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 14, fontSize: 13.5, color: 'var(--ink2)', lineHeight: 1.75 }}>
+            {recent.map((r, i) => <div key={i}><span style={{ color: 'var(--v)', marginRight: 6 }}>{['↓', '↑', '↔'][i]}</span>{r}</div>)}
           </div>
 
           <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}>

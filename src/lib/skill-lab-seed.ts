@@ -11,7 +11,7 @@
  * 起点是两份真实 JD（抓取自企业官方招聘站，见 jd.url）；灌入时会把它们写进岗位库，任务从岗位库的这条 JD 拆解而来。
  * 专家与学生均为化名；题目中的业务情境与数据为虚构的练习材料，与相关企业的实际经营无关。
  */
-import type { SkillCard, InterviewTurn, RubricItem, Grading } from '@/lib/skill-lab';
+import type { SkillCard, InterviewTurn, RubricItem, Grading, SpaceProfile } from '@/lib/skill-lab';
 
 export interface SeedSubmission {
   candidate_name: string; candidate_type: 'human' | 'ai'; candidate_note: string; candidate_location: string;
@@ -42,8 +42,8 @@ export interface SeedCase {
     url: string; source_url: string; fetched_at: string;
   };
   task: {
-    /** 空间核心 AI 的档案 */
-    profile: { codename: string; tagline: string; capabilities: string[]; can_solve: string[] };
+    /** 空间核心那位从业者数字人的档案 */
+    profile: SpaceProfile;
     /** JD 拆解：职责原句 → 能力项 → 可检验的任务；chosen = 本题选中的那一条 */
     jd_breakdown: { duty: string; capability: string; task_idea: string; chosen?: boolean }[];
     title: string; brief: string; materials: string; deliverable: string; time_limit_min: number; rubric: RubricItem[];
@@ -116,7 +116,7 @@ const CASE_A: SeedCase = {
   },
   task: {
     profile: {
-      codename: 'DA-FANQIE', tagline: '指标一动，我先验数。',
+      codename: 'DA-FANQIE', name: 'NOVA-01', role: '归因师', avatar: '/lab/nova01.png', tagline: '指标一动，我先验数。',
       capabilities: ['指标异动归因', '贡献度拆解', 'A/B 实验评估', '业务指标口径', '把结论变成当天动作'],
       can_solve: ['「DAU / 转化率突然跌了，老板下午要说法」', '「这次活动到底有没有用，怎么评估」', '「一堆可能原因，怎么判断哪个是主因」', '「我的分析报告为什么总被打回」'],
     },
@@ -313,7 +313,7 @@ const CASE_B: SeedCase = {
   },
   task: {
     profile: {
-      codename: 'UFLP-MKT', tagline: '预算有限，先说不做什么。',
+      codename: 'UFLP-MKT', name: 'NOVA-02', role: '上市操盘手', avatar: '/lab/nova02.png', tagline: '预算有限，先说不做什么。',
       capabilities: ['消费者洞察', '营销组合取舍', '新品上市计划', '预算对漏斗', '止损线设计'],
       can_solve: ['「新品要上市，预算不多，渠道怎么选」', '「老板想全渠道都做，我该怎么劝」', '「我的提案被说没有洞察，怎么改」', '「这笔市场预算花得值不值，怎么算」'],
     },
@@ -499,7 +499,7 @@ const CASE_C: SeedCase = {
   },
   task: {
     profile: {
-      codename: 'CAST-PROC', tagline: '真空先于升温，模壳先于金属。',
+      codename: 'CAST-PROC', name: 'NOVA-03', role: '熔炼师', avatar: '/lab/nova03.png', tagline: '真空先于升温，模壳先于金属。',
       capabilities: ['真空熔炼操作顺序', '浇注温度窗口控制', '模壳预热与转运节拍', '铸造缺陷归因（冷隔 / 缩松 / 夹杂）', '工艺总结报告'],
       can_solve: ['「首炉试制，开炉前该核对什么」', '「叶片出了冷隔，是提温还是改模壳」', '「同一炉又冷隔又缩松，先改哪个」', '「新人上真空炉，先教他什么顺序」'],
     },
@@ -686,7 +686,7 @@ const CASE_D: SeedCase = {
   },
   task: {
     profile: {
-      codename: 'WELD-PROC', tagline: '气先于弧，速度稳住不停。',
+      codename: 'WELD-PROC', name: 'NOVA-04', role: '焊工师傅', avatar: '/lab/nova04.png', tagline: '气先于弧，速度稳住不停。',
       capabilities: ['气保焊起弧前检查', '焊接参数窗口', '行走速度控制', '焊缝缺陷归因（气孔 / 烧穿 / 未焊透）', '工艺记录与评审'],
       can_solve: ['「新人第一块试板该盯他哪几个动作」', '「起弧段一串气孔是怎么来的」', '「未焊透能不能靠提电流解决」', '「焊工培训先教什么顺序」'],
     },
@@ -873,7 +873,7 @@ const CASE_E: SeedCase = {
   },
   task: {
     profile: {
-      codename: 'BAR-LATTE', tagline: '奶打坏了，再好的手也画不出来。',
+      codename: 'BAR-LATTE', name: 'NOVA-05', role: '拉花师傅', avatar: '/lab/nova05.png', tagline: '奶打坏了，再好的手也画不出来。',
       capabilities: ['蒸奶与微泡判断', '融合与压低的时机', '心形 / 郁金香 / 树叶的轨迹与节奏', '拉花缺陷归因（发灰 / 大泡 / 歪斜）', '门店出品带教'],
       can_solve: ['「我动作都对，为什么杯子里什么图案都没有」', '「郁金香三瓣总是糊成一坨」', '「新人第一周先练什么」', '「这杯被退了，到底是哪一下错了」'],
     },
@@ -1063,7 +1063,7 @@ const CASE_F: SeedCase = {
   },
   task: {
     profile: {
-      codename: 'SURG-SUTURE', tagline: '对合，不是勒紧。',
+      codename: 'SURG-SUTURE', name: 'NOVA-06', role: '缝合师', avatar: '/lab/nova06.png', tagline: '对合，不是勒紧。',
       capabilities: ['一期缝合窗口判断', '远端功能与深部损伤排查', '清创与冲洗', '间断缝合三要素（边距 / 深度 / 张力）', '伤口愈合不良归因', '术后医嘱与拆线'],
       can_solve: ['「这个伤口还能不能缝」', '「缝完一周裂开了，是哪一步的问题」', '「规培第一次缝合先盯他哪三下」', '「清洁伤口要不要开抗生素」'],
     },
@@ -1254,7 +1254,7 @@ const CASE_G: SeedCase = {
   },
   task: {
     profile: {
-      codename: 'SURG-OPEN', tagline: '腹膜不提起来，不下剪刀。',
+      codename: 'SURG-OPEN', name: 'NOVA-07', role: '开腹医师', avatar: '/lab/nova07.png', tagline: '腹膜不提起来，不下剪刀。',
       capabilities: ['手术安全核查与术前准备', '切口选择', '腹壁分层与器械选择', '腹膜安全切开', '并发症倒推手术步骤', '术后管理与抗生素停用'],
       can_solve: ['「肌层能不能用电刀一路切下去」', '「术后肠梗阻，是哪一步伤到的」', '「显露不好该延长切口还是加深」', '「单纯阑尾炎抗生素要用几天」'],
     },

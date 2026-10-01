@@ -10,7 +10,8 @@ export interface SkillCard {
 }
 
 /** 空间核心 AI 的档案 */
-export interface SpaceProfile { codename: string; tagline: string; capabilities: string[]; can_solve: string[] }
+/** 空间核心那位「从业者数字人」的档案：name 是编号名（NOVA-05），role 是称呼（拉花师傅） */
+export interface SpaceProfile { codename: string; tagline: string; capabilities: string[]; can_solve: string[]; name?: string; role?: string; avatar?: string }
 
 /** 专业度：吸收的专家经验越多越高（规则数 + 访谈轮数），1-5 级 */
 export function expertiseLevel(skill?: { card?: SkillCard; interview?: InterviewTurn[] } | null): { level: number; label: string } {
