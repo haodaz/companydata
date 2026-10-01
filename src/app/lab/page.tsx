@@ -95,7 +95,7 @@ const CSS = `
 .ai100-stage.block { align-items: flex-start; }
 .ai100-stage.block .in { padding-top: clamp(44px, 6vw, 76px); padding-bottom: clamp(44px, 6vw, 76px); }
 .ai100-how { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 10px; margin-top: 28px; max-width: 1000px; }
-.ai100-how > div { padding: 15px 17px; border-radius: 16px; background: rgba(12,14,30,.52); border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.ai100-how > div { padding: 16px 18px; border-radius: 16px; background: rgba(9,11,24,.74); border: 1px solid rgba(255,255,255,.16); backdrop-filter: blur(22px) saturate(1.3); -webkit-backdrop-filter: blur(22px) saturate(1.3); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
 
 .ai100-cols { columns: 5; column-gap: 26px; }
 @media (max-width: 1100px) { .ai100-cols { columns: 3; } }
@@ -329,7 +329,7 @@ export default function LabLanding() {
             <div className="lab-mono lab-cap" style={{ color: 'rgba(255,255,255,.6)' }}>VISUALIZED WORKSPACE</div>
             <h2 className="ai100-h2" style={{ color: '#fff' }}>按行业真实的场景构建<br />可视化的职业空间</h2>
           </div>
-          <div style={{ maxWidth: 640, marginTop: 6 }}>
+          <div style={{ maxWidth: 640, marginTop: 6, padding: '2px 18px 6px', borderRadius: 16, background: 'rgba(9,11,24,.56)', backdropFilter: 'blur(18px)', WebkitBackdropFilter: 'blur(18px)' }}>
             {[
               ['环境', '贮箱、试车台、凌晨四点的烘焙间——照着这个行当的真实现场生成。'],
               ['工位', '数据定义的虚拟设备。控件、量表、参数窗口、违规判据和合格线都按行业标准建模，摄像头可以接进来，手上的轨迹直接驱动它。'],
@@ -345,11 +345,11 @@ export default function LabLanding() {
             {HOW.map((x, i) => (
               <div key={x.t} className="lab-in" style={{ animationDelay: `${i * 60}ms` }}>
                 <div style={{ fontSize: 16, fontWeight: 800, marginBottom: 7, color: '#fff' }}>{x.t}</div>
-                <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.72)', lineHeight: 1.9 }}>{x.d}</div>
+                <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.86)', lineHeight: 1.9 }}>{x.d}</div>
               </div>
             ))}
           </div>
-          <button className="lab-btn" style={{ height: 50, padding: '0 26px', marginTop: 28 }} onClick={() => router.push('/lab/spaces')}>随便挑一个站进去 →</button>
+          <button className="lab-btn" style={{ height: 50, padding: '0 26px', marginTop: 28 }} onClick={() => router.push('/lab/spaces')}>立刻体验 →</button>
         </div>
       </div>
 
