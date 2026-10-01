@@ -287,12 +287,19 @@ export default function LabLanding() {
           <div className="in">
             <div style={{ maxWidth: 620, color: '#fff' }}>
               <div className="lab-mono lab-cap" style={{ color: 'rgba(255,255,255,.65)' }}>VISUALIZED WORKSPACE</div>
-              <h2 className="ai100-h2" style={{ color: '#fff' }}>可视化的职业空间，<br />按这一行真实的样子建起来</h2>
-              <p style={{ fontSize: 'clamp(15px, 1.5vw, 17.5px)', lineHeight: 2, color: 'rgba(255,255,255,.86)', maxWidth: 580 }}>
-                一座空间由三层搭成：<b style={{ color: '#fff' }}>环境</b>——贮箱、试车台、烘焙间，照着这个行当的真实现场生成；
-                <b style={{ color: '#fff' }}>工位</b>——数据定义的虚拟设备，控件、量表、参数窗口、违规判据和合格线都按行业标准建模，还能把摄像头接进来，手上的轨迹直接驱动它；
-                <b style={{ color: '#fff' }}>人</b>——在场的师傅、客户、同事会跟你说话，告诉你这一步为什么不能将就。
-              </p>
+              <h2 className="ai100-h2" style={{ color: '#fff' }}>按行业真实的场景构建<br />可视化的职业空间</h2>
+              <div style={{ maxWidth: 600, marginTop: 6 }}>
+                {[
+                  ['环境', '贮箱、试车台、凌晨四点的烘焙间——照着这个行当的真实现场生成。'],
+                  ['工位', '数据定义的虚拟设备。控件、量表、参数窗口、违规判据和合格线都按行业标准建模，摄像头可以接进来，手上的轨迹直接驱动它。'],
+                  ['在场的人', '师傅、客户、同事会跟你说话，告诉你这一步为什么不能将就。'],
+                ].map(([k, v], i) => (
+                  <div key={k} style={{ display: 'flex', gap: 16, padding: '13px 0', borderTop: i ? '1px solid rgba(255,255,255,.16)' : 0 }}>
+                    <div style={{ flexShrink: 0, width: 72, fontSize: 15.5, fontWeight: 800, color: '#fff' }}>{k}</div>
+                    <div style={{ fontSize: 14.5, lineHeight: 1.95, color: 'rgba(255,255,255,.8)' }}>{v}</div>
+                  </div>
+                ))}
+              </div>
               <button className="lab-btn" style={{ height: 50, padding: '0 26px', marginTop: 24 }} onClick={() => router.push('/lab/spaces')}>随便挑一个站进去 →</button>
             </div>
           </div>
@@ -335,8 +342,8 @@ export default function LabLanding() {
           <Art src="/lab-landing/concept-three.jpg" alt="向下考核、向上学习、平行解决" />
           <div>
             <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>03 / 能力</div>
-            <h2 className="ai100-h2">一个在岗的人，能<span className="ai100-grad">向下、向上、向旁边</span>同时发力</h2>
-            <p className="ai100-lead" style={{ marginBottom: 20 }}>这是数字职人和「教学视频」最本质的区别：他不是等着被看的内容，他是一个能干活的对象。</p>
+            <h2 className="ai100-h2">AI 数字职人，<span className="ai100-grad">向下、向上、向四方</span>同时发力</h2>
+            <p className="ai100-lead" style={{ marginBottom: 20 }}>他是一个能接活的 AI：你可以把人交给他考，把经验交给他学，也可以把一个具体的问题直接扔给他办。</p>
             <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))' }}>
               {DO.map(x => (
                 <div key={x.k} className="lab-glass" style={{ padding: '15px 17px' }}>
