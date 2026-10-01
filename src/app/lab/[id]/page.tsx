@@ -9,13 +9,14 @@ import { SimRunner, SimStage, TraceCompare, enterFullscreen } from '@/components
 import { traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tzLabel, type InterviewTurn, type RubricItem } from '@/lib/skill-lab';
 
-type Mode = 'career' | 'test' | 'learn' | 'solve' | 'ledger' | 'jd';
+type Mode = 'career' | 'test' | 'learn' | 'solve' | 'ledger' | 'eco' | 'jd';
 
 const MODES: { key: Mode; label: string; icon: string }[] = [
   { key: 'test', label: '让我考考你', icon: '🎯' },
   { key: 'learn', label: '我跟谁学的', icon: '🧠' },
   { key: 'solve', label: '丢个问题给我', icon: '⚡' },
   { key: 'ledger', label: '我被用在哪里', icon: '🌐' },
+  { key: 'eco', label: '我的行当', icon: '🗺️' },
   { key: 'jd', label: '我的来历', icon: '🧬' },
 ];
 
@@ -178,6 +179,17 @@ export default function SpacePage() {
   const [answering, setAnswering] = useState(false);
   /** 演示模式：带着专家轨迹进故事线，每一步预填好、工位自己走 */
   const [demo, setDemo] = useState<any | null>(null);
+  /** 「我的行当」：同行 / 在招 / 上下游，进这一层才拉 */
+  const [eco, setEco] = useState<any | null>(null);
+  const [ecoBusy, setEcoBusy] = useState(false);
+  useEffect(() => {
+    if (mode !== 'eco' || eco || ecoBusy) return;
+    setEcoBusy(true);
+    fetch(`/api/lab/spaces/${id}/ecosystem`).then(r => r.json())
+      .then(j => { if (j.ok) setEco(j); else message.error(j.error); })
+      .catch(e => message.error(e.message)).finally(() => setEcoBusy(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode]);
   // 向专家学习
   const [expert, setExpert] = useState({ name: '', title: '', location: '' });
   const [walk, setWalk] = useState('');
@@ -686,6 +698,77 @@ export default function SpacePage() {
       {mode === 'career' && jd.career && <CareerPanel career={jd.career} onTry={() => setMode('test')} />}
 
       {/* ── JD 拆解 ── */}
+      {mode === 'eco' && (
+        <div className="lab-in" style={{ display: 'grid', gap: 16 }}>
+          {ecoBusy && !eco && <div className="lab-glass lab-scan" style={{ padding: 40, textAlign: 'center' }}><span className="lab-mono" style={{ color: 'var(--ink3)' }}>正在找我的同行与上下游<span className="lab-dots" /></span></div>}
+          {eco && <>
+            {/* 同行 */}
+            <div className="lab-glass" style={{ padding: 20 }}>
+              <Label>和我一个行当的 · {eco.family}</Label>
+              {eco.peers.length ? (
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                  {eco.peers.map((p: any) => (
+                    <div key={p.id} onClick={() => router.push(`/lab/${p.id}`)} className="lab-glass hover" style={{ padding: '10px 14px 10px 10px', display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+                      {p.avatar ? <img src={p.avatar} alt="" style={{ width: 38, height: 38, borderRadius: 19, objectFit: 'cover', objectPosition: '54% 12%', background: '#fff' }} /> : <div className="lab-orb" style={{ ['--s' as string]: '38px' }}><div className="ring" /><div className="core" /></div>}
+                      <div style={{ minWidth: 0 }}>
+                        <div style={{ fontSize: 14, fontWeight: 700 }}>{p.role || p.profession}</div>
+                        <div className="lab-mono lab-cap">{p.name}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : <div style={{ fontSize: 13, color: 'var(--ink3)' }}>这个行当里现在就我一个。再建几个相近职业的空间，我们就能互相找到。</div>}
+            </div>
+
+            {/* 上下游 */}
+            <div className="lab-glass" style={{ padding: 20 }}>
+              <Label>我的上下游 · 环节下面是企业库里真实的公司</Label>
+              <div style={{ display: 'grid', gap: 14, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))' }}>
+                {([['上游 · 谁供给我', eco.chain.upstream, 'c'], ['下游 · 我的产出给谁', eco.chain.downstream, 'p']] as [string, any[], string][]).map(([t, nodes, tone]) => (
+                  <div key={t}>
+                    <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>{t}</div>
+                    {nodes.map((n: any) => (
+                      <div key={n.stage} style={{ marginBottom: 12, paddingLeft: 12, borderLeft: `2px solid ${tone === 'c' ? 'rgba(18,181,203,.5)' : 'rgba(255,95,162,.5)'}` }}>
+                        <div style={{ fontSize: 14.5, fontWeight: 700 }}>{n.stage}</div>
+                        <div style={{ fontSize: 12.5, color: 'var(--ink3)', margin: '2px 0 6px', lineHeight: 1.6 }}>{n.what}</div>
+                        {n.companies?.length ? n.companies.map((c: any) => (
+                          <div key={c.id} style={{ fontSize: 12.5, color: 'var(--ink2)', lineHeight: 1.85 }}>
+                            <b>{c.name}</b>{c.city ? <span style={{ color: 'var(--ink3)' }}> · {c.city}</span> : null}
+                            {c.industry ? <span style={{ color: 'var(--ink3)' }}> · {c.industry}</span> : null}
+                          </div>
+                        )) : <div style={{ fontSize: 12, color: 'var(--ink3)' }}>企业库里还没有这一段的公司</div>}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 此刻在招 */}
+            <div className="lab-glass" style={{ padding: 20 }}>
+              <Label>这个行当此刻在招 · 来自岗位库的真实 JD</Label>
+              {eco.hiring.total ? <>
+                <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap', marginBottom: 12 }}>
+                  {[['在招岗位', eco.hiring.total], ['城市', eco.hiring.cities.length], ['用人单位', eco.hiring.companies.length]].map(([k, v]: any) => (
+                    <div key={k}><div className="lab-mono" style={{ fontSize: 24, fontWeight: 800, letterSpacing: 0 }}>{v}</div><div className="lab-mono lab-cap">{k}</div></div>
+                  ))}
+                </div>
+                {eco.hiring.cities.length > 0 && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 12 }}>{eco.hiring.cities.map((c: string) => <span key={c} className="lab-chip g">{c}</span>)}</div>}
+                {eco.hiring.samples.map((j: any) => (
+                  <div key={j.id} style={{ padding: '8px 0', borderTop: '1px solid var(--line)', fontSize: 13, display: 'flex', gap: 10, alignItems: 'baseline', flexWrap: 'wrap' }}>
+                    <span style={{ color: 'var(--ink3)', fontSize: 12.5 }}>{j.company}</span>
+                    <b>{j.name}</b>
+                    {j.city && <span className="lab-chip g">{j.city}</span>}
+                    {j.edu && <span className="lab-chip g">{j.edu}</span>}
+                    {j.url && <a href={j.url} target="_blank" rel="noreferrer" style={{ color: 'var(--v)', fontSize: 12.5 }}>原文 ↗</a>}
+                  </div>
+                ))}
+              </> : <div style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.8 }}>岗位库里暂时没有和我直接对得上的在招岗位。库里的 JD 多起来，这里就会长出来。</div>}
+            </div>
+          </>}
+        </div>
+      )}
+
       {mode === 'jd' && (
         <div className="lab-in" style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 440px), 1fr))', alignItems: 'start' }}>
           <div className="lab-glass" style={{ padding: 22, minWidth: 0 }}>
