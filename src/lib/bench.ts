@@ -331,9 +331,11 @@ export function sanitizeBenchSpec(raw: any): BenchSpec | null {
     goals: raw.goals.filter((g: any) => g?.id && g?.when).map((g: any) => ({ id: String(g.id), label: String(g.label || g.id), when: String(g.when), hold: g.hold ? Number(g.hold) : undefined, after: g.after ? String(g.after) : undefined })),
     expertScript: Array.isArray(raw.expertScript) ? raw.expertScript.filter((a: any) => a?.control).map((a: any) => ({ t: Number(a.t) || 0, control: String(a.control), value: Number(a.value) || 0 })) : undefined,
   };
-  if (raw.scene && typeof raw.scene.image === 'string' && /^(\/|https?:\/\/)/.test(raw.scene.image) && Array.isArray(raw.scene.layers)) {
+  // 没有底图也能有场景：轨迹 / 工作面 / 阶段提示这几层是画出来的，生图失败不应该让整台工位报废
+  const img = typeof raw.scene?.image === 'string' && /^(\/|https?:\/\/)/.test(raw.scene.image) ? raw.scene.image.slice(0, 500) : '';
+  if (raw.scene && Array.isArray(raw.scene.layers)) {
     const KINDS = ['glow', 'lamp', 'door', 'stream', 'pulse', 'readout', 'haze', 'seam', 'pour', 'cup', 'coach'];
-    spec.scene = { image: raw.scene.image.slice(0, 500), credit: raw.scene.credit ? String(raw.scene.credit).slice(0, 200) : undefined,
+    spec.scene = { image: img, credit: raw.scene.credit ? String(raw.scene.credit).slice(0, 200) : undefined,
       layers: raw.scene.layers.filter((l: any) => l?.id && KINDS.includes(l.kind)).slice(0, 40).map((l: any) => ({ id: String(l.id), kind: l.kind, control: l.control ? String(l.control) : undefined, cold: !!l.cold, x: Number(l.x) || 0, y: Number(l.y) || 0, w: Number(l.w) || 0, h: Number(l.h) || 0, level: l.level ? String(l.level) : undefined, on: l.on ? String(l.on) : undefined, text: l.text ? String(l.text) : undefined, unit: l.unit ? String(l.unit) : undefined, digits: l.digits !== undefined ? Number(l.digits) : undefined, color: l.color ? String(l.color).slice(0, 30) : undefined, label: l.label ? String(l.label).slice(0, 80) : undefined, pace: l.pace !== undefined ? Number(l.pace) : undefined, deviation: l.deviation ? String(l.deviation) : undefined, points: Array.isArray(l.points) ? l.points.filter((q: any) => typeof q?.x === 'number' && typeof q?.y === 'number').slice(0, 400).map((q: any) => ({ x: Number(q.x), y: Number(q.y) })) : undefined })) };
   }
   if (!spec.controls.length || !spec.goals.length) return null;

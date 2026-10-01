@@ -41,10 +41,15 @@ if (b) {
   const spec = b.bench;
   console.log(`   ${spec.name}`);
   console.log(`   控件 ${spec.controls.map((c: any) => `${c.label}(${c.kind})`).join('、')}`);
-  console.log(`   变量 ${spec.vars.length} · 规则 ${spec.rules.length} · 目标 ${spec.goals.length} · 场景层 ${spec.scene ? spec.scene.layers.map((l: any) => l.kind).join(',') : '（本次关掉了生图，所以没有场景层）'}`);
+  console.log(`   变量 ${spec.vars.length} · 规则 ${spec.rules.length} · 目标 ${spec.goals.length}`);
+  console.log(`   场景层 ${spec.scene ? spec.scene.layers.map((l: any) => l.kind).join(', ') : '（无）'}`);
+  const tl = spec.scene?.layers?.find((l: any) => l.kind === 'pour' || l.kind === 'seam');
+  console.log(`   轨迹工位：${tl ? `✅ ${tl.kind}，绑 ${tl.control}，${tl.points ? tl.points.length + ' 个折线点' : '直线'}，引导点 ${tl.pace || '无'}，偏离写入 ${tl.deviation || '无'}` : '❌ 不是轨迹工位'}`);
   const tr = simulateScript(spec, spec.expertScript || [], Math.max(...(spec.expertScript || [{ t: 0 }]).map((a: any) => a.t)) + 30);
   console.log(`   老手脚本自检：目标 ${tr.metrics.goals_done}/${tr.metrics.goals_total}，违规 ${tr.metrics.violations}`);
   console.log(benchTimeline(spec, tr).split('\n').filter(l => /违规|达成/.test(l)).slice(0, 8).map(l => '     ' + l).join('\n'));
 }
+fs.writeFileSync('.probe-space.json', JSON.stringify({ jd, sim, skill: built.skill, rubric: built.task.rubric }, null, 1));
+console.log('\n生成结果已存 .probe-space.json');
 console.log(`\n⑤ 评分标准：${built.task.rubric.map((r: any) => `${r.name}(${r.weight})`).join(' · ')}`);
 console.log(`\n总耗时 ${Math.round((Date.now() - t0) / 1000)} 秒`);

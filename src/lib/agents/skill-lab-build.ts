@@ -19,10 +19,14 @@ import { artAvailable, makeNpcAsset, makeSceneAsset } from '@/lib/lab-art';
 const DEFAULT_MODEL = 'gemini-3.8-flash';
 export type Progress = (phase: string, detail?: string) => void;
 
-async function ask(prompt: string, modelId: string, taskName: string): Promise<any> {
-  const result = await generateContent(prompt, modelId, { jsonMode: true });
-  await logTokenUsage({ tool_name: 'skill-lab', task_name: taskName, institution: '', model_id: modelId, usageMetadata: result.usageMetadata, success: true }).catch(() => {});
-  return parseJsonLoose(result.text);
+/** 大模型偶尔会把 JSON 输出截断（尤其是技能卡这种长输出），解析不到就重试一次，别让整次构建跟着挂掉 */
+async function ask(prompt: string, modelId: string, taskName: string, retries = 1): Promise<any> {
+  for (let i = 0; ; i++) {
+    const result = await generateContent(prompt, modelId, { jsonMode: true });
+    await logTokenUsage({ tool_name: 'skill-lab', task_name: taskName, institution: '', model_id: modelId, usageMetadata: result.usageMetadata, success: true }).catch(() => {});
+    try { return parseJsonLoose(result.text); }
+    catch (e) { if (i >= retries) throw e; console.warn(`[build] ${taskName} 返回的 JSON 解析失败，重试第 ${i + 2} 次`); }
+  }
 }
 
 const stepsText = (sim: Sim) => sim.steps.map((s, i) => `步骤 ${i + 1}（id=${s.id}，类型=${s.type}）${s.scene ? `\n  场景：${s.scene.who}${s.scene.time ? ` ${s.scene.time}` : ''}：${s.scene.text}` : ''}\n  要求：${s.prompt}${s.max ? `（最多选 ${s.max} 个）` : ''}${s.total ? `（总量 ${s.total}${s.unit || ''}）` : ''}${s.options ? `\n  条目：${s.options.map(o => `${o.id}=${o.label}`).join('；')}` : ''}${s.labels ? `\n  标签：${s.labels.map(l => `${l.id}=${l.label}`).join('；')}` : ''}`).join('\n');
@@ -84,15 +88,25 @@ BenchSpec 的 JSON 结构（所有字段名必须完全一致）：
   "name": "<工位名>", "brief": "<这台设备 / 系统是什么，目标是什么，2–3 句>",
   "timeScale": <每 1 真实秒推进多少模拟秒，1–10>, "maxSeconds": <模拟秒上限，120–1200>,
   "vars": [ { "id": "<变量 id>", "label": "<中文名>", "initial": <初值>, "rate": "<每模拟秒的变化率表达式，可省略>", "set": "<每拍直接赋值的表达式，可省略>", "min": <可省略>, "max": <可省略> } ],
-  "controls": [ { "id": "<控件 id>", "label": "<中文名>", "kind": "knob" | "switch" | "button" | "path", "min": <knob>, "max": <knob>, "step": <knob>, "unit": "<knob>", "initial": <初值>, "hint": "<一句操作提示>" } ],
+  "controls": [ { "id": "<控件 id>", "label": "<中文名>", "kind": "knob" | "switch" | "button" | "path", "min": <knob>, "max": <knob>, "step": <knob>, "unit": "<knob>", "initial": <初值>, "hint": "<一句操作提示>", "hidden": <true 表示不上面板、由场景里的动作直接写入，只给轨迹工位的「偏离」用> } ],
   "gauges": [ { "id": "", "label": "", "unit": "", "expr": "<表达式>", "min": 0, "max": 100, "digits": 0, "warn": "<为真时仪表变红的表达式，可省略>" } ],
   "rules": [ { "id": "", "label": "<违规 / 提醒的中文说明>", "when": "<表达式>", "severity": "violation" | "warning", "once": true } ],
   "goals": [ { "id": "", "label": "<目标中文说明>", "when": "<表达式>", "hold": <需持续的秒数，可省略>, "after": "<必须在哪个目标之后才算，可省略>" } ],
   "expertScript": [ { "t": <模拟秒>, "control": "<控件 id>", "value": <数值> } ],
-  "layers": [ { "id": "", "kind": "glow" | "lamp" | "door" | "stream" | "pulse" | "readout" | "haze", "x": 0-100, "y": 0-100, "w": 0-100, "h": 0-100, "level": "<0–1 表达式，glow/door/haze 用>", "on": "<真假表达式，lamp/door/stream/pulse 用>", "text": "<readout 显示的表达式>", "unit": "", "label": "", "color": "#hex" } ]
+  "layers": [ { "id": "", "kind": "glow" | "lamp" | "door" | "stream" | "pulse" | "readout" | "haze" | "seam" | "pour" | "cup" | "coach", "x": 0-100, "y": 0-100, "w": 0-100, "h": 0-100, "level": "<0–1 表达式，glow/door/haze/cup 用>", "on": "<真假表达式，lamp/door/stream/pulse/seam/coach 用>", "text": "<readout 显示的表达式>", "unit": "", "label": "", "color": "#hex",
+    "control": "<seam / pour 绑定的 path 控件 id>", "points": [ { "x": 0-100, "y": 0-100 } ], "pace": <pour：引导点的推荐速度，% 每模拟秒>, "deviation": "<pour：把「手离轨迹多远」写进哪个隐藏 knob 控件>" } ]
 }
 表达式语法（严格）：数字、变量名（vars 的 id、controls 的 id、t 当前模拟秒、dt 本拍秒数）、+ - * / %、比较 < <= > >= == !=、逻辑 && || !、三元 ? :、括号、函数 min(a,b) max(a,b) abs(x) clamp(x,lo,hi)。不允许其它函数、不允许字符串、不允许引用不存在的 id。
 控件语义：switch 值 0/1；button 按下时 value=1（用一个变量的 set 记录它被按过：如 "set": "max(poured, pour)"）；knob 连续量；path 是 0–100 的单向推进（如「沿轨迹行走」），中间过程不逐点记事件。
+
+【轨迹工位】先判断一件事：这个岗位有没有一段「手沿着一条路径走」的核心动作？有就优先做成轨迹工位，不要退而去做旁边那道旋钮开关工序（焊接走焊缝、咖啡拉花注入、裱花、涂胶 / 打胶、刺绣 / 缝纫、美甲彩绘、刺青、理发裁剪、调酒拉花、手术缝合、刷漆 / 刮腋子、电路板走线……）。这是这套系统最有价值的形态（学生可以拖鼠标走，也可以打开摄像头、捏住拇指和食指用手走）：
+  • 一个 path 控件（如 pour / torch）+ 一个 hidden 的 knob 控件（如 dev，min 0 max 400，写「手离轨迹有多远」，单位是场景像素，表达式里自己换算成毫米）
+  • 一个 pour 层：control 指 path 控件，points 给 10–40 个点的折线（百分比坐标，允许在空间上折返——进度按折线长度算，所以来回走也是单向前进），pace 给推荐速度（常见 1.5–2.5），deviation 指那个隐藏控件
+  • 可选 cup 层：工作面是一个圆（杯口 / 托盘 / 工件表面）时用。level 表达式 = 「这一刻落在表面上的痕迹有多大」（0–1，接近 0 就不留痕），学生手走到哪里、当时的参数是多少，图案就实时长成什么样——走歪了就是歪的
+  • 2–4 个 coach 层：x 给 50、y 给 9（第二条提示给 19），w/h 给 0，on 是进度区间表达式（如 "pour < 34"），label 是这一段该做什么的一句话。别超过 4 条，也别把 y 给到 85 以下（底下是控件条）
+  • 规则里至少一条拿偏离写（如 "dev > 150" = 跑出轨迹），变量里算一个平均偏离喂给成品质量
+  • 行走速度这样算：{ "id": "prev", "set": "<path控件id>" } 和 { "id": "speed", "set": "(<path控件id> - prev) / dt", "min": 0 }
+  seam 是轨迹的简化版：只有一条直线（x,y → x+w,y+h），手柄画成焊枪，on 为真时出火花。焊接类用 seam，其他轨迹用 pour。
 时间：变量按 rate 每模拟秒积分（t 递增），set 每拍重算；操作要能在 3–6 分钟真实时间内做完。
 `;
 
@@ -111,6 +125,30 @@ function benchSpecProblem(raw: any): string {
 
 export async function designBench(jd: JdInput, task: { title: string; brief: string }, sim: Sim, modelId = DEFAULT_MODEL): Promise<BenchDesign | null> {
   const example = JSON.stringify({ ...BENCH_WELD, scene: undefined, expertScript: BENCH_WELD.expertScript }, null, 0);
+  // 轨迹工位的样子（咖啡拉花）：只给控件与层，让模型看懂折线轨迹 + 工作面 + 阶段提示怎么配套
+  const trackExample = JSON.stringify({
+    controls: [
+      { id: 'h', label: '奶缸高度', kind: 'knob', min: 0.5, max: 8, step: 0.5, unit: 'cm', initial: 6, hint: '融合要高，出图案要压到 1 cm' },
+      { id: 'flow', label: '注入流量', kind: 'knob', min: 0, max: 100, step: 5, unit: '%', initial: 0 },
+      { id: 'pour', label: '注入轨迹', kind: 'path', hint: '拖着奶缸沿白色轨迹走；也可以打开摄像头用手走' },
+      { id: 'dev', label: '偏离', kind: 'knob', min: 0, max: 400, initial: 0, hidden: true },
+    ],
+    vars: [
+      { id: 'prev', initial: 0, set: 'pour' },
+      { id: 'speed', label: '移动速度', initial: 0, set: '(pour - prev) / dt', min: 0 },
+      { id: 'pouring', initial: 0, set: 'speed > 0.4 && flow > 8 ? 1 : 0' },
+      { id: 'dev_sum', initial: 0, rate: 'pouring == 1 ? dev : 0' },
+      { id: 'dev_time', initial: 0, rate: 'pouring == 1 ? 1 : 0' },
+      { id: 'dev_avg', label: '平均偏离', initial: 0, set: 'dev_time > 0.5 ? dev_sum / dev_time : 0' },
+    ],
+    layers: [
+      { id: 'cup', kind: 'cup', x: 32.5, y: 28.9, w: 30, h: 53.3, level: 'clamp((2.6 - h) / 2.1, 0, 1) * clamp(flow / 45, 0, 1) * pouring' },
+      { id: 'trail', kind: 'pour', x: 0, y: 0, w: 0, h: 0, control: 'pour', deviation: 'dev', pace: 1.6, on: 'flow > 8',
+        points: [{ x: 47.5, y: 50.4 }, { x: 49.4, y: 53.6 }, { x: 47.5, y: 56.8 }, { x: 45.6, y: 53.6 }, { x: 47.5, y: 50.4 }, { x: 47.5, y: 69.4 }, { x: 50.6, y: 69.4 }, { x: 44.4, y: 68.6 }, { x: 47.5, y: 52.2 }, { x: 47.5, y: 74.4 }] },
+      { id: 'c1', kind: 'coach', x: 50, y: 9, w: 0, h: 0, on: 'pour < 34', label: '① 融合：奶缸抬到 4–6 cm，细水注进杯心' },
+      { id: 'c2', kind: 'coach', x: 50, y: 9, w: 0, h: 0, on: 'pour >= 34 && pour < 85', label: '② 压低：奶缸贴到液面再加流量，白色才浮得上来' },
+    ],
+  }, null, 0);
   let feedback = '';
   // 三轮里记住最好的一版：目标全达成但老手脚本撞了规则的，最后兜底把撞上的规则删掉（规则多半写错了）
   let best: { spec: BenchSpec; layers: any[]; p: any; violated: string[]; score: number } | null = null;
@@ -133,17 +171,26 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
       ${stepsText(sim)}
 
       ${DSL}
-      一个合格的例子（气保焊工位）：
+      一个合格的例子（气保焊工位，设备类）：
       ${example}
+
+      轨迹工位长什么样（咖啡拉花，只截了控件 / 变量 / 层）：
+      ${trackExample}
 
       设计要求：
       1. 3–6 个控件，3–5 个仪表，3–6 条规则（其中至少 2 条 violation 反映真实事故：顺序错、超限、停顿、忘关），4–6 个目标（含顺序性：after / hold）。
       2. 必须给出 expertScript：一位老手的完整操作脚本，按时间顺序，它在模拟器里跑完必须达成全部目标且零违规。
       3. 数值要自洽：rate 的量级要让老手脚本在 maxSeconds 内完成；变量加 min/max 防止发散。
-      4. 场景 layers 的布局固定：画面左侧 1/4 是控制柜（正面，带数字显示屏和指示灯），中间 1/2 是主设备，右侧 1/4 是辅助设备。readout 放 x 5–14、y 25–45；lamp 放 x 15–19、y 25–36；glow / door / stream 放中间 x 35–65、y 30–70；pulse 放右侧 x 80–92、y 35–55；haze 放中上 x 35–65、y 5–35。3–6 层即可。
-      5. scene_prompt：给文生图的中文提示词，必须以「半写实插画风格，正面平视的固定机位，画面左侧是……，画面中央是……，画面右侧是……」的结构描述与 layers 一致的布局，结尾加「明亮干净的工业光线，没有人物，没有文字，没有logo，16:9」。
+      4. 场景 layers 的布局分两种，按工位类型选一种：
+         • 设备 / 系统类（正面平视）：画面左侧 1/4 是控制柜（带数字显示屏和指示灯），中间 1/2 是主设备，右侧 1/4 是辅助设备。readout 放 x 5–14、y 25–45；lamp 放 x 15–19、y 25–36；glow / door / stream 放中间 x 35–65、y 30–70；pulse 放右侧 x 80–92、y 35–55；haze 放中上 x 35–65、y 5–35。3–6 层即可。
+         • 轨迹类（正俯视的工作面）：工作面在画面中间偏左，cup 层（如果有）给 x 32.5、y 28.9、w 30、h 53.3；轨迹 points 全部落在 x 40–55、y 32–78 这块里；readout 放左上 x 2–11、y 3–14；coach 放 x 50、y 9 与 19。
+      5. scene_prompt：给文生图的中文提示词，和 layers 的布局对得上：
+         • 设备类：以「半写实插画风格，正面平视的固定机位，画面左侧是……，画面中央是……，画面右侧是……」开头
+         • 轨迹类：以「半写实插画风格，正上方俯拍视角，画面中央完全空出一大片干净的工作台面，器具分布在四个角落：左上是……，右上是……，右下是……」开头（中间那片台面留给工作面和轨迹，千万不要在提示词里放东西）
+         两种都以「明亮干净的光线，没有人物，没有文字，没有logo，16:9」结尾。
       6. step：这一步在故事线里的位置和台词——scene（who 是故事线里已经出现过的人物，time，text 交代把设备交给新人）、prompt（一句话说明要完成什么）、insert_after（插在故事线哪个步骤 id 之后，通常是第 1 步之后）。
       7. 全部中文；控件 / 变量 id 用英文。
+      8. 层只画这台设备 / 这个工作面真的有的东西：没有爐膛就不要 glow、没有爐门就不要 door、没有烟雾就不要 haze。宁可少画几层，也不要把上面焊接例子里的东西搬到一个根本没有它们的工位上。
       ${feedback ? `\n上一次的设计没有通过校验，请修正后重新给出完整 JSON：\n${feedback}\n` : ''}
 
       返回 JSON：{ "bench": <BenchSpec，含 expertScript 与 layers>, "scene_prompt": "", "step": { "id": "bench", "scene": { "who": "", "time": "", "text": "" }, "prompt": "", "insert_after": "<步骤 id>" } }
@@ -258,6 +305,14 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
       if (withScene) { benchStep.bench = withScene; artCount++; scenes[benchStep.id] = benchUrl; if (!cover) cover = benchUrl; }
     }
     if (cover) sim.art = { cover, scenes, npcs };
+  }
+  // 没生图（或者生图挂了）也把层挂上：轨迹、工作面、阶段提示都是画出来的，不靠底图
+  {
+    const benchStep = sim.steps.find(s => s.type === 'bench');
+    if (benchStep?.bench && !benchStep.bench.scene && bench?.layers?.length) {
+      const withScene = sanitizeBenchSpec({ ...benchStep.bench, scene: { image: '', layers: bench.layers } });
+      if (withScene) benchStep.bench = withScene;
+    }
   }
 
   // 示范轨迹：草案里的每步示范 + 虚拟工位的老手脚本跑出的事件流

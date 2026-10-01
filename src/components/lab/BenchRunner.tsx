@@ -312,8 +312,10 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
 
   // ── 场景视图（底图 + 覆盖层 + 镜头角标） ──
   const sceneView = scene ? (
-    <div style={{ position: 'relative', borderRadius: hud ? 0 : 16, overflow: 'hidden', background: '#0f1224', aspectRatio: '16 / 9' }}>
-      <img src={scene.image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+    <div style={{ position: 'relative', borderRadius: hud ? 0 : 16, overflow: 'hidden', aspectRatio: '16 / 9',
+      // 没生成底图时用一张画出来的台面打底，轨迹和工作面照样能操作
+      background: scene.image ? '#0f1224' : 'radial-gradient(120% 90% at 50% 20%, #3b3026 0%, #241c15 55%, #140f0b 100%)' }}>
+      {scene.image && <img src={scene.image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
       <svg ref={sceneRef} viewBox={`0 0 ${VW} ${VH}`} preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', touchAction: 'none' }} xmlns="http://www.w3.org/2000/svg" onPointerMove={onScenePointerMove} onPointerUp={onScenePointerUp} onPointerLeave={onScenePointerUp}>
         <defs>
           <filter id="bench-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18" /></filter>

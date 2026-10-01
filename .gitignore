@@ -49,3 +49,4 @@ public/lab/gen/
 scripts/video/ffmpeg
 scripts/video/node_modules/
 scripts/video/package*.json
+.probe-space.json
