@@ -29,6 +29,8 @@ export default function LabHome() {
   const [jds, setJds] = useState<any[]>([]);
   const [jdsLoading, setJdsLoading] = useState(false);
   const [building, setBuilding] = useState<any | null>(null);
+  /** 刚生成完的成果小结（只给 AI 现场生成那条路；预置示范是现成的，直接进空间） */
+  const [done, setDone] = useState<any | null>(null);
   const [buildStep, setBuildStep] = useState(0);
   // 任意 JD：岗位库搜索 + 真实构建进度
   const { currentModel } = useModel();
@@ -100,7 +102,9 @@ export default function LabHome() {
     try {
       const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(prof ? { profession: prof, model: currentModel, buildId } : { jobId: job.id, model: currentModel, buildId }) })).json();
       if (!json.ok) throw new Error(json.error);
-      router.push(`/lab/${json.id}`);
+      setBuilding(null);
+      setDone({ ...json, secs: Math.round((Date.now() - buildSince) / 1000), name: prof || job.name, company: prof ? '职业探索' : job.institute_or_company_name, career: !!prof });
+      load();
     } catch (e: any) { message.error(e.message); setBuilding(null); }
   };
 
@@ -128,6 +132,43 @@ export default function LabHome() {
   };
 
   // ── 构建中：全屏科技感加载 ──
+  // 现场生成的落点：刚才那两分钟，岗位 AI 到底做出了什么
+  if (done) {
+    const sum = done.summary || {};
+    const b = sum.bench;
+    const mm = `${String(Math.floor(done.secs / 60)).padStart(2, '0')}:${String(done.secs % 60).padStart(2, '0')}`;
+    const cards: { k: string; v: React.ReactNode; note: string }[] = [
+      { k: '故事线', v: `${sum.steps || 0} 步`, note: sum.title || '一天的工作，拆成一连串要做的决定' },
+      { k: '技能卡草案', v: `${sum.rules || 0} 条规则`, note: `${sum.cardSteps || 0} 步做法 · 等第一位真人专家来校正` },
+      { k: '虚拟工位', v: b ? (b.track ? '轨迹工位' : '设备工位') : '本次没做出', note: b ? `${b.name}：${b.controls} 个控件 · ${b.goals} 个目标 · ${b.rules} 条规则` : (done.benchNote || '先以故事线为主') },
+      { k: '场景美术', v: `${(done.artCount || 0) + (done.artReused || 0)} 张`, note: done.artReused ? `新生成 ${done.artCount} 张 · 复用素材库 ${done.artReused} 张` : (done.artCount ? `${sum.scenes || 0} 个场景 · ${sum.npcs || 0} 位人物` : '文生图服务不可用') },
+    ];
+    return (
+      <div className="lab-in" style={{ minHeight: '70vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 22, textAlign: 'center' }}>
+        <div className="lab-orb" style={{ ['--s' as string]: '120px' }}><div className="ring" /><div className="ring r2" /><div className="core lab-mono" style={{ fontSize: 13 }}>✓</div><div className="sat" /></div>
+        <div>
+          <div className="lab-mono lab-cap">BUILT IN {mm}</div>
+          <div style={{ fontSize: 24, fontWeight: 800, marginTop: 6 }}>{done.company} · {done.name}</div>
+          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginTop: 6 }}>刚才这 {mm}，岗位 AI 从{done.career ? '一个职业名' : '这份 JD'}出发，自己做出了这些：</div>
+        </div>
+        <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', width: 'min(100%, 880px)' }}>
+          {cards.map(c => (
+            <div key={c.k} className="lab-glass" style={{ padding: 16, textAlign: 'left' }}>
+              <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>{c.k}</div>
+              <div style={{ fontSize: 20, fontWeight: 800, lineHeight: 1.3 }}>{c.v}</div>
+              <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 6, lineHeight: 1.6 }}>{c.note}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
+          <button className="lab-btn" onClick={() => router.push(`/lab/${done.id}`)}>进入空间 →</button>
+          <button className="lab-btn ghost" onClick={() => { setDone(null); setPick(done.career ? 'career' : 'jd'); if (!done.career) loadJds(); }}>再生成一个</button>
+          <button className="lab-btn ghost" onClick={() => setDone(null)}>回到列表</button>
+        </div>
+      </div>
+    );
+  }
+
   if (building) {
     return (
       <div style={{ minHeight: '70vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 28 }}>

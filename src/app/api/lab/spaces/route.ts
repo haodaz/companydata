@@ -57,6 +57,24 @@ export async function GET(req: Request) {
  * body { jobId, model, createdBy, buildId }；构建约 2–4 分钟，进度用 GET ?build=buildId 轮询。
  * 或 body { profession }：职业探索——先把职业结构化成典型岗位 + 生涯地图，再走同一条流水线（面向高中生 / 大学生）。
  */
+/** 构建完给前端的成果小结：刚才这两分钟，岗位 AI 到底做出了什么 */
+function summarize(built: any) {
+  const sim = built.task?.sim || {};
+  const steps = Array.isArray(sim.steps) ? sim.steps : [];
+  const bench = steps.find((s: any) => s.type === 'bench')?.bench;
+  const layers = bench?.scene?.layers || [];
+  return {
+    title: sim.title || '',
+    steps: steps.length,
+    kinds: [...new Set(steps.map((s: any) => s.type))],
+    bench: bench ? { name: bench.name, controls: bench.controls?.length || 0, goals: bench.goals?.length || 0, rules: bench.rules?.length || 0, track: layers.some((l: any) => l.kind === 'pour' || l.kind === 'seam') } : null,
+    rules: built.skill?.card?.rules?.length || 0,
+    cardSteps: built.skill?.card?.steps?.length || 0,
+    npcs: Object.keys(sim.art?.npcs || {}).length,
+    scenes: new Set(Object.values(sim.art?.scenes || {})).size,
+  };
+}
+
 const CAREER_HINT = '这是面向高中生 / 大学生的「职业探索空间」，不是招聘考核：任务要让一个完全没入行的人也能上手体验这个职业最有代表性的一天，材料自解释、术语随手解释，难度比校招题降一档；故事线要有带教的前辈，让人感受到这个职业真实的工作节奏与判断方式。';
 export async function POST(req: Request) {
   let buildId = '';
@@ -83,7 +101,7 @@ export async function POST(req: Request) {
       }).select('id').single();
       if (insErr) throw insErr;
       setBuild(buildId, { phase: '完成', done: true, id: created.id });
-      return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount, artReused: built.artReused, benchNote: built.benchNote });
+      return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount, artReused: built.artReused, benchNote: built.benchNote, summary: summarize(built) });
     }
 
     if (!jobId) return NextResponse.json({ ok: false, error: '请选择一个岗位或输入一个职业' }, { status: 400 });
@@ -113,7 +131,7 @@ export async function POST(req: Request) {
     }).select('id').single();
     if (insErr) throw insErr;
     setBuild(buildId, { phase: '完成', done: true, id: created.id });
-    return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount, artReused: built.artReused, benchNote: built.benchNote });
+    return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount, artReused: built.artReused, benchNote: built.benchNote, summary: summarize(built) });
   } catch (e: any) {
     console.error('[Lab/spaces] POST', e);
     setBuild(buildId, { done: true, error: e?.message || String(e) });
