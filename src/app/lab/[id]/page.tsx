@@ -341,13 +341,21 @@ export default function SpacePage() {
       {/* ══════ AI 核心 + 档案 ══════ */}
       <section className={`lab-glass lab-in${busy ? ' lab-scan' : ''}`} style={{ padding: 'clamp(18px, 3vw, 30px)', display: 'flex', gap: 'clamp(18px, 3vw, 36px)', alignItems: 'center', flexWrap: 'wrap' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, flex: '0 0 auto', margin: '0 auto' }}>
-          <div className={`lab-orb${busy ? ' busy' : ''}`} style={{ ['--s' as string]: '172px' }}>
-            <div className="ring" /><div className="ring r2" />
-            {profile.avatar
-              ? <div className="core" style={{ overflow: 'hidden', padding: 0 }}><img src={profile.avatar} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '54% 12%' }} /></div>
-              : <div className="core lab-mono" style={{ fontSize: 13 }}>{profile.codename || 'JD-CORE'}</div>}
-            <div className="sat" />
-          </div>
+          {profile.avatar ? (
+            // 人要大：不裁成小圆、不套转圈，就是一张立绘，底部渐隐融进卡片
+            <div style={{ position: 'relative', width: 'clamp(190px, 23vw, 260px)', flexShrink: 0 }}>
+              <div style={{ position: 'absolute', left: '4%', right: '4%', top: '6%', bottom: '14%', borderRadius: '50%', background: 'radial-gradient(circle at 50% 38%, rgba(167,155,255,.42), rgba(18,181,203,.16) 58%, transparent 74%)', filter: 'blur(16px)' }} />
+              <img src={profile.avatar} alt="" style={{ position: 'relative', width: '100%', display: 'block',
+                WebkitMaskImage: 'linear-gradient(180deg, #000 74%, transparent 97%)', maskImage: 'linear-gradient(180deg, #000 74%, transparent 97%)',
+                filter: `drop-shadow(0 16px 30px rgba(60,45,130,.28))${busy ? ' saturate(1.3)' : ''}`, transition: 'filter .4s' }} />
+            </div>
+          ) : (
+            <div className={`lab-orb${busy ? ' busy' : ''}`} style={{ ['--s' as string]: '172px' }}>
+              <div className="ring" /><div className="ring r2" />
+              <div className="core lab-mono" style={{ fontSize: 13 }}>{profile.codename || 'JD-CORE'}</div>
+              <div className="sat" />
+            </div>
+          )}
           <div style={{ textAlign: 'center' }}>
             <div style={{ display: 'flex', gap: 3, justifyContent: 'center' }}>
               {[1, 2, 3, 4, 5].map(n => <span key={n} style={{ width: 22, height: 5, borderRadius: 3, background: n <= lv.level ? 'linear-gradient(90deg, var(--v), var(--c))' : 'rgba(106,92,255,.14)' }} />)}

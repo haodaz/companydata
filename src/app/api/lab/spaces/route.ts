@@ -46,7 +46,18 @@ export async function GET(req: Request) {
         },
       };
     });
-    return NextResponse.json({ ok: true, data });
+    // 全局汇总：首屏那句「此刻 N 位数字人在线」用的就是这些真数
+    const expertPlaces = [...new Set((spaces || []).map((s: any) => (Array.isArray(s.skill) ? s.skill[0] : s.skill))
+      .filter((k: any) => k && k.source !== 'jd-draft' && k.expert_location).map((k: any) => k.expert_location as string))];
+    const totals = {
+      spaces: data.length,
+      experts: (spaces || []).filter((s: any) => { const k = Array.isArray(s.skill) ? s.skill[0] : s.skill; return k && k.source !== 'jd-draft'; }).length,
+      expertPlaces,
+      places: new Set((invs.data || []).map((x: any) => x.actor_location).filter(Boolean)).size,
+      served: (invs.data || []).reduce((a: number, x: any) => a + (x.volume || 1), 0),
+      faces: data.map((s: any) => s.profile?.avatar).filter(Boolean).slice(0, 12),
+    };
+    return NextResponse.json({ ok: true, data, totals });
   } catch (e: any) {
     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
   }

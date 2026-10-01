@@ -17,11 +17,43 @@ const MODES = [
   { k: '04', t: '错位时空', d: '能力在 A 地 B 时被蒸馏，在 C 地 D 时发挥价值，每次都记账。' },
 ];
 
+/** 千行百业的群像：两圈头像反向慢转，用的是已建数字人的真头像——空间越多，群像越密 */
+function NovaCrowd({ faces, n }: { faces: string[]; n: number }) {
+  const S = 230, R1 = S * 0.42, R2 = S * 0.245;
+  const outer = faces.slice(0, 6), inner = faces.slice(6, 10);
+  const lane = (list: string[], R: number, cls: string) => (
+    <div className={`lane${cls}`}>
+      {list.map((f, i) => {
+        const a = (i / Math.max(1, list.length)) * Math.PI * 2 - Math.PI / 2;
+        return (
+          <div key={f + i} className="face" style={{ transform: `translate(${Math.cos(a) * R}px, ${Math.sin(a) * R}px)` }}>
+            <span><img src={f} alt="" /></span>
+          </div>
+        );
+      })}
+    </div>
+  );
+  return (
+    <div className="nova-crowd" style={{ ['--s' as string]: `${S}px` }}>
+      <div className="orb-ring" style={{ inset: '8%' }} />
+      <div className="orb-ring" style={{ inset: '27%' }} />
+      <div className="halo" style={{ inset: '34%' }} />
+      {outer.length > 0 && lane(outer, R1, '')}
+      {inner.length > 0 && lane(inner, R2, ' inner')}
+      <div className="hub">
+        <div className="lab-mono" style={{ fontSize: 26, fontWeight: 800, letterSpacing: 0 }}>{n}</div>
+        <div className="lab-mono" style={{ fontSize: 9.5, letterSpacing: '.1em' }}>NOVA ONLINE</div>
+      </div>
+    </div>
+  );
+}
+
 export default function LabHome() {
   const { message } = App.useApp();
   const router = useRouter();
 
   const [spaces, setSpaces] = useState<any[]>([]);
+  const [totals, setTotals] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [needMigration, setNeedMigration] = useState('');
   /** 建空间的两个入口：'jd' 从岗位库的一份 JD 来，'career' 只给一个职业名 */
@@ -46,7 +78,7 @@ export default function LabHome() {
     setLoading(true);
     try {
       const json = await (await fetch('/api/lab/spaces')).json();
-      if (json.ok) { setSpaces(json.data); setNeedMigration(''); }
+      if (json.ok) { setSpaces(json.data); setTotals(json.totals || null); setNeedMigration(''); }
       else if (json.needMigration) setNeedMigration(json.error);
       else message.error(json.error);
     } finally { setLoading(false); }
@@ -214,6 +246,13 @@ export default function LabHome() {
           <h1 style={{ margin: '8px 0 10px', fontSize: 'clamp(26px, 4vw, 40px)', fontWeight: 800, lineHeight: 1.25, letterSpacing: 0.5 }}>
             把一份 JD / 一个职业，变成<span style={{ background: 'linear-gradient(120deg, var(--v), var(--c))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>虚拟技能空间</span>
           </h1>
+          {totals?.spaces > 0 && (
+            <p style={{ margin: '0 0 14px', fontSize: 15.5, color: 'var(--ink2)', lineHeight: 1.9, maxWidth: 640 }}>
+              此刻，<b style={{ color: 'var(--v)' }}>{totals.spaces} 位从业者数字人</b>在线。<br />
+              {totals.experts > 0 && <>他们的手艺来自{totals.expertPlaces?.length ? <b style={{ color: 'var(--ink2)' }}>{totals.expertPlaces.slice(0, 3).join('、')}{totals.expertPlaces.length > 3 ? '等地' : ''}</b> : ''}的 <b style={{ color: 'var(--ink2)' }}>{totals.experts}</b> 个人；</>}
+              {totals.served > 0 && <>已经被 <b style={{ color: 'var(--ink2)' }}>{totals.places}</b> 个地方的 <b style={{ color: 'var(--ink2)' }}>{totals.served}</b> 个人用过。</>}
+            </p>
+          )}
           <p style={{ margin: 0, fontSize: 15, color: 'var(--ink2)', lineHeight: 1.85, maxWidth: 620 }}>
             走进一个空间，可以——
           </p>
@@ -227,7 +266,7 @@ export default function LabHome() {
             <button className="lab-btn ghost" disabled={!!needMigration} onClick={() => setPick('career')}>＋ 新职业 · 只给一个职业名</button>
           </div>
         </div>
-        <div className="lab-orb" style={{ ['--s' as string]: '190px', margin: '0 auto' }}><div className="ring" /><div className="ring r2" /><div className="core lab-mono" style={{ fontSize: 15 }}>JD</div><div className="sat" /></div>
+        <NovaCrowd faces={totals?.faces || []} n={totals?.spaces ?? spaces.length} />
       </section>
 
       {needMigration && (

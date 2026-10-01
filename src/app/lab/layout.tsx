@@ -102,6 +102,21 @@ const LAB_CSS = `
 .lab-game-mask { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 56px clamp(12px, 4vw, 60px) 24px; background: rgba(10,12,30,.42); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 4; overflow: auto; }
 .lab-game-modal { width: min(100%, 880px); max-height: 100%; overflow: auto; padding: clamp(18px, 2.5vw, 30px); border-radius: 22px; background: rgba(255,255,255,.9); box-shadow: 0 30px 80px rgba(0,0,0,.35); }
 .lab-game-recap { font-size: 13px; color: var(--ink3); line-height: 1.7; margin-bottom: 12px; padding: 8px 12px; border-left: 3px solid var(--c); background: rgba(18,181,203,.06); border-radius: 0 10px 10px 0; cursor: pointer; }
+/* 千行百业的群像：两圈头像反向慢转，头像本身反向补偿保持正立 */
+@keyframes nova-spin { to { transform: rotate(360deg); } }
+.nova-crowd { position: relative; width: var(--s); height: var(--s); margin: 0 auto; }
+.nova-crowd .halo { position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(circle at 42% 34%, rgba(255,255,255,.95), rgba(167,155,255,.5) 46%, rgba(106,92,255,.26) 72%, transparent 78%); }
+.nova-crowd .orb-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(106,92,255,.22); }
+.nova-crowd .lane { position: absolute; inset: 0; animation: nova-spin 54s linear infinite; }
+.nova-crowd .lane.inner { animation-duration: 38s; animation-direction: reverse; }
+.nova-crowd .face { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; overflow: hidden;
+  background: #fff; border: 2px solid rgba(255,255,255,.95); box-shadow: 0 6px 18px rgba(50,40,120,.22); }
+.nova-crowd .lane.inner .face { width: 38px; height: 38px; margin: -19px 0 0 -19px; }
+.nova-crowd .face > span { display: block; width: 100%; height: 100%; animation: nova-spin 54s linear infinite reverse; }
+.nova-crowd .lane.inner .face > span { animation-duration: 38s; animation-direction: normal; }
+.nova-crowd .face img { width: 100%; height: 100%; object-fit: cover; object-position: 54% 12%; display: block; }
+.nova-crowd .hub { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff; text-shadow: 0 2px 10px rgba(60,45,130,.5); }
+@media (prefers-reduced-motion: reduce) { .nova-crowd .lane, .nova-crowd .face > span { animation: none !important; } }
 .bench-hud { position: absolute; inset: 0; overflow: hidden; background: #0f1224; }
 .bench-hud-blur { position: absolute; inset: -40px; width: calc(100% + 80px); height: calc(100% + 80px); object-fit: cover; filter: blur(28px) brightness(.55); }
 /* 场景按 16:9 居中；最高不超过容器，否则会顶出去、底部被控件条连同场景一起裁掉 */
