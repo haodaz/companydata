@@ -100,8 +100,6 @@ export default function LabHome() {
     try {
       const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(prof ? { profession: prof, model: currentModel, buildId } : { jobId: job.id, model: currentModel, buildId }) })).json();
       if (!json.ok) throw new Error(json.error);
-      if (!json.benchAdded) message.warning(`空间已建好，但这次没做出「虚拟操作空间」，先以故事线为主。${json.benchNote ? `原因：${json.benchNote}` : ''}`, 12);
-      else if (!json.artCount) message.warning('空间已建好，但场景美术没有生成（文生图服务不可用）。', 8);
       router.push(`/lab/${json.id}`);
     } catch (e: any) { message.error(e.message); setBuilding(null); }
   };
@@ -125,8 +123,6 @@ export default function LabHome() {
         new Promise(r => setTimeout(r, BUILD_STEPS.length * 1500 + 600)),
       ]);
       if (!json.ok) throw new Error(json.error);
-      if (!json.benchAdded) message.warning(`空间已建好，但这次没做出「虚拟操作空间」，先以故事线为主。${json.benchNote ? `原因：${json.benchNote}` : ''}`, 12);
-      else if (!json.artCount) message.warning('空间已建好，但场景美术没有生成（文生图服务不可用）。', 8);
       router.push(`/lab/${json.id}`);
     } catch (e: any) { message.error(e.message); setBuilding(null); }
   };
