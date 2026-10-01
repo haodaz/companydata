@@ -331,6 +331,9 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
           return <Layer key={l.id} l={l} level={l.level ? Math.min(1, Math.max(0, ev(l.level))) : 0} on={l.on ? !!ev(l.on) : false} value={l.text ? ev(l.text) : 0}
             progress={prog} ghost={startT !== undefined && l.pace ? Math.min(100, (st.t - startT) * l.pace) : undefined}
             deposits={l.kind === 'cup' || l.kind === 'wound' || l.kind === 'incis' ? deposits.current : undefined}
+            toolName={l.iconBy ? (l.icons || [])[Math.round(st.controls[l.iconBy] || 0)] || l.icon || 'pitcher' : l.icon || 'pitcher'}
+            pick={l.kind === 'tray' && l.control ? Math.round(st.controls[l.control] || 0) : -1}
+            onPick={l.kind === 'tray' && l.control && running ? ((i: number) => act(l.control!, i)) : undefined}
             onGrab={track && running ? (e => { dragRef.current = l; (e.target as Element).setPointerCapture?.(e.pointerId); const q = scenePoint(e.clientX, e.clientY); if (q) onTrack(l, q.x, q.y); }) : undefined} />;
         })}
       </svg>
@@ -384,8 +387,68 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
   );
 }
 
+/**
+ * 手里拿的家伙：画在原点，尖端朝 +x（跟着轨迹方向转）。教学示意，认得出来就行。
+ */
+function ToolShape({ name, s = 1 }: { name: string; s?: number }) {
+  const g = (children: React.ReactNode) => <g transform={`scale(${s})`}>{children}</g>;
+  switch (name) {
+    case 'needle':   // 持针器：两个环柄 + 交叉 + 弯针
+      return g(<>
+        <path d="M -96 -26 L -18 -4 M -96 26 L -18 4" stroke="#aeb6c4" strokeWidth={9} strokeLinecap="round" fill="none" />
+        <circle cx={-104} cy={-30} r={15} fill="none" stroke="#aeb6c4" strokeWidth={8} />
+        <circle cx={-104} cy={30} r={15} fill="none" stroke="#aeb6c4" strokeWidth={8} />
+        <rect x={-22} y={-7} width={40} height={14} rx={4} fill="#cfd5e0" stroke="#79818f" strokeWidth={2} />
+        <path d="M 20 0 A 26 26 0 1 1 44 22" fill="none" stroke="#eef2f8" strokeWidth={6} strokeLinecap="round" />
+      </>);
+    case 'scalpel':  // 手术刀
+      return g(<>
+        <rect x={-92} y={-8} width={92} height={16} rx={5} fill="#b9c0cc" stroke="#79818f" strokeWidth={2} />
+        <path d="M 0 -9 L 52 -2 L 52 4 L 0 10 Z" fill="#eaeef5" stroke="#8b93a2" strokeWidth={2} />
+      </>);
+    case 'cautery':  // 电刀
+      return g(<>
+        <path d="M -108 0 q -16 -12 -30 -6" stroke="#5b6478" strokeWidth={6} fill="none" strokeLinecap="round" />
+        <rect x={-104} y={-11} width={92} height={22} rx={8} fill="#e8eaf0" stroke="#79818f" strokeWidth={2} />
+        <rect x={-78} y={-11} width={20} height={22} fill="#ff8a5f" />
+        <rect x={-46} y={-11} width={20} height={22} fill="#ffd166" />
+        <path d="M -12 -5 L 46 0 L -12 5 Z" fill="#9aa3b1" stroke="#79818f" strokeWidth={2} />
+      </>);
+    case 'clamp':    // 血管钳（钝性分离用）
+      return g(<>
+        <path d="M -98 -28 L -14 -5 M -98 28 L -14 5" stroke="#aeb6c4" strokeWidth={9} strokeLinecap="round" fill="none" />
+        <circle cx={-106} cy={-32} r={15} fill="none" stroke="#aeb6c4" strokeWidth={8} />
+        <circle cx={-106} cy={32} r={15} fill="none" stroke="#aeb6c4" strokeWidth={8} />
+        <path d="M -14 -5 L 52 -9 M -14 5 L 52 9" stroke="#dfe4ec" strokeWidth={8} strokeLinecap="round" fill="none" />
+      </>);
+    case 'forceps':  // 镪子（提起腹膜）
+      return g(<>
+        <path d="M -90 -16 Q -20 -14 48 -3" stroke="#ccd3de" strokeWidth={10} fill="none" strokeLinecap="round" />
+        <path d="M -90 16 Q -20 14 48 3" stroke="#ccd3de" strokeWidth={10} fill="none" strokeLinecap="round" />
+        <path d="M -90 -16 L -90 16" stroke="#aeb6c4" strokeWidth={10} strokeLinecap="round" />
+      </>);
+    case 'retractor': // 牵开器
+      return g(<>
+        <rect x={-70} y={-7} width={110} height={14} rx={5} fill="#c3c9d4" stroke="#79818f" strokeWidth={2} />
+        <path d="M 40 -7 q 26 -4 26 -30 M 40 7 q 26 4 26 30" stroke="#c3c9d4" strokeWidth={12} fill="none" strokeLinecap="round" />
+      </>);
+    case 'torch':    // 焊枪
+      return g(<>
+        <rect x={-8} y={-110} width={16} height={100} rx={6} fill="#2b3040" stroke="#6b7089" strokeWidth={2} transform="rotate(60)" />
+        <rect x={-11} y={-40} width={22} height={34} rx={4} fill="#c9a24a" transform="rotate(60)" />
+      </>);
+    default:         // pitcher 奶缸
+      return g(<>
+        <ellipse cx={-26} cy={0} rx={46} ry={40} fill="#c9ced8" stroke="#79818f" strokeWidth={3} />
+        <ellipse cx={-26} cy={0} rx={34} ry={28} fill="#eef1f6" opacity={0.75} />
+        <polygon points="18,-13 56,0 18,13" fill="#d7dbe3" stroke="#79818f" strokeWidth={2} />
+        <rect x={-96} y={-13} width={36} height={26} rx={7} fill="#9aa3b1" stroke="#6b7484" strokeWidth={2} />
+      </>);
+  }
+}
+
 /** 场景覆盖层 */
-function Layer({ l, level, on, value, progress = 0, ghost, deposits, onGrab }: { l: BenchLayer; level: number; on: boolean; value: number; progress?: number; ghost?: number; deposits?: { x: number; y: number; r: number; a: number }[]; onGrab?: (e: React.PointerEvent) => void }) {
+function Layer({ l, level, on, value, progress = 0, ghost, deposits, toolName = 'pitcher', pick = -1, onGrab, onPick }: { l: BenchLayer; level: number; on: boolean; value: number; progress?: number; ghost?: number; deposits?: { x: number; y: number; r: number; a: number }[]; toolName?: string; pick?: number; onGrab?: (e: React.PointerEvent) => void; onPick?: (i: number) => void }) {
   const x = l.x * 16, y = l.y * 9, w = l.w * 16, h = l.h * 9; const w0 = w, h0 = h;
   const cx = x + w / 2, cy = y + h / 2;
   const heat = (p: number) => p < 0.35 ? `rgba(120,10,0,${Math.min(1, p * 2)})` : p < 0.7 ? '#ff4d00' : p < 0.9 ? '#ffb347' : '#fff3c4';
@@ -446,14 +509,10 @@ function Layer({ l, level, on, value, progress = 0, ghost, deposits, onGrab }: {
               <circle cx={gp.x} cy={gp.y} r={9} fill="#3ddc97" />
             </g>
           )}
-          {/* 奶缸（俯视） */}
-          {/* 走完了就把奶缸淡掉，让人看清杯里的成品 */}
+          {/* 手里拿的家伙：固定一种，或者随器械控件变；走完了淡掉让人看清成品 */}
           <g transform={`translate(${head.x} ${head.y}) rotate(${head.angle})`} opacity={progress >= 99.5 ? 0.2 : 1} pointerEvents="none">
-            <ellipse cx={-26} cy={0} rx={46} ry={40} fill="#c9ced8" stroke="#79818f" strokeWidth={3} />
-            <ellipse cx={-26} cy={0} rx={34} ry={28} fill="#eef1f6" opacity={0.75} />
-            <polygon points="18,-13 56,0 18,13" fill="#d7dbe3" stroke="#79818f" strokeWidth={2} />
-            <rect x={-96} y={-13} width={36} height={26} rx={7} fill="#9aa3b1" stroke="#6b7484" strokeWidth={2} />
-            {on && <circle cx={58} cy={0} r={9} fill="#fffaf0" opacity={0.95} />}
+            <ToolShape name={toolName} />
+            {on && toolName === 'pitcher' && <circle cx={58} cy={0} r={9} fill="#fffaf0" opacity={0.95} />}
           </g>
           <circle cx={head.x} cy={head.y} r={34} fill="transparent" />
           <text x={head.x} y={head.y + 76} textAnchor="middle" fill="#fff" fontSize={20} fontWeight={700} fontFamily="ui-monospace, Menlo, monospace" style={{ textShadow: '0 1px 5px rgba(0,0,0,.8)' }} pointerEvents="none">{Math.round(progress)}%</text>
@@ -568,6 +627,28 @@ function Layer({ l, level, on, value, progress = 0, ghost, deposits, onGrab }: {
               </g>
             );
           })}
+        </g>
+      );
+    }
+    case 'tray': {
+      // 器械盘：点一下就换手里的家伙，不用到底下摸滑块
+      const list = l.icons || [];
+      const n2 = Math.max(1, list.length);
+      const bw = Math.min(w / n2, 110), bh = Math.min(h, 110);
+      return (
+        <g>
+          <rect x={x - 10} y={y - 10} width={bw * n2 + 20} height={bh + 20} rx={16} fill="rgba(12,16,32,.5)" stroke="rgba(255,255,255,.25)" strokeWidth={2} />
+          {list.map((ic, i) => {
+            const bx2 = x + i * bw, sel = pick === i;
+            return (
+              <g key={ic + i} style={{ cursor: onPick ? 'pointer' : 'default' }} onPointerDown={e => { e.stopPropagation(); onPick?.(i); }}>
+                <rect x={bx2 + 4} y={y} width={bw - 8} height={bh} rx={12}
+                  fill={sel ? 'rgba(106,92,255,.92)' : 'rgba(255,255,255,.14)'} stroke={sel ? '#fff' : 'rgba(255,255,255,.3)'} strokeWidth={sel ? 3 : 1.5} />
+                <g transform={`translate(${bx2 + bw / 2 + 14} ${y + bh / 2}) scale(0.4)`} pointerEvents="none"><ToolShape name={ic} /></g>
+              </g>
+            );
+          })}
+          {l.label && <text x={x} y={y - 18} fill="#fff" fontSize={19} fontWeight={700} style={{ textShadow: '0 1px 5px rgba(0,0,0,.8)' }}>{l.label}</text>}
         </g>
       );
     }

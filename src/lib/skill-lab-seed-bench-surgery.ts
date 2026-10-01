@@ -115,7 +115,7 @@ export const BENCH_SUTURE: BenchSpec = {
     image: '/lab/surgery_field.jpg', credit: '底图由通义万相生成',
     layers: [
       woundLayer,
-      { id: 'trail', kind: 'pour', x: 0, y: 0, w: 0, h: 0, control: 'suture', deviation: 'dev', points: SUTURE.points, pace: 1.5, on: 'sewing == 1', label: '进出针轨迹' },
+      { id: 'trail', kind: 'pour', x: 0, y: 0, w: 0, h: 0, control: 'suture', deviation: 'dev', points: SUTURE.points, pace: 1.5, on: 'sewing == 1', label: '进出针轨迹', icon: 'needle' },
       { id: 'ro_st', kind: 'readout', x: 2, y: 3, w: 9, h: 5, text: 'stitches', unit: '针', label: 'ST' },
       { id: 'ro_ap', kind: 'readout', x: 2, y: 9, w: 9, h: 5, text: 'approx * 100', unit: '%', label: 'APPR', color: '#7cf5c9' },
       coach('c0', `suture < ${SUTURE.done[0]} && (bite < 4 || bite > 7 || depth < 4)`, '先把边距调到 5 mm 上下、深度过真皮全层（≥ 4 mm），再下第一针', 9, '#ffd166'),

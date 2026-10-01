@@ -32,10 +32,13 @@ export interface BenchAction { t: number; control: string; value: number }
  *   incis   分层切口（开腹教学示意）：x,y → x+w,y+h 是切口线；text = 当前深度 mm，level = 牵开器撕开的宽度 0–1；已切开的那一段按深度逐层露出下一层
  *   wound   创口（教学示意）：x,y → x+w,y+h 是切口线；未缝合段张开，走过的部分随着每一针合拢。level = 对合质量 0–1，text = 边距 mm（决定缝线跨度）
  */
-export interface BenchLayer { id: string; kind: 'glow' | 'lamp' | 'door' | 'stream' | 'pulse' | 'readout' | 'haze' | 'seam' | 'pour' | 'cup' | 'coach' | 'wound' | 'incis'; /** seam / pour：绑定的 path 控件 */ control?: string;
+export interface BenchLayer { id: string; kind: 'glow' | 'lamp' | 'door' | 'stream' | 'pulse' | 'readout' | 'haze' | 'seam' | 'pour' | 'cup' | 'coach' | 'wound' | 'incis' | 'tray'; /** seam / pour：绑定的 path 控件 */ control?: string;
   /** seam / pour：轨迹点（百分比坐标）。给了就沿折线走（可以折返），没给就是 x,y → x+w,y+h 的直线 */ points?: { x: number; y: number }[];
   /** pour：引导点的推荐速度（% 每模拟秒） */ pace?: number;
-  /** pour：把「手离轨迹有多远」写进哪个（隐藏）控件，单位 mm */ deviation?: string; /** glow：冷态时盖一层深色（炉膛观察窗这类底图本来就亮的地方） */ cold?: boolean; x: number; y: number; w: number; h: number; level?: string; on?: string; text?: string; unit?: string; digits?: number; color?: string; label?: string }
+  /** pour：把「手离轨迹有多远」写进哪个（隐藏）控件，单位 mm */ deviation?: string;
+  /** pour / tray：手里拿的是什么。pitcher 奶缸 / needle 持针器 / scalpel 手术刀 / cautery 电刀 / clamp 血管钳 / forceps 镪子 / torch 焊枪 */ icon?: string;
+  /** pour：手里拿什么由这个控件的值决定（0、1、2… 对应 icons 下标） */ iconBy?: string;
+  /** pour / tray：可选的器械列表 */ icons?: string[]; /** glow：冷态时盖一层深色（炉膛观察窗这类底图本来就亮的地方） */ cold?: boolean; x: number; y: number; w: number; h: number; level?: string; on?: string; text?: string; unit?: string; digits?: number; color?: string; label?: string }
 export interface BenchScene { image: string; credit?: string; layers: BenchLayer[] }
 
 export interface BenchSpec {
@@ -336,9 +339,9 @@ export function sanitizeBenchSpec(raw: any): BenchSpec | null {
   // 没有底图也能有场景：轨迹 / 工作面 / 阶段提示这几层是画出来的，生图失败不应该让整台工位报废
   const img = typeof raw.scene?.image === 'string' && /^(\/|https?:\/\/)/.test(raw.scene.image) ? raw.scene.image.slice(0, 500) : '';
   if (raw.scene && Array.isArray(raw.scene.layers)) {
-    const KINDS = ['glow', 'lamp', 'door', 'stream', 'pulse', 'readout', 'haze', 'seam', 'pour', 'cup', 'coach', 'wound', 'incis'];
+    const KINDS = ['glow', 'lamp', 'door', 'stream', 'pulse', 'readout', 'haze', 'seam', 'pour', 'cup', 'coach', 'wound', 'incis', 'tray'];
     spec.scene = { image: img, credit: raw.scene.credit ? String(raw.scene.credit).slice(0, 200) : undefined,
-      layers: raw.scene.layers.filter((l: any) => l?.id && KINDS.includes(l.kind)).slice(0, 40).map((l: any) => ({ id: String(l.id), kind: l.kind, control: l.control ? String(l.control) : undefined, cold: !!l.cold, x: Number(l.x) || 0, y: Number(l.y) || 0, w: Number(l.w) || 0, h: Number(l.h) || 0, level: l.level ? String(l.level) : undefined, on: l.on ? String(l.on) : undefined, text: l.text ? String(l.text) : undefined, unit: l.unit ? String(l.unit) : undefined, digits: l.digits !== undefined ? Number(l.digits) : undefined, color: l.color ? String(l.color).slice(0, 30) : undefined, label: l.label ? String(l.label).slice(0, 80) : undefined, pace: l.pace !== undefined ? Number(l.pace) : undefined, deviation: l.deviation ? String(l.deviation) : undefined, points: Array.isArray(l.points) ? l.points.filter((q: any) => typeof q?.x === 'number' && typeof q?.y === 'number').slice(0, 400).map((q: any) => ({ x: Number(q.x), y: Number(q.y) })) : undefined })) };
+      layers: raw.scene.layers.filter((l: any) => l?.id && KINDS.includes(l.kind)).slice(0, 40).map((l: any) => ({ id: String(l.id), kind: l.kind, control: l.control ? String(l.control) : undefined, cold: !!l.cold, x: Number(l.x) || 0, y: Number(l.y) || 0, w: Number(l.w) || 0, h: Number(l.h) || 0, level: l.level ? String(l.level) : undefined, on: l.on ? String(l.on) : undefined, text: l.text ? String(l.text) : undefined, unit: l.unit ? String(l.unit) : undefined, digits: l.digits !== undefined ? Number(l.digits) : undefined, color: l.color ? String(l.color).slice(0, 30) : undefined, label: l.label ? String(l.label).slice(0, 80) : undefined, pace: l.pace !== undefined ? Number(l.pace) : undefined, deviation: l.deviation ? String(l.deviation) : undefined, icon: l.icon ? String(l.icon).slice(0, 20) : undefined, iconBy: l.iconBy ? String(l.iconBy) : undefined, icons: Array.isArray(l.icons) ? l.icons.slice(0, 8).map((x: any) => String(x).slice(0, 20)) : undefined, points: Array.isArray(l.points) ? l.points.filter((q: any) => typeof q?.x === 'number' && typeof q?.y === 'number').slice(0, 400).map((q: any) => ({ x: Number(q.x), y: Number(q.y) })) : undefined })) };
   }
   if (!spec.controls.length || !spec.goals.length) return null;
   // 表达式都要能求值

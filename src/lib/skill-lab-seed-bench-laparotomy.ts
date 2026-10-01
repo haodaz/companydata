@@ -98,8 +98,10 @@ export const BENCH_LAPAROTOMY: BenchSpec = {
   scene: {
     image: '/lab/surgery_field.jpg', credit: '底图由通义万相生成',
     layers: [
-      { id: 'abd', kind: 'incis', x: AX / 16, y: AY / 9, w: (BX - AX) / 16, h: (BY - AY) / 9, text: 'depth', level: 'retract' },
-      { id: 'trail', kind: 'pour', x: 0, y: 0, w: 0, h: 0, control: 'cut', deviation: 'dev', points: INCISION.points, pace: 1.3, on: 'cutting == 1', label: '切口轨迹' },
+      { id: 'abd', kind: 'incis', x: AX / 16, y: AY / 9, w: (BX - AX) / 16, h: (BY - AY) / 9, text: 'depth', level: `clamp(cut / ${INCISION.pass[0]}, 0, 1)`, on: 'retract == 1' },
+      { id: 'tray', kind: 'tray', x: 60, y: 80, w: 26, h: 7, control: 'tool', icons: ['scalpel', 'cautery', 'clamp', 'forceps'], label: '器械（点一下换手里的）' },
+      { id: 'retr', kind: 'tray', x: 60, y: 90, w: 13, h: 7, control: 'retract', icons: ['scalpel', 'retractor'], label: '牵开器' },
+      { id: 'trail', kind: 'pour', x: 0, y: 0, w: 0, h: 0, control: 'cut', deviation: 'dev', points: INCISION.points, pace: 1.3, on: 'cutting == 1', label: '切口轨迹', iconBy: 'tool', icons: ['scalpel', 'cautery', 'clamp', 'forceps'] },
       { id: 'ro_p', kind: 'readout', x: 2, y: 3, w: 9, h: 5, text: 'pass', unit: '层', label: 'LAYER' },
       { id: 'ro_d', kind: 'readout', x: 2, y: 9, w: 9, h: 5, text: 'depth', unit: 'mm', label: 'DEPTH', color: '#ffd166' },
       coach('c1', `cut < ${INCISION.pass[0]}`, '① 手术刀锐性切开皮肤与皮下：器械 0，深度到 8–12 mm'),
