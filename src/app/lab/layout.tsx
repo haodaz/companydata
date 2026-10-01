@@ -180,7 +180,9 @@ function Shell({ children }: { children: React.ReactNode }) {
         <div style={{ flex: 1 }} />
         <Select size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 170 }} popupMatchSelectWidth={250}
           options={MODEL_OPTIONS.map(m => ({ value: m.id, label: <span>{m.label}<ModelBadge text={m.badge} /></span> }))} />
-        <button className="lab-btn ghost sm" onClick={() => router.push('/admin/db-company')}>数据后台</button>
+        <button className="lab-btn ghost sm" title="数据后台" aria-label="数据后台" style={{ width: 34, padding: 0 }} onClick={() => router.push('/admin/db-company')}>
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="1.5" y="9.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="9.5" width="5" height="5" rx="1.2" /></svg>
+        </button>
       </header>
 
       <div className="lab-wrap">{children}</div>

@@ -62,6 +62,12 @@ const CSS = `
 .ai100-grad { background: linear-gradient(118deg, #9f91ff, #b9aaff 40%, #4fe0f2); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .ai100-lead { font-size: clamp(15px, 1.5vw, 17.5px); color: var(--ink2); line-height: 2; max-width: 720px; }
 .ai100-sec { padding: clamp(44px, 7vw, 86px) 0 0; }
+.ai100-01 { display: grid; gap: clamp(16px, 2.5vw, 40px); grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr); align-items: center; }
+@media (max-width: 860px) { .ai100-01 { grid-template-columns: minmax(0, 1fr); } }
+/* 去背立绘：不套框、不加底，稍微溢出到容器外，人就像站在页面里 */
+.ai100-cut { display: block; width: 112%; max-width: none; margin-right: -12%; filter: drop-shadow(0 26px 50px rgba(0,0,0,.55)); }
+@media (max-width: 860px) { .ai100-cut { width: 100%; margin-right: 0; } }
+
 .ai100-art { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 22px; border: 1px solid rgba(255,255,255,.1); box-shadow: 0 22px 60px rgba(0,0,0,.5); }
 
 /* 真实截图走马灯 */
@@ -290,9 +296,9 @@ export default function LabLanding() {
 
       {/* ══ 01 落点是人 ══ */}
       <section>
-        <div style={{ display: 'grid', gap: 'clamp(20px, 3.5vw, 58px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', alignItems: 'center' }}>
+        <div className="ai100-01">
           <div>
-            <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>01 / 落点</div>
+            <div className="lab-mono lab-cap" style={{ color: '#9f91ff' }}>01 / 落点</div>
             <h2 className="ai100-h2">技能是抽象的，<br /><span className="ai100-grad">人是具体的</span></h2>
             <p className="ai100-lead">
               我们不做课程，不做题库，也不做培训模拟器。<br />
@@ -301,7 +307,8 @@ export default function LabLanding() {
               你打开的不是一门课，是一位已经在岗的同行。
             </p>
           </div>
-          <Art src="/lab-landing/concept-person.jpg" alt="一个职业收敛成一个人" />
+          {/* 去背的立绘：人直接站在页面的深色里，不套框 */}
+          <img className="ai100-cut" src="/lab-landing/concept-person.png" alt="散落的抽象资料，向右收拢成一个具体的人" loading="lazy" />
         </div>
       </section>
 

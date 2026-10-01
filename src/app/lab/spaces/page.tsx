@@ -253,23 +253,34 @@ export default function LabHome() {
 
   return (
     <>
-      {/* 这一页只干活：介绍的话都在首页，这里直接是人和入口 */}
-      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 16, flexWrap: 'wrap', padding: '2px 0 18px' }}>
-        <div style={{ flex: '1 1 340px', minWidth: 0 }}>
-          <div className="lab-mono lab-cap">AI 百业 · 百业空间</div>
-          <h1 style={{ margin: '6px 0 6px', fontSize: 'clamp(22px, 3vw, 31px)', fontWeight: 800, letterSpacing: .4 }}>
-            百业已入驻 <span style={{ color: 'var(--v)' }}>{totals?.spaces ?? spaces.length}</span> 位数字职人
-          </h1>
-          {totals && (
-            <div style={{ fontSize: 13.5, color: 'var(--ink3)', lineHeight: 1.8 }}>
-              {totals.experts > 0 && <>手艺来自{totals.expertPlaces?.length ? `${totals.expertPlaces.slice(0, 3).join('、')}${totals.expertPlaces.length > 3 ? '等地' : ''}` : ''}的 {totals.experts} 个人；</>}
-              {totals.served > 0 && <>已经被 {totals.places} 个地方的 {totals.served} 个人用过。</>}
-            </div>
-          )}
-        </div>
-        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <button className="lab-btn" disabled={!!needMigration} onClick={() => { setPick('jd'); loadJds(); }}>＋ 新岗位 · 从一份 JD 建</button>
-          <button className="lab-btn ghost" disabled={!!needMigration} onClick={() => setPick('career')}>＋ 新职业 · 只给一个职业名</button>
+      {/* 这一页只干活：介绍的话都在首页，这里直接是人和入口。页头压一条深色，跟首页接上 */}
+      <style>{`
+        .sp-head { position: relative; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); width: 100vw; margin-top: -24px; margin-bottom: 22px;
+          background: #0a0c1a radial-gradient(900px 300px at 18% -40%, rgba(106,92,255,.5), transparent 70%), radial-gradient(700px 260px at 86% 140%, rgba(18,181,203,.32), transparent 70%);
+          border-bottom: 1px solid rgba(255,255,255,.1); overflow: hidden; }
+        .sp-head::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+          background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 44px 44px;
+          mask-image: radial-gradient(ellipse 70% 100% at 40% 0%, #000 10%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 70% 100% at 40% 0%, #000 10%, transparent 75%); }
+        .sp-head-in { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 34px 28px 32px; display: flex; align-items: flex-end; gap: 18px; flex-wrap: wrap; }
+      `}</style>
+      <div className="sp-head">
+        <div className="sp-head-in">
+          <div style={{ flex: '1 1 340px', minWidth: 0 }}>
+            <div className="lab-mono lab-cap" style={{ color: 'rgba(255,255,255,.52)' }}>AI 百业 · 百业空间</div>
+            <h1 style={{ margin: '8px 0 6px', fontSize: 'clamp(23px, 3.2vw, 34px)', fontWeight: 900, letterSpacing: -.2, color: '#fff' }}>
+              百业已入驻 <span style={{ background: 'linear-gradient(118deg, #9f91ff, #4fe0f2)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{totals?.spaces ?? spaces.length}</span> 位数字职人
+            </h1>
+            {totals && (
+              <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,.62)', lineHeight: 1.8 }}>
+                {totals.experts > 0 && <>手艺来自{totals.expertPlaces?.length ? `${totals.expertPlaces.slice(0, 3).join('、')}${totals.expertPlaces.length > 3 ? '等地' : ''}` : ''}的 {totals.experts} 个人；</>}
+                {totals.served > 0 && <>已经被 {totals.places} 个地方的 {totals.served} 个人用过。</>}
+              </div>
+            )}
+          </div>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <button className="lab-btn" disabled={!!needMigration} onClick={() => { setPick('jd'); loadJds(); }}>＋ 新岗位 · 从一份 JD 建</button>
+            <button className="lab-btn ghost" disabled={!!needMigration} style={{ color: '#e7e9f8', background: 'rgba(255,255,255,.1)', boxShadow: '0 0 0 1px rgba(255,255,255,.2)' }} onClick={() => setPick('career')}>＋ 新职业 · 只给一个职业名</button>
+          </div>
         </div>
       </div>
 
