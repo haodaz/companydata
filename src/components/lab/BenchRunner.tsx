@@ -682,6 +682,40 @@ function Layer({ l, level, on, value, progress = 0, ghost, deposits, toolName = 
         </g>
       );
     }
+    case 'plume': {
+      // 液氧甲烷的尾焰：核心淡蓝白、轴线上一串马赫环，底下打在导流槽上散开。level = 推力 0–1。
+      if (level <= 0.03) return null;
+      const p = Math.min(1, level);
+      const topW = w * (0.42 + p * 0.3), botW = w * (0.9 + p * 0.85), len = h * (0.5 + p * 0.95);
+      const x0 = cx, y0 = y;
+      const ring = (k: number) => {
+        const f = 0.17 + k * 0.2;
+        const yy = y0 + len * f, ww = (topW + (botW - topW) * f) * (k % 2 ? 0.52 : 0.72);
+        return <ellipse key={k} cx={x0} cy={yy} rx={ww / 2} ry={ww / 7} fill="#eaf4ff" opacity={(0.9 - k * 0.17) * p} />;
+      };
+      return (
+        <g pointerEvents="none">
+          {/* 外层扩散的排气 */}
+          <path d={`M ${x0 - topW / 2} ${y0} L ${x0 + topW / 2} ${y0} L ${x0 + botW} ${y0 + len * 1.25} L ${x0 - botW} ${y0 + len * 1.25} Z`}
+            fill="#8fb6e8" opacity={0.2 * p} filter="url(#bench-blur)" />
+          {/* 焰流本体 */}
+          <path d={`M ${x0 - topW / 2} ${y0} L ${x0 + topW / 2} ${y0} L ${x0 + botW / 2} ${y0 + len} L ${x0 - botW / 2} ${y0 + len} Z`}
+            fill="#6fa8ff" opacity={0.55 * p} filter="url(#bench-blur-sm)" />
+          <path d={`M ${x0 - topW / 3} ${y0} L ${x0 + topW / 3} ${y0} L ${x0 + botW / 3.4} ${y0 + len * 0.94} L ${x0 - botW / 3.4} ${y0 + len * 0.94} Z`}
+            fill="#cfe4ff" opacity={0.8 * p} />
+          <path d={`M ${x0 - topW / 7} ${y0} L ${x0 + topW / 7} ${y0} L ${x0 + botW / 9} ${y0 + len * 0.8} L ${x0 - botW / 9} ${y0 + len * 0.8} Z`}
+            fill="#ffffff" opacity={0.92 * p} />
+          {/* 马赫环 */}
+          {[0, 1, 2, 3].map(ring)}
+          {/* 打在导流槽上散开的那一团 */}
+          <ellipse cx={x0} cy={y0 + len * 1.2} rx={botW * 1.15} ry={len * 0.17} fill="#dce9fb" opacity={0.42 * p} filter="url(#bench-blur)">
+            <animate attributeName="rx" values={`${botW};${botW * 1.3};${botW}`} dur="0.5s" repeatCount="indefinite" />
+          </ellipse>
+          {/* 喷管口的光 */}
+          <ellipse cx={x0} cy={y0} rx={topW * 0.62} ry={topW * 0.2} fill="#fff" opacity={0.95 * p} filter="url(#bench-blur-sm)" />
+        </g>
+      );
+    }
     case 'coach': {
       if (!on || !l.label) return null;
       const tw = l.label.length * 20 + 56;

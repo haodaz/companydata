@@ -184,8 +184,8 @@ export const BENCH_ENGINE: BenchSpec = {
   scene: {
     image: '/lab/rocket_teststand.jpg', credit: '底图由通义万相生成',
     layers: [
-      { id: 'plume', kind: 'stream', x: 46.5, y: 58, w: 7, h: 34, on: 'lit == 1 && pc > 8' },
-      { id: 'flame', kind: 'glow', x: 47.5, y: 56, w: 5, h: 7, level: 'clamp(pc / 110, 0, 1)' },
+      { id: 'plume', kind: 'plume', x: 44, y: 58, w: 12, h: 30, level: 'clamp(pc / 105, 0, 1)' },
+      { id: 'flame', kind: 'glow', x: 47.5, y: 55, w: 5, h: 6, level: 'clamp(pc / 95, 0, 1)' },
       { id: 'haze', kind: 'haze', x: 30, y: 62, w: 42, h: 32, level: 'clamp(pc / 150, 0, 0.7)', color: '#e8eef8' },
       { id: 'pump', kind: 'pulse', x: 80, y: 48, w: 7, h: 12, on: 'precool == 1', color: '#7cc8ff' },
       { id: 'lamp_f', kind: 'lamp', x: 8, y: 30, w: 2.2, h: 3.8, on: 'fuel == 1', color: '#ffb15f' },
