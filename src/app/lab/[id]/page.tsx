@@ -325,6 +325,17 @@ export default function SpacePage() {
     return out;
   })();
 
+  // 三个数值格（点一下就进对应的 action）
+  const stat: { k: string; v: number; u: string; go: Mode }[] = (() => {
+    const humans = subs.filter((x: any) => x.candidate_type === 'human').length;
+    const batch = invs.filter((i: any) => i.kind === 'batch').reduce((a: number, i: any) => a + (i.volume || 0), 0);
+    return [
+      { k: '考过', v: humans + batch, u: '人', go: 'test' },
+      { k: '学到', v: skill?.card?.rules?.length || 0, u: '条判断', go: 'learn' },
+      { k: '解过', v: invs.filter((i: any) => i.kind === 'solve').length, u: '次', go: 'solve' },
+    ];
+  })();
+
   // 账本指标
   const origin = skill?.distilled_at;
   const spanDays = origin && invs.length ? Math.max(0, Math.round((new Date(invs[invs.length - 1].occurred_at).getTime() - new Date(origin).getTime()) / 86400_000)) : 0;
@@ -370,34 +381,25 @@ export default function SpacePage() {
           <h1 style={{ margin: '4px 0 2px', fontSize: 'clamp(22px, 3.2vw, 30px)', fontWeight: 800, lineHeight: 1.3 }}>
             {profile.name ? <>{profile.name} <span style={{ color: 'var(--v)' }}>· {profile.role || ''}</span></> : <>{jd.company} · {jd.title}</>}
           </h1>
-          <div style={{ fontSize: 13, color: 'var(--ink3)' }}>
-            {profile.name ? <>{jd.company} · {jd.title}{jd.location ? ` · ${jd.location}` : ''}</> : <>{jd.job_req_id && <>职位 ID {jd.job_req_id} · </>}{jd.location}</>}
-            {jd.url && <> · <a href={jd.url} target="_blank" rel="noreferrer" style={{ color: 'var(--v)' }}>官方 JD 原文 ↗</a></>}
+          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginTop: 3 }}>
+            {skill && (skill.source === 'jd-draft'
+              ? <span className="lab-chip g">自学草案 · 等一位从业者校正</span>
+              : <>学自 <b style={{ color: 'var(--ink2)' }}>{skill.expert_name}</b>（{skill.expert_location}）</>)}
+            {jd.url && <> · <a href={jd.url} target="_blank" rel="noreferrer" style={{ color: 'var(--v)' }}>JD ↗</a></>}
           </div>
           <div style={{ margin: '14px 0', fontSize: 16, fontWeight: 600, color: 'var(--ink2)', minHeight: 26 }}>
             {busy ? <span style={{ color: 'var(--v)' }}>{busy}<span className="lab-dots" /></span> : profile.tagline ? `「${profile.tagline}」` : '我是拥有这份 JD 技能的员工 AI。'}
           </div>
 
-          {/* TA 自己说的近况：向下考过谁、向上跟谁学、平行替谁解过问题——数字全是账本里真有的 */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 14, fontSize: 13.5, color: 'var(--ink2)', lineHeight: 1.75 }}>
-            {recent.map((r, i) => <div key={i}><span style={{ color: 'var(--v)', marginRight: 6 }}>{['↓', '↑', '↔'][i]}</span>{r}</div>)}
-          </div>
-
-          <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}>
-            <div>
-              <Label>我会什么</Label>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{(profile.capabilities || []).map((c: string) => <span key={c} className="lab-chip">{c}</span>)}</div>
-              {skill && <div style={{ marginTop: 10, fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.7 }}>
-                <span className={`lab-chip ${skill.kind === 'hard' ? 'c' : 'p'}`} style={{ marginRight: 6 }}>{SKILL_KIND[skill.kind]?.label}</span>
-                {skill.source === 'jd-draft' ? <>「{skill.name}」是我读完 JD 后自己推断的<b style={{ color: 'var(--ink2)' }}>技能集草案</b>，等待第一位专家来校正</> : <>「{skill.name}」学自 <b style={{ color: 'var(--ink2)' }}>{skill.expert_name}</b>（{skill.expert_location}）</>}
-              </div>}
-            </div>
-            <div>
-              <Label>我能解决什么问题</Label>
-              {(profile.can_solve?.length ? profile.can_solve : skill?.card?.scenarios || []).slice(0, 4).map((q: string) => (
-                <div key={q} onClick={() => { setMode('solve'); setProb(p => ({ ...p, problem: q.replace(/[「」]/g, '') })); }} style={{ fontSize: 13, color: 'var(--ink2)', lineHeight: 1.9, cursor: 'pointer' }}>▸ {q}</div>
-              ))}
-            </div>
+          
+          {/* 数值面板：三格就够，成句的话都在各自的 action 里 */}
+          <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', maxWidth: 420 }}>
+            {stat.map(x => (
+              <div key={x.k} onClick={() => setMode(x.go)} style={{ padding: '10px 12px', borderRadius: 14, background: 'rgba(106,92,255,.06)', border: '1px solid var(--line)', cursor: 'pointer' }}>
+                <div className="lab-mono" style={{ fontSize: 22, fontWeight: 800, letterSpacing: 0, color: 'var(--ink)' }}>{x.v}<span style={{ fontSize: 11, fontWeight: 600, color: 'var(--ink3)', marginLeft: 3 }}>{x.u}</span></div>
+                <div className="lab-mono lab-cap" style={{ marginTop: 2 }}>{x.k}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
