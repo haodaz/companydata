@@ -5,6 +5,7 @@
 import type { Sim, SimTrace } from '@/lib/skill-sim';
 import { simulateScript } from '@/lib/bench';
 import { BENCH_CASTING, CASTING_EXPERT_SCRIPT, CASTING_SCRIPTS, BENCH_WELD, WELD_EXPERT_SCRIPT, WELD_SCRIPTS } from '@/lib/skill-lab-seed-bench';
+import { BENCH_LATTE_HEART, BENCH_LATTE_TULIP, BENCH_LATTE_ROSETTA, HEART_EXPERT_SCRIPT, HEART_SCRIPTS, TULIP_EXPERT_SCRIPT, TULIP_SCRIPTS, ROSETTA_EXPERT_SCRIPT, ROSETTA_SCRIPTS } from '@/lib/skill-lab-seed-bench-latte';
 
 // ════════════════ A：指标异动归因 · 数据分析操作台 ════════════════
 export const SIM_A: Sim = {
@@ -365,9 +366,126 @@ export const EXPERT_WHY_D: Record<string, string> = {
   fix: '末段未焊透，为什么不直接把电流提上去？',
 };
 
+// ════════════════ E：意式奶咖拉花 · 三台轨迹工位（心形 / 郁金香 / 树叶）════════════════
+/**
+ * 这个空间里三步是真的上手：奶缸沿着轨迹走，鼠标拖或者打开摄像头捧住拇指和食指用手走。
+ * 奶缸压得多低、流量多大、离轨迹多远，每一下都实时变成杯子里的图案——走歪了就是歪的，不需要老师在旁边说。
+ */
+export const SIM_E: Sim = {
+  title: '拉花操作台 · 三个图案',
+  intro: '你站在精品咖啡馆的吧台后面。今天不考理论——先把奶打好，再把心形、郁金香、树叶各拉一杯。奶缸要沿着轨迹走，每一下都会落在杯里。',
+  art: {
+    cover: '/lab/latte_cafe.jpg',
+    scenes: { prep: '/lab/latte_cafe.jpg', heart: '/lab/latte_bar.jpg', tulip: '/lab/latte_bar.jpg', rosetta: '/lab/latte_bar.jpg', defect: '/lab/latte_judge.jpg', fix: '/lab/latte_bar.jpg', final: '/lab/latte_cafe.jpg' },
+    npcs: { '主理人老陈': '/lab/npc_barista.png', '出品督导 Yuki': '/lab/npc_trainer.png' },
+  },
+  steps: [
+    {
+      id: 'prep', type: 'multi', max: 3,
+      scene: { who: '主理人老陈', time: '周一 07:40', text: '今天让你站吧。开单之前，你先查什么？别给我背流程，说你真会动手的那几项。' },
+      prompt: '出第一杯之前先核对哪几项？（最多 3 项）',
+      options: [
+        { id: 'shot', label: '试一支浓缩：粉量 20 g、液重 40 g、25–30 秒', detail: '豆子每天状态不一样' },
+        { id: 'milk', label: '牛奶是不是 4℃ 冷藏、开封没超过一天', detail: '奶温起点决定你有多少时间打发' },
+        { id: 'wand', label: '蒸汽棒排冷凝水、喷嘴孔没堵', detail: '堵了就打不出漩涡' },
+        { id: 'cup', label: '杯子预热', detail: '冷杯会把温度和图案一起吃掉' },
+        { id: 'poster', label: '把今天的新品海报摆到门口' },
+        { id: 'forecast', label: '看一眼今天的客流预估和排班' },
+      ],
+    },
+    {
+      id: 'heart', type: 'bench', bench: BENCH_LATTE_HEART,
+      scene: { who: '主理人老陈', time: '08:00', text: '吧台交给你。先打奶：进气就那几秒，40℃ 之前停手，63℃ 关汽。然后高位融合、压低出图、收细穿过——先给我一颗心。' },
+      prompt: '在拉花工位上蒸好奶，拉出一颗心',
+    },
+    {
+      id: 'tulip', type: 'bench', bench: BENCH_LATTE_TULIP,
+      scene: { who: '主理人老陈', time: '08:25', text: '奶我帮你打好了。郁金香考的不是手稳，是你敢不敢停——推一瓣就把流量收掉、把奶缸退回来。不断流，三瓣就是一坨。' },
+      prompt: '在拉花工位上推出三瓣郁金香',
+    },
+    {
+      id: 'rosetta', type: 'bench', bench: BENCH_LATTE_ROSETTA,
+      scene: { who: '主理人老陈', time: '08:45', text: '最后一杯树叶。摆快了叶片糊成一条，摆歪了整片叶子是斜的。跟着那个绿点走，它的速度就是我的速度。' },
+      prompt: '在拉花工位上匀速摆出一片树叶',
+    },
+    {
+      id: 'defect', type: 'classify',
+      scene: { who: '出品督导 Yuki', time: '周二 10:30', text: '昨天晚班新人出的三杯被客人退了，图我拍下来了：第一杯白色发灰、和咖啡没对比；第二杯表面一层大泡，一勺子下去是空的；第三杯心歪在杯壁上。他的记录：关汽 71℃，进气一直进到 50℃，注入全程奶缸抬得老高。' },
+      prompt: '逐个判断这些因素和这三杯的关系',
+      labels: [{ id: 'cause', label: '主因', tone: 'hot' }, { id: 'minor', label: '次要' }, { id: 'no', label: '无关', tone: 'cold' }],
+      options: [
+        { id: 'high', label: '全程奶缸抬得太高，没压低', detail: '白色没浮上来' },
+        { id: 'air_late', label: '50℃ 了还在进气', detail: '表面大泡、下面是空的' },
+        { id: 'temp', label: '关汽温度 71℃', detail: '奶蛋白变性' },
+        { id: 'center', label: '注入点没在杯心、轴线走歪' },
+        { id: 'bean', label: '豆子烘焙度不对' },
+        { id: 'attitude', label: '新人态度不认真' },
+      ],
+    },
+    {
+      id: 'fix', type: 'multi', max: 2,
+      scene: { who: '主理人老陈', time: '周二 14:00', text: '晚班还是他。你只能给他两句话，说哪两句？' },
+      prompt: '你给晚班新人的两条指令（最多 2 项）',
+      options: [
+        { id: 'air_stop', label: '进气只在 40℃ 以前，听不到“滋滋”就把棒子埋深；手摸奶缸烫手就关汽' },
+        { id: 'drop', label: '融合完把奶缸压到贴着液面再加流量，白色才会浮上来' },
+        { id: 'slow', label: '整体慢一点，慢就不会错' },
+        { id: 'more_milk', label: '多打一点奶泡，泡厚了图案更清楚' },
+        { id: 'change_bean', label: '换一支拼配豆' },
+        { id: 'blame', label: '把退单费用从他工资里扣' },
+      ],
+    },
+    { id: 'final', type: 'text', scene: { who: '出品督导 Yuki', time: '周三 18:00', text: '把你这三杯写成一页出品笔记，下周新人培训要用。' }, prompt: '写下你的出品笔记（不超过 400 字）', placeholder: '蒸奶的温度与进气窗口、融合与压低的时机、三个图案各自考什么、退单那三杯怎么改……' },
+  ],
+};
+
+const HEART_RUN = simulateScript(BENCH_LATTE_HEART, HEART_EXPERT_SCRIPT, 120);
+const TULIP_RUN = simulateScript(BENCH_LATTE_TULIP, TULIP_EXPERT_SCRIPT, 90);
+const ROSETTA_RUN = simulateScript(BENCH_LATTE_ROSETTA, ROSETTA_EXPERT_SCRIPT, 75);
+const latteRun = (spec: any, s: any[]) => simulateScript(spec, s, Math.max(...s.map(a => a.t)) + 12);
+
+export const EXPERT_TRACE_E: SimTrace = {
+  prep: ['shot', 'milk', 'wand'],
+  heart: HEART_RUN, tulip: TULIP_RUN, rosetta: ROSETTA_RUN,
+  defect: { high: 'cause', air_late: 'cause', temp: 'minor', center: 'minor', bean: 'no', attitude: 'no' },
+  fix: ['air_stop', 'drop'],
+  final: '三杯的顺序都一样：蒸奶 → 高位融合 → 压低出图 → 收细穿过。蒸奶开汽后进气五秒到 0.8 cm 就停（40℃ 之前），63℃ 关汽；融合奶缸抬到 5 cm、细水绕杯心两圈约 16 秒，让奶沉到咖啡下面；然后一下子压到 1 cm、流量加到 70%，白色才会浮上来；最后流量收到 25%、奶缸提起来穿。\n\n三个图案各考一件事：心形考「敢不敢压低」；郁金香考「敢不敢断流」——每推一瓣就把流量收掉再退回来，不断流三瓣就糊成一坨；树叶考节奏，摆得匀比摆得快重要，我全程跟着引导点走。\n\n退单那三杯是两个动作错了：50℃ 还在进气 → 表面大泡、下面是空的；全程没压低 → 奶沉底，白色发灰。和豆子、态度都没关系。晚班就给两句：进气只在 40℃ 以前；融合完必须压到贴着液面。别让他「慢一点」——慢不解决任何一个问题。',
+};
+
+export const TRACES_E: Record<string, SimTrace> = {
+  '林舒窈（化名）': {
+    prep: ['shot', 'milk', 'cup'],
+    heart: latteRun(BENCH_LATTE_HEART, HEART_SCRIPTS.shy_rookie), tulip: latteRun(BENCH_LATTE_TULIP, TULIP_SCRIPTS.shaky), rosetta: latteRun(BENCH_LATTE_ROSETTA, ROSETTA_SCRIPTS.wobbly),
+    defect: { high: 'cause', air_late: 'minor', temp: 'cause', center: 'minor', bean: 'no', attitude: 'no' }, fix: ['air_stop', 'slow'],
+  },
+  '郭小满（化名）': {
+    prep: ['poster', 'forecast', 'cup'],
+    heart: latteRun(BENCH_LATTE_HEART, HEART_SCRIPTS.burnt_milk), tulip: latteRun(BENCH_LATTE_TULIP, TULIP_SCRIPTS.no_break), rosetta: latteRun(BENCH_LATTE_ROSETTA, ROSETTA_SCRIPTS.too_fast),
+    defect: { high: 'minor', air_late: 'no', temp: 'minor', center: 'no', bean: 'cause', attitude: 'cause' }, fix: ['change_bean', 'more_milk'],
+  },
+  'AI 裸答': {
+    prep: ['shot', 'milk', 'wand'],
+    heart: latteRun(BENCH_LATTE_HEART, HEART_SCRIPTS.ai_bare), tulip: latteRun(BENCH_LATTE_TULIP, TULIP_SCRIPTS.ai_bare), rosetta: latteRun(BENCH_LATTE_ROSETTA, ROSETTA_SCRIPTS.ai_bare),
+    defect: { high: 'cause', air_late: 'cause', temp: 'cause', center: 'minor', bean: 'minor', attitude: 'no' }, fix: ['air_stop', 'more_milk'],
+  },
+  'AI + 专家技能': {
+    prep: ['shot', 'milk', 'wand'],
+    heart: latteRun(BENCH_LATTE_HEART, HEART_SCRIPTS.ai_skill), tulip: latteRun(BENCH_LATTE_TULIP, TULIP_SCRIPTS.ai_skill), rosetta: latteRun(BENCH_LATTE_ROSETTA, ROSETTA_SCRIPTS.ai_skill),
+    defect: { high: 'cause', air_late: 'cause', temp: 'minor', center: 'minor', bean: 'no', attitude: 'no' }, fix: ['air_stop', 'drop'],
+  },
+};
+
+export const EXPERT_WHY_E: Record<string, string> = {
+  prep: '杯子预热你没勾，冷杯不是一样会把图案吃掉吗？',
+  heart: '融合那十几秒你一直抬着奶缸不动手，客人还在等，为什么不早点压下去？',
+  tulip: '你每推一瓣都把流量收到 0，不怕断层吗？',
+  defect: '三杯三个样子，你为什么说其实只是两个动作错了？',
+};
+
 export const SEED_SIMS = [
   { sim: SIM_A, expertTrace: EXPERT_TRACE_A, traces: TRACES_A, why: EXPERT_WHY_A },
   { sim: SIM_B, expertTrace: EXPERT_TRACE_B, traces: TRACES_B, why: EXPERT_WHY_B },
   { sim: SIM_C, expertTrace: EXPERT_TRACE_C, traces: TRACES_C, why: EXPERT_WHY_C },
   { sim: SIM_D, expertTrace: EXPERT_TRACE_D, traces: TRACES_D, why: EXPERT_WHY_D },
+  { sim: SIM_E, expertTrace: EXPERT_TRACE_E, traces: TRACES_E, why: EXPERT_WHY_E },
 ];

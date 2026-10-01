@@ -104,7 +104,8 @@ const LAB_CSS = `
 .lab-game-recap { font-size: 13px; color: var(--ink3); line-height: 1.7; margin-bottom: 12px; padding: 8px 12px; border-left: 3px solid var(--c); background: rgba(18,181,203,.06); border-radius: 0 10px 10px 0; cursor: pointer; }
 .bench-hud { position: absolute; inset: 0; overflow: hidden; background: #0f1224; }
 .bench-hud-blur { position: absolute; inset: -40px; width: calc(100% + 80px); height: calc(100% + 80px); object-fit: cover; filter: blur(28px) brightness(.55); }
-.bench-hud-stage { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(100%, 177.78vh); aspect-ratio: 16 / 9; }
+/* 场景按 16:9 居中；最高不超过容器，否则会顶出去、底部被控件条连同场景一起裁掉 */
+.bench-hud-stage { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(100%, 177.78vh); max-width: 100%; max-height: 100%; aspect-ratio: 16 / 9; }
 .bench-hud-right { position: absolute; right: 14px; top: 14px; bottom: 14px; width: 340px; display: flex; flex-direction: column; gap: 10px; overflow: auto; z-index: 3; }
 .bench-hud-bottom { position: absolute; left: 14px; right: 368px; bottom: 14px; z-index: 3; }
 .bench-hud .hud-card { background: rgba(15,18,36,.78) !important; border: 1px solid rgba(255,255,255,.12) !important; color: #c7cbe6 !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }

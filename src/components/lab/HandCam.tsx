@@ -19,7 +19,7 @@ const importUrl = (u: string) => (new Function('u', 'return import(u)') as (u: s
 
 const BONES: [number, number][] = [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [5, 6], [6, 7], [7, 8], [5, 9], [9, 10], [10, 11], [11, 12], [9, 13], [13, 14], [14, 15], [15, 16], [13, 17], [17, 18], [18, 19], [19, 20], [0, 17]];
 
-export function HandCam({ onPose, onStatus }: { onPose: (p: HandPose | null) => void; onStatus?: (s: string) => void }) {
+export function HandCam({ onPose, onStatus, hold = '焊枪', width = 260 }: { onPose: (p: HandPose | null) => void; onStatus?: (s: string) => void; /** 手里握的是什么（焊枪 / 奶缸），只影响提示语 */ hold?: string; /** 画面宽度；放进侧栏时给 '100%' */ width?: number | string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [status, setStatus] = useState('正在打开摄像头…');
@@ -37,7 +37,7 @@ export function HandCam({ onPose, onStatus }: { onPose: (p: HandPose | null) => 
         const vision = await mp.FilesetResolver.forVisionTasks(`${MP_URL}/wasm`);
         landmarker = await mp.HandLandmarker.createFromOptions(vision, { baseOptions: { modelAssetPath: MODEL_URL, delegate: 'GPU' }, runningMode: 'VIDEO', numHands: 1 });
         if (stop) return;
-        say('捏合拇指和食指 = 握住焊枪');
+        say(`捏合拇指和食指 = 握住${hold}`);
         let lastT = -1;
         const loop = () => {
           if (stop) return;
@@ -73,7 +73,7 @@ export function HandCam({ onPose, onStatus }: { onPose: (p: HandPose | null) => 
   }, []);
 
   return (
-    <div style={{ position: 'relative', width: 260, borderRadius: 12, overflow: 'hidden', background: '#000', border: '1px solid rgba(255,255,255,.2)', boxShadow: '0 12px 30px rgba(0,0,0,.45)' }}>
+    <div style={{ position: 'relative', width, borderRadius: 12, overflow: 'hidden', background: '#000', border: '1px solid rgba(255,255,255,.2)', boxShadow: '0 12px 30px rgba(0,0,0,.45)' }}>
       <video ref={videoRef} muted playsInline style={{ display: 'none' }} />
       <canvas ref={canvasRef} style={{ width: '100%', display: 'block', aspectRatio: '16 / 9' }} />
       <div className="lab-mono" style={{ position: 'absolute', left: 8, top: 6, fontSize: 10, color: '#fff', textShadow: '0 1px 3px #000', letterSpacing: '.08em' }}>● LIVE · 手部追踪</div>

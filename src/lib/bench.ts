@@ -10,7 +10,7 @@
  * 控件：knob 旋钮 / switch 开关 / button 按钮 / path 沿轨迹推进（0–100，只进不退，如「焊枪沿焊缝行走」）。
  * path 是连续动作：中间过程不逐点记事件，只在起步（>0）和走完（100）各记一条；速度等由变量从 dt 推出来。以后接摄像头时，手的位置直接喂给它。
  */
-export interface BenchControl { id: string; label: string; kind: 'knob' | 'switch' | 'button' | 'path'; min?: number; max?: number; step?: number; unit?: string; initial?: number; hint?: string }
+export interface BenchControl { id: string; label: string; kind: 'knob' | 'switch' | 'button' | 'path'; min?: number; max?: number; step?: number; unit?: string; initial?: number; hint?: string; /** 隐藏控件：不上面板、也不记事件，由场景里的动作（手的位置、偏离轨迹的距离）直接写入 */ hidden?: boolean }
 export interface BenchGauge { id: string; label: string; unit: string; expr: string; min: number; max: number; digits?: number; warn?: string }
 export interface BenchVar { id: string; label?: string; initial: number; rate?: string; set?: string; min?: number; max?: number }
 export interface BenchRule { id: string; label: string; when: string; severity: 'violation' | 'warning'; once?: boolean }
@@ -26,8 +26,14 @@ export interface BenchAction { t: number; control: string; value: number }
  *   readout 数字读数：text 表达式求值后显示，可带单位
  *   haze    半透明雾 / 烟：level 0–1
  *   seam    轨迹（焊缝）：绑定一个 path 控件，画轨迹、已走过的部分（焊道）、手柄（焊枪），on 为真时手柄处出火花；可以直接在场景里拖
+ *   pour    注入轨迹（咖啡拉花）：和 seam 一样绑定 path 控件，但轨迹是 points 折线，手柄是奶缸；pace > 0 时还会按推荐速度跑一个引导点（跟着它走）
+ *   cup     咖啡杯（俯视）：crema 底色 + 随注入点生长的奶泡图案；level 求值出「此刻落在液面上的奶泡有多大」（0–1，高位细流近于 0 = 奶沉到底下）
+ *   coach   阶段提示：on 为真时把 label 显示在场景里（「现在：压低奶缸」）
  */
-export interface BenchLayer { id: string; kind: 'glow' | 'lamp' | 'door' | 'stream' | 'pulse' | 'readout' | 'haze' | 'seam'; /** seam：绑定的 path 控件 */ control?: string; /** glow：冷态时盖一层深色（炉膛观察窗这类底图本来就亮的地方） */ cold?: boolean; x: number; y: number; w: number; h: number; level?: string; on?: string; text?: string; unit?: string; digits?: number; color?: string; label?: string }
+export interface BenchLayer { id: string; kind: 'glow' | 'lamp' | 'door' | 'stream' | 'pulse' | 'readout' | 'haze' | 'seam' | 'pour' | 'cup' | 'coach'; /** seam / pour：绑定的 path 控件 */ control?: string;
+  /** seam / pour：轨迹点（百分比坐标）。给了就沿折线走（可以折返），没给就是 x,y → x+w,y+h 的直线 */ points?: { x: number; y: number }[];
+  /** pour：引导点的推荐速度（% 每模拟秒） */ pace?: number;
+  /** pour：把「手离轨迹有多远」写进哪个（隐藏）控件，单位 mm */ deviation?: string; /** glow：冷态时盖一层深色（炉膛观察窗这类底图本来就亮的地方） */ cold?: boolean; x: number; y: number; w: number; h: number; level?: string; on?: string; text?: string; unit?: string; digits?: number; color?: string; label?: string }
 export interface BenchScene { image: string; credit?: string; layers: BenchLayer[] }
 
 export interface BenchSpec {
@@ -92,6 +98,68 @@ export function evalExpr(src: string, env: Record<string, number>): number {
   return Number.isFinite(v) ? v : 0;
 }
 
+// ──── 轨迹几何 ────
+// 场景覆盖层的坐标系是 1600 × 900（百分比 × 16 / × 9）。seam / pour 层的轨迹可以是一条折线（points），
+// 允许在空间上折返（郁金香的三次推注）——进度按折线长度算，所以「只进不退」在折返轨迹上照样成立。
+export const SCENE_W = 1600, SCENE_H = 900;
+export interface Pt { x: number; y: number }
+
+/** 层的轨迹点 → 场景坐标（没给 points 就是一条直线） */
+export function layerPath(l: BenchLayer): Pt[] {
+  if (l.points && l.points.length > 1) return l.points.map(p => ({ x: p.x * 16, y: p.y * 9 }));
+  return [{ x: l.x * 16, y: l.y * 9 }, { x: (l.x + l.w) * 16, y: (l.y + l.h) * 9 }];
+}
+
+/** 每段长度与总长 */
+export function pathLengths(pts: Pt[]): { seg: number[]; total: number } {
+  const seg: number[] = []; let total = 0;
+  for (let i = 0; i < pts.length - 1; i++) { const d = Math.hypot(pts[i + 1].x - pts[i].x, pts[i + 1].y - pts[i].y); seg.push(d); total += d; }
+  return { seg, total };
+}
+
+/** 进度 0–100 → 轨迹上的点与切线方向（度） */
+export function pointOnPath(pts: Pt[], progress: number): { x: number; y: number; angle: number } {
+  const { seg, total } = pathLengths(pts);
+  if (!total) return { x: pts[0].x, y: pts[0].y, angle: 0 };
+  let want = Math.min(total, Math.max(0, progress / 100 * total));
+  for (let i = 0; i < seg.length; i++) {
+    if (want > seg[i] && i < seg.length - 1) { want -= seg[i]; continue; }
+    const a = pts[i], b = pts[i + 1], t = seg[i] ? Math.min(1, want / seg[i]) : 0;
+    return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t, angle: Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI };
+  }
+  const a = pts[pts.length - 2], b = pts[pts.length - 1];
+  return { x: b.x, y: b.y, angle: Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI };
+}
+
+/**
+ * 把一个点（指针 / 摄像头里手的位置）投影到轨迹上：返回进度和到轨迹的距离。
+ * 折返轨迹（心形的左右晃、郁金香的退回）上，光看位置是分不出「走到第几遍」的，所以两道防线：
+ *   hint —— 只在当前进度前后 window 个百分点里找；
+ *   dir  —— 手正在移动的方向：只认方向对得上的段（来和回是两段，方向正好相反）。都对不上就放开这一条再找一遍。
+ */
+export function projectOnPath(pts: Pt[], px: number, py: number, hint = -1, window = 100, dir?: Pt): { progress: number; dist: number } {
+  const { seg, total } = pathLengths(pts);
+  if (!total) return { progress: 0, dist: 0 };
+  const scan = (useDir: boolean) => {
+    let best = { progress: hint >= 0 ? hint : 0, dist: Infinity }, acc = 0;
+    for (let i = 0; i < seg.length; i++) {
+      const a = pts[i], b = pts[i + 1];
+      const dx = b.x - a.x, dy = b.y - a.y, len2 = dx * dx + dy * dy || 1;
+      const t = Math.min(1, Math.max(0, ((px - a.x) * dx + (py - a.y) * dy) / len2));
+      const prog = (acc + seg[i] * t) / total * 100;
+      acc += seg[i];
+      if (hint >= 0 && Math.abs(prog - hint) > window) continue;
+      if (useDir && dir && (dx * dir.x + dy * dir.y) / Math.sqrt(len2) < 0) continue;
+      const d = Math.hypot(px - (a.x + dx * t), py - (a.y + dy * t));
+      if (d < best.dist) best = { progress: prog, dist: d };
+    }
+    return best;
+  };
+  const withDir = dir && (dir.x || dir.y) ? scan(true) : { progress: 0, dist: Infinity };
+  const best = withDir.dist < Infinity ? withDir : scan(false);
+  return best.dist === Infinity ? { progress: hint >= 0 ? hint : 0, dist: 999 } : best;
+}
+
 // ────────────────────────────────────────────
 // 模拟器
 // ────────────────────────────────────────────
@@ -121,6 +189,7 @@ export function applyControl(spec: BenchSpec, st: BenchState, id: string, value:
   const prev = st.controls[id];
   if (prev === v && c.kind !== 'button') return;
   st.controls[id] = v;
+  if (c.hidden) return;   // 隐藏控件（偏离距离这类连续量）不进事件流
   if (c.kind === 'path') {
     // 连续动作：只记起步和走完
     if (prev <= 0 && v > 0) { st.events.push({ t: st.t, kind: 'control', control: id, value: 1, prev: 0, state: { ...st.vars } }); st.maxIdle = Math.max(st.maxIdle, st.t - st.lastActionT); st.lastActionT = st.t; }
@@ -256,16 +325,16 @@ export function sanitizeBenchSpec(raw: any): BenchSpec | null {
   const spec: BenchSpec = {
     name: String(raw.name || '虚拟工位'), brief: String(raw.brief || ''), timeScale: Math.max(1, Number(raw.timeScale) || 10), maxSeconds: Math.max(60, Number(raw.maxSeconds) || 900),
     vars: raw.vars.filter((v: any) => v?.id).map((v: any) => ({ id: String(v.id), label: v.label ? String(v.label) : undefined, initial: Number(v.initial) || 0, rate: v.rate ? String(v.rate) : undefined, set: v.set ? String(v.set) : undefined, min: v.min !== undefined ? Number(v.min) : undefined, max: v.max !== undefined ? Number(v.max) : undefined })),
-    controls: raw.controls.filter((c: any) => c?.id && c?.label).map((c: any) => ({ id: String(c.id), label: String(c.label), kind: ['knob', 'switch', 'button', 'path'].includes(c.kind) ? c.kind : 'switch', min: c.min !== undefined ? Number(c.min) : 0, max: c.max !== undefined ? Number(c.max) : 100, step: c.step !== undefined ? Number(c.step) : undefined, unit: c.unit ? String(c.unit) : '', initial: Number(c.initial) || 0, hint: c.hint ? String(c.hint) : undefined })),
+    controls: raw.controls.filter((c: any) => c?.id && c?.label).map((c: any) => ({ id: String(c.id), label: String(c.label), kind: ['knob', 'switch', 'button', 'path'].includes(c.kind) ? c.kind : 'switch', min: c.min !== undefined ? Number(c.min) : 0, max: c.max !== undefined ? Number(c.max) : 100, step: c.step !== undefined ? Number(c.step) : undefined, unit: c.unit ? String(c.unit) : '', initial: Number(c.initial) || 0, hint: c.hint ? String(c.hint) : undefined, hidden: !!c.hidden })),
     gauges: (Array.isArray(raw.gauges) ? raw.gauges : []).filter((g: any) => g?.id && g?.expr).map((g: any) => ({ id: String(g.id), label: String(g.label || g.id), unit: String(g.unit || ''), expr: String(g.expr), min: Number(g.min) || 0, max: Number(g.max) || 100, digits: g.digits !== undefined ? Number(g.digits) : undefined, warn: g.warn ? String(g.warn) : undefined })),
     rules: (Array.isArray(raw.rules) ? raw.rules : []).filter((r: any) => r?.id && r?.when).map((r: any) => ({ id: String(r.id), label: String(r.label || r.id), when: String(r.when), severity: r.severity === 'warning' ? 'warning' : 'violation', once: !!r.once })),
     goals: raw.goals.filter((g: any) => g?.id && g?.when).map((g: any) => ({ id: String(g.id), label: String(g.label || g.id), when: String(g.when), hold: g.hold ? Number(g.hold) : undefined, after: g.after ? String(g.after) : undefined })),
     expertScript: Array.isArray(raw.expertScript) ? raw.expertScript.filter((a: any) => a?.control).map((a: any) => ({ t: Number(a.t) || 0, control: String(a.control), value: Number(a.value) || 0 })) : undefined,
   };
   if (raw.scene && typeof raw.scene.image === 'string' && /^(\/|https?:\/\/)/.test(raw.scene.image) && Array.isArray(raw.scene.layers)) {
-    const KINDS = ['glow', 'lamp', 'door', 'stream', 'pulse', 'readout', 'haze', 'seam'];
+    const KINDS = ['glow', 'lamp', 'door', 'stream', 'pulse', 'readout', 'haze', 'seam', 'pour', 'cup', 'coach'];
     spec.scene = { image: raw.scene.image.slice(0, 500), credit: raw.scene.credit ? String(raw.scene.credit).slice(0, 200) : undefined,
-      layers: raw.scene.layers.filter((l: any) => l?.id && KINDS.includes(l.kind)).slice(0, 40).map((l: any) => ({ id: String(l.id), kind: l.kind, control: l.control ? String(l.control) : undefined, cold: !!l.cold, x: Number(l.x) || 0, y: Number(l.y) || 0, w: Number(l.w) || 0, h: Number(l.h) || 0, level: l.level ? String(l.level) : undefined, on: l.on ? String(l.on) : undefined, text: l.text ? String(l.text) : undefined, unit: l.unit ? String(l.unit) : undefined, digits: l.digits !== undefined ? Number(l.digits) : undefined, color: l.color ? String(l.color).slice(0, 30) : undefined, label: l.label ? String(l.label).slice(0, 40) : undefined })) };
+      layers: raw.scene.layers.filter((l: any) => l?.id && KINDS.includes(l.kind)).slice(0, 40).map((l: any) => ({ id: String(l.id), kind: l.kind, control: l.control ? String(l.control) : undefined, cold: !!l.cold, x: Number(l.x) || 0, y: Number(l.y) || 0, w: Number(l.w) || 0, h: Number(l.h) || 0, level: l.level ? String(l.level) : undefined, on: l.on ? String(l.on) : undefined, text: l.text ? String(l.text) : undefined, unit: l.unit ? String(l.unit) : undefined, digits: l.digits !== undefined ? Number(l.digits) : undefined, color: l.color ? String(l.color).slice(0, 30) : undefined, label: l.label ? String(l.label).slice(0, 80) : undefined, pace: l.pace !== undefined ? Number(l.pace) : undefined, deviation: l.deviation ? String(l.deviation) : undefined, points: Array.isArray(l.points) ? l.points.filter((q: any) => typeof q?.x === 'number' && typeof q?.y === 'number').slice(0, 400).map((q: any) => ({ x: Number(q.x), y: Number(q.y) })) : undefined })) };
   }
   if (!spec.controls.length || !spec.goals.length) return null;
   // 表达式都要能求值

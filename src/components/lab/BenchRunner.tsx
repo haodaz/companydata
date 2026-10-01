@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { applyControl, benchEnv, evalExpr, finishBench, fmtT, initBench, tickBench, type BenchSpec, type BenchState, type BenchTrace, type BenchEvent, type BenchLayer } from '@/lib/bench';
+import { applyControl, benchEnv, evalExpr, finishBench, fmtT, initBench, layerPath, pointOnPath, projectOnPath, tickBench, type BenchSpec, type BenchState, type BenchTrace, type BenchEvent, type BenchLayer, type Pt } from '@/lib/bench';
 import { HandCam, type HandPose } from '@/components/lab/HandCam';
 
 /**
@@ -10,6 +10,8 @@ import { HandCam, type HandPose } from '@/components/lab/HandCam';
  *   - 右半边是「数字面板」：仪表 + 目标 + 事件流；控件在场景下方
  *   - 每 250ms 推进一次模拟；每一次拨动、越线、达标都进事件流
  *   - 「镜头」= 每 5 秒和每次操作把场景渲染成 320 像素的快照，同样进事件流（最多 16 张）。没有场景时拍面板。
+ *   - 轨迹类工位（seam 焊缝 / pour 咖啡拉花）：指针或摄像头里手的位置投影到折线上 → 进度；到折线的距离 → 「偏离」隐藏控件。
+ *     拉花工位还把每一下实际落点按当时的奶缸高度 / 流量沉在杯里（cup 层）——走歪了，图案就是歪的。
  */
 const TICK_MS = 250, SNAP_EVERY_MS = 5000, SNAP_MAX = 16, SNAP_W = 320, SNAP_H = 180;
 const VW = 1600, VH = 900; // 场景覆盖层坐标系（百分比 × 16 / × 9）
@@ -87,40 +89,79 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
     bump(v => v + 1);
   };
 
-  // ── 在场景里拖动 path 控件（焊枪沿焊缝）：指针位置投影到轨迹线段上 → 0–100 ──
-  const dragRef = useRef<BenchLayer | null>(null);
-  const seamProgress = (l: BenchLayer, clientX: number, clientY: number) => {
+  // ── 轨迹工位（焊缝 / 拉花）：指针或手的位置 → 投影到折线上的进度 + 离折线的距离 ──
+  const trackLayer = scene?.layers.find(l => (l.kind === 'seam' || l.kind === 'pour') && l.control);
+  const trackPts = useRef<Pt[]>([]);
+  if (trackLayer && !trackPts.current.length) trackPts.current = layerPath(trackLayer);
+  const isLatte = trackLayer?.kind === 'pour';
+  const cupLayer = scene?.layers.find(l => l.kind === 'cup');
+
+  /** 奶泡沉积：每一下实际落点，半径由当时的奶缸高度 / 流量（cup 层的 level 表达式）决定。
+   *  高位细流 → 半径近于 0（奶沉到咖啡下面，杯面不留白）；压低加大流量 → 大白斑。 */
+  const deposits = useRef<{ x: number; y: number; r: number; a: number }[]>([]);
+  const lastDrop = useRef<{ x: number; y: number } | null>(null);
+  const drop = (px: number, py: number) => {
+    if (!cupLayer || deposits.current.length > 520) return;
+    const prev = lastDrop.current;
+    const moved = prev ? Math.hypot(px - prev.x, py - prev.y) : 99;
+    if (moved < 9) return;
+    const level = Math.min(1, Math.max(0, ev(cupLayer.level)));
+    lastDrop.current = { x: px, y: py };
+    if (level < 0.02) return;
+    const r = 11 + level * 100;
+    // 奶流还会把液面上已经有的图案往前推，越近推得越多——「晃出一个圆再往前推，圆就成了心」就是这么来的
+    if (prev && moved < 220) {
+      const ux = (px - prev.x) / moved, uy = (py - prev.y) / moved;
+      const reach = r * 2.4, force = Math.min(moved, 26) * level * 0.95;
+      for (const d of deposits.current) {
+        const dd = Math.hypot(d.x - px, d.y - py);
+        if (dd < reach) { const f = (1 - dd / reach) * force; d.x += ux * f; d.y += uy * f; }
+      }
+    }
+    deposits.current.push({ x: px, y: py, r, a: prev ? Math.atan2(py - prev.y, px - prev.x) * 180 / Math.PI : 0 });
+  };
+
+  /** 指针 / 手 → 进度与偏离。折返轨迹靠两件事分辨：只在当前进度附近找，再拿手的移动方向（平滑过，免得手抖）挡掉方向相反的那一段 */
+  const lastPt = useRef<Pt | null>(null);
+  const dirRef = useRef<Pt>({ x: 0, y: 0 });
+  const onTrack = (l: BenchLayer, px: number, py: number, smooth = 1) => {
+    const ctl = l.control!; const prog = stRef.current.controls[ctl] || 0;
+    const lp = lastPt.current;
+    if (lp) {
+      const mx = px - lp.x, my = py - lp.y, m = Math.hypot(mx, my);
+      if (m > 2) dirRef.current = { x: dirRef.current.x * 0.6 + mx / m * 0.4, y: dirRef.current.y * 0.6 + my / m * 0.4 };
+    }
+    lastPt.current = { x: px, y: py };
+    const { progress, dist } = projectOnPath(trackPts.current, px, py, prog, l.kind === 'pour' ? 14 : 100, l.kind === 'pour' ? dirRef.current : undefined);
+    if (l.deviation) applyControl(spec, stRef.current, l.deviation, dist);
+    if (progress > prog) { act(ctl, prog + (progress - prog) * smooth); drop(px, py); }
+    else bump(v => v + 1);
+  };
+  const scenePoint = (clientX: number, clientY: number) => {
     const svg = sceneRef.current; if (!svg) return null;
     const r = svg.getBoundingClientRect();
-    const px = (clientX - r.left) / r.width * VW, py = (clientY - r.top) / r.height * VH;
-    const ax = l.x * 16, ay = l.y * 9, bx = (l.x + l.w) * 16, by = (l.y + l.h) * 9;
-    const dx = bx - ax, dy = by - ay; const len2 = dx * dx + dy * dy || 1;
-    return Math.min(100, Math.max(0, ((px - ax) * dx + (py - ay) * dy) / len2 * 100));
+    return { x: (clientX - r.left) / r.width * VW, y: (clientY - r.top) / r.height * VH };
   };
-  // ── 摄像头握枪：食指位置 → 场景坐标；捏合且靠近焊枪 = 握住；握着移动 = 沿焊缝走 ──
+
+  const dragRef = useRef<BenchLayer | null>(null);
+  // ── 摄像头：食指位置 → 场景坐标；捏合且靠近手柄 = 握住（焊枪 / 奶缸）；握着移动 = 沿轨迹走 ──
   const [cam, setCam] = useState(false);
   const handRef = useRef<{ x: number; y: number; pinch: boolean; holding: boolean } | null>(null);
-  const seamLayer = scene?.layers.find(l => l.kind === 'seam' && l.control);
   const onPose = (p: HandPose | null) => {
     if (!p) { handRef.current = null; return; }
     const px = p.x * VW, py = p.y * VH;
     const prev = handRef.current; let holding = !!prev?.holding && p.pinch;
-    if (seamLayer?.control && running) {
-      const l = seamLayer; const ctl = l.control!; const prog = stRef.current.controls[ctl] || 0;
-      const tx = (l.x + l.w * prog / 100) * 16, ty = (l.y + l.h * prog / 100) * 9;
-      if (p.pinch && !holding && Math.hypot(px - tx, py - ty) < 170) holding = true;   // 捏在焊枪附近 = 握住
-      if (holding) {
-        const ax = l.x * 16, ay = l.y * 9, bx = (l.x + l.w) * 16, by = (l.y + l.h) * 9;
-        const dx = bx - ax, dy = by - ay; const len2 = dx * dx + dy * dy || 1;
-        const target = Math.min(100, Math.max(0, ((px - ax) * dx + (py - ay) * dy) / len2 * 100));
-        if (target > prog) act(ctl, prog + (target - prog) * 0.45);            // 平滑，避免手抖成「过快」
-      }
+    if (trackLayer?.control && running) {
+      const prog = stRef.current.controls[trackLayer.control] || 0;
+      const h = pointOnPath(trackPts.current, prog);
+      if (p.pinch && !holding && Math.hypot(px - h.x, py - h.y) < 190) holding = true;   // 捏在手柄附近 = 握住
+      if (holding) onTrack(trackLayer, px, py, 0.45);                                     // 平滑，避免手抖成「过快」
     }
     handRef.current = { x: px, y: py, pinch: p.pinch, holding };
   };
   const hand = handRef.current;
 
-  const onScenePointerMove = (e: React.PointerEvent) => { const l = dragRef.current; if (!l?.control) return; const v = seamProgress(l, e.clientX, e.clientY); if (v !== null) act(l.control, v); };
+  const onScenePointerMove = (e: React.PointerEvent) => { const l = dragRef.current; if (!l?.control) return; const q = scenePoint(e.clientX, e.clientY); if (q) onTrack(l, q.x, q.y); };
   const onScenePointerUp = () => { dragRef.current = null; };
 
   const finish = async () => {
@@ -161,7 +202,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
       <text x={18} y={24} fill="#9aa0b8" fontSize={12} fontFamily="ui-monospace, Menlo, monospace">{spec.name.toUpperCase()} · T+{fmtT(st.t)} · {role === 'expert' ? 'EXPERT' : 'TRAINEE'}</text>
       <circle cx={PW - 24} cy={19} r={5} fill={running ? '#ff3b5c' : '#555'} /><text x={PW - 34} y={23} textAnchor="end" fill="#ff8aa0" fontSize={10} fontFamily="ui-monospace, Menlo, monospace">{running ? 'REC' : 'STOP'}</text>
       {spec.gauges.slice(0, 4).map((g, i) => dial(g, 90 + i * 150, 105, 48))}
-      {!scene && spec.controls.map((c, i) => {
+      {!scene && spec.controls.filter(c => !c.hidden).map((c, i) => {
         const v = st.controls[c.id]; const x = 30 + i * 100;
         const on = c.kind === 'knob' ? v > 0 : v === 1;
         return (
@@ -180,7 +221,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
   // ── 控件 ──
   const controls = (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 10 }}>
-      {spec.controls.map(c => {
+      {spec.controls.filter(c => !c.hidden).map(c => {
         const v = st.controls[c.id]; const done = pressed(c);
         return (
           <div key={c.id} className={hud ? 'hud-card' : undefined} style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid var(--line)', background: 'rgba(255,255,255,.7)' }}>
@@ -211,9 +252,39 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
     </div>
   );
 
+  /**
+   * 手法镜（只给拉花工位）：摄像头画面单独占一块，不再压在场景上。
+   * 下面一行是这一刻的手法读数：有没有握住奶缸、离轨迹多远、走到哪里了。
+   */
+  const devNow = trackLayer?.deviation ? (st.controls[trackLayer.deviation] || 0) * 0.146 : 0;
+  const trackProg = trackLayer?.control ? st.controls[trackLayer.control] || 0 : 0;
+  const handMirror = isLatte && cam ? (
+    <div className={hud ? 'hud-card' : undefined} style={{ padding: 10, borderRadius: 14, border: '1px solid var(--line)', background: hud ? undefined : 'rgba(23,26,46,.04)' }}>
+      <div className="lab-mono lab-cap" style={{ marginBottom: 8, display: 'flex', justifyContent: 'space-between' }}>
+        <span>手法镜 · HAND CAM</span>
+        <button onClick={() => setCam(false)} style={{ border: 0, background: 'transparent', color: 'inherit', cursor: 'pointer', fontSize: 11 }}>关闭</button>
+      </div>
+      <HandCam onPose={onPose} hold="奶缸" width="100%" />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6, marginTop: 8 }}>
+        {[
+          { k: '奶缸', v: hand?.holding ? '已握住' : hand?.pinch ? '捏住了' : '松开', c: hand?.holding ? '#3ddc97' : '#9aa0b8' },
+          { k: '偏离', v: `${devNow.toFixed(1)} mm`, c: devNow > 16 ? '#ff5fa2' : '#7cc8ff' },
+          { k: '进度', v: `${Math.round(trackProg)}%`, c: '#ffd166' },
+        ].map(x => (
+          <div key={x.k} style={{ padding: '6px 8px', borderRadius: 9, background: 'rgba(15,18,36,.08)', textAlign: 'center' }}>
+            <div className="lab-mono hud-ink3" style={{ fontSize: 10, color: 'var(--ink3)' }}>{x.k}</div>
+            <div className="lab-mono" style={{ fontSize: 13, fontWeight: 800, color: x.c, letterSpacing: 0 }}>{x.v}</div>
+          </div>
+        ))}
+      </div>
+      <div className="hud-ink3" style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 7, lineHeight: 1.6 }}>捏住拇指和食指 = 握住奶缸；松开就停在原地（可以趡机调高度和流量）。</div>
+    </div>
+  ) : null;
+
   // ── 目标 + 事件流 + 按钮 ──
   const side = (
     <>
+      {handMirror}
       <div className={hud ? 'hud-card' : undefined} style={{ padding: 14, borderRadius: 14, background: 'rgba(23,26,46,.04)', border: '1px solid var(--line)' }}>
         <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>目标 {goalsDone}/{spec.goals.length}</div>
         {spec.goals.map(g => {
@@ -247,19 +318,29 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
         <defs>
           <filter id="bench-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18" /></filter>
           <filter id="bench-blur-sm" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" /></filter>
+          <filter id="latte-soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3.5" /></filter>
         </defs>
         {hand && <g pointerEvents="none"><circle cx={hand.x} cy={hand.y} r={hand.holding ? 30 : 22} fill={hand.holding ? 'rgba(255,95,162,.35)' : hand.pinch ? 'rgba(255,209,102,.35)' : 'rgba(18,181,203,.3)'} stroke={hand.holding ? '#ff5fa2' : hand.pinch ? '#ffd166' : '#12b5cb'} strokeWidth={4} /><text x={hand.x} y={hand.y + 9} textAnchor="middle" fontSize={26}>{hand.holding ? '🤏' : hand.pinch ? '🤏' : '☝️'}</text></g>}
-        {scene.layers.map(l => <Layer key={l.id} l={l} level={l.level ? Math.min(1, Math.max(0, ev(l.level))) : 0} on={l.on ? !!ev(l.on) : false} value={l.text ? ev(l.text) : 0} progress={l.kind === 'seam' && l.control ? st.controls[l.control] || 0 : 0} onGrab={l.kind === 'seam' && running ? (e => { dragRef.current = l; (e.target as Element).setPointerCapture?.(e.pointerId); const v = l.control ? seamProgress(l, e.clientX, e.clientY) : null; if (v !== null && l.control) act(l.control, v); }) : undefined} />)}
+        {scene.layers.map(l => {
+          const track = (l.kind === 'seam' || l.kind === 'pour') && !!l.control;
+          const prog = track ? st.controls[l.control!] || 0 : 0;
+          // 引导点：从学生起步那一刻起，按推荐速度自己往前走——跟着它，节奏就对了
+          const startT = track && l.pace ? st.events.find(e => e.kind === 'control' && e.control === l.control)?.t : undefined;
+          return <Layer key={l.id} l={l} level={l.level ? Math.min(1, Math.max(0, ev(l.level))) : 0} on={l.on ? !!ev(l.on) : false} value={l.text ? ev(l.text) : 0}
+            progress={prog} ghost={startT !== undefined && l.pace ? Math.min(100, (st.t - startT) * l.pace) : undefined}
+            deposits={l.kind === 'cup' ? deposits.current : undefined}
+            onGrab={track && running ? (e => { dragRef.current = l; (e.target as Element).setPointerCapture?.(e.pointerId); const q = scenePoint(e.clientX, e.clientY); if (q) onTrack(l, q.x, q.y); }) : undefined} />;
+        })}
       </svg>
       <div className="lab-mono" style={{ position: 'absolute', left: 12, top: hud ? 34 : 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em' }}>
         <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
       </div>
-      {seamLayer && (
+      {trackLayer && (
         <button onClick={() => setCam(v => !v)} style={{ position: 'absolute', left: 12, top: hud ? 58 : 34, padding: '6px 12px', borderRadius: 999, border: '1px solid rgba(255,255,255,.35)', background: cam ? 'linear-gradient(135deg,#ff5fa2,#ff8a5f)' : 'rgba(15,18,36,.7)', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(6px)' }}>
-          {cam ? '📷 摄像头握枪中 · 关闭' : '📷 用摄像头握枪'}
+          {cam ? `📷 摄像头${isLatte ? '握奶缸' : '握枪'}中 · 关闭` : `📷 用摄像头${isLatte ? '握奶缸' : '握枪'}`}
         </button>
       )}
-      {cam && <div style={{ position: 'absolute', left: 12, top: hud ? 94 : 68, zIndex: 2 }}><HandCam onPose={onPose} /></div>}
+      {cam && !isLatte && <div style={{ position: 'absolute', left: 12, top: hud ? 94 : 68, zIndex: 2 }}><HandCam onPose={onPose} hold="焊枪" /></div>}
       {!hud && <div className="lab-mono" style={{ position: 'absolute', right: 12, top: 10, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)' }}>{role === 'expert' ? 'EXPERT' : 'TRAINEE'} · {goalsDone}/{spec.goals.length} · ⛔{violations}</div>}
     </div>
   ) : null;
@@ -302,7 +383,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
 }
 
 /** 场景覆盖层 */
-function Layer({ l, level, on, value, progress = 0, onGrab }: { l: BenchLayer; level: number; on: boolean; value: number; progress?: number; onGrab?: (e: React.PointerEvent) => void }) {
+function Layer({ l, level, on, value, progress = 0, ghost, deposits, onGrab }: { l: BenchLayer; level: number; on: boolean; value: number; progress?: number; ghost?: number; deposits?: { x: number; y: number; r: number; a: number }[]; onGrab?: (e: React.PointerEvent) => void }) {
   const x = l.x * 16, y = l.y * 9, w = l.w * 16, h = l.h * 9; const w0 = w, h0 = h;
   const cx = x + w / 2, cy = y + h / 2;
   const heat = (p: number) => p < 0.35 ? `rgba(120,10,0,${Math.min(1, p * 2)})` : p < 0.7 ? '#ff4d00' : p < 0.9 ? '#ffb347' : '#fff3c4';
@@ -340,6 +421,73 @@ function Layer({ l, level, on, value, progress = 0, onGrab }: { l: BenchLayer; l
           </g>
           <circle cx={px} cy={py} r={26} fill="transparent" />
           <text x={px} y={py + 54} textAnchor="middle" fill="#fff" fontSize={16} fontWeight={700} fontFamily="ui-monospace, Menlo, monospace" style={{ textShadow: '0 1px 4px rgba(0,0,0,.6)' }}>{on ? '●' : ''} {Math.round(progress)}%</text>
+        </g>
+      );
+    }
+    case 'pour': {
+      // 注入轨迹：虚线是要走的路，金色实线是已经走过的（pathLength=100 把长度归一化，直接用进度做虚线长），
+      // 引导点按推荐速度自己往前走：跟得上它，节奏就对了。手柄是一只俯视的不锈钢奶缸，尖嘴朝着前进方向。
+      const pts = layerPath(l);
+      const d = pts.map((p, i) => `${i ? 'L' : 'M'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+      const head = pointOnPath(pts, progress);
+      const gp = ghost !== undefined && ghost > 0 && progress < 99 ? pointOnPath(pts, ghost) : null;
+      return (
+        <g style={{ cursor: onGrab ? 'grab' : 'default' }} onPointerDown={onGrab}>
+          <g opacity={progress >= 99.5 ? 0.25 : 1}>
+            <path d={d} fill="none" stroke="rgba(10,8,20,.45)" strokeWidth={30} strokeLinecap="round" strokeLinejoin="round" />
+            <path d={d} fill="none" stroke="rgba(255,255,255,.75)" strokeWidth={4} strokeDasharray="16 16" strokeLinecap="round" />
+          </g>
+          <path d={d} pathLength={100} fill="none" stroke="#ffd166" strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={`${Math.max(0.01, progress)} 100`} opacity={0.9} />
+          {gp && (
+            <g pointerEvents="none">
+              <circle cx={gp.x} cy={gp.y} r={30} fill="none" stroke="#3ddc97" strokeWidth={5} opacity={0.9}><animate attributeName="r" values="26;40;26" dur="1.1s" repeatCount="indefinite" /></circle>
+              <circle cx={gp.x} cy={gp.y} r={9} fill="#3ddc97" />
+            </g>
+          )}
+          {/* 奶缸（俯视） */}
+          {/* 走完了就把奶缸淡掉，让人看清杯里的成品 */}
+          <g transform={`translate(${head.x} ${head.y}) rotate(${head.angle})`} opacity={progress >= 99.5 ? 0.2 : 1} pointerEvents="none">
+            <ellipse cx={-26} cy={0} rx={46} ry={40} fill="#c9ced8" stroke="#79818f" strokeWidth={3} />
+            <ellipse cx={-26} cy={0} rx={34} ry={28} fill="#eef1f6" opacity={0.75} />
+            <polygon points="18,-13 56,0 18,13" fill="#d7dbe3" stroke="#79818f" strokeWidth={2} />
+            <rect x={-96} y={-13} width={36} height={26} rx={7} fill="#9aa3b1" stroke="#6b7484" strokeWidth={2} />
+            {on && <circle cx={58} cy={0} r={9} fill="#fffaf0" opacity={0.95} />}
+          </g>
+          <circle cx={head.x} cy={head.y} r={34} fill="transparent" />
+          <text x={head.x} y={head.y + 76} textAnchor="middle" fill="#fff" fontSize={20} fontWeight={700} fontFamily="ui-monospace, Menlo, monospace" style={{ textShadow: '0 1px 5px rgba(0,0,0,.8)' }} pointerEvents="none">{Math.round(progress)}%</text>
+        </g>
+      );
+    }
+    case 'cup': {
+      // 咖啡杯俯视：crema 底色 + 按实际落点堆出来的奶泡图案（后落的盖在先落的上面，郁金香的层次就是这么来的）
+      const r = Math.min(w, h) / 2;
+      return (
+        <g pointerEvents="none">
+          <defs>
+            <radialGradient id={`crema-${l.id}`} cx="42%" cy="36%" r="72%">
+              <stop offset="0%" stopColor="#c08a52" /><stop offset="48%" stopColor="#92602f" /><stop offset="100%" stopColor="#4e2d14" />
+            </radialGradient>
+            <clipPath id={`cupclip-${l.id}`}><circle cx={cx} cy={cy} r={r * 0.97} /></clipPath>
+          </defs>
+          <ellipse cx={cx} cy={cy + r * 0.12} rx={r * 1.2} ry={r * 1.2} fill="rgba(0,0,0,.45)" filter="url(#bench-blur)" />
+          <circle cx={cx} cy={cy} r={r * 1.14} fill="#f2efe8" stroke="rgba(60,45,30,.35)" strokeWidth={3} />
+          <circle cx={cx} cy={cy} r={r * 1.05} fill="#ded9cf" />
+          <circle cx={cx} cy={cy} r={r} fill={`url(#crema-${l.id})`} />
+          <g clipPath={`url(#cupclip-${l.id})`} filter="url(#latte-soft)">
+            {(deposits || []).map((p, i) => <ellipse key={i} cx={p.x} cy={p.y} rx={p.r * 1.18} ry={p.r * 0.84} transform={`rotate(${p.a} ${p.x} ${p.y})`} fill="#fffaf0" opacity={0.96} />)}
+          </g>
+          <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(40,25,12,.45)" strokeWidth={4} />
+          <circle cx={cx} cy={cy} r={r * 1.1} fill="none" stroke="rgba(255,255,255,.6)" strokeWidth={5} />
+        </g>
+      );
+    }
+    case 'coach': {
+      if (!on || !l.label) return null;
+      const tw = l.label.length * 20 + 56;
+      return (
+        <g pointerEvents="none">
+          <rect x={cx - tw / 2} y={y - 27} width={tw} height={54} rx={27} fill="rgba(10,12,26,.8)" stroke={l.color || 'rgba(255,255,255,.35)'} strokeWidth={2} />
+          <text x={cx} y={y + 10} textAnchor="middle" fill={l.color || '#fff'} fontSize={25} fontWeight={700}>{l.label}</text>
         </g>
       );
     }
