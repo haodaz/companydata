@@ -162,11 +162,16 @@ export default function LabHome() {
         <div style={{ flex: '1 1 480px', minWidth: 0 }}>
           <div className="lab-mono lab-cap">EVERY JD IS A SKILL SPACE</div>
           <h1 style={{ margin: '8px 0 10px', fontSize: 'clamp(26px, 4vw, 40px)', fontWeight: 800, lineHeight: 1.25, letterSpacing: 0.5 }}>
-            每一份 JD，都能构建一个<span style={{ background: 'linear-gradient(120deg, var(--v), var(--c))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>虚拟技能空间</span>
+            把一份 JD / 一个职业，变成<span style={{ background: 'linear-gradient(120deg, var(--v), var(--c))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>虚拟技能空间</span>
           </h1>
           <p style={{ margin: 0, fontSize: 15, color: 'var(--ink2)', lineHeight: 1.85, maxWidth: 620 }}>
-            空间的核心，是一个拥有这份 JD 技能的优秀员工 AI。它等着考验新人，等着向资深从业者学习，等着用自己的能力解决问题。
+            走进一个空间，可以——
           </p>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12, maxWidth: 620 }}>
+            {['了解职业', '探索岗位', '技能学习', '能力自检', '专家训练', '远程解决问题'].map((t, i) => (
+              <span key={t} className={`lab-chip${i % 3 === 1 ? ' c' : i % 3 === 2 ? ' p' : ''}`} style={{ fontSize: 13, padding: '5px 13px' }}>{t}</span>
+            ))}
+          </div>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 20 }}>
             <button className="lab-btn" disabled={!!needMigration} onClick={() => { setPickOpen(true); loadJds(); }}>＋ 从岗位 JD 构建新空间</button>
           </div>
