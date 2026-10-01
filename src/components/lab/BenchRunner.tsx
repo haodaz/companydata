@@ -16,7 +16,7 @@ import { HandCam, type HandPose } from '@/components/lab/HandCam';
 const TICK_MS = 250, SNAP_EVERY_MS = 5000, SNAP_MAX = 16, SNAP_W = 320, SNAP_H = 180;
 const VW = 1600, VH = 900; // 场景覆盖层坐标系（百分比 × 16 / × 9）
 
-export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean }) {
+export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean; /** 演示模式：进来就自己走 */ demo?: boolean }) {
   const stRef = useRef<BenchState>(initBench(spec));
   const panelRef = useRef<SVGSVGElement>(null);
   const sceneRef = useRef<SVGSVGElement>(null);
@@ -67,6 +67,28 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
     finally { snapping.current = false; }
   }, [scene]);
 
+  // ── AI 演示：拿老手脚本自己把这台工位走一遍，人在旁边看 ──
+  const [auto, setAuto] = useState(!!demo);
+  const autoI = useRef(0);
+  useEffect(() => {
+    if (!auto || !running) return;
+    const script = [...(spec.expertScript || [])].sort((a, b) => a.t - b.t);
+    if (!script.length) return;
+    const iv = setInterval(() => {
+      const s = stRef.current;
+      while (autoI.current < script.length && script[autoI.current].t <= s.t) {
+        const a = script[autoI.current++];
+        applyControl(spec, s, a.control, a.value);
+      }
+      // 轨迹走到哪里，落点就落在哪里——图案 / 切口跟着长出来
+      if (trackLayer?.control) { const h = pointOnPath(trackPts.current, s.controls[trackLayer.control] || 0); drop(h.x, h.y); }
+      if (autoI.current >= script.length && s.t > script[script.length - 1].t + 4) { setAuto(false); setRunning(false); }
+      bump(v => v + 1);
+    }, TICK_MS);
+    return () => clearInterval(iv);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auto, running, spec]);
+
   // 模拟时钟
   useEffect(() => {
     if (!running) return;
@@ -83,7 +105,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
   }, [running, spec, snapshot]);
 
   const act = (id: string, value: number) => {
-    if (!running) return;
+    if (!running || auto) return;
     applyControl(spec, stRef.current, id, value);
     if (spec.controls.find(c => c.id === id)?.kind !== 'path') snapshot();
     bump(v => v + 1);
@@ -347,6 +369,11 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud }: { spec: Ben
       <div className="lab-mono" style={{ position: 'absolute', left: 12, top: hud ? 34 : 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em' }}>
         <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
       </div>
+      {!!spec.expertScript?.length && (
+        <button onClick={() => { if (!auto) { autoI.current = 0; setAuto(true); } else setAuto(false); }} style={{ position: 'absolute', right: 12, bottom: 12, padding: '8px 15px', borderRadius: 999, border: '1px solid rgba(255,255,255,.35)', background: auto ? 'linear-gradient(135deg,#3ddc97,#12b5cb)' : 'rgba(15,18,36,.72)', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(6px)', zIndex: 3 }}>
+          {auto ? '■ 演示中 · 点此停下' : '▶ 看我操作一遍'}
+        </button>
+      )}
       {trackLayer && (
         <button onClick={() => setCam(v => !v)} style={{ position: 'absolute', left: 12, top: hud ? 58 : 34, padding: '6px 12px', borderRadius: 999, border: '1px solid rgba(255,255,255,.35)', background: cam ? 'linear-gradient(135deg,#ff5fa2,#ff8a5f)' : 'rgba(15,18,36,.7)', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(6px)' }}>
           {cam ? `📷 摄像头握${holdName}中 · 关闭` : `📷 用摄像头握${holdName}`}

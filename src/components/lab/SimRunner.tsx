@@ -70,9 +70,15 @@ export interface SimRunnerProps {
 }
 
 /** 模拟操作台：一步一步操作，每一步确认后才推进；下钻 / 询问会浮现新的信息 */
-export function SimRunner({ sim, role, busy, onFinish, onCancel }: SimRunnerProps) {
+export function SimRunner({ sim, role, busy, onFinish, onCancel, demo }: SimRunnerProps & { /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace }) {
   const [idx, setIdx] = useState(0);
-  const [trace, setTrace] = useState<SimTrace>({});
+  const [trace, setTrace] = useState<SimTrace>(() => {
+    if (!demo) return {};
+    // bench 那几步不预填，留给工位当场走
+    const t: SimTrace = {};
+    for (const st of sim.steps) if (st.type !== 'bench' && demo[st.id] !== undefined) t[st.id] = demo[st.id];
+    return t;
+  });
   const [confirmed, setConfirmed] = useState(false);
   const step = sim.steps[idx];
   const value = trace[step.id];
@@ -261,7 +267,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel }: SimRunnerProp
             </div>
           </div>
         )}
-        {benchLive && <BenchRunner hud key={step.id} spec={step.bench!} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />}
+        {benchLive && <BenchRunner hud demo={!!demo} key={step.id} spec={step.bench!} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />}
       </div>
     );
   }
@@ -290,7 +296,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel }: SimRunnerProp
           ) : (
             <div>
               <div style={{ fontSize: 13.5, color: 'var(--ink2)', lineHeight: 1.75, marginBottom: 12, padding: '10px 14px', borderRadius: 12, background: 'rgba(106,92,255,.06)' }}>{step.bench.brief}</div>
-              <BenchRunner key={step.id} spec={step.bench} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />
+              <BenchRunner demo={!!demo} key={step.id} spec={step.bench} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />
             </div>
           )
         )}

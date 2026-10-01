@@ -176,6 +176,8 @@ export default function SpacePage() {
   // 考验新人
   const [rookie, setRookie] = useState({ name: '', note: '', location: '', answer: '' });
   const [answering, setAnswering] = useState(false);
+  /** 演示模式：带着专家轨迹进故事线，每一步预填好、工位自己走 */
+  const [demo, setDemo] = useState<any | null>(null);
   // 向专家学习
   const [expert, setExpert] = useState({ name: '', title: '', location: '' });
   const [walk, setWalk] = useState('');
@@ -434,7 +436,7 @@ export default function SpacePage() {
               </div>
             </div>
           ) : (
-            <SimRunner key={runKey} sim={sim} role="rookie" busy={!!busy} onCancel={() => { setStageReport(null); setAnswering(false); }} onFinish={trace => submit('human', false, trace)} />
+            <SimRunner key={runKey + (demo ? '-demo' : '')} demo={demo || undefined} sim={sim} role="rookie" busy={!!busy} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); }} onFinish={trace => { const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, d ? undefined : trace); }} />
           )}
         </SimStage>
       )}
@@ -452,7 +454,10 @@ export default function SpacePage() {
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 18 }}>
                 <button className="lab-btn" disabled={!!busy} onClick={() => { if (sim?.art) enterFullscreen(); setAnswering(true); }}>🎯 {sim ? '让新兵上操作台走一遍' : '让新兵走一遍'}</button>
                 <button className="lab-btn ghost" disabled={!!busy} onClick={() => submit('ai', false)}>让通用 AI {sim ? '上台操作' : '裸答'}</button>
-                <button className="lab-btn ghost" disabled={!!busy || !skill} title={skill ? '' : '先让专家来教一遍'} onClick={() => submit('ai', true)}>让 AI 核心亲自{sim ? '操作' : '答'}</button>
+                <button className="lab-btn ghost" disabled={!!busy || !skill} title={skill ? '' : '先让专家来教一遍'}
+                  onClick={() => { if (sim && skill?.expert_trace) { setDemo(skill.expert_trace); setAnswering(true); } else submit('ai', true); }}>
+                  让 AI 核心亲自{sim ? '走一遍（看得见）' : '答'}
+                </button>
               </div>
             ) : (
               <div style={{ marginTop: 18, display: 'flex', flexDirection: 'column', gap: 10 }}>
