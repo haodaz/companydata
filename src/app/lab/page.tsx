@@ -64,6 +64,23 @@ const CSS = `
 .ai100-sec { padding: clamp(44px, 7vw, 86px) 0 0; }
 .ai100-01 { display: grid; gap: clamp(16px, 2.5vw, 40px); grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr); align-items: center; }
 @media (max-width: 860px) { .ai100-01 { grid-template-columns: minmax(0, 1fr); } }
+/* 技能留存：整页宽的一块，图在右上，三步在下，底下是真实的账 */
+.ai100-keep { background: linear-gradient(180deg, rgba(140,126,255,.1), rgba(18,181,203,.05) 55%, transparent),
+  radial-gradient(900px 340px at 14% 0%, rgba(140,126,255,.16), transparent 70%), rgba(255,255,255,.028);
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  margin-top: clamp(44px, 7vw, 86px); margin-bottom: clamp(44px, 7vw, 86px); }
+.ai100-keep .in { max-width: 1280px; margin: 0 auto; padding: clamp(40px, 6vw, 72px) 28px; }
+.ai100-keep .hd { display: grid; gap: clamp(20px, 3vw, 48px); grid-template-columns: minmax(0, 1fr) minmax(0, .92fr); align-items: center; }
+.ai100-keep .hd img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 20px; border: 1px solid rgba(255,255,255,.1); box-shadow: 0 22px 60px rgba(0,0,0,.5); }
+@media (max-width: 860px) { .ai100-keep .hd { grid-template-columns: minmax(0, 1fr); } }
+.ai100-keep .steps { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); margin-top: clamp(26px, 4vw, 44px); }
+.ai100-keep .steps > div { padding: 20px 22px 22px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); }
+.ai100-keep .steps .n { font-size: 12px; font-weight: 700; color: #9f91ff; letter-spacing: .14em; }
+.ai100-keep .steps .t { font-size: 16.5px; font-weight: 800; color: #fff; margin: 7px 0 9px; line-height: 1.45; }
+.ai100-keep .steps .d { font-size: 13px; color: var(--ink3); line-height: 1.95; }
+.ai100-keep .ledger { margin-top: clamp(22px, 3vw, 34px); padding-top: 22px; border-top: 1px solid var(--line); }
+.ai100-keep .ledger .row { display: flex; gap: clamp(22px, 4vw, 54px); flex-wrap: wrap; margin-top: 10px; }
+
 /* 它对谁有用：上图下字，身份字大 */
 .ai100-value { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 248px), 1fr)); margin-top: 26px; }
 .ai100-value > div { border-radius: 20px; overflow: hidden; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.1); box-shadow: 0 16px 44px rgba(0,0,0,.4); }
@@ -164,6 +181,12 @@ const HOW = [
   { t: '尊重专业', d: '宁可少做，不可做错。每个工位都要先让专家脚本自己走一遍能过，才允许上线，不然就是在添乱。' },
   { t: '数据不说谎', d: '同行、在招岗位、上下游企业全部来自真实抓取的企业库与岗位库。我们不编公司名，也不编薪资。' },
   { t: '可被创造', d: '不是我们预先做好一百个行业。任何人给一份 JD、甚至只给一个职业名，几分钟就能长出一个新的空间。' },
+];
+
+const KEEP = [
+  { n: '01', t: '采集：问的是判断，不是答案', d: '让真人专家把自己的故事线走一遍。每到一个决定点，AI 核心就追问「为什么是现在」「凭什么是这个数」「换个条件你还这么做吗」——它要的是他脑子里那套判断，不是一个标准答案。' },
+  { n: '02', t: '蒸馏：落成一张能被检验的技能卡', d: '回答被结构化成能力项、判断规则、参数窗口、合格判据，以及常见错误和它们的归因。先由 AI 起草，专家逐条校正；没人校正过的，卡上就老实写着「AI 自学草案 · 等待第一位专家」。' },
+  { n: '03', t: '调用：每一次都记账', d: '技能卡进了空间就能反复被用——考新人、答疑、异地解决问题。这门手艺来自谁、在哪一年被蒸馏、此刻正被哪个地方的谁用着，全部留痕。' },
 ];
 
 const VALUE = [
@@ -449,6 +472,87 @@ export default function LabLanding() {
           ))}
         </div>
       </div>
+
+      {/* ══ 03 三个方向 ══ */}
+      <section className="ai100-sec">
+        <div style={{ display: 'grid', gap: 'clamp(20px, 3.5vw, 58px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', alignItems: 'center' }}>
+          <Art src="/lab-landing/concept-three.jpg" alt="向下考核、向上学习、平行解决" />
+          <div>
+            <div className="lab-mono lab-cap" style={{ color: '#9f91ff' }}>03 / 能力</div>
+            <h2 className="ai100-h2">AI 数字职人，<span className="ai100-grad">向下、向上、向四方</span>同时发力</h2>
+            <p className="ai100-lead" style={{ marginBottom: 20 }}>他是一个能接活的 AI：你可以把人交给他考，把经验交给他学，也可以把一个具体的问题直接扔给他办。</p>
+            <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))' }}>
+              {DO.map(x => (
+                <div key={x.k} className="lab-glass" style={{ padding: '15px 17px' }}>
+                  <span className="lab-chip c">{x.k}</span>
+                  <div style={{ fontSize: 15.5, fontWeight: 800, margin: '8px 0 6px' }}>{x.t}</div>
+                  <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.85 }}>{x.d}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 让资深技能被记录和留存 ══ */}
+      <div className="ai100-bleed ai100-keep">
+        <div className="in">
+          <div className="hd">
+            <div>
+              <div className="lab-mono lab-cap" style={{ color: '#9f91ff' }}>SKILL PRESERVATION</div>
+              <h2 className="ai100-h2">让资深技能<br /><span className="ai100-grad">被记录、被校正、被再用起来</span></h2>
+              <p className="ai100-lead" style={{ margin: 0 }}>
+                一个老师傅手上的判断，大多说不清，也没人记。退休、转行、换一家厂，一套手艺就跟着走了。
+                我们把「留住」这件事拆成三步，每一步都落在数据上，而不是落在一段录像里。
+              </p>
+            </div>
+            <img src="/lab-landing/skill-keep.jpg" alt="老师傅的手艺被记录成一张张可以被取用的技能卡" loading="lazy" />
+          </div>
+          <div className="steps">
+            {KEEP.map((x, i) => (
+              <div key={x.n} className="lab-in" style={{ animationDelay: `${i * 80}ms` }}>
+                <div className="lab-mono n">{x.n}</div>
+                <div className="t">{x.t}</div>
+                <div className="d">{x.d}</div>
+              </div>
+            ))}
+          </div>
+          {(t?.experts > 0 || t?.served > 0) && (
+            <div className="ledger">
+              <div className="lab-mono lab-cap" style={{ color: 'var(--ink3)' }}>已经留下来的</div>
+              <div className="row">
+                {t?.experts > 0 && <Stat n={t.experts} k="位真人专家校正过" />}
+                {t?.expertPlaces?.length > 0 && <Stat n={t.expertPlaces.length} k="个地方的手艺" />}
+                {t?.served > 0 && <Stat n={t.served} k="人次调用过" />}
+                {t?.places > 0 && <Stat n={t.places} k="个地方用过" />}
+              </div>
+              {t?.expertPlaces?.length > 0 && (
+                <div style={{ fontSize: 13, color: 'var(--ink3)', marginTop: 12, lineHeight: 1.9, maxWidth: 900 }}>
+                  手艺来自 {t.expertPlaces.slice(0, 6).join('、')}{t.expertPlaces.length > 6 ? ' 等地' : ''}——
+                  这些名字和地点不是写在宣传页上的，它们记在每一张技能卡的来处里，进空间点开就能看见。
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ══ 04 从一个人，长成一座空间 ══ */}
+      <section className="ai100-sec">
+        <div style={{ display: 'grid', gap: 'clamp(20px, 3.5vw, 58px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', alignItems: 'center' }}>
+          <div>
+            <div className="lab-mono lab-cap" style={{ color: '#9f91ff' }}>04 / 存在空间</div>
+            <h2 className="ai100-h2">从一个数字职人，<br /><span className="ai100-grad">长成一整座空间</span></h2>
+            <p className="ai100-lead">
+              先有一个人：他的手艺、他的工位、他最有代表性的一天。<br />
+              再由这个人向外展开他所在的行当——和他同行的是谁、此刻哪些企业在招这个岗、他上游拿谁的料、下游谁在用他的活。
+              环节划分由模型给出，挂在每个环节下面的公司全部来自我们自己的企业库，在招的岗位来自真实抓取的岗位库。
+              一个人、一门手艺、一张产业图谱，是同一个空间的三种看法。
+            </p>
+          </div>
+          <Art src="/lab-landing/concept-space.jpg" alt="一个人在行业里的存在空间" />
+        </div>
+      </section>
 
       {/* ══ 一整块：在岗的人 + 已经住进来的职业 ══ */}
       {featured.length > 0 && (
