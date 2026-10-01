@@ -307,13 +307,17 @@ export default function LabHome() {
                   </Popconfirm>
                 </div>
                 <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-                  <div className="lab-orb" style={{ ['--s' as string]: '76px' }}>
-                    <div className="ring" />
-                    {profile.avatar
-                      ? <div className="core" style={{ overflow: 'hidden', padding: 0 }}><img src={profile.avatar} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '54% 12%' }} /></div>
-                      : <div className="core lab-mono" style={{ fontSize: 10 }}>Lv{lv.level}</div>}
-                    <div className="sat" />
-                  </div>
+                  {/* 人就是人：不套转圈。这么小的圆里转着彩环，看起来就是闪屏 */}
+                  {profile.avatar ? (
+                    <div style={{ position: 'relative', width: 96, height: 96, flexShrink: 0 }}>
+                      <div style={{ position: 'absolute', inset: 2, borderRadius: '50%', background: 'radial-gradient(circle at 50% 36%, rgba(167,155,255,.4), rgba(18,181,203,.14) 62%, transparent 76%)' }} />
+                      <img src={profile.avatar} alt="" style={{ position: 'relative', width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', objectPosition: '54% 10%', border: '2px solid rgba(255,255,255,.95)', boxShadow: '0 6px 18px rgba(60,45,130,.18)', background: 'rgba(255,255,255,.6)' }} />
+                    </div>
+                  ) : (
+                    <div className="lab-orb" style={{ ['--s' as string]: '76px' }}>
+                      <div className="ring" /><div className="core lab-mono" style={{ fontSize: 10 }}>Lv{lv.level}</div><div className="sat" />
+                    </div>
+                  )}
                   <div style={{ minWidth: 0, flex: 1 }}>
                     <div className="lab-mono lab-cap">{profile.name || profile.codename || 'JD-CORE'}{profile.name && profile.codename ? ` · ${profile.codename}` : ''}</div>
                     <div style={{ fontSize: 17, fontWeight: 800, lineHeight: 1.35 }}>{profile.name ? <>{profile.name} <span style={{ color: 'var(--v)' }}>· {profile.role}</span></> : <>{jd.company} · {jd.title}</>}</div>
