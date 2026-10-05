@@ -15,13 +15,11 @@ export interface StructuredJobsResult {
 export async function structureJobData(markdown: string, company: string, hint: string, modelId: string = 'gemini-3.8-flash', batchId?: number, scope: 'campus' | 'all' = 'campus'): Promise<StructuredJobsResult | null> {
   try {
     const today = new Date().toISOString().slice(0, 10);
+    // 提示词顺序为「上下文缓存」优化：固定指令与 schema 前置，变量（公司 / 提示 / 日期 / 正文）后置。
+    // SCOPE 只有两种取值，留在前缀里不影响同类任务的命中。
     const prompt = `
       You are an expert recruiting-data extraction AI.
       Your task is to read raw markdown scraped from a company's official recruiting pages and extract EVERY job opening into structured JSON.
-
-      Company: ${company || 'Unknown (infer from the page)'}
-      ${hint ? `Focus hint from the user (team / role / location of interest): ${hint}` : ''}
-      Today's date: ${today}
 
       The markdown is a concatenation of several pages, each starting with a "### Source: [...](url)" header:
       the main page first, then sub-pages (usually individual job postings or further list pages).
@@ -44,9 +42,6 @@ export async function structureJobData(markdown: string, company: string, hint: 
       6. Ignore navigation, marketing copy, talent-community sign-ups and expired-posting notices.
       7. If the pages contain NO concrete job opening, return "jobs": [] and explain why in "ai_summary".
 
-      Raw Markdown Data:
-      ${markdown.substring(0, 500000)}
-
       Return ONLY a valid JSON object matching this schema exactly:
       {
         "ai_summary": <string>, // 中文综述：这批页面上有多少个岗位、主要是哪些职能 / 地区 / 类型（社招、校招、实习），以及值得注意的共性要求（学历、签证担保、届别等）。
@@ -56,6 +51,14 @@ ${jobSchemaForPrompt()}
           }
         ]
       }
+
+      ──────────────────────────────────────
+      Company: ${company || 'Unknown (infer from the page)'}
+      ${hint ? `Focus hint from the user (team / role / location of interest): ${hint}` : ''}
+      Today's date: ${today}
+
+      Raw Markdown Data:
+      ${markdown.substring(0, 500000)}
     `;
 
     const result = await generateContent(prompt, modelId, { jsonMode: true, fast: true });

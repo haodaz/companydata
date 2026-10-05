@@ -44,10 +44,10 @@ export interface CompanyProfile {
 }
 
 export async function findCompanyProfile(name: string, nameEn: string, country: string, modelId: string = 'gemini-3.8-flash'): Promise<CompanyProfile> {
+  // 提示词顺序为「上下文缓存」优化：固定指令与字段清单前置，变量（公司名）后置。
+  // 缓存按逐字相同的前缀命中，变量放前面会让后面所有固定内容都无法复用。
   const prompt = `
     You are a corporate research assistant. Look up basic facts about this company using web search.
-
-    Company: ${name}${nameEn && nameEn !== name ? ` (${nameEn})` : ''}${country ? `, ${country}` : ''}
 
     Find:
     1. "name_en": official English name.
@@ -76,6 +76,9 @@ export async function findCompanyProfile(name: string, nameEn: string, country: 
 
     Return ONLY a JSON object with exactly these keys:
     { ${PROFILE_FIELDS.map(f => `"${f}"`).join(', ')}, "sources" }
+
+    ──────────────────────────────────────
+    Company: ${name}${nameEn && nameEn !== name ? ` (${nameEn})` : ''}${country ? `, ${country}` : ''}
   `;
 
   const { parsed } = await searchJson(prompt, modelId, { tool_name: 'company-profile', task_name: 'Company Profile', institution: name });
