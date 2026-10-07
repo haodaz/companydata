@@ -228,6 +228,11 @@ export default function SpacePage() {
     const m = u.get('m') as Mode | null;
     if (m) { openedCareer.current = true; setMode(m); }
     if (u.get('invite')) { openedCareer.current = true; setMode('learn'); }
+    // 从百业空间「我有个问题」交过来的：问题在 sessionStorage 里，接住就删
+    try {
+      const k = `lab:problem:${id}`, q = sessionStorage.getItem(k);
+      if (q) { sessionStorage.removeItem(k); setProb(p => ({ ...p, problem: q })); openedCareer.current = true; setMode('solve'); }
+    } catch { /* 存储不可用就算了 */ }
     goRef.current = u.get('go');
     if (goRef.current) { openedCareer.current = true; setMode('test'); }
   }, []);
@@ -695,7 +700,9 @@ export default function SpacePage() {
           <div className={`lab-glass${busy ? ' lab-scan' : ''}`} style={{ padding: 22, minWidth: 0 }}>
             <Label>BRING ME A PROBLEM</Label>
             <h2 style={{ margin: '0 0 6px', fontSize: 19, fontWeight: 800 }}>把真实问题交给我</h2>
-            <p style={{ margin: '0 0 14px', fontSize: 13.5, color: 'var(--ink3)', lineHeight: 1.8 }}>{skill ? `${skill.expert_name} 此刻不在场${skill.expert_note ? `（${skill.expert_note}）` : ''}。我会按从他 / 她那里学到的做法来帮你。` : '我还没有向专家学过，暂时解决不了问题。先去「向专家学习」。'}</p>
+            <p style={{ margin: '0 0 14px', fontSize: 13.5, color: 'var(--ink3)', lineHeight: 1.8 }}>{!skill ? '我还没有向专家学过，暂时解决不了问题。先去「向专家学习」。'
+              : skill.source === 'jd-draft' ? '我还没被真人专家校正过，下面是按 AI 推断的做法给你的建议——拿去参考，关键处找个干这行的人再确认一下。'
+              : `${skill.expert_name} 此刻不在场${skill.expert_note ? `（${skill.expert_note}）` : ''}。我会按从他 / 她那里学到的做法来帮你。`}</p>
             <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', marginBottom: 10 }}>
               {field(prob.actor, v => setProb(p => ({ ...p, actor: v })), '你是谁（如 某小程序运营）')}
               {field(prob.location, v => setProb(p => ({ ...p, location: v })), '你在哪（如 成都）')}

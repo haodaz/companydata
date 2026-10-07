@@ -38,6 +38,27 @@ export default function LabHome() {
   const [profession, setProfession] = useState('');
   const [buildSince, setBuildSince] = useState(0);
   const [now, setNow] = useState(0);
+  // 「我有个问题」：一句话分给最合适的 1–3 位数字职人
+  const [ask, setAsk] = useState('');
+  const [asking, setAsking] = useState(false);
+  const [picks, setPicks] = useState<any[] | null>(null);
+  const routeProblem = async () => {
+    const q = ask.trim();
+    if (q.length < 4) { message.warning('把问题说具体一点'); return; }
+    setAsking(true); setPicks(null);
+    try {
+      const j = await (await fetch('/api/lab/route-problem', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ problem: q, model: currentModel }) })).json();
+      if (!j.ok) throw new Error(j.error);
+      setPicks(j.picks || []);
+    } catch (e: any) { message.error(e.message); }
+    finally { setAsking(false); }
+  };
+  /** 交给他：问题走 sessionStorage，不放进网址——网址会留在浏览器历史和服务器日志里 */
+  const handTo = (id: string) => {
+    try { sessionStorage.setItem(`lab:problem:${id}`, ask.trim()); } catch { /* 存不了就让人进去再贴一次 */ }
+    router.push(`/lab/${id}?m=solve`);
+  };
+
   // 列表筛选：搜一个词 + 选一个领域 + 勾若干标记（标记之间是「或」，人多了只想快速捞出一拨）
   const [q, setQ] = useState('');
   const [fam, setFam] = useState('');
@@ -261,7 +282,17 @@ export default function LabHome() {
         .sp-head::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5;
           background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 44px 44px;
           mask-image: radial-gradient(ellipse 70% 100% at 40% 0%, #000 10%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 70% 100% at 40% 0%, #000 10%, transparent 75%); }
-        .sp-head-in { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 34px 28px 32px; display: flex; align-items: flex-end; gap: 18px; flex-wrap: wrap; }
+        .sp-head-in { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 34px 28px 22px; display: flex; align-items: flex-end; gap: 18px; flex-wrap: wrap; }
+        .sp-ask { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 28px 26px; }
+        .sp-ask .row { display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 14px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); }
+        .sp-ask input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: #fff; font-size: 14.5px; font-family: inherit; }
+        .sp-ask input::placeholder { color: rgba(255,255,255,.38); }
+        .sp-ask .picks { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); margin-top: 12px; }
+        .sp-ask .pick { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 14px; cursor: pointer; background: rgba(9,11,24,.55); border: 1px solid rgba(255,255,255,.12); transition: border-color .2s, transform .2s; }
+        .sp-ask .pick:hover { border-color: rgba(159,145,255,.7); transform: translateY(-2px); }
+        .sp-ask .pick img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; object-position: 54% 10%; border: 2px solid rgba(255,255,255,.85); flex-shrink: 0; }
+        .sp-ask .pick .go { font-size: 12.5px; font-weight: 700; color: #9f91ff; white-space: nowrap; }
+        @media (max-width: 640px) { .sp-ask .row { flex-wrap: wrap; } .sp-ask .row > span { width: 100%; } }
       `}</style>
       <div className="sp-head sp-root">
         <div className="sp-head-in">
@@ -281,6 +312,31 @@ export default function LabHome() {
             <button className="lab-btn" disabled={!!needMigration} onClick={() => { setPick('jd'); loadJds(); }}>＋ 新岗位 · 从一份 JD 建</button>
             <button className="lab-btn ghost" disabled={!!needMigration} style={{ color: '#e7e9f8', background: 'rgba(255,255,255,.1)', boxShadow: '0 0 0 1px rgba(255,255,255,.2)' }} onClick={() => setPick('career')}>＋ 新职业 · 只给一个职业名</button>
           </div>
+        </div>
+        {/* 平行解决别人的问题：不用先猜该进哪个空间 */}
+        <div className="sp-ask">
+          <div className="row">
+            <span className="lab-mono" style={{ color: 'rgba(255,255,255,.55)', fontSize: 11, letterSpacing: '.12em', whiteSpace: 'nowrap' }}>我有个问题</span>
+            <input value={ask} onChange={e => setAsk(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !asking) routeProblem(); }}
+              placeholder="一句话说清楚，比如：狗一出门就暴冲拉绳 / 新产线焊缝老有气孔 / 婚礼当天新娘礼服开线了" />
+            <button className="lab-btn sm" disabled={asking || ask.trim().length < 4} onClick={routeProblem}>{asking ? '在找人…' : '找谁帮忙 →'}</button>
+          </div>
+          {picks && (
+            <div className="picks">
+              {picks.length === 0 && <div style={{ color: 'rgba(255,255,255,.6)', fontSize: 13 }}>在岗的人里暂时没有对口的。可以换个说法，或者用上面的「新职业」造一位。</div>}
+              {picks.map(p => (
+                <div key={p.id} className="pick" onClick={() => handTo(p.id)}>
+                  {p.avatar && <img src={p.avatar} alt="" />}
+                  <div style={{ minWidth: 0, flex: 1 }}>
+                    <div className="lab-mono" style={{ fontSize: 10, letterSpacing: '.1em', color: '#9f91ff' }}>{p.name}{p.expert ? ' · 有真人专家校正' : ' · AI 草案'}</div>
+                    <div style={{ fontSize: 14.5, fontWeight: 800, color: '#fff' }}>{p.role}<span style={{ fontWeight: 500, color: 'rgba(255,255,255,.5)', fontSize: 12 }}> · {p.profession}</span></div>
+                    <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.7)', marginTop: 2 }}>{p.why}</div>
+                  </div>
+                  <span className="go">交给他 →</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
