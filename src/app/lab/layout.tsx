@@ -97,9 +97,14 @@ const LAB_CSS = `
   background: rgba(8,10,22,.86) !important; border-bottom-color: rgba(255,255,255,.08) !important; color: #eef0fb;
   --ink: #eef0fb; --ink2: #c0c5e2; --ink3: #878dae; --line: rgba(255,255,255,.12); }
 .lab:not([data-theme="light"]):has(.sp-root) > header .lab-btn.ghost { color: #dfe2f5; background: rgba(255,255,255,.08); box-shadow: 0 0 0 1px rgba(255,255,255,.16); }
-.lab:not([data-theme="light"]):has(.ai100-root) > header .ant-select-selector, .lab:not([data-theme="light"]):has(.sp-root) > header .ant-select-selector { background: rgba(255,255,255,.1) !important; }
-.lab:not([data-theme="light"]):has(.ai100-root) > header .ant-select-selection-item, .lab:not([data-theme="light"]):has(.sp-root) > header .ant-select-selection-item { color: #e7e9f8 !important; }
-.lab:not([data-theme="light"]):has(.ai100-root) > header .ant-select-arrow, .lab:not([data-theme="light"]):has(.sp-root) > header .ant-select-arrow { color: #a8aed2 !important; }
+/* 深色顶栏里的模型下拉。antd 新版结构是 .ant-select > .ant-select-content / .ant-select-suffix，
+   以前写的 .ant-select-selector / -selection-item / -arrow 是旧版类名，一条都没命中，深色字落在深底上看不见 */
+.lab:not([data-theme="light"]):has(.ai100-root) > header .lab-head-model, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-head-model {
+  background: rgba(255,255,255,.1) !important; border: 1px solid rgba(255,255,255,.16) !important; color: #e7e9f8 !important; }
+.lab:not([data-theme="light"]):has(.ai100-root) > header .lab-head-model:hover, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-head-model:hover { background: rgba(255,255,255,.15) !important; }
+.lab:not([data-theme="light"]):has(.ai100-root) > header .lab-head-model .ant-select-content, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-head-model .ant-select-content,
+.lab:not([data-theme="light"]):has(.ai100-root) > header .lab-head-model .ant-select-input, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-head-model .ant-select-input { color: #e7e9f8 !important; }
+.lab:not([data-theme="light"]):has(.ai100-root) > header .lab-head-model .ant-select-suffix, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-head-model .ant-select-suffix { color: rgba(255,255,255,.6) !important; }
 
 /* 深浅切换按钮 */
 .lab-theme { width: 34px; height: 34px; border-radius: 11px; border: 1px solid var(--line); background: rgba(255,255,255,.7); color: var(--ink2);
