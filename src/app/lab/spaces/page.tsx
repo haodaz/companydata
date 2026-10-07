@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { App, Modal, Popconfirm } from 'antd';
 import { SKILL_KIND, expertiseLevel } from '@/lib/skill-lab';
 import { useModel } from '@/lib/model-context';
@@ -326,7 +327,7 @@ export default function LabHome() {
               {picks.length === 0 && <div style={{ color: 'rgba(255,255,255,.6)', fontSize: 13 }}>在岗的人里暂时没有对口的。可以换个说法，或者用上面的「新职业」造一位。</div>}
               {picks.map(p => (
                 <div key={p.id} className="pick" onClick={() => handTo(p.id)}>
-                  {p.avatar && <img src={p.avatar} alt="" />}
+                  {p.avatar && <Image src={p.avatar} alt="" width={46} height={46} sizes="46px" />}
                   <div style={{ minWidth: 0, flex: 1 }}>
                     <div className="lab-mono" style={{ fontSize: 10, letterSpacing: '.1em', color: '#9f91ff' }}>{p.name}{p.expert ? ' · 有真人专家校正' : ' · AI 草案'}</div>
                     <div style={{ fontSize: 14.5, fontWeight: 800, color: '#fff' }}>{p.role}<span style={{ fontWeight: 500, color: 'rgba(255,255,255,.5)', fontSize: 12 }}> · {p.profession}</span></div>
@@ -409,7 +410,7 @@ export default function LabHome() {
                   {profile.avatar ? (
                     <div style={{ position: 'relative', width: 96, height: 96, flexShrink: 0 }}>
                       <div style={{ position: 'absolute', inset: 2, borderRadius: '50%', background: 'radial-gradient(circle at 50% 36%, rgba(167,155,255,.4), rgba(18,181,203,.14) 62%, transparent 76%)' }} />
-                      <img src={profile.avatar} alt="" style={{ position: 'relative', width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', objectPosition: '54% 10%', border: '2px solid rgba(255,255,255,.95)', boxShadow: '0 6px 18px rgba(60,45,130,.18)', background: 'rgba(255,255,255,.6)' }} />
+                      <Image src={profile.avatar} alt="" width={96} height={96} sizes="96px" style={{ position: 'relative', width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', objectPosition: '54% 10%', border: '2px solid rgba(255,255,255,.95)', boxShadow: '0 6px 18px rgba(60,45,130,.18)', background: 'rgba(255,255,255,.6)' }} />
                     </div>
                   ) : (
                     <div className="lab-orb" style={{ ['--s' as string]: '76px' }}>

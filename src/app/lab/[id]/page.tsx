@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import { App, Drawer, Popconfirm } from 'antd';
 import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
@@ -436,7 +437,7 @@ export default function SpacePage() {
             // 人要大：不裁成小圆、不套转圈，就是一张立绘，底部渐隐融进卡片
             <div style={{ position: 'relative', width: 'clamp(190px, 23vw, 260px)', flexShrink: 0 }}>
               <div style={{ position: 'absolute', left: '4%', right: '4%', top: '6%', bottom: '14%', borderRadius: '50%', background: 'radial-gradient(circle at 50% 38%, rgba(167,155,255,.42), rgba(18,181,203,.16) 58%, transparent 74%)', filter: 'blur(16px)' }} />
-              <img src={profile.avatar} alt="" style={{ position: 'relative', width: '100%', display: 'block',
+              <Image src={profile.avatar} alt="" width={900} height={1440} sizes="260px" preload style={{ position: 'relative', width: '100%', height: 'auto', display: 'block',
                 WebkitMaskImage: 'linear-gradient(180deg, #000 74%, transparent 97%)', maskImage: 'linear-gradient(180deg, #000 74%, transparent 97%)',
                 filter: `drop-shadow(0 16px 30px rgba(60,45,130,.28))${busy ? ' saturate(1.3)' : ''}`, transition: 'filter .4s' }} />
             </div>

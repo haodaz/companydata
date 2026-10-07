@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 /**
  * AI 百业 · 首页。
@@ -220,7 +221,7 @@ function FaceReel({ people, onPick }: { people: any[]; onPick: (id: string) => v
   return (
     <div className="ai100-faces" onClick={() => onPick(cur.id)} title={`${cur.name} · ${cur.role}`}>
       <div className="halo" />
-      {people.map((p, k) => <img key={p.id} src={p.avatar} alt="" loading={k < 2 ? 'eager' : 'lazy'} className={k === i ? 'on' : ''} />)}
+      {people.map((p, k) => <Image key={p.id} src={p.avatar} alt="" fill sizes="(max-width: 860px) 90vw, 560px" loading={k < 2 ? 'eager' : 'lazy'} className={k === i ? 'on' : ''} />)}
       <div className="cap">
         <div className="lab-mono" style={{ fontSize: 10.5, letterSpacing: '.12em', color: '#9f91ff' }}>{cur.name}</div>
         <div style={{ fontSize: 17, fontWeight: 800, color: '#fff', marginTop: 2 }}>{cur.role}</div>
@@ -235,7 +236,7 @@ function FaceReel({ people, onPick }: { people: any[]; onPick: (id: string) => v
 function Art({ src, alt }: { src: string; alt: string }) {
   const [bad, setBad] = useState(false);
   if (bad) return null;
-  return <img className="ai100-art" src={src} alt={alt} loading="lazy" onError={() => setBad(true)} />;
+  return <Image className="ai100-art" src={src} alt={alt} width={1440} height={810} sizes="(max-width: 860px) 100vw, 640px" onError={() => setBad(true)} />;
 }
 
 function Stat({ n, k }: { n: React.ReactNode; k: string }) {
@@ -354,7 +355,7 @@ export default function LabLanding() {
             <div key={r} className={`ai100-film-track${r ? ' back' : ''}`} style={{ animationDuration: `${96 + r * 22}s` }}>
               {[0, 1].map(k => (
                 <React.Fragment key={k}>
-                  {row.map((u, i) => <img key={`${k}-${i}`} src={u} alt="" loading="lazy" />)}
+                  {row.map((u, i) => <Image key={`${k}-${i}`} src={u} alt="" width={256} height={144} sizes="256px" />)}
                 </React.Fragment>
               ))}
             </div>
@@ -397,7 +398,9 @@ export default function LabLanding() {
           </div>
           {faces.length > 1
             ? <FaceReel people={faces} onPick={id => router.push(`/lab/${id}`)} />
-            : <img className="ai100-cut" src="/lab-landing/concept-person.png" alt="散落的抽象资料，向右收拢成一个具体的人" loading="lazy" />}
+            : d
+              ? <Image className="ai100-cut" src="/lab-landing/concept-person.png" alt="散落的抽象资料，向右收拢成一个具体的人" width={1280} height={720} sizes="(max-width: 860px) 100vw, 720px" />
+              : <div className="ai100-faces" />}
         </div>
       </section>
 
@@ -418,7 +421,7 @@ export default function LabLanding() {
 
       {/* ══ 一整块：可视化的职业空间怎么建起来 ══ */}
       <div className="ai100-bleed ai100-stage block">
-        <img src={stageBg} alt="" />
+        <Image src={stageBg} alt="" fill sizes="100vw" />
         <div className="veil" />
         <div className="in">
           <div style={{ maxWidth: 640, color: '#fff' }}>
@@ -464,7 +467,7 @@ export default function LabLanding() {
             <React.Fragment key={k}>
               {SHOTS.map(x => (
                 <figure key={`${k}-${x.src}`} className="ai100-shot">
-                  <img src={x.src} alt={x.t} loading="lazy" />
+                  <Image src={x.src} alt={x.t} width={1600} height={900} sizes="620px" />
                   <figcaption><b>{x.t}</b><span>{x.d}</span></figcaption>
                 </figure>
               ))}
@@ -506,7 +509,7 @@ export default function LabLanding() {
                 我们把「留住」这件事拆成三步，每一步都落在数据上，而不是落在一段录像里。
               </p>
             </div>
-            <img src="/lab-landing/skill-keep.jpg" alt="老师傅的手艺被记录成一张张可以被取用的技能卡" loading="lazy" />
+            <Image src="/lab-landing/skill-keep.jpg" alt="老师傅的手艺被记录成一张张可以被取用的技能卡" width={1440} height={810} sizes="(max-width: 860px) 100vw, 600px" />
           </div>
           <div className="steps">
             {KEEP.map((x, i) => (
@@ -572,8 +575,8 @@ export default function LabLanding() {
               const big = i === 0 || i === 5;
               return (
                 <div key={s.id} className={`ai100-card lab-in${big ? ' big' : ''}`} onClick={() => router.push(`/lab/${s.id}`)}>
-                  <img className="bg" src={s.cover} alt="" loading="lazy" />
-                  {s.avatar && <img className="face" src={s.avatar} alt="" loading="lazy" />}
+                  <Image className="bg" src={s.cover} alt="" fill sizes={big ? '(max-width: 900px) 100vw, 640px' : '(max-width: 900px) 50vw, 320px'} />
+                  {s.avatar && <Image className="face" src={s.avatar} alt="" width={68} height={68} sizes="68px" />}
                   <div className="ov">
                     <div className="lab-mono" style={{ fontSize: 10.5, opacity: .75, letterSpacing: '.1em' }}>{s.name}</div>
                     <div style={{ fontSize: big ? 22 : 17, fontWeight: 800, lineHeight: 1.3, marginTop: 2 }}>{s.role}</div>
@@ -599,7 +602,7 @@ export default function LabLanding() {
         <div className="ai100-value">
           {VALUE.map((x, i) => (
             <div key={x.k} className="lab-in" style={{ animationDelay: `${i * 70}ms` }}>
-              <img src={x.img} alt="" loading="lazy" />
+              <Image src={x.img} alt="" width={1440} height={810} sizes="(max-width: 600px) 100vw, 320px" />
               <div className="t">
                 <div className="who">{x.k}<span>{x.sub}</span></div>
                 <div className="d">{x.d}</div>
@@ -636,7 +639,7 @@ export default function LabLanding() {
         {(t?.faces?.length > 0 || spaces.length > 0) && (
           <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 8, margin: '0 auto 24px', maxWidth: 800 }}>
             {(spaces.map((x: any) => x.avatar).filter(Boolean).length ? spaces.map((x: any) => x.avatar).filter(Boolean) : t.faces).slice(0, 20).map((f: string, i: number) => (
-              <img key={i} src={f} alt="" loading="lazy" style={{ width: 50, height: 50, borderRadius: '50%', objectFit: 'cover', objectPosition: '54% 10%', border: '2px solid #fff', boxShadow: '0 4px 14px rgba(60,45,130,.18)' }} />
+              <Image key={i} src={f} alt="" width={50} height={50} sizes="50px" style={{ width: 50, height: 50, borderRadius: '50%', objectFit: 'cover', objectPosition: '54% 10%', border: '2px solid #fff', boxShadow: '0 4px 14px rgba(60,45,130,.18)' }} />
             ))}
           </div>
         )}
