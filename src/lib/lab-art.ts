@@ -121,7 +121,64 @@ export async function makeSceneAsset(prompt: string, name: string): Promise<stri
 /** NPC 立绘：绿幕生成 → 抠图 → 透明 png */
 export async function makeNpcAsset(prompt: string, name: string): Promise<string> {
   const full = `半写实插画风格的游戏NPC立绘，${prompt}，正面略侧的半身像，人物完整不裁切，纯正绿色平涂背景，背景没有任何阴影和渐变，没有文字，没有logo，竖构图`;
-  return saveLabAsset(await chromaKey(await genImage(full, '900*1440')), `${name}.png`);
+  const raw = await genImage(full, '900*1440');
+  let png = await chromaKey(raw);
+  // 模型给的不一定是纯绿幕（灰绿、带噪点的都有），绿幕抠完四周还是不透明，就换泛洪去背再来一次
+  if (await edgeOpaque(png) > 0.3) png = await sharp().then(S => S(raw).resize({ width: 720 }).toBuffer()).then(cutoutByBorder);
+  return saveLabAsset(png, `${name}.png`);
+}
+
+/** 四周一圈像素里不透明的比例：去背成功应该接近 0 */
+export async function edgeOpaque(png: Buffer): Promise<number> {
+  const S = await sharp();
+  const { data: px, info } = await S(png).ensureAlpha().resize(60, 96, { fit: 'fill' }).raw().toBuffer({ resolveWithObject: true });
+  let edge = 0, solid = 0;
+  for (let y = 0; y < info.height; y++) for (let x = 0; x < info.width; x++) {
+    if (x > 3 && x < info.width - 4 && y > 3) continue;
+    edge++; if (px[(y * info.width + x) * 4 + 3] > 30) solid++;
+  }
+  return edge ? solid / edge : 0;
+}
+
+/**
+ * 不认颜色的去背：从四周往里泛洪，吃掉「连着边缘、和边缘颜色相近」的那一片。
+ * 人物身上恰好同色的地方不连着边缘，所以留得住；再清一遍背景里残留的噪点，边缘羽化一圈。
+ * 用在绿幕不纯的立绘上（chromaKey 只认偏绿，灰绿底会漏）。
+ */
+export async function cutoutByBorder(input: Buffer): Promise<Buffer> {
+  const S = await sharp();
+  const { data: px, info } = await S(input).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const W = info.width, H = info.height, N = W * H;
+  const rgb = (i: number) => [px[i * 4], px[i * 4 + 1], px[i * 4 + 2]];
+  const border: number[][] = [];
+  for (let x = 0; x < W; x += 2) border.push(rgb(x), rgb((H - 1) * W + x));
+  for (let y = 0; y < H; y += 2) border.push(rgb(y * W), rgb(y * W + W - 1));
+  const med = [0, 1, 2].map(c => border.map(q => q[c]).sort((a, b) => a - b)[border.length >> 1]);
+  const near = (i: number) => { const [r, g, b] = rgb(i); return Math.hypot(r - med[0], g - med[1], b - med[2]) < 70; };
+  const bg = new Uint8Array(N), stack: number[] = [];
+  const push = (i: number) => { if (!bg[i] && near(i)) { bg[i] = 1; stack.push(i); } };
+  for (let x = 0; x < W; x++) { push(x); push((H - 1) * W + x); }
+  for (let y = 0; y < H; y++) { push(y * W); push(y * W + W - 1); }
+  while (stack.length) {
+    const i = stack.pop()!, x = i % W, y = (i / W) | 0;
+    if (x > 0) push(i - 1); if (x < W - 1) push(i + 1); if (y > 0) push(i - W); if (y < H - 1) push(i + W);
+  }
+  for (let pass = 0; pass < 2; pass++) {
+    const nb = bg.slice();
+    for (let y = 2; y < H - 2; y++) for (let x = 2; x < W - 2; x++) {
+      const i = y * W + x; if (bg[i]) continue;
+      let c = 0; for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) c += bg[i + dy * W + dx];
+      if (c >= 17) nb[i] = 1;
+    }
+    bg.set(nb);
+  }
+  for (let i = 0; i < N; i++) if (bg[i]) px[i * 4 + 3] = 0;
+  for (let y = 1; y < H - 1; y++) for (let x = 1; x < W - 1; x++) {
+    const i = y * W + x; if (bg[i]) continue;
+    const n = bg[i - 1] + bg[i + 1] + bg[i - W] + bg[i + W];
+    if (n) px[i * 4 + 3] = Math.round(px[i * 4 + 3] * (n >= 3 ? 0.35 : 0.7));
+  }
+  return S(px, { raw: { width: W, height: H, channels: 4 } }).png({ compressionLevel: 9 }).toBuffer();
 }
 
 // ──────────────────────────────────────────────

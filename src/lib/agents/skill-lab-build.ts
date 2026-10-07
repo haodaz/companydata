@@ -14,7 +14,7 @@ import type { SkillCard } from '@/lib/skill-lab';
 import { sanitizeSim, sanitizeTrace, type Sim, type SimStep, type SimTrace } from '@/lib/skill-sim';
 import { benchTimeline, evalExpr, sanitizeBenchSpec, simulateScript, type BenchSpec } from '@/lib/bench';
 import { BENCH_WELD } from '@/lib/skill-lab-seed-bench';
-import { ART_FAMILIES, artAvailable, makeSceneAsset, npcAssetReusing, sceneAssetReusing } from '@/lib/lab-art';
+import { ART_FAMILIES, artAvailable, makeNpcAsset, makeSceneAsset, npcAssetReusing, sceneAssetReusing } from '@/lib/lab-art';
 
 const DEFAULT_MODEL = 'gemini-3.8-flash';
 export type Progress = (phase: string, detail?: string) => void;
@@ -123,7 +123,7 @@ function benchSpecProblem(raw: any): string {
   return bad.length ? ` 具体问题：${bad.slice(0, 6).join('；')}` : '';
 }
 
-export async function designBench(jd: JdInput, task: { title: string; brief: string }, sim: Sim, modelId = DEFAULT_MODEL, diag: { note: string } = { note: '' }): Promise<BenchDesign | null> {
+export async function designBench(jd: JdInput, task: { title: string; brief: string }, sim: Sim, modelId = DEFAULT_MODEL, diag: { note: string } = { note: '' }, hint = ''): Promise<BenchDesign | null> {
   const example = JSON.stringify({ ...BENCH_WELD, scene: undefined, expertScript: BENCH_WELD.expertScript }, null, 0);
   // 轨迹工位的样子（咖啡拉花）：只给控件与层，让模型看懂折线轨迹 + 工作面 + 阶段提示怎么配套
   const trackExample = JSON.stringify({
@@ -181,7 +181,7 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
       关键是要有随时间演化的状态，操作顺序和时机会影响结果。
 
       岗位职责：${jd.responsibilities || '（未提供）'}
-      【任务】${task.title}：${task.brief}
+      【任务】${task.title}：${task.brief}${hint ? `\n      【这一次的工位方向，必须遵守】${hint}` : ''}
       【已有的故事线】
       ${stepsText(sim)}
 
@@ -361,7 +361,9 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
       Promise.all(art.scenes.map(s => safe(sceneAssetReusing(s.prompt, `${tag}-${s.key}`, { ...meta, slot: s.slot })))),
       Promise.all(art.npcs.map((n, i) => safe(npcAssetReusing(n.prompt, `${tag}-npc${i + 1}`, { ...meta, slot: n.slot })))),
       bench?.scenePrompt ? safe(makeSceneAsset(bench.scenePrompt, `${tag}-bench`)) : Promise.resolve(null),
-      art.self ? safe(npcAssetReusing(art.self, `${tag}-self`, { ...meta, slot: '从业者本人' })) : Promise.resolve(null),
+      // 数字职人本人的脸永远现画、不进素材库：配角可以撞脸，主角撞脸就不是「一个具体的人」了
+      // （以前按领域复用，13 位数字职人只有 5 张脸）
+      art.self ? safe(makeNpcAsset(art.self, `${tag}-self`).then(url => ({ url, reused: false }))) : Promise.resolve(null),
     ]);
     // 这个空间核心那位数字人长什么样
     if (selfHit) { avatarUrl = selfHit.url; if (!selfHit.reused) artCount++; else reusedCount++; }
@@ -399,4 +401,45 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
     skill: { name: draft.name, domain: draft.domain, kind: draft.kind, summary: draft.summary, card: draft.card, expert_trace: { ...trace, _why: draft.why } },
     benchAdded: !!benchStep, artCount, artReused: reusedCount, benchNote: benchDiag.note,
   };
+}
+
+/**
+ * 只重建工位：人、故事线、技能卡、其他场景都不动，只把那台虚拟设备换掉。
+ *
+ * 以前要换工位只能删掉整个空间重建——编号、立绘、故事线跟着全变，等于换了一个人。
+ * 这里把旧的 bench 步拿掉，按同一套 designBench（同样的三轮自检：老手脚本跑不通就不收）
+ * 重新设计，插回原处，补一张新的工位底图，再用老手脚本重跑一遍示范轨迹。
+ * hint 用来指方向，比如「婚礼策划的核心是统筹调度，做成流程调度型工位」。
+ */
+export async function rebuildBench(space: { jd_snapshot: any; title: string; brief: string; sim: Sim }, modelId = DEFAULT_MODEL, hint = ''): Promise<{ sim: Sim; benchTrace: any; name: string; note: string } | null> {
+  const jd = space.jd_snapshot as JdInput;
+  const base = sanitizeSim({ ...space.sim, steps: space.sim.steps.filter(s => s.type !== 'bench') });
+  if (!base) throw new Error('这个空间的故事线读不出来');
+  const diag = { note: '' };
+  const bench = await designBench(jd, { title: space.title, brief: space.brief }, base, modelId, diag, hint);
+  if (!bench) throw new Error(diag.note || '三轮都没设计出能跑通的工位');
+
+  const steps = [...base.steps];
+  const at = bench.insertAfter ? steps.findIndex(s => s.id === bench.insertAfter) : 0;
+  steps.splice((at >= 0 ? at : 0) + 1, 0, bench.step);
+  const sim = sanitizeSim({ ...base, steps });
+  const benchStep = sim?.steps.find(s => s.type === 'bench');
+  if (!sim || !benchStep?.bench) return null;
+
+  // 新底图：工位底图不走素材库，它和这台设备强绑
+  let benchUrl = '';
+  if (artAvailable() && bench.scenePrompt) {
+    try { benchUrl = await makeSceneAsset(bench.scenePrompt, `${Date.now().toString(36)}-bench`); } catch (e: any) { console.error('[rebench] image', e?.message || e); }
+  }
+  const withScene = sanitizeBenchSpec({ ...benchStep.bench, scene: { image: benchUrl, ...(benchUrl ? { credit: '底图由通义万相生成' } : {}), layers: bench.layers || [] } });
+  if (withScene) benchStep.bench = withScene;
+  if (sim.art) {
+    const scenes = { ...(sim.art.scenes || {}) };
+    if (benchUrl) scenes[benchStep.id] = benchUrl; else delete scenes[benchStep.id];
+    sim.art = { ...sim.art, scenes };
+  }
+
+  const b = benchStep.bench;
+  const benchTrace = b.expertScript?.length ? simulateScript(b, b.expertScript, Math.min(b.maxSeconds, Math.max(...b.expertScript.map(a => a.t)) + 60)) : null;
+  return { sim, benchTrace, name: b.name, note: diag.note };
 }
