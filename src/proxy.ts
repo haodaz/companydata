@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
+import { INVITED, INVITED_BY, readInvite } from '@/lib/lab-invite';
+
+/** 受邀专家能碰的接口：这一位数字职人的空间本身（只读），以及向上学习的三步 */
+const INVITE_API = /^\/api\/lab\/spaces\/([^/]+)(?:\/(interview|submit|distill))?$/;
+const INVITE_PAGE = /^\/lab\/([^/]+)$/;
 
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -8,10 +13,31 @@ export async function proxy(req: NextRequest) {
   // API：除登录 / 注册外全部需要登录（agent 接口会消耗 Token，数据接口走 service role）
   if (pathname.startsWith('/api/')) {
     if (pathname.startsWith('/api/auth/')) return NextResponse.next();
+    // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉
+    const headers = new Headers(req.headers);
+    headers.delete(INVITED); headers.delete(INVITED_BY);
     const token = req.cookies.get('auth_token')?.value;
     const payload = token ? await verifyToken(token) : null;
-    if (!payload) return NextResponse.json({ ok: false, error: '未登录或登录已过期' }, { status: 401 });
-    return NextResponse.next();
+    if (payload) return NextResponse.next({ request: { headers } });
+
+    // 没登录：拿着邀请票的老师傅，只能碰票上那一位数字职人的几条学习接口
+    const m = pathname.match(INVITE_API);
+    if (m) {
+      const inv = await readInvite(req.headers.get('x-lab-invite'));
+      const methodOk = m[2] ? req.method === 'POST' : req.method === 'GET';
+      if (inv && inv.spaceId === m[1] && methodOk) {
+        headers.set(INVITED, m[1]); headers.set(INVITED_BY, encodeURIComponent(inv.by));
+        return NextResponse.next({ request: { headers } });
+      }
+    }
+    return NextResponse.json({ ok: false, error: '未登录或登录已过期' }, { status: 401 });
+  }
+
+  // 邀请链接 /lab/<id>?invite=…：票对得上这个空间，就不用登录
+  const pm = pathname.match(INVITE_PAGE);
+  if (pm && pm[1] !== 'spaces') {
+    const inv = await readInvite(req.nextUrl.searchParams.get('invite'));
+    if (inv && inv.spaceId === pm[1]) return NextResponse.next();
   }
 
   // Protect /admin and /office (虚拟工厂) routes

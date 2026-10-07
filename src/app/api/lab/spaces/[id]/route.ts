@@ -1,16 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { labError, loadSpace } from '@/lib/skill-lab-server';
+import { INVITED } from '@/lib/lab-invite';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 type Ctx = { params: Promise<{ id: string }> };
 
-export async function GET(_req: NextRequest, { params }: Ctx) {
+export async function GET(req: NextRequest, { params }: Ctx) {
   try {
     const { id } = await params;
     const space = await loadSpace(id);
+    // 受邀专家只看这位数字职人本身，别人的作答和账本（里面有姓名、所在地）不给
+    if (req.headers.get(INVITED) === id) return NextResponse.json({ ok: true, space, submissions: [], invocations: [], invited: true });
     const [subs, invs] = await Promise.all([
       supabaseAdmin.from('skill_submissions').select('*').eq('task_id', id).order('submitted_at', { ascending: true }),
       supabaseAdmin.from('skill_invocations').select('*').eq('task_id', id).order('occurred_at', { ascending: true }),

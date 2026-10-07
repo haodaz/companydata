@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { buildSkillCard } from '@/lib/agents/skill-lab';
 import { labError, loadSpace } from '@/lib/skill-lab-server';
+import { INVITED, INVITED_BY } from '@/lib/lab-invite';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -31,7 +32,9 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       expert_name: who, expert_title: String(expert?.title || '').trim(), expert_note: '',
       expert_location: where, tz_offset: typeof expert?.tz === 'number' ? expert.tz : space.skill?.tz_offset ?? null,
       ...(trace ? { expert_trace: trace } : {}),
-      source: 'interview', assigned_agent: 'qa', distilled_at: new Date().toISOString(), created_by: createdBy || '',
+      source: 'interview', assigned_agent: 'qa', distilled_at: new Date().toISOString(),
+      // 受邀来教的：记成「谁发的邀请」，以后能追到这位老师傅是谁请来的
+      created_by: req.headers.get(INVITED) === id ? `invite:${decodeURIComponent(req.headers.get(INVITED_BY) || '')}` : (createdBy || ''),
     };
 
     let skillId = space.skill_id as string | null;

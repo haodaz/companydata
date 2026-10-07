@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Select } from 'antd';
 import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
@@ -168,6 +168,9 @@ const LAB_CSS = `
 function Shell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const path = usePathname();
+  // 拿着邀请链接来的人没登录：只留品牌，导航点了也是被拦去登录页，不如不给
+  const [guest, setGuest] = useState(false);
+  useEffect(() => { setGuest(new URLSearchParams(window.location.search).has('invite')); }, [path]);
   const { currentModel, setCurrentModel } = useModel();
   // 自己的导航：首页讲理念，百业空间干活。不跟数据后台的侧边栏混在一起
   const NAV = [{ k: '/lab', t: '首页' }, { k: '/lab/spaces', t: '百业空间' }];
@@ -177,14 +180,14 @@ function Shell({ children }: { children: React.ReactNode }) {
       <div className="lab-bg"><div className="lab-blob b1" /><div className="lab-blob b2" /><div className="lab-blob b3" /><div className="lab-grid" /></div>
 
       <header className="lab-head" style={{ position: 'sticky', top: 0, zIndex: 20, display: 'flex', alignItems: 'center', gap: 14, background: 'rgba(245,246,255,.72)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(106,92,255,.12)' }}>
-        <div onClick={() => router.push('/lab')} style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', minWidth: 0, flexShrink: 0 }}>
+        <div onClick={() => { if (!guest) router.push('/lab'); }} style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', minWidth: 0, flexShrink: 0 }}>
           <div className="lab-orb" style={{ ['--s' as string]: '34px' }}><div className="ring" /><div className="core" /></div>
           <div style={{ minWidth: 0 }}>
             <div style={{ fontSize: 16, fontWeight: 800, letterSpacing: 0.5, whiteSpace: 'nowrap' }}>AI 百业</div>
             <div className="lab-mono lab-cap lab-head-sub">数字技能空间 · EXPERIMENTAL</div>
           </div>
         </div>
-        <nav className="lab-nav">
+        {!guest && <nav className="lab-nav">
           {NAV.map(x => {
             const on = x.k === '/lab' ? path === '/lab' : path.startsWith(x.k);
             return (
@@ -194,13 +197,15 @@ function Shell({ children }: { children: React.ReactNode }) {
               </button>
             );
           })}
-        </nav>
+        </nav>}
         <div style={{ flex: 1 }} />
+        {!guest && <>
         <Select className="lab-head-model" size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 170 }} popupMatchSelectWidth={250}
           options={MODEL_OPTIONS.map(m => ({ value: m.id, label: <span>{m.label}<ModelBadge text={m.badge} /></span> }))} />
         <button className="lab-btn ghost sm" title="数据后台" aria-label="数据后台" style={{ width: 34, padding: 0 }} onClick={() => router.push('/admin/db-company')}>
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="1.5" y="9.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="9.5" width="5" height="5" rx="1.2" /></svg>
         </button>
+        </>}
       </header>
 
       <div className="lab-wrap">{children}</div>

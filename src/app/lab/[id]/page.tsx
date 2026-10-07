@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { App, Drawer, Popconfirm } from 'antd';
 import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
@@ -157,9 +157,15 @@ function CareerPanel({ career: c, onTry }: { career: any; onTry: () => void }) {
 export default function SpacePage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  const { message } = App.useApp();
+  const { message, modal } = App.useApp();
   const { currentModel } = useModel();
   const { user } = useUser();
+  // 拿着邀请链接来的老师傅：不登录，只做「向上学习」——走一遍、被追问、交给 AI 核心吸收
+  const invite = useSearchParams().get('invite');
+  const guest = !!invite;
+  const inviteHdr: Record<string, string> = invite ? { 'x-lab-invite': invite } : {};
+  const [taught, setTaught] = useState(false);
+  const [inviting, setInviting] = useState(false);
 
   const [space, setSpace] = useState<any>(null);
   const [subs, setSubs] = useState<any[]>([]);
@@ -204,12 +210,13 @@ export default function SpacePage() {
 
   const load = useCallback(async () => {
     try {
-      const json = await (await fetch(`/api/lab/spaces/${id}`)).json();
+      const json = await (await fetch(`/api/lab/spaces/${id}`, { headers: inviteHdr })).json();
       if (!json.ok) throw new Error(json.error);
       setSpace(json.space); setSubs(json.submissions); setInvs(json.invocations);
     } catch (e: any) { message.error(e.message); }
     finally { setLoading(false); }
-  }, [id, message]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, message, invite]);
 
   useEffect(() => { load(); }, [load]);
   useEffect(() => { if (space?.jd_snapshot?.career && !openedCareer.current) { openedCareer.current = true; setMode('career'); } }, [space]);
@@ -220,13 +227,14 @@ export default function SpacePage() {
     const u = new URLSearchParams(window.location.search);
     const m = u.get('m') as Mode | null;
     if (m) { openedCareer.current = true; setMode(m); }
+    if (u.get('invite')) { openedCareer.current = true; setMode('learn'); }
     goRef.current = u.get('go');
     if (goRef.current) { openedCareer.current = true; setMode('test'); }
   }, []);
   useEffect(() => { chatEnd.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, [turns]);
 
   const post = async (path: string, body: Record<string, unknown>) => {
-    const json = await (await fetch(`/api/lab/spaces/${id}/${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...body, model: currentModel, tz: -new Date().getTimezoneOffset() / 60 }) })).json();
+    const json = await (await fetch(`/api/lab/spaces/${id}/${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...inviteHdr }, body: JSON.stringify({ ...body, model: currentModel, tz: -new Date().getTimezoneOffset() / 60 }) })).json();
     if (!json.ok) throw new Error(json.error);
     return json;
   };
@@ -301,6 +309,30 @@ export default function SpacePage() {
     await askNext(next);
   };
 
+  /** 请一位老师傅来教：生成一条只能用来「教」这一位数字职人的链接 */
+  const makeInvite = async () => {
+    setInviting(true);
+    try {
+      const j = await (await fetch(`/api/lab/spaces/${id}/invite`, { method: 'POST' })).json();
+      if (!j.ok) throw new Error(j.error);
+      let copied = false;
+      try { await navigator.clipboard.writeText(j.url); copied = true; } catch { /* 浏览器不给写剪贴板就让人手动复制 */ }
+      modal.success({
+        title: copied ? '邀请链接已复制' : '邀请链接',
+        width: 560,
+        content: (
+          <div style={{ fontSize: 13.5, lineHeight: 1.85 }}>
+            <div style={{ margin: '6px 0 10px', padding: '8px 10px', borderRadius: 8, background: 'rgba(106,92,255,.07)', wordBreak: 'break-all', fontFamily: 'var(--font-geist-mono), monospace', fontSize: 12 }}>{j.url}</div>
+            发给一位真正干这行的人。他不用注册，打开就能把 {profile.name || '这位数字职人'} 的一天走一遍，再回答几个「为什么」，大约 10–15 分钟。
+            <br />这条链接只能用来<b>教</b>：看不到别人的作答和账本，也不能考人、删空间。{j.days} 天后失效。
+            <br />教完之后，技能卡上会写着「学自 他的名字（他所在的地方）」。
+          </div>
+        ),
+      });
+    } catch (e: any) { message.error(e.message); }
+    finally { setInviting(false); }
+  };
+
   const distill = async () => {
     setBusy('AI 核心正在吸收专家的经验');
     try {
@@ -309,6 +341,7 @@ export default function SpacePage() {
       await post('distill', { turns: turns.filter((t, i) => !(i === turns.length - 1 && t.role === 'ai')), walkthrough: walk, trace: expertTrace, expert: { ...expert, tz: -new Date().getTimezoneOffset() / 60 }, createdBy: user?.email });
       message.success('吸收完成，专业度提升');
       setLearnStep(0); setTurns([]); setWalk(''); setEnough(false); setExpertTrace(null);
+      if (guest) setTaught(true);
       await load();
     } catch (e: any) { message.error(e.message); }
     finally { setBusy(''); }
@@ -376,10 +409,20 @@ export default function SpacePage() {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 14 }}>
-        <button className="lab-btn ghost sm" onClick={() => router.push('/lab/spaces')}>← 全部空间</button>
-        <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="lab-btn ghost sm">删除空间</button></Popconfirm>
-      </div>
+      {guest ? (
+        <div className="lab-glass lab-in" style={{ padding: '14px 18px', marginBottom: 14, borderColor: 'rgba(106,92,255,.35)', background: 'rgba(106,92,255,.07)' }}>
+          <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>YOU ARE INVITED TO TEACH</div>
+          <div style={{ fontSize: 15.5, fontWeight: 800, margin: '4px 0 2px' }}>有人请你来教 {profile.name || '这位数字职人'}{profile.role ? ` · ${profile.role}` : ''}</div>
+          <div style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.8 }}>
+            把他最有代表性的一天按你平时的做法走一遍，再回答几个「为什么」，大约 10–15 分钟。你说的判断会变成他的技能卡，卡上写着手艺来自你。
+          </div>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 14 }}>
+          <button className="lab-btn ghost sm" onClick={() => router.push('/lab/spaces')}>← 全部空间</button>
+          <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="lab-btn ghost sm">删除空间</button></Popconfirm>
+        </div>
+      )}
 
       {/* ══════ AI 核心 + 档案 ══════ */}
       <section className={`lab-glass lab-in${busy ? ' lab-scan' : ''}`} style={{ padding: 'clamp(18px, 3vw, 30px)', display: 'flex', gap: 'clamp(18px, 3vw, 36px)', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -415,7 +458,10 @@ export default function SpacePage() {
           </h1>
           <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginTop: 3 }}>
             {skill && (skill.source === 'jd-draft'
-              ? <span className="lab-chip g">自学草案 · 等一位从业者校正</span>
+              ? <>
+                  <span className="lab-chip g">自学草案 · 等一位从业者校正</span>
+                  {!guest && <button className="lab-btn sm" style={{ marginLeft: 8, height: 28, padding: '0 12px', fontSize: 12.5 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '请一位老师傅来教 →'}</button>}
+                </>
               : <>学自 <b style={{ color: 'var(--ink2)' }}>{skill.expert_name}</b>（{skill.expert_location}）</>)}
             {jd.url && <> · <a href={jd.url} target="_blank" rel="noreferrer" style={{ color: 'var(--v)' }}>JD ↗</a></>}
           </div>
@@ -427,7 +473,7 @@ export default function SpacePage() {
           {/* 数值面板：三格就够，成句的话都在各自的 action 里 */}
           <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', maxWidth: 420 }}>
             {stat.map(x => (
-              <div key={x.k} onClick={() => setMode(x.go)} style={{ padding: '10px 12px', borderRadius: 14, background: 'rgba(106,92,255,.06)', border: '1px solid var(--line)', cursor: 'pointer' }}>
+              <div key={x.k} onClick={() => { if (!guest) setMode(x.go); }} style={{ padding: '10px 12px', borderRadius: 14, background: 'rgba(106,92,255,.06)', border: '1px solid var(--line)', cursor: 'pointer' }}>
                 <div className="lab-mono" style={{ fontSize: 22, fontWeight: 800, letterSpacing: 0, color: 'var(--ink)' }}>{x.v}<span style={{ fontSize: 11, fontWeight: 600, color: 'var(--ink3)', marginLeft: 3 }}>{x.u}</span></div>
                 <div className="lab-mono lab-cap" style={{ marginTop: 2 }}>{x.k}</div>
               </div>
@@ -437,9 +483,11 @@ export default function SpacePage() {
       </section>
 
       {/* ══════ 模式 ══════ */}
-      <div className="lab-tabs" style={{ margin: '20px 0 16px' }}>
-        {(jd.career ? [{ key: 'career' as Mode, label: '职业地图', icon: '🧭' }, ...MODES] : MODES).map(m => <div key={m.key} className={`lab-tab${mode === m.key ? ' on' : ''}`} onClick={() => setMode(m.key)}><span>{m.icon}</span>{m.label}</div>)}
-      </div>
+      {guest ? <div style={{ height: 18 }} /> : (
+        <div className="lab-tabs" style={{ margin: '20px 0 16px' }}>
+          {(jd.career ? [{ key: 'career' as Mode, label: '职业地图', icon: '🧭' }, ...MODES] : MODES).map(m => <div key={m.key} className={`lab-tab${mode === m.key ? ' on' : ''}`} onClick={() => setMode(m.key)}><span>{m.icon}</span>{m.label}</div>)}
+        </div>
+      )}
 
       {/* ── 考验新人 ── */}
       {mode === 'test' && answering && sim && (
@@ -545,15 +593,26 @@ export default function SpacePage() {
           <div className="lab-glass" style={{ padding: 22, minWidth: 0 }}>
             <Label>LEARN FROM AN EXPERT</Label>
             <h2 style={{ margin: '0 0 6px', fontSize: 19, fontWeight: 800 }}>请一位资深从业者，把这道题走一遍</h2>
-            <p style={{ margin: '0 0 16px', fontSize: 13.5, color: 'var(--ink3)', lineHeight: 1.8 }}>我会围绕「你为什么这么做」来追问，把你的判断方式吸收成我的能力。{skill ? '我已经学过一位专家，新的经验会叠加上去。' : ''}</p>
+            <p style={{ margin: '0 0 16px', fontSize: 13.5, color: 'var(--ink3)', lineHeight: 1.8 }}>我会围绕「你为什么这么做」来追问，把你的判断方式吸收成我的能力。{skill && skill.source !== 'jd-draft' ? '我已经学过一位专家，新的经验会叠加上去。' : '我现在会的都是 AI 自己推断的草案，你是第一位来校正我的人。'}</p>
 
-            {learnStep === 0 && <>
+            {guest && taught && (
+              <div className="lab-in" style={{ padding: '16px 18px', borderRadius: 14, background: 'rgba(18,161,80,.07)', border: '1px solid rgba(18,161,80,.25)', lineHeight: 1.9 }}>
+                <div style={{ fontSize: 17, fontWeight: 800, color: '#12a150' }}>谢谢你{skill?.expert_name ? `，${skill.expert_name}` : ''}。</div>
+                <div style={{ fontSize: 14, color: 'var(--ink2)' }}>
+                  {profile.name || '他'}已经把你的做法吸收成 <b>{skill?.card?.rules?.length || 0}</b> 条判断规则，技能卡上写着「学自 {skill?.expert_name}（{skill?.expert_location}）」。
+                  以后他考新人、替人答疑时用到的每一条，都会记着来自你。右边就是他从你这里学到的东西。
+                </div>
+              </div>
+            )}
+
+            {learnStep === 0 && !(guest && taught) && <>
               <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
                 {field(expert.name, v => setExpert(e => ({ ...e, name: v })), '专家姓名 / 化名 *')}
                 {field(expert.title, v => setExpert(e => ({ ...e, title: v })), '资历（如 前品牌总监 · 12 年）')}
                 {field(expert.location, v => setExpert(e => ({ ...e, location: v })), '所在地 *')}
               </div>
               <button className="lab-btn" style={{ marginTop: 14 }} onClick={() => { if (!expert.name.trim() || !expert.location.trim()) { message.warning('请填写专家姓名（或化名）和所在地——技能卡要写清楚手艺来自谁、来自哪儿'); return; } if (sim?.art) enterFullscreen(); setLearnStep(1); }}>开始 →</button>
+              {!guest && <button className="lab-btn ghost" style={{ marginTop: 14, marginLeft: 10 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '专家不在身边？发一条邀请链接'}</button>}
             </>}
 
             {learnStep === 1 && sim && <div style={{ fontSize: 13.5, color: 'var(--v)', fontWeight: 600 }}>操作台已在下方打开 ↓</div>}

@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { answerTask, gradeAnswer, operateSim } from '@/lib/agents/skill-lab';
 import { sanitizeTrace, traceMatch, traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { labError, loadSpace, recordInvocation, skillRef } from '@/lib/skill-lab-server';
+import { INVITED } from '@/lib/lab-invite';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -17,6 +18,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     const { id } = await params;
     const body = await req.json();
     const mode: 'human' | 'expert' | 'ai' = ['expert', 'ai'].includes(body.mode) ? body.mode : 'human';
+    // 受邀的老师傅只来教，不来考人、也不替 AI 作答
+    if (req.headers.get(INVITED) === id && mode !== 'expert') return NextResponse.json({ ok: false, error: '邀请链接只能用来教' }, { status: 403 });
     const model = body.model || undefined;
 
     const space = await loadSpace(id);
