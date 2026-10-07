@@ -14,17 +14,17 @@ import Image from 'next/image';
 
 const CSS = `
 /* 首页是整站唯一的深色页：靠 :has 把外壳一起压暗，不动 layout，别的页照旧浅色 */
-.lab:has(.ai100-root) { background: #080a16; --ink: #eef0fb; --ink2: #c0c5e2; --ink3: #878dae; --line: rgba(255,255,255,.10); }
-.lab:has(.ai100-root) .lab-bg { opacity: .35; }
-.lab:has(.ai100-root) .lab-blob { filter: blur(100px); opacity: .34; }
-.lab:has(.ai100-root) .lab-grid { opacity: .3; }
-.lab:has(.ai100-root) > header { background: rgba(8,10,22,.76) !important; border-bottom-color: rgba(255,255,255,.08) !important; }
-.lab:has(.ai100-root) .lab-glass { background: rgba(255,255,255,.055); border-color: rgba(255,255,255,.1);
+.lab:not([data-theme="light"]):has(.ai100-root) { background: #080a16; --ink: #eef0fb; --ink2: #c0c5e2; --ink3: #878dae; --line: rgba(255,255,255,.10); }
+.lab:not([data-theme="light"]):has(.ai100-root) .lab-bg { opacity: .35; }
+.lab:not([data-theme="light"]):has(.ai100-root) .lab-blob { filter: blur(100px); opacity: .34; }
+.lab:not([data-theme="light"]):has(.ai100-root) .lab-grid { opacity: .3; }
+.lab:not([data-theme="light"]):has(.ai100-root) > header { background: rgba(8,10,22,.76) !important; border-bottom-color: rgba(255,255,255,.08) !important; }
+.lab:not([data-theme="light"]):has(.ai100-root) .lab-glass { background: rgba(255,255,255,.055); border-color: rgba(255,255,255,.1);
   box-shadow: 0 1px 0 rgba(255,255,255,.07) inset, 0 16px 44px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.07); }
-.lab:has(.ai100-root) .lab-chip { color: #b9b1ff; background: rgba(140,126,255,.16); border-color: rgba(140,126,255,.3); }
-.lab:has(.ai100-root) .lab-chip.c { color: #6fe3f2; background: rgba(18,181,203,.16); border-color: rgba(18,181,203,.32); }
-.lab:has(.ai100-root) .lab-btn.ghost { color: #dfe2f5; background: rgba(255,255,255,.08); box-shadow: 0 0 0 1px rgba(255,255,255,.16); }
-.lab:has(.ai100-root) .lab-btn.ghost:hover { color: #fff; box-shadow: 0 0 0 1px rgba(140,126,255,.6); }
+.lab:not([data-theme="light"]):has(.ai100-root) .lab-chip { color: #b9b1ff; background: rgba(140,126,255,.16); border-color: rgba(140,126,255,.3); }
+.lab:not([data-theme="light"]):has(.ai100-root) .lab-chip.c { color: #6fe3f2; background: rgba(18,181,203,.16); border-color: rgba(18,181,203,.32); }
+.lab:not([data-theme="light"]):has(.ai100-root) .lab-btn.ghost { color: #dfe2f5; background: rgba(255,255,255,.08); box-shadow: 0 0 0 1px rgba(255,255,255,.16); }
+.lab:not([data-theme="light"]):has(.ai100-root) .lab-btn.ghost:hover { color: #fff; box-shadow: 0 0 0 1px rgba(140,126,255,.6); }
 .ai100-root { color: var(--ink); }
 
 /* 整页出血 */
@@ -57,6 +57,44 @@ const CSS = `
 .ai100-stage > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .ai100-stage .veil { position: absolute; inset: 0; background: linear-gradient(90deg, #080a16 0%, rgba(8,10,22,.9) 40%, rgba(8,10,22,.45) 74%, rgba(8,10,22,.18) 100%); }
 .ai100-stage .in { position: relative; max-width: 1280px; margin: 0 auto; padding: 56px 28px; width: 100%; }
+
+.ai100-hero-cap { color: rgba(255,255,255,.6); }
+.ai100-hero-sub { font-size: clamp(15px, 1.6vw, 18px); color: rgba(255,255,255,.78); line-height: 1.85; margin: 0 0 24px; max-width: 580px; }
+.ai100-hero-check { display: flex; gap: 9px; align-items: flex-start; font-size: 14.5px; color: rgba(255,255,255,.76); line-height: 1.7; }
+.ai100-kick { color: #9f91ff; }
+.ai100-faces .cap .k { font-size: 10.5px; letter-spacing: .12em; color: #9f91ff; }
+.ai100-faces .cap .r { font-size: 17px; font-weight: 800; color: #fff; margin-top: 2px; }
+.ai100-faces .cap .p { font-size: 12.5px; color: rgba(255,255,255,.6); margin-top: 2px; }
+
+/* ── 浅色：白天的教室、投影、一体机。整屏的照片带（banner、工位那一块）保持压暗，那是电影感，不跟着变 ── */
+.lab[data-theme="light"] .ai100-hero .veil { background:
+  linear-gradient(90deg, #f5f6ff 2%, rgba(245,246,255,.94) 36%, rgba(245,246,255,.62) 66%, rgba(245,246,255,.28) 100%),
+  linear-gradient(0deg, #f5f6ff 1%, rgba(245,246,255,.25) 32%, transparent 60%); }
+.lab[data-theme="light"] .ai100-hero-cap { color: var(--ink3); }
+.lab[data-theme="light"] .ai100-hero-sub { color: var(--ink2); }
+.lab[data-theme="light"] .ai100-hero-check { color: var(--ink2); }
+.lab[data-theme="light"] .ai100-kick { color: var(--v); }
+.lab[data-theme="light"] .ai100-grad { background: linear-gradient(118deg, var(--v), #8f7bff 40%, var(--c)); -webkit-background-clip: text; background-clip: text; }
+.lab[data-theme="light"] .ai100-film { background: rgba(255,255,255,.66); border-bottom-color: var(--line); }
+.lab[data-theme="light"] .ai100-film img { border-color: rgba(106,92,255,.16); }
+.lab[data-theme="light"] .ai100-band { background: rgba(255,255,255,.72); }
+.lab[data-theme="light"] .ai100-faces .cap { background: rgba(255,255,255,.86); border-color: rgba(106,92,255,.18); }
+.lab[data-theme="light"] .ai100-faces .cap .k { color: var(--v); }
+.lab[data-theme="light"] .ai100-faces .cap .r { color: var(--ink); }
+.lab[data-theme="light"] .ai100-faces .cap .p { color: var(--ink3); }
+.lab[data-theme="light"] .ai100-faces .dots i { background: rgba(106,92,255,.2); }
+.lab[data-theme="light"] .ai100-faces .dots i.on { background: var(--v); }
+.lab[data-theme="light"] .ai100-faces > img { filter: drop-shadow(0 22px 36px rgba(60,45,130,.28)); }
+.lab[data-theme="light"] .ai100-art, .lab[data-theme="light"] .ai100-keep .hd img { border-color: rgba(255,255,255,.9); box-shadow: 0 18px 50px rgba(88,76,220,.18); }
+.lab[data-theme="light"] .ai100-shot { background: rgba(255,255,255,.82); border-color: rgba(255,255,255,.95); box-shadow: 0 14px 40px rgba(88,76,220,.14); }
+.lab[data-theme="light"] .ai100-keep { background: linear-gradient(180deg, rgba(140,126,255,.1), rgba(18,181,203,.05) 55%, transparent), rgba(255,255,255,.55); }
+.lab[data-theme="light"] .ai100-keep .steps > div { background: rgba(255,255,255,.82); border-color: rgba(106,92,255,.14); }
+.lab[data-theme="light"] .ai100-keep .steps .n { color: var(--v); }
+.lab[data-theme="light"] .ai100-keep .steps .t { color: var(--ink); }
+.lab[data-theme="light"] .ai100-value > div { background: rgba(255,255,255,.82); border-color: rgba(255,255,255,.95); box-shadow: 0 14px 40px rgba(88,76,220,.12); }
+.lab[data-theme="light"] .ai100-value .who { color: var(--ink); }
+.lab[data-theme="light"] .ai100-value .who span { color: var(--v); }
+.lab[data-theme="light"] .ai100-card { box-shadow: 0 12px 34px rgba(88,76,220,.16); }
 
 .ai100-h1 { font-size: clamp(27px, 4.6vw, 62px); font-weight: 900; line-height: 1.08; letter-spacing: -0.5px; margin: 12px 0 18px; }
 .ai100-h2 { font-size: clamp(26px, 3.6vw, 46px); font-weight: 900; line-height: 1.16; letter-spacing: -0.3px; margin: 10px 0 14px; }
@@ -223,9 +261,9 @@ function FaceReel({ people, onPick }: { people: any[]; onPick: (id: string) => v
       <div className="halo" />
       {people.map((p, k) => <Image key={p.id} src={p.avatar} alt="" fill sizes="(max-width: 860px) 90vw, 560px" loading={k < 2 ? 'eager' : 'lazy'} className={k === i ? 'on' : ''} />)}
       <div className="cap">
-        <div className="lab-mono" style={{ fontSize: 10.5, letterSpacing: '.12em', color: '#9f91ff' }}>{cur.name}</div>
-        <div style={{ fontSize: 17, fontWeight: 800, color: '#fff', marginTop: 2 }}>{cur.role}</div>
-        <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.6)', marginTop: 2 }}>{cur.profession}</div>
+        <div className="lab-mono k">{cur.name}</div>
+        <div className="r">{cur.role}</div>
+        <div className="p">{cur.profession}</div>
       </div>
       <div className="dots">{people.map((p, k) => <i key={p.id} className={k === i ? 'on' : ''} />)}</div>
     </div>
@@ -319,16 +357,16 @@ export default function LabLanding() {
         <div className="veil" />
         <div className="in">
           <div className="lab-in" style={{ maxWidth: 660 }}>
-            <div className="lab-mono lab-cap" style={{ color: 'rgba(255,255,255,.6)' }}>AI 百业 · AI HUNDRED TRADES</div>
+            <div className="lab-mono lab-cap ai100-hero-cap">AI 百业 · AI HUNDRED TRADES</div>
             <h1 className="ai100-h1">
               <span style={{ whiteSpace: 'nowrap' }}>AI 技能空间 ＋ 数字职人，</span><br /><span className="ai100-grad" style={{ whiteSpace: 'nowrap' }}>带你走进数智化千行百业</span>
             </h1>
-            <p style={{ fontSize: 'clamp(15px, 1.6vw, 18px)', color: 'rgba(255,255,255,.78)', lineHeight: 1.85, margin: '0 0 24px', maxWidth: 580 }}>
+            <p className="ai100-hero-sub">
               在线做职业探究、能力自测、技能演化，以及真正解决行业里的问题。
             </p>
             <div style={{ display: 'grid', gap: 9, marginBottom: 28 }}>
               {CHECKS.map(c => (
-                <div key={c} style={{ display: 'flex', gap: 9, alignItems: 'flex-start', fontSize: 14.5, color: 'rgba(255,255,255,.76)', lineHeight: 1.7 }}>
+                <div key={c} className="ai100-hero-check">
                   <span style={{ flexShrink: 0, width: 18, height: 18, borderRadius: '50%', marginTop: 2, background: 'linear-gradient(120deg, var(--v), var(--c))', color: '#fff', fontSize: 11, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✓</span>
                   {c}
                 </div>
@@ -387,7 +425,7 @@ export default function LabLanding() {
       <section>
         <div className="ai100-01">
           <div>
-            <div className="lab-mono lab-cap" style={{ color: '#9f91ff' }}>01 / 落点</div>
+            <div className="lab-mono lab-cap ai100-kick">01 / 落点</div>
             <h2 className="ai100-h2">技能是抽象的，<br /><span className="ai100-grad">人是具体的</span></h2>
             <p className="ai100-lead">
               我们不做课程，不做题库，也不做培训模拟器。<br />
@@ -481,7 +519,7 @@ export default function LabLanding() {
         <div style={{ display: 'grid', gap: 'clamp(20px, 3.5vw, 58px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', alignItems: 'center' }}>
           <Art src="/lab-landing/concept-three.jpg" alt="向下考核、向上学习、平行解决" />
           <div>
-            <div className="lab-mono lab-cap" style={{ color: '#9f91ff' }}>03 / 能力</div>
+            <div className="lab-mono lab-cap ai100-kick">03 / 能力</div>
             <h2 className="ai100-h2">AI 数字职人，<span className="ai100-grad">向下、向上、向四方</span>同时发力</h2>
             <p className="ai100-lead" style={{ marginBottom: 20 }}>他是一个能接活的 AI：你可以把人交给他考，把经验交给他学，也可以把一个具体的问题直接扔给他办。</p>
             <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))' }}>
@@ -502,7 +540,7 @@ export default function LabLanding() {
         <div className="in">
           <div className="hd">
             <div>
-              <div className="lab-mono lab-cap" style={{ color: '#9f91ff' }}>SKILL PRESERVATION</div>
+              <div className="lab-mono lab-cap ai100-kick">SKILL PRESERVATION</div>
               <h2 className="ai100-h2">让资深技能<br /><span className="ai100-grad">被记录、被校正、被再用起来</span></h2>
               <p className="ai100-lead" style={{ margin: 0 }}>
                 一个老师傅手上的判断，大多说不清，也没人记。退休、转行、换一家厂，一套手艺就跟着走了。
@@ -544,7 +582,7 @@ export default function LabLanding() {
       <section className="ai100-sec">
         <div style={{ display: 'grid', gap: 'clamp(20px, 3.5vw, 58px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', alignItems: 'center' }}>
           <div>
-            <div className="lab-mono lab-cap" style={{ color: '#9f91ff' }}>04 / 存在空间</div>
+            <div className="lab-mono lab-cap ai100-kick">04 / 存在空间</div>
             <h2 className="ai100-h2">从一个数字职人，<br /><span className="ai100-grad">长成一整座空间</span></h2>
             <p className="ai100-lead">
               先有一个人：他的手艺、他的工位、他最有代表性的一天。<br />
@@ -562,7 +600,7 @@ export default function LabLanding() {
         <section className="ai100-sec">
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', marginBottom: 26 }}>
             <div>
-              <div className="lab-mono lab-cap" style={{ color: '#9f91ff' }}>NOW ON DUTY</div>
+              <div className="lab-mono lab-cap ai100-kick">NOW ON DUTY</div>
               <h2 className="ai100-h2">已经有 <span className="ai100-grad">{n}</span> 位数字职人在岗</h2>
               <p className="ai100-lead" style={{ margin: 0 }}>
                 从高精尖材料、航天发动机试车，到剧本杀 DM、整理收纳师、陪诊师。覆盖 {famN} 个一级领域——冷门的、新兴的、灵活就业的，一样配有自己的空间。

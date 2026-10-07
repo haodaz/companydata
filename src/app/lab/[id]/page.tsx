@@ -11,15 +11,291 @@ import { traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tzLabel, type InterviewTurn, type RubricItem } from '@/lib/skill-lab';
 
 type Mode = 'career' | 'test' | 'learn' | 'solve' | 'ledger' | 'eco' | 'jd';
+const ALL_MODES: Mode[] = ['career', 'test', 'learn', 'solve', 'ledger', 'eco', 'jd'];
 
 const MODES: { key: Mode; label: string; icon: string }[] = [
-  { key: 'test', label: '让我考考你', icon: '🎯' },
-  { key: 'learn', label: '我跟谁学的', icon: '🧠' },
-  { key: 'solve', label: '丢个问题给我', icon: '⚡' },
-  { key: 'ledger', label: '我被用在哪里', icon: '🌐' },
-  { key: 'eco', label: '我的行当', icon: '🗺️' },
-  { key: 'jd', label: '我的来历', icon: '🧬' },
+  { key: 'test', label: '考考我', icon: 'test' },
+  { key: 'learn', label: '教教我', icon: 'learn' },
+  { key: 'solve', label: '问问我', icon: 'solve' },
+  { key: 'ledger', label: '我被用在哪', icon: 'ledger' },
+  { key: 'eco', label: '我的行当', icon: 'eco' },
+  { key: 'jd', label: '我的来历', icon: 'jd' },
 ];
+const CAREER_MODE = { key: 'career' as Mode, label: '职业地图', icon: 'career' };
+
+/** 线性小图标：深色舞台上 emoji 太廉价 */
+function Ico({ n, s = 20 }: { n: string; s?: number }) {
+  const P: Record<string, React.ReactNode> = {
+    test: <><circle cx="12" cy="12" r="8.5" /><circle cx="12" cy="12" r="4.5" /><circle cx="12" cy="12" r="1" fill="currentColor" /></>,
+    learn: <><path d="M3 5.5h6a3 3 0 0 1 3 3V20a2.4 2.4 0 0 0-2.4-2.4H3z" /><path d="M21 5.5h-6a3 3 0 0 0-3 3V20a2.4 2.4 0 0 1 2.4-2.4H21z" /></>,
+    solve: <path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12z" />,
+    ledger: <><circle cx="12" cy="12" r="8.5" /><path d="M3.5 12h17M12 3.5c2.6 2.4 2.6 14.6 0 17M12 3.5c-2.6 2.4-2.6 14.6 0 17" /></>,
+    eco: <><circle cx="5.5" cy="6.5" r="2.3" /><circle cx="18.5" cy="6.5" r="2.3" /><circle cx="12" cy="18" r="2.3" /><path d="M7.6 7.6 10.6 16M16.4 7.6 13.4 16M7.8 6.5h8.4" /></>,
+    jd: <><path d="M6.5 3h7.5l4.5 4.5V21h-12z" /><path d="M14 3v4.5h4.5M9.5 12.5h6M9.5 16.5h6" /></>,
+    career: <><circle cx="12" cy="12" r="8.5" /><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z" /></>,
+    back: <path d="M15 5.5 8.5 12l6.5 6.5" />,
+  };
+  return <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>{P[n]}</svg>;
+}
+
+/**
+ * 数字职人的样式：首页是一个人站在他自己的工作现场里，像游戏里的人物面板；
+ * 其余每件事都是一扇门，进去是独立的空间。
+ */
+const HUB_CSS = `
+.hub { position: relative; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); width: 100vw; margin-top: -24px; margin-bottom: -64px;
+  min-height: calc(100dvh - 62px); overflow: hidden; background: #070915; color: #eef0fb; display: flex; flex-direction: column; }
+.hub-bg { position: absolute; inset: -40px; transform: translate3d(calc(var(--mx, 0) * -28px), calc(var(--my, 0) * -18px), 0); }
+.hub-bg img { object-fit: cover; filter: brightness(.5) saturate(.92) blur(2.4px); animation: hub-drift 46s ease-in-out infinite alternate; }
+@keyframes hub-drift { from { transform: scale(1.05); } to { transform: scale(1.13) translate(-1.6%, -1%); } }
+.hub-veil { position: absolute; inset: 0; background:
+  radial-gradient(ellipse 42% 64% at 29% 60%, rgba(7,9,21,0) 0%, rgba(7,9,21,.3) 58%, rgba(7,9,21,.82) 100%),
+  linear-gradient(90deg, rgba(7,9,21,.2) 0%, rgba(7,9,21,.2) 38%, rgba(7,9,21,.86) 64%, #070915 100%),
+  linear-gradient(0deg, #070915 0%, rgba(7,9,21,.55) 22%, rgba(7,9,21,0) 46%); }
+.hub-grid { position: absolute; inset: -30px; pointer-events: none; transform: translate3d(calc(var(--mx, 0) * -12px), calc(var(--my, 0) * -8px), 0);
+  background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 46px 46px;
+  mask-image: radial-gradient(ellipse 60% 75% at 30% 55%, #000 0%, transparent 72%); -webkit-mask-image: radial-gradient(ellipse 60% 75% at 30% 55%, #000 0%, transparent 72%); }
+/* 光束：从上往下打在人身上，像抽卡出货那一下 */
+.hub-beam { position: absolute; left: 6%; width: 48%; top: -10%; height: 110%; pointer-events: none; mix-blend-mode: screen;
+  background: linear-gradient(180deg, rgba(170,158,255,.38), rgba(120,200,255,.12) 55%, transparent 85%);
+  clip-path: polygon(40% 0, 60% 0, 96% 100%, 4% 100%); filter: blur(10px); opacity: .85;
+  transform: translate3d(calc(var(--mx, 0) * -6px), 0, 0); animation: hub-beam 7s ease-in-out infinite; }
+@keyframes hub-beam { 50% { opacity: .55; } }
+/* 前景：几颗失焦的光斑，离镜头最近，动得最多 */
+.hub-bokeh { position: absolute; inset: -60px; pointer-events: none; z-index: 2; transform: translate3d(calc(var(--mx, 0) * 42px), calc(var(--my, 0) * 26px), 0); }
+.hub-bokeh i { position: absolute; border-radius: 50%; filter: blur(var(--b, 8px)); background: radial-gradient(circle, rgba(190,180,255,.55), rgba(120,200,255,.12) 60%, transparent 72%); animation: hub-mote 11s ease-in-out infinite; }
+@keyframes hub-mote { 50% { transform: translateY(-18px); opacity: .6; } }
+/* 浮尘：中景里慢慢往上飘的小亮点 */
+.hub-dust { position: absolute; inset: 0; pointer-events: none; transform: translate3d(calc(var(--mx, 0) * -4px), 0, 0); }
+.hub-dust i { position: absolute; bottom: -10px; width: 2px; height: 2px; border-radius: 50%; background: rgba(220,215,255,.9); box-shadow: 0 0 6px rgba(170,158,255,.9); animation: hub-rise linear infinite; }
+@keyframes hub-rise { from { transform: translateY(0); opacity: 0; } 12% { opacity: 1; } to { transform: translateY(-78vh); opacity: 0; } }
+.hub-in { position: relative; z-index: 1; flex: 1; width: 100%; max-width: 1280px; margin: 0 auto; padding: 16px 28px 26px; display: flex; flex-direction: column; }
+.hub-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.hub-ghost { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06); color: rgba(255,255,255,.75); font-size: 12.5px; cursor: pointer; font-family: inherit; }
+.hub-ghost:hover { color: #fff; border-color: rgba(159,145,255,.6); }
+.hub-main { flex: 1; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 44px); align-items: end; min-height: 440px; }
+.hub-fig { position: relative; height: min(64vh, 610px); min-height: 360px; perspective: 900px;
+  transform: translate3d(calc(var(--mx, 0) * 12px), calc(var(--my, 0) * 6px), 0); }
+.hub-fig .tilt { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateY(calc(var(--mx, 0) * 6deg)) rotateX(calc(var(--my, 0) * -3deg)); }
+.hub-fig .halo { position: absolute; left: 50%; top: 44%; width: 74%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%;
+  background: radial-gradient(circle, rgba(140,126,255,.32), rgba(18,181,203,.1) 55%, transparent 72%); }
+.hub-fig .floor { position: absolute; left: 20%; right: 20%; bottom: -4px; height: 30px; border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(140,126,255,.6), rgba(18,181,203,.2) 48%, transparent 72%); filter: blur(5px); }
+.hub-fig .float { position: absolute; inset: 0; animation: hub-float 6.5s ease-in-out infinite; }
+.hub-fig .float img { object-fit: contain; object-position: center bottom; filter: drop-shadow(0 28px 40px rgba(0,0,0,.62));
+  mask-image: radial-gradient(ellipse 82% 92% at 50% 46%, #000 70%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 82% 92% at 50% 46%, #000 70%, transparent 100%); }
+@keyframes hub-float { 50% { transform: translateY(-7px); } }
+.hub-fig .brk { position: absolute; width: 22px; height: 22px; border-color: rgba(159,145,255,.75); border-style: solid; border-width: 0; }
+.hub-fig .brk.a { left: 8%; top: 4%; border-left-width: 2px; border-top-width: 2px; }
+.hub-fig .brk.b { right: 8%; top: 4%; border-right-width: 2px; border-top-width: 2px; }
+.hub-fig .brk.c { left: 8%; bottom: 6%; border-left-width: 2px; border-bottom-width: 2px; }
+.hub-fig .brk.d { right: 8%; bottom: 6%; border-right-width: 2px; border-bottom-width: 2px; }
+.hub-fig .tag { position: absolute; left: 8%; top: calc(4% + 30px); font-size: 10px; letter-spacing: .14em; color: rgba(159,145,255,.9); }
+.hub-hud { align-self: center; padding-bottom: 16px; min-width: 0; }
+.hub-kicker { font-size: 12px; letter-spacing: .16em; color: #9f91ff; }
+.hub-origin { margin-top: 10px; font-size: 13px; color: rgba(255,255,255,.62); }
+.hub-strong { color: #fff; }
+.hub-lv-n { font-size: 12px; color: #fff; font-weight: 700; }
+.hub-lv-t { font-size: 12px; color: rgba(255,255,255,.55); }
+.hub-name { font-size: clamp(34px, 5vw, 58px); font-weight: 900; line-height: 1.04; letter-spacing: -.5px; margin: 8px 0 10px; color: #fff; }
+.hub-tag { font-size: clamp(15px, 1.4vw, 18px); color: rgba(255,255,255,.82); line-height: 1.7; }
+.hub-lv { display: flex; align-items: center; gap: 10px; margin: 18px 0 14px; }
+.hub-lv i { width: 26px; height: 5px; border-radius: 3px; background: rgba(255,255,255,.14); }
+.hub-lv i.on { background: linear-gradient(90deg, #8c7eff, #4fe0f2); box-shadow: 0 0 10px rgba(140,126,255,.6); }
+.hub-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)); gap: 8px; max-width: 560px; }
+.hub-stat { padding: 10px 12px 9px; border-radius: 12px; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.1); }
+.hub-stat b { display: block; font-size: 24px; font-weight: 800; color: #fff; letter-spacing: 0; line-height: 1.15; }
+.hub-stat b small { font-size: 11px; font-weight: 600; color: rgba(255,255,255,.5); margin-left: 3px; }
+.hub-stat span { font-size: 10.5px; color: rgba(255,255,255,.5); letter-spacing: .1em; }
+.hub-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; max-width: 560px; }
+.hub-skills span { padding: 3px 10px; border-radius: 999px; font-size: 12px; color: rgba(255,255,255,.78); border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.04); }
+.hub-portals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) repeat(3, minmax(0, .78fr)); gap: 10px; margin-top: 22px; position: relative; z-index: 3; }
+.hub-portal.main { min-height: 104px; padding: 16px 18px; border: 0; background: linear-gradient(125deg, rgba(118,100,255,.95), rgba(140,118,255,.9) 45%, rgba(30,182,206,.88));
+  box-shadow: 0 14px 40px rgba(106,92,255,.42), inset 0 1px 0 rgba(255,255,255,.3); }
+.hub-portal.main .ic { color: #fff; }
+.hub-portal.main b { font-size: 20px; }
+.hub-portal.main span { color: rgba(255,255,255,.82); font-size: 12.5px; }
+.hub-portal.main::after { color: rgba(255,255,255,.75); font-size: 18px; }
+.hub-portal.main:hover { box-shadow: 0 20px 52px rgba(106,92,255,.6), inset 0 1px 0 rgba(255,255,255,.35); }
+.hub-portal.main.pulse { animation: hub-pulse 3.2s ease-in-out infinite; }
+@keyframes hub-pulse { 50% { box-shadow: 0 14px 54px rgba(106,92,255,.72), 0 0 0 4px rgba(140,126,255,.18), inset 0 1px 0 rgba(255,255,255,.3); } }
+.hub-portal { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 14px 16px 14px; border-radius: 16px; cursor: pointer; text-align: left; font-family: inherit;
+  background: linear-gradient(160deg, rgba(255,255,255,.16), rgba(255,255,255,.06)); border: 1px solid rgba(255,255,255,.22); color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 10px 30px rgba(0,0,0,.3);
+  backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  transition: transform .22s, border-color .22s, box-shadow .22s; }
+.hub-portal:hover { transform: translateY(-3px); border-color: rgba(159,145,255,.7); box-shadow: 0 14px 36px rgba(0,0,0,.45), 0 0 0 1px rgba(159,145,255,.25); }
+.hub-portal .ic { color: #c3b9ff; }
+.hub-portal b { font-size: 15.5px; font-weight: 800; }
+.hub-portal span { font-size: 11.5px; color: rgba(255,255,255,.72); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hub-portal::after { content: '→'; position: absolute; right: 14px; top: 13px; color: rgba(255,255,255,.3); transition: color .2s, transform .2s; }
+.hub-portal:hover::after { color: #9f91ff; transform: translateX(3px); }
+@media (max-width: 860px) {
+  .hub-main { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .hub-fig { height: 40vh; min-height: 280px; }
+  /* 手机上门要早点露出来：技能标签和等级说明让位 */
+  .hub-skills, .hub-lv-t, .hub-fig .tag { display: none; }
+  .hub-name { margin: 4px 0 6px; }
+  .hub-veil { background: linear-gradient(0deg, #070915 0%, rgba(7,9,21,.7) 40%, rgba(7,9,21,.25) 100%); }
+  .hub-portals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hub-portal.main { min-height: 86px; }
+}
+@media (prefers-reduced-motion: reduce) { .hub-bg img, .hub-fig .float, .hub-beam, .hub-bokeh i, .hub-dust i, .hub-portal.main.pulse { animation: none !important; } }
+
+/* ── 浅色：亮环境、投影、学校一体机。现场是白天的现场，玻璃是亮的，字是深的 ── */
+.lab[data-theme="light"] .hub { background: #eef0fb; color: var(--ink); }
+.lab[data-theme="light"] .hub-bg img { filter: brightness(1.06) saturate(.82) blur(2.4px); }
+.lab[data-theme="light"] .hub-veil { background:
+  radial-gradient(ellipse 42% 64% at 29% 60%, rgba(245,246,255,0) 0%, rgba(245,246,255,.3) 58%, rgba(245,246,255,.82) 100%),
+  linear-gradient(90deg, rgba(245,246,255,.08) 0%, rgba(245,246,255,.2) 38%, rgba(245,246,255,.86) 64%, #f5f6ff 100%),
+  linear-gradient(0deg, #f5f6ff 0%, rgba(245,246,255,.6) 22%, rgba(245,246,255,0) 46%); }
+.lab[data-theme="light"] .hub-grid { background-image: linear-gradient(rgba(106,92,255,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(106,92,255,.09) 1px, transparent 1px); }
+.lab[data-theme="light"] .hub-beam { mix-blend-mode: normal; background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.3) 55%, transparent 85%); opacity: .7; }
+.lab[data-theme="light"] .hub-bokeh i { background: radial-gradient(circle, rgba(140,126,255,.32), rgba(18,181,203,.1) 60%, transparent 72%); }
+.lab[data-theme="light"] .hub-dust i { background: rgba(106,92,255,.6); box-shadow: 0 0 6px rgba(106,92,255,.5); }
+.lab[data-theme="light"] .hub-fig .halo { background: radial-gradient(circle, rgba(255,255,255,.9), rgba(167,155,255,.28) 50%, transparent 72%); }
+.lab[data-theme="light"] .hub-fig .floor { background: radial-gradient(ellipse, rgba(106,92,255,.38), rgba(18,181,203,.14) 48%, transparent 72%); }
+.lab[data-theme="light"] .hub-fig .float img { filter: drop-shadow(0 24px 34px rgba(60,45,130,.3)); }
+.lab[data-theme="light"] .hub-fig .brk { border-color: rgba(106,92,255,.55); }
+.lab[data-theme="light"] .hub-fig .tag, .lab[data-theme="light"] .hub-kicker { color: var(--v); }
+.lab[data-theme="light"] .hub-name, .lab[data-theme="light"] .hub-strong, .lab[data-theme="light"] .hub-lv-n { color: var(--ink); }
+.lab[data-theme="light"] .hub-tag { color: var(--ink2); }
+.lab[data-theme="light"] .hub-origin, .lab[data-theme="light"] .hub-lv-t { color: var(--ink3); }
+.lab[data-theme="light"] .hub-lv i { background: rgba(106,92,255,.14); }
+.lab[data-theme="light"] .hub-lv i.on { box-shadow: 0 0 8px rgba(106,92,255,.35); }
+.lab[data-theme="light"] .hub-stat { background: rgba(255,255,255,.78); border-color: rgba(106,92,255,.16); box-shadow: 0 6px 18px rgba(88,76,220,.08); }
+.lab[data-theme="light"] .hub-stat b { color: var(--ink); }
+.lab[data-theme="light"] .hub-stat b small, .lab[data-theme="light"] .hub-stat span { color: var(--ink3); }
+.lab[data-theme="light"] .hub-skills span { color: var(--ink2); border-color: rgba(106,92,255,.22); background: rgba(255,255,255,.7); }
+.lab[data-theme="light"] .hub-ghost { background: rgba(255,255,255,.78); border-color: rgba(106,92,255,.2); color: var(--ink2); }
+.lab[data-theme="light"] .hub-portal:not(.main) { background: linear-gradient(160deg, rgba(255,255,255,.9), rgba(255,255,255,.66)); border-color: rgba(106,92,255,.2); color: var(--ink);
+  box-shadow: inset 0 1px 0 #fff, 0 10px 28px rgba(88,76,220,.12); }
+.lab[data-theme="light"] .hub-portal:not(.main) .ic { color: var(--v); }
+.lab[data-theme="light"] .hub-portal:not(.main) span { color: var(--ink3); }
+.lab[data-theme="light"] .hub-portal:not(.main)::after { color: rgba(106,92,255,.4); }
+.lab[data-theme="light"] .sub-head { background: rgba(255,255,255,.86) radial-gradient(700px 160px at 12% -60%, rgba(106,92,255,.16), transparent 70%); border-bottom-color: var(--line);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.lab[data-theme="light"] .sub-head-in, .lab[data-theme="light"] .sub-now { color: var(--ink); }
+.lab[data-theme="light"] .sub-now .ic { color: var(--v); }
+.lab[data-theme="light"] .sub-back { background: #fff; border-color: rgba(106,92,255,.2); color: var(--ink); }
+.lab[data-theme="light"] .sub-nav button { color: var(--ink3); }
+.lab[data-theme="light"] .sub-nav button:hover { color: var(--ink); background: rgba(106,92,255,.07); }
+.lab[data-theme="light"] .sub-nav button.on { color: var(--v); background: rgba(106,92,255,.12); }
+
+/* 进了某个独立空间：顶上一条细的深色带，能回到人、也能在几扇门之间直接跳 */
+.sub-head { margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); width: 100vw; margin-top: -24px; margin-bottom: 22px;
+  background: #0a0c1a radial-gradient(700px 160px at 12% -60%, rgba(106,92,255,.45), transparent 70%); border-bottom: 1px solid rgba(255,255,255,.08); }
+.sub-head-in { max-width: 1280px; margin: 0 auto; padding: 12px 28px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; color: #eef0fb; }
+.sub-back { display: inline-flex; align-items: center; gap: 9px; padding: 4px 12px 4px 6px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06); color: #fff; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 700; }
+.sub-back:hover { border-color: rgba(159,145,255,.7); }
+.sub-back img { border-radius: 50%; object-fit: cover; object-position: 54% 10%; background: rgba(255,255,255,.1); }
+.sub-now { display: inline-flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 900; color: #fff; }
+.sub-now .ic { color: #9f91ff; }
+.sub-nav { margin-left: auto; display: flex; gap: 2px; flex-wrap: wrap; }
+.sub-nav button { display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 9px; border: 0; background: none; cursor: pointer;
+  color: rgba(255,255,255,.55); font-size: 12.5px; font-family: inherit; }
+.sub-nav button:hover { color: #fff; background: rgba(255,255,255,.07); }
+.sub-nav button.on { color: #fff; background: rgba(140,126,255,.22); }
+@media (max-width: 760px) { .sub-head-in { padding: 10px 12px; } .sub-nav { margin-left: 0; width: 100%; } .sub-nav button span { display: none; } }
+`;
+/**
+ * 人物首页：一个人站在他自己的工作现场里。
+ * 景深：远景（失焦的现场）、光束和网格、人物（带一点 3D 倾斜）、前景光斑，鼠标一动各层按远近错开。
+ */
+function PersonHub({ name, role, avatar, tagline, scene, origin, level, levelLabel, stats, skills, portals, top, onEnter }: {
+  name: string; role: string; avatar: string; tagline: string; scene: string; origin: React.ReactNode; level: number; levelLabel: string;
+  stats: { k: string; v: number; u: string }[]; skills: string[]; portals: { key: Mode; label: string; icon: string; sub: string; main?: boolean }[];
+  top: React.ReactNode; onEnter: (m: Mode) => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let raf = 0, tx = 0, ty = 0, cx = 0, cy = 0;
+    // 跟手但带一点阻尼，像镜头在呼吸，不是贴着鼠标抖
+    const tick = () => {
+      cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+      el.style.setProperty('--mx', cx.toFixed(4)); el.style.setProperty('--my', cy.toFixed(4));
+      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.001 ? requestAnimationFrame(tick) : 0;
+    };
+    const kick = () => { if (!raf) raf = requestAnimationFrame(tick); };
+    const move = (e: PointerEvent) => { const r = el.getBoundingClientRect(); tx = ((e.clientX - r.left) / r.width - 0.5) * 2; ty = ((e.clientY - r.top) / r.height - 0.5) * 2; kick(); };
+    const leave = () => { tx = 0; ty = 0; kick(); };
+    el.addEventListener('pointermove', move); el.addEventListener('pointerleave', leave);
+    return () => { el.removeEventListener('pointermove', move); el.removeEventListener('pointerleave', leave); cancelAnimationFrame(raf); };
+  }, []);
+  // 光斑和浮尘的位置固定写死，别每次渲染乱跳
+  const motes = [[8, 18, 90, 10], [78, 12, 60, 7], [88, 62, 120, 14], [22, 78, 70, 9], [60, 84, 46, 6]];
+  const dust = Array.from({ length: 14 }, (_, i) => [(i * 37) % 52 + 6, 9 + (i * 7) % 13, (i * 1.3) % 9]);
+  return (
+    <section className="hub" ref={ref}>
+      <div className="hub-bg">{scene && <Image src={scene} alt="" fill sizes="100vw" preload />}</div>
+      <div className="hub-grid" />
+      <div className="hub-veil" />
+      <div className="hub-beam" />
+      <div className="hub-dust">{dust.map(([l, d, delay], i) => <i key={i} style={{ left: `${l}%`, animationDuration: `${d}s`, animationDelay: `-${delay}s` }} />)}</div>
+      <div className="hub-bokeh">{motes.map(([l, t, sz, b], i) => <i key={i} style={{ left: `${l}%`, top: `${t}%`, width: sz, height: sz, ['--b' as string]: `${b}px`, animationDelay: `-${i * 2.1}s` }} />)}</div>
+      <div className="hub-in">
+        <div className="hub-top">{top}</div>
+        <div className="hub-main">
+          <div className="hub-fig">
+            <div className="halo" /><div className="floor" />
+            <span className="brk a" /><span className="brk b" /><span className="brk c" /><span className="brk d" />
+            <span className="tag lab-mono">● ONLINE · {name}</span>
+            <div className="tilt"><div className="float">{avatar && <Image src={avatar} alt="" fill sizes="(max-width: 860px) 80vw, 560px" preload />}</div></div>
+          </div>
+          <div className="hub-hud">
+            <div className="lab-mono hub-kicker">{name}</div>
+            <h1 className="hub-name">{role}</h1>
+            {tagline && <div className="hub-tag">「{tagline}」</div>}
+            <div className="hub-origin">{origin}</div>
+            <div className="hub-lv">
+              <span className="lab-mono hub-lv-n">LV.{level}</span>
+              <span style={{ display: 'flex', gap: 3 }}>{[1, 2, 3, 4, 5].map(n => <i key={n} className={n <= level ? 'on' : ''} />)}</span>
+              <span className="hub-lv-t">{levelLabel}</span>
+            </div>
+            <div className="hub-stats">
+              {stats.map(x => <div key={x.k} className="hub-stat"><b className="lab-mono">{x.v}<small>{x.u}</small></b><span>{x.k}</span></div>)}
+            </div>
+            {skills.length > 0 && <div className="hub-skills">{skills.map(c => <span key={c}>{c}</span>)}</div>}
+          </div>
+        </div>
+        <div className="hub-portals">
+          {portals.map((x, i) => (
+            <button key={x.key} className={`hub-portal${x.main ? ' main' : ''}${i === 0 ? ' pulse' : ''}`} onClick={() => onEnter(x.key)}>
+              <span className="ic"><Ico n={x.icon} s={x.main ? 26 : 20} /></span>
+              <b>{x.label}</b>
+              <span>{x.sub}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** 进了某个独立空间：回到人、标出当前在哪、能在几扇门之间直接跳 */
+function SubHead({ name, role, avatar, now, modes, onBack, onGo }: { name: string; role: string; avatar: string; now: { key: Mode; label: string; icon: string } | undefined; modes: { key: Mode; label: string; icon: string }[] | null; onBack: (() => void) | null; onGo: (m: Mode) => void }) {
+  return (
+    <div className="sub-head">
+      <div className="sub-head-in">
+        {onBack
+          ? <button className="sub-back" onClick={onBack} title="回到人物首页">
+              <Ico n="back" s={16} />{avatar && <Image src={avatar} alt="" width={30} height={30} sizes="30px" />}{name}<span style={{ color: '#9f91ff', fontWeight: 800 }}>· {role}</span>
+            </button>
+          : <span className="sub-back" style={{ cursor: 'default' }}>{avatar && <Image src={avatar} alt="" width={30} height={30} sizes="30px" />}{name}<span style={{ color: '#9f91ff', fontWeight: 800 }}>· {role}</span></span>}
+        {now && <div className="sub-now"><span className="ic"><Ico n={now.icon} s={20} /></span>{now.label}</div>}
+        {modes && (
+          <nav className="sub-nav">
+            {modes.map(m => <button key={m.key} className={now?.key === m.key ? 'on' : ''} onClick={() => onGo(m.key)}><Ico n={m.icon} s={15} /><span>{m.label}</span></button>)}
+          </nav>
+        )}
+      </div>
+    </div>
+  );
+}
 
 /** 打字机：新产出逐字浮现 */
 function useTypewriter(text: string, enabled: boolean) {
@@ -162,7 +438,8 @@ export default function SpacePage() {
   const { currentModel } = useModel();
   const { user } = useUser();
   // 拿着邀请链接来的老师傅：不登录，只做「向上学习」——走一遍、被追问、交给 AI 核心吸收
-  const invite = useSearchParams().get('invite');
+  const sp = useSearchParams();
+  const invite = sp.get('invite');
   const guest = !!invite;
   const inviteHdr: Record<string, string> = invite ? { 'x-lab-invite': invite } : {};
   const [taught, setTaught] = useState(false);
@@ -172,8 +449,17 @@ export default function SpacePage() {
   const [subs, setSubs] = useState<any[]>([]);
   const [invs, setInvs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [mode, setMode] = useState<Mode>('test');
-  const openedCareer = useRef(false);
+  // 模式跟着网址走：没有 m = 人物首页；有 m = 进了这位数字职人的某个独立空间。
+  // 浏览器后退就回到人，每个空间也都有自己的链接。受邀的老师傅只有「教」这一个空间。
+  const urlMode = sp.get('m') as Mode | null;
+  const mode: Mode | null = guest ? 'learn' : (urlMode && ALL_MODES.includes(urlMode) ? urlMode : null);
+  const setMode = (m: Mode | null, replace = false) => {
+    const q = new URLSearchParams();
+    if (m) q.set('m', m);
+    if (invite) q.set('invite', invite);
+    const url = `/lab/${id}${q.toString() ? `?${q}` : ''}`;
+    if (replace) router.replace(url, { scroll: false }); else router.push(url);
+  };
   const [busy, setBusy] = useState('');             // 正在做什么（AI 核心进入 busy 动效）
   const [openSub, setOpenSub] = useState<any>(null);
   /** 沉浸模式：评分报告直接在舞台里出（退出后排行榜里照样能看） */
@@ -220,22 +506,19 @@ export default function SpacePage() {
   }, [id, message, invite]);
 
   useEffect(() => { load(); }, [load]);
-  useEffect(() => { if (space?.jd_snapshot?.career && !openedCareer.current) { openedCareer.current = true; setMode('career'); } }, [space]);
   // ?m=eco / ?go=bench 这类直达：演示、分享链接、首页取图都用得上
   const [startAt, setStartAt] = useState(0);
   const goRef = useRef<string | null>(null);
   useEffect(() => {
     const u = new URLSearchParams(window.location.search);
-    const m = u.get('m') as Mode | null;
-    if (m) { openedCareer.current = true; setMode(m); }
-    if (u.get('invite')) { openedCareer.current = true; setMode('learn'); }
     // 从百业空间「我有个问题」交过来的：问题在 sessionStorage 里，接住就删
     try {
       const k = `lab:problem:${id}`, q = sessionStorage.getItem(k);
-      if (q) { sessionStorage.removeItem(k); setProb(p => ({ ...p, problem: q })); openedCareer.current = true; setMode('solve'); }
+      if (q) { sessionStorage.removeItem(k); setProb(p => ({ ...p, problem: q })); if (u.get('m') !== 'solve') setMode('solve', true); }
     } catch { /* 存储不可用就算了 */ }
     goRef.current = u.get('go');
-    if (goRef.current) { openedCareer.current = true; setMode('test'); }
+    if (goRef.current && u.get('m') !== 'test') setMode('test', true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => { chatEnd.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, [turns]);
 
@@ -413,85 +696,61 @@ export default function SpacePage() {
   const places = new Set(invs.map(i => i.actor_location).filter(Boolean)).size;
   const served = invs.reduce((a, i) => a + (i.volume || 1), 0);
 
+  // 首页上的数：都是账本里真有的
+  const draft = !skill || skill.source === 'jd-draft';
+  const modeList = jd.career ? [CAREER_MODE, ...MODES] : MODES;
+  const hubStats = [
+    { k: '考过', v: stat[0].v, u: '人' },
+    { k: '学到', v: stat[1].v, u: '条判断' },
+    { k: '解过', v: stat[2].v, u: '次' },
+    { k: '服务', v: served, u: '人次' },
+    { k: '跨越', v: places, u: '地' },
+  ];
+  const portals: { key: Mode; label: string; icon: string; sub: string; main?: boolean }[] = [
+    { key: 'test', label: '考考我', icon: 'test', sub: stat[0].v ? `${stat[0].v} 人考过` : '走一遍我的一天', main: true },
+    { key: 'learn', label: '教教我', icon: 'learn', sub: draft ? '等第一位老师傅' : `学自 ${skill.expert_name}`, main: true },
+    { key: 'solve', label: '问问我', icon: 'solve', sub: stat[2].v ? `解过 ${stat[2].v} 次` : '把真实问题交给我', main: true },
+    { key: 'ledger', label: '我被用在哪', icon: 'ledger', sub: served ? `${places} 地 · ${served} 人次` : '每一次调用都记账' },
+    { key: 'eco', label: '我的行当', icon: 'eco', sub: '同行 · 在招 · 上下游' },
+    jd.career ? { key: 'career', label: '职业地图', icon: 'career', sub: '这一行在做什么' } : { key: 'jd', label: '我的来历', icon: 'jd', sub: jd.company || '岗位 JD' },
+  ];
+
   return (
-    <>
-      {guest ? (
-        <div className="lab-glass lab-in" style={{ padding: '14px 18px', marginBottom: 14, borderColor: 'rgba(106,92,255,.35)', background: 'rgba(106,92,255,.07)' }}>
+    <div className="sp-root">
+      <style>{HUB_CSS}</style>
+
+      {/* ══════ 人物首页：一个人站在他的工作现场里 ══════ */}
+      {!mode && (
+        <PersonHub
+          name={profile.name || 'AI CORE'} role={profile.role || jd.title || ''} avatar={profile.avatar || ''} tagline={profile.tagline || ''}
+          scene={sim?.art?.cover || ''} level={lv.level} levelLabel={lv.label} stats={hubStats} skills={(profile.capabilities || []).slice(0, 4)} portals={portals}
+          onEnter={m => setMode(m)}
+          origin={draft
+            ? <>AI 自学草案 · 等一位从业者校正{!guest && <button className="hub-ghost" style={{ marginLeft: 10, height: 26, padding: '0 10px', fontSize: 12 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '请一位老师傅来教 →'}</button>}</>
+            : <>学自 <b className="hub-strong">{skill.expert_name}</b>（{skill.expert_location}）</>}
+          top={<>
+            <button className="hub-ghost" onClick={() => router.push('/lab/spaces')}><Ico n="back" s={14} />全部空间</button>
+            <div style={{ display: 'flex', gap: 8 }}>
+              {jd.url && <a className="hub-ghost" href={jd.url} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>JD 原文 ↗</a>}
+              <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="hub-ghost">删除空间</button></Popconfirm>
+            </div>
+          </>}
+        />
+      )}
+
+      {/* ══════ 进了某个独立空间 ══════ */}
+      {mode && (
+        <SubHead name={profile.name || 'AI CORE'} role={profile.role || ''} avatar={profile.avatar || ''}
+          now={modeList.find(m => m.key === mode)} modes={guest ? null : modeList}
+          onBack={guest ? null : () => setMode(null)} onGo={m => setMode(m)} />
+      )}
+      {guest && (
+        <div className="lab-glass lab-in" style={{ padding: '14px 18px', marginBottom: 18, borderColor: 'rgba(106,92,255,.35)', background: 'rgba(106,92,255,.07)' }}>
           <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>YOU ARE INVITED TO TEACH</div>
           <div style={{ fontSize: 15.5, fontWeight: 800, margin: '4px 0 2px' }}>有人请你来教 {profile.name || '这位数字职人'}{profile.role ? ` · ${profile.role}` : ''}</div>
           <div style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.8 }}>
             把他最有代表性的一天按你平时的做法走一遍，再回答几个「为什么」，大约 10–15 分钟。你说的判断会变成他的技能卡，卡上写着手艺来自你。
           </div>
-        </div>
-      ) : (
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 14 }}>
-          <button className="lab-btn ghost sm" onClick={() => router.push('/lab/spaces')}>← 全部空间</button>
-          <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="lab-btn ghost sm">删除空间</button></Popconfirm>
-        </div>
-      )}
-
-      {/* ══════ AI 核心 + 档案 ══════ */}
-      <section className={`lab-glass lab-in${busy ? ' lab-scan' : ''}`} style={{ padding: 'clamp(18px, 3vw, 30px)', display: 'flex', gap: 'clamp(18px, 3vw, 36px)', alignItems: 'center', flexWrap: 'wrap' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, flex: '0 0 auto', margin: '0 auto' }}>
-          {profile.avatar ? (
-            // 人要大：不裁成小圆、不套转圈，就是一张立绘，底部渐隐融进卡片
-            <div style={{ position: 'relative', width: 'clamp(190px, 23vw, 260px)', flexShrink: 0 }}>
-              <div style={{ position: 'absolute', left: '4%', right: '4%', top: '6%', bottom: '14%', borderRadius: '50%', background: 'radial-gradient(circle at 50% 38%, rgba(167,155,255,.42), rgba(18,181,203,.16) 58%, transparent 74%)', filter: 'blur(16px)' }} />
-              <Image src={profile.avatar} alt="" width={900} height={1440} sizes="260px" preload style={{ position: 'relative', width: '100%', height: 'auto', display: 'block',
-                WebkitMaskImage: 'linear-gradient(180deg, #000 74%, transparent 97%)', maskImage: 'linear-gradient(180deg, #000 74%, transparent 97%)',
-                filter: `drop-shadow(0 16px 30px rgba(60,45,130,.28))${busy ? ' saturate(1.3)' : ''}`, transition: 'filter .4s' }} />
-            </div>
-          ) : (
-            <div className={`lab-orb${busy ? ' busy' : ''}`} style={{ ['--s' as string]: '172px' }}>
-              <div className="ring" /><div className="ring r2" />
-              <div className="core lab-mono" style={{ fontSize: 13 }}>{profile.codename || 'JD-CORE'}</div>
-              <div className="sat" />
-            </div>
-          )}
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ display: 'flex', gap: 3, justifyContent: 'center' }}>
-              {[1, 2, 3, 4, 5].map(n => <span key={n} style={{ width: 22, height: 5, borderRadius: 3, background: n <= lv.level ? 'linear-gradient(90deg, var(--v), var(--c))' : 'rgba(106,92,255,.14)' }} />)}
-            </div>
-            <div className="lab-mono lab-cap" style={{ marginTop: 6 }}>专业度 LV.{lv.level}</div>
-            <div style={{ fontSize: 11.5, color: 'var(--ink3)', marginTop: 2 }}>{lv.label}</div>
-          </div>
-        </div>
-
-        <div style={{ flex: '1 1 420px', minWidth: 0 }}>
-          <div className="lab-mono lab-cap">{profile.name || 'AI CORE'}{profile.role ? ` · ${profile.role.toUpperCase()}` : ''}</div>
-          <h1 style={{ margin: '4px 0 2px', fontSize: 'clamp(22px, 3.2vw, 30px)', fontWeight: 800, lineHeight: 1.3 }}>
-            {profile.name ? <>{profile.name} <span style={{ color: 'var(--v)' }}>· {profile.role || ''}</span></> : <>{jd.company} · {jd.title}</>}
-          </h1>
-          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginTop: 3 }}>
-            {skill && (skill.source === 'jd-draft'
-              ? <>
-                  <span className="lab-chip g">自学草案 · 等一位从业者校正</span>
-                  {!guest && <button className="lab-btn sm" style={{ marginLeft: 8, height: 28, padding: '0 12px', fontSize: 12.5 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '请一位老师傅来教 →'}</button>}
-                </>
-              : <>学自 <b style={{ color: 'var(--ink2)' }}>{skill.expert_name}</b>（{skill.expert_location}）</>)}
-            {jd.url && <> · <a href={jd.url} target="_blank" rel="noreferrer" style={{ color: 'var(--v)' }}>JD ↗</a></>}
-          </div>
-          <div style={{ margin: '14px 0', fontSize: 16, fontWeight: 600, color: 'var(--ink2)', minHeight: 26 }}>
-            {busy ? <span style={{ color: 'var(--v)' }}>{busy}<span className="lab-dots" /></span> : profile.tagline ? `「${profile.tagline}」` : '我是拥有这份 JD 技能的员工 AI。'}
-          </div>
-
-          
-          {/* 数值面板：三格就够，成句的话都在各自的 action 里 */}
-          <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', maxWidth: 420 }}>
-            {stat.map(x => (
-              <div key={x.k} onClick={() => { if (!guest) setMode(x.go); }} style={{ padding: '10px 12px', borderRadius: 14, background: 'rgba(106,92,255,.06)', border: '1px solid var(--line)', cursor: 'pointer' }}>
-                <div className="lab-mono" style={{ fontSize: 22, fontWeight: 800, letterSpacing: 0, color: 'var(--ink)' }}>{x.v}<span style={{ fontSize: 11, fontWeight: 600, color: 'var(--ink3)', marginLeft: 3 }}>{x.u}</span></div>
-                <div className="lab-mono lab-cap" style={{ marginTop: 2 }}>{x.k}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══════ 模式 ══════ */}
-      {guest ? <div style={{ height: 18 }} /> : (
-        <div className="lab-tabs" style={{ margin: '20px 0 16px' }}>
-          {(jd.career ? [{ key: 'career' as Mode, label: '职业地图', icon: '🧭' }, ...MODES] : MODES).map(m => <div key={m.key} className={`lab-tab${mode === m.key ? ' on' : ''}`} onClick={() => setMode(m.key)}><span>{m.icon}</span>{m.label}</div>)}
         </div>
       )}
 
@@ -898,6 +1157,6 @@ export default function SpacePage() {
           </div>
         )}
       </Drawer>
-    </>
+    </div>
   );
 }

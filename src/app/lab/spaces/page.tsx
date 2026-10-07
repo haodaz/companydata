@@ -277,6 +277,18 @@ export default function LabHome() {
     <>
       {/* 这一页只干活：介绍的话都在首页，这里直接是人和入口。页头压一条深色，跟首页接上 */}
       <style>{`
+        .sp-head { --hd-fg: #fff; --hd-fg2: rgba(255,255,255,.66); --hd-fg3: rgba(255,255,255,.52); --hd-glass: rgba(255,255,255,.1); --hd-line: rgba(255,255,255,.2);
+          --hd-grad: linear-gradient(118deg, #9f91ff, #4fe0f2); }
+        .lab[data-theme="light"] .sp-head { --hd-fg: var(--ink); --hd-fg2: var(--ink2); --hd-fg3: var(--ink3); --hd-glass: rgba(255,255,255,.85); --hd-line: rgba(106,92,255,.22);
+          --hd-grad: linear-gradient(118deg, var(--v), var(--c));
+          background: radial-gradient(900px 300px at 18% -40%, rgba(106,92,255,.2), transparent 70%), radial-gradient(700px 260px at 86% 140%, rgba(18,181,203,.16), transparent 70%), #eef0fb !important;
+          border-bottom-color: var(--line); }
+        .lab[data-theme="light"] .sp-head::after { background-image: linear-gradient(rgba(106,92,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(106,92,255,.08) 1px, transparent 1px); }
+        .lab[data-theme="light"] .sp-ask .row { background: #fff; border-color: rgba(106,92,255,.22); box-shadow: 0 8px 24px rgba(88,76,220,.08); }
+        .lab[data-theme="light"] .sp-ask input { color: var(--ink); }
+        .lab[data-theme="light"] .sp-ask input::placeholder { color: var(--ink3); }
+        .lab[data-theme="light"] .sp-ask .pick { background: rgba(255,255,255,.88); border-color: rgba(106,92,255,.18); }
+        .lab[data-theme="light"] .sp-ask .pick .go { color: var(--v); }
         .sp-head { position: relative; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); width: 100vw; margin-top: -24px; margin-bottom: 22px;
           background: radial-gradient(900px 300px at 18% -40%, rgba(106,92,255,.5), transparent 70%), radial-gradient(700px 260px at 86% 140%, rgba(18,181,203,.32), transparent 70%), #0a0c1a;
           border-bottom: 1px solid rgba(255,255,255,.1); overflow: hidden; }
@@ -298,12 +310,12 @@ export default function LabHome() {
       <div className="sp-head sp-root">
         <div className="sp-head-in">
           <div style={{ flex: '1 1 340px', minWidth: 0 }}>
-            <div className="lab-mono lab-cap" style={{ color: 'rgba(255,255,255,.52)' }}>AI 百业 · 百业空间</div>
-            <h1 style={{ margin: '8px 0 6px', fontSize: 'clamp(23px, 3.2vw, 34px)', fontWeight: 900, letterSpacing: -.2, color: '#fff' }}>
-              百业已入驻 <span style={{ background: 'linear-gradient(118deg, #9f91ff, #4fe0f2)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{totals?.spaces ?? spaces.length}</span> 位数字职人
+            <div className="lab-mono lab-cap" style={{ color: 'var(--hd-fg3)' }}>AI 百业 · 百业空间</div>
+            <h1 style={{ margin: '8px 0 6px', fontSize: 'clamp(23px, 3.2vw, 34px)', fontWeight: 900, letterSpacing: -.2, color: 'var(--hd-fg)' }}>
+              百业已入驻 <span style={{ background: 'var(--hd-grad)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{totals?.spaces ?? spaces.length}</span> 位数字职人
             </h1>
             {totals && (
-              <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,.62)', lineHeight: 1.8 }}>
+              <div style={{ fontSize: 13.5, color: 'var(--hd-fg2)', lineHeight: 1.8 }}>
                 {totals.experts > 0 && <>手艺来自{totals.expertPlaces?.length ? `${totals.expertPlaces.slice(0, 3).join('、')}${totals.expertPlaces.length > 3 ? '等地' : ''}` : ''}的 {totals.experts} 个人；</>}
                 {totals.served > 0 && <>已经被 {totals.places} 个地方的 {totals.served} 个人用过。</>}
               </div>
@@ -311,27 +323,27 @@ export default function LabHome() {
           </div>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <button className="lab-btn" disabled={!!needMigration} onClick={() => { setPick('jd'); loadJds(); }}>＋ 新岗位 · 从一份 JD 建</button>
-            <button className="lab-btn ghost" disabled={!!needMigration} style={{ color: '#e7e9f8', background: 'rgba(255,255,255,.1)', boxShadow: '0 0 0 1px rgba(255,255,255,.2)' }} onClick={() => setPick('career')}>＋ 新职业 · 只给一个职业名</button>
+            <button className="lab-btn ghost" disabled={!!needMigration} style={{ color: 'var(--hd-fg)', background: 'var(--hd-glass)', boxShadow: '0 0 0 1px var(--hd-line)' }} onClick={() => setPick('career')}>＋ 新职业 · 只给一个职业名</button>
           </div>
         </div>
         {/* 平行解决别人的问题：不用先猜该进哪个空间 */}
         <div className="sp-ask">
           <div className="row">
-            <span className="lab-mono" style={{ color: 'rgba(255,255,255,.55)', fontSize: 11, letterSpacing: '.12em', whiteSpace: 'nowrap' }}>我有个问题</span>
+            <span className="lab-mono" style={{ color: 'var(--hd-fg3)', fontSize: 11, letterSpacing: '.12em', whiteSpace: 'nowrap' }}>我有个问题</span>
             <input value={ask} onChange={e => setAsk(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !asking) routeProblem(); }}
               placeholder="一句话说清楚，比如：狗一出门就暴冲拉绳 / 新产线焊缝老有气孔 / 婚礼当天新娘礼服开线了" />
             <button className="lab-btn sm" disabled={asking || ask.trim().length < 4} onClick={routeProblem}>{asking ? '在找人…' : '找谁帮忙 →'}</button>
           </div>
           {picks && (
             <div className="picks">
-              {picks.length === 0 && <div style={{ color: 'rgba(255,255,255,.6)', fontSize: 13 }}>在岗的人里暂时没有对口的。可以换个说法，或者用上面的「新职业」造一位。</div>}
+              {picks.length === 0 && <div style={{ color: 'var(--hd-fg3)', fontSize: 13 }}>在岗的人里暂时没有对口的。可以换个说法，或者用上面的「新职业」造一位。</div>}
               {picks.map(p => (
                 <div key={p.id} className="pick" onClick={() => handTo(p.id)}>
                   {p.avatar && <Image src={p.avatar} alt="" width={46} height={46} sizes="46px" />}
                   <div style={{ minWidth: 0, flex: 1 }}>
                     <div className="lab-mono" style={{ fontSize: 10, letterSpacing: '.1em', color: '#9f91ff' }}>{p.name}{p.expert ? ' · 有真人专家校正' : ' · AI 草案'}</div>
-                    <div style={{ fontSize: 14.5, fontWeight: 800, color: '#fff' }}>{p.role}<span style={{ fontWeight: 500, color: 'rgba(255,255,255,.5)', fontSize: 12 }}> · {p.profession}</span></div>
-                    <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.7)', marginTop: 2 }}>{p.why}</div>
+                    <div style={{ fontSize: 14.5, fontWeight: 800, color: 'var(--hd-fg)' }}>{p.role}<span style={{ fontWeight: 500, color: 'var(--hd-fg3)', fontSize: 12 }}> · {p.profession}</span></div>
+                    <div style={{ fontSize: 12.5, color: 'var(--hd-fg2)', marginTop: 2 }}>{p.why}</div>
                   </div>
                   <span className="go">交给他 →</span>
                 </div>

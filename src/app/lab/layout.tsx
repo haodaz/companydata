@@ -93,13 +93,19 @@ const LAB_CSS = `
 .lab-nav-i:hover i { transform: scaleX(.4); }
 
 /* 深色顶栏：首页整页深，百业空间只有页头深，顶栏得跟着它俩一起深 */
-.lab:has(.ai100-root) > header, .lab:has(.sp-root) > header {
+.lab:not([data-theme="light"]):has(.ai100-root) > header, .lab:not([data-theme="light"]):has(.sp-root) > header {
   background: rgba(8,10,22,.86) !important; border-bottom-color: rgba(255,255,255,.08) !important; color: #eef0fb;
   --ink: #eef0fb; --ink2: #c0c5e2; --ink3: #878dae; --line: rgba(255,255,255,.12); }
-.lab:has(.sp-root) > header .lab-btn.ghost { color: #dfe2f5; background: rgba(255,255,255,.08); box-shadow: 0 0 0 1px rgba(255,255,255,.16); }
-.lab:has(.ai100-root) > header .ant-select-selector, .lab:has(.sp-root) > header .ant-select-selector { background: rgba(255,255,255,.1) !important; }
-.lab:has(.ai100-root) > header .ant-select-selection-item, .lab:has(.sp-root) > header .ant-select-selection-item { color: #e7e9f8 !important; }
-.lab:has(.ai100-root) > header .ant-select-arrow, .lab:has(.sp-root) > header .ant-select-arrow { color: #a8aed2 !important; }
+.lab:not([data-theme="light"]):has(.sp-root) > header .lab-btn.ghost { color: #dfe2f5; background: rgba(255,255,255,.08); box-shadow: 0 0 0 1px rgba(255,255,255,.16); }
+.lab:not([data-theme="light"]):has(.ai100-root) > header .ant-select-selector, .lab:not([data-theme="light"]):has(.sp-root) > header .ant-select-selector { background: rgba(255,255,255,.1) !important; }
+.lab:not([data-theme="light"]):has(.ai100-root) > header .ant-select-selection-item, .lab:not([data-theme="light"]):has(.sp-root) > header .ant-select-selection-item { color: #e7e9f8 !important; }
+.lab:not([data-theme="light"]):has(.ai100-root) > header .ant-select-arrow, .lab:not([data-theme="light"]):has(.sp-root) > header .ant-select-arrow { color: #a8aed2 !important; }
+
+/* 深浅切换按钮 */
+.lab-theme { width: 34px; height: 34px; border-radius: 11px; border: 1px solid var(--line); background: rgba(255,255,255,.7); color: var(--ink2);
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: color .2s, border-color .2s; }
+.lab-theme:hover { color: var(--v); border-color: rgba(106,92,255,.45); }
+.lab:not([data-theme="light"]):has(.ai100-root) > header .lab-theme, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-theme { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.16); color: #dfe2f5; }
 
 /* 模式切换 */
 .lab-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -174,10 +180,20 @@ function Shell({ children }: { children: React.ReactNode }) {
   const { currentModel, setCurrentModel } = useModel();
   // 首页是公开的：没登录的人看不到模型下拉和后台入口，那是给干活的人用的
   const { user } = useUser();
+  // 深浅两套：大屏投放、学校一体机、白天的教室都可能更适合浅色。按设备记住；
+  // 也认 ?theme=light / ?theme=dark，方便把一体机的链接直接钉死成某一套。
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get('theme');
+    let t: string | null = q === 'light' || q === 'dark' ? q : null;
+    try { if (t) localStorage.setItem('lab:theme', t); else t = localStorage.getItem('lab:theme'); } catch { /* 无痕模式就只用这一次 */ }
+    if (t === 'light' || t === 'dark') setTheme(t);
+  }, []);
+  const flipTheme = () => setTheme(t => { const n = t === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('lab:theme', n); } catch { /* 记不住就算了 */ } return n; });
   // 自己的导航：首页讲理念，百业空间干活。不跟数据后台的侧边栏混在一起
   const NAV = [{ k: '/lab', t: '首页' }, { k: '/lab/spaces', t: '百业空间' }];
   return (
-    <div className="lab">
+    <div className="lab" data-theme={theme}>
       <style>{LAB_CSS}</style>
       <div className="lab-bg"><div className="lab-blob b1" /><div className="lab-blob b2" /><div className="lab-blob b3" /><div className="lab-grid" /></div>
 
@@ -201,6 +217,11 @@ function Shell({ children }: { children: React.ReactNode }) {
           })}
         </nav>}
         <div style={{ flex: 1 }} />
+        <button className="lab-theme" onClick={flipTheme} title={theme === 'dark' ? '切到浅色（亮环境、投影、一体机）' : '切到深色'} aria-label="切换深浅色">
+          {theme === 'dark'
+            ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" /></svg>
+            : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" /></svg>}
+        </button>
         {!guest && user && <>
         <Select className="lab-head-model" size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 170 }} popupMatchSelectWidth={250}
           options={MODEL_OPTIONS.map(m => ({ value: m.id, label: <span>{m.label}<ModelBadge text={m.badge} /></span> }))} />
