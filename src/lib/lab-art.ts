@@ -2,6 +2,7 @@
  * 技能空间的美术生成（服务端）：通义万相文生图 → 场景底图（jpg）/ NPC 立绘（绿幕抠成透明 png）。
  * 生成的文件上传到 Supabase Storage 公开桶 lab-art，页面用公开 URL 引用（开发环境无 Supabase 时回退 public/lab/gen/）。
  */
+import { FAMILIES } from '@/lib/career-family';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
@@ -131,7 +132,9 @@ export async function makeNpcAsset(prompt: string, name: string): Promise<string
 export const ART_POOL = 3;
 
 /** 一级领域：固定这几个，让「会计 ↔ 精算」「咖啡师 ↔ 调酒师」这种相近职业能落到同一桶里 */
-export const ART_FAMILIES = ['制造与工程', '餐饮零售', '医疗健康', '教育培训', '金融财会', '互联网与科技', '建筑与土木', '交通与物流', '农业与食品', '文化创意', '公共服务', '其他'] as const;
+// 图库的分桶就是职业的一级领域。以前这里手抄了一份，career-family 加了「生活服务」这边没跟上，
+// 收纳师、陪诊师的立绘就被塞进医疗健康的桶里复用。现在只认一份。
+export const ART_FAMILIES = FAMILIES;
 
 export interface ArtAsset { kind: 'scene' | 'npc'; family: string; slot: string; domain?: string; profession?: string; prompt?: string; url: string }
 

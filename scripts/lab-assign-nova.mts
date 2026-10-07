@@ -27,14 +27,7 @@ for (const t of (data || []) as any[]) {
 let next = 21;   // 01–20 留给手写的预置示范
 const take = () => { while (used.has(next)) next++; used.add(next); return next; };
 
-/** 没有 role 的，从职业 / 岗位名里挑一个像称呼的词 */
-const roleFrom = (s: string) => {
-  // 只取第一个词（早期试的职业名里有「外科医生，动手术，腹腔手术」这种）
-  const t = String(s || '').split(/[,，、\/]/)[0].replace(/（.*?）|\(.*?\)/g, '').trim();
-  const m = t.match(/[\u4e00-\u9fa5]{1,4}(师傅|医师|工程师|护理师|设计师|分析师|治疗师|技师|教练|顾问|导游|律师|师|员)/);
-  const r = (m ? m[0] : t) || '从业者';
-  return r.length > 7 ? r.slice(-5) : r;
-};
+const { roleFrom } = await import('../src/lib/lab-nova');
 
 let n = 0;
 for (const t of (data || []) as any[]) {

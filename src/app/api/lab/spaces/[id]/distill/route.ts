@@ -14,6 +14,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     if (!Array.isArray(turns) || turns.filter((t: any) => t.role === 'expert').length < 2) {
       return NextResponse.json({ ok: false, error: '至少回答 2 个问题再生成技能卡' }, { status: 400 });
     }
+    // 技能卡必须写清楚手艺来自谁、来自哪儿。以前缺了就退回草案的占位值，
+    // 于是出现「这门手艺是 岗位 AI 自学草案（云端）教我的」，「云端」还被首页算成了一个手艺来处
+    const who = String(expert?.name || '').trim(), where = String(expert?.location || '').trim();
+    if (!who || !where) return NextResponse.json({ ok: false, error: '需要专家的姓名（或化名）和所在地' }, { status: 400 });
     const space = await loadSpace(id);
     const topic = `${space.jd_snapshot?.company || ''} ${space.jd_snapshot?.title || ''} —— ${space.title}`;
 
@@ -24,8 +28,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
     const row = {
       name: built.name, domain: built.domain, kind: built.kind, summary: built.summary, card: built.card, interview: allTurns,
-      expert_name: expert?.name || space.skill?.expert_name || '', expert_title: expert?.title || space.skill?.expert_title || '',
-      expert_location: expert?.location || space.skill?.expert_location || '', tz_offset: typeof expert?.tz === 'number' ? expert.tz : space.skill?.tz_offset ?? null,
+      expert_name: who, expert_title: String(expert?.title || '').trim(), expert_note: '',
+      expert_location: where, tz_offset: typeof expert?.tz === 'number' ? expert.tz : space.skill?.tz_offset ?? null,
       ...(trace ? { expert_trace: trace } : {}),
       source: 'interview', assigned_agent: 'qa', distilled_at: new Date().toISOString(), created_by: createdBy || '',
     };

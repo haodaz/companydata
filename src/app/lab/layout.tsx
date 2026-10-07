@@ -70,7 +70,18 @@ const LAB_CSS = `
 .lab-caret::after { content: '▍'; color: var(--v); animation: lab-blink 1s steps(2) infinite; margin-left: 2px; }
 @keyframes lab-blink { 50% { opacity: 0; } }
 
-/* 顶栏导航：等宽编号 + 会发光的下划线，别套 tag 底色 */
+/* 顶栏：手机上副标题和模型下拉让位，品牌和导航必须一行放下（以前副标题被挤成一字一行的竖排） */
+.lab-head { padding: 12px 28px; }
+.lab-head-sub { white-space: nowrap; }
+@media (max-width: 760px) {
+  .lab-head { padding: 10px 12px; gap: 8px !important; }
+  .lab-head-sub, .lab-head-model { display: none !important; }
+  .lab-head .lab-orb { --s: 28px !important; }
+  .lab-nav { margin-left: 2px; }
+  .lab-nav-i { padding: 8px 10px 9px; font-size: 13.5px; }
+}
+
+/* 顶栏导航：会发光的下划线，别套 tag 底色 */
 .lab-nav { display: flex; gap: 2px; margin-left: 14px; }
 .lab-nav-i { position: relative; display: flex; align-items: center; gap: 7px; padding: 9px 16px 10px; border: 0; background: none; cursor: pointer;
   font-size: 14px; font-weight: 600; white-space: nowrap; color: var(--ink3); transition: color .2s; font-family: inherit; }
@@ -165,12 +176,12 @@ function Shell({ children }: { children: React.ReactNode }) {
       <style>{LAB_CSS}</style>
       <div className="lab-bg"><div className="lab-blob b1" /><div className="lab-blob b2" /><div className="lab-blob b3" /><div className="lab-grid" /></div>
 
-      <header style={{ position: 'sticky', top: 0, zIndex: 20, display: 'flex', alignItems: 'center', gap: 14, padding: '12px 28px', background: 'rgba(245,246,255,.72)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(106,92,255,.12)' }}>
-        <div onClick={() => router.push('/lab')} style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', minWidth: 0 }}>
+      <header className="lab-head" style={{ position: 'sticky', top: 0, zIndex: 20, display: 'flex', alignItems: 'center', gap: 14, background: 'rgba(245,246,255,.72)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(106,92,255,.12)' }}>
+        <div onClick={() => router.push('/lab')} style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', minWidth: 0, flexShrink: 0 }}>
           <div className="lab-orb" style={{ ['--s' as string]: '34px' }}><div className="ring" /><div className="core" /></div>
           <div style={{ minWidth: 0 }}>
             <div style={{ fontSize: 16, fontWeight: 800, letterSpacing: 0.5, whiteSpace: 'nowrap' }}>AI 百业</div>
-            <div className="lab-mono lab-cap">数字技能空间 · EXPERIMENTAL</div>
+            <div className="lab-mono lab-cap lab-head-sub">数字技能空间 · EXPERIMENTAL</div>
           </div>
         </div>
         <nav className="lab-nav">
@@ -185,7 +196,7 @@ function Shell({ children }: { children: React.ReactNode }) {
           })}
         </nav>
         <div style={{ flex: 1 }} />
-        <Select size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 170 }} popupMatchSelectWidth={250}
+        <Select className="lab-head-model" size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 170 }} popupMatchSelectWidth={250}
           options={MODEL_OPTIONS.map(m => ({ value: m.id, label: <span>{m.label}<ModelBadge text={m.badge} /></span> }))} />
         <button className="lab-btn ghost sm" title="数据后台" aria-label="数据后台" style={{ width: 34, padding: 0 }} onClick={() => router.push('/admin/db-company')}>
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="1.5" y="9.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="9.5" width="5" height="5" rx="1.2" /></svg>

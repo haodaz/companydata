@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
+import { assignNova } from '@/lib/lab-nova';
 import { buildSpaceFromJd } from '@/lib/agents/skill-lab-build';
 import { structureCareer } from '@/lib/agents/career';
 import { labError } from '@/lib/skill-lab-server';
@@ -111,6 +112,7 @@ export async function POST(req: Request) {
         ...built.task, created_by: createdBy || '',
       }).select('id').single();
       if (insErr) throw insErr;
+      await assignNova(created.id).catch(e => console.warn('[Lab/spaces] 分编号失败', e?.message));
       setBuild(buildId, { phase: '完成', done: true, id: created.id });
       return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount, artReused: built.artReused, benchNote: built.benchNote, summary: summarize(built) });
     }
@@ -141,6 +143,7 @@ export async function POST(req: Request) {
       created_by: createdBy || '',
     }).select('id').single();
     if (insErr) throw insErr;
+    await assignNova(created.id).catch(e => console.warn('[Lab/spaces] 分编号失败', e?.message));
     setBuild(buildId, { phase: '完成', done: true, id: created.id });
     return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount, artReused: built.artReused, benchNote: built.benchNote, summary: summarize(built) });
   } catch (e: any) {

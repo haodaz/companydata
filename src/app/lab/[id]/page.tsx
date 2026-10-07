@@ -328,7 +328,7 @@ export default function SpacePage() {
 
   const remove = async () => {
     const json = await (await fetch(`/api/lab/spaces/${id}`, { method: 'DELETE' })).json();
-    if (json.ok) router.push('/lab'); else message.error(json.error);
+    if (json.ok) router.push('/lab/spaces'); else message.error(json.error);
   };
 
   if (loading) return <div className="lab-glass lab-scan" style={{ height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span className="lab-mono" style={{ color: 'var(--ink3)' }}>ENTERING SPACE<span className="lab-dots" /></span></div>;
@@ -377,7 +377,7 @@ export default function SpacePage() {
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 14 }}>
-        <button className="lab-btn ghost sm" onClick={() => router.push('/lab')}>← 全部空间</button>
+        <button className="lab-btn ghost sm" onClick={() => router.push('/lab/spaces')}>← 全部空间</button>
         <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="lab-btn ghost sm">删除空间</button></Popconfirm>
       </div>
 
@@ -549,11 +549,11 @@ export default function SpacePage() {
 
             {learnStep === 0 && <>
               <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
-                {field(expert.name, v => setExpert(e => ({ ...e, name: v })), '专家姓名 / 化名')}
+                {field(expert.name, v => setExpert(e => ({ ...e, name: v })), '专家姓名 / 化名 *')}
                 {field(expert.title, v => setExpert(e => ({ ...e, title: v })), '资历（如 前品牌总监 · 12 年）')}
-                {field(expert.location, v => setExpert(e => ({ ...e, location: v })), '所在地')}
+                {field(expert.location, v => setExpert(e => ({ ...e, location: v })), '所在地 *')}
               </div>
-              <button className="lab-btn" style={{ marginTop: 14 }} onClick={() => { if (!expert.name.trim()) { message.warning('请填写专家姓名'); return; } if (sim?.art) enterFullscreen(); setLearnStep(1); }}>开始 →</button>
+              <button className="lab-btn" style={{ marginTop: 14 }} onClick={() => { if (!expert.name.trim() || !expert.location.trim()) { message.warning('请填写专家姓名（或化名）和所在地——技能卡要写清楚手艺来自谁、来自哪儿'); return; } if (sim?.art) enterFullscreen(); setLearnStep(1); }}>开始 →</button>
             </>}
 
             {learnStep === 1 && sim && <div style={{ fontSize: 13.5, color: 'var(--v)', fontWeight: 600 }}>操作台已在下方打开 ↓</div>}
