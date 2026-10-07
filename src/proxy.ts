@@ -13,6 +13,8 @@ export async function proxy(req: NextRequest) {
   // API：除登录 / 注册外全部需要登录（agent 接口会消耗 Token，数据接口走 service role）
   if (pathname.startsWith('/api/')) {
     if (pathname.startsWith('/api/auth/')) return NextResponse.next();
+    // 首页（/lab）是公开的宣传页，它只问这一个接口
+    if (pathname === '/api/lab/landing' && req.method === 'GET') return NextResponse.next();
     // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉
     const headers = new Headers(req.headers);
     headers.delete(INVITED); headers.delete(INVITED_BY);
@@ -33,6 +35,9 @@ export async function proxy(req: NextRequest) {
     return NextResponse.json({ ok: false, error: '未登录或登录已过期' }, { status: 401 });
   }
 
+  // AI 百业首页公开：谁都能看见理念和这些人，点进任何一个空间才要求登录
+  if (pathname === '/lab') return NextResponse.next();
+
   // 邀请链接 /lab/<id>?invite=…：票对得上这个空间，就不用登录
   const pm = pathname.match(INVITE_PAGE);
   if (pm && pm[1] !== 'spaces') {
@@ -45,7 +50,10 @@ export async function proxy(req: NextRequest) {
     const token = req.cookies.get('auth_token')?.value;
 
     if (!token) {
-      return NextResponse.redirect(new URL('/login', req.url));
+      // 从公开首页点进来的，登录完要回到他想去的地方，而不是落到虚拟工厂
+      const login = new URL('/login', req.url);
+      if (pathname.startsWith('/lab')) login.searchParams.set('next', pathname + req.nextUrl.search);
+      return NextResponse.redirect(login);
     }
 
     const payload = await verifyToken(token);

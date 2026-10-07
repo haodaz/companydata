@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Select } from 'antd';
 import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
-import { UserProvider } from '@/lib/user-context';
+import { UserProvider, useUser } from '@/lib/user-context';
 
 /**
  * 数字技能空间（实验）独立外壳：浅色科技感，和数据后台 / 虚拟工厂刻意长得不一样。
@@ -172,6 +172,8 @@ function Shell({ children }: { children: React.ReactNode }) {
   const [guest, setGuest] = useState(false);
   useEffect(() => { setGuest(new URLSearchParams(window.location.search).has('invite')); }, [path]);
   const { currentModel, setCurrentModel } = useModel();
+  // 首页是公开的：没登录的人看不到模型下拉和后台入口，那是给干活的人用的
+  const { user } = useUser();
   // 自己的导航：首页讲理念，百业空间干活。不跟数据后台的侧边栏混在一起
   const NAV = [{ k: '/lab', t: '首页' }, { k: '/lab/spaces', t: '百业空间' }];
   return (
@@ -199,7 +201,7 @@ function Shell({ children }: { children: React.ReactNode }) {
           })}
         </nav>}
         <div style={{ flex: 1 }} />
-        {!guest && <>
+        {!guest && user && <>
         <Select className="lab-head-model" size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 170 }} popupMatchSelectWidth={250}
           options={MODEL_OPTIONS.map(m => ({ value: m.id, label: <span>{m.label}<ModelBadge text={m.badge} /></span> }))} />
         <button className="lab-btn ghost sm" title="数据后台" aria-label="数据后台" style={{ width: 34, padding: 0 }} onClick={() => router.push('/admin/db-company')}>

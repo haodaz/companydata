@@ -254,8 +254,8 @@ export default function LabLanding() {
 
   useEffect(() => {
     (async () => {
-      try { const j = await (await fetch('/api/lab/landing')).json(); if (j.ok) setD(j); } catch { /* 静态文案照样能看 */ }
-      try { const j = await (await fetch('/api/lab/spaces')).json(); if (j.ok) setT(j.totals || null); } catch { /* 同上 */ }
+      // 首页是公开的，只问这一个公开接口；挂了就退回静态文案
+      try { const j = await (await fetch('/api/lab/landing')).json(); if (j.ok) { setD(j); setT(j.totals || null); } } catch { /* 静态文案照样能看 */ }
     })();
   }, []);
 

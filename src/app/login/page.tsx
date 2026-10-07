@@ -24,7 +24,9 @@ export default function LoginPage() {
       const data = await res.json();
       if (data.success) {
         message.success('登录成功');
-        router.push('/office');
+        // 从公开首页点进空间被拦过来的，登录完回原处；只认站内路径，别被拿去做开放跳转
+        const next = new URLSearchParams(window.location.search).get('next') || '';
+        router.push(next.startsWith('/') && !next.startsWith('//') && !next.startsWith('/\\') ? next : '/office');
       } else {
         message.error(data.error || '登录失败');
       }
