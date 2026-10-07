@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Button, Card, Col, Descriptions, Empty, Form, Input, InputNumber, Modal, Popconfirm, Row, Select, Space, Spin, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
+import { guardLink } from '@/lib/download-gate';
 import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, GlobalOutlined, LinkOutlined, ThunderboltOutlined, FileTextOutlined, ApiOutlined, CheckCircleOutlined, CloseCircleOutlined, LockOutlined, ProfileOutlined, EyeOutlined, TrophyOutlined, SearchOutlined, LoadingOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { DEEP_TOPICS, topicsFor } from '@/lib/agents/company-deep-research';
 import { FINANCING_COLUMNS, NEWS_COLUMNS, EXECUTIVE_COLUMNS, PRODUCT_COLUMNS, formatProfileValue } from '@/components/admin/CompanyRunView';
@@ -197,7 +198,7 @@ export default function CompanyDetailPage() {
           <Tooltip title="轻量版：一次联网检索只补基础字段；完整画像请用「跑画像流水线」"><Button icon={<ThunderboltOutlined />} loading={enriching} onClick={() => runEnrich(false)}>快速补全</Button></Tooltip>
           <Tooltip title="投资尽调维度：上市与市值 / 财务 / 股权 / 管线 / BD 交易 / 团队 / 风险 / 校招——八个专题逐个联网检索，结果落库并回填管线 / 持股 / 营收，约 4 分钟"><Button icon={<SearchOutlined />} loading={deepRunning} onClick={runDeep}>深度尽调</Button></Tooltip>
           <Tooltip title={deepTopics.length ? `已有深度尽调报告（${deepTopics.length} 个专题）：实体库全部档案 + 尽调专题排成一份可打印的报告` : '还没跑过深度尽调，报告里只有画像流水线的档案；先点「深度尽调」'}><Button type="primary" icon={<ProfileOutlined />} onClick={() => router.push(`/admin/db-company/${company.id}/report`)}>{deepTopics.length ? `深度报告 · ${deepTopics.length} 专题` : '报告'}</Button></Tooltip>
-          {deepTopics.length > 0 && <Tooltip title="下载 PDF 版深度报告"><Button icon={<FilePdfOutlined />} href={`/api/db/companies/${company.id}/report-pdf`}>下载 PDF</Button></Tooltip>}
+          {deepTopics.length > 0 && <Tooltip title="下载 PDF 版深度报告"><Button icon={<FilePdfOutlined />} href={`/api/db/companies/${company.id}/report-pdf`} onClick={guardLink}>下载 PDF</Button></Tooltip>}
           <Button icon={<EditOutlined />} onClick={openEdit}>编辑</Button>
           <Popconfirm title="删除这家企业？" description="关联的信息源与岗位会保留，但解除与企业的关联。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消">
             <Button danger icon={<DeleteOutlined />} />

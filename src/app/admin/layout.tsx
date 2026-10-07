@@ -7,6 +7,7 @@ import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-
 import { UserProvider, useUser } from '@/lib/user-context';
 import { BRAND } from '@/lib/theme';
 import { Logo, BRAND_NAME, BRAND_TAGLINE } from '@/components/brand/Logo';
+import DownloadPermissionModal from '@/components/admin/DownloadPermissionModal';
 
 const PRIMARY = BRAND.primary;
 
@@ -101,7 +102,28 @@ function ModelSwitcher() {
   );
 }
 
-function NavLink({ item, active, onClick }: { item: NavItem; active: boolean; onClick: () => void }) {
+/** 侧导航红点（和黄色文字 badge 分开：红点 = 有待处理的事） */
+const RedDot = ({ style }: { style?: React.CSSProperties }) => (
+  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#ef4444', boxShadow: '0 0 0 2px #fff', ...style }} />
+);
+
+/** admin 才轮询：待审批的下载许可数（审批后系统账号管理页会发 download-requests:changed 事件刷新） */
+function usePendingDownloadRequests(isAdmin: boolean, pathname: string | null) {
+  const [pending, setPending] = useState(0);
+  useEffect(() => {
+    if (!isAdmin) { setPending(0); return; }
+    let alive = true;
+    const load = () => fetch('/api/admin/download-requests?count=1', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null).then(d => { if (alive && d) setPending(d.pending || 0); }).catch(() => {});
+    load();
+    const timer = setInterval(load, 60_000);
+    window.addEventListener('download-requests:changed', load);
+    return () => { alive = false; clearInterval(timer); window.removeEventListener('download-requests:changed', load); };
+  }, [isAdmin, pathname]);
+  return pending;
+}
+
+function NavLink({ item, active, onClick, dot }: { item: NavItem; active: boolean; onClick: () => void; dot?: boolean }) {
   return (
     <div
       onClick={onClick}
@@ -119,6 +141,7 @@ function NavLink({ item, active, onClick }: { item: NavItem; active: boolean; on
       {item.label}
       {item.badge && <span style={{ fontSize: 10, color: '#d48806', background: '#fffbe6', border: '1px solid #ffe58f', borderRadius: 4, padding: '0 4px', lineHeight: '15px' }}>{item.badge}</span>}
       {item.newWindow && <ExportOutlined style={{ marginLeft: 'auto', fontSize: 11, color: BRAND.ink4 }} />}
+      {dot && <RedDot style={{ marginLeft: 'auto' }} />}
     </div>
   );
 }
@@ -144,6 +167,11 @@ function AdminLayoutGuard({ children }: { children: React.ReactNode }) {
     ...(user?.role === 'admin' ? [{ key: 'system-users', icon: <SafetyCertificateOutlined />, label: '系统账号管理', path: '/admin/system-users', group: '系统' }] : []),
   ];
 
+  // 有待审批的下载许可申请：系统账号管理亮红点，点进去直接到「下载许可」页签
+  const pendingDownloads = usePendingDownloadRequests(user?.role === 'admin', pathname);
+  const navDot = (key: string) => key === 'system-users' && pendingDownloads > 0;
+  const navPath = (item: NavItem) => navDot(item.key) ? `${item.path}?tab=downloads` : item.path;
+
   // 按路径长度降序匹配，避免短路径先被命中
   const activeKey = [...NAV_WITH_AUTH].sort((a, b) => b.path.length - a.path.length)
     .find(n => pathname.startsWith(n.path))?.key;
@@ -153,6 +181,7 @@ function AdminLayoutGuard({ children }: { children: React.ReactNode }) {
     return (
       <div style={{ background: BRAND.pageBg, minHeight: '100vh', padding: 16 }}>
         {children}
+        <DownloadPermissionModal />
       </div>
     );
   }
@@ -233,7 +262,7 @@ function AdminLayoutGuard({ children }: { children: React.ReactNode }) {
               <div key={group} style={{ marginBottom: 6 }}>
                 <div style={{ fontSize: 11, color: BRAND.ink4, fontWeight: 500, padding: '10px 12px 6px', letterSpacing: 1 }}>{group}</div>
                 {items.map(item => (
-                  <NavLink key={item.key} item={item} active={activeKey === item.key} onClick={() => item.newWindow ? window.open(item.path, '_blank') : router.push(item.path)} />
+                  <NavLink key={item.key} item={item} active={activeKey === item.key} dot={navDot(item.key)} onClick={() => item.newWindow ? window.open(item.path, '_blank') : router.push(navPath(item))} />
                 ))}
               </div>
             );
@@ -278,6 +307,7 @@ function AdminLayoutGuard({ children }: { children: React.ReactNode }) {
       <div className="cd-content" style={{ flex: 1, minHeight: 0, minWidth: 0, overflow: 'auto' }}>
         {children}
       </div>
+      <DownloadPermissionModal />
     </div>
   );
 }

@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Table, Card, Typography, Button, Space, App, Popconfirm, Select, Modal, Form, Input } from 'antd';
+import { Table, Card, Typography, Button, Space, App, Popconfirm, Select, Modal, Form, Input, Tabs, Badge } from 'antd';
 import { PageHeader } from '@/components/admin/PageHeader';
 import { DeleteOutlined, ReloadOutlined, SafetyCertificateOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useUser } from '@/lib/user-context';
 import { useRouter } from 'next/navigation';
+import DownloadRequestsCard from '@/components/admin/DownloadRequestsCard';
+import DownloadLogsTable from '@/components/admin/DownloadLogsTable';
 
 const { Text } = Typography;
 
@@ -18,6 +20,18 @@ export default function SystemUsersPage() {
   const [loading, setLoading] = useState(true);
   const { user } = useUser();
   const router = useRouter();
+  const [tab, setTab] = useState('accounts');
+  // 侧导航红点带 ?tab=downloads 进来，直接打开下载许可
+  useEffect(() => {
+    const t = new URLSearchParams(window.location.search).get('tab');
+    if (t === 'downloads' || t === 'logs') setTab(t);
+  }, []);
+  const [pendingDl, setPendingDl] = useState(0);
+  // 待审批数：标签页角标（申请组件加载后也会回报最新数）
+  useEffect(() => {
+    if (user?.role !== 'admin') return;
+    fetch('/api/admin/download-requests?count=1', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(d => d && setPendingDl(d.pending || 0)).catch(() => {});
+  }, [user]);
 
   useEffect(() => {
     if (user && user.role !== 'admin') {
@@ -165,22 +179,29 @@ export default function SystemUsersPage() {
       <PageHeader
         icon={<SafetyCertificateOutlined />}
         title="系统账号管理"
-        description={<>管理登录账号与权限。可以手动添加账号，也可以让同事自行注册（默认普通权限）。</>}
+        description={<>管理登录账号与权限。可以手动添加账号，也可以让同事自行注册（默认普通权限）。普通用户下载数据需管理员在「下载许可」里批准，每次下载都记在「下载记录」。</>}
         extra={<Space wrap>
           <Button icon={<ReloadOutlined />} onClick={fetchUsers}>刷新</Button>
           <Button type="primary" icon={<UserAddOutlined />} onClick={() => setAddOpen(true)}>添加账号</Button>
         </Space>}
       />
-      <Card>
-        
-        <Table
-          columns={columns}
-          dataSource={data}
-          rowKey="id"
-          loading={loading}
-          size="small"
-          pagination={false}
-        />
+      <Card styles={{ body: { paddingTop: 0 } }}>
+        <Tabs activeKey={tab} onChange={setTab} destroyOnHidden={false}
+          items={[
+            { key: 'accounts', label: '账号', children: (
+              <Table
+                columns={columns}
+                dataSource={data}
+                rowKey="id"
+                loading={loading}
+                size="small"
+                pagination={false}
+              />
+            ) },
+            // 两个下载页签只给管理员挂载（本页非管理员会被跳走，这里再保险一次，免得发出 403 请求）
+            { key: 'downloads', label: <Badge count={pendingDl} size="small" offset={[8, -2]}>下载许可</Badge>, children: user?.role === 'admin' ? <DownloadRequestsCard onPendingChange={setPendingDl} /> : null },
+            { key: 'logs', label: '下载记录', children: user?.role === 'admin' && tab === 'logs' ? <DownloadLogsTable /> : null },
+          ]} />
       </Card>
 
       <Modal title="添加账号" open={addOpen} onOk={handleAdd} onCancel={() => setAddOpen(false)} okText="创建" confirmLoading={adding} destroyOnHidden>

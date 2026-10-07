@@ -7,6 +7,7 @@ import { ReadOutlined, DownloadOutlined, CheckCircleOutlined, DeleteOutlined, Do
 import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import { StatCards } from '@/components/admin/StatCards';
 import { exportToCsv } from '@/lib/export-csv';
+import { ensureDownloadAllowed, clearDownloadPermissionCache } from '@/lib/download-gate';
 import { JOB_FIELDS, JOB_STATUS, JOB_TYPE_LABELS, RECRUIT_SEASON_LABELS, REMOTE_TYPE_LABELS, CAMPUS_JOB_TYPES, formatJobValue, formatSalary } from '@/lib/job-fields';
 import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { SEGMENT_LABELS } from '@/lib/company-fields';
@@ -92,9 +93,15 @@ export default function DbJobPage() {
 
   /** 导出当前筛选条件下的全部岗位 */
   const handleExport = async () => {
+    if (!(await ensureDownloadAllowed())) return;   // 没有下载许可：弹出申请框（日志由服务端导出接口记）
     setExporting(true);
     try {
-      const json = await (await fetch(`/api/db/jobs?${query({ exportAll: 'true' })}`)).json();
+      const res = await fetch(`/api/db/jobs?${query({ exportAll: 'true' })}`);
+      const json = await res.json();
+      if (res.status === 403 && json.code === 'DOWNLOAD_PERMISSION_REQUIRED') {
+        // 前端缓存的许可已过期（被收回）：以服务端为准，重新弹申请框
+        clearDownloadPermissionCache(); await ensureDownloadAllowed(); return;
+      }
       if (!json.success) throw new Error(json.error);
       if (!json.data.length) { message.warning('当前筛选条件下没有数据'); return; }
       exportToCsv(json.data, [
@@ -109,7 +116,7 @@ export default function DbJobPage() {
         { key: 'source_url', header: '来源页面' },
         { key: 'first_seen_at', header: '首次发现' },
         { key: 'last_seen_at', header: '最近一次在招' },
-      ], '校招岗位库');
+      ], '校招岗位库', { serverChecked: true });
       message.success(`已导出 ${json.data.length} 条`);
     } catch (e: any) { message.error(`导出失败: ${e.message}`); }
     finally { setExporting(false); }

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import path from 'node:path';
+import { requireDownload } from '@/lib/download-permission';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -61,6 +62,8 @@ async function resolveBrowser(): Promise<{ executablePath: string; args?: string
 }
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  // 下载门禁：admin 或已获批准的用户才放行，放行时记下载日志（报告页本身的渲染 ?print=1 不拦）
+  const denied = await requireDownload(req); if (denied) return denied;
   const { id } = await params;
   const url = new URL(req.url);
   const format = url.searchParams.get('format') === 'png' ? 'png' : 'pdf';
@@ -73,7 +76,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     const found = await resolveBrowser();
     if (!found) {
       // 没有可用的 Chromium：退回报告页自动弹打印，用户在浏览器里"存为 PDF"（Vercel 上没装 @sparticuz/chromium 时就是这条路）
-      return NextResponse.redirect(`${origin}/admin/db-company/${id}/report?print=1&auto=1&format=${format}`, 302);
+      return NextResponse.redirect(`${origin}/admin/db-company/${id}/report?print=1&auto=1&logged=1&format=${format}`, 302);
     }
     const puppeteer = (await import('puppeteer-core')).default;
     browser = await puppeteer.launch({ executablePath: found.executablePath, headless: found.headless ?? true, args: [...(found.args || []), '--no-sandbox', '--hide-scrollbars', '--window-size=1440,900'] });

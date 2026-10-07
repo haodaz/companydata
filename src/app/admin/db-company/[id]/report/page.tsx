@@ -9,6 +9,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { App, Button, Space, Spin, Tag } from 'antd';
 import { ArrowLeftOutlined, PrinterOutlined, LinkOutlined, FilePdfOutlined, PictureOutlined } from '@ant-design/icons';
+import { ensureDownloadAllowed, guardLink } from '@/lib/download-gate';
 import { COMPANY_TYPE_LABELS, SEGMENT_LABELS, KIND_LABELS, FINANCE_ROUND_LABELS, NEWS_KIND_LABELS } from '@/lib/company-fields';
 
 const v = (x: any) => (x && typeof x === 'object' && !Array.isArray(x) && 'value' in x) ? x.value : x;
@@ -71,7 +72,16 @@ export default function CompanyReportPage() {
 
   // 服务器没有 Chromium 时，「下载 PDF」会跳到这里带 auto=1：数据到齐后自动弹系统打印，用户选"存为 PDF"即可
   const autoPrint = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('auto') === '1';
-  useEffect(() => { if (autoPrint && !loading && d?.company) { const t = setTimeout(() => window.print(), 1500); return () => clearTimeout(t); } }, [autoPrint, loading, d]);
+  // 自动打印同样要过下载门禁；从 report-pdf 接口跳过来的（logged=1）服务端已记过日志，这里不再重复记
+  useEffect(() => {
+    if (!(autoPrint && !loading && d?.company)) return;
+    const logged = new URLSearchParams(window.location.search).get('logged') === '1';
+    let cancelled = false;
+    const t = setTimeout(async () => {
+      if (await ensureDownloadAllowed(logged ? undefined : { target: `企业报告 打印：${d.company.name}`, params: { companyId: id } }) && !cancelled) window.print();
+    }, 1500);
+    return () => { cancelled = true; clearTimeout(t); };
+  }, [autoPrint, loading, d, id]);
   const T = (k: string) => deep?.topics?.[k]?.data || {};
   const c = d?.company;
   const pipeline = useMemo(() => (T('pipeline').pipeline || []) as any[], [deep]);
@@ -108,9 +118,9 @@ export default function CompanyReportPage() {
         <Button icon={<ArrowLeftOutlined />} type="text" onClick={() => router.push(`/admin/db-company/${id}`)}>返回档案</Button>
         <Space>
           {hasDeep ? <Tag color={deep.source === 'db' ? 'green' : 'blue'}>深度尽调 · {deep.source === 'db' ? '实体库' : '快照'} · {Object.keys(deep.topics).length} 个专题 · {deep.model}</Tag> : <Tag>尚未跑深度尽调，仅实体库档案</Tag>}
-          <Button icon={<PrinterOutlined />} onClick={() => window.print()}>打印</Button>
-          <Button type="primary" icon={<FilePdfOutlined />} href={`/api/db/companies/${id}/report-pdf`}>下载 PDF</Button>
-          <Button icon={<PictureOutlined />} href={`/api/db/companies/${id}/report-pdf?format=png`}>网页截图 PNG</Button>
+          <Button icon={<PrinterOutlined />} onClick={async () => { if (await ensureDownloadAllowed({ target: `企业报告 打印：${c.name}`, params: { companyId: id } })) window.print(); }}>打印</Button>
+          <Button type="primary" icon={<FilePdfOutlined />} href={`/api/db/companies/${id}/report-pdf`} onClick={guardLink}>下载 PDF</Button>
+          <Button icon={<PictureOutlined />} href={`/api/db/companies/${id}/report-pdf?format=png`} onClick={guardLink}>网页截图 PNG</Button>
         </Space>
       </div>
 

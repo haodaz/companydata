@@ -3,6 +3,8 @@
  * 支持中文字段名映射、BOM 头（Excel 兼容）、自动处理特殊字符
  */
 
+import { ensureDownloadAllowed } from '@/lib/download-gate';
+
 interface CsvColumn {
   /** 数据中的 key */
   key: string;
@@ -18,14 +20,18 @@ interface CsvColumn {
  * @param columns 列定义
  * @param filename 文件名（不含 .csv 后缀）
  */
-export function exportToCsv(
+export async function exportToCsv(
   data: any[],
   columns: CsvColumn[],
-  filename: string
+  filename: string,
+  /** serverChecked：数据来自服务端导出接口，许可已校验、下载日志已记，这里不再重复 */
+  opts: { serverChecked?: boolean } = {},
 ) {
   if (!data || data.length === 0) {
     return;
   }
+  // 下载门禁：admin 或已获批准的用户才能导出，否则弹出申请
+  if (!opts.serverChecked && !(await ensureDownloadAllowed({ target: `${filename}.csv`, params: { rows: data.length } }))) return;
 
   // CSV 表头
   const headers = columns.map((col) => escapeCsvField(col.header));

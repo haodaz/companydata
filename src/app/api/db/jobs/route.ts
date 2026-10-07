@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { orIlike, pageParams } from '@/lib/pg-filter';
+import { requireDownload } from '@/lib/download-permission';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -9,6 +10,8 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const exportAll = searchParams.get('exportAll') === 'true';
+    // 全量导出 = 下载数据：admin 或已获批准的用户才放行，放行时记下载日志
+    if (exportAll) { const denied = await requireDownload(request); if (denied) return denied; }
     const { page, pageSize, from, to } = pageParams(searchParams, 50);
     const search = searchParams.get('search') || '';
     const get = (k: string) => searchParams.get(k) || '';
