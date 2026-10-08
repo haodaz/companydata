@@ -148,6 +148,7 @@ export async function computeBoard(now = Date.now()) {
     r.gap = round(r.heat30 * f);
   }
 
+  for (const m of Object.values(acc)) for (const r of m.values()) { r.heat7 = round(r.heat7); r.heatPrev7 = round(r.heatPrev7); r.heat30 = round(r.heat30); r.web30 = round(r.web30); }
   const sortRows = (m: Map<string, BoardRow>) => [...m.values()].sort((a, b) => b.heat30 - a.heat30);
   const dims = { industry: sortRows(acc.industry), job_function: sortRows(acc.job_function), career_family: sortRows(acc.career_family), company: sortRows(acc.company) };
   const totals = { signals30: (sigs as any[]).length, heat30: round((sigs as any[]).reduce((a, s) => a + (Number(s.weight) || 1), 0)), companies: (companies as any[]).length, openJobs: (jobs as any[]).filter((j: any) => j.status === 'open').length, spaces: (spaces as any[]).length };

@@ -7,9 +7,9 @@ import { selectAll } from '@/lib/supabase-all';
 import { generateContent } from '@/lib/llm-client';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
-import { resolveCompanyId } from '@/lib/company-match';
+import { resolveCompanyLoose } from '@/lib/company-match';
 import { sourceLabel } from '@/lib/flywheel/sources';
-import { FAMILIES, INDUSTRIES, JOB_FUNCTIONS, aliasKey, industryByRule } from '@/lib/flywheel/taxonomy';
+import { FAMILIES, INDUSTRIES, JOB_FUNCTIONS, aliasKey, cleanProfession, industryByRule, isEmployer } from '@/lib/flywheel/taxonomy';
 import { aliasMap, invalidateAliases } from '@/lib/flywheel/signals';
 
 const pick = <T extends string>(list: readonly T[], v: unknown): T | null => (list as readonly string[]).includes(String(v)) ? (v as T) : null;
@@ -94,11 +94,11 @@ ${batch.map((r, k) => `${k + 1}. ${sourceLabel(r.source)}｜${String(r.query || 
       if (!r.industry) patch.industry = pick(INDUSTRIES, x.industry);
       if (!r.job_function) patch.job_function = pick(JOB_FUNCTIONS, x.job_function);
       if (!r.career_family) { const f = pick(FAMILIES, x.career_family); patch.career_family = f === '其他' ? null : f; }
-      if (!r.profession && typeof x.profession === 'string' && x.profession.trim()) patch.profession = x.profession.trim().slice(0, 60);
-      if (!r.company_id && typeof x.company === 'string' && x.company.trim()) {
+      if (!r.profession && cleanProfession(x.profession)) patch.profession = cleanProfession(x.profession);
+      if (!r.company_id && typeof x.company === 'string' && isEmployer(x.company)) {
         const name = x.company.trim().slice(0, 100);
         patch.company_name = r.company_name || name;
-        patch.company_id = await resolveCompanyId(name).catch(() => null);
+        patch.company_id = await resolveCompanyLoose(name).catch(() => null);
       }
       const hasAny = r.industry || r.job_function || r.career_family || r.company_id || Object.keys(patch).some(k2 => !['normalized_at', 'normalized_by'].includes(k2) && patch[k2]);
       if (!hasAny) patch.normalized_by = 'none';

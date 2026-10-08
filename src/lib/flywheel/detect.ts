@@ -11,9 +11,9 @@
 import { supabaseAdmin } from '@/lib/supabase';
 import { selectAll } from '@/lib/supabase-all';
 import { searchJson } from '@/lib/agents/search-llm';
-import { resolveCompanyId, resolveOrCreateCompany } from '@/lib/company-match';
+import { resolveCompanyLoose, resolveLooseOrCreateCompany } from '@/lib/company-match';
 import { WEB_PROBES } from '@/lib/flywheel/sources';
-import { INDUSTRIES, JOB_FUNCTIONS } from '@/lib/flywheel/taxonomy';
+import { INDUSTRIES, JOB_FUNCTIONS, cleanProfession, isEmployer } from '@/lib/flywheel/taxonomy';
 import { logDemand } from '@/lib/flywheel/signals';
 import { normalizeCompanyIndustries, normalizePending } from '@/lib/flywheel/normalize';
 import { computeBoard, type BoardRow } from '@/lib/flywheel/board';
@@ -122,10 +122,12 @@ async function runDailyInner(opts: DailyOptions, day: string, log: (s: string) =
           for (const it of items) {
             let company_id: number | null = null;
             if (it.company) {
-              company_id = await resolveCompanyId(it.company).catch(() => null);
-              if (!company_id && p.onboard) {
-                company_id = await resolveOrCreateCompany(it.company).catch(() => null);
-                if (company_id) onboarded.push({ id: company_id, name: it.company, probe: p.key });
+              if (p.onboard) {
+                const r = await resolveLooseOrCreateCompany(it.company).catch(() => ({ id: null, created: false }));
+                company_id = r.id;
+                if (r.id && r.created) onboarded.push({ id: r.id, name: it.company, probe: p.key });
+              } else {
+                company_id = await resolveCompanyLoose(it.company).catch(() => null);
               }
             }
             await logDemand({
@@ -206,7 +208,8 @@ async function scanProbe(key: string, ask: string, model: string): Promise<any[]
   const items = Array.isArray(parsed?.items) ? parsed.items : [];
   return items
     .filter((x: any) => x && (x.company || x.detail))
-    .map((x: any) => ({ ...x, company: typeof x.company === 'string' ? x.company.trim().slice(0, 100) : null, detail: String(x.detail || '').slice(0, 200) }))
+    .map((x: any) => ({ ...x, company: typeof x.company === 'string' && isEmployer(x.company) ? x.company.trim().slice(0, 100) : null, profession: cleanProfession(x.profession), detail: String(x.detail || '').slice(0, 200) }))
+    .filter((x: any) => x.company || x.profession || key === 'trend')
     .slice(0, 40);
 }
 

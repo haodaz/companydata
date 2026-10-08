@@ -91,3 +91,18 @@ export function familyByRule(...hints: (string | null | undefined)[]): string | 
 }
 
 export const aliasKey = (s: string) => s.trim().toLowerCase().replace(/\s+/g, ' ').slice(0, 200);
+
+/**
+ * 招聘平台 / 就业网站 / 媒体不是「招人的企业」：联网检索常把消息来源当成企业写进来（「智联招聘发布报告」），
+ * 这类名字不进企业热度、不自动建档。
+ */
+export const NOT_EMPLOYER = /智联招聘|前程无忧|51job|boss直聘|猎聘|拉勾|牛客|实习僧|应届生求职|海投网|看准|脉脉|领英|linkedin|indeed|国聘|中国就业网|就业网|人才网|人才市场|人社局|人力资源和社会保障|教育部|就业指导中心|招聘网|新浪财经|36氪|界面新闻|澎湃|新华社|人民网|央视|证券时报|第一财经|21世纪经济|经济观察|中国证券报|上海证券报|财联社|投资界|清科|IT桔子|鲸准|企查查|天眼查/i;
+export const isEmployer = (name?: string | null) => !!name && name.trim().length >= 2 && !NOT_EMPLOYER.test(name);
+
+/** 职业名：只收短字符串；模型偶尔回数组（["金融","经济学"]）或一长串说明 */
+export function cleanProfession(v: unknown): string | null {
+  const one = Array.isArray(v) ? v.find(x => typeof x === 'string' && x.trim()) : v;
+  if (typeof one !== 'string') return null;
+  const t = one.trim().replace(/^[\["'「]+|[\]"'」]+$/g, '');
+  return t && t.length <= 30 && !/^\[|","/.test(t) ? t : null;
+}

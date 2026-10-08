@@ -10,9 +10,9 @@
 import { after } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
-import { resolveCompanyId } from '@/lib/company-match';
+import { resolveCompanyId, resolveCompanyLoose } from '@/lib/company-match';
 import { sourceWeight } from '@/lib/flywheel/sources';
-import { aliasKey, familyByRule, functionByRule, industryByRule } from '@/lib/flywheel/taxonomy';
+import { aliasKey, cleanProfession, familyByRule, functionByRule, industryByRule, isEmployer } from '@/lib/flywheel/taxonomy';
 
 export interface DemandInput {
   source: string;
@@ -84,9 +84,12 @@ export async function logDemand(input: DemandInput): Promise<void> {
     const aliases = await aliasMap();
     let company_id = input.company_id ?? null;
     let company_name = input.company_name?.trim() || null;
+    // 招聘平台 / 媒体 / 就业网站不算企业
+    if (company_name && !isEmployer(company_name)) { company_name = null; if (!input.company_id) company_id = null; }
     // 搜索词本身就是企业名（「华为」「宁德时代」）：对上库里的企业
-    if (!company_id && (company_name || (query && query.length <= 40 && !/\s{2,}/.test(query)))) {
-      company_id = await resolveCompanyId(company_name || query).catch(() => null);
+    if (!company_id && (company_name || (query && query.length <= 40 && !/\s{2,}/.test(query) && isEmployer(query)))) {
+      // 有明确企业名的走宽松匹配；拿搜索词猜企业只做精确匹配，免得「华」这种词乱对
+      company_id = await (company_name ? resolveCompanyLoose(company_name) : resolveCompanyId(query)).catch(() => null);
     }
     let industry = input.industry || null;
     if (company_id) {
@@ -98,7 +101,7 @@ export async function logDemand(input: DemandInput): Promise<void> {
     industry = industry || aliases.get(`industry:${aliasKey(query)}`) || industryByRule(hint);
     const job_function = input.job_function || aliases.get(`job_function:${aliasKey(query)}`) || functionByRule(hint);
     const career_family = input.career_family || aliases.get(`career_family:${aliasKey(query)}`) || familyByRule(hint);
-    const profession = input.profession || null;
+    const profession = cleanProfession(input.profession);
 
     // 对上了企业的搜索，企业就是它的全部意思；其余的要四个口径都有才算规则归一完
     const done = !!company_id && !query.replace(company_name || '', '').trim() || !!(industry && job_function && career_family);
