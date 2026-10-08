@@ -6,17 +6,21 @@
  *   它前端用的列表 / 详情接口是公开的明文 JSON，直接调，每个岗位整理成一段「详情页」文本交给结构化。
  * - 飞书招聘（*.jobs.feishu.cn，蓝箭航天等）：列表一页只出 10 个、翻页靠按钮。
  *   改写成 /<站点>/position/list?current=1&limit=100，一次列全。
+ * - 北森（*.zhiye.com，汇川、埃斯顿、东方雨虹、日丰、亚厦等大企业）：页面是 SPA，岗位接口 /api/Jobad/GetJobAdPageList
+ *   是公开 JSON，直接带职责 / 要求 / 地点 / 学历；Category 1 社招 / 2 校招 / 3 实习。
  * - moka 不在这里：它的岗位接口返回的是加密数据（平台有意的反爬，不去破解），
  *   但把渲染请求改成 POST（见 fetcher.ts）之后，#/jobs、#/job/<id> 这些前端路由都能正常渲染。
  */
 
 const HOTJOB = /(^|\.)hotjob\.cn$/i;
 const FEISHU = /\.jobs\.feishu\.cn$/i;
+const BEISEN = /\.zhiye\.com$/i;
 
-export function atsOf(url: string): 'hotjob' | 'feishu' | 'moka' | null {
+export function atsOf(url: string): 'hotjob' | 'feishu' | 'moka' | 'beisen' | null {
   try {
     const h = new URL(url).hostname;
     if (HOTJOB.test(h)) return 'hotjob';
+    if (BEISEN.test(h)) return 'beisen';
     if (FEISHU.test(h)) return 'feishu';
     if (/mokahr\.com$/i.test(h)) return 'moka';
   } catch { /* 不是合法网址 */ }
@@ -78,6 +82,13 @@ async function hotjobPost(origin: string, path: string, suite: string, form: Rec
  */
 async function hotjobResolve(url: string): Promise<string> {
   if (/\/SU[0-9a-f]{16,}\//i.test(url)) return url;
+  // /wt/<企业>/web/index 这类老入口多数会 302 到新站（纬创）：先跟一次跳转
+  try {
+    // 只读第一跳的 Location：自动跟随时连 wecruit 偶尔超时，而新站地址第一跳就给了
+    const r = await fetch(url, { redirect: 'manual', signal: AbortSignal.timeout(15000), headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/126 Safari/537.36' } });
+    const loc = r.headers.get('location') || '';
+    if (/\/SU[0-9a-f]{16,}\//i.test(loc)) return new URL(loc, url).toString();
+  } catch { /* 跟不过去就试 getSLD */ }
   try {
     const u = new URL(url);
     const r = await fetch(`${u.origin}/wecruit/common/getSLD`, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `sld=${encodeURIComponent(u.host)}`, signal: AbortSignal.timeout(15000) });
@@ -163,4 +174,50 @@ export async function hotjobMarkdown(rawUrl: string, scope: 'campus' | 'all'): P
     return lines.join('\n');
   });
   return { markdown: blocks.join('\n\n'), count: rows.length };
+}
+
+
+// ─────────── 北森（zhiye.com）───────────
+const BEISEN_KIND: Record<string, string> = { '1': '社会招聘', '2': '校园招聘', '3': '实习生招聘' };
+
+/** 北森招聘站：一个站点的岗位全拉下来，每个岗位整理成一段「详情页」文本。scope=campus 只要校招 + 实习 */
+export async function beisenMarkdown(url: string, scope: 'campus' | 'all'): Promise<{ markdown: string; count: number } | null> {
+  let origin: string;
+  try { origin = new URL(url).origin; } catch { return null; }
+  const rows: any[] = [];
+  for (let page = 0; page < 30; page++) {
+    const body: Record<string, unknown> = { PageIndex: page, PageSize: 100, DisplayFields: ['Category', 'Kind', 'LocId', 'ClassificationOne'] };
+    // 社招先不管：除非给的就是社招页，只拉校招 + 实习（东方雨虹这种站点社招上千个）
+    if (scope === 'campus' || !/\/social/i.test(new URL(url).pathname)) body.Category = ['2', '3'];
+    let data: any[] = [];
+    for (let i = 0; i < 3; i++) {
+      try {
+        const r = await fetch(`${origin}/api/Jobad/GetJobAdPageList`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'User-Agent': 'Mozilla/5.0' }, body: JSON.stringify(body), signal: AbortSignal.timeout(20000) });
+        const j = await r.json();
+        data = Array.isArray(j?.Data) ? j.Data : [];
+        break;
+      } catch (e) { if (i === 2) { if (page === 0) return null; data = []; } else await new Promise(r => setTimeout(r, 800 * (i + 1))); }
+    }
+    rows.push(...data);
+    if (data.length < 100) break;
+  }
+  if (!rows.length) return null;
+  const blocks = rows.map(r => {
+    const cat = String(r.CategoryId || '');
+    const link = `${origin}/${cat === '1' ? 'social' : 'campus'}/detail?jobAdId=${r.Id}`;
+    const locs = Array.isArray(r.LocNames) ? r.LocNames.join('；') : (r.LocNames || '');
+    const meta = [
+      BEISEN_KIND[cat] || r.Category ? `招聘类型：${BEISEN_KIND[cat] || r.Category}` : '',
+      locs ? `工作地点：${locs}` : '',
+      r.ClassificationOne ? `职位类别：${r.ClassificationOne}` : '',
+      r.Kind ? `工作性质：${r.Kind}` : '',
+      r.Degree ? `学历要求：${r.Degree}` : '',
+      r.HeadCount ? `招聘人数：${r.HeadCount}` : '',
+      r.PostDate && !/^0001/.test(r.PostDate) ? `发布日期：${String(r.PostDate).slice(0, 10)}` : '',
+      r.EndTime && !/^0001/.test(r.EndTime) ? `截止日期：${String(r.EndTime).slice(0, 10)}` : '',
+      r.Org ? `所属组织：${r.Org}` : '',
+    ].filter(Boolean).join('\n');
+    return `### Source: [${r.JobAdName}](${link})\n\n# ${r.JobAdName}\n\n${meta}\n\n## 工作职责\n${strip(r.Duty)}\n\n## 任职要求\n${strip(r.Require)}\n`;
+  });
+  return { markdown: blocks.join('\n---\n'), count: rows.length };
 }

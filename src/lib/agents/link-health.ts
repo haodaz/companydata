@@ -5,7 +5,7 @@
  */
 import { fetchJinaUrl } from '@/lib/agents/fetcher';
 
-const DEAD = /您访问的页面不存在|当前网页已关停|网页已关停|页面已关闭|该页面不存在|页面不存在|链接已失效|该职位已下线|职位已关闭|招聘已结束|项目已结束|page not found|404 not found|this page (?:does not|doesn't) exist|job (?:is )?no longer available/i;
+const DEAD = /您访问的页面不存在|当前网页已关停|网页已关停|页面已关闭|该页面不存在|页面不存在|链接已失效|该职位已下线|职位已关闭|招聘已结束|项目已结束|page not found|404 not found|this page (?:does not|doesn't) exist|job (?:is )?no longer available|do not have permission to operate/i;
 
 export type LinkHealth = { status: 'alive' | 'dead' | 'unknown'; title: string; reason?: string };
 

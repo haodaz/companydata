@@ -76,7 +76,7 @@ async function phaseA() {
 
 // ─────────── B 招聘平台岗位重抓 ───────────
 async function phaseB() {
-  const PLAT = /hotjob\.cn|mokahr\.com|jobs\.feishu\.cn/i;
+  const PLAT = /hotjob\.cn|mokahr\.com|jobs\.feishu\.cn|zhiye\.com/i;
   const urls = new Map<string, { url: string; company: string; company_id: number | null }>();
   const add = (url: string, company: string, company_id: number | null) => { if (url && PLAT.test(url) && !urls.has(url)) urls.set(url, { url, company, company_id }); };
   const { data: us } = await selectAll(() => supabaseAdmin.from('url_sources').select('url, type, company, company_id').order('id'));

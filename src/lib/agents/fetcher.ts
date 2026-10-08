@@ -6,7 +6,7 @@ import { generateContent } from '@/lib/llm-client';
 import { logTokenUsage } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { isAtsHost } from '@/lib/url-types';
-import { atsOf, hotjobMarkdown, resolveListUrl } from '@/lib/agents/ats-adapters';
+import { atsOf, beisenMarkdown, hotjobMarkdown, resolveListUrl } from '@/lib/agents/ats-adapters';
 
 const MAX_CANDIDATES = 15;
 /** moka / 飞书这类招聘平台的列表页一页就是几十个岗位，详情页多挑一些 */
@@ -107,6 +107,11 @@ export async function fetchBaseAndLinks(url: string, modelId: string = 'gemini-3
     if (ats === 'hotjob') {
       const hj = await hotjobMarkdown(url, scope).catch(e => { console.error('[fetcher] hotjob', e?.message || e); return null; });
       if (hj && hj.count) return { success: true, base_markdown: `### Source: [Main Page](${url})\n\n（hotjob 接口返回 ${hj.count} 个岗位）\n\n${hj.markdown}\n\n`, candidate_urls: [] };
+    }
+    // 北森：同样走公开接口，带职责 / 要求
+    if (ats === 'beisen') {
+      const bs = await beisenMarkdown(url, scope).catch(e => { console.error('[fetcher] beisen', e?.message || e); return null; });
+      if (bs && bs.count) return { success: true, base_markdown: `### Source: [Main Page](${url})\n\n（北森接口返回 ${bs.count} 个岗位）\n\n${bs.markdown}\n\n`, candidate_urls: [] };
     }
     // 飞书：入口改写成「一次列全」的列表地址
     const baseMarkdown = await fetchJinaUrl(await resolveListUrl(url));
