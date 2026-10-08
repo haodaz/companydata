@@ -221,3 +221,21 @@ export async function beisenMarkdown(url: string, scope: 'campus' | 'all'): Prom
   });
   return { markdown: blocks.join('\n---\n'), count: rows.length };
 }
+
+/**
+ * 同一个招聘站的「站点键」：北森 / hotjob 一次接口就拉全站，同站点的几个入口网址（首页、校招页、实习页、自定义页）
+ * 抓一个就够；moka 按项目编号、飞书按站点路径区分。社招页单独算一个站点（抓取范围不同）。不是已知平台就返回网址本身。
+ */
+export function siteKey(url: string): string {
+  try {
+    const u = new URL(url);
+    const social = /social/i.test(u.pathname + u.hash) ? ':social' : ':campus';
+    switch (atsOf(url)) {
+      case 'beisen': return `beisen:${u.host}${social}`;
+      case 'hotjob': return `hotjob:${u.host}:${url.match(/SU([0-9a-f]{16,})/i)?.[1] || u.pathname.split('/').slice(0, 3).join('/')}${social}`;
+      case 'feishu': return /\/position\/\d+\/detail/.test(u.pathname) ? url : `feishu:${u.host}:${u.pathname.split('/').filter(Boolean)[0] || 'index'}`;
+      case 'moka': { const m = u.pathname.match(/\/(?:m\/)?(?:(?:campus|social)[-_])?(?:recruitment|apply)\/([^/]+)\/(\d+)/); return m && !/^#\/job\//.test(u.hash) ? `moka:${m[1]}:${m[2]}` : url; }
+    }
+  } catch { /* 原样 */ }
+  return url;
+}

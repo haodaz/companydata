@@ -99,7 +99,16 @@ async function phaseB() {
     const { data: dl } = await supabaseAdmin.from('job_crawl_logs').select('target_url').in('task_id', doneTasks.map((t: any) => t.id)).eq('structurer_status', 'success').gt('jobs_saved', 0);
     for (const r of dl || []) doneUrls.add(r.target_url);
   }
-  const list = [...urls.values()].filter(u => !doneUrls.has(u.url));
+  // 按站点去重：北森 / hotjob 一次拉全站，同一站点的多个入口只抓一个；抓到过岗位的站点整个跳过
+  const { siteKey } = await import('../src/lib/agents/ats-adapters');
+  const doneSites = new Set([...doneUrls].map(siteKey));
+  const seenSites = new Set<string>();
+  const list = [...urls.values()].filter(u => {
+    const k = siteKey(u.url);
+    if (doneUrls.has(u.url) || doneSites.has(k) || seenSites.has(k)) return false;
+    seenSites.add(k);
+    return true;
+  });
   if (doneUrls.size) console.log(`[${ts()}] 跳过本次补跑里已抓到岗位的 ${doneUrls.size} 个页面`);
   console.log(`[${ts()}] B 岗位重抓：${list.length} 个招聘平台页面`);
   if (!list.length) return;
