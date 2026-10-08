@@ -6,7 +6,7 @@ import { generateContent } from '@/lib/llm-client';
 import { logTokenUsage } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { isAtsHost } from '@/lib/url-types';
-import { atsOf, hotjobMarkdown, listAllUrl } from '@/lib/agents/ats-adapters';
+import { atsOf, hotjobMarkdown, resolveListUrl } from '@/lib/agents/ats-adapters';
 
 const MAX_CANDIDATES = 15;
 /** moka / 飞书这类招聘平台的列表页一页就是几十个岗位，详情页多挑一些 */
@@ -109,7 +109,7 @@ export async function fetchBaseAndLinks(url: string, modelId: string = 'gemini-3
       if (hj && hj.count) return { success: true, base_markdown: `### Source: [Main Page](${url})\n\n（hotjob 接口返回 ${hj.count} 个岗位）\n\n${hj.markdown}\n\n`, candidate_urls: [] };
     }
     // 飞书：入口改写成「一次列全」的列表地址
-    const baseMarkdown = await fetchJinaUrl(listAllUrl(url));
+    const baseMarkdown = await fetchJinaUrl(await resolveListUrl(url));
     if (!baseMarkdown) {
       return { success: false, base_markdown: '', candidate_urls: [], error_message: `Jina fetch failed for base URL: ${url}` };
     }

@@ -32,9 +32,10 @@ export function listAllUrl(url: string): string {
       if (/\/position\/\d+\/detail/.test(u.pathname)) return url; // 已经是单个岗位
       return `${u.origin}/${seg}/position/list?current=1&limit=100`;
     }
-    // moka 手机版（/m/campus_apply/<企业>/<项目>）只有宣传栏目，换成电脑版的岗位列表
-    const mm = /(^|\.)mokahr\.com$/i.test(u.hostname) && u.pathname.match(/^\/m\/(campus|social)_apply\/([^/]+)\/(\d+)/);
-    if (mm && !/^#\/job\//.test(u.hash)) return `${u.origin}/${mm[1]}-recruitment/${mm[2]}/${mm[3]}#/jobs`;
+    // moka 老写法 / 手机版（/m/campus_apply/、/campus_apply/、/apply/<企业>/<项目>）只有宣传栏目或已停用，换成电脑版的岗位列表；
+    // /apply/ 是老的社招写法
+    const mm = /(^|\.)mokahr\.com$/i.test(u.hostname) && u.pathname.match(/^\/(?:m\/)?(?:(campus|social)_)?apply\/([^/]+)\/(\d+)/);
+    if (mm && !/^#\/job\//.test(u.hash)) return `${u.origin}/${mm[1] || 'social'}-recruitment/${mm[2]}/${mm[3]}#/jobs`;
     // moka 招聘首页（#/ 或没有路由）只有企业介绍和宣传图，岗位列表在 #/jobs
     if (/(^|\.)mokahr\.com$/i.test(u.hostname) && /\/(campus|social)[-_]recruitment\//.test(u.pathname) && /^(#!?\/?)?$/.test(u.hash)) {
       u.hash = '#/jobs';
@@ -42,6 +43,22 @@ export function listAllUrl(url: string): string {
     }
   } catch { /* 原样 */ }
   return url;
+}
+
+/**
+ * 需要先看一眼页面才能确定的列表地址：飞书招聘站根域名（infinigence.jobs.feishu.cn/）的站点路径不一定是 index，
+ * 要从首页里读 website_path。其余情况等同 listAllUrl。
+ */
+export async function resolveListUrl(url: string): Promise<string> {
+  try {
+    const u = new URL(url);
+    if (FEISHU.test(u.hostname) && !u.pathname.split('/').filter(Boolean).length) {
+      const html = await fetch(u.origin + '/', { signal: AbortSignal.timeout(15000) }).then(r => r.text());
+      const seg = html.match(/website_path\\?"\s*:\s*\\?"([a-z0-9_-]+)/i)?.[1];
+      if (seg) return `${u.origin}/${seg}/position/list?current=1&limit=100`;
+    }
+  } catch { /* 读不到就按默认写法 */ }
+  return listAllUrl(url);
 }
 
 const strip = (v: unknown) => String(v ?? '').replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
