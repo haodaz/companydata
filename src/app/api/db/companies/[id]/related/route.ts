@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 import { computeRelated } from '@/lib/company-related';
 
@@ -10,10 +11,10 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
   try {
     const id = parseInt((await params).id);
     const [companies, products, executives, financings] = await Promise.all([
-      supabaseAdmin.from('companies').select('id, name, industry, sub_industry, city, type_label, tags, segment, completeness_score').limit(50000),
-      supabaseAdmin.from('company_products').select('company_id, category, tech_keywords').eq('if_delete', false).limit(100000),
-      supabaseAdmin.from('company_executives').select('company_id, name').eq('if_delete', false).limit(100000),
-      supabaseAdmin.from('company_financings').select('company_id, finance_enterprise').eq('if_delete', false).limit(100000),
+      selectAll(() => supabaseAdmin.from('companies').select('id, name, industry, sub_industry, city, type_label, tags, segment, completeness_score').order('id')),
+      selectAll(() => supabaseAdmin.from('company_products').select('company_id, category, tech_keywords').eq('if_delete', false).order('id')),
+      selectAll(() => supabaseAdmin.from('company_executives').select('company_id, name').eq('if_delete', false).order('id')),
+      selectAll(() => supabaseAdmin.from('company_financings').select('company_id, finance_enterprise').eq('if_delete', false).order('id')),
     ]);
     const related = computeRelated(id, {
       companies: companies.data || [], products: products.data || [], executives: executives.data || [], financings: financings.data || [],

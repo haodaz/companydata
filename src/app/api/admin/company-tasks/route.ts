@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 import { PROFILE_TOPIC_KEYS } from '@/lib/company-fields';
 
@@ -16,7 +17,7 @@ export async function GET() {
     const ids = (tasks || []).map(t => t.id);
     const byTask = new Map<string, any[]>();
     if (ids.length) {
-      const { data: logs, error: logErr } = await supabaseAdmin.from('company_crawl_logs').select(LOG_COLUMNS).in('task_id', ids).order('id', { ascending: true }).limit(20000);
+      const { data: logs, error: logErr } = await selectAll(() => supabaseAdmin.from('company_crawl_logs').select(LOG_COLUMNS).in('task_id', ids).order('id', { ascending: true }));
       if (logErr) throw logErr;
       for (const l of logs || []) {
         if (!byTask.has(l.task_id)) byTask.set(l.task_id, []);

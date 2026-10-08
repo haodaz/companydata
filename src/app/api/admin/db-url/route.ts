@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 import { resolveOrCreateCompany } from '@/lib/company-match';
 import { orIlike, pageParams } from '@/lib/pg-filter';
@@ -34,7 +35,7 @@ export async function GET(request: Request) {
     // 各类型数量（不受 type 筛选影响，用于页面顶部统计）
     const stats: Record<string, number> = {};
     if (searchParams.get('withStats') === '1') {
-      const { data: all } = await supabaseAdmin.from('url_sources').select('type').limit(50000);
+      const { data: all } = await selectAll(() => supabaseAdmin.from('url_sources').select('type').order('id'));
       for (const r of all || []) stats[r.type || 'unknown'] = (stats[r.type || 'unknown'] || 0) + 1;
     }
 

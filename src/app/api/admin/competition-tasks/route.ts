@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 
 export const runtime = 'nodejs';
@@ -14,7 +15,7 @@ export async function GET() {
     const ids = (tasks || []).map(t => t.id);
     const byTask = new Map<string, any[]>();
     if (ids.length) {
-      const { data: items, error: e2 } = await supabaseAdmin.from('competition_searches').select(ITEM_COLUMNS).in('task_id', ids).order('id', { ascending: true }).limit(20000);
+      const { data: items, error: e2 } = await selectAll(() => supabaseAdmin.from('competition_searches').select(ITEM_COLUMNS).in('task_id', ids).order('id', { ascending: true }));
       if (e2) throw e2;
       for (const it of items || []) { if (!byTask.has(it.task_id)) byTask.set(it.task_id, []); byTask.get(it.task_id)!.push(it); }
     }

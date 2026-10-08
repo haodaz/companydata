@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 import { JOB_CORE_FIELDS, JOB_FIELD_MAP } from '@/lib/job-fields';
 
@@ -10,9 +11,11 @@ export async function GET(req: Request) {
   try {
     const ids = (new URL(req.url).searchParams.get('companyIds') || '').split(',').map(s => parseInt(s)).filter(Number.isFinite);
 
-    let q = supabaseAdmin.from('jobs').select(['id', 'institute_or_company_name', 'name', 'job_type', 'status', 'remote_type', 'completeness_score', 'human_review_status', ...JOB_CORE_FIELDS.filter(f => f !== 'title' && f !== 'job_type' && f !== 'remote_type')].join(',')).limit(20000);
-    if (ids.length) q = q.in('company_id', ids);
-    const { data, error } = await q;
+    const { data, error } = await selectAll(() => {
+      let q = supabaseAdmin.from('jobs').select(['id', 'institute_or_company_name', 'name', 'job_type', 'status', 'remote_type', 'completeness_score', 'human_review_status', ...JOB_CORE_FIELDS.filter(f => f !== 'title' && f !== 'job_type' && f !== 'remote_type')].join(',')).order('id');
+      if (ids.length) q = q.in('company_id', ids);
+      return q;
+    });
     if (error) throw error;
     const jobs: any[] = data || [];
 
@@ -25,13 +28,17 @@ export async function GET(req: Request) {
 
     const count = (fn: (j: any) => boolean) => jobs.filter(fn).length;
     // 赛事 + 企业画像完整度（新表不存在时静默为 0）
-    let cq = supabaseAdmin.from('competitions').select('status, reward_types, offer_track').limit(20000);
-    if (ids.length) cq = cq.in('organizer_company_id', ids);
-    const { data: comps } = await cq;
+    const { data: comps } = await selectAll(() => {
+      let cq = supabaseAdmin.from('competitions').select('status, reward_types, offer_track').order('id');
+      if (ids.length) cq = cq.in('organizer_company_id', ids);
+      return cq;
+    });
     const compRows: any[] = comps || [];
-    let cpq = supabaseAdmin.from('companies').select('completeness_score, profile_crawled_at').limit(50000);
-    if (ids.length) cpq = cpq.in('id', ids);
-    const { data: compRowsC } = await cpq;
+    const { data: compRowsC } = await selectAll(() => {
+      let cpq = supabaseAdmin.from('companies').select('completeness_score, profile_crawled_at').order('id');
+      if (ids.length) cpq = cpq.in('id', ids);
+      return cpq;
+    });
     const scored = (compRowsC || []).filter((c: any) => c.completeness_score != null);
     const [companies, urls] = await Promise.all([
       ids.length ? Promise.resolve({ count: ids.length }) : supabaseAdmin.from('companies').select('id', { count: 'exact', head: true }),

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 import { orIlike, pageParams } from '@/lib/pg-filter';
 import { COMPANY_EDITABLE_KEYS } from '@/lib/company-fields';
@@ -45,7 +46,7 @@ export async function GET(request: Request) {
     let stats: Record<string, number> | undefined;
     if (searchParams.get('withStats') === '1') {
       stats = { total: 0, reviewed: 0 };
-      const { data: all } = await supabaseAdmin.from('companies').select('segment, human_review_status').limit(50000);
+      const { data: all } = await selectAll(() => supabaseAdmin.from('companies').select('segment, human_review_status').order('id'));
       for (const r of all || []) { stats.total++; const k = r.segment || 'none'; stats[k] = (stats[k] || 0) + 1; if (r.human_review_status === 'complete') stats.reviewed++; }
     }
 
@@ -80,7 +81,8 @@ export async function POST(request: Request) {
 
     // 已存在的同名企业
     const existing = new Set<string>();
-    const { data: all } = await supabaseAdmin.from('companies').select('name').limit(50000);
+    // 同名去重要看全库：以前只看到前 1000 家，第 1001 家以后的同名企业会被重复建档
+    const { data: all } = await selectAll(() => supabaseAdmin.from('companies').select('name').order('id'));
     for (const r of all || []) existing.add(String(r.name).toLowerCase());
 
     const fresh = Array.from(rows.entries()).filter(([k]) => !existing.has(k)).map(([, v]) => v);

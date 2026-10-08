@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 import { orIlike, pageParams } from '@/lib/pg-filter';
 import { requireDownload } from '@/lib/download-permission';
@@ -16,10 +17,13 @@ export async function GET(request: Request) {
     const search = searchParams.get('search') || '';
     const get = (k: string) => searchParams.get(k) || '';
 
+    // 导出要翻页读全量，所以查询写成「每次新建」的函数
+    const build = () => {
     let query = supabaseAdmin
       .from('jobs')
       .select('*, company_ref:companies(id, name, name_en, segment, industry)', { count: 'exact' })
-      .order('updated_at', { ascending: false });
+      .order('updated_at', { ascending: false })
+      .order('id', { ascending: false });
 
     if (search) query = query.or(orIlike(['name', 'title_cn', 'institute_or_company_name', 'program_name', 'location', 'department'], search));
     if (get('jobType')) query = query.in('job_type', get('jobType').split(','));
@@ -31,14 +35,18 @@ export async function GET(request: Request) {
     if (get('missingJd') === '1') query = query.or('responsibilities.is.null,responsibilities.eq.');
     if (get('review') === 'none') query = query.is('human_review_status', null);
     else if (get('review')) query = query.eq('human_review_status', get('review'));
+    return query;
+    };
 
-    const { data, count, error } = exportAll ? await query.limit(20000) : await query.range(from, to);
+    const { data, count, error } = exportAll
+      ? await selectAll(build).then(r => ({ ...r, count: r.data.length }))
+      : await build().range(from, to);
     if (error) throw error;
 
     let stats: Record<string, number> | undefined;
     if (searchParams.get('withStats') === '1') {
       stats = { total: 0, open: 0, graduate: 0, intern: 0, program: 0, remote: 0, overseas: 0, reviewed: 0, missing_jd: 0 };
-      const { data: all } = await supabaseAdmin.from('jobs').select('job_type, status, remote_type, accepts_overseas_students, human_review_status, responsibilities').limit(100000);
+      const { data: all } = await selectAll(() => supabaseAdmin.from('jobs').select('job_type, status, remote_type, accepts_overseas_students, human_review_status, responsibilities').order('id'));
       for (const r of all || []) {
         stats.total++;
         if (r.status === 'open') stats.open++;

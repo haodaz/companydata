@@ -110,10 +110,17 @@ function ToolCompanyInner() {
     deepLinkHandled.current = key;
     (async () => {
       try {
+        // 同一家企业已经有一个还没跑过的单家画像任务，就直接打开它——以前每点一次「画像」都新建一个同名任务
+        if (single) {
+          const list = await (await fetch('/api/admin/company-tasks')).json();
+          const reuse = (list.tasks || []).find((t: any) => t.status === 'draft' && t.items?.length === 1 && t.items[0].company_id === single);
+          if (reuse) { await fetchTasks(); setActiveTaskId(reuse.id); router.replace('/admin/tool-company'); return; }
+        }
         const name = single ? `单家画像 · ${params.get('name') || `企业 #${single}`}` : `画像 · ${ids.length} 家（${new Date().toLocaleDateString('zh-CN')}）`;
         const created = await (await fetch('/api/admin/company-tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, topics: PROFILE_TOPICS.map(t => t.key), skip_filled: false, model_id: currentModel, created_by: user?.email || '' }) })).json();
         if (!created.ok) throw new Error(created.error);
-        await fetch('/api/admin/company-tasks/companies', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ taskId: created.task.id, companyIds: ids }) });
+        const added = await (await fetch('/api/admin/company-tasks/companies', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ taskId: created.task.id, companyIds: ids }) })).json();
+        if (!added.ok) throw new Error(added.error);
         await fetchTasks();
         setActiveTaskId(created.task.id);
         router.replace('/admin/tool-company');

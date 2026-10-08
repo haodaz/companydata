@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 import { COMPANY_HEALTH_FIELDS, SEGMENT_LABELS, hasValue } from '@/lib/company-fields';
 
@@ -13,9 +14,11 @@ export async function GET(request: Request) {
   try {
     const segment = new URL(request.url).searchParams.get('segment') || '';
     const cols = ['id', 'name', 'segment', 'industry', 'human_review_status', 'completeness_score', 'profile_crawled_at', 'profile_updated_at', ...COMPANY_HEALTH_FIELDS.map(f => f.key)];
-    let q = supabaseAdmin.from('companies').select(Array.from(new Set(cols)).join(', ')).limit(50000);
-    if (segment === 'none') q = q.is('segment', null); else if (segment) q = q.eq('segment', segment);
-    const { data: companies, error } = await q;
+    const { data: companies, error } = await selectAll(() => {
+      let q = supabaseAdmin.from('companies').select(Array.from(new Set(cols)).join(', ')).order('id');
+      if (segment === 'none') q = q.is('segment', null); else if (segment) q = q.eq('segment', segment);
+      return q;
+    });
     if (error) throw error;
     const rows = (companies || []) as any[];
     const ids = new Set(rows.map(r => r.id));
@@ -29,10 +32,10 @@ export async function GET(request: Request) {
 
     // 子实体覆盖 + 动态新鲜度
     const [fin, news, exe, prod] = await Promise.all([
-      supabaseAdmin.from('company_financings').select('company_id').eq('if_delete', false).limit(100000),
-      supabaseAdmin.from('company_news').select('company_id, publish_date').eq('if_delete', false).limit(100000),
-      supabaseAdmin.from('company_executives').select('company_id').eq('if_delete', false).limit(100000),
-      supabaseAdmin.from('company_products').select('company_id').eq('if_delete', false).limit(100000),
+      selectAll(() => supabaseAdmin.from('company_financings').select('company_id').eq('if_delete', false).order('id')),
+      selectAll(() => supabaseAdmin.from('company_news').select('company_id, publish_date').eq('if_delete', false).order('id')),
+      selectAll(() => supabaseAdmin.from('company_executives').select('company_id').eq('if_delete', false).order('id')),
+      selectAll(() => supabaseAdmin.from('company_products').select('company_id').eq('if_delete', false).order('id')),
     ]);
     const coverage = (list: any[] | null) => { const s = new Set<number>(); for (const r of list || []) if (ids.has(r.company_id)) s.add(r.company_id); return s.size; };
     const latestNews = new Map<number, string>();
@@ -76,7 +79,7 @@ export async function GET(request: Request) {
       .map(r => ({ id: r.id, name: r.name, segment: r.segment, completeness_score: r.completeness_score, profile_crawled_at: r.profile_crawled_at }));
 
     // 成本：画像流水线的 token 日志按企业聚合
-    const { data: usage } = await supabaseAdmin.from('token_usage_logs').select('institution, total_tokens, total_cost_usd, model_id, created_at').eq('tool_name', 'company-pipeline').limit(100000);
+    const { data: usage } = await selectAll(() => supabaseAdmin.from('token_usage_logs').select('institution, total_tokens, total_cost_usd, model_id, created_at').eq('tool_name', 'company-pipeline').order('id'));
     const byCompany = new Map<string, { calls: number; tokens: number; cost: number }>();
     const cost = { calls: 0, tokens: 0, usd: 0 };
     for (const u of usage || []) {
@@ -88,7 +91,7 @@ export async function GET(request: Request) {
       byCompany.set(k, cur);
     }
     const costliest = Array.from(byCompany.entries()).map(([name, v]) => ({ name, ...v })).sort((a, b) => b.cost - a.cost).slice(0, 10);
-    const { data: logsAgg } = await supabaseAdmin.from('company_crawl_logs').select('status, cost_usd, llm_calls').limit(100000);
+    const { data: logsAgg } = await selectAll(() => supabaseAdmin.from('company_crawl_logs').select('status, cost_usd, llm_calls').order('id'));
     const runs = { total: 0, success: 0, failed: 0 };
     for (const l of logsAgg || []) { runs.total++; if (l.status === 'success') runs.success++; else if (l.status === 'failed') runs.failed++; }
 

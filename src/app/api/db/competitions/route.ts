@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 import { orIlike, pageParams } from '@/lib/pg-filter';
 import { upsertCompetitions } from '@/lib/competition-store';
@@ -36,7 +37,7 @@ export async function GET(request: Request) {
 
     let stats: Record<string, number> | undefined;
     if (searchParams.get('withStats') === '1') {
-      const { data: all } = await supabaseAdmin.from('competitions').select('status, reward_types, level, human_review_status').limit(50000);
+      const { data: all } = await selectAll(() => supabaseAdmin.from('competitions').select('status, reward_types, level, human_review_status').order('id'));
       stats = { total: 0, open: 0, hardware: 0, cash: 0, internship: 0, offer: 0, credits: 0, global: 0, reviewed: 0 };
       for (const r of all || []) {
         stats.total++;

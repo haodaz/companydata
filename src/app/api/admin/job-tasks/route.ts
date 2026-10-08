@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 
 export const runtime = 'nodejs';
@@ -15,7 +16,7 @@ export async function GET() {
     const ids = (tasks || []).map(t => t.id);
     const byTask = new Map<string, any[]>();
     if (ids.length) {
-      const { data: logs, error: logErr } = await supabaseAdmin.from('job_crawl_logs').select(LOG_COLUMNS).in('task_id', ids).order('id', { ascending: true }).limit(20000);
+      const { data: logs, error: logErr } = await selectAll(() => supabaseAdmin.from('job_crawl_logs').select(LOG_COLUMNS).in('task_id', ids).order('id', { ascending: true }));
       if (logErr) throw logErr;
       for (const l of logs || []) {
         const { job_count, ...rest } = l as any;
