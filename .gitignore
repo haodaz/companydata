@@ -53,3 +53,4 @@ scripts/video/package*.json
 
 # 补跑脚本的断点进度
 scripts/.rerun-*.json
+scripts/.check-recruit-links.json

@@ -10,6 +10,7 @@
  */
 import { fetchJinaUrl } from '@/lib/agents/fetcher';
 import { findCampusUrls } from '@/lib/agents/finder-pipeline';
+import { recruitLinkHealth } from '@/lib/agents/link-health';
 
 export type RecruitKind = 'campus' | 'intern' | 'social' | 'careers';
 export interface RecruitLink { kind: RecruitKind; url: string; text: string }
@@ -73,6 +74,29 @@ const pick = (links: RecruitLink[], kind: RecruitKind) => {
   return c[0]?.url || null;
 };
 
+/**
+ * 选出来的入口先打开看一眼：往年的招聘项目页会「页面不存在 / 已关停」，失效的换同类下一个，每类最多试 3 个。
+ */
+async function keepAlive(all: RecruitLink[]): Promise<Omit<RecruitEntry, 'via'>> {
+  let links = [...all];
+  const health = new Map<string, Awaited<ReturnType<typeof recruitLinkHealth>>>();
+  const pickAlive = async (kind: RecruitKind) => {
+    for (let i = 0; i < 3; i++) {
+      const u = pick(links, kind);
+      if (!u) return null;
+      if (!health.has(u)) health.set(u, await recruitLinkHealth(u));
+      if (health.get(u)!.status !== 'dead') return u;
+      links = links.filter(l => l.url !== u);
+    }
+    return null;
+  };
+  const campus = await pickAlive('campus');
+  const intern = await pickAlive('intern');
+  const social = await pickAlive('social');
+  const careers = (await pickAlive('careers')) || social;
+  return { campus, intern, social, careers, links };
+}
+
 export async function discoverRecruitEntry(name: string, officialWebsite: string | null | undefined, modelId?: string): Promise<RecruitEntry> {
   let links: RecruitLink[] = [];
   if (officialWebsite) {
@@ -89,7 +113,8 @@ export async function discoverRecruitEntry(name: string, officialWebsite: string
   const dedup = (ls: RecruitLink[]) => { const s = new Set<string>(); return ls.filter(l => !s.has(l.url) && s.add(l.url)); };
   links = dedup(links);
   if (links.length) {
-    return { campus: pick(links, 'campus'), intern: pick(links, 'intern'), social: pick(links, 'social'), careers: pick(links, 'careers') || pick(links, 'social'), links, via: 'homepage' };
+    const alive = await keepAlive(links);
+    if (alive.campus || alive.intern || alive.social || alive.careers) return { ...alive, via: 'homepage' };
   }
 
   // 官网上一个都没找到：退回联网搜索
@@ -99,7 +124,10 @@ export async function discoverRecruitEntry(name: string, officialWebsite: string
       kind: (u.type === 'careers' ? 'careers' : u.subtype === 'intern' || u.subtype === 'remote_intern' ? 'intern' : u.type === 'campus' ? 'campus' : 'careers') as RecruitKind,
       url: u.url, text: u.title || '',
     })).filter((l: RecruitLink) => !AGGREGATOR.test(l.url) && !bareHomepage(l.url));
-    if (mapped.length) return { campus: pick(mapped, 'campus'), intern: pick(mapped, 'intern'), social: null, careers: pick(mapped, 'careers'), links: dedup(mapped), via: 'search' };
+    if (mapped.length) {
+      const alive = await keepAlive(dedup(mapped));
+      if (alive.campus || alive.intern || alive.careers) return { ...alive, social: null, via: 'search' };
+    }
   } catch (e: any) {
     // 模型欠费 / 额度用完不能当成「没找到」，抛出去让调用方停下来
     if (/402|Payment Required|credits are depleted|insufficient_quota|exceeded your current quota/i.test(e?.message || '')) throw e;
