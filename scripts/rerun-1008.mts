@@ -18,11 +18,14 @@ const { fetchBaseAndLinks, fetchAndEvaluateBatch } = await import('../src/lib/ag
 const { structureJobData } = await import('../src/lib/agents/structurer-job');
 const { upsertJobsFromLog } = await import('../src/lib/job-store');
 
-const MODEL = 'gemini-3.8-flash';
+const MODEL = process.argv.find(a => a.startsWith('--model='))?.slice(8) || 'gemini-3.8-flash';
 const phase = process.argv[2] || 'all';
 const arg = (k: string, d: number) => Number((process.argv.find(a => a.startsWith(`--${k}=`)) || '').split('=')[1] || d);
 const CONC = arg('conc', 6), LIMIT = arg('limit', 0);
 const ts = () => new Date().toLocaleTimeString('zh-CN', { hour12: false });
+// 模型欠费 / 额度用完：整个脚本停下，别把失败记成「已处理」
+const BILLING = /402|Payment Required|credits are depleted|insufficient_quota|exceeded your current quota/i;
+const stopForBilling = (msg: string) => { if (BILLING.test(msg)) { console.log(`[${ts()}] ══ 模型额度用完（${msg.slice(0, 120)}），已停下。充值后重新运行会从断点继续。`); process.exit(2); } };
 const withTimeout = <T,>(p: Promise<T>, ms: number) => Promise.race([p, new Promise<T>((_, rej) => setTimeout(() => rej(new Error(`超时 ${ms / 1000}s`)), ms))]);
 
 // ─────────── A 招聘入口 ───────────
@@ -58,6 +61,8 @@ async function phaseA() {
       prog[c.id] = { via: r.via, campus, careers, intern: r.intern, social: r.social };
       console.log(`[${ts()}] ${++n}/${todo.length} ${c.name}　${r.via}　${[r.campus && '校招', r.intern && '实习', r.social && '社招', r.careers && '总入口'].filter(Boolean).join('/') || '—'}　${Math.round((Date.now() - t0) / 1000)}s`);
     } catch (e: any) {
+      if (BILLING.test(e.message)) fs.writeFileSync(PROG, JSON.stringify(prog));
+      stopForBilling(e.message);
       tally.error++;
       console.log(`[${ts()}] ${++n}/${todo.length} ${c.name}　出错：${e.message}`);
     }
@@ -128,6 +133,8 @@ async function phaseB() {
       console.log(`[${ts()}] ${log.company}　${log.target_url}\n           岗位 ${r.jobs.length}，入库 ${saved}，详情页 ${sub.length}，${Math.round((Date.now() - t0) / 1000)}s`);
     } catch (e: any) {
       await patch({ fetcher_status: 'failed', error_message: e.message });
+      if (BILLING.test(e.message)) await supabaseAdmin.from('job_tasks').update({ status: 'completed', notes: '模型额度用完中途停下，没跑完的页面下次运行会重跑。' }).eq('id', task.id);
+      stopForBilling(e.message);
       console.log(`[${ts()}] ${log.company}　${log.target_url}　出错：${e.message}`);
     }
   };

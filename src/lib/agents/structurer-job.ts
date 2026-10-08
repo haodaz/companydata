@@ -108,6 +108,8 @@ ${jobSchemaForPrompt()}
       jobs: Array.isArray(parsed.jobs) ? parsed.jobs.filter((j: any) => j && typeof j === 'object') : [],
     };
   } catch (error: any) {
+    // 模型欠费 / 额度用完往外抛，别被当成「这一页没岗位」
+    if (/402|Payment Required|credits are depleted|insufficient_quota|exceeded your current quota/i.test(error?.message || '')) throw error;
     console.error('Structurer Agent Error:', error);
     return null;
   }

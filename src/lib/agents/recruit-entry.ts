@@ -100,6 +100,10 @@ export async function discoverRecruitEntry(name: string, officialWebsite: string
       url: u.url, text: u.title || '',
     })).filter((l: RecruitLink) => !AGGREGATOR.test(l.url) && !bareHomepage(l.url));
     if (mapped.length) return { campus: pick(mapped, 'campus'), intern: pick(mapped, 'intern'), social: null, careers: pick(mapped, 'careers'), links: dedup(mapped), via: 'search' };
-  } catch (e: any) { console.error('[recruit-entry] search', e?.message || e); }
+  } catch (e: any) {
+    // 模型欠费 / 额度用完不能当成「没找到」，抛出去让调用方停下来
+    if (/402|Payment Required|credits are depleted|insufficient_quota|exceeded your current quota/i.test(e?.message || '')) throw e;
+    console.error('[recruit-entry] search', e?.message || e);
+  }
   return { campus: null, intern: null, social: null, careers: null, links: [], via: 'none' };
 }
