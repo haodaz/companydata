@@ -10,11 +10,13 @@ import { SimRunner, SimStage, TraceCompare, enterFullscreen } from '@/components
 import { traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tzLabel, type InterviewTurn, type RubricItem } from '@/lib/skill-lab';
 
-type Mode = 'career' | 'test' | 'learn' | 'solve' | 'ledger' | 'eco' | 'jd';
-const ALL_MODES: Mode[] = ['career', 'test', 'learn', 'solve', 'ledger', 'eco', 'jd'];
+type Mode = 'career' | 'teach' | 'test' | 'learn' | 'solve' | 'ledger' | 'eco' | 'jd';
+const ALL_MODES: Mode[] = ['career', 'teach', 'test', 'learn', 'solve', 'ledger', 'eco', 'jd'];
 
 const MODES: { key: Mode; label: string; icon: string }[] = [
-  { key: 'test', label: '考考我', icon: 'test' },
+  // 都是数字职人在说话：我教你 = 他上台演示给你看；考考你 = 你自己上手（考核，也是体验）
+  { key: 'teach', label: '我教你', icon: 'play' },
+  { key: 'test', label: '考考你', icon: 'test' },
   { key: 'learn', label: '教教我', icon: 'learn' },
   { key: 'solve', label: '问问我', icon: 'solve' },
   { key: 'ledger', label: '我被用在哪', icon: 'ledger' },
@@ -34,6 +36,7 @@ function Ico({ n, s = 20 }: { n: string; s?: number }) {
     jd: <><path d="M6.5 3h7.5l4.5 4.5V21h-12z" /><path d="M14 3v4.5h4.5M9.5 12.5h6M9.5 16.5h6" /></>,
     career: <><circle cx="12" cy="12" r="8.5" /><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z" /></>,
     back: <path d="M15 5.5 8.5 12l6.5 6.5" />,
+    play: <><circle cx="12" cy="12" r="8.5" /><path d="M10.2 8.6v6.8l5.4-3.4z" fill="currentColor" stroke="none" /></>,
   };
   return <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>{P[n]}</svg>;
 }
@@ -110,7 +113,7 @@ const HUB_CSS = `
 .hub-stat span { font-size: 10.5px; color: rgba(255,255,255,.5); letter-spacing: .1em; }
 .hub-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; max-width: 560px; }
 .hub-skills span { padding: 3px 10px; border-radius: 999px; font-size: 12px; color: rgba(255,255,255,.78); border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.04); }
-.hub-portals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) repeat(3, minmax(0, .78fr)); gap: 10px; margin-top: 22px; position: relative; z-index: 3; }
+.hub-portals { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) repeat(3, minmax(0, .74fr)); gap: 10px; margin-top: 22px; position: relative; z-index: 3; }
 .hub-portal.main { min-height: 104px; padding: 16px 18px; border: 0; background: linear-gradient(125deg, rgba(118,100,255,.95), rgba(140,118,255,.9) 45%, rgba(30,182,206,.88));
   box-shadow: 0 14px 40px rgba(106,92,255,.42), inset 0 1px 0 rgba(255,255,255,.3); }
 .hub-portal.main .ic { color: #fff; }
@@ -520,6 +523,15 @@ export default function SpacePage() {
     if (goRef.current && u.get('m') !== 'test') setMode('test', true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // 「我教你」：一进来就由数字职人自己上台走一遍（有专家示范轨迹的才放得出来，没有就停在测试页让人点）
+  const taughtOnce = useRef(false);
+  useEffect(() => {
+    if (mode !== 'teach') { taughtOnce.current = false; return; }
+    if (taughtOnce.current || answering || !space) return;
+    const sk = space.skill;
+    if (space.sim?.steps?.length && sk?.expert_trace) { taughtOnce.current = true; setDemo(sk.expert_trace); setAnswering(true); }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, space]);
   useEffect(() => { chatEnd.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, [turns]);
 
   const post = async (path: string, body: Record<string, unknown>) => {
@@ -707,7 +719,8 @@ export default function SpacePage() {
     { k: '跨越', v: places, u: '地' },
   ];
   const portals: { key: Mode; label: string; icon: string; sub: string; main?: boolean }[] = [
-    { key: 'test', label: '考考我', icon: 'test', sub: stat[0].v ? `${stat[0].v} 人考过` : '走一遍我的一天', main: true },
+    { key: 'teach', label: '我教你', icon: 'play', sub: skill?.expert_trace && sim ? '看我把这一天走一遍' : '先让老师傅教我一遍', main: true },
+    { key: 'test', label: '考考你', icon: 'test', sub: stat[0].v ? `${stat[0].v} 人考过 · 换你上手` : '换你上手走一遍', main: true },
     { key: 'learn', label: '教教我', icon: 'learn', sub: draft ? '等第一位老师傅' : `学自 ${skill.expert_name}`, main: true },
     { key: 'solve', label: '问问我', icon: 'solve', sub: stat[2].v ? `解过 ${stat[2].v} 次` : '把真实问题交给我', main: true },
     { key: 'ledger', label: '我被用在哪', icon: 'ledger', sub: served ? `${places} 地 · ${served} 人次` : '每一次调用都记账' },
@@ -755,7 +768,7 @@ export default function SpacePage() {
       )}
 
       {/* ── 考验新人 ── */}
-      {mode === 'test' && answering && sim && (
+      {(mode === 'test' || mode === 'teach') && answering && sim && (
         <SimStage title={space.title} role="rookie" immersive={!!sim.art} onExit={() => { setStageReport(null); setAnswering(false); }} header={
           <div className="lab-stage-fields">
             {field(rookie.name, v => setRookie(r => ({ ...r, name: v })), '新兵姓名')}
@@ -784,7 +797,7 @@ export default function SpacePage() {
         </SimStage>
       )}
 
-      {mode === 'test' && !(answering && sim) && (
+      {(mode === 'test' || mode === 'teach') && !(answering && sim) && (
         <div className="lab-in" style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))', alignItems: 'start' }}>
           <div className="lab-glass" style={{ padding: 22, minWidth: 0 }}>
             <Label>THE TASK · {space.time_limit_min} MIN</Label>
@@ -795,11 +808,11 @@ export default function SpacePage() {
 
             {!answering ? (
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 18 }}>
-                <button className="lab-btn" disabled={!!busy} onClick={() => { if (sim?.art) enterFullscreen(); setAnswering(true); }}>🎯 {sim ? '让新兵上操作台走一遍' : '让新兵走一遍'}</button>
+                <button className="lab-btn" disabled={!!busy} onClick={() => { if (sim?.art) enterFullscreen(); setAnswering(true); }}>🎯 {sim ? '换你上操作台走一遍' : '换你走一遍'}</button>
                 <button className="lab-btn ghost" disabled={!!busy} onClick={() => submit('ai', false)}>让通用 AI {sim ? '上台操作' : '裸答'}</button>
                 <button className="lab-btn ghost" disabled={!!busy || !skill} title={skill ? '' : '先让专家来教一遍'}
                   onClick={() => { if (sim && skill?.expert_trace) { setDemo(skill.expert_trace); setAnswering(true); } else submit('ai', true); }}>
-                  让 AI 核心亲自{sim ? '走一遍（看得见）' : '答'}
+                  {sim ? '我教你：看我走一遍' : '我教你：看我怎么答'}
                 </button>
               </div>
             ) : (
