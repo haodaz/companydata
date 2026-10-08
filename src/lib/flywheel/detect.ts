@@ -154,7 +154,7 @@ async function scanProbe(key: string, ask: string, model: string): Promise<any[]
 async function campusRecruiterLeads(): Promise<number> {
   const { data } = await supabaseAdmin.from('jobs').select('company_id, name, source_url')
     .eq('status', 'open').not('company_id', 'is', null)
-    .or('name.ilike.%校园招聘%,name.ilike.%校招%,name.ilike.%雇主品牌%,name.ilike.%campus recruit%,name.ilike.%university relations%,name.ilike.%early career%')
+    .or('name.ilike.%校园招聘%,name.ilike.%校招%,name.ilike.%雇主品牌%,name.ilike.%校园大使%,name.ilike.%campus recruit%,name.ilike.%university relations%,name.ilike.%early career%')
     .limit(500);
   const byCo = new Map<number, any>();
   for (const j of data || []) if (!byCo.has(j.company_id)) byCo.set(j.company_id, j);

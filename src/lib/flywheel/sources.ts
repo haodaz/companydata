@@ -28,7 +28,7 @@ export const SOURCES: Record<string, { label: string; weight: number; group: Sig
   web_expansion: { label: '新基地 / 研发中心 / 投产', weight: 3, group: 'web' },
   web_ats: { label: '新开校招站点', weight: 4, group: 'web' },
   // 站内数据推出来的前瞻信号
-  lead_campus_recruiter: { label: '在招校招经理 / 雇主品牌', weight: 4, group: 'web' },
+  lead_campus_recruiter: { label: '在招校招经理 / 雇主品牌 / 校园大使', weight: 4, group: 'web' },
   // ToC（预留）
   toc_search: { label: 'ToC 搜索', weight: 1, group: 'toc' },
   toc_view: { label: 'ToC 浏览', weight: 0.5, group: 'toc' },
