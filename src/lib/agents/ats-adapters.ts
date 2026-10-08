@@ -32,6 +32,11 @@ export function listAllUrl(url: string): string {
       if (/\/position\/\d+\/detail/.test(u.pathname)) return url; // 已经是单个岗位
       return `${u.origin}/${seg}/position/list?current=1&limit=100`;
     }
+    // moka 招聘首页（#/ 或没有路由）只有企业介绍和宣传图，岗位列表在 #/jobs
+    if (/(^|\.)mokahr\.com$/i.test(u.hostname) && /\/(campus|social)[-_]recruitment\//.test(u.pathname) && /^(#!?\/?)?$/.test(u.hash)) {
+      u.hash = '#/jobs';
+      return u.toString();
+    }
   } catch { /* 原样 */ }
   return url;
 }
