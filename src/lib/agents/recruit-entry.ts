@@ -19,6 +19,11 @@ export interface RecruitEntry { campus: string | null; intern: string | null; so
 /** 招聘平台：企业自己的招聘板块常托管在这些域名上 */
 const ATS = /(hotjob\.cn|mokahr\.com|zhiye\.com|beisen\.com|jobs\.feishu\.cn|dingtalkcloud\.com|myworkdayjobs\.com|greenhouse\.io|lever\.co|smartrecruiters\.com|successfactors|taleo\.net|avature\.net|icims\.com|51job\.com\/(?!\w*\.php)|wintalent\.cn|zhaopin\.cn\/\w+|hirede\.com|jobs\.\w+\.com)/i;
 /** 第三方招聘网站，不算官方入口 */
+/** 搜索常带回来的「能打开但不是招聘入口」：文件、新闻稿、联系我们 / 关于我们 */
+const NOT_ENTRY_RE = /\.(pdf|docx?|xlsx?|pptx?|zip)(\?|#|$)|news|xinwen|\/article\/|\/contact|lianxi|aboutus|\/about(\.|\/|$)/i;
+const RECRUITISH = /join|career|job|recruit|zhaopin|talent|rencai|campus|xiaoyuan|\/hr\b/i;
+/** 网址带招聘字样的（/about/careers、/contact/joinUs）照样算入口；公众号文章不在这里拦（小公司校招公告常只发公众号） */
+const NOT_ENTRY = { test: (u: string) => { let d = u; try { d = decodeURIComponent(u); } catch { /* 原样 */ } return NOT_ENTRY_RE.test(u) && !RECRUITISH.test(d) && !/加入|招聘|校招|人才|实习/.test(d); } };
 const AGGREGATOR = /(zhipin\.com|liepin\.com|lagou\.com|zhaopin\.com|nowcoder\.com|shixiseng\.com|yingjiesheng\.com|gaoxiaojob\.com|haitou\.cc|linkedin\.com|indeed\.|glassdoor\.|kanzhun\.com|maimai\.cn|zhihu\.com|weibo\.com|baike\.)/i;
 
 /** 只是某个网站的首页根路径——搜索常把企业官网首页当成「招聘总入口」报上来，这不算入口 */
@@ -123,7 +128,7 @@ export async function discoverRecruitEntry(name: string, officialWebsite: string
     const mapped: RecruitLink[] = (r.urls || []).map((u: any) => ({
       kind: (u.type === 'careers' ? 'careers' : u.subtype === 'intern' || u.subtype === 'remote_intern' ? 'intern' : u.type === 'campus' ? 'campus' : 'careers') as RecruitKind,
       url: u.url, text: u.title || '',
-    })).filter((l: RecruitLink) => !AGGREGATOR.test(l.url) && !bareHomepage(l.url));
+    })).filter((l: RecruitLink) => !AGGREGATOR.test(l.url) && !bareHomepage(l.url) && !NOT_ENTRY.test(l.url));
     if (mapped.length) {
       const alive = await keepAlive(dedup(mapped));
       if (alive.campus || alive.intern || alive.careers) return { ...alive, social: null, via: 'search' };
