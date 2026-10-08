@@ -91,11 +91,11 @@ async function phaseB() {
   const { data: doneTasks } = await supabaseAdmin.from('job_tasks').select('id').eq('created_by', 'rerun-1008');
   const doneUrls = new Set<string>();
   if (doneTasks?.length) {
-    const { data: dl } = await supabaseAdmin.from('job_crawl_logs').select('target_url').in('task_id', doneTasks.map((t: any) => t.id)).eq('structurer_status', 'success');
+    const { data: dl } = await supabaseAdmin.from('job_crawl_logs').select('target_url').in('task_id', doneTasks.map((t: any) => t.id)).eq('structurer_status', 'success').gt('jobs_saved', 0);
     for (const r of dl || []) doneUrls.add(r.target_url);
   }
   const list = [...urls.values()].filter(u => !doneUrls.has(u.url));
-  if (doneUrls.size) console.log(`[${ts()}] 跳过本次补跑里已抓过的 ${doneUrls.size} 个页面`);
+  if (doneUrls.size) console.log(`[${ts()}] 跳过本次补跑里已抓到岗位的 ${doneUrls.size} 个页面`);
   console.log(`[${ts()}] B 岗位重抓：${list.length} 个招聘平台页面`);
   if (!list.length) return;
 

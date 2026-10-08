@@ -39,16 +39,33 @@ export function listAllUrl(url: string): string {
 const strip = (v: unknown) => String(v ?? '').replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
 
 /** hotjob 并发打快了会直接断开连接（fetch failed），每个请求最多试 3 次、间隔递增 */
-async function hotjobPost(path: string, suite: string, form: Record<string, string>): Promise<any> {
+async function hotjobPost(origin: string, path: string, suite: string, form: Record<string, string>): Promise<any> {
   let last: any;
   for (let i = 0; i < 3; i++) {
-    try { return await hotjobOnce(path, suite, form); } catch (e) { last = e; await new Promise(r => setTimeout(r, 800 * (i + 1))); }
+    try { return await hotjobOnce(origin, path, suite, form); } catch (e) { last = e; await new Promise(r => setTimeout(r, 800 * (i + 1))); }
   }
   throw last;
 }
 
-async function hotjobOnce(path: string, suite: string, form: Record<string, string>): Promise<any> {
-  const r = await fetch(`https://wecruit.hotjob.cn/wecruit/positionInfo/${path}/SU${suite}?iSaJAx=isAjax&request_locale=zh_CN`, {
+/**
+ * 老版 hotjob 站点（faw-vw.hotjob.cn 这种）首页只是个跳转壳，内容装在 iframe 里，渲染服务拿到的是空白。
+ * 它自己是调 /wecruit/common/getSLD 拿真实地址再跳过去的，这里照做。
+ */
+async function hotjobResolve(url: string): Promise<string> {
+  if (/\/SU[0-9a-f]{16,}\//i.test(url)) return url;
+  try {
+    const u = new URL(url);
+    const r = await fetch(`${u.origin}/wecruit/common/getSLD`, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `sld=${encodeURIComponent(u.host)}`, signal: AbortSignal.timeout(15000) });
+    const j = await r.json();
+    const link = j?.data?.linkData?.link;
+    if (typeof link === 'string' && /\/SU[0-9a-f]{16,}\//i.test(link)) return link;
+  } catch { /* 解析不了就原样返回，交给渲染兜底 */ }
+  return url;
+}
+
+async function hotjobOnce(origin: string, path: string, suite: string, form: Record<string, string>): Promise<any> {
+  // 接口跟着站点自己的域名走：企业可能挂在 faw-zhaopin.hotjob.cn 这类自己的子域名上
+  const r = await fetch(`${origin}/wecruit/positionInfo/${path}/SU${suite}?iSaJAx=isAjax&request_locale=zh_CN`, {
     method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams(form).toString(), signal: AbortSignal.timeout(20000),
   });
@@ -61,10 +78,12 @@ async function hotjobOnce(path: string, suite: string, form: Record<string, stri
  * hotjob：调列表 + 详情接口，拼成 markdown（每个岗位一段 ### Source，链接是它真实的详情页）。
  * 页面是 school / index 取校招（recruitType=1），social 取社招（2）；范围是「全部」时两种都取。
  */
-export async function hotjobMarkdown(url: string, scope: 'campus' | 'all'): Promise<{ markdown: string; count: number } | null> {
+export async function hotjobMarkdown(rawUrl: string, scope: 'campus' | 'all'): Promise<{ markdown: string; count: number } | null> {
+  const url = await hotjobResolve(rawUrl);
   const m = url.match(/\/SU([0-9a-f]{16,})\//i);
   if (!m) return null;
   const suite = m[1];
+  const origin = new URL(url).origin;
   const page = (new URL(url).pathname.split('/').pop() || '').toLowerCase();
   // 页面本身就说明了是哪类：校招页只取校招、社招页只取社招；认不出的页面才看任务范围
   const types = page.startsWith('social') ? ['2'] : /^(school|campus|index|intern)/.test(page) ? ['1'] : scope === 'all' ? ['1', '2'] : ['1'];
@@ -77,7 +96,7 @@ export async function hotjobMarkdown(url: string, scope: 'campus' | 'all'): Prom
     const before = rows.length;
     let size = 50;
     for (let p = 1; p <= 200; p++) {
-      const d = await hotjobPost('listPosition', suite, { isFrompb: 'true', recruitType: t, pageSize: String(size), currentPage: String(p) });
+      const d = await hotjobPost(origin, 'listPosition', suite, { isFrompb: 'true', recruitType: t, pageSize: String(size), currentPage: String(p) });
       const list = d?.pageForm?.pageData || [];
       if (p === 1 && list.length) size = list.length;
       rows.push(...list.map((x: any) => ({ ...x, _type: t })));
@@ -91,13 +110,13 @@ export async function hotjobMarkdown(url: string, scope: 'campus' | 'all'): Prom
   const details: any[] = new Array(rows.length);
   for (let i = 0; i < rows.length; i += 3) {
     await Promise.all(rows.slice(i, i + 3).map(async (r, k) => {
-      try { details[i + k] = await hotjobPost('listPositionDetail', suite, { postId: r.postId }); } catch { details[i + k] = null; }
+      try { details[i + k] = await hotjobPost(origin, 'listPositionDetail', suite, { postId: r.postId }); } catch { details[i + k] = null; }
     }));
   }
 
   const blocks = rows.map((r, i) => {
     const d = details[i] || {};
-    const link = `https://wecruit.hotjob.cn/SU${suite}/pb/posDetail.html?postId=${r.postId}&postType=${r._type}`;
+    const link = `${origin}/SU${suite}/pb/posDetail.html?postId=${r.postId}&postType=${r._type}`;
     const lines = [
       `### Source: [${r.postName}](${link})`, '',
       `# ${r.postName}`,
