@@ -2,7 +2,7 @@
  * Fetcher Agent（企业版）：抓取招聘页面 Markdown，并让大模型从页面链接里挑出岗位详情页 / 岗位列表页继续抓。
  * 与院校版同一套两段式：fetchBaseAndLinks（主页 + 选子页面）→ fetchAndEvaluateBatch（分批抓取 + 判定是否有用）。
  */
-import { generateContent } from '@/lib/llm-client';
+import { generateContent, generateCheap } from '@/lib/llm-client';
 import { logTokenUsage } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { isAtsHost } from '@/lib/url-types';
@@ -124,7 +124,7 @@ export async function fetchBaseAndLinks(url: string, modelId: string = 'gemini-3
 
     if (allLinks.length > 0) {
       try {
-        const result = await generateContent(`
+        const result = await generateCheap(`
         You are a smart crawler working on a company's recruiting website. Here is the list of links found on one page.
         Select up to ${ats === 'moka' || ats === 'feishu' ? MAX_CANDIDATES_ATS : MAX_CANDIDATES} links that are MOST LIKELY to be:
           (a) an INDIVIDUAL JOB POSTING page (a single role with its description), or
@@ -152,7 +152,7 @@ export async function fetchBaseAndLinks(url: string, modelId: string = 'gemini-3
           .filter((u: unknown): u is string => typeof u === 'string' && known.has(u)) // 只接受页面上真实存在的链接
           .slice(0, ats === 'moka' || ats === 'feishu' ? MAX_CANDIDATES_ATS : MAX_CANDIDATES);
 
-        await logTokenUsage({ tool_name: 'fetcher', task_name: `Sub-page Discovery (${MAX_CANDIDATES} links)`, institution: url, model_id: modelId, usageMetadata: result.usageMetadata, success: true, batch_id: batchId })
+        await logTokenUsage({ tool_name: 'fetcher', task_name: `Sub-page Discovery (${MAX_CANDIDATES} links)`, institution: url, model_id: result.model || modelId, usageMetadata: result.usageMetadata, success: true, batch_id: batchId })
           .catch(e => console.error('Token logging failed', e));
       } catch (e) {
         console.error('LLM link selection failed', e);
@@ -181,7 +181,7 @@ export async function fetchAndEvaluateBatch(urls: string[], modelId: string = 'g
       const block = `\n\n---\n### Source: [Sub-page](${res.url})\n\n${res.markdown}\n\n`;
 
       try {
-        const evalResult = await generateContent(`
+        const evalResult = await generateCheap(`
         You are a crawler evaluating a fetched page from a company's recruiting website.
         Does this page contain at least ONE CONCRETE JOB OPENING — a specific role with a title plus some of the following?${JOB_INDICATORS}
 
@@ -199,7 +199,7 @@ export async function fetchAndEvaluateBatch(urls: string[], modelId: string = 'g
           usefulUrls.push(res.url);
         }
 
-        await logTokenUsage({ tool_name: 'fetcher', task_name: 'Evaluate Sub-page', institution: res.url, model_id: modelId, usageMetadata: evalResult.usageMetadata, success: true, batch_id: batchId })
+        await logTokenUsage({ tool_name: 'fetcher', task_name: 'Evaluate Sub-page', institution: res.url, model_id: evalResult.model || modelId, usageMetadata: evalResult.usageMetadata, success: true, batch_id: batchId })
           .catch(e => console.error('Token log fail', e));
       } catch {
         // 判定失败时保留页面，宁可多给 Structurer 一些内容也不丢数据

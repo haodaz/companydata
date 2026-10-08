@@ -22,6 +22,8 @@ function getGeminiClient(): GoogleGenerativeAI {
 
 export interface LLMResponse {
   text: string;
+  /** 实际用的模型（generateCheap 可能换了模型，记 token 用量时以它为准） */
+  model?: string;
   usageMetadata: {
     promptTokenCount: number;
     candidatesTokenCount: number;
@@ -185,3 +187,27 @@ async function generateOpenAI(
   };
 }
 
+
+
+/**
+ * 简单的活（挑链接、判断页面有没有岗位、归一、岗位结构化）固定用便宜模型，不跟着页面上选的模型走。
+ * 便宜模型出错（额度、限流、空返回）时退回调用方给的模型，活照样干完。环境变量 CHEAP_MODEL 可改。
+ */
+export const cheapModel = () => process.env.CHEAP_MODEL || 'gemini-3.8-flash';
+
+export async function generateCheap(
+  prompt: string,
+  fallbackModel: string,
+  options?: { jsonMode?: boolean; fast?: boolean },
+): Promise<LLMResponse> {
+  const cheap = cheapModel();
+  try {
+    const r = await generateContent(prompt, cheap, options);
+    if (r.text?.trim()) return { ...r, model: cheap };
+  } catch (e: any) {
+    if (resolveModel(fallbackModel) === cheap) throw e;
+    console.warn(`[llm] 便宜模型 ${cheap} 失败，改用 ${fallbackModel}：${String(e?.message || e).slice(0, 120)}`);
+  }
+  const r = await generateContent(prompt, fallbackModel, options);
+  return { ...r, model: resolveModel(fallbackModel) };
+}

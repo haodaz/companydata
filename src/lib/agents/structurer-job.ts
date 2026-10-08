@@ -2,7 +2,7 @@
  * Structurer Agent（企业版）：把抓到的招聘页面 Markdown 结构化为岗位列表。
  * 字段 schema 由 src/lib/job-fields.ts 生成，改字段只改那里。
  */
-import { generateContent } from '@/lib/llm-client';
+import { generateCheap } from '@/lib/llm-client';
 import { logTokenUsage } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { jobSchemaForPrompt, JOB_FIELDS } from '@/lib/job-fields';
@@ -97,9 +97,9 @@ ${jobSchemaForPrompt()}
       ${markdown.substring(0, 500000)}
     `;
 
-    const result = await generateContent(prompt, modelId, { jsonMode: true, fast: true });
+    const result = await generateCheap(prompt, modelId, { jsonMode: true, fast: true });
 
-    await logTokenUsage({ tool_name: 'structurer-job', task_name: `Extract Jobs${hint ? ` · ${hint}` : ''}`, institution: company, model_id: modelId, usageMetadata: result.usageMetadata, success: true, batch_id: batchId })
+    await logTokenUsage({ tool_name: 'structurer-job', task_name: `Extract Jobs${hint ? ` · ${hint}` : ''}`, institution: company, model_id: result.model || modelId, usageMetadata: result.usageMetadata, success: true, batch_id: batchId })
       .catch(e => console.error('Token logging failed', e));
 
     const parsed = parseJsonLoose(result.text);

@@ -4,7 +4,7 @@
  */
 import { supabaseAdmin } from '@/lib/supabase';
 import { selectAll } from '@/lib/supabase-all';
-import { generateContent } from '@/lib/llm-client';
+import { generateCheap } from '@/lib/llm-client';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
 import { resolveCompanyLoose } from '@/lib/company-match';
@@ -33,8 +33,8 @@ export async function normalizeCompanyIndustries(model: string): Promise<number>
     const prompt = `把下面每个「行业写法」归到一个标准行业。标准行业只能取：${INDUSTRIES.join(' / ')}。
 ${batch.map((s, k) => `${k + 1}. ${s}`).join('\n')}
 返回 JSON：{ "items": [{ "n": 编号, "industry": "标准行业" }] }`;
-    const r = await generateContent(prompt, model, { jsonMode: true, fast: true });
-    await logTokenUsage({ tool_name: 'flywheel', task_name: 'Normalize · 企业行业', institution: '', model_id: model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
+    const r = await generateCheap(prompt, model, { jsonMode: true, fast: true });
+    await logTokenUsage({ tool_name: 'flywheel', task_name: 'Normalize · 企业行业', institution: '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
     const items = parseJsonLoose(r.text)?.items || [];
     const rows = (Array.isArray(items) ? items : []).map((x: any) => {
       const raw = batch[Number(x?.n) - 1];
@@ -78,8 +78,8 @@ ${batch.map((r, k) => `${k + 1}. ${sourceLabel(r.source)}｜${String(r.query || 
 返回 JSON：{ "items": [{ "n": 编号, "industry": null, "job_function": null, "career_family": null, "profession": null, "company": null }] }`;
     let items: any[] = [];
     try {
-      const r = await generateContent(prompt, model, { jsonMode: true, fast: true });
-      await logTokenUsage({ tool_name: 'flywheel', task_name: 'Normalize · 需求信号', institution: '', model_id: model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
+      const r = await generateCheap(prompt, model, { jsonMode: true, fast: true });
+      await logTokenUsage({ tool_name: 'flywheel', task_name: 'Normalize · 需求信号', institution: '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
       items = parseJsonLoose(r.text)?.items || [];
     } catch (e: any) {
       if (/402|Payment Required|credits are depleted|insufficient_quota|exceeded your current quota/i.test(e?.message || '')) throw e;
