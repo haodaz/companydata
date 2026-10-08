@@ -15,6 +15,8 @@ export async function proxy(req: NextRequest) {
     if (pathname.startsWith('/api/auth/')) return NextResponse.next();
     // 首页（/lab）是公开的宣传页，它只问这一个接口
     if (pathname === '/api/lab/landing' && req.method === 'GET') return NextResponse.next();
+    // 飞轮信号接入：以后的 ToC 带 FLYWHEEL_INGEST_KEY，没有登录态；放进去由路由自己验密钥
+    if (pathname === '/api/flywheel/signal' && req.method === 'POST' && req.headers.get('x-flywheel-key')) return NextResponse.next();
     // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉
     const headers = new Headers(req.headers);
     headers.delete(INVITED); headers.delete(INVITED_BY);

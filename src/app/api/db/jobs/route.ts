@@ -3,6 +3,7 @@ import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 import { orIlike, pageParams } from '@/lib/pg-filter';
 import { requireDownload } from '@/lib/download-permission';
+import { trackDemand } from '@/lib/flywheel/signals';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -16,6 +17,11 @@ export async function GET(request: Request) {
     const { page, pageSize, from, to } = pageParams(searchParams, 50);
     const search = searchParams.get('search') || '';
     const get = (k: string) => searchParams.get(k) || '';
+
+    if (page === 1 && !exportAll) trackDemand(request, [
+      search && { source: 'admin_job_search', query: search },
+      get('companyId') && { source: 'admin_job_company', company_id: parseInt(get('companyId')) || null, query: '' },
+    ].filter(Boolean) as any);
 
     // 导出要翻页读全量，所以查询写成「每次新建」的函数
     const build = () => {

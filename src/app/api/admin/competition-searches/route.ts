@@ -4,6 +4,7 @@ import { resolveCompanyId } from '@/lib/company-match';
 import { upsertCompetitions } from '@/lib/competition-store';
 import { summarizeCost } from '@/lib/company-store';
 import { pageParams } from '@/lib/pg-filter';
+import { trackDemand } from '@/lib/flywheel/signals';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
     };
     if (!row.query && !row.company) return NextResponse.json({ ok: false, error: '请输入检索主题或主办企业' }, { status: 400 });
     const { data, error } = await supabaseAdmin.from('competition_searches').insert(row).select().single();
+    trackDemand(request, { source: 'competition_search', query: row.query || row.company || '', company_id: row.company_id, company_name: row.company });
     if (error) throw error;
     return NextResponse.json({ ok: true, search: data });
   } catch (error: any) {

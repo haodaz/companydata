@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { resolveOrCreateCompany } from '@/lib/company-match';
+import { trackDemand } from '@/lib/flywheel/signals';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -35,6 +36,9 @@ export async function POST(request: Request) {
       const { error } = await supabaseAdmin.from('company_crawl_logs').insert(rows);
       if (error) throw error;
     }
+    // 飞轮里自己排的任务不算需求，不然会自己给自己加热
+    const { data: t } = await supabaseAdmin.from('company_tasks').select('created_by').eq('id', taskId).maybeSingle();
+    if (t?.created_by !== 'flywheel') trackDemand(request, rows.map(r => ({ source: 'company_task', company_id: r.company_id, query: '' })));
     return NextResponse.json({ ok: true, added: rows.length, skipped: ids.size - rows.length + unresolved });
   } catch (error: any) {
     console.error('[CompanyTasks/companies] POST error:', error);

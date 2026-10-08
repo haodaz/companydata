@@ -5,6 +5,7 @@ import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
 import { familyOf } from '@/lib/career-family';
 import { labError } from '@/lib/skill-lab-server';
+import { trackDemand } from '@/lib/flywheel/signals';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -21,6 +22,7 @@ export async function POST(req: NextRequest) {
     const { problem, model } = await req.json();
     const q = String(problem || '').trim().slice(0, 600);
     if (q.length < 4) return NextResponse.json({ ok: false, error: '把问题说具体一点' }, { status: 400 });
+    trackDemand(req, { source: 'lab_problem', query: q });
 
     const { data } = await supabaseAdmin.from('skill_tasks')
       .select('id, profile, jd_snapshot, skill:skills(name, domain, source, expert_name, expert_location)');

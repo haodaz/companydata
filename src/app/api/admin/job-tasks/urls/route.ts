@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { resolveOrCreateCompany } from '@/lib/company-match';
+import { trackDemand } from '@/lib/flywheel/signals';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -39,6 +40,11 @@ export async function POST(request: Request) {
     if (rows.length) {
       const { error } = await supabaseAdmin.from('job_crawl_logs').insert(rows);
       if (error) throw error;
+    }
+    const { data: t } = await supabaseAdmin.from('job_tasks').select('created_by').eq('id', taskId).maybeSingle();
+    if (t?.created_by !== 'flywheel') {
+      const seenCo = new Set<number>();
+      trackDemand(request, rows.filter(r => r.company_id && !seenCo.has(r.company_id) && seenCo.add(r.company_id)).map(r => ({ source: 'job_task', company_id: r.company_id, query: '' })));
     }
     return NextResponse.json({ ok: true, added: rows.length, skipped: urls.length - rows.length });
   } catch (error: any) {

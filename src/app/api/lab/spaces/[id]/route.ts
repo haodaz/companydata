@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { labError, loadSpace } from '@/lib/skill-lab-server';
 import { INVITED } from '@/lib/lab-invite';
+import { trackDemand } from '@/lib/flywheel/signals';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -18,6 +19,9 @@ export async function GET(req: NextRequest, { params }: Ctx) {
       supabaseAdmin.from('skill_submissions').select('*').eq('task_id', id).order('submitted_at', { ascending: true }),
       supabaseAdmin.from('skill_invocations').select('*').eq('task_id', id).order('occurred_at', { ascending: true }),
     ]);
+    const jd: any = (space as any)?.jd_snapshot || {};
+    const prof = jd.career?.profession || jd.title || '';
+    if (prof) trackDemand(req, { source: 'lab_view', query: prof, profession: prof, company_name: jd.company || null, meta: { space: id } });
     return NextResponse.json({ ok: true, space, submissions: subs.data || [], invocations: invs.data || [] });
   } catch (e: any) {
     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });

@@ -4,6 +4,7 @@ import { assignNova } from '@/lib/lab-nova';
 import { buildSpaceFromJd } from '@/lib/agents/skill-lab-build';
 import { structureCareer } from '@/lib/agents/career';
 import { labError } from '@/lib/skill-lab-server';
+import { trackDemand } from '@/lib/flywheel/signals';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -97,6 +98,7 @@ export async function POST(req: Request) {
 
     if (profession) {
       // ── 职业探索：职业名 → 典型岗位 + 生涯地图 → 同一条流水线 ──
+      trackDemand(req, { source: 'lab_space', query: profession, profession });
       setBuild(buildId, { phase: '结构化职业 · 推断典型岗位' });
       const { jd, career } = await structureCareer(profession, model || undefined);
       const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), { hint: CAREER_HINT });
@@ -125,6 +127,7 @@ export async function POST(req: Request) {
     if (!job.responsibilities && !job.overview) return NextResponse.json({ ok: false, error: '这条岗位没有职责 / 要求正文，无法拆解。请选一条 JD 完整的岗位。' }, { status: 400 });
 
     const jd = { company: job.institute_or_company_name || '', title: job.name, responsibilities: job.responsibilities || '', qualifications: job.overview || '' };
+    trackDemand(req, { source: 'lab_space', query: `${jd.company} ${jd.title}`.trim(), company_name: jd.company || null, profession: jd.title });
     const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }));
 
     // 技能集草案：AI 自己推断的，挂成这个空间的技能，等真人专家来校正（专家蒸馏时会覆盖）

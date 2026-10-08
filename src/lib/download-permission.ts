@@ -7,6 +7,7 @@
  */
 import { supabaseAdmin } from '@/lib/supabase';
 import { getSessionUser, type SessionUser } from '@/lib/session';
+import { logDemand } from '@/lib/flywheel/signals';
 
 export type DownloadStatus = 'none' | 'pending' | 'approved' | 'rejected' | 'revoked';
 
@@ -51,6 +52,10 @@ export async function logDownload(user: SessionUser, entry: { target: string; pa
       user_agent: h?.get('user-agent')?.slice(0, 300) || null,
     });
     if (error) console.error('[download-log]', error.message);
+    // 飞轮：导出 = 很强的需求（带筛选条件的导出才说明在意哪一块）
+    const p = (entry.params || {}) as Record<string, any>;
+    const q = [p.search, p.industry, p.jobType && `岗位类型 ${p.jobType}`].filter(Boolean).join(' ');
+    if (q || p.companyId) await logDemand({ source: 'download', actor: user.email || null, query: q, company_id: Number(p.companyId) || null, meta: { target: entry.target.slice(0, 200) } });
   } catch (e: any) {
     console.error('[download-log]', e?.message || e);
   }

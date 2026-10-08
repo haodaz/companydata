@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { ApiOutlined, UserOutlined, SwapOutlined, DownOutlined, GlobalOutlined, LogoutOutlined, LinkOutlined, BankOutlined, ReadOutlined, FileSearchOutlined, FileTextOutlined, BarChartOutlined, SafetyCertificateOutlined, MenuOutlined, ExperimentOutlined, ExportOutlined, ProfileOutlined, HeartOutlined, TrophyOutlined } from '@ant-design/icons';
+import { ApiOutlined, UserOutlined, SwapOutlined, DownOutlined, GlobalOutlined, LogoutOutlined, LinkOutlined, BankOutlined, ReadOutlined, FileSearchOutlined, FileTextOutlined, BarChartOutlined, SafetyCertificateOutlined, MenuOutlined, ExperimentOutlined, ExportOutlined, ProfileOutlined, HeartOutlined, TrophyOutlined, FireOutlined } from '@ant-design/icons';
 import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
 import { UserProvider, useUser } from '@/lib/user-context';
 import { BRAND } from '@/lib/theme';
@@ -25,6 +25,7 @@ const NAV: NavItem[] = [
   { key: 'db-url',       icon: <LinkOutlined />,       label: '信息源库',      path: '/admin/db-url',       group: '数据资产' },
   { key: 'db-competition', icon: <TrophyOutlined />,    label: '企业赛事库',    path: '/admin/db-competition', group: '数据资产' },
   { key: 'health-company', icon: <HeartOutlined />,    label: '企业画像健康',  path: '/admin/health-company', group: '数据资产' },
+  { key: 'flywheel',     icon: <FireOutlined />,       label: '需求飞轮',      path: '/admin/flywheel',     group: '数据资产', badge: '新' },
   { key: 'lab',          icon: <ExperimentOutlined />, label: '数字技能空间',  path: '/lab',                group: '实验室', newWindow: true },
   { key: 'journal-url',  icon: <FileSearchOutlined />, label: 'URL 日志',      path: '/admin/journal-url',  group: '运行日志' },
   { key: 'journal-job',  icon: <FileTextOutlined />,   label: '岗位爬取日志',  path: '/admin/journal-job',  group: '运行日志' },

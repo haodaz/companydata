@@ -3,6 +3,7 @@ import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 import { orIlike, pageParams } from '@/lib/pg-filter';
 import { COMPANY_EDITABLE_KEYS } from '@/lib/company-fields';
+import { trackDemand } from '@/lib/flywheel/signals';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -17,6 +18,11 @@ export async function GET(request: Request) {
 
     let query = supabaseAdmin.from('companies').select('*', { count: 'exact' }).order('id', { ascending: false });
     if (search) query = query.or(orIlike(['name', 'name_en', 'industry'], search));
+    // 飞轮：后台有人在找这个（只记第一页，翻页不重复算）
+    if (page === 1) trackDemand(request, [
+      search && { source: 'admin_company_search', query: search },
+      industry && { source: 'admin_company_search', query: industry, industry: null, meta: { filter: 'industry' } },
+    ].filter(Boolean) as any);
     const review = searchParams.get('review') || '';
     if (review === 'none') query = query.is('human_review_status', null);
     else if (review) query = query.eq('human_review_status', review);
