@@ -56,9 +56,12 @@ export function listAllUrl(url: string): string {
 export async function resolveListUrl(url: string): Promise<string> {
   try {
     const u = new URL(url);
-    if (FEISHU.test(u.hostname) && !u.pathname.split('/').filter(Boolean).length) {
+    // 根地址或内推入口（/referral/…）：从首页读主站点路径。页面里的 "path" 是主站点（生数是 index、云启是 yunqijobs），
+    // "website_path" 可能是另一个没岗位的入口（生数的 692892），只在没有主路径时兜底
+    const first = u.pathname.split('/').filter(Boolean)[0];
+    if (FEISHU.test(u.hostname) && (!first || first === 'referral')) {
       const html = await fetch(u.origin + '/', { signal: AbortSignal.timeout(15000) }).then(r => r.text());
-      const seg = html.match(/website_path\\?"\s*:\s*\\?"([a-z0-9_-]+)/i)?.[1];
+      const seg = html.match(/(?<!website_)path\\?"\s*:\s*\\?"(?!https)([a-z0-9_-]+)/i)?.[1] || html.match(/website_path\\?"\s*:\s*\\?"([a-z0-9_-]+)/i)?.[1];
       if (seg) return `${u.origin}/${seg}/position/list?current=1&limit=100`;
     }
   } catch { /* 读不到就按默认写法 */ }
