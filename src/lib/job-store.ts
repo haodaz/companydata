@@ -42,6 +42,9 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
   for (const raw of jobsOf(structuredJson)) {
     const job = sanitizeJob(raw);
     if (!job.name) continue;
+    // 非空布尔列：模型给 null 时批量 upsert 会写进 null 撞约束（GPT 系模型常这样）。是否删除由人工决定，不让 AI 写
+    if (typeof job.is_in_campus !== 'boolean') job.is_in_campus = false;
+    delete job.if_delete;
     // 对方的枚举字段：AI 没直接给出时，从我们自己的字段推导
     if (!job.kind && job.job_type) job.kind = KIND_BY_JOB_TYPE[job.job_type] || null;
     if (!job.accept_foreign && job.visa_sponsorship !== null) job.accept_foreign = job.visa_sponsorship ? 'accepted' : 'not_accepted';
