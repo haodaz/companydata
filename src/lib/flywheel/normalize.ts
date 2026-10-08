@@ -16,6 +16,8 @@ const pick = <T extends string>(list: readonly T[], v: unknown): T | null => (li
 
 /** 企业库里的行业写法 → 标准行业（只处理词典里没有、规则也对不上的） */
 export async function normalizeCompanyIndustries(model: string): Promise<number> {
+  // 别的进程（回填脚本、另一次检测）可能刚写过词典：先丢掉缓存再读，免得同一批写法又让模型归一一遍
+  invalidateAliases();
   const aliases = await aliasMap();
   const { data } = await selectAll(() => supabaseAdmin.from('companies').select('industry, sub_industry').order('id'));
   const raws = new Set<string>();
@@ -59,8 +61,10 @@ export async function normalizePending(model: string, limit = 400): Promise<{ do
     .is('normalized_at', null).order('created_at', { ascending: false }).limit(limit);
   const rows = data || [];
   let done = 0, batches = 0;
-  for (let i = 0; i < rows.length; i += 40) {
-    const batch = rows.slice(i, i + 40);
+  const chunks: typeof rows[] = [];
+  for (let i = 0; i < rows.length; i += 40) chunks.push(rows.slice(i, i + 40));
+  // 四批并行：一千条信号从十几分钟降到几分钟
+  const runChunk = async (batch: typeof rows) => {
     batches++;
     const prompt = `下面是一批「有人在意什么」的需求信号（来源｜原话）。把每条归到四个口径，归不出的填 null，不要硬猜：
 - industry 行业，只能取：${INDUSTRIES.join(' / ')}
@@ -80,7 +84,7 @@ ${batch.map((r, k) => `${k + 1}. ${sourceLabel(r.source)}｜${String(r.query || 
     } catch (e: any) {
       if (/402|Payment Required|credits are depleted|insufficient_quota|exceeded your current quota/i.test(e?.message || '')) throw e;
       console.warn('[flywheel] normalize batch failed', e?.message);
-      continue;
+      return;
     }
     const byN = new Map<number, any>((Array.isArray(items) ? items : []).map((x: any) => [Number(x?.n), x]));
     const now = new Date().toISOString();
@@ -101,6 +105,7 @@ ${batch.map((r, k) => `${k + 1}. ${sourceLabel(r.source)}｜${String(r.query || 
       await supabaseAdmin.from('demand_signals').update(patch).eq('id', r.id);
       done++;
     }
-  }
+  };
+  for (let i = 0; i < chunks.length; i += 4) await Promise.all(chunks.slice(i, i + 4).map(runChunk));
   return { done, batches };
 }

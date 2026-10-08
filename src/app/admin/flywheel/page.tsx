@@ -29,10 +29,9 @@ export default function FlywheelPage() {
   const [scanWeb, setScanWeb] = useState(true);
   const [forceAll, setForceAll] = useState(false);
   const [normalizing, setNormalizing] = useState(false);
-  const [runLog, setRunLog] = useState<string[]>([]);
 
-  const load = useCallback(async () => {
-    setLoading(true);
+  const load = useCallback(async (quiet = false) => {
+    if (!quiet) setLoading(true);
     try {
       const j = await (await fetch('/api/flywheel', { cache: 'no-store' })).json();
       if (!j.ok) throw new Error(j.error);
@@ -42,17 +41,30 @@ export default function FlywheelPage() {
   }, [message]);
   useEffect(() => { load(); }, [load]);
 
+  // 检测在服务端后台跑，进度写在今天那行的 stats.run 里：跑着的时候每 3 秒刷新一次
+  const run = data?.days?.[0]?.day === today() ? data.days[0].stats?.run : null;
+  const detecting = run?.status === 'running' && Date.now() - Date.parse(run.startedAt) < 15 * 60_000;
+  const wasDetecting = React.useRef(false);
+  useEffect(() => {
+    if (wasDetecting.current && !detecting && run) {
+      if (run.status === 'done') message.success('检测完成，缺口和排产已更新');
+      else if (run.status === 'failed') message.error(`检测失败：${run.error || '看下面的过程'}`);
+    }
+    wasDetecting.current = detecting;
+    if (!detecting) return;
+    const t = setTimeout(() => load(true), 3000);
+    return () => clearTimeout(t);
+  }, [detecting, run, load, message]);
+
   const runNow = async () => {
-    setRunning(true); setRunLog([]);
-    const hide = message.loading('检测中：归一 → 前瞻信号 → 算缺口 → 排产，联网扫描要几分钟……', 0);
+    setRunning(true);
     try {
       const j = await (await fetch('/api/flywheel/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: currentModel, scanWeb, forceAll }) })).json();
-      setRunLog(j.log || []);
-      if (!j.ok) throw new Error(j.error);
-      message.success(`检测完成：缺口 ${j.gaps?.length || 0} 个，排产 ${j.actions?.length || 0} 个任务，新盘进企业 ${j.onboarded?.length || 0} 家`);
-      load();
-    } catch (e: any) { message.error(`检测失败：${e.message}`); }
-    finally { hide(); setRunning(false); }
+      if (!j.ok && !j.running) throw new Error(j.error);
+      message.info(j.running ? j.error : '检测已开始，在后台跑，下面能看到进度');
+      await load(true);
+    } catch (e: any) { message.error(`检测没能开始：${e.message}`); }
+    finally { setRunning(false); }
   };
 
   const normalizeNow = async () => {
@@ -173,7 +185,7 @@ export default function FlywheelPage() {
         description="把后台搜索、lab 提问与浏览、任务、下载，以及联网扫到的前瞻信号（宣讲会、融资、校企合作、扩张、新开校招站、热门职位），归一到企业 / 行业 / 职能 / 职业领域看热度；热但数据薄或旧的地方，检测时排成采集任务。"
         extra={<>
           {latest ? <Tag color={ranToday ? 'green' : 'orange'}>上次检测 {latest.day}{ranToday ? '（今天）' : ''}</Tag> : <Tag color="orange">还没检测过</Tag>}
-          <Button icon={<ReloadOutlined />} onClick={load}>刷新</Button>
+          <Button icon={<ReloadOutlined />} onClick={() => load()}>刷新</Button>
           <Button icon={<NodeIndexOutlined />} loading={normalizing} disabled={!data?.pending} onClick={normalizeNow}>归一 {data?.pending || 0} 条</Button>
           <Popconfirm title="立即检测" okText="开始" cancelText="取消" onConfirm={runNow}
             description={<div style={{ maxWidth: 300 }}>
@@ -181,7 +193,7 @@ export default function FlywheelPage() {
               <Checkbox checked={scanWeb} onChange={e => setScanWeb(e.target.checked)}>联网扫前瞻信号（按各自间隔，几分钟）</Checkbox>
               <br /><Checkbox checked={forceAll} disabled={!scanWeb} onChange={e => setForceAll(e.target.checked)}>忽略间隔，{(data?.probes || []).length} 个探针全扫</Checkbox>
             </div>}>
-            <Button type="primary" icon={<ThunderboltOutlined />} loading={running}>立即检测</Button>
+            <Button type="primary" icon={<ThunderboltOutlined />} loading={running || detecting}>{detecting ? '检测中…' : '立即检测'}</Button>
           </Popconfirm>
         </>} />
 
@@ -209,9 +221,11 @@ export default function FlywheelPage() {
         </Card>
       )}
 
-      {runLog.length > 0 && (
-        <Card size="small" style={{ marginBottom: 16 }} title="这次检测的过程">
-          <pre style={{ margin: 0, fontSize: 12, whiteSpace: 'pre-wrap' }}>{runLog.join('\n')}</pre>
+      {run?.log?.length > 0 && (
+        <Card size="small" style={{ marginBottom: 16 }}
+          title={<Space>{detecting ? <Tag color="processing">检测中</Tag> : run.status === 'failed' ? <Tag color="error">失败</Tag> : <Tag color="success">完成</Tag>}今天这次检测的过程</Space>}
+          extra={<Text type="secondary" style={{ fontSize: 12 }}>{fmtTime(run.startedAt)} 开始{run.finishedAt ? ` · ${fmtTime(run.finishedAt)} 结束` : ''}</Text>}>
+          <pre style={{ margin: 0, fontSize: 12, whiteSpace: 'pre-wrap', maxHeight: 260, overflow: 'auto' }}>{run.log.join('\n')}</pre>
         </Card>
       )}
 

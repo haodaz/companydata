@@ -33,9 +33,46 @@ export interface DailyOptions {
   log?: (s: string) => void;
 }
 
-export async function runDaily(opts: DailyOptions) {
-  const log = opts.log || ((s: string) => console.log(`[flywheel] ${s}`));
+/** 检测进度写在当天那行的 stats.run 里：{ status, startedAt, finishedAt, log[], error }，看板轮询它 */
+async function setRun(day: string, patch: Record<string, any>) {
+  const { data } = await supabaseAdmin.from('flywheel_days').select('stats').eq('day', day).maybeSingle();
+  const stats = { ...(data?.stats || {}), run: { ...((data?.stats as any)?.run || {}), ...patch } };
+  await supabaseAdmin.from('flywheel_days').upsert({ day, stats, updated_at: new Date().toISOString() }, { onConflict: 'day' });
+}
+
+/** 有没有正在跑的检测（15 分钟内开始、还没结束的算在跑；超过就当上次中断了） */
+export async function runningDetection(): Promise<{ day: string; startedAt: string } | null> {
   const day = shanghaiDay();
+  const { data } = await supabaseAdmin.from('flywheel_days').select('stats').eq('day', day).maybeSingle();
+  const run = (data?.stats as any)?.run;
+  if (run?.status === 'running' && Date.now() - Date.parse(run.startedAt) < 15 * 60_000) return { day, startedAt: run.startedAt };
+  return null;
+}
+
+export async function runDaily(opts: DailyOptions) {
+  const day = shanghaiDay();
+  const startedAt = new Date().toISOString();
+  const lines: string[] = [];
+  let chain: Promise<unknown> = setRun(day, { status: 'running', startedAt, finishedAt: null, error: null, log: [] });
+  const log = (s: string) => {
+    const line = `${new Date(Date.now() + 8 * 3600_000).toISOString().slice(11, 19)} ${s}`;
+    lines.push(line); console.log(`[flywheel] ${s}`); opts.log?.(s);
+    chain = chain.then(() => setRun(day, { log: lines.slice() })).catch(() => {});
+  };
+  try {
+    const r = await runDailyInner(opts, day, log);
+    await chain;
+    await setRun(day, { status: 'done', finishedAt: new Date().toISOString(), log: lines.slice() });
+    return r;
+  } catch (e: any) {
+    log(`出错：${e?.message || e}`);
+    await chain;
+    await setRun(day, { status: 'failed', finishedAt: new Date().toISOString(), error: String(e?.message || e).slice(0, 500), log: lines.slice() });
+    throw e;
+  }
+}
+
+async function runDailyInner(opts: DailyOptions, day: string, log: (s: string) => void) {
   let model = opts.model;
   const tryModel = async <T,>(fn: (m: string) => Promise<T>): Promise<T> => {
     try { return await fn(model); }
@@ -141,8 +178,9 @@ export async function runDaily(opts: DailyOptions) {
       company: board.dims.company.slice(0, 5).map(r => ({ key: r.label, heat30: r.heat30 })),
     },
   };
+  const { data: prev } = await supabaseAdmin.from('flywheel_days').select('stats').eq('day', day).maybeSingle();
   await supabaseAdmin.from('flywheel_days').upsert({
-    day, stats, gaps, actions, model_id: model, updated_at: new Date().toISOString(),
+    day, stats: { ...stats, run: (prev?.stats as any)?.run }, gaps, actions, model_id: model, updated_at: new Date().toISOString(),
     web: Object.fromEntries(Object.entries(web).map(([k, v]) => [k, v.slice(0, 40)])),
   }, { onConflict: 'day' });
   log(`完成：缺口 ${gaps.length} 个，排产 ${actions.length} 个任务，新盘进企业 ${onboarded.length} 家`);
