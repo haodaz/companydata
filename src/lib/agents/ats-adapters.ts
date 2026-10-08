@@ -66,7 +66,8 @@ export async function hotjobMarkdown(url: string, scope: 'campus' | 'all'): Prom
   if (!m) return null;
   const suite = m[1];
   const page = (new URL(url).pathname.split('/').pop() || '').toLowerCase();
-  const types = page.startsWith('social') ? ['2'] : scope === 'all' ? ['1', '2'] : ['1'];
+  // 页面本身就说明了是哪类：校招页只取校招、社招页只取社招；认不出的页面才看任务范围
+  const types = page.startsWith('social') ? ['2'] : /^(school|campus|index|intern)/.test(page) ? ['1'] : scope === 'all' ? ['1', '2'] : ['1'];
 
   const rows: any[] = [];
   for (const t of types) {

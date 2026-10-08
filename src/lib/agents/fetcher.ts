@@ -58,12 +58,18 @@ export async function fetchJinaUrl(url: string): Promise<string | null> {
     const headers: Record<string, string> = { 'Content-Type': 'application/json', 'Accept': 'text/markdown', 'X-Timeout': '25' };
     // 可选：配了 JINA_API_KEY 就走付费额度（免费额度有频率限制，整批跑上千家企业时容易被限流）
     if (process.env.JINA_API_KEY) headers.Authorization = `Bearer ${process.env.JINA_API_KEY}`;
-    const response = await fetch('https://r.jina.ai/', {
-      method: 'POST', headers, body: JSON.stringify({ url }),
-      signal: AbortSignal.timeout(40000), // 招聘站多为 JS 渲染，给足渲染时间
-    });
-    if (!response.ok) return null;
-    return await response.text();
+    // 被限流（429）或渲染服务临时出错（5xx）时等一等再试：批量补跑上千家时一定会碰到，
+    // 不重试的话这些企业会被当成「官网上没有招聘链接」，白白掉进更贵的联网搜索
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const response = await fetch('https://r.jina.ai/', {
+        method: 'POST', headers, body: JSON.stringify({ url }),
+        signal: AbortSignal.timeout(40000), // 招聘站多为 JS 渲染，给足渲染时间
+      });
+      if (response.ok) return await response.text();
+      if (response.status !== 429 && response.status < 500) return null;
+      await new Promise(r => setTimeout(r, [4000, 12000, 0][attempt]));
+    }
+    return null;
   } catch (e) {
     console.error(`Error fetching ${url}:`, e);
     return null;

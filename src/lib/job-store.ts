@@ -13,10 +13,12 @@ const normUrl = (u: string) => u.trim().toLowerCase().replace(/[#?].*$/, '').rep
 
 export function jobDedupeKey(job: { link?: string | null; job_req_id?: string | null; name: string; location?: string | null }, companyId: number | null, company: string, sourceUrl: string) {
   const own = (job.link || '').trim();
+  // 单页招聘站（moka 等）的岗位链接是 …/116100#/job/<id>：# 后面那段就是岗位本身，不能删
+  const route = /#!?\//.test(own);
   // 列表页上的岗位如果链接就是列表页自己，不算独立链接
-  if (own && normUrl(own) !== normUrl(sourceUrl)) {
-    // 保留 query：很多 ATS 用 ?gh_jid= / ?jobId= 区分岗位
-    return own.trim().toLowerCase().replace(/#.*$/, '').replace(/\/+$/, '');
+  if (own && (route || normUrl(own) !== normUrl(sourceUrl))) {
+    // 保留 query：很多 ATS 用 ?gh_jid= / ?jobId= 区分岗位；保留 #/ 前端路由，只去掉页内锚点
+    return own.trim().toLowerCase().replace(/#(?!!?\/).*$/, '').replace(/\/+$/, '');
   }
   const who = companyId ?? (company || '').trim().toLowerCase();
   const what = (job.job_req_id || job.name).trim().toLowerCase();

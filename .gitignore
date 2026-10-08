@@ -50,3 +50,6 @@ scripts/video/ffmpeg
 scripts/video/node_modules/
 scripts/video/package*.json
 .probe-space.json
+
+# 补跑脚本的断点进度
+scripts/.rerun-*.json
