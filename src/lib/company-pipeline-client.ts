@@ -148,6 +148,29 @@ export async function runCompanyProfile(log: { id: number; company_id: number; c
       if (!(await cb.waitIfPaused())) return { status: 'aborted' };
     }
 
+    // ── 工序 4.9：招聘入口（校招官网 / 招聘总入口任一缺失才跑） ──
+    // 数据部门反馈：972 家跑过画像的企业里校招官网只有 8% 有值——「校招视角」主题顺手报的链接大多不可用。
+    // 这里先爬官网导航找「校园招聘 / 社会招聘 / 实习 / 加入我们」和招聘平台链接，找不到再联网搜；找到的同时存进信息源库。
+    {
+      const cur = snapshot().profile as Record<string, any>;
+      const need = !hasValue(cur.campus_url) && !hasValue(company.campus_url) || !hasValue(cur.careers_url) && !hasValue(company.careers_url);
+      if (need) {
+        emit({ key: 'recruit', title: '工序 4.9: 找招聘入口（先看官网导航里的校招 / 社招 / 实习链接，找不到再联网搜）...', status: 'loading', color: 'blue' });
+        try {
+          const r = await post('/api/agents/company/recruit-entry', { companyId: log.company_id, name: log.company, official_website: cur.official_website || company.official_website || null, model });
+          if (r.success) {
+            const got = Object.fromEntries(Object.entries(r.fields || {}).filter(([, v]) => hasValue(v)));
+            if (Object.keys(got).length) parts.push({ profile: got as any });
+            stepsDone.push('recruit');
+            const f = r.found || {};
+            const list = [f.campus && '校招', f.intern && '实习', f.social && '社招', f.careers && '总入口'].filter(Boolean).join(' / ');
+            done({ status: 'success', color: list ? 'green' : 'orange', title: list ? `工序 4.9 完成: 找到 ${list}（${r.via === 'homepage' ? '官网导航' : '联网搜索'}）` : '工序 4.9: 官网和搜索里都没找到招聘入口' });
+            cb.onData(snapshot());
+          } else done({ status: 'error', color: 'orange', title: `工序 4.9 失败: ${r.error}（不影响其他字段入库）` });
+        } catch (e: any) { done({ status: 'error', color: 'orange', title: `工序 4.9 失败: ${e.message}（不影响其他字段入库）` }); }
+      }
+    }
+
     // ── 工序 5：合并落库 ──
     emit({ key: 'save', title: '工序 5: 合并多来源结果，写入企业库与子实体（只填空，人工锁定 / 定论的不覆盖）...', status: 'loading', color: 'blue' });
     const data = snapshot();
