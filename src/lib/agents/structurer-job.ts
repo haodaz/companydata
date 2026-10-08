@@ -12,7 +12,43 @@ export interface StructuredJobsResult {
   jobs: Record<string, any>[];
 }
 
+/**
+ * 结构化岗位。正文不长就一次调用；长了按「### Source」切成几批并行再合并。
+ *
+ * 以前不论多长都一次丢给模型：一个站上百个岗位（华泰校招 105 个、蓝箭校招 76 个）时，
+ * 输出的 JSON 太长会被截断，后半截岗位整批丢失。现在每批不超过约 2.4 万字，
+ * 每批都带上入口页开头作为共享上下文（校招项目、届别、截止时间这些共有信息在那里）。
+ */
 export async function structureJobData(markdown: string, company: string, hint: string, modelId: string = 'gemini-3.8-flash', batchId?: number, scope: 'campus' | 'all' = 'campus'): Promise<StructuredJobsResult | null> {
+  const SINGLE = 30000, CHUNK = 24000;
+  if (markdown.length <= SINGLE) return structureChunk(markdown, company, hint, modelId, batchId, scope);
+  const sections = markdown.split(/\n(?=### Source: )/);
+  const head = sections[0].slice(0, 6000);
+  const chunks: string[] = [];
+  let cur = '';
+  for (const sec of sections.slice(1)) {
+    if (cur && cur.length + sec.length > CHUNK) { chunks.push(cur); cur = ''; }
+    cur += (cur ? '\n' : '') + sec.slice(0, CHUNK);
+  }
+  if (cur) chunks.push(cur);
+  if (!chunks.length) return structureChunk(markdown.slice(0, 500000), company, hint, modelId, batchId, scope);
+  const shared = `### Source: [入口页（共享上下文：校招项目、届别、截止时间等共有信息看这里；这里列出的岗位只在下面也出现时才输出）]\n\n${head}\n\n`;
+  const results: (StructuredJobsResult | null)[] = [];
+  for (let i = 0; i < chunks.length; i += 3) {
+    results.push(...await Promise.all(chunks.slice(i, i + 3).map(c => structureChunk(shared + c, company, hint, modelId, batchId, scope))));
+  }
+  const ok = results.filter((r): r is StructuredJobsResult => !!r);
+  if (!ok.length) return null;
+  const seen = new Set<string>(), jobs: Record<string, any>[] = [];
+  for (const j of ok.flatMap(r => r.jobs)) {
+    const k = String(j.link || '').trim() || `${j.name}|${j.location}`;
+    if (seen.has(k)) continue;
+    seen.add(k); jobs.push(j);
+  }
+  return { ai_summary: ok.map(r => r.ai_summary).filter(Boolean).join('\n'), jobs };
+}
+
+async function structureChunk(markdown: string, company: string, hint: string, modelId: string, batchId: number | undefined, scope: 'campus' | 'all'): Promise<StructuredJobsResult | null> {
   try {
     const today = new Date().toISOString().slice(0, 10);
     // 提示词顺序为「上下文缓存」优化：固定指令与 schema 前置，变量（公司 / 提示 / 日期 / 正文）后置。

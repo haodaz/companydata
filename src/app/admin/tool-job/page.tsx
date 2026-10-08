@@ -598,7 +598,13 @@ export default function ToolJobPage() {
           {isRunning && !isPaused && <Button icon={<PauseCircleOutlined />} onClick={handlePause} style={{ color: '#fa8c16', borderColor: '#fa8c16' }}>暂停</Button>}
           {isRunning && isPaused && <Button type="primary" icon={<RocketOutlined />} onClick={handleResume} style={{ background: '#52c41a', borderColor: '#52c41a' }}>继续</Button>}
           {taskBusy && <Button danger icon={<StopOutlined />} onClick={handleStop}>{isRunning ? '停止' : '重置运行状态'}</Button>}
-          {activeTask.jobs_total > 0 && <Button onClick={() => router.push('/admin/db-job')}>去校招岗位库审核 →</Button>}
+          {activeTask.jobs_total > 0 && (() => {
+            // 带上企业和「全部类型」：提取到的可能是社招（比如 hr.vivo.com/jobs），岗位库默认的校招口径会把它们藏起来
+            const cos = Array.from(new Map((activeTask.urls || []).filter((i: any) => i.company_id).map((i: any) => [i.company_id, i.company])).entries());
+            const q = new URLSearchParams({ jobType: 'all' });
+            if (cos.length === 1) { q.set('companyId', String(cos[0][0])); q.set('companyName', String(cos[0][1] || '')); }
+            return <Button onClick={() => router.push(`/admin/db-job?${q}`)}>去岗位库看这 {activeTask.jobs_total} 个岗位 →</Button>;
+          })()}
         </div>
 
         <Card variant="borderless" style={{ borderRadius: 12 }}>

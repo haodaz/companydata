@@ -32,14 +32,26 @@ export default function DbJobPage() {
   const [pageSize, setPageSize] = useState(50);
   const [selected, setSelected] = useState<React.Key[]>([]);
   const [exporting, setExporting] = useState(false);
-  const [filters, setFilters] = useState({ search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false, missingJd: false });
+  const [filters, setFilters] = useState({ search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false, missingJd: false, companyId: '', companyName: '' });
+  // 从「校招岗位提取」任务跳过来：?companyId=&companyName=&jobType=all 直接定位到刚提取的那批。
+  // 以前跳过来是默认的「校招口径」，社招岗位被默认筛掉，看起来像「提取成功了库里却没有」。
+  const [urlReady, setUrlReady] = useState(false);
+  useEffect(() => {
+    const u = new URLSearchParams(window.location.search);
+    const jt = u.get('jobType');
+    if (u.get('companyId') || jt || u.get('search')) {
+      setFilters(f => ({ ...f, companyId: u.get('companyId') || '', companyName: u.get('companyName') || '', search: u.get('search') || '', jobType: jt === 'all' ? '' : (jt ?? f.jobType) }));
+    }
+    setUrlReady(true);
+  }, []);
 
   const query = useCallback((extra: Record<string, string> = {}) => new URLSearchParams({
     search: filters.search, jobType: filters.jobType, season: filters.season, remote: filters.remote,
-    status: filters.status, review: filters.review, overseas: filters.overseas ? '1' : '', missingJd: filters.missingJd ? '1' : '', ...extra,
+    status: filters.status, review: filters.review, overseas: filters.overseas ? '1' : '', missingJd: filters.missingJd ? '1' : '', companyId: filters.companyId, ...extra,
   }), [filters]);
 
   const load = useCallback(async () => {
+    if (!urlReady) return;
     setLoading(true);
     try {
       const json = await (await fetch(`/api/db/jobs?${query({ page: String(page), pageSize: String(pageSize), withStats: '1' })}`)).json();
@@ -47,7 +59,7 @@ export default function DbJobPage() {
       setData(json.data); setTotal(json.total); setStats(json.stats || {});
     } catch (e: any) { message.error(`加载失败: ${e.message}`); }
     finally { setLoading(false); }
-  }, [page, pageSize, query]);
+  }, [page, pageSize, query, urlReady]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -184,6 +196,7 @@ export default function DbJobPage() {
       <Panel padding={16}>
         <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap', alignItems: 'center' }}>
           <Input.Search placeholder="搜索岗位 / 企业 / 校招项目 / 地点" allowClear style={{ width: 300 }} onSearch={v => setFilter({ search: v })} />
+          {filters.companyId && <Tag closable color="purple" style={{ padding: '4px 10px', fontSize: 13 }} onClose={() => setFilter({ companyId: '', companyName: '' })}>只看：{filters.companyName || `企业 #${filters.companyId}`}</Tag>}
           <Select value={filters.jobType} style={{ width: 170 }} onChange={v => setFilter({ jobType: v })}
             options={[{ value: CAMPUS_JOB_TYPES.join(','), label: '校招口径（默认）' }, { value: '', label: '全部类型' }, ...toOptions(JOB_TYPE_LABELS)]} />
           <Select value={filters.season} style={{ width: 130 }} onChange={v => setFilter({ season: v })} options={[{ value: '', label: '全部招聘季' }, ...toOptions(RECRUIT_SEASON_LABELS)]} />

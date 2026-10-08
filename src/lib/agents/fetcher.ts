@@ -6,8 +6,11 @@ import { generateContent } from '@/lib/llm-client';
 import { logTokenUsage } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { isAtsHost } from '@/lib/url-types';
+import { atsOf, hotjobMarkdown, listAllUrl } from '@/lib/agents/ats-adapters';
 
 const MAX_CANDIDATES = 15;
+/** moka / 飞书这类招聘平台的列表页一页就是几十个岗位，详情页多挑一些 */
+const MAX_CANDIDATES_ATS = 40;
 
 /** 招聘页上永远不值得抓的链接 */
 const SKIP_LINK = /(login|signin|sign-in|signup|register|account|privacy|cookie|terms|legal|sitemap|facebook\.com|twitter\.com|x\.com|instagram\.com|youtube\.com|linkedin\.com|weibo\.com|\.(png|jpe?g|gif|svg|pdf|zip|mp4)(\?|$))/i;
@@ -33,7 +36,9 @@ function extractLinks(markdown: string, baseUrl: string): { text: string; url: s
     try {
       const resolved = new URL(href, baseUrl);
       if (!/^https?:$/.test(resolved.protocol)) continue;
-      resolved.hash = '';
+      // 单页招聘站的前端路由（moka 的 #/job/<id>、#!/position/1）是不同的页面，不能当页内锚点删掉——
+      // 以前一律删 #，华大九天 13 个岗位的详情链接全塌成同一个首页地址，被当作重复丢了
+      if (!/^#!?\//.test(resolved.hash)) resolved.hash = '';
       const url = resolved.href;
       if (SKIP_LINK.test(url) || url === base.href) continue;
       // 站内链接，或企业托管在 ATS 上的招聘站（careers 页经常跳到 greenhouse / workday / moka 等）
@@ -47,9 +52,15 @@ function extractLinks(markdown: string, baseUrl: string): { text: string; url: s
 
 export async function fetchJinaUrl(url: string): Promise<string | null> {
   try {
-    const response = await fetch(`https://r.jina.ai/${url}`, {
-      headers: { 'Accept': 'text/markdown', 'X-Timeout': '20' },
-      signal: AbortSignal.timeout(30000), // 招聘站多为 JS 渲染，给足渲染时间
+    // 用 POST、网址放在请求体里。GET 的写法（r.jina.ai/<网址>）在请求发出前就把 # 后面丢了，
+    // 渲染服务打开的永远是单页应用的首页那一层：华大九天（moka）只拿到四个分类名，
+    // 改成 POST 后 13 个岗位、每个岗位的完整职责都拿得到（2026-10-08 数据部门反馈）。
+    const headers: Record<string, string> = { 'Content-Type': 'application/json', 'Accept': 'text/markdown', 'X-Timeout': '25' };
+    // 可选：配了 JINA_API_KEY 就走付费额度（免费额度有频率限制，整批跑上千家企业时容易被限流）
+    if (process.env.JINA_API_KEY) headers.Authorization = `Bearer ${process.env.JINA_API_KEY}`;
+    const response = await fetch('https://r.jina.ai/', {
+      method: 'POST', headers, body: JSON.stringify({ url }),
+      signal: AbortSignal.timeout(40000), // 招聘站多为 JS 渲染，给足渲染时间
     });
     if (!response.ok) return null;
     return await response.text();
@@ -85,7 +96,14 @@ export type ExtractScope = 'campus' | 'all';
 
 export async function fetchBaseAndLinks(url: string, modelId: string = 'gemini-3.8-flash', batchId?: number, hint: string = '', scope: ExtractScope = 'campus'): Promise<InitResult> {
   try {
-    const baseMarkdown = await fetchJinaUrl(url);
+    const ats = atsOf(url);
+    // hotjob：直接走它的公开接口，所有岗位连同详情一次拿全，不用再挑子页面
+    if (ats === 'hotjob') {
+      const hj = await hotjobMarkdown(url, scope).catch(e => { console.error('[fetcher] hotjob', e?.message || e); return null; });
+      if (hj && hj.count) return { success: true, base_markdown: `### Source: [Main Page](${url})\n\n（hotjob 接口返回 ${hj.count} 个岗位）\n\n${hj.markdown}\n\n`, candidate_urls: [] };
+    }
+    // 飞书：入口改写成「一次列全」的列表地址
+    const baseMarkdown = await fetchJinaUrl(listAllUrl(url));
     if (!baseMarkdown) {
       return { success: false, base_markdown: '', candidate_urls: [], error_message: `Jina fetch failed for base URL: ${url}` };
     }
@@ -97,7 +115,7 @@ export async function fetchBaseAndLinks(url: string, modelId: string = 'gemini-3
       try {
         const result = await generateContent(`
         You are a smart crawler working on a company's recruiting website. Here is the list of links found on one page.
-        Select up to ${MAX_CANDIDATES} links that are MOST LIKELY to be:
+        Select up to ${ats === 'moka' || ats === 'feishu' ? MAX_CANDIDATES_ATS : MAX_CANDIDATES} links that are MOST LIKELY to be:
           (a) an INDIVIDUAL JOB POSTING page (a single role with its description), or
           (b) a job LIST / search-results page that lists more openings (e.g. "View all jobs", next page, a team's or location's openings).
           (c) a campus-recruitment INFORMATION page: season announcement, programme description (管培 / 专项 / internship programme), timeline / process / FAQ, overseas-student (留学生) session.
@@ -121,7 +139,7 @@ export async function fetchBaseAndLinks(url: string, modelId: string = 'gemini-3
         const known = new Set(allLinks.map(l => l.url));
         selected = (parseJsonLoose(result.text).selected_urls || [])
           .filter((u: unknown): u is string => typeof u === 'string' && known.has(u)) // 只接受页面上真实存在的链接
-          .slice(0, MAX_CANDIDATES);
+          .slice(0, ats === 'moka' || ats === 'feishu' ? MAX_CANDIDATES_ATS : MAX_CANDIDATES);
 
         await logTokenUsage({ tool_name: 'fetcher', task_name: `Sub-page Discovery (${MAX_CANDIDATES} links)`, institution: url, model_id: modelId, usageMetadata: result.usageMetadata, success: true, batch_id: batchId })
           .catch(e => console.error('Token logging failed', e));
