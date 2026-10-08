@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
-import { resolveOrCreateCompany } from '@/lib/company-match';
-import { jobCompleteness } from '@/lib/job-fields';
 import { SEED_CASES } from '@/lib/skill-lab-seed';
 import { SEED_SIMS } from '@/lib/skill-lab-seed-sims';
 import { traceMatch, traceToText } from '@/lib/skill-sim';
@@ -10,7 +8,7 @@ import { labError } from '@/lib/skill-lab-server';
 export const runtime = 'nodejs';
 export const maxDuration = 120;
 
-/** 删掉某个预置空间（及其作答、账本、技能）。岗位库里的真实 JD 保留。 */
+/** 删掉某个预置空间（及其作答、账本、技能）。 */
 async function clearCase(slug: string) {
   const { data: skill } = await supabaseAdmin.from('skills').select('id').eq('slug', slug).maybeSingle();
   if (!skill) return;
@@ -51,26 +49,9 @@ export async function POST(req: Request) {
     await clearCase(slug);
 
     {
-      // 1. 真实 JD → 企业库 + 岗位库
-      const companyId = await resolveOrCreateCompany(c.jd.company);
-      if (companyId) {
-        const { data: co } = await supabaseAdmin.from('companies').select('segment, industry, name_en').eq('id', companyId).single();
-        const fill: Record<string, string> = {};
-        if (!co?.segment) fill.segment = c.jd.segment;
-        if (!co?.industry) fill.industry = c.jd.industry;
-        if (!co?.name_en) fill.name_en = c.jd.company_en;
-        if (Object.keys(fill).length) await supabaseAdmin.from('companies').update(fill).eq('id', companyId);
-      }
-      const jobRow: Record<string, any> = {
-        dedupe_key: c.jd.url.toLowerCase(), company_id: companyId, institute_or_company_name: c.jd.company,
-        name: c.jd.title, kind: c.jd.job_type === 'graduate' ? 'campus_fulltime' : 'campus_fulltime', job_req_id: c.jd.job_req_id, job_type: c.jd.job_type, department: c.jd.department, job_function: c.jd.job_function,
-        program_name: c.jd.program_name, graduation_year: c.jd.graduation_year, location: c.jd.location, country: c.jd.country,
-        responsibilities: c.jd.responsibilities, overview: c.jd.qualifications, recruit_process: c.jd.recruit_process,
-        link: c.jd.url, source_url: c.jd.source_url, status: 'open', last_seen_at: new Date().toISOString(), updated_at: new Date().toISOString(),
-      };
-      jobRow.completeness_score = jobCompleteness(jobRow);
-      const { data: job, error: jobErr } = await supabaseAdmin.from('jobs').upsert(jobRow, { onConflict: 'dedupe_key' }).select('id').single();
-      if (jobErr) throw jobErr;
+      // 预置示范不写岗位库、也不建企业：JD 完整存在空间自己的 jd_snapshot 里就够了。
+      // 以前这里把演示 JD 当真实岗位写进 jobs、顺手把「住院医师规范化培训基地」这种建成企业，
+      // 混进了数据部门的校招岗位库，「原文」只是招聘站首页、对不上具体岗位（2026-10-08 反馈）。
 
       // 2. 技能
       const { data: skill, error: skillErr } = await supabaseAdmin.from('skills').upsert({ ...c.skill, expert_trace: { ...expertTrace, _why: why }, source: 'seed', is_demo: true }, { onConflict: 'slug' }).select('id').single();
@@ -78,7 +59,7 @@ export async function POST(req: Request) {
 
       // 3. 技能空间
       const { data: task, error: taskErr } = await supabaseAdmin.from('skill_tasks').insert({
-        ...c.task, sim, skill_id: skill.id, job_id: job.id, is_demo: true, created_by: 'demo',
+        ...c.task, sim, skill_id: skill.id, job_id: null, is_demo: true, created_by: 'demo',
         jd_snapshot: { company: c.jd.company, title: c.jd.title, job_req_id: c.jd.job_req_id, location: c.jd.location, responsibilities: c.jd.responsibilities, qualifications: c.jd.qualifications, url: c.jd.url, fetched_at: c.jd.fetched_at },
       }).select('id').single();
       if (taskErr) throw taskErr;
