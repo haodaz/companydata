@@ -27,6 +27,8 @@ export interface DailyOptions {
   /** 额度用完时换用的模型 */
   fallbackModel?: string;
   scanWeb?: boolean;
+  /** 忽略探针的扫描间隔，全部扫一遍 */
+  forceAll?: boolean;
   plan?: boolean;
   log?: (s: string) => void;
 }
@@ -51,43 +53,61 @@ export async function runDaily(opts: DailyOptions) {
   const aliasAdded = await tryModel(m => normalizeCompanyIndustries(m));
   log(`企业行业写法新归一 ${aliasAdded} 种`);
 
-  // 2. 站内前瞻：在招校招经理 / 雇主品牌的企业
-  const leads = await campusRecruiterLeads();
-  log(`站内前瞻：在招校招经理 / 雇主品牌 ${leads} 家`);
+  // 2. 站内前瞻：在招校招经理 / 雇主品牌 / 校园大使、社招应届可投、主办 / 冠名学生比赛
+  const leadCampus = await campusRecruiterLeads();
+  const leadEntry = await entryLevelLeads();
+  const leadComp = await competitionLeads();
+  const leads = leadCampus + leadEntry + leadComp;
+  log(`站内前瞻：校招经理 / 雇主品牌 / 校园大使 ${leadCampus} 家 · 社招应届可投 ${leadEntry} 家 · 主办学生比赛 ${leadComp} 家`);
 
   // 3. 联网前瞻
   const web: Record<string, any[]> = {};
   const onboarded: { id: number; name: string; probe: string }[] = [];
+  const skipped: string[] = [];
   if (opts.scanWeb !== false) {
-    for (const p of WEB_PROBES) {
-      try {
-        const items = await tryModel(m => scanProbe(p.key, p.ask.replace(/\{today\}/g, day), m));
-        web[p.key] = items;
-        for (const it of items) {
-          let company_id: number | null = null;
-          if (it.company) {
-            company_id = await resolveCompanyId(it.company).catch(() => null);
-            if (!company_id && p.onboard) {
-              company_id = await resolveOrCreateCompany(it.company).catch(() => null);
-              if (company_id) onboarded.push({ id: company_id, name: it.company, probe: p.key });
+    // 每个探针有自己的间隔（宣讲会 / 融资天天扫，就业报告一个月一次）：上次扫过且没到间隔就跳过
+    const { data: past } = await supabaseAdmin.from('flywheel_days').select('day, web').gte('day', shanghaiDay(Date.now() - 60 * DAY)).lt('day', day).order('day', { ascending: false });
+    const lastRun = new Map<string, string>();
+    for (const d of past || []) for (const k of Object.keys(d.web || {})) if (!lastRun.has(k)) lastRun.set(k, d.day);
+    const due = WEB_PROBES.filter(p => {
+      const last = lastRun.get(p.key);
+      const ok = opts.forceAll || !last || (Date.parse(day) - Date.parse(last)) / DAY >= p.every;
+      if (!ok) skipped.push(`${p.label}（${last} 扫过，每 ${p.every} 天一次）`);
+      return ok;
+    });
+    if (skipped.length) log(`没到间隔、这次跳过：${skipped.join('；')}`);
+    // 三个一组并行扫，一轮控制在几分钟
+    for (let i = 0; i < due.length; i += 3) {
+      await Promise.all(due.slice(i, i + 3).map(async p => {
+        try {
+          const items = await tryModel(m => scanProbe(p.key, p.ask.replace(/\{today\}/g, day), m));
+          web[p.key] = items;
+          for (const it of items) {
+            let company_id: number | null = null;
+            if (it.company) {
+              company_id = await resolveCompanyId(it.company).catch(() => null);
+              if (!company_id && p.onboard) {
+                company_id = await resolveOrCreateCompany(it.company).catch(() => null);
+                if (company_id) onboarded.push({ id: company_id, name: it.company, probe: p.key });
+              }
             }
+            await logDemand({
+              source: `web_${p.key}`, actor: 'flywheel',
+              query: [it.company, it.detail].filter(Boolean).join('｜'),
+              company_id, company_name: it.company || null,
+              industry: (INDUSTRIES as readonly string[]).includes(it.industry) ? it.industry : null,
+              job_function: (JOB_FUNCTIONS as readonly string[]).includes(it.job_function) ? it.job_function : null,
+              profession: it.profession || null,
+              meta: { url: it.url || null, date: it.date || null, city: it.city || null, school: it.school || null, probe: p.key, day },
+            });
           }
-          await logDemand({
-            source: `web_${p.key}`, actor: 'flywheel',
-            query: [it.company, it.detail].filter(Boolean).join('｜'),
-            company_id, company_name: it.company || null,
-            industry: (INDUSTRIES as readonly string[]).includes(it.industry) ? it.industry : null,
-            job_function: (JOB_FUNCTIONS as readonly string[]).includes(it.job_function) ? it.job_function : null,
-            profession: it.profession || null,
-            meta: { url: it.url || null, date: it.date || null, city: it.city || null, school: it.school || null, probe: p.key, day },
-          });
+          log(`联网「${p.label}」${items.length} 条`);
+        } catch (e: any) {
+          if (BILLING.test(e?.message || '')) throw e;
+          log(`联网「${p.label}」失败：${e?.message}`);
+          web[p.key] = [];
         }
-        log(`联网「${p.label}」${items.length} 条`);
-      } catch (e: any) {
-        if (BILLING.test(e?.message || '')) throw e;
-        log(`联网「${p.label}」失败：${e?.message}`);
-        web[p.key] = [];
-      }
+      }));
     }
   }
 
@@ -111,6 +131,8 @@ export async function runDaily(opts: DailyOptions) {
     totals: board.totals,
     onboarded: onboarded.length,
     leads,
+    leadsDetail: { campus: leadCampus, entry: leadEntry, competition: leadComp },
+    skippedProbes: skipped,
     normalized: norm.done,
     aliasAdded,
     top: {
@@ -166,6 +188,45 @@ async function campusRecruiterLeads(): Promise<number> {
   for (const [cid, j] of byCo) {
     if (skip.has(cid)) continue;
     await logDemand({ source: 'lead_campus_recruiter', actor: 'flywheel', company_id: cid, query: `在招「${j.name}」`, job_function: '人力资源', meta: { url: j.source_url } });
+    n++;
+  }
+  return n;
+}
+
+/** 站内前瞻：社招里「应届可投 / 经验不限」的岗位多的企业（≥ 2 个），两周内同一家只记一次 */
+async function entryLevelLeads(): Promise<number> {
+  const { data } = await selectAll(() => supabaseAdmin.from('jobs').select('company_id, name, seniority, exp_years, job_type')
+    .eq('status', 'open').eq('job_type', 'full_time').not('company_id', 'is', null).or('seniority.eq.entry,exp_years.eq.0').order('id'));
+  const byCo = new Map<number, string[]>();
+  for (const j of data as any[]) byCo.set(j.company_id, [...(byCo.get(j.company_id) || []), j.name]);
+  const hits = [...byCo].filter(([, names]) => names.length >= 2);
+  if (!hits.length) return 0;
+  const { data: had } = await supabaseAdmin.from('demand_signals').select('company_id')
+    .eq('source', 'lead_entry_level').gte('created_at', new Date(Date.now() - 14 * DAY).toISOString()).in('company_id', hits.map(h => h[0]));
+  const skip = new Set((had || []).map(r => r.company_id));
+  let n = 0;
+  for (const [cid, names] of hits) {
+    if (skip.has(cid)) continue;
+    await logDemand({ source: 'lead_entry_level', actor: 'flywheel', company_id: cid, query: `社招 ${names.length} 个岗位应届可投（${names.slice(0, 3).join('、')}）` });
+    n++;
+  }
+  return n;
+}
+
+/** 站内前瞻：赛事库里报名中 / 即将开放、由企业主办或冠名的学生比赛，30 天内同一家只记一次 */
+async function competitionLeads(): Promise<number> {
+  const { data } = await supabaseAdmin.from('competitions').select('organizer_company_id, organizer, name, status, sponsor_tier, source_url')
+    .not('organizer_company_id', 'is', null).in('status', ['open', 'upcoming']).limit(1000);
+  const byCo = new Map<number, any>();
+  for (const c of data || []) if (c.sponsor_tier !== 'university' && !byCo.has(c.organizer_company_id)) byCo.set(c.organizer_company_id, c);
+  if (!byCo.size) return 0;
+  const { data: had } = await supabaseAdmin.from('demand_signals').select('company_id')
+    .eq('source', 'lead_competition').gte('created_at', new Date(Date.now() - 30 * DAY).toISOString()).in('company_id', [...byCo.keys()]);
+  const skip = new Set((had || []).map(r => r.company_id));
+  let n = 0;
+  for (const [cid, c] of byCo) {
+    if (skip.has(cid)) continue;
+    await logDemand({ source: 'lead_competition', actor: 'flywheel', company_id: cid, query: `主办「${c.name}」`, meta: { url: c.source_url } });
     n++;
   }
   return n;

@@ -21,7 +21,7 @@ export async function GET(req: Request) {
     const bySource: Record<string, number> = {};
     for (const g of groups || []) bySource[g.source] = (bySource[g.source] || 0) + 1;
     const { compById: _drop, ...rest } = board;
-    return NextResponse.json({ ok: true, ...rest, recent: recent || [], pending: pending || 0, days: days || [], bySource, sources: SOURCES, probes: WEB_PROBES.map(p => ({ key: p.key, label: p.label })) });
+    return NextResponse.json({ ok: true, ...rest, recent: recent || [], pending: pending || 0, days: days || [], bySource, sources: SOURCES, probes: WEB_PROBES.map(p => ({ key: p.key, label: p.label, every: p.every })) });
   } catch (e: any) {
     console.error('[flywheel] GET', e);
     return NextResponse.json({ ok: false, error: e.message }, { status: 500 });

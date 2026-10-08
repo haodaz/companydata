@@ -4,7 +4,7 @@ import { runDaily } from '@/lib/flywheel/detect';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-// 六个联网探针 + 归一 + 排产，一轮要几分钟
+// 联网探针（按各自间隔，三个一组并行）+ 归一 + 排产，一轮要几分钟
 export const maxDuration = 800;
 
 const MODEL = () => process.env.FLYWHEEL_MODEL || 'gemini-3.8-flash';
@@ -15,10 +15,10 @@ export async function POST(req: Request) {
   const user = await getSessionUser(req);
   if (!user) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
   const body = await req.json().catch(() => ({}));
-  return run({ model: body.model || MODEL(), scanWeb: body.scanWeb, plan: body.plan });
+  return run({ model: body.model || MODEL(), scanWeb: body.scanWeb, forceAll: !!body.forceAll, plan: body.plan });
 }
 
-async function run(o: { model: string; scanWeb?: boolean; plan?: boolean }) {
+async function run(o: { model: string; scanWeb?: boolean; forceAll?: boolean; plan?: boolean }) {
   const lines: string[] = [];
   try {
     const r = await runDaily({ ...o, fallbackModel: FALLBACK(), log: s => { lines.push(s); console.log(`[flywheel] ${s}`); } });

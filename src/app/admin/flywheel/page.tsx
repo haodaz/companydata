@@ -27,6 +27,7 @@ export default function FlywheelPage() {
   const [dim, setDim] = useState<Dim>('company');
   const [running, setRunning] = useState(false);
   const [scanWeb, setScanWeb] = useState(true);
+  const [forceAll, setForceAll] = useState(false);
   const [normalizing, setNormalizing] = useState(false);
   const [runLog, setRunLog] = useState<string[]>([]);
 
@@ -45,7 +46,7 @@ export default function FlywheelPage() {
     setRunning(true); setRunLog([]);
     const hide = message.loading('检测中：归一 → 前瞻信号 → 算缺口 → 排产，联网扫描要几分钟……', 0);
     try {
-      const j = await (await fetch('/api/flywheel/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: currentModel, scanWeb }) })).json();
+      const j = await (await fetch('/api/flywheel/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: currentModel, scanWeb, forceAll }) })).json();
       setRunLog(j.log || []);
       if (!j.ok) throw new Error(j.error);
       message.success(`检测完成：缺口 ${j.gaps?.length || 0} 个，排产 ${j.actions?.length || 0} 个任务，新盘进企业 ${j.onboarded?.length || 0} 家`);
@@ -143,7 +144,7 @@ export default function FlywheelPage() {
             <div style={{ fontSize: 13 }}>{it.detail} {it.url && <a href={it.url} target="_blank" rel="noreferrer">出处</a>}</div>
           </div>
         ))}
-      </div>) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={latest ? '这次没扫到' : '还没检测过'} />,
+      </div>) : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={!latest ? '还没检测过' : p.key in webDay ? '这次没扫到' : `这次按间隔没扫（每 ${p.every} 天一次）`} />,
   }));
 
   const signalCols: any[] = [
@@ -164,6 +165,7 @@ export default function FlywheelPage() {
   const t = data?.totals || {};
   const internal = Object.entries(data?.bySource || {}).filter(([s]) => sources[s]?.group === 'internal').reduce((a, [, n]) => a + (n as number), 0);
   const web = Object.entries(data?.bySource || {}).filter(([s]) => sources[s]?.group === 'web').reduce((a, [, n]) => a + (n as number), 0);
+  const toc = Object.entries(data?.bySource || {}).filter(([s]) => sources[s]?.group === 'toc').reduce((a, [, n]) => a + (n as number), 0);
 
   return (
     <div style={{ maxWidth: 1480, margin: '0 auto' }}>
@@ -176,7 +178,8 @@ export default function FlywheelPage() {
           <Popconfirm title="立即检测" okText="开始" cancelText="取消" onConfirm={runNow}
             description={<div style={{ maxWidth: 300 }}>
               <Paragraph style={{ marginBottom: 8 }}>归一 → 前瞻信号 → 算缺口 → 把缺口排成「飞轮排产」草稿任务（7 天内排过的企业不重复）。</Paragraph>
-              <Checkbox checked={scanWeb} onChange={e => setScanWeb(e.target.checked)}>联网扫前瞻信号（6 个探针，几分钟）</Checkbox>
+              <Checkbox checked={scanWeb} onChange={e => setScanWeb(e.target.checked)}>联网扫前瞻信号（按各自间隔，几分钟）</Checkbox>
+              <br /><Checkbox checked={forceAll} disabled={!scanWeb} onChange={e => setForceAll(e.target.checked)}>忽略间隔，{(data?.probes || []).length} 个探针全扫</Checkbox>
             </div>}>
             <Button type="primary" icon={<ThunderboltOutlined />} loading={running}>立即检测</Button>
           </Popconfirm>
@@ -184,6 +187,7 @@ export default function FlywheelPage() {
 
       <StatCards loading={loading} items={[
         { label: '近 30 天信号', value: t.signals30 ?? 0, icon: <FireOutlined />, hint: `站内 ${internal} · 联网 ${web}` },
+        { label: '用户使用信号（ToC）', value: toc || '未接入', icon: <FireOutlined />, color: '#52c41a', hint: toc ? '近 30 天' : '预留 /api/flywheel/signal，ToC 上线后接' },
         { label: '加权热度', value: t.heat30 ?? 0, icon: <ThunderboltOutlined />, color: '#fa541c', hint: '按来源权重加总' },
         { label: '待归一', value: data?.pending ?? 0, icon: <NodeIndexOutlined />, color: '#722ed1', hint: '规则对不上的，等模型批量归' },
         { label: '最新缺口', value: latest?.gaps?.length ?? 0, icon: <GlobalOutlined />, color: '#f5222d', hint: latest ? latest.day : '还没检测过' },
