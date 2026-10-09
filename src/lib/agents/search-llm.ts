@@ -91,7 +91,17 @@ export async function searchJson(prompt: string, modelId: string, log: Pick<Toke
     for (let i = 0; i < attempts.length; i++) {
       // @ts-ignore googleSearch 工具在运行时可用，SDK 类型未收录
       const model = genAI.getGenerativeModel({ model: attempts[i], tools: [{ googleSearch: {} }] });
-      const result = await model.generateContent(prompt);
+      let result: any;
+      try {
+        result = await model.generateContent(prompt);
+      } catch (e: any) {
+        // 503 超时 / 429 限流 / 500：等一下换下一档（最后一档是 3.6-flash）再试；欠费 402 直接抛
+        const msg = String(e?.message || '');
+        if (/402|Payment Required|credits are depleted/i.test(msg) || i === attempts.length - 1 || !/503|429|500|Deadline|UNAVAILABLE|RESOURCE_EXHAUSTED|overloaded|fetch failed/i.test(msg)) throw e;
+        console.warn(`[searchJson] ${attempts[i]} 出错（第 ${i + 1} 次），稍后重试：${msg.slice(0, 100)}`, log.task_name);
+        await new Promise(r => setTimeout(r, 4000 * (i + 1)));
+        continue;
+      }
       usageMetadata = result.response.usageMetadata;
       try { text = result.response.text() || ''; } catch { text = ''; }
       searchQueries = result.response.candidates?.[0]?.groundingMetadata?.webSearchQueries || [];
