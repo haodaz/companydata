@@ -3,11 +3,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button, Input, Table, Tag, Space, Select, Modal, Form, Typography, Tooltip, InputNumber, Alert, Progress, App, Dropdown } from 'antd';
-import { BankOutlined, PlusOutlined, RobotOutlined, ThunderboltOutlined, GlobalOutlined, FlagOutlined, TeamOutlined, ApartmentOutlined, ImportOutlined, CheckCircleOutlined, DownOutlined, SafetyCertificateOutlined, ProfileOutlined } from '@ant-design/icons';
+import { BankOutlined, PlusOutlined, RobotOutlined, ThunderboltOutlined, GlobalOutlined, FlagOutlined, TeamOutlined, ApartmentOutlined, ImportOutlined, CheckCircleOutlined, DownOutlined, SafetyCertificateOutlined, ProfileOutlined, DownloadOutlined } from '@ant-design/icons';
 import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import { StatCards } from '@/components/admin/StatCards';
 import { useModel } from '@/lib/model-context';
-import { SEGMENT_LABELS, SEGMENT_OPTIONS, COMPANY_TYPE_LABELS } from '@/lib/company-fields';
+import { SEGMENT_LABELS, SEGMENT_OPTIONS, COMPANY_TYPE_LABELS, COMPANY_EDIT_FIELDS, KIND_LABELS } from '@/lib/company-fields';
+import { exportToCsv } from '@/lib/export-csv';
+import { ensureDownloadAllowed, clearDownloadPermissionCache } from '@/lib/download-gate';
 import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { BRAND } from '@/lib/theme';
 
@@ -36,6 +38,7 @@ export default function DbCompanyPage() {
   const [search, setSearch] = useState('');
   const [segment, setSegment] = useState('');
   const [review, setReview] = useState('');
+  const [exporting, setExporting] = useState(false);
   const [selected, setSelected] = useState<React.Key[]>([]);
 
   const [addOpen, setAddOpen] = useState(false);
@@ -173,6 +176,41 @@ export default function DbCompanyPage() {
     },
   ];
 
+  /** 导出当前筛选条件下的全部企业（全部画像字段 + 招聘入口 + 关联计数） */
+  const handleExport = async () => {
+    if (!(await ensureDownloadAllowed())) return;   // 没有下载许可：弹出申请框（日志由服务端导出接口记）
+    setExporting(true);
+    try {
+      const qs = new URLSearchParams({ exportAll: 'true', search, segment, review });
+      const res = await fetch(`/api/db/companies?${qs}`);
+      const json = await res.json();
+      if (res.status === 403 && json.code === 'DOWNLOAD_PERMISSION_REQUIRED') { clearDownloadPermissionCache(); await ensureDownloadAllowed(); return; }
+      if (!json.success) throw new Error(json.error);
+      if (!json.data.length) { message.warning('当前筛选条件下没有数据'); return; }
+      const fmt = (kind: string) => (v: any) => {
+        if (v == null) return '';
+        if (Array.isArray(v)) return v.join('；');
+        if (kind === 'segment') return SEGMENT_LABELS[v]?.label || v;
+        if (kind === 'company_type') return COMPANY_TYPE_LABELS[v] || v;
+        if (kind === 'kind') return KIND_LABELS[v] || v;
+        return typeof v === 'object' ? JSON.stringify(v) : String(v);
+      };
+      exportToCsv(json.data, [
+        { key: 'id', header: 'ID' },
+        ...COMPANY_EDIT_FIELDS.map(f => ({ key: f.key, header: f.label, formatter: fmt(f.kind) })),
+        { key: 'completeness_score', header: '完整度' },
+        { key: 'human_review_status', header: '审核状态', formatter: (v: any) => REVIEW_STATUS[v]?.label || '未审核' },
+        { key: 'counts.jobs_total', header: '岗位数', formatter: (_: any, r: any) => String(r.counts?.jobs_total ?? 0) },
+        { key: 'counts.jobs_open', header: '在招岗位数', formatter: (_: any, r: any) => String(r.counts?.jobs_open ?? 0) },
+        { key: 'counts.url_total', header: '信息源数', formatter: (_: any, r: any) => String(r.counts?.url_total ?? 0) },
+        { key: 'created_at', header: '建档时间' },
+        { key: 'updated_at', header: '最近更新' },
+      ], '企业实体库', { serverChecked: true });
+      message.success(`已导出 ${json.data.length} 家企业`);
+    } catch (e: any) { message.error(`导出失败: ${e.message}`); }
+    finally { setExporting(false); }
+  };
+
   return (
     <div style={{ maxWidth: 1600, margin: '0 auto' }}>
       <PageHeader
@@ -180,6 +218,7 @@ export default function DbCompanyPage() {
         title="企业实体库"
         description="以企业为个体。目标：中国企业、中外合资企业、海外百强。名单可由 AI 从无到有生成，也可手动 / 粘贴导入；采集时遇到新企业会自动建档。"
         extra={<>
+          <Button icon={<DownloadOutlined />} loading={exporting} onClick={handleExport}>导出 CSV（当前筛选）</Button>
           <Button icon={<ImportOutlined />} onClick={() => setImportOpen(true)}>粘贴导入</Button>
           <Button icon={<PlusOutlined />} onClick={() => setAddOpen(true)}>新增企业</Button>
           <Button type="primary" icon={<RobotOutlined />} onClick={() => setAiOpen(true)}>AI 建名单</Button>

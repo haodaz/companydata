@@ -4,6 +4,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { orIlike, pageParams } from '@/lib/pg-filter';
 import { COMPANY_EDITABLE_KEYS } from '@/lib/company-fields';
 import { trackDemand } from '@/lib/flywheel/signals';
+import { requireDownload } from '@/lib/download-permission';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -11,26 +12,40 @@ export const dynamic = 'force-dynamic';
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
+    const exportAll = searchParams.get('exportAll') === 'true';
+    // 全量导出 = 下载数据：admin 或已获批准的用户才放行，放行时记下载日志
+    if (exportAll) { const denied = await requireDownload(request); if (denied) return denied; }
     const { page, pageSize, from, to } = pageParams(searchParams, 50);
     const search = searchParams.get('search') || '';
     const segment = searchParams.get('segment') || '';
     const industry = searchParams.get('industry') || '';
 
-    let query = supabaseAdmin.from('companies').select('*', { count: 'exact' }).order('id', { ascending: false });
-    if (search) query = query.or(orIlike(['name', 'name_en', 'industry'], search));
+    const review = searchParams.get('review') || '';
+    // 导出要翻页读全量，所以查询写成「每次新建」的函数
+    const build = () => {
+      let query = supabaseAdmin.from('companies').select('*', { count: 'exact' }).order('id', { ascending: false });
+      if (search) query = query.or(orIlike(['name', 'name_en', 'industry'], search));
+      if (review === 'none') query = query.is('human_review_status', null);
+      else if (review) query = query.eq('human_review_status', review);
+      if (segment === 'none') query = query.is('segment', null);
+      else if (segment) query = query.eq('segment', segment);
+      if (industry) query = query.eq('industry', industry);
+      return query;
+    };
+    if (exportAll) {
+      const { data, error } = await selectAll(build);
+      if (error) throw error;
+      const { data: rel } = await selectAll(() => supabaseAdmin.from('company_relation_counts').select('*').order('company_id'));
+      const counts = new Map<number, any>((rel || []).map((r: any) => [r.company_id, r]));
+      return NextResponse.json({ success: true, data: data.map((c: any) => ({ ...c, counts: counts.get(c.id) || null })), total: data.length });
+    }
     // 飞轮：后台有人在找这个（只记第一页，翻页不重复算）
     if (page === 1) trackDemand(request, [
       search && { source: 'admin_company_search', query: search },
       industry && { source: 'admin_company_search', query: industry, industry: null, meta: { filter: 'industry' } },
     ].filter(Boolean) as any);
-    const review = searchParams.get('review') || '';
-    if (review === 'none') query = query.is('human_review_status', null);
-    else if (review) query = query.eq('human_review_status', review);
-    if (segment === 'none') query = query.is('segment', null);
-    else if (segment) query = query.eq('segment', segment);
-    if (industry) query = query.eq('industry', industry);
 
-    const { data, count, error } = await query.range(from, to);
+    const { data, count, error } = await build().range(from, to);
     if (error) throw error;
 
     // 关联计数（信息源 / 岗位）
