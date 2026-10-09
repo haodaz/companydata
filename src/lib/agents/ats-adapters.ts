@@ -275,15 +275,15 @@ export function splitSubRoles(duty: string, req: string): { title: string; duty:
  * 它的列表接口 POST /api/social/webSite/portal/page 一次返回全部岗位，带完整岗位描述。校招接口要登录，不做。
  */
 async function vivoSocialMarkdown(url: string): Promise<{ markdown: string; count: number } | null> {
-  // 偶尔连不上（fetch failed），试 3 次
+  // hr.vivo.com 解析出两个地址，其中一个从部分网络连不上（connect timeout），每次随机挑：多试几次就能换到通的那个
   let rows: any[] = [];
-  for (let i = 0; i < 3 && !rows.length; i++) {
-    if (i) await new Promise(r => setTimeout(r, 1500 * i));
+  for (let i = 0; i < 6 && !rows.length; i++) {
+    if (i) await new Promise(r => setTimeout(r, 500));
     try {
       const r = await fetch('https://hr.vivo.com/api/social/webSite/portal/page', { method: 'POST', headers: { 'Content-Type': 'application/json', 'User-Agent': 'Mozilla/5.0' }, body: '{}', signal: AbortSignal.timeout(25000) });
       const j = await r.json().catch(() => null);
       rows = Array.isArray(j?.data) ? j.data : [];
-    } catch (e: any) { if (i === 2) console.warn('[ats] vivo 接口', e?.message); }
+    } catch (e: any) { if (i === 5) console.warn('[ats] vivo 接口', e?.message); }
   }
   if (!rows.length) return null;
   const blocks = rows.map(x => {
