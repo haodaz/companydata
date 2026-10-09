@@ -219,13 +219,15 @@ ${CAST_RULES}
    scene.time 要落在本章时段附近（前后 1 小时内）。
 3. 要接住前面章节发生的事（提到具体的人和事），但不要重复它们的操作。
 4. 情境与数据虚构，不用真实企业的内部数据。全部用中文。
+6. rubric：这一章的评分标准 4 个维度，权重合计 100；每个维度写「看什么」，要能区分会做事的人和会写套话的人，贴着这一章的内容（不要泛泛的「专业能力」）。
 5. expert：这一行老师傅在每一步会怎么做（choose 填选项 id；multi 填 id 数组；classify 填 {条目 id: 标签 id}；allocate 填 {条目 id: 数值}，和等于 total；slider 填数字；text 写一段示范答案）。
 
 返回 JSON：
 {
   "new_cast": [ { "id": "N1", "kind": "person|place|prop", "name": "", "type_name": "", "note": "", "look": "" } ],
   "sim": { "title": "<本章操作台名称>", "intro": "<开场：把体验者带进 ${ch.slot || '这个时段'} 的情境，2–3 句>", "steps": [ { "id": "<英文短 id>", "type": "choose|multi|classify|allocate|slider|text", "scene": { "who": "<P01 / N1>", "time": "", "text": "" }, "place": "<S01 / N2>", "props": ["<T01>"], "prompt": "", "options": [ { "id": "", "label": "", "detail": "" } ], "max": 2, "labels": [ { "id": "", "label": "" } ], "total": 100, "unit": "" } ] },
-  "expert": { "<step id>": "<见上>" }
+  "expert": { "<step id>": "<见上>" },
+  "rubric": [ { "key": "<英文短 key>", "name": "<维度名>", "weight": <数字>, "description": "<看什么>" } ]
 }`, model, 'Lab Chapter');
 
   // 新角色进角色表（同类型的从素材库复用）
@@ -261,7 +263,8 @@ ${CAST_RULES}
   const withArt = cover ? applyCastArt({ ...sim, art: { cover, npcs: {}, scenes: {} } }, cast) : sim;
 
   await progress('保存', '存成草稿，检查后再发布');
-  const { error: e3 } = await supabaseAdmin.from('lab_chapters').update({ sim: withArt, expert_trace: trace, updated_at: new Date().toISOString() }).eq('id', chapterId);
+  const rubric = normalizeRubric(p.rubric);
+  const { error: e3 } = await supabaseAdmin.from('lab_chapters').update({ sim: withArt, expert_trace: trace, ...(rubric ? { rubric } : {}), updated_at: new Date().toISOString() }).eq('id', chapterId);
   if (e3) throw e3;
   if (ch.seq === 1) await supabaseAdmin.from('skill_tasks').update({ sim: withArt }).eq('id', spaceId);
   return { steps: sim.steps.length, newCast: cast.length - before0, drawn, reused: Math.max(0, reused) };
@@ -293,4 +296,31 @@ function cleanSim(raw: any, ch: StudioChapter, ref: (v: any) => CastMember | nul
   });
   if (steps.length && steps[steps.length - 1].type !== 'text') steps.push({ id: 'final', type: 'text', prompt: '最后，用几句话写下你的结论。' });
   return { title: String(raw?.title || ch.title), intro: String(raw?.intro || ''), steps };
+}
+
+/** 评分标准：4–5 个维度，权重归一到 100；不合格就返回 null（评分时用通用四项） */
+export function normalizeRubric(raw: any): { key: string; name: string; weight: number; description: string }[] | null {
+  let list = (Array.isArray(raw) ? raw : []).map((r: any, i: number) => ({
+    key: String(r?.key || `d${i + 1}`).replace(/[^\w-]/g, '').slice(0, 24) || `d${i + 1}`, name: str(r?.name, 20), weight: Math.max(0, Math.round(Number(r?.weight) || 0)), description: str(r?.description, 200),
+  })).filter(r => r.name && r.weight > 0).slice(0, 5);
+  if (list.length < 3) return null;
+  const total = list.reduce((a, r) => a + r.weight, 0);
+  list = list.map(r => ({ ...r, weight: Math.round((r.weight / total) * 100) }));
+  list[0].weight += 100 - list.reduce((a, r) => a + r.weight, 0);
+  return list;
+}
+
+/** 给已经写好的章节补评分标准（老章节、手工写的章节） */
+export async function draftRubric(ch: StudioChapter, space: any, model: string) {
+  const p = await ask(`
+给职业体验空间里的一章定评分标准。
+${spaceText(space)}
+【这一章】${ch.slot || ''} · ${ch.title}
+要交代的事：${ch.brief || ''}
+开场：${ch.sim?.intro || ''}
+步骤：
+${(ch.sim?.steps || []).map((s: any, i: number) => `${i + 1}. [${s.type}] ${s.prompt}`).join('\n')}
+要求：4 个维度，权重合计 100；每个维度写「看什么」，贴着这一章的内容，能区分会做事的人和会写套话的人。全部用中文。
+返回 JSON：{ "rubric": [ { "key": "<英文短 key>", "name": "<维度名>", "weight": <数字>, "description": "<看什么>" } ] }`, model, 'Lab Chapter Rubric');
+  return normalizeRubric(p.rubric);
 }

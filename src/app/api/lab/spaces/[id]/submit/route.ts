@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { answerTask, gradeAnswer, operateSim } from '@/lib/agents/skill-lab';
 import { sanitizeTrace, traceMatch, traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
-import { chapterExpertTrace, labError, loadSpace, pickChapter, recordInvocation, skillRef } from '@/lib/skill-lab-server';
+import { chapterExpertTrace, chapterTask, labError, loadSpace, pickChapter, recordInvocation, skillRef } from '@/lib/skill-lab-server';
 import { INVITED } from '@/lib/lab-invite';
 
 export const runtime = 'nodejs';
@@ -33,12 +33,13 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     let trace: SimTrace | null = null;
     let answer = String(body.answer || '').trim();
     if (sim) {
-      trace = mode === 'ai' ? await operateSim(space, sim, withSkill ? skill : null, model) : sanitizeTrace(sim, body.trace);
+      trace = mode === 'ai' ? await operateSim({ ...space, ...chapterTask(space, chapter) }, sim, withSkill ? skill : null, model) : sanitizeTrace(sim, body.trace);
       answer = traceToText(sim, trace);
     } else if (mode === 'ai') answer = await answerTask(space, withSkill ? skill : null, model);
     if (answer.length < 20) return NextResponse.json({ ok: false, error: '作答太短了，至少写几句' }, { status: 400 });
 
-    const { score, grading } = await gradeAnswer(space, answer, skill, model);
+    // 按这一章自己的题面和评分标准评（第 1 章用空间的）
+    const { score, grading } = await gradeAnswer(chapterTask(space, chapter), answer, skill, model);
 
     const name = mode === 'ai' ? (withSkill ? 'AI + 专家技能' : 'AI 裸答') : String(body.name || '').trim() || (mode === 'expert' ? '专家' : '匿名新兵');
     const row: Record<string, any> = {
@@ -51,10 +52,15 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       graded_with_skill_id: skill ? space.skill_id : null,
       graded_by_model: model || 'gemini-3.8-flash',
       ...(chapter?.id ? { chapter_id: chapter.id } : {}),
+      // 体验者的访客编号（浏览器生成；登录用户是 u:<账号>）：「我的历史 / 证书库」按它找（迁移 017）
+      ...(mode === 'human' && body.visitor ? { visitor_id: String(body.visitor).slice(0, 80) } : {}),
     };
     let { data: sub, error } = await supabaseAdmin.from('skill_submissions').insert(row).select().single();
     // 迁移 015 还没跑时没有 chapter_id 列：去掉再写
-    if (error && /chapter_id/.test(error.message || '')) { const { chapter_id: _c, ...rest } = row; ({ data: sub, error } = await supabaseAdmin.from('skill_submissions').insert(rest).select().single()); }
+    // 迁移 015 / 017 还没跑时少列：缺哪列去掉哪列再写
+    for (const col of ['visitor_id', 'chapter_id']) {
+      if (error && new RegExp(col).test(error.message || '')) { delete row[col]; ({ data: sub, error } = await supabaseAdmin.from('skill_submissions').insert(row).select().single()); }
+    }
     if (error) throw error;
 
     // 账本：技能被用来评分 / 作答，各记一笔

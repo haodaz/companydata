@@ -80,3 +80,28 @@ export function sortByDay<T extends { slot?: string | null; seq: number }>(list:
     return a.seq - b.seq;
   });
 }
+
+/** 章节没单独定评分标准时的通用四项（权重合计 100） */
+export const GENERIC_CHAPTER_RUBRIC = [
+  { key: 'judgement', name: '判断与优先级', weight: 30, description: '能否抓住这一段最关键的风险和信息，先做该先做的事，不被干扰项带偏' },
+  { key: 'practice', name: '操作与规范', weight: 30, description: '处置是否符合行业规范和安全要求，有没有新人常犯的错误动作' },
+  { key: 'communication', name: '沟通与协作', weight: 20, description: '对上级、同事、客户 / 家属说的话是否清楚、诚实、不越界' },
+  { key: 'record', name: '结论与记录', weight: 20, description: '最后写下的结论 / 记录 / 交接是否具体、可执行，别人拿到就能接着干' },
+];
+
+/**
+ * 按哪一章的题面评分：第 1 章（老空间迁来的那章）用空间本身的任务、材料、评分标准；
+ * 其他章用它自己的标题、要交代的事、开场和最后一步，评分标准用章节的（没有就用通用四项）。
+ * 以前所有章都按第 1 章评，会诊那段拿阑尾手术的标准打分。
+ */
+export function chapterTask(space: any, ch: LabChapter | null) {
+  if (!ch || ch.seq === 1 || !ch.id) return { title: space.title, brief: space.brief, materials: space.materials, deliverable: space.deliverable, rubric: space.rubric || [] };
+  const last = [...(ch.sim?.steps || [])].reverse().find((s: any) => s.type === 'text');
+  return {
+    title: `${ch.slot ? `${ch.slot} · ` : ''}${ch.title}`,
+    brief: [ch.brief, ch.sim?.intro].filter(Boolean).join('\n'),
+    materials: '',
+    deliverable: last?.prompt || '',
+    rubric: Array.isArray(ch.rubric) && ch.rubric.length ? ch.rubric : GENERIC_CHAPTER_RUBRIC,
+  };
+}
