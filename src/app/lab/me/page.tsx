@@ -27,7 +27,7 @@ const fmt = (iso: string) => new Date(iso).toLocaleString('zh-CN', { hour12: fal
 
 export default function MePage() {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, loading } = useUser();
   const [d, setD] = useState<{ history: any[]; spaces: any[]; needMigration?: boolean } | null>(null);
   const [tab, setTab] = useState<'certs' | 'history'>('certs');
   // 证书上的名字（只存本地，进操作台时只问过一次；以后在这里改）
@@ -36,10 +36,16 @@ export default function MePage() {
   useEffect(() => { try { const r = JSON.parse(localStorage.getItem('lab:rookie') || 'null'); if (r) setMe(m => ({ ...m, ...r })); } catch { /* 读不到 */ } }, []);
   const saveMe = () => { try { localStorage.setItem('lab:rookie', JSON.stringify(me)); localStorage.setItem('lab:rookie:asked', '1'); } catch { /* 记不住 */ } setEditMe(false); };
 
+  // 等登录状态读完再问（不然先用浏览器编号问一次、再用账号问一次，慢的那次会把对的结果盖掉）
   useEffect(() => {
+    if (loading) return;
+    let stale = false;
     const ids = visitorIds(user?.id);
-    fetch(`/api/lab/me?v=${encodeURIComponent(ids.join(','))}`).then(r => r.json()).then(j => setD(j.ok ? j : { history: [], spaces: [] })).catch(() => setD({ history: [], spaces: [] }));
-  }, [user?.id]);
+    fetch(`/api/lab/me?v=${encodeURIComponent(ids.join(','))}`).then(r => r.json())
+      .then(j => { if (!stale) setD(j.ok ? j : { history: [], spaces: [] }); })
+      .catch(() => { if (!stale) setD({ history: [], spaces: [] }); });
+    return () => { stale = true; };
+  }, [user?.id, loading]);
 
   const stats = useMemo(() => {
     const sp = d?.spaces || [];
@@ -108,7 +114,7 @@ export default function MePage() {
                   <div className="me-grid">
                     {full && s.total > 1 && <MiniCover day role={s.role} title="" band={band(Math.round(s.chapters.reduce((a: number, c: any) => a + (c.best?.score || 0), 0) / s.total))} onClick={() => router.push(`/lab/cert/day?s=${ids.join(',')}`)} />}
                     {s.chapters.map((c: any) => c.best
-                      ? <MiniCover key={c.n} role={s.role} title={c.title} slot={c.slot || `第 ${c.n} 段`} band={c.best.band} name={me.name} onClick={() => router.push(`/lab/cert/${c.best.id}`)} />
+                      ? <MiniCover key={c.n} role={s.role} title={c.title} slot={c.slot || `第 ${c.n} 段`} band={c.best.band} name={c.best.name && c.best.name !== '匿名新兵' ? c.best.name : me.name} onClick={() => router.push(`/lab/cert/${c.best.id}`)} />
                       : <MiniCover key={c.n} empty role={s.role} title={c.title} slot={c.slot || `第 ${c.n} 段`} onClick={() => router.push(`/lab/${s.id}?m=test${c.id ? `&ch=${c.id}` : ''}`)} />)}
                   </div>
                 </div>

@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
         // 每段取我最好的一次；第 1 段的老作答没记章节
         const tries = mine.filter(s => (c.id && s.chapter_id === c.id) || (i === 0 && !s.chapter_id));
         const best = tries.sort((a, b) => (b.score ?? 0) - (a.score ?? 0))[0];
-        return { id: c.id, n: i + 1, slot: c.slot, title: c.title, kind: c.kind, tries: tries.length, best: best ? { id: best.id, score: best.score, band: band(best.score), no: certNo(best.id), date: best.submitted_at } : null };
+        return { id: c.id, n: i + 1, slot: c.slot, title: c.title, kind: c.kind, tries: tries.length, best: best ? { id: best.id, name: best.candidate_name, score: best.score, band: band(best.score), no: certNo(best.id), date: best.submitted_at } : null };
       });
       const jd = t.jd_snapshot || {};
       return {

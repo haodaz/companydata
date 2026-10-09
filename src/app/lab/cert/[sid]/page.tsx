@@ -12,7 +12,7 @@ export default function CertPage() {
   const { sid } = useParams<{ sid: string }>();
   const router = useRouter();
   const { message } = App.useApp();
-  const { user } = useUser();
+  const { user, loading } = useUser();
   const [c, setC] = useState<any>(null);
   const [err, setErr] = useState('');
   const [editing, setEditing] = useState(false);
@@ -21,8 +21,9 @@ export default function CertPage() {
 
   const load = () => fetch(`/api/lab/cert/${sid}?v=${encodeURIComponent(ids.join(','))}`).then(r => r.json())
     .then(j => { if (j.ok) { setC(j.cert); setName(j.cert.candidate.name); } else setErr(j.error); }).catch(e => setErr(e.message));
+  // 等登录状态读完再问：「是不是本人」要用账号编号判断
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { load(); }, [sid, user?.id]);
+  useEffect(() => { if (!loading) load(); }, [sid, user?.id, loading]);
 
   const saveName = async () => {
     const j = await fetch(`/api/lab/cert/${sid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, v: ids.join(',') }) }).then(r => r.json());
