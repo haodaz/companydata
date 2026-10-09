@@ -10,14 +10,16 @@ import { bandText, visitorIds } from '@/lib/lab-cert';
  * 按访客编号找（浏览器本地 + 登录账号），不用注册。
  */
 const CSS = `
-.me-mini { position: relative; border-radius: 12px; padding: 12px 14px; min-height: 104px; display: grid; align-content: space-between; cursor: pointer; transition: transform .2s, box-shadow .2s;
-  background: radial-gradient(120% 90% at 50% 30%, #fffdf6, #f6ecd4); box-shadow: 0 0 0 1px rgba(176,141,87,.5), 0 8px 20px rgba(80,55,15,.10); color: #3a2c12; text-align: left; border: 0; font-family: inherit; }
-.me-mini:hover { transform: translateY(-2px); box-shadow: 0 0 0 1.5px #b08d57, 0 14px 30px rgba(80,55,15,.16); }
-.me-mini::after { content: ''; position: absolute; inset: 5px; border: 1px solid rgba(176,141,87,.35); border-radius: 8px; pointer-events: none; }
+.me-mini { position: relative; overflow: hidden; border-radius: 14px; padding: 14px 14px 12px; min-height: 108px; display: grid; align-content: space-between; cursor: pointer; transition: transform .2s, box-shadow .2s;
+  background: radial-gradient(90% 70% at 0% 0%, rgba(106,92,255,.12), transparent 70%), radial-gradient(80% 70% at 100% 100%, rgba(18,181,203,.12), transparent 70%), #fff;
+  box-shadow: 0 0 0 1px rgba(106,92,255,.16), 0 8px 22px rgba(60,50,160,.10); color: var(--ink); text-align: left; border: 0; font-family: inherit; }
+.me-mini:hover { transform: translateY(-2px); box-shadow: 0 0 0 1.5px rgba(106,92,255,.5), 0 14px 30px rgba(60,50,160,.16); }
+.me-mini::before { content: ''; position: absolute; left: 0; top: 0; right: 0; height: 3px; background: linear-gradient(90deg, #6a5cff, #12b5cb, #ff5fa2); }
+.me-mini .bd { font-size: 24px; font-weight: 900; letter-spacing: 0; background: linear-gradient(100deg, #6a5cff, #12b5cb); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .me-mini.empty { background: rgba(255,255,255,.5); box-shadow: none; border: 1.5px dashed rgba(106,92,255,.25); color: var(--ink3); }
-.me-mini.empty::after { display: none; }
+.me-mini.empty::before { display: none; }
 .me-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); }
-.me-day { border: 0; cursor: pointer; font-family: inherit; padding: 10px 16px; border-radius: 12px; font-weight: 800; color: #2a1c05; background: linear-gradient(120deg, #e9cf8f, #fff2c9 45%, #d7b46a); box-shadow: 0 6px 18px rgba(150,110,30,.3); }
+.me-day { border: 0; cursor: pointer; font-family: inherit; padding: 10px 16px; border-radius: 12px; font-weight: 800; color: #fff; background: linear-gradient(120deg, #6a5cff, #12b5cb 60%, #ff5fa2); box-shadow: 0 8px 22px rgba(106,92,255,.35); }
 `;
 
 const fmt = (iso: string) => new Date(iso).toLocaleString('zh-CN', { hour12: false, month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
@@ -27,6 +29,11 @@ export default function MePage() {
   const { user } = useUser();
   const [d, setD] = useState<{ history: any[]; spaces: any[]; needMigration?: boolean } | null>(null);
   const [tab, setTab] = useState<'certs' | 'history'>('certs');
+  // 证书上的名字（只存本地，进操作台时只问过一次；以后在这里改）
+  const [me, setMe] = useState({ name: '', note: '', location: '' });
+  const [editMe, setEditMe] = useState(false);
+  useEffect(() => { try { const r = JSON.parse(localStorage.getItem('lab:rookie') || 'null'); if (r) setMe(m => ({ ...m, ...r })); } catch { /* 读不到 */ } }, []);
+  const saveMe = () => { try { localStorage.setItem('lab:rookie', JSON.stringify(me)); localStorage.setItem('lab:rookie:asked', '1'); } catch { /* 记不住 */ } setEditMe(false); };
 
   useEffect(() => {
     const ids = visitorIds(user?.id);
@@ -49,6 +56,20 @@ export default function MePage() {
         </div>
         <div style={{ flex: 1 }} />
         <button className="lab-btn ghost sm" onClick={() => router.push('/lab/gallery')}>去体验馆</button>
+      </div>
+      <div className="lab-glass" style={{ padding: '10px 16px', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', fontSize: 14 }}>
+        <span className="lab-mono lab-cap">证书上的名字</span>
+        {editMe ? <>
+          <input className="lab-input" style={{ width: 150, padding: '6px 10px', fontSize: 14 }} value={me.name} onChange={e => setMe({ ...me, name: e.target.value })} placeholder="称呼" />
+          <input className="lab-input" style={{ width: 170, padding: '6px 10px', fontSize: 14 }} value={me.note} onChange={e => setMe({ ...me, note: e.target.value })} placeholder="学校 / 专业" />
+          <input className="lab-input" style={{ width: 130, padding: '6px 10px', fontSize: 14 }} value={me.location} onChange={e => setMe({ ...me, location: e.target.value })} placeholder="所在地" />
+          <button className="lab-btn sm" onClick={saveMe}>保存</button>
+        </> : <>
+          <b>{me.name || '还没填（证书上显示「匿名新兵」）'}</b>
+          <span style={{ color: 'var(--ink3)' }}>{[me.note, me.location].filter(Boolean).join(' · ')}</span>
+          <button className="lab-btn ghost sm" onClick={() => setEditMe(true)}>修改</button>
+          <span style={{ fontSize: 12, color: 'var(--ink3)' }}>以后的证书用这个名字；已经领过的证书在证书页单独改</span>
+        </>}
       </div>
 
       <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
@@ -77,7 +98,7 @@ export default function MePage() {
                       <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{s.name} · 已集 {s.done} / {s.total} 段</div>
                     </div>
                     <div style={{ flex: 1 }} />
-                    <div style={{ width: 140, height: 6, borderRadius: 3, background: 'rgba(106,92,255,.12)', overflow: 'hidden' }}><div style={{ width: `${(s.done / s.total) * 100}%`, height: '100%', background: full ? 'linear-gradient(90deg,#d7b46a,#f3dca0)' : 'linear-gradient(90deg,var(--v),var(--c))' }} /></div>
+                    <div style={{ width: 140, height: 6, borderRadius: 3, background: 'rgba(106,92,255,.12)', overflow: 'hidden' }}><div style={{ width: `${(s.done / s.total) * 100}%`, height: '100%', background: full ? 'linear-gradient(90deg,#6a5cff,#12b5cb,#ff5fa2)' : 'linear-gradient(90deg,var(--v),var(--c))' }} /></div>
                     {full && s.total > 1
                       ? <button className="me-day" onClick={() => router.push(`/lab/cert/day?s=${ids.join(',')}`)}>领取全天证书 ✦</button>
                       : <button className="lab-btn ghost sm" onClick={() => router.push(`/lab/${s.id}?m=test`)}>继续这一天</button>}
@@ -86,9 +107,9 @@ export default function MePage() {
                     {s.chapters.map((c: any) => c.best ? (
                       <button key={c.n} className="me-mini" onClick={() => router.push(`/lab/cert/${c.best.id}`)} title={`证书 ${c.best.no}`}>
                         <span className="lab-mono" style={{ fontSize: 11, opacity: .75 }}>{c.slot || `第 ${c.n} 段`}</span>
-                        <b style={{ fontSize: 13.5, lineHeight: 1.4, fontFamily: "'Songti SC','STSong',serif" }}>{c.title}</b>
+                        <b style={{ fontSize: 13.5, lineHeight: 1.4 }}>{c.title}</b>
                         <span style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                          <span className="lab-mono" style={{ fontSize: 22, fontWeight: 900, letterSpacing: 0, color: '#8a6a2f' }}>{bandText(c.best.band)}</span>
+                          <span className="lab-mono bd">{bandText(c.best.band)}</span>
                           <span style={{ fontSize: 11, opacity: .7 }}>{c.tries > 1 ? `走过 ${c.tries} 次` : ''}</span>
                         </span>
                       </button>

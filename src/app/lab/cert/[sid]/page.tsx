@@ -5,9 +5,9 @@ import { useParams, useRouter } from 'next/navigation';
 import { App } from 'antd';
 import { useUser } from '@/lib/user-context';
 import { visitorIds } from '@/lib/lab-cert';
-import { CERT_CSS, Certificate, ScoreReport } from '@/components/lab/Certificate';
+import { CertFolio } from '@/components/lab/CertFolio';
 
-/** 单段证书 + 成绩单。链接公开，就是查验方式；本人可以改证书上的名字 */
+/** 单段证书页夹（证书 · 画作 · 成绩记录 · 图表）。链接公开，就是查验方式；本人可以改证书上的名字 */
 export default function CertPage() {
   const { sid } = useParams<{ sid: string }>();
   const router = useRouter();
@@ -37,7 +37,6 @@ export default function CertPage() {
 
   return (
     <div style={{ display: 'grid', gap: 26 }}>
-      <style>{CERT_CSS}</style>
       <div className="no-print" style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
         <div>
           <div className="lab-mono lab-cap">CERTIFICATE · {c.no}</div>
@@ -52,8 +51,7 @@ export default function CertPage() {
         <button className="lab-btn ghost sm" onClick={() => router.push('/lab/me')}>我的证书库</button>
         {next && <button className="lab-btn sm" onClick={() => router.push(`/lab/${c.space.id}?m=test`)}>继续这一天 →</button>}
       </div>
-      <Certificate c={c} />
-      <ScoreReport r={c} />
+      <CertFolio d={c} />
     </div>
   );
 }

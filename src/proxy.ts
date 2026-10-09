@@ -55,7 +55,7 @@ export async function proxy(req: NextRequest) {
 
   // public/lab/ 下的图和视频跟登录墙后的页面共用 /lab/ 前缀，别被当成页面拦去登录：
   // 公开首页要用，图片优化器从服务端去取时也不带 cookie
-  if (/^\/lab\/[^/]+\.(png|jpe?g|webp|gif|svg|mp4|webm)$/i.test(pathname)) return NextResponse.next();
+  if (/^\/lab\/(?:[^/]+\/)*[^/]+\.(png|jpe?g|webp|gif|svg|mp4|webm)$/i.test(pathname)) return NextResponse.next();
 
   // AI 百业首页公开：谁都能看见理念和这些人，点进任何一个空间才要求登录（LAB_PUBLIC=1 时整个 /lab 都公开）
   // 百业工厂的工作室 /lab/studio/*、素材库 /lab/assets 例外：放开时也要登录

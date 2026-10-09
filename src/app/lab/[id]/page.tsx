@@ -490,8 +490,22 @@ function castOf(space: any, sim: Sim | null) {
   // 考验新人
   const [rookie, setRookie] = useState({ name: '', note: '', location: '', answer: '' });
   const [answering, setAnswering] = useState(false);
-  // 上次填过的名字 / 背景 / 所在地带出来（证书上要用名字）
-  useEffect(() => { try { const r = JSON.parse(localStorage.getItem('lab:rookie') || 'null'); if (r?.name) setRookie(x => ({ ...x, ...r })); } catch { /* 读不到就空着 */ } }, []);
+  // 体验者的称呼只问一次：第一次进操作台时在介绍页上问（证书上用），填了或跳过都记在本地，以后不再问
+  const [askProfile, setAskProfile] = useState(false);
+  useEffect(() => {
+    try {
+      const r = JSON.parse(localStorage.getItem('lab:rookie') || 'null');
+      if (r?.name) setRookie(x => ({ ...x, ...r }));
+      else if (!localStorage.getItem('lab:rookie:asked')) setAskProfile(true);
+    } catch { /* 无痕模式：不问，证书上叫「匿名新兵」，可以在证书页改 */ }
+  }, []);
+  const saveProfile = () => {
+    try {
+      localStorage.setItem('lab:rookie:asked', '1');
+      if (rookie.name.trim()) localStorage.setItem('lab:rookie', JSON.stringify({ name: rookie.name.trim(), note: rookie.note.trim(), location: rookie.location.trim() }));
+    } catch { /* 记不住就算了 */ }
+    setAskProfile(false);
+  };
   /** 演示模式：带着专家轨迹进故事线，每一步预填好、工位自己走 */
   const [demo, setDemo] = useState<any | null>(null);
   /** 「我的行当」：同行 / 在招 / 上下游，进这一层才拉 */
@@ -507,6 +521,9 @@ function castOf(space: any, sim: Sim | null) {
   }, [mode]);
   // 向专家学习
   const [expert, setExpert] = useState({ name: '', title: '', location: '' });
+  // 老师傅的信息也只填一次：记在本地，下次直接「以 xx 的身份示范」
+  const [expertSaved, setExpertSaved] = useState(false);
+  useEffect(() => { try { const e = JSON.parse(localStorage.getItem('lab:expert') || 'null'); if (e?.name && e?.location) { setExpert(e); setExpertSaved(true); } } catch { /* 读不到就空着 */ } }, []);
   const [walk, setWalk] = useState('');
   const [turns, setTurns] = useState<InterviewTurn[]>([]);
   const [reply, setReply] = useState('');
@@ -829,13 +846,20 @@ function castOf(space: any, sim: Sim | null) {
             按你平时的做法一段一段走，每段走完我会围绕「你为什么这么做」追问几句，最后把你的判断方式吸收成我的能力。不用一次走完整天，走几段都算。
             {skill && !draft ? `我已经学过 ${skill.expert_name}（${skill.expert_location}），新的经验会叠加上去。` : '我现在只读过 JD，你会是第一位教我的老师傅。'}
           </div>
-          <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))' }}>
-            {field(expert.name, v => setExpert(e => ({ ...e, name: v })), '你的姓名 / 化名 *')}
-            {field(expert.title, v => setExpert(e => ({ ...e, title: v })), '资历（如 普外科主任医师 · 20 年）')}
-            {field(expert.location, v => setExpert(e => ({ ...e, location: v })), '所在地 *')}
-          </div>
+          {expertSaved ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14 }}>
+              <span>以 <b>{expert.name}</b>{expert.title ? `（${expert.title}）` : ''} · {expert.location} 的身份示范</span>
+              <button className="lab-btn ghost sm" onClick={() => setExpertSaved(false)}>修改</button>
+            </div>
+          ) : (
+            <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))' }}>
+              {field(expert.name, v => setExpert(e => ({ ...e, name: v })), '你的姓名 / 化名 *')}
+              {field(expert.title, v => setExpert(e => ({ ...e, title: v })), '资历（如 普外科主任医师 · 20 年）')}
+              {field(expert.location, v => setExpert(e => ({ ...e, location: v })), '所在地 *')}
+            </div>
+          )}
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginTop: 12, flexWrap: 'wrap', fontSize: 13, color: 'var(--ink3)' }}>
-            <span>填好后点上面的「示范这一段」，从哪一段开始都行。</span>
+            <span>{expertSaved ? '点上面的「示范这一段」开始，从哪一段开始都行。' : '只填这一次。填好后点上面的「示范这一段」，从哪一段开始都行。'}</span>
             {!guest && user && <button className="lab-btn ghost sm" disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '老师傅不在身边？发邀请链接'}</button>}
           </div>
           {walkedLabels.length > 0 && <div style={{ marginTop: 10, fontSize: 13, color: '#12a150' }}>已示范：{walkedLabels.join('、')}</div>}
@@ -927,13 +951,7 @@ function castOf(space: any, sim: Sim | null) {
 
       {/* ── 考验新人 ── */}
       {(mode === 'test' || mode === 'teach') && answering && sim && (
-        <SimStage title={chapters.length > 1 && chapter ? `${chapter.slot ? `${chapter.slot} · ` : ""}${chapter.title}` : space.title} role="rookie" immersive={!!sim.art} onExit={() => { setStageReport(null); setAnswering(false); setIntro(true); }} header={
-          <div className="lab-stage-fields">
-            {field(rookie.name, v => setRookie(r => ({ ...r, name: v })), '新兵姓名')}
-            {field(rookie.note, v => setRookie(r => ({ ...r, note: v })), '背景（学校 / 专业）')}
-            {field(rookie.location, v => setRookie(r => ({ ...r, location: v })), '所在地（如 伦敦）')}
-          </div>
-        }>
+        <SimStage title={chapters.length > 1 && chapter ? `${chapter.slot ? `${chapter.slot} · ` : ""}${chapter.title}` : space.title} role="rookie" immersive={!!sim.art} onExit={() => { setStageReport(null); setAnswering(false); setIntro(true); }}>
           {stageReport ? (
             <div className="lab-game">
               <img className="lab-game-bg lab-in" src={sim.art?.scenes?.final || sim.art?.cover} alt="" />
@@ -955,7 +973,8 @@ function castOf(space: any, sim: Sim | null) {
             </div>
           ) : intro ? (
             <ChapterIntro chapter={chapter} chapters={chapters} space={space} sim={sim} demo={!!demo}
-              onStart={() => setIntro(false)} />
+              profile={askProfile && !demo ? { name: rookie.name, note: rookie.note, location: rookie.location, set: (k: 'name' | 'note' | 'location', v: string) => setRookie(r => ({ ...r, [k]: v })) } : null}
+              onStart={() => { if (askProfile && !demo) saveProfile(); setIntro(false); }} />
           ) : (
             <SimRunner key={runKey + (demo ? '-demo' : '')} startAt={startAt} demo={demo || undefined} sim={sim} role="rookie" busy={!!busy} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); }} onFinish={trace => { const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, d ? undefined : trace); }} />
           )}
@@ -969,6 +988,8 @@ function castOf(space: any, sim: Sim | null) {
           actions={mode === 'learn' && !(guest && taught) ? (
             <button className="lab-btn" disabled={!!busy} style={{ height: 46, padding: '0 26px', fontSize: 15 }} onClick={() => {
               if (!expert.name.trim() || !expert.location.trim()) { message.warning('先在下面留下你的姓名（或化名）和所在地'); return; }
+              try { localStorage.setItem('lab:expert', JSON.stringify(expert)); } catch { /* 记不住就算了 */ }
+              setExpertSaved(true);
               if (sim?.art) enterFullscreen();
               setLearnStep(1);
             }}>{chTraces[chapter?.id || 'base'] ? '重新示范这一段' : '示范这一段'}</button>
@@ -1395,7 +1416,8 @@ function castOf(space: any, sim: Sim | null) {
 }
 
 /** 每一段开演前的介绍页：这一幕是什么、几点、会见到谁、在哪、用到什么（第一段也有） */
-function ChapterIntro({ chapter, chapters, space, sim, demo, onStart }: { chapter: any; chapters: any[]; space: any; sim: Sim; demo: boolean; onStart: () => void }) {
+function ChapterIntro({ chapter, chapters, space, sim, demo, onStart, profile }: { chapter: any; chapters: any[]; space: any; sim: Sim; demo: boolean; onStart: () => void;
+  /** 第一次来：顺便问一下称呼（证书上用），只问这一次 */ profile?: { name: string; note: string; location: string; set: (k: 'name' | 'note' | 'location', v: string) => void } | null }) {
   const idx = chapter ? chapters.indexOf(chapter) : 0;
   const n = chapters.length;
   const k = CHAPTER_KIND[chapter?.kind] || CHAPTER_KIND.daily;
@@ -1431,6 +1453,16 @@ function ChapterIntro({ chapter, chapters, space, sim, demo, onStart }: { chapte
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 12 }}>
           {places.map(m => <span key={m.id} className="lab-chip c">📍 {m.name.replace(/^工位：/, '工位 · ')}</span>)}
           {props.map(m => <span key={m.id} className="lab-chip g">◇ {m.name}</span>)}
+        </div>
+      )}
+      {profile && (
+        <div style={{ marginTop: 16, padding: '12px 14px', borderRadius: 14, background: 'rgba(106,92,255,.06)', boxShadow: '0 0 0 1px rgba(106,92,255,.16)' }}>
+          <div style={{ fontSize: 13, color: 'var(--ink2)', marginBottom: 8 }}>第一次来，留个称呼吧——每走完一段都能领证书，证书上用这个名字。<b>只问这一次</b>，不填也能玩。</div>
+          <div style={{ display: 'grid', gap: 8, gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
+            <input className="lab-input" style={{ padding: '8px 11px', fontSize: 14 }} value={profile.name} onChange={e => profile.set('name', e.target.value)} placeholder="怎么称呼你" />
+            <input className="lab-input" style={{ padding: '8px 11px', fontSize: 14 }} value={profile.note} onChange={e => profile.set('note', e.target.value)} placeholder="学校 / 专业（可空）" />
+            <input className="lab-input" style={{ padding: '8px 11px', fontSize: 14 }} value={profile.location} onChange={e => profile.set('location', e.target.value)} placeholder="所在地（可空）" />
+          </div>
         </div>
       )}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 18, flexWrap: 'wrap' }}>
