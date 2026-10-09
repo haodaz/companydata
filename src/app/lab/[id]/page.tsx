@@ -456,9 +456,12 @@ export default function SpacePage() {
   // 浏览器后退就回到人，每个空间也都有自己的链接。受邀的老师傅只有「教」这一个空间。
   const urlMode = sp.get('m') as Mode | null;
   const mode: Mode | null = guest ? 'learn' : (urlMode && ALL_MODES.includes(urlMode) ? urlMode : null);
+  // 章节也跟着网址走（?ch=章节编号）：一个职业可以有几章组成「一天」，分享链接能直达某一章
+  const chParam = sp.get('ch');
   const setMode = (m: Mode | null, replace = false) => {
     const q = new URLSearchParams();
     if (m) q.set('m', m);
+    if (chParam) q.set('ch', chParam);
     if (invite) q.set('invite', invite);
     const url = `/lab/${id}${q.toString() ? `?${q}` : ''}`;
     if (replace) router.replace(url, { scroll: false }); else router.push(url);
@@ -528,10 +531,11 @@ export default function SpacePage() {
   useEffect(() => {
     if (mode !== 'teach') { taughtOnce.current = false; return; }
     if (taughtOnce.current || answering || !space) return;
-    const sk = space.skill;
-    if (space.sim?.steps?.length && sk?.expert_trace) { taughtOnce.current = true; setDemo(sk.expert_trace); setAnswering(true); }
+    const ch = (space.chapters || []).find((c: any) => c.id && c.id === chParam) || (space.chapters || [])[0];
+    const trace = (ch?.expert_trace && Object.keys(ch.expert_trace).length ? ch.expert_trace : null) || space.skill?.expert_trace;
+    if ((ch?.sim?.steps?.length || space.sim?.steps?.length) && trace) { taughtOnce.current = true; setDemo(trace); setAnswering(true); }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, space]);
+  }, [mode, space, chParam]);
   useEffect(() => { chatEnd.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, [turns]);
 
   const post = async (path: string, body: Record<string, unknown>) => {
@@ -545,7 +549,17 @@ export default function SpacePage() {
   const jd = space?.jd_snapshot || {};
   const lv = expertiseLevel(skill);
   const rubric: RubricItem[] = space?.rubric || [];
-  const sim: Sim | null = space?.sim?.steps?.length ? space.sim : null;
+  // 当前章节：网址里指定的，不然第一章。没有章节（迁移前 / 老数据）时服务端会把 sim 当成唯一的第 1 章给过来
+  const chapters: any[] = space?.chapters || [];
+  const chapter = chapters.find(c => c.id && c.id === chParam) || chapters[0] || null;
+  const sim: Sim | null = chapter?.sim?.steps?.length ? chapter.sim : (space?.sim?.steps?.length ? space.sim : null);
+  const chapterTrace = (chapter?.expert_trace && Object.keys(chapter.expert_trace).length ? chapter.expert_trace : null) || skill?.expert_trace || null;
+  const pickChapter = (cid: string | null) => {
+    const q = new URLSearchParams(sp.toString());
+    if (cid) q.set('ch', cid); else q.delete('ch');
+    setAnswering(false); setDemo(null); setStageReport(null); taughtOnce.current = false;
+    router.replace(`/lab/${id}?${q}`, { scroll: false });
+  };
   useEffect(() => {
     const go = goRef.current;
     if (!go || !sim) return;
@@ -554,7 +568,9 @@ export default function SpacePage() {
     setStartAt(Math.max(0, i));
     setAnswering(true);
   }, [sim]);
-  const ranked = useMemo(() => [...subs].sort((a, b) => (b.score ?? 0) - (a.score ?? 0)), [subs]);
+  // 多章时排行榜按章分开（没记章节的老作答算第一章）
+  const chapterSubs = useMemo(() => chapters.length > 1 && chapter ? subs.filter(s => (s.chapter_id || chapters[0]?.id) === chapter.id) : subs, [subs, chapters, chapter]);
+  const ranked = useMemo(() => [...chapterSubs].sort((a, b) => (b.score ?? 0) - (a.score ?? 0)), [chapterSubs]);
   const aiBare = subs.filter(s => s.candidate_type === 'ai' && !s.with_skill_id).slice(-1)[0];
   const aiSkill = subs.filter(s => s.candidate_type === 'ai' && s.with_skill_id).slice(-1)[0];
   const solves = invs.filter(i => i.kind === 'solve').reverse();
@@ -564,7 +580,7 @@ export default function SpacePage() {
     if (m === 'human' && !trace && rookie.answer.trim().length < 20) { message.warning('先把任务走一遍，至少写几句'); return; }
     setBusy(m === 'ai' ? (withSkill ? 'AI 核心正在亲自走一遍' : '未装配技能的通用模型正在走一遍') : 'AI 核心正在按岗位标准评分');
     try {
-      const json = await post('submit', m === 'ai' ? { mode: 'ai', withSkill } : { mode: 'human', ...rookie, trace });
+      const json = await post('submit', { ...(m === 'ai' ? { mode: 'ai', withSkill } : { mode: 'human', ...rookie, trace }), chapterId: chapter?.id || undefined });
       setFreshId(json.submission.id);
       await load();
       if (m === 'human' && trace && sim?.art) { setStageReport(json.submission); setRookie(r => ({ ...r, answer: '' })); return; }
@@ -799,11 +815,15 @@ export default function SpacePage() {
         </SimStage>
       )}
 
+      {(mode === 'test' || mode === 'teach') && !(answering && sim) && chapters.length > 1 && (
+        <DayTimeline chapters={chapters} current={chapter?.id || null} onPick={pickChapter} />
+      )}
       {(mode === 'test' || mode === 'teach') && !(answering && sim) && (
         <div className="lab-in" style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))', alignItems: 'start' }}>
           <div className="lab-glass" style={{ padding: 22, minWidth: 0 }}>
             <Label>THE TASK · {space.time_limit_min} MIN</Label>
-            <h2 style={{ margin: '0 0 10px', fontSize: 19, fontWeight: 800, lineHeight: 1.4 }}>{space.title}</h2>
+            <h2 style={{ margin: '0 0 10px', fontSize: 19, fontWeight: 800, lineHeight: 1.4 }}>{chapters.length > 1 && chapter ? <>{chapter.slot && <span className="lab-mono" style={{ fontSize: 13, color: 'var(--v)', marginRight: 8 }}>{chapter.slot}</span>}{chapter.title}</> : space.title}</h2>
+            {chapters.length > 1 && chapter?.brief && <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 8 }}>{chapter.brief}</div>}
             <div className="lab-pre">{space.brief}</div>
             {space.materials && <div className="lab-mono" style={{ marginTop: 14, padding: 14, borderRadius: 14, background: 'rgba(23,26,46,.04)', fontSize: 12.5, lineHeight: 1.9, whiteSpace: 'pre-wrap', letterSpacing: 0, overflowX: 'auto', color: 'var(--ink2)' }}>{space.materials}</div>}
             {space.deliverable && <div style={{ marginTop: 14, fontSize: 13.5 }}><b>交付物：</b>{space.deliverable}</div>}
@@ -813,7 +833,7 @@ export default function SpacePage() {
                 <button className="lab-btn" disabled={!!busy} onClick={() => { if (sim?.art) enterFullscreen(); setAnswering(true); }}>🎯 {sim ? '换你上操作台走一遍' : '换你走一遍'}</button>
                 <button className="lab-btn ghost" disabled={!!busy} onClick={() => submit('ai', false)}>让通用 AI {sim ? '上台操作' : '裸答'}</button>
                 <button className="lab-btn ghost" disabled={!!busy || !skill} title={skill ? '' : '先让专家来教一遍'}
-                  onClick={() => { if (sim && skill?.expert_trace) { setDemo(skill.expert_trace); setAnswering(true); } else submit('ai', true); }}>
+                  onClick={() => { if (sim && chapterTrace) { setDemo(chapterTrace); setAnswering(true); } else submit('ai', true); }}>
                   {sim ? '我教你：看我走一遍' : '我教你：看我怎么答'}
                 </button>
               </div>
@@ -1172,6 +1192,35 @@ export default function SpacePage() {
           </div>
         )}
       </Drawer>
+    </div>
+  );
+}
+
+
+const CHAPTER_KIND: Record<string, { label: string; color: string }> = {
+  daily: { label: '日常', color: '#6b5cff' }, incident: { label: '突发', color: '#ef4444' }, assessment: { label: '考核', color: '#0ea5a4' },
+};
+
+/** 一天时间轴：多章时在任务卡片上方，点哪章进哪章 */
+function DayTimeline({ chapters, current, onPick }: { chapters: any[]; current: string | null; onPick: (id: string | null) => void }) {
+  return (
+    <div className="lab-in lab-glass" style={{ padding: '14px 18px', marginBottom: 14, overflowX: 'auto' }}>
+      <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>A DAY · {chapters.length} 章</div>
+      <div style={{ display: 'flex', gap: 10, minWidth: 'min-content' }}>
+        {chapters.map((c, i) => {
+          const on = (c.id || null) === current || (!current && i === 0);
+          const k = CHAPTER_KIND[c.kind] || CHAPTER_KIND.daily;
+          return (
+            <button key={c.id || i} onClick={() => onPick(c.id)} className="lab-btn ghost"
+              style={{ display: 'grid', gap: 2, textAlign: 'left', padding: '10px 14px', minWidth: 170, borderRadius: 14, height: 'auto',
+                boxShadow: on ? `0 0 0 2px ${k.color}` : undefined, background: on ? 'rgba(107,92,255,.08)' : undefined }}>
+              <span className="lab-mono" style={{ fontSize: 11.5, color: k.color }}>{c.slot || `第 ${c.seq || i + 1} 章`} · {k.label}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--ink)', whiteSpace: 'normal', lineHeight: 1.4 }}>{c.title}</span>
+              <span style={{ fontSize: 11.5, color: 'var(--ink3)' }}>{c.sim?.steps?.length || 0} 步{c.sim?.steps?.some((st: any) => st.type === 'bench') ? ' · 含工位' : ''}</span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -39,7 +39,7 @@ export async function loadChapters(space: any, opts: { includeDrafts?: boolean }
     let q = supabaseAdmin.from('lab_chapters').select('*').eq('task_id', space.id).order('seq');
     if (!opts.includeDrafts) q = q.eq('status', 'published');
     const { data, error } = await q;
-    if (!error && data?.length) return data.filter((c: any) => c.sim?.steps?.length) as LabChapter[];
+    if (!error && data?.length) return sortByDay(data.filter((c: any) => c.sim?.steps?.length) as LabChapter[]);
   } catch { /* 表还没建 */ }
   // 没有章节：现有故事线就是唯一的第 1 章
   return space.sim?.steps?.length
@@ -60,4 +60,20 @@ export const skillRef = (skill: any | null) => (skill?.card ? { name: skill.name
 export async function recordInvocation(row: Record<string, unknown>) {
   const { error } = await supabaseAdmin.from('skill_invocations').insert(row);
   if (error) console.error('[SkillLab] invocation insert failed:', error.message);
+}
+
+
+/**
+ * 「一天」要有时间逻辑：按时段排（08:30 在 14:00 前），没写时段的按 seq 跟在后面。
+ * 时段写成「周一上午」这类非时刻的，按 seq。内容和时段配不配（早上别做全天复盘）由生成和校验管，见 docs/lab-studio.md。
+ */
+export function sortByDay<T extends { slot?: string | null; seq: number }>(list: T[]): T[] {
+  const minutes = (s?: string | null) => { const m = String(s || '').match(/^(\d{1,2})[:：](\d{2})/); return m ? +m[1] * 60 + +m[2] : null; };
+  return [...list].sort((a, b) => {
+    const x = minutes(a.slot), y = minutes(b.slot);
+    if (x != null && y != null && x !== y) return x - y;
+    if (x != null && y == null) return -1;
+    if (x == null && y != null) return 1;
+    return a.seq - b.seq;
+  });
 }
