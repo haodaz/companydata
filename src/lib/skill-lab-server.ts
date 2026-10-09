@@ -2,6 +2,8 @@
 import { supabaseAdmin } from '@/lib/supabase';
 import type { SkillCard } from '@/lib/skill-lab';
 import type { Sim, SimTrace } from '@/lib/skill-sim';
+import { applyCastArt } from '@/lib/lab-cast';
+import { loadCast } from '@/lib/lab-cast-server';
 
 export const MIGRATION_HINT = '技能实验室的表还没建：请在 Supabase SQL Editor 执行 supabase/migrations/002_skill_lab.sql';
 
@@ -15,7 +17,10 @@ export function labError(e: any): { error: string; needMigration: boolean } {
 export async function loadSpace(id: string, opts: { includeDrafts?: boolean } = {}) {
   const { data: task, error } = await supabaseAdmin.from('skill_tasks').select('*, skill:skills(*)').eq('id', id).single();
   if (error) throw error;
-  (task as any).chapters = await loadChapters(task, opts);
+  // 角色表是图的来源：换了某人的立绘 / 某个场景的图，各章跟着换（迁移 016 没跑就是空表，原样不动）
+  const cast = await loadCast(id);
+  (task as any).cast = cast.map(({ asset, ...m }) => ({ ...m, image: asset?.url || null, asset_code: asset?.code || null }));
+  (task as any).chapters = (await loadChapters(task, opts)).map(c => ({ ...c, sim: applyCastArt(c.sim, cast) }));
   return task as any;
 }
 

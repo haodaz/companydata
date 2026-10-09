@@ -15,6 +15,7 @@ const LAB_PUBLIC = () => process.env.LAB_PUBLIC === '1';
 /** 放开时仍要登录的「工厂」操作：生成新空间 / 预置示范、删除空间、发邀请链接、蒸馏专家技能（花钱或改内容） */
 const LAB_PROTECTED = (pathname: string, method: string) =>
   pathname.startsWith('/api/lab/studio/') ||   // 百业工厂：看草稿、改章节
+  pathname.startsWith('/api/lab/assets') ||    // 百业工厂：素材库
   (method === 'POST' && (pathname === '/api/lab/spaces' || pathname === '/api/lab/seed')) ||
   (method === 'DELETE' && /^\/api\/lab\/spaces\/[^/]+$/.test(pathname)) ||
   (method === 'POST' && /^\/api\/lab\/spaces\/[^/]+\/(invite|distill)$/.test(pathname));
@@ -55,8 +56,8 @@ export async function proxy(req: NextRequest) {
   if (/^\/lab\/[^/]+\.(png|jpe?g|webp|gif|svg|mp4|webm)$/i.test(pathname)) return NextResponse.next();
 
   // AI 百业首页公开：谁都能看见理念和这些人，点进任何一个空间才要求登录（LAB_PUBLIC=1 时整个 /lab 都公开）
-  // 百业工厂的工作室 /lab/studio/* 例外：放开时也要登录
-  if (pathname === '/lab' || (LAB_PUBLIC() && pathname.startsWith('/lab/') && !pathname.startsWith('/lab/studio'))) return NextResponse.next();
+  // 百业工厂的工作室 /lab/studio/*、素材库 /lab/assets 例外：放开时也要登录
+  if (pathname === '/lab' || (LAB_PUBLIC() && pathname.startsWith('/lab/') && !pathname.startsWith('/lab/studio') && !pathname.startsWith('/lab/assets'))) return NextResponse.next();
 
   // 邀请链接 /lab/<id>?invite=…：票对得上这个空间，就不用登录
   const pm = pathname.match(INVITE_PAGE);

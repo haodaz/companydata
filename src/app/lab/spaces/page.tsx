@@ -329,6 +329,7 @@ export default function LabHome() {
           {user && <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <button className="lab-btn" disabled={!!needMigration} onClick={() => { setPick('jd'); loadJds(); }}>＋ 新岗位 · 从一份 JD 建</button>
             <button className="lab-btn ghost" disabled={!!needMigration} style={{ color: 'var(--hd-fg)', background: 'var(--hd-glass)', boxShadow: '0 0 0 1px var(--hd-line)' }} onClick={() => setPick('career')}>＋ 新职业 · 只给一个职业名</button>
+            <button className="lab-btn ghost" style={{ color: 'var(--hd-fg)', background: 'var(--hd-glass)', boxShadow: '0 0 0 1px var(--hd-line)' }} onClick={() => router.push('/lab/assets')}>素材库 · 人物 / 场景 / 道具</button>
           </div>}
         </div>
         {/* 平行解决别人的问题：不用先猜该进哪个空间 */}

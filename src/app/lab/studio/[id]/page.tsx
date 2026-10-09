@@ -2,10 +2,12 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { App, Popconfirm } from 'antd';
+import { App, Modal, Popconfirm } from 'antd';
+import Image from 'next/image';
 import { useUser } from '@/lib/user-context';
 import { SimRunner, SimStage } from '@/components/lab/SimRunner';
 import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue } from '@/lib/lab-studio';
+import { CAST_KINDS, applyCastArt, castKind, stepsUsing, type CastKind, type CastMember, type LabAsset } from '@/lib/lab-cast';
 
 /**
  * 百业工厂 · 工作室：一个空间的「一天」在这里编。
@@ -26,7 +28,8 @@ export default function StudioPage() {
   const { message } = App.useApp();
   const { user } = useUser();
 
-  const [data, setData] = useState<{ space: any; chapters: StudioChapter[]; expertTrace: any } | null>(null);
+  const [data, setData] = useState<{ space: any; chapters: StudioChapter[]; expertTrace: any; cast: CastMember[] } | null>(null);
+  const [castEdit, setCastEdit] = useState<CastMember | { kind: CastKind } | null>(null);
   const [err, setErr] = useState('');
   const [cur, setCur] = useState<string | null>(sp.get('ch'));
   const [draft, setDraft] = useState<StudioChapter | null>(null);   // 正在编辑的这一章（未保存）
@@ -38,7 +41,7 @@ export default function StudioPage() {
   const [newType, setNewType] = useState('choose');
 
   const apply = useCallback((j: any, pick?: string | null) => {
-    setData({ space: j.space, chapters: j.chapters, expertTrace: j.expertTrace });
+    setData({ space: j.space, chapters: j.chapters, expertTrace: j.expertTrace, cast: j.cast || [] });
     const target = j.chapters.find((c: StudioChapter) => c.id === pick) || j.chapters[0] || null;
     setCur(target?.id || null);
     setDraft(target ? clone(target) : null);
@@ -103,6 +106,14 @@ export default function StudioPage() {
     finally { setSaving(false); }
   };
 
+  // 角色表改动后重新读：人物改名会改到各章台词。手上没保存的改动保留，提醒一句
+  const refresh = async () => {
+    const j = await fetch(`/api/lab/studio/${id}`).then(r => r.json());
+    if (!j.ok) { message.error(j.error); return; }
+    if (dirty) { setData({ space: j.space, chapters: j.chapters, expertTrace: j.expertTrace, cast: j.cast || [] }); message.warning('这一章有没保存的改动，角色改名不会同步进去，保存前留意称呼'); }
+    else apply(j, cur);
+  };
+
   const addChapter = async () => {
     if (dirty && !window.confirm('这一章还有没保存的改动，丢掉吗？')) return;
     const j = await fetch(`/api/lab/studio/${id}/chapters`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: '', kind: 'daily' }) }).then(r => r.json());
@@ -141,6 +152,7 @@ export default function StudioPage() {
           <div style={{ fontSize: 19, fontWeight: 800 }}>{profile.name ? <>{profile.name} <span style={{ color: 'var(--v)' }}>· {profile.role}</span></> : space.title}</div>
         </div>
         <div style={{ flex: 1 }} />
+        <button className="lab-btn ghost sm" onClick={() => router.push('/lab/assets')}>素材库</button>
         <button className="lab-btn ghost sm" onClick={() => window.open(`/lab/${id}?m=test${saved?.status === 'published' ? `&ch=${saved.id}` : ''}`, '_blank')}>在体验端打开 ↗</button>
         <button className="lab-btn sm" onClick={addChapter}>＋ 加一章</button>
       </div>
@@ -150,7 +162,8 @@ export default function StudioPage() {
           @media (max-width: 640px) { .studio-row { grid-template-columns: minmax(0, 1fr) !important; } .studio-opt { grid-template-columns: 40px minmax(0, 1fr) 28px !important; } .studio-opt .detail { display: none; } }`}</style>
 
         {/* 左：一天时间轴（含草稿） */}
-        <div className="studio-day lab-glass" style={{ padding: 14, position: 'sticky', top: 76 }}>
+        <div className="studio-day" style={{ position: 'sticky', top: 76, maxHeight: 'calc(100dvh - 92px)', overflowY: 'auto', display: 'grid', gap: 12, alignContent: 'start' }}>
+        <div className="lab-glass" style={{ padding: 14 }}>
           <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>A DAY · {data.chapters.length} 章 · 已发布 {data.chapters.filter(c => c.status === 'published').length}</div>
           <div style={{ display: 'grid', gap: 8 }}>
             {liveChapters.map(c => {
@@ -181,6 +194,8 @@ export default function StudioPage() {
           </div>
           {dayIssues.length > 0 && <div style={{ marginTop: 10 }}>{dayIssues.map((x, i) => <IssueLine key={i} x={x} />)}</div>}
           <div style={{ marginTop: 12, fontSize: 11.5, color: 'var(--ink3)', lineHeight: 1.7 }}>按时段排序。早上做晨会 / 交接 / 准备，中段做核心操作，下午傍晚才是收尾、复盘——排反了会标红、不能发布。</div>
+        </div>
+        <CastPanel cast={data.cast} chapters={liveChapters} current={draft} onOpen={setCastEdit} />
         </div>
 
         {/* 右：编辑当前这一章 */}
@@ -249,7 +264,7 @@ export default function StudioPage() {
                       {jsonMode ? (
                         <textarea className="lab-input lab-mono" style={{ ...field, fontSize: 12, letterSpacing: 0 }} rows={16} value={raw[s.id]} onChange={e => { const v = e.target.value; setRaw(r => ({ ...r, [s.id]: v })); setDirty(true); }} />
                       ) : (
-                        <StepForm s={s} onEdit={fn => editStep(i, fn)} />
+                        <StepForm s={s} cast={data.cast} onEdit={fn => editStep(i, fn)} />
                       )}
                     </div>
                   )}
@@ -288,9 +303,10 @@ export default function StudioPage() {
         )}
       </div>
 
+      {castEdit && <CastEditor spaceId={id} member={castEdit} onClose={() => setCastEdit(null)} onDone={() => { setCastEdit(null); refresh(); }} />}
       {preview && draft && (
-        <SimStage title={`试玩 · ${draft.title}`} role="rookie" immersive={!!draft.sim.art} onExit={() => setPreview(false)}>
-          <SimRunner sim={draft.sim} role="rookie" onCancel={() => setPreview(false)} onFinish={() => { setPreview(false); message.success('走完了。试玩不保存、不评分'); }} />
+        <SimStage title={`试玩 · ${draft.title}`} role="rookie" immersive={!!applyCastArt(draft.sim, data.cast).art} onExit={() => setPreview(false)}>
+          <SimRunner sim={applyCastArt(draft.sim, data.cast)} role="rookie" onCancel={() => setPreview(false)} onFinish={() => { setPreview(false); message.success('走完了。试玩不保存、不评分'); }} />
         </SimStage>
       )}
     </div>
@@ -307,15 +323,39 @@ function IssueLine({ x }: { x: StudioIssue }) {
 }
 
 /** 一步的表单：场景台词、题干、按题型的选项 / 分类 / 数值。虚拟工位太复杂，只给 JSON 编辑 */
-function StepForm({ s, onEdit }: { s: any; onEdit: (fn: (s: any) => void) => void }) {
+function StepForm({ s, cast, onEdit }: { s: any; cast: CastMember[]; onEdit: (fn: (s: any) => void) => void }) {
   const hasOpts = ['choose', 'multi', 'drill', 'classify', 'allocate'].includes(s.type);
+  const people = cast.filter(m => m.kind === 'person' && !m.is_self);
+  const places = cast.filter(m => m.kind === 'place');
+  const props = cast.filter(m => m.kind === 'prop');
+  const listId = `who-${s.id}`;
+  const whoKnown = !s.scene?.who || people.some(m => m.name === s.scene.who) || cast.length === 0;
   return (
     <>
+      <datalist id={listId}>{people.map(m => <option key={m.id} value={m.name}>{m.code} · {m.type_name}</option>)}</datalist>
       <div className="studio-row" style={{ display: 'grid', gridTemplateColumns: '140px 120px minmax(0, 1fr)', gap: 8 }}>
-        <label><span style={lbl}>谁在说话</span><input className="lab-input" style={field} value={s.scene?.who || ''} placeholder="带教师傅老周" onChange={e => onEdit(x => { x.scene = { ...(x.scene || {}), who: e.target.value }; })} /></label>
+        <label><span style={lbl}>谁在说话</span><input className="lab-input" list={listId} style={{ ...field, borderColor: whoKnown ? undefined : 'rgba(208,138,0,.7)' }} title={whoKnown ? '' : '不在角色表里：会被当成新人物'} value={s.scene?.who || ''} placeholder="从角色表选，或写新名字" onChange={e => onEdit(x => { x.scene = { ...(x.scene || {}), who: e.target.value }; })} /></label>
         <label><span style={lbl}>场景时间</span><input className="lab-input" style={field} value={s.scene?.time || ''} placeholder="08:40" onChange={e => onEdit(x => { x.scene = { ...(x.scene || {}), time: e.target.value }; })} /></label>
         <label><span style={lbl}>发生了什么 / 说了什么</span><input className="lab-input" style={field} value={s.scene?.text || ''} onChange={e => onEdit(x => { x.scene = { ...(x.scene || {}), text: e.target.value }; })} /></label>
       </div>
+      {cast.length > 0 && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 2fr)', gap: 8 }} className="studio-row">
+          <label><span style={lbl}>在哪（场景）</span>
+            <select className="lab-input" style={field} value={s.place || ''} onChange={e => onEdit(x => { if (e.target.value) x.place = e.target.value; else delete x.place; })}>
+              <option value="">{s.type === 'bench' ? '（工位自带底图）' : '（跟着章节封面）'}</option>
+              {places.map(m => <option key={m.id} value={m.id}>{m.code} · {m.name}</option>)}
+            </select>
+          </label>
+          <div><span style={lbl}>用到的道具</span>
+            <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+              {props.length ? props.map(m => {
+                const on = (s.props || []).includes(m.id);
+                return <button key={m.id} className={`lab-chip ${on ? '' : 'g'}`} style={{ cursor: 'pointer' }} onClick={() => onEdit(x => { const l = new Set<string>(x.props || []); if (on) l.delete(m.id); else l.add(m.id); x.props = [...l]; if (!x.props.length) delete x.props; })}>{m.code} {m.name}</button>;
+              }) : <span style={{ fontSize: 12, color: 'var(--ink3)' }}>角色表里还没有道具</span>}
+            </div>
+          </div>
+        </div>
+      )}
       <label><span style={lbl}>题干（要体验者做什么判断）</span><textarea className="lab-input" style={field} rows={2} value={s.prompt || ''} onChange={e => onEdit(x => { x.prompt = e.target.value; })} /></label>
       {s.type === 'bench' && <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>虚拟工位「{s.bench?.name || '未命名'}」：设备、规则、目标较复杂，点右上「JSON 编辑」修改。</div>}
       {hasOpts && (
@@ -368,5 +408,123 @@ function StepForm({ s, onEdit }: { s: any; onEdit: (fn: (s: any) => void) => voi
         <label><span style={lbl}>输入框提示</span><input className="lab-input" style={field} value={s.placeholder || ''} onChange={e => onEdit(x => { x.placeholder = e.target.value; })} /></label>
       )}
     </>
+  );
+}
+
+/** 角色表：这个空间的人 / 场景 / 道具，每个看得到编号、图、在几章出场；当前章用到的高亮 */
+function CastPanel({ cast, chapters, current, onOpen }: { cast: CastMember[]; chapters: StudioChapter[]; current: StudioChapter | null; onOpen: (m: CastMember | { kind: CastKind }) => void }) {
+  return (
+    <div className="lab-glass" style={{ padding: 14 }}>
+      <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>CAST · 角色表 · {cast.length}</div>
+      {CAST_KINDS.map(k => {
+        const list = cast.filter(m => m.kind === k.k);
+        return (
+          <div key={k.k} style={{ marginBottom: 10 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 5 }}>
+              <span style={{ fontSize: 12.5, fontWeight: 700, color: 'var(--ink2)' }}>{k.label}</span>
+              <span className="lab-mono" style={{ fontSize: 11, color: 'var(--ink3)' }}>{k.prefix} · {list.length}</span>
+              <span style={{ flex: 1 }} />
+              <button style={mini} title={`加${k.label}`} onClick={() => onOpen({ kind: k.k })}>＋</button>
+            </div>
+            <div style={{ display: 'grid', gap: 4 }}>
+              {list.map(m => {
+                const n = chapters.filter(c => stepsUsing(c.sim, m).length).length;
+                const here = !!current && !m.is_self && stepsUsing(current.sim, m).length > 0;
+                return (
+                  <button key={m.id} onClick={() => onOpen(m)} className="lab-btn ghost"
+                    style={{ height: 'auto', padding: '5px 8px', borderRadius: 10, justifyContent: 'flex-start', gap: 8, fontWeight: 500, boxShadow: here ? '0 0 0 1.5px var(--v)' : undefined }}>
+                    <span style={{ position: 'relative', width: 30, height: 30, borderRadius: k.k === 'person' ? '50%' : 7, overflow: 'hidden', flexShrink: 0, background: 'rgba(106,92,255,.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: 'var(--v)' }}>
+                      {m.asset?.url ? <Image src={m.asset.url} alt="" fill sizes="30px" style={{ objectFit: 'cover', objectPosition: k.k === 'person' ? '50% 12%' : 'center' }} /> : (m.name[0] || '?')}
+                    </span>
+                    <span style={{ display: 'grid', textAlign: 'left', minWidth: 0, flex: 1 }}>
+                      <span style={{ fontSize: 12.5, fontWeight: 700, color: 'var(--ink)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{m.name}</span>
+                      <span style={{ fontSize: 10.5, color: 'var(--ink3)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        <span className="lab-mono">{m.code}</span>{m.asset?.code ? ` → ${m.asset.code}` : ' · 无素材'} · {m.is_self ? '主角' : `${n} 章`}
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+      <div style={{ fontSize: 11, color: 'var(--ink3)', lineHeight: 1.6 }}>框起来的是当前这一章用到的。同一天各章共用这些人和地方：同一张脸、同一个地点。</div>
+    </div>
+  );
+}
+
+/** 编辑 / 新建一个角色：名字、规范类型名、说明、外形；从素材库挑图（同类型优先），换了图所有章节跟着换 */
+function CastEditor({ spaceId, member, onClose, onDone }: { spaceId: string; member: CastMember | { kind: CastKind }; onClose: () => void; onDone: () => void }) {
+  const { message } = App.useApp();
+  const isNew = !('id' in member);
+  const m = member as CastMember;
+  const k = castKind(member.kind);
+  const [f, setF] = useState({ name: isNew ? '' : m.name, type_name: isNew ? '' : m.type_name, note: isNew ? '' : m.note, look: isNew ? '' : m.look, asset_id: isNew ? null : m.asset_id });
+  const [lib, setLib] = useState<(LabAsset & { usage?: any })[] | null>(null);
+  const [q, setQ] = useState('');
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    fetch('/api/lab/assets').then(r => r.json()).then(j => setLib(j.ok ? j.assets.filter((a: LabAsset) => a.kind === k.asset) : []));
+  }, [k.asset]);
+  const picked = lib?.find(a => a.id === f.asset_id) || (!isNew && m.asset?.id === f.asset_id ? m.asset : null);
+  const list = useMemo(() => {
+    const kw = (q || f.type_name).trim().toLowerCase();
+    const all = (lib || []).filter(a => a.reusable || a.id === f.asset_id || (!isNew && a.source_task_id === m.task_id));
+    const score = (a: LabAsset) => (kw && [a.title, a.type_name, a.code, ...(a.tags || [])].join(' ').toLowerCase().includes(kw) ? 2 : 0) + (a.url ? 1 : 0);
+    return all.sort((x, y) => score(y) - score(x)).slice(0, 60);
+  }, [lib, q, f.type_name, f.asset_id, isNew, m.task_id]);
+
+  const save = async () => {
+    setBusy(true);
+    try {
+      const url = isNew ? `/api/lab/studio/${spaceId}/cast` : `/api/lab/studio/${spaceId}/cast/${m.id}`;
+      const j = await fetch(url, { method: isNew ? 'POST' : 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...f, kind: member.kind }) }).then(r => r.json());
+      if (!j.ok) throw new Error(j.error);
+      message.success(isNew ? `已加入角色表 ${j.code}${j.reused ? '，从素材库复用了同类型的图' : ''}` : j.renamed ? `已保存，${j.renamed} 章里的称呼一起改了` : '已保存');
+      onDone();
+    } catch (e: any) { message.error(e.message); } finally { setBusy(false); }
+  };
+  const remove = async () => {
+    const j = await fetch(`/api/lab/studio/${spaceId}/cast/${m.id}`, { method: 'DELETE' }).then(r => r.json());
+    if (!j.ok) { message.error(j.error); return; }
+    message.success('已从角色表删除（素材还在库里）'); onDone();
+  };
+
+  return (
+    <Modal open onCancel={onClose} footer={null} width={720} title={isNew ? `加${k.label}` : `${m.code} · ${m.name}`}>
+      <div style={{ display: 'grid', gap: 10 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 10 }} className="studio-row">
+          <label><span style={lbl}>名字（故事里的叫法）</span><input className="lab-input" style={field} disabled={!isNew && m.is_self} value={f.name} onChange={e => setF({ ...f, name: e.target.value })} placeholder={k.k === 'person' ? '老周 / 夜班小林' : k.k === 'place' ? 'B1 女卫生间' : '含氯消毒液'} /></label>
+          <label><span style={lbl}>规范类型名（同类型的复用素材）</span><input className="lab-input" style={field} value={f.type_name} onChange={e => setF({ ...f, type_name: e.target.value })} placeholder={k.k === 'person' ? '带教师傅 / 挑剔的顾客' : k.k === 'place' ? '商场公共卫生间' : '消毒液'} /></label>
+        </div>
+        <label><span style={lbl}>{k.k === 'person' ? '性格 / 和主角的关系' : '用途 / 状态'}</span><input className="lab-input" style={field} value={f.note} onChange={e => setF({ ...f, note: e.target.value })} /></label>
+        <label><span style={lbl}>{k.k === 'place' ? '陈设描述（以后画图用）' : '外形描述（以后画图用）'}</span><input className="lab-input" style={field} value={f.look} onChange={e => setF({ ...f, look: e.target.value })} /></label>
+        <div>
+          <span style={lbl}>素材（从库里挑；{isNew ? '不挑就按规范类型名自动找' : '换了图，所有章节跟着换'}）{picked ? ` · 当前 ${picked.code}` : ''}</span>
+          <input className="lab-input" style={{ ...field, marginBottom: 8 }} value={q} onChange={e => setQ(e.target.value)} placeholder="搜素材库：编号 / 类型 / 标签" />
+          <div style={{ display: 'grid', gap: 8, gridTemplateColumns: `repeat(auto-fill, minmax(${k.k === 'place' ? 130 : 90}px, 1fr))`, maxHeight: 280, overflowY: 'auto', padding: 2 }}>
+            {!lib ? <span className="lab-mono" style={{ color: 'var(--ink3)' }}>LOADING…</span> : list.map(a => {
+              const on = a.id === f.asset_id;
+              return (
+                <button key={a.id} onClick={() => setF({ ...f, asset_id: on ? null : a.id })} title={`${a.code} ${a.title || a.type_name}`}
+                  style={{ padding: 0, border: 0, borderRadius: 10, overflow: 'hidden', cursor: 'pointer', background: 'rgba(106,92,255,.08)', boxShadow: on ? '0 0 0 2.5px var(--v)' : '0 0 0 1px var(--line)', textAlign: 'left' }}>
+                  <span style={{ display: 'block', position: 'relative', aspectRatio: k.k === 'place' ? '16 / 10' : '3 / 4' }}>
+                    {a.url ? <Image src={a.url} alt="" fill sizes="140px" style={{ objectFit: k.k === 'place' ? 'cover' : 'contain', objectPosition: 'bottom' }} /> : <span style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink3)' }}>◇</span>}
+                  </span>
+                  <span style={{ display: 'block', padding: '3px 6px', fontSize: 10.5, color: 'var(--ink2)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}><span className="lab-mono">{a.code}</span> {a.type_name || a.title}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          {!isNew && !m.is_self && <Popconfirm title="从角色表删除？" description="还有章节在用就删不掉；素材留在库里。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="lab-btn ghost sm" style={{ color: '#e5484d' }}>删除</button></Popconfirm>}
+          <span style={{ flex: 1 }} />
+          <button className="lab-btn ghost sm" onClick={onClose}>取消</button>
+          <button className="lab-btn sm" disabled={busy || !f.name.trim()} onClick={save}>{busy ? '保存中…' : isNew ? '加入角色表' : '保存'}</button>
+        </div>
+      </div>
+    </Modal>
   );
 }

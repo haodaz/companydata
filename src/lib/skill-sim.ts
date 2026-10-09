@@ -28,6 +28,8 @@ export interface SimStep {
   min?: number; maxValue?: number; // slider 范围
   placeholder?: string;           // text
   bench?: BenchSpec;              // bench：虚拟工位设备定义（事件流采集）
+  place?: string;                 // 这一步在哪：角色表里场景（S）的 id（迁移 016）
+  props?: string[];               // 这一步用到的道具：角色表里道具（T）的 id
 }
 
 /** 沉浸模式的美术：全景底图、各步骤的场景图、NPC 立绘（按 scene.who 匹配）。有 cover 就进沉浸模式（全屏场景 + NPC 对话 + 蒙版提问 + 工位 HUD） */

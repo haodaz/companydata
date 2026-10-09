@@ -2,6 +2,7 @@
 import { supabaseAdmin } from '@/lib/supabase';
 import { sortByDay } from '@/lib/skill-lab-server';
 import { checkAll, type StudioChapter } from '@/lib/lab-studio';
+import { loadCast } from '@/lib/lab-cast-server';
 
 export async function loadStudio(id: string) {
   const { data: task, error } = await supabaseAdmin.from('skill_tasks')
@@ -12,5 +13,6 @@ export async function loadStudio(id: string) {
   const chapters = sortByDay((data || []) as StudioChapter[]);
   const skill: any = Array.isArray((task as any).skill) ? (task as any).skill[0] : (task as any).skill;
   const { sim: _legacy, ...space } = task as any;
-  return { space: { ...space, skill: skill ? { ...skill, expert_trace: undefined, has_trace: !!skill.expert_trace } : null }, chapters, issues: checkAll(chapters, skill?.expert_trace || null), expertTrace: skill?.expert_trace || null };
+  const cast = await loadCast(id);
+  return { space: { ...space, skill: skill ? { ...skill, expert_trace: undefined, has_trace: !!skill.expert_trace } : null }, chapters, cast, issues: checkAll(chapters, skill?.expert_trace || null), expertTrace: skill?.expert_trace || null };
 }

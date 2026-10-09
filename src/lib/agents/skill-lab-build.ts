@@ -284,8 +284,8 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
 // ────────────────────────────────────────────
 /** family = 一级领域（图库按它分桶）；slot = 场景位 / 人物角色（图库按它匹配） */
 export interface ArtPlan { family: string; /** 空间核心那位数字人自己的形象 */ self: string; scenes: { key: string; slot: string; prompt: string; steps: string[] }[]; npcs: { who: string; slot: string; prompt: string }[] }
-const ART_SLOTS = ['办公室', '会议室', '车间', '实验室', '门店', '后厨', '工地', '仓库', '机房', '教室', '诊室', '户外现场', '驾驶舱', '其他'];
-const NPC_SLOTS = ['带教师傅', '主管', '同事', '客户', '质检', '老师', '专家', '其他'];
+export const ART_SLOTS = ['办公室', '会议室', '车间', '实验室', '门店', '后厨', '工地', '仓库', '机房', '教室', '诊室', '户外现场', '驾驶舱', '其他'];
+export const NPC_SLOTS = ['带教师傅', '主管', '同事', '客户', '质检', '老师', '专家', '其他'];
 
 export async function planArt(jd: JdInput, sim: Sim, modelId = DEFAULT_MODEL): Promise<ArtPlan> {
   const cast = [...new Set(sim.steps.map(s => s.scene?.who).filter((w): w is string => !!w && w !== '你'))];
