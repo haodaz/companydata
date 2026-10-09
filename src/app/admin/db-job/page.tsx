@@ -140,6 +140,8 @@ export default function DbJobPage() {
       if (!json.data.length) { message.warning('当前筛选条件下没有数据'); return; }
       exportToCsv(json.data, [
         { key: 'id', header: 'ID' },
+        { key: 'external_id', header: 'flora_external_id' },
+        { key: 'applysquare_id', header: 'applysquare_id' },
         { key: 'institute_or_company_name', header: '企业' },
         { key: 'company_ref.segment', header: '企业分类', formatter: v => SEGMENT_LABELS[v]?.label || '' },
         { key: 'company_ref.industry', header: '行业' },

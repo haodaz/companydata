@@ -220,6 +220,8 @@ export default function DbCompanyPage() {
       };
       exportToCsv(json.data, [
         { key: 'id', header: 'ID' },
+        { key: 'external_id', header: 'flora_external_id' },
+        { key: 'applysquare_id', header: 'applysquare_id' },
         ...COMPANY_EDIT_FIELDS.map(f => ({ key: f.key, header: f.label, formatter: fmt(f.kind) })),
         { key: 'completeness_score', header: '完整度' },
         { key: 'human_review_status', header: '审核状态', formatter: (v: any) => REVIEW_STATUS[v]?.label || '未审核' },
