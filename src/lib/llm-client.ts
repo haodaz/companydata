@@ -64,7 +64,69 @@ export async function generateContent(
   if (isOpenAIModel(resolvedModelId)) {
     return generateOpenAI(prompt, resolvedModelId, options);
   }
+  if (resolvedModelId.startsWith('qwen')) {
+    return generateQwen(prompt, resolvedModelId, options);
+  }
   return generateGemini(prompt, resolvedModelId, options);
+}
+
+// ──── 通义千问（阿里云百炼 DashScope 原生接口）────
+/**
+ * 国内检索用阿里云：webSearch 时打开 enable_search（search_strategy turbo + 返回来源），
+ * 来源网址附在正文后面（「## 搜索来源」），调用方要真实链接时从这里取。用法和 zhiji-yida 的 src/lib/search.ts 一致。
+ */
+async function generateQwen(
+  prompt: string,
+  modelId: string,
+  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean },
+): Promise<LLMResponse> {
+  const key = process.env.DASHSCOPE_API_KEY;
+  if (!key) throw new Error('缺少 DASHSCOPE_API_KEY，无法调用通义千问');
+  const base = (process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
+  const parameters: Record<string, any> = { result_format: 'message' };
+  if (options?.webSearch) {
+    parameters.enable_search = true;
+    parameters.search_options = { search_strategy: 'turbo', enable_source: true, forced_search: true };
+  } else if (options?.jsonMode) {
+    parameters.response_format = { type: 'json_object' };
+  }
+  let data: any = null, lastErr: any = null;
+  for (let attempt = 0; attempt < 3 && !data; attempt++) {
+    if (attempt) await new Promise(r => setTimeout(r, 3000 * attempt));
+    try {
+      const res = await fetch(`${base}/api/v1/services/aigc/text-generation/generation`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+        body: JSON.stringify({ model: modelId, input: { messages: [{ role: 'user', content: prompt }] }, parameters }),
+        signal: AbortSignal.timeout(180_000),
+      });
+      if (!res.ok) {
+        const t = await res.text().catch(() => '');
+        const err = new Error(`DashScope ${res.status}: ${t.slice(0, 300)}`);
+        if (res.status === 429 || res.status >= 500) { lastErr = err; continue; }
+        throw err;
+      }
+      data = await res.json();
+    } catch (e: any) {
+      lastErr = e;
+      if (!/fetch failed|ECONNRESET|ETIMEDOUT|timeout|DashScope (429|5\d\d)/i.test(String(e?.message))) throw e;
+    }
+  }
+  if (!data) throw lastErr;
+  let text: string = data.output?.choices?.[0]?.message?.content || '';
+  const sources: any[] = data.output?.search_info?.search_results || [];
+  if (options?.webSearch && sources.length) {
+    text += `\n\n## 搜索来源\n${sources.map((s: any, i: number) => `[${s.index ?? i + 1}] ${s.title || ''} ${s.url || ''}`).join('\n')}`;
+  }
+  const u = data.usage || {};
+  return {
+    text,
+    usageMetadata: {
+      promptTokenCount: u.input_tokens || 0,
+      candidatesTokenCount: u.output_tokens || 0,
+      totalTokenCount: u.total_tokens || (u.input_tokens || 0) + (u.output_tokens || 0),
+    },
+  };
 }
 
 // ──── Gemini implementation ────
@@ -193,7 +255,7 @@ async function generateOpenAI(
  * 简单的活（挑链接、判断页面有没有岗位、归一、岗位结构化）固定用便宜模型，不跟着页面上选的模型走。
  * 便宜模型出错（额度、限流、空返回）时退回调用方给的模型，活照样干完。环境变量 CHEAP_MODEL 可改。
  */
-export const cheapModel = () => process.env.CHEAP_MODEL || 'gemini-3.8-flash';
+export const cheapModel = () => process.env.CHEAP_MODEL || 'qwen-plus';
 
 export async function generateCheap(
   prompt: string,

@@ -13,6 +13,10 @@ const PRICING: Record<string, { input: number; output: number }> = {
   'gpt-6-astra': { input: 10, output: 30 },
   'gpt-5.6-terra': { input: 2.5, output: 10 },
   'gpt-5.6-luna': { input: 0.5, output: 2 },
+  // 通义千问（按人民币价折美元的粗估；联网搜索另按次计费，这里没算）
+  'qwen-plus': { input: 0.11, output: 0.28 },
+  'qwen-max': { input: 0.33, output: 1.33 },
+  'qwen-turbo': { input: 0.04, output: 0.08 },
 };
 
 export interface TokenUsageParams {

@@ -83,7 +83,12 @@ export async function searchJson(prompt: string, modelId: string, log: Pick<Toke
   let usageMetadata: any;
   let searchQueries: string[] = [];
 
-  if (!modelId.startsWith('gpt-')) {
+  if (modelId.startsWith('qwen')) {
+    // 阿里云：通义千问 + 联网搜索（国内企业用这个，便宜、搜得到国内站点）
+    const result = await generateContent(prompt, modelId, { webSearch: true });
+    text = result.text.replace(/\n\n## 搜索来源[\s\S]*$/, '');
+    usageMetadata = result.usageMetadata;
+  } else if (!modelId.startsWith('gpt-')) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
     // Gemini 联网检索偶尔整包空返回（没有 candidates，只消耗了思考 token）：先重试，仍为空就换一版 flash 兜底
     const attempts = [modelId, modelId, modelId === 'gemini-3.8-flash' ? 'gemini-3.6-flash' : modelId];
