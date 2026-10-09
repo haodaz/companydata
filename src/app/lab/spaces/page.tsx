@@ -163,6 +163,44 @@ export default function LabHome() {
     } catch (e: any) { message.error(e.message); setBuilding(null); }
   };
 
+  // hook 必须在下面「构建中 / 构建完成」两个提前 return 之前调用，否则一点生成整页就崩（Rendered fewer hooks）
+  // ── 给每个空间算出：可搜的正文、一级领域、标记 ──
+  const enriched = useMemo(() => spaces.map((s: any) => {
+    const jd = s.jd_snapshot || {};
+    const p = s.profile || {};
+    const prof = jd.career?.profession || '';
+    const text = [p.name, p.codename, p.role, p.tagline, (p.capabilities || []).join(' '), jd.company, jd.title, prof, jd.location, s.skill?.name, s.skill?.domain, s.skill?.expert_location]
+      .filter(Boolean).join(' ');
+    // 打标记只认「这人是干什么的」，不拿 tagline 和能力词那堆自由文本去撞——
+    // 不然西点师会因为一句「面糊是有记忆的材料」被打上「高精尖材料」
+    const tags = tagsOf([p.role, prof, jd.title, s.skill?.name, s.skill?.domain].filter(Boolean).join(' '));
+    tags.unshift(jd.kind === 'career' ? '职业探索' : '真实 JD');
+    if (s.features?.immersive) tags.unshift('沉浸场景');
+    if (s.features?.bench) tags.unshift('虚拟工位');
+    return { s, tags, text: text.toLowerCase(), family: familyOf(prof, s.skill?.domain, jd.title, jd.company) };
+  }), [spaces]);
+
+  const famCount = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const e of enriched) m.set(e.family, (m.get(e.family) || 0) + 1);
+    return [...m.entries()].sort((a, b) => b[1] - a[1]);
+  }, [enriched]);
+  const tagCount = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const e of enriched) for (const t of e.tags) m.set(t, (m.get(t) || 0) + 1);
+    return ALL_TAGS.filter(t => m.has(t)).map(t => [t, m.get(t)!] as [string, number]);
+  }, [enriched]);
+
+  const shown = useMemo(() => {
+    const kw = q.trim().toLowerCase();
+    return enriched.filter(e =>
+      (!fam || e.family === fam) &&
+      (!marks.length || marks.some(t => e.tags.includes(t))) &&
+      (!kw || e.text.includes(kw) || e.tags.some(t => t.toLowerCase().includes(kw)) || e.family.includes(kw)));
+  }, [enriched, q, fam, marks]);
+  const filtering = !!(q.trim() || fam || marks.length);
+  const toggleMark = (t: string) => setMarks(l => l.includes(t) ? l.filter(x => x !== t) : [...l, t]);
+
   // ── 构建中：全屏科技感加载 ──
   // 现场生成的落点：刚才那两分钟，岗位 AI 到底做出了什么
   if (done) {
@@ -236,42 +274,6 @@ export default function LabHome() {
     );
   }
 
-  // ── 给每个空间算出：可搜的正文、一级领域、标记 ──
-  const enriched = useMemo(() => spaces.map((s: any) => {
-    const jd = s.jd_snapshot || {};
-    const p = s.profile || {};
-    const prof = jd.career?.profession || '';
-    const text = [p.name, p.codename, p.role, p.tagline, (p.capabilities || []).join(' '), jd.company, jd.title, prof, jd.location, s.skill?.name, s.skill?.domain, s.skill?.expert_location]
-      .filter(Boolean).join(' ');
-    // 打标记只认「这人是干什么的」，不拿 tagline 和能力词那堆自由文本去撞——
-    // 不然西点师会因为一句「面糊是有记忆的材料」被打上「高精尖材料」
-    const tags = tagsOf([p.role, prof, jd.title, s.skill?.name, s.skill?.domain].filter(Boolean).join(' '));
-    tags.unshift(jd.kind === 'career' ? '职业探索' : '真实 JD');
-    if (s.features?.immersive) tags.unshift('沉浸场景');
-    if (s.features?.bench) tags.unshift('虚拟工位');
-    return { s, tags, text: text.toLowerCase(), family: familyOf(prof, s.skill?.domain, jd.title, jd.company) };
-  }), [spaces]);
-
-  const famCount = useMemo(() => {
-    const m = new Map<string, number>();
-    for (const e of enriched) m.set(e.family, (m.get(e.family) || 0) + 1);
-    return [...m.entries()].sort((a, b) => b[1] - a[1]);
-  }, [enriched]);
-  const tagCount = useMemo(() => {
-    const m = new Map<string, number>();
-    for (const e of enriched) for (const t of e.tags) m.set(t, (m.get(t) || 0) + 1);
-    return ALL_TAGS.filter(t => m.has(t)).map(t => [t, m.get(t)!] as [string, number]);
-  }, [enriched]);
-
-  const shown = useMemo(() => {
-    const kw = q.trim().toLowerCase();
-    return enriched.filter(e =>
-      (!fam || e.family === fam) &&
-      (!marks.length || marks.some(t => e.tags.includes(t))) &&
-      (!kw || e.text.includes(kw) || e.tags.some(t => t.toLowerCase().includes(kw)) || e.family.includes(kw)));
-  }, [enriched, q, fam, marks]);
-  const filtering = !!(q.trim() || fam || marks.length);
-  const toggleMark = (t: string) => setMarks(l => l.includes(t) ? l.filter(x => x !== t) : [...l, t]);
 
   return (
     <>
