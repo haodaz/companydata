@@ -267,3 +267,49 @@ export function splitSubRoles(duty: string, req: string): { title: string; duty:
   if (shared < 2 || roleLike < Math.ceil(a.length / 2)) return null;
   return a.map(x => ({ title: x.title, duty: x.body, req: reqBy.get(x.title) || '' }));
 }
+
+
+// ─────────── 企业自建招聘站（逐个适配）───────────
+/**
+ * vivo 社招（hr.vivo.com/jobs）：页面一页 10 条、分页在浏览器里做，渲染只能看到第一页（数据部门 1009：官网 119 条只拿到 10 条）。
+ * 它的列表接口 POST /api/social/webSite/portal/page 一次返回全部岗位，带完整岗位描述。校招接口要登录，不做。
+ */
+async function vivoSocialMarkdown(url: string): Promise<{ markdown: string; count: number } | null> {
+  const r = await fetch('https://hr.vivo.com/api/social/webSite/portal/page', { method: 'POST', headers: { 'Content-Type': 'application/json', 'User-Agent': 'Mozilla/5.0' }, body: '{}', signal: AbortSignal.timeout(20000) });
+  const j = await r.json().catch(() => null);
+  const rows: any[] = Array.isArray(j?.data) ? j.data : [];
+  if (!rows.length) return null;
+  const blocks = rows.map(x => {
+    const locs = (x.job_location_list || []).map((l: any) => l.city).filter(Boolean).join('；');
+    const yoe = x.yoe_min != null ? (x.yoe_max > 0 ? `${x.yoe_min}-${x.yoe_max} 年` : `${x.yoe_min} 年及以上`) : '';
+    return [
+      // 详情页参数名在 vivo 前端里是混淆的，不硬凑；原文链接用列表页（入库时共用链接不参与去重）
+      `### Source: [${x.job_title}](https://hr.vivo.com/jobs)`, '',
+      `# ${x.job_title}${x.job_code ? `（${x.job_code}）` : ''}`,
+      '招聘类型：社会招聘',
+      x.job_category && `职位类别：${x.job_category}`,
+      x.requirement_org_name && `所属部门：${x.requirement_org_name}`,
+      locs && `工作地点：${locs}`,
+      x.degree_range_name && `学历要求：${x.degree_range_name}`,
+      yoe && `经验要求：${yoe}`,
+      x.head_count && `招聘人数：${x.head_count}`,
+      x.job_code && `岗位编号：${x.job_code}`,
+      x.publish_timestamp && `发布时间：${new Date(x.publish_timestamp + 8 * 3600_000).toISOString().slice(0, 10)}`,
+      `\n## 岗位描述\n${strip(x.job_desc)}`,
+    ].filter(Boolean).join('\n');
+  });
+  return { markdown: blocks.join('\n\n'), count: rows.length };
+}
+
+/** 自建招聘站适配表：网址对上就走对应接口，拿全站岗位 */
+const SITE_ADAPTERS: { name: string; test: (u: URL) => boolean; run: (url: string) => Promise<{ markdown: string; count: number } | null> }[] = [
+  { name: 'vivo 社招', test: u => u.hostname === 'hr.vivo.com' && !/campus|school/i.test(u.pathname), run: vivoSocialMarkdown },
+];
+
+export async function siteAdapterMarkdown(url: string): Promise<{ name: string; markdown: string; count: number } | null> {
+  let u: URL; try { u = new URL(url); } catch { return null; }
+  const a = SITE_ADAPTERS.find(x => x.test(u));
+  if (!a) return null;
+  const r = await a.run(url).catch(e => { console.error(`[ats] ${a.name}`, e?.message || e); return null; });
+  return r && r.count ? { name: a.name, ...r } : null;
+}

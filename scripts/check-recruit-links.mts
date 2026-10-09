@@ -30,13 +30,14 @@ for (const c of cos as any[]) for (const f of ['campus_url', 'careers_url'] as c
 const urls = [...byUrl.keys()].filter(u => !prog[u] || Date.now() - prog[u].at > 7 * 86_400_000);
 console.log(`[${ts()}] ${byUrl.size} 个招聘链接，要查 ${urls.length} 个${DRY ? '（只看不改）' : ''}`);
 
-const tally = { alive: 0, dead: 0, unknown: 0, cleared: 0 };
+const tally: Record<string, number> = { alive: 0, dead: 0, unknown: 0, cleared: 0, login: 0 };
 let n = 0;
 const one = async (u: string) => {
   const h = await recruitLinkHealth(u);
   tally[h.status]++;
   prog[u] = { status: h.status, at: Date.now(), title: h.title, reason: h.reason };
-  if (!DRY) await supabaseAdmin.from('url_sources').update({ health_status: h.status === 'unknown' ? 'unknown' : h.status, last_checked_at: new Date().toISOString(), url_health: { title: h.title, reason: h.reason || null, by: 'check-recruit-links' } }).eq('url', u);
+  if (!DRY) await supabaseAdmin.from('url_sources').update({ health_status: h.status === 'unknown' ? 'unknown' : h.status, last_checked_at: new Date().toISOString(), url_health: { title: h.title, reason: h.reason || null, by: 'check-recruit-links' }, ...(h.status === 'unknown' ? {} : { requires_login: !!h.loginRequired, login_reason: h.loginReason || null, login_checked_at: new Date().toISOString() }) }).eq('url', u);
+  if (h.loginRequired) { tally.login = (tally.login || 0) + 1; console.log(`[${ts()}] 需登录：${byUrl.get(u)!.map(r => r.name).join('、')}　${u}　（${h.loginReason}）`); }
   if (h.status === 'dead') {
     for (const r of byUrl.get(u)!) {
       if (r.locked) { console.log(`           ${r.name} 的 ${r.field} 失效，但人工锁定 / 已定论，没动`); continue; }
@@ -49,4 +50,4 @@ const one = async (u: string) => {
 };
 for (let i = 0; i < urls.length; i += CONC) await Promise.all(urls.slice(i, i + CONC).map(u => one(u).catch(e => console.log(`[${ts()}] ${u} 出错：${e.message}`))));
 fs.writeFileSync(PROG, JSON.stringify(prog));
-console.log(`[${ts()}] ══ 完成：正常 ${tally.alive} · 失效 ${tally.dead} · 打不开 ${tally.unknown} · 清掉企业字段 ${tally.cleared}${DRY ? '（只看不改）' : ''}`);
+console.log(`[${ts()}] ══ 完成：正常 ${tally.alive}（其中需登录 ${tally.login}）· 失效 ${tally.dead} · 打不开 ${tally.unknown} · 清掉企业字段 ${tally.cleared}${DRY ? '（只看不改）' : ''}`);

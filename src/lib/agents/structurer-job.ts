@@ -21,7 +21,11 @@ export interface StructuredJobsResult {
  */
 export async function structureJobData(markdown: string, company: string, hint: string, modelId: string = 'gemini-3.8-flash', batchId?: number, scope: 'campus' | 'all' = 'campus'): Promise<StructuredJobsResult | null> {
   const SINGLE = 30000, CHUNK = 24000;
-  if (markdown.length <= SINGLE) return structureChunk(markdown, company, hint, modelId, batchId, scope);
+  if (markdown.length <= SINGLE) {
+    const r = await structureChunk(markdown, company, hint, modelId, batchId, scope);
+    if (r) { const note = pagingNote(markdown, r.jobs.length); if (note) r.ai_summary = [r.ai_summary, note].filter(Boolean).join('\n'); }
+    return r;
+  }
   const sections = markdown.split(/\n(?=### Source: )/);
   const head = sections[0].slice(0, 6000);
   const chunks: string[] = [];
@@ -45,7 +49,7 @@ export async function structureJobData(markdown: string, company: string, hint: 
     if (seen.has(k)) continue;
     seen.add(k); jobs.push(j);
   }
-  return { ai_summary: ok.map(r => r.ai_summary).filter(Boolean).join('\n'), jobs };
+  return { ai_summary: [ok.map(r => r.ai_summary).filter(Boolean).join('\n'), pagingNote(markdown, jobs.length)].filter(Boolean).join('\n'), jobs };
 }
 
 async function structureChunk(markdown: string, company: string, hint: string, modelId: string, batchId: number | undefined, scope: 'campus' | 'all'): Promise<StructuredJobsResult | null> {
@@ -146,4 +150,16 @@ ${wanted.map(f => `      "${f.key}": <${f.kind === 'number' ? 'number' : f.kind 
   if (parsed?.official_url && typeof parsed.official_url === 'string' && /^https?:\/\//i.test(parsed.official_url) && !fields.link) fields.link = parsed.official_url;
   const sources = parsed?.sources && typeof parsed.sources === 'object' ? parsed.sources : {};
   return { fields, sources };
+}
+
+
+/**
+ * 页面上写着「共 119 条」，结果只提取到十几条：多半是站点分页在浏览器里翻、渲染只看到第一页（vivo 就是这样）。
+ * 在综述里提醒一句，数据部门在日志里能看到哪些站点需要单独适配。接口适配（hotjob / 北森 / vivo …）拿全了的不会触发。
+ */
+export function pagingNote(markdown: string, got: number): string {
+  const nums = [...markdown.matchAll(/共\s*(\d{2,5})\s*(?:条|个职位|个岗位|个结果)/g)].map(m => parseInt(m[1]));
+  const declared = nums.length ? Math.max(...nums) : 0;
+  if (!declared || got >= declared * 0.8 || declared - got < 5) return '';
+  return `⚠ 页面写着共 ${declared} 条，只提取到 ${got} 条：这个站点要翻页，渲染只拿到了前几页，需要单独适配（把站点告诉技术）。`;
 }

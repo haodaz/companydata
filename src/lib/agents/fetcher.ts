@@ -6,7 +6,9 @@ import { generateContent, generateCheap } from '@/lib/llm-client';
 import { logTokenUsage } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { isAtsHost } from '@/lib/url-types';
-import { atsOf, beisenMarkdown, hotjobMarkdown, resolveListUrl } from '@/lib/agents/ats-adapters';
+import { atsOf, beisenMarkdown, hotjobMarkdown, resolveListUrl, siteAdapterMarkdown } from '@/lib/agents/ats-adapters';
+import { loginVerdict } from '@/lib/agents/login-wall';
+import { markLogin } from '@/lib/url-login';
 
 const MAX_CANDIDATES = 15;
 /** moka / 飞书这类招聘平台的列表页一页就是几十个岗位，详情页多挑一些 */
@@ -113,11 +115,18 @@ export async function fetchBaseAndLinks(url: string, modelId: string = 'gemini-3
       const bs = await beisenMarkdown(url, scope).catch(e => { console.error('[fetcher] beisen', e?.message || e); return null; });
       if (bs && bs.count) return { success: true, base_markdown: `### Source: [Main Page](${url})\n\n（北森接口返回 ${bs.count} 个岗位）\n\n${bs.markdown}\n\n`, candidate_urls: [] };
     }
+    // 企业自建招聘站（vivo 等）：有适配就走接口拿全站
+    const site = await siteAdapterMarkdown(url);
+    if (site) return { success: true, base_markdown: `### Source: [Main Page](${url})\n\n（${site.name}接口返回 ${site.count} 个岗位）\n\n${site.markdown}\n\n`, candidate_urls: [] };
     // 飞书：入口改写成「一次列全」的列表地址
     const baseMarkdown = await fetchJinaUrl(await resolveListUrl(url));
     if (!baseMarkdown) {
       return { success: false, base_markdown: '', candidate_urls: [], error_message: `Jina fetch failed for base URL: ${url}` };
     }
+    // 要登录才能看：标到信息源库，不交给模型白跑
+    const lw = loginVerdict({ finalUrl: baseMarkdown.match(/^URL Source:\s*(\S+)/m)?.[1], page: baseMarkdown });
+    await markLogin(url, lw);
+    if (lw.login) return { success: false, base_markdown: baseMarkdown, candidate_urls: [], error_message: `需登录：${lw.reason}（已在信息源库标记「需登录」）` };
 
     const allLinks = extractLinks(baseMarkdown, url);
     let selected: string[] = [];

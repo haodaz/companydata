@@ -14,16 +14,20 @@ export async function POST(request: Request) {
     const { data: rows, error } = await supabaseAdmin.from('url_sources').select('id, url').in('id', ids.slice(0, 200));
     if (error) throw error;
 
-    const summary = { alive: 0, redirect: 0, dead: 0 };
+    const summary = { alive: 0, redirect: 0, dead: 0, login: 0 };
     const CONCURRENCY = 8;
     for (let i = 0; i < (rows || []).length; i += CONCURRENCY) {
       await Promise.all(rows!.slice(i, i + CONCURRENCY).map(async row => {
         const result = await checkUrl(row.url);
         summary[result.status]++;
+        if (result.loginRequired) summary.login++;
         await supabaseAdmin.from('url_sources').update({
           health_status: result.status,
           url_health: result,
           last_checked_at: new Date().toISOString(),
+          requires_login: !!result.loginRequired,
+          login_reason: result.loginReason || null,
+          login_checked_at: new Date().toISOString(),
         }).eq('id', row.id);
       }));
     }

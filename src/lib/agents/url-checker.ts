@@ -1,3 +1,4 @@
+import { loginByApiText, loginByPage, loginByRedirect } from '@/lib/agents/login-wall';
 /**
  * URL Health Checker — Zero AI cost, pure HTTP verification
  * 
@@ -13,6 +14,9 @@ export interface UrlCheckResult {
   latencyMs: number;
   yearAutoFixed?: string; // If we auto-incremented year in URL
   error?: string;
+  /** 要登录才能看（跳到登录页 / 页面只剩登录提示 / 接口回未登录） */
+  loginRequired?: boolean;
+  loginReason?: string;
 }
 
 /**
@@ -110,7 +114,7 @@ export async function checkUrl(url: string): Promise<UrlCheckResult> {
   const result = await checkSingleUrl(url);
   
   if (result.status === 'alive' || result.status === 'redirect') {
-    return result;
+    return withLogin(result);
   }
   
   // If dead, try incrementing the year
@@ -118,14 +122,34 @@ export async function checkUrl(url: string): Promise<UrlCheckResult> {
   if (yearFixedUrl && yearFixedUrl !== url) {
     const fixedResult = await checkSingleUrl(yearFixedUrl);
     if (fixedResult.status === 'alive' || fixedResult.status === 'redirect') {
-      return {
+      return withLogin({
         ...fixedResult,
         url: yearFixedUrl,
         yearAutoFixed: yearFixedUrl,
-      };
+      });
     }
   }
   
   return result;
 }
 
+
+
+/**
+ * 需登录判断：跳转去了登录地址直接算；能打开的再取一次正文（前 60KB），看是不是只剩登录提示 / 接口回未登录。
+ * 单页应用（moka、飞书）HTML 里看不出来，那类由抓取时的渲染结果判断（fetcher / link-health）。
+ */
+async function withLogin(r: UrlCheckResult): Promise<UrlCheckResult> {
+  const byRedirect = loginByRedirect(r.redirectUrl);
+  if (byRedirect.login) return { ...r, loginRequired: true, loginReason: byRedirect.reason };
+  if (r.status !== 'alive') return r;
+  try {
+    const res = await fetch(r.url, { method: 'GET', redirect: 'follow', signal: AbortSignal.timeout(8000), headers: { 'User-Agent': 'Mozilla/5.0 (compatible; CompanyData/1.0)' } });
+    const v = loginByRedirect(res.url !== r.url ? res.url : null);
+    if (v.login) return { ...r, loginRequired: true, loginReason: v.reason };
+    if (res.status === 401) return { ...r, loginRequired: true, loginReason: 'HTTP 401' };
+    const body = (await res.text()).slice(0, 60000);
+    const w = loginByApiText(body).login ? loginByApiText(body) : loginByPage(body);
+    return { ...r, loginRequired: w.login, loginReason: w.reason };
+  } catch { return r; }
+}

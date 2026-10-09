@@ -113,11 +113,14 @@ function DbUrlInner() {
     { title: 'URL', dataIndex: 'url', ellipsis: true, render: (u: string) => <a href={u} target="_blank" rel="noreferrer" style={{ fontSize: 12 }}>{u}</a> },
     { title: '说明', dataIndex: 'reasoning', width: 260, ellipsis: true, render: (t: string) => <Tooltip title={t}><Text type="secondary" style={{ fontSize: 12 }}>{t || '-'}</Text></Tooltip> },
     {
-      title: '健康', dataIndex: 'health_status', width: 90,
+      title: '健康', dataIndex: 'health_status', width: 130,
       render: (h: string, r: any) => {
         const m = HEALTH[h] || HEALTH.unknown;
         const tip = r.url_health ? `HTTP ${r.url_health.httpCode || '-'} · ${r.url_health.latencyMs}ms${r.url_health.redirectUrl ? ` → ${r.url_health.redirectUrl}` : ''}${r.url_health.error ? ` · ${r.url_health.error}` : ''}` : '';
-        return <Tooltip title={tip}><Tag color={m.color}>{m.label}</Tag></Tooltip>;
+        return <Space size={2} wrap>
+          <Tooltip title={tip}><Tag color={m.color}>{m.label}</Tag></Tooltip>
+          {r.requires_login && <Tooltip title={r.login_reason || '要登录才能看内容'}><Tag color="orange">需登录</Tag></Tooltip>}
+        </Space>;
       },
     },
     { title: '入库时间', dataIndex: 'created_at', width: 110, render: (t: string) => <Text type="secondary" style={{ fontSize: 12 }}>{new Date(t).toLocaleDateString('zh-CN')}</Text> },
@@ -158,7 +161,7 @@ function DbUrlInner() {
         <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap', alignItems: 'center' }}>
           <Input.Search placeholder="搜索企业 / 标题 / 业务线 / URL" allowClear style={{ width: 320 }} onSearch={v => { setSearch(v); setPage(1); }} />
           <Select value={type} style={{ width: 150 }} onChange={v => { setType(v); setPage(1); }} options={[{ value: '', label: '全部类型' }, ...URL_TYPE_OPTIONS]} />
-          <Select value={health} style={{ width: 130 }} onChange={v => { setHealth(v); setPage(1); }} options={[{ value: '', label: '全部健康状态' }, ...Object.entries(HEALTH).map(([value, m]) => ({ value, label: m.label }))]} />
+          <Select value={health} style={{ width: 130 }} onChange={v => { setHealth(v); setPage(1); }} options={[{ value: '', label: '全部健康状态' }, ...Object.entries(HEALTH).map(([value, m]) => ({ value, label: m.label })), { value: 'login', label: '只看需登录' }]} />
           <div style={{ flex: 1 }} />
           {selected.length > 0 && (
             <Popconfirm title={`删除选中的 ${selected.length} 条 URL？`} onConfirm={() => remove(selected)} okText="删除" okButtonProps={{ danger: true }} cancelText="取消">

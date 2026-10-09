@@ -4,10 +4,11 @@
  * 拿不到页面（超时、被拦）算 unknown，不当成失效，免得误删。
  */
 import { fetchJinaUrl } from '@/lib/agents/fetcher';
+import { loginVerdict } from '@/lib/agents/login-wall';
 
 const DEAD = /您访问的页面不存在|当前网页已关停|网页已关停|页面已关闭|该页面不存在|页面不存在|链接已失效|该职位已下线|职位已关闭|招聘已结束|项目已结束|page not found|404 not found|this page (?:does not|doesn't) exist|job (?:is )?no longer available|do not have permission to operate/i;
 
-export type LinkHealth = { status: 'alive' | 'dead' | 'unknown'; title: string; reason?: string };
+export type LinkHealth = { status: 'alive' | 'dead' | 'unknown'; title: string; reason?: string; loginRequired?: boolean; loginReason?: string };
 
 export async function recruitLinkHealth(url: string): Promise<LinkHealth> {
   const md = await fetchJinaUrl(url).catch(() => null);
@@ -17,5 +18,6 @@ export async function recruitLinkHealth(url: string): Promise<LinkHealth> {
   const head = `${title}\n${body.slice(0, 600)}`;
   const hit = head.match(DEAD)?.[0];
   if (hit) return { status: 'dead', title, reason: hit };
-  return { status: 'alive', title };
+  const lw = loginVerdict({ finalUrl: md.match(/^URL Source:\s*(\S+)/m)?.[1], api: body, page: md });
+  return { status: 'alive', title, loginRequired: lw.login, loginReason: lw.reason };
 }

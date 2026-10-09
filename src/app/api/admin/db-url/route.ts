@@ -26,7 +26,9 @@ export async function GET(request: Request) {
     if (types.length === 1) query = query.eq('type', types[0]);
     else if (types.length > 1) query = query.in('type', types);
     if (subtype) query = query.eq('subtype', subtype);
-    if (health) query = query.eq('health_status', health);
+    // 「需登录」是独立标记（能打开但要登录），和可访问 / 失效并存
+    if (health === 'login') query = query.eq('requires_login', true);
+    else if (health) query = query.eq('health_status', health);
     if (companyId) query = query.eq('company_id', parseInt(companyId));
 
     const { data, count, error } = await query.range(from, to);

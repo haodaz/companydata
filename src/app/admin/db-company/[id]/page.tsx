@@ -184,7 +184,10 @@ export default function CompanyDetailPage() {
     { title: '类型', width: 150, render: (_: any, r: any) => <Space size={2} wrap><Tag color={urlTypeMeta(r.type).color}>{urlTypeMeta(r.type).short}</Tag>{r.subtype && <Tag>{subtypeLabel(r.type, r.subtype)}</Tag>}</Space> },
     { title: '标题', dataIndex: 'title', ellipsis: true, render: (t: string, r: any) => <Tooltip title={r.reasoning}><span>{r.unit && <Text type="secondary">[{r.unit}] </Text>}{t || '-'}</span></Tooltip> },
     { title: 'URL', dataIndex: 'url', ellipsis: true, render: (u: string) => <a href={u} target="_blank" rel="noreferrer" style={{ fontSize: 12 }}>{u}</a> },
-    { title: '健康', dataIndex: 'health_status', width: 80, render: (h: string) => h === 'alive' ? <Tag color="success">可访问</Tag> : h === 'dead' ? <Tag color="error">失效</Tag> : h === 'redirect' ? <Tag color="warning">跳转</Tag> : <Tag>未检查</Tag> },
+    { title: '健康', dataIndex: 'health_status', width: 130, render: (h: string, r: any) => <Space size={2} wrap>
+      {h === 'alive' ? <Tag color="success">可访问</Tag> : h === 'dead' ? <Tag color="error">失效</Tag> : h === 'redirect' ? <Tag color="warning">跳转</Tag> : <Tag>未检查</Tag>}
+      {r.requires_login && <Tooltip title={r.login_reason || '要登录才能看内容'}><Tag color="orange">需登录</Tag></Tooltip>}
+    </Space> },
   ];
 
   return (
