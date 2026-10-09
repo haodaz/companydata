@@ -68,11 +68,27 @@ export async function registerAsset(a: Partial<LabAsset> & { kind: LabAsset['kin
 }
 
 /** 按规范类型名在库里找一件能复用的（同类、可复用、有图优先、用得少的优先，避免满屏同一张脸） */
-export async function findReusable(kind: LabAsset['kind'], typeName: string, family = ''): Promise<LabAsset | null> {
+export async function findReusable(kind: LabAsset['kind'], typeName: string, family = '', exclude: (string | null)[] = []): Promise<LabAsset | null> {
   if (!typeName) return null;
   const { data } = await supabaseAdmin.from('lab_art_assets').select('*').eq('kind', kind).eq('type_name', typeName).eq('reusable', true).limit(20);
-  const list = (data || []) as LabAsset[];
+  // 同一个空间里，不同的人不能共用一张脸、不同的地方不能共用一张图
+  const list = ((data || []) as LabAsset[]).filter(a => !exclude.includes(a.id));
   if (!list.length) return null;
   list.sort((x, y) => Number(!!y.url) - Number(!!x.url) || Number(y.family === family) - Number(x.family === family) || (x.uses || 0) - (y.uses || 0));
   return list[0];
+}
+
+/** 给角色现画一张（人物立绘 / 场景图），画完立刻归库并挂到角色上。道具先不画 */
+export async function drawCastAsset(taskId: string, m: CastMember, family: string): Promise<LabAsset> {
+  const { makeNpcAsset, makeSceneAsset } = await import('@/lib/lab-art');
+  if (m.kind === 'prop') throw new Error('道具先不画图');
+  const look = m.look || m.type_name || m.name;
+  const name = `${taskId.slice(0, 8)}-${m.code}-${Date.now().toString(36)}`;
+  const url = m.kind === 'person'
+    ? await makeNpcAsset(look, name)
+    : await makeSceneAsset(`半写实插画风格，正面平视的固定机位，${look}，明亮，没有人物，没有可辨认文字，没有logo，16:9`, name);
+  const a = await registerAsset({ kind: m.kind === 'person' ? 'npc' : 'scene', url, title: m.kind === 'person' ? (m.type_name || m.name) : m.name, type_name: m.type_name || m.name, family, prompt: look, source_task_id: taskId });
+  await supabaseAdmin.from('lab_cast').update({ asset_id: a.id, updated_at: new Date().toISOString() }).eq('id', m.id);
+  m.asset_id = a.id; m.asset = a;
+  return a;
 }

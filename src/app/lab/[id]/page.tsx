@@ -787,7 +787,7 @@ export default function SpacePage() {
 
       {/* ── 考验新人 ── */}
       {(mode === 'test' || mode === 'teach') && answering && sim && (
-        <SimStage title={space.title} role="rookie" immersive={!!sim.art} onExit={() => { setStageReport(null); setAnswering(false); }} header={
+        <SimStage title={chapters.length > 1 && chapter ? `${chapter.slot ? `${chapter.slot} · ` : ""}${chapter.title}` : space.title} role="rookie" immersive={!!sim.art} onExit={() => { setStageReport(null); setAnswering(false); }} header={
           <div className="lab-stage-fields">
             {field(rookie.name, v => setRookie(r => ({ ...r, name: v })), '新兵姓名')}
             {field(rookie.note, v => setRookie(r => ({ ...r, note: v })), '背景（学校 / 专业）')}
@@ -821,11 +821,14 @@ export default function SpacePage() {
       {(mode === 'test' || mode === 'teach') && !(answering && sim) && (
         <div className="lab-in" style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))', alignItems: 'start' }}>
           <div className="lab-glass" style={{ padding: 22, minWidth: 0 }}>
-            <Label>THE TASK · {space.time_limit_min} MIN</Label>
+            <Label>{chapters.length > 1 && chapter ? `A DAY · 第 ${chapters.indexOf(chapter) + 1} / ${chapters.length} 段` : `THE TASK · ${space.time_limit_min} MIN`}</Label>
             <h2 style={{ margin: '0 0 10px', fontSize: 19, fontWeight: 800, lineHeight: 1.4 }}>{chapters.length > 1 && chapter ? <>{chapter.slot && <span className="lab-mono" style={{ fontSize: 13, color: 'var(--v)', marginRight: 8 }}>{chapter.slot}</span>}{chapter.title}</> : space.title}</h2>
             {chapters.length > 1 && chapter?.brief && <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 8 }}>{chapter.brief}</div>}
-            <div className="lab-pre">{space.brief}</div>
-            {space.materials && <div className="lab-mono" style={{ marginTop: 14, padding: 14, borderRadius: 14, background: 'rgba(23,26,46,.04)', fontSize: 12.5, lineHeight: 1.9, whiteSpace: 'pre-wrap', letterSpacing: 0, overflowX: 'auto', color: 'var(--ink2)' }}>{space.materials}</div>}
+            {/* 空间的题面 / 材料只属于第 1 章（老空间迁来的那章）；后面的章节用它自己的开场 */}
+            {chapter && chapter.seq !== 1 && chapters.length > 1
+              ? <div className="lab-pre">{chapter.sim?.intro}</div>
+              : <div className="lab-pre">{space.brief}</div>}
+            {space.materials && (!chapter || chapter.seq === 1 || chapters.length <= 1) && <div className="lab-mono" style={{ marginTop: 14, padding: 14, borderRadius: 14, background: 'rgba(23,26,46,.04)', fontSize: 12.5, lineHeight: 1.9, whiteSpace: 'pre-wrap', letterSpacing: 0, overflowX: 'auto', color: 'var(--ink2)' }}>{space.materials}</div>}
             {space.deliverable && <div style={{ marginTop: 14, fontSize: 13.5 }}><b>交付物：</b>{space.deliverable}</div>}
 
             {!answering ? (
@@ -868,7 +871,7 @@ export default function SpacePage() {
 
             <div className="lab-glass" style={{ padding: 20 }}>
               <Label>LEADERBOARD · {subs.length}</Label>
-              {ranked.length === 0 && <div style={{ color: 'var(--ink3)', fontSize: 13, padding: '12px 0' }}>还没有人走过这道题。</div>}
+              {ranked.length === 0 && <div style={{ color: 'var(--ink3)', fontSize: 13, padding: '12px 0' }}>{chapters.length > 1 ? '还没有人走过这一段。' : '还没有人走过这道题。'}</div>}
               {ranked.map((s, i) => (
                 <div key={s.id} onClick={() => setOpenSub(s)} className={s.id === freshId ? 'lab-in' : ''} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderTop: i ? '1px solid var(--line)' : 'none', cursor: 'pointer' }}>
                   <span className="lab-mono" style={{ width: 22, color: 'var(--ink3)', fontSize: 12 }}>{String(i + 1).padStart(2, '0')}</span>
@@ -984,7 +987,7 @@ export default function SpacePage() {
       )}
 
       {mode === 'learn' && learnStep === 1 && sim && (
-        <SimStage title={space.title} role="expert" immersive={!!sim.art} onExit={() => setLearnStep(0)}>
+        <SimStage title={chapters.length > 1 && chapter ? `${chapter.slot ? `${chapter.slot} · ` : ""}${chapter.title}` : space.title} role="expert" immersive={!!sim.art} onExit={() => setLearnStep(0)}>
           <SimRunner sim={sim} role="expert" busy={!!busy} onCancel={() => setLearnStep(0)} onFinish={expertFinished} />
         </SimStage>
       )}

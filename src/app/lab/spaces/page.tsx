@@ -211,7 +211,7 @@ export default function LabHome() {
     const b = sum.bench;
     const mm = `${String(Math.floor(done.secs / 60)).padStart(2, '0')}:${String(done.secs % 60).padStart(2, '0')}`;
     const cards: { k: string; v: React.ReactNode; note: string }[] = [
-      { k: '故事线', v: `${sum.steps || 0} 步`, note: sum.title || '一天的工作，拆成一连串要做的决定' },
+      { k: '一天的第一段', v: `${sum.steps || 0} 步`, note: `${sum.title ? `${sum.title}。` : ''}后面的时段在百业工厂里排骨架、一格一格往下写` },
       { k: '技能卡草案', v: `${sum.rules || 0} 条规则`, note: `${sum.cardSteps || 0} 步做法 · 等第一位真人专家来校正` },
       { k: '虚拟工位', v: b ? (b.track ? '轨迹工位' : '设备工位') : '本次没做出', note: b ? `${b.name}：${b.controls} 个控件 · ${b.goals} 个目标 · ${b.rules} 条规则` : (done.benchNote || '先以故事线为主') },
       { k: '场景美术', v: `${(done.artCount || 0) + (done.artReused || 0)} 张`, note: done.artReused ? `新生成 ${done.artCount} 张 · 复用素材库 ${done.artReused} 张` : (done.artCount ? `${sum.scenes || 0} 个场景 · ${sum.npcs || 0} 位人物` : '文生图服务不可用') },

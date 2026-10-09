@@ -5,6 +5,7 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { App, Modal, Popconfirm } from 'antd';
 import Image from 'next/image';
 import { useUser } from '@/lib/user-context';
+import { MODEL_OPTIONS } from '@/lib/model-context';
 import { SimRunner, SimStage } from '@/components/lab/SimRunner';
 import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue } from '@/lib/lab-studio';
 import { CAST_KINDS, applyCastArt, castKind, stepsUsing, type CastKind, type CastMember, type LabAsset } from '@/lib/lab-cast';
@@ -39,6 +40,14 @@ export default function StudioPage() {
   const [raw, setRaw] = useState<Record<string, string>>({});       // 某一步切到 JSON 编辑时的文本
   const [preview, setPreview] = useState(false);
   const [newType, setNewType] = useState('choose');
+  // 生成：模型（默认 luna，写故事要好一点的模型）、任务进度
+  const [genModel, setGenModel] = useState('gpt-5.6-luna');
+  const [genHint, setGenHint] = useState('');
+  const [genArt, setGenArt] = useState(true);
+  const [dayOpen, setDayOpen] = useState(false);
+  const [dayHint, setDayHint] = useState('');
+  const [jobs, setJobs] = useState<any[]>([]);
+  const runningJobs = jobs.filter(j => j.status === 'running');
 
   const apply = useCallback((j: any, pick?: string | null) => {
     setData({ space: j.space, chapters: j.chapters, expertTrace: j.expertTrace, cast: j.cast || [] });
@@ -69,6 +78,46 @@ export default function StudioPage() {
     window.addEventListener('beforeunload', h);
     return () => window.removeEventListener('beforeunload', h);
   }, [dirty]);
+
+  // 生成任务：有在跑的就每 3 秒问一次；跑完了刷新（正在改的那一章有没保存的改动就不覆盖）
+  const loadJobs = useCallback(async () => {
+    const j = await fetch(`/api/lab/studio/${id}/jobs`).then(r => r.json()).catch(() => null);
+    if (j?.ok) setJobs(j.jobs);
+    return j?.ok ? j.jobs as any[] : [];
+  }, [id]);
+  useEffect(() => { loadJobs(); }, [loadJobs]);
+  const runningKey = runningJobs.map(j => j.id).join(',');
+  useEffect(() => {
+    if (!runningKey) return;
+    const timer = setInterval(async () => {
+      const list = await loadJobs();
+      const finished = list.filter(j => runningKey.includes(j.id) && j.status !== 'running');
+      if (!finished.length) return;
+      for (const f of finished) f.status === 'done' ? message.success(`${f.kind === 'build_day' ? '一天骨架' : '这一章'}生成好了：${f.detail || ''}`) : message.error(`生成失败：${f.error || ''}`);
+      const j = await fetch(`/api/lab/studio/${id}`).then(r => r.json());
+      if (!j.ok) return;
+      const mine = finished.some(f => f.chapter_id && f.chapter_id === cur);
+      if (dirty && mine) { setData({ space: j.space, chapters: j.chapters, expertTrace: j.expertTrace, cast: j.cast || [] }); message.warning('这一章有没保存的改动，新生成的内容没套进来：放弃改动后切换章节再回来就能看到'); }
+      else if (dirty) setData({ space: j.space, chapters: j.chapters, expertTrace: j.expertTrace, cast: j.cast || [] });
+      else apply(j, cur);
+    }, 3000);
+    return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [runningKey]);
+
+  const startDay = async () => {
+    const j = await fetch(`/api/lab/studio/${id}/day`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: genModel, hint: dayHint }) }).then(r => r.json());
+    if (!j.ok) { message.error(j.error); return; }
+    setDayOpen(false); message.info(j.job.already ? '骨架已经在排了' : '开始排一天骨架，约 1 分钟'); loadJobs();
+  };
+  const startChapter = async () => {
+    if (!draft) return;
+    if (dirty && !window.confirm('这一章有没保存的改动，生成会覆盖步骤。先丢掉改动继续？')) return;
+    const j = await fetch(`/api/lab/studio/${id}/chapters/${draft.id}/generate`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: genModel, hint: genHint, art: genArt }) }).then(r => r.json());
+    if (!j.ok) { message.error(j.error); return; }
+    setDirty(false);
+    message.info(j.job.already ? '这一章已经在生成了' : '开始生成这一章，1–3 分钟（要画图会久一点）'); loadJobs();
+  };
 
   // 校验用「当前编辑中的版本」替换库里那一章，改一个字就能看到问题消失
   const liveChapters = useMemo(() => (data?.chapters || []).map(c => (draft && c.id === draft.id ? draft : c)), [data, draft]);
@@ -153,6 +202,10 @@ export default function StudioPage() {
         </div>
         <div style={{ flex: 1 }} />
         <button className="lab-btn ghost sm" onClick={() => router.push('/lab/assets')}>素材库</button>
+        <select className="lab-input" value={genModel} onChange={e => setGenModel(e.target.value)} title="生成用的模型" style={{ width: 'auto', padding: '6px 10px', fontSize: 12.5, borderRadius: 10 }}>
+          {MODEL_OPTIONS.map(m => <option key={m.id} value={m.id}>{m.label}{m.badge ? ` ${m.badge}` : ''}</option>)}
+        </select>
+        <button className="lab-btn ghost sm" disabled={runningJobs.some(j => j.kind === 'build_day')} onClick={() => setDayOpen(true)}>{runningJobs.some(j => j.kind === 'build_day') ? '骨架排着呢…' : '✦ 排一天骨架'}</button>
         <button className="lab-btn ghost sm" onClick={() => window.open(`/lab/${id}?m=test${saved?.status === 'published' ? `&ch=${saved.id}` : ''}`, '_blank')}>在体验端打开 ↗</button>
         <button className="lab-btn sm" onClick={addChapter}>＋ 加一章</button>
       </div>
@@ -193,6 +246,15 @@ export default function StudioPage() {
             })}
           </div>
           {dayIssues.length > 0 && <div style={{ marginTop: 10 }}>{dayIssues.map((x, i) => <IssueLine key={i} x={x} />)}</div>}
+          {runningJobs.map(j => <div key={j.id} className="lab-scan" style={{ marginTop: 8, fontSize: 12, color: 'var(--v)', padding: '6px 8px', borderRadius: 8, background: 'rgba(106,92,255,.07)' }}>
+            {j.kind === 'build_day' ? '排骨架' : `生成「${data.chapters.find(c => c.id === j.chapter_id)?.title || '一章'}」`} · {j.phase}{j.detail ? `：${j.detail}` : ''}<span className="lab-dots" />
+          </div>)}
+          {(data.space.bible?.facts || []).length > 0 && (
+            <details style={{ marginTop: 10, fontSize: 12, color: 'var(--ink2)' }}>
+              <summary style={{ cursor: 'pointer', color: 'var(--ink3)' }}>这一天要前后一致的事实 · {data.space.bible.facts.length}</summary>
+              <ul style={{ margin: '6px 0 0', paddingLeft: 18, lineHeight: 1.7 }}>{data.space.bible.facts.map((f: string, i: number) => <li key={i}>{f}</li>)}</ul>
+            </details>
+          )}
           <div style={{ marginTop: 12, fontSize: 11.5, color: 'var(--ink3)', lineHeight: 1.7 }}>按时段排序。早上做晨会 / 交接 / 准备，中段做核心操作，下午傍晚才是收尾、复盘——排反了会标红、不能发布。</div>
         </div>
         <CastPanel cast={data.cast} chapters={liveChapters} current={draft} onOpen={setCastEdit} />
@@ -203,6 +265,26 @@ export default function StudioPage() {
           <div className="lab-glass" style={{ padding: 40, textAlign: 'center', color: 'var(--ink3)' }}>这个空间还没有章节。点右上「加一章」。</div>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: 14, minWidth: 0 }}>
+            {(() => {
+              const job = runningJobs.find(j => j.chapter_id === draft.id);
+              return (
+                <div className="lab-glass" style={{ padding: '12px 16px', display: 'grid', gap: 8, background: 'linear-gradient(120deg, rgba(106,92,255,.08), rgba(18,181,203,.06))' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                    <span className="lab-mono lab-cap">AI · 按格生成</span>
+                    <span style={{ fontSize: 12, color: 'var(--ink3)' }}>按这一格的时段、标题、要交代的事写故事线和示范答案；人物 / 场景优先用角色表，新的先找素材库，找不到才画</span>
+                  </div>
+                  <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+                    <input className="lab-input" style={{ ...field, flex: '1 1 260px', width: 'auto' }} value={genHint} onChange={e => setGenHint(e.target.value)} placeholder="附一句要求（可空）：如「这台是急诊阑尾切除，中途发现穿孔」" />
+                    <label style={{ fontSize: 12.5, color: 'var(--ink2)', display: 'flex', alignItems: 'center', gap: 4, cursor: 'pointer' }} title="用到但还没图的人物 / 场景现画（一章最多 4 张）"><input type="checkbox" checked={genArt} onChange={e => setGenArt(e.target.checked)} /> 缺图就画</label>
+                    {job ? <span className="lab-scan" style={{ fontSize: 12.5, color: 'var(--v)', padding: '6px 10px', borderRadius: 10, background: 'rgba(106,92,255,.08)' }}>{job.phase}{job.detail ? `：${job.detail}` : ''}<span className="lab-dots" /></span>
+                      : draft.locked ? <span style={{ fontSize: 12.5, color: 'var(--ink3)' }}>已锁定，解锁后才能重新生成</span>
+                      : steps.length
+                        ? <Popconfirm title="重新生成这一章？" description="会覆盖现在的步骤和示范答案（存成草稿）。" onConfirm={startChapter} okText="重新生成" cancelText="取消"><button className="lab-btn ghost sm">↻ 重新生成</button></Popconfirm>
+                        : <button className="lab-btn sm" onClick={startChapter}>✦ 生成这一章</button>}
+                  </div>
+                </div>
+              );
+            })()}
             <div className="lab-glass" style={{ padding: 18 }}>
               <div className="studio-row" style={{ display: 'grid', gridTemplateColumns: '130px minmax(0, 1fr) auto', gap: 12, alignItems: 'end' }}>
                 <label><span style={lbl}>时段</span><input className="lab-input" style={field} value={draft.slot || ''} placeholder="08:30 / 周一上午" onChange={e => edit(d => { d.slot = e.target.value; })} /></label>
@@ -303,6 +385,13 @@ export default function StudioPage() {
         )}
       </div>
 
+      <Modal open={dayOpen} onCancel={() => setDayOpen(false)} title="排一天骨架" okText="开始排" cancelText="取消" onOk={startDay}>
+        <div style={{ fontSize: 13, color: 'var(--ink2)', lineHeight: 1.8, marginBottom: 10 }}>
+          按「一天的规则」排 6–8 格（时段、标题、要交代的事），已有章节放进合适的时段；这一天还缺的人物 / 地点 / 道具先进角色表（同类型的从素材库复用）。<br />
+          只排骨架、不出题；之后一格一格生成。<b>重排会清掉没有步骤的空草稿格</b>，已写好的、锁定的、已发布的不动。
+        </div>
+        <textarea className="lab-input" rows={3} style={field} value={dayHint} onChange={e => setDayHint(e.target.value)} placeholder="附几句要求（可空）：如「要有两台不同的手术、上午查房、下午多学科会诊」" />
+      </Modal>
       {castEdit && <CastEditor spaceId={id} member={castEdit} onClose={() => setCastEdit(null)} onDone={() => { setCastEdit(null); refresh(); }} />}
       {preview && draft && (
         <SimStage title={`试玩 · ${draft.title}`} role="rookie" immersive={!!applyCastArt(draft.sim, data.cast).art} onExit={() => setPreview(false)}>
@@ -485,6 +574,19 @@ function CastEditor({ spaceId, member, onClose, onDone }: { spaceId: string; mem
       onDone();
     } catch (e: any) { message.error(e.message); } finally { setBusy(false); }
   };
+  // 现画一张：先把描述存上，再按外形 / 陈设描述画，画完立刻归库并换上
+  const [drawing, setDrawing] = useState(false);
+  const drawNow = async () => {
+    if (!f.look.trim()) { message.warning('先写外形 / 陈设描述，画图要用'); return; }
+    setDrawing(true);
+    try {
+      const s1 = await fetch(`/api/lab/studio/${spaceId}/cast/${m.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...f, asset_id: f.asset_id }) }).then(r => r.json());
+      if (!s1.ok) throw new Error(s1.error);
+      const j = await fetch(`/api/lab/studio/${spaceId}/cast/${m.id}/draw`, { method: 'POST' }).then(r => r.json());
+      if (!j.ok) throw new Error(j.error);
+      message.success(`画好了，已归库 ${j.asset.code}`); onDone();
+    } catch (e: any) { message.error(e.message); } finally { setDrawing(false); }
+  };
   const remove = async () => {
     const j = await fetch(`/api/lab/studio/${spaceId}/cast/${m.id}`, { method: 'DELETE' }).then(r => r.json());
     if (!j.ok) { message.error(j.error); return; }
@@ -519,6 +621,7 @@ function CastEditor({ spaceId, member, onClose, onDone }: { spaceId: string; mem
           </div>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          {!isNew && !m.is_self && k.k !== 'prop' && <button className="lab-btn ghost sm" disabled={drawing} onClick={drawNow} title="按外形 / 陈设描述现画一张，画完立刻归库（约半分钟）">{drawing ? '画图中…' : '✎ 按描述画一张'}</button>}
           {!isNew && !m.is_self && <Popconfirm title="从角色表删除？" description="还有章节在用就删不掉；素材留在库里。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="lab-btn ghost sm" style={{ color: '#e5484d' }}>删除</button></Popconfirm>}
           <span style={{ flex: 1 }} />
           <button className="lab-btn ghost sm" onClick={onClose}>取消</button>

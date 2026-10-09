@@ -26,7 +26,7 @@ export async function POST(req: NextRequest, { params }: Ctx) {
     let asset_id: string | null = b.asset_id || null;
     let reused = false;
     if (!asset_id && type_name) {
-      const hit = await findReusable(castKind(kind).asset, type_name);
+      const hit = await findReusable(castKind(kind).asset, type_name, '', cast.map(m => m.asset_id));
       if (hit) { asset_id = hit.id; reused = true; await supabaseAdmin.from('lab_art_assets').update({ uses: (hit.uses || 1) + 1 }).eq('id', hit.id); }
     }
     if (!asset_id && kind === 'prop') {
