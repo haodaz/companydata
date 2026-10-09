@@ -58,6 +58,9 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
   // 这种链接不拿来去重，不然一页几十个岗位会被合成一个（MiniMax 16 → 1）
   const linkCount = new Map<string, number>();
   for (const raw of jobsOf(structuredJson)) { const l = String(raw?.link || '').trim().toLowerCase(); if (l) linkCount.set(l, (linkCount.get(l) || 0) + 1); }
+  // 同理，一个招聘帖拆出的子岗位共用母帖的岗位编号（立讯 LUXSHARE101735 下 12 个子岗位）：编号对应多个不同岗位名时，去重改看岗位名
+  const reqNames = new Map<string, Set<string>>();
+  for (const raw of jobsOf(structuredJson)) { const r = String(raw?.job_req_id || '').trim(); if (r) reqNames.set(r, (reqNames.get(r) || new Set()).add(String(raw?.name || ''))); }
   for (const raw of jobsOf(structuredJson)) {
     const job = sanitizeJob(raw);
     if (!job.name) continue;
@@ -70,7 +73,8 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
     if (!job.accept_foreign && job.visa_sponsorship !== null) job.accept_foreign = job.visa_sponsorship ? 'accepted' : 'not_accepted';
     applyGradWindowDefault(job);
     if (!job.form_of_play && job.remote_type) job.form_of_play = { remote: 'online', onsite: 'offline', hybrid: 'online_and_offline' }[job.remote_type as string] || null;
-    const key = jobDedupeKey(job as any, log.company_id, log.company, log.target_url);
+    const sharedReq = job.job_req_id && (reqNames.get(String(job.job_req_id).trim())?.size || 0) > 1;
+    const key = jobDedupeKey(sharedReq ? { ...job, job_req_id: null } as any : job as any, log.company_id, log.company, log.target_url);
     rows.set(key, {
       ...job,
       dedupe_key: key,
@@ -90,8 +94,8 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
 
   type Existing = { id: number; dedupe_key: string; human_review_status: string | null; human_locked_fields: string[] | null };
   const existing = new Map<string, Existing>();
-  for (let i = 0; i < keys.length; i += 100) {
-    const { data, error } = await supabaseAdmin.from('jobs').select('id, dedupe_key, human_review_status, human_locked_fields').in('dedupe_key', keys.slice(i, i + 100));
+  for (let i = 0; i < keys.length; i += 10) { // 键里有中文，编码后网址很长：一批 10 个，免得超过请求头上限
+    const { data, error } = await supabaseAdmin.from('jobs').select('id, dedupe_key, human_review_status, human_locked_fields').in('dedupe_key', keys.slice(i, i + 10));
     if (error) throw error;
     for (const r of data || []) existing.set(r.dedupe_key, r);
   }
