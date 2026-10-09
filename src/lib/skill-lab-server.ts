@@ -36,10 +36,9 @@ export interface LabChapter {
 
 export async function loadChapters(space: any, opts: { includeDrafts?: boolean } = {}): Promise<LabChapter[]> {
   try {
-    let q = supabaseAdmin.from('lab_chapters').select('*').eq('task_id', space.id).order('seq');
-    if (!opts.includeDrafts) q = q.eq('status', 'published');
-    const { data, error } = await q;
-    if (!error && data?.length) return sortByDay(data.filter((c: any) => c.sim?.steps?.length) as LabChapter[]);
+    const { data, error } = await supabaseAdmin.from('lab_chapters').select('*').eq('task_id', space.id).order('seq');
+    // 有章节就只认章节：全改成草稿就是体验端一章都看不到，不能再退回 sim 把草稿露出去
+    if (!error && data?.length) return sortByDay(data.filter((c: any) => c.sim?.steps?.length && (opts.includeDrafts || c.status === 'published')) as LabChapter[]);
   } catch { /* 表还没建 */ }
   // 没有章节：现有故事线就是唯一的第 1 章
   return space.sim?.steps?.length

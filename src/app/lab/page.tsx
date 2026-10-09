@@ -8,7 +8,7 @@ import Image from 'next/image';
  * AI 百业 · 首页。
  *
  * 这一页只讲一件事：这套东西的落点是「人」，不是课程、题库或者培训模拟器。
- * 干活的部分全在 /lab/spaces——别再把宣传和列表混在一页里。
+ * 干活的部分全在 /lab/spaces（百业工厂），体验在 /lab/gallery（体验百业）——别再把宣传和列表混在一页里。
  * 数据来自 /api/lab/landing；拿不到就退回静态文案，页面照样成立。
  */
 
@@ -373,7 +373,7 @@ export default function LabLanding() {
               ))}
             </div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              <button className="lab-btn" style={{ height: 52, padding: '0 28px', fontSize: 15 }} onClick={() => router.push('/lab/spaces')}>走进百业空间 →</button>
+              <button className="lab-btn" style={{ height: 52, padding: '0 28px', fontSize: 15 }} onClick={() => router.push('/lab/gallery')}>体验百业 →</button>
               <button className="lab-btn ghost" style={{ height: 52, padding: '0 26px', fontSize: 15 }} onClick={() => router.push('/lab/spaces?new=career')}>创造一个空间</button>
             </div>
             <div style={{ display: 'flex', gap: 'clamp(22px, 4vw, 50px)', flexWrap: 'wrap', marginTop: 36 }}>
@@ -486,7 +486,7 @@ export default function LabLanding() {
               </div>
             ))}
           </div>
-          <button className="lab-btn" style={{ height: 50, padding: '0 26px', marginTop: 28 }} onClick={() => router.push('/lab/spaces')}>立刻体验 →</button>
+          <button className="lab-btn" style={{ height: 50, padding: '0 26px', marginTop: 28 }} onClick={() => router.push('/lab/gallery')}>立刻体验 →</button>
         </div>
       </div>
 

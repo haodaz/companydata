@@ -3,7 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { assignNova } from '@/lib/lab-nova';
 import { buildSpaceFromJd } from '@/lib/agents/skill-lab-build';
 import { structureCareer } from '@/lib/agents/career';
-import { labError } from '@/lib/skill-lab-server';
+import { labError, sortByDay } from '@/lib/skill-lab-server';
 import { trackDemand } from '@/lib/flywheel/signals';
 
 export const runtime = 'nodejs';
@@ -26,10 +26,12 @@ export async function GET(req: Request) {
     if (error) throw error;
 
     const ids = (spaces || []).map(s => s.id);
-    const [subs, invs] = ids.length ? await Promise.all([
+    const [subs, invs, chs] = ids.length ? await Promise.all([
       supabaseAdmin.from('skill_submissions').select('task_id, candidate_type, score').in('task_id', ids),
       supabaseAdmin.from('skill_invocations').select('task_id, kind, volume, actor_location').in('task_id', ids),
-    ]) : [{ data: [] }, { data: [] }];
+      // 章节概况（体验馆显示「一天 N 章」；迁移 015 没跑时这里报错，按没有章节处理）
+      supabaseAdmin.from('lab_chapters').select('task_id, slot, title, kind, status').in('task_id', ids).then(r => r, () => ({ data: [] as any[] })),
+    ]) : [{ data: [] }, { data: [] }, { data: [] as any[] }];
 
     const data = (spaces || []).map(s => {
       const ss = (subs.data || []).filter(x => x.task_id === s.id);
@@ -38,6 +40,14 @@ export async function GET(req: Request) {
       return {
         ...s, sim: undefined,
         features: { immersive: !!sim?.art?.cover, bench: !!sim?.steps?.some((x: any) => x.type === 'bench'), steps: sim?.steps?.length || 0 },
+        cover: sim?.art?.cover || Object.values(sim?.art?.scenes || {})[0] || null,
+        chapters: (() => {
+          const cc = ((chs as any).data || []).filter((c: any) => c.task_id === s.id);
+          // 没有章节表（或老空间没迁）就看 sim：有步骤 = 一章已发布
+          if (!cc.length) return { total: sim?.steps?.length ? 1 : 0, published: sim?.steps?.length ? 1 : 0, slots: [] as string[] };
+          const pub = cc.filter((c: any) => c.status === 'published');
+          return { total: cc.length, published: pub.length, slots: sortByDay(pub.map((c: any, i: number) => ({ ...c, seq: i }))).map((c: any) => c.slot).filter(Boolean) };
+        })(),
         stats: {
           rookies: ss.filter(x => x.candidate_type === 'human').length,
           ai_runs: ss.filter(x => x.candidate_type === 'ai').length,

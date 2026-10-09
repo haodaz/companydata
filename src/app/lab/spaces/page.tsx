@@ -315,7 +315,7 @@ export default function LabHome() {
       <div className="sp-head sp-root">
         <div className="sp-head-in">
           <div style={{ flex: '1 1 340px', minWidth: 0 }}>
-            <div className="lab-mono lab-cap" style={{ color: 'var(--hd-fg3)' }}>AI 百业 · 百业空间</div>
+            <div className="lab-mono lab-cap" style={{ color: 'var(--hd-fg3)' }}>AI 百业 · 百业工厂</div>
             <h1 style={{ margin: '8px 0 6px', fontSize: 'clamp(23px, 3.2vw, 34px)', fontWeight: 900, letterSpacing: -.2, color: 'var(--hd-fg)' }}>
               百业已入驻 <span style={{ background: 'var(--hd-grad)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{totals?.spaces ?? spaces.length}</span> 位数字职人
             </h1>
@@ -417,7 +417,8 @@ export default function LabHome() {
             const lv = expertiseLevel(s.skill);
             return (
               <div key={s.id} className="lab-glass hover lab-in" style={{ padding: 22, animationDelay: `${i * 90}ms`, minWidth: 0, position: 'relative' }} onClick={() => router.push(`/lab/${s.id}`)}>
-                {user && <div onClick={e => e.stopPropagation()} style={{ position: 'absolute', right: 12, top: 12, zIndex: 2 }}>
+                {user && <div onClick={e => e.stopPropagation()} style={{ position: 'absolute', right: 12, top: 12, zIndex: 2, display: 'flex', gap: 6 }}>
+                  <button title="在工作室里编辑这一天的章节" onClick={() => router.push(`/lab/studio/${s.id}`)} style={{ height: 26, padding: '0 9px', borderRadius: 8, border: '1px solid var(--line)', background: 'rgba(255,255,255,.7)', color: 'var(--ink2)', cursor: 'pointer', fontSize: 12, fontWeight: 600 }}>编辑</button>
                   <Popconfirm title="删除这个技能空间？" description={<>作答、账本和蒸馏出的技能会一起删除。<br />预置示范删掉后可以重新构建。</>} onConfirm={() => removeSpace(s.id)} okText="删除" okButtonProps={{ danger: true }} cancelText="取消">
                     <button title="删除空间" style={{ width: 26, height: 26, borderRadius: 8, border: '1px solid var(--line)', background: 'rgba(255,255,255,.7)', color: 'var(--ink3)', cursor: 'pointer', fontSize: 14, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
                   </Popconfirm>

@@ -80,6 +80,12 @@ const LAB_CSS = `
   .lab-nav { margin-left: 2px; }
   .lab-nav-i { padding: 8px 10px 9px; font-size: 13.5px; }
 }
+/* 三个导航放不下品牌字：窄屏只留光球 */
+@media (max-width: 480px) {
+  .lab-head-brand { display: none; }
+  .lab-nav-i { padding: 8px 7px 9px; }
+  .lab-nav-i i { left: 7px; right: 7px; }
+}
 
 /* 顶栏导航：会发光的下划线，别套 tag 底色 */
 .lab-nav { display: flex; gap: 2px; margin-left: 14px; }
@@ -195,8 +201,13 @@ function Shell({ children }: { children: React.ReactNode }) {
     if (t === 'light' || t === 'dark') setTheme(t);
   }, []);
   const flipTheme = () => setTheme(t => { const n = t === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('lab:theme', n); } catch { /* 记不住就算了 */ } return n; });
-  // 自己的导航：首页讲理念，百业空间干活。不跟数据后台的侧边栏混在一起
-  const NAV = [{ k: '/lab', t: '首页' }, { k: '/lab/spaces', t: '百业空间' }];
+  // 三个主页面：首页讲理念；百业工厂造空间（列表 + 工作室）；体验百业是体验馆（所有已发布空间，点开就玩）。
+  // 单个空间页 /lab/<id> 算体验。不跟数据后台的侧边栏混在一起
+  const NAV = [
+    { k: '/lab', t: '首页', on: (p: string) => p === '/lab' },
+    { k: '/lab/spaces', t: '百业工厂', on: (p: string) => p.startsWith('/lab/spaces') || p.startsWith('/lab/studio') },
+    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || /^\/lab\/(?!spaces|studio|gallery)[^/]+$/.test(p) },
+  ];
   return (
     <div className="lab" data-theme={theme}>
       <style>{LAB_CSS}</style>
@@ -205,14 +216,14 @@ function Shell({ children }: { children: React.ReactNode }) {
       <header className="lab-head" style={{ position: 'sticky', top: 0, zIndex: 20, display: 'flex', alignItems: 'center', gap: 14, background: 'rgba(245,246,255,.72)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(106,92,255,.12)' }}>
         <div onClick={() => { if (!guest) router.push('/lab'); }} style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', minWidth: 0, flexShrink: 0 }}>
           <div className="lab-orb" style={{ ['--s' as string]: '34px' }}><div className="ring" /><div className="core" /></div>
-          <div style={{ minWidth: 0 }}>
+          <div className="lab-head-brand" style={{ minWidth: 0 }}>
             <div style={{ fontSize: 16, fontWeight: 800, letterSpacing: 0.5, whiteSpace: 'nowrap' }}>AI 百业</div>
             <div className="lab-mono lab-cap lab-head-sub">数字技能空间 · EXPERIMENTAL</div>
           </div>
         </div>
         {!guest && <nav className="lab-nav">
           {NAV.map(x => {
-            const on = x.k === '/lab' ? path === '/lab' : path.startsWith(x.k);
+            const on = x.on(path);
             return (
               <button key={x.k} onClick={() => router.push(x.k)} className={`lab-nav-i${on ? ' on' : ''}`}>
                 {x.t}
