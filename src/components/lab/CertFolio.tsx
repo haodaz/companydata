@@ -98,6 +98,8 @@ export interface FolioData {
   analysis: { summary: string; gaps: string[]; suggestions: string[] };
   art?: { scene: string; place: string; people: { name: string; role: string; image: string }[]; value: { headline: string; lines: string[] } | null };
   charts?: { avg: Record<string, number | null>; expert: Record<string, number | null> | null; dist: number[] };
+  /** 全天证书：dims 是每一段（名字 = 时段 + 标题，满分 100），chapter 为空 */
+  day?: boolean;
 }
 
 /** 墨色印章：环形文字 + R² 意象 */
@@ -142,10 +144,10 @@ function PageCert({ d }: { d: FolioData }) {
           <div style={{ fontSize: '2.6cqi', marginTop: '4.4cqi', color: '#4a5180' }}>兹证明</div>
           <div style={{ fontSize: '7cqi', fontWeight: 800, marginTop: '1cqi', display: 'inline-block', padding: '0 6cqi 1cqi', borderBottom: '.22cqi solid #1d2450' }}>{d.candidate.name || '匿名新兵'}</div>
           <div style={{ fontSize: '2.5cqi', lineHeight: 1.9, marginTop: '2.8cqi', color: '#2a3160' }}>
-            于 {fmtDate(d.date)} 在数字职人 {d.space.name} 的带领下，<br />完成了「{d.space.role}的一天」{d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段` : ''}的全部操作
+            于 {fmtDate(d.date)} 在数字职人 {d.space.name} 的带领下，<br />{d.day ? <>走完了「{d.space.role}的一天」全部 {d.dims.length} 段</> : <>完成了「{d.space.role}的一天」{d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段` : ''}的全部操作</>}
           </div>
-          {d.chapter && <div className="pg-accent" style={{ fontSize: '3.6cqi', fontWeight: 900, marginTop: '2cqi', letterSpacing: '.06em' }}>{d.chapter.slot ? `${d.chapter.slot} · ` : ''}{d.chapter.title}</div>}
-          <div style={{ fontSize: '2.2cqi', marginTop: '3cqi', color: '#4a5180' }}>按岗位标准评定，综合等级</div>
+          {!d.day && d.chapter && <div className="pg-accent" style={{ fontSize: '3.6cqi', fontWeight: 900, marginTop: '2cqi', letterSpacing: '.06em' }}>{d.chapter.slot ? `${d.chapter.slot} · ` : ''}{d.chapter.title}</div>}
+          <div style={{ fontSize: '2.2cqi', marginTop: '3cqi', color: '#4a5180' }}>{d.day ? '按岗位标准逐段评定，全天综合等级' : '按岗位标准评定，综合等级'}</div>
           <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '2cqi', marginTop: '1cqi' }}>
             <span className="pg-mono" style={{ fontSize: '7.6cqi', fontWeight: 900, letterSpacing: 0 }}>{bandText(d.overall)}</span>
             <span style={{ fontSize: '2.8cqi', fontWeight: 800 }}>{d.level || bandLevel(d.overall)}</span>
@@ -194,7 +196,7 @@ function PageArt({ d }: { d: FolioData }) {
       <div className="pg-in" style={{ inset: '7cqi 8cqi 7cqi' }}>
         <div className="pg-mono" style={{ fontSize: '1.8cqi', letterSpacing: '.32em', opacity: .85 }}>THE PROFESSION</div>
         <div className="pg-serif" style={{ fontSize: '7cqi', fontWeight: 900, marginTop: '1cqi', textShadow: '0 .6cqi 3cqi rgba(0,0,0,.5)' }}>{d.space.role}</div>
-        {a?.place && <div style={{ fontSize: '2.1cqi', opacity: .85, marginTop: '.6cqi' }}>📍 {a.place}{d.chapter?.slot ? ` · ${d.chapter.slot}` : ''}</div>}
+        {a?.place && <div style={{ fontSize: '2.1cqi', opacity: .85, marginTop: '.6cqi' }}>📍 {a.place}{!d.day && d.chapter?.slot ? ` · ${d.chapter.slot}` : d.day && d.dims.length > 1 ? ` 等 · 一整天 ${d.dims.length} 段` : ''}</div>}
         <div style={{ flex: 1 }} />
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: '2.4cqi' }}>
           {d.space.avatar && (
@@ -208,7 +210,7 @@ function PageArt({ d }: { d: FolioData }) {
             {a?.people?.length ? (
               <div style={{ display: 'flex', marginTop: '1.4cqi' }}>
                 {a.people.map((p, i) => <img key={p.name} src={p.image} alt={p.name} title={`${p.name} · ${p.role}`} style={{ width: '7cqi', height: '7cqi', borderRadius: '50%', objectFit: 'cover', objectPosition: '50% 12%', border: '.35cqi solid #0b0d26', marginLeft: i ? '-1.6cqi' : 0, background: '#2a2f5a' }} />)}
-                <span style={{ fontSize: '1.8cqi', opacity: .75, alignSelf: 'center', marginLeft: '1.4cqi' }}>和 {a.people.map(p => p.name).join('、')} 一起</span>
+                <span style={{ fontSize: '1.8cqi', opacity: .75, alignSelf: 'center', marginLeft: '1.4cqi' }}>和 {a.people.slice(0, 4).map(p => p.name).join('、')}{a.people.length > 4 ? ` 等 ${a.people.length} 人` : ''} 一起</span>
               </div>
             ) : null}
           </div>
@@ -237,25 +239,25 @@ function PageRecord({ d }: { d: FolioData }) {
           <span style={{ flex: 1 }} />
           <div style={{ textAlign: 'right', fontSize: '1.9cqi', lineHeight: 1.7, color: '#4a5180' }}><div>{fmtDate(d.date)}</div><div className="pg-mono">Document No. {d.no}</div></div>
         </div>
-        <div className="pg-serif" style={{ fontSize: '4.6cqi', fontWeight: 900, textAlign: 'center', margin: '4.4cqi 0 .6cqi', letterSpacing: '.12em' }}>成绩记录</div>
+        <div className="pg-serif" style={{ fontSize: '4.6cqi', fontWeight: 900, textAlign: 'center', margin: '4.4cqi 0 .6cqi', letterSpacing: '.12em' }}>{d.day ? '全天成绩记录' : '成绩记录'}</div>
         <div className="pg-mono" style={{ textAlign: 'center', fontSize: '1.7cqi', letterSpacing: '.36em', color: '#6b7290' }}>TRANSCRIPT OF RECORDS</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '.8cqi 3cqi', fontSize: '2.1cqi', marginTop: '3.6cqi' }}>
           {[['姓名', d.candidate.name || '匿名新兵'], ['背景', [d.candidate.note, d.candidate.location].filter(Boolean).join(' · ') || '—'], ['职业', `${d.space.role}${d.space.company ? ` · ${d.space.company}` : ''}`],
-            ['场景', `${d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段 · ` : ''}${d.chapter?.slot ? `${d.chapter.slot} · ` : ''}${d.chapter?.title || ''}`], ['带教', `数字职人 ${d.space.name}${d.skill?.expert ? `（技能来源：${d.skill.expert} · ${d.skill.location}）` : ''}`]].map(([k, v]) => (
+            ['场景', d.day ? `「${d.space.role}的一天」全部 ${d.dims.length} 段` : `${d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段 · ` : ''}${d.chapter?.slot ? `${d.chapter.slot} · ` : ''}${d.chapter?.title || ''}`], ['带教', `数字职人 ${d.space.name}${d.skill?.expert ? `（技能来源：${d.skill.expert} · ${d.skill.location}）` : ''}`]].map(([k, v]) => (
             <React.Fragment key={k}><span style={{ color: '#6b7290' }}>{k}</span><b>{v}</b></React.Fragment>
           ))}
         </div>
         <table className="pg-tbl" style={{ marginTop: '3cqi' }}>
-          <thead><tr><th>评定项目</th><th style={{ width: '12cqi' }}>权重</th><th style={{ width: '15cqi' }}>得分</th><th style={{ width: '10cqi' }}>等级</th></tr></thead>
+          <thead><tr><th>{d.day ? '段落' : '评定项目'}</th><th style={{ width: '12cqi' }}>{d.day ? '一致' : '权重'}</th><th style={{ width: '15cqi' }}>得分</th><th style={{ width: '10cqi' }}>等级</th></tr></thead>
           <tbody>
-            {d.dims.map(x => <tr key={x.key}><td className="pg-serif" style={{ fontWeight: 700 }}>{x.name}</td><td className="pg-mono">{x.weight}%</td><td className="pg-mono" style={{ whiteSpace: 'nowrap' }}>{x.score} / {x.weight}</td><td className="pg-mono" style={{ fontWeight: 800 }}>{bandText(x.band)}</td></tr>)}
-            <tr><td className="pg-serif" style={{ fontWeight: 900 }}>综合</td><td className="pg-mono">100%</td><td className="pg-mono" style={{ fontWeight: 800, whiteSpace: 'nowrap' }}>{d.score} / 100</td><td className="pg-mono pg-accent" style={{ fontWeight: 900 }}>{bandText(d.overall)}</td></tr>
+            {d.dims.map(x => <tr key={x.key}><td className="pg-serif" style={{ fontWeight: 700 }}>{x.name}</td><td className="pg-mono">{d.day ? (x.comment || '—') : `${x.weight}%`}</td><td className="pg-mono" style={{ whiteSpace: 'nowrap' }}>{x.score} / {x.weight}</td><td className="pg-mono" style={{ fontWeight: 800 }}>{bandText(x.band)}</td></tr>)}
+            <tr><td className="pg-serif" style={{ fontWeight: 900 }}>{d.day ? '全天平均' : '综合'}</td><td className="pg-mono">{d.day ? (d.match == null ? '—' : `${d.match}%`) : '100%'}</td><td className="pg-mono" style={{ fontWeight: 800, whiteSpace: 'nowrap' }}>{d.score} / 100</td><td className="pg-mono pg-accent" style={{ fontWeight: 900 }}>{bandText(d.overall)}</td></tr>
           </tbody>
         </table>
         {/* 纸面有限：每条最多两行，全文在成绩单的网页版里看得到 */}
         <div style={{ display: 'grid', gap: '1.6cqi', marginTop: '3cqi', fontSize: '1.85cqi', lineHeight: 1.6 }}>
-          <div><div className="pg-cap" style={{ marginBottom: '.4cqi' }}>总体评价</div><div className="pg-clamp" style={{ WebkitLineClamp: 3 }}>{d.analysis.summary}</div></div>
-          {d.analysis.gaps.length > 0 && <div><div className="pg-cap" style={{ marginBottom: '.4cqi' }}>失分点</div>{d.analysis.gaps.slice(0, 2).map((g, i) => <div key={i} className="pg-clamp">{i + 1}. {g}</div>)}</div>}
+          <div><div className="pg-cap" style={{ marginBottom: '.4cqi' }}>{d.day ? '这一天' : '总体评价'}</div><div className="pg-clamp" style={{ WebkitLineClamp: 3 }}>{d.analysis.summary}</div></div>
+          {d.analysis.gaps.length > 0 && <div><div className="pg-cap" style={{ marginBottom: '.4cqi' }}>{d.day ? '最需要加强的一段 · 失分点' : '失分点'}</div>{d.analysis.gaps.slice(0, 2).map((g, i) => <div key={i} className="pg-clamp">{i + 1}. {g}</div>)}</div>}
           {d.analysis.suggestions.length > 0 && <div><div className="pg-cap" style={{ marginBottom: '.4cqi' }}>下次这样做</div>{d.analysis.suggestions.slice(0, 2).map((g, i) => <div key={i} className="pg-clamp">{i + 1}. {g}</div>)}</div>}
         </div>
         <div style={{ flex: 1 }} />
@@ -301,7 +303,7 @@ function PageCharts({ d }: { d: FolioData }) {
     <div className="pg pg-paper">
       <div className="pg-in" style={{ inset: '7cqi 7.5cqi 6cqi' }}>
         <div className="pg-cap">Performance Report</div>
-        <div className="pg-serif" style={{ fontSize: '4.4cqi', fontWeight: 900, marginTop: '.6cqi' }}>能力画像</div>
+        <div className="pg-serif" style={{ fontSize: '4.4cqi', fontWeight: 900, marginTop: '.6cqi' }}>{d.day ? '一天的能力画像' : '能力画像'}</div>
         <div style={{ display: 'flex', gap: '3cqi', marginTop: '1.4cqi', fontSize: '1.9cqi', color: '#4a5180' }}>
           {legend.map(([c, t]) => <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: '.8cqi' }}><i style={{ width: '2.4cqi', height: '.6cqi', background: c, display: 'inline-block' }} />{t}</span>)}
         </div>
@@ -328,15 +330,15 @@ function PageCharts({ d }: { d: FolioData }) {
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: '4cqi', marginTop: '2.6cqi', alignItems: 'end' }}>
-          <div>
+          {ch.dist.length === 0 ? <div style={{ fontSize: '1.9cqi', color: '#4a5180', lineHeight: 1.7 }}>雷达上每个角是一天里的一段；离外圈越近，这一段做得越像能独当一面的人。灰色虚线是同一段其他体验者的平均。</div> : <div>
             <div className="pg-cap">同段分数分布 · {d.peers} 人</div>
             <div style={{ display: 'flex', alignItems: 'flex-end', gap: '.6cqi', height: '11cqi', marginTop: '1.4cqi', borderBottom: '.12cqi solid #1d2450' }}>
               {bins.map((b, i) => <div key={i} title={`${i * 10}–${i * 10 + 9} 分：${b} 人`} style={{ flex: 1, height: `${Math.max(3, (b / maxBin) * 100)}%`, background: i === myBin ? '#6a5cff' : '#d8dbe8', borderRadius: '.5cqi .5cqi 0 0' }} />)}
             </div>
             <div className="pg-mono" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.4cqi', color: '#8a90aa', marginTop: '.6cqi' }}><span>0</span><span>50</span><span>100</span></div>
-          </div>
+          </div>}
           <div style={{ display: 'grid', gap: '1.2cqi' }}>
-            <div><div className="pg-cap">超过</div><div className="pg-mono" style={{ fontSize: '4.6cqi', fontWeight: 900, letterSpacing: 0 }}>{d.beat == null ? '—' : `${d.beat}%`}</div><div style={{ fontSize: '1.7cqi', color: '#6b7290' }}>{d.beat == null ? '你是第一位走完这一段的人' : '的体验者'}</div></div>
+            <div><div className="pg-cap">超过</div><div className="pg-mono" style={{ fontSize: '4.6cqi', fontWeight: 900, letterSpacing: 0 }}>{d.beat == null ? '—' : `${d.beat}%`}</div><div style={{ fontSize: '1.7cqi', color: '#6b7290' }}>{d.beat == null ? '你是第一位走完这一段的人' : d.day ? '的体验者（各段平均）' : '的体验者'}</div></div>
             <div><div className="pg-cap">与老师傅一致</div><div className="pg-mono" style={{ fontSize: '4.6cqi', fontWeight: 900, letterSpacing: 0, color: '#12b5cb' }}>{d.match == null ? '—' : `${d.match}%`}</div><div style={{ fontSize: '1.7cqi', color: '#6b7290' }}>按每一步和示范的对照</div></div>
           </div>
         </div>
@@ -380,12 +382,27 @@ function Cover({ d, opening, onOpen }: { d: FolioData; opening: boolean; onOpen:
           <div className="pg-serif cover-foil" style={{ fontSize: '8.4cqi', fontWeight: 900, letterSpacing: '.3em', marginTop: '2cqi', paddingLeft: '.3em' }}>职业体验证书</div>
           <div style={{ width: '18cqi', height: '.25cqi', background: 'linear-gradient(90deg, transparent, #d2a95a, transparent)', margin: '4cqi 0' }} />
           <div className="pg-serif" style={{ fontSize: '4.6cqi', fontWeight: 800, color: '#f3e3b8' }}>{d.candidate.name || '匿名新兵'}的证书</div>
-          <div style={{ fontSize: '2.5cqi', marginTop: '1.6cqi', opacity: .75 }}>{d.space.role}的一天{d.chapter && d.chapter.total > 1 ? ` · 第 ${d.chapter.n} / ${d.chapter.total} 段` : ''}</div>
+          <div style={{ fontSize: '2.5cqi', marginTop: '1.6cqi', opacity: .75 }}>{d.space.role}的一天{d.day ? ` · 全天 ${d.dims.length} 段` : ''}</div>
           <div style={{ flex: 1.2 }} />
           <div className="pg-serif" style={{ fontSize: '2.3cqi', letterSpacing: '.3em', opacity: .8 }}>平方创想 · 方略研究院</div>
           <div style={{ fontSize: '2cqi', marginTop: '3cqi', opacity: .6, letterSpacing: '.2em' }}>{opening ? '正在打开…' : '点击打开'}</div>
         </div>
       </div>
+    </div>
+  );
+}
+
+/** 单段成绩单：一段只有成绩（成绩记录 | 能力画像），证书要走完一整天才有 */
+export function ScoreFolio({ d }: { d: FolioData }) {
+  const pages = [<PageRecord key="r" d={d} />, <PageCharts key="ch" d={d} />];
+  return (
+    <div className="folio-wrap folio-open">
+      <style>{CSS}</style>
+      <div className="folio"><div className="folio-spread">
+        <div className="pg-slot l" style={{ borderRadius: '4px 0 0 4px', overflow: 'hidden' }}>{pages[0]}</div>
+        <div className="pg-slot r" style={{ borderRadius: '0 4px 4px 0', overflow: 'hidden' }}>{pages[1]}</div>
+      </div></div>
+      <div className="folio-stack">{pages.map((p, i) => <div key={i}>{p}</div>)}</div>
     </div>
   );
 }
@@ -437,7 +454,7 @@ export function CertFolio({ d }: { d: FolioData }) {
 
 /** 证书库里的一本：小封皮（烫金职业名、段落、等级）。empty = 还没走的那一段，虚线空位 */
 export const MINI_COVER_CSS = `
-.mcv { position: relative; aspect-ratio: 210 / 300; border-radius: 3px 10px 10px 3px; container-type: inline-size; cursor: pointer; border: 0; padding: 0; font-family: inherit; text-align: center; overflow: hidden;
+.mcv { position: relative; width: 100%; aspect-ratio: 210 / 300; border-radius: 3px 10px 10px 3px; container-type: inline-size; cursor: pointer; border: 0; padding: 0; font-family: inherit; text-align: center; overflow: hidden;
   background: radial-gradient(130% 100% at 30% 0%, #2c3266 0%, #181b3c 50%, #0d0f27 100%); color: #f3e3b8;
   box-shadow: 0 14px 30px rgba(10,12,40,.35), inset 7px 0 10px -6px rgba(0,0,0,.6); transition: transform .25s, box-shadow .25s; }
 .mcv:hover { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 22px 40px rgba(10,12,40,.45), inset 7px 0 10px -6px rgba(0,0,0,.6); }
@@ -446,19 +463,21 @@ export const MINI_COVER_CSS = `
 .mcv.empty { background: rgba(255,255,255,.55); box-shadow: none; color: var(--ink3); outline: 2px dashed rgba(106,92,255,.28); outline-offset: -2px; }
 .mcv.empty::before { display: none; }
 .mcv.day { background: radial-gradient(130% 100% at 30% 0%, #5a3f9e 0%, #2a1f5c 50%, #120d2e 100%); }
+.mcv.locked { filter: grayscale(1) brightness(1.15); opacity: .55; cursor: default; }
+.mcv.locked:hover { transform: none; }
 `;
 
-export function MiniCover({ role, title, slot, band, name, empty, day, onClick }: { role: string; title: string; slot?: string; band?: number | null; name?: string; empty?: boolean; day?: boolean; onClick: () => void }) {
+export function MiniCover({ role, title, slot, band, name, empty, day, locked, onClick }: { role: string; title: string; slot?: string; band?: number | null; name?: string; empty?: boolean; day?: boolean; locked?: string; onClick: () => void }) {
   return (
-    <button className={`mcv${empty ? ' empty' : ''}${day ? ' day' : ''}`} onClick={onClick} title={empty ? '还没走这一段' : `${role} · ${title}`}>
+    <button className={`mcv${empty ? ' empty' : ''}${day ? ' day' : ''}${locked ? ' locked' : ''}`} onClick={locked ? undefined : onClick} title={locked || (empty ? '还没走这一段' : `${role} · ${title}`)}>
       <div style={{ position: 'absolute', inset: '11cqi 9cqi 10cqi', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {!empty && <span style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: '11cqi', opacity: .9 }} className="mcv-foil">R²</span>}
         <span className="pg-mono" style={{ fontSize: '5.2cqi', letterSpacing: '.16em', marginTop: empty ? 0 : '3cqi', opacity: .75 }}>{slot || (day ? 'A FULL DAY' : '')}</span>
         <span className={`pg-serif${empty ? '' : ' mcv-foil'}`} style={{ fontSize: '10cqi', fontWeight: 900, lineHeight: 1.3, marginTop: '3cqi' }}>{day ? `${role}的一天` : title}</span>
         <span style={{ flex: 1 }} />
         {empty ? <span style={{ fontSize: '7.5cqi', fontWeight: 700, color: 'var(--v)' }}>去完成 →</span> : <>
-          <span className="pg-mono mcv-foil" style={{ fontSize: '16cqi', fontWeight: 900, letterSpacing: 0, lineHeight: 1 }}>{band != null ? bandText(band) : ''}</span>
-          <span style={{ fontSize: '5.6cqi', marginTop: '2cqi', opacity: .7 }}>{day ? '全天证书' : name ? `${name}的证书` : role}</span>
+          {locked ? <span style={{ fontSize: '12cqi' }}>🔒</span> : <span className="pg-mono mcv-foil" style={{ fontSize: '16cqi', fontWeight: 900, letterSpacing: 0, lineHeight: 1 }}>{band != null ? bandText(band) : ''}</span>}
+          <span style={{ fontSize: '5.6cqi', marginTop: '2cqi', opacity: .75 }}>{locked || (day ? (name ? `${name}的证书` : '职业体验证书') : name ? `${name}的成绩` : role)}</span>
         </>}
       </div>
     </button>

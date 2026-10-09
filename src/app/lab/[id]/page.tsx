@@ -961,11 +961,13 @@ function castOf(space: any, sim: Sim | null) {
                   <ReportBody sub={stageReport} rubric={chapterRubric} sim={sim} skill={skill} actions={
                     <div style={{ display: 'flex', gap: 8 }}>
                       <button className="lab-btn ghost sm" onClick={() => { setStageReport(null); setRunKey(k => k + 1); }}>再走一遍</button>
-                      <button className="lab-btn ghost sm" onClick={() => window.open(`/lab/cert/${stageReport.id}`, '_blank')} style={{ color: '#8a6a2f', boxShadow: '0 0 0 1px rgba(176,141,87,.6)' }}>✦ 领取证书</button>
+                      <button className="lab-btn ghost sm" onClick={() => window.open(`/lab/cert/${stageReport.id}`, '_blank')}>查看成绩单</button>
                       {nextChapter
                         ? <><button className="lab-btn ghost sm" onClick={() => { setStageReport(null); setAnswering(false); }}>退出操作台</button>
                           <button className="lab-btn sm" onClick={goNext}>进入下一段 · {nextChapter.slot ? `${nextChapter.slot} ` : ''}{nextChapter.title} →</button></>
-                        : <button className="lab-btn sm" onClick={() => { setStageReport(null); setAnswering(false); setIntro(true); }}>{chapters.length > 1 ? '这一天走完了 · 回到时间轴' : '退出操作台'}</button>}
+                        : <><button className="lab-btn ghost sm" onClick={() => { setStageReport(null); setAnswering(false); setIntro(true); }}>回到时间轴</button>
+                          {/* 最后一段：每段都走过的话，证书在「我的进度与证书」里解锁；只有一段的空间直接就是一整天 */}
+                          <button className="lab-btn sm" onClick={() => window.open(chapters.length > 1 ? '/lab/me' : `/lab/cert/day?s=${stageReport.id}`, '_blank')}>去领证书 ✦</button></>}
                     </div>
                   } />
                 </div>
@@ -1341,7 +1343,7 @@ function castOf(space: any, sim: Sim | null) {
       <Drawer open={!!openSub} onClose={() => setOpenSub(null)} size={Math.min(760, typeof window !== 'undefined' ? window.innerWidth : 760)} title={null} closable={false} styles={{ body: { padding: 0, background: '#f5f6ff' } }}>
         {openSub && (
           <div className="lab" style={{ minHeight: '100%', padding: 22 }}>
-            <ReportBody sub={openSub} rubric={chapterRubric} sim={sim} skill={skill} actions={<div style={{ display: 'flex', gap: 8 }}>{openSub.candidate_type !== 'ai' && <button className="lab-btn sm" onClick={() => window.open(`/lab/cert/${openSub.id}`, '_blank')}>领取证书</button>}<button className="lab-btn ghost sm" onClick={() => setOpenSub(null)}>关闭</button></div>} />
+            <ReportBody sub={openSub} rubric={chapterRubric} sim={sim} skill={skill} actions={<div style={{ display: 'flex', gap: 8 }}>{openSub.candidate_type !== 'ai' && <button className="lab-btn sm" onClick={() => window.open(`/lab/cert/${openSub.id}`, '_blank')}>查看成绩单</button>}<button className="lab-btn ghost sm" onClick={() => setOpenSub(null)}>关闭</button></div>} />
           </div>
         )}
       </Drawer>
@@ -1457,7 +1459,7 @@ function ChapterIntro({ chapter, chapters, space, sim, demo, onStart, profile }:
       )}
       {profile && (
         <div style={{ marginTop: 16, padding: '12px 14px', borderRadius: 14, background: 'rgba(106,92,255,.06)', boxShadow: '0 0 0 1px rgba(106,92,255,.16)' }}>
-          <div style={{ fontSize: 13, color: 'var(--ink2)', marginBottom: 8 }}>第一次来，留个称呼吧——每走完一段都能领证书，证书上用这个名字。<b>只问这一次</b>，不填也能玩。</div>
+          <div style={{ fontSize: 13, color: 'var(--ink2)', marginBottom: 8 }}>第一次来，留个称呼吧——成绩单和走完一整天后的证书上用这个名字。<b>只问这一次</b>，不填也能玩。</div>
           <div style={{ display: 'grid', gap: 8, gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
             <input className="lab-input" style={{ padding: '8px 11px', fontSize: 14 }} value={profile.name} onChange={e => profile.set('name', e.target.value)} placeholder="怎么称呼你" />
             <input className="lab-input" style={{ padding: '8px 11px', fontSize: 14 }} value={profile.note} onChange={e => profile.set('note', e.target.value)} placeholder="学校 / 专业（可空）" />
@@ -1564,7 +1566,7 @@ function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach,
               background: mode === m ? '#fff' : 'transparent', color: mode === m ? 'var(--v)' : 'var(--ink3)', boxShadow: mode === m ? '0 2px 8px rgba(60,45,130,.12)' : 'none' }}>{t}</button>
           ))}
         </div>}
-        <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.6 }}>{learn ? '请一位资深从业者把这一天走一遍，每段走完接受追问' : teach ? '看他怎么走：每一步按老师傅的做法' : '你来走：走完评分，每段都能领证书'}</div>
+        <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.6 }}>{learn ? '请一位资深从业者把这一天走一遍，每段走完接受追问' : teach ? '看他怎么走：每一步按老师傅的做法' : '你来走：每段有成绩单，走完一整天领证书'}</div>
         <ol className="dayv-tl">
           {chapters.map((c, i) => {
             const on = c === chapter;
@@ -1633,7 +1635,7 @@ function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach,
         {rubric.length > 0 && (
           <div className="dayv-sec">
             <div className="lab-mono lab-cap" style={{ marginBottom: 4 }}>{learn ? '这一段新人按这几项评分' : teach ? '老师傅这一段看重什么' : '这一段考什么'}</div>
-            <div style={{ fontSize: 13, color: 'var(--ink3)', marginBottom: 12 }}>{learn ? '你的做法会成为这一段的示范：以后新人走完，按这几项打分，并和你的每一步对照。' : teach ? '看他走的时候留意这几件事：每一步为什么这么选，换成新人最容易在哪里出错。' : '走完由 AI 核心按这几项打分，并和老师傅的做法逐步对照；完成就能领这一段的证书。'}</div>
+            <div style={{ fontSize: 13, color: 'var(--ink3)', marginBottom: 12 }}>{learn ? '你的做法会成为这一段的示范：以后新人走完，按这几项打分，并和你的每一步对照。' : teach ? '看他走的时候留意这几件事：每一步为什么这么选，换成新人最容易在哪里出错。' : '走完由 AI 核心按这几项打分，并和老师傅的做法逐步对照，给你一份成绩单；一天的每一段都走完，领这一行的证书。'}</div>
             <div className="dayv-rub">
               {rubric.map(r => (
                 <div key={r.key}>

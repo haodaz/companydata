@@ -5,9 +5,9 @@ import { useParams, useRouter } from 'next/navigation';
 import { App } from 'antd';
 import { useUser } from '@/lib/user-context';
 import { visitorIds } from '@/lib/lab-cert';
-import { CertFolio } from '@/components/lab/CertFolio';
+import { ScoreFolio } from '@/components/lab/CertFolio';
 
-/** 单段证书页夹（证书 · 画作 · 成绩记录 · 图表）。链接公开，就是查验方式；本人可以改证书上的名字 */
+/** 单段成绩单（成绩记录 | 能力画像）。证书只在一天走完时发（/lab/cert/day）。链接公开；本人可以改名字 */
 export default function CertPage() {
   const { sid } = useParams<{ sid: string }>();
   const router = useRouter();
@@ -40,19 +40,22 @@ export default function CertPage() {
     <div style={{ display: 'grid', gap: 26 }}>
       <div className="no-print" style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
         <div>
-          <div className="lab-mono lab-cap">CERTIFICATE · {c.no}</div>
-          <div style={{ fontSize: 20, fontWeight: 800 }}>{c.space.role}的一天{c.chapter && c.chapter.total > 1 ? ` · 第 ${c.chapter.n} / ${c.chapter.total} 段` : ''}</div>
+          <div className="lab-mono lab-cap">SCORE REPORT · {c.no}</div>
+          <div style={{ fontSize: 20, fontWeight: 800 }}>成绩单 · {c.space.role}的一天{c.chapter && c.chapter.total > 1 ? ` · 第 ${c.chapter.n} / ${c.chapter.total} 段` : ''}</div>
         </div>
         <div style={{ flex: 1 }} />
         {c.mine && (editing
           ? <><input className="lab-input" style={{ width: 180, padding: '7px 10px', fontSize: 14 }} value={name} onChange={e => setName(e.target.value)} placeholder="证书上的名字" /><button className="lab-btn sm" onClick={saveName}>保存</button><button className="lab-btn ghost sm" onClick={() => setEditing(false)}>取消</button></>
-          : <button className="lab-btn ghost sm" onClick={() => setEditing(true)}>改证书上的名字</button>)}
+          : <button className="lab-btn ghost sm" onClick={() => setEditing(true)}>改名字</button>)}
         <button className="lab-btn ghost sm" onClick={copy}>复制链接</button>
         <button className="lab-btn ghost sm" onClick={() => window.print()}>打印 / 存 PDF</button>
-        <button className="lab-btn ghost sm" onClick={() => router.push('/lab/me')}>我的证书库</button>
+        <button className="lab-btn ghost sm" onClick={() => router.push('/lab/me')}>我的进度与证书</button>
+        {/* 只有一段的空间：这一段走完就是一整天，直接领证书 */}
+        {c.chapter?.total === 1 && <button className="lab-btn sm" onClick={() => router.push(`/lab/cert/day?s=${c.id}`)}>领取证书 ✦</button>}
         {next && <button className="lab-btn sm" onClick={() => router.push(`/lab/${c.space.id}?m=test`)}>继续这一天 →</button>}
       </div>
-      <CertFolio d={c} />
+      {c.chapter && c.chapter.total > 1 && <div className="no-print" style={{ fontSize: 13, color: 'var(--ink3)', marginTop: -12 }}>每一段只有成绩单；把这一天的 {c.chapter.total} 段都走完，才能领「{c.space.role}的一天」证书。</div>}
+      <ScoreFolio d={c} />
     </div>
   );
 }
