@@ -61,8 +61,14 @@ export default [
   { scroll: 1900, over: 7 },
   { hold: 1 },
   { scroll: 0, over: 2 },
-  { eval: run(`const card = await L.until(() => [...document.querySelectorAll('.gal-card')].find(c => c.innerText.includes('开腹医师'))); if (!card) throw new Error('没找到开腹医师卡片'); card.scrollIntoView({ block: 'center', behavior: 'smooth' }); await L.sleep(1400); card.style.outline = '3px solid #6a5cff'; await L.sleep(900); [...card.querySelectorAll('button')].find(b => b.innerText.includes('开始体验')).click(); return 'open';`) },
-  { pause: true }, { hold: 7 }, { resume: true },
+  { eval: run(`const card = await L.until(() => [...document.querySelectorAll('.gal-card')].find(c => c.innerText.includes('开腹医师'))); if (!card) throw new Error('没找到开腹医师卡片'); card.scrollIntoView({ block: 'center', behavior: 'smooth' }); await L.sleep(1400); card.style.outline = '3px solid #6a5cff'; await L.sleep(900); card.click(); return 'open';`) },
+  { pause: true }, { hold: 6 }, { resume: true },
+
+  // ── 职业主页：这位数字职人是谁、学自谁、多少人考过 ──
+  { note: 'hub' },
+  { hold: 7 },
+  { eval: run(`const p = await L.until(() => [...document.querySelectorAll('.hub-portal')].find(x => x.innerText.includes('考考你'))); if (!p) throw new Error('没找到考考你入口'); p.style.outline = '3px solid #fff'; await L.sleep(800); p.click(); return 'test';`) },
+  { pause: true }, { hold: 5 }, { resume: true },
 
   // ── 二、一天页 ──
   { note: 'day' },

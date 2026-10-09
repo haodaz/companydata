@@ -20,7 +20,7 @@ END = dur(os.path.join(D, "clip.mp4"))
 
 # (clip 名, 起, 止, 倍速)：clip 名就是旁白挂的场景
 # 讲解多的地方放慢（一天页旁白 17 秒），漫长的操作加速（工位自己走 100 秒压到 17 秒）
-SPEED = {"gallery": 1.2, "day": 0.75, "ch1_intro": 1.0, "ch1_steps": 1.25, "ch1_text": 1.4, "ch1_report": 1.0,
+SPEED = {"gallery": 1.2, "hub": 1.0, "day": 0.75, "ch1_intro": 1.0, "ch1_steps": 1.25, "ch1_text": 1.4, "ch1_report": 1.0,
          "ch2_intro": 1.0, "bench": 6.0, "bench_done": 1.6, "day_tour": 1.0, "me": 1.0, "cover": 1.0,
          "cert": 1.0, "scores": 1.0, "dayscore": 1.0, "end": 1.0}
 order = [m["note"] for m in marks]

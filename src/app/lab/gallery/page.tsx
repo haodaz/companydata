@@ -108,9 +108,11 @@ export default function GalleryPage() {
         <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))' }}>
           {shown.map(({ s, jd, p, family }, i) => {
             const ch = s.chapters || {};
+            // 点卡片先到这位数字职人的主页（他是谁、学自谁、多少人考过、我教你 / 考考你 / 你教我）；「开始体验」直接进考考你
+            const home = () => router.push(`/lab/${s.id}`);
             const go = () => router.push(`/lab/${s.id}?m=test`);
             return (
-              <div key={s.id} className="lab-glass hover lab-in gal-card" style={{ animationDelay: `${Math.min(i, 12) * 50}ms` }} onClick={go}>
+              <div key={s.id} className="lab-glass hover lab-in gal-card" style={{ animationDelay: `${Math.min(i, 12) * 50}ms` }} onClick={home}>
                 <div className="gal-cover">
                   {s.cover && <Image className="bg" src={s.cover} alt="" fill sizes="(max-width: 700px) 100vw, 400px" />}
                   <div className="gal-badges">
