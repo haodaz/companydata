@@ -11,7 +11,7 @@ export const maxDuration = 300;
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const { turns, walkthrough, expert, model, createdBy, trace } = await req.json();
+    const { turns, walkthrough, expert, model, createdBy, trace, chapterTraces } = await req.json();
     if (!Array.isArray(turns) || turns.filter((t: any) => t.role === 'expert').length < 2) {
       return NextResponse.json({ ok: false, error: '至少回答 2 个问题再生成技能卡' }, { status: 400 });
     }
@@ -46,6 +46,11 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       if (error) throw error;
       skillId = data.id;
       await supabaseAdmin.from('skill_tasks').update({ skill_id: skillId }).eq('id', id);
+    }
+    // 一天里第 2 段以后的示范存回各段（第 1 段的示范跟着技能走，上面已经写进 expert_trace）
+    if (chapterTraces && typeof chapterTraces === 'object') {
+      const ids = new Set((space.chapters || []).filter((c: any) => c.id && c.seq !== 1).map((c: any) => c.id));
+      for (const [cid, tr] of Object.entries(chapterTraces)) if (ids.has(cid) && tr && typeof tr === 'object') await supabaseAdmin.from('lab_chapters').update({ expert_trace: tr, updated_at: new Date().toISOString() }).eq('id', cid);
     }
     return NextResponse.json({ ok: true, skillId, skill: { id: skillId, ...row } });
   } catch (e: any) {

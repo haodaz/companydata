@@ -1,6 +1,6 @@
 /** 技能实验室 · 服务端公共函数 */
 import { supabaseAdmin } from '@/lib/supabase';
-import type { SkillCard } from '@/lib/skill-lab';
+import { GENERIC_CHAPTER_RUBRIC, type SkillCard } from '@/lib/skill-lab';
 import type { Sim, SimTrace } from '@/lib/skill-sim';
 import { applyCastArt } from '@/lib/lab-cast';
 import { loadCast } from '@/lib/lab-cast-server';
@@ -81,13 +81,8 @@ export function sortByDay<T extends { slot?: string | null; seq: number }>(list:
   });
 }
 
-/** 章节没单独定评分标准时的通用四项（权重合计 100） */
-export const GENERIC_CHAPTER_RUBRIC = [
-  { key: 'judgement', name: '判断与优先级', weight: 30, description: '能否抓住这一段最关键的风险和信息，先做该先做的事，不被干扰项带偏' },
-  { key: 'practice', name: '操作与规范', weight: 30, description: '处置是否符合行业规范和安全要求，有没有新人常犯的错误动作' },
-  { key: 'communication', name: '沟通与协作', weight: 20, description: '对上级、同事、客户 / 家属说的话是否清楚、诚实、不越界' },
-  { key: 'record', name: '结论与记录', weight: 20, description: '最后写下的结论 / 记录 / 交接是否具体、可执行，别人拿到就能接着干' },
-];
+
+export { GENERIC_CHAPTER_RUBRIC };
 
 /**
  * 按哪一章的题面评分：第 1 章（老空间迁来的那章）用空间本身的任务、材料、评分标准；

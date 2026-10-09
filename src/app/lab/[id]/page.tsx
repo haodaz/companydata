@@ -8,7 +8,7 @@ import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
 import { SimRunner, SimStage, TraceCompare, enterFullscreen } from '@/components/lab/SimRunner';
 import { traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
-import { INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tzLabel, type InterviewTurn, type RubricItem } from '@/lib/skill-lab';
+import { GENERIC_CHAPTER_RUBRIC, INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tzLabel, type InterviewTurn, type RubricItem } from '@/lib/skill-lab';
 
 type Mode = 'career' | 'teach' | 'test' | 'learn' | 'solve' | 'ledger' | 'eco' | 'jd';
 const ALL_MODES: Mode[] = ['career', 'teach', 'test', 'learn', 'solve', 'ledger', 'eco', 'jd'];
@@ -17,7 +17,7 @@ const MODES: { key: Mode; label: string; icon: string }[] = [
   // 都是数字职人在说话：我教你 = 他上台演示给你看；考考你 = 你自己上手（考核，也是体验）
   { key: 'teach', label: '我教你', icon: 'play' },
   { key: 'test', label: '考考你', icon: 'test' },
-  { key: 'learn', label: '教教我', icon: 'learn' },
+  { key: 'learn', label: '你教我', icon: 'learn' },
   { key: 'solve', label: '问问我', icon: 'solve' },
   { key: 'ledger', label: '我被用在哪', icon: 'ledger' },
   { key: 'eco', label: '我的行当', icon: 'eco' },
@@ -470,7 +470,18 @@ export default function SpacePage() {
   const [openSub, setOpenSub] = useState<any>(null);
   /** 沉浸模式：评分报告直接在舞台里出（退出后排行榜里照样能看） */
   const [stageReport, setStageReport] = useState<any>(null);
-  /** 每一段开演前的介绍页（这一幕是什么、会见到谁、在哪）；直达某一步（?go=）时跳过 */
+  /** 这一段出场的人 / 地点 / 道具（按角色表；没有角色表的老空间用台词里的说话人） */
+function castOf(space: any, sim: Sim | null) {
+  const cast: any[] = space?.cast || [];
+  const steps: any[] = sim?.steps || [];
+  const people = cast.filter(m => m.kind === 'person' && !m.is_self && steps.some(s => s.scene?.who === m.name));
+  const looseWho = people.length ? [] : [...new Set(steps.map(s => s.scene?.who).filter((w: string) => w && !/^你/.test(w)))] as string[];
+  const places = cast.filter(m => m.kind === 'place' && steps.some(s => s.place === m.id || (m.image && (sim?.art?.scenes?.[s.id] === m.image || s.bench?.scene?.image === m.image))));
+  const props = cast.filter(m => m.kind === 'prop' && steps.some(s => (s.props || []).includes(m.id)));
+  return { people, looseWho, places, props };
+}
+
+/** 每一段开演前的介绍页（这一幕是什么、会见到谁、在哪）；直达某一步（?go=）时跳过 */
   const [intro, setIntro] = useState(true);
   const [runKey, setRunKey] = useState(0);
   const [freshId, setFreshId] = useState('');
@@ -499,6 +510,8 @@ export default function SpacePage() {
   const [learnStep, setLearnStep] = useState<0 | 1 | 2>(0); // 0 档案 · 1 走一遍 · 2 追问
   const [enough, setEnough] = useState(false);
   const [expertTrace, setExpertTrace] = useState<SimTrace | null>(null);
+  /** 你教我：老师傅这一趟示范过的每一段（章节编号 → 轨迹），吸收时各段的示范存回各段 */
+  const [chTraces, setChTraces] = useState<Record<string, { trace: SimTrace; label: string }>>({});
   // 解决问题
   const [prob, setProb] = useState({ actor: '', location: '', context: '', problem: '' });
   const chatEnd = useRef<HTMLDivElement>(null);
@@ -532,7 +545,8 @@ export default function SpacePage() {
   const taughtOnce = useRef(false);
   useEffect(() => {
     if (mode !== 'teach') { taughtOnce.current = false; return; }
-    if (taughtOnce.current || answering || !space) return;
+    // 多段的空间停在「一天」页让人挑段，不自动开演
+    if (taughtOnce.current || answering || !space || (space.chapters || []).length > 1) return;
     const ch = (space.chapters || []).find((c: any) => c.id && c.id === chParam) || (space.chapters || [])[0];
     const trace = (ch?.expert_trace && Object.keys(ch.expert_trace).length ? ch.expert_trace : null) || space.skill?.expert_trace;
     if ((ch?.sim?.steps?.length || space.sim?.steps?.length) && trace) { taughtOnce.current = true; setDemo(trace); setAnswering(true); }
@@ -556,6 +570,11 @@ export default function SpacePage() {
   const chapter = chapters.find(c => c.id && c.id === chParam) || chapters[0] || null;
   const sim: Sim | null = chapter?.sim?.steps?.length ? chapter.sim : (space?.sim?.steps?.length ? space.sim : null);
   const chapterTrace = (chapter?.expert_trace && Object.keys(chapter.expert_trace).length ? chapter.expert_trace : null) || skill?.expert_trace || null;
+  // 多段的空间：考 / 教都进「一天」页（左时间轴、右整段内容）
+  // 考 / 教 / 你教我都先落在「一天」页（只有一段的老空间也一样，时间轴上就一段）；没有操作台的纯文字老空间走老版
+  const isDay = (mode === 'test' || mode === 'teach' || mode === 'learn') && !!sim && chapters.length >= 1;
+  // 这一段的评分标准：第 1 段用空间的，后面的用章节自己的（没有就用通用四项），和评分接口一致
+  const chapterRubric: RubricItem[] = !chapter || chapter.seq === 1 || !chapter.id ? (space?.rubric || []) : (Array.isArray(chapter.rubric) && chapter.rubric.length ? chapter.rubric : GENERIC_CHAPTER_RUBRIC);
   const pickChapter = (cid: string | null) => {
     const q = new URLSearchParams(sp.toString());
     if (cid) q.set('ch', cid); else q.delete('ch');
@@ -623,12 +642,16 @@ export default function SpacePage() {
   /** 专家在操作台上走完：轨迹被 AI 核心记录下来，接着围绕轨迹追问 */
   const expertFinished = async (trace: SimTrace) => {
     if (!sim) return;
-    const transcript = traceToText(sim, trace);
-    setExpertTrace(trace); setWalk(transcript); setLearnStep(2);
+    // 一天走好几段：每段的示范单独记下，走过的经过拼起来给追问用；追问接着之前的对话往下问
+    const label = chapters.length > 1 && chapter ? `${chapter.slot ? `${chapter.slot} · ` : ''}${chapter.title}` : space.title;
+    const transcript = `【${label}】\n${traceToText(sim, trace)}`;
+    setExpertTrace(trace); setChTraces(m => ({ ...m, [chapter?.id || 'base']: { trace, label } }));
+    setWalk(w => (w ? `${w}\n\n` : '') + transcript); setLearnStep(2);
     setBusy('AI 核心正在回看专家的每一步操作');
     try {
-      const json = await post('interview', { turns: [], walkthrough: transcript });
-      setTurns([{ role: 'ai', content: json.question }]);
+      const prev = turns.filter((t, i) => !(i === turns.length - 1 && t.role === 'ai'));
+      const json = await post('interview', { turns: prev, walkthrough: transcript });
+      setTurns([...prev, { role: 'ai', content: json.question }]);
     } catch (e: any) { message.error(e.message); }
     finally { setBusy(''); }
   };
@@ -670,10 +693,14 @@ export default function SpacePage() {
     setBusy('AI 核心正在吸收专家的经验');
     try {
       // 专家走的这一遍也留痕（同一套标准评分，作为参考答案）
-      await post('submit', { mode: 'expert', name: expert.name, note: expert.title, location: expert.location, answer: walk, trace: expertTrace }).catch(() => null);
-      await post('distill', { turns: turns.filter((t, i) => !(i === turns.length - 1 && t.role === 'ai')), walkthrough: walk, trace: expertTrace, expert: { ...expert, tz: -new Date().getTimezoneOffset() / 60 }, createdBy: user?.email });
+      const walked = Object.entries(chTraces);
+      if (walked.length) for (const [cid, x] of walked) await post('submit', { mode: 'expert', name: expert.name, note: expert.title, location: expert.location, trace: x.trace, chapterId: cid === 'base' ? undefined : cid }).catch(() => null);
+      else await post('submit', { mode: 'expert', name: expert.name, note: expert.title, location: expert.location, answer: walk, trace: expertTrace }).catch(() => null);
+      const firstId = chapters[0]?.id || 'base';
+      const chapterTraces = Object.fromEntries(walked.filter(([cid]) => cid !== 'base' && cid !== firstId).map(([cid, x]) => [cid, x.trace]));
+      await post('distill', { turns: turns.filter((t, i) => !(i === turns.length - 1 && t.role === 'ai')), walkthrough: walk, trace: walked.length ? (chTraces[firstId] || chTraces.base)?.trace : expertTrace, chapterTraces, expert: { ...expert, tz: -new Date().getTimezoneOffset() / 60 }, createdBy: user?.email });
       message.success('吸收完成，专业度提升');
-      setLearnStep(0); setTurns([]); setWalk(''); setEnough(false); setExpertTrace(null);
+      setLearnStep(0); setTurns([]); setWalk(''); setEnough(false); setExpertTrace(null); setChTraces({});
       if (guest) setTaught(true);
       await load();
     } catch (e: any) { message.error(e.message); }
@@ -753,12 +780,106 @@ export default function SpacePage() {
   const portals: { key: Mode; label: string; icon: string; sub: string; main?: boolean }[] = [
     { key: 'teach', label: '我教你', icon: 'play', sub: skill?.expert_trace && sim ? '看我把这一天走一遍' : '先让老师傅教我一遍', main: true },
     { key: 'test', label: '考考你', icon: 'test', sub: stat[0].v ? `${stat[0].v} 人考过 · 换你上手` : '换你上手走一遍', main: true },
-    { key: 'learn', label: '教教我', icon: 'learn', sub: draft ? '等第一位老师傅' : `学自 ${skill.expert_name}`, main: true },
+    { key: 'learn', label: '你教我', icon: 'learn', sub: draft ? '等第一位老师傅' : `学自 ${skill.expert_name}`, main: true },
     { key: 'solve', label: '问问我', icon: 'solve', sub: stat[2].v ? `解过 ${stat[2].v} 次` : '把真实问题交给我', main: true },
     { key: 'ledger', label: '我被用在哪', icon: 'ledger', sub: served ? `${places} 地 · ${served} 人次` : '每一次调用都记账' },
     { key: 'eco', label: '我的行当', icon: 'eco', sub: '同行 · 在招 · 上下游' },
     jd.career ? { key: 'career', label: '职业地图', icon: 'career', sub: '这一行在做什么' } : { key: 'jd', label: '我的来历', icon: 'jd', sub: jd.company || '岗位 JD' },
   ];
+
+  // 你教我：横幅下方的那一块——请老师傅把这一天走一遍（留名 → 逐段示范 → 每段走完接受追问 → 吸收）
+  const walkedLabels = Object.values(chTraces).map(x => x.label);
+  const nextUnwalked = chapters.find(c => !chTraces[c.id || 'base']);
+  const learnTop = space ? (
+    <div className="dayv-sec">
+      {guest && taught ? (
+        <div className="lab-in" style={{ padding: '16px 18px', borderRadius: 14, background: 'rgba(18,161,80,.07)', border: '1px solid rgba(18,161,80,.25)', lineHeight: 1.9 }}>
+          <div style={{ fontSize: 17, fontWeight: 800, color: '#12a150' }}>谢谢你{skill?.expert_name ? `，${skill.expert_name}` : ''}。</div>
+          <div style={{ fontSize: 14, color: 'var(--ink2)' }}>{profile.name || '他'}已经把你的做法吸收成 <b>{skill?.card?.rules?.length || 0}</b> 条判断规则，技能卡上写着「学自 {skill?.expert_name}（{skill?.expert_location}）」。以后他考新人、替人答疑时用到的每一条，都会记着来自你。</div>
+        </div>
+      ) : learnStep === 2 ? (
+        <>
+          <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>追问 · 已示范 {walkedLabels.length} / {chapters.length} 段</div>
+          <div style={{ maxHeight: 420, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 10, paddingRight: 4 }}>
+            {turns.map((t, i) => (
+              <div key={i} className="lab-in" style={{ alignSelf: t.role === 'ai' ? 'flex-start' : 'flex-end', maxWidth: '88%', padding: '10px 14px', borderRadius: 14, fontSize: 14.5, lineHeight: 1.8,
+                background: t.role === 'ai' ? 'rgba(106,92,255,.09)' : 'linear-gradient(120deg, var(--v), #8f7bff)', color: t.role === 'ai' ? 'var(--ink)' : '#fff' }}>{t.content}</div>
+            ))}
+            {busy && <div className="lab-mono" style={{ fontSize: 12, color: 'var(--v)' }}>{busy}<span className="lab-dots" /></div>}
+            <div ref={chatEnd} />
+          </div>
+          <textarea className="lab-input" style={{ marginTop: 12 }} rows={3} value={reply} onChange={e => setReply(e.target.value)} placeholder="你的回答……（Ctrl / ⌘ + Enter 发送）"
+            onKeyDown={e => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') answerTurn(); }} />
+          <div style={{ display: 'flex', gap: 10, marginTop: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+            <button className="lab-btn" disabled={!!busy || !reply.trim()} onClick={answerTurn}>回答</button>
+            {nextUnwalked && <button className="lab-btn ghost" disabled={!!busy} onClick={() => { pickChapter(nextUnwalked.id); setLearnStep(2); }}>去示范下一段 · {nextUnwalked.slot ? `${nextUnwalked.slot} ` : ''}{nextUnwalked.title}</button>}
+            <button className={`lab-btn${enough ? '' : ' ghost'}`} disabled={!!busy || turns.filter(t => t.role === 'expert').length < 2} onClick={distill}>🧠 让 AI 核心吸收{enough ? '（问得差不多了）' : ''}</button>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>你教我</div>
+          <div style={{ fontSize: 19, fontWeight: 800, marginBottom: 6 }}>请一位资深从业者，把这一天走一遍</div>
+          <div style={{ fontSize: 14, color: 'var(--ink2)', lineHeight: 1.85, marginBottom: 14 }}>
+            按你平时的做法一段一段走，每段走完我会围绕「你为什么这么做」追问几句，最后把你的判断方式吸收成我的能力。不用一次走完整天，走几段都算。
+            {skill && !draft ? `我已经学过 ${skill.expert_name}（${skill.expert_location}），新的经验会叠加上去。` : '我现在只读过 JD，你会是第一位教我的老师傅。'}
+          </div>
+          <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))' }}>
+            {field(expert.name, v => setExpert(e => ({ ...e, name: v })), '你的姓名 / 化名 *')}
+            {field(expert.title, v => setExpert(e => ({ ...e, title: v })), '资历（如 普外科主任医师 · 20 年）')}
+            {field(expert.location, v => setExpert(e => ({ ...e, location: v })), '所在地 *')}
+          </div>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginTop: 12, flexWrap: 'wrap', fontSize: 13, color: 'var(--ink3)' }}>
+            <span>填好后点上面的「示范这一段」，从哪一段开始都行。</span>
+            {!guest && user && <button className="lab-btn ghost sm" disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '老师傅不在身边？发邀请链接'}</button>}
+          </div>
+          {walkedLabels.length > 0 && <div style={{ marginTop: 10, fontSize: 13, color: '#12a150' }}>已示范：{walkedLabels.join('、')}</div>}
+        </>
+      )}
+    </div>
+  ) : null;
+
+  // 技能里的示范轨迹属于第 1 段（老空间迁来的那段），对照时用那一段的步骤
+  const baseChapter = chapters.find(c => c.seq === 1) || chapters[0] || null;
+  const baseSim: Sim | null = baseChapter?.sim?.steps?.length ? baseChapter.sim : (space?.sim?.steps?.length ? space.sim : null);
+  // 「我已经学到的」：你教我页面底部 / 老版两栏右侧共用
+  const learnedPanel = space ? (<>
+            <Label>WHAT I HAVE LEARNED</Label>
+            {!skill ? <div style={{ color: 'var(--ink3)', fontSize: 14, lineHeight: 1.9 }}>我现在只读过 JD，还没有向任何专家学过。<br />没有专家经验之前，我只能按通用标准评分，也无法解决问题。</div> : <>
+              <h2 style={{ margin: '0 0 4px', fontSize: 19, fontWeight: 800 }}>{skill.name}</h2>
+              <div style={{ fontSize: 13, color: 'var(--ink3)' }}>{skill.expert_name} · {skill.expert_title}</div>
+              <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 2 }}>{skill.expert_location} · {fmt(skill.distilled_at, skill.tz_offset)}{skill.expert_note ? ` · ${skill.expert_note}` : ''}</div>
+              <p style={{ fontSize: 14, color: 'var(--ink2)', lineHeight: 1.8 }}>{skill.summary}</p>
+
+              <Label>做法</Label>
+              {(skill.card.steps || []).map((s: any, i: number) => (
+                <div key={i} style={{ display: 'flex', gap: 10, marginBottom: 8 }}>
+                  <span className="lab-mono" style={{ color: 'var(--v)', fontWeight: 700, fontSize: 12, paddingTop: 3 }}>{String(i + 1).padStart(2, '0')}</span>
+                  <div style={{ fontSize: 13.5, lineHeight: 1.75 }}><b>{s.title}</b><span style={{ color: 'var(--ink3)' }}> —— {s.detail}</span></div>
+                </div>
+              ))}
+              <div style={{ height: 8 }} /><Label>专家的判断规则</Label>
+              {(skill.card.rules || []).map((r: string, i: number) => <div key={i} style={{ fontSize: 13.5, lineHeight: 1.75, padding: '7px 12px', marginBottom: 6, borderRadius: 10, borderLeft: '3px solid var(--p)', background: 'rgba(255,95,162,.06)' }}>{r}</div>)}
+              <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginTop: 12 }}>
+                <div style={{ padding: 12, borderRadius: 12, background: 'rgba(18,161,80,.07)', fontSize: 12.5, lineHeight: 1.75 }}><b style={{ color: '#12a150' }}>好的样子</b><br />{skill.card.good_example}</div>
+                <div style={{ padding: 12, borderRadius: 12, background: 'rgba(220,38,38,.06)', fontSize: 12.5, lineHeight: 1.75 }}><b style={{ color: '#dc2626' }}>差的样子</b><br />{skill.card.bad_example}</div>
+              </div>
+              {baseSim && skill.expert_trace && (
+                <details style={{ marginTop: 14 }} open={chapters.length <= 1}>
+                  <summary className="lab-mono lab-cap" style={{ cursor: 'pointer', marginBottom: 10 }}>我记录下来的专家操作轨迹{chapters.length > 1 ? ` · ${baseChapter?.slot ? `${baseChapter.slot} ` : ''}${baseChapter?.title || ''}` : ''}</summary>
+                  <TraceCompare sim={baseSim} trace={skill.expert_trace} expertTrace={skill.expert_trace} expertName={skill.expert_name} />
+                </details>
+              )}
+              {(skill.interview || []).length > 0 && (
+                <details style={{ marginTop: 14 }}>
+                  <summary className="lab-mono lab-cap" style={{ cursor: 'pointer' }}>访谈原文 · {(skill.interview || []).length} 轮</summary>
+                  <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {skill.interview.map((t: InterviewTurn, i: number) => <div key={i} style={{ fontSize: 13, lineHeight: 1.75, color: t.role === 'ai' ? 'var(--v)' : 'var(--ink2)' }}><b>{t.role === 'ai' ? 'AI 核心：' : '专家：'}</b>{t.content}</div>)}
+                  </div>
+                </details>
+              )}
+            </>}
+            </>) : null;
 
   return (
     <div className="sp-root">
@@ -783,8 +904,8 @@ export default function SpacePage() {
         />
       )}
 
-      {/* ══════ 进了某个独立空间 ══════ */}
-      {mode && (
+      {/* ══════ 进了某个独立空间（「一天」页自带返回入口和时间轴，不要顶部的考 / 教切换） ══════ */}
+      {mode && !isDay && (
         <SubHead name={profile.name || 'AI CORE'} role={profile.role || ''} avatar={profile.avatar || ''}
           now={modeList.find(m => m.key === mode)} modes={guest ? null : modeList}
           onBack={guest ? null : () => setMode(null)} onGo={m => setMode(m)} />
@@ -835,7 +956,23 @@ export default function SpacePage() {
         </SimStage>
       )}
 
-      {(mode === 'test' || mode === 'teach') && !(answering && sim) && (
+      {isDay && !(answering && sim) && (
+        <DayView mode={mode as DayMode} modes={guest ? ['learn'] : ['test', 'teach', 'learn']} space={space} chapters={chapters} chapter={chapter} sim={sim} rubric={chapterRubric} canTeach={!!(sim && chapterTrace)} busy={!!busy}
+          onBack={guest ? null : () => setMode(null)} onMode={m => setMode(m, true)}
+          done={mode === 'learn' ? new Set(Object.keys(chTraces)) : undefined}
+          actions={mode === 'learn' && !(guest && taught) ? (
+            <button className="lab-btn" disabled={!!busy} style={{ height: 46, padding: '0 26px', fontSize: 15 }} onClick={() => {
+              if (!expert.name.trim() || !expert.location.trim()) { message.warning('先在下面留下你的姓名（或化名）和所在地'); return; }
+              if (sim?.art) enterFullscreen();
+              setLearnStep(1);
+            }}>{chTraces[chapter?.id || 'base'] ? '重新示范这一段' : '示范这一段'}</button>
+          ) : undefined}
+          top={mode === 'learn' ? learnTop : undefined}
+          bottom={mode === 'learn' && learnedPanel ? <div className="dayv-sec">{learnedPanel}</div> : undefined} onPick={pickChapter} onBareAI={() => submit('ai', false)}
+          onStart={() => { if (sim?.art) enterFullscreen(); setDemo(null); setIntro(true); setAnswering(true); }}
+          onTeach={() => { if (sim && chapterTrace) { setDemo(chapterTrace); setIntro(true); setAnswering(true); } }} />
+      )}
+      {(mode === 'test' || mode === 'teach') && !isDay && !(answering && sim) && (
         <div className={chapters.length > 1 ? 'day-layout' : ''}>
         {chapters.length > 1 && <DayTimeline chapters={chapters} current={chapter?.id || null} onPick={pickChapter} />}
         <div className="lab-in" style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))', alignItems: 'start', minWidth: 0 }}>
@@ -852,7 +989,7 @@ export default function SpacePage() {
 
             {!answering ? (
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 18 }}>
-                <button className="lab-btn" disabled={!!busy} onClick={() => { if (sim?.art) enterFullscreen(); setAnswering(true); }}>🎯 {sim ? '换你上操作台走一遍' : '换你走一遍'}</button>
+                <button className="lab-btn" disabled={!!busy} onClick={() => { if (sim?.art) enterFullscreen(); setAnswering(true); }}>{sim ? '进入操作台' : '开始作答'}</button>
                 <button className="lab-btn ghost" disabled={!!busy} onClick={() => submit('ai', false)}>让通用 AI {sim ? '上台操作' : '裸答'}</button>
                 <button className="lab-btn ghost" disabled={!!busy || !skill} title={skill ? '' : '先让专家来教一遍'}
                   onClick={() => { if (sim && chapterTrace) { setDemo(chapterTrace); setAnswering(true); } else submit('ai', true); }}>
@@ -911,7 +1048,7 @@ export default function SpacePage() {
       )}
 
       {/* ── 向专家学习 ── */}
-      {mode === 'learn' && (
+      {mode === 'learn' && !isDay && (
         <div className="lab-in" style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))', alignItems: 'start' }}>
           <div className="lab-glass" style={{ padding: 22, minWidth: 0 }}>
             <Label>LEARN FROM AN EXPERT</Label>
@@ -967,48 +1104,14 @@ export default function SpacePage() {
           </div>
 
           <div className="lab-glass" style={{ padding: 22, minWidth: 0, display: learnStep === 1 && sim ? 'none' : undefined }}>
-            <Label>WHAT I HAVE LEARNED</Label>
-            {!skill ? <div style={{ color: 'var(--ink3)', fontSize: 14, lineHeight: 1.9 }}>我现在只读过 JD，还没有向任何专家学过。<br />没有专家经验之前，我只能按通用标准评分，也无法解决问题。</div> : <>
-              <h2 style={{ margin: '0 0 4px', fontSize: 19, fontWeight: 800 }}>{skill.name}</h2>
-              <div style={{ fontSize: 13, color: 'var(--ink3)' }}>{skill.expert_name} · {skill.expert_title}</div>
-              <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 2 }}>{skill.expert_location} · {fmt(skill.distilled_at, skill.tz_offset)}{skill.expert_note ? ` · ${skill.expert_note}` : ''}</div>
-              <p style={{ fontSize: 14, color: 'var(--ink2)', lineHeight: 1.8 }}>{skill.summary}</p>
-
-              <Label>做法</Label>
-              {(skill.card.steps || []).map((s: any, i: number) => (
-                <div key={i} style={{ display: 'flex', gap: 10, marginBottom: 8 }}>
-                  <span className="lab-mono" style={{ color: 'var(--v)', fontWeight: 700, fontSize: 12, paddingTop: 3 }}>{String(i + 1).padStart(2, '0')}</span>
-                  <div style={{ fontSize: 13.5, lineHeight: 1.75 }}><b>{s.title}</b><span style={{ color: 'var(--ink3)' }}> —— {s.detail}</span></div>
-                </div>
-              ))}
-              <div style={{ height: 8 }} /><Label>专家的判断规则</Label>
-              {(skill.card.rules || []).map((r: string, i: number) => <div key={i} style={{ fontSize: 13.5, lineHeight: 1.75, padding: '7px 12px', marginBottom: 6, borderRadius: 10, borderLeft: '3px solid var(--p)', background: 'rgba(255,95,162,.06)' }}>{r}</div>)}
-              <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginTop: 12 }}>
-                <div style={{ padding: 12, borderRadius: 12, background: 'rgba(18,161,80,.07)', fontSize: 12.5, lineHeight: 1.75 }}><b style={{ color: '#12a150' }}>好的样子</b><br />{skill.card.good_example}</div>
-                <div style={{ padding: 12, borderRadius: 12, background: 'rgba(220,38,38,.06)', fontSize: 12.5, lineHeight: 1.75 }}><b style={{ color: '#dc2626' }}>差的样子</b><br />{skill.card.bad_example}</div>
-              </div>
-              {sim && skill.expert_trace && (
-                <details style={{ marginTop: 14 }} open>
-                  <summary className="lab-mono lab-cap" style={{ cursor: 'pointer', marginBottom: 10 }}>我记录下来的专家操作轨迹</summary>
-                  <TraceCompare sim={sim} trace={skill.expert_trace} expertTrace={skill.expert_trace} expertName={skill.expert_name} />
-                </details>
-              )}
-              {(skill.interview || []).length > 0 && (
-                <details style={{ marginTop: 14 }}>
-                  <summary className="lab-mono lab-cap" style={{ cursor: 'pointer' }}>访谈原文 · {(skill.interview || []).length} 轮</summary>
-                  <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 8 }}>
-                    {skill.interview.map((t: InterviewTurn, i: number) => <div key={i} style={{ fontSize: 13, lineHeight: 1.75, color: t.role === 'ai' ? 'var(--v)' : 'var(--ink2)' }}><b>{t.role === 'ai' ? 'AI 核心：' : '专家：'}</b>{t.content}</div>)}
-                  </div>
-                </details>
-              )}
-            </>}
+            {learnedPanel}
           </div>
         </div>
       )}
 
       {mode === 'learn' && learnStep === 1 && sim && (
-        <SimStage title={chapters.length > 1 && chapter ? `${chapter.slot ? `${chapter.slot} · ` : ""}${chapter.title}` : space.title} role="expert" immersive={!!sim.art} onExit={() => setLearnStep(0)}>
-          <SimRunner sim={sim} role="expert" busy={!!busy} onCancel={() => setLearnStep(0)} onFinish={expertFinished} />
+        <SimStage title={chapters.length > 1 && chapter ? `${chapter.slot ? `${chapter.slot} · ` : ""}${chapter.title}` : space.title} role="expert" immersive={!!sim.art} onExit={() => setLearnStep(turns.length ? 2 : 0)}>
+          <SimRunner sim={sim} role="expert" busy={!!busy} onCancel={() => setLearnStep(turns.length ? 2 : 0)} onFinish={expertFinished} />
         </SimStage>
       )}
 
@@ -1274,18 +1377,24 @@ function DayTimeline({ chapters, current, onPick }: { chapters: any[]; current: 
   );
 }
 
+/** 这一段出场的人 / 地点 / 道具（按角色表；没有角色表的老空间用台词里的说话人） */
+function castOf(space: any, sim: Sim | null) {
+  const cast: any[] = space?.cast || [];
+  const steps: any[] = sim?.steps || [];
+  const people = cast.filter(m => m.kind === 'person' && !m.is_self && steps.some(s => s.scene?.who === m.name));
+  const looseWho = people.length ? [] : [...new Set(steps.map(s => s.scene?.who).filter((w: string) => w && !/^你/.test(w)))] as string[];
+  const places = cast.filter(m => m.kind === 'place' && steps.some(s => s.place === m.id || (m.image && (sim?.art?.scenes?.[s.id] === m.image || s.bench?.scene?.image === m.image))));
+  const props = cast.filter(m => m.kind === 'prop' && steps.some(s => (s.props || []).includes(m.id)));
+  return { people, looseWho, places, props };
+}
+
 /** 每一段开演前的介绍页：这一幕是什么、几点、会见到谁、在哪、用到什么（第一段也有） */
 function ChapterIntro({ chapter, chapters, space, sim, demo, onStart }: { chapter: any; chapters: any[]; space: any; sim: Sim; demo: boolean; onStart: () => void }) {
   const idx = chapter ? chapters.indexOf(chapter) : 0;
   const n = chapters.length;
   const k = CHAPTER_KIND[chapter?.kind] || CHAPTER_KIND.daily;
-  const cast: any[] = space?.cast || [];
   const steps: any[] = sim.steps || [];
-  const people = cast.filter(m => m.kind === 'person' && !m.is_self && steps.some(s => s.scene?.who === m.name));
-  // 角色表还没有的老空间：直接用台词里的说话人
-  const looseWho = people.length ? [] : [...new Set(steps.map(s => s.scene?.who).filter((w: string) => w && !/^你/.test(w)))] as string[];
-  const places = cast.filter(m => m.kind === 'place' && steps.some(s => s.place === m.id || (m.image && (sim.art?.scenes?.[s.id] === m.image || s.bench?.scene?.image === m.image))));
-  const props = cast.filter(m => m.kind === 'prop' && steps.some(s => (s.props || []).includes(m.id)));
+  const { people, looseWho, places, props } = castOf(space, sim);
   const brief = chapter?.brief || (idx <= 0 ? space?.brief : '');
   const bench = steps.some(s => s.type === 'bench');
   const card = (
@@ -1330,6 +1439,181 @@ function ChapterIntro({ chapter, chapters, space, sim, demo, onStart }: { chapte
       <img className="lab-game-bg lab-in" src={places.find(m => m.image && !m.name.startsWith('工位'))?.image || sim.art.cover} alt="" />
       <div className="lab-game-vignette" />
       <div className="lab-game-mask">{card}</div>
+    </div>
+  );
+}
+
+const DAYV_CSS = `
+.dayv { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 32px; align-items: start; }
+.dayv-side { position: sticky; top: 72px; max-height: calc(100dvh - 88px); overflow-y: auto; padding: 6px 22px 24px 0; border-right: 1px solid var(--line); }
+.dayv-back { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px 8px 6px; border: 0; border-radius: 14px; background: none; cursor: pointer; font-family: inherit; color: var(--ink2); text-align: left; transition: background .2s; }
+.dayv-back:hover { background: rgba(106,92,255,.07); color: var(--v); }
+.dayv-back img, .dayv-back .ph { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: 54% 10%; border: 2px solid #fff; box-shadow: 0 4px 12px rgba(50,40,120,.18); flex-shrink: 0; background: rgba(106,92,255,.15); }
+.dayv-h { margin: 18px 0 2px; font-size: 22px; font-weight: 900; letter-spacing: .2px; }
+.dayv-tl { list-style: none; margin: 18px 0 0; padding: 0; }
+.dayv-tl li { position: relative; }
+.dayv-tl li:not(:last-child)::after { content: ''; position: absolute; left: 67px; top: 26px; bottom: -4px; width: 2px; background: linear-gradient(rgba(106,92,255,.28), rgba(106,92,255,.12)); }
+.dayv-tl button { display: grid; grid-template-columns: 50px 18px minmax(0, 1fr); gap: 10px; align-items: start; width: 100%; text-align: left; background: none; border: 0; padding: 10px 10px 18px 0; cursor: pointer; border-radius: 14px; font-family: inherit; color: var(--ink); transition: background .2s; }
+.dayv-tl button:hover { background: rgba(106,92,255,.05); }
+.dayv-tl li.on button { background: rgba(106,92,255,.10); }
+.dayv-tl .t { font-size: 13px; color: var(--ink3); padding-top: 2px; text-align: right; white-space: nowrap; }
+.dayv-tl li.on .t { color: var(--v); font-weight: 800; }
+.dayv-tl .dot { width: 18px; height: 18px; border-radius: 50%; margin-top: 2px; background: #fff; border: 3px solid var(--k); position: relative; z-index: 1; box-sizing: border-box; }
+.dayv-tl li.on .dot { background: var(--k); box-shadow: 0 0 0 5px rgba(106,92,255,.15); }
+.dayv-tl .body { display: grid; gap: 3px; min-width: 0; }
+.dayv-tl .kind { font-size: 11.5px; font-weight: 700; }
+.dayv-tl .body b { font-size: 15px; line-height: 1.45; }
+.dayv-tl .body small { font-size: 12px; color: var(--ink3); }
+.dayv-banner { position: relative; border-radius: 26px; overflow: hidden; min-height: clamp(240px, 30vw, 380px); background: linear-gradient(135deg, #2b2463, #0f6c7a); display: flex; align-items: flex-end; box-shadow: 0 20px 60px rgba(40,30,120,.18); }
+.dayv-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dayv-banner::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,12,30,0) 30%, rgba(10,12,30,.82) 100%); }
+.dayv-banner .in { position: relative; z-index: 1; padding: clamp(18px, 3vw, 34px); color: #fff; width: 100%; }
+.dayv-banner h1 { margin: 6px 0 0; font-size: clamp(24px, 3.2vw, 38px); font-weight: 900; line-height: 1.25; text-shadow: 0 2px 14px rgba(0,0,0,.4); }
+.dayv-sec { padding: 22px 4px 4px; }
+.dayv-sec + .dayv-sec { border-top: 1px solid var(--line); margin-top: 18px; }
+.dayv-rub { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 640px) { .dayv-rub { grid-template-columns: minmax(0, 1fr); } }
+.dayv-rub > div { padding: 14px 16px; border-radius: 16px; background: rgba(255,255,255,.7); box-shadow: 0 0 0 1px var(--line); }
+.dayv-rub .w { height: 5px; border-radius: 3px; background: rgba(106,92,255,.12); margin: 8px 0 8px; overflow: hidden; }
+.dayv-rub .w i { display: block; height: 100%; background: linear-gradient(90deg, var(--v), var(--c)); }
+.dayv-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 26px; }
+.dayv-nav button { text-align: left; padding: 14px 16px; border-radius: 16px; border: 0; background: rgba(255,255,255,.7); box-shadow: 0 0 0 1px var(--line); cursor: pointer; font-family: inherit; color: var(--ink); }
+.dayv-nav button:hover { box-shadow: 0 0 0 1.5px var(--v); }
+@media (max-width: 900px) {
+  .dayv { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .dayv-side { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 12px; }
+}
+`;
+
+/**
+ * 多段空间的「一天」页：左边一整列是时间轴（顶上是回到这位职人主页的入口），右边整块是当前这一段：
+ * 场景大图、这一段要交代的事、会遇到谁、在哪、这一段考什么，进入操作台 / 看他走一遍。
+ */
+type DayMode = 'test' | 'teach' | 'learn';
+function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach, busy, onBack, onMode, onPick, onStart, onTeach, onBareAI, actions, top, bottom, done }: {
+  mode: DayMode; modes: DayMode[]; space: any; chapters: any[]; chapter: any; sim: Sim | null; rubric: RubricItem[]; canTeach: boolean; busy: boolean;
+  onBack: (() => void) | null; onMode: (m: DayMode) => void; onPick: (id: string | null) => void; onStart: () => void; onTeach: () => void; onBareAI: () => void;
+  /** 横幅上的按钮（你教我用自己的）；横幅下方 / 页面底部插进来的内容 */ actions?: React.ReactNode; top?: React.ReactNode; bottom?: React.ReactNode;
+  /** 已经走过的段（时间轴上打 ✓） */ done?: Set<string>;
+}) {
+  const teach = mode === 'teach', learn = mode === 'learn';
+  const profile = space?.profile || {};
+  const idx = Math.max(0, chapters.indexOf(chapter));
+  const k = CHAPTER_KIND[chapter?.kind] || CHAPTER_KIND.daily;
+  const { people, looseWho, places, props } = castOf(space, sim);
+  const steps: any[] = sim?.steps || [];
+  const minutes = chapters.reduce((a, c) => a + Math.max(5, (c.sim?.steps?.length || 0) * 2), 0);
+  const bg = places.find(m => m.image && !m.name.startsWith('工位'))?.image || sim?.art?.cover || '';
+  const brief = chapter?.brief || (idx === 0 ? space?.brief : '');
+  const prev = idx > 0 ? chapters[idx - 1] : null, next = idx < chapters.length - 1 ? chapters[idx + 1] : null;
+  return (
+    <div className="dayv lab-in">
+      <style>{DAYV_CSS}</style>
+      <aside className="dayv-side">
+        {onBack && <button className="dayv-back" onClick={onBack} title="回到这位数字职人的主页">
+          {profile.avatar ? <img src={profile.avatar} alt="" /> : <span className="ph" />}
+          <span style={{ display: 'grid', lineHeight: 1.35, minWidth: 0 }}>
+            <span style={{ fontSize: 12, color: 'var(--ink3)' }}>← 回到主页</span>
+            <b style={{ fontSize: 14, color: 'var(--ink)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{profile.name} · {profile.role}</b>
+          </span>
+        </button>}
+        <div className="dayv-h">{profile.role || '这一行'}的一天</div>
+        <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{chapters.length} 段 · 约 {minutes} 分钟</div>
+        {/* 考核里不观摩：「考考你」只有自己上；想看老师傅怎么做，切到「我教你」 */}
+        {modes.length > 1 && <div style={{ display: 'flex', gap: 4, marginTop: 12, padding: 3, borderRadius: 12, background: 'rgba(106,92,255,.08)', width: 'fit-content', flexWrap: 'wrap' }}>
+          {([['test', '考考你'], ['teach', '我教你'], ['learn', '你教我']] as const).filter(([m]) => modes.includes(m)).map(([m, t]) => (
+            <button key={m} onClick={() => onMode(m)} style={{ border: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: 12.5, fontWeight: 700, padding: '6px 12px', borderRadius: 9,
+              background: mode === m ? '#fff' : 'transparent', color: mode === m ? 'var(--v)' : 'var(--ink3)', boxShadow: mode === m ? '0 2px 8px rgba(60,45,130,.12)' : 'none' }}>{t}</button>
+          ))}
+        </div>}
+        <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.6 }}>{learn ? '请一位资深从业者把这一天走一遍，每段走完接受追问' : teach ? '看他怎么走：每一步按老师傅的做法' : '你来走：走完评分，每段都能领证书'}</div>
+        <ol className="dayv-tl">
+          {chapters.map((c, i) => {
+            const on = c === chapter;
+            const ck = CHAPTER_KIND[c.kind] || CHAPTER_KIND.daily;
+            return (
+              <li key={c.id || i} className={on ? 'on' : ''}>
+                <button onClick={() => onPick(c.id)}>
+                  <span className="t lab-mono">{c.slot || `第 ${i + 1} 段`}</span>
+                  <span className="dot" style={{ ['--k' as string]: ck.color }} />
+                  <span className="body">
+                    <span className="kind" style={{ color: ck.color }}>{ck.label}</span>
+                    <b>{c.title}</b>
+                    <small>{c.sim?.steps?.length || 0} 步{c.sim?.steps?.some((st: any) => st.type === 'bench') ? ' · 含工位' : ''}{done?.has(c.id || 'base') ? <b style={{ color: '#12a150', marginLeft: 6 }}>✓ {learn ? '已示范' : '已走过'}</b> : null}</small>
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      </aside>
+
+      <main style={{ minWidth: 0 }}>
+        <div className="dayv-banner">
+          {bg && <img src={bg} alt="" />}
+          <div className="in">
+            <div className="lab-mono" style={{ fontSize: 12.5, letterSpacing: '.14em', fontWeight: 700, opacity: .92 }}>
+              第 {idx + 1} / {chapters.length} 段{chapter?.slot ? ` · ${chapter.slot}` : ''} · <span style={{ color: k.color === '#ef4444' ? '#ff8a8a' : '#c9c2ff' }}>{k.label}</span>
+            </div>
+            <h1>{chapter?.title}</h1>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 18, alignItems: 'center' }}>
+              {actions}
+              {!teach && !learn && <button className="lab-btn" disabled={busy || !sim} onClick={onStart} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>进入操作台</button>}
+              {teach && <button className="lab-btn" disabled={busy || !canTeach} title={canTeach ? '' : '这一段还没有老师傅的示范'} onClick={onTeach} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>看 {profile.name || '他'} 走一遍</button>}
+              {teach && <button className="lab-btn ghost" disabled={busy} onClick={onBareAI} title="没学过老师傅的通用模型自己走一遍，看看差在哪" style={{ height: 46, background: 'rgba(255,255,255,.14)', color: '#fff', boxShadow: '0 0 0 1px rgba(255,255,255,.35)' }}>{busy ? <>通用 AI 走着呢<span className="lab-dots" /></> : '对比：没学过的通用 AI'}</button>}
+              <span style={{ fontSize: 13, opacity: .85 }}>{steps.length} 步{steps.some(st => st.type === 'bench') ? ' · 含虚拟工位' : ''} · 约 {Math.max(5, steps.length * 2)} 分钟</span>
+            </div>
+          </div>
+        </div>
+
+        {top}
+        {brief && <div className="dayv-sec"><div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>这一段</div><div style={{ fontSize: 16, lineHeight: 1.9, color: 'var(--ink)' }}>{brief}</div>
+          {sim?.intro && sim.intro !== brief && <div style={{ marginTop: 12, fontSize: 14.5, lineHeight: 1.85, color: 'var(--ink2)', paddingLeft: 14, borderLeft: '3px solid var(--c)' }}>{sim.intro}</div>}
+        </div>}
+
+        {(people.length > 0 || looseWho.length > 0 || places.length > 0 || props.length > 0) && (
+          <div className="dayv-sec">
+            <div className="lab-mono lab-cap" style={{ marginBottom: 12 }}>会遇到</div>
+            <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap' }}>
+              {people.map(m => (
+                <div key={m.id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span style={{ width: 54, height: 54, borderRadius: '50%', overflow: 'hidden', background: 'linear-gradient(135deg,#ffb15f,#ff5fa2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, flexShrink: 0, border: '2px solid #fff', boxShadow: '0 6px 16px rgba(50,40,120,.18)' }}>
+                    {m.image ? <img src={m.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 12%' }} /> : m.name[0]}
+                  </span>
+                  <span style={{ display: 'grid', lineHeight: 1.4 }}><b style={{ fontSize: 15 }}>{m.name}</b><span style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{String(m.type_name || '').split('·')[0]}</span></span>
+                </div>
+              ))}
+              {looseWho.map(w => <span key={w} className="lab-chip g">{w}</span>)}
+            </div>
+            {(places.length > 0 || props.length > 0) && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 14 }}>
+              {places.map(m => <span key={m.id} className="lab-chip c">📍 {m.name.replace(/^工位：/, '工位 · ')}</span>)}
+              {props.map(m => <span key={m.id} className="lab-chip g">◇ {m.name}</span>)}
+            </div>}
+          </div>
+        )}
+
+        {rubric.length > 0 && (
+          <div className="dayv-sec">
+            <div className="lab-mono lab-cap" style={{ marginBottom: 4 }}>{learn ? '这一段新人按这几项评分' : teach ? '老师傅这一段看重什么' : '这一段考什么'}</div>
+            <div style={{ fontSize: 13, color: 'var(--ink3)', marginBottom: 12 }}>{learn ? '你的做法会成为这一段的示范：以后新人走完，按这几项打分，并和你的每一步对照。' : teach ? '看他走的时候留意这几件事：每一步为什么这么选，换成新人最容易在哪里出错。' : '走完由 AI 核心按这几项打分，并和老师傅的做法逐步对照；完成就能领这一段的证书。'}</div>
+            <div className="dayv-rub">
+              {rubric.map(r => (
+                <div key={r.key}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}><b style={{ fontSize: 15 }}>{r.name}</b><span className="lab-mono" style={{ marginLeft: 'auto', color: 'var(--v)', fontWeight: 800 }}>{r.weight}%</span></div>
+                  <div className="w"><i style={{ width: `${r.weight}%` }} /></div>
+                  <div style={{ fontSize: 13, color: 'var(--ink2)', lineHeight: 1.7 }}>{r.description}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {bottom}
+        <div className="dayv-nav">
+          {prev ? <button onClick={() => onPick(prev.id)}><div style={{ fontSize: 12, color: 'var(--ink3)' }}>← 上一段{prev.slot ? ` · ${prev.slot}` : ''}</div><b style={{ fontSize: 14.5 }}>{prev.title}</b></button> : <span />}
+          {next ? <button onClick={() => onPick(next.id)} style={{ textAlign: 'right' }}><div style={{ fontSize: 12, color: 'var(--ink3)' }}>下一段{next.slot ? ` · ${next.slot}` : ''} →</div><b style={{ fontSize: 14.5 }}>{next.title}</b></button> : <span />}
+        </div>
+      </main>
     </div>
   );
 }
