@@ -99,7 +99,7 @@ export async function generateTask(jd: JdInput, skill: SkillRef | null, modelId 
 export interface TaskForGrading { title: string; brief: string; materials?: string | null; deliverable?: string | null; rubric: RubricItem[] }
 
 export async function gradeAnswer(task: TaskForGrading, answer: string, skill: SkillRef | null, modelId = DEFAULT_MODEL): Promise<{ score: number; grading: Grading }> {
-  const text = await ask(`
+  const prompt = `
     你是一位严格、公正的评分人。请按评分标准给下面这份作答打分。
     ${skill ? `\n评分时请采用这位专家的判断规则（这是一项被蒸馏下来的数字技能，专家本人此刻不在场）：\n${skillCardToPrompt(skill.name, skill.card)}\n` : ''}
     【任务】${task.title}
@@ -130,9 +130,13 @@ export async function gradeAnswer(task: TaskForGrading, answer: string, skill: S
       "gaps": ["..."],
       "suggestions": ["..."]
     }
-  `, modelId, 'Grade Answer');
-
-  const p = parseJsonLoose(text);
+  `;
+  // 模型偶尔吐出坏 JSON（引用原文时没转义引号）：再评一次，别让体验者卡在「评分中」
+  let p: any;
+  for (let i = 0; ; i++) {
+    try { p = parseJsonLoose(await ask(prompt, modelId, 'Grade Answer')); break; }
+    catch (e) { if (i >= 1) throw e; console.warn('[gradeAnswer] 评分 JSON 坏了，重评一次'); }
+  }
   const byKey = new Map<string, any>((Array.isArray(p.dimensions) ? p.dimensions : []).map((d: any) => [String(d.key), d]));
   const dimensions = task.rubric.map(r => {
     const d = byKey.get(r.key) || {};

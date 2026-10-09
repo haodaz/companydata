@@ -8,7 +8,7 @@ const BASE = process.env.LAB_BASE || 'http://localhost:3003';
 const SPACE = '681b5f1c-5115-4c32-82ea-69c085b21868';
 
 // 页面里用的小工具：按文字找按钮 / 选项格子、点对话、拖滑块、慢慢打字、点「下一步」
-const H = `(() => {
+export const H = `(() => {
   if (window.__lab) return window.__lab;
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   const vis = el => !!el && el.getClientRects().length > 0;
@@ -48,7 +48,7 @@ const H = `(() => {
   }
   return (window.__lab = { sleep, byText, click, btn, dialogue, answer, nextBtn, root, until });
 })()`;
-const run = body => `async () => { const L = ${H}; ${body} }`;
+export const run = body => `async () => { const L = ${H}; ${body} }`;
 
 const SBAR = 'S：周教授，王建国术后第 3 天，07:30 体温 38.6℃、心率 108，引流从 120 增到 260 ml，浑浊有异味，担心吻合口漏。B：右半结肠切除术后第 3 天。A：血压 116/70，右下腹局限压痛，切口干燥。已禁食补液，开了血常规、降钙素原、引流液培养和腹部增强 CT。R：请您来床旁看一下，定抗生素和要不要进一步控源。';
 

@@ -22,7 +22,7 @@ for (const s of segs) {
     const url = j.output?.audio?.url;
     if (!url) { console.log('fail', s.id, JSON.stringify(j).slice(0, 200)); continue; }
     fs.writeFileSync(f, Buffer.from(await (await fetch(url)).arrayBuffer()));
-    await new Promise(r => setTimeout(r, 1500));   // 一分钟限流，别连着打
+    await new Promise(r => setTimeout(r, Number(process.env.TTS_GAP || 1500)));   // 一分钟限流，别连着打；被限流就调大 TTS_GAP 再跑一遍（已生成的会跳过）
   }
   const d = dur(f); out.push({ id: s.id, dur: d });
   console.log(s.id, d.toFixed(2) + 's', s.text.length + '字');

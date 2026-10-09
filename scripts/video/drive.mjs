@@ -89,7 +89,9 @@ console.log(`▶︎ 版面 ${W}×${H} @${DSF}x → 输出 ${OUT_W}×${OUT_H}，�
 // 所以改成按固定节拍主动截图，保证时间轴均匀。
 let capturing = true;
 let paused = false;
-let activeMs = 0;   // 真正在抓帧的时长（暂停的不算），成片帧率按它算，跳过的空等不会把视频拉长
+let activeMs = 0;
+// 每一帧在成片里的时间（毫秒）。页面忙的时候截图会变慢，按平均帧率铺开会让画面和时间点错位，所以按这个时间合成
+const frameTimes = [];   // 真正在抓帧的时长（暂停的不算），成片帧率按它算，跳过的空等不会把视频拉长
 const captureLoop = (async () => {
   const interval = 1000 / FPS;
   while (capturing) {
@@ -97,7 +99,7 @@ const captureLoop = (async () => {
     if (paused) { await sleep(interval); continue; }
     try {
       const r = await send('Page.captureScreenshot', { format: 'jpeg', quality: 80 }, 3000);
-      if (r?.data) fs.writeFileSync(path.join(OUT_DIR, 'frames', `f${String(frameCount++).padStart(6, '0')}.jpg`), Buffer.from(r.data, 'base64'));
+      if (r?.data) { frameTimes.push(activeMs + (Date.now() - t0)); fs.writeFileSync(path.join(OUT_DIR, 'frames', `f${String(frameCount++).padStart(6, '0')}.jpg`), Buffer.from(r.data, 'base64')); }
     } catch { /* 页面导航中，跳过这一帧 */ }
     const wait = interval - (Date.now() - t0);
     if (wait > 0) await sleep(wait);
@@ -213,9 +215,10 @@ const wall = (Date.now() - startedAt) / 1000;
 const realFps = frameCount / Math.max(1, activeMs / 1000);
 
 const out = path.join(OUT_DIR, 'clip.mp4');
+fs.writeFileSync(path.join(OUT_DIR, 'frames', 'times.json'), JSON.stringify(frameTimes));
+writeConcat(OUT_DIR, frameTimes, activeMs);
 spawnSync(FFMPEG, [
-  '-y', '-framerate', realFps.toFixed(3),
-  '-i', path.join(OUT_DIR, 'frames', 'f%06d.jpg'),
+  '-y', '-f', 'concat', '-safe', '0', '-i', path.join(OUT_DIR, 'frames', 'list.txt'),
   '-vf', `fps=${FPS},scale=${OUT_W}:${OUT_H}:force_original_aspect_ratio=decrease,pad=${OUT_W}:${OUT_H}:(ow-iw)/2:(oh-ih)/2:white`,
   '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', out,
 ], { stdio: 'ignore' });
@@ -232,3 +235,14 @@ if (timeline) console.log(`   事件时间轴：${timeline.events.length} 个事
 console.log(`\n✅ ${out}　${wall.toFixed(1)}s / ${frameCount} 帧（抓帧 ${realFps.toFixed(1)}fps）`);
 chrome.kill();
 process.exit(0);
+
+/** concat 清单：每帧停到下一帧的时间点，最后一帧停到录制结束 */
+function writeConcat(dir, times, endMs) {
+  const lines = [];
+  times.forEach((t, i) => {
+    const next = i + 1 < times.length ? times[i + 1] : endMs;
+    lines.push(`file 'f${String(i).padStart(6, '0')}.jpg'`, `duration ${Math.max(0.001, (next - t) / 1000).toFixed(4)}`);
+  });
+  if (times.length) lines.push(`file 'f${String(times.length - 1).padStart(6, '0')}.jpg'`);
+  fs.writeFileSync(path.join(dir, 'frames', 'list.txt'), lines.join('\n') + '\n');
+}

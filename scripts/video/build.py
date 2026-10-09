@@ -23,6 +23,8 @@ END = dur(os.path.join(D, "clip.mp4"))
 SPEED = {"gallery": 1.2, "hub": 1.0, "day": 0.75, "ch1_intro": 1.0, "ch1_steps": 1.25, "ch1_text": 1.4, "ch1_report": 1.0,
          "ch2_intro": 1.0, "bench": 6.0, "bench_done": 1.6, "day_tour": 1.0, "me": 1.0, "cover": 1.0,
          "cert": 1.0, "scores": 1.0, "dayscore": 1.0, "end": 1.0}
+# 第二个参数：这条片子自己的分段速度（json），盖在默认表上
+if len(sys.argv) > 2: SPEED.update(json.load(open(sys.argv[2], encoding="utf-8")))
 order = [m["note"] for m in marks]
 SEG = []
 for i, n in enumerate(order):
