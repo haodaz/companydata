@@ -74,9 +74,7 @@ export async function logTokenUsage(params: TokenUsageParams) {
     const toUsd = (v: number) => price.currency === 'CNY' ? v / rate : v;
     const costUsd = toUsd(tokenCost + searchCost);
 
-    const { error } = await supabase
-      .from('token_usage_logs')
-      .insert({
+    const row: Record<string, any> = {
         tool_name,
         task_name,
         institution: institution || '',
@@ -94,7 +92,14 @@ export async function logTokenUsage(params: TokenUsageParams) {
         records: [],
         model_breakdown: {},
         api_cost_cny: 0   // 这一列是「数据供应链」（第三方数据接口）费用，AI 费用（含联网搜索）全在 total_cost_usd
-      });
+    };
+    let { error } = await supabase.from('token_usage_logs').insert(row);
+    // 迁移 014 还没跑时没有 search_calls / search_cost_usd 两列：去掉再写，不丢记录
+    if (error && /search_calls|search_cost_usd/.test(error.message || '')) {
+      const { search_calls: _a, search_cost_usd: _b, ...rest } = row;
+      ({ error } = await supabase.from('token_usage_logs').insert(rest));
+    }
+
 
     if (error) {
       console.error("[Token Logger] DB Insert error:", error);
