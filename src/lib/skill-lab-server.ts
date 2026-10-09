@@ -64,16 +64,15 @@ export async function recordInvocation(row: Record<string, unknown>) {
 
 
 /**
- * 「一天」要有时间逻辑：按时段排（08:30 在 14:00 前），没写时段的按 seq 跟在后面。
+ * 「一天」要有时间逻辑：两章都有时刻就按时间排（08:30 在 14:00 前），否则按 seq。
  * 时段写成「周一上午」这类非时刻的，按 seq。内容和时段配不配（早上别做全天复盘）由生成和校验管，见 docs/lab-studio.md。
  */
 export function sortByDay<T extends { slot?: string | null; seq: number }>(list: T[]): T[] {
   const minutes = (s?: string | null) => { const m = String(s || '').match(/^(\d{1,2})[:：](\d{2})/); return m ? +m[1] * 60 + +m[2] : null; };
   return [...list].sort((a, b) => {
     const x = minutes(a.slot), y = minutes(b.slot);
+    // 两章都有时刻才按时间比；有一章没写（老空间迁来的第 1 章就没有）就按 seq，别把它挤到最后
     if (x != null && y != null && x !== y) return x - y;
-    if (x != null && y == null) return -1;
-    if (x == null && y != null) return 1;
     return a.seq - b.seq;
   });
 }
