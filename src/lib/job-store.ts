@@ -39,9 +39,14 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
 
   const now = new Date().toISOString();
   const rows = new Map<string, any>();
+  // 同一批里好几个岗位共用的链接不是岗位自己的详情页（多半是列表页，模型给每个岗位都填了它）：
+  // 这种链接不拿来去重，不然一页几十个岗位会被合成一个（MiniMax 16 → 1）
+  const linkCount = new Map<string, number>();
+  for (const raw of jobsOf(structuredJson)) { const l = String(raw?.link || '').trim().toLowerCase(); if (l) linkCount.set(l, (linkCount.get(l) || 0) + 1); }
   for (const raw of jobsOf(structuredJson)) {
     const job = sanitizeJob(raw);
     if (!job.name) continue;
+    if (job.link && (linkCount.get(String(job.link).trim().toLowerCase()) || 0) > 1) job.link = null;
     // 非空布尔列：模型给 null 时批量 upsert 会写进 null 撞约束（GPT 系模型常这样）。是否删除由人工决定，不让 AI 写
     if (typeof job.is_in_campus !== 'boolean') job.is_in_campus = false;
     delete job.if_delete;
