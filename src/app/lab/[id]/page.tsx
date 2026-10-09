@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { App, Drawer, Popconfirm } from 'antd';
 import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
+import { visitorIds } from '@/lib/lab-cert';
 import { SimRunner, SimStage, TraceCompare, enterFullscreen } from '@/components/lab/SimRunner';
 import { traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { GENERIC_CHAPTER_RUBRIC, INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tzLabel, type InterviewTurn, type RubricItem } from '@/lib/skill-lab';
@@ -489,6 +490,8 @@ function castOf(space: any, sim: Sim | null) {
   // 考验新人
   const [rookie, setRookie] = useState({ name: '', note: '', location: '', answer: '' });
   const [answering, setAnswering] = useState(false);
+  // 上次填过的名字 / 背景 / 所在地带出来（证书上要用名字）
+  useEffect(() => { try { const r = JSON.parse(localStorage.getItem('lab:rookie') || 'null'); if (r?.name) setRookie(x => ({ ...x, ...r })); } catch { /* 读不到就空着 */ } }, []);
   /** 演示模式：带着专家轨迹进故事线，每一步预填好、工位自己走 */
   const [demo, setDemo] = useState<any | null>(null);
   /** 「我的行当」：同行 / 在招 / 上下游，进这一层才拉 */
@@ -613,7 +616,9 @@ function castOf(space: any, sim: Sim | null) {
     if (m === 'human' && !trace && rookie.answer.trim().length < 20) { message.warning('先把任务走一遍，至少写几句'); return; }
     setBusy(m === 'ai' ? (withSkill ? 'AI 核心正在亲自走一遍' : '未装配技能的通用模型正在走一遍') : 'AI 核心正在按岗位标准评分');
     try {
-      const json = await post('submit', { ...(m === 'ai' ? { mode: 'ai', withSkill } : { mode: 'human', ...rookie, trace }), chapterId: chapter?.id || undefined });
+      // 访客编号：「我的历史 / 证书库」按它找回；名字记在本地，下次不用再填
+      try { if (m === 'human' && rookie.name.trim()) localStorage.setItem('lab:rookie', JSON.stringify({ name: rookie.name, note: rookie.note, location: rookie.location })); } catch { /* 无痕模式 */ }
+      const json = await post('submit', { ...(m === 'ai' ? { mode: 'ai', withSkill } : { mode: 'human', ...rookie, trace, visitor: visitorIds(user?.id)[0] }), chapterId: chapter?.id || undefined });
       setFreshId(json.submission.id);
       await load();
       if (m === 'human' && trace && sim?.art) { setStageReport(json.submission); setRookie(r => ({ ...r, answer: '' })); return; }
@@ -935,9 +940,10 @@ function castOf(space: any, sim: Sim | null) {
               <div className="lab-game-vignette" />
               <div className="lab-game-mask">
                 <div className="lab-game-modal lab-in" style={{ width: 'min(100%, 980px)' }}>
-                  <ReportBody sub={stageReport} rubric={rubric} sim={sim} skill={skill} actions={
+                  <ReportBody sub={stageReport} rubric={chapterRubric} sim={sim} skill={skill} actions={
                     <div style={{ display: 'flex', gap: 8 }}>
                       <button className="lab-btn ghost sm" onClick={() => { setStageReport(null); setRunKey(k => k + 1); }}>再走一遍</button>
+                      <button className="lab-btn ghost sm" onClick={() => window.open(`/lab/cert/${stageReport.id}`, '_blank')} style={{ color: '#8a6a2f', boxShadow: '0 0 0 1px rgba(176,141,87,.6)' }}>✦ 领取证书</button>
                       {nextChapter
                         ? <><button className="lab-btn ghost sm" onClick={() => { setStageReport(null); setAnswering(false); }}>退出操作台</button>
                           <button className="lab-btn sm" onClick={goNext}>进入下一段 · {nextChapter.slot ? `${nextChapter.slot} ` : ''}{nextChapter.title} →</button></>
@@ -1314,7 +1320,7 @@ function castOf(space: any, sim: Sim | null) {
       <Drawer open={!!openSub} onClose={() => setOpenSub(null)} size={Math.min(760, typeof window !== 'undefined' ? window.innerWidth : 760)} title={null} closable={false} styles={{ body: { padding: 0, background: '#f5f6ff' } }}>
         {openSub && (
           <div className="lab" style={{ minHeight: '100%', padding: 22 }}>
-            <ReportBody sub={openSub} rubric={rubric} sim={sim} skill={skill} actions={<button className="lab-btn ghost sm" onClick={() => setOpenSub(null)}>关闭</button>} />
+            <ReportBody sub={openSub} rubric={chapterRubric} sim={sim} skill={skill} actions={<div style={{ display: 'flex', gap: 8 }}>{openSub.candidate_type !== 'ai' && <button className="lab-btn sm" onClick={() => window.open(`/lab/cert/${openSub.id}`, '_blank')}>领取证书</button>}<button className="lab-btn ghost sm" onClick={() => setOpenSub(null)}>关闭</button></div>} />
           </div>
         )}
       </Drawer>

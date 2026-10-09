@@ -28,6 +28,8 @@ export async function proxy(req: NextRequest) {
     if (pathname.startsWith('/api/auth/')) return NextResponse.next();
     // 首页（/lab）是公开的宣传页，它只问这一个接口
     if (pathname === '/api/lab/landing' && req.method === 'GET') return NextResponse.next();
+    // 证书公开：链接本身就是验证方式，分享出去的人不该被拦去登录（改名字由路由自己核对访客编号）
+    if (pathname.startsWith('/api/lab/cert/')) return NextResponse.next();
     // 飞轮信号接入：以后的 ToC 带 FLYWHEEL_INGEST_KEY，没有登录态；放进去由路由自己验密钥
     if (pathname === '/api/flywheel/signal' && req.method === 'POST' && req.headers.get('x-flywheel-key')) return NextResponse.next();
     // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉
@@ -57,6 +59,7 @@ export async function proxy(req: NextRequest) {
 
   // AI 百业首页公开：谁都能看见理念和这些人，点进任何一个空间才要求登录（LAB_PUBLIC=1 时整个 /lab 都公开）
   // 百业工厂的工作室 /lab/studio/*、素材库 /lab/assets 例外：放开时也要登录
+  if (pathname.startsWith('/lab/cert/')) return NextResponse.next();
   if (pathname === '/lab' || (LAB_PUBLIC() && pathname.startsWith('/lab/') && !pathname.startsWith('/lab/studio') && !pathname.startsWith('/lab/assets'))) return NextResponse.next();
 
   // 邀请链接 /lab/<id>?invite=…：票对得上这个空间，就不用登录

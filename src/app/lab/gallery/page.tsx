@@ -77,7 +77,10 @@ export default function GalleryPage() {
         <h1 style={{ fontSize: 'clamp(24px, 3.4vw, 34px)', fontWeight: 800, margin: '4px 0 6px', lineHeight: 1.25 }}>
           {items.length || ''} 个职业的一天，点开就能上手
         </h1>
-        <div style={{ fontSize: 14.5, color: 'var(--ink2)' }}>跟着数字职人走一遍真实工作：接活、判断、操作设备，做完和老师傅的做法逐步对照。</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <div style={{ fontSize: 14.5, color: 'var(--ink2)', flex: '1 1 320px' }}>跟着数字职人走一遍真实工作：接活、判断、操作设备，做完和老师傅的做法逐步对照。每走完一段领一张证书。</div>
+          <button className="lab-btn ghost sm" onClick={() => router.push('/lab/me')} style={{ color: '#8a6a2f', boxShadow: '0 0 0 1px rgba(176,141,87,.55)' }}>✦ 我的证书库 · 操作历史</button>
+        </div>
       </div>
 
       <div className="lab-glass" style={{ padding: '12px 14px', marginBottom: 16, display: 'grid', gap: 10 }}>

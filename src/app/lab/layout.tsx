@@ -206,7 +206,7 @@ function Shell({ children }: { children: React.ReactNode }) {
   const NAV = [
     { k: '/lab', t: '首页', on: (p: string) => p === '/lab' },
     { k: '/lab/spaces', t: '百业工厂', on: (p: string) => p.startsWith('/lab/spaces') || p.startsWith('/lab/studio') || p.startsWith('/lab/assets') },
-    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || /^\/lab\/(?!spaces|studio|gallery|assets)[^/]+$/.test(p) },
+    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || p.startsWith('/lab/me') || p.startsWith('/lab/cert') || /^\/lab\/(?!spaces|studio|gallery|assets)[^/]+$/.test(p) },
   ];
   return (
     <div className="lab" data-theme={theme}>
