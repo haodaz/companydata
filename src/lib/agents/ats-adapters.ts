@@ -275,9 +275,16 @@ export function splitSubRoles(duty: string, req: string): { title: string; duty:
  * 它的列表接口 POST /api/social/webSite/portal/page 一次返回全部岗位，带完整岗位描述。校招接口要登录，不做。
  */
 async function vivoSocialMarkdown(url: string): Promise<{ markdown: string; count: number } | null> {
-  const r = await fetch('https://hr.vivo.com/api/social/webSite/portal/page', { method: 'POST', headers: { 'Content-Type': 'application/json', 'User-Agent': 'Mozilla/5.0' }, body: '{}', signal: AbortSignal.timeout(20000) });
-  const j = await r.json().catch(() => null);
-  const rows: any[] = Array.isArray(j?.data) ? j.data : [];
+  // 偶尔连不上（fetch failed），试 3 次
+  let rows: any[] = [];
+  for (let i = 0; i < 3 && !rows.length; i++) {
+    if (i) await new Promise(r => setTimeout(r, 1500 * i));
+    try {
+      const r = await fetch('https://hr.vivo.com/api/social/webSite/portal/page', { method: 'POST', headers: { 'Content-Type': 'application/json', 'User-Agent': 'Mozilla/5.0' }, body: '{}', signal: AbortSignal.timeout(25000) });
+      const j = await r.json().catch(() => null);
+      rows = Array.isArray(j?.data) ? j.data : [];
+    } catch (e: any) { if (i === 2) console.warn('[ats] vivo 接口', e?.message); }
+  }
   if (!rows.length) return null;
   const blocks = rows.map(x => {
     const locs = (x.job_location_list || []).map((l: any) => l.city).filter(Boolean).join('；');
@@ -301,9 +308,53 @@ async function vivoSocialMarkdown(url: string): Promise<{ markdown: string; coun
   return { markdown: blocks.join('\n\n'), count: rows.length };
 }
 
+/**
+ * 好未来（job.tal.com/campus/positions?tag_ids=15&tag_ids=16）：页面一页 20 个，共 104 个（数据部门 1009 给的正确校招链接）。
+ * 列表接口 POST job-api.100tal.com/sapi/activities/c/jobs/list 是公开 JSON，一页最多 100、offset 是页码（从 0 起），带完整描述。
+ * 网址上的 tag_ids（校招 / 实习等标签）原样带过去。
+ */
+async function talMarkdown(url: string): Promise<{ markdown: string; count: number } | null> {
+  const u = new URL(url);
+  const site = u.pathname.split('/').filter(Boolean)[0] === 'social' ? 'social' : 'campus';
+  const tagIds = u.searchParams.getAll('tag_ids');
+  const rows: any[] = [];
+  for (let page = 0; page < 20; page++) {
+    let data: any = null;
+    for (let i = 0; i < 3 && !data; i++) {
+      try {
+        const r = await fetch('https://job-api.100tal.com/sapi/activities/c/jobs/list', {
+          method: 'POST', headers: { 'Content-Type': 'application/json', Origin: 'https://job.tal.com', Referer: 'https://job.tal.com/', 'User-Agent': 'Mozilla/5.0' },
+          body: JSON.stringify({ orgId: 'tal', route_code: 'kg8Meh', limit: 100, offset: page, site, keyword: '', locations: [], commitments: [], zhinengIds: [], tag_ids: tagIds }),
+          signal: AbortSignal.timeout(20000),
+        });
+        data = (await r.json())?.data || null;
+      } catch { await new Promise(r => setTimeout(r, 1000 * (i + 1))); }
+    }
+    const list: any[] = data?.list || [];
+    rows.push(...list);
+    if (!list.length || rows.length >= (data?.total || 0)) break;
+  }
+  if (!rows.length) return null;
+  const blocks = rows.map(x => [
+    `### Source: [${x.title}](https://job.tal.com/${site}/positions/${x.job_id})`, '',
+    `# ${x.title}`,
+    `招聘类型：${x.hire_mode || (site === 'campus' ? '校园招聘' : '社会招聘')}`,
+    (x.tag_names || []).length && `标签：${x.tag_names.join('、')}`,
+    x.department_name && `所属部门：${x.department_name}`,
+    (x.Locations || []).length && `工作地点：${x.Locations.join('；')}`,
+    x.commitment && `工作性质：${x.commitment}`,
+    (x.zhineng?.name || typeof x.zhineng === 'string') && `职能：${x.zhineng?.name || x.zhineng}`,
+    x.mj_code && `岗位编号：${x.mj_code}`,
+    x.created_at && `发布时间：${String(x.created_at).slice(0, 10)}`,
+    `\n## 岗位描述\n${strip(x.description)}`,
+  ].filter(Boolean).join('\n'));
+  return { markdown: blocks.join('\n\n'), count: rows.length };
+}
+
 /** 自建招聘站适配表：网址对上就走对应接口，拿全站岗位 */
 const SITE_ADAPTERS: { name: string; test: (u: URL) => boolean; run: (url: string) => Promise<{ markdown: string; count: number } | null> }[] = [
   { name: 'vivo 社招', test: u => u.hostname === 'hr.vivo.com' && !/campus|school/i.test(u.pathname), run: vivoSocialMarkdown },
+  { name: '好未来', test: u => u.hostname === 'job.tal.com' && /\/(campus|social)\/positions\/?$/.test(u.pathname), run: talMarkdown },
 ];
 
 export async function siteAdapterMarkdown(url: string): Promise<{ name: string; markdown: string; count: number } | null> {
