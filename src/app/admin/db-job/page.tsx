@@ -37,13 +37,35 @@ export default function DbJobPage() {
   // 以前跳过来是默认的「校招口径」，社招岗位被默认筛掉，看起来像「提取成功了库里却没有」。
   const [urlReady, setUrlReady] = useState(false);
   useEffect(() => {
+    // 网址里的筛选 + 页码：从岗位详情返回时还原到原来那一页（数据部门 1009 反馈「从第 5 页进去，返回跳回第 1 页」）
     const u = new URLSearchParams(window.location.search);
     const jt = u.get('jobType');
-    if (u.get('companyId') || jt || u.get('search')) {
-      setFilters(f => ({ ...f, companyId: u.get('companyId') || '', companyName: u.get('companyName') || '', search: u.get('search') || '', jobType: jt === 'all' ? '' : (jt ?? f.jobType) }));
-    }
+    setFilters(f => ({
+      ...f,
+      companyId: u.get('companyId') || '', companyName: u.get('companyName') || '', search: u.get('search') || '',
+      jobType: jt === 'all' ? '' : (jt ?? f.jobType),
+      season: u.get('season') || '', remote: u.get('remote') || '', status: u.get('status') || '', review: u.get('review') || '',
+      overseas: u.get('overseas') === '1', missingJd: u.get('missingJd') === '1',
+    }));
+    const p = parseInt(u.get('page') || ''), ps = parseInt(u.get('pageSize') || '');
+    if (p > 0) setPage(p);
+    if (ps > 0) setPageSize(ps);
     setUrlReady(true);
   }, []);
+
+  // 筛选 / 页码一变就写回网址（replaceState，不新增历史记录、不触发页面跳转）
+  useEffect(() => {
+    if (!urlReady) return;
+    const q = new URLSearchParams();
+    const put = (k: string, v: string | boolean) => { if (v) q.set(k, v === true ? '1' : String(v)); };
+    put('search', filters.search); put('jobType', filters.jobType === CAMPUS_JOB_TYPES.join(',') ? '' : (filters.jobType || 'all'));
+    put('season', filters.season); put('remote', filters.remote); put('status', filters.status); put('review', filters.review);
+    put('overseas', filters.overseas); put('missingJd', filters.missingJd); put('companyId', filters.companyId); put('companyName', filters.companyName);
+    if (page > 1) q.set('page', String(page));
+    if (pageSize !== 50) q.set('pageSize', String(pageSize));
+    const s = q.toString();
+    window.history.replaceState(window.history.state, '', s ? `?${s}` : window.location.pathname);
+  }, [filters, page, pageSize, urlReady]);
 
   const query = useCallback((extra: Record<string, string> = {}) => new URLSearchParams({
     search: filters.search, jobType: filters.jobType, season: filters.season, remote: filters.remote,
@@ -195,7 +217,7 @@ export default function DbJobPage() {
 
       <Panel padding={16}>
         <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-          <Input.Search placeholder="搜索岗位 / 企业 / 校招项目 / 地点" allowClear style={{ width: 300 }} onSearch={v => setFilter({ search: v })} />
+          <Input.Search key={urlReady ? 'ready' : 'init'} defaultValue={filters.search} placeholder="搜索岗位 / 企业 / 校招项目 / 地点" allowClear style={{ width: 300 }} onSearch={v => setFilter({ search: v })} />
           {filters.companyId && <Tag closable color="purple" style={{ padding: '4px 10px', fontSize: 13 }} onClose={() => setFilter({ companyId: '', companyName: '' })}>只看：{filters.companyName || `企业 #${filters.companyId}`}</Tag>}
           <Select value={filters.jobType} style={{ width: 170 }} onChange={v => setFilter({ jobType: v })}
             options={[{ value: CAMPUS_JOB_TYPES.join(','), label: '校招口径（默认）' }, { value: '', label: '全部类型' }, ...toOptions(JOB_TYPE_LABELS)]} />

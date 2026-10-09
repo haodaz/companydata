@@ -25,6 +25,21 @@ export function jobDedupeKey(job: { link?: string | null; job_req_id?: string | 
   return `${who}|${what}|${(job.location || '').trim().toLowerCase()}`;
 }
 
+/**
+ * 招应届生 / 「XX 届」的岗位，毕业时间窗口没写就默认那一年整年（数据部门 2026-10-09 口径）：
+ * 年份取「2027 届」里的年；只说「应届」没写届别的，取岗位发布日期的年份（再没有就取当年）。
+ */
+export function applyGradWindowDefault(job: Record<string, any>) {
+  if (job.grad_window_start || job.grad_window_end) return;
+  const text = [job.graduation_year, job.program_name, job.name, job.target_students, job.recruit_season].filter(Boolean).join(' ');
+  const cls = text.match(/(20\d{2})\s*届/)?.[1];
+  if (!cls && job.job_type !== 'graduate' && !/应届/.test(text)) return;
+  const y = cls || String(job.official_publish_date || '').slice(0, 4) || String(new Date().getFullYear());
+  if (!/^20\d{2}$/.test(y)) return;
+  job.grad_window_start = `${y}-01-01`;
+  job.grad_window_end = `${y}-12-31`;
+}
+
 export function jobsOf(json: any): any[] {
   return Array.isArray(json?.jobs) ? json.jobs : [];
 }
@@ -53,6 +68,7 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
     // 对方的枚举字段：AI 没直接给出时，从我们自己的字段推导
     if (!job.kind && job.job_type) job.kind = KIND_BY_JOB_TYPE[job.job_type] || null;
     if (!job.accept_foreign && job.visa_sponsorship !== null) job.accept_foreign = job.visa_sponsorship ? 'accepted' : 'not_accepted';
+    applyGradWindowDefault(job);
     if (!job.form_of_play && job.remote_type) job.form_of_play = { remote: 'online', onsite: 'offline', hybrid: 'online_and_offline' }[job.remote_type as string] || null;
     const key = jobDedupeKey(job as any, log.company_id, log.company, log.target_url);
     rows.set(key, {

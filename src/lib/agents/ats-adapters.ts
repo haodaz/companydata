@@ -153,12 +153,16 @@ export async function hotjobMarkdown(rawUrl: string, scope: 'campus' | 'all'): P
     }));
   }
 
-  const blocks = rows.map((r, i) => {
+  const blocks = rows.flatMap((r, i) => {
     const d = details[i] || {};
     const link = `${origin}/SU${suite}/pb/posDetail.html?postId=${r.postId}&postType=${r._type}`;
-    const lines = [
-      `### Source: [${r.postName}](${link})`, '',
-      `# ${r.postName}`,
+    const duty = d.workContent ? strip(d.workContent) : '', req = d.serviceCondition ? strip(d.serviceCondition) : '';
+    // 一个招聘帖里装了多个子岗位（立讯「研发岗(华南区)」= 产品设计 / 电子 / 声学 … 12 个）：按编号拆成独立岗位，原文不动
+    const subs = splitSubRoles(duty, req);
+    const parts = subs ? subs.map(x => ({ name: `${r.postName}-${x.title}`, duty: x.duty, req: x.req })) : [{ name: r.postName, duty, req }];
+    return parts.map(p => [
+      `### Source: [${p.name}](${link})`, '',
+      `# ${p.name}`,
       r._type === '2' ? '招聘类型：社会招聘' : `招聘类型：校园招聘${r.projectName ? `（${r.projectName}）` : ''}`,
       r.workTypeStr && `工作性质：${r.workTypeStr}`,
       r.postTypeName && `职位类别：${r.postTypeName}`,
@@ -171,12 +175,12 @@ export async function hotjobMarkdown(rawUrl: string, scope: 'campus' | 'all'): P
       r.publishFirstDate && `发布时间：${r.publishFirstDate}`,
       r.endDate && `截止时间：${r.endDate}`,
       (d.subject || r.subject) && `专业要求：${strip(d.subject || r.subject)}`,
-      d.workContent && `\n## 工作职责\n${strip(d.workContent)}`,
-      d.serviceCondition && `\n## 任职要求\n${strip(d.serviceCondition)}`,
-    ].filter(Boolean);
-    return lines.join('\n');
+      subs && `子岗位：属于「${r.postName}」招聘帖（共 ${subs.length} 个子岗位）`,
+      p.duty && `\n## 工作职责\n${p.duty}`,
+      p.req && `\n## 任职要求\n${p.req}`,
+    ].filter(Boolean).join('\n'));
   });
-  return { markdown: blocks.join('\n\n'), count: rows.length };
+  return { markdown: blocks.join('\n\n'), count: blocks.length };
 }
 
 
@@ -241,4 +245,25 @@ export function siteKey(url: string): string {
     }
   } catch { /* 原样 */ }
   return url;
+}
+
+
+const ROLE_LIKE = /(工程师|设计师|分析师|研究员|专员|经理|主管|顾问|助理|技术员|操作员|管培生|实习生|师|员|岗|开发|测试|运营|销售|设计|LAYOUT|layout)$/;
+/**
+ * 一个招聘帖里装了多个子岗位：职责、要求两段都按「一、产品设计工程师 / 二、电子工程师 …」编号排。
+ * 只有职责和要求的子标题对得上（≥2 个同名）、且标题像岗位名时才拆——
+ * 单个岗位里用「一、惯性导航与姿态解算 / 二、多传感器融合」分小节的不能拆。
+ */
+export function splitSubRoles(duty: string, req: string): { title: string; duty: string; req: string }[] | null {
+  const sections = (text: string) => {
+    const hits = [...text.matchAll(/^[ \t]*([一二三四五六七八九十]{1,3})、[ \t]*([^\n：:]{2,30}?)[ \t]*$/gm)];
+    return hits.map((h, i) => ({ title: h[2].trim(), body: text.slice((h.index ?? 0) + h[0].length, hits[i + 1]?.index ?? text.length).trim() }));
+  };
+  const a = sections(duty), b = sections(req);
+  if (a.length < 2) return null;
+  const reqBy = new Map(b.map(x => [x.title, x.body]));
+  const shared = a.filter(x => reqBy.has(x.title)).length;
+  const roleLike = a.filter(x => ROLE_LIKE.test(x.title)).length;
+  if (shared < 2 || roleLike < Math.ceil(a.length / 2)) return null;
+  return a.map(x => ({ title: x.title, duty: x.body, req: reqBy.get(x.title) || '' }));
 }

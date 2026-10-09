@@ -56,7 +56,30 @@ export default function DbCompanyPage() {
 
   const [enrich, setEnrich] = useState<{ done: number; total: number; current: string } | null>(null);
 
+  // 网址里的筛选 + 页码：从企业详情返回时还原到原来那一页（数据部门 1009 反馈）
+  const [urlReady, setUrlReady] = useState(false);
+  useEffect(() => {
+    const u = new URLSearchParams(window.location.search);
+    setSearch(u.get('search') || ''); setSegment(u.get('segment') || ''); setReview(u.get('review') || '');
+    const p = parseInt(u.get('page') || ''), ps = parseInt(u.get('pageSize') || '');
+    if (p > 0) setPage(p);
+    if (ps > 0) setPageSize(ps);
+    setUrlReady(true);
+  }, []);
+  useEffect(() => {
+    if (!urlReady) return;
+    const q = new URLSearchParams();
+    if (search) q.set('search', search);
+    if (segment) q.set('segment', segment);
+    if (review) q.set('review', review);
+    if (page > 1) q.set('page', String(page));
+    if (pageSize !== 50) q.set('pageSize', String(pageSize));
+    const s = q.toString();
+    window.history.replaceState(window.history.state, '', s ? `?${s}` : window.location.pathname);
+  }, [search, segment, review, page, pageSize, urlReady]);
+
   const load = useCallback(async () => {
+    if (!urlReady) return;
     setLoading(true);
     try {
       const qs = new URLSearchParams({ page: String(page), pageSize: String(pageSize), search, segment, review, withStats: '1' });
@@ -65,7 +88,7 @@ export default function DbCompanyPage() {
       setData(json.data); setTotal(json.total); setStats(json.stats || {});
     } catch (e: any) { message.error(`加载失败: ${e.message}`); }
     finally { setLoading(false); }
-  }, [page, pageSize, search, segment, review]);
+  }, [page, pageSize, search, segment, review, urlReady]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -236,7 +259,7 @@ export default function DbCompanyPage() {
 
       <Panel padding={16}>
         <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-          <Input.Search placeholder="搜索企业名 / 英文名 / 行业" allowClear style={{ width: 300 }} onSearch={v => { setSearch(v); setPage(1); }} />
+          <Input.Search key={urlReady ? 'ready' : 'init'} defaultValue={search} placeholder="搜索企业名 / 英文名 / 行业" allowClear style={{ width: 300 }} onSearch={v => { setSearch(v); setPage(1); }} />
           <Select value={segment} style={{ width: 140 }} onChange={v => { setSegment(v); setPage(1); }}
             options={[{ value: '', label: '全部分类' }, ...SEGMENT_OPTIONS, { value: 'none', label: '未分类' }]} />
           <Select value={review} style={{ width: 120 }} onChange={v => { setReview(v); setPage(1); }} options={[{ value: '', label: '全部审核' }, { value: 'none', label: '未审核' }, ...REVIEW_STATUS_OPTIONS]} />
