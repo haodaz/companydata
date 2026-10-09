@@ -44,8 +44,13 @@ export async function structureJobData(markdown: string, company: string, hint: 
   const ok = results.filter((r): r is StructuredJobsResult => !!r);
   if (!ok.length) return null;
   const seen = new Set<string>(), jobs: Record<string, any>[] = [];
-  for (const j of ok.flatMap(r => r.jobs)) {
-    const k = String(j.link || '').trim() || `${j.name}|${j.location}`;
+  // 好几个岗位共用的链接（列表页，vivo 119 个岗位都是 hr.vivo.com/jobs）不能拿来去重，不然合并成 1 个
+  const all = ok.flatMap(r => r.jobs);
+  const linkCount = new Map<string, number>();
+  for (const j of all) { const l = String(j.link || '').trim(); if (l) linkCount.set(l, (linkCount.get(l) || 0) + 1); }
+  for (const j of all) {
+    const l = String(j.link || '').trim();
+    const k = l && (linkCount.get(l) || 0) === 1 ? l : `${j.name}|${j.location}|${j.job_req_id || ''}`;
     if (seen.has(k)) continue;
     seen.add(k); jobs.push(j);
   }
