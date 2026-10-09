@@ -29,6 +29,25 @@ const CSS = `
 .folio-nav { display: flex; gap: 10px; align-items: center; }
 .folio-dots { display: flex; gap: 6px; } .folio-dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(106,92,255,.25); } .folio-dots i.on { background: var(--v); }
 .folio-stack { display: none; }
+.cover-stage { width: min(100%, 1180px); display: flex; justify-content: center; perspective: 2600px; padding: 10px 0 20px; }
+.cover { position: relative; width: min(92vw, 520px); aspect-ratio: 210 / 316; border-radius: 6px 16px 16px 6px; cursor: pointer; transform-origin: left center; transform-style: preserve-3d;
+  background: radial-gradient(130% 100% at 30% 0%, #2c3266 0%, #181b3c 50%, #0d0f27 100%);
+  box-shadow: 0 40px 90px rgba(10,12,40,.5), inset 0 0 0 1px rgba(255,255,255,.06), inset 14px 0 18px -10px rgba(0,0,0,.6);
+  transition: transform .25s; color: #f3e3b8; container-type: inline-size; overflow: hidden; }
+.cover:hover { transform: rotateY(-6deg); }
+.cover.opening { animation: cover-open 1s cubic-bezier(.5,.05,.3,1) forwards; }
+@keyframes cover-open { 0% { transform: rotateY(0); } 100% { transform: rotateY(-120deg); opacity: 0; } }
+.cover::before { content: ''; position: absolute; inset: 4cqi; border: .4cqi solid rgba(212,180,110,.55); border-radius: 1.4cqi; pointer-events: none; }
+.cover::after { content: ''; position: absolute; inset: 5.6cqi; border: .15cqi solid rgba(212,180,110,.35); border-radius: 1cqi; pointer-events: none; }
+.cover-grain { position: absolute; inset: 0; opacity: .35; pointer-events: none;
+  background-image: radial-gradient(rgba(255,255,255,.06) .2cqi, transparent .25cqi), radial-gradient(rgba(0,0,0,.25) .2cqi, transparent .25cqi); background-size: 1.6cqi 1.6cqi, 2.3cqi 2.3cqi; background-position: 0 0, .8cqi 1.1cqi; }
+.cover-foil { background: linear-gradient(100deg, #b98e3e, #f6e1a6 30%, #d2a95a 48%, #fff3cc 62%, #c39648 80%, #e9cf8f); background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: foil 6s ease-in-out infinite alternate; }
+@keyframes foil { to { background-position: 100% 0; } }
+.cover-spine { position: absolute; left: 0; top: 0; bottom: 0; width: 4.5cqi; background: linear-gradient(90deg, rgba(0,0,0,.45), rgba(255,255,255,.05) 60%, rgba(0,0,0,.2)); }
+.folio-open { animation: folio-in .7s ease-out both; }
+@keyframes folio-in { from { opacity: 0; transform: scale(.97); } }
+@media print { .cover-stage { display: none !important; } }
 @media (max-width: 820px) { .folio, .folio-nav { display: none; } .folio-stack { display: grid; gap: 14px; width: 100%; } }
 
 .pg { position: relative; container-type: inline-size; aspect-ratio: 210 / 316; overflow: hidden; background: #fff; color: #1d2450;
@@ -328,10 +347,56 @@ function PageCharts({ d }: { d: FolioData }) {
   );
 }
 
+/** 封皮：深色硬壳、烫金字，点一下翻开 */
+function Cover({ d, opening, onOpen }: { d: FolioData; opening: boolean; onOpen: () => void }) {
+  return (
+    <div className="cover-stage">
+      <div className={`cover${opening ? ' opening' : ''}`} onClick={onOpen} role="button" aria-label="打开证书">
+        <div className="cover-grain" />
+        <div className="cover-spine" />
+        <div style={{ position: 'absolute', inset: '11cqi 10cqi 10cqi 12cqi', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '3cqi', opacity: .92 }}>
+            <img src="/lab/brand/visionsquare.png" alt="平方创想" style={{ height: '6cqi', filter: 'brightness(0) invert(1) sepia(.5) saturate(1.6) hue-rotate(5deg)' }} />
+            <span style={{ width: '.2cqi', height: '6cqi', background: 'rgba(243,227,184,.4)' }} />
+            {/* 方略的 R² 是实心色块，反白后成了一块白方块：封皮上用烫金字排 */}
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '1.4cqi', color: '#f3e3b8' }}>
+              <span style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: '5.2cqi', lineHeight: 1 }}>R²</span>
+              <span style={{ display: 'grid', textAlign: 'left', lineHeight: 1.15 }}><b className="pg-serif" style={{ fontSize: '3.4cqi', letterSpacing: '.08em' }}>方略研究院</b><span style={{ fontSize: '1.2cqi', opacity: .8 }}>SquareStrategics Research Institute</span></span>
+            </span>
+          </div>
+          <div style={{ flex: 1 }} />
+          <svg viewBox="0 0 200 200" style={{ width: '30cqi', height: '30cqi', filter: 'drop-shadow(0 .6cqi 1.2cqi rgba(0,0,0,.5))' }} aria-hidden>
+            <defs>
+              <linearGradient id="cv-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#f6e1a6" /><stop offset="50%" stopColor="#c39648" /><stop offset="100%" stopColor="#fff3cc" /></linearGradient>
+              <path id="cv-c" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" />
+            </defs>
+            <circle cx="100" cy="100" r="94" fill="none" stroke="url(#cv-g)" strokeWidth="3" />
+            <circle cx="100" cy="100" r="86" fill="none" stroke="url(#cv-g)" strokeWidth="1" />
+            <circle cx="100" cy="100" r="56" fill="none" stroke="url(#cv-g)" strokeWidth="1" />
+            <text fill="url(#cv-g)" fontSize="12.5" fontWeight="700" letterSpacing="3.2"><textPath href="#cv-c">VISIONSQUARE · SQUARESTRATEGICS RESEARCH INSTITUTE ·</textPath></text>
+            <text x="100" y="114" textAnchor="middle" fill="url(#cv-g)" fontSize="46" fontWeight="800" fontFamily="Georgia, serif">R²</text>
+          </svg>
+          <div className="pg-mono" style={{ fontSize: '2cqi', letterSpacing: '.4em', marginTop: '6cqi', opacity: .75 }}>CERTIFICATE OF PROFESSIONAL EXPERIENCE</div>
+          <div className="pg-serif cover-foil" style={{ fontSize: '8.4cqi', fontWeight: 900, letterSpacing: '.3em', marginTop: '2cqi', paddingLeft: '.3em' }}>职业体验证书</div>
+          <div style={{ width: '18cqi', height: '.25cqi', background: 'linear-gradient(90deg, transparent, #d2a95a, transparent)', margin: '4cqi 0' }} />
+          <div className="pg-serif" style={{ fontSize: '4.6cqi', fontWeight: 800, color: '#f3e3b8' }}>{d.candidate.name || '匿名新兵'}的证书</div>
+          <div style={{ fontSize: '2.5cqi', marginTop: '1.6cqi', opacity: .75 }}>{d.space.role}的一天{d.chapter && d.chapter.total > 1 ? ` · 第 ${d.chapter.n} / ${d.chapter.total} 段` : ''}</div>
+          <div style={{ flex: 1.2 }} />
+          <div className="pg-serif" style={{ fontSize: '2.3cqi', letterSpacing: '.3em', opacity: .8 }}>平方创想 · 方略研究院</div>
+          <div style={{ fontSize: '2cqi', marginTop: '3cqi', opacity: .6, letterSpacing: '.2em' }}>{opening ? '正在打开…' : '点击打开'}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /** 页夹本体：两屏四页，翻页有动画；窄屏四页竖排；打印四页 A4 */
 export function CertFolio({ d }: { d: FolioData }) {
   const pages = [<PageCert key="c" d={d} />, <PageArt key="a" d={d} />, <PageRecord key="r" d={d} />, <PageCharts key="ch" d={d} />];
   const [spread, setSpread] = useState(0);
+  // 先看封皮，点一下翻开
+  const [cover, setCover] = useState<'closed' | 'opening' | 'open'>('closed');
+  const openCover = () => { if (cover !== 'closed') return; setCover('opening'); setTimeout(() => setCover('open'), 950); };
   const [turn, setTurn] = useState<null | 'next' | 'prev'>(null);
   const go = (dir: 'next' | 'prev') => {
     if (turn || (dir === 'next' && spread === 1) || (dir === 'prev' && spread === 0)) return;
@@ -342,8 +407,16 @@ export function CertFolio({ d }: { d: FolioData }) {
   const R = (i: number) => <div className="pg-slot r" style={{ borderRadius: '0 4px 4px 0', overflow: 'hidden' }}>{pages[i]}</div>;
   // 翻页时：底下先换成翻过去之后看得见的两页，中间一张纸带着正反两面转过去
   const base = turn === 'next' ? [0, 3] : turn === 'prev' ? [0, 3] : [spread * 2, spread * 2 + 1];
-  return (
+  if (cover !== 'open') return (
     <div className="folio-wrap">
+      <style>{CSS}</style>
+      <Cover d={d} opening={cover === 'opening'} onOpen={openCover} />
+      {/* 打印时不要封皮，直接四页 */}
+      <div className="folio-stack" style={{ display: 'none' }}>{pages.map((p, i) => <div key={i}>{p}</div>)}</div>
+    </div>
+  );
+  return (
+    <div className="folio-wrap folio-open">
       <style>{CSS}</style>
       <div className="folio">
         <div className="folio-spread">
@@ -359,5 +432,35 @@ export function CertFolio({ d }: { d: FolioData }) {
       </div>
       <div className="folio-stack">{pages.map((p, i) => <div key={i}>{p}</div>)}</div>
     </div>
+  );
+}
+
+/** 证书库里的一本：小封皮（烫金职业名、段落、等级）。empty = 还没走的那一段，虚线空位 */
+export const MINI_COVER_CSS = `
+.mcv { position: relative; aspect-ratio: 210 / 300; border-radius: 3px 10px 10px 3px; container-type: inline-size; cursor: pointer; border: 0; padding: 0; font-family: inherit; text-align: center; overflow: hidden;
+  background: radial-gradient(130% 100% at 30% 0%, #2c3266 0%, #181b3c 50%, #0d0f27 100%); color: #f3e3b8;
+  box-shadow: 0 14px 30px rgba(10,12,40,.35), inset 7px 0 10px -6px rgba(0,0,0,.6); transition: transform .25s, box-shadow .25s; }
+.mcv:hover { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 22px 40px rgba(10,12,40,.45), inset 7px 0 10px -6px rgba(0,0,0,.6); }
+.mcv::before { content: ''; position: absolute; inset: 5cqi; border: .8cqi solid rgba(212,180,110,.5); border-radius: 2cqi; pointer-events: none; }
+.mcv-foil { background: linear-gradient(100deg, #b98e3e, #f6e1a6 30%, #d2a95a 48%, #fff3cc 62%, #c39648 80%, #e9cf8f); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.mcv.empty { background: rgba(255,255,255,.55); box-shadow: none; color: var(--ink3); outline: 2px dashed rgba(106,92,255,.28); outline-offset: -2px; }
+.mcv.empty::before { display: none; }
+.mcv.day { background: radial-gradient(130% 100% at 30% 0%, #5a3f9e 0%, #2a1f5c 50%, #120d2e 100%); }
+`;
+
+export function MiniCover({ role, title, slot, band, name, empty, day, onClick }: { role: string; title: string; slot?: string; band?: number | null; name?: string; empty?: boolean; day?: boolean; onClick: () => void }) {
+  return (
+    <button className={`mcv${empty ? ' empty' : ''}${day ? ' day' : ''}`} onClick={onClick} title={empty ? '还没走这一段' : `${role} · ${title}`}>
+      <div style={{ position: 'absolute', inset: '11cqi 9cqi 10cqi', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {!empty && <span style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: '11cqi', opacity: .9 }} className="mcv-foil">R²</span>}
+        <span className="pg-mono" style={{ fontSize: '5.2cqi', letterSpacing: '.16em', marginTop: empty ? 0 : '3cqi', opacity: .75 }}>{slot || (day ? 'A FULL DAY' : '')}</span>
+        <span className={`pg-serif${empty ? '' : ' mcv-foil'}`} style={{ fontSize: '10cqi', fontWeight: 900, lineHeight: 1.3, marginTop: '3cqi' }}>{day ? `${role}的一天` : title}</span>
+        <span style={{ flex: 1 }} />
+        {empty ? <span style={{ fontSize: '7.5cqi', fontWeight: 700, color: 'var(--v)' }}>去完成 →</span> : <>
+          <span className="pg-mono mcv-foil" style={{ fontSize: '16cqi', fontWeight: 900, letterSpacing: 0, lineHeight: 1 }}>{band != null ? bandText(band) : ''}</span>
+          <span style={{ fontSize: '5.6cqi', marginTop: '2cqi', opacity: .7 }}>{day ? '全天证书' : name ? `${name}的证书` : role}</span>
+        </>}
+      </div>
+    </button>
   );
 }

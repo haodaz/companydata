@@ -3,7 +3,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/lib/user-context';
-import { bandText, visitorIds } from '@/lib/lab-cert';
+import { band, bandText, visitorIds } from '@/lib/lab-cert';
+import { MINI_COVER_CSS, MiniCover } from '@/components/lab/CertFolio';
 
 /**
  * 体验百业 · 我的：证书库（按职业分组，一天里没走的段是灰色空位，集齐整天能领全天证书）+ 操作历史。
@@ -18,7 +19,7 @@ const CSS = `
 .me-mini .bd { font-size: 24px; font-weight: 900; letter-spacing: 0; background: linear-gradient(100deg, #6a5cff, #12b5cb); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .me-mini.empty { background: rgba(255,255,255,.5); box-shadow: none; border: 1.5px dashed rgba(106,92,255,.25); color: var(--ink3); }
 .me-mini.empty::before { display: none; }
-.me-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); }
+.me-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); padding: 6px 2px 14px; border-bottom: 10px solid rgba(106,92,255,.10); border-radius: 0 0 6px 6px; }
 .me-day { border: 0; cursor: pointer; font-family: inherit; padding: 10px 16px; border-radius: 12px; font-weight: 800; color: #fff; background: linear-gradient(120deg, #6a5cff, #12b5cb 60%, #ff5fa2); box-shadow: 0 8px 22px rgba(106,92,255,.35); }
 `;
 
@@ -47,7 +48,7 @@ export default function MePage() {
 
   return (
     <div>
-      <style>{CSS}</style>
+      <style>{CSS + MINI_COVER_CSS}</style>
       <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, flexWrap: 'wrap', margin: '6px 0 16px' }}>
         <div>
           <div className="lab-mono lab-cap">EXPERIENCE · 我的</div>
@@ -103,23 +104,12 @@ export default function MePage() {
                       ? <button className="me-day" onClick={() => router.push(`/lab/cert/day?s=${ids.join(',')}`)}>领取全天证书 ✦</button>
                       : <button className="lab-btn ghost sm" onClick={() => router.push(`/lab/${s.id}?m=test`)}>继续这一天</button>}
                   </div>
+                  {/* 书架：每一段一本，没走的是虚线空位；集齐整天多一本全天证书 */}
                   <div className="me-grid">
-                    {s.chapters.map((c: any) => c.best ? (
-                      <button key={c.n} className="me-mini" onClick={() => router.push(`/lab/cert/${c.best.id}`)} title={`证书 ${c.best.no}`}>
-                        <span className="lab-mono" style={{ fontSize: 11, opacity: .75 }}>{c.slot || `第 ${c.n} 段`}</span>
-                        <b style={{ fontSize: 13.5, lineHeight: 1.4 }}>{c.title}</b>
-                        <span style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                          <span className="lab-mono bd">{bandText(c.best.band)}</span>
-                          <span style={{ fontSize: 11, opacity: .7 }}>{c.tries > 1 ? `走过 ${c.tries} 次` : ''}</span>
-                        </span>
-                      </button>
-                    ) : (
-                      <button key={c.n} className="me-mini empty" onClick={() => router.push(`/lab/${s.id}?m=test${c.id ? `&ch=${c.id}` : ''}`)}>
-                        <span className="lab-mono" style={{ fontSize: 11 }}>{c.slot || `第 ${c.n} 段`}</span>
-                        <b style={{ fontSize: 13.5, lineHeight: 1.4 }}>{c.title}</b>
-                        <span style={{ fontSize: 12, color: 'var(--v)', fontWeight: 700 }}>去完成 →</span>
-                      </button>
-                    ))}
+                    {full && s.total > 1 && <MiniCover day role={s.role} title="" band={band(Math.round(s.chapters.reduce((a: number, c: any) => a + (c.best?.score || 0), 0) / s.total))} onClick={() => router.push(`/lab/cert/day?s=${ids.join(',')}`)} />}
+                    {s.chapters.map((c: any) => c.best
+                      ? <MiniCover key={c.n} role={s.role} title={c.title} slot={c.slot || `第 ${c.n} 段`} band={c.best.band} name={me.name} onClick={() => router.push(`/lab/cert/${c.best.id}`)} />
+                      : <MiniCover key={c.n} empty role={s.role} title={c.title} slot={c.slot || `第 ${c.n} 段`} onClick={() => router.push(`/lab/${s.id}?m=test${c.id ? `&ch=${c.id}` : ''}`)} />)}
                   </div>
                 </div>
               );
