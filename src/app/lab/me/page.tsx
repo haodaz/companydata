@@ -129,7 +129,7 @@ export default function MePage() {
                     <div className="me-parts">
                       {s.chapters.map((c: any) => c.best ? (
                         <button key={c.n} className={`me-part${passed(c.best.score) ? '' : ' fail'}`} onClick={() => router.push(`/lab/cert/day?s=${ids.join(',')}&at=${c.best.id}`)} title={`查看成绩单 ${c.best.no}`}>
-                          <span className="lab-mono" style={{ fontSize: 11, color: 'var(--ink3)' }}>{c.slot || `第 ${c.n} 段`}</span>
+                          <span className="lab-mono" style={{ fontSize: 11, color: 'var(--ink3)' }}>{c.slot || `第 ${c.n} 段`}<span style={{ float: 'right' }}>{fmt(c.best.date)}</span></span>
                           <b style={{ fontSize: 13.5, lineHeight: 1.4 }}>{c.title}</b>
                           <span style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}><span className="lab-mono bd">{bandText(c.best.band)}</span><span style={{ fontSize: 11, color: passed(c.best.score) ? 'var(--ink3)' : '#c4323a', fontWeight: passed(c.best.score) ? 400 : 700 }}>{passed(c.best.score) ? (c.tries > 1 ? `走过 ${c.tries} 次 ✓` : '通过 ✓') : `未过 ${PASS_SCORE} · 重做`}</span></span>
                         </button>

@@ -90,6 +90,19 @@ const CSS = `
 `;
 
 const fmtDate = (iso: string) => { const d = new Date(iso); return `${d.getFullYear()} 年 ${d.getMonth() + 1} 月 ${d.getDate()} 日`; };
+const hm = (d: Date) => `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+/** 真实完成时间要带日期：几段可能隔天才做完（07:30 这种是故事里的场景时间，不是完成时间） */
+const fmtDateTime = (iso: string) => { const d = new Date(iso); return `${fmtDate(iso)} ${hm(d)}`; };
+const fmtShort = (iso: string) => { const d = new Date(iso); return `${d.getMonth() + 1} 月 ${d.getDate()} 日 ${hm(d)}`; };
+/** 全天：最早一段到最后一段的日期区间；同一天就只写一天 */
+const dateRange = (d: FolioData) => {
+  const ts = d.dims.map(x => x.at).filter(Boolean) as string[];
+  if (!d.day || ts.length < 2) return fmtDate(d.date);
+  const a = ts.reduce((m, t) => (t < m ? t : m)), b = ts.reduce((m, t) => (t > m ? t : m));
+  const A = new Date(a), B = new Date(b);
+  if (A.toDateString() === B.toDateString()) return fmtDate(a);
+  return A.getFullYear() === B.getFullYear() ? `${fmtDate(a)}至 ${B.getMonth() + 1} 月 ${B.getDate()} 日` : `${fmtDate(a)}至${fmtDate(b)}`;
+};
 const ISSUERS = '平方创想 · 方略研究院';
 
 export interface FolioData {
@@ -99,7 +112,8 @@ export interface FolioData {
   space: { id: string; name: string; role: string; avatar: string; profession: string; company?: string };
   chapter?: { n: number; total: number; slot: string; title: string; kind?: string } | null;
   skill?: { expert: string; location: string; draft: boolean } | null;
-  dims: { key: string; name: string; weight: number; score: number; band: number; comment: string }[];
+  /** at：这一段真正完成的时间（全天证书里每一段一项） */
+  dims: { key: string; name: string; weight: number; score: number; band: number; comment: string; at?: string }[];
   analysis: { summary: string; gaps: string[]; suggestions: string[] };
   art?: { scene: string; place: string; people: { name: string; role: string; image: string }[]; value: { headline: string; lines: string[] } | null };
   charts?: { avg: Record<string, number | null>; expert: Record<string, number | null> | null; dist: number[] };
@@ -149,7 +163,7 @@ function PageCert({ d }: { d: FolioData }) {
           <div style={{ fontSize: '2.6cqi', marginTop: '4.4cqi', color: '#4a5180' }}>兹证明</div>
           <div style={{ fontSize: '7cqi', fontWeight: 800, marginTop: '1cqi', display: 'inline-block', padding: '0 6cqi 1cqi', borderBottom: '.22cqi solid #1d2450' }}>{d.candidate.name || '匿名新兵'}</div>
           <div style={{ fontSize: '2.5cqi', lineHeight: 1.9, marginTop: '2.8cqi', color: '#2a3160' }}>
-            于 {fmtDate(d.date)} 在数字职人 {d.space.name} 的带领下，<br />{d.day ? <>走完了「{d.space.role}的一天」全部 {d.dims.length} 段</> : <>完成了「{d.space.role}的一天」{d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段` : ''}的全部操作</>}
+            于 {dateRange(d)} 在数字职人 {d.space.name} 的带领下，<br />{d.day ? <>走完了「{d.space.role}的一天」全部 {d.dims.length} 段</> : <>完成了「{d.space.role}的一天」{d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段` : ''}的全部操作</>}
           </div>
           {!d.day && d.chapter && <div className="pg-accent" style={{ fontSize: '3.6cqi', fontWeight: 900, marginTop: '2cqi', letterSpacing: '.06em' }}>{d.chapter.slot ? `${d.chapter.slot} · ` : ''}{d.chapter.title}</div>}
           <div style={{ fontSize: '2.2cqi', marginTop: '3cqi', color: '#4a5180' }}>{d.day ? '按岗位标准逐段评定，全天综合等级' : '按岗位标准评定，综合等级'}</div>
@@ -242,21 +256,21 @@ function PageRecord({ d }: { d: FolioData }) {
         <div style={{ display: 'flex', alignItems: 'flex-start' }}>
           <Issuers size="4.4cqi" />
           <span style={{ flex: 1 }} />
-          <div style={{ textAlign: 'right', fontSize: '1.9cqi', lineHeight: 1.7, color: '#4a5180' }}><div>{fmtDate(d.date)}</div><div className="pg-mono">Document No. {d.no}</div></div>
+          <div style={{ textAlign: 'right', fontSize: '1.9cqi', lineHeight: 1.7, color: '#4a5180' }}><div>{d.day ? dateRange(d) : `完成于 ${fmtDateTime(d.date)}`}</div><div className="pg-mono">Document No. {d.no}</div></div>
         </div>
         <div className="pg-serif" style={{ fontSize: '4.6cqi', fontWeight: 900, textAlign: 'center', margin: '4.4cqi 0 .6cqi', letterSpacing: '.12em' }}>{d.day ? '全天成绩记录' : '成绩记录'}</div>
         <div className="pg-mono" style={{ textAlign: 'center', fontSize: '1.7cqi', letterSpacing: '.36em', color: '#6b7290' }}>TRANSCRIPT OF RECORDS</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '.8cqi 3cqi', fontSize: '2.1cqi', marginTop: '3.6cqi' }}>
           {[['姓名', d.candidate.name || '匿名新兵'], ['背景', [d.candidate.note, d.candidate.location].filter(Boolean).join(' · ') || '—'], ['职业', `${d.space.role}${d.space.company ? ` · ${d.space.company}` : ''}`],
-            ['场景', d.day ? `「${d.space.role}的一天」全部 ${d.dims.length} 段` : `${d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段 · ` : ''}${d.chapter?.slot ? `${d.chapter.slot} · ` : ''}${d.chapter?.title || ''}`], ['带教', `数字职人 ${d.space.name}${d.skill?.expert ? `（技能来源：${d.skill.expert} · ${d.skill.location}）` : ''}`]].map(([k, v]) => (
+            ['场景', d.day ? `「${d.space.role}的一天」全部 ${d.dims.length} 段` : `${d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段 · ` : ''}${d.chapter?.slot ? `场景时间 ${d.chapter.slot} · ` : ''}${d.chapter?.title || ''}`], ['带教', `数字职人 ${d.space.name}${d.skill?.expert ? `（技能来源：${d.skill.expert} · ${d.skill.location}）` : ''}`]].map(([k, v]) => (
             <React.Fragment key={k}><span style={{ color: '#6b7290' }}>{k}</span><b>{v}</b></React.Fragment>
           ))}
         </div>
         <table className="pg-tbl" style={{ marginTop: '3cqi' }}>
-          <thead><tr><th>{d.day ? '段落' : '评定项目'}</th><th style={{ width: '12cqi' }}>{d.day ? '一致' : '权重'}</th><th style={{ width: '15cqi' }}>得分</th><th style={{ width: '10cqi' }}>等级</th></tr></thead>
+          <thead><tr><th>{d.day ? '段落' : '评定项目'}</th><th style={{ width: d.day ? '20cqi' : '12cqi' }}>{d.day ? '完成于' : '权重'}</th><th style={{ width: '15cqi' }}>得分</th><th style={{ width: '10cqi' }}>等级</th></tr></thead>
           <tbody>
-            {d.dims.map(x => <tr key={x.key}><td className="pg-serif" style={{ fontWeight: 700 }}>{x.name}</td><td className="pg-mono">{d.day ? (x.comment || '—') : `${x.weight}%`}</td><td className="pg-mono" style={{ whiteSpace: 'nowrap' }}>{x.score} / {x.weight}</td><td className="pg-mono" style={{ fontWeight: 800 }}>{bandText(x.band)}</td></tr>)}
-            <tr><td className="pg-serif" style={{ fontWeight: 900 }}>{d.day ? '全天平均' : '综合'}</td><td className="pg-mono">{d.day ? (d.match == null ? '—' : `${d.match}%`) : '100%'}</td><td className="pg-mono" style={{ fontWeight: 800, whiteSpace: 'nowrap' }}>{d.score} / 100</td><td className="pg-mono pg-accent" style={{ fontWeight: 900 }}>{bandText(d.overall)}</td></tr>
+            {d.dims.map(x => <tr key={x.key}><td className="pg-serif" style={{ fontWeight: 700 }}>{x.name}</td><td className="pg-mono" style={{ whiteSpace: 'nowrap', fontSize: d.day ? '1.7cqi' : undefined }}>{d.day ? (x.at ? fmtShort(x.at) : '—') : `${x.weight}%`}</td><td className="pg-mono" style={{ whiteSpace: 'nowrap' }}>{x.score} / {x.weight}</td><td className="pg-mono" style={{ fontWeight: 800 }}>{bandText(x.band)}</td></tr>)}
+            <tr><td className="pg-serif" style={{ fontWeight: 900 }}>{d.day ? '全天平均' : '综合'}</td><td className="pg-mono">{d.day ? '' : '100%'}</td><td className="pg-mono" style={{ fontWeight: 800, whiteSpace: 'nowrap' }}>{d.score} / 100</td><td className="pg-mono pg-accent" style={{ fontWeight: 900 }}>{bandText(d.overall)}</td></tr>
           </tbody>
         </table>
         {!d.day && <div style={{ marginTop: '2cqi', display: 'flex', alignItems: 'center', gap: '1.4cqi', fontSize: '2cqi' }}>

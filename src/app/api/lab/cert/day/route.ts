@@ -55,7 +55,7 @@ export async function GET(req: NextRequest) {
         date: last, score: avg, overall, level: bandLevel(overall),
         match: matches.length ? mean(matches) : null, beat: beats.length ? mean(beats) : null, peers: Math.max(...list.map(c => c.peers)),
         candidate: list[list.length - 1].candidate, space, skill: list[0].skill, chapter: null,
-        dims: list.map(c => ({ key: c.id, name: label(c), weight: 100, score: c.score || 0, band: c.overall, comment: typeof c.match === 'number' ? `${c.match}%` : '' })),
+        dims: list.map(c => ({ key: c.id, name: label(c), weight: 100, score: c.score || 0, band: c.overall, comment: typeof c.match === 'number' ? `${c.match}%` : '', at: c.date })),
         analysis: {
           summary: `全天 ${list.length} 段，每段都过了 ${PASS_SCORE} 分，平均 ${avg} 分。${list.length > 1 ? `做得最好的是「${label(strongest)}」（${strongest.overall.toFixed(1)}），最需要加强的是「${label(weakest)}」（${weakest.overall.toFixed(1)}）。` : ''}${weakest.analysis.summary || ''}`,
           gaps: weakest.analysis.gaps.slice(0, 2), suggestions: weakest.analysis.suggestions.slice(0, 2),
