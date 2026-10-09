@@ -470,6 +470,8 @@ export default function SpacePage() {
   const [openSub, setOpenSub] = useState<any>(null);
   /** 沉浸模式：评分报告直接在舞台里出（退出后排行榜里照样能看） */
   const [stageReport, setStageReport] = useState<any>(null);
+  /** 每一段开演前的介绍页（这一幕是什么、会见到谁、在哪）；直达某一步（?go=）时跳过 */
+  const [intro, setIntro] = useState(true);
   const [runKey, setRunKey] = useState(0);
   const [freshId, setFreshId] = useState('');
 
@@ -557,7 +559,17 @@ export default function SpacePage() {
   const pickChapter = (cid: string | null) => {
     const q = new URLSearchParams(sp.toString());
     if (cid) q.set('ch', cid); else q.delete('ch');
-    setAnswering(false); setDemo(null); setStageReport(null); taughtOnce.current = false;
+    setAnswering(false); setDemo(null); setStageReport(null); setIntro(true); taughtOnce.current = false;
+    router.replace(`/lab/${id}?${q}`, { scroll: false });
+  };
+  // 操作台里走完一段：直接进下一段（先看下一段的介绍页），不用退出来再点
+  const chapterIdx = chapter ? chapters.indexOf(chapter) : -1;
+  const nextChapter = chapterIdx >= 0 && chapterIdx < chapters.length - 1 ? chapters[chapterIdx + 1] : null;
+  const goNext = () => {
+    if (!nextChapter) return;
+    const q = new URLSearchParams(sp.toString());
+    if (nextChapter.id) q.set('ch', nextChapter.id);
+    setStageReport(null); setDemo(null); setIntro(true); setStartAt(0); setRunKey(k => k + 1);
     router.replace(`/lab/${id}?${q}`, { scroll: false });
   };
   useEffect(() => {
@@ -566,13 +578,15 @@ export default function SpacePage() {
     goRef.current = null;
     const i = go === 'bench' ? sim.steps.findIndex((st: any) => st.type === 'bench') : Number(go) - 1;
     setStartAt(Math.max(0, i));
+    setIntro(false);
     setAnswering(true);
   }, [sim]);
   // 多章时排行榜按章分开（没记章节的老作答算第一章）
   const chapterSubs = useMemo(() => chapters.length > 1 && chapter ? subs.filter(s => (s.chapter_id || chapters[0]?.id) === chapter.id) : subs, [subs, chapters, chapter]);
   const ranked = useMemo(() => [...chapterSubs].sort((a, b) => (b.score ?? 0) - (a.score ?? 0)), [chapterSubs]);
-  const aiBare = subs.filter(s => s.candidate_type === 'ai' && !s.with_skill_id).slice(-1)[0];
-  const aiSkill = subs.filter(s => s.candidate_type === 'ai' && s.with_skill_id).slice(-1)[0];
+  // 「学之前 / 学之后」也按章分开：别拿第 1 章的分数挂在第 4 章上
+  const aiBare = chapterSubs.filter(s => s.candidate_type === 'ai' && !s.with_skill_id).slice(-1)[0];
+  const aiSkill = chapterSubs.filter(s => s.candidate_type === 'ai' && s.with_skill_id).slice(-1)[0];
   const solves = invs.filter(i => i.kind === 'solve').reverse();
 
   // ── 动作 ──
@@ -787,7 +801,7 @@ export default function SpacePage() {
 
       {/* ── 考验新人 ── */}
       {(mode === 'test' || mode === 'teach') && answering && sim && (
-        <SimStage title={chapters.length > 1 && chapter ? `${chapter.slot ? `${chapter.slot} · ` : ""}${chapter.title}` : space.title} role="rookie" immersive={!!sim.art} onExit={() => { setStageReport(null); setAnswering(false); }} header={
+        <SimStage title={chapters.length > 1 && chapter ? `${chapter.slot ? `${chapter.slot} · ` : ""}${chapter.title}` : space.title} role="rookie" immersive={!!sim.art} onExit={() => { setStageReport(null); setAnswering(false); setIntro(true); }} header={
           <div className="lab-stage-fields">
             {field(rookie.name, v => setRookie(r => ({ ...r, name: v })), '新兵姓名')}
             {field(rookie.note, v => setRookie(r => ({ ...r, note: v })), '背景（学校 / 专业）')}
@@ -803,23 +817,28 @@ export default function SpacePage() {
                   <ReportBody sub={stageReport} rubric={rubric} sim={sim} skill={skill} actions={
                     <div style={{ display: 'flex', gap: 8 }}>
                       <button className="lab-btn ghost sm" onClick={() => { setStageReport(null); setRunKey(k => k + 1); }}>再走一遍</button>
-                      <button className="lab-btn sm" onClick={() => { setStageReport(null); setAnswering(false); }}>退出操作台</button>
+                      {nextChapter
+                        ? <><button className="lab-btn ghost sm" onClick={() => { setStageReport(null); setAnswering(false); }}>退出操作台</button>
+                          <button className="lab-btn sm" onClick={goNext}>进入下一段 · {nextChapter.slot ? `${nextChapter.slot} ` : ''}{nextChapter.title} →</button></>
+                        : <button className="lab-btn sm" onClick={() => { setStageReport(null); setAnswering(false); setIntro(true); }}>{chapters.length > 1 ? '这一天走完了 · 回到时间轴' : '退出操作台'}</button>}
                     </div>
                   } />
                 </div>
               </div>
             </div>
+          ) : intro ? (
+            <ChapterIntro chapter={chapter} chapters={chapters} space={space} sim={sim} demo={!!demo}
+              onStart={() => setIntro(false)} />
           ) : (
             <SimRunner key={runKey + (demo ? '-demo' : '')} startAt={startAt} demo={demo || undefined} sim={sim} role="rookie" busy={!!busy} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); }} onFinish={trace => { const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, d ? undefined : trace); }} />
           )}
         </SimStage>
       )}
 
-      {(mode === 'test' || mode === 'teach') && !(answering && sim) && chapters.length > 1 && (
-        <DayTimeline chapters={chapters} current={chapter?.id || null} onPick={pickChapter} />
-      )}
       {(mode === 'test' || mode === 'teach') && !(answering && sim) && (
-        <div className="lab-in" style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))', alignItems: 'start' }}>
+        <div className={chapters.length > 1 ? 'day-layout' : ''}>
+        {chapters.length > 1 && <DayTimeline chapters={chapters} current={chapter?.id || null} onPick={pickChapter} />}
+        <div className="lab-in" style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))', alignItems: 'start', minWidth: 0 }}>
           <div className="lab-glass" style={{ padding: 22, minWidth: 0 }}>
             <Label>{chapters.length > 1 && chapter ? `A DAY · 第 ${chapters.indexOf(chapter) + 1} / ${chapters.length} 段` : `THE TASK · ${space.time_limit_min} MIN`}</Label>
             <h2 style={{ margin: '0 0 10px', fontSize: 19, fontWeight: 800, lineHeight: 1.4 }}>{chapters.length > 1 && chapter ? <>{chapter.slot && <span className="lab-mono" style={{ fontSize: 13, color: 'var(--v)', marginRight: 8 }}>{chapter.slot}</span>}{chapter.title}</> : space.title}</h2>
@@ -829,7 +848,7 @@ export default function SpacePage() {
               ? <div className="lab-pre">{chapter.sim?.intro}</div>
               : <div className="lab-pre">{space.brief}</div>}
             {space.materials && (!chapter || chapter.seq === 1 || chapters.length <= 1) && <div className="lab-mono" style={{ marginTop: 14, padding: 14, borderRadius: 14, background: 'rgba(23,26,46,.04)', fontSize: 12.5, lineHeight: 1.9, whiteSpace: 'pre-wrap', letterSpacing: 0, overflowX: 'auto', color: 'var(--ink2)' }}>{space.materials}</div>}
-            {space.deliverable && <div style={{ marginTop: 14, fontSize: 13.5 }}><b>交付物：</b>{space.deliverable}</div>}
+            {space.deliverable && (!chapter || chapter.seq === 1 || chapters.length <= 1) && <div style={{ marginTop: 14, fontSize: 13.5 }}><b>交付物：</b>{space.deliverable}</div>}
 
             {!answering ? (
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 18 }}>
@@ -862,7 +881,7 @@ export default function SpacePage() {
                 <Label>SAME MODEL · BEFORE / AFTER LEARNING</Label>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', gap: 12, textAlign: 'center' }}>
                   <div onClick={() => aiBare && setOpenSub(aiBare)} style={{ cursor: aiBare ? 'pointer' : 'default' }}><ScoreRing score={aiBare?.score ?? null} size={84} /><div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 4 }}>通用 AI 裸答</div></div>
-                  <div className="lab-mono" style={{ fontSize: 22, color: 'var(--v)', fontWeight: 800 }}>{aiBare && aiSkill ? `+${Math.round(aiSkill.score - aiBare.score)}` : '→'}</div>
+                  <div className="lab-mono" style={{ fontSize: 22, color: 'var(--v)', fontWeight: 800 }}>{aiBare && aiSkill ? `${aiSkill.score >= aiBare.score ? '+' : '−'}${Math.abs(Math.round(aiSkill.score - aiBare.score))}` : '→'}</div>
                   <div onClick={() => aiSkill && setOpenSub(aiSkill)} style={{ cursor: aiSkill ? 'pointer' : 'default' }}><ScoreRing score={aiSkill?.score ?? null} size={84} /><div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 4 }}>学过专家之后</div></div>
                 </div>
                 <div style={{ fontSize: 12.5, color: 'var(--ink3)', textAlign: 'center', marginTop: 10 }}>同一个模型、同一道题。差的不是知识，是专家的判断纪律。</div>
@@ -887,6 +906,7 @@ export default function SpacePage() {
               ))}
             </div>
           </div>
+        </div>
         </div>
       )}
 
@@ -1204,26 +1224,112 @@ const CHAPTER_KIND: Record<string, { label: string; color: string }> = {
   daily: { label: '日常', color: '#6b5cff' }, incident: { label: '突发', color: '#ef4444' }, assessment: { label: '考核', color: '#0ea5a4' },
 };
 
-/** 一天时间轴：多章时在任务卡片上方，点哪章进哪章 */
+const DAY_CSS = `
+.day-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 18px; align-items: start; }
+.day-tl { position: sticky; top: 76px; padding: 16px 12px 10px; }
+.day-tl ol { list-style: none; margin: 10px 0 0; padding: 0; }
+.day-tl li { position: relative; }
+.day-tl li:not(:last-child)::after { content: ''; position: absolute; left: 61px; top: 24px; bottom: -6px; width: 2px; background: rgba(106,92,255,.18); }
+.day-tl button { display: grid; grid-template-columns: 46px 14px minmax(0, 1fr); gap: 8px; align-items: start; width: 100%; text-align: left; background: none; border: 0;
+  padding: 8px 8px 14px 0; cursor: pointer; border-radius: 12px; font-family: inherit; color: var(--ink); transition: background .2s; }
+.day-tl button:hover { background: rgba(106,92,255,.05); }
+.day-tl li.on button { background: rgba(106,92,255,.09); }
+.day-tl .t { font-size: 12px; color: var(--ink3); padding-top: 2px; text-align: right; white-space: nowrap; }
+.day-tl li.on .t { color: var(--v); font-weight: 700; }
+.day-tl .dot { width: 14px; height: 14px; border-radius: 50%; margin-top: 3px; background: #fff; border: 2.5px solid var(--k); position: relative; z-index: 1; box-sizing: border-box; }
+.day-tl li.on .dot { background: var(--k); box-shadow: 0 0 0 4px rgba(106,92,255,.16); }
+.day-tl .body { display: grid; gap: 2px; min-width: 0; }
+.day-tl .kind { font-size: 11px; font-weight: 700; }
+.day-tl .body b { font-size: 13.5px; line-height: 1.45; }
+.day-tl .body small { font-size: 11.5px; color: var(--ink3); }
+@media (max-width: 900px) { .day-layout { grid-template-columns: minmax(0, 1fr); } .day-tl { position: static; } }
+`;
+
+/** 一天时间轴：多章时竖在左边当侧导航（时刻 · 圆点 · 连线），点哪段进哪段 */
 function DayTimeline({ chapters, current, onPick }: { chapters: any[]; current: string | null; onPick: (id: string | null) => void }) {
   return (
-    <div className="lab-in lab-glass" style={{ padding: '14px 18px', marginBottom: 14, overflowX: 'auto' }}>
-      <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>A DAY · {chapters.length} 章</div>
-      <div style={{ display: 'flex', gap: 10, minWidth: 'min-content' }}>
+    <nav className="lab-in lab-glass day-tl">
+      <style>{DAY_CSS}</style>
+      <div className="lab-mono lab-cap">A DAY · {chapters.length} 段</div>
+      <ol>
         {chapters.map((c, i) => {
           const on = (c.id || null) === current || (!current && i === 0);
           const k = CHAPTER_KIND[c.kind] || CHAPTER_KIND.daily;
           return (
-            <button key={c.id || i} onClick={() => onPick(c.id)} className="lab-btn ghost"
-              style={{ display: 'grid', gap: 2, textAlign: 'left', padding: '10px 14px', minWidth: 170, borderRadius: 14, height: 'auto',
-                boxShadow: on ? `0 0 0 2px ${k.color}` : undefined, background: on ? 'rgba(107,92,255,.08)' : undefined }}>
-              <span className="lab-mono" style={{ fontSize: 11.5, color: k.color }}>{c.slot || `第 ${c.seq || i + 1} 章`} · {k.label}</span>
-              <span style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--ink)', whiteSpace: 'normal', lineHeight: 1.4 }}>{c.title}</span>
-              <span style={{ fontSize: 11.5, color: 'var(--ink3)' }}>{c.sim?.steps?.length || 0} 步{c.sim?.steps?.some((st: any) => st.type === 'bench') ? ' · 含工位' : ''}</span>
-            </button>
+            <li key={c.id || i} className={on ? 'on' : ''}>
+              <button onClick={() => onPick(c.id)}>
+                <span className="t lab-mono">{c.slot || `第 ${i + 1} 段`}</span>
+                <span className="dot" style={{ ['--k' as string]: k.color }} />
+                <span className="body">
+                  <span className="kind" style={{ color: k.color }}>{k.label}</span>
+                  <b>{c.title}</b>
+                  <small>{c.sim?.steps?.length || 0} 步{c.sim?.steps?.some((st: any) => st.type === 'bench') ? ' · 含工位' : ''}</small>
+                </span>
+              </button>
+            </li>
           );
         })}
+      </ol>
+    </nav>
+  );
+}
+
+/** 每一段开演前的介绍页：这一幕是什么、几点、会见到谁、在哪、用到什么（第一段也有） */
+function ChapterIntro({ chapter, chapters, space, sim, demo, onStart }: { chapter: any; chapters: any[]; space: any; sim: Sim; demo: boolean; onStart: () => void }) {
+  const idx = chapter ? chapters.indexOf(chapter) : 0;
+  const n = chapters.length;
+  const k = CHAPTER_KIND[chapter?.kind] || CHAPTER_KIND.daily;
+  const cast: any[] = space?.cast || [];
+  const steps: any[] = sim.steps || [];
+  const people = cast.filter(m => m.kind === 'person' && !m.is_self && steps.some(s => s.scene?.who === m.name));
+  // 角色表还没有的老空间：直接用台词里的说话人
+  const looseWho = people.length ? [] : [...new Set(steps.map(s => s.scene?.who).filter((w: string) => w && !/^你/.test(w)))] as string[];
+  const places = cast.filter(m => m.kind === 'place' && steps.some(s => s.place === m.id || (m.image && (sim.art?.scenes?.[s.id] === m.image || s.bench?.scene?.image === m.image))));
+  const props = cast.filter(m => m.kind === 'prop' && steps.some(s => (s.props || []).includes(m.id)));
+  const brief = chapter?.brief || (idx <= 0 ? space?.brief : '');
+  const bench = steps.some(s => s.type === 'bench');
+  const card = (
+    <div className="lab-game-modal lab-in" style={{ width: 'min(100%, 780px)' }}>
+      <div className="lab-mono" style={{ fontSize: 12, letterSpacing: '.12em', color: k.color, fontWeight: 700 }}>
+        {n > 1 ? `第 ${idx + 1} / ${n} 段` : '这一幕'}{chapter?.slot ? ` · ${chapter.slot}` : ''} · {k.label}
       </div>
+      <h2 style={{ margin: '6px 0 10px', fontSize: 'clamp(20px, 2.4vw, 26px)', fontWeight: 800, lineHeight: 1.35 }}>{chapter?.title || sim.title}</h2>
+      {brief && <div style={{ fontSize: 14.5, color: 'var(--ink2)', lineHeight: 1.8, marginBottom: 10 }}>{brief}</div>}
+      {sim.intro && sim.intro !== brief && <div className="lab-game-recap" style={{ cursor: 'default' }}>{sim.intro}</div>}
+      {(people.length > 0 || looseWho.length > 0) && (
+        <div style={{ marginTop: 6 }}>
+          <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>这一段你会遇到</div>
+          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+            {people.map(m => (
+              <div key={m.id} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ width: 46, height: 46, borderRadius: '50%', overflow: 'hidden', background: 'linear-gradient(135deg,#ffb15f,#ff5fa2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, flexShrink: 0, border: '2px solid #fff', boxShadow: '0 4px 12px rgba(50,40,120,.18)' }}>
+                  {m.image ? <img src={m.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 12%' }} /> : m.name[0]}
+                </span>
+                <span style={{ display: 'grid', lineHeight: 1.35 }}><b style={{ fontSize: 14 }}>{m.name}</b><span style={{ fontSize: 12, color: 'var(--ink3)' }}>{String(m.type_name || '').split('·')[0]}</span></span>
+              </div>
+            ))}
+            {looseWho.map(w => <span key={w} className="lab-chip g">{w}</span>)}
+          </div>
+        </div>
+      )}
+      {(places.length > 0 || props.length > 0) && (
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 12 }}>
+          {places.map(m => <span key={m.id} className="lab-chip c">📍 {m.name.replace(/^工位：/, '工位 · ')}</span>)}
+          {props.map(m => <span key={m.id} className="lab-chip g">◇ {m.name}</span>)}
+        </div>
+      )}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 18, flexWrap: 'wrap' }}>
+        <button className="lab-btn" onClick={onStart}>{demo ? `看 ${space?.profile?.name || '他'} 走这一段 →` : '开始这一段 →'}</button>
+        <span style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{steps.length} 步{bench ? ' · 含虚拟工位' : ''} · 约 {Math.max(5, steps.length * 2)} 分钟</span>
+      </div>
+    </div>
+  );
+  if (!sim.art?.cover) return <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 0' }}>{card}</div>;
+  return (
+    <div className="lab-game">
+      <img className="lab-game-bg lab-in" src={places.find(m => m.image && !m.name.startsWith('工位'))?.image || sim.art.cover} alt="" />
+      <div className="lab-game-vignette" />
+      <div className="lab-game-mask">{card}</div>
     </div>
   );
 }

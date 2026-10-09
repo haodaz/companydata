@@ -229,7 +229,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt }
           {busy ? <>AI 核心处理中<span className="lab-dots" /></> : needsReveal && !confirmed ? '确认操作' : last ? (role === 'expert' ? '操作完毕，接受追问 →' : '操作完毕，请 AI 核心评分 →') : '下一步 →'}
         </button>
         {idx > 0 && !busy && <button className="lab-btn ghost" onClick={() => setIdx(i => i - 1)}>上一步</button>}
-        <button className="lab-btn ghost" disabled={busy} onClick={() => { if (window.confirm('退出后这次操作不会保存，确定退出？')) onCancel(); }} style={{ marginLeft: 'auto' }}>退出操作台</button>
+        {/* 退出只留操作台右上角那一个：这里以前还有一个，全屏时 confirm 弹不出来，点了像没反应 */}
       </div>}
     </>
   );
