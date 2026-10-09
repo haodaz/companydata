@@ -1,7 +1,8 @@
 /**
  * 企业画像批跑（服务端驱动，直接复用前端的流水线编排 runCompanyProfile）
  *
- *   npx tsx scripts/run-profiles.mts --task <taskId> [--minutes 14] [--concurrency 3] [--model gpt-5.6-luna]
+ *   npx tsx scripts/run-profiles.mts --task <taskId> [--minutes 14] [--concurrency 3] [--model gpt-5.6-luna] [--topics basic,campus]
+ * - --topics 只跑这些检索主题（不传就按任务上设的主题，任务也没设就全跑）；每个主题都是一次联网检索，按次计费
  *
  * - 只处理该任务里 status != success 的条目；每条跑完立即落库，可随时中断重跑
  * - --minutes 到时后不再领新条目，等在跑的跑完就退出（配合外层每轮播报进度）
@@ -15,6 +16,7 @@ const TASK = args.task;
 const MINUTES = parseFloat(args.minutes || '14');
 const CONC = parseInt(args.concurrency || '6');
 const MODEL = args.model || 'gpt-5.6-luna';
+const TOPICS_ARG = (args.topics || '').split(',').map((x: string) => x.trim()).filter(Boolean);
 const BASE = process.env.BASE_URL || 'http://localhost:3003';
 const TOKEN = process.env.AUTH_TOKEN || fs.readFileSync(process.env.TOKEN_FILE || path.join(process.cwd(), '.preview-token'), 'utf8').trim();
 if (!TASK) { console.error('need --task'); process.exit(1); }
@@ -36,9 +38,10 @@ const tasks = await api('/api/admin/company-tasks');
 const task = (tasks.tasks || []).find((t: any) => t.id === TASK);
 if (!task) { console.error('task not found'); process.exit(1); }
 const queue: any[] = task.items.filter((i: any) => i.status !== 'success');
+const TOPICS: string[] = TOPICS_ARG.length ? TOPICS_ARG : (task.topics || []);
 const startedAt = Date.now();
 const deadline = startedAt + MINUTES * 60_000;
-console.log(`[${new Date().toISOString()}] task=${task.name} pending=${queue.length}/${task.items.length} model=${MODEL} conc=${CONC} window=${MINUTES}min`);
+console.log(`[${new Date().toISOString()}] task=${task.name} pending=${queue.length}/${task.items.length} model=${MODEL} conc=${CONC} window=${MINUTES}min topics=${TOPICS.join(',') || '全部'}`);
 await patchTask({ id: TASK, status: 'running' });
 
 let ok = 0, bad = 0, aborted = 0;
@@ -48,7 +51,7 @@ async function worker(n: number) {
     const it = queue.shift()!;
     const t0 = Date.now();
     try {
-      const r = await runCompanyProfile({ id: it.id, company_id: it.company_id, company: it.company }, { model: MODEL, skipFilled: true, topicConcurrency: 7 }, {
+      const r = await runCompanyProfile({ id: it.id, company_id: it.company_id, company: it.company }, { model: MODEL, skipFilled: true, topicConcurrency: 7, topics: TOPICS.length ? TOPICS : undefined }, {
         onEvents: () => {}, onMarkdown: () => {}, onData: () => {}, waitIfPaused: async () => true,
       });
       const secs = Math.round((Date.now() - t0) / 1000);
