@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin as supabase } from '@/lib/supabase';
 
 export const runtime = 'nodejs';
@@ -61,17 +62,20 @@ export async function GET(request: Request) {
        }
     }
 
-    let statsQuery = supabase
-      .from('token_usage_logs')
-      .select('total_input_tokens, total_output_tokens, total_tokens, total_cost_usd, api_cost_cny, model_id, tool_name, created_at');
-
-    if (modelFilter) statsQuery = statsQuery.eq('model_id', modelFilter);
-    if (daysFilter > 0) {
-      const since = new Date(Date.now() - daysFilter * 86400000).toISOString();
-      statsQuery = statsQuery.gte('created_at', since);
-    }
-
-    const { data: allForStats } = await statsQuery;
+    // 统计要全量：PostgREST 单次最多 1000 行，翻页读完（以前只统计了最近 1000 条）
+    const since = daysFilter > 0 ? new Date(Date.now() - daysFilter * 86400000).toISOString() : '';
+    const statsBuild = (cols: string) => () => {
+      let q = supabase.from('token_usage_logs').select(cols).order('id');
+      if (modelFilter) q = q.eq('model_id', modelFilter);
+      if (since) q = q.gte('created_at', since);
+      return q;
+    };
+    const { data: allForStats } = await selectAll<any>(statsBuild('total_input_tokens, total_output_tokens, total_tokens, total_cost_usd, api_cost_cny, model_id, tool_name, created_at'));
+    // 联网搜索次数 / 费用（迁移 014 之后才有这两列；没有就当 0）
+    const { data: searchByRow, error: searchErr } = await selectAll<any>(statsBuild('search_calls, search_cost_usd'));
+    if (searchErr) searchByRow.length = 0;
+    const totalSearchCalls = searchByRow.reduce((a: number, r: any) => a + (r.search_calls || 0), 0);
+    const totalSearchCost = searchByRow.reduce((a: number, r: any) => a + (parseFloat(String(r.search_cost_usd)) || 0), 0);
 
     let totalInputTokens = 0, totalOutputTokens = 0, totalTokens = 0, totalCostUsd = 0, totalApiCostCny = 0;
     const modelStats: Record<string, { count: number; tokens: number; cost: number }> = {};
@@ -111,6 +115,8 @@ export async function GET(request: Request) {
         total_tokens: totalTokens,
         total_cost_usd: Math.round(totalCostUsd * 1_000_000) / 1_000_000,
         total_api_cost_cny: Math.round(totalApiCostCny * 100) / 100,
+        total_search_calls: totalSearchCalls,
+        total_search_cost_usd: Math.round(totalSearchCost * 10000) / 10000,
         model_stats: modelStats,
         tool_stats: toolStats,
       },

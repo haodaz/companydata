@@ -5,6 +5,7 @@ import { Card, Table, Tag, Select, Space, Typography, Statistic, Row, Col, Butto
 import { ReloadOutlined, DollarOutlined, ThunderboltOutlined, FileTextOutlined, RobotOutlined, InfoCircleOutlined, DownloadOutlined, BarChartOutlined } from '@ant-design/icons';
 import { exportToCsv } from '@/lib/export-csv';
 import { PageHeader } from '@/components/admin/PageHeader';
+import { PricingCard } from '@/components/admin/PricingCard';
 
 const { Title, Text } = Typography;
 
@@ -37,6 +38,8 @@ interface Stats {
   total_tokens: number;
   total_cost_usd: number;
   total_api_cost_cny: number;
+  total_search_calls?: number;
+  total_search_cost_usd?: number;
   model_stats: Record<string, { count: number; tokens: number; cost: number }>;
   tool_stats?: Record<string, { count: number; tokens: number; cost_usd: number; cost_cny: number }>;
 }
@@ -219,7 +222,17 @@ export default function TokenUsagePage() {
               />
             </Card>
           </Col>
-          <Col xs={12} md={8}>
+          <Col xs={12} md={4}>
+            <Card size="small" style={{ borderRadius: 12, borderTop: '3px solid #eb2f96' }}>
+              <Statistic
+                title={<Tooltip title="Gemini 联网 / 阿里云搜索 / OpenAI web search 按次另收费，已算进 AI 模型成本"><span style={{ fontSize: 13, color: '#8c8c8c' }}>联网搜索</span></Tooltip>}
+                value={stats.total_search_calls ?? 0}
+                suffix={<span style={{ fontSize: 12, color: '#8c8c8c', fontWeight: 400 }}>次 · {formatCost(stats.total_search_cost_usd || 0, currency)}</span>}
+                valueStyle={{ fontSize: 24, fontWeight: 700, color: '#1a1a2e' }}
+              />
+            </Card>
+          </Col>
+          <Col xs={12} md={4}>
             <Card size="small" style={{ borderRadius: 12, borderTop: '3px solid #fa8c16' }}>
               <Statistic
                 title={<span style={{ fontSize: 13, color: '#8c8c8c' }}>总 Token 消耗</span>}
@@ -338,40 +351,8 @@ export default function TokenUsagePage() {
         </Card>
       )}
 
-      {/* 模型价格参考 */}
-      <Card
-        size="small"
-        style={{ marginBottom: 24, borderRadius: 12, background: '#fafafa' }}
-        title={<span style={{ fontSize: 13 }}><InfoCircleOutlined style={{ color: '#8c8c8c', marginRight: 6 }} />模型定价参考 <Text type="secondary" style={{ fontSize: 12, fontWeight: 400 }}>（USD / 1M tokens · 2026 Q3）</Text></span>}
-      >
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
-          {[
-            { model: 'Gemini 3.8 Flash', input: 0.75, output: 3.75, tag: '最新', color: '#1a73e8' },
-            { model: 'Gemini 3.6 Flash', input: 0.75, output: 3.75, tag: '', color: '#4285f4' },
-            { model: 'Gemini 3.5 Flash', input: 0.75, output: 3.75, tag: '', color: '#34a853' },
-            { model: 'Gemini 3.1 Pro', input: 2.00, output: 12.00, tag: '旗舰', color: '#e8710a' },
-            { model: 'GPT-6 Astra', input: 10.00, output: 30.00, tag: '旗舰', color: '#ef4444' },
-            { model: 'GPT-5.6 Terra', input: 2.50, output: 10.00, tag: '平衡', color: '#f97316' },
-            { model: 'GPT-5.6 Luna', input: 0.50, output: 2.00, tag: '性价比', color: '#eab308' },
-            { model: 'DeepSeek V3', input: 0.27, output: 1.10, tag: '最划算', color: '#7c3aed' },
-            { model: 'GPT-4o', input: 2.50, output: 10.00, tag: '', color: '#10a37f' },
-            { model: 'Qwen Plus', input: 0.80, output: 2.00, tag: '搜索引擎', color: '#ff6a00' },
-          ].map(item => (
-            <div key={item.model} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 12px', background: '#fff', borderRadius: 8, border: '1px solid #f0f0f0' }}>
-              <div style={{ width: 4, height: 28, borderRadius: 2, background: item.color, flexShrink: 0 }} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 13, fontWeight: 500, color: '#1a1a2e' }}>
-                  {item.model}
-                  {item.tag && <Tag style={{ marginLeft: 6, fontSize: 10, lineHeight: '16px', padding: '0 4px', borderRadius: 4 }} color={item.color}>{item.tag}</Tag>}
-                </div>
-                <div style={{ fontSize: 11, color: '#8c8c8c' }}>
-                  入 ${item.input.toFixed(2)} / 出 ${item.output.toFixed(2)}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Card>
+      {/* 价目表（可编辑，记账按它算） */}
+      <PricingCard />
 
       {/* 详细日志表格 */}
       <Card

@@ -112,7 +112,7 @@ export async function searchJson(prompt: string, modelId: string, log: Pick<Toke
       searchQueries = result.response.candidates?.[0]?.groundingMetadata?.webSearchQueries || [];
       if (text.trim()) { if (attempts[i] !== modelId) console.warn(`[searchJson] ${modelId} 连续空返回，已用 ${attempts[i]} 兜底`); break; }
       console.warn(`[searchJson] ${attempts[i]} 空返回（第 ${i + 1} 次）`, log.task_name);
-      await logTokenUsage({ ...log, model_id: attempts[i], usageMetadata, success: false, error_message: 'empty response' }).catch(() => {});
+      await logTokenUsage({ ...log, model_id: attempts[i], usageMetadata, success: false, error_message: 'empty response', search_calls: 1 }).catch(() => {});
     }
   } else {
     const result = await generateContent(prompt, modelId, { jsonMode: true, webSearch: true, fast: true });
@@ -120,6 +120,7 @@ export async function searchJson(prompt: string, modelId: string, log: Pick<Toke
     usageMetadata = result.usageMetadata;
   }
 
-  await logTokenUsage({ ...log, model_id: modelId, usageMetadata, success: true }).catch(e => console.error('Token logging failed', e));
+  // 每次 searchJson 是一次带搜索的调用（Gemini 按 grounded prompt、阿里云 / OpenAI 按搜索调用计费）
+  await logTokenUsage({ ...log, model_id: modelId, usageMetadata, success: true, search_calls: 1 }).catch(e => console.error('Token logging failed', e));
   return { parsed: await resolveGroundingRedirects(parseJsonLoose(text)), searchQueries };
 }
