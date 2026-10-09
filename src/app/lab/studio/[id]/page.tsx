@@ -41,7 +41,8 @@ export default function StudioPage() {
   const [preview, setPreview] = useState(false);
   const [newType, setNewType] = useState('choose');
   // 生成：模型（默认 luna，写故事要好一点的模型）、任务进度
-  const [genModel, setGenModel] = useState('gpt-5.6-luna');
+  // 默认生成模型：NEXT_PUBLIC_LAB_GEN_MODEL（公司国内部署设 qwen-max；海外默认 luna）
+  const [genModel, setGenModel] = useState(process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna');
   const [genHint, setGenHint] = useState('');
   const [genArt, setGenArt] = useState(true);
   const [dayOpen, setDayOpen] = useState(false);
