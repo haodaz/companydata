@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { bandLevel, bandText } from '@/lib/lab-cert';
+import { PASS_SCORE, bandLevel, bandText, passed } from '@/lib/lab-cert';
 
 /**
  * 证书页夹（仿诺奖证书）：深色硬壳，打开是两页一屏。
@@ -26,7 +26,11 @@ const CSS = `
 .folio-leaf > .back { transform: rotateY(180deg); }
 @keyframes leaf-next { to { transform: rotateY(-180deg); } }
 @keyframes leaf-prev { to { transform: rotateY(180deg); } }
-.folio-nav { display: flex; gap: 10px; align-items: center; }
+.folio-nav { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: center; max-width: 100%; }
+.folio-tabs { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; align-items: center; }
+.folio-tabs button { border: 0; cursor: pointer; font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 99px; color: var(--ink2); background: rgba(106,92,255,.08); }
+.folio-tabs button.on { color: #fff; background: linear-gradient(120deg, var(--v), var(--c)); }
+.folio-todo { font-size: 12px; color: var(--ink3); padding: 6px 10px; border-radius: 99px; outline: 1.5px dashed rgba(106,92,255,.3); }
 .folio-dots { display: flex; gap: 6px; } .folio-dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(106,92,255,.25); } .folio-dots i.on { background: var(--v); }
 .folio-stack { display: none; }
 .cover-stage { width: min(100%, 1180px); display: flex; justify-content: center; perspective: 2600px; padding: 10px 0 20px; }
@@ -89,6 +93,7 @@ const fmtDate = (iso: string) => { const d = new Date(iso); return `${d.getFullY
 const ISSUERS = '平方创想 · 方略研究院';
 
 export interface FolioData {
+  id?: string;
   no: string; date: string; score: number; overall: number; level: string; match: number | null; beat: number | null; peers: number;
   candidate: { name: string; location?: string; note?: string };
   space: { id: string; name: string; role: string; avatar: string; profession: string; company?: string };
@@ -254,6 +259,12 @@ function PageRecord({ d }: { d: FolioData }) {
             <tr><td className="pg-serif" style={{ fontWeight: 900 }}>{d.day ? '全天平均' : '综合'}</td><td className="pg-mono">{d.day ? (d.match == null ? '—' : `${d.match}%`) : '100%'}</td><td className="pg-mono" style={{ fontWeight: 800, whiteSpace: 'nowrap' }}>{d.score} / 100</td><td className="pg-mono pg-accent" style={{ fontWeight: 900 }}>{bandText(d.overall)}</td></tr>
           </tbody>
         </table>
+        {!d.day && <div style={{ marginTop: '2cqi', display: 'flex', alignItems: 'center', gap: '1.4cqi', fontSize: '2cqi' }}>
+          <span className="pg-cap">本段结果</span>
+          {passed(d.score)
+            ? <b style={{ color: '#12865a', padding: '.4cqi 1.4cqi', borderRadius: '1cqi', background: 'rgba(18,161,80,.1)' }}>通过 ✓</b>
+            : <b style={{ color: '#c4323a', padding: '.4cqi 1.4cqi', borderRadius: '1cqi', background: 'rgba(220,38,38,.08)' }}>未通过 · {PASS_SCORE} 分及格，重做这一段可以刷新成绩</b>}
+        </div>}
         {/* 纸面有限：每条最多两行，全文在成绩单的网页版里看得到 */}
         <div style={{ display: 'grid', gap: '1.6cqi', marginTop: '3cqi', fontSize: '1.85cqi', lineHeight: 1.6 }}>
           <div><div className="pg-cap" style={{ marginBottom: '.4cqi' }}>{d.day ? '这一天' : '总体评价'}</div><div className="pg-clamp" style={{ WebkitLineClamp: 3 }}>{d.analysis.summary}</div></div>
@@ -350,7 +361,7 @@ function PageCharts({ d }: { d: FolioData }) {
 }
 
 /** 封皮：深色硬壳、烫金字，点一下翻开 */
-function Cover({ d, opening, onOpen }: { d: FolioData; opening: boolean; onOpen: () => void }) {
+function Cover({ d, opening, onOpen, progress }: { d: FolioData; opening: boolean; onOpen: () => void; progress?: { done: number; total: number } | null }) {
   return (
     <div className="cover-stage">
       <div className={`cover${opening ? ' opening' : ''}`} onClick={onOpen} role="button" aria-label="打开证书">
@@ -382,7 +393,8 @@ function Cover({ d, opening, onOpen }: { d: FolioData; opening: boolean; onOpen:
           <div className="pg-serif cover-foil" style={{ fontSize: '8.4cqi', fontWeight: 900, letterSpacing: '.3em', marginTop: '2cqi', paddingLeft: '.3em' }}>职业体验证书</div>
           <div style={{ width: '18cqi', height: '.25cqi', background: 'linear-gradient(90deg, transparent, #d2a95a, transparent)', margin: '4cqi 0' }} />
           <div className="pg-serif" style={{ fontSize: '4.6cqi', fontWeight: 800, color: '#f3e3b8' }}>{d.candidate.name || '匿名新兵'}的证书</div>
-          <div style={{ fontSize: '2.5cqi', marginTop: '1.6cqi', opacity: .75 }}>{d.space.role}的一天{d.day ? ` · 全天 ${d.dims.length} 段` : ''}</div>
+          <div style={{ fontSize: '2.5cqi', marginTop: '1.6cqi', opacity: .75 }}>{d.space.role}的一天{progress ? ` · 已通过 ${progress.done} / ${progress.total} 段` : d.day ? ` · 全天 ${d.dims.length} 段` : ''}</div>
+          {progress && <div style={{ fontSize: '2.1cqi', marginTop: '1.4cqi', opacity: .6, letterSpacing: '.12em' }}>证书待解锁 · 每段 60 分通过</div>}
           <div style={{ flex: 1.2 }} />
           <div className="pg-serif" style={{ fontSize: '2.3cqi', letterSpacing: '.3em', opacity: .8 }}>平方创想 · 方略研究院</div>
           <div style={{ fontSize: '2cqi', marginTop: '3cqi', opacity: .6, letterSpacing: '.2em' }}>{opening ? '正在打开…' : '点击打开'}</div>
@@ -408,27 +420,47 @@ export function ScoreFolio({ d }: { d: FolioData }) {
 }
 
 /** 页夹本体：两屏四页，翻页有动画；窄屏四页竖排；打印四页 A4 */
-export function CertFolio({ d }: { d: FolioData }) {
-  const pages = [<PageCert key="c" d={d} />, <PageArt key="a" d={d} />, <PageRecord key="r" d={d} />, <PageCharts key="ch" d={d} />];
-  const [spread, setSpread] = useState(0);
+export interface FolderData {
+  /** 走完整天才有：证书、画作、全天成绩用它 */ day: FolioData | null;
+  /** 每一段已完成的成绩（按时段先后） */ parts: FolioData[];
+  complete: boolean; total: number;
+}
+
+/**
+ * 证书夹：一个人一个职业一本，越攒越厚——每走完一段放进一份成绩（成绩记录 | 能力画像），
+ * 一天走完再放进全天成绩和证书（证书 | 画作，翻开就是它）。一天只有一段也是同样的逻辑。
+ * at = 打开后先翻到哪一份（作答编号）。
+ */
+export function CertFolio({ f, at }: { f: FolderData; at?: string | null }) {
+  const spreads: { key: string; label: string; pages: React.ReactNode[] }[] = [];
+  if (f.complete && f.day) spreads.push({ key: 'cert', label: '证书', pages: [<PageCert key="c" d={f.day} />, <PageArt key="a" d={f.day} />] });
+  for (const p of f.parts) spreads.push({ key: p.id || p.no, label: `${p.chapter?.slot || (p.chapter ? `第 ${p.chapter.n} 段` : '成绩')}${passed(p.score) ? ' ✓' : ' ✗'}`, pages: [<PageRecord key={`r${p.no}`} d={p} />, <PageCharts key={`c${p.no}`} d={p} />] });
+  if (f.complete && f.day) spreads.push({ key: 'day', label: '全天', pages: [<PageRecord key="dr" d={f.day} />, <PageCharts key="dc" d={f.day} />] });
+  const pages = spreads.flatMap(x => x.pages);
+  const startAt = Math.max(0, at ? spreads.findIndex(x => x.key === at) : 0);
+  const [spread, setSpread] = useState(startAt);
   // 先看封皮，点一下翻开
   const [cover, setCover] = useState<'closed' | 'opening' | 'open'>('closed');
   const openCover = () => { if (cover !== 'closed') return; setCover('opening'); setTimeout(() => setCover('open'), 950); };
   const [turn, setTurn] = useState<null | 'next' | 'prev'>(null);
+  const last = spreads.length - 1;
   const go = (dir: 'next' | 'prev') => {
-    if (turn || (dir === 'next' && spread === 1) || (dir === 'prev' && spread === 0)) return;
+    if (turn || (dir === 'next' && spread >= last) || (dir === 'prev' && spread <= 0)) return;
     setTurn(dir);
-    setTimeout(() => { setSpread(s => s + (dir === 'next' ? 1 : -1)); setTurn(null); }, 900);
+    setTimeout(() => { setSpread(x => x + (dir === 'next' ? 1 : -1)); setTurn(null); }, 900);
   };
   const L = (i: number) => <div className="pg-slot l" style={{ borderRadius: '4px 0 0 4px', overflow: 'hidden' }}>{pages[i]}</div>;
   const R = (i: number) => <div className="pg-slot r" style={{ borderRadius: '0 4px 4px 0', overflow: 'hidden' }}>{pages[i]}</div>;
   // 翻页时：底下先换成翻过去之后看得见的两页，中间一张纸带着正反两面转过去
-  const base = turn === 'next' ? [0, 3] : turn === 'prev' ? [0, 3] : [spread * 2, spread * 2 + 1];
+  const k = spread * 2;
+  const base = turn === 'next' ? [k, k + 3] : turn === 'prev' ? [k - 2, k + 1] : [k, k + 1];
+  const coverD = f.day || f.parts[f.parts.length - 1];
+  if (!coverD) return null;
   if (cover !== 'open') return (
     <div className="folio-wrap">
       <style>{CSS}</style>
-      <Cover d={d} opening={cover === 'opening'} onOpen={openCover} />
-      {/* 打印时不要封皮，直接四页 */}
+      <Cover d={coverD} opening={cover === 'opening'} onOpen={openCover} progress={f.complete ? null : { done: f.parts.filter(p => passed(p.score)).length, total: f.total }} />
+      {/* 打印时不要封皮，直接每一页 */}
       <div className="folio-stack" style={{ display: 'none' }}>{pages.map((p, i) => <div key={i}>{p}</div>)}</div>
     </div>
   );
@@ -438,14 +470,17 @@ export function CertFolio({ d }: { d: FolioData }) {
       <div className="folio">
         <div className="folio-spread">
           {L(base[0])}{R(base[1])}
-          {turn === 'next' && <div className="folio-leaf next"><div className="front">{pages[1]}</div><div className="back">{pages[2]}</div></div>}
-          {turn === 'prev' && <div className="folio-leaf prev"><div className="front">{pages[2]}</div><div className="back">{pages[1]}</div></div>}
+          {turn === 'next' && <div className="folio-leaf next"><div className="front">{pages[k + 1]}</div><div className="back">{pages[k + 2]}</div></div>}
+          {turn === 'prev' && <div className="folio-leaf prev"><div className="front">{pages[k]}</div><div className="back">{pages[k - 1]}</div></div>}
         </div>
       </div>
       <div className="folio-nav no-print">
-        <button className="lab-btn ghost sm" disabled={spread === 0 || !!turn} onClick={() => go('prev')}>← 证书</button>
-        <span className="folio-dots"><i className={spread === 0 ? 'on' : ''} /><i className={spread === 1 ? 'on' : ''} /></span>
-        <button className="lab-btn sm" disabled={spread === 1 || !!turn} onClick={() => go('next')}>翻页：成绩 →</button>
+        <button className="lab-btn ghost sm" disabled={spread === 0 || !!turn} onClick={() => go('prev')}>← {spread > 0 ? spreads[spread - 1].label : ''}</button>
+        <span className="folio-tabs">
+          {spreads.map((x, i) => <button key={x.key} className={i === spread ? 'on' : ''} disabled={!!turn} onClick={() => setSpread(i)}>{x.label}</button>)}
+          {!f.complete && <span className="folio-todo">证书 · 还差 {f.total - f.parts.filter(p => passed(p.score)).length} 段通过</span>}
+        </span>
+        <button className="lab-btn sm" disabled={spread >= last || !!turn} onClick={() => go('next')}>{spread < last ? `翻页：${spreads[spread + 1].label === '全天' ? '全天成绩' : spreads[spread + 1].label === '证书' ? '证书' : `${spreads[spread + 1].label} 成绩`}` : '翻页'} →</button>
       </div>
       <div className="folio-stack">{pages.map((p, i) => <div key={i}>{p}</div>)}</div>
     </div>
@@ -463,20 +498,19 @@ export const MINI_COVER_CSS = `
 .mcv.empty { background: rgba(255,255,255,.55); box-shadow: none; color: var(--ink3); outline: 2px dashed rgba(106,92,255,.28); outline-offset: -2px; }
 .mcv.empty::before { display: none; }
 .mcv.day { background: radial-gradient(130% 100% at 30% 0%, #5a3f9e 0%, #2a1f5c 50%, #120d2e 100%); }
-.mcv.locked { filter: grayscale(1) brightness(1.15); opacity: .55; cursor: default; }
-.mcv.locked:hover { transform: none; }
+.mcv.locked { filter: grayscale(.85) brightness(1.1); opacity: .78; }
 `;
 
 export function MiniCover({ role, title, slot, band, name, empty, day, locked, onClick }: { role: string; title: string; slot?: string; band?: number | null; name?: string; empty?: boolean; day?: boolean; locked?: string; onClick: () => void }) {
   return (
-    <button className={`mcv${empty ? ' empty' : ''}${day ? ' day' : ''}${locked ? ' locked' : ''}`} onClick={locked ? undefined : onClick} title={locked || (empty ? '还没走这一段' : `${role} · ${title}`)}>
+    <button className={`mcv${empty ? ' empty' : ''}${day ? ' day' : ''}${locked ? ' locked' : ''}`} onClick={onClick} title={locked || (empty ? '还没走这一段' : `${role} · ${title}`)}>
       <div style={{ position: 'absolute', inset: '11cqi 9cqi 10cqi', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {!empty && <span style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: '11cqi', opacity: .9 }} className="mcv-foil">R²</span>}
         <span className="pg-mono" style={{ fontSize: '5.2cqi', letterSpacing: '.16em', marginTop: empty ? 0 : '3cqi', opacity: .75 }}>{slot || (day ? 'A FULL DAY' : '')}</span>
         <span className={`pg-serif${empty ? '' : ' mcv-foil'}`} style={{ fontSize: '10cqi', fontWeight: 900, lineHeight: 1.3, marginTop: '3cqi' }}>{day ? `${role}的一天` : title}</span>
         <span style={{ flex: 1 }} />
         {empty ? <span style={{ fontSize: '7.5cqi', fontWeight: 700, color: 'var(--v)' }}>去完成 →</span> : <>
-          {locked ? <span style={{ fontSize: '12cqi' }}>🔒</span> : <span className="pg-mono mcv-foil" style={{ fontSize: '16cqi', fontWeight: 900, letterSpacing: 0, lineHeight: 1 }}>{band != null ? bandText(band) : ''}</span>}
+          {locked ? <span style={{ fontSize: '10cqi' }}>🔒</span> : <span className="pg-mono mcv-foil" style={{ fontSize: '16cqi', fontWeight: 900, letterSpacing: 0, lineHeight: 1 }}>{band != null ? bandText(band) : ''}</span>}
           <span style={{ fontSize: '5.6cqi', marginTop: '2cqi', opacity: .75 }}>{locked || (day ? (name ? `${name}的证书` : '职业体验证书') : name ? `${name}的成绩` : role)}</span>
         </>}
       </div>

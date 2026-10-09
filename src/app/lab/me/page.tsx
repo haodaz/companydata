@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/lib/user-context';
-import { band, bandText, visitorIds } from '@/lib/lab-cert';
+import { PASS_SCORE, band, bandText, passed, visitorIds } from '@/lib/lab-cert';
 import { MINI_COVER_CSS, MiniCover } from '@/components/lab/CertFolio';
 
 /**
@@ -27,6 +27,8 @@ const CSS = `
 .me-part::before { content: ''; position: absolute; left: 0; top: 0; right: 0; height: 3px; background: linear-gradient(90deg, #6a5cff, #12b5cb); }
 .me-part.empty { background: rgba(255,255,255,.5); box-shadow: none; outline: 1.5px dashed rgba(106,92,255,.28); outline-offset: -1.5px; color: var(--ink3); }
 .me-part.empty::before { display: none; }
+.me-part.fail { box-shadow: 0 0 0 1.5px rgba(220,38,38,.45), 0 6px 16px rgba(60,50,160,.08); }
+.me-part.fail::before { background: linear-gradient(90deg, #ef4444, #f59e0b); }
 .me-part .bd { font-size: 22px; font-weight: 900; letter-spacing: 0; background: linear-gradient(100deg, #6a5cff, #12b5cb); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 @media (max-width: 640px) { .me-row { grid-template-columns: minmax(0, 1fr); } .me-book { max-width: 150px; } }
 .me-grid-old { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); padding: 6px 2px 14px; border-bottom: 10px solid rgba(106,92,255,.10); border-radius: 0 0 6px 6px; }
@@ -59,7 +61,7 @@ export default function MePage() {
 
   const stats = useMemo(() => {
     const sp = d?.spaces || [];
-    return { parts: sp.reduce((a, s) => a + s.done, 0), certs: sp.filter(s => s.done === s.total).length, roles: sp.length };
+    return { parts: sp.reduce((a, s) => a + s.done, 0), certs: sp.filter(s => s.chapters.every((c: any) => c.best && passed(c.best.score))).length, roles: sp.length };
   }, [d]);
 
   return (
@@ -69,7 +71,7 @@ export default function MePage() {
         <div>
           <div className="lab-mono lab-cap">EXPERIENCE · 我的</div>
           <h1 style={{ fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: 800, margin: '2px 0 4px' }}>{stats.certs ? `已获得 ${stats.certs} 本证书` : stats.parts ? `已完成 ${stats.parts} 段` : '我的进度与证书'}</h1>
-          <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{stats.roles ? `走过 ${stats.roles} 个职业、${stats.parts} 段。` : ''}每一段都有成绩单；把一个职业的一天全部走完，才能领这本证书。</div>
+          <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{stats.roles ? `走过 ${stats.roles} 个职业、${stats.parts} 段。` : ''}每一段都有成绩单；一个职业的一天每段都 60 分通过，才能领这本证书。</div>
         </div>
         <div style={{ flex: 1 }} />
         <button className="lab-btn ghost sm" onClick={() => router.push('/lab/gallery')}>去体验馆</button>
@@ -104,7 +106,9 @@ export default function MePage() {
         ) : tab === 'certs' ? (
           <div style={{ display: 'grid', gap: 16 }}>
             {d.spaces.map(s => {
-              const full = s.done === s.total;
+              // 每段都通过（≥ 60）才算拿到证书；走过但没过的段要重做
+              const okN = s.chapters.filter((c: any) => c.best && passed(c.best.score)).length;
+              const full = okN === s.total;
               const ids = s.chapters.map((c: any) => c.best?.id).filter(Boolean);
               return (
                 <div key={s.id} className="lab-glass" style={{ padding: 18 }}>
@@ -112,10 +116,10 @@ export default function MePage() {
                     {s.avatar && <img src={s.avatar} alt="" style={{ width: 44, height: 44, borderRadius: '50%', objectFit: 'cover', objectPosition: '54% 10%', border: '2px solid #fff', boxShadow: '0 4px 12px rgba(50,40,120,.15)' }} />}
                     <div>
                       <div style={{ fontSize: 16, fontWeight: 800 }}>{s.role}的一天</div>
-                      <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{s.name} · 已集 {s.done} / {s.total} 段</div>
+                      <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{s.name} · 已通过 {okN} / {s.total} 段{s.done > okN ? ` · ${s.done - okN} 段未通过` : ''}</div>
                     </div>
                     <div style={{ flex: 1 }} />
-                    <div style={{ width: 140, height: 6, borderRadius: 3, background: 'rgba(106,92,255,.12)', overflow: 'hidden' }}><div style={{ width: `${(s.done / s.total) * 100}%`, height: '100%', background: full ? 'linear-gradient(90deg,#6a5cff,#12b5cb,#ff5fa2)' : 'linear-gradient(90deg,var(--v),var(--c))' }} /></div>
+                    <div style={{ width: 140, height: 6, borderRadius: 3, background: 'rgba(106,92,255,.12)', overflow: 'hidden' }}><div style={{ width: `${(okN / s.total) * 100}%`, height: '100%', background: full ? 'linear-gradient(90deg,#6a5cff,#12b5cb,#ff5fa2)' : 'linear-gradient(90deg,var(--v),var(--c))' }} /></div>
                     {full
                       ? <button className="me-day" onClick={() => router.push(`/lab/cert/day?s=${ids.join(',')}`)}>打开证书 ✦</button>
                       : <button className="lab-btn ghost sm" onClick={() => router.push(`/lab/${s.id}?m=test`)}>继续这一天</button>}
@@ -124,10 +128,10 @@ export default function MePage() {
                   <div className="me-row">
                     <div className="me-parts">
                       {s.chapters.map((c: any) => c.best ? (
-                        <button key={c.n} className="me-part" onClick={() => router.push(`/lab/cert/${c.best.id}`)} title={`查看成绩单 ${c.best.no}`}>
+                        <button key={c.n} className={`me-part${passed(c.best.score) ? '' : ' fail'}`} onClick={() => router.push(`/lab/cert/day?s=${ids.join(',')}&at=${c.best.id}`)} title={`查看成绩单 ${c.best.no}`}>
                           <span className="lab-mono" style={{ fontSize: 11, color: 'var(--ink3)' }}>{c.slot || `第 ${c.n} 段`}</span>
                           <b style={{ fontSize: 13.5, lineHeight: 1.4 }}>{c.title}</b>
-                          <span style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}><span className="lab-mono bd">{bandText(c.best.band)}</span><span style={{ fontSize: 11, color: 'var(--ink3)' }}>{c.tries > 1 ? `走过 ${c.tries} 次` : '成绩单 →'}</span></span>
+                          <span style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}><span className="lab-mono bd">{bandText(c.best.band)}</span><span style={{ fontSize: 11, color: passed(c.best.score) ? 'var(--ink3)' : '#c4323a', fontWeight: passed(c.best.score) ? 400 : 700 }}>{passed(c.best.score) ? (c.tries > 1 ? `走过 ${c.tries} 次 ✓` : '通过 ✓') : `未过 ${PASS_SCORE} · 重做`}</span></span>
                         </button>
                       ) : (
                         <button key={c.n} className="me-part empty" onClick={() => router.push(`/lab/${s.id}?m=test${c.id ? `&ch=${c.id}` : ''}`)}>
@@ -138,9 +142,10 @@ export default function MePage() {
                       ))}
                     </div>
                     <div className="me-book">
+                      {/* 证书夹：没拿到证书时是灰的，但也能打开看里面已经夹着的成绩 */}
                       <MiniCover day role={s.role} title="" band={full ? band(Math.round(s.chapters.reduce((a: number, c: any) => a + (c.best?.score || 0), 0) / s.total)) : null}
                         name={full ? (s.chapters.map((c: any) => c.best?.name).filter((n: string) => n && n !== '匿名新兵').pop() || me.name) : undefined}
-                        locked={full ? undefined : `集齐 ${s.total} 段解锁 · 已 ${s.done}`} onClick={() => router.push(`/lab/cert/day?s=${ids.join(',')}`)} />
+                        locked={full ? undefined : `证书待解锁 · 已通过 ${okN}/${s.total}`} onClick={() => ids.length && router.push(`/lab/cert/day?s=${ids.join(',')}`)} />
                     </div>
                   </div>
                 </div>

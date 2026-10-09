@@ -1002,8 +1002,7 @@ function castOf(space: any, sim: Sim | null) {
           onTeach={() => { if (sim && chapterTrace) { setDemo(chapterTrace); setIntro(true); setAnswering(true); } }} />
       )}
       {(mode === 'test' || mode === 'teach') && !isDay && !(answering && sim) && (
-        <div className={chapters.length > 1 ? 'day-layout' : ''}>
-        {chapters.length > 1 && <DayTimeline chapters={chapters} current={chapter?.id || null} onPick={pickChapter} />}
+        <div>
         <div className="lab-in" style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))', alignItems: 'start', minWidth: 0 }}>
           <div className="lab-glass" style={{ padding: 22, minWidth: 0 }}>
             <Label>{chapters.length > 1 && chapter ? `A DAY · 第 ${chapters.indexOf(chapter) + 1} / ${chapters.length} 段` : `THE TASK · ${space.time_limit_min} MIN`}</Label>
@@ -1356,55 +1355,6 @@ const CHAPTER_KIND: Record<string, { label: string; color: string }> = {
   daily: { label: '日常', color: '#6b5cff' }, incident: { label: '突发', color: '#ef4444' }, assessment: { label: '考核', color: '#0ea5a4' },
 };
 
-const DAY_CSS = `
-.day-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 18px; align-items: start; }
-.day-tl { position: sticky; top: 76px; padding: 16px 12px 10px; }
-.day-tl ol { list-style: none; margin: 10px 0 0; padding: 0; }
-.day-tl li { position: relative; }
-.day-tl li:not(:last-child)::after { content: ''; position: absolute; left: 61px; top: 24px; bottom: -6px; width: 2px; background: rgba(106,92,255,.18); }
-.day-tl button { display: grid; grid-template-columns: 46px 14px minmax(0, 1fr); gap: 8px; align-items: start; width: 100%; text-align: left; background: none; border: 0;
-  padding: 8px 8px 14px 0; cursor: pointer; border-radius: 12px; font-family: inherit; color: var(--ink); transition: background .2s; }
-.day-tl button:hover { background: rgba(106,92,255,.05); }
-.day-tl li.on button { background: rgba(106,92,255,.09); }
-.day-tl .t { font-size: 12px; color: var(--ink3); padding-top: 2px; text-align: right; white-space: nowrap; }
-.day-tl li.on .t { color: var(--v); font-weight: 700; }
-.day-tl .dot { width: 14px; height: 14px; border-radius: 50%; margin-top: 3px; background: #fff; border: 2.5px solid var(--k); position: relative; z-index: 1; box-sizing: border-box; }
-.day-tl li.on .dot { background: var(--k); box-shadow: 0 0 0 4px rgba(106,92,255,.16); }
-.day-tl .body { display: grid; gap: 2px; min-width: 0; }
-.day-tl .kind { font-size: 11px; font-weight: 700; }
-.day-tl .body b { font-size: 13.5px; line-height: 1.45; }
-.day-tl .body small { font-size: 11.5px; color: var(--ink3); }
-@media (max-width: 900px) { .day-layout { grid-template-columns: minmax(0, 1fr); } .day-tl { position: static; } }
-`;
-
-/** 一天时间轴：多章时竖在左边当侧导航（时刻 · 圆点 · 连线），点哪段进哪段 */
-function DayTimeline({ chapters, current, onPick }: { chapters: any[]; current: string | null; onPick: (id: string | null) => void }) {
-  return (
-    <nav className="lab-in lab-glass day-tl">
-      <style>{DAY_CSS}</style>
-      <div className="lab-mono lab-cap">A DAY · {chapters.length} 段</div>
-      <ol>
-        {chapters.map((c, i) => {
-          const on = (c.id || null) === current || (!current && i === 0);
-          const k = CHAPTER_KIND[c.kind] || CHAPTER_KIND.daily;
-          return (
-            <li key={c.id || i} className={on ? 'on' : ''}>
-              <button onClick={() => onPick(c.id)}>
-                <span className="t lab-mono">{c.slot || `第 ${i + 1} 段`}</span>
-                <span className="dot" style={{ ['--k' as string]: k.color }} />
-                <span className="body">
-                  <span className="kind" style={{ color: k.color }}>{k.label}</span>
-                  <b>{c.title}</b>
-                  <small>{c.sim?.steps?.length || 0} 步{c.sim?.steps?.some((st: any) => st.type === 'bench') ? ' · 含工位' : ''}</small>
-                </span>
-              </button>
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
-  );
-}
 
 /** 这一段出场的人 / 地点 / 道具（按角色表；没有角色表的老空间用台词里的说话人） */
 function castOf(space: any, sim: Sim | null) {

@@ -26,3 +26,7 @@ export function visitorIds(userId?: string | number | null): string[] {
   } catch { /* 无痕模式：只能靠登录账号 */ }
   return out;
 }
+
+/** 每一段的及格线：60 分（等级 5.5「基本胜任」）。每段都过了才发证书，否则只有成绩单，提示去重做哪一段 */
+export const PASS_SCORE = 60;
+export const passed = (score?: number | null) => (score ?? 0) >= PASS_SCORE;

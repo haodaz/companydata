@@ -73,11 +73,25 @@ export async function certData(sid: string) {
       id: space.id, title: space.title, name: space.profile?.name || '', role: space.profile?.role || '', avatar: space.profile?.avatar || '',
       profession: jd.career?.profession || jd.title || space.title, company: jd.kind === 'career' ? '' : jd.company || '',
     },
+    chapters_all: chapters.map((c: any) => ({ id: c.id, slot: c.slot, title: c.title })),
     chapter: chapter ? { id: chapter.id, n: idx + 1, total: chapters.length, slot: chapter.slot || '', title: chapter.title, kind: chapter.kind } : null,
     skill: skill ? { expert: skill.source === 'jd-draft' ? '' : skill.expert_name || '', location: skill.expert_location || '', draft: skill.source === 'jd-draft' } : null,
     art: { scene: place?.image || sim?.art?.cover || '', place: place?.name || '', people, value },
     charts: { avg: avgOf(humans), expert: experts.length ? avgOf(experts.slice(-1)) : null, dist: scores },
     mine: (v: string[]) => !!sub.visitor_id && v.includes(sub.visitor_id),
+    folder: await folderOf(sub, chapters),
     visitor_id: sub.visitor_id as string | null,
   };
+}
+
+/** 这个人在这个空间的证书夹：每一段取最好的一次（第 1 段的老作答没记章节）；没有访客编号的老作答只有它自己 */
+async function folderOf(sub: any, chapters: any[]): Promise<string[]> {
+  if (!sub.visitor_id) return [sub.id];
+  const { data } = await supabaseAdmin.from('skill_submissions').select('id, chapter_id, score').eq('task_id', sub.task_id).eq('visitor_id', sub.visitor_id).eq('candidate_type', 'human');
+  const out: string[] = [];
+  chapters.forEach((c: any, i: number) => {
+    const best = (data || []).filter((x: any) => (c.id && x.chapter_id === c.id) || (i === 0 && !x.chapter_id)).sort((a: any, b: any) => (b.score ?? 0) - (a.score ?? 0))[0];
+    if (best) out.push(best.id);
+  });
+  return out.length ? out : [sub.id];
 }
