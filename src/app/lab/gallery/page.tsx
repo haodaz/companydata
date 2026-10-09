@@ -79,7 +79,7 @@ export default function GalleryPage() {
         </h1>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
           <div style={{ fontSize: 14.5, color: 'var(--ink2)', flex: '1 1 320px' }}>跟着数字职人走一遍真实工作：接活、判断、操作设备，做完和老师傅的做法逐步对照。每一段有成绩单，走完一整天领证书。</div>
-          <button className="lab-btn ghost sm" onClick={() => router.push('/lab/me')} style={{ color: '#8a6a2f', boxShadow: '0 0 0 1px rgba(176,141,87,.55)' }}>✦ 我的进度与证书</button>
+          <button className="lab-btn ghost sm" onClick={() => router.push('/lab/me')} style={{ color: '#8a6a2f', boxShadow: '0 0 0 1px rgba(176,141,87,.55)' }}>✦ 我的进度与证书 · 看示范证书</button>
         </div>
       </div>
 

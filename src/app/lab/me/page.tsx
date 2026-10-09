@@ -60,7 +60,7 @@ export default function MePage() {
   }, [user?.id, loading]);
 
   const stats = useMemo(() => {
-    const sp = d?.spaces || [];
+    const sp = (d?.spaces || []).filter((s: any) => !s.demo);
     return { parts: sp.reduce((a, s) => a + s.done, 0), certs: sp.filter(s => s.chapters.every((c: any) => c.best && passed(c.best.score))).length, roles: sp.length };
   }, [d]);
 
@@ -115,7 +115,7 @@ export default function MePage() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12, flexWrap: 'wrap' }}>
                     {s.avatar && <img src={s.avatar} alt="" style={{ width: 44, height: 44, borderRadius: '50%', objectFit: 'cover', objectPosition: '54% 10%', border: '2px solid #fff', boxShadow: '0 4px 12px rgba(50,40,120,.15)' }} />}
                     <div>
-                      <div style={{ fontSize: 16, fontWeight: 800 }}>{s.role}的一天</div>
+                      <div style={{ fontSize: 16, fontWeight: 800 }}>{s.role}的一天{s.demo && <span className="lab-chip c" style={{ marginLeft: 8, fontSize: 11, padding: '1px 8px', verticalAlign: 'middle' }}>示范 · 好大壮的</span>}</div>
                       <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{s.name} · 已通过 {okN} / {s.total} 段{s.done > okN ? ` · ${s.done - okN} 段未通过` : ''}</div>
                     </div>
                     <div style={{ flex: 1 }} />

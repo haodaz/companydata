@@ -5,15 +5,32 @@ import { band, certNo } from '@/lib/lab-cert';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+/**
+ * 示范证书夹：每个人（含没登录的投资人）打开「我的」都能看到——一本走完的开腹医师证书、一本需要重考的潜水成绩夹。
+ * 作答挂在这个专门的访客编号下（名字「好大壮」），不和任何真实账号混；自己做过同一个职业，就只显示自己的。
+ */
+const SHOWCASE = 'v:showcase';
+
 /** 我的历史 + 证书库：按访客编号找回自己的真人作答，带上空间和章节，算每个空间这一天集齐了几段 */
 export async function GET(req: NextRequest) {
   try {
-    const v = (req.nextUrl.searchParams.get('v') || '').split(',').filter(x => /^[uv]:/.test(x)).slice(0, 4);
-    if (!v.length) return NextResponse.json({ ok: true, history: [], spaces: [] });
+    const v = (req.nextUrl.searchParams.get('v') || '').split(',').filter(x => /^[uv]:/.test(x) && x !== SHOWCASE).slice(0, 4);
+    const mine = v.length ? await build(v) : { history: [], spaces: [] };
+    if ('needMigration' in mine) return NextResponse.json({ ok: true, ...mine });
+    const demo = await build([SHOWCASE]);
+    const demoSpaces = 'spaces' in demo ? demo.spaces.filter((s: any) => !mine.spaces.some((m: any) => m.id === s.id)).map((s: any) => ({ ...s, demo: true })).sort((a: any, b: any) => b.done / b.total - a.done / a.total) : [];
+    return NextResponse.json({ ok: true, history: mine.history, spaces: [...mine.spaces, ...demoSpaces] });
+  } catch (e: any) {
+    return NextResponse.json({ ok: false, error: e.message }, { status: 500 });
+  }
+}
+
+async function build(v: string[]): Promise<{ history: any[]; spaces: any[] } | { history: any[]; spaces: any[]; needMigration: true }> {
+  {
     const { data: subs, error } = await supabaseAdmin.from('skill_submissions').select('id, task_id, chapter_id, candidate_name, score, match, submitted_at')
       .in('visitor_id', v).eq('candidate_type', 'human').order('submitted_at', { ascending: false }).limit(300);
     if (error) {
-      if (/visitor_id/.test(error.message)) return NextResponse.json({ ok: true, history: [], spaces: [], needMigration: true });
+      if (/visitor_id/.test(error.message)) return { history: [], spaces: [], needMigration: true };
       throw error;
     }
     const taskIds = [...new Set((subs || []).map(s => s.task_id))];
@@ -47,8 +64,6 @@ export async function GET(req: NextRequest) {
       const ch = sp?.chapters.find(c => c.id === s.chapter_id) || sp?.chapters[0];
       return { id: s.id, date: s.submitted_at, name: s.candidate_name, score: s.score, band: band(s.score), match: s.match, space: sp ? { id: sp.id, role: sp.role, name: sp.name, avatar: sp.avatar } : null, chapter: ch ? { id: ch.id, n: ch.n, total: sp!.total, slot: ch.slot, title: ch.title } : null };
     });
-    return NextResponse.json({ ok: true, history, spaces });
-  } catch (e: any) {
-    return NextResponse.json({ ok: false, error: e.message }, { status: 500 });
+    return { history, spaces };
   }
 }
