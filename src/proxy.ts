@@ -7,6 +7,17 @@ import { INVITED, INVITED_BY, readInvite } from '@/lib/lab-invite';
 const INVITE_API = /^\/api\/lab\/spaces\/([^/]+)(?:\/(interview|submit|distill))?$/;
 const INVITE_PAGE = /^\/lab\/([^/]+)$/;
 
+/**
+ * 整个 /lab 免登录（海外这套用来给投资人 / CEO 融资演示，不能让人注册登录）。环境变量 LAB_PUBLIC=1 打开。
+ * 公司部署不开：/lab 照常要登录（他们有自己的统一认证）。只放 /lab 页面和 /api/lab/*，数据工厂的接口不受影响。
+ */
+const LAB_PUBLIC = () => process.env.LAB_PUBLIC === '1';
+/** 放开时仍要登录的「工厂」操作：生成新空间 / 预置示范、删除空间、发邀请链接、蒸馏专家技能（花钱或改内容） */
+const LAB_PROTECTED = (pathname: string, method: string) =>
+  (method === 'POST' && (pathname === '/api/lab/spaces' || pathname === '/api/lab/seed')) ||
+  (method === 'DELETE' && /^\/api\/lab\/spaces\/[^/]+$/.test(pathname)) ||
+  (method === 'POST' && /^\/api\/lab\/spaces\/[^/]+\/(invite|distill)$/.test(pathname));
+
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
@@ -20,6 +31,7 @@ export async function proxy(req: NextRequest) {
     // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉
     const headers = new Headers(req.headers);
     headers.delete(INVITED); headers.delete(INVITED_BY);
+    if (LAB_PUBLIC() && pathname.startsWith('/api/lab/') && !LAB_PROTECTED(pathname, req.method)) return NextResponse.next({ request: { headers } });
     const token = req.cookies.get('auth_token')?.value;
     const payload = token ? await verifyToken(token) : null;
     if (payload) return NextResponse.next({ request: { headers } });
@@ -41,8 +53,8 @@ export async function proxy(req: NextRequest) {
   // 公开首页要用，图片优化器从服务端去取时也不带 cookie
   if (/^\/lab\/[^/]+\.(png|jpe?g|webp|gif|svg|mp4|webm)$/i.test(pathname)) return NextResponse.next();
 
-  // AI 百业首页公开：谁都能看见理念和这些人，点进任何一个空间才要求登录
-  if (pathname === '/lab') return NextResponse.next();
+  // AI 百业首页公开：谁都能看见理念和这些人，点进任何一个空间才要求登录（LAB_PUBLIC=1 时整个 /lab 都公开）
+  if (pathname === '/lab' || (LAB_PUBLIC() && pathname.startsWith('/lab/'))) return NextResponse.next();
 
   // 邀请链接 /lab/<id>?invite=…：票对得上这个空间，就不用登录
   const pm = pathname.match(INVITE_PAGE);

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { answerTask, gradeAnswer, operateSim } from '@/lib/agents/skill-lab';
 import { sanitizeTrace, traceMatch, traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
-import { labError, loadSpace, recordInvocation, skillRef } from '@/lib/skill-lab-server';
+import { chapterExpertTrace, labError, loadSpace, pickChapter, recordInvocation, skillRef } from '@/lib/skill-lab-server';
 import { INVITED } from '@/lib/lab-invite';
 
 export const runtime = 'nodejs';
@@ -10,7 +10,8 @@ export const maxDuration = 300;
 
 /**
  * 走一遍任务并评分。人和 AI 用同一套标准。
- * body: { mode: 'human' | 'expert' | 'ai', name?, note?, location?, tz?, answer?, withSkill?, model? }
+ * body: { mode: 'human' | 'expert' | 'ai', chapterId?, name?, note?, location?, tz?, answer?, withSkill?, model? }
+ * chapterId：答的是哪一章（不给 = 第一章）；按那一章的故事线和示范轨迹评分
  * 空间里已有专家技能时，评分会带上专家的判断规则，并在账本里记一笔。
  */
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -27,7 +28,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     const withSkill = mode === 'ai' && !!body.withSkill && !!skill;
 
     // 有模拟操作台就上台操作：轨迹的文字记录 + 最后一步的结论 = 交给评分的「作答」
-    const sim: Sim | null = space.sim?.steps?.length ? space.sim : null;
+    const chapter = pickChapter(space, body.chapterId);
+    const sim: Sim | null = chapter?.sim?.steps?.length ? chapter.sim : null;
     let trace: SimTrace | null = null;
     let answer = String(body.answer || '').trim();
     if (sim) {
@@ -39,16 +41,20 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     const { score, grading } = await gradeAnswer(space, answer, skill, model);
 
     const name = mode === 'ai' ? (withSkill ? 'AI + 专家技能' : 'AI 裸答') : String(body.name || '').trim() || (mode === 'expert' ? '专家' : '匿名新兵');
-    const { data: sub, error } = await supabaseAdmin.from('skill_submissions').insert({
+    const row: Record<string, any> = {
       task_id: id, candidate_name: name, candidate_type: mode,
       candidate_note: mode === 'ai' ? `${model || 'gemini-3.8-flash'}${withSkill ? ` · 装配「${skill!.name}」` : ' · 未装配技能'}` : String(body.note || ''),
       candidate_location: mode === 'ai' ? '云端' : String(body.location || ''),
       with_skill_id: withSkill ? space.skill_id : null,
       answer, score, grading, trace,
-      match: sim && trace ? traceMatch(sim, trace, space.skill?.expert_trace) : null,
+      match: sim && trace ? traceMatch(sim, trace, chapterExpertTrace(chapter, space)) : null,
       graded_with_skill_id: skill ? space.skill_id : null,
       graded_by_model: model || 'gemini-3.8-flash',
-    }).select().single();
+      ...(chapter?.id ? { chapter_id: chapter.id } : {}),
+    };
+    let { data: sub, error } = await supabaseAdmin.from('skill_submissions').insert(row).select().single();
+    // 迁移 015 还没跑时没有 chapter_id 列：去掉再写
+    if (error && /chapter_id/.test(error.message || '')) { const { chapter_id: _c, ...rest } = row; ({ data: sub, error } = await supabaseAdmin.from('skill_submissions').insert(rest).select().single()); }
     if (error) throw error;
 
     // 账本：技能被用来评分 / 作答，各记一笔

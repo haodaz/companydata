@@ -635,6 +635,8 @@ export default function SpacePage() {
   };
 
   const distill = async () => {
+    // 免登录演示：没登录、也不是拿着邀请链接来的，流程可以体验，存进技能要登录
+    if (!user && !guest) { message.info('登录后才能把老师傅教的存进技能。现在是演示，前面的流程都可以体验。'); return; }
     setBusy('AI 核心正在吸收专家的经验');
     try {
       // 专家走的这一遍也留痕（同一套标准评分，作为参考答案）
@@ -739,7 +741,7 @@ export default function SpacePage() {
           scene={sim?.art?.cover || ''} level={lv.level} levelLabel={lv.label} stats={hubStats} skills={(profile.capabilities || []).slice(0, 4)} portals={portals}
           onEnter={m => setMode(m)}
           origin={draft
-            ? <>AI 自学草案 · 等一位从业者校正{!guest && <button className="hub-ghost" style={{ marginLeft: 10, height: 26, padding: '0 10px', fontSize: 12 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '请一位老师傅来教 →'}</button>}</>
+            ? <>AI 自学草案 · 等一位从业者校正{!guest && user && <button className="hub-ghost" style={{ marginLeft: 10, height: 26, padding: '0 10px', fontSize: 12 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '请一位老师傅来教 →'}</button>}</>
             : <>学自 <b className="hub-strong">{skill.expert_name}</b>（{skill.expert_location}）</>}
           top={<>
             <button className="hub-ghost" onClick={() => router.push('/lab/spaces')}><Ico n="back" s={14} />全部空间</button>
@@ -890,7 +892,7 @@ export default function SpacePage() {
                 {field(expert.location, v => setExpert(e => ({ ...e, location: v })), '所在地 *')}
               </div>
               <button className="lab-btn" style={{ marginTop: 14 }} onClick={() => { if (!expert.name.trim() || !expert.location.trim()) { message.warning('请填写专家姓名（或化名）和所在地——技能卡要写清楚手艺来自谁、来自哪儿'); return; } if (sim?.art) enterFullscreen(); setLearnStep(1); }}>开始 →</button>
-              {!guest && <button className="lab-btn ghost" style={{ marginTop: 14, marginLeft: 10 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '专家不在身边？发一条邀请链接'}</button>}
+              {!guest && user && <button className="lab-btn ghost" style={{ marginTop: 14, marginLeft: 10 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '专家不在身边？发一条邀请链接'}</button>}
             </>}
 
             {learnStep === 1 && sim && <div style={{ fontSize: 13.5, color: 'var(--v)', fontWeight: 600 }}>操作台已在下方打开 ↓</div>}

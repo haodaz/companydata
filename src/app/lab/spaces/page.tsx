@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { App, Modal, Popconfirm } from 'antd';
 import { SKILL_KIND, expertiseLevel } from '@/lib/skill-lab';
 import { useModel } from '@/lib/model-context';
+import { useUser } from '@/lib/user-context';
 import { familyOf } from '@/lib/career-family';
 import { tagsOf, ALL_TAGS, FEATURE_TAGS } from '@/lib/career-tags';
 
@@ -32,6 +33,8 @@ export default function LabHome() {
   const [buildStep, setBuildStep] = useState(0);
   // 任意 JD：岗位库搜索 + 真实构建进度
   const { currentModel } = useModel();
+  // 海外这套 /lab 免登录（融资演示）：没登录的人只看和玩，生成 / 删除这些工厂操作不给按钮（接口那边也拦着）
+  const { user } = useUser();
   const [jobQ, setJobQ] = useState('');
   const [jobs, setJobs] = useState<any[]>([]);
   const [jobsLoading, setJobsLoading] = useState(false);
@@ -323,10 +326,10 @@ export default function LabHome() {
               </div>
             )}
           </div>
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          {user && <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <button className="lab-btn" disabled={!!needMigration} onClick={() => { setPick('jd'); loadJds(); }}>＋ 新岗位 · 从一份 JD 建</button>
             <button className="lab-btn ghost" disabled={!!needMigration} style={{ color: 'var(--hd-fg)', background: 'var(--hd-glass)', boxShadow: '0 0 0 1px var(--hd-line)' }} onClick={() => setPick('career')}>＋ 新职业 · 只给一个职业名</button>
-          </div>
+          </div>}
         </div>
         {/* 平行解决别人的问题：不用先猜该进哪个空间 */}
         <div className="sp-ask">
@@ -414,11 +417,11 @@ export default function LabHome() {
             const lv = expertiseLevel(s.skill);
             return (
               <div key={s.id} className="lab-glass hover lab-in" style={{ padding: 22, animationDelay: `${i * 90}ms`, minWidth: 0, position: 'relative' }} onClick={() => router.push(`/lab/${s.id}`)}>
-                <div onClick={e => e.stopPropagation()} style={{ position: 'absolute', right: 12, top: 12, zIndex: 2 }}>
+                {user && <div onClick={e => e.stopPropagation()} style={{ position: 'absolute', right: 12, top: 12, zIndex: 2 }}>
                   <Popconfirm title="删除这个技能空间？" description={<>作答、账本和蒸馏出的技能会一起删除。<br />预置示范删掉后可以重新构建。</>} onConfirm={() => removeSpace(s.id)} okText="删除" okButtonProps={{ danger: true }} cancelText="取消">
                     <button title="删除空间" style={{ width: 26, height: 26, borderRadius: 8, border: '1px solid var(--line)', background: 'rgba(255,255,255,.7)', color: 'var(--ink3)', cursor: 'pointer', fontSize: 14, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
                   </Popconfirm>
-                </div>
+                </div>}
                 <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
                   {/* 人就是人：不套转圈。这么小的圆里转着彩环，看起来就是闪屏 */}
                   {profile.avatar ? (
