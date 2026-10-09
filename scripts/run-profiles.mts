@@ -1,7 +1,7 @@
 /**
  * 企业画像批跑（服务端驱动，直接复用前端的流水线编排 runCompanyProfile）
  *
- *   npx tsx scripts/run-profiles.mts --task <taskId> [--minutes 14] [--concurrency 3] [--model gpt-5.6-luna] [--topics basic,campus]
+ *   npx tsx scripts/run-profiles.mts --task <taskId> [--minutes 14] [--concurrency 3] [--model gpt-5.6-luna] [--topics basic,campus] [--limit 30]
  * - --topics 只跑这些检索主题（不传就按任务上设的主题，任务也没设就全跑）；每个主题都是一次联网检索，按次计费
  *
  * - 只处理该任务里 status != success 的条目；每条跑完立即落库，可随时中断重跑
@@ -37,7 +37,8 @@ const patchTask = (body: any) => realFetch(BASE + '/api/admin/company-tasks', { 
 const tasks = await api('/api/admin/company-tasks');
 const task = (tasks.tasks || []).find((t: any) => t.id === TASK);
 if (!task) { console.error('task not found'); process.exit(1); }
-const queue: any[] = task.items.filter((i: any) => i.status !== 'success');
+// --limit N：只跑前 N 家（先小批试跑看真实账单）
+const queue: any[] = task.items.filter((i: any) => i.status !== 'success').slice(0, args.limit ? parseInt(args.limit) : undefined);
 const TOPICS: string[] = TOPICS_ARG.length ? TOPICS_ARG : (task.topics || []);
 const startedAt = Date.now();
 const deadline = startedAt + MINUTES * 60_000;
