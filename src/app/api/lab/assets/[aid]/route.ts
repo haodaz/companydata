@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireAdminUser } from '@/lib/session';
 import { supabaseAdmin } from '@/lib/supabase';
 import { labError } from '@/lib/skill-lab-server';
 import { assetAppearances } from '@/lib/lab-cast-server';
+import { LAB_ART_BUCKET } from '@/lib/lab-art';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -12,8 +14,9 @@ type Ctx = { params: Promise<{ aid: string }> };
 export async function GET(_req: NextRequest, { params }: Ctx) {
   try {
     const { aid } = await params;
-    const { data: asset, error } = await supabaseAdmin.from('lab_art_assets').select('*').eq('id', aid).single();
+    const { data: asset, error } = await supabaseAdmin.from('lab_art_assets').select('*').eq('id', aid).maybeSingle();
     if (error) throw error;
+    if (!asset) return NextResponse.json({ ok: false, error: '素材不存在（可能已删除）' }, { status: 404 });
     const apps = (await assetAppearances([aid])).get(aid) || [];
     let source = null;
     if (asset.source_task_id) {
@@ -40,6 +43,42 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
     const { data, error } = await supabaseAdmin.from('lab_art_assets').update(patch).eq('id', aid).select('*').single();
     if (error) throw error;
     return NextResponse.json({ ok: true, asset: data });
+  } catch (e: any) {
+    return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
+  }
+}
+
+/**
+ * 删除一件素材（行）。仍被角色表引用的会被拒绝（外键会把角色的图清空，得先解绑）。
+ * 加 ?storage=1 时，若该图在本环境 lab-art 桶且删除后没有别的行再用它，一并删掉 Storage 文件。
+ */
+export async function DELETE(req: NextRequest, { params }: Ctx) {
+  try {
+    // 换图 / 删素材会影响所有用到它的空间：只有管理员能做（simulator 原版只靠登录墙）
+    const denied = await requireAdminUser(req); if (denied) return denied;
+    const { aid } = await params;
+    const withFile = new URL(req.url).searchParams.get('storage') === '1';
+
+    const { data: asset, error } = await supabaseAdmin.from('lab_art_assets').select('*').eq('id', aid).single();
+    if (error) throw error;
+
+    const { data: used } = await supabaseAdmin.from('lab_cast').select('id').eq('asset_id', aid).limit(1);
+    if (used?.length) return NextResponse.json({ ok: false, error: '这件素材还被角色表引用，请先在工作室里换图 / 解绑再删' }, { status: 400 });
+
+    const { error: delErr } = await supabaseAdmin.from('lab_art_assets').delete().eq('id', aid);
+    if (delErr) throw delErr;
+
+    let fileDeleted = false;
+    const url: string | null = (asset as any)?.url || null;
+    if (withFile && url && url.includes(`/${LAB_ART_BUCKET}/`)) {
+      const { data: other } = await supabaseAdmin.from('lab_art_assets').select('id').eq('url', url).limit(1);
+      if (!other?.length) {
+        const name = decodeURIComponent(url.split('/').pop() || '');
+        const { error: rmErr } = await supabaseAdmin.storage.from(LAB_ART_BUCKET).remove([name]);
+        fileDeleted = !rmErr;
+      }
+    }
+    return NextResponse.json({ ok: true, fileDeleted });
   } catch (e: any) {
     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
   }

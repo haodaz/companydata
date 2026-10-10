@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { App, Drawer, Switch } from 'antd';
+import { App, Drawer, Popconfirm, Switch } from 'antd';
 import { useUser } from '@/lib/user-context';
 import { FAMILIES } from '@/lib/career-family';
 import { CAST_KINDS, assetKindLabel, type LabAsset } from '@/lib/lab-cast';
@@ -46,6 +46,8 @@ export default function AssetLibrary() {
 
   const load = () => fetch('/api/lab/assets').then(r => r.json()).then(j => { if (j.ok) setRows(j.assets); else setErr(j.error || '读取失败'); }).catch(e => setErr(e.message));
   useEffect(() => { load(); }, []);
+  // 支持 /lab/assets?aid=<id> 直接打开某件素材（从空间管理/导入失败清单跳过来）
+  useEffect(() => { const aid = new URLSearchParams(window.location.search).get('aid'); if (aid) setOpenId(aid); }, []);
 
   const counts = useMemo(() => {
     const m: Record<string, number> = {};
@@ -129,19 +131,24 @@ export default function AssetLibrary() {
           </>
         )}
 
-      <Drawer open={!!openId} onClose={() => setOpenId(null)} width={Math.min(560, typeof window !== 'undefined' ? window.innerWidth : 560)} title={null} destroyOnHidden>
-        {openId && <AssetDetail id={openId} onSaved={a => { setRows(rs => (rs || []).map(r => (r.id === a.id ? { ...r, ...a } : r))); message.success('已保存'); }} />}
+      <Drawer open={!!openId} onClose={() => setOpenId(null)} size={Math.min(560, typeof window !== 'undefined' ? window.innerWidth : 560)} title={null} destroyOnHidden>
+        {openId && <AssetDetail id={openId}
+          onSaved={a => { setRows(rs => (rs || []).map(r => (r.id === a.id ? { ...r, ...a } : r))); message.success('已保存'); }}
+          onDeleted={() => { setRows(rs => (rs || []).filter(r => r.id !== openId)); setOpenId(null); message.success('素材已删除'); }} />}
       </Drawer>
     </div>
   );
 }
 
-function AssetDetail({ id, onSaved }: { id: string; onSaved: (a: LabAsset) => void }) {
+function AssetDetail({ id, onSaved, onDeleted }: { id: string; onSaved: (a: LabAsset) => void; onDeleted: () => void }) {
   const router = useRouter();
   const { message } = App.useApp();
   const [d, setD] = useState<{ asset: LabAsset; appearances: any[]; source: any } | null>(null);
   const [form, setForm] = useState<any>(null);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch(`/api/lab/assets/${id}`).then(r => r.json()).then(j => {
@@ -162,6 +169,42 @@ function AssetDetail({ id, onSaved }: { id: string; onSaved: (a: LabAsset) => vo
     } catch (e: any) { message.error(e.message); } finally { setSaving(false); }
   };
   const nChapters = d.appearances.reduce((n, x) => n + x.chapters.length, 0);
+
+  /** 手动上传 / 替换这件素材的图片：上传到本环境 Storage，并同步改写各处引用 */
+  const replaceImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    e.target.value = '';
+    if (!f) return;
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append('file', f);
+      const j = await fetch(`/api/lab/assets/${id}/file`, { method: 'POST', body: fd }).then(r => r.json());
+      if (!j.ok) throw new Error(j.error || '上传失败');
+      setD(x => x && { ...x, asset: j.asset });
+      setForm((fm: any) => ({ ...fm, url: j.asset.url }));
+      onSaved(j.asset);
+      message.success(`图片已替换${j.rewritten ? `，同步更新了 ${j.rewritten} 处引用` : ''}`);
+    } catch (err: any) {
+      message.error(err.message || '上传失败');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  /** 删除这件素材（行）；本桶的图一并删掉（若没有别的行在用它） */
+  const remove = async () => {
+    setDeleting(true);
+    try {
+      const j = await fetch(`/api/lab/assets/${id}?storage=1`, { method: 'DELETE' }).then(r => r.json());
+      if (!j.ok) throw new Error(j.error || '删除失败');
+      onDeleted();
+    } catch (err: any) {
+      message.error(err.message || '删除失败');
+    } finally {
+      setDeleting(false);
+    }
+  };
 
   return (
     <div style={{ display: 'grid', gap: 16 }}>
@@ -192,7 +235,15 @@ function AssetDetail({ id, onSaved }: { id: string; onSaved: (a: LabAsset) => vo
         <span>入库 / 修改</span><span style={{ color: 'var(--ink2)' }}>{fmt(a.created_at)} / {fmt(a.updated_at)}</span>
         <span>原图</span><span>{a.url ? <a href={a.url} target="_blank" rel="noreferrer" style={{ color: 'var(--v)', wordBreak: 'break-all' }}>打开 ↗</a> : '—'}</span>
       </div>
-      <div><button className="lab-btn sm" disabled={saving} onClick={save}>{saving ? '保存中…' : '保存字段'}</button></div>
+      <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+        <button className="lab-btn sm" disabled={saving} onClick={save}>{saving ? '保存中…' : '保存字段'}</button>
+        <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={replaceImage} />
+        <button className="lab-btn ghost sm" disabled={uploading} onClick={() => fileRef.current?.click()}>{uploading ? '上传中…' : '重新上传 / 替换图片'}</button>
+        <span style={{ fontSize: 12, color: 'var(--ink3)' }}>上传后自动写到本环境 Storage，并同步替换各空间里的引用（原图不会被删）</span>
+        <Popconfirm title="删除这件素材？" description="同时删除本环境 Storage 里的图片（若没被别的记录用到）。仍被角色表引用时会拒绝。" okText="删除" cancelText="取消" okButtonProps={{ danger: true }} onConfirm={remove}>
+          <button className="lab-btn ghost sm" disabled={deleting} style={{ color: '#d6336c' }}>{deleting ? '删除中…' : '删除素材'}</button>
+        </Popconfirm>
+      </div>
 
       <div>
         <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>出场记录</div>

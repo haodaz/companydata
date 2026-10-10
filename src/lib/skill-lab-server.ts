@@ -2,7 +2,7 @@
 import { supabaseAdmin } from '@/lib/supabase';
 import { GENERIC_CHAPTER_RUBRIC, type SkillCard } from '@/lib/skill-lab';
 import type { Sim, SimTrace } from '@/lib/skill-sim';
-import { applyCastArt } from '@/lib/lab-cast';
+import { applyCastArt, castAvatar } from '@/lib/lab-cast';
 import { loadCast } from '@/lib/lab-cast-server';
 
 export const MIGRATION_HINT = '技能实验室的表还没建：请在 Supabase SQL Editor 执行 supabase/migrations/002_skill_lab.sql';
@@ -20,7 +20,10 @@ export async function loadSpace(id: string, opts: { includeDrafts?: boolean } = 
   // 角色表是图的来源：换了某人的立绘 / 某个场景的图，各章跟着换（迁移 016 没跑就是空表，原样不动）
   const cast = await loadCast(id);
   (task as any).cast = cast.map(({ asset, ...m }) => ({ ...m, image: asset?.url || null, asset_code: asset?.code || null }));
-  (task as any).chapters = (await loadChapters(task, opts)).map(c => ({ ...c, sim: applyCastArt(c.sim, cast) }));
+  // 头像也以角色表 P00 为准（profile.avatar 只是缓存）
+  const avatar = castAvatar(cast);
+  if (avatar) (task as any).profile = { ...((task as any).profile || {}), avatar };
+  (task as any).chapters = (await loadChapters(task, opts)).map(c => ({ ...c, sim: applyCastArt(c.sim, cast, (c as any).cover_cast) }));
   return task as any;
 }
 
@@ -37,6 +40,7 @@ export interface LabChapter {
   rubric?: any;
   status: 'draft' | 'published';
   locked?: boolean;
+  cover_cast?: string | null;  // 封面用角色表里哪个场景（迁移 019）
 }
 
 export async function loadChapters(space: any, opts: { includeDrafts?: boolean } = {}): Promise<LabChapter[]> {

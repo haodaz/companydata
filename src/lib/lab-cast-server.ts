@@ -1,6 +1,6 @@
 /** AI 百业 · 角色表与素材库（服务端读写）。迁移 016 没跑时一律当作空，不影响老功能 */
 import { supabaseAdmin } from '@/lib/supabase';
-import { chapterCode, stepsUsing, type CastMember, type LabAsset } from '@/lib/lab-cast';
+import { applyCastArt, castAvatar, chapterCode, stepsUsing, type CastMember, type LabAsset } from '@/lib/lab-cast';
 
 export async function loadCast(taskId: string): Promise<CastMember[]> {
   try {
@@ -53,6 +53,80 @@ export async function assetAppearances(assetIds: string[]): Promise<Map<string, 
   return out;
 }
 
+/** 哪些空间的角色表挂着这些素材（换了素材的图要刷新它们的缓存） */
+export async function tasksUsingAssets(assetIds: string[]): Promise<string[]> {
+  if (!assetIds.length) return [];
+  const { data } = await supabaseAdmin.from('lab_cast').select('task_id').in('asset_id', assetIds);
+  return [...new Set(((data || []) as { task_id: string }[]).map(x => x.task_id))];
+}
+
+/**
+ * 把角色表算出来的图写回缓存：profile.avatar、各章 sim.art（封面 / 场景 / 立绘）、工位底图。
+ * 迁移 019 起，JSON 里的网址只是缓存，真相在角色表 → 素材库。换素材的图、给角色换素材、现画之后调它，
+ * 只动受影响的空间，列表页 / 宣传页读缓存就是新的，不用再全库搜字符串。返回改了几行。
+ */
+export async function refreshArtCache(taskIds: string[]): Promise<number> {
+  let n = 0;
+  for (const id of [...new Set(taskIds)]) {
+    const cast = await loadCast(id);
+    if (!cast.length) continue;
+    const [{ data: task }, { data: chs }] = await Promise.all([
+      supabaseAdmin.from('skill_tasks').select('id, profile, sim').eq('id', id).single(),
+      supabaseAdmin.from('lab_chapters').select('*').eq('task_id', id),  // select * ：迁移 019 没跑的库没有 cover_cast 列
+    ]);
+    if (!task) continue;
+    const avatar = castAvatar(cast);
+    if (avatar && avatar !== (task as any).profile?.avatar) {
+      const { error } = await supabaseAdmin.from('skill_tasks').update({ profile: { ...((task as any).profile || {}), avatar } }).eq('id', id);
+      if (!error) n++;
+    }
+    for (const c of (chs || []) as any[]) {
+      const next = applyCastArt(c.sim, cast, c.cover_cast);
+      if (JSON.stringify(next) === JSON.stringify(c.sim)) continue;
+      const { error } = await supabaseAdmin.from('lab_chapters').update({ sim: next, updated_at: new Date().toISOString() }).eq('id', c.id);
+      if (error) continue;
+      n++;
+      // 第 1 章和 skill_tasks.sim 互为镜像（老代码还在读 sim）
+      if (c.seq === 1) await supabaseAdmin.from('skill_tasks').update({ sim: next }).eq('id', id);
+    }
+  }
+  return n;
+}
+
+/**
+ * 新建 / 导入空间后对一次账（迁移 019 的 lab_reconcile_cast）：把 sim / 头像里的图登记进素材库，
+ * 补齐角色表（P00、人物、场景、工位底图），每一步写上 place。库里没有这个函数（019 没跑）就静默跳过，不影响建空间。
+ */
+export async function reconcileCast(taskId: string): Promise<void> {
+  const { error } = await supabaseAdmin.rpc('lab_reconcile_cast', { p_task: taskId });
+  if (error) console.warn('[lab-cast] 角色表对账失败（迁移 019 没跑？）：', error.message);
+}
+
+/** 兜底：把各处 JSON 里还写着旧网址的引用改成新的（skill_tasks.profile / sim、lab_chapters.sim）。返回改写的行数 */
+export async function rewriteUrlEverywhere(oldUrl: string, newUrl: string): Promise<number> {
+  if (!oldUrl || !newUrl || oldUrl === newUrl) return 0;
+  const { rewriteUrls, jsonHasUrl } = await import('@/lib/json-url');
+  const map = new Map([[oldUrl, newUrl]]);
+  let n = 0;
+  const { data: tasks } = await supabaseAdmin.from('skill_tasks').select('id, profile, sim');
+  for (const t of (tasks || []) as any[]) {
+    const profHit = jsonHasUrl(t.profile, oldUrl), simHit = jsonHasUrl(t.sim, oldUrl);
+    if (!profHit && !simHit) continue;
+    const patch: Record<string, any> = {};
+    if (profHit) patch.profile = rewriteUrls(t.profile, map);
+    if (simHit) patch.sim = rewriteUrls(t.sim, map);
+    const { error } = await supabaseAdmin.from('skill_tasks').update(patch).eq('id', t.id);
+    if (!error) n++;
+  }
+  const { data: chs } = await supabaseAdmin.from('lab_chapters').select('id, sim');
+  for (const c of (chs || []) as any[]) {
+    if (!jsonHasUrl(c.sim, oldUrl)) continue;
+    const { error } = await supabaseAdmin.from('lab_chapters').update({ sim: rewriteUrls(c.sim, map), updated_at: new Date().toISOString() }).eq('id', c.id);
+    if (!error) n++;
+  }
+  return n;
+}
+
 /** 新画的 / 新建的素材立刻归库，返回库里那一行 */
 export async function registerAsset(a: Partial<LabAsset> & { kind: LabAsset['kind'] }): Promise<LabAsset> {
   const row = {
@@ -90,5 +164,6 @@ export async function drawCastAsset(taskId: string, m: CastMember, family: strin
   const a = await registerAsset({ kind: m.kind === 'person' ? 'npc' : 'scene', url, title: m.kind === 'person' ? (m.type_name || m.name) : m.name, type_name: m.type_name || m.name, family, prompt: look, source_task_id: taskId });
   await supabaseAdmin.from('lab_cast').update({ asset_id: a.id, updated_at: new Date().toISOString() }).eq('id', m.id);
   m.asset_id = a.id; m.asset = a;
+  await refreshArtCache([taskId]);
   return a;
 }

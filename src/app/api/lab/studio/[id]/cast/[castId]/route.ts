@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { labError } from '@/lib/skill-lab-server';
 import { stepsUsing, type CastMember } from '@/lib/lab-cast';
+import { refreshArtCache } from '@/lib/lab-cast-server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -27,6 +28,8 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
     }
     const { error } = await supabaseAdmin.from('lab_cast').update(patch).eq('id', castId);
     if (error) throw error;
+    // 换了素材：各章缓存里的图跟着换（列表页 / 宣传页读的是缓存）
+    if ('asset_id' in patch && patch.asset_id !== cur.asset_id) await refreshArtCache([id]);
 
     let renamed = 0;
     if (patch.name && cur.kind === 'person' && !cur.is_self) {

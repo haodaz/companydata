@@ -4,6 +4,8 @@ import { SEED_CASES } from '@/lib/skill-lab-seed';
 import { SEED_SIMS } from '@/lib/skill-lab-seed-sims';
 import { traceMatch, traceToText } from '@/lib/skill-sim';
 import { labError } from '@/lib/skill-lab-server';
+import { localizeSeedUrls } from '@/lib/lab-seed-assets';
+import { reconcileCast } from '@/lib/lab-cast-server';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -57,9 +59,12 @@ export async function POST(req: Request) {
       const { data: skill, error: skillErr } = await supabaseAdmin.from('skills').upsert({ ...c.skill, expert_trace: { ...expertTrace, _why: why }, source: 'seed', is_demo: true }, { onConflict: 'slug' }).select('id').single();
       if (skillErr) throw skillErr;
 
-      // 3. 技能空间
+      // 3. 技能空间。示范用的图原来写死在仓库 public/lab/ 里：先搬进 Storage，引用一律换成 Storage 网址，
+      //    和生成的图同一个来源（传不上去就保留本地路径，页面照样显示）
+      const { value: simL } = await localizeSeedUrls(sim);
+      const { value: profileL } = await localizeSeedUrls(c.task.profile);
       const { data: task, error: taskErr } = await supabaseAdmin.from('skill_tasks').insert({
-        ...c.task, sim, skill_id: skill.id, job_id: null, is_demo: true, created_by: 'demo',
+        ...c.task, profile: profileL, sim: simL, skill_id: skill.id, job_id: null, is_demo: true, created_by: 'demo',
         jd_snapshot: { company: c.jd.company, title: c.jd.title, job_req_id: c.jd.job_req_id, location: c.jd.location, responsibilities: c.jd.responsibilities, qualifications: c.jd.qualifications, url: c.jd.url, fetched_at: c.jd.fetched_at },
       }).select('id').single();
       if (taskErr) throw taskErr;
@@ -81,6 +86,9 @@ export async function POST(req: Request) {
         ...inv, skill_id: skill.id, task_id: task.id, submission_id: submission ? subIds.get(submission) || null : null, is_demo: true,
       })));
       if (invErr) throw invErr;
+
+      // 6. 角色表对账：图登记进素材库，补 P00 / 人物 / 场景 / 工位底图，每一步写上 place（迁移 019）
+      await reconcileCast(task.id);
 
       return NextResponse.json({ ok: true, id: task.id, existed: false });
     }

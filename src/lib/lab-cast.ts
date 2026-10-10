@@ -57,20 +57,33 @@ export function stepsUsing(sim: Sim, m: CastMember): string[] {
   return out;
 }
 
+/** 数字职人本人的头像：角色表 P00 挂的素材（迁移 019 起以它为准，profile.avatar 只是缓存） */
+export const castAvatar = (cast: CastMember[]): string | null => cast.find(m => m.is_self && m.asset?.url)?.asset!.url || null;
+
 /**
- * 角色表是图的来源：换了某人的立绘，所有章节跟着换。
- * 有立绘的人物覆盖 art.npcs[名字]；步骤标了 place 的覆盖 art.scenes[步骤]；没有角色表的老数据原样不动。
+ * 角色表是图的来源：换了某人的立绘 / 某个地方的图，所有章节跟着换。
+ * 有立绘的人物覆盖 art.npcs[名字]；步骤标了 place 的覆盖 art.scenes[步骤]（工位步覆盖 bench.scene.image）；
+ * 章节标了 cover_cast 的覆盖 art.cover。没有角色表的老数据原样不动。
+ * sim.art 里的网址只是算出来的缓存：读的时候这里现算，写库前用 refreshArtCache 刷新（lab-cast-server）。
  */
-export function applyCastArt(sim: Sim, cast: CastMember[]): Sim {
+export function applyCastArt(sim: Sim, cast: CastMember[], coverCast?: string | null): Sim {
   if (!cast.length || !sim?.steps?.length) return sim;
   const npcs: Record<string, string> = { ...(sim.art?.npcs || {}) };
   const scenes: Record<string, string> = { ...(sim.art?.scenes || {}) };
   for (const m of cast) if (m.kind === 'person' && !m.is_self && m.asset?.url) npcs[m.name] = m.asset.url;
   const places = new Map(cast.filter(m => m.kind === 'place' && m.asset?.url).map(m => [m.id, m.asset!.url!]));
-  for (const s of sim.steps as any[]) if (s.place && places.has(s.place) && s.type !== 'bench') scenes[s.id] = places.get(s.place)!;
-  const cover = sim.art?.cover || Object.values(scenes)[0];
+  const steps = (sim.steps as any[]).map(s => {
+    if (!s.place || !places.has(s.place)) return s;
+    const url = places.get(s.place)!;
+    if (s.type !== 'bench') { scenes[s.id] = url; return s; }
+    // 工位底图跟着角色表里那个「工位：xxx」的地点走
+    if (!s.bench?.scene || s.bench.scene.image === url) { scenes[s.id] = url; return s; }
+    scenes[s.id] = url;
+    return { ...s, bench: { ...s.bench, scene: { ...s.bench.scene, image: url } } };
+  });
+  const cover = (coverCast && places.get(coverCast)) || sim.art?.cover || Object.values(scenes)[0];
   if (!cover) return sim;
-  return { ...sim, art: { ...(sim.art || {}), cover, npcs, scenes } };
+  return { ...sim, steps, art: { ...(sim.art || {}), cover, npcs, scenes } };
 }
 
 /**
