@@ -575,7 +575,10 @@ function castOf(space: any, sim: Sim | null) {
   useEffect(() => { chatEnd.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, [turns]);
 
   const post = async (path: string, body: Record<string, unknown>) => {
-    const json = await (await fetch(`/api/lab/spaces/${id}/${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...inviteHdr }, body: JSON.stringify({ ...body, model: currentModel, tz: -new Date().getTimezoneOffset() / 60 }) })).json();
+    // 模型偶尔卡住：最多等 4 分钟，超时给一句能看懂的话，别让「AI 核心处理中」一直转
+    const res = await fetch(`/api/lab/spaces/${id}/${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...inviteHdr }, body: JSON.stringify({ ...body, model: currentModel, tz: -new Date().getTimezoneOffset() / 60 }), signal: AbortSignal.timeout(240_000) })
+      .catch((e: any) => { throw new Error(e?.name === 'TimeoutError' ? 'AI 处理超时了，请再试一次' : `网络出错：${e?.message || e}`); });
+    const json = await res.json().catch(() => ({ ok: false, error: `服务器返回 ${res.status}，请再试一次` }));
     if (!json.ok) throw new Error(json.error);
     return json;
   };
@@ -635,7 +638,8 @@ function castOf(space: any, sim: Sim | null) {
     try {
       // 访客编号：「我的历史 / 证书库」按它找回；名字记在本地，下次不用再填
       try { if (m === 'human' && rookie.name.trim()) localStorage.setItem('lab:rookie', JSON.stringify({ name: rookie.name, note: rookie.note, location: rookie.location })); } catch { /* 无痕模式 */ }
-      const json = await post('submit', { ...(m === 'ai' ? { mode: 'ai', withSkill } : { mode: 'human', ...rookie, trace, visitor: visitorIds(user?.id)[0] }), chapterId: chapter?.id || undefined });
+      // 我教你：屏幕上演示的那一遍（老师傅的轨迹）直接交去评分——以前服务端会让模型从头再操作一遍，两次大模型调用串着，慢的时候卡在「处理中」
+      const json = await post('submit', { ...(m === 'ai' ? { mode: 'ai', withSkill, trace } : { mode: 'human', ...rookie, trace, visitor: visitorIds(user?.id)[0] }), chapterId: chapter?.id || undefined });
       setFreshId(json.submission.id);
       await load();
       if (m === 'human' && trace && sim?.art) { setStageReport(json.submission); setRookie(r => ({ ...r, answer: '' })); return; }
@@ -978,7 +982,7 @@ function castOf(space: any, sim: Sim | null) {
               profile={askProfile && !demo ? { name: rookie.name, note: rookie.note, location: rookie.location, set: (k: 'name' | 'note' | 'location', v: string) => setRookie(r => ({ ...r, [k]: v })) } : null}
               onStart={() => { if (askProfile && !demo) saveProfile(); setIntro(false); }} />
           ) : (
-            <SimRunner key={runKey + (demo ? '-demo' : '')} startAt={startAt} demo={demo || undefined} sim={sim} role="rookie" busy={!!busy} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); }} onFinish={trace => { const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, d ? undefined : trace); }} />
+            <SimRunner key={runKey + (demo ? '-demo' : '')} startAt={startAt} demo={demo || undefined} sim={sim} role="rookie" busy={!!busy} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); }} onFinish={trace => { const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, trace); }} />
           )}
         </SimStage>
       )}

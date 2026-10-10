@@ -33,7 +33,9 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     let trace: SimTrace | null = null;
     let answer = String(body.answer || '').trim();
     if (sim) {
-      trace = mode === 'ai' ? await operateSim({ ...space, ...chapterTask(space, chapter) }, sim, withSkill ? skill : null, model) : sanitizeTrace(sim, body.trace);
+      // AI 模式带了轨迹（「我教你」屏幕上演示的那一遍）就直接评它；没带才让模型自己上台操作
+      const given = body.trace && typeof body.trace === 'object' ? sanitizeTrace(sim, body.trace) : null;
+      trace = given && Object.keys(given).length ? given : mode === 'ai' ? await operateSim({ ...space, ...chapterTask(space, chapter) }, sim, withSkill ? skill : null, model) : sanitizeTrace(sim, body.trace);
       answer = traceToText(sim, trace);
     } else if (mode === 'ai') answer = await answerTask(space, withSkill ? skill : null, model);
     if (answer.length < 20) return NextResponse.json({ ok: false, error: '作答太短了，至少写几句' }, { status: 400 });
