@@ -645,8 +645,9 @@ function castOf(space: any, sim: Sim | null) {
       // 我教你：屏幕上演示的那一遍（老师傅的轨迹）直接交去评分——以前服务端会让模型从头再操作一遍，两次大模型调用串着，慢的时候卡在「处理中」
       const json = await post('submit', { ...(m === 'ai' ? { mode: 'ai', withSkill, trace } : { mode: 'human', ...rookie, trace, visitor: visitorIds(user?.id)[0] }), chapterId: chapter?.id || undefined });
       setFreshId(json.submission.id);
+      // 操作台里的成绩单先出来，空间数据（进度、排行、证书夹）后台再刷新——别让人多等那两秒
+      if (m === 'human' && trace && sim?.art) { setStageReport(json.submission); setRookie(r => ({ ...r, answer: '' })); load(); return; }
       await load();
-      if (m === 'human' && trace && sim?.art) { setStageReport(json.submission); setRookie(r => ({ ...r, answer: '' })); return; }
       setOpenSub(json.submission);
       if (m === 'human') { setAnswering(false); setRookie(r => ({ ...r, answer: '' })); }
     } catch (e: any) { message.error(e.message); }
