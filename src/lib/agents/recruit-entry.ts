@@ -17,7 +17,7 @@ export interface RecruitLink { kind: RecruitKind; url: string; text: string }
 export interface RecruitEntry { campus: string | null; intern: string | null; social: string | null; careers: string | null; links: RecruitLink[]; via: 'homepage' | 'search' | 'none' }
 
 /** 招聘平台：企业自己的招聘板块常托管在这些域名上 */
-const ATS = /(hotjob\.cn|mokahr\.com|zhiye\.com|beisen\.com|jobs\.feishu\.cn|dingtalkcloud\.com|myworkdayjobs\.com|greenhouse\.io|lever\.co|smartrecruiters\.com|successfactors|taleo\.net|avature\.net|icims\.com|51job\.com\/(?!\w*\.php)|wintalent\.cn|zhaopin\.cn\/\w+|hirede\.com|jobs\.\w+\.com)/i;
+const ATS = /(^https?:\/\/apply\.|hotjob\.cn|mokahr\.com|zhiye\.com|beisen\.com|jobs\.feishu\.cn|dingtalkcloud\.com|myworkdayjobs\.com|greenhouse\.io|lever\.co|smartrecruiters\.com|successfactors|taleo\.net|avature\.net|icims\.com|51job\.com\/(?!\w*\.php)|wintalent\.cn|zhaopin\.cn\/\w+|hirede\.com|jobs\.\w+\.com)/i;
 /** 第三方招聘网站，不算官方入口 */
 /** 搜索常带回来的「能打开但不是招聘入口」：文件、新闻稿、联系我们 / 关于我们 */
 const NOT_ENTRY_RE = /\.(pdf|docx?|xlsx?|pptx?|zip)(\?|#|$)|news|xinwen|\/article\/|\/contact|lianxi|aboutus|\/about(\.|\/|$)/i;
@@ -90,16 +90,37 @@ async function keepAlive(all: RecruitLink[]): Promise<Omit<RecruitEntry, 'via'>>
       const u = pick(links, kind);
       if (!u) return null;
       if (!health.has(u)) health.set(u, await recruitLinkHealth(u));
-      if (health.get(u)!.status !== 'dead') return u;
+      if (health.get(u)!.status !== 'dead') return health.get(u)!.fixedUrl || u;
       links = links.filter(l => l.url !== u);
     }
     return null;
   };
-  const campus = await pickAlive('campus');
+  const campus = await deepenToJobList(await pickAlive('campus'));
   const intern = await pickAlive('intern');
   const social = await pickAlive('social');
   const careers = (await pickAlive('careers')) || social;
   return { campus, intern, social, careers, links };
+}
+
+/** 职位列表按钮：「查看在招职位」「全部职位」「立即投递」这类 */
+const JOB_LIST_TEXT = /在招|职位|岗位|投递|网申|申请|开放|jobs?\b|positions?|openings|apply/i;
+
+/**
+ * 校招页再往下挖一层（数据部门 2026-10-10）：大疆的校招页 /zh-CN/campus 只是介绍，
+ * 真正列岗位的是页面上「查看在招职位」指向的招聘系统（apply.careers.dji.com/…/170070#/jobs）。
+ * 校招页本身就在招聘系统上就不挖；挖到的打不开就还用原来的。
+ */
+async function deepenToJobList(url: string | null): Promise<string | null> {
+  if (!url || ATS.test(url)) return url;
+  const md = await fetchJinaUrl(url).catch(() => null);
+  if (!md) return url;
+  const cands = linksOf(md, url).filter(l => ATS.test(l.url) && !AGGREGATOR.test(l.url) && JOB_LIST_TEXT.test(`${l.text} ${l.url}`))
+    .sort((a, b) => Number(/校园|校招|campus|graduate|应届/i.test(`${b.text} ${decodeURIComponent(b.url)}`)) - Number(/校园|校招|campus|graduate|应届/i.test(`${a.text} ${decodeURIComponent(a.url)}`)) || a.text.length - b.text.length);
+  for (const c of cands.slice(0, 2)) {
+    const h = await recruitLinkHealth(c.url);
+    if (h.status === 'alive') return h.fixedUrl || c.url;
+  }
+  return url;
 }
 
 export async function discoverRecruitEntry(name: string, officialWebsite: string | null | undefined, modelId?: string): Promise<RecruitEntry> {
@@ -125,10 +146,15 @@ export async function discoverRecruitEntry(name: string, officialWebsite: string
   // 官网上一个都没找到：退回联网搜索
   try {
     const r = await findCampusUrls(name, '', modelId);
-    const mapped: RecruitLink[] = (r.urls || []).map((u: any) => ({
-      kind: (u.type === 'careers' ? 'careers' : u.subtype === 'intern' || u.subtype === 'remote_intern' ? 'intern' : u.type === 'campus' ? 'campus' : 'careers') as RecruitKind,
-      url: u.url, text: u.title || '',
-    })).filter((l: RecruitLink) => !AGGREGATOR.test(l.url) && !bareHomepage(l.url) && !NOT_ENTRY.test(l.url));
+    const mapped: RecruitLink[] = (r.urls || []).map((u: any) => {
+      // 标题 / 网址里写明了「校园招聘」「实习」的按它算（「大疆校园招聘职位投递系统」搜索报的是 careers），其次才看搜索给的类型
+      let hay = `${u.title || ''} ${u.url}`; try { hay = `${u.title || ''} ${decodeURIComponent(u.url)}`; } catch { /* 原样 */ }
+      const byText = KIND_RULES.slice(0, 3).find(([, re]) => re.test(hay))?.[0];
+      return {
+        kind: (byText || (u.type === 'careers' ? 'careers' : u.subtype === 'intern' || u.subtype === 'remote_intern' ? 'intern' : u.type === 'campus' ? 'campus' : 'careers')) as RecruitKind,
+        url: u.url, text: u.title || '',
+      };
+    }).filter((l: RecruitLink) => !AGGREGATOR.test(l.url) && !bareHomepage(l.url) && !NOT_ENTRY.test(l.url));
     if (mapped.length) {
       const alive = await keepAlive(dedup(mapped));
       if (alive.campus || alive.intern || alive.careers) return { ...alive, social: null, via: 'search' };

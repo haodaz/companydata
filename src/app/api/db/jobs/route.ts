@@ -31,6 +31,8 @@ export async function GET(request: Request) {
       .order('updated_at', { ascending: false })
       .order('id', { ascending: false });
 
+    // 合并掉的重复岗位（if_delete）默认不出现：同一岗位前后两次抓取留下的旧那条
+    if (get('deleted') !== '1') query = query.not('if_delete', 'is', true);
     if (search) query = query.or(orIlike(['name', 'title_cn', 'institute_or_company_name', 'program_name', 'location', 'department'], search));
     if (get('jobType')) query = query.in('job_type', get('jobType').split(','));
     if (get('season')) query = query.eq('recruit_season', get('season'));
@@ -52,7 +54,7 @@ export async function GET(request: Request) {
     let stats: Record<string, number> | undefined;
     if (searchParams.get('withStats') === '1') {
       stats = { total: 0, open: 0, graduate: 0, intern: 0, program: 0, remote: 0, overseas: 0, reviewed: 0, missing_jd: 0 };
-      const { data: all } = await selectAll(() => supabaseAdmin.from('jobs').select('job_type, status, remote_type, accepts_overseas_students, human_review_status, responsibilities').order('id'));
+      const { data: all } = await selectAll(() => supabaseAdmin.from('jobs').select('job_type, status, remote_type, accepts_overseas_students, human_review_status, responsibilities').not('if_delete', 'is', true).order('id'));
       for (const r of all || []) {
         stats.total++;
         if (r.status === 'open') stats.open++;

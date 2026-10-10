@@ -79,9 +79,16 @@ export default function DbJobPage() {
       const json = await (await fetch(`/api/db/jobs?${query({ page: String(page), pageSize: String(pageSize), withStats: '1' })}`)).json();
       if (!json.success) throw new Error(json.error);
       setData(json.data); setTotal(json.total); setStats(json.stats || {});
+      // 按类型筛空了：看看放开类型有多少（vivo 的岗位全是社招，校招口径下一条都搜不到）
+      setOtherScope(null);
+      if (!json.total && filters.jobType) {
+        const o = await (await fetch(`/api/db/jobs?${query({ jobType: '', page: '1', pageSize: '1' })}`)).json();
+        if (o.success && o.total) setOtherScope(o.total);
+      }
     } catch (e: any) { message.error(`加载失败: ${e.message}`); }
     finally { setLoading(false); }
-  }, [page, pageSize, query, urlReady]);
+  }, [page, pageSize, query, urlReady, filters.jobType]);
+  const [otherScope, setOtherScope] = useState<number | null>(null);
 
   useEffect(() => { load(); }, [load]);
 
@@ -253,6 +260,11 @@ export default function DbJobPage() {
         </div>
         {enrich && <Alert type="info" style={{ marginBottom: 12 }} action={<Button size="small" onClick={() => { enrichStop.current = true; }}>停止</Button>}
           message={<div><div style={{ marginBottom: 4 }}>AI 补全中（{currentModel}）：{enrich.current} · 已补 {enrich.filled} · 未补 {enrich.failed}</div><Progress percent={Math.round((enrich.done / enrich.total) * 100)} size="small" /></div>} />}
+        {otherScope !== null && !loading && (
+          <Alert type="warning" showIcon style={{ marginBottom: 12 }}
+            message={`「${filters.jobType === CAMPUS_JOB_TYPES.join(',') ? '校招口径' : '当前类型'}」下没有符合条件的岗位；放开类型后有 ${otherScope} 条（多半是社招全职）。`}
+            action={<Button size="small" type="primary" onClick={() => setFilter({ jobType: '' })}>看全部类型</Button>} />
+        )}
         <Table
           rowKey="id" size="small" loading={loading} dataSource={data} columns={columns} scroll={{ x: 1900 }}
           rowSelection={{ selectedRowKeys: selected, onChange: setSelected }}

@@ -19,6 +19,8 @@ export interface JobFieldDef {
   options?: Record<string, string>;
   /** 计入完整度评分的核心字段 */
   core?: boolean;
+  /** 系统按规则推出来的字段：不让大模型填（不进提示词），sanitizeJob 里算 */
+  derived?: boolean;
 }
 
 export const JOB_TYPE_LABELS: Record<string, string> = {
@@ -83,6 +85,7 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'seniority', label: '职级', kind: 'enum', group: 'basic', options: SENIORITY_LABELS, hint: '职级，根据名称与经验要求判断。' },
   { key: 'number_of_recruits', label: '招聘人数', kind: 'string', group: 'basic', hint: '招聘人数，页面明确写了才填（数字或「若干」）。' },
   { key: 'organizer', label: '主办方', kind: 'string', group: 'basic', hint: '主办方 / 招聘主体，与企业不同时才填（如子公司、联合招聘的机构）。' },
+  { key: 'if_develop_management', label: '管培项目', kind: 'boolean', group: 'basic', derived: true, hint: '岗位名里有「管培」为是，否则为否（数据部门 2026-10-10 口径）。' },
   { key: 'qianli_job_labels', label: '岗位标签', kind: 'string[]', group: 'basic', options: Object.fromEntries(QIANLI_JOB_LABELS.map(l => [l, l])), hint: `岗位标签，只能从这些里选（可多选）：${QIANLI_JOB_LABELS.join(' / ')}。` },
 
   { key: 'location', label: '工作地点', kind: 'string', group: 'location', core: true, hint: '工作地点原文；多个地点用英文分号 ; 分隔。' },
@@ -122,7 +125,7 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'graduation_year', label: '面向届别', kind: 'string', group: 'requirement', core: true, hint: '校招 / 实习面向的毕业届别或毕业时间范围（如 "2027 届" 或 "2026-12 至 2027-08 毕业"）。' },
 
   { key: 'contact_name', label: '联系人', kind: 'string', group: 'link', hint: '招聘联系人姓名，没有则为 null。' },
-  { key: 'contact_email', label: '联系邮箱', kind: 'string', group: 'link', hint: '简历投递 / 咨询邮箱，没有则为 null。' },
+  { key: 'contact_email', label: '联系邮箱', kind: 'string', group: 'link', hint: '简历投递邮箱 / 咨询邮箱；页面写了「简历发送至 xx@xx.com」这类投递邮箱一定填在这里。没有则为 null。' },
   { key: 'contact_phone', label: '联系电话', kind: 'string', group: 'link', hint: '联系电话，没有则为 null。' },
   { key: 'contact_wechat', label: '联系微信', kind: 'string', group: 'link', hint: '联系微信 / 公众号，没有则为 null。' },
   { key: 'summary_cn', label: '岗位摘要（中文）', kind: 'text', group: 'content', core: true, hint: '用 2-4 句中文概括这个岗位做什么、要什么样的人。' },
@@ -141,6 +144,7 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'application_end_date_time_description', label: '截止时间说明', kind: 'string', group: 'timeline', hint: '截止时间的原文说明（如「北京时间 10 月 31 日 24:00」「滚动招聘，招满即止」）。' },
 
   { key: 'link', label: '岗位详情页', kind: 'url', group: 'link', core: true, hint: '这个岗位自己的详情页完整 URL（从 Markdown 链接里取）；找不到独立链接则为 null，不要编造。' },
+  { key: 'application_rule', label: '投递规则', kind: 'string', group: 'link', hint: '投递规则：投递次数限制（如「仅限投递一个岗位」「最多 2 个志愿」）+ 投递渠道（如「只需投递到 xx@xx.com」「仅接受官网网申」），用一句中文写清；页面没说则为 null。' },
   { key: 'application_website', label: '投递入口', kind: 'url', group: 'link', hint: '投递 / Apply 按钮指向的完整 URL，没有则为 null。' },
 ];
 
@@ -160,7 +164,7 @@ function tsType(f: JobFieldDef): string {
 
 /** Structurer 提示词里的单个岗位 schema */
 export function jobSchemaForPrompt(indent = '            '): string {
-  return JOB_FIELDS.map(f => `${indent}"${f.key}": <${tsType(f)}> // ${f.label}. ${f.hint}`).join('\n');
+  return JOB_FIELDS.filter(f => !f.derived).map(f => `${indent}"${f.key}": <${tsType(f)}> // ${f.label}. ${f.hint}`).join('\n');
 }
 
 const isFilled = (v: unknown) => v !== null && v !== undefined && v !== '' && !(Array.isArray(v) && v.length === 0);
@@ -204,8 +208,25 @@ export function sanitizeJob(raw: Record<string, any>): Record<string, any> {
     }
   }
   if (out.minimum_working_days !== null) out.minimum_working_days = Math.round(out.minimum_working_days);
+  out.if_develop_management = isManagementTrainee(out.name);
   return out;
 }
+
+/** 管培项目：岗位名里有「管培」两个字（数据部门口径，默认否） */
+export const isManagementTrainee = (name: unknown) => /管培/.test(String(name || ''));
+
+/** 工作地点拆成单个城市（「北京、上海」→ 两条）；只有一个地点时原样返回 */
+export function splitLocations(loc: unknown): string[] {
+  const s = String(loc || '').trim();
+  if (!s) return [];
+  // 英文地点「San Francisco, CA」里的逗号不是分隔符：只有不含英文字母时才按逗号拆
+  const sep = /[A-Za-z]/.test(s) ? /\s*[;；、/|]\s*/ : /\s*[;；、,，/|]\s*|\s+(?:和|及|与)\s+/;
+  const parts = s.split(sep).map(x => x.trim()).filter(Boolean);
+  return parts.length > 1 ? Array.from(new Set(parts)) : [s];
+}
+
+/** 地点比对用的城市名：去掉「总部」「市」这类尾巴（「深圳总部」和「深圳」算同一个地方） */
+export const normCity = (loc: unknown) => String(loc || '').trim().toLowerCase().replace(/\s+/g, '').replace(/(总部|总公司|分公司|特别行政区|市)$/, '');
 
 /** 字段值的展示文本（列表 / 详情 / 导出通用） */
 export function formatJobValue(key: string, v: any): string {

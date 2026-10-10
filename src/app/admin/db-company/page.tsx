@@ -25,6 +25,9 @@ const LIST_PRESETS = [
   '在中国大陆有校招的外资快消、咨询、四大 30 家',
 ];
 
+/** 来源的中文名；数据部门发来的来源原样显示 */
+const SOURCE_LABELS: Record<string, string> = { 'seed-wellknown': '知名企业种子名单' };
+
 export default function DbCompanyPage() {
   const { message } = App.useApp();
   const router = useRouter();
@@ -37,6 +40,8 @@ export default function DbCompanyPage() {
   const [pageSize, setPageSize] = useState(50);
   const [search, setSearch] = useState('');
   const [segment, setSegment] = useState('');
+  const [source, setSource] = useState('');
+  const [sources, setSources] = useState<Record<string, number>>({});
   const [review, setReview] = useState('');
   const [exporting, setExporting] = useState(false);
   const [selected, setSelected] = useState<React.Key[]>([]);
@@ -60,7 +65,7 @@ export default function DbCompanyPage() {
   const [urlReady, setUrlReady] = useState(false);
   useEffect(() => {
     const u = new URLSearchParams(window.location.search);
-    setSearch(u.get('search') || ''); setSegment(u.get('segment') || ''); setReview(u.get('review') || '');
+    setSearch(u.get('search') || ''); setSegment(u.get('segment') || ''); setSource(u.get('source') || ''); setReview(u.get('review') || '');
     const p = parseInt(u.get('page') || ''), ps = parseInt(u.get('pageSize') || '');
     if (p > 0) setPage(p);
     if (ps > 0) setPageSize(ps);
@@ -71,24 +76,25 @@ export default function DbCompanyPage() {
     const q = new URLSearchParams();
     if (search) q.set('search', search);
     if (segment) q.set('segment', segment);
+    if (source) q.set('source', source);
     if (review) q.set('review', review);
     if (page > 1) q.set('page', String(page));
     if (pageSize !== 50) q.set('pageSize', String(pageSize));
     const s = q.toString();
     window.history.replaceState(window.history.state, '', s ? `?${s}` : window.location.pathname);
-  }, [search, segment, review, page, pageSize, urlReady]);
+  }, [search, segment, source, review, page, pageSize, urlReady]);
 
   const load = useCallback(async () => {
     if (!urlReady) return;
     setLoading(true);
     try {
-      const qs = new URLSearchParams({ page: String(page), pageSize: String(pageSize), search, segment, review, withStats: '1' });
+      const qs = new URLSearchParams({ page: String(page), pageSize: String(pageSize), search, segment, source, review, withStats: '1' });
       const json = await (await fetch(`/api/db/companies?${qs}`)).json();
       if (!json.success) throw new Error(json.error);
-      setData(json.data); setTotal(json.total); setStats(json.stats || {});
+      setData(json.data); setTotal(json.total); setStats(json.stats || {}); setSources(json.sources || {});
     } catch (e: any) { message.error(`加载失败: ${e.message}`); }
     finally { setLoading(false); }
-  }, [page, pageSize, search, segment, review, urlReady]);
+  }, [page, pageSize, search, segment, source, review, urlReady]);
 
   useEffect(() => { load(); }, [load]);
 
@@ -204,7 +210,7 @@ export default function DbCompanyPage() {
     if (!(await ensureDownloadAllowed())) return;   // 没有下载许可：弹出申请框（日志由服务端导出接口记）
     setExporting(true);
     try {
-      const qs = new URLSearchParams({ exportAll: 'true', search, segment, review });
+      const qs = new URLSearchParams({ exportAll: 'true', search, segment, source, review });
       const res = await fetch(`/api/db/companies?${qs}`);
       const json = await res.json();
       if (res.status === 403 && json.code === 'DOWNLOAD_PERMISSION_REQUIRED') { clearDownloadPermissionCache(); await ensureDownloadAllowed(); return; }
@@ -264,6 +270,9 @@ export default function DbCompanyPage() {
           <Input.Search key={urlReady ? 'ready' : 'init'} defaultValue={search} placeholder="搜索企业名 / 英文名 / 行业" allowClear style={{ width: 300 }} onSearch={v => { setSearch(v); setPage(1); }} />
           <Select value={segment} style={{ width: 140 }} onChange={v => { setSegment(v); setPage(1); }}
             options={[{ value: '', label: '全部分类' }, ...SEGMENT_OPTIONS, { value: 'none', label: '未分类' }]} />
+          <Select value={source} style={{ width: 170 }} onChange={v => { setSource(v); setPage(1); }} popupMatchSelectWidth={false}
+            options={[{ value: '', label: '全部来源' }, ...Object.entries(sources).filter(([k]) => k !== 'none').sort((a, b) => b[1] - a[1]).map(([k, n]) => ({ value: k, label: `${SOURCE_LABELS[k] || k}（${n}）` })),
+              { value: 'none', label: `未标来源（${sources.none || 0}）` }]} />
           <Select value={review} style={{ width: 120 }} onChange={v => { setReview(v); setPage(1); }} options={[{ value: '', label: '全部审核' }, { value: 'none', label: '未审核' }, ...REVIEW_STATUS_OPTIONS]} />
           <div style={{ flex: 1 }} />
           {selected.length > 0 && (

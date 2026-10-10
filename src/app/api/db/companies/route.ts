@@ -1,3 +1,4 @@
+import { ensureCompanyFloraId } from '@/lib/company-flora-id';
 import { NextResponse } from 'next/server';
 import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
@@ -19,6 +20,7 @@ export async function GET(request: Request) {
     const search = searchParams.get('search') || '';
     const segment = searchParams.get('segment') || '';
     const industry = searchParams.get('industry') || '';
+    const source = searchParams.get('source') || '';
 
     const review = searchParams.get('review') || '';
     // 导出要翻页读全量，所以查询写成「每次新建」的函数
@@ -30,6 +32,9 @@ export async function GET(request: Request) {
       if (segment === 'none') query = query.is('segment', null);
       else if (segment) query = query.eq('segment', segment);
       if (industry) query = query.eq('industry', industry);
+      // 来源（数据部门会按 slug 发来每家企业的来源）：none = 没标来源
+      if (source === 'none') query = query.is('source', null);
+      else if (source) query = query.eq('source', source);
       return query;
     };
     if (exportAll) {
@@ -65,16 +70,20 @@ export async function GET(request: Request) {
 
     // 顶部统计：各 segment 数量
     let stats: Record<string, number> | undefined;
+    let sources: Record<string, number> | undefined;   // 来源筛选的选项：每个来源多少家
     if (searchParams.get('withStats') === '1') {
-      stats = { total: 0, reviewed: 0 };
-      const { data: all } = await selectAll(() => supabaseAdmin.from('companies').select('segment, human_review_status').order('id'));
-      for (const r of all || []) { stats.total++; const k = r.segment || 'none'; stats[k] = (stats[k] || 0) + 1; if (r.human_review_status === 'complete') stats.reviewed++; }
+      stats = { total: 0, reviewed: 0 }; sources = {};
+      const { data: all } = await selectAll(() => supabaseAdmin.from('companies').select('segment, human_review_status, source').order('id'));
+      for (const r of all || []) {
+        stats.total++; const k = r.segment || 'none'; stats[k] = (stats[k] || 0) + 1; if (r.human_review_status === 'complete') stats.reviewed++;
+        const s = r.source || 'none'; sources[s] = (sources[s] || 0) + 1;
+      }
     }
 
     return NextResponse.json({
       success: true,
       data: (data || []).map(c => ({ ...c, counts: counts.get(c.id) || null, deep_topics: deepCount.get(c.id) || 0 })),
-      total: count || 0, page, pageSize, stats,
+      total: count || 0, page, pageSize, stats, sources,
     });
   } catch (error: any) {
     console.error('[Companies] GET error:', error);
@@ -112,6 +121,8 @@ export async function POST(request: Request) {
       const { data, error } = await supabaseAdmin.from('companies').insert(fresh).select('id, name');
       if (error) throw error;
       created = data || [];
+      // 带官网导入的由触发器给编号；没官网的补拼音那一档
+      for (const c of created) await ensureCompanyFloraId(c.id).catch(() => {});
     }
     return NextResponse.json({ success: true, created: created.length, skipped: rows.size - fresh.length, data: created });
   } catch (error: any) {

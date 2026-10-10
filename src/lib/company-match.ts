@@ -4,6 +4,7 @@
  * 仅在服务端使用。
  */
 import { supabaseAdmin } from '@/lib/supabase';
+import { ensureCompanyFloraId } from '@/lib/company-flora-id';
 
 const cache = new Map<string, number>();
 
@@ -56,6 +57,8 @@ export async function resolveOrCreateCompany(company?: string | null): Promise<n
     return resolveCompanyId(name);
   }
   cache.set(name.toLowerCase(), data.id);
+  // 刚建档还没有官网：先按「国家代码.拼音首字母」给编号，之后补上官网由触发器升级成域名那一档
+  await ensureCompanyFloraId(data.id).catch(() => {});
   return data.id;
 }
 
