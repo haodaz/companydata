@@ -27,7 +27,8 @@ export async function linkLanding(url: string, ms = 12000): Promise<Landing> {
   let httpFallback: string | undefined;
   if ('error' in r && u.protocol === 'https:') {
     const alt = await get(url.replace(/^https:/i, 'http:'), ms);
-    if (!('error' in alt) && alt.status < 400) { r = alt; httpFallback = alt.finalUrl; }
+    // http 能开但最后又跳回 https：只是刚才那次 https 偶尔超时，不算「只支持 http」，链接不用改
+    if (!('error' in alt) && alt.status < 400) { r = alt; if (/^http:/i.test(alt.finalUrl)) httpFallback = alt.finalUrl; }
   }
   if ('error' in r) return { ok: false, error: r.error };
   let homeRedirect = false;
