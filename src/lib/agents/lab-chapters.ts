@@ -13,7 +13,7 @@ import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { supabaseAdmin } from '@/lib/supabase';
 import { sanitizeTrace, type Sim, type SimStep, type SimTrace } from '@/lib/skill-sim';
 import { slotMinutes, type StudioChapter } from '@/lib/lab-studio';
-import { applyCastArt, castKind, nextCastCode, stepsUsing, type CastKind, type CastMember } from '@/lib/lab-cast';
+import { applyCastArt, castKind, decodeCastRefs, decodeSimRefs, nextCastCode, stepsUsing, type CastKind, type CastMember } from '@/lib/lab-cast';
 import { drawCastAsset, findReusable, loadCast, registerAsset } from '@/lib/lab-cast-server';
 import { artAvailable } from '@/lib/lab-art';
 import { familyOf } from '@/lib/career-family';
@@ -86,7 +86,8 @@ async function addCast(taskId: string, cast: CastMember[], x: { kind: CastKind; 
 function readNewCast(raw: any): { tmp: string; kind: CastKind; name: string; type_name: string; note: string; look: string }[] {
   return (Array.isArray(raw) ? raw : []).map((c: any, i: number) => ({
     tmp: str(c.id || c.tmp || `N${i + 1}`, 10), kind: CAST_K.includes(c.kind) ? c.kind : 'person',
-    name: str(c.name, 30), type_name: str(c.type_name, 30), note: str(c.note, 120), look: str(c.look, 300),
+    // 模型偶尔把编号填进名字（name: "T01"）：这种用类型名当名字
+    name: /^[PSTN]\d{1,2}$/.test(str(c.name, 30)) ? str(c.type_name, 30) : str(c.name, 30), type_name: str(c.type_name, 30), note: str(c.note, 120), look: str(c.look, 300),
   })).filter(c => c.name).slice(0, 8);
 }
 
@@ -139,8 +140,14 @@ ${CAST_RULES}
     const c = chapters.find(x => x.id === e?.id);
     if (c && ids.has(c.id) && !c.slot && str(e.slot, 40)) await supabaseAdmin.from('lab_chapters').update({ slot: str(e.slot, 40) }).eq('id', c.id);
   }
+  // 新角色先进角色表，好把简介里的编号（P01 / 临时的 N1）换成名字——简介是给体验者看的
+  await progress('登记角色', '新的人 / 地方 / 道具先进角色表，同类型的从素材库复用');
+  const before = cast.length;
+  const tmpDay = new Map<string, CastMember>();
+  for (const x of readNewCast(p.new_cast)) tmpDay.set(x.tmp, await addCast(spaceId, cast, x, family));
+  const nameOf = (code: string) => (tmpDay.get(code) || cast.find(m => m.code === code))?.name;
   const slots = (Array.isArray(p.slots) ? p.slots : [])
-    .map((x: any) => ({ slot: str(x.slot, 40), title: str(x.title, 60), kind: KINDS.includes(x.kind) ? x.kind : 'daily', brief: str(x.brief, 400) }))
+    .map((x: any) => ({ slot: str(x.slot, 40), title: decodeCastRefs(str(x.title, 60), nameOf), kind: KINDS.includes(x.kind) ? x.kind : 'daily', brief: decodeCastRefs(str(x.brief, 400), nameOf) }))
     .filter((x: any) => x.slot && x.title).slice(0, 9);
   let seq = Math.max(0, ...chapters.map(c => c.seq));
   if (slots.length) {
@@ -149,12 +156,9 @@ ${CAST_RULES}
     })));
     if (e2) throw e2;
   }
-  await progress('登记角色', '新的人 / 地方 / 道具先进角色表，同类型的从素材库复用');
-  const before = cast.length;
-  for (const x of readNewCast(p.new_cast)) await addCast(spaceId, cast, x, family);
   const bible: DayBible = {
     ...((space as any).bible || {}),
-    facts: (Array.isArray(p.facts) ? p.facts : []).map((f: any) => str(f, 140)).filter(Boolean).slice(0, 8),
+    facts: (Array.isArray(p.facts) ? p.facts : []).map((f: any) => decodeCastRefs(str(f, 140), nameOf)).filter(Boolean).slice(0, 8),
     outline: [...chapters.map(c => ({ slot: c.slot || '', title: c.title })), ...slots.map((x: any) => ({ slot: x.slot, title: x.title }))]
       .sort((a, b) => (slotMinutes(a.slot) ?? 9999) - (slotMinutes(b.slot) ?? 9999)),
     updated_at: new Date().toISOString(),
@@ -187,7 +191,7 @@ export async function buildChapter(spaceId: string, chapterId: string, model: st
   const usedBefore = (m: CastMember) => before.some(c => stepsUsing(c.sim, m).length);
 
   await progress('写故事线', `${ch.slot || ''} ${ch.title}`);
-  const p = await ask(`
+  const prompt = (fix: string) => `
 你在给一个「职业体验空间」写其中一章。体验者扮演这个职业的新人，跟着时间把一天走下去；这一章是一段 5–10 分钟的真实工作操作。
 
 ${spaceText(space)}
@@ -212,8 +216,8 @@ ${CAST_RULES}
 1. 4–6 步真实工作中的决策动作，最后一步固定为 text（写结论 / 记录 / 交接留言）。让人是在「操作」而不是「答题」。
    - choose：单选一个动作 / 判断（4–5 个选项，有新人最容易选的错误项，正确项不能一眼看出）
    - multi：多选，带 max 上限，逼人取舍
-   - classify：给一组条目逐个贴标签，labels 2 个
-   - allocate：把一个总量（total + unit）分到几项上
+   - classify：options 是要贴标签的 3–5 个条目（每条一个具体的人 / 事 / 物），labels 是 2 个标签。条目一定放在 options 里，不能只给 labels
+   - allocate：把一个总量（total + unit）分到 options 列出的 3–4 项上。options 一定要给
    - slider：0–100 的把握程度 / 比例
 2. 每步有 scene（who 说话的人编号、time、text 说了什么 / 发生了什么）推进剧情；place 写这一步在哪（场景编号）；props 写这一步用到的道具编号（没有就空）。
    scene.time 要落在本章时段附近（前后 1 小时内）。
@@ -228,7 +232,18 @@ ${CAST_RULES}
   "sim": { "title": "<本章操作台名称>", "intro": "<开场：把体验者带进 ${ch.slot || '这个时段'} 的情境，2–3 句>", "steps": [ { "id": "<英文短 id>", "type": "choose|multi|classify|allocate|slider|text", "scene": { "who": "<P01 / N1>", "time": "", "text": "" }, "place": "<S01 / N2>", "props": ["<T01>"], "prompt": "", "options": [ { "id": "", "label": "", "detail": "" } ], "max": 2, "labels": [ { "id": "", "label": "" } ], "total": 100, "unit": "" } ] },
   "expert": { "<step id>": "<见上>" },
   "rubric": [ { "key": "<英文短 key>", "name": "<维度名>", "weight": <数字>, "description": "<看什么>" } ]
-}`, model, 'Lab Chapter');
+}${fix}`;
+  // 自检：选择 / 多选 / 分类 / 分配题少于两个选项就没法做（模型常只给分类题的 labels、漏了条目）——把问题指出来重写一次
+  const lacking = (raw: any) => (Array.isArray(raw?.sim?.steps) ? raw.sim.steps : [])
+    .map((st: any, i: number) => ['choose', 'multi', 'classify', 'allocate'].includes(st?.type) && !(Array.isArray(st.options) && st.options.filter((o: any) => o?.id && o?.label).length >= 2) ? `第 ${i + 1} 步（${st.type}）没有给 options 或少于 2 项` : '')
+    .filter(Boolean);
+  let p = await ask(prompt(''), model, 'Lab Chapter');
+  const miss = lacking(p);
+  if (miss.length) {
+    await progress('自检重写', miss.join('；'));
+    const again = await ask(prompt(`\n\n上一版有问题，这次一定改掉：${miss.join('；')}。classify 的 options 是要贴标签的条目，allocate 的 options 是要分配的项。`), model, 'Lab Chapter');
+    if (lacking(again).length < miss.length) p = again;
+  }
 
   // 新角色进角色表（同类型的从素材库复用）
   await progress('登记角色', '新的人 / 地方 / 道具进角色表，同类型的从素材库复用');
@@ -241,6 +256,10 @@ ${CAST_RULES}
     return tmp.get(s) || cast.find(m => m.code === s) || cast.find(m => m.name === s) || null;
   };
 
+  // 台词 / 题干 / 选项 / 示范答案里的编号换成名字（关联字段 who / place / props 留给 cleanSim 按编号挂角色）
+  const nameOf = (code: string) => (tmp.get(code) || cast.find(m => m.code === code))?.name;
+  decodeSimRefs(p.sim, nameOf);
+  if (p.expert && typeof p.expert === 'object') for (const k of Object.keys(p.expert)) if (typeof p.expert[k] === 'string') p.expert[k] = decodeCastRefs(p.expert[k], nameOf);
   const sim = cleanSim(p.sim, ch, ref);
   if (sim.steps.length < 3) throw new Error('生成的步骤太少，换个说法再试一次');
   const trace = sanitizeTrace(sim, p.expert || {});

@@ -72,3 +72,33 @@ export function applyCastArt(sim: Sim, cast: CastMember[]): Sim {
   if (!cover) return sim;
   return { ...sim, art: { ...(sim.art || {}), cover, npcs, scenes } };
 }
+
+/**
+ * 给人看的文字里不该出现角色编号（「在S03与客户N1陈先生…P01林工分派」）：换成名字。
+ * 编号后面紧跟着就是这个名字的（P01林工）只去掉编号；查不到的 P/S/T 编号原样留着（可能是真的刀具号 T05），查不到的临时编号 N1 去掉。
+ */
+const REF_RE = /(?<![A-Za-z0-9])([PST]\d{2}|N\d{1,2})(?![A-Za-z0-9])(\s*)/g;
+export function decodeCastRefs(text: string, lookup: (code: string) => string | null | undefined): string {
+  if (!text || !REF_RE.test(text)) return text;
+  REF_RE.lastIndex = 0;
+  return text.replace(REF_RE, (m: string, code: string, sp: string, at: number, whole: string) => {
+    // 工位的场景名带「工位：」前缀，放进句子里去掉
+    const name = lookup(code)?.replace(/^工位[：:]\s*/, '');
+    if (!name) return code.startsWith('N') ? '' : m;
+    return whole.slice(at + m.length).startsWith(name) ? '' : name + sp;
+  });
+}
+
+/** 一章里给人看的文字字段统一过一遍（scene.who / place / props 是关联字段，不动） */
+export function decodeSimRefs(sim: any, lookup: (code: string) => string | null | undefined) {
+  if (!sim) return sim;
+  const d = (s: any) => typeof s === 'string' ? decodeCastRefs(s, lookup) : s;
+  sim.title = d(sim.title); sim.intro = d(sim.intro);
+  for (const st of Array.isArray(sim.steps) ? sim.steps : []) {
+    st.prompt = d(st.prompt);
+    if (st.scene) st.scene.text = d(st.scene.text);
+    for (const o of Array.isArray(st.options) ? st.options : []) { o.label = d(o.label); o.detail = d(o.detail); }
+    for (const l of Array.isArray(st.labels) ? st.labels : []) l.label = d(l.label);
+  }
+  return sim;
+}

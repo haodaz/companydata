@@ -121,9 +121,12 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
     if (!trackLayer) return '工具';
     if (trackLayer.kind === 'seam') return '焊枪';
     const ic = trackLayer.iconBy ? (trackLayer.icons || [])[Math.round(st.controls[trackLayer.iconBy] || 0)] : trackLayer.icon;
-    return ({ needle: '持针器', scalpel: '手术刀', cautery: '电刀', clamp: '血管钳', forceps: '镪子', retractor: '牵开器', torch: '焊枪' } as Record<string, string>)[ic || ''] || '奶缸';
+    return ({ needle: '持针器', scalpel: '手术刀', cautery: '电刀', clamp: '血管钳', forceps: '镪子', retractor: '牵开器', torch: '焊枪', hand: '手' } as Record<string, string>)[ic || ''] || '奶缸';
   })();
-  const cupLayer = scene?.layers.find(l => l.kind === 'cup' || l.kind === 'wound' || l.kind === 'incis');
+  /** 直接用手（抚触 / 推拿）：没有「握住」什么，说法换成「贴上去」 */
+  const bareHand = holdName === '手';
+  const holdVerb = bareHand ? '手贴上去' : `握住${holdName}`;
+  const cupLayer = scene?.layers.find(l => l.kind === 'cup' || l.kind === 'wound' || l.kind === 'incis' || l.kind === 'skin');
 
   /** 奶泡沉积：每一下实际落点，半径由当时的奶缸高度 / 流量（cup 层的 level 表达式）决定。
    *  高位细流 → 半径近于 0（奶沉到咖啡下面，杯面不留白）；压低加大流量 → 大白斑。 */
@@ -296,7 +299,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
       <HandCam onPose={onPose} hold={holdName} width="100%" />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6, marginTop: 8 }}>
         {[
-          { k: holdName, v: hand?.holding ? '已握住' : hand?.pinch ? '捏住了' : '松开', c: hand?.holding ? '#3ddc97' : '#9aa0b8' },
+          { k: holdName, v: hand?.holding ? (bareHand ? '已贴上' : '已握住') : hand?.pinch ? '捏住了' : '松开', c: hand?.holding ? '#3ddc97' : '#9aa0b8' },
           { k: '偏离', v: `${devNow.toFixed(1)} mm`, c: devNow > 16 ? '#ff5fa2' : '#7cc8ff' },
           { k: '进度', v: `${Math.round(trackProg)}%`, c: '#ffd166' },
         ].map(x => (
@@ -306,7 +309,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
           </div>
         ))}
       </div>
-      <div className="hud-ink3" style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 7, lineHeight: 1.6 }}>捏住拇指和食指 = 握住{holdName}；松开就停在原地（可以趡机换器械、调参数）。</div>
+      <div className="hud-ink3" style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 7, lineHeight: 1.6 }}>捏住拇指和食指 = {holdVerb}；松开就停在原地（可以趡机换器械、调参数）。</div>
     </div>
   ) : null;
 
@@ -359,7 +362,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
           const startT = track && l.pace ? st.events.find(e => e.kind === 'control' && e.control === l.control)?.t : undefined;
           return <Layer key={l.id} l={l} level={l.level ? Math.min(1, Math.max(0, ev(l.level))) : 0} on={l.on ? !!ev(l.on) : false} value={l.text ? ev(l.text) : 0}
             progress={prog} ghost={startT !== undefined && l.pace ? Math.min(100, (st.t - startT) * l.pace) : undefined}
-            deposits={l.kind === 'cup' || l.kind === 'wound' || l.kind === 'incis' ? deposits.current : undefined}
+            deposits={l.kind === 'cup' || l.kind === 'wound' || l.kind === 'incis' || l.kind === 'skin' ? deposits.current : undefined}
             toolName={l.iconBy ? (l.icons || [])[Math.round(st.controls[l.iconBy] || 0)] || l.icon || 'pitcher' : l.icon || 'pitcher'}
             pick={l.kind === 'tray' && l.control ? Math.round(st.controls[l.control] || 0) : -1}
             onPick={l.kind === 'tray' && l.control && running ? ((i: number) => act(l.control!, i)) : undefined}
@@ -376,7 +379,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
       )}
       {trackLayer && (
         <button onClick={() => setCam(v => !v)} style={{ position: 'absolute', left: 12, top: hud ? 58 : 34, padding: '6px 12px', borderRadius: 999, border: '1px solid rgba(255,255,255,.35)', background: cam ? 'linear-gradient(135deg,#ff5fa2,#ff8a5f)' : 'rgba(15,18,36,.7)', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(6px)' }}>
-          {cam ? `📷 摄像头握${holdName}中 · 关闭` : `📷 用摄像头握${holdName}`}
+          {bareHand ? (cam ? '📷 摄像头跟手中 · 关闭' : '📷 用摄像头比划手法') : cam ? `📷 摄像头握${holdName}中 · 关闭` : `📷 用摄像头握${holdName}`}
         </button>
       )}
       {cam && !isLatte && <div style={{ position: 'absolute', left: 12, top: hud ? 94 : 68, zIndex: 2 }}><HandCam onPose={onPose} hold="焊枪" /></div>}
@@ -471,6 +474,14 @@ function ToolShape({ name, s = 1 }: { name: string; s?: number }) {
         <rect x={-8} y={-110} width={16} height={100} rx={6} fill="#2b3040" stroke="#6b7089" strokeWidth={2} transform="rotate(60)" />
         <rect x={-11} y={-40} width={22} height={34} rx={4} fill="#c9a24a" transform="rotate(60)" />
       </>);
+    case 'hand':     // 手：俯视的食指 + 中指指腹，指尖朝前进方向
+      return g(<>
+        <rect x={-150} y={-38} width={92} height={78} rx={34} fill="#efbf9c" stroke="#b9805e" strokeWidth={3} />
+        <rect x={-84} y={-30} width={130} height={26} rx={13} fill="#f6cfb2" stroke="#b9805e" strokeWidth={3} />
+        <rect x={-88} y={2} width={122} height={26} rx={13} fill="#f3c8a8" stroke="#b9805e" strokeWidth={3} />
+        <ellipse cx={34} cy={-17} rx={8} ry={8} fill="#fde8db" stroke="#d9a588" strokeWidth={1.5} />
+        <ellipse cx={22} cy={15} rx={8} ry={8} fill="#fde8db" stroke="#d9a588" strokeWidth={1.5} />
+      </>);
     default:         // pitcher 奶缸
       return g(<>
         <ellipse cx={-26} cy={0} rx={46} ry={40} fill="#c9ced8" stroke="#79818f" strokeWidth={3} />
@@ -545,7 +556,7 @@ function Layer({ l, level, on, value, progress = 0, ghost, deposits, toolName = 
           )}
           {/* 手里拿的家伙：固定一种，或者随器械控件变；走完了淡掉让人看清成品 */}
           <g transform={`translate(${head.x} ${head.y}) rotate(${head.angle})`} opacity={progress >= 99.5 ? 0.2 : 1} pointerEvents="none">
-            <ToolShape name={toolName} />
+            <ToolShape name={toolName} s={toolName === 'hand' ? 0.55 : 1} />
             {on && toolName === 'pitcher' && <circle cx={58} cy={0} r={9} fill="#fffaf0" opacity={0.95} />}
           </g>
           <circle cx={head.x} cy={head.y} r={34} fill="transparent" />
@@ -573,6 +584,28 @@ function Layer({ l, level, on, value, progress = 0, ghost, deposits, toolName = 
           </g>
           <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(40,25,12,.45)" strokeWidth={4} />
           <circle cx={cx} cy={cy} r={r * 1.1} fill="none" stroke="rgba(255,255,255,.6)" strokeWidth={5} />
+        </g>
+      );
+    }
+    case 'skin': {
+      // 皮肤上的手法（宝宝抚触、推拿）：底图里本来就画着人 / 宝宝，这里只叠两样——
+      // 手走过留下的抚触油光（按实际落点，压得越合适越亮），和必须避开的禁区（points[0]，肚脐 / 脐带残端），碰到就标红。
+      const navel = l.points?.[0] ? { x: l.points[0].x * 16, y: l.points[0].y * 9 } : null;
+      const nr = Math.max(26, Math.min(w, h) * 0.16);
+      return (
+        <g pointerEvents="none">
+          <defs>
+            <clipPath id={`skinclip-${l.id}`}><ellipse cx={cx} cy={cy} rx={w / 2} ry={h / 2} /></clipPath>
+            <radialGradient id={`sheen-${l.id}`}><stop offset="0%" stopColor="#ffffff" stopOpacity={0.9} /><stop offset="60%" stopColor="#fff6e6" stopOpacity={0.45} /><stop offset="100%" stopColor="#fff3df" stopOpacity={0} /></radialGradient>
+          </defs>
+          <g clipPath={`url(#skinclip-${l.id})`} filter="url(#latte-soft)">
+            {(deposits || []).map((p, i) => <ellipse key={i} cx={p.x} cy={p.y} rx={p.r * 1.4 + 10} ry={p.r + 7} transform={`rotate(${p.a} ${p.x} ${p.y})`} fill={`url(#sheen-${l.id})`} />)}
+          </g>
+          {navel && (<g>
+            <circle cx={navel.x} cy={navel.y} r={nr} fill={on ? 'rgba(255,59,92,.28)' : 'rgba(255,255,255,.06)'} stroke={on ? '#ff3b5c' : 'rgba(255,90,120,.85)'} strokeWidth={on ? 5 : 3} strokeDasharray={on ? undefined : '9 7'} />
+            <text x={navel.x + nr + 10} y={navel.y + 7} textAnchor="start" fill={on ? '#ff3b5c' : '#fff'} fontSize={19} fontWeight={800} style={{ textShadow: '0 1px 5px rgba(0,0,0,.75)' }}>{on ? '碰到脐带了！' : (l.label || '禁区 · 别碰')}</text>
+          </g>)}
+          {level > 0.02 && <ellipse cx={cx} cy={cy} rx={w / 2} ry={h / 2} fill="none" stroke="rgba(255,236,200,.7)" strokeWidth={2 + level * 5} opacity={0.5 + level * 0.4} />}
         </g>
       );
     }
