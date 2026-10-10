@@ -468,6 +468,8 @@ export default function SpacePage() {
     if (replace) router.replace(url, { scroll: false }); else router.push(url);
   };
   const [busy, setBusy] = useState('');             // 正在做什么（AI 核心进入 busy 动效）
+  // 「对比：没学过的通用 AI」单独一个标志：它要让模型从头操作一整章（一两分钟），不能把同时打开的操作台锁成「AI 核心处理中」
+  const [bareBusy, setBareBusy] = useState(false);
   const [openSub, setOpenSub] = useState<any>(null);
   /** 沉浸模式：评分报告直接在舞台里出（退出后排行榜里照样能看） */
   const [stageReport, setStageReport] = useState<any>(null);
@@ -634,7 +636,9 @@ function castOf(space: any, sim: Sim | null) {
   // ── 动作 ──
   const submit = async (m: 'human' | 'ai', withSkill = false, trace?: SimTrace) => {
     if (m === 'human' && !trace && rookie.answer.trim().length < 20) { message.warning('先把任务走一遍，至少写几句'); return; }
-    setBusy(m === 'ai' ? (withSkill ? 'AI 核心正在亲自走一遍' : '未装配技能的通用模型正在走一遍') : 'AI 核心正在按岗位标准评分');
+    const bare = m === 'ai' && !withSkill && !trace;
+    if (bare) setBareBusy(true);
+    else setBusy(m === 'ai' ? (withSkill ? 'AI 核心正在亲自走一遍' : '未装配技能的通用模型正在走一遍') : 'AI 核心正在按岗位标准评分');
     try {
       // 访客编号：「我的历史 / 证书库」按它找回；名字记在本地，下次不用再填
       try { if (m === 'human' && rookie.name.trim()) localStorage.setItem('lab:rookie', JSON.stringify({ name: rookie.name, note: rookie.note, location: rookie.location })); } catch { /* 无痕模式 */ }
@@ -646,7 +650,7 @@ function castOf(space: any, sim: Sim | null) {
       setOpenSub(json.submission);
       if (m === 'human') { setAnswering(false); setRookie(r => ({ ...r, answer: '' })); }
     } catch (e: any) { message.error(e.message); }
-    finally { setBusy(''); }
+    finally { if (bare) setBareBusy(false); else setBusy(''); }
   };
 
   const askNext = async (nextTurns: InterviewTurn[]) => {
@@ -988,7 +992,7 @@ function castOf(space: any, sim: Sim | null) {
       )}
 
       {isDay && !(answering && sim) && (
-        <DayView mode={mode as DayMode} modes={guest ? ['learn'] : ['test', 'teach', 'learn']} space={space} chapters={chapters} chapter={chapter} sim={sim} rubric={chapterRubric} canTeach={!!(sim && chapterTrace)} busy={!!busy}
+        <DayView mode={mode as DayMode} modes={guest ? ['learn'] : ['test', 'teach', 'learn']} space={space} chapters={chapters} chapter={chapter} sim={sim} rubric={chapterRubric} canTeach={!!(sim && chapterTrace)} busy={!!busy} bareBusy={bareBusy}
           onBack={guest ? null : () => setMode(null)} onMode={m => setMode(m, true)}
           done={mode === 'learn' ? new Set(Object.keys(chTraces)) : undefined}
           actions={mode === 'learn' && !(guest && taught) ? (
@@ -1022,7 +1026,7 @@ function castOf(space: any, sim: Sim | null) {
             {!answering ? (
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 18 }}>
                 <button className="lab-btn" disabled={!!busy} onClick={() => { if (sim?.art) enterFullscreen(); setAnswering(true); }}>{sim ? '进入操作台' : '开始作答'}</button>
-                <button className="lab-btn ghost" disabled={!!busy} onClick={() => submit('ai', false)}>让通用 AI {sim ? '上台操作' : '裸答'}</button>
+                <button className="lab-btn ghost" disabled={!!busy || bareBusy} onClick={() => submit('ai', false)}>{bareBusy ? <>通用 AI 走着呢<span className="lab-dots" /></> : <>让通用 AI {sim ? '上台操作' : '裸答'}</>}</button>
                 <button className="lab-btn ghost" disabled={!!busy || !skill} title={skill ? '' : '先让专家来教一遍'}
                   onClick={() => { if (sim && chapterTrace) { setDemo(chapterTrace); setAnswering(true); } else submit('ai', true); }}>
                   {sim ? '我教你：看我走一遍' : '我教你：看我怎么答'}
@@ -1484,8 +1488,8 @@ const DAYV_CSS = `
  * 场景大图、这一段要交代的事、会遇到谁、在哪、这一段考什么，进入操作台 / 看他走一遍。
  */
 type DayMode = 'test' | 'teach' | 'learn';
-function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach, busy, onBack, onMode, onPick, onStart, onTeach, onBareAI, actions, top, bottom, done }: {
-  mode: DayMode; modes: DayMode[]; space: any; chapters: any[]; chapter: any; sim: Sim | null; rubric: RubricItem[]; canTeach: boolean; busy: boolean;
+function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach, busy, bareBusy, onBack, onMode, onPick, onStart, onTeach, onBareAI, actions, top, bottom, done }: {
+  mode: DayMode; modes: DayMode[]; space: any; chapters: any[]; chapter: any; sim: Sim | null; rubric: RubricItem[]; canTeach: boolean; busy: boolean; bareBusy?: boolean;
   onBack: (() => void) | null; onMode: (m: DayMode) => void; onPick: (id: string | null) => void; onStart: () => void; onTeach: () => void; onBareAI: () => void;
   /** 横幅上的按钮（你教我用自己的）；横幅下方 / 页面底部插进来的内容 */ actions?: React.ReactNode; top?: React.ReactNode; bottom?: React.ReactNode;
   /** 已经走过的段（时间轴上打 ✓） */ done?: Set<string>;
@@ -1554,7 +1558,7 @@ function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach,
               {actions}
               {!teach && !learn && <button className="lab-btn" disabled={busy || !sim} onClick={onStart} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>进入操作台</button>}
               {teach && <button className="lab-btn" disabled={busy || !canTeach} title={canTeach ? '' : '这一段还没有老师傅的示范'} onClick={onTeach} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>看 {profile.name || '他'} 走一遍</button>}
-              {teach && <button className="lab-btn ghost" disabled={busy} onClick={onBareAI} title="没学过老师傅的通用模型自己走一遍，看看差在哪" style={{ height: 46, background: 'rgba(255,255,255,.14)', color: '#fff', boxShadow: '0 0 0 1px rgba(255,255,255,.35)' }}>{busy ? <>通用 AI 走着呢<span className="lab-dots" /></> : '对比：没学过的通用 AI'}</button>}
+              {teach && <button className="lab-btn ghost" disabled={busy || bareBusy} onClick={onBareAI} title="没学过老师傅的通用模型自己走一遍，看看差在哪" style={{ height: 46, background: 'rgba(255,255,255,.14)', color: '#fff', boxShadow: '0 0 0 1px rgba(255,255,255,.35)' }}>{bareBusy ? <>通用 AI 走着呢<span className="lab-dots" /></> : '对比：没学过的通用 AI'}</button>}
               <span style={{ fontSize: 13, opacity: .85 }}>{steps.length} 步{steps.some(st => st.type === 'bench') ? ' · 含虚拟工位' : ''} · 约 {Math.max(5, steps.length * 2)} 分钟</span>
             </div>
           </div>
