@@ -118,6 +118,8 @@ for (const [i, sc] of scenes.entries()) {
   // vt = 成片里的时间（只算在抓帧的时长），后期按它切
   if (sc.note) { const vt = activeMs / 1000; marks.push({ at, vt, note: sc.note }); console.log(`  ${at.toFixed(1)}s（成片 ${vt.toFixed(1)}s）· ${sc.note}`); }
 
+  // { cookie: { name, value, url } }：先种登录 cookie（studio / 素材库在 LAB_PUBLIC 下也要登录）
+  if (sc.cookie) await send('Network.setCookie', { name: sc.cookie.name, value: sc.cookie.value, url: sc.cookie.url, path: '/' });
   if (sc.go) {
     paused = true;                       // 导航中截图会挂起，先停抓
     await send('Page.navigate', { url: sc.go }, 15000);
