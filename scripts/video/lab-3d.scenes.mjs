@@ -37,6 +37,23 @@ const STAGE = slot => run(`
   await L.click(await L.until(() => L.btn('开始这一段')), 1500);
   await L.until(() => document.querySelector('canvas') && !document.body.innerText.includes('LOADING 3D'), 60000);
   return 'stage';`);
+// 「我教你」：选这一段 → NOVA 走一遍，对话、前几步一翻而过，停在工位上
+const TEACH_STAGE = slot => run(`
+  await L.until(() => document.querySelector('.dayv-tl'));
+  const b = [...document.querySelectorAll('.dayv-tl button')].find(x => x.innerText.includes('${slot}')); if (b) { b.click(); await L.sleep(1500); }
+  await L.click(await L.until(() => [...document.querySelectorAll('button')].find(x => /走一遍/.test(x.innerText) && !x.disabled)), 2500);
+  const go = L.btn('走这一段'); if (go) await L.click(go, 1500);
+  await L.until(() => document.querySelector('canvas') && !document.body.innerText.includes('LOADING 3D'), 60000);
+  return 'stage';`);
+const TO_BENCH = run(`
+  for (let i = 0; i < 14; i++) {
+    if (document.body.innerText.includes('CAM 01')) return 'bench';
+    const d = document.querySelector('.lab-game-dialogue'); if (d && d.getClientRects().length) { d.click(); await L.sleep(700); continue; }
+    const r = await L.nextBtn(); if (!r) await L.sleep(600);
+  }
+  return 'no bench';`);
+// 工位演示走完（「下一步」能点了），最多等 secs 秒
+const BENCH_DONE = secs => run(`for (let k = 0; k < ${secs} * 2; k++) { const b = L.btn('下一步'); if (b && !b.disabled && !document.body.innerText.includes('CAM 01')) return 'done'; if (b && !b.disabled) return 'done'; await L.sleep(500); } return 'timeout';`);
 const TO_QUESTION = run(`for (let i = 0; i < 5; i++) { const d = document.querySelector('.lab-game-dialogue'); if (!d) break; d.click(); await L.sleep(1000); } return 'q';`);
 // 用老师傅的答案答当前这一步，进到下一步的对话
 const ANSWER = (space, slot) => run(`
@@ -54,50 +71,41 @@ export default [
   { scroll: 900, over: 5 },
   { scroll: 0, over: 2 },
 
-  // ── 开腹医师：主页 → 走进手术室 ──
+  // ── 开腹医师：主页 → 走进手术室（看一眼就进操作） ──
   { go: `${BASE}/lab/${SURGEON}`, wait: 7000 },
   { note: 'hub_or' },
   { hold: 3 },
   { eval: CLICK_TEXT('走进手术室') },
   { pause: true }, { eval: WAIT3D, timeout: 90 }, { resume: true },
   { note: 'or3d' },
-  { hold: 1 * SLOW },
-  { eval: SWEEP(19, 0.45, 2), timeout: 120 },
+  { eval: SWEEP(7, 0.45), timeout: 60 },
 
-  // ── 操作台：09:10 阑尾切除，背景是 3D 手术室 ──
-  { go: `${BASE}/lab/${SURGEON}?m=test`, wait: 7000 },
-  { pause: true }, { eval: STAGE('09:10'), timeout: 120 }, { resume: true },
+  // ── 09:10 阑尾切除：周教授说着话，直接进开腹工位 ──
+  { go: `${BASE}/lab/${SURGEON}?m=teach`, wait: 7000 },
+  { pause: true }, { eval: TEACH_STAGE('09:10'), timeout: 120 }, { resume: true },
   { note: 'or_stage' },
-  { hold: 1 * SLOW },
-  { eval: SWEEP(7, 0.4), timeout: 60 },
-  { eval: TO_QUESTION },
-  { note: 'or_q' },
-  { eval: SWEEP(4, 0.35), timeout: 60 },
-  { eval: ANSWER(SURGEON, '09:10'), timeout: 90 },
-  { note: 'or_step2' },
-  { hold: 1.5 * SLOW },
-  { eval: SWEEP(4, 0.35), timeout: 60 },
+  { hold: 2 * SLOW },
+  { eval: TO_BENCH, timeout: 90 },
+  { note: 'or_bench' },
+  { eval: BENCH_DONE(110), timeout: 150 },
+  { hold: 2 },
 
-  // ── 拉花师傅：走进咖啡吧台 ──
+  // ── 拉花师傅：走进咖啡吧台 → 09:00 拉花操作台 ──
   { go: `${BASE}/lab/${LATTE}`, wait: 7000 },
   { note: 'hub_cafe' },
-  { hold: 3.5 },
+  { hold: 3 },
   { eval: CLICK_TEXT('走进咖啡吧台') },
   { pause: true }, { eval: WAIT3D, timeout: 90 }, { resume: true },
   { note: 'cafe3d' },
-  { hold: 0.5 * SLOW },
-  { eval: SWEEP(7, 0.45), timeout: 60 },
-
-  // ── 操作台：10:30 点单出品 ──
-  { go: `${BASE}/lab/${LATTE}?m=test`, wait: 7000 },
-  { pause: true }, { eval: STAGE('10:30'), timeout: 120 }, { resume: true },
+  { eval: SWEEP(5, 0.45), timeout: 60 },
+  { go: `${BASE}/lab/${LATTE}?m=teach`, wait: 7000 },
+  { pause: true }, { eval: TEACH_STAGE('09:00'), timeout: 120 }, { resume: true },
   { note: 'cafe_stage' },
-  { hold: 0.5 * SLOW },
-  { eval: SWEEP(6, 0.4), timeout: 60 },
-  { eval: TO_QUESTION },
-  { note: 'cafe_q' },
-  { eval: SWEEP(3, 0.35), timeout: 60 },
-
+  { hold: 2 * SLOW },
+  { eval: TO_BENCH, timeout: 90 },
+  { note: 'cafe_bench' },
+  { eval: BENCH_DONE(120), timeout: 160 },
+  { hold: 2 },
   // ── 古籍修复师：主页 → 一天 → 看 NOVA 拿毛刷刷浆（2D 工位，正常速度） ──
   { go: `${BASE}/lab/${GUJI}`, wait: 7000 },
   { note: 'guji_hub' },
