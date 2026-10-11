@@ -100,13 +100,16 @@ const captureLoop = (async () => {
   while (capturing) {
     const t0 = Date.now();
     if (paused) { await sleep(interval); continue; }
+    let got = false;
     try {
       const r = await send('Page.captureScreenshot', { format: 'jpeg', quality: 80 }, 3000);
-      if (r?.data) { frameTimes.push(activeMs + (Date.now() - t0)); fs.writeFileSync(path.join(OUT_DIR, 'frames', `f${String(frameCount++).padStart(6, '0')}.jpg`), Buffer.from(r.data, 'base64')); }
+      if (r?.data) { got = true; frameTimes.push(activeMs + (Date.now() - t0)); fs.writeFileSync(path.join(OUT_DIR, 'frames', `f${String(frameCount++).padStart(6, '0')}.jpg`), Buffer.from(r.data, 'base64')); }
     } catch { /* 页面导航中，跳过这一帧 */ }
     const wait = interval - (Date.now() - t0);
     if (wait > 0) await sleep(wait);
-    activeMs += Date.now() - t0;
+    // 抓帧超时 / 失败（比如 { local } 的 reload）那几秒不计入成片时间，不然之后所有标记都比画面晚这么多，
+    // 每段开头会带着上一页的尾巴（百业 / 平方智能两条片都中过招，事后用 fixmarks.py 前移 3 秒才对上）
+    if (got) activeMs += Date.now() - t0;
   }
 })();
 

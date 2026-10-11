@@ -25,6 +25,8 @@
     <div class="badge">3D 沉浸版 · BETA</div>
     <div class="brand">AI 百业 · 平方智能 × 方略研究院</div>
     <div class="line">百业：用你所做，<b>证你所能</b></div>
-    <div class="sub">来百业，体验职业的一日 · 每一种都亲手做一做</div>
+    <div class="sub" id="sub">来百业，体验职业的一日 · 每一种都亲手做一做</div>
   </div></div>
+  <!-- 3 分钟版换一句副题：?sub=来百业：从千行百业沉浸大千世界 -->
+  <script>const s = new URLSearchParams(location.search).get('sub'); if (s) document.getElementById('sub').textContent = s;</script>
 </body></html>
