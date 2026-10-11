@@ -9,16 +9,6 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [new URL(`${SUPABASE.replace(/\/$/, "")}/storage/v1/object/public/lab-art/**`)],
   },
-  // 爱百业的独立域名 aisimjob.com：根路径直接显示 /lab（地址栏保持 aisimjob.com），里面的链接本来就是 /lab/…，照常能用
-  async rewrites() {
-    return {
-      beforeFiles: [
-        { source: "/", has: [{ type: "host", value: "(www\\.)?aisimjob\\.com" }], destination: "/lab" },
-      ],
-      afterFiles: [],
-      fallback: [],
-    };
-  },
 };
 
 export default nextConfig;
