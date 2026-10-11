@@ -179,6 +179,8 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
   // ── 摄像头：食指位置 → 场景坐标；捏合且靠近手柄 = 握住（焊枪 / 奶缸）；握着移动 = 沿轨迹走 ──
   const [cam, setCam] = useState(false);
   const handRef = useRef<{ x: number; y: number; pinch: boolean; holding: boolean } | null>(null);
+  /** 握住那一刻手和手柄差多少：之后一直按「手 + 这个差」走，握住那一下不会被判成跑出轨迹 */
+  const grabOffset = useRef<Pt>({ x: 0, y: 0 });
   const onPose = (p: HandPose | null) => {
     if (!p) { handRef.current = null; return; }
     const px = p.x * VW, py = p.y * VH;
@@ -186,8 +188,10 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
     if (trackLayer?.control && running) {
       const prog = stRef.current.controls[trackLayer.control] || 0;
       const h = pointOnPath(trackPts.current, prog);
-      if (p.pinch && !holding && Math.hypot(px - h.x, py - h.y) < 190) holding = true;   // 捏在手柄附近 = 握住
-      if (holding) onTrack(trackLayer, px, py, 0.45);                                     // 平滑，避免手抖成「过快」
+      // 捏在手柄附近 = 握住（稳定层已经按手掌大小判断捏合、去了抖）
+      if (p.pinch && !holding && Math.hypot(px - h.x, py - h.y) < 190) { holding = true; grabOffset.current = { x: h.x - px, y: h.y - py }; }
+      // 识别丢帧（宽限内沿用上一帧）不往轨迹里写：没有新信息
+      if (holding && !p.lost) onTrack(trackLayer, px + grabOffset.current.x, py + grabOffset.current.y, 0.45);
     }
     handRef.current = { x: px, y: py, pinch: p.pinch, holding };
   };

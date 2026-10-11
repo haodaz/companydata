@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { HandStabilizer } from '@/lib/hand-filter';
 
 /**
  * 摄像头手部追踪（MediaPipe Hand Landmarker，浏览器本地推理，视频不离开本机）。
@@ -9,7 +10,7 @@ import React, { useEffect, useRef, useState } from 'react';
  *   - 捏合 = 握住道具；松开 = 放下。上层拿这个去驱动工位里的 path 控件（焊枪沿焊缝走）
  * 模型与 wasm 从 jsdelivr / Google 存储加载，首次约 10 MB。
  */
-export interface HandPose { x: number; y: number; pinch: boolean; pinchDist: number }
+export interface HandPose { x: number; y: number; pinch: boolean; pinchDist: number; /** 捏合程度（拇指—食指 ÷ 手掌），0 贴住 ~1 张开 */ ratio?: number; /** 这一帧没识别到，沿用上一帧（宽限内） */ lost?: boolean }
 
 const MP_VERSION = '0.10.14';
 const MP_URL = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MP_VERSION}`;
@@ -27,6 +28,8 @@ export function HandCam({ onPose, onStatus, hold = '焊枪', width = 260 }: { on
 
   useEffect(() => {
     let stop = false; let raf = 0; let stream: MediaStream | null = null; let landmarker: any = null;
+    // 稳定层：滤抖、捏合按手掌大小折算 + 进出门槛、取两指中点、画面中间一圈映射整个场景、丢帧宽限（lib/hand-filter.ts）
+    const stab = new HandStabilizer();
     const say = (s: string) => { setStatus(s); onStatus?.(s); };
     (async () => {
       try {
@@ -54,17 +57,17 @@ export function HandCam({ onPose, onStatus, hold = '焊枪', width = 260 }: { on
           // 镜像画视频
           ctx.save(); ctx.scale(-1, 1); ctx.drawImage(v, -c.width, 0, c.width, c.height); ctx.restore();
           const lm = res?.landmarks?.[0];
-          if (!lm) { onPose(null); return; }
+          const pose = stab.update(lm || null, now);
+          if (!lm) { onPose(pose ? { x: pose.x, y: pose.y, pinch: pose.pinch, pinchDist: pose.ratio, ratio: pose.ratio, lost: true } : null); return; }
           const pt = (i: number) => ({ x: (1 - lm[i].x) * c.width, y: lm[i].y * c.height });
           const tip = pt(8), thumb = pt(4);
-          const d = Math.hypot(lm[8].x - lm[4].x, lm[8].y - lm[4].y, (lm[8].z - lm[4].z) * 0.5);
-          const pinch = d < 0.06;
+          const pinch = !!pose?.pinch;
           ctx.lineWidth = 3; ctx.strokeStyle = pinch ? '#ff5fa2' : '#12b5cb';
           for (const [a, b] of BONES) { const p = pt(a), q = pt(b); ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
           ctx.fillStyle = '#fff'; for (let i = 0; i < 21; i++) { const p = pt(i); ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2); ctx.fill(); }
           ctx.fillStyle = pinch ? '#ff5fa2' : '#ffd166'; ctx.beginPath(); ctx.arc(tip.x, tip.y, 9, 0, Math.PI * 2); ctx.fill();
           ctx.beginPath(); ctx.arc(thumb.x, thumb.y, 7, 0, Math.PI * 2); ctx.fill();
-          onPose({ x: 1 - lm[8].x, y: lm[8].y, pinch, pinchDist: d });
+          if (pose) onPose({ x: pose.x, y: pose.y, pinch: pose.pinch, pinchDist: pose.ratio, ratio: pose.ratio });
         };
         loop();
       } catch (e: any) {

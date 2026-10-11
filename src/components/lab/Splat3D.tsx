@@ -61,7 +61,8 @@ export function Splat3D({ scene: s, head = false, pan = 0, camCorner, onReady, o
         tick();
       } catch (e: any) { setErr(`3D 场景加载失败：${e?.message || e}`); }
     })();
-    return () => { dead = true; cancelAnimationFrame(raf); try { viewer?.dispose(); } catch { /* 已释放 */ } };
+    // dispose 是异步的：React 已经把容器拿掉时它再删画布会报 removeChild，try/catch 接不住，要接它返回的 promise
+    return () => { dead = true; cancelAnimationFrame(raf); try { Promise.resolve(viewer?.dispose()).catch(() => {}); } catch { /* 已释放 */ } };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [s.url]);
 
