@@ -1,5 +1,6 @@
 'use client';
 
+import { beta3dForChapter, beta3dForSpace } from '@/lib/lab-3d-beta';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
@@ -935,6 +936,7 @@ function castOf(space: any, sim: Sim | null) {
           top={<>
             <button className="hub-ghost" onClick={() => router.push('/lab/spaces')}><Ico n="back" s={14} />全部空间</button>
             <div style={{ display: 'flex', gap: 8 }}>
+              {beta3dForSpace(String(id)) && <a className="hub-ghost" href={`/lab/beta/3d/${beta3dForSpace(String(id))!.key}`} style={{ textDecoration: 'none', color: '#fff', border: 0, background: 'linear-gradient(120deg,#ff5fa2,#6a5cff)' }}>走进{beta3dForSpace(String(id))!.title} · 3D BETA</a>}
               {jd.url && <a className="hub-ghost" href={jd.url} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>JD 原文 ↗</a>}
               <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="hub-ghost">删除空间</button></Popconfirm>
             </div>
@@ -987,7 +989,7 @@ function castOf(space: any, sim: Sim | null) {
               profile={askProfile && !demo ? { name: rookie.name, note: rookie.note, location: rookie.location, set: (k: 'name' | 'note' | 'location', v: string) => setRookie(r => ({ ...r, [k]: v })) } : null}
               onStart={() => { if (askProfile && !demo) saveProfile(); setIntro(false); }} />
           ) : (
-            <SimRunner key={runKey + (demo ? '-demo' : '')} startAt={startAt} demo={demo || undefined} sim={sim} role="rookie" busy={!!busy} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); }} onFinish={trace => { const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, trace); }} />
+            <SimRunner key={runKey + (demo ? '-demo' : '')} startAt={startAt} demo={demo || undefined} sim={sim} role="rookie" busy={!!busy} backdrop={beta3dForChapter(String(id), chapter?.slot)} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); }} onFinish={trace => { const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, trace); }} />
           )}
         </SimStage>
       )}

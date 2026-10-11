@@ -5,6 +5,8 @@ import { createPortal } from 'react-dom';
 import type { Sim, SimReveal, SimStep, SimTrace } from '@/lib/skill-sim';
 import { compareStep, describeStep } from '@/lib/skill-sim';
 import { BenchRunner, SnapshotStrip } from '@/components/lab/BenchRunner';
+import { Splat3D } from '@/components/lab/Splat3D';
+import type { Beta3DScene } from '@/lib/lab-3d-beta';
 import type { BenchTrace } from '@/lib/bench';
 
 /** 下钻 / 回复后浮现的数据面板：带动画的对比条 */
@@ -70,8 +72,9 @@ export interface SimRunnerProps {
 }
 
 /** 模拟操作台：一步一步操作，每一步确认后才推进；下钻 / 询问会浮现新的信息 */
-export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt }: SimRunnerProps & { /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace; /** 从第几步开始：演示和取图时直接跳到工位那步 */ startAt?: number }) {
+export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, backdrop }: SimRunnerProps & { /** 3D beta：这一章发生在已重建的 3D 场景里，用它代替平面背景 */ backdrop?: Beta3DScene | null; /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace; /** 从第几步开始：演示和取图时直接跳到工位那步 */ startAt?: number }) {
   const [idx, setIdx] = useState(Math.min(Math.max(0, startAt || 0), sim.steps.length - 1));
+  const [head3d, setHead3d] = useState(false);
   // 评分要十几秒：按钮上走秒，让人知道没卡住
   const [waited, setWaited] = useState(0);
   useEffect(() => {
@@ -257,7 +260,11 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt }
     const benchLive = isBench && phase === 'question' && !value?.finished;
     return (
       <div className="lab-game">
-        {!benchLive && <img key={bg} className="lab-game-bg lab-in" src={bg} alt="" />}
+        {/* 3D 背景整段只加载一次；到工位那步先藏起来，让给工位画面。每往下一步，镜头在房间里横移一点 */}
+        {backdrop && <div style={{ position: 'absolute', inset: 0, visibility: benchLive ? 'hidden' : 'visible' }}>
+          <Splat3D scene={backdrop} head={head3d} pan={sim.steps.length > 1 ? (idx / (sim.steps.length - 1) - 0.5) * 0.9 : 0} camCorner={{ left: 16, bottom: 64 }} />
+        </div>}
+        {!benchLive && !backdrop && <img key={bg} className="lab-game-bg lab-in" src={bg} alt="" />}
         {!benchLive && <div className="lab-game-vignette" />}
         <div className="lab-game-progress">
           <span className="lab-mono">{role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
@@ -265,7 +272,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt }
         </div>
         {phase === 'dialogue' && step.scene && <NpcDialogue key={step.id} scene={step.scene} portrait={portrait} onDone={() => setPhase('question')} cta={isBench ? '开始操作' : undefined} />}
         {phase === 'question' && !benchLive && (
-          <div className="lab-game-mask">
+          <div className={`lab-game-mask${backdrop ? ' is-3d' : ''}`}>
             <div className={`lab-game-modal lab-in${busy ? ' lab-scan' : ''}`}>
               {step.scene && <div className="lab-game-recap" onClick={() => setPhase('dialogue')}><b>{step.scene.who}</b>{step.scene.time ? ` · ${step.scene.time}` : ''}：{step.scene.text}</div>}
               {promptEl}
@@ -275,6 +282,13 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt }
           </div>
         )}
         {benchLive && <BenchRunner hud demo={!!demo} key={step.id} spec={step.bench!} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />}
+        {backdrop && !benchLive && (
+          <button onClick={() => setHead3d(v => !v)} title="摄像头只在本机算头的位置，不录、不传"
+            style={{ position: 'absolute', left: 16, bottom: 16, zIndex: 6, padding: '8px 14px', borderRadius: 999, border: '1px solid rgba(255,255,255,.3)', cursor: 'pointer', fontWeight: 700, fontSize: 12.5, color: '#fff', background: head3d ? 'linear-gradient(135deg,#3ddc97,#12b5cb)' : 'rgba(15,18,36,.72)', backdropFilter: 'blur(6px)' }}>
+            <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.1em', padding: '2px 6px', borderRadius: 4, marginRight: 8, background: 'linear-gradient(120deg,#ff5fa2,#6a5cff)' }}>3D BETA</span>
+            {head3d ? '跟着头看中 · 关闭' : '📷 用头看'}
+          </button>
+        )}
       </div>
     );
   }

@@ -148,6 +148,8 @@ const LAB_CSS = `
 .lab-game-hint { margin-top: 12px; font-size: 12px; color: rgba(255,255,255,.7); letter-spacing: .1em; animation: lab-blink 1.4s infinite; }
 @keyframes lab-blink { 50% { opacity: .35; } }
 .lab-game-mask { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 56px clamp(12px, 4vw, 60px) 24px; background: rgba(10,12,30,.42); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 4; overflow: auto; }
+/* 3D beta：背后是能跟着头动的 3D 场景，遮罩放淡，让场景从题卡四周透出来 */
+.lab-game-mask.is-3d { background: rgba(10,12,30,.16); backdrop-filter: blur(1.5px); -webkit-backdrop-filter: blur(1.5px); }
 .lab-game-modal { width: min(100%, 880px); max-height: 100%; overflow: auto; padding: clamp(18px, 2.5vw, 30px); border-radius: 22px; background: rgba(255,255,255,.9); box-shadow: 0 30px 80px rgba(0,0,0,.35); }
 .lab-game-recap { font-size: 13px; color: var(--ink3); line-height: 1.7; margin-bottom: 12px; padding: 8px 12px; border-left: 3px solid var(--c); background: rgba(18,181,203,.06); border-radius: 0 10px 10px 0; cursor: pointer; }
 /* 千行百业的群像：两圈头像反向慢转，头像本身反向补偿保持正立 */

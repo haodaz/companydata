@@ -31,7 +31,11 @@ export function HandCam({ onPose, onStatus, hold = '焊枪', width = 260 }: { on
     (async () => {
       try {
         stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 360 } }, audio: false });
-        const video = videoRef.current!; video.srcObject = stream; await video.play();
+        if (stop) { stream.getTracks().forEach(t => t.stop()); return; }
+        const video = videoRef.current!; video.srcObject = stream;
+        // 开发模式下组件会挂两遍：前一遍的 play() 被后一遍打断（AbortError），不是真打不开
+        await video.play().catch((e: any) => { if (e?.name !== 'AbortError') throw e; });
+        if (stop) return;
         say('正在加载手部识别模型…');
         const mp = await importUrl(`${MP_URL}/vision_bundle.mjs`);
         const vision = await mp.FilesetResolver.forVisionTasks(`${MP_URL}/wasm`);
@@ -64,6 +68,7 @@ export function HandCam({ onPose, onStatus, hold = '焊枪', width = 260 }: { on
         };
         loop();
       } catch (e: any) {
+        if (stop || e?.name === 'AbortError') return;
         const msg = e?.name === 'NotAllowedError' ? '浏览器没有允许使用摄像头' : e?.name === 'NotFoundError' ? '没有找到摄像头' : `摄像头启动失败：${e?.message || e}`;
         setErr(msg); say(msg);
       }
