@@ -1,0 +1,328 @@
+{
+ "id": "bench",
+ "type": "bench",
+ "bench": {
+  "name": "呼叫中心ACD话务应急调度台",
+  "vars": [
+   {
+    "id": "script_pushed",
+    "set": "max(script_pushed, push_script)",
+    "label": "话术下发状态",
+    "initial": 0
+   },
+   {
+    "id": "aht",
+    "max": 360,
+    "min": 120,
+    "rate": "script_pushed == 1 && aht > 120 ? -4 : 0",
+    "label": "平均通话时长",
+    "initial": 360
+   },
+   {
+    "id": "effective_agents",
+    "set": "(takeover == 1 ? 7 : 7) + support_seats",
+    "label": "现场可用接听人力",
+    "initial": 7
+   },
+   {
+    "id": "inflow_rate",
+    "set": "ivr_intercept == 1 ? (overflow_cutoff <= 120 ? 0.8 : 1.2) : 3.4",
+    "label": "进线流速",
+    "initial": 3.4
+   },
+   {
+    "id": "outflow_rate",
+    "set": "effective_agents / (aht / 60)",
+    "label": "座席消化流速",
+    "initial": 1.16
+   },
+   {
+    "id": "queue_count",
+    "max": 200,
+    "min": 0,
+    "rate": "inflow_rate - outflow_rate",
+    "label": "实时排队人数",
+    "initial": 122
+   },
+   {
+    "id": "abandon_rate",
+    "set": "clamp(queue_count * 0.18 + (ivr_intercept == 0 ? 8 : 0) - (support_seats * 1.5), 1, 45)",
+    "label": "呼叫放弃率",
+    "initial": 26
+   },
+   {
+    "id": "stress_index",
+    "set": "clamp(queue_count * 0.5 + (aht / 360) * 35 - (takeover == 1 ? 18 : 0), 10, 100)",
+    "label": "现场负荷压力",
+    "initial": 88
+   },
+   {
+    "id": "burnout_time",
+    "rate": "takeover == 0 && queue_count > 100 ? 1 : 0",
+    "label": "未接管高压累积秒数",
+    "initial": 0
+   }
+  ],
+  "brief": "智能硬件服务现场话务监控与路由调度系统。在早高峰突发突增话务时，组长需通过IVR前置自愈引导、坐席情绪保护接管、紧急话术下发以及跨组人力支援调度，在排队挤压引发大面积客户弃呼前稳住现场阵脚。",
+  "goals": [
+   {
+    "id": "goal_ivr",
+    "hold": 2,
+    "when": "ivr_intercept == 1",
+    "label": "启动IVR闪播与自愈分流策略"
+   },
+   {
+    "id": "goal_protect_agent",
+    "hold": 2,
+    "when": "takeover == 1",
+    "label": "完成小敏置忙保护与恶性客诉接管"
+   },
+   {
+    "id": "goal_push_script",
+    "when": "script_pushed == 1",
+    "after": "goal_ivr",
+    "label": "下发标准自愈弹屏话术压降AHT"
+   },
+   {
+    "id": "goal_reasonable_dispatch",
+    "hold": 5,
+    "when": "support_seats >= 2 && support_seats <= 4",
+    "after": "goal_protect_agent",
+    "label": "控制支援调派在合理安全区间（2至4人）"
+   },
+   {
+    "id": "goal_queue_drop",
+    "hold": 6,
+    "when": "queue_count <= 35 && abandon_rate < 10",
+    "after": "goal_push_script",
+    "label": "排队人数压降至35人以下且放弃率低于10%"
+   }
+  ],
+  "rules": [
+   {
+    "id": "r_no_ivr_surge",
+    "once": true,
+    "when": "queue_count > 150 && ivr_intercept == 0",
+    "label": "未开启IVR前置分流致排队破150（话务雪崩）",
+    "severity": "violation"
+   },
+   {
+    "id": "r_agent_burnout",
+    "once": true,
+    "when": "burnout_time > 25",
+    "label": "长时间未对哭泣坐席做置忙保护（人员情绪二次崩溃）",
+    "severity": "violation"
+   },
+   {
+    "id": "r_over_dispatch",
+    "once": true,
+    "when": "support_seats > 4",
+    "label": "调派支援超过4人抽空VIP保障线（高价值专线脱保）",
+    "severity": "violation"
+   },
+   {
+    "id": "r_script_delay",
+    "once": true,
+    "when": "t > 30 && script_pushed == 0",
+    "label": "超30秒未下发统一自愈话术（坐席通话冗长无序）",
+    "severity": "warning"
+   },
+   {
+    "id": "r_cutoff_harsh",
+    "once": true,
+    "when": "overflow_cutoff < 90",
+    "label": "溢出阈值调得过低导致客户被过早强切（引发大量二次重拨）",
+    "severity": "warning"
+   }
+  ],
+  "scene": {
+   "image": "https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3yrcpvpl4m-bench.jpg",
+   "credit": "底图由通义万相生成",
+   "layers": [
+    {
+     "h": 12,
+     "w": 10,
+     "x": 8,
+     "y": 28,
+     "id": "ly_queue_readout",
+     "cold": false,
+     "kind": "readout",
+     "text": "queue_count",
+     "unit": "人",
+     "color": "#ef4444",
+     "label": "ACD队列待分配"
+    },
+    {
+     "h": 5,
+     "w": 3,
+     "x": 16,
+     "y": 30,
+     "id": "ly_ivr_lamp",
+     "on": "ivr_intercept == 1",
+     "cold": false,
+     "kind": "lamp",
+     "color": "#10b981",
+     "label": "IVR自愈旁路"
+    },
+    {
+     "h": 32,
+     "w": 24,
+     "x": 38,
+     "y": 35,
+     "id": "ly_traffic_stream",
+     "on": "queue_count > 20",
+     "cold": false,
+     "kind": "stream",
+     "color": "#f59e0b",
+     "label": "话务浪涌消化走势"
+    },
+    {
+     "h": 18,
+     "w": 10,
+     "x": 82,
+     "y": 38,
+     "id": "ly_agent_pulse",
+     "on": "stress_index > 60",
+     "cold": false,
+     "kind": "pulse",
+     "color": "#ec4899",
+     "label": "坐席负荷警报"
+    }
+   ]
+  },
+  "gauges": [
+   {
+    "id": "g_queue",
+    "max": 180,
+    "min": 0,
+    "expr": "queue_count",
+    "unit": "人",
+    "warn": "queue_count > 90",
+    "label": "实时等待队列"
+   },
+   {
+    "id": "g_aht",
+    "max": 400,
+    "min": 60,
+    "expr": "aht",
+    "unit": "s",
+    "warn": "aht > 240",
+    "label": "平均通话时长AHT"
+   },
+   {
+    "id": "g_abandon",
+    "max": 50,
+    "min": 0,
+    "expr": "abandon_rate",
+    "unit": "%",
+    "warn": "abandon_rate > 15",
+    "label": "呼叫放弃率",
+    "digits": 1
+   },
+   {
+    "id": "g_stress",
+    "max": 100,
+    "min": 0,
+    "expr": "stress_index",
+    "unit": "pt",
+    "warn": "stress_index > 75",
+    "label": "坐席压力指数"
+   }
+  ],
+  "controls": [
+   {
+    "id": "ivr_intercept",
+    "max": 100,
+    "min": 0,
+    "hint": "开启后向进线客户先行广播长按10秒重启自愈方案，直接拦截简易件",
+    "kind": "switch",
+    "unit": "",
+    "label": "IVR自愈闪播分流",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "push_script",
+    "max": 100,
+    "min": 0,
+    "hint": "一键弹屏推送产研10秒救砖方案，压降人均通话时长（AHT）",
+    "kind": "button",
+    "unit": "",
+    "label": "全员下发自愈话术",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "takeover",
+    "max": 100,
+    "min": 0,
+    "hint": "将情绪崩溃坐席置忙休息10分钟，由组长接管恶性升级工单",
+    "kind": "switch",
+    "unit": "",
+    "label": "客诉接管与置忙保护",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "support_seats",
+    "max": 6,
+    "min": 0,
+    "hint": "从早班后备/中班/VIP协调增援，切忌盲目全抽空专线",
+    "kind": "knob",
+    "step": 1,
+    "unit": "人",
+    "label": "支援席位调拨",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "overflow_cutoff",
+    "max": 300,
+    "min": 60,
+    "hint": "等待过长自动触发短信引流至官方APP自愈工单",
+    "kind": "knob",
+    "step": 30,
+    "unit": "s",
+    "label": "排队超时溢出阀值",
+    "hidden": false,
+    "initial": 240
+   }
+  ],
+  "timeScale": 2,
+  "maxSeconds": 240,
+  "expertScript": [
+   {
+    "t": 2,
+    "value": 1,
+    "control": "ivr_intercept"
+   },
+   {
+    "t": 4,
+    "value": 1,
+    "control": "takeover"
+   },
+   {
+    "t": 7,
+    "value": 1,
+    "control": "push_script"
+   },
+   {
+    "t": 10,
+    "value": 3,
+    "control": "support_seats"
+   },
+   {
+    "t": 14,
+    "value": 120,
+    "control": "overflow_cutoff"
+   }
+  ]
+ },
+ "place": "18d92b02-fbf2-4ccb-bdaf-29cf1ed834d6",
+ "scene": {
+  "who": "电话系统工程师 小周",
+  "text": "主管！控制台大屏权限已经交给你了，现在排队120多号还在猛涨！你必须立刻在调度台上操作分流开关、下发产研话术并调派支援，把排队压回安全线，不然一线真的全被冲垮了！",
+  "time": "09:33"
+ },
+ "prompt": "操作呼叫中心应急调度台：开启IVR自愈闪播、下发弹屏话术、保护崩溃坐席并合理调派2-4名支援人力，将话务排队压降至35人以下。"
+}

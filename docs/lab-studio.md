@@ -92,3 +92,43 @@
 - 体验百业：外部平台嵌入形态（只显示当前资源，不显示菜单 / 返回）。
 - 发布版本、空间包 v2（带章节、角色表）、只读接口——公司搬老数据也靠它。
 - 其他 42 个空间还都只有一段，按需补成一整天。
+
+## 交互故事台面（2026-10-11 起，先锋尝试）
+
+原则：一个行业一个交互故事，不再「一排滑块 + 一个操作」。工位规格（变量 / 规则 / 目标 / 事件流 / 评分）不变，只加一个 `surface` 字段，由专门的组件画舞台、接手势、往（多半是隐藏的）控件里写。
+
+| surface | 组件 | 故事 | 手势 |
+|---|---|---|---|
+| `laparotomy` | `surfaces/Laparotomy.tsx` + `lib/lab-surgery-spec.ts` | 开腹分层入腹（开腹医师 09:10） | 按住 = 下刀（刀碰到下一层会变慢）、沿线划；血管钳往外撑三处；镊子夹起腹膜留作左手；牵开器放进切口。每层分步清单 + 画面上的目标标记 |
+| `soothe` | `surfaces/Soothe.tsx` + `lib/lab-yuesao-spec.ts` | 哄睡（月嫂 18:00） | 第一人称两只手：点宝宝抱起、点头部 = 左手托头（空格）、在背上点 = 轻拍（节奏由间隔算）、按住拖 = 摇、按住「嘘」（S 键）、点夜灯调暗、睡着后点床放回。反馈全在宝宝脸上 |
+| `latte` | `surfaces/LatteOverlay.tsx`（盖在原 cup/pour 层上） | 打奶 + 拉花（拉花师傅 09:00 三台） | 蒸汽位按住奶缸上下拖（缸低进气多，手烫了关汽）；滚轮 = 高度；按住奶缸 = 倒，松开断流；Shift / 按钮 = 大流量 |
+
+| `desk` | `surfaces/Desk.tsx`（HTML）+ `lib/lab-desk-spec.ts` | 数据破案（数据分析师 a35a662d 09:20） | 浅色整屏的模拟桌面：图标（大盘明细 / 接口日志 / 运营群 / 排查简报 / 便签）→ 窗口 → 任务栏；数据集生成、答案埋在里面；打开了哪个 app、切了哪张图都进事件流。统计 / 精算 / 财务 / 写代码都套这个桌面 |
+| `restore` | `surfaces/Restore.tsx` + `lib/lab-restore-spec.ts` | 补虫洞（古籍补书人 11:10） | 喷壶点着喷（喷多洇墨）、毛刷点碗蘸浆沿破口边缘刷（出界、刷干了要再蘸）、镊子拖补纸对位、手按住压实、等半干、镊子慢慢揭吸水纸（快了撕坏） |
+
+| `triage` | `surfaces/Triage.tsx`（HTML）+ `lib/lab-triage-spec.ts` | 预检分诊（急诊护士 c9783880） | 六个病人前后脚到：叫号 → 量体征（4 秒出数）/ 问诊 → 分级 + 去向 → 确认；候诊区恶化报警要回头重分；危重分轻、不量就分、轻症占抢救室都记 |
+| `repair` | `surfaces/Repair.tsx` + `lib/lab-repair-spec.ts` | 查不启动的风机（电气设备维修工 f9add4b9） | 看现场（急停）→ 试机跳热继 → 断电挂牌验电开柜 → 万用表量测试点（FU2 断）→ 换件 → 关门合闸试机 10 秒；带电开柜 / 带电换件 / 不量就换 / 换没坏的件都记 |
+| `complaint` | `surfaces/Complaint.tsx`（HTML）+ `lib/lab-complaint-spec.ts` | 升级投诉（客服主管 d1b7b17d） | 对话即操作：核实订单 → 共情 → 道歉 → 权限内方案 → 工单；怒气 / 信任两条线，第三次要照片、套话术、越权、让她等太久都会炸 |
+| `chef` | `surfaces/Chef.tsx` + `lib/lab-chef-spec.ts` | 宫保鸡丁（中餐厨师 09ae7c66） | 时间轴流程：腌（等）→ 热锅（火力 / 油温）→ 下料顺序 → 在锅里来回拖 = 翻炒（停 4 秒糊）→ 收汁 → 出锅；1 秒真实 = 4 秒模拟 |
+
+| `audit` | `surfaces/Audit.tsx`（HTML）+ `lib/lab-audit-spec.ts` | 银行存款对账（审计师 fde330a0） | 对账单 × 日记账逐笔勾对、分未达账项、看凭证标疑点（56,000 两边都对得上但凭证是手写收据）、写底稿 |
+| `garden` | `surfaces/Garden.tsx` + `lib/lab-garden-spec.ts` | 救龟背竹（园艺师 15f91634） | 延迟反馈：摸土看盆 / 脱盆看根 → 剪根换盆挪位 → 「过一天」看变化 → 等三天再浇 → 新叶；见黄叶就施肥浇水是红线 |
+| `live` | `surfaces/Live.tsx`（HTML）+ `lib/lab-live-spec.ts` | 带货中控（直播运营 92bf01bf） | 实时信息流：弹幕按时间轴来，20 秒内递话术；库存见底先下链接再切款；喊假货要回应不是拉黑；「全网最低」违规词 |
+| `kinder` | `surfaces/Kinder.tsx` + `lib/lab-kinder-spec.ts` | 一节 20 分钟的课（幼儿园老师 dc121c80） | 群体调度：四个环节有时长，八个孩子注意力会散；哭 → 安抚、抢 → 分开、跑 → 请回座位；拍手儿歌用多了不灵；吼是红线。1 秒 = 6 秒模拟 |
+
+| `dive` | `surfaces/Dive.tsx` + `lib/lab-dive-spec.ts` | 礁区导潜（潜导带教 387fcc19 09:00） | 现场型侧视图（Veo 珊瑚礁底图）：拖着自己走、客人跟在后面；一臂之内、12 m 上限；面镜进水手势 + 停住、要碰珊瑚手势 + 挡中间、70 bar 回转、≤ 9 m/分、5 m 停 3 分钟。1 秒 = 8 秒模拟 |
+
+一次性动作的写法：旋钮控件 `act` 在台面里按下后 0.6 秒归零，规格里用 `act_now = act != last_act ? act : 0` 只在变化那一拍算一次（旋钮会留着，不这样做会每拍都算）。
+通用写入脚本：`scripts/lab-upgrade-surface.mts <规格名> <空间前缀> [时段]`（备份到 `scripts/.bench-backup-*.json`，`--remove` 换回）。干跑示范：`scripts/.sim-spec.mts <规格名> <秒>`。
+写入 / 回退脚本：`scripts/lab-upgrade-surgery.mts`、`lab-upgrade-yuesao.mts`、`lab-upgrade-latte.mts`、`lab-upgrade-desk.mts`、`lab-upgrade-restore.mts`（都有 `--restore` / `--remove`）。每个新台面的示范脚本先在模拟器里跑一遍（目标全达成、零违规）再写库。
+BenchRunner 里 `重来` 按钮清状态重计时；`退出` / `重来` 都是「点一下再点一下确认」（内嵌浏览器会拦 confirm 弹窗）。
+
+### 3D 景深 + 物件标签
+- 工位那一步也有 3D：`BenchRunner backdrop`——工位卡片缩一圈，四周是活的 3D 房间，鼠标一动卡片反向错几个像素（视差）。
+- 3D 查看器里的物件标签：`lab-3d-beta.ts` 每个场景的 `hotspots`（name / desc / pos），标签钉在 3D 位置上（每帧投影直接写 DOM），点一下说明卡贴着标签弹出。位置用 `/lab/beta/3d/<key>?edit=1` 点物件取坐标。试过画 3D 线框盒，和高斯场景对不齐、还拖慢渲染，弃用。
+- 新场景：婴儿房 `beta3d-nursery-v1`（月嫂）、办公室 `beta3d-office-v1`（数据分析师，v1 笔记本朝向反了，office-3 重训中）。Veo 提示词里「原地转圈」「dolly 平移」两种写法婴儿房都没重建出来，只有「40° 弧线绕场」成功。
+
+### 十五个交互故事一览（2026-10-11 完成第一版，未提交，等用户逐个试）
+外科（分层入腹）· 月嫂（哄睡）· 拉花（打奶 + 拉花）· 数据分析（模拟桌面）· 古籍（补虫洞）· 急诊护士（分诊）· 电气维修（查不启动）· 客服（升级投诉）· 中餐厨师（宫保鸡丁）· 审计（银行对账）· 园艺（救龟背竹）· 直播运营（中控）· 幼儿园老师（一节课）· 潜导（礁区导潜）。
+新建空间 + 完整一天：`scripts/lab-create-space.mts "<职业>"` → `scripts/lab-build-full-day.mts <id>` → `scripts/lab-upgrade-surface.mts <规格> <id> [时段]`。
+测试时注意：浏览器脚本里连点要隔 ≥ 120 ms（React 对合成事件不会同步刷新）；`window.__bench` 是当前工位状态（换页不清，测前 delete）。

@@ -1,0 +1,471 @@
+{
+ "id": "bench",
+ "type": "bench",
+ "bench": {
+  "name": "特规树木根际微创勘测与应急排气工位",
+  "vars": [
+   {
+    "id": "prev_pos",
+    "set": "probe_path",
+    "initial": 0
+   },
+   {
+    "id": "speed",
+    "max": 10,
+    "min": 0,
+    "set": "(probe_path - prev_pos) / dt",
+    "label": "探移速度",
+    "initial": 0
+   },
+   {
+    "id": "dev_mm",
+    "max": 320,
+    "min": 0,
+    "set": "dev * 0.8",
+    "label": "点位偏离距",
+    "initial": 0
+   },
+   {
+    "id": "in_zone",
+    "set": "depth >= 45 && depth <= 55 ? 1 : 0",
+    "label": "有效探层",
+    "initial": 0
+   },
+   {
+    "id": "sample_valid",
+    "set": "max(sample_valid, (sample_btn == 1 && in_zone == 1 ? 1 : 0))",
+    "label": "有效深层取样",
+    "initial": 0
+   },
+   {
+    "id": "drag_stress",
+    "set": "depth > 15 && speed > 0.8 ? 1 : 0",
+    "label": "带土横移应力",
+    "initial": 0
+   },
+   {
+    "id": "dev_acc",
+    "rate": "speed > 0.1 ? dev_mm : 0",
+    "initial": 0
+   },
+   {
+    "id": "move_time",
+    "rate": "speed > 0.1 ? 1 : 0",
+    "initial": 0
+   },
+   {
+    "id": "avg_dev",
+    "set": "move_time > 1 ? dev_acc / move_time : 0",
+    "label": "平均点位偏离",
+    "initial": 0
+   },
+   {
+    "id": "water_detected",
+    "set": "depth >= 45 ? 1 : 0",
+    "label": "滞水黑臭液探出",
+    "initial": 0
+   }
+  ],
+  "brief": "手持洛阳铲与土壤探针，沿下沉中庭红枫土球外缘滴水线进行四向定点钻孔探查。目标：严控行进轨迹规避主根骨干，垂直进铲穿透30 cm板结硬层至45–55 cm深部滞水沤根层，逐点提取厌氧土样并植入透气滤水管，为复壮方案提供一手地下立地数据。",
+  "goals": [
+   {
+    "id": "deep_core",
+    "hold": 2,
+    "when": "in_zone == 1",
+    "label": "探铲穿透硬层，深入45–55cm厌氧渍水层"
+   },
+   {
+    "id": "extract_sample",
+    "when": "sample_valid == 1",
+    "after": "deep_core",
+    "label": "提铲取出黑臭水浸根土样并获取理化数据"
+   },
+   {
+    "id": "full_perimeter",
+    "when": "probe_path >= 90",
+    "after": "extract_sample",
+    "label": "稳步完成树穴四向环周探查巡线（>= 90%）"
+   },
+   {
+    "id": "retract_tool",
+    "when": "depth <= 10",
+    "after": "full_perimeter",
+    "label": "巡线打通后回提探铲至安全高度（<= 10cm）"
+   },
+   {
+    "id": "install_vents",
+    "when": "vent_pipe == 1 && avg_dev < 80",
+    "after": "retract_tool",
+    "label": "在排气导水孔位规范植入透气花管"
+   }
+  ],
+  "rules": [
+   {
+    "id": "root_cut",
+    "once": false,
+    "when": "dev_mm > 120 && depth > 20",
+    "label": "铲位内偏过大：误伤红枫骨干侧根！",
+    "severity": "violation"
+   },
+   {
+    "id": "waterproof_punctured",
+    "once": false,
+    "when": "depth > 65",
+    "label": "下探超深破坏下沉广场结构防水卷材！",
+    "severity": "violation"
+   },
+   {
+    "id": "lateral_tear",
+    "once": false,
+    "when": "drag_stress == 1",
+    "label": "深铲入土状态下横向强行移位（土球撕裂）",
+    "severity": "violation"
+   },
+   {
+    "id": "shallow_sample",
+    "once": true,
+    "when": "sample_btn == 1 && depth < 35",
+    "label": "未穿透板结层即取样：仅测得表干假象！",
+    "severity": "warning"
+   },
+   {
+    "id": "pipe_too_early",
+    "once": true,
+    "when": "vent_pipe == 1 && sample_valid == 0",
+    "label": "探孔未钻到底即盲目插入透气管",
+    "severity": "warning"
+   }
+  ],
+  "scene": {
+   "image": "https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3zedh2a3vz-bench.jpg",
+   "credit": "底图由通义万相生成",
+   "layers": [
+    {
+     "h": 53.3,
+     "w": 30,
+     "x": 32.5,
+     "y": 28.9,
+     "id": "soil_layer",
+     "cold": false,
+     "kind": "cup",
+     "level": "clamp(depth / 55, 0, 1)"
+    },
+    {
+     "h": 0,
+     "w": 0,
+     "x": 0,
+     "y": 0,
+     "id": "survey_track",
+     "on": "probe_path < 100",
+     "cold": false,
+     "icon": "hand",
+     "kind": "pour",
+     "pace": 2.2,
+     "points": [
+      {
+       "x": 47.5,
+       "y": 33.5
+      },
+      {
+       "x": 51.5,
+       "y": 36
+      },
+      {
+       "x": 54,
+       "y": 42
+      },
+      {
+       "x": 54.5,
+       "y": 55.5
+      },
+      {
+       "x": 52,
+       "y": 68
+      },
+      {
+       "x": 47.5,
+       "y": 72.5
+      },
+      {
+       "x": 43,
+       "y": 68
+      },
+      {
+       "x": 40.5,
+       "y": 55.5
+      },
+      {
+       "x": 41,
+       "y": 42
+      },
+      {
+       "x": 44,
+       "y": 36
+      },
+      {
+       "x": 47.5,
+       "y": 33.5
+      }
+     ],
+     "control": "probe_path",
+     "deviation": "dev"
+    },
+    {
+     "h": 0,
+     "w": 0,
+     "x": 50,
+     "y": 9,
+     "id": "coach_1",
+     "on": "probe_path < 25",
+     "cold": false,
+     "kind": "coach",
+     "label": "① 东侧首孔：稳步下钻穿透30cm硬结，下探至45–55cm深部取样"
+    },
+    {
+     "h": 0,
+     "w": 0,
+     "x": 50,
+     "y": 9,
+     "id": "coach_2",
+     "on": "probe_path >= 25 && probe_path < 85",
+     "cold": false,
+     "kind": "coach",
+     "label": "② 提铲至安全高度再移步，顺时针打通南、西、北三侧泄水通气孔"
+    },
+    {
+     "h": 0,
+     "w": 0,
+     "x": 50,
+     "y": 9,
+     "id": "coach_3",
+     "on": "probe_path >= 85",
+     "cold": false,
+     "kind": "coach",
+     "label": "③ 四向孔道打通完成，回退探铲并埋设透气导水花管"
+    },
+    {
+     "h": 9,
+     "w": 18,
+     "x": 3,
+     "y": 4,
+     "id": "data_readout",
+     "cold": false,
+     "kind": "readout",
+     "text": "water_detected == 1 ? 58 : 12",
+     "unit": "%",
+     "label": "深层体积含水率"
+    }
+   ]
+  },
+  "gauges": [
+   {
+    "id": "g_depth",
+    "max": 80,
+    "min": 0,
+    "expr": "depth",
+    "unit": "cm",
+    "warn": "depth > 60 || (depth < 30 && depth > 5)",
+    "label": "探铲入土深度",
+    "digits": 0
+   },
+   {
+    "id": "g_water",
+    "max": 70,
+    "min": 0,
+    "expr": "depth < 20 ? 12 : (depth < 40 ? 28 : 58)",
+    "unit": "%",
+    "warn": "depth >= 40",
+    "label": "深层土壤含水率",
+    "digits": 0
+   },
+   {
+    "id": "g_dev",
+    "max": 200,
+    "min": 0,
+    "expr": "dev_mm",
+    "unit": "mm",
+    "warn": "dev_mm > 100",
+    "label": "骨干根距偏离",
+    "digits": 0
+   },
+   {
+    "id": "g_redox",
+    "max": 500,
+    "min": -150,
+    "expr": "depth < 20 ? 420 : (depth < 40 ? 210 : -85)",
+    "unit": "mV",
+    "warn": "depth >= 45",
+    "label": "氧化还原电位 Eh",
+    "digits": 0
+   }
+  ],
+  "controls": [
+   {
+    "id": "probe_path",
+    "max": 100,
+    "min": 0,
+    "hint": "手持工具沿土球外围白色虚线环形推进，在四向关键位停步下探",
+    "kind": "path",
+    "unit": "",
+    "label": "环树探查路径",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "depth",
+    "max": 80,
+    "min": 0,
+    "hint": "下钻穿透30cm硬板结，探至45–55cm积水层，严禁超65cm穿底",
+    "kind": "knob",
+    "step": 5,
+    "unit": "cm",
+    "label": "进铲深度",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "sample_btn",
+    "max": 100,
+    "min": 0,
+    "hint": "达到目标深度后提铲倒出深层土核，观察根系色泽与气味",
+    "kind": "button",
+    "unit": "",
+    "label": "提铲取样/清淤",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "vent_pipe",
+    "max": 100,
+    "min": 0,
+    "hint": "全环四个探孔开通且退铲至安全深度后，置入带滤网透气盲管",
+    "kind": "switch",
+    "unit": "",
+    "label": "置入透气花管",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "dev",
+    "max": 400,
+    "min": 0,
+    "kind": "knob",
+    "unit": "",
+    "label": "偏离量",
+    "hidden": true,
+    "initial": 0
+   }
+  ],
+  "timeScale": 1,
+  "maxSeconds": 300,
+  "expertScript": [
+   {
+    "t": 0,
+    "value": 0,
+    "control": "probe_path"
+   },
+   {
+    "t": 2,
+    "value": 15,
+    "control": "depth"
+   },
+   {
+    "t": 4,
+    "value": 35,
+    "control": "depth"
+   },
+   {
+    "t": 7,
+    "value": 50,
+    "control": "depth"
+   },
+   {
+    "t": 10,
+    "value": 1,
+    "control": "sample_btn"
+   },
+   {
+    "t": 12,
+    "value": 0,
+    "control": "depth"
+   },
+   {
+    "t": 15,
+    "value": 15,
+    "control": "probe_path"
+   },
+   {
+    "t": 18,
+    "value": 30,
+    "control": "probe_path"
+   },
+   {
+    "t": 20,
+    "value": 50,
+    "control": "depth"
+   },
+   {
+    "t": 23,
+    "value": 0,
+    "control": "depth"
+   },
+   {
+    "t": 26,
+    "value": 45,
+    "control": "probe_path"
+   },
+   {
+    "t": 29,
+    "value": 60,
+    "control": "probe_path"
+   },
+   {
+    "t": 32,
+    "value": 50,
+    "control": "depth"
+   },
+   {
+    "t": 35,
+    "value": 0,
+    "control": "depth"
+   },
+   {
+    "t": 38,
+    "value": 75,
+    "control": "probe_path"
+   },
+   {
+    "t": 41,
+    "value": 92,
+    "control": "probe_path"
+   },
+   {
+    "t": 44,
+    "value": 50,
+    "control": "depth"
+   },
+   {
+    "t": 47,
+    "value": 0,
+    "control": "depth"
+   },
+   {
+    "t": 50,
+    "value": 100,
+    "control": "probe_path"
+   },
+   {
+    "t": 53,
+    "value": 1,
+    "control": "vent_pipe"
+   }
+  ]
+ },
+ "place": "1687f20f-306d-4d85-b6c9-1fb017f6f5fe",
+ "scene": {
+  "who": "带教师傅林工",
+  "text": "你拿上洛阳铲和便携土壤仪，蹲下沿着树球滴水线周边打四个微创孔。记住，表土发白是假象，底板顶多70公分深，下铲必须穿透35公分板结层，但严禁用力过猛戳穿商场地下顶板防水层。把深处的泥样带上来给老张看！",
+  "time": "上午 09:35"
+ },
+ "prompt": "在特规红枫土球外围安全带进行微创钻孔勘测：下探至45–55cm深部厌氧层提取土样并通气，规避骨干根并严防打穿底层防水。"
+}

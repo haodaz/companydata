@@ -17,13 +17,16 @@ export default function Beta3DPage({ params }: { params: Promise<{ scene: string
   const [headSeen, setHeadSeen] = useState(false);
   // 挂到 body 上：/lab 的布局有顶栏，3D 场景要整屏
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  // ?edit=1：标注模式——点场景里的物件，坐标列在右上角（抄进 lab-3d-beta.ts 的 hotspots）
+  const [edit, setEdit] = useState(false);
+  const [picks, setPicks] = useState<[number, number, number][]>([]);
+  useEffect(() => { setMounted(true); setEdit(new URLSearchParams(window.location.search).get('edit') === '1'); }, []);
 
   if (!s) return <div style={{ padding: 40, color: '#fff', background: '#0b0d1c', minHeight: '100vh' }}>没有这个 3D 场景。</div>;
   if (!mounted) return null;
   return createPortal((
     <div style={{ position: 'fixed', inset: 0, zIndex: 1000, background: '#0b0d1c', color: '#fff', overflow: 'hidden' }}>
-      {s.url ? <Splat3D scene={s} head={cam} onHeadSeen={setHeadSeen} camCorner={{ right: 18, bottom: 150 }} />
+      {s.url ? <Splat3D scene={s} head={cam} onHeadSeen={setHeadSeen} camCorner={{ right: 18, bottom: 150 }} hotspots={s.hotspots} edit={edit} onPick={p => { setPicks(ps => [...ps, p]); (window as any).__picks = [...picks, p]; }} />
         : <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', color: '#c7cbe6' }}>这个场景还在重建中，稍后再来。</div>}
 
       <div style={{ position: 'absolute', left: 20, top: 18, display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -32,6 +35,14 @@ export default function Beta3DPage({ params }: { params: Promise<{ scene: string
         <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.12em', padding: '4px 9px', borderRadius: 6, background: 'linear-gradient(120deg,#ff5fa2,#6a5cff)' }}>3D BETA</span>
       </div>
 
+      {edit && (
+        <div className="lab-mono" style={{ position: 'absolute', right: 18, top: 18, width: 300, maxHeight: '50vh', overflow: 'auto', padding: 12, borderRadius: 12, background: 'rgba(15,18,36,.85)', border: '1px solid rgba(255,255,255,.2)', fontSize: 11, color: '#c7cbe6', whiteSpace: 'pre' }}>
+          标注模式 · 点物件取坐标{'\n'}{picks.map((p, i) => `${i + 1}. [${p.join(', ')}]`).join('\n') || '（还没点）'}
+        </div>
+      )}
+      {(s.hotspots?.length || 0) > 0 && !edit && (
+        <div style={{ position: 'absolute', left: 20, top: 64, fontSize: 12, color: '#c7cbe6', padding: '6px 12px', borderRadius: 999, background: 'rgba(15,18,36,.6)', border: '1px solid rgba(255,255,255,.18)' }}>点一下标签，看这件东西是干什么的</div>
+      )}
       <div style={{ position: 'absolute', right: 18, bottom: 18, display: 'grid', gap: 10, justifyItems: 'end', maxWidth: 320 }}>
         <button onClick={() => setCam(v => !v)}
           style={{ padding: '10px 16px', borderRadius: 999, border: '1px solid rgba(255,255,255,.3)', cursor: 'pointer', fontWeight: 700, fontSize: 13, color: '#fff', background: cam ? 'linear-gradient(135deg,#3ddc97,#12b5cb)' : 'rgba(15,18,36,.72)', backdropFilter: 'blur(6px)' }}>

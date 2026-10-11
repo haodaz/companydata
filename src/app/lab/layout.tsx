@@ -176,6 +176,11 @@ const LAB_CSS = `
 .bench-hud .hud-card { background: rgba(15,18,36,.78) !important; border: 1px solid rgba(255,255,255,.12) !important; color: #c7cbe6 !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .bench-hud .hud-card .hud-ink { color: #e6e8f5 !important; }
 .bench-hud .hud-card .hud-ink3 { color: #9aa0b8 !important; }
+.bench-hud-light { background: #f3f4fa; }
+.bench-hud-light .hud-card { background: #fff !important; border: 1px solid rgba(23,26,46,.1) !important; color: #171a2e !important; backdrop-filter: none; box-shadow: 0 6px 20px rgba(23,26,46,.06); }
+.bench-hud-light .hud-card .hud-ink { color: #171a2e !important; }
+.bench-hud-light .hud-card .hud-ink3 { color: #6b7089 !important; }
+.bench-hud-light .bench-hud-right { background: #f3f4fa; border-left: 1px solid rgba(23,26,46,.08); top: 0; bottom: 0; right: 0; padding: 14px; width: 368px; }
 @media (max-width: 900px) { .bench-hud-right { position: static; width: auto; } .bench-hud-bottom { position: static; } .bench-hud { overflow: auto; } .bench-hud-stage { position: relative; left: 0; top: 0; transform: none; width: 100%; } .lab-game-npc { max-width: 60%; height: 60%; } .lab-game-box { padding-left: 20px; } }
 .bench-split { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr); gap: 16px; align-items: start; }
 @media (max-width: 900px) { .bench-split { grid-template-columns: 1fr; } .lab-stage-fields { display: none; } }

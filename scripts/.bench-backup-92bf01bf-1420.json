@@ -1,0 +1,405 @@
+{
+ "id": "bench",
+ "type": "bench",
+ "bench": {
+  "name": "电商直播中控应急调度台",
+  "vars": [
+   {
+    "id": "retained_time",
+    "max": 75,
+    "min": 10,
+    "rate": "prod_select == 4 && cue_board == 2 && pop_welfare == 1 ? 0.35 : (prod_select == 1 ? -0.08 : 0.1)",
+    "label": "平均停留时长",
+    "initial": 18
+   },
+   {
+    "id": "online_users",
+    "max": 3500,
+    "min": 400,
+    "rate": "retained_time < 22 ? -18 : (retained_time > 35 ? 4 : -3)",
+    "label": "在线人数",
+    "initial": 2200
+   },
+   {
+    "id": "stock_trigger",
+    "set": "stock_btn",
+    "initial": 0
+   },
+   {
+    "id": "welfare_sold",
+    "max": 600,
+    "min": 0,
+    "rate": "stock_trigger == 1 && welfare_sold < 400 ? 50 : 0",
+    "label": "秒杀库存释放量",
+    "initial": 0
+   },
+   {
+    "id": "risk_score",
+    "max": 100,
+    "min": 0,
+    "rate": "shield_switch == 1 ? -0.8 : 0.6",
+    "label": "公屏负面违规分",
+    "initial": 15
+   },
+   {
+    "id": "orders_count",
+    "max": 1200,
+    "min": 0,
+    "rate": "prod_select == 4 && cue_board >= 2 ? (cue_board == 3 ? 5.5 : 3.2) : 0",
+    "label": "49.9爆款累积单量",
+    "initial": 0
+   }
+  ],
+  "brief": "千川投流大额流量洪峰涌入，直播间人数暴涨但停留骤降。初级中控需在3分钟窗口期内迅速完成转品弹窗、切换主播提词、开启负面弹幕拦截，并梯度释放秒杀库存承接流量。",
+  "goals": [
+   {
+    "id": "g_shield_active",
+    "hold": 3,
+    "when": "shield_switch == 1 && risk_score < 20",
+    "label": "开启违规拦截盾净化公屏"
+   },
+   {
+    "id": "g_change_hero",
+    "hold": 5,
+    "when": "prod_select == 4 && cue_board == 2",
+    "after": "g_shield_active",
+    "label": "切主推品至4号沐浴露并递白板提词2档"
+   },
+   {
+    "id": "g_welfare_cadence",
+    "hold": 5,
+    "when": "pop_welfare == 1 && welfare_sold >= 200 && welfare_sold <= 400",
+    "after": "g_change_hero",
+    "label": "开启互动福袋并分批注入秒杀库存至200单以上"
+   },
+   {
+    "id": "g_retention_recovered",
+    "hold": 10,
+    "when": "retained_time >= 45 && online_users >= 1200",
+    "after": "g_welfare_cadence",
+    "label": "承接住大流量：停留时长重回45秒以上"
+   },
+   {
+    "id": "g_harvest_orders",
+    "hold": 5,
+    "when": "cue_board == 3 && orders_count >= 300",
+    "after": "g_retention_recovered",
+    "label": "切提词3档逼单收割：沐浴露爆单破300单"
+   }
+  ],
+  "rules": [
+   {
+    "id": "r_oversold",
+    "once": false,
+    "when": "welfare_sold > 400",
+    "label": "秒杀库存超放！亏本配额击穿400单红线",
+    "severity": "violation"
+   },
+   {
+    "id": "r_risk_limit",
+    "once": false,
+    "when": "risk_score >= 50",
+    "label": "负面舆情失控！未开拦截盾导致违规分超标被限流",
+    "severity": "violation"
+   },
+   {
+    "id": "r_wrong_push",
+    "once": true,
+    "when": "t > 25 && (prod_select == 1 || prod_select == 3)",
+    "label": "洪峰期间高客单价硬推导致极速掉人",
+    "severity": "violation"
+   },
+   {
+    "id": "r_premature_rush",
+    "once": false,
+    "when": "cue_board == 3 && retained_time < 35",
+    "label": "停留时长未稳即逼单导致转化率折损",
+    "severity": "warning"
+   }
+  ],
+  "scene": {
+   "image": "https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3z9z8kmvg1-bench.jpg",
+   "credit": "底图由通义万相生成",
+   "layers": [
+    {
+     "h": 10,
+     "w": 14,
+     "x": 8,
+     "y": 25,
+     "id": "l_rt_stat",
+     "cold": false,
+     "kind": "readout",
+     "text": "retained_time",
+     "unit": "s",
+     "color": "#10b981",
+     "label": "实时停留"
+    },
+    {
+     "h": 10,
+     "w": 14,
+     "x": 8,
+     "y": 38,
+     "id": "l_online_stat",
+     "cold": false,
+     "kind": "readout",
+     "text": "online_users",
+     "unit": "人",
+     "color": "#3b82f6",
+     "label": "在线人数"
+    },
+    {
+     "h": 4,
+     "w": 4,
+     "x": 16,
+     "y": 28,
+     "id": "l_shield_lamp",
+     "on": "shield_switch == 1",
+     "cold": false,
+     "kind": "lamp",
+     "color": "#22c55e",
+     "label": "风控盾"
+    },
+    {
+     "h": 4,
+     "w": 4,
+     "x": 16,
+     "y": 36,
+     "id": "l_warn_lamp",
+     "on": "risk_score > 35 || retained_time < 20",
+     "cold": false,
+     "kind": "lamp",
+     "color": "#ef4444",
+     "label": "流失预警"
+    },
+    {
+     "h": 36,
+     "w": 30,
+     "x": 38,
+     "y": 32,
+     "id": "l_stream_traffic",
+     "on": "prod_select == 4",
+     "cold": false,
+     "kind": "stream",
+     "color": "#f59e0b"
+    },
+    {
+     "h": 14,
+     "w": 10,
+     "x": 84,
+     "y": 40,
+     "id": "l_pulse_orders",
+     "on": "orders_count > 100",
+     "cold": false,
+     "kind": "pulse",
+     "color": "#ec4899"
+    }
+   ]
+  },
+  "gauges": [
+   {
+    "id": "g_retention",
+    "max": 80,
+    "min": 0,
+    "expr": "retained_time",
+    "unit": "s",
+    "warn": "retained_time < 25",
+    "label": "停留时长",
+    "digits": 1
+   },
+   {
+    "id": "g_online",
+    "max": 3000,
+    "min": 0,
+    "expr": "online_users",
+    "unit": "人",
+    "warn": "online_users < 800",
+    "label": "在线人数",
+    "digits": 0
+   },
+   {
+    "id": "g_risk",
+    "max": 100,
+    "min": 0,
+    "expr": "risk_score",
+    "unit": "分",
+    "warn": "risk_score > 40",
+    "label": "公屏风险值",
+    "digits": 0
+   },
+   {
+    "id": "g_welfare",
+    "max": 500,
+    "min": 0,
+    "expr": "welfare_sold",
+    "unit": "单",
+    "warn": "welfare_sold > 400",
+    "label": "秒杀释放量",
+    "digits": 0
+   },
+   {
+    "id": "g_orders",
+    "max": 1000,
+    "min": 0,
+    "expr": "orders_count",
+    "unit": "单",
+    "label": "爆款出单量",
+    "digits": 0
+   }
+  ],
+  "controls": [
+   {
+    "id": "prod_select",
+    "max": 4,
+    "min": 1,
+    "hint": "1:89元身体乳 2:9.9元护手霜 3:168元套盒 4:49.9元沐浴露",
+    "kind": "knob",
+    "step": 1,
+    "unit": "",
+    "label": "挂车主推品",
+    "hidden": false,
+    "initial": 1
+   },
+   {
+    "id": "cue_board",
+    "max": 3,
+    "min": 1,
+    "hint": "1:讲成分 2:抱大瓶喊拍1发6 3:卡库存逼单",
+    "kind": "knob",
+    "step": 1,
+    "unit": "",
+    "label": "提词白板指令",
+    "hidden": false,
+    "initial": 1
+   },
+   {
+    "id": "shield_switch",
+    "max": 100,
+    "min": 0,
+    "hint": "开启后自动屏蔽假货、违规词并禁言恶意账号",
+    "kind": "switch",
+    "unit": "",
+    "label": "负面违规拦截盾",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "pop_welfare",
+    "max": 100,
+    "min": 0,
+    "hint": "开启公屏扣字领福利弹窗拉升互动与停留",
+    "kind": "switch",
+    "unit": "",
+    "label": "互动福袋弹窗",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "stock_btn",
+    "max": 100,
+    "min": 0,
+    "hint": "点击单次向右下角推放50单9.9元福利护手霜",
+    "kind": "button",
+    "unit": "",
+    "label": "释放秒杀库存",
+    "hidden": false,
+    "initial": 0
+   }
+  ],
+  "timeScale": 1,
+  "maxSeconds": 240,
+  "expertScript": [
+   {
+    "t": 2,
+    "value": 1,
+    "control": "shield_switch"
+   },
+   {
+    "t": 5,
+    "value": 4,
+    "control": "prod_select"
+   },
+   {
+    "t": 8,
+    "value": 2,
+    "control": "cue_board"
+   },
+   {
+    "t": 12,
+    "value": 1,
+    "control": "pop_welfare"
+   },
+   {
+    "t": 16,
+    "value": 1,
+    "control": "stock_btn"
+   },
+   {
+    "t": 17,
+    "value": 0,
+    "control": "stock_btn"
+   },
+   {
+    "t": 22,
+    "value": 1,
+    "control": "stock_btn"
+   },
+   {
+    "t": 23,
+    "value": 0,
+    "control": "stock_btn"
+   },
+   {
+    "t": 28,
+    "value": 1,
+    "control": "stock_btn"
+   },
+   {
+    "t": 29,
+    "value": 0,
+    "control": "stock_btn"
+   },
+   {
+    "t": 35,
+    "value": 1,
+    "control": "stock_btn"
+   },
+   {
+    "t": 36,
+    "value": 0,
+    "control": "stock_btn"
+   },
+   {
+    "t": 42,
+    "value": 1,
+    "control": "stock_btn"
+   },
+   {
+    "t": 43,
+    "value": 0,
+    "control": "stock_btn"
+   },
+   {
+    "t": 50,
+    "value": 1,
+    "control": "stock_btn"
+   },
+   {
+    "t": 51,
+    "value": 0,
+    "control": "stock_btn"
+   },
+   {
+    "t": 95,
+    "value": 3,
+    "control": "cue_board"
+   }
+  ]
+ },
+ "place": "5155d516-4ac8-4c52-baee-0288ae8d5cc9",
+ "scene": {
+  "who": "带教老张",
+  "text": "千川大额消耗已经开始狂奔，在线猛涨到2200人，但停留时长在断崖式下坠！不能再按原定脚本念成分了，中控台控制权交给你，立刻切品、上白板提词、开弹幕盾并分批下放秒杀库存承接流量！",
+  "time": "20:21"
+ },
+ "prompt": "操作中控调度台：切换至4号沐浴露主推、开启弹幕盾、递送拍1发6白板并分批释放秒杀，把停留拉回45秒以上。"
+}

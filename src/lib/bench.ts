@@ -44,6 +44,12 @@ export interface BenchScene { image: string; credit?: string; layers: BenchLayer
 
 export interface BenchSpec {
   name: string; brief: string;
+  /**
+   * 专属台面（2026-10-11 起「一个行业一个交互故事」）：有它就不用底下那排滑块，舞台由专门的组件画、专门的手势驱动，
+   * 控件由台面自己写（大多是隐藏控件）。变量 / 规则 / 目标 / 事件流照旧，所以评分不用改。
+   *   laparotomy  开腹分层入腹：按住下刀、沿线划、血管钳撑、镊子提起再切、放牵开器
+   */
+  surface?: string;
   /** 场景：生成的底图 + 随状态变化的覆盖层；镜头快照拍的就是它 */ scene?: BenchScene;
   /** 每真实 1 秒推进多少模拟秒 */ timeScale: number;
   /** 模拟秒上限 */ maxSeconds: number;
@@ -329,7 +335,7 @@ export function benchMatch(spec: BenchSpec, mine: BenchTrace, expert: BenchTrace
 export function sanitizeBenchSpec(raw: any): BenchSpec | null {
   if (!raw || !Array.isArray(raw.controls) || !Array.isArray(raw.vars) || !Array.isArray(raw.goals)) return null;
   const spec: BenchSpec = {
-    name: String(raw.name || '虚拟工位'), brief: String(raw.brief || ''), timeScale: Math.max(1, Number(raw.timeScale) || 10), maxSeconds: Math.max(60, Number(raw.maxSeconds) || 900),
+    name: String(raw.name || '虚拟工位'), brief: String(raw.brief || ''), surface: raw.surface ? String(raw.surface).slice(0, 30) : undefined, timeScale: Math.max(1, Number(raw.timeScale) || 10), maxSeconds: Math.max(60, Number(raw.maxSeconds) || 900),
     vars: raw.vars.filter((v: any) => v?.id).map((v: any) => ({ id: String(v.id), label: v.label ? String(v.label) : undefined, initial: Number(v.initial) || 0, rate: v.rate ? String(v.rate) : undefined, set: v.set ? String(v.set) : undefined, min: v.min !== undefined ? Number(v.min) : undefined, max: v.max !== undefined ? Number(v.max) : undefined })),
     controls: raw.controls.filter((c: any) => c?.id && c?.label).map((c: any) => ({ id: String(c.id), label: String(c.label), kind: ['knob', 'switch', 'button', 'path'].includes(c.kind) ? c.kind : 'switch', min: c.min !== undefined ? Number(c.min) : 0, max: c.max !== undefined ? Number(c.max) : 100, step: c.step !== undefined ? Number(c.step) : undefined, unit: c.unit ? String(c.unit) : '', initial: Number(c.initial) || 0, hint: c.hint ? String(c.hint) : undefined, hidden: !!c.hidden })),
     gauges: (Array.isArray(raw.gauges) ? raw.gauges : []).filter((g: any) => g?.id && g?.expr).map((g: any) => ({ id: String(g.id), label: String(g.label || g.id), unit: String(g.unit || ''), expr: String(g.expr), min: Number(g.min) || 0, max: Number(g.max) || 100, digits: g.digits !== undefined ? Number(g.digits) : undefined, warn: g.warn ? String(g.warn) : undefined })),

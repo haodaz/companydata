@@ -3,6 +3,23 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { applyControl, benchEnv, evalExpr, finishBench, fmtT, initBench, layerPath, pointOnPath, projectOnPath, tickBench, type BenchSpec, type BenchState, type BenchTrace, type BenchEvent, type BenchLayer, type Pt } from '@/lib/bench';
 import { HandCam, type HandPose } from '@/components/lab/HandCam';
+import { ToolShape } from '@/components/lab/ToolShape';
+import { LaparotomyStage } from '@/components/lab/surfaces/Laparotomy';
+import { SootheStage } from '@/components/lab/surfaces/Soothe';
+import { LatteOverlay } from '@/components/lab/surfaces/LatteOverlay';
+import { DeskStage } from '@/components/lab/surfaces/Desk';
+import { RestoreStage } from '@/components/lab/surfaces/Restore';
+import { TriageStage } from '@/components/lab/surfaces/Triage';
+import { RepairStage } from '@/components/lab/surfaces/Repair';
+import { ComplaintStage } from '@/components/lab/surfaces/Complaint';
+import { ChefStage } from '@/components/lab/surfaces/Chef';
+import { AuditStage } from '@/components/lab/surfaces/Audit';
+import { GardenStage } from '@/components/lab/surfaces/Garden';
+import { LiveStage } from '@/components/lab/surfaces/Live';
+import { KinderStage } from '@/components/lab/surfaces/Kinder';
+import { DiveStage } from '@/components/lab/surfaces/Dive';
+import { Splat3D } from '@/components/lab/Splat3D';
+import type { Beta3DScene } from '@/lib/lab-3d-beta';
 
 /**
  * 虚拟工位：数字模拟的设备。
@@ -16,7 +33,7 @@ import { HandCam, type HandPose } from '@/components/lab/HandCam';
 const TICK_MS = 250, SNAP_EVERY_MS = 5000, SNAP_MAX = 16, SNAP_W = 320, SNAP_H = 180;
 const VW = 1600, VH = 900; // 场景覆盖层坐标系（百分比 × 16 / × 9）
 
-export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean; /** 演示模式：进来就自己走 */ demo?: boolean }) {
+export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdrop }: { spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean; /** 演示模式：进来就自己走 */ demo?: boolean; /** 3D beta：工位画面四周是活的 3D 房间（跟着鼠标微动），工位本身也有一点视差 */ backdrop?: Beta3DScene | null }) {
   const stRef = useRef<BenchState>(initBench(spec));
   const panelRef = useRef<SVGSVGElement>(null);
   const sceneRef = useRef<SVGSVGElement>(null);
@@ -27,6 +44,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
   const lastSnap = useRef(0);
   const snapping = useRef(false);
   const st = stRef.current;
+  if (typeof window !== 'undefined') (window as any).__bench = st;   // 调试 / 脚本验证用：当前工位状态
   const env = benchEnv(spec, st);
   const scene = spec.scene;
 
@@ -175,8 +193,23 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
   };
 
   const dragRef = useRef<BenchLayer | null>(null);
+  // 拉花台面：按住奶缸 = 倒（流量由「大流量」决定），松开 = 断流；高度走滚轮（LatteOverlay）
+  const isLatteSurface = spec.surface === 'latte';
+  const [big, setBigState] = useState(false);
+  const flowFor = (b: boolean) => (b ? 80 : 35);
+  const setBig = (b: boolean) => { setBigState(b); if (isLatteSurface && dragRef.current) act('flow', flowFor(b)); };
+  const pourStart = () => { if (isLatteSurface && (stRef.current.controls.flow || 0) === 0) act('flow', flowFor(big)); };
+  const pourEnd = () => { if (isLatteSurface && (stRef.current.controls.flow || 0) > 0) act('flow', 0); };
   // ── 摄像头：食指位置 → 场景坐标；捏合且靠近手柄 = 握住（焊枪 / 奶缸）；握着移动 = 沿轨迹走 ──
   const [cam, setCam] = useState(false);
+  // 3D 背景时工位卡片跟着鼠标反向挪几个像素：房间在后面动得多、台子在前面动得少，就有了前后层次
+  const [parallax, setParallax] = useState({ x: 0, y: 0 });
+  useEffect(() => {
+    if (!backdrop) return;
+    const move = (e: PointerEvent) => setParallax({ x: -(e.clientX / window.innerWidth - 0.5) * 14, y: -(e.clientY / window.innerHeight - 0.5) * 10 });
+    window.addEventListener('pointermove', move);
+    return () => window.removeEventListener('pointermove', move);
+  }, [backdrop]);
   const handRef = useRef<{ x: number; y: number; pinch: boolean; holding: boolean } | null>(null);
   /**
    * 像鼠标一样「相对」移动（2026-10-11 第二轮，用户实测：太灵、手 / 刀 / 光标三处对不上）：
@@ -194,21 +227,35 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
       if (!grabAnchor.current) grabAnchor.current = { hand: { x: px, y: py }, tool: pointOnPath(trackPts.current, prog) };
       const a = grabAnchor.current;
       x = a.tool.x + (px - a.hand.x) * HAND_GAIN; y = a.tool.y + (py - a.hand.y) * HAND_GAIN;
-      holding = true;
+      holding = true; pourStart();
       // 识别丢帧（宽限内沿用上一帧）不往轨迹里写：没有新信息
       if (!p.lost) onTrack(trackLayer, x, y, 0.6);
-    } else grabAnchor.current = null;
+    } else { grabAnchor.current = null; if (handRef.current?.holding) pourEnd(); }
     handRef.current = { x, y, pinch: p.pinch, holding };
   };
   const hand = handRef.current;
 
   const onScenePointerMove = (e: React.PointerEvent) => { const l = dragRef.current; if (!l?.control) return; const q = scenePoint(e.clientX, e.clientY); if (q) onTrack(l, q.x, q.y); };
-  const onScenePointerUp = () => { dragRef.current = null; };
+  const onScenePointerUp = () => { if (dragRef.current) pourEnd(); dragRef.current = null; };
 
   const finish = async () => {
     setRunning(false);
     await snapshot(true);
     onFinish(finishBench(spec, stRef.current, true));
+  };
+  /** 从头再来：工位状态、落点、快照计数全清，时钟重新走（用户 2026-10-11 要的「重置」） */
+  // 不用 window.confirm（内嵌浏览器里弹窗会被拦掉，看起来像按钮坏了）：点一下「武装」，三秒内再点一下才执行
+  const [armed, setArmed] = useState<'reset' | 'exit' | null>(null);
+  // 重来时台面组件整个重挂（它们自己的本地状态——补纸位置、刷过的点——也要清）
+  const [resetKey, setResetKey] = useState(0);
+  useEffect(() => { if (!armed) return; const t = setTimeout(() => setArmed(null), 3000); return () => clearTimeout(t); }, [armed]);
+  const reset = () => {
+    if (armed !== 'reset') { setArmed('reset'); return; }
+    setArmed(null);
+    stRef.current = initBench(spec);
+    deposits.current = []; lastDrop.current = null; lastPt.current = null; dirRef.current = { x: 0, y: 0 };
+    snapCount.current = 0; lastSnap.current = 0; cutDepth.current = 0; cutProg.current = 0; grabAnchor.current = null; handRef.current = null;
+    autoI.current = 0; setAuto(false); setRunning(true); setResetKey(k => k + 1); bump(v => v + 1);
   };
 
   const ev = (expr?: string) => { if (!expr) return 0; try { return evalExpr(expr, env); } catch { return 0; } };
@@ -354,7 +401,8 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
       </div>
       <div style={{ display: 'flex', gap: 8 }}>
         <button className="lab-btn" disabled={!canFinish} onClick={finish} style={{ flex: 1 }}>{running ? '完成操作 →' : '提交这段操作 →'}</button>
-        <button className="lab-btn ghost" onClick={() => { if (window.confirm('退出后这次操作不会保存，确定退出？')) onCancel(); }}>退出</button>
+        <button className="lab-btn ghost" onClick={reset} title="清掉这次的操作，从头再来" style={armed === 'reset' ? { background: '#ffd166', color: '#171a2e', borderColor: '#ffd166' } : hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined}>{armed === 'reset' ? '再点一下 · 重来' : '重来'}</button>
+        <button className="lab-btn ghost" onClick={() => { if (armed !== 'exit') { setArmed('exit'); return; } setArmed(null); onCancel(); }} style={armed === 'exit' ? { background: '#ff5fa2', color: '#fff', borderColor: '#ff5fa2' } : hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined}>{armed === 'exit' ? '再点一下 · 退出' : '退出'}</button>
       </div>
       {!canFinish && <div style={{ fontSize: 11.5, color: hud ? 'rgba(255,255,255,.7)' : 'var(--ink3)' }}>至少操作 30 秒（模拟时间）后可提交。1 秒真实时间 = {spec.timeScale} 秒模拟时间。</div>}
     </>
@@ -372,7 +420,23 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
           <filter id="bench-blur-sm" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" /></filter>
           <filter id="latte-soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3.5" /></filter>
         </defs>
-        {scene.layers.map(l => {
+        {spec.surface === 'laparotomy' && <LaparotomyStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'soothe' && <SootheStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'restore' && <RestoreStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'repair' && <RepairStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'chef' && <ChefStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'garden' && <GardenStage key={resetKey} st={st} running={running} auto={auto} act={act}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'kinder' && <KinderStage key={resetKey} st={st} running={running} auto={auto} act={act}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'dive' && <DiveStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint} image={scene.image}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {(!spec.surface || isLatteSurface) && scene.layers.map(l => {
           const track = (l.kind === 'seam' || l.kind === 'pour') && !!l.control;
           const prog = track ? st.controls[l.control!] || 0 : 0;
           // 引导点：不自己跑（用户实测：自己走来走去像有人在抢刀）。只在刀前面一小截指路；
@@ -386,13 +450,17 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
             toolName={l.iconBy ? (l.icons || [])[Math.round(st.controls[l.iconBy] || 0)] || l.icon || 'pitcher' : l.icon || 'pitcher'}
             pick={l.kind === 'tray' && l.control ? Math.round(st.controls[l.control] || 0) : -1}
             onPick={l.kind === 'tray' && l.control && running ? ((i: number) => act(l.control!, i)) : undefined}
-            onGrab={track && running ? (e => { dragRef.current = l; (e.target as Element).setPointerCapture?.(e.pointerId); const q = scenePoint(e.clientX, e.clientY); if (q) onTrack(l, q.x, q.y); }) : undefined} />;
+            onGrab={track && running ? (e => { dragRef.current = l; pourStart(); (e.target as Element).setPointerCapture?.(e.pointerId); const q = scenePoint(e.clientX, e.clientY); if (q) onTrack(l, q.x, q.y); }) : undefined} />;
         })}
+        {isLatteSurface && <LatteOverlay key={resetKey} spec={spec} st={st} running={running} auto={auto} act={act} ev={ev} big={big} setBig={setBig} dragging={!!dragRef.current}
+          head={trackLayer?.control ? pointOnPath(trackPts.current, st.controls[trackLayer.control] || 0) : null} />}
         {/* 手的光标：拿着的时候画在工具被拽到的地方（就在刀尖上，偏出去多远一眼看得见）；没拿的时候只是一个淡淡的手影 */}
         {hand && (hand.holding
           ? <g pointerEvents="none"><circle cx={hand.x} cy={hand.y} r={16} fill="none" stroke="#ff5fa2" strokeWidth={4} /><circle cx={hand.x} cy={hand.y} r={4} fill="#ff5fa2" /></g>
           : <g pointerEvents="none" opacity={0.75}><circle cx={hand.x} cy={hand.y} r={22} fill="rgba(18,181,203,.25)" stroke="#12b5cb" strokeWidth={3} strokeDasharray="6 5" /><text x={hand.x} y={hand.y + 50} textAnchor="middle" fill="#fff" fontSize={18} fontWeight={700} style={{ textShadow: '0 1px 4px rgba(0,0,0,.8)' }}>捏一下拿起{holdName}</text></g>)}
       </svg>
+      {/* 办公桌台面是 HTML（表格 / 下拉 / 文本框），盖在 svg 上面 */}
+      {spec.surface === 'desk' && <DeskStage key={resetKey} st={st} running={running} auto={auto} act={act} setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
       <div className="lab-mono" style={{ position: 'absolute', left: 12, top: hud ? 34 : 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em' }}>
         <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
       </div>
@@ -411,13 +479,31 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
     </div>
   ) : null;
 
+  // 办公桌类台面（数据分析、财务、写代码……）：整屏、浅色、好读，像游戏里打开大盘 / 银行那一屏；背后不放房间
+  const LIGHT: Record<string, React.ComponentType<any>> = { desk: DeskStage, triage: TriageStage, complaint: ComplaintStage, audit: AuditStage, live: LiveStage };
+  if (hud && scene && spec.surface && LIGHT[spec.surface]) {
+    const Light = LIGHT[spec.surface];
+    return (
+      <div className="bench-hud bench-hud-light">
+        <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, right: 368 }}>
+          <Light key={resetKey} st={st} running={running} auto={auto} act={act} setHidden={(id: string, v: number) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />
+        </div>
+        <div className="bench-hud-right">{side}</div>
+      </div>
+    );
+  }
   if (hud && scene) {
     return (
       <div className="bench-hud">
-        <img className="bench-hud-blur" src={scene.image} alt="" />
-        <div className="bench-hud-stage">{sceneView}</div>
+        {backdrop
+          ? <><div style={{ position: 'absolute', inset: 0 }}><Splat3D scene={backdrop} /></div><div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(60% 60% at 50% 50%, rgba(10,12,30,.15), rgba(10,12,30,.55))' }} /></>
+          : <img className="bench-hud-blur" src={scene.image} alt="" />}
+        {/* 3D 背景时工位卡片缩一圈、让开右侧面板：房间从四周露出来，鼠标一动前后错位 */}
+        {/* 舞台让开右侧面板（目标 / 事件流），不然工位右边的按钮会被盖住 */}
+        <div className="bench-hud-stage" style={backdrop ? { left: 'calc((100% - 368px) / 2)', width: 'min(calc(100% - 400px), 150vh)', transform: `translate(calc(-50% + ${parallax.x}px), calc(-50% + ${parallax.y}px))`, transition: 'transform .25s ease-out', boxShadow: '0 30px 80px rgba(0,0,0,.65)', borderRadius: 14, overflow: 'hidden', border: '1px solid rgba(255,255,255,.14)' }
+          : { left: 'calc((100% - 368px) / 2)', width: 'min(calc(100% - 382px), 177.78vh)' }}>{sceneView}</div>
         <div className="bench-hud-right">{panel}{side}</div>
-        <div className="bench-hud-bottom">{controls}</div>
+        {!spec.surface && <div className="bench-hud-bottom">{controls}</div>}
       </div>
     );
   }
@@ -438,7 +524,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
     <div className="lab-in bench-split">
       <div>
         {sceneView}
-        <div style={{ marginTop: 12 }}>{controls}</div>
+        {!spec.surface && <div style={{ marginTop: 12 }}>{controls}</div>}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {panel}
@@ -446,81 +532,6 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
       </div>
     </div>
   );
-}
-
-/**
- * 手里拿的家伙：画在原点，尖端朝 +x（跟着轨迹方向转）。教学示意，认得出来就行。
- */
-function ToolShape({ name, s = 1 }: { name: string; s?: number }) {
-  const g = (children: React.ReactNode) => <g transform={`scale(${s})`}>{children}</g>;
-  switch (name) {
-    case 'needle':   // 持针器：两个环柄 + 交叉 + 弯针
-      return g(<>
-        <path d="M -96 -26 L -18 -4 M -96 26 L -18 4" stroke="#aeb6c4" strokeWidth={9} strokeLinecap="round" fill="none" />
-        <circle cx={-104} cy={-30} r={15} fill="none" stroke="#aeb6c4" strokeWidth={8} />
-        <circle cx={-104} cy={30} r={15} fill="none" stroke="#aeb6c4" strokeWidth={8} />
-        <rect x={-22} y={-7} width={40} height={14} rx={4} fill="#cfd5e0" stroke="#79818f" strokeWidth={2} />
-        <path d="M 20 0 A 26 26 0 1 1 44 22" fill="none" stroke="#eef2f8" strokeWidth={6} strokeLinecap="round" />
-      </>);
-    case 'scalpel':  // 手术刀
-      return g(<>
-        <rect x={-92} y={-8} width={92} height={16} rx={5} fill="#b9c0cc" stroke="#79818f" strokeWidth={2} />
-        <path d="M 0 -9 L 52 -2 L 52 4 L 0 10 Z" fill="#eaeef5" stroke="#8b93a2" strokeWidth={2} />
-      </>);
-    case 'cautery':  // 电刀
-      return g(<>
-        <path d="M -108 0 q -16 -12 -30 -6" stroke="#5b6478" strokeWidth={6} fill="none" strokeLinecap="round" />
-        <rect x={-104} y={-11} width={92} height={22} rx={8} fill="#e8eaf0" stroke="#79818f" strokeWidth={2} />
-        <rect x={-78} y={-11} width={20} height={22} fill="#ff8a5f" />
-        <rect x={-46} y={-11} width={20} height={22} fill="#ffd166" />
-        <path d="M -12 -5 L 46 0 L -12 5 Z" fill="#9aa3b1" stroke="#79818f" strokeWidth={2} />
-      </>);
-    case 'clamp':    // 血管钳（钝性分离用）
-      return g(<>
-        <path d="M -98 -28 L -14 -5 M -98 28 L -14 5" stroke="#aeb6c4" strokeWidth={9} strokeLinecap="round" fill="none" />
-        <circle cx={-106} cy={-32} r={15} fill="none" stroke="#aeb6c4" strokeWidth={8} />
-        <circle cx={-106} cy={32} r={15} fill="none" stroke="#aeb6c4" strokeWidth={8} />
-        <path d="M -14 -5 L 52 -9 M -14 5 L 52 9" stroke="#dfe4ec" strokeWidth={8} strokeLinecap="round" fill="none" />
-      </>);
-    case 'forceps':  // 镪子（提起腹膜）
-      return g(<>
-        <path d="M -90 -16 Q -20 -14 48 -3" stroke="#ccd3de" strokeWidth={10} fill="none" strokeLinecap="round" />
-        <path d="M -90 16 Q -20 14 48 3" stroke="#ccd3de" strokeWidth={10} fill="none" strokeLinecap="round" />
-        <path d="M -90 -16 L -90 16" stroke="#aeb6c4" strokeWidth={10} strokeLinecap="round" />
-      </>);
-    case 'retractor': // 牵开器
-      return g(<>
-        <rect x={-70} y={-7} width={110} height={14} rx={5} fill="#c3c9d4" stroke="#79818f" strokeWidth={2} />
-        <path d="M 40 -7 q 26 -4 26 -30 M 40 7 q 26 4 26 30" stroke="#c3c9d4" strokeWidth={12} fill="none" strokeLinecap="round" />
-      </>);
-    case 'torch':    // 焊枪
-      return g(<>
-        <rect x={-8} y={-110} width={16} height={100} rx={6} fill="#2b3040" stroke="#6b7089" strokeWidth={2} transform="rotate(60)" />
-        <rect x={-11} y={-40} width={22} height={34} rx={4} fill="#c9a24a" transform="rotate(60)" />
-      </>);
-    case 'brush':    // 毛刷（刷浆糊 / 刷胶 / 刷漆）：木柄 + 铜箍 + 刷毛，刷毛朝前进方向
-      return g(<>
-        <rect x={-120} y={-9} width={86} height={18} rx={8} fill="#b07a46" stroke="#6e4a26" strokeWidth={2} />
-        <rect x={-36} y={-14} width={18} height={28} rx={3} fill="#c9a24a" stroke="#8a6a24" strokeWidth={2} />
-        <path d="M -18 -16 L 34 -20 Q 44 0 34 20 L -18 16 Z" fill="#efe4cf" stroke="#9c8a6a" strokeWidth={2} />
-        {[-12, -4, 4, 12].map(y => <line key={y} x1={-12} y1={y} x2={34} y2={y * 1.15} stroke="#c9b894" strokeWidth={1.5} />)}
-      </>);
-    case 'hand':     // 手：俯视的食指 + 中指指腹，指尖朝前进方向
-      return g(<>
-        <rect x={-150} y={-38} width={92} height={78} rx={34} fill="#efbf9c" stroke="#b9805e" strokeWidth={3} />
-        <rect x={-84} y={-30} width={130} height={26} rx={13} fill="#f6cfb2" stroke="#b9805e" strokeWidth={3} />
-        <rect x={-88} y={2} width={122} height={26} rx={13} fill="#f3c8a8" stroke="#b9805e" strokeWidth={3} />
-        <ellipse cx={34} cy={-17} rx={8} ry={8} fill="#fde8db" stroke="#d9a588" strokeWidth={1.5} />
-        <ellipse cx={22} cy={15} rx={8} ry={8} fill="#fde8db" stroke="#d9a588" strokeWidth={1.5} />
-      </>);
-    default:         // pitcher 奶缸
-      return g(<>
-        <ellipse cx={-26} cy={0} rx={46} ry={40} fill="#c9ced8" stroke="#79818f" strokeWidth={3} />
-        <ellipse cx={-26} cy={0} rx={34} ry={28} fill="#eef1f6" opacity={0.75} />
-        <polygon points="18,-13 56,0 18,13" fill="#d7dbe3" stroke="#79818f" strokeWidth={2} />
-        <rect x={-96} y={-13} width={36} height={26} rx={7} fill="#9aa3b1" stroke="#6b7484" strokeWidth={2} />
-      </>);
-  }
 }
 
 /** 场景覆盖层 */

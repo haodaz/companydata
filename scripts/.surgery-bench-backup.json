@@ -1,0 +1,1926 @@
+{
+ "name": "开腹工位 · 麦氏切口分层入腹",
+ "vars": [
+  {
+   "id": "prev",
+   "set": "cut",
+   "initial": 0
+  },
+  {
+   "id": "rate_c",
+   "max": 60,
+   "min": 0,
+   "set": "(cut - prev) / dt",
+   "label": "推进速度",
+   "initial": 0
+  },
+  {
+   "id": "cutting",
+   "set": "rate_c > 0.4 ? 1 : 0",
+   "initial": 0
+  },
+  {
+   "id": "pass",
+   "max": 5,
+   "min": 0,
+   "set": "(cut >= 20 ? 1 : 0) + (cut >= 40 ? 1 : 0) + (cut >= 60 ? 1 : 0) + (cut >= 80 ? 1 : 0) + (cut >= 100 ? 1 : 0)",
+   "label": "已完成层次",
+   "initial": 0
+  },
+  {
+   "id": "dev_sum",
+   "rate": "cutting == 1 ? dev : 0",
+   "initial": 0
+  },
+  {
+   "id": "dev_time",
+   "rate": "cutting == 1 ? 1 : 0",
+   "initial": 0
+  },
+  {
+   "id": "dev_avg",
+   "set": "dev_time > 0.5 ? dev_sum / dev_time : 0",
+   "label": "平均偏离",
+   "initial": 0
+  },
+  {
+   "id": "sharp_muscle",
+   "max": 14,
+   "rate": "cutting == 1 && depth > 16 && depth <= 24 && tool < 2 ? 1 : 0",
+   "label": "肌层用锐性的秒数",
+   "initial": 0
+  },
+  {
+   "id": "blind_perit",
+   "max": 14,
+   "rate": "cutting == 1 && depth > 24 && depth <= 29 && tool != 3 && pass < 4 ? 1 : 0",
+   "label": "腹膜未提起就切的秒数",
+   "initial": 0
+  },
+  {
+   "id": "too_deep",
+   "max": 14,
+   "rate": "depth > 32 ? 1 : 0",
+   "label": "进腹过深的秒数",
+   "initial": 0
+  },
+  {
+   "id": "blunt_skin",
+   "max": 14,
+   "rate": "cutting == 1 && depth <= 12 && tool >= 2 ? 1 : 0",
+   "label": "皮肤用钝性的秒数",
+   "initial": 0
+  },
+  {
+   "id": "no_retract",
+   "max": 14,
+   "rate": "cutting == 1 && depth > 24 && retract == 0 ? 1 : 0",
+   "label": "没牵开就深入的秒数",
+   "initial": 0
+  },
+  {
+   "id": "stall",
+   "set": "cut > 3 && cut < 99 && rate_c < 0.4 ? stall + dt : 0",
+   "label": "停顿秒数",
+   "initial": 0
+  },
+  {
+   "id": "stall_max",
+   "set": "max(stall_max, stall)",
+   "initial": 0
+  },
+  {
+   "id": "bowel_risk",
+   "max": 100,
+   "min": 0,
+   "set": "clamp(blind_perit * 6 + too_deep * 9, 0, 100)",
+   "label": "肠管损伤风险",
+   "initial": 0
+  },
+  {
+   "id": "quality",
+   "max": 100,
+   "min": 0,
+   "set": "clamp(100 - dev_avg * 0.4 - sharp_muscle * 4 - blind_perit * 4.5 - too_deep * 5 - blunt_skin * 2.5 - no_retract * 2.5 - max(0, 5 - pass) * 12 - max(0, stall_max - 6) * 3, 0, 100)",
+   "label": "入腹质量",
+   "initial": 0
+  }
+ ],
+ "brief": "急性阑尾炎，右下腹麦氏点斜切口开腹。五趟走完五个层次：皮肤皮下锐性切开 → 腱膜沿纤维切开 → 肌层钝性分离 → 提起腹膜再切开 → 牵开显露。每一层该用刀还是该用钳，用错了系统当场记。（教学化简化模型，不构成医疗指导）",
+ "goals": [
+  {
+   "id": "skin",
+   "when": "cut >= 20 && tool < 2 && depth >= 3 && depth <= 12",
+   "label": "第一趟：手术刀锐性切开皮肤与皮下"
+  },
+  {
+   "id": "fascia",
+   "when": "cut >= 40 && depth > 12 && depth <= 16",
+   "after": "skin",
+   "label": "第二趟：沿纤维方向切开腹外斜肌腱膜"
+  },
+  {
+   "id": "muscle",
+   "when": "cut >= 60 && depth > 16 && depth <= 24 && tool == 2 && sharp_muscle < 1",
+   "after": "fascia",
+   "label": "第三趟：肌层钝性分离（血管钳，不用刀）"
+  },
+  {
+   "id": "perit",
+   "when": "cut >= 80 && depth > 24 && depth <= 29 && tool == 3 && blind_perit < 1",
+   "after": "muscle",
+   "label": "第四趟：提起腹膜形成帐篷后切开"
+  },
+  {
+   "id": "expose",
+   "when": "cut >= 100 && retract == 1",
+   "after": "perit",
+   "label": "上牵开器，显露回盲部"
+  },
+  {
+   "id": "safe",
+   "when": "pass >= 5 && bowel_risk < 10 && quality >= 70",
+   "after": "expose",
+   "label": "安全入腹：未伤及肠管、入腹质量 ≥ 70 分"
+  }
+ ],
+ "rules": [
+  {
+   "id": "sharp_muscle",
+   "once": true,
+   "when": "cutting == 1 && depth > 16 && depth <= 24 && tool < 2",
+   "label": "肌层用刀锐性切开（腹内斜肌与腹横肌应钝性分离，锐切出血多且无必要）",
+   "severity": "violation"
+  },
+  {
+   "id": "blind_perit",
+   "once": true,
+   "when": "cutting == 1 && depth > 24 && depth <= 29 && tool != 3 && pass < 4",
+   "label": "没提起腹膜就切（刀尖下面可能就是肠管）",
+   "severity": "violation"
+  },
+  {
+   "id": "too_deep",
+   "when": "depth > 32",
+   "label": "进腹过深，已超过腹膜层（肠管损伤）",
+   "severity": "violation"
+  },
+  {
+   "id": "blunt_skin",
+   "once": true,
+   "when": "cutting == 1 && depth <= 12 && tool >= 2",
+   "label": "用血管钳去分离皮肤皮下（该锐性的层次别钝性撕）",
+   "severity": "warning"
+  },
+  {
+   "id": "no_retract",
+   "once": true,
+   "when": "cutting == 1 && depth > 24 && retract == 0",
+   "label": "没上牵开器就往深层走（显露不清）",
+   "severity": "warning"
+  },
+  {
+   "id": "skip",
+   "once": true,
+   "when": "cutting == 1 && depth > 16 && pass < 2",
+   "label": "层次跳跃：上一层还没走完就加深",
+   "severity": "violation"
+  },
+  {
+   "id": "off",
+   "when": "cutting == 1 && dev > 150",
+   "label": "偏离切口轴线（切口歪斜、显露困难）",
+   "severity": "violation"
+  },
+  {
+   "id": "rush",
+   "when": "cutting == 1 && rate_c > 8",
+   "label": "推进过快（层次辨认不清）",
+   "severity": "warning"
+  }
+ ],
+ "scene": {
+  "image": "https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/seed-surgery_field.jpg",
+  "credit": "底图由通义万相生成",
+  "layers": [
+   {
+    "h": 15.555555555555555,
+    "w": 22.5,
+    "x": 40,
+    "y": 55.55555555555556,
+    "id": "abd",
+    "on": "retract == 1",
+    "kind": "incis",
+    "text": "depth",
+    "level": "clamp(cut / 20, 0, 1)"
+   },
+   {
+    "h": 7,
+    "w": 26,
+    "x": 40,
+    "y": 21,
+    "id": "tray",
+    "kind": "tray",
+    "icons": [
+     "scalpel",
+     "cautery",
+     "clamp",
+     "forceps"
+    ],
+    "label": "器械 · 点一下换手里的",
+    "control": "tool"
+   },
+   {
+    "h": 7,
+    "w": 13,
+    "x": 21,
+    "y": 21,
+    "id": "retr",
+    "kind": "tray",
+    "icons": [
+     "clamp",
+     "retractor"
+    ],
+    "label": "牵开器",
+    "control": "retract"
+   },
+   {
+    "h": 0,
+    "w": 0,
+    "x": 0,
+    "y": 0,
+    "id": "trail",
+    "on": "cutting == 1",
+    "kind": "pour",
+    "pace": 1.3,
+    "icons": [
+     "scalpel",
+     "cautery",
+     "clamp",
+     "forceps"
+    ],
+    "label": "切口轨迹",
+    "iconBy": "tool",
+    "points": [
+     {
+      "x": 40,
+      "y": 55.55555555555556
+     },
+     {
+      "x": 62.5,
+      "y": 71.11111111111111
+     },
+     {
+      "x": 62.5,
+      "y": 71.11111111111111
+     },
+     {
+      "x": 40,
+      "y": 55.55555555555556
+     },
+     {
+      "x": 40,
+      "y": 55.55555555555556
+     },
+     {
+      "x": 62.5,
+      "y": 71.11111111111111
+     },
+     {
+      "x": 62.5,
+      "y": 71.11111111111111
+     },
+     {
+      "x": 40,
+      "y": 55.55555555555556
+     },
+     {
+      "x": 40,
+      "y": 55.55555555555556
+     },
+     {
+      "x": 62.5,
+      "y": 71.11111111111111
+     }
+    ],
+    "control": "cut",
+    "deviation": "dev"
+   },
+   {
+    "h": 5,
+    "w": 9,
+    "x": 2,
+    "y": 30,
+    "id": "ro_p",
+    "kind": "readout",
+    "text": "pass",
+    "unit": "层",
+    "label": "LAYER"
+   },
+   {
+    "h": 5,
+    "w": 9,
+    "x": 2,
+    "y": 36,
+    "id": "ro_d",
+    "kind": "readout",
+    "text": "depth",
+    "unit": "mm",
+    "color": "#ffd166",
+    "label": "DEPTH"
+   },
+   {
+    "h": 0,
+    "w": 0,
+    "x": 50,
+    "y": 9,
+    "id": "c1",
+    "on": "cut < 20",
+    "kind": "coach",
+    "label": "① 手术刀锐性切开皮肤与皮下：器械 0，深度到 8–12 mm"
+   },
+   {
+    "h": 0,
+    "w": 0,
+    "x": 50,
+    "y": 9,
+    "id": "c2",
+    "on": "cut >= 20 && cut < 40",
+    "kind": "coach",
+    "label": "② 腹外斜肌腱膜：沿纤维方向切开，深度 13–16 mm"
+   },
+   {
+    "h": 0,
+    "w": 0,
+    "x": 50,
+    "y": 9,
+    "id": "c3",
+    "on": "cut >= 40 && cut < 60",
+    "kind": "coach",
+    "color": "#ffd166",
+    "label": "③ 肌层必须钝性分离：换血管钳（器械 2），刀切下去是一片出血"
+   },
+   {
+    "h": 0,
+    "w": 0,
+    "x": 50,
+    "y": 9,
+    "id": "c4",
+    "on": "cut >= 60 && cut < 80",
+    "kind": "coach",
+    "color": "#ff5fa2",
+    "label": "④ 腹膜先提起来形成帐篷再切（器械 3）——刀尖下面就是肠管"
+   },
+   {
+    "h": 0,
+    "w": 0,
+    "x": 50,
+    "y": 9,
+    "id": "c5",
+    "on": "cut >= 80",
+    "kind": "coach",
+    "label": "⑤ 上牵开器，显露回盲部"
+   }
+  ]
+ },
+ "gauges": [
+  {
+   "id": "g_pass",
+   "max": 5,
+   "min": 0,
+   "expr": "pass",
+   "unit": "层",
+   "label": "已完成层次"
+  },
+  {
+   "id": "g_depth",
+   "max": 36,
+   "min": 0,
+   "expr": "depth",
+   "unit": "mm",
+   "warn": "depth > 32",
+   "label": "当前深度"
+  },
+  {
+   "id": "g_risk",
+   "max": 100,
+   "min": 0,
+   "expr": "bowel_risk",
+   "unit": "",
+   "warn": "bowel_risk > 20",
+   "label": "肠管损伤风险"
+  },
+  {
+   "id": "g_q",
+   "max": 100,
+   "min": 0,
+   "expr": "quality",
+   "unit": "分",
+   "warn": "pass > 1 && quality < 60",
+   "label": "入腹质量"
+  }
+ ],
+ "controls": [
+  {
+   "id": "tool",
+   "max": 3,
+   "min": 0,
+   "hint": "0 手术刀 · 1 电刀 · 2 血管钳（钝性分离）· 3 镊子提起",
+   "kind": "knob",
+   "step": 1,
+   "label": "器械",
+   "initial": 0
+  },
+  {
+   "id": "depth",
+   "max": 36,
+   "min": 0,
+   "hint": "皮肤 0–3 · 皮下 3–12 · 腱膜 12–16 · 肌层 16–24 · 腹膜 24–28 · 入腹 28–32 · 超过 32 就是肠管",
+   "kind": "knob",
+   "step": 1,
+   "unit": "mm",
+   "label": "下刀深度",
+   "initial": 0
+  },
+  {
+   "id": "retract",
+   "hint": "切开腱膜后上牵开器，显露清楚再往深走",
+   "kind": "switch",
+   "label": "牵开器"
+  },
+  {
+   "id": "cut",
+   "hint": "沿麦氏切口来回五趟，一趟一个层次；也可以打开摄像头用手走",
+   "kind": "path",
+   "label": "沿切口推进"
+  },
+  {
+   "id": "dev",
+   "max": 400,
+   "min": 0,
+   "kind": "knob",
+   "label": "偏离",
+   "hidden": true,
+   "initial": 0
+  }
+ ],
+ "timeScale": 1,
+ "maxSeconds": 420,
+ "expertScript": [
+  {
+   "t": 1,
+   "value": 0,
+   "control": "tool"
+  },
+  {
+   "t": 1.5,
+   "value": 10,
+   "control": "depth"
+  },
+  {
+   "t": 2,
+   "value": 3,
+   "control": "dev"
+  },
+  {
+   "t": 2,
+   "value": 0,
+   "control": "cut"
+  },
+  {
+   "t": 2.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 2.5,
+   "value": 0.75,
+   "control": "cut"
+  },
+  {
+   "t": 3,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 3,
+   "value": 1.5,
+   "control": "cut"
+  },
+  {
+   "t": 3.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 3.5,
+   "value": 2.25,
+   "control": "cut"
+  },
+  {
+   "t": 4,
+   "value": 6,
+   "control": "dev"
+  },
+  {
+   "t": 4,
+   "value": 3,
+   "control": "cut"
+  },
+  {
+   "t": 4.5,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 4.5,
+   "value": 3.75,
+   "control": "cut"
+  },
+  {
+   "t": 5,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 5,
+   "value": 4.5,
+   "control": "cut"
+  },
+  {
+   "t": 5.5,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 5.5,
+   "value": 5.25,
+   "control": "cut"
+  },
+  {
+   "t": 6,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 6,
+   "value": 6,
+   "control": "cut"
+  },
+  {
+   "t": 6.5,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 6.5,
+   "value": 6.75,
+   "control": "cut"
+  },
+  {
+   "t": 7,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 7,
+   "value": 7.5,
+   "control": "cut"
+  },
+  {
+   "t": 7.5,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 7.5,
+   "value": 8.25,
+   "control": "cut"
+  },
+  {
+   "t": 8,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 8,
+   "value": 9,
+   "control": "cut"
+  },
+  {
+   "t": 8.5,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 8.5,
+   "value": 9.75,
+   "control": "cut"
+  },
+  {
+   "t": 9,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 9,
+   "value": 10.5,
+   "control": "cut"
+  },
+  {
+   "t": 9.5,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 9.5,
+   "value": 11.25,
+   "control": "cut"
+  },
+  {
+   "t": 10,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 10,
+   "value": 12,
+   "control": "cut"
+  },
+  {
+   "t": 10.5,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 10.5,
+   "value": 12.75,
+   "control": "cut"
+  },
+  {
+   "t": 11,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 11,
+   "value": 13.5,
+   "control": "cut"
+  },
+  {
+   "t": 11.5,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 11.5,
+   "value": 14.25,
+   "control": "cut"
+  },
+  {
+   "t": 12,
+   "value": 6,
+   "control": "dev"
+  },
+  {
+   "t": 12,
+   "value": 15,
+   "control": "cut"
+  },
+  {
+   "t": 12.5,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 12.5,
+   "value": 15.75,
+   "control": "cut"
+  },
+  {
+   "t": 13,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 13,
+   "value": 16.5,
+   "control": "cut"
+  },
+  {
+   "t": 13.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 13.5,
+   "value": 17.25,
+   "control": "cut"
+  },
+  {
+   "t": 14,
+   "value": 3,
+   "control": "dev"
+  },
+  {
+   "t": 14,
+   "value": 18,
+   "control": "cut"
+  },
+  {
+   "t": 14.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 14.5,
+   "value": 18.75,
+   "control": "cut"
+  },
+  {
+   "t": 15,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 15,
+   "value": 19.5,
+   "control": "cut"
+  },
+  {
+   "t": 15.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 15.5,
+   "value": 20,
+   "control": "cut"
+  },
+  {
+   "t": 16.5,
+   "value": 0,
+   "control": "tool"
+  },
+  {
+   "t": 17,
+   "value": 15,
+   "control": "depth"
+  },
+  {
+   "t": 17.5,
+   "value": 3,
+   "control": "dev"
+  },
+  {
+   "t": 17.5,
+   "value": 20,
+   "control": "cut"
+  },
+  {
+   "t": 18,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 18,
+   "value": 20.75,
+   "control": "cut"
+  },
+  {
+   "t": 18.5,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 18.5,
+   "value": 21.5,
+   "control": "cut"
+  },
+  {
+   "t": 19,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 19,
+   "value": 22.25,
+   "control": "cut"
+  },
+  {
+   "t": 19.5,
+   "value": 6,
+   "control": "dev"
+  },
+  {
+   "t": 19.5,
+   "value": 23,
+   "control": "cut"
+  },
+  {
+   "t": 20,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 20,
+   "value": 23.75,
+   "control": "cut"
+  },
+  {
+   "t": 20.5,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 20.5,
+   "value": 24.5,
+   "control": "cut"
+  },
+  {
+   "t": 21,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 21,
+   "value": 25.25,
+   "control": "cut"
+  },
+  {
+   "t": 21.5,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 21.5,
+   "value": 26,
+   "control": "cut"
+  },
+  {
+   "t": 22,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 22,
+   "value": 26.75,
+   "control": "cut"
+  },
+  {
+   "t": 22.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 22.5,
+   "value": 27.5,
+   "control": "cut"
+  },
+  {
+   "t": 23,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 23,
+   "value": 28.25,
+   "control": "cut"
+  },
+  {
+   "t": 23.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 23.5,
+   "value": 29,
+   "control": "cut"
+  },
+  {
+   "t": 24,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 24,
+   "value": 29.75,
+   "control": "cut"
+  },
+  {
+   "t": 24.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 24.5,
+   "value": 30.5,
+   "control": "cut"
+  },
+  {
+   "t": 25,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 25,
+   "value": 31.25,
+   "control": "cut"
+  },
+  {
+   "t": 25.5,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 25.5,
+   "value": 32,
+   "control": "cut"
+  },
+  {
+   "t": 26,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 26,
+   "value": 32.75,
+   "control": "cut"
+  },
+  {
+   "t": 26.5,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 26.5,
+   "value": 33.5,
+   "control": "cut"
+  },
+  {
+   "t": 27,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 27,
+   "value": 34.25,
+   "control": "cut"
+  },
+  {
+   "t": 27.5,
+   "value": 6,
+   "control": "dev"
+  },
+  {
+   "t": 27.5,
+   "value": 35,
+   "control": "cut"
+  },
+  {
+   "t": 28,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 28,
+   "value": 35.75,
+   "control": "cut"
+  },
+  {
+   "t": 28.5,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 28.5,
+   "value": 36.5,
+   "control": "cut"
+  },
+  {
+   "t": 29,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 29,
+   "value": 37.25,
+   "control": "cut"
+  },
+  {
+   "t": 29.5,
+   "value": 3,
+   "control": "dev"
+  },
+  {
+   "t": 29.5,
+   "value": 38,
+   "control": "cut"
+  },
+  {
+   "t": 30,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 30,
+   "value": 38.75,
+   "control": "cut"
+  },
+  {
+   "t": 30.5,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 30.5,
+   "value": 39.5,
+   "control": "cut"
+  },
+  {
+   "t": 31,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 31,
+   "value": 40,
+   "control": "cut"
+  },
+  {
+   "t": 32,
+   "value": 2,
+   "control": "tool"
+  },
+  {
+   "t": 32.5,
+   "value": 21,
+   "control": "depth"
+  },
+  {
+   "t": 32.8,
+   "value": 1,
+   "control": "retract"
+  },
+  {
+   "t": 33,
+   "value": 3,
+   "control": "dev"
+  },
+  {
+   "t": 33,
+   "value": 40,
+   "control": "cut"
+  },
+  {
+   "t": 33.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 33.5,
+   "value": 40.75,
+   "control": "cut"
+  },
+  {
+   "t": 34,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 34,
+   "value": 41.5,
+   "control": "cut"
+  },
+  {
+   "t": 34.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 34.5,
+   "value": 42.25,
+   "control": "cut"
+  },
+  {
+   "t": 35,
+   "value": 6,
+   "control": "dev"
+  },
+  {
+   "t": 35,
+   "value": 43,
+   "control": "cut"
+  },
+  {
+   "t": 35.5,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 35.5,
+   "value": 43.75,
+   "control": "cut"
+  },
+  {
+   "t": 36,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 36,
+   "value": 44.5,
+   "control": "cut"
+  },
+  {
+   "t": 36.5,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 36.5,
+   "value": 45.25,
+   "control": "cut"
+  },
+  {
+   "t": 37,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 37,
+   "value": 46,
+   "control": "cut"
+  },
+  {
+   "t": 37.5,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 37.5,
+   "value": 46.75,
+   "control": "cut"
+  },
+  {
+   "t": 38,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 38,
+   "value": 47.5,
+   "control": "cut"
+  },
+  {
+   "t": 38.5,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 38.5,
+   "value": 48.25,
+   "control": "cut"
+  },
+  {
+   "t": 39,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 39,
+   "value": 49,
+   "control": "cut"
+  },
+  {
+   "t": 39.5,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 39.5,
+   "value": 49.75,
+   "control": "cut"
+  },
+  {
+   "t": 40,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 40,
+   "value": 50.5,
+   "control": "cut"
+  },
+  {
+   "t": 40.5,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 40.5,
+   "value": 51.25,
+   "control": "cut"
+  },
+  {
+   "t": 41,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 41,
+   "value": 52,
+   "control": "cut"
+  },
+  {
+   "t": 41.5,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 41.5,
+   "value": 52.75,
+   "control": "cut"
+  },
+  {
+   "t": 42,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 42,
+   "value": 53.5,
+   "control": "cut"
+  },
+  {
+   "t": 42.5,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 42.5,
+   "value": 54.25,
+   "control": "cut"
+  },
+  {
+   "t": 43,
+   "value": 6,
+   "control": "dev"
+  },
+  {
+   "t": 43,
+   "value": 55,
+   "control": "cut"
+  },
+  {
+   "t": 43.5,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 43.5,
+   "value": 55.75,
+   "control": "cut"
+  },
+  {
+   "t": 44,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 44,
+   "value": 56.5,
+   "control": "cut"
+  },
+  {
+   "t": 44.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 44.5,
+   "value": 57.25,
+   "control": "cut"
+  },
+  {
+   "t": 45,
+   "value": 3,
+   "control": "dev"
+  },
+  {
+   "t": 45,
+   "value": 58,
+   "control": "cut"
+  },
+  {
+   "t": 45.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 45.5,
+   "value": 58.75,
+   "control": "cut"
+  },
+  {
+   "t": 46,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 46,
+   "value": 59.5,
+   "control": "cut"
+  },
+  {
+   "t": 46.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 46.5,
+   "value": 60,
+   "control": "cut"
+  },
+  {
+   "t": 47.5,
+   "value": 3,
+   "control": "tool"
+  },
+  {
+   "t": 48,
+   "value": 27,
+   "control": "depth"
+  },
+  {
+   "t": 48.5,
+   "value": 3,
+   "control": "dev"
+  },
+  {
+   "t": 48.5,
+   "value": 60,
+   "control": "cut"
+  },
+  {
+   "t": 49,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 49,
+   "value": 60.75,
+   "control": "cut"
+  },
+  {
+   "t": 49.5,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 49.5,
+   "value": 61.5,
+   "control": "cut"
+  },
+  {
+   "t": 50,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 50,
+   "value": 62.25,
+   "control": "cut"
+  },
+  {
+   "t": 50.5,
+   "value": 6,
+   "control": "dev"
+  },
+  {
+   "t": 50.5,
+   "value": 63,
+   "control": "cut"
+  },
+  {
+   "t": 51,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 51,
+   "value": 63.75,
+   "control": "cut"
+  },
+  {
+   "t": 51.5,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 51.5,
+   "value": 64.5,
+   "control": "cut"
+  },
+  {
+   "t": 52,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 52,
+   "value": 65.25,
+   "control": "cut"
+  },
+  {
+   "t": 52.5,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 52.5,
+   "value": 66,
+   "control": "cut"
+  },
+  {
+   "t": 53,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 53,
+   "value": 66.75,
+   "control": "cut"
+  },
+  {
+   "t": 53.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 53.5,
+   "value": 67.5,
+   "control": "cut"
+  },
+  {
+   "t": 54,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 54,
+   "value": 68.25,
+   "control": "cut"
+  },
+  {
+   "t": 54.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 54.5,
+   "value": 69,
+   "control": "cut"
+  },
+  {
+   "t": 55,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 55,
+   "value": 69.75,
+   "control": "cut"
+  },
+  {
+   "t": 55.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 55.5,
+   "value": 70.5,
+   "control": "cut"
+  },
+  {
+   "t": 56,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 56,
+   "value": 71.25,
+   "control": "cut"
+  },
+  {
+   "t": 56.5,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 56.5,
+   "value": 72,
+   "control": "cut"
+  },
+  {
+   "t": 57,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 57,
+   "value": 72.75,
+   "control": "cut"
+  },
+  {
+   "t": 57.5,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 57.5,
+   "value": 73.5,
+   "control": "cut"
+  },
+  {
+   "t": 58,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 58,
+   "value": 74.25,
+   "control": "cut"
+  },
+  {
+   "t": 58.5,
+   "value": 6,
+   "control": "dev"
+  },
+  {
+   "t": 58.5,
+   "value": 75,
+   "control": "cut"
+  },
+  {
+   "t": 59,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 59,
+   "value": 75.75,
+   "control": "cut"
+  },
+  {
+   "t": 59.5,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 59.5,
+   "value": 76.5,
+   "control": "cut"
+  },
+  {
+   "t": 60,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 60,
+   "value": 77.25,
+   "control": "cut"
+  },
+  {
+   "t": 60.5,
+   "value": 3,
+   "control": "dev"
+  },
+  {
+   "t": 60.5,
+   "value": 78,
+   "control": "cut"
+  },
+  {
+   "t": 61,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 61,
+   "value": 78.75,
+   "control": "cut"
+  },
+  {
+   "t": 61.5,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 61.5,
+   "value": 79.5,
+   "control": "cut"
+  },
+  {
+   "t": 62,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 62,
+   "value": 80,
+   "control": "cut"
+  },
+  {
+   "t": 63,
+   "value": 2,
+   "control": "tool"
+  },
+  {
+   "t": 63.5,
+   "value": 30,
+   "control": "depth"
+  },
+  {
+   "t": 64,
+   "value": 3,
+   "control": "dev"
+  },
+  {
+   "t": 64,
+   "value": 80,
+   "control": "cut"
+  },
+  {
+   "t": 64.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 64.5,
+   "value": 80.75,
+   "control": "cut"
+  },
+  {
+   "t": 65,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 65,
+   "value": 81.5,
+   "control": "cut"
+  },
+  {
+   "t": 65.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 65.5,
+   "value": 82.25,
+   "control": "cut"
+  },
+  {
+   "t": 66,
+   "value": 6,
+   "control": "dev"
+  },
+  {
+   "t": 66,
+   "value": 83,
+   "control": "cut"
+  },
+  {
+   "t": 66.5,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 66.5,
+   "value": 83.75,
+   "control": "cut"
+  },
+  {
+   "t": 67,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 67,
+   "value": 84.5,
+   "control": "cut"
+  },
+  {
+   "t": 67.5,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 67.5,
+   "value": 85.25,
+   "control": "cut"
+  },
+  {
+   "t": 68,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 68,
+   "value": 86,
+   "control": "cut"
+  },
+  {
+   "t": 68.5,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 68.5,
+   "value": 86.75,
+   "control": "cut"
+  },
+  {
+   "t": 69,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 69,
+   "value": 87.5,
+   "control": "cut"
+  },
+  {
+   "t": 69.5,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 69.5,
+   "value": 88.25,
+   "control": "cut"
+  },
+  {
+   "t": 70,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 70,
+   "value": 89,
+   "control": "cut"
+  },
+  {
+   "t": 70.5,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 70.5,
+   "value": 89.75,
+   "control": "cut"
+  },
+  {
+   "t": 71,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 71,
+   "value": 90.5,
+   "control": "cut"
+  },
+  {
+   "t": 71.5,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 71.5,
+   "value": 91.25,
+   "control": "cut"
+  },
+  {
+   "t": 72,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 72,
+   "value": 92,
+   "control": "cut"
+  },
+  {
+   "t": 72.5,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 72.5,
+   "value": 92.75,
+   "control": "cut"
+  },
+  {
+   "t": 73,
+   "value": 7,
+   "control": "dev"
+  },
+  {
+   "t": 73,
+   "value": 93.5,
+   "control": "cut"
+  },
+  {
+   "t": 73.5,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 73.5,
+   "value": 94.25,
+   "control": "cut"
+  },
+  {
+   "t": 74,
+   "value": 6,
+   "control": "dev"
+  },
+  {
+   "t": 74,
+   "value": 95,
+   "control": "cut"
+  },
+  {
+   "t": 74.5,
+   "value": 8,
+   "control": "dev"
+  },
+  {
+   "t": 74.5,
+   "value": 95.75,
+   "control": "cut"
+  },
+  {
+   "t": 75,
+   "value": 5,
+   "control": "dev"
+  },
+  {
+   "t": 75,
+   "value": 96.5,
+   "control": "cut"
+  },
+  {
+   "t": 75.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 75.5,
+   "value": 97.25,
+   "control": "cut"
+  },
+  {
+   "t": 76,
+   "value": 3,
+   "control": "dev"
+  },
+  {
+   "t": 76,
+   "value": 98,
+   "control": "cut"
+  },
+  {
+   "t": 76.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 76.5,
+   "value": 98.75,
+   "control": "cut"
+  },
+  {
+   "t": 77,
+   "value": 4,
+   "control": "dev"
+  },
+  {
+   "t": 77,
+   "value": 99.5,
+   "control": "cut"
+  },
+  {
+   "t": 77.5,
+   "value": 9,
+   "control": "dev"
+  },
+  {
+   "t": 77.5,
+   "value": 100,
+   "control": "cut"
+  }
+ ]
+}

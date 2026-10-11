@@ -1,0 +1,497 @@
+{
+ "id": "bench",
+ "type": "bench",
+ "bench": {
+  "name": "银行存款余额调节表穿透核验工作站",
+  "vars": [
+   {
+    "id": "doc_ok",
+    "set": "fetch_doc == 1 ? 1 : 0",
+    "label": "凭证调阅状态",
+    "initial": 0
+   },
+   {
+    "id": "bank_ok",
+    "set": "fetch_bank == 1 ? 1 : 0",
+    "label": "次月流水比对状态",
+    "initial": 0
+   },
+   {
+    "id": "blind_count",
+    "set": "sign_tick == 1 && (fetch_doc == 0 || fetch_bank == 0) ? blind_count + 1 : blind_count",
+    "label": "盲签违规次数",
+    "initial": 0
+   },
+   {
+    "id": "i1_done",
+    "set": "sign_tick == 1 && item_sel == 1 && fetch_doc == 1 && fetch_bank == 1 && audit_disp == 3 ? 1 : i1_done",
+    "label": "第1项穿透认定",
+    "initial": 0
+   },
+   {
+    "id": "i1_mis",
+    "set": "sign_tick == 1 && item_sel == 1 && fetch_doc == 1 && fetch_bank == 1 && audit_disp != 3 ? 1 : i1_mis",
+    "label": "第1项错误放行",
+    "initial": 0
+   },
+   {
+    "id": "i2_done",
+    "set": "sign_tick == 1 && item_sel == 2 && fetch_doc == 1 && fetch_bank == 1 && audit_disp == 1 ? 1 : i2_done",
+    "label": "第2项核实放行",
+    "initial": 0
+   },
+   {
+    "id": "i2_mis",
+    "set": "sign_tick == 1 && item_sel == 2 && fetch_doc == 1 && fetch_bank == 1 && audit_disp != 1 ? 1 : i2_mis",
+    "label": "第2项判定偏差",
+    "initial": 0
+   },
+   {
+    "id": "i3_done",
+    "set": "sign_tick == 1 && item_sel == 3 && fetch_doc == 1 && fetch_bank == 1 && audit_disp == 2 ? 1 : i3_done",
+    "label": "第3项揭示差额",
+    "initial": 0
+   },
+   {
+    "id": "i3_mis",
+    "set": "sign_tick == 1 && item_sel == 3 && fetch_doc == 1 && fetch_bank == 1 && audit_disp != 2 ? 1 : i3_mis",
+    "label": "第3项漏查差额",
+    "initial": 0
+   },
+   {
+    "id": "i4_done",
+    "set": "sign_tick == 1 && item_sel == 4 && fetch_doc == 1 && fetch_bank == 1 && audit_disp == 1 ? 1 : i4_done",
+    "label": "第4项核实放行",
+    "initial": 0
+   },
+   {
+    "id": "i4_mis",
+    "set": "sign_tick == 1 && item_sel == 4 && fetch_doc == 1 && fetch_bank == 1 && audit_disp != 1 ? 1 : i4_mis",
+    "label": "第4项判定偏差",
+    "initial": 0
+   },
+   {
+    "id": "audit_progress",
+    "max": 100,
+    "min": 0,
+    "set": "(i1_done + i2_done + i3_done + i4_done + i1_mis + i2_mis + i3_mis + i4_mis) * 25",
+    "label": "核查进度",
+    "initial": 0
+   },
+   {
+    "id": "audit_score",
+    "max": 100,
+    "min": 0,
+    "set": "(i1_done + i2_done + i3_done + i4_done) * 25",
+    "label": "规范合格率",
+    "initial": 0
+   },
+   {
+    "id": "risk_revealed",
+    "set": "(i1_done * 350000) + (i3_done * 30000)",
+    "label": "穿透查明异常金额",
+    "initial": 0
+   }
+  ],
+  "brief": "审计助理专用底稿核验与原始凭证穿透操作台。新人需逐项检索调节表项，调阅原始凭证与次月银行流水，完成实质性比对判定并签署Tickmark底稿勾稽印鉴，查明粉饰错报。",
+  "goals": [
+   {
+    "id": "g_item1",
+    "when": "i1_done == 1",
+    "label": "穿透核查第1项大股东35万元倒账舞弊"
+   },
+   {
+    "id": "g_item3",
+    "when": "i3_done == 1",
+    "label": "穿透核查第3项在途POS款并核定3万元真实短缺"
+   },
+   {
+    "id": "g_routine",
+    "when": "i2_done == 1 && i4_done == 1",
+    "label": "审定第2项与第4项常规跨期未达账项"
+   },
+   {
+    "id": "g_all_done",
+    "when": "audit_progress >= 100",
+    "after": "g_routine",
+    "label": "完成全部4笔调节项的逐笔实质性勾稽核验"
+   },
+   {
+    "id": "g_quality",
+    "when": "audit_score == 100 && blind_count == 0",
+    "after": "g_all_done",
+    "label": "底稿全部准确无误且零盲签零错报"
+   }
+  ],
+  "rules": [
+   {
+    "id": "r_blind",
+    "once": false,
+    "when": "sign_tick == 1 && (fetch_doc == 0 || fetch_bank == 0)",
+    "label": "未调单据或未核流水直接签字（质控盲签严重违规）",
+    "severity": "violation"
+   },
+   {
+    "id": "r_wrong_shareholder",
+    "once": true,
+    "when": "i1_mis == 1",
+    "label": "未能识破控股股东体外倒账周转借款（重大审计遗漏）",
+    "severity": "violation"
+   },
+   {
+    "id": "r_wrong_transit",
+    "once": true,
+    "when": "i3_mis == 1",
+    "label": "未查实POS解款30,000元账实短缺（差额未平）",
+    "severity": "violation"
+   },
+   {
+    "id": "r_routine_mismatch",
+    "once": true,
+    "when": "i2_mis == 1 || i4_mis == 1",
+    "label": "常规跨期未达项判定有误",
+    "severity": "warning"
+   },
+   {
+    "id": "r_incomplete",
+    "once": true,
+    "when": "t > 200 && audit_progress < 100",
+    "label": "现场核查超时仍未全部完成勾稽",
+    "severity": "warning"
+   }
+  ],
+  "scene": {
+   "image": "https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3z0q5fgtvx-bench.jpg",
+   "credit": "底图由通义万相生成",
+   "layers": [
+    {
+     "h": 8,
+     "w": 4,
+     "x": 16,
+     "y": 28,
+     "id": "lamp_audit_ready",
+     "on": "fetch_doc == 1 && fetch_bank == 1",
+     "cold": false,
+     "kind": "lamp",
+     "color": "#22c55e",
+     "label": "双向凭据核验就绪"
+    },
+    {
+     "h": 44,
+     "w": 32,
+     "x": 35,
+     "y": 28,
+     "id": "glow_doc_view",
+     "cold": false,
+     "kind": "glow",
+     "color": "#38bdf8",
+     "level": "fetch_doc * 0.75 + fetch_bank * 0.25"
+    },
+    {
+     "h": 22,
+     "w": 26,
+     "x": 38,
+     "y": 34,
+     "id": "read_item_amount",
+     "cold": false,
+     "kind": "readout",
+     "text": "item_sel == 1 ? 350000 : (item_sel == 2 ? 10000 : (item_sel == 3 ? 180000 : 80000))",
+     "unit": "元",
+     "label": "待穿透单笔申报额"
+    },
+    {
+     "h": 18,
+     "w": 10,
+     "x": 84,
+     "y": 32,
+     "id": "pulse_risk_alarm",
+     "on": "audit_disp == 3 || i1_done == 1",
+     "cold": false,
+     "kind": "pulse",
+     "color": "#ef4444"
+    },
+    {
+     "h": 20,
+     "w": 18,
+     "x": 78,
+     "y": 55,
+     "id": "read_total_exposed",
+     "cold": false,
+     "kind": "readout",
+     "text": "risk_revealed",
+     "unit": "元",
+     "label": "查明异常错报累计"
+    }
+   ]
+  },
+  "gauges": [
+   {
+    "id": "g_prog",
+    "max": 100,
+    "min": 0,
+    "expr": "audit_progress",
+    "unit": "%",
+    "label": "底稿复核进度",
+    "digits": 0
+   },
+   {
+    "id": "g_qual",
+    "max": 100,
+    "min": 0,
+    "expr": "audit_score",
+    "unit": "分",
+    "warn": "audit_progress > 50 && audit_score < audit_progress",
+    "label": "底稿有效得分",
+    "digits": 0
+   },
+   {
+    "id": "g_risk",
+    "max": 400000,
+    "min": 0,
+    "expr": "risk_revealed",
+    "unit": "元",
+    "label": "查实异常错报额",
+    "digits": 0
+   },
+   {
+    "id": "g_item",
+    "max": 4,
+    "min": 1,
+    "expr": "item_sel",
+    "unit": "#",
+    "label": "当前调节项编号",
+    "digits": 0
+   }
+  ],
+  "controls": [
+   {
+    "id": "item_sel",
+    "max": 4,
+    "min": 1,
+    "hint": "1:保障金35W 2:手续费-1W 3:在途POS18W 4:采购支票-8W",
+    "kind": "knob",
+    "step": 1,
+    "unit": "项",
+    "label": "调节项选择",
+    "hidden": false,
+    "initial": 1
+   },
+   {
+    "id": "fetch_doc",
+    "max": 100,
+    "min": 0,
+    "hint": "调取被审计单位记账凭证、银行进账单、回单及合同附件",
+    "kind": "switch",
+    "unit": "",
+    "label": "调阅原始凭证与单据",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "fetch_bank",
+    "max": 100,
+    "min": 0,
+    "hint": "核对次年1月上旬银行流水是否真实发生划转",
+    "kind": "switch",
+    "unit": "",
+    "label": "比对次月银行对账流水",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "audit_disp",
+    "max": 3,
+    "min": 0,
+    "hint": "0:待定 1:合规跨期放行 2:揭示在途差额 3:定性舞弊/大股东倒账",
+    "kind": "knob",
+    "step": 1,
+    "unit": "档",
+    "label": "实质性核验结论",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "sign_tick",
+    "max": 100,
+    "min": 0,
+    "hint": "完成核对后盖章归档该项底稿，未查单据盲签将触发质控违规",
+    "kind": "button",
+    "unit": "",
+    "label": "签署Tickmark底稿印鉴",
+    "hidden": false,
+    "initial": 0
+   }
+  ],
+  "timeScale": 1,
+  "maxSeconds": 240,
+  "expertScript": [
+   {
+    "t": 0,
+    "value": 1,
+    "control": "item_sel"
+   },
+   {
+    "t": 3,
+    "value": 1,
+    "control": "fetch_doc"
+   },
+   {
+    "t": 6,
+    "value": 1,
+    "control": "fetch_bank"
+   },
+   {
+    "t": 9,
+    "value": 3,
+    "control": "audit_disp"
+   },
+   {
+    "t": 12,
+    "value": 1,
+    "control": "sign_tick"
+   },
+   {
+    "t": 13,
+    "value": 0,
+    "control": "sign_tick"
+   },
+   {
+    "t": 15,
+    "value": 0,
+    "control": "fetch_doc"
+   },
+   {
+    "t": 16,
+    "value": 0,
+    "control": "fetch_bank"
+   },
+   {
+    "t": 18,
+    "value": 2,
+    "control": "item_sel"
+   },
+   {
+    "t": 21,
+    "value": 1,
+    "control": "fetch_doc"
+   },
+   {
+    "t": 24,
+    "value": 1,
+    "control": "fetch_bank"
+   },
+   {
+    "t": 27,
+    "value": 1,
+    "control": "audit_disp"
+   },
+   {
+    "t": 30,
+    "value": 1,
+    "control": "sign_tick"
+   },
+   {
+    "t": 31,
+    "value": 0,
+    "control": "sign_tick"
+   },
+   {
+    "t": 33,
+    "value": 0,
+    "control": "fetch_doc"
+   },
+   {
+    "t": 34,
+    "value": 0,
+    "control": "fetch_bank"
+   },
+   {
+    "t": 36,
+    "value": 3,
+    "control": "item_sel"
+   },
+   {
+    "t": 39,
+    "value": 1,
+    "control": "fetch_doc"
+   },
+   {
+    "t": 42,
+    "value": 1,
+    "control": "fetch_bank"
+   },
+   {
+    "t": 45,
+    "value": 2,
+    "control": "audit_disp"
+   },
+   {
+    "t": 48,
+    "value": 1,
+    "control": "sign_tick"
+   },
+   {
+    "t": 49,
+    "value": 0,
+    "control": "sign_tick"
+   },
+   {
+    "t": 51,
+    "value": 0,
+    "control": "fetch_doc"
+   },
+   {
+    "t": 52,
+    "value": 0,
+    "control": "fetch_bank"
+   },
+   {
+    "t": 54,
+    "value": 4,
+    "control": "item_sel"
+   },
+   {
+    "t": 57,
+    "value": 1,
+    "control": "fetch_doc"
+   },
+   {
+    "t": 60,
+    "value": 1,
+    "control": "fetch_bank"
+   },
+   {
+    "t": 63,
+    "value": 1,
+    "control": "audit_disp"
+   },
+   {
+    "t": 66,
+    "value": 1,
+    "control": "sign_tick"
+   },
+   {
+    "t": 67,
+    "value": 0,
+    "control": "sign_tick"
+   },
+   {
+    "t": 70,
+    "value": 0,
+    "control": "fetch_doc"
+   },
+   {
+    "t": 71,
+    "value": 0,
+    "control": "fetch_bank"
+   }
+  ]
+ },
+ "place": "f423c623-8844-4ccd-bd2c-5fc0cbd883e8",
+ "scene": {
+  "who": "带教老师 林姐",
+  "text": "‘单靠肉眼看那张平账表是看不出破绽的。坐到核验终端前，把这4笔调节项逐一调出原始凭证和次月流水进行实质性比对。记住：绝不能未验单据就盲签，也不能把大股东倒账当成正常保障金放过去！’",
+  "time": "现场审计 第2天 上午 10:30"
+ },
+ "prompt": "操作审计勾稽核验工作台，逐笔调阅原始单据与次月银行流水，做出正确的实质性判定并签章入底稿，彻底穿透38万元异常款项。"
+}

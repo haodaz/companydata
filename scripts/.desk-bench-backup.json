@@ -1,0 +1,404 @@
+{
+ "name": "电商大盘多维异动下钻与归因工作台",
+ "vars": [
+  {
+   "id": "query_active",
+   "set": "run_query == 1 ? 1 : 0",
+   "initial": 0
+  },
+  {
+   "id": "bad_drill_step",
+   "set": "query_active == 1 && formula_level == 0 && dim_slice > 0 ? 1 : 0",
+   "initial": 0
+  },
+  {
+   "id": "overload_hit",
+   "set": "query_active == 1 && sample_depth == 3 && dim_slice != 3 ? 1 : 0",
+   "initial": 0
+  },
+  {
+   "id": "query_load",
+   "set": "clamp(15 + (query_active == 1 ? (sample_depth == 3 && dim_slice != 3 ? 70 : 20) : -8 * dt), 10, 100)",
+   "label": "查询引擎负载",
+   "initial": 15
+  },
+  {
+   "id": "step1_ok",
+   "set": "max(step1_ok, (query_active == 1 && formula_level == 1 && dim_slice == 0 ? 1 : 0))",
+   "initial": 0
+  },
+  {
+   "id": "step2_ok",
+   "set": "max(step2_ok, (query_active == 1 && step1_ok == 1 && formula_level == 2 && dim_slice == 3 && sample_depth == 1 ? 1 : 0))",
+   "initial": 0
+  },
+  {
+   "id": "step3_ok",
+   "set": "max(step3_ok, (query_active == 1 && step2_ok == 1 && dim_slice == 3 && sample_depth == 2 ? 1 : 0))",
+   "initial": 0
+  },
+  {
+   "id": "step4_ok",
+   "set": "max(step4_ok, (query_active == 1 && step3_ok == 1 && dim_slice == 3 && sample_depth == 3 ? 1 : 0))",
+   "initial": 0
+  },
+  {
+   "id": "distract_waste",
+   "rate": "query_active == 1 && dim_slice == 2 ? 1 : 0",
+   "initial": 0
+  },
+  {
+   "id": "confidence",
+   "set": "clamp(step1_ok * 25 + step2_ok * 30 + step3_ok * 25 + step4_ok * 20 - distract_waste * 10, 0, 100)",
+   "label": "归因置信度",
+   "initial": 0
+  },
+  {
+   "id": "report_exported",
+   "set": "max(report_exported, (export_btn == 1 && confidence >= 90 ? 1 : 0))",
+   "label": "报告已归档",
+   "initial": 0
+  }
+ ],
+ "brief": "平台级实时指标下钻沙盘。分析师需按照科学归因路径：先拆解核心公式因子，再收敛维度切片，自顶向下定位异常端与故障版本，避免无序遍历扫表导致引擎崩溃并锁定真正元凶。",
+ "goals": [
+  {
+   "id": "g_formula_break",
+   "hold": 1,
+   "when": "step1_ok == 1",
+   "label": "完成公式一级拆解，明确 CVR 为核心异常驱动项"
+  },
+  {
+   "id": "g_os_isolate",
+   "hold": 1,
+   "when": "step2_ok == 1",
+   "after": "g_formula_break",
+   "label": "全链路转化率拆解并锁定 Android 客户端异常"
+  },
+  {
+   "id": "g_ver_isolate",
+   "hold": 1,
+   "when": "step3_ok == 1",
+   "after": "g_os_isolate",
+   "label": "下钻至应用版本切片，锚定发版故障群体"
+  },
+  {
+   "id": "g_log_locked",
+   "hold": 1,
+   "when": "step4_ok == 1",
+   "after": "g_ver_isolate",
+   "label": "调取支付接口错误日志完成 100% 根因链闭环"
+  },
+  {
+   "id": "g_finish",
+   "hold": 1,
+   "when": "report_exported == 1",
+   "after": "g_log_locked",
+   "label": "置信度达标并成功导出异动排查简报"
+  }
+ ],
+ "rules": [
+  {
+   "id": "r_blind_drill",
+   "once": false,
+   "when": "bad_drill_step == 1",
+   "label": "未拆解核心公式直接盲目交叉维度（违规试错）",
+   "severity": "violation"
+  },
+  {
+   "id": "r_cluster_overload",
+   "once": false,
+   "when": "overload_hit == 1",
+   "label": "全量范围直查底层明细日志引发集群扫表熔断",
+   "severity": "violation"
+  },
+  {
+   "id": "r_premature_export",
+   "once": false,
+   "when": "export_btn == 1 && confidence < 90",
+   "label": "置信度未达标（<90%）即草率导出结论汇报总监",
+   "severity": "violation"
+  },
+  {
+   "id": "r_distract_warn",
+   "once": true,
+   "when": "distract_waste > 2",
+   "label": "陷入主播假象分支，空耗分析时间与计算算力",
+   "severity": "warning"
+  }
+ ],
+ "scene": {
+  "image": "https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3wd8l17nhn-bench.jpg",
+  "credit": "底图由通义万相生成",
+  "layers": [
+   {
+    "h": 8,
+    "w": 10,
+    "x": 6,
+    "y": 28,
+    "id": "readout_conf",
+    "cold": false,
+    "kind": "readout",
+    "text": "confidence",
+    "unit": "%",
+    "label": "置信度"
+   },
+   {
+    "h": 8,
+    "w": 10,
+    "x": 6,
+    "y": 40,
+    "id": "readout_load",
+    "cold": false,
+    "kind": "readout",
+    "text": "query_load",
+    "unit": "%",
+    "label": "集群负荷"
+   },
+   {
+    "h": 6,
+    "w": 3,
+    "x": 16,
+    "y": 30,
+    "id": "status_lamp",
+    "on": "confidence >= 90",
+    "cold": false,
+    "kind": "lamp",
+    "color": "#10b981",
+    "label": "可归因"
+   },
+   {
+    "h": 36,
+    "w": 28,
+    "x": 36,
+    "y": 32,
+    "id": "center_sunburst",
+    "cold": false,
+    "kind": "glow",
+    "color": "#3b82f6",
+    "level": "confidence / 100"
+   },
+   {
+    "h": 12,
+    "w": 16,
+    "x": 42,
+    "y": 68,
+    "id": "query_stream",
+    "on": "query_active == 1",
+    "cold": false,
+    "kind": "stream",
+    "color": "#06b6d4"
+   },
+   {
+    "h": 16,
+    "w": 10,
+    "x": 82,
+    "y": 38,
+    "id": "right_engine_pulse",
+    "on": "step4_ok == 1",
+    "cold": false,
+    "kind": "pulse",
+    "color": "#f59e0b"
+   }
+  ]
+ },
+ "gauges": [
+  {
+   "id": "g_conf",
+   "max": 100,
+   "min": 0,
+   "expr": "confidence",
+   "unit": "%",
+   "warn": "confidence < 50",
+   "label": "归因置信度",
+   "digits": 0
+  },
+  {
+   "id": "g_load",
+   "max": 100,
+   "min": 0,
+   "expr": "query_load",
+   "unit": "%",
+   "warn": "query_load > 80",
+   "label": "OLAP计算负载",
+   "digits": 0
+  },
+  {
+   "id": "g_var",
+   "max": 100,
+   "min": 0,
+   "expr": "step4_ok == 1 ? 88 : (step3_ok == 1 ? 76 : (step2_ok == 1 ? 58 : (step1_ok == 1 ? 30 : 0)))",
+   "unit": "%",
+   "label": "解释异动比率",
+   "digits": 0
+  },
+  {
+   "id": "g_depth",
+   "max": 4,
+   "min": 0,
+   "expr": "step1_ok + step2_ok + step3_ok + step4_ok",
+   "unit": "阶",
+   "label": "链路下钻层深",
+   "digits": 0
+  }
+ ],
+ "controls": [
+  {
+   "id": "formula_level",
+   "max": 2,
+   "min": 0,
+   "hint": "0=大盘单指标, 1=一级因子(UV*CVR*客单价), 2=二级因子(全链路转化率拆解)",
+   "kind": "knob",
+   "step": 1,
+   "unit": "级",
+   "label": "公式拆解层级",
+   "hidden": false,
+   "initial": 0
+  },
+  {
+   "id": "dim_slice",
+   "max": 3,
+   "min": 0,
+   "hint": "0=全站汇总, 1=渠道来源, 2=主播直播间, 3=客户端平台(OS/版本)",
+   "kind": "knob",
+   "step": 1,
+   "unit": "维",
+   "label": "切片维度选择",
+   "hidden": false,
+   "initial": 0
+  },
+  {
+   "id": "sample_depth",
+   "max": 3,
+   "min": 0,
+   "hint": "0=日聚合大盘, 1=分端交叉, 2=应用版本细分, 3=支付接口错误日志",
+   "kind": "knob",
+   "step": 1,
+   "unit": "层",
+   "label": "下钻数据深度",
+   "hidden": false,
+   "initial": 0
+  },
+  {
+   "id": "run_query",
+   "max": 100,
+   "min": 0,
+   "hint": "调好参数后触发 OLAP 计算下钻",
+   "kind": "button",
+   "unit": "",
+   "label": "执行多维切片",
+   "hidden": false,
+   "initial": 0
+  },
+  {
+   "id": "export_btn",
+   "max": 100,
+   "min": 0,
+   "hint": "置信度达到 90% 以上时导出结论推送告警组",
+   "kind": "button",
+   "unit": "",
+   "label": "导出归因简报",
+   "hidden": false,
+   "initial": 0
+  }
+ ],
+ "timeScale": 1,
+ "maxSeconds": 300,
+ "expertScript": [
+  {
+   "t": 0,
+   "value": 0,
+   "control": "formula_level"
+  },
+  {
+   "t": 0,
+   "value": 0,
+   "control": "dim_slice"
+  },
+  {
+   "t": 0,
+   "value": 0,
+   "control": "sample_depth"
+  },
+  {
+   "t": 5,
+   "value": 1,
+   "control": "formula_level"
+  },
+  {
+   "t": 8,
+   "value": 1,
+   "control": "run_query"
+  },
+  {
+   "t": 10,
+   "value": 0,
+   "control": "run_query"
+  },
+  {
+   "t": 15,
+   "value": 2,
+   "control": "formula_level"
+  },
+  {
+   "t": 18,
+   "value": 3,
+   "control": "dim_slice"
+  },
+  {
+   "t": 20,
+   "value": 1,
+   "control": "sample_depth"
+  },
+  {
+   "t": 23,
+   "value": 1,
+   "control": "run_query"
+  },
+  {
+   "t": 25,
+   "value": 0,
+   "control": "run_query"
+  },
+  {
+   "t": 30,
+   "value": 2,
+   "control": "sample_depth"
+  },
+  {
+   "t": 34,
+   "value": 1,
+   "control": "run_query"
+  },
+  {
+   "t": 36,
+   "value": 0,
+   "control": "run_query"
+  },
+  {
+   "t": 42,
+   "value": 3,
+   "control": "sample_depth"
+  },
+  {
+   "t": 46,
+   "value": 1,
+   "control": "run_query"
+  },
+  {
+   "t": 48,
+   "value": 0,
+   "control": "run_query"
+  },
+  {
+   "t": 55,
+   "value": 1,
+   "control": "export_btn"
+  },
+  {
+   "t": 57,
+   "value": 0,
+   "control": "export_btn"
+  }
+ ]
+}

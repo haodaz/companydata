@@ -1,0 +1,320 @@
+{
+ "id": "bench",
+ "type": "bench",
+ "bench": {
+  "name": "急诊复苏移动支持工位",
+  "vars": [
+   {
+    "id": "fluid",
+    "max": 500,
+    "min": 0,
+    "rate": "flow_roller > 0 ? (0 - (flow_roller / 100) * (press_knob > 0 ? 3.0 : 1.0)) : 0",
+    "label": "平衡液剩余量",
+    "initial": 500
+   },
+   {
+    "id": "spo2",
+    "max": 99,
+    "min": 70,
+    "rate": "monitor_pwr == 1 ? (o2_knob >= 6 ? 0.6 : (o2_knob > 0 ? 0.2 : -0.1)) : 0",
+    "label": "脉搏血氧饱和度",
+    "initial": 88
+   },
+   {
+    "id": "nibp_done",
+    "set": "max(nibp_done, monitor_pwr == 1 && nibp_btn == 1 ? 1 : 0)",
+    "label": "首测血压触发状态",
+    "initial": 0
+   },
+   {
+    "id": "sbp",
+    "set": "clamp(78 + (500 - fluid) * 0.08, 70, 120)",
+    "label": "动脉收缩压",
+    "initial": 78
+   }
+  ],
+  "brief": "急诊抢救室床旁生命支持系统。面对失血休克合并低氧血症的濒危患者，护士需快速联动开启监护仪、给氧、实施加压快速补液扩容，并在复苏达标与余液临界时精准减压降速，防止气栓与肺水肿。",
+  "goals": [
+   {
+    "id": "goal_monitor",
+    "hold": 1,
+    "when": "monitor_pwr == 1 && nibp_done == 1",
+    "label": "启动心电监护并完成首诊血压测量"
+   },
+   {
+    "id": "goal_pressurize",
+    "hold": 2,
+    "when": "press_knob >= 150 && press_knob <= 220",
+    "label": "加压输液袋充压至有效复苏区间（150–220 mmHg）"
+   },
+   {
+    "id": "goal_oxygen",
+    "hold": 2,
+    "when": "o2_knob >= 6 && spo2 >= 95",
+    "label": "建立有效氧疗并使血氧回升至95%以上"
+   },
+   {
+    "id": "goal_resuscitate",
+    "when": "500 - fluid >= 250",
+    "after": "goal_pressurize",
+    "label": "快速加压输注抗休克平衡液达到首剂负荷量（>= 250 mL）"
+   },
+   {
+    "id": "goal_sbp_recovery",
+    "hold": 2,
+    "when": "sbp >= 90",
+    "after": "goal_resuscitate",
+    "label": "患者低血压休克逆转（收缩压稳定在90 mmHg以上）"
+   },
+   {
+    "id": "goal_safe_fluid",
+    "hold": 2,
+    "when": "press_knob == 0 && flow_roller <= 20 && fluid <= 160",
+    "after": "goal_resuscitate",
+    "label": "余液不足160 mL时及时下调滚轮夹并释放加压袋压力"
+   }
+  ],
+  "rules": [
+   {
+    "id": "rule_air_embolism",
+    "once": false,
+    "when": "fluid <= 30 && press_knob > 50 && flow_roller > 30",
+    "label": "输液袋将空仍全开加压输注（严重空气栓塞隐患）",
+    "severity": "violation"
+   },
+   {
+    "id": "rule_overpressure",
+    "once": false,
+    "when": "press_knob > 240",
+    "label": "加压输液袋压力超过240 mmHg（输液袋爆裂及渗漏风险）",
+    "severity": "violation"
+   },
+   {
+    "id": "rule_no_o2",
+    "once": true,
+    "when": "t > 40 && spo2 < 90 && o2_knob < 6",
+    "label": "患者重度缺氧超40秒未给予高流量氧疗",
+    "severity": "warning"
+   },
+   {
+    "id": "rule_fluid_overload",
+    "once": false,
+    "when": "sbp >= 105 && press_knob >= 150 && flow_roller >= 80",
+    "label": "血压回升达标后未减慢滴速（急性肺水肿风险）",
+    "severity": "warning"
+   }
+  ],
+  "scene": {
+   "image": "https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3yk5lqvln3-bench.jpg",
+   "credit": "底图由通义万相生成",
+   "layers": [
+    {
+     "h": 12,
+     "w": 10,
+     "x": 8,
+     "y": 28,
+     "id": "monitor_scr",
+     "cold": false,
+     "kind": "readout",
+     "text": "nibp_done == 1 ? sbp : 0",
+     "unit": "mmHg",
+     "color": "#00FF66",
+     "label": "BP收缩压"
+    },
+    {
+     "h": 6,
+     "w": 4,
+     "x": 16,
+     "y": 30,
+     "id": "spo2_lamp",
+     "on": "monitor_pwr == 1 && spo2 >= 95",
+     "cold": false,
+     "kind": "lamp",
+     "color": "#00E5FF",
+     "label": "SpO₂正常"
+    },
+    {
+     "h": 26,
+     "w": 16,
+     "x": 48,
+     "y": 38,
+     "id": "press_glow",
+     "cold": false,
+     "kind": "glow",
+     "color": "#3388FF",
+     "level": "press_knob / 300"
+    },
+    {
+     "h": 22,
+     "w": 4,
+     "x": 54,
+     "y": 55,
+     "id": "infusion_flow",
+     "on": "flow_roller > 10",
+     "cold": false,
+     "kind": "stream",
+     "color": "#AADDFF"
+    },
+    {
+     "h": 14,
+     "w": 8,
+     "x": 84,
+     "y": 42,
+     "id": "o2_bubble",
+     "on": "o2_knob > 0",
+     "cold": false,
+     "kind": "pulse",
+     "color": "#00CCFF"
+    }
+   ]
+  },
+  "gauges": [
+   {
+    "id": "g_sbp",
+    "max": 160,
+    "min": 0,
+    "expr": "nibp_done == 1 ? sbp : 0",
+    "unit": "mmHg",
+    "warn": "nibp_done == 1 && sbp < 90",
+    "label": "收缩压 SBP",
+    "digits": 0
+   },
+   {
+    "id": "g_spo2",
+    "max": 100,
+    "min": 0,
+    "expr": "monitor_pwr == 1 ? spo2 : 0",
+    "unit": "%",
+    "warn": "monitor_pwr == 1 && spo2 < 90",
+    "label": "脉搏血氧 SpO₂",
+    "digits": 0
+   },
+   {
+    "id": "g_press",
+    "max": 300,
+    "min": 0,
+    "expr": "press_knob",
+    "unit": "mmHg",
+    "warn": "press_knob > 220",
+    "label": "加压袋表压",
+    "digits": 0
+   },
+   {
+    "id": "g_fluid",
+    "max": 500,
+    "min": 0,
+    "expr": "fluid",
+    "unit": "mL",
+    "warn": "fluid < 100",
+    "label": "袋装平衡液存量",
+    "digits": 0
+   }
+  ],
+  "controls": [
+   {
+    "id": "monitor_pwr",
+    "max": 100,
+    "min": 0,
+    "hint": "开启床旁心电多参数监护仪总电源",
+    "kind": "switch",
+    "unit": "",
+    "label": "监护仪主电源",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "nibp_btn",
+    "max": 100,
+    "min": 0,
+    "hint": "按下启动袖带自动充气测量首组无创血压",
+    "kind": "button",
+    "unit": "",
+    "label": "NIBP启动测压",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "o2_knob",
+    "max": 15,
+    "min": 0,
+    "hint": "顺时针调节浮标流量，重度缺氧需储氧面罩6–10 L/min",
+    "kind": "knob",
+    "step": 1,
+    "unit": "L/min",
+    "label": "氧气吸入流量",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "press_knob",
+    "max": 300,
+    "min": 0,
+    "hint": "挤压充气皮球为加压袋充压，有效抗休克区间150–220 mmHg",
+    "kind": "knob",
+    "step": 10,
+    "unit": "mmHg",
+    "label": "加压输液袋充气压",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "flow_roller",
+    "max": 100,
+    "min": 0,
+    "hint": "上下滚动调节管路流通孔径，快速扩容需推至100%全开",
+    "kind": "knob",
+    "step": 5,
+    "unit": "%",
+    "label": "输液管滚轮夹开度",
+    "hidden": false,
+    "initial": 0
+   }
+  ],
+  "timeScale": 1,
+  "maxSeconds": 300,
+  "expertScript": [
+   {
+    "t": 0,
+    "value": 1,
+    "control": "monitor_pwr"
+   },
+   {
+    "t": 2,
+    "value": 1,
+    "control": "nibp_btn"
+   },
+   {
+    "t": 5,
+    "value": 8,
+    "control": "o2_knob"
+   },
+   {
+    "t": 8,
+    "value": 180,
+    "control": "press_knob"
+   },
+   {
+    "t": 10,
+    "value": 100,
+    "control": "flow_roller"
+   },
+   {
+    "t": 125,
+    "value": 0,
+    "control": "press_knob"
+   },
+   {
+    "t": 126,
+    "value": 10,
+    "control": "flow_roller"
+   }
+  ]
+ },
+ "place": "f64f43ef-6b4b-454c-894e-336315b3fbe6",
+ "scene": {
+  "who": "带教老师 林护士",
+  "text": "“患者A已推进1床抢救室！急性心肌梗死并心源性休克前期，血压骤降、外周血氧告急。立刻上监护、给高流量氧，同时给平衡液加压袋打气快速扩容，注意控制余液防气栓！”",
+  "time": "20:02"
+ },
+ "prompt": "在床旁支持工作台上：开启心电监护并测血压、旋开高流量氧、加压快速输注抗休克平衡液，待血压回升且余液降至临界时及时泄压降速。"
+}

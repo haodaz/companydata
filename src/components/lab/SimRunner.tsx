@@ -281,7 +281,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
             </div>
           </div>
         )}
-        {benchLive && <BenchRunner hud demo={!!demo} key={step.id} spec={step.bench!} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />}
+        {benchLive && <BenchRunner hud demo={!!demo} key={step.id} spec={step.bench!} role={role} onFinish={tr => set(tr)} onCancel={onCancel} backdrop={backdrop} />}
         {backdrop && !benchLive && (
           <button onClick={() => setHead3d(v => !v)} title="摄像头只在本机算头的位置，不录、不传"
             style={{ position: 'absolute', left: 16, bottom: 16, zIndex: 6, padding: '8px 14px', borderRadius: 999, border: '1px solid rgba(255,255,255,.3)', cursor: 'pointer', fontWeight: 700, fontSize: 12.5, color: '#fff', background: head3d ? 'linear-gradient(135deg,#3ddc97,#12b5cb)' : 'rgba(15,18,36,.72)', backdropFilter: 'blur(6px)' }}>

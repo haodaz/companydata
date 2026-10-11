@@ -3,8 +3,12 @@
  * 查看器 /lab/beta/3d/<key>：场景跟着鼠标 / 头部（摄像头，本机推理）挪，屏幕像一扇窗。
  * position / lookAt / up 由 scripts/beta3d/view.py 从重建结果算出（视频中间那一帧的机位），span 是头部摆动时机位最多挪多远。
  */
+/** 场景里可以点的物件：鼠标悬停出线框，点一下弹说明（像游戏里的空间建模）。pos / size 在重建出来的场景坐标系里（用查看器 ?edit=1 点出来） */
+export interface Beta3DHotspot { id: string; name: string; desc: string; pos: [number, number, number]; size: [number, number, number]; /** 绕竖轴转多少度 */ rotY?: number }
+
 export interface Beta3DScene {
   key: string; title: string; role: string; spaceId: string; url: string;
+  hotspots?: Beta3DHotspot[];
   position: [number, number, number]; lookAt: [number, number, number]; up: [number, number, number]; span: number;
   credit: string;
   /** 操作台里用它当背景的章节（时段）：这几章发生在这个场景里 */
@@ -17,12 +21,40 @@ export const BETA3D: Record<string, Beta3DScene> = {
     url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-cafe-v2.splat', position: [0.0063, 0.0036, -0.0818], lookAt: [-2.4812, -0.8693, 25.2562], up: [-0.0009, -0.9994, -0.0348], span: 3.6,
     credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建',
     slots: ['08:00', '09:00', '10:30', '12:00', '18:30'],   // 15:30 补货盘点在后仓，不用吧台
+    // 位置是粗放的：在 /lab/beta/3d/cafe?edit=1 里点物件拿坐标再校
+    hotspots: [
+      { id: 'machine', name: '半自动意式咖啡机', pos: [-3, 2, 26], size: [9, 6, 6], desc: '双头机：每个冲煮头 9 bar 压力、93℃ 左右的水穿过压实的咖啡粉饼，25–30 秒萃出一份 espresso。开店第一件事是放水、看锅炉压力表稳不稳；每杯之间要冲一下冲煮头，把上一杯的粉渣冲掉。' },
+      { id: 'wand', name: '蒸汽棒', pos: [-8, 2, 25], size: [2, 5, 2], desc: '打奶的地方。棒尖插到奶面下一点点，先「进气」把奶撕出细泡，听到的是纸撕开一样的声音；奶温 40℃ 左右停止进气，再把棒插深一点让奶旋起来「打绵」，63℃ 左右关汽。用完立刻擦干净、放一下汽，奶渍烧在棒上就很难擦。' },
+      { id: 'grinder', name: '磨豆机', pos: [5, 1, 26], size: [3.5, 8, 3.5], desc: '意式磨豆机，刻度调的是研磨粗细。早上第一件事就是「调磨」：粉太粗流速快、酸而薄；太细流速慢、苦而涩。豆子换袋、天气潮湿都要重新调，一天里会调好几次。' },
+      { id: 'counter', name: '出杯台', pos: [0, 5, 19], size: [16, 1.5, 6], desc: '做好的饮品放这里喊单。拉花杯口朝客人、把手朝右；高峰期一次出三四杯，顺序和单子一致，别让先点的人等后点的。台面随时擦干，一圈奶渍就是一次差评。' },
+      { id: 'shelf', name: '杯架与豆仓', pos: [0, -6, 34], size: [16, 4, 3], desc: '杯子倒扣沥干、按容量分列；豆子按烘焙日期先进先出，开封后两周内用完。盘点时数的就是这里：一袋豆能出多少杯、今天用掉几袋，就能算出今天的杯量对不对。' },
+    ],
   },
   or: {
     key: 'or', title: '手术室', role: '开腹医师', spaceId: '681b5f1c-5115-4c32-82ea-69c085b21868',
     url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-or-v1.splat', position: [0.0615, 0.0058, -0.0765], lookAt: [-1.5469, 0.3359, 26.0459], up: [-0.0033, -0.9999, 0.0124], span: 3.6,
     credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建',
     slots: ['09:10', '14:00'],   // 阑尾切除、急诊探查在手术室；晨查 / 会诊 / 晚查不在
+    // 坐标系：up 是 -y（y 越小越高），z 往房间深处。用 /lab/beta/3d/or?edit=1 点出来再手调
+    hotspots: [
+      { id: 'table', name: '手术床', pos: [-1, 3, 28], size: [8, 3, 20], desc: '可以升降、倾斜、侧翻的手术床。开腹前主刀会把床调到自己肘部略下的高度，阑尾手术常把床往左倾一点，让肠管靠重力离开右下腹，显露更清楚。床垫下面有电热毯，术中保温也是外科医生的事。' },
+      { id: 'lamp', name: '无影灯', pos: [-1, -8, 28], size: [17, 4, 9], desc: '多颗灯珠从不同角度打光，手和器械挡住一部分也不会留下影子，所以叫无影。手柄是可拆的无菌把手，术中由手术组自己调——新手常犯的错是让巡回护士调灯，位置永远对不准自己的视线。' },
+      { id: 'monitor', name: '麻醉机与监护仪', pos: [-1, -1, 42], size: [7, 7, 4], desc: '麻醉医生的阵地：呼吸机送气、吸入麻药浓度、心电、血压、血氧都在这几块屏上。外科医生切皮前要和麻醉医生确认「可以开始」，术中出血多了第一个告诉你的也是这边的血压曲线。' },
+      { id: 'cabinet_r', name: '器械与耗材柜', pos: [9, -2, 30], size: [3, 7, 14], desc: '无菌器械包、缝线、引流管、纱布按手术类型分格存放。巡回护士按手术通知单提前备好，术中临时加东西要报数——纱布、器械进出都得清点，关腹前数目对不上就不能缝。' },
+      { id: 'cabinet_l', name: '洗手间与通道', pos: [-11, -2, 30], size: [3, 7, 14], desc: '外科洗手在手术间外的洗手池完成，七步洗手法、刷到肘上 10 cm，双手举着走进来，由器械护士帮你穿无菌衣、戴手套。穿好后双手只能在胸前到腰之间活动，碰到任何非无菌的东西就得重来。' },
+    ],
+  },
+  nursery: {
+    key: 'nursery', title: '婴儿房', role: '月嫂', spaceId: '19fd15d1-3787-4e65-a3a6-883a013ae59c',
+    url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-nursery-v1.splat', position: [0.1853, 0.0051, 0.0312], lookAt: [1.7824, -0.0463, 30.4817], up: [0.0089, -1.0, -0.0022], span: 3.6,
+    credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建',
+    slots: ['07:40', '08:30', '10:10', '11:30', '16:20', '18:00'],   // 09:20 上报安抚、14:30 月子餐不在婴儿房
+  },
+  office: {
+    key: 'office', title: '数据分析工位', role: '数据分析师', spaceId: 'a35a662d-2be8-4cc1-a255-4c3f8ad29139',
+    url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-office-v3.splat', position: [0.1139, 0.0067, -0.1061], lookAt: [-2.2126, 0.1388, 19.596], up: [-0.0017, -1.0, 0.0061], span: 3.0,   // v3：从椅背后看过去，屏幕朝着椅子
+    credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建',
+    slots: ['08:30', '09:20', '10:10', '11:00', '14:00', '15:10', '16:20', '17:30'],   // 一整天都在工位上
   },
 };
 

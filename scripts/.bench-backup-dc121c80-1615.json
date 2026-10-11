@@ -1,0 +1,484 @@
+{
+ "id": "bench",
+ "type": "bench",
+ "bench": {
+  "name": "离园前突发抓痕轻柔冷敷与情绪安抚工位",
+  "vars": [
+   {
+    "id": "trace_prev",
+    "set": "trace",
+    "initial": 0
+   },
+   {
+    "id": "speed",
+    "max": 20,
+    "min": 0,
+    "set": "(trace - trace_prev) / dt",
+    "label": "冷敷移动速度",
+    "initial": 0
+   },
+   {
+    "id": "cold_relief",
+    "max": 100,
+    "min": 0,
+    "rate": "pressure >= 10 && pressure <= 25 && gauze_layer >= 2 && gauze_layer <= 3 ? 2.5 : 0",
+    "label": "充血消退度",
+    "initial": 0
+   },
+   {
+    "id": "child_distress",
+    "max": 100,
+    "min": 0,
+    "rate": "comfort == 1 && pressure <= 25 ? -1.8 : (pressure > 25 ? 1.5 : -0.2)",
+    "label": "幼儿应激指数",
+    "initial": 50
+   },
+   {
+    "id": "dev_sum",
+    "rate": "pressure > 5 ? dev : 0",
+    "initial": 0
+   },
+   {
+    "id": "dev_time",
+    "rate": "pressure > 5 ? 1 : 0",
+    "initial": 0
+   },
+   {
+    "id": "dev_avg",
+    "set": "dev_time > 0.5 ? dev_sum / dev_time : 0",
+    "label": "平均偏离度",
+    "initial": 0
+   }
+  ],
+  "brief": "幼儿离园前突发手背浅表划痕（未破皮）。教师需先规范折叠医用隔温纱布并开启温和口头安抚，施加适度轻压力，手持冷敷包沿红痕外周做轻柔环形冷敷舒缓，促使毛细血管收缩充血消退并平复幼儿应激情绪，完成后平稳撤除进入离园交接。",
+  "goals": [
+   {
+    "id": "goal_gauze",
+    "hold": 1,
+    "when": "gauze_layer >= 2 && gauze_layer <= 3",
+    "label": "规范折叠隔温纱布（2-3层）"
+   },
+   {
+    "id": "goal_comfort",
+    "hold": 1,
+    "when": "comfort == 1",
+    "label": "开启低语轻拍安抚稳定幼儿情绪"
+   },
+   {
+    "id": "goal_pressure",
+    "hold": 2,
+    "when": "pressure >= 10 && pressure <= 25",
+    "after": "goal_gauze",
+    "label": "贴敷力度平稳控制在适宜区间（10-25 cN）"
+   },
+   {
+    "id": "goal_trace_done",
+    "when": "trace >= 100",
+    "after": "goal_pressure",
+    "label": "沿外周完成全程平稳环形轻敷"
+   },
+   {
+    "id": "goal_relief",
+    "when": "cold_relief >= 75 && child_distress <= 15",
+    "after": "goal_trace_done",
+    "label": "浅红痕充血消退达标且幼儿情绪平复"
+   },
+   {
+    "id": "goal_finish",
+    "when": "pressure == 0 && trace >= 100",
+    "after": "goal_relief",
+    "label": "平稳撤离冷敷包，完成离园交接前检查"
+   }
+  ],
+  "rules": [
+   {
+    "id": "frostbite_risk",
+    "once": false,
+    "when": "pressure > 5 && gauze_layer < 2",
+    "label": "隔温纱布过薄直接贴敷（易致冻伤红肿）",
+    "severity": "violation"
+   },
+   {
+    "id": "excessive_force",
+    "once": false,
+    "when": "pressure > 28",
+    "label": "贴敷力度超过25cN（压迫疼痛加重）",
+    "severity": "violation"
+   },
+   {
+    "id": "rubbing_too_fast",
+    "once": false,
+    "when": "speed > 6.0 && pressure > 5",
+    "label": "移动速度过快（摩擦表皮加剧发红）",
+    "severity": "violation"
+   },
+   {
+    "id": "unsoothed_distress",
+    "once": false,
+    "when": "pressure > 15 && comfort == 0 && child_distress > 30",
+    "label": "未开启言语情绪安抚即强行冷敷",
+    "severity": "warning"
+   }
+  ],
+  "scene": {
+   "image": "https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3z769ft9is-bench.jpg",
+   "credit": "底图由通义万相生成",
+   "layers": [
+    {
+     "h": 53.3,
+     "w": 30,
+     "x": 32.5,
+     "y": 28.9,
+     "id": "skin_zone",
+     "cold": false,
+     "kind": "cup",
+     "level": "clamp((100 - cold_relief) / 100, 0, 1) * 0.85"
+    },
+    {
+     "h": 0,
+     "w": 0,
+     "x": 0,
+     "y": 0,
+     "id": "ice_pack_trail",
+     "on": "pressure >= 8",
+     "cold": false,
+     "icon": "hand",
+     "kind": "pour",
+     "pace": 2.2,
+     "points": [
+      {
+       "x": 42,
+       "y": 40
+      },
+      {
+       "x": 45,
+       "y": 36
+      },
+      {
+       "x": 50,
+       "y": 35
+      },
+      {
+       "x": 54,
+       "y": 38
+      },
+      {
+       "x": 55,
+       "y": 45
+      },
+      {
+       "x": 53,
+       "y": 52
+      },
+      {
+       "x": 48,
+       "y": 55
+      },
+      {
+       "x": 43,
+       "y": 52
+      },
+      {
+       "x": 41,
+       "y": 46
+      },
+      {
+       "x": 44,
+       "y": 42
+      },
+      {
+       "x": 48,
+       "y": 42
+      },
+      {
+       "x": 51,
+       "y": 45
+      },
+      {
+       "x": 49,
+       "y": 49
+      },
+      {
+       "x": 45,
+       "y": 48
+      },
+      {
+       "x": 47.5,
+       "y": 45.5
+      }
+     ],
+     "control": "trace",
+     "deviation": "dev"
+    },
+    {
+     "h": 0,
+     "w": 0,
+     "x": 50,
+     "y": 9,
+     "id": "c1",
+     "on": "gauze_layer < 2 || comfort == 0",
+     "cold": false,
+     "kind": "coach",
+     "label": "① 准备：折好 2-3 层隔温纱布包好冷袋，开启轻拍低语安抚"
+    },
+    {
+     "h": 0,
+     "w": 0,
+     "x": 50,
+     "y": 9,
+     "id": "c2",
+     "on": "gauze_layer >= 2 && comfort == 1 && trace < 100",
+     "cold": false,
+     "kind": "coach",
+     "label": "② 冷敷：将力度控制在 10-25 cN，手持冷包平稳顺着环形轨迹慢揉外周"
+    },
+    {
+     "h": 0,
+     "w": 0,
+     "x": 50,
+     "y": 9,
+     "id": "c3",
+     "on": "trace >= 100 && pressure > 0",
+     "cold": false,
+     "kind": "coach",
+     "label": "③ 结束：红印已明显收敛，松开手部压力平稳撤离冷敷包"
+    }
+   ]
+  },
+  "gauges": [
+   {
+    "id": "g_relief",
+    "max": 100,
+    "min": 0,
+    "expr": "cold_relief",
+    "unit": "%",
+    "label": "充血消退度",
+    "digits": 0
+   },
+   {
+    "id": "g_distress",
+    "max": 100,
+    "min": 0,
+    "expr": "child_distress",
+    "unit": "分",
+    "warn": "child_distress > 40",
+    "label": "幼儿应激指数",
+    "digits": 0
+   },
+   {
+    "id": "g_pressure",
+    "max": 40,
+    "min": 0,
+    "expr": "pressure",
+    "unit": "cN",
+    "warn": "pressure > 25",
+    "label": "贴敷贴合力",
+    "digits": 0
+   },
+   {
+    "id": "g_speed",
+    "max": 10,
+    "min": 0,
+    "expr": "speed",
+    "unit": "%/s",
+    "warn": "speed > 5.5",
+    "label": "移动速度",
+    "digits": 1
+   }
+  ],
+  "controls": [
+   {
+    "id": "gauze_layer",
+    "max": 4,
+    "min": 1,
+    "hint": "折叠2-3层包裹冷敷袋，过薄冻伤，过厚无冷效",
+    "kind": "knob",
+    "step": 1,
+    "unit": "层",
+    "label": "隔温纱布折叠",
+    "hidden": false,
+    "initial": 1
+   },
+   {
+    "id": "comfort",
+    "max": 100,
+    "min": 0,
+    "hint": "蹲下平视低语并轻拍背部，缓解紧张情绪",
+    "kind": "switch",
+    "unit": "",
+    "label": "低语轻拍安抚",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "pressure",
+    "max": 40,
+    "min": 0,
+    "hint": "适宜轻压范围为 10-25 cN，避免重压痛哭",
+    "kind": "knob",
+    "step": 2,
+    "unit": "cN",
+    "label": "贴敷贴合力度",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "trace",
+    "max": 100,
+    "min": 0,
+    "hint": "沿伤口外周环形由外向内慢速推抚，切忌快速搓擦",
+    "kind": "path",
+    "unit": "",
+    "label": "环形轻敷轨迹",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "dev",
+    "max": 300,
+    "min": 0,
+    "kind": "knob",
+    "unit": "",
+    "label": "轨迹偏离",
+    "hidden": true,
+    "initial": 0
+   }
+  ],
+  "timeScale": 1,
+  "maxSeconds": 150,
+  "expertScript": [
+   {
+    "t": 0,
+    "value": 2,
+    "control": "gauze_layer"
+   },
+   {
+    "t": 1,
+    "value": 1,
+    "control": "comfort"
+   },
+   {
+    "t": 3,
+    "value": 16,
+    "control": "pressure"
+   },
+   {
+    "t": 6,
+    "value": 0,
+    "control": "trace"
+   },
+   {
+    "t": 8,
+    "value": 5,
+    "control": "trace"
+   },
+   {
+    "t": 10,
+    "value": 10,
+    "control": "trace"
+   },
+   {
+    "t": 12,
+    "value": 15,
+    "control": "trace"
+   },
+   {
+    "t": 14,
+    "value": 20,
+    "control": "trace"
+   },
+   {
+    "t": 16,
+    "value": 25,
+    "control": "trace"
+   },
+   {
+    "t": 18,
+    "value": 30,
+    "control": "trace"
+   },
+   {
+    "t": 20,
+    "value": 35,
+    "control": "trace"
+   },
+   {
+    "t": 22,
+    "value": 40,
+    "control": "trace"
+   },
+   {
+    "t": 24,
+    "value": 45,
+    "control": "trace"
+   },
+   {
+    "t": 26,
+    "value": 50,
+    "control": "trace"
+   },
+   {
+    "t": 28,
+    "value": 55,
+    "control": "trace"
+   },
+   {
+    "t": 30,
+    "value": 60,
+    "control": "trace"
+   },
+   {
+    "t": 32,
+    "value": 65,
+    "control": "trace"
+   },
+   {
+    "t": 34,
+    "value": 70,
+    "control": "trace"
+   },
+   {
+    "t": 36,
+    "value": 75,
+    "control": "trace"
+   },
+   {
+    "t": 38,
+    "value": 80,
+    "control": "trace"
+   },
+   {
+    "t": 40,
+    "value": 85,
+    "control": "trace"
+   },
+   {
+    "t": 42,
+    "value": 90,
+    "control": "trace"
+   },
+   {
+    "t": 44,
+    "value": 95,
+    "control": "trace"
+   },
+   {
+    "t": 46,
+    "value": 100,
+    "control": "trace"
+   },
+   {
+    "t": 47,
+    "value": 0,
+    "control": "pressure"
+   }
+  ]
+ },
+ "place": "27ba4220-79dc-43d8-bee1-6c98c4c3d999",
+ "scene": {
+  "who": "带教林老师",
+  "text": "林老师快步走过来低声叮嘱：「然然已经不哭了，但手背红印还在。离园家长马上到门口，你立刻用纱布包好冷敷包给她做局部冷敷消充血，切记动作要轻柔、边敷边安抚，千万别用力搓皮弄疼孩子！」",
+  "time": "16:20"
+ },
+ "prompt": "折叠2-3层隔温纱布包覆冷敷包，开启语言安抚并将压力稳定在10-25 cN，沿着红痕外周环形缓慢平推冷敷，直至红印消退、情绪平复后平稳撤离。"
+}

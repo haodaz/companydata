@@ -1,0 +1,346 @@
+{
+ "id": "bench",
+ "type": "bench",
+ "bench": {
+  "name": "包装输送电机控制柜排障与试机工位",
+  "vars": [
+   {
+    "id": "jam_state",
+    "set": "jam_cleared == 1 ? 0 : 1",
+    "label": "机械卡阻状态",
+    "initial": 1
+   },
+   {
+    "id": "fr_tripped",
+    "set": "fr_reset_btn == 1 ? 0 : fr_tripped",
+    "label": "FR2脱扣状态",
+    "initial": 1
+   },
+   {
+    "id": "v_101",
+    "label": "101对地电压",
+    "initial": 24
+   },
+   {
+    "id": "v_102",
+    "label": "102对地电压",
+    "initial": 24
+   },
+   {
+    "id": "v_103",
+    "set": "fr_tripped == 0 ? 24 : 0",
+    "label": "103对地电压",
+    "initial": 0
+   },
+   {
+    "id": "v_104",
+    "set": "fr_tripped == 0 && sb_start_btn == 1 ? 24 : 0",
+    "label": "104对地电压",
+    "initial": 0
+   },
+   {
+    "id": "meter_disp",
+    "set": "meter_knob == 1 ? (probe_sel == 1 ? v_101 : (probe_sel == 2 ? v_102 : (probe_sel == 3 ? v_103 : (probe_sel == 4 ? v_104 : 0)))) : (meter_knob == 2 ? (probe_sel == 3 && fr_tripped == 1 ? 999 : 0.1) : 0)",
+    "label": "万用表读数",
+    "initial": 0
+   },
+   {
+    "id": "measured_fault",
+    "set": "meter_knob == 1 && probe_sel == 3 && v_103 == 0 ? 1 : measured_fault",
+    "label": "已测出103断路",
+    "initial": 0
+   },
+   {
+    "id": "motor_status",
+    "set": "sb_start_btn == 1 ? (fr_tripped == 1 ? 0 : (jam_state == 1 ? 2 : 1)) : motor_status",
+    "label": "电机状态",
+    "initial": 0
+   },
+   {
+    "id": "current_i",
+    "max": 25,
+    "min": 0,
+    "set": "motor_status == 1 ? 3.2 : (motor_status == 2 ? 18.5 : 0)",
+    "label": "运行电流",
+    "initial": 0
+   },
+   {
+    "id": "safe_run_s",
+    "max": 100,
+    "min": 0,
+    "rate": "motor_status == 1 ? 1 : 0",
+    "label": "平稳试机时长",
+    "initial": 0
+   }
+  ],
+  "brief": "2号封箱机M2输送电机失电停机。学员需使用万用表对控制回路进行逐级电压追踪，定位断路元器件；并在排除机械卡阻、复位保护元件后完成带载试机与状态核验。",
+  "goals": [
+   {
+    "id": "g_measure",
+    "hold": 2,
+    "when": "measured_fault == 1",
+    "label": "完成101/102/103电压追踪，查出103断电脱扣"
+   },
+   {
+    "id": "g_mech_clear",
+    "when": "jam_cleared == 1",
+    "after": "g_measure",
+    "label": "现场排除输送卡箱异物并手盘车确认灵活"
+   },
+   {
+    "id": "g_fr_reset",
+    "when": "fr_tripped == 0 && probe_sel == 0",
+    "after": "g_mech_clear",
+    "label": "完成FR2热继电器触点复位并断开测量表笔"
+   },
+   {
+    "id": "g_test_run",
+    "when": "safe_run_s >= 5 && current_i > 2 && current_i < 6",
+    "after": "g_fr_reset",
+    "label": "带载试机启动，电机三相平稳运转无过载"
+   }
+  ],
+  "rules": [
+   {
+    "id": "r_live_ohm",
+    "once": true,
+    "when": "meter_knob == 2 && (probe_sel == 1 || probe_sel == 2)",
+    "label": "违章作业：带电回路中使用电阻档测试，损坏万用表",
+    "severity": "violation"
+   },
+   {
+    "id": "r_blind_start",
+    "once": true,
+    "when": "motor_status == 2",
+    "label": "严重违章：未排除输送机机械卡阻强行试机，电机堵转过载严重烧毁！",
+    "severity": "violation"
+   },
+   {
+    "id": "r_no_measure_reset",
+    "once": true,
+    "when": "measured_fault == 0 && fr_reset_btn == 1",
+    "label": "操作不规范：尚未用仪表定位故障点，盲目按压复位",
+    "severity": "warning"
+   },
+   {
+    "id": "r_meter_left_on",
+    "once": true,
+    "when": "safe_run_s > 6 && meter_knob != 0",
+    "label": "作业收尾：排障试机完成后未将万用表旋至OFF档",
+    "severity": "warning"
+   }
+  ],
+  "scene": {
+   "image": "https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3yn5rx1mgs-bench.jpg",
+   "credit": "底图由通义万相生成",
+   "layers": [
+    {
+     "h": 9,
+     "w": 9,
+     "x": 6,
+     "y": 32,
+     "id": "dmm_screen",
+     "cold": false,
+     "kind": "readout",
+     "text": "meter_disp",
+     "unit": "V",
+     "label": "万用表示数"
+    },
+    {
+     "h": 5,
+     "w": 3,
+     "x": 16,
+     "y": 28,
+     "id": "fault_lamp",
+     "on": "fr_tripped == 1",
+     "cold": false,
+     "kind": "lamp",
+     "color": "#ef4444",
+     "label": "FR2过载报警"
+    },
+    {
+     "h": 5,
+     "w": 3,
+     "x": 16,
+     "y": 35,
+     "id": "run_lamp",
+     "on": "motor_status == 1",
+     "cold": false,
+     "kind": "lamp",
+     "color": "#22c55e",
+     "label": "运行指示"
+    },
+    {
+     "h": 12,
+     "w": 26,
+     "x": 42,
+     "y": 48,
+     "id": "belt_motion",
+     "on": "motor_status == 1",
+     "cold": false,
+     "kind": "stream",
+     "color": "#38bdf8",
+     "label": "输送辊轴运转"
+    },
+    {
+     "h": 10,
+     "w": 8,
+     "x": 52,
+     "y": 43,
+     "id": "jam_block",
+     "on": "jam_state == 1",
+     "cold": false,
+     "kind": "pulse",
+     "color": "#f97316",
+     "label": "卡箱阻滞点"
+    }
+   ]
+  },
+  "gauges": [
+   {
+    "id": "g_dmm",
+    "max": 30,
+    "min": 0,
+    "expr": "meter_disp",
+    "unit": "V",
+    "warn": "meter_knob == 1 && probe_sel == 3 && meter_disp == 0",
+    "label": "万用表LCD读数",
+    "digits": 1
+   },
+   {
+    "id": "g_cur",
+    "max": 25,
+    "min": 0,
+    "expr": "current_i",
+    "unit": "A",
+    "warn": "current_i > 10",
+    "label": "主回路钳表电流",
+    "digits": 1
+   },
+   {
+    "id": "g_run",
+    "max": 30,
+    "min": 0,
+    "expr": "safe_run_s",
+    "unit": "s",
+    "label": "输送线正常运转时间",
+    "digits": 0
+   }
+  ],
+  "controls": [
+   {
+    "id": "meter_knob",
+    "max": 2,
+    "min": 0,
+    "hint": "0:关机(OFF)，1:直流电压档(DCV 24V)，2:电阻蜂鸣档(Ω)",
+    "kind": "knob",
+    "step": 1,
+    "unit": "档",
+    "label": "万用表档位",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "probe_sel",
+    "max": 4,
+    "min": 0,
+    "hint": "黑表笔搭0V；0:悬空，1:端子101，2:端子102，3:端子103(FR2后)，4:端子104",
+    "kind": "knob",
+    "step": 1,
+    "unit": "号",
+    "label": "红表笔测点",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "jam_cleared",
+    "max": 100,
+    "min": 0,
+    "hint": "去线体取出卡阻纸箱，并用手盘动输送皮带辊确认无机械卡死",
+    "kind": "switch",
+    "unit": "",
+    "label": "清卡阻并手盘车",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "fr_reset_btn",
+    "max": 100,
+    "min": 0,
+    "hint": "按压热继电器面板上的蓝色RESET按钮，使常闭脱扣触点复位",
+    "kind": "button",
+    "unit": "",
+    "label": "热继FR2复位",
+    "hidden": false,
+    "initial": 0
+   },
+   {
+    "id": "sb_start_btn",
+    "max": 100,
+    "min": 0,
+    "hint": "点动控制柜启动按钮，吸合KM2线圈进行带载试机",
+    "kind": "button",
+    "unit": "",
+    "label": "启动按钮SB2",
+    "hidden": false,
+    "initial": 0
+   }
+  ],
+  "timeScale": 1,
+  "maxSeconds": 200,
+  "expertScript": [
+   {
+    "t": 0,
+    "value": 1,
+    "control": "meter_knob"
+   },
+   {
+    "t": 2,
+    "value": 1,
+    "control": "probe_sel"
+   },
+   {
+    "t": 5,
+    "value": 2,
+    "control": "probe_sel"
+   },
+   {
+    "t": 8,
+    "value": 3,
+    "control": "probe_sel"
+   },
+   {
+    "t": 12,
+    "value": 0,
+    "control": "probe_sel"
+   },
+   {
+    "t": 14,
+    "value": 1,
+    "control": "jam_cleared"
+   },
+   {
+    "t": 17,
+    "value": 1,
+    "control": "fr_reset_btn"
+   },
+   {
+    "t": 19,
+    "value": 0,
+    "control": "meter_knob"
+   },
+   {
+    "t": 21,
+    "value": 1,
+    "control": "sb_start_btn"
+   }
+  ]
+ },
+ "place": "e2ff3012-02a2-42c6-89b0-9d156facab7e",
+ "scene": {
+  "who": "带教师傅老张",
+  "text": "“安全规范记牢了，现在你亲自上手！万用表打到合适档位，红表笔从101端子开始顺着控制回路往下点测，把断电点给我揪出来。记住，电气维修不是按个按钮就完事，机械和绝缘不弄明白严禁送电试车！”",
+  "time": "10:19"
+ },
+ "prompt": "使用万用表追踪101至103节点电压锁定故障脱扣点，排查输送线机械卡阻，复位热继电器并成功带载试机。"
+}
