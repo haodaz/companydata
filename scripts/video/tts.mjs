@@ -19,7 +19,8 @@ for (const s of segs) {
     const r = await fetch('https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation', {
       method: 'POST', headers: { Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json' },
       // qwen-tts 在 2026-10-10 前后下线（Model not exist），换 qwen3-tts-flash；TTS_MODEL 可以覆盖
-      body: JSON.stringify({ model: process.env.TTS_MODEL || 'qwen3-tts-flash', input: { text: spoken(s.text), voice: process.env.VOICE || 'Serena' } }),
+      // language_type 锁中文：短句（「急诊护士，预检台前先看谁、分几级。」）曾被模型猜成日语念出来
+      body: JSON.stringify({ model: process.env.TTS_MODEL || 'qwen3-tts-flash', input: { text: spoken(s.text), voice: process.env.VOICE || 'Serena', language_type: 'Chinese' } }),
     });
     const j = await r.json();
     const url = j.output?.audio?.url;
