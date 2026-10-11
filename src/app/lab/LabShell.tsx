@@ -1,0 +1,264 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { Select } from 'antd';
+import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
+import { UserProvider, useUser } from '@/lib/user-context';
+
+/**
+ * 数字技能空间（实验）独立外壳：浅色科技感，和数据后台 / 虚拟工厂刻意长得不一样。
+ * 设计语言：流动的渐变光斑 + 细网格 + 玻璃卡片 + 等宽小标签 + 会呼吸的 AI 核心。
+ */
+const LAB_CSS = `
+.lab { --v: #6a5cff; --c: #12b5cb; --p: #ff5fa2; --ink: #171a2e; --ink2: #4a4f6a; --ink3: #8389a6; --line: rgba(106,92,255,.16);
+  min-height: 100dvh; position: relative; color: var(--ink); background: #f5f6ff; overflow-x: hidden;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.lab-mono { font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; }
+
+/* 背景：三团缓慢漂移的光斑 + 细网格 */
+.lab-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.lab-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .55; animation: lab-drift 22s ease-in-out infinite alternate; }
+.lab-blob.b1 { width: 620px; height: 620px; left: -160px; top: -200px; background: radial-gradient(circle, #cfc8ff, transparent 65%); }
+.lab-blob.b2 { width: 560px; height: 560px; right: -140px; top: 8%; background: radial-gradient(circle, #bdf0f6, transparent 65%); animation-duration: 28s; animation-delay: -6s; }
+.lab-blob.b3 { width: 520px; height: 520px; left: 32%; bottom: -260px; background: radial-gradient(circle, #ffd3e6, transparent 65%); animation-duration: 34s; animation-delay: -12s; }
+.lab-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 44px 44px; mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 80%); -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 80%); opacity: .55; }
+@keyframes lab-drift { to { transform: translate(60px, 40px) scale(1.12); } }
+
+/* 玻璃卡片 */
+.lab-glass { position: relative; background: rgba(255,255,255,.72); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,.9); border-radius: 22px; box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 12px 40px rgba(88,76,220,.10), 0 0 0 1px var(--line); }
+.lab-glass.hover { transition: transform .25s, box-shadow .25s; cursor: pointer; }
+.lab-glass.hover:hover { transform: translateY(-3px); box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 22px 60px rgba(88,76,220,.18), 0 0 0 1px rgba(106,92,255,.35); }
+.lab-cap { font-size: 10.5px; color: var(--ink3); text-transform: uppercase; }
+.lab-chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--v); background: rgba(106,92,255,.09); border: 1px solid rgba(106,92,255,.18); white-space: nowrap; }
+.lab-chip.c { color: #0a8fa3; background: rgba(18,181,203,.10); border-color: rgba(18,181,203,.25); }
+.lab-chip.p { color: #d6336c; background: rgba(255,95,162,.10); border-color: rgba(255,95,162,.25); }
+.lab-chip.g { color: var(--ink2); background: rgba(23,26,46,.05); border-color: rgba(23,26,46,.08); font-weight: 500; }
+
+/* 按钮 */
+.lab-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 42px; padding: 0 20px; border-radius: 14px; border: 0; cursor: pointer; font-size: 14px; font-weight: 700;
+  color: #fff; background: linear-gradient(120deg, var(--v), #8f7bff 45%, var(--c)); background-size: 180% 100%; box-shadow: 0 8px 24px rgba(106,92,255,.30); transition: background-position .4s, transform .15s, box-shadow .25s; }
+.lab-btn:hover { background-position: 100% 0; transform: translateY(-1px); box-shadow: 0 12px 30px rgba(106,92,255,.38); }
+.lab-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.lab-btn.ghost { color: var(--ink2); background: rgba(255,255,255,.8); box-shadow: 0 0 0 1px var(--line); }
+.lab-btn.ghost:hover { color: var(--v); box-shadow: 0 0 0 1px rgba(106,92,255,.45); }
+.lab-btn.sm { height: 34px; padding: 0 14px; font-size: 13px; border-radius: 11px; }
+
+/* AI 核心：旋转光环 + 呼吸球体 + 轨道卫星 */
+.lab-orb { position: relative; width: var(--s, 160px); height: var(--s, 160px); flex-shrink: 0; }
+.lab-orb .ring { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, var(--v), var(--c), var(--p), var(--v)); animation: lab-spin 9s linear infinite;
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px)); -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px)); }
+.lab-orb .ring.r2 { inset: 11%; animation-duration: 14s; animation-direction: reverse; opacity: .45; }
+.lab-orb .core { position: absolute; inset: 22%; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #fff 0%, #d9d4ff 28%, #8d7dff 62%, #4f43d6 100%);
+  box-shadow: 0 0 40px rgba(106,92,255,.55), inset 0 -8px 20px rgba(40,30,160,.35); animation: lab-breathe 3.6s ease-in-out infinite; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; }
+.lab-orb .sat { position: absolute; inset: 0; animation: lab-spin 6s linear infinite; }
+.lab-orb .sat::after { content: ''; position: absolute; top: -3px; left: 50%; width: 8px; height: 8px; margin-left: -4px; border-radius: 50%; background: #ffc53d; box-shadow: 0 0 12px #ffc53d; }
+.lab-orb.busy .ring { animation-duration: 1.6s; } .lab-orb.busy .core { animation-duration: 1s; } .lab-orb.busy .sat { animation-duration: 1.2s; }
+@keyframes lab-spin { to { transform: rotate(360deg); } }
+@keyframes lab-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); box-shadow: 0 0 60px rgba(106,92,255,.7), inset 0 -8px 20px rgba(40,30,160,.35); } }
+
+/* 扫描中：一条光带从上往下扫 */
+.lab-scan { position: relative; overflow: hidden; }
+.lab-scan::after { content: ''; position: absolute; left: 0; right: 0; height: 90px; top: -90px; background: linear-gradient(180deg, transparent, rgba(106,92,255,.16), transparent); animation: lab-scanline 1.8s linear infinite; pointer-events: none; }
+@keyframes lab-scanline { to { top: 100%; } }
+.lab-dots::after { content: ''; animation: lab-dots 1.4s steps(4, end) infinite; }
+@keyframes lab-dots { 0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; } }
+.lab-in { animation: lab-in .5s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes lab-in { from { opacity: 0; transform: translateY(14px); } }
+.lab-caret::after { content: '▍'; color: var(--v); animation: lab-blink 1s steps(2) infinite; margin-left: 2px; }
+@keyframes lab-blink { 50% { opacity: 0; } }
+
+/* 顶栏：手机上副标题和模型下拉让位，品牌和导航必须一行放下（以前副标题被挤成一字一行的竖排） */
+.lab-head { padding: 12px 28px; }
+.lab-head-sub { white-space: nowrap; }
+@media (max-width: 760px) {
+  .lab-head { padding: 10px 12px; gap: 8px !important; }
+  .lab-head-sub, .lab-head-model { display: none !important; }
+  .lab-head .lab-orb { --s: 28px !important; }
+  .lab-nav { margin-left: 2px; }
+  .lab-nav-i { padding: 8px 10px 9px; font-size: 13.5px; }
+}
+/* 三个导航放不下品牌字：窄屏只留光球 */
+@media (max-width: 480px) {
+  .lab-head-brand { display: none; }
+  .lab-nav-i { padding: 8px 7px 9px; }
+  .lab-nav-i i { left: 7px; right: 7px; }
+}
+
+/* 顶栏导航：会发光的下划线，别套 tag 底色 */
+.lab-nav { display: flex; gap: 2px; margin-left: 14px; }
+.lab-nav-i { position: relative; display: flex; align-items: center; gap: 7px; padding: 9px 16px 10px; border: 0; background: none; cursor: pointer;
+  font-size: 14px; font-weight: 600; white-space: nowrap; color: var(--ink3); transition: color .2s; font-family: inherit; }
+.lab-nav-i:hover { color: var(--ink2); }
+.lab-nav-i.on { color: var(--ink); font-weight: 800; }
+.lab-nav-i i { position: absolute; left: 12px; right: 12px; bottom: 2px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--v), var(--c));
+  transform: scaleX(0); transform-origin: left; transition: transform .28s cubic-bezier(.2,.8,.2,1); }
+.lab-nav-i.on i { transform: scaleX(1); box-shadow: 0 0 12px rgba(106,92,255,.9); }
+.lab-nav-i:hover i { transform: scaleX(.4); }
+
+/* 深色顶栏：首页整页深，百业空间只有页头深，顶栏得跟着它俩一起深 */
+.lab:not([data-theme="light"]):has(.ai100-root) > header, .lab:not([data-theme="light"]):has(.sp-root) > header {
+  background: rgba(8,10,22,.86) !important; border-bottom-color: rgba(255,255,255,.08) !important; color: #eef0fb;
+  --ink: #eef0fb; --ink2: #c0c5e2; --ink3: #878dae; --line: rgba(255,255,255,.12); }
+.lab:not([data-theme="light"]):has(.sp-root) > header .lab-btn.ghost { color: #dfe2f5; background: rgba(255,255,255,.08); box-shadow: 0 0 0 1px rgba(255,255,255,.16); }
+/* 深色顶栏里的模型下拉。antd 新版结构是 .ant-select > .ant-select-content / .ant-select-suffix，
+   以前写的 .ant-select-selector / -selection-item / -arrow 是旧版类名，一条都没命中，深色字落在深底上看不见 */
+.lab:not([data-theme="light"]):has(.ai100-root) > header .lab-head-model, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-head-model {
+  background: rgba(255,255,255,.1) !important; border: 1px solid rgba(255,255,255,.16) !important; color: #e7e9f8 !important; }
+.lab:not([data-theme="light"]):has(.ai100-root) > header .lab-head-model:hover, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-head-model:hover { background: rgba(255,255,255,.15) !important; }
+.lab:not([data-theme="light"]):has(.ai100-root) > header .lab-head-model .ant-select-content, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-head-model .ant-select-content,
+.lab:not([data-theme="light"]):has(.ai100-root) > header .lab-head-model .ant-select-input, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-head-model .ant-select-input { color: #e7e9f8 !important; }
+.lab:not([data-theme="light"]):has(.ai100-root) > header .lab-head-model .ant-select-suffix, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-head-model .ant-select-suffix { color: rgba(255,255,255,.6) !important; }
+
+/* 深浅切换按钮 */
+.lab-theme { width: 34px; height: 34px; border-radius: 11px; border: 1px solid var(--line); background: rgba(255,255,255,.7); color: var(--ink2);
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: color .2s, border-color .2s; }
+.lab-theme:hover { color: var(--v); border-color: rgba(106,92,255,.45); }
+.lab:not([data-theme="light"]):has(.ai100-root) > header .lab-theme, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-theme { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.16); color: #dfe2f5; }
+
+/* 模式切换 */
+.lab-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.lab-tab { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 14px; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--ink2); background: rgba(255,255,255,.6); box-shadow: 0 0 0 1px var(--line); transition: all .2s; white-space: nowrap; }
+.lab-tab:hover { color: var(--v); }
+.lab-tab.on { color: #fff; background: linear-gradient(120deg, var(--v), #8f7bff); box-shadow: 0 8px 22px rgba(106,92,255,.32); }
+
+.lab-input { width: 100%; border: 1px solid var(--line); background: rgba(255,255,255,.85); border-radius: 14px; padding: 12px 14px; font-size: 15px; color: var(--ink); outline: none; resize: vertical; font-family: inherit; line-height: 1.7; transition: box-shadow .2s, border-color .2s; }
+.lab-input:focus { border-color: rgba(106,92,255,.55); box-shadow: 0 0 0 4px rgba(106,92,255,.12); }
+.lab-stage { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; background: #f0f1ff radial-gradient(1200px 600px at 10% -10%, rgba(106,92,255,.18), transparent 60%), radial-gradient(900px 500px at 100% 100%, rgba(18,181,203,.16), transparent 60%); }
+.lab-stage-bar { display: flex; align-items: center; gap: 12px; padding: 10px clamp(12px, 2.5vw, 28px); background: rgba(255,255,255,.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+.lab-stage-body { flex: 1; min-height: 0; overflow: auto; padding: clamp(12px, 2vw, 24px) clamp(12px, 3vw, 40px) 40px; }
+.lab-stage-body > * { max-width: 1480px; margin: 0 auto; }
+.lab-stage-fields { display: flex; gap: 8px; justify-content: flex-end; }
+.lab-stage-fields .lab-input { width: 160px; padding: 6px 10px; font-size: 13px; border-radius: 10px; }
+.lab-stage.immersive .lab-stage-body { padding: 0; overflow: hidden; position: relative; }
+.lab-stage.immersive .lab-stage-body > * { max-width: none; margin: 0; }
+.lab-game { position: absolute; inset: 0; overflow: hidden; background: #0f1224; }
+.lab-game-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.lab-game-vignette { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(10,12,30,.55) 100%); pointer-events: none; }
+.lab-game-progress { position: absolute; left: 20px; right: 20px; top: 12px; display: flex; align-items: center; gap: 6px; color: #fff; font-size: 11px; text-shadow: 0 1px 4px rgba(0,0,0,.6); z-index: 3; }
+.lab-game-progress .lab-mono { margin-right: 8px; white-space: nowrap; letter-spacing: .12em; }
+.lab-game-dialogue { position: absolute; inset: 0; cursor: pointer; z-index: 4; }
+.lab-game-npc { position: absolute; left: 4%; bottom: 0; height: 88%; max-width: 46%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 20px 40px rgba(0,0,0,.45)); }
+.lab-game-npc-fallback { position: absolute; left: 6%; bottom: 24%; width: 120px; height: 120px; border-radius: 40px; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: 800; color: #fff; background: linear-gradient(135deg,#ffb15f,#ff5fa2); }
+.lab-game-box { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px clamp(20px, 6vw, 90px) 34px clamp(20px, 30vw, 520px); background: linear-gradient(180deg, rgba(10,12,30,0) 0%, rgba(10,12,30,.82) 30%, rgba(10,12,30,.94) 100%); color: #fff; min-height: 30%; }
+.lab-game-name { display: inline-block; padding: 6px 18px; border-radius: 10px; background: linear-gradient(135deg,var(--v),var(--c)); font-weight: 800; font-size: 15px; margin-bottom: 12px; box-shadow: 0 6px 18px rgba(106,92,255,.4); }
+.lab-game-text { font-size: clamp(16px, 1.6vw, 21px); line-height: 1.9; max-width: 900px; text-shadow: 0 1px 4px rgba(0,0,0,.6); }
+.lab-game-hint { margin-top: 12px; font-size: 12px; color: rgba(255,255,255,.7); letter-spacing: .1em; animation: lab-blink 1.4s infinite; }
+@keyframes lab-blink { 50% { opacity: .35; } }
+.lab-game-mask { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 56px clamp(12px, 4vw, 60px) 24px; background: rgba(10,12,30,.42); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 4; overflow: auto; }
+/* 3D beta：背后是能跟着头动的 3D 场景，遮罩放淡，让场景从题卡四周透出来 */
+.lab-game-mask.is-3d { background: rgba(10,12,30,.16); backdrop-filter: blur(1.5px); -webkit-backdrop-filter: blur(1.5px); }
+.lab-game-modal { width: min(100%, 880px); max-height: 100%; overflow: auto; padding: clamp(18px, 2.5vw, 30px); border-radius: 22px; background: rgba(255,255,255,.9); box-shadow: 0 30px 80px rgba(0,0,0,.35); }
+.lab-game-recap { font-size: 13px; color: var(--ink3); line-height: 1.7; margin-bottom: 12px; padding: 8px 12px; border-left: 3px solid var(--c); background: rgba(18,181,203,.06); border-radius: 0 10px 10px 0; cursor: pointer; }
+/* 千行百业的群像：两圈头像反向慢转，头像本身反向补偿保持正立 */
+@keyframes nova-spin { to { transform: rotate(360deg); } }
+.nova-crowd { position: relative; width: var(--s); height: var(--s); margin: 0 auto; }
+.nova-crowd .halo { position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(circle at 42% 34%, rgba(255,255,255,.95), rgba(167,155,255,.5) 46%, rgba(106,92,255,.26) 72%, transparent 78%); }
+.nova-crowd .orb-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(106,92,255,.22); }
+.nova-crowd .lane { position: absolute; inset: 0; animation: nova-spin 54s linear infinite; }
+.nova-crowd .lane.inner { animation-duration: 38s; animation-direction: reverse; }
+.nova-crowd .face { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; overflow: hidden;
+  background: #fff; border: 2px solid rgba(255,255,255,.95); box-shadow: 0 6px 18px rgba(50,40,120,.22); }
+.nova-crowd .lane.inner .face { width: 38px; height: 38px; margin: -19px 0 0 -19px; }
+.nova-crowd .face > span { display: block; width: 100%; height: 100%; animation: nova-spin 54s linear infinite reverse; }
+.nova-crowd .lane.inner .face > span { animation-duration: 38s; animation-direction: normal; }
+.nova-crowd .face img { width: 100%; height: 100%; object-fit: cover; object-position: 54% 12%; display: block; }
+.nova-crowd .hub { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff; text-shadow: 0 2px 10px rgba(60,45,130,.5); }
+@media (prefers-reduced-motion: reduce) { .nova-crowd .lane, .nova-crowd .face > span { animation: none !important; } }
+.bench-hud { position: absolute; inset: 0; overflow: hidden; background: #0f1224; }
+.bench-hud-blur { position: absolute; inset: -40px; width: calc(100% + 80px); height: calc(100% + 80px); object-fit: cover; filter: blur(28px) brightness(.55); }
+/* 场景按 16:9 居中；最高不超过容器，否则会顶出去、底部被控件条连同场景一起裁掉 */
+.bench-hud-stage { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(100%, 177.78vh); max-width: 100%; max-height: 100%; aspect-ratio: 16 / 9; }
+.bench-hud-right { position: absolute; right: 14px; top: 14px; bottom: 14px; width: 340px; display: flex; flex-direction: column; gap: 10px; overflow: auto; z-index: 3; }
+.bench-hud-bottom { position: absolute; left: 14px; right: 368px; bottom: 14px; z-index: 3; }
+.bench-hud .hud-card { background: rgba(15,18,36,.78) !important; border: 1px solid rgba(255,255,255,.12) !important; color: #c7cbe6 !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.bench-hud .hud-card .hud-ink { color: #e6e8f5 !important; }
+.bench-hud .hud-card .hud-ink3 { color: #9aa0b8 !important; }
+.bench-hud-light { background: #f3f4fa; }
+.bench-hud-light .hud-card { background: #fff !important; border: 1px solid rgba(23,26,46,.1) !important; color: #171a2e !important; backdrop-filter: none; box-shadow: 0 6px 20px rgba(23,26,46,.06); }
+.bench-hud-light .hud-card .hud-ink { color: #171a2e !important; }
+.bench-hud-light .hud-card .hud-ink3 { color: #6b7089 !important; }
+.bench-hud-light .bench-hud-right { background: #f3f4fa; border-left: 1px solid rgba(23,26,46,.08); top: 0; bottom: 0; right: 0; padding: 14px; width: 368px; }
+@media (max-width: 900px) { .bench-hud-right { position: static; width: auto; } .bench-hud-bottom { position: static; } .bench-hud { overflow: auto; } .bench-hud-stage { position: relative; left: 0; top: 0; transform: none; width: 100%; } .lab-game-npc { max-width: 60%; height: 60%; } .lab-game-box { padding-left: 20px; } }
+.bench-split { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 900px) { .bench-split { grid-template-columns: 1fr; } .lab-stage-fields { display: none; } }
+.lab-pre { white-space: pre-wrap; word-break: break-word; line-height: 1.85; font-size: 14px; color: var(--ink2); }
+.lab-wrap { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 24px 28px 64px; }
+@media (max-width: 768px) { .lab-wrap { padding: 14px 12px 40px; } .lab-glass { border-radius: 18px; } .lab-tab { padding: 8px 12px; font-size: 13px; } }
+`;
+
+function Shell({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+  const path = usePathname();
+  // 拿着邀请链接来的人没登录：只留品牌，导航点了也是被拦去登录页，不如不给
+  const [guest, setGuest] = useState(false);
+  useEffect(() => { setGuest(new URLSearchParams(window.location.search).has('invite')); }, [path]);
+  const { currentModel, setCurrentModel } = useModel();
+  // 首页是公开的：没登录的人看不到模型下拉和后台入口，那是给干活的人用的
+  const { user } = useUser();
+  // 深浅两套：大屏投放、学校一体机、白天的教室都可能更适合浅色。按设备记住；
+  // 也认 ?theme=light / ?theme=dark，方便把一体机的链接直接钉死成某一套。
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get('theme');
+    let t: string | null = q === 'light' || q === 'dark' ? q : null;
+    try { if (t) localStorage.setItem('lab:theme', t); else t = localStorage.getItem('lab:theme'); } catch { /* 无痕模式就只用这一次 */ }
+    if (t === 'light' || t === 'dark') setTheme(t);
+  }, []);
+  const flipTheme = () => setTheme(t => { const n = t === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('lab:theme', n); } catch { /* 记不住就算了 */ } return n; });
+  // 三个主页面：首页讲理念；百业工厂造空间（列表 + 工作室）；体验百业是体验馆（所有已发布空间，点开就玩）。
+  // 单个空间页 /lab/<id> 算体验。不跟数据后台的侧边栏混在一起
+  const NAV = [
+    { k: '/lab', t: '首页', on: (p: string) => p === '/lab' },
+    { k: '/lab/spaces', t: '百业工厂', on: (p: string) => p.startsWith('/lab/spaces') || p.startsWith('/lab/studio') || p.startsWith('/lab/assets') },
+    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || p.startsWith('/lab/me') || p.startsWith('/lab/cert') || /^\/lab\/(?!spaces|studio|gallery|assets)[^/]+$/.test(p) },
+  ];
+  return (
+    <div className="lab" data-theme={theme}>
+      <style>{LAB_CSS}</style>
+      <div className="lab-bg"><div className="lab-blob b1" /><div className="lab-blob b2" /><div className="lab-blob b3" /><div className="lab-grid" /></div>
+
+      <header className="lab-head" style={{ position: 'sticky', top: 0, zIndex: 20, display: 'flex', alignItems: 'center', gap: 14, background: 'rgba(245,246,255,.72)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(106,92,255,.12)' }}>
+        <div onClick={() => { if (!guest) router.push('/lab'); }} style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', minWidth: 0, flexShrink: 0 }}>
+          <div className="lab-orb" style={{ ['--s' as string]: '34px' }}><div className="ring" /><div className="core" /></div>
+          <div className="lab-head-brand" style={{ minWidth: 0 }}>
+            <div style={{ fontSize: 16, fontWeight: 800, letterSpacing: 0.5, whiteSpace: 'nowrap' }}>AI 百业</div>
+            <div className="lab-mono lab-cap lab-head-sub">数字技能空间 · EXPERIMENTAL</div>
+          </div>
+        </div>
+        {!guest && <nav className="lab-nav">
+          {NAV.map(x => {
+            const on = x.on(path);
+            return (
+              <button key={x.k} onClick={() => router.push(x.k)} className={`lab-nav-i${on ? ' on' : ''}`}>
+                {x.t}
+                <i />
+              </button>
+            );
+          })}
+        </nav>}
+        <div style={{ flex: 1 }} />
+        <button className="lab-theme" onClick={flipTheme} title={theme === 'dark' ? '切到浅色（亮环境、投影、一体机）' : '切到深色'} aria-label="切换深浅色">
+          {theme === 'dark'
+            ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" /></svg>
+            : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" /></svg>}
+        </button>
+        {!guest && user && <>
+        <Select className="lab-head-model" size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 170 }} popupMatchSelectWidth={250}
+          options={MODEL_OPTIONS.map(m => ({ value: m.id, label: <span>{m.label}<ModelBadge text={m.badge} /></span> }))} />
+        <button className="lab-btn ghost sm" title="数据后台" aria-label="数据后台" style={{ width: 34, padding: 0 }} onClick={() => router.push('/admin/db-company')}>
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="1.5" y="9.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="9.5" width="5" height="5" rx="1.2" /></svg>
+        </button>
+        </>}
+      </header>
+
+      <div className="lab-wrap">{children}</div>
+    </div>
+  );
+}
+
+export default function LabShell({ children }: { children: React.ReactNode }) {
+  return <UserProvider><ModelProvider><Shell>{children}</Shell></ModelProvider></UserProvider>;
+}

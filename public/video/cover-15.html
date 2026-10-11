@@ -22,11 +22,17 @@
   <div class="mosaic"><figure style="--i:0"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/seed-or_hall.jpg" alt=""><figcaption>外科医生</figcaption></figure><figure style="--i:1"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/seed-latte_cafe.jpg" alt=""><figcaption>咖啡师</figcaption></figure><figure style="--i:2"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3wd8l17nhn-open_office_workstation.jpg" alt=""><figcaption>数据分析师</figcaption></figure><figure style="--i:3"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mupt5ju9b1kj-maternity_suite_room.jpg" alt=""><figcaption>月嫂</figcaption></figure><figure style="--i:4"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv38sqq1gqw5-paper_archive.jpg" alt=""><figcaption>古籍修复师</figcaption></figure><figure style="--i:5"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3yk5lqvln3-er_resuscitation_room.jpg" alt=""><figcaption>急诊护士</figcaption></figure><figure style="--i:6"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3ywrvog0l6-prep_fridge_station.jpg" alt=""><figcaption>中餐厨师</figcaption></figure><figure style="--i:7"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3z0q5fgtvx-client_audit_room.jpg" alt=""><figcaption>审计师</figcaption></figure><figure style="--i:8"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mupsyg29jl6u-dive_shop_reception.jpg" alt=""><figcaption>潜导</figcaption></figure><figure style="--i:9"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3yn5rx1mgs-control_cabinet_area.jpg" alt=""><figcaption>电气维修工</figcaption></figure><figure style="--i:10"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3yrcpvpl4m-contact_center_floor.jpg" alt=""><figcaption>客服主管</figcaption></figure><figure style="--i:11"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3zedh2a3vz-landscape_planting_site.jpg" alt=""><figcaption>园艺师</figcaption></figure><figure style="--i:12"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3z9z8kmvg1-control_desk.jpg" alt=""><figcaption>直播中控</figcaption></figure><figure style="--i:13"><img src="https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/mv3z769ft9is-kindergarten_classroom.jpg" alt=""><figcaption>幼儿园老师</figcaption></figure></div>
   <div class="shade"></div>
   <div class="wrap"><div>
-    <div class="badge">3D 沉浸版 · BETA</div>
-    <div class="brand">AI 百业 · 平方智能 × 方略研究院</div>
-    <div class="line">百业：用你所做，<b>证你所能</b></div>
+    <div class="badge" id="badge">3D 沉浸版 · BETA</div>
+    <div class="brand" id="brand">AI 百业 · 平方智能 × 方略研究院</div>
+    <div class="line" id="line">百业：用你所做，<b>证你所能</b></div>
     <div class="sub" id="sub">来百业，体验职业的一日 · 每一种都亲手做一做</div>
   </div></div>
-  <!-- 3 分钟版换一句副题：?sub=来百业：从千行百业沉浸大千世界 -->
-  <script>const s = new URLSearchParams(location.search).get('sub'); if (s) document.getElementById('sub').textContent = s;</script>
+  <!-- 同一张画换文案：?sub=…（3 分钟版副题）、?line=…（主标题，| 后面的部分描金）、?brand=…、?badge=0（分享图 og.jpg 用） -->
+  <script>
+    const q = new URLSearchParams(location.search);
+    if (q.get('sub')) document.getElementById('sub').textContent = q.get('sub');
+    if (q.get('brand')) document.getElementById('brand').textContent = q.get('brand');
+    if (q.get('line')) { const [a, b] = q.get('line').split('|'); const el = document.getElementById('line'); el.textContent = a; if (b) { const bb = document.createElement('b'); bb.textContent = b; el.appendChild(bb); } }
+    if (q.get('badge') === '0') document.getElementById('badge').style.display = 'none';
+  </script>
 </body></html>
