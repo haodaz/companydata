@@ -1,0 +1,22 @@
+{
+ "cover": 1.0,
+ "a1_landing": 1.0,
+ "a1_spaces": 1.0,
+ "a1_studio": 0.9,
+ "a1_hub": 1.0,
+ "a1_or3d": 1.0,
+ "a1_teach": 1.5,
+ "a1_certs": 1.0,
+ "a1_solve": 1.0,
+ "a1_ledger": 1.0,
+ "a2_learn": 1.0,
+ "a2_expert": 2.2,
+ "a2_interview": 1.0,
+ "a2_version": 0.8,
+ "a3_dataspace": 0.7,
+ "a3_ainative": 0.75,
+ "a3_upscale": 0.8,
+ "a3_assets": 0.8,
+ "a3_tags": 1.0,
+ "end": 1.0
+}
