@@ -56,6 +56,12 @@ export const BETA3D: Record<string, Beta3DScene> = {
     credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建',
     slots: ['08:30', '09:20', '10:10', '11:00', '14:00', '15:10', '16:20', '17:30'],   // 一整天都在工位上
   },
+  reef: {
+    key: 'reef', title: '珊瑚礁', role: '潜导', spaceId: '387fcc19-bd56-453e-a983-b3a1b4da5704',
+    url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-reef-v1.splat', position: [-0.0038, 0.1282, 0.2202], lookAt: [-0.4826, 0.187, 7.7058], up: [-0.0142, -0.9999, 0.002], span: 1.2,   // 场景近（depth 7.5），摆动幅度按比例缩小
+    credit: 'Veo 3.1 生成水下绕礁视频 · COLMAP + Brush 重建（39 万高斯，12.6 MB）',
+    slots: ['09:00'],   // 礁区导潜
+  },
 };
 
 /** 空间 id → 3D beta 场景（空间主页上挂入口用） */

@@ -47,8 +47,12 @@ const TO_BENCH = run(`
     if (!acted) await L.sleep(600);
   }
   await L.sleep(800); return document.querySelector('.bench-hud') ? 'bench' : 'no bench';`);
-// 体验馆列表缓缓滚
-const GALLERY_SCROLL = (secs) => run(`const n = Math.round(${secs} * 20); const total = document.body.scrollHeight - window.innerHeight; for (let i = 0; i <= n; i++) { window.scrollTo(0, total * i / n); await L.sleep(50); } return 'scrolled';`);
+// 体验馆列表缓缓划几行（不到底：有多少个空间别让人数出来）
+const GALLERY_SCROLL = (secs, px = 480) => run(`
+  const first = [...document.querySelectorAll('button')].find(b => /开始体验/.test(b.innerText));
+  const card = first ? (first.closest('article') || first.parentElement?.parentElement || first) : null;
+  const y0 = card ? card.getBoundingClientRect().top + window.scrollY - 24 : 160;
+  const n = Math.round(${secs} * 20); for (let i = 0; i <= n; i++) { window.scrollTo(0, y0 + ${px} * i / n); await L.sleep(50); } return 'scrolled';`);
 
 const scenes = [
   { go: `${BASE}/video/cover-15.html`, wait: 2500 },
@@ -69,9 +73,7 @@ for (const p of PROS) {
   );
 }
 scenes.push(
-  { go: `${BASE}/lab/gallery`, wait: 6000 },
-  { note: 'gallery_end' }, { eval: GALLERY_SCROLL(12), timeout: 40 },
-  { go: `${BASE}/video/end-15.html`, wait: 2500 },
-  { note: 'end' }, { hold: 6 },
+  { go: `${BASE}/video/end-15.html`, wait: 3000 },
+  { note: 'end' }, { hold: 13 },
 );
 export default scenes;
