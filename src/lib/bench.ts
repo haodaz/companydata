@@ -37,7 +37,7 @@ export interface BenchLayer { id: string; kind: 'glow' | 'lamp' | 'door' | 'stre
   /** seam / pour：轨迹点（百分比坐标）。给了就沿折线走（可以折返），没给就是 x,y → x+w,y+h 的直线。skin：第一个点是要避开的禁区中心（肚脐 / 伤口） */ points?: { x: number; y: number }[];
   /** pour：引导点的推荐速度（% 每模拟秒） */ pace?: number;
   /** pour：把「手离轨迹有多远」写进哪个（隐藏）控件，单位 mm */ deviation?: string;
-  /** pour / tray：手里拿的是什么。pitcher 奶缸 / hand 手（抚触、推拿、涂抹）/ needle 持针器 / scalpel 手术刀 / cautery 电刀 / clamp 血管钳 / forceps 镪子 / torch 焊枪 */ icon?: string;
+  /** pour / tray：手里拿的是什么。pitcher 奶缸 / hand 手（抚触、推拿、涂抹）/ brush 毛刷（刷浆糊、刷胶、刷漆）/ needle 持针器 / scalpel 手术刀 / cautery 电刀 / clamp 血管钳 / forceps 镪子 / torch 焊枪 */ icon?: string;
   /** pour：手里拿什么由这个控件的值决定（0、1、2… 对应 icons 下标） */ iconBy?: string;
   /** pour / tray：可选的器械列表 */ icons?: string[]; /** glow：冷态时盖一层深色（炉膛观察窗这类底图本来就亮的地方） */ cold?: boolean; x: number; y: number; w: number; h: number; level?: string; on?: string; text?: string; unit?: string; digits?: number; color?: string; label?: string }
 export interface BenchScene { image: string; credit?: string; layers: BenchLayer[] }
@@ -345,6 +345,12 @@ export function sanitizeBenchSpec(raw: any): BenchSpec | null {
       layers: raw.scene.layers.filter((l: any) => l?.id && KINDS.includes(l.kind)).slice(0, 40).map((l: any) => ({ id: String(l.id), kind: l.kind, control: l.control ? String(l.control) : undefined, cold: !!l.cold, x: Number(l.x) || 0, y: Number(l.y) || 0, w: Number(l.w) || 0, h: Number(l.h) || 0, level: l.level ? String(l.level) : undefined, on: l.on ? String(l.on) : undefined, text: l.text ? String(l.text) : undefined, unit: l.unit ? String(l.unit) : undefined, digits: l.digits !== undefined ? Number(l.digits) : undefined, color: l.color ? String(l.color).slice(0, 30) : undefined, label: l.label ? String(l.label).slice(0, 80) : undefined, pace: l.pace !== undefined ? Number(l.pace) : undefined, deviation: l.deviation ? String(l.deviation) : undefined, icon: l.icon ? String(l.icon).slice(0, 20) : undefined, iconBy: l.iconBy ? String(l.iconBy) : undefined, icons: Array.isArray(l.icons) ? l.icons.slice(0, 8).map((x: any) => String(x).slice(0, 20)) : undefined, points: Array.isArray(l.points) ? l.points.filter((q: any) => typeof q?.x === 'number' && typeof q?.y === 'number').slice(0, 400).map((q: any) => ({ x: Number(q.x), y: Number(q.y) })) : undefined })) };
   }
   if (!spec.controls.length || !spec.goals.length) return null;
+  // 轨迹层没写手里拿什么：按工位名 / 控件名推断，别一律默认成拉花的奶缸（月嫂抚触、古籍刷浆都踩过）
+  for (const l of spec.scene?.layers || []) {
+    if (l.kind !== 'pour' || l.icon || l.iconBy) continue;
+    const text = `${spec.name} ${spec.brief || ''} ${spec.controls.map(c => c.label).join(' ')}`;
+    l.icon = /奶缸|拉花|咖啡|奶泡/.test(text) ? 'pitcher' : /挤注|裱花袋|挤花/.test(text) ? 'hand' : /切配|刀工|砧板/.test(text) ? 'scalpel' : /刷|笔|浆|胶|漆|裱/.test(text) ? 'brush' : /焊/.test(text) ? 'torch' : /缝合|持针/.test(text) ? 'needle' : /切开|手术刀/.test(text) ? 'scalpel' : 'hand';
+  }
   // 表达式都要能求值
   try { const st = initBench(spec); const env = benchEnv(spec, st); env.dt = 1; for (const v of spec.vars) { if (v.rate) evalExpr(v.rate, env); if (v.set) evalExpr(v.set, env); } for (const g of spec.gauges) evalExpr(g.expr, env); for (const r of spec.rules) evalExpr(r.when, env); for (const g of spec.goals) evalExpr(g.when, env); for (const l of spec.scene?.layers || []) { if (l.level) evalExpr(l.level, env); if (l.on) evalExpr(l.on, env); if (l.text) evalExpr(l.text, env); } } catch { return null; }
   return spec;

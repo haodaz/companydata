@@ -4,6 +4,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 const ROOT = path.resolve(import.meta.dirname, '../..');
+// 念的稿和字幕分开：NOVA-45 让语音模型一个字母一个字母拼，念成「诺瓦 45」；字幕照样显示 NOVA-45
+const spoken = (t) => t.replace(/NOVA[-\s]?(\d+)/gi, '诺瓦 $1').replace(/\bNOVA\b/gi, '诺瓦');
 const KEY = fs.readFileSync(path.join(ROOT, '.env.local'), 'utf8').split('\n').find(l => l.startsWith('DASHSCOPE_API_KEY=')).split('=')[1].trim().replace(/^"|"$/g, '');
 const F = path.join(ROOT, 'node_modules', 'ffmpeg-static', 'ffmpeg');
 const [NARR, OUT] = process.argv.slice(2);
@@ -16,7 +18,8 @@ for (const s of segs) {
   if (!fs.existsSync(f)) {
     const r = await fetch('https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation', {
       method: 'POST', headers: { Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'qwen-tts', input: { text: s.text, voice: process.env.VOICE || 'Serena' } }),
+      // qwen-tts 在 2026-10-10 前后下线（Model not exist），换 qwen3-tts-flash；TTS_MODEL 可以覆盖
+      body: JSON.stringify({ model: process.env.TTS_MODEL || 'qwen3-tts-flash', input: { text: spoken(s.text), voice: process.env.VOICE || 'Serena' } }),
     });
     const j = await r.json();
     const url = j.output?.audio?.url;

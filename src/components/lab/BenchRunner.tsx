@@ -121,7 +121,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
     if (!trackLayer) return '工具';
     if (trackLayer.kind === 'seam') return '焊枪';
     const ic = trackLayer.iconBy ? (trackLayer.icons || [])[Math.round(st.controls[trackLayer.iconBy] || 0)] : trackLayer.icon;
-    return ({ needle: '持针器', scalpel: '手术刀', cautery: '电刀', clamp: '血管钳', forceps: '镪子', retractor: '牵开器', torch: '焊枪', hand: '手' } as Record<string, string>)[ic || ''] || '奶缸';
+    return ({ needle: '持针器', scalpel: '手术刀', cautery: '电刀', clamp: '血管钳', forceps: '镪子', retractor: '牵开器', torch: '焊枪', hand: '手', brush: '毛刷' } as Record<string, string>)[ic || ''] || '奶缸';
   })();
   /** 直接用手（抚触 / 推拿）：没有「握住」什么，说法换成「贴上去」 */
   const bareHand = holdName === '手';
@@ -473,6 +473,13 @@ function ToolShape({ name, s = 1 }: { name: string; s?: number }) {
       return g(<>
         <rect x={-8} y={-110} width={16} height={100} rx={6} fill="#2b3040" stroke="#6b7089" strokeWidth={2} transform="rotate(60)" />
         <rect x={-11} y={-40} width={22} height={34} rx={4} fill="#c9a24a" transform="rotate(60)" />
+      </>);
+    case 'brush':    // 毛刷（刷浆糊 / 刷胶 / 刷漆）：木柄 + 铜箍 + 刷毛，刷毛朝前进方向
+      return g(<>
+        <rect x={-120} y={-9} width={86} height={18} rx={8} fill="#b07a46" stroke="#6e4a26" strokeWidth={2} />
+        <rect x={-36} y={-14} width={18} height={28} rx={3} fill="#c9a24a" stroke="#8a6a24" strokeWidth={2} />
+        <path d="M -18 -16 L 34 -20 Q 44 0 34 20 L -18 16 Z" fill="#efe4cf" stroke="#9c8a6a" strokeWidth={2} />
+        {[-12, -4, 4, 12].map(y => <line key={y} x1={-12} y1={y} x2={34} y2={y * 1.15} stroke="#c9b894" strokeWidth={1.5} />)}
       </>);
     case 'hand':     // 手：俯视的食指 + 中指指腹，指尖朝前进方向
       return g(<>

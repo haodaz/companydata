@@ -14,7 +14,7 @@ export interface Beta3DScene {
 export const BETA3D: Record<string, Beta3DScene> = {
   cafe: {
     key: 'cafe', title: '咖啡吧台', role: '拉花师傅', spaceId: '155db8f9-b0b3-4f08-a842-df1e94c381f4',
-    url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-cafe-v1.splat', position: [0.0063, 0.0036, -0.0818], lookAt: [-2.4812, -0.8693, 25.2562], up: [-0.0009, -0.9994, -0.0348], span: 3.6,
+    url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-cafe-v2.splat', position: [0.0063, 0.0036, -0.0818], lookAt: [-2.4812, -0.8693, 25.2562], up: [-0.0009, -0.9994, -0.0348], span: 3.6,
     credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建',
     slots: ['08:00', '09:00', '10:30', '12:00', '18:30'],   // 15:30 补货盘点在后仓，不用吧台
   },

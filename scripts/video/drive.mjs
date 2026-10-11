@@ -48,7 +48,10 @@ fs.mkdirSync(path.join(OUT_DIR, 'frames'), { recursive: true });
 const chrome = spawn(CHROME, [
   `--remote-debugging-port=${PORT}`, `--user-data-dir=${PROFILE}`,
   '--headless=new', `--window-size=${W},${H}`, '--hide-scrollbars',
-  '--no-first-run', '--no-default-browser-check', 'about:blank',
+  '--no-first-run', '--no-default-browser-check',
+  // 3D 场景（WebGL）：无头默认用软件渲染，每秒只能抓 3 帧；CHROME_GPU=1 走 Metal 显卡
+  ...(process.env.CHROME_GPU ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-gpu-rasterization'] : []),
+  'about:blank',
 ], { stdio: 'ignore' });
 
 let page = null;
