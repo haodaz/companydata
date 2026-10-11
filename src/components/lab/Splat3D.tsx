@@ -31,12 +31,15 @@ export function Splat3D({ scene: s, head = false, pan = 0, camCorner, onReady, o
   useEffect(() => {
     if (!s.url || !host.current) return;
     let viewer: any = null, raf = 0, dead = false;
+    // 查看器要一个归它管的容器：它 dispose 时会把画布从容器里删掉、再把容器从 document.body 删掉（按它自己建容器的假设写的）
+    const el = Object.assign(document.createElement('div'), { style: 'position:absolute;inset:0' });
+    host.current.appendChild(el);
     (async () => {
       try {
         const GS: any = await import('@mkkellogg/gaussian-splats-3d');
         if (dead) return;
         viewer = new GS.Viewer({
-          rootElement: host.current, cameraUp: s.up, initialCameraPosition: s.position, initialCameraLookAt: s.lookAt,
+          rootElement: el, cameraUp: s.up, initialCameraPosition: s.position, initialCameraLookAt: s.lookAt,
           useBuiltInControls: false, sharedMemoryForWorkers: false, selfDrivenMode: true, dynamicScene: false, sphericalHarmonicsDegree: 1,
         });
         await viewer.addSplatScene(s.url, { showLoadingUI: false, progressiveLoad: false, splatAlphaRemovalThreshold: 5, onProgress: (p: number) => setProgress(Math.round(p)) });
@@ -61,8 +64,13 @@ export function Splat3D({ scene: s, head = false, pan = 0, camCorner, onReady, o
         tick();
       } catch (e: any) { setErr(`3D 场景加载失败：${e?.message || e}`); }
     })();
-    // dispose 是异步的：React 已经把容器拿掉时它再删画布会报 removeChild，try/catch 接不住，要接它返回的 promise
-    return () => { dead = true; cancelAnimationFrame(raf); try { Promise.resolve(viewer?.dispose()).catch(() => {}); } catch { /* 已释放 */ } };
+    // 收尾：先把容器挪到 body 底下（藏起来），它 dispose 里那两次 removeChild 才都对得上；没建出查看器就直接删
+    return () => {
+      dead = true; cancelAnimationFrame(raf);
+      if (!viewer) { el.remove(); return; }
+      el.style.display = 'none'; document.body.appendChild(el);
+      try { Promise.resolve(viewer.dispose()).catch(() => {}).finally(() => el.remove()); } catch { el.remove(); }
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [s.url]);
 

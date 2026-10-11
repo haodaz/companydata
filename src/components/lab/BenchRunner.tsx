@@ -125,7 +125,6 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
   })();
   /** 直接用手（抚触 / 推拿）：没有「握住」什么，说法换成「贴上去」 */
   const bareHand = holdName === '手';
-  const holdVerb = bareHand ? '手贴上去' : `握住${holdName}`;
   const cupLayer = scene?.layers.find(l => l.kind === 'cup' || l.kind === 'wound' || l.kind === 'incis' || l.kind === 'skin');
 
   /** 奶泡沉积：每一下实际落点，半径由当时的奶缸高度 / 流量（cup 层的 level 表达式）决定。
@@ -179,21 +178,27 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
   // ── 摄像头：食指位置 → 场景坐标；捏合且靠近手柄 = 握住（焊枪 / 奶缸）；握着移动 = 沿轨迹走 ──
   const [cam, setCam] = useState(false);
   const handRef = useRef<{ x: number; y: number; pinch: boolean; holding: boolean } | null>(null);
-  /** 握住那一刻手和手柄差多少：之后一直按「手 + 这个差」走，握住那一下不会被判成跑出轨迹 */
-  const grabOffset = useRef<Pt>({ x: 0, y: 0 });
+  /**
+   * 像鼠标一样「相对」移动（2026-10-11 第二轮，用户实测：太灵、手 / 刀 / 光标三处对不上）：
+   *   在哪儿捏都行，捏下去那一刻就拿起了工具；之后工具从它原来的位置出发，按手移动的距离 × HAND_GAIN 走。
+   *   手伸到画面边上了就松开、挪回来再捏（像把鼠标提起来）。光标画在工具实际被拽到的地方，不再画在手的绝对位置。
+   */
+  const HAND_GAIN = 0.55;
+  const grabAnchor = useRef<{ hand: Pt; tool: Pt } | null>(null);
   const onPose = (p: HandPose | null) => {
-    if (!p) { handRef.current = null; return; }
+    if (!p) { handRef.current = null; grabAnchor.current = null; return; }
     const px = p.x * VW, py = p.y * VH;
-    const prev = handRef.current; let holding = !!prev?.holding && p.pinch;
-    if (trackLayer?.control && running) {
+    let x = px, y = py, holding = false;
+    if (trackLayer?.control && running && !auto && p.pinch) {
       const prog = stRef.current.controls[trackLayer.control] || 0;
-      const h = pointOnPath(trackPts.current, prog);
-      // 捏在手柄附近 = 握住（稳定层已经按手掌大小判断捏合、去了抖）
-      if (p.pinch && !holding && Math.hypot(px - h.x, py - h.y) < 190) { holding = true; grabOffset.current = { x: h.x - px, y: h.y - py }; }
+      if (!grabAnchor.current) grabAnchor.current = { hand: { x: px, y: py }, tool: pointOnPath(trackPts.current, prog) };
+      const a = grabAnchor.current;
+      x = a.tool.x + (px - a.hand.x) * HAND_GAIN; y = a.tool.y + (py - a.hand.y) * HAND_GAIN;
+      holding = true;
       // 识别丢帧（宽限内沿用上一帧）不往轨迹里写：没有新信息
-      if (holding && !p.lost) onTrack(trackLayer, px + grabOffset.current.x, py + grabOffset.current.y, 0.45);
-    }
-    handRef.current = { x: px, y: py, pinch: p.pinch, holding };
+      if (!p.lost) onTrack(trackLayer, x, y, 0.6);
+    } else grabAnchor.current = null;
+    handRef.current = { x, y, pinch: p.pinch, holding };
   };
   const hand = handRef.current;
 
@@ -207,6 +212,15 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
   };
 
   const ev = (expr?: string) => { if (!expr) return 0; try { return evalExpr(expr, env); } catch { return 0; } };
+  /** 分层切口真正切到多深：只有刀在往前走的时候，当时的刀深才算数——光拨深度滑块不会自己切开（用户实测：调深度肚子自己一层层开合） */
+  const incisLayer = scene?.layers.find(l => l.kind === 'incis');
+  const cutDepth = useRef(0), cutProg = useRef(0);
+  if (incisLayer?.text && trackLayer?.control) {
+    const pr = st.controls[trackLayer.control] || 0;
+    if (pr < cutProg.current - 5) cutDepth.current = 0;           // 重来了
+    else if (pr > cutProg.current + 0.01) cutDepth.current = Math.max(cutDepth.current, ev(incisLayer.text));
+    cutProg.current = pr;
+  }
   const goalsDone = spec.goals.filter(g => st.goalDone[g.id] !== null).length;
   const violations = st.events.filter(e => e.kind === 'rule' && e.severity === 'violation').length;
   const recent = [...st.events].filter(e => e.kind !== 'snapshot').slice(-8).reverse();
@@ -303,7 +317,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
       <HandCam onPose={onPose} hold={holdName} width="100%" />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6, marginTop: 8 }}>
         {[
-          { k: holdName, v: hand?.holding ? (bareHand ? '已贴上' : '已握住') : hand?.pinch ? '捏住了' : '松开', c: hand?.holding ? '#3ddc97' : '#9aa0b8' },
+          { k: holdName, v: hand?.holding ? (bareHand ? '贴着' : '拿着') : hand ? '放下了' : '看不到手', c: hand?.holding ? '#3ddc97' : '#9aa0b8' },
           { k: '偏离', v: `${devNow.toFixed(1)} mm`, c: devNow > 16 ? '#ff5fa2' : '#7cc8ff' },
           { k: '进度', v: `${Math.round(trackProg)}%`, c: '#ffd166' },
         ].map(x => (
@@ -313,7 +327,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
           </div>
         ))}
       </div>
-      <div className="hud-ink3" style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 7, lineHeight: 1.6 }}>捏住拇指和食指 = {holdVerb}；松开就停在原地（可以趡机换器械、调参数）。</div>
+      <div className="hud-ink3" style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 7, lineHeight: 1.6 }}>在哪儿捏都行：拇指食指一捏就{bareHand ? '贴上去' : `拿起${holdName}`}，手往哪挪它就往哪走（比手慢一半，好控制）；松开就放下。手伸到画面边上了，松开、挪回来再捏。</div>
     </div>
   ) : null;
 
@@ -358,20 +372,26 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo }: { spe
           <filter id="bench-blur-sm" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" /></filter>
           <filter id="latte-soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3.5" /></filter>
         </defs>
-        {hand && <g pointerEvents="none"><circle cx={hand.x} cy={hand.y} r={hand.holding ? 30 : 22} fill={hand.holding ? 'rgba(255,95,162,.35)' : hand.pinch ? 'rgba(255,209,102,.35)' : 'rgba(18,181,203,.3)'} stroke={hand.holding ? '#ff5fa2' : hand.pinch ? '#ffd166' : '#12b5cb'} strokeWidth={4} /><text x={hand.x} y={hand.y + 9} textAnchor="middle" fontSize={26}>{hand.holding ? '🤏' : hand.pinch ? '🤏' : '☝️'}</text></g>}
         {scene.layers.map(l => {
           const track = (l.kind === 'seam' || l.kind === 'pour') && !!l.control;
           const prog = track ? st.controls[l.control!] || 0 : 0;
-          // 引导点：从学生起步那一刻起，按推荐速度自己往前走——跟着它，节奏就对了
+          // 引导点：不自己跑（用户实测：自己走来走去像有人在抢刀）。只在刀前面一小截指路；
+          // 按推荐速度算的节奏点要是落在刀后面（推太快了），它就留在后面，提醒慢一点
           const startT = track && l.pace ? st.events.find(e => e.kind === 'control' && e.control === l.control)?.t : undefined;
+          const paced = startT !== undefined && l.pace ? (st.t - startT) * l.pace : undefined;
+          const ghost = paced === undefined ? undefined : Math.min(100, paced < prog - 3 ? paced : prog + 4);
           return <Layer key={l.id} l={l} level={l.level ? Math.min(1, Math.max(0, ev(l.level))) : 0} on={l.on ? !!ev(l.on) : false} value={l.text ? ev(l.text) : 0}
-            progress={prog} ghost={startT !== undefined && l.pace ? Math.min(100, (st.t - startT) * l.pace) : undefined}
+            progress={prog} ghost={ghost} cutDepth={l.kind === 'incis' ? cutDepth.current : undefined}
             deposits={l.kind === 'cup' || l.kind === 'wound' || l.kind === 'incis' || l.kind === 'skin' ? deposits.current : undefined}
             toolName={l.iconBy ? (l.icons || [])[Math.round(st.controls[l.iconBy] || 0)] || l.icon || 'pitcher' : l.icon || 'pitcher'}
             pick={l.kind === 'tray' && l.control ? Math.round(st.controls[l.control] || 0) : -1}
             onPick={l.kind === 'tray' && l.control && running ? ((i: number) => act(l.control!, i)) : undefined}
             onGrab={track && running ? (e => { dragRef.current = l; (e.target as Element).setPointerCapture?.(e.pointerId); const q = scenePoint(e.clientX, e.clientY); if (q) onTrack(l, q.x, q.y); }) : undefined} />;
         })}
+        {/* 手的光标：拿着的时候画在工具被拽到的地方（就在刀尖上，偏出去多远一眼看得见）；没拿的时候只是一个淡淡的手影 */}
+        {hand && (hand.holding
+          ? <g pointerEvents="none"><circle cx={hand.x} cy={hand.y} r={16} fill="none" stroke="#ff5fa2" strokeWidth={4} /><circle cx={hand.x} cy={hand.y} r={4} fill="#ff5fa2" /></g>
+          : <g pointerEvents="none" opacity={0.75}><circle cx={hand.x} cy={hand.y} r={22} fill="rgba(18,181,203,.25)" stroke="#12b5cb" strokeWidth={3} strokeDasharray="6 5" /><text x={hand.x} y={hand.y + 50} textAnchor="middle" fill="#fff" fontSize={18} fontWeight={700} style={{ textShadow: '0 1px 4px rgba(0,0,0,.8)' }}>捏一下拿起{holdName}</text></g>)}
       </svg>
       <div className="lab-mono" style={{ position: 'absolute', left: 12, top: hud ? 34 : 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em' }}>
         <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
@@ -504,7 +524,7 @@ function ToolShape({ name, s = 1 }: { name: string; s?: number }) {
 }
 
 /** 场景覆盖层 */
-function Layer({ l, level, on, value, progress = 0, ghost, deposits, toolName = 'pitcher', pick = -1, onGrab, onPick }: { l: BenchLayer; level: number; on: boolean; value: number; progress?: number; ghost?: number; deposits?: { x: number; y: number; r: number; a: number }[]; toolName?: string; pick?: number; onGrab?: (e: React.PointerEvent) => void; onPick?: (i: number) => void }) {
+function Layer({ l, level, on, value, progress = 0, ghost, cutDepth, deposits, toolName = 'pitcher', pick = -1, onGrab, onPick }: { l: BenchLayer; level: number; on: boolean; value: number; progress?: number; ghost?: number; /** incis：刀实际切到的深度（不传就按当前刀深） */ cutDepth?: number; deposits?: { x: number; y: number; r: number; a: number }[]; toolName?: string; pick?: number; onGrab?: (e: React.PointerEvent) => void; onPick?: (i: number) => void }) {
   const x = l.x * 16, y = l.y * 9, w = l.w * 16, h = l.h * 9; const w0 = w, h0 = h;
   const cx = x + w / 2, cy = y + h / 2;
   const heat = (p: number) => p < 0.35 ? `rgba(120,10,0,${Math.min(1, p * 2)})` : p < 0.7 ? '#ff4d00' : p < 0.9 ? '#ffb347' : '#fff3c4';
@@ -561,8 +581,8 @@ function Layer({ l, level, on, value, progress = 0, ghost, deposits, toolName = 
           <path d={d} pathLength={100} fill="none" stroke="#ffd166" strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={`${Math.max(0.01, progress)} 100`} opacity={0.9} />
           {gp && (
             <g pointerEvents="none">
-              <circle cx={gp.x} cy={gp.y} r={30} fill="none" stroke="#3ddc97" strokeWidth={5} opacity={0.9}><animate attributeName="r" values="26;40;26" dur="1.1s" repeatCount="indefinite" /></circle>
-              <circle cx={gp.x} cy={gp.y} r={9} fill="#3ddc97" />
+              <circle cx={gp.x} cy={gp.y} r={16} fill="none" stroke="#3ddc97" strokeWidth={3} opacity={0.85}><animate attributeName="r" values="12;20;12" dur="1.1s" repeatCount="indefinite" /></circle>
+              <circle cx={gp.x} cy={gp.y} r={6} fill="#3ddc97" />
             </g>
           )}
           {/* 手里拿的家伙：固定一种，或者随器械控件变；走完了淡掉让人看清成品 */}
@@ -621,8 +641,8 @@ function Layer({ l, level, on, value, progress = 0, ghost, deposits, toolName = 
       );
     }
     case 'incis': {
-      // 划到哪开到哪，划开了就不合上。
-      // level = 已划开的比例（只进不退）、value = 当前深度 mm、on = 牵开器。教学示意配色，不做写实。
+      // 划到哪开到哪，划开了就不合上；切到多深也只进不退——光调刀深不划，切口不变。
+      // level = 已划开的比例（只进不退）、value = 当前刀深 mm、cutDepth = 实际切到的深度、on = 牵开器。教学示意配色，不做写实。
       const STRATA = [
         { to: 3, c: '#e9c6aa', n: '皮肤' }, { to: 12, c: '#f0d78d', n: '皮下脂肪' },
         { to: 16, c: '#e4e0d1', n: '腹外斜肌腻膜' }, { to: 24, c: '#b35b52', n: '肌层' },
@@ -633,8 +653,9 @@ function Layer({ l, level, on, value, progress = 0, ghost, deposits, toolName = 
       const ux = (bx - ax) / L, uy = (by - ay) / L, nx = -uy, ny = ux;
       const cutLen = Math.min(1, Math.max(0, level));
       const ex = ax + (bx - ax) * cutLen, ey = ay + (by - ay) * cutLen;
-      const depth = value || 0;
+      const knife = value || 0, depth = cutDepth ?? knife;
       const top = Math.max(0, STRATA.findIndex(s2 => depth <= s2.to));
+      const pending = knife > depth + 0.5;   // 刀深调好了，还没沿切口划下去
       const open = (0.95 + depth / 36 * 1.7) * (on ? 2.2 : 1);
       const lens = (half: number) =>
         `M ${ax} ${ay} Q ${(ax + ex) / 2 + nx * half} ${(ay + ey) / 2 + ny * half} ${ex} ${ey} Q ${(ax + ex) / 2 - nx * half} ${(ay + ey) / 2 - ny * half} ${ax} ${ay} Z`;
@@ -659,7 +680,8 @@ function Layer({ l, level, on, value, progress = 0, ghost, deposits, toolName = 
           })}
           <text x={cx} y={cy + skinR * 0.64 + 36} textAnchor="middle" fill="#fff" fontSize={23} fontWeight={700}
             style={{ textShadow: '0 1px 6px rgba(0,0,0,.9)' }}>
-            {cutLen > 0.01 && depth > 0.5 ? `${STRATA[top].n} · ${depth.toFixed(0)} mm${on ? ' · 已牵开' : ''}` : '还没下刀'}
+            {cutLen > 0.01 && depth > 0.5 ? `已切到${STRATA[top].n} · ${depth.toFixed(0)} mm${on ? ' · 已牵开' : ''}` : '还没下刀'}
+            {pending ? `　｜　刀深 ${knife.toFixed(0)} mm，沿切口划过去才切开` : ''}
           </text>
         </g>
       );
