@@ -14,8 +14,10 @@ const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
 const cross = (a: V3, b: V3): V3 => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
 const norm = (a: V3): V3 => { const l = Math.hypot(...a) || 1; return [a[0] / l, a[1] / l, a[2] / l]; };
 
-export function Splat3D({ scene: s, head = false, pan = 0, camCorner, onReady, onHeadSeen }: {
+export function Splat3D({ scene: s, head = false, pan = 0, still = false, camCorner, onReady, onHeadSeen }: {
   scene: Beta3DScene; head?: boolean; pan?: number;
+  /** 定住视角（答题蒙版打开时）：不跟鼠标 / 头，慢慢回到正中——蒙版上晃鼠标不带动后面的场景 */
+  still?: boolean;
   /** 摄像头小窗放在哪个角（不传就不显示小窗，但照样追踪） */
   camCorner?: React.CSSProperties;
   onReady?: () => void; onHeadSeen?: (seen: boolean) => void;
@@ -24,6 +26,8 @@ export function Splat3D({ scene: s, head = false, pan = 0, camCorner, onReady, o
   const input = useRef({ x: 0, y: 0, z: 0 });
   const panRef = useRef(pan);
   panRef.current = pan;
+  const stillRef = useRef(still);
+  stillRef.current = still;
   const [progress, setProgress] = useState(0);
   const [ready, setReady] = useState(false);
   const [err, setErr] = useState('');
@@ -74,16 +78,18 @@ export function Splat3D({ scene: s, head = false, pan = 0, camCorner, onReady, o
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [s.url]);
 
+  // 定住：输入清零，tick 里的缓动会把机位带回正中
+  useEffect(() => { if (still) input.current = { x: 0, y: 0, z: 0 }; }, [still]);
   // 没开摄像头：跟着鼠标
   useEffect(() => {
     if (head) return;
-    const move = (e: PointerEvent) => { input.current = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2, z: 0 }; };
+    const move = (e: PointerEvent) => { if (stillRef.current) return; input.current = { x: (e.clientX / window.innerWidth - 0.5) * 2, y: (e.clientY / window.innerHeight - 0.5) * 2, z: 0 }; };
     window.addEventListener('pointermove', move);
     return () => window.removeEventListener('pointermove', move);
   }, [head]);
   useEffect(() => { input.current = { x: 0, y: 0, z: 0 }; onHeadSeen?.(false); }, [head]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onHead = (p: HeadPose | null) => { if (p) { input.current = { x: p.x * 1.6, y: p.y * 1.2, z: p.z }; onHeadSeen?.(true); } };
+  const onHead = (p: HeadPose | null) => { if (!p) return; onHeadSeen?.(true); if (!stillRef.current) input.current = { x: p.x * 1.6, y: p.y * 1.2, z: p.z }; };
 
   return (
     <>

@@ -262,7 +262,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
       <div className="lab-game">
         {/* 3D 背景整段只加载一次；到工位那步先藏起来，让给工位画面。每往下一步，镜头在房间里横移一点 */}
         {backdrop && <div style={{ position: 'absolute', inset: 0, visibility: benchLive ? 'hidden' : 'visible' }}>
-          <Splat3D scene={backdrop} head={head3d} pan={sim.steps.length > 1 ? (idx / (sim.steps.length - 1) - 0.5) * 0.9 : 0} camCorner={{ left: 16, bottom: 64 }} />
+          <Splat3D scene={backdrop} head={head3d} still={phase === 'question'} pan={sim.steps.length > 1 ? (idx / (sim.steps.length - 1) - 0.5) * 0.9 : 0} camCorner={{ left: 16, bottom: 64 }} />
         </div>}
         {!benchLive && !backdrop && <img key={bg} className="lab-game-bg lab-in" src={bg} alt="" />}
         {!benchLive && <div className="lab-game-vignette" />}
