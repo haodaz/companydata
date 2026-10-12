@@ -10,13 +10,14 @@
   figcaption { position: absolute; left: 16px; bottom: 12px; font-size: 18px; font-weight: 800; letter-spacing: .08em; text-shadow: 0 1px 8px rgba(0,0,0,.95); }
   .shade { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 58% at 50% 50%, rgba(12,34,92,.80), rgba(18,52,128,.52) 60%, rgba(30,80,170,.18) 100%), linear-gradient(rgba(20,60,150,.12), rgba(20,60,150,.12)); }
   .wrap { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
-  .head { display: flex; gap: 16px; align-items: center; justify-content: center; margin-bottom: 30px; }
-  .logo { background: #fff; border-radius: 14px; padding: 10px 18px; box-shadow: 0 8px 30px rgba(0,0,0,.35); }
-  .logo img { height: 46px; display: block; }
+  .head { position: absolute; left: 0; right: 0; top: 150px; display: flex; gap: 26px; align-items: center; justify-content: center; z-index: 2; }
+  .head img { height: 58px; display: block; filter: brightness(0) invert(1) drop-shadow(0 2px 10px rgba(0,0,0,.5)); }
+  .head i { width: 2px; height: 46px; background: rgba(255,255,255,.75); }
+  .head b { font-size: 40px; font-weight: 800; letter-spacing: .14em; color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
   .badge { display: inline-block; font-size: 18px; font-weight: 800; letter-spacing: .18em; padding: 8px 18px; border-radius: 10px; background: linear-gradient(120deg,#ff5fa2,#6a5cff); margin-bottom: 0; }
   .brand { font-size: 30px; letter-spacing: .34em; color: #c7cbe6; margin-bottom: 22px; text-shadow: 0 2px 10px rgba(0,0,0,.8); }
   .line { font-size: 92px; font-weight: 900; letter-spacing: .06em; line-height: 1.22; text-shadow: 0 4px 24px rgba(0,0,0,.8); }
-  .line b { background: linear-gradient(90deg,#ffd166,#ff8a5f); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .line b { color: #7FD8FF; text-shadow: 0 0 28px rgba(80,170,255,.55), 0 4px 24px rgba(0,0,0,.6); }
   .three { margin-top: 38px; display: flex; gap: 18px; justify-content: center; }
   .three span { font-size: 30px; font-weight: 800; letter-spacing: .1em; padding: 10px 28px; border-radius: 100px; background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.28); backdrop-filter: blur(6px); }
   .three span:nth-child(1) { color: #FFB38A; } .three span:nth-child(2) { color: #B9AEFF; } .three span:nth-child(3) { color: #9CC2FF; }
@@ -35,8 +36,8 @@
     <figure><img src="baiye-story/img/cv-surgery.jpg"><figcaption>外科 · 开腹</figcaption></figure>
   </div>
   <div class="shade"></div>
-  <div class="wrap"><div>
-    <div class="head"><div class="logo"><img src="baiye-story/img/vs-logo.png" alt="平方创想 VisionSquare"></div><div class="badge">AI 百业</div></div>
+  <div class="head"><img src="baiye-story/img/vs-logo.png" alt="平方创想 VisionSquare"><i></i><b>AI 百业</b></div>
+  <div class="wrap" style="padding-top:90px"><div>
     <div class="title">平方智能：构建 AI 职人与虚拟职业空间</div>
     <div class="line">实现 AI 与人的<b>升维</b><br>构建<b>求真</b>空间的<b>心智</b>智能</div>
     <div class="three"><span>升维</span><span>求真</span><span>心智</span></div>
