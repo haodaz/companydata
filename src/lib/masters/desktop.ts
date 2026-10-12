@@ -1,7 +1,8 @@
 /**
  * 母版 A 桌面工作站（桌边 N 个程序）：顶栏 + 2–3 栏（panes）或图标坞 + 窗口 + 任务栏（dock）；
  * 块：表格（行可选）/ 卡片名单（随时间出现的实体）/ 选中实体的详情（scope）/ 便签 / 选项组 / 下拉 / 按钮 / 写作框（字数 → 控件）/ 键值格 / 自定义插件。
- * 搬过来的旧台面：审计 audit（lab-audit-desktop.ts）、分诊 triage（lab-triage-desktop.ts）。渲染：components/lab/masters/DesktopStage.tsx。
+ * 搬过来的旧台面：审计 audit（lab-audit-desktop.ts）、分诊 triage（lab-triage-desktop.ts）、验证工作站 chipdesk（lab-chipdesk-desktop.ts，dock 版面 + 波形插件）。
+ * 渲染：components/lab/masters/DesktopStage.tsx；插件在 components/lab/masters/plugins/。
  *
  * 表达式：bench 表达式（evalExpr）+ 路径。路径在求值前换成数：
  *   row.name             当前行 / 卡片 / 详情的实体字段
@@ -44,7 +45,9 @@ export interface DButton extends Base {
   kind: 'button'; label: string; labelWhen?: When<'text'>[];
   /** 能不能点（不成立时置灰 / 禁用）；doneWhen 成立时显示成「已完成」的浅绿样式且不能点 */
   enabled?: string; doneWhen?: string;
-  tone?: 'primary' | 'ghost' | 'dark' | 'violet' | 'teal' | 'gradient';
+  /** toggle：小号开关键，litWhen 成立时是实色（color，默认紫），否则白底细边；dimWhen 成立时半透明 */
+  tone?: 'primary' | 'ghost' | 'dark' | 'violet' | 'teal' | 'gradient' | 'toggle';
+  litWhen?: string; dimWhen?: string; color?: string;
   size?: 'sm' | 'md' | 'lg'; full?: boolean; /** 竖排里推到最底下 */ push?: boolean;
   action: DAction;
 }
@@ -52,7 +55,7 @@ export type DBlock =
   /** 小标题（栏目名） */
   | (Base & { kind: 'label'; text: string; spaced?: boolean; mb?: number })
   /** 一段字 */
-  | (Base & { kind: 'text'; text: string; textWhen?: When<'text'>[]; size?: number; color?: string; colorWhen?: When<'color'>[]; lh?: number })
+  | (Base & { kind: 'text'; text: string; textWhen?: When<'text'>[]; size?: number; color?: string; colorWhen?: When<'color'>[]; lh?: number; weight?: number; mb?: number })
   /** 一行「粗体标签 + 内容」 */
   | (Base & { kind: 'line'; label?: string; text: string; size?: number; color?: string })
   /** 实体抬头：大名字 + 灰字 + 右边小字 */
@@ -61,26 +64,40 @@ export type DBlock =
   | (Base & { kind: 'note'; text: string; textWhen?: When<'text'>[] })
   /** 白卡片：可带标题行（标题 + 右侧按钮），里面再放块 */
   | (Base & { kind: 'card'; title?: string; buttons?: DButton[]; blocks: DBlock[]; pad?: number; radius?: number })
+  /** 容器：竖排 / 横排（横排默认竖直居中），pad 内边距、scroll 超出滚动、border 上 / 下分隔线、wrap 换行 */
+  | (Base & { kind: 'box'; blocks: DBlock[]; dir?: 'row' | 'col'; gap?: number; pad?: number | string; scroll?: boolean; border?: 'top' | 'bottom'; bg?: string; wrap?: boolean })
+  /** 横排里把后面的东西推到最右 */
+  | (Base & { kind: 'spacer' })
+  /** 代码（深色等宽）：一段段拼起来，hl 成立的那段整行高亮（改前 / 改后那一行） */
+  | (Base & { kind: 'code'; parts: { text: string; textWhen?: When<'text'>[]; hl?: string; hlWhen?: When<'color'>[] }[] })
+  /** 大数字格（仿真结果）：小标题 + 大字，字和颜色按状态切 */
+  | (Base & { kind: 'stats'; cols?: number; items: { label: string; text: string; textWhen?: When<'text'>[]; color?: string; colorWhen?: When<'color'>[] }[] })
   /** 横排网格（'1fr 1fr'） */
   | (Base & { kind: 'grid'; cols: string; gap?: number; blocks: DBlock[] })
   /** 选中的那个实体：from 数据集里 id == at 的一行当 row；没有就显示 empty */
   | (Base & { kind: 'scope'; from: string; at: string; gap?: number; blocks: DBlock[]; empty?: DBlock[] })
   /** 表格：rows 来自数据集，点行执行 action；selWhen 选中底色、doneWhen 划掉 */
-  | (Base & { kind: 'table'; title?: string; from: string; filter?: string; cols: DCol[]; selWhen?: string; doneWhen?: string; action?: DAction })
+  | (Base & { kind: 'table'; title?: string; from: string; filter?: string; cols: DCol[]; selWhen?: string; doneWhen?: string; action?: DAction;
+      /** 表头；plain = 不套卡片、不画行线（报告里的表）；rowBgWhen 按行换底色；mono / size 整表字体 */
+      head?: string[]; plain?: boolean; rowBgWhen?: When<'color'>[]; mono?: boolean; size?: number })
   /** 卡片名单（实体随时间出现）：appear 成立才出来；还有没出来的就显示 pending */
   | (Base & { kind: 'cards'; from: string; appear?: string; pending?: string; selWhen?: string; bg?: string; bgWhen?: When<'color'>[];
       dot?: string; title: string; sub?: string; right?: { text: string; textWhen?: When<'text'>[]; color?: string; colorWhen?: When<'color'>[]; boldWhen?: string };
       body?: string; alerts?: { when: string; text: string }[]; action?: DAction })
-  /** 选项组：点哪个就把 control 拨到 v（或执行 action，ev.value = v） */
-  | (Base & { kind: 'choices'; control: string; options: { v: number; label: string; sub?: string; color?: string }[]; dir?: 'col' | 'row'; look?: 'card' | 'pill'; enabled?: string; action?: DAction })
+  /** 选项组：点哪个就把 control 拨到 v（或执行 action，ev.value = v）。
+   *  look list = 一行一个白底选项，选中后在下面露出 note（noteColor 着色：对 / 错）；current「哪个算选中」的表达式（默认控件值）；lockSel 选中的不能再点；mono 选项用等宽字 */
+  | (Base & { kind: 'choices'; control: string; options: { v: number; label: string; sub?: string; color?: string; note?: string; noteColor?: string }[]; dir?: 'col' | 'row'; look?: 'card' | 'pill' | 'list';
+      enabled?: string; action?: DAction; current?: string; lockSel?: boolean; mono?: boolean })
   /** 下拉 */
   | (Base & { kind: 'select'; control: string; options: { v: number; label: string }[]; enabled?: string })
   /** 键值格（体征这类），bad 成立的标红 */
   | (Base & { kind: 'kv'; cols?: number; mono?: boolean; items: { label: string; text: string; bad?: string }[] })
-  /** 写作框：字数（count: nonspace 去掉空白）写进 control；文字存在 ui.text_<control> */
-  | (Base & { kind: 'write'; control: string; label?: string; placeholder?: string; count?: 'nonspace' | 'all' })
+  /** 写作框：字数（count: nonspace 去掉空白）写进 control；文字存在 ui.text_<control>。
+   *  enabled 不成立时不能写；autoEdit: false = 演示时不能打字（默认能）；demoText = 演示时控件 > 0 而框里没字，就填这段（老手写的样子）；look paper = 无边框米黄纸 */
+  | (Base & { kind: 'write'; control: string; label?: string; placeholder?: string; count?: 'nonspace' | 'all'; enabled?: string; autoEdit?: boolean; demoText?: string; look?: 'box' | 'paper' })
   | DButton
-  /** 插件位：真做不成通用的（波形、电路图……）在 DesktopStage 的 DESKTOP_PLUGINS 里按名字登记；exprs / controls 写清楚它用到的，校验才拦得住 */
+  /** 插件位：真做不成通用的（波形、电路图……）在 DesktopStage 的 DESKTOP_PLUGINS 里按名字登记；exprs / controls 写清楚它用到的，校验才拦得住。
+   *  props 里的 when / 模板 / control 也照常校验；其它键里的表达式（模型参数这类）要列进 exprs */
   | (Base & { kind: 'custom'; plugin: string; props?: Record<string, unknown>; exprs?: string[]; controls?: string[] });
 
 export interface DCol { text: string; textWhen?: When<'text'>[]; mono?: boolean; size?: number; align?: 'left' | 'right' | 'center'; weight?: number; color?: string; colorWhen?: When<'color'>[]; pad?: string; nowrap?: boolean; width?: number | string }
@@ -92,6 +109,8 @@ export interface DPane {
   pad?: number | string; scroll?: boolean; border?: 'left' | 'right'; bg?: string; gap?: number;
   /** dock 版面：图标 + 标题 + 窗口位置（百分比）+ 开局开没开 */
   icon?: string; title?: string; win?: { x: number; y: number; w: number; h: number }; open?: boolean;
+  /** dock + cfg.dock：这个窗口对应的控件值；hint 标题栏灰字；badges 图标下的红字（「1 条违例」）；fs 窗口里的字号 */
+  v?: number; hint?: string; badges?: When<'text'>[]; fs?: number;
 }
 
 /** 顶栏上的东西（从左到右） */
@@ -113,12 +132,18 @@ export interface DesktopConfig {
   panes: DPane[];
   /** 任务栏右边的字（dock 版面，模板） */
   taskbar?: string;
+  /** dock 版面的窗口管理：不写 = 各窗口自己开关（ui.win_<id>）、可叠放；
+   *  写了 = 一次只显示一个窗口（最大化），前台是哪个就是 control 的值（pane.v），点图标 / 任务栏 = 拨控件；
+   *  开过的进任务栏（按打开顺序），关掉退回最后一个还开着的；brand 任务栏左边的字；empty 一个都没开时桌面上的字 */
+  dock?: { control: string; brand?: string; empty?: DBlock[] };
+  /** 整屏底色（可以是渐变） */
+  bg?: string;
   /** 数据集：表格行、病人、标记类型……每行有数字 id */
   data?: Record<string, DRow[]>;
   /** 台面小状态的初值 */
   ui?: Record<string, number | string | Record<string, number | string>>;
   /** 盯着控件：隐藏控件看值变了、其余看事件流里的新事件，执行 do（ev.value / ev.t）。演示回放时脚本直接拨控件，靠它把台面状态补上 */
-  watch?: { control: string; do: DAction }[];
+  watch?: { control: string; do: DAction; /** 台面挂上时把之前的事件补跑一遍（中途重挂不丢状态；只对事件流里的控件） */ replay?: boolean }[];
   /** 实体出现时播报（新病人到）：when 是行内表达式，出现的人数变多就播最后一个 */
   announce?: { from: string; when: string; say: string; tone?: DTone; ms?: number }[];
   sayTone?: DTone; sayMs?: number;
@@ -179,12 +204,12 @@ export const rootsOf = (cfg: DesktopConfig) => new Set([...DESK_ROOTS, ...Object
 
 // ──── 校验：表达式、控件 ────
 
-const EXPR_KEYS = new Set(['when', 'enabled', 'doneWhen', 'selWhen', 'appear', 'at', 'filter', 'bad', 'boldWhen']);
+const EXPR_KEYS = new Set(['when', 'enabled', 'doneWhen', 'selWhen', 'appear', 'at', 'filter', 'bad', 'boldWhen', 'litWhen', 'dimWhen', 'current']);
 function walk(o: any, fn: (k: string, v: any, parent: any) => void) {
   if (Array.isArray(o)) { o.forEach(x => walk(x, fn)); return; }
   if (!o || typeof o !== 'object') return;
   for (const [k, v] of Object.entries(o)) {
-    if (k === 'data' || k === 'props' || k === 'ui' && !Array.isArray(v)) continue;   // 数据集、插件参数、ui 初值不是表达式
+    if (k === 'data' || k === 'demoText' || k === 'ui' && !Array.isArray(v)) continue;   // 数据集、演示文字、ui 初值不是表达式（插件参数照常走）
     fn(k, v, o);
     walk(v, fn);
   }

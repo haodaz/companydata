@@ -11,6 +11,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { benchEnv, evalExpr, type BenchState } from '@/lib/bench';
 import type { MasterStageProps } from '@/lib/lab-masters';
 import { TPL_RE, isPath, parsePath, parseTpl, rootsOf, subPaths, type DAction, type DBlock, type DButton, type DCol, type DPane, type DRow, type DTone, type DTopItem, type DesktopConfig } from '@/lib/masters/desktop';
+import { WaveformPlugin } from '@/components/lab/masters/plugins/waveform';
 
 type UiVal = number | string | Record<string, number | string>;
 type Ui = Record<string, UiVal>;
@@ -19,8 +20,8 @@ type Val = number | string | undefined;
 
 /** 插件拿到的东西：求值 / 填模板 / 执行动作 */
 export interface DesktopPluginProps { block: Extract<DBlock, { kind: 'custom' }>; ctx: DCtx; st: BenchState; canAct: boolean; num: (e: string, ctx?: DCtx) => number; fill: (t: string, ctx?: DCtx) => string; run: (a: DAction, ctx?: DCtx) => void }
-/** 插件登记处：名字 → 组件（ChipDesk 的波形这类以后放这里） */
-export const DESKTOP_PLUGINS: Record<string, React.ComponentType<DesktopPluginProps>> = {};
+/** 插件登记处：名字 → 组件（plugins/ 下各一个文件，只 `import type` 本文件） */
+export const DESKTOP_PLUGINS: Record<string, React.ComponentType<DesktopPluginProps>> = { waveform: WaveformPlugin };
 
 const INK = '#171a2e', GRAY = '#6b7089', LINE = 'rgba(23,26,46,.08)', OFF = '#c9cbe0';
 const FONT = 'ui-sans-serif, system-ui, -apple-system, "PingFang SC", sans-serif', MONO = 'ui-monospace, Menlo, monospace';
@@ -28,7 +29,7 @@ const TONES: Record<DTone, { bg: string; fg: string; w: number }> = {
   pink: { bg: '#ffe3ec', fg: '#d6336c', w: 700 }, violet: { bg: '#e9e6ff', fg: '#4b3fd6', w: 700 }, alarm: { bg: '#d6336c', fg: '#fff', w: 800 },
   green: { bg: '#e6f6ec', fg: '#12a150', w: 700 }, gray: { bg: '#eef0f6', fg: GRAY, w: 600 },
 };
-const BTN: Record<NonNullable<DButton['tone']>, { bg: string; fg: string; off?: string; border?: string; w: number }> = {
+const BTN: Record<Exclude<DButton['tone'], 'toggle' | undefined>, { bg: string; fg: string; off?: string; border?: string; w: number }> = {
   primary: { bg: '#6a5cff', fg: '#fff', off: OFF, w: 800 }, ghost: { bg: '#fff', fg: INK, border: '1px solid rgba(23,26,46,.15)', w: 700 },
   dark: { bg: INK, fg: '#fff', off: OFF, w: 800 }, violet: { bg: '#6a5cff', fg: '#fff', w: 700 }, teal: { bg: '#12b5cb', fg: '#fff', w: 700 },
   gradient: { bg: 'linear-gradient(135deg,#6a5cff,#12b5cb)', fg: '#fff', off: OFF, w: 800 },
@@ -94,6 +95,18 @@ export function DesktopStage({ spec, cfg, st, running, auto, act, setHidden }: M
   live.current = { st, canAct, act, setHidden };
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
   for (const p of cfg.panes) if (p.id && ui.current[`win_${p.id}`] === undefined) ui.current[`win_${p.id}`] = p.open === false ? 0 : 1;
+  // 带 demoText 的写作框（演示时补上老手写的那段）
+  const demoWrites = useRef<{ control: string; text: string }[] | null>(null);
+  if (!demoWrites.current) {
+    const out: { control: string; text: string }[] = [];
+    const scan = (o: unknown) => {
+      if (Array.isArray(o)) o.forEach(scan);
+      else if (o && typeof o === 'object') { const b = o as Partial<Extract<DBlock, { kind: 'write' }>>; if (b.kind === 'write' && b.demoText && b.control) out.push({ control: b.control, text: b.demoText }); Object.values(o).forEach(scan); }
+    };
+    scan([cfg.panes, cfg.dock?.empty]); demoWrites.current = out;
+  }
+  /** dock 窗口管理：开过的窗口（值 → 打开顺序） */
+  const dockOpen = () => { const m = ui.current.dock_open; return (m && typeof m === 'object' ? m : {}) as Record<string, number>; };
 
   const E = makeEval(cfg, roots, benchEnv(spec, st), ui.current, st.controls);
   const later = (ms: number, fn: () => void) => { timers.current.push(setTimeout(fn, ms)); };
@@ -137,8 +150,12 @@ export function DesktopStage({ spec, cfg, st, running, auto, act, setHidden }: M
   };
 
   // watch：隐藏控件看值、其余看新事件；announce：实体出现就播报（都在渲染后做，不在渲染里改状态）
-  const seen = useRef<{ idx: number; vals: Record<string, number>; counts: number[] } | null>(null);
-  if (!seen.current) seen.current = { idx: st.events.length, vals: { ...st.controls }, counts: (cfg.announce || []).map(() => 0) };
+  // replay 的 watch 从头看事件流，其余从挂上那一刻看起（start 之前的跳过）
+  const seen = useRef<{ idx: number; start: number; vals: Record<string, number>; counts: number[] } | null>(null);
+  if (!seen.current) {
+    const replay = (cfg.watch || []).some(w => w.replay);
+    seen.current = { idx: replay ? 0 : st.events.length, start: st.events.length, vals: { ...st.controls }, counts: (cfg.announce || []).map(() => 0) };
+  }
   useEffect(() => {
     const S = seen.current!;
     for (const w of cfg.watch || []) {
@@ -147,8 +164,18 @@ export function DesktopStage({ spec, cfg, st, running, auto, act, setHidden }: M
       const v = st.controls[w.control];
       if (v !== S.vals[w.control]) { S.vals[w.control] = v; run(w.do, { ev: { value: v, t: st.t } }, false); }
     }
-    const fresh = st.events.slice(S.idx); S.idx = st.events.length;
-    for (const e of fresh) if (e.kind === 'control') for (const w of cfg.watch || []) if (w.control === e.control) run(w.do, { ev: { value: e.value ?? 0, t: e.t } }, false);
+    const from = S.idx, fresh = st.events.slice(from); S.idx = st.events.length;
+    fresh.forEach((e, k) => {
+      if (e.kind !== 'control') return;
+      for (const w of cfg.watch || []) if (w.control === e.control && (w.replay || from + k >= S.start)) run(w.do, { ev: { value: e.value ?? 0, t: e.t } }, false);
+    });
+    // dock：前台窗口记进「开过的」（任务栏），演示时脚本拨控件也一样
+    if (cfg.dock) {
+      const v = Math.round(st.controls[cfg.dock.control] || 0), m = dockOpen();
+      if (v && m[v] === undefined) { const n = Number(ui.current.dock_n || 0) + 1; ui.current.dock_n = n; ui.current.dock_open = { ...m, [v]: n }; rerender(x => x + 1); }
+    }
+    // 演示：字数控件有了而框里没字，填上老手写的那段
+    if (auto) for (const w of demoWrites.current!) if ((st.controls[w.control] || 0) > 0 && !ui.current[`text_${w.control}`]) { ui.current[`text_${w.control}`] = w.text; rerender(x => x + 1); }
     (cfg.announce || []).forEach((a, i) => {
       const rows = (cfg.data?.[a.from] || []).filter(row => E.ok(a.when, { row }));
       if (rows.length > S.counts[i]) { S.counts[i] = rows.length; say(E.fill(a.say, { row: rows[rows.length - 1] }), a.tone || 'violet', a.ms || 3500); }
@@ -159,6 +186,15 @@ export function DesktopStage({ spec, cfg, st, running, auto, act, setHidden }: M
   const button = (b: DButton, ctx: DCtx, key: React.Key) => {
     if (b.when && !E.ok(b.when, ctx)) return null;
     const on = E.ok(b.enabled, ctx), done = !!b.doneWhen && E.ok(b.doneWhen, ctx);
+    if (b.tone === 'toggle') {
+      const lit = !!b.litWhen && E.ok(b.litWhen, ctx), col = b.color || '#6a5cff';
+      return (
+        <button key={key} disabled={!canAct || !on} onClick={() => run(b.action, ctx)} style={{
+          border: `1px solid ${lit && b.color ? col : 'rgba(23,26,46,.14)'}`, background: lit ? col : '#fff', color: lit ? '#fff' : INK, borderRadius: 10, padding: '6px 12px',
+          fontSize: 13, fontWeight: 700, cursor: canAct ? 'pointer' : 'default', opacity: b.dimWhen && E.ok(b.dimWhen, ctx) ? 0.5 : undefined, marginLeft: b.push ? 'auto' : undefined, marginTop: b.mt, flexShrink: 0,
+        }}>{E.pick(b.labelWhen, 'text', b.label, ctx)}</button>
+      );
+    }
     const T = BTN[b.tone || 'primary'], size = b.size || 'md';
     const bg = done ? '#e6f6ec' : !on && T.off ? T.off : T.bg, fg = done ? '#12a150' : T.fg;
     const pad = size === 'sm' ? '6px 12px' : size === 'lg' ? (b.full ? '14px 0' : '14px 18px') : b.full ? '9px 0' : '7px 14px';
@@ -171,8 +207,8 @@ export function DesktopStage({ spec, cfg, st, running, auto, act, setHidden }: M
     );
   };
 
-  const cell = (c: DCol, ctx: DCtx, i: number) => (
-    <td key={i} style={{ padding: c.pad || '7px 8px', borderBottom: '1px solid rgba(23,26,46,.06)', fontFamily: c.mono ? MONO : undefined, fontSize: c.size || 13, textAlign: c.align, fontWeight: c.weight,
+  const cell = (c: DCol, ctx: DCtx, i: number, plain = false) => (
+    <td key={i} style={{ padding: c.pad || '7px 8px', borderBottom: plain ? undefined : '1px solid rgba(23,26,46,.06)',fontFamily: c.mono ? MONO : undefined, fontSize: c.size || 13, textAlign: c.align, fontWeight: c.weight,
       color: c.color || c.colorWhen ? E.pick(c.colorWhen, 'color', c.color, ctx) || undefined : undefined, whiteSpace: c.nowrap ? 'nowrap' : undefined, width: c.width }}>{E.pick(c.textWhen, 'text', c.text, ctx)}</td>
   );
 
@@ -183,7 +219,30 @@ export function DesktopStage({ spec, cfg, st, running, auto, act, setHidden }: M
     switch (b.kind) {
       case 'button': return button(b, ctx, key);
       case 'label': return <div key={key} style={{ fontSize: 12, color: GRAY, marginBottom: b.mb ?? 6, marginTop: b.mt, letterSpacing: b.spaced ? '.06em' : undefined }}>{E.fill(b.text, ctx)}</div>;
-      case 'text': return <div key={key} style={{ fontSize: b.size || 14, color: E.pick(b.colorWhen, 'color', b.color || GRAY, ctx), marginTop: b.mt, lineHeight: b.lh }}>{E.pick(b.textWhen, 'text', b.text, ctx)}</div>;
+      case 'text': return <div key={key} style={{ fontSize: b.size || 14, color: E.pick(b.colorWhen, 'color', b.color || GRAY, ctx), marginTop: b.mt, marginBottom: b.mb, lineHeight: b.lh, fontWeight: b.weight }}>{E.pick(b.textWhen, 'text', b.text, ctx)}</div>;
+      case 'spacer': return <span key={key} style={{ marginLeft: 'auto' }} />;
+      case 'box': {
+        const row = b.dir === 'row', line = `1px solid ${LINE}`;
+        return (
+          <div key={key} style={{ display: 'flex', flexDirection: row ? 'row' : 'column', alignItems: row ? 'center' : undefined, flexWrap: b.wrap ? 'wrap' : undefined, gap: b.gap, padding: b.pad, background: b.bg,
+            overflow: b.scroll ? 'auto' : undefined, borderTop: b.border === 'top' ? line : undefined, borderBottom: b.border === 'bottom' ? line : undefined, marginTop: b.mt, flexShrink: b.grow ? undefined : 0, ...grow }}>
+            {blocks(b.blocks, ctx)}
+          </div>);
+      }
+      case 'code': return (
+        <pre key={key} style={{ margin: 0, marginTop: b.mt, background: '#0f1224', color: '#d9dcef', padding: 14, borderRadius: 10, fontFamily: MONO, fontSize: 12.5, lineHeight: 1.6, whiteSpace: 'pre' }}>
+          {b.parts.map((p, i) => {
+            const t = E.pick(p.textWhen, 'text', p.text, ctx), hl = p.hl || p.hlWhen ? E.pick(p.hlWhen, 'color', p.hl, ctx) : '';
+            return hl ? <span key={i} style={{ background: hl, display: 'inline-block', width: '100%' }}>{t}</span> : <React.Fragment key={i}>{t}</React.Fragment>;
+          })}
+        </pre>);
+      case 'stats': return (
+        <div key={key} style={{ display: 'grid', gap: 10, gridTemplateColumns: `repeat(${b.cols || b.items.length}, 1fr)`, marginTop: b.mt }}>
+          {b.items.map((x, i) => <div key={i} style={{ padding: '12px 14px', borderRadius: 12, background: '#f3f4fa' }}>
+            <div style={{ fontSize: 12, color: GRAY }}>{E.fill(x.label, ctx)}</div>
+            <div style={{ fontSize: 22, fontWeight: 800, color: E.pick(x.colorWhen, 'color', x.color || INK, ctx) }}>{E.pick(x.textWhen, 'text', x.text, ctx)}</div>
+          </div>)}
+        </div>);
       case 'line': return <div key={key} style={{ marginTop: b.mt, fontSize: b.size || 14, color: b.color }}>{b.label && <b>{E.fill(b.label, ctx)}</b>}{E.fill(b.text, ctx)}</div>;
       case 'head': return (
         <div key={key} style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginTop: b.mt }}>
@@ -205,16 +264,20 @@ export function DesktopStage({ spec, cfg, st, running, auto, act, setHidden }: M
       }
       case 'table': {
         const rows = (cfg.data?.[b.from] || []).filter(row => E.ok(b.filter, { row }));
+        const plain = !!b.plain;
         return (
-          <div key={key} style={{ background: '#fff', borderRadius: 14, border: `1px solid ${LINE}`, overflow: 'hidden', display: 'flex', flexDirection: 'column', minHeight: 0, marginTop: b.mt, ...grow }}>
+          <div key={key} style={plain ? { marginTop: b.mt, minHeight: 0, ...grow } : { background: '#fff', borderRadius: 14, border: `1px solid ${LINE}`, overflow: 'hidden', display: 'flex', flexDirection: 'column', minHeight: 0, marginTop: b.mt, ...grow }}>
             {b.title && <div style={{ padding: '10px 12px', fontWeight: 800, borderBottom: `1px solid ${LINE}`, background: '#f8f9fd', fontSize: 13.5 }}>{E.fill(b.title, ctx)}</div>}
-            <div style={{ overflow: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse' }}><tbody>{rows.map(row => {
-              const c = { ...ctx, row }, sel = !!b.selWhen && E.ok(b.selWhen, c), done = !!b.doneWhen && E.ok(b.doneWhen, c);
-              return (
-                <tr key={String(row.id)} onClick={() => b.action && run(b.action, c)} style={{ cursor: canAct && b.action ? 'pointer' : 'default', background: sel ? '#efedff' : done ? '#f1f9f4' : 'transparent', color: done ? '#8a93a6' : INK, textDecoration: done ? 'line-through' : 'none' }}>
-                  {b.cols.map((col, i) => cell(col, c, i))}
-                </tr>);
-            })}</tbody></table></div>
+            <div style={{ overflow: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: b.mono ? MONO : undefined, fontSize: b.size }}>
+              {b.head && <thead><tr style={{ color: GRAY, textAlign: 'left', background: '#f8f9fd' }}>{b.head.map((h, i) => <th key={i} style={{ padding: '8px 10px', borderBottom: '1px solid rgba(23,26,46,.1)' }}>{E.fill(h, ctx)}</th>)}</tr></thead>}
+              <tbody>{rows.map(row => {
+                const c = { ...ctx, row }, sel = !!b.selWhen && E.ok(b.selWhen, c), done = !!b.doneWhen && E.ok(b.doneWhen, c);
+                const bg = sel ? '#efedff' : done ? '#f1f9f4' : b.rowBgWhen ? E.pick(b.rowBgWhen, 'color', 'transparent', c) : 'transparent';
+                return (
+                  <tr key={String(row.id)} onClick={() => b.action && run(b.action, c)} style={{ cursor: canAct && b.action ? 'pointer' : 'default', background: bg, color: done ? '#8a93a6' : INK, textDecoration: done ? 'line-through' : 'none' }}>
+                    {b.cols.map((col, i) => cell(col, c, i, plain))}
+                  </tr>);
+              })}</tbody></table></div>
           </div>);
       }
       case 'cards': {
@@ -239,8 +302,20 @@ export function DesktopStage({ spec, cfg, st, running, auto, act, setHidden }: M
           </div>);
       }
       case 'choices': {
-        const on = E.ok(b.enabled, ctx), cur = Math.round(st.controls[b.control] || 0), row = b.dir === 'row';
+        const on = E.ok(b.enabled, ctx), cur = Math.round(b.current ? E.num(b.current, ctx) : st.controls[b.control] || 0), row = b.dir === 'row';
         const pickOpt = (v: number) => b.action ? run(b.action, { ...ctx, ev: { value: v, t: st.t } }) : run({ set: [{ control: b.control, value: v }] }, ctx);
+        if (b.look === 'list') return (
+          <div key={key} style={{ marginTop: b.mt }}>
+            {b.options.map(o => {
+              const sel = cur === o.v;
+              return (
+                <button key={o.v} disabled={!canAct || !on || (!!b.lockSel && sel)} onClick={() => pickOpt(o.v)} style={{ display: 'block', width: '100%', textAlign: 'left', marginTop: 8, padding: '10px 12px', borderRadius: 10,
+                  border: sel ? '2px solid #6a5cff' : '1px solid rgba(23,26,46,.12)', background: '#fff', cursor: canAct ? 'pointer' : 'default', fontSize: 13.5, color: INK }}>
+                  <span style={{ fontFamily: b.mono ? MONO : undefined }}>{E.fill(o.label, ctx)}</span>
+                  {sel && o.note && <div style={{ marginTop: 6, fontSize: 12.5, color: o.noteColor || GRAY }}>{E.fill(o.note, ctx)}</div>}
+                </button>);
+            })}
+          </div>);
         return (
           <div key={key} style={{ display: 'flex', flexDirection: row ? 'row' : 'column', gap: row ? 6 : 12, marginTop: b.mt }}>
             {b.options.map(o => {
@@ -268,15 +343,16 @@ export function DesktopStage({ spec, cfg, st, running, auto, act, setHidden }: M
           {b.items.map((x, i) => { const bad = !!x.bad && E.ok(x.bad, ctx); return <div key={i} style={{ padding: '6px 10px', borderRadius: 8, background: bad ? '#fff0f3' : '#f6f7fb', color: bad ? '#d6336c' : INK, fontWeight: bad ? 800 : 600 }}>{E.fill(x.label, ctx)}：{E.fill(x.text, ctx)}</div>; })}
         </div>);
       case 'write': {
-        const tk = `text_${b.control}`, text = String(ui.current[tk] ?? '');
+        const tk = `text_${b.control}`, text = String(ui.current[tk] ?? ''), on = E.ok(b.enabled, ctx);
+        const paper: React.CSSProperties = { flex: 1, minHeight: 0, border: 0, outline: 'none', resize: 'none', padding: 16, fontSize: 14, lineHeight: 1.75, fontFamily: 'inherit', background: '#fffdf5', color: INK };
         return (
           <div key={key} style={{ display: 'flex', flexDirection: 'column', marginTop: b.mt, ...(b.grow ? { flex: 1, minHeight: 0 } : {}) }}>
             {b.label && <div style={{ fontSize: 12, color: GRAY, marginBottom: 6 }}>{E.fill(b.label, ctx)}</div>}
-            {/* 和代码版一样：演示时也能打字，但只有自己操作时字数才进控件 */}
-            <textarea value={text} disabled={!canAct && !auto} placeholder={b.placeholder} onChange={e => {
+            {/* 默认和审计代码版一样：演示时也能打字，但只有自己操作时字数才进控件；autoEdit: false 演示时锁住 */}
+            <textarea value={text} disabled={!on || (b.autoEdit === false ? !canAct : !canAct && !auto)} placeholder={b.placeholder} onChange={e => {
               const v = e.target.value; ui.current[tk] = v; rerender(x => x + 1);
               if (live.current.canAct) write(b.control, b.count === 'all' ? v.length : v.replace(/\s/g, '').length);
-            }} style={{ flex: 1, minHeight: 100, resize: 'none', padding: 10, borderRadius: 8, border: '1px solid rgba(23,26,46,.16)', background: '#fbfbfe', color: INK, fontSize: 13, lineHeight: 1.7 }} />
+            }} style={b.look === 'paper' ? paper : { flex: 1, minHeight: 100, resize: 'none', padding: 10, borderRadius: 8, border: '1px solid rgba(23,26,46,.16)', background: '#fbfbfe', color: INK, fontSize: 13, lineHeight: 1.7 }} />
           </div>);
       }
       case 'custom': {
@@ -304,10 +380,55 @@ export function DesktopStage({ spec, cfg, st, running, auto, act, setHidden }: M
     </div>
   );
   const paneStyle = (p: DPane): React.CSSProperties => ({
-    padding: p.pad, overflow: p.scroll ? 'auto' : 'hidden', minHeight: 0, minWidth: 0, display: 'flex', flexDirection: 'column', gap: p.gap, background: p.bg,
+    padding: p.pad, overflow: p.scroll ? 'auto' : 'hidden', minHeight: 0, minWidth: 0, display: 'flex', flexDirection: 'column', gap: p.gap, background: p.bg, fontSize: p.fs,
     borderLeft: p.border === 'left' ? `1px solid ${LINE}` : undefined, borderRight: p.border === 'right' ? `1px solid ${LINE}` : undefined,
   });
-  const root: React.CSSProperties = { position: 'absolute', inset: 0, background: '#f3f5fa', color: INK, fontFamily: FONT, overflow: 'hidden' };
+  const root: React.CSSProperties = { position: 'absolute', inset: 0, background: cfg.bg || '#f3f5fa', color: INK, fontFamily: FONT, overflow: 'hidden' };
+
+  if (cfg.layout === 'dock' && cfg.dock) {
+    // 窗口跟着控件走：前台 = 控件值对应的那个窗口（最大化），开过的进任务栏；点图标 / 任务栏 = 拨控件（走 act，评分看得见「开了哪个程序」）
+    const D = cfg.dock, cur = Math.round(st.controls[D.control] || 0);
+    const wins = cfg.panes.filter(p => p.v !== undefined), active = wins.find(p => p.v === cur);
+    const opened = Object.entries(dockOpen()).sort((a, b) => a[1] - b[1]).map(([v]) => Number(v));
+    const go = (v: number) => run({ set: [{ control: D.control, value: v }] });
+    // 关窗口：和代码版一样不拦（没在操作时控件拨不动，下一拍又会记回任务栏末尾）
+    const close = (p: DPane) => {
+      const m = { ...dockOpen() }; delete m[String(p.v)]; ui.current.dock_open = m;
+      const rest = opened.filter(v => v !== p.v);
+      if (cur === p.v) go(rest[rest.length - 1] || 0);
+      rerender(x => x + 1);
+    };
+    const tab = (on: boolean): React.CSSProperties => ({ border: '1px solid rgba(23,26,46,.14)', background: on ? '#6a5cff' : '#fff', color: on ? '#fff' : INK, borderRadius: 10, padding: '6px 12px', fontSize: 13, fontWeight: 700, cursor: canAct ? 'pointer' : 'default' });
+    return (
+      <div style={{ ...root, display: 'flex', flexDirection: 'column' }}>
+        {cfg.topbar.length > 0 && topbar}
+        <div style={{ position: 'relative', flex: 1, minHeight: 0 }}>
+          <div style={{ position: 'absolute', left: 18, top: 18, display: 'grid', gap: 14, width: 96 }}>
+            {wins.map(p => <button key={p.v} disabled={!canAct} onClick={() => go(p.v!)} title={p.hint ? E.fill(p.hint) : undefined}
+              style={{ border: 0, background: cur === p.v ? 'rgba(106,92,255,.12)' : 'transparent', borderRadius: 14, padding: '10px 4px', cursor: canAct ? 'pointer' : 'default', color: INK, textAlign: 'center' }}>
+              <div style={{ width: 56, height: 56, margin: '0 auto 6px', borderRadius: 16, background: '#fff', boxShadow: '0 6px 18px rgba(23,26,46,.12)', display: 'grid', placeItems: 'center', fontSize: 28 }}>{p.icon || '🗔'}</div>
+              <div style={{ fontSize: 12.5, fontWeight: 700 }}>{E.fill(p.title)}</div>
+              {(p.badges || []).filter(x => E.ok(x.when)).map((x, i) => <div key={i} style={{ fontSize: 10, color: '#d6336c', fontWeight: 800 }}>{E.fill(x.text)}</div>)}
+            </button>)}
+          </div>
+          {active ? (
+            <div style={{ position: 'absolute', left: 132, top: 18, right: 18, bottom: 14, borderRadius: 16, background: '#fff', boxShadow: '0 24px 60px rgba(23,26,46,.16)', border: `1px solid ${LINE}`, display: 'grid', gridTemplateRows: '44px minmax(0, 1fr)', overflow: 'hidden' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 14px', background: '#f8f9fd', borderBottom: `1px solid ${LINE}` }}>
+                <span style={{ fontSize: 18 }}>{active.icon}</span><span style={{ fontWeight: 800 }}>{E.fill(active.title)}</span>{active.hint && <span style={{ fontSize: 12, color: GRAY }}>{E.fill(active.hint)}</span>}
+                <button onClick={() => close(active)} style={{ marginLeft: 'auto', border: 0, background: 'transparent', color: GRAY, cursor: 'pointer', fontSize: 16 }}>✕</button>
+              </div>
+              <div style={{ ...paneStyle(active), height: '100%' }}>{blocks(active.blocks, {})}</div>
+            </div>
+          ) : D.empty && <div style={{ position: 'absolute', left: 160, top: '40%' }}>{blocks(D.empty, {})}</div>}
+        </div>
+        <div style={{ height: 54, display: 'flex', alignItems: 'center', gap: 8, padding: '0 14px', background: 'rgba(255,255,255,.85)', borderTop: `1px solid ${LINE}`, backdropFilter: 'blur(8px)', flexShrink: 0 }}>
+          {D.brand && <span style={{ fontWeight: 800, fontSize: 13, color: '#6a5cff', marginRight: 8 }}>{E.fill(D.brand)}</span>}
+          {opened.map(v => { const p = wins.find(x => x.v === v); return p && <button key={v} onClick={() => canAct && go(v)} style={{ ...tab(cur === v), display: 'flex', gap: 6, alignItems: 'center' }}><span>{p.icon}</span>{E.fill(p.title)}</button>; })}
+          {cfg.taskbar && <span style={{ marginLeft: 'auto', fontSize: 12.5, color: GRAY }}>{E.fill(cfg.taskbar)}</span>}
+        </div>
+      </div>
+    );
+  }
 
   if (cfg.layout === 'dock') {
     // 图标坞 + 窗口 + 任务栏：窗口开没开记在 ui.win_<id>（动作里也能开关），点哪个窗口哪个到最上面
