@@ -125,6 +125,20 @@ export const BETA3D: Record<string, Beta3DScene> = {
   },
   // ⚠ UI 测试夹具，不是真数据：同一张锅炉房图当两个点位，只为看街景箭头 / 走动过场 / 要素标记。
   // 点位 b 的 yaw = 90：假装 b 的图正中朝世界的 90°，走过去时视线会按这个偏移换算。spots 的内容是编的
+  'reef-dive': {
+    key: 'reef-dive', title: '珊瑚礁 · 潜水员视角', role: '潜导 / 海洋科考（试看）', spaceId: '',
+    url: '', position: [0, 0, 0], lookAt: [0, 0, 1], up: [0, -1, 0], span: 1,
+    // 两个礁区用箭头连起来：从苍鹭岛礁丘「游」到伊利奥特夫人岛。原图 9500 宽，缩到 8192 免得有的显卡贴图上限黑屏
+    pano: {
+      url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-heron_bommie_svii.jpg', kind: 'image',
+      nodes: [
+        { id: 'heron', url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-heron_bommie_svii.jpg', kind: 'image', links: [{ to: 'elliot', yaw: 0, label: '游去伊利奥特夫人岛礁区' }] },
+        { id: 'elliot', url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-lady_elliot_island_svii.jpg', kind: 'image', links: [{ to: 'heron', yaw: 180, label: '游回苍鹭岛礁丘' }] },
+      ],
+    },
+    credit: '360° 水下实拍 · Underwater Earth / XL Catlin Seaview Survey（Christophe Bailhache）· 大堡礁 Heron Bommie / Lady Elliot Island · CC BY-SA 3.0 · 来自 Wikimedia Commons',
+    slots: [],   // 2026-10-12 和用户一起挑的（带比特看大海）；授权 BY-SA：要署名，改了再发布也得同授权
+  },
   'boiler-walk': {
     key: 'boiler-walk', title: '锅炉房 · 走动测试', role: '锅炉运行 / 设备巡检（试看）', spaceId: '',
     url: '', position: [0, 0, 0], lookAt: [0, 0, 1], up: [0, -1, 0], span: 1,
