@@ -3,6 +3,8 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { labError } from '@/lib/skill-lab-server';
 import { loadStudio } from '@/lib/lab-studio-server';
 import { checkChapter, checkDay, type StudioChapter } from '@/lib/lab-studio';
+import { recordEdit } from '@/lib/lab-edits';
+import { getSessionUser } from '@/lib/session';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -50,6 +52,7 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
 
     const { error } = await supabaseAdmin.from('lab_chapters').update(patch).eq('id', cid);
     if (error) throw error;
+    await recordEdit({ task_id: id, chapter_id: cid, source: 'studio', actor: (await getSessionUser(req).catch(() => null))?.userId, before: cur, after: patch });
     // seq=1 是老空间迁来的那章：skill_tasks.sim 还被重建工位、刷新美术、首页统计这些老代码读，跟着同步
     if (patch.sim && cur.seq === 1) await supabaseAdmin.from('skill_tasks').update({ sim: patch.sim }).eq('id', id);
     return NextResponse.json({ ok: true, ...(await loadStudio(id)) });

@@ -12,7 +12,8 @@ import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { generateTask, type JdInput } from '@/lib/agents/skill-lab';
 import type { SkillCard } from '@/lib/skill-lab';
 import { sanitizeSim, sanitizeTrace, type Sim, type SimStep, type SimTrace } from '@/lib/skill-sim';
-import { benchTimeline, evalExpr, sanitizeBenchSpec, simulateScript, type BenchSpec } from '@/lib/bench';
+import { benchTimeline, evalExpr, playDt, sanitizeBenchSpec, simulateScript, type BenchSpec } from '@/lib/bench';
+import { benchToolIssues } from '@/lib/lab-studio';
 import { BENCH_WELD } from '@/lib/skill-lab-seed-bench';
 import { ART_FAMILIES, artAvailable, makeNpcAsset, makeSceneAsset, npcAssetReusing, sceneAssetReusing } from '@/lib/lab-art';
 
@@ -234,7 +235,7 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
     if (!spec) { feedback = `控件 / 变量 / 目标缺失，或某个表达式无法求值（检查：只用允许的运算和函数、引用的 id 都存在、字段名拼写）。${benchSpecProblem(raw)}`; diag.note = `第 ${attempt + 1} 轮：设备定义没通过静态校验。${benchSpecProblem(raw)}`; console.warn(`[build] bench attempt ${attempt + 1}: ${feedback.slice(0, 300)}`); continue; }
     if (!spec.expertScript?.length) { feedback = '缺少 expertScript。'; diag.note = `第 ${attempt + 1} 轮：没给老手脚本，无法验证这台工位自己做不做得到。`; console.warn(`[build] bench attempt ${attempt + 1}: 缺少 expertScript`); continue; }
     const until = Math.min(spec.maxSeconds, Math.max(...spec.expertScript.map(a => a.t)) + 60);
-    const tr = simulateScript(spec, spec.expertScript, until);
+    const tr = simulateScript(spec, spec.expertScript, until, playDt(spec));   // 按体验端的真实步长自检，不是 dt=1
     const m = tr.metrics;
     const layers = Array.isArray(raw.layers) ? raw.layers : [];
     if (m.goals_done < m.goals_total || m.violations > 0) {
@@ -254,12 +255,20 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
       console.warn(`[build] bench attempt ${attempt + 1}: 目标 ${m.goals_done}/${m.goals_total} 违规 ${m.violations}`);
       continue;
     }
+    // [B2] 生完先过一遍工作室的规则：手里拿的东西、工作面得对得上行业（docs/lab-playbook.md）
+    const tools = benchToolIssues({ ...raw, layers });
+    if (tools.length && attempt < 2) {
+      feedback = `工位能跑通，但不符合规则：\n${tools.join('\n')}\n只改场景层（layers）里的 kind / icon，变量、规则、目标和老手脚本保持不变。`;
+      diag.note = `第 ${attempt + 1} 轮：${tools[0]}`;
+      console.warn(`[build] bench attempt ${attempt + 1}: ${tools[0]}`);
+      continue;
+    }
     return finish(spec, layers, p);
   }
   // 兜底：三轮都没谈拢的话，拿最好的那一版，把老手脚本自己都做不到的目标、和它撞上的规则裁掉。
   // 剩下的是一台自洽的工位：目标少了点，但能真的动手，比完全没有强。
   if (best?.spec.expertScript?.length) {
-    const run = (sp: BenchSpec) => simulateScript(sp, sp.expertScript!, Math.min(sp.maxSeconds, Math.max(...sp.expertScript!.map(a => a.t)) + 60));
+    const run = (sp: BenchSpec) => simulateScript(sp, sp.expertScript!, Math.min(sp.maxSeconds, Math.max(...sp.expertScript!.map(a => a.t)) + 60), playDt(sp));
     const tr0 = run(best.spec);
     const keep = best.spec.goals.filter(g => tr0.metrics.time_to_goal[g.id] !== null).map(g => g.id);
     const dropped = best.spec.goals.length - keep.length;

@@ -5,6 +5,7 @@
  *   - 跑完得到确定性的过程指标 + 一段人话时间线（喂给评分的大模型）+ 和专家事件序列的吻合度
  * 前后端共用，纯函数，不依赖 DOM；表达式用自带的小解析器求值，不用 eval。
  */
+import { masterControls, masterExprs, sanitizeSurfaceConfig, type SurfaceConfig } from '@/lib/lab-masters';
 
 /**
  * 控件：knob 旋钮 / switch 开关 / button 按钮 / path 沿轨迹推进（0–100，只进不退，如「焊枪沿焊缝行走」）。
@@ -50,6 +51,8 @@ export interface BenchSpec {
    *   laparotomy  开腹分层入腹：按住下刀、沿线划、血管钳撑、镊子提起再切、放牵开器
    */
   surface?: string;
+  /** 母版台面的配置（surface 是母版名时用，如 'field'）：画什么、点了拨哪个控件、说什么，全是数据，可以整份存库。见 src/lib/lab-masters.ts */
+  surfaceConfig?: SurfaceConfig;
   /** 场景：生成的底图 + 随状态变化的覆盖层；镜头快照拍的就是它 */ scene?: BenchScene;
   /** 每真实 1 秒推进多少模拟秒 */ timeScale: number;
   /** 模拟秒上限 */ maxSeconds: number;
@@ -269,6 +272,12 @@ export function finishBench(spec: BenchSpec, st: BenchState, finished = true): B
 }
 
 /** 无头跑一段脚本（专家轨迹 / 单元测试用） */
+/** 体验端每 PLAY_TICK_MS 推进一拍，一拍 = timeScale × 0.25 模拟秒。变量动力学和「保持 N 秒」的目标对步长敏感：
+ *  用 dt=1 干跑过了、真人玩时可能达不成（2026-10-12 全库体检：转炉、火箭、潜导、幼儿园、精铸、焊接都有）。
+ *  校验和新工位的生成自检显式传 playDt(spec)；simulateScript 默认仍是 1，免得已经算好的示范轨迹变样。 */
+export const PLAY_TICK_MS = 250;
+export const playDt = (spec: Pick<BenchSpec, 'timeScale'>) => spec.timeScale * PLAY_TICK_MS / 1000;
+
 export function simulateScript(spec: BenchSpec, actions: BenchAction[], untilSec: number, dt = 1): BenchTrace {
   const st = initBench(spec);
   const sorted = [...actions].sort((a, b) => a.t - b.t); let i = 0;
@@ -341,6 +350,7 @@ export function sanitizeBenchSpec(raw: any): BenchSpec | null {
     gauges: (Array.isArray(raw.gauges) ? raw.gauges : []).filter((g: any) => g?.id && g?.expr).map((g: any) => ({ id: String(g.id), label: String(g.label || g.id), unit: String(g.unit || ''), expr: String(g.expr), min: Number(g.min) || 0, max: Number(g.max) || 100, digits: g.digits !== undefined ? Number(g.digits) : undefined, warn: g.warn ? String(g.warn) : undefined })),
     rules: (Array.isArray(raw.rules) ? raw.rules : []).filter((r: any) => r?.id && r?.when).map((r: any) => ({ id: String(r.id), label: String(r.label || r.id), when: String(r.when), severity: r.severity === 'warning' ? 'warning' : 'violation', once: !!r.once })),
     goals: raw.goals.filter((g: any) => g?.id && g?.when).map((g: any) => ({ id: String(g.id), label: String(g.label || g.id), when: String(g.when), hold: g.hold ? Number(g.hold) : undefined, after: g.after ? String(g.after) : undefined })),
+    surfaceConfig: sanitizeSurfaceConfig(raw.surfaceConfig),
     expertScript: Array.isArray(raw.expertScript) ? raw.expertScript.filter((a: any) => a?.control).map((a: any) => ({ t: Number(a.t) || 0, control: String(a.control), value: Number(a.value) || 0 })) : undefined,
   };
   // 没有底图也能有场景：轨迹 / 工作面 / 阶段提示这几层是画出来的，生图失败不应该让整台工位报废
@@ -358,7 +368,9 @@ export function sanitizeBenchSpec(raw: any): BenchSpec | null {
     l.icon = /奶缸|拉花|咖啡|奶泡/.test(text) ? 'pitcher' : /挤注|裱花袋|挤花/.test(text) ? 'hand' : /切配|刀工|砧板/.test(text) ? 'scalpel' : /刷|笔|浆|胶|漆|裱/.test(text) ? 'brush' : /焊/.test(text) ? 'torch' : /缝合|持针/.test(text) ? 'needle' : /切开|手术刀/.test(text) ? 'scalpel' : 'hand';
   }
   // 表达式都要能求值
-  try { const st = initBench(spec); const env = benchEnv(spec, st); env.dt = 1; for (const v of spec.vars) { if (v.rate) evalExpr(v.rate, env); if (v.set) evalExpr(v.set, env); } for (const g of spec.gauges) evalExpr(g.expr, env); for (const r of spec.rules) evalExpr(r.when, env); for (const g of spec.goals) evalExpr(g.when, env); for (const l of spec.scene?.layers || []) { if (l.level) evalExpr(l.level, env); if (l.on) evalExpr(l.on, env); if (l.text) evalExpr(l.text, env); } } catch { return null; }
+  try { const st = initBench(spec); const env = benchEnv(spec, st); env.dt = 1; for (const v of spec.vars) { if (v.rate) evalExpr(v.rate, env); if (v.set) evalExpr(v.set, env); } for (const g of spec.gauges) evalExpr(g.expr, env); for (const r of spec.rules) evalExpr(r.when, env); for (const g of spec.goals) evalExpr(g.when, env); for (const l of spec.scene?.layers || []) { if (l.level) evalExpr(l.level, env); if (l.on) evalExpr(l.on, env); if (l.text) evalExpr(l.text, env); } if (spec.surfaceConfig) for (const e of masterExprs(spec.surfaceConfig)) evalExpr(e, env); } catch { return null; }
+  // 母版里拨到的控件都得在规格里声明过，不然点了没反应
+  if (spec.surfaceConfig && masterControls(spec.surfaceConfig).some(id => !spec.controls.some(c => c.id === id))) return null;
   return spec;
 }
 

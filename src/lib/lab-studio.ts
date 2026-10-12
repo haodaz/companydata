@@ -2,9 +2,10 @@
  * 百业工厂 · 工作室校验（前后端共用）。
  * 两类问题：error 不许发布（存成草稿可以）；warn 只提醒。
  * 「一天」的规则见 docs/lab-studio.md：按时间排、内容配得上时段（别一大早做全天复盘）、前后接得上。
+ * 带编号的规则（[D3]、[B2]…）对应 docs/lab-playbook.md 的规则清单——平台自己生职人时，生成 agent 也先过这一关。
  */
 import type { Sim, SimTrace } from '@/lib/skill-sim';
-import { sanitizeBenchSpec } from '@/lib/bench';
+import { playDt, sanitizeBenchSpec, simulateScript } from '@/lib/bench';
 
 export interface StudioChapter {
   id: string;
@@ -19,7 +20,7 @@ export interface StudioChapter {
   locked?: boolean;
 }
 
-export interface StudioIssue { level: 'error' | 'warn'; chapter?: string; step?: string; msg: string }
+export interface StudioIssue { level: 'error' | 'warn'; chapter?: string; step?: string; msg: string; /** 对应 docs/lab-playbook.md 的规则编号 */ rule?: string }
 
 export const CHAPTER_KINDS = [
   { k: 'daily', label: '日常', color: '#6b5cff' },
@@ -78,6 +79,26 @@ export function checkDay(chapters: StudioChapter[]): StudioIssue[] {
     if (LUNCH.test(text) && (t < 11 * 60 || t > 14 * 60)) out.push({ level: 'warn', chapter: c.id, msg: `${name}讲的是午间的事，时段却是 ${slot}` });
   }
   if (chapters.length && !live.length) out.push({ level: 'warn', msg: '还没有已发布的章节：体验端看不到这个空间的任何一章' });
+  // [D3] 选择题可以有，但一天至少一章真动手（用户 2026-10-11 晚）
+  const hands = chapters.some(c => (c.sim?.steps || []).some((s: any) => s?.type === 'bench'));
+  if (chapters.length >= 3 && !hands) out.push({ level: 'warn', rule: 'D3', msg: '[D3] 一整天都是选择 / 分类题，没有一章真动手的虚拟工位：至少补一章实操台面' });
+  return out;
+}
+
+/** [D5] 给人看的文字里残留的角色编号（「在S03与客户N1陈先生…」）。P/S/T 两位数、N 一位数是生成时的临时编号 */
+const CAST_CODE = /(?<![A-Za-z0-9])(?:[PST]\d{2}|N\d)(?![A-Za-z0-9])/;
+
+/** [B2] 手里拿的工具得对得上行业：奶缸只给拉花，咖啡杯层只给咖啡（月嫂抚触台曾借用拉花的 cup 层 + 默认奶缸） */
+export function benchToolIssues(spec: any): string[] {
+  const out: string[] = [];
+  const text = `${spec?.name || ''} ${spec?.brief || ''}`;
+  const coffee = /咖啡|拉花|奶泡|浓缩|latte|espresso/i.test(text);
+  for (const l of spec?.scene?.layers || []) {
+    if (l.kind === 'cup' && !coffee) out.push(`[B2] 场景里有咖啡杯层（cup），但这个工位不是做咖啡的——换成对应的操作对象（皮肤用 skin、伤口用 wound）`);
+    const icons = [l.icon, ...(l.icons || [])].filter(Boolean);
+    if (l.kind === 'pour' && !icons.length && !coffee) out.push(`[B2] 注入轨迹层没写手里拿什么（icon），默认会画成拉花的奶缸`);
+    if (icons.includes('pitcher') && !coffee) out.push(`[B2] 手里拿的是奶缸（pitcher），这个工位不是拉花`);
+  }
   return out;
 }
 
@@ -100,7 +121,21 @@ export function checkChapter(c: StudioChapter, fallbackTrace?: SimTrace | null):
     ids.add(sid);
     if (!STEP_TYPES.some(t => t.k === s?.type)) { add('error', `${n}题型「${s?.type}」不认识`, sid); return; }
     if (!String(s.prompt || '').trim()) add('error', `${n}没有题干`, sid);
-    if (s.type === 'bench') { if (!sanitizeBenchSpec(s.bench)) add('error', `${n}是虚拟工位，但工位定义不完整（用 JSON 编辑补齐）`, sid); return; }
+    if (s.type === 'bench') {
+      const spec = sanitizeBenchSpec(s.bench);
+      if (!spec) { add('error', `${n}是虚拟工位，但工位定义不完整（用 JSON 编辑补齐）`, sid); return; }
+      for (const m of benchToolIssues(s.bench)) out.push({ level: 'warn', chapter: c.id, step: sid, rule: 'B2', msg: `${n}：${m}` });
+      // [B1] 示范脚本在模拟器里干跑：老手都过不了的工位，学生更过不了
+      if (spec.expertScript?.length) {
+        const last = Math.max(...spec.expertScript.map(a => a.t));
+        const m = simulateScript(spec, spec.expertScript, Math.min(spec.maxSeconds, last + 60), playDt(spec)).metrics;   // 用体验端的真实步长
+        if (m.goals_done < m.goals_total || m.violations) out.push({ level: 'warn', chapter: c.id, step: sid, rule: 'B1', msg: `${n}：[B1] 按体验端的步长干跑示范脚本，只达成 ${m.goals_done}/${m.goals_total} 个目标、违规 ${m.violations} 次——真人照着老手做也过不了` });
+      } else if (!spec.surface) out.push({ level: 'warn', chapter: c.id, step: sid, rule: 'B1', msg: `${n}：[B1] 工位没有示范脚本，「看老手做一遍」和「和专家比」都用不了` });
+      return;
+    }
+    const shown = [s.prompt, s.scene?.text, ...(s.options || []).map((o: any) => o?.label)].filter(Boolean).join(' ');
+    const code = shown.match(CAST_CODE);
+    if (code) out.push({ level: 'warn', chapter: c.id, step: sid, rule: 'D5', msg: `${n}：[D5] 给人看的文字里有角色编号「${code[0]}」，换成名字（scripts/lab-decode-cast-refs.mts）` });
     const opts = Array.isArray(s.options) ? s.options : [];
     if (['choose', 'multi', 'drill', 'classify', 'allocate'].includes(s.type)) {
       if (opts.length < 2) add('error', `${n}至少要两个选项`, sid);

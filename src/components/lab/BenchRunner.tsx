@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { applyControl, benchEnv, evalExpr, finishBench, fmtT, initBench, layerPath, pointOnPath, projectOnPath, tickBench, type BenchSpec, type BenchState, type BenchTrace, type BenchEvent, type BenchLayer, type Pt } from '@/lib/bench';
+import { PLAY_TICK_MS, applyControl, benchEnv, evalExpr, finishBench, fmtT, initBench, layerPath, pointOnPath, projectOnPath, tickBench, type BenchSpec, type BenchState, type BenchTrace, type BenchEvent, type BenchLayer, type Pt } from '@/lib/bench';
 import { HandCam, type HandPose } from '@/components/lab/HandCam';
 import { ToolShape } from '@/components/lab/ToolShape';
 import { LaparotomyStage } from '@/components/lab/surfaces/Laparotomy';
+import { FieldStage } from '@/components/lab/masters/FieldStage';
 import { SootheStage } from '@/components/lab/surfaces/Soothe';
 import { LatteOverlay } from '@/components/lab/surfaces/LatteOverlay';
 import { DeskStage } from '@/components/lab/surfaces/Desk';
@@ -39,7 +40,7 @@ import type { Beta3DScene } from '@/lib/lab-3d-beta';
  *   - 轨迹类工位（seam 焊缝 / pour 咖啡拉花）：指针或摄像头里手的位置投影到折线上 → 进度；到折线的距离 → 「偏离」隐藏控件。
  *     拉花工位还把每一下实际落点按当时的奶缸高度 / 流量沉在杯里（cup 层）——走歪了，图案就是歪的。
  */
-const TICK_MS = 250, SNAP_EVERY_MS = 5000, SNAP_MAX = 16, SNAP_W = 320, SNAP_H = 180;
+const TICK_MS = PLAY_TICK_MS, SNAP_EVERY_MS = 5000, SNAP_MAX = 16, SNAP_W = 320, SNAP_H = 180;
 const VW = 1600, VH = 900; // 场景覆盖层坐标系（百分比 × 16 / × 9）
 
 export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdrop }: { spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean; /** 演示模式：进来就自己走 */ demo?: boolean; /** 3D beta：工位画面四周是活的 3D 房间（跟着鼠标微动），工位本身也有一点视差 */ backdrop?: Beta3DScene | null }) {
@@ -429,6 +430,8 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
           <filter id="bench-blur-sm" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" /></filter>
           <filter id="latte-soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3.5" /></filter>
         </defs>
+        {/* 母版台面：配置从库里来（spec.surfaceConfig）；下面那串专属台面是代码版，重点 demo 留着当保底 / 精细调整 */}
+        {(spec.surface === 'field' || spec.surface === 'console') && spec.surfaceConfig?.master === spec.surface && <FieldStage key={resetKey} spec={spec} cfg={spec.surfaceConfig} st={st} running={running} auto={auto} act={act} toScene={scenePoint} />}
         {spec.surface === 'laparotomy' && <LaparotomyStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
           setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
         {spec.surface === 'soothe' && <SootheStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
