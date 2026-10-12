@@ -514,15 +514,15 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
 
   // 办公桌类台面（数据分析、财务、写代码……）：整屏、浅色、好读，像游戏里打开大盘 / 银行那一屏；背后不放房间
   const LIGHT: Record<string, React.ComponentType<any>> = { desk: DeskStage, triage: TriageStage, complaint: ComplaintStage, audit: AuditStage, live: LiveStage, chipdesk: ChipDeskStage, sandtable: SandtableStage, cad: CadStage };
-  // 母版 A / F：同一套浅色整屏版面，配置从 spec.surfaceConfig 来
-  if (spec.surfaceConfig?.master === 'desktop') LIGHT.desktop = (p: any) => <DesktopStage {...p} spec={spec} cfg={spec.surfaceConfig} />;
-  if (spec.surfaceConfig?.master === 'dialog') LIGHT.dialog = (p: any) => <DialogStage {...p} spec={spec} cfg={spec.surfaceConfig} />;
+  // 母版 A / F：同一套浅色整屏版面，配置从 spec.surfaceConfig 来（直接放组件本身——包一层箭头函数的话每拍都是新组件，台面会重挂、输入框失焦）
+  if (spec.surfaceConfig?.master === 'desktop') LIGHT.desktop = DesktopStage;
+  if (spec.surfaceConfig?.master === 'dialog') LIGHT.dialog = DialogStage;
   if (hud && scene && spec.surface && LIGHT[spec.surface]) {
     const Light = LIGHT[spec.surface];
     return (
       <div className="bench-hud bench-hud-light">
         <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, right: 368 }}>
-          <Light key={resetKey} st={st} running={running} auto={auto} act={act} setHidden={(id: string, v: number) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />
+          <Light key={resetKey} spec={spec} cfg={spec.surfaceConfig} st={st} running={running} auto={auto} act={act} setHidden={(id: string, v: number) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />
         </div>
         <div className="bench-hud-right">{side}</div>
       </div>
