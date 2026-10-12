@@ -15,3 +15,5 @@ CREATE TABLE IF NOT EXISTS lab_edits (
 );
 CREATE INDEX IF NOT EXISTS lab_edits_task_idx ON lab_edits (task_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS lab_edits_chapter_idx ON lab_edits (chapter_id, created_at DESC);
+-- 和其他表一样开行级权限、不加策略：只有服务端（service role）能读写，浏览器拿公开密钥碰不到（2026-10-12 补，公司那边指出的漏洞）
+ALTER TABLE lab_edits ENABLE ROW LEVEL SECURITY;
