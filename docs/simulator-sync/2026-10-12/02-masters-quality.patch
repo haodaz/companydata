@@ -10324,10 +10324,10 @@ index 0000000..541d0f5
 +export const HANDS_DEF: MasterDef<HandsConfig> = { name: 'hands', host: 'svg', exprs: handsExprs, controls: handsControls };
 diff --git a/supabase/migrations/020_lab_edits.sql b/supabase/migrations/020_lab_edits.sql
 new file mode 100644
-index 0000000..694c3dc
+index 0000000..f47e5ae
 --- /dev/null
 +++ b/supabase/migrations/020_lab_edits.sql
-@@ -0,0 +1,17 @@
+@@ -0,0 +1,19 @@
 +-- 020：人工修改留痕（2026-10-12）。平台以后要自己生职人，人每一次怎么改 AI 生成的东西，就是最直接的偏好数据。
 +-- 工作室保存章节、脚本改库、agent 改库都往这里记一行：改了哪些字段、改前、改后、谁、从哪改的。
 +-- 可重复执行。
@@ -10345,3 +10345,5 @@ index 0000000..694c3dc
 +);
 +CREATE INDEX IF NOT EXISTS lab_edits_task_idx ON lab_edits (task_id, created_at DESC);
 +CREATE INDEX IF NOT EXISTS lab_edits_chapter_idx ON lab_edits (chapter_id, created_at DESC);
++-- 和其他表一样开行级权限、不加策略：只有服务端（service role）能读写，浏览器拿公开密钥碰不到（2026-10-12 补，公司那边指出的漏洞）
++ALTER TABLE lab_edits ENABLE ROW LEVEL SECURITY;
