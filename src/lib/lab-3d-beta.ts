@@ -33,6 +33,7 @@ export interface Beta3DPano {
   /** 识别出来的要素（单点位时用这里） */ spots?: PanoSpot[];
   /** 多点位：有了就按街景方式走，url / spots 是起点那一张 */ nodes?: PanoNode[];
   /** 视频是边走边拍的：前倾 / W 就沿拍摄路线往前播（而不是循环播放） */ walk?: boolean;
+  /** 场景同时有 3D 和实拍时，默认先看实拍 */ first?: boolean;
 }
 
 export interface Beta3DScene {
@@ -44,6 +45,15 @@ export interface Beta3DScene {
   /** 操作台里用它当背景的章节（时段）：这几章发生在这个场景里 */
   slots: string[];
 }
+
+/** 实拍珊瑚礁（大堡礁两个礁区，潜导视角识别过）：潜导空间的 reef 场景和独立试看页 reef-dive 共用 */
+const REEF_DIVE_PANO: Beta3DPano = {
+  url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-heron_bommie_svii.jpg', kind: 'image',
+  nodes: [
+    { id: 'heron', spots: REEF_HERON_SPOTS as PanoSpot[], url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-heron_bommie_svii.jpg', kind: 'image', links: [{ to: 'elliot', yaw: 0, label: '游去伊利奥特夫人岛礁区' }] },
+    { id: 'elliot', spots: REEF_ELLIOT_SPOTS as PanoSpot[], url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-lady_elliot_island_svii.jpg', kind: 'image', links: [{ to: 'heron', yaw: 180, label: '游回苍鹭岛礁丘' }] },
+  ],
+};
 
 export const BETA3D: Record<string, Beta3DScene> = {
   cafe: {
@@ -114,8 +124,10 @@ export const BETA3D: Record<string, Beta3DScene> = {
   reef: {
     key: 'reef', title: '珊瑚礁', role: '潜导', spaceId: '387fcc19-bd56-453e-a983-b3a1b4da5704',
     url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-reef-v1.splat', position: [-0.0038, 0.1282, 0.2202], lookAt: [-0.4826, 0.187, 7.7058], up: [-0.0142, -0.9999, 0.002], span: 1.2,   // 场景近（depth 7.5），摆动幅度按比例缩小
-    credit: 'Veo 3.1 生成水下绕礁视频 · COLMAP + Brush 重建（39 万高斯，12.6 MB）',
+    credit: '3D：Veo 3.1 生成水下绕礁视频 · COLMAP + Brush 重建（39 万高斯，12.6 MB）｜360° 实拍：Underwater Earth / XL Catlin Seaview Survey（Christophe Bailhache）· 大堡礁 · CC BY-SA 3.0 · Wikimedia Commons',
     slots: ['09:00'],   // 礁区导潜
+    // 2026-10-12：实拍珊瑚礁也接进来——入口进去默认看实拍（有潜水要点标记），右上角能切回 3D
+    pano: { ...REEF_DIVE_PANO, first: true },
   },
   boiler: {
     key: 'boiler', title: '锅炉房', role: '锅炉运行 / 设备巡检（试看）', spaceId: '',
@@ -132,13 +144,7 @@ export const BETA3D: Record<string, Beta3DScene> = {
     url: '', position: [0, 0, 0], lookAt: [0, 0, 1], up: [0, -1, 0], span: 1,
     // spots：pano-recognize.mts 按潜导视角识别（不可触碰的珊瑚、要保持距离的生物、浪涌 / 触礁风险区、看点）
     // 两个礁区用箭头连起来：从苍鹭岛礁丘「游」到伊利奥特夫人岛。原图 9500 宽，缩到 8192 免得有的显卡贴图上限黑屏
-    pano: {
-      url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-heron_bommie_svii.jpg', kind: 'image',
-      nodes: [
-        { id: 'heron', spots: REEF_HERON_SPOTS as PanoSpot[], url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-heron_bommie_svii.jpg', kind: 'image', links: [{ to: 'elliot', yaw: 0, label: '游去伊利奥特夫人岛礁区' }] },
-        { id: 'elliot', spots: REEF_ELLIOT_SPOTS as PanoSpot[], url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-lady_elliot_island_svii.jpg', kind: 'image', links: [{ to: 'heron', yaw: 180, label: '游回苍鹭岛礁丘' }] },
-      ],
-    },
+    pano: REEF_DIVE_PANO,
     credit: '360° 水下实拍 · Underwater Earth / XL Catlin Seaview Survey（Christophe Bailhache）· 大堡礁 Heron Bommie / Lady Elliot Island · CC BY-SA 3.0 · 来自 Wikimedia Commons',
     slots: [],   // 2026-10-12 和用户一起挑的（带比特看大海）；授权 BY-SA：要署名，改了再发布也得同授权
   },

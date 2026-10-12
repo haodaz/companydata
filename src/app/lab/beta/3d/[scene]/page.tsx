@@ -26,7 +26,7 @@ export default function Beta3DPage({ params }: { params: Promise<{ scene: string
   const [allSpots, setAllSpots] = useState(false);
   useEffect(() => { setMounted(true); const q = new URLSearchParams(window.location.search); setEdit(q.get('edit') === '1'); setAllSpots(q.get('all') === '1'); }, []);
   // 360° 全景：没有 3D 重建时就是它；两个都有时由右上角按钮切
-  const [panoOn, setPanoOn] = useState(false);
+  const [panoOn, setPanoOn] = useState(!!s?.pano?.first);
 
   if (!s) return <div style={{ padding: 40, color: '#fff', background: '#0b0d1c', minHeight: '100vh' }}>没有这个 3D 场景。</div>;
   if (!mounted) return null;
