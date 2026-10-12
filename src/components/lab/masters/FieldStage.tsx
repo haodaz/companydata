@@ -4,10 +4,12 @@
  * 母版 B · 现场热点 + 工具盘（src/lib/lab-masters.ts 的 FieldConfig）：写实底图上压一层暗色，
  * 工具盘拿工具 → 点场景里的透明热区 → 拨控件 + 说一句；纸面板（操作票）、按钮（汇报 / 回令）、步骤清单、跟手的工具图标都是配置出来的。
  * 画在 BenchRunner 的场景 svg 里（1600 × 900）。变电站验电挂地线是第一个纯配置的样板（lab-switching-field.ts）。
+ * B 的变体（花房 lab-garden-field.ts、炒锅 lab-chef-field.ts）：中心主体插件（field-subjects.tsx）+ 动作卡片 + 拖动区 + 日志，同一个渲染器。
  */
 import React, { useRef, useState } from 'react';
 import { benchEnv, evalExpr, type BenchSpec, type BenchState } from '@/lib/bench';
 import { TEMPLATE_RE, type FieldConfig, type MasterAction, type MasterShape, type MasterWidget, type Num } from '@/lib/lab-masters';
+import { FIELD_SUBJECTS } from '@/components/lab/masters/field-subjects';
 
 type Pt = { x: number; y: number };
 
@@ -41,15 +43,34 @@ export function FieldStage({ spec, cfg, st, running: live, auto, act, toScene }:
     if (hist.current.length > cap) hist.current.shift();
   }
 
-  const run = (a: MasterAction) => {
+  // 日志：on 涨一次记一句（花房「每过一天记一句」）。在渲染里推进，靠 last 去重
+  const logs = useRef<{ last: number; lines: string[]; used: Set<number> }[]>([]);
+  (cfg.logs || []).forEach((l, i) => {
+    // 起点按 0 算（和代码版一样：中途挂上来时先补记一句当前的）
+    const s = logs.current[i] ||= { last: 0, lines: [...(l.initial || [])], used: new Set() };
+    const v = Math.round(num(l.on));
+    if (v <= s.last) return;
+    s.last = v;
+    const k = l.lines.findIndex((x, j) => (!x.once || !s.used.has(j)) && ok(x.when));
+    if (k < 0) return;
+    if (l.lines[k].once) s.used.add(k);
+    s.lines.push(fill(l.lines[k].text));
+  });
+  const cool = useRef(0);
+  const drag = useRef<{ i: number; last: Pt; acc: number } | null>(null);
+
+  /** gate：onlyWhen 之后、拨控件之前的额外闸（卡片防连点） */
+  const run = (a: MasterAction, gate?: () => boolean) => {
     if (!canAct) return;
+    if (a.onlyWhen && !ok(a.onlyWhen)) return;
+    if (gate && !gate()) return;
     const g = a.guards?.find(x => ok(x.when));
     if (g) { say(g.say); return; }
     if (a.needTool !== undefined && tool !== a.needTool) { say(a.toolMsg || `先拿${cfg.tools?.find(t => t.v === a.needTool)?.label || '对的工具'}`); return; }
     // 话和读数都按点下去那一刻的状态挑（「有电时验电笔亮」）
     const line = fill(pick(a.sayWhen, 'text', a.say || ''));
     const rd = a.readout ? { title: fill(pick(a.readout.titleWhen, 'text', a.readout.title)), text: fill(pick(a.readout.textWhen, 'text', a.readout.text)) } : null;
-    for (const x of a.act || []) act(x.control, typeof x.value === 'string' ? num(x.value) : x.value ?? 1);
+    for (const x of a.act || []) { const v = typeof x.value === 'string' ? num(x.value) : x.value ?? 1; if (x.delay) setTimeout(() => act(x.control, v), x.delay); else act(x.control, v); }
     if (line) say(line);
     if (rd) setReading(rd);
     if (a.flash) { setFlash(a.flash); setTimeout(() => setFlash(null), 1500); }
@@ -70,7 +91,7 @@ export function FieldStage({ spec, cfg, st, running: live, auto, act, toScene }:
     const color = pick(sh.colorWhen, 'color', sh.color || '#c7cbe6');
     const x = N(sh.x), y = N(sh.y), op = sh.opacity === undefined ? undefined : N(sh.opacity);
     const filter = sh.blur ? `url(#bench-blur${sh.blur === 'sm' ? '-sm' : ''})` : undefined;
-    const pulse = sh.pulse ? <animate attributeName="opacity" values="1;.4;1" dur=".6s" repeatCount="indefinite" /> : null;
+    const pulse = sh.pulse ? <animate attributeName="opacity" values={op === undefined ? '1;.4;1' : `${op};${op / 7};${op}`} dur={typeof sh.pulse === 'number' ? `${sh.pulse}s` : '.6s'} repeatCount="indefinite" /> : null;
     switch (sh.kind) {
       case 'line': return <line key={i} x1={x} y1={y} x2={N(sh.x2)} y2={N(sh.y2)} stroke={color} strokeWidth={sh.width || 4} strokeDasharray={sh.dash} strokeLinecap="round" opacity={op} />;
       case 'rect': return <rect key={i} x={x} y={y} width={Math.max(0, N(sh.w))} height={Math.max(0, N(sh.h))} rx={N(sh.rx, 8)} fill={sh.fill || 'none'} stroke={sh.fill && !sh.color ? 'none' : color} strokeWidth={sh.width ?? 2} strokeDasharray={sh.dash} opacity={op} filter={filter}>{pulse}</rect>;
@@ -81,7 +102,7 @@ export function FieldStage({ spec, cfg, st, running: live, auto, act, toScene }:
         return <g key={i} opacity={op}>{Array.from({ length: n }, (_, k) => <circle key={k} cx={x + Math.sin(st.t * 7 + k * 1.7) * w / 2} cy={y - ((st.t * 90 + k * 37) % h)} r={2 + (k % 3)} fill={sh.fill || '#ffd166'} opacity={.8} />)}</g>;
       }
       case 'path': {
-        const p = <path d={sh.d} fill={sh.fill || 'none'} stroke={sh.fill && !sh.color ? 'none' : color} strokeWidth={sh.width ?? (sh.fill ? 0 : 4)} strokeDasharray={sh.dash} opacity={op} filter={filter} />;
+        const p = <path d={sh.d} fill={sh.fill || 'none'} stroke={sh.fill && !sh.color ? 'none' : color} strokeWidth={sh.width ?? (sh.fill ? 0 : 4)} strokeDasharray={sh.dash} opacity={op} filter={filter}>{pulse}</path>;
         if (sh.x === undefined && sh.rotate === undefined) return <g key={i}>{p}</g>;
         const r = sh.rotate || 0;
         return <g key={i} transform={`translate(${x} ${y})`}><g transform={`rotate(${r})`}>{p}{ok(sh.spinWhen) && !!sh.spinWhen && <animateTransform attributeName="transform" type="rotate" from={`${r}`} to={`${r + 360}`} dur="0.5s" repeatCount="indefinite" />}</g></g>;
@@ -89,7 +110,7 @@ export function FieldStage({ spec, cfg, st, running: live, auto, act, toScene }:
       case 'text': {
         const t = fill(pick(sh.textWhen, 'text', sh.text || ''));
         if (sh.wrap) return <foreignObject key={i} x={x} y={y} width={sh.wrap} height={(sh.size || 14) * 4} pointerEvents="none"><div style={{ color, fontSize: sh.size || 14, fontWeight: sh.weight || 600, lineHeight: 1.45, fontFamily: 'ui-sans-serif, system-ui, -apple-system, "PingFang SC", sans-serif' }}>{t}</div></foreignObject>;
-        return <text key={i} x={x} y={y} fill={color} fontSize={sh.size || 14} fontWeight={sh.weight || 600} textAnchor={sh.anchor || 'start'} fontFamily={sh.mono ? 'ui-monospace, Menlo, monospace' : undefined} opacity={op} pointerEvents="none">{t}</text>;
+        return <text key={i} x={x} y={y} fill={color} fontSize={sh.size || 14} fontWeight={sh.weight || 600} textAnchor={sh.anchor || 'start'} fontFamily={sh.mono ? 'ui-monospace, Menlo, monospace' : undefined} letterSpacing={sh.spacing} opacity={op} pointerEvents="none">{t}</text>;
       }
     }
   };
@@ -132,7 +153,13 @@ export function FieldStage({ spec, cfg, st, running: live, auto, act, toScene }:
   };
 
   return (
-    <g onPointerMove={e => { const p = toScene(e.clientX, e.clientY); if (p) setHand(p); }} onPointerLeave={() => setHand(null)}>
+    <g onPointerMove={e => {
+      const p = toScene(e.clientX, e.clientY); if (!p) return; setHand(p);
+      // 拖动区：累计拖过的路程，每满 every 像素执行一次
+      const d = drag.current, dc = d && cfg.drags?.[d.i]; if (!d || !dc || !canAct) return;
+      d.acc += Math.hypot(p.x - d.last.x, p.y - d.last.y); d.last = p;
+      if (d.acc > dc.every) { d.acc = 0; run(dc.action); }
+    }} onPointerLeave={() => setHand(null)}>
       <rect x={0} y={0} width={1600} height={900} fill={cfg.bg || `rgba(10,12,30,${cfg.dim ?? 0.35})`} />
       {/* 面板（操作票 / 读数牌） */}
       {(cfg.panels || []).map((p, i) => { const paper = p.tone !== 'dark'; return (
@@ -143,18 +170,50 @@ export function FieldStage({ spec, cfg, st, running: live, auto, act, toScene }:
           {p.footer && <text x={p.x + 20} y={p.y + p.h - 20} fill={paper ? '#9a7b1a' : '#9aa0b8'} fontSize={12}>{p.footer}</text>}
         </g>); })}
       {(cfg.shapes || []).map(shape)}
+      {/* 主体插件（盆栽 / 炒锅） */}
+      {(cfg.subjects || []).filter(s => ok(s.when)).map((s, i) => { const S = FIELD_SUBJECTS[s.plugin]; if (!S) return null;
+        return <S key={`s${i}`} x={s.x} y={s.y} t={st.t} live={canAct} P={(k, d = 0) => N(s.params?.[k], d)} />; })}
+      {/* 日志（养护日记） */}
+      {(cfg.logs || []).map((l, i) => { const shown = (logs.current[i]?.lines || []).slice(-(l.show || 8)), n = l.chars || 26; return (
+        <g key={`l${i}`} pointerEvents="none">
+          <rect x={l.x} y={l.y} width={l.w} height={l.h} rx={16} fill="rgba(12,16,32,.62)" stroke="rgba(255,255,255,.22)" strokeWidth={2} />
+          {l.title && <text x={l.x + 20} y={l.y + 30} fill="#9aa0b8" fontSize={12} letterSpacing={2}>{l.title}</text>}
+          {shown.map((d, j) => <text key={j} x={l.x + 20} y={l.y + 58 + j * (l.gap || 44)} fill={j === shown.length - 1 ? '#fff' : '#c7cbe6'} fontSize={13}>{d.length > n ? d.slice(0, n) + '…' : d}</text>)}
+        </g>); })}
       {(cfg.widgets || []).map(widget)}
       {flash && <circle cx={flash.x} cy={flash.y} r={flash.r || 30} fill={flash.color || '#ffd166'} opacity={.7} pointerEvents="none"><animate attributeName="r" values={`10;${(flash.r || 30) + 10};10`} dur="0.6s" repeatCount="indefinite" /></circle>}
       {/* 按钮 */}
-      {(cfg.buttons || []).map((b, i) => { if (b.when && !ok(b.when)) return null; const lit = ok(b.litWhen) && !!b.litWhen; return (
+      {(cfg.buttons || []).map((b, i) => { if (b.when && !ok(b.when)) return null; const lit = ok(b.litWhen) && !!b.litWhen, seg = b.style === 'seg';
+        const bg = pick(b.colorWhen, 'color', '') || (lit ? (b.litColor || '#12a150') : (b.color || (seg ? 'rgba(255,255,255,.12)' : '#3b4254')));
+        const ink = pick(b.inkWhen, 'color', ''), fs = b.size || 13, sub = b.sub || b.subWhen ? fill(pick(b.subWhen, 'text', b.sub || '')) : '';
+        return (
         <g key={`b${i}`} style={{ cursor: canAct ? 'pointer' : 'default' }} onPointerDown={e => { e.stopPropagation(); run(b.action); }}>
-          <rect x={b.x} y={b.y} width={b.w} height={b.h} rx={10} fill={lit ? (b.litColor || '#12a150') : (b.color || '#3b4254')} stroke="#fff" strokeWidth={2} />
-          <text x={b.x + b.w / 2} y={b.y + b.h / 2 + 5} textAnchor="middle" fill="#fff" fontSize={13} fontWeight={800} pointerEvents="none">{pick(b.labelWhen, 'text', b.label)}</text>
+          <rect x={b.x} y={b.y} width={b.w} height={b.h} rx={b.rx ?? 10} fill={bg} stroke={seg && !lit ? 'rgba(255,255,255,.3)' : '#fff'} strokeWidth={seg ? (lit ? 3 : 1.5) : 2} />
+          <text x={b.x + b.w / 2} y={sub ? b.y + b.h * 0.47 : b.y + b.h / 2 + (b.size ? fs * 0.36 : 5)} textAnchor="middle" fill={ink || '#fff'} fontSize={fs} fontWeight={800} pointerEvents="none">{fill(pick(b.labelWhen, 'text', b.label))}</text>
+          {sub && <text x={b.x + b.w / 2} y={b.y + b.h * 0.78} textAnchor="middle" fill={ink || b.subInk || 'rgba(255,255,255,.8)'} fontSize={13} pointerEvents="none">{sub}</text>}
         </g>); })}
+      {/* 动作卡片：整组共用一个防连点的冷却 */}
+      {cfg.cards && (() => { const c = cfg.cards, cols = c.cols || 1, isz = c.iconSize || 26; return c.items.map((it, i) => {
+        const x = c.x + (i % cols) * (c.w + (c.gx ?? 14)), y = c.y + Math.floor(i / cols) * (c.h + (c.gy ?? 16)), dim = !!it.dimWhen && ok(it.dimWhen), glow = !!it.glowWhen && ok(it.glowWhen);
+        const gate = () => { const now = performance.now(); if (now - cool.current < (c.cooldown || 0)) return false; cool.current = now; return true; };
+        return (
+          <g key={`c${i}`} style={{ cursor: canAct && !dim ? 'pointer' : 'default' }} onPointerDown={e => { e.stopPropagation(); if (!dim) run(it.action, gate); }}>
+            {glow && <rect x={x - 6} y={y - 6} width={c.w + 12} height={c.h + 12} rx={16} fill="none" stroke="#ffd166" strokeWidth={3}><animate attributeName="opacity" values="1;.3;1" dur="1.2s" repeatCount="indefinite" /></rect>}
+            <rect x={x} y={y} width={c.w} height={c.h} rx={12} fill={dim ? 'rgba(255,255,255,.06)' : (it.fill || 'rgba(255,255,255,.14)')} stroke="rgba(255,255,255,.3)" strokeWidth={1.5} />
+            <text x={x + (c.iconX ?? 18)} y={y + c.h * 0.62} fontSize={isz} opacity={dim ? 0.35 : 1} pointerEvents="none">{it.icon}</text>
+            <text x={x + (c.labelX ?? 60)} y={y + c.h * 0.61} fill={dim ? '#6b7089' : '#fff'} fontSize={c.labelSize || 16} fontWeight={700} pointerEvents="none">{pick(it.labelWhen, 'text', it.label)}</text>
+          </g>); }); })()}
       {/* 热区（透明，悬停出提示） */}
       {(cfg.hotspots || []).filter(h => !h.when || ok(h.when)).map(h => (
         <rect key={h.id} x={h.x} y={h.y} width={h.w} height={h.h} rx={8} fill="transparent" style={{ cursor: canAct ? 'pointer' : 'default' }} onPointerDown={e => { e.stopPropagation(); run(h.action); }}><title>{h.title}</title></rect>
       ))}
+      {/* 拖动区（透明）：按下开始累计，松手 / 离开就停 */}
+      {(cfg.drags || []).map((d, i) => { if (!ok(d.when)) return null;
+        const down = (e: React.PointerEvent) => { if (!canAct) return; const p = toScene(e.clientX, e.clientY); if (!p) return; try { (e.currentTarget as Element).setPointerCapture?.(e.pointerId); } catch { /* */ } drag.current = { i, last: p, acc: 0 }; };
+        const up = () => { drag.current = null; };
+        const ev = { style: { cursor: canAct ? 'grab' : 'default', touchAction: 'none' }, onPointerDown: down, onPointerUp: up, onPointerLeave: up, onPointerCancel: up };
+        return d.rx ? <ellipse key={d.id} cx={d.x} cy={d.y} rx={d.rx} ry={d.ry ?? d.rx} fill="transparent" {...ev}>{d.title && <title>{d.title}</title>}</ellipse>
+          : <rect key={d.id} x={d.x} y={d.y} width={d.w || 0} height={d.h || 0} fill="transparent" {...ev}>{d.title && <title>{d.title}</title>}</rect>; })}
       {/* 工具盘：这一步该拿的那件发光 */}
       {!!cfg.tools?.length && <g>
         <rect x={ta.x} y={ta.y} width={24 + cfg.tools.length * 88} height={70} rx={14} fill="rgba(12,16,32,.7)" stroke="rgba(255,255,255,.22)" strokeWidth={2} />
@@ -166,7 +225,12 @@ export function FieldStage({ spec, cfg, st, running: live, auto, act, toScene }:
             <text x={x + 38} y={ta.y + 54} textAnchor="middle" fill="#fff" fontSize={11} fontWeight={700} pointerEvents="none">{t.label}</text>
           </g>); })}
       </g>}
-      {reading && <g pointerEvents="none">
+      {ra.style === 'note' && (() => { const r = reading || ra.placeholder; if (!r) return null; const n = ra.chars || 30; return <g pointerEvents="none">
+        <rect x={ra.x} y={ra.y} width={ra.w} height={ra.h ?? 120} rx={14} fill="rgba(12,16,32,.66)" stroke="rgba(255,255,255,.2)" strokeWidth={1.5} />
+        <text x={ra.x + 20} y={ra.y + 28} fill="#9aa0b8" fontSize={12} letterSpacing={2}>{r.title}</text>
+        {(r.text.match(new RegExp(`.{1,${n}}`, 'g')) || []).slice(0, ra.maxLines || 3).map((line, i) => <text key={i} x={ra.x + 20} y={ra.y + 56 + i * 24} fill="#fff" fontSize={15}>{line}</text>)}
+      </g>; })()}
+      {reading && ra.style !== 'note' && <g pointerEvents="none">
         {(ra.h ?? 120) < 80 ? <>
           <rect x={ra.x} y={ra.y} width={ra.w} height={ra.h} rx={12} fill="rgba(61,220,151,.18)" stroke="#3ddc97" strokeWidth={2} />
           <text x={ra.x + 20} y={ra.y + 22} fill="#3ddc97" fontSize={13} fontWeight={800}>{reading.title}</text>
@@ -180,13 +244,16 @@ export function FieldStage({ spec, cfg, st, running: live, auto, act, toScene }:
       {msg && <g pointerEvents="none"><rect x={sa.x} y={sa.y} width={sa.w} height={40} fill="rgba(255,95,162,.9)" /><text x={sa.x + sa.w / 2} y={sa.y + 26} textAnchor="middle" fill="#fff" fontSize={14} fontWeight={800}>{msg}</text></g>}
       {/* 步骤清单 */}
       {!!steps.length && <g pointerEvents="none">
-        <rect x={stp.x} y={stp.y} width={stp.w} height={24 + head + rows * 28} rx={14} fill="rgba(12,16,32,.72)" stroke="rgba(255,255,255,.2)" strokeWidth={1.5} />
+        <rect x={stp.x} y={stp.y} width={stp.w} height={Math.max(stp.h || 0, 24 + head + rows * 28)} rx={14} fill="rgba(12,16,32,.72)" stroke="rgba(255,255,255,.2)" strokeWidth={1.5} />
         {stp.title && <text x={stp.x + 24} y={stp.y + 34} fill="#ffd166" fontSize={stp.titleSize || 20} fontWeight={800}>{stp.title}</text>}
-        {steps.map((s, i) => { const cx = stp.x + 22 + (i % cols) * ((stp.w - 20) / cols), cy = stp.y + head + 26 + Math.floor(i / cols) * 28; return <g key={i}>
+        {stp.footer && <text x={stp.x + 24} y={stp.y + Math.max(stp.h || 0, 24 + head + rows * 28) - 18} fill="#9aa0b8" fontSize={13}>{fill(stp.footer)}</text>}
+        {steps.map((s, i) => { const colW = (stp.w - 20) / cols, cx = stp.x + 22 + (i % cols) * colW, cy = stp.y + head + 26 + Math.floor(i / cols) * 28; return <g key={i}>
+          {stp.link && i % cols < cols - 1 && i < steps.length - 1 && <line x1={cx + colW - 36} y1={cy} x2={cx + colW - 10} y2={cy} stroke="rgba(255,255,255,.25)" strokeWidth={2} />}
           <circle cx={cx} cy={cy} r={7} fill={done[i] ? '#3ddc97' : i === cur ? '#ffd166' : 'transparent'} stroke={done[i] ? '#3ddc97' : i === cur ? '#ffd166' : 'rgba(255,255,255,.4)'} strokeWidth={2} />
           <text x={cx + 16} y={cy + 5} fill={done[i] ? '#3ddc97' : i === cur ? '#fff' : 'rgba(255,255,255,.55)'} fontSize={cols > 1 ? 14 : 12.5} fontWeight={i === cur ? 800 : 500}>{i + 1}. {s.label}</text>
         </g>; })}
       </g>}
+      {hand && canAct && drag.current && cfg.drags?.[drag.current.i]?.cursor && <text x={hand.x} y={hand.y + 10} textAnchor="middle" fontSize={34} pointerEvents="none">{cfg.drags[drag.current.i].cursor}</text>}
       {hand && canAct && !!cfg.tools?.length && <text x={hand.x + 18} y={hand.y + 26} fontSize={30} pointerEvents="none" style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,.6))' }}>{cfg.tools.find(t => t.v === tool)?.icon}</text>}
     </g>
   );

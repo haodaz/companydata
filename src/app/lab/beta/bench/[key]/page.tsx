@@ -17,6 +17,10 @@ import { repairSpec } from '@/lib/lab-repair-spec';
 import { repairFieldSpec } from '@/lib/lab-repair-field';
 import { converterSpec } from '@/lib/lab-converter-spec';
 import { converterConsoleSpec } from '@/lib/lab-converter-console';
+import { gardenSpec } from '@/lib/lab-garden-spec';
+import { gardenFieldSpec } from '@/lib/lab-garden-field';
+import { chefSpec } from '@/lib/lab-chef-spec';
+import { chefFieldSpec } from '@/lib/lab-chef-field';
 import { SAMPLES as DESKTOP_SAMPLES } from '@/lib/masters/desktop-samples';
 import { SAMPLES as DIALOG_SAMPLES } from '@/lib/masters/dialog-samples';
 import { SAMPLES as DISPATCH_SAMPLES } from '@/lib/masters/dispatch-samples';
@@ -30,6 +34,10 @@ const SPECS: Record<string, () => BenchSpec> = {
   'repair-field': () => repairFieldSpec(''),
   converter: () => converterSpec(`${ART}surface-converter.jpg`),
   'converter-console': () => converterConsoleSpec(`${ART}surface-converter.jpg`),
+  garden: () => gardenSpec(''),
+  'garden-field': () => gardenFieldSpec(''),
+  chef: () => chefSpec(''),
+  'chef-field': () => chefFieldSpec(''),
   ...DESKTOP_SAMPLES, ...DIALOG_SAMPLES, ...DISPATCH_SAMPLES, ...HANDS_SAMPLES,
 };
 

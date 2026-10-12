@@ -15,11 +15,13 @@ const { recordEdit } = await import('../src/lib/lab-edits');
 const { SWITCHING_FIELD } = await import('../src/lib/lab-switching-field');
 const { REPAIR_FIELD } = await import('../src/lib/lab-repair-field');
 const { CONVERTER_CONSOLE } = await import('../src/lib/lab-converter-console');
+const { GARDEN_FIELD } = await import('../src/lib/lab-garden-field');
+const { CHEF_FIELD } = await import('../src/lib/lab-chef-field');
 
 const extra = await Promise.all(['desktop', 'dialog', 'dispatch', 'hands'].map(m => import(`../src/lib/masters/${m}-samples`).then(x => x.TO_MASTER || {})));
 /** 旧的代码台面名 → 母版配置。重点 demo（teststand 火箭 / laparotomy 外科 / paving 沥青 / desk 数据分析 / cad / sandtable、levee 应急 / greenhouse 温室）不在这里。
  *  可以只搬某几个：--only audit,triage */
-const ALL: Record<string, any> = { switching: SWITCHING_FIELD, repair: REPAIR_FIELD, converter: CONVERTER_CONSOLE, ...Object.assign({}, ...extra) };
+const ALL: Record<string, any> = { switching: SWITCHING_FIELD, repair: REPAIR_FIELD, converter: CONVERTER_CONSOLE, garden: GARDEN_FIELD, chef: CHEF_FIELD, ...Object.assign({}, ...extra) };
 const KEEP_CODE = ['teststand', 'laparotomy', 'paving', 'desk', 'cad', 'sandtable', 'levee', 'greenhouse'];
 for (const k of KEEP_CODE) delete ALL[k];
 const only = process.argv.includes('--only') ? process.argv[process.argv.indexOf('--only') + 1].split(',') : null;
