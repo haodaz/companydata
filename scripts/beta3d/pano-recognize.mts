@@ -1,6 +1,8 @@
 /**
  * 全景要素识别（2026-10-12，用户：「路过的好东西都别放过，加 tag，写介绍，让大家真的进入了工厂」）：
  *   npx tsx scripts/beta3d/pano-recognize.mts <全景.jpg> <key> --scene "锅炉房" [--role "锅炉运行工"] [--model gemini-3.8-flash]
+ *     [--kinds "珊瑚,生物,地形,水况,安全注意,环境"] [--focus "要找什么（一段话）"] [--tags "打标签的角度"] [--out <json 路径>]
+ *   默认是工业现场（设备 / 仪表 / 阀门管路…）；换领域（水下、医院、户外）就传 kinds / focus / tags。
  * 采集 → 清洗之后的「识别 → 结构化」（见 /lab/logic 第 15 节）：
  *   1. ffmpeg v360 把等距柱状全景切成一圈透视图（水平每 45° 一张 × 平视 / 略往下两圈，视场 90° × 64°）
  *   2. 每张交给视觉模型找行业要素（设备 / 仪表 / 阀门管路 / 电气 / 安全标识 / 文件规程 / 工具 / 环境），框出位置
@@ -28,7 +30,10 @@ const H_FOV = 90, V_FOV = 64, VW = 1280, VH = 853;
 const YAWS = [-180, -135, -90, -45, 0, 45, 90, 135], PITCHES = [5, -25];
 fs.mkdirSync(path.join(W, 'views'), { recursive: true });
 
-const KINDS = ['设备', '仪表', '阀门管路', '电气', '安全标识', '文件规程', '工具', '环境'];
+const KINDS = flag('kinds') ? flag('kinds').split(/[,，]/).map(x => x.trim()).filter(Boolean) : ['设备', '仪表', '阀门管路', '电气', '安全标识', '文件规程', '工具', '环境'];
+const FOCUS = flag('focus', '设备、机器、仪表盘 / 压力表 / 温度计、阀门、管道与管路走向、泵、控制柜 / 配电箱 / 开关、指示灯、安全标识 / 警示牌、贴着的操作规程 / 记录表、工具、消防器材、特殊的环境特征（操作平台、梯子、地沟）');
+const TAG_ANGLES = flag('tags', '用到它的岗位（如 锅炉运行工 / 电工 / 仪表工）、所属工序或系统（如 燃气供应 / 给水 / 配电）、风险点（如 高温 / 高压 / 燃气泄漏 / 触电）、日常动作（如 巡检 / 抄表 / 倒闸）');
+const OTHER = KINDS.includes('环境') ? '环境' : KINDS[KINDS.length - 1];
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 const model = genAI.getGenerativeModel({ model: modelId, generationConfig: { responseMimeType: 'application/json' } });
 const ask = async (parts: any[], tries = 2): Promise<any> => {
@@ -53,7 +58,7 @@ console.log(`切了 ${views.length} 个视角 → ${path.join(W, 'views')}`);
 
 // ── 2. 逐视角识别 ──
 const DETECT = `你在看「${scene}」${role ? `（${role}的工作现场）` : ''}的一张实拍照片（360° 全景里切出来的一个普通视角）。
-把画面里所有对这个行业有意义的东西都找出来——路过的好东西都别放过：设备、机器、仪表盘 / 压力表 / 温度计、阀门、管道与管路走向、泵、控制柜 / 配电箱 / 开关、指示灯、安全标识 / 警示牌、贴着的操作规程 / 记录表、工具、消防器材、特殊的环境特征（操作平台、梯子、地沟）。
+把画面里所有对这个行业有意义的东西都找出来——路过的好东西都别放过：${FOCUS}。
 同一类东西成排出现时，整排算一个（比如「一排控制柜」），但特别显眼的单件可以单独列。看不清、被裁掉大半的不要。
 每一件给：name（行业里的叫法，中文，尽量具体：比如「燃气调压阀组」而不是「阀门」）、kind（只能是 ${KINDS.join(' / ')} 之一）、box_2d（[ymin, xmin, ymax, xmax]，0–1000 归一化）、conf（0–1，你有多确定它是这个东西）、seen（一句话：你看到了什么让你这么判断）。
 返回 JSON：{ "items": [ ... ] }`;
@@ -85,7 +90,7 @@ for (const v of views) for (const it of raw[v.id] || []) {
   const u = (x0 + x1) / 2, w = (y0 + y1) / 2;
   // 贴着画面边缘的框可能被裁了一半，合并时优先用别的视角
   const edge = x0 < 0.03 || x1 > 0.97 || y0 < 0.03 || y1 > 0.97;
-  dets.push({ name: String(it.name || '').trim(), kind: KINDS.includes(it.kind) ? it.kind : '环境', conf: Math.max(0, Math.min(1, Number(it.conf) || 0.5)), seen: String(it.seen || ''), ...toPano(v, u, w), view: v.id, edge });
+  dets.push({ name: String(it.name || '').trim(), kind: KINDS.includes(it.kind) ? it.kind : OTHER, conf: Math.max(0, Math.min(1, Number(it.conf) || 0.5)), seen: String(it.seen || ''), ...toPano(v, u, w), view: v.id, edge });
 }
 
 // ── 4. 合并：方位相近（< 9°）且同类、名字有共同字 ──
@@ -114,7 +119,7 @@ const WRITE = `下面是在「${scene}」${role ? `（${role}的工作现场）`
 要做成「AI 百业」里体验者转着看时可以点开的介绍卡片，让大家像真的走进了这个现场。逐件处理：
 - title：行业里的规范叫法（可以改得更准，但别编画面里没有的型号参数）
 - kind：保持原类别（${KINDS.join(' / ')}）
-- tags：3–5 个行业标签，从这几个角度挑：用到它的岗位（如 锅炉运行工 / 电工 / 仪表工）、所属工序或系统（如 燃气供应 / 给水 / 配电）、风险点（如 高温 / 高压 / 燃气泄漏 / 触电）、日常动作（如 巡检 / 抄表 / 倒闸）
+- tags：3–5 个行业标签，从这几个角度挑：${TAG_ANGLES}
 - desc：两三句、像老师傅在旁边指给新人看：它是什么、干什么用、这一行对它的规矩或常见坑。不写具体数字（压力值、温度值）除非画面上清楚可见。
 - keep：值不值得放出来（重复的、太普通看不出门道的给 false）
 返回 JSON：{ "spots": [ { "id": "", "title": "", "kind": "", "tags": [], "desc": "", "keep": true } ] }
@@ -127,7 +132,7 @@ const spots = merged.flatMap(m => {
   return [{ id: m.id, yaw: m.yaw, pitch: m.pitch, title: String(s.title || m.name), kind: KINDS.includes(s.kind) ? s.kind : m.kind, tags: (Array.isArray(s.tags) ? s.tags : []).map(String).slice(0, 5), desc: String(s.desc || ''), conf: m.conf }];
 });
 fs.mkdirSync('src/lib/pano-spots', { recursive: true });
-const dst = `src/lib/pano-spots/${key}.json`;
+const dst = flag('out', `src/lib/pano-spots/${key}.json`);
 fs.writeFileSync(dst, JSON.stringify(spots, null, 1) + '\n');
 const kinds = spots.reduce((a: Record<string, number>, s) => (a[s.kind] = (a[s.kind] || 0) + 1, a), {});
 console.log(`✅ ${spots.length} 件要素 → ${dst}`);

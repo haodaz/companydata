@@ -4,6 +4,8 @@
  * position / lookAt / up 由 scripts/beta3d/view.py 从重建结果算出（视频中间那一帧的机位），span 是头部摆动时机位最多挪多远。
  */
 import BOILER_SPOTS from '@/lib/pano-spots/boiler.json';
+import REEF_HERON_SPOTS from '@/lib/pano-spots/reef-heron.json';
+import REEF_ELLIOT_SPOTS from '@/lib/pano-spots/reef-elliot.json';
 /** 场景里可以点的物件：鼠标悬停出线框，点一下弹说明（像游戏里的空间建模）。pos / size 在重建出来的场景坐标系里（用查看器 ?edit=1 点出来） */
 export interface Beta3DHotspot { id: string; name: string; desc: string; pos: [number, number, number]; size: [number, number, number]; /** 绕竖轴转多少度 */ rotY?: number }
 
@@ -128,12 +130,13 @@ export const BETA3D: Record<string, Beta3DScene> = {
   'reef-dive': {
     key: 'reef-dive', title: '珊瑚礁 · 潜水员视角', role: '潜导 / 海洋科考（试看）', spaceId: '',
     url: '', position: [0, 0, 0], lookAt: [0, 0, 1], up: [0, -1, 0], span: 1,
+    // spots：pano-recognize.mts 按潜导视角识别（不可触碰的珊瑚、要保持距离的生物、浪涌 / 触礁风险区、看点）
     // 两个礁区用箭头连起来：从苍鹭岛礁丘「游」到伊利奥特夫人岛。原图 9500 宽，缩到 8192 免得有的显卡贴图上限黑屏
     pano: {
       url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-heron_bommie_svii.jpg', kind: 'image',
       nodes: [
-        { id: 'heron', url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-heron_bommie_svii.jpg', kind: 'image', links: [{ to: 'elliot', yaw: 0, label: '游去伊利奥特夫人岛礁区' }] },
-        { id: 'elliot', url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-lady_elliot_island_svii.jpg', kind: 'image', links: [{ to: 'heron', yaw: 180, label: '游回苍鹭岛礁丘' }] },
+        { id: 'heron', spots: REEF_HERON_SPOTS as PanoSpot[], url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-heron_bommie_svii.jpg', kind: 'image', links: [{ to: 'elliot', yaw: 0, label: '游去伊利奥特夫人岛礁区' }] },
+        { id: 'elliot', spots: REEF_ELLIOT_SPOTS as PanoSpot[], url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-lady_elliot_island_svii.jpg', kind: 'image', links: [{ to: 'heron', yaw: 180, label: '游回苍鹭岛礁丘' }] },
       ],
     },
     credit: '360° 水下实拍 · Underwater Earth / XL Catlin Seaview Survey（Christophe Bailhache）· 大堡礁 Heron Bommie / Lady Elliot Island · CC BY-SA 3.0 · 来自 Wikimedia Commons',
