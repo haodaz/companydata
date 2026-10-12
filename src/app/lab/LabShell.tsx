@@ -212,8 +212,8 @@ function Shell({ children }: { children: React.ReactNode }) {
   // 单个空间页 /lab/<id> 算体验。不跟数据后台的侧边栏混在一起
   const NAV = [
     { k: '/lab', t: '首页', on: (p: string) => p === '/lab' },
-    { k: '/lab/spaces', t: '百业工厂', on: (p: string) => p.startsWith('/lab/spaces') || p.startsWith('/lab/studio') || p.startsWith('/lab/assets') },
-    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || p.startsWith('/lab/me') || p.startsWith('/lab/cert') || /^\/lab\/(?!spaces|studio|gallery|assets)[^/]+$/.test(p) },
+    { k: '/lab/spaces', t: '百业工厂', on: (p: string) => p.startsWith('/lab/spaces') || p.startsWith('/lab/studio') || p.startsWith('/lab/assets') || p.startsWith('/lab/logic') },
+    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || p.startsWith('/lab/me') || p.startsWith('/lab/cert') || /^\/lab\/(?!spaces|studio|gallery|assets|logic|beta)[^/]+$/.test(p) },
   ];
   return (
     <div className="lab" data-theme={theme}>

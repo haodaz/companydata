@@ -62,9 +62,9 @@ export async function proxy(req: NextRequest) {
   if (/^\/lab\/(?:[^/]+\/)*[^/]+\.(png|jpe?g|webp|gif|svg|mp4|webm)$/i.test(pathname)) return NextResponse.next();
 
   // AI 百业首页公开：谁都能看见理念和这些人，点进任何一个空间才要求登录（LAB_PUBLIC=1 时整个 /lab 都公开）
-  // 百业工厂的工作室 /lab/studio/*、素材库 /lab/assets 例外：放开时也要登录
+  // 百业工厂的工作室 /lab/studio/*、素材库 /lab/assets、设计文档 /lab/logic 例外：放开时也要登录
   if (pathname.startsWith('/lab/cert/')) return NextResponse.next();
-  if (pathname === '/lab' || (LAB_PUBLIC() && pathname.startsWith('/lab/') && !pathname.startsWith('/lab/studio') && !pathname.startsWith('/lab/assets'))) return NextResponse.next();
+  if (pathname === '/lab' || (LAB_PUBLIC() && pathname.startsWith('/lab/') && !pathname.startsWith('/lab/studio') && !pathname.startsWith('/lab/assets') && !pathname.startsWith('/lab/logic'))) return NextResponse.next();
 
   // 邀请链接 /lab/<id>?invite=…：票对得上这个空间，就不用登录
   const pm = pathname.match(INVITE_PAGE);
