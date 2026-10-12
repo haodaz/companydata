@@ -18,6 +18,15 @@ import { GardenStage } from '@/components/lab/surfaces/Garden';
 import { LiveStage } from '@/components/lab/surfaces/Live';
 import { KinderStage } from '@/components/lab/surfaces/Kinder';
 import { DiveStage } from '@/components/lab/surfaces/Dive';
+import { TestStandStage } from '@/components/lab/surfaces/TestStand';
+import { ChipDeskStage } from '@/components/lab/surfaces/ChipDesk';
+import { SandtableStage } from '@/components/lab/surfaces/Sandtable';
+import { SwitchingStage } from '@/components/lab/surfaces/Switching';
+import { LeveeStage } from '@/components/lab/surfaces/Levee';
+import { ConverterStage } from '@/components/lab/surfaces/Converter';
+import { PavingStage } from '@/components/lab/surfaces/Paving';
+import { GreenhouseStage } from '@/components/lab/surfaces/Greenhouse';
+import { CadStage } from '@/components/lab/surfaces/Cad';
 import { Splat3D } from '@/components/lab/Splat3D';
 import type { Beta3DScene } from '@/lib/lab-3d-beta';
 
@@ -436,6 +445,18 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
           setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
         {spec.surface === 'dive' && <DiveStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint} image={scene.image}
           setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'teststand' && <TestStandStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'switching' && <SwitchingStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'levee' && <LeveeStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'converter' && <ConverterStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'paving' && <PavingStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'greenhouse' && <GreenhouseStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
         {(!spec.surface || isLatteSurface) && scene.layers.map(l => {
           const track = (l.kind === 'seam' || l.kind === 'pour') && !!l.control;
           const prog = track ? st.controls[l.control!] || 0 : 0;
@@ -480,7 +501,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   ) : null;
 
   // 办公桌类台面（数据分析、财务、写代码……）：整屏、浅色、好读，像游戏里打开大盘 / 银行那一屏；背后不放房间
-  const LIGHT: Record<string, React.ComponentType<any>> = { desk: DeskStage, triage: TriageStage, complaint: ComplaintStage, audit: AuditStage, live: LiveStage };
+  const LIGHT: Record<string, React.ComponentType<any>> = { desk: DeskStage, triage: TriageStage, complaint: ComplaintStage, audit: AuditStage, live: LiveStage, chipdesk: ChipDeskStage, sandtable: SandtableStage, cad: CadStage };
   if (hud && scene && spec.surface && LIGHT[spec.surface]) {
     const Light = LIGHT[spec.surface];
     return (

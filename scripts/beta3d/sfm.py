@@ -29,6 +29,13 @@ pycolmap.match_sequential(db)
 print(f'顺序匹配完 {time.time() - t0:.0f}s', flush=True)
 maps = pycolmap.incremental_mapping(db, img, sparse)
 if not maps:
+    # 大面积纯色（白火箭、玻璃顶）时顺序匹配不够：换全量匹配、放宽初始化再试一次
+    print('顺序匹配没建起来，换全量匹配重试…', flush=True)
+    pycolmap.match_exhaustive(db)
+    opt = pycolmap.IncrementalPipelineOptions()
+    opt.min_num_matches = 10; opt.mapper.init_min_num_inliers = 50; opt.mapper.abs_pose_min_num_inliers = 15
+    maps = pycolmap.incremental_mapping(db, img, sparse, options=opt)
+if not maps:
     print('❌ 重建失败：没有一个模型', flush=True); sys.exit(1)
 best = max(maps.values(), key=lambda r: r.num_reg_images())
 print(f'模型 {len(maps)} 个，最大的注册了 {best.num_reg_images()}/{n} 帧，3D 点 {best.num_points3D()} 个，{time.time() - t0:.0f}s', flush=True)

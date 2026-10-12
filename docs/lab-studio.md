@@ -117,6 +117,15 @@
 | `kinder` | `surfaces/Kinder.tsx` + `lib/lab-kinder-spec.ts` | 一节 20 分钟的课（幼儿园老师 dc121c80） | 群体调度：四个环节有时长，八个孩子注意力会散；哭 → 安抚、抢 → 分开、跑 → 请回座位；拍手儿歌用多了不灵；吼是红线。1 秒 = 6 秒模拟 |
 
 | `dive` | `surfaces/Dive.tsx` + `lib/lab-dive-spec.ts` | 礁区导潜（潜导带教 387fcc19 09:00） | 现场型侧视图（Veo 珊瑚礁底图）：拖着自己走、客人跟在后面；一臂之内、12 m 上限；面镜进水手势 + 停住、要碰珊瑚手势 + 挡中间、70 bar 回转、≤ 9 m/分、5 m 停 3 分钟。1 秒 = 8 秒模拟 |
+| `teststand` | `surfaces/TestStand.tsx` + `lib/lab-teststand-spec.ts` | 火箭发动机热试车（火箭总装工程师 15:00） | 底图是原来那张「火箭车」画进 svg：贮箱液位 / 主阀 / 柜子灯叠在图上；预冷 → 增压到窗口 → 吹除 → 点火器 → 燃料阀 → 氧阀 → 稳态 → 第 12 秒燃烧不稳定 2.5 秒内紧急关机 → 吹除泄压。尾焰朝下、竖排马赫环间距随室压，硬启动爆燃、关机白气、积液滴漏 |
+| `chipdesk` | `surfaces/ChipDesk.tsx`（HTML）+ `lib/lab-chipdesk-spec.ts` | 握手死锁排障（芯片设计 10:30） | 桌面五个 app：波形（按 RTL 版本算 40 拍，光标点一拍出解释、标记死锁拍）/ RTL（三种改法）/ 时序报告（CDC 三种处理）/ 定向仿真（反压 + 跑）/ 交接说明 |
+| `sandtable` | `surfaces/Sandtable.tsx`（HTML）+ `lib/lab-sandtable-spec.ts` | 山洪指挥沙盘（应急指挥 10:20） | 地图 + 七支力量卡（点卡再点村 / 厂区 / 待命区派去向）；首报、下令转移、核实道路、开第二安置点、记决策；第 120 分钟厂区坍塌 |
+| `levee` | `surfaces/Levee.tsx` + `lib/lab-levee-spec.ts` | 河堤抢险一线（应急 11:40，`lab-insert-chapter.mts` 插的章） | 写实底图上叠河 / 堤 / 村；拿沙袋点堤顶堆子堤（错缝）、拿土工布点迎水面、拿沙袋点堤脚围井、拿反滤料按砂 → 小石 → 大石铺、拿泵点积水就位 + 加油 + 出水接堤外；系安全绳 |
+| `switching` | `surfaces/Switching.tsx` + `lib/lab-switching-spec.ts` | 验电挂地线（变电站 13:30） | 一次接线叠在变电站照片上：核对名称 / 三台设备位置（1121 没分到位要汇报）→ 验电器自检 → 线路侧验电 → 接地线先接地端后导体端 → 标示牌 → 回令；跨遮栏、母线侧挂地线即违规 |
+| `converter` | `surfaces/Converter.tsx` + `lib/lab-converter-spec.ts` | 吹炼终点控制（转炉 09:40） | 炉口在右（底图）、主控在左：枪位 / 供氧两个旋钮、石灰 / 矿石、副枪、挡渣、底吹氩、出钢；碳-温曲线带终点窗口；第 150 秒冷却水报警要提枪降氧 |
+| `paving` | `surfaces/Paving.tsx` + `lib/lab-paving-spec.ts` | 控速控厚 + 便道压车（沥青 10:20） | 左右分屏：左驾驶室操作台（速度 / 厚度 / 压路机间距拉杆、料斗、料车卡接收 / 退回、收翼板），右驾驶位真实画面叠铺好的路面、卸料、压路机标尺；料车按时刻表到，第 5 车晚到 |
+| `greenhouse` | `surfaces/Greenhouse.tsx` + `lib/lab-greenhouse-spec.ts` | 午间环控接管（温室 12:20） | 温室照片上叠顶窗扇、遮阳幕、微雾、风机、雨、传感器标牌；第 30 分钟网关异常切手动，补水再开泵，第 150 分钟下雨收窗 |
+| `cad` | `surfaces/Cad.tsx`（HTML）+ `lib/lab-cad-spec.ts` | 电机座补图与干涉整改（机械设计 09:00） | 三视图画布：缺尺寸处虚线标注，右栏选值（对照草图）、选基准面、选公差、跑干涉检查选整改、出图检查发布 |
 
 一次性动作的写法：旋钮控件 `act` 在台面里按下后 0.6 秒归零，规格里用 `act_now = act != last_act ? act : 0` 只在变化那一拍算一次（旋钮会留着，不这样做会每拍都算）。
 通用写入脚本：`scripts/lab-upgrade-surface.mts <规格名> <空间前缀> [时段]`（备份到 `scripts/.bench-backup-*.json`，`--remove` 换回）。干跑示范：`scripts/.sim-spec.mts <规格名> <秒>`。

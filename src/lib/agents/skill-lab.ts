@@ -54,7 +54,7 @@ export async function generateTask(jd: JdInput, skill: SkillRef | null, modelId 
 
     返回 JSON：
     {
-      "profile": { "codename": "<这个岗位 AI 的代号，英文大写 + 连字符，如 DA-GROWTH>", "role": "<人对它的称呼，2–6 个字的职业称谓，要像人而不是像岗位名，如「拉花师傅」「缝合师」「造箭师」「推拿师傅」>", "tagline": "<它的一句口头禅，15 字以内，体现这个岗位的判断方式>", "capabilities": ["<它具备的能力，4-6 项>"], "can_solve": ["<它能帮人解决的具体问题，3-4 个，写成用户会说的话>"] },
+      "profile": { "codename": "<这个岗位 AI 的代号，英文大写 + 连字符，如 DA-GROWTH>", "role": "<人对它的称呼，2–8 个字，必须是大众一看就懂的直白职业名，如「数据分析师」「外科住院医师」「火箭总装工程师」「咖啡师」；禁止谜语式花名（「归因师」「电路雕刻师」「救火掌柜」这种都不行——会和消防员等严肃职业混淆）>", "tagline": "<它的一句口头禅，15 字以内，体现这个岗位的判断方式>", "capabilities": ["<它具备的能力，4-6 项>"], "can_solve": ["<它能帮人解决的具体问题，3-4 个，写成用户会说的话>"] },
       "jd_breakdown": [ { "duty": "<JD 职责原句，逐字引用>", "capability": "<能力项>", "task_idea": "<可检验的任务点子>", "chosen": true | false } ],
       "title": "<任务标题>",
       "brief": "<情境与要求，2-4 句>",
