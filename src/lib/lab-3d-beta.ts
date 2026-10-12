@@ -95,6 +95,13 @@ export const BETA3D: Record<string, Beta3DScene> = {
     credit: 'Veo 3.1 生成水下绕礁视频 · COLMAP + Brush 重建（39 万高斯，12.6 MB）',
     slots: ['09:00'],   // 礁区导潜
   },
+  boiler: {
+    key: 'boiler', title: '锅炉房', role: '锅炉运行 / 设备巡检（试看）', spaceId: '',
+    url: '', position: [0, 0, 0], lookAt: [0, 0, 1], up: [0, -1, 0], span: 1,   // 只有全景，没有 3D
+    pano: { url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-polyhaven-boiler_room.jpg', kind: 'image' },
+    credit: '360° 实拍 · Poly Haven「Boiler Room」· 摄影 Oliksiy Yakovlyev · CC0',
+    slots: [],   // 第一张公开实拍素材（2026-10-12 和用户一起挑的），还没挂到任何空间
+  },
 };
 
 /** 空间 id → 3D beta 场景（空间主页上挂入口用） */
