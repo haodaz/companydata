@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>平方智能 · AI 百业</title>
+<meta name="description" content="平方智能 · AI 百业：让 AI 与人升维，构建求真空间的心智智能——怎么造、为什么不会被大模型覆盖">
+<style>
+/* ===== 平方智能 · AI 百业 · 动态讲述（1920×1080）=====
+   一页讲一件事：原理动图（card）之后紧跟百业产品里的真实画面（clip）做呼应；开头先是一段全屏的百业画面（full）。
+   只用来出片（不是对外页面）：?render=1 时不自动播，window.show(id, 秒) 定格任意一帧；产品画面由 scripts/video/baiye-story.py 用 ffmpeg 叠进画框。
+   时长 / 旁白 / 画面字幕来自 baiye-story/story.js（由出片脚本生成）。 */
+*{box-sizing:border-box}
+:root{
+  --bg:#F7F8FC;--ink:#16182B;--muted:#5F6680;--dim:#9AA0B8;--line:rgba(22,24,43,.09);
+  --violet:#6D5BFF;--cyan:#2BB3D9;--mint:#2FBF8F;--gold:#C8891F;--rose:#E25C8E;--ai:#F0652A;--cp:#2F6BFF;--teal:#14A3A0;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  --mono:"SF Mono",Menlo,Consolas,"Roboto Mono",monospace;
+}
+html,body{margin:0;height:100%;background:#0B0F1E;color:var(--ink);font-family:var(--sans);overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0;overflow:hidden;background:var(--bg)}
+#stage::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(1200px 700px at 50% 40%,rgba(109,91,255,.16),transparent 62%),
+  radial-gradient(900px 600px at 0% 100%,rgba(43,179,217,.18),transparent 62%),
+  radial-gradient(900px 600px at 100% 0%,rgba(255,190,150,.20),transparent 65%)}
+#stage::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(22,24,43,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(22,24,43,.04) 1px,transparent 1px);
+  background-size:60px 60px;mask-image:radial-gradient(ellipse at 50% 45%,#000 20%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at 50% 45%,#000 20%,transparent 70%)}
+#stage>*{position:absolute;z-index:1}
+#cv{left:0;top:0;width:1920px;height:1080px;z-index:1}
+#card{left:0;top:0;width:1920px;height:1080px;z-index:2}
+#card *{text-wrap:balance}
+
+/* 页眉 */
+.top{left:56px;right:56px;top:34px;height:40px;display:flex;align-items:center;gap:18px;z-index:5}
+.top .brand{font-weight:800;font-size:20px;letter-spacing:.12em;color:var(--ink);white-space:nowrap}
+.top .brand i{font-style:normal;font-weight:500;color:var(--muted);letter-spacing:.06em;margin-left:10px;font-size:16px}
+.top .ch{margin-left:auto;display:flex;gap:8px}
+.top .ch span{font:600 13px var(--mono);letter-spacing:.12em;color:var(--dim);padding:6px 14px;border-radius:100px;border:1px solid var(--line);background:rgba(255,255,255,.6);white-space:nowrap}
+.top .ch span.on{color:#fff;background:var(--ink);border-color:var(--ink)}
+.top img{height:34px}
+body.full .top{opacity:0}
+
+/* 卡片页通用 */
+.kick{position:absolute;left:120px;top:118px;font:700 16px var(--mono);letter-spacing:.2em;color:var(--c,var(--violet))}
+.ttl{position:absolute;left:120px;top:146px;right:120px;font-size:54px;font-weight:800;line-height:1.2;color:var(--ink);letter-spacing:.01em}
+.ttl em{font-style:normal;color:var(--c)}
+.fade{opacity:0;transform:translateY(14px)}
+.on-in{opacity:1;transform:none}
+
+/* 画框页 */
+.panel{position:absolute;left:160px;top:200px;width:1600px;height:775px;border-radius:22px;overflow:hidden;background:#0B1020;box-shadow:0 30px 80px rgba(22,24,43,.28);border:1px solid rgba(255,255,255,.6)}
+.panel video{width:100%;height:100%;object-fit:cover;display:block}
+.cap{position:absolute;left:184px;top:925px;padding:9px 18px;border-radius:12px;background:rgba(11,16,32,.72);color:#fff;font-size:22px;font-weight:600;letter-spacing:.02em;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:3;white-space:nowrap}
+.cap i{font-style:normal;font:700 13px var(--mono);letter-spacing:.14em;color:#9FE7FF;margin-right:12px}
+.ctl{position:absolute;left:160px;top:118px;right:160px;display:flex;align-items:baseline;gap:22px}
+.ctl b{font-size:44px;font-weight:800;color:var(--ink);letter-spacing:.01em;white-space:nowrap}
+.ctl i{font-style:normal;font:700 15px var(--mono);letter-spacing:.2em;color:var(--c,var(--violet));white-space:nowrap}
+/* 全屏页 */
+.full{position:absolute;inset:0;background:#000}
+.full video{width:100%;height:100%;object-fit:cover}
+.fcap{position:absolute;left:72px;top:900px;color:#fff;font-size:24px;font-weight:700;letter-spacing:.04em;text-shadow:0 2px 12px rgba(0,0,0,.6);z-index:3}
+.fcap i{display:block;font-style:normal;font:700 14px var(--mono);letter-spacing:.24em;color:#9FE7FF;margin-bottom:6px}
+.fbrand{position:absolute;right:72px;top:60px;color:#fff;font-size:22px;font-weight:800;letter-spacing:.16em;text-shadow:0 2px 12px rgba(0,0,0,.6);z-index:3}
+
+/* 三件事 */
+.tri{position:absolute;left:120px;right:120px;top:300px;display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+.tri div{height:380px;border-radius:28px;background:rgba(255,255,255,.86);border:1px solid #fff;box-shadow:0 20px 60px rgba(22,24,43,.10);padding:44px 40px;position:relative;overflow:hidden}
+.tri div::after{content:"";position:absolute;right:-60px;bottom:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--c) 26%,transparent),transparent 70%)}
+.tri b{display:block;font-size:110px;line-height:1;font-weight:900;color:var(--c);letter-spacing:.04em}
+.tri span{display:block;font-size:34px;font-weight:800;color:var(--ink);margin-top:34px}
+.tri small{display:block;font-size:22px;color:var(--muted);margin-top:14px;line-height:1.5}
+.gan{position:absolute;left:0;right:0;top:770px;text-align:center;font-size:40px;font-weight:700;color:var(--ink)}
+.gan em{font-style:normal;font-size:84px;font-weight:900;color:var(--ai);vertical-align:-8px;margin:0 10px}
+
+/* 问题 */
+.qa{position:absolute;left:0;right:0;top:330px;text-align:center}
+.qa .l1{font-size:40px;color:var(--muted);font-weight:600}
+.qa .l2{font-size:96px;font-weight:900;color:var(--ink);margin-top:40px;letter-spacing:.02em}
+.qa .l2 em{font-style:normal;background:linear-gradient(90deg,var(--ai),var(--violet) 55%,var(--cp));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* 母版 */
+.mgrid{position:absolute;left:120px;right:120px;top:290px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.mgrid div{height:300px;border-radius:22px;overflow:hidden;position:relative;background:#0B1020;box-shadow:0 18px 50px rgba(22,24,43,.16)}
+.mgrid div .im{position:absolute;inset:0;background:center/cover no-repeat;opacity:.9}
+.mgrid div .tx{position:absolute;left:0;right:0;bottom:0;padding:60px 26px 22px;background:linear-gradient(transparent,rgba(8,12,28,.9));color:#fff}
+.mgrid div .tx b{font-size:36px;font-weight:900;letter-spacing:.06em}
+.mgrid div .tx span{display:block;font-size:19px;opacity:.85;margin-top:6px}
+.mgrid div .tg{position:absolute;left:20px;top:18px;font:700 13px var(--mono);letter-spacing:.14em;color:#fff;background:rgba(255,255,255,.18);padding:5px 11px;border-radius:100px}
+.mnote{position:absolute;left:120px;right:120px;top:935px;display:flex;gap:16px;justify-content:center}
+.mnote span{font-size:22px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:100px;padding:10px 24px;font-weight:600}
+
+/* 求真清单 */
+.chk{position:absolute;left:1180px;top:300px;width:620px;display:grid;gap:14px}
+.chk div{display:flex;align-items:center;gap:16px;font-size:26px;color:var(--dim);padding:14px 20px;border-radius:16px;border:1px solid transparent;transition:none}
+.chk div i{font:800 16px var(--mono);font-style:normal;color:var(--dim);width:56px}
+.chk div.on{color:var(--ink);background:#fff;border-color:var(--line);box-shadow:0 8px 24px rgba(22,24,43,.06)}
+.chk div.on i{color:var(--violet)}
+.chk div.on::after{content:"✓";margin-left:auto;color:var(--mint);font-weight:900;font-size:30px}
+.stamp{position:absolute;left:1290px;top:830px;width:380px;height:110px;border:5px solid var(--gold);border-radius:18px;color:var(--gold);display:grid;place-items:center;text-align:center;font-weight:900;font-size:36px;line-height:1.15;background:rgba(255,250,240,.9);opacity:0}
+.stamp small{display:block;font:700 16px var(--sans);letter-spacing:.06em}
+
+/* 心智 */
+.tick{position:absolute;left:120px;top:290px;width:640px;height:620px;overflow:hidden;mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent);-webkit-mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent)}
+.tick .rail{position:absolute;left:0;right:0;top:0}
+.ev{height:72px;display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center}
+.ev i{font:700 18px var(--mono);font-style:normal;color:var(--dim)}
+.ev span{font-size:26px;padding:12px 20px;border-radius:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev.op span{background:rgba(47,107,255,.10);color:#1d3f9a}
+.ev.say span{background:rgba(240,101,42,.12);color:#9a3d12}
+.ev.hes span{background:rgba(226,92,142,.12);color:#9b2457}
+.ret{position:absolute;left:0;right:0;top:930px;text-align:center;font-size:28px;font-weight:700;color:var(--ink);opacity:0}
+.ret em{font-style:normal;color:var(--cp)}
+
+/* 结尾 */
+.endc{position:absolute;left:0;right:0;top:300px;text-align:center}
+.endc .a{font-size:30px;color:var(--muted);font-weight:600}
+.endc .b{font-size:100px;font-weight:900;margin-top:36px;line-height:1.15;background:linear-gradient(90deg,#B26A10,var(--ai) 40%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.endc .c{margin-top:46px;display:flex;justify-content:center;gap:16px}
+.endc .c span{font-size:26px;font-weight:700;padding:10px 26px;border-radius:100px;background:#fff;border:1px solid var(--line)}
+.endc .d{margin-top:50px;font-size:30px;font-weight:800;letter-spacing:.3em;color:var(--ink)}
+.endc img{height:64px;margin-top:30px}
+
+/* 网页播放控制 */
+#ui{position:fixed;left:0;right:0;bottom:0;height:46px;display:flex;align-items:center;gap:12px;padding:0 16px;background:rgba(11,15,30,.75);color:#fff;font:13px var(--sans);z-index:20}
+#ui button{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:5px 12px;font:13px var(--sans);cursor:pointer}
+#bar{flex:1;height:6px;background:rgba(255,255,255,.15);border-radius:3px;position:relative;cursor:pointer}
+#bar i{position:absolute;left:0;top:0;bottom:0;background:#9FE7FF;border-radius:3px}
+#bar b{position:absolute;top:-3px;width:2px;height:12px;background:rgba(255,255,255,.35)}
+#go{position:fixed;inset:0;display:grid;place-items:center;z-index:30;background:rgba(11,15,30,.55);cursor:pointer}
+#go div{background:#fff;color:var(--ink);border-radius:20px;padding:26px 40px;text-align:center;font-size:22px;font-weight:800;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+#go div small{display:block;font-size:14px;color:var(--muted);font-weight:500;margin-top:8px}
+body.render #ui,body.render #go{display:none}
+/* 出片：全屏页只出字幕层（透明底），画面由 ffmpeg 垫在下面 */
+body.render.full,body.render.full #stage{background:transparent}
+body.render.full #stage::before,body.render.full #stage::after{display:none}
+body.render.full .full{background:transparent}
+.fshade{position:absolute;left:0;right:0;bottom:0;height:320px;background:linear-gradient(transparent,rgba(0,0,0,.5));z-index:2}
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="cv" width="1920" height="1080"></canvas>
+  <div id="card"></div>
+  <div class="top"><span class="brand">平方智能<i>AI 百业</i></span><span class="ch" id="chs"></span><img src="baiye-story/img/vs-logo.png" alt="平方创想 VisionSquare"></div>
+</div>
+<script src="baiye-story/story.js"></script>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const stage = $('stage'), cv = $('cv'), card = $('card');
+const q = new URLSearchParams(location.search), RENDER = true;
+if (RENDER) { document.body.classList.add('render'); document.documentElement.style.background = 'transparent'; }
+function fit(){ const s = RENDER ? 1 : Math.min(innerWidth/1920, (innerHeight - 46)/1080); stage.style.transform = `translate(${-960*s}px,${-540*s - (RENDER ? 0 : 23)}px) scale(${s})`; }
+addEventListener('resize', fit); fit();
+const TAU = Math.PI*2, F = getComputedStyle(document.documentElement).getPropertyValue('--sans'), M = getComputedStyle(document.documentElement).getPropertyValue('--mono');
+const clamp01 = x => Math.max(0, Math.min(1, x)), ease = x => 1 - Math.pow(1 - clamp01(x), 3), frac = x => x - Math.floor(x);
+const hexA = (h, a) => { const n = parseInt(h.slice(1), 16); return `rgba(${n>>16},${(n>>8)&255},${n&255},${a})`; };
+const ctx = cv.getContext('2d');
+function rr(x, X, Y, W, H, r){ x.beginPath(); x.moveTo(X+r, Y); x.arcTo(X+W, Y, X+W, Y+H, r); x.arcTo(X+W, Y+H, X, Y+H, r); x.arcTo(X, Y+H, X, Y, r); x.arcTo(X, Y, X+W, Y, r); x.closePath(); }
+const bez = (p0, p1, p2, p3, u) => { const v = 1-u; return [v*v*v*p0[0]+3*v*v*u*p1[0]+3*v*u*u*p2[0]+u*u*u*p3[0], v*v*v*p0[1]+3*v*v*u*p1[1]+3*v*u*u*p2[1]+u*u*u*p3[1]]; };
+const appear = (el, lt, at) => { if (!el) return; const p = ease((lt - at) / 0.6); el.style.opacity = p; el.style.transform = `translateY(${(1-p)*14}px)`; };
+
+const ST = window.STORY || { scenes: {} };
+const CH = [['AI 百业',''],['HOW','怎么造'],['VALUE','三样价值'],['ALWAYS','始终的价值']];
+
+// ---------- 场景定义 ----------
+const S = [];
+const card_ = (id, ch, html, draw) => S.push({ id, ch, kind: 'card', html, draw });
+const clip_ = (id, ch, title, kick, c) => S.push({ id, ch, kind: 'clip', title, kick, c });
+const full_ = (id, ch) => S.push({ id, ch, kind: 'full' });
+
+full_('intro', 0);
+
+card_('open', 0, () => `<div class="qa"><div class="l1 fade" id="q1">AI 一年一代地迭代，会说、会画、会推理越来越便宜</div><div class="l2 fade" id="q2">平方智能始终握着的<em>核心价值</em></div></div><div class="kick" style="--c:var(--gold)">在 AI 不断迭代的时代</div>`,
+  (lt, D) => {
+    appear($('q1'), lt, 0.3); appear($('q2'), lt, D * .55);
+    ctx.font = `600 22px ${M}`; ctx.textAlign = 'center';
+    for (let k = 0; k < 14; k++) { const u = frac(lt * 0.05 + k / 14), x = 160 + (k * 137) % 1600, y = 1000 - u * 900; ctx.fillStyle = `rgba(109,91,255,${0.16 * Math.sin(u * Math.PI)})`; ctx.fillText(`第 ${1 + Math.floor(lt / 2.5 + k) % 9} 代模型`, x, y); }
+  });
+
+card_('three', 0, () => `<div class="kick">平方智能 · 三样核心价值</div><div class="ttl">让 AI 与人<em style="--c:var(--ai)">升维</em>，构建<em style="--c:var(--violet)">求真</em>空间的<em style="--c:var(--cp)">心智</em>智能</div>
+  <div class="tri"><div class="fade" id="t1" style="--c:var(--ai)"><b>升维</b><span>让 AI 与人一起升维</span><small>人被看见怎么干<br>AI 学会怎么干</small></div><div class="fade" id="t2" style="--c:var(--violet)"><b>求真</b><span>构建求真的空间</span><small>能考、能核、能追溯<br>老手跑得通，老师傅认</small></div><div class="fade" id="t3" style="--c:var(--cp)"><b>心智</b><span>看见人的心智</span><small>过程即证据<br>人连万物</small></div></div>
+  <div class="gan fade" id="t4">AI 百业：三样价值落到一个<em>干</em>字上</div>`,
+  (lt, D) => { appear($('t1'), lt, 0.4); appear($('t2'), lt, 1.8); appear($('t3'), lt, 3.2); appear($('t4'), lt, D * .62); });
+
+clip_('montage', 0, '干，就是真的动手', 'AI 百业');
+
+const PIPE = ['一份 JD / 职业名', '拆解一天', '统一表示', '母版工位', '环境素材', '求真校验', '老师傅校正', '升维空间'];
+card_('how', 1, () => `<div class="kick" style="--c:var(--teal)">HOW · 一个升维空间是怎么造出来的</div><div class="ttl">一条可以复用的流水线：怎么造，本身就是积累</div>`,
+  (lt, D) => {
+    const n = PIPE.length, X0 = 150, W = 1620, y = 600, step = W / (n - 1), lit = clamp01(lt / (D * 0.85)) * (n - 1);
+    ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(22,24,43,.10)'; ctx.beginPath(); ctx.moveTo(X0, y); ctx.lineTo(X0 + W, y); ctx.stroke();
+    const g = ctx.createLinearGradient(X0, 0, X0 + W, 0); g.addColorStop(0, '#14A3A0'); g.addColorStop(.5, '#6D5BFF'); g.addColorStop(1, '#F0652A');
+    ctx.strokeStyle = g; ctx.beginPath(); ctx.moveTo(X0, y); ctx.lineTo(X0 + lit * step, y); ctx.stroke();
+    for (let k = 0; k < 10; k++) { const u = frac(lt * 0.18 + k / 10); if (u * (n - 1) > lit) continue; ctx.fillStyle = 'rgba(109,91,255,.7)'; ctx.beginPath(); ctx.arc(X0 + u * W, y, 5, 0, TAU); ctx.fill(); }
+    PIPE.forEach((nm, i) => {
+      const x = X0 + i * step, on = i <= lit + 0.001, cur = Math.abs(i - lit) < 0.5;
+      ctx.beginPath(); ctx.arc(x, y, cur ? 34 : 26, 0, TAU); ctx.fillStyle = on ? '#fff' : 'rgba(255,255,255,.6)'; ctx.fill();
+      ctx.lineWidth = cur ? 6 : 3; ctx.strokeStyle = on ? (i < 3 ? '#14A3A0' : i < 6 ? '#6D5BFF' : '#F0652A') : 'rgba(22,24,43,.15)'; ctx.stroke();
+      ctx.fillStyle = on ? '#16182B' : '#9AA0B8'; ctx.font = `800 20px ${M}`; ctx.textAlign = 'center'; ctx.fillText(String(i + 1).padStart(2, '0'), x, y + 7);
+      ctx.font = `${cur ? 800 : 700} ${cur ? 30 : 26}px ${F}`; ctx.fillText(nm, x, i % 2 ? y + 92 : y - 62);
+    });
+  });
+
+clip_('jd', 1, '起点：一份 JD，或一个职业名', 'HOW · 01');
+
+// 统一表示
+const GEN = ['rocket', 'greenhouse', 'converter', 'latte', 'surgery', 'dive'].map(k => `baiye-story/img/${k}.jpg`);
+const IMG = {}; [...GEN, 'baiye-story/img/boiler360.jpg'].forEach(s => { const i = new Image(); i.src = s; IMG[s] = i; });
+const AX = [['场景', '#14A3A0'], ['状态', '#2BB3D9'], ['操作', '#2F6BFF'], ['规则', '#6D5BFF'], ['目标', '#2FBF8F'], ['一天', '#F0652A']];
+function drawImg(src, X, Y, W, H, r){ const im = IMG[src]; ctx.save(); rr(ctx, X, Y, W, H, r); ctx.clip(); if (im && im.complete && im.naturalWidth) { const s = Math.max(W / im.naturalWidth, H / im.naturalHeight); ctx.drawImage(im, X + (W - im.naturalWidth * s) / 2, Y + (H - im.naturalHeight * s) / 2, im.naturalWidth * s, im.naturalHeight * s); } else { ctx.fillStyle = '#0E1430'; ctx.fillRect(X, Y, W, H); } ctx.restore(); }
+card_('unify', 1, () => `<div class="kick">HOW · 02 · 统一表示</div><div class="ttl">一门手艺 = 场景 × 状态 × 操作 × 规则 × 目标 × 一天</div>`,
+  (lt, D) => {
+    const O = { x: 960, y: 560 }, R = 190;
+    const SRC = [['AI 生成', '#6D5BFF', 400], ['实拍 360°', '#14A3A0', 560], ['老师傅示范', '#C8891F', 720]];
+    const OUT = [['人 · 升维画像', '#F0652A', 400], ['AI · 数字职人', '#6D5BFF', 560], ['组织 · 测评带教', '#2F6BFF', 720]];
+    SRC.forEach(([nm, c, y], i) => {
+      ctx.globalAlpha = ease(lt - 0.3 - i * 0.3);
+      rr(ctx, 120, y - 62, 360, 124, 18); ctx.fillStyle = 'rgba(255,255,255,.94)'; ctx.fill(); ctx.strokeStyle = hexA(c, .5); ctx.lineWidth = 2; ctx.stroke();
+      if (i === 0) drawImg(GEN[Math.floor(lt / 2) % GEN.length], 132, y - 50, 140, 100, 10);
+      else if (i === 1) drawImg('baiye-story/img/boiler360.jpg', 132, y - 50, 140, 100, 10);
+      else { rr(ctx, 132, y - 50, 140, 100, 10); ctx.fillStyle = '#FBE5C2'; ctx.fill(); ctx.fillStyle = '#7A4F0E'; ctx.font = `900 54px ${F}`; ctx.textAlign = 'center'; ctx.fillText('师', 202, y + 18); }
+      ctx.textAlign = 'left'; ctx.fillStyle = c; ctx.font = `800 28px ${F}`; ctx.fillText(nm, 292, y + 10);
+      const p0 = [480, y], p3 = [O.x - R * 0.7, O.y + (i - 1) * 50], p1 = [600, y], p2 = [660, p3[1]];
+      ctx.strokeStyle = hexA(c, .2); ctx.lineWidth = 3; ctx.beginPath(); for (let k = 0; k <= 40; k++) { const [a, b] = bez(p0, p1, p2, p3, k / 40); k ? ctx.lineTo(a, b) : ctx.moveTo(a, b); } ctx.stroke();
+      for (let k = 0; k < 12; k++) { const u = frac(lt * 0.35 + k / 12 + i * .13); const [a, b] = bez(p0, p1, p2, p3, u); ctx.fillStyle = hexA(c, .3 + .6 * Math.sin(u * Math.PI)); ctx.beginPath(); ctx.arc(a, b, 3.5 + 2 * Math.sin(u * Math.PI), 0, TAU); ctx.fill(); }
+      ctx.globalAlpha = 1;
+    });
+    OUT.forEach(([nm, c, y], i) => {
+      const a0 = ease((lt - D * 0.35) / 1);
+      ctx.globalAlpha = a0;
+      const p0 = [O.x + R * 0.7, O.y + (i - 1) * 50], p3 = [1440, y], p1 = [1260, p0[1]], p2 = [1320, y];
+      ctx.strokeStyle = hexA(c, .2); ctx.lineWidth = 3; ctx.beginPath(); for (let k = 0; k <= 40; k++) { const [a, b] = bez(p0, p1, p2, p3, k / 40); k ? ctx.lineTo(a, b) : ctx.moveTo(a, b); } ctx.stroke();
+      for (let k = 0; k < 12; k++) { const u = frac(lt * 0.35 + k / 12 + i * .21); const [a, b] = bez(p0, p1, p2, p3, u); ctx.fillStyle = hexA(c, .3 + .6 * Math.sin(u * Math.PI)); ctx.beginPath(); ctx.arc(a, b, 3.5 + 2 * Math.sin(u * Math.PI), 0, TAU); ctx.fill(); }
+      rr(ctx, 1440, y - 50, 360, 100, 18); ctx.fillStyle = 'rgba(255,255,255,.94)'; ctx.fill(); ctx.strokeStyle = hexA(c, .5); ctx.lineWidth = 2; ctx.stroke();
+      ctx.fillStyle = c; ctx.font = `800 28px ${F}`; ctx.textAlign = 'left'; ctx.fillText(nm, 1470, y + 10);
+      ctx.globalAlpha = 1;
+    });
+    const g = ctx.createRadialGradient(O.x, O.y, 10, O.x, O.y, R * 1.6); g.addColorStop(0, 'rgba(109,91,255,.22)'); g.addColorStop(1, 'rgba(109,91,255,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(O.x, O.y, R * 1.6, 0, TAU); ctx.fill();
+    ctx.setLineDash([5, 8]); ctx.strokeStyle = 'rgba(109,91,255,.35)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(O.x, O.y, R, 0, TAU); ctx.stroke(); ctx.setLineDash([]);
+    const rot = lt * 0.1;
+    ctx.beginPath(); for (let k = 0; k < 6; k++) { const a = rot + k * TAU / 6 - Math.PI / 2; const px = O.x + Math.cos(a) * R * .72, py = O.y + Math.sin(a) * R * .72; k ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.closePath();
+    ctx.fillStyle = 'rgba(255,255,255,.95)'; ctx.fill(); ctx.strokeStyle = 'rgba(109,91,255,.6)'; ctx.lineWidth = 3; ctx.stroke();
+    ctx.save(); ctx.beginPath(); ctx.arc(O.x, O.y, R * .55, 0, TAU); ctx.clip();
+    ctx.fillStyle = 'rgba(47,191,143,.15)'; ctx.fillRect(O.x - 100, O.y + 4, 200, 26);
+    ctx.strokeStyle = '#2F6BFF'; ctx.lineWidth = 3; ctx.beginPath(); const ph = frac(lt / 5);
+    for (let k = 0; k <= 60; k++) { const u = k / 60; if (u > ph) break; const px = O.x - 100 + u * 200, py = O.y + 64 - 56 * ease(u * 1.4) + 5 * Math.sin(u * 18); k ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke(); ctx.restore();
+    ctx.textAlign = 'center'; ctx.fillStyle = '#16182B'; ctx.font = `900 34px ${F}`; ctx.fillText('职业经验', O.x, O.y - 34);
+    ctx.font = `700 16px ${M}`; ctx.fillStyle = '#6D5BFF'; ctx.fillText('统一表示 · BenchSpec', O.x, O.y - 8);
+    // 六轴：旁白念到时逐个点亮
+    const hot = clamp01((lt - D * 0.12) / (D * 0.22)) * 6;
+    AX.forEach(([lab, c], k) => {
+      const a = rot + k * TAU / 6 - Math.PI / 2, px = O.x + Math.cos(a) * R, py = O.y + Math.sin(a) * R, on = k < hot;
+      ctx.font = `800 24px ${F}`; const w = ctx.measureText(lab).width + 34;
+      rr(ctx, px - w / 2, py - 22, w, 44, 22); ctx.fillStyle = on ? c : '#fff'; ctx.fill(); ctx.strokeStyle = hexA(c, .7); ctx.lineWidth = 2; ctx.stroke();
+      ctx.fillStyle = on ? '#fff' : c; ctx.fillText(lab, px, py + 8);
+    });
+    // 类比：文本 → 大模型 · 三维点轨迹 → 具身（跨维 UNITAS）· 职业经验 → 百业
+    const AN = [['文本', '大模型', '知识世界', '#9AA0B8', .42], ['三维点轨迹', '具身智能', '跨维 UNITAS', '#14A3A0', .52], ['职业经验', 'AI 百业', '人的手艺', '#F0652A', .64]];
+    AN.forEach(([a, b, s, c, at], i) => {
+      const p = ease((lt - D * at) / .6); if (p <= 0) return; ctx.globalAlpha = p;
+      const X = 300 + i * 450, Y = 880; rr(ctx, X, Y, 420, 76, 20); ctx.fillStyle = i === 2 ? '#fff' : 'rgba(255,255,255,.75)'; ctx.fill(); ctx.strokeStyle = hexA(c, i === 2 ? .9 : .4); ctx.lineWidth = i === 2 ? 3 : 2; ctx.stroke();
+      ctx.textAlign = 'left'; ctx.font = `800 26px ${F}`; ctx.fillStyle = '#16182B'; ctx.fillText(`${a}  →  ${b}`, X + 24, Y + 46);
+      ctx.textAlign = 'right'; ctx.font = `700 15px ${M}`; ctx.fillStyle = c; ctx.fillText(s, X + 400, Y + 46); ctx.globalAlpha = 1;
+    });
+  });
+
+clip_('unify-echo', 1, '统一表示，落在一个工位上', 'HOW · 呼应');
+
+const MST = [['桌面', 'DESKTOP', 'chip', '芯片验证 · 审计 · 急诊预检'], ['现场', 'FIELD', 'substation', '变电站 · 温室 · 维修 · 后厨'], ['分屏', 'CONSOLE', 'converter', '转炉 · 控制台类'], ['调度', 'DISPATCH', 'dive', '潜水带教 · 幼儿园'], ['双手', 'HANDS', 'latte', '咖啡拉花 · 古籍修复 · 安抚婴儿'], ['对话', 'DIALOG', null, '客诉处理 · 直播']];
+card_('masters', 1, () => `<div class="kick">HOW · 03 · 母版</div><div class="ttl">穷举过的典型工位，归成六个母版</div>
+  <div class="mgrid">${MST.map(([a, e, img, s], i) => `<div class="fade" id="m${i}">${img ? `<div class="im" style="background-image:url(baiye-story/img/${img}.jpg)"></div>` : `<div class="im" style="background:linear-gradient(135deg,#2B2F6B,#6D5BFF)"><svg viewBox="0 0 600 300" style="width:100%;height:100%"><rect x="60" y="50" rx="22" width="300" height="64" fill="rgba(255,255,255,.9)"/><rect x="240" y="130" rx="22" width="300" height="64" fill="rgba(255,170,120,.95)"/><rect x="60" y="210" rx="22" width="240" height="56" fill="rgba(255,255,255,.75)"/></svg></div>`}<span class="tg">${e}</span><div class="tx"><b>${a}</b><span>${s}</span></div></div>`).join('')}</div>
+  <div class="mnote fade" id="mn"><span>新职业只填配置，不用重写代码</span><span>重点场景保留代码精调</span></div>`,
+  (lt, D) => { MST.forEach((_, i) => appear($('m' + i), lt, D * 0.18 + i * D * 0.07)); appear($('mn'), lt, D * 0.66); });
+
+clip_('masters-echo', 1, '同一套引擎，长出不同的手艺', 'HOW · 呼应');
+clip_('layers', 1, '空间一层一层升维', 'HOW · 04');
+clip_('real', 1, '实拍素材：能用就不生成', 'HOW · 05 · 兼容真实世界');
+
+const CHK = [['D3', '一天至少一章真动手'], ['B1', '老手按真实步长跑通'], ['红线', '新手越界当场记违规'], ['B2', '工具对得上行业'], ['AI', '评审打分'], ['留痕', '每一次修改都记下来']];
+card_('check', 1, () => `<div class="kick" style="--c:var(--violet)">HOW · 06 · 求真校验</div><div class="ttl">造好之后，先过硬校验</div>
+  <div class="chk">${CHK.map(([a, b]) => `<div><i>${a}</i>${b}</div>`).join('')}</div><div class="stamp" id="stamp"><div>全部通过<small>才能上线 · 才能发证</small></div></div>`,
+  (lt, D) => {
+    const L = 140, T = 320, PW = 900, PH = 540, u = clamp01(lt / (D * 0.6));
+    ctx.fillStyle = 'rgba(255,255,255,.85)'; rr(ctx, L - 30, T - 50, PW + 70, PH + 110, 24); ctx.fill();
+    ctx.strokeStyle = 'rgba(22,24,43,.18)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(L, T); ctx.lineTo(L, T + PH); ctx.lineTo(L + PW, T + PH); ctx.stroke();
+    ctx.fillStyle = 'rgba(47,191,143,.16)'; ctx.fillRect(L + PW * .55, T + 120, PW * .45, 90);
+    ctx.font = `700 20px ${F}`; ctx.fillStyle = '#1F8F6A'; ctx.textAlign = 'left'; ctx.fillText('目标窗口', L + PW * .57, T + 238);
+    ctx.setLineDash([8, 8]); ctx.strokeStyle = 'rgba(226,92,142,.7)'; ctx.beginPath(); ctx.moveTo(L, T + 60); ctx.lineTo(L + PW, T + 60); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#C23B70'; ctx.fillText('红线', L + 10, T + 48);
+    const cur = (v, k) => k ? T + PH - (PH - 165) * ease(v * 1.25) - 18 * Math.sin(v * 9) : T + PH - (PH - 20) * Math.min(1, Math.pow(v * 1.35, 1.6));
+    ctx.setLineDash([12, 9]); ctx.strokeStyle = 'rgba(226,92,142,.85)'; ctx.lineWidth = 4; ctx.beginPath(); let viol = null;
+    for (let k = 0; k <= 100; k++) { const v = k / 100; if (v > u) break; const px = L + v * PW, py = cur(v, 0); k ? ctx.lineTo(px, py) : ctx.moveTo(px, py); if (!viol && py < T + 60) viol = px; } ctx.stroke(); ctx.setLineDash([]);
+    if (viol) { ctx.fillStyle = '#E25C8E'; ctx.beginPath(); ctx.arc(viol, T + 60, 11, 0, TAU); ctx.fill(); ctx.font = `800 24px ${F}`; ctx.fillText('新手 · 越界 · 记违规', viol - 330, T + 34); }
+    ctx.strokeStyle = '#6D5BFF'; ctx.lineWidth = 6; ctx.beginPath();
+    for (let k = 0; k <= 100; k++) { const v = k / 100; if (v > u) break; const px = L + v * PW, py = cur(v, 1); k ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke();
+    if (u >= 1) { ctx.fillStyle = '#6D5BFF'; ctx.font = `800 26px ${F}`; ctx.fillText('老手 · 按真实步长干跑 ✓ 进窗口', L + PW * .5, T + 300); }
+    ctx.font = `700 18px ${M}`; ctx.fillStyle = '#9AA0B8'; ctx.fillText('同一份规则 · 同一个步长', L, T + PH + 36);
+    const n = Math.floor(clamp01((lt - D * .15) / (D * .65)) * 6.999);
+    [...document.querySelectorAll('.chk div')].forEach((el, i) => el.classList.toggle('on', i < n));
+    const sp = clamp01((lt - D * .84) / .5), st = $('stamp'); st.style.opacity = sp; st.style.transform = `rotate(-5deg) scale(${1.4 - .4 * sp})`;
+  });
+
+clip_('check-echo', 1, '规则在跑：报警先处置，进窗口才出钢', 'HOW · 呼应');
+clip_('master', 1, '老师傅校正：谈话回写成规则和示范轨迹', 'HOW · 07');
+
+const LAY = [['检索', '全网找你', 0], ['验真', '这个人是真的', 0], ['测评', '看你怎么答', 0], ['长期', '长期地看你', 0], ['操作', '看你怎么干', 1], ['谈话', '听你怎么说', 1]];
+card_('up', 2, () => `<div class="kick" style="--c:var(--ai)">VALUE · 01 · 升维</div><div class="ttl">六层信源托举，百业补上最硬的两层</div>`,
+  (lt, D) => {
+    const n = clamp01(lt / (D * .7)) * 6;
+    for (let i = 0; i < 6; i++) {
+      const p = clamp01(n - i); if (p <= 0) break;
+      const [nm, sub, ours] = LAY[i], y = 900 - i * 92 - (1 - ease(p)) * 30;
+      ctx.globalAlpha = ease(p);
+      ctx.beginPath(); ctx.moveTo(180, y); ctx.lineTo(1000, y); ctx.lineTo(1060, y - 58); ctx.lineTo(240, y - 58); ctx.closePath();
+      ctx.fillStyle = ours ? 'rgba(240,101,42,.9)' : `rgba(109,91,255,${.13 + i * .04})`; ctx.fill();
+      ctx.fillStyle = ours ? '#fff' : '#3B3399'; ctx.font = `900 30px ${F}`; ctx.textAlign = 'left'; ctx.fillText(`${i + 1}  ${nm}`, 270, y - 18);
+      ctx.font = `600 26px ${F}`; ctx.fillStyle = ours ? 'rgba(255,255,255,.95)' : '#5F6680'; ctx.fillText(sub, 470, y - 18);
+      if (ours) { ctx.font = `900 26px ${F}`; ctx.fillStyle = '#F0652A'; ctx.fillText('← 百业', 1080, y - 18); }
+      ctx.globalAlpha = 1;
+    }
+    const cx = 1500, cy = 560, halo = 230 - n * 30;
+    ctx.font = `700 22px ${F}`; ctx.fillStyle = '#9AA0B8'; ctx.textAlign = 'center'; ctx.fillText('简历：平面上的一个点', cx, 300);
+    const g = ctx.createRadialGradient(cx, cy, 4, cx, cy, halo); g.addColorStop(0, 'rgba(240,101,42,.38)'); g.addColorStop(1, 'rgba(240,101,42,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, halo, 0, TAU); ctx.fill();
+    ctx.setLineDash([6, 8]); ctx.strokeStyle = 'rgba(240,101,42,.55)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx, cy, halo, 0, TAU); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(cx, cy, 36, 0, TAU); ctx.fill(); ctx.strokeStyle = '#F0652A'; ctx.lineWidth = 6; ctx.stroke();
+    ctx.fillStyle = '#16182B'; ctx.font = `900 34px ${F}`; ctx.fillText('人', cx, cy + 12);
+    ctx.font = `800 28px ${F}`; ctx.fillStyle = '#F0652A'; ctx.fillText(`${Math.floor(n)} / 6 层 · 光晕越小 = 证据越多`, cx, 860);
+  });
+
+clip_('ai', 2, '给 AI 升维：会干，而不只是知道', 'VALUE · 呼应');
+
+const EVS = [['09:02', 'op', '开顶窗 30%'], ['09:03', 'say', '问调度：要不要先补水？'], ['09:03', 'hes', '停顿 6 秒，回看规程'], ['09:04', 'op', '拉遮阳 · 补水再开泵'], ['09:06', 'say', '跟客人说：慢慢来，看我手势'], ['09:07', 'op', '提枪降氧'], ['09:08', 'hes', '换一种安抚方式'], ['09:09', 'op', '验电 → 装接地线'], ['09:11', 'say', '先汇报调度，再动刀闸'], ['09:12', 'op', '改长圆孔让位'], ['09:15', 'op', '副枪定碳 · 出钢']];
+const DIMS = [['节奏', .42], ['依据', .82], ['边界', .32], ['驱动', .76], ['用户距离', .80], ['视野', .38], ['掌控', .66], ['协作', .22], ['确定性', .28]];
+card_('mind', 2, () => `<div class="kick" style="--c:var(--cp)">VALUE · 02 · 心智</div><div class="ttl">过程即证据：心智不在答案里，在怎么干里</div>
+  <div class="tick"><div class="rail" id="rail">${EVS.concat(EVS).map(([t, k, s]) => `<div class="ev ${k}"><i>${t}</i><span>${s}</span></div>`).join('')}</div></div>
+  <div class="ret" id="ret">回流 → <em>知己</em>（个人成长） · <em>一答</em>（组织求真）</div>`,
+  (lt, D) => {
+    $('rail').style.transform = `translateY(${-(lt * 40) % (EVS.length * 72)}px)`;
+    appear($('ret'), lt, D * .72);
+    const cx = 1360, cy = 590, r = 250, p = ease(clamp01(lt / (D * .75)));
+    for (let k = 0; k < 9; k++) { const u = frac(lt * .4 + k / 9); ctx.fillStyle = `rgba(47,107,255,${.6 * Math.sin(u * Math.PI)})`; ctx.beginPath(); ctx.arc(780 + u * (cx - r - 780), 330 + k * 66 + u * (cy - 330 - k * 66), 6, 0, TAU); ctx.fill(); }
+    ctx.strokeStyle = 'rgba(22,24,43,.1)'; ctx.lineWidth = 2;
+    for (const s of [1, .66, .33]) { ctx.beginPath(); DIMS.forEach((d, i) => { const a = -Math.PI / 2 + i * TAU / 9; const px = cx + Math.cos(a) * r * s, py = cy + Math.sin(a) * r * s; i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }); ctx.closePath(); ctx.stroke(); }
+    ctx.beginPath(); DIMS.forEach(([, v], i) => { const a = -Math.PI / 2 + i * TAU / 9, q = r * (.12 + .88 * v * p); const px = cx + Math.cos(a) * q, py = cy + Math.sin(a) * q; i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }); ctx.closePath();
+    ctx.fillStyle = 'rgba(47,107,255,.22)'; ctx.fill(); ctx.strokeStyle = '#2F6BFF'; ctx.lineWidth = 4; ctx.stroke();
+    ctx.textAlign = 'center';
+    DIMS.forEach(([nm], i) => { const a = -Math.PI / 2 + i * TAU / 9, hl = ['驱动', '掌控', '确定性'].includes(nm); ctx.font = `${hl ? 900 : 700} ${hl ? 28 : 22}px ${F}`; ctx.fillStyle = hl ? '#2F6BFF' : '#5F6680'; ctx.fillText(nm, cx + Math.cos(a) * (r + 46), cy + Math.sin(a) * (r + 46) + 9); });
+    ctx.font = `700 20px ${M}`; ctx.fillStyle = '#2F6BFF'; ctx.fillText(`九维画像 · 置信 ${Math.round(p * 86)}%`, cx, cy + r + 100);
+  });
+
+clip_('mind-echo', 2, '心智：怎么回答、先做哪一步', 'VALUE · 呼应');
+clip_('cert', 2, '用你所做，证你所能', 'VALUE · 03 · 证书');
+
+const NODES = ['解析岗位', '规划一天', '设计工位', '美术 · 3D', '校验', '评审'];
+const STOCK = [['统一表示与母版', '#6D5BFF'], ['校验标准与考核', '#C8891F'], ['老师傅与实拍合作网络', '#14A3A0'], ['过程数据与画像', '#2F6BFF'], ['证书与信任', '#F0652A']];
+card_('cover', 3, () => `<div class="kick" style="--c:var(--gold)">ALWAYS · 在 AI 迭代中始终的价值</div><div class="ttl">模型是可替换的节点；沉淀在平台上的，换代不清零</div>`,
+  (lt, D) => {
+    const G = 4, per = D / G, g = Math.min(G - 1, Math.floor(lt / per)), gp = frac(lt / per);
+    ctx.textAlign = 'left'; ctx.font = `700 20px ${M}`; ctx.fillStyle = '#9AA0B8'; ctx.fillText('流水线 · 模型是可替换的节点', 120, 300);
+    NODES.forEach((nm, i) => {
+      const X = 120 + i * 168, Y = 320, w = 150, h = 120;
+      rr(ctx, X, Y, w, h, 16); ctx.fillStyle = '#fff'; ctx.fill(); ctx.strokeStyle = 'rgba(22,24,43,.12)'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.font = `800 24px ${F}`; ctx.fillStyle = '#16182B'; ctx.textAlign = 'left'; ctx.fillText(nm, X + 16, Y + 42);
+      const sw = clamp01((gp - i * .05) / .1), show = (gp < .5 && sw < .5 && g > 0) ? g - 1 : g;
+      rr(ctx, X + 14, Y + 64, w - 28, 38, 19); ctx.fillStyle = `rgba(109,91,255,${.14 + .14 * show})`; ctx.fill();
+      ctx.font = `800 18px ${M}`; ctx.fillStyle = '#3B3399'; ctx.textAlign = 'center'; ctx.fillText(`第 ${show + 1} 代模型`, X + w / 2, Y + 90);
+    });
+    const gx = 120, gy = 520, gw = 960, gh = 380, prog = clamp01(lt / D);
+    ctx.textAlign = 'left'; ctx.font = `700 20px ${M}`; ctx.fillStyle = '#9AA0B8'; ctx.fillText('建一个空间的单价 · 每换一代往下走（示意）', gx, gy);
+    ctx.strokeStyle = 'rgba(22,24,43,.15)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(gx, gy + 20); ctx.lineTo(gx, gy + gh); ctx.lineTo(gx + gw, gy + gh); ctx.stroke();
+    const yy = v => gy + 50 + (gh - 90) * (1 - Math.exp(-3 * v)) / (1 - Math.exp(-3));
+    ctx.strokeStyle = '#6D5BFF'; ctx.lineWidth = 5; ctx.beginPath();
+    for (let k = 0; k <= 100; k++) { const v = k / 100; if (v > prog) break; k ? ctx.lineTo(gx + v * gw, yy(v)) : ctx.moveTo(gx, yy(0)); } ctx.stroke();
+    for (let i = 0; i < G; i++) { const v = i / G; if (v > prog) break; ctx.fillStyle = '#6D5BFF'; ctx.beginPath(); ctx.arc(gx + v * gw, yy(v), 9, 0, TAU); ctx.fill(); ctx.font = `800 20px ${F}`; ctx.fillText(`第 ${i + 1} 代`, gx + v * gw + 16, yy(v) + (i ? -14 : 30)); }
+    const sx = 1180, sy = 300; ctx.font = `700 20px ${M}`; ctx.fillStyle = '#9AA0B8'; ctx.fillText('平台沉淀 · 只往上长', sx, sy);
+    STOCK.forEach(([nm, c], i) => {
+      const Y = sy + 30 + i * 112, full = 620, w = full * (.15 + .85 * clamp01(prog * 1.15 - i * .04));
+      rr(ctx, sx, Y, full, 84, 18); ctx.fillStyle = 'rgba(22,24,43,.05)'; ctx.fill();
+      rr(ctx, sx, Y, w, 84, 18); const lg = ctx.createLinearGradient(sx, 0, sx + w, 0); lg.addColorStop(0, hexA(c, .2)); lg.addColorStop(1, hexA(c, .6)); ctx.fillStyle = lg; ctx.fill();
+      ctx.font = `800 28px ${F}`; ctx.fillStyle = '#16182B'; ctx.fillText(nm, sx + 26, Y + 52);
+    });
+  });
+
+clip_('cover-echo', 3, '同样的方法，越来越多的职业空间', 'ALWAYS · 呼应');
+
+card_('end', 3, () => `<div class="endc"><div class="a fade" id="e1">下一代模型来了，百业的升维空间只会打造得更快、更丰富</div><div class="b fade" id="e2">模型越强，<br>百业越值钱</div><div class="c fade" id="e3"><span style="color:var(--ai)">升维</span><span style="color:var(--violet)">求真</span><span style="color:var(--cp)">心智</span><span>人连万物</span></div><div class="d fade" id="e4">平方智能 · AI 百业 · 用你所做，证你所能</div></div>`,
+  (lt, D) => { appear($('e1'), lt, .3); appear($('e2'), lt, D * .45); appear($('e3'), lt, D * .7); appear($('e4'), lt, D * .8); });
+
+// ---------- 时长 ----------
+const durOf = s => (ST.scenes[s.id] && ST.scenes[s.id].dur) || 6;
+const starts = []; let acc = 0; S.forEach(s => { starts.push(acc); acc += durOf(s); }); const TOTAL = acc;
+
+// ---------- 渲染 ----------
+let curId = null, vid = null;
+function enter(s){
+  curId = s.id; document.body.classList.toggle('full', s.kind === 'full');
+  $('chs').innerHTML = CH.map(([a, b], i) => `<span class="${i === s.ch ? 'on' : ''}">${b ? a + ' · ' + b : a}</span>`).join('');
+  if (s.kind === 'card') { card.innerHTML = s.html(); vid = null; }
+  else {
+    const src = `baiye-story/${s.id}.mp4`;
+    const media = RENDER ? '' : `<video id="vd" src="${src}" muted playsinline preload="auto"></video>`;
+    card.innerHTML = s.kind === 'full'
+      ? `<div class="full">${media}</div><div class="fshade"></div><div class="fcap" id="cap"></div><div class="fbrand">平方智能 · AI 百业</div>`
+      : `<div class="ctl" style="--c:var(--violet)"><i>${s.kick}</i><b>${s.title}</b></div><div class="panel">${media}</div><div class="cap" id="cap"></div>`;
+    vid = $('vd');
+  }
+}
+function capAt(s, lt){
+  const cuts = (ST.scenes[s.id] && ST.scenes[s.id].cuts) || []; if (!cuts.length) return '';
+  const k = Math.min(cuts.length - 1, Math.floor(lt / (durOf(s) / cuts.length)));
+  return s.kind === 'full' ? `<i>AI 百业 · 真实画面</i>${cuts[k]}` : `<i>百业产品 · 真实画面</i>${cuts[k]}`;
+}
+function show(id, lt){
+  const s = S.find(x => x.id === id); if (!s) return;
+  if (curId !== id) enter(s);
+  ctx.clearRect(0, 0, 1920, 1080);
+  if (s.kind === 'card') s.draw(lt, durOf(s));
+  else { const c = $('cap'); const h = capAt(s, lt); if (c.innerHTML !== h) c.innerHTML = h; c.style.display = h ? '' : 'none'; }
+}
+window.show = show; window.SCENES = S.map((s, i) => ({ id: s.id, kind: s.kind, dur: durOf(s), start: starts[i] }));
+
+// 只用来出片：没有播放器，默认停在第一页；?scene=id&t=秒 定格任意一帧
+show(q.get('scene') || S[0].id, +(q.get('t') || 0)); window.__ready = true;
+})();
+</script>
+</body>
+</html>
