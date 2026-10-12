@@ -1,0 +1,192 @@
+[
+ {
+  "id": "n00",
+  "clip": "landing",
+  "text": "AI 百业，用你所做，证你所能。"
+ },
+ {
+  "id": "n01",
+  "clip": "gallery",
+  "text": "在百业，你可以走进各种职业的数字空间，让 AI 职人带你学习、演练。从火箭总装到田间地头，从热火朝天的车间到安静的工作室，从服务台到指挥席。"
+ },
+ {
+  "id": "greenhouse_hub",
+  "clip": "greenhouse_hub",
+  "text": "第一产业。温室管理员，中午的番茄坐果期，环控网关突然不应答。"
+ },
+ {
+  "id": "greenhouse_bench",
+  "clip": "greenhouse_bench",
+  "text": "她切到手动接管：开顶窗、拉遮阳、先给微雾水箱补水再开泵，把温度压回去；一会儿下雨，顶窗又收回来。"
+ },
+ {
+  "id": "converter_hub",
+  "clip": "converter_hub",
+  "text": "第二产业。转炉炼钢操作工，炉前平台，这一炉铁水等着吹成钢。"
+ },
+ {
+  "id": "converter_bench",
+  "clip": "converter_bench",
+  "text": "他先高枪小氧化渣，再降枪大氧脱碳；氧枪冷却水一报警立刻提枪降氧，碳和温度同时进窗口才副枪定碳、挡渣、底吹氩、出钢。"
+ },
+ {
+  "id": "foundry_hub",
+  "clip": "foundry_hub",
+  "text": "精铸熔炼工程师，涡轮叶片的一炉试制。"
+ },
+ {
+  "id": "foundry_bench",
+  "clip": "foundry_bench",
+  "text": "抽真空、升温、精炼，模壳预热到位，在温度窗口里把这一炉浇出去，然后安全停机。"
+ },
+ {
+  "id": "paving_hub",
+  "clip": "paving_hub",
+  "text": "沥青摊铺施工员，驾驶位上看出去，前面是刚铺好的热路面。"
+ },
+ {
+  "id": "paving_bench",
+  "clip": "paving_bench",
+  "text": "手柄稳住匀速，料车到场先看温度、低温料退回；运料便道压车，他降速不断料、收翼板归中，等晚到的料车接上再恢复。"
+ },
+ {
+  "id": "switching_hub",
+  "clip": "switching_hub",
+  "text": "变电站运维值班员，清枫线间隔转检修。"
+ },
+ {
+  "id": "switching_bench",
+  "clip": "switching_bench",
+  "text": "到现场先核对设备名称和实际位置——发现刀闸没分到位，先汇报调度；验电器自检、线路侧验电确认无电，才装接地线、挂标示牌、回令。"
+ },
+ {
+  "id": "cad_hub",
+  "clip": "cad_hub",
+  "text": "机械设计工程师，一张缺尺寸的电机座工程图。"
+ },
+ {
+  "id": "cad_bench",
+  "clip": "cad_bench",
+  "text": "对照草图补齐尺寸、标基准、把公差标得车间检得出来；干涉检查查出护罩顶住了，改长圆孔让位，出图检查零错误再发布。"
+ },
+ {
+  "id": "chip_hub",
+  "clip": "chip_hub",
+  "text": "数字芯片设计工程师，回归红了，一帧都没收到。"
+ },
+ {
+  "id": "chip_bench",
+  "clip": "chip_bench",
+  "text": "先跑仿真，在波形里找到握手互等的那一拍；改掉 valid 对 ready 的依赖，时序违例按跨时钟域加同步器，带反压回归全收。"
+ },
+ {
+  "id": "rocket_hub",
+  "clip": "rocket_hub",
+  "text": "火箭总装工程师。总装厂房里，发动机段就在眼前，可以走进去看一圈。"
+ },
+ {
+  "id": "rocket_bench",
+  "clip": "rocket_bench",
+  "text": "试车台：预冷、增压到窗口、吹除，点火器先亮再开燃料阀和氧阀；尾焰里一串马赫环。燃烧一不稳定，他立刻紧急关机，再吹除、泄压。"
+ },
+ {
+  "id": "latte_hub",
+  "clip": "latte_hub",
+  "text": "第三产业。咖啡师，早上的吧台。"
+ },
+ {
+  "id": "latte_bench",
+  "clip": "latte_bench",
+  "text": "蒸汽棒进气打奶，高位细流融合，压低加大流量，晃出一颗心，收细一刀穿过去。"
+ },
+ {
+  "id": "yuesao_hub",
+  "clip": "yuesao_hub",
+  "text": "月嫂，傍晚的婴儿房。"
+ },
+ {
+  "id": "yuesao_bench",
+  "clip": "yuesao_bench",
+  "text": "托住头、贴着胸口轻拍，宝宝哭声变调她就换一种安抚，直到哄睡放下。"
+ },
+ {
+  "id": "audit_hub",
+  "clip": "audit_hub",
+  "text": "审计助理，一张银行存款余额调节表。"
+ },
+ {
+  "id": "audit_bench",
+  "clip": "audit_bench",
+  "text": "一笔一笔勾对，找出那条对不上的。"
+ },
+ {
+  "id": "desk_hub",
+  "clip": "desk_hub",
+  "text": "数据分析师，大盘异动的早上。"
+ },
+ {
+  "id": "desk_bench",
+  "clip": "desk_bench",
+  "text": "按客户端拆、按版本拆，拉日志拿证据，再把简报发到群里。"
+ },
+ {
+  "id": "guji_hub",
+  "clip": "guji_hub",
+  "text": "古籍修复师，一个虫洞。"
+ },
+ {
+  "id": "guji_bench",
+  "clip": "guji_bench",
+  "text": "配纸、调糊、对位、按等揭，补得看不出补过。"
+ },
+ {
+  "id": "dive_hub",
+  "clip": "dive_hub",
+  "text": "潜水教练，晨光号到了礁区，海面下是斑斓的珊瑚礁。"
+ },
+ {
+  "id": "dive_bench",
+  "clip": "dive_bench",
+  "text": "带第一次潜水的客人下到礁区，什么时候停、什么时候回转，眼睛不离客人。"
+ },
+ {
+  "id": "triage_hub",
+  "clip": "triage_hub",
+  "text": "急诊护士，晚高峰的预检台。"
+ },
+ {
+  "id": "triage_bench",
+  "clip": "triage_bench",
+  "text": "胸痛出汗的老先生先看进抢救室，看着只是喘的老太太一量血氧才知道不对。"
+ },
+ {
+  "id": "or_hub",
+  "clip": "or_hub",
+  "text": "外科医生。手术室里，无影灯已经亮了。"
+ },
+ {
+  "id": "or_bench",
+  "clip": "or_bench",
+  "text": "他按住手术刀，让刀慢慢沉到皮下，再沿着画好的线划开；一层一层分开，血管钳撑、镊子提起再切，放牵开器。"
+ },
+ {
+  "id": "sandtable_hub",
+  "clip": "sandtable_hub",
+  "text": "应急。应急指挥调度员，青岚河流域暴雨红色预警。"
+ },
+ {
+  "id": "sandtable_bench",
+  "clip": "sandtable_bench",
+  "text": "沙盘上，她先首报，让地势低的村先转移、派救援队背行动不便的人；厂区坍塌一报，消防马上上；每一次取舍都记进决策记录。"
+ },
+ {
+  "id": "certs",
+  "clip": "a1_certs",
+  "text": "每一段考过，都由 AI 职人签出一张证书，攒进你自己的证书夹。"
+ },
+ {
+  "id": "end",
+  "clip": "end",
+  "text": "每一行都有自己的门道，还有更多。来百业，感受千行百业的门道。"
+ }
+]

@@ -27,4 +27,11 @@
     <div class="line">平方智能：<b>AI 职人</b>与虚拟职业空间</div>
     <div class="sub">一份 JD，长出一个会教、会考、会干活、会学习的 AI</div>
   </div></div>
+  <!-- 新一版封面：字大一档、蒙版换色，和上一版一眼能分开（?big=1&tint=wine） -->
+  <script>
+    const q = new URLSearchParams(location.search);
+    if (q.get('big')) { document.querySelector('.line').style.fontSize = '80px'; document.querySelector('.brand').style.fontSize = '25px'; document.querySelector('.sub').style.fontSize = '23px'; }
+    const tints = { teal: 'radial-gradient(ellipse 62% 55% at 50% 50%, rgba(6,32,40,.93), rgba(6,32,40,.74) 55%, rgba(6,32,40,.38) 100%)', wine: 'radial-gradient(ellipse 62% 55% at 50% 50%, rgba(40,8,24,.93), rgba(40,8,24,.74) 55%, rgba(40,8,24,.38) 100%)', sky: 'radial-gradient(ellipse 62% 55% at 50% 50%, rgba(36,70,120,.9), rgba(36,70,120,.7) 55%, rgba(36,70,120,.34) 100%)' };
+    if (tints[q.get('tint')]) document.querySelector('.shade').style.background = tints[q.get('tint')];
+  </script>
 </body></html>

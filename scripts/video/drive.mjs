@@ -240,6 +240,8 @@ try {
 fs.writeFileSync(path.join(OUT_DIR, 'marks.json'), JSON.stringify({ wall, frames: frameCount, marks, timeline }, null, 2));
 fs.writeFileSync(path.join(OUT_DIR, 'meta.json'), JSON.stringify({ wallSeconds: wall, frames: frameCount, fps: FPS, timeline }, null, 2));
 if (timeline) console.log(`   事件时间轴：${timeline.events.length} 个事件`);
+// 抓的 jpg 动辄几个 G（一条十分钟的片 4 GB），clip.mp4 合成后就删，不然磁盘被塞满、下一条录到一半开始写空文件（2026-10-12 凌晨中过招）
+if (fs.existsSync(out) && fs.statSync(out).size > 0 && !process.env.KEEP_FRAMES) fs.rmSync(path.join(OUT_DIR, 'frames'), { recursive: true, force: true });
 console.log(`\n✅ ${out}　${wall.toFixed(1)}s / ${frameCount} 帧（抓帧 ${realFps.toFixed(1)}fps）`);
 chrome.kill();
 process.exit(0);

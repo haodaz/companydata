@@ -1,0 +1,17 @@
+{
+ "cover": 100,
+ "a_landing": 0.639,
+ "a_hub": 0.607,
+ "a_3d": 1.129,
+ "a_cast": 0.747,
+ "a_things": 2.146,
+ "a_day": 0.86,
+ "b_teach": 5.612,
+ "b_certs": 1.332,
+ "b_learn": 1.114,
+ "b_solve": 0.799,
+ "c_open": 1.777,
+ "c_standard": 0.995,
+ "c_expert": 1.011,
+ "c_many": 1.143
+}

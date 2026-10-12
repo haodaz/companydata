@@ -6,6 +6,13 @@
 """
 import json, os, shutil, subprocess, sys
 
+def _clean(f):
+    """concat 拼出来的文件时间戳有缝，-ss 会越往后越偏：先重编成等帧率干净流再抽段"""
+    c = f[:-4] + '.clean.mp4'
+    if not os.path.exists(c) or os.path.getmtime(c) < os.path.getmtime(f):
+        subprocess.run([F, '-loglevel', 'error', '-y', '-i', f, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '18', '-pix_fmt', 'yuv420p', '-r', '30', '-fps_mode', 'cfr', '-an', c], check=True)
+    return c
+
 F = os.path.join(os.path.dirname(__file__), '..', '..', 'node_modules', 'ffmpeg-static', 'ffmpeg')
 D, FIX, *names = sys.argv[1:]
 tl = json.load(open(os.path.join(D, 'timeline.json'), encoding='utf-8'))
@@ -22,14 +29,16 @@ parts, out, t = [], [], 0.0
 for i, x in enumerate(tl):
     seg, f = (ftl[x['clip']], fix_src) if x['clip'] in names else (x, keep)
     p = os.path.join(D, f'seg_{i:02d}.mp4')
-    subprocess.run([F, '-loglevel', 'error', '-y', '-ss', f"{seg['start']:.3f}", '-to', f"{seg['end']:.3f}", '-i', f, '-c:v', 'libx264', '-crf', '20', '-pix_fmt', 'yuv420p', '-an', p], check=True)
+    nf = max(1, round((seg['end'] - seg['start']) * 30))
+    subprocess.run([F, '-loglevel', 'error', '-y', '-ss', f"{seg['start']:.3f}", '-i', f, '-frames:v', str(nf), '-c:v', 'libx264', '-crf', '20', '-pix_fmt', 'yuv420p', '-an', p], check=True)
     parts.append(p)
-    d = seg['end'] - seg['start']
+    d = nf / 30
     out.append({**seg, 'start': round(t, 2), 'end': round(t + d, 2)}); t += d
 lst = os.path.join(D, 'concat.txt')
 open(lst, 'w', encoding='utf-8').write(''.join(f"file '{p}'\n" for p in parts))
-subprocess.run([F, '-loglevel', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', lst, '-c', 'copy', src], check=True)
+subprocess.run([F, '-loglevel', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', lst, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '19', '-pix_fmt', 'yuv420p', '-r', '30', '-fps_mode', 'cfr', '-an', src], check=True)
 json.dump(out, open(os.path.join(D, 'timeline.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-for p in parts: os.remove(p)
-os.remove(lst)
+if not os.environ.get('KEEP_PARTS'):
+    for p in parts: os.remove(p)
+    os.remove(lst)
 print('已替换：', ' '.join(names), f'· 成片 {t:.1f}s')

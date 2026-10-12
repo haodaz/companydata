@@ -5,7 +5,8 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 const ROOT = path.resolve(import.meta.dirname, '../..');
 // 念的稿和字幕分开：NOVA-45 让语音模型一个字母一个字母拼，念成「诺瓦 45」；字幕照样显示 NOVA-45
-const spoken = (t) => t.replace(/NOVA[-\s]?(\d+)/gi, '诺瓦 $1').replace(/\bNOVA\b/gi, '诺瓦');
+// 「长成 / 长出」模型会念成 cháng：念稿换成「变成 / 生出」，字幕不变
+const spoken = (t) => t.replace(/NOVA[-\s]?(\d+)/gi, '诺瓦 $1').replace(/\bNOVA\b/gi, '诺瓦').replace(/长成/g, '变成').replace(/长出/g, '生出');
 const KEY = fs.readFileSync(path.join(ROOT, '.env.local'), 'utf8').split('\n').find(l => l.startsWith('DASHSCOPE_API_KEY=')).split('=')[1].trim().replace(/^"|"$/g, '');
 const F = path.join(ROOT, 'node_modules', 'ffmpeg-static', 'ffmpeg');
 const [NARR, OUT] = process.argv.slice(2);

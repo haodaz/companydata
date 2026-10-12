@@ -17,6 +17,10 @@ narr = json.load(open(NARR, encoding="utf-8"))
 # 每段旁白从它对应 clip 第一次出现的时间点开始；同一 clip 的第二段接在第一段后面
 first = {}
 for seg in tl: first.setdefault(seg["clip"], seg["start"])
+# 旁白按画面顺序排（调序 / 换段之后稿子顺序可能和画面不一致，不排的话会一路往后推、压到别的画面上）
+missing = [n["id"] + "→" + n["clip"] for n in narr if n["clip"] not in first]
+if missing: print("⚠ 旁白没有对应画面（段名对不上，这几句不会出现）：", " ".join(missing))
+narr.sort(key=lambda n: first.get(n["clip"], 1e9))
 starts, prev_end, seen = [], 0.0, set()
 for n in narr:
     if n["id"] not in dur or n["clip"] not in first: continue
@@ -26,6 +30,13 @@ for n in narr:
     if "at" in n: t = max(t, first[n["clip"]] + n["at"])
     s = max(t + 0.3, prev_end + 0.3)
     starts.append((n["id"], s)); prev_end = s + dur[n["id"]]; seen.add(n["clip"])
+# 检查：每句旁白的开头必须落在自己那段画面里（落到别的画面上就是串段）
+rng = {}
+for seg in tl: rng.setdefault(seg["clip"], [seg["start"], seg["end"]]); rng[seg["clip"]][1] = max(rng[seg["clip"]][1], seg["end"])
+clip_of = {n["id"]: n["clip"] for n in narr}
+for nid, s in starts:
+    a, b = rng.get(clip_of[nid], (0, 1e9))
+    if not (a - 0.05 <= s < b): print(f"⚠ 旁白串段：{nid} 开口于 {s:.1f}s，但它的画面 {clip_of[nid]} 是 {a:.1f}–{b:.1f}s")
 
 def ts(x):
     h = int(x // 3600); m = int(x % 3600 // 60); s = x % 60

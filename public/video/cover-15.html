@@ -34,5 +34,9 @@
     if (q.get('brand')) document.getElementById('brand').textContent = q.get('brand');
     if (q.get('line')) { const [a, b] = q.get('line').split('|'); const el = document.getElementById('line'); el.textContent = a; if (b) { const bb = document.createElement('b'); bb.textContent = b; el.appendChild(bb); } }
     if (q.get('badge') === '0') document.getElementById('badge').style.display = 'none';
+    // 新一版封面：字大一档、蒙版换色，和上一版一眼能分开（?big=1&tint=teal）
+    if (q.get('big')) { document.querySelector('.line').style.fontSize = '80px'; document.querySelector('.brand').style.fontSize = '25px'; document.querySelector('.sub').style.fontSize = '23px'; }
+    const tints = { teal: 'radial-gradient(ellipse 62% 55% at 50% 50%, rgba(6,32,40,.93), rgba(6,32,40,.74) 55%, rgba(6,32,40,.38) 100%)', wine: 'radial-gradient(ellipse 62% 55% at 50% 50%, rgba(40,8,24,.93), rgba(40,8,24,.74) 55%, rgba(40,8,24,.38) 100%)', sky: 'radial-gradient(ellipse 62% 55% at 50% 50%, rgba(36,70,120,.9), rgba(36,70,120,.7) 55%, rgba(36,70,120,.34) 100%)' };
+    if (tints[q.get('tint')]) document.querySelector('.shade').style.background = tints[q.get('tint')];
   </script>
 </body></html>
