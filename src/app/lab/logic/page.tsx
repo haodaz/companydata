@@ -52,7 +52,7 @@ const TOC: [string, string][] = [
   ['why', '0 · 为什么、终局'], ['history', '1 · 演进时间线'], ['pipeline', '2 · 总流程：从 JD 到空间'], ['parse', '3 · 解析与规划（起点）'],
   ['day', '4 · 一天：骨架 + 逐格'], ['data', '5 · 数据模型'], ['experience', '6 · 体验端：六扇门与证书'], ['bench', '7 · 虚拟工位与交互故事'],
   ['masters', '8 · 台面母版'], ['art', '9 · 美术与素材库'], ['3d', '10 · 3D 场景流水线'], ['quality', '11 · 质量体系'],
-  ['train', '12 · 留痕与训练数据'], ['agents', '13 · AI 自生成：编排路线'], ['rules', '14 · 原则与对外口径'], ['issues', '15 · 已知问题 / 待办'], ['files', '16 · 文件索引'],
+  ['train', '12 · 留痕与训练数据'], ['agents', '13 · AI 自生成：编排路线'], ['rules', '14 · 原则与对外口径'], ['assets', '15 · 真实素材接入与空间加工'], ['issues', '16 · 已知问题 / 待办'], ['files', '17 · 文件索引'],
 ];
 
 const F = (p: string) => <code>{p}</code>;
@@ -215,6 +215,7 @@ export default function LabLogicPage() {
           <tr><td>不要成排重复、大面积玻璃 / 纯色、镜面</td><td>温室四次失败；咖啡机反光处糊</td></tr>
           <tr><td>初始机位挑近处点最少的帧</td><td>沥青中间帧贴着路面，打开就是满屏糊</td></tr>
         </tbody></table>
+        <p><b>真实 360° 实拍（可选）</b>：上传后可以只当全景看，也可以 {F('make-scene --equirect')} 切成透视图走同一条重建流水线，详见 <a href="#assets">15</a>。</p>
         <p>现有场景：手术室、咖啡吧台、育婴室、办公室、珊瑚礁、火箭发动机段、应急指挥大厅、沥青（效果差，片子里已回退 2D）、变电站（10-12 用新流水线 10 分钟出，未挂页面）。</p>
 
         {/* 11 */}
@@ -255,6 +256,7 @@ export default function LabLogicPage() {
           <li><b>规则校验器 + AI 评审</b> <span className="lg-st done">完成</span>：带编号硬规则、生成自检接入、全库体检、评审 agent。</li>
           <li><b>台面母版化</b> <span className="lg-st wip">收尾中</span>：六个母版都做好了，13 个非重点台面已换成库里的配置（变电站、电工维修、转炉、审计、分诊、客服、直播、幼儿园、潜导、古籍、哄睡），每个都和代码版逐项对照过画面和点击判分；园艺、中餐在做；重点 demo 留代码保底。</li>
           <li><b>人工修改留痕</b> <span className="lg-st done">完成</span>（迁移 020 待跑）。</li>
+          <li><b>真实素材加工</b> <span className="lg-st todo">下一步</span>：采集 → 清洗 → 成形已有；接着做识别 → 结构化 → 入库关联 → 审核留痕（<a href="#assets">15</a>）。</li>
           <li><b>编排器</b> <span className="lg-st todo">待做</span>：把上面每个环节串成有状态的流水线（{F('lab_jobs')}），每步可重跑 / 回退，关键处停下来等人审；每步输入输出自动记下 = 训练数据。</li>
         </ol>
         <p>每个环节的形态：<b>可独立调用</b>（脚本 / API / agent 工具）· <b>可校验</b>（硬规则 + 评审）· <b>可回退</b>（草稿、版本、失败回退 2D / 代码保底）· <b>留痕</b>（输入输出、人怎么改）。</p>
@@ -269,7 +271,36 @@ export default function LabLogicPage() {
         </ul>
 
         {/* 15 */}
-        <h2 id="issues">15 · 已知问题 / 待办</h2>
+        <h2 id="assets">15 · 真实素材接入与空间加工</h2>
+        <p>用户 10-12 定的方向：一旦开了真实素材接入（GoPro / Insta360 这类 360° 实拍），就等于开了<b>合作方的素材接入</b>；我们要做的是对空间做分析、处理、识别行业里的要素——<b>和数据加工处理的思路一样，只是模态拓宽了</b>（从文字、表格到空间画面）。真实素材是<b>兼容</b>的一条路，不是唯一的路，和 Veo 生成并存。</p>
+        <div className="lg-callout"><p><b>按岗位兼容：</b>一个岗位有可用的实拍素材，这个岗位的环境就直接用实拍、不用生成（真实、省钱）；没有素材的岗位照常走 Veo 生成。实拍里拍不到的东西（危险或罕见的状态、人物立绘、还不存在的设备）继续生成补上。</p></div>
+        <h3>加工流水线：和数据加工一一对应</h3>
+        <table><thead><tr><th>数据加工</th><th>空间素材加工</th><th>状态</th></tr></thead><tbody>
+          <tr><td><b>采集</b></td><td>上传口 {F('/lab/studio/pano')}（签名直传，图片 / 视频）；以后加合作方批量接口（素材来源、授权、拍摄信息一起进来）</td><td><span className="lg-st done">上传口已有</span></td></tr>
+          <tr><td><b>清洗 / 预处理</b></td><td>2:1 检查、转 H.264、按朝向切成透视图（{F('equirect.py')}，v360）、抽帧、去掉脚下的拍摄者和自拍杆、挑初始机位</td><td><span className="lg-st done">已有</span></td></tr>
+          <tr><td><b>成形</b></td><td>两档：<b>全景</b>（传上来马上能转头看，没有视差）；<b>3D 重建</b>（缓慢平稳走一段 → {F('make-scene --equirect')} → 质量门 → 3D 高斯，有纵深）</td><td><span className="lg-st done">已有</span></td></tr>
+          <tr><td><b>识别</b></td><td>视觉模型在全景 / 透视图里找行业要素：设备、工具、工位、仪表、警示标识、人能站的地方；标出在空间里的位置（全景方位角 / 3D 坐标）</td><td><span className="lg-st todo">下一步</span></td></tr>
+          <tr><td><b>结构化</b></td><td>识别结果变成场景里可交互的物件（像火箭厂房里点「喷管」弹说明的热点），每件带名称、用途、在这行里的规矩；挂到素材库和实体图谱上（物 = 企业 / 空间 / 道具 / 仪器设备）</td><td><span className="lg-st todo">下一步</span></td></tr>
+          <tr><td><b>入库 / 关联</b></td><td>物件和章节、母版关联：拍到一台开关柜，就能直接变成现场母版里的热区和工具；同一类物件跨空间复用（和人物、场景复用同一套归库规则）</td><td><span className="lg-st todo">下一步</span></td></tr>
+          <tr><td><b>审核 / 留痕</b></td><td>识别和结构化的结果进工作室给人确认、改正；人怎么改记进留痕（训练识别和关联的偏好数据）</td><td><span className="lg-st todo">下一步</span></td></tr>
+        </tbody></table>
+        <h3>为什么这件事和母版是一回事</h3>
+        <p>母版把台面变成了数据（热区、工具、读数、手势都是配置）。所以真实空间里识别出来的每件东西，可以<b>直接</b>变成某个母版的配置项——人连物的升维：真实环境里的每件设备都成了可交互、可考核、可追溯的实体。识别做得越全，生一个新职业空间要手工补的越少。</p>
+        <h3>合作模式</h3>
+        <ul>
+          <li><b>素材方</b>（拍摄团队、企业、行业协会、场馆）：提供真实空间素材和授权；我们返回加工后的可交互空间和数据。</li>
+          <li><b>行业方</b>：企业给工艺和老师傅，我们给空间、考评和数据回流（见 {F('docs/lab-next-batch.md')}「合作研发」）。</li>
+          <li>素材接入时一起记下：来源、授权范围、拍摄时间地点、可否跨空间复用——和人物素材「先查库、新的立刻归库」同一套规矩。</li>
+        </ul>
+        <h3>拍摄建议（给合作方）</h3>
+        <ul>
+          <li>只要全景：机位放在人站的高度，场景里尽量没人走动，光线均匀。</li>
+          <li>要 3D：拿着相机缓慢平稳地走一段（不要原地转），离主要设备两三米绕一段弧；避开流水、烟雾、来回走的人；海面 / 水下画面在动，先只当全景用。</li>
+          <li>导出 2:1 等距柱状投影，视频用 H.264。</li>
+        </ul>
+
+        {/* 16 */}
+        <h2 id="issues">16 · 已知问题 / 待办</h2>
         <ul>
           <li>全库体检（10-12）：<b>B2</b> 9 个空间的工位借用了咖啡杯层（宠物洗护、消防、整理衣橱…）；<b>D5</b> 3 个空间给人看的文字留着角色编号（含沥青）；<b>B1</b> 按真实步长有空间的老手脚本走不通（精铸 Case C、焊接 Case D、火箭、转炉、潜导、幼儿园…）。未改库，等定。</li>
           <li>迁移 020 {F('lab_edits')} 待在 Supabase 跑。</li>
@@ -278,14 +309,14 @@ export default function LabLogicPage() {
           <li>{F('lab_releases')} 空间包 / 对外只读接口：未做。</li>
         </ul>
 
-        {/* 16 */}
-        <h2 id="files">16 · 文件索引</h2>
+        {/* 17 */}
+        <h2 id="files">17 · 文件索引</h2>
         <table><thead><tr><th>环节</th><th>文件</th></tr></thead><tbody>
           <tr><td>解析 / 生成</td><td>{F('src/lib/agents/career.ts')} · {F('skill-lab.ts')} · {F('skill-lab-build.ts')} · {F('lab-chapters.ts')} · {F('src/lib/lab-nova.ts')}</td></tr>
           <tr><td>模拟器 / 工位</td><td>{F('src/lib/skill-sim.ts')} · {F('src/lib/bench.ts')} · {F('src/components/lab/BenchRunner.tsx')} · {F('SimRunner.tsx')} · {F('src/lib/lab-*-spec.ts')} · {F('src/components/lab/surfaces/')}</td></tr>
           <tr><td>母版</td><td>{F('src/lib/lab-masters.ts')} · {F('src/components/lab/masters/')} · {F('src/lib/lab-switching-field.ts')} · {F('/lab/beta/bench/<key>')}</td></tr>
           <tr><td>校验 / 评审</td><td>{F('src/lib/lab-studio.ts')} · {F('src/lib/agents/lab-review.ts')} · {F('scripts/lab-check-all.mts')} · {F('scripts/lab-review.mts')}</td></tr>
-          <tr><td>美术 / 3D</td><td>{F('src/lib/lab-art.ts')} · {F('scripts/lab-gen-scene.mts')} · {F('scripts/beta3d/')}（make-scene / prompt / sfm / view / ply2splat / upload）· {F('src/lib/lab-3d-beta.ts')}</td></tr>
+          <tr><td>美术 / 3D</td><td>{F('src/lib/lab-art.ts')} · {F('scripts/lab-gen-scene.mts')} · {F('scripts/beta3d/')}（make-scene / prompt / sfm / view / ply2splat / upload / equirect）· {F('src/lib/lab-3d-beta.ts')} · 360° 实拍：{F('/lab/studio/pano')}、{F('api/lab/studio/pano')}、{F('components/lab/Pano360.tsx')}</td></tr>
           <tr><td>留痕 / 样板</td><td>{F('src/lib/lab-edits.ts')} · {F('supabase/migrations/020_lab_edits.sql')} · {F('docs/lab-playbook.md')} · {F('scripts/lab-playbook-export.mts')}</td></tr>
           <tr><td>其他文档</td><td>{F('docs/lab-studio.md')}（工厂 / 体验改造）· {F('docs/lab-assets.md')} · {F('docs/lab-3d-beta.md')} · {F('docs/lab-next-batch.md')} · {F('docs/video-storyboards.md')}</td></tr>
         </tbody></table>
