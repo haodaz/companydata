@@ -3,7 +3,7 @@
   .venv/bin/python scripts/beta3d/sfm.py <视频.mp4> <输出目录> [--every 2] [--width 1280]
 视频是 Veo 生成的「绕场一圈」：相邻帧重叠大，用顺序匹配（sequential）就够，比全量匹配快很多。
 """
-import argparse, os, shutil, subprocess, sys, time
+import argparse, json, os, shutil, subprocess, sys, time
 import pycolmap
 
 ap = argparse.ArgumentParser()
@@ -28,14 +28,21 @@ print(f'特征点提取完 {time.time() - t0:.0f}s', flush=True)
 pycolmap.match_sequential(db)
 print(f'顺序匹配完 {time.time() - t0:.0f}s', flush=True)
 maps = pycolmap.incremental_mapping(db, img, sparse)
-if not maps:
-    # 大面积纯色（白火箭、玻璃顶）时顺序匹配不够：换全量匹配、放宽初始化再试一次
-    print('顺序匹配没建起来，换全量匹配重试…', flush=True)
+reg = max((r.num_reg_images() for r in maps.values()), default=0)
+if reg < n * 0.6:
+    # 大面积纯色（白火箭、玻璃顶）、成排重复（温室）时顺序匹配不够：换全量匹配、放宽初始化再试一次
+    # （以前只在一个模型都没建起来时才重试；温室那种「建起来了但只对上十几帧」的也要重试）
+    print(f'顺序匹配只对上 {reg}/{n} 帧，换全量匹配重试…', flush=True)
+    for k in list(maps.keys()): shutil.rmtree(os.path.join(sparse, str(k)), ignore_errors=True)
     pycolmap.match_exhaustive(db)
     opt = pycolmap.IncrementalPipelineOptions()
     opt.min_num_matches = 10; opt.mapper.init_min_num_inliers = 50; opt.mapper.abs_pose_min_num_inliers = 15
+    first = maps
     maps = pycolmap.incremental_mapping(db, img, sparse, options=opt)
+    if max((r.num_reg_images() for r in maps.values()), default=0) < reg: maps = first   # 全量匹配反而更差就用回顺序匹配的
+result = lambda **kw: json.dump({'frames': n, 'every': a.every, 'width': a.width, 'seconds': round(time.time() - t0), **kw}, open(os.path.join(a.out, 'result.json'), 'w'))
 if not maps:
+    result(registered=0, points=0, models=0)
     print('❌ 重建失败：没有一个模型', flush=True); sys.exit(1)
 best = max(maps.values(), key=lambda r: r.num_reg_images())
 print(f'模型 {len(maps)} 个，最大的注册了 {best.num_reg_images()}/{n} 帧，3D 点 {best.num_points3D()} 个，{time.time() - t0:.0f}s', flush=True)
@@ -43,7 +50,8 @@ print(f'模型 {len(maps)} 个，最大的注册了 {best.num_reg_images()}/{n} 
 dst = os.path.join(sparse, '0')
 for k in list(maps.keys()):
     p = os.path.join(sparse, str(k))
-    if maps[k] is best and p != dst:
+    if maps[k] is best and p != dst and os.path.exists(p):
         shutil.rmtree(dst, ignore_errors=True); shutil.move(p, dst)
 best.write(dst)
+result(registered=best.num_reg_images(), points=best.num_points3D(), models=len(maps))
 print('✅', a.out, flush=True)

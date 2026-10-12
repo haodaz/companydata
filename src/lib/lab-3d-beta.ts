@@ -56,6 +56,31 @@ export const BETA3D: Record<string, Beta3DScene> = {
     credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建',
     slots: ['08:30', '09:20', '10:10', '11:00', '14:00', '15:10', '16:20', '17:30'],   // 一整天都在工位上
   },
+  rocket: {
+    key: 'rocket', title: '总装厂房 · 发动机段', role: '火箭总装工程师', spaceId: '640f3bc6-6ce1-4c32-82dd-6491344ab86f',
+    url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-rocket-v1.splat', position: [0.006, 0.0041, -0.0052], lookAt: [-1.4515, -0.0696, 19.0291], up: [0.0068, -1.0, -0.0034], span: 3.0,   // 近景弧线（离主体 3 m）一次重建成功；大空间远景两次都对不上
+    credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建（17 万高斯，5.6 MB）',
+    slots: ['08:30', '09:10', '10:00', '11:00', '13:30'],   // 厂房里的章；15:00 试车台在户外、16:10 复盘在会议室
+    // 位置是粗放的：在 /lab/beta/3d/rocket?edit=1 里点物件拿坐标再校
+    hotspots: [
+      { id: 'nozzle', name: '发动机喷管', pos: [-1.5, 1, 19], size: [5, 5, 5], desc: '钟形的喷管把燃气加速到超音速——推力就从这里来。总装时最怕磕碰：喷管壁是再生冷却通道，薄得像易拉罐，吊装、对接、每一次挪动都要有人盯着喷管口。' },
+      { id: 'pump', name: '涡轮泵与管路', pos: [-1.5, -3, 19], size: [4, 4, 4], desc: '把液氧和甲烷从贮箱压进燃烧室的泵，转速以万转计。周围这一团管路、阀门和电缆，每一根都有编号，装错一根试车就点不着——总装工艺卡上一条一条对，装完还要做气密。' },
+      { id: 'cradle', name: '运输托架', pos: [-1.5, 5, 19], size: [12, 2, 6], desc: '黄色的托架托着整个箭体，上面的滚轮能让箭体绕轴转，方便从各个角度作业。箭体一上托架就要测同轴度，托架不平，后面级段对接全是白干。' },
+      { id: 'platform', name: '工作平台', pos: [5, 0, 17], size: [3, 8, 10], desc: '蓝色的工作平台贴着箭体，高度可调。上平台先系安全带、工具要有防坠绳——一把扳手掉进箭体里，整段都得重新清点。' },
+    ],
+  },
+  command: {
+    key: 'command', title: '应急指挥大厅', role: '应急指挥调度员', spaceId: 'adcf442a-fe29-4f82-9bd0-4a82f82f72fc',
+    url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-command-hall-v1.splat', position: [0.0039, 0.0012, -0.0766], lookAt: [12.2838, 2.612, 47.097], up: [0.036, -0.9983, 0.0455], span: 3.6,
+    credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建（6 万高斯，2 MB）',
+    slots: ['07:30', '08:00', '08:30', '09:10', '10:20', '11:10', '14:00', '16:30', '18:00'],   // 11:40 河堤一线不在大厅
+  },
+  asphalt: {
+    key: 'asphalt', title: '摊铺现场', role: '沥青摊铺施工员', spaceId: '0cfe3233-acd9-4e4c-b910-3d9350f18eff',
+    url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-asphalt-site-v1.splat', position: [-0.5483, -4.2882, -0.9021], lookAt: [-0.8637, -2.3699, 4.9669], up: [0.3431, -0.8872, 0.3084], span: 1.2,   // 用视频前段（第 13 帧）的机位：中间帧贴着路面，近处全是糊的高斯
+    credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建（54 万高斯，17 MB）',
+    slots: ['06:50', '07:30', '08:20', '09:00', '10:20', '10:50', '13:30'],   // 15:40 日志归档在项目部
+  },
   reef: {
     key: 'reef', title: '珊瑚礁', role: '潜导', spaceId: '387fcc19-bd56-453e-a983-b3a1b4da5704',
     url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-reef-v1.splat', position: [-0.0038, 0.1282, 0.2202], lookAt: [-0.4826, 0.187, 7.7058], up: [-0.0142, -0.9999, 0.002], span: 1.2,   // 场景近（depth 7.5），摆动幅度按比例缩小
