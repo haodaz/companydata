@@ -8,7 +8,7 @@ import { useUser } from '@/lib/user-context';
 const { Text } = Typography;
 
 /**
- * 价目表（记账用）：token 单价 + 每千次联网搜索价。管理员对照真实账单直接改，改完之后的新调用按新价记账。
+ * 价目表（记账用）：token 单价 + 每千次联网搜索价 + 按件计价（出图每张、视频每秒，迁移 021）。管理员对照真实账单直接改，改完之后的新调用按新价记账。
  * 以前的费用低估主要是联网搜索没算——这里每个能联网的模型都要填搜索价。
  */
 export function PricingCard() {
@@ -58,6 +58,8 @@ export function PricingCard() {
             { title: '输入 / 百万 token', dataIndex: 'input_per_m', width: 120, render: num('input_per_m', 0.1) },
             { title: '输出 / 百万 token', dataIndex: 'output_per_m', width: 120, render: num('output_per_m', 0.1) },
             { title: '联网搜索 / 千次', dataIndex: 'search_per_k', width: 120, render: num('search_per_k', 1) },
+            { title: '按件（张 / 秒）', dataIndex: 'unit_price', width: 150, render: (v: number, r: any) => r.unit_price === undefined && !r.unit ? <Text type="secondary" style={{ fontSize: 12 }}>迁移 021</Text>
+              : <span style={{ display: 'inline-flex', gap: 4, alignItems: 'center' }}>{num('unit_price', 0.01)(v || 0, r)}<Text type="secondary" style={{ fontSize: 12 }}>{r.unit === 'image' ? '/张' : r.unit === 'second' ? '/秒' : ''}</Text></span> },
             { title: '说明', dataIndex: 'note', render: (v: string, r: any) => isAdmin ? <Input size="small" value={v || ''} onChange={e => patch(r.model_id, { note: e.target.value })} /> : <Text type="secondary" style={{ fontSize: 12 }}>{v}</Text> },
             ...(isAdmin ? [{ title: '', key: 'op', width: 70, render: (_: any, r: any) => <Button size="small" type={r._dirty ? 'primary' : 'default'} disabled={!r._dirty} loading={saving === r.model_id} onClick={() => save(r)}>保存</Button> }] : []),
           ]} />

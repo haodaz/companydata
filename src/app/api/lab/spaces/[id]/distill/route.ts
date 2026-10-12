@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { withCost } from '@/lib/token-logger';
 import { supabaseAdmin } from '@/lib/supabase';
 import { buildSkillCard } from '@/lib/agents/skill-lab';
 import { labError, loadSpace } from '@/lib/skill-lab-server';
@@ -25,7 +26,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     // 已有技能时把历史访谈一起蒸馏，技能越用越厚
     const history = space.skill?.interview || [];
     const allTurns = [...history, ...turns];
-    const built = await buildSkillCard(topic, allTurns, model || undefined, String(walkthrough || ''));
+    const built = await withCost({ space_id: id, stage: 'learn' }, () => buildSkillCard(topic, allTurns, model || undefined, String(walkthrough || '')));
 
     const row = {
       name: built.name, domain: built.domain, kind: built.kind, summary: built.summary, card: built.card, interview: allTurns,

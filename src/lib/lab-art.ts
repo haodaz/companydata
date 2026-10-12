@@ -38,7 +38,7 @@ async function submitImage(prompt: string, size: string, model: string): Promise
 }
 
 /** 文生图：提交异步任务（排队）→ 轮询 → 下载 PNG */
-export async function genImage(prompt: string, size = '1440*810', model = 'wan2.2-t2i-flash'): Promise<Buffer> {
+export async function genImage(prompt: string, size = '1440*810', model = 'wan2.2-t2i-flash', purpose = '出图'): Promise<Buffer> {
   if (!KEY()) throw new Error('缺少 DASHSCOPE_API_KEY，无法生成美术');
   const taskId = await submitImage(prompt, size, model);
   for (let i = 0; i < 60; i++) {
@@ -48,6 +48,8 @@ export async function genImage(prompt: string, size = '1440*810', model = 'wan2.
     if (st === 'SUCCEEDED') {
       const url = (j.output.results || []).map((x: any) => x.url).filter(Boolean)[0];
       if (!url) throw new Error('文生图无结果');
+      // 记账：按张计价（迁移 021；空间 / 章节从 withCost 的上下文里带上）。不挡出图
+      await import('@/lib/token-logger').then(m => m.logTokenUsage({ tool_name: 'lab-art', task_name: purpose, model_id: model, units: 1, stage: 'media' })).catch(() => {});
       return Buffer.from(await (await fetch(url)).arrayBuffer());
     }
     if (st === 'FAILED') throw new Error(`文生图失败：${JSON.stringify(j.output).slice(0, 200)}`);
@@ -116,12 +118,12 @@ export async function saveLabAsset(buf: Buffer, name: string): Promise<string> {
 
 /** 场景底图（16:9 jpg） */
 export async function makeSceneAsset(prompt: string, name: string): Promise<string> {
-  return saveLabAsset(await toJpeg(await genImage(prompt, '1440*810')), `${name}.jpg`);
+  return saveLabAsset(await toJpeg(await genImage(prompt, '1440*810', undefined, '场景底图')), `${name}.jpg`);
 }
 /** NPC 立绘：绿幕生成 → 抠图 → 透明 png */
 export async function makeNpcAsset(prompt: string, name: string): Promise<string> {
   const full = `半写实插画风格的游戏NPC立绘，${prompt}，正面略侧的半身像，人物完整不裁切，纯正绿色平涂背景，背景没有任何阴影和渐变，没有文字，没有logo，竖构图`;
-  const raw = await genImage(full, '900*1440');
+  const raw = await genImage(full, '900*1440', undefined, '人物立绘');
   let png = await chromaKey(raw);
   // 模型给的不一定是纯绿幕（灰绿、带噪点的都有），绿幕抠完四周还是不透明，就换泛洪去背再来一次
   if (await edgeOpaque(png) > 0.3) png = await sharp().then(S => S(raw).resize({ width: 720 }).toBuffer()).then(cutoutByBorder);

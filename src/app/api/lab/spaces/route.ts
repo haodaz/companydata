@@ -6,6 +6,7 @@ import { structureCareer } from '@/lib/agents/career';
 import { labError, sortByDay } from '@/lib/skill-lab-server';
 import { reconcileCast } from '@/lib/lab-cast-server';
 import { trackDemand } from '@/lib/flywheel/signals';
+import { attachCostToSpace, withCost } from '@/lib/token-logger';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -101,9 +102,15 @@ function summarize(built: any) {
 
 const CAREER_HINT = '这是面向高中生 / 大学生的「职业探索空间」，不是招聘考核：任务要让一个完全没入行的人也能上手体验这个职业最有代表性的一天，材料自解释、术语随手解释，难度比校招题降一档；故事线要有带教的前辈，让人感受到这个职业真实的工作节奏与判断方式。';
 export async function POST(req: Request) {
+  const body = await req.json().catch(() => ({}));
+  // 记账：这次构建的所有调用（任务、技能卡、工位、美术）记到同一个任务编号上，空间建好后补上空间编号（迁移 021）
+  const costJob = `build-${String(body.buildId || '') || Date.now().toString(36)}`;
+  return withCost({ job_id: costJob, stage: 'create', actor: body.createdBy || null }, () => build(req, body, costJob));
+}
+
+async function build(req: Request, body: any, costJob: string) {
   let buildId = '';
   try {
-    const body = await req.json();
     const { jobId, model, createdBy } = body; buildId = String(body.buildId || '');
     const profession = String(body.profession || '').trim().slice(0, 40);
 
@@ -125,6 +132,7 @@ export async function POST(req: Request) {
         ...built.task, created_by: createdBy || '',
       }).select('id').single();
       if (insErr) throw insErr;
+      await attachCostToSpace(costJob, created.id);
       await assignNova(created.id).catch(e => console.warn('[Lab/spaces] 分编号失败', e?.message));
       // 角色表对账：生成的图登记进素材库、补齐角色表（迁移 019）；以后换图走角色表，不再改 JSON 里的网址
       await reconcileCast(created.id);
@@ -159,6 +167,7 @@ export async function POST(req: Request) {
       created_by: createdBy || '',
     }).select('id').single();
     if (insErr) throw insErr;
+    await attachCostToSpace(costJob, created.id);
     await assignNova(created.id).catch(e => console.warn('[Lab/spaces] 分编号失败', e?.message));
     // 角色表对账：生成的图登记进素材库、补齐角色表（迁移 019）；以后换图走角色表，不再改 JSON 里的网址
     await reconcileCast(created.id);

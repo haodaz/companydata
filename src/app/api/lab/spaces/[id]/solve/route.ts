@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { withCost } from '@/lib/token-logger';
 import { supabaseAdmin } from '@/lib/supabase';
 import { solveWithSkill } from '@/lib/agents/skill-lab';
 import { labError, loadSpace, skillRef } from '@/lib/skill-lab-server';
@@ -17,7 +18,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     const skill = skillRef(space.skill);
     if (!skill) return NextResponse.json({ ok: false, error: '这个空间还没有蒸馏出技能。先到「专家蒸馏」让专家走一遍。' }, { status: 400 });
 
-    const { output, summary } = await solveWithSkill(String(problem), skill, model || undefined);
+    const { output, summary } = await withCost({ space_id: id, stage: 'use' }, () => solveWithSkill(String(problem), skill, model || undefined));
     const { data, error } = await supabaseAdmin.from('skill_invocations').insert({
       skill_id: space.skill_id, task_id: id, kind: 'solve',
       actor: String(actor || '').trim() || '匿名', actor_location: String(location || ''), tz_offset: typeof tz === 'number' ? tz : null,

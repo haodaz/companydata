@@ -7,7 +7,7 @@
  *   5. 美术生成       通义万相出图（场景 jpg / 立绘绿幕抠图）
  */
 import { generateContent } from '@/lib/llm-client';
-import { logTokenUsage } from '@/lib/token-logger';
+import { logTokenUsage, withCost } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { generateTask, type JdInput } from '@/lib/agents/skill-lab';
 import type { SkillCard } from '@/lib/skill-lab';
@@ -422,7 +422,10 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
  * 重新设计，插回原处，补一张新的工位底图，再用老手脚本重跑一遍示范轨迹。
  * hint 用来指方向，比如「婚礼策划的核心是统筹调度，做成流程调度型工位」。
  */
-export async function rebuildBench(space: { jd_snapshot: any; title: string; brief: string; sim: Sim }, modelId = DEFAULT_MODEL, hint = ''): Promise<{ sim: Sim; benchTrace: any; name: string; note: string } | null> {
+export function rebuildBench(space: { id?: string; jd_snapshot: any; title: string; brief: string; sim: Sim }, modelId = DEFAULT_MODEL, hint = ''): Promise<{ sim: Sim; benchTrace: any; name: string; note: string } | null> {
+  return withCost({ space_id: space.id || null, stage: 'create' }, () => rebuildBenchInner(space, modelId, hint));
+}
+async function rebuildBenchInner(space: { jd_snapshot: any; title: string; brief: string; sim: Sim }, modelId = DEFAULT_MODEL, hint = ''): Promise<{ sim: Sim; benchTrace: any; name: string; note: string } | null> {
   const jd = space.jd_snapshot as JdInput;
   const base = sanitizeSim({ ...space.sim, steps: space.sim.steps.filter(s => s.type !== 'bench') });
   if (!base) throw new Error('这个空间的故事线读不出来');

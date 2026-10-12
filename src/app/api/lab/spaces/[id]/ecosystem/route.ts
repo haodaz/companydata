@@ -104,7 +104,7 @@ keywords 要能在企业的「所属行业 / 产品领域 / 公司名」里原�
   好：「咖啡」「烘焙」「乳品」「半导体」「航天」「消防」「冷链」
   差：「咖啡豆烘焙加工」「商用咖啡机设备供应」（这种整句在数据库里一条也找不到）
 返回 JSON：{ "upstream": [{"stage":"","what":"","keywords":[]}], "downstream": [{"stage":"","what":"","keywords":[]}] }`, 'gemini-3.8-flash', { jsonMode: true });
-      await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Ecosystem · Chain', institution: '', model_id: 'gemini-3.8-flash', usageMetadata: r.usageMetadata, success: true }).catch(() => {});
+      await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Ecosystem · Chain', institution: '', model_id: 'gemini-3.8-flash', usageMetadata: r.usageMetadata, success: true, space_id: id, stage: 'use' }).catch(() => {});
       const p = parseJsonLoose(r.text);
       const norm = (arr: any): ChainNode[] => (Array.isArray(arr) ? arr : []).slice(0, 3).map((n: any) => ({
         stage: String(n.stage || '').slice(0, 20), what: String(n.what || '').slice(0, 60),

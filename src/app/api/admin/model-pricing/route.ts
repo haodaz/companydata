@@ -14,7 +14,7 @@ export async function GET(req: Request) {
   return NextResponse.json({ ok: true, pricing: data || [] });
 }
 
-/** 改一行：{ model_id, provider?, currency, input_per_m, output_per_m, search_per_k, note? } */
+/** 改一行：{ model_id, provider?, currency, input_per_m, output_per_m, search_per_k, unit_price?, unit?, note? }（按件计价两列迁移 021 才有） */
 export async function PUT(req: Request) {
   const denied = await requireAdminUser(req); if (denied) return denied;
   const b = await req.json().catch(() => ({}));
@@ -24,8 +24,11 @@ export async function PUT(req: Request) {
     model_id: String(b.model_id).trim(), provider: b.provider || null, currency: b.currency === 'CNY' ? 'CNY' : 'USD',
     input_per_m: num(b.input_per_m), output_per_m: num(b.output_per_m), search_per_k: num(b.search_per_k),
     note: b.note ?? null, updated_at: new Date().toISOString(),
+    ...('unit_price' in b ? { unit_price: num(b.unit_price), unit: b.unit === 'image' || b.unit === 'second' ? b.unit : null } : {}),
   };
-  const { error } = await supabaseAdmin.from('model_pricing').upsert(row, { onConflict: 'model_id' });
+  let { error } = await supabaseAdmin.from('model_pricing').upsert(row, { onConflict: 'model_id' });
+  // 021 还没跑：没有按件计价两列，去掉再存
+  if (error && /unit_price|'unit'/.test(error.message || '')) { const { unit_price: _a, unit: _b, ...rest } = row as any; ({ error } = await supabaseAdmin.from('model_pricing').upsert(rest, { onConflict: 'model_id' })); }
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
   invalidatePriceCache();
   return NextResponse.json({ ok: true });

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { withCost } from '@/lib/token-logger';
 import { supabaseAdmin } from '@/lib/supabase';
 import { answerTask, gradeAnswer, operateSim } from '@/lib/agents/skill-lab';
 import { sanitizeTrace, traceMatch, traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
@@ -29,19 +30,21 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
     // 有模拟操作台就上台操作：轨迹的文字记录 + 最后一步的结论 = 交给评分的「作答」
     const chapter = pickChapter(space, body.chapterId);
+    // 记账：使用环节（考试作答、AI 代答、评分），记到空间 / 章节 / 作答人上（迁移 021）
+    const cost = { space_id: id, chapter_id: chapter?.id || null, stage: 'use', actor: body.visitor ? `v:${String(body.visitor).slice(0, 60)}` : null };
     const sim: Sim | null = chapter?.sim?.steps?.length ? chapter.sim : null;
     let trace: SimTrace | null = null;
     let answer = String(body.answer || '').trim();
     if (sim) {
       // AI 模式带了轨迹（「我教你」屏幕上演示的那一遍）就直接评它；没带才让模型自己上台操作
       const given = body.trace && typeof body.trace === 'object' ? sanitizeTrace(sim, body.trace) : null;
-      trace = given && Object.keys(given).length ? given : mode === 'ai' ? await operateSim({ ...space, ...chapterTask(space, chapter) }, sim, withSkill ? skill : null, model) : sanitizeTrace(sim, body.trace);
+      trace = given && Object.keys(given).length ? given : mode === 'ai' ? await withCost(cost, () => operateSim({ ...space, ...chapterTask(space, chapter) }, sim, withSkill ? skill : null, model)) : sanitizeTrace(sim, body.trace);
       answer = traceToText(sim, trace);
-    } else if (mode === 'ai') answer = await answerTask(space, withSkill ? skill : null, model);
+    } else if (mode === 'ai') answer = await withCost(cost, () => answerTask(space, withSkill ? skill : null, model));
     if (answer.length < 20) return NextResponse.json({ ok: false, error: '作答太短了，至少写几句' }, { status: 400 });
 
     // 按这一章自己的题面和评分标准评（第 1 章用空间的）
-    const { score, grading } = await gradeAnswer(chapterTask(space, chapter), answer, skill, model);
+    const { score, grading } = await withCost(cost, () => gradeAnswer(chapterTask(space, chapter), answer, skill, model));
 
     const name = mode === 'ai' ? (withSkill ? 'AI + 专家技能' : 'AI 裸答') : String(body.name || '').trim() || (mode === 'expert' ? '专家' : '匿名新兵');
     const row: Record<string, any> = {

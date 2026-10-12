@@ -8,7 +8,7 @@
  *   新建的先按规范类型名找素材库，找不到才画，画完立刻归库。
  */
 import { generateContent, resolveModel } from '@/lib/llm-client';
-import { logTokenUsage } from '@/lib/token-logger';
+import { logTokenUsage, withCost } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { supabaseAdmin } from '@/lib/supabase';
 import { sanitizeTrace, type Sim, type SimStep, type SimTrace } from '@/lib/skill-sim';
@@ -94,7 +94,11 @@ function readNewCast(raw: any): { tmp: string; kind: CastKind; name: string; typ
 // ────────────────────────────────────────────
 // 1. 一天骨架
 // ────────────────────────────────────────────
-export async function buildDay(spaceId: string, model: string, hint: string, progress: Progress): Promise<{ added: number; cast: number }> {
+/** 排一天骨架（记账：这次的调用都记到这个空间上，环节 create） */
+export function buildDay(spaceId: string, model: string, hint: string, progress: Progress): Promise<{ added: number; cast: number }> {
+  return withCost({ space_id: spaceId, stage: 'create' }, () => buildDayInner(spaceId, model, hint, progress));
+}
+async function buildDayInner(spaceId: string, model: string, hint: string, progress: Progress): Promise<{ added: number; cast: number }> {
   const { data: space, error } = await supabaseAdmin.from('skill_tasks').select('id, title, profile, jd_snapshot, bible').eq('id', spaceId).single();
   if (error) throw error;
   // 重排骨架：空的、没锁的草稿格子先清掉（有步骤的、锁定的、已发布的都留着）
@@ -170,7 +174,11 @@ ${CAST_RULES}
 // ────────────────────────────────────────────
 // 2. 按格生成一章
 // ────────────────────────────────────────────
-export async function buildChapter(spaceId: string, chapterId: string, model: string, hint: string, opts: { art?: boolean }, progress: Progress): Promise<{ steps: number; newCast: number; drawn: number; reused: number }> {
+/** 逐格生成一章（记账：记到这个空间、这一章上，含补画的人物 / 场景） */
+export function buildChapter(spaceId: string, chapterId: string, model: string, hint: string, opts: { art?: boolean }, progress: Progress): Promise<{ steps: number; newCast: number; drawn: number; reused: number }> {
+  return withCost({ space_id: spaceId, chapter_id: chapterId, stage: 'create' }, () => buildChapterInner(spaceId, chapterId, model, hint, opts, progress));
+}
+async function buildChapterInner(spaceId: string, chapterId: string, model: string, hint: string, opts: { art?: boolean }, progress: Progress): Promise<{ steps: number; newCast: number; drawn: number; reused: number }> {
   const [{ data: space, error }, { data: chs, error: e2 }] = await Promise.all([
     supabaseAdmin.from('skill_tasks').select('id, title, profile, jd_snapshot, bible').eq('id', spaceId).single(),
     supabaseAdmin.from('lab_chapters').select('*').eq('task_id', spaceId).order('seq'),
@@ -330,7 +338,10 @@ export function normalizeRubric(raw: any): { key: string; name: string; weight: 
 }
 
 /** 给已经写好的章节补评分标准（老章节、手工写的章节） */
-export async function draftRubric(ch: StudioChapter, space: any, model: string) {
+export function draftRubric(ch: StudioChapter, space: any, model: string) {
+  return withCost({ space_id: space?.id || null, chapter_id: ch.id, stage: 'create' }, () => draftRubricInner(ch, space, model));
+}
+async function draftRubricInner(ch: StudioChapter, space: any, model: string) {
   const p = await ask(`
 给职业体验空间里的一章定评分标准。
 ${spaceText(space)}

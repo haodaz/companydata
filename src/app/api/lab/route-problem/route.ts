@@ -46,7 +46,7 @@ ${roster}
 问题明显不属于任何一位的行当，就返回空数组。
 每位给一句 why（25 字内，说他凭什么能帮上忙，用「他」指代）。
 返回 JSON：{ "picks": [{ "n": 编号, "why": "" }] }`, model || 'gemini-3.8-flash', { jsonMode: true });
-    await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Route · Problem', institution: '', model_id: model || 'gemini-3.8-flash', usageMetadata: r.usageMetadata, success: true }).catch(() => {});
+    await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Route · Problem', institution: '', model_id: model || 'gemini-3.8-flash', usageMetadata: r.usageMetadata, success: true, stage: 'use' }).catch(() => {});
 
     const out = parseJsonLoose(r.text);
     const seen = new Set<string>();

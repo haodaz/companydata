@@ -40,3 +40,6 @@ if (!uri) { console.error('没有视频', JSON.stringify(op.response).slice(0, 6
 const vid = await fetch(uri, { headers: { 'x-goog-api-key': KEY }, redirect: 'follow' });
 fs.writeFileSync(out, Buffer.from(await vid.arrayBuffer()));
 console.log('✅', out, (fs.statSync(out).size / 1e6).toFixed(1), 'MB');
+// 记账（迁移 021）：Veo 按视频秒数计价，一条 8 秒；--space / --job 可以把它记到某个空间 / 批次上
+const { spawnSync } = await import('node:child_process');
+spawnSync('npx', ['tsx', 'scripts/lab-log-cost.mts', '--tool', 'lab-3d', '--task', 'Veo 环绕视频', '--model', MODEL, '--units', String(flags.seconds || 8), ...(flags.space ? ['--space', flags.space] : []), ...(flags.job ? ['--job', flags.job] : [])], { stdio: 'ignore', cwd: new URL('../..', import.meta.url).pathname });

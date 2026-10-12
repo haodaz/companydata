@@ -18,6 +18,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 for (const l of fs.readFileSync('.env.local', 'utf8').split('\n')) { const m = l.match(/^([A-Z_]+)=(.*)$/); if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim().replace(/^"|"$/g, ''); }
 const { GoogleGenerativeAI } = await import('@google/generative-ai');
+const { logTokenUsage } = await import('../../src/lib/token-logger');
 
 const args = process.argv.slice(2);
 const flag = (k: string, d = '') => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
@@ -38,7 +39,13 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 const model = genAI.getGenerativeModel({ model: modelId, generationConfig: { responseMimeType: 'application/json' } });
 const ask = async (parts: any[], tries = 2): Promise<any> => {
   for (let i = 0; ; i++) {
-    try { const r = await model.generateContent(parts); return JSON.parse(r.response.text()); }
+    try {
+      const r = await model.generateContent(parts);
+      // 记账（迁移 021）：全景识别，--space 可以记到某个空间上
+      const u = r.response.usageMetadata;
+      await logTokenUsage({ tool_name: 'lab-3d', task_name: parts.length > 1 ? '全景识别 · 找要素' : '全景识别 · 写介绍', model_id: modelId, usageMetadata: { promptTokenCount: u?.promptTokenCount || 0, candidatesTokenCount: u?.candidatesTokenCount || 0, totalTokenCount: u?.totalTokenCount || 0 }, job_id: `pano-${key}`, space_id: flag('space') || null, stage: 'media', actor: 'pano-recognize' }).catch(() => {});
+      return JSON.parse(r.response.text());
+    }
     catch (e) { if (i >= tries) throw e; await new Promise(r => setTimeout(r, 2000 * (i + 1))); }
   }
 };

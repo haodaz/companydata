@@ -44,7 +44,7 @@ ${chapters.map(chapterText).join('\n\n')}
 
 返回 JSON：{ "items": [ { "rule": "D2", "score": 1-5, "reason": "", "fix": "" } ], "summary": "一句话总评" }`;
   const r = await generateContent(prompt, modelId, { jsonMode: true });
-  await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Review · Day', institution: '', model_id: modelId, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
+  await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Review · Day', institution: '', model_id: modelId, usageMetadata: r.usageMetadata, success: true, stage: 'review' }).catch(() => {});
   const p = parseJsonLoose(r.text) || {};
   const items: ReviewItem[] = REVIEW_RULES.map(rule => {
     const x = (p.items || []).find((i: any) => i?.rule === rule.id) || {};
