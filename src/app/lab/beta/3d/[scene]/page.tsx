@@ -22,7 +22,9 @@ export default function Beta3DPage({ params }: { params: Promise<{ scene: string
   // ?edit=1：标注模式——点场景里的物件，坐标列在右上角（抄进 lab-3d-beta.ts 的 hotspots）
   const [edit, setEdit] = useState(false);
   const [picks, setPicks] = useState<[number, number, number][]>([]);
-  useEffect(() => { setMounted(true); setEdit(new URLSearchParams(window.location.search).get('edit') === '1'); }, []);
+  // ?all=1：全景里低置信度（< 0.5）的识别结果也显示，给人工核对用
+  const [allSpots, setAllSpots] = useState(false);
+  useEffect(() => { setMounted(true); const q = new URLSearchParams(window.location.search); setEdit(q.get('edit') === '1'); setAllSpots(q.get('all') === '1'); }, []);
   // 360° 全景：没有 3D 重建时就是它；两个都有时由右上角按钮切
   const [panoOn, setPanoOn] = useState(false);
 
@@ -31,7 +33,8 @@ export default function Beta3DPage({ params }: { params: Promise<{ scene: string
   const showPano = !!s.pano && (!s.url || panoOn);
   return createPortal((
     <div style={{ position: 'fixed', inset: 0, zIndex: 1000, background: '#0b0d1c', color: '#fff', overflow: 'hidden' }}>
-      {showPano ? <Pano360 key={s.pano!.url} src={s.pano!.url} kind={s.pano!.kind} yaw={s.pano!.yaw} head={cam} onHeadSeen={setHeadSeen} camCorner={{ right: 18, bottom: 150 }} />
+      {showPano ? <Pano360 key={s.pano!.url} src={s.pano!.url} kind={s.pano!.kind} yaw={s.pano!.yaw} head={cam} onHeadSeen={setHeadSeen} camCorner={{ right: 18, bottom: 150 }}
+            spots={s.pano!.spots} nodes={s.pano!.nodes} walk={s.pano!.walk} showAll={allSpots} />
         : s.url ? <Splat3D scene={s} head={cam} onHeadSeen={setHeadSeen} camCorner={{ right: 18, bottom: 150 }} hotspots={s.hotspots} edit={edit} onPick={p => { setPicks(ps => [...ps, p]); (window as any).__picks = [...picks, p]; }} />
         : <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', color: '#c7cbe6' }}>这个场景还在重建中，稍后再来。</div>}
 
@@ -64,7 +67,8 @@ export default function Beta3DPage({ params }: { params: Promise<{ scene: string
         </button>
         <div style={{ fontSize: 11, color: '#9aa0c8', textAlign: 'right', lineHeight: 1.6 }}>
           {showPano
-            ? (cam ? (headSeen ? '左右上下挪头转着看、凑近拉近。全景只能转，没有前后左右的纵深。' : '把脸放进画面里…') : '按住拖动转着看，滚轮拉近；打开摄像头后跟着头转。')
+            ? (cam ? (headSeen ? (s.pano?.nodes?.length ? '挪头转着看；往前凑 = 走近，对准地上的箭头再往前倾就走过去。' : '左右上下挪头转着看，往前凑 = 走近、往后靠 = 退远。') : '把脸放进画面里（先坐正，第一眼的距离当基准）…')
+              : (s.pano?.nodes?.length ? '拖动转着看，点地上的箭头 / 按 W 往前走、S 往回走；滚轮拉近。' : '拖动转着看，滚轮 / 双指 / W S 走近走远；打开摄像头后跟着头转、往前凑就走近。'))
             : (cam ? (headSeen ? '左右上下挪头、往前凑近，场景跟着你的视角变。' : '把脸放进画面里…') : '移动鼠标看看；打开摄像头后，场景跟着你的头动。')}
           <br />摄像头只在本机算头的位置，不录、不传。<br />{showPano ? '真实 360° 素材' : s.credit}
         </div>

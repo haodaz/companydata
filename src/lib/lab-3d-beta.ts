@@ -3,6 +3,7 @@
  * 查看器 /lab/beta/3d/<key>：场景跟着鼠标 / 头部（摄像头，本机推理）挪，屏幕像一扇窗。
  * position / lookAt / up 由 scripts/beta3d/view.py 从重建结果算出（视频中间那一帧的机位），span 是头部摆动时机位最多挪多远。
  */
+import BOILER_SPOTS from '@/lib/pano-spots/boiler.json';
 /** 场景里可以点的物件：鼠标悬停出线框，点一下弹说明（像游戏里的空间建模）。pos / size 在重建出来的场景坐标系里（用查看器 ?edit=1 点出来） */
 export interface Beta3DHotspot { id: string; name: string; desc: string; pos: [number, number, number]; size: [number, number, number]; /** 绕竖轴转多少度 */ rotY?: number }
 
@@ -11,7 +12,26 @@ export interface Beta3DHotspot { id: string; name: string; desc: string; pos: [n
  * 只有 pano 的场景：url 留空 ''（position / lookAt / up / span 随便填，用不上）；两个都有：先看 3D，角上能切到 360°。
  * 上传入口 /lab/studio/pano（要登录），传完给出要贴进来的这一段。yaw：一打开朝哪看（度，0 = 画面正中，正数往右）
  */
-export interface Beta3DPano { url: string; kind: 'image' | 'video'; yaw?: number }
+/**
+ * 全景里识别出来的「好东西」（scripts/beta3d/pano-recognize.mts 生成，人可以在 JSON 里改）。
+ * 方位：yaw = 水平角（度，0 = 等距柱状图的正中间，向右为正，-180–180）；pitch = 仰角（度，向上为正，-90–90）。
+ */
+export interface PanoSpot {
+  id: string; yaw: number; pitch: number;
+  /** 叫什么（行业里的叫法） */ title: string;
+  /** 分类：设备 / 仪表 / 阀门管路 / 电气 / 安全标识 / 文件规程 / 工具 / 环境 */ kind: string;
+  /** 行业标签：岗位、工序、风险点…… */ tags: string[];
+  /** 介绍：是什么、干什么用、这一行看它的规矩（给体验者看的，两三句） */ desc: string;
+  /** 识别置信度 0–1（低的人工确认后再放出） */ conf?: number;
+}
+/** 一个拍摄点位：街景式行走用。links 是地上的箭头——往 yaw 方向走到 to 那个点位 */
+export interface PanoNode { id: string; url: string; kind: 'image' | 'video'; yaw?: number; spots?: PanoSpot[]; links?: { to: string; yaw: number; label?: string }[] }
+export interface Beta3DPano {
+  url: string; kind: 'image' | 'video'; yaw?: number;
+  /** 识别出来的要素（单点位时用这里） */ spots?: PanoSpot[];
+  /** 多点位：有了就按街景方式走，url / spots 是起点那一张 */ nodes?: PanoNode[];
+  /** 视频是边走边拍的：前倾 / W 就沿拍摄路线往前播（而不是循环播放） */ walk?: boolean;
+}
 
 export interface Beta3DScene {
   key: string; title: string; role: string; spaceId: string; url: string;
@@ -98,9 +118,39 @@ export const BETA3D: Record<string, Beta3DScene> = {
   boiler: {
     key: 'boiler', title: '锅炉房', role: '锅炉运行 / 设备巡检（试看）', spaceId: '',
     url: '', position: [0, 0, 0], lookAt: [0, 0, 1], up: [0, -1, 0], span: 1,   // 只有全景，没有 3D
-    pano: { url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-polyhaven-boiler_room.jpg', kind: 'image' },
+    // spots：scripts/beta3d/pano-recognize.mts 识别出来的要素（35 件），人可以直接改 JSON
+    pano: { url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-polyhaven-boiler_room.jpg', kind: 'image', spots: BOILER_SPOTS as PanoSpot[] },
     credit: '360° 实拍 · Poly Haven「Boiler Room」· 摄影 Oliksiy Yakovlyev · CC0',
     slots: [],   // 第一张公开实拍素材（2026-10-12 和用户一起挑的），还没挂到任何空间
+  },
+  // ⚠ UI 测试夹具，不是真数据：同一张锅炉房图当两个点位，只为看街景箭头 / 走动过场 / 要素标记。
+  // 点位 b 的 yaw = 90：假装 b 的图正中朝世界的 90°，走过去时视线会按这个偏移换算。spots 的内容是编的
+  'boiler-walk': {
+    key: 'boiler-walk', title: '锅炉房 · 走动测试', role: '锅炉运行 / 设备巡检（试看）', spaceId: '',
+    url: '', position: [0, 0, 0], lookAt: [0, 0, 1], up: [0, -1, 0], span: 1,
+    pano: {
+      url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-polyhaven-boiler_room.jpg', kind: 'image',
+      nodes: [
+        {
+          id: 'a', url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-polyhaven-boiler_room.jpg', kind: 'image', yaw: 0,
+          links: [{ to: 'b', yaw: 30, label: '往前走（测试）' }, { to: 'b', yaw: -110, label: '去左边（测试）' }],
+          spots: [
+            { id: 'test-a1', yaw: 0, pitch: 0, title: '测试点 · 正前方', kind: '设备', tags: ['测试', '巡检'], desc: '假数据：yaw 0 / pitch 0，应该正好落在一打开的画面中心。', conf: 0.9 },
+            { id: 'test-a2', yaw: 90, pitch: 20, title: '测试点 · 右上', kind: '仪表', tags: ['测试'], desc: '假数据：yaw 90 / pitch 20，往右转 90° 再抬头一点。', conf: 0.8 },
+            { id: 'test-a3', yaw: -60, pitch: -10, title: '测试点 · 低置信度', kind: '阀门管路', tags: ['测试', '待核对'], desc: '假数据：conf 0.3，平时藏起来，?all=1 才显示。', conf: 0.3 },
+          ],
+        },
+        {
+          id: 'b', url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-polyhaven-boiler_room.jpg', kind: 'image', yaw: 90,
+          links: [{ to: 'a', yaw: -150, label: '回起点（测试）' }],
+          spots: [
+            { id: 'test-b1', yaw: 180, pitch: 0, title: '测试点 · b 的背面', kind: '安全标识', tags: ['测试'], desc: '假数据：点位 b 里 yaw 180，在图的接缝处。', conf: 0.7 },
+          ],
+        },
+      ],
+    },
+    credit: '360° 实拍 · Poly Haven「Boiler Room」· 摄影 Oliksiy Yakovlyev · CC0（走动测试夹具）',
+    slots: [],
   },
 };
 
