@@ -181,19 +181,19 @@ export default function LabLogicPage() {
         <h2 id="masters">8 · 台面母版</h2>
         <p>23 个手写台面约 60% 是重复的同一套东西（外壳、工具盘、热区、步骤清单、提示条），真正专属的渲染 / 模拟只有 8 处左右。所以收成 6 个母版：<b>设计一个新职业 = 选母版 + 填配置</b>，生成 agent 只写 JSON（{F('BenchSpec.surfaceConfig')}），不写组件。</p>
         <table><thead><tr><th>母版</th><th>骨架</th><th>已有台面</th><th>状态</th></tr></thead><tbody>
-          <tr><td><b>A 桌面工作站</b><br />（桌边 N 个程序）</td><td>图标坞 + 窗口 + 任务栏，或顶栏 + 2–3 栏；app 种类：表 / 图 / 文档 / 表单 / 日志 / 聊天 / 卡片 / 名单 / 自定义</td><td>数据分析、芯片 EDA、审计、分诊、CAD</td><td><span className="lg-st todo">待做</span></td></tr>
+          <tr><td><b>A 桌面工作站</b><br />（桌边 N 个程序）</td><td>图标坞 + 窗口 + 任务栏，或顶栏 + 2–3 栏；app 种类：表 / 图 / 文档 / 表单 / 日志 / 聊天 / 卡片 / 名单 / 自定义</td><td>数据分析、芯片 EDA、审计、分诊、CAD</td><td><span className="lg-st done">审计、分诊已进库</span>（数据分析、CAD 是重点 demo 留代码；芯片波形待插件）</td></tr>
           <tr><td><b>B 现场热点 + 工具盘</b><br />（车间 / 现场）</td><td>写实底图 + 工具盘 + 透明热区 + 面板（操作票）+ 按钮 + 步骤清单 + 跟手工具</td><td>变电站、电工维修、河堤、园艺、中餐</td><td><span className="lg-st done">变电站、电工维修已进库</span></td></tr>
           <tr><td><b>C 分屏操作台 + 机器实景</b></td><td>一侧操作台（旋钮 / 趋势曲线 / 液位条 / 按钮），一侧机器实景叠层（坐标、尺寸、透明度都可以是表达式：氧枪随枪位升降、火焰随供氧变大）</td><td>转炉、沥青、试车台、温室</td><td><span className="lg-st done">转炉已进库</span></td></tr>
-          <tr><td><b>D 沙盘 / 调度</b></td><td>地图 + 地点 + 单位 + 调度板 + 事件流</td><td>应急沙盘、幼儿园、潜导</td><td><span className="lg-st todo">待做</span></td></tr>
-          <tr><td><b>E 第一人称双手</b>（手术类）</td><td>中央主体 + 器械盘 + 手势原语（按住下沉 / 沿线划 / 撑开 / 连拍节奏 / 拖到位 / 刷覆盖…）+ 主体渲染插件</td><td>开腹、月嫂、古籍、拉花</td><td><span className="lg-st todo">待做</span></td></tr>
-          <tr><td><b>F 对人应对</b></td><td>聊天线程 + 话术 + 方案 + 工单，NPC 的怒气 / 信任；可单用或当 A 的一个 app</td><td>客服、直播</td><td><span className="lg-st todo">待做</span></td></tr>
+          <tr><td><b>D 沙盘 / 调度</b></td><td>地图 + 地点 + 单位 + 调度板 + 事件流</td><td>应急沙盘、幼儿园、潜导</td><td><span className="lg-st done">幼儿园、潜导已进库</span>（应急沙盘留代码）</td></tr>
+          <tr><td><b>E 第一人称双手</b>（手术类）</td><td>中央主体 + 器械盘 + 手势原语（按住下沉 / 沿线划 / 撑开 / 连拍节奏 / 拖到位 / 刷覆盖…）+ 主体渲染插件</td><td>开腹、月嫂、古籍、拉花</td><td><span className="lg-st done">古籍、哄睡已进库</span>（开腹留代码；拉花待做）</td></tr>
+          <tr><td><b>F 对人应对</b></td><td>聊天线程 + 话术 + 方案 + 工单，NPC 的怒气 / 信任；可单用或当 A 的一个 app</td><td>客服、直播</td><td><span className="lg-st done">客服、直播已进库</span></td></tr>
         </tbody></table>
         <ul>
           <li><b>两套并存</b>：{F("surface: 'field'")} + {F('surfaceConfig')} → 母版按库里的配置画；{F("surface: 'switching'")} 等专属名 → 代码组件。<b>重点 demo（火箭、外科、沥青、数据分析、CAD、应急、温室）留代码保底</b>，可以客制化精细调整；普通空间把写死的部分搬进库。</li>
           <li><b>判分不动</b>：母版只管画什么、点了拨哪个控件、说什么；对错仍由规格里的 vars / rules / goals 算——老手脚本照样能干跑，评分不用改。</li>
           <li><b>存库校验</b>：配置里所有表达式要能求值、拨到的控件都要在规格里声明过，否则 {F('sanitizeBenchSpec')} 拒收。</li>
           <li>样板（都和代码版逐项对过：画面一致、真人点击判分一致）：{F('src/lib/lab-switching-field.ts')} 变电站 · {F('lab-repair-field.ts')} 电工维修 · {F('lab-converter-console.ts')} 转炉。母版类型 {F('src/lib/lab-masters.ts')}；渲染器 {F('src/components/lab/masters/FieldStage.tsx')}（B、C 共用）；对照试玩 {F('/lab/beta/bench/<名>')} vs {F('<名>-field / -console')}。</li>
-          <li><b>搬进库</b>：{F('npx tsx scripts/lab-to-master.mts [--apply | --revert <备份>]')}——只换画法（surface + surfaceConfig），库里的物理原样；写库前原样备份、每章记一笔留痕。10-12 已搬：变电站 13:30、2 号封箱机维修 10:20、302 炉 09:40。</li>
+          <li><b>搬进库</b>：{F('npx tsx scripts/lab-to-master.mts [--only a,b] [--apply | --revert <备份>]')}——只换画法（surface + surfaceConfig），库里的物理原样；写库前原样备份、每章记一笔留痕。每个母版一个文件：{F('src/lib/masters/<名>.ts')}（类型 + 校验）、{F('<名>-samples.ts')}（试玩样板 + 搬库清单）、{F('components/lab/masters/<名>Stage.tsx')}（渲染）；注册表在 {F('lab-masters.ts')}。</li>
           <li><b>母版能力</b>（都是数据）：工具盘、透明热区（可按状态出现）、拦截（「先断电再挂牌」）、要拿哪件工具、拨控件（值可以是表达式，来回切）、按点击那一刻的状态说话 / 出读数（万用表、副枪）、纸面板（操作票）、按钮、步骤清单（竖排 / 横排）、该拿哪件工具发光、文字嵌实时数字 {F('{{run_s}}')}、会转的部件、旋钮、趋势曲线、液位条、火焰 / 辉光 / 火星。</li>
           <li>模板化的拦路点（调研结论）：剧情数据和阈值写死在 TSX / spec 常量里；部分判分写在组件里；有的用真实时钟（setTimeout）不是仿真时间；几何坐标写死；挂载是 if 链 → 都要随母版化逐个收口。</li>
         </ul>
@@ -253,7 +253,7 @@ export default function LabLogicPage() {
           <li><b>3D 流水线自动化</b> <span className="lg-st done">完成</span>：模板 + 风险词 + 质量门 + 自动机位 + 回退 + 成败样本。</li>
           <li><b>样板库</b> <span className="lg-st done">完成</span>：故事模板、台面形态、规则清单、22 条样例。</li>
           <li><b>规则校验器 + AI 评审</b> <span className="lg-st done">完成</span>：带编号硬规则、生成自检接入、全库体检、评审 agent。</li>
-          <li><b>台面母版化</b> <span className="lg-st wip">进行中</span>：B 现场型、C 分屏型已做成母版并搬进库（变电站、电工维修、转炉）；接着 A 桌面、F 对话、D 调度，E 双手留插件位；重点 demo 留代码保底。</li>
+          <li><b>台面母版化</b> <span className="lg-st wip">收尾中</span>：六个母版都做好了，13 个非重点台面已换成库里的配置（变电站、电工维修、转炉、审计、分诊、客服、直播、幼儿园、潜导、古籍、哄睡），每个都和代码版逐项对照过画面和点击判分；园艺、中餐在做；重点 demo 留代码保底。</li>
           <li><b>人工修改留痕</b> <span className="lg-st done">完成</span>（迁移 020 待跑）。</li>
           <li><b>编排器</b> <span className="lg-st todo">待做</span>：把上面每个环节串成有状态的流水线（{F('lab_jobs')}），每步可重跑 / 回退，关键处停下来等人审；每步输入输出自动记下 = 训练数据。</li>
         </ol>
