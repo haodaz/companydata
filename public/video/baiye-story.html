@@ -172,11 +172,11 @@ const full_ = (id, ch) => S.push({ id, ch, kind: 'full' });
 
 full_('intro', 0);
 
-card_('open', 0, () => `<div class="qa"><div class="l1 fade" id="q1">AI 一年一代地迭代，会说、会画、会推理越来越便宜</div><div class="l2 fade" id="q2">平方智能始终握着的<em>核心价值</em></div></div><div class="kick" style="--c:var(--gold)">在 AI 不断迭代的时代</div>`,
+card_('open', 0, () => `<div class="qa"><div class="l1 fade" id="q1">AI 迭代越来越快：从半年一个版本，到几个星期一个版本</div><div class="l2 fade" id="q2">平方智能始终握着的<em>核心价值</em></div></div><div class="kick" style="--c:var(--gold)">在 AI 不断迭代的时代</div>`,
   (lt, D) => {
     appear($('q1'), lt, 0.3); appear($('q2'), lt, D * .55);
     ctx.font = `600 22px ${M}`; ctx.textAlign = 'center';
-    for (let k = 0; k < 14; k++) { const u = frac(lt * 0.05 + k / 14), x = 160 + (k * 137) % 1600, y = 1000 - u * 900; ctx.fillStyle = `rgba(109,91,255,${0.16 * Math.sin(u * Math.PI)})`; ctx.fillText(`第 ${1 + Math.floor(lt / 2.5 + k) % 9} 代模型`, x, y); }
+    for (let k = 0; k < 14; k++) { const u = frac(lt * 0.05 + k / 14), x = 160 + (k * 137) % 1600, y = 1000 - u * 900; ctx.fillStyle = `rgba(109,91,255,${0.16 * Math.sin(u * Math.PI)})`; ctx.fillText(`v${1 + Math.floor(lt / 1.2 + k) % 9}.${(k * 3) % 10}`, x, y); }
   });
 
 card_('three', 0, () => `<div class="kick">平方智能 · 三样核心价值</div><div class="ttl">让 AI 与人<em style="--c:var(--ai)">升维</em>，构建<em style="--c:var(--violet)">求真</em>空间的<em style="--c:var(--cp)">心智</em>智能</div>
