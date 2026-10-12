@@ -6,6 +6,10 @@ import { HandCam, type HandPose } from '@/components/lab/HandCam';
 import { ToolShape } from '@/components/lab/ToolShape';
 import { LaparotomyStage } from '@/components/lab/surfaces/Laparotomy';
 import { FieldStage } from '@/components/lab/masters/FieldStage';
+import { DesktopStage } from '@/components/lab/masters/DesktopStage';
+import { DialogStage } from '@/components/lab/masters/DialogStage';
+import { DispatchStage } from '@/components/lab/masters/DispatchStage';
+import { HandsStage } from '@/components/lab/masters/HandsStage';
 import { SootheStage } from '@/components/lab/surfaces/Soothe';
 import { LatteOverlay } from '@/components/lab/surfaces/LatteOverlay';
 import { DeskStage } from '@/components/lab/surfaces/Desk';
@@ -431,7 +435,9 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
           <filter id="latte-soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3.5" /></filter>
         </defs>
         {/* 母版台面：配置从库里来（spec.surfaceConfig）；下面那串专属台面是代码版，重点 demo 留着当保底 / 精细调整 */}
-        {(spec.surface === 'field' || spec.surface === 'console') && spec.surfaceConfig?.master === spec.surface && <FieldStage key={resetKey} spec={spec} cfg={spec.surfaceConfig} st={st} running={running} auto={auto} act={act} toScene={scenePoint} />}
+        {(spec.surface === 'field' || spec.surface === 'console') && spec.surfaceConfig?.master === spec.surface && <FieldStage key={resetKey} spec={spec} cfg={spec.surfaceConfig as any} st={st} running={running} auto={auto} act={act} toScene={scenePoint} />}
+        {spec.surface === 'dispatch' && spec.surfaceConfig?.master === 'dispatch' && <DispatchStage key={resetKey} spec={spec} cfg={spec.surfaceConfig as any} st={st} running={running} auto={auto} act={act} toScene={scenePoint} setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'hands' && spec.surfaceConfig?.master === 'hands' && <HandsStage key={resetKey} spec={spec} cfg={spec.surfaceConfig as any} st={st} running={running} auto={auto} act={act} toScene={scenePoint} setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
         {spec.surface === 'laparotomy' && <LaparotomyStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
           setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
         {spec.surface === 'soothe' && <SootheStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
@@ -484,6 +490,9 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
           : <g pointerEvents="none" opacity={0.75}><circle cx={hand.x} cy={hand.y} r={22} fill="rgba(18,181,203,.25)" stroke="#12b5cb" strokeWidth={3} strokeDasharray="6 5" /><text x={hand.x} y={hand.y + 50} textAnchor="middle" fill="#fff" fontSize={18} fontWeight={700} style={{ textShadow: '0 1px 4px rgba(0,0,0,.8)' }}>捏一下拿起{holdName}</text></g>)}
       </svg>
       {/* 办公桌台面是 HTML（表格 / 下拉 / 文本框），盖在 svg 上面 */}
+      {/* 母版 A / F 是 HTML 整屏：非沉浸时也盖在 svg 上（沉浸模式走下面的 LIGHT 版面） */}
+      {spec.surface === 'desktop' && spec.surfaceConfig?.master === 'desktop' && <DesktopStage key={resetKey} spec={spec} cfg={spec.surfaceConfig as any} st={st} running={running} auto={auto} act={act} setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+      {spec.surface === 'dialog' && spec.surfaceConfig?.master === 'dialog' && <DialogStage key={resetKey} spec={spec} cfg={spec.surfaceConfig as any} st={st} running={running} auto={auto} act={act} setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
       {spec.surface === 'desk' && <DeskStage key={resetKey} st={st} running={running} auto={auto} act={act} setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
       <div className="lab-mono" style={{ position: 'absolute', left: 12, top: hud ? 34 : 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em' }}>
         <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
@@ -505,6 +514,9 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
 
   // 办公桌类台面（数据分析、财务、写代码……）：整屏、浅色、好读，像游戏里打开大盘 / 银行那一屏；背后不放房间
   const LIGHT: Record<string, React.ComponentType<any>> = { desk: DeskStage, triage: TriageStage, complaint: ComplaintStage, audit: AuditStage, live: LiveStage, chipdesk: ChipDeskStage, sandtable: SandtableStage, cad: CadStage };
+  // 母版 A / F：同一套浅色整屏版面，配置从 spec.surfaceConfig 来
+  if (spec.surfaceConfig?.master === 'desktop') LIGHT.desktop = (p: any) => <DesktopStage {...p} spec={spec} cfg={spec.surfaceConfig} />;
+  if (spec.surfaceConfig?.master === 'dialog') LIGHT.dialog = (p: any) => <DialogStage {...p} spec={spec} cfg={spec.surfaceConfig} />;
   if (hud && scene && spec.surface && LIGHT[spec.surface]) {
     const Light = LIGHT[spec.surface];
     return (

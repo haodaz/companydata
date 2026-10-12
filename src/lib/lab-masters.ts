@@ -2,7 +2,9 @@
  * 台面母版（2026-10-12）：23 个手写台面收成 6 个母版，生成 agent 只填 JSON（BenchSpec.surfaceConfig），不再每个行业写一个组件。
  *   A desktop 桌面工作站（桌边 N 个程序）   B field 现场热点 + 工具盘   C console 分屏操作台 + 机器实景
  *   D dispatch 沙盘 / 调度                  E hands 第一人称双手           F dialog 对人应对
- * 分类依据和每个旧台面归哪类见 docs/lab-playbook.md「台面母版」。现在实现了 B（field），样板是变电站验电挂地线。
+ * 分类依据和每个旧台面归哪类见 /lab/logic「台面母版」。field / console 的类型和渲染在这里和 FieldStage；
+ * 其余母版各一个文件：src/lib/masters/<名>.ts（类型 + 定义）、<名>-samples.ts（样板）、components/lab/masters/<名>Stage.tsx（渲染），
+ * 由下面的注册表 MASTER_DEFS 汇总。母版文件只能 `import type` 本文件（避免运行时循环引用）。
  *
  * 约定：所有条件 / 取值都是 bench 表达式（evalExpr），能读到变量、控件、t；判分仍然只看规格里的 vars / rules / goals，
  * 母版只负责「画什么、点了以后拨哪个控件、说什么」——这样老手脚本照样能在模拟器里干跑，评分不用改。
@@ -81,19 +83,43 @@ export interface FieldConfig {
   sayAt?: { x: number; y: number; w: number }; readoutAt?: { x: number; y: number; w: number; /** 不到 80 就是一行小牌（标题 + 一行读数） */ h?: number };
 }
 
-export type SurfaceConfig = FieldConfig;
-export const MASTERS = ['field', 'console'] as const;
+import type { BenchSpec, BenchState } from '@/lib/bench';
+import { DESKTOP_DEF, type DesktopConfig } from '@/lib/masters/desktop';
+import { DIALOG_DEF, type DialogConfig } from '@/lib/masters/dialog';
+import { DISPATCH_DEF, type DispatchConfig } from '@/lib/masters/dispatch';
+import { HANDS_DEF, type HandsConfig } from '@/lib/masters/hands';
+
+/** 一个母版的定义：渲染在 svg 里还是 HTML 整屏；配置里的表达式和会拨到的控件（存库前校验用） */
+export interface MasterDef<C> { name: string; host: 'svg' | 'html'; exprs: (cfg: C) => string[]; controls: (cfg: C) => string[] }
+/** 母版渲染组件统一的 props（BenchRunner 传进来） */
+export interface MasterStageProps<C> {
+  spec: BenchSpec; cfg: C; st: BenchState; running: boolean; auto: boolean;
+  act: (id: string, v: number) => void; setHidden: (id: string, v: number) => void;
+  toScene?: (clientX: number, clientY: number) => { x: number; y: number } | null;
+}
+
+export type SurfaceConfig = FieldConfig | DesktopConfig | DialogConfig | DispatchConfig | HandsConfig;
+const FIELD_DEF: MasterDef<FieldConfig> = { name: 'field', host: 'svg', exprs: c => fieldExprs(c), controls: c => fieldControls(c) };
+export const MASTER_DEFS: Record<string, MasterDef<any>> = {
+  field: FIELD_DEF, console: { ...FIELD_DEF, name: 'console' },
+  desktop: DESKTOP_DEF, dialog: DIALOG_DEF, dispatch: DISPATCH_DEF, hands: HANDS_DEF,
+};
+export const MASTERS = Object.keys(MASTER_DEFS);
 
 /** 存库前清洗：只认识的母版放行，大小封顶（防止把整本书塞进来） */
 export function sanitizeSurfaceConfig(raw: any): SurfaceConfig | undefined {
-  if (!raw || typeof raw !== 'object' || !(MASTERS as readonly string[]).includes(raw.master)) return undefined;
+  if (!raw || typeof raw !== 'object' || !MASTER_DEFS[raw.master]) return undefined;
   const s = JSON.stringify(raw);
   if (s.length > 80_000) return undefined;
   return JSON.parse(s);
 }
 
 /** 母版里出现的所有表达式（静态校验用：每个都要能求值） */
-export function masterExprs(cfg: SurfaceConfig): string[] {
+export const masterExprs = (cfg: SurfaceConfig): string[] => MASTER_DEFS[cfg.master]?.exprs(cfg) || [];
+/** 母版里拨到的控件都得在规格里声明过 */
+export const masterControls = (cfg: SurfaceConfig): string[] => MASTER_DEFS[cfg.master]?.controls(cfg) || [];
+
+function fieldExprs(cfg: FieldConfig): string[] {
   const out: string[] = [];
   const act = (a?: MasterAction) => { a?.sayWhen?.forEach(x => out.push(x.when)); a?.guards?.forEach(x => out.push(x.when)); a?.act?.forEach(x => typeof x.value === 'string' && out.push(x.value)); a?.readout?.textWhen?.forEach(x => out.push(x.when)); a?.readout?.titleWhen?.forEach(x => out.push(x.when)); };
   const tpl = (t?: string) => { for (const m of (t || '').matchAll(TEMPLATE_RE)) out.push(m[1]); };
@@ -109,8 +135,7 @@ export function masterExprs(cfg: SurfaceConfig): string[] {
   return out;
 }
 
-/** 母版里拨到的控件都得在规格里声明过 */
-export function masterControls(cfg: SurfaceConfig): string[] {
+function fieldControls(cfg: FieldConfig): string[] {
   const ids = new Set<string>();
   const act = (a?: MasterAction) => a?.act?.forEach(x => ids.add(x.control));
   cfg.hotspots?.forEach(h => act(h.action)); cfg.buttons?.forEach(b => act(b.action));
