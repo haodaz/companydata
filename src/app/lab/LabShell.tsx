@@ -212,8 +212,8 @@ function Shell({ children }: { children: React.ReactNode }) {
   // 单个空间页 /lab/<id> 算体验。不跟数据后台的侧边栏混在一起
   const NAV = [
     { k: '/lab', t: '首页', on: (p: string) => p === '/lab' },
-    { k: '/lab/spaces', t: '百业工厂', on: (p: string) => p.startsWith('/lab/spaces') || p.startsWith('/lab/studio') || p.startsWith('/lab/assets') || p.startsWith('/lab/logic') },
-    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || p.startsWith('/lab/me') || p.startsWith('/lab/cert') || /^\/lab\/(?!spaces|studio|gallery|assets|logic|beta)[^/]+$/.test(p) },
+    { k: '/lab/spaces', t: '百业工厂', on: (p: string) => p.startsWith('/lab/spaces') || p.startsWith('/lab/studio') || p.startsWith('/lab/assets') || p.startsWith('/lab/logic') || p.startsWith('/lab/admin') },
+    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || p.startsWith('/lab/me') || p.startsWith('/lab/cert') || /^\/lab\/(?!spaces|studio|gallery|assets|logic|beta|admin)[^/]+$/.test(p) },
   ];
   return (
     <div className="lab" data-theme={theme}>
@@ -248,7 +248,8 @@ function Shell({ children }: { children: React.ReactNode }) {
         {!guest && user && <>
         <Select className="lab-head-model" size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 170 }} popupMatchSelectWidth={250}
           options={MODEL_OPTIONS.map(m => ({ value: m.id, label: <span>{m.label}<ModelBadge text={m.badge} /></span> }))} />
-        <button className="lab-btn ghost sm" title="数据后台" aria-label="数据后台" style={{ width: 34, padding: 0 }} onClick={() => router.push('/admin/db-company')}>
+        {/* 百业自己的后台（成本、价目表、素材库…）；数据工厂的后台是另一个产品，不从这里进（2026-10-12 拆开） */}
+        <button className="lab-btn ghost sm" title="百业后台" aria-label="百业后台" style={{ width: 34, padding: 0 }} onClick={() => router.push('/lab/admin')}>
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="1.5" y="9.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="9.5" width="5" height="5" rx="1.2" /></svg>
         </button>
         </>}

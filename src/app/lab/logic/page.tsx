@@ -325,6 +325,7 @@ export default function LabLogicPage() {
           <tr><td>母版</td><td>{F('src/lib/lab-masters.ts')} · {F('src/components/lab/masters/')} · {F('src/lib/lab-switching-field.ts')} · {F('/lab/beta/bench/<key>')}</td></tr>
           <tr><td>校验 / 评审</td><td>{F('src/lib/lab-studio.ts')} · {F('src/lib/agents/lab-review.ts')} · {F('scripts/lab-check-all.mts')} · {F('scripts/lab-review.mts')}</td></tr>
           <tr><td>美术 / 3D</td><td>{F('src/lib/lab-art.ts')} · {F('scripts/lab-gen-scene.mts')} · {F('scripts/beta3d/')}（make-scene / prompt / sfm / view / ply2splat / upload / equirect）· {F('src/lib/lab-3d-beta.ts')} · 360° 实拍：{F('/lab/studio/pano')}、{F('api/lab/studio/pano')}、{F('components/lab/Pano360.tsx')}</td></tr>
+          <tr><td>百业后台 / 成本</td><td>{F('/lab/admin')}（百业自己的后台，和数据工厂 {F('/admin')} 分开）· {F('api/lab/admin/cost')} · 共用底层 {F('src/lib/cost/')}（products 两个产品的口径、usage-report 报表）· {F('token-logger.ts')}（withCost 归属到空间 / 章节 / 环节）· 迁移 021</td></tr>
           <tr><td>母版回归</td><td>{F('scripts/lab-masters-check.mts')}（改了共用代码就跑：样板清洗 / 干跑对照代码版 / 渲染，库里用母版的工位逐个过）</td></tr>
           <tr><td>真实素材</td><td>{F('scripts/beta3d/pano-recognize.mts')} · {F('src/lib/pano-spots/')} · {F('components/lab/Pano360.tsx')} · {F('/lab/studio/pano')}</td></tr>
           <tr><td>留痕 / 样板</td><td>{F('src/lib/lab-edits.ts')} · {F('supabase/migrations/020_lab_edits.sql')} · {F('docs/lab-playbook.md')} · {F('scripts/lab-playbook-export.mts')}</td></tr>

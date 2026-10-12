@@ -42,22 +42,10 @@ interface Stats {
   total_search_cost_usd?: number;
   model_stats: Record<string, { count: number; tokens: number; cost: number }>;
   tool_stats?: Record<string, { count: number; tokens: number; cost_usd: number; cost_cny: number }>;
-  /** 按「功能 | 环节」/ 流程环节 / 空间（迁移 021 之后才有后两项） */
+  /** 按「功能 | 环节」 */
   task_stats?: { key: string; count: number; tokens: number; cost: number }[];
-  stage_stats?: Record<string, { count: number; cost: number; units: number }>;
-  space_stats?: { space_id: string; title: string; cost: number; count: number; byStage: Record<string, number> }[];
-  attribution_ready?: boolean;
 }
 
-/** 百业的几类记账：大模型调用（skill-lab）、出图（lab-art）、视频 / 3D / 全景识别（lab-3d） */
-const LAB_TOOLS = 'skill-lab,lab-art,lab-3d';
-const STAGE_LABEL: Record<string, { label: string; color: string }> = {
-  create: { label: '创造（建空间 / 生一天 / 设计工位）', color: '#6055f5' },
-  use: { label: '使用（考试作答 / 评分 / 问问我）', color: '#10b981' },
-  learn: { label: '学习（老师傅访谈 / 蒸馏）', color: '#fa8c16' },
-  review: { label: 'AI 评审', color: '#eb2f96' },
-  media: { label: '美术与 3D（出图 / 视频 / 全景识别）', color: '#1890ff' },
-};
 
 const USD_TO_CNY = 7.2; // 汇率
 type Currency = 'CNY' | 'USD';
@@ -133,7 +121,6 @@ export default function TokenUsagePage() {
   const [loading, setLoading] = useState(false);
   const [daysFilter, setDaysFilter] = useState(30);
   const [modelFilter, setModelFilter] = useState('');
-  const [labOnly, setLabOnly] = useState(false);
   const [page, setPage] = useState(1);
   const [currency, setCurrency] = useState<Currency>('CNY');
   const [total, setTotal] = useState(0);
@@ -150,7 +137,6 @@ export default function TokenUsagePage() {
         pageSize: String(pageSize),
         ...(daysFilter > 0 ? { days: String(daysFilter) } : {}),
         ...(modelFilter ? { model: modelFilter } : {}),
-        ...(labOnly ? { tool: LAB_TOOLS } : {}),
       });
       const res = await fetch(`/api/admin/token-usage?${params}`);
       const data = await res.json();
@@ -164,7 +150,7 @@ export default function TokenUsagePage() {
       console.error('Failed to fetch token usage:', e);
     }
     if (seq === reqSeq.current) setLoading(false);
-  }, [page, daysFilter, modelFilter, labOnly]);
+  }, [page, daysFilter, modelFilter]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
@@ -198,7 +184,6 @@ export default function TokenUsagePage() {
               <Select.Option key={m} value={m}>{m}</Select.Option>
             ))}
           </Select>
-          <Button size="small" type={labOnly ? 'primary' : 'default'} onClick={() => { setLabOnly(v => !v); setPage(1); }}>{labOnly ? '✓ 只看百业' : '只看百业'}</Button>
           <Button icon={<ReloadOutlined />} size="small" onClick={fetchData} loading={loading}>刷新</Button>
           <Button
             icon={<DownloadOutlined />}
@@ -373,38 +358,13 @@ export default function TokenUsagePage() {
         </Card>
       )}
 
-      {/* 百业成本：按流程环节 / 按空间 / 按功能 | 环节（迁移 021；参考公司 simulator 的按环节汇总，再加归属到空间） */}
-      {stats && (stats.stage_stats || stats.task_stats) && (() => {
-        const money = (usd: number) => currency === 'CNY' ? formatCostCny(usd * USD_TO_CNY) : formatCostUsd(usd);
-        const stages = Object.entries(stats.stage_stats || {}).sort(([, a], [, b]) => b.cost - a.cost);
-        return (
-          <Card size="small" style={{ marginBottom: 24, borderRadius: 12 }} title={<Text strong style={{ fontSize: 13 }}>🧭 钱花在哪：创造 · 使用 · 空间</Text>}
-            extra={!stats.attribution_ready && <Text type="secondary" style={{ fontSize: 12 }}>按空间 / 按环节要先跑迁移 021</Text>}>
-            {stages.length > 0 && <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10, marginBottom: 16 }}>
-              {stages.map(([st, v]) => { const c = STAGE_LABEL[st] || { label: st, color: '#8c8c8c' }; return (
-                <div key={st} style={{ padding: '10px 14px', borderRadius: 10, background: '#fafbff', borderLeft: `4px solid ${c.color}` }}>
-                  <div style={{ fontSize: 13, fontWeight: 600 }}>{c.label}</div>
-                  <div style={{ fontSize: 12, color: '#666', display: 'flex', gap: 12, marginTop: 4 }}><span>{v.count} 次</span>{v.units > 0 && <span>{v.units} 件（张 / 秒）</span>}<span style={{ fontWeight: 700, color: c.color }}>{money(v.cost)}</span></div>
-                </div>); })}
-            </div>}
-            {!!stats.space_stats?.length && <>
-              <Text strong style={{ fontSize: 12.5 }}>按空间（花得最多的 30 个）</Text>
-              <Table size="small" rowKey="space_id" pagination={false} style={{ margin: '8px 0 16px' }} dataSource={stats.space_stats}
-                columns={[
-                  { title: '空间', dataIndex: 'title', render: (t: string, r: any) => <a href={`/lab/${r.space_id}`} target="_blank" rel="noreferrer">{t}</a> },
-                  { title: '次数', dataIndex: 'count', width: 70 },
-                  ...Object.keys(STAGE_LABEL).map(k => ({ title: STAGE_LABEL[k].label.replace(/（.*/, ''), key: k, width: 90, render: (_: any, r: any) => r.byStage?.[k] ? money(r.byStage[k]) : '—' })),
-                  { title: '合计', dataIndex: 'cost', width: 100, render: (v: number) => <b>{money(v)}</b> },
-                ]} />
-            </>}
-            {!!stats.task_stats?.length && <>
-              <Text strong style={{ fontSize: 12.5 }}>按功能 | 环节（前 15）</Text>
-              <Table size="small" rowKey="key" pagination={false} style={{ marginTop: 8 }} dataSource={stats.task_stats.slice(0, 15)}
-                columns={[{ title: '功能 | 环节', dataIndex: 'key' }, { title: '次数', dataIndex: 'count', width: 70 }, { title: 'Token', dataIndex: 'tokens', width: 110, render: (v: number) => formatTokens(v) }, { title: '花费', dataIndex: 'cost', width: 100, render: (v: number) => money(v) }]} />
-            </>}
-          </Card>
-        );
-      })()}
+      {/* 按「功能 | 环节」：钱花在哪个工序（百业的成本在百业后台 /lab/admin，2026-10-12 拆开） */}
+      {!!stats?.task_stats?.length && (
+        <Card size="small" style={{ marginBottom: 24, borderRadius: 12 }} title={<Text strong style={{ fontSize: 13 }}>🧭 按功能 | 环节（前 15）</Text>}>
+          <Table size="small" rowKey="key" pagination={false} dataSource={stats.task_stats.slice(0, 15)}
+            columns={[{ title: '功能 | 环节', dataIndex: 'key' }, { title: '次数', dataIndex: 'count', width: 70 }, { title: 'Token', dataIndex: 'tokens', width: 110, render: (v: number) => formatTokens(v) }, { title: '花费', dataIndex: 'cost', width: 100, render: (v: number) => currency === 'CNY' ? formatCostCny(v * USD_TO_CNY) : formatCostUsd(v) }]} />
+        </Card>
+      )}
 
       {/* 价目表（可编辑，记账按它算） */}
       <PricingCard />
