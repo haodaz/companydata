@@ -6,25 +6,31 @@ import { BRAND } from '@/lib/theme';
 
 export interface HeroMetric { label: string; value: React.ReactNode; color?: string; active?: boolean }
 
-/** 实体详情页头卡：渐变首字头像 + 名称 + 标签行 + 右侧指标（与院校详情页同一形态） */
-export function EntityHero({ initial, title, subtitle, tags, metrics, extra }: {
+/** 实体详情页头卡：logo（有的话，加载失败退回首字）/ 渐变首字头像 + 名称 + 标签行 + 右侧指标（与院校详情页同一形态） */
+export function EntityHero({ initial, logo, title, subtitle, tags, metrics, extra }: {
   initial: string;
+  logo?: string | null;
   title: React.ReactNode;
   subtitle?: React.ReactNode;
   tags?: React.ReactNode;
   metrics?: HeroMetric[];
   extra?: React.ReactNode;
 }) {
+  const [logoOk, setLogoOk] = React.useState(true);
+  const showLogo = !!logo && logoOk;
   return (
     <Card style={{ marginBottom: 16 }} styles={{ body: { padding: '20px 24px' } }}>
       <Row gutter={[24, 16]} align="middle">
         <Col flex="1" style={{ minWidth: 320 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             <div style={{
-              width: 52, height: 52, borderRadius: 26, flexShrink: 0, background: BRAND.gradient,
+              width: 52, height: 52, borderRadius: 26, flexShrink: 0, background: showLogo ? '#fff' : BRAND.gradient,
+              border: showLogo ? `1px solid ${BRAND.ink4}33` : undefined, overflow: 'hidden',
               display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 22, fontWeight: 700,
             }}>
-              {initial}
+              {showLogo
+                ? <img src={logo!} alt="" referrerPolicy="no-referrer" onError={() => setLogoOk(false)} style={{ width: 40, height: 40, objectFit: 'contain' }} />
+                : initial}
             </div>
             <div style={{ minWidth: 0 }}>
               <div style={{ fontSize: 20, fontWeight: 700, color: BRAND.ink }}>{title}</div>

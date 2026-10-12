@@ -211,6 +211,7 @@ export default function CompanyDetailPage() {
 
       <EntityHero
         initial={(company.name || '?').slice(0, 1).toUpperCase()}
+        logo={company.logo_url}
         title={company.name}
         subtitle={[company.name_en !== company.name && company.name_en, company.jv_partners].filter(Boolean).join(' · ') || undefined}
         tags={<>

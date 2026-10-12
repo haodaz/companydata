@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { locateCompanyPages } from '@/lib/agents/company-pipeline';
 import { subEntityCounts } from '@/lib/company-store';
 import { hasValue } from '@/lib/company-fields';
+import { findLogoUrl } from '@/lib/company-logo';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -30,10 +31,16 @@ export async function POST(req: Request) {
     }));
     if (rows.length) await supabaseAdmin.from('url_sources').upsert(rows, { onConflict: 'company,url', ignoreDuplicates: true });
 
-    // 只填空：官网 / 英文名 / 简称
+    // 只填空：官网 / 英文名 / 简称 / logo（英文名里存的是网址的当作空，那是早先导入错位）
     const fill: Record<string, any> = {};
     if (located.official_website && !hasValue(company.official_website)) fill.official_website = located.official_website;
-    if (located.name_en && !hasValue(company.name_en)) fill.name_en = located.name_en;
+    const nameEnIsUrl = /^https?:\/\//i.test(company.name_en || '');
+    if (located.name_en && !/^https?:\/\//i.test(located.name_en) && (!hasValue(company.name_en) || nameEnIsUrl)) fill.name_en = located.name_en;
+    else if (nameEnIsUrl) fill.name_en = null;
+    if (!hasValue(company.logo_url)) {
+      const logo = await findLogoUrl(fill.official_website || company.official_website || located.official_website);
+      if (logo) fill.logo_url = logo;
+    }
     if (located.brief_name && !hasValue(company.brief_name)) fill.brief_name = located.brief_name;
     const locked = new Set<string>(company.human_locked_fields || []);
     for (const k of Object.keys(fill)) if (locked.has(k)) delete fill[k];

@@ -113,11 +113,14 @@ export default function DbCompanyPage() {
     } catch { /* 校验未通过 */ }
   };
 
-  /** 粘贴导入：每行一家，「名称, 英文名, 官网」后两项可省 */
+  /** 粘贴导入：每行一家，「名称, 英文名, 官网」后两项可省、顺序不限——像网址的那一列认作官网（只给「名称, 官网」时官网曾被当成英文名，数据部门 10-11 反馈） */
   const handleImport = async () => {
+    const isUrl = (s: string) => /^(https?:\/\/|www\.)/i.test(s) || /^[\w-]+(\.[\w-]+)+(\/\S*)?$/.test(s);
     const companies = importText.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(l => {
-      const [name, name_en, website] = l.split(/[,，\t]/).map(s => s.trim());
-      return { name, name_en: name_en || undefined, official_website: /^https?:\/\//i.test(website || '') ? website : undefined, segment: importSegment };
+      const [name, ...rest] = l.split(/[,，\t]/).map(s => s.trim()).filter(Boolean);
+      const site = rest.find(isUrl);
+      const name_en = rest.find(s => !isUrl(s));
+      return { name, name_en, official_website: site ? (/^https?:\/\//i.test(site) ? site : `https://${site}`) : undefined, segment: importSegment };
     });
     if (!companies.length) { message.warning('请粘贴企业名单'); return; }
     if (await createCompanies(companies)) { setImportOpen(false); setImportText(''); }

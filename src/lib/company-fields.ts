@@ -58,6 +58,7 @@ export const COMPANY_EDIT_FIELDS: { key: string; label: string; kind: 'string' |
   { key: 'campus_overview', label: '校招概况', kind: 'text', group: '招聘入口' },
 
   { key: 'official_website', label: '官网', kind: 'url', group: '企业画像' },
+  { key: 'logo_url', label: 'Logo 链接', kind: 'url', group: '企业画像' },
   { key: 'linkedin_url', label: 'LinkedIn', kind: 'url', group: '企业画像' },
   { key: 'continent', label: '大洲', kind: 'string', group: '企业画像' },
   { key: 'country', label: '总部国家 / 地区', kind: 'string', group: '企业画像' },
