@@ -2,7 +2,8 @@
  * 数据部门 2026-10-11 反馈的存量回溯：
  *   npx tsx scripts/fix-1011.mts            只出报告，不写库
  *   npx tsx scripts/fix-1011.mts --apply    写库
- *   --only name|locate|logo|logo-alt                 只跑其中一步（--limit N 只跑前 N 家，试跑用；--model 换联网模型，默认 gpt-5.6-luna）
+ *   --only name|locate|logo|logo-alt                 只跑其中一步（--limit N 只跑前 N 家，试跑用；--model 换联网模型，默认 gpt-5.6-luna；--ids 1,2,3 只跑这些企业）
+ *   失败的企业 id 写到 scripts/.fix-1011-failed.ids，可直接 --ids $(cat …) 重跑
  *
  * ① 英文名里存的是网址（早先粘贴导入「名称, 官网」，官网落进了英文名列）：
  *    官网空着就把它的站点根地址挪过去；英文名清空后让便宜模型按「中文名 + 官网」给官方英文名，不确定的留空。
@@ -26,6 +27,7 @@ const APPLY = argv.includes('--apply');
 const ONLY = argv.includes('--only') ? argv[argv.indexOf('--only') + 1] : '';
 const run = (k: string) => !ONLY || ONLY === k;
 const MODEL = argv.includes('--model') ? argv[argv.indexOf('--model') + 1] : 'gpt-5.6-luna';
+const IDS = argv.includes('--ids') ? new Set(argv[argv.indexOf('--ids') + 1].split(',').map(Number)) : null;
 const LIMIT = argv.includes('--limit') ? Number(argv[argv.indexOf('--limit') + 1]) : Infinity;
 const { locateCompanyPages } = await import('../src/lib/agents/company-pipeline');
 console.log(APPLY ? '▶ 写库' : '▶ 只出报告（加 --apply 写库）');
@@ -80,10 +82,11 @@ ${batch.map((r: any) => `${r.id}\t${r.name}\t${r._site || ''}`).join('\n')}`;
 
 // ── ①' 联网定位补官网 / 英文名 ──
 if (run('locate')) {
-  const todo = rows.filter((r: any) => !r.if_delete && ((!r.official_website && !locked(r, 'official_website')) || (!r.name_en && !locked(r, 'name_en')))).slice(0, LIMIT);
+  const todo = rows.filter((r: any) => (!IDS || IDS.has(r.id)) && !r.if_delete && ((!r.official_website && !locked(r, 'official_website')) || (!r.name_en && !locked(r, 'name_en')))).slice(0, LIMIT);
   console.log(`\n①' 缺官网或缺英文名的企业 ${todo.length} 家，联网定位`);
   const batchId = Date.now();
   let site = 0, en = 0, brief = 0, done = 0, failed = 0;
+  const failedIds: number[] = [];
   const queue = [...todo];
   await Promise.all(Array.from({ length: 4 }, async () => {
     for (let r = queue.shift(); r; r = queue.shift()) {
@@ -100,16 +103,17 @@ if (run('locate')) {
           if (pages.length) await db.from('url_sources').upsert(pages, { onConflict: 'company,url', ignoreDuplicates: true });
         }
         Object.assign(r, patch);
-      } catch (e: any) { failed++; if (failed <= 5) console.warn(`  #${r.id} ${r.name} 定位失败：${e.message}`); }
+      } catch (e: any) { failed++; failedIds.push(r.id); if (failed <= 5) console.warn(`  #${r.id} ${r.name} 定位失败：${e.message}`); }
       if (++done % 50 === 0) console.log(`  进度 ${done}/${todo.length}：官网 +${site}、英文名 +${en}、简称 +${brief}`);
     }
   }));
   console.log(`  补上官网 ${site}、英文名 ${en}、简称 ${brief} 家；失败 ${failed} 家`);
+  if (failedIds.length) fs.writeFileSync('scripts/.fix-1011-failed.ids', failedIds.join(','));
 }
 
 // ── ② logo ──
 if (run('logo')) {
-  const todo = rows.filter((r: any) => !r.if_delete && r.official_website && !r.logo_url && !locked(r, 'logo_url')).slice(0, LIMIT);
+  const todo = rows.filter((r: any) => (!IDS || IDS.has(r.id)) && !r.if_delete && r.official_website && !r.logo_url && !locked(r, 'logo_url')).slice(0, LIMIT);
   console.log(`\n② 有官网、没 logo 的企业 ${todo.length} 家`);
   let hit = 0, done = 0, fav = 0;
   const queue = [...todo];
@@ -131,7 +135,7 @@ if (run('logo')) {
 // ── ③ logo 兜底（百科 / 维基 / 招聘站）──
 if (run('logo-alt')) {
   const { data: fresh } = await selectAll(() => db.from('companies').select('id, name, name_en, brief_name, segment, official_website, campus_url, careers_url, logo_url, human_locked_fields, if_delete').order('id'));
-  const todo = fresh.filter((r: any) => !r.if_delete && !locked(r, 'logo_url') && (!r.logo_url || isFaviconOnly(r.logo_url))).slice(0, LIMIT);
+  const todo = fresh.filter((r: any) => (!IDS || IDS.has(r.id)) && !r.if_delete && !locked(r, 'logo_url') && (!r.logo_url || isFaviconOnly(r.logo_url))).slice(0, LIMIT);
   console.log(`\n③ 没 logo 或只有站点图标的企业 ${todo.length} 家，查百科 / 维基 / 招聘站`);
   const by: Record<string, number> = {};
   let done = 0, hit = 0;
