@@ -1,0 +1,1418 @@
+diff --git a/docs/lab-3d-beta.md b/docs/lab-3d-beta.md
+index b64a478..58fa2e9 100644
+--- a/docs/lab-3d-beta.md
++++ b/docs/lab-3d-beta.md
+@@ -21,6 +21,32 @@
+ 5. **初始视角**：`.venv/bin/python scripts/beta3d/view.py out-sfm` → position / lookAt / up 填进 `lab-3d-beta.ts`。
+ 6. 上传到 Storage（lab-art 桶，文件名 `beta3d-*.splat`），url 填进配置。
+ 
++## 真实 360° 素材（可选）
++
++和 Veo 并存，不替代：GoPro Max / Insta360 导出的**等距柱状 2:1** 图片或视频（双鱼眼原片 .360 / .insv 先在相机 App 里导出成全景 mp4 / jpg；H.265 浏览器不一定放得了，导 H.264）。两种用法：
++
++| | 只当全景看（pano） | 重建成 3D（--equirect） |
++|---|---|---|
++| 要多久 | 传完立刻能看 | 本机 15–30 分钟（估机位 + Brush） |
++| 能干什么 | 转头看、拉近；**没有视差**，头部追踪只转方向 | 和 Veo 场景一样能挪、能点物件 |
++| 素材要求 | 一张图或一段原地拍的视频就行 | 视频、拿着相机**慢走**（每秒半步）、稳（自拍杆竖直别晃）、画面里少动的东西 |
++| 适合 | 海面、水下、人多的现场、天空——会动的都只能这样 | 静的室内、设备间、车间 |
++
++- 海面 / 水下（第一批试的素材）：波纹、反光、漂浮物、鱼群帧帧不一样，COLMAP 对不上，重建大概率过不了质量门——**先当全景看**。水下要重建，只能拍礁石这类静物、贴近慢游。
++- 脚下（拿相机的人、自拍杆）：重建切透视图时不渲染往下看的方向（俯仰 < -20° 直接拒绝；fov 90 只看到水平线下 45°）；全景查看器里低头能看到，选 yaw 时朝前。
++- 拍摄：相机举过头顶或用长自拍杆，镜头正对前进方向；曝光锁定；一段 20–60 秒够了；别转身原地转圈（纯旋转没有视差，重建不出来）。
++
++**上传 / 只当全景看**：`/lab/studio/pano`（要登录，LAB_PUBLIC 下也拦）。选文件 → 粗查 2:1 → 签名地址直传 lab-art 桶 `pano/` 目录（带进度；桶单文件上限不够时接口会自动抬到 2 GB，项目级全局上限要在 Supabase 控制台看）→ 立刻预览、拖滑块定初始朝向 → 复制 `pano: { url, kind, yaw }` 贴进 `src/lib/lab-3d-beta.ts`。
++- 已有 3D 场景加 pano：查看器上方多一个「3D 场景 / 360° 实拍」切换。
++- 只有 pano 的新场景：`url: ''`（position 等随便填，页面给了整段模板），`/lab/beta/3d/<key>` 直接打开全景；操作台背景（`beta3dForChapter`）只认 3D，不会用它。
++- 查看器：`src/components/lab/Pano360.tsx`（three.js 球内贴图，视频静音循环 playsInline）。
++
++**重建**（视频，本机）：
++```
++node scripts/beta3d/make-scene.mjs <key> --equirect 全景.mp4 [--every 15] [--yaws 8] [--pitches 0] [--no-upload]
++```
++`equirect.py` 每 every 帧取一帧、每帧朝 yaws 个水平方向用 ffmpeg `v360` 各切一张 90° 方图（同一台 PINHOLE 相机，内参固定）→ `sfm.py --images … --camera-params … --overlap yaws×3` → 同一个质量门 → Brush → 挑机位 → 上传。不过门自动把抽帧加密一倍再试，还不行退出码 2（就只当全景看）。`--pitches 0,30` 多切一圈往上看的（天花板、高处设备）。单独切图：`.venv/bin/python scripts/beta3d/equirect.py 全景.mp4 out-frames`。
++
+ ## 还没做 / 想法
+ 
+ - 每一步对准场景里不同位置（器械台、无影灯下）：现在只是按步骤序号横移。
+diff --git a/scripts/beta3d/equirect.py b/scripts/beta3d/equirect.py
+new file mode 100644
+index 0000000..939d976
+--- /dev/null
++++ b/scripts/beta3d/equirect.py
+@@ -0,0 +1,50 @@
++"""
++真实 360° 素材（GoPro Max / Insta360 导出的等距柱状 2:1 视频）→ 一组普通透视画面，喂给 sfm.py --images 估机位。
++  .venv/bin/python scripts/beta3d/equirect.py <全景视频.mp4> <输出目录> [--every 15] [--yaws 8] [--pitches 0] [--fov 90] [--size 1024]
++每隔 every 帧取一帧，每帧朝 yaws 个水平方向各「拍」一张 fov 度的方图（ffmpeg v360，一遍解码、split 成多路）。
++所有画面同一台 PINHOLE 相机（焦距 = size/2 / tan(fov/2)），参数写进 <输出目录>/camera.json，sfm.py 用 --camera-params 固定住。
++文件名 f<帧>_p<俯仰>_y<朝向>.jpg：按名字排序是「先帧后方向」，顺序匹配的 overlap 要盖住两三帧（sfm.py --overlap yaws×3）。
++脚下（拿相机的人、自拍杆）：不渲染往下看的方向——俯仰 < -20° 直接拒绝；fov 90 + 俯仰 0 只看到水平线下 45°。
++"""
++import argparse, json, math, os, re, shutil, subprocess, sys, time
++
++ap = argparse.ArgumentParser()
++ap.add_argument('video'); ap.add_argument('out')
++ap.add_argument('--every', type=int, default=15, help='每几帧取一帧（30fps 素材 15 = 每秒 2 帧）')
++ap.add_argument('--yaws', type=int, default=8, help='每帧水平拍几个方向（均分 360°）')
++ap.add_argument('--pitches', default='0', help='俯仰角列表，逗号隔开，如 0,30（往上看一圈）；不许低于 -20')
++ap.add_argument('--fov', type=float, default=90, help='每张透视图的视场角（度，方图）')
++ap.add_argument('--size', type=int, default=1024, help='每张透视图边长（像素）')
++ap.add_argument('--yaw0', type=float, default=0, help='第一个方向相对画面正中的偏角')
++ap.add_argument('--ffmpeg', default=os.path.join(os.path.dirname(__file__), '..', '..', 'node_modules', 'ffmpeg-static', 'ffmpeg'))
++a = ap.parse_args()
++
++pitches = [float(p) for p in a.pitches.split(',') if p.strip()]
++if any(p < -20 for p in pitches): sys.exit('俯仰低于 -20° 会拍到脚下的人和自拍杆，不渲染')
++views = [(p, a.yaw0 + 360 * k / a.yaws) for p in pitches for k in range(a.yaws)]
++img = os.path.join(a.out, 'images'); tmp = os.path.join(a.out, '_raw')
++shutil.rmtree(a.out, ignore_errors=True); os.makedirs(img); os.makedirs(tmp)
++
++# 一遍解码：先抽帧，再 split 成每个方向一路，各自 v360 成透视图
++t0 = time.time()
++yawn = lambda y: ((y + 180) % 360) - 180   # v360 的 yaw 取 -180…180
++chains = [f"[s{i}]v360=input=e:output=flat:yaw={yawn(y):.3f}:pitch={p:.3f}:h_fov={a.fov}:v_fov={a.fov}:w={a.size}:h={a.size}:interp=cubic[o{i}]" for i, (p, y) in enumerate(views)]
++fc = f"[0:v]select='not(mod(n\\,{a.every}))',split={len(views)}" + ''.join(f'[s{i}]' for i in range(len(views))) + ';' + ';'.join(chains)
++cmd = [a.ffmpeg, '-loglevel', 'error', '-i', a.video, '-filter_complex', fc]
++for i in range(len(views)): cmd += ['-map', f'[o{i}]', '-fps_mode', 'vfr', '-q:v', '2', os.path.join(tmp, f'v{i}_%04d.jpg')]
++subprocess.run(cmd, check=True)
++
++# 改名成「先帧后方向」，放进 images/
++n = 0
++for f in os.listdir(tmp):
++    m = re.match(r'v(\d+)_(\d+)\.jpg$', f)
++    if not m: continue
++    p, y = views[int(m[1])]
++    shutil.move(os.path.join(tmp, f), os.path.join(img, f'f{int(m[2]):04d}_p{int(round(p)) + 90:03d}_y{int(round(y)) % 360:03d}.jpg')); n += 1
++shutil.rmtree(tmp)
++frames = n // len(views)
++focal = a.size / 2 / math.tan(math.radians(a.fov) / 2)
++cam = {'model': 'PINHOLE', 'params': [round(focal, 3), round(focal, 3), a.size / 2, a.size / 2], 'size': a.size, 'fov': a.fov,
++       'views': len(views), 'frames': frames, 'images': n, 'every': a.every, 'pitches': pitches, 'yaws': a.yaws, 'seconds': round(time.time() - t0)}
++json.dump(cam, open(os.path.join(a.out, 'camera.json'), 'w'))
++print(json.dumps(cam, ensure_ascii=False), flush=True)
+diff --git a/scripts/beta3d/make-scene.mjs b/scripts/beta3d/make-scene.mjs
+new file mode 100644
+index 0000000..0926169
+--- /dev/null
++++ b/scripts/beta3d/make-scene.mjs
+@@ -0,0 +1,138 @@
++/**
++ * 3D 场景一条龙（2026-10-12）：提示词模板 → Veo 视频 → COLMAP 估机位 → 质量门 → Brush 训练 → .splat → 自动挑初始机位 → 上传。
++ * 失败自动换更保守的提示词重来，几次都不行就回退 2D（退出码 2），不用人盯着。每次尝试都记进 runs.jsonl（成败样本，以后喂给生成 agent）。
++ *
++ *   node scripts/beta3d/make-scene.mjs <key> --subject "<英文场景描述>" --anchor "<镜头围着的硬结构物件>"
++ *        [--video 已有.mp4]   第一轮直接用这条视频（不花 Veo 额度）
++ *        [--tries 3] [--steps 15000] [--work 目录] [--no-upload] [--force]（风险词也照跑）
++ *
++ *   真实 360° 素材（可选，不走 Veo）：
++ *   node scripts/beta3d/make-scene.mjs <key> --equirect 全景.mp4 [--every 15] [--yaws 8] [--pitches 0] [--steps 15000] [--no-upload]
++ *        equirect.py 切成每帧 yaws 个方向的透视图（同一台 PINHOLE 相机、不看脚下）→ sfm.py --images → 同一个质量门 / Brush / 挑机位 / 上传。
++ *        过不了质量门就把抽帧加密一倍（every 减半）再估一次；还不行退出码 2（这条素材只能当 360° 全景看，见 docs/lab-3d-beta.md）。
++ *
++ * 质量门：最大模型注册帧 ≥ max(60, 60%)；初始机位近处点占比 > 5% 只警告（沥青那种满屏拉丝）。
++ * 产出：<work>/<key>/result.json，打印 lab-3d-beta.ts 要填的 url / position / lookAt / up。
++ */
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import { spawnSync } from 'node:child_process';
++import { buildPrompt, lintSubject, VARIANTS } from './prompt.mjs';
++
++const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
++const PY = path.join(ROOT, '.venv/bin/python');
++const BRUSH = path.join(os.homedir(), '.local/brush/brush-app-aarch64-apple-darwin/brush_app');
++const RUNS = path.join(ROOT, 'scripts/beta3d/runs.jsonl');
++
++const argv = process.argv.slice(2);
++const flag = (k, d) => { const i = argv.indexOf(`--${k}`); return i < 0 ? d : (argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : true); };
++const key = argv[0];
++const subject = flag('subject'), anchor = flag('anchor', 'the main piece of equipment');
++const equirect = flag('equirect');
++if (!key || key.startsWith('--') || !(subject || equirect)) { console.error('用法：node scripts/beta3d/make-scene.mjs <key> --subject "…" --anchor "…" [--video x.mp4]\n   或：node scripts/beta3d/make-scene.mjs <key> --equirect 全景.mp4 [--every 15] [--yaws 8] [--pitches 0]'); process.exit(1); }
++const tries = Number(flag('tries', VARIANTS.length)), steps = Number(flag('steps', 15000));
++const W = path.resolve(flag('work', path.join(os.tmpdir(), 'beta3d')), key);
++fs.mkdirSync(W, { recursive: true });
++
++const log = (...a) => console.log(`[${new Date().toTimeString().slice(0, 8)}]`, ...a);
++const run = (cmd, args, opt = {}) => {
++  const r = spawnSync(cmd, args, { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 28, ...opt });
++  return { ok: r.status === 0, out: (r.stdout || '') + (r.stderr || '') };
++};
++const record = rec => fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), key, subject, anchor, ...rec }) + '\n');
++
++const risks = equirect ? [] : lintSubject(subject);
++if (risks.length) {
++  log('⚠ 场景描述里有已知风险：\n   - ' + risks.join('\n   - '));
++  if (!flag('force')) { log('改描述再跑，或者加 --force 硬跑'); process.exit(1); }
++}
++
++/** 过了质量门之后：Brush 训练 → .splat → 挑初始机位 → 上传 → 打印配置。成功返回 true（Veo 和 360° 素材两条路共用） */
++function train({ t, variant, prompt, sfm, res, credit, extra = [] }) {
++  const out = path.join(W, `try${t}-out`); fs.mkdirSync(out, { recursive: true });
++  log(`   训练 ${steps} 步（约 10 分钟）`);
++  const b = run(BRUSH, [sfm, '--total-steps', String(steps), '--export-every', String(steps), '--export-path', out, '--export-name', `${key}.ply`, '--max-resolution', '1280'], { cwd: out });
++  const ply = path.join(out, `${key}.ply`);
++  if (!fs.existsSync(ply)) { log('训练没出 ply', b.out.slice(-300)); record({ try: t, variant, prompt, stage: 'brush', ok: false, sfm: res }); return false; }
++  const splat = path.join(W, `beta3d-${key}.splat`);
++  run(PY, ['scripts/beta3d/ply2splat.py', ply, splat]);
++  const view = JSON.parse(run(PY, ['scripts/beta3d/view.py', sfm]).out.trim().split('\n').pop());
++  if (view.nearRatio > 0.05) log(`   ⚠ 初始机位近处点占比 ${(view.nearRatio * 100).toFixed(1)}%，打开可能满屏糊`);
++  let url = null;
++  if (!flag('no-upload')) {
++    const u = run('npx', ['tsx', 'scripts/beta3d/upload.mts', splat, path.basename(splat)]);
++    url = u.out.match(/https:\/\/\S+\.splat/)?.[0] || null;
++    if (!url) log('上传失败', u.out.slice(-300));
++  }
++  const gaussians = fs.statSync(splat).size / 32;
++  const result = { ok: true, key, url, splat, position: view.position, lookAt: view.lookAt, up: view.up, depth: view.depth, nearRatio: view.nearRatio, gaussians, sfm: res, variant, prompt };
++  fs.writeFileSync(path.join(W, 'result.json'), JSON.stringify(result, null, 1));
++  record({ try: t, variant, prompt, stage: 'done', ok: true, sfm: res, nearRatio: view.nearRatio, gaussians, url });
++  // 中间产物很大（抽帧 + ply 上百 MB），成功了就删，别再把硬盘塞满
++  fs.rmSync(path.join(sfm, 'images'), { recursive: true, force: true }); fs.rmSync(path.join(sfm, 'database.db'), { force: true }); fs.rmSync(ply, { force: true });
++  log('✅ 完成，lab-3d-beta.ts 里填：');
++  console.log(`    url: '${url || splat}', position: ${JSON.stringify(view.position)}, lookAt: ${JSON.stringify(view.lookAt)}, up: ${JSON.stringify(view.up)}, span: ${view.depth < 10 ? 1.2 : 3.6},`);
++  console.log(`    credit: '${credit} · COLMAP + Brush 重建（${Math.round(gaussians / 1e4)} 万高斯，${(gaussians * 32 / 1e6).toFixed(1)} MB）',`);
++  for (const d of extra) fs.rmSync(d, { recursive: true, force: true });
++  return true;
++}
++
++const gate = r => !!r && r.registered >= Math.min(r.frames, Math.max(60, Math.ceil(r.frames * 0.6)));
++
++// ── 真实 360° 素材：不走 Veo，切透视图 → 同一条估机位 / 训练路 ──
++if (equirect) {
++  const vid = path.resolve(equirect);
++  if (!fs.existsSync(vid)) { log('找不到素材', vid); process.exit(1); }
++  const yaws = Number(flag('yaws', 8)), pitches = String(flag('pitches', '0')), every0 = Number(flag('every', 15));
++  const views = yaws * pitches.split(',').filter(Boolean).length;
++  const meta = { variant: 'equirect', prompt: null, video: vid, yaws, pitches };
++  let sfm = null, res = null, frames = null;
++  // 两档：先按 every 抽，不过门就加密一倍
++  for (const every of [every0, Math.max(1, Math.floor(every0 / 2))]) {
++    frames = path.join(W, 'equirect-frames'); sfm = path.join(W, 'equirect-sfm');
++    log(`== 360° 素材：每 ${every} 帧取一帧 × ${views} 个方向`);
++    const e = run(PY, ['scripts/beta3d/equirect.py', vid, frames, '--every', String(every), '--yaws', String(yaws), '--pitches', pitches]);
++    let cam = null; try { cam = JSON.parse(fs.readFileSync(path.join(frames, 'camera.json'), 'utf8')); } catch { /* 下面报错 */ }
++    if (!e.ok || !cam) { log('切透视图失败', e.out.slice(-300)); record({ ...meta, stage: 'equirect', ok: false }); process.exit(1); }
++    log(`   切出 ${cam.images} 张（${cam.frames} 帧 × ${cam.views} 向），估机位`);
++    run(PY, ['scripts/beta3d/sfm.py', '-', sfm, '--images', path.join(frames, 'images'), '--model', 'PINHOLE', '--camera-params', cam.params.join(','), '--overlap', String(views * 3)]);
++    try { res = JSON.parse(fs.readFileSync(path.join(sfm, 'result.json'), 'utf8')); } catch { res = null; }
++    log(`   对上 ${res?.registered ?? 0}/${res?.frames ?? '?'} 张`);
++    if (gate(res)) break;
++    if (every === 1) break;
++  }
++  if (!gate(res)) {
++    record({ ...meta, stage: 'sfm', ok: false, sfm: res });
++    log('❌ 360° 素材没过质量门：这条只能当全景看（pano: {...}），重建要慢走、稳拿、少动的东西');
++    process.exit(2);
++  }
++  if (train({ t: 0, ...meta, sfm, res, credit: '真实 360° 素材', extra: [frames] })) process.exit(0);
++  process.exit(2);
++}
++
++for (let t = 0; t < tries; t++) {
++  const variant = VARIANTS[Math.min(t, VARIANTS.length - 1)].key;
++  const prompt = buildPrompt(subject, anchor, t);
++  const vid = t === 0 && flag('video') ? path.resolve(flag('video')) : path.join(W, `try${t}.mp4`);
++  log(`== 第 ${t + 1}/${tries} 次（${variant}）`);
++  if (!(t === 0 && flag('video'))) {
++    const v = run('node', ['scripts/beta3d/veo.mjs', vid, prompt]);
++    if (!v.ok || !fs.existsSync(vid)) { log('Veo 失败', v.out.slice(-300)); record({ try: t, variant, prompt, stage: 'veo', ok: false }); continue; }
++  }
++  // 两档抽帧：先快（每 2 帧、1280 宽），不过门再用每帧、1600 宽
++  let sfm = null, res = null;
++  for (const [every, width] of [[2, 1280], [1, 1600]]) {
++    sfm = path.join(W, `try${t}-sfm`);
++    log(`   估机位 every=${every} width=${width}`);
++    run(PY, ['scripts/beta3d/sfm.py', vid, sfm, '--every', String(every), '--width', String(width)]);
++    try { res = JSON.parse(fs.readFileSync(path.join(sfm, 'result.json'), 'utf8')); } catch { res = null; }
++    log(`   对上 ${res?.registered ?? 0}/${res?.frames ?? '?'} 帧`);
++    if (gate(res)) break;
++  }
++  if (!gate(res)) { record({ try: t, variant, prompt, video: vid, stage: 'sfm', ok: false, sfm: res }); continue; }
++  if (train({ t, variant, prompt, sfm, res, credit: 'Veo 3.1 生成环绕视频' })) process.exit(0);
++}
++record({ stage: 'fallback-2d', ok: false });
++log(`❌ ${tries} 次都没过质量门，这个场景先用 2D 底图`);
++process.exit(2);
+diff --git a/scripts/beta3d/pano-recognize.mts b/scripts/beta3d/pano-recognize.mts
+new file mode 100644
+index 0000000..42ca144
+--- /dev/null
++++ b/scripts/beta3d/pano-recognize.mts
+@@ -0,0 +1,147 @@
++/**
++ * 全景要素识别（2026-10-12，用户：「路过的好东西都别放过，加 tag，写介绍，让大家真的进入了工厂」）：
++ *   npx tsx scripts/beta3d/pano-recognize.mts <全景.jpg> <key> --scene "锅炉房" [--role "锅炉运行工"] [--model gemini-3.8-flash]
++ *     [--kinds "珊瑚,生物,地形,水况,安全注意,环境"] [--focus "要找什么（一段话）"] [--tags "打标签的角度"] [--out <json 路径>]
++ *   默认是工业现场（设备 / 仪表 / 阀门管路…）；换领域（水下、医院、户外）就传 kinds / focus / tags。
++ * 采集 → 清洗之后的「识别 → 结构化」（见 /lab/logic 第 15 节）：
++ *   1. ffmpeg v360 把等距柱状全景切成一圈透视图（水平每 45° 一张 × 平视 / 略往下两圈，视场 90° × 64°）
++ *   2. 每张交给视觉模型找行业要素（设备 / 仪表 / 阀门管路 / 电气 / 安全标识 / 文件规程 / 工具 / 环境），框出位置
++ *   3. 框的中心按透视投影换算回全景方位（yaw 0 = 全景图正中、向右为正；pitch 向上为正——和 ffmpeg v360 的约定一致，已核对）
++ *   4. 不同视角里认出的同一件东西合并（方位相近 + 名字 / 类别相近）
++ *   5. 再整体过一遍：统一叫法、打行业标签（岗位 / 工序 / 风险）、写两三句介绍，去掉不值一提的
++ * 产出 src/lib/pano-spots/<key>.json（PanoSpot[]，人可以直接改），lab-3d-beta.ts 里的场景 import 它。
++ * 每一步的原始结果存在 <工作目录>/<key>/：views/*.jpg、raw.json（逐视角识别）、merged.json——留着当训练样本。
++ */
++import fs from 'node:fs';
++import os from 'node:os';
++import path from 'node:path';
++import { spawnSync } from 'node:child_process';
++for (const l of fs.readFileSync('.env.local', 'utf8').split('\n')) { const m = l.match(/^([A-Z_]+)=(.*)$/); if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim().replace(/^"|"$/g, ''); }
++const { GoogleGenerativeAI } = await import('@google/generative-ai');
++const { logTokenUsage } = await import('../../src/lib/token-logger');
++
++const args = process.argv.slice(2);
++const flag = (k: string, d = '') => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
++const [src, key] = args;
++if (!src || !key || src.startsWith('--')) { console.error('用法：npx tsx scripts/beta3d/pano-recognize.mts <全景.jpg> <key> --scene "锅炉房" [--role "…"]'); process.exit(1); }
++const scene = flag('scene', key), role = flag('role', ''), modelId = flag('model', 'gemini-3.8-flash');
++const W = path.join(flag('work', path.join(os.tmpdir(), 'pano-recognize')), key);
++const FF = path.resolve('node_modules/ffmpeg-static/ffmpeg');
++const H_FOV = 90, V_FOV = 64, VW = 1280, VH = 853;
++const YAWS = [-180, -135, -90, -45, 0, 45, 90, 135], PITCHES = [5, -25];
++fs.mkdirSync(path.join(W, 'views'), { recursive: true });
++
++const KINDS = flag('kinds') ? flag('kinds').split(/[,，]/).map(x => x.trim()).filter(Boolean) : ['设备', '仪表', '阀门管路', '电气', '安全标识', '文件规程', '工具', '环境'];
++const FOCUS = flag('focus', '设备、机器、仪表盘 / 压力表 / 温度计、阀门、管道与管路走向、泵、控制柜 / 配电箱 / 开关、指示灯、安全标识 / 警示牌、贴着的操作规程 / 记录表、工具、消防器材、特殊的环境特征（操作平台、梯子、地沟）');
++const TAG_ANGLES = flag('tags', '用到它的岗位（如 锅炉运行工 / 电工 / 仪表工）、所属工序或系统（如 燃气供应 / 给水 / 配电）、风险点（如 高温 / 高压 / 燃气泄漏 / 触电）、日常动作（如 巡检 / 抄表 / 倒闸）');
++const OTHER = KINDS.includes('环境') ? '环境' : KINDS[KINDS.length - 1];
++const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
++const model = genAI.getGenerativeModel({ model: modelId, generationConfig: { responseMimeType: 'application/json' } });
++const ask = async (parts: any[], tries = 2): Promise<any> => {
++  for (let i = 0; ; i++) {
++    try {
++      const r = await model.generateContent(parts);
++      // 记账（迁移 021）：全景识别，--space 可以记到某个空间上
++      const u = r.response.usageMetadata;
++      await logTokenUsage({ tool_name: 'lab-3d', task_name: parts.length > 1 ? '全景识别 · 找要素' : '全景识别 · 写介绍', model_id: modelId, usageMetadata: { promptTokenCount: u?.promptTokenCount || 0, candidatesTokenCount: u?.candidatesTokenCount || 0, totalTokenCount: u?.totalTokenCount || 0 }, job_id: `pano-${key}`, space_id: flag('space') || null, stage: 'media', actor: 'pano-recognize' }).catch(() => {});
++      return JSON.parse(r.response.text());
++    }
++    catch (e) { if (i >= tries) throw e; await new Promise(r => setTimeout(r, 2000 * (i + 1))); }
++  }
++};
++
++// ── 1. 切视角 ──
++type View = { id: string; yaw: number; pitch: number; file: string };
++const views: View[] = [];
++for (const pitch of PITCHES) for (const yaw of YAWS) {
++  const id = `y${yaw}_p${pitch}`, file = path.join(W, 'views', `${id}.jpg`);
++  if (!fs.existsSync(file)) {
++    const r = spawnSync(FF, ['-nostdin', '-loglevel', 'error', '-y', '-i', src, '-vf', `v360=input=e:output=flat:h_fov=${H_FOV}:v_fov=${V_FOV}:yaw=${yaw}:pitch=${pitch}:w=${VW}:h=${VH}`, '-q:v', '3', file]);
++    if (r.status !== 0) throw new Error(`切视角失败 ${id}：${r.stderr}`);
++  }
++  views.push({ id, yaw, pitch, file });
++}
++console.log(`切了 ${views.length} 个视角 → ${path.join(W, 'views')}`);
++
++// ── 2. 逐视角识别 ──
++const DETECT = `你在看「${scene}」${role ? `（${role}的工作现场）` : ''}的一张实拍照片（360° 全景里切出来的一个普通视角）。
++把画面里所有对这个行业有意义的东西都找出来——路过的好东西都别放过：${FOCUS}。
++同一类东西成排出现时，整排算一个（比如「一排控制柜」），但特别显眼的单件可以单独列。看不清、被裁掉大半的不要。
++每一件给：name（行业里的叫法，中文，尽量具体：比如「燃气调压阀组」而不是「阀门」）、kind（只能是 ${KINDS.join(' / ')} 之一）、box_2d（[ymin, xmin, ymax, xmax]，0–1000 归一化）、conf（0–1，你有多确定它是这个东西）、seen（一句话：你看到了什么让你这么判断）。
++返回 JSON：{ "items": [ ... ] }`;
++const rawFile = path.join(W, 'raw.json');
++const raw: Record<string, any[]> = fs.existsSync(rawFile) ? JSON.parse(fs.readFileSync(rawFile, 'utf8')) : {};
++for (const v of views) {
++  if (raw[v.id]) continue;
++  const img = fs.readFileSync(v.file).toString('base64');
++  const r = await ask([{ text: DETECT }, { inlineData: { mimeType: 'image/jpeg', data: img } }]);
++  raw[v.id] = Array.isArray(r?.items) ? r.items : [];
++  fs.writeFileSync(rawFile, JSON.stringify(raw, null, 1));
++  console.log(`  ${v.id}：${raw[v.id].length} 件`);
++}
++
++// ── 3. 框中心 → 全景方位（透视投影的反算：先绕 x 轴转 pitch，再绕 y 轴转 yaw） ──
++const rad = (d: number) => d * Math.PI / 180, deg = (r: number) => r * 180 / Math.PI;
++function toPano(v: View, u: number, w: number) {
++  const x = (2 * u - 1) * Math.tan(rad(H_FOV / 2)), y = (1 - 2 * w) * Math.tan(rad(V_FOV / 2)), z = 1;
++  const p = rad(v.pitch), Y = rad(v.yaw);
++  const y1 = y * Math.cos(p) + z * Math.sin(p), z1 = -y * Math.sin(p) + z * Math.cos(p);
++  const x2 = x * Math.cos(Y) + z1 * Math.sin(Y), z2 = -x * Math.sin(Y) + z1 * Math.cos(Y);
++  return { yaw: deg(Math.atan2(x2, z2)), pitch: deg(Math.atan2(y1, Math.hypot(x2, z2))) };
++}
++type Det = { name: string; kind: string; conf: number; seen: string; yaw: number; pitch: number; view: string; edge: boolean };
++const dets: Det[] = [];
++for (const v of views) for (const it of raw[v.id] || []) {
++  const b = it.box_2d; if (!Array.isArray(b) || b.length !== 4) continue;
++  const [y0, x0, y1, x1] = b.map((n: number) => Number(n) / 1000);
++  const u = (x0 + x1) / 2, w = (y0 + y1) / 2;
++  // 贴着画面边缘的框可能被裁了一半，合并时优先用别的视角
++  const edge = x0 < 0.03 || x1 > 0.97 || y0 < 0.03 || y1 > 0.97;
++  dets.push({ name: String(it.name || '').trim(), kind: KINDS.includes(it.kind) ? it.kind : OTHER, conf: Math.max(0, Math.min(1, Number(it.conf) || 0.5)), seen: String(it.seen || ''), ...toPano(v, u, w), view: v.id, edge });
++}
++
++// ── 4. 合并：方位相近（< 9°）且同类、名字有共同字 ──
++const angDist = (a: { yaw: number; pitch: number }, b: { yaw: number; pitch: number }) => {
++  const [ay, ap, by, bp] = [a.yaw, a.pitch, b.yaw, b.pitch].map(rad);
++  return deg(Math.acos(Math.min(1, Math.sin(ap) * Math.sin(bp) + Math.cos(ap) * Math.cos(bp) * Math.cos(ay - by))));
++};
++const overlap = (a: string, b: string) => [...new Set(a)].filter(c => b.includes(c) && /[一-龥]/.test(c)).length >= 2;
++const groups: Det[][] = [];
++for (const d of dets.sort((a, b) => Number(a.edge) - Number(b.edge) || b.conf - a.conf)) {
++  const g = groups.find(g => g[0].kind === d.kind && angDist(g[0], d) < 9 && overlap(g[0].name, d.name));
++  if (g) g.push(d); else groups.push([d]);
++}
++const merged = groups.map((g, i) => {
++  const best = g[0];
++  // 方位取不贴边那几次的平均（同一件东西在相邻视角里各算一次，取平均更准）
++  const pool = g.filter(d => !d.edge).length ? g.filter(d => !d.edge) : g;
++  const sx = pool.reduce((s, d) => s + Math.sin(rad(d.yaw)), 0), cx = pool.reduce((s, d) => s + Math.cos(rad(d.yaw)), 0);
++  return { id: `s${String(i + 1).padStart(2, '0')}`, name: best.name, kind: best.kind, yaw: Math.round(deg(Math.atan2(sx, cx)) * 10) / 10, pitch: Math.round(pool.reduce((s, d) => s + d.pitch, 0) / pool.length * 10) / 10, conf: Math.round(Math.min(1, best.conf + 0.08 * (g.length - 1)) * 100) / 100, seen: best.seen, views: g.length };
++});
++fs.writeFileSync(path.join(W, 'merged.json'), JSON.stringify(merged, null, 1));
++console.log(`识别 ${dets.length} 次 → 合并成 ${merged.length} 件`);
++
++// ── 5. 结构化：统一叫法、行业标签、介绍 ──
++const WRITE = `下面是在「${scene}」${role ? `（${role}的工作现场）` : ''}一张 360° 实拍全景里识别出来的东西（id、名字、类别、几个视角看到、识别时的依据）。
++要做成「AI 百业」里体验者转着看时可以点开的介绍卡片，让大家像真的走进了这个现场。逐件处理：
++- title：行业里的规范叫法（可以改得更准，但别编画面里没有的型号参数）
++- kind：保持原类别（${KINDS.join(' / ')}）
++- tags：3–5 个行业标签，从这几个角度挑：${TAG_ANGLES}
++- desc：两三句、像老师傅在旁边指给新人看：它是什么、干什么用、这一行对它的规矩或常见坑。不写具体数字（压力值、温度值）除非画面上清楚可见。
++- keep：值不值得放出来（重复的、太普通看不出门道的给 false）
++返回 JSON：{ "spots": [ { "id": "", "title": "", "kind": "", "tags": [], "desc": "", "keep": true } ] }
++
++${merged.map(m => `${m.id} · ${m.name} · ${m.kind} · ${m.views} 个视角 · ${m.seen}`).join('\n')}`;
++const out = await ask([{ text: WRITE }]);
++const byId = new Map<string, any>((out?.spots || []).map((s: any) => [s.id, s]));
++const spots = merged.flatMap(m => {
++  const s = byId.get(m.id); if (!s || s.keep === false) return [];
++  return [{ id: m.id, yaw: m.yaw, pitch: m.pitch, title: String(s.title || m.name), kind: KINDS.includes(s.kind) ? s.kind : m.kind, tags: (Array.isArray(s.tags) ? s.tags : []).map(String).slice(0, 5), desc: String(s.desc || ''), conf: m.conf }];
++});
++fs.mkdirSync('src/lib/pano-spots', { recursive: true });
++const dst = flag('out', `src/lib/pano-spots/${key}.json`);
++fs.writeFileSync(dst, JSON.stringify(spots, null, 1) + '\n');
++const kinds = spots.reduce((a: Record<string, number>, s) => (a[s.kind] = (a[s.kind] || 0) + 1, a), {});
++console.log(`✅ ${spots.length} 件要素 → ${dst}`);
++console.log('   ' + Object.entries(kinds).map(([k, n]) => `${k} ${n}`).join(' · '));
++for (const s of spots.slice(0, 8)) console.log(`   ${s.id} [${s.kind}] ${s.title}（yaw ${s.yaw}, pitch ${s.pitch}）#${s.tags.join(' #')}`);
+diff --git a/scripts/beta3d/prompt.mjs b/scripts/beta3d/prompt.mjs
+new file mode 100644
+index 0000000..8c5ad9e
+--- /dev/null
++++ b/scripts/beta3d/prompt.mjs
+@@ -0,0 +1,56 @@
++/**
++ * 3D 场景的 Veo 提示词：模板 + 风险词检查（2026-10-12 从 12 个场景的成败里总结，流水线 make-scene.mjs 用它）。
++ *   import { buildPrompt, lintSubject, VARIANTS } from './prompt.mjs'
++ *   node scripts/beta3d/prompt.mjs "<场景描述>" ["<锚点物件>"]     打印三档提示词和风险提示
++ *
++ * 成败记录（详见 runs.jsonl）：
++ *   ✅ 手术室 / 咖啡吧台 / 育婴室 / 办公室 / 珊瑚礁 / 指挥大厅 / 变电站 / 火箭发动机段（近景 3 m）
++ *   ❌ 手术室第一版：「360° 环绕」→ 鱼眼 + 器械盘帧间变形
++ *   ❌ 火箭总装大厅远景两次：大面积白色箭体、大空间没有近处参照
++ *   ❌ 转炉车间：炉口辉光 + 烟雾在动
++ *   ❌ 温室四次：成排一模一样的番茄架 + 玻璃顶，特征点互相认错；近景那条里采收车自己在动
++ *   ⚠ 沥青摊铺：重建成功，但压路机冒的烟训练成了满屏拉丝
++ *   ⚠ 咖啡吧台：不锈钢咖啡机反光的地方糊
++ */
++
++/** 每档都带的固定要求：静止、35mm、40° 弧线、不要近处小件 */
++const BASE = 'Photorealistic, 35mm lens, no fisheye. Completely static scene: no people, no vehicles moving, no smoke, no steam, no haze, no fire, no flowing water, nothing moves at all. Soft even lighting, sharp focus everywhere, no motion blur.';
++
++/** 重试时一档比一档保守：更近、弧线更短、更强调有纹理的硬结构 */
++export const VARIANTS = [
++  { key: 'arc40', cam: 'The camera glides slowly and smoothly along a gentle 40-degree horizontal arc at eye level, about 3 meters from {anchor}, keeping {anchor} centered; clear parallax between {anchor} and the background.' },
++  { key: 'close30', cam: 'The camera is close, about 2 to 3 meters from {anchor}, and moves slowly sideways along a 30-degree arc at chest height, keeping {anchor} large in frame; lots of hard edges, labels, bolts and surface texture visible.' },
++  { key: 'slide20', cam: 'A very slow, steady sideways dolly of about 1.5 meters (a 20-degree arc) at eye level, about 2 meters from {anchor}; {anchor} fills the middle third of the frame; richly textured, matte surfaces.' },
++];
++
++/** 风险词：命中就提醒（不拦），理由写清楚是哪次踩的坑 */
++const RISKS = [
++  [/smok|steam|haze|fog|mist|dust|烟|蒸汽|雾|粉尘/i, '会动的烟 / 雾训练成拉丝（沥青摊铺、转炉）'],
++  [/fire|flame|glow|spark|molten|火|焰|辉光|火花|钢水/i, '火光和辉光每帧都在变（转炉）'],
++  [/water|river|rain|wave|fountain|水流|河|雨|浪/i, '流动的水没法重建（静水面、水下礁石可以）'],
++  [/people|person|worker|crowd|staff|人群|工人|行人/i, '人会动；人物用 NPC 立绘贴在前面'],
++  [/rows of|row after row|identical|repeating|aisle of|一排排|成排|整齐排列/i, '成排一样的东西会让特征点互相认错（温室）'],
++  [/glass roof|glass wall|greenhouse|skylight|玻璃顶|玻璃幕墙|温室/i, '大面积玻璃 / 天光，没有纹理（温室）'],
++  [/white .*(rocket|wall|hall)|plain|blank|纯白|白色箭体/i, '大面积纯色没有特征点（火箭大厅）'],
++  [/stainless|chrome|mirror|polished|reflect|不锈钢|镜面|抛光/i, '反光的地方会糊（咖啡机）'],
++  [/360|orbit|full circle|drone|aerial|fisheye|bird.?s.?eye|环绕一圈|航拍|鱼眼/i, '整圈环绕 / 航拍 / 鱼眼（手术室第一版）'],
++  [/huge hall|vast|wide shot|panorama|大厅全景|远景/i, '大空间远景没有近处参照（火箭大厅两次失败，近景一次成功）'],
++];
++
++export function lintSubject(text) {
++  return RISKS.filter(([re]) => re.test(text)).map(([, why]) => why);
++}
++
++/** subject：场景本身（英文更稳）；anchor：镜头围着转的那个有硬结构的物件，比如 "the steel harvest trolley" */
++export function buildPrompt(subject, anchor = 'the main piece of equipment', variant = 0) {
++  const v = VARIANTS[Math.min(variant, VARIANTS.length - 1)];
++  return `${subject.trim().replace(/\.?$/, '.')} ${v.cam.replaceAll('{anchor}', anchor)} ${BASE}`;
++}
++
++if (import.meta.url === `file://${process.argv[1]}`) {
++  const [subject, anchor] = process.argv.slice(2);
++  if (!subject) { console.error('用法：node scripts/beta3d/prompt.mjs "<场景描述>" ["<锚点物件>"]'); process.exit(1); }
++  const w = lintSubject(subject);
++  console.log(w.length ? '⚠ 风险：\n  - ' + w.join('\n  - ') : '✓ 没有已知风险词');
++  VARIANTS.forEach((v, i) => console.log(`\n[${i}] ${v.key}\n${buildPrompt(subject, anchor, i)}`));
++}
+diff --git a/scripts/beta3d/sfm.py b/scripts/beta3d/sfm.py
+index 7134e51..7f5f78e 100644
+--- a/scripts/beta3d/sfm.py
++++ b/scripts/beta3d/sfm.py
+@@ -2,8 +2,11 @@
+ 3D beta 探索：视频 → 抽帧 → COLMAP（pycolmap）估每帧相机位置 → Brush 能直接训练的目录（images/ + sparse/0）。
+   .venv/bin/python scripts/beta3d/sfm.py <视频.mp4> <输出目录> [--every 2] [--width 1280]
+ 视频是 Veo 生成的「绕场一圈」：相邻帧重叠大，用顺序匹配（sequential）就够，比全量匹配快很多。
++真实 360° 素材：先用 equirect.py 切成透视图，再
++  sfm.py - <输出目录> --images <equirect 输出>/images --model PINHOLE --camera-params fx,fy,cx,cy --overlap 24
++（--images 跳过抽帧、直接拷图；给了 --camera-params 就固定内参不优化；--overlap 顺序匹配往后配几张，默认 10 不变）
+ """
+-import argparse, os, shutil, subprocess, sys, time
++import argparse, json, os, shutil, subprocess, sys, time
+ import pycolmap
+ 
+ ap = argparse.ArgumentParser()
+@@ -11,24 +14,51 @@ ap.add_argument('video'); ap.add_argument('out')
+ ap.add_argument('--every', type=int, default=2, help='每几帧取一帧')
+ ap.add_argument('--width', type=int, default=1280)
+ ap.add_argument('--model', default='SIMPLE_RADIAL', help='相机模型；鱼眼画面用 OPENCV_FISHEYE')
++ap.add_argument('--images', help='已有的图片目录（equirect.py 的输出），不再从视频抽帧；video 填 - 即可')
++ap.add_argument('--camera-params', default='', help='已知内参（如 PINHOLE 的 fx,fy,cx,cy），给了就固定不优化')
++ap.add_argument('--overlap', type=int, default=10, help='顺序匹配往后配几张')
+ ap.add_argument('--ffmpeg', default=os.path.join(os.path.dirname(__file__), '..', '..', 'node_modules', 'ffmpeg-static', 'ffmpeg'))
+ a = ap.parse_args()
+ 
++if a.images and os.path.abspath(a.images).startswith(os.path.abspath(a.out) + os.sep): sys.exit('--images 不能放在输出目录里（输出目录会先清空）')
+ img = os.path.join(a.out, 'images'); sparse = os.path.join(a.out, 'sparse'); db = os.path.join(a.out, 'database.db')
+ shutil.rmtree(a.out, ignore_errors=True); os.makedirs(img); os.makedirs(sparse)
+ 
+ t0 = time.time()
+-subprocess.run([a.ffmpeg, '-loglevel', 'error', '-i', a.video, '-vf', f"select='not(mod(n\\,{a.every}))',scale={a.width}:-2", '-vsync', 'vfr', '-q:v', '2', os.path.join(img, 'f%04d.jpg')], check=True)
++if a.images:
++    for f in sorted(os.listdir(a.images)):
++        if f.lower().endswith(('.jpg', '.jpeg', '.png')): shutil.copy(os.path.join(a.images, f), img)
++else:
++    subprocess.run([a.ffmpeg, '-loglevel', 'error', '-i', a.video, '-vf', f"select='not(mod(n\\,{a.every}))',scale={a.width}:-2", '-vsync', 'vfr', '-q:v', '2', os.path.join(img, 'f%04d.jpg')], check=True)
+ n = len(os.listdir(img))
+ print(f'抽帧 {n} 张', flush=True)
+ 
+ ro = pycolmap.ImageReaderOptions(); ro.camera_model = a.model
++if a.camera_params: ro.camera_params = a.camera_params
+ pycolmap.extract_features(db, img, camera_mode=pycolmap.CameraMode.SINGLE, reader_options=ro)
+ print(f'特征点提取完 {time.time() - t0:.0f}s', flush=True)
+-pycolmap.match_sequential(db)
++pycolmap.match_sequential(db, pairing_options=pycolmap.SequentialPairingOptions(overlap=a.overlap))
+ print(f'顺序匹配完 {time.time() - t0:.0f}s', flush=True)
+-maps = pycolmap.incremental_mapping(db, img, sparse)
++def mapper_opts():
++    o = pycolmap.IncrementalPipelineOptions()
++    if a.camera_params: o.ba_refine_focal_length = False; o.ba_refine_principal_point = False; o.ba_refine_extra_params = False
++    return o
++maps = pycolmap.incremental_mapping(db, img, sparse, options=mapper_opts())
++reg = max((r.num_reg_images() for r in maps.values()), default=0)
++if reg < n * 0.6:
++    # 大面积纯色（白火箭、玻璃顶）、成排重复（温室）时顺序匹配不够：换全量匹配、放宽初始化再试一次
++    # （以前只在一个模型都没建起来时才重试；温室那种「建起来了但只对上十几帧」的也要重试）
++    print(f'顺序匹配只对上 {reg}/{n} 帧，换全量匹配重试…', flush=True)
++    for k in list(maps.keys()): shutil.rmtree(os.path.join(sparse, str(k)), ignore_errors=True)
++    pycolmap.match_exhaustive(db)
++    opt = mapper_opts()
++    opt.min_num_matches = 10; opt.mapper.init_min_num_inliers = 50; opt.mapper.abs_pose_min_num_inliers = 15
++    first = maps
++    maps = pycolmap.incremental_mapping(db, img, sparse, options=opt)
++    if max((r.num_reg_images() for r in maps.values()), default=0) < reg: maps = first   # 全量匹配反而更差就用回顺序匹配的
++result = lambda **kw: json.dump({'frames': n, 'every': a.every, 'width': a.width, 'seconds': round(time.time() - t0), **kw}, open(os.path.join(a.out, 'result.json'), 'w'))
+ if not maps:
++    result(registered=0, points=0, models=0)
+     print('❌ 重建失败：没有一个模型', flush=True); sys.exit(1)
+ best = max(maps.values(), key=lambda r: r.num_reg_images())
+ print(f'模型 {len(maps)} 个，最大的注册了 {best.num_reg_images()}/{n} 帧，3D 点 {best.num_points3D()} 个，{time.time() - t0:.0f}s', flush=True)
+@@ -36,7 +66,9 @@ print(f'模型 {len(maps)} 个，最大的注册了 {best.num_reg_images()}/{n}
+ dst = os.path.join(sparse, '0')
+ for k in list(maps.keys()):
+     p = os.path.join(sparse, str(k))
+-    if maps[k] is best and p != dst:
++    if maps[k] is best and p != dst and os.path.exists(p):
+         shutil.rmtree(dst, ignore_errors=True); shutil.move(p, dst)
++os.makedirs(dst, exist_ok=True)   # 全量匹配更差、用回顺序匹配的结果时，它的目录已经删了
+ best.write(dst)
++result(registered=best.num_reg_images(), points=best.num_points3D(), models=len(maps))
+ print('✅', a.out, flush=True)
+diff --git a/scripts/beta3d/upload.mts b/scripts/beta3d/upload.mts
+new file mode 100644
+index 0000000..fbac6f9
+--- /dev/null
++++ b/scripts/beta3d/upload.mts
+@@ -0,0 +1,7 @@
++// 把 .splat 传到 lab-art 桶，打印公开网址：npx tsx scripts/beta3d/upload.mts <文件> <存成的名字>
++import fs from 'node:fs';
++for (const l of fs.readFileSync('.env.local', 'utf8').split('\n')) { const m = l.match(/^([A-Z_]+)=(.*)$/); if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim().replace(/^"|"$/g, ''); }
++const { uploadLabAsset } = await import('../../src/lib/lab-art');
++const [file, name] = process.argv.slice(2);
++if (!file || !name) { console.error('用法：npx tsx scripts/beta3d/upload.mts <文件> <名字>'); process.exit(1); }
++console.log(await uploadLabAsset(fs.readFileSync(file), name, 'application/octet-stream'));
+diff --git a/scripts/beta3d/veo.mjs b/scripts/beta3d/veo.mjs
+index 44054d5..9c39872 100644
+--- a/scripts/beta3d/veo.mjs
++++ b/scripts/beta3d/veo.mjs
+@@ -40,3 +40,6 @@ if (!uri) { console.error('没有视频', JSON.stringify(op.response).slice(0, 6
+ const vid = await fetch(uri, { headers: { 'x-goog-api-key': KEY }, redirect: 'follow' });
+ fs.writeFileSync(out, Buffer.from(await vid.arrayBuffer()));
+ console.log('✅', out, (fs.statSync(out).size / 1e6).toFixed(1), 'MB');
++// 记账（迁移 021）：Veo 按视频秒数计价，一条 8 秒；--space / --job 可以把它记到某个空间 / 批次上
++const { spawnSync } = await import('node:child_process');
++spawnSync('npx', ['tsx', 'scripts/lab-log-cost.mts', '--tool', 'lab-3d', '--task', 'Veo 环绕视频', '--model', MODEL, '--units', String(flags.seconds || 8), ...(flags.space ? ['--space', flags.space] : []), ...(flags.job ? ['--job', flags.job] : [])], { stdio: 'ignore', cwd: new URL('../..', import.meta.url).pathname });
+diff --git a/scripts/beta3d/view.py b/scripts/beta3d/view.py
+index f96ac2a..9d30736 100644
+--- a/scripts/beta3d/view.py
++++ b/scripts/beta3d/view.py
+@@ -1,33 +1,45 @@
+ """
+-3D beta：从 COLMAP 重建里算查看器的初始视角——用视频中间那一帧的机位当「窗户」的位置，看向场景中心。
+-  .venv/bin/python scripts/beta3d/view.py <sfm 目录>
++3D beta：从 COLMAP 重建里算查看器的初始视角——挑一帧机位当「窗户」的位置，看向场景中心。
++  .venv/bin/python scripts/beta3d/view.py <sfm 目录> [--frame 中间|序号]
+ 输出 JSON：position / lookAt / up（世界坐标，和 Brush 导出的 ply 一致），以及机位沿视频轨迹的左右范围（头部追踪的摆动幅度参考）。
++
++挑哪一帧（2026-10-12，沥青摊铺的教训）：以前固定用视频中间那帧，沥青那条视频中段贴着路面拍，
++初始视角一打开就是满屏近处的糊高斯。现在按「近处点占比」给每帧打分（离镜头不到中位深度 25% 的点算近处），
++近处点最少的帧里取离中间最近的那帧；--frame 可以手动指定。
+ """
+-import json, sys
++import argparse, json
+ import numpy as np
+ import pycolmap
+ 
+-rec = pycolmap.Reconstruction(f'{sys.argv[1]}/sparse/0')
++ap = argparse.ArgumentParser(); ap.add_argument('sfm'); ap.add_argument('--frame', default='auto')
++a = ap.parse_args()
++rec = pycolmap.Reconstruction(f'{a.sfm}/sparse/0')
+ imgs = sorted(rec.images.values(), key=lambda im: im.name)
+-centers, ups, fwds = [], [], []
++pts = np.array([p.xyz for p in rec.points3D.values()])
++cams = []
+ for im in imgs:
+     w2c = im.cam_from_world() if callable(im.cam_from_world) else im.cam_from_world
+     R = np.array(w2c.rotation.matrix()); t = np.array(w2c.translation)
+-    centers.append(-R.T @ t)
+-    ups.append(-R[1])            # COLMAP 相机 y 朝下，世界里的「上」是 -y 轴
+-    fwds.append(R[2])            # 相机 z 朝前
+-centers = np.array(centers)
+-pts = np.array([p.xyz for p in rec.points3D.values()])
+-mid = centers[len(centers) // 2]
+-up = np.mean(ups, axis=0); up /= np.linalg.norm(up)
+-fwd = fwds[len(fwds) // 2]
+-# 看向：沿中间那一帧的视线，取离相机最近的点云中位深度
+-d = np.median((pts - mid) @ fwd)
+-look = mid + fwd * max(d, 0.5)
+-span = float(np.linalg.norm(centers[-1] - centers[0]))
++    c = -R.T @ t; fwd = R[2]; up = -R[1]          # COLMAP 相机 y 朝下，世界里的「上」是 -y 轴；z 朝前
++    d = (pts - c) @ fwd; vis = d > 0
++    med = float(np.median(d[vis])) if vis.any() else 1.0
++    near = float(((d > 0) & (d < med * 0.25)).sum() / max(1, vis.sum()))
++    cams.append({'c': c, 'fwd': fwd, 'up': up, 'depth': med, 'near': near})
++n = len(cams); mid = n // 2
++if a.frame == 'auto':
++    best = min(c['near'] for c in cams)
++    ok = [i for i, c in enumerate(cams) if c['near'] <= best + 0.01]
++    i = min(ok, key=lambda k: abs(k - mid))
++elif a.frame == 'mid':
++    i = mid
++else:
++    i = int(a.frame)
++c = cams[i]
++look = c['c'] + c['fwd'] * max(c['depth'], 0.5)
++span = float(np.linalg.norm(cams[-1]['c'] - cams[0]['c']))
++r = lambda v: [round(float(x), 4) for x in v]
+ print(json.dumps({
+-  'position': [round(float(v), 4) for v in mid],
+-  'lookAt': [round(float(v), 4) for v in look],
+-  'up': [round(float(v), 4) for v in up],
+-  'depth': round(float(d), 3), 'pathSpan': round(span, 3), 'frames': len(imgs), 'points': len(pts),
++  'position': r(c['c']), 'lookAt': r(look), 'up': r(c['up']),
++  'frame': i, 'frameName': imgs[i].name, 'nearRatio': round(c['near'], 4), 'midNearRatio': round(cams[mid]['near'], 4),
++  'depth': round(c['depth'], 3), 'pathSpan': round(span, 3), 'frames': n, 'points': len(pts),
+ }, ensure_ascii=False))
+diff --git a/src/app/api/lab/studio/pano/route.ts b/src/app/api/lab/studio/pano/route.ts
+new file mode 100644
+index 0000000..8b7a2bb
+--- /dev/null
++++ b/src/app/api/lab/studio/pano/route.ts
+@@ -0,0 +1,44 @@
++import { NextRequest, NextResponse } from 'next/server';
++import { supabaseAdmin } from '@/lib/supabase';
++import { LAB_ART_BUCKET } from '@/lib/lab-art';
++
++export const runtime = 'nodejs';
++export const dynamic = 'force-dynamic';
++
++/**
++ * 360° 素材上传：发一个 Supabase Storage 的签名上传地址（lab-art 公开桶，pano/ 目录），浏览器拿着它直传——
++ * 全景视频动辄几百 MB，不经过我们的服务器。LAB_PUBLIC 下也要登录（见 proxy：/api/lab/studio/* 受保护）。
++ * 只检查、不改桶的设置：lab-art 桶建的时候单文件上限 20 MB，文件超了就照实告诉人上限多少、怎么办
++ * （在 Supabase 控制台放宽，或者先压缩 / 截短）——共用存储的设置由人决定，接口不自己改。
++ */
++const PANO_MAX = 2 * 1024 ** 3;   // 2 GB
++const MB = 1024 ** 2;
++
++export async function POST(req: NextRequest) {
++  try {
++    const { name, type, size } = await req.json() as { name?: string; type?: string; size?: number };
++    const kind = /^video\//.test(type || '') ? 'video' : /^image\//.test(type || '') ? 'image' : null;
++    if (!kind) return NextResponse.json({ ok: false, error: '只收图片或视频（等距柱状 2:1 全景）' }, { status: 400 });
++    if (!size || size > PANO_MAX) return NextResponse.json({ ok: false, error: `文件大小不对（上限 ${PANO_MAX / MB} MB）` }, { status: 400 });
++
++    // 桶上限 / 类型白名单不够就拒，说清楚原因（不自动放宽）
++    const { data: bucket } = await supabaseAdmin.storage.getBucket(LAB_ART_BUCKET);
++    if (bucket) {
++      const limit = bucket.file_size_limit || 0, mimes = bucket.allowed_mime_types || [];
++      const mimeOk = !mimes.length || mimes.some(m => m === type || (m.endsWith('/*') && type!.startsWith(m.slice(0, -1))));
++      if (limit && limit < size) return NextResponse.json({ ok: false, error: `文件 ${Math.round(size / MB)} MB，超过 ${LAB_ART_BUCKET} 桶的单文件上限 ${Math.round(limit / MB)} MB：先压缩 / 截短，或在 Supabase 控制台 Storage 里放宽这个桶的上限` }, { status: 413 });
++      if (!mimeOk) return NextResponse.json({ ok: false, error: `${LAB_ART_BUCKET} 桶不收 ${type}（允许：${mimes.join(' / ')}），要在 Supabase 控制台加上` }, { status: 415 });
++    }
++
++    const base = (name || 'pano').replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 60) || 'pano';
++    const ext = ((name || '').match(/\.([a-zA-Z0-9]{2,5})$/)?.[1] || (kind === 'video' ? 'mp4' : 'jpg')).toLowerCase();
++    const stamp = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14);
++    const path = `pano/${stamp}-${base}.${ext}`;
++    const { data, error } = await supabaseAdmin.storage.from(LAB_ART_BUCKET).createSignedUploadUrl(path);
++    if (error || !data) throw new Error(`签名上传地址失败：${error?.message}`);
++    const publicUrl = supabaseAdmin.storage.from(LAB_ART_BUCKET).getPublicUrl(path).data.publicUrl;
++    return NextResponse.json({ ok: true, kind, path, signedUrl: data.signedUrl, token: data.token, publicUrl });
++  } catch (e) {
++    return NextResponse.json({ ok: false, error: e instanceof Error ? e.message : String(e) }, { status: 500 });
++  }
++}
+diff --git a/src/app/lab/studio/pano/page.tsx b/src/app/lab/studio/pano/page.tsx
+new file mode 100644
+index 0000000..a2f1d7d
+--- /dev/null
++++ b/src/app/lab/studio/pano/page.tsx
+@@ -0,0 +1,180 @@
++'use client';
++
++import React, { useEffect, useMemo, useState } from 'react';
++import { useRouter } from 'next/navigation';
++import { App } from 'antd';
++import { useUser } from '@/lib/user-context';
++import { Pano360 } from '@/components/lab/Pano360';
++
++/**
++ * 百业工厂 · 360° 素材上传（3D beta 的可选素材，不替代 Veo）：GoPro Max / Insta360 导出的等距柱状 2:1 图片或视频。
++ * 选文件 → 粗查是不是 2:1 → 拿签名地址直传 Storage（带进度，几百 MB 也不经过服务器）→ 立刻在全景查看器里看 →
++ * 给出公开网址、要贴进 src/lib/lab-3d-beta.ts 的 pano 段，以及（视频）可选的重建命令。暂时不建表，配置靠手贴。
++ * /lab/studio/* 在 LAB_PUBLIC 下也要登录（见 proxy）。
++ */
++type Picked = { file: File; kind: 'image' | 'video'; w: number; h: number; local: string };
++
++const field: React.CSSProperties = { padding: '8px 11px', fontSize: 13.5, borderRadius: 10, lineHeight: 1.6 };
++const code: React.CSSProperties = { margin: 0, padding: '10px 12px', borderRadius: 10, background: 'rgba(15,18,36,.88)', color: '#dfe2f5', fontSize: 12.5, lineHeight: 1.6, whiteSpace: 'pre-wrap', wordBreak: 'break-all' };
++
++/** 读宽高：图片用 Image，视频读元数据（不用整段下载） */
++const measure = (url: string, kind: 'image' | 'video') => new Promise<{ w: number; h: number }>((ok, bad) => {
++  if (kind === 'image') { const im = new Image(); im.onload = () => ok({ w: im.naturalWidth, h: im.naturalHeight }); im.onerror = () => bad(new Error('图片读不出来')); im.src = url; return; }
++  const v = document.createElement('video'); v.preload = 'metadata'; v.muted = true;
++  v.onloadedmetadata = () => ok({ w: v.videoWidth, h: v.videoHeight }); v.onerror = () => bad(new Error('视频读不出来（浏览器不支持这个编码？H.265 / ProRes 先转 H.264）')); v.src = url;
++});
++
++/** 拿签名地址直传：XHR 才有上传进度（supabase-js 的 uploadToSignedUrl 走 fetch，没有进度） */
++const putSigned = (signedUrl: string, file: File, onProgress: (p: number) => void) => new Promise<void>((ok, bad) => {
++  const fd = new FormData(); fd.append('cacheControl', '31536000'); fd.append('', file);
++  const x = new XMLHttpRequest();
++  x.open('PUT', signedUrl); x.setRequestHeader('x-upsert', 'false');
++  x.upload.onprogress = e => { if (e.lengthComputable) onProgress(e.loaded / e.total); };
++  x.onload = () => x.status < 300 ? ok() : bad(new Error(`上传被拒（${x.status}）：${x.responseText.slice(0, 200)}`));
++  x.onerror = () => bad(new Error('网络中断'));
++  x.send(fd);
++});
++
++const copy = (s: string, message: ReturnType<typeof App.useApp>['message']) => navigator.clipboard.writeText(s).then(() => message.success('已复制'), () => message.error('复制失败，手动选中复制'));
++
++export default function PanoUploadPage() {
++  const router = useRouter();
++  const { message } = App.useApp();
++  const { user } = useUser();
++  const [picked, setPicked] = useState<Picked | null>(null);
++  const [progress, setProgress] = useState<number | null>(null);
++  const [url, setUrl] = useState('');
++  const [err, setErr] = useState('');
++  const [yaw, setYaw] = useState(0);
++  const [key, setKey] = useState('sea');
++  const [cam, setCam] = useState(false);
++
++  useEffect(() => () => { if (picked) URL.revokeObjectURL(picked.local); }, [picked]);
++
++  const pick = async (f?: File) => {
++    setErr(''); setUrl(''); setProgress(null); setYaw(0);
++    if (!f) { setPicked(null); return; }
++    const kind = f.type.startsWith('video/') ? 'video' : f.type.startsWith('image/') ? 'image' : null;
++    if (!kind) { setErr('只收图片或视频'); return; }
++    const local = URL.createObjectURL(f);
++    try { const { w, h } = await measure(local, kind); setPicked({ file: f, kind, w, h, local }); }
++    catch (e) { URL.revokeObjectURL(local); setErr(e instanceof Error ? e.message : String(e)); }
++  };
++
++  const upload = async () => {
++    if (!picked) return;
++    setErr(''); setProgress(0);
++    try {
++      const r = await fetch('/api/lab/studio/pano', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: picked.file.name, type: picked.file.type, size: picked.file.size }) });
++      const j = await r.json();
++      if (!j.ok) throw new Error(j.error || `HTTP ${r.status}`);
++      await putSigned(j.signedUrl, picked.file, setProgress);
++      setUrl(j.publicUrl); setProgress(1);
++      message.success('传好了');
++    } catch (e) { setErr(e instanceof Error ? e.message : String(e)); setProgress(null); }
++  };
++
++  const ratio = picked ? picked.w / picked.h : 0;
++  const ratioOk = Math.abs(ratio - 2) < 0.03;
++  const mb = picked ? picked.file.size / 1024 ** 2 : 0;
++  const panoLine = useMemo(() => picked && url ? `pano: { url: '${url}', kind: '${picked.kind}'${yaw ? `, yaw: ${yaw}` : ''} },` : '', [picked, url, yaw]);
++  const entry = panoLine && `  ${key}: {
++    key: '${key}', title: '（场景名）', role: '（职业名）', spaceId: '（空间 id）',
++    url: '', position: [0, 0, 0], lookAt: [0, 0, 1], up: [0, -1, 0], span: 0,   // 只有 360°：url 留空，这几项用不上
++    ${panoLine}
++    credit: '真实 360° 素材',
++    slots: [],
++  },`;
++  const cmd = picked?.kind === 'video' ? `node scripts/beta3d/make-scene.mjs ${key} --equirect ~/Downloads/${picked.file.name} --every 15 --yaws 8 --no-upload` : '';
++
++  if (!user) return <div className="lab-glass" style={{ padding: 40, textAlign: 'center', color: 'var(--ink3)' }}>360° 素材上传要登录后使用。</div>;
++
++  return (
++    <div>
++      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, flexWrap: 'wrap', margin: '6px 0 14px' }}>
++        <div>
++          <div className="lab-mono lab-cap">FACTORY · 360° 素材</div>
++          <h1 style={{ fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: 800, margin: '2px 0 4px' }}>真实 360° 实拍，传上来就能转着看</h1>
++          <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>GoPro Max / Insta360 导出的等距柱状（2:1）图片或视频。全景只能转头看、没有纵深；要纵深，视频可以再走一遍重建（命令在下面）。</div>
++        </div>
++        <div style={{ flex: 1 }} />
++        <button className="lab-btn ghost sm" onClick={() => router.push('/lab/spaces')}>← 百业工厂</button>
++      </div>
++
++      <div className="lab-glass" style={{ padding: '14px 16px', marginBottom: 14, display: 'grid', gap: 12 }}>
++        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
++          <input type="file" accept="image/*,video/*" onChange={e => pick(e.target.files?.[0])} disabled={progress !== null && progress < 1} style={{ fontSize: 13 }} />
++          {picked && (
++            <>
++              <span className="lab-chip g">{picked.kind === 'video' ? '视频' : '图片'}</span>
++              <span className="lab-mono" style={{ fontSize: 12.5, color: 'var(--ink2)' }}>{picked.w}×{picked.h} · {ratio.toFixed(3)}:1 · {mb.toFixed(1)} MB</span>
++              {!ratioOk && <span className="lab-chip p">不是 2:1，可能不是等距柱状全景（双鱼眼原片要先在相机 App 里导出）</span>}
++            </>
++          )}
++          <div style={{ flex: 1 }} />
++          <button className="lab-btn sm" disabled={!picked || (progress !== null && progress < 1) || !!url} onClick={upload}>
++            {progress === null ? '上传' : progress < 1 ? `上传中 ${Math.round(progress * 100)}%` : '已上传'}
++          </button>
++        </div>
++        {progress !== null && progress < 1 && (
++          <div style={{ height: 6, borderRadius: 3, background: 'rgba(106,92,255,.15)', overflow: 'hidden' }}>
++            <div style={{ width: `${progress * 100}%`, height: '100%', background: 'linear-gradient(90deg,#6a5cff,#12b5cb)', transition: 'width .2s' }} />
++          </div>
++        )}
++        {err && <div style={{ color: '#d6336c', fontSize: 13 }}>{err}</div>}
++      </div>
++
++      {url && picked && (
++        <div style={{ display: 'grid', gap: 14, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))', alignItems: 'start' }}>
++          <div className="lab-glass" style={{ padding: 0, overflow: 'hidden' }}>
++            <div style={{ position: 'relative', aspectRatio: '16 / 9', background: '#0b0d1c' }}>
++              <Pano360 src={url} kind={picked.kind} yaw={yaw} head={cam} camCorner={{ right: 10, bottom: 10 }} />
++            </div>
++            <div style={{ padding: '10px 14px', display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', fontSize: 13 }}>
++              <span style={{ color: 'var(--ink3)' }}>一打开朝哪看</span>
++              <input type="range" min={-180} max={180} step={5} value={yaw} onChange={e => setYaw(Number(e.target.value))} style={{ flex: '1 1 160px' }} />
++              <span className="lab-mono" style={{ width: 44 }}>{yaw}°</span>
++              <button className="lab-btn ghost sm" onClick={() => setCam(v => !v)}>{cam ? '关摄像头' : '📷 用头看'}</button>
++            </div>
++            <div style={{ padding: '0 14px 12px', fontSize: 12, color: 'var(--ink3)' }}>预览用的是线上地址（和场景里看到的一样）。按住拖动转着看，滚轮拉近。</div>
++          </div>
++
++          <div className="lab-glass" style={{ padding: '14px 16px', display: 'grid', gap: 12, fontSize: 13 }}>
++            <div>
++              <div style={{ fontWeight: 700, marginBottom: 6 }}>公开网址</div>
++              <pre style={code}>{url}</pre>
++            </div>
++            <div>
++              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
++                <span style={{ fontWeight: 700 }}>贴进 src/lib/lab-3d-beta.ts</span><div style={{ flex: 1 }} />
++                <button className="lab-btn ghost sm" onClick={() => copy(panoLine, message)}>复制 pano 段</button>
++              </div>
++              <div style={{ color: 'var(--ink3)', marginBottom: 6 }}>已有 3D 重建的场景：加这一行，查看器上方会多一个「360° 实拍」切换。</div>
++              <pre style={code}>{panoLine}</pre>
++            </div>
++            <div>
++              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
++                <span style={{ fontWeight: 700 }}>新场景（只有 360°）</span>
++                <input className="lab-input" value={key} onChange={e => setKey(e.target.value.replace(/[^a-z0-9_-]/gi, ''))} style={{ ...field, width: 120, padding: '4px 8px' }} />
++                <div style={{ flex: 1 }} />
++                <button className="lab-btn ghost sm" onClick={() => copy(entry, message)}>复制整段</button>
++              </div>
++              <pre style={code}>{entry}</pre>
++              <div style={{ color: 'var(--ink3)', marginTop: 6 }}>贴进 BETA3D 后打开 /lab/beta/3d/{key}。</div>
++            </div>
++            {cmd && (
++              <div>
++                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
++                  <span style={{ fontWeight: 700 }}>可选：重建成 3D（本机跑，约 15–30 分钟）</span><div style={{ flex: 1 }} />
++                  <button className="lab-btn ghost sm" onClick={() => copy(cmd, message)}>复制命令</button>
++                </div>
++                <pre style={code}>{cmd}</pre>
++                <div style={{ color: 'var(--ink3)', marginTop: 6, lineHeight: 1.6 }}>用原文件（不用从网上下回来）。素材要慢走、稳拿、画面里少动的东西；海面 / 水下的波纹和漂浮物对不上，大概率过不了质量门——那就只当全景看。说明见 docs/lab-3d-beta.md。</div>
++              </div>
++            )}
++          </div>
++        </div>
++      )}
++    </div>
++  );
++}
+diff --git a/src/components/lab/Pano360.tsx b/src/components/lab/Pano360.tsx
+new file mode 100644
+index 0000000..142073a
+--- /dev/null
++++ b/src/components/lab/Pano360.tsx
+@@ -0,0 +1,546 @@
++'use client';
++
++/**
++ * 360° 全景查看器（3D beta 的可选素材）：GoPro Max / Insta360 导出的等距柱状 2:1 图片或视频，贴在一个球的内壁上，人站在球心往外看。
++ * 拖动（鼠标 / 触屏）转头看，滚轮 / 双指捏合 / W S 拉近拉远；打开 head 后跟着头转，往前凑 = 走近（视场角变窄）。
++ * 只能转、不能挪——没有视差，这是和 3D 高斯（Splat3D）的根本区别；要视差得走 make-scene.mjs --equirect 重建。
++ *   yaw：一打开朝哪看，度，0 = 画面正中，正数往右
++ *   spots：识别出来的要素，钉在 yaw / pitch 上，点开看说明；conf < 0.5 的藏起来（showAll 时全显示）
++ *   nodes：街景式多点位。地上画箭头（links），点箭头 / W / 前倾对准箭头 → 走到下一个点位。
++ *          node.yaw = 这张图的正中在「世界」里朝哪（度）；跨点位时保持世界朝向不变，所以各点位的图不用拍得朝向一致
++ *   walk：边走边拍的视频——不循环播放，前倾 / 按住 W 往前播，S / 往后仰慢慢倒回去
++ *   视频（非 walk）：静音、循环、playsInline（手机上不全屏）
++ */
++import { useEffect, useRef, useState } from 'react';
++import type * as T from 'three';
++import { HeadCam, type HeadPose } from '@/components/lab/HeadCam';
++import type { PanoNode, PanoSpot } from '@/lib/lab-3d-beta';
++
++type Link = NonNullable<PanoNode['links']>[number];
++type Layer = { url: string; kind: 'image' | 'video'; mesh: T.Mesh; mat: T.MeshBasicMaterial; tex: T.Texture; video: HTMLVideoElement | null };
++
++const FOV_MIN = 30, FOV_MAX = 100;
++const clampFov = (f: number) => Math.max(FOV_MIN, Math.min(FOV_MAX, f));
++/** a − b 的角度差，落在 −180–180 */
++const angDiff = (a: number, b: number) => ((a - b) % 360 + 540) % 360 - 180;
++/** 视线 lon / lat（度）→ 单位方向。和球的贴图对齐：lon = 180 + 图上 yaw，lat = pitch */
++const lonLatDir = (lon: number, lat: number): [number, number, number] => {
++  const phi = (90 - lat) * Math.PI / 180, th = lon * Math.PI / 180;
++  return [Math.sin(phi) * Math.cos(th), Math.cos(phi), Math.sin(phi) * Math.sin(th)];
++};
++// 地上箭头：离人水平 1.3、低 0.91 → 俯角约 35°；有点位时开场视线往下压 8°，箭头一进来就在画面下沿（和街景一样）
++const ARROW_D = 1.3, ARROW_H = 0.91, STREET_LAT = -8;
++const LEAN_STEP = 0.5, LEAN_REARM = 0.2, LEAN_AIM = 25;   // 前倾迈步：z 过 0.5、视线对准箭头 25° 内；退回 0.2 以下才能迈下一步
++const conf = (s: PanoSpot) => s.conf ?? 1;
++
++export function Pano360({ src, kind, yaw = 0, head = false, camCorner, onReady, onHeadSeen, spots, nodes, walk = false, showAll = false }: {
++  src: string; kind: 'image' | 'video'; yaw?: number; head?: boolean;
++  /** 摄像头小窗放在哪个角（不传就不显示小窗，但照样追踪） */
++  camCorner?: React.CSSProperties;
++  onReady?: () => void; onHeadSeen?: (seen: boolean) => void;
++  /** 单点位的要素（有 nodes 时是起点那张的兜底） */ spots?: PanoSpot[];
++  /** 街景式多点位 */ nodes?: PanoNode[];
++  /** 视频沿拍摄路线走（不循环） */ walk?: boolean;
++  /** 低置信度的要素也显示（?all=1） */ showAll?: boolean;
++}) {
++  const host = useRef<HTMLDivElement>(null);
++  // 视线：lon 水平（度），lat 俯仰（度），fov 视场角（目标值，画面上有平滑）；拖动改 lon / lat，头部只叠一个偏移
++  const view = useRef({ lon: 180 + yaw, lat: nodes?.length ? STREET_LAT : 0, fov: 75 });
++  const aim = useRef<{ lon: number; lat: number; k: number } | null>(null);   // 平滑转过去（点列表 / 走向箭头）
++  const headIn = useRef({ x: 0, y: 0, z: 0 });
++  const [ready, setReady] = useState(false);
++  const [err, setErr] = useState('');
++
++  // 点位 / 要素
++  const startNode = nodes?.find(n => n.url === src) || nodes?.[0];
++  const [nodeId, setNodeId] = useState(startNode?.id || '');
++  const node = nodes?.find(n => n.id === nodeId) || null;
++  const curSpots = (node ? (node.spots ?? (node.url === src ? spots : undefined)) : spots) || [];
++  const visible = curSpots.filter(s => showAll || conf(s) >= 0.5);
++  const [filter, setFilter] = useState<string | null>(null);
++  const [moreTags, setMoreTags] = useState(false);
++  const [listOpen, setListOpen] = useState(() => typeof window === 'undefined' || window.innerWidth >= 720);   // 手机上默认收起
++  const [open, setOpen] = useState<string | null>(null);
++  const shown = filter ? visible.filter(s => s.kind === filter || s.tags.includes(filter)) : visible;
++  const [videoUi, setVideoUi] = useState(false);   // 当前是行走视频：显示进度条
++
++  // 给每帧循环读的
++  const shownRef = useRef(shown); shownRef.current = shown;
++  const markerRefs = useRef<Record<string, HTMLDivElement | null>>({});
++  const nodesRef = useRef(nodes); nodesRef.current = nodes;
++  const nodeIdRef = useRef(nodeId);
++  const walkRef = useRef(walk); walkRef.current = walk;
++  const headRef = useRef(head); headRef.current = head;
++  const want = useRef({ url: startNode?.url || src, kind: startNode?.kind || kind });
++  const swapRef = useRef<((url: string, kind: 'image' | 'video') => void) | null>(null);
++  const leanHud = useRef<HTMLDivElement>(null);
++  const arrowTip = useRef<HTMLDivElement>(null);
++  const progBar = useRef<HTMLDivElement>(null);
++
++  useEffect(() => {
++    if (!host.current) return;
++    let dead = false, raf = 0, dispose = () => {};
++    const el = host.current;
++    view.current = { lon: 180 + yaw, lat: nodesRef.current?.length ? STREET_LAT : 0, fov: 75 };
++    (async () => {
++      try {
++        const THREE = await import('three');
++        if (dead) return;
++        const DEG = Math.PI / 180;
++        // 球内壁：x 翻过来，贴图从里面看才是正的。three 的球 u=0.5（画面正中）落在 -x 方向，所以 lon=180 看的是画面正中
++        const geo = new THREE.SphereGeometry(500, 72, 48); geo.scale(-1, 1, 1);
++        const loader = new THREE.TextureLoader().setCrossOrigin('anonymous');
++
++        // 一个点位一张贴图（8K 不做 mipmap，省显存）；换点位时旧的整个 dispose
++        const mkLayer = async (url: string, k: 'image' | 'video'): Promise<Layer> => {
++          let tex: T.Texture, video: HTMLVideoElement | null = null;
++          if (k === 'video') {
++            const walking = walkRef.current;
++            video = Object.assign(document.createElement('video'), { src: url, crossOrigin: 'anonymous', loop: !walking, muted: true, playsInline: true, autoplay: !walking, preload: 'auto' });
++            video.setAttribute('playsinline', ''); video.setAttribute('muted', '');
++            try {
++              await new Promise<void>((ok, bad) => {
++                video!.addEventListener('loadeddata', () => ok(), { once: true });
++                video!.addEventListener('error', () => bad(new Error('视频读不出来（格式不支持或跨域）')), { once: true });
++              });
++            } catch (e) { video.removeAttribute('src'); video.load(); throw e; }
++            if (!walking) await video.play().catch(() => {});   // 自动播放被拦就停在第一帧，点一下再播（见 pointerdown）
++            const vt = new THREE.VideoTexture(video); tex = vt;
++            if (walking) video.addEventListener('seeked', () => { vt.needsUpdate = true; });   // 暂停时倒退（seek）也要刷新画面
++          } else {
++            tex = await loader.loadAsync(url);
++          }
++          tex.colorSpace = THREE.SRGBColorSpace;
++          tex.minFilter = THREE.LinearFilter; tex.generateMipmaps = false;
++          // 不做深度测试：叠两层做淡入淡出、地上箭头都靠 renderOrder 排先后
++          const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthTest: false, depthWrite: false });
++          return { url, kind: k, mesh: new THREE.Mesh(geo, mat), mat, tex, video };
++        };
++        const drop = (l: Layer) => {
++          l.mesh.removeFromParent(); l.tex.dispose(); l.mat.dispose();
++          if (l.video) { l.video.pause(); l.video.removeAttribute('src'); l.video.load(); }
++        };
++
++        let cur = await mkLayer(want.current.url, want.current.kind);
++        if (dead) { drop(cur); geo.dispose(); return; }
++        const renderer = new THREE.WebGLRenderer({ antialias: true });
++        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
++        renderer.setSize(el.clientWidth, el.clientHeight);
++        renderer.domElement.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block';
++        el.appendChild(renderer.domElement);
++        const scene = new THREE.Scene();
++        const camera = new THREE.PerspectiveCamera(75, el.clientWidth / Math.max(1, el.clientHeight), 0.1, 1100);
++        scene.add(cur.mesh);
++        setVideoUi(walkRef.current && cur.kind === 'video');
++        setReady(true); onReady?.();
++
++        const resize = () => { renderer.setSize(el.clientWidth, el.clientHeight); camera.aspect = el.clientWidth / Math.max(1, el.clientHeight); camera.updateProjectionMatrix(); };
++        const ro = new ResizeObserver(resize); ro.observe(el);
++
++        // ── 地上箭头（街景式）：平铺在脚下的人字形，透视自然压扁 ──
++        const chev = new THREE.Shape([[0, .42], [.42, -.02], [.42, -.24], [0, .17], [-.42, -.24], [-.42, -.02]].map(([x, y]) => new THREE.Vector2(x, y)));
++        const arrowGeo = new THREE.ShapeGeometry(chev); arrowGeo.rotateX(-Math.PI / 2);   // 形状的 +y → 局部 -z（箭头指向）
++        const hitGeo = new THREE.CircleGeometry(.6, 24); hitGeo.rotateX(-Math.PI / 2);
++        const arrows = new THREE.Group(); scene.add(arrows);
++        type Arrow = { g: T.Group; link: Link; main: T.MeshBasicMaterial; hit: T.Mesh };
++        let arrowList: Arrow[] = [];
++        const buildArrows = (links: Link[]) => {
++          for (const a of arrowList) a.g.traverse(o => { if ((o as T.Mesh).isMesh) ((o as T.Mesh).material as T.Material).dispose(); });
++          arrows.clear(); arrowList = [];
++          for (const link of links) {
++            const th = (180 + link.yaw) * DEG;
++            const g = new THREE.Group();
++            g.position.set(Math.cos(th) * ARROW_D, -ARROW_H, Math.sin(th) * ARROW_D);
++            g.rotation.y = -th - Math.PI / 2;   // 局部 -z 转到 (cos th, 0, sin th)
++            g.scale.setScalar(.6);
++            const shade = new THREE.Mesh(arrowGeo, new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: .35, depthTest: false, depthWrite: false }));
++            shade.scale.setScalar(1.18); shade.position.y = -.01; shade.renderOrder = 10;
++            const main = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .85, depthTest: false, depthWrite: false });
++            const m = new THREE.Mesh(arrowGeo, main); m.renderOrder = 11;
++            const hit = new THREE.Mesh(hitGeo, new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, colorWrite: false, depthTest: false, depthWrite: false }));
++            g.add(shade, m, hit); arrows.add(g);
++            arrowList.push({ g, link, main, hit });
++          }
++        };
++        const nodeNow = () => nodesRef.current?.find(n => n.id === nodeIdRef.current);
++        buildArrows(nodeNow()?.links || []);
++
++        // ── 走到下一个点位：转向箭头 + 拉近 → 新图淡入 → 恢复视场角 ──
++        const headS = { x: 0, y: 0, z: 0 };   // 平滑后的头部输入
++        let fx = 0, fxT = 0;   // 过场时叠在视场角上的偏移（负 = 拉近）
++        let trans = false, fade: { t0: number; old: Layer } | null = null;
++        const go = async (link: Link) => {
++          if (trans) return;
++          const from = nodeNow(), to = nodesRef.current?.find(n => n.id === link.to);
++          if (!from || !to) return;
++          trans = true; arrows.visible = false; setOpen(null);
++          aim.current = { lon: 180 + link.yaw, lat: STREET_LAT, k: .2 };
++          fxT = -16;
++          const t0 = performance.now();
++          let next: Layer;
++          try { next = await mkLayer(to.url, to.kind); }
++          catch { trans = false; fxT = 0; aim.current = null; arrows.visible = true; return; }
++          if (dead) { drop(next); return; }
++          const left = 320 - (performance.now() - t0);
++          if (left > 0) await new Promise(r => setTimeout(r, left));
++          if (dead) { drop(next); return; }
++          // 换参考系：世界朝向不变。旧图跟着转同样的角度，淡出时看起来没动
++          const delta = (from.yaw || 0) - (to.yaw || 0);
++          aim.current = null;
++          view.current.lon = 180 + link.yaw + delta;
++          const old = cur; old.mesh.rotation.y = -delta * DEG; old.mesh.renderOrder = 0;
++          cur = next; cur.mat.opacity = 0; cur.mesh.renderOrder = 1; scene.add(cur.mesh);
++          if (cur.video && walkRef.current) cur.video.pause();
++          nodeIdRef.current = to.id; setNodeId(to.id);
++          setVideoUi(walkRef.current && cur.kind === 'video');
++          buildArrows(to.links || []);
++          fade = { t0: performance.now(), old }; fxT = 0;
++        };
++        // W / S：走向离视线（或背后）最近的箭头（90° 以内才算）
++        const stepNearest = (off: number) => {
++          const vy = view.current.lon - headS.x * 35 - 180 + off;
++          let best: Arrow | null = null, bd = 90;
++          for (const a of arrowList) { const d = Math.abs(angDiff(a.link.yaw, vy)); if (d < bd) { bd = d; best = a; } }
++          if (best) go(best.link);
++        };
++
++        // 单点位换图（上传页换素材）：直接换，不做过场
++        swapRef.current = async (url, k) => {
++          if (url === cur.url && k === cur.kind) return;
++          try {
++            const next = await mkLayer(url, k);
++            if (dead) { drop(next); return; }
++            drop(cur); cur = next; scene.add(cur.mesh); setVideoUi(walkRef.current && cur.kind === 'video');
++          } catch (e) { setErr(`360° 画面加载失败：${e instanceof Error ? e.message : e}`); }
++        };
++        if (!nodesRef.current?.length && (want.current.url !== cur.url || want.current.kind !== cur.kind)) swapRef.current(want.current.url, want.current.kind);
++
++        // ── 输入：拖动 / 捏合 / 滚轮 / 键盘 ──
++        const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
++        const pickArrow = (cx: number, cy: number): Arrow | null => {
++          if (!arrows.visible || !arrowList.length) return null;
++          const r = el.getBoundingClientRect();
++          ndc.set((cx - r.left) / r.width * 2 - 1, -((cy - r.top) / r.height) * 2 + 1);
++          ray.setFromCamera(ndc, camera);
++          const hit = ray.intersectObjects(arrowList.map(a => a.hit), false)[0];
++          return hit ? arrowList.find(a => a.hit === hit.object) || null : null;
++        };
++        let hover: Arrow | null = null;
++        const pts = new Map<number, { x: number; y: number }>();
++        let drag: { x: number; y: number; lon: number; lat: number } | null = null;
++        let pinch: { d: number; fov: number } | null = null;
++        let downAt: { x: number; y: number } | null = null;
++        const spread = () => { const [a, b] = [...pts.values()]; return Math.max(1, Math.hypot(a.x - b.x, a.y - b.y)); };
++        const down = (e: PointerEvent) => {
++          if (cur.video?.paused && !walkRef.current) cur.video.play().catch(() => {});
++          pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
++          if (pts.size === 2) { drag = null; downAt = null; pinch = { d: spread(), fov: view.current.fov }; }
++          else if (pts.size === 1) { drag = { x: e.clientX, y: e.clientY, lon: view.current.lon, lat: view.current.lat }; downAt = { x: e.clientX, y: e.clientY }; aim.current = null; }
++          el.setPointerCapture(e.pointerId);
++        };
++        const move = (e: PointerEvent) => {
++          if (pts.has(e.pointerId)) pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
++          if (pinch && pts.size >= 2) { view.current.fov = clampFov(pinch.fov * pinch.d / spread()); return; }
++          if (drag) {
++            const k = camera.fov / el.clientHeight;   // 一个屏高 ≈ 一个视场角，拖起来跟手
++            view.current.lon = drag.lon - (e.clientX - drag.x) * k;
++            view.current.lat = Math.max(-85, Math.min(85, drag.lat + (e.clientY - drag.y) * k));
++            return;
++          }
++          if (e.pointerType === 'mouse') { hover = pickArrow(e.clientX, e.clientY); el.style.cursor = hover ? 'pointer' : 'grab'; }
++        };
++        const up = (e: PointerEvent) => {
++          pts.delete(e.pointerId);
++          if (pinch && pts.size < 2) pinch = null;
++          if (drag && downAt && Math.hypot(e.clientX - downAt.x, e.clientY - downAt.y) < 6) {
++            const a = pickArrow(e.clientX, e.clientY);
++            if (a) go(a.link); else setOpen(null);   // 点空白处：关掉说明卡
++          }
++          drag = null; downAt = null;
++          if (el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
++        };
++        const wheel = (e: WheelEvent) => { e.preventDefault(); view.current.fov = clampFov(view.current.fov + e.deltaY * 0.05); };
++        const keys = { fwd: false, back: false, turn: 0 };
++        const walkingNow = () => walkRef.current && cur.kind === 'video';
++        const keyDown = (e: KeyboardEvent) => {
++          const t = e.target as HTMLElement | null;
++          if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
++          const k = e.key.toLowerCase();
++          const street = !!nodesRef.current?.length && !walkingNow();
++          if (k === 'w' || k === 'arrowup') { keys.fwd = true; if (street && !e.repeat) stepNearest(0); }
++          else if (k === 's' || k === 'arrowdown') { keys.back = true; if (street && !e.repeat) stepNearest(180); }
++          else if (k === 'a' || k === 'arrowleft') keys.turn = -1;
++          else if (k === 'd' || k === 'arrowright') keys.turn = 1;
++          else if (k === '=' || k === '+') view.current.fov = clampFov(view.current.fov - 6);
++          else if (k === '-') view.current.fov = clampFov(view.current.fov + 6);
++          else if (k === 'escape') { setOpen(null); return; }
++          else return;
++          e.preventDefault();
++        };
++        const keyUp = (e: KeyboardEvent) => {
++          const k = e.key.toLowerCase();
++          if (k === 'w' || k === 'arrowup') keys.fwd = false;
++          else if (k === 's' || k === 'arrowdown') keys.back = false;
++          else if (k === 'a' || k === 'arrowleft' || k === 'd' || k === 'arrowright') keys.turn = 0;
++        };
++        const blur = () => { keys.fwd = keys.back = false; keys.turn = 0; };
++        el.addEventListener('pointerdown', down); el.addEventListener('pointermove', move);
++        el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
++        el.addEventListener('wheel', wheel, { passive: false });
++        window.addEventListener('keydown', keyDown); window.addEventListener('keyup', keyUp); window.addEventListener('blur', blur);
++
++        // ── 每帧 ──
++        const target = new THREE.Vector3(), fwd = new THREE.Vector3(), tmp = new THREE.Vector3();
++        const yellow = new THREE.Color(0xffd166), white = new THREE.Color(0xffffff);
++        let fovS = view.current.fov, last = performance.now(), armed = true, cool = 0, backAcc = 0;
++        const tick = () => {
++          raf = requestAnimationFrame(tick);
++          const now = performance.now(), dt = Math.min(.05, (now - last) / 1000); last = now;
++          for (const k of ['x', 'y', 'z'] as const) headS[k] += (headIn.current[k] - headS[k]) * 0.12;
++          // 前倾量：0.06 以内当没动（脸不可能完全不晃）
++          const lean = Math.sign(headS.z) * Math.max(0, Math.abs(headS.z) - .06);
++          const v = view.current, walking = walkingNow(), street = !!nodesRef.current?.length && !walking;
++          if (keys.turn) { v.lon += keys.turn * 70 * dt; aim.current = null; }
++          if (!street && !walking) {   // 单张图：W / S 按住就是往前走近 / 往后退
++            if (keys.fwd) v.fov = clampFov(v.fov - 40 * dt);
++            if (keys.back) v.fov = clampFov(v.fov + 40 * dt);
++          }
++          const a = aim.current;
++          if (a) {
++            const dl = angDiff(a.lon, v.lon), dd = a.lat - v.lat;
++            v.lon += dl * a.k; v.lat += dd * a.k;
++            if (Math.abs(dl) < .05 && Math.abs(dd) < .05) aim.current = null;
++          }
++          // 视场角：目标（滚轮 / 键 / 捏合）− 前倾（凑近 → 变窄 = 往前走）+ 过场拉近，再整体平滑，像迈步而不是跳
++          fx += (fxT - fx) * .12;
++          const fovGoal = clampFov(v.fov - lean * (walking ? 8 : 40)) + fx;
++          fovS += (fovGoal - fovS) * .1;
++          const fov = Math.max(20, Math.min(FOV_MAX, fovS));
++          if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
++          // 头往右挪 → 像透过窗户往左边看（和 Splat3D 的窗户方向一致）
++          const lon = v.lon - headS.x * 35, lat = Math.max(-85, Math.min(85, v.lat + headS.y * 20));
++          target.set(...lonLatDir(lon, lat));
++          camera.lookAt(target); camera.updateMatrixWorld();
++          camera.getWorldDirection(fwd);
++
++          // 过场淡入
++          if (fade) {
++            const k = Math.min(1, (now - fade.t0) / 450);
++            cur.mat.opacity = k;
++            if (k >= 1) { drop(fade.old); fade = null; cur.mesh.renderOrder = 0; trans = false; arrows.visible = true; }
++          }
++
++          // 行走视频：前倾 / W 往前播，后仰 / S 慢慢倒回
++          if (walking && cur.video) {
++            const vid = cur.video;
++            const fwdOn = keys.fwd || lean > .18, backOn = keys.back || lean < -.3;
++            if (fwdOn) {
++              backAcc = 0;
++              vid.playbackRate = keys.fwd ? 1 : Math.max(.4, Math.min(1.6, .4 + (lean - .18) * 2.5));
++              if (vid.paused && !vid.ended) vid.play().catch(() => {});
++            } else {
++              if (!vid.paused) vid.pause();
++              if (backOn && vid.currentTime > 0) {
++                backAcc += dt * .5;
++                if (!vid.seeking) { vid.currentTime = Math.max(0, vid.currentTime - backAcc); backAcc = 0; }
++              }
++            }
++            if (progBar.current && vid.duration) progBar.current.style.width = `${(vid.currentTime / vid.duration * 100).toFixed(2)}%`;
++          }
++
++          // 前倾迈步：视线对准某个箭头（25° 内）且前倾过线 → 走过去；之后要先退回来才能迈下一步
++          let leanTo: Arrow | null = null;
++          if (street && headRef.current && !trans) {
++            const vy = lon - 180; let bd = LEAN_AIM;
++            for (const ar of arrowList) { const d = Math.abs(angDiff(ar.link.yaw, vy)); if (d < bd) { bd = d; leanTo = ar; } }
++            if (lean < LEAN_REARM) armed = true;
++            if (leanTo && lean > LEAN_STEP && armed && now > cool) { armed = false; cool = now + 1500; go(leanTo.link); }
++          }
++          const hud = leanHud.current;
++          if (hud) {
++            const p = leanTo ? Math.max(0, Math.min(1, lean / LEAN_STEP)) : 0;
++            hud.style.display = leanTo && armed ? 'flex' : 'none';
++            if (leanTo) {
++              const lbl = hud.firstElementChild as HTMLElement, bar = hud.lastElementChild?.firstElementChild as HTMLElement;
++              const txt = `往前倾，走向${leanTo.link.label ? `「${leanTo.link.label}」` : '这个方向'}`;
++              if (lbl.textContent !== txt) lbl.textContent = txt;
++              bar.style.width = `${(p * 100).toFixed(1)}%`;
++            }
++          }
++          for (const ar of arrowList) {
++            const on = ar === hover || ar === leanTo;
++            const p = ar === leanTo ? Math.max(0, Math.min(1, lean / LEAN_STEP)) : 0;
++            ar.main.color.copy(on ? yellow : white); ar.main.opacity = on ? 1 : .85;
++            ar.g.scale.setScalar(.6 * (1 + (ar === hover ? .12 : 0) + p * .25));
++          }
++          // 悬停箭头：旁边写上去哪
++          const tip = arrowTip.current;
++          if (tip) {
++            if (hover && arrows.visible) {
++              tmp.copy(hover.g.position).project(camera);
++              tip.style.display = 'block';
++              tip.textContent = hover.link.label || '走过去';
++              tip.style.transform = `translate(${((tmp.x + 1) / 2 * el.clientWidth).toFixed(1)}px, ${((1 - tmp.y) / 2 * el.clientHeight + 26).toFixed(1)}px) translate(-50%, 0)`;
++            } else tip.style.display = 'none';
++          }
++
++          // 要素标记：每帧把 yaw / pitch 投到屏幕上；在身后的、出了屏幕的藏起来
++          const w = el.clientWidth, h = el.clientHeight;
++          for (const s of shownRef.current) {
++            const m = markerRefs.current[s.id]; if (!m) continue;
++            tmp.set(...lonLatDir(180 + s.yaw, s.pitch));
++            let show = !trans && tmp.dot(fwd) > .05;
++            let x = 0, y = 0;
++            if (show) {
++              tmp.multiplyScalar(100).project(camera);
++              x = (tmp.x + 1) / 2 * w; y = (1 - tmp.y) / 2 * h;
++              show = x > -40 && x < w + 40 && y > -40 && y < h + 40;
++            }
++            m.style.visibility = show ? 'visible' : 'hidden';
++            if (show) {
++              m.dataset.flip = y < 300 ? '1' : '';   // 靠近顶部：说明卡改弹在下面
++              m.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translate(-50%, -50%)`;
++            }
++          }
++          renderer.render(scene, camera);
++        };
++        tick();
++
++        dispose = () => {
++          ro.disconnect(); swapRef.current = null;
++          el.removeEventListener('pointerdown', down); el.removeEventListener('pointermove', move);
++          el.removeEventListener('pointerup', up); el.removeEventListener('pointercancel', up);
++          el.removeEventListener('wheel', wheel);
++          window.removeEventListener('keydown', keyDown); window.removeEventListener('keyup', keyUp); window.removeEventListener('blur', blur);
++          buildArrows([]); arrowGeo.dispose(); hitGeo.dispose();
++          if (fade) drop(fade.old);
++          drop(cur); geo.dispose(); renderer.dispose(); renderer.domElement.remove();
++        };
++      } catch (e) { if (!dead) setErr(`360° 画面加载失败：${e instanceof Error ? e.message : e}`); }
++    })();
++    return () => { dead = true; cancelAnimationFrame(raf); dispose(); setReady(false); };
++  // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, []);
++
++  // 单点位换素材（上传页）：换贴图，不重建渲染器
++  useEffect(() => {
++    if (nodes?.length) return;
++    want.current = { url: src, kind };
++    swapRef.current?.(src, kind);
++  }, [src, kind]); // eslint-disable-line react-hooks/exhaustive-deps
++  // yaw 改了（上传页调朝向）：直接转过去，不重新加载
++  useEffect(() => { view.current.lon = 180 + yaw; }, [yaw]);
++  useEffect(() => { headIn.current = { x: 0, y: 0, z: 0 }; onHeadSeen?.(false); }, [head]); // eslint-disable-line react-hooks/exhaustive-deps
++  const onHead = (p: HeadPose | null) => { if (!p) return; onHeadSeen?.(true); headIn.current = { x: p.x, y: p.y, z: p.z }; };
++
++  // 点列表里的一项：平滑转过去，打开说明卡
++  const flyTo = (s: PanoSpot) => { aim.current = { lon: 180 + s.yaw, lat: Math.max(-80, Math.min(80, s.pitch)), k: .08 }; setOpen(s.id); };
++
++  // 分类 + 标签，带个数；分类在前
++  const kinds = new Map<string, number>(), tags = new Map<string, number>();
++  for (const s of visible) {
++    kinds.set(s.kind, (kinds.get(s.kind) || 0) + 1);
++    for (const t of new Set(s.tags)) if (t !== s.kind) tags.set(t, (tags.get(t) || 0) + 1);
++  }
++  for (const k of kinds.keys()) tags.delete(k);
++  const byCount = (m: Map<string, number>) => [...m].sort((a, b) => b[1] - a[1]);
++  const tagList = byCount(tags), TAG_CAP = 8;
++  const chips: [string | null, string, number][] = [
++    [null, '全部', visible.length],
++    ...byCount(kinds).map(([k, n]) => [k, k, n] as [string, string, number]),
++    ...(moreTags ? tagList : tagList.slice(0, TAG_CAP)).map(([t, n]) => [t, `#${t}`, n] as [string, string, number]),
++  ];
++  const chipStyle = (on: boolean): React.CSSProperties => ({ padding: '4px 10px', borderRadius: 999, fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap', border: `1px solid ${on ? '#ffd166' : 'rgba(255,255,255,.22)'}`, color: on ? '#171a2e' : '#c7cbe6', background: on ? '#ffd166' : 'rgba(15,18,36,.62)', backdropFilter: 'blur(6px)' });
++
++  return (
++    <>
++      <div ref={host} style={{ position: 'absolute', inset: 0, cursor: 'grab', touchAction: 'none' }} />
++      {!ready && !err && (
++        <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', pointerEvents: 'none' }}>
++          <div style={{ fontSize: 13, letterSpacing: '.2em', color: '#9aa0c8' }}>LOADING 360°</div>
++        </div>
++      )}
++      {err && <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', color: '#ff8fa3', padding: 20, textAlign: 'center' }}>{err}</div>}
++
++      {/* 要素标记：点 + 圈，悬停出名字，点开说明卡（样式同 Splat3D 的物件说明卡） */}
++      {ready && shown.map(s => { const on = open === s.id; return (
++        <div key={s.id} ref={n => { markerRefs.current[s.id] = n; }} className="pano-spot" data-on={on ? '1' : ''}
++          style={{ position: 'absolute', left: 0, top: 0, visibility: 'hidden', zIndex: on ? 7 : 4, userSelect: 'none' }}>
++          {on && (
++            <div className="pano-card" onPointerDown={e => e.stopPropagation()} style={{ position: 'absolute', bottom: 'calc(100% + 12px)', left: '50%', transform: 'translateX(-50%)', width: 'min(360px, 80vw)', padding: '14px 16px', borderRadius: 14, background: 'rgba(15,18,36,.92)', border: '1.5px solid #ffd166', color: '#e6e8f5', backdropFilter: 'blur(10px)', boxShadow: '0 20px 60px rgba(0,0,0,.55)', cursor: 'default', textAlign: 'left' }}>
++              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}>
++                <div style={{ fontSize: 16, fontWeight: 800, color: '#ffd166' }}>{s.title}</div>
++                <button onClick={() => setOpen(null)} style={{ border: 0, background: 'transparent', color: '#9aa0c8', cursor: 'pointer', fontSize: 15 }}>✕</button>
++              </div>
++              <div style={{ marginTop: 6, display: 'flex', flexWrap: 'wrap', gap: 5 }}>
++                <span style={{ fontSize: 11, fontWeight: 800, padding: '2px 8px', borderRadius: 6, color: '#171a2e', background: '#9aa0c8' }}>{s.kind}</span>
++                {s.tags.map(t => <span key={t} style={{ fontSize: 11, padding: '2px 8px', borderRadius: 999, color: '#c7cbe6', border: '1px solid rgba(255,255,255,.22)' }}>{t}</span>)}
++                {showAll && <span style={{ fontSize: 11, padding: '2px 8px', color: conf(s) < .5 ? '#ff8fa3' : '#9aa0c8' }}>置信度 {conf(s).toFixed(2)}</span>}
++              </div>
++              <div style={{ marginTop: 8, fontSize: 13.5, lineHeight: 1.7, color: '#d9dcef', whiteSpace: 'normal' }}>{s.desc}</div>
++              <div className="pano-card-arrow" style={{ position: 'absolute', left: '50%', bottom: -8, width: 14, height: 14, transform: 'translateX(-50%) rotate(45deg)', background: 'rgba(15,18,36,.92)', borderRight: '1.5px solid #ffd166', borderBottom: '1.5px solid #ffd166' }} />
++            </div>
++          )}
++          <div className="pano-label">{s.title}</div>
++          <div className="pano-dot" onClick={() => setOpen(on ? null : s.id)}><i /></div>
++        </div>); })}
++      <style>{`.pano-spot .pano-dot { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; border: 1.5px solid rgba(255,255,255,.45); background: rgba(15,18,36,.22); transition: transform .15s, border-color .15s, background .15s; }
++.pano-spot .pano-dot i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.9); box-shadow: 0 0 6px rgba(0,0,0,.7); transition: background .15s; }
++.pano-spot:hover .pano-dot, .pano-spot[data-on="1"] .pano-dot { border-color: #ffd166; background: rgba(15,18,36,.55); transform: scale(1.25); box-shadow: 0 0 0 4px rgba(255,209,102,.18); }
++.pano-spot:hover .pano-dot i, .pano-spot[data-on="1"] .pano-dot i { background: #ffd166; }
++.pano-spot .pano-label { position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%); opacity: 0; pointer-events: none; white-space: nowrap; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 700; color: #fff; background: rgba(15,18,36,.82); border: 1px solid rgba(255,255,255,.3); transition: opacity .15s; }
++.pano-spot:hover .pano-label { opacity: 1; }
++.pano-spot[data-on="1"] .pano-label { display: none; }
++.pano-spot[data-flip="1"] .pano-card { bottom: auto !important; top: calc(100% + 12px); }
++.pano-spot[data-flip="1"] .pano-card-arrow { bottom: auto !important; top: -8px; transform: translateX(-50%) rotate(225deg) !important; }`}</style>
++
++      {/* 分类 / 标签筛选 + 「路过的好东西」列表 */}
++      {ready && visible.length > 0 && (
++        <div style={{ position: 'absolute', left: 20, top: 64, width: 'min(290px, calc(100vw - 40px))', zIndex: 6, display: 'grid', gap: 8 }}>
++          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
++            {chips.map(([k, label, n]) => (
++              <button key={label} onClick={() => setFilter(k === filter ? null : k)} style={chipStyle(k === filter)}>{label} <span style={{ opacity: .6 }}>{n}</span></button>
++            ))}
++            {tagList.length > TAG_CAP && <button onClick={() => setMoreTags(v => !v)} style={{ ...chipStyle(false), borderStyle: 'dashed' }}>{moreTags ? '收起' : `更多 ${tagList.length - TAG_CAP}`}</button>}
++          </div>
++          <div style={{ borderRadius: 12, background: 'rgba(15,18,36,.72)', border: '1px solid rgba(255,255,255,.18)', backdropFilter: 'blur(8px)', overflow: 'hidden' }}>
++            <button onClick={() => setListOpen(v => !v)} style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', border: 0, background: 'transparent', color: '#fff', cursor: 'pointer', fontSize: 13, fontWeight: 800 }}>
++              <span>路过的好东西 <span style={{ color: '#9aa0c8', fontWeight: 600 }}>{shown.length}</span></span>
++              <span style={{ color: '#9aa0c8', transform: listOpen ? 'rotate(180deg)' : undefined, transition: 'transform .15s' }}>▾</span>
++            </button>
++            {listOpen && (
++              <div style={{ maxHeight: '46vh', overflowY: 'auto', borderTop: '1px solid rgba(255,255,255,.1)' }}>
++                {shown.map(s => (
++                  <button key={s.id} onClick={() => flyTo(s)} style={{ width: '100%', display: 'flex', justifyContent: 'space-between', gap: 8, padding: '7px 12px', border: 0, cursor: 'pointer', textAlign: 'left', fontSize: 12.5, color: open === s.id ? '#ffd166' : '#e6e8f5', background: open === s.id ? 'rgba(255,209,102,.1)' : 'transparent' }}>
++                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.title}</span>
++                    <span style={{ flex: 'none', color: '#9aa0c8', fontSize: 11 }}>{s.kind}</span>
++                  </button>
++                ))}
++                {!shown.length && <div style={{ padding: '8px 12px', fontSize: 12, color: '#9aa0c8' }}>这个点位没有这一类</div>}
++              </div>
++            )}
++          </div>
++        </div>
++      )}
++
++      {/* 悬停箭头的去向、前倾进度（tick 里直接写） */}
++      <div ref={arrowTip} style={{ position: 'absolute', left: 0, top: 0, display: 'none', zIndex: 4, pointerEvents: 'none', padding: '3px 9px', borderRadius: 999, fontSize: 12, fontWeight: 700, color: '#171a2e', background: '#ffd166', whiteSpace: 'nowrap' }} />
++      <div ref={leanHud} style={{ position: 'absolute', left: '50%', bottom: 28, transform: 'translateX(-50%)', display: 'none', flexDirection: 'column', alignItems: 'center', gap: 6, zIndex: 5, pointerEvents: 'none', padding: '8px 14px', borderRadius: 12, background: 'rgba(15,18,36,.72)', border: '1px solid rgba(255,255,255,.2)', backdropFilter: 'blur(6px)' }}>
++        <span style={{ fontSize: 12.5, fontWeight: 700, color: '#fff' }} />
++        <div style={{ width: 160, height: 4, borderRadius: 2, background: 'rgba(255,255,255,.15)', overflow: 'hidden' }}><div style={{ width: 0, height: '100%', background: '#ffd166' }} /></div>
++      </div>
++      {videoUi && (
++        <>
++          <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 3, background: 'rgba(255,255,255,.12)', zIndex: 5, pointerEvents: 'none' }}>
++            <div ref={progBar} style={{ width: 0, height: '100%', background: 'linear-gradient(90deg,#3ddc97,#12b5cb)' }} />
++          </div>
++          <div style={{ position: 'absolute', left: '50%', bottom: 12, transform: 'translateX(-50%)', fontSize: 11.5, color: '#c7cbe6', textShadow: '0 1px 6px rgba(0,0,0,.8)', pointerEvents: 'none', zIndex: 5 }}>按住 W / 往前倾 往前走 · S / 往后仰 退回</div>
++        </>
++      )}
++
++      {head && (camCorner
++        ? <div style={{ position: 'absolute', zIndex: 5, ...camCorner }}><HeadCam onPose={onHead} /></div>
++        : <div style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', opacity: 0 }}><HeadCam onPose={onHead} /></div>)}
++    </>
++  );
++}

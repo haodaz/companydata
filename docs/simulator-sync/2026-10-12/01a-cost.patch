@@ -1,0 +1,555 @@
+diff --git a/scripts/lab-log-cost.mts b/scripts/lab-log-cost.mts
+new file mode 100644
+index 0000000..3a16c32
+--- /dev/null
++++ b/scripts/lab-log-cost.mts
+@@ -0,0 +1,12 @@
++/**
++ * 命令行记一笔账（迁移 021）：给不走 llm-client 的花费用——Veo 视频、外部工具。
++ *   npx tsx scripts/lab-log-cost.mts --tool lab-3d --task "Veo 视频" --model veo-3.1-fast-generate-preview --units 8 [--space <id>] [--job <编号>] [--stage media]
++ * 单价看 model_pricing.unit_price（没有就用 token-logger 里的默认价）。
++ */
++import fs from 'node:fs';
++for (const l of fs.readFileSync('.env.local', 'utf8').split('\n')) { const m = l.match(/^([A-Z_]+)=(.*)$/); if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim().replace(/^"|"$/g, ''); }
++const { logTokenUsage } = await import('../src/lib/token-logger');
++const a = process.argv.slice(2);
++const f = (k: string) => { const i = a.indexOf(`--${k}`); return i >= 0 ? a[i + 1] : undefined; };
++if (!f('model') || !f('task')) { console.error('用法：npx tsx scripts/lab-log-cost.mts --tool lab-3d --task "…" --model … --units 8'); process.exit(1); }
++await logTokenUsage({ tool_name: (f('tool') || 'lab-3d') as any, task_name: f('task')!, model_id: f('model')!, units: Number(f('units') || 0), space_id: f('space') || null, job_id: f('job') || null, stage: f('stage') || 'media', actor: 'script' });
+diff --git a/src/app/api/lab/admin/cost/route.ts b/src/app/api/lab/admin/cost/route.ts
+new file mode 100644
+index 0000000..980307f
+--- /dev/null
++++ b/src/app/api/lab/admin/cost/route.ts
+@@ -0,0 +1,23 @@
++import { NextResponse } from 'next/server';
++import { requireAdminUser } from '@/lib/session';
++import { usageReport } from '@/lib/cost/usage-report';
++import { toolsOf } from '@/lib/cost/products';
++
++export const runtime = 'nodejs';
++export const dynamic = 'force-dynamic';
++
++/** 百业的成本（百业后台 /lab/admin 用）：只算百业的记账（大模型调用 / 出图 / 视频与 3D），按环节、按空间分解。仅管理员 */
++export async function GET(req: Request) {
++  const denied = await requireAdminUser(req); if (denied) return denied;
++  try {
++    const { searchParams } = new URL(req.url);
++    const r = await usageReport({
++      tools: toolsOf('lab'),
++      page: parseInt(searchParams.get('page') || '1'), pageSize: parseInt(searchParams.get('pageSize') || '50'),
++      model: searchParams.get('model') || '', days: parseInt(searchParams.get('days') || '0'),
++    });
++    return NextResponse.json({ ok: true, ...r });
++  } catch (e: any) {
++    return NextResponse.json({ ok: false, error: e.message }, { status: 500 });
++  }
++}
+diff --git a/src/app/api/lab/route-problem/route.ts b/src/app/api/lab/route-problem/route.ts
+index 50bed7f..bafb3b5 100644
+--- a/src/app/api/lab/route-problem/route.ts
++++ b/src/app/api/lab/route-problem/route.ts
+@@ -46,7 +46,7 @@ ${roster}
+ 问题明显不属于任何一位的行当，就返回空数组。
+ 每位给一句 why（25 字内，说他凭什么能帮上忙，用「他」指代）。
+ 返回 JSON：{ "picks": [{ "n": 编号, "why": "" }] }`, model || 'gemini-3.8-flash', { jsonMode: true });
+-    await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Route · Problem', institution: '', model_id: model || 'gemini-3.8-flash', usageMetadata: r.usageMetadata, success: true }).catch(() => {});
++    await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Route · Problem', institution: '', model_id: model || 'gemini-3.8-flash', usageMetadata: r.usageMetadata, success: true, stage: 'use' }).catch(() => {});
+ 
+     const out = parseJsonLoose(r.text);
+     const seen = new Set<string>();
+diff --git a/src/app/api/lab/spaces/[id]/distill/route.ts b/src/app/api/lab/spaces/[id]/distill/route.ts
+index 57271c1..e8775a9 100644
+--- a/src/app/api/lab/spaces/[id]/distill/route.ts
++++ b/src/app/api/lab/spaces/[id]/distill/route.ts
+@@ -1,4 +1,5 @@
+ import { NextRequest, NextResponse } from 'next/server';
++import { withCost } from '@/lib/token-logger';
+ import { supabaseAdmin } from '@/lib/supabase';
+ import { buildSkillCard } from '@/lib/agents/skill-lab';
+ import { labError, loadSpace } from '@/lib/skill-lab-server';
+@@ -25,7 +26,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
+     // 已有技能时把历史访谈一起蒸馏，技能越用越厚
+     const history = space.skill?.interview || [];
+     const allTurns = [...history, ...turns];
+-    const built = await buildSkillCard(topic, allTurns, model || undefined, String(walkthrough || ''));
++    const built = await withCost({ space_id: id, stage: 'learn' }, () => buildSkillCard(topic, allTurns, model || undefined, String(walkthrough || '')));
+ 
+     const row = {
+       name: built.name, domain: built.domain, kind: built.kind, summary: built.summary, card: built.card, interview: allTurns,
+diff --git a/src/app/api/lab/spaces/[id]/ecosystem/route.ts b/src/app/api/lab/spaces/[id]/ecosystem/route.ts
+index 8eceb34..ec4eafc 100644
+--- a/src/app/api/lab/spaces/[id]/ecosystem/route.ts
++++ b/src/app/api/lab/spaces/[id]/ecosystem/route.ts
+@@ -104,7 +104,7 @@ keywords 要能在企业的「所属行业 / 产品领域 / 公司名」里原
+   好：「咖啡」「烘焙」「乳品」「半导体」「航天」「消防」「冷链」
+   差：「咖啡豆烘焙加工」「商用咖啡机设备供应」（这种整句在数据库里一条也找不到）
+ 返回 JSON：{ "upstream": [{"stage":"","what":"","keywords":[]}], "downstream": [{"stage":"","what":"","keywords":[]}] }`, 'gemini-3.8-flash', { jsonMode: true });
+-      await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Ecosystem · Chain', institution: '', model_id: 'gemini-3.8-flash', usageMetadata: r.usageMetadata, success: true }).catch(() => {});
++      await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Ecosystem · Chain', institution: '', model_id: 'gemini-3.8-flash', usageMetadata: r.usageMetadata, success: true, space_id: id, stage: 'use' }).catch(() => {});
+       const p = parseJsonLoose(r.text);
+       const norm = (arr: any): ChainNode[] => (Array.isArray(arr) ? arr : []).slice(0, 3).map((n: any) => ({
+         stage: String(n.stage || '').slice(0, 20), what: String(n.what || '').slice(0, 60),
+diff --git a/src/app/api/lab/spaces/[id]/interview/route.ts b/src/app/api/lab/spaces/[id]/interview/route.ts
+index f9ddf41..71957d2 100644
+--- a/src/app/api/lab/spaces/[id]/interview/route.ts
++++ b/src/app/api/lab/spaces/[id]/interview/route.ts
+@@ -1,4 +1,5 @@
+ import { NextRequest, NextResponse } from 'next/server';
++import { withCost } from '@/lib/token-logger';
+ import { nextQuestion } from '@/lib/agents/skill-lab';
+ import { labError, loadSpace } from '@/lib/skill-lab-server';
+ 
+@@ -12,7 +13,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
+     const { turns, walkthrough, model } = await req.json();
+     const space = await loadSpace(id);
+     const topic = `${space.jd_snapshot?.company || ''} ${space.jd_snapshot?.title || ''} —— ${space.title}`;
+-    const result = await nextQuestion(topic, Array.isArray(turns) ? turns : [], model || undefined, String(walkthrough || ''));
++    const result = await withCost({ space_id: id, stage: 'learn' }, () => nextQuestion(topic, Array.isArray(turns) ? turns : [], model || undefined, String(walkthrough || '')));
+     return NextResponse.json({ ok: true, ...result });
+   } catch (e: any) {
+     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
+diff --git a/src/app/api/lab/spaces/[id]/solve/route.ts b/src/app/api/lab/spaces/[id]/solve/route.ts
+index 41fd976..188fa2e 100644
+--- a/src/app/api/lab/spaces/[id]/solve/route.ts
++++ b/src/app/api/lab/spaces/[id]/solve/route.ts
+@@ -1,4 +1,5 @@
+ import { NextRequest, NextResponse } from 'next/server';
++import { withCost } from '@/lib/token-logger';
+ import { supabaseAdmin } from '@/lib/supabase';
+ import { solveWithSkill } from '@/lib/agents/skill-lab';
+ import { labError, loadSpace, skillRef } from '@/lib/skill-lab-server';
+@@ -17,7 +18,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
+     const skill = skillRef(space.skill);
+     if (!skill) return NextResponse.json({ ok: false, error: '这个空间还没有蒸馏出技能。先到「专家蒸馏」让专家走一遍。' }, { status: 400 });
+ 
+-    const { output, summary } = await solveWithSkill(String(problem), skill, model || undefined);
++    const { output, summary } = await withCost({ space_id: id, stage: 'use' }, () => solveWithSkill(String(problem), skill, model || undefined));
+     const { data, error } = await supabaseAdmin.from('skill_invocations').insert({
+       skill_id: space.skill_id, task_id: id, kind: 'solve',
+       actor: String(actor || '').trim() || '匿名', actor_location: String(location || ''), tz_offset: typeof tz === 'number' ? tz : null,
+diff --git a/src/app/api/lab/spaces/[id]/submit/route.ts b/src/app/api/lab/spaces/[id]/submit/route.ts
+index 5eba3fa..478ffa9 100644
+--- a/src/app/api/lab/spaces/[id]/submit/route.ts
++++ b/src/app/api/lab/spaces/[id]/submit/route.ts
+@@ -1,4 +1,5 @@
+ import { NextRequest, NextResponse } from 'next/server';
++import { withCost } from '@/lib/token-logger';
+ import { supabaseAdmin } from '@/lib/supabase';
+ import { answerTask, gradeAnswer, operateSim } from '@/lib/agents/skill-lab';
+ import { sanitizeTrace, traceMatch, traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
+@@ -29,19 +30,21 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
+ 
+     // 有模拟操作台就上台操作：轨迹的文字记录 + 最后一步的结论 = 交给评分的「作答」
+     const chapter = pickChapter(space, body.chapterId);
++    // 记账：使用环节（考试作答、AI 代答、评分），记到空间 / 章节 / 作答人上（迁移 021）
++    const cost = { space_id: id, chapter_id: chapter?.id || null, stage: 'use', actor: body.visitor ? `v:${String(body.visitor).slice(0, 60)}` : null };
+     const sim: Sim | null = chapter?.sim?.steps?.length ? chapter.sim : null;
+     let trace: SimTrace | null = null;
+     let answer = String(body.answer || '').trim();
+     if (sim) {
+       // AI 模式带了轨迹（「我教你」屏幕上演示的那一遍）就直接评它；没带才让模型自己上台操作
+       const given = body.trace && typeof body.trace === 'object' ? sanitizeTrace(sim, body.trace) : null;
+-      trace = given && Object.keys(given).length ? given : mode === 'ai' ? await operateSim({ ...space, ...chapterTask(space, chapter) }, sim, withSkill ? skill : null, model) : sanitizeTrace(sim, body.trace);
++      trace = given && Object.keys(given).length ? given : mode === 'ai' ? await withCost(cost, () => operateSim({ ...space, ...chapterTask(space, chapter) }, sim, withSkill ? skill : null, model)) : sanitizeTrace(sim, body.trace);
+       answer = traceToText(sim, trace);
+-    } else if (mode === 'ai') answer = await answerTask(space, withSkill ? skill : null, model);
++    } else if (mode === 'ai') answer = await withCost(cost, () => answerTask(space, withSkill ? skill : null, model));
+     if (answer.length < 20) return NextResponse.json({ ok: false, error: '作答太短了，至少写几句' }, { status: 400 });
+ 
+     // 按这一章自己的题面和评分标准评（第 1 章用空间的）
+-    const { score, grading } = await gradeAnswer(chapterTask(space, chapter), answer, skill, model);
++    const { score, grading } = await withCost(cost, () => gradeAnswer(chapterTask(space, chapter), answer, skill, model));
+ 
+     const name = mode === 'ai' ? (withSkill ? 'AI + 专家技能' : 'AI 裸答') : String(body.name || '').trim() || (mode === 'expert' ? '专家' : '匿名新兵');
+     const row: Record<string, any> = {
+diff --git a/src/app/api/lab/spaces/route.ts b/src/app/api/lab/spaces/route.ts
+index 2eb288c..159b650 100644
+--- a/src/app/api/lab/spaces/route.ts
++++ b/src/app/api/lab/spaces/route.ts
+@@ -6,6 +6,7 @@ import { structureCareer } from '@/lib/agents/career';
+ import { labError, sortByDay } from '@/lib/skill-lab-server';
+ import { reconcileCast } from '@/lib/lab-cast-server';
+ import { trackDemand } from '@/lib/flywheel/signals';
++import { attachCostToSpace, withCost } from '@/lib/token-logger';
+ 
+ export const runtime = 'nodejs';
+ export const dynamic = 'force-dynamic';
+@@ -101,9 +102,15 @@ function summarize(built: any) {
+ 
+ const CAREER_HINT = '这是面向高中生 / 大学生的「职业探索空间」，不是招聘考核：任务要让一个完全没入行的人也能上手体验这个职业最有代表性的一天，材料自解释、术语随手解释，难度比校招题降一档；故事线要有带教的前辈，让人感受到这个职业真实的工作节奏与判断方式。';
+ export async function POST(req: Request) {
++  const body = await req.json().catch(() => ({}));
++  // 记账：这次构建的所有调用（任务、技能卡、工位、美术）记到同一个任务编号上，空间建好后补上空间编号（迁移 021）
++  const costJob = `build-${String(body.buildId || '') || Date.now().toString(36)}`;
++  return withCost({ job_id: costJob, stage: 'create', actor: body.createdBy || null }, () => build(req, body, costJob));
++}
++
++async function build(req: Request, body: any, costJob: string) {
+   let buildId = '';
+   try {
+-    const body = await req.json();
+     const { jobId, model, createdBy } = body; buildId = String(body.buildId || '');
+     const profession = String(body.profession || '').trim().slice(0, 40);
+ 
+@@ -125,6 +132,7 @@ export async function POST(req: Request) {
+         ...built.task, created_by: createdBy || '',
+       }).select('id').single();
+       if (insErr) throw insErr;
++      await attachCostToSpace(costJob, created.id);
+       await assignNova(created.id).catch(e => console.warn('[Lab/spaces] 分编号失败', e?.message));
+       // 角色表对账：生成的图登记进素材库、补齐角色表（迁移 019）；以后换图走角色表，不再改 JSON 里的网址
+       await reconcileCast(created.id);
+@@ -159,6 +167,7 @@ export async function POST(req: Request) {
+       created_by: createdBy || '',
+     }).select('id').single();
+     if (insErr) throw insErr;
++    await attachCostToSpace(costJob, created.id);
+     await assignNova(created.id).catch(e => console.warn('[Lab/spaces] 分编号失败', e?.message));
+     // 角色表对账：生成的图登记进素材库、补齐角色表（迁移 019）；以后换图走角色表，不再改 JSON 里的网址
+     await reconcileCast(created.id);
+diff --git a/src/app/lab/admin/page.tsx b/src/app/lab/admin/page.tsx
+new file mode 100644
+index 0000000..464376a
+--- /dev/null
++++ b/src/app/lab/admin/page.tsx
+@@ -0,0 +1,144 @@
++'use client';
++
++/**
++ * 百业后台（2026-10-12，用户：「得拆开，咱们最后大概率也会拆开代码」）：百业自己的管理后台，和数据工厂的 /admin 分开。
++ * 首页是成本：创造（建空间 / 生一天 / 设计工位）· 使用（考试作答 / 评分 / 问问我）· 学习（老师傅访谈）· 评审 · 美术与 3D，
++ * 按环节、按空间、按功能 | 环节、按模型；下面是价目表和明细。其他后台入口（素材库、360 上传、设计文档、母版试玩）在顶部。
++ * 数据来自 /api/lab/admin/cost（只算百业的记账，口径见 src/lib/cost/products.ts）。要登录、要管理员。
++ */
++import React, { useCallback, useEffect, useRef, useState } from 'react';
++import Link from 'next/link';
++import { Select, Table } from 'antd';
++import { PricingCard } from '@/components/admin/PricingCard';
++
++const USD_CNY = 7.2;
++const STAGES: Record<string, { label: string; hint: string; color: string }> = {
++  create: { label: '创造', hint: '建空间 · 生一天 · 设计工位', color: '#6a5cff' },
++  use: { label: '使用', hint: '考试作答 · 评分 · 问问我', color: '#12a150' },
++  learn: { label: '学习', hint: '老师傅访谈 · 蒸馏技能卡', color: '#ff8a3d' },
++  review: { label: 'AI 评审', hint: '按规则给一整天打分', color: '#d6336c' },
++  media: { label: '美术与 3D', hint: '出图 · 视频 · 全景识别', color: '#12b5cb' },
++};
++const LINKS: [string, string][] = [['/lab/admin', '成本'], ['/lab/assets', '素材库'], ['/lab/studio/pano', '360° 上传'], ['/lab/logic', '设计文档'], ['/lab/spaces', '百业工厂']];
++
++export default function LabAdminPage() {
++  const [days, setDays] = useState(30);
++  const [cny, setCny] = useState(true);
++  const [page, setPage] = useState(1);
++  const [data, setData] = useState<any>(null);
++  const [err, setErr] = useState('');
++  const [loading, setLoading] = useState(false);
++  const seq = useRef(0);   // 统计要翻页拉全量、慢：只认最新那次请求
++  const load = useCallback(async () => {
++    const my = ++seq.current; setLoading(true); setErr('');
++    try {
++      const q = new URLSearchParams({ page: String(page), pageSize: '30', ...(days ? { days: String(days) } : {}) });
++      const j = await (await fetch(`/api/lab/admin/cost?${q}`, { cache: 'no-store' })).json();
++      if (my !== seq.current) return;
++      if (!j.ok) throw new Error(j.error || '加载失败');
++      setData(j);
++    } catch (e: any) { if (my === seq.current) setErr(e.message); }
++    finally { if (my === seq.current) setLoading(false); }
++  }, [days, page]);
++  useEffect(() => { load(); }, [load]);
++
++  const money = (usd: number) => cny ? `¥${(usd * USD_CNY).toFixed(usd * USD_CNY < 1 ? 3 : 2)}` : `$${usd.toFixed(usd < 1 ? 4 : 2)}`;
++  const tok = (n: number) => n >= 1e6 ? `${(n / 1e6).toFixed(2)}M` : n >= 1e3 ? `${(n / 1e3).toFixed(1)}K` : String(n);
++  const s = data?.stats;
++  const stages = Object.entries(s?.stage_stats || {}) as [string, any][];
++
++  return (
++    <div style={{ maxWidth: 1200, margin: '0 auto', padding: '24px 20px 80px' }}>
++      <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, flexWrap: 'wrap', marginBottom: 6 }}>
++        <h1 style={{ fontSize: 28, margin: 0 }}>百业后台</h1>
++        <nav style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
++          {LINKS.map(([href, t]) => <Link key={href} href={href} className={`lab-chip${href === '/lab/admin' ? '' : ' g'}`} style={{ textDecoration: 'none' }}>{t}</Link>)}
++        </nav>
++      </div>
++      <p style={{ color: 'var(--ink2)', fontSize: 14, margin: '0 0 20px' }}>AI 百业从创造到使用全过程的 AI 成本：每一笔记到空间、章节、环节上。数据工厂（挖公司数据）的花费在它自己的后台，不算在这里。</p>
++
++      <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 16, flexWrap: 'wrap' }}>
++        <Select size="small" value={days} style={{ width: 120 }} onChange={v => { setDays(v); setPage(1); }} options={[{ value: 7, label: '最近 7 天' }, { value: 30, label: '最近 30 天' }, { value: 90, label: '最近 90 天' }, { value: 0, label: '全部' }]} />
++        <button className="lab-btn ghost sm" onClick={() => setCny(v => !v)}>{cny ? '¥ 人民币' : '$ 美元'}</button>
++        <button className="lab-btn ghost sm" onClick={load} disabled={loading}>{loading ? '统计中…' : '刷新'}</button>
++        {err && <span style={{ color: '#d6336c', fontSize: 13 }}>{err}</span>}
++      </div>
++
++      {s && <>
++        {/* 总数 */}
++        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 12, marginBottom: 16 }}>
++          {[['总花费', money(s.total_cost_usd)], ['调用次数', s.total_tasks.toLocaleString()], ['Token', tok(s.total_tokens)], ['联网搜索', `${s.total_search_calls} 次 · ${money(s.total_search_cost_usd)}`]].map(([k, v]) => (
++            <div key={k} className="lab-card" style={{ padding: '14px 16px' }}><div className="lab-cap">{k}</div><div style={{ fontSize: 24, fontWeight: 800, marginTop: 4 }}>{v}</div></div>
++          ))}
++        </div>
++
++        {/* 按流程环节 */}
++        <div className="lab-card" style={{ padding: 16, marginBottom: 16 }}>
++          <b>钱花在哪个环节</b>
++          {!s.attribution_ready ? <p style={{ color: 'var(--ink3)', fontSize: 13, margin: '8px 0 0' }}>按环节 / 按空间要先在 Supabase 跑迁移 <code>021_cost_attribution.sql</code>；跑之前的记录没有归属，之后的调用会自动带上。</p> : (
++            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 10, marginTop: 10 }}>
++              {Object.keys(STAGES).concat(stages.map(([k]) => k).filter(k => !STAGES[k])).map(k => {
++                const v = s.stage_stats?.[k], c = STAGES[k] || { label: k, hint: '', color: '#8389a6' };
++                return (
++                  <div key={k} style={{ padding: '10px 12px', borderRadius: 12, borderLeft: `4px solid ${c.color}`, background: 'rgba(106,92,255,.04)' }}>
++                    <div style={{ fontWeight: 800 }}>{c.label} <span style={{ fontWeight: 400, fontSize: 12, color: 'var(--ink3)' }}>{c.hint}</span></div>
++                    <div style={{ fontSize: 13, color: 'var(--ink2)', marginTop: 4 }}>{v ? <>{v.count} 次{v.units ? ` · ${v.units} 件` : ''} · <b style={{ color: c.color }}>{money(v.cost)}</b></> : '—'}</div>
++                  </div>
++                );
++              })}
++            </div>
++          )}
++        </div>
++
++        {/* 按空间 */}
++        {!!s.space_stats?.length && (
++          <div className="lab-card" style={{ padding: 16, marginBottom: 16 }}>
++            <b>按空间（花得最多的 30 个）</b>
++            <Table size="small" rowKey="space_id" pagination={false} style={{ marginTop: 10 }} dataSource={s.space_stats} scroll={{ x: 760 }}
++              columns={[
++                { title: '空间', dataIndex: 'title', render: (t: string, r: any) => <Link href={`/lab/${r.space_id}`}>{t}</Link> },
++                ...Object.keys(STAGES).map(k => ({ title: STAGES[k].label, key: k, width: 90, render: (_: any, r: any) => r.byStage?.[k] ? money(r.byStage[k]) : '—' })),
++                { title: '合计', dataIndex: 'cost', width: 100, render: (v: number) => <b>{money(v)}</b> },
++              ]} />
++          </div>
++        )}
++
++        {/* 按功能 | 环节 + 按模型 */}
++        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', gap: 16, marginBottom: 16 }}>
++          <div className="lab-card" style={{ padding: 16 }}>
++            <b>按功能 | 环节</b>
++            <Table size="small" rowKey="key" pagination={{ pageSize: 12, size: 'small' }} style={{ marginTop: 10 }} dataSource={s.task_stats}
++              columns={[{ title: '功能 | 环节', dataIndex: 'key' }, { title: '次数', dataIndex: 'count', width: 70 }, { title: 'Token', dataIndex: 'tokens', width: 90, render: tok }, { title: '花费', dataIndex: 'cost', width: 90, render: money }]} />
++          </div>
++          <div className="lab-card" style={{ padding: 16 }}>
++            <b>按模型</b>
++            {Object.entries(s.model_stats || {}).sort(([, a]: any, [, b]: any) => b.cost - a.cost).map(([m, v]: any) => (
++              <div key={m} style={{ display: 'flex', justifyContent: 'space-between', gap: 8, padding: '8px 0', borderBottom: '1px solid var(--line)', fontSize: 13 }}>
++                <span className="lab-mono" style={{ letterSpacing: 0 }}>{m}</span><span style={{ color: 'var(--ink2)' }}>{v.count} 次 · <b>{money(v.cost)}</b></span>
++              </div>
++            ))}
++          </div>
++        </div>
++      </>}
++
++      <PricingCard />
++
++      {data && (
++        <div className="lab-card" style={{ padding: 16 }}>
++          <b>明细</b>
++          <Table size="small" rowKey={(r: any) => `${r.id}-${r.created_at}`} loading={loading} dataSource={data.logs} scroll={{ x: 900 }} style={{ marginTop: 10 }}
++            pagination={{ current: page, pageSize: 30, total: data.total, size: 'small', onChange: setPage, showSizeChanger: false }}
++            columns={[
++              { title: '时间', dataIndex: 'created_at', width: 140, render: (v: string) => new Date(v).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) },
++              { title: '功能', dataIndex: 'tool_name', width: 90 },
++              { title: '环节', dataIndex: 'task_name' },
++              { title: '归属', key: 'attr', width: 120, render: (_: any, r: any) => r.stage ? `${STAGES[r.stage]?.label || r.stage}${r.space_id ? ' · 空间' : ''}` : '—' },
++              { title: '模型', dataIndex: 'model_id', width: 150 },
++              { title: 'Token', dataIndex: 'total_tokens', width: 80, render: tok },
++              { title: '花费', dataIndex: 'total_cost_usd', width: 90, render: money },
++            ]} />
++        </div>
++      )}
++    </div>
++  );
++}
+diff --git a/src/lib/agents/lab-chapters.ts b/src/lib/agents/lab-chapters.ts
+index ba98cf3..6dcbcdf 100644
+--- a/src/lib/agents/lab-chapters.ts
++++ b/src/lib/agents/lab-chapters.ts
+@@ -8,7 +8,7 @@
+  *   新建的先按规范类型名找素材库，找不到才画，画完立刻归库。
+  */
+ import { generateContent, resolveModel } from '@/lib/llm-client';
+-import { logTokenUsage } from '@/lib/token-logger';
++import { logTokenUsage, withCost } from '@/lib/token-logger';
+ import { parseJsonLoose } from '@/lib/agents/search-llm';
+ import { supabaseAdmin } from '@/lib/supabase';
+ import { sanitizeTrace, type Sim, type SimStep, type SimTrace } from '@/lib/skill-sim';
+@@ -94,7 +94,11 @@ function readNewCast(raw: any): { tmp: string; kind: CastKind; name: string; typ
+ // ────────────────────────────────────────────
+ // 1. 一天骨架
+ // ────────────────────────────────────────────
+-export async function buildDay(spaceId: string, model: string, hint: string, progress: Progress): Promise<{ added: number; cast: number }> {
++/** 排一天骨架（记账：这次的调用都记到这个空间上，环节 create） */
++export function buildDay(spaceId: string, model: string, hint: string, progress: Progress): Promise<{ added: number; cast: number }> {
++  return withCost({ space_id: spaceId, stage: 'create' }, () => buildDayInner(spaceId, model, hint, progress));
++}
++async function buildDayInner(spaceId: string, model: string, hint: string, progress: Progress): Promise<{ added: number; cast: number }> {
+   const { data: space, error } = await supabaseAdmin.from('skill_tasks').select('id, title, profile, jd_snapshot, bible').eq('id', spaceId).single();
+   if (error) throw error;
+   // 重排骨架：空的、没锁的草稿格子先清掉（有步骤的、锁定的、已发布的都留着）
+@@ -170,7 +174,11 @@ ${CAST_RULES}
+ // ────────────────────────────────────────────
+ // 2. 按格生成一章
+ // ────────────────────────────────────────────
+-export async function buildChapter(spaceId: string, chapterId: string, model: string, hint: string, opts: { art?: boolean }, progress: Progress): Promise<{ steps: number; newCast: number; drawn: number; reused: number }> {
++/** 逐格生成一章（记账：记到这个空间、这一章上，含补画的人物 / 场景） */
++export function buildChapter(spaceId: string, chapterId: string, model: string, hint: string, opts: { art?: boolean }, progress: Progress): Promise<{ steps: number; newCast: number; drawn: number; reused: number }> {
++  return withCost({ space_id: spaceId, chapter_id: chapterId, stage: 'create' }, () => buildChapterInner(spaceId, chapterId, model, hint, opts, progress));
++}
++async function buildChapterInner(spaceId: string, chapterId: string, model: string, hint: string, opts: { art?: boolean }, progress: Progress): Promise<{ steps: number; newCast: number; drawn: number; reused: number }> {
+   const [{ data: space, error }, { data: chs, error: e2 }] = await Promise.all([
+     supabaseAdmin.from('skill_tasks').select('id, title, profile, jd_snapshot, bible').eq('id', spaceId).single(),
+     supabaseAdmin.from('lab_chapters').select('*').eq('task_id', spaceId).order('seq'),
+@@ -330,7 +338,10 @@ export function normalizeRubric(raw: any): { key: string; name: string; weight:
+ }
+ 
+ /** 给已经写好的章节补评分标准（老章节、手工写的章节） */
+-export async function draftRubric(ch: StudioChapter, space: any, model: string) {
++export function draftRubric(ch: StudioChapter, space: any, model: string) {
++  return withCost({ space_id: space?.id || null, chapter_id: ch.id, stage: 'create' }, () => draftRubricInner(ch, space, model));
++}
++async function draftRubricInner(ch: StudioChapter, space: any, model: string) {
+   const p = await ask(`
+ 给职业体验空间里的一章定评分标准。
+ ${spaceText(space)}
+diff --git a/src/lib/cost/products.ts b/src/lib/cost/products.ts
+new file mode 100644
+index 0000000..34155c7
+--- /dev/null
++++ b/src/lib/cost/products.ts
+@@ -0,0 +1,12 @@
++/**
++ * 两个产品的记账口径（2026-10-12，用户：「得拆开，咱们最后大概率也会拆开代码」）：
++ *   百业（AI 百业，将来随 /lab 一起拆走）和数据工厂（挖公司数据）各有各的后台、各看各的钱。
++ * 底层的记账表 token_usage_logs、价目表 model_pricing、token-logger 两边共用；按 tool_name 分产品。
++ * 新加一种记账（tool_name）就在这里归到一边。
++ */
++export const COST_PRODUCTS = {
++  lab: { label: 'AI 百业', tools: ['skill-lab', 'lab-art', 'lab-3d'] },
++  factory: { label: '智能企业数据工厂', tools: ['finder', 'fetcher', 'structurer-job', 'company-profile', 'company-pipeline', 'company-deep-research', 'competition-radar', 'office-chief', 'office-chat', 'flywheel'] },
++} as const;
++export type CostProduct = keyof typeof COST_PRODUCTS;
++export const toolsOf = (p: CostProduct): string[] => [...COST_PRODUCTS[p].tools];
+diff --git a/src/lib/cost/usage-report.ts b/src/lib/cost/usage-report.ts
+new file mode 100644
+index 0000000..6aa6f26
+--- /dev/null
++++ b/src/lib/cost/usage-report.ts
+@@ -0,0 +1,88 @@
++/**
++ * 用量报表（服务端，两个产品的后台共用）：明细分页 + 全量统计（按模型 / 功能 / 功能 | 环节 / 流程环节 / 空间）。
++ * 从 /api/admin/token-usage 抽出来（2026-10-12），百业后台 /api/lab/admin/cost 和数据工厂后台各调一次，只是 tools 不同。
++ */
++import { selectAll } from '@/lib/supabase-all';
++import { supabaseAdmin as supabase } from '@/lib/supabase';
++
++export interface UsageQuery { tools: string[]; days?: number; model?: string; page?: number; pageSize?: number }
++
++export async function usageReport({ tools, days = 0, model = '', page = 1, pageSize = 50 }: UsageQuery) {
++  const since = days > 0 ? new Date(Date.now() - days * 86400000).toISOString() : '';
++  let query = supabase.from('token_usage_logs').select('*', { count: 'exact' }).order('created_at', { ascending: false });
++  if (model) query = query.eq('model_id', model);
++  if (tools.length) query = query.in('tool_name', tools);
++  if (since) query = query.gte('created_at', since);
++  const from = (page - 1) * pageSize;
++  const { data: logs, count, error } = await query.range(from, from + pageSize - 1);
++  if (error) throw error;
++
++  // 明细按 batch_id 合并
++  const groupedLogs: any[] = [];
++  const batchMap = new Map<number, any>();
++  for (const log of logs || []) {
++    if (!log.batch_id) { groupedLogs.push(log); continue; }
++    const parent = batchMap.get(log.batch_id);
++    if (!parent) { const g = { ...log, records: [log], task_name: `[Batch] ${log.task_name}` }; batchMap.set(log.batch_id, g); groupedLogs.push(g); continue; }
++    parent.total_input_tokens += log.total_input_tokens || 0; parent.total_output_tokens += log.total_output_tokens || 0;
++    parent.total_tokens += log.total_tokens || 0; parent.total_cost_usd += log.total_cost_usd || 0; parent.api_cost_cny += log.api_cost_cny || 0;
++    parent.records.push(log);
++  }
++
++  // 统计要全量：PostgREST 单次最多 1000 行，翻页读完
++  const statsBuild = (cols: string) => () => {
++    let q = supabase.from('token_usage_logs').select(cols).order('id');
++    if (model) q = q.eq('model_id', model);
++    if (tools.length) q = q.in('tool_name', tools);
++    if (since) q = q.gte('created_at', since);
++    return q;
++  };
++  const { data: rows } = await selectAll<any>(statsBuild('total_input_tokens, total_output_tokens, total_tokens, total_cost_usd, api_cost_cny, model_id, tool_name, task_name'));
++  const { data: searchRows, error: searchErr } = await selectAll<any>(statsBuild('search_calls, search_cost_usd'));   // 迁移 014 之后才有
++  if (searchErr) searchRows.length = 0;
++  const { data: attrRows, error: attrErr } = await selectAll<any>(statsBuild('space_id, stage, units, total_cost_usd'));   // 迁移 021 之后才有
++  if (attrErr) attrRows.length = 0;
++
++  const f = (v: any) => parseFloat(v) || 0;
++  let inTok = 0, outTok = 0, allTok = 0, costUsd = 0, apiCny = 0;
++  const modelStats: Record<string, { count: number; tokens: number; cost: number }> = {};
++  const toolStats: Record<string, { count: number; tokens: number; cost_usd: number; cost_cny: number }> = {};
++  const taskStats: Record<string, { count: number; tokens: number; cost: number }> = {};
++  for (const r of rows) {
++    inTok += r.total_input_tokens || 0; outTok += r.total_output_tokens || 0; allTok += r.total_tokens || 0; costUsd += f(r.total_cost_usd); apiCny += f(r.api_cost_cny);
++    const m = (modelStats[r.model_id || 'unknown'] ||= { count: 0, tokens: 0, cost: 0 }); m.count++; m.tokens += r.total_tokens || 0; m.cost += f(r.total_cost_usd);
++    const t = (toolStats[r.tool_name || 'unknown'] ||= { count: 0, tokens: 0, cost_usd: 0, cost_cny: 0 }); t.count++; t.tokens += r.total_tokens || 0; t.cost_usd += f(r.total_cost_usd); t.cost_cny += f(r.api_cost_cny);
++    const k = `${r.tool_name || 'unknown'} | ${String(r.task_name || '').replace(/^\[Batch\] /, '')}`;
++    const s = (taskStats[k] ||= { count: 0, tokens: 0, cost: 0 }); s.count++; s.tokens += r.total_tokens || 0; s.cost += f(r.total_cost_usd);
++  }
++  // 按流程环节（创造 / 使用 / 学习 / 评审 / 美术与 3D）和按空间
++  const stageStats: Record<string, { count: number; cost: number; units: number }> = {};
++  const spaceAgg = new Map<string, { cost: number; count: number; byStage: Record<string, number> }>();
++  for (const r of attrRows) {
++    const st = r.stage || '（未归类）', c = f(r.total_cost_usd);
++    const a = (stageStats[st] ||= { count: 0, cost: 0, units: 0 }); a.count++; a.cost += c; a.units += +r.units || 0;
++    if (!r.space_id) continue;
++    const sp = spaceAgg.get(r.space_id) || { cost: 0, count: 0, byStage: {} };
++    sp.cost += c; sp.count++; sp.byStage[st] = (sp.byStage[st] || 0) + c; spaceAgg.set(r.space_id, sp);
++  }
++  const top = [...spaceAgg.entries()].sort((a, b) => b[1].cost - a[1].cost).slice(0, 30);
++  const { data: titles } = top.length ? await supabase.from('skill_tasks').select('id, title').in('id', top.map(([id]) => id)) : { data: [] as any[] };
++  const titleOf = new Map((titles || []).map((t: any) => [t.id, t.title]));
++
++  return {
++    logs: groupedLogs, total: count || 0, page, pageSize,
++    stats: {
++      total_tasks: rows.length,
++      total_input_tokens: inTok, total_output_tokens: outTok, total_tokens: allTok,
++      total_cost_usd: Math.round(costUsd * 1_000_000) / 1_000_000,
++      total_api_cost_cny: Math.round(apiCny * 100) / 100,
++      total_search_calls: searchRows.reduce((a: number, r: any) => a + (r.search_calls || 0), 0),
++      total_search_cost_usd: Math.round(searchRows.reduce((a: number, r: any) => a + f(r.search_cost_usd), 0) * 10000) / 10000,
++      model_stats: modelStats, tool_stats: toolStats,
++      task_stats: Object.entries(taskStats).map(([key, v]) => ({ key, ...v })).sort((a, b) => b.cost - a.cost),
++      stage_stats: stageStats,
++      space_stats: top.map(([id, v]) => ({ space_id: id, title: titleOf.get(id) || id.slice(0, 8), ...v })),
++      attribution_ready: !attrErr,
++    },
++  };
++}
+diff --git a/supabase/migrations/021_cost_attribution.sql b/supabase/migrations/021_cost_attribution.sql
+new file mode 100644
+index 0000000..ccd0f18
+--- /dev/null
++++ b/supabase/migrations/021_cost_attribution.sql
+@@ -0,0 +1,26 @@
++-- 021 成本归属（2026-10-12）：用户要看「整个创造、使用过程」花了多少——建一个空间、生一天、出图、出 3D、考试评分、AI 评审各花多少，归到哪个空间。
++-- 以前只能按「功能 | 环节」汇总（token_usage_logs 没有空间 / 任务列），出图、视频、3D、全景识别也没记账。
++-- 参考了公司 simulator 的做法（出图按张计价、按环节汇总），再往前走一步：每笔记到空间 / 章节 / 任务上。整份可重复执行。
++
++ALTER TABLE token_usage_logs ADD COLUMN IF NOT EXISTS space_id   UUID;   -- 花在哪个空间上（skill_tasks.id）
++ALTER TABLE token_usage_logs ADD COLUMN IF NOT EXISTS chapter_id UUID;   -- 哪一章（lab_chapters.id）
++ALTER TABLE token_usage_logs ADD COLUMN IF NOT EXISTS job_id     TEXT;   -- 哪个生成任务（lab_jobs.id 或脚本批次）
++ALTER TABLE token_usage_logs ADD COLUMN IF NOT EXISTS actor      TEXT;   -- 谁触发的：用户 id / 访客编号 / 脚本名
++ALTER TABLE token_usage_logs ADD COLUMN IF NOT EXISTS stage      TEXT;   -- 流程环节：create 创造 / use 使用 / review 评审 / media 美术与 3D
++ALTER TABLE token_usage_logs ADD COLUMN IF NOT EXISTS units      NUMERIC DEFAULT 0;   -- 按件计费的数量（出图张数、视频秒数）
++ALTER TABLE token_usage_logs ADD COLUMN IF NOT EXISTS unit       TEXT;   -- image / second
++CREATE INDEX IF NOT EXISTS token_usage_logs_space_idx ON token_usage_logs (space_id, created_at DESC);
++CREATE INDEX IF NOT EXISTS token_usage_logs_stage_idx ON token_usage_logs (stage, created_at DESC);
++
++-- 价目表：按件计价（出图每张、视频每秒），和 token 单价并列
++ALTER TABLE model_pricing ADD COLUMN IF NOT EXISTS unit_price NUMERIC DEFAULT 0;
++ALTER TABLE model_pricing ADD COLUMN IF NOT EXISTS unit       TEXT;
++
++INSERT INTO model_pricing (model_id, provider, currency, input_per_m, output_per_m, search_per_k, unit_price, unit, note) VALUES
++  ('wan2.2-t2i-flash', 'Aliyun', 'CNY', 0, 0, 0, 0.14, 'image',  '参考价：通义万相 flash 每张（同公司 simulator）；按百炼账单核对'),
++  ('wan2.2-t2i-plus',  'Aliyun', 'CNY', 0, 0, 0, 0.2,  'image',  '参考价：通义万相 plus 每张；按百炼账单核对'),
++  ('veo-3.1-fast-generate-preview', 'Google', 'USD', 0, 0, 0, 0.15, 'second', '参考价：Veo 3.1 fast 每秒视频（估），请按 AI Studio 账单核对后在用量页改'),
++  ('veo-3.1-generate-preview',      'Google', 'USD', 0, 0, 0, 0.4,  'second', '参考价：Veo 3.1 每秒视频（估），请按账单核对')
++ON CONFLICT (model_id) DO NOTHING;
++
++NOTIFY pgrst, 'reload schema';

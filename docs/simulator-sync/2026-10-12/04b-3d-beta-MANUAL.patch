@@ -1,0 +1,229 @@
+diff --git a/src/app/lab/beta/3d/[scene]/page.tsx b/src/app/lab/beta/3d/[scene]/page.tsx
+index 04c6579..e30dafe 100644
+--- a/src/app/lab/beta/3d/[scene]/page.tsx
++++ b/src/app/lab/beta/3d/[scene]/page.tsx
+@@ -3,12 +3,14 @@
+ /**
+  * 3D beta 查看器：3D 高斯场景 + 「屏幕是一扇窗」——机位跟着鼠标，打开摄像头后跟着头。
+  * 摄像头只在浏览器本地算头的位置（MediaPipe），画面不录、不传。
++ * 场景有 pano（真实 360° 素材）：只有 pano 就直接看全景（只能转头，没有视差）；3D 和 pano 都有，先看 3D，右上角能切到 360°。
+  */
+ import { use, useEffect, useState } from 'react';
+ import { createPortal } from 'react-dom';
+ import Link from 'next/link';
+ import { BETA3D } from '@/lib/lab-3d-beta';
+ import { Splat3D } from '@/components/lab/Splat3D';
++import { Pano360 } from '@/components/lab/Pano360';
+ 
+ export default function Beta3DPage({ params }: { params: Promise<{ scene: string }> }) {
+   const { scene: key } = use(params);
+@@ -20,27 +22,42 @@ export default function Beta3DPage({ params }: { params: Promise<{ scene: string
+   // ?edit=1：标注模式——点场景里的物件，坐标列在右上角（抄进 lab-3d-beta.ts 的 hotspots）
+   const [edit, setEdit] = useState(false);
+   const [picks, setPicks] = useState<[number, number, number][]>([]);
+-  useEffect(() => { setMounted(true); setEdit(new URLSearchParams(window.location.search).get('edit') === '1'); }, []);
++  // ?all=1：全景里低置信度（< 0.5）的识别结果也显示，给人工核对用
++  const [allSpots, setAllSpots] = useState(false);
++  useEffect(() => { setMounted(true); const q = new URLSearchParams(window.location.search); setEdit(q.get('edit') === '1'); setAllSpots(q.get('all') === '1'); }, []);
++  // 360° 全景：没有 3D 重建时就是它；两个都有时由右上角按钮切
++  const [panoOn, setPanoOn] = useState(!!s?.pano?.first);
+ 
+   if (!s) return <div style={{ padding: 40, color: '#fff', background: '#0b0d1c', minHeight: '100vh' }}>没有这个 3D 场景。</div>;
+   if (!mounted) return null;
++  const showPano = !!s.pano && (!s.url || panoOn);
+   return createPortal((
+     <div style={{ position: 'fixed', inset: 0, zIndex: 1000, background: '#0b0d1c', color: '#fff', overflow: 'hidden' }}>
+-      {s.url ? <Splat3D scene={s} head={cam} onHeadSeen={setHeadSeen} camCorner={{ right: 18, bottom: 150 }} hotspots={s.hotspots} edit={edit} onPick={p => { setPicks(ps => [...ps, p]); (window as any).__picks = [...picks, p]; }} />
++      {showPano ? <Pano360 key={s.pano!.url} src={s.pano!.url} kind={s.pano!.kind} yaw={s.pano!.yaw} head={cam} onHeadSeen={setHeadSeen} camCorner={{ right: 18, bottom: 150 }}
++            spots={s.pano!.spots} nodes={s.pano!.nodes} walk={s.pano!.walk} showAll={allSpots} />
++        : s.url ? <Splat3D scene={s} head={cam} onHeadSeen={setHeadSeen} camCorner={{ right: 18, bottom: 150 }} hotspots={s.hotspots} edit={edit} onPick={p => { setPicks(ps => [...ps, p]); (window as any).__picks = [...picks, p]; }} />
+         : <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', color: '#c7cbe6' }}>这个场景还在重建中，稍后再来。</div>}
+ 
+       <div style={{ position: 'absolute', left: 20, top: 18, display: 'flex', alignItems: 'center', gap: 12 }}>
+         <Link href={`/lab/${s.spaceId}`} style={{ color: '#c7cbe6', fontSize: 13, textDecoration: 'none', padding: '6px 12px', borderRadius: 999, background: 'rgba(15,18,36,.6)', border: '1px solid rgba(255,255,255,.18)' }}>← {s.role}</Link>
+         <span style={{ fontSize: 22, fontWeight: 800, textShadow: '0 2px 10px rgba(0,0,0,.6)' }}>{s.title}</span>
+-        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.12em', padding: '4px 9px', borderRadius: 6, background: 'linear-gradient(120deg,#ff5fa2,#6a5cff)' }}>3D BETA</span>
++        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.12em', padding: '4px 9px', borderRadius: 6, background: 'linear-gradient(120deg,#ff5fa2,#6a5cff)' }}>{showPano ? '360° BETA' : '3D BETA'}</span>
+       </div>
+ 
++      {s.url && s.pano && (
++        <div style={{ position: 'absolute', left: '50%', top: 18, transform: 'translateX(-50%)', display: 'flex', padding: 3, borderRadius: 999, background: 'rgba(15,18,36,.72)', border: '1px solid rgba(255,255,255,.2)', backdropFilter: 'blur(6px)' }}>
++          {([[false, '3D 场景'], [true, '360° 实拍']] as const).map(([v, label]) => (
++            <button key={label} onClick={() => setPanoOn(v)} style={{ padding: '6px 14px', borderRadius: 999, border: 0, cursor: 'pointer', fontSize: 12.5, fontWeight: 700, color: panoOn === v ? '#171a2e' : '#c7cbe6', background: panoOn === v ? '#ffd166' : 'transparent' }}>{label}</button>
++          ))}
++        </div>
++      )}
++
+       {edit && (
+         <div className="lab-mono" style={{ position: 'absolute', right: 18, top: 18, width: 300, maxHeight: '50vh', overflow: 'auto', padding: 12, borderRadius: 12, background: 'rgba(15,18,36,.85)', border: '1px solid rgba(255,255,255,.2)', fontSize: 11, color: '#c7cbe6', whiteSpace: 'pre' }}>
+           标注模式 · 点物件取坐标{'\n'}{picks.map((p, i) => `${i + 1}. [${p.join(', ')}]`).join('\n') || '（还没点）'}
+         </div>
+       )}
+-      {(s.hotspots?.length || 0) > 0 && !edit && (
++      {(s.hotspots?.length || 0) > 0 && !edit && !showPano && (
+         <div style={{ position: 'absolute', left: 20, top: 64, fontSize: 12, color: '#c7cbe6', padding: '6px 12px', borderRadius: 999, background: 'rgba(15,18,36,.6)', border: '1px solid rgba(255,255,255,.18)' }}>点一下标签，看这件东西是干什么的</div>
+       )}
+       <div style={{ position: 'absolute', right: 18, bottom: 18, display: 'grid', gap: 10, justifyItems: 'end', maxWidth: 320 }}>
+@@ -49,8 +66,11 @@ export default function Beta3DPage({ params }: { params: Promise<{ scene: string
+           {cam ? '📷 跟着头看中 · 关闭' : '📷 用头看（打开摄像头）'}
+         </button>
+         <div style={{ fontSize: 11, color: '#9aa0c8', textAlign: 'right', lineHeight: 1.6 }}>
+-          {cam ? (headSeen ? '左右上下挪头、往前凑近，场景跟着你的视角变。' : '把脸放进画面里…') : '移动鼠标看看；打开摄像头后，场景跟着你的头动。'}
+-          <br />摄像头只在本机算头的位置，不录、不传。<br />{s.credit}
++          {showPano
++            ? (cam ? (headSeen ? (s.pano?.nodes?.length ? '挪头转着看；往前凑 = 走近，对准地上的箭头再往前倾就走过去。' : '左右上下挪头转着看，往前凑 = 走近、往后靠 = 退远。') : '把脸放进画面里（先坐正，第一眼的距离当基准）…')
++              : (s.pano?.nodes?.length ? '拖动转着看，点地上的箭头 / 按 W 往前走、S 往回走；滚轮拉近。' : '拖动转着看，滚轮 / 双指 / W S 走近走远；打开摄像头后跟着头转、往前凑就走近。'))
++            : (cam ? (headSeen ? '左右上下挪头、往前凑近，场景跟着你的视角变。' : '把脸放进画面里…') : '移动鼠标看看；打开摄像头后，场景跟着你的头动。')}
++          <br />摄像头只在本机算头的位置，不录、不传。<br />{showPano ? '真实 360° 素材' : s.credit}
+         </div>
+       </div>
+     </div>
+diff --git a/src/lib/lab-3d-beta.ts b/src/lib/lab-3d-beta.ts
+index d139860..b9428c6 100644
+--- a/src/lib/lab-3d-beta.ts
++++ b/src/lib/lab-3d-beta.ts
+@@ -3,11 +3,42 @@
+  * 查看器 /lab/beta/3d/<key>：场景跟着鼠标 / 头部（摄像头，本机推理）挪，屏幕像一扇窗。
+  * position / lookAt / up 由 scripts/beta3d/view.py 从重建结果算出（视频中间那一帧的机位），span 是头部摆动时机位最多挪多远。
+  */
++import BOILER_SPOTS from '@/lib/pano-spots/boiler.json';
++import REEF_HERON_SPOTS from '@/lib/pano-spots/reef-heron.json';
++import REEF_ELLIOT_SPOTS from '@/lib/pano-spots/reef-elliot.json';
+ /** 场景里可以点的物件：鼠标悬停出线框，点一下弹说明（像游戏里的空间建模）。pos / size 在重建出来的场景坐标系里（用查看器 ?edit=1 点出来） */
+ export interface Beta3DHotspot { id: string; name: string; desc: string; pos: [number, number, number]; size: [number, number, number]; /** 绕竖轴转多少度 */ rotY?: number }
+ 
++/**
++ * 真实 360° 素材（可选，和 Veo 重建并存）：GoPro Max / Insta360 导出的等距柱状 2:1 图片或视频，查看器里只能转头看、没有视差。
++ * 只有 pano 的场景：url 留空 ''（position / lookAt / up / span 随便填，用不上）；两个都有：先看 3D，角上能切到 360°。
++ * 上传入口 /lab/studio/pano（要登录），传完给出要贴进来的这一段。yaw：一打开朝哪看（度，0 = 画面正中，正数往右）
++ */
++/**
++ * 全景里识别出来的「好东西」（scripts/beta3d/pano-recognize.mts 生成，人可以在 JSON 里改）。
++ * 方位：yaw = 水平角（度，0 = 等距柱状图的正中间，向右为正，-180–180）；pitch = 仰角（度，向上为正，-90–90）。
++ */
++export interface PanoSpot {
++  id: string; yaw: number; pitch: number;
++  /** 叫什么（行业里的叫法） */ title: string;
++  /** 分类：设备 / 仪表 / 阀门管路 / 电气 / 安全标识 / 文件规程 / 工具 / 环境 */ kind: string;
++  /** 行业标签：岗位、工序、风险点…… */ tags: string[];
++  /** 介绍：是什么、干什么用、这一行看它的规矩（给体验者看的，两三句） */ desc: string;
++  /** 识别置信度 0–1（低的人工确认后再放出） */ conf?: number;
++}
++/** 一个拍摄点位：街景式行走用。links 是地上的箭头——往 yaw 方向走到 to 那个点位 */
++export interface PanoNode { id: string; url: string; kind: 'image' | 'video'; yaw?: number; spots?: PanoSpot[]; links?: { to: string; yaw: number; label?: string }[] }
++export interface Beta3DPano {
++  url: string; kind: 'image' | 'video'; yaw?: number;
++  /** 识别出来的要素（单点位时用这里） */ spots?: PanoSpot[];
++  /** 多点位：有了就按街景方式走，url / spots 是起点那一张 */ nodes?: PanoNode[];
++  /** 视频是边走边拍的：前倾 / W 就沿拍摄路线往前播（而不是循环播放） */ walk?: boolean;
++  /** 场景同时有 3D 和实拍时，默认先看实拍 */ first?: boolean;
++}
++
+ export interface Beta3DScene {
+   key: string; title: string; role: string; spaceId: string; url: string;
++  pano?: Beta3DPano;
+   hotspots?: Beta3DHotspot[];
+   position: [number, number, number]; lookAt: [number, number, number]; up: [number, number, number]; span: number;
+   credit: string;
+@@ -15,6 +46,15 @@ export interface Beta3DScene {
+   slots: string[];
+ }
+ 
++/** 实拍珊瑚礁（大堡礁两个礁区，潜导视角识别过）：潜导空间的 reef 场景和独立试看页 reef-dive 共用 */
++const REEF_DIVE_PANO: Beta3DPano = {
++  url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-heron_bommie_svii.jpg', kind: 'image',
++  nodes: [
++    { id: 'heron', spots: REEF_HERON_SPOTS as PanoSpot[], url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-heron_bommie_svii.jpg', kind: 'image', links: [{ to: 'elliot', yaw: 0, label: '游去伊利奥特夫人岛礁区' }] },
++    { id: 'elliot', spots: REEF_ELLIOT_SPOTS as PanoSpot[], url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-wikimedia-lady_elliot_island_svii.jpg', kind: 'image', links: [{ to: 'heron', yaw: 180, label: '游回苍鹭岛礁丘' }] },
++  ],
++};
++
+ export const BETA3D: Record<string, Beta3DScene> = {
+   cafe: {
+     key: 'cafe', title: '咖啡吧台', role: '拉花师傅', spaceId: '155db8f9-b0b3-4f08-a842-df1e94c381f4',
+@@ -56,11 +96,84 @@ export const BETA3D: Record<string, Beta3DScene> = {
+     credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建',
+     slots: ['08:30', '09:20', '10:10', '11:00', '14:00', '15:10', '16:20', '17:30'],   // 一整天都在工位上
+   },
++  rocket: {
++    key: 'rocket', title: '总装厂房 · 发动机段', role: '火箭总装工程师', spaceId: '640f3bc6-6ce1-4c32-82dd-6491344ab86f',
++    url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-rocket-v1.splat', position: [0.006, 0.0041, -0.0052], lookAt: [-1.4515, -0.0696, 19.0291], up: [0.0068, -1.0, -0.0034], span: 3.0,   // 近景弧线（离主体 3 m）一次重建成功；大空间远景两次都对不上
++    credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建（17 万高斯，5.6 MB）',
++    slots: ['08:30', '09:10', '10:00', '11:00', '13:30'],   // 厂房里的章；15:00 试车台在户外、16:10 复盘在会议室
++    // 位置是粗放的：在 /lab/beta/3d/rocket?edit=1 里点物件拿坐标再校
++    hotspots: [
++      { id: 'nozzle', name: '发动机喷管', pos: [-1.5, 1, 19], size: [5, 5, 5], desc: '钟形的喷管把燃气加速到超音速——推力就从这里来。总装时最怕磕碰：喷管壁是再生冷却通道，薄得像易拉罐，吊装、对接、每一次挪动都要有人盯着喷管口。' },
++      { id: 'pump', name: '涡轮泵与管路', pos: [-1.5, -3, 19], size: [4, 4, 4], desc: '把液氧和甲烷从贮箱压进燃烧室的泵，转速以万转计。周围这一团管路、阀门和电缆，每一根都有编号，装错一根试车就点不着——总装工艺卡上一条一条对，装完还要做气密。' },
++      { id: 'cradle', name: '运输托架', pos: [-1.5, 5, 19], size: [12, 2, 6], desc: '黄色的托架托着整个箭体，上面的滚轮能让箭体绕轴转，方便从各个角度作业。箭体一上托架就要测同轴度，托架不平，后面级段对接全是白干。' },
++      { id: 'platform', name: '工作平台', pos: [5, 0, 17], size: [3, 8, 10], desc: '蓝色的工作平台贴着箭体，高度可调。上平台先系安全带、工具要有防坠绳——一把扳手掉进箭体里，整段都得重新清点。' },
++    ],
++  },
++  command: {
++    key: 'command', title: '应急指挥大厅', role: '应急指挥调度员', spaceId: 'adcf442a-fe29-4f82-9bd0-4a82f82f72fc',
++    url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-command-hall-v1.splat', position: [0.0039, 0.0012, -0.0766], lookAt: [12.2838, 2.612, 47.097], up: [0.036, -0.9983, 0.0455], span: 3.6,
++    credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建（6 万高斯，2 MB）',
++    slots: ['07:30', '08:00', '08:30', '09:10', '10:20', '11:10', '14:00', '16:30', '18:00'],   // 11:40 河堤一线不在大厅
++  },
++  asphalt: {
++    key: 'asphalt', title: '摊铺现场', role: '沥青摊铺施工员', spaceId: '0cfe3233-acd9-4e4c-b910-3d9350f18eff',
++    url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-asphalt-site-v1.splat', position: [-0.5483, -4.2882, -0.9021], lookAt: [-0.8637, -2.3699, 4.9669], up: [0.3431, -0.8872, 0.3084], span: 1.2,   // 用视频前段（第 13 帧）的机位：中间帧贴着路面，近处全是糊的高斯
++    credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建（54 万高斯，17 MB）',
++    slots: ['06:50', '07:30', '08:20', '09:00', '10:20', '10:50', '13:30'],   // 15:40 日志归档在项目部
++  },
+   reef: {
+     key: 'reef', title: '珊瑚礁', role: '潜导', spaceId: '387fcc19-bd56-453e-a983-b3a1b4da5704',
+     url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-reef-v1.splat', position: [-0.0038, 0.1282, 0.2202], lookAt: [-0.4826, 0.187, 7.7058], up: [-0.0142, -0.9999, 0.002], span: 1.2,   // 场景近（depth 7.5），摆动幅度按比例缩小
+-    credit: 'Veo 3.1 生成水下绕礁视频 · COLMAP + Brush 重建（39 万高斯，12.6 MB）',
++    credit: '3D：Veo 3.1 生成水下绕礁视频 · COLMAP + Brush 重建（39 万高斯，12.6 MB）｜360° 实拍：Underwater Earth / XL Catlin Seaview Survey（Christophe Bailhache）· 大堡礁 · CC BY-SA 3.0 · Wikimedia Commons',
+     slots: ['09:00'],   // 礁区导潜
++    // 2026-10-12：实拍珊瑚礁也接进来——入口进去默认看实拍（有潜水要点标记），右上角能切回 3D
++    pano: { ...REEF_DIVE_PANO, first: true },
++  },
++  boiler: {
++    key: 'boiler', title: '锅炉房', role: '锅炉运行 / 设备巡检（试看）', spaceId: '',
++    url: '', position: [0, 0, 0], lookAt: [0, 0, 1], up: [0, -1, 0], span: 1,   // 只有全景，没有 3D
++    // spots：scripts/beta3d/pano-recognize.mts 识别出来的要素（35 件），人可以直接改 JSON
++    pano: { url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-polyhaven-boiler_room.jpg', kind: 'image', spots: BOILER_SPOTS as PanoSpot[] },
++    credit: '360° 实拍 · Poly Haven「Boiler Room」· 摄影 Oliksiy Yakovlyev · CC0',
++    slots: [],   // 第一张公开实拍素材（2026-10-12 和用户一起挑的），还没挂到任何空间
++  },
++  // ⚠ UI 测试夹具，不是真数据：同一张锅炉房图当两个点位，只为看街景箭头 / 走动过场 / 要素标记。
++  // 点位 b 的 yaw = 90：假装 b 的图正中朝世界的 90°，走过去时视线会按这个偏移换算。spots 的内容是编的
++  'reef-dive': {
++    key: 'reef-dive', title: '珊瑚礁 · 潜水员视角', role: '潜导 / 海洋科考（试看）', spaceId: '',
++    url: '', position: [0, 0, 0], lookAt: [0, 0, 1], up: [0, -1, 0], span: 1,
++    // spots：pano-recognize.mts 按潜导视角识别（不可触碰的珊瑚、要保持距离的生物、浪涌 / 触礁风险区、看点）
++    // 两个礁区用箭头连起来：从苍鹭岛礁丘「游」到伊利奥特夫人岛。原图 9500 宽，缩到 8192 免得有的显卡贴图上限黑屏
++    pano: REEF_DIVE_PANO,
++    credit: '360° 水下实拍 · Underwater Earth / XL Catlin Seaview Survey（Christophe Bailhache）· 大堡礁 Heron Bommie / Lady Elliot Island · CC BY-SA 3.0 · 来自 Wikimedia Commons',
++    slots: [],   // 2026-10-12 和用户一起挑的（带比特看大海）；授权 BY-SA：要署名，改了再发布也得同授权
++  },
++  'boiler-walk': {
++    key: 'boiler-walk', title: '锅炉房 · 走动测试', role: '锅炉运行 / 设备巡检（试看）', spaceId: '',
++    url: '', position: [0, 0, 0], lookAt: [0, 0, 1], up: [0, -1, 0], span: 1,
++    pano: {
++      url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-polyhaven-boiler_room.jpg', kind: 'image',
++      nodes: [
++        {
++          id: 'a', url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-polyhaven-boiler_room.jpg', kind: 'image', yaw: 0,
++          links: [{ to: 'b', yaw: 30, label: '往前走（测试）' }, { to: 'b', yaw: -110, label: '去左边（测试）' }],
++          spots: [
++            { id: 'test-a1', yaw: 0, pitch: 0, title: '测试点 · 正前方', kind: '设备', tags: ['测试', '巡检'], desc: '假数据：yaw 0 / pitch 0，应该正好落在一打开的画面中心。', conf: 0.9 },
++            { id: 'test-a2', yaw: 90, pitch: 20, title: '测试点 · 右上', kind: '仪表', tags: ['测试'], desc: '假数据：yaw 90 / pitch 20，往右转 90° 再抬头一点。', conf: 0.8 },
++            { id: 'test-a3', yaw: -60, pitch: -10, title: '测试点 · 低置信度', kind: '阀门管路', tags: ['测试', '待核对'], desc: '假数据：conf 0.3，平时藏起来，?all=1 才显示。', conf: 0.3 },
++          ],
++        },
++        {
++          id: 'b', url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/pano-polyhaven-boiler_room.jpg', kind: 'image', yaw: 90,
++          links: [{ to: 'a', yaw: -150, label: '回起点（测试）' }],
++          spots: [
++            { id: 'test-b1', yaw: 180, pitch: 0, title: '测试点 · b 的背面', kind: '安全标识', tags: ['测试'], desc: '假数据：点位 b 里 yaw 180，在图的接缝处。', conf: 0.7 },
++          ],
++        },
++      ],
++    },
++    credit: '360° 实拍 · Poly Haven「Boiler Room」· 摄影 Oliksiy Yakovlyev · CC0（走动测试夹具）',
++    slots: [],
+   },
+ };
+ 
