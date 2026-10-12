@@ -100,3 +100,102 @@ export async function findLogoUrl(website: string | null | undefined): Promise<s
   const fav = abs('/favicon.ico', website);
   return fav && (await isImage(fav)) ? fav : null;
 }
+
+// ────────────────────────────────────────────
+// 官网找不到 / 只拿到站点图标时的兜底来源（数据部门 10-11：中国企业先看百科，海外企业看维基）
+// ────────────────────────────────────────────
+
+export const isFaviconOnly = (u: string | null | undefined) => !!u && /favicon|\.ico(\?|$)/i.test(u);
+
+/** 招聘站（moka / 北森 / hotjob 页头一般挂公司 logo）：只认页面里明确的 logo 图，不要站点图标（那是招聘平台自己的） */
+export async function careersLogo(url: string | null | undefined): Promise<string | null> {
+  if (!url || !/^https?:\/\//i.test(url)) return null;
+  const page = (await directHtml(url)) || (await jinaHtml(url));
+  if (!page) return null;
+  const { list, strong } = logoCandidates(page.html, page.url);
+  return list.slice(0, Math.min(strong, 3)).find(Boolean) || null;
+}
+
+const norm = (s: string) => s.replace(/[（(].*?[)）]|股份|有限|责任|公司|集团|控股|科技|技术|中国|\s/g, '');
+
+/** 百度百科词条卡片接口（公开 API，不过网页的安全验证）：词条标题要和企业名对得上，描述得像企业 */
+export async function baikeLogo(names: (string | null | undefined)[]): Promise<string | null> {
+  for (const key of Array.from(new Set(names.filter((n): n is string => !!n && /[一-龥]/.test(n))))) {
+    try {
+      const r = await fetch(`https://baike.baidu.com/api/openapi/BaikeLemmaCardApi?scope=103&format=json&appid=379020&bk_length=80&bk_key=${encodeURIComponent(key)}`, { headers: { 'User-Agent': UA }, signal: AbortSignal.timeout(15000) });
+      const d: any = await r.json().catch(() => null);
+      if (!d?.image || !d?.title) continue;
+      const a = norm(d.title), b = norm(key);
+      if (!a || !b || !(a.includes(b) || b.includes(a))) continue;
+      if (d.desc && /(人物|演员|歌手|作家|电影|电视剧|小说|游戏|歌曲|地名|城市|河流)/.test(d.desc) && !/(公司|企业|集团|品牌)/.test(d.desc)) continue;
+      return String(d.image);
+    } catch { /* 下一个名字 */ }
+  }
+  return null;
+}
+
+const WD_UA = { 'User-Agent': 'companydata-logo/1.0 (company logo lookup)' };
+const rootOf = (u: string) => { try { return new URL(u).hostname.replace(/^www\./, '').split('.').slice(-2).join('.'); } catch { return ''; } };
+
+/** 维基数据 P154（logo 图片）→ 维基共享资源的文件地址。官网（P856）对得上的条目优先；没官网可比时要求条目名 / 别名和企业名一致、描述像企业（防「诺和诺德基金会」这类同名机构） */
+export async function wikidataLogo(name: string | null | undefined, website?: string | null): Promise<string | null> {
+  if (!name) return null;
+  try {
+    const s: any = await (await fetch(`https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&uselang=en&type=item&limit=5&search=${encodeURIComponent(name)}`, { headers: WD_UA, signal: AbortSignal.timeout(15000) })).json();
+    const ids: string[] = (s?.search || []).map((x: any) => x.id).slice(0, 5);
+    if (!ids.length) return null;
+    const e: any = await (await fetch(`https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=claims|descriptions|labels|aliases&languages=en&ids=${ids.join('|')}`, { headers: WD_UA, signal: AbortSignal.timeout(15000) })).json();
+    const want = website ? rootOf(website) : '';
+    let fallback: string | null = null;
+    for (const id of ids) {
+      const ent = e?.entities?.[id];
+      const file = ent?.claims?.P154?.[0]?.mainsnak?.datavalue?.value;
+      if (!file) continue;
+      const fileUrl = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(String(file).replace(/ /g, '_'))}`;
+      const sites: string[] = (ent.claims.P856 || []).map((c: any) => c?.mainsnak?.datavalue?.value).filter(Boolean);
+      if (want && sites.some(u => rootOf(u) === want)) return fileUrl;
+      const desc = ent?.descriptions?.en?.value || '';
+      const key = (x: string) => x.toLowerCase().replace(/[^a-z0-9]/g, '').replace(/(incorporated|inc|corporation|corp|company|co|ltd|limited|plc|ag|sa|se|nv|gmbh|group|holdings?)$/g, '');
+      const labels = [ent?.labels?.en?.value, ...(ent?.aliases?.en || []).map((a: any) => a?.value)].filter(Boolean).map(key);
+      if (!fallback && (!want || !sites.length) && labels.includes(key(name)) && /(company|corporation|manufacturer|conglomerate|enterprise|business|bank|group|firm|maker|retailer|brand)/i.test(desc)) fallback = fileUrl;
+    }
+    return fallback;
+  } catch { return null; }
+}
+
+/** 让 Gemini 看一眼：这张图是不是这家企业的 logo（百科给小公司自动生成的「公司名 + 楼房插画」卡片、招聘平台自己的 logo 都要排除） */
+export async function looksLikeLogo(url: string, company: string): Promise<boolean> {
+  try {
+    const r = await fetch(url, { headers: { 'User-Agent': UA }, redirect: 'follow', signal: AbortSignal.timeout(20000) });
+    if (!r.ok) return false;
+    const ct = (r.headers.get('content-type') || '').split(';')[0].trim().toLowerCase();
+    const buf = Buffer.from(await r.arrayBuffer());
+    if (ct.includes('svg') || /\.svg(\?|$)/i.test(r.url)) return buf.length > 200;   // 矢量图基本都是正式 logo，模型也看不了
+    const mime = /^image\/(png|jpeg|webp|heic|heif)$/.test(ct) ? ct : buf.subarray(0, 4).toString('hex') === '89504e47' ? 'image/png' : buf.subarray(0, 2).toString('hex') === 'ffd8' ? 'image/jpeg' : '';
+    if (!mime || buf.length < 300) return false;
+    const { GoogleGenerativeAI } = await import('@google/generative-ai');
+    const model = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '').getGenerativeModel({ model: 'gemini-3.8-flash', generationConfig: { responseMimeType: 'application/json' } });
+    const res = await model.generateContent([
+      { inlineData: { mimeType: mime, data: buf.toString('base64') } },
+      `Is this image the brand logo (logo mark and/or wordmark) of the company "${company}"? Answer false for: auto-generated placeholder cards that just print the company name over a generic illustration, photos of buildings / people / products, logos of a different company or of a recruiting platform. Return JSON {"logo": true|false}.`,
+    ]);
+    return /"logo"\s*:\s*true/.test(res.response.text());
+  } catch { return false; }
+}
+
+/** 兜底找 logo：中国企业 百科 → 招聘站 → 维基；海外企业 维基 → 招聘站 → 百科。每个候选过一遍 looksLikeLogo */
+export async function findLogoFallback(c: { name: string; name_en?: string | null; brief_name?: string | null; segment?: string | null; official_website?: string | null; campus_url?: string | null; careers_url?: string | null }): Promise<{ url: string; source: string } | null> {
+  const overseas = c.segment === 'overseas_top' || !/[一-龥]/.test(c.name);
+  const baike = async () => baikeLogo([c.name, c.brief_name]);
+  const wiki = async () => wikidataLogo(c.name_en || (overseas ? c.name : null), c.official_website);
+  const careers = async () => (await careersLogo(c.campus_url)) || (await careersLogo(c.careers_url));
+  const order: [string, () => Promise<string | null>][] = overseas
+    ? [['wikidata', wiki], ['careers', careers], ['baike', baike]]
+    : [['baike', baike], ['careers', careers], ['wikidata', wiki]];
+  const label = [c.name, c.name_en].filter(Boolean).join(' / ');
+  for (const [source, get] of order) {
+    const u = await get().catch(() => null);
+    if (u && (await looksLikeLogo(u, label))) return { url: u, source };
+  }
+  return null;
+}

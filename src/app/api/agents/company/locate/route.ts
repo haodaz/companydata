@@ -3,7 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { locateCompanyPages } from '@/lib/agents/company-pipeline';
 import { subEntityCounts } from '@/lib/company-store';
 import { hasValue } from '@/lib/company-fields';
-import { findLogoUrl } from '@/lib/company-logo';
+import { findLogoFallback, findLogoUrl, isFaviconOnly } from '@/lib/company-logo';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -37,9 +37,14 @@ export async function POST(req: Request) {
     const nameEnIsUrl = /^https?:\/\//i.test(company.name_en || '');
     if (located.name_en && !/^https?:\/\//i.test(located.name_en) && (!hasValue(company.name_en) || nameEnIsUrl)) fill.name_en = located.name_en;
     else if (nameEnIsUrl) fill.name_en = null;
-    if (!hasValue(company.logo_url)) {
-      const logo = await findLogoUrl(fill.official_website || company.official_website || located.official_website);
-      if (logo) fill.logo_url = logo;
+    if (!hasValue(company.logo_url) || isFaviconOnly(company.logo_url)) {
+      let logo = hasValue(company.logo_url) ? null : await findLogoUrl(fill.official_website || company.official_website || located.official_website);
+      // 官网没有 / 只拿到站点图标：中国企业查百科、海外企业查维基，再看招聘站
+      if (!logo || isFaviconOnly(logo)) {
+        const alt = await findLogoFallback({ ...company, ...fill, brief_name: fill.brief_name || company.brief_name, official_website: fill.official_website || company.official_website || located.official_website });
+        if (alt) logo = alt.url;
+      }
+      if (logo && logo !== company.logo_url) fill.logo_url = logo;
     }
     if (located.brief_name && !hasValue(company.brief_name)) fill.brief_name = located.brief_name;
     const locked = new Set<string>(company.human_locked_fields || []);
