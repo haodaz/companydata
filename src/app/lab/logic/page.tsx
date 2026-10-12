@@ -279,11 +279,18 @@ export default function LabLogicPage() {
           <tr><td><b>采集</b></td><td>上传口 {F('/lab/studio/pano')}（签名直传，图片 / 视频）；以后加合作方批量接口（素材来源、授权、拍摄信息一起进来）</td><td><span className="lg-st done">上传口已有</span></td></tr>
           <tr><td><b>清洗 / 预处理</b></td><td>2:1 检查、转 H.264、按朝向切成透视图（{F('equirect.py')}，v360）、抽帧、去掉脚下的拍摄者和自拍杆、挑初始机位</td><td><span className="lg-st done">已有</span></td></tr>
           <tr><td><b>成形</b></td><td>两档：<b>全景</b>（传上来马上能转头看，没有视差）；<b>3D 重建</b>（缓慢平稳走一段 → {F('make-scene --equirect')} → 质量门 → 3D 高斯，有纵深）</td><td><span className="lg-st done">已有</span></td></tr>
-          <tr><td><b>识别</b></td><td>视觉模型在全景 / 透视图里找行业要素：设备、工具、工位、仪表、警示标识、人能站的地方；标出在空间里的位置（全景方位角 / 3D 坐标）</td><td><span className="lg-st todo">下一步</span></td></tr>
-          <tr><td><b>结构化</b></td><td>识别结果变成场景里可交互的物件（像火箭厂房里点「喷管」弹说明的热点），每件带名称、用途、在这行里的规矩；挂到素材库和实体图谱上（物 = 企业 / 空间 / 道具 / 仪器设备）</td><td><span className="lg-st todo">下一步</span></td></tr>
-          <tr><td><b>入库 / 关联</b></td><td>物件和章节、母版关联：拍到一台开关柜，就能直接变成现场母版里的热区和工具；同一类物件跨空间复用（和人物、场景复用同一套归库规则）</td><td><span className="lg-st todo">下一步</span></td></tr>
+          <tr><td><b>识别</b></td><td>视觉模型在全景 / 透视图里找行业要素：设备、工具、工位、仪表、警示标识、人能站的地方；标出在空间里的位置（全景方位角 / 3D 坐标）</td><td><span className="lg-st done">已有</span></td></tr>
+          <tr><td><b>结构化</b></td><td>识别结果变成场景里可交互的物件（像火箭厂房里点「喷管」弹说明的热点），每件带名称、用途、在这行里的规矩；挂到素材库和实体图谱上（物 = 企业 / 空间 / 道具 / 仪器设备）</td><td><span className="lg-st wip">要素卡片已有；挂图谱待做</span></td></tr>
+          <tr><td><b>入库 / 关联</b></td><td>物件和章节、母版关联：拍到一台开关柜，就能直接变成现场母版里的热区和工具；同一类物件跨空间复用（和人物、场景复用同一套归库规则）</td><td><span className="lg-st wip">场景已能接进空间（潜导）；接母版热区待做</span></td></tr>
           <tr><td><b>审核 / 留痕</b></td><td>识别和结构化的结果进工作室给人确认、改正；人怎么改记进留痕（训练识别和关联的偏好数据）</td><td><span className="lg-st todo">下一步</span></td></tr>
         </tbody></table>
+        <h3>已经跑通的（2026-10-12）</h3>
+        <ul>
+          <li><b>识别</b> {F('npx tsx scripts/beta3d/pano-recognize.mts <全景.jpg> <key> --scene … [--role …] [--kinds … --focus … --tags …]')}：切一圈 16 个透视图 → 视觉模型逐张找要素、框位置 → 框中心反算全景方位（和 ffmpeg v360 约定一致，已核对）→ 跨视角合并 → 统一写叫法 / 标签 / 介绍。产出 {F('src/lib/pano-spots/<key>.json')}（人可以直接改），原始结果留作训练样本。换领域只换参数（工厂默认；水下用潜导的类别和关注点）。</li>
+          <li><b>全景查看器</b> {F('Pano360')}：要素做成可点标记 + 介绍卡片 + 分类 / 标签筛选 +「路过的好东西」清单；前倾推近（头部追踪的远近）；街景式地面箭头在多个点位间走；边走边拍的视频前倾往前播。</li>
+          <li><b>案例</b>：锅炉房（Poly Haven，CC0，35 件：仪表、阀门、配电、规程…）{F('/lab/beta/3d/boiler')}；大堡礁两个礁区（Wikimedia Commons，CC BY-SA，18 + 22 件：不可触碰的珊瑚、要保持距离的生物、浪涌 / 触礁风险区）{F('/lab/beta/3d/reef-dive')}，已接进潜导空间（进去默认看实拍，可切回 3D）。抽查定位都准。</li>
+          <li><b>授权</b>：每个场景的说明里写来源和署名；CC BY-SA 的要署名、改了再发布也要同授权。目前只做演示、不商用，正式的用合作素材。</li>
+        </ul>
         <h3>为什么这件事和母版是一回事</h3>
         <p>母版把台面变成了数据（热区、工具、读数、手势都是配置）。所以真实空间里识别出来的每件东西，可以<b>直接</b>变成某个母版的配置项——人连物的升维：真实环境里的每件设备都成了可交互、可考核、可追溯的实体。识别做得越全，生一个新职业空间要手工补的越少。</p>
         <h3>合作模式</h3>
@@ -302,11 +309,12 @@ export default function LabLogicPage() {
         {/* 16 */}
         <h2 id="issues">16 · 已知问题 / 待办</h2>
         <ul>
-          <li>全库体检（10-12）：<b>B2</b> 9 个空间的工位借用了咖啡杯层（宠物洗护、消防、整理衣橱…）；<b>D5</b> 3 个空间给人看的文字留着角色编号（含沥青）；<b>B1</b> 按真实步长有空间的老手脚本走不通（精铸 Case C、焊接 Case D、火箭、转炉、潜导、幼儿园…）。未改库，等定。</li>
-          <li>迁移 020 {F('lab_edits')} 待在 Supabase 跑。</li>
-          <li>河堤台面「堆砌复杂、没有可操作感」待重做（可借母版 B 重做）。</li>
-          <li>手部识别 / 拿道具精度：待真人试。</li>
-          <li>{F('lab_releases')} 空间包 / 对外只读接口：未做。</li>
+          <li><b>内容问题</b>（全库体检，未改库，等定）：B2 有空间的工位借用了咖啡杯层（宠物洗护、消防、整理衣橱…）；D5 有空间给人看的文字留着角色编号（含沥青）；B1 幼儿园、潜导等的老手脚本按体验端真实步长走不通（代码版同样，和母版化无关）。</li>
+          <li>迁移 020 {F('lab_edits')} 待在 Supabase 跑（没跑之前留痕静默跳过）。</li>
+          <li><b>代码规范债</b>：React 编译器新规则「渲染时读写 ref」和类型里的 {F('any')}，老代码（BenchRunner、各台面）和母版里都有，构建不检查；以后统一清。</li>
+          <li>河堤台面「堆砌复杂、没有可操作感」待重做（可借母版 B）。手部识别 / 拿道具精度待真人试。</li>
+          <li>真实素材：识别结果挂实体图谱、接成母版热区、工作室审核留痕还没做；合作方批量接口未做。</li>
+          <li>{F('lab_releases')} 空间包 / 对外只读接口未做；同步给公司 simulator 的新一轮补丁在整理（见 {F('docs/simulator-sync.md')}）。</li>
         </ul>
 
         {/* 17 */}
@@ -317,6 +325,8 @@ export default function LabLogicPage() {
           <tr><td>母版</td><td>{F('src/lib/lab-masters.ts')} · {F('src/components/lab/masters/')} · {F('src/lib/lab-switching-field.ts')} · {F('/lab/beta/bench/<key>')}</td></tr>
           <tr><td>校验 / 评审</td><td>{F('src/lib/lab-studio.ts')} · {F('src/lib/agents/lab-review.ts')} · {F('scripts/lab-check-all.mts')} · {F('scripts/lab-review.mts')}</td></tr>
           <tr><td>美术 / 3D</td><td>{F('src/lib/lab-art.ts')} · {F('scripts/lab-gen-scene.mts')} · {F('scripts/beta3d/')}（make-scene / prompt / sfm / view / ply2splat / upload / equirect）· {F('src/lib/lab-3d-beta.ts')} · 360° 实拍：{F('/lab/studio/pano')}、{F('api/lab/studio/pano')}、{F('components/lab/Pano360.tsx')}</td></tr>
+          <tr><td>母版回归</td><td>{F('scripts/lab-masters-check.mts')}（改了共用代码就跑：样板清洗 / 干跑对照代码版 / 渲染，库里用母版的工位逐个过）</td></tr>
+          <tr><td>真实素材</td><td>{F('scripts/beta3d/pano-recognize.mts')} · {F('src/lib/pano-spots/')} · {F('components/lab/Pano360.tsx')} · {F('/lab/studio/pano')}</td></tr>
           <tr><td>留痕 / 样板</td><td>{F('src/lib/lab-edits.ts')} · {F('supabase/migrations/020_lab_edits.sql')} · {F('docs/lab-playbook.md')} · {F('scripts/lab-playbook-export.mts')}</td></tr>
           <tr><td>其他文档</td><td>{F('docs/lab-studio.md')}（工厂 / 体验改造）· {F('docs/lab-assets.md')} · {F('docs/lab-3d-beta.md')} · {F('docs/lab-next-batch.md')} · {F('docs/video-storyboards.md')}</td></tr>
         </tbody></table>
