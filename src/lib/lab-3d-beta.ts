@@ -6,8 +6,16 @@
 /** 场景里可以点的物件：鼠标悬停出线框，点一下弹说明（像游戏里的空间建模）。pos / size 在重建出来的场景坐标系里（用查看器 ?edit=1 点出来） */
 export interface Beta3DHotspot { id: string; name: string; desc: string; pos: [number, number, number]; size: [number, number, number]; /** 绕竖轴转多少度 */ rotY?: number }
 
+/**
+ * 真实 360° 素材（可选，和 Veo 重建并存）：GoPro Max / Insta360 导出的等距柱状 2:1 图片或视频，查看器里只能转头看、没有视差。
+ * 只有 pano 的场景：url 留空 ''（position / lookAt / up / span 随便填，用不上）；两个都有：先看 3D，角上能切到 360°。
+ * 上传入口 /lab/studio/pano（要登录），传完给出要贴进来的这一段。yaw：一打开朝哪看（度，0 = 画面正中，正数往右）
+ */
+export interface Beta3DPano { url: string; kind: 'image' | 'video'; yaw?: number }
+
 export interface Beta3DScene {
   key: string; title: string; role: string; spaceId: string; url: string;
+  pano?: Beta3DPano;
   hotspots?: Beta3DHotspot[];
   position: [number, number, number]; lookAt: [number, number, number]; up: [number, number, number]; span: number;
   credit: string;
