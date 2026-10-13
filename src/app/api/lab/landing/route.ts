@@ -62,8 +62,22 @@ export async function GET() {
       faces: spaces.map(s => s.avatar).filter(Boolean).slice(0, 12),
     };
 
+    // 平方知识图谱的家底（首页「一个职业，四种空间」用；都是库里的实数）
+    const cnt = async (table: string, f?: (q: any) => any) => {
+      let q: any = supabaseAdmin.from(table).select('id', { count: 'exact', head: true });
+      if (f) q = f(q);
+      const { count } = await q; return count || 0;
+    };
+    const [kCompanies, kJobs, kOcc, kTasks, kPlaces, kStations, kItems, kStd, kLinks, kRuns] = await Promise.all([
+      cnt('companies'), cnt('jobs', q => q.not('if_delete', 'is', true)), cnt('occupations', q => q.eq('if_delete', false)),
+      cnt('typical_tasks', q => q.eq('if_delete', false)), cnt('work_places', q => q.eq('if_delete', false)), cnt('work_stations', q => q.eq('if_delete', false)),
+      cnt('work_items', q => q.eq('if_delete', false)), cnt('industry_standards'), cnt('entity_links', q => q.eq('if_delete', false)), cnt('skill_submissions'),
+    ].map(p => p.catch(() => 0)));
+    const kg = { companies: kCompanies, jobs: kJobs, occupations: kOcc, tasks: kTasks, places: kPlaces, stations: kStations, items: kItems, standards: kStd, links: kLinks, runs: kRuns, experts: real.length };
+
     const body = {
       ok: true,
+      kg,
       totals,
       spaces,
       tiles,

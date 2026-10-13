@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { KeepChart } from '@/components/lab/KeepChart';
 
 /**
  * AI 百业 · 首页。
@@ -27,10 +28,27 @@ const CSS = `
 .lab:not([data-theme="light"]):has(.ai100-root) .lab-btn.ghost:hover { color: #fff; box-shadow: 0 0 0 1px rgba(140,126,255,.6); }
 .ai100-root { color: var(--ink); }
 
+/* 体验视频：左文右片 */
+.ai100-watch { display: grid; gap: clamp(20px, 3.5vw, 52px); grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; }
+@media (max-width: 860px) { .ai100-watch { grid-template-columns: 1fr; } }
+.ai100-player { border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 30px 80px rgba(0,0,0,.45), 0 0 0 1px rgba(140,126,255,.18); background: #000; aspect-ratio: 16 / 9; }
+.ai100-player video { width: 100%; height: 100%; display: block; object-fit: cover; }
+.lab[data-theme="light"] .ai100-player { border-color: rgba(255,255,255,.9); box-shadow: 0 24px 60px rgba(88,76,220,.2); }
+/* 四种空间：四张卡一路往前 */
+.ai100-spaces { display: grid; gap: 14px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1100px) { .ai100-spaces { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .ai100-spaces { grid-template-columns: 1fr; } }
+.ai100-space { position: relative; padding: 22px 22px 18px; display: flex; flex-direction: column; min-height: 330px; }
+.ai100-space-name { font-size: clamp(26px, 2.6vw, 34px); font-weight: 900; letter-spacing: .02em; margin-top: 8px; line-height: 1.2; }
+.ai100-space-metric { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 12.5px; font-weight: 700; color: var(--v); letter-spacing: .02em; }
+.ai100-space-arrow { position: absolute; right: -13px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(120deg, var(--v), var(--c)); color: #fff; font-size: 13px; z-index: 2; box-shadow: 0 4px 14px rgba(106,92,255,.4); }
+@media (max-width: 1100px) { .ai100-space-arrow { display: none; } }
+
 /* 整页出血 */
 .ai100-bleed { margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); width: 100vw; }
 
-/* banner：一次真实点火当背景，字压在上面 */
+/* banner：我们自己的三个空间（3D / 360° 实拍）串成的无缝循环当背景，字压在上面 */
 .ai100-hero { position: relative; min-height: min(90vh, 820px); display: flex; align-items: center; overflow: hidden; margin-top: -24px; }
 .ai100-hero > video, .ai100-hero > img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .ai100-hero .veil { position: absolute; inset: 0;
@@ -47,7 +65,7 @@ const CSS = `
 @keyframes ai100-left { to { transform: translateX(calc(-50% - 6px)); } }
 @keyframes ai100-right { from { transform: translateX(calc(-50% - 6px)); } to { transform: translateX(0); } }
 
-.ai100-band { background: rgba(255,255,255,.035); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 26px 0; margin-top: clamp(44px, 7vw, 80px); margin-bottom: clamp(44px, 7vw, 80px); }
+.ai100-band { background: transparent; padding: 10px 0; margin-top: clamp(18px, 3vw, 32px); margin-bottom: clamp(8px, 2vw, 18px); }
 .ai100-band-in { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
 .ai100-marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
 .ai100-marquee > div { display: flex; gap: 44px; width: max-content; animation: ai100-left 58s linear infinite; align-items: center; }
@@ -77,7 +95,6 @@ const CSS = `
 .lab[data-theme="light"] .ai100-grad { background: linear-gradient(118deg, var(--v), #8f7bff 40%, var(--c)); -webkit-background-clip: text; background-clip: text; }
 .lab[data-theme="light"] .ai100-film { background: rgba(255,255,255,.66); border-bottom-color: var(--line); }
 .lab[data-theme="light"] .ai100-film img { border-color: rgba(106,92,255,.16); }
-.lab[data-theme="light"] .ai100-band { background: rgba(255,255,255,.72); }
 .lab[data-theme="light"] .ai100-faces .cap { background: rgba(255,255,255,.86); border-color: rgba(106,92,255,.18); }
 .lab[data-theme="light"] .ai100-faces .cap .k { color: var(--v); }
 .lab[data-theme="light"] .ai100-faces .cap .r { color: var(--ink); }
@@ -219,13 +236,13 @@ const HOW = [
   { t: '故事化', d: '没有知识点列表，只有一天里接连发生的事。先遇到问题，再需要知识——这才是职业真实的学习顺序。' },
   { t: '尊重专业', d: '宁可少做，不可做错。每个工位都要先让专家脚本自己走一遍能过，才允许上线，不然就是在添乱。' },
   { t: '数据不说谎', d: '同行、在招岗位、上下游企业全部来自真实抓取的企业库与岗位库。我们不编公司名，也不编薪资。' },
-  { t: '可被创造', d: '不是我们预先做好一百个行业。任何人给一份 JD、甚至只给一个职业名，几分钟就能长出一个新的空间。' },
+  { t: '持续生长', d: '不是预先摆好的一百个展台。一份企业 JD、甚至一个职业名，几分钟就能长出一个新的空间，百业每天都在变大。' },
 ];
 
 const KEEP = [
-  { n: '01', t: '采集：问的是判断，不是答案', d: '让真人专家把自己的一天走一遍。每到一个决定点，AI 核心就追问「为什么是现在」「凭什么是这个数」「换个条件你还这么做吗」——它要的是他脑子里那套判断，不是一个标准答案。' },
-  { n: '02', t: '蒸馏：落成一张能被检验的技能卡', d: '回答被结构化成能力项、判断规则、参数窗口、合格判据，以及常见错误和它们的归因。先由 AI 起草，专家逐条校正；没人校正过的，卡上就老实写着「AI 自学草案 · 等待第一位专家」。' },
-  { n: '03', t: '调用：每一次都记账', d: '技能卡进了空间就能反复被用——考新人、答疑、异地解决问题。这门手艺来自谁、在哪一年被蒸馏、此刻正被哪个地方的谁用着，全部留痕。' },
+  { n: '01', t: '记录：盯着偏差追问', d: '请老师傅把这一行的一天亲手走一遍。AI 不泛泛地问，专挑他和现行规则不一样的地方追问——为什么是现在、凭什么是这个数、换个条件还这么做吗。追问出来的结论，直接写回那条规则的出处。' },
+  { n: '02', t: '校正：每条规则回挂出处', d: '工位上的每一条规则都要说清来处：标准条款、老师傅经验，还是 AI 推断。没有出处的规则、只靠 AI 推断就判违规的规则，校验器当场拦下。老师傅认可的推断升级为「老师傅经验」，不认的留下修改建议。' },
+  { n: '03', t: '再用：示范要过五道关', d: '一次示范操作逐条对照出处，过五道关——守红线、达目标、讲得清、可复现、有增量；评三档——示范级、参考级、不采纳转为反例。不靠 AI 自己打分。示范级的轨迹，成为新人必须跑通的标准。' },
 ];
 
 const VALUE = [
@@ -285,6 +302,26 @@ function Stat({ n, k }: { n: React.ReactNode; k: string }) {
     </div>
   );
 }
+
+/** 体验视频（8 分 34 秒，720p，存在 Supabase Storage lab-media 桶；原片在桌面「AI百业演示」） */
+const DEMO_VIDEO = 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-media/landing/baiye-demo-720.mp4';
+
+/** 一个职业，四种空间：可信（数据）→ 升维（知识图谱）→ 求真（科学评价）→ 心智（AI + 空间）。数字都是库里的实数 */
+const fmt = (n?: number) => (n ? n.toLocaleString('zh-CN') : '');
+const SPACES4: { k: string; name: string; t: string; d: string; metric: (kg: any) => string }[] = [
+  { k: 'SPACE 1 · 数据', name: '可信空间', t: '底子干净，句句有出处',
+    d: '企业、岗位、职业、标准、工位与设备分库建档：统一编号、去重合并、人工审核留痕。数字职人说出的每一个数字都能追到来源；库里没有的，它不编。',
+    metric: kg => [kg.companies && `${fmt(kg.companies)} 家企业`, kg.jobs && `${fmt(kg.jobs)} 个岗位`].filter(Boolean).join(' · ') },
+  { k: 'SPACE 2 · 知识图谱', name: '升维空间', t: '从一条记录，到一张全景',
+    d: '把散落的数据连成一张图：职业连着在招的企业与岗位，连着典型任务、工位与设备，连着标准条款与成长阶梯。理解一个职业，从此是全局的、全面的、连续的、有深度的。',
+    metric: kg => [kg.tasks && `${fmt(kg.tasks)} 个典型任务`, kg.items && `${fmt(kg.items)} 件工具设备`, kg.links && `${fmt(kg.links)} 条关联`].filter(Boolean).join(' · ') },
+  { k: 'SPACE 3 · 科学评价', name: '求真空间', t: '用过程说话，让能力可被证明',
+    d: '每一步操作进入事件流，按行业标准判分，请老师傅复核，对照成长阶梯定级发证。研究背书、数据支撑、产品落地连成闭环——评价可核验，决策才有依据。',
+    metric: kg => (kg.standards ? `${fmt(kg.standards)} 条行业标准与操作规程` : '') },
+  { k: 'SPACE 4 · AI + 空间', name: '心智空间', t: '让每个职业长出自己的心智',
+    d: '数字职人不是会说话的搜索框。它带着这一行的经验、判断与分寸，在空间里带你做、陪你练、答你问；来的人越多、教它的师傅越多，它越懂这一行。',
+    metric: kg => (kg.stations ? `${fmt(kg.stations)} 个工位 / 操作台` : '') },
+];
 
 export default function LabLanding() {
   const router = useRouter();
@@ -348,11 +385,10 @@ export default function LabLanding() {
     <div className="ai100-root">
       <style>{CSS}</style>
 
-      {/* ══ 开场：一次真实点火当背景 ══ */}
+      {/* ══ 开场：我们自己的空间——火箭总装（3D）→ 锅炉房（360° 实拍）→ 咖啡吧台（3D），约 10 秒一段无缝循环 ══ */}
       <section className="ai100-bleed ai100-hero">
-        <video autoPlay muted loop playsInline preload="metadata" poster="/lab-landing/rocket-wide.jpg">
-          <source src="/lab-landing/rocket-wide.webm" type="video/webm" />
-          <source src="/lab-landing/rocket-wide.mp4" type="video/mp4" />
+        <video autoPlay muted loop playsInline preload="metadata" poster="/lab-landing/spaces-loop.jpg">
+          <source src="/lab-landing/spaces-loop.mp4" type="video/mp4" />
         </video>
         <div className="veil" />
         <div className="in">
@@ -374,13 +410,6 @@ export default function LabLanding() {
             </div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
               <button className="lab-btn" style={{ height: 52, padding: '0 28px', fontSize: 15 }} onClick={() => router.push('/lab/gallery')}>体验百业 →</button>
-              <button className="lab-btn ghost" style={{ height: 52, padding: '0 26px', fontSize: 15 }} onClick={() => router.push('/lab/spaces?new=career')}>创造一个空间</button>
-            </div>
-            <div style={{ display: 'flex', gap: 'clamp(22px, 4vw, 50px)', flexWrap: 'wrap', marginTop: 36 }}>
-              <Stat n={n} k="位数字职人" />
-              <Stat n={famN} k="个一级领域" />
-              {t?.served > 0 && <Stat n={t.served} k="人次走过他们的一天" />}
-              {t?.places > 0 && <Stat n={t.places} k="个地方用过" />}
             </div>
           </div>
         </div>
@@ -420,6 +449,48 @@ export default function LabLanding() {
           </div>
         </div>
       )}
+
+      {/* ══ 体验视频：8 分钟走一遍百业 ══ */}
+      <section className="ai100-sec ai100-watch">
+        <div>
+          <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>WATCH · 8 MIN</div>
+          <h2 className="ai100-h2">用你所做，<span className="ai100-grad">证你所能</span></h2>
+          <p className="ai100-lead" style={{ marginBottom: 18 }}>
+            从火箭总装到田间地头，从热火朝天的车间到安静的工作室，从服务台到应急指挥席——一二三产，八分钟走一遍百业。
+          </p>
+          <button className="lab-btn ghost" style={{ height: 46, padding: '0 22px' }} onClick={() => router.push('/lab/gallery')}>自己进去试试 →</button>
+        </div>
+        <div className="ai100-player">
+          <video controls playsInline preload="none" poster="/lab-landing/demo-poster.jpg">
+            <source src={DEMO_VIDEO} type="video/mp4" />
+            <track kind="subtitles" srcLang="zh" label="中文" src="/lab-landing/demo.vtt" default />
+          </video>
+        </div>
+      </section>
+
+      {/* ══ 平方智能：一个职业，四种空间（数字来自平方的库，不是写死的） ══ */}
+      <section className="ai100-sec">
+        <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>SQUARE AI · 平方智能</div>
+        <h2 className="ai100-h2">一个职业，<span className="ai100-grad">四种空间</span></h2>
+        <p className="ai100-lead" style={{ marginBottom: 26 }}>
+          百业里的每一个职业，都建在平方的数据与知识图谱之上：先做到可信，再实现升维，用评价求真，最终长出这一行自己的心智。
+        </p>
+        <div className="ai100-spaces">
+          {SPACES4.map((x, i) => {
+            const metric = x.metric(d?.kg || {});
+            return (
+              <div key={x.name} className="lab-glass lab-in ai100-space" style={{ animationDelay: `${i * 80}ms` }}>
+                <div className="lab-mono" style={{ fontSize: 11.5, letterSpacing: '.14em', color: 'var(--ink3)' }}>{x.k}</div>
+                <div className="ai100-space-name"><span className="ai100-grad">{x.name}</span></div>
+                <div style={{ fontSize: 16, fontWeight: 800, margin: '4px 0 10px' }}>{x.t}</div>
+                <div style={{ fontSize: 13.5, color: 'var(--ink2)', lineHeight: 1.95, flex: 1 }}>{x.d}</div>
+                {metric && <div className="ai100-space-metric">{metric}</div>}
+                {i < SPACES4.length - 1 && <div className="ai100-space-arrow">→</div>}
+              </div>
+            );
+          })}
+        </div>
+      </section>
 
       {/* ══ 01 落点是人 ══ */}
       <section>
@@ -544,10 +615,10 @@ export default function LabLanding() {
               <h2 className="ai100-h2">让资深技能<br /><span className="ai100-grad">被记录、被校正、被再用起来</span></h2>
               <p className="ai100-lead" style={{ margin: 0 }}>
                 一个老师傅手上的判断，大多说不清，也没人记。退休、转行、换一家厂，一套手艺就跟着走了。
-                我们把「留住」这件事拆成三步，每一步都落在数据上，而不是落在一段录像里。
+                百业让每一条规则都说得清来处：哪条出自标准条款，哪条是老师傅的经验，哪条还只是 AI 的推断——可解释，才可信，才敢再用。
               </p>
             </div>
-            <Image src="/lab-landing/skill-keep.jpg" alt="老师傅的手艺被记录成一张张可以被取用的技能卡" width={1440} height={810} sizes="(max-width: 860px) 100vw, 600px" />
+            <KeepChart />
           </div>
           <div className="steps">
             {KEEP.map((x, i) => (
@@ -558,23 +629,6 @@ export default function LabLanding() {
               </div>
             ))}
           </div>
-          {(t?.experts > 0 || t?.served > 0) && (
-            <div className="ledger">
-              <div className="lab-mono lab-cap" style={{ color: 'var(--ink3)' }}>已经留下来的</div>
-              <div className="row">
-                {t?.experts > 0 && <Stat n={t.experts} k="位真人专家校正过" />}
-                {t?.expertPlaces?.length > 0 && <Stat n={t.expertPlaces.length} k="个地方的手艺" />}
-                {t?.served > 0 && <Stat n={t.served} k="人次调用过" />}
-                {t?.places > 0 && <Stat n={t.places} k="个地方用过" />}
-              </div>
-              {t?.expertPlaces?.length > 0 && (
-                <div style={{ fontSize: 13, color: 'var(--ink3)', marginTop: 12, lineHeight: 1.9, maxWidth: 900 }}>
-                  手艺来自 {t.expertPlaces.slice(0, 6).join('、')}{t.expertPlaces.length > 6 ? ' 等地' : ''}——
-                  这些名字和地点不是写在宣传页上的，它们记在每一张技能卡的来处里，进空间点开就能看见。
-                </div>
-              )}
-            </div>
-          )}
         </div>
       </div>
 
@@ -650,31 +704,10 @@ export default function LabLanding() {
         </div>
       </section>
 
-      {/* ══ 07 创造 ══ */}
-      <section className="ai100-sec">
-        <div style={{ display: 'grid', gap: 'clamp(20px, 3.5vw, 58px)', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', alignItems: 'center' }}>
-          <Art src="/lab-landing/concept-create.jpg" alt="从一份 JD 长出一座空间" />
-          <div>
-            <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>07 / 创造</div>
-            <h2 className="ai100-h2">不只是走进去，<br /><span className="ai100-grad">还能亲手造一个</span></h2>
-            <p className="ai100-lead" style={{ marginBottom: 20 }}>
-              百业不是我们预先摆好的一百个展台。给一份企业官方 JD，或者只给一个职业名——
-              岗位 AI 会自己拆职责、起草技能集、设计能用的工位，先排出这一行一天的时间轴，再一段一段写下去。
-              同一天里的人和地方反复出场：老师傅从早到晚是同一张脸，画过的人物、场景、道具进素材库，下一个职业接着用。
-              第一段两到四分钟就写好，你能看着它一步步长出来。
-            </p>
-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              <button className="lab-btn" style={{ height: 48, padding: '0 22px' }} onClick={() => router.push('/lab/spaces?new=jd')}>从一份 JD 建 →</button>
-              <button className="lab-btn ghost" style={{ height: 48, padding: '0 22px' }} onClick={() => router.push('/lab/spaces?new=career')}>只给一个职业名</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ══ 收尾 ══ */}
       <section className="lab-glass lab-in" style={{ padding: 'clamp(26px, 5vw, 56px)', margin: 'clamp(44px, 7vw, 86px) 0 10px', textAlign: 'center' }}>
         <div className="lab-mono lab-cap">NOW LIVING IN AI 百业</div>
-        <div className="ai100-h2" style={{ margin: '10px 0 20px' }}>{n} 位数字职人，正在各自的工位上</div>
+        <div className="ai100-h2" style={{ margin: '10px 0 20px' }}>数字职人，正在各自的工位上</div>
         {(t?.faces?.length > 0 || spaces.length > 0) && (
           <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 8, margin: '0 auto 24px', maxWidth: 800 }}>
             {(spaces.map((x: any) => x.avatar).filter(Boolean).length ? spaces.map((x: any) => x.avatar).filter(Boolean) : t.faces).slice(0, 20).map((f: string, i: number) => (
