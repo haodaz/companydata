@@ -9,7 +9,7 @@ import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
 import { visitorIds } from '@/lib/lab-cert';
 import { SimRunner, SimStage, TraceCompare, enterFullscreen } from '@/components/lab/SimRunner';
-import { PersonaChat } from '@/components/kg/PersonaChat';
+import { ChatLauncher } from '@/components/kg/PersonaChat';
 import { traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { GENERIC_CHAPTER_RUBRIC, INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tzLabel, type InterviewTurn, type RubricItem } from '@/lib/skill-lab';
 
@@ -1315,7 +1315,7 @@ function castOf(space: any, sim: Sim | null) {
       )}
 
       {/* ── 和我聊：数字职人聊这一行（知识来自平方知识图谱）。考核 / 走一天时不出现（考核不观摩），受邀老师傅也不出现 ── */}
-      {!guest && !isDay && mode !== 'solve' && <PersonaChat top={84} endpoint={`/api/lab/spaces/${id}/chat`} theme="dark" fallbackName={profile.name} fallbackAvatar={profile.avatar} bottom={!mode ? 200 : 22} />}
+      {!guest && !isDay && mode !== 'solve' && <ChatLauncher href={`/lab/${id}/chat`} name={profile.name} avatar={profile.avatar} bottom={!mode ? 200 : 22} />}
 
       {/* ── 职业地图（职业探索空间） ── */}
       {mode === 'career' && jd.career && <CareerPanel career={jd.career} onTry={() => setMode('test')} />}

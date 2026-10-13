@@ -209,7 +209,7 @@ export function opening(occ: any, persona: Persona, openJobs?: number) {
 export async function loadChatContext(by: { spaceId?: string | null; occupationId?: number | null }) {
   let space: any = null, occ: any = null;
   if (by.spaceId) {
-    const { data } = await supabaseAdmin.from('skill_tasks').select('id, title, jd_snapshot, profile').eq('id', by.spaceId).single();
+    const { data } = await supabaseAdmin.from('skill_tasks').select('id, title, jd_snapshot, profile, sim').eq('id', by.spaceId).single();
     space = data;
     if (!space) throw new Error('空间不存在');
     occ = await occupationOfSpace(space);

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { chatReply, loadChatContext, opening, recordTurn } from '@/lib/kg/persona-chat';
 import { LAB_GUEST } from '@/lib/lab-guest';
 import { getSessionUser } from '@/lib/session';
+import { supabaseAdmin } from '@/lib/supabase';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -14,7 +15,10 @@ export async function GET(_req: Request, ctx: Ctx) {
     const { id } = await ctx.params;
     const c = await loadChatContext({ spaceId: id });
     const jobs = Number(c.knowledge.text.match(/一共 (\d+) 个在招/)?.[1] || 0);
-    return NextResponse.json({ success: true, occupation: { id: c.occ.id, name: c.occ.name }, persona: c.persona, ...opening(c.occ, c.persona, jobs) });
+    // 独立对话页的左半边：立绘（人物首页那张全身像）+ 工作场景（第一章的封面，没有就用空间的）
+    const { data: ch } = await supabaseAdmin.from('lab_chapters').select('sim').eq('task_id', id).order('seq').limit(1).maybeSingle();
+    const scene = ch?.sim?.art?.cover || c.space?.sim?.art?.cover || null;
+    return NextResponse.json({ success: true, occupation: { id: c.occ.id, name: c.occ.name }, persona: c.persona, scene, title: c.space?.title || '', ...opening(c.occ, c.persona, jobs) });
   } catch (e: any) {
     return NextResponse.json({ success: false, error: e.message }, { status: 400 });
   }
