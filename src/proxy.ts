@@ -12,6 +12,7 @@ const INVITE_PAGE = /^\/lab\/([^/]+)$/;
  * 公司部署不开：/lab 照常要登录（他们有自己的统一认证）。只放 /lab 页面和 /api/lab/*，数据工厂的接口不受影响。
  */
 const LAB_PUBLIC = () => process.env.LAB_PUBLIC === '1';
+const LAB_FACTORY_PAGE = (p: string) => /^\/lab\/(spaces|studio|assets|logic|admin)(\/|$)/.test(p);
 /** 放开时仍要登录的「工厂」操作：生成新空间 / 预置示范、删除空间、发邀请链接、蒸馏专家技能（花钱或改内容） */
 const LAB_PROTECTED = (pathname: string, method: string) =>
   pathname.startsWith('/api/lab/studio/') ||   // 百业工厂：看草稿、改章节
@@ -62,9 +63,10 @@ export async function proxy(req: NextRequest) {
   if (/^\/lab\/(?:[^/]+\/)*[^/]+\.(png|jpe?g|webp|gif|svg|mp4|webm)$/i.test(pathname)) return NextResponse.next();
 
   // AI 百业首页公开：谁都能看见理念和这些人，点进任何一个空间才要求登录（LAB_PUBLIC=1 时整个 /lab 都公开）
-  // 百业工厂的工作室 /lab/studio/*、素材库 /lab/assets、设计文档 /lab/logic、百业后台 /lab/admin 例外：放开时也要登录
+  // 百业工厂（列表 /lab/spaces、工作室 /lab/studio/*、素材库 /lab/assets、设计文档 /lab/logic、百业后台 /lab/admin）例外：放开时也要登录。
+  // 没登录的人只有首页和「体验百业」（/lab/gallery、各空间页、我的进度、证书、3D beta）。
   if (pathname.startsWith('/lab/cert/')) return NextResponse.next();
-  if (pathname === '/lab' || (LAB_PUBLIC() && pathname.startsWith('/lab/') && !pathname.startsWith('/lab/studio') && !pathname.startsWith('/lab/assets') && !pathname.startsWith('/lab/logic') && !pathname.startsWith('/lab/admin'))) return NextResponse.next();
+  if (pathname === '/lab' || (LAB_PUBLIC() && pathname.startsWith('/lab/') && !LAB_FACTORY_PAGE(pathname))) return NextResponse.next();
 
   // 邀请链接 /lab/<id>?invite=…：票对得上这个空间，就不用登录
   const pm = pathname.match(INVITE_PAGE);

@@ -32,7 +32,7 @@ export async function GET(req: Request) {
       supabaseAdmin.from('skill_submissions').select('task_id, candidate_type, score').in('task_id', ids),
       supabaseAdmin.from('skill_invocations').select('task_id, kind, volume, actor_location').in('task_id', ids),
       // 章节概况（体验馆显示「一天 N 章」；迁移 015 没跑时这里报错，按没有章节处理）
-      supabaseAdmin.from('lab_chapters').select('task_id, slot, title, kind, status').in('task_id', ids).then(r => r, () => ({ data: [] as any[] })),
+      supabaseAdmin.from('lab_chapters').select('task_id, slot, title, kind, status, steps:sim->steps').in('task_id', ids).then(r => r, () => ({ data: [] as any[] })),
     ]) : [{ data: [] }, { data: [] }, { data: [] as any[] }];
 
     const data = (spaces || []).map(s => {
@@ -41,7 +41,12 @@ export async function GET(req: Request) {
       const sim = s.sim as any;
       return {
         ...s, sim: undefined,
-        features: { immersive: !!sim?.art?.cover, bench: !!sim?.steps?.some((x: any) => x.type === 'bench'), steps: sim?.steps?.length || 0 },
+        // 有工位：老空间看主 sim，按章节的看已发布章节里有没有工位步骤（体验馆按这个排序、打标记）
+        features: (() => {
+          const pubCh = ((chs as any).data || []).filter((c: any) => c.task_id === s.id && c.status === 'published');
+          const benchCh = pubCh.filter((c: any) => Array.isArray(c.steps) && c.steps.some((x: any) => x?.type === 'bench')).length;
+          return { immersive: !!sim?.art?.cover, bench: benchCh > 0 || !!sim?.steps?.some((x: any) => x.type === 'bench'), benchChapters: benchCh, steps: sim?.steps?.length || 0 };
+        })(),
         cover: sim?.art?.cover || Object.values(sim?.art?.scenes || {})[0] || null,
         chapters: (() => {
           const cc = ((chs as any).data || []).filter((c: any) => c.task_id === s.id);
@@ -80,6 +85,7 @@ export async function GET(req: Request) {
 /**
  * 新建技能空间：选岗位库里的一条 JD → 岗位 AI 自己生成 技能集草案 + 故事线 + 虚拟工位 + 场景美术。
  * body { jobId, model, createdBy, buildId }；构建约 2–4 分钟，进度用 GET ?build=buildId 轮询。
+ * 或 body { jdText, title, company }：粘贴一份不在岗位库里的全新 JD，正文直接进同一条流水线。
  * 或 body { profession }：职业探索——先把职业结构化成典型岗位 + 生涯地图，再走同一条流水线（面向高中生 / 大学生）。
  */
 /** 构建完给前端的成果小结：刚才这两分钟，岗位 AI 到底做出了什么 */
@@ -140,7 +146,34 @@ async function build(req: Request, body: any, costJob: string) {
       return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount, artReused: built.artReused, benchNote: built.benchNote, summary: summarize(built) });
     }
 
-    if (!jobId) return NextResponse.json({ ok: false, error: '请选择一个岗位或输入一个职业' }, { status: 400 });
+    // ── 粘贴一份全新 JD（不在岗位库里）：正文直接进同一条流水线 ──
+    const pasted = String(body.jdText || '').trim().slice(0, 12000);
+    if (pasted) {
+      if (pasted.length < 40) return NextResponse.json({ ok: false, error: 'JD 正文太短了，至少贴上职责或要求的几条' }, { status: 400 });
+      const jd = { company: String(body.company || '').trim().slice(0, 60), title: String(body.title || '').trim().slice(0, 60) || '未命名岗位', responsibilities: pasted, qualifications: '' };
+      setBuild(buildId, { phase: '读取岗位 JD' });
+      trackDemand(req, { source: 'lab_space', query: `${jd.company} ${jd.title}`.trim(), company_name: jd.company || null, profession: jd.title });
+      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }));
+      const { data: skill, error: skErr } = await supabaseAdmin.from('skills').insert({
+        slug: `jd-paste-${Date.now().toString(36)}`, ...built.skill, interview: [],
+        expert_name: '岗位 AI 自学草案', expert_title: '从 JD 与公开职业知识推断 · 等待第一位专家校正', expert_location: '云端', expert_note: '尚未有真人专家', tz_offset: 0,
+        source: 'jd-draft', assigned_agent: 'qa', distilled_at: new Date().toISOString(), created_by: createdBy || '',
+      }).select('id').single();
+      if (skErr) throw skErr;
+      const { data: created, error: insErr } = await supabaseAdmin.from('skill_tasks').insert({
+        job_id: null, skill_id: skill.id,
+        jd_snapshot: { ...jd, kind: 'pasted', fetched_at: new Date().toISOString().slice(0, 10) },
+        ...built.task, created_by: createdBy || '',
+      }).select('id').single();
+      if (insErr) throw insErr;
+      await attachCostToSpace(costJob, created.id);
+      await assignNova(created.id).catch(e => console.warn('[Lab/spaces] 分编号失败', e?.message));
+      await reconcileCast(created.id);
+      setBuild(buildId, { phase: '完成', done: true, id: created.id });
+      return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount, artReused: built.artReused, benchNote: built.benchNote, summary: summarize(built) });
+    }
+
+    if (!jobId) return NextResponse.json({ ok: false, error: '请选择一个岗位、粘贴一份 JD，或输入一个职业' }, { status: 400 });
     setBuild(buildId, { phase: '读取岗位 JD' });
 
     const { data: job, error } = await supabaseAdmin.from('jobs').select('id, institute_or_company_name, name, job_req_id, location, responsibilities, overview, link, source_url').eq('id', jobId).single();

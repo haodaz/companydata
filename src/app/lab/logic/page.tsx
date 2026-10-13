@@ -90,7 +90,7 @@ export default function LabLogicPage() {
         <h2 id="pipeline">2 · 总流程：从 JD 到空间</h2>
         <div className="lg-legend"><span><i style={{ background: 'rgba(106,92,255,.5)' }} />大模型生成</span><span><i style={{ background: 'rgba(18,181,203,.6)' }} />自动校验 / 质量门</span><span><i style={{ background: 'rgba(255,95,162,.55)' }} />人</span><span><i style={{ background: 'rgba(23,26,46,.15)' }} />确定性程序</span></div>
         <div className="lg-flow">
-          <div className="lg-node"><b>输入</b><span>真实 JD（岗位库）或一个职业名</span></div>
+          <div className="lg-node"><b>输入</b><span>真实 JD（岗位库挑一条，或粘贴一份全新的）或一个职业名</span></div>
           <div className="lg-node ai"><b>解析 · 职业结构化</b><span>职业名 → 典型 JD + 生涯地图 {F('career.ts')}</span></div>
           <div className="lg-node ai"><b>任务 + 故事线</b><span>任务、评分标准、4–8 步决策 {F('generateTask')}</span></div>
           <div className="lg-node ai"><b>技能卡 + 示范</b><span>技能草案 + 每步示范轨迹 {F('draftSkill')}</span></div>

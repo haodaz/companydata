@@ -40,6 +40,8 @@ export default function LabHome() {
   const [jobsLoading, setJobsLoading] = useState(false);
   const [buildInfo, setBuildInfo] = useState<{ phase: string; detail?: string; error?: string } | null>(null);
   const [profession, setProfession] = useState('');
+  // 粘贴一份全新 JD（不在岗位库里）
+  const [paste, setPaste] = useState({ title: '', company: '', text: '' });
   const [buildSince, setBuildSince] = useState(0);
   const [now, setNow] = useState(0);
   // 「我有个问题」：一句话分给最合适的 1–3 位数字职人
@@ -128,14 +130,19 @@ export default function LabHome() {
     } catch (e: any) { message.error(e.message); }
   };
 
-  const buildFromJob = async (job: any | null, prof?: string) => {
+  const buildFromJob = async (job: any | null, prof?: string, pasted?: { title: string; company: string; text: string }) => {
     const buildId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
     setPick(null);
     const startedAt = Date.now();
     setBuildInfo({ phase: prof ? '结构化职业 · 推断典型岗位' : '读取岗位 JD' }); setBuildSince(startedAt); setNow(startedAt);
+    // 粘贴的 JD 也走「从 JD 建」的展示，公司 / 岗位名用填的（没填就叫新 JD）
+    if (pasted) job = { institute_or_company_name: pasted.company.trim() || '新 JD', name: pasted.title.trim() || '未命名岗位' };
     setBuilding(prof ? { company: '职业探索', title: prof, buildId, career: true } : { company: job.institute_or_company_name, title: job.name, buildId });
     try {
-      const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(prof ? { profession: prof, model: currentModel, buildId } : { jobId: job.id, model: currentModel, buildId }) })).json();
+      const payload = prof ? { profession: prof, model: currentModel, buildId }
+        : pasted ? { jdText: pasted.text.trim(), title: pasted.title.trim(), company: pasted.company.trim(), model: currentModel, buildId }
+        : { jobId: job.id, model: currentModel, buildId };
+      const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })).json();
       if (!json.ok) throw new Error(json.error);
       setBuilding(null);
       setDone({ ...json, secs: Math.round((Date.now() - startedAt) / 1000), name: prof || job.name, company: prof ? '职业探索' : job.institute_or_company_name, career: !!prof });
@@ -177,7 +184,7 @@ export default function LabHome() {
     // 打标记只认「这人是干什么的」，不拿 tagline 和能力词那堆自由文本去撞——
     // 不然西点师会因为一句「面糊是有记忆的材料」被打上「高精尖材料」
     const tags = tagsOf([p.role, prof, jd.title, s.skill?.name, s.skill?.domain].filter(Boolean).join(' '));
-    tags.unshift(jd.kind === 'career' ? '职业探索' : '真实 JD');
+    tags.unshift(jd.kind === 'career' ? '职业探索' : jd.kind === 'pasted' ? '粘贴 JD' : '真实 JD');
     if (s.features?.immersive) tags.unshift('沉浸场景');
     if (s.features?.bench) tags.unshift('虚拟工位');
     return { s, tags, text: text.toLowerCase(), family: familyOf(prof, s.skill?.domain, jd.title, jd.company) };
@@ -474,7 +481,7 @@ export default function LabHome() {
         <div className="lab" style={{ minHeight: 0, padding: 'clamp(16px, 3vw, 28px)' }}>
           <div className="lab-mono lab-cap">{pick === 'career' ? 'ANY CAREER' : 'PICK A JD'}</div>
           <div style={{ fontSize: 22, fontWeight: 800, margin: '4px 0 4px' }}>{pick === 'career' ? '输入一个职业，把它变成空间' : '选一份 JD，构建它的技能空间'}</div>
-          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: 14 }}>{pick === 'career' ? '不需要 JD。适合还没有具体岗位、只想先看看这一行在干什么的人。' : 'JD 来自岗位库，抓取自企业官方招聘站。'}</div>
+          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: 14 }}>{pick === 'career' ? '不需要 JD。适合还没有具体岗位、只想先看看这一行在干什么的人。' : '从岗位库挑一条（抓取自企业官方招聘站），或者粘贴一份全新的 JD。'}</div>
 
           {pick === 'jd' && <>
           <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(106,92,255,.35)' }}>
@@ -497,6 +504,19 @@ export default function LabHome() {
                 ))}
               </div>
             )}
+          </div>
+          <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(18,181,203,.4)' }}>
+            <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>NEW JD · 粘贴一份全新的 JD</div>
+            <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>岗位库里没有？把招聘页上的职责和要求整段贴进来，走同一条流水线生成。</div>
+            <div style={{ display: 'flex', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
+              <input className="lab-input" value={paste.title} onChange={e => setPaste(p => ({ ...p, title: e.target.value }))} placeholder="岗位名，如：储能系统测试工程师" style={{ flex: '2 1 220px', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
+              <input className="lab-input" value={paste.company} onChange={e => setPaste(p => ({ ...p, company: e.target.value }))} placeholder="公司（可不填）" style={{ flex: '1 1 160px', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
+            </div>
+            <textarea value={paste.text} onChange={e => setPaste(p => ({ ...p, text: e.target.value }))} rows={6} placeholder={'岗位职责：\n1. …\n任职要求：\n1. …'} style={{ width: '100%', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 13.5, lineHeight: 1.7, outline: 'none', background: '#fff', resize: 'vertical', fontFamily: 'inherit' }} />
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 8, gap: 10 }}>
+              <span style={{ fontSize: 12, color: 'var(--ink3)' }}>{paste.text.trim().length < 40 ? '正文至少 40 字' : `${paste.text.trim().length} 字`}</span>
+              <button className="lab-btn" disabled={paste.text.trim().length < 40 || !paste.title.trim()} onClick={() => buildFromJob(null, undefined, paste)}>用这份 JD 构建空间 →</button>
+            </div>
           </div>
           <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>DEMO JDS · 预置示范</div>
           {jdsLoading && <div className="lab-glass lab-scan" style={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span className="lab-mono" style={{ color: 'var(--ink3)' }}>LOADING<span className="lab-dots" /></span></div>}

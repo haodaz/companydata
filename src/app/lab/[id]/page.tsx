@@ -25,6 +25,8 @@ const MODES: { key: Mode; label: string; icon: string }[] = [
   { key: 'eco', label: '我的行当', icon: 'eco' },
   { key: 'jd', label: '我的来历', icon: 'jd' },
 ];
+/** 体验视角里不出现的入口：老师傅来教、账本、JD 来历都是工厂侧的 */
+const EXP_HIDDEN: Mode[] = ['learn', 'ledger', 'jd'];
 const CAREER_MODE = { key: 'career' as Mode, label: '职业地图', icon: 'career' };
 
 /** 线性小图标：深色舞台上 emoji 太廉价 */
@@ -457,7 +459,11 @@ export default function SpacePage() {
   // 模式跟着网址走：没有 m = 人物首页；有 m = 进了这位数字职人的某个独立空间。
   // 浏览器后退就回到人，每个空间也都有自己的链接。受邀的老师傅只有「教」这一个空间。
   const urlMode = sp.get('m') as Mode | null;
-  const mode: Mode | null = guest ? 'learn' : (urlMode && ALL_MODES.includes(urlMode) ? urlMode : null);
+  // 体验视角（没登录的访客，或从「体验百业」点进来的 ?from=gallery）：只看体验，不给「你教我 / 我被用在哪 / 我的来历」这些工厂侧的入口
+  const fromParam = sp.get('from');
+  const exp = !guest && (!user || fromParam === 'gallery');
+  const hiddenInExp = (m: Mode) => exp && EXP_HIDDEN.includes(m);
+  const mode: Mode | null = guest ? 'learn' : (urlMode && ALL_MODES.includes(urlMode) && !hiddenInExp(urlMode) ? urlMode : null);
   // 章节也跟着网址走（?ch=章节编号）：一个职业可以有几章组成「一天」，分享链接能直达某一章
   const chParam = sp.get('ch');
   const setMode = (m: Mode | null, replace = false) => {
@@ -465,6 +471,7 @@ export default function SpacePage() {
     if (m) q.set('m', m);
     if (chParam) q.set('ch', chParam);
     if (invite) q.set('invite', invite);
+    if (fromParam) q.set('from', fromParam);
     const url = `/lab/${id}${q.toString() ? `?${q}` : ''}`;
     if (replace) router.replace(url, { scroll: false }); else router.push(url);
   };
@@ -801,7 +808,7 @@ function castOf(space: any, sim: Sim | null) {
 
   // 首页上的数：都是账本里真有的
   const draft = !skill || skill.source === 'jd-draft';
-  const modeList = jd.career ? [CAREER_MODE, ...MODES] : MODES;
+  const modeList = (jd.career ? [CAREER_MODE, ...MODES] : MODES).filter(m => !hiddenInExp(m.key));
   const hubStats = [
     { k: '考过', v: stat[0].v, u: '人' },
     { k: '学到', v: stat[1].v, u: '条判断' },
@@ -809,7 +816,7 @@ function castOf(space: any, sim: Sim | null) {
     { k: '服务', v: served, u: '人次' },
     { k: '跨越', v: places, u: '地' },
   ];
-  const portals: { key: Mode; label: string; icon: string; sub: string; main?: boolean }[] = [
+  const allPortals: { key: Mode; label: string; icon: string; sub: string; main?: boolean }[] = [
     { key: 'teach', label: '我教你', icon: 'play', sub: skill?.expert_trace && sim ? '看我把这一天走一遍' : '先让老师傅教我一遍', main: true },
     { key: 'test', label: '考考你', icon: 'test', sub: stat[0].v ? `${stat[0].v} 人考过 · 换你上手` : '换你上手走一遍', main: true },
     { key: 'learn', label: '你教我', icon: 'learn', sub: draft ? '等第一位老师傅' : `学自 ${skill.expert_name}`, main: true },
@@ -818,6 +825,7 @@ function castOf(space: any, sim: Sim | null) {
     { key: 'eco', label: '我的行当', icon: 'eco', sub: '同行 · 在招 · 上下游' },
     jd.career ? { key: 'career', label: '职业地图', icon: 'career', sub: '这一行在做什么' } : { key: 'jd', label: '我的来历', icon: 'jd', sub: jd.company || '岗位 JD' },
   ];
+  const portals = allPortals.filter(p => !hiddenInExp(p.key));
 
   // 你教我：横幅下方的那一块——请老师傅把这一天走一遍（留名 → 逐段示范 → 每段走完接受追问 → 吸收）
   const walkedLabels = Object.values(chTraces).map(x => x.label);
@@ -931,14 +939,14 @@ function castOf(space: any, sim: Sim | null) {
           scene={sim?.art?.cover || ''} level={lv.level} levelLabel={lv.label} stats={hubStats} skills={(profile.capabilities || []).slice(0, 4)} portals={portals}
           onEnter={m => setMode(m)}
           origin={draft
-            ? <>AI 自学草案 · 等一位从业者校正{!guest && user && <button className="hub-ghost" style={{ marginLeft: 10, height: 26, padding: '0 10px', fontSize: 12 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '请一位老师傅来教 →'}</button>}</>
+            ? <>AI 自学草案 · 等一位从业者校正{!guest && !exp && user && <button className="hub-ghost" style={{ marginLeft: 10, height: 26, padding: '0 10px', fontSize: 12 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '请一位老师傅来教 →'}</button>}</>
             : <>学自 <b className="hub-strong">{skill.expert_name}</b>（{skill.expert_location}）</>}
           top={<>
-            <button className="hub-ghost" onClick={() => router.push('/lab/spaces')}><Ico n="back" s={14} />全部空间</button>
+            <button className="hub-ghost" onClick={() => router.push(exp ? '/lab/gallery' : '/lab/spaces')}><Ico n="back" s={14} />{exp ? '体验百业' : '全部空间'}</button>
             <div style={{ display: 'flex', gap: 8 }}>
               {beta3dForSpace(String(id)) && <a className="hub-ghost" href={`/lab/beta/3d/${beta3dForSpace(String(id))!.key}`} style={{ textDecoration: 'none', color: '#fff', border: 0, background: 'linear-gradient(120deg,#ff5fa2,#6a5cff)' }}>走进{beta3dForSpace(String(id))!.title} · 3D BETA</a>}
-              {jd.url && <a className="hub-ghost" href={jd.url} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>JD 原文 ↗</a>}
-              <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="hub-ghost">删除空间</button></Popconfirm>
+              {jd.url && !exp && <a className="hub-ghost" href={jd.url} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>JD 原文 ↗</a>}
+              {!exp && <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="hub-ghost">删除空间</button></Popconfirm>}
             </div>
           </>}
         />
@@ -995,7 +1003,7 @@ function castOf(space: any, sim: Sim | null) {
       )}
 
       {isDay && !(answering && sim) && (
-        <DayView mode={mode as DayMode} modes={guest ? ['learn'] : ['test', 'teach', 'learn']} space={space} chapters={chapters} chapter={chapter} sim={sim} rubric={chapterRubric} canTeach={!!(sim && chapterTrace)} busy={!!busy} bareBusy={bareBusy}
+        <DayView mode={mode as DayMode} modes={guest ? ['learn'] : exp ? ['test', 'teach'] : ['test', 'teach', 'learn']} space={space} chapters={chapters} chapter={chapter} sim={sim} rubric={chapterRubric} canTeach={!!(sim && chapterTrace)} busy={!!busy} bareBusy={bareBusy}
           onBack={guest ? null : () => setMode(null)} onMode={m => setMode(m, true)}
           done={mode === 'learn' ? new Set(Object.keys(chTraces)) : undefined}
           actions={mode === 'learn' && !(guest && taught) ? (

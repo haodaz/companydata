@@ -18,6 +18,7 @@ const GALLERY_CSS = `
 .gal-cover::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,12,30,0) 40%, rgba(10,12,30,.72) 100%); }
 .gal-badges { position: absolute; left: 12px; top: 12px; display: flex; gap: 6px; flex-wrap: wrap; z-index: 2; }
 .gal-badge { padding: 3px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; color: #fff; background: rgba(10,12,30,.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.22); white-space: nowrap; }
+.gal-badge.bench { background: linear-gradient(120deg, #6a5cff, #12b5cb); border-color: rgba(255,255,255,.45); }
 .gal-who { position: absolute; left: 14px; right: 14px; bottom: 12px; z-index: 2; display: flex; align-items: flex-end; gap: 12px; color: #fff; }
 .gal-who img { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; object-position: 54% 10%; border: 2px solid rgba(255,255,255,.95); background: rgba(255,255,255,.7); flex-shrink: 0; }
 .gal-day { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; font-size: 11.5px; color: var(--ink3); }
@@ -25,6 +26,10 @@ const GALLERY_CSS = `
 .gal-fams { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
 .gal-fams::-webkit-scrollbar { display: none; }
 `;
+
+/** 一整天的故事都发布了：至少三章，而且没有还在草稿里的 */
+const fullDay = (s: any) => { const c = s.chapters || {}; return c.published >= 3 && c.published === c.total; };
+const rank = (s: any) => (s.features?.bench ? 100 : 0) + (fullDay(s) ? 50 : 0) + Math.min(s.features?.benchChapters || 0, 9) * 2 + (s.chapters?.published || 0) * .5 + (s.cover ? 1 : 0);
 
 export default function GalleryPage() {
   const router = useRouter();
@@ -49,8 +54,8 @@ export default function GalleryPage() {
       const text = [p.name, p.role, p.tagline, prof, jd.title, jd.company, jd.location, s.skill?.domain, family].filter(Boolean).join(' ').toLowerCase();
       return { s, jd, p, family, text };
     })
-    // 有场景图的排前面：体验馆第一眼要好看
-    .sort((a, b) => Number(!!b.s.cover) - Number(!!a.s.cover)), [spaces]);
+    // 排序：故事全（一整天的章节都发布了）且有工位的最前；再是有工位的、故事全的；同档里工位章节多、有场景图的靠前
+    .sort((a, b) => rank(b.s) - rank(a.s)), [spaces]);
 
   const fams = useMemo(() => {
     const m = new Map<string, number>();
@@ -64,7 +69,7 @@ export default function GalleryPage() {
   }, [items, q, fam]);
 
   const share = async (id: string) => {
-    const url = `${window.location.origin}/lab/${id}?m=test`;
+    const url = `${window.location.origin}/lab/${id}?m=test&from=gallery`;
     try { await navigator.clipboard.writeText(url); message.success('链接已复制，发给别人点开就能玩'); }
     catch { message.info(url); }
   };
@@ -108,16 +113,16 @@ export default function GalleryPage() {
         <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))' }}>
           {shown.map(({ s, jd, p, family }, i) => {
             const ch = s.chapters || {};
-            // 点卡片先到这位数字职人的主页（他是谁、学自谁、多少人考过、我教你 / 考考你 / 你教我）；「开始体验」直接进考考你
-            const home = () => router.push(`/lab/${s.id}`);
-            const go = () => router.push(`/lab/${s.id}?m=test`);
+            // 点卡片先到这位数字职人的主页（体验视角 ?from=gallery：只有我教你 / 考考你 / 问问我 / 我的行当）；「开始体验」直接进考考你
+            const home = () => router.push(`/lab/${s.id}?from=gallery`);
+            const go = () => router.push(`/lab/${s.id}?m=test&from=gallery`);
             return (
               <div key={s.id} className="lab-glass hover lab-in gal-card" style={{ animationDelay: `${Math.min(i, 12) * 50}ms` }} onClick={home}>
                 <div className="gal-cover">
                   {s.cover && <Image className="bg" src={s.cover} alt="" fill sizes="(max-width: 700px) 100vw, 400px" />}
                   <div className="gal-badges">
-                    {ch.published > 1 && <span className="gal-badge">一天 · {ch.published} 章</span>}
-                    {s.features?.bench && <span className="gal-badge">虚拟工位</span>}
+                    {s.features?.bench && <span className="gal-badge bench">⚙ 虚拟工位{s.features.benchChapters > 1 ? ` · ${s.features.benchChapters} 处` : ''}</span>}
+                    {fullDay(s) ? <span className="gal-badge">完整一天 · {ch.published} 章</span> : ch.published > 1 && <span className="gal-badge">一天 · {ch.published} 章</span>}
                     {s.features?.immersive && <span className="gal-badge">沉浸场景</span>}
                   </div>
                   <div className="gal-who">
