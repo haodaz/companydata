@@ -16,7 +16,8 @@ for (const c of chats as any[]) {
     if (m.role !== 'user' || seen.has(`${c.id}|${m.content}`)) return;
     const a = ms[i + 1] || {};
     rows.push({ chat_id: c.id, occupation_id: c.occupation_id, space_id: c.space_id, surface: c.surface, visitor: c.visitor, question: m.content, reply: a.content || null,
-      sources: (a.sources || []).map((id: string) => ({ id, type: id[0] === 'W' ? 'web' : 'data', title: id, url: null })).concat([]),
+      // 旧记录只存了编号；网上来源的标题 / 链接在 a.web 里，能对回来
+      sources: (a.sources || []).map((id: string) => { const w = (a.web || [])[Number(id.slice(1)) - 1]; return id[0] === 'W' && w ? { id, type: 'web', title: w.title, url: w.url } : { id, type: 'data', title: id, url: null }; }),
       gap: m.gap || null, web: a.web || [], web_points: a.webPoints || null, created_at: m.at || c.created_at });
   });
 }
