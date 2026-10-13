@@ -10,7 +10,7 @@
  */
 import React, { useEffect, useRef, useState } from 'react';
 
-export interface ChatSource { id: string; type: string; title: string; url?: string | null }
+export interface ChatSource { id: string; type: string; title: string; url?: string | null; ref?: { kind: string; id: number; section?: string } }
 export interface ChatMsg { role: 'user' | 'assistant'; content: string; sources?: ChatSource[] }
 export interface ChatPersona { name: string; role: string; avatar?: string | null; tagline?: string | null }
 
@@ -63,7 +63,7 @@ export function PersonaAvatar({ name, avatar, size, ring = '#fff' }: { name: str
     : <div style={{ width: size, height: size, borderRadius: '50%', background: THEMES.light.me, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: size * 0.42, flexShrink: 0 }}>{name.slice(0, 1)}</div>;
 }
 
-export function ChatBody({ chat, theme = 'light', fallbackName }: { chat: ReturnType<typeof usePersonaChat>; theme?: 'dark' | 'light'; fallbackName?: string }) {
+export function ChatBody({ chat, theme = 'light', fallbackName, onOpen, activeId }: { chat: ReturnType<typeof usePersonaChat>; theme?: 'dark' | 'light'; fallbackName?: string; onOpen?: (s: ChatSource) => void; activeId?: string | null }) {
   const C = THEMES[theme];
   const [input, setInput] = useState('');
   const listRef = useRef<HTMLDivElement>(null);
@@ -77,8 +77,10 @@ export function ChatBody({ chat, theme = 'light', fallbackName }: { chat: Return
     const hit = p.match(/^\[([JSTDC]\d+)\]$/);
     if (!hit) return <React.Fragment key={i}>{p}</React.Fragment>;
     const s = m.sources?.find(x => x.id === hit[1]);
-    return <sup key={i} title={s?.title} style={{ color: C.chipInk, fontWeight: 600, cursor: s?.url ? 'pointer' : 'default', margin: '0 1px' }} onClick={() => s?.url && window.open(s.url, '_blank')}>{hit[1]}</sup>;
+    return <sup key={i} title={s?.title} style={{ color: C.chipInk, fontWeight: 600, cursor: s && (s.ref || s.url) ? 'pointer' : 'default', margin: '0 1px' }} onClick={() => s && open(s)}>{hit[1]}</sup>;
   });
+  /** 有资料面板就在右侧展开，否则才跳外链 */
+  const open = (s: ChatSource) => { if (onOpen && s.ref) onOpen(s); else if (s.url) window.open(s.url, '_blank'); };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, color: C.ink }}>
@@ -93,11 +95,13 @@ export function ChatBody({ chat, theme = 'light', fallbackName }: { chat: Return
                 background: m.role === 'user' ? C.me : C.them, color: m.role === 'user' ? '#fff' : C.ink }}>{m.role === 'assistant' ? render(m) : m.content}</div>
               {!!m.sources?.length && <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
                 {m.sources.map(s => (
-                  <a key={s.id} href={s.url || undefined} target="_blank" rel="noreferrer" onClick={e => { if (!s.url) e.preventDefault(); }}
-                    style={{ fontSize: 12, color: C.ink3, textDecoration: 'none', display: 'flex', gap: 6, alignItems: 'baseline', cursor: s.url ? 'pointer' : 'default' }}>
+                  <a key={s.id} href={s.url || undefined} target="_blank" rel="noreferrer" onClick={e => { e.preventDefault(); open(s); }}
+                    style={{ fontSize: 12, color: C.ink3, textDecoration: 'none', display: 'flex', gap: 6, alignItems: 'baseline', cursor: s.ref || s.url ? 'pointer' : 'default',
+                      background: activeId === s.id ? C.chip : 'transparent', borderRadius: 6, padding: '2px 4px', margin: '0 -4px' }}>
                     <span style={{ color: C.chipInk, fontWeight: 700, minWidth: 22 }}>{s.id}</span>
                     <span style={{ padding: '0 6px', borderRadius: 4, background: C.chip, color: C.chipInk, fontSize: 11, flexShrink: 0 }}>{TYPE_LABEL[s.type] || s.type}</span>
                     <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.title}</span>
+                    {s.ref && onOpen && <span style={{ color: C.chipInk, flexShrink: 0 }}>›</span>}
                   </a>
                 ))}
               </div>}

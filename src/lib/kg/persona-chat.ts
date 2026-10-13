@@ -16,7 +16,9 @@ import { orIlike } from '@/lib/pg-filter';
 import { SALARY_YEAR_LABELS, SALARY_YEARS, SALARY_COUNTRIES, SALARY_CN_REGIONS, CAREER_CATEGORY_LABELS } from '@/lib/occupation-fields';
 
 export interface Persona { name: string; role: string; avatar?: string | null; tagline?: string | null; years?: string; workplace?: string; personality?: string; voice?: string; story?: string }
-export interface ChatSource { id: string; type: 'job' | 'standard' | 'task' | 'data' | 'company'; title: string; url?: string | null }
+/** ref：点来源时右侧资料面板要展示的实体（职业的某一节 / 岗位 / 企业 / 标准 / 典型任务） */
+export interface SourceRef { kind: 'occupation' | 'job' | 'company' | 'standard' | 'task'; id: number; section?: 'intro' | 'graph' | 'salary' | 'context' | 'jobs' }
+export interface ChatSource { id: string; type: 'job' | 'standard' | 'task' | 'data' | 'company'; title: string; url?: string | null; ref?: SourceRef }
 export interface ChatMessage { role: 'user' | 'assistant'; content: string }
 
 const CHAT_MODEL = () => process.env.PERSONA_CHAT_MODEL || 'qwen-plus';
@@ -39,7 +41,8 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
   const hit = cache.get(key);
   if (hit && Date.now() - hit.at < 10 * 60_000) return hit;
   const sources: ChatSource[] = [];
-  const src = (type: ChatSource['type'], title: string, url?: string | null) => { const id = `${{ job: 'J', standard: 'S', task: 'T', data: 'D', company: 'C' }[type]}${sources.filter(s => s.type === type).length + 1}`; sources.push({ id, type, title, url }); return id; };
+  const src = (type: ChatSource['type'], title: string, url?: string | null, ref?: SourceRef) => { const id = `${{ job: 'J', standard: 'S', task: 'T', data: 'D', company: 'C' }[type]}${sources.filter(s => s.type === type).length + 1}`; sources.push({ id, type, title, url, ref }); return id; };
+  const occRef = (section: SourceRef['section']): SourceRef => ({ kind: 'occupation', id: occ.id, section });
   const names = Array.from(new Set([occ.name, occ.name_lang_cn, ...(occ.aliases || [])].filter((n: any) => n && String(n).length >= 2))).slice(0, 10) as string[];
   const match = names.map(n => orIlike(['name'], n)).join(',');
 
@@ -55,7 +58,7 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
   ]);
 
   const L: string[] = [];
-  const dOcc = src('data', `平方职业库 · ${occ.name}`);
+  const dOcc = src('data', `平方职业库 · ${occ.name}`, null, occRef('intro'));
   L.push(`【职业】${occ.name}${occ.name_lang_en ? `（${occ.name_lang_en}）` : ''}，${CAREER_CATEGORY_LABELS[occ.career_category] || ''}。也叫：${(occ.aliases || []).slice(0, 6).join('、')} [${dOcc}]`);
   if (occ.intro) L.push(`简介：${cut(occ.intro, 220)}`);
   if (occ.responsibility) L.push(`工作内容：${cut(occ.responsibility, 360)}`);
@@ -66,7 +69,7 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
 
   const g = occ.career_map;
   if (g?.ladder?.length) {
-    const dG = src('data', `平方职业库 · ${occ.name} 发展图谱`);
+    const dG = src('data', `平方职业库 · ${occ.name} 发展图谱`, null, occRef('graph'));
     L.push(`\n【发展】${g.summary || ''} [${dG}]`);
     L.push(`成长阶梯：${g.ladder.map((l: any) => `${l.title}（${l.years}${l.salary ? `，月薪 ${l.salary}` : ''}）：${cut(l.focus, 60)}`).join(' → ')}`);
     if (g.next_roles?.length) L.push(`再往上 / 往外：${g.next_roles.map((r: any) => `${r.type === 'promotion' ? '晋升' : '转型'}「${r.name}」${r.years ? `（${r.years}）` : ''}：${cut(r.how, 50)}`).join('；')}`);
@@ -76,7 +79,7 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
 
   const salRows = (sal.data || []).sort((a: any, b: any) => SALARY_YEARS.indexOf(a.year) - SALARY_YEARS.indexOf(b.year));
   if (salRows.length || occ.recent_year_monthly_salary || regions.data?.length) {
-    const dS = src('data', `平方职业库 · ${occ.name} 薪资`);
+    const dS = src('data', `平方职业库 · ${occ.name} 薪资`, null, occRef('salary'));
     L.push(`\n【薪资】（税前月薪）[${dS}]`);
     if (occ.recent_year_monthly_salary) L.push(`全国平均 ¥${occ.recent_year_monthly_salary}`);
     if (salRows.length) L.push(`按年限：${salRows.map((s: any) => `${SALARY_YEAR_LABELS[s.year]} ¥${s.salary}`).join('，')}`);
@@ -89,7 +92,7 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
   if (tasks.data?.length) {
     L.push('\n【典型任务】');
     for (const t of tasks.data as any[]) {
-      const id = src('task', `典型任务 · ${t.name}`);
+      const id = src('task', `典型任务 · ${t.name}`, null, { kind: 'task', id: t.id });
       L.push(`[${id}] ${t.name}（${['', '入门', '独立', '资深'][t.difficulty] || ''}${t.frequency ? `，${({ daily: '每天', weekly: '每周', occasional: '偶尔' } as any)[t.frequency]}` : ''}${t.duration ? `，约 ${t.duration}` : ''}）：目标 ${cut(t.goal, 60)}。`
         + `过程：${(t.process || []).slice(0, 6).map((p: any) => `${p.step}${p.checkpoint ? `（检查：${cut(p.checkpoint, 30)}）` : ''}`).join(' → ')}。`
         + `${(t.success_criteria || []).length ? `验收：${t.success_criteria.slice(0, 3).map((c: any) => `${c.name}${c.target ? ` ${c.target}` : ''}`).join('；')}。` : ''}`
@@ -101,7 +104,7 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
   const pl = links.filter((l: any) => l.dir === 'out' && l.other_type === 'place').map((l: any) => l.other.name);
   const it = links.filter((l: any) => l.dir === 'out' && l.other_type === 'item');
   if (st.length || pl.length || it.length) {
-    const dE = src('data', `平方知识图谱 · ${occ.name} 工作场所与工具设备`);
+    const dE = src('data', `平方知识图谱 · ${occ.name} 工作场所与工具设备`, null, occRef('context'));
     L.push(`\n【在哪干、用什么】[${dE}]`);
     if (pl.length) L.push(`工作场所：${pl.join('、')}`);
     if (st.length) L.push(`工位 / 操作台：${st.join('、')}`);
@@ -111,21 +114,22 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
   if (stds.data?.length) {
     L.push('\n【行业标准与操作规范】');
     for (const s of stds.data as any[]) {
-      const id = src('standard', `${s.code || ''} ${s.title}`.trim(), s.official_url);
+      const id = src('standard', `${s.code || ''} ${s.title}`.trim(), s.official_url, { kind: 'standard', id: s.id });
       L.push(`[${id}] ${s.code || ''}《${s.title}》${s.scope ? `：${cut(s.scope, 80)}` : ''}${(s.key_points || []).length ? ` 要点：${s.key_points.slice(0, 4).map((p: any) => cut(p.point, 40)).join('；')}` : ''}`);
     }
   }
 
   const jobs: any[] = openJobs.data || [];
-  const dJ = src('data', `平方岗位库 · 在招「${occ.name}」岗位（实时）`);
+  const dJ = src('data', `平方岗位库 · 在招「${occ.name}」岗位（实时）`, null, occRef('jobs'));
   L.push(`\n【在招岗位】（实时）一共 ${openJobs.count || 0} 个在招 [${dJ}]`);
   if (jobs.length) {
-    const byCo = new Map<string, number>(), byCity = new Map<string, number>();
-    for (const j of jobs) { byCo.set(j.institute_or_company_name, (byCo.get(j.institute_or_company_name) || 0) + 1); const c = j.city || j.location; if (c) byCity.set(c, (byCity.get(c) || 0) + 1); }
-    L.push(`招得多的公司：${Array.from(byCo).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([c, n]) => `${c}（${n}）`).join('、')}`);
+    const byCo = new Map<string, { n: number; id: number | null }>(), byCity = new Map<string, number>();
+    for (const j of jobs) { const e = byCo.get(j.institute_or_company_name) || { n: 0, id: j.company_id || null }; e.n++; byCo.set(j.institute_or_company_name, e); const c = j.city || j.location; if (c) byCity.set(c, (byCity.get(c) || 0) + 1); }
+    // 招得多的公司各给一个 [C] 编号：聊天里点公司名能看企业资料
+    L.push(`招得多的公司：${Array.from(byCo).sort((a, b) => b[1].n - a[1].n).slice(0, 6).map(([c, e]) => `${c}（${e.n}）${e.id ? `[${src('company', c, null, { kind: 'company', id: e.id })}]` : ''}`).join('、')}`);
     L.push(`主要城市：${Array.from(byCity).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([c, n]) => `${c}（${n}）`).join('、')}`);
     for (const j of jobs.slice(0, 8)) {
-      const id = src('job', `${j.institute_or_company_name} · ${j.name}${j.city ? ` · ${j.city}` : ''}`, j.link || `/admin/db-job/${j.id}`);
+      const id = src('job', `${j.institute_or_company_name} · ${j.name}${j.city ? ` · ${j.city}` : ''}`, j.link || null, { kind: 'job', id: j.id });
       L.push(`[${id}] ${j.institute_or_company_name}「${j.name}」${j.city || j.location || ''}${j.internship_salary_min ? ` ${j.internship_salary_min}${j.internship_salary_max && j.internship_salary_max !== j.internship_salary_min ? `-${j.internship_salary_max}` : ''}` : ''}${j.official_publish_date ? `，${j.official_publish_date} 发布` : ''}`);
     }
   }
@@ -249,4 +253,48 @@ ${reply}`;
     await logTokenUsage({ tool_name: 'occupation', task_name: 'Persona Chat · Fact Check', institution: occName, model_id: model, usageMetadata: r.usageMetadata, batch_id: Date.now() }).catch(() => {});
     return ((parseJsonLoose(r.text)?.unsupported || []) as any[]).map(String).filter(x => x.length >= 4 && reply.includes(x));
   } catch { return []; }
+}
+
+/**
+ * 资料面板：点来源后右侧展示的实体内容。只给这次对话资料里引用过的实体（防止游客拿它翻整个库）。
+ */
+export async function entityDetail(occ: any, knowledge: { sources: ChatSource[] }, ref: SourceRef) {
+  const allowed = knowledge.sources.some(s => s.ref && s.ref.kind === ref.kind && s.ref.id === ref.id && (ref.kind !== 'occupation' || s.ref.section === ref.section));
+  if (!allowed) throw new Error('这条资料不在这段对话里');
+  if (ref.kind === 'occupation') {
+    const { data: o } = await supabaseAdmin.from('occupations').select('id, name, name_lang_en, aliases, career_category, career_mid_category, intro, responsibility, position_requirement, relevant_certificates, relevant_fos_ids, relevant_celebrities, recent_year_monthly_salary, career_map').eq('id', occ.id).single();
+    if (ref.section === 'intro') return { kind: 'occupation', section: 'intro', occupation: { ...o, career_map: undefined } };
+    if (ref.section === 'graph') return { kind: 'occupation', section: 'graph', occupation: { id: o!.id, name: o!.name }, career_map: o!.career_map };
+    if (ref.section === 'salary') {
+      const [sal, reg] = await Promise.all([
+        supabaseAdmin.from('occupation_salaries').select('year, salary').eq('occupation_id', occ.id).eq('if_delete', false),
+        supabaseAdmin.from('occupation_region_salaries').select('scope, code, currency, monthly_local, monthly_cny').eq('occupation_id', occ.id).eq('if_delete', false),
+      ]);
+      return { kind: 'occupation', section: 'salary', occupation: { id: o!.id, name: o!.name, recent_year_monthly_salary: o!.recent_year_monthly_salary }, salaries: sal.data || [], regions: reg.data || [] };
+    }
+    if (ref.section === 'context') {
+      const links = (await linksOf('occupation', occ.id).catch(() => [])).filter((l: any) => l.dir === 'out' && ['place', 'station', 'item'].includes(l.other_type));
+      return { kind: 'occupation', section: 'context', occupation: { id: o!.id, name: o!.name }, links: links.map((l: any) => ({ type: l.other_type, name: l.other.name, kind: l.other.kind, category: l.other.category, image_url: l.other.image_url, frequency: l.frequency, proficiency: l.proficiency, note: l.note })) };
+    }
+    const names = Array.from(new Set([o!.name, ...(o!.aliases || [])].filter((n: any) => n && String(n).length >= 2))).slice(0, 10) as string[];
+    const { data: jobs, count } = await supabaseAdmin.from('jobs').select('id, name, institute_or_company_name, company_id, city, location, job_type, official_publish_date, internship_salary_min, internship_salary_max, salary_unit, salary_currency, link', { count: 'exact' })
+      .not('if_delete', 'is', true).eq('status', 'open').or(names.map(n => orIlike(['name'], n)).join(',')).order('updated_at', { ascending: false }).limit(40);
+    return { kind: 'occupation', section: 'jobs', occupation: { id: o!.id, name: o!.name }, total: count || 0, jobs: jobs || [] };
+  }
+  if (ref.kind === 'job') {
+    const { data } = await supabaseAdmin.from('jobs').select('id, name, institute_or_company_name, company_id, city, location, job_type, status, department, responsibilities, overview, welfare, official_publish_date, application_end_date_str, internship_salary_min, internship_salary_max, salary_unit, salary_currency, link, company_ref:companies(id, name, logo_url, industry)').eq('id', ref.id).single();
+    return { kind: 'job', job: data };
+  }
+  if (ref.kind === 'company') {
+    const { data } = await supabaseAdmin.from('companies').select('id, name, name_en, registered_name, logo_url, industry, sub_industry, city, country, company_scale, info_founding_year, one_sentence, introduction, official_website, campus_url').eq('id', ref.id).single();
+    const names = Array.from(new Set([occ.name, ...(occ.aliases || [])].filter((n: any) => n && String(n).length >= 2))).slice(0, 10) as string[];
+    const { data: jobs, count } = await supabaseAdmin.from('jobs').select('id, name, city, location, job_type, link', { count: 'exact' }).eq('company_id', ref.id).not('if_delete', 'is', true).eq('status', 'open').or(names.map(n => orIlike(['name'], n)).join(',')).limit(20);
+    return { kind: 'company', company: data, jobs: jobs || [], total: count || 0, occupation: { name: occ.name } };
+  }
+  if (ref.kind === 'standard') {
+    const { data } = await supabaseAdmin.from('industry_standards').select('id, code, title, kind, status, issuer, scope, key_points, official_url').eq('id', ref.id).single();
+    return { kind: 'standard', standard: data };
+  }
+  const { data: t } = await supabaseAdmin.from('typical_tasks').select('*').eq('id', ref.id).single();
+  return { kind: 'task', task: t };
 }

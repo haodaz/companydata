@@ -61,7 +61,7 @@ function SkillTree({ skills, uses }: { skills: CareerSkill[]; uses: SkillUses })
   }, [skills]);
 
   return (
-    <div ref={wrap} style={{ position: 'relative', display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', columnGap: 56 }}>
+    <div ref={wrap} style={{ position: 'relative', display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', columnGap: size.w && size.w < 760 ? 28 : 56 }}>
       <svg width={size.w} height={size.h} style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'visible' }}>
         <defs><marker id="occ-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill={BRAND.primary} /></marker></defs>
         {lines.map((l, i) => {
@@ -99,9 +99,10 @@ function SkillTree({ skills, uses }: { skills: CareerSkill[]; uses: SkillUses })
   );
 }
 
-export function OccupationCareerGraph({ graph, roleLinks, onOpenRole, onQueryRole, uses = {} }: {
+export function OccupationCareerGraph({ graph, roleLinks, onOpenRole, onQueryRole, uses = {}, readonly = false }: {
   graph: CareerGraph | null | undefined;
   uses?: SkillUses;
+  readonly?: boolean;                      // 百业对话页里用：不出现「查询并建档」这类后台操作
   roleLinks: Record<string, number>;
   onOpenRole: (id: number) => void;
   onQueryRole: (name: string) => void;
@@ -115,8 +116,8 @@ export function OccupationCareerGraph({ graph, roleLinks, onOpenRole, onQueryRol
     return (
       <div key={r.name} style={{ border: '1px solid #e5e7eb', borderRadius: 8, padding: '10px 12px', background: '#fff' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-          {linked ? <a style={{ fontWeight: 600 }} onClick={() => onOpenRole(linked)}>{r.name}</a> : <span style={{ fontWeight: 600 }}>{r.name}</span>}
-          {linked ? <Tag color="green" style={{ margin: 0 }}>职业库已有</Tag> : <a style={{ fontSize: 12 }} onClick={() => onQueryRole(r.name)}>查询并建档</a>}
+          {linked && !readonly ? <a style={{ fontWeight: 600 }} onClick={() => onOpenRole(linked)}>{r.name}</a> : <span style={{ fontWeight: 600 }}>{r.name}</span>}
+          {readonly ? null : linked ? <Tag color="green" style={{ margin: 0 }}>职业库已有</Tag> : <a style={{ fontSize: 12 }} onClick={() => onQueryRole(r.name)}>查询并建档</a>}
         </div>
         {r.years && <div style={{ fontSize: 12, color: BRAND.ink3, marginTop: 2 }}>通常 {r.years}</div>}
         <div style={{ fontSize: 13, marginTop: 4 }}>{r.how}</div>
