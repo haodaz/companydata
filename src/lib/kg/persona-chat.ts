@@ -19,8 +19,9 @@ import { SALARY_YEAR_LABELS, SALARY_YEARS, SALARY_COUNTRIES, SALARY_CN_REGIONS, 
 
 export interface Persona { nickname?: string | null; name: string; role: string; avatar?: string | null; tagline?: string | null; years?: string; workplace?: string; personality?: string; voice?: string; story?: string }
 /** ref：点来源时右侧资料面板要展示的实体（职业的某一节 / 岗位 / 企业 / 标准 / 典型任务） */
-export interface SourceRef { kind: 'occupation' | 'job' | 'company' | 'standard' | 'task'; id: number; section?: 'intro' | 'graph' | 'salary' | 'context' | 'jobs' }
-export interface ChatSource { id: string; type: 'job' | 'standard' | 'task' | 'data' | 'company' | 'web' | 'faq'; title: string; url?: string | null; ref?: SourceRef }
+export interface SourceRef { kind: 'occupation' | 'job' | 'company' | 'standard' | 'task'; id: number; section?: 'intro' | 'graph' | 'salary' | 'context' | 'jobs' | 'eco' }
+/** card：功能级的资料（图谱 / 薪资 / 场所工具 / 在招 / 行当）——对话里不当一行普通出处，而是气泡后面跟一张带预览的卡片，点了右侧展开 */
+export interface ChatSource { id: string; type: 'job' | 'standard' | 'task' | 'data' | 'company' | 'web' | 'faq'; title: string; url?: string | null; ref?: SourceRef; card?: { tag: string; lines: string[] } }
 export interface ChatMessage { role: 'user' | 'assistant'; content: string }
 
 const CHAT_MODEL = () => process.env.PERSONA_CHAT_MODEL || 'qwen-plus';
@@ -45,6 +46,7 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
   const sources: ChatSource[] = [];
   const src = (type: ChatSource['type'], title: string, url?: string | null, ref?: SourceRef) => { const id = `${({ job: 'J', standard: 'S', task: 'T', data: 'D', company: 'C', web: 'W', faq: 'F' } as Record<string, string>)[type]}${sources.filter(s => s.type === type).length + 1}`; sources.push({ id, type, title, url, ref }); return id; };
   const occRef = (section: SourceRef['section']): SourceRef => ({ kind: 'occupation', id: occ.id, section });
+  const card = (id: string, tag: string, lines: (string | number | false | null | undefined)[]) => { const x = sources.find(y => y.id === id); if (x) x.card = { tag, lines: lines.filter(x => typeof x === 'string' && x).slice(0, 3) as string[] }; };
   const names = Array.from(new Set([occ.name, occ.name_lang_cn, ...(occ.aliases || [])].filter((n: any) => n && String(n).length >= 2))).slice(0, 10) as string[];
   const match = names.map(n => orIlike(['name'], n)).join(',');
 
@@ -76,6 +78,7 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
     L.push(`成长阶梯：${g.ladder.map((l: any) => `${l.title}（${l.years}${l.salary ? `，月薪 ${l.salary}` : ''}）：${cut(l.focus, 60)}`).join(' → ')}`);
     if (g.next_roles?.length) L.push(`再往上 / 往外：${g.next_roles.map((r: any) => `${r.type === 'promotion' ? '晋升' : '转型'}「${r.name}」${r.years ? `（${r.years}）` : ''}：${cut(r.how, 50)}`).join('；')}`);
     if (g.skills?.length) L.push(`技能树：入门 ${g.skills.filter((s: any) => s.level === 1).map((s: any) => s.name).join('、')}；核心 ${g.skills.filter((s: any) => s.level === 2).map((s: any) => s.name).join('、')}；进阶 ${g.skills.filter((s: any) => s.level === 3).map((s: any) => s.name).join('、')}`);
+    card(dG, '职业图谱', [g.ladder.slice(0, 4).map((l: any) => l.title).join(' → '), `技能树 ${g.skills?.length || 0} 项${g.next_roles?.length ? ` · ${g.next_roles.length} 条晋升 / 转型路线` : ''}`]);
     if (g.entry_paths?.length) L.push(`入行路径：${g.entry_paths.map((e: any) => `${e.path}（${cut(e.detail, 50)}）`).join('；')}`);
   }
 
@@ -88,6 +91,7 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
     const cn = (regions.data || []).filter((r: any) => r.scope === 'cn_region').sort((a: any, b: any) => b.monthly_cny - a.monthly_cny);
     if (cn.length) L.push(`中国各地：${cn.map((r: any) => `${SALARY_CN_REGIONS.find(x => x.code === r.code)?.name || r.code} ¥${r.monthly_cny}`).join('，')}`);
     const ct = (regions.data || []).filter((r: any) => r.scope === 'country').sort((a: any, b: any) => b.monthly_cny - a.monthly_cny);
+    card(dS, '薪资', [occ.recent_year_monthly_salary && `全国平均 ¥${occ.recent_year_monthly_salary} / 月`, salRows.length > 1 && `按年限 ¥${salRows[0].salary} → ¥${salRows[salRows.length - 1].salary}`, (cn.length || ct.length) && `${cn.length ? `中国 ${cn.length} 个地区` : ''}${cn.length && ct.length ? ' · ' : ''}${ct.length ? `${ct.length} 个国家` : ''}`]);
     if (ct.length) L.push(`各国（折人民币）：${ct.map((r: any) => `${SALARY_COUNTRIES.find(x => x.code === r.code)?.name || r.code} ¥${r.monthly_cny}${r.currency !== 'CNY' ? `（${r.currency} ${r.monthly_local}）` : ''}`).join('，')}`);
   }
 
@@ -110,6 +114,7 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
     L.push(`\n【在哪干、用什么】[${dE}]`);
     if (pl.length) L.push(`工作场所：${pl.join('、')}`);
     if (st.length) L.push(`工位 / 操作台：${st.join('、')}`);
+    card(dE, '场所与工具', [pl.length && `场所：${pl.slice(0, 3).join('、')}`, st.length && `工位：${st.slice(0, 3).join('、')}`, it.length && `常用工具设备 ${it.length} 件`]);
     if (it.length) L.push(`常用工具设备：${it.slice(0, 24).map((l: any) => `${l.other.name}${l.frequency === 'daily' ? '（每天）' : ''}${l.proficiency ? `（要${l.proficiency}）` : ''}`).join('、')}`);
   }
 
@@ -129,6 +134,7 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
     for (const j of jobs) { const e = byCo.get(j.institute_or_company_name) || { n: 0, id: j.company_id || null }; e.n++; byCo.set(j.institute_or_company_name, e); const c = j.city || j.location; if (c) byCity.set(c, (byCity.get(c) || 0) + 1); }
     // 招得多的公司各给一个 [C] 编号：聊天里点公司名能看企业资料
     L.push(`招得多的公司：${Array.from(byCo).sort((a, b) => b[1].n - a[1].n).slice(0, 6).map(([c, e]) => `${c}（${e.n}）${e.id ? `[${src('company', c, null, { kind: 'company', id: e.id })}]` : ''}`).join('、')}`);
+    card(dJ, '在招岗位', [`实时在招 ${openJobs.count || 0} 个`, `招得多：${Array.from(byCo).sort((a, b) => b[1].n - a[1].n).slice(0, 3).map(([c]) => c).join('、')}`, byCity.size && `主要在 ${Array.from(byCity).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([c]) => c).join('、')}`]);
     L.push(`主要城市：${Array.from(byCity).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([c, n]) => `${c}（${n}）`).join('、')}`);
     for (const j of jobs.slice(0, 8)) {
       const id = src('job', `${j.institute_or_company_name} · ${j.name}${j.city ? ` · ${j.city}` : ''}`, j.link || null, { kind: 'job', id: j.id });
@@ -149,13 +155,17 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
     const chain = sp?.profile?.ecosystem?.chain;
     if (chain?.upstream?.length || chain?.downstream?.length) {
       const rows: string[] = [];
+      const dEco = src('data', `平方产业链 · ${occ.name} 的行当（上下游）`, null, occRef('eco'));
+      let firmsN = 0;
       for (const [side, nodes] of [['上游', chain.upstream || []], ['下游', chain.downstream || []]] as const) {
         for (const n of (nodes as any[]).slice(0, 4)) {
           const firms = await matchCompanies(n.keywords || [], 3).catch(() => [] as any[]);
+          firmsN += firms.length;
           rows.push(`${side} · ${n.stage}（${cut(n.what, 40)}）${firms.length ? `：${firms.map((c: any) => `${c.name}[${src('company', c.name, null, { kind: 'company', id: c.id })}]`).join('、')}` : '：平方企业库里暂未匹配到公司'}`);
         }
       }
-      L.push(`\n【我的行当 · 上下游】（环节划分是平方的产业链分析，公司来自平方企业库）\n${rows.join('\n')}`);
+      L.push(`\n【我的行当 · 上下游】（环节划分是平方的产业链分析，公司来自平方企业库）[${dEco}]\n${rows.join('\n')}`);
+      card(dEco, '我的行当', [chain.upstream?.length && `上游：${chain.upstream.slice(0, 3).map((n: any) => n.stage).join('、')}`, chain.downstream?.length && `下游：${chain.downstream.slice(0, 3).map((n: any) => n.stage).join('、')}`, firmsN && `平方企业库里 ${firmsN} 家公司`]);
     }
   }
   if (chapters.data?.length) L.push(`\n【我的一天】${(chapters.data as any[]).map(c => `${c.slot || ''} ${c.title}${c.kind === 'incident' ? '（突发）' : ''}`.trim()).join(' → ')}`);
@@ -319,7 +329,7 @@ ${reply}`;
 /**
  * 资料面板：点来源后右侧展示的实体内容。只给这次对话资料里引用过的实体（防止游客拿它翻整个库）。
  */
-export async function entityDetail(occ: any, knowledge: { sources: ChatSource[] }, ref: SourceRef) {
+export async function entityDetail(occ: any, knowledge: { sources: ChatSource[] }, ref: SourceRef, spaceId?: string | null) {
   const allowed = knowledge.sources.some(s => s.ref && s.ref.kind === ref.kind && s.ref.id === ref.id && (ref.kind !== 'occupation' || s.ref.section === ref.section));
   if (!allowed) throw new Error('这条资料不在这段对话里');
   if (ref.kind === 'occupation') {
@@ -332,6 +342,13 @@ export async function entityDetail(occ: any, knowledge: { sources: ChatSource[] 
         supabaseAdmin.from('occupation_region_salaries').select('scope, code, currency, monthly_local, monthly_cny').eq('occupation_id', occ.id).eq('if_delete', false),
       ]);
       return { kind: 'occupation', section: 'salary', occupation: { id: o!.id, name: o!.name, recent_year_monthly_salary: o!.recent_year_monthly_salary }, salaries: sal.data || [], regions: reg.data || [] };
+    }
+    if (ref.section === 'eco') {
+      const { data: sp } = spaceId ? await supabaseAdmin.from('skill_tasks').select('profile').eq('id', spaceId).maybeSingle() : { data: null as any };
+      const chain = sp?.profile?.ecosystem?.chain || { upstream: [], downstream: [] };
+      const withFirms = (nodes: any[]) => Promise.all((nodes || []).map(async (n: any) => ({ stage: n.stage, what: n.what, companies: await matchCompanies(n.keywords || [], 4).catch(() => []) })));
+      const [upstream, downstream] = await Promise.all([withFirms(chain.upstream), withFirms(chain.downstream)]);
+      return { kind: 'occupation', section: 'eco', occupation: { id: o!.id, name: o!.name }, upstream, downstream };
     }
     if (ref.section === 'context') {
       const links = (await linksOf('occupation', occ.id).catch(() => [])).filter((l: any) => l.dir === 'out' && ['place', 'station', 'item'].includes(l.other_type));

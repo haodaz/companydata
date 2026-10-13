@@ -10,7 +10,7 @@
  */
 import React, { useEffect, useRef, useState } from 'react';
 
-export interface ChatSource { id: string; type: string; title: string; url?: string | null; ref?: { kind: string; id: number; section?: string } }
+export interface ChatSource { id: string; type: string; title: string; url?: string | null; ref?: { kind: string; id: number; section?: string }; card?: { tag: string; lines: string[] } }
 export interface ChatMsg { role: 'user' | 'assistant'; content: string; sources?: ChatSource[] }
 export interface ChatPersona { name: string; role: string; avatar?: string | null; tagline?: string | null }
 
@@ -19,6 +19,8 @@ const THEMES = {
   dark: { panel: 'rgba(14,16,28,.96)', border: 'rgba(255,255,255,.1)', ink: '#eef0ff', ink3: 'rgba(238,240,255,.55)', me: 'linear-gradient(120deg,#6a5cff,#8b5cf6)', them: 'rgba(255,255,255,.07)', chip: 'rgba(106,92,255,.16)', chipInk: '#c9c3ff', input: 'rgba(255,255,255,.06)' },
   light: { panel: '#ffffff', border: '#e8eaf2', ink: '#1f2233', ink3: '#8a8fa3', me: 'linear-gradient(120deg,#6055f5,#8b5cf6)', them: '#f4f5fa', chip: 'rgba(96,85,245,.08)', chipInk: '#5b50e6', input: '#f7f8fb' },
 };
+/** 功能卡片左边的小方块：一个字说清是哪类资料 */
+const CARD_GLYPH: Record<string, string> = { 职业图谱: '谱', 薪资: '¥', 场所与工具: '具', 在招岗位: '招', 我的行当: '链' };
 const qsOf = (extra: Record<string, any>) => new URLSearchParams(Object.fromEntries(Object.entries(extra).filter(([, v]) => v != null && typeof v !== 'object').map(([k, v]) => [k, String(v)]))).toString();
 
 export function usePersonaChat(endpoint: string, extraBody: Record<string, any> = {}, enabled = true) {
@@ -100,8 +102,21 @@ export function ChatBody({ chat, theme = 'light', fallbackName, onOpen, activeId
             <div style={{ maxWidth: '84%' }}>
               <div style={{ padding: '11px 14px', borderRadius: m.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px', fontSize: 14.5, lineHeight: 1.75, whiteSpace: 'pre-wrap',
                 background: m.role === 'user' ? C.me : C.them, color: m.role === 'user' ? '#fff' : C.ink }}>{m.role === 'assistant' ? render(m) : m.content}</div>
-              {!!m.sources?.length && <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
-                {m.sources.map(s => (
+              {/* 功能级资料（图谱 / 薪资 / 场所工具 / 在招 / 行当）：气泡后面一张预览卡，点了右侧展开 */}
+              {m.sources?.filter(s => s.card).map(s => { const on = activeId === s.id; return (
+                <button key={s.id} onClick={() => open(s)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%', marginTop: 8, padding: '11px 12px', borderRadius: 14, cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit',
+                    border: `1px solid ${on ? C.chipInk : C.border}`, background: on ? C.chip : C.panel, color: C.ink, boxShadow: on ? 'none' : '0 4px 14px rgba(31,34,51,.06)', transition: 'border-color .2s, background .2s' }}>
+                  <span style={{ width: 42, height: 42, borderRadius: 11, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: C.me, color: '#fff', fontSize: 18, fontWeight: 800 }}>{CARD_GLYPH[s.card!.tag] || '图'}</span>
+                  <span style={{ flex: 1, minWidth: 0 }}>
+                    <span style={{ display: 'block', fontSize: 11, color: C.chipInk, fontWeight: 700, letterSpacing: 1 }}>{s.card!.tag} · {s.id}</span>
+                    <span style={{ display: 'block', fontSize: 14, fontWeight: 800, margin: '1px 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.title.replace(/^平方[^·]*·\s*/, '')}</span>
+                    {s.card!.lines.map((l, k) => <span key={k} style={{ display: 'block', fontSize: 12, color: C.ink3, lineHeight: 1.55, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l}</span>)}
+                  </span>
+                  {(s.ref && onOpen) && <span style={{ flexShrink: 0, padding: '6px 11px', borderRadius: 999, fontSize: 12.5, fontWeight: 700, background: on ? C.me : C.chip, color: on ? '#fff' : C.chipInk }}>{on ? '已展开' : '展开看 ›'}</span>}
+                </button>); })}
+              {!!m.sources?.some(s => !s.card) && <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                {m.sources.filter(s => !s.card).map(s => (
                   <a key={s.id} href={s.url || undefined} target="_blank" rel="noreferrer" onClick={e => { e.preventDefault(); open(s); }}
                     style={{ fontSize: 12, color: C.ink3, textDecoration: 'none', display: 'flex', gap: 6, alignItems: 'baseline', cursor: s.ref || s.url ? 'pointer' : 'default',
                       background: activeId === s.id ? C.chip : 'transparent', borderRadius: 6, padding: '2px 4px', margin: '0 -4px' }}>

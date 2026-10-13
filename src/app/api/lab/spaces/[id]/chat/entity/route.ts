@@ -11,7 +11,7 @@ export async function GET(req: Request, ctx: Ctx) {
     const sp = new URL(req.url).searchParams;
     const ref = { kind: sp.get('kind'), id: Number(sp.get('id')), section: sp.get('section') || undefined } as SourceRef;
     const c = await loadChatContext({ spaceId: id });
-    return NextResponse.json({ success: true, ...(await entityDetail(c.occ, c.knowledge, ref)) });
+    return NextResponse.json({ success: true, ...(await entityDetail(c.occ, c.knowledge, ref, id)) });
   } catch (e: any) {
     return NextResponse.json({ success: false, error: e.message }, { status: 400 });
   }

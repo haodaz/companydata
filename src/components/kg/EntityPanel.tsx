@@ -13,7 +13,7 @@ import { JOB_TYPE_LABELS, formatSalary } from '@/lib/job-fields';
 import type { ChatSource } from '@/components/kg/PersonaChat';
 
 const C = { ink: '#1f2233', ink2: '#4b5064', ink3: '#8a8fa3', border: '#e8eaf2', soft: '#f6f7fb', v: '#6055f5', chip: 'rgba(96,85,245,.08)' };
-const SECTION_TITLE: Record<string, string> = { intro: '职业介绍', graph: '发展与升迁', salary: '薪资', context: '在哪干 · 用什么', jobs: '在招岗位' };
+const SECTION_TITLE: Record<string, string> = { intro: '职业介绍', graph: '发展与升迁', salary: '薪资', context: '在哪干 · 用什么', jobs: '在招岗位', eco: '我的行当 · 上下游' };
 const KIND_TITLE: Record<string, string> = { job: '岗位', company: '企业', standard: '行业标准', task: '典型任务' };
 
 const H = ({ children }: { children: React.ReactNode }) => <div style={{ fontSize: 13, fontWeight: 700, color: C.ink, margin: '18px 0 8px' }}>{children}</div>;
@@ -28,6 +28,24 @@ const Bar = ({ label, value, max, right }: { label: string; value: number; max: 
 );
 
 function Body({ d }: { d: any }) {
+  if (d.kind === 'occupation' && d.section === 'eco') {
+    // 环节是平方的产业链分析，环节下面的公司全部来自平方企业库
+    const Side = ({ label, nodes }: { label: string; nodes: any[] }) => !nodes.length ? null : <>
+      <H>{label}</H>
+      {nodes.map((n: any, i: number) => <div key={i} style={{ padding: '10px 12px', borderRadius: 12, background: C.soft, marginBottom: 8 }}>
+        <div style={{ fontSize: 14, fontWeight: 700 }}>{n.stage}</div>
+        {n.what && <div style={{ fontSize: 12.5, color: C.ink3, lineHeight: 1.6, margin: '2px 0 6px' }}>{n.what}</div>}
+        {n.companies.length
+          ? n.companies.map((c: any) => <div key={c.id} style={{ fontSize: 13, color: C.ink2, padding: '3px 0' }}><b style={{ color: C.ink }}>{c.name}</b>{[c.industry, c.city].filter(Boolean).length ? <span style={{ color: C.ink3 }}> · {[c.industry, c.city].filter(Boolean).join(' · ')}</span> : null}{c.one_sentence && <div style={{ fontSize: 12, color: C.ink3 }}>{c.one_sentence}</div>}</div>)
+          : <div style={{ fontSize: 12, color: C.ink3 }}>平方企业库里暂未匹配到公司</div>}
+      </div>)}
+    </>;
+    return <>
+      <div style={{ fontSize: 13, color: C.ink3, lineHeight: 1.7 }}>这一行在产业链上的位置：往上是谁给它供东西，往下它的活儿交给谁。环节划分是平方的产业链分析，每个环节下的公司都来自平方企业库。</div>
+      <Side label="上游" nodes={d.upstream} />
+      <Side label="下游" nodes={d.downstream} />
+    </>;
+  }
   if (d.kind === 'occupation' && d.section === 'intro') {
     const o = d.occupation;
     return <>
