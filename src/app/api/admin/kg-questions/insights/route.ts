@@ -71,6 +71,20 @@ export async function GET(req: Request) {
     // 只在真缺的时候排产：有缺口 / 质检不合格 / 这块还空着；问得多但平方库答得上的不用补
     }).filter(s => s.needed).sort((a, b) => b.score - a.score).slice(0, 15);
 
+    // 飞轮闭环：提问 → 平方答得上 / 缺口 → 质检 → 排补全 → 入问答库
+    const st = (k: string) => (rows as any[]).filter(r => r.status === k).length;
+    const { count: faqs } = await supabaseAdmin.from('occupation_faqs').select('id', { count: 'exact', head: true }).eq('if_delete', false).eq('status', 'ok');
+    const total = (rows as any[]).length, gapsN = (rows as any[]).filter(r => r.gap).length;
+    const flywheel = { total, answered: total - gapsN, gaps: gapsN, reviewed: st('ok') + st('bad') + st('task') + st('ingested'), ok: st('ok'), bad: st('bad'), task: st('task'), ingested: st('ingested'), faqs: faqs || 0, occupations: occTotals.size };
+    // 热门问题：同一问法合并计数
+    const tq = new Map<string, { q: string; n: number; gaps: number; occ: string }>();
+    for (const r of rows as any[]) {
+      const k = String(r.question).replace(/[？?！!。，,\s]/g, '');
+      const x = tq.get(k) || { q: r.question, n: 0, gaps: 0, occ: r.occupation?.name || '' };
+      x.n++; if (r.gap) x.gaps++; tq.set(k, x);
+    }
+    const topQuestions = Array.from(tq.values()).sort((a, b) => b.n - a.n || b.gaps - a.gaps).slice(0, 8);
+
     const occList = Array.from(occTotals.values()).sort((a, b) => b.gaps - a.gaps || b.n - a.n).slice(0, 15);
     const topicKeys = [...QUESTION_TOPICS.map(t => t.key), 'other'].filter(k => topics.has(k));
     const trend: { day: string; n: number; gaps: number }[] = [];
@@ -79,7 +93,7 @@ export async function GET(req: Request) {
       success: true,
       occupations: occList, topics: topicKeys.map(k => ({ key: k, label: topicLabel(k), ...topics.get(k)! })),
       matrix: Array.from(cell.values()).filter(c => occList.some(o => o.id === c.occ)),
-      trend, surfaces, suggestions,
+      trend, surfaces, suggestions, flywheel, topQuestions,
     });
   } catch (e: any) {
     return NextResponse.json({ success: false, error: e.message }, { status: 500 });

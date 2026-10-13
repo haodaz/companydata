@@ -14,6 +14,52 @@ import { BRAND } from '@/lib/theme';
 const { Text } = Typography;
 const SURFACE: Record<string, string> = { lab: '体验百业', studio: '百业工厂', admin: '后台试聊' };
 
+function Flywheel({ f }: { f: any }) {
+  const pct = (a: number, b: number) => (b ? `${Math.round((a / b) * 100)}%` : '—');
+  const steps = [
+    { label: '用户提问', value: f.total, sub: `${f.occupations} 个职业`, color: BRAND.primary },
+    { label: '平方库答得上', value: f.answered, sub: `覆盖率 ${pct(f.answered, f.total)}`, color: '#16a34a' },
+    { label: '知识缺口', value: f.gaps, sub: '上网查 · 注明出处', color: '#ea580c' },
+    { label: '人工质检', value: f.reviewed, sub: `合格 ${f.ok + f.task + f.ingested} · 不合格 ${f.bad}`, color: '#0ea5e9' },
+    { label: '排产补全', value: f.task, sub: 'AI 补齐职业知识', color: '#2f54eb' },
+    { label: '平方问答库', value: f.faqs, sub: `已转译 ${f.ingested} 问`, color: '#8b5cf6' },
+  ];
+  return (
+    <div>
+      <div style={{ display: 'flex', alignItems: 'stretch', gap: 0 }}>
+        {steps.map((x, i) => <React.Fragment key={x.label}>
+          <div style={{ flex: 1, minWidth: 0, padding: '12px 10px', borderRadius: 10, background: `${x.color}0f`, border: `1px solid ${x.color}33`, textAlign: 'center' }}>
+            <div style={{ fontSize: 12, color: BRAND.ink2 }}>{x.label}</div>
+            <div style={{ fontSize: 26, fontWeight: 800, color: x.color, lineHeight: 1.3 }}>{x.value}</div>
+            <div style={{ fontSize: 11, color: BRAND.ink3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{x.sub}</div>
+          </div>
+          {i < steps.length - 1 && <div style={{ display: 'flex', alignItems: 'center', padding: '0 4px', color: BRAND.ink4, fontSize: 16 }}>→</div>}
+        </React.Fragment>)}
+      </div>
+      {/* 闭环回流：入了问答库，下次同样的问题直接从平方库答 */}
+      <div style={{ position: 'relative', height: 26, margin: '2px 8% 0' }}>
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 14, borderLeft: `2px dashed #8b5cf6`, borderRight: `2px dashed #8b5cf6`, borderBottom: `2px dashed #8b5cf6`, borderRadius: '0 0 10px 10px' }} />
+        <div style={{ position: 'absolute', left: '50%', top: 6, transform: 'translateX(-50%)', background: '#fff', padding: '0 10px', fontSize: 11.5, color: '#8b5cf6', whiteSpace: 'nowrap' }}>↺ 入库后同类问题直接从平方库答（[F] 编号），覆盖率持续上升</div>
+      </div>
+    </div>
+  );
+}
+
+function TopQuestions({ list }: { list: any[] }) {
+  if (!list?.length) return <Text type="secondary">—</Text>;
+  const max = Math.max(...list.map(q => q.n));
+  return <div>{list.map((q, i) => <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '6px 0', borderBottom: i < list.length - 1 ? `1px solid ${BRAND.borderSoft}` : 0 }}>
+    <span style={{ width: 18, color: i < 3 ? '#ea580c' : BRAND.ink3, fontWeight: 700 }}>{i + 1}</span>
+    <div style={{ flex: 1, minWidth: 0 }}>
+      <div style={{ fontSize: 13, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{q.q}</div>
+      <div style={{ height: 4, background: '#f0f1f7', borderRadius: 2, marginTop: 4 }}><div style={{ width: `${(q.n / max) * 100}%`, height: 4, borderRadius: 2, background: q.gaps ? '#ea580c' : BRAND.primary }} /></div>
+    </div>
+    <span style={{ fontSize: 12, color: BRAND.ink3, whiteSpace: 'nowrap' }}>{q.occ}</span>
+    <span style={{ fontSize: 12, width: 54, textAlign: 'right' }}>{q.n} 次</span>
+    {q.gaps ? <Tag color="orange" style={{ margin: 0 }}>缺口</Tag> : <Tag color="green" style={{ margin: 0 }}>答得上</Tag>}
+  </div>)}</div>;
+}
+
 export function KgInsights({ d, onCell, onFill, busyKey }: { d: any; onCell: (occ: number, topic: string) => void; onFill: (s: any) => void; busyKey: string | null }) {
   if (!d) return null;
   if (!d.occupations?.length) return <Empty style={{ margin: '12px 0 20px' }} description="还没有足够的提问做分析" />;
@@ -42,6 +88,12 @@ export function KgInsights({ d, onCell, onFill, busyKey }: { d: any; onCell: (oc
               </table>
             </div>
             <div style={{ fontSize: 11, color: BRAND.ink3, marginTop: 6 }}><span style={{ color: '#ea580c' }}>■</span> 有知识缺口　<span style={{ color: BRAND.primary }}>■</span> 平方库答得上</div>
+          </Card>
+          <Card size="small" title="数据飞轮 · 闭环" extra={<Text type="secondary" style={{ fontSize: 12 }}>用户关心什么 → 补什么、核什么 → 入库</Text>} style={{ marginBottom: 16 }}>
+            {d.flywheel && <Flywheel f={d.flywheel} />}
+          </Card>
+          <Card size="small" title="热门问题" style={{ marginBottom: 16 }}>
+            <TopQuestions list={d.topQuestions} />
           </Card>
         </Col>
         <Col xs={24} xl={9}>
