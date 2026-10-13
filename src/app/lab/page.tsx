@@ -385,10 +385,10 @@ export default function LabLanding() {
     <div className="ai100-root">
       <style>{CSS}</style>
 
-      {/* ══ 开场：我们自己的空间——火箭总装 → 锅炉房（360° 实拍）→ 手术室 → 珊瑚礁（360° 实拍）→ 应急指挥大厅 → 咖啡吧台，约 10 秒一段无缝循环；3D 段只水平移 + 缓推，实拍段慢转。换素材必须改文件名（防缓存） ══ */}
+      {/* ══ 开场：我们自己的空间——火箭总装 → 锅炉房（360° 实拍）→ 手术室 → 应急指挥大厅 → 咖啡吧台，约 10 秒一段无缝循环；3D 段只水平移 + 缓推，实拍段慢转。换素材必须改文件名（防缓存） ══ */}
       <section className="ai100-bleed ai100-hero">
-        <video autoPlay muted loop playsInline preload="metadata" poster="/lab-landing/spaces-loop-v3.jpg">
-          <source src="/lab-landing/spaces-loop-v3.mp4" type="video/mp4" />
+        <video autoPlay muted loop playsInline preload="metadata" poster="/lab-landing/spaces-loop-v4.jpg">
+          <source src="/lab-landing/spaces-loop-v4.mp4" type="video/mp4" />
         </video>
         <div className="veil" />
         <div className="in">

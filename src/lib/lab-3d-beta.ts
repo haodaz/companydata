@@ -115,12 +115,7 @@ export const BETA3D: Record<string, Beta3DScene> = {
     credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建（6 万高斯，2 MB）',
     slots: ['07:30', '08:00', '08:30', '09:10', '10:20', '11:10', '14:00', '16:30', '18:00'],   // 11:40 河堤一线不在大厅
   },
-  asphalt: {
-    key: 'asphalt', title: '摊铺现场', role: '沥青摊铺施工员', spaceId: '0cfe3233-acd9-4e4c-b910-3d9350f18eff',
-    url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-asphalt-site-v1.splat', position: [-0.5483, -4.2882, -0.9021], lookAt: [-0.8637, -2.3699, 4.9669], up: [0.3431, -0.8872, 0.3084], span: 1.2,   // 用视频前段（第 13 帧）的机位：中间帧贴着路面，近处全是糊的高斯
-    credit: 'Veo 3.1 生成环绕视频 · COLMAP + Brush 重建（54 万高斯，17 MB）',
-    slots: ['06:50', '07:30', '08:20', '09:00', '10:20', '10:50', '13:30'],   // 15:40 日志归档在项目部
-  },
+  // asphalt（摊铺现场）2026-10-13 撤掉：重建出来几乎全是针状高斯（中位长宽比 ~100，压路机冒烟训练成拉丝），挪机位、滤浮点都救不回来；重新生成环绕视频再重建前，这个空间不挂 3D
   reef: {
     key: 'reef', title: '珊瑚礁', role: '潜导', spaceId: '387fcc19-bd56-453e-a983-b3a1b4da5704',
     url: 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art/beta3d-reef-v1.splat', position: [-0.0038, 0.1282, 0.2202], lookAt: [-0.4826, 0.187, 7.7058], up: [-0.0142, -0.9999, 0.002], span: 1.2,   // 场景近（depth 7.5），摆动幅度按比例缩小
