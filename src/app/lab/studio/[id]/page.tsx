@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useUser } from '@/lib/user-context';
 import { MODEL_OPTIONS } from '@/lib/model-context';
 import { SimRunner, SimStage } from '@/components/lab/SimRunner';
+import { PersonaChat } from '@/components/kg/PersonaChat';
 import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue, type BasisRow } from '@/lib/lab-studio';
 import { CAST_KINDS, applyCastArt, castKind, stepsUsing, type CastKind, type CastMember, type LabAsset } from '@/lib/lab-cast';
 
@@ -194,6 +195,8 @@ export default function StudioPage() {
 
   return (
     <div>
+      {/* 和我聊：在工厂里先试聊，看数字职人答得像不像这一行的人 */}
+      {data?.space && <PersonaChat top={84} endpoint={`/api/lab/spaces/${id}/chat`} extraBody={{ surface: 'studio' }} theme="dark" fallbackName={data.space.profile?.name} fallbackAvatar={data.space.profile?.avatar} />}
       {/* 页头 */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 16 }}>
         <button className="lab-btn ghost sm" onClick={() => router.push('/lab/spaces')}>← 百业工厂</button>

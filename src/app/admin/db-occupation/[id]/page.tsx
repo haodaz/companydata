@@ -12,9 +12,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { App, Avatar, Button, Card, Col, Descriptions, Empty, Form, Input, InputNumber, Modal, Popconfirm, Row, Segmented, Select, Space, Spin, Table, Tabs, Tag, Typography } from 'antd';
-import { ArrowLeftOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, EditOutlined, ThunderboltOutlined, ApartmentOutlined, GlobalOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, EditOutlined, ThunderboltOutlined, ApartmentOutlined, GlobalOutlined, ToolOutlined } from '@ant-design/icons';
 import { EntityHero } from '@/components/admin/EntityHero';
 import { OccupationCareerGraph } from '@/components/admin/OccupationCareerGraph';
+import { OccupationContextTab, OccupationTasksTab } from '@/components/admin/EntityLibrary';
+import { PersonaChat } from '@/components/kg/PersonaChat';
 import { REVIEW_STATUS } from '@/lib/review-status';
 import { useModel } from '@/lib/model-context';
 import { BRAND } from '@/lib/theme';
@@ -103,7 +105,7 @@ export default function OccupationDetailPage() {
   const sp = useSearchParams();
   const { message } = App.useApp();
   const { currentModel } = useModel();
-  const [d, setD] = useState<{ occupation: any; salaries: any[]; regions: any[]; roleLinks: Record<string, number>; related: any } | null>(null);
+  const [d, setD] = useState<{ occupation: any; salaries: any[]; regions: any[]; roleLinks: Record<string, number>; links: any[]; tasks: any[]; related: any } | null>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState<string | null>(null);
   const [tab, setTab] = useState(sp.get('tab') || 'info');
@@ -129,15 +131,17 @@ export default function OccupationDetailPage() {
   };
 
   /** part：profile 职业画像 + 年限薪资（只填空）/ career 重新生成发展图谱 / regions 重新检索各地薪资 */
-  const runAgent = async (part: 'profile' | 'career' | 'regions') => {
+  const runAgent = async (part: 'profile' | 'career' | 'regions' | 'context' | 'tasks') => {
     setBusy(part);
-    const label = { profile: 'AI 补全', career: '生成发展图谱', regions: '检索各国家 / 地区薪资' }[part];
+    const label = { profile: 'AI 补全', career: '生成发展图谱', regions: '检索各国家 / 地区薪资', context: '生成工作场所与工具设备', tasks: '生成典型任务与工位' }[part];
     const hide = message.loading(`${label}中，约 30–90 秒…`, 0);
     try {
       const j = await (await fetch('/api/agents/occupation', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: Number(id), model: currentModel, part }) })).json();
       if (!j.success) throw new Error(j.error);
       message.success(part === 'career' ? `图谱：${j.skills} 个技能、${j.ladder} 级阶梯、${j.next_roles} 个进阶 / 转型岗位`
         : part === 'regions' ? `拿到 ${j.regions} 个国家 / 地区的薪资`
+        : part === 'context' ? `场所 ${j.places} 个、工具设备 ${j.items} 个，新关联 ${j.links} 条`
+        : part === 'tasks' ? `新典型任务 ${j.tasks} 个、新工位 ${j.stations} 个`
         : j.skipped ? `跳过：${j.skipped}` : `补了 ${j.changed.length} 个字段、${j.salaries} 档薪资`);
       load();
     } catch (e: any) { message.error(`${label}失败：${e.message}`); } finally { hide(); setBusy(null); }
@@ -174,6 +178,11 @@ export default function OccupationDetailPage() {
   const salMax = Math.max(0, ...d.salaries.map((s: any) => s.salary || 0));
   const countries = SALARY_COUNTRIES.map(c => ({ ...c, row: d.regions.find((r: any) => r.scope === 'country' && r.code === c.code) })).filter(c => c.row).sort((a, b) => (b.row.monthly_cny || 0) - (a.row.monthly_cny || 0));
   const cnRegions = SALARY_CN_REGIONS.map(c => ({ ...c, row: d.regions.find((r: any) => r.scope === 'cn_region' && r.code === c.code) })).filter(c => c.row).sort((a, b) => (b.row.monthly_cny || 0) - (a.row.monthly_cny || 0));
+  // 技能节点 → 用到的工具设备（关联上的 skill_ids）+ 练它的典型任务
+  const skillUses: Record<string, { tools: string[]; tasks: string[] }> = {};
+  const use = (sid: string) => (skillUses[sid] ||= { tools: [], tasks: [] });
+  for (const l of d.links || []) if (l.dir === 'out' && l.other_type === 'item') for (const sid of l.skill_ids || []) use(sid).tools.push(l.other.name);
+  for (const t of d.tasks || []) for (const sid of t.skill_ids || []) use(sid).tasks.push(t.name);
   const countryMax = Math.max(0, ...countries.map(c => c.row.monthly_cny || 0));
   const regionMax = Math.max(0, ...cnRegions.map(c => c.row.monthly_cny || 0));
 
@@ -263,6 +272,7 @@ export default function OccupationDetailPage() {
           <Button type="primary" icon={<ThunderboltOutlined />} loading={busy === 'profile'} onClick={() => runAgent('profile')}>AI 补全</Button>
           <Button icon={<ApartmentOutlined />} loading={busy === 'career'} onClick={() => runAgent('career')}>{o.career_map ? '重新生成发展图谱' : '生成发展图谱'}</Button>
           <Button icon={<GlobalOutlined />} loading={busy === 'regions'} onClick={() => runAgent('regions')}>检索各地薪资</Button>
+          <Button icon={<ToolOutlined />} loading={busy === 'context'} onClick={() => runAgent('context')}>生成场所与工具</Button>
           <Button icon={<CheckCircleOutlined />} onClick={() => patch({ human_review_status: 'complete' }, '已审核通过')}>审核通过</Button>
           <Button icon={<CloseCircleOutlined />} onClick={() => patch({ human_review_status: 'rejected' }, '已标为不通过')}>不通过</Button>
           <Button icon={<EditOutlined />} onClick={openEdit}>编辑</Button>
@@ -292,12 +302,16 @@ export default function OccupationDetailPage() {
       <Card styles={{ body: { paddingTop: 4 } }}>
         <Tabs activeKey={tab} onChange={switchTab} destroyOnHidden items={[
           { key: 'info', label: '职业信息', children: infoTab },
-          { key: 'graph', label: `发展图谱${o.career_map?.skills?.length ? '' : '（未生成）'}`, children: <OccupationCareerGraph graph={o.career_map} roleLinks={d.roleLinks || {}} onOpenRole={rid => router.push(`/admin/db-occupation/${rid}?tab=graph`)} onQueryRole={queryRole} /> },
+          { key: 'graph', label: `发展图谱${o.career_map?.skills?.length ? '' : '（未生成）'}`, children: <OccupationCareerGraph graph={o.career_map} uses={skillUses} roleLinks={d.roleLinks || {}} onOpenRole={rid => router.push(`/admin/db-occupation/${rid}?tab=graph`)} onQueryRole={queryRole} /> },
+          { key: 'tasks', label: `典型任务${(d.tasks || []).length ? `（${d.tasks.length}）` : ''}`, children: <OccupationTasksTab tasks={d.tasks || []} skills={o.career_map?.skills || []} busy={busy === 'tasks'} onGenerate={() => runAgent('tasks')} /> },
+          { key: 'context', label: `场所与工具${(d.links || []).filter((l: any) => l.other_type === 'place' || l.other_type === 'item').length ? `（${(d.links || []).filter((l: any) => l.other_type === 'place' || l.other_type === 'item').length}）` : ''}`, children: <OccupationContextTab links={(d.links || []).filter((l: any) => l.dir === 'out')} skills={o.career_map?.skills || []} busy={busy === 'context'} onGenerate={() => runAgent('context')} /> },
           { key: 'salary', label: `薪资${d.regions.length ? `（${d.regions.length} 地）` : ''}`, children: salaryTab },
           { key: 'companies', label: '热门公司', children: <CompaniesTab id={id} router={router} /> },
           { key: 'jobs', label: `岗位（${d.related.jobs_total}）`, children: <JobsTab id={id} router={router} /> },
         ]} />
       </Card>
+
+      <PersonaChat endpoint="/api/kg/chat" extraBody={{ occupationId: Number(id) }} theme="light" />
 
       <Modal open={editOpen} title={`编辑：${o.name}`} width={860} onCancel={() => setEditOpen(false)} onOk={saveEdit} okText="保存（改过的字段会锁定）" destroyOnHidden>
         <Form form={form} layout="vertical">

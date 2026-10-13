@@ -2,7 +2,7 @@
  * 数据部门 2026-10-13 反馈 + 职业实体库起步（迁移 024 跑完后再跑）：
  *   npx tsx scripts/fix-1013.mts            只出报告，不写库
  *   npx tsx scripts/fix-1013.mts --apply    写库
- *   --only registered|jobsource|occ-import|occ-lab|occ-graph|occ-fill   只跑其中一步；--limit N 试跑；--model 换联网模型（默认 gemini-3.8-flash）
+ *   --only registered|jobsource|occ-import|occ-lab|occ-graph|occ-fill|occ-context|occ-tasks   只跑其中一步；--limit N 试跑；--model 换联网模型（默认 gemini-3.8-flash）
  *
  * ① registered：companies.registered_name 工商企业名称。企业名本身就是全称的直接用；中文企业查百度百科词条卡片
  *    （企业词条标题就是工商全称）；英文名是「…Inc. / Ltd. / AG」这类法定名的用英文名。其余等画像流水线补。
@@ -11,6 +11,8 @@
  * ④ occ-lab：第一批排产 = AI 百业里已有的职业（用户 10-13 定）。从百业空间的岗位名 / 职人角色里归出规范职业名，
  *    去重后逐个联网生成职业档案（只填空），空间里的原始叫法记进别名，方便职业 ↔ 空间互相对上。
  * ⑥ occ-fill：没有别名或没有年限薪资的职业（数据部门导入的那批）跑一遍 AI 补全（只填空），别名补上才对得上岗位库。
+ * ⑦ occ-context：每个职业的工作场所 + 工具设备（全集，迁移 026），建 职业 → 场所 / 物品、场所 → 物品 的关联；已经有 AI 关联的职业跳过。
+ * ⑧ occ-tasks：典型任务 + 工位的全集（百业已有的任务避开），任务少于 6 个的职业补。
  * ⑤ occ-graph：没有发展图谱 / 没有分地区薪资的职业，补发展图谱（技能树 + 阶梯 + 晋升 / 转型）和分国家 / 中国各地区薪资（迁移 025）。
  */
 import fs from 'node:fs';
@@ -22,7 +24,8 @@ const { baikeCard } = await import('../src/lib/company-logo');
 const { jobSourceOf, JOB_SOURCE_LABELS } = await import('../src/lib/job-fields');
 const { importHeaderKey } = await import('../src/lib/occupation-fields');
 const { upsertOccupation, upsertSalaries, findOccupation, saveCareerMap, upsertRegionSalaries, mergeOccupations } = await import('../src/lib/occupation-store');
-const { researchOccupation, researchCareerGraph, researchRegionSalaries } = await import('../src/lib/agents/occupation-enrich');
+const { researchOccupation, researchCareerGraph, researchRegionSalaries, researchOccupationContext, researchOccupationTasks } = await import('../src/lib/agents/occupation-enrich');
+const { saveOccupationContext, saveTasksAndStations } = await import('../src/lib/entity-store');
 const { generateCheap } = await import('../src/lib/llm-client');
 const { parseJsonLoose } = await import('../src/lib/agents/search-llm');
 
@@ -189,6 +192,48 @@ if (run('occ-fill')) {
         const saved = await upsertOccupation({ ...r.fields, name: o.name, external_id: o.external_id }, { mode: 'fill', source: 'ai', sources: r.sources });
         const n = await upsertSalaries(o.id, r.salaries, 'fill');
         console.log(`  ${o.name}：补 ${saved.changed.join('、') || '无'}；薪资 ${n} 档`);
+      } catch (e: any) { console.warn(`  ${o.name} 失败：${e.message}`); }
+    });
+  }
+}
+
+// ── ⑦ 工作场所 + 工具设备 ──
+if (run('occ-context')) {
+  const { data: occ } = await selectAll(() => db.from('occupations').select('id, name, name_lang_en, responsibility, career_map').eq('if_delete', false).order('id'));
+  const { data: ls } = await selectAll(() => db.from('entity_links').select('from_id').eq('from_type', 'occupation').eq('source', 'ai').eq('if_delete', false).order('id'));
+  const done = new Set(ls.map((l: any) => l.from_id));
+  const todo = occ.filter((o: any) => !done.has(o.id)).slice(0, LIMIT);
+  console.log(`\n⑦ 还没有场所与工具的职业 ${todo.length} 个`);
+  if (APPLY) {
+    const batchId = Date.now();
+    await pool(todo, 3, async (o: any) => {
+      try {
+        const ctx = await researchOccupationContext(o, MODEL, batchId);
+        const r = await saveOccupationContext(o.id, ctx);
+        console.log(`  ${o.name}：场所 ${r.places}、物品 ${r.items}、新关联 ${r.links}`);
+      } catch (e: any) { console.warn(`  ${o.name} 失败：${e.message}`); }
+    });
+  }
+}
+
+// ── ⑧ 典型任务 + 工位（全集）──
+if (run('occ-tasks')) {
+  const { data: occ } = await selectAll(() => db.from('occupations').select('id, name, responsibility, career_map').eq('if_delete', false).order('id'));
+  const { data: ts } = await selectAll(() => db.from('typical_tasks').select('occupation_id, name').eq('if_delete', false).order('id'));
+  const byOcc = new Map<number, string[]>();
+  for (const t of ts as any[]) byOcc.set(t.occupation_id, [...(byOcc.get(t.occupation_id) || []), t.name]);
+  const todo = occ.filter((o: any) => (byOcc.get(o.id) || []).length < 6).slice(0, LIMIT);
+  console.log(`\n⑧ 典型任务少于 6 个的职业 ${todo.length} 个`);
+  if (APPLY) {
+    const batchId = Date.now();
+    await pool(todo, 3, async (o: any) => {
+      try {
+        const { data: ls } = await db.from('entity_links').select('to_type, to_id').eq('from_type', 'occupation').eq('from_id', o.id).in('to_type', ['place', 'item']);
+        const ids = (t: string) => (ls || []).filter((l: any) => l.to_type === t).map((l: any) => l.to_id);
+        const names = async (table: string, list: number[]) => list.length ? ((await db.from(table).select('name').in('id', list)).data || []).map((r: any) => r.name) : [];
+        const r = await researchOccupationTasks(o, MODEL, batchId, { existingTasks: byOcc.get(o.id) || [], places: await names('work_places', ids('place')), items: await names('work_items', ids('item')) });
+        const w = await saveTasksAndStations(o.id, r, 'ai');
+        console.log(`  ${o.name}：新任务 ${w.tasks}、新工位 ${w.stations}、新关联 ${w.links}`);
       } catch (e: any) { console.warn(`  ${o.name} 失败：${e.message}`); }
     });
   }

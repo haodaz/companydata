@@ -12,7 +12,9 @@ import { SKILL_KIND_LABELS, SKILL_LEVEL_LABELS, type CareerGraph, type CareerSki
 
 const { Text } = Typography;
 
-function SkillTree({ skills }: { skills: CareerSkill[] }) {
+export type SkillUses = Record<string, { tools: string[]; tasks: string[] }>;
+
+function SkillTree({ skills, uses }: { skills: CareerSkill[]; uses: SkillUses }) {
   const wrap = useRef<HTMLDivElement>(null);
   const nodes = useRef<Record<string, HTMLDivElement | null>>({});
   const [lines, setLines] = useState<{ from: string; to: string; d: string }[]>([]);
@@ -73,7 +75,9 @@ function SkillTree({ skills }: { skills: CareerSkill[] }) {
           {list.map(s => {
             const dim = related && !related.has(s.id);
             return (
-              <Tooltip key={s.id} title={<div>{s.why && <div>为什么：{s.why}</div>}{s.how_to_build && <div style={{ marginTop: 4 }}>怎么练：{s.how_to_build}</div>}</div>}>
+              <Tooltip key={s.id} title={<div>{s.why && <div>为什么：{s.why}</div>}{s.how_to_build && <div style={{ marginTop: 4 }}>怎么练：{s.how_to_build}</div>}
+                {!!uses[s.id]?.tools.length && <div style={{ marginTop: 4 }}>用到：{uses[s.id].tools.join('、')}</div>}
+                {!!uses[s.id]?.tasks.length && <div style={{ marginTop: 4 }}>在这些任务里练：{uses[s.id].tasks.join('、')}</div>}</div>}>
                 <div ref={el => { nodes.current[s.id] = el; }} onMouseEnter={() => setHover(s.id)} onMouseLeave={() => setHover(null)}
                   style={{ position: 'relative', zIndex: 1, background: '#fff', border: `1px solid ${hover === s.id ? BRAND.primary : '#e5e7eb'}`, borderRadius: 8, padding: '8px 10px', opacity: dim ? 0.35 : 1, transition: 'opacity .15s, border-color .15s', cursor: 'default', boxShadow: hover === s.id ? '0 2px 10px rgba(0,0,0,.08)' : undefined }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'space-between' }}>
@@ -81,6 +85,10 @@ function SkillTree({ skills }: { skills: CareerSkill[] }) {
                     <Tag color={SKILL_KIND_LABELS[s.kind]?.color} style={{ margin: 0, fontSize: 10, lineHeight: '16px' }}>{SKILL_KIND_LABELS[s.kind]?.label}</Tag>
                   </div>
                   {s.how_to_build && <div style={{ fontSize: 11, color: BRAND.ink3, marginTop: 3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.how_to_build}</div>}
+                  {(!!uses[s.id]?.tools.length || !!uses[s.id]?.tasks.length) && <div style={{ fontSize: 11, marginTop: 3, display: 'flex', gap: 8 }}>
+                    {!!uses[s.id]?.tools.length && <span style={{ color: '#0e7490' }}>🔧 {uses[s.id].tools.length} 件工具设备</span>}
+                    {!!uses[s.id]?.tasks.length && <span style={{ color: '#7c3aed' }}>📋 {uses[s.id].tasks.length} 个典型任务</span>}
+                  </div>}
                 </div>
               </Tooltip>
             );
@@ -91,8 +99,9 @@ function SkillTree({ skills }: { skills: CareerSkill[] }) {
   );
 }
 
-export function OccupationCareerGraph({ graph, roleLinks, onOpenRole, onQueryRole }: {
+export function OccupationCareerGraph({ graph, roleLinks, onOpenRole, onQueryRole, uses = {} }: {
   graph: CareerGraph | null | undefined;
+  uses?: SkillUses;
   roleLinks: Record<string, number>;
   onOpenRole: (id: number) => void;
   onQueryRole: (name: string) => void;
@@ -120,8 +129,8 @@ export function OccupationCareerGraph({ graph, roleLinks, onOpenRole, onQueryRol
     <div>
       {graph.summary && <div style={{ fontSize: 15, fontWeight: 500, marginBottom: 16, padding: '10px 14px', background: '#f5f3ff', borderRadius: 8, color: BRAND.ink }}>{graph.summary}</div>}
 
-      <Card size="small" title="技能树" extra={<Text type="secondary" style={{ fontSize: 12 }}>箭头 = 前置关系；悬停看一条技能的上下游</Text>} style={{ marginBottom: 16 }}>
-        <SkillTree skills={graph.skills} />
+      <Card size="small" title="技能树" extra={<Text type="secondary" style={{ fontSize: 12 }}>箭头 = 前置关系；悬停看一条技能的上下游、用到的工具设备、在哪些典型任务里练</Text>} style={{ marginBottom: 16 }}>
+        <SkillTree skills={graph.skills} uses={uses} />
       </Card>
 
       <Card size="small" title="成长阶梯" style={{ marginBottom: 16 }}>

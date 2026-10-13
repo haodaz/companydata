@@ -4,7 +4,15 @@
  * 相关专业用英文 snake_case 的专业 key；大类 / 小类只能从对方枚举里选。
  * 只返回「找到的值」，写库交给 occupation-store（AI 模式只填空）。
  */
-import { searchJson } from '@/lib/agents/search-llm';
+import { parseJsonLoose, searchJson } from '@/lib/agents/search-llm';
+import { generateContent } from '@/lib/llm-client';
+
+/**
+ * 国内信息走国内联网检索（阿里云百炼 · 通义千问 enable_search，每次搜索约 ¥0.004，Gemini 搜索约 ¥0.25）：
+ * 中国的薪酬、职业画像、发展通道、典型任务、场所设备都不用出外网。只有「各国家薪资」才用调用方给的模型（Gemini 等）。
+ * 环境变量 DOMESTIC_SEARCH_MODEL 可改（如 qwen-max）；设成 same 则全部跟调用方的模型走。
+ */
+const cn = (modelId: string) => (process.env.DOMESTIC_SEARCH_MODEL === 'same' ? modelId : process.env.DOMESTIC_SEARCH_MODEL || 'qwen-plus');
 import { CAREER_CATEGORY_LABELS, CAREER_MID_CATEGORIES, SALARY_YEAR_LABELS, SALARY_COUNTRIES, SALARY_CN_REGIONS, FX_TO_CNY, toCny, type CareerGraph, type CareerSkill, type CareerStage, type CareerNextRole } from '@/lib/occupation-fields';
 
 export interface OccupationResearch { fields: Record<string, any>; salaries: { year: string; salary: number; source_url?: string | null }[]; sources: Record<string, string>; searchQueries: string[]; raw: any }
@@ -37,7 +45,7 @@ export async function researchOccupation(o: { name: string; name_lang_en?: strin
 }
 规则：只报告检索到或有把握的事实；薪资必须来自可查的数据源并在 sources 里给链接，查不到就 null；中文字段用中文。
 `;
-  const { parsed, searchQueries } = await searchJson(prompt, modelId, { tool_name: 'occupation', task_name: 'Occupation Research', institution: o.name, batch_id: batchId });
+  const { parsed, searchQueries } = await searchJson(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Research', institution: o.name, batch_id: batchId });
   const p = parsed || {};
   const fields: Record<string, any> = {};
   for (const k of ['name', 'name_lang_en', 'aliases', 'career_category', 'career_mid_category', 'intro', 'responsibility', 'position_requirement', 'recent_year_monthly_salary', 'relevant_certificates', 'relevant_celebrities', 'relevant_fos_ids']) {
@@ -74,7 +82,7 @@ ${o.intro ? `职业简介：${o.intro}\n` : ''}${o.responsibility ? `工作内�
 }
 中文作答；职位头衔、薪资带要符合中国行业实际，不要编造公司内部职级代号。
 `;
-  const { parsed } = await searchJson(prompt, modelId, { tool_name: 'occupation', task_name: 'Occupation Career Graph', institution: o.name, batch_id: batchId });
+  const { parsed } = await searchJson(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Career Graph', institution: o.name, batch_id: batchId });
   const p = parsed || {};
   const skills: CareerSkill[] = (Array.isArray(p.skills) ? p.skills : []).slice(0, 20).map((s: any, i: number) => ({
     id: String(s?.id || `s${i}`).toLowerCase().replace(/[^a-z0-9_]+/g, '_') || `s${i}`, name: String(s?.name || '').trim(),
@@ -123,7 +131,7 @@ ${regions}
 `;
   const [a, b] = await Promise.all([
     searchJson(p1, modelId, { tool_name: 'occupation', task_name: 'Occupation Salary · Countries', institution: o.name, batch_id: batchId }).catch(() => ({ parsed: null })),
-    searchJson(p2, modelId, { tool_name: 'occupation', task_name: 'Occupation Salary · CN Regions', institution: o.name, batch_id: batchId }).catch(() => ({ parsed: null })),
+    searchJson(p2, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Salary · CN Regions', institution: o.name, batch_id: batchId }).catch(() => ({ parsed: null })),
   ]);
   const num = (v: any) => parseInt(String(v ?? '').replace(/[^\d]/g, ''), 10);
   for (const it of (a.parsed as any)?.items || []) {
@@ -140,4 +148,95 @@ ${regions}
     out.push({ scope: 'cn_region', code: r.code, name: r.name, currency: 'CNY', monthly_local: m, monthly_cny: m, data_year: num(it?.year) || null, source_url: it?.source_url || null, note: it?.note || null });
   }
   return out;
+}
+
+// ────────────────────────────────────────────
+// 工作场所 + 工具设备（迁移 026）：数据工厂这边是全集，百业生成时来查；所以按职业全量列，不只列百业里画过的
+// ────────────────────────────────────────────
+export interface ContextPlace { name: string; category?: string; setting?: string; description?: string; environment?: string; safety?: string; frequency?: string; note?: string }
+export interface ContextItem { name: string; kind: string; category?: string; description?: string; usage?: string; brands?: string; frequency?: string; proficiency?: string; skill_ids?: string[]; places?: string[]; note?: string }
+
+export async function researchOccupationContext(o: { name: string; name_lang_en?: string | null; responsibility?: string | null; career_map?: any }, modelId: string, batchId: number): Promise<{ places: ContextPlace[]; items: ContextItem[]; sources: string[] }> {
+  const skills = (o.career_map?.skills || []).map((s: any) => `${s.id}=${s.name}`).join('; ');
+  const prompt = `
+你是这个行业里干了十几年的老师傅。列出「${o.name}」${o.name_lang_en ? `（${o.name_lang_en}）` : ''}在中国真实工作中会待的地方和会用到的东西，要全、要具体，用联网检索核实（行业规范、设备手册、岗位 SOP、招聘要求）。
+${o.responsibility ? `工作内容：${String(o.responsibility).slice(0, 500)}\n` : ''}${skills ? `已有技能节点（items 的 skill_ids 只能从这里取）：${skills}\n` : ''}
+返回 JSON：
+{
+  "places": 工作场所 3-8 个，[{ "name": 规范场所名（如「医院急诊抢救室」「咖啡门店吧台」「转炉炉前操作平台」，不要具体门牌 / 公司）, "category": office|factory|lab|medical|kitchen|store|site|field|control|transport|education|home|public|other, "setting": indoor|outdoor|mixed, "description": 这里是什么样、有什么, "environment": 环境特点（噪声 / 高温 / 洁净 / 夜班 / 高空 / 久站…）, "safety": 安全要求, "frequency": daily|weekly|occasional, "note": 在这里主要干什么 }],
+  "items": 工具设备 12-25 个，覆盖下面各类（有就列）：tool 手工具 / equipment 设备仪器 / material 耗材材料 / software 软件系统 / ppe 防护用品 / document 常用单据表单 / credential 上岗证照，
+     [{ "name": 规范名称（通用叫法，不带品牌）, "kind": 上面之一, "category": 细分类别, "description": 是什么 / 干什么用（一句）, "usage": 操作要点（一句）, "brands": 常见品牌型号（顿号分隔，没有就 null）, "frequency": daily|weekly|occasional, "proficiency": 了解|会用|熟练|精通, "skill_ids": [对应技能节点 id], "places": [在哪个场所用，取上面 places 的 name] }],
+  "sources": [参考链接]
+}
+中文作答；只列这个职业真会碰到的，不要泛泛的「电脑」「笔」，除非是核心工具（如设计师的数位板）。
+`;
+  const { parsed } = await searchJson(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Places & Items', institution: o.name, batch_id: batchId });
+  const p = parsed || {};
+  const str = (v: any) => (v == null || v === 'null' || v === '' ? undefined : String(v).trim());
+  const places: ContextPlace[] = (Array.isArray(p.places) ? p.places : []).map((x: any) => ({
+    name: String(x?.name || '').trim(), category: str(x?.category), setting: str(x?.setting), description: str(x?.description), environment: str(x?.environment),
+    safety: str(x?.safety), frequency: str(x?.frequency), note: str(x?.note),
+  })).filter((x: ContextPlace) => x.name);
+  const items: ContextItem[] = (Array.isArray(p.items) ? p.items : []).map((x: any) => ({
+    name: String(x?.name || '').trim(), kind: ['tool', 'equipment', 'material', 'software', 'ppe', 'document', 'credential'].includes(x?.kind) ? x.kind : 'tool',
+    category: str(x?.category), description: str(x?.description), usage: str(x?.usage), brands: str(x?.brands), frequency: str(x?.frequency), proficiency: str(x?.proficiency),
+    skill_ids: Array.isArray(x?.skill_ids) ? x.skill_ids.map(String) : [], places: Array.isArray(x?.places) ? x.places.map(String) : [], note: str(x?.note),
+  })).filter((x: ContextItem) => x.name);
+  return { places, items, sources: Array.isArray(p.sources) ? p.sources.filter((u: any) => typeof u === 'string' && /^https?:/.test(u)) : [] };
+}
+
+// ────────────────────────────────────────────
+// 典型任务 + 工位（迁移 026）
+//   lab 给了：只从百业章节 / 虚拟工位归纳（快速启动的种子，每条记下对应章节）
+//   lab 没给：按职业列全集（避开已有任务名）
+// ────────────────────────────────────────────
+export interface LabChapterHint { ref: string; space: string; title: string; kind: string; brief: string; steps: string }
+export interface LabBenchHint { ref: string; space: string; name: string; surface: string; controls: string; gauges: string }
+
+export async function researchOccupationTasks(
+  o: { name: string; responsibility?: string | null; career_map?: any },
+  modelId: string, batchId: number,
+  opts: { lab?: { chapters: LabChapterHint[]; benches: LabBenchHint[] }; existingTasks?: string[]; places?: string[]; items?: string[] } = {},
+) {
+  const skills = (o.career_map?.skills || []).map((s: any) => `${s.id}=${s.name}`).join('; ');
+  const lab = opts.lab;
+  const material = lab ? `
+下面是职业体验产品「AI 百业」里已经做好的这个职业的章节（每章是一个工作片段）和虚拟工位（控件 = 操作对象，仪表 = 监测量）。
+只根据这些材料归纳，不要另外编；同一件事在不同空间 / 章节里出现的合成一个典型任务，lab_refs 列出对应章节的 ref；工位的 bench_refs 列出对应虚拟工位的 ref。
+章节：
+${lab.chapters.map(c => `[${c.ref}] ${c.title}（${c.kind}）${c.brief ? `：${c.brief.slice(0, 160)}` : ''}${c.steps ? `｜步骤：${c.steps.slice(0, 240)}` : ''}`).join('\n')}
+虚拟工位：
+${lab.benches.map(b => `[${b.ref}] ${b.name}（${b.surface}）｜控件：${b.controls.slice(0, 200)}｜仪表：${b.gauges.slice(0, 160)}`).join('\n') || '（无）'}
+` : `
+列这个职业在中国真实工作里的典型任务 6-10 个（从入门到资深都要有，日常 / 突发都要有），以及完成这些任务的工位 / 操作台 2-5 个，用联网检索核实（岗位 SOP、操作规程、行业标准）。
+${opts.existingTasks?.length ? `已有的任务（不要重复）：${opts.existingTasks.join('、')}` : ''}
+${opts.places?.length ? `已知工作场所：${opts.places.join('、')}` : ''}${opts.items?.length ? `\n已知工具设备：${opts.items.slice(0, 40).join('、')}` : ''}
+`;
+  const prompt = `
+你是「${o.name}」这一行带过很多新人的老师傅，在给职业知识图谱整理「典型任务」和「工位 / 操作台」。
+工位 / 操作台 = 一组仪器、设备、操作对象、软件，放在某个场所里（如「转炉炉前操作台」「急诊抢救单元」「意式咖啡出品位」「温室环控中控台」）。
+典型任务发生在工位上，有任务目标、验收标准、过程步骤、相关方。
+${o.responsibility ? `工作内容：${String(o.responsibility).slice(0, 400)}\n` : ''}${skills ? `技能节点（skill_ids 只能从这里取）：${skills}\n` : ''}${material}
+返回 JSON：
+{
+  "stations": [{ "name": 规范工位名, "description": 是什么、谁在这干什么, "environment": 环境与布局, "place": 所在的规范场所名,
+     "controls": [{ "name": 操作对象, "unit": 单位, "range": 常用范围, "purpose": 调它干什么 }], "monitors": [{ "name": 监测量, "unit": 单位, "normal": 正常范围, "alarm": 报警条件 }],
+     "items": [这个工位上的仪器 / 设备 / 工具 / 软件的规范名], "safety": 安全要求${lab ? ', "bench_refs": [虚拟工位 ref]' : ''} }],
+  "tasks": [{ "name": 任务名（动宾短语，如「午高峰前把萃取参数拉回标准」）, "summary": 情境（什么时候、为什么要做）, "goal": 任务目标,
+     "success_criteria": [{ "name": 指标, "target": 达标要求 }], "process": [{ "step": 步骤名, "action": 具体做法, "items": [用到的物品], "checkpoint": 关键检查点 }],
+     "stakeholders": [{ "role": 相关方（如带教师傅 / 患者家属 / 客户 / 上游工序）, "relation": 关系, "interaction": 要怎么打交道 }],
+     "common_mistakes": 新手常见失误, "difficulty": 1|2|3（入门 / 独立 / 资深）, "frequency": daily|weekly|occasional, "duration": 通常用时,
+     "skill_ids": [技能节点 id], "station": 发生在哪个工位（stations 的 name）${lab ? ', "lab_refs": [章节 ref]' : ''} }]
+}
+中文作答，具体、可操作。
+`;
+  const { parsed } = lab
+    ? { parsed: parseJsonLoose((await generateContent(prompt, modelId, { jsonMode: true })).text) }
+    : await searchJson(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Tasks & Stations', institution: o.name, batch_id: batchId });
+  const p = parsed || {};
+  const arr = (v: any) => (Array.isArray(v) ? v : []);
+  return {
+    stations: arr(p.stations).filter((s: any) => s?.name).map((s: any) => ({ ...s, name: String(s.name).trim(), controls: arr(s.controls), monitors: arr(s.monitors), items: arr(s.items).map(String), bench_refs: arr(s.bench_refs).map(String) })),
+    tasks: arr(p.tasks).filter((t: any) => t?.name).map((t: any) => ({ ...t, name: String(t.name).trim(), success_criteria: arr(t.success_criteria), process: arr(t.process), stakeholders: arr(t.stakeholders), skill_ids: arr(t.skill_ids).map(String), lab_refs: arr(t.lab_refs).map(String) })),
+  };
 }

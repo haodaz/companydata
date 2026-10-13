@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { OCCUPATION_EDITABLE_KEYS, computeOccupationCompleteness, sanitizeOccupation, SALARY_YEARS } from '@/lib/occupation-fields';
 import { refreshCompleteness, upsertSalaries } from '@/lib/occupation-store';
 import { orIlike } from '@/lib/pg-filter';
+import { linksOf } from '@/lib/entity-store';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -46,6 +47,17 @@ export async function GET(_req: Request, ctx: Ctx) {
       success: true, occupation: o,
       salaries: (salaries.data || []).sort((a: any, b: any) => order(a.year) - order(b.year)),
       regions: regions.data || [], roleLinks,
+      links: await linksOf('occupation', id).catch(() => []),
+      tasks: await (async () => {
+        const { data: ts } = await supabaseAdmin.from('typical_tasks').select('*').eq('occupation_id', id).eq('if_delete', false).order('difficulty', { ascending: true, nullsFirst: false }).order('id');
+        if (!ts?.length) return [];
+        const { data: ls } = await supabaseAdmin.from('entity_links').select('from_id, to_id').eq('from_type', 'task').eq('to_type', 'station').eq('if_delete', false).in('from_id', ts.map(t => t.id));
+        const sids = Array.from(new Set((ls || []).map(l => l.to_id)));
+        const { data: st } = sids.length ? await supabaseAdmin.from('work_stations').select('id, name, lab_bench').in('id', sids) : { data: [] as any[] };
+        const labIds = Array.from(new Set(ts.flatMap(t => t.lab_task_ids || [])));
+        const { data: sp } = labIds.length ? await supabaseAdmin.from('skill_tasks').select('id, title').in('id', labIds) : { data: [] as any[] };
+        return ts.map(t => ({ ...t, station: (st || []).find(s => s.id === (ls || []).find(l => l.from_id === t.id)?.to_id) || null, spaces: (sp || []).filter(s => (t.lab_task_ids || []).includes(s.id)) }));
+      })().catch(() => []),
       related: { jobs: jobs.data || [], jobs_total: jobs.count || 0, spaces: spaces.data || [], standards: standards.data || [] },
     });
   } catch (e: any) {
