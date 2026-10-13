@@ -868,7 +868,9 @@ function castOf(space: any, sim: Sim | null) {
     { key: 'solve', label: '问问我', icon: 'solve', sub: stat[2].v ? `解过 ${stat[2].v} 次` : '把真实问题交给我', main: true },
     { key: 'ledger', label: '我被用在哪', icon: 'ledger', sub: served ? `${places} 地 · ${served} 人次` : '每一次调用都记账' },
     { key: 'eco', label: '我的行当', icon: 'eco', sub: '同行 · 在招 · 上下游' },
-    jd.career ? { key: 'career', label: '职业地图', icon: 'career', sub: '这一行在做什么' } : { key: 'jd', label: '我的来历', icon: 'jd', sub: jd.company || '岗位 JD' },
+    // 职业探索空间只有职业地图；从 JD 建的空间补了职业地图（精选空间，scripts/lab-career-maps.mts）就两个都有
+    ...(jd.career ? [{ key: 'career' as Mode, label: '职业地图', icon: 'career', sub: '这一行在做什么' }] : []),
+    ...(jd.kind !== 'career' ? [{ key: 'jd' as Mode, label: '我的来历', icon: 'jd', sub: jd.company || '岗位 JD' }] : []),
   ];
   // 「你教我」在体验视角也有（专业数采）：点了领一张邀请票进去示范，之后照样过示范评审
   const portals = allPortals.filter(p => !hiddenInExp(p.key) || p.key === 'learn');
