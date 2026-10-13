@@ -39,6 +39,31 @@ export const SENIORITY_LABELS: Record<string, string> = {
   manager: '经理', director: '总监', executive: '高管',
 };
 
+/**
+ * 岗位来源（jobs.source，数据部门字段表「内容来源(source)」）：按岗位从哪个招聘渠道抓到的归类。
+ * 数据部门 10-13 要在岗位库上按来源筛选；值由 jobSourceOf(详情链接 / 来源页) 推出，入库时写、存量由 scripts/fix-1013.mts 回填。
+ */
+export const JOB_SOURCE_LABELS: Record<string, string> = {
+  official: '企业官网', beisen: '北森', hotjob: 'Hotjob', moka: 'Moka', feishu: '飞书招聘', dayee: '大易',
+  workday: 'Workday', greenhouse: 'Greenhouse', lever: 'Lever', other_ats: '其他招聘系统', third_party: '第三方招聘站',
+};
+const SOURCE_HOSTS: [string, RegExp][] = [
+  ['beisen', /(^|\.)(zhiye\.com|beisen\.com|italent\.cn)$/], ['hotjob', /(^|\.)hotjob\.cn$/], ['moka', /(^|\.)mokahr\.com$/],
+  ['feishu', /(^|\.)(feishu\.cn|larksuite\.com|jobs\.bytedance\.com)$/], ['dayee', /(^|\.)dayee\.com$/],
+  ['workday', /(^|\.)myworkdayjobs\.com$/], ['greenhouse', /(^|\.)greenhouse\.io$/], ['lever', /(^|\.)lever\.co$/],
+  ['other_ats', /(^|\.)(ashbyhq\.com|smartrecruiters\.com|icims\.com|jobvite\.com|successfactors\.(com|eu)|taleo\.net|oraclecloud\.com|workable\.com|bamboohr\.com|recruitee\.com|teamtailor\.com|eightfold\.ai|phenompeople\.com|avature\.net|brassring\.com)$/],
+  ['third_party', /(^|\.)(yingjiesheng\.com|gaoxiaojob\.com|nowcoder\.com|zhaopin\.com|51job\.com|liepin\.com|zhipin\.com|shixiseng\.com|linkedin\.com|indeed\.com|glassdoor\.com|lagou\.com|dajie\.com|iguopin\.com|ncss\.cn|gov\.cn)$/],
+];
+export function jobSourceOf(...urls: (string | null | undefined)[]): string | null {
+  for (const u of urls) {
+    if (!u) continue;
+    let host = '';
+    try { host = new URL(u).hostname.toLowerCase(); } catch { continue; }
+    return SOURCE_HOSTS.find(([, re]) => re.test(host))?.[0] || 'official';
+  }
+  return null;
+}
+
 export const REMOTE_TYPE_LABELS: Record<string, string> = { onsite: '现场办公', hybrid: '混合办公', remote: '远程' };
 
 export const EDUCATION_LABELS: Record<string, string> = {

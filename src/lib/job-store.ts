@@ -10,7 +10,7 @@
  */
 import { supabaseAdmin } from '@/lib/supabase';
 import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
-import { sanitizeJob, jobCompleteness, KIND_BY_JOB_TYPE, splitLocations, normCity } from '@/lib/job-fields';
+import { sanitizeJob, jobCompleteness, KIND_BY_JOB_TYPE, splitLocations, normCity, jobSourceOf } from '@/lib/job-fields';
 
 const normUrl = (u: string) => u.trim().toLowerCase().replace(/[#?].*$/, '').replace(/\/+$/, '');
 
@@ -92,6 +92,7 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
         status: 'open',
         source_url: log.target_url,
         source_log_id: log.id,
+        source: jobSourceOf(one.link, log.target_url),
         completeness_score: jobCompleteness(job),
         last_seen_at: now,
         updated_at: now,

@@ -40,6 +40,12 @@ export async function GET(request: Request) {
     if (get('status')) query = query.eq('status', get('status'));
     if (get('overseas') === '1') query = query.eq('accepts_overseas_students', true);
     if (get('companyId')) query = query.eq('company_id', parseInt(get('companyId')));
+    // 来源 / 发布日期（数据部门 10-13）：source=none 看未标来源；发布日期按 official_publish_date（YYYY-MM-DD 文本，字典序即时间序）
+    if (get('source') === 'none') query = query.is('source', null);
+    else if (get('source')) query = query.eq('source', get('source'));
+    if (get('publishFrom')) query = query.gte('official_publish_date', get('publishFrom'));
+    if (get('publishTo')) query = query.lte('official_publish_date', get('publishTo'));
+    if (get('publish') === 'none') query = query.is('official_publish_date', null);
     if (get('missingJd') === '1') query = query.or('responsibilities.is.null,responsibilities.eq.');
     if (get('review') === 'none') query = query.is('human_review_status', null);
     else if (get('review')) query = query.eq('human_review_status', get('review'));
@@ -52,11 +58,15 @@ export async function GET(request: Request) {
     if (error) throw error;
 
     let stats: Record<string, number> | undefined;
+    let sources: Record<string, number> | undefined;
     if (searchParams.get('withStats') === '1') {
-      stats = { total: 0, open: 0, graduate: 0, intern: 0, program: 0, remote: 0, overseas: 0, reviewed: 0, missing_jd: 0 };
-      const { data: all } = await selectAll(() => supabaseAdmin.from('jobs').select('job_type, status, remote_type, accepts_overseas_students, human_review_status, responsibilities').not('if_delete', 'is', true).order('id'));
+      stats = { total: 0, open: 0, graduate: 0, intern: 0, program: 0, remote: 0, overseas: 0, reviewed: 0, missing_jd: 0, with_publish_date: 0 };
+      sources = {};
+      const { data: all } = await selectAll(() => supabaseAdmin.from('jobs').select('job_type, status, remote_type, accepts_overseas_students, human_review_status, responsibilities, source, official_publish_date').not('if_delete', 'is', true).order('id'));
       for (const r of all || []) {
         stats.total++;
+        sources[r.source || 'none'] = (sources[r.source || 'none'] || 0) + 1;
+        if (r.official_publish_date) stats.with_publish_date++;
         if (r.status === 'open') stats.open++;
         if (r.job_type && r.job_type in stats) stats[r.job_type]++;
         if (r.remote_type === 'remote') stats.remote++;
@@ -66,7 +76,7 @@ export async function GET(request: Request) {
       }
     }
 
-    return NextResponse.json({ success: true, data: data || [], total: count || 0, page, pageSize, stats });
+    return NextResponse.json({ success: true, data: data || [], total: count || 0, page, pageSize, stats, sources });
   } catch (error: any) {
     console.error('[Jobs] GET error:', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });

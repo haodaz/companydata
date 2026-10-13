@@ -118,20 +118,27 @@ export async function careersLogo(url: string | null | undefined): Promise<strin
 
 const norm = (s: string) => s.replace(/[（(].*?[)）]|股份|有限|责任|公司|集团|控股|科技|技术|中国|\s/g, '');
 
-/** 百度百科词条卡片接口（公开 API，不过网页的安全验证）：词条标题要和企业名对得上，描述得像企业 */
-export async function baikeLogo(names: (string | null | undefined)[]): Promise<string | null> {
-  for (const key of Array.from(new Set(names.filter((n): n is string => !!n && /[一-龥]/.test(n))))) {
+/**
+ * 百度百科词条卡片接口（公开 API，不过网页的安全验证）：词条标题要和企业名对得上，描述得像企业。
+ * 返回词条标题（企业词条的标题就是工商全称，如「立讯精密」→「立讯精密工业股份有限公司」）、概述图、描述。
+ */
+export async function baikeCard(names: (string | null | undefined)[]): Promise<{ title: string; image: string | null; desc: string; key: string } | null> {
+  for (const key of Array.from(new Set(names.filter((n): n is string => !!n && /[\u4e00-\u9fa5]/.test(n))))) {
     try {
       const r = await fetch(`https://baike.baidu.com/api/openapi/BaikeLemmaCardApi?scope=103&format=json&appid=379020&bk_length=80&bk_key=${encodeURIComponent(key)}`, { headers: { 'User-Agent': UA }, signal: AbortSignal.timeout(15000) });
       const d: any = await r.json().catch(() => null);
-      if (!d?.image || !d?.title) continue;
+      if (!d?.title) continue;
       const a = norm(d.title), b = norm(key);
       if (!a || !b || !(a.includes(b) || b.includes(a))) continue;
       if (d.desc && /(人物|演员|歌手|作家|电影|电视剧|小说|游戏|歌曲|地名|城市|河流)/.test(d.desc) && !/(公司|企业|集团|品牌)/.test(d.desc)) continue;
-      return String(d.image);
+      return { title: String(d.title), image: d.image ? String(d.image) : null, desc: String(d.desc || ''), key };
     } catch { /* 下一个名字 */ }
   }
   return null;
+}
+
+export async function baikeLogo(names: (string | null | undefined)[]): Promise<string | null> {
+  return (await baikeCard(names))?.image || null;
 }
 
 const WD_UA = { 'User-Agent': 'companydata-logo/1.0 (company logo lookup)' };

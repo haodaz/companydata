@@ -18,7 +18,7 @@ export const COMPANY_TYPE_OPTIONS = Object.entries(COMPANY_TYPE_LABELS).map(([va
 
 /** 可由 AI 补全的字段 */
 export const PROFILE_FIELDS = [
-  'name_en', 'brief_name', 'segment', 'jv_partners', 'official_website', 'campus_url', 'careers_url', 'campus_overview', 'linkedin_url',
+  'name_en', 'registered_name', 'brief_name', 'segment', 'jv_partners', 'official_website', 'campus_url', 'careers_url', 'campus_overview', 'linkedin_url',
   'industry', 'sub_industry', 'company_type', 'kind', 'stock_code', 'info_founding_year', 'company_scale', 'operating_revenue',
   'country', 'city', 'province', 'continent', 'address', 'one_sentence', 'introduction', 'company_specialties', 'product_area',
   'chairman', 'ceo_general_manager', 'legal_representative', 'registered_capital', 'unified_social_credit_code', 'registration_address',
@@ -38,6 +38,7 @@ export const CONTINENT_LABELS: Record<string, string> = { asia: '亚洲', europe
 export const COMPANY_EDIT_FIELDS: { key: string; label: string; kind: 'string' | 'text' | 'number' | 'url' | 'segment' | 'company_type' | 'kind' | 'tags'; group: string }[] = [
   { key: 'name', label: '企业名称', kind: 'string', group: '基本信息' },
   { key: 'name_en', label: '英文名', kind: 'string', group: '基本信息' },
+  { key: 'registered_name', label: '工商企业名称', kind: 'string', group: '基本信息' },
   { key: 'brief_name', label: '公司简称', kind: 'string', group: '基本信息' },
   { key: 'historical_name', label: '曾用名', kind: 'string', group: '基本信息' },
   { key: 'aliases', label: '别名 / 简称', kind: 'tags', group: '基本信息' },
@@ -154,7 +155,7 @@ export type SubEntityKey = keyof typeof SUB_ENTITIES;
  */
 export const PROFILE_TOPICS: { key: string; label: string; desc: string; fields: string[]; entity?: SubEntityKey }[] = [
   { key: 'basic', label: '基础与工商', desc: '官网 / 名称 / 行业 / 类型 / 总部 / 规模 / 财务 / 工商登记 / 高管', fields: [
-    'name_en', 'brief_name', 'historical_name', 'segment', 'jv_partners', 'official_website', 'linkedin_url', 'industry', 'sub_industry', 'company_type', 'kind',
+    'name_en', 'registered_name', 'brief_name', 'historical_name', 'segment', 'jv_partners', 'official_website', 'linkedin_url', 'industry', 'sub_industry', 'company_type', 'kind',
     'stock_code', 'info_founding_year', 'company_scale', 'company_employees', 'operating_revenue', 'profit', 'registered_capital', 'paid_in_capital', 'unified_social_credit_code',
     'continent', 'country', 'province', 'city', 'county_area', 'address', 'registration_address', 'legal_representative', 'chairman', 'ceo_general_manager', 'cto',
     'info_email', 'info_phone', 'year_report_address', 'business_range', 'one_sentence', 'introduction', 'company_specialties', 'product_area', 'fortune_global_rank', 'ranking_year', 'type_label',

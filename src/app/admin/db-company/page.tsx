@@ -180,6 +180,8 @@ export default function DbCompanyPage() {
         </div>
       ),
     },
+    // 数据部门 10-13：企业名常是简称 / 品牌名，旁边列出工商登记全称
+    { title: '工商企业名称', dataIndex: 'registered_name', width: 200, render: (t: string) => t ? <span style={{ fontSize: 13 }}>{t}</span> : <Text type="secondary">-</Text> },
     { title: '分类', dataIndex: 'segment', width: 100, render: (s: string) => s ? <Tag color={SEGMENT_LABELS[s]?.color}>{SEGMENT_LABELS[s]?.label || s}</Tag> : <Text type="secondary">未分类</Text> },
     { title: '行业', dataIndex: 'industry', width: 130, render: (t: string, r: any) => t ? <span>{t}{r.sub_industry && <span style={{ color: BRAND.ink3 }}> · {r.sub_industry}</span>}</span> : '-' },
     { title: '类型', dataIndex: 'company_type', width: 100, render: (t: string) => COMPANY_TYPE_LABELS[t] || '-' },
@@ -296,7 +298,7 @@ export default function DbCompanyPage() {
           <Alert type="info" style={{ marginBottom: 12 }} message={<div><div style={{ marginBottom: 4 }}>正在补全：{enrich.current}（{enrich.done + 1}/{enrich.total}）</div><Progress percent={Math.round((enrich.done / enrich.total) * 100)} size="small" /></div>} />
         )}
         <Table
-          rowKey="id" size="small" loading={loading} dataSource={data} columns={columns} scroll={{ x: 1400 }}
+          rowKey="id" size="small" loading={loading} dataSource={data} columns={columns} scroll={{ x: 1600 }}
           rowSelection={{ selectedRowKeys: selected, onChange: setSelected }}
           pagination={{ current: page, pageSize, total, showSizeChanger: true, showTotal: t => `共 ${t} 家`, onChange: (p, ps) => { setPage(p); setPageSize(ps); } }}
           locale={{ emptyText: <div style={{ padding: 40, color: BRAND.ink3 }}>企业库还是空的。点右上角「AI 建名单」从无到有生成第一批目标企业。</div> }}

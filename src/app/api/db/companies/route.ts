@@ -26,7 +26,7 @@ export async function GET(request: Request) {
     // 导出要翻页读全量，所以查询写成「每次新建」的函数
     const build = () => {
       let query = supabaseAdmin.from('companies').select('*', { count: 'exact' }).order('id', { ascending: false });
-      if (search) query = query.or(orIlike(['name', 'name_en', 'industry'], search));
+      if (search) query = query.or(orIlike(['name', 'name_en', 'registered_name', 'industry'], search));
       if (review === 'none') query = query.is('human_review_status', null);
       else if (review) query = query.eq('human_review_status', review);
       if (segment === 'none') query = query.is('segment', null);

@@ -100,7 +100,7 @@ export function joinPagesMarkdown(pages: FetchedPage[]): string {
 // ────────────────────────────────────────────
 const EXTRACT_CAP = 80000;
 const PROFILE_KEYS_FROM_PAGES = [
-  'name_en', 'brief_name', 'one_sentence', 'introduction', 'company_specialties', 'product_area', 'industry', 'sub_industry', 'info_founding_year', 'company_scale', 'operating_revenue', 'profit',
+  'name_en', 'registered_name', 'brief_name', 'one_sentence', 'introduction', 'company_specialties', 'product_area', 'industry', 'sub_industry', 'info_founding_year', 'company_scale', 'operating_revenue', 'profit',
   'continent', 'country', 'province', 'city', 'address', 'stock_code', 'chairman', 'ceo_general_manager', 'cto', 'info_email', 'info_phone', 'campus_url', 'careers_url',
   'tech_advantage', 'research_area', 'business_profile', 'company_case', 'industry_position', 'benefits_package', 'growth_signals', 'linkedin_url',
 ];
@@ -153,7 +153,7 @@ const TOPIC_PROMPTS: Record<string, (c: any, missing: string[]) => string> = {
 Look up basic corporate facts about this company. Fields still missing in our database: ${missing.join(', ') || '(none — verify key facts)'}.
 
 Field definitions:
-- name_en / brief_name / historical_name (曾用名); segment: one of ${Object.keys(SEGMENT_LABELS).join('|')} (china = Chinese-controlled HQ in mainland/HK/Macau/TW; joint_venture = Sino-foreign JV operating in China; overseas_top = leading multinational HQ outside China); jv_partners: JV shareholders like "上汽集团 × Volkswagen AG" else null.
+- name_en / registered_name (工商登记的完整法定名称，如「立讯精密工业股份有限公司」「Meta Platforms, Inc.」；只填登记名，不要简称或品牌名) / brief_name / historical_name (曾用名); segment: one of ${Object.keys(SEGMENT_LABELS).join('|')} (china = Chinese-controlled HQ in mainland/HK/Macau/TW; joint_venture = Sino-foreign JV operating in China; overseas_top = leading multinational HQ outside China); jv_partners: JV shareholders like "上汽集团 × Volkswagen AG" else null.
 - official_website (root), linkedin_url; industry (中文大类, e.g. 互联网 / 半导体 / 汽车 / 快消 / 投资银行); sub_industry (中文细分).
 - company_type: ${Object.keys(COMPANY_TYPE_LABELS).join('|')}; kind (legal form): ${Object.keys(KIND_LABELS).join('|')}.
 - stock_code "EXCHANGE: TICKER"; info_founding_year integer; company_scale headcount text with year; company_employees integer (参保人数 / employees) ; operating_revenue & profit latest fiscal year text with currency; registered_capital / paid_in_capital text with currency; unified_social_credit_code 18-char code (mainland China entities only).

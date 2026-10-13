@@ -2,13 +2,14 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Input, Table, Tag, Space, Select, Typography, Popconfirm, Dropdown, Progress, Tooltip, Checkbox, App, Alert } from 'antd';
+import { Button, Input, Table, Tag, Space, Select, Typography, Popconfirm, Dropdown, Progress, Tooltip, Checkbox, App, Alert, DatePicker } from 'antd';
+import dayjs from 'dayjs';
 import { ReadOutlined, DownloadOutlined, CheckCircleOutlined, DeleteOutlined, DownOutlined, RocketOutlined, ExperimentOutlined, GlobalOutlined, HomeOutlined, SafetyCertificateOutlined, SolutionOutlined, ThunderboltOutlined, FileUnknownOutlined } from '@ant-design/icons';
 import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import { StatCards } from '@/components/admin/StatCards';
 import { exportToCsv } from '@/lib/export-csv';
 import { ensureDownloadAllowed, clearDownloadPermissionCache } from '@/lib/download-gate';
-import { JOB_FIELDS, JOB_STATUS, JOB_TYPE_LABELS, RECRUIT_SEASON_LABELS, REMOTE_TYPE_LABELS, CAMPUS_JOB_TYPES, formatJobValue, formatSalary } from '@/lib/job-fields';
+import { JOB_FIELDS, JOB_SOURCE_LABELS, JOB_STATUS, JOB_TYPE_LABELS, RECRUIT_SEASON_LABELS, REMOTE_TYPE_LABELS, CAMPUS_JOB_TYPES, formatJobValue, formatSalary } from '@/lib/job-fields';
 import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { SEGMENT_LABELS } from '@/lib/company-fields';
 import { BRAND } from '@/lib/theme';
@@ -32,7 +33,8 @@ export default function DbJobPage() {
   const [pageSize, setPageSize] = useState(50);
   const [selected, setSelected] = useState<React.Key[]>([]);
   const [exporting, setExporting] = useState(false);
-  const [filters, setFilters] = useState({ search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false, missingJd: false, companyId: '', companyName: '' });
+  const [filters, setFilters] = useState({ search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false, missingJd: false, companyId: '', companyName: '', source: '', publishFrom: '', publishTo: '' });
+  const [sources, setSources] = useState<Record<string, number>>({});
   // 从「校招岗位提取」任务跳过来：?companyId=&companyName=&jobType=all 直接定位到刚提取的那批。
   // 以前跳过来是默认的「校招口径」，社招岗位被默认筛掉，看起来像「提取成功了库里却没有」。
   const [urlReady, setUrlReady] = useState(false);
@@ -46,6 +48,7 @@ export default function DbJobPage() {
       jobType: jt === 'all' ? '' : (jt ?? f.jobType),
       season: u.get('season') || '', remote: u.get('remote') || '', status: u.get('status') || '', review: u.get('review') || '',
       overseas: u.get('overseas') === '1', missingJd: u.get('missingJd') === '1',
+      source: u.get('source') || '', publishFrom: u.get('publishFrom') || '', publishTo: u.get('publishTo') || '',
     }));
     const p = parseInt(u.get('page') || ''), ps = parseInt(u.get('pageSize') || '');
     if (p > 0) setPage(p);
@@ -61,6 +64,7 @@ export default function DbJobPage() {
     put('search', filters.search); put('jobType', filters.jobType === CAMPUS_JOB_TYPES.join(',') ? '' : (filters.jobType || 'all'));
     put('season', filters.season); put('remote', filters.remote); put('status', filters.status); put('review', filters.review);
     put('overseas', filters.overseas); put('missingJd', filters.missingJd); put('companyId', filters.companyId); put('companyName', filters.companyName);
+    put('source', filters.source); put('publishFrom', filters.publishFrom); put('publishTo', filters.publishTo);
     if (page > 1) q.set('page', String(page));
     if (pageSize !== 50) q.set('pageSize', String(pageSize));
     const s = q.toString();
@@ -69,7 +73,8 @@ export default function DbJobPage() {
 
   const query = useCallback((extra: Record<string, string> = {}) => new URLSearchParams({
     search: filters.search, jobType: filters.jobType, season: filters.season, remote: filters.remote,
-    status: filters.status, review: filters.review, overseas: filters.overseas ? '1' : '', missingJd: filters.missingJd ? '1' : '', companyId: filters.companyId, ...extra,
+    status: filters.status, review: filters.review, overseas: filters.overseas ? '1' : '', missingJd: filters.missingJd ? '1' : '', companyId: filters.companyId,
+    source: filters.source, publishFrom: filters.publishFrom, publishTo: filters.publishTo, ...extra,
   }), [filters]);
 
   const load = useCallback(async () => {
@@ -78,7 +83,7 @@ export default function DbJobPage() {
     try {
       const json = await (await fetch(`/api/db/jobs?${query({ page: String(page), pageSize: String(pageSize), withStats: '1' })}`)).json();
       if (!json.success) throw new Error(json.error);
-      setData(json.data); setTotal(json.total); setStats(json.stats || {});
+      setData(json.data); setTotal(json.total); setStats(json.stats || {}); setSources(json.sources || {});
       // 按类型筛空了：看看放开类型有多少（vivo 的岗位全是社招，校招口径下一条都搜不到）
       setOtherScope(null);
       if (!json.total && filters.jobType) {
@@ -152,6 +157,7 @@ export default function DbJobPage() {
         { key: 'institute_or_company_name', header: '企业' },
         { key: 'company_ref.segment', header: '企业分类', formatter: v => SEGMENT_LABELS[v]?.label || '' },
         { key: 'company_ref.industry', header: '行业' },
+        { key: 'source', header: '来源', formatter: v => (v && JOB_SOURCE_LABELS[v]) || v || '' },
         ...JOB_FIELDS.map(f => ({ key: f.key, header: f.label, formatter: (v: any) => formatJobValue(f.key, v) })),
         { key: 'status', header: '在招状态', formatter: v => JOB_STATUS[v]?.label || v || '' },
         { key: 'human_review_status', header: '审核状态', formatter: v => REVIEW_STATUS[v]?.label || '未审核' },
@@ -234,6 +240,14 @@ export default function DbJobPage() {
           <Select value={filters.remote} style={{ width: 130 }} onChange={v => setFilter({ remote: v })} options={[{ value: '', label: '全部办公方式' }, ...toOptions(REMOTE_TYPE_LABELS)]} />
           <Select value={filters.status} style={{ width: 110 }} onChange={v => setFilter({ status: v })} options={[{ value: '', label: '全部状态' }, ...Object.entries(JOB_STATUS).map(([value, m]) => ({ value, label: m.label }))]} />
           <Select value={filters.review} style={{ width: 120 }} onChange={v => setFilter({ review: v })} options={[{ value: '', label: '全部审核' }, { value: 'none', label: '未审核' }, ...REVIEW_STATUS_OPTIONS]} />
+          <Select value={filters.source} style={{ width: 160 }} onChange={v => setFilter({ source: v })} popupMatchSelectWidth={false}
+            options={[{ value: '', label: '全部来源' }, ...Object.entries(sources).filter(([k]) => k !== 'none').sort((a, b) => b[1] - a[1]).map(([k, n]) => ({ value: k, label: `${JOB_SOURCE_LABELS[k] || k}（${n}）` })),
+              ...(sources.none ? [{ value: 'none', label: `未标来源（${sources.none}）` }] : [])]} />
+          <Tooltip title={`按岗位页面写明的发布日期筛（${stats.with_publish_date || 0} / ${stats.total || 0} 条有发布日期，没写的不会出现在日期筛选结果里）`}>
+            <DatePicker.RangePicker style={{ width: 240 }} placeholder={['发布日期起', '止']} allowEmpty={[true, true]}
+              value={[filters.publishFrom ? dayjs(filters.publishFrom) : null, filters.publishTo ? dayjs(filters.publishTo) : null]}
+              onChange={v => setFilter({ publishFrom: v?.[0]?.format('YYYY-MM-DD') || '', publishTo: v?.[1]?.format('YYYY-MM-DD') || '' })} />
+          </Tooltip>
           <Checkbox checked={filters.overseas} onChange={e => setFilter({ overseas: e.target.checked })}>只看面向留学生</Checkbox>
           <Checkbox checked={filters.missingJd} onChange={e => setFilter({ missingJd: e.target.checked })}>只看缺 JD</Checkbox>
           <Tooltip title={selected.length ? `打开选中 ${selected.length} 条岗位的详情页重新提取，只填空字段` : '打开当前筛选下所有「缺 JD 且有详情链接」的岗位详情页重新提取，只填空字段'}>
