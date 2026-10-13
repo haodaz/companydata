@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { ApiOutlined, UserOutlined, SwapOutlined, DownOutlined, GlobalOutlined, LogoutOutlined, LinkOutlined, BankOutlined, ReadOutlined, FileSearchOutlined, FileTextOutlined, BarChartOutlined, SafetyCertificateOutlined, MenuOutlined, ExperimentOutlined, ExportOutlined, ProfileOutlined, HeartOutlined, TrophyOutlined, FireOutlined } from '@ant-design/icons';
+import { ApiOutlined, UserOutlined, SwapOutlined, DownOutlined, GlobalOutlined, LogoutOutlined, LinkOutlined, BankOutlined, ReadOutlined, FileSearchOutlined, FileTextOutlined, BarChartOutlined, SafetyCertificateOutlined, MenuOutlined, ExperimentOutlined, ExportOutlined, ProfileOutlined, HeartOutlined, TrophyOutlined, FireOutlined, BookOutlined } from '@ant-design/icons';
 import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
 import { UserProvider, useUser } from '@/lib/user-context';
 import { BRAND } from '@/lib/theme';
@@ -20,10 +20,12 @@ const NAV: NavItem[] = [
   { key: 'tool-job',     icon: <ApiOutlined />,        label: '校招岗位提取',  path: '/admin/tool-job',     group: '采集工具' },
   { key: 'tool-company', icon: <ProfileOutlined />,    label: '企业画像工具',  path: '/admin/tool-company', group: '采集工具', badge: '新' },
   { key: 'tool-competition', icon: <TrophyOutlined />,  label: '企业赛事雷达',  path: '/admin/tool-competition', group: '采集工具', badge: '新' },
+  { key: 'tool-standard', icon: <BookOutlined />,     label: '行业标准获取',  path: '/admin/tool-standard', group: '采集工具', badge: '新' },
   { key: 'db-company',   icon: <BankOutlined />,       label: '企业实体库',    path: '/admin/db-company',   group: '数据资产' },
   { key: 'db-job',       icon: <ReadOutlined />,       label: '校招岗位库',    path: '/admin/db-job',       group: '数据资产' },
   { key: 'db-url',       icon: <LinkOutlined />,       label: '信息源库',      path: '/admin/db-url',       group: '数据资产' },
   { key: 'db-competition', icon: <TrophyOutlined />,    label: '企业赛事库',    path: '/admin/db-competition', group: '数据资产' },
+  { key: 'db-standard',  icon: <BookOutlined />,       label: '行业标准与规程库', path: '/admin/db-standard', group: '数据资产', badge: '新' },
   { key: 'health-company', icon: <HeartOutlined />,    label: '企业画像健康',  path: '/admin/health-company', group: '数据资产' },
   { key: 'flywheel',     icon: <FireOutlined />,       label: '需求飞轮',      path: '/admin/flywheel',     group: '数据资产', badge: '新' },
   { key: 'lab',          icon: <ExperimentOutlined />, label: '数字技能空间',  path: '/lab',                group: '实验室', newWindow: true },
