@@ -1260,7 +1260,7 @@ function castOf(space: any, sim: Sim | null) {
               {eco.peers.length ? (
                 <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                   {eco.peers.map((p: any) => (
-                    <div key={p.id} onClick={() => router.push(`/lab/${p.id}`)} className="lab-glass hover" style={{ padding: '10px 14px 10px 10px', display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+                    <div key={p.id} onClick={() => router.push(`/lab/${p.id}${fromParam ? `?from=${fromParam}` : ''}`)} onMouseEnter={() => router.prefetch(`/lab/${p.id}`)} className="lab-glass hover" style={{ padding: '10px 14px 10px 10px', display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
                       {p.avatar ? <img src={p.avatar} alt="" style={{ width: 38, height: 38, borderRadius: 19, objectFit: 'cover', objectPosition: '54% 12%', background: '#fff' }} /> : <div className="lab-orb" style={{ ['--s' as string]: '38px' }}><div className="ring" /><div className="core" /></div>}
                       <div style={{ minWidth: 0 }}>
                         <div style={{ fontSize: 14, fontWeight: 700 }}>{p.role || p.profession}</div>
@@ -1306,15 +1306,25 @@ function castOf(space: any, sim: Sim | null) {
                   ))}
                 </div>
                 {eco.hiring.cities.length > 0 && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 12 }}>{eco.hiring.cities.map((c: string) => <span key={c} className="lab-chip g">{c}</span>)}</div>}
-                {eco.hiring.samples.map((j: any) => (
-                  <div key={j.id} style={{ padding: '8px 0', borderTop: '1px solid var(--line)', fontSize: 13, display: 'flex', gap: 10, alignItems: 'baseline', flexWrap: 'wrap' }}>
-                    <span style={{ color: 'var(--ink3)', fontSize: 12.5 }}>{j.company}</span>
-                    <b>{j.name}</b>
-                    {j.city && <span className="lab-chip g">{j.city}</span>}
-                    {j.edu && <span className="lab-chip g">{j.edu}</span>}
-                    {j.url && <a href={j.url} target="_blank" rel="noreferrer" style={{ color: 'var(--v)', fontSize: 12.5 }}>原文 ↗</a>}
+                {([['直接对口', eco.hiring.samples], ['上下游企业在招', eco.hiring.chainSamples || []]] as [string, any[]][]).filter(([, l]) => l.length).map(([t, list]) => (
+                  <div key={t} style={{ marginTop: 6 }}>
+                    <div className="lab-mono lab-cap" style={{ margin: '8px 0 2px' }}>{t} · {t === '直接对口' ? eco.hiring.direct ?? list.length : eco.hiring.chain ?? list.length}</div>
+                    {list.map((j: any) => (
+                      <div key={j.id} style={{ padding: '8px 0', borderTop: '1px solid var(--line)', fontSize: 13, display: 'flex', gap: 10, alignItems: 'baseline', flexWrap: 'wrap' }}>
+                        <span style={{ color: 'var(--ink3)', fontSize: 12.5 }}>{j.company}</span>
+                        {user && !exp ? <a href={`/admin/db-job/${j.id}`} target="_blank" rel="noreferrer" style={{ fontWeight: 700, color: 'var(--ink)' }}>{j.name}</a> : <b>{j.name}</b>}
+                        {j.stage && <span className="lab-chip c">{j.stage}</span>}
+                        {j.city && <span className="lab-chip g">{j.city}</span>}
+                        {j.edu && <span className="lab-chip g">{j.edu}</span>}
+                        {j.url && <a href={j.url} target="_blank" rel="noreferrer" style={{ color: 'var(--v)', fontSize: 12.5 }}>原文 ↗</a>}
+                      </div>
+                    ))}
                   </div>
                 ))}
+                {user && !exp && <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  <a className="lab-btn ghost sm" href={`/admin/db-job?search=${encodeURIComponent(eco.profession.replace(/(工程师|技术员|操作工|师傅|技师|员|师)$/, ''))}&jobType=all`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>在岗位库里看全部 ↗</a>
+                  <a className="lab-btn ghost sm" href="/admin/tool-job" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>去岗位库补这个行当的岗位 ↗</a>
+                </div>}
               </> : <div style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.8 }}>岗位库里暂时没有和我直接对得上的在招岗位。库里的 JD 多起来，这里就会长出来。</div>}
             </div>
           </>}
