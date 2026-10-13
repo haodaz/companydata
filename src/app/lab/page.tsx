@@ -387,8 +387,8 @@ export default function LabLanding() {
 
       {/* ══ 开场：我们自己的空间——火箭总装（3D）→ 锅炉房（360° 实拍）→ 咖啡吧台（3D），约 10 秒一段无缝循环 ══ */}
       <section className="ai100-bleed ai100-hero">
-        <video autoPlay muted loop playsInline preload="metadata" poster="/lab-landing/spaces-loop.jpg">
-          <source src="/lab-landing/spaces-loop.mp4" type="video/mp4" />
+        <video autoPlay muted loop playsInline preload="metadata" poster="/lab-landing/spaces-loop-v2.jpg">
+          <source src="/lab-landing/spaces-loop-v2.mp4" type="video/mp4" />
         </video>
         <div className="veil" />
         <div className="in">
