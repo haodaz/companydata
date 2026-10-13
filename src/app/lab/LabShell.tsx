@@ -13,7 +13,7 @@ import { GUEST_MODEL } from '@/lib/lab-guest';
  */
 const LAB_CSS = `
 .lab { --v: #6a5cff; --c: #12b5cb; --p: #ff5fa2; --ink: #171a2e; --ink2: #4a4f6a; --ink3: #8389a6; --line: rgba(106,92,255,.16);
-  min-height: 100dvh; position: relative; color: var(--ink); background: #f5f6ff; overflow-x: hidden;
+  min-height: 100dvh; position: relative; color: var(--ink); background: #f5f6ff; overflow-x: clip;   /* clip 而不是 hidden：hidden 会让 .lab 变成滚动容器，「一天」页左侧时间轴的 sticky 就钉不住了 */
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .lab-mono { font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; }
 
