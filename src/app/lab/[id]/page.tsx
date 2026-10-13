@@ -1599,14 +1599,15 @@ function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach,
               第 {idx + 1} / {chapters.length} 段{chapter?.slot ? ` · ${chapter.slot}` : ''} · <span style={{ color: k.color === '#ef4444' ? '#ff8a8a' : '#c9c2ff' }}>{k.label}</span>
             </div>
             <h1>{chapter?.title}</h1>
-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 18, alignItems: 'center' }}>
-              {actions}
-              {!teach && !learn && <button className="lab-btn" disabled={busy || !sim} onClick={onStart} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>进入操作台</button>}
-              {teach && <button className="lab-btn" disabled={busy || !canTeach} title={canTeach ? '' : '这一段还没有老师傅的示范'} onClick={onTeach} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>看 {profile.name || '他'} 走一遍</button>}
-              {teach && <button className="lab-btn ghost" disabled={busy || bareBusy} onClick={onBareAI} title="没学过老师傅的通用模型自己走一遍，看看差在哪" style={{ height: 46, background: 'rgba(255,255,255,.14)', color: '#fff', boxShadow: '0 0 0 1px rgba(255,255,255,.35)' }}>{bareBusy ? <>通用 AI 走着呢<span className="lab-dots" /></> : '对比：没学过的通用 AI'}</button>}
-              <span style={{ fontSize: 13, opacity: .85 }}>{steps.length} 步{steps.some(st => st.type === 'bench') ? ' · 含虚拟工位' : ''} · 约 {Math.max(5, steps.length * 2)} 分钟</span>
-            </div>
           </div>
+        </div>
+        {/* 进入按钮放在大图下面（2026-10-12 用户：压在图上看不清） */}
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', margin: '14px 2px 4px', alignItems: 'center' }}>
+          {actions}
+          {!teach && !learn && <button className="lab-btn" disabled={busy || !sim} onClick={onStart} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>进入操作台</button>}
+          {teach && <button className="lab-btn" disabled={busy || !canTeach} title={canTeach ? '' : '这一段还没有老师傅的示范'} onClick={onTeach} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>看 {profile.name || '他'} 走一遍</button>}
+          {teach && <button className="lab-btn ghost" disabled={busy || bareBusy} onClick={onBareAI} title="没学过老师傅的通用模型自己走一遍，看看差在哪" style={{ height: 46 }}>{bareBusy ? <>通用 AI 走着呢<span className="lab-dots" /></> : '对比：没学过的通用 AI'}</button>}
+          <span style={{ fontSize: 13, color: 'var(--ink3)' }}>{steps.length} 步{steps.some(st => st.type === 'bench') ? ' · 含虚拟工位' : ''} · 约 {Math.max(5, steps.length * 2)} 分钟</span>
         </div>
 
         {top}
