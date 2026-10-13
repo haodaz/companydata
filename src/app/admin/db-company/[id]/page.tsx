@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Button, Card, Col, Descriptions, Empty, Form, Input, InputNumber, Modal, Popconfirm, Row, Select, Space, Spin, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
 import { guardLink } from '@/lib/download-gate';
 import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, GlobalOutlined, LinkOutlined, ThunderboltOutlined, FileTextOutlined, ApiOutlined, CheckCircleOutlined, CloseCircleOutlined, LockOutlined, ProfileOutlined, EyeOutlined, TrophyOutlined, SearchOutlined, LoadingOutlined, FilePdfOutlined } from '@ant-design/icons';
-import { DEEP_TOPICS, topicsFor } from '@/lib/agents/company-deep-research';
+import { DEEP_TOPICS, topicsFor } from '@/lib/company-deep-topics';
 import { FINANCING_COLUMNS, NEWS_COLUMNS, EXECUTIVE_COLUMNS, PRODUCT_COLUMNS, formatProfileValue } from '@/components/admin/CompanyRunView';
 import { EntityHero } from '@/components/admin/EntityHero';
 import { useModel } from '@/lib/model-context';
