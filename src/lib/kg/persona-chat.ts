@@ -186,14 +186,17 @@ ${history.slice(-10).map(m => `${m.role === 'user' ? '对方' : persona.nickname
   let p = parseJsonLoose(r.text) || {};
   let reply = String(p.reply || r.text || '').trim().replace(/\[\s*([JSTDC]\d+)\s*\]/g, '[$1]');
   // 核查：逐句对照资料，没依据的打回重写一次；还有就删掉那几句（宁可少说，不可错说）
-  let flagged = await unsupportedSentences(reply, knowledge.text, model, occ.name);
+  // 职人自己的身份（名字、对方起的昵称、代号、头衔、口头禅）也算有依据，不然「我叫小拿铁」会被当成编造删掉
+  const identity = `【我是谁】${persona.nickname ? `对方给我起的名字：${persona.nickname}；` : ''}代号 / 名字：${persona.name}；头衔：${persona.role}${persona.tagline ? `；口头禅：${persona.tagline}` : ''}${persona.years ? `；${persona.years}` : ''}${persona.workplace ? `；在${persona.workplace}` : ''}`;
+  const checkBase = `${identity}\n${knowledge.text}`;
+  let flagged = await unsupportedSentences(reply, checkBase, model, occ.name);
   if (flagged.length) {
     r = await generateContent(`${prompt}\n\n（你上一版回答里这些句子在资料里找不到依据，重写时去掉或改成资料里有的内容：${flagged.map(x => `「${x}」`).join('、')}）`, model, { jsonMode: true });
     p = parseJsonLoose(r.text) || p;
     reply = String(p.reply || reply).trim().replace(/\[\s*([JSTDC]\d+)\s*\]/g, '[$1]');
-    flagged = await unsupportedSentences(reply, knowledge.text, model, occ.name);
+    flagged = await unsupportedSentences(reply, checkBase, model, occ.name);
     for (const f of flagged) reply = reply.replace(f, '');
-    reply = reply.replace(/\s{2,}/g, ' ').trim() || '这个平方的资料里还没有，我不乱说。';
+    reply = reply.replace(/\s{2,}/g, ' ').replace(/^[，。；、,.;\s]+/, '').replace(/([。！？])[，；、]+/g, '$1').trim() || '这个平方的资料里还没有，我不乱说。';
   }
   const cited = Array.from(new Set(reply.match(/\[([JSTDC]\d+)\]/g)?.map(x => x.slice(1, -1)) || []));
   return {
