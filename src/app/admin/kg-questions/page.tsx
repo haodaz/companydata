@@ -13,6 +13,8 @@ import { CheckCircleOutlined, CloseCircleOutlined, MessageOutlined, ThunderboltO
 import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import { StatCards } from '@/components/admin/StatCards';
 import { BRAND } from '@/lib/theme';
+import { KgInsights } from '@/components/admin/KgInsights';
+import { topicLabel } from '@/lib/kg/question-topics';
 import { useModel } from '@/lib/model-context';
 
 const { Text, Paragraph } = Typography;
@@ -57,7 +59,9 @@ export default function KgQuestionsPage() {
   const [occs, setOccs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [f, setF] = useState({ occupation: '', status: '', gap: false, surface: '', search: '' });
+  const [f, setF] = useState({ occupation: '', status: '', gap: false, surface: '', search: '', topic: '' });
+  const [ins, setIns] = useState<any>(null);
+  const [fillKey, setFillKey] = useState<string | null>(null);
   const [selected, setSelected] = useState<React.Key[]>([]);
   const [draft, setDraft] = useState<any>(null);
   const [form] = Form.useForm();
@@ -73,6 +77,17 @@ export default function KgQuestionsPage() {
     } catch (e: any) { message.error(`加载失败：${e.message}（迁移 029 跑过了吗？）`); } finally { setLoading(false); }
   }, [page, f, message]);
   useEffect(() => { load(); }, [load]);
+  const loadInsights = useCallback(async () => { const j = await (await fetch('/api/admin/kg-questions/insights', { cache: 'no-store' })).json(); if (j.success) setIns(j); }, []);
+  useEffect(() => { loadInsights(); }, [loadInsights]);
+  /** 排产建议一键排：给这个职业补对应的一块（后台跑），涉及的缺口问题标「已排补全」 */
+  const fillSuggestion = async (sg: any) => {
+    setFillKey(`${sg.occupation_id}|${sg.part}`);
+    try {
+      const j = await (await fetch('/api/admin/kg-questions/task', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ occupationIds: [sg.occupation_id], part: sg.part, model: currentModel }) })).json();
+      if (!j.success) throw new Error(j.error);
+      message.success(`已排产：${sg.occupation} 补「${j.part}」，后台跑（国内检索走千问）`); load(); loadInsights();
+    } catch (e: any) { message.error(e.message); } finally { setFillKey(null); }
+  };
   const set = (patch: Partial<typeof f>) => { setPage(1); setSelected([]); setF(x => ({ ...x, ...patch })); };
 
   const qc = async (status: string, ids = selected) => {
@@ -116,6 +131,7 @@ export default function KgQuestionsPage() {
         <Select allowClear placeholder="状态" style={{ width: 120 }} onChange={v => set({ status: v || '' })} options={Object.entries(STATUS).map(([value, s]) => ({ value, label: s.label }))} />
         <Select allowClear placeholder="在哪问的" style={{ width: 120 }} onChange={v => set({ surface: v || '' })} options={Object.entries(SURFACE).map(([value, label]) => ({ value, label }))} />
         <Checkbox checked={f.gap} onChange={e => set({ gap: e.target.checked })}>只看平方答不上的（知识缺口）</Checkbox>
+        {f.topic && <Tag closable color="purple" onClose={() => set({ topic: '' })}>话题：{topicLabel(f.topic)}</Tag>}
       </Space>
       {selected.length > 0 && <Space wrap style={{ marginBottom: 12, padding: '8px 12px', background: BRAND.primarySoft, borderRadius: 8, width: '100%' }}>
         <Text>已选 {selected.length} 条</Text>
@@ -164,6 +180,7 @@ export default function KgQuestionsPage() {
         { label: '已排补全', value: stats.task || 0, color: '#2f54eb', icon: <ThunderboltOutlined /> },
         { label: '平方问答库', value: stats.faqs || 0, color: '#8b5cf6', hint: `已转译 ${stats.ingested || 0} 问` },
       ]} />
+      <KgInsights d={ins} busyKey={fillKey} onFill={fillSuggestion} onCell={(occ, topic) => set({ occupation: String(occ), topic })} />
       <Panel padding={16}>
         <Tabs items={[{ key: 'log', label: '问答日志', children: list }, { key: 'faq', label: `平方问答库（${stats.faqs || 0}）`, children: <FaqLibrary /> }]} />
       </Panel>

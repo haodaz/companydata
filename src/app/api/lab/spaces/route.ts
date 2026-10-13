@@ -7,6 +7,7 @@ import { labError, sortByDay } from '@/lib/skill-lab-server';
 import { reconcileCast } from '@/lib/lab-cast-server';
 import { trackDemand } from '@/lib/flywheel/signals';
 import { attachCostToSpace, withCost } from '@/lib/token-logger';
+import { ensureOccupationLater } from '@/lib/kg/ensure-occupation';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -142,6 +143,7 @@ async function build(req: Request, body: any, costJob: string) {
       await assignNova(created.id).catch(e => console.warn('[Lab/spaces] 分编号失败', e?.message));
       // 角色表对账：生成的图登记进素材库、补齐角色表（迁移 019）；以后换图走角色表，不再改 JSON 里的网址
       await reconcileCast(created.id);
+      ensureOccupationLater(created.id);   // 自动建档、对上职业库（数据工厂），新职人一建好就能「和我聊」
       setBuild(buildId, { phase: '完成', done: true, id: created.id });
       return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount, artReused: built.artReused, benchNote: built.benchNote, summary: summarize(built) });
     }
@@ -169,6 +171,7 @@ async function build(req: Request, body: any, costJob: string) {
       await attachCostToSpace(costJob, created.id);
       await assignNova(created.id).catch(e => console.warn('[Lab/spaces] 分编号失败', e?.message));
       await reconcileCast(created.id);
+      ensureOccupationLater(created.id);   // 自动建档、对上职业库（数据工厂），新职人一建好就能「和我聊」
       setBuild(buildId, { phase: '完成', done: true, id: created.id });
       return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount, artReused: built.artReused, benchNote: built.benchNote, summary: summarize(built) });
     }
@@ -204,6 +207,7 @@ async function build(req: Request, body: any, costJob: string) {
     await assignNova(created.id).catch(e => console.warn('[Lab/spaces] 分编号失败', e?.message));
     // 角色表对账：生成的图登记进素材库、补齐角色表（迁移 019）；以后换图走角色表，不再改 JSON 里的网址
     await reconcileCast(created.id);
+    ensureOccupationLater(created.id);   // 自动建档、对上职业库（数据工厂），新职人一建好就能「和我聊」
     setBuild(buildId, { phase: '完成', done: true, id: created.id });
     return NextResponse.json({ ok: true, id: created.id, benchAdded: built.benchAdded, artCount: built.artCount, artReused: built.artReused, benchNote: built.benchNote, summary: summarize(built) });
   } catch (e: any) {

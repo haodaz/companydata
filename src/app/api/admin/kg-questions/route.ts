@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { selectAll } from '@/lib/supabase-all';
 import { orIlike, pageParams } from '@/lib/pg-filter';
 import { getSessionUser, requireAdminUser } from '@/lib/session';
+import { QUESTION_TOPICS } from '@/lib/kg/question-topics';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -23,6 +24,9 @@ export async function GET(req: Request) {
     if (get('gap') === '1') q = q.not('gap', 'is', null);
     if (get('surface')) q = q.eq('surface', get('surface'));
     if (get('search')) q = q.or(orIlike(['question', 'reply', 'gap'], get('search')));
+    // 话题筛选（热力格子点进来）：按话题关键词匹配问题
+    const topic = QUESTION_TOPICS.find(t => t.key === get('topic'));
+    if (topic) q = q.or(topic.kw.map(k => orIlike(['question', 'gap'], k)).join(','));
     const { data, count, error } = await q.order('created_at', { ascending: false }).range(from, to);
     if (error) throw error;
     const { data: all } = await selectAll(() => supabaseAdmin.from('kg_questions').select('occupation_id, status, gap, occupation:occupations(name)').order('id'));

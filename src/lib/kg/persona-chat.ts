@@ -12,6 +12,7 @@ import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
 import { findOccupation } from '@/lib/occupation-store';
 import { linksOf } from '@/lib/entity-store';
+import { ensureOccupationForSpace, ensureOccupationLater } from '@/lib/kg/ensure-occupation';
 import { orIlike } from '@/lib/pg-filter';
 import { SALARY_YEAR_LABELS, SALARY_YEARS, SALARY_COUNTRIES, SALARY_CN_REGIONS, CAREER_CATEGORY_LABELS } from '@/lib/occupation-fields';
 
@@ -250,6 +251,8 @@ export async function loadChatContext(by: { spaceId?: string | null; occupationI
     space = data;
     if (!space) throw new Error('空间不存在');
     occ = await occupationOfSpace(space);
+    // 兜底：还没对上职业库（老空间 / 建档没跑完）——当场建档，图谱 / 场所 / 任务后台补
+    if (!occ) { occ = await ensureOccupationForSpace(space); if (occ) ensureOccupationLater(space.id); }
   }
   if (!occ && by.occupationId) occ = (await supabaseAdmin.from('occupations').select('*').eq('id', by.occupationId).single()).data;
   if (!occ) throw new Error('这个空间还没对上职业库里的职业');
