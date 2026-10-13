@@ -273,6 +273,7 @@ export default function OccupationDetailPage() {
           <Button icon={<ApartmentOutlined />} loading={busy === 'career'} onClick={() => runAgent('career')}>{o.career_map ? '重新生成发展图谱' : '生成发展图谱'}</Button>
           <Button icon={<GlobalOutlined />} loading={busy === 'regions'} onClick={() => runAgent('regions')}>检索各地薪资</Button>
           <Button icon={<ToolOutlined />} loading={busy === 'context'} onClick={() => runAgent('context')}>生成场所与工具</Button>
+          <Button onClick={() => router.push(`/admin/kg-questions?occupation=${id}`)}>问答日志</Button>
           <Button icon={<CheckCircleOutlined />} onClick={() => patch({ human_review_status: 'complete' }, '已审核通过')}>审核通过</Button>
           <Button icon={<CloseCircleOutlined />} onClick={() => patch({ human_review_status: 'rejected' }, '已标为不通过')}>不通过</Button>
           <Button icon={<EditOutlined />} onClick={openEdit}>编辑</Button>

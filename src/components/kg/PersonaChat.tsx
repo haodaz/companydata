@@ -14,7 +14,7 @@ export interface ChatSource { id: string; type: string; title: string; url?: str
 export interface ChatMsg { role: 'user' | 'assistant'; content: string; sources?: ChatSource[] }
 export interface ChatPersona { name: string; role: string; avatar?: string | null; tagline?: string | null }
 
-const TYPE_LABEL: Record<string, string> = { job: '在招岗位', standard: '行业标准', task: '典型任务', data: '平方数据', company: '企业' };
+const TYPE_LABEL: Record<string, string> = { job: '在招岗位', standard: '行业标准', task: '典型任务', data: '平方数据', company: '企业', web: '互联网', faq: '平方问答库' };
 const THEMES = {
   dark: { panel: 'rgba(14,16,28,.96)', border: 'rgba(255,255,255,.1)', ink: '#eef0ff', ink3: 'rgba(238,240,255,.55)', me: 'linear-gradient(120deg,#6a5cff,#8b5cf6)', them: 'rgba(255,255,255,.07)', chip: 'rgba(106,92,255,.16)', chipInk: '#c9c3ff', input: 'rgba(255,255,255,.06)' },
   light: { panel: '#ffffff', border: '#e8eaf2', ink: '#1f2233', ink3: '#8a8fa3', me: 'linear-gradient(120deg,#6055f5,#8b5cf6)', them: '#f4f5fa', chip: 'rgba(96,85,245,.08)', chipInk: '#5b50e6', input: '#f7f8fb' },
@@ -73,8 +73,8 @@ export function ChatBody({ chat, theme = 'light', fallbackName, onOpen, activeId
   const send = (q: string) => { if (!q.trim()) return; setInput(''); ask(q); };
 
   /** 回答里的 [J1] → 上标链接 */
-  const render = (m: ChatMsg) => m.content.split(/(\[[JSTDC]\d+\])/g).map((p, i) => {
-    const hit = p.match(/^\[([JSTDC]\d+)\]$/);
+  const render = (m: ChatMsg) => m.content.split(/(\[[JSTDCWF]\d+\])/g).map((p, i) => {
+    const hit = p.match(/^\[([JSTDCWF]\d+)\]$/);
     if (!hit) return <React.Fragment key={i}>{p}</React.Fragment>;
     const s = m.sources?.find(x => x.id === hit[1]);
     return <sup key={i} title={s?.title} style={{ color: C.chipInk, fontWeight: 600, cursor: s && (s.ref || s.url) ? 'pointer' : 'default', margin: '0 1px' }} onClick={() => s && open(s)}>{hit[1]}</sup>;
@@ -99,11 +99,12 @@ export function ChatBody({ chat, theme = 'light', fallbackName, onOpen, activeId
                     style={{ fontSize: 12, color: C.ink3, textDecoration: 'none', display: 'flex', gap: 6, alignItems: 'baseline', cursor: s.ref || s.url ? 'pointer' : 'default',
                       background: activeId === s.id ? C.chip : 'transparent', borderRadius: 6, padding: '2px 4px', margin: '0 -4px' }}>
                     <span style={{ color: C.chipInk, fontWeight: 700, minWidth: 22 }}>{s.id}</span>
-                    <span style={{ padding: '0 6px', borderRadius: 4, background: C.chip, color: C.chipInk, fontSize: 11, flexShrink: 0 }}>{TYPE_LABEL[s.type] || s.type}</span>
+                    <span style={{ padding: '0 6px', borderRadius: 4, background: s.type === 'web' ? 'rgba(217,119,6,.12)' : C.chip, color: s.type === 'web' ? '#b45309' : C.chipInk, fontSize: 11, flexShrink: 0 }}>{TYPE_LABEL[s.type] || s.type}</span>
                     <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.title}</span>
                     {s.ref && onOpen && <span style={{ color: C.chipInk, flexShrink: 0 }}>›</span>}
                   </a>
                 ))}
+                {m.sources.some(s => s.type === 'web') && <div style={{ fontSize: 11.5, color: '#b45309', marginTop: 2 }}>⚠ 带 W 编号的内容来自互联网检索，平方未核实，请注意甄别</div>}
               </div>}
             </div>
           </div>

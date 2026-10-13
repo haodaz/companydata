@@ -18,7 +18,7 @@ import { SALARY_YEAR_LABELS, SALARY_YEARS, SALARY_COUNTRIES, SALARY_CN_REGIONS, 
 export interface Persona { nickname?: string | null; name: string; role: string; avatar?: string | null; tagline?: string | null; years?: string; workplace?: string; personality?: string; voice?: string; story?: string }
 /** ref：点来源时右侧资料面板要展示的实体（职业的某一节 / 岗位 / 企业 / 标准 / 典型任务） */
 export interface SourceRef { kind: 'occupation' | 'job' | 'company' | 'standard' | 'task'; id: number; section?: 'intro' | 'graph' | 'salary' | 'context' | 'jobs' }
-export interface ChatSource { id: string; type: 'job' | 'standard' | 'task' | 'data' | 'company'; title: string; url?: string | null; ref?: SourceRef }
+export interface ChatSource { id: string; type: 'job' | 'standard' | 'task' | 'data' | 'company' | 'web' | 'faq'; title: string; url?: string | null; ref?: SourceRef }
 export interface ChatMessage { role: 'user' | 'assistant'; content: string }
 
 const CHAT_MODEL = () => process.env.PERSONA_CHAT_MODEL || 'qwen-plus';
@@ -41,7 +41,7 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
   const hit = cache.get(key);
   if (hit && Date.now() - hit.at < 10 * 60_000) return hit;
   const sources: ChatSource[] = [];
-  const src = (type: ChatSource['type'], title: string, url?: string | null, ref?: SourceRef) => { const id = `${{ job: 'J', standard: 'S', task: 'T', data: 'D', company: 'C' }[type]}${sources.filter(s => s.type === type).length + 1}`; sources.push({ id, type, title, url, ref }); return id; };
+  const src = (type: ChatSource['type'], title: string, url?: string | null, ref?: SourceRef) => { const id = `${({ job: 'J', standard: 'S', task: 'T', data: 'D', company: 'C', web: 'W', faq: 'F' } as Record<string, string>)[type]}${sources.filter(s => s.type === type).length + 1}`; sources.push({ id, type, title, url, ref }); return id; };
   const occRef = (section: SourceRef['section']): SourceRef => ({ kind: 'occupation', id: occ.id, section });
   const names = Array.from(new Set([occ.name, occ.name_lang_cn, ...(occ.aliases || [])].filter((n: any) => n && String(n).length >= 2))).slice(0, 10) as string[];
   const match = names.map(n => orIlike(['name'], n)).join(',');
@@ -134,6 +134,13 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
     }
   }
 
+  // 平方问答库：问答日志里质检合格、人工改过的（迁移 029）
+  const { data: faqs } = await supabaseAdmin.from('occupation_faqs').select('id, question, answer').eq('occupation_id', occ.id).eq('status', 'ok').eq('if_delete', false).limit(30);
+  if (faqs?.length) {
+    L.push('\n【平方问答库（已审核）】');
+    for (const f of faqs) { const id = src('faq', `平方问答库 · ${f.question}`); L.push(`[${id}] 问：${f.question} 答：${cut(f.answer, 260)}`); }
+  }
+
   if (chapters.data?.length) L.push(`\n【我的一天】${(chapters.data as any[]).map(c => `${c.slot || ''} ${c.title}${c.kind === 'incident' ? '（突发）' : ''}`.trim()).join(' → ')}`);
 
   const out = { text: L.join('\n'), sources, at: Date.now() };
@@ -162,46 +169,69 @@ export async function resolvePersona(occ: any, space?: any): Promise<Persona> {
 export async function chatReply(args: { occ: any; persona: Persona; knowledge: { text: string; sources: ChatSource[] }; history: ChatMessage[]; question: string; model?: string }) {
   const { occ, persona, knowledge, history, question } = args;
   const model = args.model || CHAT_MODEL();
-  const prompt = `${persona.nickname ? `对方给你起了个名字叫「${persona.nickname}」（你原来的代号是 ${persona.name}），聊天里就用「${persona.nickname}」自称，带着被起名字的亲近感。\n` : ''}你是「${persona.nickname || persona.name}」，${persona.role}${persona.years ? `，${persona.years}` : ''}${persona.workplace ? `，在${persona.workplace}` : ''}。你是平台上「${occ.name}」这一行的数字职人，正在跟来了解这一行的人（多半是学生、想转行的人）面对面聊天。
+  const build = (kb: string) => `${persona.nickname ? `对方给你起了个名字叫「${persona.nickname}」（你原来的代号是 ${persona.name}），聊天里就用「${persona.nickname}」自称，带着被起名字的亲近感。\n` : ''}你是「${persona.nickname || persona.name}」，${persona.role}${persona.years ? `，${persona.years}` : ''}${persona.workplace ? `，在${persona.workplace}` : ''}。你是平台上「${occ.name}」这一行的数字职人，正在跟来了解这一行的人（多半是学生、想转行的人）面对面聊天。
 ${persona.personality ? `性格：${persona.personality}\n` : ''}${persona.voice ? `说话方式：${persona.voice}\n` : ''}${persona.story ? `你的入行故事：${persona.story}\n` : ''}${persona.tagline ? `你常说：${persona.tagline}\n` : ''}
 怎么聊：
 - 铁律：**绝对不编造**。你说的每一个事实——薪资、年限、时间点、流程步骤、操作参数、检查点、常见失误、公司、岗位、城市、标准、证书、人名——都必须来自下面「平方知识库」，并在那句话末尾标来源编号，如 [J2]、[S1]、[D3]、[T4]。
 - 不许编个人经历和细节（「我第一次上手手抖」「我们店早上七点交班」「我在某某店干过」这类资料里没有的都不行）。角色感靠语气和视角，不靠编故事：用第一人称、口语，像带新人的老师傅那样讲资料里的内容（「我们这行新手最容易栽在……[T3]」「入门那一级主要就是……[D2]」）。
-- 资料里没有的，直说「这个平方的资料里还没有，我不乱说」，可以建议对方去哪儿核实。宁可少说，不可错说。
+- 资料里没有的：如果资料末尾有【互联网检索】，可以用它补充，但必须说清是网上查的（「网上的说法是……」「据网上资料……」），句末标 [W1] 这样的编号，并提醒对方注意甄别；绝不能把网上的内容说成平方的数据。
+  行业前景、趋势、会不会被 AI / 机器取代、政策、行情、和别的职业比较这类**判断性问题**，资料里没有直接依据时也一样：不许自己推一个结论出来，必须去查。
+  如果资料里没有、也没有【互联网检索】，就在 JSON 的 "search" 字段写出需要上网查的那个问题（简短，面向中国的信息源），先在 reply 里说「这个平方的资料里还没有，我去网上查查」；资料够用时 search 填 null。宁可少说，不可错说。
 - 不要像报告，不要说自己是 AI，不要用 markdown 标题。
 - 问到在招岗位：说清有多少、哪些公司招得多、举一两个具体岗位（带编号）。问到规范 / 标准：讲清楚怎么做、为什么，有标准就引标准。问到一天怎么过：按时间讲，挑一两个真实的典型任务讲细节。
 - 一次回答 80–220 字；对方要清单时可以分点。回答完别总问「还有什么问题」。
 - 再给 3 个对方可能想接着问的问题（短，从对方视角，跟刚才的话题相关又往深一步；只问不答，问题里不要带任何具体数字、标准值或资料里没有的说法）。
 
 ——平方知识库（${occ.name}）——
-${knowledge.text}
+${kb}
 ——资料完——
 
 ${history.slice(-10).map(m => `${m.role === 'user' ? '对方' : persona.nickname || persona.name}：${m.content}`).join('\n')}
 对方：${question}
 
-返回 JSON：{ "reply": 你的回答（含来源编号）, "suggestions": [三个追问] }`;
+返回 JSON：{ "reply": 你的回答（含来源编号）, "suggestions": [三个追问], "search": 需要上网查的问题或 null }`;
+  let web: { text: string; sources: ChatSource[] } | null = null;
+  let kb = knowledge.text;
+  const prompt = build(kb);
   let r = await generateContent(prompt, model, { jsonMode: true });
   await logTokenUsage({ tool_name: 'occupation', task_name: 'Persona Chat', institution: occ.name, model_id: model, usageMetadata: r.usageMetadata, batch_id: Date.now() }).catch(() => {});
   let p = parseJsonLoose(r.text) || {};
-  let reply = String(p.reply || r.text || '').trim().replace(/\[\s*([JSTDC]\d+)\s*\]/g, '[$1]');
+  // 平方资料里没有：上网查一次（国内检索，便宜），带 [W] 编号重答；网上的内容要说明出处、提醒甄别
+  // 判断性问题（前景 / 趋势 / 会不会被取代 / 政策 / 行情 / 值不值……）平方资料里没有直接依据，不靠模型自觉：一律去网上查
+  const JUDGE = /前景|趋势|取代|替代|未来|会不会|政策|行情|值不值|值得|饱和|裁员|内卷|哪个更|好不好|转行|稳定吗|发展空间|过时|淘汰|AI.*(冲击|影响)/;
+  const need = typeof p.search === 'string' && p.search.trim() && p.search !== 'null' ? p.search.trim() : JUDGE.test(question) ? question : '';
+  if (need) {
+    web = await webLookup(need, occ.name).catch(() => null);
+    if (web?.sources.length) {
+      kb = `${knowledge.text}\n\n【互联网检索】（未经平方核实，用的时候要说明来自网上、提醒对方甄别）\n${web.text}`;
+      r = await generateContent(build(kb), model, { jsonMode: true });
+      p = parseJsonLoose(r.text) || p;
+    }
+  }
+  const tidy = (x: string) => x.trim().replace(/\[\s*([JSTDCWF]\d+)\s*\]/g, '[$1]').replace(/[（(]\s*([JSTDCWF]\d+)\s*[)）]\s*(\[\1\])/g, '$2');
+  let reply = tidy(String(p.reply || r.text || ''));
   // 核查：逐句对照资料，没依据的打回重写一次；还有就删掉那几句（宁可少说，不可错说）
   // 职人自己的身份（名字、对方起的昵称、代号、头衔、口头禅）也算有依据，不然「我叫小拿铁」会被当成编造删掉
   const identity = `【我是谁】${persona.nickname ? `对方给我起的名字：${persona.nickname}；` : ''}代号 / 名字：${persona.name}；头衔：${persona.role}${persona.tagline ? `；口头禅：${persona.tagline}` : ''}${persona.years ? `；${persona.years}` : ''}${persona.workplace ? `；在${persona.workplace}` : ''}`;
-  const checkBase = `${identity}\n${knowledge.text}`;
+  const checkBase = `${identity}\n${kb}`;
   let flagged = await unsupportedSentences(reply, checkBase, model, occ.name);
   if (flagged.length) {
-    r = await generateContent(`${prompt}\n\n（你上一版回答里这些句子在资料里找不到依据，重写时去掉或改成资料里有的内容：${flagged.map(x => `「${x}」`).join('、')}）`, model, { jsonMode: true });
+    r = await generateContent(`${build(kb)}\n\n（你上一版回答里这些句子在资料里找不到依据，重写时去掉或改成资料里有的内容：${flagged.map(x => `「${x}」`).join('、')}）`, model, { jsonMode: true });
     p = parseJsonLoose(r.text) || p;
-    reply = String(p.reply || reply).trim().replace(/\[\s*([JSTDC]\d+)\s*\]/g, '[$1]');
+    reply = tidy(String(p.reply || reply));
     flagged = await unsupportedSentences(reply, checkBase, model, occ.name);
     for (const f of flagged) reply = reply.replace(f, '');
     reply = reply.replace(/\s{2,}/g, ' ').replace(/^[，。；、,.;\s]+/, '').replace(/([。！？])[，；、]+/g, '$1').trim() || '这个平方的资料里还没有，我不乱说。';
   }
-  const cited = Array.from(new Set(reply.match(/\[([JSTDC]\d+)\]/g)?.map(x => x.slice(1, -1)) || []));
+  const cited = Array.from(new Set(reply.match(/\[([JSTDCWF]\d+)\]/g)?.map(x => x.slice(1, -1)) || []));
+  // 用了网上的内容却没交代出处：开头补一句（网上的不能说成平方的）
+  if (cited.some(c => c.startsWith('W')) && !/网上|网络|互联网|据报道|有报道|媒体/.test(reply)) reply = `这个平方的资料里没有，我在网上查了查——${reply}`;
   return {
     reply,
-    sources: knowledge.sources.filter(s => cited.includes(s.id)),
+    sources: [...knowledge.sources, ...(web?.sources || [])].filter(s => cited.includes(s.id)),
+    webSearched: !!web?.sources.length,
+    gap: need || null,                       // 平方资料答不上、去网上查的问题：进飞轮当知识缺口
+    webPoints: web?.text || null,
     suggestions: (Array.isArray(p.suggestions) ? p.suggestions : []).map(String).slice(0, 3),
   };
 }
@@ -227,9 +257,9 @@ export async function loadChatContext(by: { spaceId?: string | null; occupationI
   return { space, occ, persona, knowledge };
 }
 
-export async function recordTurn(chatId: string | null, base: { space_id?: string | null; occupation_id: number; surface: string; visitor?: string | null }, turn: { question: string; reply: string; sources: ChatSource[] }) {
+export async function recordTurn(chatId: string | null, base: { space_id?: string | null; occupation_id: number; surface: string; visitor?: string | null }, turn: { question: string; reply: string; sources: ChatSource[]; gap?: string | null; webPoints?: string | null }) {
   const at = new Date().toISOString();
-  const add = [{ role: 'user', content: turn.question, at }, { role: 'assistant', content: turn.reply, sources: turn.sources.map(s => s.id), at }];
+  const add = [{ role: 'user', content: turn.question, at, gap: turn.gap || undefined }, { role: 'assistant', content: turn.reply, sources: turn.sources.map(s => s.id), web: turn.sources.filter(s => s.type === 'web').map(s => ({ title: s.title, url: s.url })), webPoints: turn.webPoints || undefined, at }];
   if (chatId) {
     const { data } = await supabaseAdmin.from('persona_chats').select('messages, turns').eq('id', chatId).maybeSingle();
     if (data) {
@@ -239,6 +269,15 @@ export async function recordTurn(chatId: string | null, base: { space_id?: strin
   }
   const { data } = await supabaseAdmin.from('persona_chats').insert({ ...base, messages: add, turns: 1 }).select('id').single();
   return data?.id || null;
+}
+
+/** 问答日志（迁移 029）：每一问一行，给「职业问答日志」工作台质检、排任务、转译入库 */
+export async function logQuestion(chatId: string | null, base: { space_id?: string | null; occupation_id: number; surface: string; visitor?: string | null }, turn: { question: string; reply: string; sources: ChatSource[]; gap?: string | null; webPoints?: string | null }) {
+  await supabaseAdmin.from('kg_questions').insert({
+    chat_id: chatId, ...base, question: turn.question, reply: turn.reply,
+    sources: turn.sources.map(s => ({ id: s.id, type: s.type, title: s.title, url: s.url || null })),
+    gap: turn.gap || null, web: turn.sources.filter(s => s.type === 'web').map(s => ({ id: s.id, title: s.title, url: s.url })), web_points: turn.webPoints || null,
+  }).then(() => {}, () => {});
 }
 
 /** 核查：回答里哪些句子在资料里找不到依据（语气、建议、观点不算；具体事实必须有依据） */
@@ -300,4 +339,29 @@ export async function entityDetail(occ: any, knowledge: { sources: ChatSource[] 
   }
   const { data: t } = await supabaseAdmin.from('typical_tasks').select('*').eq('id', ref.id).single();
   return { kind: 'task', task: t };
+}
+
+/**
+ * 平方资料里没有的问题：千问联网查一次。出处只认搜索引擎真实返回的结果（按编号对回真实链接），
+ * 模型自己写的链接一律不用（实测会编出 c_123456789.htm 这种假地址）；对不上真实结果的要点丢掉。
+ */
+async function webLookup(question: string, occName: string): Promise<{ text: string; sources: ChatSource[] }> {
+  const prompt = `关于「${occName}」这一行，用联网检索回答这个问题：${question}
+只用检索到的信息，3-5 条要点，每条一两句；每条注明它来自第几条搜索结果（搜索结果的编号）。优先中国的权威来源（政府 / 行业协会 / 主流招聘平台 / 正规媒体），自媒体、论坛的说法要注明。不要写链接。
+只返回 JSON：{ "points": [ { "text": 要点, "ref": 搜索结果编号 } ] }`;
+  const r = await generateContent(prompt, CHAT_MODEL(), { webSearch: true });
+  await logTokenUsage({ tool_name: 'occupation', task_name: 'Persona Chat · Web Lookup', institution: occName, model_id: CHAT_MODEL(), usageMetadata: r.usageMetadata, batch_id: Date.now() }).catch(() => {});
+  // 真实搜索结果：llm-client 把 search_info.search_results 附在「## 搜索来源」后面：[编号] 标题 链接
+  const results = new Map<number, { title: string; url: string }>();
+  for (const line of (r.text.split('## 搜索来源')[1] || '').split('\n')) {
+    const m = line.match(/^\[(\d+)\]\s*(.*?)\s*(https?:\/\/\S+)\s*$/);
+    if (m) results.set(Number(m[1]), { title: m[2] || '', url: m[3] });
+  }
+  const parsed = parseJsonLoose(r.text.split('## 搜索来源')[0]) || {};
+  const pts = ((parsed.points || []) as any[]).map(x => ({ text: String(x?.text || '').trim(), hit: results.get(Number(x?.ref)) })).filter(x => x.text && x.hit).slice(0, 5);
+  const sources: ChatSource[] = pts.map((x, i) => {
+    let host = ''; try { host = new URL(x.hit!.url).hostname.replace(/^www\./, ''); } catch { /* */ }
+    return { id: `W${i + 1}`, type: 'web', title: `${x.hit!.title || host}${host ? `（${host}）` : ''}`, url: x.hit!.url };
+  });
+  return { text: pts.map((x, i) => `[W${i + 1}] ${x.text}（来源：${x.hit!.title || ''}）`).join('\n'), sources };
 }

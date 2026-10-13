@@ -19,6 +19,8 @@ export const SOURCES: Record<string, { label: string; weight: number; group: Sig
   lab_problem: { label: 'lab「我有个问题」', weight: 2, group: 'internal' },
   lab_space: { label: 'lab 生成职业空间', weight: 3, group: 'internal' },
   lab_view: { label: 'lab 进入职业空间', weight: 0.5, group: 'internal' },
+  lab_chat: { label: '问数字职人（和我聊）', weight: 1, group: 'internal' },
+  lab_chat_gap: { label: '和我聊 · 平方答不上（知识缺口）', weight: 3, group: 'internal' },
   competition_search: { label: '赛事雷达检索', weight: 1, group: 'internal' },
   // 联网扫的前瞻信号（WEB_PROBES 的 key 加 web_ 前缀）
   web_trend: { label: '热门职位趋势', weight: 2, group: 'web' },
