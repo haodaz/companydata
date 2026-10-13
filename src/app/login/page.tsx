@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { App, Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { AuthShell } from '@/components/auth/AuthShell';
 import { BRAND } from '@/lib/theme';
 
@@ -38,7 +37,7 @@ export default function LoginPage() {
   };
 
   return (
-    <AuthShell title="欢迎回到工厂" subtitle="登录后给 AI 员工下达任务">
+    <AuthShell title="欢迎回来" subtitle="登录进入平方智能产业数据与 AI 管理后台">
       <Form name="login" onFinish={onFinish} layout="vertical" size="large" requiredMark={false}>
         <Form.Item name="email" label="邮箱" rules={[{ required: true, message: '请输入邮箱' }, { type: 'email', message: '请输入有效的邮箱格式' }]}>
           <Input prefix={<UserOutlined style={{ color: BRAND.ink4 }} />} placeholder="name@company.com" autoComplete="username" />
@@ -50,9 +49,7 @@ export default function LoginPage() {
           <Button type="primary" htmlType="submit" loading={loading} block style={{ height: 46, borderRadius: 12, fontWeight: 700, fontSize: 15 }}>登录</Button>
         </Form.Item>
       </Form>
-      <div style={{ textAlign: 'center', fontSize: 13, color: BRAND.ink3 }}>
-        还没有账号？ <Link href="/register" style={{ color: BRAND.primary, fontWeight: 600 }}>立即注册</Link>
-      </div>
+      {/* 不开放自助注册（2026-10-12）：账号由管理员在「系统账号管理」里开 */}
     </AuthShell>
   );
 }
