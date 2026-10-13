@@ -55,21 +55,20 @@ const CSS = `
   background: linear-gradient(90deg, rgba(8,10,22,.9) 0%, rgba(8,10,22,.76) 34%, rgba(8,10,22,.32) 64%, rgba(8,10,22,.06) 100%),
               linear-gradient(0deg, #080a16 0%, rgba(8,10,22,.16) 22%, transparent 45%); }
 .ai100-hero .in { position: relative; width: 100%; max-width: 1280px; margin: 0 auto; padding: 72px 28px; }
-/* 首屏底部「往下还有」：鼠标轮廓里滚轮点往下走 + 下箭头一节节亮起；一滚动就淡掉，点一下滑到下一屏 */
-.ai100-cue { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 10px;
+/* 首屏底部「往下还有」：一行——鼠标轮廓（滚轮点往下走）· 字 · 下箭头一节节亮起；一滚动就淡掉，点一下滑到下一屏 */
+.ai100-cue { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 2; display: flex; align-items: center; gap: 12px; white-space: nowrap;
   border: 0; background: transparent; color: rgba(255,255,255,.82); cursor: pointer; font: inherit; transition: opacity .4s ease; animation: ai100-cue-in 1s ease 1.2s backwards; }
 .ai100-cue:hover { color: #fff; }
 .ai100-cue-t { font-size: 12.5px; letter-spacing: .32em; padding-left: .32em; text-shadow: 0 2px 12px rgba(0,0,0,.55); }
-.ai100-cue-m { width: 24px; height: 38px; border: 1.6px solid currentColor; border-radius: 13px; position: relative; opacity: .9; }
-.ai100-cue-m::after { content: ''; position: absolute; left: 50%; top: 7px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: currentColor; animation: ai100-wheel 1.8s cubic-bezier(.6,0,.4,1) infinite; }
-.ai100-cue-a { display: flex; flex-direction: column; align-items: center; margin-top: -4px; }
+.ai100-cue-m { flex-shrink: 0; width: 20px; height: 31px; border: 1.5px solid currentColor; border-radius: 11px; position: relative; opacity: .9; }
+.ai100-cue-m::after { content: ''; position: absolute; left: 50%; top: 6px; width: 3px; height: 6px; margin-left: -1.5px; border-radius: 2px; background: currentColor; animation: ai100-wheel 1.8s cubic-bezier(.6,0,.4,1) infinite; }
+.ai100-cue-a { display: flex; flex-direction: column; align-items: center; padding-top: 3px; }
 .ai100-cue-a i { width: 9px; height: 9px; border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor; transform: rotate(45deg); margin-top: -3px; animation: ai100-chev 1.8s ease-in-out infinite; }
 .ai100-cue-a i:nth-child(2) { animation-delay: .18s; }
-@keyframes ai100-wheel { 0% { opacity: 0; transform: translateY(-2px); } 25% { opacity: 1; } 70% { opacity: 0; transform: translateY(12px); } 100% { opacity: 0; } }
+@keyframes ai100-wheel { 0% { opacity: 0; transform: translateY(-2px); } 25% { opacity: 1; } 70% { opacity: 0; transform: translateY(9px); } 100% { opacity: 0; } }
 @keyframes ai100-chev { 0%, 100% { opacity: .15; } 45% { opacity: 1; } }
 @keyframes ai100-cue-in { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
 @media (prefers-reduced-motion: reduce) { .ai100-cue, .ai100-cue-m::after, .ai100-cue-a i { animation: none; } }
-@media (max-height: 640px) { .ai100-cue-m { display: none; } }
 
 /* 胶片：横着走的一条，压在 banner 下沿 */
 .ai100-film { overflow: hidden; padding: 16px 0; display: grid; gap: 12px; background: transparent; margin-top: clamp(40px, 6vw, 72px);
@@ -437,8 +436,8 @@ export default function LabLanding() {
         </div>
         <button className="ai100-cue" aria-label="下滑了解 AI 百业" style={{ opacity: scrolled ? 0 : undefined, pointerEvents: scrolled ? 'none' : undefined }}
           onClick={e => (e.currentTarget.parentElement?.nextElementSibling as HTMLElement | null)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
-          <span className="ai100-cue-t">下滑了解 AI 百业</span>
           <span className="ai100-cue-m" />
+          <span className="ai100-cue-t">下滑了解 AI 百业</span>
           <span className="ai100-cue-a"><i /><i /></span>
         </button>
       </section>
