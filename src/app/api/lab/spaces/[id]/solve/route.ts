@@ -3,6 +3,7 @@ import { withCost } from '@/lib/token-logger';
 import { supabaseAdmin } from '@/lib/supabase';
 import { solveWithSkill } from '@/lib/agents/skill-lab';
 import { labError, loadSpace, skillRef } from '@/lib/skill-lab-server';
+import { labModel } from '@/lib/lab-guest';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -11,7 +12,8 @@ export const maxDuration = 300;
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const { problem, actor, location, tz, context, model } = await req.json();
+    const { problem, actor, location, tz, context, model: asked } = await req.json();
+    const model = labModel(req, asked);
     if (!problem || String(problem).trim().length < 10) return NextResponse.json({ ok: false, error: '把问题说具体一点' }, { status: 400 });
 
     const space = await loadSpace(id);

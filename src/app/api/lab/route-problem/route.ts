@@ -6,6 +6,7 @@ import { logTokenUsage } from '@/lib/token-logger';
 import { familyOf } from '@/lib/career-family';
 import { labError } from '@/lib/skill-lab-server';
 import { trackDemand } from '@/lib/flywheel/signals';
+import { labModel } from '@/lib/lab-guest';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -19,7 +20,8 @@ export const maxDuration = 60;
  */
 export async function POST(req: NextRequest) {
   try {
-    const { problem, model } = await req.json();
+    const { problem, model: asked } = await req.json();
+    const model = labModel(req, asked);
     const q = String(problem || '').trim().slice(0, 600);
     if (q.length < 4) return NextResponse.json({ ok: false, error: '把问题说具体一点' }, { status: 400 });
     trackDemand(req, { source: 'lab_problem', query: q });

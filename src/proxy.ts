@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
 import { INVITED, INVITED_BY, readInvite } from '@/lib/lab-invite';
+import { LAB_GUEST } from '@/lib/lab-guest';
 
 /** 受邀专家能碰的接口：这一位数字职人的空间本身（只读），以及向上学习的三步 */
 const INVITE_API = /^\/api\/lab\/spaces\/([^/]+)(?:\/(interview|submit|distill))?$/;
@@ -39,11 +40,13 @@ export async function proxy(req: NextRequest) {
     if (pathname === '/api/flywheel/signal' && req.method === 'POST' && req.headers.get('x-flywheel-key')) return NextResponse.next();
     // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉
     const headers = new Headers(req.headers);
-    headers.delete(INVITED); headers.delete(INVITED_BY);
-    if (LAB_PUBLIC() && pathname.startsWith('/api/lab/') && !LAB_PROTECTED(pathname, req.method)) return NextResponse.next({ request: { headers } });
+    headers.delete(INVITED); headers.delete(INVITED_BY); headers.delete(LAB_GUEST);
     const token = req.cookies.get('auth_token')?.value;
     const payload = token ? await verifyToken(token) : null;
     if (payload) return NextResponse.next({ request: { headers } });
+    // 没登录的游客 / 受邀老师傅：打上游客标记，接口里模型锁死在默认那个（不让游客挑贵的模型）
+    headers.set(LAB_GUEST, '1');
+    if (LAB_PUBLIC() && pathname.startsWith('/api/lab/') && !LAB_PROTECTED(pathname, req.method)) return NextResponse.next({ request: { headers } });
 
     // 没登录：拿着邀请票的老师傅，只能碰票上那一位数字职人的几条学习接口
     const m = pathname.match(INVITE_API);

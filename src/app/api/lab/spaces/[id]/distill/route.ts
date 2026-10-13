@@ -4,6 +4,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { buildSkillCard } from '@/lib/agents/skill-lab';
 import { labError, loadSpace } from '@/lib/skill-lab-server';
 import { INVITED, INVITED_BY } from '@/lib/lab-invite';
+import { labModel } from '@/lib/lab-guest';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -12,7 +13,8 @@ export const maxDuration = 300;
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const { turns, walkthrough, expert, model, createdBy, trace, chapterTraces } = await req.json();
+    const { turns, walkthrough, expert, model: asked, createdBy, trace, chapterTraces } = await req.json();
+    const model = labModel(req, asked);
     if (!Array.isArray(turns) || turns.filter((t: any) => t.role === 'expert').length < 2) {
       return NextResponse.json({ ok: false, error: '至少回答 2 个问题再生成技能卡' }, { status: 400 });
     }

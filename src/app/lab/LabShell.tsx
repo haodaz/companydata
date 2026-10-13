@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Select } from 'antd';
 import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
 import { UserProvider, useUser } from '@/lib/user-context';
+import { GUEST_MODEL } from '@/lib/lab-guest';
 
 /**
  * 数字技能空间（实验）独立外壳：浅色科技感，和数据后台 / 虚拟工厂刻意长得不一样。
@@ -197,7 +198,9 @@ function Shell({ children }: { children: React.ReactNode }) {
   useEffect(() => { setGuest(new URLSearchParams(window.location.search).has('invite')); }, [path]);
   const { currentModel, setCurrentModel } = useModel();
   // 首页是公开的：没登录的人看不到模型下拉和后台入口，那是给干活的人用的
-  const { user } = useUser();
+  const { user, loading: userLoading } = useUser();
+  // 游客（没登录）模型锁死在 Gemini 3.8 Flash：浏览器里存过别的模型也不算（接口那边也锁着，见 lib/lab-guest.ts）
+  useEffect(() => { if (!userLoading && !user && currentModel !== GUEST_MODEL) setCurrentModel(GUEST_MODEL); }, [userLoading, user, currentModel, setCurrentModel]);
   // 深浅两套：大屏投放、学校一体机、白天的教室都可能更适合浅色。按设备记住；
   // 也认 ?theme=light / ?theme=dark，方便把一体机的链接直接钉死成某一套。
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
