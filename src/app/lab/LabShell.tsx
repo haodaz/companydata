@@ -203,8 +203,7 @@ function Shell({ children }: { children: React.ReactNode }) {
   useEffect(() => { if (!userLoading && !user && currentModel !== GUEST_MODEL) setCurrentModel(GUEST_MODEL); }, [userLoading, user, currentModel, setCurrentModel]);
   // 深浅两套：大屏投放、学校一体机、白天的教室都可能更适合浅色。按设备记住；
   // 也认 ?theme=light / ?theme=dark，方便把一体机的链接直接钉死成某一套。
-  // 默认浅色（2026-10-12 用户定）；手动切过的人按 localStorage 记住的来
-  const [theme, setTheme] = useState<'dark' | 'light'>('light');
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   useEffect(() => {
     const q = new URLSearchParams(window.location.search).get('theme');
     let t: string | null = q === 'light' || q === 'dark' ? q : null;
