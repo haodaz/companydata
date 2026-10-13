@@ -450,6 +450,14 @@ export default function SpacePage() {
   const guest = !!invite;
   const inviteHdr: Record<string, string> = invite ? { 'x-lab-invite': invite } : {};
   const [taught, setTaught] = useState(false);
+  // 体验视角点「你教我」：没有邀请票的人先领一张这个空间的票（游客不能直接调学习接口），拿到就进去示范
+  const enterTeach = async () => {
+    try {
+      const j = await (await fetch(`/api/lab/spaces/${id}/practitioner`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })).json();
+      if (!j.ok) throw new Error(j.error);
+      window.location.href = j.path;
+    } catch (e: any) { message.error(e.message); }
+  };
   const [inviting, setInviting] = useState(false);
 
   const [space, setSpace] = useState<any>(null);
@@ -825,7 +833,8 @@ function castOf(space: any, sim: Sim | null) {
     { key: 'eco', label: '我的行当', icon: 'eco', sub: '同行 · 在招 · 上下游' },
     jd.career ? { key: 'career', label: '职业地图', icon: 'career', sub: '这一行在做什么' } : { key: 'jd', label: '我的来历', icon: 'jd', sub: jd.company || '岗位 JD' },
   ];
-  const portals = allPortals.filter(p => !hiddenInExp(p.key));
+  // 「你教我」在体验视角也有（专业数采）：点了领一张邀请票进去示范，之后照样过示范评审
+  const portals = allPortals.filter(p => !hiddenInExp(p.key) || p.key === 'learn');
 
   // 你教我：横幅下方的那一块——请老师傅把这一天走一遍（留名 → 逐段示范 → 每段走完接受追问 → 吸收）
   const walkedLabels = Object.values(chTraces).map(x => x.label);
@@ -937,7 +946,7 @@ function castOf(space: any, sim: Sim | null) {
         <PersonHub
           name={profile.name || 'AI CORE'} role={profile.role || jd.title || ''} avatar={profile.avatar || ''} tagline={profile.tagline || ''}
           scene={sim?.art?.cover || ''} level={lv.level} levelLabel={lv.label} stats={hubStats} skills={(profile.capabilities || []).slice(0, 4)} portals={portals}
-          onEnter={m => setMode(m)}
+          onEnter={m => (exp && m === 'learn' ? enterTeach() : setMode(m))}
           origin={draft
             ? <>AI 自学草案 · 等一位从业者校正{!guest && !exp && user && <button className="hub-ghost" style={{ marginLeft: 10, height: 26, padding: '0 10px', fontSize: 12 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '请一位老师傅来教 →'}</button>}</>
             : <>学自 <b className="hub-strong">{skill.expert_name}</b>（{skill.expert_location}）</>}
