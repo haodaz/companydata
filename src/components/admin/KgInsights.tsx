@@ -20,7 +20,7 @@ function Flywheel({ f }: { f: any }) {
     { label: '用户提问', value: f.total, sub: `${f.occupations} 个职业`, color: BRAND.primary },
     { label: '平方库答得上', value: f.answered, sub: `覆盖率 ${pct(f.answered, f.total)}`, color: '#16a34a' },
     { label: '知识缺口', value: f.gaps, sub: '上网查 · 注明出处', color: '#ea580c' },
-    { label: '人工质检', value: f.reviewed, sub: `合格 ${f.ok + f.task + f.ingested} · 不合格 ${f.bad}`, color: '#0ea5e9' },
+    { label: '人工质检', value: f.reviewed, sub: `合格 ${f.ok + f.ingested} · 不合格 ${f.bad}`, color: '#0ea5e9' },
     { label: '排产补全', value: f.task, sub: 'AI 补齐职业知识', color: '#2f54eb' },
     { label: '平方问答库', value: f.faqs, sub: `已转译 ${f.ingested} 问`, color: '#8b5cf6' },
   ];
@@ -92,9 +92,7 @@ export function KgInsights({ d, onCell, onFill, busyKey }: { d: any; onCell: (oc
           <Card size="small" title="数据飞轮 · 闭环" extra={<Text type="secondary" style={{ fontSize: 12 }}>用户关心什么 → 补什么、核什么 → 入库</Text>} style={{ marginBottom: 16 }}>
             {d.flywheel && <Flywheel f={d.flywheel} />}
           </Card>
-          <Card size="small" title="热门问题" style={{ marginBottom: 16 }}>
-            <TopQuestions list={d.topQuestions} />
-          </Card>
+
         </Col>
         <Col xs={24} xl={9}>
           <Card size="small" title="话题 · 缺口率" style={{ marginBottom: 16 }}>
@@ -118,6 +116,9 @@ export function KgInsights({ d, onCell, onFill, busyKey }: { d: any; onCell: (oc
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: BRAND.ink3, marginTop: 4 }}><span>{d.trend[0]?.day.slice(5)}</span><span>今天</span></div>
             <div style={{ marginTop: 8 }}>{Object.entries(d.surfaces).map(([k, n]: any) => <Tag key={k}>{SURFACE[k] || k} {Math.round((n / sTotal) * 100)}%</Tag>)}</div>
+          </Card>
+          <Card size="small" title="热门问题" style={{ marginBottom: 16 }}>
+            <TopQuestions list={d.topQuestions} />
           </Card>
         </Col>
       </Row>
