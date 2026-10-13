@@ -10,12 +10,14 @@ export const STANDARD_KIND_LABELS: Record<string, { label: string; color: string
   local: { label: '地方标准', color: 'gold', hint: 'DB11/T …' },
   group: { label: '团体标准', color: 'cyan', hint: 'T/CXXX …' },
   enterprise: { label: '企业标准 / 规程', color: 'blue', hint: 'Q/… 或企业公开的作业规程' },
+  vendor: { label: '厂商资料', color: 'lime', hint: '设备 / 仪器厂商公开的操作手册、使用说明书、作业指导' },
   international: { label: '国际 / 国外标准', color: 'geekblue', hint: 'ISO / IEC / IEEE / UL / ASTM / NFPA / PADI …' },
   regulation: { label: '法规规章', color: 'purple', hint: '法律、部门规章、规范性文件' },
 };
 export const STANDARD_DOC_TYPE_LABELS: Record<string, { label: string; color: string }> = {
   standard: { label: '标准', color: 'default' },
   procedure: { label: '操作规程 / 作业指导', color: 'green' },
+  manual: { label: '设备操作手册', color: 'lime' },
   safety_rule: { label: '安全规程', color: 'red' },
   code: { label: '技术 / 施工规范', color: 'blue' },
   guideline: { label: '指南 / 专家共识', color: 'cyan' },

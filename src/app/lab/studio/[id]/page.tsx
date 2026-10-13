@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useUser } from '@/lib/user-context';
 import { MODEL_OPTIONS } from '@/lib/model-context';
 import { SimRunner, SimStage } from '@/components/lab/SimRunner';
-import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue } from '@/lib/lab-studio';
+import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue, type BasisRow } from '@/lib/lab-studio';
 import { CAST_KINDS, applyCastArt, castKind, stepsUsing, type CastKind, type CastMember, type LabAsset } from '@/lib/lab-cast';
 
 /**
@@ -29,7 +29,7 @@ export default function StudioPage() {
   const { message } = App.useApp();
   const { user } = useUser();
 
-  const [data, setData] = useState<{ space: any; chapters: StudioChapter[]; expertTrace: any; cast: CastMember[] } | null>(null);
+  const [data, setData] = useState<{ space: any; chapters: StudioChapter[]; expertTrace: any; cast: CastMember[]; basis?: BasisRow[] } | null>(null);
   const [castEdit, setCastEdit] = useState<CastMember | { kind: CastKind } | null>(null);
   const [err, setErr] = useState('');
   const [cur, setCur] = useState<string | null>(sp.get('ch'));
@@ -123,7 +123,7 @@ export default function StudioPage() {
   // 校验用「当前编辑中的版本」替换库里那一章，改一个字就能看到问题消失
   const liveChapters = useMemo(() => (data?.chapters || []).map(c => (draft && c.id === draft.id ? draft : c)), [data, draft]);
   const firstSeq = useMemo(() => Math.min(...(data?.chapters || []).map(c => c.seq), 1), [data]);
-  const issues = useMemo(() => checkAll(liveChapters, data?.expertTrace || null, firstSeq), [liveChapters, data, firstSeq]);
+  const issues = useMemo(() => checkAll(liveChapters, data?.expertTrace || null, firstSeq, data?.basis || null), [liveChapters, data, firstSeq]);
   const issuesOf = (cid: string) => issues.filter(x => x.chapter === cid);
   const dayIssues = issues.filter(x => !x.chapter);
 

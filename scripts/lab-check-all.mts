@@ -7,6 +7,7 @@ import fs from 'node:fs';
 for (const l of fs.readFileSync('.env.local', 'utf8').split('\n')) { const m = l.match(/^([A-Z_]+)=(.*)$/); if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim().replace(/^"|"$/g, ''); }
 const { supabaseAdmin: db } = await import('../src/lib/supabase');
 const { checkAll } = await import('../src/lib/lab-studio');
+const { loadBasis } = await import('../src/lib/lab-standards');
 const only = process.argv.includes('--rule') ? process.argv[process.argv.indexOf('--rule') + 1] : null;
 const { data: spaces } = await db.from('skill_tasks').select('id, title').order('created_at');
 const { data: chs } = await db.from('lab_chapters').select('id, task_id, seq, slot, title, kind, brief, sim, expert_trace, status, locked');
@@ -16,7 +17,7 @@ const tally = new Map<string, Set<string>>();
 for (const s of spaces || []) {
   const list = (by.get(s.id) || []).sort((a, b) => a.seq - b.seq);
   if (!list.length) continue;
-  for (const i of checkAll(list as any)) {
+  for (const i of checkAll(list as any, null, 1, await loadBasis(s.id))) {
     const k = i.rule || (i.level === 'error' ? '（结构 error）' : '（结构 warn）');
     if (!tally.has(k)) tally.set(k, new Set());
     tally.get(k)!.add(s.id);

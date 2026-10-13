@@ -168,12 +168,45 @@ export function checkChapter(c: StudioChapter, fallbackTrace?: SimTrace | null):
   return out;
 }
 
-export function checkAll(chapters: StudioChapter[], fallbackTrace?: SimTrace | null, firstSeq = 1): StudioIssue[] {
+export function checkAll(chapters: StudioChapter[], fallbackTrace?: SimTrace | null, firstSeq = 1, basis?: BasisRow[] | null): StudioIssue[] {
   return [
     ...checkDay(chapters),
     // 空间技能里的示范轨迹只属于第 1 章（老空间迁来的那章）
     ...chapters.flatMap(c => checkChapter(c, c.seq === firstSeq ? fallbackTrace : null)),
+    ...(basis ? checkBasis(chapters, basis) : []),
   ];
+}
+
+/** 一条依据（standard_links，迁移 022 / 023）：工位规则 / 目标 → 标准条款 / 老师傅经验 / AI 推断 */
+export interface BasisRow { chapter_id: string | null; target: string; basis?: string | null; confidence?: number | null; standard?: { code?: string | null; title?: string | null } | null }
+
+/**
+ * [S1] 工位规则 / 目标没有出处；[S2] 违规规则只有 AI 推断（或标准依据置信度 < 60），要老师傅确认或补标准。
+ * 只看已发布章节里的工位；按章节汇总成一条，不刷屏。回挂见 scripts/lab-link-standards.mts。
+ */
+export function checkBasis(chapters: StudioChapter[], basis: BasisRow[]): StudioIssue[] {
+  const out: StudioIssue[] = [];
+  const pub = chapters.filter(c => c.status === 'published' && ((c.sim as any)?.steps || []).some((s: any) => s?.type === 'bench'));
+  if (!pub.length) return out;
+  if (!basis.length) return [{ level: 'warn', rule: 'S1', msg: '工位规则还没回挂出处（标准条款 / 老师傅经验 / AI 推断）：跑 scripts/lab-link-standards.mts' }];
+  const by = new Map(basis.map(b => [`${b.chapter_id}|${b.target.split(' · ')[0]}`, b]));
+  for (const c of pub) {
+    const none: string[] = [], weak: string[] = [];
+    for (const st of ((c.sim as any)?.steps || [])) {
+      const b = st?.type === 'bench' ? st.bench : null; if (!b) continue;
+      const items = [...(b.rules || []).map((r: any) => ({ k: `rule:${r.id}`, label: r.label, v: r.severity === 'violation' })), ...(b.goals || []).map((g: any) => ({ k: `goal:${g.id}`, label: g.label, v: false }))];
+      for (const it of items) {
+        const x = by.get(`${c.id}|${it.k}`);
+        if (!x) { none.push(it.label); continue; }
+        if (it.v && (x.basis === 'ai' || (x.basis === 'standard' && (x.confidence ?? 100) < 60))) weak.push(it.label);
+      }
+    }
+    const name = c.title || c.slot || '';
+    const few = (a: string[]) => a.slice(0, 3).map(x => `「${x}」`).join('') + (a.length > 3 ? ` 等 ${a.length} 条` : '');
+    if (none.length) out.push({ level: 'warn', rule: 'S1', chapter: c.id, msg: `${name}：${none.length} 条工位规则 / 目标没有出处 ${few(none)}（规则改过？重新回挂）` });
+    if (weak.length) out.push({ level: 'warn', rule: 'S2', chapter: c.id, msg: `${name}：${weak.length} 条违规规则只有 AI 推断或依据不牢 ${few(weak)}——请老师傅确认，或去标准库补` });
+  }
+  return out;
 }
 
 /** 新步骤的模板 */

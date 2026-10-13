@@ -3,6 +3,7 @@
  *   npx tsx scripts/standards-seed.mts                 建任务并全部跑（并发 2）
  *   npx tsx scripts/standards-seed.mts --only 1        只跑第 1 条（试通链路）
  *   npx tsx scripts/standards-seed.mts --task <id>     续跑：只跑这个任务里还没成功的
+ *   npx tsx scripts/standards-seed.mts --from-spaces   按图索骥：百业每个有工位的空间 × （岗位规程 + 设备手册）
  * 记账 tool_name = standard-radar（算数据工厂）。
  */
 import fs from 'node:fs';
@@ -46,6 +47,32 @@ const conc = parseInt(arg('--conc') || '2');
 
 const { data: spaces } = await db.from('skill_tasks').select('id');
 const fullId = (p?: string) => (p ? (spaces || []).find(s => s.id.startsWith(p))?.id || null : null);
+
+// 按图索骥（--from-spaces）：从百业里每个已发布、有工位的空间出发，每个空间两条检索——
+//   ① 岗位规程：职业 + 工位名 + 关键规则当线索；② 设备手册：工位上的设备 / 仪器 / 工具（最底层、最细，可能不属于某个行业）
+if (process.argv.includes('--from-spaces') && !taskId) {
+  const { data: all } = await db.from('skill_tasks').select('id, title, profile, jd_snapshot');
+  const { data: chs } = await db.from('lab_chapters').select('task_id, steps:sim->steps').eq('status', 'published');
+  const { data: done } = await db.from('standard_searches').select('space_id, doc_types').neq('status', 'failed').not('space_id', 'is', null);   // 已有的（含排队中）不重复加
+  const hasJob = new Set((done || []).filter(d => !(d.doc_types || []).includes('manual')).map(d => d.space_id));
+  const hasManual = new Set((done || []).filter(d => (d.doc_types || []).includes('manual')).map(d => d.space_id));
+  const items: any[] = [];
+  for (const s of all || []) {
+    const benches = (chs || []).filter((c: any) => c.task_id === s.id).flatMap((c: any) => (c.steps || []).filter((x: any) => x?.type === 'bench').map((x: any) => x.bench));
+    if (!benches.length) continue;
+    const role = s.profile?.role || s.jd_snapshot?.career?.profession || s.jd_snapshot?.title || s.title;
+    const names = Array.from(new Set(benches.map((b: any) => String(b.name || '').replace(/(模拟)?(工位|工作台|操作台|台面)$/, '')))).slice(0, 3).join('；');
+    const rules = benches.flatMap((b: any) => (b.rules || []).map((r: any) => String(r.label).split(/[（(]/)[0])).slice(0, 4).join('；');
+    const gear = benches.flatMap((b: any) => [...(b.controls || []).map((c: any) => c.label), ...(b.gauges || []).map((g: any) => g.label)]).filter(Boolean).slice(0, 10).join('、');
+    if (!hasJob.has(s.id)) items.push({ profession: role, industry: null, query: `${names}；${rules}`.slice(0, 200), space_id: s.id, doc_types: [] });
+    if (!hasManual.has(s.id)) items.push({ profession: role, industry: null, query: `设备 / 仪器操作手册：${names}；涉及 ${gear}`.slice(0, 220), space_id: s.id, doc_types: ['manual', 'procedure', 'code'] });
+  }
+  const { data: t, error } = await db.from('standard_tasks').insert({ name: `百业按图索骥 · ${items.length} 条（岗位规程 + 设备手册）`, notes: '从每个有工位的百业空间出发：工位名 / 规则当线索找规程；工位上的设备 / 仪器找操作手册', model_id: 'gemini-3.8-flash', created_by: 'scripts/standards-seed --from-spaces', status: 'running' }).select().single();
+  if (error) throw error;
+  taskId = t.id;
+  for (let k = 0; k < items.length; k += 100) { const { error: e2 } = await db.from('standard_searches').insert(items.slice(k, k + 100).map(x => ({ ...x, task_id: t.id, count: x.doc_types.length ? 6 : 8, enrich: true, status: 'pending' }))); if (e2) throw e2; }
+  console.log('按图索骥任务', taskId, items.length, '条');
+}
 
 if (!taskId) {
   const { data: t, error } = await db.from('standard_tasks').insert({ name: `百业打底 · ${SEED.length} 个职业的标准与规程`, notes: '给百业空间的工位规则找依据（可解释性）', model_id: 'gemini-3.8-flash', created_by: 'scripts/standards-seed', status: 'running' }).select().single();

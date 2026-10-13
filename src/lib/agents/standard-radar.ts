@@ -24,7 +24,8 @@ const OFFICIAL_SITES = `Authoritative sources to prefer (题录 / 全文):
 - 国家标准全文公开系统 openstd.samr.gov.cn（国标全文公开）
 - 行业标准信息服务平台 hbba.sacinfo.org.cn；地方标准 dbba.sacinfo.org.cn；全国团体标准信息平台 ttbz.org.cn
 - 行业主管部门官网：应急管理部（AQ 安全标准）、国家能源局 / 中电联（DL/T 电力）、交通运输部（JTG 公路）、国家卫健委（WS 卫生）、国家药监局（YY 医疗器械）、工信部、农业农村部（NY/T）、文旅部（WH/T）、国防科工局（QJ 航天）
-- 国际：iso.org、iec.ch、ieee.org、ul.com、nfpa.org、PADI / RSTC（潜水）、WHO 手术安全核查表等`;
+- 国际：iso.org、iec.ch、ieee.org、ul.com、nfpa.org、PADI / RSTC（潜水）、WHO 手术安全核查表等
+- 操作手册：设备 / 仪器厂商官网的产品文档、下载中心、技术支持页（如 西门子、施耐德、ABB、徐工、中联、维特根 Vögele、La Marzocco、迈瑞、美敦力、Keysight、Synopsys / Cadence 文档门户），不要用文库 / 网盘转载`;
 
 // ────────────────────────────────────────────
 // 1. 检索候选
@@ -43,7 +44,7 @@ ${kinds.length ? `Only these levels: ${kinds.map(k => `${k} = ${STANDARD_KIND_LA
 ${docTypes.length ? `Only these document types: ${docTypes.map(k => `${k} = ${STANDARD_DOC_TYPE_LABELS[k].label}`).join(', ')}` : `Document types: ${Object.entries(STANDARD_DOC_TYPE_LABELS).map(([k, v]) => `${k} = ${v.label}`).join(', ')}`}
 
 Find the standards / safety rules / operating procedures / construction codes / clinical guidelines that actually GOVERN how this job is done day to day:
-safety rules for the equipment, process specifications with numeric windows (temperatures, pressures, times, tolerances), step-by-step operating procedures, inspection / acceptance criteria, PPE, emergency handling, professional service-quality norms. Prefer CURRENT (现行) versions; if an old one was replaced, return the new one.
+equipment OPERATING MANUALS (设备操作手册 / 使用说明书 / 作业指导书 published by the equipment maker or the employer — doc_type "manual", kind "vendor"; give model numbers when known), safety rules for the equipment, process specifications with numeric windows (temperatures, pressures, times, tolerances), step-by-step operating procedures, inspection / acceptance criteria, PPE, emergency handling, professional service-quality norms. Prefer CURRENT (现行) versions; if an old one was replaced, return the new one.
 ${OFFICIAL_SITES}
 
 Search in Chinese and English (e.g. "${p.profession || p.query} 安全规程 标准", "${p.profession || p.query} 操作规程 GB", "${p.query || p.profession} 技术规范 行业标准 现行").
