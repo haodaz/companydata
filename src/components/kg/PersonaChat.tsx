@@ -126,8 +126,9 @@ export function ChatBody({ chat, theme = 'light', fallbackName, onOpen, activeId
 }
 
 /** 浮动按钮：给 href 就是进独立对话页，否则走 onClick */
-export function ChatLauncher({ name, avatar, href, onClick, bottom = 22 }: { name?: string; avatar?: string | null; href?: string; onClick?: () => void; bottom?: number }) {
-  const style: React.CSSProperties = { position: 'fixed', right: 22, bottom, zIndex: 1000, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 18px 8px 8px', borderRadius: 999, border: 0, cursor: 'pointer',
+/** inline：放进内容流里（人物首页那一排）；否则浮在右下角，但贴着内容区（1280 宽）的右边，不贴整个屏幕 */
+export function ChatLauncher({ name, avatar, href, onClick, bottom = 22, inline = false }: { name?: string; avatar?: string | null; href?: string; onClick?: () => void; bottom?: number; inline?: boolean }) {
+  const style: React.CSSProperties = { ...(inline ? { position: 'relative' } : { position: 'fixed', right: 'max(22px, calc((100vw - 1280px) / 2 + 28px))', bottom, zIndex: 1000 }), display: 'flex', alignItems: 'center', gap: 10, padding: '8px 18px 8px 8px', borderRadius: 999, border: 0, cursor: 'pointer',
     background: THEMES.light.me, color: '#fff', boxShadow: '0 10px 30px rgba(96,85,245,.45)', fontFamily: 'inherit', textDecoration: 'none' };
   const inner = <>
     <PersonaAvatar name={name || '我'} avatar={avatar} size={40} />

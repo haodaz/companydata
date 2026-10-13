@@ -120,6 +120,11 @@ const HUB_CSS = `
 .hub-stat span { font-size: 10.5px; color: rgba(255,255,255,.5); letter-spacing: .1em; }
 .hub-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; max-width: 560px; }
 .hub-skills span { padding: 3px 10px; border-radius: 999px; font-size: 12px; color: rgba(255,255,255,.78); border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.04); }
+.hub-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 22px; position: relative; z-index: 3; }
+.hub-actions + .hub-portals { margin-top: 12px; }
+.hub-3d { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; color: #fff; font-size: 13.5px; font-weight: 700; text-decoration: none; white-space: nowrap;
+  background: linear-gradient(120deg, #ff5fa2, #6a5cff); box-shadow: 0 8px 24px rgba(255,95,162,.3); transition: transform .2s, box-shadow .2s; }
+.hub-3d:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,95,162,.45); }
 .hub-portals { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) repeat(3, minmax(0, .74fr)); gap: 10px; margin-top: 22px; position: relative; z-index: 3; }
 .hub-portal.main { min-height: 104px; padding: 16px 18px; border: 0; background: linear-gradient(125deg, rgba(118,100,255,.95), rgba(140,118,255,.9) 45%, rgba(30,182,206,.88));
   box-shadow: 0 14px 40px rgba(106,92,255,.42), inset 0 1px 0 rgba(255,255,255,.3); }
@@ -214,10 +219,10 @@ const HUB_CSS = `
  * 人物首页：一个人站在他自己的工作现场里。
  * 景深：远景（失焦的现场）、光束和网格、人物（带一点 3D 倾斜）、前景光斑，鼠标一动各层按远近错开。
  */
-function PersonHub({ name, role, avatar, tagline, scene, origin, level, levelLabel, stats, skills, portals, top, onEnter }: {
+function PersonHub({ name, role, avatar, tagline, scene, origin, level, levelLabel, stats, skills, portals, top, actions, onEnter }: {
   name: string; role: string; avatar: string; tagline: string; scene: string; origin: React.ReactNode; level: number; levelLabel: string;
   stats: { k: string; v: number; u: string }[]; skills: string[]; portals: { key: Mode; label: string; icon: string; sub: string; main?: boolean }[];
-  top: React.ReactNode; onEnter: (m: Mode) => void;
+  top: React.ReactNode; actions?: React.ReactNode; onEnter: (m: Mode) => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -272,6 +277,7 @@ function PersonHub({ name, role, avatar, tagline, scene, origin, level, levelLab
             {skills.length > 0 && <div className="hub-skills">{skills.map(c => <span key={c}>{c}</span>)}</div>}
           </div>
         </div>
+        {actions && <div className="hub-actions">{actions}</div>}
         <div className="hub-portals">
           {portals.map((x, i) => (
             <button key={x.key} className={`hub-portal${x.main ? ' main' : ''}${i === 0 ? ' pulse' : ''}`} onClick={() => onEnter(x.key)}>
@@ -1015,12 +1021,15 @@ function castOf(space: any, sim: Sim | null) {
           top={<>
             <button className="hub-ghost" onClick={() => router.push(exp ? '/lab/gallery' : '/lab/spaces')}><Ico n="back" s={14} />{exp ? '体验百业' : '全部空间'}</button>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              {/* 给自家的数字职人起名字：只有自己看得到 */}
-              {!guest && <NicknameEditor dark value={nicks[String(id)] || ''} original={profile.name || ''} onSave={n => setNickname(String(id), n)} />}
-              {beta3dForSpace(String(id)) && <a className="hub-ghost" href={`/lab/beta/3d/${beta3dForSpace(String(id))!.key}`} style={{ textDecoration: 'none', color: '#fff', border: 0, background: 'linear-gradient(120deg,#ff5fa2,#6a5cff)' }}>走进{beta3dForSpace(String(id))!.title} · 3D BETA</a>}
               {jd.url && !exp && <a className="hub-ghost" href={jd.url} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>JD 原文 ↗</a>}
               {!exp && <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="hub-ghost">删除空间</button></Popconfirm>}
             </div>
+          </>}
+          // 操作收在大按钮上面一行：名字（默认亮出来，能改，只有自己看得到）· 走进 3D ·（右）和我聊
+          actions={<>
+            {!guest && <NicknameEditor dark showName value={nicks[String(id)] || ''} original={profile.name || ''} onSave={n => setNickname(String(id), n)} />}
+            {beta3dForSpace(String(id)) && <a className="hub-3d" href={`/lab/beta/3d/${beta3dForSpace(String(id))!.key}`}>走进{beta3dForSpace(String(id))!.title} · 3D BETA</a>}
+            {!guest && <span style={{ marginLeft: 'auto' }}><ChatLauncher inline href={`/lab/${id}/chat`} name={nicks[String(id)] || profile.name} avatar={profile.avatar} /></span>}
           </>}
         />
       )}
@@ -1320,7 +1329,7 @@ function castOf(space: any, sim: Sim | null) {
       )}
 
       {/* ── 和我聊：数字职人聊这一行（知识来自平方知识图谱）。考核 / 走一天时不出现（考核不观摩），受邀老师傅也不出现 ── */}
-      {!guest && !isDay && mode !== 'solve' && <ChatLauncher href={`/lab/${id}/chat`} name={profile.name} avatar={profile.avatar} bottom={!mode ? 200 : 22} />}
+      {!guest && !isDay && mode && mode !== 'solve' && <ChatLauncher href={`/lab/${id}/chat`} name={nicks[String(id)] || profile.name} avatar={profile.avatar} />}
 
       {/* ── 职业地图（职业探索空间） ── */}
       {mode === 'career' && jd.career && <CareerPanel career={jd.career} onTry={() => setMode('test')} />}

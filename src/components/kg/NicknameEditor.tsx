@@ -1,9 +1,10 @@
 'use client';
 
-/** 给自家数字职人起名字：小铅笔 → 输入框（回车保存，清空 = 用回原名）。名字只给本人看 */
+/** 给自家数字职人起名字：小铅笔 → 输入框（回车保存，清空 = 用回原名）。名字只给本人看
+ *  showName：默认就把名字亮出来（起过的名字 / 原名），旁边一个 ✎ 改名字 */
 import React, { useState } from 'react';
 
-export function NicknameEditor({ value, original, onSave, dark = false }: { value: string; original: string; onSave: (n: string) => Promise<any>; dark?: boolean }) {
+export function NicknameEditor({ value, original, onSave, dark = false, showName = false }: { value: string; original: string; onSave: (n: string) => Promise<any>; dark?: boolean; showName?: boolean }) {
   const [editing, setEditing] = useState(false);
   const [v, setV] = useState(value);
   const [busy, setBusy] = useState(false);
@@ -13,6 +14,14 @@ export function NicknameEditor({ value, original, onSave, dark = false }: { valu
     try { await onSave(v.trim()); setEditing(false); } catch (e: any) { setErr(e.message); } finally { setBusy(false); }
   };
   const ink = dark ? 'rgba(255,255,255,.75)' : '#6055f5';
+  if (!editing && showName) return (
+    <button onClick={() => { setV(value); setEditing(true); }} title="给 TA 起个名字（只有你看得到）"
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 10, height: 40, padding: '0 14px 0 16px', borderRadius: 999, cursor: 'pointer', fontFamily: 'inherit', whiteSpace: 'nowrap',
+        border: `1px solid ${dark ? 'rgba(255,255,255,.22)' : 'rgba(96,85,245,.25)'}`, background: dark ? 'rgba(255,255,255,.08)' : 'rgba(96,85,245,.06)', color: dark ? '#fff' : '#1f2233' }}>
+      <span style={{ fontSize: 15, fontWeight: 800, letterSpacing: '.02em' }}>{value || original}</span>
+      <span style={{ fontSize: 12, color: ink, opacity: .85 }}>✎ {value ? '改名字' : '给 TA 起个名字'}</span>
+    </button>
+  );
   if (!editing) return (
     <button onClick={() => { setV(value); setEditing(true); }} title="给 TA 起个名字（只有你看得到）"
       style={{ border: 0, background: dark ? 'rgba(255,255,255,.1)' : 'rgba(96,85,245,.08)', color: ink, borderRadius: 999, padding: '4px 10px', fontSize: 12, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', letterSpacing: 0 }}>
