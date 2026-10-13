@@ -15,7 +15,7 @@ import { linksOf } from '@/lib/entity-store';
 import { orIlike } from '@/lib/pg-filter';
 import { SALARY_YEAR_LABELS, SALARY_YEARS, SALARY_COUNTRIES, SALARY_CN_REGIONS, CAREER_CATEGORY_LABELS } from '@/lib/occupation-fields';
 
-export interface Persona { name: string; role: string; avatar?: string | null; tagline?: string | null; years?: string; workplace?: string; personality?: string; voice?: string; story?: string }
+export interface Persona { nickname?: string | null; name: string; role: string; avatar?: string | null; tagline?: string | null; years?: string; workplace?: string; personality?: string; voice?: string; story?: string }
 /** ref：点来源时右侧资料面板要展示的实体（职业的某一节 / 岗位 / 企业 / 标准 / 典型任务） */
 export interface SourceRef { kind: 'occupation' | 'job' | 'company' | 'standard' | 'task'; id: number; section?: 'intro' | 'graph' | 'salary' | 'context' | 'jobs' }
 export interface ChatSource { id: string; type: 'job' | 'standard' | 'task' | 'data' | 'company'; title: string; url?: string | null; ref?: SourceRef }
@@ -162,7 +162,7 @@ export async function resolvePersona(occ: any, space?: any): Promise<Persona> {
 export async function chatReply(args: { occ: any; persona: Persona; knowledge: { text: string; sources: ChatSource[] }; history: ChatMessage[]; question: string; model?: string }) {
   const { occ, persona, knowledge, history, question } = args;
   const model = args.model || CHAT_MODEL();
-  const prompt = `你是「${persona.name}」，${persona.role}${persona.years ? `，${persona.years}` : ''}${persona.workplace ? `，在${persona.workplace}` : ''}。你是平台上「${occ.name}」这一行的数字职人，正在跟来了解这一行的人（多半是学生、想转行的人）面对面聊天。
+  const prompt = `${persona.nickname ? `对方给你起了个名字叫「${persona.nickname}」（你原来的代号是 ${persona.name}），聊天里就用「${persona.nickname}」自称，带着被起名字的亲近感。\n` : ''}你是「${persona.nickname || persona.name}」，${persona.role}${persona.years ? `，${persona.years}` : ''}${persona.workplace ? `，在${persona.workplace}` : ''}。你是平台上「${occ.name}」这一行的数字职人，正在跟来了解这一行的人（多半是学生、想转行的人）面对面聊天。
 ${persona.personality ? `性格：${persona.personality}\n` : ''}${persona.voice ? `说话方式：${persona.voice}\n` : ''}${persona.story ? `你的入行故事：${persona.story}\n` : ''}${persona.tagline ? `你常说：${persona.tagline}\n` : ''}
 怎么聊：
 - 铁律：**绝对不编造**。你说的每一个事实——薪资、年限、时间点、流程步骤、操作参数、检查点、常见失误、公司、岗位、城市、标准、证书、人名——都必须来自下面「平方知识库」，并在那句话末尾标来源编号，如 [J2]、[S1]、[D3]、[T4]。
@@ -177,7 +177,7 @@ ${persona.personality ? `性格：${persona.personality}\n` : ''}${persona.voice
 ${knowledge.text}
 ——资料完——
 
-${history.slice(-10).map(m => `${m.role === 'user' ? '对方' : persona.name}：${m.content}`).join('\n')}
+${history.slice(-10).map(m => `${m.role === 'user' ? '对方' : persona.nickname || persona.name}：${m.content}`).join('\n')}
 对方：${question}
 
 返回 JSON：{ "reply": 你的回答（含来源编号）, "suggestions": [三个追问] }`;
@@ -205,7 +205,7 @@ ${history.slice(-10).map(m => `${m.role === 'user' ? '对方' : persona.name}：
 
 /** 开场白：职人主动打招呼 + 3 个起手问题（不调模型，秒开） */
 export function opening(occ: any, persona: Persona, openJobs?: number) {
-  const hello = `${persona.tagline ? `${persona.tagline.replace(/[。！!.]$/, '')}。` : ''}我是${persona.name}，${persona.role}${persona.years ? `，${persona.years}` : ''}。想了解${occ.name}这一行？薪资、怎么入行、每天干什么、现在哪儿在招${openJobs ? `（平方岗位库里眼下有 ${openJobs} 个在招）` : ''}，随便问。`;
+  const hello = `${persona.tagline ? `${persona.tagline.replace(/[。！!.]$/, '')}。` : ''}我是${persona.nickname ? `${persona.nickname}（${persona.name}）` : persona.name}，${persona.role}${persona.years ? `，${persona.years}` : ''}。想了解${occ.name}这一行？薪资、怎么入行、每天干什么、现在哪儿在招${openJobs ? `（平方岗位库里眼下有 ${openJobs} 个在招）` : ''}，随便问。`;
   return { hello, suggestions: [`${occ.name}一天都在忙什么？`, '刚入行能拿多少钱，几年能涨上去？', '现在哪些公司在招，要什么条件？'] };
 }
 

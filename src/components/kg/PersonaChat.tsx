@@ -63,12 +63,12 @@ export function PersonaAvatar({ name, avatar, size, ring = '#fff' }: { name: str
     : <div style={{ width: size, height: size, borderRadius: '50%', background: THEMES.light.me, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: size * 0.42, flexShrink: 0 }}>{name.slice(0, 1)}</div>;
 }
 
-export function ChatBody({ chat, theme = 'light', fallbackName, onOpen, activeId }: { chat: ReturnType<typeof usePersonaChat>; theme?: 'dark' | 'light'; fallbackName?: string; onOpen?: (s: ChatSource) => void; activeId?: string | null }) {
+export function ChatBody({ chat, theme = 'light', fallbackName, onOpen, activeId, displayName }: { chat: ReturnType<typeof usePersonaChat>; theme?: 'dark' | 'light'; fallbackName?: string; onOpen?: (s: ChatSource) => void; activeId?: string | null; displayName?: string }) {
   const C = THEMES[theme];
   const [input, setInput] = useState('');
   const listRef = useRef<HTMLDivElement>(null);
   const { meta, msgs, sugs, busy, err, ask } = chat;
-  const name = meta?.persona.name || fallbackName || '我';
+  const name = displayName || meta?.persona.name || fallbackName || '我';
   useEffect(() => { listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' }); }, [msgs, busy]);
   const send = (q: string) => { if (!q.trim()) return; setInput(''); ask(q); };
 

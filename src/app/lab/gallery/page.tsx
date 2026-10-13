@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { App } from 'antd';
 import { familyOf } from '@/lib/career-family';
 import { featuredIndex } from '@/lib/lab-featured';
+import { useNicknames } from '@/components/kg/useNicknames';
 
 /**
  * 体验百业 · 体验馆：所有已发布的职业空间，像应用商店一样摆出来，点开就玩。
@@ -38,6 +39,7 @@ export default function GalleryPage() {
   const router = useRouter();
   const { message } = App.useApp();
   const [spaces, setSpaces] = useState<any[] | null>(null);
+  const { map: nicks } = useNicknames();   // 自己给数字职人起的名字（只有自己看得到）
   const [err, setErr] = useState('');
   const [q, setQ] = useState('');
   const [fam, setFam] = useState('');
@@ -132,7 +134,7 @@ export default function GalleryPage() {
                     {p.avatar && <Image src={p.avatar} alt="" width={58} height={58} sizes="58px" />}
                     <div style={{ minWidth: 0, textShadow: '0 1px 6px rgba(0,0,0,.5)' }}>
                       <div style={{ fontSize: 17, fontWeight: 800, lineHeight: 1.3 }}>{p.role || jd.career?.profession || jd.title}</div>
-                      <div style={{ fontSize: 12.5, opacity: .85, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name ? `${p.name} 带你上岗` : jd.company}</div>
+                      <div style={{ fontSize: 12.5, opacity: .85, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{nicks[s.id] || p.name ? `${nicks[s.id] || p.name} 带你上岗` : jd.company}</div>
                     </div>
                   </div>
                 </div>

@@ -10,6 +10,8 @@ import { useUser } from '@/lib/user-context';
 import { visitorIds } from '@/lib/lab-cert';
 import { SimRunner, SimStage, TraceCompare, enterFullscreen } from '@/components/lab/SimRunner';
 import { ChatLauncher } from '@/components/kg/PersonaChat';
+import { useNicknames } from '@/components/kg/useNicknames';
+import { NicknameEditor } from '@/components/kg/NicknameEditor';
 import { traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { GENERIC_CHAPTER_RUBRIC, INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tzLabel, type InterviewTurn, type RubricItem } from '@/lib/skill-lab';
 
@@ -624,6 +626,7 @@ function castOf(space: any, sim: Sim | null) {
   const chapterTrace = (chapter?.expert_trace && Object.keys(chapter.expert_trace).length ? chapter.expert_trace : null) || skill?.expert_trace || null;
   // 多段的空间：考 / 教都进「一天」页（左时间轴、右整段内容）
   // 考 / 教 / 你教我都先落在「一天」页（只有一段的老空间也一样，时间轴上就一段）；没有操作台的纯文字老空间走老版
+  const { map: nicks, setNickname } = useNicknames();
   const isDay = (mode === 'test' || mode === 'teach' || mode === 'learn') && !!sim && chapters.length >= 1;
   // 这一段的评分标准：第 1 段用空间的，后面的用章节自己的（没有就用通用四项），和评分接口一致
   const chapterRubric: RubricItem[] = !chapter || chapter.seq === 1 || !chapter.id ? (space?.rubric || []) : (Array.isArray(chapter.rubric) && chapter.rubric.length ? chapter.rubric : GENERIC_CHAPTER_RUBRIC);
@@ -1003,7 +1006,7 @@ function castOf(space: any, sim: Sim | null) {
       {/* ══════ 人物首页：一个人站在他的工作现场里 ══════ */}
       {!mode && (
         <PersonHub
-          name={profile.name || 'AI CORE'} role={profile.role || jd.title || ''} avatar={profile.avatar || ''} tagline={profile.tagline || ''}
+          name={nicks[String(id)] || profile.name || 'AI CORE'} role={profile.role || jd.title || ''} avatar={profile.avatar || ''} tagline={profile.tagline || ''}
           scene={sim?.art?.cover || ''} level={lv.level} levelLabel={lv.label} stats={hubStats} skills={(profile.capabilities || []).slice(0, 4)} portals={portals}
           onEnter={m => (exp && m === 'learn' ? enterTeach() : setMode(m))}
           origin={draft
@@ -1011,7 +1014,9 @@ function castOf(space: any, sim: Sim | null) {
             : <>学自 <b className="hub-strong">{skill.expert_name}</b>（{skill.expert_location}）</>}
           top={<>
             <button className="hub-ghost" onClick={() => router.push(exp ? '/lab/gallery' : '/lab/spaces')}><Ico n="back" s={14} />{exp ? '体验百业' : '全部空间'}</button>
-            <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              {/* 给自家的数字职人起名字：只有自己看得到 */}
+              {!guest && <NicknameEditor dark value={nicks[String(id)] || ''} original={profile.name || ''} onSave={n => setNickname(String(id), n)} />}
               {beta3dForSpace(String(id)) && <a className="hub-ghost" href={`/lab/beta/3d/${beta3dForSpace(String(id))!.key}`} style={{ textDecoration: 'none', color: '#fff', border: 0, background: 'linear-gradient(120deg,#ff5fa2,#6a5cff)' }}>走进{beta3dForSpace(String(id))!.title} · 3D BETA</a>}
               {jd.url && !exp && <a className="hub-ghost" href={jd.url} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>JD 原文 ↗</a>}
               {!exp && <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="hub-ghost">删除空间</button></Popconfirm>}
