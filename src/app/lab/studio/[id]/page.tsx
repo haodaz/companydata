@@ -203,6 +203,7 @@ export default function StudioPage() {
         </div>
         <div style={{ flex: 1 }} />
         <button className="lab-btn ghost sm" onClick={() => router.push('/lab/assets')}>素材库</button>
+        <button className="lab-btn ghost sm" onClick={() => router.push(`/lab/studio/review?space=${id}`)}>示范评审</button>
         <select className="lab-input" value={genModel} onChange={e => setGenModel(e.target.value)} title="生成用的模型" style={{ width: 'auto', padding: '6px 10px', fontSize: 12.5, borderRadius: 10 }}>
           {MODEL_OPTIONS.map(m => <option key={m.id} value={m.id}>{m.label}{m.badge ? ` ${m.badge}` : ''}</option>)}
         </select>
