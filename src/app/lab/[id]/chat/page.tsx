@@ -12,6 +12,12 @@ import { EntityPanel } from '@/components/kg/EntityPanel';
 import { useNicknames } from '@/components/kg/useNicknames';
 import { NicknameEditor } from '@/components/kg/NicknameEditor';
 
+// 原来的「职业地图」「我的行当」两个入口改成这里的快捷提问：不让人干读一大页，由职人带着讲（答案照样逐句带出处）
+const SHORTCUTS = [
+  { label: '职业地图', q: '带我看看这一行的职业地图：从入门到资深怎么一步步走，再往上、往外还能去哪？' },
+  { label: '我的行当', q: '说说我们这个行当：现在谁在招人、在哪些城市，上下游都是哪些公司？' },
+];
+
 export default function PersonaChatPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -66,7 +72,7 @@ export default function PersonaChatPage() {
     <div style={{ position: 'fixed', top, left: 0, right: 0, bottom: 0, zIndex: 5, display: 'flex', flexDirection: narrow ? 'column' : 'row', background: '#f6f7fb', color: '#1f2233' }}>
       {!(narrow && active) && stage}
       <div style={{ width: narrow ? '100%' : active ? (wide ? '36%' : '44%') : 'min(520px, 44vw)', flex: narrow ? 1 : undefined, transition: 'width .35s ease', minHeight: 0, display: narrow && active ? 'none' : 'flex', flexDirection: 'column', background: '#fff', borderLeft: narrow ? 0 : '1px solid #e8eaf2', boxShadow: '-12px 0 40px rgba(31,34,51,.05)' }}>
-        <div style={{ flex: 1, minHeight: 0 }}><ChatBody chat={chat} theme="light" onOpen={setActive} activeId={active?.id} displayName={nickname || undefined} /></div>
+        <div style={{ flex: 1, minHeight: 0 }}><ChatBody chat={chat} theme="light" onOpen={setActive} activeId={active?.id} displayName={nickname || undefined} shortcuts={SHORTCUTS} /></div>
       </div>
       {active && <div style={{ flex: 1, minWidth: 0, minHeight: 0, borderLeft: '1px solid #e8eaf2', boxShadow: '-12px 0 40px rgba(31,34,51,.06)', animation: 'kgSlideIn .35s ease' }}>
         <style>{`@keyframes kgSlideIn { from { transform: translateX(40px); opacity: 0 } to { transform: none; opacity: 1 } }`}</style>

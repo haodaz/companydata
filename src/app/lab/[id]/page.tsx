@@ -25,7 +25,7 @@ const MODES: { key: Mode; label: string; icon: string }[] = [
   { key: 'learn', label: '你教我', icon: 'learn' },
   { key: 'solve', label: '问问我', icon: 'solve' },
   { key: 'ledger', label: '我被用在哪', icon: 'ledger' },
-  { key: 'eco', label: '我的行当', icon: 'eco' },
+  // 我的行当 / 职业地图不再单列入口：放进「和我聊」当快捷提问（有 AI 陪着讲，不让人干读一大页）
   { key: 'jd', label: '我的来历', icon: 'jd' },
 ];
 /** 体验视角里不出现的入口：老师傅来教、账本、JD 来历都是工厂侧的 */
@@ -38,6 +38,7 @@ function Ico({ n, s = 20 }: { n: string; s?: number }) {
     test: <><circle cx="12" cy="12" r="8.5" /><circle cx="12" cy="12" r="4.5" /><circle cx="12" cy="12" r="1" fill="currentColor" /></>,
     learn: <><path d="M3 5.5h6a3 3 0 0 1 3 3V20a2.4 2.4 0 0 0-2.4-2.4H3z" /><path d="M21 5.5h-6a3 3 0 0 0-3 3V20a2.4 2.4 0 0 1 2.4-2.4H21z" /></>,
     solve: <path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12z" />,
+    chat: <><path d="M4 5.5h16v10H10l-4.5 4v-4H4z" /><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" strokeWidth="2.4" /></>,
     ledger: <><circle cx="12" cy="12" r="8.5" /><path d="M3.5 12h17M12 3.5c2.6 2.4 2.6 14.6 0 17M12 3.5c-2.6 2.4-2.6 14.6 0 17" /></>,
     eco: <><circle cx="5.5" cy="6.5" r="2.3" /><circle cx="18.5" cy="6.5" r="2.3" /><circle cx="12" cy="18" r="2.3" /><path d="M7.6 7.6 10.6 16M16.4 7.6 13.4 16M7.8 6.5h8.4" /></>,
     jd: <><path d="M6.5 3h7.5l4.5 4.5V21h-12z" /><path d="M14 3v4.5h4.5M9.5 12.5h6M9.5 16.5h6" /></>,
@@ -125,15 +126,21 @@ const HUB_CSS = `
 .hub-3d { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; color: #fff; font-size: 13.5px; font-weight: 700; text-decoration: none; white-space: nowrap;
   background: linear-gradient(120deg, #ff5fa2, #6a5cff); box-shadow: 0 8px 24px rgba(255,95,162,.3); transition: transform .2s, box-shadow .2s; }
 .hub-3d:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,95,162,.45); }
-.hub-portals { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) repeat(3, minmax(0, .74fr)); gap: 10px; margin-top: 22px; position: relative; z-index: 3; }
-.hub-portal.main { min-height: 104px; padding: 16px 18px; border: 0; background: linear-gradient(125deg, rgba(118,100,255,.95), rgba(140,118,255,.9) 45%, rgba(30,182,206,.88));
-  box-shadow: 0 14px 40px rgba(106,92,255,.42), inset 0 1px 0 rgba(255,255,255,.3); }
-.hub-portal.main .ic { color: #fff; }
+.hub-portals { display: grid; grid-template-columns: var(--pc, repeat(4, minmax(0, 1fr)) repeat(3, minmax(0, .74fr))); gap: 10px; margin-top: 22px; position: relative; z-index: 3; }
+/* 只有第一个（和我聊）是实心渐变；其余主按钮是同尺寸的毛玻璃，顶上一道细色线 + 彩色图标——一个焦点，不是一排蓝 */
+.hub-portal.main { min-height: 104px; padding: 16px 18px; }
 .hub-portal.main b { font-size: 20px; }
-.hub-portal.main span { color: rgba(255,255,255,.82); font-size: 12.5px; }
-.hub-portal.main::after { color: rgba(255,255,255,.75); font-size: 18px; }
-.hub-portal.main:hover { box-shadow: 0 20px 52px rgba(106,92,255,.6), inset 0 1px 0 rgba(255,255,255,.35); }
-.hub-portal.main.pulse { animation: hub-pulse 3.2s ease-in-out infinite; }
+.hub-portal.main span { font-size: 12.5px; }
+.hub-portal.main::after { font-size: 18px; }
+.hub-portal.main:not(.solid)::before { content: ''; position: absolute; left: 18px; right: 18px; top: -1px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, #8c7eff, #4fe0f2); opacity: .75; }
+.hub-portal.main:not(.solid) .ic { color: #b3a8ff; }
+.hub-portal.solid { border: 0; background: linear-gradient(125deg, rgba(118,100,255,.95), rgba(140,118,255,.9) 45%, rgba(30,182,206,.88));
+  box-shadow: 0 14px 40px rgba(106,92,255,.42), inset 0 1px 0 rgba(255,255,255,.3); }
+.hub-portal.solid .ic { color: #fff; }
+.hub-portal.solid span { color: rgba(255,255,255,.85); }
+.hub-portal.solid::after { color: rgba(255,255,255,.75); }
+.hub-portal.solid:hover { box-shadow: 0 20px 52px rgba(106,92,255,.6), inset 0 1px 0 rgba(255,255,255,.35); }
+.hub-portal.solid.pulse { animation: hub-pulse 3.2s ease-in-out infinite; }
 @keyframes hub-pulse { 50% { box-shadow: 0 14px 54px rgba(106,92,255,.72), 0 0 0 4px rgba(140,126,255,.18), inset 0 1px 0 rgba(255,255,255,.3); } }
 .hub-portal { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 14px 16px 14px; border-radius: 16px; cursor: pointer; text-align: left; font-family: inherit;
   background: linear-gradient(160deg, rgba(255,255,255,.16), rgba(255,255,255,.06)); border: 1px solid rgba(255,255,255,.22); color: #fff;
@@ -156,7 +163,7 @@ const HUB_CSS = `
   .hub-portals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hub-portal.main { min-height: 86px; }
 }
-@media (prefers-reduced-motion: reduce) { .hub-bg img, .hub-fig .float, .hub-beam, .hub-bokeh i, .hub-dust i, .hub-portal.main.pulse { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { .hub-bg img, .hub-fig .float, .hub-beam, .hub-bokeh i, .hub-dust i, .hub-portal.solid.pulse { animation: none !important; } }
 
 /* ── 浅色：亮环境、投影、学校一体机。现场是白天的现场，玻璃是亮的，字是深的 ── */
 .lab[data-theme="light"] .hub { background: #eef0fb; color: var(--ink); }
@@ -184,11 +191,11 @@ const HUB_CSS = `
 .lab[data-theme="light"] .hub-stat b small, .lab[data-theme="light"] .hub-stat span { color: var(--ink3); }
 .lab[data-theme="light"] .hub-skills span { color: var(--ink2); border-color: rgba(106,92,255,.22); background: rgba(255,255,255,.7); }
 .lab[data-theme="light"] .hub-ghost { background: rgba(255,255,255,.78); border-color: rgba(106,92,255,.2); color: var(--ink2); }
-.lab[data-theme="light"] .hub-portal:not(.main) { background: linear-gradient(160deg, rgba(255,255,255,.9), rgba(255,255,255,.66)); border-color: rgba(106,92,255,.2); color: var(--ink);
+.lab[data-theme="light"] .hub-portal:not(.solid) { background: linear-gradient(160deg, rgba(255,255,255,.9), rgba(255,255,255,.66)); border-color: rgba(106,92,255,.2); color: var(--ink);
   box-shadow: inset 0 1px 0 #fff, 0 10px 28px rgba(88,76,220,.12); }
-.lab[data-theme="light"] .hub-portal:not(.main) .ic { color: var(--v); }
-.lab[data-theme="light"] .hub-portal:not(.main) span { color: var(--ink3); }
-.lab[data-theme="light"] .hub-portal:not(.main)::after { color: rgba(106,92,255,.4); }
+.lab[data-theme="light"] .hub-portal:not(.solid) .ic { color: var(--v); }
+.lab[data-theme="light"] .hub-portal:not(.solid) span { color: var(--ink3); }
+.lab[data-theme="light"] .hub-portal:not(.solid)::after { color: rgba(106,92,255,.4); }
 .lab[data-theme="light"] .sub-head { background: rgba(255,255,255,.86) radial-gradient(700px 160px at 12% -60%, rgba(106,92,255,.16), transparent 70%); border-bottom-color: var(--line);
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
 .lab[data-theme="light"] .sub-head-in, .lab[data-theme="light"] .sub-now { color: var(--ink); }
@@ -221,7 +228,7 @@ const HUB_CSS = `
  */
 function PersonHub({ name, role, avatar, tagline, scene, origin, level, levelLabel, stats, skills, portals, top, actions, onEnter }: {
   name: string; role: string; avatar: string; tagline: string; scene: string; origin: React.ReactNode; level: number; levelLabel: string;
-  stats: { k: string; v: number; u: string }[]; skills: string[]; portals: { key: Mode; label: string; icon: string; sub: string; main?: boolean }[];
+  stats: { k: string; v: number; u: string }[]; skills: string[]; portals: { key: Mode | 'chat'; label: string; icon: string; sub: string; main?: boolean; go?: () => void }[];
   top: React.ReactNode; actions?: React.ReactNode; onEnter: (m: Mode) => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -278,9 +285,10 @@ function PersonHub({ name, role, avatar, tagline, scene, origin, level, levelLab
           </div>
         </div>
         {actions && <div className="hub-actions">{actions}</div>}
-        <div className="hub-portals">
+        {/* 列数跟着按钮个数走（主按钮宽、次按钮窄）；窄屏的两列规则照样生效 */}
+        <div className="hub-portals" style={{ ['--pc' as string]: [portals.filter(x => x.main).length && `repeat(${portals.filter(x => x.main).length}, minmax(0, 1fr))`, portals.filter(x => !x.main).length && `repeat(${portals.filter(x => !x.main).length}, minmax(0, .74fr))`].filter(Boolean).join(' ') }}>
           {portals.map((x, i) => (
-            <button key={x.key} className={`hub-portal${x.main ? ' main' : ''}${i === 0 ? ' pulse' : ''}`} onClick={() => onEnter(x.key)}>
+            <button key={x.key} className={`hub-portal${x.main ? ' main' : ''}${i === 0 && x.main ? ' solid pulse' : ''}`} onClick={() => (x.go ? x.go() : onEnter(x.key as Mode))}>
               <span className="ic"><Ico n={x.icon} s={x.main ? 26 : 20} /></span>
               <b>{x.label}</b>
               <span>{x.sub}</span>
@@ -863,7 +871,7 @@ function castOf(space: any, sim: Sim | null) {
 
   // 首页上的数：都是账本里真有的
   const draft = !skill || skill.source === 'jd-draft';
-  const modeList = (jd.career ? [CAREER_MODE, ...MODES] : MODES).filter(m => !hiddenInExp(m.key));
+  const modeList = MODES.filter(m => !hiddenInExp(m.key));
   const hubStats = [
     { k: '考过', v: stat[0].v, u: '人' },
     { k: '学到', v: stat[1].v, u: '条判断' },
@@ -871,19 +879,18 @@ function castOf(space: any, sim: Sim | null) {
     { k: '服务', v: served, u: '人次' },
     { k: '跨越', v: places, u: '地' },
   ];
-  const allPortals: { key: Mode; label: string; icon: string; sub: string; main?: boolean }[] = [
+  const allPortals: { key: Mode | 'chat'; label: string; icon: string; sub: string; main?: boolean; go?: () => void }[] = [
+    // 和我聊排第一：受邀来教的老师傅不出现
+    ...(!guest ? [{ key: 'chat' as const, label: '和我聊', icon: 'chat', sub: '聊聊这一行 · 每句有出处', main: true, go: () => router.push(`/lab/${id}/chat`) }] : []),
     { key: 'teach', label: '我教你', icon: 'play', sub: skill?.expert_trace && sim ? '看我把这一天走一遍' : '先让老师傅教我一遍', main: true },
     { key: 'test', label: '考考你', icon: 'test', sub: stat[0].v ? `${stat[0].v} 人考过 · 换你上手` : '换你上手走一遍', main: true },
     { key: 'learn', label: '你教我', icon: 'learn', sub: draft ? '等第一位老师傅' : `学自 ${skill.expert_name}`, main: true },
     { key: 'solve', label: '问问我', icon: 'solve', sub: stat[2].v ? `解过 ${stat[2].v} 次` : '把真实问题交给我', main: true },
     { key: 'ledger', label: '我被用在哪', icon: 'ledger', sub: served ? `${places} 地 · ${served} 人次` : '每一次调用都记账' },
-    { key: 'eco', label: '我的行当', icon: 'eco', sub: '同行 · 在招 · 上下游' },
-    // 职业探索空间只有职业地图；从 JD 建的空间补了职业地图（精选空间，scripts/lab-career-maps.mts）就两个都有
-    ...(jd.career ? [{ key: 'career' as Mode, label: '职业地图', icon: 'career', sub: '这一行在做什么' }] : []),
     ...(jd.kind !== 'career' ? [{ key: 'jd' as Mode, label: '我的来历', icon: 'jd', sub: jd.company || '岗位 JD' }] : []),
   ];
   // 「你教我」在体验视角也有（专业数采）：点了领一张邀请票进去示范，之后照样过示范评审
-  const portals = allPortals.filter(p => !hiddenInExp(p.key) || p.key === 'learn');
+  const portals = allPortals.filter(p => p.key === 'chat' || p.key === 'learn' || !hiddenInExp(p.key));
 
   // 你教我：横幅下方的那一块——请老师傅把这一天走一遍（留名 → 逐段示范 → 每段走完接受追问 → 吸收）
   const walkedLabels = Object.values(chTraces).map(x => x.label);
@@ -1025,11 +1032,10 @@ function castOf(space: any, sim: Sim | null) {
               {!exp && <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="hub-ghost">删除空间</button></Popconfirm>}
             </div>
           </>}
-          // 操作收在大按钮上面一行：名字（默认亮出来，能改，只有自己看得到）· 走进 3D ·（右）和我聊
+          // 操作收在大按钮上面一行：名字（默认亮出来，能改，只有自己看得到）· 走进 3D；和我聊是第一个大按钮
           actions={<>
             {!guest && <NicknameEditor dark showName value={nicks[String(id)] || ''} original={profile.name || ''} onSave={n => setNickname(String(id), n)} />}
             {beta3dForSpace(String(id)) && <a className="hub-3d" href={`/lab/beta/3d/${beta3dForSpace(String(id))!.key}`}>走进{beta3dForSpace(String(id))!.title} · 3D BETA</a>}
-            {!guest && <span style={{ marginLeft: 'auto' }}><ChatLauncher inline href={`/lab/${id}/chat`} name={nicks[String(id)] || profile.name} avatar={profile.avatar} /></span>}
           </>}
         />
       )}

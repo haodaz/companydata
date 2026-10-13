@@ -31,11 +31,15 @@ export function usePersonaChat(endpoint: string, extraBody: Record<string, any> 
   const qs = qsOf(extraBody);
   useEffect(() => {
     if (!enabled || meta || err) return;
+    // 参数变了（比如昵称刚读出来）会再拉一次：只认最后一次，早回来的那次作废，不然它会把已经发出去的提问冲掉
+    let stale = false;
     fetch(`${endpoint}${qs ? `?${qs}` : ''}`).then(r => r.json()).then(j => {
+      if (stale) return;
       if (!j.success) { setErr(j.error || '暂时聊不了'); return; }
       setMeta({ persona: j.persona, occupation: j.occupation, scene: j.scene, title: j.title });
-      setMsgs([{ role: 'assistant', content: j.hello }]); setSugs(j.suggestions || []);
-    }).catch(e => setErr(e.message));
+      setMsgs(m => m.length ? m : [{ role: 'assistant', content: j.hello }]); setSugs(s => s.length ? s : (j.suggestions || []));
+    }).catch(e => { if (!stale) setErr(e.message); });
+    return () => { stale = true; };
   }, [enabled, meta, err, endpoint, qs]);
 
   const ask = async (q: string) => {
@@ -63,7 +67,8 @@ export function PersonaAvatar({ name, avatar, size, ring = '#fff' }: { name: str
     : <div style={{ width: size, height: size, borderRadius: '50%', background: THEMES.light.me, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: size * 0.42, flexShrink: 0 }}>{name.slice(0, 1)}</div>;
 }
 
-export function ChatBody({ chat, theme = 'light', fallbackName, onOpen, activeId, displayName }: { chat: ReturnType<typeof usePersonaChat>; theme?: 'dark' | 'light'; fallbackName?: string; onOpen?: (s: ChatSource) => void; activeId?: string | null; displayName?: string }) {
+/** shortcuts：常驻的快捷提问（百业里「职业地图」「我的行当」不再单独做页面，点一下让职人带着讲），问过的收起 */
+export function ChatBody({ chat, theme = 'light', fallbackName, onOpen, activeId, displayName, shortcuts = [] }: { chat: ReturnType<typeof usePersonaChat>; theme?: 'dark' | 'light'; fallbackName?: string; onOpen?: (s: ChatSource) => void; activeId?: string | null; displayName?: string; shortcuts?: { label: string; q: string }[] }) {
   const C = THEMES[theme];
   const [input, setInput] = useState('');
   const listRef = useRef<HTMLDivElement>(null);
@@ -71,6 +76,8 @@ export function ChatBody({ chat, theme = 'light', fallbackName, onOpen, activeId
   const name = displayName || meta?.persona.name || fallbackName || '我';
   useEffect(() => { listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' }); }, [msgs, busy]);
   const send = (q: string) => { if (!q.trim()) return; setInput(''); ask(q); };
+  const asked = new Set(msgs.filter(m => m.role === 'user').map(m => m.content));
+  const shorts = shortcuts.filter(x => !asked.has(x.q));
 
   /** 回答里的 [J1] → 上标链接 */
   const render = (m: ChatMsg) => m.content.split(/(\[[JSTDCWF]\d+\])/g).map((p, i) => {
@@ -111,6 +118,10 @@ export function ChatBody({ chat, theme = 'light', fallbackName, onOpen, activeId
         ))}
         {busy && <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}><PersonaAvatar name={name} avatar={meta?.persona.avatar} size={30} ring={C.border} /><span style={{ color: C.ink3, fontSize: 13 }}>{name}在想…（会先核对资料，稍等）</span></div>}
       </div>
+      {!!shorts.length && !!meta && !busy && <div style={{ padding: '0 16px 8px', display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+        <span style={{ fontSize: 11.5, color: C.ink3, marginRight: 2 }}>快捷提问</span>
+        {shorts.map(x => <button key={x.label} onClick={() => send(x.q)} title={x.q} style={{ border: `1px solid ${C.chipInk}`, borderRadius: 999, padding: '6px 12px', fontSize: 13, fontWeight: 700, cursor: 'pointer', background: 'transparent', color: C.chipInk, fontFamily: 'inherit' }}>{x.label} →</button>)}
+      </div>}
       {!!sugs.length && !busy && <div style={{ padding: '0 16px 10px', display: 'flex', flexWrap: 'wrap', gap: 6 }}>
         {sugs.map(s => <button key={s} onClick={() => send(s)} style={{ border: 0, borderRadius: 999, padding: '7px 12px', fontSize: 13, cursor: 'pointer', background: C.chip, color: C.chipInk, fontFamily: 'inherit', textAlign: 'left' }}>{s}</button>)}
       </div>}

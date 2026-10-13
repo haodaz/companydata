@@ -14,6 +14,7 @@ import { findOccupation } from '@/lib/occupation-store';
 import { linksOf } from '@/lib/entity-store';
 import { ensureOccupationForSpace, ensureOccupationLater } from '@/lib/kg/ensure-occupation';
 import { orIlike } from '@/lib/pg-filter';
+import { matchCompanies } from '@/lib/lab-ecosystem';
 import { SALARY_YEAR_LABELS, SALARY_YEARS, SALARY_COUNTRIES, SALARY_CN_REGIONS, CAREER_CATEGORY_LABELS } from '@/lib/occupation-fields';
 
 export interface Persona { nickname?: string | null; name: string; role: string; avatar?: string | null; tagline?: string | null; years?: string; workplace?: string; personality?: string; voice?: string; story?: string }
@@ -142,6 +143,21 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
     for (const f of faqs) { const id = src('faq', `平方问答库 · ${f.question}`); L.push(`[${id}] 问：${f.question} 答：${cut(f.answer, 260)}`); }
   }
 
+  // 行当的上下游：只用「我的行当」算好缓存的环节（不在聊天里现调大模型），环节下面挂的公司全部来自平方企业库
+  if (spaceId) {
+    const { data: sp } = await supabaseAdmin.from('skill_tasks').select('profile').eq('id', spaceId).maybeSingle();
+    const chain = sp?.profile?.ecosystem?.chain;
+    if (chain?.upstream?.length || chain?.downstream?.length) {
+      const rows: string[] = [];
+      for (const [side, nodes] of [['上游', chain.upstream || []], ['下游', chain.downstream || []]] as const) {
+        for (const n of (nodes as any[]).slice(0, 4)) {
+          const firms = await matchCompanies(n.keywords || [], 3).catch(() => [] as any[]);
+          rows.push(`${side} · ${n.stage}（${cut(n.what, 40)}）${firms.length ? `：${firms.map((c: any) => `${c.name}[${src('company', c.name, null, { kind: 'company', id: c.id })}]`).join('、')}` : '：平方企业库里暂未匹配到公司'}`);
+        }
+      }
+      L.push(`\n【我的行当 · 上下游】（环节划分是平方的产业链分析，公司来自平方企业库）\n${rows.join('\n')}`);
+    }
+  }
   if (chapters.data?.length) L.push(`\n【我的一天】${(chapters.data as any[]).map(c => `${c.slot || ''} ${c.title}${c.kind === 'incident' ? '（突发）' : ''}`.trim()).join(' → ')}`);
 
   const out = { text: L.join('\n'), sources, at: Date.now() };
