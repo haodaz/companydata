@@ -89,6 +89,9 @@ ${tgtList}
     byBasis[basis] = (byBasis[basis] || 0) + 1;
     rows.push({ standard_id, space_id: spaceId, chapter_id: t.chapter_id, target: targetKey(t), clause, note: String(l.note || '').slice(0, 300), confidence: Math.max(0, Math.min(100, parseInt(l.confidence) || 0)), basis, evidence, created_by: 'lab-link-standards' });
   }
+  // 同一章里规则编号重复（两个工位用了同名规则）时只留一条，免得撞唯一键
+  const seenKey = new Set<string>();
+  for (let i = rows.length - 1; i >= 0; i--) { const k = `${rows[i].standard_id}|${rows[i].chapter_id}|${rows[i].target}`; if (seenKey.has(k)) rows.splice(i, 1); else seenKey.add(k); }
   if (!opts.dryRun) {
     await supabaseAdmin.from('standard_links').delete().eq('space_id', spaceId).eq('created_by', 'lab-link-standards');
     for (let i = 0; i < rows.length; i += 200) {
