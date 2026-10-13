@@ -4,7 +4,7 @@ import { beta3dForChapter, beta3dForSpace } from '@/lib/lab-3d-beta';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import { App, Drawer, Popconfirm } from 'antd';
+import { App, Drawer, Input, Modal, Popconfirm } from 'antd';
 import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
 import { visitorIds } from '@/lib/lab-cert';
@@ -541,11 +541,17 @@ function castOf(space: any, sim: Sim | null) {
   const [expert, setExpert] = useState({ name: '', title: '', location: '' });
   // 老师傅的信息也只填一次：记在本地，下次直接「以 xx 的身份示范」
   const [expertSaved, setExpertSaved] = useState(false);
+  // 「你教我」进来先弹一个小窗留名（姓名 / 资历 / 所在地），不埋在一堆说明文字里；关掉了可以从说明区再打开
+  const [idOpen, setIdOpen] = useState(false);
+  const [idAsked, setIdAsked] = useState(false);
   useEffect(() => { try { const e = JSON.parse(localStorage.getItem('lab:expert') || 'null'); if (e?.name && e?.location) { setExpert(e); setExpertSaved(true); } } catch { /* 读不到就空着 */ } }, []);
   const [walk, setWalk] = useState('');
   const [turns, setTurns] = useState<InterviewTurn[]>([]);
   const [reply, setReply] = useState('');
   const [learnStep, setLearnStep] = useState<0 | 1 | 2>(0); // 0 档案 · 1 走一遍 · 2 追问
+  useEffect(() => {
+    if (mode === 'learn' && space && !expertSaved && !idAsked && !(guest && taught) && learnStep !== 2) { setIdOpen(true); setIdAsked(true); }
+  }, [mode, space, expertSaved, idAsked, guest, taught, learnStep]);
   const [enough, setEnough] = useState(false);
   const [expertTrace, setExpertTrace] = useState<SimTrace | null>(null);
   /** 你教我：老师傅这一趟示范过的每一段（章节编号 → 轨迹），吸收时各段的示范存回各段 */
@@ -839,6 +845,11 @@ function castOf(space: any, sim: Sim | null) {
   // 你教我：横幅下方的那一块——请老师傅把这一天走一遍（留名 → 逐段示范 → 每段走完接受追问 → 吸收）
   const walkedLabels = Object.values(chTraces).map(x => x.label);
   const nextUnwalked = chapters.find(c => !chTraces[c.id || 'base']);
+  const saveIdentity = () => {
+    if (!expert.name.trim() || !expert.location.trim()) { message.warning('姓名（或化名）和所在地要填'); return; }
+    try { localStorage.setItem('lab:expert', JSON.stringify(expert)); } catch { /* 记不住就算了 */ }
+    setExpertSaved(true); setIdOpen(false);
+  };
   const learnTop = space ? (
     <div className="dayv-sec">
       {guest && taught ? (
@@ -879,14 +890,10 @@ function castOf(space: any, sim: Sim | null) {
               <button className="lab-btn ghost sm" onClick={() => setExpertSaved(false)}>修改</button>
             </div>
           ) : (
-            <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))' }}>
-              {field(expert.name, v => setExpert(e => ({ ...e, name: v })), '你的姓名 / 化名 *')}
-              {field(expert.title, v => setExpert(e => ({ ...e, title: v })), '资历（如 普外科主任医师 · 20 年）')}
-              {field(expert.location, v => setExpert(e => ({ ...e, location: v })), '所在地 *')}
-            </div>
+            <button className="lab-btn" onClick={() => setIdOpen(true)}>留下你的名字，开始示范</button>
           )}
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginTop: 12, flexWrap: 'wrap', fontSize: 13, color: 'var(--ink3)' }}>
-            <span>{expertSaved ? '点上面的「示范这一段」开始，从哪一段开始都行。' : '只填这一次。填好后点上面的「示范这一段」，从哪一段开始都行。'}</span>
+            <span>{expertSaved ? '点上面的「示范这一段」开始，从哪一段开始都行。' : '只填这一次，填好就能从任意一段开始示范。'}</span>
             {!guest && user && <button className="lab-btn ghost sm" disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '老师傅不在身边？发邀请链接'}</button>}
           </div>
           {walkedLabels.length > 0 && <div style={{ marginTop: 10, fontSize: 13, color: '#12a150' }}>已示范：{walkedLabels.join('、')}</div>}
@@ -941,6 +948,14 @@ function castOf(space: any, sim: Sim | null) {
     <div className="sp-root">
       <style>{HUB_CSS}</style>
 
+      <Modal open={idOpen} onCancel={() => setIdOpen(false)} onOk={saveIdentity} okText="开始示范" cancelText="稍后" title={`你教我 · ${profile.role || ''}`} width={460} destroyOnHidden>
+        <div style={{ display: 'grid', gap: 10 }}>
+          <div style={{ fontSize: 13.5, color: '#5f6680', lineHeight: 1.7 }}>按你平时的做法把这一天走一遍，每段走完会追问几句「为什么这么做」。先留个名字，技能卡上会写着手艺来自你。</div>
+          <Input size="large" autoFocus value={expert.name} onChange={e => setExpert(x => ({ ...x, name: e.target.value }))} placeholder="你的姓名 / 化名 *" />
+          <Input size="large" value={expert.title} onChange={e => setExpert(x => ({ ...x, title: e.target.value }))} placeholder="资历（如 普外科主任医师 · 20 年）" />
+          <Input size="large" value={expert.location} onChange={e => setExpert(x => ({ ...x, location: e.target.value }))} onPressEnter={saveIdentity} placeholder="所在地 *" />
+        </div>
+      </Modal>
       {/* ══════ 人物首页：一个人站在他的工作现场里 ══════ */}
       {!mode && (
         <PersonHub
@@ -1017,7 +1032,7 @@ function castOf(space: any, sim: Sim | null) {
           done={mode === 'learn' ? new Set(Object.keys(chTraces)) : undefined}
           actions={mode === 'learn' && !(guest && taught) ? (
             <button className="lab-btn" disabled={!!busy} style={{ height: 46, padding: '0 26px', fontSize: 15 }} onClick={() => {
-              if (!expert.name.trim() || !expert.location.trim()) { message.warning('先在下面留下你的姓名（或化名）和所在地'); return; }
+              if (!expert.name.trim() || !expert.location.trim()) { setIdOpen(true); return; }
               try { localStorage.setItem('lab:expert', JSON.stringify(expert)); } catch { /* 记不住就算了 */ }
               setExpertSaved(true);
               if (sim?.art) enterFullscreen();
