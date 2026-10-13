@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { App } from 'antd';
 import { familyOf } from '@/lib/career-family';
+import { featuredIndex } from '@/lib/lab-featured';
 
 /**
  * 体验百业 · 体验馆：所有已发布的职业空间，像应用商店一样摆出来，点开就玩。
@@ -29,7 +30,9 @@ const GALLERY_CSS = `
 
 /** 一整天的故事都发布了：至少三章，而且没有还在草稿里的 */
 const fullDay = (s: any) => { const c = s.chapters || {}; return c.published >= 3 && c.published === c.total; };
-const rank = (s: any) => (s.features?.bench ? 100 : 0) + (fullDay(s) ? 50 : 0) + Math.min(s.features?.benchChapters || 0, 9) * 2 + (s.chapters?.published || 0) * .5 + (s.cover ? 1 : 0);
+// 精选名单（做得特别精致的）永远在最前，按名单顺序；其余按有工位 / 完整一天 / 工位多少排
+const rank = (s: any) => { const f = featuredIndex(s.id); return f >= 0 ? 10000 - f : rawRank(s); };
+const rawRank = (s: any) => (s.features?.bench ? 100 : 0) + (fullDay(s) ? 50 : 0) + Math.min(s.features?.benchChapters || 0, 9) * 2 + (s.chapters?.published || 0) * .5 + (s.cover ? 1 : 0);
 
 export default function GalleryPage() {
   const router = useRouter();
@@ -54,7 +57,7 @@ export default function GalleryPage() {
       const text = [p.name, p.role, p.tagline, prof, jd.title, jd.company, jd.location, s.skill?.domain, family].filter(Boolean).join(' ').toLowerCase();
       return { s, jd, p, family, text };
     })
-    // 排序：故事全（一整天的章节都发布了）且有工位的最前；再是有工位的、故事全的；同档里工位章节多、有场景图的靠前
+    // 排序：精选名单最前；然后故事全（一整天的章节都发布了）且有工位的；再是有工位的、故事全的；同档里工位章节多、有场景图的靠前
     .sort((a, b) => rank(b.s) - rank(a.s)), [spaces]);
 
   const fams = useMemo(() => {
