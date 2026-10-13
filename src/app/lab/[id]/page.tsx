@@ -541,6 +541,10 @@ function castOf(space: any, sim: Sim | null) {
   const [expert, setExpert] = useState({ name: '', title: '', location: '' });
   // 老师傅的信息也只填一次：记在本地，下次直接「以 xx 的身份示范」
   const [expertSaved, setExpertSaved] = useState(false);
+  // 这次示范对照出处挑出来的偏差（访谈盯着问；显示在追问上方）
+  const [devs, setDevs] = useState<{ label: string; kind: string; evidence: string | null }[]>([]);
+  const fromSub = sp.get('fromSub');
+  const [fromSubDone, setFromSubDone] = useState(false);
   // 「你教我」进来先弹一个小窗留名（姓名 / 资历 / 所在地），不埋在一堆说明文字里；关掉了可以从说明区再打开
   const [idOpen, setIdOpen] = useState(false);
   const [idAsked, setIdAsked] = useState(false);
@@ -676,10 +680,35 @@ function castOf(space: any, sim: Sim | null) {
     finally { if (bare) setBareBusy(false); else setBusy(''); }
   };
 
+  // 示范评审页「拿这次操作去访谈」：把那次作答的轨迹原样装进「你教我」，直接开始盯着偏差追问（要登录）
+  useEffect(() => {
+    if (!fromSub || fromSubDone || !space || !user || mode !== 'learn') return;
+    setFromSubDone(true);
+    (async () => {
+      try {
+        const j = await (await fetch(`/api/lab/studio/review?trace=${fromSub}`)).json();
+        if (!j.ok) throw new Error(j.error);
+        const sub = j.submission, cid = sub.chapter_id || 'base';
+        const ch = chapters.find(c => c.id === sub.chapter_id) || null;
+        const csim: any = ch?.sim || space?.sim;
+        const label = ch ? `${ch.slot ? `${ch.slot} · ` : ''}${ch.title}` : space.title;
+        const transcript = csim ? `【${label}】\n${traceToText(csim, sub.trace)}` : '';
+        setExpert({ name: sub.candidate_name || '', title: sub.candidate_note || '', location: sub.candidate_location || '' }); setExpertSaved(true); setIdOpen(false);
+        setChTraces({ [cid]: { trace: sub.trace, label } }); setExpertTrace(sub.trace); setWalk(transcript); setLearnStep(2);
+        setBusy('AI 核心正在回看这次操作');
+        const json = await post('interview', { turns: [], walkthrough: transcript, traces: { [cid]: sub.trace } });
+        if (json.deviations) setDevs(json.deviations);
+        setTurns([{ role: 'ai', content: json.question }]);
+      } catch (e: any) { message.error(e.message); } finally { setBusy(''); }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fromSub, fromSubDone, space, user, mode]);
+
   const askNext = async (nextTurns: InterviewTurn[]) => {
     setBusy('AI 核心正在想下一个问题');
     try {
-      const json = await post('interview', { turns: nextTurns, walkthrough: walk });
+      const json = await post('interview', { turns: nextTurns, walkthrough: walk, traces: Object.fromEntries(Object.entries(chTraces).map(([k, x]) => [k, x.trace])) });
+      if (json.deviations) setDevs(json.deviations);
       setTurns([...nextTurns, { role: 'ai', content: json.question }]);
       setEnough(json.enough || nextTurns.filter(t => t.role === 'expert').length >= 5);
     } catch (e: any) { message.error(e.message); }
@@ -703,7 +732,8 @@ function castOf(space: any, sim: Sim | null) {
     setBusy('AI 核心正在回看专家的每一步操作');
     try {
       const prev = turns.filter((t, i) => !(i === turns.length - 1 && t.role === 'ai'));
-      const json = await post('interview', { turns: prev, walkthrough: transcript });
+      const json = await post('interview', { turns: prev, walkthrough: transcript, traces: { ...Object.fromEntries(Object.entries(chTraces).map(([k, x]) => [k, x.trace])), [chapter?.id || 'base']: trace } });
+      if (json.deviations) setDevs(json.deviations);
       setTurns([...prev, { role: 'ai', content: json.question }]);
     } catch (e: any) { message.error(e.message); }
     finally { setBusy(''); }
@@ -751,8 +781,9 @@ function castOf(space: any, sim: Sim | null) {
       else await post('submit', { mode: 'expert', name: expert.name, note: expert.title, location: expert.location, answer: walk, trace: expertTrace }).catch(() => null);
       const firstId = chapters[0]?.id || 'base';
       const chapterTraces = Object.fromEntries(walked.filter(([cid]) => cid !== 'base' && cid !== firstId).map(([cid, x]) => [cid, x.trace]));
-      await post('distill', { turns: turns.filter((t, i) => !(i === turns.length - 1 && t.role === 'ai')), walkthrough: walk, trace: walked.length ? (chTraces[firstId] || chTraces.base)?.trace : expertTrace, chapterTraces, expert: { ...expert, tz: -new Date().getTimezoneOffset() / 60 }, createdBy: user?.email });
-      message.success('吸收完成，专业度提升');
+      const dj = await post('distill', { turns: turns.filter((t, i) => !(i === turns.length - 1 && t.role === 'ai')), walkthrough: walk, trace: walked.length ? (chTraces[firstId] || chTraces.base)?.trace : expertTrace, chapterTraces, traces: Object.fromEntries(walked.map(([k, x]) => [k, x.trace])), expert: { ...expert, tz: -new Date().getTimezoneOffset() / 60 }, createdBy: user?.email });
+      const wb = dj?.writeBack;
+      message.success(wb && !wb.error && (wb.confirmed || wb.overridden || wb.context) ? `吸收完成：${wb.confirmed} 条规则得到你的确认，${wb.overridden + wb.context} 条记下了修改建议` : '吸收完成，专业度提升');
       setLearnStep(0); setTurns([]); setWalk(''); setEnough(false); setExpertTrace(null); setChTraces({});
       if (guest) setTaught(true);
       await load();
@@ -860,6 +891,16 @@ function castOf(space: any, sim: Sim | null) {
       ) : learnStep === 2 ? (
         <>
           <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>追问 · 已示范 {walkedLabels.length} / {chapters.length} 段</div>
+          {devs.length > 0 && (
+            <div style={{ marginBottom: 12, padding: '10px 14px', borderRadius: 12, background: 'rgba(240,160,60,.08)', border: '1px solid rgba(240,160,60,.25)' }}>
+              <div style={{ fontSize: 12.5, fontWeight: 700, color: '#9a5b12', marginBottom: 6 }}>对照标准和其他老师傅，这几处想听你说说</div>
+              {devs.map((d, i) => (
+                <div key={i} style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--ink2)' }}>
+                  <b style={{ color: d.kind === 'redline' ? '#d6336c' : d.kind === 'expert' ? '#9a5b12' : d.kind === 'ai' ? '#6b6f8a' : '#e08a1e' }}>{d.kind === 'redline' ? '标准红线' : d.kind === 'expert' ? '老师傅经验' : d.kind === 'ai' ? 'AI 推断' : '没达成'}</b> · {d.label}
+                </div>
+              ))}
+            </div>
+          )}
           <div style={{ maxHeight: 420, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 10, paddingRight: 4 }}>
             {turns.map((t, i) => (
               <div key={i} className="lab-in" style={{ alignSelf: t.role === 'ai' ? 'flex-start' : 'flex-end', maxWidth: '88%', padding: '10px 14px', borderRadius: 14, fontSize: 14.5, lineHeight: 1.8,

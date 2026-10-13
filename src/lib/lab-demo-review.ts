@@ -116,3 +116,46 @@ export async function reviewableSubmissions(spaceId: string) {
   const { data } = await supabaseAdmin.from('skill_submissions').select('id, chapter_id, candidate_name, candidate_type, score, submitted_at, trace').eq('task_id', spaceId).neq('candidate_type', 'ai').order('submitted_at', { ascending: false }).limit(200);
   return (data || []).filter((s: any) => Object.values(s.trace || {}).some((v: any) => v?.events)).map(({ trace, ...s }: any) => s);
 }
+
+/**
+ * 访谈用的偏差清单（专家数采第 2 步）：老师傅刚示范的几段（章节编号 → 作答轨迹）对照规则出处，挑出值得追问的地方。
+ * 顺序：越过有标准依据的红线 → 和老师傅经验不一致 → 触发了 AI 推断的规则 → 没达成的目标。追问盯着这些问，访谈结论再写回出处。
+ */
+export interface Deviation { chapter_id: string | null; key: string; label: string; kind: 'redline' | 'expert' | 'ai' | 'missed'; basis: string; evidence: string | null; question: string }
+export async function deviationsFor(spaceId: string, traces: Record<string, any>): Promise<Deviation[]> {
+  const ids = Object.keys(traces || {}).filter(k => k !== 'base');
+  const [{ data: chs }, { data: links }, { data: space }] = await Promise.all([
+    ids.length ? supabaseAdmin.from('lab_chapters').select('id, sim').in('id', ids) : Promise.resolve({ data: [] as any[] } as any),
+    supabaseAdmin.from('standard_links').select('chapter_id, target, basis, evidence, standard:industry_standards(code, title)').eq('space_id', spaceId),
+    traces.base ? supabaseAdmin.from('skill_tasks').select('sim').eq('id', spaceId).single() : Promise.resolve({ data: null } as any),
+  ]);
+  const out: Deviation[] = [];
+  const pairs: [string | null, any, any][] = [...(chs || []).map((c: any) => [c.id, c.sim, traces[c.id]] as [string, any, any]), ...(traces.base && space?.sim ? [[null, space.sim, traces.base] as [null, any, any]] : [])];
+  for (const [cid, sim, tr] of pairs) {
+    const linkOf = new Map<string, any>();
+    for (const l of links || []) if (!cid || l.chapter_id === cid) linkOf.set(String(l.target).split(' · ')[0], l);
+    for (const st of sim?.steps || []) {
+      if (st?.type !== 'bench' || !st.bench) continue;
+      const bt = tr?.[st.id]; if (!bt?.events) continue;
+      const hit = new Set(bt.events.filter((e: any) => e.kind === 'rule' || e.kind === 'goal').map((e: any) => `${e.kind}:${e.id}`));
+      for (const r of st.bench.rules || []) {
+        if (r.severity !== 'violation' || !hit.has(`rule:${r.id}`)) continue;
+        const l = linkOf.get(`rule:${r.id}`); const basis = l?.basis || 'none';
+        const std = Array.isArray(l?.standard) ? l.standard[0] : l?.standard;
+        const said = String(l?.evidence || '').split('：').slice(1).join('：');
+        const kind: Deviation['kind'] = basis === 'standard' ? 'redline' : basis === 'expert' ? 'expert' : 'ai';
+        const question = kind === 'redline' ? `你的操作触发了「${r.label}」，${std?.code || '标准'}要求「${said}」。当时为什么这样做？是现场条件不同，还是这条在你们那里不这么执行？`
+          : kind === 'expert' ? `「${r.label}」：另一位老师傅说过「${said}」，你的做法不一样。哪种更对，还是看情况？`
+          : `「${r.label}」是系统自己推断的规则，你触发了它。是规则定严了（应该放到多少？），还是这一下确实冒险？`;
+        out.push({ chapter_id: cid, key: `rule:${r.id}`, label: r.label, kind, basis, evidence: l?.evidence || null, question });
+      }
+      for (const g of st.bench.goals || []) {
+        if (hit.has(`goal:${g.id}`)) continue;
+        const l = linkOf.get(`goal:${g.id}`);
+        out.push({ chapter_id: cid, key: `goal:${g.id}`, label: g.label, kind: 'missed', basis: l?.basis || 'none', evidence: l?.evidence || null, question: `「${g.label}」这一步你没有做到：是模拟器的窗口和现场不一样，还是这一步本来就可以不做？` });
+      }
+    }
+  }
+  const order = { redline: 0, expert: 1, ai: 2, missed: 3 } as const;
+  return out.sort((a, b) => order[a.kind] - order[b.kind]).slice(0, 8);
+}

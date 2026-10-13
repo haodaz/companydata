@@ -5,6 +5,8 @@ import { buildSkillCard } from '@/lib/agents/skill-lab';
 import { labError, loadSpace } from '@/lib/skill-lab-server';
 import { INVITED, INVITED_BY } from '@/lib/lab-invite';
 import { labModel } from '@/lib/lab-guest';
+import { deviationsFor } from '@/lib/lab-demo-review';
+import { writeBackFromInterview } from '@/lib/lab-standards';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -13,7 +15,7 @@ export const maxDuration = 300;
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
-    const { turns, walkthrough, expert, model: asked, createdBy, trace, chapterTraces } = await req.json();
+    const { turns, walkthrough, expert, model: asked, createdBy, trace, chapterTraces, traces } = await req.json();
     const model = labModel(req, asked);
     if (!Array.isArray(turns) || turns.filter((t: any) => t.role === 'expert').length < 2) {
       return NextResponse.json({ ok: false, error: '至少回答 2 个问题再生成技能卡' }, { status: 400 });
@@ -55,7 +57,13 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       const ids = new Set((space.chapters || []).filter((c: any) => c.id && c.seq !== 1).map((c: any) => c.id));
       for (const [cid, tr] of Object.entries(chapterTraces)) if (ids.has(cid) && tr && typeof tr === 'object') await supabaseAdmin.from('lab_chapters').update({ expert_trace: tr, updated_at: new Date().toISOString() }).eq('id', cid);
     }
-    return NextResponse.json({ ok: true, skillId, skill: { id: skillId, ...row } });
+    // 访谈结论写回规则出处：认了的 AI 推断升级成「老师傅经验」，不认的记修改建议（专家数采第 2 步）
+    let writeBack: any = null;
+    if (traces && typeof traces === 'object') {
+      const devs = await deviationsFor(id, traces).catch(() => []);
+      writeBack = await withCost({ space_id: id, stage: 'learn' }, () => writeBackFromInterview(id, devs, turns, who, model || undefined)).catch((e: any) => ({ error: e.message }));
+    }
+    return NextResponse.json({ ok: true, skillId, skill: { id: skillId, ...row }, writeBack });
   } catch (e: any) {
     console.error('[Lab/distill]', e);
     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });

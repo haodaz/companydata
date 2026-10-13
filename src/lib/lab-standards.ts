@@ -108,3 +108,45 @@ export async function loadBasis(spaceId: string) {
   if (error) return [];
   return (data || []).map((r: any) => ({ ...r, standard: Array.isArray(r.standard) ? r.standard[0] : r.standard }));
 }
+
+/**
+ * 访谈结论写回出处（专家数采第 2 步）：每条偏差，老师傅是认（规则对）、不认（规则该改）、还是看情况。
+ *   认：AI 推断 / 无出处的规则 → 出处升级为「老师傅经验」，证据写他的原话
+ *   不认：出处不动，记一条修改建议（lab_edits，source = interview），等人改工位——不自动改规则
+ *   看情况：把条件写进依据的备注
+ * 违反标准红线时老师傅不认，不推翻标准：只记「现场执行有分歧」，交给第二位老师傅或协会。
+ */
+export async function writeBackFromInterview(spaceId: string, deviations: { chapter_id: string | null; key: string; label: string; kind: string; basis: string }[], turns: { role: string; content: string }[], expertName: string, model = 'gemini-3.8-flash') {
+  if (!deviations.length || !turns.length) return { confirmed: 0, overridden: 0, context: 0, unclear: 0 };
+  const prompt = `下面是一段对老师傅的访谈，以及他示范时出现的几处偏差。逐条判断老师傅对这条规则 / 目标的态度。
+偏差：
+${deviations.map((d, i) => `D${i} [${d.kind === 'redline' ? '标准红线' : d.kind === 'expert' ? '老师傅经验' : d.kind === 'ai' ? 'AI 推断' : '没达成的目标'}] ${d.label}`).join('\n')}
+
+访谈：
+${turns.map(t => `${t.role === 'ai' ? '问' : '老师傅'}：${t.content}`).join('\n').slice(0, 6000)}
+
+只返回 JSON：{ "items": [ { "d": "D0", "decision": "confirm|override|context|unclear", "quote": "老师傅原话里最能说明态度的一句（没提到就空）", "suggestion": "override / context 时：规则该怎么改、在什么条件下成立（一句中文）" } ] }
+confirm = 他认为这条规则 / 目标是对的（自己当时确实做错了，或认同这样要求）；override = 他认为规则定错了或阈值不对；context = 要看情况；unclear = 访谈里没谈到。`;
+  const res = await generateContent(prompt, model, { jsonMode: true });
+  await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Interview Write-back', institution: spaceId, model_id: model, usageMetadata: res.usageMetadata, stage: 'learn', space_id: spaceId } as any).catch(() => {});
+  const p = parseJsonLoose(res.text);
+  const tally = { confirmed: 0, overridden: 0, context: 0, unclear: 0 };
+  for (const it of Array.isArray(p?.items) ? p.items : []) {
+    const d = deviations[parseInt(String(it.d || '').replace(/\D/g, ''))]; if (!d) continue;
+    const quote = String(it.quote || '').trim().slice(0, 200), sugg = String(it.suggestion || '').trim().slice(0, 200);
+    let q = supabaseAdmin.from('standard_links').select('id, basis, note').eq('space_id', spaceId).like('target', `${d.key} · %`);
+    if (d.chapter_id) q = q.eq('chapter_id', d.chapter_id);   // 老空间的主工位没有章节编号：不按章节筛
+    const { data: rows } = await q;
+    const row = rows?.[0];
+    if (it.decision === 'confirm') {
+      tally.confirmed++;
+      if (row && (row.basis === 'ai' || row.basis === 'none') && quote) await supabaseAdmin.from('standard_links').update({ basis: 'expert', evidence: `${expertName}：${quote}`, note: `访谈确认（${new Date().toISOString().slice(0, 10)}）`, confidence: 80 }).eq('id', row.id);
+    } else if (it.decision === 'override' || it.decision === 'context') {
+      if (it.decision === 'override') tally.overridden++; else tally.context++;
+      const tag = d.kind === 'redline' && it.decision === 'override' ? '现场执行和标准有分歧（不推翻标准，交第二位老师傅 / 协会）' : it.decision === 'override' ? '老师傅不认这条' : '老师傅说要看情况';
+      if (row) await supabaseAdmin.from('standard_links').update({ note: `${tag}：${sugg || quote}`.slice(0, 300) }).eq('id', row.id);
+      await supabaseAdmin.from('lab_edits').insert({ task_id: spaceId, chapter_id: d.chapter_id, source: 'interview', actor: expertName, fields: [d.key], before: { label: d.label, basis: d.basis }, after: { decision: it.decision, quote, suggestion: sugg }, note: `${tag}：「${d.label}」→ ${sugg || quote}` }).then(() => {}, () => {});
+    } else tally.unclear++;
+  }
+  return tally;
+}

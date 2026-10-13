@@ -71,6 +71,7 @@ function DemoReview() {
               <div style={{ fontSize: 13, color: 'var(--ink3)' }}>原评分 {rv.submission.score ?? '—'}</div>
             </div>
             <div style={{ fontSize: 14, color: 'var(--ink2)', marginTop: 6, lineHeight: 1.7 }}>{rv.grade.why}</div>
+            <div style={{ marginTop: 12 }}><a className="lab-btn sm" href={`/lab/${rv.space.id}?m=learn${rv.chapter.id ? `&ch=${rv.chapter.id}` : ''}&fromSub=${rv.submission.id}`} style={{ textDecoration: 'none' }}>拿这次操作去访谈 →</a></div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
               {Object.entries(rv.coverage).filter(([, v]: any) => v > 0).map(([k, v]: any) => <span key={k} style={{ fontSize: 12.5, padding: '4px 10px', borderRadius: 100, color: BASIS[k].color, background: BASIS[k].bg, fontWeight: 700 }}>出处 · {BASIS[k].label} {v} 条</span>)}
             </div>

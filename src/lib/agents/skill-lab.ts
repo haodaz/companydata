@@ -164,17 +164,21 @@ export async function answerTask(task: TaskForGrading, skill: SkillRef | null, m
   return text.trim();
 }
 
-export async function nextQuestion(topic: string, turns: InterviewTurn[], modelId = DEFAULT_MODEL, expertWalkthrough = ''): Promise<{ question: string; enough: boolean }> {
+export async function nextQuestion(topic: string, turns: InterviewTurn[], modelId = DEFAULT_MODEL, expertWalkthrough = '', focus: string[] = []): Promise<{ question: string; enough: boolean }> {
   const text = await ask(`
     你是「技能蒸馏师」，正在访谈一位有经验的从业者，目标是把他 / 她关于「${topic}」的隐性经验挖出来，变成可以交给 AI 使用的数字技能。
 
     ${expertWalkthrough ? `专家刚刚亲自把这个岗位的任务走了一遍，这是他 / 她的作答——请围绕「为什么这么做」来追问：\n"""\n${expertWalkthrough.slice(0, 4000)}\n"""\n` : ''}
+    ${focus.length ? `【偏差清单】把专家的操作对照了标准、设备手册和其他老师傅，下面这些地方值得追问（已按重要性排好）：
+${focus.map((q, i) => `${i + 1}. ${q}`).join('\n')}
+先按顺序问清单里还没问过的（每轮问一条，可以用更口语的说法，但要点明是哪一步、依据是什么）；清单问完了，再问「判断」类的问题。不要泛泛地问「你为什么这么做」。
+` : ''}
     已有对话：
     ${turns.map(t => `${t.role === 'ai' ? '你' : '专家'}：${t.content}`).join('\n') || '（尚未开始）'}
 
     请给出下一个问题。好的问题追问的是「判断」而不是「知识」：第一反应看什么、怎么取舍、什么情况会直接否决、新人最常犯的错、好与差的具体样子、交付前检查什么。
     一次只问一个问题，口语化，不超过 40 字，不要重复已经问过的角度。
-    如果已经覆盖了「步骤、判断规则、正反例、检查清单」四个方面（通常 5-6 轮），把 enough 设为 true。
+    如果偏差清单都问过了，并且覆盖了「步骤、判断规则、正反例、检查清单」四个方面（通常 5-6 轮），把 enough 设为 true。
 
     返回 JSON：{ "question": "", "enough": true | false }
   `, modelId, 'Distill Interview');
