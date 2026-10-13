@@ -71,11 +71,11 @@ export async function GET(req: Request) {
     // 只在真缺的时候排产：有缺口 / 质检不合格 / 这块还空着；问得多但平方库答得上的不用补
     }).filter(s => s.needed).sort((a, b) => b.score - a.score).slice(0, 10);
 
-    // 飞轮闭环：提问 → 平方答得上 / 缺口 → 质检 → 排补全 → 入问答库
+    // 飞轮闭环：提问 → 平方答得上 / 缺口 → 质检 → 排补全 → 入问答库（人工质检只算人点过的，排产不算质检）
     const st = (k: string) => (rows as any[]).filter(r => r.status === k).length;
     const { count: faqs } = await supabaseAdmin.from('occupation_faqs').select('id', { count: 'exact', head: true }).eq('if_delete', false).eq('status', 'ok');
     const total = (rows as any[]).length, gapsN = (rows as any[]).filter(r => r.gap).length;
-    const flywheel = { total, answered: total - gapsN, gaps: gapsN, reviewed: st('ok') + st('bad') + st('ingested'),   // 人工质检只算人点过的（排产不算质检） ok: st('ok'), bad: st('bad'), task: st('task'), ingested: st('ingested'), faqs: faqs || 0, occupations: occTotals.size };
+    const flywheel = { total, answered: total - gapsN, gaps: gapsN, reviewed: st('ok') + st('bad') + st('ingested'), ok: st('ok'), bad: st('bad'), task: st('task'), ingested: st('ingested'), faqs: faqs || 0, occupations: occTotals.size };
     // 热门问题：同一问法合并计数
     const tq = new Map<string, { q: string; n: number; gaps: number; occ: string }>();
     for (const r of rows as any[]) {
