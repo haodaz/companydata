@@ -49,15 +49,15 @@ const CSS = `
 .ai100-bleed { margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); width: 100vw; }
 
 /* banner：我们自己的三个空间（3D / 360° 实拍）串成的无缝循环当背景，字压在上面 */
-.ai100-hero { position: relative; min-height: min(90vh, 820px); display: flex; align-items: center; overflow: hidden; margin-top: -24px; }
+.ai100-hero { position: relative; min-height: calc(100svh - 64px); display: flex; align-items: center; overflow: hidden; margin-top: -24px; }
 .ai100-hero > video, .ai100-hero > img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .ai100-hero .veil { position: absolute; inset: 0;
-  background: linear-gradient(90deg, #080a16 2%, rgba(8,10,22,.94) 36%, rgba(8,10,22,.6) 66%, rgba(8,10,22,.3) 100%),
-              linear-gradient(0deg, #080a16 1%, rgba(8,10,22,.2) 32%, transparent 60%); }
+  background: linear-gradient(90deg, rgba(8,10,22,.9) 0%, rgba(8,10,22,.76) 34%, rgba(8,10,22,.32) 64%, rgba(8,10,22,.06) 100%),
+              linear-gradient(0deg, #080a16 0%, rgba(8,10,22,.16) 22%, transparent 45%); }
 .ai100-hero .in { position: relative; width: 100%; max-width: 1280px; margin: 0 auto; padding: 72px 28px; }
 
 /* 胶片：横着走的一条，压在 banner 下沿 */
-.ai100-film { overflow: hidden; padding: 16px 0; display: grid; gap: 12px; background: #0b0d1c; border-bottom: 1px solid rgba(255,255,255,.08);
+.ai100-film { overflow: hidden; padding: 16px 0; display: grid; gap: 12px; background: transparent; margin-top: clamp(40px, 6vw, 72px);
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
 .ai100-film-track { display: flex; gap: 12px; width: max-content; animation: ai100-left 96s linear infinite; }
 .ai100-film-track.back { animation-name: ai100-right; }
@@ -415,6 +415,24 @@ export default function LabLanding() {
         </div>
       </section>
 
+      {/* ══ 体验视频：8 分钟走一遍百业 ══ */}
+      <section className="ai100-sec ai100-watch">
+        <div>
+          <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>WATCH · 8 MIN</div>
+          <h2 className="ai100-h2">用你所做，<span className="ai100-grad">证你所能</span></h2>
+          <p className="ai100-lead" style={{ marginBottom: 18 }}>
+            从火箭总装到田间地头，从热火朝天的车间到安静的工作室，从服务台到应急指挥席——一二三产，八分钟走一遍百业。
+          </p>
+          <button className="lab-btn ghost" style={{ height: 46, padding: '0 22px' }} onClick={() => router.push('/lab/gallery')}>自己进去试试 →</button>
+        </div>
+        <div className="ai100-player">
+          <video controls playsInline preload="none" poster="/lab-landing/demo-poster.jpg">
+            <source src={DEMO_VIDEO} type="video/mp4" />
+            <track kind="subtitles" srcLang="zh" label="中文" src="/lab-landing/demo.vtt" default />
+          </video>
+        </div>
+      </section>
+
       {/* 胶片：这些都是空间里的真实场景 */}
       {film && (
         <div className="ai100-bleed ai100-film">
@@ -449,24 +467,6 @@ export default function LabLanding() {
           </div>
         </div>
       )}
-
-      {/* ══ 体验视频：8 分钟走一遍百业 ══ */}
-      <section className="ai100-sec ai100-watch">
-        <div>
-          <div className="lab-mono lab-cap" style={{ color: 'var(--v)' }}>WATCH · 8 MIN</div>
-          <h2 className="ai100-h2">用你所做，<span className="ai100-grad">证你所能</span></h2>
-          <p className="ai100-lead" style={{ marginBottom: 18 }}>
-            从火箭总装到田间地头，从热火朝天的车间到安静的工作室，从服务台到应急指挥席——一二三产，八分钟走一遍百业。
-          </p>
-          <button className="lab-btn ghost" style={{ height: 46, padding: '0 22px' }} onClick={() => router.push('/lab/gallery')}>自己进去试试 →</button>
-        </div>
-        <div className="ai100-player">
-          <video controls playsInline preload="none" poster="/lab-landing/demo-poster.jpg">
-            <source src={DEMO_VIDEO} type="video/mp4" />
-            <track kind="subtitles" srcLang="zh" label="中文" src="/lab-landing/demo.vtt" default />
-          </video>
-        </div>
-      </section>
 
       {/* ══ 平方智能：一个职业，四种空间（数字来自平方的库，不是写死的） ══ */}
       <section className="ai100-sec">

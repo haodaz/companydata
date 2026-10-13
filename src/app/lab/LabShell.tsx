@@ -221,7 +221,8 @@ function Shell({ children }: { children: React.ReactNode }) {
     { k: '/lab/me', t: '我的证书', on: (p: string) => p.startsWith('/lab/me') || p.startsWith('/lab/cert') },
   ];
   return (
-    <div className="lab" data-theme={theme}>
+    // 首页只有深色（深浅切换是给空间用的）
+    <div className="lab" data-theme={path === '/lab' ? 'dark' : theme}>
       <style>{LAB_CSS}</style>
       <div className="lab-bg"><div className="lab-blob b1" /><div className="lab-blob b2" /><div className="lab-blob b3" /><div className="lab-grid" /></div>
 
@@ -246,11 +247,11 @@ function Shell({ children }: { children: React.ReactNode }) {
           })}
         </nav>}
         <div style={{ flex: 1 }} />
-        <button className="lab-theme" onClick={flipTheme} title={theme === 'dark' ? '切到浅色（亮环境、投影、一体机）' : '切到深色'} aria-label="切换深浅色">
+        {path !== '/lab' && <button className="lab-theme" onClick={flipTheme} title={theme === 'dark' ? '切到浅色（亮环境、投影、一体机）' : '切到深色'} aria-label="切换深浅色">
           {theme === 'dark'
             ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" /></svg>
             : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" /></svg>}
-        </button>
+        </button>}
         {!guest && !user && !userLoading && (
           <button className="lab-btn ghost sm" onClick={() => router.push(`/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`)}>登录</button>
         )}
