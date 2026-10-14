@@ -9,6 +9,7 @@
  * 人工审核保护：审核通过 / 不通过 / 失效隐藏的岗位不覆盖；人工改过的字段（human_locked_fields）不覆盖。
  */
 import { supabaseAdmin } from '@/lib/supabase';
+import { applyJobDefaults } from '@/lib/job-defaults';
 import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
 import { sanitizeJob, jobCompleteness, KIND_BY_JOB_TYPE, splitLocations, normCity, jobSourceOf } from '@/lib/job-fields';
 
@@ -77,12 +78,14 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
     if (!job.kind && job.job_type) job.kind = KIND_BY_JOB_TYPE[job.job_type] || null;
     if (!job.accept_foreign && job.visa_sponsorship !== null) job.accept_foreign = job.visa_sponsorship ? 'accepted' : 'not_accepted';
     applyGradWindowDefault(job);
+    applyJobDefaults(job, log.company);   // 主办方 / 年级要求 / 工作地址 / 技能标签分隔（数据部门 10-14）
     if (!job.form_of_play && job.remote_type) job.form_of_play = { remote: 'online', onsite: 'offline', hybrid: 'online_and_offline' }[job.remote_type as string] || null;
     const sharedReq = job.job_req_id && (reqNames.get(String(job.job_req_id).trim())?.size || 0) > 1;
     const cities = splitLocations(job.location);
     for (const loc of cities.length ? cities : [job.location]) {
       const multi = cities.length > 1;
-      const one = multi ? { ...job, location: loc, city: loc } : job;
+      // 拆城市时，工作地址是默认抄的工作地点的，跟着改成这一条的城市
+      const one = multi ? { ...job, location: loc, city: loc, address: job.address === job.location ? loc : job.address } : job;
       const key = jobDedupeKey(sharedReq ? { ...one, job_req_id: null } as any : one as any, log.company_id, log.company, log.target_url, multi ? loc : null);
       rows.set(key, {
         ...one,

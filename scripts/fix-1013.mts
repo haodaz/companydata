@@ -90,9 +90,23 @@ if (run('occ-import')) {
   const rows: any[][] = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, defval: '' });
   const keys = (rows[0] || []).map((h: any) => importHeaderKey(String(h)));
   const list = rows.slice(1).filter(r => r.some(c => String(c).trim()) && !/^(必填，)?字段类型/.test(String(r[0])))
-    .map(r => Object.fromEntries(keys.map((k, i) => [k, r[i]]).filter(([k]) => k))).filter((o: any) => o.name);
+    .map(r => Object.fromEntries(keys.map((k, i) => [k, r[i]]).filter(([k]) => k))).filter((o: any) => o.name)
+    // 对方表里全国平均月薪写 0 的是「没有数据」，当空处理，别把已有的薪资覆盖成 0（10-14 职业库基础数据）
+    .map((o: any) => { if (o.recent_year_monthly_salary !== undefined && !(Number(o.recent_year_monthly_salary) > 0)) delete o.recent_year_monthly_salary; return o; });
   console.log(`\n③ ${file.split('/').pop()}：${list.length} 个职业（识别列 ${keys.filter(Boolean).length} 个）`);
+  // 别名撞车：对方表里「导游」「研学旅行指导师」是两个职业，我们的导游别名里却有研学旅行指导师——
+  // 这一行只靠别名对上、而那条职业自己的名字也在表里单独一行时，把别名从那条职业上摘掉，这一行单独建档
+  const fileNames = new Set(list.map((o: any) => String(o.name).trim()));
   for (const o of list) {
+    const nm = String(o.name).trim();
+    const { data: own } = await db.from('occupations').select('id').eq('if_delete', false).or(`name.eq.${JSON.stringify(nm)},name_lang_cn.eq.${JSON.stringify(nm)}${o.external_id ? `,external_id.eq.${JSON.stringify(String(o.external_id))}` : ''}`).limit(1);
+    if (!own?.length) {
+      const { data: viaAlias } = await db.from('occupations').select('id, name, aliases').eq('if_delete', false).contains('aliases', [nm]);
+      for (const v of (viaAlias || []).filter((v: any) => fileNames.has(String(v.name).trim()) && v.name !== nm)) {
+        console.log(`  ${nm}：原是「${v.name}」(#${v.id}) 的别名，对方表里是两个职业 → 摘掉别名、单独建档`);
+        if (APPLY) await db.from('occupations').update({ aliases: (v.aliases || []).filter((x: string) => x !== nm) }).eq('id', v.id);
+      }
+    }
     if (!APPLY) { console.log(`  ${o.name} · ${o.career_category} / ${o.career_mid_category} · ${o.recent_year_monthly_salary}`); continue; }
     const r = await upsertOccupation(o, { mode: 'overwrite', source: 'import' });
     console.log(`  ${o.name}：${r.created ? '新建' : `更新 ${r.changed.length} 个字段`}（#${r.id}）`);
