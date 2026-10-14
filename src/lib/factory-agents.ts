@@ -4,10 +4,10 @@
  * 形象素材复用自 myAI（public/factory/）。
  */
 
-export type AgentId = 'chief' | 'scout' | 'profiler' | 'radar' | 'finder' | 'fetcher' | 'structurer' | 'qa';
+export type AgentId = 'chief' | 'scout' | 'profiler' | 'radar' | 'finder' | 'fetcher' | 'structurer' | 'occupation' | 'standard' | 'qa';
 
 /** 员工在单聊里能执行的动作（由 /api/office/chat 的大模型判定，前端调用对应接口执行） */
-export type AgentActionType = 'master_task' | 'company_list' | 'profile' | 'competitions' | 'campus_urls' | 'extract' | 'stats';
+export type AgentActionType = 'master_task' | 'company_list' | 'profile' | 'competitions' | 'campus_urls' | 'extract' | 'occupation' | 'standards' | 'stats';
 
 export interface FactoryAgent {
   id: AgentId;
@@ -101,6 +101,26 @@ export const FACTORY_AGENTS: FactoryAgent[] = [
     persona: '你是 Dr. Thorne，结构化分析师。你把非结构化的招聘原文提炼成字段完整的岗位数据，绝不编造原文没有的信息。学者气质，讲究证据。',
   },
   {
+    id: 'occupation', name: 'Mira', title: '职业研究员', titleEn: 'Occupation Researcher', station: '职业研究室',
+    description: '给一个职业建完整档案：职业画像与分年限薪资 → 发展图谱（技能树 / 成长阶梯 / 晋升转型）→ 工作场所与工具设备 → 典型任务与工位。写入职业库和知识图谱，AI 百业的「和我聊」直接用。',
+    pixel: '/factory/pixel_mira.png', portrait: '/factory/avatar_mira.png', color: '#db2777',
+    skills: ['职业画像与薪资', '发展图谱', '场所与工具设备', '典型任务与工位'],
+    greeting: '我是 Mira，职业研究员。给我一个职业名——比如「智能体开发员」「微电网管理员」——我把它的档案、发展图谱、在哪干用什么、典型任务都查清楚。',
+    quickPrompts: ['给 智能体开发员 建完整档案', '画一张 数字孪生工程技术人员 的发展图谱', '职业图谱里都有哪些东西？'],
+    action: 'occupation',
+    persona: '你是 Mira，职业研究员。你替学生和求职者把一个职业查透：它做什么、怎么入行、怎么往上走、每天在哪干、用什么工具、典型任务长什么样。温和、条理清楚，只写查得到的事实，薪资查不到就说查不到。',
+  },
+  {
+    id: 'standard', name: 'Ken', title: '标准规程官', titleEn: 'Standards Officer', station: '标准档案室',
+    description: '找真正管这一行日常操作的标准：国标 / 行标 / 团标 / 地标、安全规程、法规规章、设备厂商操作手册，以及 ISO / IEC / OSHA 等国际参考。核对标准号与现行状态，把操作要点转述成条（不抄原文），写入标准库并挂到职业上。',
+    pixel: '/factory/pixel_ken.png', portrait: '/factory/avatar_ken.png', color: '#475569',
+    skills: ['标准号与现行状态核对', '设备操作手册', '要点转述（不抄原文）', 'OSHA 等国际参考'],
+    greeting: '我是 Ken，标准规程官。告诉我一个职业或一道工序——比如「焊工 · 气体保护焊」「手术室 · 器械清点」——我把管它的标准、规程和设备手册找出来。',
+    quickPrompts: ['找 焊工 气体保护焊 的安全规程和标准', '电工 高压倒闸操作 要守哪些规程？', '标准要点为什么不抄原文？'],
+    action: 'standards',
+    persona: '你是 Ken，标准规程官。你只认官方题录：标准号、年份、现行还是被代替都要核实，查不到就写查不到，绝不编号。严谨、话不多，最在意「这条规定管到哪一步操作」。',
+  },
+  {
     id: 'qa', name: 'Nova', title: '质检员', titleEn: 'Quality Inspector', station: '质检站',
     description: '盯着产出质量：岗位完整度、待审核数量、已下线岗位、缺失的关键字段，给数据同事一份质检简报。',
     pixel: '/factory/pixel_nova.png', portrait: '/factory/avatar_edda.png', color: '#16a34a',
@@ -115,7 +135,9 @@ export const FACTORY_AGENTS: FactoryAgent[] = [
 export const AGENT_MAP: Record<AgentId, FactoryAgent> = Object.fromEntries(FACTORY_AGENTS.map(a => [a.id, a])) as Record<AgentId, FactoryAgent>;
 
 /** 总任务流水线的工序 */
-export interface FactoryStage { key: 'list' | 'profile' | 'competition' | 'source' | 'extract' | 'qa'; label: string; agents: AgentId[]; desc: string }
+/** 产线：企业与岗位（原来那条）/ 职业图谱 / 行业标准。厂长排产时先判断是哪条线 */
+export type FactoryLine = 'company' | 'occupation' | 'standard';
+export interface FactoryStage { key: 'list' | 'profile' | 'competition' | 'source' | 'extract' | 'occ' | 'std' | 'qa'; label: string; agents: AgentId[]; desc: string }
 
 export const FACTORY_STAGES: FactoryStage[] = [
   { key: 'list', label: '建名单', agents: ['scout'], desc: '圈定目标企业并建档' },
@@ -123,5 +145,14 @@ export const FACTORY_STAGES: FactoryStage[] = [
   { key: 'competition', label: '赛事雷达', agents: ['radar'], desc: '找企业办的比赛：设备 / 奖金 / 实习 / offer' },
   { key: 'source', label: '寻源', agents: ['finder'], desc: '找校招 / 实习官方入口' },
   { key: 'extract', label: '抓取与提炼', agents: ['fetcher', 'structurer'], desc: '抓取页面并提取结构化岗位' },
+  { key: 'occ', label: '职业建档与图谱', agents: ['occupation'], desc: '档案与薪资 → 发展图谱 → 场所与工具设备 → 典型任务' },
+  { key: 'std', label: '标准与规程', agents: ['standard'], desc: '国标 / 行标 / 法规 / 设备操作手册，核对现行状态并转述要点' },
   { key: 'qa', label: '质检', agents: ['qa'], desc: '盘点产出与数据质量' },
 ];
+
+/** 每条产线走哪些工序（按顺序） */
+export const LINE_STAGES: Record<FactoryLine, FactoryStage['key'][]> = {
+  company: ['list', 'profile', 'competition', 'source', 'extract', 'qa'],
+  occupation: ['occ', 'std', 'qa'],
+  standard: ['std', 'qa'],
+};

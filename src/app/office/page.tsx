@@ -2,20 +2,22 @@
 
 import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { App, Button, Drawer, Input, Popconfirm, Tag, Tooltip } from 'antd';
+import { App, Button, Drawer, Popconfirm, Tag, Tooltip } from 'antd';
 import {
   CheckOutlined, CloseOutlined, DownOutlined, LoadingOutlined, MinusOutlined, PlusOutlined, ReloadOutlined,
-  RocketOutlined, StopOutlined, CodeOutlined, UpOutlined, MessageOutlined, HistoryOutlined, DeleteOutlined,
+  StopOutlined, CodeOutlined, UpOutlined, HistoryOutlined, DeleteOutlined,
 } from '@ant-design/icons';
 import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
 import { BRAND } from '@/lib/theme';
 import { useIsMobile } from '@/lib/use-mobile';
-import { AGENT_MAP, FACTORY_AGENTS, FACTORY_STAGES, type AgentId, type FactoryStage } from '@/lib/factory-agents';
+import { AGENT_MAP, FACTORY_STAGES, LINE_STAGES, type AgentId, type FactoryStage } from '@/lib/factory-agents';
+import { FactoryLanding } from '@/components/office/FactoryLanding';
 import {
   planTask, buildCompanyList, ensureCompany, profileCompany, profileCompanyFull, findAndSaveCampusUrls, pickUrlsToExtract,
   createCompetitionTask, addCompetitionItems, setCompetitionTaskStatus, runRadarItem, rewardText,
   createJobTask, addUrlsToTask, setJobTaskStatus, extractUrl, fetchQaStats, qaBriefing,
+  occupationStep, createStandardTask, addStandardItems, runStandardItem,
   type FactoryPlan, type FactoryCompany,
 } from '@/lib/factory-pipeline';
 
@@ -40,14 +42,7 @@ interface Snapshot { task: string; plan: FactoryPlan | null; items: WorkItem[]; 
 
 const STORAGE_KEY = 'cd_factory_last_run';
 
-const PRESETS = [
-  '采集 腾讯、字节跳动、美团 的 2027 届校招和实习岗位',
-  '找 5 家汽车行业中外合资企业，补全企业画像，并采集它们的校招项目',
-  '宝洁、联合利华、欧莱雅：看看它们在中国的管培生和暑期实习',
-  '列出 8 家中国新能源与动力电池龙头，只要名单和企业画像',
-  '给 宁德时代、比亚迪 跑完整画像：融资、动态、管理团队、校招口碑',
-  '找 华为、阿里云、腾讯 办的比赛，奔着送设备和直通 offer 去',
-];
+const PART_LABEL: Record<string, string> = { profile: '档案与薪资', career: '发展图谱', context: '场所与工具设备', tasks: '典型任务' };
 
 const STATUS_STYLE: Record<ItemStatus, { border: string; bg: string; footBg: string; footColor: string; label: string }> = {
   idle:    { border: '#e5e7eb', bg: '#fafafa', footBg: '#f5f5f7', footColor: BRAND.ink4, label: '等待上一道工序' },
@@ -150,6 +145,84 @@ function OfficeInner() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ task: t, plan: p, items: normalized, logs: logsRef.current.slice(-200), status: s, report: rep, finishedAt: at } satisfies Snapshot)); } catch { /* 存不下就算了 */ }
   };
 
+  // ── 职业图谱线 / 行业标准线：Mira 逐个职业建档（档案 → 图谱 → 场所工具 → 典型任务），Ken 逐条查标准，Nova 盘点 ──
+  const runKnowledgeLine = async (p: FactoryPlan, text: string, model: string, stopped: () => boolean): Promise<string> => {
+    const parts = (['profile', 'career', 'context', 'tasks'] as const).filter(k => p.occ_parts?.[k]);
+    const occs = p.line === 'occupation' ? (p.occupations || []) : [];
+    const stdItems = p.std_items || [];
+    if (!occs.length && !stdItems.length) throw new Error('厂长没排出要做的职业或标准检索，换个说法再试试');
+    const pending: WorkItem[] = [];
+    occs.forEach((n, i) => pending.push({ key: `occ:${i}`, stage: 'occ', agent: 'occupation', status: 'idle', title: n, detail: parts.map(x => PART_LABEL[x]).join(' → ') }));
+    stdItems.forEach((it, i) => pending.push({ key: `std:${i}`, stage: 'std', agent: 'standard', status: 'idle', title: it.profession || it.query, detail: it.query ? `聚焦：${it.query}` : '这一行日常操作的标准 / 规程 / 设备手册' }));
+    pending.push({ key: 'qa:0', stage: 'qa', agent: 'qa', status: 'idle', title: '产出质检', detail: '盘点本次入库的职业知识与标准' });
+    addItems(pending);
+
+    let occDone = 0, graphs = 0, tasksN = 0, toolsN = 0, created = 0;
+    await pool(occs.map((n, i) => ({ n, i })), 2, async ({ n, i }) => {
+      if (stopped()) return;
+      const key = `occ:${i}`;
+      setItem(key, { status: 'working' });
+      try {
+        const notes: string[] = [];
+        // 先对上这个职业（库里有就用已有的；没有就联网建档）——按名字调用时接口只认人、不干别的活
+        setItem(key, { summary: '在职业库里核对…' });
+        const first: any = await occupationStep({ name: n }, 'profile', model);
+        const id: number = first.id;
+        if (first.created) { created++; notes.push(`新建档案 · 薪资 ${first.salaries || 0} 档`); }
+        for (const part of parts) {
+          if (stopped()) break;
+          if (part === 'profile' && first.created) continue;   // 刚建档就是 profile 这一步
+          setItem(key, { summary: [...notes, `${PART_LABEL[part]}…`].join(' · ') });
+          log('Mira', `「${n}」${PART_LABEL[part]}`);
+          const r: any = await occupationStep({ id }, part, model);
+          if (part === 'profile') notes.push(`库里已有，补 ${r.changed?.length || 0} 项`);
+          if (part === 'career') { graphs++; notes.push(`图谱 ${r.skills ?? '-'} 技能 / ${r.ladder ?? '-'} 级`); }
+          if (part === 'context') { toolsN += r.items || 0; notes.push(`场所 ${r.places ?? 0} · 工具设备 ${r.items ?? 0}`); }
+          if (part === 'tasks') { tasksN += r.tasks || 0; notes.push(`典型任务 ${r.tasks ?? 0}`); }
+          setItem(key, { summary: notes.join(' · ') });
+        }
+        occDone++;
+        setItem(key, { status: 'done', summary: notes.join(' · '), link: id ? `/admin/db-occupation/${id}` : '/admin/db-occupation' });
+        log('Mira', `「${n}」完成：${notes.join('，')}`);
+      } catch (e: any) { setItem(key, { status: 'failed', summary: e.message }); log('Mira', `「${n}」失败：${e.message}`); }
+    });
+    if (stopped()) throw new Error('已停止');
+    saveRun({});
+
+    let stdSaved = 0;
+    if (stdItems.length) {
+      const tid = await createStandardTask(`🏭 ${p.title} · ${new Date().toLocaleDateString('zh-CN')}`, `虚拟工厂总任务：${text.slice(0, 200)}`, model, user?.email || '');
+      const rows = await addStandardItems(tid, stdItems);
+      for (let i = 0; i < stdItems.length; i++) {
+        if (stopped()) break;
+        const it = stdItems[i];
+        const row = rows.find(r => (r.profession || '') === it.profession && (r.query || '') === it.query) || rows[i];
+        const key = `std:${i}`;
+        if (!row) { setItem(key, { status: 'skipped', summary: '和已有检索重复，跳过' }); continue; }
+        setItem(key, { status: 'working', summary: '检索 → 核对题录与现行状态 → 转述要点…' });
+        log('Ken', `检索「${it.profession}${it.query ? ` · ${it.query}` : ''}」的标准与规程`);
+        try {
+          const r = await runStandardItem(row.id, model);
+          stdSaved += r.inserted + r.updated;
+          setItem(key, { status: r.found ? 'done' : 'failed', summary: r.found ? `${r.found} 条候选，新增 ${r.inserted}、补全 ${r.updated}` : '没检索到现行标准', link: '/admin/db-standard' });
+          log('Ken', `「${it.profession}」：${r.found} 条候选，入库 ${r.inserted + r.updated} 条`);
+        } catch (e: any) { setItem(key, { status: 'failed', summary: e.message }); log('Ken', `「${it.profession}」失败：${e.message}`); }
+      }
+    }
+    if (stopped()) throw new Error('已停止');
+
+    setItem('qa:0', { status: 'working' });
+    const report = [
+      occs.length ? `职业 ${occDone}/${occs.length} 个完成${created ? `（新建档案 ${created} 个）` : ''}${graphs ? `，发展图谱 ${graphs} 张` : ''}${toolsN ? `，工具设备 ${toolsN} 件` : ''}${tasksN ? `，典型任务 ${tasksN} 个` : ''}。` : '',
+      stdItems.length ? `标准与规程：新入库 / 补全 ${stdSaved} 条（含设备操作手册与国际参考）。` : '',
+      '新建的档案和标准都是「待审核」，请在职业实体库 / 标准库里人工过一眼；薪资、标准号查不到的都留空，没有编造。',
+    ].filter(Boolean).join('\n');
+    setItem('qa:0', { status: 'done', summary: occs.length ? `职业 ${occDone}/${occs.length} · 标准 ${stdSaved} 条` : `标准 ${stdSaved} 条`, link: occs.length ? '/admin/db-occupation' : '/admin/db-standard' });
+    log('Nova', report.replace(/\n/g, ' '));
+    log('Max', '总任务完成。');
+    return report;
+  };
+
   const run = async (taskText: string) => {
     const text = taskText.trim();
     if (!text) { message.warning('先写下总任务'); return; }
@@ -175,6 +248,9 @@ function OfficeInner() {
       setStatus('running');
       saveRun({ title: thePlan.title, plan: thePlan });
 
+      if (thePlan.line === 'occupation' || thePlan.line === 'standard') {
+        finalReport = await runKnowledgeLine(thePlan, text, model, stopped);
+      } else {
       // ── 工序 1：建名单 ──
       const companies: FactoryCompany[] = [];
       const listKey = 'list:0';
@@ -310,6 +386,7 @@ function OfficeInner() {
       setItem('qa:0', { status: 'done', summary: `平均完整度 ${stats.avg_completeness}% · 待审核 ${stats.unreviewed}`, link: '/admin/db-job' });
       log('Nova', finalReport.replace(/\n/g, ' '));
       log('Max', `总任务完成：${companies.length} 家企业，本次新入库 / 更新 ${jobsSaved} 个岗位${thePlan.steps.competitions ? `、${competitionsSaved} 场赛事` : ''}。`);
+      }
     } catch (e: any) {
       finalStatus = e.message === '已停止' ? 'stopped' : 'failed';
       log('Max', finalStatus === 'stopped' ? '已按指令停产。已经入库的数据会保留。' : `任务中断：${e.message}`);
@@ -389,49 +466,12 @@ function OfficeInner() {
     </Drawer>
   );
 
-  // ══════════ 空闲：下达总任务 ══════════
+  // ══════════ 空闲：下达总任务（入口页在 components/office/FactoryLanding） ══════════
   if (status === 'idle' && items.length === 0) {
-    return (
-      <div style={{ maxWidth: 980, margin: '0 auto', padding: mobile ? '14px 12px 28px' : '32px 20px 48px' }}>
-        <div style={{ background: '#fff', borderRadius: 24, border: `1px solid ${BRAND.border}`, boxShadow: BRAND.shadow, padding: mobile ? '12px 16px 20px' : '28px 36px 32px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <img src="/factory/office_hero.png" alt="虚拟工厂" style={{ width: mobile ? 168 : 250, height: mobile ? 168 : 250, objectFit: 'contain' }} />
-          <h1 style={{ margin: '4px 0 0', fontSize: mobile ? 20 : 24, fontWeight: 800, color: BRAND.ink }}>给 AI 工厂下达一个总任务</h1>
-          <p style={{ margin: mobile ? '6px 0 14px' : '8px 0 20px', fontSize: mobile ? 13 : 14, color: BRAND.ink3, maxWidth: 560, lineHeight: 1.7 }}>
-            一句话说清要哪些企业、要什么数据。厂长 Max 负责排产，AI 员工按「建名单 → 企业画像 → 寻源 → 抓取与提炼 → 质检」逐道工序协作，产出直接进入正式数据库。
-          </p>
-          <Input.TextArea value={task} onChange={e => setTask(e.target.value)} autoSize={{ minRows: 3, maxRows: 6 }} maxLength={1000}
-            placeholder="例如：采集 腾讯、宝洁、上汽大众 的 2027 届校招和实习岗位" style={{ fontSize: 16, borderRadius: 14, padding: '12px 16px', maxWidth: 720 }}
-            onPressEnter={e => { if (e.metaKey || e.ctrlKey) run(task); }} />
-          <div style={mobile
-            ? { display: 'flex', gap: 6, marginTop: 12, width: 'calc(100% + 32px)', margin: '12px -16px 0', padding: '0 16px', overflowX: 'auto', scrollbarWidth: 'none' }
-            : { display: 'flex', flexWrap: 'wrap', gap: 6, justifyContent: 'center', marginTop: 12, maxWidth: 760 }}>
-            {PRESETS.map(p => <Tag key={p} onClick={() => setTask(p)} style={{ cursor: 'pointer', padding: '4px 12px', borderRadius: 999, fontSize: 12, flexShrink: 0, margin: 0 }}>{p}</Tag>)}
-          </div>
-          <Button type="primary" size="large" icon={<RocketOutlined />} onClick={() => run(task)} style={{ marginTop: mobile ? 16 : 20, height: 50, minWidth: 240, width: mobile ? '100%' : undefined, borderRadius: 14, fontSize: 16, fontWeight: 700 }}>下达任务，开工</Button>
-          <Button type="link" icon={<HistoryOutlined />} onClick={() => { setHistoryOpen(true); loadHistory(); }} style={{ marginTop: 6 }}>任务历史</Button>
-          <div style={{ marginTop: 10, fontSize: 12, color: BRAND.ink4, lineHeight: 1.6 }}>单次最多 8 家企业{mobile ? '' : ' · ⌘/Ctrl + Enter 快速下达'} · 已有画像和信息源的企业自动复用，不重复消耗 Token</div>
-        </div>
-
-        {historyDrawer}
-        <div style={{ marginTop: 28 }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10, padding: '0 4px' }}>
-            <span style={{ fontSize: 13, fontWeight: 700, color: BRAND.ink2 }}>在岗 AI 员工 · {FACTORY_AGENTS.length}</span>
-            <a onClick={() => router.push('/office/employees')} style={{ fontSize: 12 }}><MessageOutlined /> 和单个 AI 员工对话 →</a>
-          </div>
-          <div style={{ display: 'grid', gap: mobile ? 8 : 10, gridTemplateColumns: mobile ? 'repeat(4, 1fr)' : 'repeat(auto-fill, minmax(120px, 1fr))' }}>
-            {FACTORY_AGENTS.map(a => (
-              <Tooltip key={a.id} title={a.description}>
-                <div onClick={() => router.push(`/office/employees?agent=${a.id}`)} style={{ background: '#fff', borderRadius: 14, border: `1px solid ${BRAND.border}`, padding: '10px 8px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', cursor: 'pointer' }}>
-                  <img src={a.pixel} alt={a.name} style={{ width: mobile ? 48 : 64, height: mobile ? 48 : 64, borderRadius: 12, objectFit: 'cover', imageRendering: 'pixelated' }} />
-                  <div style={{ marginTop: 6, fontSize: mobile ? 12 : 13, fontWeight: 700, color: BRAND.ink, whiteSpace: 'nowrap' }}>{a.name}</div>
-                  <div style={{ fontSize: mobile ? 10 : 11, color: BRAND.ink3, lineHeight: 1.4 }}>{mobile ? a.title.split(' · ')[0] : a.title}</div>
-                </div>
-              </Tooltip>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
+    return <>
+      <FactoryLanding task={task} setTask={setTask} onRun={() => run(task)} onHistory={() => { setHistoryOpen(true); loadHistory(); }} mobile={mobile} />
+      {historyDrawer}
+    </>;
   }
 
   // ══════════ 产线现场 ══════════
@@ -441,6 +481,7 @@ function OfficeInner() {
     : status === 'completed' ? { c: 'success', t: '任务完成' } : status === 'stopped' ? { c: 'warning', t: '已停产' } : { c: 'error', t: '任务中断' };
 
   return (
+    <div style={{ background: 'linear-gradient(160deg, #f7f6ff 0%, #f3f7ff 45%, #f4fbf8 100%)', minHeight: '100%' }}>
     <div style={{ maxWidth: 1240, margin: '0 auto', padding: mobile ? '12px 12px 28px' : '20px 24px 48px', display: 'flex', flexDirection: 'column', gap: mobile ? 14 : 18 }}>
       {/* 总控台 */}
       <div style={{ background: '#fff', borderRadius: 18, border: `1px solid ${BRAND.border}`, boxShadow: BRAND.shadow, padding: mobile ? 14 : 18, display: 'flex', gap: mobile ? 12 : 16, alignItems: 'flex-start', flexWrap: 'wrap' }}>
@@ -474,9 +515,9 @@ function OfficeInner() {
       {viewingHistory && <div style={{ fontSize: 12.5, color: BRAND.ink3, marginTop: -8 }}>正在查看历史任务的现场（只读）。点「再跑一次」会按同样的总任务重新开工。</div>}
 
       {/* 工序 */}
-      {FACTORY_STAGES.map((stage, idx) => {
+      {FACTORY_STAGES.filter(st => LINE_STAGES[plan?.line || 'company'].includes(st.key)).map((stage, idx) => {
         const stageItems = items.filter(i => i.stage === stage.key);
-        const planned = stage.key === 'list' || stage.key === 'qa' || (plan ? (stage.key === 'profile' ? plan.steps.profile : stage.key === 'competition' ? plan.steps.competitions : stage.key === 'source' ? plan.steps.source : plan.steps.extract) : stage.key !== 'competition');
+        const planned = stage.key === 'list' || stage.key === 'qa' || (stage.key === 'occ' ? !!plan?.occupations?.length : stage.key === 'std' ? !!plan?.std_items?.length : plan ? (stage.key === 'profile' ? plan.steps.profile : stage.key === 'competition' ? plan.steps.competitions : stage.key === 'source' ? plan.steps.source : plan.steps.extract) : stage.key !== 'competition');
         const active = stageItems.some(i => i.status === 'working');
         const finished = stageItems.length > 0 && stageItems.every(i => i.status === 'done' || i.status === 'skipped' || i.status === 'failed');
         return (
@@ -523,6 +564,7 @@ function OfficeInner() {
           )}
         </div>
       )}
+    </div>
     </div>
   );
 }

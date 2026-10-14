@@ -25,6 +25,11 @@ async function patch(url: string, body: unknown) {
 
 export interface FactoryPlan {
   title: string;
+  /** 产线（老的历史记录里没有这个字段 = 企业与岗位线） */
+  line?: 'company' | 'occupation' | 'standard';
+  occupations?: string[];
+  occ_parts?: { profile: boolean; career: boolean; context: boolean; tasks: boolean; standards: boolean } | null;
+  std_items?: { profession: string; query: string }[];
   mode: 'named' | 'list';
   companies: string[];
   list_query: string;
@@ -216,4 +221,26 @@ export function qaBriefing(s: Record<string, any>): string {
   if (s.competitions) parts.push(`赛事库里与这些企业相关的比赛 ${s.competitions} 场：报名中 ${s.competitions_open}，给设备 ${s.competitions_hardware}，给实习 / offer ${s.competitions_offer}。`);
   if (s.avg_company_completeness != null) parts.push(`企业画像平均完整度 ${s.avg_company_completeness}%，跑过完整画像流水线的 ${s.companies_crawled} 家。`);
   return parts.join('\n');
+}
+
+// ── Mira：职业建档与图谱（/api/agents/occupation，一步一个 part；库里已有的职业直接复用、只补空） ──
+export async function occupationStep(o: { id?: number; name?: string }, part: 'profile' | 'career' | 'context' | 'tasks', model: string) {
+  return post('/api/agents/occupation', { ...(o.id ? { id: o.id } : { name: o.name }), part, model });
+}
+
+// ── Ken：标准与规程（建一个标准任务 → 加检索项 → 逐条在服务端跑：检索 → 补题录与要点 → 入库） ──
+export async function createStandardTask(name: string, notes: string, model: string, createdBy: string): Promise<number> {
+  const j = await post('/api/admin/standard-tasks', { name, notes, model_id: model, created_by: createdBy });
+  return j.task.id;
+}
+export async function addStandardItems(taskId: number, items: { profession: string; query: string }[]): Promise<{ id: number; profession: string | null; query: string }[]> {
+  await post('/api/admin/standard-tasks/items', { taskId, items: items.map(i => ({ profession: i.profession, query: i.query, count: 8 })) });
+  const j = await (await fetch('/api/admin/standard-tasks', { cache: 'no-store' })).json();
+  const t = (j.tasks || []).find((x: any) => x.id === taskId);
+  return (t?.items || []).map((x: any) => ({ id: x.id, profession: x.profession, query: x.query }));
+}
+export async function runStandardItem(id: number, model: string): Promise<{ found: number; inserted: number; updated: number }> {
+  const j = await post('/api/admin/standard-searches/run', { id, model });
+  if (j.ok === false) throw new Error(j.error || '检索失败');
+  return { found: j.found || 0, inserted: j.inserted || 0, updated: j.updated || 0 };
 }

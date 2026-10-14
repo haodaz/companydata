@@ -6,11 +6,13 @@
 import fs from 'fs';
 import path from 'path';
 
-const env = Object.fromEntries(
-  [new URL('../.env.local', import.meta.url), new URL('../../programcrawler/.env.local', import.meta.url)].filter(u => fs.existsSync(u)).map(u => fs.readFileSync(u, 'utf8')).join('\n')
-    .split('\n').filter(l => l.includes('=') && !l.startsWith('#'))
-    .map(l => { const i = l.indexOf('='); return [l.slice(0, i).trim(), l.slice(i + 1).trim().replace(/^["']|["']$/g, '')]; })
-);
+// 本仓库的 .env.local 优先（同级 programcrawler 的只补本仓库没有的键——它的阿里云旧 key 已被封）
+const env = {};
+for (const u of [new URL('../.env.local', import.meta.url), new URL('../../programcrawler/.env.local', import.meta.url)].filter(u => fs.existsSync(u)))
+  for (const l of fs.readFileSync(u, 'utf8').split('\n').filter(l => l.includes('=') && !l.startsWith('#'))) {
+    const i = l.indexOf('='); const k = l.slice(0, i).trim();
+    if (!(k in env)) env[k] = l.slice(i + 1).trim().replace(/^["']|["']$/g, '');
+  }
 const KEY = env.DASHSCOPE_API_KEY;
 if (!KEY) { console.error('缺少 DASHSCOPE_API_KEY'); process.exit(1); }
 

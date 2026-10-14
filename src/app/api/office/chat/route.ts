@@ -16,6 +16,8 @@ const ACTION_SPEC: Record<string, string> = {
   competitions: '{"type":"competitions","query":"<检索主题，可空>","company":"<主办企业名，可空>","rewards":["hardware"|"cash"|"internship"|"offer"|"credits", ...]} — 用户要找比赛 / 赛事 / 黑客松 / 大赛，或问哪些比赛送设备 / 给奖金 / 给实习 / 给 offer 时使用；query 和 company 至少一个非空',
   campus_urls: '{"type":"campus_urls","company":"<企业名>"} — 用户要找某家企业的校招 / 实习入口时使用',
   extract: '{"type":"extract","url":"<http(s) 链接>","company":"<企业名，可从上下文或域名推断，推断不出就留空>"} — 用户给了一个页面链接要抓取 / 提取岗位时使用',
+  occupation: '{"type":"occupation","name":"<规范职业名>","parts":["profile","career","context","tasks"]} — 用户要查 / 建一个职业的档案、薪资、发展图谱、在哪干用什么、典型任务时使用；只要档案就 ["profile"]，说「图谱」就加 career，说「工具 / 设备 / 场所」加 context，说「任务 / 一天干什么」加 tasks，没特别说明就四项都要',
+  standards: '{"type":"standards","profession":"<职业名>","query":"<聚焦的工序 / 设备 / 场景，可空>"} — 用户要找某个职业 / 工序 / 设备的标准、规程、法规、设备操作手册时使用',
   stats: '{"type":"stats"} — 用户要质检简报 / 数据质量 / 库里有多少数据时使用',
 };
 
@@ -33,7 +35,7 @@ export async function POST(req: Request) {
       ${agent.persona}
       你的工位：${agent.station}。你的职责：${agent.description}
 
-      你所在的「智能企业数据工厂」以企业为个体，采集企业信息（画像 + 融资 / 动态 / 管理团队）、企业赛事、校招项目、应届生岗位、实习（含远程），默认不采社招。目标企业：中国企业、中外合资、海外百强。
+      你所在的「智能企业数据工厂」有三条产线：企业与岗位（企业画像 + 融资 / 动态 / 管理团队、企业赛事、校招项目、应届生岗位、实习，默认不采社招；目标企业：中国企业、中外合资、海外百强）、职业图谱（职业档案、薪资、发展图谱、场所与工具设备、典型任务）、行业标准（国标 / 行标 / 法规 / 设备操作手册）。
       同事：${FACTORY_AGENTS.filter(a => a.id !== agent.id).map(a => `${a.name}（${a.title}）`).join('、')}。
       ${agent.id === 'structurer' || agent.id === 'qa' ? `岗位字段：${JOB_FIELDS.map(f => f.label).join('、')}。核心字段（计入完整度）：${JOB_FIELDS.filter(f => f.core).map(f => f.label).join('、')}。` : ''}
 

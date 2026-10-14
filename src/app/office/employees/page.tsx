@@ -14,7 +14,7 @@ import { subtypeLabel, urlTypeMeta } from '@/lib/url-types';
 import {
   buildCompanyList, ensureCompany, profileCompany, profileCompanyFull, findAndSaveCampusUrls, createJobTask, addUrlsToTask,
   createCompetitionTask, addCompetitionItems, setCompetitionTaskStatus, runRadarItem, rewardText,
-  setJobTaskStatus, extractUrl, fetchQaStats, qaBriefing,
+  setJobTaskStatus, extractUrl, fetchQaStats, qaBriefing, occupationStep, createStandardTask, addStandardItems, runStandardItem,
 } from '@/lib/factory-pipeline';
 
 interface ChatMessage {
@@ -148,6 +148,36 @@ function EmployeesInner() {
             await setJobTaskStatus(taskId, 'completed');
             finish(r.jobs ? `处理完了：提炼出 ${r.jobs} 个岗位 / 项目，${r.saved} 个已写入岗位库，等数据同事审核。` : '页面抓下来了，但里面没有校招 / 实习岗位（可能是纯介绍页，或者岗位列表是登录后才加载的）。', { kind: 'jobs', data: { ...r, logId: logs[0].id } });
           } catch (e) { await setJobTaskStatus(taskId, 'failed'); throw e; }
+          return;
+        }
+
+        case 'occupation': {
+          const LABEL: Record<string, string> = { profile: '档案与薪资', career: '发展图谱', context: '场所与工具设备', tasks: '典型任务' };
+          const parts = (Array.isArray(action.parts) && action.parts.length ? action.parts : ['profile', 'career', 'context', 'tasks']).filter((p: string) => p in LABEL);
+          if (!parts.includes('profile')) parts.unshift('profile');
+          let oid: number | undefined;
+          const notes: string[] = [];
+          for (const part of parts) {
+            say(`「${action.name}」${LABEL[part]}…`);
+            const r: any = await occupationStep(oid ? { id: oid } : { name: action.name }, part, currentModel);
+            oid = r.id;
+            if (part === 'profile') notes.push(r.existed ? '库里已有档案' : r.created ? `新建档案，年限薪资 ${r.salaries || 0} 档` : `补了 ${r.changed?.length || 0} 项`);
+            if (part === 'career') notes.push(`发展图谱：${r.skills ?? '-'} 个技能、${r.ladder ?? '-'} 级阶梯、${r.next_roles ?? '-'} 条晋升 / 转型`);
+            if (part === 'context') notes.push(`场所 ${r.places ?? 0} 个、工具设备 ${r.items ?? 0} 件`);
+            if (part === 'tasks') notes.push(`典型任务 ${r.tasks ?? 0} 个、工位 ${r.stations ?? 0} 个`);
+          }
+          finish(`「${action.name}」做好了：\n${notes.map(n => `- ${n}`).join('\n')}\n\n档案在职业实体库（/admin/db-occupation/${oid}），新建的是「待审核」；查不到的薪资我留空了。`);
+          return;
+        }
+
+        case 'standards': {
+          say(`建检索单：${action.profession}${action.query ? ` · ${action.query}` : ''}`);
+          const tid = await createStandardTask(`💬 ${a.name} · ${action.profession}`, `单聊：${action.profession} ${action.query || ''}`.trim(), currentModel, user?.email || '');
+          const rows = await addStandardItems(tid, [{ profession: String(action.profession || ''), query: String(action.query || '') }]);
+          if (!rows.length) { finish('这条检索和已有的重复了，标准库里应该已经有结果。'); return; }
+          say('检索 → 核对标准号与现行状态 → 转述要点…');
+          const r = await runStandardItem(rows[0].id, currentModel);
+          finish(r.found ? `找到 ${r.found} 条候选，新入库 ${r.inserted} 条、补全 ${r.updated} 条（含设备操作手册与国际参考）。都在标准库（/admin/db-standard），状态「待审核」；要点是转述，不是原文。` : '没检索到管这道工序的现行标准。换个说法，比如写上具体设备或工序，再试试？');
           return;
         }
 
