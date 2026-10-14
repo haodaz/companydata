@@ -115,3 +115,48 @@ All free text in Chinese. "operation_relevance": which operations of the profess
     mode, mismatch, searchQueries,
   };
 }
+
+// ────────────────────────────────────────────
+// 3. 答题人模式（scripts/agent-research.mts 的 standards 步骤）：一题里同时「找」和「补全」——
+//    由能自己联网检索的 agent 作答（不调大模型接口），找到的每条标准直接给完整题录 + 转述要点，写库走 upsertStandards
+// ────────────────────────────────────────────
+export function buildAgentStandardsPrompt(o: { name: string; aliases?: string[] | null; intro?: string | null; responsibility?: string | null; places?: string[]; items?: string[] }, count = 8) {
+  return `
+你在给职业知识图谱的「行业标准与操作规程库」找资料：一个职业日常怎么干活，要能追到真实的标准条款、规程、操作手册上。今天是 ${today()}。
+职业：${o.name}${o.aliases?.length ? `（也叫：${o.aliases.slice(0, 6).join('、')}）` : ''}
+${o.intro ? `简介：${o.intro}\n` : ''}${o.responsibility ? `工作内容：${String(o.responsibility).slice(0, 500)}\n` : ''}${o.places?.length ? `工作场所：${o.places.slice(0, 8).join('、')}\n` : ''}${o.items?.length ? `常用仪器设备 / 软件：${o.items.slice(0, 25).join('、')}\n` : ''}
+找真正约束这个职业日常操作的（最多 ${count} 条，宁缺毋滥）：
+- 国标 / 行标 / 地标 / 团标里管这些操作的安全规程、技术规范、工艺规范（带数值窗口：温度、压力、时间、公差）、检验验收标准、服务规范；
+- 法规与主管部门规章（安全生产、职业卫生、行业准入）；
+- **仪器设备的操作手册 / 使用说明书**：上面那些常用设备的厂商官方手册（doc_type "manual"，kind "vendor"，写清型号；只要厂商官网 / 文档中心的，不要文库 / 网盘转载）；
+- 国际参考（kind "international"）：ISO / IEC / IEEE；美国劳工部 OSHA 法规（29 CFR 1910 通用行业、1926 建筑业，如 1910.147 上锁挂牌）、NIOSH、ANSI——只在它确实管到这个职业的操作时才列，国内标准优先。
+${OFFICIAL_SITES}
+- 美国：osha.gov（29 CFR 条文）、cdc.gov/niosh、ansi.org；O*NET（onetonline.org）只用来核对这个职业用哪些工具，它本身不是标准，不要列进来。
+
+每条返回完整题录 + 要点，JSON：
+{
+  "standards": [ {
+${SCHEMA.split('\n').map(l => '    ' + l).join('\n')}
+    ${POINTS_RULE.replace(/\n/g, '\n    ')}
+    "sources": { "<字段名>": "<你实际打开过的链接>" }
+  } ],
+  "summary": "中文 2–4 句：查了哪些地方、这一行的骨干标准是哪几条、哪些没查实"
+}
+规则：只列你这次真的查到的标准 / 手册，标准号和年份照官方原样写，查不到就 null，**绝不编号、编年份、编数值**；优先现行版本，被代替的写 replaced_by；
+不要列通用管理体系标准（ISO 9001 之类）除非它直接管操作；要点用自己的话转述，不抄原文；professions 里写上「${o.name}」。
+`.trim();
+}
+
+export function parseAgentStandards(parsed: any) {
+  const list = Array.isArray(parsed?.standards) ? parsed.standards : [];
+  const rows: Record<string, any>[] = [];
+  const sources: Record<string, Record<string, string>> = {};
+  for (const s of list) {
+    const r = sanitizeStandard(s || {});
+    if (!r.title) continue;
+    rows.push(r);
+    const src = s?.sources && typeof s.sources === 'object' ? Object.fromEntries(Object.entries(s.sources).filter(([, v]) => typeof v === 'string' && /^https?:\/\//.test(v as string))) as Record<string, string> : {};
+    sources[r.code || r.title] = src;
+  }
+  return { rows, sources, summary: str(parsed?.summary) };
+}

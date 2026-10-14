@@ -7,6 +7,7 @@
  *   npx tsx scripts/agent-research.mts save <文件>                  交卷：文件里的 answers 写进库，文件挪到 agent-work/done/
  *   npx tsx scripts/agent-research.mts skip <文件> "<原因>"          这题做不了（查不到可靠资料等），记一笔挪到 agent-work/skipped/
  *   step = fill（别名 / 简介等空字段 + 分年限薪资）| graph（发展图谱 + 各国 / 中国各地薪资）| context（工作场所 + 工具设备）| tasks（典型任务 + 工位）
+ *        | standards（这个职业的国标 / 行标 / 团标 / 法规 / 设备操作手册 / 国际与 OSHA 参考 → 标准库，挂到职业上）
  *
  * 题目文件：{ step, occupation_id, name, questions: [{ task, prompt }], answers: {} }
  * 作答：按每道题 prompt 里要求的 JSON 结构，把答案填进 answers[task]（是对象，不是字符串）。查不到的字段按 prompt 要求填 null / 省略，**不许编**；
@@ -22,12 +23,14 @@ const { selectAll } = await import('../src/lib/supabase-all');
 const E = await import('../src/lib/agents/occupation-enrich');
 const { upsertOccupation, upsertSalaries, saveCareerMap, upsertRegionSalaries } = await import('../src/lib/occupation-store');
 const { saveOccupationContext, saveTasksAndStations } = await import('../src/lib/entity-store');
+const { buildAgentStandardsPrompt, parseAgentStandards } = await import('../src/lib/agents/standard-radar');
+const { upsertStandards } = await import('../src/lib/standard-store');
 
 const DIR = 'agent-work';
 for (const d of ['inbox', 'done', 'skipped']) fs.mkdirSync(path.join(DIR, d), { recursive: true });
 const [cmd, a1, a2] = process.argv.slice(2);
 const flag = (k: string) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : ''; };
-const STEPS = ['fill', 'graph', 'context', 'tasks'] as const;
+const STEPS = ['fill', 'graph', 'context', 'tasks', 'standards'] as const;
 type Step = typeof STEPS[number];
 
 // ── 每一步还缺的职业（和 fix-1013 的挑法一样） ──
@@ -52,6 +55,13 @@ async function todoOf(step: Step): Promise<any[]> {
     const { data: ls } = await selectAll(() => db.from('entity_links').select('from_id').eq('from_type', 'occupation').eq('source', 'ai').eq('if_delete', false).order('id'));
     const done = new Set(ls.map((l: any) => l.from_id));
     return occ.filter((o: any) => !done.has(o.id));
+  }
+  if (step === 'standards') {
+    // 标准库里还没有一条挂到这个职业（名称 / 别名都对不上）的；答过确实没找到的（ai_sources._std_checked）不再派
+    const { data: occ } = await selectAll(() => db.from('occupations').select('id, name, aliases, intro, responsibility, ai_sources').eq('if_delete', false).order('id'));
+    const { data: st } = await selectAll(() => db.from('industry_standards').select('professions').order('id'));
+    const profs = new Set((st as any[]).flatMap(r => r.professions || []));
+    return occ.filter((o: any) => ![o.name, ...(o.aliases || [])].some((n: string) => profs.has(n)) && !o.ai_sources?._std_checked);
   }
   const { data: occ } = await selectAll(() => db.from('occupations').select('id, name, responsibility, career_map').eq('if_delete', false).order('id'));
   const { data: ts } = await selectAll(() => db.from('typical_tasks').select('occupation_id, name').eq('if_delete', false).order('id'));
@@ -84,6 +94,12 @@ async function runStep(step: Step, o: any, answers: Record<string, any> | null) 
     }
     if (step === 'context') out.ctx = await E.researchOccupationContext(o, 'agent', 0);
     if (step === 'tasks') out.tasks = await E.researchOccupationTasks(o, 'agent', 0, await taskOpts(o));
+    if (step === 'standards') {
+      const { places, items } = await taskOpts(o);
+      const prompt = buildAgentStandardsPrompt({ ...o, places, items });
+      asked.push({ task: 'Standards', prompt });
+      if (answers) out.std = parseAgentStandards(answers['Standards']);
+    }
   } catch (e) { if (answers) throw e; }
   finally { E.setResearchHook(null); }
   return { asked, out };
@@ -134,6 +150,12 @@ if (cmd === 'status') {
   }
   if (out.ctx) { const r = await saveOccupationContext(o.id, out.ctx); msg = `场所 ${r.places}、物品 ${r.items}、新关联 ${r.links}`; }
   if (out.tasks) { const w = await saveTasksAndStations(o.id, out.tasks, 'ai'); msg = `新任务 ${w.tasks}、新工位 ${w.stations}、新关联 ${w.links}`; }
+  if (out.std) {
+    const r = await upsertStandards(out.std.rows, { profession: o.name, sources: out.std.sources });
+    const { data: cur } = await db.from('occupations').select('ai_sources').eq('id', o.id).single();
+    await db.from('occupations').update({ ai_sources: { ...(cur?.ai_sources || {}), _std_checked: new Date().toISOString() } }).eq('id', o.id);
+    msg = `标准 ${out.std.rows.length} 条：新增 ${r.inserted}、补全 ${r.updated}、已有 ${r.skipped}（${out.std.rows.map((x: any) => x.code || x.title).slice(0, 6).join('；')}）`;
+  }
   fs.renameSync(a1, path.join(DIR, 'done', path.basename(a1)));
   console.log(`✓ ${doc.name}（${step}）：${msg}`);
 } else if (cmd === 'skip') {
@@ -141,10 +163,10 @@ if (cmd === 'status') {
   doc.skipped = { reason: a2 || '', at: new Date().toISOString() };
   fs.writeFileSync(path.join(DIR, 'skipped', path.basename(a1)), JSON.stringify(doc, null, 1));
   // 跳过也记进库（换一台机器 / 容器重开也不再派）：fill 记 ai_sources._fill_checked；graph 记 career_map.regions_checked_at（图谱已有时）
-  if (doc.step === 'fill') { const { data: cur } = await db.from('occupations').select('ai_sources').eq('id', doc.occupation_id).single(); await db.from('occupations').update({ ai_sources: { ...(cur?.ai_sources || {}), _fill_checked: new Date().toISOString(), _fill_skip: a2 || '' } }).eq('id', doc.occupation_id); }
+  if (doc.step === 'fill' || doc.step === 'standards') { const f = doc.step === 'fill' ? '_fill' : '_std'; const { data: cur } = await db.from('occupations').select('ai_sources').eq('id', doc.occupation_id).single(); await db.from('occupations').update({ ai_sources: { ...(cur?.ai_sources || {}), [`${f}_checked`]: new Date().toISOString(), [`${f}_skip`]: a2 || '' } }).eq('id', doc.occupation_id); }
   if (doc.step === 'graph') { const { data: cur } = await db.from('occupations').select('career_map').eq('id', doc.occupation_id).single(); if (cur?.career_map?.skills?.length) await db.from('occupations').update({ career_map: { ...cur.career_map, regions_checked_at: new Date().toISOString() } }).eq('id', doc.occupation_id); }
   fs.unlinkSync(a1);
   console.log(`跳过 ${doc.name}（${doc.step}）：${a2 || ''}`);
 } else {
-  console.log('用法：status | next <fill|graph|context|tasks> [--n 3] | save <文件> | skip <文件> "<原因>"');
+  console.log('用法：status | next <fill|graph|context|tasks|standards> [--n 3] [--ids 1-68] | save <文件> | skip <文件> "<原因>"');
 }
