@@ -68,6 +68,8 @@ export async function fetchJinaUrl(url: string): Promise<string | null> {
         signal: AbortSignal.timeout(40000), // 招聘站多为 JS 渲染，给足渲染时间
       });
       if (response.ok) return await response.text();
+      // 付费额度用完（402）：去掉 key 走免费额度（有频率限制，小批量够用），这次重试不算次数
+      if (response.status === 402 && headers.Authorization) { delete headers.Authorization; attempt--; continue; }
       if (response.status !== 429 && response.status < 500) return null;
       await new Promise(r => setTimeout(r, [4000, 12000, 0][attempt]));
     }

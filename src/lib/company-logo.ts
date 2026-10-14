@@ -22,7 +22,9 @@ async function jinaHtml(url: string): Promise<{ html: string; url: string } | nu
   try {
     const headers: Record<string, string> = { 'Content-Type': 'application/json', 'X-Return-Format': 'html', 'X-Timeout': '25' };
     if (process.env.JINA_API_KEY) headers.Authorization = `Bearer ${process.env.JINA_API_KEY}`;
-    const r = await fetch('https://r.jina.ai/', { method: 'POST', headers, body: JSON.stringify({ url }), signal: AbortSignal.timeout(40000) });
+    let r = await fetch('https://r.jina.ai/', { method: 'POST', headers, body: JSON.stringify({ url }), signal: AbortSignal.timeout(40000) });
+    // 付费额度用完（402）就走免费额度再试一次
+    if (r.status === 402 && headers.Authorization) { delete headers.Authorization; r = await fetch('https://r.jina.ai/', { method: 'POST', headers, body: JSON.stringify({ url }), signal: AbortSignal.timeout(40000) }); }
     if (!r.ok) return null;
     const html = await r.text();
     return html.length > 200 ? { html, url } : null;

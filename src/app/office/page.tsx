@@ -332,6 +332,7 @@ function OfficeInner() {
 
       // ── 工序 3：寻源 ──
       const toExtract: { url: string; company: string; company_id: number; hint: string }[] = [];
+      const spares = new Map<string, any[]>(); // 每家的备用入口：选中的页面抓不到时换下一条，最多补 2 次
       if (thePlan.steps.source) {
         await pool(companies, 2, async c => {
           if (stopped()) return;
@@ -343,7 +344,9 @@ function OfficeInner() {
             let urls: any[] = existing.ok ? existing.data : [];
             if (urls.length) log('Jarvis', `「${c.name}」库里已有 ${urls.length} 条校招信息源，直接复用。`);
             else { log('Jarvis', `开始寻找「${c.name}」的校招与实习入口`); urls = await findAndSaveCampusUrls(c, model); }
-            const picked = pickUrlsToExtract(urls, thePlan!.urls_per_company);
+            const ranked = pickUrlsToExtract(urls, thePlan!.urls_per_company + 2);
+            const picked = ranked.slice(0, thePlan!.urls_per_company);
+            spares.set(c.name, ranked.slice(thePlan!.urls_per_company));
             picked.forEach(u => toExtract.push({ url: u.url, company: c.name, company_id: c.id, hint: thePlan!.hint }));
             setItem(key, { status: urls.length ? 'done' : 'failed', summary: urls.length ? `${urls.length} 条官方信息源，选 ${picked.length} 个送去抓取` : '没找到官方校招入口', link: `/admin/db-company/${c.id}` });
             log('Jarvis', `「${c.name}」：${urls.length} 条信息源。`);
@@ -362,7 +365,9 @@ function OfficeInner() {
         addItems(taskLogs.map((l: any) => ({ key: `extract:${l.id}`, stage: 'extract' as StageKey, agent: 'structurer' as AgentId, status: 'idle' as ItemStatus, title: l.company, detail: l.target_url })));
 
         let failed = 0;
-        for (const l of taskLogs) {
+        const queue: any[] = [...taskLogs];
+        for (let qi = 0; qi < queue.length; qi++) {
+          const l = queue[qi];
           if (stopped()) break;
           const key = `extract:${l.id}`;
           setItem(key, { status: 'working' });
@@ -371,9 +376,19 @@ function OfficeInner() {
             jobsSaved += r.saved;
             setItem(key, { status: 'done', summary: `提炼 ${r.jobs} 个岗位 / 项目，${r.saved} 个已入库`, link: '/admin/db-job' });
             saveRun({ jobs_saved: jobsSaved });
-          } catch (e: any) { failed++; setItem(key, { status: 'failed', summary: e.message }); }
+          } catch (e: any) {
+            failed++; setItem(key, { status: 'failed', summary: e.message });
+            // 这个入口抓不到：换这家的下一条信息源再试
+            const next = spares.get(l.company)?.shift();
+            if (next && !stopped()) {
+              log('Kelly', `[${l.company}] 这个入口没抓到，换下一条：${next.url}`);
+              const all = await addUrlsToTask(taskId, [{ url: next.url, company: l.company, company_id: l.company_id, hint: thePlan.hint }]).catch(() => [] as any[]);
+              const nl = all.find((x: any) => x.target_url === next.url && !queue.some(q => q.id === x.id));
+              if (nl) { queue.push(nl); addItems([{ key: `extract:${nl.id}`, stage: 'extract' as StageKey, agent: 'structurer' as AgentId, status: 'idle' as ItemStatus, title: nl.company, detail: nl.target_url }]); }
+            }
+          }
         }
-        await setJobTaskStatus(taskId, stopped() ? 'draft' : failed === taskLogs.length ? 'failed' : 'completed');
+        await setJobTaskStatus(taskId, stopped() ? 'draft' : failed === queue.length ? 'failed' : 'completed');
       } else if (thePlan.steps.extract) {
         log('Max', '没有可抓取的页面，跳过抓取与提炼。');
       }

@@ -54,6 +54,7 @@ export async function POST(req: Request) {
       - 只有当用户明确要你干活、且动作所需参数齐全时才给 action；缺参数就在 reply 里问清楚，action 为 null。
       - 用户的需求不归你管时，action 为 null，并告诉他该找哪位同事。
       - 不要编造数据、链接或岗位；你还没执行动作之前不知道结果，不要在 reply 里假装已经有结果。
+      - 开工前不要对企业 / 职业 / 标准下任何事实判断（是否在国标或职业分类大典里、名称规不规范、薪资多少、有没有这条标准……）：这些要等动作查完才知道，凭印象说很可能是错的。
     `;
 
     const result = await generateContent(prompt, modelId, { jsonMode: true });

@@ -37,6 +37,7 @@ function cleanUrls(raw: any, allowed: string[], fallbackType: FoundUrl['type']):
   for (const u of Array.isArray(raw) ? raw : []) {
     const url = typeof u?.url === 'string' ? u.url.trim() : '';
     if (!/^https?:\/\//i.test(url)) continue;
+    if (/\.\.\.|…/.test(url)) continue; // 模型把长链接截断成 ...，打不开
     const key = url.toLowerCase().replace(/\/+$/, '');
     if (seen.has(key)) continue;
     seen.add(key);
@@ -56,6 +57,7 @@ function cleanUrls(raw: any, allowed: string[], fallbackType: FoundUrl['type']):
 // --- 校招 + 实习（重点；社招暂不采集，只保留招聘总入口作线索）---
 export async function findCampusUrls(company: string, unit: string, modelId: string = 'gemini-3.8-flash'): Promise<FinderUrlResult> {
   const prompt = `
+    检索对象：${company}${unit ? `（${unit}）` : ""}。先用中文搜「${company} 校园招聘 官网」「${company} 实习生招聘」「${company} 招聘官网」，海外企业再加英文 careers / graduate 关键词。
     You are an expert campus-recruiting intelligence search assistant.
     Task: Find the OFFICIAL webpages where a company recruits STUDENTS and FRESH GRADUATES: campus recruitment, graduate programmes, internships (including REMOTE / online internships), management-trainee and special talent programmes.
     We do NOT need experienced-hire (社招) job lists.
@@ -112,6 +114,7 @@ export async function findCampusUrls(company: string, unit: string, modelId: str
 // --- 企业官网 + 企业信息 ---
 export async function findHomepageUrls(company: string, unit: string, modelId: string = 'gemini-3.8-flash'): Promise<FinderUrlResult> {
   const prompt = `
+    检索对象：${company}${unit ? `（${unit}）` : ""}。先用中文搜「${company} 官网」「${company} 公司简介」，海外企业再用英文名搜 official website。
     You are an expert corporate-research search assistant.
     Task: Find the OFFICIAL websites of a company and the official pages that describe the company.
 

@@ -82,7 +82,8 @@ async function flywheelExamples(): Promise<Example[]> {
     fetch('/api/admin/kg-questions/insights').then(r => r.json()).catch(() => null),
   ]);
   const out: Example[] = [];
-  const all = (fw?.dims?.company || []) as any[];
+  // 热度只来自百业页面浏览（lab_*）的不算真实企业需求（比如百业空间里的「规培基地」），排除
+  const all = ((fw?.dims?.company || []) as any[]).filter(c => Object.keys(c.sources || {}).some(k => !k.startsWith('lab_')));
   // 热度飞轮：近 7 天比前 7 天升得最快的企业
   const up = all.filter(c => c.supply?.inLibrary && c.heat7 > c.heatPrev7).sort((a, b) => (b.heat7 - b.heatPrev7) - (a.heat7 - a.heatPrev7)).slice(0, 3);
   if (up.length) out.push({ title: '热度飞轮 · 升温最快', text: `给 ${up.map(c => c.label).join('、')} 刷新校招和实习岗位`, out: '岗位库',
@@ -103,7 +104,7 @@ async function flywheelExamples(): Promise<Example[]> {
   const byOcc = new Map<string, Set<string>>();
   for (const s of fills) byOcc.set(s.occupation, (byOcc.get(s.occupation) || new Set()).add(s.partLabel));
   const occ = Array.from(byOcc).slice(0, 3);
-  if (occ.length) out.push({ title: '问答飞轮 · 和我聊答不上的', text: occ.map(([o, ps]) => `给 ${o} 补${Array.from(ps).join('、')}`).join('；'), out: '职业库 · 知识图谱',
+  if (occ.length) out.push({ title: '问答飞轮 · 和我聊答不上的', text: `只补这几块，别的不动：${occ.map(([o, ps]) => `${o}——${Array.from(ps).join('、')}`).join('；')}`, out: '职业库 · 知识图谱',
     why: `依据：${fills.slice(0, 3).map(s => `${s.occupation} · ${s.topicLabel}（${(s.reasons || [])[0] || ''}）`).join('；')}` });
   return out;
 }

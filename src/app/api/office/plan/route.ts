@@ -42,7 +42,7 @@ export async function POST(req: Request) {
         "title": "<12 字以内的任务标题>",
         "line": "company" | "occupation" | "standard",
         "occupations": ["职业名", ...],    // line=occupation 时填：用户点名的职业照写；用户只给了方向（如「新能源方向的 5 个职业」）就由你列出最有代表性的规范职业名（中文、不带公司和级别），最多 ${MAX_OCCUPATIONS} 个；其它线为 []
-        "occ_parts": { "profile": true, "career": true|false, "context": true|false, "tasks": true|false, "standards": true|false },   // line=occupation 时：只开用户点到的部分——「图谱 / 发展路径 / 晋升」→ career，「工具 / 设备 / 场所 / 在哪干」→ context，「任务 / 一天干什么」→ tasks，「档案 / 薪资 / 简介」→ profile，「标准 / 规程 / 手册」→ standards；用户说「完整 / 全套 / 建档 / 全部」或完全没说要哪部分时，profile+career+context+tasks 全开、standards 关
+        "occ_parts": { "profile": true, "career": true|false, "context": true|false, "tasks": true|false, "standards": true|false },   // line=occupation 时：只开用户点到的部分——「图谱 / 发展路径 / 晋升」→ career，「工具 / 设备 / 场所 / 在哪干」→ context，「任务 / 一天干什么」→ tasks，「档案 / 薪资 / 简介」→ profile，「标准 / 规程 / 手册」→ standards；用户说「完整 / 全套 / 建档 / 全部」或完全没说要哪部分时，profile+career+context+tasks 全开、standards 关；用户说「只补 / 只要 / 别的不动」时严格只开点到的部分（「职业画像 / 年限薪资」→ profile，「场所与工具」→ context）
         "std_items": [{ "profession": "职业名", "query": "聚焦的工序 / 设备 / 场景，可空" }],   // line=standard 时填，最多 ${MAX_STD_ITEMS} 条；line=occupation 且 occ_parts.standards=true 时可空（每个职业自动查一条）；其它为 []
         "mode": "named" | "list",          // named = 用户点名了具体企业；list = 用户只描述了一类企业，需要先建名单
         "companies": ["企业名", ...],       // mode=named 时填，保持用户的写法，最多 ${MAX_COMPANIES} 家；mode=list 时为 []
@@ -76,7 +76,10 @@ export async function POST(req: Request) {
 
     const line = p.line === 'occupation' || p.line === 'standard' ? p.line : 'company';
     const occupations: string[] = Array.from(new Set((Array.isArray(p.occupations) ? p.occupations : []).map((x: unknown) => String(x).trim()).filter(Boolean))).slice(0, MAX_OCCUPATIONS) as string[];
-    const op = p.occ_parts || {};
+    let op = p.occ_parts || {};
+    // 用户说「只补 / 只要 / 别的不动」时按关键词定死要做的部分，不让模型自作主张多开（问答飞轮的建议就是这么写的）
+    const t = String(task);
+    if (/只补|只要|别的不动/.test(t)) op = { profile: /画像|薪资|档案|简介|要求/.test(t), career: /图谱|发展|晋升|路径/.test(t), context: /场所|工具|设备/.test(t), tasks: /任务/.test(t), standards: /标准|规程|手册/.test(t) };
     const stdItems = (Array.isArray(p.std_items) ? p.std_items : []).map((x: any) => ({ profession: String(x?.profession || '').trim(), query: String(x?.query || '').trim() })).filter((x: any) => x.profession || x.query).slice(0, MAX_STD_ITEMS);
     if (line !== 'company') {
       return NextResponse.json({

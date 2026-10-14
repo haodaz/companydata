@@ -59,6 +59,9 @@ export async function resolveListUrl(url: string): Promise<string> {
     // 根地址或内推入口（/referral/…）：从首页读主站点路径。页面里的 "path" 是主站点（生数是 index、云启是 yunqijobs），
     // "website_path" 可能是另一个没岗位的入口（生数的 692892），只在没有主路径时兜底
     const first = u.pathname.split('/').filter(Boolean)[0];
+    // moka 是 # 路由：/campus-recruitment/<机构>/jobs 这种丢了 # 的地址打开是空页，改回 #/jobs
+    const moka = /mokahr\.com$/i.test(u.hostname) && !u.hash && u.pathname.match(/^\/((?:campus|social)[-_]recruitment\/[^/]+)\/(.+?)\/?$/i);
+    if (moka) return `${u.origin}/${moka[1]}#/${moka[2]}`;
     if (FEISHU.test(u.hostname) && (!first || first === 'referral')) {
       const html = await fetch(u.origin + '/', { signal: AbortSignal.timeout(15000) }).then(r => r.text());
       const seg = html.match(/(?<!website_)path\\?"\s*:\s*\\?"(?!https)([a-z0-9_-]+)/i)?.[1] || html.match(/website_path\\?"\s*:\s*\\?"([a-z0-9_-]+)/i)?.[1];
