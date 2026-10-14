@@ -1,0 +1,414 @@
+diff --git a/src/app/api/lab/route-problem/route.ts b/src/app/api/lab/route-problem/route.ts
+index bafb3b5..f70f5b9 100644
+--- a/src/app/api/lab/route-problem/route.ts
++++ b/src/app/api/lab/route-problem/route.ts
+@@ -6,6 +6,7 @@ import { logTokenUsage } from '@/lib/token-logger';
+ import { familyOf } from '@/lib/career-family';
+ import { labError } from '@/lib/skill-lab-server';
+ import { trackDemand } from '@/lib/flywheel/signals';
++import { labModel } from '@/lib/lab-guest';
+ 
+ export const runtime = 'nodejs';
+ export const maxDuration = 60;
+@@ -19,7 +20,8 @@ export const maxDuration = 60;
+  */
+ export async function POST(req: NextRequest) {
+   try {
+-    const { problem, model } = await req.json();
++    const { problem, model: asked } = await req.json();
++    const model = labModel(req, asked);
+     const q = String(problem || '').trim().slice(0, 600);
+     if (q.length < 4) return NextResponse.json({ ok: false, error: '把问题说具体一点' }, { status: 400 });
+     trackDemand(req, { source: 'lab_problem', query: q });
+diff --git a/src/app/api/lab/spaces/[id]/solve/route.ts b/src/app/api/lab/spaces/[id]/solve/route.ts
+index 188fa2e..74d4ec7 100644
+--- a/src/app/api/lab/spaces/[id]/solve/route.ts
++++ b/src/app/api/lab/spaces/[id]/solve/route.ts
+@@ -3,6 +3,7 @@ import { withCost } from '@/lib/token-logger';
+ import { supabaseAdmin } from '@/lib/supabase';
+ import { solveWithSkill } from '@/lib/agents/skill-lab';
+ import { labError, loadSpace, skillRef } from '@/lib/skill-lab-server';
++import { labModel } from '@/lib/lab-guest';
+ 
+ export const runtime = 'nodejs';
+ export const maxDuration = 300;
+@@ -11,7 +12,8 @@ export const maxDuration = 300;
+ export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+   try {
+     const { id } = await params;
+-    const { problem, actor, location, tz, context, model } = await req.json();
++    const { problem, actor, location, tz, context, model: asked } = await req.json();
++    const model = labModel(req, asked);
+     if (!problem || String(problem).trim().length < 10) return NextResponse.json({ ok: false, error: '把问题说具体一点' }, { status: 400 });
+ 
+     const space = await loadSpace(id);
+diff --git a/src/app/api/lab/spaces/[id]/submit/route.ts b/src/app/api/lab/spaces/[id]/submit/route.ts
+index 478ffa9..68f9064 100644
+--- a/src/app/api/lab/spaces/[id]/submit/route.ts
++++ b/src/app/api/lab/spaces/[id]/submit/route.ts
+@@ -5,6 +5,7 @@ import { answerTask, gradeAnswer, operateSim } from '@/lib/agents/skill-lab';
+ import { sanitizeTrace, traceMatch, traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
+ import { chapterExpertTrace, chapterTask, labError, loadSpace, pickChapter, recordInvocation, skillRef } from '@/lib/skill-lab-server';
+ import { INVITED } from '@/lib/lab-invite';
++import { labModel } from '@/lib/lab-guest';
+ 
+ export const runtime = 'nodejs';
+ export const maxDuration = 300;
+@@ -22,7 +23,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
+     const mode: 'human' | 'expert' | 'ai' = ['expert', 'ai'].includes(body.mode) ? body.mode : 'human';
+     // 受邀的老师傅只来教，不来考人、也不替 AI 作答
+     if (req.headers.get(INVITED) === id && mode !== 'expert') return NextResponse.json({ ok: false, error: '邀请链接只能用来教' }, { status: 403 });
+-    const model = body.model || undefined;
++    const model = labModel(req, body.model);
+ 
+     const space = await loadSpace(id);
+     const skill = skillRef(space.skill);
+diff --git a/src/app/lab/LabShell.tsx b/src/app/lab/LabShell.tsx
+index 762d98b..98d56f3 100644
+--- a/src/app/lab/LabShell.tsx
++++ b/src/app/lab/LabShell.tsx
+@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
+ import { Select } from 'antd';
+ import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
+ import { UserProvider, useUser } from '@/lib/user-context';
++import { GUEST_MODEL } from '@/lib/lab-guest';
+ 
+ /**
+  * 数字技能空间（实验）独立外壳：浅色科技感，和数据后台 / 虚拟工厂刻意长得不一样。
+@@ -12,7 +13,7 @@ import { UserProvider, useUser } from '@/lib/user-context';
+  */
+ const LAB_CSS = `
+ .lab { --v: #6a5cff; --c: #12b5cb; --p: #ff5fa2; --ink: #171a2e; --ink2: #4a4f6a; --ink3: #8389a6; --line: rgba(106,92,255,.16);
+-  min-height: 100dvh; position: relative; color: var(--ink); background: #f5f6ff; overflow-x: hidden;
++  min-height: 100dvh; position: relative; color: var(--ink); background: #f5f6ff; overflow-x: clip;   /* clip 而不是 hidden：hidden 会让 .lab 变成滚动容器，「一天」页左侧时间轴的 sticky 就钉不住了 */
+   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+ .lab-mono { font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; }
+ 
+@@ -197,7 +198,9 @@ function Shell({ children }: { children: React.ReactNode }) {
+   useEffect(() => { setGuest(new URLSearchParams(window.location.search).has('invite')); }, [path]);
+   const { currentModel, setCurrentModel } = useModel();
+   // 首页是公开的：没登录的人看不到模型下拉和后台入口，那是给干活的人用的
+-  const { user } = useUser();
++  const { user, loading: userLoading } = useUser();
++  // 游客（没登录）模型锁死在 Gemini 3.8 Flash：浏览器里存过别的模型也不算（接口那边也锁着，见 lib/lab-guest.ts）
++  useEffect(() => { if (!userLoading && !user && currentModel !== GUEST_MODEL) setCurrentModel(GUEST_MODEL); }, [userLoading, user, currentModel, setCurrentModel]);
+   // 深浅两套：大屏投放、学校一体机、白天的教室都可能更适合浅色。按设备记住；
+   // 也认 ?theme=light / ?theme=dark，方便把一体机的链接直接钉死成某一套。
+   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+@@ -213,10 +216,13 @@ function Shell({ children }: { children: React.ReactNode }) {
+   const NAV = [
+     { k: '/lab', t: '首页', on: (p: string) => p === '/lab' },
+     { k: '/lab/spaces', t: '百业工厂', on: (p: string) => p.startsWith('/lab/spaces') || p.startsWith('/lab/studio') || p.startsWith('/lab/assets') || p.startsWith('/lab/logic') || p.startsWith('/lab/admin') },
+-    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || p.startsWith('/lab/me') || p.startsWith('/lab/cert') || /^\/lab\/(?!spaces|studio|gallery|assets|logic|beta|admin)[^/]+$/.test(p) },
++    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || /^\/lab\/(?!spaces|studio|gallery|assets|logic|beta|admin|me|cert)[^/]+$/.test(p) },
++    // 我的证书：游客也有（按浏览器本地的访客编号攒，里面有示范证书），登录后并上账号的
++    { k: '/lab/me', t: '我的证书', on: (p: string) => p.startsWith('/lab/me') || p.startsWith('/lab/cert') },
+   ];
+   return (
+-    <div className="lab" data-theme={theme}>
++    // 首页只有深色（深浅切换是给空间用的）
++    <div className="lab" data-theme={path === '/lab' ? 'dark' : theme}>
+       <style>{LAB_CSS}</style>
+       <div className="lab-bg"><div className="lab-blob b1" /><div className="lab-blob b2" /><div className="lab-blob b3" /><div className="lab-grid" /></div>
+ 
+@@ -229,7 +235,8 @@ function Shell({ children }: { children: React.ReactNode }) {
+           </div>
+         </div>
+         {!guest && <nav className="lab-nav">
+-          {NAV.map(x => {
++          {/* 游客（没登录）看不到百业工厂：那是造空间的地方，要登录；右上角给登录入口 */}
++          {NAV.filter(x => user || userLoading || x.k !== '/lab/spaces').map(x => {
+             const on = x.on(path);
+             return (
+               <button key={x.k} onClick={() => router.push(x.k)} className={`lab-nav-i${on ? ' on' : ''}`}>
+@@ -240,11 +247,14 @@ function Shell({ children }: { children: React.ReactNode }) {
+           })}
+         </nav>}
+         <div style={{ flex: 1 }} />
+-        <button className="lab-theme" onClick={flipTheme} title={theme === 'dark' ? '切到浅色（亮环境、投影、一体机）' : '切到深色'} aria-label="切换深浅色">
++        {path !== '/lab' && <button className="lab-theme" onClick={flipTheme} title={theme === 'dark' ? '切到浅色（亮环境、投影、一体机）' : '切到深色'} aria-label="切换深浅色">
+           {theme === 'dark'
+             ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" /></svg>
+             : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" /></svg>}
+-        </button>
++        </button>}
++        {!guest && !user && !userLoading && (
++          <button className="lab-btn ghost sm" onClick={() => router.push(`/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`)}>登录</button>
++        )}
+         {!guest && user && <>
+         <Select className="lab-head-model" size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 170 }} popupMatchSelectWidth={250}
+           options={MODEL_OPTIONS.map(m => ({ value: m.id, label: <span>{m.label}<ModelBadge text={m.badge} /></span> }))} />
+diff --git a/src/app/lab/gallery/page.tsx b/src/app/lab/gallery/page.tsx
+index 9831dff..ca5469f 100644
+--- a/src/app/lab/gallery/page.tsx
++++ b/src/app/lab/gallery/page.tsx
+@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
+ import Image from 'next/image';
+ import { App } from 'antd';
+ import { familyOf } from '@/lib/career-family';
++import { featuredIndex } from '@/lib/lab-featured';
++import { useNicknames } from '@/components/kg/useNicknames';
+ 
+ /**
+  * 体验百业 · 体验馆：所有已发布的职业空间，像应用商店一样摆出来，点开就玩。
+@@ -18,6 +20,7 @@ const GALLERY_CSS = `
+ .gal-cover::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,12,30,0) 40%, rgba(10,12,30,.72) 100%); }
+ .gal-badges { position: absolute; left: 12px; top: 12px; display: flex; gap: 6px; flex-wrap: wrap; z-index: 2; }
+ .gal-badge { padding: 3px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; color: #fff; background: rgba(10,12,30,.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.22); white-space: nowrap; }
++.gal-badge.bench { background: linear-gradient(120deg, #6a5cff, #12b5cb); border-color: rgba(255,255,255,.45); }
+ .gal-who { position: absolute; left: 14px; right: 14px; bottom: 12px; z-index: 2; display: flex; align-items: flex-end; gap: 12px; color: #fff; }
+ .gal-who img { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; object-position: 54% 10%; border: 2px solid rgba(255,255,255,.95); background: rgba(255,255,255,.7); flex-shrink: 0; }
+ .gal-day { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; font-size: 11.5px; color: var(--ink3); }
+@@ -26,10 +29,17 @@ const GALLERY_CSS = `
+ .gal-fams::-webkit-scrollbar { display: none; }
+ `;
+ 
++/** 一整天的故事都发布了：至少三章，而且没有还在草稿里的 */
++const fullDay = (s: any) => { const c = s.chapters || {}; return c.published >= 3 && c.published === c.total; };
++// 精选名单（做得特别精致的）永远在最前，按名单顺序；其余按有工位 / 完整一天 / 工位多少排
++const rank = (s: any) => { const f = featuredIndex(s.id); return f >= 0 ? 10000 - f : rawRank(s); };
++const rawRank = (s: any) => (s.features?.bench ? 100 : 0) + (fullDay(s) ? 50 : 0) + Math.min(s.features?.benchChapters || 0, 9) * 2 + (s.chapters?.published || 0) * .5 + (s.cover ? 1 : 0);
++
+ export default function GalleryPage() {
+   const router = useRouter();
+   const { message } = App.useApp();
+   const [spaces, setSpaces] = useState<any[] | null>(null);
++  const { map: nicks } = useNicknames();   // 自己给数字职人起的名字（只有自己看得到）
+   const [err, setErr] = useState('');
+   const [q, setQ] = useState('');
+   const [fam, setFam] = useState('');
+@@ -49,8 +59,8 @@ export default function GalleryPage() {
+       const text = [p.name, p.role, p.tagline, prof, jd.title, jd.company, jd.location, s.skill?.domain, family].filter(Boolean).join(' ').toLowerCase();
+       return { s, jd, p, family, text };
+     })
+-    // 有场景图的排前面：体验馆第一眼要好看
+-    .sort((a, b) => Number(!!b.s.cover) - Number(!!a.s.cover)), [spaces]);
++    // 排序：精选名单最前；然后故事全（一整天的章节都发布了）且有工位的；再是有工位的、故事全的；同档里工位章节多、有场景图的靠前
++    .sort((a, b) => rank(b.s) - rank(a.s)), [spaces]);
+ 
+   const fams = useMemo(() => {
+     const m = new Map<string, number>();
+@@ -64,7 +74,7 @@ export default function GalleryPage() {
+   }, [items, q, fam]);
+ 
+   const share = async (id: string) => {
+-    const url = `${window.location.origin}/lab/${id}?m=test`;
++    const url = `${window.location.origin}/lab/${id}?m=test&from=gallery`;
+     try { await navigator.clipboard.writeText(url); message.success('链接已复制，发给别人点开就能玩'); }
+     catch { message.info(url); }
+   };
+@@ -108,23 +118,23 @@ export default function GalleryPage() {
+         <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))' }}>
+           {shown.map(({ s, jd, p, family }, i) => {
+             const ch = s.chapters || {};
+-            // 点卡片先到这位数字职人的主页（他是谁、学自谁、多少人考过、我教你 / 考考你 / 你教我）；「开始体验」直接进考考你
+-            const home = () => router.push(`/lab/${s.id}`);
+-            const go = () => router.push(`/lab/${s.id}?m=test`);
++            // 点卡片先到这位数字职人的主页（体验视角 ?from=gallery：只有我教你 / 考考你 / 问问我 / 我的行当）；「开始体验」直接进考考你
++            const home = () => router.push(`/lab/${s.id}?from=gallery`);
++            const go = () => router.push(`/lab/${s.id}?m=test&from=gallery`);
+             return (
+               <div key={s.id} className="lab-glass hover lab-in gal-card" style={{ animationDelay: `${Math.min(i, 12) * 50}ms` }} onClick={home}>
+                 <div className="gal-cover">
+                   {s.cover && <Image className="bg" src={s.cover} alt="" fill sizes="(max-width: 700px) 100vw, 400px" />}
+                   <div className="gal-badges">
+-                    {ch.published > 1 && <span className="gal-badge">一天 · {ch.published} 章</span>}
+-                    {s.features?.bench && <span className="gal-badge">虚拟工位</span>}
++                    {s.features?.bench && <span className="gal-badge bench">⚙ 虚拟工位{s.features.benchChapters > 1 ? ` · ${s.features.benchChapters} 处` : ''}</span>}
++                    {fullDay(s) ? <span className="gal-badge">完整一天 · {ch.published} 章</span> : ch.published > 1 && <span className="gal-badge">一天 · {ch.published} 章</span>}
+                     {s.features?.immersive && <span className="gal-badge">沉浸场景</span>}
+                   </div>
+                   <div className="gal-who">
+                     {p.avatar && <Image src={p.avatar} alt="" width={58} height={58} sizes="58px" />}
+                     <div style={{ minWidth: 0, textShadow: '0 1px 6px rgba(0,0,0,.5)' }}>
+                       <div style={{ fontSize: 17, fontWeight: 800, lineHeight: 1.3 }}>{p.role || jd.career?.profession || jd.title}</div>
+-                      <div style={{ fontSize: 12.5, opacity: .85, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name ? `${p.name} 带你上岗` : jd.company}</div>
++                      <div style={{ fontSize: 12.5, opacity: .85, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{nicks[s.id] || p.name ? `${nicks[s.id] || p.name} 带你上岗` : jd.company}</div>
+                     </div>
+                   </div>
+                 </div>
+diff --git a/src/app/lab/logic/page.tsx b/src/app/lab/logic/page.tsx
+index d1a8476..acec408 100644
+--- a/src/app/lab/logic/page.tsx
++++ b/src/app/lab/logic/page.tsx
+@@ -90,7 +90,7 @@ export default function LabLogicPage() {
+         <h2 id="pipeline">2 · 总流程：从 JD 到空间</h2>
+         <div className="lg-legend"><span><i style={{ background: 'rgba(106,92,255,.5)' }} />大模型生成</span><span><i style={{ background: 'rgba(18,181,203,.6)' }} />自动校验 / 质量门</span><span><i style={{ background: 'rgba(255,95,162,.55)' }} />人</span><span><i style={{ background: 'rgba(23,26,46,.15)' }} />确定性程序</span></div>
+         <div className="lg-flow">
+-          <div className="lg-node"><b>输入</b><span>真实 JD（岗位库）或一个职业名</span></div>
++          <div className="lg-node"><b>输入</b><span>真实 JD（岗位库挑一条，或粘贴一份全新的）或一个职业名</span></div>
+           <div className="lg-node ai"><b>解析 · 职业结构化</b><span>职业名 → 典型 JD + 生涯地图 {F('career.ts')}</span></div>
+           <div className="lg-node ai"><b>任务 + 故事线</b><span>任务、评分标准、4–8 步决策 {F('generateTask')}</span></div>
+           <div className="lg-node ai"><b>技能卡 + 示范</b><span>技能草案 + 每步示范轨迹 {F('draftSkill')}</span></div>
+diff --git a/src/app/lab/spaces/page.tsx b/src/app/lab/spaces/page.tsx
+index 55deb6f..ee70ac3 100644
+--- a/src/app/lab/spaces/page.tsx
++++ b/src/app/lab/spaces/page.tsx
+@@ -40,6 +40,8 @@ export default function LabHome() {
+   const [jobsLoading, setJobsLoading] = useState(false);
+   const [buildInfo, setBuildInfo] = useState<{ phase: string; detail?: string; error?: string } | null>(null);
+   const [profession, setProfession] = useState('');
++  // 粘贴一份全新 JD（不在岗位库里）
++  const [paste, setPaste] = useState({ title: '', company: '', text: '' });
+   const [buildSince, setBuildSince] = useState(0);
+   const [now, setNow] = useState(0);
+   // 「我有个问题」：一句话分给最合适的 1–3 位数字职人
+@@ -128,14 +130,19 @@ export default function LabHome() {
+     } catch (e: any) { message.error(e.message); }
+   };
+ 
+-  const buildFromJob = async (job: any | null, prof?: string) => {
++  const buildFromJob = async (job: any | null, prof?: string, pasted?: { title: string; company: string; text: string }) => {
+     const buildId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+     setPick(null);
+     const startedAt = Date.now();
+     setBuildInfo({ phase: prof ? '结构化职业 · 推断典型岗位' : '读取岗位 JD' }); setBuildSince(startedAt); setNow(startedAt);
++    // 粘贴的 JD 也走「从 JD 建」的展示，公司 / 岗位名用填的（没填就叫新 JD）
++    if (pasted) job = { institute_or_company_name: pasted.company.trim() || '新 JD', name: pasted.title.trim() || '未命名岗位' };
+     setBuilding(prof ? { company: '职业探索', title: prof, buildId, career: true } : { company: job.institute_or_company_name, title: job.name, buildId });
+     try {
+-      const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(prof ? { profession: prof, model: currentModel, buildId } : { jobId: job.id, model: currentModel, buildId }) })).json();
++      const payload = prof ? { profession: prof, model: currentModel, buildId }
++        : pasted ? { jdText: pasted.text.trim(), title: pasted.title.trim(), company: pasted.company.trim(), model: currentModel, buildId }
++        : { jobId: job.id, model: currentModel, buildId };
++      const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })).json();
+       if (!json.ok) throw new Error(json.error);
+       setBuilding(null);
+       setDone({ ...json, secs: Math.round((Date.now() - startedAt) / 1000), name: prof || job.name, company: prof ? '职业探索' : job.institute_or_company_name, career: !!prof });
+@@ -177,7 +184,7 @@ export default function LabHome() {
+     // 打标记只认「这人是干什么的」，不拿 tagline 和能力词那堆自由文本去撞——
+     // 不然西点师会因为一句「面糊是有记忆的材料」被打上「高精尖材料」
+     const tags = tagsOf([p.role, prof, jd.title, s.skill?.name, s.skill?.domain].filter(Boolean).join(' '));
+-    tags.unshift(jd.kind === 'career' ? '职业探索' : '真实 JD');
++    tags.unshift(jd.kind === 'career' ? '职业探索' : jd.kind === 'pasted' ? '粘贴 JD' : '真实 JD');
+     if (s.features?.immersive) tags.unshift('沉浸场景');
+     if (s.features?.bench) tags.unshift('虚拟工位');
+     return { s, tags, text: text.toLowerCase(), family: familyOf(prof, s.skill?.domain, jd.title, jd.company) };
+@@ -474,7 +481,7 @@ export default function LabHome() {
+         <div className="lab" style={{ minHeight: 0, padding: 'clamp(16px, 3vw, 28px)' }}>
+           <div className="lab-mono lab-cap">{pick === 'career' ? 'ANY CAREER' : 'PICK A JD'}</div>
+           <div style={{ fontSize: 22, fontWeight: 800, margin: '4px 0 4px' }}>{pick === 'career' ? '输入一个职业，把它变成空间' : '选一份 JD，构建它的技能空间'}</div>
+-          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: 14 }}>{pick === 'career' ? '不需要 JD。适合还没有具体岗位、只想先看看这一行在干什么的人。' : 'JD 来自岗位库，抓取自企业官方招聘站。'}</div>
++          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: 14 }}>{pick === 'career' ? '不需要 JD。适合还没有具体岗位、只想先看看这一行在干什么的人。' : '从岗位库挑一条（抓取自企业官方招聘站），或者粘贴一份全新的 JD。'}</div>
+ 
+           {pick === 'jd' && <>
+           <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(106,92,255,.35)' }}>
+@@ -498,6 +505,19 @@ export default function LabHome() {
+               </div>
+             )}
+           </div>
++          <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(18,181,203,.4)' }}>
++            <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>NEW JD · 粘贴一份全新的 JD</div>
++            <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>岗位库里没有？把招聘页上的职责和要求整段贴进来，走同一条流水线生成。</div>
++            <div style={{ display: 'flex', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
++              <input className="lab-input" value={paste.title} onChange={e => setPaste(p => ({ ...p, title: e.target.value }))} placeholder="岗位名，如：储能系统测试工程师" style={{ flex: '2 1 220px', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
++              <input className="lab-input" value={paste.company} onChange={e => setPaste(p => ({ ...p, company: e.target.value }))} placeholder="公司（可不填）" style={{ flex: '1 1 160px', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
++            </div>
++            <textarea value={paste.text} onChange={e => setPaste(p => ({ ...p, text: e.target.value }))} rows={6} placeholder={'岗位职责：\n1. …\n任职要求：\n1. …'} style={{ width: '100%', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 13.5, lineHeight: 1.7, outline: 'none', background: '#fff', resize: 'vertical', fontFamily: 'inherit' }} />
++            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 8, gap: 10 }}>
++              <span style={{ fontSize: 12, color: 'var(--ink3)' }}>{paste.text.trim().length < 40 ? '正文至少 40 字' : `${paste.text.trim().length} 字`}</span>
++              <button className="lab-btn" disabled={paste.text.trim().length < 40 || !paste.title.trim()} onClick={() => buildFromJob(null, undefined, paste)}>用这份 JD 构建空间 →</button>
++            </div>
++          </div>
+           <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>DEMO JDS · 预置示范</div>
+           {jdsLoading && <div className="lab-glass lab-scan" style={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span className="lab-mono" style={{ color: 'var(--ink3)' }}>LOADING<span className="lab-dots" /></span></div>}
+           <div style={{ display: 'grid', gap: 14, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))' }}>
+diff --git a/src/lib/lab-featured.ts b/src/lib/lab-featured.ts
+new file mode 100644
+index 0000000..5d6e50e
+--- /dev/null
++++ b/src/lib/lab-featured.ts
+@@ -0,0 +1,29 @@
++/**
++ * 体验百业的精选顺序（2026-10-12，用户：「把我们做的特别精致的往前放」）。
++ * 前一档：有 3D / 实拍场景、工位精调过的旗舰空间；后一档：演示片里出现过、工位打磨过的空间。
++ * 写空间编号的前 8 位即可（按前缀匹配）。不在名单里的按「有工位 + 完整一天」自动排（见 /lab/gallery）。
++ */
++export const FEATURED_SPACES: string[] = [
++  // 旗舰：3D / 360° 实拍 + 精调工位
++  '640f3bc6', // 火箭总装工程师 · 总装厂房 3D + 试车台
++  '681b5f1c', // 开腹医师 · 手术室 3D
++  '387fcc19', // 潜水教练 · 珊瑚礁实拍
++  'adcf442a', // 应急指挥调度员 · 指挥大厅 3D + 沙盘 / 河堤
++  '0cfe3233', // 沥青摊铺施工员 · 摊铺现场 3D
++  '155db8f9', // 咖啡师（拉花）· 吧台 3D
++  'a35a662d', // 数据分析师 · 办公室 3D
++  '19fd15d1', // 月嫂 · 婴儿房 3D
++  // 演示片里的精致工位
++  '71a6cbf5', // 转炉炼钢操作工
++  'd9daaaf1', // 精铸熔炼工程师
++  '065fd7f4', // 机械设计工程师 · CAD
++  '392bcbeb', // 数字芯片设计工程师
++  'd571b482', // 变电站值班员
++  '7dd9393d', // 农业技术员 · 温室
++  '61f1f7fb', // 古籍修复师
++  'c9783880', // 急诊分诊护士
++  'fde330a0', // 审计助理
++];
++
++/** 在精选名单里的位置（越靠前越小）；不在名单里返回 -1 */
++export const featuredIndex = (id: string) => FEATURED_SPACES.findIndex(p => id.startsWith(p));
+diff --git a/src/lib/lab-guest.ts b/src/lib/lab-guest.ts
+new file mode 100644
+index 0000000..d870b88
+--- /dev/null
++++ b/src/lib/lab-guest.ts
+@@ -0,0 +1,9 @@
++/**
++ * 游客模型锁（2026-10-12，用户：「游客不要看到模型切换，默认锁在 Gemini 3.8 Flash」）。
++ * proxy 给没登录的请求（LAB_PUBLIC 放行的游客、受邀老师傅）打上 x-lab-guest，客户端自己带的会先被剥掉；
++ * 接口里取模型一律走 labModel：游客不管传什么都用默认模型，登录的人按自己选的。
++ */
++export const LAB_GUEST = 'x-lab-guest';
++export const GUEST_MODEL = 'gemini-3.8-flash';
++export const labModel = (req: Request, model: unknown): string | undefined =>
++  req.headers.get(LAB_GUEST) === '1' ? GUEST_MODEL : (typeof model === 'string' && model ? model : undefined);
+diff --git a/src/proxy.ts b/src/proxy.ts
+index 796e091..a51aa53 100644
+--- a/src/proxy.ts
++++ b/src/proxy.ts
+@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
+ import type { NextRequest } from 'next/server';
+ import { verifyToken } from '@/lib/jwt';
+ import { INVITED, INVITED_BY, readInvite } from '@/lib/lab-invite';
++import { LAB_GUEST } from '@/lib/lab-guest';
+ 
+ /** 受邀专家能碰的接口：这一位数字职人的空间本身（只读），以及向上学习的三步 */
+ const INVITE_API = /^\/api\/lab\/spaces\/([^/]+)(?:\/(interview|submit|distill))?$/;
+@@ -12,6 +13,7 @@ const INVITE_PAGE = /^\/lab\/([^/]+)$/;
+  * 公司部署不开：/lab 照常要登录（他们有自己的统一认证）。只放 /lab 页面和 /api/lab/*，数据工厂的接口不受影响。
+  */
+ const LAB_PUBLIC = () => process.env.LAB_PUBLIC === '1';
++const LAB_FACTORY_PAGE = (p: string) => /^\/lab\/(spaces|studio|assets|logic|admin)(\/|$)/.test(p);
+ /** 放开时仍要登录的「工厂」操作：生成新空间 / 预置示范、删除空间、发邀请链接、蒸馏专家技能（花钱或改内容） */
+ const LAB_PROTECTED = (pathname: string, method: string) =>
+   pathname.startsWith('/api/lab/studio/') ||   // 百业工厂：看草稿、改章节
+@@ -38,11 +40,13 @@ export async function proxy(req: NextRequest) {
+     if (pathname === '/api/flywheel/signal' && req.method === 'POST' && req.headers.get('x-flywheel-key')) return NextResponse.next();
+     // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉
+     const headers = new Headers(req.headers);
+-    headers.delete(INVITED); headers.delete(INVITED_BY);
+-    if (LAB_PUBLIC() && pathname.startsWith('/api/lab/') && !LAB_PROTECTED(pathname, req.method)) return NextResponse.next({ request: { headers } });
++    headers.delete(INVITED); headers.delete(INVITED_BY); headers.delete(LAB_GUEST);
+     const token = req.cookies.get('auth_token')?.value;
+     const payload = token ? await verifyToken(token) : null;
+     if (payload) return NextResponse.next({ request: { headers } });
++    // 没登录的游客 / 受邀老师傅：打上游客标记，接口里模型锁死在默认那个（不让游客挑贵的模型）
++    headers.set(LAB_GUEST, '1');
++    if (LAB_PUBLIC() && pathname.startsWith('/api/lab/') && !LAB_PROTECTED(pathname, req.method)) return NextResponse.next({ request: { headers } });
+ 
+     // 没登录：拿着邀请票的老师傅，只能碰票上那一位数字职人的几条学习接口
+     const m = pathname.match(INVITE_API);
+@@ -62,9 +66,10 @@ export async function proxy(req: NextRequest) {
+   if (/^\/lab\/(?:[^/]+\/)*[^/]+\.(png|jpe?g|webp|gif|svg|mp4|webm)$/i.test(pathname)) return NextResponse.next();
+ 
+   // AI 百业首页公开：谁都能看见理念和这些人，点进任何一个空间才要求登录（LAB_PUBLIC=1 时整个 /lab 都公开）
+-  // 百业工厂的工作室 /lab/studio/*、素材库 /lab/assets、设计文档 /lab/logic、百业后台 /lab/admin 例外：放开时也要登录
++  // 百业工厂（列表 /lab/spaces、工作室 /lab/studio/*、素材库 /lab/assets、设计文档 /lab/logic、百业后台 /lab/admin）例外：放开时也要登录。
++  // 没登录的人只有首页和「体验百业」（/lab/gallery、各空间页、我的进度、证书、3D beta）。
+   if (pathname.startsWith('/lab/cert/')) return NextResponse.next();
+-  if (pathname === '/lab' || (LAB_PUBLIC() && pathname.startsWith('/lab/') && !pathname.startsWith('/lab/studio') && !pathname.startsWith('/lab/assets') && !pathname.startsWith('/lab/logic') && !pathname.startsWith('/lab/admin'))) return NextResponse.next();
++  if (pathname === '/lab' || (LAB_PUBLIC() && pathname.startsWith('/lab/') && !LAB_FACTORY_PAGE(pathname))) return NextResponse.next();
+ 
+   // 邀请链接 /lab/<id>?invite=…：票对得上这个空间，就不用登录
+   const pm = pathname.match(INVITE_PAGE);

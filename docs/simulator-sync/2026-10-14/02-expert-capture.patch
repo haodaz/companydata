@@ -1,0 +1,1163 @@
+diff --git a/scripts/lab-check-all.mts b/scripts/lab-check-all.mts
+index 15d6398..c683064 100644
+--- a/scripts/lab-check-all.mts
++++ b/scripts/lab-check-all.mts
+@@ -7,6 +7,7 @@ import fs from 'node:fs';
+ for (const l of fs.readFileSync('.env.local', 'utf8').split('\n')) { const m = l.match(/^([A-Z_]+)=(.*)$/); if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim().replace(/^"|"$/g, ''); }
+ const { supabaseAdmin: db } = await import('../src/lib/supabase');
+ const { checkAll } = await import('../src/lib/lab-studio');
++const { loadBasis } = await import('../src/lib/lab-standards');
+ const only = process.argv.includes('--rule') ? process.argv[process.argv.indexOf('--rule') + 1] : null;
+ const { data: spaces } = await db.from('skill_tasks').select('id, title').order('created_at');
+ const { data: chs } = await db.from('lab_chapters').select('id, task_id, seq, slot, title, kind, brief, sim, expert_trace, status, locked');
+@@ -16,7 +17,7 @@ const tally = new Map<string, Set<string>>();
+ for (const s of spaces || []) {
+   const list = (by.get(s.id) || []).sort((a, b) => a.seq - b.seq);
+   if (!list.length) continue;
+-  for (const i of checkAll(list as any)) {
++  for (const i of checkAll(list as any, null, 1, await loadBasis(s.id))) {
+     const k = i.rule || (i.level === 'error' ? '（结构 error）' : '（结构 warn）');
+     if (!tally.has(k)) tally.set(k, new Set());
+     tally.get(k)!.add(s.id);
+diff --git a/scripts/lab-link-standards.mts b/scripts/lab-link-standards.mts
+new file mode 100644
+index 0000000..6ccbca3
+--- /dev/null
++++ b/scripts/lab-link-standards.mts
+@@ -0,0 +1,35 @@
++/**
++ * 工位规则回挂出处（闭环第 1 步，迁移 022 / 023）：每条工位规则 / 目标 → 标准条款 / 老师傅经验 / AI 推断，写 standard_links。
++ *   npx tsx scripts/lab-link-standards.mts                  所有有工位、且库里有对应标准的空间
++ *   npx tsx scripts/lab-link-standards.mts 71a6cbf5 640f…  只跑这几个（编号前缀）
++ *   --dry                                                   只看结果不写库
++ * 跑完打印每个空间的出处分布；校验器 [S1] / [S2] 按这里的结果查。
++ */
++import fs from 'node:fs';
++for (const l of fs.readFileSync('.env.local', 'utf8').split('\n')) { const m = l.match(/^([A-Z_]+)=(.*)$/); if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim().replace(/^"|"$/g, ''); }
++const { supabaseAdmin: db } = await import('../src/lib/supabase');
++const { linkSpace } = await import('../src/lib/lab-standards');
++const dry = process.argv.includes('--dry');
++const prefixes = process.argv.slice(2).filter(a => !a.startsWith('--'));
++
++const { data: spaces } = await db.from('skill_tasks').select('id, title, profile');
++let list = (spaces || []).filter(s => !prefixes.length || prefixes.some(p => s.id.startsWith(p)));
++if (!prefixes.length) {
++  // 只跑库里有为它检索过标准的空间（其余等标准打底跑到再说）
++  const { data: sr } = await db.from('standard_searches').select('space_id').eq('status', 'success').not('space_id', 'is', null);
++  const have = new Set((sr || []).map(r => r.space_id));
++  list = list.filter(s => have.has(s.id));
++}
++const total: Record<string, number> = {};
++for (const s of list) {
++  try {
++    const r = await linkSpace(s.id, { dryRun: dry });
++    for (const [k, v] of Object.entries(r.byBasis)) total[k] = (total[k] || 0) + v;
++    const pct = (k: string) => r.links ? Math.round(((r.byBasis as any)[k] || 0) / r.links * 100) : 0;
++    console.log(`${s.id.slice(0, 8)} ${(s.profile?.role || s.title).padEnd(12)} 规则+目标 ${r.targets} · 标准 ${pct('standard')}% · 老师傅 ${pct('expert')}% · AI 推断 ${pct('ai')}% · 用了 ${r.standards} 条标准`);
++    if (dry) for (const x of (r.rows || []).slice(0, 6)) console.log('   ', x.basis, '·', x.target, '←', x.evidence || x.note);
++  } catch (e: any) { console.log(`✗ ${s.id.slice(0, 8)} ${e.message}`); }
++}
++const n = Object.values(total).reduce((a, b) => a + b, 0);
++console.log(`\n共 ${list.length} 个空间 · ${n} 条规则 / 目标：` + Object.entries(total).map(([k, v]) => `${k} ${v}（${Math.round(v / (n || 1) * 100)}%）`).join(' · '));
++process.exit(0);
+diff --git a/src/app/api/lab/spaces/[id]/distill/route.ts b/src/app/api/lab/spaces/[id]/distill/route.ts
+index e8775a9..7576b14 100644
+--- a/src/app/api/lab/spaces/[id]/distill/route.ts
++++ b/src/app/api/lab/spaces/[id]/distill/route.ts
+@@ -4,6 +4,9 @@ import { supabaseAdmin } from '@/lib/supabase';
+ import { buildSkillCard } from '@/lib/agents/skill-lab';
+ import { labError, loadSpace } from '@/lib/skill-lab-server';
+ import { INVITED, INVITED_BY } from '@/lib/lab-invite';
++import { labModel } from '@/lib/lab-guest';
++import { deviationsFor } from '@/lib/lab-demo-review';
++import { writeBackFromInterview } from '@/lib/lab-standards';
+ 
+ export const runtime = 'nodejs';
+ export const maxDuration = 300;
+@@ -12,7 +15,8 @@ export const maxDuration = 300;
+ export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+   try {
+     const { id } = await params;
+-    const { turns, walkthrough, expert, model, createdBy, trace, chapterTraces } = await req.json();
++    const { turns, walkthrough, expert, model: asked, createdBy, trace, chapterTraces, traces } = await req.json();
++    const model = labModel(req, asked);
+     if (!Array.isArray(turns) || turns.filter((t: any) => t.role === 'expert').length < 2) {
+       return NextResponse.json({ ok: false, error: '至少回答 2 个问题再生成技能卡' }, { status: 400 });
+     }
+@@ -53,7 +57,13 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
+       const ids = new Set((space.chapters || []).filter((c: any) => c.id && c.seq !== 1).map((c: any) => c.id));
+       for (const [cid, tr] of Object.entries(chapterTraces)) if (ids.has(cid) && tr && typeof tr === 'object') await supabaseAdmin.from('lab_chapters').update({ expert_trace: tr, updated_at: new Date().toISOString() }).eq('id', cid);
+     }
+-    return NextResponse.json({ ok: true, skillId, skill: { id: skillId, ...row } });
++    // 访谈结论写回规则出处：认了的 AI 推断升级成「老师傅经验」，不认的记修改建议（专家数采第 2 步）
++    let writeBack: any = null;
++    if (traces && typeof traces === 'object') {
++      const devs = await deviationsFor(id, traces).catch(() => []);
++      writeBack = await withCost({ space_id: id, stage: 'learn' }, () => writeBackFromInterview(id, devs, turns, who, model || undefined)).catch((e: any) => ({ error: e.message }));
++    }
++    return NextResponse.json({ ok: true, skillId, skill: { id: skillId, ...row }, writeBack });
+   } catch (e: any) {
+     console.error('[Lab/distill]', e);
+     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
+diff --git a/src/app/api/lab/spaces/[id]/interview/route.ts b/src/app/api/lab/spaces/[id]/interview/route.ts
+index 71957d2..6f3f0b1 100644
+--- a/src/app/api/lab/spaces/[id]/interview/route.ts
++++ b/src/app/api/lab/spaces/[id]/interview/route.ts
+@@ -2,19 +2,24 @@ import { NextRequest, NextResponse } from 'next/server';
+ import { withCost } from '@/lib/token-logger';
+ import { nextQuestion } from '@/lib/agents/skill-lab';
+ import { labError, loadSpace } from '@/lib/skill-lab-server';
++import { labModel } from '@/lib/lab-guest';
++import { deviationsFor } from '@/lib/lab-demo-review';
+ 
+ export const runtime = 'nodejs';
+ export const maxDuration = 120;
+ 
+-/** 专家蒸馏 · 追问：围绕专家刚走完的那一遍，问「为什么这么做」 */
++/** 专家蒸馏 · 追问：围绕专家刚走完的那一遍追问；带上 traces 时先盯着偏差问（越过的红线、和老师傅经验不一致、AI 推断的规则、没达成的目标） */
+ export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+   try {
+     const { id } = await params;
+-    const { turns, walkthrough, model } = await req.json();
++    const { turns, walkthrough, model: asked, traces } = await req.json();
++    const model = labModel(req, asked);
+     const space = await loadSpace(id);
+     const topic = `${space.jd_snapshot?.company || ''} ${space.jd_snapshot?.title || ''} —— ${space.title}`;
+-    const result = await withCost({ space_id: id, stage: 'learn' }, () => nextQuestion(topic, Array.isArray(turns) ? turns : [], model || undefined, String(walkthrough || '')));
+-    return NextResponse.json({ ok: true, ...result });
++    // 偏差清单：老师傅示范的几段对照规则出处（标准 / 老师傅 / AI 推断），追问盯着这些问（专家数采第 2 步）
++    const deviations = traces && typeof traces === 'object' ? await deviationsFor(id, traces).catch(() => []) : [];
++    const result = await withCost({ space_id: id, stage: 'learn' }, () => nextQuestion(topic, Array.isArray(turns) ? turns : [], model || undefined, String(walkthrough || ''), deviations.map(d => d.question)));
++    return NextResponse.json({ ok: true, ...result, deviations: deviations.map(d => ({ label: d.label, kind: d.kind, evidence: d.evidence })) });
+   } catch (e: any) {
+     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
+   }
+diff --git a/src/app/api/lab/spaces/[id]/practitioner/route.ts b/src/app/api/lab/spaces/[id]/practitioner/route.ts
+new file mode 100644
+index 0000000..06ec60c
+--- /dev/null
++++ b/src/app/api/lab/spaces/[id]/practitioner/route.ts
+@@ -0,0 +1,34 @@
++import { NextRequest, NextResponse } from 'next/server';
++import { supabaseAdmin } from '@/lib/supabase';
++import { labError, loadSpace } from '@/lib/skill-lab-server';
++import { INVITE_DAYS, signInvite } from '@/lib/lab-invite';
++
++export const runtime = 'nodejs';
++
++/**
++ * 体验百业里点「你教我」（2026-10-12「专家数采」第 3 步）：
++ * 记一笔进修改留痕（lab_edits，source = practitioner；身份可选填），然后发一张这个空间的邀请票，
++ * 直接进「你教我」走一遍——之后照样过示范评审（守红线、达目标……），身份不直接等于可信。
++ * 不要登录；同一个 IP 每小时最多 5 次，防刷模型成本。
++ */
++const hits = new Map<string, number[]>();
++export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
++  try {
++    const { id } = await params;
++    const ip = (req.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'local';
++    const now = Date.now(); const recent = (hits.get(ip) || []).filter(t => now - t < 3600_000);
++    if (recent.length >= 5) return NextResponse.json({ ok: false, error: '提交太频繁了，过一会儿再来' }, { status: 429 });
++    const b = await req.json().catch(() => ({}));
++    // 身份可以不填（点「你教我」直接进来）；填了就记下，评审时一起看
++    const name = String(b.name || '').trim().slice(0, 30) || '访客从业者', org = String(b.org || '').trim().slice(0, 60), cert = String(b.cert || '').trim().slice(0, 80);
++    const years = Math.round(Number(b.years)) || null;
++    await loadSpace(id);
++    hits.set(ip, [...recent, now]);
++    const app = { name, years, org, cert, note: String(b.note || '').slice(0, 300), at: new Date().toISOString() };
++    await supabaseAdmin.from('lab_edits').insert({ task_id: id, source: 'practitioner', actor: `self:${name}`, fields: ['apply'], after: app, note: `从业者进来示范：${name}${years ? ` · ${years} 年` : ''}${org || cert ? ` · ${org || cert}` : ''}` }).then(() => {}, () => {});
++    const { token, expiresAt } = await signInvite(id, `self:${name}`);
++    return NextResponse.json({ ok: true, path: `/lab/${id}?invite=${encodeURIComponent(token)}`, expiresAt, days: INVITE_DAYS });
++  } catch (e: any) {
++    return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
++  }
++}
+diff --git a/src/app/api/lab/studio/review/route.ts b/src/app/api/lab/studio/review/route.ts
+new file mode 100644
+index 0000000..7703b45
+--- /dev/null
++++ b/src/app/api/lab/studio/review/route.ts
+@@ -0,0 +1,22 @@
++import { NextResponse } from 'next/server';
++import { reviewSubmission, reviewableSubmissions } from '@/lib/lab-demo-review';
++import { supabaseAdmin } from '@/lib/supabase';
++
++export const runtime = 'nodejs';
++export const dynamic = 'force-dynamic';
++
++/** 示范评审：?submission=<作答编号> 出一份报告；?space=<空间编号> 列出可评审的作答（要登录，在 /api/lab/studio/ 下） */
++export async function GET(req: Request) {
++  try {
++    const q = new URL(req.url).searchParams;
++    const sid = q.get('submission'), space = q.get('space');
++    // ?trace=<作答编号>：把这次操作原样拿回去开访谈（「拿这次操作去访谈」）
++    const tid = q.get('trace');
++    if (tid) { const { data, error } = await supabaseAdmin.from('skill_submissions').select('id, task_id, chapter_id, candidate_name, candidate_note, candidate_location, trace').eq('id', tid).single(); if (error) throw error; return NextResponse.json({ ok: true, submission: data }); }
++    if (sid) return NextResponse.json({ ok: true, review: await reviewSubmission(sid) });
++    if (space) return NextResponse.json({ ok: true, items: await reviewableSubmissions(space) });
++    return NextResponse.json({ ok: false, error: '缺 submission 或 space' }, { status: 400 });
++  } catch (e: any) {
++    return NextResponse.json({ ok: false, error: e.message }, { status: 500 });
++  }
++}
+diff --git a/src/app/lab/studio/[id]/page.tsx b/src/app/lab/studio/[id]/page.tsx
+index adb0f4c..c83d86a 100644
+--- a/src/app/lab/studio/[id]/page.tsx
++++ b/src/app/lab/studio/[id]/page.tsx
+@@ -7,7 +7,8 @@ import Image from 'next/image';
+ import { useUser } from '@/lib/user-context';
+ import { MODEL_OPTIONS } from '@/lib/model-context';
+ import { SimRunner, SimStage } from '@/components/lab/SimRunner';
+-import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue } from '@/lib/lab-studio';
++import { ChatLauncher } from '@/components/kg/PersonaChat';
++import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue, type BasisRow } from '@/lib/lab-studio';
+ import { CAST_KINDS, applyCastArt, castKind, stepsUsing, type CastKind, type CastMember, type LabAsset } from '@/lib/lab-cast';
+ 
+ /**
+@@ -29,7 +30,7 @@ export default function StudioPage() {
+   const { message } = App.useApp();
+   const { user } = useUser();
+ 
+-  const [data, setData] = useState<{ space: any; chapters: StudioChapter[]; expertTrace: any; cast: CastMember[] } | null>(null);
++  const [data, setData] = useState<{ space: any; chapters: StudioChapter[]; expertTrace: any; cast: CastMember[]; basis?: BasisRow[] } | null>(null);
+   const [castEdit, setCastEdit] = useState<CastMember | { kind: CastKind } | null>(null);
+   const [err, setErr] = useState('');
+   const [cur, setCur] = useState<string | null>(sp.get('ch'));
+@@ -123,7 +124,7 @@ export default function StudioPage() {
+   // 校验用「当前编辑中的版本」替换库里那一章，改一个字就能看到问题消失
+   const liveChapters = useMemo(() => (data?.chapters || []).map(c => (draft && c.id === draft.id ? draft : c)), [data, draft]);
+   const firstSeq = useMemo(() => Math.min(...(data?.chapters || []).map(c => c.seq), 1), [data]);
+-  const issues = useMemo(() => checkAll(liveChapters, data?.expertTrace || null, firstSeq), [liveChapters, data, firstSeq]);
++  const issues = useMemo(() => checkAll(liveChapters, data?.expertTrace || null, firstSeq, data?.basis || null), [liveChapters, data, firstSeq]);
+   const issuesOf = (cid: string) => issues.filter(x => x.chapter === cid);
+   const dayIssues = issues.filter(x => !x.chapter);
+ 
+@@ -194,6 +195,8 @@ export default function StudioPage() {
+ 
+   return (
+     <div>
++      {/* 和我聊：在工厂里先试聊，看数字职人答得像不像这一行的人 */}
++      {data?.space && <ChatLauncher href={`/lab/${id}/chat`} name={data.space.profile?.name} avatar={data.space.profile?.avatar} />}
+       {/* 页头 */}
+       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 16 }}>
+         <button className="lab-btn ghost sm" onClick={() => router.push('/lab/spaces')}>← 百业工厂</button>
+@@ -203,6 +206,7 @@ export default function StudioPage() {
+         </div>
+         <div style={{ flex: 1 }} />
+         <button className="lab-btn ghost sm" onClick={() => router.push('/lab/assets')}>素材库</button>
++        <button className="lab-btn ghost sm" onClick={() => router.push(`/lab/studio/review?space=${id}`)}>示范评审</button>
+         <select className="lab-input" value={genModel} onChange={e => setGenModel(e.target.value)} title="生成用的模型" style={{ width: 'auto', padding: '6px 10px', fontSize: 12.5, borderRadius: 10 }}>
+           {MODEL_OPTIONS.map(m => <option key={m.id} value={m.id}>{m.label}{m.badge ? ` ${m.badge}` : ''}</option>)}
+         </select>
+diff --git a/src/app/lab/studio/review/page.tsx b/src/app/lab/studio/review/page.tsx
+new file mode 100644
+index 0000000..a14f40e
+--- /dev/null
++++ b/src/app/lab/studio/review/page.tsx
+@@ -0,0 +1,127 @@
++'use client';
++
++/**
++ * 示范评审报告（百业工厂，要登录）：/lab/studio/review?space=<空间>&s=<作答>
++ * 一次操作算不算「值得学习的操作」：五道关 + 三档，每个判断都带出处（标准 / 老师傅 / 其他示范者），三边都没有的写「待定」。
++ */
++import React, { Suspense, useEffect, useState } from 'react';
++import { useRouter, useSearchParams } from 'next/navigation';
++
++const BASIS: Record<string, { label: string; color: string; bg: string }> = {
++  standard: { label: '标准', color: '#1f7a4d', bg: 'rgba(47,191,143,.14)' },
++  expert: { label: '老师傅', color: '#9a5b12', bg: 'rgba(240,160,60,.16)' },
++  ai: { label: 'AI 推断', color: '#6b6f8a', bg: 'rgba(120,124,160,.14)' },
++  none: { label: '无出处', color: '#a33', bg: 'rgba(226,92,92,.12)' },
++};
++const GATE: Record<string, { icon: string; color: string; label: string }> = {
++  pass: { icon: '✓', color: '#12a150', label: '通过' }, fail: { icon: '✕', color: '#d6336c', label: '未过' },
++  warn: { icon: '!', color: '#e08a1e', label: '部分' }, pending: { icon: '…', color: '#8389a6', label: '待访谈' },
++};
++const GRADE: Record<string, { color: string; bg: string }> = {
++  exemplar: { color: '#12a150', bg: 'linear-gradient(120deg, rgba(47,191,143,.18), rgba(47,191,143,.04))' },
++  reference: { color: '#6a5cff', bg: 'linear-gradient(120deg, rgba(106,92,255,.18), rgba(106,92,255,.04))' },
++  rejected: { color: '#d6336c', bg: 'linear-gradient(120deg, rgba(214,51,108,.16), rgba(214,51,108,.04))' },
++};
++
++export default function DemoReviewPage() {
++  return <Suspense fallback={null}><DemoReview /></Suspense>;
++}
++
++function DemoReview() {
++  const sp = useSearchParams();
++  const router = useRouter();
++  const space = sp.get('space') || '';
++  const sid = sp.get('s') || '';
++  const [items, setItems] = useState<any[] | null>(null);
++  const [rv, setRv] = useState<any>(null);
++  const [err, setErr] = useState('');
++
++  useEffect(() => { if (space) fetch(`/api/lab/studio/review?space=${space}`).then(r => r.json()).then(j => j.ok ? setItems(j.items) : setErr(j.error)); }, [space]);
++  useEffect(() => {
++    if (!sid) { setRv(null); return; }
++    setRv(null); setErr('');
++    fetch(`/api/lab/studio/review?submission=${sid}`).then(r => r.json()).then(j => j.ok ? setRv(j.review) : setErr(j.error));
++  }, [sid]);
++  const pick = (id: string) => router.replace(`/lab/studio/review?space=${space}&s=${id}`, { scroll: false });
++
++  return (
++    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(220px, 280px) minmax(0, 1fr)', gap: 18, alignItems: 'start' }}>
++      <div className="lab-glass" style={{ padding: 14, position: 'sticky', top: 80 }}>
++        <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>可评审的操作 · 有工位记录</div>
++        {!items && !err && <div className="lab-mono" style={{ color: 'var(--ink3)' }}>LOADING<span className="lab-dots" /></div>}
++        {items?.map(s => (
++          <div key={s.id} onClick={() => pick(s.id)} style={{ padding: '9px 10px', borderRadius: 10, cursor: 'pointer', marginBottom: 4, background: s.id === sid ? 'rgba(106,92,255,.12)' : 'transparent' }}>
++            <div style={{ fontWeight: 700, fontSize: 14 }}>{s.candidate_name || '匿名'} <span style={{ fontWeight: 400, fontSize: 12, color: 'var(--ink3)' }}>{s.candidate_type === 'expert' ? '老师傅' : '真人'}</span></div>
++            <div style={{ fontSize: 12, color: 'var(--ink3)' }}>{s.score ?? '—'} 分 · {s.submitted_at ? new Date(s.submitted_at).toLocaleDateString('zh-CN') : ''}</div>
++          </div>
++        ))}
++        {items && !items.length && <div style={{ fontSize: 13, color: 'var(--ink3)' }}>这个空间还没有带工位记录的真人操作。</div>}
++      </div>
++
++      <div style={{ display: 'grid', gap: 16 }}>
++        {err && <div className="lab-glass" style={{ padding: 20, color: '#d6336c' }}>{err}</div>}
++        {!rv && sid && !err && <div className="lab-glass lab-scan" style={{ padding: 40, textAlign: 'center' }}><span className="lab-mono" style={{ color: 'var(--ink3)' }}>对照出处评审中<span className="lab-dots" /></span></div>}
++        {!sid && <div className="lab-glass" style={{ padding: 28, color: 'var(--ink2)', lineHeight: 1.8 }}>左边选一次操作。评审不让 AI 自己打分：每一条判断都引用出处——<b>标准 / 设备手册</b>管红线和数值，<b>老师傅经验</b>管手感和判断，<b>其他示范者</b>看是否一致；三边都管不到的写「待定」。</div>}
++        {rv && <>
++          <div className="lab-glass" style={{ padding: 22, background: GRADE[rv.grade.key].bg }}>
++            <div className="lab-mono lab-cap">示范评审报告 · {rv.space.role}{rv.chapter.title ? ` · ${rv.chapter.title}` : ''}</div>
++            <div style={{ display: 'flex', alignItems: 'baseline', gap: 16, flexWrap: 'wrap', marginTop: 6 }}>
++              <div style={{ fontSize: 26, fontWeight: 800 }}>{rv.submission.name} 的这次操作</div>
++              <div style={{ fontSize: 22, fontWeight: 900, color: GRADE[rv.grade.key].color }}>{rv.grade.label}</div>
++              <div style={{ fontSize: 13, color: 'var(--ink3)' }}>原评分 {rv.submission.score ?? '—'}</div>
++            </div>
++            <div style={{ fontSize: 14, color: 'var(--ink2)', marginTop: 6, lineHeight: 1.7 }}>{rv.grade.why}</div>
++            <div style={{ marginTop: 12 }}><a className="lab-btn sm" href={`/lab/${rv.space.id}?m=learn${rv.chapter.id ? `&ch=${rv.chapter.id}` : ''}&fromSub=${rv.submission.id}`} style={{ textDecoration: 'none' }}>拿这次操作去访谈 →</a></div>
++            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
++              {Object.entries(rv.coverage).filter(([, v]: any) => v > 0).map(([k, v]: any) => <span key={k} style={{ fontSize: 12.5, padding: '4px 10px', borderRadius: 100, color: BASIS[k].color, background: BASIS[k].bg, fontWeight: 700 }}>出处 · {BASIS[k].label} {v} 条</span>)}
++            </div>
++          </div>
++
++          <div className="lab-glass" style={{ padding: 18 }}>
++            <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>五道关</div>
++            <div style={{ display: 'grid', gap: 8 }}>
++              {rv.gates.map((g: any) => (
++                <div key={g.key} style={{ display: 'grid', gridTemplateColumns: '110px 64px minmax(0, 1fr)', gap: 12, alignItems: 'baseline' }}>
++                  <b>{g.label}</b>
++                  <span style={{ fontWeight: 800, color: GATE[g.state].color }}>{GATE[g.state].icon} {GATE[g.state].label}</span>
++                  <span style={{ fontSize: 13.5, color: 'var(--ink2)', lineHeight: 1.6 }}>{g.detail}</span>
++                </div>
++              ))}
++            </div>
++          </div>
++
++          {rv.benches.map((b: any, i: number) => (
++            <div key={i} className="lab-glass" style={{ padding: 18 }}>
++              <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>逐条对照 · {b.bench || b.step} · 目标 {b.goalsDone}/{b.goalsTotal}</div>
++              <div style={{ display: 'grid', gap: 2 }}>
++                {b.findings.filter((f: any) => f.kind === 'goal' || f.hit || f.basis === 'standard').map((f: any) => {
++                  const bad = f.kind === 'rule' && f.hit && f.severity === 'violation';
++                  return (
++                    <div key={`${f.kind}${f.id}`} style={{ display: 'grid', gridTemplateColumns: '58px minmax(0, 1.2fr) 76px minmax(0, 1.6fr)', gap: 10, padding: '9px 4px', borderTop: '1px solid var(--line)', alignItems: 'baseline' }}>
++                      <span className="lab-mono" style={{ fontSize: 11, color: 'var(--ink3)' }}>{f.kind === 'goal' ? '目标' : f.severity === 'violation' ? '红线' : '提醒'}{f.t != null ? ` ${Math.floor(f.t / 60)}:${String(Math.round(f.t % 60)).padStart(2, '0')}` : ''}</span>
++                      <div>
++                        <div style={{ fontSize: 14, fontWeight: 700, color: bad ? '#d6336c' : 'var(--ink)' }}>{f.label}</div>
++                        <div style={{ fontSize: 12.5, color: bad ? '#d6336c' : f.kind === 'goal' && !f.hit ? '#e08a1e' : 'var(--ink3)', marginTop: 2 }}>{f.verdict}</div>
++                      </div>
++                      <span style={{ fontSize: 12, padding: '3px 8px', borderRadius: 100, color: BASIS[f.basis].color, background: BASIS[f.basis].bg, fontWeight: 700, justifySelf: 'start' }}>{BASIS[f.basis].label}</span>
++                      <div style={{ fontSize: 12.5, color: 'var(--ink2)', lineHeight: 1.6 }}>
++                        {f.evidence ? <><b>{f.source}{f.clause ? ` ${f.clause}` : ''}</b>：{f.evidence.split('：').slice(1).join('：')}</> : <span style={{ color: 'var(--ink3)' }}>{f.note || '没有出处'}</span>}
++                      </div>
++                    </div>
++                  );
++                })}
++              </div>
++            </div>
++          ))}
++
++          {rv.questions.length > 0 && (
++            <div className="lab-glass" style={{ padding: 18 }}>
++              <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>访谈要问的 · 盯着偏差问，不泛泛地问「为什么」</div>
++              <ol style={{ margin: 0, paddingLeft: 20, display: 'grid', gap: 8, fontSize: 14, lineHeight: 1.7 }}>{rv.questions.map((q: string, i: number) => <li key={i}>{q}</li>)}</ol>
++            </div>
++          )}
++        </>}
++      </div>
++    </div>
++  );
++}
+diff --git a/src/lib/agents/skill-lab.ts b/src/lib/agents/skill-lab.ts
+index a824dbb..389cfe1 100644
+--- a/src/lib/agents/skill-lab.ts
++++ b/src/lib/agents/skill-lab.ts
+@@ -164,17 +164,21 @@ export async function answerTask(task: TaskForGrading, skill: SkillRef | null, m
+   return text.trim();
+ }
+ 
+-export async function nextQuestion(topic: string, turns: InterviewTurn[], modelId = DEFAULT_MODEL, expertWalkthrough = ''): Promise<{ question: string; enough: boolean }> {
++export async function nextQuestion(topic: string, turns: InterviewTurn[], modelId = DEFAULT_MODEL, expertWalkthrough = '', focus: string[] = []): Promise<{ question: string; enough: boolean }> {
+   const text = await ask(`
+     你是「技能蒸馏师」，正在访谈一位有经验的从业者，目标是把他 / 她关于「${topic}」的隐性经验挖出来，变成可以交给 AI 使用的数字技能。
+ 
+     ${expertWalkthrough ? `专家刚刚亲自把这个岗位的任务走了一遍，这是他 / 她的作答——请围绕「为什么这么做」来追问：\n"""\n${expertWalkthrough.slice(0, 4000)}\n"""\n` : ''}
++    ${focus.length ? `【偏差清单】把专家的操作对照了标准、设备手册和其他老师傅，下面这些地方值得追问（已按重要性排好）：
++${focus.map((q, i) => `${i + 1}. ${q}`).join('\n')}
++先按顺序问清单里还没问过的（每轮问一条，可以用更口语的说法，但要点明是哪一步、依据是什么）；清单问完了，再问「判断」类的问题。不要泛泛地问「你为什么这么做」。
++` : ''}
+     已有对话：
+     ${turns.map(t => `${t.role === 'ai' ? '你' : '专家'}：${t.content}`).join('\n') || '（尚未开始）'}
+ 
+     请给出下一个问题。好的问题追问的是「判断」而不是「知识」：第一反应看什么、怎么取舍、什么情况会直接否决、新人最常犯的错、好与差的具体样子、交付前检查什么。
+     一次只问一个问题，口语化，不超过 40 字，不要重复已经问过的角度。
+-    如果已经覆盖了「步骤、判断规则、正反例、检查清单」四个方面（通常 5-6 轮），把 enough 设为 true。
++    如果偏差清单都问过了，并且覆盖了「步骤、判断规则、正反例、检查清单」四个方面（通常 5-6 轮），把 enough 设为 true。
+ 
+     返回 JSON：{ "question": "", "enough": true | false }
+   `, modelId, 'Distill Interview');
+diff --git a/src/lib/lab-demo-review.ts b/src/lib/lab-demo-review.ts
+new file mode 100644
+index 0000000..e53b31f
+--- /dev/null
++++ b/src/lib/lab-demo-review.ts
+@@ -0,0 +1,161 @@
++/**
++ * 示范评审报告（2026-10-12「专家数采」第 1 步）：一次操作（老师傅示范 / 真人作答）算不算「值得学习的操作」。
++ * AI 不当裁判：每个判断都引用出处——标准 / 设备手册（硬性）、老师傅经验（软性）、其他示范者（一致性）；三边都没有的写「待定」。
++ * 五道关：① 守红线 ② 达目标 ③ 讲得清 ④ 可复现 ⑤ 有增量 → 三档：示范级 / 参考级 / 不采纳（不采纳转反例）。
++ * 本步不调模型：判定全靠工位事件流 × standard_links 的出处（迁移 022 / 023）。③⑤ 要访谈，第 2 步接上。
++ */
++import { supabaseAdmin } from '@/lib/supabase';
++
++export type Gate = 'pass' | 'fail' | 'pending' | 'warn';
++export interface Finding { kind: 'rule' | 'goal'; id: string; label: string; hit: boolean; severity?: string; basis: 'standard' | 'expert' | 'ai' | 'none'; source?: string | null; clause?: string | null; evidence?: string | null; note?: string | null; t?: number | null; verdict: string }
++export interface BenchReview { step: string; bench: string; duration: number; findings: Finding[]; goalsDone: number; goalsTotal: number }
++export interface DemoReview {
++  submission: { id: string; name: string; type: string; score: number | null; at: string | null };
++  space: { id: string; role: string };
++  chapter: { id: string | null; title: string };
++  benches: BenchReview[];
++  gates: { key: string; label: string; state: Gate; detail: string }[];
++  grade: { key: 'exemplar' | 'reference' | 'rejected'; label: string; why: string };
++  questions: string[];
++  peers: { name: string; score: number | null; type: string }[];
++  coverage: { standard: number; expert: number; ai: number; none: number };
++}
++
++const fmtT = (t?: number | null) => t == null ? '' : `${Math.floor(t / 60)}:${String(Math.round(t % 60)).padStart(2, '0')}`;
++
++export async function reviewSubmission(submissionId: string): Promise<DemoReview> {
++  const { data: sub, error } = await supabaseAdmin.from('skill_submissions').select('id, task_id, chapter_id, candidate_name, candidate_type, score, trace, submitted_at').eq('id', submissionId).single();
++  if (error || !sub) throw new Error(error?.message || '找不到这次作答');
++  const [{ data: space }, { data: chapter }, { data: links }, { data: peers }] = await Promise.all([
++    supabaseAdmin.from('skill_tasks').select('id, title, profile, jd_snapshot, sim').eq('id', sub.task_id).single(),
++    sub.chapter_id ? supabaseAdmin.from('lab_chapters').select('id, title, slot, sim').eq('id', sub.chapter_id).single() : Promise.resolve({ data: null } as any),
++    supabaseAdmin.from('standard_links').select('chapter_id, target, basis, clause, evidence, note, confidence, standard:industry_standards(code, title)').eq('space_id', sub.task_id),
++    supabaseAdmin.from('skill_submissions').select('id, candidate_name, candidate_type, score, chapter_id').eq('task_id', sub.task_id).neq('id', sub.id),
++  ]);
++  const sim: any = chapter?.sim || (space as any)?.sim || {};
++  const chId = chapter?.id || null;
++  const linkOf = new Map<string, any>();
++  for (const l of links || []) if (!chId || l.chapter_id === chId) linkOf.set(String(l.target).split(' · ')[0], l);
++
++  const benches: BenchReview[] = [];
++  const cov = { standard: 0, expert: 0, ai: 0, none: 0 };
++  for (const st of sim.steps || []) {
++    if (st?.type !== 'bench' || !st.bench) continue;
++    const tr: any = (sub.trace || {})[st.id];
++    if (!tr?.events) continue;
++    const spec = st.bench;
++    const firstHit = new Map<string, any>();
++    for (const e of tr.events) if ((e.kind === 'rule' || e.kind === 'goal') && e.id && !firstHit.has(`${e.kind}:${e.id}`)) firstHit.set(`${e.kind}:${e.id}`, e);
++    const findings: Finding[] = [];
++    for (const r of spec.rules || []) {
++      const l = linkOf.get(`rule:${r.id}`); const e = firstHit.get(`rule:${r.id}`);
++      const basis = (l?.basis || 'none') as Finding['basis']; cov[basis]++;
++      const std = Array.isArray(l?.standard) ? l.standard[0] : l?.standard;
++      const hard = basis === 'standard';
++      const verdict = !e ? (hard ? '守住（有标准依据）' : '没有触发')
++        : r.severity !== 'violation' ? '提醒：不扣关'
++        : hard ? '越过红线：违反标准条款，这次不能当范本'
++        : basis === 'expert' ? '和老师傅经验不一致：要追问'
++        : '触发了 AI 推断的规则：待定，追问是不是规则定错了';
++      findings.push({ kind: 'rule', id: r.id, label: r.label, hit: !!e, severity: r.severity, basis, source: std ? `${std.code || ''} ${std.title || ''}`.trim() : basis === 'expert' ? (l?.evidence || '').split('：')[0] : null, clause: l?.clause, evidence: l?.evidence, note: l?.note, t: e?.t ?? null, verdict });
++    }
++    let done = 0;
++    for (const g of spec.goals || []) {
++      const l = linkOf.get(`goal:${g.id}`); const e = firstHit.get(`goal:${g.id}`);
++      const basis = (l?.basis || 'none') as Finding['basis']; cov[basis]++;
++      if (e) done++;
++      const std = Array.isArray(l?.standard) ? l.standard[0] : l?.standard;
++      findings.push({ kind: 'goal', id: g.id, label: g.label, hit: !!e, basis, source: std ? `${std.code || ''} ${std.title || ''}`.trim() : basis === 'expert' ? (l?.evidence || '').split('：')[0] : null, clause: l?.clause, evidence: l?.evidence, note: l?.note, t: e?.t ?? null, verdict: e ? `达成 ${fmtT(e.t)}` : '没有达成' });
++    }
++    benches.push({ step: st.title || st.id, bench: spec.name || '', duration: tr.metrics?.duration || tr.duration || 0, findings, goalsDone: done, goalsTotal: (spec.goals || []).length });
++  }
++  if (!benches.length) throw new Error('这次作答里没有工位操作记录（示范评审只看工位）');
++
++  const all = benches.flatMap(b => b.findings);
++  const redline = all.filter(f => f.kind === 'rule' && f.hit && f.severity === 'violation' && f.basis === 'standard');
++  const softConflict = all.filter(f => f.kind === 'rule' && f.hit && f.severity === 'violation' && f.basis === 'expert');
++  const aiHits = all.filter(f => f.kind === 'rule' && f.hit && f.severity === 'violation' && (f.basis === 'ai' || f.basis === 'none'));
++  const goals = all.filter(f => f.kind === 'goal');
++  const missed = goals.filter(g => !g.hit);
++  const notes = benches.length && Object.values(sub.trace || {}).some((v: any) => v?.events?.some((e: any) => e.kind === 'note'));
++  const samePeers = (peers || []).filter((p: any) => p.chapter_id === sub.chapter_id && p.candidate_type !== 'ai');
++  const strongPeers = samePeers.filter((p: any) => (p.score ?? 0) >= 80);
++
++  const gates: DemoReview['gates'] = [
++    { key: 'redline', label: '① 守红线', state: redline.length ? 'fail' : 'pass', detail: redline.length ? `越过 ${redline.length} 条有标准依据的红线：${redline.map(f => `「${f.label}」（${f.source}${f.clause ? ` ${f.clause}` : ''}）`).join('、')}` : `有标准依据的 ${all.filter(f => f.kind === 'rule' && f.basis === 'standard').length} 条红线全部守住` },
++    { key: 'goals', label: '② 达目标', state: missed.length ? (missed.length === goals.length ? 'fail' : 'warn') : 'pass', detail: `目标 ${goals.length - missed.length}/${goals.length}${missed.length ? `；没达成：${missed.slice(0, 3).map(g => `「${g.label}」`).join('')}` : ''}` },
++    { key: 'explain', label: '③ 讲得清', state: notes ? 'warn' : 'pending', detail: notes ? '操作里有口述，访谈后逐条核对理由' : '还没有访谈：关键决策的理由要听他讲（第 2 步接上，追问盯着下面的偏差问）' },
++    { key: 'repeat', label: '④ 可复现', state: strongPeers.length >= 1 ? 'pass' : samePeers.length ? 'warn' : 'pending', detail: samePeers.length ? `同一章还有 ${samePeers.length} 位真人做过，其中 ${strongPeers.length} 位 ≥ 80 分` : '这一章只有他一个人做过：最多算参考级' },
++    { key: 'delta', label: '⑤ 有增量', state: 'pending', detail: `标准管不到的地方（AI 推断 ${cov.ai + cov.none} 条）正是他能教出新东西的地方，访谈后判定` },
++  ];
++  const grade: DemoReview['grade'] = redline.length
++    ? { key: 'rejected', label: '不采纳 · 转反例', why: '越过了有标准依据的红线。这次操作不当范本，但会存成反例，教新手「为什么不能这么做」。' }
++    : missed.length === 0 && softConflict.length === 0 && aiHits.length === 0 && strongPeers.length >= 1 && notes
++      ? { key: 'exemplar', label: '示范级', why: '红线全守、目标全达、和其他示范者一致、讲得清。可以采纳为这个工位的标准轨迹。' }
++      : { key: 'reference', label: '参考级', why: [missed.length ? '有目标没达成' : '', softConflict.length ? '有和老师傅经验不一致的地方' : '', aiHits.length ? '触发了 AI 推断的规则（可能是规则定错了）' : '', !strongPeers.length ? '还没有第二位示范者印证' : '', !notes ? '还没访谈' : ''].filter(Boolean).join('；') + '。红线守住了，先当参考；把下面的问题问清楚就可能升到示范级。' };
++
++  const questions = [
++    ...redline.map(f => `「${f.label}」：${f.source}${f.clause ? ` ${f.clause}` : ''} 的要求是「${(f.evidence || '').split('：').slice(1).join('：')}」。你当时为什么这样做？是现场条件不同，还是这条标准在你们那里不这么执行？`),
++    ...softConflict.map(f => `「${f.label}」：老师傅说过「${(f.evidence || '').split('：').slice(1).join('：')}」，你的做法不一样。哪种更对，还是看情况？`),
++    ...aiHits.map(f => `「${f.label}」：这条是系统自己推断的规则，你触发了它。是规则定严了（阈值该改成多少？），还是你确实冒了险？`),
++    ...missed.slice(0, 3).map(g => `「${g.label}」没达成：是模拟器的窗口和现场不一样，还是这一步本来就该放弃？`),
++  ].slice(0, 8);
++
++  return {
++    submission: { id: sub.id, name: sub.candidate_name || '匿名', type: sub.candidate_type, score: sub.score ?? null, at: sub.submitted_at },
++    space: { id: sub.task_id, role: (space as any)?.profile?.role || (space as any)?.jd_snapshot?.title || (space as any)?.title || '' },
++    chapter: { id: chId, title: chapter?.title || chapter?.slot || '' },
++    benches, gates, grade, questions,
++    peers: samePeers.map((p: any) => ({ name: p.candidate_name, score: p.score, type: p.candidate_type })),
++    coverage: cov,
++  };
++}
++
++/** 一个空间里可以评审的作答（有工位操作记录的真人 / 专家作答） */
++export async function reviewableSubmissions(spaceId: string) {
++  const { data } = await supabaseAdmin.from('skill_submissions').select('id, chapter_id, candidate_name, candidate_type, score, submitted_at, trace').eq('task_id', spaceId).neq('candidate_type', 'ai').order('submitted_at', { ascending: false }).limit(200);
++  return (data || []).filter((s: any) => Object.values(s.trace || {}).some((v: any) => v?.events)).map(({ trace, ...s }: any) => s);
++}
++
++/**
++ * 访谈用的偏差清单（专家数采第 2 步）：老师傅刚示范的几段（章节编号 → 作答轨迹）对照规则出处，挑出值得追问的地方。
++ * 顺序：越过有标准依据的红线 → 和老师傅经验不一致 → 触发了 AI 推断的规则 → 没达成的目标。追问盯着这些问，访谈结论再写回出处。
++ */
++export interface Deviation { chapter_id: string | null; key: string; label: string; kind: 'redline' | 'expert' | 'ai' | 'missed'; basis: string; evidence: string | null; question: string }
++export async function deviationsFor(spaceId: string, traces: Record<string, any>): Promise<Deviation[]> {
++  const ids = Object.keys(traces || {}).filter(k => k !== 'base');
++  const [{ data: chs }, { data: links }, { data: space }] = await Promise.all([
++    ids.length ? supabaseAdmin.from('lab_chapters').select('id, sim').in('id', ids) : Promise.resolve({ data: [] as any[] } as any),
++    supabaseAdmin.from('standard_links').select('chapter_id, target, basis, evidence, standard:industry_standards(code, title)').eq('space_id', spaceId),
++    traces.base ? supabaseAdmin.from('skill_tasks').select('sim').eq('id', spaceId).single() : Promise.resolve({ data: null } as any),
++  ]);
++  const out: Deviation[] = [];
++  const pairs: [string | null, any, any][] = [...(chs || []).map((c: any) => [c.id, c.sim, traces[c.id]] as [string, any, any]), ...(traces.base && space?.sim ? [[null, space.sim, traces.base] as [null, any, any]] : [])];
++  for (const [cid, sim, tr] of pairs) {
++    const linkOf = new Map<string, any>();
++    for (const l of links || []) if (!cid || l.chapter_id === cid) linkOf.set(String(l.target).split(' · ')[0], l);
++    for (const st of sim?.steps || []) {
++      if (st?.type !== 'bench' || !st.bench) continue;
++      const bt = tr?.[st.id]; if (!bt?.events) continue;
++      const hit = new Set(bt.events.filter((e: any) => e.kind === 'rule' || e.kind === 'goal').map((e: any) => `${e.kind}:${e.id}`));
++      for (const r of st.bench.rules || []) {
++        if (r.severity !== 'violation' || !hit.has(`rule:${r.id}`)) continue;
++        const l = linkOf.get(`rule:${r.id}`); const basis = l?.basis || 'none';
++        const std = Array.isArray(l?.standard) ? l.standard[0] : l?.standard;
++        const said = String(l?.evidence || '').split('：').slice(1).join('：');
++        const kind: Deviation['kind'] = basis === 'standard' ? 'redline' : basis === 'expert' ? 'expert' : 'ai';
++        const question = kind === 'redline' ? `你的操作触发了「${r.label}」，${std?.code || '标准'}要求「${said}」。当时为什么这样做？是现场条件不同，还是这条在你们那里不这么执行？`
++          : kind === 'expert' ? `「${r.label}」：另一位老师傅说过「${said}」，你的做法不一样。哪种更对，还是看情况？`
++          : `「${r.label}」是系统自己推断的规则，你触发了它。是规则定严了（应该放到多少？），还是这一下确实冒险？`;
++        out.push({ chapter_id: cid, key: `rule:${r.id}`, label: r.label, kind, basis, evidence: l?.evidence || null, question });
++      }
++      for (const g of st.bench.goals || []) {
++        if (hit.has(`goal:${g.id}`)) continue;
++        const l = linkOf.get(`goal:${g.id}`);
++        out.push({ chapter_id: cid, key: `goal:${g.id}`, label: g.label, kind: 'missed', basis: l?.basis || 'none', evidence: l?.evidence || null, question: `「${g.label}」这一步你没有做到：是模拟器的窗口和现场不一样，还是这一步本来就可以不做？` });
++      }
++    }
++  }
++  const order = { redline: 0, expert: 1, ai: 2, missed: 3 } as const;
++  return out.sort((a, b) => order[a.kind] - order[b.kind]).slice(0, 8);
++}
+diff --git a/src/lib/lab-standards.ts b/src/lib/lab-standards.ts
+new file mode 100644
+index 0000000..0b56f93
+--- /dev/null
++++ b/src/lib/lab-standards.ts
+@@ -0,0 +1,152 @@
++/**
++ * 工位规则 ↔ 依据（2026-10-12「闭环第 1 步：回挂」，迁移 022 / 023）。
++ * 每个工位的每条规则、每个目标都要说清出处，三种来源并存：
++ *   standard 标准条款（行业标准与规程库里的要点）· expert 老师傅经验（技能卡里的规则）· ai AI 推断（要人看）
++ * linkSpace：取这个空间已发布章节里的工位规则 / 目标 → 取同职业的标准要点 + 技能卡规则 → 让模型逐条找依据 → 写 standard_links。
++ * 校验器 [S1] / [S2]（lab-studio.ts 的 checkBasis）按这里的结果查「没有出处」「只有 AI 推断」。
++ */
++import { supabaseAdmin } from '@/lib/supabase';
++import { generateContent } from '@/lib/llm-client';
++import { logTokenUsage } from '@/lib/token-logger';
++import { parseJsonLoose } from '@/lib/agents/search-llm';
++import { withCost } from '@/lib/token-logger';
++
++export type Basis = 'standard' | 'expert' | 'ai';
++export interface BasisTarget { chapter_id: string; chapter: string; bench: string; kind: 'rule' | 'goal'; id: string; label: string; when: string; severity?: string }
++/** target 写进 standard_links 的形式：「rule:ox_cool · 冷却水掉了枪还在低位」 */
++export const targetKey = (t: { kind: string; id: string; label: string }) => `${t.kind}:${t.id} · ${t.label}`.slice(0, 300);
++
++export function collectTargets(chapters: any[]): BasisTarget[] {
++  const out: BasisTarget[] = [];
++  for (const c of chapters) for (const s of (c.sim?.steps || c.steps || [])) {
++    const b = s?.type === 'bench' ? s.bench : null; if (!b) continue;
++    for (const r of b.rules || []) out.push({ chapter_id: c.id, chapter: c.title || c.slot || '', bench: b.name || '', kind: 'rule', id: String(r.id), label: String(r.label || ''), when: String(r.when || ''), severity: r.severity });
++    for (const g of b.goals || []) out.push({ chapter_id: c.id, chapter: c.title || c.slot || '', bench: b.name || '', kind: 'goal', id: String(g.id), label: String(g.label || ''), when: String(g.when || '') });
++  }
++  return out;
++}
++
++/** 这个空间能用的标准：专门为它检索过的 + 适用职业对得上的（按有要点、现行优先） */
++async function standardsFor(spaceId: string, words: string[]) {
++  const { data: sr } = await supabaseAdmin.from('standard_searches').select('id, profession').eq('space_id', spaceId);
++  const ids = (sr || []).map(r => r.id);
++  const profs = Array.from(new Set([...(sr || []).map(r => r.profession).filter(Boolean), ...words.filter(Boolean)])) as string[];
++  const rows: any[] = [];
++  if (ids.length) { const { data } = await supabaseAdmin.from('industry_standards').select('id, code, title, status, key_points, professions').in('search_id', ids); rows.push(...(data || [])); }
++  if (profs.length) { const { data } = await supabaseAdmin.from('industry_standards').select('id, code, title, status, key_points, professions').overlaps('professions', profs); rows.push(...(data || [])); }
++  const uniq = [...new Map(rows.map(r => [r.id, r])).values()].filter(r => (r.key_points || []).length && r.status !== 'abolished');
++  return uniq.sort((a, b) => Number(b.status === 'current') - Number(a.status === 'current')).slice(0, 18);
++}
++
++export async function linkSpace(spaceId: string, opts: { model?: string; dryRun?: boolean } = {}) {
++  const model = opts.model || 'gemini-3.8-flash';
++  const { data: space } = await supabaseAdmin.from('skill_tasks').select('id, title, profile, jd_snapshot, skill:skills(name, card, source, expert_name)').eq('id', spaceId).single();
++  if (!space) throw new Error('空间不存在');
++  const { data: chs } = await supabaseAdmin.from('lab_chapters').select('id, title, slot, status, sim').eq('task_id', spaceId).eq('status', 'published');
++  const targets = collectTargets(chs || []);
++  if (!targets.length) return { targets: 0, links: 0, byBasis: {} as Record<string, number>, standards: 0 };
++  const role = (space as any).profile?.role || (space as any).jd_snapshot?.title || (space as any).title;
++  const stds = await standardsFor(spaceId, [role, (space as any).jd_snapshot?.career?.profession]);
++  const skill: any = Array.isArray((space as any).skill) ? (space as any).skill[0] : (space as any).skill;
++  const expertRules: string[] = skill && skill.source !== 'jd-draft' ? [...(skill.card?.rules || []), ...(skill.card?.checklist || [])].slice(0, 30) : [];
++
++  // 给模型的依据清单：S<i>.P<j> = 第 i 条标准的第 j 条要点；E<k> = 老师傅技能卡第 k 条
++  const stdList = stds.map((s, i) => `S${i} ${s.code || ''} ${s.title}\n${(s.key_points || []).map((p: any, j: number) => `  S${i}.P${j}${p.clause ? ` [${p.clause}]` : ''} (${p.kind}) ${p.point}`).join('\n')}`).join('\n');
++  const expList = expertRules.map((r, k) => `E${k} ${r}`).join('\n');
++  const tgtList = targets.map((t, i) => `T${i} [${t.kind === 'rule' ? (t.severity === 'violation' ? '违规规则' : '提醒规则') : '目标'}] ${t.label}  （条件：${t.when.slice(0, 120)}）`).join('\n');
++  const prompt = `你在给职业模拟工位的每一条规则 / 目标找「出处」。岗位：${role}。
++三种出处：standard = 下面某条标准要点直接规定了它（同一件事、同一方向的要求；数值窗口在标准限值之内或一致）；expert = 下面某条老师傅技能卡规则说的就是它；ai = 两边都没有，是 AI 设计工位时自己推断的。
++宁可判 ai，也不要牵强附会：标准只是同一行业、但管的不是这件事，就不算。
++
++【标准要点】
++${stdList || '（没有）'}
++
++【老师傅技能卡】
++${expList || '（这个空间还没有真人老师傅的技能卡）'}
++
++【工位规则与目标】
++${tgtList}
++
++只返回 JSON：{ "links": [ { "t": "T0", "basis": "standard|expert|ai", "ref": "S2.P3 或 E1 或 null", "confidence": 0-100, "note": "一句中文：为什么是这条（ai 时写：建议请老师傅确认什么 / 应该去查哪类标准）" } ] }，每个 T 都要有一条。`;
++
++  const run = async () => {
++    const res = await generateContent(prompt, model, { jsonMode: true });
++    await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Link Standards', institution: role, model_id: model, usageMetadata: res.usageMetadata, stage: 'review' }).catch(() => {});
++    return parseJsonLoose(res.text);
++  };
++  const parsed: any = await withCost({ space_id: spaceId, stage: 'review' }, run);
++  const rows: any[] = [];
++  const byBasis: Record<string, number> = {};
++  for (const l of Array.isArray(parsed?.links) ? parsed.links : []) {
++    const t = targets[parseInt(String(l.t || '').replace(/\D/g, ''))]; if (!t) continue;
++    let basis: Basis = ['standard', 'expert', 'ai'].includes(l.basis) ? l.basis : 'ai';
++    let standard_id: number | null = null, clause: string | null = null, evidence: string | null = null;
++    const ref = String(l.ref || '');
++    const ms = ref.match(/^S(\d+)\.P(\d+)$/), me = ref.match(/^E(\d+)$/);
++    if (basis === 'standard' && ms && stds[+ms[1]]) { const s = stds[+ms[1]], p = (s.key_points || [])[+ms[2]]; standard_id = s.id; clause = p?.clause || null; evidence = `${s.code || s.title}：${p?.point || ''}`; }
++    else if (basis === 'expert' && me && expertRules[+me[1]]) evidence = `${skill?.expert_name || '老师傅'}：${expertRules[+me[1]]}`;
++    else basis = 'ai';
++    byBasis[basis] = (byBasis[basis] || 0) + 1;
++    rows.push({ standard_id, space_id: spaceId, chapter_id: t.chapter_id, target: targetKey(t), clause, note: String(l.note || '').slice(0, 300), confidence: Math.max(0, Math.min(100, parseInt(l.confidence) || 0)), basis, evidence, created_by: 'lab-link-standards' });
++  }
++  // 同一章里规则编号重复（两个工位用了同名规则）时只留一条，免得撞唯一键
++  const seenKey = new Set<string>();
++  for (let i = rows.length - 1; i >= 0; i--) { const k = `${rows[i].standard_id}|${rows[i].chapter_id}|${rows[i].target}`; if (seenKey.has(k)) rows.splice(i, 1); else seenKey.add(k); }
++  if (!opts.dryRun) {
++    await supabaseAdmin.from('standard_links').delete().eq('space_id', spaceId).eq('created_by', 'lab-link-standards');
++    for (let i = 0; i < rows.length; i += 200) {
++      const { error } = await supabaseAdmin.from('standard_links').insert(rows.slice(i, i + 200));
++      if (error) throw new Error(`写依据失败：${error.message}${/basis|evidence/.test(error.message) ? '（先跑迁移 023）' : ''}`);
++    }
++  }
++  return { targets: targets.length, links: rows.length, byBasis, standards: stds.length, rows };
++}
++
++/** 读一个空间的依据：target → { basis, confidence, code, clause, note } */
++export async function loadBasis(spaceId: string) {
++  const { data, error } = await supabaseAdmin.from('standard_links').select('chapter_id, target, basis, confidence, clause, note, evidence, standard:industry_standards(code, title)').eq('space_id', spaceId);
++  if (error) return [];
++  return (data || []).map((r: any) => ({ ...r, standard: Array.isArray(r.standard) ? r.standard[0] : r.standard }));
++}
++
++/**
++ * 访谈结论写回出处（专家数采第 2 步）：每条偏差，老师傅是认（规则对）、不认（规则该改）、还是看情况。
++ *   认：AI 推断 / 无出处的规则 → 出处升级为「老师傅经验」，证据写他的原话
++ *   不认：出处不动，记一条修改建议（lab_edits，source = interview），等人改工位——不自动改规则
++ *   看情况：把条件写进依据的备注
++ * 违反标准红线时老师傅不认，不推翻标准：只记「现场执行有分歧」，交给第二位老师傅或协会。
++ */
++export async function writeBackFromInterview(spaceId: string, deviations: { chapter_id: string | null; key: string; label: string; kind: string; basis: string }[], turns: { role: string; content: string }[], expertName: string, model = 'gemini-3.8-flash') {
++  if (!deviations.length || !turns.length) return { confirmed: 0, overridden: 0, context: 0, unclear: 0 };
++  const prompt = `下面是一段对老师傅的访谈，以及他示范时出现的几处偏差。逐条判断老师傅对这条规则 / 目标的态度。
++偏差：
++${deviations.map((d, i) => `D${i} [${d.kind === 'redline' ? '标准红线' : d.kind === 'expert' ? '老师傅经验' : d.kind === 'ai' ? 'AI 推断' : '没达成的目标'}] ${d.label}`).join('\n')}
++
++访谈：
++${turns.map(t => `${t.role === 'ai' ? '问' : '老师傅'}：${t.content}`).join('\n').slice(0, 6000)}
++
++只返回 JSON：{ "items": [ { "d": "D0", "decision": "confirm|override|context|unclear", "quote": "老师傅原话里最能说明态度的一句（没提到就空）", "suggestion": "override / context 时：规则该怎么改、在什么条件下成立（一句中文）" } ] }
++confirm = 他认为这条规则 / 目标是对的（自己当时确实做错了，或认同这样要求）；override = 他认为规则定错了或阈值不对；context = 要看情况；unclear = 访谈里没谈到。`;
++  const res = await generateContent(prompt, model, { jsonMode: true });
++  await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Interview Write-back', institution: spaceId, model_id: model, usageMetadata: res.usageMetadata, stage: 'learn', space_id: spaceId } as any).catch(() => {});
++  const p = parseJsonLoose(res.text);
++  const tally = { confirmed: 0, overridden: 0, context: 0, unclear: 0 };
++  for (const it of Array.isArray(p?.items) ? p.items : []) {
++    const d = deviations[parseInt(String(it.d || '').replace(/\D/g, ''))]; if (!d) continue;
++    const quote = String(it.quote || '').trim().slice(0, 200), sugg = String(it.suggestion || '').trim().slice(0, 200);
++    let q = supabaseAdmin.from('standard_links').select('id, basis, note').eq('space_id', spaceId).like('target', `${d.key} · %`);
++    if (d.chapter_id) q = q.eq('chapter_id', d.chapter_id);   // 老空间的主工位没有章节编号：不按章节筛
++    const { data: rows } = await q;
++    const row = rows?.[0];
++    if (it.decision === 'confirm') {
++      tally.confirmed++;
++      if (row && (row.basis === 'ai' || row.basis === 'none') && quote) await supabaseAdmin.from('standard_links').update({ basis: 'expert', evidence: `${expertName}：${quote}`, note: `访谈确认（${new Date().toISOString().slice(0, 10)}）`, confidence: 80 }).eq('id', row.id);
++    } else if (it.decision === 'override' || it.decision === 'context') {
++      if (it.decision === 'override') tally.overridden++; else tally.context++;
++      const tag = d.kind === 'redline' && it.decision === 'override' ? '现场执行和标准有分歧（不推翻标准，交第二位老师傅 / 协会）' : it.decision === 'override' ? '老师傅不认这条' : '老师傅说要看情况';
++      if (row) await supabaseAdmin.from('standard_links').update({ note: `${tag}：${sugg || quote}`.slice(0, 300) }).eq('id', row.id);
++      await supabaseAdmin.from('lab_edits').insert({ task_id: spaceId, chapter_id: d.chapter_id, source: 'interview', actor: expertName, fields: [d.key], before: { label: d.label, basis: d.basis }, after: { decision: it.decision, quote, suggestion: sugg }, note: `${tag}：「${d.label}」→ ${sugg || quote}` }).then(() => {}, () => {});
++    } else tally.unclear++;
++  }
++  return tally;
++}
+diff --git a/src/lib/lab-studio-server.ts b/src/lib/lab-studio-server.ts
+index e368af5..d5684b6 100644
+--- a/src/lib/lab-studio-server.ts
++++ b/src/lib/lab-studio-server.ts
+@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
+ import { sortByDay } from '@/lib/skill-lab-server';
+ import { checkAll, type StudioChapter } from '@/lib/lab-studio';
+ import { loadCast } from '@/lib/lab-cast-server';
++import { loadBasis } from '@/lib/lab-standards';
+ 
+ export async function loadStudio(id: string) {
+   const { data: task, error } = await supabaseAdmin.from('skill_tasks')
+@@ -14,5 +15,7 @@ export async function loadStudio(id: string) {
+   const skill: any = Array.isArray((task as any).skill) ? (task as any).skill[0] : (task as any).skill;
+   const { sim: _legacy, ...space } = task as any;
+   const cast = await loadCast(id);
+-  return { space: { ...space, skill: skill ? { ...skill, expert_trace: undefined, has_trace: !!skill.expert_trace } : null }, chapters, cast, issues: checkAll(chapters, skill?.expert_trace || null), expertTrace: skill?.expert_trace || null };
++  // 工位规则的出处（迁移 022 / 023；没跑迁移时 loadBasis 返回空）：校验器 [S1] / [S2] 用
++  const basis = await loadBasis(id);
++  return { space: { ...space, skill: skill ? { ...skill, expert_trace: undefined, has_trace: !!skill.expert_trace } : null }, chapters, cast, basis, issues: checkAll(chapters, skill?.expert_trace || null, 1, basis), expertTrace: skill?.expert_trace || null };
+ }
+diff --git a/src/lib/lab-studio.ts b/src/lib/lab-studio.ts
+index 75da960..b8aee5b 100644
+--- a/src/lib/lab-studio.ts
++++ b/src/lib/lab-studio.ts
+@@ -168,14 +168,47 @@ export function checkChapter(c: StudioChapter, fallbackTrace?: SimTrace | null):
+   return out;
+ }
+ 
+-export function checkAll(chapters: StudioChapter[], fallbackTrace?: SimTrace | null, firstSeq = 1): StudioIssue[] {
++export function checkAll(chapters: StudioChapter[], fallbackTrace?: SimTrace | null, firstSeq = 1, basis?: BasisRow[] | null): StudioIssue[] {
+   return [
+     ...checkDay(chapters),
+     // 空间技能里的示范轨迹只属于第 1 章（老空间迁来的那章）
+     ...chapters.flatMap(c => checkChapter(c, c.seq === firstSeq ? fallbackTrace : null)),
++    ...(basis ? checkBasis(chapters, basis) : []),
+   ];
+ }
+ 
++/** 一条依据（standard_links，迁移 022 / 023）：工位规则 / 目标 → 标准条款 / 老师傅经验 / AI 推断 */
++export interface BasisRow { chapter_id: string | null; target: string; basis?: string | null; confidence?: number | null; standard?: { code?: string | null; title?: string | null } | null }
++
++/**
++ * [S1] 工位规则 / 目标没有出处；[S2] 违规规则只有 AI 推断（或标准依据置信度 < 60），要老师傅确认或补标准。
++ * 只看已发布章节里的工位；按章节汇总成一条，不刷屏。回挂见 scripts/lab-link-standards.mts。
++ */
++export function checkBasis(chapters: StudioChapter[], basis: BasisRow[]): StudioIssue[] {
++  const out: StudioIssue[] = [];
++  const pub = chapters.filter(c => c.status === 'published' && ((c.sim as any)?.steps || []).some((s: any) => s?.type === 'bench'));
++  if (!pub.length) return out;
++  if (!basis.length) return [{ level: 'warn', rule: 'S1', msg: '工位规则还没回挂出处（标准条款 / 老师傅经验 / AI 推断）：跑 scripts/lab-link-standards.mts' }];
++  const by = new Map(basis.map(b => [`${b.chapter_id}|${b.target.split(' · ')[0]}`, b]));
++  for (const c of pub) {
++    const none: string[] = [], weak: string[] = [];
++    for (const st of ((c.sim as any)?.steps || [])) {
++      const b = st?.type === 'bench' ? st.bench : null; if (!b) continue;
++      const items = [...(b.rules || []).map((r: any) => ({ k: `rule:${r.id}`, label: r.label, v: r.severity === 'violation' })), ...(b.goals || []).map((g: any) => ({ k: `goal:${g.id}`, label: g.label, v: false }))];
++      for (const it of items) {
++        const x = by.get(`${c.id}|${it.k}`);
++        if (!x) { none.push(it.label); continue; }
++        if (it.v && (x.basis === 'ai' || (x.basis === 'standard' && (x.confidence ?? 100) < 60))) weak.push(it.label);
++      }
++    }
++    const name = c.title || c.slot || '';
++    const few = (a: string[]) => a.slice(0, 3).map(x => `「${x}」`).join('') + (a.length > 3 ? ` 等 ${a.length} 条` : '');
++    if (none.length) out.push({ level: 'warn', rule: 'S1', chapter: c.id, msg: `${name}：${none.length} 条工位规则 / 目标没有出处 ${few(none)}（规则改过？重新回挂）` });
++    if (weak.length) out.push({ level: 'warn', rule: 'S2', chapter: c.id, msg: `${name}：${weak.length} 条违规规则只有 AI 推断或依据不牢 ${few(weak)}——请老师傅确认，或去标准库补` });
++  }
++  return out;
++}
++
+ /** 新步骤的模板 */
+ export function blankStep(type: string, n: number): any {
+   const id = `s${Date.now().toString(36)}${n}`;
+diff --git a/src/lib/standard-fields.ts b/src/lib/standard-fields.ts
+new file mode 100644
+index 0000000..58c9ea9
+--- /dev/null
++++ b/src/lib/standard-fields.ts
+@@ -0,0 +1,139 @@
++/**
++ * 行业标准与操作规程字段单一来源（迁移 022）：提示词 schema / 列表 / 详情 / 编辑 / 完整度都从这里生成。前后端共用。
++ * 版权口径：只存题录与「要点」（AI 转述的操作要求），不存原文；全文走官方链接。
++ */
++
++export const STANDARD_KIND_LABELS: Record<string, { label: string; color: string; hint: string }> = {
++  national_mandatory: { label: '强制性国标', color: 'red', hint: 'GB xxxx（不带 /T）' },
++  national: { label: '推荐性国标', color: 'volcano', hint: 'GB/T、GB/Z' },
++  industry: { label: '行业标准', color: 'orange', hint: 'AQ / DL/T / JTG / WS / YY / QJ / JB / NY/T / WH/T …' },
++  local: { label: '地方标准', color: 'gold', hint: 'DB11/T …' },
++  group: { label: '团体标准', color: 'cyan', hint: 'T/CXXX …' },
++  enterprise: { label: '企业标准 / 规程', color: 'blue', hint: 'Q/… 或企业公开的作业规程' },
++  vendor: { label: '厂商资料', color: 'lime', hint: '设备 / 仪器厂商公开的操作手册、使用说明书、作业指导' },
++  international: { label: '国际 / 国外标准', color: 'geekblue', hint: 'ISO / IEC / IEEE / UL / ASTM / NFPA / PADI …' },
++  regulation: { label: '法规规章', color: 'purple', hint: '法律、部门规章、规范性文件' },
++};
++export const STANDARD_DOC_TYPE_LABELS: Record<string, { label: string; color: string }> = {
++  standard: { label: '标准', color: 'default' },
++  procedure: { label: '操作规程 / 作业指导', color: 'green' },
++  manual: { label: '设备操作手册', color: 'lime' },
++  safety_rule: { label: '安全规程', color: 'red' },
++  code: { label: '技术 / 施工规范', color: 'blue' },
++  guideline: { label: '指南 / 专家共识', color: 'cyan' },
++  regulation: { label: '法规', color: 'purple' },
++};
++export const STANDARD_STATUS_LABELS: Record<string, { label: string; color: string }> = {
++  current: { label: '现行', color: 'success' }, upcoming: { label: '即将实施', color: 'processing' }, revised: { label: '被代替', color: 'warning' }, abolished: { label: '废止', color: 'default' }, unknown: { label: '未知', color: 'default' },
++};
++/** 要点的类型：工位规则最常落到这几类 */
++export const POINT_KIND_LABELS: Record<string, { label: string; color: string }> = {
++  step: { label: '步骤', color: 'blue' }, limit: { label: '限值 / 窗口', color: 'gold' }, prohibit: { label: '禁止', color: 'red' },
++  check: { label: '检查 / 确认', color: 'cyan' }, ppe: { label: '防护', color: 'purple' }, emergency: { label: '应急', color: 'volcano' },
++};
++
++export type StandardFieldKind = 'string' | 'text' | 'url' | 'bool' | 'tags' | 'enum' | 'points';
++export interface StandardField { key: string; label: string; kind: StandardFieldKind; group: string; weight?: number; enum?: Record<string, any>; desc?: string }
++
++export const STANDARD_FIELDS: StandardField[] = [
++  { key: 'code', label: '标准号', kind: 'string', group: '题录', weight: 3, desc: '如 GB/T 36276-2023；企业规程没有号就 null' },
++  { key: 'title', label: '名称', kind: 'string', group: '题录', weight: 3 },
++  { key: 'title_en', label: '英文名', kind: 'string', group: '题录', weight: 1 },
++  { key: 'kind', label: '层级', kind: 'enum', group: '题录', weight: 2, enum: STANDARD_KIND_LABELS },
++  { key: 'doc_type', label: '文件类型', kind: 'enum', group: '题录', weight: 2, enum: STANDARD_DOC_TYPE_LABELS },
++  { key: 'issuer', label: '发布 / 归口单位', kind: 'string', group: '题录', weight: 2 },
++  { key: 'status', label: '状态', kind: 'enum', group: '题录', weight: 2, enum: STANDARD_STATUS_LABELS },
++  { key: 'publish_date_str', label: '发布日期', kind: 'string', group: '题录', weight: 1 },
++  { key: 'implement_date_str', label: '实施日期', kind: 'string', group: '题录', weight: 1 },
++  { key: 'replaces', label: '代替', kind: 'string', group: '题录' },
++  { key: 'replaced_by', label: '被代替为', kind: 'string', group: '题录' },
++  { key: 'industry', label: '行业', kind: 'string', group: '适用', weight: 2 },
++  { key: 'professions', label: '适用职业 / 岗位', kind: 'tags', group: '适用', weight: 2 },
++  { key: 'scope', label: '适用范围', kind: 'text', group: '适用', weight: 2, desc: '中文 2–3 句' },
++  { key: 'operation_relevance', label: '约束了哪些操作', kind: 'text', group: '适用', weight: 2, desc: '这条标准管到岗位上的哪些动作（一两句）' },
++  { key: 'key_points', label: '操作要点', kind: 'points', group: '要点', weight: 3, desc: '[{ clause, kind, point }]：AI 转述，不抄原文' },
++  { key: 'full_text_public', label: '全文官方公开', kind: 'bool', group: '链接', weight: 1 },
++  { key: 'official_url', label: '官方页面', kind: 'url', group: '链接', weight: 3 },
++  { key: 'source_url', label: '来源', kind: 'url', group: '链接' },
++  { key: 'tags', label: '标签', kind: 'tags', group: '链接' },
++  { key: 'note', label: '备注', kind: 'text', group: '链接' },
++];
++export const STANDARD_EDITABLE_KEYS = STANDARD_FIELDS.map(f => f.key);
++export const STANDARD_GROUPS = Array.from(new Set(STANDARD_FIELDS.map(f => f.group)));
++
++export function hasStandardValue(v: any): boolean {
++  if (v === null || v === undefined) return false;
++  if (typeof v === 'string') return v.trim() !== '';
++  if (Array.isArray(v)) return v.length > 0;
++  return true;
++}
++export function computeStandardCompleteness(row: Record<string, any>): number {
++  let got = 0, total = 0;
++  for (const f of STANDARD_FIELDS) { if (!f.weight) continue; total += f.weight; if (hasStandardValue(row[f.key])) got += f.weight; }
++  return total ? Math.round((got / total) * 100) : 0;
++}
++
++const str = (v: any): string | null => (typeof v === 'string' && v.trim() && !/^(null|none|n\/a|未知|不详|无|待定|tbd)$/i.test(v.trim()) ? v.trim() : (typeof v === 'number' ? String(v) : null));
++const list = (v: any): string[] => Array.isArray(v) ? v.map(x => str(x)).filter((x): x is string => !!x) : (str(v) ? String(v).split(/[,，;；/、]/).map(x => x.trim()).filter(Boolean) : []);
++const boolOrNull = (v: any): boolean | null => v === true || /^(true|yes|是)$/i.test(String(v ?? '')) ? true : v === false || /^(false|no|否)$/i.test(String(v ?? '')) ? false : null;
++
++/** 标准号规范化：全角转半角、各种横线统一、去多余空格（GB/T 36276—2023 → GB/T 36276-2023） */
++export function normalizeCode(v: any): string | null {
++  const s = str(v); if (!s) return null;
++  return s.replace(/[！-～]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xfee0)).replace(/[—–－―]/g, '-').replace(/\s+/g, ' ').replace(/\s*\/\s*/g, '/').replace(/\s*-\s*/g, '-').trim().toUpperCase().replace(/^GB\/T(\d)/, 'GB/T $1');
++}
++
++/** 按标准号推层级（模型没给或给错时兜底） */
++export function kindFromCode(code: string | null): string | null {
++  if (!code) return null;
++  if (/^GB\/[TZ]\b/.test(code)) return 'national';
++  if (/^GB\s?\d/.test(code)) return 'national_mandatory';
++  if (/^DB\d/.test(code)) return 'local';
++  if (/^T\//.test(code)) return 'group';
++  if (/^Q\//.test(code)) return 'enterprise';
++  if (/^(ISO|IEC|IEEE|UL|ASTM|NFPA|EN|ANSI|API|ASME|SAE|JIS|DIN|BS)\b/.test(code)) return 'international';
++  if (/^[A-Z]{1,4}(\/[TZ])?\s?\d/.test(code)) return 'industry';
++  return null;
++}
++
++/** 大模型输出 → 干净的标准行 */
++export function sanitizeStandard(raw: Record<string, any>): Record<string, any> {
++  const out: Record<string, any> = {};
++  for (const f of STANDARD_FIELDS) {
++    const v = raw?.[f.key];
++    if (v === undefined) continue;
++    switch (f.kind) {
++      case 'url': { const s = str(v); out[f.key] = s && /^https?:\/\/\S+$/i.test(s) ? s : null; break; }
++      case 'bool': out[f.key] = boolOrNull(v); break;
++      case 'tags': out[f.key] = list(v).slice(0, 20); break;
++      case 'enum': { const s = str(v); out[f.key] = s && f.enum && s in f.enum ? s : null; break; }
++      case 'points': {
++        const arr = Array.isArray(v) ? v : [];
++        out[f.key] = arr.map((p: any) => ({ clause: str(p?.clause), kind: str(p?.kind) && p.kind in POINT_KIND_LABELS ? p.kind : 'step', point: str(p?.point) }))
++          .filter((p: any) => p.point).map((p: any) => ({ ...p, point: String(p.point).slice(0, 160) })).slice(0, 12);
++        break;
++      }
++      default: out[f.key] = str(v);
++    }
++  }
++  if (out.code !== undefined) out.code = normalizeCode(out.code);
++  if (out.code && !out.kind) out.kind = kindFromCode(out.code);
++  return out;
++}
++
++/** 去重键：规范化标准号（去空格、年份连着）；没有号用 发布单位 + 名称 */
++export function standardDedupeKey(row: Record<string, any>): string {
++  const norm = (s: any) => String(s || '').toLowerCase().replace(/\s+/g, '').replace(/[，,。.;；:：、\-—_()（）【】\[\]"'“”《》/]/g, '');
++  const code = normalizeCode(row.code);
++  return code ? `code:${norm(code)}` : `t:${norm(row.issuer)}|${norm(row.title)}`;
++}
++
++export function formatStandardValue(key: string, v: any): string {
++  if (!hasStandardValue(v)) return '';
++  const f = STANDARD_FIELDS.find(x => x.key === key);
++  if (f?.kind === 'bool') return v ? '是' : '否';
++  if (f?.kind === 'points') return (v as any[]).map(p => `${p.clause ? `[${p.clause}] ` : ''}${p.point}`).join('\n');
++  if (f?.enum) { const m = f.enum[v]; return typeof m === 'string' ? m : (m?.label || String(v)); }
++  if (Array.isArray(v)) return v.join('、');
++  return String(v);
++}
+diff --git a/src/lib/standard-store.ts b/src/lib/standard-store.ts
+new file mode 100644
+index 0000000..516dc40
+--- /dev/null
++++ b/src/lib/standard-store.ts
+@@ -0,0 +1,60 @@
++/**
++ * 标准入库（服务端，迁移 022）：按去重键（规范化标准号）upsert；新行插入、已有行只填空；
++ * 人工定论（通过 / 不通过 / 隐藏）的行不覆盖，人工锁定的字段不动。状态 / 被代替这类会变的字段允许刷新。
++ * 适用职业取并集：同一条标准被不同职业搜到，就挂到每个职业上。
++ */
++import { supabaseAdmin } from '@/lib/supabase';
++import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
++import { STANDARD_EDITABLE_KEYS, computeStandardCompleteness, hasStandardValue, sanitizeStandard, standardDedupeKey } from '@/lib/standard-fields';
++
++export interface UpsertResult { inserted: number; updated: number; skipped: number; ids: number[] }
++
++export async function upsertStandards(rows: Record<string, any>[], opts: { searchId?: number | null; sources?: Record<string, Record<string, string>>; profession?: string | null } = {}): Promise<UpsertResult> {
++  const clean = rows.map(r => sanitizeStandard(r)).filter(r => r.title);
++  if (!clean.length) return { inserted: 0, updated: 0, skipped: 0, ids: [] };
++  const now = new Date().toISOString();
++  const keyed: Record<string, any>[] = clean.map(r => {
++    const professions = Array.from(new Set([...(r.professions || []), ...(opts.profession ? [opts.profession] : [])]));
++    return { ...r, professions, dedupe_key: standardDedupeKey(r) };
++  });
++  const keys = Array.from(new Set(keyed.map(r => r.dedupe_key)));
++  const { data: existing } = await supabaseAdmin.from('industry_standards').select('*').in('dedupe_key', keys);
++  const byKey = new Map<string, any>((existing || []).map(r => [r.dedupe_key, r]));
++  const result: UpsertResult = { inserted: 0, updated: 0, skipped: 0, ids: [] };
++  const seen = new Set<string>();
++
++  for (const r of keyed) {
++    if (seen.has(r.dedupe_key)) { result.skipped++; continue; }
++    seen.add(r.dedupe_key);
++    const src = opts.sources?.[r.dedupe_key] || opts.sources?.[r.code || ''] || opts.sources?.[r.title] || {};
++    const cur = byKey.get(r.dedupe_key);
++    if (!cur) {
++      const row: Record<string, any> = { dedupe_key: r.dedupe_key, ai_sources: src, search_id: opts.searchId || null, human_review_status: 'review', created_at: now, updated_at: now };
++      for (const k of STANDARD_EDITABLE_KEYS) if (r[k] !== undefined) row[k] = r[k];
++      row.completeness_score = computeStandardCompleteness(row);
++      const { data, error } = await supabaseAdmin.from('industry_standards').insert(row).select('id').single();
++      if (error) throw new Error(`标准写入失败（${r.code || r.title}）: ${error.message}`);
++      result.inserted++; result.ids.push(data.id);
++      continue;
++    }
++    result.ids.push(cur.id);
++    if (FROZEN_REVIEW_STATUSES.has(cur.human_review_status || '')) { result.skipped++; continue; }
++    const locked = new Set<string>(cur.human_locked_fields || []);
++    const updates: Record<string, any> = {};
++    for (const k of STANDARD_EDITABLE_KEYS) {
++      if (locked.has(k) || !hasStandardValue(r[k])) continue;
++      if (k === 'professions') { const merged = Array.from(new Set([...(cur.professions || []), ...r.professions])); if (merged.length !== (cur.professions || []).length) updates.professions = merged; continue; }
++      const refreshable = ['status', 'replaced_by', 'implement_date_str'].includes(k);
++      if (!hasStandardValue(cur[k]) || (refreshable && cur[k] !== r[k])) updates[k] = r[k];
++    }
++    if (Object.keys(updates).length) {
++      updates.ai_sources = { ...(cur.ai_sources || {}), ...src };
++      updates.completeness_score = computeStandardCompleteness({ ...cur, ...updates });
++      updates.updated_at = now;
++      if (opts.searchId) updates.search_id = opts.searchId;
++      await supabaseAdmin.from('industry_standards').update(updates).eq('id', cur.id);
++      result.updated++;
++    } else result.skipped++;
++  }
++  return result;
++}
+diff --git a/supabase/migrations/022_industry_standards.sql b/supabase/migrations/022_industry_standards.sql
+new file mode 100644
+index 0000000..50375f9
+--- /dev/null
++++ b/supabase/migrations/022_industry_standards.sql
+@@ -0,0 +1,122 @@
++-- ============================================
++-- 022: 行业标准与操作规程库（2026-10-12）
++--   用户：「给数据工厂加一个库 + 获取工具——行业标准与操作库，这样一切才有可解释性」。
++--   百业空间里工位的每条规则、每个目标窗口，都应该能指回一条标准 / 规程的条款：平方的数据知识与编织图谱让空间可信。
++--
++--   industry_standards   标准 / 规程实体（国标、行标、地标、团标、企业规程、国际标准、法规）
++--   standard_tasks       获取任务（一批检索配置，历史与成败累积）
++--   standard_searches    任务里的每一条检索（配置 + 原始候选 + 官方页原文 + AI 摘要 + 成本）
++--   standard_links       标准条款 ↔ 百业空间 / 章节 / 工位规则（可解释性的那根线）
++--
++-- 版权口径：只存题录（标准号、名称、发布单位、状态、日期、适用范围）和「要点」（AI 转述的操作要求，不抄原文），全文给官方链接。
++-- 在 Supabase SQL Editor 中整段执行，可重复执行。所有新表都开 RLS（不加策略：只有服务端 service role 能读写）。
++-- ============================================
++
++CREATE TABLE IF NOT EXISTS standard_tasks (
++  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
++  name TEXT NOT NULL,
++  notes TEXT DEFAULT '',
++  status TEXT DEFAULT 'draft',          -- draft | running | completed | failed
++  model_id TEXT DEFAULT '',
++  created_by TEXT DEFAULT '',
++  created_at TIMESTAMPTZ DEFAULT now(),
++  updated_at TIMESTAMPTZ DEFAULT now()
++);
++
++CREATE TABLE IF NOT EXISTS standard_searches (
++  id SERIAL PRIMARY KEY,
++  task_id UUID REFERENCES standard_tasks(id) ON DELETE CASCADE,
++  query TEXT NOT NULL DEFAULT '',       -- 检索主题：职业 / 工序 / 设备 / 场景（如「转炉炼钢 氧枪 安全」）
++  profession TEXT,                      -- 面向的职业（如「转炉炼钢操作工」）
++  industry TEXT,                        -- 行业（如「冶金」）
++  space_id UUID,                        -- 为哪个百业空间找（skill_tasks.id，可空）
++  kinds TEXT[] DEFAULT '{}',            -- 限定标准层级（见 standard-fields.ts）
++  doc_types TEXT[] DEFAULT '{}',        -- 限定文件类型：standard / procedure / safety_rule / code / guideline / regulation
++  count INTEGER DEFAULT 10,
++  enrich BOOLEAN DEFAULT TRUE,          -- 逐条抓官方页补题录与要点
++  model_id TEXT,
++  batch_id BIGINT,
++  llm_calls INTEGER DEFAULT 0,
++  token_total BIGINT DEFAULT 0,
++  cost_usd NUMERIC(12, 6) DEFAULT 0,
++  search_queries TEXT[] DEFAULT '{}',
++  raw_candidates JSONB DEFAULT '[]',
++  raw_pages JSONB DEFAULT '[]',         -- [{ url, ok, len, markdown }]
++  structured_json JSONB,                -- { standards: [...], ai_summary, pipeline_log }
++  candidates_found INTEGER DEFAULT 0,
++  saved INTEGER DEFAULT 0,
++  status TEXT DEFAULT 'pending',        -- pending | running | success | failed
++  error_message TEXT,
++  created_by TEXT DEFAULT '',
++  created_at TIMESTAMPTZ DEFAULT now(),
++  updated_at TIMESTAMPTZ DEFAULT now()
++);
++CREATE INDEX IF NOT EXISTS idx_standard_searches_task ON standard_searches(task_id);
++CREATE INDEX IF NOT EXISTS idx_standard_searches_created ON standard_searches(created_at DESC);
++
++-- 字段定义与 src/lib/standard-fields.ts 保持一致
++CREATE TABLE IF NOT EXISTS industry_standards (
++  id SERIAL PRIMARY KEY,
++  dedupe_key TEXT UNIQUE NOT NULL,      -- 规范化的标准号（如 gbt36276-2023）；没有标准号的规程用 发布单位+名称
++
++  code TEXT,                            -- 标准号（如 GB/T 36276-2023、AQ 2001-2018、JTG F40-2004）
++  title TEXT NOT NULL,                  -- 标准 / 规程名称
++  title_en TEXT,
++  kind TEXT,                            -- national_mandatory 强制性国标 | national 推荐性国标 | industry 行业标准 | local 地方标准 | group 团体标准 | enterprise 企业标准 / 规程 | international 国际 / 国外标准 | regulation 法规规章
++  doc_type TEXT,                        -- standard 标准 | procedure 操作规程 / 作业指导 | safety_rule 安全规程 | code 技术规范 / 施工规范 | guideline 指南 / 共识 | regulation 法规
++  issuer TEXT,                          -- 发布 / 归口单位
++  industry TEXT,                        -- 行业（中文）
++  professions TEXT[] DEFAULT '{}',      -- 适用职业 / 岗位
++  status TEXT DEFAULT 'unknown',        -- current 现行 | upcoming 即将实施 | revised 被代替 | abolished 废止 | unknown
++  publish_date_str TEXT,
++  implement_date_str TEXT,
++  replaces TEXT,                        -- 代替了哪个旧标准
++  replaced_by TEXT,                     -- 被哪个新标准代替
++
++  scope TEXT,                           -- 适用范围（中文 2–3 句）
++  key_points JSONB DEFAULT '[]',        -- 操作要点（AI 转述，不抄原文）：[{ clause, kind: step|limit|prohibit|check|ppe|emergency, point }]
++  operation_relevance TEXT,             -- 这条标准约束了岗位上的哪些操作（一两句）
++  full_text_public BOOLEAN,             -- 官方是否免费公开全文
++
++  official_url TEXT,                    -- 官方题录 / 全文公开页
++  source_url TEXT,
++  tags TEXT[] DEFAULT '{}',
++
++  ai_sources JSONB DEFAULT '{}',
++  search_id INTEGER REFERENCES standard_searches(id) ON DELETE SET NULL,
++  completeness_score INTEGER,
++  human_review_status VARCHAR(20) DEFAULT 'review',
++  human_review_at TIMESTAMPTZ,
++  human_review_note TEXT,
++  human_locked_fields JSONB DEFAULT '[]',
++  note TEXT,
++  created_at TIMESTAMPTZ DEFAULT now(),
++  updated_at TIMESTAMPTZ DEFAULT now()
++);
++CREATE INDEX IF NOT EXISTS idx_industry_standards_kind ON industry_standards(kind);
++CREATE INDEX IF NOT EXISTS idx_industry_standards_status ON industry_standards(status);
++CREATE INDEX IF NOT EXISTS idx_industry_standards_industry ON industry_standards(industry);
++CREATE INDEX IF NOT EXISTS idx_industry_standards_professions ON industry_standards USING GIN(professions);
++
++-- 标准条款 ↔ 百业空间（可解释性）：一条工位规则 / 目标窗口 / 章节，依据哪条标准的哪一款
++CREATE TABLE IF NOT EXISTS standard_links (
++  id SERIAL PRIMARY KEY,
++  standard_id INTEGER REFERENCES industry_standards(id) ON DELETE CASCADE,
++  space_id UUID NOT NULL,               -- skill_tasks.id
++  chapter_id UUID,                      -- lab_chapters.id（可空：整个空间）
++  target TEXT NOT NULL DEFAULT '',      -- 依据的对象：如「工位规则 · 氧枪冷却水报警先提枪」「目标 · 终点碳 0.04–0.08%」
++  clause TEXT,                          -- 条款号
++  note TEXT,                            -- 为什么这条依据它（AI 或人工写的一句）
++  confidence INTEGER,                   -- 0–100
++  created_by TEXT DEFAULT '',
++  created_at TIMESTAMPTZ DEFAULT now(),
++  UNIQUE NULLS NOT DISTINCT (standard_id, space_id, chapter_id, target)
++);
++CREATE INDEX IF NOT EXISTS idx_standard_links_space ON standard_links(space_id);
++
++ALTER TABLE standard_tasks ENABLE ROW LEVEL SECURITY;
++ALTER TABLE standard_searches ENABLE ROW LEVEL SECURITY;
++ALTER TABLE industry_standards ENABLE ROW LEVEL SECURITY;
++ALTER TABLE standard_links ENABLE ROW LEVEL SECURITY;
++
++NOTIFY pgrst, 'reload schema';
+diff --git a/supabase/migrations/023_standard_links_basis.sql b/supabase/migrations/023_standard_links_basis.sql
+new file mode 100644
+index 0000000..b1b312a
+--- /dev/null
++++ b/supabase/migrations/023_standard_links_basis.sql
+@@ -0,0 +1,7 @@
++-- 023 依据来源（2026-10-12）：工位的每条规则 / 目标都要说清出处——
++--   standard 标准条款（standard_id + clause）| expert 老师傅经验（技能卡里的规则，标准写不出来的手感和判断）| ai AI 推断（要人看）
++-- 回挂脚本 scripts/lab-link-standards.mts 写 standard_links；校验器 [S1] / [S2] 按这里查「没有出处」「只有 AI 推断」。可重复执行。
++ALTER TABLE standard_links ADD COLUMN IF NOT EXISTS basis TEXT DEFAULT 'standard';
++ALTER TABLE standard_links ADD COLUMN IF NOT EXISTS evidence TEXT;   -- 依据原话：标准要点 / 技能卡规则的那一句
++CREATE INDEX IF NOT EXISTS idx_standard_links_chapter ON standard_links(chapter_id);
++NOTIFY pgrst, 'reload schema';

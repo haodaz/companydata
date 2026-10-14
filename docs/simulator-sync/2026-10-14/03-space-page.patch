@@ -1,0 +1,673 @@
+diff --git a/scripts/lab-career-maps.mts b/scripts/lab-career-maps.mts
+new file mode 100644
+index 0000000..672e60b
+--- /dev/null
++++ b/scripts/lab-career-maps.mts
+@@ -0,0 +1,25 @@
++/**
++ * 给从 JD 建的精选空间补「职业地图」（2026-10-12，用户：职业地图有些岗位没有，补前面几个就行）。
++ * 职业探索空间建的时候就有；从 JD 建的没有。这里按空间的岗位称呼跑一遍 structureCareer，只取生涯地图那半写进 jd_snapshot.career。
++ *   npx tsx scripts/lab-career-maps.mts          精选名单里还没有职业地图的
++ *   npx tsx scripts/lab-career-maps.mts 71a6cbf5 只补这几个（编号前缀）
++ */
++import fs from 'node:fs';
++for (const l of fs.readFileSync('.env.local', 'utf8').split('\n')) { const m = l.match(/^([A-Z_]+)=(.*)$/); if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim().replace(/^"|"$/g, ''); }
++const { supabaseAdmin: db } = await import('../src/lib/supabase');
++const { structureCareer } = await import('../src/lib/agents/career');
++const { FEATURED_SPACES } = await import('../src/lib/lab-featured');
++const want = process.argv.slice(2).length ? process.argv.slice(2) : FEATURED_SPACES;
++const { data: spaces } = await db.from('skill_tasks').select('id, title, profile, jd_snapshot');
++for (const p of want) {
++  const s = (spaces || []).find(x => x.id.startsWith(p)); if (!s) continue;
++  const jd: any = s.jd_snapshot || {};
++  if (jd.career) { console.log('已有', s.id.slice(0, 8), jd.career.profession); continue; }
++  const role = String(s.profile?.role || jd.title || s.title).replace(/[（(].*?[)）]/g, '').trim();
++  try {
++    const { career } = await structureCareer(role);
++    await db.from('skill_tasks').update({ jd_snapshot: { ...jd, career: { ...career, profession: role } } }).eq('id', s.id);
++    console.log('✓', s.id.slice(0, 8), role);
++  } catch (e: any) { console.log('✗', s.id.slice(0, 8), role, e.message); }
++}
++process.exit(0);
+diff --git a/src/app/api/lab/spaces/[id]/ecosystem/route.ts b/src/app/api/lab/spaces/[id]/ecosystem/route.ts
+index ec4eafc..35fda04 100644
+--- a/src/app/api/lab/spaces/[id]/ecosystem/route.ts
++++ b/src/app/api/lab/spaces/[id]/ecosystem/route.ts
+@@ -4,8 +4,10 @@ import { supabaseAdmin } from '@/lib/supabase';
+ import { generateContent } from '@/lib/llm-client';
+ import { parseJsonLoose } from '@/lib/agents/search-llm';
+ import { logTokenUsage } from '@/lib/token-logger';
++import { featuredIndex } from '@/lib/lab-featured';
+ import { familyOf } from '@/lib/career-family';
+ import { labError } from '@/lib/skill-lab-server';
++import { matchCompanies } from '@/lib/lab-ecosystem';
+ 
+ export const runtime = 'nodejs';
+ export const maxDuration = 120;
+@@ -23,39 +25,6 @@ type Ctx = { params: Promise<{ id: string }> };
+ interface ChainNode { stage: string; what: string; keywords: string[] }
+ interface Chain { upstream: ChainNode[]; downstream: ChainNode[] }
+ 
+-/**
+- * 拿环节关键词去企业库里捞真实公司。
+- * 字段不同可信度不同：行业 / 产品领域里写着「半导体」是真做半导体，
+- * 经营范围那种长文本里提一口就不算——所以打分排序，分不够的宁可不给。
+- */
+-async function matchCompanies(keywords: string[], limit = 4) {
+-  const kws = [...new Set(keywords.filter(k => k && k.length >= 2).slice(0, 5))];
+-  if (!kws.length) return [];
+-  const FIELDS: [string, number][] = [['industry', 3], ['sub_industry', 3], ['product_area', 3], ['name', 2.5], ['company_specialties', 2], ['business_range', 1]];
+-  const or = kws.flatMap(k => FIELDS.map(([f]) => `${f}.ilike.%${k}%`)).join(',');
+-  const { data } = await supabaseAdmin.from('companies')
+-    .select('id, name, industry, sub_industry, product_area, company_specialties, business_range, one_sentence, city, province')
+-    .or(or).limit(60);
+-  const scored = (data || []).map((c: any) => {
+-    let sc = 0, strong = false;
+-    for (const k of kws) {
+-      // 一个词只算它命中的最可信那个字段，别让同一个词在五个字段里重复计分
+-      let best = 0;
+-      for (const [f, w] of FIELDS) if (String(c[f] || '').includes(k)) best = Math.max(best, w);
+-      if (best >= 2.5) strong = true;
+-      sc += best;
+-    }
+-    return { c, sc, strong };
+-  })
+-    // 必须有一个词落在行业 / 产品领域 / 公司名上——只是简介里提过一口的不算同行
+-    .filter(x => x.strong && x.sc >= 3)
+-    .sort((a, b) => b.sc - a.sc);
+-  const seen = new Set<string>();
+-  return scored.filter(x => { if (seen.has(x.c.name)) return false; seen.add(x.c.name); return true; })
+-    .slice(0, limit)
+-    .map(x => ({ id: x.c.id, name: x.c.name, industry: x.c.industry || x.c.sub_industry, city: x.c.city || x.c.province, one_sentence: x.c.one_sentence }));
+-}
+-
+ export async function GET(_req: NextRequest, { params }: Ctx) {
+   try {
+     const { id } = await params;
+@@ -68,30 +37,29 @@ export async function GET(_req: NextRequest, { params }: Ctx) {
+     const profession = jd.career?.profession || jd.title || skill?.name || '';
+     const family = familyOf(profession, skill?.domain, jd.title, jd.company);
+ 
+-    // ── 同行：同一个一级领域里的其他数字人 ──
+-    const { data: all } = await supabaseAdmin
+-      .from('skill_tasks').select('id, profile, jd_snapshot, skill:skills(name, domain)').neq('id', id).limit(200);
++    // ── 同行：同一个一级领域里的其他数字人。只列点得开的（有已发布章节），精选的、有工位的排前面 ──
++    const [{ data: all }, { data: pubCh }] = await Promise.all([
++      supabaseAdmin.from('skill_tasks').select('id, profile, jd_snapshot, skill:skills(name, domain)').neq('id', id).limit(300),
++      supabaseAdmin.from('lab_chapters').select('task_id').eq('status', 'published'),
++    ]);
++    const pubCount = new Map<string, number>();
++    for (const c of pubCh || []) pubCount.set(c.task_id, (pubCount.get(c.task_id) || 0) + 1);
+     const peers = (all || []).map((t: any) => {
+       const s = Array.isArray(t.skill) ? t.skill[0] : t.skill;
+       const p = t.jd_snapshot?.career?.profession || t.jd_snapshot?.title || s?.name || '';
+-      return { id: t.id, name: t.profile?.name, role: t.profile?.role, avatar: t.profile?.avatar, profession: p, family: familyOf(p, s?.domain, t.jd_snapshot?.title) };
+-    }).filter(p => p.family === family && p.name).slice(0, 8);
++      return { id: t.id, name: t.profile?.name, role: t.profile?.role, avatar: t.profile?.avatar, profession: p, family: familyOf(p, s?.domain, t.jd_snapshot?.title), chapters: pubCount.get(t.id) || 0 };
++    }).filter(p => p.family === family && p.name && p.chapters > 0)
++      .sort((a, b) => { const fa = featuredIndex(a.id), fb = featuredIndex(b.id); return (fa < 0 ? 999 : fa) - (fb < 0 ? 999 : fb) || b.chapters - a.chapters; })
++      .slice(0, 10);
+ 
+-    // ── 此刻在招：岗位库里和这个职业沾边的真实 JD ──
+-    const terms = [...new Set([profession, skill?.name, jd.title].filter(Boolean)
+-      .flatMap((s: string) => s.replace(/[（(].*?[)）]/g, '').split(/[·\s/、,，]+/)).filter((w: string) => w.length >= 2))].slice(0, 6);
++    // ── 此刻在招（一）直接对口：岗位库里和这个职业沾边的真实 JD。职业名之外再拆出核心词（火箭总装工程师 → 火箭总装 / 总装） ──
++    const base = [profession, profile.role, skill?.name, jd.title].filter(Boolean).flatMap((s: string) => s.replace(/[（(].*?[)）]/g, '').split(/[·\s/、,，]+/));
++    const core = base.map((w: string) => w.replace(/(工程师|技术员|操作工|管理员|值班员|调度员|施工员|师傅|技师|助理|主管|专员|老师|教师|教练|医师|医生|护士|师|员|工)$/, ''));
++    const terms = [...new Set([...base, ...core].filter((w: string) => w.length >= 2))].slice(0, 8);
+     const jobOr = terms.flatMap(k => [`name.ilike.%${k}%`, `job_function.ilike.%${k}%`, `department.ilike.%${k}%`]).join(',');
+-    const { data: jobs } = jobOr
+-      ? await supabaseAdmin.from('jobs').select('id, name, institute_or_company_name, city, province, location, education_requirement, link, source_url, status, graduation_year').or(jobOr).limit(40)
+-      : { data: [] as any[] };
+-    const cities = [...new Set((jobs || []).map((j: any) => j.city || j.location).filter(Boolean))];
+-    const firms = [...new Set((jobs || []).map((j: any) => j.institute_or_company_name).filter(Boolean))];
+-    const hiring = {
+-      total: (jobs || []).length,
+-      cities: cities.slice(0, 8),
+-      companies: firms.slice(0, 8),
+-      samples: (jobs || []).slice(0, 5).map((j: any) => ({ id: j.id, name: j.name, company: j.institute_or_company_name, city: j.city || j.location, edu: j.education_requirement, year: j.graduation_year, url: j.link || j.source_url })),
+-    };
++    const JOB_COLS = 'id, name, institute_or_company_name, company_id, city, province, location, education_requirement, link, source_url, status, graduation_year';
++    const { data: jobs } = jobOr ? await supabaseAdmin.from('jobs').select(JOB_COLS).or(jobOr).order('id', { ascending: false }).limit(80) : { data: [] as any[] };
++    const job = (j: any, extra: Record<string, any> = {}) => ({ id: j.id, name: j.name, company: j.institute_or_company_name, city: j.city || j.location, edu: j.education_requirement, year: j.graduation_year, url: j.link || j.source_url, ...extra });
+ 
+     // ── 上下游：环节由模型划分，公司全部来自企业库 ──
+     let chain: Chain | null = profile.ecosystem?.chain || null;
+@@ -118,6 +86,33 @@ keywords 要能在企业的「所属行业 / 产品领域 / 公司名」里原
+       Promise.all(nodes.map(async n => ({ ...n, companies: await matchCompanies(n.keywords) })));
+     const [upstream, downstream] = await Promise.all([withFirms(chain.upstream), withFirms(chain.downstream)]);
+ 
++    // ── 此刻在招（二）上下游企业在招：上面那些真实公司正在招的岗位（万物相连：从一个职业连到一条产业链上的机会） ──
++    const firmStage = new Map<number, string>();
++    for (const [side, nodes] of [['上游', upstream], ['下游', downstream]] as const) for (const n of nodes) for (const c of n.companies) if (!firmStage.has(c.id)) firmStage.set(c.id, `${side} · ${n.stage}`);
++    const { data: chainJobs } = firmStage.size ? await supabaseAdmin.from('jobs').select(JOB_COLS).in('company_id', [...firmStage.keys()]).order('id', { ascending: false }).limit(200) : { data: [] as any[] };
++    // 岗位按城市拆成了多行：同一家同一个岗位名合成一条、城市并起来；上下游按公司轮流取（每家最多 3 条），别让一家刷屏
++    const merge = (rows: any[], extra: (j: any) => Record<string, any> = () => ({})) => {
++      const m = new Map<string, any>();
++      for (const j of rows) { const k = `${j.institute_or_company_name}|${j.name}`; const c = j.city || j.location; const cur = m.get(k); if (cur) { if (c && !cur.cities.includes(c)) cur.cities.push(c); } else m.set(k, { ...job(j, extra(j)), cities: c ? [c] : [] }); }
++      return [...m.values()].map(x => ({ ...x, city: x.cities.slice(0, 3).join(' / ') + (x.cities.length > 3 ? ` 等 ${x.cities.length} 城` : '') }));
++    };
++    const roundRobin = (list: any[], per = 3) => {
++      const by = new Map<string, any[]>(); for (const x of list) by.set(x.company, [...(by.get(x.company) || []), x]);
++      const out: any[] = []; for (let r = 0; r < per; r++) for (const l of by.values()) if (l[r]) out.push(l[r]);
++      return out;
++    };
++    const direct = merge(jobs || []);
++    const directKeys = new Set(direct.map(j => `${j.company}|${j.name}`));
++    const viaChain = roundRobin(merge(chainJobs || [], (j: any) => ({ stage: firmStage.get(j.company_id) })).filter(j => !directKeys.has(`${j.company}|${j.name}`)));
++    const allJobs = [...(jobs || []), ...(chainJobs || [])];
++    const cities = [...new Set(allJobs.map((j: any) => j.city || j.location).filter(Boolean))];
++    const firms = [...new Set(allJobs.map((j: any) => j.institute_or_company_name).filter(Boolean))];
++    const hiring = {
++      total: direct.length + viaChain.length, direct: direct.length, chain: viaChain.length,
++      cities: cities.slice(0, 12), companies: firms.slice(0, 12),
++      samples: direct.slice(0, 12), chainSamples: viaChain.slice(0, 12),
++    };
++
+     return NextResponse.json({ ok: true, family, profession, peers, hiring, chain: { upstream, downstream } });
+   } catch (e: any) {
+     console.error('[Lab/ecosystem]', e);
+diff --git a/src/app/lab/[id]/page.tsx b/src/app/lab/[id]/page.tsx
+index 655b024..90547e5 100644
+--- a/src/app/lab/[id]/page.tsx
++++ b/src/app/lab/[id]/page.tsx
+@@ -4,11 +4,14 @@ import { beta3dForChapter, beta3dForSpace } from '@/lib/lab-3d-beta';
+ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+ import { useParams, useRouter, useSearchParams } from 'next/navigation';
+ import Image from 'next/image';
+-import { App, Drawer, Popconfirm } from 'antd';
++import { App, Drawer, Input, Modal, Popconfirm } from 'antd';
+ import { useModel } from '@/lib/model-context';
+ import { useUser } from '@/lib/user-context';
+ import { visitorIds } from '@/lib/lab-cert';
+ import { SimRunner, SimStage, TraceCompare, enterFullscreen } from '@/components/lab/SimRunner';
++import { ChatLauncher } from '@/components/kg/PersonaChat';
++import { useNicknames } from '@/components/kg/useNicknames';
++import { NicknameEditor } from '@/components/kg/NicknameEditor';
+ import { traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
+ import { GENERIC_CHAPTER_RUBRIC, INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tzLabel, type InterviewTurn, type RubricItem } from '@/lib/skill-lab';
+ 
+@@ -22,9 +25,11 @@ const MODES: { key: Mode; label: string; icon: string }[] = [
+   { key: 'learn', label: '你教我', icon: 'learn' },
+   { key: 'solve', label: '问问我', icon: 'solve' },
+   { key: 'ledger', label: '我被用在哪', icon: 'ledger' },
+-  { key: 'eco', label: '我的行当', icon: 'eco' },
++  // 我的行当 / 职业地图不再单列入口：放进「和我聊」当快捷提问（有 AI 陪着讲，不让人干读一大页）
+   { key: 'jd', label: '我的来历', icon: 'jd' },
+ ];
++/** 体验视角里不出现的入口：老师傅来教、账本、JD 来历都是工厂侧的 */
++const EXP_HIDDEN: Mode[] = ['learn', 'ledger', 'jd'];
+ const CAREER_MODE = { key: 'career' as Mode, label: '职业地图', icon: 'career' };
+ 
+ /** 线性小图标：深色舞台上 emoji 太廉价 */
+@@ -33,6 +38,7 @@ function Ico({ n, s = 20 }: { n: string; s?: number }) {
+     test: <><circle cx="12" cy="12" r="8.5" /><circle cx="12" cy="12" r="4.5" /><circle cx="12" cy="12" r="1" fill="currentColor" /></>,
+     learn: <><path d="M3 5.5h6a3 3 0 0 1 3 3V20a2.4 2.4 0 0 0-2.4-2.4H3z" /><path d="M21 5.5h-6a3 3 0 0 0-3 3V20a2.4 2.4 0 0 1 2.4-2.4H21z" /></>,
+     solve: <path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12z" />,
++    chat: <><path d="M4 5.5h16v10H10l-4.5 4v-4H4z" /><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" strokeWidth="2.4" /></>,
+     ledger: <><circle cx="12" cy="12" r="8.5" /><path d="M3.5 12h17M12 3.5c2.6 2.4 2.6 14.6 0 17M12 3.5c-2.6 2.4-2.6 14.6 0 17" /></>,
+     eco: <><circle cx="5.5" cy="6.5" r="2.3" /><circle cx="18.5" cy="6.5" r="2.3" /><circle cx="12" cy="18" r="2.3" /><path d="M7.6 7.6 10.6 16M16.4 7.6 13.4 16M7.8 6.5h8.4" /></>,
+     jd: <><path d="M6.5 3h7.5l4.5 4.5V21h-12z" /><path d="M14 3v4.5h4.5M9.5 12.5h6M9.5 16.5h6" /></>,
+@@ -115,15 +121,26 @@ const HUB_CSS = `
+ .hub-stat span { font-size: 10.5px; color: rgba(255,255,255,.5); letter-spacing: .1em; }
+ .hub-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; max-width: 560px; }
+ .hub-skills span { padding: 3px 10px; border-radius: 999px; font-size: 12px; color: rgba(255,255,255,.78); border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.04); }
+-.hub-portals { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) repeat(3, minmax(0, .74fr)); gap: 10px; margin-top: 22px; position: relative; z-index: 3; }
+-.hub-portal.main { min-height: 104px; padding: 16px 18px; border: 0; background: linear-gradient(125deg, rgba(118,100,255,.95), rgba(140,118,255,.9) 45%, rgba(30,182,206,.88));
+-  box-shadow: 0 14px 40px rgba(106,92,255,.42), inset 0 1px 0 rgba(255,255,255,.3); }
+-.hub-portal.main .ic { color: #fff; }
++.hub-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 22px; position: relative; z-index: 3; }
++.hub-actions + .hub-portals { margin-top: 12px; }
++.hub-3d { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; color: #fff; font-size: 13.5px; font-weight: 700; text-decoration: none; white-space: nowrap;
++  background: linear-gradient(120deg, #ff5fa2, #6a5cff); box-shadow: 0 8px 24px rgba(255,95,162,.3); transition: transform .2s, box-shadow .2s; }
++.hub-3d:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,95,162,.45); }
++.hub-portals { display: grid; grid-template-columns: var(--pc, repeat(4, minmax(0, 1fr)) repeat(3, minmax(0, .74fr))); gap: 10px; margin-top: 22px; position: relative; z-index: 3; }
++/* 只有第一个（和我聊）是实心渐变；其余主按钮是同尺寸的毛玻璃，顶上一道细色线 + 彩色图标——一个焦点，不是一排蓝 */
++.hub-portal.main { min-height: 104px; padding: 16px 18px; }
+ .hub-portal.main b { font-size: 20px; }
+-.hub-portal.main span { color: rgba(255,255,255,.82); font-size: 12.5px; }
+-.hub-portal.main::after { color: rgba(255,255,255,.75); font-size: 18px; }
+-.hub-portal.main:hover { box-shadow: 0 20px 52px rgba(106,92,255,.6), inset 0 1px 0 rgba(255,255,255,.35); }
+-.hub-portal.main.pulse { animation: hub-pulse 3.2s ease-in-out infinite; }
++.hub-portal.main span { font-size: 12.5px; }
++.hub-portal.main::after { font-size: 18px; }
++.hub-portal.main:not(.solid)::before { content: ''; position: absolute; left: 18px; right: 18px; top: -1px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, #8c7eff, #4fe0f2); opacity: .75; }
++.hub-portal.main:not(.solid) .ic { color: #b3a8ff; }
++.hub-portal.solid { border: 0; background: linear-gradient(125deg, rgba(118,100,255,.95), rgba(140,118,255,.9) 45%, rgba(30,182,206,.88));
++  box-shadow: 0 14px 40px rgba(106,92,255,.42), inset 0 1px 0 rgba(255,255,255,.3); }
++.hub-portal.solid .ic { color: #fff; }
++.hub-portal.solid span { color: rgba(255,255,255,.85); }
++.hub-portal.solid::after { color: rgba(255,255,255,.75); }
++.hub-portal.solid:hover { box-shadow: 0 20px 52px rgba(106,92,255,.6), inset 0 1px 0 rgba(255,255,255,.35); }
++.hub-portal.solid.pulse { animation: hub-pulse 3.2s ease-in-out infinite; }
+ @keyframes hub-pulse { 50% { box-shadow: 0 14px 54px rgba(106,92,255,.72), 0 0 0 4px rgba(140,126,255,.18), inset 0 1px 0 rgba(255,255,255,.3); } }
+ .hub-portal { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 14px 16px 14px; border-radius: 16px; cursor: pointer; text-align: left; font-family: inherit;
+   background: linear-gradient(160deg, rgba(255,255,255,.16), rgba(255,255,255,.06)); border: 1px solid rgba(255,255,255,.22); color: #fff;
+@@ -146,7 +163,7 @@ const HUB_CSS = `
+   .hub-portals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+   .hub-portal.main { min-height: 86px; }
+ }
+-@media (prefers-reduced-motion: reduce) { .hub-bg img, .hub-fig .float, .hub-beam, .hub-bokeh i, .hub-dust i, .hub-portal.main.pulse { animation: none !important; } }
++@media (prefers-reduced-motion: reduce) { .hub-bg img, .hub-fig .float, .hub-beam, .hub-bokeh i, .hub-dust i, .hub-portal.solid.pulse { animation: none !important; } }
+ 
+ /* ── 浅色：亮环境、投影、学校一体机。现场是白天的现场，玻璃是亮的，字是深的 ── */
+ .lab[data-theme="light"] .hub { background: #eef0fb; color: var(--ink); }
+@@ -174,11 +191,11 @@ const HUB_CSS = `
+ .lab[data-theme="light"] .hub-stat b small, .lab[data-theme="light"] .hub-stat span { color: var(--ink3); }
+ .lab[data-theme="light"] .hub-skills span { color: var(--ink2); border-color: rgba(106,92,255,.22); background: rgba(255,255,255,.7); }
+ .lab[data-theme="light"] .hub-ghost { background: rgba(255,255,255,.78); border-color: rgba(106,92,255,.2); color: var(--ink2); }
+-.lab[data-theme="light"] .hub-portal:not(.main) { background: linear-gradient(160deg, rgba(255,255,255,.9), rgba(255,255,255,.66)); border-color: rgba(106,92,255,.2); color: var(--ink);
++.lab[data-theme="light"] .hub-portal:not(.solid) { background: linear-gradient(160deg, rgba(255,255,255,.9), rgba(255,255,255,.66)); border-color: rgba(106,92,255,.2); color: var(--ink);
+   box-shadow: inset 0 1px 0 #fff, 0 10px 28px rgba(88,76,220,.12); }
+-.lab[data-theme="light"] .hub-portal:not(.main) .ic { color: var(--v); }
+-.lab[data-theme="light"] .hub-portal:not(.main) span { color: var(--ink3); }
+-.lab[data-theme="light"] .hub-portal:not(.main)::after { color: rgba(106,92,255,.4); }
++.lab[data-theme="light"] .hub-portal:not(.solid) .ic { color: var(--v); }
++.lab[data-theme="light"] .hub-portal:not(.solid) span { color: var(--ink3); }
++.lab[data-theme="light"] .hub-portal:not(.solid)::after { color: rgba(106,92,255,.4); }
+ .lab[data-theme="light"] .sub-head { background: rgba(255,255,255,.86) radial-gradient(700px 160px at 12% -60%, rgba(106,92,255,.16), transparent 70%); border-bottom-color: var(--line);
+   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+ .lab[data-theme="light"] .sub-head-in, .lab[data-theme="light"] .sub-now { color: var(--ink); }
+@@ -209,10 +226,10 @@ const HUB_CSS = `
+  * 人物首页：一个人站在他自己的工作现场里。
+  * 景深：远景（失焦的现场）、光束和网格、人物（带一点 3D 倾斜）、前景光斑，鼠标一动各层按远近错开。
+  */
+-function PersonHub({ name, role, avatar, tagline, scene, origin, level, levelLabel, stats, skills, portals, top, onEnter }: {
++function PersonHub({ name, role, avatar, tagline, scene, origin, level, levelLabel, stats, skills, portals, top, actions, onEnter }: {
+   name: string; role: string; avatar: string; tagline: string; scene: string; origin: React.ReactNode; level: number; levelLabel: string;
+-  stats: { k: string; v: number; u: string }[]; skills: string[]; portals: { key: Mode; label: string; icon: string; sub: string; main?: boolean }[];
+-  top: React.ReactNode; onEnter: (m: Mode) => void;
++  stats: { k: string; v: number; u: string }[]; skills: string[]; portals: { key: Mode | 'chat'; label: string; icon: string; sub: string; main?: boolean; go?: () => void }[];
++  top: React.ReactNode; actions?: React.ReactNode; onEnter: (m: Mode) => void;
+ }) {
+   const ref = useRef<HTMLDivElement>(null);
+   useEffect(() => {
+@@ -267,9 +284,11 @@ function PersonHub({ name, role, avatar, tagline, scene, origin, level, levelLab
+             {skills.length > 0 && <div className="hub-skills">{skills.map(c => <span key={c}>{c}</span>)}</div>}
+           </div>
+         </div>
+-        <div className="hub-portals">
++        {actions && <div className="hub-actions">{actions}</div>}
++        {/* 列数跟着按钮个数走（主按钮宽、次按钮窄）；窄屏的两列规则照样生效 */}
++        <div className="hub-portals" style={{ ['--pc' as string]: [portals.filter(x => x.main).length && `repeat(${portals.filter(x => x.main).length}, minmax(0, 1fr))`, portals.filter(x => !x.main).length && `repeat(${portals.filter(x => !x.main).length}, minmax(0, .74fr))`].filter(Boolean).join(' ') }}>
+           {portals.map((x, i) => (
+-            <button key={x.key} className={`hub-portal${x.main ? ' main' : ''}${i === 0 ? ' pulse' : ''}`} onClick={() => onEnter(x.key)}>
++            <button key={x.key} className={`hub-portal${x.main ? ' main' : ''}${i === 0 && x.main ? ' solid pulse' : ''}`} onClick={() => (x.go ? x.go() : onEnter(x.key as Mode))}>
+               <span className="ic"><Ico n={x.icon} s={x.main ? 26 : 20} /></span>
+               <b>{x.label}</b>
+               <span>{x.sub}</span>
+@@ -448,6 +467,14 @@ export default function SpacePage() {
+   const guest = !!invite;
+   const inviteHdr: Record<string, string> = invite ? { 'x-lab-invite': invite } : {};
+   const [taught, setTaught] = useState(false);
++  // 体验视角点「你教我」：没有邀请票的人先领一张这个空间的票（游客不能直接调学习接口），拿到就进去示范
++  const enterTeach = async () => {
++    try {
++      const j = await (await fetch(`/api/lab/spaces/${id}/practitioner`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })).json();
++      if (!j.ok) throw new Error(j.error);
++      window.location.href = j.path;
++    } catch (e: any) { message.error(e.message); }
++  };
+   const [inviting, setInviting] = useState(false);
+ 
+   const [space, setSpace] = useState<any>(null);
+@@ -457,7 +484,11 @@ export default function SpacePage() {
+   // 模式跟着网址走：没有 m = 人物首页；有 m = 进了这位数字职人的某个独立空间。
+   // 浏览器后退就回到人，每个空间也都有自己的链接。受邀的老师傅只有「教」这一个空间。
+   const urlMode = sp.get('m') as Mode | null;
+-  const mode: Mode | null = guest ? 'learn' : (urlMode && ALL_MODES.includes(urlMode) ? urlMode : null);
++  // 体验视角（没登录的访客，或从「体验百业」点进来的 ?from=gallery）：只看体验，不给「你教我 / 我被用在哪 / 我的来历」这些工厂侧的入口
++  const fromParam = sp.get('from');
++  const exp = !guest && (!user || fromParam === 'gallery');
++  const hiddenInExp = (m: Mode) => exp && EXP_HIDDEN.includes(m);
++  const mode: Mode | null = guest ? 'learn' : (urlMode && ALL_MODES.includes(urlMode) && !hiddenInExp(urlMode) ? urlMode : null);
+   // 章节也跟着网址走（?ch=章节编号）：一个职业可以有几章组成「一天」，分享链接能直达某一章
+   const chParam = sp.get('ch');
+   const setMode = (m: Mode | null, replace = false) => {
+@@ -465,6 +496,7 @@ export default function SpacePage() {
+     if (m) q.set('m', m);
+     if (chParam) q.set('ch', chParam);
+     if (invite) q.set('invite', invite);
++    if (fromParam) q.set('from', fromParam);
+     const url = `/lab/${id}${q.toString() ? `?${q}` : ''}`;
+     if (replace) router.replace(url, { scroll: false }); else router.push(url);
+   };
+@@ -526,11 +558,21 @@ function castOf(space: any, sim: Sim | null) {
+   const [expert, setExpert] = useState({ name: '', title: '', location: '' });
+   // 老师傅的信息也只填一次：记在本地，下次直接「以 xx 的身份示范」
+   const [expertSaved, setExpertSaved] = useState(false);
++  // 这次示范对照出处挑出来的偏差（访谈盯着问；显示在追问上方）
++  const [devs, setDevs] = useState<{ label: string; kind: string; evidence: string | null }[]>([]);
++  const fromSub = sp.get('fromSub');
++  const [fromSubDone, setFromSubDone] = useState(false);
++  // 「你教我」进来先弹一个小窗留名（姓名 / 资历 / 所在地），不埋在一堆说明文字里；关掉了可以从说明区再打开
++  const [idOpen, setIdOpen] = useState(false);
++  const [idAsked, setIdAsked] = useState(false);
+   useEffect(() => { try { const e = JSON.parse(localStorage.getItem('lab:expert') || 'null'); if (e?.name && e?.location) { setExpert(e); setExpertSaved(true); } } catch { /* 读不到就空着 */ } }, []);
+   const [walk, setWalk] = useState('');
+   const [turns, setTurns] = useState<InterviewTurn[]>([]);
+   const [reply, setReply] = useState('');
+   const [learnStep, setLearnStep] = useState<0 | 1 | 2>(0); // 0 档案 · 1 走一遍 · 2 追问
++  useEffect(() => {
++    if (mode === 'learn' && space && !expertSaved && !idAsked && !(guest && taught) && learnStep !== 2) { setIdOpen(true); setIdAsked(true); }
++  }, [mode, space, expertSaved, idAsked, guest, taught, learnStep]);
+   const [enough, setEnough] = useState(false);
+   const [expertTrace, setExpertTrace] = useState<SimTrace | null>(null);
+   /** 你教我：老师傅这一趟示范过的每一段（章节编号 → 轨迹），吸收时各段的示范存回各段 */
+@@ -598,6 +640,7 @@ function castOf(space: any, sim: Sim | null) {
+   const chapterTrace = (chapter?.expert_trace && Object.keys(chapter.expert_trace).length ? chapter.expert_trace : null) || skill?.expert_trace || null;
+   // 多段的空间：考 / 教都进「一天」页（左时间轴、右整段内容）
+   // 考 / 教 / 你教我都先落在「一天」页（只有一段的老空间也一样，时间轴上就一段）；没有操作台的纯文字老空间走老版
++  const { map: nicks, setNickname } = useNicknames();
+   const isDay = (mode === 'test' || mode === 'teach' || mode === 'learn') && !!sim && chapters.length >= 1;
+   // 这一段的评分标准：第 1 段用空间的，后面的用章节自己的（没有就用通用四项），和评分接口一致
+   const chapterRubric: RubricItem[] = !chapter || chapter.seq === 1 || !chapter.id ? (space?.rubric || []) : (Array.isArray(chapter.rubric) && chapter.rubric.length ? chapter.rubric : GENERIC_CHAPTER_RUBRIC);
+@@ -655,10 +698,35 @@ function castOf(space: any, sim: Sim | null) {
+     finally { if (bare) setBareBusy(false); else setBusy(''); }
+   };
+ 
++  // 示范评审页「拿这次操作去访谈」：把那次作答的轨迹原样装进「你教我」，直接开始盯着偏差追问（要登录）
++  useEffect(() => {
++    if (!fromSub || fromSubDone || !space || !user || mode !== 'learn') return;
++    setFromSubDone(true);
++    (async () => {
++      try {
++        const j = await (await fetch(`/api/lab/studio/review?trace=${fromSub}`)).json();
++        if (!j.ok) throw new Error(j.error);
++        const sub = j.submission, cid = sub.chapter_id || 'base';
++        const ch = chapters.find(c => c.id === sub.chapter_id) || null;
++        const csim: any = ch?.sim || space?.sim;
++        const label = ch ? `${ch.slot ? `${ch.slot} · ` : ''}${ch.title}` : space.title;
++        const transcript = csim ? `【${label}】\n${traceToText(csim, sub.trace)}` : '';
++        setExpert({ name: sub.candidate_name || '', title: sub.candidate_note || '', location: sub.candidate_location || '' }); setExpertSaved(true); setIdOpen(false);
++        setChTraces({ [cid]: { trace: sub.trace, label } }); setExpertTrace(sub.trace); setWalk(transcript); setLearnStep(2);
++        setBusy('AI 核心正在回看这次操作');
++        const json = await post('interview', { turns: [], walkthrough: transcript, traces: { [cid]: sub.trace } });
++        if (json.deviations) setDevs(json.deviations);
++        setTurns([{ role: 'ai', content: json.question }]);
++      } catch (e: any) { message.error(e.message); } finally { setBusy(''); }
++    })();
++    // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, [fromSub, fromSubDone, space, user, mode]);
++
+   const askNext = async (nextTurns: InterviewTurn[]) => {
+     setBusy('AI 核心正在想下一个问题');
+     try {
+-      const json = await post('interview', { turns: nextTurns, walkthrough: walk });
++      const json = await post('interview', { turns: nextTurns, walkthrough: walk, traces: Object.fromEntries(Object.entries(chTraces).map(([k, x]) => [k, x.trace])) });
++      if (json.deviations) setDevs(json.deviations);
+       setTurns([...nextTurns, { role: 'ai', content: json.question }]);
+       setEnough(json.enough || nextTurns.filter(t => t.role === 'expert').length >= 5);
+     } catch (e: any) { message.error(e.message); }
+@@ -682,7 +750,8 @@ function castOf(space: any, sim: Sim | null) {
+     setBusy('AI 核心正在回看专家的每一步操作');
+     try {
+       const prev = turns.filter((t, i) => !(i === turns.length - 1 && t.role === 'ai'));
+-      const json = await post('interview', { turns: prev, walkthrough: transcript });
++      const json = await post('interview', { turns: prev, walkthrough: transcript, traces: { ...Object.fromEntries(Object.entries(chTraces).map(([k, x]) => [k, x.trace])), [chapter?.id || 'base']: trace } });
++      if (json.deviations) setDevs(json.deviations);
+       setTurns([...prev, { role: 'ai', content: json.question }]);
+     } catch (e: any) { message.error(e.message); }
+     finally { setBusy(''); }
+@@ -730,8 +799,9 @@ function castOf(space: any, sim: Sim | null) {
+       else await post('submit', { mode: 'expert', name: expert.name, note: expert.title, location: expert.location, answer: walk, trace: expertTrace }).catch(() => null);
+       const firstId = chapters[0]?.id || 'base';
+       const chapterTraces = Object.fromEntries(walked.filter(([cid]) => cid !== 'base' && cid !== firstId).map(([cid, x]) => [cid, x.trace]));
+-      await post('distill', { turns: turns.filter((t, i) => !(i === turns.length - 1 && t.role === 'ai')), walkthrough: walk, trace: walked.length ? (chTraces[firstId] || chTraces.base)?.trace : expertTrace, chapterTraces, expert: { ...expert, tz: -new Date().getTimezoneOffset() / 60 }, createdBy: user?.email });
+-      message.success('吸收完成，专业度提升');
++      const dj = await post('distill', { turns: turns.filter((t, i) => !(i === turns.length - 1 && t.role === 'ai')), walkthrough: walk, trace: walked.length ? (chTraces[firstId] || chTraces.base)?.trace : expertTrace, chapterTraces, traces: Object.fromEntries(walked.map(([k, x]) => [k, x.trace])), expert: { ...expert, tz: -new Date().getTimezoneOffset() / 60 }, createdBy: user?.email });
++      const wb = dj?.writeBack;
++      message.success(wb && !wb.error && (wb.confirmed || wb.overridden || wb.context) ? `吸收完成：${wb.confirmed} 条规则得到你的确认，${wb.overridden + wb.context} 条记下了修改建议` : '吸收完成，专业度提升');
+       setLearnStep(0); setTurns([]); setWalk(''); setEnough(false); setExpertTrace(null); setChTraces({});
+       if (guest) setTaught(true);
+       await load();
+@@ -801,7 +871,7 @@ function castOf(space: any, sim: Sim | null) {
+ 
+   // 首页上的数：都是账本里真有的
+   const draft = !skill || skill.source === 'jd-draft';
+-  const modeList = jd.career ? [CAREER_MODE, ...MODES] : MODES;
++  const modeList = MODES.filter(m => !hiddenInExp(m.key));
+   const hubStats = [
+     { k: '考过', v: stat[0].v, u: '人' },
+     { k: '学到', v: stat[1].v, u: '条判断' },
+@@ -809,19 +879,27 @@ function castOf(space: any, sim: Sim | null) {
+     { k: '服务', v: served, u: '人次' },
+     { k: '跨越', v: places, u: '地' },
+   ];
+-  const portals: { key: Mode; label: string; icon: string; sub: string; main?: boolean }[] = [
++  const allPortals: { key: Mode | 'chat'; label: string; icon: string; sub: string; main?: boolean; go?: () => void }[] = [
++    // 和我聊排第一：受邀来教的老师傅不出现
++    ...(!guest ? [{ key: 'chat' as const, label: '和我聊', icon: 'chat', sub: '聊聊这一行 · 每句有出处', main: true, go: () => router.push(`/lab/${id}/chat`) }] : []),
+     { key: 'teach', label: '我教你', icon: 'play', sub: skill?.expert_trace && sim ? '看我把这一天走一遍' : '先让老师傅教我一遍', main: true },
+     { key: 'test', label: '考考你', icon: 'test', sub: stat[0].v ? `${stat[0].v} 人考过 · 换你上手` : '换你上手走一遍', main: true },
+     { key: 'learn', label: '你教我', icon: 'learn', sub: draft ? '等第一位老师傅' : `学自 ${skill.expert_name}`, main: true },
+     { key: 'solve', label: '问问我', icon: 'solve', sub: stat[2].v ? `解过 ${stat[2].v} 次` : '把真实问题交给我', main: true },
+     { key: 'ledger', label: '我被用在哪', icon: 'ledger', sub: served ? `${places} 地 · ${served} 人次` : '每一次调用都记账' },
+-    { key: 'eco', label: '我的行当', icon: 'eco', sub: '同行 · 在招 · 上下游' },
+-    jd.career ? { key: 'career', label: '职业地图', icon: 'career', sub: '这一行在做什么' } : { key: 'jd', label: '我的来历', icon: 'jd', sub: jd.company || '岗位 JD' },
++    ...(jd.kind !== 'career' ? [{ key: 'jd' as Mode, label: '我的来历', icon: 'jd', sub: jd.company || '岗位 JD' }] : []),
+   ];
++  // 「你教我」在体验视角也有（专业数采）：点了领一张邀请票进去示范，之后照样过示范评审
++  const portals = allPortals.filter(p => p.key === 'chat' || p.key === 'learn' || !hiddenInExp(p.key));
+ 
+   // 你教我：横幅下方的那一块——请老师傅把这一天走一遍（留名 → 逐段示范 → 每段走完接受追问 → 吸收）
+   const walkedLabels = Object.values(chTraces).map(x => x.label);
+   const nextUnwalked = chapters.find(c => !chTraces[c.id || 'base']);
++  const saveIdentity = () => {
++    if (!expert.name.trim() || !expert.location.trim()) { message.warning('姓名（或化名）和所在地要填'); return; }
++    try { localStorage.setItem('lab:expert', JSON.stringify(expert)); } catch { /* 记不住就算了 */ }
++    setExpertSaved(true); setIdOpen(false);
++  };
+   const learnTop = space ? (
+     <div className="dayv-sec">
+       {guest && taught ? (
+@@ -832,6 +910,16 @@ function castOf(space: any, sim: Sim | null) {
+       ) : learnStep === 2 ? (
+         <>
+           <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>追问 · 已示范 {walkedLabels.length} / {chapters.length} 段</div>
++          {devs.length > 0 && (
++            <div style={{ marginBottom: 12, padding: '10px 14px', borderRadius: 12, background: 'rgba(240,160,60,.08)', border: '1px solid rgba(240,160,60,.25)' }}>
++              <div style={{ fontSize: 12.5, fontWeight: 700, color: '#9a5b12', marginBottom: 6 }}>对照标准和其他老师傅，这几处想听你说说</div>
++              {devs.map((d, i) => (
++                <div key={i} style={{ fontSize: 13, lineHeight: 1.7, color: 'var(--ink2)' }}>
++                  <b style={{ color: d.kind === 'redline' ? '#d6336c' : d.kind === 'expert' ? '#9a5b12' : d.kind === 'ai' ? '#6b6f8a' : '#e08a1e' }}>{d.kind === 'redline' ? '标准红线' : d.kind === 'expert' ? '老师傅经验' : d.kind === 'ai' ? 'AI 推断' : '没达成'}</b> · {d.label}
++                </div>
++              ))}
++            </div>
++          )}
+           <div style={{ maxHeight: 420, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 10, paddingRight: 4 }}>
+             {turns.map((t, i) => (
+               <div key={i} className="lab-in" style={{ alignSelf: t.role === 'ai' ? 'flex-start' : 'flex-end', maxWidth: '88%', padding: '10px 14px', borderRadius: 14, fontSize: 14.5, lineHeight: 1.8,
+@@ -862,14 +950,10 @@ function castOf(space: any, sim: Sim | null) {
+               <button className="lab-btn ghost sm" onClick={() => setExpertSaved(false)}>修改</button>
+             </div>
+           ) : (
+-            <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))' }}>
+-              {field(expert.name, v => setExpert(e => ({ ...e, name: v })), '你的姓名 / 化名 *')}
+-              {field(expert.title, v => setExpert(e => ({ ...e, title: v })), '资历（如 普外科主任医师 · 20 年）')}
+-              {field(expert.location, v => setExpert(e => ({ ...e, location: v })), '所在地 *')}
+-            </div>
++            <button className="lab-btn" onClick={() => setIdOpen(true)}>留下你的名字，开始示范</button>
+           )}
+           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginTop: 12, flexWrap: 'wrap', fontSize: 13, color: 'var(--ink3)' }}>
+-            <span>{expertSaved ? '点上面的「示范这一段」开始，从哪一段开始都行。' : '只填这一次。填好后点上面的「示范这一段」，从哪一段开始都行。'}</span>
++            <span>{expertSaved ? '点上面的「示范这一段」开始，从哪一段开始都行。' : '只填这一次，填好就能从任意一段开始示范。'}</span>
+             {!guest && user && <button className="lab-btn ghost sm" disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '老师傅不在身边？发邀请链接'}</button>}
+           </div>
+           {walkedLabels.length > 0 && <div style={{ marginTop: 10, fontSize: 13, color: '#12a150' }}>已示范：{walkedLabels.join('、')}</div>}
+@@ -924,23 +1008,35 @@ function castOf(space: any, sim: Sim | null) {
+     <div className="sp-root">
+       <style>{HUB_CSS}</style>
+ 
++      <Modal open={idOpen} onCancel={() => setIdOpen(false)} onOk={saveIdentity} okText="开始示范" cancelText="稍后" title={`你教我 · ${profile.role || ''}`} width={460} destroyOnHidden>
++        <div style={{ display: 'grid', gap: 10 }}>
++          <div style={{ fontSize: 13.5, color: '#5f6680', lineHeight: 1.7 }}>按你平时的做法把这一天走一遍，每段走完会追问几句「为什么这么做」。先留个名字，技能卡上会写着手艺来自你。</div>
++          <Input size="large" autoFocus value={expert.name} onChange={e => setExpert(x => ({ ...x, name: e.target.value }))} placeholder="你的姓名 / 化名 *" />
++          <Input size="large" value={expert.title} onChange={e => setExpert(x => ({ ...x, title: e.target.value }))} placeholder="资历（如 普外科主任医师 · 20 年）" />
++          <Input size="large" value={expert.location} onChange={e => setExpert(x => ({ ...x, location: e.target.value }))} onPressEnter={saveIdentity} placeholder="所在地 *" />
++        </div>
++      </Modal>
+       {/* ══════ 人物首页：一个人站在他的工作现场里 ══════ */}
+       {!mode && (
+         <PersonHub
+-          name={profile.name || 'AI CORE'} role={profile.role || jd.title || ''} avatar={profile.avatar || ''} tagline={profile.tagline || ''}
++          name={nicks[String(id)] || profile.name || 'AI CORE'} role={profile.role || jd.title || ''} avatar={profile.avatar || ''} tagline={profile.tagline || ''}
+           scene={sim?.art?.cover || ''} level={lv.level} levelLabel={lv.label} stats={hubStats} skills={(profile.capabilities || []).slice(0, 4)} portals={portals}
+-          onEnter={m => setMode(m)}
++          onEnter={m => (exp && m === 'learn' ? enterTeach() : setMode(m))}
+           origin={draft
+-            ? <>AI 自学草案 · 等一位从业者校正{!guest && user && <button className="hub-ghost" style={{ marginLeft: 10, height: 26, padding: '0 10px', fontSize: 12 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '请一位老师傅来教 →'}</button>}</>
++            ? <>AI 自学草案 · 等一位从业者校正{!guest && !exp && user && <button className="hub-ghost" style={{ marginLeft: 10, height: 26, padding: '0 10px', fontSize: 12 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '请一位老师傅来教 →'}</button>}</>
+             : <>学自 <b className="hub-strong">{skill.expert_name}</b>（{skill.expert_location}）</>}
+           top={<>
+-            <button className="hub-ghost" onClick={() => router.push('/lab/spaces')}><Ico n="back" s={14} />全部空间</button>
+-            <div style={{ display: 'flex', gap: 8 }}>
+-              {beta3dForSpace(String(id)) && <a className="hub-ghost" href={`/lab/beta/3d/${beta3dForSpace(String(id))!.key}`} style={{ textDecoration: 'none', color: '#fff', border: 0, background: 'linear-gradient(120deg,#ff5fa2,#6a5cff)' }}>走进{beta3dForSpace(String(id))!.title} · 3D BETA</a>}
+-              {jd.url && <a className="hub-ghost" href={jd.url} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>JD 原文 ↗</a>}
+-              <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="hub-ghost">删除空间</button></Popconfirm>
++            <button className="hub-ghost" onClick={() => router.push(exp ? '/lab/gallery' : '/lab/spaces')}><Ico n="back" s={14} />{exp ? '体验百业' : '全部空间'}</button>
++            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
++              {jd.url && !exp && <a className="hub-ghost" href={jd.url} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>JD 原文 ↗</a>}
++              {!exp && <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="hub-ghost">删除空间</button></Popconfirm>}
+             </div>
+           </>}
++          // 操作收在大按钮上面一行：名字（默认亮出来，能改，只有自己看得到）· 走进 3D；和我聊是第一个大按钮
++          actions={<>
++            {!guest && <NicknameEditor dark showName value={nicks[String(id)] || ''} original={profile.name || ''} onSave={n => setNickname(String(id), n)} />}
++            {beta3dForSpace(String(id)) && <a className="hub-3d" href={`/lab/beta/3d/${beta3dForSpace(String(id))!.key}`}>走进{beta3dForSpace(String(id))!.title} · 3D BETA</a>}
++          </>}
+         />
+       )}
+ 
+@@ -995,12 +1091,12 @@ function castOf(space: any, sim: Sim | null) {
+       )}
+ 
+       {isDay && !(answering && sim) && (
+-        <DayView mode={mode as DayMode} modes={guest ? ['learn'] : ['test', 'teach', 'learn']} space={space} chapters={chapters} chapter={chapter} sim={sim} rubric={chapterRubric} canTeach={!!(sim && chapterTrace)} busy={!!busy} bareBusy={bareBusy}
++        <DayView mode={mode as DayMode} modes={guest ? ['learn'] : exp ? ['test', 'teach'] : ['test', 'teach', 'learn']} space={space} chapters={chapters} chapter={chapter} sim={sim} rubric={chapterRubric} canTeach={!!(sim && chapterTrace)} busy={!!busy} bareBusy={bareBusy}
+           onBack={guest ? null : () => setMode(null)} onMode={m => setMode(m, true)}
+           done={mode === 'learn' ? new Set(Object.keys(chTraces)) : undefined}
+           actions={mode === 'learn' && !(guest && taught) ? (
+             <button className="lab-btn" disabled={!!busy} style={{ height: 46, padding: '0 26px', fontSize: 15 }} onClick={() => {
+-              if (!expert.name.trim() || !expert.location.trim()) { message.warning('先在下面留下你的姓名（或化名）和所在地'); return; }
++              if (!expert.name.trim() || !expert.location.trim()) { setIdOpen(true); return; }
+               try { localStorage.setItem('lab:expert', JSON.stringify(expert)); } catch { /* 记不住就算了 */ }
+               setExpertSaved(true);
+               if (sim?.art) enterFullscreen();
+@@ -1238,6 +1334,9 @@ function castOf(space: any, sim: Sim | null) {
+         </div>
+       )}
+ 
++      {/* ── 和我聊：数字职人聊这一行（知识来自平方知识图谱）。考核 / 走一天时不出现（考核不观摩），受邀老师傅也不出现 ── */}
++      {!guest && !isDay && mode && mode !== 'solve' && <ChatLauncher href={`/lab/${id}/chat`} name={nicks[String(id)] || profile.name} avatar={profile.avatar} />}
++
+       {/* ── 职业地图（职业探索空间） ── */}
+       {mode === 'career' && jd.career && <CareerPanel career={jd.career} onTry={() => setMode('test')} />}
+ 
+@@ -1252,7 +1351,7 @@ function castOf(space: any, sim: Sim | null) {
+               {eco.peers.length ? (
+                 <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                   {eco.peers.map((p: any) => (
+-                    <div key={p.id} onClick={() => router.push(`/lab/${p.id}`)} className="lab-glass hover" style={{ padding: '10px 14px 10px 10px', display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
++                    <div key={p.id} onClick={() => router.push(`/lab/${p.id}${fromParam ? `?from=${fromParam}` : ''}`)} onMouseEnter={() => router.prefetch(`/lab/${p.id}`)} className="lab-glass hover" style={{ padding: '10px 14px 10px 10px', display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+                       {p.avatar ? <img src={p.avatar} alt="" style={{ width: 38, height: 38, borderRadius: 19, objectFit: 'cover', objectPosition: '54% 12%', background: '#fff' }} /> : <div className="lab-orb" style={{ ['--s' as string]: '38px' }}><div className="ring" /><div className="core" /></div>}
+                       <div style={{ minWidth: 0 }}>
+                         <div style={{ fontSize: 14, fontWeight: 700 }}>{p.role || p.profession}</div>
+@@ -1298,15 +1397,25 @@ function castOf(space: any, sim: Sim | null) {
+                   ))}
+                 </div>
+                 {eco.hiring.cities.length > 0 && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 12 }}>{eco.hiring.cities.map((c: string) => <span key={c} className="lab-chip g">{c}</span>)}</div>}
+-                {eco.hiring.samples.map((j: any) => (
+-                  <div key={j.id} style={{ padding: '8px 0', borderTop: '1px solid var(--line)', fontSize: 13, display: 'flex', gap: 10, alignItems: 'baseline', flexWrap: 'wrap' }}>
+-                    <span style={{ color: 'var(--ink3)', fontSize: 12.5 }}>{j.company}</span>
+-                    <b>{j.name}</b>
+-                    {j.city && <span className="lab-chip g">{j.city}</span>}
+-                    {j.edu && <span className="lab-chip g">{j.edu}</span>}
+-                    {j.url && <a href={j.url} target="_blank" rel="noreferrer" style={{ color: 'var(--v)', fontSize: 12.5 }}>原文 ↗</a>}
++                {([['直接对口', eco.hiring.samples], ['上下游企业在招', eco.hiring.chainSamples || []]] as [string, any[]][]).filter(([, l]) => l.length).map(([t, list]) => (
++                  <div key={t} style={{ marginTop: 6 }}>
++                    <div className="lab-mono lab-cap" style={{ margin: '8px 0 2px' }}>{t} · {t === '直接对口' ? eco.hiring.direct ?? list.length : eco.hiring.chain ?? list.length}</div>
++                    {list.map((j: any) => (
++                      <div key={j.id} style={{ padding: '8px 0', borderTop: '1px solid var(--line)', fontSize: 13, display: 'flex', gap: 10, alignItems: 'baseline', flexWrap: 'wrap' }}>
++                        <span style={{ color: 'var(--ink3)', fontSize: 12.5 }}>{j.company}</span>
++                        {user && !exp ? <a href={`/admin/db-job/${j.id}`} target="_blank" rel="noreferrer" style={{ fontWeight: 700, color: 'var(--ink)' }}>{j.name}</a> : <b>{j.name}</b>}
++                        {j.stage && <span className="lab-chip c">{j.stage}</span>}
++                        {j.city && <span className="lab-chip g">{j.city}</span>}
++                        {j.edu && <span className="lab-chip g">{j.edu}</span>}
++                        {j.url && <a href={j.url} target="_blank" rel="noreferrer" style={{ color: 'var(--v)', fontSize: 12.5 }}>原文 ↗</a>}
++                      </div>
++                    ))}
+                   </div>
+                 ))}
++                {user && !exp && <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
++                  <a className="lab-btn ghost sm" href={`/admin/db-job?search=${encodeURIComponent(eco.profession.replace(/(工程师|技术员|操作工|师傅|技师|员|师)$/, ''))}&jobType=all`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>在岗位库里看全部 ↗</a>
++                  <a className="lab-btn ghost sm" href="/admin/tool-job" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>去岗位库补这个行当的岗位 ↗</a>
++                </div>}
+               </> : <div style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.8 }}>岗位库里暂时没有和我直接对得上的在招岗位。库里的 JD 多起来，这里就会长出来。</div>}
+             </div>
+           </>}
+@@ -1557,15 +1666,16 @@ function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach,
+               第 {idx + 1} / {chapters.length} 段{chapter?.slot ? ` · ${chapter.slot}` : ''} · <span style={{ color: k.color === '#ef4444' ? '#ff8a8a' : '#c9c2ff' }}>{k.label}</span>
+             </div>
+             <h1>{chapter?.title}</h1>
+-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 18, alignItems: 'center' }}>
+-              {actions}
+-              {!teach && !learn && <button className="lab-btn" disabled={busy || !sim} onClick={onStart} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>进入操作台</button>}
+-              {teach && <button className="lab-btn" disabled={busy || !canTeach} title={canTeach ? '' : '这一段还没有老师傅的示范'} onClick={onTeach} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>看 {profile.name || '他'} 走一遍</button>}
+-              {teach && <button className="lab-btn ghost" disabled={busy || bareBusy} onClick={onBareAI} title="没学过老师傅的通用模型自己走一遍，看看差在哪" style={{ height: 46, background: 'rgba(255,255,255,.14)', color: '#fff', boxShadow: '0 0 0 1px rgba(255,255,255,.35)' }}>{bareBusy ? <>通用 AI 走着呢<span className="lab-dots" /></> : '对比：没学过的通用 AI'}</button>}
+-              <span style={{ fontSize: 13, opacity: .85 }}>{steps.length} 步{steps.some(st => st.type === 'bench') ? ' · 含虚拟工位' : ''} · 约 {Math.max(5, steps.length * 2)} 分钟</span>
+-            </div>
+           </div>
+         </div>
++        {/* 进入按钮放在大图下面（2026-10-12 用户：压在图上看不清） */}
++        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', margin: '14px 2px 4px', alignItems: 'center' }}>
++          {actions}
++          {!teach && !learn && <button className="lab-btn" disabled={busy || !sim} onClick={onStart} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>进入操作台</button>}
++          {teach && <button className="lab-btn" disabled={busy || !canTeach} title={canTeach ? '' : '这一段还没有老师傅的示范'} onClick={onTeach} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>看 {profile.name || '他'} 走一遍</button>}
++          {teach && <button className="lab-btn ghost" disabled={busy || bareBusy} onClick={onBareAI} title="没学过老师傅的通用模型自己走一遍，看看差在哪" style={{ height: 46 }}>{bareBusy ? <>通用 AI 走着呢<span className="lab-dots" /></> : '对比：没学过的通用 AI'}</button>}
++          <span style={{ fontSize: 13, color: 'var(--ink3)' }}>{steps.length} 步{steps.some(st => st.type === 'bench') ? ' · 含虚拟工位' : ''} · 约 {Math.max(5, steps.length * 2)} 分钟</span>
++        </div>
+ 
+         {top}
+         {brief && <div className="dayv-sec"><div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>这一段</div><div style={{ fontSize: 16, lineHeight: 1.9, color: 'var(--ink)' }}>{brief}</div>
+diff --git a/src/lib/lab-ecosystem.ts b/src/lib/lab-ecosystem.ts
+new file mode 100644
+index 0000000..919fac9
+--- /dev/null
++++ b/src/lib/lab-ecosystem.ts
+@@ -0,0 +1,35 @@
++/** 产业链环节 → 企业库里的真实公司（「我的行当」页和「和我聊」的知识包共用） */
++import { supabaseAdmin } from '@/lib/supabase';
++
++/**
++ * 拿环节关键词去企业库里捞真实公司。
++ * 字段不同可信度不同：行业 / 产品领域里写着「半导体」是真做半导体，
++ * 经营范围那种长文本里提一口就不算——所以打分排序，分不够的宁可不给。
++ */
++export async function matchCompanies(keywords: string[], limit = 4) {
++  const kws = [...new Set(keywords.filter(k => k && k.length >= 2).slice(0, 5))];
++  if (!kws.length) return [];
++  const FIELDS: [string, number][] = [['industry', 3], ['sub_industry', 3], ['product_area', 3], ['name', 2.5], ['company_specialties', 2], ['business_range', 1]];
++  const or = kws.flatMap(k => FIELDS.map(([f]) => `${f}.ilike.%${k}%`)).join(',');
++  const { data } = await supabaseAdmin.from('companies')
++    .select('id, name, industry, sub_industry, product_area, company_specialties, business_range, one_sentence, city, province')
++    .or(or).limit(60);
++  const scored = (data || []).map((c: any) => {
++    let sc = 0, strong = false;
++    for (const k of kws) {
++      // 一个词只算它命中的最可信那个字段，别让同一个词在五个字段里重复计分
++      let best = 0;
++      for (const [f, w] of FIELDS) if (String(c[f] || '').includes(k)) best = Math.max(best, w);
++      if (best >= 2.5) strong = true;
++      sc += best;
++    }
++    return { c, sc, strong };
++  })
++    // 必须有一个词落在行业 / 产品领域 / 公司名上——只是简介里提过一口的不算同行
++    .filter(x => x.strong && x.sc >= 3)
++    .sort((a, b) => b.sc - a.sc);
++  const seen = new Set<string>();
++  return scored.filter(x => { if (seen.has(x.c.name)) return false; seen.add(x.c.name); return true; })
++    .slice(0, limit)
++    .map(x => ({ id: x.c.id, name: x.c.name, industry: x.c.industry || x.c.sub_industry, city: x.c.city || x.c.province, one_sentence: x.c.one_sentence }));
++}
