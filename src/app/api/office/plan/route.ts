@@ -53,6 +53,7 @@ export async function POST(req: Request) {
         "rewards": ["hardware" | "cash" | "internship" | "offer" | "credits", ...],   // competitions=true 时，用户在意的奖励类型；没说就填 ["hardware","cash","internship","offer"]
         "competition_query": "<交给 Leo 的附加主题，如「黑客松」「校园赛」；没有则为空串>",
         "urls_per_company": <1-3>,          // 每家企业送去抓取的页面数，默认 2；用户要求「全面 / 尽量多」时填 3，要求「快速 / 试一下」时填 1
+        "detail_pages": <0-40>,            // 每个入口最多再打开几个岗位详情页（列表页已有岗位名 / 城市 / 日期，详情页才有职责要求）。默认 15；「快速 / 试一下 / 演示」填 6；「全面 / 尽量多」填 40
         "hint": "<提取时要特别关注的方向，如「2027 届 技术类」「远程实习」；没有则为空串>",
         "scope": "campus" | "all",          // 只有用户明确要求社招时才填 all
         "briefing": "<厂长的排产说明，2-3 句中文：这次任务怎么排、先后顺序、大概会产出什么>"
@@ -85,7 +86,7 @@ export async function POST(req: Request) {
       return NextResponse.json({
         plan: {
           title: String(p.title || '总任务').slice(0, 30), line, mode: 'named', companies: [], list_query: '', list_count: 0,
-          steps: { profile: false, competitions: false, source: false, extract: false }, profile_mode: 'quick', rewards: [], competition_query: '', urls_per_company: 1, hint: '', scope: 'campus',
+          steps: { profile: false, competitions: false, source: false, extract: false }, profile_mode: 'quick', rewards: [], competition_query: '', urls_per_company: 1, detail_pages: 6, hint: '', scope: 'campus',
           occupations: line === 'occupation' ? occupations : [],
           occ_parts: { profile: op.profile !== false, career: op.career !== false, context: op.context !== false, tasks: op.tasks !== false, standards: op.standards === true },
           std_items: line === 'standard' ? stdItems : (op.standards === true ? occupations.map(o => ({ profession: o, query: '' })) : []),
@@ -106,6 +107,7 @@ export async function POST(req: Request) {
         rewards: (Array.isArray(p.rewards) ? p.rewards : []).filter((r: unknown) => ['hardware', 'cash', 'internship', 'offer', 'credits'].includes(String(r))),
         competition_query: String(p.competition_query || '').slice(0, 100),
         urls_per_company: Math.min(3, Math.max(1, parseInt(p.urls_per_company) || 2)),
+        detail_pages: Math.min(40, Math.max(0, Number.isFinite(parseInt(p.detail_pages)) ? parseInt(p.detail_pages) : 15)),
         hint: String(p.hint || '').slice(0, 100),
         scope: p.scope === 'all' ? 'all' : 'campus',
         briefing: String(p.briefing || ''),

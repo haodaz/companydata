@@ -372,7 +372,7 @@ function OfficeInner() {
           const key = `extract:${l.id}`;
           setItem(key, { status: 'working' });
           try {
-            const r = await extractUrl(l, { model, scope: thePlan.scope, ctl: { aborted: stopped }, emit: m => { setItem(key, { summary: m }); log(/Thorne|提炼|岗位/.test(m) ? 'Dr. Thorne' : 'Kelly', `[${l.company}] ${m}`); } });
+            const r = await extractUrl(l, { model, scope: thePlan.scope, maxSubPages: thePlan.detail_pages, ctl: { aborted: stopped }, emit: m => { setItem(key, { summary: m }); log(/Thorne|提炼|岗位/.test(m) ? 'Dr. Thorne' : 'Kelly', `[${l.company}] ${m}`); } });
             jobsSaved += r.saved;
             setItem(key, { status: 'done', summary: `提炼 ${r.jobs} 个岗位 / 项目，${r.saved} 个已入库`, link: '/admin/db-job' });
             saveRun({ jobs_saved: jobsSaved });

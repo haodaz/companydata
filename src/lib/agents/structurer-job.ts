@@ -2,7 +2,7 @@
  * Structurer Agent（企业版）：把抓到的招聘页面 Markdown 结构化为岗位列表。
  * 字段 schema 由 src/lib/job-fields.ts 生成，改字段只改那里。
  */
-import { generateCheap } from '@/lib/llm-client';
+import { generateCheap, generateContent, cheapModel } from '@/lib/llm-client';
 import { logTokenUsage } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { jobSchemaForPrompt, JOB_FIELDS } from '@/lib/job-fields';
@@ -20,7 +20,13 @@ export interface StructuredJobsResult {
  * 每批都带上入口页开头作为共享上下文（校招项目、届别、截止时间这些共有信息在那里）。
  */
 export async function structureJobData(markdown: string, company: string, hint: string, modelId: string = 'gemini-3.8-flash', batchId?: number, scope: 'campus' | 'all' = 'campus'): Promise<StructuredJobsResult | null> {
-  const SINGLE = 30000, CHUNK = 24000;
+  // 千问写长 JSON 慢：一批 2.4 万字（8–10 个岗位）三分钟写不完会超时，千问改成小批、多并发
+  const qwen = cheapModel().startsWith('qwen');
+  const SINGLE = qwen ? 12000 : 30000, CHUNK = qwen ? 9000 : 24000, PAR = qwen ? 10 : 3;
+  // 慢的不是读，是写：一张列表页 6 千字就有 30 个岗位，每个 66 个字段一次写完要十几分钟（雀巢 moka）。
+  // 先花几秒列出岗位清单（只要名称 / 链接 / 城市），岗位多就按 3 个一组、多组并发去补字段（雀巢 30 个岗位：超时 → 84 秒）
+  const roster = await listOpenings(markdown, company, hint, scope, modelId, batchId);
+  if (roster && roster.length > GROUP) return structureByRoster(markdown, roster, company, hint, modelId, batchId, scope, PAR);
   if (markdown.length <= SINGLE) {
     const r = await structureChunk(markdown, company, hint, modelId, batchId, scope);
     if (r) { const note = pagingNote(markdown, r.jobs.length); if (note) r.ai_summary = [r.ai_summary, note].filter(Boolean).join('\n'); }
@@ -38,9 +44,13 @@ export async function structureJobData(markdown: string, company: string, hint: 
   if (!chunks.length) return structureChunk(markdown.slice(0, 500000), company, hint, modelId, batchId, scope);
   const shared = `### Source: [入口页（共享上下文：校招项目、届别、截止时间等共有信息看这里；这里列出的岗位只在下面也出现时才输出）]\n\n${head}\n\n`;
   const results: (StructuredJobsResult | null)[] = [];
-  for (let i = 0; i < chunks.length; i += 3) {
-    results.push(...await Promise.all(chunks.slice(i, i + 3).map(c => structureChunk(shared + c, company, hint, modelId, batchId, scope))));
+  for (let i = 0; i < chunks.length; i += PAR) {
+    results.push(...await Promise.all(chunks.slice(i, i + PAR).map(c => structureChunk(shared + c, company, hint, modelId, batchId, scope))));
   }
+  return mergeResults(results, markdown);
+}
+
+function mergeResults(results: (StructuredJobsResult | null)[], markdown: string): StructuredJobsResult | null {
   const ok = results.filter((r): r is StructuredJobsResult => !!r);
   if (!ok.length) return null;
   const seen = new Set<string>(), jobs: Record<string, any>[] = [];
@@ -57,7 +67,55 @@ export async function structureJobData(markdown: string, company: string, hint: 
   return { ai_summary: [ok.map(r => r.ai_summary).filter(Boolean).join('\n'), pagingNote(markdown, jobs.length)].filter(Boolean).join('\n'), jobs };
 }
 
-async function structureChunk(markdown: string, company: string, hint: string, modelId: string, batchId: number | undefined, scope: 'campus' | 'all'): Promise<StructuredJobsResult | null> {
+const GROUP = 3;
+type Opening = { name: string; link: string | null; location: string | null };
+const normUrl = (u: string) => u.trim().toLowerCase().replace(/\/+$/, '');
+
+/** 第一步：只列岗位清单（名称 / 链接 / 城市），输出很短，几秒出结果。失败返回 null，退回老办法 */
+async function listOpenings(markdown: string, company: string, hint: string, scope: 'campus' | 'all', modelId: string, batchId?: number): Promise<Opening[] | null> {
+  try {
+    const prompt = `
+      List EVERY distinct ${scope === 'campus' ? 'campus / new-grad / internship / trainee-programme' : ''} job opening in the recruiting pages below${scope === 'campus' ? ' (skip experienced-hire 社招 roles)' : ''}.
+      The same job on a list page and on its own detail page counts ONCE. Do not invent anything; "link" must appear literally in the markdown (or null).
+      Return ONLY JSON: {"jobs":[{"name":"<title as written>","link":"<url or null>","location":"<city or null>"}]}
+
+      Company: ${company || 'Unknown'}
+      ${hint ? `Hint: ${hint}` : ''}
+
+      ${markdown.substring(0, 200000)}
+    `;
+    // 列清单是简单活，千问时用更快的 flash
+    const r = cheapModel().startsWith('qwen') ? await generateContent(prompt, 'qwen-flash', { jsonMode: true }).catch(() => generateCheap(prompt, modelId, { jsonMode: true, fast: true })) : await generateCheap(prompt, modelId, { jsonMode: true, fast: true });
+    await logTokenUsage({ tool_name: 'structurer-job', task_name: 'List Openings', institution: company, model_id: r.model || modelId, usageMetadata: r.usageMetadata, success: true, batch_id: batchId }).catch(() => {});
+    const jobs = parseJsonLoose(r.text)?.jobs;
+    if (!Array.isArray(jobs)) return null;
+    return jobs.filter((j: any) => j && typeof j.name === 'string' && j.name.trim())
+      .map((j: any) => ({ name: j.name.trim(), link: typeof j.link === 'string' && /^https?:/i.test(j.link) ? j.link.trim() : null, location: typeof j.location === 'string' ? j.location : null }));
+  } catch (e) {
+    console.error('[structurer] 列岗位清单失败，退回整页提炼', e);
+    return null;
+  }
+}
+
+/** 第二步：按清单 3 个一组、多组并发补字段。每组带入口页（共有信息）+ 这几个岗位自己的详情页 */
+async function structureByRoster(markdown: string, roster: Opening[], company: string, hint: string, modelId: string, batchId: number | undefined, scope: 'campus' | 'all', par: number): Promise<StructuredJobsResult | null> {
+  const sections = markdown.split(/\n(?=### Source: )/);
+  const head = sections[0].slice(0, 12000);
+  const bySource = new Map<string, string>();
+  for (const s of sections.slice(1)) { const u = s.match(/^### Source: \[[^\]]*\]\(([^)\s]+)/)?.[1]; if (u) bySource.set(normUrl(u), s.slice(0, 8000)); }
+  const groups: Opening[][] = [];
+  for (let i = 0; i < roster.length; i += GROUP) groups.push(roster.slice(i, i + GROUP));
+  const results: (StructuredJobsResult | null)[] = [];
+  for (let i = 0; i < groups.length; i += par) {
+    results.push(...await Promise.all(groups.slice(i, i + par).map(g => {
+      const details = g.map(o => (o.link && bySource.get(normUrl(o.link))) || '').filter(Boolean).join('\n');
+      return structureChunk(`${head}\n\n${details}`, company, hint, modelId, batchId, scope, g);
+    })));
+  }
+  return mergeResults(results, markdown);
+}
+
+async function structureChunk(markdown: string, company: string, hint: string, modelId: string, batchId: number | undefined, scope: 'campus' | 'all', focus?: Opening[]): Promise<StructuredJobsResult | null> {
   try {
     const today = new Date().toISOString().slice(0, 10);
     // 提示词顺序为「上下文缓存」优化：固定指令与 schema 前置，变量（公司 / 提示 / 日期 / 正文）后置。
@@ -86,6 +144,7 @@ async function structureChunk(markdown: string, company: string, hint: string, m
       5. Follow the language rule given for each field: fields marked 中文 must be written in Chinese; "原文" fields keep the page's language; proper nouns stay in their original language.
       6. Ignore navigation, marketing copy, talent-community sign-ups and expired-posting notices.
       7. If the pages contain NO concrete job opening, return "jobs": [] and explain why in "ai_summary".
+      8. Keep the output short: OMIT any field whose value would be null or an empty array (missing keys are read as null).
 
       Return ONLY a valid JSON object matching this schema exactly:
       {
@@ -102,6 +161,7 @@ ${jobSchemaForPrompt()}
       ${hint ? `Focus hint from the user (team / role / location of interest): ${hint}` : ''}
       Today's date: ${today}
 
+      ${focus ? `ONLY output these ${focus.length} openings (the other openings on the page are handled separately), one entry each:\n${focus.map(o => `- ${o.name}${o.location ? ` (${o.location})` : ""}${o.link ? ` ${o.link}` : ""}`).join("\n")}\n` : ""}
       Raw Markdown Data:
       ${markdown.substring(0, 500000)}
     `;
@@ -114,7 +174,8 @@ ${jobSchemaForPrompt()}
     const parsed = parseJsonLoose(result.text);
     return {
       ai_summary: typeof parsed.ai_summary === 'string' ? parsed.ai_summary : '',
-      jobs: Array.isArray(parsed.jobs) ? parsed.jobs.filter((j: any) => j && typeof j === 'object') : [],
+      // 模型省略的空字段补回 null / []（入库那边按 !== null 判断，undefined 会被当成有值）
+      jobs: Array.isArray(parsed.jobs) ? parsed.jobs.filter((j: any) => j && typeof j === 'object').map((j: any) => { for (const f of JOB_FIELDS) if (!(f.key in j)) j[f.key] = f.kind === 'string[]' ? [] : null; return j; }) : [],
     };
   } catch (error: any) {
     // 模型欠费 / 额度用完往外抛，别被当成「这一页没岗位」

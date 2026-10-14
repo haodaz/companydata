@@ -39,6 +39,7 @@ export interface FactoryPlan {
   rewards: string[];
   competition_query: string;
   urls_per_company: number;
+  detail_pages?: number; // 每个入口最多打开的详情页数（Max 按任务定：快 6 / 默认 15 / 全 40）
   hint: string;
   scope: 'campus' | 'all';
   briefing: string;
@@ -151,7 +152,7 @@ export async function addUrlsToTask(taskId: string, urls: { url: string; company
 export const setJobTaskStatus = (id: string, status: string) => patch('/api/admin/job-tasks', { id, status });
 
 /** 处理一个 URL：抓主页 → 选子页面 → 分批抓取 → 结构化 → 入库。与「校招岗位提取」工具是同一条链路。 */
-export async function extractUrl(log: { id: number; target_url: string; company?: string; hint?: string }, opts: { model: string; scope: string; emit: Emit; ctl?: RunControl }): Promise<{ jobs: number; saved: number }> {
+export async function extractUrl(log: { id: number; target_url: string; company?: string; hint?: string }, opts: { model: string; scope: string; emit: Emit; ctl?: RunControl; maxSubPages?: number }): Promise<{ jobs: number; saved: number }> {
   const { model, scope, emit, ctl } = opts;
   const batchId = Date.now();
   const events: { key: string; title: string; status: string; color: string }[] = [];
@@ -165,18 +166,24 @@ export async function extractUrl(log: { id: number; target_url: string; company?
     if (!init.success) throw new Error(`页面抓取失败: ${init.error_message || '未知错误'}`);
 
     let markdown: string = init.base_markdown;
-    const candidates: string[] = init.candidate_urls || [];
+    const all: string[] = init.candidate_urls || [];
+    // 详情页开几个由厂长按任务定（快 6 / 默认 15 / 全 40）：列表页已有岗位名 / 城市 / 日期，其余岗位按列表页提炼
+    const candidates = opts.maxSubPages == null ? all : all.slice(0, opts.maxSubPages);
     const subPages: string[] = [];
-    say(candidates.length ? `主页抓取完成，挑出 ${candidates.length} 个子页面` : '主页抓取完成，没有需要继续抓的子页面');
+    say(all.length ? `主页抓取完成，挑出 ${all.length} 个子页面${candidates.length < all.length ? `，按排产打开前 ${candidates.length} 个` : ''}` : '主页抓取完成，没有需要继续抓的子页面');
 
-    for (let i = 0; i < candidates.length; i += 3) {
+    // 每批 3 页、3 批并发（Jina 免费额度约每分钟 20 次，9 页一轮不会被限流）
+    const batches: string[][] = [];
+    for (let i = 0; i < candidates.length; i += 3) batches.push(candidates.slice(i, i + 3));
+    let done = 0;
+    for (let i = 0; i < batches.length; i += 3) {
       if (ctl?.aborted()) throw new Error('已停止');
-      const batch = await post('/api/agents/fetcher/batch', { urls: candidates.slice(i, i + 3), model, batchId }).catch(() => null);
-      if (batch?.success) {
-        markdown += batch.useful_markdown;
-        subPages.push(...(batch.useful_urls || []));
-        say(`子页面 ${Math.min(i + 3, candidates.length)}/${candidates.length}：${batch.useful_urls?.length || 0} 个有料`);
-      }
+      const rs = await Promise.all(batches.slice(i, i + 3).map(urls => post('/api/agents/fetcher/batch', { urls, model, batchId }).catch(() => null)));
+      rs.forEach((batch, k) => {
+        done += batches[i + k].length;
+        if (batch?.success) { markdown += batch.useful_markdown; subPages.push(...(batch.useful_urls || [])); }
+      });
+      say(`子页面 ${done}/${candidates.length}：累计 ${subPages.length} 个有料`);
     }
     if (ctl?.aborted()) throw new Error('已停止');
 
