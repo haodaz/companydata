@@ -2,7 +2,7 @@
  * 数据部门 2026-10-14 反馈（查企业、岗位反馈-1014.docx + 公司来源及slug.xlsx + 行业和产业的选项集.xlsx）：
  *   npx tsx scripts/fix-1014.mts            只出报告，不写库
  *   npx tsx scripts/fix-1014.mts --apply    写库
- *   --only co-source|job-defaults|co-industry|job-source|job-lang   只跑其中一步；--limit N 试跑；--model 换模型（默认 qwen-plus）
+ *   --only co-source|job-defaults|co-industry|job-source|job-lang|occ-new   只跑其中一步；--limit N 试跑；--model 换模型（默认 qwen-plus）
  *
  * ① co-source：按《公司来源及slug》把现有企业分成 潜历一批 / 潜历二批 / ted，名单里没有的标「其他」（companies.source）；
  *    名单里给了 slug 的，企业编号 external_id 换成平台的 slug 并锁定（flora_id_locked，触发器不再改）。
@@ -14,6 +14,8 @@
  * ③ co-industry：所属行业大类（97 个，GB/T 4754）/ 所属产业二级目录（38 个，战略性新兴产业）——按企业名、行业、简介让便宜模型从选项集里选，
  *    存 external_id 数组（导出时「|」隔开）。只填空；审核已定论的不动；不属于战新产业的产业目录留空。
  * ④ job-source（迁移 030 跑完后）：岗位「来源」= 所属企业的名单批次（和企业一致）；原来的招聘渠道已由 030 挪到 recruit_channel。
+ * ⑥ occ-new：人社部第八批（2026-09-09 发布）11 个新职业 + 23 个新工种进职业库。新职业的简介用 7 月公示稿的官方定义原文，
+ *    其余字段联网建档（只填空）；新工种没有公开的官方定义，整条联网建档、待审核。来源记进 ai_sources。
  * ⑤ job-lang（迁移 030 跑完后）：岗位中英文字段 *_lang_cn / *_lang_en——原文是哪种语言就原样放进那一列，另一列用便宜模型翻译。
  */
 import fs from 'node:fs';
@@ -34,7 +36,7 @@ const arg = (k: string) => argv.includes(k) ? argv[argv.indexOf(k) + 1] : '';
 const ONLY = arg('--only');
 const LIMIT = arg('--limit') ? Number(arg('--limit')) : Infinity;
 const MODEL = arg('--model') || 'qwen-plus';
-const run = (k: string) => ONLY ? ONLY.split(',').includes(k) : !['job-source', 'job-lang'].includes(k);   // ④⑤ 要等 030，默认不跑
+const run = (k: string) => ONLY ? ONLY.split(',').includes(k) : !['job-source', 'job-lang', 'occ-new'].includes(k);   // ④⑤ 要等 030，默认不跑
 const OUT = arg('--out') || 'reports/1014';
 fs.mkdirSync(OUT, { recursive: true });
 console.log(APPLY ? '▶ 写库' : '▶ 只出报告（加 --apply 写库）');
@@ -272,4 +274,50 @@ ${t.ask.map(x => `【${x.key}】目标：${x.to === 'en' ? '英文' : '简体中
     });
     console.log(`   ✓ 写了 ${done} 条，失败 ${failed} 条（重跑会接着补没写上的）`);
   }
+}
+
+// ── ⑥ 人社部第八批新职业 / 新工种进职业库 ──
+if (run('occ-new')) {
+  const { researchOccupation } = await import('../src/lib/agents/occupation-enrich');
+  const { upsertOccupation, upsertSalaries, findOccupation } = await import('../src/lib/occupation-store');
+  const SRC_NOTICE = 'https://m.12371.gov.cn/content/2026-07/03/content_512796.html';   // 7 月公示稿（带定义）
+  const SRC_RELEASE = 'https://www.news.cn/fortune/20260909/f44ae08cf77d4958981d59663ae3063c/c.html';   // 9 月 9 日正式发布
+  const SRC_GZ = 'https://m.hqwx.com/jlgcs-kaoshi/news/17890892694689.html';   // 23 个新工种名单（官方通稿只点了部分名字）
+  // 新职业：官方定义（S 数字职业 / L 绿色职业）
+  const JOBS8: [string, string, string][] = [
+    ['船舶岸基管理工程技术人员', '', '从事船舶航行岸基安全保障、设备技术管控、营运合规监督、防污染管理、应急处置及安全管理制度运行监控的工程技术人员。'],
+    ['数字孪生工程技术人员', 'S', '从事数字孪生技术研发、规划设计、工程实施、调试优化及运行维护的工程技术人员。'],
+    ['具身智能机器人应用技术员', 'S', '使用遥操作设备、空间数字化工具及仿真测试平台，从事具身智能机器人多模态交互数据的采集与处理、算法模型的微调与适配、系统软硬件的现场部署与调试，以及运行效能监控与维护优化的人员。'],
+    ['工业产品数字建模师', 'S', '使用数字化设计、产品数据管理等软件，从事工业产品三维模型构建、零部件设计、装配验证和工程图输出的人员。'],
+    ['企业可持续发展规划师', '', '从事企业环境、社会与治理可持续发展规划管理工作的人员。'],
+    ['微电网管理员', 'L/S', '使用微电网能量管理系统等，监测、预测和分析微电网电力数据，制定、执行微电网运行策略，实施并离网切换、并网和孤岛运行、黑启动，分析和评估微电网性能的人员。'],
+    ['运动数据分析师', 'S', '从事体育运动数据收集、清洗、挖掘、分析，编制并应用运动表现分析报告的人员。'],
+    ['制香香艺师', '', '以天然香材为原料，通过原料甄选、炮制、合方、成型、窖藏等技艺，制作香制品，进行香艺艺术实践与传播工作的人员。'],
+    ['氢燃料电池制造工', 'L', '使用搅拌、涂布、热压、激光切割、测试平台等设备和工具，处理材料、制备部件，组装、调测氢燃料电池堆和系统，制造氢燃料电池的人员。'],
+    ['卫星导航设备装调工', '', '使用频谱仪、卫星信号模拟器等仪器、设备和工具，装配、调试卫星导航设备的人员。'],
+    ['电解水制氢工', 'L', '操作整流柜、电解槽、气体干燥净化装置、压缩机、储氢罐等设备，进行波动电源调节、原料制备、氢气生产、分离提纯、储存输送等作业的人员。'],
+  ];
+  const GZ8 = ['社区工作者', '消防救护员', '彩票销售员', '机场净空巡查员', '原糖保管员', '低空物流员', '食品生产安全员', '餐饮食品安全员', '食品销售安全员', '低空智能网联系统管理员', '智能体开发员', '工程建设项目劳资专管员', '新能源汽车检测员', '适老化改造设计师', '体育场馆安全员', '鲜切花加工工', '智能家具装调工', '冰雪雕塑工', '油渣萃取装置操作工', '聚乙醇酸装置操作工', '具身智能机器人数据采集员', '具身智能机器人训练师', '企业可持续投资分析师'];
+  const todo = [...JOBS8.map(([name, tag, def]) => ({ name, tag, def, kind: '职业' })), ...GZ8.map(name => ({ name, tag: '', def: '', kind: '工种' }))].slice(0, LIMIT);
+  const model = arg('--model') || 'gemini-3.8-flash';   // 国内信息在 occupation-enrich 里走千问联网
+  console.log(`\n⑥ 第八批：新职业 ${JOBS8.length} + 新工种 ${GZ8.length}，要建档 ${todo.length} 个（模型 ${model}）`);
+  let created = 0, filled = 0, failed = 0;
+  await pool(todo, 3, async o => {
+    try {
+      const existing = await findOccupation({ name: o.name });
+      if (existing?.intro && existing.source === 'official') { console.log(`  ${o.name}：已建档，跳过（#${existing.id}）`); return; }
+      if (!APPLY) { console.log(`  ${o.kind} ${o.name}${o.tag ? `（${o.tag}）` : ''}${existing ? ` → 补全 #${existing.id}` : ' → 新建'}`); return; }
+      const r = await researchOccupation(existing || { name: o.name }, model, 1014);
+      const fields: Record<string, any> = { ...r.fields, name: o.name };
+      const sources: Record<string, string> = { ...(r.sources || {}), name: o.kind === '职业' ? SRC_RELEASE : SRC_GZ };
+      if (o.def) { fields.intro = o.def; sources.intro = SRC_NOTICE; }   // 官方定义原文
+      // 别名只放真实叫法（别名用来和岗位名对上）；「第八批 / 数字职业 / 绿色职业」靠 source=official + 来源链接 + 报告记录
+      fields.aliases = Array.from(new Set((fields.aliases || []).filter((a: string) => a !== o.name)));
+      const saved = await upsertOccupation(existing ? { ...fields, external_id: existing.external_id } : fields, { mode: o.def ? 'overwrite' : 'fill', source: 'official', sources });
+      const sal = await upsertSalaries(saved.id, r.salaries, 'fill');
+      if (saved.created) created++; else filled++;
+      console.log(`  ${o.kind} ${o.name}：${saved.created ? '新建' : '补全'}（#${saved.id}）${sal} 档薪资`);
+    } catch (e: any) { failed++; console.log(`  ${o.name} 失败：${e.message}`); }
+  });
+  if (APPLY) console.log(`   ✓ 新建 ${created}、补全 ${filled}、失败 ${failed}（失败的重跑会接着补）`);
 }

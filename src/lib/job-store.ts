@@ -57,6 +57,9 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
     .eq('id', logId)
     .single();
   if (logErr) throw logErr;
+  // 来源 = 所属企业的名单批次（数据部门 10-14，和企业一致）；招聘渠道按链接推，单独一列
+  const { data: co } = log.company_id ? await supabaseAdmin.from('companies').select('source').eq('id', log.company_id).maybeSingle() : { data: null as any };
+  const companySource: string = co?.source || '其他';
 
   const now = new Date().toISOString();
   const rows = new Map<string, any>();
@@ -95,7 +98,8 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
         status: 'open',
         source_url: log.target_url,
         source_log_id: log.id,
-        source: jobSourceOf(one.link, log.target_url),
+        source: companySource,
+        recruit_channel: jobSourceOf(one.link, log.target_url),
         completeness_score: jobCompleteness(job),
         last_seen_at: now,
         updated_at: now,
