@@ -16,7 +16,6 @@ import { ArrowLeftOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutl
 import { EntityHero } from '@/components/admin/EntityHero';
 import { OccupationCareerGraph } from '@/components/admin/OccupationCareerGraph';
 import { OccupationContextTab, OccupationTasksTab } from '@/components/admin/EntityLibrary';
-import { PersonaChat } from '@/components/kg/PersonaChat';
 import { REVIEW_STATUS } from '@/lib/review-status';
 import { useModel } from '@/lib/model-context';
 import { BRAND } from '@/lib/theme';
@@ -218,7 +217,7 @@ export default function OccupationDetailPage() {
       <Col xs={24} lg={8}>
         <Card size="small" title={`百业空间（${d.related.spaces.length}）`} style={{ marginBottom: 16 }}>
           {d.related.spaces.length ? d.related.spaces.map((s: any) => <div key={s.id} style={{ marginBottom: 6 }}>
-            <a href={`/lab/${s.id}`} target="_blank" rel="noreferrer">{s.title}</a>
+            <a href={`/lab/${s.id}`} target="_blank" rel="noreferrer">{s.profile?.role ? `${s.profile.role} · ` : ''}{s.title}</a>
           </div>) : <Text type="secondary">还没有这个职业的百业空间</Text>}
         </Card>
         <Card size="small" title={`行业标准与规程（${d.related.standards.length}）`}>
@@ -312,7 +311,6 @@ export default function OccupationDetailPage() {
         ]} />
       </Card>
 
-      <PersonaChat endpoint="/api/kg/chat" extraBody={{ occupationId: Number(id) }} theme="light" />
 
       <Modal open={editOpen} title={`编辑：${o.name}`} width={860} onCancel={() => setEditOpen(false)} onOk={saveEdit} okText="保存（改过的字段会锁定）" destroyOnHidden>
         <Form form={form} layout="vertical">

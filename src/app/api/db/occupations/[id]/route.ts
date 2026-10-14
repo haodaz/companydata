@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { OCCUPATION_EDITABLE_KEYS, computeOccupationCompleteness, sanitizeOccupation, SALARY_YEARS } from '@/lib/occupation-fields';
 import { refreshCompleteness, upsertSalaries } from '@/lib/occupation-store';
+import { spaceOccupationMap } from '@/lib/kg/space-occupation';
 import { orIlike } from '@/lib/pg-filter';
 import { linksOf } from '@/lib/entity-store';
 
@@ -28,9 +29,11 @@ export async function GET(_req: Request, ctx: Ctx) {
         ? supabaseAdmin.from('jobs').select('id, name, institute_or_company_name, location, job_type, status, company_id', { count: 'exact' })
             .not('if_delete', 'is', true).or(orIlike(['name'], names[0]) + (names.length > 1 ? ',' + names.slice(1).map(n => orIlike(['name'], n)).join(',') : '')).order('updated_at', { ascending: false }).limit(12)
         : Promise.resolve({ data: [], count: 0 } as any),
-      names.length
-        ? supabaseAdmin.from('skill_tasks').select('id, title, created_at').or(names.map(n => orIlike(['title'], n)).join(',')).order('created_at', { ascending: false }).limit(12)
-        : Promise.resolve({ data: [] } as any),
+      // 百业空间：和「和我聊」同一套对应规则（空间的职业名 / 岗位名 / 职人角色 → 职业库），不再按空间标题模糊匹配
+      spaceOccupationMap().then(async m => {
+        const ids = Array.from(m).filter(([, oid]) => oid === id).map(([sid]) => sid);
+        return ids.length ? supabaseAdmin.from('skill_tasks').select('id, title, created_at, profile').in('id', ids).order('created_at', { ascending: false }) : { data: [] as any[] };
+      }),
       names.length
         ? supabaseAdmin.from('industry_standards').select('id, code, title, kind, status').overlaps('professions', names).limit(12)
         : Promise.resolve({ data: [] } as any),
