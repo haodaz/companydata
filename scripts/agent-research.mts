@@ -36,13 +36,16 @@ async function todoOf(step: Step): Promise<any[]> {
     const { data: occ } = await selectAll(() => db.from('occupations').select('*').eq('if_delete', false).order('id'));
     const { data: sal } = await selectAll(() => db.from('occupation_salaries').select('occupation_id').eq('if_delete', false).order('id'));
     const has = new Set(sal.map((r: any) => r.occupation_id));
-    return occ.filter((o: any) => !(o.aliases || []).length || !has.has(o.id));
+    // 答过一次、确实查不到年限薪资的（ai_sources._fill_checked）不再派，免得反复花额度
+    return occ.filter((o: any) => (!(o.aliases || []).length || !has.has(o.id)) && !o.ai_sources?._fill_checked);
   }
   if (step === 'graph') {
     const { data: occ } = await selectAll(() => db.from('occupations').select('id, name, name_lang_en, intro, responsibility, career_map').eq('if_delete', false).order('id'));
     const { data: reg } = await selectAll(() => db.from('occupation_region_salaries').select('occupation_id').eq('if_delete', false).order('id'));
     const has = new Set(reg.map((r: any) => r.occupation_id));
-    return occ.filter((o: any) => !o.career_map?.skills?.length || !has.has(o.id)).map((o: any) => ({ ...o, _needGraph: !o.career_map?.skills?.length, _needReg: !has.has(o.id) }));
+    // 地区薪资答过一次、确实查不到的（career_map.regions_checked_at）不再派
+    const needReg = (o: any) => !has.has(o.id) && !o.career_map?.regions_checked_at;
+    return occ.filter((o: any) => !o.career_map?.skills?.length || needReg(o)).map((o: any) => ({ ...o, _needGraph: !o.career_map?.skills?.length, _needReg: needReg(o) }));
   }
   if (step === 'context') {
     const { data: occ } = await selectAll(() => db.from('occupations').select('id, name, name_lang_en, responsibility, career_map').eq('if_delete', false).order('id'));
@@ -118,10 +121,15 @@ if (cmd === 'status') {
     const saved = await upsertOccupation({ ...r.fields, name: o.name, external_id: o.external_id }, { mode: 'fill', source: 'ai', sources: r.sources });
     const n = await upsertSalaries(o.id, r.salaries, 'fill');
     msg = `补 ${saved.changed.join('、') || '无'}；薪资 ${n} 档`;
+    // 记一笔「查过了」：没查到薪资的下次不再派这题
+    const { data: cur } = await db.from('occupations').select('ai_sources').eq('id', o.id).single();
+    await db.from('occupations').update({ ai_sources: { ...(cur?.ai_sources || {}), _fill_checked: new Date().toISOString() } }).eq('id', o.id);
   }
   if (step === 'graph') {
     const g = out.graph && await saveCareerMap(o.id, out.graph, 'fill');
     const n = out.reg ? await upsertRegionSalaries(o.id, out.reg, 'fill') : 0;
+    // 地区薪资这题答过了（哪怕一条都没有）就记下，下次不再派
+    if (o._needReg) { const { data: cur } = await db.from('occupations').select('career_map').eq('id', o.id).single(); if (cur?.career_map) await db.from('occupations').update({ career_map: { ...cur.career_map, regions_checked_at: new Date().toISOString() } }).eq('id', o.id); }
     msg = `${out.graph ? `图谱 ${out.graph.skills.length} 技能 / ${out.graph.ladder.length} 级 / ${out.graph.next_roles.length} 进阶${g ? '' : '（已有，未覆盖）'}` : '图谱已有'}、地区薪资 ${n} 条`;
   }
   if (out.ctx) { const r = await saveOccupationContext(o.id, out.ctx); msg = `场所 ${r.places}、物品 ${r.items}、新关联 ${r.links}`; }
@@ -132,6 +140,9 @@ if (cmd === 'status') {
   const doc = JSON.parse(fs.readFileSync(a1, 'utf8'));
   doc.skipped = { reason: a2 || '', at: new Date().toISOString() };
   fs.writeFileSync(path.join(DIR, 'skipped', path.basename(a1)), JSON.stringify(doc, null, 1));
+  // 跳过也记进库（换一台机器 / 容器重开也不再派）：fill 记 ai_sources._fill_checked；graph 记 career_map.regions_checked_at（图谱已有时）
+  if (doc.step === 'fill') { const { data: cur } = await db.from('occupations').select('ai_sources').eq('id', doc.occupation_id).single(); await db.from('occupations').update({ ai_sources: { ...(cur?.ai_sources || {}), _fill_checked: new Date().toISOString(), _fill_skip: a2 || '' } }).eq('id', doc.occupation_id); }
+  if (doc.step === 'graph') { const { data: cur } = await db.from('occupations').select('career_map').eq('id', doc.occupation_id).single(); if (cur?.career_map?.skills?.length) await db.from('occupations').update({ career_map: { ...cur.career_map, regions_checked_at: new Date().toISOString() } }).eq('id', doc.occupation_id); }
   fs.unlinkSync(a1);
   console.log(`跳过 ${doc.name}（${doc.step}）：${a2 || ''}`);
 } else {
