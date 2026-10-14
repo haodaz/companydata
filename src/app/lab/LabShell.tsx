@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Select } from 'antd';
 import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
 import { UserProvider, useUser } from '@/lib/user-context';
-import { GUEST_MODEL } from '@/lib/lab-guest';
+import { GUEST_MODEL, GUEST_MODELS } from '@/lib/lab-guest';
 
 /**
  * 数字技能空间（实验）独立外壳：浅色科技感，和数据后台 / 虚拟工厂刻意长得不一样。
@@ -199,8 +199,15 @@ function Shell({ children }: { children: React.ReactNode }) {
   const { currentModel, setCurrentModel } = useModel();
   // 首页是公开的：没登录的人看不到模型下拉和后台入口，那是给干活的人用的
   const { user, loading: userLoading } = useUser();
-  // 游客（没登录）模型锁死在 Gemini 3.8 Flash：浏览器里存过别的模型也不算（接口那边也锁着，见 lib/lab-guest.ts）
-  useEffect(() => { if (!userLoading && !user && currentModel !== GUEST_MODEL) setCurrentModel(GUEST_MODEL); }, [userLoading, user, currentModel, setCurrentModel]);
+  // 游客（没登录）只能在 GUEST_MODELS 里挑，默认通义千问（接口那边也只认这几个，见 lib/lab-guest.ts）。
+  // 老的游客锁（10-12）给每个游客浏览器都存了 Gemini：升级后第一次来统一切到千问一次，之后尊重自己的选择
+  useEffect(() => {
+    if (userLoading || user) return;
+    let first = false;
+    try { first = !localStorage.getItem('lab:guest-model-v2'); localStorage.setItem('lab:guest-model-v2', '1'); } catch { /* 无痕模式 */ }
+    if (first || !GUEST_MODELS.includes(currentModel)) { if (currentModel !== GUEST_MODEL) setCurrentModel(GUEST_MODEL); }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userLoading, user]);
   // 深浅两套：大屏投放、学校一体机、白天的教室都可能更适合浅色。按设备记住；
   // 也认 ?theme=light / ?theme=dark，方便把一体机的链接直接钉死成某一套。
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
@@ -252,6 +259,11 @@ function Shell({ children }: { children: React.ReactNode }) {
             ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" /></svg>
             : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" /></svg>}
         </button>}
+        {/* 游客也能换模型，但只在便宜的几个里挑；默认千问（国内推荐） */}
+        {!guest && !user && !userLoading && (
+          <Select className="lab-head-model" size="small" variant="filled" value={GUEST_MODELS.includes(currentModel) ? currentModel : GUEST_MODEL} onChange={setCurrentModel} style={{ width: 190 }} popupMatchSelectWidth={210}
+            options={GUEST_MODELS.map(id => { const m = MODEL_OPTIONS.find(x => x.id === id); return { value: id, label: <span>{id === 'qwen-plus' ? '通义千问 Plus' : m?.label || id}{id === 'qwen-plus' && <ModelBadge text="国内推荐" />}</span> }; })} />
+        )}
         {!guest && !user && !userLoading && (
           <button className="lab-btn ghost sm" onClick={() => router.push(`/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`)}>登录</button>
         )}

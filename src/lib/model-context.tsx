@@ -33,7 +33,8 @@ type ModelContextType = {
 const ModelContext = createContext<ModelContextType | undefined>(undefined);
 
 export function ModelProvider({ children }: { children: React.ReactNode }) {
-  const [currentModel, setCurrentModel] = useState<string>('gemini-3.8-flash');
+  // 默认通义千问（国内服务；2026-10-14 起 Gemini 不再充值）。存过别的选择照旧
+  const [currentModel, setCurrentModel] = useState<string>('qwen-plus');
 
   useEffect(() => {
     const saved = localStorage.getItem('cd_current_model');
