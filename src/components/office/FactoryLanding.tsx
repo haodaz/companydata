@@ -87,7 +87,8 @@ export function FactoryLanding({ task, setTask, onRun, onHistory, mobile }: { ta
           <div className="fl-hero-text">
             <div className="fl-eyebrow">AI DATA FACTORY · 智能数据工厂</div>
             <h1>一句话下达，<br /><span className="fl-grad">一条 AI 产线替你干完</span></h1>
-            <p>厂长 Max 先读懂任务、选产线、排工序；十位 AI 员工按工序接力——联网检索、抓官方页、提炼结构化数据、核对出处、质检——产出直接进正式数据库，每一条都能追到来源。</p>
+            <p>厂长 Max 排产，AI 员工接力干活，结果直接进数据库，每一条都有出处。</p>
+            <div className="fl-counts-label">已通过工厂采集：</div>
             <div className="fl-counts">
               {COUNT_LABELS.map(([k, l]) => (
                 <div key={k} className="fl-count"><b>{counts ? (counts[k] ?? 0).toLocaleString() : '—'}</b><span>{l}</span></div>
@@ -180,7 +181,8 @@ const CSS = `
 .fl-hero h1 { font-size: clamp(30px, 4vw, 46px); line-height: 1.15; font-weight: 900; margin: 10px 0 14px; letter-spacing: -.5px; }
 .fl-grad { background: linear-gradient(100deg, #6055f5, #12b5cb 60%, #db2777); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .fl-hero p { font-size: 15px; line-height: 1.85; color: #4b5064; max-width: 560px; margin: 0; }
-.fl-counts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.fl-counts-label { margin-top: 20px; font-size: 12.5px; font-weight: 700; color: #6b7083; }
+.fl-counts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .fl-count { padding: 8px 12px; border-radius: 12px; background: rgba(255,255,255,.75); border: 1px solid #e8eaf2; backdrop-filter: blur(8px); min-width: 74px; }
 .fl-count b { display: block; font-size: 19px; font-weight: 800; color: #1f2233; font-variant-numeric: tabular-nums; }
 .fl-count span { font-size: 11.5px; color: #8a8fa3; }
