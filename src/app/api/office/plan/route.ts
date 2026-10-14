@@ -6,9 +6,10 @@ import { parseJsonLoose } from '@/lib/agents/search-llm';
 export const runtime = 'nodejs';
 export const maxDuration = 120;
 
-const MAX_COMPANIES = 8;
-const MAX_OCCUPATIONS = 6;
-const MAX_STD_ITEMS = 5;
+// 一次最多这么多；超过 8 家 / 6 个时页面上排队做（每道工序同时开工 2 个），不另拆任务
+const MAX_COMPANIES = 24;
+const MAX_OCCUPATIONS = 18;
+const MAX_STD_ITEMS = 10;
 
 /** 厂长排产：把一句话总任务拆成流水线参数 */
 export async function POST(req: Request) {

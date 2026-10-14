@@ -113,7 +113,7 @@ export const FACTORY_AGENTS: FactoryAgent[] = [
   {
     id: 'standard', name: 'Ken', title: '标准规程官', titleEn: 'Standards Officer', station: '标准档案室',
     description: '找真正管这一行日常操作的标准：国标 / 行标 / 团标 / 地标、安全规程、法规规章、设备厂商操作手册，以及 ISO / IEC / OSHA 等国际参考。核对标准号与现行状态，把操作要点转述成条（不抄原文），写入标准库并挂到职业上。',
-    pixel: '/factory/pixel_ken.png', portrait: '/factory/avatar_ken.png', color: '#475569',
+    pixel: '/factory/pixel_ken.png', portrait: '/factory/avatar_ken.png', color: '#0284c7',
     skills: ['标准号与现行状态核对', '设备操作手册', '要点转述（不抄原文）', 'OSHA 等国际参考'],
     greeting: '我是 Ken，标准规程官。告诉我一个职业或一道工序——比如「焊工 · 气体保护焊」「手术室 · 器械清点」——我把管它的标准、规程和设备手册找出来。',
     quickPrompts: ['找 焊工 气体保护焊 的安全规程和标准', '电工 高压倒闸操作 要守哪些规程？', '标准要点为什么不抄原文？'],

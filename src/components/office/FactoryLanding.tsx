@@ -12,10 +12,17 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AGENT_MAP, FACTORY_AGENTS, type AgentId } from '@/lib/factory-agents';
 
-interface Example { title: string; text: string; out: string }
+interface Example { title: string; text: string; out: string; why?: string }
 interface Line { key: string; label: string; tint: string; crew: AgentId[]; story: string[]; examples: Example[] }
 
 const LINES: Line[] = [
+  {
+    // 例子不写死：打开这个 tab 时从需求飞轮（谁被搜得多、数据旧了）和问答飞轮（和我聊答不上的）现算
+    key: 'flywheel', label: '按飞轮排产', tint: '#059669',
+    crew: ['chief', 'profiler', 'finder', 'occupation', 'qa'],
+    story: ['读飞轮、挑缺口', '补企业画像', '刷新校招入口', '补职业知识', '质检'],
+    examples: [],
+  },
   {
     key: 'jobs', label: '企业与岗位', tint: '#6055f5',
     crew: ['chief', 'scout', 'profiler', 'finder', 'fetcher', 'structurer', 'qa'],
@@ -57,7 +64,7 @@ const LINES: Line[] = [
     ],
   },
   {
-    key: 'standard', label: '行业标准与手册', tint: '#475569',
+    key: 'standard', label: '行业标准与手册', tint: '#0284c7',
     crew: ['chief', 'standard', 'qa'],
     story: ['排产', '找标准 → 核对现行状态 → 转述要点 → 挂到职业', '质检'],
     examples: [
@@ -68,6 +75,39 @@ const LINES: Line[] = [
   },
 ];
 
+/** 从飞轮现算排产建议：热度飞轮 = 升温最快的企业；企业变化 = 网上探针抓到的新动态；需求飞轮 = 热门但数据旧的企业 / 缺口最大的行业；问答飞轮 = 和我聊里平方答不上、该补哪一块 */
+async function flywheelExamples(): Promise<Example[]> {
+  const [fw, kg] = await Promise.all([
+    fetch('/api/flywheel').then(r => r.json()).catch(() => null),
+    fetch('/api/admin/kg-questions/insights').then(r => r.json()).catch(() => null),
+  ]);
+  const out: Example[] = [];
+  const all = (fw?.dims?.company || []) as any[];
+  // 热度飞轮：近 7 天比前 7 天升得最快的企业
+  const up = all.filter(c => c.supply?.inLibrary && c.heat7 > c.heatPrev7).sort((a, b) => (b.heat7 - b.heatPrev7) - (a.heat7 - a.heatPrev7)).slice(0, 3);
+  if (up.length) out.push({ title: '热度飞轮 · 升温最快', text: `给 ${up.map(c => c.label).join('、')} 刷新校招和实习岗位`, out: '岗位库',
+    why: `依据：近 7 天热度 ${up.map(c => `${c.label} ${Math.round(c.heatPrev7)} → ${Math.round(c.heat7)}`).join('；')}` });
+  // 企业变化：网上探针抓到的新动态（融资 / IPO / 新基地 / 宣讲会 / 专精特新…）
+  const PROBE: Record<string, string> = Object.fromEntries(((fw?.probes || []) as any[]).map(p => [`web_${p.key}`, String(p.label).split(' / ')[0]]));
+  const CHANGE = /^web_(funding|ipo|expansion|campus_talk|little_giant|coop|postdoc|hr_exec)$/;
+  const moved = all.filter(c => c.supply?.inLibrary && Object.keys(c.sources || {}).some(k => CHANGE.test(k))).sort((a, b) => b.heat30 - a.heat30).slice(0, 3);
+  if (moved.length) out.push({ title: '企业变化 · 有新动态', text: `给 ${moved.map(c => c.label).join('、')} 跑完整画像（融资、动态、管理团队），并刷新校招入口和岗位`, out: '企业库 · 岗位库',
+    why: `依据：${moved.map(c => `${c.label}（${Object.keys(c.sources).filter(k => CHANGE.test(k)).map(k => PROBE[k] || k).join('、')}）`).join('；')}` });
+  const cos = all.filter(c => c.supply?.inLibrary && c.gap > 0 && !up.includes(c) && !moved.includes(c)).sort((a, b) => b.gap - a.gap).slice(0, 3);
+  if (cos.length) out.push({ title: '需求飞轮 · 热门企业数据旧了', text: `给 ${cos.map(c => c.label).join('、')} 刷新校招和实习岗位，并补全企业画像`, out: '企业库 · 岗位库',
+    why: `依据：${cos.map(c => `${c.label}（${(c.reasons || [])[0] || `近 30 天热度 ${Math.round(c.heat30)}`}）`).join('；')}` });
+  const ind = ((fw?.dims?.industry || []) as any[]).slice().sort((a, b) => b.gap - a.gap)[0];
+  if (ind) out.push({ title: '需求飞轮 · 缺口最大的行业', text: `找 5 家「${ind.label}」行业的代表企业，补全企业画像并采集它们的校招项目`, out: '企业库 · 岗位库',
+    why: `依据：近 30 天热度 ${Math.round(ind.heat30)}，库里 ${ind.supply?.companies ?? '-'} 家企业、${ind.supply?.openJobs ?? '-'} 个在招` });
+  const fills = ((kg?.suggestions || []) as any[]).filter(s => s.action === 'fill' && s.partLabel);
+  const byOcc = new Map<string, Set<string>>();
+  for (const s of fills) byOcc.set(s.occupation, (byOcc.get(s.occupation) || new Set()).add(s.partLabel));
+  const occ = Array.from(byOcc).slice(0, 3);
+  if (occ.length) out.push({ title: '问答飞轮 · 和我聊答不上的', text: occ.map(([o, ps]) => `给 ${o} 补${Array.from(ps).join('、')}`).join('；'), out: '职业库 · 知识图谱',
+    why: `依据：${fills.slice(0, 3).map(s => `${s.occupation} · ${s.topicLabel}（${(s.reasons || [])[0] || ''}）`).join('；')}` });
+  return out;
+}
+
 const COUNT_LABELS: [string, string][] = [['companies', '企业'], ['jobs', '岗位'], ['competitions', '赛事'], ['occupations', '职业'], ['tasks', '典型任务'], ['items', '工具设备'], ['standards', '标准规程']];
 
 export function FactoryLanding({ task, setTask, onRun, onHistory, mobile }: { task: string; setTask: (t: string) => void; onRun: () => void; onHistory: () => void; mobile: boolean }) {
@@ -75,7 +115,10 @@ export function FactoryLanding({ task, setTask, onRun, onHistory, mobile }: { ta
   const [tab, setTab] = useState(LINES[0].key);
   const [counts, setCounts] = useState<Record<string, number> | null>(null);
   const line = useMemo(() => LINES.find(l => l.key === tab)!, [tab]);
-  useEffect(() => { fetch('/api/office/overview').then(r => r.json()).then(j => j.ok && setCounts(j.counts)).catch(() => {}); }, []);
+  const [fly, setFly] = useState<Example[] | null>(null);
+  useEffect(() => { if (tab === 'flywheel' && !fly) flywheelExamples().then(setFly).catch(() => setFly([])); }, [tab, fly]);
+  const examples = tab === 'flywheel' ? (fly || []) : line.examples;
+  useEffect(() => { fetch('/api/office/overview').then(r => r.json()).then(j => { if (j.ok) setCounts(j.counts); }).catch(() => {}); }, []);
 
   return (
     <div className="fl-page">
@@ -84,33 +127,37 @@ export function FactoryLanding({ task, setTask, onRun, onHistory, mobile }: { ta
       <div className="fl-in">
         {/* ── 开场：厂长 Max 和今天在岗的员工 ── */}
         <section className="fl-hero">
+          {/* 背后满屏循环视频（数据流水线），浅色蒙版压住，文字在左；采集数字压在第一屏底部（学百业首页 banner） */}
+          <div className="fl-hero-bg" aria-hidden>
+            <video autoPlay muted loop playsInline preload="auto" poster="/factory/hero-loop.jpg"><source src="/factory/hero-loop.mp4" type="video/mp4" /></video>
+          </div>
           <div className="fl-hero-text">
             <div className="fl-eyebrow">AI DATA FACTORY · 智能数据工厂</div>
             <h1>一句话下达，<br /><span className="fl-grad">一条 AI 产线替你干完</span></h1>
             <p>厂长 Max 排产，AI 员工接力干活，结果直接进数据库，每一条都有出处。</p>
-            <div className="fl-counts-label">已通过工厂采集：</div>
+          </div>
+          {/* 已通过工厂采集：压在第一屏底部 */}
+          <div className="fl-stats">
+            <div className="fl-counts-label">已通过工厂采集</div>
             <div className="fl-counts">
               {COUNT_LABELS.map(([k, l]) => (
                 <div key={k} className="fl-count"><b>{counts ? (counts[k] ?? 0).toLocaleString() : '—'}</b><span>{l}</span></div>
               ))}
-            </div>
           </div>
-          <div className="fl-hero-cast">
-            <div className="fl-bubble">今天想让工厂干点什么？<br /><span>企业、岗位、赛事、职业、标准，都能排产。</span></div>
-            <div className="fl-max"><img src={AGENT_MAP.chief.portrait} alt="厂长 Max" /><span className="fl-tag">Max · 厂长</span></div>
-            {FACTORY_AGENTS.filter(a => a.id !== 'chief').slice(0, 9).map((a, i) => (
-              <img key={a.id} className="fl-orbit" src={a.portrait} alt={a.name} title={`${a.name} · ${a.title}`}
-                style={{ ['--i' as string]: i, ['--n' as string]: 9, borderColor: a.color }} />
-            ))}
           </div>
         </section>
 
-        {/* ── 下单台 ── */}
+
+        {/* ── 下单台：厂长 Max 半身像探出卡片，开口问 ── */}
+        <div className="fl-ask">
+          <div className="fl-ask-fig"><img src="/factory/max_cutout.png" alt="厂长 Max" /></div>
+          <div className="fl-say"><b>今天想让工厂干点什么？</b><span>企业、岗位、赛事、职业、标准，都能排产。</span></div>
+        </div>
         <section className="fl-desk">
           <div className="fl-tabs" role="tablist">
             {LINES.map(l => (
               <button key={l.key} role="tab" aria-selected={tab === l.key} className={`fl-tabbtn${tab === l.key ? ' on' : ''}`} style={{ ['--t' as string]: l.tint }} onClick={() => setTab(l.key)}>
-                {l.label}{(l.key === 'occupation' || l.key === 'standard') && <i>新</i>}
+                {l.label}{(l.key === 'occupation' || l.key === 'standard') && <i>新</i>}{l.key === 'flywheel' && <i className="ai">智能</i>}
               </button>
             ))}
           </div>
@@ -130,11 +177,13 @@ export function FactoryLanding({ task, setTask, onRun, onHistory, mobile }: { ta
           </div>
 
           <div className="fl-examples">
-            {line.examples.map(ex => (
+            {tab === 'flywheel' && !fly && <div className="fl-ex-wait">正在读需求飞轮和问答飞轮，算排产建议…</div>}
+            {tab === 'flywheel' && fly && !fly.length && <div className="fl-ex-wait">飞轮里暂时没有明显的缺口，换个 tab 看看。</div>}
+            {examples.map(ex => (
               <button key={ex.title} className={`fl-ex${task === ex.text ? ' on' : ''}`} style={{ ['--t' as string]: line.tint }} onClick={() => setTask(ex.text)}>
                 <b>{ex.title}</b>
                 <span className="fl-ex-text">{ex.text}</span>
-                <span className="fl-ex-out">产出 → {ex.out}</span>
+                <span className="fl-ex-out">{ex.why || `产出 → ${ex.out}`}</span>
               </button>
             ))}
           </div>
@@ -146,7 +195,7 @@ export function FactoryLanding({ task, setTask, onRun, onHistory, mobile }: { ta
             <button className="fl-go" onClick={onRun} disabled={!task.trim()}>下达任务，开工 <span>→</span></button>
           </div>
           <div className="fl-foot">
-            <span>单次最多 8 家企业 / 6 个职业{mobile ? '' : ' · ⌘ / Ctrl + Enter 快速下达'} · 已有的画像、信息源、档案自动复用，不重复花 Token</span>
+            <span>一次最多 24 家企业 / 18 个职业：超过 8 家或 6 个时排队做，每道工序同时开工 2 个、做完一个接下一个，时间会长一些{mobile ? '' : ' · ⌘ / Ctrl + Enter 快速下达'} · 已有的画像、信息源、档案自动复用，不重复花 Token</span>
             <a onClick={onHistory}>任务历史 →</a>
           </div>
         </section>
@@ -176,33 +225,39 @@ const CSS = `
 .fl-blob.c { width: 420px; height: 420px; left: 30%; bottom: -220px; background: #ffd9ea; opacity: .4; }
 .fl-in { position: relative; max-width: 1160px; margin: 0 auto; padding: 36px 24px 56px; }
 
-.fl-hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 28px; align-items: center; }
+/* 背景铺满整屏宽（跳出内容列），文字仍和下面对齐 */
+.fl-hero { position: relative; display: flex; flex-direction: column; justify-content: center; height: 600px; margin: -36px calc(50% - 50vw) 0; padding: 32px calc(50vw - 50%) 28px; overflow: hidden; }
+.fl-hero > .fl-hero-text { position: relative; z-index: 1; max-width: 620px; min-width: 0; }
+.fl-hero-bg { position: absolute; inset: 0; }
+.fl-hero-bg video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* 浅色蒙版：左边压实让字清楚，往右渐渐透出流水线；底部和下面衔接 */
+.fl-hero-bg::after { content: ''; position: absolute; inset: 0; background:
+  linear-gradient(90deg, rgba(248,247,255,.95) 0%, rgba(248,247,255,.86) 40%, rgba(244,246,255,.62) 70%, rgba(240,244,255,.5) 100%),
+  linear-gradient(0deg, rgba(246,248,255,1) 0%, rgba(246,248,255,.6) 18%, rgba(246,248,255,0) 40%); }
 .fl-eyebrow { font-size: 12px; letter-spacing: .2em; color: #6055f5; font-weight: 700; }
 .fl-hero h1 { font-size: clamp(30px, 4vw, 46px); line-height: 1.15; font-weight: 900; margin: 10px 0 14px; letter-spacing: -.5px; }
 .fl-grad { background: linear-gradient(100deg, #6055f5, #12b5cb 60%, #db2777); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .fl-hero p { font-size: 15px; line-height: 1.85; color: #4b5064; max-width: 560px; margin: 0; }
-.fl-counts-label { margin-top: 20px; font-size: 12.5px; font-weight: 700; color: #6b7083; }
-.fl-counts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-.fl-count { padding: 8px 12px; border-radius: 12px; background: rgba(255,255,255,.75); border: 1px solid #e8eaf2; backdrop-filter: blur(8px); min-width: 74px; }
-.fl-count b { display: block; font-size: 19px; font-weight: 800; color: #1f2233; font-variant-numeric: tabular-nums; }
-.fl-count span { font-size: 11.5px; color: #8a8fa3; }
+.fl-stats { position: relative; z-index: 1; margin-top: 40px; }
+.fl-counts-label { font-size: 12.5px; font-weight: 700; color: #6b7083; letter-spacing: .12em; }
+.fl-counts { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); margin-top: 12px; }
+.fl-count { padding: 2px 0 2px 22px; border-left: 1px solid rgba(96,85,245,.18); }
+.fl-count:first-child { padding-left: 0; border-left: 0; }
+.fl-count b { display: block; font-size: clamp(24px, 2.6vw, 34px); font-weight: 800; line-height: 1.1; letter-spacing: -.5px; font-variant-numeric: tabular-nums;
+  background: linear-gradient(120deg, #1f2233, #4b45c9); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.fl-count span { display: block; margin-top: 4px; font-size: 12.5px; color: #6b7083; letter-spacing: .05em; }
 
-.fl-hero-cast { position: relative; height: 440px; }
-.fl-max { position: absolute; left: 50%; top: 60%; transform: translate(-50%, -50%); width: 190px; height: 190px; border-radius: 50%; padding: 5px;
-  background: conic-gradient(from 200deg, #6055f5, #12b5cb, #db2777, #6055f5); box-shadow: 0 24px 60px rgba(96,85,245,.25); }
-.fl-max img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid #fff; }
-.fl-tag { position: absolute; left: 50%; bottom: -12px; transform: translateX(-50%); white-space: nowrap; padding: 4px 12px; border-radius: 999px; background: #fff; border: 1px solid #e8eaf2; font-size: 12.5px; font-weight: 700; box-shadow: 0 6px 16px rgba(31,34,51,.08); }
-.fl-bubble { position: absolute; left: 50%; top: 0; transform: translateX(-50%); z-index: 2; padding: 10px 16px; border-radius: 16px 16px 16px 4px; background: #fff; border: 1px solid #e8eaf2;
-  box-shadow: 0 12px 30px rgba(31,34,51,.08); font-size: 14px; font-weight: 700; text-align: center; white-space: nowrap; animation: fl-pop .6s ease both .2s; }
-.fl-bubble span { font-size: 12px; font-weight: 500; color: #6b7083; }
-.fl-orbit { position: absolute; left: 50%; top: 60%; width: 54px; height: 54px; border-radius: 50%; object-fit: cover; border: 3px solid; background: #fff; box-shadow: 0 8px 20px rgba(31,34,51,.12);
-  --r: 150px; --a: calc(var(--i) / var(--n) * 360deg + 15deg);
-  transform: translate(-50%, -50%) rotate(var(--a)) translate(var(--r)) rotate(calc(-1 * var(--a)));
-  animation: fl-float 5s ease-in-out infinite; animation-delay: calc(var(--i) * -.55s); will-change: translate; backface-visibility: hidden; }
-@keyframes fl-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
-@keyframes fl-pop { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@keyframes fl-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+/* 抠图版 Max 站在输入卡片后面：卡片压住他胸口以下，只露上半身 */
+.fl-ask { position: relative; z-index: 1; display: flex; align-items: flex-end; gap: 6px; margin: 30px 0 -56px 28px; pointer-events: none; }
+.fl-ask-fig { width: 170px; height: 196px; overflow: hidden; flex-shrink: 0; }
+.fl-ask-fig img { width: 170px; height: auto; display: block; }
+.fl-say { margin-bottom: 78px; padding: 11px 18px; border-radius: 18px 18px 18px 4px; background: #fff; border: 1px solid #e8eaf2; box-shadow: 0 12px 30px rgba(31,34,51,.08); animation: fl-pop .6s ease both .2s; }
+.fl-say b { display: block; font-size: 17px; color: #1f2233; }
+.fl-say span { font-size: 13px; color: #6b7083; }
+@keyframes fl-pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
-.fl-desk { margin-top: 28px; padding: 18px 20px 16px; border-radius: 24px; background: rgba(255,255,255,.82); border: 1px solid rgba(232,234,242,.9); backdrop-filter: blur(14px); box-shadow: 0 20px 60px rgba(60,60,120,.08); }
+.fl-desk { position: relative; z-index: 2; margin-top: 0; padding: 22px 20px 16px; border-radius: 24px; background: rgba(255,255,255,.82); border: 1px solid rgba(232,234,242,.9); backdrop-filter: blur(14px); box-shadow: 0 20px 60px rgba(60,60,120,.08); }
 .fl-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
 .fl-tabbtn { border: 1px solid #e8eaf2; background: #fff; color: #4b5064; border-radius: 999px; padding: 8px 16px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all .2s; }
 .fl-tabbtn:hover { border-color: var(--t); color: var(--t); }
@@ -225,7 +280,9 @@ const CSS = `
 .fl-ex.on { border-color: var(--t); box-shadow: 0 0 0 3px color-mix(in srgb, var(--t) 18%, transparent); }
 .fl-ex b { font-size: 14px; color: var(--t); }
 .fl-ex-text { font-size: 13px; line-height: 1.6; color: #1f2233; }
-.fl-ex-out { font-size: 11.5px; color: #8a8fa3; margin-top: auto; }
+.fl-ex-out { font-size: 11.5px; color: #8a8fa3; margin-top: auto; line-height: 1.55; }
+.fl-ex-wait { grid-column: 1 / -1; padding: 18px; text-align: center; font-size: 13px; color: #8a8fa3; border: 1px dashed #d9dbe8; border-radius: 14px; }
+.fl-tabbtn i.ai { background: #d1fae5; color: #059669; }
 
 .fl-compose { display: flex; gap: 10px; align-items: stretch; margin-top: 14px; }
 .fl-compose textarea { flex: 1; resize: none; border: 1px solid #e3e5ef; border-radius: 14px; padding: 12px 14px; font-size: 15px; line-height: 1.6; font-family: inherit; outline: none; background: #fff; color: #1f2233; transition: border-color .2s, box-shadow .2s; }
@@ -254,14 +311,17 @@ const CSS = `
 
 @media (max-width: 860px) {
   .fl-in { padding: 18px 14px 40px; }
-  .fl-hero { grid-template-columns: 1fr; gap: 6px; }
-  .fl-hero-cast { height: 360px; order: -1; }
-  .fl-orbit { --r: 118px; width: 44px; height: 44px; }
-  .fl-max { width: 150px; height: 150px; }
+  .fl-hero { height: auto; min-height: 520px; margin: -18px calc(50% - 50vw) 0; padding: 28px calc(50vw - 50%) 24px; }
+  .fl-hero-bg::after { background: linear-gradient(180deg, rgba(247,246,255,.97) 0%, rgba(247,246,255,.88) 55%, rgba(247,246,255,.35) 80%, rgba(246,248,255,1) 100%); }
+  .fl-ask { margin-left: 4px; margin-bottom: -40px; }
+  .fl-ask-fig { width: 120px; height: 140px; } .fl-ask-fig img { width: 120px; }
+  .fl-say { margin-bottom: 56px; } .fl-say b { font-size: 15px; } .fl-say span { font-size: 12px; }
+  .fl-counts { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 16px; }
+  .fl-count { padding-left: 12px; } .fl-count:nth-child(4n+1) { padding-left: 0; border-left: 0; } .fl-count b { font-size: 22px; }
   .fl-examples { grid-template-columns: 1fr; }
   .fl-compose { flex-direction: column; }
   .fl-go { padding: 14px; }
   .fl-desk { padding: 14px; }
 }
-@media (prefers-reduced-motion: reduce) { .fl-orbit, .fl-bubble, .fl-step { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .fl-say, .fl-step { animation: none; } }
 `;
