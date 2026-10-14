@@ -2,7 +2,7 @@
  * 数据部门 2026-10-14 反馈（查企业、岗位反馈-1014.docx + 公司来源及slug.xlsx + 行业和产业的选项集.xlsx）：
  *   npx tsx scripts/fix-1014.mts            只出报告，不写库
  *   npx tsx scripts/fix-1014.mts --apply    写库
- *   --only co-source|job-defaults|co-industry|job-source|job-lang|occ-new   只跑其中一步；--limit N 试跑；--model 换模型（默认 qwen-plus）
+ *   --only co-source|job-defaults|co-industry|job-source|job-lang|occ-new|co-merge   只跑其中一步；--limit N 试跑；--model 换模型（默认 qwen-plus）
  *
  * ① co-source：按《公司来源及slug》把现有企业分成 潜历一批 / 潜历二批 / ted，名单里没有的标「其他」（companies.source）；
  *    名单里给了 slug 的，企业编号 external_id 换成平台的 slug 并锁定（flora_id_locked，触发器不再改）。
@@ -16,6 +16,8 @@
  * ④ job-source（迁移 030 跑完后）：岗位「来源」= 所属企业的名单批次（和企业一致）；原来的招聘渠道已由 030 挪到 recruit_channel。
  * ⑥ occ-new：人社部第八批（2026-09-09 发布）11 个新职业 + 23 个新工种进职业库。新职业的简介用 7 月公示稿的官方定义原文，
  *    其余字段联网建档（只填空）；新工种没有公开的官方定义，整条联网建档、待审核。来源记进 ai_sources。
+ * ⑦ co-merge：合并我们库里重复建档的企业（① 报告「疑似重复企业」里名字明显是同一家的那些组；名单里两家不同公司共用 slug 的不动，等数据部门核对）。
+ *    留拿到平台 slug 的那条；另一条的岗位 / 子实体 / 抓取记录等挪过来，空字段用它补（人工锁定的不动），名字进别名，然后软删。
  * ⑤ job-lang（迁移 030 跑完后）：岗位中英文字段 *_lang_cn / *_lang_en——原文是哪种语言就原样放进那一列，另一列用便宜模型翻译。
  */
 import fs from 'node:fs';
@@ -36,7 +38,7 @@ const arg = (k: string) => argv.includes(k) ? argv[argv.indexOf(k) + 1] : '';
 const ONLY = arg('--only');
 const LIMIT = arg('--limit') ? Number(arg('--limit')) : Infinity;
 const MODEL = arg('--model') || 'qwen-plus';
-const run = (k: string) => ONLY ? ONLY.split(',').includes(k) : !['job-source', 'job-lang', 'occ-new'].includes(k);   // ④⑤ 要等 030，默认不跑
+const run = (k: string) => ONLY ? ONLY.split(',').includes(k) : !['job-source', 'job-lang', 'occ-new', 'co-merge'].includes(k);   // ④⑤ 要等 030，默认不跑
 const OUT = arg('--out') || 'reports/1014';
 fs.mkdirSync(OUT, { recursive: true });
 console.log(APPLY ? '▶ 写库' : '▶ 只出报告（加 --apply 写库）');
@@ -320,4 +322,56 @@ if (run('occ-new')) {
     } catch (e: any) { failed++; console.log(`  ${o.name} 失败：${e.message}`); }
   });
   if (APPLY) console.log(`   ✓ 新建 ${created}、补全 ${filled}、失败 ${failed}（失败的重跑会接着补）`);
+}
+
+// ── ⑦ 合并我们库里的重复企业 ──
+if (run('co-merge')) {
+  const file = `${OUT}/疑似重复企业.csv`;
+  const rows = fs.readFileSync(file, 'utf8').replace(/^\ufeff/, '').trim().split('\n').slice(1).map(l => l.slice(1, -1).split('","'));
+  const flatN = (s: string) => String(s || '').replace(/[（(][^）)]*[）)]/g, '').replace(/(股份有限公司|有限责任公司|有限公司|集团|股份|公司|科技|技术|信息|智能)/g, '').replace(/^(上海|北京|深圳|广州|杭州|中国)/, '').replace(/\s/g, '').toLowerCase();
+  // 括号里是地名的（「（上海）」）不算别名；母公司和子业务不算一家
+  const PLACE_P = /^(上海|北京|深圳|广州|杭州|中国|天津|苏州|南京|成都|武汉|西安|合肥|香港|宁波|厦门)$/;
+  const NOT_SAME = [['京东方', '京东方智慧农业']];
+  const keysN = (s: string) => [flatN(s), ...[...String(s || '').matchAll(/[（(]([^）)]+)[）)]/g)].map(m => m[1].replace(/\s/g, '').toLowerCase()).filter(k => !PLACE_P.test(k))].filter(Boolean);
+  const same = (a: string, b: string) => !NOT_SAME.some(([x, y]) => (a === x && b === y) || (a === y && b === x)) && keysN(a).some(x => keysN(b).some(y => x.includes(y) || y.includes(x) || x.slice(0, 2) === y.slice(0, 2)));
+  const pairs = rows.map(r => ({ slug: r[0], keepName: r[1], keep: Number(r[2]), dropName: r[3], drop: Number(r[4]) })).filter(p => same(p.keepName, p.dropName) && p.keep !== p.drop);
+  console.log(`\n⑦ 疑似重复 ${rows.length} 组，其中同一家公司重复建档 ${pairs.length} 组要合并`);
+  for (const p of pairs) console.log(`   留 #${p.keep} ${p.keepName} ← 并入 #${p.drop} ${p.dropName}`);
+  if (APPLY) {
+    const CHILD: [string, string][] = [['jobs', 'company_id'], ['job_crawl_logs', 'company_id'], ['company_crawl_logs', 'company_id'], ['url_sources', 'company_id'], ['url_journal', 'company_id'], ['competition_searches', 'company_id'], ['competitions', 'organizer_company_id'], ['demand_signals', 'company_id'],
+      ['company_financings', 'company_id'], ['company_news', 'company_id'], ['company_executives', 'company_id'], ['company_products', 'company_id'], ['company_deep_research', 'company_id']];
+    let merged = 0;
+    for (const p of pairs) {
+      const [{ data: keep }, { data: drop }] = await Promise.all([db.from('companies').select('*').eq('id', p.keep).single(), db.from('companies').select('*').eq('id', p.drop).single()]);
+      if (!keep || !drop || drop.if_delete) { console.log(`   跳过 #${p.drop}（已删或不存在）`); continue; }
+      const moved: string[] = [];
+      for (const [t, col] of CHILD) {
+        const { data: kids, error } = await db.from(t).select('id').eq(col, p.drop);
+        if (error || !kids?.length) continue;
+        let n = 0;
+        for (const k of kids) {   // 一条条挪：撞唯一键（同一条融资 / 新闻两边都有）就把并入方那条软删 / 丢掉
+          const { error: e } = await db.from(t).update({ [col]: p.keep }).eq('id', k.id);
+          if (!e) { n++; continue; }
+          if (/duplicate|unique/i.test(e.message)) await db.from(t).update({ if_delete: true }).eq('id', k.id).then(() => {}, () => {});
+        }
+        if (n) moved.push(`${t} ${n}`);
+      }
+      // 空字段用并入方补；人工锁定的、编号类、审核类不动；名字进别名
+      const locked = new Set(keep.human_locked_fields || []);
+      const SKIP = new Set(['id', 'name', 'external_id', 'applysquare_id', 'slug', 'flora_id_locked', 'created_at', 'updated_at', 'if_delete', 'human_review_status', 'human_review_at', 'human_locked_fields', 'completeness_score', 'source', 'aliases']);
+      const patch: Record<string, any> = {};
+      for (const [k, v] of Object.entries(drop)) {
+        if (SKIP.has(k) || locked.has(k) || v === null || v === '' || (Array.isArray(v) && !v.length)) continue;
+        const cur = (keep as any)[k];
+        if (cur === null || cur === '' || (Array.isArray(cur) && !cur.length)) patch[k] = v;
+      }
+      patch.aliases = Array.from(new Set([...(keep.aliases || []), ...(drop.aliases || []), drop.name, drop.registered_name].filter((x: any) => x && x !== keep.name)));
+      const { error: ue } = await db.from('companies').update(patch).eq('id', p.keep);
+      if (ue) { console.log(`   ✗ #${p.keep} 补字段：${ue.message}`); continue; }
+      await db.from('companies').update({ if_delete: true, aliases: Array.from(new Set([...(drop.aliases || []), `并入#${p.keep}`])) }).eq('id', p.drop);
+      merged++;
+      console.log(`   ✓ #${p.drop} → #${p.keep}：挪了 ${moved.join('、') || '无子数据'}；补字段 ${Object.keys(patch).length - 1} 个`);
+    }
+    console.log(`   ✓ 合并 ${merged} 组（并入方已软删，名字记进保留方的别名）`);
+  }
 }

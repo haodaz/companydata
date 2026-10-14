@@ -15,6 +15,16 @@ import { generateContent } from '@/lib/llm-client';
 const cn = (modelId: string) => (process.env.DOMESTIC_SEARCH_MODEL === 'same' ? modelId : process.env.DOMESTIC_SEARCH_MODEL || 'qwen-plus');
 import { CAREER_CATEGORY_LABELS, CAREER_MID_CATEGORIES, SALARY_YEAR_LABELS, SALARY_COUNTRIES, SALARY_CN_REGIONS, FX_TO_CNY, toCny, type CareerGraph, type CareerSkill, type CareerStage, type CareerNextRole } from '@/lib/occupation-fields';
 
+/**
+ * 答题人钩子（scripts/agent-research.mts 用）：设了之后，下面这些函数不再调大模型接口，而是把提示词交给钩子——
+ * 由一个能自己联网检索的 agent（如云端 Claude 会话）作答，返回的 JSON 照常走这里的解析 / 规整，写库口径不变。
+ */
+export type ResearchHook = (prompt: string, task: string) => Promise<any>;
+let researchHook: ResearchHook | null = null;
+export const setResearchHook = (h: ResearchHook | null) => { researchHook = h; };
+const ask = async (prompt: string, modelId: string, meta: { tool_name: any; task_name: string; institution?: string; batch_id?: number }) =>
+  researchHook ? { parsed: await researchHook(prompt, meta.task_name), searchQueries: [] as string[] } : searchJson(prompt, modelId, meta);
+
 export interface OccupationResearch { fields: Record<string, any>; salaries: { year: string; salary: number; source_url?: string | null }[]; sources: Record<string, string>; searchQueries: string[]; raw: any }
 
 export async function researchOccupation(o: { name: string; name_lang_en?: string | null; aliases?: string[] | null }, modelId: string, batchId: number): Promise<OccupationResearch> {
@@ -45,7 +55,7 @@ export async function researchOccupation(o: { name: string; name_lang_en?: strin
 }
 规则：只报告检索到或有把握的事实；薪资必须来自可查的数据源并在 sources 里给链接，查不到就 null；中文字段用中文。
 `;
-  const { parsed, searchQueries } = await searchJson(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Research', institution: o.name, batch_id: batchId });
+  const { parsed, searchQueries } = await ask(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Research', institution: o.name, batch_id: batchId });
   const p = parsed || {};
   const fields: Record<string, any> = {};
   for (const k of ['name', 'name_lang_en', 'aliases', 'career_category', 'career_mid_category', 'intro', 'responsibility', 'position_requirement', 'recent_year_monthly_salary', 'relevant_certificates', 'relevant_celebrities', 'relevant_fos_ids']) {
@@ -82,7 +92,7 @@ ${o.intro ? `职业简介：${o.intro}\n` : ''}${o.responsibility ? `工作内�
 }
 中文作答；职位头衔、薪资带要符合中国行业实际，不要编造公司内部职级代号。
 `;
-  const { parsed } = await searchJson(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Career Graph', institution: o.name, batch_id: batchId });
+  const { parsed } = await ask(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Career Graph', institution: o.name, batch_id: batchId });
   const p = parsed || {};
   const skills: CareerSkill[] = (Array.isArray(p.skills) ? p.skills : []).slice(0, 20).map((s: any, i: number) => ({
     id: String(s?.id || `s${i}`).toLowerCase().replace(/[^a-z0-9_]+/g, '_') || `s${i}`, name: String(s?.name || '').trim(),
@@ -130,8 +140,8 @@ ${regions}
 返回 JSON：{ "items": [ { "code": "sichuan", "monthly": 9800, "year": 2025, "source_url": "...", "note": "职友集成都数据" } ] }
 `;
   const [a, b] = await Promise.all([
-    searchJson(p1, modelId, { tool_name: 'occupation', task_name: 'Occupation Salary · Countries', institution: o.name, batch_id: batchId }).catch(() => ({ parsed: null })),
-    searchJson(p2, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Salary · CN Regions', institution: o.name, batch_id: batchId }).catch(() => ({ parsed: null })),
+    ask(p1, modelId, { tool_name: 'occupation', task_name: 'Occupation Salary · Countries', institution: o.name, batch_id: batchId }).catch(() => ({ parsed: null })),
+    ask(p2, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Salary · CN Regions', institution: o.name, batch_id: batchId }).catch(() => ({ parsed: null })),
   ]);
   const num = (v: any) => parseInt(String(v ?? '').replace(/[^\d]/g, ''), 10);
   for (const it of (a.parsed as any)?.items || []) {
@@ -170,7 +180,7 @@ ${o.responsibility ? `工作内容：${String(o.responsibility).slice(0, 500)}\n
 }
 中文作答；只列这个职业真会碰到的，不要泛泛的「电脑」「笔」，除非是核心工具（如设计师的数位板）。
 `;
-  const { parsed } = await searchJson(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Places & Items', institution: o.name, batch_id: batchId });
+  const { parsed } = await ask(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Places & Items', institution: o.name, batch_id: batchId });
   const p = parsed || {};
   const str = (v: any) => (v == null || v === 'null' || v === '' ? undefined : String(v).trim());
   const places: ContextPlace[] = (Array.isArray(p.places) ? p.places : []).map((x: any) => ({
@@ -232,7 +242,7 @@ ${o.responsibility ? `工作内容：${String(o.responsibility).slice(0, 400)}\n
 `;
   const { parsed } = lab
     ? { parsed: parseJsonLoose((await generateContent(prompt, modelId, { jsonMode: true })).text) }
-    : await searchJson(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Tasks & Stations', institution: o.name, batch_id: batchId });
+    : await ask(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Tasks & Stations', institution: o.name, batch_id: batchId });
   const p = parsed || {};
   const arr = (v: any) => (Array.isArray(v) ? v : []);
   return {

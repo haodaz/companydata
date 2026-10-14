@@ -59,3 +59,4 @@ scripts/.lab-full-day-*.log
 # Brush（3D 训练）的 autotune 缓存
 target/
 reports/
+agent-work/
