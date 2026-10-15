@@ -48,7 +48,7 @@ export async function GET(request: Request) {
   }
 }
 
-const EDITABLE = ['url', 'company', 'unit', 'title', 'type', 'subtype', 'reasoning', 'company_id', 'verification_status'];
+const EDITABLE = ['url', 'company', 'unit', 'title', 'type', 'subtype', 'reasoning', 'company_id', 'verification_status', 'health_status', 'url_health', 'last_checked_at'];
 
 /** 新增一条 URL */
 export async function POST(request: Request) {

@@ -132,6 +132,34 @@ export async function findCampusUrls(company: string, unit: string, modelId: str
   return { search_queries: searchQueries, urls: await keepLanding(cleanUrls(parsed.urls, ['campus', 'careers', 'job'], 'campus')) };
 }
 
+/**
+ * 第二轮：不看库里已有的链接，换角度自己搜（数据部门 10-15：潜历二批只有约两成能补上岗位）。
+ * 两路并行：① 官网 + 招聘平台（北森 zhiye / Moka / 飞书 / Hotjob / 大易 …）上的企业主页；② 公众号校招推文 + 高校就业网的招聘公告。
+ * 只要搜索结果里真实出现过的网址；出来后照样逐个落地检查。②是第三方来源，入库时招聘渠道会标「第三方招聘站」。
+ */
+export async function findRecruitChannels(company: string, modelId: string = 'qwen-plus'): Promise<FinderUrlResult> {
+  const year = new Date().getFullYear();
+  const ask = (angle: string, examples: string) => `
+    检索对象：${company}。要找的是：这家企业正在招 ${year + 1} 届 / ${year} 届应届生、实习生的、能看到具体岗位列表或岗位要求的网页。
+    检索角度：${angle}
+    参考搜法：${examples}
+    规则：
+    - 只给你在搜索结果里真实看到的网址，不要按规律拼接或猜测路径；拿不准就不给。
+    - 优先「能看到具体岗位名」的页面（岗位列表、岗位详情、招聘公告），其次才是校招首页。
+    - 过期的（${year - 2} 年以前）不要。
+    只返回 JSON：{"urls":[{"url":"","title":"页面标题","channel":"official|ats|wechat|university|third_party","reasoning":"为什么认为是这家企业当前的校招 / 实习"}]}`;
+  const angles: [string, string][] = [
+    ['企业官网的「加入我们 / 校园招聘」，以及企业在招聘平台上的主页（北森 zhiye.com、Moka mokahr.com、飞书 jobs.feishu.cn、Hotjob hotjob.cn、大易 dayee.com、牛客 nowcoder.com 企业主页等）',
+      `「${company} 校园招聘」「${company} 校招 投递」「${company} zhiye」「${company} mokahr」「${company} 实习生招聘 官网」`],
+    ['企业官方公众号的校招 / 实习推文（推文里通常有投递链接），以及各高校就业信息网上这家企业的招聘公告（job.xxx.edu.cn、career.xxx.edu.cn 一类）',
+      `「${company} ${year + 1}届校园招聘 公众号」「${company} 校园招聘 就业信息网」「${company} 招聘公告 edu.cn」`],
+  ];
+  const results = await Promise.all(angles.map(([a, e]) => searchJson(ask(a, e), modelId, { tool_name: 'finder', task_name: 'Recruit Channels Search', institution: company }).catch(() => null)));
+  const raw = results.flatMap(r => (r?.parsed?.urls || []).map((u: any) => ({ ...u, type: 'campus', subtype: u.channel === 'official' || u.channel === 'ats' ? 'list' : 'portal' })));
+  const urls = await keepLanding(cleanUrls(raw, ['campus'], 'campus'));
+  return { search_queries: results.flatMap(r => r?.searchQueries || []), urls };
+}
+
 // --- 企业官网 + 企业信息 ---
 export async function findHomepageUrls(company: string, unit: string, modelId: string = 'gemini-3.8-flash'): Promise<FinderUrlResult> {
   const prompt = `

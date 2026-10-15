@@ -52,7 +52,7 @@ const SOURCE_HOSTS: [string, RegExp][] = [
   ['feishu', /(^|\.)(feishu\.cn|larksuite\.com|jobs\.bytedance\.com)$/], ['dayee', /(^|\.)dayee\.com$/],
   ['workday', /(^|\.)myworkdayjobs\.com$/], ['greenhouse', /(^|\.)greenhouse\.io$/], ['lever', /(^|\.)lever\.co$/],
   ['other_ats', /(^|\.)(ashbyhq\.com|smartrecruiters\.com|icims\.com|jobvite\.com|successfactors\.(com|eu)|taleo\.net|oraclecloud\.com|workable\.com|bamboohr\.com|recruitee\.com|teamtailor\.com|eightfold\.ai|phenompeople\.com|avature\.net|brassring\.com)$/],
-  ['third_party', /(^|\.)(yingjiesheng\.com|gaoxiaojob\.com|nowcoder\.com|zhaopin\.com|51job\.com|liepin\.com|zhipin\.com|shixiseng\.com|linkedin\.com|indeed\.com|glassdoor\.com|lagou\.com|dajie\.com|iguopin\.com|ncss\.cn|gov\.cn)$/],
+  ['third_party', /(^|\.)(yingjiesheng\.com|gaoxiaojob\.com|nowcoder\.com|zhaopin\.com|51job\.com|liepin\.com|zhipin\.com|shixiseng\.com|linkedin\.com|indeed\.com|glassdoor\.com|lagou\.com|dajie\.com|iguopin\.com|ncss\.cn|gov\.cn|edu\.cn|mp\.weixin\.qq\.com)$/],
 ];
 export function jobSourceOf(...urls: (string | null | undefined)[]): string | null {
   for (const u of urls) {

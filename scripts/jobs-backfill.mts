@@ -6,10 +6,12 @@
  *   npx tsx scripts/jobs-backfill.mts --ids 1361,1571 --detail 15 --par 2 --limit 3
  *
  * 每家：库里已有校招信息源就复用，没有就用千问寻源并入库；按「列表页 > 应届 / 实习 > 专项 > 校招首页」挑入口，
- * 一个入口抓不到或 0 个岗位就换下一个（最多 3 个）；都不行就从企业官网顺着「加入我们 / 招聘」找入口（recruit-discover）。结果逐家写进 --out（tsv），岗位入库为「待审核」。
+ * 一个入口抓不到或 0 个岗位就换下一个（最多 3 个）；都不行就从企业官网顺着「加入我们 / 招聘」找入口（recruit-discover）；
+ * 再不行就不看库里已有链接、换角度自己搜（findRecruitChannels）。找到的入口记进信息源库，证实 404 的库内信息源标「失效」。结果逐家写进 --out（tsv），岗位入库为「待审核」。
  * 来源：数据部门 2026-10-15 反馈「岗位数据量大但覆盖面小」，附 153 家历史上抓到过、我们库里 0 岗位的企业。
  */
 import fs from 'node:fs';
+process.loadEnvFile('.env.local');
 
 const argv = process.argv.slice(2);
 const opt = (k: string, d = '') => { const i = argv.indexOf(`--${k}`); return i >= 0 ? argv[i + 1] : d; };
@@ -32,6 +34,7 @@ globalThis.fetch = ((input: any, init: any = {}) => {
 
 const P = await import('../src/lib/factory-pipeline');
 const { discoverRecruitEntries } = await import('../src/lib/agents/recruit-discover');
+const { findRecruitChannels } = await import('../src/lib/agents/finder-pipeline');
 const CAMPUS_RE = /校园|校招|应届|实习|campus|graduate|intern|students?/i;
 
 const flat = (s: any) => String(s || '').replace(/\s/g, '').toLowerCase();
@@ -93,7 +96,12 @@ async function one(c: any) {
         const r = await P.extractUrl(log, { model: MODEL, scope: 'campus', maxSubPages: DETAIL, emit: () => {} });
         if (r.saved > 0) { saved = r.saved; used = url; return r.saved; }
         notes.push(`${url}：提炼 ${r.jobs} 个、入库 0`);
-      } catch (e: any) { notes.push(`${url}：${String(e.message).slice(0, 80)}`); }
+      } catch (e: any) {
+        notes.push(`${url}：${String(e.message).slice(0, 80)}`);
+        // 证实打不开的（404 / 410）：信息源库里这条标「失效」，以后工厂和批量都不再用
+        const src = urls.find((u: any) => u.url === url && u.id);
+        if (src && /页面不存在（(404|410)）/.test(e.message)) await fetch('/api/admin/db-url', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: src.id, health_status: 'dead', last_checked_at: new Date().toISOString(), url_health: { reason: String(e.message).slice(0, 120), by: 'jobs-backfill' } }) }).catch(() => {});
+      }
       return 0;
     };
     // ① 库里 / 检索到的入口
@@ -109,6 +117,16 @@ async function one(c: any) {
           break;
         }
       }
+    }
+    // ③ 还不行：不看库里已有的链接，换角度自己搜（官网 + 招聘平台 / 公众号 + 高校就业网），验过能打开的全记进信息源库
+    if (!saved) {
+      const r3 = await findRecruitChannels(c.name, MODEL).catch((e: any) => { notes.push(`多角度检索：${String(e.message).slice(0, 80)}`); return null; });
+      const fresh = (r3?.urls || []).filter(u => !tried_.has(u.url));
+      if (r3 && !fresh.length) notes.push('多角度检索也没找到新入口');
+      for (const u of fresh) {
+        await fetch('/api/db/save-url', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: c.name, companyId: c.id, unit: '', title: u.title, targetUrl: u.url, type: 'campus', subtype: u.subtype, reasoning: `多角度检索（批量补岗位第三轮）：${u.reasoning || ''}`.slice(0, 500) }) }).catch(() => {});
+      }
+      for (const u of fresh.slice(0, 3)) if (await tryUrl(u.url)) break;
     }
   } catch (e: any) { notes.push(String(e.message).slice(0, 120)); }
   // 免费额度全用完（DASHSCOPE_FREE_ONLY）：整批停下，这家不记，下次续跑会重来

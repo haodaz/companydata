@@ -133,7 +133,8 @@ export async function findAndSaveCampusUrls(company: FactoryCompany, model: stri
 const SUBTYPE_RANK: Record<string, number> = { list: 0, graduate: 1, intern: 2, remote_intern: 2, program: 3, overseas: 3, portal: 4, faq: 6, events: 7 };
 export function pickUrlsToExtract(urls: any[], n: number): any[] {
   const rank = (u: any) => u.type === 'campus' ? (SUBTYPE_RANK[u.subtype] ?? 5) : u.type === 'job' ? 5 : 9;
-  return [...urls].filter(u => u.type === 'campus' || u.type === 'job').sort((a, b) => rank(a) - rank(b)).slice(0, n);
+  // 信息源库里已标「失效」的（404 / 域名不存在 / 跳回首页）不再用
+  return [...urls].filter(u => (u.type === 'campus' || u.type === 'job') && u.health_status !== 'dead').sort((a, b) => rank(a) - rank(b)).slice(0, n);
 }
 
 // ── Kelly + Dr. Thorne：抓取与提炼 ──
