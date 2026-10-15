@@ -61,6 +61,8 @@ export async function generateContent(
   options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean },
 ): Promise<LLMResponse> {
   const resolvedModelId = resolveModel(modelId);
+  // 本地「只用免费额度」：千问以外的模型（OpenAI / Gemini 都是付费的）一律不调
+  if (process.env.DASHSCOPE_FREE_ONLY === '1' && !resolvedModelId.startsWith('qwen')) throw new Error(`已开「只用免费额度」，不调用付费模型 ${resolvedModelId}`);
   if (isOpenAIModel(resolvedModelId)) {
     return generateOpenAI(prompt, resolvedModelId, options);
   }
@@ -74,15 +76,52 @@ export async function generateContent(
 /**
  * 国内检索用阿里云：webSearch 时打开 enable_search（search_strategy turbo + 返回来源），
  * 来源网址附在正文后面（「## 搜索来源」），调用方要真实链接时从这里取。用法和 zhiji-yida 的 src/lib/search.ts 一致。
+ *
+ * 本地挖数据省钱：.env.local 里配了 DASHSCOPE_FREE_KEY（阿里云国际站新加坡的免费额度，每个模型 100 万 token，
+ * 开了「用完即停」，用完返回 403 AllocationQuota.FreeTierOnly、不扣费）就先走免费额度，同档模型轮着用，
+ * 全用完再回到付费 key——除非 DASHSCOPE_FREE_ONLY=1（本地挖数据时开着：免费全用完就报错停下，一分钱不花）。
+ * 线上（Vercel）不配这些变量，不受影响。2026-10-15 实测国际站也能联网搜简中网页。
  */
+const FREE_DEFAULT = {
+  plus: 'qwen-plus,qwen-plus-latest,qwen3.6-plus,qwen3.7-plus,qwen3.5-plus,qwen3.5-plus-2026-02-15,qwen3.7-plus-2026-05-26,qwen-max,qwen3-max,qwen3.8-max,qwen3-235b-a22b-instruct-2507',
+  flash: 'qwen-flash,qwen3.8-flash,qwen-turbo,qwen3-30b-a3b-instruct-2507',
+};
+// 用完的模型（403 FreeTierOnly）整个跳过；只是不支持某种用法的（比如开源版不能联网搜，400）只在那种用法下跳过
+const freeExhausted = new Set<string>();
+const freeUnsupported = new Set<string>();
+
+async function callDashScope(base: string, key: string, model: string, prompt: string, parameters: Record<string, any>): Promise<any> {
+  let lastErr: any = null;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt) await new Promise(r => setTimeout(r, 3000 * attempt));
+    try {
+      const res = await fetch(`${base}/api/v1/services/aigc/text-generation/generation`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+        body: JSON.stringify({ model, input: { messages: [{ role: 'user', content: prompt }] }, parameters }),
+        signal: AbortSignal.timeout(180_000),
+      });
+      if (!res.ok) {
+        const t = await res.text().catch(() => '');
+        const err: any = new Error(`DashScope ${res.status}: ${t.slice(0, 300)}`);
+        err.status = res.status; err.freeTierOut = res.status === 403 && /FreeTierOnly|AllocationQuota/i.test(t);
+        if (res.status === 429 || res.status >= 500) { lastErr = err; continue; }
+        throw err;
+      }
+      return await res.json();
+    } catch (e: any) {
+      lastErr = e;
+      if (e?.status || !/fetch failed|ECONNRESET|ETIMEDOUT|timeout|DashScope (429|5\d\d)/i.test(String(e?.message))) throw e;
+    }
+  }
+  throw lastErr;
+}
+
 async function generateQwen(
   prompt: string,
   modelId: string,
   options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean },
 ): Promise<LLMResponse> {
-  const key = process.env.DASHSCOPE_API_KEY;
-  if (!key) throw new Error('缺少 DASHSCOPE_API_KEY，无法调用通义千问');
-  const base = (process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
   const parameters: Record<string, any> = { result_format: 'message' };
   if (options?.webSearch) {
     parameters.enable_search = true;
@@ -90,29 +129,33 @@ async function generateQwen(
   } else if (options?.jsonMode) {
     parameters.response_format = { type: 'json_object' };
   }
-  let data: any = null, lastErr: any = null;
-  for (let attempt = 0; attempt < 3 && !data; attempt++) {
-    if (attempt) await new Promise(r => setTimeout(r, 3000 * attempt));
-    try {
-      const res = await fetch(`${base}/api/v1/services/aigc/text-generation/generation`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
-        body: JSON.stringify({ model: modelId, input: { messages: [{ role: 'user', content: prompt }] }, parameters }),
-        signal: AbortSignal.timeout(180_000),
-      });
-      if (!res.ok) {
-        const t = await res.text().catch(() => '');
-        const err = new Error(`DashScope ${res.status}: ${t.slice(0, 300)}`);
-        if (res.status === 429 || res.status >= 500) { lastErr = err; continue; }
-        throw err;
+  let data: any = null, used = modelId;
+  const freeKey = process.env.DASHSCOPE_FREE_KEY;
+  if (freeKey) {
+    const tier = /flash|turbo/i.test(modelId) ? 'flash' : 'plus';
+    const pool = (process.env[`DASHSCOPE_FREE_POOL_${tier.toUpperCase()}`] || FREE_DEFAULT[tier]).split(',').map(x => x.trim()).filter(Boolean);
+    const freeBase = (process.env.DASHSCOPE_FREE_BASE_URL || 'https://dashscope-intl.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
+    const mode = options?.webSearch ? 'search' : options?.jsonMode ? 'json' : 'text';
+    for (const m of pool) {
+      if (freeExhausted.has(m) || freeUnsupported.has(`${m}|${mode}`)) continue;
+      try {
+        // qwen3 系列商用版默认不思考，这里显式关掉，免得哪个快照默认开着、白耗额度
+        data = await callDashScope(freeBase, freeKey, m, prompt, /^qwen3/.test(m) ? { ...parameters, enable_thinking: false } : parameters);
+        used = m; break;
+      } catch (e: any) {
+        // 额度用完 / 这个模型在免费区不可用（400 / 403 / 404）：记下来换下一个；超时这类临时错误也换下一个，不拖着
+        if (e?.freeTierOut) { freeExhausted.add(m); console.warn(`[llm] 免费额度 ${m} 用完了，换下一个`); }
+        else if ([400, 403, 404].includes(e?.status)) { freeUnsupported.add(`${m}|${mode}`); console.warn(`[llm] 免费模型 ${m} 不支持这种用法（${mode}），换下一个：${String(e.message).slice(0, 100)}`); }
       }
-      data = await res.json();
-    } catch (e: any) {
-      lastErr = e;
-      if (!/fetch failed|ECONNRESET|ETIMEDOUT|timeout|DashScope (429|5\d\d)/i.test(String(e?.message))) throw e;
     }
+    if (!data && process.env.DASHSCOPE_FREE_ONLY === '1') throw new Error(`免费额度（${tier} 档）全部用完或不可用，已按设置停下，不走付费 key。用完的：${[...freeExhausted].join('、') || '无'}`);
   }
-  if (!data) throw lastErr;
+  if (!data) {
+    const key = process.env.DASHSCOPE_API_KEY;
+    if (!key) throw new Error('缺少 DASHSCOPE_API_KEY，无法调用通义千问');
+    const base = (process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
+    data = await callDashScope(base, key, modelId, prompt, parameters);
+  }
   let text: string = data.output?.choices?.[0]?.message?.content || '';
   const sources: any[] = data.output?.search_info?.search_results || [];
   if (options?.webSearch && sources.length) {
@@ -121,6 +164,7 @@ async function generateQwen(
   const u = data.usage || {};
   return {
     text,
+    model: used,
     usageMetadata: {
       promptTokenCount: u.input_tokens || 0,
       candidatesTokenCount: u.output_tokens || 0,

@@ -88,6 +88,8 @@ export async function searchJson(prompt: string, modelId: string, log: Pick<Toke
     const result = await generateContent(prompt, modelId, { webSearch: true });
     text = result.text.replace(/\n\n## 搜索来源[\s\S]*$/, '');
     usageMetadata = result.usageMetadata;
+  } else if (process.env.DASHSCOPE_FREE_ONLY === '1') {
+    throw new Error(`已开「只用免费额度」，不调用付费模型 ${modelId} 联网检索`);
   } else if (!modelId.startsWith('gpt-')) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
     // Gemini 联网检索偶尔整包空返回（没有 candidates，只消耗了思考 token）：先重试，仍为空就换一版 flash 兜底

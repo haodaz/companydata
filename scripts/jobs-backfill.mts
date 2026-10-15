@@ -61,7 +61,9 @@ if (opt('names')) {
     if (c?.id) targets.set(c.id, c); else missing.push(line);
   }
 }
-let list = [...targets.values()].filter(c => !(c.counts?.jobs_total > 0));
+// 断点续跑：--out 里已经跑过的企业（包括 0 个的）跳过
+const doneIds = new Set(fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8').split('\n').slice(1).map(l => Number(l.split('\t')[0])).filter(Boolean) : []);
+let list = [...targets.values()].filter(c => !(c.counts?.jobs_total > 0) && !doneIds.has(c.id));
 if (LIMIT) list = list.slice(0, LIMIT);
 console.log(`目标 ${targets.size} 家，其中 0 岗位 ${list.length} 家；建档失败 ${missing.length}：${missing.join('、')}`);
 if (!list.length) process.exit(0);
