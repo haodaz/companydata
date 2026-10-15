@@ -83,8 +83,9 @@ export async function generateContent(
  * 线上（Vercel）不配这些变量，不受影响。2026-10-15 实测国际站也能联网搜简中网页。
  */
 const FREE_DEFAULT = {
-  plus: 'qwen-plus,qwen-plus-latest,qwen3.6-plus,qwen3.7-plus,qwen3.5-plus,qwen3.5-plus-2026-02-15,qwen3.7-plus-2026-05-26,qwen-max,qwen3-max,qwen3.8-max,qwen3-235b-a22b-instruct-2507',
-  flash: 'qwen-flash,qwen3.8-flash,qwen-turbo,qwen3-30b-a3b-instruct-2507',
+  // 2026-10-15 实测：qwen-plus / qwen-plus-latest / qwen-max 的免费额度已用完；新版走兼容接口都能用（含联网）
+  plus: 'qwen3.7-plus,qwen3.6-plus,qwen3.5-plus,qwen3.7-plus-2026-05-26,qwen3.5-plus-2026-02-15,qwen3.8-max,qwen-plus,qwen-plus-latest,qwen-max',
+  flash: 'qwen-flash,qwen3.8-flash,qwen-turbo',
 };
 // 用完的模型（403 FreeTierOnly）整个跳过；只是不支持某种用法的（比如开源版不能联网搜，400）只在那种用法下跳过
 const freeExhausted = new Set<string>();
@@ -117,6 +118,37 @@ async function callDashScope(base: string, key: string, model: string, prompt: s
   throw lastErr;
 }
 
+/**
+ * 新版模型（qwen3.5 / 3.6 / 3.7 / 3.8 系列）在原生接口上报 400「url error」，要走 OpenAI 兼容接口；
+ * 兼容接口同样支持 enable_search。返回值转成原生接口的样子，下游不用改。
+ */
+const compatModels = new Set<string>();
+async function callCompat(base: string, key: string, model: string, prompt: string, parameters: Record<string, any>): Promise<any> {
+  const body: Record<string, any> = { model, messages: [{ role: 'user', content: prompt }] };
+  if (parameters.enable_search) { body.enable_search = true; body.search_options = parameters.search_options; }
+  if (parameters.response_format) body.response_format = parameters.response_format;
+  if ('enable_thinking' in parameters) body.enable_thinking = parameters.enable_thinking;
+  let lastErr: any = null;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt) await new Promise(r => setTimeout(r, 3000 * attempt));
+    const res = await fetch(`${base}/compatible-mode/v1/chat/completions`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+      body: JSON.stringify(body), signal: AbortSignal.timeout(180_000),
+    }).catch(e => { lastErr = e; return null; });
+    if (!res) continue;
+    if (!res.ok) {
+      const t = await res.text().catch(() => '');
+      const err: any = new Error(`DashScope ${res.status}: ${t.slice(0, 300)}`);
+      err.status = res.status; err.freeTierOut = res.status === 403 && /FreeTierOnly|AllocationQuota/i.test(t);
+      if (res.status === 429 || res.status >= 500) { lastErr = err; continue; }
+      throw err;
+    }
+    const j: any = await res.json();
+    return { output: { choices: [{ message: { content: j.choices?.[0]?.message?.content || '' } }], search_info: j.search_info }, usage: { input_tokens: j.usage?.prompt_tokens, output_tokens: j.usage?.completion_tokens, total_tokens: j.usage?.total_tokens } };
+  }
+  throw lastErr;
+}
+
 async function generateQwen(
   prompt: string,
   modelId: string,
@@ -140,7 +172,16 @@ async function generateQwen(
       if (freeExhausted.has(m) || freeUnsupported.has(`${m}|${mode}`)) continue;
       try {
         // qwen3 系列商用版默认不思考，这里显式关掉，免得哪个快照默认开着、白耗额度
-        data = await callDashScope(freeBase, freeKey, m, prompt, /^qwen3/.test(m) ? { ...parameters, enable_thinking: false } : parameters);
+        const p = /^qwen3/.test(m) ? { ...parameters, enable_thinking: false } : parameters;
+        if (compatModels.has(m)) data = await callCompat(freeBase, freeKey, m, prompt, p);
+        else {
+          try { data = await callDashScope(freeBase, freeKey, m, prompt, p); }
+          catch (e: any) {
+            if (e?.status !== 400 || !/url error/i.test(String(e.message))) throw e;
+            compatModels.add(m);
+            data = await callCompat(freeBase, freeKey, m, prompt, p);
+          }
+        }
         used = m; break;
       } catch (e: any) {
         // 额度用完 / 这个模型在免费区不可用（400 / 403 / 404）：记下来换下一个；超时这类临时错误也换下一个，不拖着
