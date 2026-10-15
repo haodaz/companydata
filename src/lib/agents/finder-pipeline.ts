@@ -9,6 +9,7 @@ import { generateContent } from '@/lib/llm-client';
 import { logTokenUsage } from '@/lib/token-logger';
 import { searchJson, parseJsonLoose } from '@/lib/agents/search-llm';
 import { ATS_DOMAINS } from '@/lib/url-types';
+import { linkLanding } from '@/lib/agents/link-landing';
 
 export interface FoundUrl {
   title: string;
@@ -52,6 +53,26 @@ function cleanUrls(raw: any, allowed: string[], fallbackType: FoundUrl['type']):
     });
   }
   return out;
+}
+
+/**
+ * 落地检查：联网检索的模型（尤其千问）会顺着站点「补全」出像模像样的路径（深信服 hr.sangfor.com/campus/2027 全是 404）。
+ * 逐个直接打开一次：404 / 410、跳回网站首页的扔掉；全扔光了就用这些地址的站点根目录当入口，让抓取顺着首页链接找。
+ * 打不开（超时 / 被拦）的不算死链，留着交给抓取（很多招聘站不让直接请求）。
+ */
+async function keepLanding(urls: FoundUrl[]): Promise<FoundUrl[]> {
+  const checked = await Promise.all(urls.map(async u => ({ u, land: await linkLanding(u.url, 10000).catch(() => null) })));
+  // 域名根本解析不到（模型编的子域名 jobs.ainnovation.com）也算死链；超时 / 被拦不算
+  const dead = (l: any) => !!l && (l.status === 404 || l.status === 410 || l.homeRedirect || l.error === 'ENOTFOUND');
+  const alive = checked.filter(c => !dead(c.land)).map(c => c.land?.httpFallback ? { ...c.u, url: c.land.httpFallback } : c.u);
+  if (alive.some(u => u.type === 'campus' || u.type === 'job')) return alive;
+  const roots = [...new Set(checked.filter(c => dead(c.land)).map(c => { try { return new URL(c.u.url).origin + '/'; } catch { return ''; } }).filter(Boolean))];
+  const ok: FoundUrl[] = [];
+  for (const r of roots.slice(0, 2)) {
+    const l = await linkLanding(r, 10000).catch(() => null);
+    if (l && !dead(l) && (l.status ?? 200) < 400) ok.push({ title: '招聘官网首页（检索给的子页面打不开，从首页找）', url: r, type: 'campus', subtype: 'portal', reasoning: '模型给的具体路径落地 404，改用站点首页' });
+  }
+  return [...alive, ...ok];
 }
 
 // --- 校招 + 实习（重点；社招暂不采集，只保留招聘总入口作线索）---
@@ -108,7 +129,7 @@ export async function findCampusUrls(company: string, unit: string, modelId: str
   `;
 
   const { parsed, searchQueries } = await searchJson(prompt, modelId, { tool_name: 'finder', task_name: 'Campus URLs Search', institution: company });
-  return { search_queries: searchQueries, urls: cleanUrls(parsed.urls, ['campus', 'careers', 'job'], 'campus') };
+  return { search_queries: searchQueries, urls: await keepLanding(cleanUrls(parsed.urls, ['campus', 'careers', 'job'], 'campus')) };
 }
 
 // --- 企业官网 + 企业信息 ---

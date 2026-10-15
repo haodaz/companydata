@@ -55,8 +55,9 @@ if (run('co-source')) {
   const file = arg('--file') || `${os.homedir()}/Desktop/公司来源及slug.xlsx`;
   const wb = XLSX.read(fs.readFileSync(file));
   const rows: any[] = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: null });
-  const list = rows.map(r => ({ name: String(r['公司名称'] || '').trim(), slug: r.slug ? String(r.slug).trim() : null, batch: String(r['来源'] || '').trim() })).filter(r => r.name);
-  const { data: cos, error } = await selectAll(() => db.from('companies').select('id, name, registered_name, brief_name, name_en, official_website, external_id, source, flora_id_locked').order('id'));
+  const list = rows.map(r => ({ name: String(r['公司名称'] || '').trim(), slug: r.slug ? String(r.slug).trim() : null, batch: String(r['来源'] || '').trim(), platforms: String(r['订阅平台'] || '').split(/[|｜]/).map(x => x.trim()).filter(Boolean) })).filter(r => r.name);
+  // 10-15 版起「来源」可以是组合（潜历二批，ted），另有「订阅平台」（北辰工作台|汇智海淀平台…）
+  const { data: cos, error } = await selectAll(() => db.from('companies').select('id, name, registered_name, brief_name, name_en, official_website, external_id, source, subscription_platform, flora_id_locked').order('id'));
   if (error) throw error;
 
   const SUF = /(股份有限公司|有限责任公司|有限公司|集团股份|集团|股份|公司|科技|技术|信息|网络|智能|软件|系统|研究院|研究所|实验室|事务所)+$/g;
@@ -94,14 +95,17 @@ if (run('co-source')) {
   }
 
   const RANK = ['潜历一批', '潜历二批', 'ted'];
-  type Plan = { id: number; name: string; batch: string; slug: string | null; slugFrom: string | null; how: string; oldSource: string | null; oldSlug: string | null; site: string | null };
+  type Plan = { id: number; name: string; batch: string; platforms: string[]; oldPlatforms: string[]; slug: string | null; slugFrom: string | null; how: string; oldSource: string | null; oldSlug: string | null; site: string | null };
   const plans: Plan[] = (cos as any[]).map(c => {
     const h = hits.get(c.id);
-    if (!h) return { id: c.id, name: c.name, batch: '其他', slug: null, slugFrom: null, how: '名单里没有', oldSource: c.source, oldSlug: c.external_id, site: c.official_website };
-    const batch = RANK.find(b => h.rows.some(r => r.batch === b)) || h.rows[0].batch;
+    if (!h) return { id: c.id, name: c.name, batch: '其他', platforms: c.subscription_platform || [], oldPlatforms: c.subscription_platform || [], slug: null, slugFrom: null, how: '名单里没有', oldSource: c.source, oldSlug: c.external_id, site: c.official_website };
+    // 来源照名单原样保留组合（几行对到同一家就合起来），按 潜历一批 / 潜历二批 / ted 排序
+    const bs = [...new Set(h.rows.flatMap(r => r.batch.split(/[，,、]/).map(x => x.trim()).filter(Boolean)))];
+    const batch = bs.sort((a, b) => (RANK.indexOf(a) + 1 || 99) - (RANK.indexOf(b) + 1 || 99)).join('，') || '其他';
+    const platforms = [...new Set(h.rows.flatMap(r => r.platforms))];
     // slug：优先全名一致的那一行，其次排在前面的批次
     const withSlug = h.rows.filter(r => r.slug).sort((a, b) => Number(flat(b.name) === flat(c.name)) - Number(flat(a.name) === flat(c.name)) || RANK.indexOf(a.batch) - RANK.indexOf(b.batch));
-    return { id: c.id, name: c.name, batch, slug: withSlug[0]?.slug || null, slugFrom: withSlug[0]?.name || null, how: h.how, oldSource: c.source, oldSlug: c.external_id, site: c.official_website };
+    return { id: c.id, name: c.name, batch, platforms, oldPlatforms: c.subscription_platform || [], slug: withSlug[0]?.slug || null, slugFrom: withSlug[0]?.name || null, how: h.how, oldSource: c.source, oldSlug: c.external_id, site: c.official_website };
   });
 
   // 两家抢同一个 slug：全名一致的那家拿，其余报疑似重复
@@ -122,7 +126,7 @@ if (run('co-source')) {
   });
 
   const cnt = (f: (p: Plan) => boolean) => plans.filter(f).length;
-  console.log(`\n① 名单 ${list.length} 行；库里 ${plans.length} 家：` + RANK.concat('其他').map(b => `${b} ${cnt(p => p.batch === b)}`).join(' / '));
+  console.log(`\n① 名单 ${list.length} 行；库里 ${plans.length} 家：` + [...new Set(plans.map(p => p.batch))].map(b => `${b} ${cnt(p => p.batch === b)}`).join(' / ') + `；订阅平台要更新 ${cnt(p => JSON.stringify([...p.platforms].sort()) !== JSON.stringify([...p.oldPlatforms].sort()))} 家`);
   console.log(`   对名字：${['全名', 'slug', '去后缀', '包含'].map(h => `${h} ${cnt(p => p.how === h)}`).join(' / ')}；名单里我们没有的 ${unmatchedRows.length} 行`);
   console.log(`   换成平台 slug ${cnt(p => !!p.slug && p.slug !== p.oldSlug)} 家（已一致 ${cnt(p => !!p.slug && p.slug === p.oldSlug)}，名单没给 slug 的保留我们的 ${cnt(p => p.batch !== '其他' && !p.slug)}）；疑似重复 ${dupes.length} 组；疑似填错的 slug ${suspicious.length} 个`);
   fs.writeFileSync(`${OUT}/企业来源与slug-对照.csv`, csv([['企业 id', '企业名', '来源（新）', '来源（旧）', '平台 slug', '我们原来的编号', '对上的方式', '名单里的名字'], ...plans.map(p => [p.id, p.name, p.batch, p.oldSource, p.slug, p.oldSlug, p.how, p.slugFrom])]));
@@ -133,9 +137,13 @@ if (run('co-source')) {
 
   if (APPLY) {
     // 来源
-    for (const b of [...RANK, '其他']) {
+    for (const b of new Set(plans.map(p => p.batch))) {
       const ids = plans.filter(p => p.batch === b && p.oldSource !== b).map(p => p.id);
       for (let i = 0; i < ids.length; i += 200) { const { error } = await db.from('companies').update({ source: b }).in('id', ids.slice(i, i + 200)); if (error) throw error; }
+    }
+    // 订阅平台
+    for (const p of plans.filter(p => JSON.stringify([...p.platforms].sort()) !== JSON.stringify([...p.oldPlatforms].sort()))) {
+      const { error } = await db.from('companies').update({ subscription_platform: p.platforms }).eq('id', p.id); if (error) throw error;
     }
     // slug：先挪到临时编号（锁住），再写平台 slug；被占用的旧主人解锁、清空，让触发器重算（重了会自动加 -2）
     const todo = plans.filter(p => p.slug && p.slug !== p.oldSlug).slice(0, LIMIT);

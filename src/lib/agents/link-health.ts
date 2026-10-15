@@ -23,6 +23,9 @@ export async function recruitLinkHealth(url: string): Promise<LinkHealth> {
   const title = md.match(/^Title:\s*(.*)$/m)?.[1]?.trim() || '';
   const body = md.split(/Markdown Content:/)[1] || md;
   const head = `${title}\n${body.slice(0, 600)}`;
+  // Jina 渲染单页应用时目标返回 404 也会照样给出页面骨架，只在开头警告里写「Target URL returned error 404」
+  const jinaWarn = md.split(/Markdown Content:/)[0].match(/Target URL returned error (404|410)/)?.[0];
+  if (jinaWarn) return { status: 'dead', title, reason: jinaWarn };
   const hit = head.match(DEAD)?.[0];
   if (hit) return { status: 'dead', title, reason: hit };
   const lw = loginVerdict({ finalUrl: md.match(/^URL Source:\s*(\S+)/m)?.[1], api: body, page: md });

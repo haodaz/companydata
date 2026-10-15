@@ -125,6 +125,9 @@ export async function fetchBaseAndLinks(url: string, modelId: string = 'gemini-3
     if (!baseMarkdown) {
       return { success: false, base_markdown: '', candidate_urls: [], error_message: `Jina fetch failed for base URL: ${url}` };
     }
+    // 目标页 404（单页应用照样渲染出骨架，Jina 只在开头警告）：直接算失败，让上游换下一个入口
+    const notFound = baseMarkdown.split(/Markdown Content:/)[0].match(/Target URL returned error (404|410)/);
+    if (notFound) return { success: false, base_markdown: '', candidate_urls: [], error_message: `页面不存在（${notFound[1]}）：${url}` };
     // 要登录才能看：标到信息源库，不交给模型白跑
     const lw = loginVerdict({ finalUrl: baseMarkdown.match(/^URL Source:\s*(\S+)/m)?.[1], page: baseMarkdown });
     await markLogin(url, lw);
