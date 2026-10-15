@@ -80,7 +80,7 @@ async function one(c: any) {
   try {
     const ex = await getJson(`/api/admin/db-url?companyId=${c.id}&type=campus,job&pageSize=100`);
     urls = ex.ok ? ex.data : [];
-    if (!urls.length) urls = await P.findAndSaveCampusUrls({ id: c.id, name: c.name } as any, MODEL);
+    if (!urls.length) urls = await P.findAndSaveCampusUrls({ id: c.id, name: c.name } as any, MODEL, { report: false });   // 批量不写寻源报告，省 token
     const ranked = P.pickUrlsToExtract(urls, 3);
     const tried_ = new Set<string>();
     const tryUrl = async (url: string) => {
@@ -111,11 +111,18 @@ async function one(c: any) {
       }
     }
   } catch (e: any) { notes.push(String(e.message).slice(0, 120)); }
+  // 免费额度全用完（DASHSCOPE_FREE_ONLY）：整批停下，这家不记，下次续跑会重来
+  if (!saved && notes.some(n => /免费额度.*(用完|不可用)/.test(n))) {
+    if (!quotaOut) console.log(`\n⛔ 免费额度用完，停在「${c.name}」：${notes.find(n => /免费额度/.test(n))}`);
+    quotaOut = true; queue.length = 0; return;
+  }
   done++; totalSaved += saved;
   fs.appendFileSync(OUT, [c.id, c.name, urls.length, tried, saved, used, notes.join('；')].join('\t') + '\n');
   console.log(`[${done}/${list.length}] ${c.name}：${saved ? `入库 ${saved}` : '0'}（信息源 ${urls.length}，试 ${tried} 个入口）${notes.length && !saved ? ' — ' + notes[notes.length - 1] : ''}  · 已用 ${((Date.now() - t0) / 60000).toFixed(0)} 分`);
 }
+let quotaOut = false;
 const queue = [...list];
 await Promise.all(Array.from({ length: PAR }, async () => { while (queue.length) await one(queue.shift()); }));
 await P.setJobTaskStatus(taskId, 'completed');
-console.log(`\n完成：${list.length} 家，入库 ${totalSaved} 个岗位，有岗位的 ${fs.readFileSync(OUT, 'utf8').split('\n').slice(1).filter(l => Number(l.split('\t')[4]) > 0).length} 家 → ${OUT}`);
+console.log(`\n${quotaOut ? "⛔ 因免费额度用完提前停止" : "完成"}：跑完 ${done}/${list.length} 家，入库 ${totalSaved} 个岗位，有岗位的 ${fs.readFileSync(OUT, 'utf8').split('\n').slice(1).filter(l => Number(l.split('\t')[4]) > 0).length} 家 → ${OUT}`);
+if (quotaOut) process.exitCode = 2;   // 让后面排队的批次别再启动

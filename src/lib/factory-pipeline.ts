@@ -110,7 +110,7 @@ export async function runRadarItem(item: any, model: string, emit: Emit, ctl?: R
 export const rewardText = (types?: string[]) => (types || []).map(t => REWARD_LABELS[t] ? `${REWARD_LABELS[t].emoji}${REWARD_LABELS[t].label}` : t).join(' ');
 
 // ── Jarvis：寻源 + 入库 ──
-export async function findAndSaveCampusUrls(company: FactoryCompany, model: string): Promise<any[]> {
+export async function findAndSaveCampusUrls(company: FactoryCompany, model: string, opts: { report?: boolean } = {}): Promise<any[]> {
   const json = await post('/api/agents/finder/campus-urls', { company: company.name, unit: '', model });
   const urls: any[] = json.urls || [];
   // 个别 URL 入库失败不影响整体；全部失败（如登录过期）则报错，不能假装找到了
@@ -122,7 +122,7 @@ export async function findAndSaveCampusUrls(company: FactoryCompany, model: stri
   }).then(() => { saved++; }).catch(e => { lastError = e; })));
   if (urls.length && !saved) throw new Error(`信息源入库失败：${(lastError as Error | null)?.message || '未知错误'}`);
   // 报告与 URL 工具单家检索一致：再调一次大模型把 URL 写成检索报告，报告失败不影响流水线
-  if (urls.length) {
+  if (urls.length && opts.report !== false) {
     const report = await post('/api/agents/finder/report', { company: company.name, unit: '', searchType: 'campus', urls, model }).then(r => r.detailed_report || '').catch((e: Error) => `（报告生成失败：${e.message}）`);
     post('/api/db/save-journal', { company: company.name, companyId: company.id, urls, searchQueries: json.search_queries, searchType: 'campus', model, aiOverview: report }).catch(() => {});
   }

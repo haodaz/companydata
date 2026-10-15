@@ -100,7 +100,9 @@ async function listOpenings(markdown: string, company: string, hint: string, sco
 /** 第二步：按清单 3 个一组、多组并发补字段。每组带入口页（共有信息）+ 这几个岗位自己的详情页 */
 async function structureByRoster(markdown: string, roster: Opening[], company: string, hint: string, modelId: string, batchId: number | undefined, scope: 'campus' | 'all', par: number): Promise<StructuredJobsResult | null> {
   const sections = markdown.split(/\n(?=### Source: )/);
-  const head = sections[0].slice(0, 12000);
+  // 入口页每组都要带一遍，太长就是成倍的输入：只带开头（项目 / 届别 / 截止时间这些共有信息在前面），这几个岗位的列表行单独附上
+  const head = sections[0].slice(0, 3000);
+  const rowsOf = (g: Opening[]) => g.map(o => { const i = sections[0].indexOf(o.name); return i < 0 ? '' : sections[0].slice(Math.max(0, i - 200), i + 600); }).filter(Boolean).join('\n…\n');
   const bySource = new Map<string, string>();
   for (const s of sections.slice(1)) { const u = s.match(/^### Source: \[[^\]]*\]\(([^)\s]+)/)?.[1]; if (u) bySource.set(normUrl(u), s.slice(0, 8000)); }
   const groups: Opening[][] = [];
@@ -109,7 +111,7 @@ async function structureByRoster(markdown: string, roster: Opening[], company: s
   for (let i = 0; i < groups.length; i += par) {
     results.push(...await Promise.all(groups.slice(i, i + par).map(g => {
       const details = g.map(o => (o.link && bySource.get(normUrl(o.link))) || '').filter(Boolean).join('\n');
-      return structureChunk(`${head}\n\n${details}`, company, hint, modelId, batchId, scope, g);
+      return structureChunk(`${head}\n\n${rowsOf(g)}\n\n${details}`, company, hint, modelId, batchId, scope, g);
     })));
   }
   return mergeResults(results, markdown);
@@ -161,7 +163,7 @@ ${jobSchemaForPrompt()}
       ${hint ? `Focus hint from the user (team / role / location of interest): ${hint}` : ''}
       Today's date: ${today}
 
-      ${focus ? `ONLY output these ${focus.length} openings (the other openings on the page are handled separately), one entry each:\n${focus.map(o => `- ${o.name}${o.location ? ` (${o.location})` : ""}${o.link ? ` ${o.link}` : ""}`).join("\n")}\n` : ""}
+      ${focus ? `ONLY output these ${focus.length} openings (the other openings on the page are handled separately), one entry each ("name" = the title exactly as written on the page, never add the city):\n${focus.map(o => JSON.stringify({ name: o.name, location: o.location, link: o.link })).join("\n")}\n` : ""}
       Raw Markdown Data:
       ${markdown.substring(0, 500000)}
     `;

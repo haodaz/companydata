@@ -84,8 +84,8 @@ export async function generateContent(
  */
 const FREE_DEFAULT = {
   // 2026-10-15 实测：qwen-plus / qwen-plus-latest / qwen-max 的免费额度已用完；新版走兼容接口都能用（含联网）
-  plus: 'qwen3.7-plus,qwen3.6-plus,qwen3.5-plus,qwen3.7-plus-2026-05-26,qwen3.5-plus-2026-02-15,qwen3.8-max,qwen-plus,qwen-plus-latest,qwen-max',
-  flash: 'qwen-flash,qwen3.8-flash,qwen-turbo',
+  plus: 'qwen3.7-plus,qwen3.6-plus,qwen3.5-plus,qwen3.7-plus-2026-05-26,qwen3.6-plus-2026-04-02,qwen3.5-plus-2026-02-15,qwen3.8-max,qwen3.7-max,qwen-plus,qwen-plus-latest,qwen-max',
+  flash: 'qwen-flash,qwen3.8-flash,qwen3.7-flash,qwen3.6-flash,qwen3.5-flash,qwen3.6-flash-2026-04-16,qwen3.5-flash-2026-02-23,qwen-turbo',
 };
 // 用完的模型（403 FreeTierOnly）整个跳过；只是不支持某种用法的（比如开源版不能联网搜，400）只在那种用法下跳过
 const freeExhausted = new Set<string>();
