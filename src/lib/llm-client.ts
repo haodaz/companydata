@@ -165,7 +165,9 @@ async function generateQwen(
   const freeKey = process.env.DASHSCOPE_FREE_KEY;
   if (freeKey) {
     const tier = /flash|turbo/i.test(modelId) ? 'flash' : 'plus';
-    const pool = (process.env[`DASHSCOPE_FREE_POOL_${tier.toUpperCase()}`] || FREE_DEFAULT[tier]).split(',').map(x => x.trim()).filter(Boolean);
+    const poolOf = (t: string) => (process.env[`DASHSCOPE_FREE_POOL_${t.toUpperCase()}`] || FREE_DEFAULT[t as keyof typeof FREE_DEFAULT]).split(',').map(x => x.trim()).filter(Boolean);
+    // flash 档用完了就接着用 plus 档（同样免费，只是慢一点）；plus 档不往 flash 降，联网检索要聪明的
+    const pool = tier === 'flash' ? [...new Set([...poolOf('flash'), ...poolOf('plus')])] : poolOf('plus');
     const freeBase = (process.env.DASHSCOPE_FREE_BASE_URL || 'https://dashscope-intl.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
     const mode = options?.webSearch ? 'search' : options?.jsonMode ? 'json' : 'text';
     for (const m of pool) {
