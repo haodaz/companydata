@@ -6,10 +6,29 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { generateContent } from '@/lib/llm-client';
 import { logTokenUsage, type TokenUsageParams } from '@/lib/token-logger';
 
+/** 从第一个「{」开始按括号配对（跳过字符串里的括号）截出完整对象 */
+function firstBalanced(s: string): string | null {
+  const start = s.indexOf('{');
+  if (start < 0) return null;
+  let depth = 0, inStr = false, esc = false;
+  for (let i = start; i < s.length; i++) {
+    const ch = s[i];
+    if (inStr) { if (esc) esc = false; else if (ch === '\\') esc = true; else if (ch === '"') inStr = false; continue; }
+    if (ch === '"') inStr = true;
+    else if (ch === '{') depth++;
+    else if (ch === '}' && --depth === 0) return s.slice(start, i + 1);
+  }
+  return null;
+}
+
 /** 去掉 ```json 围栏，取第一个完整 JSON 对象 */
 export function parseJsonLoose(text: string): any {
   const clean = (text || '').replace(/^```(?:json)?\n?/i, '').replace(/\n?```$/i, '').trim();
   try { return JSON.parse(clean); } catch { /* 联网检索模式下模型偶尔会在 JSON 前后带说明文字 */ }
+  // 先按括号配对取第一个完整对象：新版模型（qwen3.x 兼容接口）常在 JSON 后面再写一段带花括号的说明 / 第二个对象，
+  // 贪婪匹配会把两段连在一起解析失败（10-15 批量补岗位连着几家寻源报「after JSON at position …」）
+  const bal = firstBalanced(clean);
+  if (bal) { try { return JSON.parse(bal); } catch { try { return JSON.parse(repairJson(bal)); } catch { /* 退回老办法 */ } } }
   const match = clean.match(/\{[\s\S]*\}/);
   if (!match) { console.error('[parseJsonLoose] no JSON in response:', clean.slice(0, 800)); throw new Error(`大模型未返回有效 JSON${clean ? `（返回开头：${clean.slice(0, 120)}）` : '（返回为空）'}`); }
   try { return JSON.parse(match[0]); } catch { /* 再试一次修补 */ }
