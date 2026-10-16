@@ -57,7 +57,7 @@ if (run('co-source')) {
   const rows: any[] = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: null });
   const list = rows.map(r => ({ name: String(r['公司名称'] || '').trim(), slug: r.slug ? String(r.slug).trim() : null, batch: String(r['来源'] || '').trim(), platforms: String(r['订阅平台'] || '').split(/[|｜]/).map(x => x.trim()).filter(Boolean) })).filter(r => r.name);
   // 10-15 版起「来源」可以是组合（潜历二批，ted），另有「订阅平台」（北辰工作台|汇智海淀平台…）
-  const { data: cos, error } = await selectAll(() => db.from('companies').select('id, name, registered_name, brief_name, name_en, official_website, external_id, source, subscription_platform, flora_id_locked').order('id'));
+  const { data: cos, error } = await selectAll(() => db.from('companies').select('id, name, registered_name, brief_name, name_en, aliases, official_website, external_id, source, subscription_platform, flora_id_locked').not('if_delete', 'is', true).order('id'));   // 已合并 / 软删的不参与（10-16：曾把 slug 对到已删记录上）
   if (error) throw error;
 
   const SUF = /(股份有限公司|有限责任公司|有限公司|集团股份|集团|股份|公司|科技|技术|信息|网络|智能|软件|系统|研究院|研究所|实验室|事务所)+$/g;
@@ -66,7 +66,8 @@ if (run('co-source')) {
   const flat = (s: any) => String(s || '').replace(/\s/g, '').toLowerCase();
   const core = (s: any) => { let t = flat(String(s || '').replace(/[（(][^）)]*[）)]/g, '')); for (let i = 0; i < 3; i++) t = t.replace(SUF, '').replace(PRE, ''); return t; };
   const paren = (s: any) => [...String(s || '').matchAll(/[（(]([^）)]+)[）)]/g)].map(m => flat(m[1])).filter(k => k.length >= 2 && !PLACE.has(k));
-  const namesOf = (c: any) => [c.name, c.registered_name, c.brief_name, c.name_en].filter(Boolean);
+  // 别名也算：合并后被并入方的名字记在保留方别名里，名单里写的往往正是那个名字（10-16 拼多多 / 星巴克 / 德勤）
+  const namesOf = (c: any) => [c.name, c.registered_name, c.brief_name, c.name_en, ...(c.aliases || []).filter((x: string) => !/^并入#/.test(x))].filter(Boolean);
   const exact = new Map<string, any[]>(), loose = new Map<string, any[]>();
   const put = (m: Map<string, any[]>, k: string, c: any) => { if (!k || k.length < 2) return; const a = m.get(k) || []; if (!a.includes(c)) a.push(c); m.set(k, a); };
   for (const c of cos as any[]) for (const n of namesOf(c)) { put(exact, flat(n), c); put(loose, core(n), c); for (const p of paren(n)) put(loose, p, c); }
@@ -352,6 +353,8 @@ if (run('co-merge')) {
     for (const p of pairs) {
       const [{ data: keep }, { data: drop }] = await Promise.all([db.from('companies').select('*').eq('id', p.keep).single(), db.from('companies').select('*').eq('id', p.drop).single()]);
       if (!keep || !drop || drop.if_delete) { console.log(`   跳过 #${p.drop}（已删或不存在）`); continue; }
+      // 保留方自己已经被删了（上一轮反过来合并过）：不能往已删记录里并，否则两条都删了（10-16 传音 / 镁伽 / 宇树 / 瑞派就是这样没的）
+      if (keep.if_delete) { console.log(`   跳过 #${p.drop} → #${p.keep}：保留方已删，人工看一下`); continue; }
       const moved: string[] = [];
       for (const [t, col] of CHILD) {
         const { data: kids, error } = await db.from(t).select('id').eq(col, p.drop);
