@@ -20,18 +20,27 @@ export async function resolveCompanyId(company?: string | null): Promise<number 
   const key = name.toLowerCase();
   if (cache.has(key)) return cache.get(key)!;
 
-  const like = quote(escapeLike(name));
-  const { data } = await supabaseAdmin
-    .from('companies')
-    .select('id')
-    .or(`name.ilike.${like},name_en.ilike.${like}`)
-    .order('id', { ascending: true })
-    .limit(1);
-
-  let id: number | null = data?.[0]?.id ?? null;
+  // 已合并 / 软删的记录不算（合并后被并入方的名字记在保留方的别名里，下面按别名能找到保留方）
+  const exact = async (n: string) => {
+    const like = quote(escapeLike(n));
+    const { data } = await supabaseAdmin.from('companies').select('id')
+      .or(`name.ilike.${like},name_en.ilike.${like},registered_name.ilike.${like},brief_name.ilike.${like}`)
+      .not('if_delete', 'is', true).order('id', { ascending: true }).limit(1);
+    if (data?.[0]) return data[0].id as number;
+    const { data: byAlias } = await supabaseAdmin.from('companies').select('id').contains('aliases', [n]).not('if_delete', 'is', true).limit(1);
+    return (byAlias?.[0]?.id as number) ?? null;
+  };
+  let id: number | null = await exact(name);
+  // 「工商全称（简称）」：全称对不上时用括号里的简称再对一次（10-15 导入潜历二批时「北京梦想绽放科技有限公司（爱奇艺）」没对上库里的「爱奇艺」，重复建了档）
   if (id === null) {
-    const { data: byAlias } = await supabaseAdmin.from('companies').select('id').contains('aliases', [name]).limit(1);
-    id = byAlias?.[0]?.id ?? null;
+    const PLACE = /^(中国|北京|上海|深圳|广州|杭州|天津|苏州|南京|成都|武汉|西安|合肥|香港|宁波|厦门|无锡|集团)$/;
+    for (const m of name.matchAll(/[（(]([^）)]+)[）)]/g)) {
+      for (const part of m[1].split(/[\/、,，]/).map(x => x.trim()).filter(x => x.length >= 2 && !PLACE.test(x))) {
+        id = await exact(part);
+        if (id !== null) break;
+      }
+      if (id !== null) break;
+    }
   }
   if (id !== null) cache.set(key, id);
   return id;
