@@ -82,11 +82,7 @@ export async function generateContent(
  * 全用完再回到付费 key——除非 DASHSCOPE_FREE_ONLY=1（本地挖数据时开着：免费全用完就报错停下，一分钱不花）。
  * 线上（Vercel）不配这些变量，不受影响。2026-10-15 实测国际站也能联网搜简中网页。
  */
-const FREE_DEFAULT = {
-  // 2026-10-15 实测：qwen-plus / qwen-plus-latest / qwen-max 的免费额度已用完；新版走兼容接口都能用（含联网）
-  plus: 'qwen3.7-plus,qwen3.6-plus,qwen3.5-plus,qwen3.7-plus-2026-05-26,qwen3.6-plus-2026-04-02,qwen3.5-plus-2026-02-15,qwen3.8-max,qwen3.7-max,qwen-plus,qwen-plus-latest,qwen-max',
-  flash: 'qwen-flash,qwen3.8-flash,qwen3.7-flash,qwen3.6-flash,qwen3.5-flash,qwen3.6-flash-2026-04-16,qwen3.5-flash-2026-02-23,qwen-turbo',
-};
+// 免费模型池完全由环境变量给出（DASHSCOPE_FREE_POOL_PLUS / DASHSCOPE_FREE_POOL_FLASH，逗号分隔），代码里不写死模型
 // 用完的模型（403 FreeTierOnly）整个跳过；只是不支持某种用法的（比如开源版不能联网搜，400）只在那种用法下跳过
 const freeExhausted = new Set<string>();
 const freeUnsupported = new Set<string>();
@@ -165,7 +161,7 @@ async function generateQwen(
   const freeKey = process.env.DASHSCOPE_FREE_KEY;
   if (freeKey) {
     const tier = /flash|turbo/i.test(modelId) ? 'flash' : 'plus';
-    const poolOf = (t: string) => (process.env[`DASHSCOPE_FREE_POOL_${t.toUpperCase()}`] || FREE_DEFAULT[t as keyof typeof FREE_DEFAULT]).split(',').map(x => x.trim()).filter(Boolean);
+    const poolOf = (t: string) => (process.env[`DASHSCOPE_FREE_POOL_${t.toUpperCase()}`] || '').split(',').map(x => x.trim()).filter(Boolean);
     // flash 档用完了就接着用 plus 档（同样免费，只是慢一点）；plus 档不往 flash 降，联网检索要聪明的
     const pool = tier === 'flash' ? [...new Set([...poolOf('flash'), ...poolOf('plus')])] : poolOf('plus');
     const freeBase = (process.env.DASHSCOPE_FREE_BASE_URL || 'https://dashscope-intl.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');

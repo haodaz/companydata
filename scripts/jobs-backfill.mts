@@ -16,7 +16,10 @@ process.loadEnvFile('.env.local');
 const argv = process.argv.slice(2);
 const opt = (k: string, d = '') => { const i = argv.indexOf(`--${k}`); return i >= 0 ? argv[i + 1] : d; };
 const BASE = opt('base', 'http://localhost:3003');
-const MODEL = opt('model', 'qwen-plus');
+// 模型不写死：--model 指定（必须是模型选单里的），不给就用环境变量 DEFAULT_MODEL
+const { MODEL_OPTIONS, isKnownModel } = await import('../src/lib/model-options');
+const MODEL = opt('model', process.env.DEFAULT_MODEL || '');
+if (!isKnownModel(MODEL)) { console.error(`--model 要从模型选单里选：${MODEL_OPTIONS.map(m => m.id).join(' / ')}${MODEL ? `（给的是 ${MODEL}）` : ''}`); process.exit(1); }
 const DETAIL = parseInt(opt('detail', '15'));
 const PAR = parseInt(opt('par', '2'));
 const LIMIT = parseInt(opt('limit', '0'));
