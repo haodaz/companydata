@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>数据外采篮</title>
+  <link rel="stylesheet" href="sidepanel.css" />
+</head>
+<body>
+  <header>
+    <div class="brand"><span class="logo">🧺</span><div><b>数据外采篮</b><small>人翻页 · 篮子读 · 工厂提炼</small></div></div>
+    <button id="toggleSettings" class="ghost" title="设置">⚙︎</button>
+  </header>
+
+  <section id="settings" class="card hidden">
+    <h3>连接工厂</h3>
+    <label>平台地址<input id="base" placeholder="https://www.aisimjob.com" /></label>
+    <label>篮子口令<textarea id="token" rows="3" placeholder="在「数据外采篮」页面登录后点「生成篮子口令」，复制粘贴到这里"></textarea></label>
+    <div class="row"><button id="saveSettings">保存</button><span id="settingsMsg" class="muted"></span></div>
+  </section>
+
+  <section class="card">
+    <h3>① 这一篮采的是哪家企业</h3>
+    <div class="row"><input id="q" placeholder="输入企业名搜索" /><button id="search" class="ghost">搜</button></div>
+    <div id="results"></div>
+    <div id="picked" class="picked muted">还没选企业</div>
+  </section>
+
+  <section class="card">
+    <h3>② 你来打开、翻页，篮子来读</h3>
+    <div id="pageInfo" class="muted small">当前标签：—</div>
+    <div class="row">
+      <button id="once">放进篮子（读这一页）</button>
+    </div>
+    <div class="row">
+      <label class="switch"><input type="checkbox" id="follow" /> <span>跟着我翻页：页面一变就自动读</span></label>
+    </div>
+    <p class="hint">篮子<b>只读</b>你屏幕上已经显示的文字，不点按钮、不翻页、不绕验证码。要登录、要过「我是人类」、要点开详情，都由你来。</p>
+  </section>
+
+  <section class="card">
+    <h3>③ 篮子里的收获</h3>
+    <div id="stats" class="stats"><span>已放 <b id="nPages">0</b> 页</span><span>提炼 <b id="nJobs">0</b> 个岗位</span></div>
+    <ol id="log"></ol>
+  </section>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

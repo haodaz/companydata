@@ -41,6 +41,11 @@ export async function proxy(req: NextRequest) {
     // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉
     const headers = new Headers(req.headers);
     headers.delete(INVITED); headers.delete(INVITED_BY); headers.delete(LAB_GUEST);
+    // 数据外采篮（Chrome 插件）不带 cookie，带篮子口令（Authorization: Bearer）
+    if (pathname.startsWith('/api/basket/')) {
+      const bearer = req.headers.get('authorization')?.match(/^Bearer\s+(.+)$/i)?.[1];
+      if (bearer && await verifyToken(bearer.trim())) return NextResponse.next({ request: { headers } });
+    }
     const token = req.cookies.get('auth_token')?.value;
     const payload = token ? await verifyToken(token) : null;
     if (payload) return NextResponse.next({ request: { headers } });

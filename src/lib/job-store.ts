@@ -177,7 +177,9 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
 
   // 同一来源页之前提取到、这次不在名单里的在招岗位 → 已下线。
   // 本次一个岗位都没提取到时不做判定（更可能是抓取失败而不是全部下线）。
-  if (list.length > 0) {
+  // 只是列表的一页（数据外采篮 / 人翻页逐页读，partial_page）也不判：别的页上的岗位不在这一页很正常——
+  // 百度翻页网址不变，10-16 入第 18–28 页时把前 17 页的岗位全关了。
+  if (list.length > 0 && !structuredJson?.partial_page) {
     const keep = new Set(keys);
     const stale: number[] = [];
     for (let from = 0; ; from += 1000) {
@@ -192,5 +194,27 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
     }
   }
 
+
+  // 这个网址实测出了岗位：信息源库里标成「校招职位列表」+ 核实通过（数据部门 10-16：表层招聘官网和真正的岗位列表页常常不是一个网址）
+  if (list.length && log.company_id) await markRealEntry(log.company_id, log.company || '', log.target_url, list.length).catch(e => console.error('[job-store] 标记信息源失败', e?.message || e));
   return list.length;
+}
+
+/** 实测出岗位的网址记进信息源库：有就改成职位列表 + 核实通过，没有就新建一条。数据部门给的「招聘官网」不动 */
+export async function markRealEntry(companyId: number, company: string, url: string, jobs: number) {
+  const health = { reason: `实测出岗位 ${jobs} 个（${new Date().toISOString().slice(0, 10)}）`, by: 'job-store' };
+  const now = new Date().toISOString();
+  const { data: rows } = await supabaseAdmin.from('url_sources').select('id, subtype, reasoning').eq('company_id', companyId).eq('url', url).limit(1);
+  const row = rows?.[0];
+  if (row) {
+    const keepPortal = /数据部门/.test(row.reasoning || '');   // 数据部门给的入口保留「校招官网」类型，只标核实通过
+    await supabaseAdmin.from('url_sources').update({ ...(keepPortal ? {} : { type: 'campus', subtype: 'list' }), verification_status: 'passed', health_status: 'alive', last_checked_at: now, url_health: health }).eq('id', row.id);
+  } else {
+    const name = company || (await supabaseAdmin.from('companies').select('name').eq('id', companyId).maybeSingle()).data?.name;
+    if (!name) return;
+    const fields = { verification_status: 'passed', health_status: 'alive', last_checked_at: now, url_health: health };
+    const { error } = await supabaseAdmin.from('url_sources').insert({ company: name, company_id: companyId, url, title: '实测出岗位的职位列表', type: 'campus', subtype: 'list', reasoning: '抓取时实测出岗位，自动记入', ...fields });
+    // 同名同网址已有一条（挂在别的 company_id 上）：改那条
+    if (error && /duplicate|unique/i.test(error.message)) await supabaseAdmin.from('url_sources').update({ company_id: companyId, ...fields }).eq('company', name).eq('url', url);
+  }
 }
