@@ -172,7 +172,7 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'application_rule', label: '投递规则', kind: 'string', group: 'link', hint: '投递规则：投递次数限制（如「仅限投递一个岗位」「最多 2 个志愿」）+ 投递渠道（如「只需投递到 xx@xx.com」「仅接受官网网申」），用一句中文写清；页面没说则为 null。' },
   { key: 'application_website', label: '投递入口', kind: 'url', group: 'link', hint: '投递 / Apply 按钮指向的完整 URL，没有则为 null。' },
   // ── 数据部门 10-14：来源 = 所属企业的名单批次；招聘渠道（原来的「来源」）单独一列；中英文字段由 scripts/fix-1014.mts --only job-lang 翻译回填（不进提取提示词） ──
-  { key: 'source', label: '来源', kind: 'string', group: 'link', derived: true, hint: '所属企业在数据部门名单里的批次：潜历一批 / 潜历二批 / ted / 其他（和企业的来源一致）。' },
+  { key: 'source', label: '来源', kind: 'string[]', group: 'link', derived: true, hint: '所属企业在数据部门名单里的批次：潜历一批 / 潜历二批 / ted / 其他（和企业的来源一致）。' },
   { key: 'recruit_channel', label: '招聘渠道', kind: 'enum', group: 'link', derived: true, options: JOB_SOURCE_LABELS, hint: '按岗位链接 / 来源页域名推出的招聘渠道。' },
   { key: 'name_lang_cn', label: '名称 (Cn)', kind: 'text', group: 'content', derived: true, hint: '名称（中文）。' },
   { key: 'name_lang_en', label: '名称 (En)', kind: 'text', group: 'content', derived: true, hint: '名称（英文）。' },

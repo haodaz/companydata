@@ -51,6 +51,9 @@ const csv = (rows: (string | number | null | undefined)[][]) => '﻿' + rows.map
 
 // ── ① 企业来源 + 平台 slug ──
 if (run('co-source')) {
+  const { toSources } = await import('../src/lib/source-tags');
+  const { data: probe } = await db.from('companies').select('source').not('source', 'is', null).limit(1);
+  const SOURCE_IS_ARRAY = Array.isArray(probe?.[0]?.source);
   const XLSX = await import('xlsx');
   const file = arg('--file') || `${os.homedir()}/Desktop/公司来源及slug.xlsx`;
   const wb = XLSX.read(fs.readFileSync(file));
@@ -96,17 +99,17 @@ if (run('co-source')) {
   }
 
   const RANK = ['潜历一批', '潜历二批', 'ted'];
-  type Plan = { id: number; name: string; batch: string; platforms: string[]; oldPlatforms: string[]; slug: string | null; slugFrom: string | null; how: string; oldSource: string | null; oldSlug: string | null; site: string | null };
+  type Plan = { id: number; name: string; batch: string; platforms: string[]; oldPlatforms: string[]; slug: string | null; slugFrom: string | null; how: string; oldSource: string; oldSlug: string | null; site: string | null };
   const plans: Plan[] = (cos as any[]).map(c => {
     const h = hits.get(c.id);
-    if (!h) return { id: c.id, name: c.name, batch: '其他', platforms: c.subscription_platform || [], oldPlatforms: c.subscription_platform || [], slug: null, slugFrom: null, how: '名单里没有', oldSource: c.source, oldSlug: c.external_id, site: c.official_website };
+    if (!h) return { id: c.id, name: c.name, batch: '其他', platforms: c.subscription_platform || [], oldPlatforms: c.subscription_platform || [], slug: null, slugFrom: null, how: '名单里没有', oldSource: toSources(c.source).join('，'), oldSlug: c.external_id, site: c.official_website };
     // 来源照名单原样保留组合（几行对到同一家就合起来），按 潜历一批 / 潜历二批 / ted 排序
     const bs = [...new Set(h.rows.flatMap(r => r.batch.split(/[，,、]/).map(x => x.trim()).filter(Boolean)))];
     const batch = bs.sort((a, b) => (RANK.indexOf(a) + 1 || 99) - (RANK.indexOf(b) + 1 || 99)).join('，') || '其他';
     const platforms = [...new Set(h.rows.flatMap(r => r.platforms))];
     // slug：优先全名一致的那一行，其次排在前面的批次
     const withSlug = h.rows.filter(r => r.slug).sort((a, b) => Number(flat(b.name) === flat(c.name)) - Number(flat(a.name) === flat(c.name)) || RANK.indexOf(a.batch) - RANK.indexOf(b.batch));
-    return { id: c.id, name: c.name, batch, platforms, oldPlatforms: c.subscription_platform || [], slug: withSlug[0]?.slug || null, slugFrom: withSlug[0]?.name || null, how: h.how, oldSource: c.source, oldSlug: c.external_id, site: c.official_website };
+    return { id: c.id, name: c.name, batch, platforms, oldPlatforms: c.subscription_platform || [], slug: withSlug[0]?.slug || null, slugFrom: withSlug[0]?.name || null, how: h.how, oldSource: toSources(c.source).join('，'), oldSlug: c.external_id, site: c.official_website };
   });
 
   // 两家抢同一个 slug：全名一致的那家拿，其余报疑似重复
@@ -140,7 +143,9 @@ if (run('co-source')) {
     // 来源
     for (const b of new Set(plans.map(p => p.batch))) {
       const ids = plans.filter(p => p.batch === b && p.oldSource !== b).map(p => p.id);
-      for (let i = 0; i < ids.length; i += 200) { const { error } = await db.from('companies').update({ source: b }).in('id', ids.slice(i, i + 200)); if (error) throw error; }
+      // 迁移 031 起来源是数组（多选）；还没跑迁移时写回字符串
+      const val = SOURCE_IS_ARRAY ? toSources(b) : b;
+      for (let i = 0; i < ids.length; i += 200) { const { error } = await db.from('companies').update({ source: val }).in('id', ids.slice(i, i + 200)); if (error) throw error; }
     }
     // 订阅平台
     for (const p of plans.filter(p => JSON.stringify([...p.platforms].sort()) !== JSON.stringify([...p.oldPlatforms].sort()))) {

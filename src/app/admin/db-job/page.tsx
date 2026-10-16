@@ -14,6 +14,7 @@ import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { SEGMENT_LABELS } from '@/lib/company-fields';
 import { BRAND } from '@/lib/theme';
 import { useModel } from '@/lib/model-context';
+import { sourcesText } from '@/lib/source-tags';
 
 const { Text } = Typography;
 
@@ -157,7 +158,7 @@ export default function DbJobPage() {
         { key: 'institute_or_company_name', header: '企业' },
         { key: 'company_ref.segment', header: '企业分类', formatter: v => SEGMENT_LABELS[v]?.label || '' },
         { key: 'company_ref.industry', header: '行业' },
-        { key: 'source', header: '来源' },
+        { key: 'source', header: '来源', formatter: (v: any) => sourcesText(v) },   // 多选，用 | 连
         { key: 'recruit_channel', header: '招聘渠道', formatter: v => (v && JOB_SOURCE_LABELS[v]) || v || '' },
         ...JOB_FIELDS.map(f => ({ key: f.key, header: f.label, formatter: (v: any) => formatJobValue(f.key, v) })),
         { key: 'status', header: '在招状态', formatter: v => JOB_STATUS[v]?.label || v || '' },

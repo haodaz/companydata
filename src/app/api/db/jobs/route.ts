@@ -4,6 +4,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { orIlike, pageParams } from '@/lib/pg-filter';
 import { requireDownload } from '@/lib/download-permission';
 import { trackDemand } from '@/lib/flywheel/signals';
+import { toSources } from '@/lib/source-tags';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -41,8 +42,9 @@ export async function GET(request: Request) {
     if (get('overseas') === '1') query = query.eq('accepts_overseas_students', true);
     if (get('companyId')) query = query.eq('company_id', parseInt(get('companyId')));
     // 来源 / 发布日期（数据部门 10-13）：source=none 看未标来源；发布日期按 official_publish_date（YYYY-MM-DD 文本，字典序即时间序）
-    if (get('source') === 'none') query = query.is('source', null);
-    else if (get('source')) query = query.eq('source', get('source'));
+    // 来源多选（迁移 031 起是数组）：none = 没有来源；选了某个来源 = 来源里包含它
+    if (get('source') === 'none') query = query.or('source.is.null,source.eq.{}');
+    else if (get('source')) query = query.contains('source', [get('source')]);
     if (get('publishFrom')) query = query.gte('official_publish_date', get('publishFrom'));
     if (get('publishTo')) query = query.lte('official_publish_date', get('publishTo'));
     if (get('publish') === 'none') query = query.is('official_publish_date', null);
@@ -65,7 +67,7 @@ export async function GET(request: Request) {
       const { data: all } = await selectAll(() => supabaseAdmin.from('jobs').select('job_type, status, remote_type, accepts_overseas_students, human_review_status, responsibilities, source, official_publish_date').not('if_delete', 'is', true).order('id'));
       for (const r of all || []) {
         stats.total++;
-        sources[r.source || 'none'] = (sources[r.source || 'none'] || 0) + 1;
+        const ss = toSources(r.source); for (const s of ss.length ? ss : ['none']) sources[s] = (sources[s] || 0) + 1;
         if (r.official_publish_date) stats.with_publish_date++;
         if (r.status === 'open') stats.open++;
         if (r.job_type && r.job_type in stats) stats[r.job_type]++;

@@ -11,6 +11,7 @@
 import { supabaseAdmin } from '@/lib/supabase';
 import { applyJobDefaults } from '@/lib/job-defaults';
 import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
+import { toSources } from '@/lib/source-tags';
 import { sanitizeJob, jobCompleteness, KIND_BY_JOB_TYPE, splitLocations, normCity, jobSourceOf } from '@/lib/job-fields';
 
 const normUrl = (u: string) => u.trim().toLowerCase().replace(/[#?].*$/, '').replace(/\/+$/, '');
@@ -59,7 +60,9 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
   if (logErr) throw logErr;
   // 来源 = 所属企业的名单批次（数据部门 10-14，和企业一致）；招聘渠道按链接推，单独一列
   const { data: co } = log.company_id ? await supabaseAdmin.from('companies').select('source').eq('id', log.company_id).maybeSingle() : { data: null as any };
-  const companySource: string = co?.source || '其他';
+  // 多选（迁移 031 起企业、岗位的来源都是数组）；迁移前库里还是字符串，按企业那边的类型写，两边一起迁移
+  const srcList = toSources(co?.source).length ? toSources(co?.source) : ['其他'];
+  const companySource: string[] | string = Array.isArray(co?.source) ? srcList : srcList.join('，');
 
   const now = new Date().toISOString();
   const rows = new Map<string, any>();

@@ -6,6 +6,7 @@ import { orIlike, pageParams } from '@/lib/pg-filter';
 import { COMPANY_EDITABLE_KEYS } from '@/lib/company-fields';
 import { trackDemand } from '@/lib/flywheel/signals';
 import { requireDownload } from '@/lib/download-permission';
+import { toSources } from '@/lib/source-tags';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -33,8 +34,9 @@ export async function GET(request: Request) {
       else if (segment) query = query.eq('segment', segment);
       if (industry) query = query.eq('industry', industry);
       // 来源（数据部门会按 slug 发来每家企业的来源）：none = 没标来源
-      if (source === 'none') query = query.is('source', null);
-      else if (source) query = query.eq('source', source);
+      // 来源多选（迁移 031 起是数组）
+      if (source === 'none') query = query.or('source.is.null,source.eq.{}');
+      else if (source) query = query.contains('source', [source]);
       return query;
     };
     if (exportAll) {
@@ -76,7 +78,7 @@ export async function GET(request: Request) {
       const { data: all } = await selectAll(() => supabaseAdmin.from('companies').select('segment, human_review_status, source').order('id'));
       for (const r of all || []) {
         stats.total++; const k = r.segment || 'none'; stats[k] = (stats[k] || 0) + 1; if (r.human_review_status === 'complete') stats.reviewed++;
-        const s = r.source || 'none'; sources[s] = (sources[s] || 0) + 1;
+        const ss = toSources(r.source); for (const s of ss.length ? ss : ['none']) sources[s] = (sources[s] || 0) + 1;
       }
     }
 
