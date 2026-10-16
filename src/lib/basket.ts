@@ -69,7 +69,7 @@ export async function ingestBasketPage(user: SessionPayload, p: BasketPage) {
   }
   // partial_page：篮子送来的只是一页，入库时不拿它判断别的岗位「已下线」
   const structured = { ...r, partial_page: true, pipeline_log: [{ key: 'basket', title: `数据外采篮 · ${user.email}`, status: 'success', color: 'green' }] };
-  await supabaseAdmin.from('job_crawl_logs').update({ structurer_status: 'success', structured_json: structured, jobs_extracted: r.jobs.length }).eq('id', log.id);
+  await supabaseAdmin.from('job_crawl_logs').update({ structurer_status: 'success', structured_json: structured }).eq('id', log.id);
   const saved = r.jobs.length ? await upsertJobsFromLog(log.id, structured) : 0;
   await supabaseAdmin.from('job_crawl_logs').update({ pushed_to_db: saved > 0, jobs_saved: saved }).eq('id', log.id);
 

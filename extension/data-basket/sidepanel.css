@@ -35,3 +35,4 @@ button:disabled { opacity: .5; cursor: default; }
 #log .ok { color: var(--ok); }
 #log .bad { color: var(--bad); }
 #log small { display: block; color: var(--ink2); }
+#log a.go { font-size: 12px; text-decoration: none; color: var(--brand); }

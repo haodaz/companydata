@@ -15,17 +15,18 @@ const WALLS = [
   { site: '中国太平', wall: '反爬保护', what: '直接请求返回 412，页面要先过一道人机校验。', human: '同事打开页面、过校验', got: '待采' },
 ];
 
-const STEPS_INSTALL = [
+type Step = { t: string; d: string; img?: string; img2?: string };
+const STEPS_INSTALL: Step[] = [
   { t: '下载插件', d: '点上面的「下载数据外采篮」，得到 data-basket.zip，双击解压，得到一个 data-basket 文件夹。' },
   { t: '打开扩展程序页', d: '在 Chrome 地址栏输入 chrome://extensions ，打开右上角的「开发者模式」。' },
-  { t: '加载插件', d: '点「加载已解压的扩展程序」，选中 data-basket 文件夹。工具栏上会出现一个橙色小篮子，把它固定在工具栏上更方便。' },
+  { t: '加载插件', d: '点「加载已解压的扩展程序」，选中 data-basket 文件夹。工具栏上会出现一个橙色小篮子，把它固定在工具栏上更方便。', img: '/basket/step-extensions.png' },
 ];
 
-const STEPS_USE = [
-  { t: '连接工厂', d: '在本页登录后点「生成篮子口令」，复制；点开插件的 ⚙︎，粘贴口令、保存，显示「连上了」就好。' },
-  { t: '选企业', d: '在插件里搜这一篮要采的企业（打开招聘站时插件会按网址先猜一个）。' },
+const STEPS_USE: Step[] = [
+  { t: '连接工厂', d: '在本页登录后点「生成篮子口令」，复制；点开插件的 ⚙︎，平台地址填 https://www.aidataoffice.com，粘贴口令、保存，显示「连上了」就好。口令在哪个平台生成，平台地址就填哪个。', img: '/basket/step-token.png', img2: '/basket/step-connect.png' },
+  { t: '选企业', d: '在插件里搜这一篮要采的企业。打开招聘站时插件会按网址先猜几家，已有岗位最多的排最前；同一个招聘站在名单里常对应好几家（比如百度公司 / 百度（中国）/ 网讯），选岗位一直挂着的那家。', img: '/basket/step-pick.png' },
   { t: '你来打开、翻页', d: '打开招聘站，该登录登录、该过验证过验证，翻到职位列表。打开「跟着我翻页」，之后你每翻一页、每点开一个详情，篮子自动读一次。' },
-  { t: '看收获', d: '侧边栏实时显示每一篮提炼了几个岗位、入了多少库。岗位以「待审核」进岗位库，带「数据外采篮」「仅列表信息 / 详情已补」标记，信息源库同时记下真实的职位列表页。' },
+  { t: '看收获', d: '侧边栏实时显示每一篮提炼了几个岗位、入了多少库，点「去岗位库看 ↗」直接跳到这家企业的岗位。岗位以「待审核」进岗位库，带「数据外采篮」「仅列表信息 / 详情已补」标记（岗位库可按「采集标记」筛选），信息源库同时记下真实的职位列表页。', img: '/basket/step-follow.png' },
 ];
 
 export default function BasketPage() {
@@ -122,9 +123,9 @@ export default function BasketPage() {
 
       <section id="how" className="bk-wrap bk-sec">
         <h2>三步装好</h2>
-        <ol className="bk-steps">{STEPS_INSTALL.map((s, i) => <li key={i}><b>{s.t}</b><span>{s.d}</span></li>)}</ol>
+        <ol className="bk-steps">{STEPS_INSTALL.map((s, i) => <li key={i}><b>{s.t}</b><span>{s.d}</span>{(s.img || s.img2) && <div className="bk-shots">{s.img && <img src={s.img} alt={s.t} />}{s.img2 && <img src={s.img2} alt={s.t} />}</div>}</li>)}</ol>
         <h2 style={{ marginTop: 28 }}>四步采完</h2>
-        <ol className="bk-steps">{STEPS_USE.map((s, i) => <li key={i}><b>{s.t}</b><span>{s.d}</span></li>)}</ol>
+        <ol className="bk-steps">{STEPS_USE.map((s, i) => <li key={i}><b>{s.t}</b><span>{s.d}</span>{(s.img || s.img2) && <div className="bk-shots">{s.img && <img src={s.img} alt={s.t} />}{s.img2 && <img src={s.img2} alt={s.t} />}</div>}</li>)}</ol>
       </section>
 
       <section className="bk-wrap bk-sec">
@@ -201,6 +202,8 @@ const CSS = `
 .bk-steps li { counter-increment:s; display:grid; grid-template-columns:36px 1fr; column-gap:12px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px; }
 .bk-steps li::before { content:counter(s); grid-row:span 2; width:30px; height:30px; border-radius:50%; background:var(--soft); color:var(--brand); font-weight:800; display:flex; align-items:center; justify-content:center; }
 .bk-steps span { color:var(--ink2); font-size:13.5px; line-height:1.8; }
+.bk-shots { grid-column:2; display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; align-items:flex-start; }
+.bk-shots img { max-width:100%; max-height:420px; border:1px solid var(--line); border-radius:10px; box-shadow:0 4px 18px rgba(0,0,0,.06); background:#fff; }
 .bk-token { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
 .bk-token textarea { flex:1 1 100%; font-family:ui-monospace,monospace; font-size:11px; padding:8px; border:1px solid var(--line); border-radius:10px; }
 .bk-muted { color:var(--ink3); font-size:13px; font-weight:400; }

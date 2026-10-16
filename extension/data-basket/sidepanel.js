@@ -14,7 +14,7 @@ async function load() {
   $('base').value = state.base; $('token').value = state.token;
   if (!state.token) $('settings').classList.remove('hidden');
   renderPicked(); renderStats();
-  for (const li of (s.log || []).slice(0, 30)) addLog(li, false);
+  for (const li of (s.log || []).slice(0, 30).reverse()) addLog(li, false);   // 存的是新的在前，逐条 prepend 要倒着来
   refreshPageInfo();
 }
 
@@ -66,7 +66,7 @@ function renderResults(list, title = '') {
   if (!list.length) { box.innerHTML += '<div class="muted small">没搜到，换个叫法试试（简称 / 工商名）</div>'; return; }
   for (const c of list) {
     const d = document.createElement('div'); d.className = 'item';
-    d.innerHTML = `<b></b><small></small>`; d.querySelector('b').textContent = c.name; d.querySelector('small').textContent = c.entry || '';
+    d.innerHTML = `<b></b><small></small>`; d.querySelector('b').textContent = c.name + (c.jobs ? `（已有 ${c.jobs} 个岗位）` : ''); d.querySelector('small').textContent = c.entry || '';
     d.onclick = async () => { state.company = { id: c.id, name: c.name }; await chrome.storage.local.set({ company: state.company }); renderPicked(); box.innerHTML = ''; };
     box.appendChild(d);
   }
@@ -74,7 +74,9 @@ function renderResults(list, title = '') {
 
 function addLog(item, save = true) {
   const li = document.createElement('li');
-  li.innerHTML = `<span class="${item.ok ? 'ok' : 'bad'}"></span><small></small>`;
+  li.innerHTML = `<span class="${item.ok ? 'ok' : 'bad'}"></span><small></small>${item.ok && item.companyId ? '<a class="go" target="_blank">去岗位库看 ↗</a>' : ''}`;
+  const go = li.querySelector('a.go');
+  if (go) go.href = `${state.base.replace(/\/$/, '')}/admin/db-job?companyId=${item.companyId}&companyName=${encodeURIComponent(item.company)}&jobType=all${item.kind === 'detail' ? '&flag=%E8%AF%A6%E6%83%85%E5%B7%B2%E8%A1%A5' : ''}`;
   li.querySelector('span').textContent = item.ok ? `✓ ${item.company}：提炼 ${item.jobs} 个，入库 ${item.saved}${item.kind === 'detail' ? '（详情）' : ''}` : `✗ ${item.error}`;
   li.querySelector('small').textContent = `${item.time} · ${item.title || ''}`;
   $('log').prepend(li);
@@ -93,7 +95,7 @@ async function putInBasket(reason) {
   try {
     const r = await api('/api/basket/page', { method: 'POST', body: JSON.stringify({ companyId: state.company.id, ...snap, kind: 'auto' }) });
     state.pages++; state.jobs += r.jobs; renderStats(); chrome.storage.local.set({ pages: state.pages, jobs: state.jobs });
-    addLog({ ok: true, company: r.company, jobs: r.jobs, saved: r.saved, kind: r.kind, title: snap.title, time: new Date().toLocaleTimeString() });
+    addLog({ ok: true, company: r.company, companyId: state.company.id, jobs: r.jobs, saved: r.saved, kind: r.kind, title: snap.title, time: new Date().toLocaleTimeString() });
   } catch (e) {
     addLog({ ok: false, error: e.message, title: snap.title, time: new Date().toLocaleTimeString() });
   } finally {

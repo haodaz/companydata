@@ -34,7 +34,7 @@ export default function DbJobPage() {
   const [pageSize, setPageSize] = useState(50);
   const [selected, setSelected] = useState<React.Key[]>([]);
   const [exporting, setExporting] = useState(false);
-  const [filters, setFilters] = useState({ search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false, missingJd: false, companyId: '', companyName: '', source: '', publishFrom: '', publishTo: '' });
+  const [filters, setFilters] = useState({ search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false, missingJd: false, companyId: '', companyName: '', source: '', flag: '', publishFrom: '', publishTo: '' });
   const [sources, setSources] = useState<Record<string, number>>({});
   // 从「校招岗位提取」任务跳过来：?companyId=&companyName=&jobType=all 直接定位到刚提取的那批。
   // 以前跳过来是默认的「校招口径」，社招岗位被默认筛掉，看起来像「提取成功了库里却没有」。
@@ -49,7 +49,7 @@ export default function DbJobPage() {
       jobType: jt === 'all' ? '' : (jt ?? f.jobType),
       season: u.get('season') || '', remote: u.get('remote') || '', status: u.get('status') || '', review: u.get('review') || '',
       overseas: u.get('overseas') === '1', missingJd: u.get('missingJd') === '1',
-      source: u.get('source') || '', publishFrom: u.get('publishFrom') || '', publishTo: u.get('publishTo') || '',
+      source: u.get('source') || '', flag: u.get('flag') || '', publishFrom: u.get('publishFrom') || '', publishTo: u.get('publishTo') || '',
     }));
     const p = parseInt(u.get('page') || ''), ps = parseInt(u.get('pageSize') || '');
     if (p > 0) setPage(p);
@@ -65,7 +65,7 @@ export default function DbJobPage() {
     put('search', filters.search); put('jobType', filters.jobType === CAMPUS_JOB_TYPES.join(',') ? '' : (filters.jobType || 'all'));
     put('season', filters.season); put('remote', filters.remote); put('status', filters.status); put('review', filters.review);
     put('overseas', filters.overseas); put('missingJd', filters.missingJd); put('companyId', filters.companyId); put('companyName', filters.companyName);
-    put('source', filters.source); put('publishFrom', filters.publishFrom); put('publishTo', filters.publishTo);
+    put('source', filters.source); put('flag', filters.flag); put('publishFrom', filters.publishFrom); put('publishTo', filters.publishTo);
     if (page > 1) q.set('page', String(page));
     if (pageSize !== 50) q.set('pageSize', String(pageSize));
     const s = q.toString();
@@ -75,7 +75,7 @@ export default function DbJobPage() {
   const query = useCallback((extra: Record<string, string> = {}) => new URLSearchParams({
     search: filters.search, jobType: filters.jobType, season: filters.season, remote: filters.remote,
     status: filters.status, review: filters.review, overseas: filters.overseas ? '1' : '', missingJd: filters.missingJd ? '1' : '', companyId: filters.companyId,
-    source: filters.source, publishFrom: filters.publishFrom, publishTo: filters.publishTo, ...extra,
+    source: filters.source, flag: filters.flag, publishFrom: filters.publishFrom, publishTo: filters.publishTo, ...extra,
   }), [filters]);
 
   const load = useCallback(async () => {
@@ -242,6 +242,8 @@ export default function DbJobPage() {
           <Select value={filters.remote} style={{ width: 130 }} onChange={v => setFilter({ remote: v })} options={[{ value: '', label: '全部办公方式' }, ...toOptions(REMOTE_TYPE_LABELS)]} />
           <Select value={filters.status} style={{ width: 110 }} onChange={v => setFilter({ status: v })} options={[{ value: '', label: '全部状态' }, ...Object.entries(JOB_STATUS).map(([value, m]) => ({ value, label: m.label }))]} />
           <Select value={filters.review} style={{ width: 120 }} onChange={v => setFilter({ review: v })} options={[{ value: '', label: '全部审核' }, { value: 'none', label: '未审核' }, ...REVIEW_STATUS_OPTIONS]} />
+          <Select value={filters.flag} style={{ width: 150 }} onChange={v => setFilter({ flag: v })} popupMatchSelectWidth={false}
+            options={[{ value: '', label: '全部采集标记' }, ...['数据外采篮', '仅列表信息', '详情已补', '重点岗位', '支持内推码'].map(f => ({ value: f, label: f }))]} />
           <Select value={filters.source} style={{ width: 160 }} onChange={v => setFilter({ source: v })} popupMatchSelectWidth={false}
             options={[{ value: '', label: '全部来源' }, ...Object.entries(sources).filter(([k]) => k !== 'none').sort((a, b) => b[1] - a[1]).map(([k, n]) => ({ value: k, label: `${JOB_SOURCE_LABELS[k] || k}（${n}）` })),
               ...(sources.none ? [{ value: 'none', label: `未标来源（${sources.none}）` }] : [])]} />
