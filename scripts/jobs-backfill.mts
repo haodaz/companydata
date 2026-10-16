@@ -4,6 +4,7 @@
  *
  *   npx tsx scripts/jobs-backfill.mts --names 名单.txt            # 一行一个企业名（「全称；简称」也行）
  *   npx tsx scripts/jobs-backfill.mts --ids 1361,1571 --detail 15 --par 2 --limit 3
+ *   npx tsx scripts/jobs-backfill.mts --entries 招聘官网.tsv --force --model qwen-plus   # 指定入口先抓，已有岗位的也重抓
  *
  * 每家：库里已有校招信息源就复用，没有就用千问寻源并入库；按「列表页 > 应届 / 实习 > 专项 > 校招首页」挑入口，
  * 一个入口抓不到或 0 个岗位就换下一个（最多 3 个）；都不行就从企业官网顺着「加入我们 / 招聘」找入口（recruit-discover）；
@@ -54,6 +55,10 @@ for (let page = 1; ; page++) {
 const targets = new Map<number, any>();
 const missing: string[] = [];
 if (opt('ids')) for (const id of opt('ids').split(',').map(Number)) { const c = cos.find(x => x.id === id); if (c) targets.set(id, c); }
+// --entries 文件（每行「企业 id<TAB>网址」，如数据部门给的招聘官网）：这些企业先用指定入口抓
+const ENTRY = new Map<number, string>();
+if (opt('entries')) for (const l of fs.readFileSync(opt('entries'), 'utf8').trim().split('\n')) { const [id, url] = l.split('\t'); if (Number(id) && /^https?:/.test(url || '')) { ENTRY.set(Number(id), url.trim()); const c = cos.find(x => x.id === Number(id)); if (c) targets.set(c.id, c); } }
+const FORCE = argv.includes('--force');   // 已有岗位的也跑（按新入口重新抓）
 if (opt('names')) {
   for (const line of fs.readFileSync(opt('names'), 'utf8').split('\n').map(s => s.trim()).filter(Boolean)) {
     const keys = line.split(/[；;]/).map(flat).filter(Boolean);
@@ -69,7 +74,7 @@ if (opt('names')) {
 }
 // 断点续跑：--out 里已经跑过的企业（包括 0 个的）跳过
 const doneIds = new Set(fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8').split('\n').slice(1).map(l => Number(l.split('\t')[0])).filter(Boolean) : []);
-let list = [...targets.values()].filter(c => !(c.counts?.jobs_total > 0) && !doneIds.has(c.id));
+let list = [...targets.values()].filter(c => (FORCE || !(c.counts?.jobs_total > 0)) && !doneIds.has(c.id));
 if (LIMIT) list = list.slice(0, LIMIT);
 console.log(`目标 ${targets.size} 家，其中 0 岗位 ${list.length} 家；建档失败 ${missing.length}：${missing.join('、')}`);
 if (!list.length) process.exit(0);
@@ -88,6 +93,9 @@ async function one(c: any) {
     urls = ex.ok ? ex.data : [];
     if (!urls.length) urls = await P.findAndSaveCampusUrls({ id: c.id, name: c.name } as any, MODEL, { report: false });   // 批量不写寻源报告，省 token
     const ranked = P.pickUrlsToExtract(urls, 3);
+    // 指定入口排第一个
+    const given = ENTRY.get(c.id);
+    if (given) { const i = ranked.findIndex((u: any) => u.url.replace(/\/$/, '') === given.replace(/\/$/, '')); if (i >= 0) ranked.splice(i, 1); ranked.unshift({ url: given }); }
     const tried_ = new Set<string>();
     const tryUrl = async (url: string) => {
       if (tried_.has(url)) return 0;

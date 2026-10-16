@@ -51,11 +51,40 @@ export function normalizeSkillTags(v: string | null | undefined): string | null 
   return parts.length ? parts.join('；') : null;
 }
 
+/**
+ * 中英文字段（*_lang_cn / *_lang_en）对应哪个原文字段——按数据部门 10-16《查企业、岗位反馈》的对照表。
+ * schedule（流程/日程安排）对方有、我们没有对应的原文字段，先不填。
+ */
+export const LANG_SOURCE: Record<string, string> = {
+  name: 'name', description: 'summary_cn', overview: 'overview', process: 'application_website',
+  organizer: 'organizer', responsibilities: 'responsibilities', welfare: 'welfare', address: 'address',
+};
+export const isZhText = (s: string) => (s.match(/[一-鿿]/g) || []).length >= Math.max(1, s.replace(/\s/g, '').length * 0.15);
+
+/**
+ * 按对照表放中英文字段：原文是中文放 (Cn)，英文放 (En)；网址不分语言，两边都放。
+ * 只补空的，已有的（人工改过 / 以前翻译过的）不覆盖，除非 overwrite（数据部门改了对照，旧值是按旧对照放的）。
+ */
+export function applyLangFields(job: Record<string, any>, opts: { overwrite?: string[] } = {}) {
+  const patch: Record<string, string> = {};
+  for (const [k, src] of Object.entries(LANG_SOURCE)) {
+    const v = String(job[src] ?? '').trim();
+    if (!v) continue;
+    const slots = /^https?:\/\//i.test(v) ? ['cn', 'en'] : [isZhText(v) ? 'cn' : 'en'];
+    for (const l of slots) {
+      const key = `${k}_lang_${l}`;
+      if (!job[key] || opts.overwrite?.includes(k)) { if (job[key] !== v) patch[key] = v; job[key] = v; }
+    }
+  }
+  return patch;
+}
+
 /** 入库前补默认值。company 是这个岗位所属企业的名字 */
 export function applyJobDefaults(job: Record<string, any>, company?: string | null) {
   if (!job.organizer && company) job.organizer = company;
   if (!(Array.isArray(job.grade) && job.grade.length)) { const g = gradeFromEducation(job.education_description); if (g) job.grade = g; }
   if (!job.address && job.location) job.address = job.location;
   if (job.skill_labels_jd) job.skill_labels_jd = normalizeSkillTags(job.skill_labels_jd);
+  applyLangFields(job);   // 中英文字段按对照表放好（数据部门 10-16）
   return job;
 }
