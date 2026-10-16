@@ -195,6 +195,9 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
   }
 
 
+  // 同一个岗位编号、同一城市在这家企业下有两条（列表行按编号去重、详情页按链接去重，键不一样）：并成一条
+  if (list.length && log.company_id) await mergeSameReqId(log.company_id).catch(e => console.error('[job-store] 同编号合并失败', e?.message || e));
+
   // 这个网址实测出了岗位：信息源库里标成「校招职位列表」+ 核实通过（数据部门 10-16：表层招聘官网和真正的岗位列表页常常不是一个网址）
   if (list.length && log.company_id) await markRealEntry(log.company_id, log.company || '', log.target_url, list.length).catch(e => console.error('[job-store] 标记信息源失败', e?.message || e));
   return list.length;
@@ -217,4 +220,38 @@ export async function markRealEntry(companyId: number, company: string, url: str
     // 同名同网址已有一条（挂在别的 company_id 上）：改那条
     if (error && /duplicate|unique/i.test(error.message)) await supabaseAdmin.from('url_sources').update({ company_id: companyId, ...fields }).eq('company', name).eq('url', url);
   }
+}
+
+/**
+ * 同一家企业里「岗位编号 + 城市」相同的在招岗位只留一条：留内容最全的（职责最长），另一条有而它没有的字段补过来，另一条软删。
+ * 起因：百度列表页的岗位行没有独立链接，按「企业|编号|城市」去重；点开详情页读到的同一个岗位有链接，按链接去重——成了两条（10-16）。
+ */
+export async function mergeSameReqId(companyId: number) {
+  const { data } = await supabaseAdmin.from('jobs').select('*').eq('company_id', companyId).not('if_delete', 'is', true).not('job_req_id', 'is', null).neq('job_req_id', '');
+  const groups = new Map<string, any[]>();
+  // 编号要像个编号（带数字、至少 3 位）：「暂无」「-」这类占位不能拿来合并
+  for (const j of (data || []).filter(j => /\d/.test(String(j.job_req_id)) && String(j.job_req_id).trim().length >= 3)) { const k = `${String(j.job_req_id).trim().toLowerCase()}|${String(j.location || '').trim()}`; groups.set(k, [...(groups.get(k) || []), j]); }
+  const SKIP = new Set(['id', 'company_id', 'dedupe_key', 'created_at', 'updated_at', 'if_delete', 'human_review_status', 'human_review_at', 'human_locked_fields', 'source_log_id']);
+  let merged = 0;
+  for (const g of groups.values()) {
+    if (g.length < 2) continue;
+    g.sort((x, y) => String(y.responsibilities || '').length - String(x.responsibilities || '').length);
+    const [keep, ...rest] = g;
+    const patch: Record<string, any> = {};
+    for (const r of rest) for (const [k, v] of Object.entries(r)) {
+      if (SKIP.has(k) || v == null || v === '' || (Array.isArray(v) && !v.length)) continue;
+      const cur = (patch[k] ?? keep[k]);
+      if (cur == null || cur === '' || (Array.isArray(cur) && !cur.length)) patch[k] = v;
+    }
+    const flags = new Set<string>([...(keep.collect_flags || []), ...rest.flatMap(r => r.collect_flags || [])]);
+    if (flags.has('详情已补')) flags.delete('仅列表信息');
+    patch.collect_flags = [...flags];
+    // 名称取更完整的那个（列表行常带城市前缀「北京-」）
+    const longest = g.map(x => String(x.name || '')).sort((a, b) => b.length - a.length)[0];
+    if (longest && longest !== keep.name) patch.name = longest;
+    await supabaseAdmin.from('jobs').update(patch).eq('id', keep.id);
+    await supabaseAdmin.from('jobs').update({ if_delete: true, updated_at: new Date().toISOString() }).in('id', rest.map(r => r.id));
+    merged += rest.length;
+  }
+  return merged;
 }
