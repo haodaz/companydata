@@ -38,7 +38,8 @@ async function panel(name, store, after) {
     const mem = { ...store };
     window.chrome = {
       storage: { local: { get: async () => mem, set: async (o) => Object.assign(mem, o) } },
-      tabs: { query: async () => [{ id: 1, title: '百度校园招聘', url: 'https://talent.baidu.com/jobs/list?search=&recruitType=INTERN' }] },
+      tabs: { query: async () => [{ id: 1, title: '百度校园招聘', url: 'https://talent.baidu.com/jobs/list?search=&recruitType=INTERN' }], onRemoved: { addListener() {} } },
+      action: { setBadgeText: async () => {}, setBadgeBackgroundColor: async () => {} },
       scripting: { executeScript: async () => [{ result: { url: 'https://talent.baidu.com/jobs/list', title: '百度校园招聘', text: 'x', links: [] } }] },
     };
     window.fetch = async (u) => new Response(JSON.stringify(String(u).includes('companies') ? { ok: true, data: [{ id: 1350, name: '百度公司', entry: 'https://talent.baidu.com/jobs/list?recruitType=GRADUATE' }] } : { ok: true }), { headers: { 'Content-Type': 'application/json' } });
@@ -51,7 +52,7 @@ async function panel(name, store, after) {
 }
 await panel('step-connect', {}, async p => { await p.evaluate(() => { document.getElementById('settings').classList.remove('hidden'); document.getElementById('base').value = 'https://www.aidataoffice.com'; document.getElementById('token').value = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6Ij…（粘贴你的篮子口令）'; document.getElementById('settingsMsg').textContent = '✓ 连上了'; }); });
 await panel('step-pick', { base: 'https://www.aidataoffice.com', token: 't' }, async p => { await p.type('#q', '百度'); await p.click('#search'); await new Promise(r => setTimeout(r, 400)); });
-await panel('step-follow', { base: 'https://www.aidataoffice.com', token: 't', company: { id: 1350, name: '百度公司' }, pages: 4, jobs: 31, log: RESULTS }, async p => { await p.click('#follow'); });
+await panel('step-follow', { base: 'https://www.aidataoffice.com', token: 't', company: { id: 1350, name: '百度公司' }, pages: 4, jobs: 31, log: RESULTS }, async p => { await p.click('#startStop'); await p.evaluate(() => { window.__fakeSession = true; }); });
 
 // ── ③ 平台上生成篮子口令 ──
 {

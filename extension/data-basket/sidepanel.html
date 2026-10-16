@@ -31,10 +31,13 @@
     <div class="row">
       <button id="once">放进篮子（读这一页）</button>
     </div>
-    <div class="row">
-      <label class="switch"><input type="checkbox" id="follow" /> <span>跟着我翻页：页面一变就自动读</span></label>
+    <div id="session" class="session hidden">
+      <div class="rec"><span class="dot"></span>正在采集 <b id="sessHost"></b></div>
+      <div class="muted small" id="sessInfo"></div>
     </div>
-    <p class="hint">篮子<b>只读</b>你屏幕上已经显示的文字，不点按钮、不翻页、不绕验证码。要登录、要过「我是人类」、要点开详情，都由你来。</p>
+    <div class="row"><button id="startStop" class="start">▶ 开始采集（只采这个网站）</button></div>
+    <p class="muted small">开始后只读这个网站的页面（含从它点开的详情）；切到邮件、聊天等别的网站一律不读。15 分钟没有新页面、或关掉这个标签，会自动结束。</p>
+    <p class="hint">篮子<b>只读</b>你屏幕上已经显示的文字，不点按钮、不翻页、不绕验证码。要登录、要过「我是人类」、要点开详情，都由你来。<b>没点「开始采集」时，篮子什么都不读。</b></p>
   </section>
 
   <section class="card">

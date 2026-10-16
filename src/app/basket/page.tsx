@@ -25,7 +25,7 @@ const STEPS_INSTALL: Step[] = [
 const STEPS_USE: Step[] = [
   { t: '连接工厂', d: '在本页登录后点「生成篮子口令」，复制；点开插件的 ⚙︎，平台地址填 https://www.aidataoffice.com，粘贴口令、保存，显示「连上了」就好。口令在哪个平台生成，平台地址就填哪个。', img: '/basket/step-token.png', img2: '/basket/step-connect.png' },
   { t: '选企业', d: '在插件里搜这一篮要采的企业。打开招聘站时插件会按网址先猜几家，已有岗位最多的排最前；同一个招聘站在名单里常对应好几家（比如百度公司 / 百度（中国）/ 网讯），选岗位一直挂着的那家。', img: '/basket/step-pick.png' },
-  { t: '你来打开、翻页', d: '打开招聘站，该登录登录、该过验证过验证，翻到职位列表。打开「跟着我翻页」，之后你每翻一页、每点开一个详情，篮子自动读一次。' },
+  { t: '开始采集，你来翻页', d: '打开招聘站，该登录登录、该过验证过验证，翻到职位列表，点插件里的「▶ 开始采集」。之后你每翻一页、每点开一个详情，篮子自动读一次——只读这个网站，切到邮件、聊天等别的网站一律不读；工具栏的篮子上会亮红色「采」字。采完点「■ 结束采集」（15 分钟没新页面、或关掉这个标签也会自动结束）。只想读一页，就点「放进篮子」。' },
   { t: '看收获', d: '侧边栏实时显示每一篮提炼了几个岗位、入了多少库，点「去岗位库看 ↗」直接跳到这家企业的岗位。岗位以「待审核」进岗位库，带「数据外采篮」「仅列表信息 / 详情已补」标记（岗位库可按「采集标记」筛选），信息源库同时记下真实的职位列表页。', img: '/basket/step-follow.png' },
 ];
 
@@ -114,6 +114,7 @@ export default function BasketPage() {
       <section className="bk-wrap bk-sec">
         <h2>篮子的规矩</h2>
         <div className="bk-rules">
+          <div><b>人说开始才开始</b><span>没点「开始采集」时篮子什么都不读；开始后也只读那一个网站，切走就不读</span></div>
           <div><b>只读不点</b><span>不点按钮、不翻页、不填表——这些都是人做的</span></div>
           <div><b>不碰验证码</b><span>验证、登录永远由人完成，篮子不绕任何拦截</span></div>
           <div><b>不伪装、不并发</b><span>人看一页，篮子读一页，节奏就是人的节奏</span></div>
@@ -194,7 +195,7 @@ const CSS = `
 .bk-nums b { display:block; font-size:32px; color:var(--brand); }
 .bk-nums span { color:var(--ink2); font-size:13px; }
 .bk-note { color:var(--ink2); font-size:14px; background:var(--soft); border-radius:12px; padding:10px 14px; display:inline-block; }
-.bk-rules { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
+.bk-rules { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; }
 .bk-rules div { background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px; }
 .bk-rules b { display:block; margin-bottom:4px; }
 .bk-rules span { color:var(--ink2); font-size:13px; }

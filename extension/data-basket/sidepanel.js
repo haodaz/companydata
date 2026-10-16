@@ -1,7 +1,11 @@
 // 数据外采篮 · 侧边栏
 // 规矩：只读当前标签页上已经显示的文字和链接，不点击、不翻页、不填表、不碰验证码。翻页、登录、点开详情都由人来做。
 const $ = id => document.getElementById(id);
-const state = { base: '', token: '', company: null, follow: false, lastHash: '', sending: false, pages: 0, jobs: 0 };
+const state = { base: '', token: '', company: null, session: null, lastHash: '', sending: false, pages: 0, jobs: 0 };
+// 采集会话：人点「开始采集」才开始，只采开始时那个网站（主域名），15 分钟没新页面 / 关掉起始标签自动结束
+const IDLE_MS = 15 * 60 * 1000;
+const baseDomain = host => { const p = host.replace(/^www\./, '').split('.'); const two = p.length >= 3 && /^(com|net|org|gov|edu|co)$/.test(p[p.length - 2]); return p.slice(two ? -3 : -2).join('.'); };
+const inSession = url => { try { return !!state.session && baseDomain(new URL(url).hostname) === state.session.domain; } catch { return false; } };
 
 const hash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return String(h); };
 
@@ -44,9 +48,10 @@ function readPage() {
   };
 }
 
-async function snapshot() {
+async function snapshot(onlySession = false) {
   const t = await activeTab();
   if (!t || !/^https?:/.test(t.url || '')) return null;
+  if (onlySession && !inSession(t.url)) return null;   // 不是这次采集的网站：一个字都不读
   const [res] = await chrome.scripting.executeScript({ target: { tabId: t.id }, func: readPage });
   return res && res.result;
 }
@@ -77,7 +82,7 @@ function addLog(item, save = true) {
   li.innerHTML = `<span class="${item.ok ? 'ok' : 'bad'}"></span><small></small>${item.ok && item.companyId ? '<a class="go" target="_blank">去岗位库看 ↗</a>' : ''}`;
   const go = li.querySelector('a.go');
   if (go) go.href = `${state.base.replace(/\/$/, '')}/admin/db-job?companyId=${item.companyId}&companyName=${encodeURIComponent(item.company)}&jobType=all${item.kind === 'detail' ? '&flag=%E8%AF%A6%E6%83%85%E5%B7%B2%E8%A1%A5' : ''}`;
-  li.querySelector('span').textContent = item.ok ? `✓ ${item.company}：提炼 ${item.jobs} 个，入库 ${item.saved}${item.kind === 'detail' ? '（详情）' : ''}` : `✗ ${item.error}`;
+  li.querySelector('span').textContent = item.note ? '■ 采集结束' : item.ok ? `✓ ${item.company}：提炼 ${item.jobs} 个，入库 ${item.saved}${item.kind === 'detail' ? '（详情）' : ''}` : `✗ ${item.error}`;
   li.querySelector('small').textContent = `${item.time} · ${item.title || ''}`;
   $('log').prepend(li);
   if (save) chrome.storage.local.get('log').then(s => chrome.storage.local.set({ log: [item, ...(s.log || [])].slice(0, 100) }));
@@ -87,14 +92,15 @@ async function putInBasket(reason) {
   if (state.sending) return;
   if (!state.token) { $('settings').classList.remove('hidden'); $('settingsMsg').textContent = '先填篮子口令'; return; }
   if (!state.company) { $('picked').textContent = '先选这一篮是哪家企业'; return; }
-  const snap = await snapshot().catch(e => ({ error: e.message }));
+  const snap = await snapshot(reason === 'follow').catch(e => ({ error: e.message }));
+  if (!snap && reason === 'follow') return;   // 这一瞬间切到了别的网站：不读
   if (!snap || snap.error) { addLog({ ok: false, error: `读不到这一页：${snap?.error || '不是网页'}`, time: new Date().toLocaleTimeString() }); return; }
   const h = hash(snap.text);
   if (reason === 'follow' && h === state.lastHash) return;
   state.lastHash = h; state.sending = true; $('once').disabled = true; $('once').textContent = '篮子正在交给工厂…';
   try {
     const r = await api('/api/basket/page', { method: 'POST', body: JSON.stringify({ companyId: state.company.id, ...snap, kind: 'auto' }) });
-    state.pages++; state.jobs += r.jobs; renderStats(); chrome.storage.local.set({ pages: state.pages, jobs: state.jobs });
+    state.pages++; state.jobs += r.jobs; if (state.session) state.session.pages++; renderStats(); chrome.storage.local.set({ pages: state.pages, jobs: state.jobs });
     addLog({ ok: true, company: r.company, companyId: state.company.id, jobs: r.jobs, saved: r.saved, kind: r.kind, title: snap.title, time: new Date().toLocaleTimeString() });
   } catch (e) {
     addLog({ ok: false, error: e.message, title: snap.title, time: new Date().toLocaleTimeString() });
@@ -107,12 +113,14 @@ async function putInBasket(reason) {
 let prev = '', stableTicks = 0;
 setInterval(async () => {
   refreshPageInfo();
-  if (!state.follow || state.sending) return;
-  const snap = await snapshot().catch(() => null);
+  renderSession();
+  if (!state.session || state.sending) return;
+  if (Date.now() - state.session.lastAt > IDLE_MS) { stopSession('15 分钟没有新页面，自动结束'); return; }
+  const snap = await snapshot(true).catch(() => null);
   if (!snap) return;
   const h = hash(snap.text);
   if (h === prev) stableTicks++; else { prev = h; stableTicks = 0; }
-  if (stableTicks === 1 && h !== state.lastHash) putInBasket('follow');
+  if (stableTicks === 1 && h !== state.lastHash) { state.session.lastAt = Date.now(); putInBasket('follow'); }
 }, 2000);
 
 $('toggleSettings').onclick = () => $('settings').classList.toggle('hidden');
@@ -125,6 +133,34 @@ $('saveSettings').onclick = async () => {
 $('search').onclick = async () => { try { const j = await api(`/api/basket/companies?q=${encodeURIComponent($('q').value.trim())}`); renderResults(j.data); } catch (e) { renderResults([], e.message); } };
 $('q').addEventListener('keydown', e => { if (e.key === 'Enter') $('search').click(); });
 $('once').onclick = () => putInBasket('once');
-$('follow').onchange = e => { state.follow = e.target.checked; state.lastHash = ''; };
+
+function renderSession() {
+  const on = !!state.session;
+  $('session').classList.toggle('hidden', !on);
+  $('startStop').className = on ? 'stop' : 'start';
+  $('startStop').textContent = on ? '■ 结束采集' : '▶ 开始采集（只采这个网站）';
+  if (on) { $('sessHost').textContent = state.session.domain; $('sessInfo').textContent = `已采 ${state.session.pages} 页 · 开始于 ${new Date(state.session.startedAt).toLocaleTimeString()} · 只读 ${state.session.domain} 的页面`; }
+  chrome.action.setBadgeText({ text: on ? '采' : '' }).catch(() => {});
+  if (on) chrome.action.setBadgeBackgroundColor({ color: '#dc2626' }).catch(() => {});
+}
+async function startSession() {
+  if (!state.token) { $('settings').classList.remove('hidden'); $('settingsMsg').textContent = '先填篮子口令'; return; }
+  if (!state.company) { $('picked').textContent = '先选这一篮是哪家企业'; return; }
+  const t = await activeTab();
+  if (!t || !/^https?:/.test(t.url || '')) { addLog({ ok: false, error: '先打开要采的招聘网站，再点开始', time: new Date().toLocaleTimeString() }); return; }
+  state.session = { tabId: t.id, domain: baseDomain(new URL(t.url).hostname), startedAt: Date.now(), lastAt: Date.now(), pages: 0 };
+  state.lastHash = ''; prev = ''; stableTicks = 0;
+  renderSession();
+}
+function stopSession(why) {
+  if (!state.session) return;
+  const s0 = state.session; state.session = null; renderSession();
+  addLog({ ok: true, company: state.company?.name || '', companyId: state.company?.id, jobs: 0, saved: 0, title: `采集结束：${s0.domain}，共 ${s0.pages} 页${why ? `（${why}）` : ''}`, time: new Date().toLocaleTimeString(), note: true });
+}
+$('startStop').onclick = () => state.session ? stopSession() : startSession();
+// 起始标签关掉 → 结束
+chrome.tabs.onRemoved.addListener(id => { if (state.session && id === state.session.tabId) stopSession('起始标签已关闭'); });
+// 侧边栏关掉也就不采了：下次打开是「没在采集」
+chrome.action.setBadgeText({ text: '' }).catch(() => {});
 
 load();
