@@ -23,7 +23,7 @@ const STEPS_INSTALL: Step[] = [
 ];
 
 const STEPS_USE: Step[] = [
-  { t: '连接工厂', d: '在本页登录后点「生成篮子口令」，复制；点开插件的 ⚙︎，平台地址填 https://www.aidataoffice.com，粘贴口令、保存，显示「连上了」就好。口令在哪个平台生成，平台地址就填哪个。', img: '/basket/step-token.png', img2: '/basket/step-connect.png' },
+  { t: '连接工厂', d: '在本页最上面「开始使用」的 ② 里生成篮子口令、复制；点开插件的 ⚙︎，平台地址填 https://www.aidataoffice.com，粘贴口令、保存，显示「连上了」就好。', img: '/basket/step-connect.png' },
   { t: '选企业', d: '在插件里搜这一篮要采的企业。打开招聘站时插件会按网址先猜几家，已有岗位最多的排最前；同一个招聘站在名单里常对应好几家（比如百度公司 / 百度（中国）/ 网讯），选岗位一直挂着的那家。', img: '/basket/step-pick.png' },
   { t: '开始采集，你来翻页', d: '打开招聘站，该登录登录、该过验证过验证，翻到职位列表，点插件里的「▶ 开始采集」。之后你每翻一页、每点开一个详情，篮子自动读一次——只读这个网站，切到邮件、聊天等别的网站一律不读；工具栏的篮子上会亮红色「采」字。采完点「■ 结束采集」（15 分钟没新页面、或关掉这个标签也会自动结束）。只想读一页，就点「放进篮子」。' },
   { t: '看收获', d: '侧边栏实时显示每一篮提炼了几个岗位、入了多少库，点「去岗位库看 ↗」直接跳到这家企业的岗位。岗位以「待审核」进岗位库，带「数据外采篮」「仅列表信息 / 详情已补」标记（岗位库可按「采集标记」筛选），信息源库同时记下真实的职位列表页。', img: '/basket/step-follow.png' },
@@ -65,7 +65,35 @@ export default function BasketPage() {
           <p className="bk-sub">有些数据只给真人看：入口藏在按钮后面、一看是机器就关门、要先过「我是人类」。数据同事挎着篮子去采，篮子把人看到的页面交给 AI 工厂，提炼成结构化数据、对着原文核对、直接入库。</p>
           <div className="bk-cta">
             <a className="bk-btn" href="/downloads/data-basket.zip" download>下载数据外采篮{ver ? ` v${ver}` : ''}</a>
-            <a className="bk-btn ghost" href="#how">三步装好 · 四步采完</a>
+            <a className="bk-btn ghost" href="#start">开始使用 ↓</a>
+            <a className="bk-btn ghost" href="#how">使用说明</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="start" className="bk-wrap bk-sec">
+        <div className="bk-start">
+          <div className="bk-start-h"><h2>开始使用</h2><span className="bk-muted">这里的按钮是真的，下面使用说明里的都是截图</span></div>
+          <div className="bk-start-grid">
+            <div className="bk-act">
+              <div className="bk-act-n">①</div>
+              <div><b>下载插件</b><p>下载后解压，按下面「三步装好」装进 Chrome。</p>
+                <a className="bk-btn" href="/downloads/data-basket.zip" download>下载数据外采篮{ver ? ` v${ver}` : ''}</a></div>
+            </div>
+            <div className="bk-act">
+              <div className="bk-act-n">②</div>
+              <div><b>生成篮子口令</b><p>复制后粘进插件 ⚙︎ 里，插件就连上工厂了。口令 30 天有效。</p>
+                {loggedIn === false && <a className="bk-btn" href="/login?next=/basket">先登录数据工厂</a>}
+                {loggedIn && (
+                  <div className="bk-token">
+                    <button className="bk-btn" onClick={makeToken}>{token ? '重新生成' : '生成篮子口令'}</button>
+                    {token && <><textarea readOnly value={token} rows={3} onFocus={e => e.currentTarget.select()} /><button className="bk-btn ghost" onClick={copy}>复制口令</button></>}
+                    <span className="bk-muted">{tokenMsg}</span>
+                  </div>
+                )}
+                {loggedIn === null && <span className="bk-muted">检查登录中…</span>}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -124,21 +152,9 @@ export default function BasketPage() {
 
       <section id="how" className="bk-wrap bk-sec">
         <h2>三步装好</h2>
-        <ol className="bk-steps">{STEPS_INSTALL.map((s, i) => <li key={i}><b>{s.t}</b><span>{s.d}</span>{(s.img || s.img2) && <div className="bk-shots">{s.img && <img src={s.img} alt={s.t} />}{s.img2 && <img src={s.img2} alt={s.t} />}</div>}</li>)}</ol>
+        <ol className="bk-steps">{STEPS_INSTALL.map((s, i) => <li key={i}><b>{s.t}</b><span>{s.d}</span>{(s.img || s.img2) && <div className="bk-shots">{[s.img, s.img2].filter(Boolean).map(src => <figure key={src} className="bk-shot" aria-label="示意截图"><img src={src} alt={`示意截图：${s.t}`} draggable={false} /><figcaption>示意截图 · 不能点</figcaption></figure>)}</div>}</li>)}</ol>
         <h2 style={{ marginTop: 28 }}>四步采完</h2>
-        <ol className="bk-steps">{STEPS_USE.map((s, i) => <li key={i}><b>{s.t}</b><span>{s.d}</span>{(s.img || s.img2) && <div className="bk-shots">{s.img && <img src={s.img} alt={s.t} />}{s.img2 && <img src={s.img2} alt={s.t} />}</div>}</li>)}</ol>
-      </section>
-
-      <section className="bk-wrap bk-sec">
-        <h2>连接我的篮子</h2>
-        {loggedIn === false && <p className="bk-p">请先 <a href="/login?next=/basket">登录数据工厂</a>，再回来生成篮子口令。</p>}
-        {loggedIn && (
-          <div className="bk-token">
-            <button className="bk-btn" onClick={makeToken}>生成篮子口令</button>
-            {token && <><textarea readOnly value={token} rows={3} /><button className="bk-btn ghost" onClick={copy}>复制</button></>}
-            <span className="bk-muted">{tokenMsg}</span>
-          </div>
-        )}
+        <ol className="bk-steps">{STEPS_USE.map((s, i) => <li key={i}><b>{s.t}</b><span>{s.d}</span>{(s.img || s.img2) && <div className="bk-shots">{[s.img, s.img2].filter(Boolean).map(src => <figure key={src} className="bk-shot" aria-label="示意截图"><img src={src} alt={`示意截图：${s.t}`} draggable={false} /><figcaption>示意截图 · 不能点</figcaption></figure>)}</div>}</li>)}</ol>
       </section>
 
       {loggedIn && (
@@ -204,7 +220,17 @@ const CSS = `
 .bk-steps li::before { content:counter(s); grid-row:span 2; width:30px; height:30px; border-radius:50%; background:var(--soft); color:var(--brand); font-weight:800; display:flex; align-items:center; justify-content:center; }
 .bk-steps span { color:var(--ink2); font-size:13.5px; line-height:1.8; }
 .bk-shots { grid-column:2; display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; align-items:flex-start; }
-.bk-shots img { max-width:100%; max-height:420px; border:1px solid var(--line); border-radius:10px; box-shadow:0 4px 18px rgba(0,0,0,.06); background:#fff; }
+.bk-shot { position:relative; margin:0; padding:8px; border:2px dashed #d6d3d1; border-radius:12px; background:#f5f5f4; max-width:100%; }
+.bk-shot img { display:block; max-width:100%; max-height:400px; border-radius:8px; pointer-events:none; user-select:none; opacity:.92; }
+.bk-shot figcaption { position:absolute; top:-11px; left:12px; padding:1px 8px; border-radius:999px; background:#57534e; color:#fff; font-size:11px; letter-spacing:.04em; }
+.bk-start { background:#fff; border:2px solid #fed7aa; border-radius:18px; padding:18px 20px; box-shadow:0 8px 30px rgba(194,65,12,.08); }
+.bk-start-h { display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+.bk-start-h h2 { margin:0 0 10px; }
+.bk-start-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; }
+.bk-act { display:flex; gap:12px; background:var(--soft); border-radius:14px; padding:14px; }
+.bk-act-n { font-size:22px; color:var(--brand); font-weight:800; }
+.bk-act b { font-size:15px; }
+.bk-act p { margin:4px 0 10px; color:var(--ink2); font-size:13px; }
 .bk-token { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
 .bk-token textarea { flex:1 1 100%; font-family:ui-monospace,monospace; font-size:11px; padding:8px; border:1px solid var(--line); border-radius:10px; }
 .bk-muted { color:var(--ink3); font-size:13px; font-weight:400; }
