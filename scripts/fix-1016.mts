@@ -2,6 +2,7 @@
  * 数据部门 2026-10-16 反馈（查企业、岗位反馈-1016.docx）：
  *   lang-map  岗位的中英文字段按对照表放：原文是中文放 (Cn)、英文放 (En)，网址两边都放；不调模型。
  *             对照表和 10-14 不同的两处（description ← 岗位摘要（中文）、process ← 报名/申请链接）按新对照覆盖旧值，其余只补空。
+ *   name-search  岗位的「查找名称」name_to_search = 所属企业的各种叫法（全称 / 简称 / 工商名 / 英文名 / 别名，| 连）
  *   npx tsx scripts/fix-1016.mts                # 只出报告
  *   npx tsx scripts/fix-1016.mts --apply        # 写库
  */
@@ -13,7 +14,7 @@ const { LANG_SOURCE, applyLangFields } = await import('../src/lib/job-defaults')
 const { FROZEN_REVIEW_STATUSES } = await import('../src/lib/review-status');
 
 const APPLY = process.argv.includes('--apply');
-const CHANGED = ['description', 'process'];   // 对照改了的：按新对照覆盖
+const CHANGED = ['description', 'process', 'schedule'];   // 对照改了 / 新定的：按新对照覆盖（schedule ← 招聘流程，10-16 确认）
 const cols = ['id', 'human_review_status', 'human_locked_fields', ...new Set(Object.values(LANG_SOURCE)), ...Object.keys(LANG_SOURCE).flatMap(k => [`${k}_lang_cn`, `${k}_lang_en`])];
 const { data: jobs, error } = await selectAll(() => db.from('jobs').select(cols.join(', ')).not('if_delete', 'is', true).order('id'));
 if (error) throw error;
@@ -47,4 +48,20 @@ if (APPLY) {
     await Promise.all(todo.slice(i, i + 20).map(t => db.from('jobs').update(t.patch).eq('id', t.id).then(({ error }) => { if (!error) done++; else console.log('✗', t.id, error.message); })));
   }
   console.log(`✓ 写了 ${done} 条`);
+}
+
+// ── 查找名称 ──
+const { companySearchNames } = await import('../src/lib/job-defaults');
+const { data: cos } = await selectAll(() => db.from('companies').select('id, name, brief_name, registered_name, name_en, aliases').order('id'));
+const names = new Map((cos as any[]).map(c => [c.id, companySearchNames(c)]));
+const { data: js } = await selectAll(() => db.from('jobs').select('id, company_id, name_to_search').not('if_delete', 'is', true).order('id'));
+const todo2 = (js as any[]).filter(j => j.company_id && (names.get(j.company_id) || null) !== (j.name_to_search || null)).map(j => ({ id: j.id, v: names.get(j.company_id) || null }));
+console.log(`查找名称：岗位 ${js!.length} 条，要写的 ${todo2.length} 条；样例：${todo2.slice(0, 3).map(t => t.v).join(' ／ ')}`);
+if (APPLY) {
+  // 同一家企业的岗位一起写
+  const byVal = new Map<string, number[]>();
+  for (const t of todo2) { const k = t.v ?? ''; byVal.set(k, [...(byVal.get(k) || []), t.id]); }
+  let n = 0;
+  for (const [v, ids] of byVal) for (let i = 0; i < ids.length; i += 200) { const { error } = await db.from('jobs').update({ name_to_search: v || null }).in('id', ids.slice(i, i + 200)); if (error) console.log('✗', error.message); else n += Math.min(200, ids.length - i); }
+  console.log(`✓ 查找名称写了 ${n} 条`);
 }

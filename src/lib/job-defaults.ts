@@ -53,10 +53,10 @@ export function normalizeSkillTags(v: string | null | undefined): string | null 
 
 /**
  * 中英文字段（*_lang_cn / *_lang_en）对应哪个原文字段——按数据部门 10-16《查企业、岗位反馈》的对照表。
- * schedule（流程/日程安排）对方有、我们没有对应的原文字段，先不填。
+ * schedule（流程/日程安排）用我们的「招聘流程」recruit_process（数据部门 10-16 确认）。
  */
 export const LANG_SOURCE: Record<string, string> = {
-  name: 'name', description: 'summary_cn', overview: 'overview', process: 'application_website',
+  name: 'name', description: 'summary_cn', schedule: 'recruit_process', overview: 'overview', process: 'application_website',
   organizer: 'organizer', responsibilities: 'responsibilities', welfare: 'welfare', address: 'address',
 };
 export const isZhText = (s: string) => (s.match(/[一-鿿]/g) || []).length >= Math.max(1, s.replace(/\s/g, '').length * 0.15);
@@ -77,6 +77,19 @@ export function applyLangFields(job: Record<string, any>, opts: { overwrite?: st
     }
   }
   return patch;
+}
+
+/**
+ * 查找名称 name_to_search：这家企业的各种叫法（全称 / 简称 / 工商名 / 英文名 / 别名），去重后用「|」连，
+ * 写在它每个岗位上，方便按任何一个叫法搜到（数据部门 10-16：「就像我们公司也可以叫申请方、平方」）。
+ */
+export function companySearchNames(c: { name?: string | null; brief_name?: string | null; registered_name?: string | null; name_en?: string | null; aliases?: string[] | null } | null | undefined): string | null {
+  if (!c) return null;
+  const all = [c.name, c.brief_name, c.registered_name, c.name_en, ...(c.aliases || [])]
+    .map(x => String(x || '').trim()).filter(x => x && !/^并入#/.test(x));
+  const seen = new Set<string>(), out: string[] = [];
+  for (const x of all) { const k = x.replace(/\s/g, '').toLowerCase(); if (!seen.has(k)) { seen.add(k); out.push(x); } }
+  return out.length ? out.join('|') : null;
 }
 
 /** 入库前补默认值。company 是这个岗位所属企业的名字 */
