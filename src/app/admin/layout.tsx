@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { IdcardOutlined, MessageOutlined, EnvironmentOutlined, ToolOutlined, ControlOutlined, ApiOutlined, UserOutlined, SwapOutlined, DownOutlined, GlobalOutlined, LogoutOutlined, LinkOutlined, BankOutlined, ReadOutlined, FileSearchOutlined, FileTextOutlined, BarChartOutlined, SafetyCertificateOutlined, MenuOutlined, ExperimentOutlined, ExportOutlined, ProfileOutlined, HeartOutlined, TrophyOutlined, FireOutlined, BookOutlined } from '@ant-design/icons';
+import { IdcardOutlined, MessageOutlined, EnvironmentOutlined, ToolOutlined, ControlOutlined, ApiOutlined, UserOutlined, SwapOutlined, DownOutlined, GlobalOutlined, LogoutOutlined, LinkOutlined, BankOutlined, ReadOutlined, FileSearchOutlined, FileTextOutlined, BarChartOutlined, SafetyCertificateOutlined, MenuOutlined, ExperimentOutlined, ExportOutlined, ProfileOutlined, HeartOutlined, TrophyOutlined, FireOutlined, BookOutlined, ShoppingOutlined } from '@ant-design/icons';
 import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
 import { UserProvider, useUser } from '@/lib/user-context';
 import { BRAND } from '@/lib/theme';
@@ -21,6 +21,7 @@ const NAV: NavItem[] = [
   { key: 'tool-company', icon: <ProfileOutlined />,    label: '企业画像工具',  path: '/admin/tool-company', group: '采集工具', badge: '新' },
   { key: 'tool-competition', icon: <TrophyOutlined />,  label: '企业赛事雷达',  path: '/admin/tool-competition', group: '采集工具', badge: '新' },
   { key: 'tool-standard', icon: <BookOutlined />,     label: '行业标准获取',  path: '/admin/tool-standard', group: '采集工具', badge: '新' },
+  { key: 'basket',       icon: <ShoppingOutlined />,   label: '数据外采篮',    path: '/basket',            group: '采集工具', badge: '新', newWindow: true },   // 人机协同采集：插件下载 + 使用说明 + 口令 + 待采清单
   { key: 'db-company',   icon: <BankOutlined />,       label: '企业实体库',    path: '/admin/db-company',   group: '数据资产' },
   { key: 'db-job',       icon: <ReadOutlined />,       label: '校招岗位库',    path: '/admin/db-job',       group: '数据资产' },
   { key: 'db-occupation', icon: <IdcardOutlined />,    label: '职业实体库',    path: '/admin/db-occupation', group: '数据资产', badge: '新' },
