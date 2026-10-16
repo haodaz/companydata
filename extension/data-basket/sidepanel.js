@@ -7,7 +7,7 @@ const hash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + 
 
 async function load() {
   const s = await chrome.storage.local.get(['base', 'token', 'company', 'pages', 'jobs', 'log']);
-  state.base = s.base || 'https://www.aisimjob.com';
+  state.base = s.base || 'https://www.aidataoffice.com';
   state.token = s.token || '';
   state.company = s.company || null;
   state.pages = s.pages || 0; state.jobs = s.jobs || 0;
@@ -115,7 +115,7 @@ setInterval(async () => {
 
 $('toggleSettings').onclick = () => $('settings').classList.toggle('hidden');
 $('saveSettings').onclick = async () => {
-  state.base = $('base').value.trim() || 'https://www.aisimjob.com'; state.token = $('token').value.trim();
+  state.base = $('base').value.trim() || 'https://www.aidataoffice.com'; state.token = $('token').value.trim();
   await chrome.storage.local.set({ base: state.base, token: state.token });
   try { await api('/api/basket/companies?q=%E7%99%BE%E5%BA%A6'); $('settingsMsg').textContent = '✓ 连上了'; setTimeout(() => $('settings').classList.add('hidden'), 800); }
   catch (e) { $('settingsMsg').textContent = `✗ ${e.message}`; }
