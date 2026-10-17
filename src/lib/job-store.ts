@@ -12,6 +12,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { applyJobDefaults, companySearchNames } from '@/lib/job-defaults';
 import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
 import { toSources } from '@/lib/source-tags';
+import { tagAndSave } from '@/lib/job-tagging';
 import { sanitizeJob, jobCompleteness, KIND_BY_JOB_TYPE, splitLocations, normCity, jobSourceOf } from '@/lib/job-fields';
 
 const normUrl = (u: string) => u.trim().toLowerCase().replace(/[#?].*$/, '').replace(/\/+$/, '');
@@ -54,7 +55,7 @@ export function jobsOf(json: any): any[] {
 export async function upsertJobsFromLog(logId: number, structuredJson: any): Promise<number> {
   const { data: log, error: logErr } = await supabaseAdmin
     .from('job_crawl_logs')
-    .select('id, company_id, company, target_url')
+    .select('id, company_id, company, target_url, model_id')
     .eq('id', logId)
     .single();
   if (logErr) throw logErr;
@@ -200,6 +201,13 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
 
   // 这个网址实测出了岗位：信息源库里标成「校招职位列表」+ 核实通过（数据部门 10-16：表层招聘官网和真正的岗位列表页常常不是一个网址）
   if (list.length && log.company_id) await markRealEntry(log.company_id, log.company || '', log.target_url, list.length).catch(e => console.error('[job-store] 标记信息源失败', e?.message || e));
+
+  // 关联专业 / 职业（数据部门 10-17）：这一页新进来、还没标过的岗位，用这次提炼选的模型打上
+  if (list.length) {
+    const { data: untagged } = await supabaseAdmin.from('jobs').select('id').eq('source_log_id', logId).not('if_delete', 'is', true).or('fos_ids.is.null,fos_ids.eq.{}');
+    const ids = (untagged || []).map(r => r.id);
+    if (ids.length && (process.env.CHEAP_MODEL || log.model_id || process.env.DEFAULT_MODEL)) await tagAndSave(ids, process.env.CHEAP_MODEL || log.model_id || process.env.DEFAULT_MODEL || '').catch(e => console.error('[job-store] 关联专业职业失败', e?.message || e));
+  }
   return list.length;
 }
 
