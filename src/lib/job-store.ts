@@ -226,16 +226,33 @@ export async function markRealEntry(companyId: number, company: string, url: str
  * 同一家企业里「岗位编号 + 城市」相同的在招岗位只留一条：留内容最全的（职责最长），另一条有而它没有的字段补过来，另一条软删。
  * 起因：百度列表页的岗位行没有独立链接，按「企业|编号|城市」去重；点开详情页读到的同一个岗位有链接，按链接去重——成了两条（10-16）。
  */
+/** 两个岗位名是不是同一个岗位：去掉城市前缀、括号里的编号 / 届别后，相同或一个包含另一个 */
+export const sameJobName = (a: unknown, b: unknown) => {
+  const n = (x: unknown) => String(x || '').replace(/\s+/g, '').replace(/^[\u4e00-\u9fa5]{2,3}[-－—]/, '').replace(/[（(][^）)]*[）)]/g, '').toLowerCase();
+  const x = n(a), y = n(b);
+  return !!x && !!y && (x === y || (Math.min(x.length, y.length) >= 4 && (x.includes(y) || y.includes(x))));
+};
+
+/** 合并用的城市键：「江苏省·常州市」「常州市」「常州」都算常州（取分隔符后最后一段、去掉省 / 市）——数据部门 10-17 反馈中创新航 J14747 两条 */
+export const cityKey = (loc: unknown) => {
+  const parts = String(loc || '').replace(/\s+/g, '').split(/[·・\-－—\/|]/).filter(Boolean);
+  const last = parts.length ? parts[parts.length - 1] : '';
+  return last.replace(/^.{2,3}省/, '').replace(/(特别行政区|自治区|市)$/, '').toLowerCase();
+};
+
 /** 最近一次合并：被并掉的岗位 id → 留下的那条 id（数据外采篮用它把「去岗位库看」指到真正留下的记录） */
 export const mergedInto = new Map<number, number>();
 export async function mergeSameReqId(companyId: number) {
   const { data } = await supabaseAdmin.from('jobs').select('*').eq('company_id', companyId).not('if_delete', 'is', true).not('job_req_id', 'is', null).neq('job_req_id', '');
   const groups = new Map<string, any[]>();
   // 编号要像个编号（带数字、至少 3 位）：「暂无」「-」这类占位不能拿来合并
-  for (const j of (data || []).filter(j => /\d/.test(String(j.job_req_id)) && String(j.job_req_id).trim().length >= 3)) { const k = `${String(j.job_req_id).trim().toLowerCase()}|${String(j.location || '').trim()}`; groups.set(k, [...(groups.get(k) || []), j]); }
+  for (const j of (data || []).filter(j => /\d/.test(String(j.job_req_id)) && String(j.job_req_id).trim().length >= 3)) { const k = `${String(j.job_req_id).trim().toLowerCase()}|${cityKey(j.location)}`; groups.set(k, [...(groups.get(k) || []), j]); }
   const SKIP = new Set(['id', 'company_id', 'dedupe_key', 'created_at', 'updated_at', 'if_delete', 'human_review_status', 'human_review_at', 'human_locked_fields', 'source_log_id']);
   let merged = 0;
-  for (const g of groups.values()) {
+  for (const g0 of groups.values()) {
+    if (g0.length < 2) continue;
+    // 名字也得对得上：有的站整页岗位共用一个编号（「光学硬件工程师」和「供应链负责人」编号一样），只按编号会把不同岗位并掉
+    const g = g0.filter(j => sameJobName(j.name, g0[0].name));
     if (g.length < 2) continue;
     g.sort((x, y) => String(y.responsibilities || '').length - String(x.responsibilities || '').length);
     const [keep, ...rest] = g;
@@ -258,7 +275,7 @@ export async function mergeSameReqId(companyId: number) {
   }
   // 第二遍：没有岗位编号的站，列表行和详情页按名称 + 城市对上（名称去掉「北京-」这类城市前缀），其中一条是「仅列表信息」才并
   const { data: rest2 } = await supabaseAdmin.from('jobs').select('*').eq('company_id', companyId).not('if_delete', 'is', true).eq('status', 'open');
-  const nameKey = (j: any) => `${String(j.name || '').replace(/\s+/g, '').replace(/^[\u4e00-\u9fa5]{2,3}[-－—]/, '').toLowerCase()}|${String(j.location || '').trim()}`;
+  const nameKey = (j: any) => `${String(j.name || '').replace(/\s+/g, '').replace(/^[\u4e00-\u9fa5]{2,3}[-－—]/, '').toLowerCase()}|${cityKey(j.location)}`;
   const g2 = new Map<string, any[]>();
   for (const j of rest2 || []) g2.set(nameKey(j), [...(g2.get(nameKey(j)) || []), j]);
   for (const g of g2.values()) {

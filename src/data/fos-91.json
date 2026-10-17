@@ -1,0 +1,548 @@
+[
+ {
+  "key": "accounting",
+  "name": "会计学",
+  "name_en": "Accounting",
+  "category": "商学与管理"
+ },
+ {
+  "key": "actuarial_science",
+  "name": "精算学",
+  "name_en": "Actuarial Sciences",
+  "category": "理学"
+ },
+ {
+  "key": "aerospace",
+  "name": "航空航天工程",
+  "name_en": "Aerospace / Aeronautical / Astronautical Science and Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "agriculture_engineering",
+  "name": "农业工程",
+  "name_en": "Agriculture Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "animal_science",
+  "name": "动物科学",
+  "name_en": "Animal Science",
+  "category": "农学"
+ },
+ {
+  "key": "anthropology",
+  "name": "人类学",
+  "name_en": "Anthropology",
+  "category": "社会科学"
+ },
+ {
+  "key": "aquaculture",
+  "name": "水产",
+  "name_en": "Aquaculture",
+  "category": "农学"
+ },
+ {
+  "key": "architecture",
+  "name": "建筑学",
+  "name_en": "Architecture",
+  "category": "人文艺术"
+ },
+ {
+  "key": "area_studies",
+  "name": "区域研究学",
+  "name_en": "Area Studies",
+  "category": "社会科学"
+ },
+ {
+  "key": "artistic_theory",
+  "name": "艺术学理论",
+  "name_en": "Artistic Theory",
+  "category": "人文艺术"
+ },
+ {
+  "key": "arts_management",
+  "name": "艺术管理",
+  "name_en": "Arts Management",
+  "category": "人文艺术"
+ },
+ {
+  "key": "atmospheric_science",
+  "name": "大气科学",
+  "name_en": "Atmospheric Science",
+  "category": "理学"
+ },
+ {
+  "key": "basic_medicine",
+  "name": "基础医学",
+  "name_en": "Basic Medicine",
+  "category": "医学"
+ },
+ {
+  "key": "biological_engineering",
+  "name": "生物工程",
+  "name_en": "Biological Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "biology",
+  "name": "生命科学",
+  "name_en": "Biological / Biomedical Science",
+  "category": "理学"
+ },
+ {
+  "key": "biomedical_engineering",
+  "name": "生物医学工程",
+  "name_en": "Biomedical/Bioengineering",
+  "category": "工学"
+ },
+ {
+  "key": "biostatistics",
+  "name": "生物统计学",
+  "name_en": "Biostatistics",
+  "category": "理学"
+ },
+ {
+  "key": "business_analytics",
+  "name": "商业分析",
+  "name_en": "Business Analytics",
+  "category": "商学与管理"
+ },
+ {
+  "key": "chemical_engineering",
+  "name": "化学工程",
+  "name_en": "Chemical Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "chemistry",
+  "name": "化学",
+  "name_en": "Chemistry",
+  "category": "理学"
+ },
+ {
+  "key": "civil_engineering",
+  "name": "土木工程",
+  "name_en": "Civil Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "clinical_medicine",
+  "name": "临床医学",
+  "name_en": "Clinical Medicine",
+  "category": "医学"
+ },
+ {
+  "key": "communication",
+  "name": "新闻传播学",
+  "name_en": "Journalism and Mass Communication",
+  "category": "社会科学"
+ },
+ {
+  "key": "computer_engineering",
+  "name": "计算机工程",
+  "name_en": "Computer Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "computer_science",
+  "name": "计算机科学",
+  "name_en": "Computer Science",
+  "category": "理学"
+ },
+ {
+  "key": "criminology",
+  "name": "公安学",
+  "name_en": "Public Security",
+  "category": "社会科学"
+ },
+ {
+  "key": "data_science",
+  "name": "数据科学",
+  "name_en": "Data Science",
+  "category": "理学"
+ },
+ {
+  "key": "decision_science",
+  "name": "决策科学",
+  "name_en": "Decision Science",
+  "category": "商学与管理"
+ },
+ {
+  "key": "design",
+  "name": "设计",
+  "name_en": "Design",
+  "category": "人文艺术"
+ },
+ {
+  "key": "drama_and_film",
+  "name": "戏剧与影视",
+  "name_en": "Drama and Film",
+  "category": "人文艺术"
+ },
+ {
+  "key": "economics",
+  "name": "经济学",
+  "name_en": "Economics",
+  "category": "社会科学"
+ },
+ {
+  "key": "education",
+  "name": "教育学",
+  "name_en": "Education",
+  "category": "社会科学"
+ },
+ {
+  "key": "electrical_engineering",
+  "name": "电气工程",
+  "name_en": "Electrical Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "electronic_engineering",
+  "name": "电子信息工程",
+  "name_en": "Electronic Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "english",
+  "name": "英语言与文学",
+  "name_en": "English and English Literature",
+  "category": "人文艺术"
+ },
+ {
+  "key": "entrepreneurship",
+  "name": "创业与战略管理学",
+  "name_en": "Entrepreneurship and Strategy",
+  "category": "商学与管理"
+ },
+ {
+  "key": "environmental_construction_and_equipment_engineering",
+  "name": "建筑环境与设备工程",
+  "name_en": "Environmental Construction and Equipment Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "environmental_engineering",
+  "name": "环境工程",
+  "name_en": "Environmental Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "environmental_science",
+  "name": "环境科学",
+  "name_en": "Environmental Science",
+  "category": "理学"
+ },
+ {
+  "key": "epidemiology",
+  "name": "流行病学",
+  "name_en": "Epidemiology",
+  "category": "医学"
+ },
+ {
+  "key": "exercise_and_sport_science",
+  "name": "体育学",
+  "name_en": "Exercise and Sport Science",
+  "category": "社会科学"
+ },
+ {
+  "key": "finance",
+  "name": "金融学",
+  "name_en": "Finance",
+  "category": "商学与管理"
+ },
+ {
+  "key": "financial_engineering",
+  "name": "金融工程",
+  "name_en": "Financial Engineering",
+  "category": "商学与管理"
+ },
+ {
+  "key": "fine_art",
+  "name": "美术",
+  "name_en": "Fine Art",
+  "category": "人文艺术"
+ },
+ {
+  "key": "food_science_and_technology",
+  "name": "食品科学与工程",
+  "name_en": "Food Science and Technology",
+  "category": "工学"
+ },
+ {
+  "key": "forestry",
+  "name": "林学",
+  "name_en": "Forestry",
+  "category": "农学"
+ },
+ {
+  "key": "geography",
+  "name": "地理科学",
+  "name_en": "Geography",
+  "category": "理学"
+ },
+ {
+  "key": "geology",
+  "name": "地质学",
+  "name_en": "Geology",
+  "category": "理学"
+ },
+ {
+  "key": "geophysics",
+  "name": "地球物理学",
+  "name_en": "Geophysics",
+  "category": "理学"
+ },
+ {
+  "key": "history",
+  "name": "历史学",
+  "name_en": "History",
+  "category": "人文艺术"
+ },
+ {
+  "key": "human_resource_management",
+  "name": "人力资源管理",
+  "name_en": "Human Resource Management",
+  "category": "商学与管理"
+ },
+ {
+  "key": "industrial_engineering",
+  "name": "工业工程",
+  "name_en": "Industrial Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "information_systems",
+  "name": "信息系统学",
+  "name_en": "Information Systems",
+  "category": "商学与管理"
+ },
+ {
+  "key": "international_business",
+  "name": "国际贸易",
+  "name_en": "International Business",
+  "category": "商学与管理"
+ },
+ {
+  "key": "language",
+  "name": "其他语言与文学",
+  "name_en": "Other Languages and Literature",
+  "category": "人文艺术"
+ },
+ {
+  "key": "law",
+  "name": "法学",
+  "name_en": "Law",
+  "category": "社会科学"
+ },
+ {
+  "key": "literature",
+  "name": "汉语言与文学",
+  "name_en": "Chinese and Chinese Literature",
+  "category": "人文艺术"
+ },
+ {
+  "key": "management",
+  "name": "管理科学与工程",
+  "name_en": "Management Science and Engineering",
+  "category": "商学与管理"
+ },
+ {
+  "key": "marketing",
+  "name": "市场营销学",
+  "name_en": "Marketing",
+  "category": "商学与管理"
+ },
+ {
+  "key": "materials",
+  "name": "材料工程",
+  "name_en": "Materials Science and Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "mathematics",
+  "name": "数学",
+  "name_en": "Mathematics",
+  "category": "理学"
+ },
+ {
+  "key": "mba",
+  "name": "工商管理学",
+  "name_en": "Business Administration",
+  "category": "商学与管理"
+ },
+ {
+  "key": "mechanical_engineering",
+  "name": "机械工程",
+  "name_en": "Mechanical Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "mineral_engineering",
+  "name": "矿业工程",
+  "name_en": "Mineral Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "music_and_dance",
+  "name": "音乐与舞蹈",
+  "name_en": "Music and Dance",
+  "category": "人文艺术"
+ },
+ {
+  "key": "natural_conservation_and_ecology",
+  "name": "生态学",
+  "name_en": "Ecology",
+  "category": "农学"
+ },
+ {
+  "key": "nuclear_engineering",
+  "name": "核能工程",
+  "name_en": "Nuclear Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "nursing",
+  "name": "护理学",
+  "name_en": "Nursing",
+  "category": "医学"
+ },
+ {
+  "key": "nutrition",
+  "name": "营养学",
+  "name_en": "Nutrition",
+  "category": "医学"
+ },
+ {
+  "key": "oceanography",
+  "name": "海洋科学",
+  "name_en": "Oceanography",
+  "category": "理学"
+ },
+ {
+  "key": "operations",
+  "name": "运作管理学",
+  "name_en": "Operations Management",
+  "category": "商学与管理"
+ },
+ {
+  "key": "pharmacy",
+  "name": "药学",
+  "name_en": "Pharmaceutical Sciences",
+  "category": "医学"
+ },
+ {
+  "key": "philosophy",
+  "name": "哲学",
+  "name_en": "Philosophy",
+  "category": "人文艺术"
+ },
+ {
+  "key": "physics",
+  "name": "物理",
+  "name_en": "Physics",
+  "category": "理学"
+ },
+ {
+  "key": "plant_science",
+  "name": "植物科学",
+  "name_en": "Plant Science",
+  "category": "农学"
+ },
+ {
+  "key": "political_science",
+  "name": "政治学",
+  "name_en": "Political Science",
+  "category": "社会科学"
+ },
+ {
+  "key": "prataculture",
+  "name": "草业",
+  "name_en": "Prataculture",
+  "category": "农学"
+ },
+ {
+  "key": "psychology",
+  "name": "心理学",
+  "name_en": "Psychology",
+  "category": "社会科学"
+ },
+ {
+  "key": "public_affairs",
+  "name": "公共事务学",
+  "name_en": "Public Affairs",
+  "category": "商学与管理"
+ },
+ {
+  "key": "public_health",
+  "name": "公共卫生与预防医学",
+  "name_en": "Public Health and Preventive Medicine",
+  "category": "医学"
+ },
+ {
+  "key": "public_management_administration",
+  "name": "公共管理学",
+  "name_en": "Public Management",
+  "category": "商学与管理"
+ },
+ {
+  "key": "religion",
+  "name": "宗教学",
+  "name_en": "Religion",
+  "category": "人文艺术"
+ },
+ {
+  "key": "social_work",
+  "name": "社会工作学",
+  "name_en": "Social Work",
+  "category": "社会科学"
+ },
+ {
+  "key": "sociology",
+  "name": "社会学",
+  "name_en": "Sociology",
+  "category": "社会科学"
+ },
+ {
+  "key": "software_engineering",
+  "name": "软件工程",
+  "name_en": "Software Engineering",
+  "category": "工学"
+ },
+ {
+  "key": "statistics",
+  "name": "统计学",
+  "name_en": "Statistics",
+  "category": "理学"
+ },
+ {
+  "key": "supply_chain_and_logistics",
+  "name": "供应链及物流管理学",
+  "name_en": "Supply Chain and Logistics",
+  "category": "商学与管理"
+ },
+ {
+  "key": "textile_and_light_industry",
+  "name": "纺织轻工",
+  "name_en": "Textile and Light Industry",
+  "category": "工学"
+ },
+ {
+  "key": "urban_planning",
+  "name": "城市规划",
+  "name_en": "Urban Planning",
+  "category": "人文艺术"
+ },
+ {
+  "key": "veterinary_medicine",
+  "name": "动物医学",
+  "name_en": "Veterinary Medicine",
+  "category": "农学"
+ },
+ {
+  "key": "water_resources_engineering",
+  "name": "水利工程",
+  "name_en": "Water Resources Engineering",
+  "category": "工学"
+ }
+]

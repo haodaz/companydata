@@ -216,6 +216,12 @@ export default function DbJobPage() {
         title="校招岗位库"
         description="AI 提取的校招项目、应届生岗位与实习（含远程）。再次提取同一页面时：新岗位入库、已有岗位更新、页面上消失的岗位标记为「已下线」；人工审核过 / 改过的内容不会被覆盖。"
         extra={<>
+          <Popconfirm title={filters.companyId ? `给「${filters.companyName || '这家企业'}」去重？` : '给所有企业的岗位去重？'} description="同一企业里岗位编号 + 城市相同（「江苏省·常州市」和「常州市」算同一城市），或名称 + 城市相同且一条只有列表信息的在招岗位，并成一条：留内容最全的，另一条的字段补过来后软删。" okText="去重" cancelText="取消" onConfirm={async () => {
+            message.loading({ content: '去重中…', key: 'dedupe', duration: 0 });
+            const r = await fetch('/api/admin/jobs-dedupe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ companyId: filters.companyId || undefined }) }).then(x => x.json()).catch(e => ({ ok: false, error: e.message }));
+            if (!r.ok) { message.error({ content: `去重失败：${r.error}`, key: 'dedupe' }); return; }
+            message.success({ content: `检查了 ${r.companies} 家企业，合并了 ${r.merged} 条重复岗位`, key: 'dedupe' }); load();
+          }}><Button>一键去重{filters.companyId ? '（本企业）' : ''}</Button></Popconfirm>
           <Button icon={<DownloadOutlined />} loading={exporting} onClick={handleExport}>导出 CSV（当前筛选）</Button>
           <Button type="primary" icon={<RocketOutlined />} onClick={() => router.push('/admin/tool-job')}>去提取岗位</Button>
         </>}
