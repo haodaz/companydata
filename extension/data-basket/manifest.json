@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "数据外采篮",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "人在自己的浏览器里打开、过验证、翻页；篮子只读页面上已经显示的文字，交给智能企业数据工厂提炼入库。",
   "permissions": ["sidePanel", "scripting", "storage", "tabs"],
   "host_permissions": ["<all_urls>"],

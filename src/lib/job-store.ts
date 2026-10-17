@@ -226,6 +226,8 @@ export async function markRealEntry(companyId: number, company: string, url: str
  * 同一家企业里「岗位编号 + 城市」相同的在招岗位只留一条：留内容最全的（职责最长），另一条有而它没有的字段补过来，另一条软删。
  * 起因：百度列表页的岗位行没有独立链接，按「企业|编号|城市」去重；点开详情页读到的同一个岗位有链接，按链接去重——成了两条（10-16）。
  */
+/** 最近一次合并：被并掉的岗位 id → 留下的那条 id（数据外采篮用它把「去岗位库看」指到真正留下的记录） */
+export const mergedInto = new Map<number, number>();
 export async function mergeSameReqId(companyId: number) {
   const { data } = await supabaseAdmin.from('jobs').select('*').eq('company_id', companyId).not('if_delete', 'is', true).not('job_req_id', 'is', null).neq('job_req_id', '');
   const groups = new Map<string, any[]>();
@@ -251,7 +253,27 @@ export async function mergeSameReqId(companyId: number) {
     if (longest && longest !== keep.name) patch.name = longest;
     await supabaseAdmin.from('jobs').update(patch).eq('id', keep.id);
     await supabaseAdmin.from('jobs').update({ if_delete: true, updated_at: new Date().toISOString() }).in('id', rest.map(r => r.id));
+    for (const r of rest) mergedInto.set(r.id, keep.id);
     merged += rest.length;
+  }
+  // 第二遍：没有岗位编号的站，列表行和详情页按名称 + 城市对上（名称去掉「北京-」这类城市前缀），其中一条是「仅列表信息」才并
+  const { data: rest2 } = await supabaseAdmin.from('jobs').select('*').eq('company_id', companyId).not('if_delete', 'is', true).eq('status', 'open');
+  const nameKey = (j: any) => `${String(j.name || '').replace(/\s+/g, '').replace(/^[\u4e00-\u9fa5]{2,3}[-－—]/, '').toLowerCase()}|${String(j.location || '').trim()}`;
+  const g2 = new Map<string, any[]>();
+  for (const j of rest2 || []) g2.set(nameKey(j), [...(g2.get(nameKey(j)) || []), j]);
+  for (const g of g2.values()) {
+    if (g.length !== 2 || !g.some(j => (j.collect_flags || []).includes('仅列表信息'))) continue;
+    const ids = g.map(j => String(j.job_req_id || '')).filter(Boolean);
+    if (new Set(ids).size > 1) continue;   // 两条编号不一样：是两个岗位
+    g.sort((x, y) => String(y.responsibilities || '').length - String(x.responsibilities || '').length);
+    const [keep, drop] = g;
+    const patch: Record<string, any> = {};
+    for (const [k, v] of Object.entries(drop)) { if (SKIP.has(k) || v == null || v === '' || (Array.isArray(v) && !v.length)) continue; const cur = keep[k]; if (cur == null || cur === '' || (Array.isArray(cur) && !cur.length)) patch[k] = v; }
+    const flags = new Set<string>([...(keep.collect_flags || []), ...(drop.collect_flags || [])]); if (flags.has('详情已补')) flags.delete('仅列表信息');
+    patch.collect_flags = [...flags];
+    await supabaseAdmin.from('jobs').update(patch).eq('id', keep.id);
+    await supabaseAdmin.from('jobs').update({ if_delete: true, updated_at: new Date().toISOString() }).eq('id', drop.id);
+    mergedInto.set(drop.id, keep.id); merged++;
   }
   return merged;
 }

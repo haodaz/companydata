@@ -45,6 +45,8 @@ export async function GET(request: Request) {
     // 来源多选（迁移 031 起是数组）：none = 没有来源；选了某个来源 = 来源里包含它
     // 采集标记（迁移 032）：仅列表信息 / 详情已补 / 重点岗位 / 支持内推码 / 数据外采篮
     if (get('flag')) query = query.contains('collect_flags', [get('flag')]);
+    // 数据外采篮「去岗位库看」：只看这一篮采到的那几个岗位
+    if (get('ids')) { const ids = get('ids').split(',').map(Number).filter(Boolean).slice(0, 200); if (ids.length) query = query.in('id', ids); }
     if (get('source') === 'none') query = query.or('source.is.null,source.eq.{}');
     else if (get('source')) query = query.contains('source', [get('source')]);
     if (get('publishFrom')) query = query.gte('official_publish_date', get('publishFrom'));

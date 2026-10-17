@@ -43,3 +43,6 @@ button.stop { width: 100%; padding: 10px; background: #b91c1c; font-size: 14px; 
 .rec b { color: var(--ink); word-break: break-all; }
 .dot { width: 9px; height: 9px; border-radius: 50%; background: #dc2626; animation: blink 1.2s infinite; flex: none; }
 @keyframes blink { 50% { opacity: .25; } }
+#log li.working { color: #b45309; list-style: none; margin-left: -18px; padding: 6px 8px; background: #fffbeb; border-radius: 8px; }
+.spin { display: inline-block; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }

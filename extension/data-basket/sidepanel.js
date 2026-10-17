@@ -81,9 +81,12 @@ function addLog(item, save = true) {
   const li = document.createElement('li');
   li.innerHTML = `<span class="${item.ok ? 'ok' : 'bad'}"></span><small></small>${item.ok && item.companyId ? '<a class="go" target="_blank">去岗位库看 ↗</a>' : ''}`;
   const go = li.querySelector('a.go');
-  if (go) go.href = `${state.base.replace(/\/$/, '')}/admin/db-job?companyId=${item.companyId}&companyName=${encodeURIComponent(item.company)}&jobType=all${item.kind === 'detail' ? '&flag=%E8%AF%A6%E6%83%85%E5%B7%B2%E8%A1%A5' : ''}`;
+  if (go) go.href = item.ids && item.ids.length
+    ? `${state.base.replace(/\/$/, '')}/admin/db-job?ids=${item.ids.join(',')}&jobType=all`
+    : `${state.base.replace(/\/$/, '')}/admin/db-job?companyId=${item.companyId}&companyName=${encodeURIComponent(item.company)}&jobType=all`;
+  if (go) go.textContent = item.ids && item.ids.length ? `看这一篮的 ${item.ids.length} 个岗位 ↗` : '去岗位库看 ↗';
   li.querySelector('span').textContent = item.note ? '■ 采集结束' : item.ok ? `✓ ${item.company}：提炼 ${item.jobs} 个，入库 ${item.saved}${item.kind === 'detail' ? '（详情）' : ''}` : `✗ ${item.error}`;
-  li.querySelector('small').textContent = `${item.time} · ${item.title || ''}`;
+  li.querySelector('small').textContent = `${item.time} · ${item.title || ''}${item.secs ? ` · 用时 ${item.secs} 秒` : ''}${item.dropped ? ` · 挡掉 ${item.dropped} 条原文里找不到的` : ''}`;
   $('log').prepend(li);
   if (save) chrome.storage.local.get('log').then(s => chrome.storage.local.set({ log: [item, ...(s.log || [])].slice(0, 100) }));
 }
@@ -98,13 +101,18 @@ async function putInBasket(reason) {
   const h = hash(snap.text);
   if (reason === 'follow' && h === state.lastHash) return;
   state.lastHash = h; state.sending = true; $('once').disabled = true; $('once').textContent = '篮子正在交给工厂…';
+  const t0 = Date.now();
+  const tick = document.createElement('li'); tick.className = 'working'; $('log').prepend(tick);
+  const draw = () => { const sec = Math.round((Date.now() - t0) / 1000); tick.innerHTML = '<span class="spin">◐</span> '; tick.append(sec < 40 ? `正在提炼这一页… ${sec} 秒（通常 10–30 秒）` : `页面较长，再等等… ${sec} 秒`); const sm = document.createElement('small'); sm.textContent = snap.title || ''; tick.append(sm); };
+  draw(); const timer = setInterval(draw, 1000);
   try {
     const r = await api('/api/basket/page', { method: 'POST', body: JSON.stringify({ companyId: state.company.id, ...snap, kind: 'auto' }) });
     state.pages++; state.jobs += r.jobs; if (state.session) state.session.pages++; renderStats(); chrome.storage.local.set({ pages: state.pages, jobs: state.jobs });
-    addLog({ ok: true, company: r.company, companyId: state.company.id, jobs: r.jobs, saved: r.saved, kind: r.kind, title: snap.title, time: new Date().toLocaleTimeString() });
+    addLog({ ok: true, company: r.company, companyId: state.company.id, ids: r.ids || [], dropped: r.dropped || 0, secs: Math.round((Date.now() - t0) / 1000), jobs: r.jobs, saved: r.saved, kind: r.kind, title: snap.title, time: new Date().toLocaleTimeString() });
   } catch (e) {
     addLog({ ok: false, error: e.message, title: snap.title, time: new Date().toLocaleTimeString() });
   } finally {
+    clearInterval(timer); tick.remove();
     state.sending = false; $('once').disabled = false; $('once').textContent = '放进篮子（读这一页）';
   }
 }

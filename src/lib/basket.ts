@@ -7,7 +7,7 @@
  */
 import { supabaseAdmin } from '@/lib/supabase';
 import { structureJobData } from '@/lib/agents/structurer-job';
-import { upsertJobsFromLog } from '@/lib/job-store';
+import { upsertJobsFromLog, mergedInto } from '@/lib/job-store';
 import { verifyToken, signToken, type SessionPayload } from '@/lib/jwt';
 
 export const BASKET_MODEL = () => process.env.BASKET_MODEL || process.env.CHEAP_MODEL || 'qwen-plus';
@@ -67,6 +67,13 @@ export async function ingestBasketPage(user: SessionPayload, p: BasketPage) {
     await supabaseAdmin.from('job_crawl_logs').update({ structurer_status: 'failed', error_message: '提炼失败' }).eq('id', log.id);
     throw new Error('这一页没提炼出结果，换一页再试');
   }
+  // 挡空壳：模型提炼出来、但名字在这一页原文里找不到的岗位不要（几乎全是导航的薄页面容易被挤出一个占位岗位）
+  const flat = (x: string) => String(x || '').replace(/\s+/g, '').toLowerCase();
+  const T = flat(text);
+  const coreName = (n: string) => flat(n).replace(/^[\u4e00-\u9fa5]{2,3}[-－—]/, '').replace(/[（(][^）)]*[）)]$/, '').slice(0, 12);
+  const kept = r.jobs.filter(j => { const c = coreName(String(j.name || '')); return c.length >= 2 && T.includes(c); });
+  const dropped = r.jobs.length - kept.length;
+  r.jobs = kept;
   // partial_page：篮子送来的只是一页，入库时不拿它判断别的岗位「已下线」
   const structured = { ...r, partial_page: true, pipeline_log: [{ key: 'basket', title: `数据外采篮 · ${user.email}`, status: 'success', color: 'green' }] };
   await supabaseAdmin.from('job_crawl_logs').update({ structurer_status: 'success', structured_json: structured }).eq('id', log.id);
@@ -85,7 +92,10 @@ export async function ingestBasketPage(user: SessionPayload, p: BasketPage) {
       await supabaseAdmin.from('jobs').update({ collect_flags: [...f] }).eq('id', j.id);
     }
   }
-  return { company: co.name, jobs: r.jobs.length, saved, kind: isDetail ? 'detail' : 'list', names: r.jobs.slice(0, 12).map(j => String(j.name || '')) };
+  // 这一篮最终落在哪几条岗位上（被合并的指到留下的那条），插件「去岗位库看」只看这几条
+  const { data: mine } = await supabaseAdmin.from('jobs').select('id, if_delete').eq('source_log_id', log.id);
+  const ids = [...new Set((mine || []).map(j => j.if_delete ? (mergedInto.get(j.id) || 0) : j.id).filter(Boolean))];
+  return { company: co.name, jobs: r.jobs.length, saved, dropped, ids, kind: isDetail ? 'detail' : 'list', names: r.jobs.slice(0, 12).map(j => String(j.name || '')) };
 }
 
 /** 待采清单：AI 自己啃不动的企业（库里有档、0 个在招岗位），附上卡在哪、可能的入口 */
