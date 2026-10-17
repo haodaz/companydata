@@ -1,7 +1,6 @@
 // 数据外采篮使用说明的操作截图（public/basket/step-*.png）
 //   node scripts/basket-shots.mjs
 // ① 扩展程序页：真实页面 + 中文标注；② 侧边栏三种状态：打开插件自己的 sidepanel.html，给 chrome.* 和平台接口装个替身；
-// ③ 平台「生成篮子口令」：本地 dev server 真实截图（要 3003 在跑）
 import { createRequire } from 'node:module';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -54,18 +53,5 @@ await panel('step-connect', {}, async p => { await p.evaluate(() => { document.g
 await panel('step-pick', { base: 'https://www.aidataoffice.com', token: 't' }, async p => { await p.type('#q', '百度'); await p.click('#search'); await new Promise(r => setTimeout(r, 400)); });
 await panel('step-follow', { base: 'https://www.aidataoffice.com', token: 't', company: { id: 1350, name: '百度公司' }, pages: 4, jobs: 31, log: RESULTS }, async p => { await p.click('#startStop'); await p.evaluate(() => { window.__fakeSession = true; }); });
 
-// ── ③ 平台上生成篮子口令 ──
-{
-  const tok = fs.readFileSync('.preview-token', 'utf8').trim();
-  const p = await b.newPage(); await p.setViewport({ width: 1100, height: 700, deviceScaleFactor: 2 });
-  await p.setCookie({ name: 'auth_token', value: tok, domain: 'localhost', path: '/' });
-  await p.goto('http://localhost:3003/basket', { waitUntil: 'networkidle2', timeout: 90000 });
-  await p.evaluate(() => [...document.querySelectorAll('button')].find(x => x.textContent.includes('生成篮子口令'))?.click());
-  await new Promise(r => setTimeout(r, 1500));
-  // 公开页面上的截图不能露真口令和邮箱：换成示意
-  await p.evaluate(() => { const t = document.querySelector('.bk-token textarea'); if (t) t.value = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IuekuuS-iyIsImVtYWlsIjoieW91QGV4YW1wbGUuY29tIn0.（示意口令，你的会不一样）'; const m = [...document.querySelectorAll('.bk-token .bk-muted')][0]; if (m) m.textContent = '口令 30 天有效（you@example.com）'; });
-  const el = await p.evaluateHandle(() => [...document.querySelectorAll('h2')].find(h => h.textContent.includes('连接我的篮子'))?.parentElement);
-  await el.asElement().screenshot({ path: `${OUT}/step-token.png` });
-  console.log('✓ 生成口令');
-}
+// （③ 生成口令的截图不要了：页面上真按钮就在「开始使用」里，放截图同事会当成按钮去点）
 await b.close();
