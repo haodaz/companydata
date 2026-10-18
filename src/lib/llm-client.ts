@@ -246,7 +246,7 @@ async function generateClaude(prompt: string, modelId: string, options?: { jsonM
   // 长输出（教案一章一万多 token）走流式，不然并发几路时会被连接超时掐掉（10-18 备课批量见过 4 章 timeout）
   const res = await client.messages.stream({
     model: modelId,
-    max_tokens: 32000,   // 教案一章可到 1.5 万字，16000 会截断（10-18 四章失败）
+    max_tokens: 64000,   // 教案一章可到 3.6 万字（潜水 255 下工位），32000 还会截断
     ...(system ? { system } : {}),
     ...(options?.webSearch ? { tools: [{ type: 'web_search_20260209' as any, name: 'web_search', max_uses: 5 }] as any } : {}),
     messages: [{ role: 'user', content: prompt }],
