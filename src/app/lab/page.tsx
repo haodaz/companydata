@@ -49,7 +49,7 @@ const CSS = `
 .ai100-bleed { margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); width: 100vw; }
 
 /* banner：我们自己的三个空间（3D / 360° 实拍）串成的无缝循环当背景，字压在上面 */
-.ai100-hero { position: relative; min-height: calc(100svh - 64px); display: flex; align-items: center; overflow: hidden; margin-top: -24px; }
+.ai100-hero { position: relative; min-height: 100svh; display: flex; align-items: center; overflow: hidden; margin-top: -24px; padding-top: 64px; box-sizing: border-box; }   /* 顶栏第一屏透明、压在首屏上（LabShell margin-bottom:-64px），所以首屏自己占满一屏并给顶栏留 64px */
 .ai100-hero > video, .ai100-hero > img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .ai100-hero .veil { position: absolute; inset: 0;
   background: linear-gradient(90deg, rgba(8,10,22,.9) 0%, rgba(8,10,22,.76) 34%, rgba(8,10,22,.32) 64%, rgba(8,10,22,.06) 100%),

@@ -104,6 +104,15 @@ const LAB_CSS = `
   background: rgba(8,10,22,.86) !important; border-bottom-color: rgba(255,255,255,.08) !important; color: #eef0fb;
   --ink: #eef0fb; --ink2: #c0c5e2; --ink3: #878dae; --line: rgba(255,255,255,.12); }
 .lab:not([data-theme="light"]):has(.sp-root) > header .lab-btn.ghost { color: #dfe2f5; background: rgba(255,255,255,.08); box-shadow: 0 0 0 1px rgba(255,255,255,.16); }
+/* 首页第一屏：顶栏透明、无底无线，压在整幅场景上；滚过第一屏 .clear 去掉就恢复 */
+.lab:has(.ai100-root) > header.lab-head { margin-bottom: -64px; transition: background .35s, border-color .35s, backdrop-filter .35s; }
+.lab:not([data-theme="light"]):has(.ai100-root) > header.clear, .lab[data-theme="light"]:has(.ai100-root) > header.clear, .lab:has(.ai100-root) > header.lab-head.clear {
+  background: transparent !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border-bottom-color: transparent !important; }
+.lab-brand-switch { margin-left: 6px; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 700; letter-spacing: .5px; color: #fff; text-decoration: none; white-space: nowrap;
+  background: linear-gradient(135deg, #6055f5, #12b5cb); box-shadow: 0 4px 14px rgba(96,85,245,.28); transition: transform .2s, box-shadow .2s; }
+.lab-brand-switch:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(96,85,245,.36); color: #fff; }
+.lab-brand-switch-arrow { font-size: 11px; opacity: .85; }
+@media (max-width: 560px) { .lab-brand-switch { padding: 6px 9px; font-size: 12px; } }
 /* 深色顶栏里的模型下拉。antd 新版结构是 .ant-select > .ant-select-content / .ant-select-suffix，
    以前写的 .ant-select-selector / -selection-item / -arrow 是旧版类名，一条都没命中，深色字落在深底上看不见 */
 .lab:not([data-theme="light"]):has(.ai100-root) > header .lab-head-model, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-head-model {
@@ -211,6 +220,14 @@ function Shell({ children }: { children: React.ReactNode }) {
   // 深浅两套：大屏投放、学校一体机、白天的教室都可能更适合浅色。按设备记住；
   // 也认 ?theme=light / ?theme=dark，方便把一体机的链接直接钉死成某一套。
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  // 首页第一屏顶栏透明（深浅色都一样），滚过第一屏才有导航底
+  const [clear, setClear] = useState(path === '/lab');
+  useEffect(() => {
+    if (path !== '/lab') { setClear(false); return; }
+    const on = () => setClear(window.scrollY < window.innerHeight - 72);
+    on(); window.addEventListener('scroll', on, { passive: true }); window.addEventListener('resize', on);
+    return () => { window.removeEventListener('scroll', on); window.removeEventListener('resize', on); };
+  }, [path]);
   useEffect(() => {
     const q = new URLSearchParams(window.location.search).get('theme');
     let t: string | null = q === 'light' || q === 'dark' ? q : null;
@@ -222,7 +239,6 @@ function Shell({ children }: { children: React.ReactNode }) {
   // 单个空间页 /lab/<id> 算体验。不跟数据后台的侧边栏混在一起
   const NAV = [
     { k: '/lab', t: '首页', on: (p: string) => p === '/lab' },
-    { k: '/work', t: '百业真活', on: (p: string) => p.startsWith('/work') },
     { k: '/lab/spaces', t: '百业工厂', on: (p: string) => p.startsWith('/lab/spaces') || p.startsWith('/lab/studio') || p.startsWith('/lab/assets') || p.startsWith('/lab/logic') || p.startsWith('/lab/admin') },
     { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || /^\/lab\/(?!spaces|studio|gallery|assets|logic|beta|admin|me|cert)[^/]+$/.test(p) },
     // 我的证书：游客也有（按浏览器本地的访客编号攒，里面有示范证书），登录后并上账号的
@@ -234,7 +250,7 @@ function Shell({ children }: { children: React.ReactNode }) {
       <style>{LAB_CSS}</style>
       <div className="lab-bg"><div className="lab-blob b1" /><div className="lab-blob b2" /><div className="lab-blob b3" /><div className="lab-grid" /></div>
 
-      <header className="lab-head" style={{ position: 'sticky', top: 0, zIndex: 20, display: 'flex', alignItems: 'center', gap: 14, background: 'rgba(245,246,255,.72)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(106,92,255,.12)' }}>
+      <header className={`lab-head${clear ? ' clear' : ''}`} style={{ position: 'sticky', top: 0, zIndex: 20, display: 'flex', alignItems: 'center', gap: 14, background: 'rgba(245,246,255,.72)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(106,92,255,.12)' }}>
         <div onClick={() => { if (!guest) router.push('/lab'); }} style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', minWidth: 0, flexShrink: 0 }}>
           <div className="lab-orb" style={{ ['--s' as string]: '34px' }}><div className="ring" /><div className="core" /></div>
           <div className="lab-head-brand" style={{ minWidth: 0 }}>
@@ -276,6 +292,8 @@ function Shell({ children }: { children: React.ReactNode }) {
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="1.5" y="9.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="9.5" width="5" height="5" rx="1.2" /></svg>
         </button>
         </>}
+        {/* 同公司另一个品牌：百业真活（放最右，和导航分开） */}
+        <a href="/work" className="lab-brand-switch" title="百业AI｜真活 · True work, true talent">百业真活<span className="lab-brand-switch-arrow">↗</span></a>
       </header>
 
       <div className="lab-wrap">{children}</div>
