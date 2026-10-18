@@ -6,6 +6,8 @@
 const BASE = process.env.LAB_BASE || 'http://localhost:3003';
 const T = { sheet: 'T712yYY1swI', code: 'rjob47BbXrM', design: '2ebPYYMKopQ', doc: '7qcJtWqngHs' };
 const OWNER = process.env.OWNER_KEY || '';
+import fs from 'node:fs';
+const TOKEN = process.env.LAB_TOKEN_FILE ? fs.readFileSync(process.env.LAB_TOKEN_FILE, 'utf8').trim() : '';   // 出题页要登录：npx tsx scripts/mint-preview-token.mts 铸 .preview-token
 const REPORT_SID = process.env.REPORT_SID || 'b9dca9f4-9a99-4649-aaa2-a752a186ed81';
 
 // 页面里的小工具：慢慢打字、按文字找按钮、等元素出现
@@ -25,6 +27,7 @@ const H = `(() => {
 const run = body => `async () => { const L = ${H}; ${body} }`;
 
 export default [
+  ...(TOKEN ? [{ cookie: { name: 'auth_token', value: TOKEN, url: BASE } }] : []),
   // ── 首页：只露一眼，马上进正题（旁白节奏不能拖） ──
   { go: `${BASE}/work`, wait: 5000 },
   { eval: run(`L.zoom(1.15); await L.sleep(400); return 'zoom';`) },
