@@ -18,14 +18,16 @@ const H = `(() => {
   async function until(fn, ms = 30000) { const t0 = Date.now(); while (Date.now() - t0 < ms) { try { const v = fn(); if (v) return v; } catch {} await sleep(300); } return null; }
   const setv = (el, v) => { const proto = el.tagName === 'TEXTAREA' ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype; Object.getOwnPropertyDescriptor(proto, 'value').set.call(el, v); el.dispatchEvent(new Event('input', { bubbles: true })); };
   async function type(el, text, cps = 22) { el.focus(); let cur = el.value || ''; for (const ch of text) { cur += ch; setv(el, cur); await sleep(1000 / cps); } }
+  const zoom = z => { document.documentElement.style.zoom = String(z); };
   async function scrollBy(px, steps = 30, ms = 40) { const y0 = window.scrollY; for (let i = 1; i <= steps; i++) { window.scrollTo(0, y0 + px * i / steps); await sleep(ms); } }
-  return (window.__wk = { sleep, vis, btn, click, until, setv, type, scrollBy });
+  return (window.__wk = { sleep, vis, btn, click, until, setv, type, scrollBy, zoom });
 })()`;
 const run = body => `async () => { const L = ${H}; ${body} }`;
 
 export default [
   // ── 首页 ──
   { go: `${BASE}/work`, wait: 5000 },
+  { eval: run(`L.zoom(1.15); await L.sleep(500); return 'zoom';`) },
   { note: 'landing' }, { hold: 4 },
   { eval: run(`await L.scrollBy(620, 40, 45); return 'v';`), timeout: 20 },
   { note: 'landing_values' }, { hold: 3 },
@@ -34,12 +36,14 @@ export default [
 
   // ── 出题（我的真活） ──
   { go: `${BASE}/work/mine`, wait: 4000 },
-  { note: 'create' }, { hold: 1.5 },
+  { eval: run(`L.zoom(1.35); await L.sleep(600); return 'zoom';`) },
+  { note: 'create' }, { hold: 2.5 },
   { eval: run(`await L.click(L.btn('出一道真活'), 1200); const ins = [...document.querySelectorAll('.ant-drawer input, .ant-drawer textarea')]; await L.type(ins[0], '宁德时代'); await L.sleep(400); await L.type(ins[1], '供应链计划'); await L.sleep(400); const ta = document.querySelector('.ant-drawer textarea'); if (ta) await L.type(ta, '德布勒森新厂爬坡，欧洲客户的需求表口径不一致，先把账对清'); await L.sleep(600); const rest = ins.filter(i => i.placeholder && /称呼|联系/.test(i.placeholder)); if (rest[0]) await L.type(rest[0], '王经理'); if (rest[1]) await L.type(rest[1], '138****8888'); await L.sleep(800); return 'filled';`), timeout: 60 },
   { hold: 2 },
 
   // ── 真活空间（已出好的题） ──
   { go: `${BASE}/work/${T.sheet}/owner?k=${OWNER}`, wait: 5000 },
+  { eval: run(`L.zoom(1.3); await L.sleep(600); return 'zoom';`) },
   { note: 'owner' }, { hold: 3 },
   { eval: run(`const tab = [...document.querySelectorAll('.ant-tabs-tab')].find(t => t.innerText.includes('rubric')); if (tab) { tab.click(); await L.sleep(1200); } await L.scrollBy(500, 30, 45); return 'rubric';`), timeout: 30 },
   { hold: 3 },
@@ -94,6 +98,7 @@ export default [
 
   // ── 管理：真活空间看做题情况与评分 ──
   { go: `${BASE}/work/${T.sheet}/owner?k=${OWNER}`, wait: 5000 },
+  { eval: run(`L.zoom(1.3); await L.sleep(600); return 'zoom';`) },
   { note: 'manage' }, { hold: 2 },
   { eval: run(`const tab = [...document.querySelectorAll('.ant-tabs-tab')].find(t => t.innerText.includes('做题情况')); if (tab) { tab.click(); await L.sleep(1500); } const b = L.btn('看报告'); if (b) { await L.click(b, 2500); const dr = document.querySelector('.ant-drawer-body'); if (dr) { for (let i = 0; i < 40; i++) { dr.scrollTop += 24; await L.sleep(60); } } } return 'report-drawer';`), timeout: 40 },
   { hold: 3 },
