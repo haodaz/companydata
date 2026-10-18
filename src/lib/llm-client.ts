@@ -243,13 +243,14 @@ async function generateClaude(prompt: string, modelId: string, options?: { jsonM
   const system = options?.jsonMode
     ? '你是一个只输出 JSON 的生成器：回复必须是一个合法的 JSON 对象，不要用 Markdown 代码块包裹，不要在 JSON 前后加任何说明文字。'
     : undefined;
-  const res = await client.messages.create({
+  // 长输出（教案一章一万多 token）走流式，不然并发几路时会被连接超时掐掉（10-18 备课批量见过 4 章 timeout）
+  const res = await client.messages.stream({
     model: modelId,
     max_tokens: 16000,
     ...(system ? { system } : {}),
     ...(options?.webSearch ? { tools: [{ type: 'web_search_20260209' as any, name: 'web_search', max_uses: 5 }] as any } : {}),
     messages: [{ role: 'user', content: prompt }],
-  });
+  }).finalMessage();
   if (res.stop_reason === 'refusal') throw new Error(`Claude 拒绝了这次请求${res.stop_details?.explanation ? `：${res.stop_details.explanation}` : ''}`);
   const text = res.content.filter((b): b is Extract<typeof b, { type: 'text' }> => b.type === 'text').map(b => b.text).join('\n');
   if (res.stop_reason === 'max_tokens') console.warn('[Claude] 输出到了 max_tokens 上限，可能被截断');
