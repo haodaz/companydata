@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { companyJobs, searchCompanies } from '@/lib/work/generator';
+import { companyJobs, searchCompanies, suggestRoles } from '@/lib/work/generator';
 
 export const runtime = 'nodejs';
 
@@ -7,6 +7,7 @@ export const runtime = 'nodejs';
 export async function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams;
   try {
+    if (q.get('role_q') != null) return NextResponse.json({ ok: true, ...(await suggestRoles(q.get('role_q') || '', q.get('company_id') ? Number(q.get('company_id')) : null)) });
     if (q.get('company_id')) return NextResponse.json({ ok: true, jobs: await companyJobs(Number(q.get('company_id'))) });
     return NextResponse.json({ ok: true, companies: await searchCompanies(q.get('q') || '') });
   } catch (e: any) { return NextResponse.json({ ok: false, error: String(e?.message || e) }, { status: 500 }); }

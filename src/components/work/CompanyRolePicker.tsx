@@ -22,10 +22,14 @@ export function CompanyRolePicker({ company, role, onCompany, onRole, size = 'la
     }, 250);
     return () => clearTimeout(t);
   }, [company, picked]);
+  const [occs, setOccs] = useState<{ id: number; name: string; category?: string; intro?: string }[]>([]);
+  const [roleSearched, setRoleSearched] = useState('');
   useEffect(() => {
-    if (!picked) { setJobs([]); return; }
-    (async () => { const j = await (await fetch(`/api/work/companies?company_id=${picked.id}`)).json().catch(() => null); setJobs(j?.jobs || []); })();
-  }, [picked]);
+    const q = role.trim(); if (!q) { setJobs([]); setOccs([]); setRoleSearched(''); return; }
+    const t = setTimeout(async () => { const j = await (await fetch(`/api/work/companies?role_q=${encodeURIComponent(q)}${picked ? `&company_id=${picked.id}` : ''}`)).json().catch(() => null); setJobs(j?.jobs || []); setOccs(j?.occupations || []); setRoleSearched(q); }, 250);
+    return () => clearTimeout(t);
+  }, [role, picked]);
+  const roleHitJob = jobs.find(j => j.title === role.trim()); const roleHitOcc = occs.find(o => o.name === role.trim());
   return (
     <>
       <AutoComplete value={company} size={size} style={{ width: '100%' }} placeholder="企业：输入名字，从库里选（如 宁德时代）"
@@ -38,10 +42,17 @@ export function CompanyRolePicker({ company, role, onCompany, onRole, size = 'la
         <Tag color={picked.has_profile ? 'blue' : 'default'}>{picked.has_profile ? `画像完整度 ${picked.completeness ?? '–'}` : '没有画像，只能按名字出题'}</Tag>
         <Tag color={picked.jobs ? 'purple' : 'default'}>在招岗位 {picked.jobs}</Tag>
       </div>}
-      <AutoComplete value={role} size={size} style={{ width: '100%' }} placeholder={picked && jobs.length ? `岗位：从 ${picked.name} 在招的 ${jobs.length} 个里选，或手填` : '岗位 / 职业：如 供应链计划、后端开发'}
-        options={jobs.map(j => ({ value: j.title, label: <div style={{ display: 'flex', gap: 8 }}><span>{j.title}</span><span style={{ color: '#888', fontSize: 12 }}>{[j.job_function, j.city].filter(Boolean).join(' · ')}</span></div> }))}
-        filterOption={(input, o) => String(o?.value || '').toLowerCase().includes(input.toLowerCase())}
+      <AutoComplete value={role} size={size} style={{ width: '100%' }} placeholder={picked ? `岗位：输入名字，会匹配 ${picked.name} 在招的岗位和职业库` : '岗位 / 职业：输入名字，会匹配职业库（如 供应链计划）'}
+        options={[
+          ...(jobs.length ? [{ label: <span style={{ fontSize: 11, color: '#999' }}>这家在招</span>, options: jobs.map(j => ({ value: j.title, label: <div style={{ display: 'flex', gap: 8 }}><span>{j.title}</span><span style={{ color: '#888', fontSize: 12 }}>{[j.job_function, j.city].filter(Boolean).join(' · ')}</span></div> })) }] : []),
+          ...(occs.length ? [{ label: <span style={{ fontSize: 11, color: '#999' }}>职业库</span>, options: occs.filter(o => !jobs.some(j => j.title === o.name)).map(o => ({ value: o.name, label: <div style={{ display: 'flex', gap: 8 }}><span>{o.name}</span><span style={{ color: '#888', fontSize: 12 }}>{o.category}</span></div> })) }] : []),
+        ]}
         onChange={v => onRole(v)} />
+      {role.trim().length >= 2 && roleSearched === role.trim() && <div style={{ marginTop: -4 }}>
+        {roleHitJob ? <Tag color="purple">已匹配 · {picked?.name} 在招「{roleHitJob.title}」{roleHitJob.job_function ? ` · ${roleHitJob.job_function}` : ''}</Tag> : null}
+        {roleHitOcc ? <Tag color="blue">职业库 · {roleHitOcc.name}{roleHitOcc.category ? `（${roleHitOcc.category}）` : ''}</Tag> : null}
+        {!roleHitJob && !roleHitOcc && <><Tag color="orange">新岗位「{role.trim()}」</Tag><span style={{ fontSize: 12, color: '#888' }}>{jobs.length || occs.length ? '下拉里有相近的，也可以直接用你写的' : '库里没有对应岗位 / 职业，照样出题，典型任务那层会缺'}</span></>}
+      </div>}
     </>
   );
 }

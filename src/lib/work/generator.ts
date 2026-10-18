@@ -240,6 +240,16 @@ export async function companyJobs(companyId: number, limit = 40) {
   return [...seen.values()].slice(0, limit);
 }
 
+/** 岗位边输边搜：这家企业在招的（可选）+ 职业库里名字 / 别名命中的 */
+export async function suggestRoles(q: string, companyId?: number | null) {
+  const qq = q.trim(); if (!qq) return { jobs: [], occupations: [] };
+  const [jobs, occ] = await Promise.all([
+    companyId ? companyJobs(companyId, 200).then(list => list.filter(j => j.title.toLowerCase().includes(qq.toLowerCase())).slice(0, 8)) : Promise.resolve([]),
+    db.from('occupations').select('id, name, career_category, intro').eq('if_delete', false).or(`name.ilike.%${qq}%,name_lang_cn.ilike.%${qq}%`).limit(6).then(r => (r.data || []).map(o => ({ id: o.id, name: o.name, category: o.career_category, intro: (o.intro || '').slice(0, 60) }))),
+  ]);
+  return { jobs, occupations: occ };
+}
+
 /** 第三步：最强模型先做一遍当基线（用和候选人一样的材料），再用同一套 rubric 评它 */
 export async function runBaseline(task: WorkTask, opts: { model?: string; institution?: string } = {}): Promise<{ model: string; answer: string; result: any }> {
   const model = opts.model || WORK_MODEL;
