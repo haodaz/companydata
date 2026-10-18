@@ -188,6 +188,9 @@ export async function looksLikeLogo(url: string, company: string): Promise<boole
       { inlineData: { mimeType: mime, data: buf.toString('base64') } },
       `Is this image the brand logo (logo mark and/or wordmark) of the company "${company}"? Answer false for: auto-generated placeholder cards that just print the company name over a generic illustration, photos of buildings / people / products, logos of a different company or of a recruiting platform. Return JSON {"logo": true|false}.`,
     ]);
+    const u = res.response.usageMetadata;
+    const { logTokenUsage } = await import('@/lib/token-logger');
+    await logTokenUsage({ tool_name: 'company-profile', task_name: 'Logo 识图', institution: company, model_id: 'gemini-3.8-flash', usageMetadata: { promptTokenCount: u?.promptTokenCount || 0, candidatesTokenCount: u?.candidatesTokenCount || 0, totalTokenCount: u?.totalTokenCount || 0 } }).catch(() => {});
     return /"logo"\s*:\s*true/.test(res.response.text());
   } catch { return false; }
 }

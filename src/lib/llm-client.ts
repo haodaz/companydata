@@ -28,6 +28,8 @@ export interface LLMResponse {
     promptTokenCount: number;
     candidatesTokenCount: number;
     totalTokenCount: number;
+    /** llm-client 兜底记账的记录编号（token-logger 回填） */
+    __logId?: number;
   };
 }
 
@@ -67,16 +69,29 @@ export async function generateContent(
   const resolvedModelId = resolveModel(modelId);
   // 本地「只用免费额度」：千问以外的模型（OpenAI / Gemini 都是付费的）一律不调
   if (process.env.DASHSCOPE_FREE_ONLY === '1' && !resolvedModelId.startsWith('qwen')) throw new Error(`已开「只用免费额度」，不调用付费模型 ${resolvedModelId}`);
-  if (isOpenAIModel(resolvedModelId)) {
-    return generateOpenAI(prompt, resolvedModelId, options);
-  }
-  if (isClaudeModel(resolvedModelId)) {
-    return generateClaude(prompt, resolvedModelId, options);
-  }
-  if (resolvedModelId.startsWith('qwen')) {
-    return generateQwen(prompt, resolvedModelId, options);
-  }
-  return generateGemini(prompt, resolvedModelId, options);
+  let res: LLMResponse;
+  if (isOpenAIModel(resolvedModelId)) res = await generateOpenAI(prompt, resolvedModelId, options);
+  else if (isClaudeModel(resolvedModelId)) res = await generateClaude(prompt, resolvedModelId, options);
+  else if (resolvedModelId.startsWith('qwen')) res = await generateQwen(prompt, resolvedModelId, options);
+  else res = await generateGemini(prompt, resolvedModelId, options);
+  await autoLog(res, resolvedModelId, options);
+  return res;
+}
+
+/**
+ * 记账兜底（2026-10-18，用户：「账要算全，职业画像 / 赛事 / 规范 / 企业画像都花了钱」）：
+ * 每一次成功的调用都先按「未归属」记一笔（免费额度、个人充值一样按市价算），记录编号留在 usageMetadata.__logId 上；
+ * 调用方随后 logTokenUsage 时会把这一条改成准确的功能 / 环节名，不会重复计。调用方忘了记的，账上也至少有「未归属」这笔。
+ */
+async function autoLog(res: LLMResponse, modelId: string, options?: { webSearch?: boolean }) {
+  if (process.env.LLM_AUTOLOG === '0') return;
+  try {
+    const { logTokenUsage, currentCost } = await import('@/lib/token-logger');
+    const ctx = currentCost();
+    await logTokenUsage({ tool_name: 'unattributed', task_name: ctx.task_name || ctx.tool_name || '（未归属）', model_id: res.model || modelId, usageMetadata: res.usageMetadata, search_calls: options?.webSearch ? 1 : 0 });
+    // 上下文里给了功能名就直接归过去（省得调用方再记一次）
+    if (ctx.tool_name && res.usageMetadata.__logId) await logTokenUsage({ tool_name: ctx.tool_name as any, task_name: ctx.task_name || ctx.tool_name, model_id: res.model || modelId, usageMetadata: res.usageMetadata, search_calls: options?.webSearch ? 1 : 0 });
+  } catch (e: any) { console.warn('[llm-client] 兜底记账失败：', String(e?.message).slice(0, 120)); }
 }
 
 // ──── 通义千问（阿里云百炼 DashScope 原生接口）────

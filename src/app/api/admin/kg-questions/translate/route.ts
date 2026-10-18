@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { requireAdminUser } from '@/lib/session';
 import { generateContent } from '@/lib/llm-client';
+import { withCost } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 
 export const runtime = 'nodejs';
@@ -24,7 +25,7 @@ export async function POST(req: Request) {
 返回 JSON：{ "question": ..., "answer": ..., "sources": [{ "title": ..., "url": ... }] }
 
 ${rows.map((r: any) => `问：${r.question}\n答：${r.reply}\n来源：${(r.sources || []).map((s: any) => `${s.id} ${s.title} ${s.url || ''}`).join('；')}${r.web_points ? `\n网上要点：${r.web_points}` : ''}`).join('\n\n')}`;
-  const r = await generateContent(prompt, process.env.PERSONA_CHAT_MODEL || 'qwen-plus', { jsonMode: true });
+  const r = await withCost({ tool_name: 'occupation', task_name: '问答归档', stage: 'use' }, () => generateContent(prompt, process.env.PERSONA_CHAT_MODEL || 'qwen-plus', { jsonMode: true }));
   const p = parseJsonLoose(r.text) || {};
   return NextResponse.json({ success: true, occupation_id: rows[0].occupation_id, occupation: occ, question: String(p.question || rows[0].question), answer: String(p.answer || ''), sources: Array.isArray(p.sources) ? p.sources : [] });
 }

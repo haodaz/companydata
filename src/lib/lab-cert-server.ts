@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { chapterTask, loadSpace } from '@/lib/skill-lab-server';
 import { band, bandLevel, certNo } from '@/lib/lab-cert';
 import { generateCheap } from '@/lib/llm-client';
+import { withCost } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 
 /** 这一行对社会的价值（证书画作页用）：每个空间第一次开证书时用便宜模型写一次，存进 profile.social_value */
@@ -11,14 +12,14 @@ async function socialValue(space: any): Promise<{ headline: string; lines: strin
   if (cur?.headline) return cur;
   try {
     const jd = space.jd_snapshot || {};
-    const r = await generateCheap(`
+    const r = await withCost({ space_id: space.id, stage: 'use', tool_name: 'skill-lab', task_name: '证书 · 社会价值' }, () => generateCheap(`
 职业：${space.profile?.role || jd.career?.profession || jd.title}（${jd.title || ''}）
 岗位职责：${String(jd.responsibilities || '').slice(0, 600)}
 写这个职业对社会的价值，用在职业体验证书的画作页上：
 - headline：一句话，16 字以内，具体、有分量，不喊口号（例：「把每一台手术，做成病人能回家的那一台」）
 - lines：3 条，每条 30 字以内，各讲一个具体的人群或场景（谁因为这一行而得到了什么）
 - 不写任何数字、百分比、倍数和统计结论（这是给投资人和学生看的证书，编出来的数字是硬伤）
-返回 JSON：{ "headline": "", "lines": ["", "", ""] }`, 'qwen-plus', { jsonMode: true });
+返回 JSON：{ "headline": "", "lines": ["", "", ""] }`, 'qwen-plus', { jsonMode: true }));
     const p = parseJsonLoose(r.text);
     const v = { headline: String(p.headline || '').slice(0, 40), lines: (Array.isArray(p.lines) ? p.lines : []).map((x: any) => String(x).slice(0, 60)).filter(Boolean).slice(0, 3) };
     if (!v.headline) return null;

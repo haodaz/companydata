@@ -6,6 +6,7 @@
  */
 import { parseJsonLoose, searchJson } from '@/lib/agents/search-llm';
 import { generateContent } from '@/lib/llm-client';
+import { withCost } from '@/lib/token-logger';
 
 /**
  * 国内信息走国内联网检索（阿里云百炼 · 通义千问 enable_search，每次搜索约 ¥0.004，Gemini 搜索约 ¥0.25）：
@@ -241,7 +242,7 @@ ${o.responsibility ? `工作内容：${String(o.responsibility).slice(0, 400)}\n
 中文作答，具体、可操作。
 `;
   const { parsed } = lab
-    ? { parsed: parseJsonLoose((await generateContent(prompt, modelId, { jsonMode: true })).text) }
+    ? { parsed: parseJsonLoose((await withCost({ tool_name: 'occupation', task_name: 'Occupation Tasks & Stations' }, () => generateContent(prompt, modelId, { jsonMode: true }))).text) }
     : await ask(prompt, cn(modelId), { tool_name: 'occupation', task_name: 'Occupation Tasks & Stations', institution: o.name, batch_id: batchId });
   const p = parsed || {};
   const arr = (v: any) => (Array.isArray(v) ? v : []);

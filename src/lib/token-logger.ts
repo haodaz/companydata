@@ -12,6 +12,8 @@ export interface CostContext {
   space_id?: string | null; chapter_id?: string | null; job_id?: string | null; actor?: string | null;
   /** create 创造（建空间、生一天、设计工位）/ use 使用（考试评分、问问我、你教我）/ review 评审 / media 美术与 3D */
   stage?: 'create' | 'use' | 'review' | 'media' | string | null;
+  /** 兜底记账用：llm-client 自动记的那一笔归到哪个功能 / 环节名（调用方随后 logTokenUsage 会把它改成更准的） */
+  tool_name?: string | null; task_name?: string | null;
 }
 const costStore = new AsyncLocalStorage<CostContext>();
 export function withCost<T>(ctx: CostContext, fn: () => Promise<T>): Promise<T> {
@@ -55,7 +57,9 @@ const PRICING: Record<string, { input: number; output: number }> = {
 };
 
 export interface TokenUsageParams {
-  tool_name: 'finder' | 'fetcher' | 'structurer-job' | 'company-profile' | 'company-pipeline' | 'company-deep-research' | 'competition-radar' | 'standard-radar' | 'occupation' | 'office-chief' | 'office-chat' | 'skill-lab' | 'flywheel' | 'lab-art' | 'lab-3d' | 'job-tagging';
+  tool_name: 'finder' | 'fetcher' | 'structurer-job' | 'company-profile' | 'company-pipeline' | 'company-deep-research' | 'competition-radar' | 'standard-radar' | 'occupation' | 'office-chief' | 'office-chat' | 'skill-lab' | 'flywheel' | 'lab-art' | 'lab-3d' | 'job-tagging'
+    | 'unattributed'   // llm-client 兜底记的、调用方没归属的（2026-10-18：账要算全）
+    | 'external';      // 系统外的花费补记：Nebius 黑客松额度、其他平台充值（scripts/lab-log-cost.mts --usd）
   task_name: string;      // e.g. "Careers URLs Search", "Extract Jobs"
   institution?: string;   // 企业名或目标 URL（列名沿用院校版）
   model_id: string;
@@ -63,7 +67,11 @@ export interface TokenUsageParams {
     promptTokenCount: number;
     candidatesTokenCount: number;
     totalTokenCount: number;
+    /** llm-client 兜底记账时写上的记录编号：再 logTokenUsage 就改那条，不重插 */
+    __logId?: number;
   };
+  /** 直接给金额（美元）：系统外的花费补记，不按 token 算 */
+  cost_usd?: number;
   success?: boolean;
   error_message?: string;
   batch_id?: number;
@@ -105,7 +113,8 @@ const USD_CNY = () => parseFloat(process.env.USD_CNY_RATE || '7.2');
 export async function logTokenUsage(params: CostParams) {
   try {
     const { tool_name, task_name, institution, model_id, usageMetadata, success = true, error_message, batch_id, search_calls = 0, units = 0 } = params;
-    const ctx = { ...currentCost(), ...Object.fromEntries((['space_id', 'chapter_id', 'job_id', 'actor', 'stage'] as const).filter(k => params[k] !== undefined).map(k => [k, params[k]])) };
+    const base = currentCost();
+    const ctx = Object.fromEntries((['space_id', 'chapter_id', 'job_id', 'actor', 'stage'] as const).map(k => [k, params[k] !== undefined ? params[k] : base[k]]));
 
     const resolvedModelId = resolveModel(model_id);
     const inputTokens = usageMetadata?.promptTokenCount || 0;
@@ -119,7 +128,7 @@ export async function logTokenUsage(params: CostParams) {
     const unitCost = units * price.unit_price;   // 出图按张、视频按秒
     const rate = USD_CNY();
     const toUsd = (v: number) => price.currency === 'CNY' ? v / rate : v;
-    const costUsd = toUsd(tokenCost + searchCost + unitCost);
+    const costUsd = params.cost_usd != null ? params.cost_usd : toUsd(tokenCost + searchCost + unitCost);
 
     const row: Record<string, any> = {
         tool_name,
@@ -142,18 +151,27 @@ export async function logTokenUsage(params: CostParams) {
         ...(units ? { units, unit: price.unit } : {}),
         ...Object.fromEntries(Object.entries(ctx).filter(([, v]) => v !== undefined && v !== null && v !== '')),
     };
+    // llm-client 已经兜底记过这一笔：改那条的归属，不重插（2026-10-18）
+    if (usageMetadata?.__logId) {
+      const patch: Record<string, any> = { tool_name, task_name, institution: institution || '', success, error_message, batch_id, search_calls, search_cost_usd: toUsd(searchCost), total_cost_usd: costUsd, ...(units ? { units, unit: price.unit } : {}), ...Object.fromEntries(Object.entries(ctx).filter(([, v]) => v !== undefined && v !== null && v !== '')) };
+      const { error } = await supabase.from('token_usage_logs').update(patch).eq('id', usageMetadata.__logId);
+      if (!error) return;
+      console.warn('[Token Logger] 改兜底记录失败，改为新插一条：', error.message);
+    }
     // 迁移 014 / 021 还没跑时缺列：报哪列缺就去掉哪列再写，不丢记录
-    let { error } = await supabase.from('token_usage_logs').insert(row);
+    let { data: ins, error } = await supabase.from('token_usage_logs').insert(row).select('id').single();
     for (let i = 0; error && i < 8; i++) {
       const col = Object.keys(row).find(k => (error!.message || '').includes(`'${k}'`) || (error!.message || '').includes(`"${k}"`));
       if (!col) break;
       delete row[col];
-      ({ error } = await supabase.from('token_usage_logs').insert(row));
+      ({ data: ins, error } = await supabase.from('token_usage_logs').insert(row).select('id').single());
     }
 
 
     if (error) {
       console.error("[Token Logger] DB Insert error:", error);
+    } else if (usageMetadata && params.tool_name === 'unattributed' && ins?.id) {
+      usageMetadata.__logId = ins.id;   // 兜底记账：编号留在 usageMetadata 上，调用方随后正式记账时改这一条
     }
   } catch (err) {
     console.error("[Token Logger] Failed to log usage:", err);
