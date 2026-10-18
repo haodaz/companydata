@@ -6,7 +6,7 @@
 process.loadEnvFile('.env.local');
 const { supabaseAdmin: db } = await import('@/lib/supabase');
 const { selectAll } = await import('@/lib/supabase-all');
-const { searchCompetitions, extractCompetitionsFromPage } = await import('@/lib/agents/competition-radar');
+const { searchCompetitions, extractCompetitionsFromPage, PLATFORM_SOURCES } = await import('@/lib/agents/competition-radar');
 const { fetchJinaUrl } = await import('@/lib/agents/fetcher');
 const { upsertCompetitions } = await import('@/lib/competition-store');
 const { resolveCompanyId } = await import('@/lib/company-match');
@@ -50,7 +50,11 @@ const before = known.size;
 const { data: task, error: te } = await db.from('competition_tasks').insert({ name: opt('name', `赛事雷达 · ${new Date().toISOString().slice(0, 10)} · 国内（十月 Hacktoberfest）`), notes: '脚本批量扫：国内主题 + 头部企业逐家查；千问联网检索', model_id: MODEL, created_by: 'script', status: 'running' }).select().single();
 if (te) throw te;
 const rows = [];
-for (const q of QUERIES) rows.push({ task_id: task.id, query: q.query, company: q.company || null, company_id: q.company ? await resolveCompanyId(q.company) : null, kinds: q.kinds || [], region: 'china', rewards: q.rewards || [], only_open: true, count: 12, enrich: true, model_id: MODEL, status: 'pending', created_by: 'script' });
+// 常驻信源：比赛平台列表页，每个平台记一条（不联网检索，直接抓）
+const PLATFORMS = PLATFORM_SOURCES.filter(p => p.region === 'china' || process.argv.includes('--overseas'));
+for (const p of PLATFORMS) rows.push({ task_id: task.id, query: `平台列表页 · ${p.name}`, company: null, company_id: null, kinds: [], region: p.region, rewards: [], only_open: true, count: 30, enrich: true, model_id: MODEL, status: 'pending', created_by: 'script' });
+const ONLY_PLATFORMS = process.argv.includes('--platforms-only');
+if (!ONLY_PLATFORMS) for (const q of QUERIES) rows.push({ task_id: task.id, query: q.query, company: q.company || null, company_id: q.company ? await resolveCompanyId(q.company) : null, kinds: q.kinds || [], region: 'china', rewards: q.rewards || [], only_open: true, count: 12, enrich: true, model_id: MODEL, status: 'pending', created_by: 'script' });
 const { data: searches, error: se } = await db.from('competition_searches').insert(rows).select('id, query, company, company_id, kinds, rewards');
 if (se) throw se;
 console.log(`任务 ${task.id}：${searches!.length} 条检索，模型 ${MODEL}，库里原有 ${before} 个赛事`);
@@ -65,6 +69,8 @@ const urlsOf = new Map<number, { url: string; title: string }[]>();
 let fails = 0;
 await pool(searches!, PAR, async s => {
   await db.from('competition_searches').update({ status: 'running', batch_id: batchOf.get(s.id) }).eq('id', s.id);
+  const plat = PLATFORMS.find(p => s.query === `平台列表页 · ${p.name}`);
+  if (plat) { urlsOf.set(s.id, [{ url: plat.url, title: plat.name }]); console.log(`① ${plat.name}：常驻信源`); return; }
   try {
     const r = await searchCompetitions({ query: s.query, company: s.company, kinds: s.kinds, rewards: s.rewards, region: 'china', onlyOpen: true, count: 12 }, MODEL, batchOf.get(s.id)!);
     const list = [...r.sources];

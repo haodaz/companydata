@@ -12,6 +12,22 @@ import { COMPETITION_FIELDS, COMPETITION_KIND_LABELS, COMPETITION_LEVEL_LABELS, 
 
 const TOOL = 'competition-radar' as const;
 
+/** 常驻信源：比赛平台的「正在进行」列表页，一页就是一批在报名的比赛。每次批量扫都直接抓，不靠搜索碰运气 */
+export const PLATFORM_SOURCES: { name: string; url: string; region: 'china' | 'overseas' }[] = [
+  { name: '阿里云天池', url: 'https://tianchi.aliyun.com/competition/activeList', region: 'china' },
+  { name: '和鲸社区', url: 'https://www.heywhale.com/home/competition', region: 'china' },
+  { name: 'DataFountain', url: 'https://www.datafountain.cn/competitions', region: 'china' },
+  { name: '讯飞开放平台', url: 'https://challenge.xfyun.cn/', region: 'china' },
+  { name: '百度飞桨 AI Studio', url: 'https://aistudio.baidu.com/competition', region: 'china' },
+  { name: '华为云大赛', url: 'https://competition.huaweicloud.com/competitions', region: 'china' },
+  { name: '魔搭 ModelScope', url: 'https://www.modelscope.cn/competition', region: 'china' },
+  { name: '赛氪', url: 'https://www.saikr.com/vs', region: 'china' },
+  { name: '牛客竞赛', url: 'https://ac.nowcoder.com/acm/contest/vip-index', region: 'china' },
+  { name: '腾讯云开发者', url: 'https://cloud.tencent.com/developer/competition', region: 'china' },
+  { name: 'Devpost', url: 'https://devpost.com/hackathons?status[]=open', region: 'overseas' },
+  { name: 'Kaggle', url: 'https://www.kaggle.com/competitions', region: 'overseas' },
+];
+
 export interface RadarParams { query: string; company?: string | null; kinds?: string[]; region?: string; rewards?: string[]; onlyOpen?: boolean; count?: number }
 export interface Candidate {
   name: string; organizer: string | null; official_url: string | null; registration_url: string | null; kind: string | null; level: string | null;
