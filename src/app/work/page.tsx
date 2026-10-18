@@ -4,12 +4,17 @@
  * 百业AI｜真活 · 公开首页（静态宣传页 + C 端自助出题，老板 / 带队的人不绑 HR、不用登录）
  * 口径照 lab-landing-style：标题直说不自问自答；截图当环境、要真实截图（public/work/*.png 由录制脚本截）。
  */
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 
-const ENVS = [{ v: '', l: '按岗位自动选' }, { v: 'doc', l: '文档 / 对账台' }, { v: 'code', l: '代码台' }, { v: 'sheet', l: '表格 / 数据台' }, { v: 'design', l: '设计台' }];
-const ENV_NAME: Record<string, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台' };
 
+const I = (d: string) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>;
+const STEPS = [
+  { t: '出题', d: '填企业和岗位，两三分钟出一道真活：任务书、材料包、逐条标准，AI 先做一遍。', icon: I('M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z M14 4v6h6 M8 14h8 M8 18h5') },
+  { t: '分享', d: '参与链接发给候选人或团队，留个名字就能做。', icon: I('M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1 M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1') },
+  { t: '候选人做真活', d: '看材料、用 AI、交付成果，每一步都留痕。', icon: I('M3 5h18v11H3z M2 20h20 M9 9l3 3 4-4') },
+  { t: '看考评', d: '结果逐条有证据，过程有高光和风险时刻，还和 AI 基线比。', icon: I('M4 20V10 M10 20V4 M16 20v-7 M22 20H2') },
+];
 const SHOTS = [
   { src: '/work/shot-sheet.png', cap: '表格 / 数据台 · 宁德时代 · 供应链计划：三种单位混在一张需求表里，先把账对清' },
   { src: '/work/shot-code.png', cap: '代码台 · 嵌入式软件：写函数、跑自测用例，AI 随便用' },
@@ -18,20 +23,6 @@ const SHOTS = [
 ];
 
 export default function WorkLanding() {
-  const [f, setF] = useState({ company: '', role: '', env: '', focus: '', name: '', contact: '' });
-  const [busy, setBusy] = useState(''); const [err, setErr] = useState('');
-  const [done, setDone] = useState<any>(null);
-  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setF(x => ({ ...x, [k]: e.target.value }));
-  const go = async () => {
-    setErr(''); if (!f.company.trim() || !f.role.trim()) return setErr('企业和岗位都要填'); if (!f.name.trim() || !f.contact.trim()) return setErr('留个称呼和联系方式，管理链接只给你');
-    setBusy('在拼这家企业的材料、出题、做材料包、定标准、让 AI 先做一遍……约 2–3 分钟，别关页面');
-    try {
-      const j = await (await fetch('/api/work/create', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(f) })).json();
-      if (!j.ok) throw new Error(j.error);
-      setDone(j);
-    } catch (e: any) { setErr(e.message); } finally { setBusy(''); }
-  };
-  const origin = typeof location !== 'undefined' ? location.origin : '';
   return (
     <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a2e', fontFamily: 'var(--font-geist-sans), -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif' }}>
       {/* 顶栏 */}
@@ -39,7 +30,7 @@ export default function WorkLanding() {
         <div style={{ fontWeight: 800, letterSpacing: 1 }}>百业AI<span style={{ color: '#6055f5' }}>｜</span>真活</div>
         <span style={{ color: '#888', fontSize: 13 }}>平方智能</span>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 16, fontSize: 13 }}>
-          <a href="#how" style={lnk}>怎么用</a><a href="#envs" style={lnk}>操作台</a><a href="#shots" style={lnk}>看看长什么样</a><a href="#create" style={{ ...lnk, color: '#fff', background: '#6055f5', padding: '6px 14px', borderRadius: 999 }}>出一道真活</a>
+          <a href="#how" style={lnk}>怎么用</a><a href="#envs" style={lnk}>操作台</a><a href="#shots" style={lnk}>看看长什么样</a><Link href="/work/mine" style={{ ...lnk, color: '#fff', background: '#6055f5', padding: '6px 14px', borderRadius: 999 }}>出一道真活</Link>
         </div>
       </div>
 
@@ -57,7 +48,7 @@ export default function WorkLanding() {
             ))}
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <a href="#create" style={{ ...btn, textDecoration: 'none', height: 52, display: 'inline-flex', alignItems: 'center', padding: '0 28px' }}>出一道真活 →</a>
+            <Link href="/work/mine" style={{ ...btn, textDecoration: 'none', height: 52, display: 'inline-flex', alignItems: 'center', padding: '0 28px' }}>出一道真活 →</Link>
             <a href="#shots" style={{ ...btnGhost, textDecoration: 'none', height: 52, display: 'inline-flex', alignItems: 'center' }}>看看长什么样</a>
           </div>
           <div style={{ marginTop: 18, fontSize: 13, color: '#8a8fa8' }}>不用注册 · 出题约 2–3 分钟 · 每人每天 3 道 · 报告只写「观察到」，不下定性</div>
@@ -75,11 +66,17 @@ export default function WorkLanding() {
         </div>
       </section>
 
-      {/* 怎么用 */}
-      <section id="how" style={{ maxWidth: 1180, margin: '0 auto', padding: '40px 28px 8px' }}>
-        <h2 style={h2}>四步，不用懂 HR</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 14 }}>
-          {[['1 · 出题', '填企业 + 岗位（想考什么可以多说一句）。生成器拼材料 → 锚定业务问题 → 展开成任务、材料包、逐条标准 → AI 先做一遍。'], ['2 · 甩链接', '参与链接给候选人或团队，留个名字就能做；你拿管理链接，谁做了、做得怎样都在里面。'], ['3 · 他做', '在自己的操作台上做：看材料、随便用 AI、写交付物。所有动作记成事件流。'], ['4 · 看报告', '结果逐条带证据、和 AI 基线比；过程有高光 / 风险时刻；六维人机协作观察。']].map(([t, d]) => <div key={t} style={card}><div style={{ color: '#6055f5', fontWeight: 800, marginBottom: 6 }}>{t}</div><div style={{ fontSize: 14, color: '#4a4f66', lineHeight: 1.75 }}>{d}</div></div>)}
+      {/* 怎么用：一道真活就是招聘里的一个小项目——出题、分享、候选人做、看考评 */}
+      <section id="how" style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 28px 8px' }}>
+        <h2 style={h2}>一道真活，就是招聘里的一个小项目</h2>
+        <div style={{ color: '#4a4f66', marginBottom: 18 }}>四步走完，不用懂 HR。</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: 14 }}>
+          {STEPS.map((st, i) => <div key={st.t} style={{ ...card, position: 'relative', overflow: 'hidden', padding: '22px 20px 20px' }}>
+            <div style={{ position: 'absolute', right: -10, top: -14, fontSize: 96, fontWeight: 900, color: 'rgba(96,85,245,.07)', lineHeight: 1 }}>{i + 1}</div>
+            <div style={{ width: 44, height: 44, borderRadius: 12, background: 'linear-gradient(135deg,#6055f5,#12b5cb)', display: 'grid', placeItems: 'center', marginBottom: 12 }}>{st.icon}</div>
+            <div style={{ fontWeight: 800, fontSize: 17, marginBottom: 6 }}>{st.t}</div>
+            <div style={{ fontSize: 14, color: '#4a4f66', lineHeight: 1.75 }}>{st.d}</div>
+          </div>)}
         </div>
       </section>
 
@@ -99,55 +96,26 @@ export default function WorkLanding() {
         </div>
       </section>
 
-      {/* 出题 */}
+      {/* 入口：出真活 / 管真活在独立页 */}
       <section id="create" style={{ maxWidth: 1180, margin: '0 auto', padding: '48px 28px 72px' }}>
-        <h2 style={h2}>出一道真活</h2>
-        {!done ? (
-          <div style={{ ...card, padding: '22px 24px' }}>
-            <div style={grid}>
-              <L label="企业"><input value={f.company} onChange={set('company')} placeholder="公司名，如 宁德时代" style={inp} /></L>
-              <L label="岗位"><input value={f.role} onChange={set('role')} placeholder="要考的岗位 / 职业，如 供应链计划、后端开发" style={inp} /></L>
-              <L label="操作台"><select value={f.env} onChange={set('env')} style={inp}>{ENVS.map(e => <option key={e.v} value={e.v}>{e.l}</option>)}</select></L>
-              <L label="你想考什么（选填）"><input value={f.focus} onChange={set('focus')} placeholder="比如：聚焦某条产线的排产冲突；给 3 年以内的人；难一点" style={inp} /></L>
-              <L label="你的称呼"><input value={f.name} onChange={set('name')} placeholder="如 王经理" style={inp} /></L>
-              <L label="联系方式"><input value={f.contact} onChange={set('contact')} placeholder="手机 / 微信 / 邮箱（管理链接只发给你）" style={inp} /></L>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 16, flexWrap: 'wrap' }}>
-              <button onClick={go} disabled={!!busy} style={btn}>{busy ? '出题中…' : '出一道真活 →'}</button>
-              <span style={{ fontSize: 13, color: '#8a8fa8' }}>每人每天 3 道 · 出题约 2–3 分钟 · 不用注册</span>
-            </div>
-            {busy && <div style={{ marginTop: 12, color: '#4c43c9', fontSize: 14 }}>{busy}</div>}
-            {err && <div style={{ marginTop: 12, color: '#c0392b', fontSize: 14 }}>{err}</div>}
+        <div style={{ ...card, padding: '28px 30px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, alignItems: 'center' }}>
+          <div>
+            <h2 style={{ ...h2, marginBottom: 8 }}>出一道真活</h2>
+            <div style={{ color: '#4a4f66', lineHeight: 1.8 }}>填企业和岗位，两三分钟出一道带材料包、逐条标准和 AI 基线的真活。出题、分享参与链接、看每个人的考评，都在「我的真活」这一页，不用注册。</div>
           </div>
-        ) : (
-          <div style={{ ...card, padding: '22px 24px' }}>
-            <div style={{ fontSize: 12, letterSpacing: 2, color: '#12a150', fontWeight: 700 }}>题出好了</div>
-            <h3 style={{ margin: '6px 0 4px', fontSize: 22 }}>{done.title}</h3>
-            <div style={{ color: '#4a4f66', marginBottom: 16 }}>{ENV_NAME[done.env]} · AI 基线 {done.baseline ?? '未跑成（管理页可重跑）'} 分</div>
-            <Row label="参与链接（甩给候选人 / 团队）" value={`${origin}/work/${done.share_token}`} />
-            <Row label="管理链接（只给你：看每个人的报告、发布 / 下架、重跑基线）" value={`${origin}/work/${done.share_token}/owner?k=${done.owner_key}`} warn />
-            {done.notes?.length ? <div style={{ fontSize: 13, color: '#b7791f', marginTop: 10 }}>材料缺口：{done.notes.join('；')}（题里会如实标「示例数据」）</div> : null}
-            <div style={{ marginTop: 18, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              <Link href={`/work/${done.share_token}/owner?k=${done.owner_key}`} style={{ ...btn, textDecoration: 'none', display: 'inline-block' }}>先看看题 →</Link>
-              <button onClick={() => setDone(null)} style={btnGhost}>再出一道</button>
-            </div>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+            <Link href="/work/mine" style={{ ...btn, textDecoration: 'none', height: 52, display: 'inline-flex', alignItems: 'center', padding: '0 28px' }}>进入我的真活 →</Link>
+            <Link href="/work/T712yYY1swI" style={{ ...btnGhost, textDecoration: 'none', height: 52, display: 'inline-flex', alignItems: 'center' }}>先试一道示范题</Link>
           </div>
-        )}
+        </div>
       </section>
       <div style={{ textAlign: 'center', fontSize: 12, color: '#8a8fa8', padding: '0 28px 36px' }}>百业AI｜真活 · 平方智能 · 和 AI 百业（aisimjob.com）同源：真活看他会不会，百业带他学会</div>
     </div>
   );
 }
 
-function L({ label, children }: { label: string; children: React.ReactNode }) { return <label style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12, color: '#8a8fa8', fontWeight: 600 }}>{label}{children}</label>; }
-function Row({ label, value, warn }: { label: string; value: string; warn?: boolean }) {
-  const [c, setC] = useState(false);
-  return <div style={{ marginBottom: 10 }}><div style={{ fontSize: 12, color: warn ? '#b7791f' : '#8a8fa8', fontWeight: 600 }}>{label}</div><div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}><code style={{ fontSize: 13, background: '#f7f8fc', padding: '6px 10px', borderRadius: 8, border: '1px solid #e8e9f0', wordBreak: 'break-all', color: '#1a1a2e' }}>{value}</code><button onClick={() => { navigator.clipboard.writeText(value); setC(true); setTimeout(() => setC(false), 1500); }} style={btnGhost}>{c ? '已复制' : '复制'}</button></div></div>;
-}
 const lnk: React.CSSProperties = { color: '#4a4f66', textDecoration: 'none' };
 const h2: React.CSSProperties = { fontSize: 26, margin: '0 0 16px', fontWeight: 800 };
 const card: React.CSSProperties = { background: '#f7f8fc', border: '1px solid #e8e9f0', borderRadius: 16, padding: '18px 20px' };
-const grid: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 12 };
-const inp: React.CSSProperties = { padding: '10px 12px', border: '1px solid #d9dbe6', borderRadius: 10, fontSize: 14, outline: 'none', color: '#1a1a2e', fontWeight: 400, background: '#fff' };
 const btn: React.CSSProperties = { padding: '12px 24px', borderRadius: 999, border: 0, background: 'linear-gradient(135deg,#6055f5,#12b5cb)', color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: 15 };
 const btnGhost: React.CSSProperties = { padding: '10px 18px', borderRadius: 999, border: '1px solid #d9dbe6', background: '#fff', color: '#1a1a2e', cursor: 'pointer', fontSize: 14 };
