@@ -288,67 +288,16 @@ export default function TokenUsagePage() {
         <ModelDistribution modelStats={stats.model_stats} currency={currency} />
       )}
 
-      {/* 功能分类统计 */}
+      {/* 功能分布：钱花在哪类活上（2026-10-18 用户：职业画像低频但贵，别让人以为是挖岗位贵） */}
       {stats?.tool_stats && Object.keys(stats.tool_stats).length > 0 && (
-        <Card size="small" style={{ marginBottom: 24, borderRadius: 12 }}>
-          <div style={{ marginBottom: 12 }}>
-            <Text strong style={{ fontSize: 13 }}>📋 功能分类统计</Text>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
-            {Object.entries(stats.tool_stats)
-              .sort(([, a], [, b]) => b.tokens - a.tokens)
-              .map(([tool, s]) => {
-                const TOOL_CONFIG: Record<string, { label: string; icon: string; color: string }> = {
-                  'talent-web-search': { label: '🔍 人才检索', icon: '🔍', color: '#6055f5' },
-                  'translate': { label: '📋 结构化转译', icon: '📋', color: '#10b981' },
-                  'batch-web-search': { label: '📦 批量检索', icon: '📦', color: '#fa8c16' },
-                  'graph-search': { label: '🕸️ 图谱检索', icon: '🕸️', color: '#eb2f96' },
-                };
-                const config = TOOL_CONFIG[tool] || { label: tool, icon: '⚙️', color: '#8c8c8c' };
-                const totalCost = currency === 'CNY'
-                  ? s.cost_usd * USD_TO_CNY + (s.cost_cny || 0)
-                  : s.cost_usd + (s.cost_cny || 0) / USD_TO_CNY;
-                return (
-                  <div
-                    key={tool}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: 12,
-                      padding: '10px 14px', background: '#fafbff', borderRadius: 10,
-                      border: `1px solid ${config.color}22`,
-                      borderLeft: `4px solid ${config.color}`,
-                    }}
-                  >
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 14, fontWeight: 600, color: '#1a1a2e', marginBottom: 4 }}>
-                        {config.label}
-                      </div>
-                      <div style={{ display: 'flex', gap: 16, fontSize: 12, color: '#666' }}>
-                        <span>{s.count} 次</span>
-                        <span>{formatTokens(s.tokens)} tokens</span>
-                        <span style={{ fontWeight: 600, color: config.color }}>
-                          {currency === 'CNY' ? formatCostCny(totalCost) : formatCostUsd(totalCost)}
-                        </span>
-                      </div>
-                    </div>
-                    <div style={{
-                      width: 40, height: 40, borderRadius: 10,
-                      background: `${config.color}15`, display: 'flex',
-                      alignItems: 'center', justifyContent: 'center', fontSize: 20,
-                    }}>
-                      {config.icon}
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </Card>
+        <ToolDistribution toolStats={stats.tool_stats} currency={currency} />
       )}
 
       {/* 按「功能 | 环节」：钱花在哪个工序（百业的成本在百业后台 /lab/admin，2026-10-12 拆开） */}
       {!!stats?.task_stats?.length && (
         <Card size="small" style={{ marginBottom: 24, borderRadius: 12 }} title={<Text strong style={{ fontSize: 13 }}>🧭 按功能 | 环节（前 15）</Text>}>
           <Table size="small" rowKey="key" pagination={false} dataSource={stats.task_stats.slice(0, 15)}
-            columns={[{ title: '功能 | 环节', dataIndex: 'key' }, { title: '次数', dataIndex: 'count', width: 70 }, { title: 'Token', dataIndex: 'tokens', width: 110, render: (v: number) => formatTokens(v) }, { title: '花费', dataIndex: 'cost', width: 100, render: (v: number) => currency === 'CNY' ? formatCostCny(v * USD_TO_CNY) : formatCostUsd(v) }]} />
+            columns={[{ title: '功能 | 环节', dataIndex: 'key', render: (k: string) => { const [t, ...rest] = k.split(' | '); return `${TOOL_LABELS[t] || t} | ${taskLabel(rest.join(' | '))}`; } }, { title: '次数', dataIndex: 'count', width: 70 }, { title: 'Token', dataIndex: 'tokens', width: 110, render: (v: number) => formatTokens(v) }, { title: '花费', dataIndex: 'cost', width: 100, render: (v: number) => currency === 'CNY' ? formatCostCny(v * USD_TO_CNY) : formatCostUsd(v) }]} />
         </Card>
       )}
 
@@ -534,11 +483,50 @@ export default function TokenUsagePage() {
   );
 }
 
-/** 模型分布：左边饼图（按成本占比），右边明细表；明细默认只显示前 5，展开看全部 */
 const PIE_COLORS = ['#6055f5', '#10b981', '#fa8c16', '#eb2f96', '#1677ff', '#13c2c2', '#faad14', '#8c8c8c'];
+type PieRow = { model: string; count: number; tokens: number; cost: number };
 function ModelDistribution({ modelStats, currency }: { modelStats: Record<string, { count: number; tokens: number; cost: number }>; currency: Currency }) {
+  return <CostPie title="模型分布" keyTitle="模型" unit="个模型" rows={Object.entries(modelStats).map(([model, s]) => ({ model, ...s }))} currency={currency} />;
+}
+/** 功能名 → 中文（tool_name 见 token-logger） */
+const TOOL_LABELS: Record<string, string> = {
+  finder: '寻源（找招聘入口）', fetcher: '抓页读页', 'structurer-job': '岗位结构化', 'job-tagging': '岗位打标',
+  'company-profile': '企业画像', 'company-pipeline': '企业画像流水线', 'company-deep-research': '企业深度尽调',
+  'competition-radar': '赛事雷达', 'standard-radar': '行业标准与规程', occupation: '职业画像', flywheel: '需求飞轮',
+  'office-chief': '虚拟工厂 · 主管', 'office-chat': '虚拟工厂 · 对话',
+  'skill-lab': 'AI 百业 · 空间与章节', 'lab-art': 'AI 百业 · 美术', 'lab-3d': 'AI 百业 · 3D',
+  unattributed: '未归属（兜底记账）', external: '系统外补记',
+};
+/** 环节名 → 中文（task_name 是代码里的英文记账名；带「·」后缀的只翻前半） */
+const TASK_LABELS: Record<string, string> = {
+  'Job Lang 1014': '岗位语言归一（10-14 补）', 'Extract Jobs': '从页面提取岗位', 'List Openings': '列出在招岗位', 'Search Job Fields': '补岗位字段（联网）',
+  'Evaluate Sub-page': '判断子页面有没有岗位', 'Sub-page Discovery (15 links)': '发现招聘子页面',
+  'Campus URLs Search': '找校招入口', 'Recruit Channels Search': '找招聘渠道', 'Generate Finder Report': '寻源报告',
+  'Locate Official Pages': '定位官网页面', 'Extract From Official Pages': '从官网提取企业信息', 'Search: 基础与工商': '检索 · 基础与工商', 'Search: 校招与雇主口碑': '检索 · 校招与雇主口碑', 'Search: 管理团队': '检索 · 管理团队', 'Search: 融资历史': '检索 · 融资历史', 'Search: 近期动态与舆情': '检索 · 近期动态与舆情', 'Search: 行业与赛道': '检索 · 行业与赛道', 'Search: 核心产品': '检索 · 核心产品',
+  'Company Profile': '企业画像', 'Industry Classify 1014': '行业归类（10-14 补）', 'Logo 识图': 'Logo 识图',
+  'FOS + Career Tags': '专业 + 职业标签',
+  'Search Standards': '找行业标准', 'Search Standard Detail': '标准条款详情',
+  'Occupation Research': '职业基础画像', 'Occupation Career Graph': '职业发展图谱', 'Occupation Salary · CN Regions': '职业薪资 · 中国各地', 'Occupation Salary · Countries': '职业薪资 · 各国', 'Occupation Places & Items': '工作场所与工具', 'Occupation Tasks & Stations': '典型任务与工位', 'Occupation Gaps · Group': '职业缺口归组', 'Occupation Gaps · Verify': '职业缺口核验',
+  'Persona Chat': '和我聊 · 回答', 'Persona Chat · Fact Check': '和我聊 · 逐句核查', 'Persona Chat · Web Lookup': '和我聊 · 联网补查', '问答归档': '问答归档',
+  'Search Competitions': '找赛事', 'Extract Competitions From Page': '从页面提取赛事', 'Extract Competition Page': '读赛事详情页', 'Search Competition Detail': '补赛事详情',
+  'Plan Master Task': '主管拆任务', 'Normalize · 企业行业': '归一 · 企业行业', 'Normalize · 需求信号': '归一 · 需求信号',
+  'Lab Normalize Cast': '人物场景归库', 'Lab Chapter': '生成章节', 'Lab Chapter Rubric': '章节评分标准', 'Lab Day Skeleton': '一天骨架', 'Build · Design Bench': '设计工位', 'Build · Skill Draft': '技能卡草稿', 'Build · Plan Art': '美术规划', 'Generate Task': '生成空间', 'Career · Structure': '职业路径', 'Grade Answer': '考核评分', 'Link Standards': '规则挂标准', 'Ecosystem · Chain': '上下游链', 'Distill Interview': '访谈提炼', 'AI Operate (with skill)': 'AI 代操作', 'Review · Day': '评审一天', 'Lesson · 跟我学': '教案 · 跟我学',
+};
+const DEEP: Record<string, string> = { strategy: '战略', firm_risks: '机构风险', fund: '基金', network: '关系网', partners: '合伙人', portfolio: '投资组合', campus: '校招', deals: '交易', financials: '财务', listing: '上市', pipeline: '管线', risks: '风险', shareholding: '股权', team: '团队' };
+function taskLabel(t: string): string {
+  if (TASK_LABELS[t]) return TASK_LABELS[t];
+  const deep = /^Deep · (\w+)$/.exec(t); if (deep) return `深度尽调 · ${DEEP[deep[1]] || deep[1]}`;
+  const m = /^(.+?) · (.+)$/.exec(t); if (m && TASK_LABELS[m[1]]) return `${TASK_LABELS[m[1]]} · ${m[2]}`;
+  return t;
+}
+function ToolDistribution({ toolStats, currency }: { toolStats: Record<string, { count: number; tokens: number; cost_usd: number; cost_cny: number }>; currency: Currency }) {
+  const rows = Object.entries(toolStats).map(([t, s]) => ({ model: TOOL_LABELS[t] || t, count: s.count, tokens: s.tokens, cost: s.cost_usd + (s.cost_cny || 0) / USD_TO_CNY }));
+  return <CostPie title="功能分布 · 钱花在哪类活上" keyTitle="功能" unit="项" rows={rows} currency={currency} />;
+}
+/** 饼图（按成本占比）+ 明细表；明细默认只显示前 5，展开看全部 */
+function CostPie({ title, keyTitle, unit, rows: input, currency }: { title: string; keyTitle: string; unit: string; rows: PieRow[]; currency: Currency }) {
   const [expanded, setExpanded] = useState(false);
-  const rows = Object.entries(modelStats).map(([model, s]) => ({ model, ...s })).sort((a, b) => b.cost - a.cost || b.tokens - a.tokens);
+  const rows = [...input].sort((a, b) => b.cost - a.cost || b.tokens - a.tokens);
   const totalCost = rows.reduce((a, r) => a + r.cost, 0) || 1;
   // 饼图：前 7 个各一块，其余并成「其他」
   const slices = rows.slice(0, 7).map((r, i) => ({ label: r.model, value: r.cost, color: PIE_COLORS[i] }));
@@ -553,7 +541,7 @@ function ModelDistribution({ modelStats, currency }: { modelStats: Record<string
   };
   const shown = expanded ? rows : rows.slice(0, 5);
   return (
-    <Card size="small" style={{ marginBottom: 24, borderRadius: 12 }} title={<Text strong style={{ fontSize: 13 }}>模型分布</Text>}
+    <Card size="small" style={{ marginBottom: 24, borderRadius: 12 }} title={<Text strong style={{ fontSize: 13 }}>{title}</Text>}
       extra={<Text type="secondary" style={{ fontSize: 12 }}>饼图按成本占比</Text>}>
       <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'flex-start' }}>
         <div style={{ flex: '0 0 auto', width: 380, maxWidth: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -570,7 +558,7 @@ function ModelDistribution({ modelStats, currency }: { modelStats: Record<string
         <div style={{ flex: '1 1 420px', minWidth: 0 }}>
           <Table size="small" rowKey="model" pagination={false} dataSource={shown}
             columns={[
-              { title: '模型', dataIndex: 'model', render: (m: string) => <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: 2, background: colorOf.get(m) || PIE_COLORS[7], marginRight: 6 }} />{m}</span> },
+              { title: keyTitle, dataIndex: 'model', render: (m: string) => <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: 2, background: colorOf.get(m) || PIE_COLORS[7], marginRight: 6 }} />{m}</span> },
               { title: '调用次数', dataIndex: 'count', align: 'right' as const, render: (v: number) => v.toLocaleString() },
               { title: 'Tokens', dataIndex: 'tokens', align: 'right' as const, render: (v: number) => formatTokens(v) },
               { title: '成本', dataIndex: 'cost', align: 'right' as const, render: (v: number) => formatCost(v, currency) },
@@ -578,7 +566,7 @@ function ModelDistribution({ modelStats, currency }: { modelStats: Record<string
             ]} />
           {rows.length > 5 && (
             <Button type="link" size="small" style={{ paddingLeft: 0, marginTop: 4 }} onClick={() => setExpanded(e => !e)}>
-              {expanded ? '收起，只看前 5' : `展开全部 ${rows.length} 个模型`}
+              {expanded ? '收起，只看前 5' : `展开全部 ${rows.length} ${unit}`}
             </Button>
           )}
         </div>

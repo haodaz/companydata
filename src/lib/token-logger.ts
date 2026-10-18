@@ -43,6 +43,7 @@ const PRICING: Record<string, { input: number; output: number }> = {
   'gemini-1.5-pro': { input: 3.5, output: 10.5 },
   'gemini-1.5-flash': { input: 0.075, output: 0.3 },
   // Anthropic Claude（官方一手价，2026-09）
+  'claude-fable-5-1': { input: 10, output: 50 },   // 出题模式补记用（Claude Code 里跑的，按 API 价折算）
   'claude-opus-5-5': { input: 4, output: 20 },
   'claude-sonnet-5-5': { input: 2, output: 10 },
   'claude-haiku-4-5': { input: 1, output: 5 },
