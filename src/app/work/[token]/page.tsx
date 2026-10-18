@@ -88,16 +88,16 @@ export default function WorkPage() {
     </Shell>
   );
 
-  return <Workspace token={token} sid={sid} task={task} env={env} narrow={narrow} grading={phase === 'grading'} onSubmit={async (deliverable, events) => {
+  return <Workspace token={token} sid={sid} task={task} env={env} narrow={narrow} grading={phase === 'grading'} error={err} onSubmit={async (deliverable, events) => {
     setPhase('grading');
     const j = await (await fetch(`/api/work/${token}/sessions/${sid}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable, events }) })).json();
-    if (!j.ok) { alert(j.error || '交卷失败'); setPhase('work'); return; }
+    if (!j.ok) { setErr(j.error || '交卷失败，再试一次'); setPhase('work'); return; }
     setReport(j.report); setPhase('report');
   }} />;
 }
 
 /* ── 工作台 ── */
-function Workspace({ token, sid, task, env, narrow, grading, onSubmit }: { token: string; sid: string; task: Task; env: Env; narrow: boolean; grading: boolean; onSubmit: (deliverable: string, events: Ev[]) => Promise<void> }) {
+function Workspace({ token, sid, task, env, narrow, grading, error, onSubmit }: { token: string; sid: string; task: Task; env: Env; narrow: boolean; grading: boolean; error?: string; onSubmit: (deliverable: string, events: Ev[]) => Promise<void> }) {
   const t0 = useRef(Date.now());
   const [now, setNow] = useState(0);
   const buf = useRef<Ev[]>([]);
@@ -176,9 +176,11 @@ function Workspace({ token, sid, task, env, narrow, grading, onSubmit }: { token
   // 设计台草图：点一下加点，双击结束一条线
   const [cur, setCur] = useState<[number, number][]>([]);
   const svgClick = (e: React.MouseEvent<SVGSVGElement>) => { const r = e.currentTarget.getBoundingClientRect(); const p: [number, number] = [Math.round(e.clientX - r.left), Math.round(e.clientY - r.top)]; setCur(c => [...c, p]); };
-  const svgDbl = () => { if (cur.length >= 2) { const label = prompt('这条线标什么（如：外轮廓 / 孔位 / 尺寸 120mm）') || ''; setSketch(s => [...s, { pts: cur, label }]); ev('sketch', { note: label }); } setCur([]); };
+  const [lineLabel, setLineLabel] = useState('');
+  const svgDbl = () => { if (cur.length >= 2) { const label = lineLabel.trim(); setSketch(s => [...s, { pts: cur, label }]); ev('sketch', { note: label }); setLineLabel(''); } setCur([]); };
 
-  const submit = () => { if (!confirm('确定交卷？交卷后不能再改。')) return; const events = buf.current.splice(0); onSubmit(deliverable, events); };
+  const [arm, setArm] = useState(false);
+  const submit = () => { if (!arm) { setArm(true); setTimeout(() => setArm(false), 5000); return; } setArm(false); const events = buf.current.splice(0); onSubmit(deliverable, events); };
   const over = now > task.task.time_minutes * 60;
 
   return (
@@ -187,9 +189,10 @@ function Workspace({ token, sid, task, env, narrow, grading, onSubmit }: { token
         <div style={{ fontSize: 11, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台</div>
         <div style={{ fontWeight: 700, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{task.task.title} <span style={{ color: '#888', fontWeight: 400, fontSize: 13 }}>{task.company_name} · {task.role} · {ENV_NAME[env.type]}</span></div>
         <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, color: over ? '#c0392b' : '#1a1a2e' }}>{fmt(now)}<span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span></div>
-        <button onClick={submit} disabled={grading} style={btnPrimary}>{grading ? '评卷中…' : '交卷 →'}</button>
+        <button onClick={submit} disabled={grading} style={{ ...btnPrimary, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '再点一次确认交卷（交后不能改）' : '交卷 →'}</button>
       </div>
       {grading && <div style={{ padding: '14px 18px', background: '#f3f2ff', color: '#4c43c9', fontSize: 14 }}>交卷了。正在逐条核对交付物、回看过程、和 AI 基线比——大约 1–2 分钟，别关页面。</div>}
+      {error && !grading && <div style={{ padding: '10px 18px', background: '#fff1f0', color: '#c0392b', fontSize: 14 }}>{error}</div>}
       <div style={{ display: 'grid', gridTemplateColumns: narrow ? '1fr' : '300px 1fr 360px', gap: 0, minHeight: 'calc(100vh - 56px)' }}>
         {/* 材料 */}
         <aside style={{ borderRight: narrow ? undefined : '1px solid #e8e9f0', background: '#fafbff', padding: 14, overflow: 'auto', maxHeight: narrow ? 320 : 'calc(100vh - 56px)' }}>
@@ -223,7 +226,7 @@ function Workspace({ token, sid, task, env, narrow, grading, onSubmit }: { token
           {env.type === 'design' && <>
             <div style={capStyle}>参数表</div>
             <table style={{ borderCollapse: 'collapse', fontSize: 13, width: '100%' }}><tbody>{(env.params || []).map(p => <tr key={p.name} style={{ borderTop: '1px solid #eee' }}><td style={{ padding: 6, width: 180, fontWeight: 600 }}>{p.name}</td><td style={{ padding: 6 }}><input value={params[p.name] || ''} onChange={e => setParams(x => ({ ...x, [p.name]: e.target.value }))} onBlur={() => ev('set_param', { id: p.name })} style={{ ...inp, width: 140 }} /> <span style={{ color: '#888' }}>{p.unit}</span></td><td style={{ padding: 6, color: '#888', fontSize: 12 }}>{p.hint}</td></tr>)}</tbody></table>
-            <div style={capStyle}>草图（点一下加点、双击结束一条线并标注）{env.sketch_hint ? ` · ${env.sketch_hint}` : ''}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}><div style={capStyle}>草图（点一下加点、双击结束一条线）{env.sketch_hint ? ` · ${env.sketch_hint}` : ''}</div><input value={lineLabel} onChange={e => setLineLabel(e.target.value)} placeholder="这条线标什么：外轮廓 / 孔位 / 尺寸 120mm" style={{ ...inp, width: 280, padding: '5px 10px', fontSize: 13 }} /></div>
             <svg onClick={svgClick} onDoubleClick={svgDbl} width="100%" height={320} style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 12, cursor: 'crosshair', backgroundImage: 'linear-gradient(#f0f0f5 1px, transparent 1px), linear-gradient(90deg, #f0f0f5 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
               {sketch.map((l, i) => <g key={i}><polyline points={l.pts.map(p => p.join(',')).join(' ')} fill="none" stroke="#6055f5" strokeWidth={2} /><text x={l.pts[0][0] + 4} y={l.pts[0][1] - 4} fontSize={11} fill="#6055f5">{l.label}</text></g>)}
               {cur.length > 0 && <polyline points={cur.map(p => p.join(',')).join(' ')} fill="none" stroke="#fa8c16" strokeWidth={2} strokeDasharray="4 3" />}
