@@ -29,41 +29,52 @@ export async function usageReport({ tools, days = 0, model = '', page = 1, pageS
     parent.records.push(log);
   }
 
-  // 统计要全量：PostgREST 单次最多 1000 行，翻页读完
-  const statsBuild = (cols: string) => () => {
-    let q = supabase.from('token_usage_logs').select(cols).order('id');
-    if (model) q = q.eq('model_id', model);
-    if (tools.length) q = q.in('tool_name', tools);
-    if (since) q = q.gte('created_at', since);
-    return q;
-  };
-  const { data: rows } = await selectAll<any>(statsBuild('total_input_tokens, total_output_tokens, total_tokens, total_cost_usd, api_cost_cny, model_id, tool_name, task_name'));
-  const { data: searchRows, error: searchErr } = await selectAll<any>(statsBuild('search_calls, search_cost_usd'));   // 迁移 014 之后才有
-  if (searchErr) searchRows.length = 0;
-  const { data: attrRows, error: attrErr } = await selectAll<any>(statsBuild('space_id, stage, units, total_cost_usd'));   // 迁移 021 之后才有
-  if (attrErr) attrRows.length = 0;
-
+  // 统计要全量。优先让数据库汇总（迁移 033 的 token_usage_agg，只回几百行分组结果）；没跑迁移就退回翻页读全量自己加
   const f = (v: any) => parseFloat(v) || 0;
-  let inTok = 0, outTok = 0, allTok = 0, costUsd = 0, apiCny = 0;
+  let rows: any[], searchRows: any[], attrRows: any[], attrErr: any = null;
+  const agg = await supabase.rpc('token_usage_agg', { p_tools: tools.length ? tools : null, p_since: since || null, p_model: model || null });
+  if (!agg.error && Array.isArray(agg.data)) {
+    // 分组行带 n（条数），下面的累加按 n 加权
+    rows = agg.data.map((g: any) => ({ _n: +g.n, total_input_tokens: +g.in_tok, total_output_tokens: +g.out_tok, total_tokens: +g.tok, total_cost_usd: +g.cost_usd, api_cost_cny: +g.api_cny, model_id: g.model_id, tool_name: g.tool_name, task_name: g.task_name }));
+    searchRows = agg.data.map((g: any) => ({ search_calls: +g.search_calls, search_cost_usd: +g.search_cost_usd }));
+    attrRows = agg.data.map((g: any) => ({ _n: +g.n, space_id: g.space_id, stage: g.stage, units: +g.units, total_cost_usd: +g.cost_usd }));
+  } else {
+    const statsBuild = (cols: string) => () => {
+      let q = supabase.from('token_usage_logs').select(cols).order('id');
+      if (model) q = q.eq('model_id', model);
+      if (tools.length) q = q.in('tool_name', tools);
+      if (since) q = q.gte('created_at', since);
+      return q;
+    };
+    rows = (await selectAll<any>(statsBuild('total_input_tokens, total_output_tokens, total_tokens, total_cost_usd, api_cost_cny, model_id, tool_name, task_name'))).data;
+    const sr = await selectAll<any>(statsBuild('search_calls, search_cost_usd'));   // 迁移 014 之后才有
+    searchRows = sr.error ? [] : sr.data;
+    const ar = await selectAll<any>(statsBuild('space_id, stage, units, total_cost_usd'));   // 迁移 021 之后才有
+    attrErr = ar.error; attrRows = ar.error ? [] : ar.data;
+  }
+
+  let inTok = 0, outTok = 0, allTok = 0, costUsd = 0, apiCny = 0, nAll = 0;
   const modelStats: Record<string, { count: number; tokens: number; cost: number }> = {};
   const toolStats: Record<string, { count: number; tokens: number; cost_usd: number; cost_cny: number }> = {};
   const taskStats: Record<string, { count: number; tokens: number; cost: number }> = {};
   for (const r of rows) {
+    const n = r._n ?? 1; nAll += n;
     inTok += r.total_input_tokens || 0; outTok += r.total_output_tokens || 0; allTok += r.total_tokens || 0; costUsd += f(r.total_cost_usd); apiCny += f(r.api_cost_cny);
-    const m = (modelStats[r.model_id || 'unknown'] ||= { count: 0, tokens: 0, cost: 0 }); m.count++; m.tokens += r.total_tokens || 0; m.cost += f(r.total_cost_usd);
-    const t = (toolStats[r.tool_name || 'unknown'] ||= { count: 0, tokens: 0, cost_usd: 0, cost_cny: 0 }); t.count++; t.tokens += r.total_tokens || 0; t.cost_usd += f(r.total_cost_usd); t.cost_cny += f(r.api_cost_cny);
+    const m = (modelStats[r.model_id || 'unknown'] ||= { count: 0, tokens: 0, cost: 0 }); m.count += n; m.tokens += r.total_tokens || 0; m.cost += f(r.total_cost_usd);
+    const t = (toolStats[r.tool_name || 'unknown'] ||= { count: 0, tokens: 0, cost_usd: 0, cost_cny: 0 }); t.count += n; t.tokens += r.total_tokens || 0; t.cost_usd += f(r.total_cost_usd); t.cost_cny += f(r.api_cost_cny);
     const k = `${r.tool_name || 'unknown'} | ${String(r.task_name || '').replace(/^\[Batch\] /, '')}`;
-    const s = (taskStats[k] ||= { count: 0, tokens: 0, cost: 0 }); s.count++; s.tokens += r.total_tokens || 0; s.cost += f(r.total_cost_usd);
+    const s = (taskStats[k] ||= { count: 0, tokens: 0, cost: 0 }); s.count += n; s.tokens += r.total_tokens || 0; s.cost += f(r.total_cost_usd);
   }
   // 按流程环节（创造 / 使用 / 学习 / 评审 / 美术与 3D）和按空间
   const stageStats: Record<string, { count: number; cost: number; units: number }> = {};
   const spaceAgg = new Map<string, { cost: number; count: number; byStage: Record<string, number> }>();
   for (const r of attrRows) {
     const st = r.stage || '（未归类）', c = f(r.total_cost_usd);
-    const a = (stageStats[st] ||= { count: 0, cost: 0, units: 0 }); a.count++; a.cost += c; a.units += +r.units || 0;
+    const n = r._n ?? 1;
+    const a = (stageStats[st] ||= { count: 0, cost: 0, units: 0 }); a.count += n; a.cost += c; a.units += +r.units || 0;
     if (!r.space_id) continue;
     const sp = spaceAgg.get(r.space_id) || { cost: 0, count: 0, byStage: {} };
-    sp.cost += c; sp.count++; sp.byStage[st] = (sp.byStage[st] || 0) + c; spaceAgg.set(r.space_id, sp);
+    sp.cost += c; sp.count += n; sp.byStage[st] = (sp.byStage[st] || 0) + c; spaceAgg.set(r.space_id, sp);
   }
   const top = [...spaceAgg.entries()].sort((a, b) => b[1].cost - a[1].cost).slice(0, 30);
   const { data: titles } = top.length ? await supabase.from('skill_tasks').select('id, title').in('id', top.map(([id]) => id)) : { data: [] as any[] };
@@ -72,7 +83,7 @@ export async function usageReport({ tools, days = 0, model = '', page = 1, pageS
   return {
     logs: groupedLogs, total: count || 0, page, pageSize,
     stats: {
-      total_tasks: rows.length,
+      total_tasks: nAll,
       total_input_tokens: inTok, total_output_tokens: outTok, total_tokens: allTok,
       total_cost_usd: Math.round(costUsd * 1_000_000) / 1_000_000,
       total_api_cost_cny: Math.round(apiCny * 100) / 100,

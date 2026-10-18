@@ -285,21 +285,9 @@ export default function TokenUsagePage() {
         </Row>
       )}
 
-      {/* 模型分布 */}
+      {/* 模型分布：明细表 + 饼图（按成本），明细默认只看前 5 */}
       {stats?.model_stats && Object.keys(stats.model_stats).length > 0 && (
-        <Card size="small" style={{ marginBottom: 24, borderRadius: 12 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
-            <Text strong style={{ fontSize: 13 }}>模型分布:</Text>
-            {Object.entries(stats.model_stats).map(([model, s]) => (
-              <div key={model} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Tag color={MODEL_COLORS[model] || '#666'} style={{ margin: 0, borderRadius: 6 }}>{model}</Tag>
-                <Text type="secondary" style={{ fontSize: 12 }}>
-                  {s.count} 次 · {formatTokens(s.tokens)} tokens · {formatCost(s.cost, currency)}
-                </Text>
-              </div>
-            ))}
-          </div>
-        </Card>
+        <ModelDistribution modelStats={stats.model_stats} currency={currency} />
       )}
 
       {/* 功能分类统计 */}
@@ -545,5 +533,58 @@ export default function TokenUsagePage() {
         />
       </Card>
     </div>
+  );
+}
+
+/** 模型分布：左边饼图（按成本占比），右边明细表；明细默认只显示前 5，展开看全部 */
+const PIE_COLORS = ['#6055f5', '#10b981', '#fa8c16', '#eb2f96', '#1677ff', '#13c2c2', '#faad14', '#8c8c8c'];
+function ModelDistribution({ modelStats, currency }: { modelStats: Record<string, { count: number; tokens: number; cost: number }>; currency: Currency }) {
+  const [expanded, setExpanded] = useState(false);
+  const rows = Object.entries(modelStats).map(([model, s]) => ({ model, ...s })).sort((a, b) => b.cost - a.cost || b.tokens - a.tokens);
+  const totalCost = rows.reduce((a, r) => a + r.cost, 0) || 1;
+  // 饼图：前 7 个各一块，其余并成「其他」
+  const slices = rows.slice(0, 7).map((r, i) => ({ label: r.model, value: r.cost, color: PIE_COLORS[i] }));
+  const rest = rows.slice(7).reduce((a, r) => a + r.cost, 0);
+  if (rest > 0) slices.push({ label: `其他 ${rows.length - 7} 个`, value: rest, color: PIE_COLORS[7] });
+  const colorOf = new Map(slices.map(x => [x.label, x.color]));
+  let acc = 0;
+  const arc = (from: number, to: number) => {
+    const R = 60, C = 70, a0 = from * 2 * Math.PI - Math.PI / 2, a1 = to * 2 * Math.PI - Math.PI / 2;
+    if (to - from >= 0.9999) return `M ${C} ${C - R} A ${R} ${R} 0 1 1 ${C - 0.01} ${C - R} Z`;
+    return `M ${C} ${C} L ${C + R * Math.cos(a0)} ${C + R * Math.sin(a0)} A ${R} ${R} 0 ${to - from > 0.5 ? 1 : 0} 1 ${C + R * Math.cos(a1)} ${C + R * Math.sin(a1)} Z`;
+  };
+  const shown = expanded ? rows : rows.slice(0, 5);
+  return (
+    <Card size="small" style={{ marginBottom: 24, borderRadius: 12 }} title={<Text strong style={{ fontSize: 13 }}>模型分布</Text>}
+      extra={<Text type="secondary" style={{ fontSize: 12 }}>饼图按成本占比</Text>}>
+      <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+        <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
+          <svg width={140} height={140} viewBox="0 0 140 140">
+            {slices.map(x => { const from = acc / totalCost; acc += x.value; return <path key={x.label} d={arc(from, acc / totalCost)} fill={x.color} stroke="#fff" strokeWidth={1}><title>{`${x.label}：${formatCost(x.value, currency)}（${(x.value / totalCost * 100).toFixed(1)}%）`}</title></path>; })}
+            <circle cx={70} cy={70} r={32} fill="#fff" />
+            <text x={70} y={66} textAnchor="middle" fontSize={11} fill="#8c8c8c">总成本</text>
+            <text x={70} y={82} textAnchor="middle" fontSize={12} fontWeight={600}>{formatCost(totalCost, currency)}</text>
+          </svg>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 6, textAlign: 'left' }}>
+            {slices.map(x => <span key={x.label} style={{ fontSize: 12 }}><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: 2, background: x.color, marginRight: 6 }} />{x.label} {(x.value / totalCost * 100).toFixed(1)}%</span>)}
+          </div>
+        </div>
+        <div style={{ flex: '1 1 420px', minWidth: 0 }}>
+          <Table size="small" rowKey="model" pagination={false} dataSource={shown}
+            columns={[
+              { title: '模型', dataIndex: 'model', render: (m: string) => <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: 2, background: colorOf.get(m) || PIE_COLORS[7], marginRight: 6 }} />{m}</span> },
+              { title: '调用次数', dataIndex: 'count', align: 'right' as const, render: (v: number) => v.toLocaleString() },
+              { title: 'Tokens', dataIndex: 'tokens', align: 'right' as const, render: (v: number) => formatTokens(v) },
+              { title: '成本', dataIndex: 'cost', align: 'right' as const, render: (v: number) => formatCost(v, currency) },
+              { title: '占比', key: 'pct', align: 'right' as const, render: (_: any, r: any) => `${(r.cost / totalCost * 100).toFixed(1)}%` },
+            ]} />
+          {rows.length > 5 && (
+            <Button type="link" size="small" style={{ paddingLeft: 0, marginTop: 4 }} onClick={() => setExpanded(e => !e)}>
+              {expanded ? '收起，只看前 5' : `展开全部 ${rows.length} 个模型`}
+            </Button>
+          )}
+        </div>
+      </div>
+    </Card>
   );
 }
