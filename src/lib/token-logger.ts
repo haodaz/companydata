@@ -86,6 +86,12 @@ async function priceOf(model: string): Promise<Price> {
   const hit = priceCache.map.get(model), u = UNIT_PRICE[model];
   if (hit) return hit.unit_price || !u ? hit : { ...hit, unit_price: u.price, unit: u.unit };
   if (u) return { currency: u.currency, input_per_m: 0, output_per_m: 0, search_per_k: 0, unit_price: u.price, unit: u.unit };
+  // 千问库里没登记的型号（qwen-flash、qwen3.x 新快照…）：flash / turbo 档按 qwen-flash 价，其余按 qwen-plus 价（人民币，含联网搜索），
+  // 不再落到 Gemini 1.5 Flash 的美元兜底价上（2026-10-18 记账核对时发现）
+  if (/^qwen/.test(model)) {
+    const base = /flash|turbo/.test(model) ? priceCache.map.get('qwen-flash') : priceCache.map.get('qwen-plus');
+    return base || (/flash|turbo/.test(model) ? { currency: 'CNY', input_per_m: 0.15, output_per_m: 1.5, search_per_k: 4, unit_price: 0, unit: null } : { currency: 'CNY', input_per_m: 0.8, output_per_m: 2, search_per_k: 4, unit_price: 0, unit: null });
+  }
   const p = PRICING[model] || { input: 0.075, output: 0.3 };
   return { currency: 'USD', input_per_m: p.input, output_per_m: p.output, search_per_k: 0, unit_price: 0, unit: null };
 }
