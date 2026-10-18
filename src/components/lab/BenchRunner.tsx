@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { PLAY_TICK_MS, applyControl, benchEnv, evalExpr, finishBench, fmtT, initBench, layerPath, pointOnPath, projectOnPath, tickBench, type BenchSpec, type BenchState, type BenchTrace, type BenchEvent, type BenchLayer, type Pt } from '@/lib/bench';
 import { HandCam, type HandPose } from '@/components/lab/HandCam';
 import { ToolShape } from '@/components/lab/ToolShape';
@@ -47,7 +47,7 @@ import type { Beta3DScene } from '@/lib/lab-3d-beta';
 const TICK_MS = PLAY_TICK_MS, SNAP_EVERY_MS = 5000, SNAP_MAX = 16, SNAP_W = 320, SNAP_H = 180;
 const VW = 1600, VH = 900; // 场景覆盖层坐标系（百分比 × 16 / × 9）
 
-export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdrop }: { spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean; /** 演示模式：进来就自己走 */ demo?: boolean; /** 3D beta：工位画面四周是活的 3D 房间（跟着鼠标微动），工位本身也有一点视差 */ backdrop?: Beta3DScene | null }) {
+export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdrop, guided }: { spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean; /** 演示模式：进来就自己走 */ demo?: boolean; /** 跟我学：按老手脚本一步一步带着做——时钟走到下一个动作就停，说明做什么、为什么，人做对了再往下（lib/lab-lesson.ts 的 bench 教案） */ guided?: { before: string; actions: { i: number; say: string; basis?: string | null }[]; after: string } | null; /** 3D beta：工位画面四周是活的 3D 房间（跟着鼠标微动），工位本身也有一点视差 */ backdrop?: Beta3DScene | null }) {
   const stRef = useRef<BenchState>(initBench(spec));
   const panelRef = useRef<SVGSVGElement>(null);
   const sceneRef = useRef<SVGSVGElement>(null);
@@ -121,23 +121,58 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auto, running, spec]);
 
+  // ── 跟我学：老手脚本一个动作一个动作带着做。gPhase：before 先看 → act 做动作 → after 收尾确认 → done ──
+  const gScript = useMemo(() => [...(spec.expertScript || [])].sort((a, b) => a.t - b.t), [spec]);
+  const [gPhase, setGPhase] = useState<'before' | 'act' | 'after' | 'done'>(guided ? 'before' : 'done');
+  const [gi, setGi] = useState(0);                 // 下一个要做的动作
+  const [gPaused, setGPaused] = useState(!!guided); // 时钟停着等人做
+  const gPausedRef = useRef(!!guided); gPausedRef.current = gPaused;
+  const gEvents = useRef(0);                      // 发指令时的事件数（按钮类动作靠「有没有新按下」判断）
+  const gTarget = gi < gScript.length ? gScript[gi] : null;
+  const gCtl = gTarget ? spec.controls.find(c => c.id === gTarget.control) : null;
+  /** 当前动作做对了没有 */
+  const gMatched = () => {
+    if (!gTarget || !gCtl) return false;
+    const v = stRef.current.controls[gTarget.control] || 0;
+    if (gCtl.kind === 'knob') { const tol = Math.max(gCtl.step || 1, ((gCtl.max ?? 100) - (gCtl.min ?? 0)) * 0.06); return Math.abs(v - gTarget.value) <= tol; }
+    if (gCtl.kind === 'path') return v >= gTarget.value - 2;
+    if (gCtl.kind === 'button') return stRef.current.events.slice(gEvents.current).some(e => e.kind === 'control' && e.control === gTarget.control);
+    return (v ? 1 : 0) === (gTarget.value ? 1 : 0);
+  };
+  const gAdvance = () => {
+    const next = gi + 1; setGi(next); gEvents.current = stRef.current.events.length;
+    if (next >= gScript.length) { setGPhase('after'); setGPaused(false); } else setGPaused(false);
+  };
+  useEffect(() => {
+    if (!guided || gPhase !== 'act' || !gPaused) return;
+    if (gMatched()) { const t = setTimeout(gAdvance, 450); return () => clearTimeout(t); }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [guided, gPhase, gPaused, st.events.length, gi, ...spec.controls.map(c => st.controls[c.id])]);
+  /** 替我做一下：老手这一下直接帮你按了，看着它变 */
+  const gDoIt = () => { if (!gTarget) return; applyControl(spec, stRef.current, gTarget.control, gTarget.value); if (trackLayerRef.current?.control) { const h = pointOnPath(trackPts.current, stRef.current.controls[trackLayerRef.current.control] || 0); drop(h.x, h.y); } snapshot(); bump(v => v + 1); gAdvance(); };
+
   // 模拟时钟
   useEffect(() => {
     if (!running) return;
     const iv = setInterval(() => {
       const s = stRef.current;
+      if (guided && gPausedRef.current) return;   // 跟我学：停着等人做
       const before = s.events.length;
       tickBench(spec, s, spec.timeScale * (TICK_MS / 1000));
+      // 跟我学：时钟走到下一个动作的时刻就停下来讲
+      if (guided && gPhase === 'act' && gi < gScript.length && s.t >= gScript[gi].t) { gEvents.current = s.events.length; setGPaused(true); }
+      if (guided && gPhase === 'after' && s.t >= (gScript[gScript.length - 1]?.t ?? 0) + 4) { setGPaused(true); setGPhase('done'); }
       if (s.events.length > before) snapshot();
       else if (Date.now() - lastSnap.current > SNAP_EVERY_MS) snapshot();
       if (s.t >= spec.maxSeconds) setRunning(false);
       bump(v => v + 1);
     }, TICK_MS);
     return () => clearInterval(iv);
-  }, [running, spec, snapshot]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [running, spec, snapshot, guided, gPhase, gi]);
 
   const act = (id: string, value: number) => {
-    if (!running || auto) return;
+    if ((!running && !guided) || auto) return;
     applyControl(spec, stRef.current, id, value);
     if (spec.controls.find(c => c.id === id)?.kind !== 'path') snapshot();
     bump(v => v + 1);
@@ -145,6 +180,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
 
   // ── 轨迹工位（焊缝 / 拉花）：指针或手的位置 → 投影到折线上的进度 + 离折线的距离 ──
   const trackLayer = scene?.layers.find(l => (l.kind === 'seam' || l.kind === 'pour') && l.control);
+  const trackLayerRef = useRef<typeof trackLayer>(undefined); trackLayerRef.current = trackLayer;
   const trackPts = useRef<Pt[]>([]);
   if (trackLayer && !trackPts.current.length) trackPts.current = layerPath(trackLayer);
   const isLatte = trackLayer?.kind === 'pour';
@@ -270,6 +306,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
     deposits.current = []; lastDrop.current = null; lastPt.current = null; dirRef.current = { x: 0, y: 0 };
     snapCount.current = 0; lastSnap.current = 0; cutDepth.current = 0; cutProg.current = 0; grabAnchor.current = null; handRef.current = null;
     autoI.current = 0; setAuto(false); setRunning(true); setResetKey(k => k + 1); bump(v => v + 1);
+    if (guided) { setGPhase('before'); setGi(0); setGPaused(true); gEvents.current = 0; }
   };
 
   const ev = (expr?: string) => { if (!expr) return 0; try { return evalExpr(expr, env); } catch { return 0; } };
@@ -285,7 +322,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   const goalsDone = spec.goals.filter(g => st.goalDone[g.id] !== null).length;
   const violations = st.events.filter(e => e.kind === 'rule' && e.severity === 'violation').length;
   const recent = [...st.events].filter(e => e.kind !== 'snapshot').slice(-8).reverse();
-  const canFinish = st.t > 30;
+  const canFinish = guided ? gPhase === 'done' : st.t > 30;
   const pressed = (c: BenchSpec['controls'][number]) => c.kind === 'button' && st.events.some(e => e.kind === 'control' && e.control === c.id);
 
   // ── 数字面板（SVG） ──
@@ -393,8 +430,33 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   ) : null;
 
   // ── 目标 + 事件流 + 按钮 ──
+  const guideCard = guided ? (
+    <div className={hud ? 'hud-card' : undefined} style={{ padding: 14, borderRadius: 14, background: 'rgba(106,92,255,.08)', border: '1.5px solid rgba(106,92,255,.45)', boxShadow: '0 0 0 4px rgba(106,92,255,.08)' }}>
+      <div className="lab-mono lab-cap" style={{ marginBottom: 6, color: 'var(--v)' }}>跟我学 · {gPhase === 'before' ? '先看一眼' : gPhase === 'act' ? `第 ${gi + 1} / ${gScript.length} 下` : gPhase === 'after' ? '收尾' : '这一段做完了'}</div>
+      {gPhase === 'before' && <>
+        <div style={{ fontSize: 13.5, lineHeight: 1.75 }} className="hud-ink">{guided.before || '先把仪表和控件看一遍，知道每样东西管什么。'}</div>
+        <button className="lab-btn" style={{ marginTop: 10, width: '100%' }} onClick={() => { setGPhase('act'); gEvents.current = stRef.current.events.length; setGPaused(gScript.length > 0 && gScript[0].t <= stRef.current.t); if (!gScript.length) setGPhase('done'); }}>开始，带我做 →</button>
+      </>}
+      {gPhase === 'act' && gTarget && (gPaused ? <>
+        <div style={{ fontSize: 14.5, fontWeight: 700, lineHeight: 1.6 }} className="hud-ink">{guided.actions[gi]?.say || `把「${gCtl?.label}」${gCtl?.kind === 'knob' ? `调到 ${gTarget.value}${gCtl.unit || ''}` : gCtl?.kind === 'switch' ? (gTarget.value ? '打开' : '关掉') : gCtl?.kind === 'path' ? `走到 ${gTarget.value}%` : '按下'}`}</div>
+        <div className="lab-mono" style={{ fontSize: 11.5, marginTop: 6, color: 'var(--v)' }}>▸ {gCtl?.label}{gCtl?.kind === 'knob' ? ` → ${gTarget.value}${gCtl.unit || ''}（现在 ${(st.controls[gTarget.control] ?? 0).toFixed?.(gCtl.step && gCtl.step < 1 ? 1 : 0)}${gCtl.unit || ''}）` : gCtl?.kind === 'switch' ? (gTarget.value ? ' → 开' : ' → 关') : gCtl?.kind === 'path' ? ` → ${gTarget.value}%` : ' → 按一下'}</div>
+        {guided.actions[gi]?.basis && <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, lineHeight: 1.6, color: 'var(--ink3)' }}>依据：{guided.actions[gi].basis}</div>}
+        <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
+          <button className="lab-btn ghost sm" onClick={gDoIt} style={hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined}>替我做一下</button>
+          <span className="hud-ink3" style={{ fontSize: 11.5, color: 'var(--ink3)', alignSelf: 'center' }}>你自己做到位，就自动往下</span>
+        </div>
+      </> : <div className="hud-ink3" style={{ fontSize: 13, color: 'var(--ink3)' }}>做对了，看着它变化……时钟走到下一下再停 <span className="lab-dots" /></div>)}
+      {gPhase === 'after' && <div className="hud-ink3" style={{ fontSize: 13, color: 'var(--ink3)' }}>动作做完了，让它再走一会儿，看结果<span className="lab-dots" /></div>}
+      {gPhase === 'done' && <>
+        <div style={{ fontSize: 13.5, lineHeight: 1.75 }} className="hud-ink">{guided.after || '看看目标都达成了没有、事件流里有没有违规。'}</div>
+        <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, color: 'var(--ink3)' }}>目标 {goalsDone}/{spec.goals.length} · 违规 {violations}。想再来一遍就点「重来」，记住了就「完成操作」。</div>
+      </>}
+    </div>
+  ) : null;
+
   const side = (
     <>
+      {guideCard}
       {handMirror}
       <div className={hud ? 'hud-card' : undefined} style={{ padding: 14, borderRadius: 14, background: 'rgba(23,26,46,.04)', border: '1px solid var(--line)' }}>
         <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>目标 {goalsDone}/{spec.goals.length}</div>
@@ -418,7 +480,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
         <button className="lab-btn ghost" onClick={reset} title="清掉这次的操作，从头再来" style={armed === 'reset' ? { background: '#ffd166', color: '#171a2e', borderColor: '#ffd166' } : hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined}>{armed === 'reset' ? '再点一下 · 重来' : '重来'}</button>
         <button className="lab-btn ghost" onClick={() => { if (armed !== 'exit') { setArmed('exit'); return; } setArmed(null); onCancel(); }} style={armed === 'exit' ? { background: '#ff5fa2', color: '#fff', borderColor: '#ff5fa2' } : hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined}>{armed === 'exit' ? '再点一下 · 退出' : '退出'}</button>
       </div>
-      {!canFinish && <div style={{ fontSize: 11.5, color: hud ? 'rgba(255,255,255,.7)' : 'var(--ink3)' }}>至少操作 30 秒（模拟时间）后可提交。1 秒真实时间 = {spec.timeScale} 秒模拟时间。</div>}
+      {!canFinish && !guided && <div style={{ fontSize: 11.5, color: hud ? 'rgba(255,255,255,.7)' : 'var(--ink3)' }}>至少操作 30 秒（模拟时间）后可提交。1 秒真实时间 = {spec.timeScale} 秒模拟时间。</div>}
     </>
   );
 

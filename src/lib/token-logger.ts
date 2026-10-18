@@ -40,6 +40,10 @@ const PRICING: Record<string, { input: number; output: number }> = {
   'gemini-3.1-pro-preview': { input: 2, output: 12 },
   'gemini-1.5-pro': { input: 3.5, output: 10.5 },
   'gemini-1.5-flash': { input: 0.075, output: 0.3 },
+  // Anthropic Claude（官方一手价，2026-09）
+  'claude-opus-5-5': { input: 4, output: 20 },
+  'claude-sonnet-5-5': { input: 2, output: 10 },
+  'claude-haiku-4-5': { input: 1, output: 5 },
   // OpenAI GPT
   'gpt-6-astra': { input: 10, output: 30 },
   'gpt-5.6-terra': { input: 2.5, output: 10 },

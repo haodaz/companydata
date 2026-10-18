@@ -15,6 +15,9 @@ export const MODEL_OPTIONS: { id: string; label: string; provider: string; model
   { id: 'qwen3.7-plus', label: '通义千问 3.7 Plus（阿里云搜索）', provider: 'Aliyun', modelName: 'qwen3.7-plus' },
   { id: 'qwen3.6-plus', label: '通义千问 3.6 Plus（阿里云搜索）', provider: 'Aliyun', modelName: 'qwen3.6-plus' },
   { id: 'qwen3.7-max', label: '通义千问 3.7 Max（阿里云搜索）', provider: 'Aliyun', modelName: 'qwen3.7-max' },
+  // Anthropic Claude（教案 / 讲解这类长文本生成）
+  { id: 'claude-opus-5-5', label: 'Claude Opus 5.5', provider: 'Anthropic', modelName: 'claude-opus-5-5' },
+  { id: 'claude-sonnet-5-5', label: 'Claude Sonnet 5.5', provider: 'Anthropic', modelName: 'claude-sonnet-5-5' },
   // OpenAI GPT
   { id: 'gpt-6-astra', label: 'GPT-6 Astra', provider: 'OpenAI', modelName: 'gpt-6-astra', badge: '很贵🥹🥹' },
   { id: 'gpt-5.6-terra', label: 'GPT-5.6 Terra', provider: 'OpenAI', modelName: 'gpt-5.6-terra' },

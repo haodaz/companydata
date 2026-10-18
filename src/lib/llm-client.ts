@@ -37,6 +37,10 @@ function isOpenAIModel(modelId: string): boolean {
   return modelId.startsWith('gpt-');
 }
 
+function isClaudeModel(modelId: string): boolean {
+  return modelId.startsWith('claude-');
+}
+
 // ──── Main entry point ────
 
 /**
@@ -65,6 +69,9 @@ export async function generateContent(
   if (process.env.DASHSCOPE_FREE_ONLY === '1' && !resolvedModelId.startsWith('qwen')) throw new Error(`已开「只用免费额度」，不调用付费模型 ${resolvedModelId}`);
   if (isOpenAIModel(resolvedModelId)) {
     return generateOpenAI(prompt, resolvedModelId, options);
+  }
+  if (isClaudeModel(resolvedModelId)) {
+    return generateClaude(prompt, resolvedModelId, options);
   }
   if (resolvedModelId.startsWith('qwen')) {
     return generateQwen(prompt, resolvedModelId, options);
@@ -208,6 +215,37 @@ async function generateQwen(
       promptTokenCount: u.input_tokens || 0,
       candidatesTokenCount: u.output_tokens || 0,
       totalTokenCount: u.total_tokens || (u.input_tokens || 0) + (u.output_tokens || 0),
+    },
+  };
+}
+
+// ──── Claude（Anthropic）implementation ────
+// 2026-10-18 加：教案 / 讲解这类长文本生成用 Claude（用户：「claude 有钱，抓紧用」）。密钥 ANTHROPIC_API_KEY（.env.local，和 programcrawler 同一把）。
+// Opus 5.5 思考默认开着、effort 默认 medium；jsonMode 靠系统提示约束（这一代不支持 assistant 预填）。
+async function generateClaude(prompt: string, modelId: string, options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean }): Promise<LLMResponse> {
+  const { default: Anthropic } = await import('@anthropic-ai/sdk');
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  const system = options?.jsonMode
+    ? '你是一个只输出 JSON 的生成器：回复必须是一个合法的 JSON 对象，不要用 Markdown 代码块包裹，不要在 JSON 前后加任何说明文字。'
+    : undefined;
+  const res = await client.messages.create({
+    model: modelId,
+    max_tokens: 16000,
+    ...(system ? { system } : {}),
+    ...(options?.webSearch ? { tools: [{ type: 'web_search_20260209' as any, name: 'web_search', max_uses: 5 }] as any } : {}),
+    messages: [{ role: 'user', content: prompt }],
+  });
+  if (res.stop_reason === 'refusal') throw new Error(`Claude 拒绝了这次请求${res.stop_details?.explanation ? `：${res.stop_details.explanation}` : ''}`);
+  const text = res.content.filter((b): b is Extract<typeof b, { type: 'text' }> => b.type === 'text').map(b => b.text).join('\n');
+  if (res.stop_reason === 'max_tokens') console.warn('[Claude] 输出到了 max_tokens 上限，可能被截断');
+  const u = res.usage;
+  return {
+    text,
+    model: modelId,
+    usageMetadata: {
+      promptTokenCount: (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0),
+      candidatesTokenCount: u.output_tokens || 0,
+      totalTokenCount: (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0) + (u.output_tokens || 0),
     },
   };
 }
