@@ -51,6 +51,20 @@ export async function buildLesson(spaceId: string, chapterId: string | null, opt
   const role = (space as any).profile?.role || (space as any).jd_snapshot?.title || (space as any).title;
   const realSkill = skill && skill.source !== 'jd-draft' ? skill : null;
 
+  // 工位材料（控件 / 仪表 / 规则 / 目标 + 老手脚本的一段）。脚本超过 CHUNK 下的，主调用只给前 CHUNK 下，其余分块另算（潜水章 255 下，一次写 8 万字会被截）
+  const CHUNK = 60;
+  const benchMat = (b: NonNullable<Sim['steps'][number]['bench']>, from: number, to: number): string[] => {
+    const lines: string[] = [];
+    lines.push(`工位「${b.name}」：${str(b.brief, 200)}`);
+    lines.push('控件：' + b.controls.filter(c => !c.hidden).map(c => `[${c.id}] ${c.label}${c.unit ? `（${c.unit}${c.min != null ? ` ${c.min}–${c.max}` : ''}）` : ''}${c.hint ? ` 提示：${str(c.hint, 60)}` : ''}`).join('；'));
+    if (b.gauges?.length) lines.push('仪表：' + b.gauges.map(g => `${g.label}（${g.unit}）`).join('、'));
+    lines.push('规则：' + b.rules.map(r => `[rule:${r.id}] ${r.severity === 'violation' ? '违规' : '提醒'}「${r.label}」${basisOf.has(`rule:${r.id}`) ? ` ← 依据 ${basisOf.get(`rule:${r.id}`)}` : ''}`).join('；'));
+    lines.push('目标：' + b.goals.map(g => `[goal:${g.id}] ${g.label}${basisOf.has(`goal:${g.id}`) ? ` ← 依据 ${basisOf.get(`goal:${g.id}`)}` : ''}`).join('；'));
+    const script = [...(b.expertScript || [])].sort((a, c) => a.t - c.t);
+    const part = script.slice(from, to);
+    lines.push(part.length ? `老手脚本（按时间，共 ${script.length} 下${script.length > to ? `，这里只列 #${from}–#${Math.min(to, script.length) - 1}，其余另算` : from ? `，这里是 #${from}–#${Math.min(to, script.length) - 1}` : ''}）：` + part.map((a, j) => { const i = from + j; const c = b.controls.find(x => x.id === a.control); return `#${i} t=${a.t}s ${c?.label || a.control}${c?.kind === 'knob' ? ` → ${a.value}${c.unit || ''}` : c?.kind === 'switch' ? (a.value ? ' 开' : ' 关') : c?.kind === 'path' ? ` 走到 ${a.value}%` : ' 按下'}`; }).join('；') : '老手脚本：没有');
+    return lines;
+  };
   const stepsText = sim.steps.map((s, k) => {
     const lines = [`### 第 ${k + 1} 步 id=${s.id} 题型=${s.type}`];
     if (s.scene) lines.push(`剧情：${s.scene.who}${s.scene.time ? `（${s.scene.time}）` : ''}：${str(s.scene.text, 300)}`);
@@ -58,14 +72,7 @@ export async function buildLesson(spaceId: string, chapterId: string | null, opt
     if (s.options?.length) lines.push('选项：' + s.options.map(o => `[${o.id}] ${o.label}${o.detail ? `（${str(o.detail, 80)}）` : ''}`).join('；'));
     if (s.labels?.length) lines.push('分类：' + s.labels.map(l => `[${l.id}] ${l.label}`).join('；'));
     if (s.type === 'bench' && s.bench) {
-      const b = s.bench;
-      lines.push(`工位「${b.name}」：${str(b.brief, 200)}`);
-      lines.push('控件：' + b.controls.filter(c => !c.hidden).map(c => `[${c.id}] ${c.label}${c.unit ? `（${c.unit}${c.min != null ? ` ${c.min}–${c.max}` : ''}）` : ''}${c.hint ? ` 提示：${str(c.hint, 60)}` : ''}`).join('；'));
-      if (b.gauges?.length) lines.push('仪表：' + b.gauges.map(g => `${g.label}（${g.unit}）`).join('、'));
-      lines.push('规则：' + b.rules.map(r => `[rule:${r.id}] ${r.severity === 'violation' ? '违规' : '提醒'}「${r.label}」${basisOf.has(`rule:${r.id}`) ? ` ← 依据 ${basisOf.get(`rule:${r.id}`)}` : ''}`).join('；'));
-      lines.push('目标：' + b.goals.map(g => `[goal:${g.id}] ${g.label}${basisOf.has(`goal:${g.id}`) ? ` ← 依据 ${basisOf.get(`goal:${g.id}`)}` : ''}`).join('；'));
-      const script = [...(b.expertScript || [])].sort((a, c) => a.t - c.t);
-      lines.push(script.length ? '老手脚本（按时间）：' + script.map((a, i) => { const c = b.controls.find(x => x.id === a.control); return `#${i} t=${a.t}s ${c?.label || a.control}${c?.kind === 'knob' ? ` → ${a.value}${c.unit || ''}` : c?.kind === 'switch' ? (a.value ? ' 开' : ' 关') : c?.kind === 'path' ? ` 走到 ${a.value}%` : ' 按下'}`; }).join('；') : '老手脚本：没有');
+      lines.push(...benchMat(s.bench, 0, CHUNK));
     } else if (trace[s.id] !== undefined) lines.push(`老手这一步的做法：${str(describeStep(s, trace[s.id]), 300)}`);
     else lines.push('老手这一步的做法：（没有记录）');
     if (why[s.id]) lines.push(`建空间时留下的追问：${str(why[s.id], 200)}`);
@@ -102,6 +109,27 @@ ${stepsText}
       } catch (e) { lastErr = e; console.warn(`[lesson] ${m} 失败，换下一个：${String((e as any)?.message).slice(0, 120)}`); }
     }
     if (!p?.steps) throw lastErr || new Error('教案生成失败');
+    // 超长工位脚本：剩下的动作按 CHUNK 下一批单独生成，合并进主结果
+    for (const s of sim.steps) {
+      if (s.type !== 'bench' || !s.bench) continue;
+      const total = (s.bench.expertScript || []).length;
+      for (let from = CHUNK; from < total; from += CHUNK) {
+        const to = Math.min(total, from + CHUNK);
+        const sub = `你是「${role}」的资深带教，正在给新人逐个动作讲工位「${s.bench.name}」上老手是怎么做的。下面是这一台的材料和老手脚本的第 #${from}–#${to - 1} 下。
+只用材料，不编造；每一下 say = 「把 xx 调到 xx，因为…」（一句，口语），basis = 依据哪条规则 / 标准 / 老师傅经验（照材料「依据」原样引用；没有就 null）。i 用材料里的绝对序号。
+${benchMat(s.bench, from, to).join('\n')}
+只返回 JSON：{ "actions": [ { "i": ${from}, "say": "", "basis": null } ] }`;
+        let got: any[] = [];
+        for (const m of chain) {
+          try {
+            const res = await generateContent(sub, m, { jsonMode: true });
+            await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Lesson · 跟我学', institution: role, model_id: m, usageMetadata: res.usageMetadata, stage: 'use', space_id: spaceId, chapter_id: chapterId } as any).catch(() => {});
+            const q = parseJsonLoose(res.text); if (!Array.isArray(q?.actions)) throw new Error('分块 JSON 无法解析'); got = q.actions; break;
+          } catch (e) { console.warn(`[lesson] 工位分块 #${from} ${m} 失败：${String((e as any)?.message).slice(0, 100)}`); }
+        }
+        const x = (p.steps[s.id] ||= {}); x.bench ||= {}; x.bench.actions = [...(Array.isArray(x.bench.actions) ? x.bench.actions : []), ...got];
+      }
+    }
     const out: Lesson = { steps: {}, generated_at: new Date().toISOString(), model: used, version: 1 };
     for (const s of sim.steps) {
       const x = p?.steps?.[s.id] || {};
