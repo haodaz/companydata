@@ -9,7 +9,7 @@ import React from 'react';
 import Link from 'next/link';
 
 const MEDIA = 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-media/landing';
-const DEMO_VIDEO = `${MEDIA}/work-demo-720.mp4`, DEMO_POSTER = `${MEDIA}/work-demo-poster.jpg`, DEMO_VTT = `${MEDIA}/work-demo.vtt`;
+const DEMO_VIDEO = `${MEDIA}/work-demo-720.mp4`, DEMO_POSTER = `${MEDIA}/work-demo-poster.jpg`, DEMO_VTT = '/work/work-demo.vtt';   // 字幕轨要同源，放本地
 const I = (d: string) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>;
 const STEPS = [
   { t: '出题', d: '填企业和岗位，两三分钟出一道真活：任务书、材料包、逐条标准，AI 先做一遍。', icon: I('M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z M14 4v6h6 M8 14h8 M8 18h5') },
