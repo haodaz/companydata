@@ -176,6 +176,70 @@ env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "
   return { task, model: used };
 }
 
+
+/** 取材清单：这道题用了库里的什么（给出题人看，证明题是从数据底座里长出来的） */
+export function sourcesOf(ctx: WorkContext) {
+  const c = ctx.company || {};
+  const fields = ['introduction', 'business_profile', 'product_area', 'company_specialties', 'tech_advantage', 'research_area', 'growth_signals', 'industry_position', 'company_case', 'public_sentiment', 'candidate_reputation', 'campus_overview'].filter(k => c[k]);
+  const label: Record<string, string> = { introduction: '简介', business_profile: '业务', product_area: '产品领域', company_specialties: '专长', tech_advantage: '技术优势', research_area: '研发方向', growth_signals: '增长信号', industry_position: '行业位置', company_case: '合作案例', public_sentiment: '舆情风险', candidate_reputation: '求职者口碑', campus_overview: '校招概况' };
+  return {
+    company: ctx.company ? { id: ctx.company.id, name: ctx.company.name, industry: ctx.company.industry, fields: fields.map(k => label[k]) } : null,
+    products: ctx.products.map(p => p.name).slice(0, 8),
+    news: ctx.news.length, executives: ctx.executives.length,
+    jobs: ctx.jobs.map(j => j.title_cn || j.name).filter(Boolean),
+    occupation: ctx.occupation ? ctx.occupation.name : null, typical_tasks: ctx.typical_tasks.map(t => t.name),
+    standards: ctx.standards.map(x => (x.code ? x.code + ' ' : '') + x.title),
+    notes: ctx.notes,
+  };
+}
+
+/** 出题人提意见 → 按意见修订（保留没提到的部分；rubric 权重重新归一）。返回新题 + 一句改了什么 */
+export async function reviseTask(task: WorkTask, ctx: WorkContext, feedback: string, opts: { model?: string } = {}): Promise<{ task: WorkTask; model: string; changelog: string }> {
+  const model = opts.model || WORK_MODEL;
+  const prompt = `你是「真活台」的出题人。业务负责人看了下面这道真活，提了意见。请**按意见修订**，没提到的部分原样保留（不要顺手改风格、不要重写材料正文），意见涉及的部分改到位；仍然只用材料，材料里没有的数字标「示例数据」。
+## 业务负责人的意见
+${feedback.slice(0, 1200)}
+## 材料（出题依据）
+${renderContext(ctx).slice(0, 12000)}
+## 现在的题（完整 JSON）
+${JSON.stringify({ env: task.env, problem: task.problem, task: task.task, materials: task.materials, rubric: task.rubric }).slice(0, 40000)}
+## 要求
+返回修订后的完整 JSON，结构和现在一模一样（env / problem / task / materials / rubric），外加 "changelog"：两三句话说明改了哪里、为什么（口语）。rubric 的 id 尽量不变，新增的用 r9、r10…；weight 加起来 100。`;
+  const { parsed: p, model: used } = await askJson(prompt, model, 'Revise · 按意见修订', ctx.company?.name);
+  const e = p.env || task.env; const envType: WorkEnvType = ['doc', 'code', 'sheet', 'design'].includes(e.type) ? e.type : task.env.type;
+  const env: WorkEnv = { ...task.env, type: envType };
+  if (envType === 'code') { env.language = s(e.language, 20) || task.env.language || 'js'; env.starter = s(e.starter, 4000) || task.env.starter; env.tests = (Array.isArray(e.tests) ? e.tests : task.env.tests || []).slice(0, 6).map((t: any) => ({ name: s(t.name, 60), code: s(t.code, 600) })).filter((t: any) => t.code); }
+  if (envType === 'sheet') env.csv = s(e.csv, 8000) || task.env.csv;
+  if (envType === 'design') { env.params = (Array.isArray(e.params) ? e.params : task.env.params || []).slice(0, 10).map((x: any) => ({ name: s(x.name, 40), unit: s(x.unit, 12), hint: s(x.hint, 120) })).filter((x: any) => x.name); env.sketch_hint = s(e.sketch_hint, 300) || task.env.sketch_hint; }
+  const next: WorkTask = {
+    env,
+    problem: { statement: s(p.problem?.statement, 400) || task.problem.statement, why_now: s(p.problem?.why_now, 400) || task.problem.why_now, evidence: (Array.isArray(p.problem?.evidence) ? p.problem.evidence : task.problem.evidence).slice(0, 6).map((x: any) => ({ text: s(x.text, 300), source: s(x.source, 80) })) },
+    task: { title: s(p.task?.title, 40) || task.task.title, role: task.task.role, brief: s(p.task?.brief, 2000) || task.task.brief, deliverables: (Array.isArray(p.task?.deliverables) ? p.task.deliverables : task.task.deliverables).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 60), format: s(d.format, 60) })), time_minutes: Math.min(120, Math.max(30, Number(p.task?.time_minutes) || task.task.time_minutes)), rules: (Array.isArray(p.task?.rules) ? p.task.rules : task.task.rules).slice(0, 6).map((r: any) => s(r, 120)) },
+    materials: (Array.isArray(p.materials) && p.materials.length ? p.materials : task.materials).slice(0, 6).map((m: any, i: number) => ({ id: m.id || `m${i + 1}`, title: s(m.title, 60), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, 6000), source: (['db', 'generated', 'mixed'].includes(m.source) ? m.source : 'generated'), basis: s(m.basis, 200) })),
+    rubric: (Array.isArray(p.rubric) && p.rubric.length ? p.rubric : task.rubric).slice(0, 10).map((r: any, i: number) => ({ id: r.id || `r${i + 1}`, title: s(r.title, 60), desc: s(r.desc, 300), weight: Math.max(1, Number(r.weight) || 10), depends_on: Array.isArray(r.depends_on) ? r.depends_on.map(String) : [], basis: s(r.basis, 200), levels: { L1: s(r.levels?.L1, 160), L2: s(r.levels?.L2, 160), L3: s(r.levels?.L3, 160), L4: s(r.levels?.L4, 160) } })),
+  };
+  const ids = new Set(next.rubric.map(r => r.id)); const sum = next.rubric.reduce((a, r) => a + r.weight, 0) || 1;
+  for (const r of next.rubric) { r.weight = Math.round(r.weight / sum * 100); r.depends_on = r.depends_on.filter(d => ids.has(d) && d !== r.id); }
+  return { task: next, model: used, changelog: s(p.changelog, 400) || '按意见做了修订' };
+}
+
+/** 企业 / 岗位选择用：库里搜企业（名字 / 简称 / 英文名），带行业、城市、画像完整度、在招岗位数 */
+export async function searchCompanies(q: string, limit = 8) {
+  const qq = q.trim(); if (!qq) return [];
+  const { data } = await db.from('companies').select('id, name, brief_name, industry, city, completeness_score, introduction').eq('if_delete', false).or(`name.ilike.%${qq}%,brief_name.ilike.%${qq}%,name_en.ilike.%${qq}%`).order('completeness_score', { ascending: false, nullsFirst: false }).limit(limit);
+  const rows = data || []; if (!rows.length) return [];
+  const { data: js } = await db.from('jobs').select('company_id').in('company_id', rows.map(r => r.id)).eq('if_delete', false).limit(5000);
+  const cnt = new Map<number, number>(); for (const j of js || []) cnt.set(j.company_id, (cnt.get(j.company_id) || 0) + 1);
+  return rows.map(r => ({ id: r.id, name: r.name, brief_name: r.brief_name, industry: r.industry, city: r.city, completeness: r.completeness_score, has_profile: !!r.introduction, jobs: cnt.get(r.id) || 0 }));
+}
+/** 这家企业在招的岗位（去重的名字 + 职能），给岗位选择用 */
+export async function companyJobs(companyId: number, limit = 40) {
+  const { data } = await db.from('jobs').select('name, title_cn, job_function, city, kind').eq('company_id', companyId).eq('if_delete', false).limit(300);
+  const seen = new Map<string, any>();
+  for (const j of data || []) { const t = (j.title_cn || j.name || '').trim(); if (!t || seen.has(t)) continue; seen.set(t, { title: t, job_function: j.job_function, city: j.city, kind: j.kind }); }
+  return [...seen.values()].slice(0, limit);
+}
+
 /** 第三步：最强模型先做一遍当基线（用和候选人一样的材料），再用同一套 rubric 评它 */
 export async function runBaseline(task: WorkTask, opts: { model?: string; institution?: string } = {}): Promise<{ model: string; answer: string; result: any }> {
   const model = opts.model || WORK_MODEL;

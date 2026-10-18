@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { App, Button, ConfigProvider, Drawer, Input, Select, Space, Typography } from 'antd';
 import { CopyOutlined, EyeOutlined, PlusOutlined, RocketOutlined } from '@ant-design/icons';
 import { ENV_META } from '@/components/work/WorkTaskDetail';
+import { CompanyRolePicker, type PickedCompany } from '@/components/work/CompanyRolePicker';
 
 const { Text } = Typography;
 type Mine = { token: string; key: string; title: string; company: string; role: string; env: string; at: string };
@@ -26,6 +27,7 @@ function Inner() {
   const [mine, setMine] = useState<Mine[]>([]);
   const [live, setLive] = useState<Record<string, { status: string; sessions: number; done: number; baseline: number | null }>>({});
   const [f, setF] = useState({ company: '', role: '', env: '', focus: '', name: '', contact: '' });
+  const [picked, setPicked] = useState<PickedCompany>(null);
   const [busy, setBusy] = useState(''); const [open, setOpen] = useState(false);
   const [recover, setRecover] = useState('');
   const origin = typeof location !== 'undefined' ? location.origin : '';
@@ -42,7 +44,7 @@ function Inner() {
     if (!f.name.trim() || !f.contact.trim()) return message.warning('留个称呼和联系方式');
     setBusy('在拼这家企业的材料、出题、做材料包、定标准、让 AI 先做一遍……约 2–3 分钟，别关页面');
     try {
-      const j = await (await fetch('/api/work/create', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(f) })).json();
+      const j = await (await fetch('/api/work/create', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...f, company_id: picked?.id }) })).json();
       if (!j.ok) throw new Error(j.error);
       const row: Mine = { token: j.share_token, key: j.owner_key, title: j.title, company: f.company, role: f.role, env: j.env, at: new Date().toISOString() };
       const m = [row, ...load()]; save(m); setMine(m); try { localStorage.setItem('work:owner', JSON.stringify({ name: f.name, contact: f.contact })); } catch {}
@@ -107,8 +109,7 @@ function Inner() {
 
       <Drawer open={open} onClose={() => !busy && setOpen(false)} width={Math.min(560, typeof window !== 'undefined' ? window.innerWidth - 40 : 560)} title="出一道真活">
         <Space direction="vertical" style={{ width: '100%' }} size={12}>
-          <Input value={f.company} onChange={e => setF(x => ({ ...x, company: e.target.value }))} placeholder="企业：公司名，如 宁德时代" size="large" />
-          <Input value={f.role} onChange={e => setF(x => ({ ...x, role: e.target.value }))} placeholder="岗位 / 职业：如 供应链计划、后端开发" size="large" />
+          <CompanyRolePicker company={f.company} role={f.role} onCompany={(name, p) => { setF(x => ({ ...x, company: name })); setPicked(p); }} onRole={r => setF(x => ({ ...x, role: r }))} />
           <Select value={f.env} onChange={v => setF(x => ({ ...x, env: v }))} size="large" style={{ width: '100%' }} options={[{ value: '', label: '操作台：按岗位自动选' }, ...Object.entries(ENV_META).map(([v, m]) => ({ value: v, label: m.label }))]} />
           <Input.TextArea value={f.focus} onChange={e => setF(x => ({ ...x, focus: e.target.value }))} placeholder="你想考什么（选填）：聚焦哪个问题、给谁做、难度" autoSize={{ minRows: 2, maxRows: 4 }} />
           <Space style={{ width: '100%' }} styles={{ item: { flex: 1 } }}><Input value={f.name} onChange={e => setF(x => ({ ...x, name: e.target.value }))} placeholder="你的称呼" /><Input value={f.contact} onChange={e => setF(x => ({ ...x, contact: e.target.value }))} placeholder="联系方式（手机 / 微信 / 邮箱）" /></Space>

@@ -10,6 +10,7 @@ import { CopyOutlined, DeleteOutlined, EyeOutlined, RocketOutlined, SendOutlined
 import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import Link from 'next/link';
 import { WorkTaskDetail } from '@/components/work/WorkTaskDetail';
+import { CompanyRolePicker, type PickedCompany } from '@/components/work/CompanyRolePicker';
 
 const { Text } = Typography;
 const ENV: Record<string, { label: string; color: string }> = { doc: { label: '文档 / 对账台', color: 'purple' }, code: { label: '代码台', color: 'geekblue' }, sheet: { label: '表格 / 数据台', color: 'cyan' }, design: { label: '设计台', color: 'orange' } };
@@ -25,6 +26,7 @@ function Inner() {
   const [loading, setLoading] = useState(true);
   const [needLogin, setNeedLogin] = useState(false);
   const [form, setForm] = useState({ company: '', role: '', env: '', focus: '' });
+  const [picked, setPicked] = useState<PickedCompany>(null);
   const [busy, setBusy] = useState('');
   const [detail, setDetail] = useState<{ task: any; sessions: any[] } | null>(null);
 
@@ -42,7 +44,7 @@ function Inner() {
     if (!form.company.trim() || !form.role.trim()) return message.warning('企业和岗位都要填');
     setBusy('出题中（拼材料 → 问题 → 任务 → 材料包 → rubric，约 1–2 分钟）…');
     try {
-      const j = await (await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: form.company, role: form.role, env: form.env || undefined, focus: form.focus || undefined }) })).json();
+      const j = await (await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: form.company, company_id: picked?.id, role: form.role, env: form.env || undefined, focus: form.focus || undefined }) })).json();
       if (!j.ok) throw new Error(j.error);
       if (j.notes?.length) message.info(j.notes.join('；'), 6);
       setBusy('题出好了，AI 先做一遍当基线（约 1 分钟）…');
@@ -71,8 +73,7 @@ function Inner() {
       <PageHeader title="真活台 · 管理" icon={<RocketOutlined />} description="拿一家企业的真实业务问题出题：问题 → 任务 → 材料包 → 带依赖的 rubric → AI 基线。链接甩出去，对方做完就有报告（结果逐条 + 过程高光 / 风险 + 和 AI 的差距）。独立于 /lab 和数据后台。" />
       <Panel style={{ marginBottom: 16 }}>
         <Space wrap align="start">
-          <Input value={form.company} onChange={e => setForm(f => ({ ...f, company: e.target.value }))} placeholder="企业（名字或编号，库里有的最好）" style={{ width: 260 }} />
-          <Input value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))} placeholder="岗位 / 职业（如 供应链分析师）" style={{ width: 220 }} />
+          <div style={{ display: 'grid', gap: 8, width: 520 }}><CompanyRolePicker size="middle" company={form.company} role={form.role} onCompany={(name, p) => { setForm(f => ({ ...f, company: name })); setPicked(p); }} onRole={r => setForm(f => ({ ...f, role: r }))} /></div>
           <Select value={form.env} onChange={v => setForm(f => ({ ...f, env: v }))} style={{ width: 170 }} options={[{ value: '', label: '操作台：按岗位自动选' }, ...Object.entries(ENV).map(([v, x]) => ({ value: v, label: x.label }))]} />
           <Input.TextArea value={form.focus} onChange={e => setForm(f => ({ ...f, focus: e.target.value }))} placeholder="出题人额外要求（选填：聚焦哪个问题、给谁看、难度）" autoSize={{ minRows: 1, maxRows: 3 }} style={{ width: 360 }} />
           <Button type="primary" icon={<RocketOutlined />} loading={!!busy} onClick={create}>出一道真活</Button>

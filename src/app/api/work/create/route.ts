@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     const { count } = await db.from('work_tasks').select('id', { count: 'exact', head: true }).gte('created_at', since).contains('owner', { ip });
     if ((count || 0) >= DAILY_LIMIT) return NextResponse.json({ ok: false, error: `今天已经出了 ${DAILY_LIMIT} 道，明天再来；要批量用请联系我们` }, { status: 429 });
 
-    const ctx = await gatherContext(company, role);
+    const ctx = await gatherContext(body.company_id ? String(body.company_id) : company, role);
     const actor = `public:${contact}`;
     const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题', stage: 'create', actor }, () =>
       generateTask(ctx, role, { model: body.model || WORK_MODEL, focus: String(body.focus || '').slice(0, 600) || undefined, env: ['doc', 'code', 'sheet', 'design'].includes(body.env) ? body.env : undefined }));

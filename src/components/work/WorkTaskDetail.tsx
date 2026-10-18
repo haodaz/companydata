@@ -28,6 +28,17 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           <Paragraph style={{ marginTop: 12, whiteSpace: 'pre-wrap', background: '#fafbff', padding: 12, borderRadius: 10 }}>{T.task?.brief}</Paragraph>
           {T.task?.env?.type === 'code' && <Paragraph><b>自测用例</b>：{(T.task.env.tests || []).map((t: any) => t.name).join('、') || '无'}</Paragraph>}
           {notes?.length ? <Paragraph type="warning">材料缺口：{notes.join('；')}</Paragraph> : null}
+          {T.sources && <div style={{ marginTop: 14, padding: '12px 14px', borderRadius: 10, background: '#f3fbf6', border: '1px solid #cfe9d8' }}>
+            <div style={{ fontWeight: 700, marginBottom: 6 }}>取材清单 · 这道题从库里拿了什么</div>
+            <div style={{ display: 'grid', gap: 4, fontSize: 13 }}>
+              {T.sources.company && <div><Tag color="green">企业画像</Tag>{T.sources.company.name}{T.sources.company.industry ? `（${T.sources.company.industry}）` : ''} · 用到字段：{T.sources.company.fields.join('、') || '—'}</div>}
+              <div><Tag color="green">子实体</Tag>产品 {T.sources.products.length} 个{T.sources.products.length ? `（${T.sources.products.slice(0, 5).join('、')}${T.sources.products.length > 5 ? '…' : ''}）` : ''} · 近期动态 {T.sources.news} 条 · 高管 {T.sources.executives} 位</div>
+              <div><Tag color="purple">在招岗位</Tag>{T.sources.jobs.length ? T.sources.jobs.join('、') : '没有对口岗位'}</div>
+              <div><Tag color="blue">职业画像</Tag>{T.sources.occupation || '职业库里没有这个职业'}{T.sources.typical_tasks.length ? ` · 典型任务：${T.sources.typical_tasks.slice(0, 4).join('、')}` : ''}</div>
+              <div><Tag color="gold">行业标准</Tag>{T.sources.standards.length ? T.sources.standards.slice(0, 4).join('；') : '没有挂到的标准'}</div>
+            </div>
+          </div>}
+          {!!T.task?.revisions?.length && <div style={{ marginTop: 12 }}><div style={{ fontWeight: 700, marginBottom: 4 }}>修订记录</div>{T.task.revisions.map((r: any, i: number) => <div key={i} style={{ fontSize: 13, padding: '6px 0', borderTop: '1px solid #f0f0f5' }}><Text type="secondary">{new Date(r.at).toLocaleString('zh-CN', { hour12: false })}</Text> · 意见：{r.feedback}<div style={{ color: '#12a150' }}>改动：{r.changelog}</div></div>)}</div>}
         </div> },
         { key: 'm', label: `材料包（${(T.materials || []).length}）`, children: (T.materials || []).map((m: any) => <div key={m.id} style={{ marginBottom: 14 }}><b>{m.id} {m.title}</b> <Tag>{m.kind}</Tag><Tag color={m.source === 'db' ? 'green' : m.source === 'generated' ? 'orange' : 'gold'}>{m.source === 'db' ? '来自材料' : m.source === 'generated' ? '补写' : '混合'}</Tag>{m.basis && <Text type="secondary"> 依据：{m.basis}</Text>}<pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', background: '#fafbff', padding: 10, borderRadius: 8, fontSize: 13 }}>{m.content}</pre></div>) },
         { key: 'r', label: `rubric（${(T.rubric || []).length}）`, children: <Table size="small" rowKey="id" pagination={false} dataSource={T.rubric || []} columns={[

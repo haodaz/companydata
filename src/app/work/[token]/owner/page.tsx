@@ -4,7 +4,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { App, Button, ConfigProvider, Space, Tag } from 'antd';
+import { App, Button, ConfigProvider, Input, Space, Tag } from 'antd';
 import { WorkTaskDetail, ENV_META } from '@/components/work/WorkTaskDetail';
 
 export default function OwnerPage() {
@@ -17,6 +17,8 @@ function Inner() {
   const { message } = App.useApp();
   const [d, setD] = useState<{ task: any; sessions: any[] } | null>(null);
   const [err, setErr] = useState(''); const [busy, setBusy] = useState(false);
+  const [fb, setFb] = useState(''); const [revising, setRevising] = useState(false);
+  const revise = async () => { if (!fb.trim()) return; setRevising(true); try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ feedback: fb }) })).json(); if (!j.ok) throw new Error(j.error); message.success(`改好了：${j.changelog}`, 8); setFb(''); load(); } catch (e: any) { message.error(e.message); } finally { setRevising(false); } };
   const load = useCallback(async () => {
     const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { cache: 'no-store' })).json();
     if (!j.ok) { setErr(j.error); return; } setD(j);
@@ -61,6 +63,15 @@ function Inner() {
             {T.status === 'published' ? <Button onClick={() => setStatus('archived')}>下架</Button> : <Button onClick={() => setStatus('published')}>发布</Button>}
             <Button onClick={rerun} loading={busy}>重跑 AI 基线</Button>
           </Space>
+        </div>
+        {/* 对题提意见：AI 按意见修订，没提到的不动；改完基线作废 */}
+        <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', marginBottom: 16 }}>
+          <div style={{ fontWeight: 700, marginBottom: 6 }}>这道题哪里不对？说一句，按你的意见改</div>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', flexWrap: 'wrap' }}>
+            <Input.TextArea value={fb} onChange={e => setFb(e.target.value)} placeholder="比如：缺口补位那条标准太宽，要求按月给出具体调拨量；材料 m3 的良率改成 78%；时间压到 60 分钟；去掉邮件这个交付物" autoSize={{ minRows: 2, maxRows: 5 }} style={{ flex: 1, minWidth: 320 }} />
+            <Button type="primary" loading={revising} onClick={revise} disabled={!fb.trim()}>按意见修订（约 1 分钟）</Button>
+          </div>
+          <div style={{ fontSize: 12, color: '#888', marginTop: 6 }}>没提到的部分原样保留；改完 AI 基线作废，记得重跑。{T.task?.revisions?.length ? `已修订 ${T.task.revisions.length} 次。` : ''}{!T.baseline ? ' 现在没有基线。' : ''}</div>
         </div>
         <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '8px 18px 18px' }}>
           <WorkTaskDetail task={T} sessions={d.sessions} shareLink={share} notes={T.notes} defaultTab={d.sessions.length ? 's' : 'p'} />
