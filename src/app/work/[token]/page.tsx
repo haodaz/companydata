@@ -8,6 +8,10 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import { WorkReport } from '@/components/work/WorkReport';
+import { DocBench } from '@/components/work/benches/DocBench';
+import { CodeBench } from '@/components/work/benches/CodeBench';
+import { SheetBench } from '@/components/work/benches/SheetBench';
+import { DesignBench } from '@/components/work/benches/DesignBench';
 
 type Material = { id: string; title: string; kind: string; content: string; source: string };
 type Env = { type: 'doc' | 'code' | 'sheet' | 'design'; language?: string; starter?: string; tests?: { name: string; code: string }[]; csv?: string; params?: { name: string; unit?: string; hint?: string }[]; sketch_hint?: string };
@@ -184,78 +188,52 @@ function Workspace({ token, sid, task, env, narrow, grading, error, onSubmit }: 
     worker.postMessage({ src, tests: env.tests });
   };
 
-  // 设计台草图：点一下加点，双击结束一条线
-  const [cur, setCur] = useState<[number, number][]>([]);
-  const svgClick = (e: React.MouseEvent<SVGSVGElement>) => { const r = e.currentTarget.getBoundingClientRect(); const p: [number, number] = [Math.round(e.clientX - r.left), Math.round(e.clientY - r.top)]; setCur(c => [...c, p]); };
-  const [lineLabel, setLineLabel] = useState('');
-  const svgDbl = () => { if (cur.length >= 2) { const label = lineLabel.trim(); setSketch(s => [...s, { pts: cur, label }]); ev('sketch', { note: label }); setLineLabel(''); } setCur([]); };
 
   const [arm, setArm] = useState(false);
+  const dark = env.type === 'code';
   const submit = () => { if (!arm) { setArm(true); setTimeout(() => setArm(false), 5000); return; } setArm(false); const events = buf.current.splice(0); onSubmit(deliverable, events); };
   const over = now > task.task.time_minutes * 60;
 
   return (
-    <Shell>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '10px 18px', borderBottom: '1px solid #e8e9f0', background: '#fff', position: 'sticky', top: 0, zIndex: 5 }}>
+    <Shell dark={dark}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '10px 18px', borderBottom: `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, background: dark ? '#16171f' : '#fff', color: dark ? '#e6e8f0' : undefined, position: 'sticky', top: 0, zIndex: 5 }}>
         <div style={{ fontSize: 11, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台</div>
         <div style={{ fontWeight: 700, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{task.task.title} <span style={{ color: '#888', fontWeight: 400, fontSize: 13 }}>{task.company_name} · {task.role} · {ENV_NAME[env.type]}</span></div>
-        <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, color: over ? '#c0392b' : '#1a1a2e' }}>{fmt(now)}<span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span></div>
+        <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{fmt(now)}<span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span></div>
         <button onClick={submit} disabled={grading} style={{ ...btnPrimary, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '再点一次确认交卷（交后不能改）' : '交卷 →'}</button>
       </div>
       {grading && <div style={{ padding: '14px 18px', background: '#f3f2ff', color: '#4c43c9', fontSize: 14 }}>交卷了。正在逐条核对交付物、回看过程、和 AI 基线比——大约 1–2 分钟，别关页面。</div>}
       {error && !grading && <div style={{ padding: '10px 18px', background: '#fff1f0', color: '#c0392b', fontSize: 14 }}>{error}</div>}
       <div style={{ display: 'grid', gridTemplateColumns: narrow ? '1fr' : '300px 1fr 360px', gap: 0, minHeight: 'calc(100vh - 56px)' }}>
         {/* 材料 */}
-        <aside style={{ borderRight: narrow ? undefined : '1px solid #e8e9f0', background: '#fafbff', padding: 14, overflow: 'auto', maxHeight: narrow ? 320 : 'calc(100vh - 56px)' }}>
-          <div style={capStyle}>材料包 · {task.materials.length} 份</div>
-          {task.materials.map(m => <div key={m.id} onClick={() => openMat(m)} style={{ padding: '10px 12px', borderRadius: 10, marginBottom: 6, cursor: 'pointer', background: mat?.id === m.id ? '#fff' : 'transparent', border: `1px solid ${mat?.id === m.id ? '#6055f5' : '#e8e9f0'}` }}><div style={{ fontWeight: 600, fontSize: 13 }}>{m.title}</div><div style={{ fontSize: 11, color: '#999' }}>{m.id} · {m.kind}</div></div>)}
-          <div style={{ ...capStyle, marginTop: 16 }}>要交什么</div>
+        <aside style={{ borderRight: narrow ? undefined : `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, background: dark ? '#16171f' : '#fafbff', color: dark ? '#d6d8e6' : undefined, padding: 14, overflow: 'auto', maxHeight: narrow ? 320 : 'calc(100vh - 56px)' }}>
+          <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>{dark ? 'EXPLORER · 材料' : `材料包 · ${task.materials.length} 份`}</div>
+          {task.materials.map(m => dark
+            ? <div key={m.id} onClick={() => openMat(m)} style={{ padding: '5px 8px', borderRadius: 6, cursor: 'pointer', fontFamily: 'ui-monospace, Menlo, monospace', fontSize: 12.5, background: mat?.id === m.id ? '#2b2d3e' : 'transparent', color: mat?.id === m.id ? '#fff' : '#b8bdd6', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{m.kind === 'data' ? '🗂' : m.kind === 'email' ? '✉️' : m.kind === 'table' ? '📊' : '📄'} {m.id}-{m.title}.{m.kind === 'table' || m.kind === 'data' ? 'csv' : 'md'}</div>
+            : <div key={m.id} onClick={() => openMat(m)} style={{ padding: '10px 12px', borderRadius: 10, marginBottom: 6, cursor: 'pointer', background: mat?.id === m.id ? '#fff' : 'transparent', border: `1px solid ${mat?.id === m.id ? '#6055f5' : '#e8e9f0'}` }}><div style={{ fontWeight: 600, fontSize: 13 }}>{m.title}</div><div style={{ fontSize: 11, color: '#999' }}>{m.id} · {m.kind}</div></div>)}
+          <div style={{ ...capStyle, marginTop: 16, color: dark ? '#8b8fa8' : capStyle.color }}>要交什么</div>
           <ol style={{ margin: 0, paddingLeft: 18, fontSize: 13, lineHeight: 1.7 }}>{task.task.deliverables.map(d => <li key={d.id}>{d.title} <span style={{ color: '#999' }}>{d.format}</span></li>)}</ol>
-          <details style={{ marginTop: 12, fontSize: 13 }}><summary style={{ cursor: 'pointer', color: '#6055f5' }}>任务书</summary><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.7, color: '#444', marginTop: 6 }}>{task.task.brief}</div></details>
+          <details style={{ marginTop: 12, fontSize: 13 }}><summary style={{ cursor: 'pointer', color: dark ? '#8f87ff' : '#6055f5' }}>任务书</summary><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.7, color: dark ? '#b8bdd6' : '#444', marginTop: 6 }}>{task.task.brief}</div></details>
         </aside>
-        {/* 操作台 */}
-        <main style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 12, minWidth: 0 }}>
-          {mat && <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 12, padding: 14, maxHeight: 300, overflow: 'auto' }}><div style={{ display: 'flex', justifyContent: 'space-between' }}><b>{mat.title}</b><button onClick={() => setMat(null)} style={btnGhost}>收起</button></div><pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13.5, lineHeight: 1.7, margin: '8px 0 0', color: '#333' }}>{mat.content}</pre></div>}
-          {env.type === 'doc' && <>
-            <div style={capStyle}>交付物（Markdown，按「要交什么」逐个写）</div>
-            <textarea value={doc} onChange={e => setDoc(e.target.value)} onPaste={onPaste} placeholder={task.task.deliverables.map(d => `## ${d.title}\n`).join('\n')} style={{ ...ta, flex: 1, minHeight: 420 }} />
-          </>}
-          {env.type === 'code' && <>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}><div style={capStyle}>代码（{env.language || 'js'}，导出 solution）</div>{!!env.tests?.length && <button onClick={runTests} style={btnGhost}>▶ 跑自测（{env.tests.length} 个用例）</button>}</div>
-            <textarea value={code} onChange={e => setCode(e.target.value)} onPaste={onPaste} spellCheck={false} style={{ ...ta, fontFamily: 'ui-monospace, Menlo, monospace', fontSize: 13, minHeight: 320, background: '#0f1224', color: '#e6e8f0' }} />
-            {testOut && <pre style={{ margin: 0, padding: 10, background: '#fafbff', border: '1px solid #e8e9f0', borderRadius: 10, fontSize: 12.5, whiteSpace: 'pre-wrap' }}>{testOut}</pre>}
-            <div style={capStyle}>说明（思路、假设、没做完的）</div>
-            <textarea value={notes} onChange={e => setNotes(e.target.value)} onPaste={onPaste} style={{ ...ta, minHeight: 120 }} />
-          </>}
-          {env.type === 'sheet' && <>
-            <div style={capStyle}>表（CSV，直接改；下面实时预览）</div>
-            <textarea value={csv} onChange={e => setCsv(e.target.value)} onPaste={onPaste} spellCheck={false} style={{ ...ta, fontFamily: 'ui-monospace, Menlo, monospace', fontSize: 13, minHeight: 180 }} />
-            <CsvPreview csv={csv} />
-            <div style={capStyle}>口径说明（怎么对的账、哪些是假设）</div>
-            <textarea value={notes} onChange={e => setNotes(e.target.value)} onPaste={onPaste} style={{ ...ta, minHeight: 140 }} />
-          </>}
-          {env.type === 'design' && <>
-            <div style={capStyle}>参数表</div>
-            <table style={{ borderCollapse: 'collapse', fontSize: 13, width: '100%' }}><tbody>{(env.params || []).map(p => <tr key={p.name} style={{ borderTop: '1px solid #eee' }}><td style={{ padding: 6, width: 180, fontWeight: 600 }}>{p.name}</td><td style={{ padding: 6 }}><input value={params[p.name] || ''} onChange={e => setParams(x => ({ ...x, [p.name]: e.target.value }))} onBlur={() => ev('set_param', { id: p.name })} style={{ ...inp, width: 140 }} /> <span style={{ color: '#888' }}>{p.unit}</span></td><td style={{ padding: 6, color: '#888', fontSize: 12 }}>{p.hint}</td></tr>)}</tbody></table>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}><div style={capStyle}>草图（点一下加点、双击结束一条线）{env.sketch_hint ? ` · ${env.sketch_hint}` : ''}</div><input value={lineLabel} onChange={e => setLineLabel(e.target.value)} placeholder="这条线标什么：外轮廓 / 孔位 / 尺寸 120mm" style={{ ...inp, width: 280, padding: '5px 10px', fontSize: 13 }} /></div>
-            <svg onClick={svgClick} onDoubleClick={svgDbl} width="100%" height={320} style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 12, cursor: 'crosshair', backgroundImage: 'linear-gradient(#f0f0f5 1px, transparent 1px), linear-gradient(90deg, #f0f0f5 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
-              {sketch.map((l, i) => <g key={i}><polyline points={l.pts.map(p => p.join(',')).join(' ')} fill="none" stroke="#6055f5" strokeWidth={2} /><text x={l.pts[0][0] + 4} y={l.pts[0][1] - 4} fontSize={11} fill="#6055f5">{l.label}</text></g>)}
-              {cur.length > 0 && <polyline points={cur.map(p => p.join(',')).join(' ')} fill="none" stroke="#fa8c16" strokeWidth={2} strokeDasharray="4 3" />}
-            </svg>
-            {!!sketch.length && <button onClick={() => setSketch(s => s.slice(0, -1))} style={btnGhost}>撤销上一条线</button>}
-            <div style={capStyle}>设计说明（取值依据、校核、风险）</div>
-            <textarea value={notes} onChange={e => setNotes(e.target.value)} onPaste={onPaste} style={{ ...ta, minHeight: 140 }} />
-          </>}
+        {/* 操作台：四种台子长相不同（在线文档 / IDE / 电子表格 / CAD），材料面板按台子换风格 */}
+        <main style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 12, minWidth: 0, background: dark ? '#14151e' : undefined }}>
+          {mat && <div style={{ background: dark ? '#1e1f2b' : '#fff', color: dark ? '#d6d8e6' : undefined, border: `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, borderRadius: 12, padding: 14, maxHeight: 260, overflow: 'auto' }}><div style={{ display: 'flex', justifyContent: 'space-between' }}><b>{mat.title}</b><button onClick={() => setMat(null)} style={{ ...btnGhost, ...(dark ? { background: 'transparent', color: '#aab', borderColor: '#3a3d52' } : {}) }}>收起</button></div><pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13.5, lineHeight: 1.7, margin: '8px 0 0', color: dark ? '#cfd3e6' : '#333' }}>{mat.content}</pre></div>}
+          <div style={{ flex: 1, minHeight: 520, display: 'flex', flexDirection: 'column' }}>
+            {env.type === 'doc' && <DocBench value={doc} onChange={setDoc} onPaste={onPaste} deliverables={task.task.deliverables} title={task.task.title} />}
+            {env.type === 'code' && <CodeBench code={code} onCode={setCode} notes={notes} onNotes={setNotes} tests={env.tests || []} language={env.language || 'js'} onRun={runTests} testOut={testOut} onPaste={onPaste} />}
+            {env.type === 'sheet' && <SheetBench csv={csv} onCsv={setCsv} notes={notes} onNotes={setNotes} onPaste={onPaste} />}
+            {env.type === 'design' && <DesignBench params={env.params || []} values={params} onParam={(k, v) => setParams(x => ({ ...x, [k]: v }))} onParamDone={k => ev('set_param', { id: k })} sketch={sketch} setSketch={f => setSketch(f)} hint={env.sketch_hint} notes={notes} onNotes={setNotes} onPaste={onPaste} onSketch={label => ev('sketch', { note: label })} />}
+          </div>
         </main>
         {/* AI */}
-        <aside style={{ borderLeft: narrow ? undefined : '1px solid #e8e9f0', display: 'flex', flexDirection: 'column', maxHeight: narrow ? 480 : 'calc(100vh - 56px)' }}>
-          <div style={{ padding: '12px 14px', borderBottom: '1px solid #e8e9f0' }}><div style={capStyle}>AI 助手</div><div style={{ fontSize: 12, color: '#888' }}>随便问，不算作弊；评的是你怎么用、什么是你自己定的。它看得到你当前打开的材料。</div></div>
+        <aside style={{ borderLeft: narrow ? undefined : `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, background: dark ? '#16171f' : undefined, color: dark ? '#d6d8e6' : undefined, display: 'flex', flexDirection: 'column', maxHeight: narrow ? 480 : 'calc(100vh - 56px)' }}>
+          <div style={{ padding: '12px 14px', borderBottom: `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}` }}><div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>AI 助手</div><div style={{ fontSize: 12, color: '#888' }}>随便问，不算作弊；评的是你怎么用、什么是你自己定的。它看得到你当前打开的材料。</div></div>
           <div style={{ flex: 1, overflow: 'auto', padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {chat.map((c, i) => <div key={i}><div style={{ background: '#6055f5', color: '#fff', padding: '8px 12px', borderRadius: '12px 12px 2px 12px', fontSize: 13.5, marginLeft: 30, whiteSpace: 'pre-wrap' }}>{c.q}</div><div style={{ background: '#fafbff', border: '1px solid #e8e9f0', padding: '8px 12px', borderRadius: '12px 12px 12px 2px', fontSize: 13.5, marginTop: 6, marginRight: 30, whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>{c.a}<div style={{ marginTop: 6 }}><button onClick={() => adopt(c.a)} style={{ ...btnGhost, fontSize: 12 }}>放进交付物</button></div></div></div>)}
+            {chat.map((c, i) => <div key={i}><div style={{ background: '#6055f5', color: '#fff', padding: '8px 12px', borderRadius: '12px 12px 2px 12px', fontSize: 13.5, marginLeft: 30, whiteSpace: 'pre-wrap' }}>{c.q}</div><div style={{ background: dark ? '#1e1f2b' : '#fafbff', border: `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, padding: '8px 12px', borderRadius: '12px 12px 12px 2px', fontSize: 13.5, marginTop: 6, marginRight: 30, whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>{c.a}<div style={{ marginTop: 6 }}><button onClick={() => adopt(c.a)} style={{ ...btnGhost, fontSize: 12 }}>放进交付物</button></div></div></div>)}
             {asking && <div style={{ color: '#888', fontSize: 13 }}>AI 在想…</div>}
           </div>
-          <div style={{ padding: 12, borderTop: '1px solid #e8e9f0', display: 'flex', gap: 8 }}>
-            <textarea value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } }} placeholder="问 AI（Enter 发送，Shift+Enter 换行）" style={{ ...ta, minHeight: 44, flex: 1 }} />
+          <div style={{ padding: 12, borderTop: `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, display: 'flex', gap: 8 }}>
+            <textarea value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } }} placeholder="问 AI（Enter 发送，Shift+Enter 换行）" style={{ ...ta, minHeight: 44, flex: 1, ...(dark ? { background: '#1e1f2b', color: '#e6e8f0', borderColor: '#3a3d52' } : {}) }} />
             <button onClick={ask} disabled={asking || !q.trim()} style={btnPrimary}>问</button>
           </div>
         </aside>
@@ -270,7 +248,7 @@ function CsvPreview({ csv }: { csv: string }) {
   return <div style={{ overflow: 'auto', border: '1px solid #e8e9f0', borderRadius: 10, maxHeight: 260 }}><table style={{ borderCollapse: 'collapse', fontSize: 12.5, minWidth: '100%' }}><tbody>{rows.map((r, i) => <tr key={i} style={{ background: i === 0 ? '#fafbff' : undefined }}>{r.map((c, j) => <td key={j} style={{ padding: '4px 8px', borderBottom: '1px solid #f0f0f0', borderRight: '1px solid #f5f5f5', fontWeight: i === 0 ? 700 : 400, whiteSpace: 'nowrap' }}>{c}</td>)}</tr>)}</tbody></table></div>;
 }
 
-function Shell({ children }: { children: React.ReactNode }) { return <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e', fontFamily: 'var(--font-geist-sans), -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif' }}>{children}</div>; }
+function Shell({ children, dark }: { children: React.ReactNode; dark?: boolean }) { return <div style={{ minHeight: '100vh', background: dark ? '#14151e' : '#f6f7fb', color: dark ? '#e6e8f0' : '#1a1a2e', fontFamily: 'var(--font-geist-sans), -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif' }}>{children}</div>; }
 function Box({ title, children }: { title: string; children: React.ReactNode }) { return <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', marginBottom: 14 }}><div style={capStyle}>{title}</div>{children}</div>; }
 const capStyle: React.CSSProperties = { fontSize: 11, letterSpacing: 1.5, color: '#8c8c8c', marginBottom: 6, fontWeight: 600 };
 const inp: React.CSSProperties = { padding: '9px 12px', border: '1px solid #d9dbe6', borderRadius: 10, fontSize: 14, outline: 'none' };
