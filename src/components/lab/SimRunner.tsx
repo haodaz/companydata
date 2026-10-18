@@ -273,7 +273,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
   const benchDone = step.type === 'bench' && step.bench && value?.finished ? (
     <div className="lab-in" style={{ padding: '12px 14px', borderRadius: 14, background: 'rgba(18,161,80,.07)', border: '1px solid rgba(18,161,80,.25)' }}>
       <div style={{ fontWeight: 700, color: '#0d7a3d', marginBottom: 4 }}>这段操作已记录</div>
-      <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{describeStep(step, value)}</div>
+      <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{describeStep(step, value)}{(value as any)?.study && <span style={{ marginLeft: 8, fontWeight: 700, color: (value as any).study.score >= 80 ? '#0d7a3d' : (value as any).study.score >= 60 ? '#b7791f' : '#8a94a6' }}>· 操作打分 {(value as any).study.score}</span>}</div>
       <SnapshotStrip trace={value as BenchTrace} />
       <button className="lab-btn ghost" style={{ marginTop: 6 }} onClick={() => set(undefined)}>重新操作</button>
     </div>
@@ -337,7 +337,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
           value?.finished ? (
             <div className="lab-in" style={{ padding: '12px 14px', borderRadius: 14, background: 'rgba(18,161,80,.07)', border: '1px solid rgba(18,161,80,.25)' }}>
               <div style={{ fontWeight: 700, color: '#0d7a3d', marginBottom: 4 }}>这段操作已记录</div>
-              <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{describeStep(step, value)}</div>
+              <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{describeStep(step, value)}{(value as any)?.study && <span style={{ marginLeft: 8, fontWeight: 700, color: (value as any).study.score >= 80 ? '#0d7a3d' : (value as any).study.score >= 60 ? '#b7791f' : '#8a94a6' }}>· 操作打分 {(value as any).study.score}</span>}</div>
               <SnapshotStrip trace={value as BenchTrace} />
               <button className="lab-btn ghost" style={{ marginTop: 6 }} onClick={() => set(undefined)}>重新操作</button>
             </div>

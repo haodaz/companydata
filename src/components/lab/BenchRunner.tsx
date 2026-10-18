@@ -129,6 +129,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   /** 你比着做：每一下的评价。standard 一次到位 · adjusted 调了几次才到 · assisted 让他代做 */
   const [gOutcomes, setGOutcomes] = useState<{ i: number; outcome: 'standard' | 'adjusted' | 'assisted' }[]>([]);
   const gTries = useRef(0);          // 当前这一下，学生拨了几次目标控件
+  const gDir = useRef(0);            // 旋钮上一次拨的方向（反向了才算一次调整）
   const gActStart = useRef(0);       // 「换你比着做」时的事件数：之后的违规才算学生的
   const [gi, setGi] = useState(0);                 // 下一个要做的动作
   const [gPaused, setGPaused] = useState(!!guided); // 时钟停着等人做
@@ -146,7 +147,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
     return (v ? 1 : 0) === (gTarget.value ? 1 : 0);
   };
   const gAdvance = (outcome: 'standard' | 'adjusted' | 'assisted' = 'standard') => {
-    setGOutcomes(o => [...o, { i: gi, outcome }]); gTries.current = 0;
+    setGOutcomes(o => [...o, { i: gi, outcome }]); gTries.current = 0; gDir.current = 0;
     const next = gi + 1; setGi(next); gEvents.current = stRef.current.events.length;
     if (next >= gScript.length) { setGPhase('after'); setGPaused(false); } else setGPaused(false);
   };
@@ -180,7 +181,13 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
 
   const act = (id: string, value: number) => {
     if ((!running && !guided) || auto) return;
-    if (guided && gPhaseRef.current === 'act' && gPausedRef.current && id === gTarget?.control) gTries.current++;
+    if (guided && gPhaseRef.current !== 'act' && gPhaseRef.current !== 'done') return;   // 看示范的时候别碰台面
+    if (guided && gPhaseRef.current === 'act' && gPausedRef.current) {
+      // 旋钮朝一个方向连着拨算一下；拨过头往回调、或摸了别的控件，才算「调整」
+      if (id !== gTarget?.control) gTries.current += 2;
+      else if (gCtl?.kind === 'knob') { const d = Math.sign(value - (stRef.current.controls[id] || 0)); if (!gTries.current || (gDir.current && d && d !== gDir.current)) gTries.current++; if (d) gDir.current = d; }
+      else gTries.current++;
+    }
     applyControl(spec, stRef.current, id, value);
     if (spec.controls.find(c => c.id === id)?.kind !== 'path') snapshot();
     bump(v => v + 1);
@@ -478,7 +485,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
         {guided.actions[gi]?.basis && <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, lineHeight: 1.6, color: 'var(--ink3)' }}>依据：{guided.actions[gi].basis}</div>}
         <div style={{ display: 'flex', gap: 8, marginTop: 10, alignItems: 'center' }}>
           <button className="lab-btn ghost sm" onClick={gDoIt} style={hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined}>替我做一下</button>
-          <span className="hud-ink3" style={{ fontSize: 11.5, color: 'var(--ink3)' }}>{gTries.current > 1 ? `调了 ${gTries.current} 次了，再稳一点` : '一次到位算「标准」'}</span>
+          <span className="hud-ink3" style={{ fontSize: 11.5, color: 'var(--ink3)' }}>{gTries.current > 1 ? '回调过了，这一下算「调整后到位」' : '朝一个方向拨到位算「标准」'}</span>
         </div>
       </> : <div className="hud-ink3" style={{ fontSize: 13, color: 'var(--ink3)' }}>{gOutcomes.length ? <span style={{ color: gOutcomes[gOutcomes.length - 1].outcome === 'standard' ? '#3ddc97' : gOutcomes[gOutcomes.length - 1].outcome === 'adjusted' ? '#ffd166' : '#9aa0b8', fontWeight: 700 }}>{gOutcomes[gOutcomes.length - 1].outcome === 'standard' ? '✓ 标准' : gOutcomes[gOutcomes.length - 1].outcome === 'adjusted' ? '△ 调整后到位' : '○ 代做'}</span> : null} 看着它变化，到下一下再停 <span className="lab-dots" /></div>)}
       {gPhase === 'after' && <div className="hud-ink3" style={{ fontSize: 13, color: 'var(--ink3)' }}>动作做完了，让它再走一会儿，看结果<span className="lab-dots" /></div>}

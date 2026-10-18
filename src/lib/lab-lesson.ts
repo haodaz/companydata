@@ -89,10 +89,20 @@ ${stepsText}
 { "steps": { "<step id>": { "look": "", "think": "", "master": "", "options": { "<option id>": { "verdict": "best|ok|wrong", "note": "" } }, "bench": { "before": "", "actions": [ { "i": 0, "say": "", "basis": null } ], "after": "" } } } }`;
 
   const lesson = await withCost({ space_id: spaceId, chapter_id: chapterId, stage: 'use' }, async () => {
-    const res = await generateContent(prompt, model, { jsonMode: true });
-    await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Lesson · 跟我学', institution: role, model_id: model, usageMetadata: res.usageMetadata, stage: 'use', space_id: spaceId, chapter_id: chapterId } as any).catch(() => {});
-    const p = parseJsonLoose(res.text);
-    const out: Lesson = { steps: {}, generated_at: new Date().toISOString(), model, version: 1 };
+    // 失败兜底（10-18 批量时见过：JSON 没写完、Claude 误判拒绝）：换 Sonnet 再换千问各试一次
+    const chain = [model, ...['claude-sonnet-5-5', 'qwen-plus'].filter(m => m !== model)];
+    let p: any = null, used = model, lastErr: any = null;
+    for (const m of chain) {
+      try {
+        const res = await generateContent(prompt, m, { jsonMode: true });
+        await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Lesson · 跟我学', institution: role, model_id: m, usageMetadata: res.usageMetadata, stage: 'use', space_id: spaceId, chapter_id: chapterId } as any).catch(() => {});
+        p = parseJsonLoose(res.text);
+        if (!p?.steps) throw new Error('大模型返回的 JSON 无法解析');
+        used = m; break;
+      } catch (e) { lastErr = e; console.warn(`[lesson] ${m} 失败，换下一个：${String((e as any)?.message).slice(0, 120)}`); }
+    }
+    if (!p?.steps) throw lastErr || new Error('教案生成失败');
+    const out: Lesson = { steps: {}, generated_at: new Date().toISOString(), model: used, version: 1 };
     for (const s of sim.steps) {
       const x = p?.steps?.[s.id] || {};
       const st: LessonStep = { look: str(x.look, 300), think: str(x.think, 500), master: str(x.master, 200) };

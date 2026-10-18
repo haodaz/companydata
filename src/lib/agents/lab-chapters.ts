@@ -9,6 +9,7 @@
  */
 import { generateContent, resolveModel } from '@/lib/llm-client';
 import { logTokenUsage, withCost } from '@/lib/token-logger';
+import { buildLesson } from '@/lib/lab-lesson';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { supabaseAdmin } from '@/lib/supabase';
 import { sanitizeTrace, type Sim, type SimStep, type SimTrace } from '@/lib/skill-sim';
@@ -294,6 +295,9 @@ ${CAST_RULES}
   const { error: e3 } = await supabaseAdmin.from('lab_chapters').update({ sim: withArt, expert_trace: trace, ...(rubric ? { rubric } : {}), updated_at: new Date().toISOString() }).eq('id', chapterId);
   if (e3) throw e3;
   if (ch.seq === 1) await supabaseAdmin.from('skill_tasks').update({ sim: withArt }).eq('id', spaceId);
+  // 教案（跟我学 / 我教你）在生成时就备好，不让用户进来等「备课」（2026-10-18 用户）；失败不影响章节本身
+  await progress('备课', '每一步为什么这么做、工位上一下一下怎么做');
+  try { await buildLesson(spaceId, chapterId, { force: true }); } catch (e: any) { console.warn('[lab-chapters] 教案生成失败', e?.message); }
   return { steps: sim.steps.length, newCast: cast.length - before0, drawn, reused: Math.max(0, reused) };
 }
 
