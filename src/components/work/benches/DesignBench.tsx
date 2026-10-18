@@ -23,9 +23,9 @@ export function DesignBench({ params, values, onParam, onParamDone, sketch, setS
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#f4f5f9', borderRadius: 14, overflow: 'hidden', border: '1px solid #d9dbe6' }}>
       {/* 顶部菜单条 */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '7px 12px', background: '#2b2d3e', color: '#d6d8e6', fontSize: 12.5 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '7px 12px', background: '#2b2d3e', color: '#d6d8e6', fontSize: 12.5, whiteSpace: 'nowrap' }}>
         <span style={{ fontWeight: 800, color: '#fff' }}>✎ 设计台</span>{['文件', '编辑', '视图', '标注', '校核'].map(m => <span key={m} style={{ color: '#aab' }}>{m}</span>)}
-        <span style={{ marginLeft: 'auto', color: '#aab' }}>{hint ? `要画：${hint.slice(0, 60)}${hint.length > 60 ? '…' : ''}` : '草图'}</span>
+        <span style={{ marginLeft: 'auto', color: '#aab', overflow: 'hidden', textOverflow: 'ellipsis' }}>{hint ? `要画：${hint.slice(0, 60)}${hint.length > 60 ? '…' : ''}` : '草图'}</span>
       </div>
       <div style={{ display: 'flex', flex: 1, minHeight: 420 }}>
         {/* 左工具栏 */}
@@ -35,13 +35,13 @@ export function DesignBench({ params, values, onParam, onParamDone, sketch, setS
           <button title="清空当前未完成的线" onClick={() => setCur([])} style={{ width: 32, height: 32, borderRadius: 8, border: '1px solid transparent', background: 'transparent', cursor: 'pointer', fontSize: 14 }}>✕</button>
         </div>
         {/* 画布 */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 10px', background: '#fff', borderBottom: '1px solid #e6e8f0', fontSize: 12.5 }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, background: '#fbfbfe' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 10px', background: '#fff', borderBottom: '1px solid #e6e8f0', fontSize: 12.5, whiteSpace: 'nowrap', overflow: 'hidden' }}>
             <span style={{ color: '#888' }}>标注</span>
             <input value={label} onChange={e => setLabel(e.target.value)} placeholder="这条线标什么：外轮廓 / 孔位 / 尺寸 120mm" style={{ flex: 1, maxWidth: 360, border: '1px solid #d9dbe6', borderRadius: 6, padding: '4px 8px', fontSize: 12.5, outline: 'none' }} />
             <span style={{ color: '#aaa' }}>先写标注，再画线；双击结束一条线</span>
           </div>
-          <svg viewBox={`0 0 ${W} ${H}`} onClick={click} onDoubleClick={dbl} onMouseMove={e => setPos(toPt(e))} style={{ flex: 1, width: '100%', background: '#fbfbfe', cursor: tool === 'line' ? 'crosshair' : 'default', display: 'block' }}>
+          <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMinYMin meet" onClick={click} onDoubleClick={dbl} onMouseMove={e => setPos(toPt(e))} style={{ width: '100%', aspectRatio: `${W} / ${H}`, background: '#fbfbfe', cursor: tool === 'line' ? 'crosshair' : 'default', display: 'block' }}>
             <defs>
               <pattern id="g1" width={G} height={G} patternUnits="userSpaceOnUse"><path d={`M ${G} 0 L 0 0 0 ${G}`} fill="none" stroke="#e9ebf3" strokeWidth={1} /></pattern>
               <pattern id="g5" width={G * 5} height={G * 5} patternUnits="userSpaceOnUse"><rect width={G * 5} height={G * 5} fill="url(#g1)" /><path d={`M ${G * 5} 0 L 0 0 0 ${G * 5}`} fill="none" stroke="#d5d8e6" strokeWidth={1} /></pattern>
@@ -58,7 +58,7 @@ export function DesignBench({ params, values, onParam, onParamDone, sketch, setS
             </g>)}
             {cur.length > 0 && <g><polyline points={cur.map(p => p.join(',')).join(' ')} fill="none" stroke="#fa8c16" strokeWidth={2} strokeDasharray="5 4" />{cur.map((p, j) => <circle key={j} cx={p[0]} cy={p[1]} r={3} fill="#fa8c16" />)}</g>}
           </svg>
-          <div style={{ display: 'flex', gap: 16, padding: '5px 12px', background: '#2b2d3e', color: '#aab', fontSize: 11.5, fontFamily: mono }}>
+          <div style={{ display: 'flex', gap: 16, padding: '5px 12px', background: '#2b2d3e', color: '#aab', fontSize: 11.5, fontFamily: mono, marginTop: 'auto' }}>
             <span>X {pos[0]}  Y {pos[1]}</span><span>栅格 {G}</span><span>缩放 100%</span><span>{tool === 'line' ? '折线' : '选择'}</span><span style={{ marginLeft: 'auto' }}>{sketch.length} 条线{cur.length ? ` · 画着第 ${sketch.length + 1} 条（${cur.length} 点）` : ''}</span>
           </div>
         </div>
@@ -68,7 +68,7 @@ export function DesignBench({ params, values, onParam, onParamDone, sketch, setS
           <div style={{ flex: 1, overflow: 'auto' }}>
             {side === 'props' ? params.map(p => <div key={p.name} style={{ padding: '8px 12px', borderBottom: '1px solid #f0f1f6' }}>
               <div style={{ fontSize: 12.5, fontWeight: 600 }}>{p.name}</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}><input value={values[p.name] || ''} onChange={e => onParam(p.name, e.target.value)} onBlur={() => onParamDone(p.name)} style={{ flex: 1, border: '1px solid #d9dbe6', borderRadius: 6, padding: '4px 8px', fontSize: 13, fontFamily: mono, outline: 'none' }} /><span style={{ fontSize: 12, color: '#888', minWidth: 28 }}>{p.unit}</span></div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}><input data-param={p.name} value={values[p.name] || ''} onChange={e => onParam(p.name, e.target.value)} onBlur={() => onParamDone(p.name)} style={{ flex: 1, border: '1px solid #d9dbe6', borderRadius: 6, padding: '4px 8px', fontSize: 13, fontFamily: mono, outline: 'none' }} /><span style={{ fontSize: 12, color: '#888', minWidth: 28 }}>{p.unit}</span></div>
               {p.hint && <div style={{ fontSize: 11.5, color: '#999', marginTop: 3, lineHeight: 1.5 }}>{p.hint}</div>}
             </div>) : (sketch.length ? sketch.map((l, i) => <div key={i} style={{ padding: '8px 12px', borderBottom: '1px solid #f0f1f6', fontSize: 12.5, display: 'flex', gap: 8, alignItems: 'center' }}><span style={{ width: 10, height: 10, background: '#1f3a8a', borderRadius: 2 }} /><span style={{ flex: 1 }}>{l.label || `L${i + 1}`}</span><span style={{ color: '#999', fontFamily: mono }}>{l.pts.length} 点 · {Math.round(len(l.pts))}</span></div>) : <div style={{ padding: 16, color: '#aaa', fontSize: 12.5 }}>还没有线。先写标注，在画布上点一下加点、双击结束。</div>)}
           </div>
