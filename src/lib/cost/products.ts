@@ -6,7 +6,7 @@
  */
 export const COST_PRODUCTS = {
   lab: { label: 'AI 百业', tools: ['skill-lab', 'lab-art', 'lab-3d'] },
-  factory: { label: '智能企业数据工厂', tools: ['finder', 'fetcher', 'structurer-job', 'company-profile', 'company-pipeline', 'company-deep-research', 'competition-radar', 'standard-radar', 'occupation', 'office-chief', 'office-chat', 'flywheel', 'job-tagging', 'unattributed', 'external'] },   // unattributed = llm-client 兜底记的；external = 系统外花费补记（Nebius 等）
+  factory: { label: '智能企业数据工厂', tools: ['finder', 'fetcher', 'structurer-job', 'company-profile', 'company-pipeline', 'company-deep-research', 'competition-radar', 'standard-radar', 'occupation', 'office-chief', 'office-chat', 'flywheel', 'job-tagging', 'work', 'unattributed', 'external'] },   // unattributed = llm-client 兜底记的；external = 系统外花费补记（Nebius 等）
 } as const;
 export type CostProduct = keyof typeof COST_PRODUCTS;
 export const toolsOf = (p: CostProduct): string[] => [...COST_PRODUCTS[p].tools];

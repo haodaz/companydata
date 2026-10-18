@@ -495,7 +495,7 @@ const TOOL_LABELS: Record<string, string> = {
   'competition-radar': '赛事雷达', 'standard-radar': '行业标准与规程', occupation: '职业画像', flywheel: '需求飞轮',
   'office-chief': '虚拟工厂 · 主管', 'office-chat': '虚拟工厂 · 对话',
   'skill-lab': 'AI 百业 · 空间与章节', 'lab-art': 'AI 百业 · 美术', 'lab-3d': 'AI 百业 · 3D',
-  unattributed: '未归属（兜底记账）', external: '系统外补记',
+  work: '真活台', unattributed: '未归属（兜底记账）', external: '系统外补记',
 };
 /** 环节名 → 中文（task_name 是代码里的英文记账名；带「·」后缀的只翻前半） */
 const TASK_LABELS: Record<string, string> = {
@@ -508,6 +508,7 @@ const TASK_LABELS: Record<string, string> = {
   'Search Standards': '找行业标准', 'Search Standard Detail': '标准条款详情',
   'Occupation Research': '职业基础画像', 'Occupation Career Graph': '职业发展图谱', 'Occupation Salary · CN Regions': '职业薪资 · 中国各地', 'Occupation Salary · Countries': '职业薪资 · 各国', 'Occupation Places & Items': '工作场所与工具', 'Occupation Tasks & Stations': '典型任务与工位', 'Occupation Gaps · Group': '职业缺口归组', 'Occupation Gaps · Verify': '职业缺口核验',
   'Persona Chat': '和我聊 · 回答', 'Persona Chat · Fact Check': '和我聊 · 逐句核查', 'Persona Chat · Web Lookup': '和我聊 · 联网补查', '问答归档': '问答归档',
+  'Generate · 出题': '出题', 'Baseline · AI 先做一遍': 'AI 基线', 'Assist · 工作台 AI': '工作台 AI', 'Grade · 结果': '评结果', 'Grade · 过程': '评过程', 'Grade · 报告': '出报告',
   'Search Competitions': '找赛事', 'Extract Competitions From Page': '从页面提取赛事', 'Extract Competition Page': '读赛事详情页', 'Search Competition Detail': '补赛事详情',
   'Plan Master Task': '主管拆任务', 'Normalize · 企业行业': '归一 · 企业行业', 'Normalize · 需求信号': '归一 · 需求信号',
   'Lab Normalize Cast': '人物场景归库', 'Lab Chapter': '生成章节', 'Lab Chapter Rubric': '章节评分标准', 'Lab Day Skeleton': '一天骨架', 'Build · Design Bench': '设计工位', 'Build · Skill Draft': '技能卡草稿', 'Build · Plan Art': '美术规划', 'Generate Task': '生成空间', 'Career · Structure': '职业路径', 'Grade Answer': '考核评分', 'Link Standards': '规则挂标准', 'Ecosystem · Chain': '上下游链', 'Distill Interview': '访谈提炼', 'AI Operate (with skill)': 'AI 代操作', 'Review · Day': '评审一天', 'Lesson · 跟我学': '教案 · 跟我学',
@@ -529,6 +530,7 @@ const TOOL_GROUPS: { label: string; tools: string[] }[] = [
   { label: '行业标准与规程', tools: ['standard-radar'] },
   { label: '虚拟工厂', tools: ['office-chief', 'office-chat'] },
   { label: '需求飞轮', tools: ['flywheel'] },
+  { label: '真活台', tools: ['work'] },
   { label: 'AI 百业', tools: ['skill-lab', 'lab-art', 'lab-3d'] },
   { label: '未归属（兜底记账）', tools: ['unattributed'] },
   { label: '系统外补记', tools: ['external'] },
