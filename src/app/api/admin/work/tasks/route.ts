@@ -11,7 +11,10 @@ export const maxDuration = 300;
 /** 真活台 · 题目列表 */
 export async function GET(req: NextRequest) {
   if (!(await getSessionUser(req))) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
-  const { data, error } = await db.from('work_tasks').select('id, share_token, status, company_id, company_name, role, task, baseline, model, created_at, owner').order('created_at', { ascending: false }).limit(200);
+  const base = 'id, share_token, status, company_id, company_name, role, task, baseline, model, created_at';
+  let r: { data: any[] | null; error: any } = await db.from('work_tasks').select(base + ', owner').order('created_at', { ascending: false }).limit(200);
+  if (r.error) r = await db.from('work_tasks').select(base).order('created_at', { ascending: false }).limit(200);   // 迁移 036 没跑：没有 owner 列
+  const { data, error } = r;
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
   const ids = (data || []).map(t => t.id);
   const counts: Record<string, { n: number; done: number }> = {};
