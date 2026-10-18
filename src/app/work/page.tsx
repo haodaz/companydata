@@ -8,6 +8,8 @@
 import React from 'react';
 import Link from 'next/link';
 
+const MEDIA = 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-media/landing';
+const DEMO_VIDEO = `${MEDIA}/work-demo-720.mp4`, DEMO_POSTER = `${MEDIA}/work-demo-poster.jpg`, DEMO_VTT = `${MEDIA}/work-demo.vtt`;
 const I = (d: string) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>;
 const STEPS = [
   { t: '出题', d: '填企业和岗位，两三分钟出一道真活：任务书、材料包、逐条标准，AI 先做一遍。', icon: I('M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z M14 4v6h6 M8 14h8 M8 18h5') },
@@ -40,7 +42,7 @@ export default function WorkLanding() {
         <div style={{ fontWeight: 800, letterSpacing: 1 }}>百业AI<span style={{ color: '#6055f5' }}>｜</span>真活</div>
         <span style={{ color: '#888', fontSize: 13 }}>平方智能</span>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 16, fontSize: 13, alignItems: 'center' }}>
-          <a href="#how" style={lnk}>怎么用</a><a href="#envs" style={lnk}>操作台</a><a href="#report" style={lnk}>报告</a>
+          <a href="#watch" style={lnk}>看片</a><a href="#how" style={lnk}>怎么用</a><a href="#envs" style={lnk}>操作台</a><a href="#report" style={lnk}>报告</a>
           <Link href="/work/mine" style={{ ...lnk, color: '#fff', background: '#6055f5', padding: '7px 16px', borderRadius: 999 }}>出一道真活</Link>
         </div>
       </div>
@@ -68,6 +70,22 @@ export default function WorkLanding() {
             <Img src="/work/shot-sheet.png" alt="候选人在表格 / 数据台上做真活" />
           </div>
           <div style={{ fontSize: 12.5, color: '#6b6f86', marginTop: 10, textAlign: 'center' }}>候选人的操作台：左边材料包，中间做活，右边 AI 随便用——评的是他怎么用</div>
+        </div>
+      </section>
+
+      {/* 看片：两分半走一遍真活 */}
+      <section id="watch" style={{ maxWidth: 1180, margin: '0 auto', padding: '40px 28px 8px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 28, alignItems: 'center' }}>
+        <div>
+          <div style={{ fontSize: 12, letterSpacing: 3, color: '#6055f5', fontWeight: 700 }}>WATCH · 2.5 MIN</div>
+          <h2 style={{ ...h2, margin: '8px 0 10px' }}>两分半，走一遍真活</h2>
+          <p style={{ color: '#4a4f66', lineHeight: 1.85, margin: '0 0 16px' }}>从出题到候选人在操作台上做，到评分报告里的高光与风险时刻——四种操作台都在里面。</p>
+          <Link href="/work/T712yYY1swI" style={{ ...btnGhost, textDecoration: 'none', height: 46, display: 'inline-flex', alignItems: 'center' }}>自己进去试试 →</Link>
+        </div>
+        <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid #e8e9f0', boxShadow: '0 24px 60px rgba(20,24,60,.14)', background: '#000' }}>
+          <video controls playsInline preload="none" poster={DEMO_POSTER} style={{ display: 'block', width: '100%', aspectRatio: '16 / 9' }}>
+            <source src={DEMO_VIDEO} type="video/mp4" />
+            <track kind="subtitles" srcLang="zh" label="中文" src={DEMO_VTT} default />
+          </video>
         </div>
       </section>
 
