@@ -23,7 +23,7 @@ export interface Lesson { steps: Record<string, LessonStep>; generated_at: strin
 const str = (v: any, n = 400) => String(v ?? '').trim().slice(0, n);
 
 export async function buildLesson(spaceId: string, chapterId: string | null, opts: { model?: string; force?: boolean } = {}): Promise<Lesson> {
-  const model = opts.model || 'gemini-3.8-flash';
+  const model = opts.model || 'claude-opus-5-5';   // 教案用 Claude（用户 10-18：「claude 有钱，抓紧用」）
   const { data: space, error } = await supabaseAdmin.from('skill_tasks').select('id, title, profile, jd_snapshot, sim, skill:skills(name, card, source, expert_name, expert_trace)').eq('id', spaceId).single();
   if (error || !space) throw new Error(error?.message || '空间不存在');
   const skill: any = Array.isArray((space as any).skill) ? (space as any).skill[0] : (space as any).skill;

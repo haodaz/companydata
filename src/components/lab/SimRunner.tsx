@@ -152,9 +152,9 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
   // 跟我学：题面下面先讲「先看什么」；确认后讲「老手怎么想 · 老手怎么做」
   const lessonTop = ls && step.type !== 'bench' ? (
     <div className="lab-in" style={{ marginBottom: 14, padding: '12px 14px', borderRadius: 14, background: 'rgba(106,92,255,.07)', border: '1px solid rgba(106,92,255,.25)' }}>
-      <div className="lab-mono lab-cap" style={{ color: 'var(--v)', marginBottom: 4 }}>跟我学 · 先看什么</div>
+      <div className="lab-mono lab-cap" style={{ color: 'var(--v)', marginBottom: 4 }}>我教你 · 先看什么</div>
       <div style={{ fontSize: 14, lineHeight: 1.75 }}>{ls.look || '先把题面和选项都读一遍，想想老手会盯住哪一点。'}</div>
-      {!confirmed && <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 4 }}>你先按自己的理解选，选完点「看看老手怎么做」——不计时、不评分。</div>}
+      {!confirmed && <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 4 }}>你先按自己的理解选，选完点「看看老手怎么做」——这里不计时、不计分。</div>}
     </div>
   ) : null;
   const lessonBottom = ls && confirmed && step.type !== 'bench' ? (
@@ -178,7 +178,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
               </div>
             ))}
             {chosenReveal && <RevealPanel reveal={chosenReveal} />}
-            {confirmed && !chosenReveal && <div className="lab-in" style={{ fontSize: 13, color: 'var(--ink3)' }}>（没有得到新的信息）</div>}
+            {confirmed && !chosenReveal && !study && <div className="lab-in" style={{ fontSize: 13, color: 'var(--ink3)' }}>（没有得到新的信息）</div>}
           </div>
         )}
 
@@ -294,7 +294,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
         {!benchLive && !backdrop && <img key={bg} className="lab-game-bg lab-in" src={bg} alt="" />}
         {!benchLive && <div className="lab-game-vignette" />}
         <div className="lab-game-progress">
-          <span className="lab-mono">{study ? 'STUDY · 跟我学' : role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
+          <span className="lab-mono">{study ? 'LESSON · 我教你' : role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
           {sim.steps.map((s, i) => <span key={s.id} style={{ flex: 1, height: 4, borderRadius: 2, background: i < idx ? 'linear-gradient(90deg,var(--v),var(--c))' : i === idx ? '#fff' : 'rgba(255,255,255,.25)' }} />)}
         </div>
         {phase === 'dialogue' && step.scene && <NpcDialogue key={step.id} scene={step.scene} portrait={portrait} onDone={() => setPhase('question')} cta={isBench ? '开始操作' : undefined} />}
@@ -324,7 +324,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
     <div className={`lab-glass${busy ? ' lab-scan' : ''}`} style={{ padding: 'clamp(16px, 3vw, 28px)' }}>
       {/* 进度轨 */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
-        <span className="lab-mono lab-cap" style={{ marginRight: 6, whiteSpace: 'nowrap' }}>{study ? 'STUDY · 跟我学' : role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
+        <span className="lab-mono lab-cap" style={{ marginRight: 6, whiteSpace: 'nowrap' }}>{study ? 'LESSON · 我教你' : role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
         {sim.steps.map((s, i) => <span key={s.id} style={{ flex: 1, height: 4, borderRadius: 2, background: i < idx ? 'linear-gradient(90deg,var(--v),var(--c))' : i === idx ? 'var(--v)' : 'rgba(106,92,255,.14)', transition: 'background .4s' }} />)}
       </div>
       <div style={{ fontSize: 13, color: 'var(--ink3)', marginBottom: 20 }}>{sim.title}{idx === 0 ? ` —— ${sim.intro}` : ''}</div>

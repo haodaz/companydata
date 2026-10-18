@@ -16,12 +16,12 @@ import { NicknameEditor } from '@/components/kg/NicknameEditor';
 import { traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { GENERIC_CHAPTER_RUBRIC, INVOCATION_KIND, SKILL_KIND, expertiseLevel, scoreColor, scoreLevel, tzLabel, type InterviewTurn, type RubricItem } from '@/lib/skill-lab';
 
-type Mode = 'career' | 'study' | 'teach' | 'test' | 'learn' | 'solve' | 'ledger' | 'eco' | 'jd';
-const ALL_MODES: Mode[] = ['career', 'study', 'teach', 'test', 'learn', 'solve', 'ledger', 'eco', 'jd'];
+type Mode = 'career' | 'teach' | 'test' | 'learn' | 'solve' | 'ledger' | 'eco' | 'jd';
+const ALL_MODES: Mode[] = ['career', 'teach', 'test', 'learn', 'solve', 'ledger', 'eco', 'jd'];
 
 const MODES: { key: Mode; label: string; icon: string }[] = [
   // 都是数字职人在说话：我教你 = 他上台演示给你看；考考你 = 你自己上手（考核，也是体验）
-  { key: 'study', label: '跟我学', icon: 'learn' },
+  // 我教你 = 跟我学（2026-10-18 用户：别做成两套）：每步讲为什么，工位上我先做一遍、你再比着做，不发证书但有操作打分
   { key: 'teach', label: '我教你', icon: 'play' },
   { key: 'test', label: '考考你', icon: 'test' },
   { key: 'learn', label: '你教我', icon: 'learn' },
@@ -549,11 +549,19 @@ function castOf(space: any, sim: Sim | null) {
   const [study, setStudy] = useState<Lesson | null>(null);
   const [studyBusy, setStudyBusy] = useState(false);
   /** 跟我学学完一段：不评分不留痕，提示去考考你 */
-  const finishStudy = () => {
+  const finishStudy = (trace?: SimTrace) => {
     const ch = chapter;
     setAnswering(false); setStudy(null); setStageReport(null);
     if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
-    modal.success({ title: '这一段学完了', content: '每一步为什么这么做、依据是什么，都过了一遍。现在换你自己来——考考你会按同一套规则给你打分、发成绩单。', okText: '去考考你', cancelText: '再学一遍', onOk: () => { setMode('test', true); if (ch?.id) pickChapter(ch.id); } });
+    // 工位上「比着做」的操作打分（不发证书）：每个动作标准 / 调整 / 代做，违规扣分
+    const scores = Object.values(trace || {}).map((v: any) => v?.study).filter(Boolean) as { score: number; outcomes: { outcome: string }[]; violations: number }[];
+    const sc = scores.length ? Math.round(scores.reduce((a, x) => a + x.score, 0) / scores.length) : null;
+    const tally = scores.flatMap(x => x.outcomes).reduce((m, o) => ({ ...m, [o.outcome]: (m[o.outcome] || 0) + 1 }), {} as Record<string, number>);
+    modal.success({
+      title: sc != null ? `这一段学完了 · 操作打分 ${sc}` : '这一段学完了',
+      content: <div style={{ lineHeight: 1.8 }}>{sc != null && <div>比着做了 {scores.flatMap(x => x.outcomes).length} 下：标准 {tally.standard || 0} · 调整后到位 {tally.adjusted || 0} · 代做 {tally.assisted || 0}{scores.reduce((a, x) => a + x.violations, 0) ? ` · 违规 ${scores.reduce((a, x) => a + x.violations, 0)}` : ''}。这个分只记在你自己这儿，不发证书。</div>}每一步为什么这么做、依据是什么，都过了一遍。换你自己来——考考你按同一套规则打分、发成绩单。</div>,
+      okText: '去考考你', cancelText: '再学一遍', onOk: () => { setMode('test', true); if (ch?.id) pickChapter(ch.id); },
+    });
   };
   const startStudy = async () => {
     if (!sim) return;
@@ -663,7 +671,7 @@ function castOf(space: any, sim: Sim | null) {
   // 多段的空间：考 / 教都进「一天」页（左时间轴、右整段内容）
   // 考 / 教 / 你教我都先落在「一天」页（只有一段的老空间也一样，时间轴上就一段）；没有操作台的纯文字老空间走老版
   const { map: nicks, setNickname } = useNicknames();
-  const isDay = (mode === 'study' || mode === 'test' || mode === 'teach' || mode === 'learn') && !!sim && chapters.length >= 1;
+  const isDay = (mode === 'test' || mode === 'teach' || mode === 'learn') && !!sim && chapters.length >= 1;
   // 这一段的评分标准：第 1 段用空间的，后面的用章节自己的（没有就用通用四项），和评分接口一致
   const chapterRubric: RubricItem[] = !chapter || chapter.seq === 1 || !chapter.id ? (space?.rubric || []) : (Array.isArray(chapter.rubric) && chapter.rubric.length ? chapter.rubric : GENERIC_CHAPTER_RUBRIC);
   const pickChapter = (cid: string | null) => {
@@ -904,8 +912,7 @@ function castOf(space: any, sim: Sim | null) {
   const allPortals: { key: Mode | 'chat'; label: string; icon: string; sub: string; main?: boolean; go?: () => void }[] = [
     // 和我聊排第一：受邀来教的老师傅不出现
     ...(!guest ? [{ key: 'chat' as const, label: '和我聊', icon: 'chat', sub: '聊聊这一行 · 每句有出处', main: true, go: () => router.push(`/lab/${id}/chat`) }] : []),
-    { key: 'study', label: '跟我学', icon: 'learn', sub: '一步一步，不计时不评分', main: true },
-    { key: 'teach', label: '我教你', icon: 'play', sub: skill?.expert_trace && sim ? '看我把这一天走一遍' : '先让老师傅教我一遍', main: true },
+    { key: 'teach', label: '我教你', icon: 'play', sub: '一步一步讲，我做一遍你比着做', main: true },
     { key: 'test', label: '考考你', icon: 'test', sub: stat[0].v ? `${stat[0].v} 人考过 · 换你上手` : '换你上手走一遍', main: true },
     { key: 'learn', label: '你教我', icon: 'learn', sub: draft ? '等第一位老师傅' : `学自 ${skill.expert_name}`, main: true },
     { key: 'solve', label: '问问我', icon: 'solve', sub: stat[2].v ? `解过 ${stat[2].v} 次` : '把真实问题交给我', main: true },
@@ -1080,7 +1087,7 @@ function castOf(space: any, sim: Sim | null) {
       )}
 
       {/* ── 考验新人 ── */}
-      {(mode === 'study' || mode === 'test' || mode === 'teach') && answering && sim && (
+      {(mode === 'test' || mode === 'teach') && answering && sim && (
         <SimStage title={chapters.length > 1 && chapter ? `${chapter.slot ? `${chapter.slot} · ` : ""}${chapter.title}` : space.title} role="rookie" immersive={!!sim.art} onExit={() => { setStageReport(null); setAnswering(false); setIntro(true); }}>
           {stageReport ? (
             <div className="lab-game">
@@ -1108,13 +1115,13 @@ function castOf(space: any, sim: Sim | null) {
               profile={askProfile && !demo && !study ? { name: rookie.name, note: rookie.note, location: rookie.location, set: (k: 'name' | 'note' | 'location', v: string) => setRookie(r => ({ ...r, [k]: v })) } : null}
               onStart={() => { if (askProfile && !demo && !study) saveProfile(); setIntro(false); }} />
           ) : (
-            <SimRunner key={runKey + (demo ? '-demo' : '') + (study ? '-study' : '')} startAt={startAt} demo={demo || undefined} study={study || undefined} sim={sim} role="rookie" busy={!!busy} backdrop={beta3dForChapter(String(id), chapter?.slot)} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); setStudy(null); }} onFinish={trace => { if (study) { finishStudy(); return; } const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, trace); }} />
+            <SimRunner key={runKey + (demo ? '-demo' : '') + (study ? '-study' : '')} startAt={startAt} demo={demo || undefined} study={study || undefined} sim={sim} role="rookie" busy={!!busy} backdrop={beta3dForChapter(String(id), chapter?.slot)} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); setStudy(null); }} onFinish={trace => { if (study) { finishStudy(trace); return; } const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, trace); }} />
           )}
         </SimStage>
       )}
 
       {isDay && !(answering && sim) && (
-        <DayView mode={mode as DayMode} modes={guest ? ['learn'] : exp ? ['study', 'test', 'teach'] : ['study', 'test', 'teach', 'learn']} space={space} chapters={chapters} chapter={chapter} sim={sim} rubric={chapterRubric} canTeach={!!(sim && chapterTrace)} busy={!!busy} bareBusy={bareBusy}
+        <DayView mode={mode as DayMode} modes={guest ? ['learn'] : exp ? ['test', 'teach'] : ['test', 'teach', 'learn']} space={space} chapters={chapters} chapter={chapter} sim={sim} rubric={chapterRubric} canTeach={!!(sim && chapterTrace)} busy={!!busy} bareBusy={bareBusy}
           onBack={guest ? null : () => setMode(null)} onMode={m => setMode(m, true)}
           done={mode === 'learn' ? new Set(Object.keys(chTraces)) : undefined}
           actions={mode === 'learn' && !(guest && taught) ? (
@@ -1623,14 +1630,14 @@ const DAYV_CSS = `
  * 多段空间的「一天」页：左边一整列是时间轴（顶上是回到这位职人主页的入口），右边整块是当前这一段：
  * 场景大图、这一段要交代的事、会遇到谁、在哪、这一段考什么，进入操作台 / 看他走一遍。
  */
-type DayMode = 'study' | 'test' | 'teach' | 'learn';
+type DayMode = 'test' | 'teach' | 'learn';
 function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach, busy, bareBusy, onBack, onMode, onPick, onStart, onTeach, onBareAI, actions, top, bottom, done, onStudy, studyBusy }: {
   mode: DayMode; modes: DayMode[]; space: any; chapters: any[]; chapter: any; sim: Sim | null; rubric: RubricItem[]; canTeach: boolean; busy: boolean; bareBusy?: boolean;
   onBack: (() => void) | null; onMode: (m: DayMode) => void; onPick: (id: string | null) => void; onStart: () => void; onTeach: () => void; onBareAI: () => void; onStudy?: () => void; studyBusy?: boolean;
   /** 横幅上的按钮（你教我用自己的）；横幅下方 / 页面底部插进来的内容 */ actions?: React.ReactNode; top?: React.ReactNode; bottom?: React.ReactNode;
   /** 已经走过的段（时间轴上打 ✓） */ done?: Set<string>;
 }) {
-  const teach = mode === 'teach', learn = mode === 'learn', studyMode = mode === 'study';
+  const teach = mode === 'teach', learn = mode === 'learn';
   const profile = space?.profile || {};
   const idx = Math.max(0, chapters.indexOf(chapter));
   const k = CHAPTER_KIND[chapter?.kind] || CHAPTER_KIND.daily;
@@ -1653,14 +1660,8 @@ function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach,
         </button>}
         <div className="dayv-h">{profile.role || '这一行'}的一天</div>
         <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{chapters.length} 段 · 约 {minutes} 分钟</div>
-        {/* 考核里不观摩：「考考你」只有自己上；想看老师傅怎么做，切到「我教你」 */}
-        {modes.length > 1 && <div style={{ display: 'flex', gap: 4, marginTop: 12, padding: 3, borderRadius: 12, background: 'rgba(106,92,255,.08)', width: 'fit-content', flexWrap: 'wrap' }}>
-          {([['study', '跟我学'], ['test', '考考你'], ['teach', '我教你'], ['learn', '你教我']] as const).filter(([m]) => modes.includes(m)).map(([m, t]) => (
-            <button key={m} onClick={() => onMode(m)} style={{ border: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: 12.5, fontWeight: 700, padding: '6px 12px', borderRadius: 9,
-              background: mode === m ? '#fff' : 'transparent', color: mode === m ? 'var(--v)' : 'var(--ink3)', boxShadow: mode === m ? '0 2px 8px rgba(60,45,130,.12)' : 'none' }}>{t}</button>
-          ))}
-        </div>}
-        <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.6 }}>{learn ? '请一位资深从业者把这一天走一遍，每段走完接受追问' : teach ? '看他怎么走：每一步按老师傅的做法' : '你来走：每段有成绩单，走完一整天领证书'}</div>
+        {/* 这里不放模式切换（2026-10-18 用户：容易点错，想自己操作却看 AI 操作）：模式在人物首页选 */}
+        <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.6 }}>{learn ? '请一位资深从业者把这一天走一遍，每段走完接受追问' : teach ? '跟着学：每一步讲为什么；工位上他先做一遍，你再比着做' : '你来走：每段有成绩单，走完一整天领证书'}</div>
         <ol className="dayv-tl">
           {chapters.map((c, i) => {
             const on = c === chapter;
@@ -1695,9 +1696,8 @@ function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach,
         {/* 进入按钮放在大图下面（2026-10-12 用户：压在图上看不清） */}
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', margin: '14px 2px 4px', alignItems: 'center' }}>
           {actions}
-          {studyMode && <button className="lab-btn" disabled={busy || studyBusy || !sim} onClick={onStudy} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>{studyBusy ? <>在备课<span className="lab-dots" /></> : '跟着学这一段 →'}</button>}
-          {!teach && !learn && !studyMode && <button className="lab-btn" disabled={busy || !sim} onClick={onStart} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>进入操作台</button>}
-          {teach && <button className="lab-btn" disabled={busy || !canTeach} title={canTeach ? '' : '这一段还没有老师傅的示范'} onClick={onTeach} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>看 {profile.name || '他'} 走一遍</button>}
+          {teach && <button className="lab-btn" disabled={busy || studyBusy || !sim} onClick={onStudy} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>{studyBusy ? <>{profile.name || '他'}在备课<span className="lab-dots" /></> : `跟 ${profile.name || '他'} 学这一段 →`}</button>}
+          {!teach && !learn && <button className="lab-btn" disabled={busy || !sim} onClick={onStart} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>进入操作台</button>}
           {teach && <button className="lab-btn ghost" disabled={busy || bareBusy} onClick={onBareAI} title="没学过老师傅的通用模型自己走一遍，看看差在哪" style={{ height: 46 }}>{bareBusy ? <>通用 AI 走着呢<span className="lab-dots" /></> : '对比：没学过的通用 AI'}</button>}
           <span style={{ fontSize: 13, color: 'var(--ink3)' }}>{steps.length} 步{steps.some(st => st.type === 'bench') ? ' · 含虚拟工位' : ''} · 约 {Math.max(5, steps.length * 2)} 分钟</span>
         </div>

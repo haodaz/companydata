@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buildLesson } from '@/lib/lab-lesson';
 import { labError } from '@/lib/skill-lab-server';
-import { labModel } from '@/lib/lab-guest';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -11,7 +10,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   try {
     const { id } = await params;
     const q = req.nextUrl.searchParams;
-    const lesson = await buildLesson(id, q.get('chapter') || null, { model: labModel(req, q.get('model')), force: q.get('force') === '1' });
+    // 教案是服务端备的课（批量预生成，缺了才现算），模型不跟用户的选单走；游客也不走模型锁
+    const lesson = await buildLesson(id, q.get('chapter') || null, { force: q.get('force') === '1' && !!req.cookies.get('auth_token') });
     return NextResponse.json({ ok: true, lesson });
   } catch (e: any) {
     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });

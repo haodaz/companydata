@@ -114,7 +114,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
       }
       // 轨迹走到哪里，落点就落在哪里——图案 / 切口跟着长出来
       if (trackLayer?.control) { const h = pointOnPath(trackPts.current, s.controls[trackLayer.control] || 0); drop(h.x, h.y); }
-      if (autoI.current >= script.length && s.t > script[script.length - 1].t + 4) { setAuto(false); setRunning(false); }
+      if (autoI.current >= script.length && s.t > script[script.length - 1].t + 4) { setAuto(false); setRunning(false); if (guided && gPhaseRef.current === 'demo') setGPhase('ready'); }
       bump(v => v + 1);
     }, TICK_MS);
     return () => clearInterval(iv);
@@ -123,7 +123,13 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
 
   // ── 跟我学：老手脚本一个动作一个动作带着做。gPhase：before 先看 → act 做动作 → after 收尾确认 → done ──
   const gScript = useMemo(() => [...(spec.expertScript || [])].sort((a, b) => a.t - b.t), [spec]);
-  const [gPhase, setGPhase] = useState<'before' | 'act' | 'after' | 'done'>(guided ? 'before' : 'done');
+  // 两段式（2026-10-18 用户）：before 先看 → demo 我先做一遍（老手脚本自动走，边走边讲）→ ready → act 你比着做（一下一下） → after → done（操作打分）
+  const [gPhase, setGPhase] = useState<'before' | 'demo' | 'ready' | 'act' | 'after' | 'done'>(guided ? 'before' : 'done');
+  const gPhaseRef = useRef(gPhase); gPhaseRef.current = gPhase;
+  /** 你比着做：每一下的评价。standard 一次到位 · adjusted 调了几次才到 · assisted 让他代做 */
+  const [gOutcomes, setGOutcomes] = useState<{ i: number; outcome: 'standard' | 'adjusted' | 'assisted' }[]>([]);
+  const gTries = useRef(0);          // 当前这一下，学生拨了几次目标控件
+  const gActStart = useRef(0);       // 「换你比着做」时的事件数：之后的违规才算学生的
   const [gi, setGi] = useState(0);                 // 下一个要做的动作
   const [gPaused, setGPaused] = useState(!!guided); // 时钟停着等人做
   const gPausedRef = useRef(!!guided); gPausedRef.current = gPaused;
@@ -139,17 +145,18 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
     if (gCtl.kind === 'button') return stRef.current.events.slice(gEvents.current).some(e => e.kind === 'control' && e.control === gTarget.control);
     return (v ? 1 : 0) === (gTarget.value ? 1 : 0);
   };
-  const gAdvance = () => {
+  const gAdvance = (outcome: 'standard' | 'adjusted' | 'assisted' = 'standard') => {
+    setGOutcomes(o => [...o, { i: gi, outcome }]); gTries.current = 0;
     const next = gi + 1; setGi(next); gEvents.current = stRef.current.events.length;
     if (next >= gScript.length) { setGPhase('after'); setGPaused(false); } else setGPaused(false);
   };
   useEffect(() => {
     if (!guided || gPhase !== 'act' || !gPaused) return;
-    if (gMatched()) { const t = setTimeout(gAdvance, 450); return () => clearTimeout(t); }
+    if (gMatched()) { const t = setTimeout(() => gAdvance(gTries.current <= 1 ? 'standard' : 'adjusted'), 450); return () => clearTimeout(t); }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guided, gPhase, gPaused, st.events.length, gi, ...spec.controls.map(c => st.controls[c.id])]);
   /** 替我做一下：老手这一下直接帮你按了，看着它变 */
-  const gDoIt = () => { if (!gTarget) return; applyControl(spec, stRef.current, gTarget.control, gTarget.value); if (trackLayerRef.current?.control) { const h = pointOnPath(trackPts.current, stRef.current.controls[trackLayerRef.current.control] || 0); drop(h.x, h.y); } snapshot(); bump(v => v + 1); gAdvance(); };
+  const gDoIt = () => { if (!gTarget) return; applyControl(spec, stRef.current, gTarget.control, gTarget.value); if (trackLayerRef.current?.control) { const h = pointOnPath(trackPts.current, stRef.current.controls[trackLayerRef.current.control] || 0); drop(h.x, h.y); } snapshot(); bump(v => v + 1); gAdvance('assisted'); };
 
   // 模拟时钟
   useEffect(() => {
@@ -173,6 +180,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
 
   const act = (id: string, value: number) => {
     if ((!running && !guided) || auto) return;
+    if (guided && gPhaseRef.current === 'act' && gPausedRef.current && id === gTarget?.control) gTries.current++;
     applyControl(spec, stRef.current, id, value);
     if (spec.controls.find(c => c.id === id)?.kind !== 'path') snapshot();
     bump(v => v + 1);
@@ -288,10 +296,15 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   const onScenePointerMove = (e: React.PointerEvent) => { const l = dragRef.current; if (!l?.control) return; const q = scenePoint(e.clientX, e.clientY); if (q) onTrack(l, q.x, q.y); };
   const onScenePointerUp = () => { if (dragRef.current) pourEnd(); dragRef.current = null; };
 
+  /** 你比着做的操作打分：标准 100 · 调整 70 · 代做 30 的平均，学生自己那一遍里每条违规扣 10 */
+  const gViolations = () => stRef.current.events.slice(gActStart.current).filter(e => e.kind === 'rule' && e.severity === 'violation').length;
+  const gScore = () => { const w = { standard: 100, adjusted: 70, assisted: 30 }; const base = gOutcomes.length ? gOutcomes.reduce((a, o) => a + w[o.outcome], 0) / gOutcomes.length : 0; return Math.max(0, Math.min(100, Math.round(base - 10 * gViolations()))); };
   const finish = async () => {
     setRunning(false);
     await snapshot(true);
-    onFinish(finishBench(spec, stRef.current, true));
+    const tr: any = finishBench(spec, stRef.current, true);
+    if (guided) tr.study = { score: gScore(), outcomes: gOutcomes, violations: gViolations() };
+    onFinish(tr);
   };
   /** 从头再来：工位状态、落点、快照计数全清，时钟重新走（用户 2026-10-11 要的「重置」） */
   // 不用 window.confirm（内嵌浏览器里弹窗会被拦掉，看起来像按钮坏了）：点一下「武装」，三秒内再点一下才执行
@@ -299,6 +312,13 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   // 重来时台面组件整个重挂（它们自己的本地状态——补纸位置、刷过的点——也要清）
   const [resetKey, setResetKey] = useState(0);
   useEffect(() => { if (!armed) return; const t = setTimeout(() => setArmed(null), 3000); return () => clearTimeout(t); }, [armed]);
+  /** 清台面（不问）：工位状态、落点、快照计数全清 */
+  const hardReset = () => {
+    stRef.current = initBench(spec);
+    deposits.current = []; lastDrop.current = null; lastPt.current = null; dirRef.current = { x: 0, y: 0 };
+    snapCount.current = 0; lastSnap.current = 0; cutDepth.current = 0; cutProg.current = 0; grabAnchor.current = null; handRef.current = null;
+    autoI.current = 0; setAuto(false); setRunning(true); setResetKey(k => k + 1); bump(v => v + 1);
+  };
   const reset = () => {
     if (armed !== 'reset') { setArmed('reset'); return; }
     setArmed(null);
@@ -306,7 +326,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
     deposits.current = []; lastDrop.current = null; lastPt.current = null; dirRef.current = { x: 0, y: 0 };
     snapCount.current = 0; lastSnap.current = 0; cutDepth.current = 0; cutProg.current = 0; grabAnchor.current = null; handRef.current = null;
     autoI.current = 0; setAuto(false); setRunning(true); setResetKey(k => k + 1); bump(v => v + 1);
-    if (guided) { setGPhase('before'); setGi(0); setGPaused(true); gEvents.current = 0; }
+    if (guided) { setGPhase('before'); setGi(0); setGPaused(true); gEvents.current = 0; setGOutcomes([]); gTries.current = 0; gActStart.current = 0; }
   };
 
   const ev = (expr?: string) => { if (!expr) return 0; try { return evalExpr(expr, env); } catch { return 0; } };
@@ -430,27 +450,43 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   ) : null;
 
   // ── 目标 + 事件流 + 按钮 ──
+  const demoNow = guided && gPhase === 'demo' ? guided.actions[Math.max(0, Math.min(guided.actions.length - 1, autoI.current - 1))] : null;
+  const tally = gOutcomes.reduce((m, o) => ({ ...m, [o.outcome]: (m[o.outcome] || 0) + 1 }), {} as Record<string, number>);
   const guideCard = guided ? (
     <div className={hud ? 'hud-card' : undefined} style={{ padding: 14, borderRadius: 14, background: 'rgba(106,92,255,.08)', border: '1.5px solid rgba(106,92,255,.45)', boxShadow: '0 0 0 4px rgba(106,92,255,.08)' }}>
-      <div className="lab-mono lab-cap" style={{ marginBottom: 6, color: 'var(--v)' }}>跟我学 · {gPhase === 'before' ? '先看一眼' : gPhase === 'act' ? `第 ${gi + 1} / ${gScript.length} 下` : gPhase === 'after' ? '收尾' : '这一段做完了'}</div>
+      <div className="lab-mono lab-cap" style={{ marginBottom: 6, color: 'var(--v)' }}>我教你 · {gPhase === 'before' ? '先看一眼' : gPhase === 'demo' ? `我先做一遍 · 第 ${Math.min(autoI.current, gScript.length)} / ${gScript.length} 下` : gPhase === 'ready' ? '我做完了' : gPhase === 'act' ? `换你比着做 · 第 ${gi + 1} / ${gScript.length} 下` : gPhase === 'after' ? '收尾' : `操作打分 ${gScore()}`}</div>
       {gPhase === 'before' && <>
         <div style={{ fontSize: 13.5, lineHeight: 1.75 }} className="hud-ink">{guided.before || '先把仪表和控件看一遍，知道每样东西管什么。'}</div>
-        <button className="lab-btn" style={{ marginTop: 10, width: '100%' }} onClick={() => { setGPhase('act'); gEvents.current = stRef.current.events.length; setGPaused(gScript.length > 0 && gScript[0].t <= stRef.current.t); if (!gScript.length) setGPhase('done'); }}>开始，带我做 →</button>
+        <button className="lab-btn" style={{ marginTop: 10, width: '100%' }} onClick={() => { if (!gScript.length) { setGPhase('done'); setGPaused(true); return; } setGPhase('demo'); autoI.current = 0; setGPaused(false); setAuto(true); }}>先看我做一遍 →</button>
+      </>}
+      {gPhase === 'demo' && <>
+        <div style={{ fontSize: 14.5, fontWeight: 700, lineHeight: 1.6 }} className="hud-ink">{autoI.current === 0 ? '马上开始，看着仪表……' : demoNow?.say}</div>
+        {autoI.current > 0 && demoNow?.basis && <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, lineHeight: 1.6, color: 'var(--ink3)' }}>依据：{demoNow.basis}</div>}
+        <div className="hud-ink3" style={{ fontSize: 11.5, marginTop: 8, color: 'var(--ink3)' }}>看就行，先别动手；做完换你比着做</div>
+      </>}
+      {gPhase === 'ready' && <>
+        <div style={{ fontSize: 13.5, lineHeight: 1.75 }} className="hud-ink">{guided.after || '看看目标都达成了没有。'}</div>
+        <div className="hud-ink3" style={{ fontSize: 12, marginTop: 4, color: 'var(--ink3)' }}>我这一遍：目标 {goalsDone}/{spec.goals.length} · 违规 {violations}。台面清掉，换你一下一下比着做，每一下我都会评。</div>
+        <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
+          <button className="lab-btn" style={{ flex: 1 }} onClick={() => { hardReset(); setGOutcomes([]); gTries.current = 0; gActStart.current = 0; gEvents.current = 0; setGi(0); setGPhase('act'); setGPaused(false); }}>换你比着做 →</button>
+          <button className="lab-btn ghost sm" style={hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined} onClick={() => { hardReset(); setGPhase('demo'); autoI.current = 0; setGPaused(false); setAuto(true); }}>再看一遍</button>
+        </div>
       </>}
       {gPhase === 'act' && gTarget && (gPaused ? <>
         <div style={{ fontSize: 14.5, fontWeight: 700, lineHeight: 1.6 }} className="hud-ink">{guided.actions[gi]?.say || `把「${gCtl?.label}」${gCtl?.kind === 'knob' ? `调到 ${gTarget.value}${gCtl.unit || ''}` : gCtl?.kind === 'switch' ? (gTarget.value ? '打开' : '关掉') : gCtl?.kind === 'path' ? `走到 ${gTarget.value}%` : '按下'}`}</div>
         <div className="lab-mono" style={{ fontSize: 11.5, marginTop: 6, color: 'var(--v)' }}>▸ {gCtl?.label}{gCtl?.kind === 'knob' ? ` → ${gTarget.value}${gCtl.unit || ''}（现在 ${(st.controls[gTarget.control] ?? 0).toFixed?.(gCtl.step && gCtl.step < 1 ? 1 : 0)}${gCtl.unit || ''}）` : gCtl?.kind === 'switch' ? (gTarget.value ? ' → 开' : ' → 关') : gCtl?.kind === 'path' ? ` → ${gTarget.value}%` : ' → 按一下'}</div>
         {guided.actions[gi]?.basis && <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, lineHeight: 1.6, color: 'var(--ink3)' }}>依据：{guided.actions[gi].basis}</div>}
-        <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
+        <div style={{ display: 'flex', gap: 8, marginTop: 10, alignItems: 'center' }}>
           <button className="lab-btn ghost sm" onClick={gDoIt} style={hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined}>替我做一下</button>
-          <span className="hud-ink3" style={{ fontSize: 11.5, color: 'var(--ink3)', alignSelf: 'center' }}>你自己做到位，就自动往下</span>
+          <span className="hud-ink3" style={{ fontSize: 11.5, color: 'var(--ink3)' }}>{gTries.current > 1 ? `调了 ${gTries.current} 次了，再稳一点` : '一次到位算「标准」'}</span>
         </div>
-      </> : <div className="hud-ink3" style={{ fontSize: 13, color: 'var(--ink3)' }}>做对了，看着它变化……时钟走到下一下再停 <span className="lab-dots" /></div>)}
+      </> : <div className="hud-ink3" style={{ fontSize: 13, color: 'var(--ink3)' }}>{gOutcomes.length ? <span style={{ color: gOutcomes[gOutcomes.length - 1].outcome === 'standard' ? '#3ddc97' : gOutcomes[gOutcomes.length - 1].outcome === 'adjusted' ? '#ffd166' : '#9aa0b8', fontWeight: 700 }}>{gOutcomes[gOutcomes.length - 1].outcome === 'standard' ? '✓ 标准' : gOutcomes[gOutcomes.length - 1].outcome === 'adjusted' ? '△ 调整后到位' : '○ 代做'}</span> : null} 看着它变化，到下一下再停 <span className="lab-dots" /></div>)}
       {gPhase === 'after' && <div className="hud-ink3" style={{ fontSize: 13, color: 'var(--ink3)' }}>动作做完了，让它再走一会儿，看结果<span className="lab-dots" /></div>}
       {gPhase === 'done' && <>
         <div style={{ fontSize: 13.5, lineHeight: 1.75 }} className="hud-ink">{guided.after || '看看目标都达成了没有、事件流里有没有违规。'}</div>
-        <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, color: 'var(--ink3)' }}>目标 {goalsDone}/{spec.goals.length} · 违规 {violations}。想再来一遍就点「重来」，记住了就「完成操作」。</div>
+        <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, color: 'var(--ink3)' }}>你这一遍：目标 {goalsDone}/{spec.goals.length} · 违规 {gViolations()} · 一次到位 {tally.standard || 0} · 调整后到位 {tally.adjusted || 0} · 代做 {tally.assisted || 0}。不发证书，分记在你自己这儿；想再来一遍点「重来」，记住了就「完成操作」。</div>
       </>}
+      {(gPhase === 'act' || gPhase === 'after') && gOutcomes.length > 0 && <div style={{ display: 'flex', gap: 4, marginTop: 8, flexWrap: 'wrap' }}>{gOutcomes.map(o => <span key={o.i} title={guided.actions[o.i]?.say} style={{ width: 14, height: 14, borderRadius: 4, background: o.outcome === 'standard' ? '#3ddc97' : o.outcome === 'adjusted' ? '#ffd166' : '#9aa0b8' }} />)}</div>}
     </div>
   ) : null;
 
