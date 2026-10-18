@@ -36,6 +36,8 @@ export async function proxy(req: NextRequest) {
     if (pathname === '/api/lab/landing' && req.method === 'GET') return NextResponse.next();
     // 证书公开：链接本身就是验证方式，分享出去的人不该被拦去登录（改名字由路由自己核对访客编号）
     if (pathname.startsWith('/api/lab/cert/')) return NextResponse.next();
+    // 真活台公开：参与链接 / 自助出题 / 出题人管理链接都靠 token 与 owner_key 自己核对，不走登录（/api/admin/work 仍要登录）
+    if (pathname.startsWith('/api/work/')) return NextResponse.next();
     // 飞轮信号接入：以后的 ToC 带 FLYWHEEL_INGEST_KEY，没有登录态；放进去由路由自己验密钥
     if (pathname === '/api/flywheel/signal' && req.method === 'POST' && req.headers.get('x-flywheel-key')) return NextResponse.next();
     // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉

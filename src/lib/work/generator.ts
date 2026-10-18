@@ -140,7 +140,7 @@ export async function generateTask(ctx: WorkContext, role: string, opts: { model
 ${renderContext(ctx)}
 ${opts.focus ? `\n## 出题人额外要求\n${opts.focus}\n` : ''}
 ## 操作台（环境）
-${opts.env ? `出题人指定环境：${opts.env}（${ENV_LABELS[opts.env]}）。` : '按岗位选最贴近真实工作媒介的环境：'}doc 文档 / 对账台（方案、对账、邮件、scorecard）· code 代码台（写函数 / 脚本，language 用 js 时给 2–5 个自测用例：code 是一段 JS，拿到变量 solution（候选人的导出函数）后返回 true/false，如 "return solution([3,1,2]).join()==='1,2,3'"；其他语言不给 tests）· sheet 表格 / 数据台（csv 给起始表，含要对账 / 清洗的数据，5–30 行）· design 设计台（params 给 4–8 个要定的参数：name/unit/hint；sketch_hint 说明要画什么简图：零件轮廓、流程、布局）。
+${opts.env ? `出题人指定环境：${opts.env}（${ENV_LABELS[opts.env]}）。` : '按岗位选最贴近真实工作媒介的环境：'}doc 文档 / 对账台（方案、对账、邮件、scorecard）· code 代码台（写函数 / 脚本；**starter 里的主函数必须命名为 solution**，tests 也调用 solution；language 用 js 时给 2–5 个自测用例：code 是一段 JS，拿到变量 solution（候选人的导出函数）后返回 true/false，如 "return solution([3,1,2]).join()==='1,2,3'"；其他语言不给 tests）· sheet 表格 / 数据台（csv 给起始表，含要对账 / 清洗的数据，5–30 行）· design 设计台（params 给 4–8 个要定的参数：name/unit/hint；sketch_hint 说明要画什么简图：零件轮廓、流程、布局）。
 env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "tests": [ { "name": "", "code": "" } ], "csv": "", "params": [ { "name": "", "unit": "", "hint": "" } ], "sketch_hint": "" }（只填该环境用到的字段）。交付物要和环境匹配（code 的交付物是代码 + 说明，sheet 是表 + 口径说明，design 是参数表 + 草图 + 设计说明）。
 
 ## 要求

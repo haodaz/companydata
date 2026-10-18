@@ -19,7 +19,8 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ tok
   return NextResponse.json({ ok: true, session: { id: s.id, participant: s.participant, started_at: s.started_at, submitted_at: s.submitted_at, deliverable: s.deliverable, report: s.report, score: s.score, events_n: (s.events || []).length } });
 }
 
-/** 过程同步（每 30 秒 / 每个动作攒一批）：{ events: [...], deliverable?: 草稿 }。交卷后不再收 */
+/** 过程同步（每 30 秒 / 每个动作攒一批）：{ events: [...], deliverable?: 草稿 }。交卷后不再收。POST 是给 sendBeacon 用的同义接口 */
+export const POST = (req: NextRequest, ctx: { params: Promise<{ token: string; sid: string }> }) => PATCH(req, ctx);
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ token: string; sid: string }> }) {
   const { token, sid } = await params;
   const x = await load(token, sid);

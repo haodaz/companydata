@@ -133,13 +133,18 @@ function Workspace({ token, sid, task, env, narrow, grading, error, onSubmit }: 
     }, 1000);
     return () => clearInterval(iv);
   }, [deliverable]);
+  const delivRef = useRef(deliverable); delivRef.current = deliverable;
   useEffect(() => {
-    const iv = setInterval(async () => {
+    const sync = async () => {
       const events = buf.current.splice(0);
-      try { await fetch(`/api/work/${token}/sessions/${sid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ events, deliverable }) }); } catch { buf.current.unshift(...events); }
-    }, 30_000);
-    return () => clearInterval(iv);
-  }, [token, sid, deliverable]);
+      try { await fetch(`/api/work/${token}/sessions/${sid}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ events, deliverable: delivRef.current }) }); } catch { buf.current.unshift(...events); }
+    };
+    const iv = setInterval(sync, 30_000);
+    // 关页 / 切到别的标签：把剩下的事件用 sendBeacon 补发（fetch 在卸载时会被掐）
+    const flush = () => { if (document.visibilityState === 'visible') return; const events = buf.current.splice(0); if (!events.length && !delivRef.current) return; navigator.sendBeacon(`/api/work/${token}/sessions/${sid}`, new Blob([JSON.stringify({ events: [...events, { t: Math.round((Date.now() - t0.current) / 1000), type: 'leave' }], deliverable: delivRef.current })], { type: 'application/json' })); };
+    document.addEventListener('visibilitychange', flush); window.addEventListener('pagehide', flush);
+    return () => { clearInterval(iv); document.removeEventListener('visibilitychange', flush); window.removeEventListener('pagehide', flush); };
+  }, [token, sid]);
 
   // 材料
   const [mat, setMat] = useState<Material | null>(null);
@@ -165,7 +170,13 @@ function Workspace({ token, sid, task, env, narrow, grading, error, onSubmit }: 
     const src = code.replace(/export\s+(default\s+)?/g, '');
     const worker = new Worker(URL.createObjectURL(new Blob([`
       self.onmessage = (e) => { const { src, tests } = e.data; let solution; const out = [];
-        try { const mod = new Function(src + '\\n;return typeof solution!=="undefined"?solution:undefined;'); solution = mod(); } catch (err) { self.postMessage({ error: String(err) }); return; }
+        try {
+          const names = [...new Set(['solution', ...[...src.matchAll(/function\\s+([A-Za-z_$][\\w$]*)/g)].map(m => m[1]), ...[...src.matchAll(/(?:const|let|var)\\s+([A-Za-z_$][\\w$]*)\\s*=\\s*(?:async\\s*)?(?:\\(|[A-Za-z_$][\\w$]*\\s*=>)/g)].map(m => m[1])])];
+          const mod = new Function('module', 'exports', src + '\\n;return [' + names.map(n => 'typeof ' + n + '!=="undefined"?' + n + ':undefined').join(',') + '];');
+          const module = { exports: {} }; const found = mod(module, module.exports);
+          solution = found.find(f => typeof f === 'function') || (typeof module.exports === 'function' ? module.exports : Object.values(module.exports).find(f => typeof f === 'function'));
+          if (typeof solution !== 'function') { self.postMessage({ error: '没找到可调用的函数：请定义 function solution(...) 或在代码里定义一个函数' }); return; }
+        } catch (err) { self.postMessage({ error: String(err) }); return; }
         for (const t of tests) { try { out.push({ name: t.name, ok: !!(new Function('solution', t.code))(solution) }); } catch (err) { out.push({ name: t.name, ok: false, err: String(err) }); } }
         self.postMessage({ out }); };`], { type: 'text/javascript' })));
     const timer = setTimeout(() => { worker.terminate(); setTestOut('超时（3 秒）：可能死循环'); ev('run_tests', { note: 'timeout' }); }, 3000);
