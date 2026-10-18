@@ -14,11 +14,11 @@ import { gradeResult } from '@/lib/work/grader';
 export const WORK_MODEL = process.env.WORK_MODEL || 'claude-opus-5-5';
 
 export interface WorkContext {
-  company: { id?: number; name: string; industry?: string; sub_industry?: string; description?: string; campus_overview?: string; tags?: string[]; hq_city?: string; website?: string; employee_count?: string; founded_year?: number | string } | null;
+  company: Record<string, any> | null;   // companies 的画像字段（introduction / business_profile / growth_signals / industry_position / public_sentiment …）
   products: { name: string; category?: string; description?: string; is_flagship?: boolean }[];
   news: { description: string; publish_date_str?: string; kind?: string }[];
   executives: { name: string; title?: string }[];
-  jobs: { title: string; department?: string; job_function?: string; responsibilities?: string; skills?: any; education_requirement?: string; experience_requirement?: string; city?: string }[];
+  jobs: Record<string, any>[];   // jobs：name / title_cn / department / job_function / summary_cn / responsibilities / overview / skill_labels / education_description / major_requirement / preferred_qualifications / city
   occupation: { id?: number; name: string; intro?: string; responsibility?: string; position_requirement?: string } | null;
   typical_tasks: { name: string; summary?: string; goal?: string; success_criteria?: any; process?: any; common_mistakes?: any }[];
   standards: { code?: string; title: string; key_points?: any; operation_relevance?: string }[];
@@ -48,11 +48,13 @@ export async function gatherContext(companyQuery: string, role: string): Promise
   const ctx: WorkContext = { company: null, products: [], news: [], executives: [], jobs: [], occupation: null, typical_tasks: [], standards: [], notes: [] };
   const q = companyQuery.trim();
   let company: any = null;
-  if (/^\d+$/.test(q)) ({ data: company } = await db.from('companies').select('id, name, name_en, industry, sub_industry, description, campus_overview, tags, hq_city, website, employee_count, founded_year').eq('id', Number(q)).maybeSingle());
+  const C = 'id, name, name_en, brief_name, industry, sub_industry, one_sentence, introduction, business_profile, product_area, company_specialties, company_case, tech_advantage, research_area, growth_signals, industry_position, public_sentiment, candidate_reputation, campus_overview, tags, city, province, official_website, company_scale, company_employees, info_founding_year, operating_revenue, stock_code';
+  if (/^\d+$/.test(q)) ({ data: company } = await db.from('companies').select(C).eq('id', Number(q)).eq('if_delete', false).maybeSingle());
   if (!company && q) {
-    const { data } = await db.from('companies').select('id, name, name_en, industry, sub_industry, description, campus_overview, tags, hq_city, website, employee_count, founded_year').or(`name.ilike.%${q}%,name_en.ilike.%${q}%`).order('id').limit(5);
-    company = (data || []).find((c: any) => c.name === q) || data?.[0] || null;
+    const { data } = await db.from('companies').select(C).eq('if_delete', false).or(`name.ilike.%${q}%,name_en.ilike.%${q}%,brief_name.ilike.%${q}%`).order('id').limit(5);
+    company = (data || []).find((c: any) => c.name === q || c.brief_name === q) || data?.[0] || null;
   }
+  const J = 'name, title_cn, department, job_function, summary_cn, responsibilities, overview, skill_labels, education_description, major_requirement, preferred_qualifications, city';
   if (company) {
     ctx.company = company;
     const cid = company.id;
@@ -60,11 +62,11 @@ export async function gatherContext(companyQuery: string, role: string): Promise
       db.from('company_products').select('name, category, description, is_flagship').eq('company_id', cid).eq('if_delete', false).order('is_flagship', { ascending: false }).limit(8),
       db.from('company_news').select('description, publish_date_str, kind').eq('company_id', cid).eq('if_delete', false).order('publish_date', { ascending: false, nullsFirst: false }).limit(8),
       db.from('company_executives').select('name, title').eq('company_id', cid).eq('if_delete', false).limit(5),
-      db.from('jobs').select('title, department, job_function, responsibilities, skills, education_requirement, experience_requirement, city').eq('company_id', cid).or(`title.ilike.%${role}%,job_function.ilike.%${role}%`).limit(3),
+      db.from('jobs').select(J).eq('company_id', cid).eq('if_delete', false).or(`name.ilike.%${role}%,title_cn.ilike.%${role}%,job_function.ilike.%${role}%`).limit(3),
     ]);
     ctx.products = products || []; ctx.news = news || []; ctx.executives = execs || []; ctx.jobs = jobs || [];
     if (!ctx.jobs.length) {
-      const { data } = await db.from('jobs').select('title, department, job_function, responsibilities, skills, education_requirement, experience_requirement, city').eq('company_id', cid).limit(3);
+      const { data } = await db.from('jobs').select(J).eq('company_id', cid).eq('if_delete', false).not('responsibilities', 'is', null).limit(3);
       ctx.jobs = data || []; if (ctx.jobs.length) ctx.notes.push(`这家企业没有「${role}」的在招岗位，取了同企业其他岗位做参考`);
     }
   } else ctx.notes.push(`企业库里没找到「${q}」，只能按名字出题，企业事实会少`);
@@ -92,12 +94,13 @@ export function renderContext(ctx: WorkContext): string {
   const L: string[] = [];
   if (ctx.company) {
     const c = ctx.company;
-    L.push(`## 企业（来源：企业实体库）\n名称：${c.name}${c.industry ? ` · 行业：${c.industry}${c.sub_industry ? ' / ' + c.sub_industry : ''}` : ''}${c.hq_city ? ` · 总部：${c.hq_city}` : ''}${c.employee_count ? ` · 规模：${c.employee_count}` : ''}${c.founded_year ? ` · 成立：${c.founded_year}` : ''}\n简介：${s(c.description, 800)}\n${c.campus_overview ? `校招概况：${s(c.campus_overview, 400)}\n` : ''}${c.tags?.length ? `标签：${c.tags.join('、')}\n` : ''}`);
+    const f = (label: string, v: any, n = 500) => (v ? `${label}：${s(v, n)}\n` : '');
+    L.push(`## 企业画像（来源：企业实体库）\n名称：${c.name}${c.industry ? ` · 行业：${c.industry}${c.sub_industry ? ' / ' + c.sub_industry : ''}` : ''}${c.city ? ` · ${c.province || ''}${c.city}` : ''}${c.company_scale ? ` · 规模：${c.company_scale}` : ''}${c.info_founding_year ? ` · 成立：${c.info_founding_year}` : ''}${c.operating_revenue ? ` · 营收：${c.operating_revenue}` : ''}${c.stock_code ? ` · ${c.stock_code}` : ''}\n${f('一句话', c.one_sentence, 120)}${f('简介', c.introduction, 700)}${f('业务', c.business_profile, 500)}${f('产品领域', c.product_area, 200)}${f('专长', c.company_specialties, 300)}${f('技术优势', c.tech_advantage, 400)}${f('研发方向', c.research_area, 300)}${f('增长信号', c.growth_signals, 500)}${f('行业位置', c.industry_position, 500)}${f('合作案例', c.company_case, 400)}${f('舆情风险', c.public_sentiment, 500)}${f('求职者口碑', c.candidate_reputation, 300)}${f('校招概况', c.campus_overview, 300)}${c.tags?.length ? `标签：${c.tags.join('、')}\n` : ''}`);
   }
   if (ctx.products.length) L.push(`## 产品（来源：企业产品子实体）\n${ctx.products.map(p => `- ${p.name}${p.is_flagship ? '（主打）' : ''}${p.category ? ` [${p.category}]` : ''}：${s(p.description, 200)}`).join('\n')}`);
   if (ctx.news.length) L.push(`## 近期动态（来源：企业动态子实体）\n${ctx.news.map(n => `- ${n.publish_date_str || ''} ${s(n.description, 240)}`).join('\n')}`);
   if (ctx.executives.length) L.push(`## 管理团队（来源：企业高管子实体）\n${ctx.executives.map(e => `- ${e.name}${e.title ? ' · ' + e.title : ''}`).join('\n')}`);
-  if (ctx.jobs.length) L.push(`## 在招岗位（来源：校招岗位库）\n${ctx.jobs.map(j => `- ${j.title}${j.department ? ' · ' + j.department : ''}${j.city ? ' · ' + j.city : ''}\n  职责：${s(j.responsibilities, 500)}\n  要求：${s(j.education_requirement, 120)} ${s(j.experience_requirement, 120)} 技能：${s(j.skills, 200)}`).join('\n')}`);
+  if (ctx.jobs.length) L.push(`## 在招岗位（来源：校招岗位库）\n${ctx.jobs.map(j => `- ${j.title_cn || j.name}${j.department ? ' · ' + j.department : ''}${j.job_function ? ' · ' + j.job_function : ''}${j.city ? ' · ' + j.city : ''}\n  概述：${s(j.summary_cn || j.overview, 300)}\n  职责：${s(j.responsibilities, 600)}\n  要求：${s(j.education_description, 100)} ${s(j.major_requirement, 120)} ${s(j.preferred_qualifications, 200)} 技能：${s(j.skill_labels, 150)}`).join('\n')}`);
   if (ctx.occupation) L.push(`## 职业（来源：职业实体库）\n${ctx.occupation.name}：${s(ctx.occupation.intro, 400)}\n职责：${s(ctx.occupation.responsibility, 500)}\n要求：${s(ctx.occupation.position_requirement, 300)}`);
   if (ctx.typical_tasks.length) L.push(`## 这个职业的典型任务（来源：职业典型任务库）\n${ctx.typical_tasks.map(t => `- ${t.name}：${s(t.summary, 200)}\n  目标：${s(t.goal, 150)}；成功标准：${s(t.success_criteria, 200)}；常见错误：${s(t.common_mistakes, 200)}`).join('\n')}`);
   if (ctx.standards.length) L.push(`## 行业标准 / 规程（来源：行业标准与规程库）\n${ctx.standards.map(x => `- ${x.code ? x.code + ' ' : ''}${x.title}：${s(x.key_points, 300)}${x.operation_relevance ? '；操作相关：' + s(x.operation_relevance, 150) : ''}`).join('\n')}`);
