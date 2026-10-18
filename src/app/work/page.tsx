@@ -143,7 +143,6 @@ export default function WorkLanding() {
   React.useEffect(() => { const f = () => setScrolled(window.scrollY > 80); f(); window.addEventListener('scroll', f, { passive: true }); return () => window.removeEventListener('scroll', f); }, []);
   return (
     <div style={{ minHeight: '100vh', background: '#f8f6f1', color: '#1a1a2e', fontFamily: 'var(--font-geist-sans), -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif' }}>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&display=swap" />
       <style>{`@keyframes wkcue { 0% { transform: translateY(0); opacity: .9 } 60% { transform: translateY(8px); opacity: .3 } 100% { transform: translateY(0); opacity: .9 } }`}</style>
       {/* 顶栏 */}
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 3 }}>
@@ -161,7 +160,7 @@ export default function WorkLanding() {
       <section style={{ position: 'relative', minHeight: '100svh', display: 'flex', alignItems: 'center' }}>
         <SceneBackdrop onIndex={setSceneIdx} />
         <div style={{ position: 'relative', width: '100%', maxWidth: 1180, margin: '0 auto', padding: '96px 28px 72px' }}>
-          <div style={{ fontSize: 12, letterSpacing: 4, color: '#6055f5', fontWeight: 700 }}>百业AI｜真活 · REAL WORK, REAL TALENT</div>
+          <div style={{ fontSize: 12, letterSpacing: 4, color: '#6055f5', fontWeight: 700 }}>百业AI｜真活 · TRUE WORK, TRUE TALENT</div>
           <h1 style={{ fontSize: 'clamp(46px, 6vw, 84px)', lineHeight: 1.16, margin: '14px 0 18px', fontWeight: 700, letterSpacing: '.01em', fontFamily: serif }}>寻找真人才，<br /><span style={{ background: 'linear-gradient(90deg,#6055f5,#12b5cb)', WebkitBackgroundClip: 'text', color: 'transparent' }}>看他干真活</span></h1>
           <p style={{ fontSize: 'clamp(15px, 1.5vw, 18px)', color: '#3b405a', lineHeight: 1.85, maxWidth: 560, margin: '0 0 22px' }}>给一家企业、一个岗位，生成此刻真实的业务题；候选人在操作台上做，或用自己的软件做并录屏。我们记录过程、逐条评价，并和 AI 基线对照。</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '8px 18px', marginBottom: 28, maxWidth: 440 }}>
@@ -317,7 +316,8 @@ export default function WorkLanding() {
   );
 }
 
-const serif = '"Noto Serif SC", "Songti SC", "STSong", serif';
+// 衬线标题：Noto Serif SC 由 next/font 在构建时下载、自己域名下发（不依赖 Google Fonts 能不能访问）；没加载到就退到系统宋体
+const serif = 'var(--font-serif-sc), "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif';
 const lnk: React.CSSProperties = { color: '#3b405a', textDecoration: 'none' };
 const h2: React.CSSProperties = { fontSize: 30, margin: '0 0 14px', fontWeight: 700, fontFamily: serif, letterSpacing: '.01em' };
 const card: React.CSSProperties = { background: '#fffdf9', border: '1px solid #ebe7de', borderRadius: 18, padding: '18px 20px' };
