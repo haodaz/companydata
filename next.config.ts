@@ -6,6 +6,8 @@ import type { NextConfig } from "next";
 const SUPABASE = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://jextsfzlbchbnsnxwgeu.supabase.co";
 
 const nextConfig: NextConfig = {
+  // ffmpeg-static 是个带二进制路径的包，不能被打包进 server bundle（否则路径变成 bundle 里的假路径）
+  serverExternalPackages: ['ffmpeg-static'],
   images: {
     remotePatterns: [new URL(`${SUPABASE.replace(/\/$/, "")}/storage/v1/object/public/lab-art/**`)],
   },

@@ -264,10 +264,20 @@ export default function WorkLanding() {
       <section id="report" style={{ maxWidth: 1180, margin: '0 auto', padding: '56px 28px 8px' }}>
         <h2 style={h2}>评分报告：看结果，更看过程</h2>
         <div style={{ color: '#4a4f66', marginBottom: 18 }}>一份报告四个部分，每一部分都能回到证据。</div>
-        <div style={{ display: 'grid', gap: 14 }}>
-          {REPORT_PARTS.map((p, i) => <div key={p.t} style={{ ...card, padding: 0, overflow: 'hidden', display: 'grid', gridTemplateColumns: i % 2 ? 'minmax(260px, 1fr) 1.5fr' : '1.5fr minmax(260px, 1fr)', alignItems: 'center' }}>
-            <div style={{ order: i % 2 ? 2 : 1, borderRight: i % 2 ? undefined : '1px solid #ebe7de', borderLeft: i % 2 ? '1px solid #ebe7de' : undefined, background: '#fff' }}><Img src={p.img} alt={p.t} /></div>
-            <div style={{ order: i % 2 ? 1 : 2, padding: '20px 22px' }}><div style={{ fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>0{i + 1}</div><div style={{ fontWeight: 800, fontSize: 19, fontFamily: serif, margin: '4px 0 6px' }}>{p.t}</div><div style={{ fontSize: 14, color: '#4a4f66', lineHeight: 1.8 }}>{p.d}</div></div>
+        {/* 四段并排（照 NeoWork 的四步）：场景当底、报告截图当浮在前面的卡片，下面编号 + 标题 + 说明 */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 18 }}>
+          {REPORT_PARTS.map((p, i) => <div key={p.t}>
+            <div style={{ position: 'relative', height: 380, borderRadius: 18, overflow: 'hidden', border: '1px solid #ebe7de', background: `url(${SCENES[(i * 2 + 1) % SCENES.length].src}) center / cover` }}>
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(255,253,249,.35), rgba(255,253,249,.15))' }} />
+              <div style={{ position: 'absolute', left: 18, right: 18, top: '50%', transform: 'translateY(-50%)', maxHeight: 330, background: '#fff', borderRadius: 12, boxShadow: '0 18px 40px rgba(20,24,60,.22)', overflow: 'hidden', border: '1px solid rgba(0,0,0,.06)' }}>
+                <img src={p.img} alt={p.t} style={{ width: '160%', maxWidth: 'none', display: 'block' }} />
+              </div>
+            </div>
+            <div style={{ padding: '18px 4px 0' }}>
+              <div style={{ fontSize: 40, fontWeight: 800, color: '#1a1a2e', lineHeight: 1, fontFamily: serif }}>0{i + 1}</div>
+              <div style={{ fontWeight: 800, fontSize: 20, fontFamily: serif, margin: '10px 0 8px' }}>{p.t}</div>
+              <div style={{ fontSize: 14.5, color: '#4a4f66', lineHeight: 1.8 }}>{p.d}</div>
+            </div>
           </div>)}
         </div>
         <div style={{ ...card, marginTop: 18, padding: '22px 24px' }}>

@@ -19,13 +19,14 @@ export async function framesFromRecording(url: string, everySec = 20, max = 30):
   fs.writeFileSync(src, Buffer.from(await (await fetch(url)).arrayBuffer()));
   // 时长
   let dur = 0;
-  try { execFileSync(FFMPEG, ['-i', src], { stdio: 'pipe' }); } catch (e: any) { const m = /Duration: (\d+):(\d+):([\d.]+)/.exec(String(e.stderr)); if (m) dur = (+m[1]) * 3600 + (+m[2]) * 60 + (+m[3]); }
+  if (!fs.existsSync(FFMPEG)) { console.warn('[work] ffmpeg 不存在：', FFMPEG); return []; }
+  try { execFileSync(FFMPEG, ['-i', src], { stdio: 'pipe' }); } catch (e: any) { const m = /Duration: (\d+):(\d+):([\d.]+)/.exec(String(e.stderr)); if (m) dur = (+m[1]) * 3600 + (+m[2]) * 60 + (+m[3]); else console.warn('[work] ffmpeg 探测失败：', String(e?.message).slice(0, 200)); }
   if (!dur || !isFinite(dur)) dur = everySec * max;   // webm 没写时长时按上限抽
   const step = Math.max(everySec, dur / max);
   const out: { t: number; jpeg: Buffer }[] = [];
   for (let t = 2; t < dur && out.length < max; t += step) {
     const f = path.join(dir, `f${out.length}.jpg`);
-    try { execFileSync(FFMPEG, ['-loglevel', 'error', '-y', '-ss', String(t), '-i', src, '-frames:v', '1', '-vf', 'scale=960:-1', '-q:v', '5', f], { stdio: 'pipe' }); if (fs.existsSync(f)) out.push({ t: Math.round(t), jpeg: fs.readFileSync(f) }); else break; } catch { break; }
+    try { execFileSync(FFMPEG, ['-loglevel', 'error', '-y', '-ss', String(t), '-i', src, '-frames:v', '1', '-vf', 'scale=960:-1', '-q:v', '5', f], { stdio: 'pipe' }); if (fs.existsSync(f)) out.push({ t: Math.round(t), jpeg: fs.readFileSync(f) }); else break; } catch (e: any) { console.warn('[work] 抽帧失败 @', t, String(e?.message).slice(0, 200)); break; }
   }
   try { fs.rmSync(dir, { recursive: true, force: true }); } catch {}
   return out;
