@@ -149,7 +149,10 @@ export function sanitizeCompetition(raw: Record<string, any>): Record<string, an
   const deadline = parseDeadline(out.registration_deadline_str);
   if (deadline) {
     out.registration_deadline = deadline;
-    if (!out.status || out.status === 'unknown') out.status = new Date(deadline).getTime() >= Date.now() - 86400000 ? 'open' : 'closed';
+    const passed = new Date(deadline).getTime() < Date.now() - 86400000;
+    if (!out.status || out.status === 'unknown') out.status = passed ? 'closed' : 'open';
+    // 模型常把「报名截止已过」的还标报名中 / 即将开放：以截止日期为准
+    else if (passed && (out.status === 'open' || out.status === 'upcoming')) out.status = 'closed';
   }
   return out;
 }

@@ -15,7 +15,8 @@ export const maxDuration = 300;
  */
 export async function POST(req: Request) {
   try {
-    const { id, name, model, part = 'profile' } = await req.json();
+    const { id, name, model, part = 'profile', aliases: extraAliases } = await req.json();
+    const hintAliases: string[] = Array.isArray(extraAliases) ? extraAliases.map(String).filter(Boolean).slice(0, 8) : [];
     const modelId = model || 'gemini-3.8-flash';
     let target: any = null;
     if (id) {
@@ -30,7 +31,7 @@ export async function POST(req: Request) {
         // 库里已有：直接返回，前端跳详情；要补全再点「AI 补全」
         return NextResponse.json({ success: true, id: target.id, created: false, existed: true, changed: [], salaries: 0 });
       }
-      target = { name: q };
+      target = { name: q, aliases: hintAliases };   // 飞轮职业缺口带来的常见叫法，帮检索也进别名
     }
 
     const batchId = Date.now();
@@ -66,7 +67,7 @@ export async function POST(req: Request) {
     if (!target.id) {
       // 新建：规范名可能和查询词不同（「后端开发」→「计算机软件工程师」），先按规范名再认一次旧记录，查询词进别名
       fields.name = fields.name || query;
-      if (query && query !== fields.name) fields.aliases = Array.from(new Set([query, ...(fields.aliases || [])]));
+      fields.aliases = Array.from(new Set([...(query && query !== fields.name ? [query] : []), ...hintAliases, ...(fields.aliases || [])]));
     } else {
       delete fields.name;   // 已有职业不改名
     }

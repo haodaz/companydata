@@ -97,14 +97,18 @@ export async function resolveGroundingRedirects<T>(value: T): Promise<T> {
   return replace(value);
 }
 
-export async function searchJson(prompt: string, modelId: string, log: Pick<TokenUsageParams, 'tool_name' | 'task_name' | 'institution' | 'batch_id'>): Promise<{ parsed: any; searchQueries: string[] }> {
+export async function searchJson(prompt: string, modelId: string, log: Pick<TokenUsageParams, 'tool_name' | 'task_name' | 'institution' | 'batch_id'>, opts: { lenient?: boolean } = {}): Promise<{ parsed: any; searchQueries: string[]; sources: { title: string; url: string }[] }> {
   let text: string;
+  let sources: { title: string; url: string }[] = [];
   let usageMetadata: any;
   let searchQueries: string[] = [];
 
   if (modelId.startsWith('qwen')) {
     // 阿里云：通义千问 + 联网搜索（国内企业用这个，便宜、搜得到国内站点）
     const result = await generateContent(prompt, modelId, { webSearch: true });
+    // 千问自己写进 JSON 的网址常是编的，真的链接在附带的「搜索来源」里：拆出来一并返回，调用方拿它校对
+    const tail = result.text.match(/\n\n## 搜索来源\n([\s\S]*)$/)?.[1] || '';
+    sources = tail.split('\n').map(l => l.match(/^\[\d+\]\s*(.*?)\s+(https?:\/\/\S+)\s*$/)).filter(Boolean).map(m => ({ title: m![1].trim(), url: m![2] }));
     text = result.text.replace(/\n\n## 搜索来源[\s\S]*$/, '');
     usageMetadata = result.usageMetadata;
   } else if (process.env.DASHSCOPE_FREE_ONLY === '1') {
@@ -143,5 +147,8 @@ export async function searchJson(prompt: string, modelId: string, log: Pick<Toke
 
   // 每次 searchJson 是一次带搜索的调用（Gemini 按 grounded prompt、阿里云 / OpenAI 按搜索调用计费）
   await logTokenUsage({ ...log, model_id: modelId, usageMetadata, success: true, search_calls: 1 }).catch(e => console.error('Token logging failed', e));
-  return { parsed: await resolveGroundingRedirects(parseJsonLoose(text)), searchQueries };
+  // lenient：只拿它找信源时，模型回了一段话而不是 JSON 也不算失败，信源照样返回给下一步去抓
+  let parsed: any;
+  try { parsed = parseJsonLoose(text); } catch (e) { if (!opts.lenient) throw e; parsed = {}; }
+  return { parsed: await resolveGroundingRedirects(parsed), searchQueries, sources };
 }

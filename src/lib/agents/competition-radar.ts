@@ -21,6 +21,13 @@ export interface Candidate {
 const today = () => new Date().toISOString().slice(0, 10);
 const str = (v: any) => (typeof v === 'string' && v.trim() ? v.trim() : null);
 const url = (v: any) => { const s = str(v); return s && /^https?:\/\//i.test(s) ? s : null; };
+/** 按名称和来源标题的二字片段重合度挑最像的来源；一点都不像就不给 */
+const grams = (s: string) => { const t = s.toLowerCase().replace(/[\s·•\-—_()（）【】\[\]「」“”"'：:，,!！|]/g, ''); const g = new Set<string>(); for (let i = 0; i < t.length - 1; i++) g.add(t.slice(i, i + 2)); return g; };
+function bestSource(name: string, sources: { title: string; url: string }[]) {
+  const a = grams(name); let best: string | null = null, top = 0;
+  for (const x of sources) { const b = grams(x.title); let n = 0; for (const g of a) if (b.has(g)) n++; const sc = a.size ? n / a.size : 0; if (sc > top) { top = sc; best = x.url; } }
+  return top >= 0.35 ? best : null;
+}
 
 // ────────────────────────────────────────────
 // 1. 检索候选
@@ -42,7 +49,7 @@ Search focus: ${p.query || '(none)'}${p.company ? `\nHost company (must be organ
 ${kinds.length ? `Competition kinds: ${kinds.map(k => `${k} = ${COMPETITION_KIND_LABELS[k].label}`).join(', ')}` : 'Competition kinds: hackathon, developer contest, business case competition, data / algorithm competition, campus innovation contest, design contest'}
 ${regionLine}
 ${rewardLine}
-${p.onlyOpen !== false ? 'Only include editions that are still open for registration or upcoming (deadline on/after today), or whose next edition is announced. Skip ended editions.' : 'Include recent past editions too (they recur yearly).'}
+${p.onlyOpen !== false ? 'Include editions that are open for registration, upcoming, or whose status you cannot confirm yet (status "unknown" — a later step opens the page and verifies). Skip only editions that clearly ended.' : 'Include recent past editions too (they recur yearly).'}
 
 Search in Chinese and English (e.g. "${p.company || p.query} 大赛 报名 ${new Date().getFullYear()}", "hackathon ${new Date().getFullYear()} prizes laptop", "校园 创新 大赛 offer 直通").
 Sources to prefer: official competition sites, company campus-recruiting / developer portals, Devpost, Kaggle, 天池, 牛客, 掘金, MLH, university career sites.
@@ -52,16 +59,32 @@ Return up to ${p.count || 15} candidates as JSON:
   "candidates": [ { "name", "organizer", "official_url", "registration_url", "kind" (one of ${Object.keys(COMPETITION_KIND_LABELS).join('|')}), "level" (one of ${Object.keys(COMPETITION_LEVEL_LABELS).join('|')}), "brief" (1–2 sentences 中文), "registration_deadline_str" (YYYY-MM-DD if known), "status" (open|upcoming|closed|ended|unknown), "prizes" (中文 one line: 奖金 / 设备 / 实习 / offer), "reward_types" (array from ${Object.keys(REWARD_LABELS).join('|')}), "source_url" } ],
   "summary": 3–5 sentences in Chinese: what you searched, which candidates look most valuable for students (设备 / 奖金 / offer 角度), what could not be confirmed.
 }
-Rules: only real competitions you actually found; official_url must be the competition's own page (not a news article) when available; never invent deadlines or prizes — use null.
+Rules: list EVERY relevant competition that appears in your search results — news articles, WeChat posts and portal listings count as evidence; do not drop a real competition just because details are missing. "source_url" = the search-result URL where you saw it; "official_url" only if you actually saw that URL, otherwise null. Never invent URLs, deadlines or prizes — use null.
 `;
-  const { parsed, searchQueries } = await searchJson(prompt, modelId, { tool_name: TOOL, task_name: 'Search Competitions', institution: p.company || p.query, batch_id: batchId });
+  // 千问：长英文提示词 + 一堆限制它会一个都不报（只写一段「未发现」），换成中文短提示词，宽进、补全那步再核实
+  const zh = `今天是 ${today()}。联网搜索：${p.query || ''}${p.company ? `（主办或赞助企业：${p.company}）` : ''}
+${p.region === 'overseas' ? '找面向全球、可以线上参加的比赛。' : '找面向国内高校学生（在校生 / 应届生）的比赛。'}${kinds.length ? `类型：${kinds.map(k => COMPETITION_KIND_LABELS[k].label).join('、')}。` : ''}${rewards.length ? `优先奖励里有：${rewards.map(r => `${REWARD_LABELS[r].label}（${REWARD_LABELS[r].hint}）`).join('；')}。` : ''}
+把搜索结果里出现的企业 / 机构主办的比赛都列出来（新闻、公众号文章、赛事平台列表都算），最多 ${p.count || 15} 个；${p.onlyOpen !== false ? '明确已经结束的不要，报名状态不确定的标 unknown。' : '往届也可以。'}
+只返回 JSON：
+{"candidates":[{"name":"含年份 / 届次的完整名称","organizer","official_url","registration_url","kind":"${Object.keys(COMPETITION_KIND_LABELS).join('|')}","level":"${Object.keys(COMPETITION_LEVEL_LABELS).join('|')}","brief":"一两句中文","registration_deadline_str":"YYYY-MM-DD","status":"open|upcoming|closed|ended|unknown","prizes":"一行中文：奖金 / 设备 / 实习 / offer","reward_types":[${Object.keys(REWARD_LABELS).map(k => `"${k}"`).join(',')} 里选],"source_url":"你看到它的那条搜索结果的网址"}],"summary":"3–5 句中文：搜了什么、哪些最值得（设备 / 奖金 / offer）、哪些没法确认"}
+不知道的字段填 null；网址、日期、奖品都不要编。`;
+  const { parsed, searchQueries, sources } = await searchJson(modelId.startsWith('qwen') ? zh : prompt, modelId, { tool_name: TOOL, task_name: 'Search Competitions', institution: p.company || p.query, batch_id: batchId });
   const candidates: Candidate[] = (Array.isArray(parsed.candidates) ? parsed.candidates : []).map((c: any) => ({
     name: str(c.name) || '', organizer: str(c.organizer), official_url: url(c.official_url), registration_url: url(c.registration_url),
     kind: str(c.kind) && c.kind in COMPETITION_KIND_LABELS ? c.kind : null, level: str(c.level) && c.level in COMPETITION_LEVEL_LABELS ? c.level : null,
     brief: str(c.brief), registration_deadline_str: str(c.registration_deadline_str), status: str(c.status), prizes: str(c.prizes),
     reward_types: (Array.isArray(c.reward_types) ? c.reward_types : []).filter((r: any) => typeof r === 'string' && r in REWARD_LABELS), source_url: url(c.source_url),
   })).filter((c: Candidate) => c.name);
-  return { candidates, summary: str(parsed.summary), searchQueries, raw: parsed };
+  // 千问附带了真实搜索来源时，拿它校对：不在来源里的网址当作编的丢掉，出处换成标题最像的那条来源
+  if (sources.length) {
+    const real = new Set(sources.map(x => x.url));
+    for (const c of candidates) {
+      if (c.official_url && !real.has(c.official_url)) c.official_url = null;
+      if (c.registration_url && !real.has(c.registration_url)) c.registration_url = null;
+      if (!c.source_url || !real.has(c.source_url)) c.source_url = bestSource(c.name, sources);
+    }
+  }
+  return { candidates, summary: str(parsed.summary), searchQueries, sources, raw: parsed };
 }
 
 // ────────────────────────────────────────────
@@ -152,4 +175,40 @@ Rules: only report values you actually found; null otherwise.
     searchQueries,
     raw: parsed,
   };
+}
+
+// ────────────────────────────────────────────
+// 3. 处理信息：从一页原文里抽比赛（找信源 → 爬网站 → 处理信息 分开跑时用）
+//    一页可能是单个赛事页，也可能是公众号汇总 / 赛事平台列表，里面有好几个比赛
+// ────────────────────────────────────────────
+export async function extractCompetitionsFromPage(page: { url: string; title?: string; markdown: string }, ctx: { query?: string; company?: string | null; onlyOpen?: boolean }, modelId: string, batchId: number) {
+  const prompt = `
+今天是 ${today()}。下面是一页网页原文（${page.url}${page.title ? ` · ${page.title}` : ''}），是检索「${ctx.query || ''}${ctx.company ? ` · ${ctx.company}` : ''}」时找到的。
+把页面里写到的、面向学生（在校生 / 应届生 / 青年开发者）的比赛都抽出来：黑客松、开发者大赛、算法 / 数据赛、商业案例赛、创新创业赛、设计赛、学术赛。
+${ctx.onlyOpen !== false ? '页面明确写了已经结束的比赛不要。' : ''}培训课、招聘会、普通活动、纯广告不算比赛。只抽页面上写着的，不要补页面没有的信息。
+"official_url" / "registration_url"：页面里出现的该比赛官网 / 报名链接；这一页本身就是该比赛的官方页就填 ${page.url}；都没有填 null。
+
+只返回 JSON：
+{
+  "competitions": [ {
+${SCHEMA}
+  } ]
+}
+${FIELD_NOTES}
+页面原文：
+${page.markdown.slice(0, PAGE_CAP)}
+`;
+  const res = await generateContent(prompt, modelId, { jsonMode: true, fast: true });
+  await logTokenUsage({ tool_name: TOOL, task_name: 'Extract Competitions From Page', institution: ctx.company || ctx.query || '', model_id: res.model || modelId, usageMetadata: res.usageMetadata, batch_id: batchId }).catch(() => {});
+  const list: any[] = parseJsonLoose(res.text)?.competitions || [];
+  return list.map(c => {
+    const f = sanitizeCompetition(c);
+    // 链接只认这一页原文里真出现过的（或这一页本身），模型自己拼的不要
+    for (const k of ['official_url', 'registration_url'] as const) if (f[k] && f[k] !== page.url && !page.markdown.includes(String(f[k]).replace(/\/$/, ''))) f[k] = null;
+    return { fields: f, sources: Object.fromEntries(Object.keys(f).filter(k => f[k] != null).map(k => [k, page.url])) };
+  }).filter(x => x.fields.name)
+    // 只要能报名的：已截止 / 已结束的不要（提示词里说了模型也常照抽）
+    .filter(x => ctx.onlyOpen === false || !['closed', 'ended'].includes(x.fields.status))
+    // 校内选拔赛不是企业赛事（全国赛本身留着）
+    .filter(x => x.fields.level !== 'campus' && !/校级|校内|选拔赛|校赛/.test(x.fields.name));
 }

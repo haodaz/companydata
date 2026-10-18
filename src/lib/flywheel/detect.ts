@@ -10,13 +10,17 @@
  */
 import { supabaseAdmin } from '@/lib/supabase';
 import { selectAll } from '@/lib/supabase-all';
-import { searchJson } from '@/lib/agents/search-llm';
+import { searchJson, parseJsonLoose } from '@/lib/agents/search-llm';
+import { fetchJinaUrl } from '@/lib/agents/fetcher';
+import { generateContent } from '@/lib/llm-client';
+import { logTokenUsage } from '@/lib/token-logger';
 import { resolveCompanyLoose, resolveLooseOrCreateCompany } from '@/lib/company-match';
 import { WEB_PROBES } from '@/lib/flywheel/sources';
 import { INDUSTRIES, JOB_FUNCTIONS, cleanProfession, isEmployer } from '@/lib/flywheel/taxonomy';
 import { logDemand } from '@/lib/flywheel/signals';
 import { normalizeCompanyIndustries, normalizePending } from '@/lib/flywheel/normalize';
 import { computeBoard, type BoardRow } from '@/lib/flywheel/board';
+import { findOccupationGaps } from '@/lib/occupation-gaps';
 
 const DAY = 86_400_000;
 const BILLING = /402|Payment Required|credits are depleted|insufficient_quota|exceeded your current quota/i;
@@ -166,6 +170,11 @@ async function runDailyInner(opts: DailyOptions, day: string, log: (s: string) =
   // 5. 排产
   const actions = opts.plan === false ? [] : await planTasks(day, board, onboarded, model, log);
 
+  // 6. 职业缺口：近 30 天新进的岗位里，职业库对不上的职业。只出建议放看板，建不建由人点（要联网生成、花钱）
+  const occupation = opts.plan === false ? null : await tryModel(m => findOccupationGaps({ model: m, sinceDays: 30, top: 400, log }))
+    .then(r => ({ gaps: r.gaps.slice(0, 30), aliasHints: r.aliasHints.slice(0, 20) }))
+    .catch((e: any) => { log(`职业缺口检测失败：${String(e?.message || e).slice(0, 120)}`); return null; });
+
   const stats = {
     totals: board.totals,
     onboarded: onboarded.length,
@@ -174,6 +183,7 @@ async function runDailyInner(opts: DailyOptions, day: string, log: (s: string) =
     skippedProbes: skipped,
     normalized: norm.done,
     aliasAdded,
+    occupation,
     top: {
       industry: board.dims.industry.slice(0, 5).map(r => ({ key: r.key, heat30: r.heat30 })),
       job_function: board.dims.job_function.slice(0, 5).map(r => ({ key: r.key, heat30: r.heat30 })),
@@ -197,15 +207,35 @@ async function scanProbe(key: string, ask: string, model: string): Promise<any[]
   const prompt = `${ask}
 
 规则：
-1. 只要能在搜索结果里看到出处的真实事件，每条给出处链接 url（新闻 / 高校就业网 / 企业官网 / 官方公众号文章），没出处的不要。
+1. 搜索结果 / 页面里出现的真实事件都列出来，细节不全也列；每条给出处链接 url（新闻 / 高校就业网 / 企业官网 / 官方公众号文章），用你看到它的那个网址，不要编。
 2. company 写企业或机构的全称（中文优先）；同一家只写一条，合并信息。
 3. industry 只能取：${INDUSTRIES.join(' / ')}；job_function 只能取：${JOB_FUNCTIONS.join(' / ')}；对不上就 null。
 4. detail 一句话中文（40 字内），说清发生了什么。
 5. 尽量给 15–30 条。
 
 返回 JSON：{ "items": [{ "company": "", "detail": "", "url": "", "date": "YYYY-MM-DD", "city": "", "school": "", "industry": null, "job_function": null, "profession": null }] }`;
-  const { parsed } = await searchJson(prompt, model, { tool_name: 'flywheel', task_name: `Scan · ${key}`, institution: '' });
-  const items = Array.isArray(parsed?.items) ? parsed.items : [];
+  // 三步分开：① 找信源（联网检索，模型顺手给的条目也收）→ ② 爬来源页原文 → ③ 从原文里抽。
+  // 千问的搜索结果只有标题和摘要，宣讲会名单、融资方都在正文里，不读正文基本是 0 条（2026-10-18）
+  const { parsed, sources } = await searchJson(prompt, model, { tool_name: 'flywheel', task_name: `Scan · ${key}`, institution: '' }, { lenient: true });
+  const items: any[] = Array.isArray(parsed?.items) ? parsed.items : [];
+  const urls = [...new Map([...sources, ...items.filter((x: any) => /^https?:\/\//.test(x?.url || '')).map((x: any) => ({ url: x.url, title: x.company || '' }))].map(x => [x.url, x])).values()].slice(0, 10);
+  const pages = (await Promise.all(urls.map(async x => ({ ...x, md: ((await fetchJinaUrl(x.url).catch(() => '')) || '').slice(0, 8000) })))).filter(x => x.md.length > 300);
+  if (pages.length) {
+    // 模型自己写的条目，出处不在抓到的页面里的不留（多半是编的链接）；以正文抽出来的为准
+    const got = new Set(pages.map(p => p.url));
+    for (let i = items.length - 1; i >= 0; i--) if (items[i]?.url && !got.has(items[i].url) && !sources.some(s => s.url === items[i].url)) items.splice(i, 1);
+    const r = await generateContent(`${prompt}
+
+下面是搜索到的页面正文。只从正文里抽，url 用该页面的网址；正文里没写到的不要。
+
+${pages.map(x => `=== ${x.title}\n${x.url}\n${x.md}`).join('\n\n')}`, model, { jsonMode: true });
+    await logTokenUsage({ tool_name: 'flywheel', task_name: `Scan pages · ${key}`, institution: '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
+    const more = (() => { try { return parseJsonLoose(r.text)?.items; } catch { return null; } })();
+    if (Array.isArray(more)) items.push(...more);
+  }
+  // 同一家合并成一条
+  const seen = new Set<string>();
+  for (let i = 0; i < items.length; i++) { const k = String(items[i]?.company || '').replace(/\s+/g, ''); if (k && seen.has(k)) { items.splice(i--, 1); continue; } if (k) seen.add(k); }
   return items
     .filter((x: any) => x && (x.company || x.detail))
     .map((x: any) => ({ ...x, company: typeof x.company === 'string' && isEmployer(x.company) ? x.company.trim().slice(0, 100) : null, profession: cleanProfession(x.profession), detail: String(x.detail || '').slice(0, 200) }))

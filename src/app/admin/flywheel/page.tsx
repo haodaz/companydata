@@ -29,6 +29,17 @@ export default function FlywheelPage() {
   const [scanWeb, setScanWeb] = useState(true);
   const [forceAll, setForceAll] = useState(false);
   const [normalizing, setNormalizing] = useState(false);
+  const [occBusy, setOccBusy] = useState<Record<string, number | 'busy'>>({});
+  // 职业缺口：人点了才建（职业查询同一个接口：联网生成画像 + 薪资，待审核）
+  const createOccupation = async (name: string, aliases: string[]) => {
+    setOccBusy(b => ({ ...b, [name]: 'busy' }));
+    try {
+      const j = await (await fetch('/api/agents/occupation', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, aliases, model: currentModel }) })).json();
+      if (!j.success) throw new Error(j.error || '生成失败');
+      setOccBusy(b => ({ ...b, [name]: j.id }));
+      message.success(j.existed ? `「${name}」库里已有` : `已建「${name}」（待审核）`);
+    } catch (e: any) { setOccBusy(b => { const n = { ...b }; delete n[name]; return n; }); message.error(`${name}：${e.message}`); }
+  };
 
   const load = useCallback(async (quiet = false) => {
     if (!quiet) setLoading(true);
@@ -217,6 +228,32 @@ export default function FlywheelPage() {
                 <Button size="small" type="link" onClick={() => router.push(a.kind === 'job_task' ? '/admin/tool-job' : '/admin/tool-company')}>去开跑 →</Button>
               </div>
             ))}
+          </Space>
+        </Card>
+      )}
+
+      {latest?.stats?.occupation?.gaps?.length > 0 && (
+        <Card size="small" style={{ marginBottom: 16 }} title={`${latest.day} 职业缺口 · 近 30 天新岗位里职业库对不上的`}
+          extra={<Text type="secondary" style={{ fontSize: 12 }}>已核对过近义职业；建不建由你定，点了才联网生成（待审核）</Text>}>
+          <Space direction="vertical" style={{ width: '100%' }}>
+            {latest.stats.occupation.gaps.map((g: any) => {
+              const st = occBusy[g.name];
+              return (
+                <div key={g.name} style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                  <Text strong>{g.name}</Text>
+                  <Tag>{g.jobs} 个岗位</Tag>
+                  <Tooltip title={g.why}><Text type="secondary" style={{ fontSize: 12 }}>{g.titles.slice(0, 5).join('、')}</Text></Tooltip>
+                  {typeof st === 'number'
+                    ? <Button size="small" type="link" onClick={() => router.push(`/admin/db-occupation/${st}`)}>去看 →</Button>
+                    : <Button size="small" type="link" loading={st === 'busy'} onClick={() => createOccupation(g.name, g.aliases || [])}>建这个职业</Button>}
+                </div>
+              );
+            })}
+            {latest.stats.occupation.aliasHints?.length > 0 && (
+              <Text type="secondary" style={{ fontSize: 12 }}>
+                这些岗位名其实是现有职业的另一种叫法，可以在职业详情里加成别名：{latest.stats.occupation.aliasHints.slice(0, 10).map((a: any) => `${a.titles.slice(0, 2).join('/')} → ${a.occupation}`).join('；')}
+              </Text>
+            )}
           </Space>
         </Card>
       )}

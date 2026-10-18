@@ -9,6 +9,7 @@ import { isAtsHost } from '@/lib/url-types';
 import { atsOf, beisenMarkdown, hotjobMarkdown, resolveListUrl, siteAdapterMarkdown } from '@/lib/agents/ats-adapters';
 import { loginVerdict } from '@/lib/agents/login-wall';
 import { markLogin } from '@/lib/url-login';
+import { localRenderAvailable, renderMarkdown } from '@/lib/agents/local-render';
 
 const MAX_CANDIDATES = 15;
 /** moka / 飞书这类招聘平台的列表页一页就是几十个岗位，详情页多挑一些 */
@@ -71,9 +72,11 @@ export async function fetchJinaUrl(url: string): Promise<string | null> {
       // 付费额度用完（402）：去掉 key 走免费额度（有频率限制，小批量够用），这次重试不算次数
       if (response.status === 402 && headers.Authorization) { delete headers.Authorization; attempt--; continue; }
       if (response.status !== 429 && response.status < 500) return null;
+      // 被限流：本机有 Chrome 就直接自己打开，不干等（免 key 按 IP 限速，批量时等也等不过来）
+      if (response.status === 429 && localRenderAvailable()) { const md = await renderMarkdown(url); if (md) return md; }
       await new Promise(r => setTimeout(r, [4000, 12000, 0][attempt]));
     }
-    return null;
+    return localRenderAvailable() ? await renderMarkdown(url) : null;
   } catch (e) {
     console.error(`Error fetching ${url}:`, e);
     return null;

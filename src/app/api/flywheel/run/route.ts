@@ -8,7 +8,8 @@ export const dynamic = 'force-dynamic';
 export const maxDuration = 800;
 
 const MODEL = () => process.env.FLYWHEEL_MODEL || 'gemini-3.8-flash';
-const FALLBACK = () => process.env.FLYWHEEL_FALLBACK_MODEL || 'gpt-5.6-luna';
+// 额度用完换哪个只看环境变量，不在代码里替人选（国内跑千问时别悄悄换成海外模型）
+const FALLBACK = () => process.env.FLYWHEEL_FALLBACK_MODEL || undefined;
 
 /**
  * 看板上人工触发「立即检测」：{ model?, scanWeb?, forceAll?, plan? }（不做定时，数据部门按节奏手动点）
