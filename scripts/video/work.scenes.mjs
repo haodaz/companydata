@@ -25,14 +25,10 @@ const H = `(() => {
 const run = body => `async () => { const L = ${H}; ${body} }`;
 
 export default [
-  // ── 首页 ──
+  // ── 首页：只露一眼，马上进正题（旁白节奏不能拖） ──
   { go: `${BASE}/work`, wait: 5000 },
-  { eval: run(`L.zoom(1.15); await L.sleep(500); return 'zoom';`) },
-  { note: 'landing' }, { hold: 4 },
-  { eval: run(`await L.scrollBy(620, 40, 45); return 'v';`), timeout: 20 },
-  { note: 'landing_values' }, { hold: 3 },
-  { eval: run(`await L.scrollBy(900, 45, 45); await L.sleep(1500); await L.scrollBy(900, 45, 45); return 'v';`), timeout: 40 },
-  { hold: 1 },
+  { eval: run(`L.zoom(1.15); await L.sleep(400); return 'zoom';`) },
+  { note: 'landing' }, { hold: 2.5 },
 
   // ── 出题（我的真活） ──
   { go: `${BASE}/work/mine`, wait: 4000 },
@@ -51,6 +47,7 @@ export default [
   { hold: 1 },
 
   // ── 候选人做题 ──
+  { eval: `() => { localStorage.removeItem('work:${T.sheet}'); return 'cleared'; }` },
   { go: `${BASE}/work/${T.sheet}`, wait: 5000 },
   { note: 'enter' }, { hold: 2.5 },
   { eval: run(`await L.scrollBy(500, 30, 40); await L.sleep(600); const name = document.querySelector('input[placeholder="姓名 / 昵称"]'); await L.type(name, '示范 · 小周'); await L.sleep(500); await L.click(L.btn('开始做'), 2500); return 'started';`), timeout: 40 },
@@ -81,10 +78,12 @@ export default [
   { hold: 2 },
 
   // ── 其他操作台：代码 / 设计 / 文档 ──
+  { eval: `() => { localStorage.removeItem('work:${T.code}'); return 'cleared'; }` },
   { go: `${BASE}/work/${T.code}`, wait: 4500 },
   { note: 'code' }, { hold: .5 },
   { eval: run(`await L.scrollBy(500, 20, 30); const name = document.querySelector('input[placeholder="姓名 / 昵称"]'); await L.type(name, '示范 · 小周', 30); await L.click(L.btn('开始做'), 2500); const items = [...document.querySelectorAll('aside > div')].filter(d => /m\\d ·/.test(d.innerText)); if (items[0]) { items[0].click(); await L.sleep(1500); } const ta = [...document.querySelectorAll('main textarea')][0]; L.setv(ta, ${JSON.stringify(process.env.CODE_SAMPLE || '')} || ta.value); await L.sleep(1000); await L.click(L.btn('跑自测'), 2500); return 'tests';`), timeout: 60 },
   { hold: 4 },
+  { eval: `() => { localStorage.removeItem('work:${T.design}'); return 'cleared'; }` },
   { go: `${BASE}/work/${T.design}`, wait: 4500 },
   { note: 'design' }, { hold: .5 },
   { eval: run(`await L.scrollBy(500, 20, 30); const name = document.querySelector('input[placeholder="姓名 / 昵称"]'); await L.type(name, '示范 · 小周', 30); await L.click(L.btn('开始做'), 2500);
@@ -96,10 +95,12 @@ export default [
     for (const [x, y] of [[120, 220], [120, 90], [640, 90], [640, 220]]) { click(x, y); await L.sleep(500); } click(640, 220, true); await L.sleep(600);
     if (label) L.setv(label, '吊点孔 Ø18'); for (const [x, y] of [[200, 150], [230, 120], [260, 150], [230, 180], [200, 150]]) { click(x, y); await L.sleep(350); } click(200, 150, true); return 'sketch';`), timeout: 90 },
   { hold: 3 },
+  { eval: `() => { localStorage.removeItem('work:${T.doc}'); return 'cleared'; }` },
   { go: `${BASE}/work/${T.doc}`, wait: 4500 },
   { note: 'doc' }, { hold: .5 },
-  { eval: run(`await L.scrollBy(500, 20, 30); const name = document.querySelector('input[placeholder="姓名 / 昵称"]'); await L.type(name, '示范 · 小周', 30); await L.click(L.btn('开始做'), 2500); const items = [...document.querySelectorAll('aside > div')].filter(d => /m\\d ·/.test(d.innerText)); if (items[0]) { items[0].click(); await L.sleep(1800); } const ta = [...document.querySelectorAll('main textarea')][0]; await L.type(ta, '## 一页纸方案\\n\\n给海外合作伙伴的口径：先统一产品名与适应症表述，所有数字只引用最新一版材料；两份材料里的销售额口径不一致（含税 / 不含税），以财务版为准，并在脚注注明。\\n', 28); return 'typed';`), timeout: 60 },
-  { hold: 2 },
+  // 开放模式：选「用自己的软件做」→ 三步卡片（录屏 / 下载材料 / 上传交付）
+  { eval: run(`await L.scrollBy(500, 20, 30); const card = [...document.querySelectorAll('div')].filter(L.vis).find(d => (d.innerText || '').startsWith('○ 用自己的软件做')); if (card) { await L.click(card, 900); } const name = document.querySelector('input[placeholder="姓名 / 昵称"]'); await L.type(name, '示范 · 小周', 30); await L.click(L.btn('开始做'), 2500); const dl = [...document.querySelectorAll('button')].filter(b => b.innerText.startsWith('⬇')); for (const b of dl.slice(0, 2)) { await L.click(b, 900); } const up = L.btn('上传交付文件'); if (up) { up.scrollIntoView({ block: 'center', behavior: 'smooth' }); } await L.sleep(1200); return 'open:' + dl.length;`), timeout: 60 },
+  { hold: 2.5 },
 
   // ── 管理：真活空间看做题情况与评分 ──
   { go: `${BASE}/work/${T.sheet}/owner?k=${OWNER}`, wait: 5000 },
