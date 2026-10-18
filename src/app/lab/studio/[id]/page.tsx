@@ -181,7 +181,7 @@ export default function StudioPage() {
     message.success('已删除');
   };
 
-  if (!user) return <div className="lab-glass" style={{ padding: 40, textAlign: 'center', color: 'var(--ink3)' }}>百业工厂要登录后使用。<button className="lab-btn sm" style={{ marginLeft: 10 }} onClick={() => router.push(`/login?next=${encodeURIComponent(`/lab/studio/${id}`)}`)}>去登录</button></div>;
+  if (!user) return <div className="lab-glass" style={{ padding: 40, textAlign: 'center', color: 'var(--ink3)' }}>百业工厂要登录后使用。<button className="lab-btn sm" style={{ marginLeft: 10 }} onClick={() => router.push(`/lab/login?next=${encodeURIComponent(`/lab/studio/${id}`)}`)}>去登录</button></div>;
   if (err) return <div className="lab-glass" style={{ padding: 40, textAlign: 'center', color: '#d6336c' }}>{err}</div>;
   if (!data) return <div className="lab-glass lab-scan" style={{ height: 240, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink3)' }}><span className="lab-mono">LOADING<span className="lab-dots" /></span></div>;
 

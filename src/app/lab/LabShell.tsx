@@ -265,7 +265,7 @@ function Shell({ children }: { children: React.ReactNode }) {
             options={GUEST_MODELS.map(id => { const m = MODEL_OPTIONS.find(x => x.id === id); return { value: id, label: <span>{id === 'qwen-plus' ? '通义千问 Plus' : m?.label || id}{id === 'qwen-plus' && <ModelBadge text="国内推荐" />}</span> }; })} />
         )}
         {!guest && !user && !userLoading && (
-          <button className="lab-btn ghost sm" onClick={() => router.push(`/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`)}>登录</button>
+          <button className="lab-btn ghost sm" onClick={() => router.push(`/lab/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`)}>登录</button>
         )}
         {!guest && user && <>
         <Select className="lab-head-model" size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 170 }} popupMatchSelectWidth={250}

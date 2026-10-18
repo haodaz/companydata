@@ -75,7 +75,7 @@ export async function proxy(req: NextRequest) {
   // AI 百业首页公开：谁都能看见理念和这些人，点进任何一个空间才要求登录（LAB_PUBLIC=1 时整个 /lab 都公开）
   // 百业工厂（列表 /lab/spaces、工作室 /lab/studio/*、素材库 /lab/assets、设计文档 /lab/logic、百业后台 /lab/admin）例外：放开时也要登录。
   // 没登录的人只有首页和「体验百业」（/lab/gallery、各空间页、我的进度、证书、3D beta）。
-  if (pathname.startsWith('/lab/cert/')) return NextResponse.next();
+  if (pathname.startsWith('/lab/cert/') || pathname === '/lab/login') return NextResponse.next();
   if (pathname === '/lab' || (LAB_PUBLIC() && pathname.startsWith('/lab/') && !LAB_FACTORY_PAGE(pathname))) return NextResponse.next();
 
   // 邀请链接 /lab/<id>?invite=…：票对得上这个空间，就不用登录
@@ -86,12 +86,13 @@ export async function proxy(req: NextRequest) {
   }
 
   // Protect /admin and /office (虚拟工厂) routes；真活台：出题 / 管理页要登录（/work/mine、/work/admin），做题页 /work/<token> 公开
-  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab') || pathname === '/work/mine' || pathname.startsWith('/work/admin')) {
+  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab') || pathname === '/work/mine' || pathname === '/work/new' || pathname.startsWith('/work/admin')) {
     const token = req.cookies.get('auth_token')?.value;
 
     if (!token) {
       // 从公开首页点进来的，登录完要回到他想去的地方，而不是落到虚拟工厂
-      const login = new URL('/login', req.url);
+      // 百业 / 真活用各自的蒙版式登录页（账号同一套），别让人看见企业数据工厂的登录页
+      const login = new URL(pathname.startsWith('/lab') ? '/lab/login' : pathname.startsWith('/work') ? '/work/login' : '/login', req.url);
       if (pathname.startsWith('/lab') || pathname.startsWith('/work')) login.searchParams.set('next', pathname + req.nextUrl.search);
       return NextResponse.redirect(login);
     }
@@ -121,5 +122,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/work/mine', '/work/admin', '/api/:path*', '/'],
+  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/work/mine', '/work/new', '/work/admin', '/api/:path*', '/'],
 };

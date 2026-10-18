@@ -149,7 +149,7 @@ export default function WorkLanding() {
           <div style={{ fontWeight: 800, letterSpacing: 1 }}>百业AI<span style={{ color: '#6055f5' }}>｜</span>真活</div>
           <span style={{ color: '#888', fontSize: 13 }}>平方智能</span>
           <div style={{ marginLeft: 'auto', display: 'flex', gap: 16, fontSize: 13, alignItems: 'center' }}>
-            <a href="#why" style={lnk}>为什么看过程</a><a href="#how" style={lnk}>怎么用</a><a href="#modes" style={lnk}>两种做法</a><a href="#report" style={lnk}>评分报告</a><a href="#infra" style={lnk}>数据底座</a>
+            <Link href="/work/login" style={lnk}>登录</Link>
             <Link href="/work/mine" style={{ ...lnk, color: '#fff', background: '#6055f5', padding: '7px 16px', borderRadius: 999 }}>出一道真活</Link>
           </div>
         </div>

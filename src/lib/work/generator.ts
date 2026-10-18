@@ -109,7 +109,7 @@ export function renderContext(ctx: WorkContext): string {
 }
 
 /** 操作台类型（比 NeoWork 多的一层：题按岗位选环境）：doc 文档 / 对账台 · code 代码台 · sheet 表格 / 数据台 · design 设计台（CAD 雏形） */
-export type WorkEnvType = 'doc' | 'code' | 'sheet' | 'design';
+export type WorkEnvType = 'doc' | 'code' | 'sheet' | 'design' | 'open';   // open：不用站内操作台，候选人用自己的软件做、录屏 + 上传交付
 export interface WorkEnv {
   type: WorkEnvType;
   /** code：语言（js 的自测用例能在浏览器里跑）；starter 起始代码；tests 用例 [{ name, code }]，code 是拿到 `solution` 后返回 true/false 的 JS 表达式或函数体 */
@@ -119,7 +119,7 @@ export interface WorkEnv {
   /** design：参数表 [{ name, unit, hint }] + 草图说明 */
   params?: { name: string; unit?: string; hint?: string }[]; sketch_hint?: string;
 }
-export const ENV_LABELS: Record<WorkEnvType, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台' };
+export const ENV_LABELS: Record<WorkEnvType, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台', open: '自己录制电脑操作' };
 
 export interface WorkTask {
   env: WorkEnv;
@@ -140,7 +140,7 @@ export async function generateTask(ctx: WorkContext, role: string, opts: { model
 ${renderContext(ctx)}
 ${opts.focus ? `\n## 出题人额外要求\n${opts.focus}\n` : ''}
 ## 操作台（环境）
-${opts.env ? `出题人指定环境：${opts.env}（${ENV_LABELS[opts.env]}）。` : '按岗位选最贴近真实工作媒介的环境：'}doc 文档 / 对账台（方案、对账、邮件、scorecard）· code 代码台（写函数 / 脚本；**starter 里的主函数必须命名为 solution**，tests 也调用 solution；language 用 js 时给 2–5 个自测用例：code 是一段 JS，拿到变量 solution（候选人的导出函数）后返回 true/false，如 "return solution([3,1,2]).join()==='1,2,3'"；其他语言不给 tests）· sheet 表格 / 数据台（csv 给起始表，含要对账 / 清洗的数据，5–30 行）· design 设计台（params 给 4–8 个要定的参数：name/unit/hint；sketch_hint 说明要画什么简图：零件轮廓、流程、布局）。
+${opts.env === 'open' ? '出题人指定：候选人用自己电脑上的软件做（Excel / CAD / IDE 都行），全程录屏、最后上传交付文件；所以 env 按 doc 出，交付物写成「文件 + 交付说明」，材料要能下载后独立使用。' : opts.env ? `出题人指定环境：${opts.env}（${ENV_LABELS[opts.env]}）。` : '按岗位选最贴近真实工作媒介的环境：'}doc 文档 / 对账台（方案、对账、邮件、scorecard）· code 代码台（写函数 / 脚本；**starter 里的主函数必须命名为 solution**，tests 也调用 solution；language 用 js 时给 2–5 个自测用例：code 是一段 JS，拿到变量 solution（候选人的导出函数）后返回 true/false，如 "return solution([3,1,2]).join()==='1,2,3'"；其他语言不给 tests）· sheet 表格 / 数据台（csv 给起始表，含要对账 / 清洗的数据，5–30 行）· design 设计台（params 给 4–8 个要定的参数：name/unit/hint；sketch_hint 说明要画什么简图：零件轮廓、流程、布局）。
 env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "tests": [ { "name": "", "code": "" } ], "csv": "", "params": [ { "name": "", "unit": "", "hint": "" } ], "sketch_hint": "" }（只填该环境用到的字段）。交付物要和环境匹配（code 的交付物是代码 + 说明，sheet 是表 + 口径说明，design 是参数表 + 草图 + 设计说明）。
 
 ## 要求
@@ -156,7 +156,7 @@ env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "
   "rubric": [ { "id": "r1", "title": "", "desc": "", "weight": 20, "depends_on": [], "basis": "", "levels": { "L1": "", "L2": "", "L3": "", "L4": "" } } ] }`;
   const { parsed: p, model: used } = await askJson(prompt, model, 'Generate · 出题', name);
   const e = p.env || {};
-  const envType: WorkEnvType = opts.env || (['doc', 'code', 'sheet', 'design'].includes(e.type) ? e.type : 'doc');
+  const envType: WorkEnvType = opts.env || (['doc', 'code', 'sheet', 'design'].includes(e.type) ? e.type : 'doc');   // open 原样保留，参与页据此只给开放模式
   const env: WorkEnv = { type: envType };
   if (envType === 'code') { env.language = s(e.language, 20) || 'js'; env.starter = s(e.starter, 4000); env.tests = (Array.isArray(e.tests) ? e.tests : []).slice(0, 6).map((t: any) => ({ name: s(t.name, 60), code: s(t.code, 600) })).filter((t: any) => t.code); }
   if (envType === 'sheet') env.csv = s(e.csv, 8000);

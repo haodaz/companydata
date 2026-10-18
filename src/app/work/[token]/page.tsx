@@ -15,11 +15,11 @@ import { DesignBench } from '@/components/work/benches/DesignBench';
 import { OpenBench } from '@/components/work/benches/OpenBench';
 
 type Material = { id: string; title: string; kind: string; content: string; source: string };
-type Env = { type: 'doc' | 'code' | 'sheet' | 'design'; language?: string; starter?: string; tests?: { name: string; code: string }[]; csv?: string; params?: { name: string; unit?: string; hint?: string }[]; sketch_hint?: string };
+type Env = { type: 'doc' | 'code' | 'sheet' | 'design' | 'open'; language?: string; starter?: string; tests?: { name: string; code: string }[]; csv?: string; params?: { name: string; unit?: string; hint?: string }[]; sketch_hint?: string };
 type Task = { id: string; company_name: string; role: string; statement: string; task: { title: string; brief: string; deliverables: { id: string; title: string; format: string }[]; time_minutes: number; rules: string[]; env?: Env }; materials: Material[] };
 type Ev = { t: number; type: string; [k: string]: any };
 
-const ENV_NAME: Record<string, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台' };
+const ENV_NAME: Record<string, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台', open: '用自己的软件做（录屏）' };
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 
 export default function WorkPage() {
@@ -40,11 +40,11 @@ export default function WorkPage() {
     (async () => {
       const j = await (await fetch(`/api/work/${token}`)).json();
       if (!j.ok) { setErr(j.error || '链接不可用'); setPhase('intro'); return; }
-      setTask(j.task);
+      setTask(j.task); if (j.task?.task?.env?.type === 'open') setMode('open');   // 出题人指定了「自己录制电脑操作」：只有开放模式
       const s = sp.get('s') || (typeof localStorage !== 'undefined' ? localStorage.getItem(`work:${token}`) : '') || '';
       if (s) {
         const r = await (await fetch(`/api/work/${token}/sessions/${s}`)).json();
-        if (r.ok) { setSid(s); setParticipant(r.session.participant); if (r.session.participant?.mode === 'open') setMode('open'); if (r.session.report) { setReport(r.session.report); setPhase('report'); return; } if (!r.session.submitted_at) { setPhase('work'); return; } }
+        if (r.ok) { setSid(s); setParticipant(r.session.participant); if (r.session.participant?.mode === 'open' || j.task?.task?.env?.type === 'open') setMode('open'); if (r.session.report) { setReport(r.session.report); setPhase('report'); return; } if (!r.session.submitted_at) { setPhase('work'); return; } }
       }
       setPhase('intro');
     })();
@@ -71,13 +71,15 @@ export default function WorkPage() {
         <Box title="任务书"><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{task.task.brief}</div></Box>
         <Box title="要交什么"><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol></Box>
         <Box title="规则"><ul style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.rules.map((r, i) => <li key={i}>{r}</li>)}</ul><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>操作台：{ENV_NAME[env.type]} · 建议用时 {task.task.time_minutes} 分钟（不强制停表，但用时会记）· 材料 {task.materials.length} 份 · 交卷后立刻出报告</div></Box>
-        <Box title="怎么做">
+        {env.type === 'open'
+          ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用自己的软件做。</b>下载材料，用你顺手的 Excel / CAD / IDE / AI 做；浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。出题人指定了这种做法，过程由录屏还原。</div></Box>
+          : <Box title="怎么做">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 10 }}>
             {([['bench', '在本页的操作台做', `${ENV_NAME[env.type]}：材料、编辑区、AI 都在页面里，每一步自动记录。省事，推荐。`], ['open', '用自己的软件做', '下载材料，用你顺手的 Excel / CAD / IDE / AI 做；浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。']] as const).map(([k, t, d]) => (
               <div key={k} onClick={() => setMode(k)} style={{ cursor: 'pointer', padding: '12px 14px', borderRadius: 12, border: `2px solid ${mode === k ? '#6055f5' : '#e8e9f0'}`, background: mode === k ? '#f3f2ff' : '#fff' }}><div style={{ fontWeight: 700 }}>{mode === k ? '● ' : '○ '}{t}</div><div style={{ fontSize: 13, color: '#666', lineHeight: 1.6, marginTop: 4 }}>{d}</div></div>
             ))}
           </div>
-        </Box>
+        </Box>}
         <Box title="留个名字就开始">
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <input value={name} onChange={e => setName(e.target.value)} placeholder="姓名 / 昵称" style={inp} />
