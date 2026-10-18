@@ -1,31 +1,36 @@
 'use client';
 
 /**
- * 真活台 · 后台（迁移 035）：出题（生成器是核心）→ AI 基线 → 复制参与链接甩出去 → 看每个人的报告。
- * 独立于 /lab；题从数据底座长出来（企业画像 / 岗位 / 职业典型任务 / 行业规范）。
+ * 真活台 · 管理页 /work/admin（迁移 035）：出题（生成器是核心）→ AI 基线 → 复制参与链接甩出去 → 看每个人的报告。
+ * 独立于 /lab 和数据实体后台（用户 10-18：管理端不要和数据实体管理掺合），只借后台的登录；数据后台里只留一个新窗口入口。
  */
 import React, { useCallback, useEffect, useState } from 'react';
-import { App, Button, Descriptions, Drawer, Input, Popconfirm, Select, Space, Table, Tabs, Tag, Typography } from 'antd';
+import { App, Button, ConfigProvider, Drawer, Input, Popconfirm, Select, Space, Table, Tag, Typography } from 'antd';
 import { CopyOutlined, DeleteOutlined, EyeOutlined, RocketOutlined, SendOutlined } from '@ant-design/icons';
 import { PageHeader, Panel } from '@/components/admin/PageHeader';
-import { WorkReport } from '@/components/work/WorkReport';
+import Link from 'next/link';
+import { WorkTaskDetail } from '@/components/work/WorkTaskDetail';
 
-const { Text, Paragraph } = Typography;
+const { Text } = Typography;
 const ENV: Record<string, { label: string; color: string }> = { doc: { label: '文档 / 对账台', color: 'purple' }, code: { label: '代码台', color: 'geekblue' }, sheet: { label: '表格 / 数据台', color: 'cyan' }, design: { label: '设计台', color: 'orange' } };
 const STATUS: Record<string, { label: string; color: string }> = { draft: { label: '生成中', color: 'default' }, ready: { label: '已出题', color: 'blue' }, published: { label: '已发布', color: 'green' }, archived: { label: '已下架', color: 'default' } };
 
-export default function AdminWorkPage() {
+export default function WorkAdminPage() {
+  return <ConfigProvider theme={{ token: { colorPrimary: '#6055f5', borderRadius: 10 } }}><App><Inner /></App></ConfigProvider>;
+}
+
+function Inner() {
   const { message } = App.useApp();
   const [list, setList] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [needLogin, setNeedLogin] = useState(false);
   const [form, setForm] = useState({ company: '', role: '', env: '', focus: '' });
   const [busy, setBusy] = useState('');
   const [detail, setDetail] = useState<{ task: any; sessions: any[] } | null>(null);
-  const [report, setReport] = useState<any>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
-    try { const j = await (await fetch('/api/admin/work/tasks', { cache: 'no-store' })).json(); if (!j.ok) throw new Error(j.error); setList(j.tasks); }
+    try { const r = await fetch('/api/admin/work/tasks', { cache: 'no-store' }); if (r.status === 401) { setNeedLogin(true); return; } const j = await r.json(); if (!j.ok) throw new Error(j.error); setList(j.tasks); }
     catch (e: any) { message.error(e.message); } finally { setLoading(false); }
   }, [message]);
   useEffect(() => { load(); }, [load]);
@@ -58,9 +63,12 @@ export default function AdminWorkPage() {
   const rerunBaseline = async (t: any) => { setBusy('AI 基线重跑中…'); try { const b = await (await fetch(`/api/admin/work/tasks/${t.id}/baseline`, { method: 'POST' })).json(); if (!b.ok) throw new Error(b.error); message.success(`AI 基线 ${b.baseline.total} 分`); await open(t.id); await load(); } catch (e: any) { message.error(e.message); } finally { setBusy(''); } };
 
   const T = detail?.task;
+  if (needLogin) return <div style={{ padding: 40, textAlign: 'center' }}>这页要登录平方智能后台账号。<Link href="/login">去登录</Link></div>;
   return (
-    <div>
-      <PageHeader title="真活台" icon={<RocketOutlined />} description="拿一家企业的真实业务问题出题：问题 → 任务 → 材料包 → 带依赖的 rubric → AI 基线。链接甩出去，对方做完就有报告（结果逐条 + 过程高光 / 风险 + 和 AI 的差距）。独立于 /lab。" />
+    <div style={{ minHeight: '100vh', background: '#f6f7fb', padding: '20px 24px 60px' }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}><span style={{ fontSize: 12, letterSpacing: 3, color: '#6055f5', fontWeight: 700 }}>百业AI｜真活</span><Link href="/work" target="_blank" style={{ fontSize: 13 }}>公开页 ↗</Link></div>
+      <PageHeader title="真活台 · 管理" icon={<RocketOutlined />} description="拿一家企业的真实业务问题出题：问题 → 任务 → 材料包 → 带依赖的 rubric → AI 基线。链接甩出去，对方做完就有报告（结果逐条 + 过程高光 / 风险 + 和 AI 的差距）。独立于 /lab 和数据后台。" />
       <Panel style={{ marginBottom: 16 }}>
         <Space wrap align="start">
           <Input value={form.company} onChange={e => setForm(f => ({ ...f, company: e.target.value }))} placeholder="企业（名字或编号，库里有的最好）" style={{ width: 260 }} />
@@ -75,7 +83,7 @@ export default function AdminWorkPage() {
         <Table size="small" rowKey="id" loading={loading} dataSource={list} pagination={{ pageSize: 20 }}
           columns={[
             { title: '题', dataIndex: ['task', 'title'], render: (v: string, t: any) => <a onClick={() => open(t.id)}><b>{v || '（未命名）'}</b></a> },
-            { title: '企业 · 岗位', render: (_: any, t: any) => <span>{t.company_name} <Text type="secondary">· {t.role}</Text></span> },
+            { title: '企业 · 岗位', render: (_: any, t: any) => <span>{t.company_name} <Text type="secondary">· {t.role}</Text>{t.owner?.name && <Tag style={{ marginLeft: 6 }}>自助 · {t.owner.name}</Tag>}</span> },
             { title: '操作台', dataIndex: ['task', 'env', 'type'], width: 120, render: (v: string) => <Tag color={ENV[v]?.color}>{ENV[v]?.label || v || 'doc'}</Tag> },
             { title: '状态', dataIndex: 'status', width: 90, render: (v: string) => <Tag color={STATUS[v]?.color}>{STATUS[v]?.label || v}</Tag> },
             { title: 'AI 基线', dataIndex: ['baseline', 'total'], width: 90, align: 'right' as const, render: (v: number) => (v == null ? <Text type="secondary">–</Text> : <b>{v}</b>) },
@@ -92,42 +100,9 @@ export default function AdminWorkPage() {
 
       <Drawer open={!!detail} onClose={() => setDetail(null)} width={Math.min(980, typeof window !== 'undefined' ? window.innerWidth - 40 : 980)} title={T ? <span>{T.task?.title} <Tag color={ENV[T.task?.env?.type]?.color}>{ENV[T.task?.env?.type]?.label}</Tag></span> : ''}
         extra={T && <Space><Button icon={<CopyOutlined />} onClick={() => copy(T)}>复制参与链接</Button><Button onClick={() => rerunBaseline(T)} loading={!!busy}>重跑 AI 基线</Button></Space>}>
-        {T && <Tabs items={[
-          { key: 'p', label: '问题与任务', children: <div>
-            <Descriptions column={1} size="small" bordered items={[
-              { key: 'c', label: '企业 · 岗位', children: `${T.company_name} · ${T.role}` },
-              { key: 'link', label: '参与链接', children: <code>{link(T)}</code> },
-              { key: 's', label: '业务问题', children: T.problem?.statement },
-              { key: 'w', label: '为什么是现在', children: T.problem?.why_now },
-              { key: 'e', label: '依据', children: <ul style={{ margin: 0, paddingLeft: 18 }}>{(T.problem?.evidence || []).map((x: any, i: number) => <li key={i}>{x.text} <Text type="secondary">— {x.source}</Text></li>)}</ul> },
-              { key: 'd', label: '交付物', children: <ol style={{ margin: 0, paddingLeft: 18 }}>{(T.task?.deliverables || []).map((d: any) => <li key={d.id}>{d.title} <Text type="secondary">{d.format}</Text></li>)}</ol> },
-              { key: 'r', label: '规则', children: <ul style={{ margin: 0, paddingLeft: 18 }}>{(T.task?.rules || []).map((r: string, i: number) => <li key={i}>{r}</li>)}</ul> },
-              { key: 'm', label: '出题模型', children: `${T.model} · 建议 ${T.task?.time_minutes} 分钟` },
-            ]} />
-            <Paragraph style={{ marginTop: 12, whiteSpace: 'pre-wrap', background: '#fafbff', padding: 12, borderRadius: 10 }}>{T.task?.brief}</Paragraph>
-            {T.task?.env?.type === 'code' && <Paragraph><b>自测用例</b>：{(T.task.env.tests || []).map((t: any) => t.name).join('、') || '无'}</Paragraph>}
-            {T.context?.notes?.length ? <Paragraph type="warning">材料缺口：{T.context.notes.join('；')}</Paragraph> : null}
-          </div> },
-          { key: 'm', label: `材料包（${(T.materials || []).length}）`, children: (T.materials || []).map((m: any) => <div key={m.id} style={{ marginBottom: 14 }}><b>{m.id} {m.title}</b> <Tag>{m.kind}</Tag><Tag color={m.source === 'db' ? 'green' : m.source === 'generated' ? 'orange' : 'gold'}>{m.source === 'db' ? '来自材料' : m.source === 'generated' ? '补写' : '混合'}</Tag>{m.basis && <Text type="secondary"> 依据：{m.basis}</Text>}<pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', background: '#fafbff', padding: 10, borderRadius: 8, fontSize: 13 }}>{m.content}</pre></div>) },
-          { key: 'r', label: `rubric（${(T.rubric || []).length}）`, children: <Table size="small" rowKey="id" pagination={false} dataSource={T.rubric || []} columns={[
-            { title: '#', dataIndex: 'id', width: 50 }, { title: '条目', dataIndex: 'title', render: (v: string, r: any) => <div><b>{v}</b><div style={{ fontSize: 12, color: '#666' }}>{r.desc}</div></div> },
-            { title: '权重', dataIndex: 'weight', width: 60 }, { title: '依赖', dataIndex: 'depends_on', width: 80, render: (v: string[]) => v?.join('、') || '–' },
-            { title: '依据', dataIndex: 'basis', width: 200, render: (v: string) => <span style={{ fontSize: 12 }}>{v}</span> },
-            { title: 'BARS', dataIndex: 'levels', width: 320, render: (l: any) => <div style={{ fontSize: 12 }}>{['L1', 'L2', 'L3', 'L4'].map(k => <div key={k}><b>{k}</b> {l?.[k]}</div>)}</div> },
-          ]} /> },
-          { key: 'b', label: `AI 基线${T.baseline ? ` · ${T.baseline.result?.total} 分` : ''}`, children: T.baseline ? <div><Paragraph><b>{T.baseline.model}</b> 先做了一遍，用同一套 rubric 评：<b>{T.baseline.result?.total}</b> 分。{T.baseline.result?.summary}</Paragraph><Table size="small" rowKey="id" pagination={false} dataSource={T.baseline.result?.items || []} columns={[{ title: '条目', dataIndex: 'title' }, { title: '等级', dataIndex: 'level', width: 60 }, { title: '分', dataIndex: 'score', width: 60 }, { title: '证据 / 说明', render: (_: any, i: any) => <span style={{ fontSize: 12 }}>{i.evidence && <i>“{i.evidence}” </i>}{i.note}</span> }]} /><details style={{ marginTop: 12 }}><summary>AI 的答卷</summary><pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13, background: '#fafbff', padding: 10, borderRadius: 8 }}>{T.baseline.answer}</pre></details></div> : <Text type="secondary">还没跑，点右上「重跑 AI 基线」</Text> },
-          { key: 's', label: `作答（${detail!.sessions.length}）`, children: <Table size="small" rowKey="id" pagination={false} dataSource={detail!.sessions} columns={[
-            { title: '谁', render: (_: any, s: any) => <span>{s.participant?.name} <Text type="secondary">{s.participant?.contact}</Text></span> },
-            { title: '开始', dataIndex: 'started_at', render: (v: string) => new Date(v).toLocaleString('zh-CN', { hour12: false }) },
-            { title: '交卷', dataIndex: 'submitted_at', render: (v: string) => (v ? new Date(v).toLocaleString('zh-CN', { hour12: false }) : <Text type="secondary">做着呢</Text>) },
-            { title: '结果', dataIndex: 'score', width: 70, render: (v: number) => (v == null ? '–' : <b>{v}</b>) },
-            { title: '', width: 120, render: (_: any, s: any) => <Space>{s.report && <Button size="small" onClick={() => setReport({ ...s })}>看报告</Button>}<Button size="small" onClick={() => { navigator.clipboard.writeText(`${link(T)}?s=${s.id}`); message.success('报告链接已复制'); }}>报告链接</Button></Space> },
-          ]} /> },
-        ]} />}
+        {T && <WorkTaskDetail task={T} sessions={detail!.sessions} shareLink={link(T)} notes={T.context?.notes} />}
       </Drawer>
-      <Drawer open={!!report} onClose={() => setReport(null)} width={Math.min(900, typeof window !== 'undefined' ? window.innerWidth - 60 : 900)} title={report ? `${report.participant?.name} 的报告` : ''}>
-        {report && <WorkReport report={report.report} participant={report.participant} />}
-      </Drawer>
+      </div>
     </div>
   );
 }

@@ -35,7 +35,7 @@ const NAV: NavItem[] = [
   { key: 'health-company', icon: <HeartOutlined />,    label: '企业画像健康',  path: '/admin/health-company', group: '数据资产' },
   { key: 'flywheel',     icon: <FireOutlined />,       label: '需求飞轮',      path: '/admin/flywheel',     group: '数据资产', badge: '新' },
   { key: 'lab',          icon: <ExperimentOutlined />, label: '数字技能空间',  path: '/lab',                group: '实验室', newWindow: true },
-  { key: 'work',         icon: <RocketOutlined />,     label: '真活台',        path: '/admin/work',         group: '实验室', badge: '新' },
+  { key: 'work',         icon: <RocketOutlined />,     label: '真活台（百业AI｜真活）', path: '/work/admin',     group: '实验室', newWindow: true, badge: '新' },
   { key: 'journal-url',  icon: <FileSearchOutlined />, label: 'URL 日志',      path: '/admin/journal-url',  group: '运行日志' },
   { key: 'journal-job',  icon: <FileTextOutlined />,   label: '岗位爬取日志',  path: '/admin/journal-job',  group: '运行日志' },
   { key: 'journal-company', icon: <ProfileOutlined />, label: '企业画像日志',  path: '/admin/journal-company', group: '运行日志' },
