@@ -127,6 +127,8 @@ for (const [i, sc] of scenes.entries()) {
     paused = true;                       // 导航中截图会挂起，先停抓
     await send('Page.navigate', { url: sc.go }, 15000);
     await sleep(sc.wait ?? 5000);
+    // Next 开发态的「N / 1 Issue」角标别进片子：藏掉，并盯着别再冒出来
+    await evaluate(`(() => { const hide = () => document.querySelectorAll('nextjs-portal').forEach(e => { e.style.display = 'none'; }); hide(); if (!window.__hidePortal) { window.__hidePortal = new MutationObserver(hide); window.__hidePortal.observe(document.body, { childList: true, subtree: false }); } return 1; })()`);
     paused = false;
   }
   if (sc.scroll !== undefined) {

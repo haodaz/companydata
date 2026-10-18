@@ -63,7 +63,12 @@ export default [
   { resume: true },
   { hold: 5 },
   { note: 'edit' }, { hold: .5 },
-  { eval: run(`const tas = [...document.querySelectorAll('main textarea')]; const csv = tas[0]; const lines = csv.value.split('\\n'); const fixed = lines.map(l => l.replace(/,(\\d+(?:\\.\\d+)?),MWh,/, (m, v) => ',' + (Number(v) / 1000) + ',GWh,').replace(/,(\\d+),pack,/, (m, v) => ',' + (Number(v) * 75 / 1e6).toFixed(2) + ',GWh（按75kWh/包折算·假设）,')); L.setv(csv, fixed.join('\\n')); await L.sleep(1200); const note = tas[1]; await L.type(note, '口径：统一换算为 GWh。MWh 除以 1000；pack 按 m5 给的商用车单包 75kWh 折算（4000 pack = 0.3 GWh），这是假设，乘用车包容量材料没给。新旧版本取 V3-0910 为准，V2 作废。德布勒森产出按工厂邮件的爬坡计划按月取合格产出，缺口建议国内基地调拨，但要扣减海运 6 周和关税。', 30); return 'edited';`), timeout: 90 },
+  { eval: run(`await L.click(L.btn('CSV 源'), 900); const csv = [...document.querySelectorAll('main textarea')][0]; const lines = csv.value.split('\\n');
+    const fixed = lines.map(l => l.replace(/,(\\d+(?:\\.\\d+)?),MWh,/, (m, v) => ',' + (Number(v) / 1000) + ',GWh,').replace(/,(\\d+),pack,/, (m, v) => ',' + (Number(v) * 75 / 1e6).toFixed(2) + ',GWh,'));
+    // 慢慢「改」：一行一行写回去，看得见表在变
+    for (let i = 1; i <= fixed.length; i++) { L.setv(csv, fixed.slice(0, i).concat(lines.slice(i)).join('\\n')); await L.sleep(140); }
+    await L.sleep(800); await L.click(L.btn('表格视图'), 1500);
+    const note = [...document.querySelectorAll('main textarea')].pop(); await L.type(note, '口径：统一换算为 GWh。MWh 除以 1000；pack 按 m5 给的商用车单包 75kWh 折算（4000 pack = 0.30 GWh），这是假设，乘用车包容量材料没给，待确认。新旧版本取 V3-0910 为准，V2-0815 作废、重复行删除。德布勒森合格产出按工厂邮件的爬坡计划逐月取「投入 × 良率」，良率按 m4 首周实测下调；缺口先用国内基地调拨补，但扣减海运 6 周和舱位约束，10 月铁路额度不足的部分顺延到 11 月；TECTRANS II 未签框架的需求单列为不确定需求，不进承诺口径。', 34); return 'edited';`), timeout: 120 },
   { hold: 1.5 },
   { note: 'submit' }, { hold: .5 },
   { eval: run(`await L.click(L.btn('交卷'), 800); await L.click(L.btn('再点一次确认交卷'), 1500); return 'submitted';`), timeout: 20 },
@@ -102,5 +107,5 @@ export default [
   { note: 'manage' }, { hold: 2 },
   { eval: run(`const tab = [...document.querySelectorAll('.ant-tabs-tab')].find(t => t.innerText.includes('做题情况')); if (tab) { tab.click(); await L.sleep(1500); } const b = L.btn('看报告'); if (b) { await L.click(b, 2500); const dr = document.querySelector('.ant-drawer-body'); if (dr) { for (let i = 0; i < 40; i++) { dr.scrollTop += 24; await L.sleep(60); } } } return 'report-drawer';`), timeout: 40 },
   { hold: 3 },
-  { note: 'end' }, { hold: 2 },
+  { note: 'end' }, { hold: 9 },
 ];
