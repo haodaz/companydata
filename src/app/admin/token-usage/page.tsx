@@ -519,9 +519,29 @@ function taskLabel(t: string): string {
   const m = /^(.+?) · (.+)$/.exec(t); if (m && TASK_LABELS[m[1]]) return `${TASK_LABELS[m[1]]} · ${m[2]}`;
   return t;
 }
+/** 功能 → 用户看得懂的「活」（2026-10-18 用户：要一眼看到获取岗位花了多少） */
+const TOOL_GROUPS: { label: string; tools: string[] }[] = [
+  { label: '获取岗位', tools: ['finder', 'fetcher', 'structurer-job', 'job-tagging'] },
+  { label: '企业画像', tools: ['company-profile', 'company-pipeline'] },
+  { label: '企业深度尽调', tools: ['company-deep-research'] },
+  { label: '职业画像', tools: ['occupation'] },
+  { label: '赛事雷达', tools: ['competition-radar'] },
+  { label: '行业标准与规程', tools: ['standard-radar'] },
+  { label: '虚拟工厂', tools: ['office-chief', 'office-chat'] },
+  { label: '需求飞轮', tools: ['flywheel'] },
+  { label: 'AI 百业', tools: ['skill-lab', 'lab-art', 'lab-3d'] },
+  { label: '未归属（兜底记账）', tools: ['unattributed'] },
+  { label: '系统外补记', tools: ['external'] },
+];
 function ToolDistribution({ toolStats, currency }: { toolStats: Record<string, { count: number; tokens: number; cost_usd: number; cost_cny: number }>; currency: Currency }) {
-  const rows = Object.entries(toolStats).map(([t, s]) => ({ model: TOOL_LABELS[t] || t, count: s.count, tokens: s.tokens, cost: s.cost_usd + (s.cost_cny || 0) / USD_TO_CNY }));
-  return <CostPie title="功能分布 · 钱花在哪类活上" keyTitle="功能" unit="项" rows={rows} currency={currency} />;
+  const groupOf = (t: string) => TOOL_GROUPS.find(g => g.tools.includes(t))?.label || TOOL_LABELS[t] || t;
+  const acc = new Map<string, PieRow & { parts: string[] }>();
+  for (const [t, s] of Object.entries(toolStats)) {
+    const g = groupOf(t); const r = acc.get(g) || { model: g, count: 0, tokens: 0, cost: 0, parts: [] };
+    r.count += s.count; r.tokens += s.tokens; r.cost += s.cost_usd + (s.cost_cny || 0) / USD_TO_CNY; r.parts.push(TOOL_LABELS[t] || t); acc.set(g, r);
+  }
+  const rows = [...acc.values()].map(r => ({ ...r, model: r.parts.length > 1 ? `${r.model}（${r.parts.join('、')}）` : r.model }));
+  return <CostPie title="功能分布 · 钱花在哪类活上" keyTitle="活" unit="类" rows={rows} currency={currency} />;
 }
 /** 饼图（按成本占比）+ 明细表；明细默认只显示前 5，展开看全部 */
 function CostPie({ title, keyTitle, unit, rows: input, currency }: { title: string; keyTitle: string; unit: string; rows: PieRow[]; currency: Currency }) {
