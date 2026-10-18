@@ -38,7 +38,7 @@ function Inner() {
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 28px', background: '#fff', borderBottom: '1px solid #e8e9f0' }}>
         <Link href="/work" style={{ fontWeight: 800, color: '#1a1a2e', textDecoration: 'none' }}>百业AI<span style={{ color: '#6055f5' }}>｜</span>真活</Link>
         <Link href="/work/mine" style={{ color: '#6055f5', fontSize: 13 }}>← 我的真活</Link>
-        <span style={{ color: '#999', fontSize: 12, marginLeft: 'auto' }}>这个链接只给你 · 真活空间</span>
+        <span style={{ color: '#999', fontSize: 12, marginLeft: 'auto' }}>真活空间 · 这条链接带管理密钥，可转给同事</span>
       </div>
       {/* 封面头部：操作台界面做底 */}
       <div style={{ position: 'relative', overflow: 'hidden', background: 'linear-gradient(135deg, #2b2463, #0f6c7a)', color: '#fff' }}>

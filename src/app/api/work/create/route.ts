@@ -14,6 +14,8 @@ const DAILY_LIMIT = Number(process.env.WORK_PUBLIC_DAILY_LIMIT || 3);
  * → 出题 + AI 基线 → 返回参与链接 token 和管理链接 owner_key。每个 IP 每天最多 DAILY_LIMIT 道（一道约 $0.5）。
  */
 export async function POST(req: NextRequest) {
+  // 2026-10-18 用户：出题做在登录后，只有做题免登录。公开出题接口停用，保留代码备用
+  if (process.env.WORK_PUBLIC_CREATE !== '1') return NextResponse.json({ ok: false, error: '出题需要登录：请到 /work/mine' }, { status: 403 });
   try {
     const body = await req.json();
     const company = String(body.company || '').trim(), role = String(body.role || '').trim();

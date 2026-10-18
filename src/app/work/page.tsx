@@ -62,7 +62,7 @@ export default function WorkLanding() {
             <Link href="/work/mine" style={{ ...btn, textDecoration: 'none', height: 52, display: 'inline-flex', alignItems: 'center', padding: '0 28px' }}>出一道真活 →</Link>
             <Link href="/work/T712yYY1swI" style={{ ...btnGhost, textDecoration: 'none', height: 52, display: 'inline-flex', alignItems: 'center' }}>先试一道示范题</Link>
           </div>
-          <div style={{ marginTop: 16, fontSize: 13, color: '#8a8fa8' }}>不用注册 · 出题约 2–3 分钟 · 每人每天 3 道</div>
+          <div style={{ marginTop: 16, fontSize: 13, color: '#8a8fa8' }}>登录后出题 · 做题的人不用登录 · 出题约 2–3 分钟</div>
         </div>
         <div style={{ position: 'relative' }}>
           <div style={{ position: 'absolute', inset: '-10% -6% -14% -6%', background: 'radial-gradient(ellipse at 60% 40%, rgba(96,85,245,.14), rgba(18,181,203,.08) 50%, transparent 75%)', filter: 'blur(10px)' }} />
@@ -151,7 +151,7 @@ export default function WorkLanding() {
         <div style={{ borderRadius: 18, padding: '32px 30px', background: 'linear-gradient(135deg,#6055f5,#12b5cb)', color: '#fff', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, alignItems: 'center' }}>
           <div>
             <h2 style={{ ...h2, color: '#fff', marginBottom: 8 }}>出一道真活</h2>
-            <div style={{ color: 'rgba(255,255,255,.9)', lineHeight: 1.8 }}>填企业和岗位，两三分钟出题。每道真活有自己的空间：管理、分享、看做题情况、看评分报告，不用注册。</div>
+            <div style={{ color: 'rgba(255,255,255,.9)', lineHeight: 1.8 }}>填企业和岗位，两三分钟出题。每道真活有自己的空间：管理、分享、看做题情况、看评分报告。出题要登录，做题的人不用。</div>
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             <Link href="/work/mine" style={{ ...btn, background: '#fff', color: '#6055f5', textDecoration: 'none', height: 52, display: 'inline-flex', alignItems: 'center', padding: '0 28px' }}>进入我的真活 →</Link>

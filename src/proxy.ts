@@ -85,14 +85,14 @@ export async function proxy(req: NextRequest) {
     if (inv && inv.spaceId === pm[1]) return NextResponse.next();
   }
 
-  // Protect /admin and /office (虚拟工厂) routes
-  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab')) {
+  // Protect /admin and /office (虚拟工厂) routes；真活台：出题 / 管理页要登录（/work/mine、/work/admin），做题页 /work/<token> 公开
+  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab') || pathname === '/work/mine' || pathname.startsWith('/work/admin')) {
     const token = req.cookies.get('auth_token')?.value;
 
     if (!token) {
       // 从公开首页点进来的，登录完要回到他想去的地方，而不是落到虚拟工厂
       const login = new URL('/login', req.url);
-      if (pathname.startsWith('/lab')) login.searchParams.set('next', pathname + req.nextUrl.search);
+      if (pathname.startsWith('/lab') || pathname.startsWith('/work')) login.searchParams.set('next', pathname + req.nextUrl.search);
       return NextResponse.redirect(login);
     }
 
@@ -121,5 +121,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/api/:path*', '/'],
+  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/work/mine', '/work/admin', '/api/:path*', '/'],
 };

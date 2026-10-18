@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
-import { getSessionUser, requireAdminUser } from '@/lib/session';
+import { getSessionUser } from '@/lib/session';
 import { runBaseline, WORK_MODEL } from '@/lib/work/generator';
 import { withCost } from '@/lib/token-logger';
 
@@ -9,8 +9,8 @@ export const maxDuration = 300;
 
 /** AI 基线：最强模型先把这道题做一遍，再用同一套 rubric 评它；候选人的报告拿它来比 */
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const denied = await requireAdminUser(req); if (denied) return denied;
   const user = await getSessionUser(req);
+  if (!user) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
   const { id } = await params;
   const { data: t } = await db.from('work_tasks').select('*').eq('id', id).maybeSingle();
   if (!t) return NextResponse.json({ ok: false, error: '没有这道题' }, { status: 404 });
