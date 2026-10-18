@@ -51,7 +51,7 @@ export default function WorkLanding() {
           <div style={{ fontSize: 12, letterSpacing: 4, color: '#6055f5', fontWeight: 700 }}>百业AI｜真活 · REAL WORK, REAL TALENT</div>
           <h1 style={{ fontSize: 'clamp(42px, 5.4vw, 68px)', lineHeight: 1.15, margin: '14px 0 16px', fontWeight: 800, letterSpacing: '.02em' }}>寻找真人才，<br /><span style={{ background: 'linear-gradient(90deg,#6055f5,#12b5cb)', WebkitBackgroundClip: 'text', color: 'transparent' }}>看他干真活</span></h1>
           <p style={{ fontSize: 'clamp(15px, 1.5vw, 17px)', color: '#4a4f66', lineHeight: 1.85, maxWidth: 520, margin: '0 0 20px' }}>给一家企业、一个岗位，生成此刻真实的业务题；候选人在操作台上做，我们记录过程、逐条评价，并和 AI 基线对照。</p>
-          <div style={{ display: 'grid', gap: 8, marginBottom: 26 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '8px 18px', marginBottom: 26, maxWidth: 440 }}>
             {['生成真实问题', '智能评价考核', '记录过程评估', 'AI 基线对照'].map(c => (
               <div key={c} style={{ display: 'flex', gap: 9, alignItems: 'center', fontSize: 15, color: '#3b405a', fontWeight: 600 }}><span style={{ flexShrink: 0, width: 18, height: 18, borderRadius: '50%', background: 'linear-gradient(120deg,#6055f5,#12b5cb)', color: '#fff', fontSize: 11, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✓</span>{c}</div>
             ))}
