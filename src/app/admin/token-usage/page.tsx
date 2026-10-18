@@ -218,9 +218,9 @@ export default function TokenUsagePage() {
 
       {/* 统计卡片 */}
       {stats && (
-        <Row gutter={[12, 12]} style={{ marginBottom: 24 }}>
+        <Row gutter={[12, 12]} align="stretch" style={{ marginBottom: 24 }}>
           <Col xs={12} md={4}>
-            <Card size="small" style={{ borderRadius: 12, borderTop: '3px solid #6055f5' }}>
+            <Card size="small" style={{ height: '100%', borderRadius: 12, borderTop: '3px solid #6055f5' }}>
               <Statistic
                 title={<span style={{ fontSize: 13, color: '#8c8c8c' }}>检索任务数</span>}
                 value={stats.total_tasks}
@@ -230,7 +230,7 @@ export default function TokenUsagePage() {
             </Card>
           </Col>
           <Col xs={12} md={4}>
-            <Card size="small" style={{ borderRadius: 12, borderTop: '3px solid #eb2f96' }}>
+            <Card size="small" style={{ height: '100%', borderRadius: 12, borderTop: '3px solid #eb2f96' }}>
               <Statistic
                 title={<Tooltip title="Gemini 联网 / 阿里云搜索 / OpenAI web search 按次另收费，已算进 AI 模型成本"><span style={{ fontSize: 13, color: '#8c8c8c' }}>联网搜索</span></Tooltip>}
                 value={stats.total_search_calls ?? 0}
@@ -240,20 +240,18 @@ export default function TokenUsagePage() {
             </Card>
           </Col>
           <Col xs={12} md={4}>
-            <Card size="small" style={{ borderRadius: 12, borderTop: '3px solid #fa8c16' }}>
+            <Card size="small" style={{ height: '100%', borderRadius: 12, borderTop: '3px solid #fa8c16' }}>
               <Statistic
                 title={<span style={{ fontSize: 13, color: '#8c8c8c' }}>总 Token 消耗</span>}
                 value={formatTokens(stats.total_tokens)}
                 prefix={<ThunderboltOutlined style={{ color: '#fa8c16' }} />}
                 valueStyle={{ fontSize: 24, fontWeight: 700, color: '#1a1a2e' }}
-                suffix={<span style={{ fontSize: 12, color: '#8c8c8c', fontWeight: 400 }}>
-                  ({formatTokens(stats.total_input_tokens)} in / {formatTokens(stats.total_output_tokens)} out)
-                </span>}
               />
+              <div style={{ fontSize: 12, color: '#8c8c8c', marginTop: 2 }}>{formatTokens(stats.total_input_tokens)} in / {formatTokens(stats.total_output_tokens)} out</div>
             </Card>
           </Col>
           <Col xs={12} md={4}>
-            <Card size="small" style={{ borderRadius: 12, borderTop: '3px solid #52c41a' }}>
+            <Card size="small" style={{ height: '100%', borderRadius: 12, borderTop: '3px solid #52c41a' }}>
               <Statistic
                 title={<span style={{ fontSize: 13, color: '#8c8c8c' }}>AI 模型成本</span>}
                 value={formatCost(stats.total_cost_usd, currency)}
@@ -263,7 +261,7 @@ export default function TokenUsagePage() {
             </Card>
           </Col>
           <Col xs={12} md={4}>
-            <Card size="small" style={{ borderRadius: 12, borderTop: '3px solid #ff4d4f' }}>
+            <Card size="small" style={{ height: '100%', borderRadius: 12, borderTop: '3px solid #ff4d4f' }}>
               <Statistic
                 title={<span style={{ fontSize: 13, color: '#8c8c8c' }}>数据供应链</span>}
                 value={formatApiCost(stats.total_api_cost_cny || 0, currency)}
@@ -273,7 +271,7 @@ export default function TokenUsagePage() {
             </Card>
           </Col>
           <Col xs={24} md={4}>
-            <Card size="small" style={{ borderRadius: 12, borderTop: '3px solid #1890ff' }}>
+            <Card size="small" style={{ height: '100%', borderRadius: 12, borderTop: '3px solid #1890ff' }}>
               <Statistic
                 title={<span style={{ fontSize: 13, color: '#8c8c8c' }}>综合总成本</span>}
                 value={formatTotalCost(stats.total_cost_usd, stats.total_api_cost_cny || 0, currency)}
@@ -558,15 +556,15 @@ function ModelDistribution({ modelStats, currency }: { modelStats: Record<string
     <Card size="small" style={{ marginBottom: 24, borderRadius: 12 }} title={<Text strong style={{ fontSize: 13 }}>模型分布</Text>}
       extra={<Text type="secondary" style={{ fontSize: 12 }}>饼图按成本占比</Text>}>
       <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'flex-start' }}>
-        <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
-          <svg width={140} height={140} viewBox="0 0 140 140">
+        <div style={{ flex: '0 0 auto', width: 380, maxWidth: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <svg width={190} height={190} viewBox="0 0 140 140">
             {slices.map(x => { const from = acc / totalCost; acc += x.value; return <path key={x.label} d={arc(from, acc / totalCost)} fill={x.color} stroke="#fff" strokeWidth={1}><title>{`${x.label}：${formatCost(x.value, currency)}（${(x.value / totalCost * 100).toFixed(1)}%）`}</title></path>; })}
             <circle cx={70} cy={70} r={32} fill="#fff" />
             <text x={70} y={66} textAnchor="middle" fontSize={11} fill="#8c8c8c">总成本</text>
             <text x={70} y={82} textAnchor="middle" fontSize={12} fontWeight={600}>{formatCost(totalCost, currency)}</text>
           </svg>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 6, textAlign: 'left' }}>
-            {slices.map(x => <span key={x.label} style={{ fontSize: 12 }}><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: 2, background: x.color, marginRight: 6 }} />{x.label} {(x.value / totalCost * 100).toFixed(1)}%</span>)}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 16, rowGap: 2, marginTop: 10, width: '100%' }}>
+            {slices.map(x => <span key={x.label} title={x.label} style={{ fontSize: 12, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: 2, background: x.color, marginRight: 6 }} />{x.label} {(x.value / totalCost * 100).toFixed(1)}%</span>)}
           </div>
         </div>
         <div style={{ flex: '1 1 420px', minWidth: 0 }}>
