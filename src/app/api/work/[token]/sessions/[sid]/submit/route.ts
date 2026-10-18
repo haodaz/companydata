@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { buildReport } from '@/lib/work/grader';
+import { describeFrames, framesFromRecording, readTextFiles } from '@/lib/work/recording';
 import { withCost } from '@/lib/token-logger';
 
 export const runtime = 'nodejs';
@@ -15,14 +16,30 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   if (!s) return NextResponse.json({ ok: false, error: '没有这次作答' }, { status: 404 });
   if (s.submitted_at && s.report) return NextResponse.json({ ok: true, report: s.report, score: s.score });
   const body = await req.json().catch(() => ({}));
-  const deliverable = String(body.deliverable ?? s.deliverable ?? '').slice(0, 60000);
-  if (deliverable.trim().length < 50) return NextResponse.json({ ok: false, error: '交付物太短了，至少写点东西' }, { status: 400 });
+  const open = s.participant?.mode === 'open';
+  let deliverable = String(body.deliverable ?? s.deliverable ?? '').slice(0, 60000);
   const tsec = Math.round((Date.now() - new Date(s.started_at).getTime()) / 1000);
-  const events = [...(s.events || []), ...((Array.isArray(body.events) ? body.events : []).slice(0, 500)), { t: tsec, type: 'submit', chars: deliverable.length }];
+  let events: any[] = [...(s.events || []), ...((Array.isArray(body.events) ? body.events : []).slice(0, 500))];
+  // 开放模式：交付 = 交付说明 + 能读的文件；过程 = 录屏抽帧看图
+  let recording: { url: string; duration: number; summary: string; frames: number } | null = null;
+  if (open) {
+    const files = events.filter(e => e.type === 'file' && e.url).map(e => ({ name: e.name, url: e.url, size: e.size || 0 }));
+    const rec = [...events].reverse().find(e => e.type === 'recording' && e.url);
+    if (!rec) return NextResponse.json({ ok: false, error: '还没有录屏：开放模式要先录屏再交卷' }, { status: 400 });
+    if (deliverable.trim().length < 30) return NextResponse.json({ ok: false, error: '交付说明太短了：把结论、关键数字、口径和假设写清楚' }, { status: 400 });
+    deliverable = `## 交付说明\n${deliverable}\n\n## 交付文件\n${files.length ? await readTextFiles(files) : '（没有上传文件）'}`;
+    try {
+      const frames = await withCost({ tool_name: 'work', task_name: 'Grade · 录屏看图', stage: 'use' }, async () => { const fr = await framesFromRecording(rec.url); const d = await describeFrames(fr, t.task?.brief || '', t.company_name); return { ...d, n: fr.length }; });
+      events = [...events, ...frames.events].sort((a, b) => a.t - b.t);
+      recording = { url: rec.url, duration: rec.duration || 0, summary: frames.summary, frames: frames.n };
+    } catch (e) { console.warn('[work] 录屏分析失败：', String((e as any)?.message).slice(0, 160)); recording = { url: rec.url, duration: rec.duration || 0, summary: '（录屏分析失败，过程只按上传 / 下载事件评）', frames: 0 }; }
+  } else if (deliverable.trim().length < 50) return NextResponse.json({ ok: false, error: '交付物太短了，至少写点东西' }, { status: 400 });
+  events = [...events, { t: tsec, type: 'submit', chars: deliverable.length }];
   await db.from('work_sessions').update({ deliverable, events, submitted_at: new Date().toISOString() }).eq('id', sid);
   try {
-    const report = await withCost({ tool_name: 'work', task_name: 'Grade · 报告', stage: 'use' }, () =>
+    const base = await withCost({ tool_name: 'work', task_name: 'Grade · 报告', stage: 'use' }, () =>
       buildReport({ env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric }, t.baseline, deliverable, events, s.ai_chat || [], t.company_name));
+    const report = { ...base, ...(recording ? { recording } : {}), mode: open ? 'open' : 'bench' };
     await db.from('work_sessions').update({ report, score: report.result.total }).eq('id', sid);
     return NextResponse.json({ ok: true, report, score: report.result.total });
   } catch (e: any) {

@@ -25,6 +25,12 @@ export function WorkReport({ report, participant }: { report: any; participant?:
           {!!p.phases?.length && <div style={{ fontSize: 12, color: '#777', marginTop: 4 }}>{p.phases.map((ph: any) => ph.label).join(' → ')}</div>}
         </Card>
       </div>
+      {report.recording && <Card title="录屏回放 · 用自己的软件做的">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14, alignItems: 'start' }}>
+          <video controls preload="metadata" src={report.recording.url} style={{ width: '100%', borderRadius: 10, background: '#000' }} />
+          <div style={{ fontSize: 13.5, lineHeight: 1.7 }}><div style={{ color: '#888', fontSize: 12, marginBottom: 4 }}>时长 {fmt(report.recording.duration || 0)} · 抽帧 {report.recording.frames} 张看图</div>{report.recording.summary}</div>
+        </div>
+      </Card>}
       <Card title="逐条（每条都有证据；前置没做到的，后置封顶）">
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead><tr style={{ color: '#8c8c8c', textAlign: 'left' }}><th style={th}>条目</th><th style={th}>等级</th><th style={th}>得分</th>{c && <th style={th}>AI 基线</th>}<th style={th}>证据 / 说明</th></tr></thead>

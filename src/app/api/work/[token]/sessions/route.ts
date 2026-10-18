@@ -11,7 +11,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   const body = await req.json().catch(() => ({}));
   const name = String(body.name || '').trim().slice(0, 40);
   if (!name) return NextResponse.json({ ok: false, error: '留个名字' }, { status: 400 });
-  const { data, error } = await db.from('work_sessions').insert({ task_id: t.id, participant: { name, contact: String(body.contact || '').slice(0, 80) }, events: [{ t: 0, type: 'start' }] }).select('id').single();
+  const mode = body.mode === 'open' ? 'open' : 'bench';   // bench 站内工作台 / open 用自己的软件（录屏 + 上传）
+  const { data, error } = await db.from('work_sessions').insert({ task_id: t.id, participant: { name, contact: String(body.contact || '').slice(0, 80), mode }, events: [{ t: 0, type: 'start', note: mode }] }).select('id').single();
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true, session_id: data.id });
 }

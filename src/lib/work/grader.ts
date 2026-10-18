@@ -88,6 +88,7 @@ export async function analyzeProcess(task: WorkTask, events: WorkEvent[], aiChat
 ## 任务（操作台：${task.env?.type || 'doc'}）
 ${task.task.title}：${task.task.brief.slice(0, 600)}
 事件类型含义：open_material 打开材料 · ai_ask 问 AI · adopt 把 AI 的话放进交付物 · paste 粘贴 · edit 自己改稿（Δ字数）· run_tests 跑自测（note 里是通过数）· set_param 改设计参数 · sketch 画草图 · idle 空闲超过 2 分钟 · submit 交卷
+开放模式（用自己的软件做）：download 下载材料 · rec_start / rec_stop 录屏起止 · screen 录屏抽帧看图得到的描述（note = 软件 · 动作 · 看到的内容，这是主要的过程证据）· file 上传交付文件
 材料里故意留的坑（看他有没有发现）：${task.materials.filter(m => m.source !== 'db').map(m => m.id + ' ' + m.title).join('、') || '无标注'}
 ## 统计
 ${Object.entries(stats).map(([k, v]) => `${k}=${v}`).join('，')}；总时长 ${fmt(duration)}
