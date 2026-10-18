@@ -8,6 +8,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import { WorkReport } from '@/components/work/WorkReport';
+import { AuditPanel } from '@/components/work/AuditPanel';
 import { DocBench } from '@/components/work/benches/DocBench';
 import { CodeBench } from '@/components/work/benches/CodeBench';
 import { SheetBench } from '@/components/work/benches/SheetBench';
@@ -44,7 +45,7 @@ export default function WorkPage() {
       const s = sp.get('s') || (typeof localStorage !== 'undefined' ? localStorage.getItem(`work:${token}`) : '') || '';
       if (s) {
         const r = await (await fetch(`/api/work/${token}/sessions/${s}`)).json();
-        if (r.ok) { setSid(s); setParticipant(r.session.participant); if (r.session.participant?.mode === 'open' || j.task?.task?.env?.type === 'open') setMode('open'); if (r.session.report) { setReport(r.session.report); setPhase('report'); return; } if (!r.session.submitted_at) { setPhase('work'); return; } }
+        if (r.ok) { setSid(s); setParticipant(r.session.participant); if (r.session.participant?.mode === 'open' || j.task?.task?.env?.type === 'open') setMode('open'); if (r.session.report?.auditing) { setPhase('grading'); return; } if (r.session.report) { setReport(r.session.report); setPhase('report'); return; } if (!r.session.submitted_at) { setPhase('work'); return; } }
       }
       setPhase('intro');
     })();
@@ -103,15 +104,27 @@ export default function WorkPage() {
     </Shell>
   );
 
+  // 交卷后：「AI 审计中」一段一段推进（笔记追加着出现），done 了换成正式报告
+  if (phase === 'grading' && sid) return (
+    <Shell>
+      <div style={{ maxWidth: 880, margin: '0 auto', padding: '28px 20px' }}>
+        <div style={{ fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台 · 交卷了</div>
+        <h1 style={{ fontSize: 24, margin: '6px 0 4px' }}>{task.task.title}</h1>
+        <div style={{ color: '#666', marginBottom: 18, fontSize: 13.5 }}>AI 正在回看你的操作过程，一段一段记；看完再逐条核对交付物、和 AI 基线比。别关页面（关了也没事，回来接着看）。</div>
+        <AuditPanel token={token} sid={sid} onDone={rep => { setReport(rep); setPhase('report'); }} />
+      </div>
+    </Shell>
+  );
+
   return <Workspace token={token} sid={sid} task={task} env={env} mode={mode} narrow={narrow} grading={phase === 'grading'} error={err} onSubmit={async (deliverable, events) => {
     setPhase('grading');
     const j = await (await fetch(`/api/work/${token}/sessions/${sid}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable, events }) })).json();
     if (!j.ok) { setErr(j.error || '交卷失败，再试一次'); setPhase('work'); return; }
+    if (j.staged) return;   // 进「AI 审计中」，由 AuditPanel 推进
     setReport(j.report); setPhase('report');
   }} />;
 }
 
-/* ── 工作台 ── */
 function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubmit }: { token: string; sid: string; task: Task; env: Env; mode: 'bench' | 'open'; narrow: boolean; grading: boolean; error?: string; onSubmit: (deliverable: string, events: Ev[]) => Promise<void> }) {
   const t0 = useRef(Date.now());
   const [now, setNow] = useState(0);

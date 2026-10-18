@@ -7,6 +7,7 @@
  */
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { WorkLogo } from '@/components/work/WorkLogo';
 
 const ART = 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art';
 const WORK_SCENES = [`${ART}/muprqaib23zv-research_office.jpg`, `${ART}/muprkhvgjivf-structure_office.jpg`, `${ART}/mufry2fd3tn2-production_control_room.jpg`, `${ART}/muprgu4wkuxw-architect_studio.jpg`];
@@ -39,8 +40,8 @@ export function OverlayLogin({ brand }: { brand: 'work' | 'lab' }) {
             <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(106,92,255,.14) 1px, transparent 1px), linear-gradient(90deg, rgba(106,92,255,.14) 1px, transparent 1px)', backgroundSize: '44px 44px', maskImage: 'radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 80%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 80%)' }} /></>}
       {/* 卡片 */}
       <form onSubmit={submit} style={{ position: 'relative', width: '100%', maxWidth: 400, background: 'rgba(255,255,255,.86)', backdropFilter: 'blur(18px) saturate(1.3)', WebkitBackdropFilter: 'blur(18px) saturate(1.3)', border: '1px solid rgba(255,255,255,.9)', borderRadius: 22, padding: '30px 30px 26px', boxShadow: '0 24px 70px rgba(20,24,60,.16), 0 0 0 1px rgba(106,92,255,.12)' }}>
-        <div style={{ fontSize: 11, letterSpacing: 3, color: '#6b6f86', fontWeight: 700 }}>{isWork ? '平方智能' : 'PINGFANG · AI HUNDRED TRADES'}</div>
-        <div style={{ fontSize: 26, fontWeight: 800, margin: '6px 0 2px', letterSpacing: 1 }}>{isWork ? <>百业AI<span style={{ color: '#6055f5' }}>｜</span>真活</> : <>AI <span style={{ color: '#6a5cff' }}>百业</span></>}</div>
+        {isWork ? <div style={{ marginBottom: 6 }}><WorkLogo size="lg" href={null} /></div> : <><div style={{ fontSize: 11, letterSpacing: 3, color: '#6b6f86', fontWeight: 700 }}>PINGFANG · AI HUNDRED TRADES</div>
+        <div style={{ fontSize: 26, fontWeight: 800, margin: '6px 0 2px', letterSpacing: 1 }}>AI <span style={{ color: '#6a5cff' }}>百业</span></div></>}
         <div style={{ fontSize: 13.5, color: '#4a4f66', marginBottom: 22 }}>{isWork ? '登录后出题；做题的人不用登录' : '登录进入你的空间和进度'}</div>
         <label style={lab}>邮箱</label>
         <input value={email} onChange={e => setEmail(e.target.value)} type="email" autoComplete="username" placeholder="name@company.com" style={inp} />

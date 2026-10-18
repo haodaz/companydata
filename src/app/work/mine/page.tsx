@@ -6,6 +6,8 @@
  */
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { WorkLogo } from '@/components/work/WorkLogo';
+
 import { App, Button, ConfigProvider, Tag, Typography } from 'antd';
 import { CopyOutlined, EyeOutlined, PlusOutlined, RocketOutlined } from '@ant-design/icons';
 import { ENV_META } from '@/components/work/WorkTaskDetail';
@@ -41,9 +43,10 @@ function Inner() {
   return (
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 28px', background: '#fff', borderBottom: '1px solid #e8e9f0' }}>
-        <Link href="/work" style={{ fontWeight: 800, color: '#1a1a2e', textDecoration: 'none' }}>百业AI<span style={{ color: '#6055f5' }}>｜</span>真活</Link>
+        <WorkLogo size="md" />
         <span style={{ color: '#888', fontSize: 13 }}>我的真活</span>
         {role === 'admin' && <Link href="/work/admin" style={{ fontSize: 13 }}>管理全部 ↗</Link>}
+        <Link href="/lab" style={{ fontSize: 13, color: '#666' }}>百业体验空间 ↗</Link>
         <div style={{ marginLeft: 'auto' }}><Link href="/work/new"><Button type="primary" icon={<PlusOutlined />}>出一道真活</Button></Link></div>
       </div>
       <div style={{ maxWidth: 1180, margin: '0 auto', padding: '24px 28px 60px' }}>

@@ -6,6 +6,8 @@
  */
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { WorkLogo } from '@/components/work/WorkLogo';
+
 import { useRouter } from 'next/navigation';
 import { App, Button, ConfigProvider, Input, Select, Typography } from 'antd';
 import { RocketOutlined } from '@ant-design/icons';
@@ -56,7 +58,7 @@ function Inner() {
   return (
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 28px', background: '#fff', borderBottom: '1px solid #e8e9f0' }}>
-        <Link href="/work" style={{ fontWeight: 800, color: '#1a1a2e', textDecoration: 'none' }}>百业AI<span style={{ color: '#6055f5' }}>｜</span>真活</Link>
+        <WorkLogo size="md" />
         <Link href="/work/mine" style={{ color: '#666', fontSize: 13 }}>我的真活</Link>
         <span style={{ color: '#888', fontSize: 13 }}>/ 出一道真活</span>
       </div>

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { buildReport } from '@/lib/work/grader';
+import { planSegments } from '@/lib/work/audit';
 import { describeFrames, framesFromRecording, readTextFiles } from '@/lib/work/recording';
 import { withCost } from '@/lib/token-logger';
 
@@ -14,7 +15,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   if (!t) return NextResponse.json({ ok: false, error: '链接不可用' }, { status: 404 });
   const { data: s } = await db.from('work_sessions').select('*').eq('id', sid).eq('task_id', t.id).maybeSingle();
   if (!s) return NextResponse.json({ ok: false, error: '没有这次作答' }, { status: 404 });
-  if (s.submitted_at && s.report) return NextResponse.json({ ok: true, report: s.report, score: s.score });
+  if (s.submitted_at && s.report) return s.report.auditing ? NextResponse.json({ ok: true, staged: true, total: s.report.total }) : NextResponse.json({ ok: true, report: s.report, score: s.score });
   const body = await req.json().catch(() => ({}));
   const open = s.participant?.mode === 'open';
   let deliverable = String(body.deliverable ?? s.deliverable ?? '').slice(0, 60000);
@@ -36,6 +37,13 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   } else if (deliverable.trim().length < 50) return NextResponse.json({ ok: false, error: '交付物太短了，至少写点东西' }, { status: 400 });
   events = [...events, { t: tsec, type: 'submit', chars: deliverable.length }];
   await db.from('work_sessions').update({ deliverable, events, submitted_at: new Date().toISOString() }).eq('id', sid);
+  // 默认「AI 审计中」渐进式：先存一份半成品 report（auditing），前端一段一段调 /audit 推进；{ sync: true } 才一次出完（脚本用）
+  if (!body.sync) {
+    const segments = planSegments(events);
+    const partial = { auditing: true, stage: 0, total: segments.length, segments, audit: [], mode: open ? 'open' : 'bench', ...(recording ? { recording } : {}), started_at: new Date().toISOString() };
+    await db.from('work_sessions').update({ report: partial, score: null }).eq('id', sid);
+    return NextResponse.json({ ok: true, staged: true, total: segments.length });
+  }
   try {
     const base = await withCost({ tool_name: 'work', task_name: 'Grade · 报告', stage: 'use' }, () =>
       buildReport({ env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric }, t.baseline, deliverable, events, s.ai_chat || [], t.company_name));

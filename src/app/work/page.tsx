@@ -6,6 +6,8 @@
  */
 import React from 'react';
 import Link from 'next/link';
+import { WorkLogo } from '@/components/work/WorkLogo';
+
 
 const ART = 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art';
 const SCENES = [
@@ -146,9 +148,9 @@ export default function WorkLanding() {
       {/* 顶栏 */}
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 3 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '16px 28px', maxWidth: 1180, margin: '0 auto' }}>
-          <div style={{ fontWeight: 800, letterSpacing: 1 }}>百业AI<span style={{ color: '#6055f5' }}>｜</span>真活</div>
-          <span style={{ color: '#888', fontSize: 13 }}>平方智能</span>
+          <WorkLogo size="lg" />
           <div style={{ marginLeft: 'auto', display: 'flex', gap: 16, fontSize: 13, alignItems: 'center' }}>
+            <Link href="/lab" style={lnk}>百业体验空间 ↗</Link>
             <Link href="/work/login" style={lnk}>登录</Link>
             <Link href="/work/mine" style={{ ...lnk, color: '#fff', background: '#6055f5', padding: '7px 16px', borderRadius: 999 }}>出一道真活</Link>
           </div>

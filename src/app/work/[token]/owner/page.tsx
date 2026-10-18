@@ -4,6 +4,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { WorkLogo } from '@/components/work/WorkLogo';
+
 import { App, Button, ConfigProvider, Input, Space, Tag } from 'antd';
 import { WorkTaskDetail, ENV_META } from '@/components/work/WorkTaskDetail';
 
@@ -31,12 +33,12 @@ function Inner() {
   if (err) return <div style={{ padding: 40, color: '#c0392b' }}>{err}</div>;
   if (!d) return <div style={{ padding: 40, color: '#888' }}>加载中…</div>;
   const T = d.task;
-  const done = d.sessions.filter(s => s.submitted_at); const avg = done.length ? Math.round(done.reduce((a, s) => a + (Number(s.score) || 0), 0) / done.length) : null;
+  const done = d.sessions.filter(s => s.submitted_at); const scored = done.filter(s => s.score != null); const avg = scored.length ? Math.round(scored.reduce((a, s) => a + (Number(s.score) || 0), 0) / scored.length) : null;
   const env = T.task?.env?.type || 'doc';
   return (
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 28px', background: '#fff', borderBottom: '1px solid #e8e9f0' }}>
-        <Link href="/work" style={{ fontWeight: 800, color: '#1a1a2e', textDecoration: 'none' }}>百业AI<span style={{ color: '#6055f5' }}>｜</span>真活</Link>
+        <WorkLogo size="md" />
         <Link href="/work/mine" style={{ color: '#6055f5', fontSize: 13 }}>← 我的真活</Link>
         <span style={{ color: '#999', fontSize: 12, marginLeft: 'auto' }}>真活空间 · 这条链接带管理密钥，可转给同事</span>
       </div>

@@ -73,7 +73,7 @@ export interface WorkEvent { t: number; type: string; [k: string]: any }
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 
 /** 过程：事件流 → 阶段 / 高光 / 风险 / 六维。事件来自站内工作台（打开材料、问 AI、采纳、粘贴、改稿、空闲、交卷） */
-export async function analyzeProcess(task: WorkTask, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], deliverable: string, opts: { institution?: string } = {}): Promise<ProcessReport> {
+export async function analyzeProcess(task: WorkTask, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], deliverable: string, opts: { institution?: string; audit?: { idx: number; from: number; to: number; label: string; so_far: string; observations: { t: number; skill: string; signal: string; note: string }[] }[] } = {}): Promise<ProcessReport> {
   const ev = [...events].sort((a, b) => a.t - b.t);
   const duration = Math.round(ev.length ? ev[ev.length - 1].t : 0);
   const stats: Record<string, number> = {};
@@ -98,7 +98,7 @@ ${lines.join('\n')}
 ${chat.join('\n') || '（没有问过 AI）'}
 ## 交付物开头
 ${deliverable.slice(0, 800)}
-
+${opts.audit?.length ? `## 分段审计笔记（边看边记的，总评要和它连续：可以修正，但别无视）\n${opts.audit.map(a => `第 ${a.idx + 1} 段 ${fmt(a.from)}–${fmt(a.to)} ${a.label}：${a.so_far}` + a.observations.map(o => `\n  - [${fmt(o.t)}] ${o.signal} ${o.skill}：${o.note}`).join('')).join('\n')}\n` : ''}
 六个维度：${SKILL_DIMS.join('、')}。BARS：L1 没有表现 / L2 零星 / L3 稳定 / L4 主动且有依据。
 只返回 JSON：{ "phases": [ { "from": 0, "to": 300, "label": "读材料" } ], "highlights": [ { "t": 120, "behavior": "", "evidence": "", "skill": "信息核验" } ], "risks": [ { "t": 0, "behavior": "", "evidence": "", "skill": "" } ], "skills": { "问题界定": { "level": "L2", "note": "" } }, "delegation": "两三句：哪些自己做的、哪些交给 AI 的、采纳时有没有核" }`;
   const p = await askJson(prompt, 'Grade · 过程', opts.institution);
@@ -109,8 +109,8 @@ ${deliverable.slice(0, 800)}
 }
 
 /** 整份报告：结果 + 过程 + 和 AI 基线逐条比 */
-export async function buildReport(task: WorkTask, baseline: { result?: ResultReport } | null, deliverable: string, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], institution?: string) {
-  const [result, process] = await Promise.all([gradeResult(task, deliverable, { institution, who: '候选人' }), analyzeProcess(task, events, aiChat, deliverable, { institution })]);
+export async function buildReport(task: WorkTask, baseline: { result?: ResultReport } | null, deliverable: string, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], institution?: string, audit?: any[]) {
+  const [result, process] = await Promise.all([gradeResult(task, deliverable, { institution, who: '候选人' }), analyzeProcess(task, events, aiChat, deliverable, { institution, audit })]);
   const b = baseline?.result;
   const compare = b ? { baseline_total: b.total, delta: result.total - b.total, items: result.items.map(i => ({ id: i.id, title: i.title, mine: i.score, baseline: b.items.find(x => x.id === i.id)?.score ?? null })) } : null;
   return { result, process, compare, generated_at: new Date().toISOString() };

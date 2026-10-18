@@ -222,6 +222,7 @@ function Shell({ children }: { children: React.ReactNode }) {
   // 单个空间页 /lab/<id> 算体验。不跟数据后台的侧边栏混在一起
   const NAV = [
     { k: '/lab', t: '首页', on: (p: string) => p === '/lab' },
+    { k: '/work', t: '百业真活', on: (p: string) => p.startsWith('/work') },
     { k: '/lab/spaces', t: '百业工厂', on: (p: string) => p.startsWith('/lab/spaces') || p.startsWith('/lab/studio') || p.startsWith('/lab/assets') || p.startsWith('/lab/logic') || p.startsWith('/lab/admin') },
     { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || /^\/lab\/(?!spaces|studio|gallery|assets|logic|beta|admin|me|cert)[^/]+$/.test(p) },
     // 我的证书：游客也有（按浏览器本地的访客编号攒，里面有示范证书），登录后并上账号的

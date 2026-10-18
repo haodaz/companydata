@@ -2,6 +2,7 @@
 
 /** 真活台 · 报告（参与者页和后台共用）：结果逐条 + 和 AI 基线比 + 过程高光 / 风险 + 六维 */
 import React from 'react';
+import { Segment } from '@/components/work/AuditPanel';
 
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 const LV: Record<string, string> = { L1: '#c9ccd6', L2: '#ffd166', L3: '#3ddc97', L4: '#12a150' };
@@ -9,6 +10,7 @@ const col = (v: number) => (v >= 80 ? '#12a150' : v >= 60 ? '#b7791f' : '#c0392b
 
 export function WorkReport({ report, participant }: { report: any; participant?: { name?: string } }) {
   if (!report) return null;
+  if (report.auditing) return <div style={{ padding: '14px 18px', background: '#f3f2ff', borderRadius: 14, color: '#4c43c9', fontSize: 14 }}>AI 审计中：过程 {report.total} 段，已看 {report.stage} 段{report.audit?.length ? `，到 ${fmt(report.audit[report.audit.length - 1].to)} 为止的过程信号 ${report.audit[report.audit.length - 1].tentative}（暂定）` : ''}。候选人那边做完最后一步就出正式报告。</div>;
   const r = report.result, p = report.process, c = report.compare;
   return (
     <div style={{ display: 'grid', gap: 16, fontSize: 14, lineHeight: 1.7, color: '#1a1a2e' }}>
@@ -52,6 +54,9 @@ export function WorkReport({ report, participant }: { report: any; participant?:
         <Card title="高光时刻" style={{ flex: '1 1 280px' }}>{p.highlights?.length ? p.highlights.map((h: any, i: number) => <Moment key={i} m={h} color="#12a150" />) : <span style={{ color: '#999' }}>没有观察到明显的高光</span>}</Card>
         <Card title="风险时刻" style={{ flex: '1 1 280px' }}>{p.risks?.length ? p.risks.map((h: any, i: number) => <Moment key={i} m={h} color="#c0392b" />) : <span style={{ color: '#999' }}>没有观察到明显的风险</span>}</Card>
       </div>
+      {!!report.audit?.length && <Card title="审计过程（交卷后一段一段看的笔记，总评和它连续）">
+        <div style={{ display: 'grid', gap: 10 }}>{report.audit.map((seg: any) => <Segment key={seg.idx} seg={seg} compact />)}</div>
+      </Card>}
       <Card title="人机协作六维（观察到的，不是定性）">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
           {Object.entries(p.skills || {}).map(([k, v]: any) => <div key={k} style={{ padding: '10px 12px', borderRadius: 10, background: '#fafbff', borderLeft: `4px solid ${LV[v.level]}` }}><div style={{ fontWeight: 700 }}>{k} <span style={{ fontSize: 12, color: '#777' }}>{v.level}</span></div><div style={{ fontSize: 13, color: '#555' }}>{v.note}</div></div>)}
