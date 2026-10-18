@@ -42,15 +42,17 @@ function DbUrlInner() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const qs = new URLSearchParams({ page: String(page), pageSize: String(pageSize), search, type, health, withStats: '1' });
+      const qs = new URLSearchParams({ page: String(page), pageSize: String(pageSize), search, type, health });
       const json = await (await fetch(`/api/admin/db-url?${qs}`)).json();
       if (!json.ok) throw new Error(json.error);
-      setData(json.data); setTotal(json.total); setStats(json.stats || {});
+      setData(json.data); setTotal(json.total);
     } catch (e: any) { message.error(`加载失败: ${e.message}`); }
     finally { setLoading(false); }
   }, [page, pageSize, search, type, health]);
 
   useEffect(() => { load(); }, [load]);
+  // 顶部统计是全库口径：打开页面时单独取一次（接口里让数据库直接数），翻页 / 筛选不再重新数
+  useEffect(() => { fetch('/api/admin/db-url?page=1&pageSize=1&withStats=1').then(r => r.json()).then(j => { if (j.ok) setStats(j.stats || {}); }).catch(() => {}); }, []);
 
   const openEdit = (row: any | null) => {
     setEditing(row || {});

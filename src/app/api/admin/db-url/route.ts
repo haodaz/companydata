@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
+import { cachedStats, countMany } from '@/lib/db-stats';
+import { URL_TYPES } from '@/lib/url-types';
 import { resolveOrCreateCompany } from '@/lib/company-match';
 import { orIlike, pageParams } from '@/lib/pg-filter';
 
@@ -35,10 +37,13 @@ export async function GET(request: Request) {
     if (error) throw error;
 
     // 各类型数量（不受 type 筛选影响，用于页面顶部统计）
-    const stats: Record<string, number> = {};
+    let stats: Record<string, number> = {};
     if (searchParams.get('withStats') === '1') {
-      const { data: all } = await selectAll(() => supabaseAdmin.from('url_sources').select('type').order('id'));
-      for (const r of all || []) stats[r.type || 'unknown'] = (stats[r.type || 'unknown'] || 0) + 1;
+      // 数据库直接数，缓存 60 秒（以前拉全表自己数）
+      stats = await cachedStats('url_sources', async () => {
+        const st = await countMany('url_sources', { unknown: q => q.is('type', null), ...Object.fromEntries(Object.keys(URL_TYPES).map(k => [k, (q: any) => q.eq('type', k)])) });
+        return Object.fromEntries(Object.entries(st).filter(([, n]) => n > 0));
+      });
     }
 
     return NextResponse.json({ ok: true, data: data || [], total: count || 0, page, pageSize, stats });

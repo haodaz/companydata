@@ -3,10 +3,11 @@ import { NextResponse } from 'next/server';
 import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 import { orIlike, pageParams } from '@/lib/pg-filter';
-import { COMPANY_EDITABLE_KEYS } from '@/lib/company-fields';
+import { COMPANY_EDITABLE_KEYS, SEGMENT_LABELS } from '@/lib/company-fields';
 import { trackDemand } from '@/lib/flywheel/signals';
 import { requireDownload } from '@/lib/download-permission';
-import { toSources } from '@/lib/source-tags';
+import { SOURCE_ORDER, toSources } from '@/lib/source-tags';
+import { cachedStats, countMany } from '@/lib/db-stats';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -74,12 +75,19 @@ export async function GET(request: Request) {
     let stats: Record<string, number> | undefined;
     let sources: Record<string, number> | undefined;   // 来源筛选的选项：每个来源多少家
     if (searchParams.get('withStats') === '1') {
-      stats = { total: 0, reviewed: 0 }; sources = {};
-      const { data: all } = await selectAll(() => supabaseAdmin.from('companies').select('segment, human_review_status, source').order('id'));
-      for (const r of all || []) {
-        stats.total++; const k = r.segment || 'none'; stats[k] = (stats[k] || 0) + 1; if (r.human_review_status === 'complete') stats.reviewed++;
-        const ss = toSources(r.source); for (const s of ss.length ? ss : ['none']) sources[s] = (sources[s] || 0) + 1;
-      }
+      // 数据库直接数，缓存 60 秒（以前拉全表自己数）
+      const r = await cachedStats('companies', async () => {
+        const st = await countMany('companies', {
+          total: q => q, reviewed: q => q.eq('human_review_status', 'complete'), none: q => q.is('segment', null),
+          ...Object.fromEntries(Object.keys(SEGMENT_LABELS).map(k => [k, (q: any) => q.eq('segment', k)])),
+        });
+        const src = await countMany('companies', {
+          ...Object.fromEntries(SOURCE_ORDER.map(k => [k, (q: any) => q.contains('source', [k])])),
+          none: q => q.or('source.is.null,source.eq.{}'),
+        });
+        return { stats: Object.fromEntries(Object.entries(st).filter(([k, n]) => n > 0 || k === 'total' || k === 'reviewed')), sources: Object.fromEntries(Object.entries(src).filter(([, n]) => n > 0)) };
+      });
+      stats = r.stats; sources = r.sources;
     }
 
     return NextResponse.json({

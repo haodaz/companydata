@@ -82,9 +82,9 @@ export default function DbJobPage() {
     if (!urlReady) return;
     setLoading(true);
     try {
-      const json = await (await fetch(`/api/db/jobs?${query({ page: String(page), pageSize: String(pageSize), withStats: '1' })}`)).json();
+      const json = await (await fetch(`/api/db/jobs?${query({ page: String(page), pageSize: String(pageSize) })}`)).json();
       if (!json.success) throw new Error(json.error);
-      setData(json.data); setTotal(json.total); setStats(json.stats || {}); setSources(json.sources || {});
+      setData(json.data); setTotal(json.total);
       // 按类型筛空了：看看放开类型有多少（vivo 的岗位全是社招，校招口径下一条都搜不到）
       setOtherScope(null);
       if (!json.total && filters.jobType) {
@@ -97,6 +97,8 @@ export default function DbJobPage() {
   const [otherScope, setOtherScope] = useState<number | null>(null);
 
   useEffect(() => { load(); }, [load]);
+  // 顶部统计是全库口径：打开页面时单独取一次（接口里让数据库直接数），翻页 / 筛选不再重新数
+  useEffect(() => { fetch('/api/db/jobs?page=1&pageSize=1&withStats=1').then(r => r.json()).then(j => { if (j.success) { setStats(j.stats || {}); setSources(j.sources || {}); } }).catch(() => {}); }, []);
 
   const setFilter = (patch: Partial<typeof filters>) => { setFilters(f => ({ ...f, ...patch })); setPage(1); setSelected([]); };
 

@@ -4,7 +4,8 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { orIlike, pageParams } from '@/lib/pg-filter';
 import { requireDownload } from '@/lib/download-permission';
 import { trackDemand } from '@/lib/flywheel/signals';
-import { toSources } from '@/lib/source-tags';
+import { SOURCE_ORDER } from '@/lib/source-tags';
+import { cachedStats, countMany } from '@/lib/db-stats';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -66,20 +67,23 @@ export async function GET(request: Request) {
     let stats: Record<string, number> | undefined;
     let sources: Record<string, number> | undefined;
     if (searchParams.get('withStats') === '1') {
-      stats = { total: 0, open: 0, graduate: 0, intern: 0, program: 0, remote: 0, overseas: 0, reviewed: 0, missing_jd: 0, with_publish_date: 0 };
-      sources = {};
-      const { data: all } = await selectAll(() => supabaseAdmin.from('jobs').select('job_type, status, remote_type, accepts_overseas_students, human_review_status, responsibilities, source, official_publish_date').not('if_delete', 'is', true).order('id'));
-      for (const r of all || []) {
-        stats.total++;
-        const ss = toSources(r.source); for (const s of ss.length ? ss : ['none']) sources[s] = (sources[s] || 0) + 1;
-        if (r.official_publish_date) stats.with_publish_date++;
-        if (r.status === 'open') stats.open++;
-        if (r.job_type && r.job_type in stats) stats[r.job_type]++;
-        if (r.remote_type === 'remote') stats.remote++;
-        if (r.accepts_overseas_students) stats.overseas++;
-        if (r.human_review_status === 'complete') stats.reviewed++;
-        if (!r.responsibilities) stats.missing_jd++;
-      }
+      // 让数据库直接数（只回数字），缓存 60 秒；以前是把全库岗位连职责全文拉回来自己数
+      const r = await cachedStats('jobs', async () => {
+        const live = (q: any) => q.not('if_delete', 'is', true);
+        const st = await countMany('jobs', {
+          total: q => q, open: q => q.eq('status', 'open'),
+          graduate: q => q.eq('job_type', 'graduate'), intern: q => q.eq('job_type', 'intern'), program: q => q.eq('job_type', 'program'),
+          remote: q => q.eq('remote_type', 'remote'), overseas: q => q.eq('accepts_overseas_students', true),
+          reviewed: q => q.eq('human_review_status', 'complete'), missing_jd: q => q.is('responsibilities', null),
+          with_publish_date: q => q.not('official_publish_date', 'is', null),
+        }, live);
+        const src = await countMany('jobs', {
+          ...Object.fromEntries(SOURCE_ORDER.map(k => [k, (q: any) => q.contains('source', [k])])),
+          none: q => q.or('source.is.null,source.eq.{}'),
+        }, live);
+        return { stats: st, sources: Object.fromEntries(Object.entries(src).filter(([, n]) => n > 0)) };
+      });
+      stats = r.stats; sources = r.sources;
     }
 
     return NextResponse.json({ success: true, data: data || [], total: count || 0, page, pageSize, stats, sources });
