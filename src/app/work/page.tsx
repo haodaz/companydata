@@ -92,30 +92,44 @@ function ModelChart() {
 /** 平方数据基础设施 → 生成器 → 真活 */
 function InfraChart() {
   const col = (x: number, title: string, items: string[], color: string) => <g>
-    <rect x={x} y={20} width={200} height={300} rx={14} fill="#fff" stroke="#e6e8f0" />
+    <rect x={x} y={20} width={200} height={190} rx={14} fill="#fff" stroke="#e6e8f0" />
     <path d={`M${x} ${34} a14 14 0 0 1 14 -14 h172 a14 14 0 0 1 14 14 v26 h-200 z`} fill={color} />
     <text x={x + 100} y={46} textAnchor="middle" fontSize={15} fontWeight={700} fill="#fff">{title}</text>
     {items.map((it, k) => <text key={it} x={x + 16} y={92 + k * 30} fontSize={12.5} fill="#3b405a">· {it}</text>)}
   </g>;
   return (
-    <svg viewBox="0 0 980 340" style={{ width: '100%', height: 'auto', display: 'block' }}>
+    <svg viewBox="0 0 980 240" style={{ width: '100%', height: 'auto', display: 'block' }}>
       <defs><marker id="ah2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#b9bdd0" /></marker></defs>
       {col(0, '行业', ['行业标准与操作规程', '设备操作手册 · 厂商资料', '赛事 · 需求飞轮信号', '条款可引用、可追溯'], '#12b5cb')}
       {col(220, '企业', ['企业画像 12 个维度', '产品 · 动态 · 高管 · 舆情', '在招岗位 · 校招项目', '深度尽调专题'], '#6055f5')}
       {col(440, '职业', ['职业画像 · 发展图谱', '典型任务 · 工位 · 工具', '分年限薪资 · 各地薪资', '和企业岗位的图谱链接'], '#fa8c16')}
-      <text x={320} y={335} textAnchor="middle" fontSize={11.5} fill="#8a8fa8">三层之间按名称 / 别名 / 图谱链接互相指回</text>
-      <path d="M650 170 C 690 170, 690 170, 720 170" fill="none" stroke="#b9bdd0" strokeWidth={2} markerEnd="url(#ah2)" />
-      <rect x={730} y={100} width={250} height={130} rx={14} fill="#1a1a2e" />
-      <text x={855} y={140} textAnchor="middle" fontSize={16} fontWeight={700} fill="#fff">生成器</text>
-      <text x={855} y={166} textAnchor="middle" fontSize={12} fill="#cfd3e6">问题 → 任务 → 材料包（留坑）</text>
-      <text x={855} y={186} textAnchor="middle" fontSize={12} fill="#cfd3e6">→ 带依据的标准 → AI 基线</text>
-      <text x={855} y={210} textAnchor="middle" fontSize={11.5} fill="#8f87ff">材料里没有的数字标「示例数据」</text>
-      <text x={855} y={275} textAnchor="middle" fontSize={13} fontWeight={700} fill="#1a1a2e">一道此刻真实的真活</text>
-      <text x={855} y={295} textAnchor="middle" fontSize={11.5} fill="#6b6f86">+ 取材清单：用了哪些数据，题里写得清楚</text>
+      <text x={320} y={232} textAnchor="middle" fontSize={11.5} fill="#8a8fa8">三层之间按名称 / 别名 / 图谱链接互相指回</text>
+      <path d="M650 115 C 690 115, 690 115, 720 115" fill="none" stroke="#b9bdd0" strokeWidth={2} markerEnd="url(#ah2)" />
+      <rect x={730} y={50} width={250} height={130} rx={14} fill="#1a1a2e" />
+      <text x={855} y={90} textAnchor="middle" fontSize={16} fontWeight={700} fill="#fff">生成器</text>
+      <text x={855} y={116} textAnchor="middle" fontSize={12} fill="#cfd3e6">问题 → 任务 → 材料包（留坑）</text>
+      <text x={855} y={136} textAnchor="middle" fontSize={12} fill="#cfd3e6">→ 带依据的标准 → AI 基线</text>
+      <text x={855} y={160} textAnchor="middle" fontSize={11.5} fill="#8f87ff">材料里没有的数字标「示例数据」</text>
+      <text x={855} y={210} textAnchor="middle" fontSize={13} fontWeight={700} fill="#1a1a2e">一道此刻真实的真活</text>
+      <text x={855} y={230} textAnchor="middle" fontSize={11.5} fill="#6b6f86">+ 取材清单：用了哪些数据，题里写得清楚</text>
     </svg>
   );
 }
 
+const MOMENTS_A = [
+  { t: '00:16', kind: 'risk', skill: '信息获取', text: '只打开了 m1 需求表，m2 工厂邮件、m3 调拨约束、m5 单包电量没看', ev: 'materials_opened = 1 / 5' },
+  { t: '00:20', kind: 'risk', skill: '任务委托', text: '把任务书整段贴进去要答案；四秒内出现 883 字整段输入', ev: 'paste 883 字 @ 00:20' },
+  { t: '01:12', kind: 'risk', skill: '判断采纳', text: 'AI 第一版答案原样放进交付物，pack 换算用的假设没有写明', ev: 'adopt_ai → 交付物无改动' },
+] as const;
+const MOMENTS_B = [
+  { t: '00:04', kind: 'high', skill: '信息获取', text: '先把需求表和调拨约束读完，再问问题', ev: 'materials_opened = 5 / 5' },
+  { t: '01:12', kind: 'high', skill: '判断采纳', text: '问 AI 单位换算，追问「材料里有没有单包电量」；换算结果没直接采纳，自己设假设并注明影响', ev: 'ai_ask ×3 · 自己敲 2,140 字' },
+  { t: '01:40', kind: 'high', skill: '可追溯', text: '一行一行改表，旧版本行标注作废原因，每个假设标「待确认」', ev: 'edit 事件 46 次 · 无整段粘贴' },
+] as const;
+function Moment({ m }: { m: { t: string; kind: string; skill: string; text: string; ev: string } }) {
+  const c = m.kind === 'high' ? '#12a150' : '#c0392b';
+  return <div style={{ padding: '6px 0', borderTop: '1px solid #f0ede6', lineHeight: 1.55 }}><span style={{ fontFamily: 'ui-monospace, Menlo, monospace', color: c, fontWeight: 800 }}>{m.t}</span><span style={{ marginLeft: 8, fontSize: 11.5, padding: '1px 7px', borderRadius: 999, background: m.kind === 'high' ? '#dcf5e7' : '#ffe3e0', color: c }}>{m.kind === 'high' ? '高光' : '风险'}</span><span style={{ marginLeft: 6, fontSize: 12, color: '#8a8fa8' }}>{m.skill}</span><div style={{ color: '#3b405a' }}>{m.text}</div><div style={{ fontSize: 12, color: '#8a8fa8' }}>证据：{m.ev}</div></div>;
+}
 function Strip({ segs, legend }: { segs: readonly (readonly [string, number])[]; legend: string }) {
   const total = segs.reduce((a, s) => a + s[1], 0);
   return <div><div style={{ display: 'flex', height: 10, borderRadius: 5, overflow: 'hidden', background: '#eee' }}>{segs.map((s, i) => <div key={i} style={{ width: `${(s[1] / total) * 100}%`, background: s[0] }} />)}</div><div style={{ fontSize: 11.5, color: '#8a8fa8', marginTop: 4 }}>{legend}</div></div>;
@@ -189,11 +203,13 @@ export default function WorkLanding() {
             <div style={{ padding: '12px 18px', borderLeft: '1px solid #ebe7de' }}><Strip segs={[['#c9ccd6', 6], ['#6055f5', 2], ['#ffb3ad', 1], ['#e5484d', 5], ['#c9ccd6', 10]]} legend="灰 空闲 · 紫 看材料 · 红 整段粘贴" /></div>
             <div style={{ padding: '12px 18px', borderLeft: '1px solid #ebe7de' }}><Strip segs={[['#6055f5', 5], ['#12b5cb', 2], ['#6055f5', 3], ['#3ddc97', 8], ['#12b5cb', 1], ['#3ddc97', 5]]} legend="紫 看材料 · 青 问 AI · 绿 自己改稿" /></div>
           </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1.6fr 1.6fr', borderTop: '1px solid #ebe7de', fontSize: 13 }}>
+            <div style={{ padding: '12px 18px', fontWeight: 600, fontSize: 14 }}>报告节选<div style={{ fontSize: 12, color: '#8a8fa8', fontWeight: 400, marginTop: 2 }}>高光 / 风险时刻</div></div>
+            <div style={{ padding: '10px 18px 12px', borderLeft: '1px solid #ebe7de' }}>{MOMENTS_A.map(m => <Moment key={m.t} m={m} />)}</div>
+            <div style={{ padding: '10px 18px 12px', borderLeft: '1px solid #ebe7de' }}>{MOMENTS_B.map(m => <Moment key={m.t} m={m} />)}</div>
+          </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16, marginTop: 16, alignItems: 'center' }}>
-          <div style={{ borderRadius: 14, overflow: 'hidden', border: '1px solid #ebe7de', boxShadow: '0 16px 40px rgba(20,24,60,.1)' }}><Img src="/work/rep-moments.png" alt="报告里的高光与风险时刻" /></div>
-          <div><div style={{ fontWeight: 800, fontSize: 18, fontFamily: serif, marginBottom: 6 }}>报告里长这样</div><div style={{ color: '#4a4f66', lineHeight: 1.8 }}>高光时刻和风险时刻都指向具体的分秒和证据：「01:12 问 AI 单位换算，追问有没有单包电量」「00:20 四秒内出现 883 字整段输入」。结果人人能用 AI 生成，只有过程说明是谁在做。</div></div>
-        </div>
+        <div style={{ textAlign: 'center', fontSize: 13, color: '#6b6f86', marginTop: 12 }}>上面每一行都来自评分报告里的「高光时刻」「风险时刻」：指向具体的分秒和证据，不下定性。结果人人能用 AI 生成，只有过程说明是谁在做。</div>
       </section>
 
       {/* 怎么用 */}
