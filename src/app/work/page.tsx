@@ -44,17 +44,15 @@ const REPORT_POINTS = [
   ['标准有出处', '每条标准指回行业条款、企业事实或岗位职责；没有依据的写明「待业务负责人确认」。'],
 ];
 
-function SceneCarousel() {
+function SceneBackdrop({ onIndex }: { onIndex?: (i: number) => void }) {
   const [i, setI] = React.useState(0);
-  React.useEffect(() => { const t = setInterval(() => setI(x => (x + 1) % SCENES.length), 3800); return () => clearInterval(t); }, []);
+  React.useEffect(() => { const t = setInterval(() => setI(x => (x + 1) % SCENES.length), 4200); return () => clearInterval(t); }, []);
+  React.useEffect(() => { onIndex?.(i); }, [i, onIndex]);
   return (
-    <div style={{ position: 'relative', borderRadius: 22, overflow: 'hidden', aspectRatio: '4 / 3', background: '#1b1e33', boxShadow: '0 40px 90px rgba(20,24,60,.22)' }}>
-      {SCENES.map((sc, k) => <img key={sc.src} src={sc.src} alt={sc.cap} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: k === i ? 1 : 0, transition: 'opacity 1.4s ease, transform 6s linear', transform: k === i ? 'scale(1.06)' : 'scale(1)' }} />)}
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,12,30,0) 55%, rgba(10,12,30,.72) 100%)' }} />
-      <div style={{ position: 'absolute', left: 18, right: 18, bottom: 16, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', color: '#fff' }}>
-        <div><div style={{ fontSize: 11, letterSpacing: 3, opacity: .75 }}>真活发生的地方</div><div style={{ fontSize: 18, fontWeight: 700, textShadow: '0 1px 8px rgba(0,0,0,.6)' }}>{SCENES[i].cap}</div></div>
-        <div style={{ display: 'flex', gap: 5 }}>{SCENES.map((_, k) => <span key={k} onClick={() => setI(k)} style={{ width: k === i ? 18 : 6, height: 6, borderRadius: 3, background: k === i ? '#fff' : 'rgba(255,255,255,.45)', transition: 'width .3s', cursor: 'pointer' }} />)}</div>
-      </div>
+    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', background: '#141729' }}>
+      {SCENES.map((sc, k) => <img key={sc.src} src={sc.src} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: k === i ? 1 : 0, transition: 'opacity 1.6s ease, transform 7s linear', transform: k === i ? 'scale(1.07)' : 'scale(1.0)' }} />)}
+      {/* 左暗右亮：字压在左边，场景在右边透出来 */}
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(12,14,30,.88) 0%, rgba(12,14,30,.72) 42%, rgba(12,14,30,.28) 75%, rgba(12,14,30,.15) 100%), linear-gradient(0deg, rgba(12,14,30,.75) 0%, rgba(12,14,30,0) 35%)' }} />
     </div>
   );
 }
@@ -62,6 +60,7 @@ function SceneCarousel() {
 const Img = ({ src, alt, style }: { src: string; alt: string; style?: React.CSSProperties }) => <img src={src} alt={alt} style={{ display: 'block', width: '100%', ...style }} onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />;
 
 export default function WorkLanding() {
+  const [sceneIdx, setSceneIdx] = React.useState(0);
   return (
     <div style={{ minHeight: '100vh', background: '#f8f6f1', color: '#1a1a2e', fontFamily: 'var(--font-geist-sans), -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif' }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&display=swap" />
@@ -75,24 +74,28 @@ export default function WorkLanding() {
         </div>
       </div>
 
-      {/* 首屏：左边直说，右边候选人做活的真实界面 */}
-      <section style={{ maxWidth: 1180, margin: '0 auto', padding: '56px 28px 40px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 48, alignItems: 'center' }}>
-        <div>
-          <div style={{ fontSize: 12, letterSpacing: 4, color: '#6055f5', fontWeight: 700 }}>百业AI｜真活 · REAL WORK, REAL TALENT</div>
-          <h1 style={{ fontSize: 'clamp(44px, 5.6vw, 72px)', lineHeight: 1.18, margin: '14px 0 18px', fontWeight: 700, letterSpacing: '.01em', fontFamily: serif }}>寻找真人才，<br /><span style={{ background: 'linear-gradient(90deg,#6055f5,#12b5cb)', WebkitBackgroundClip: 'text', color: 'transparent' }}>看他干真活</span></h1>
-          <p style={{ fontSize: 'clamp(15px, 1.5vw, 17px)', color: '#4a4f66', lineHeight: 1.85, maxWidth: 520, margin: '0 0 20px' }}>给一家企业、一个岗位，生成此刻真实的业务题；候选人在操作台上做，我们记录过程、逐条评价，并和 AI 基线对照。</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '8px 18px', marginBottom: 26, maxWidth: 440 }}>
+      {/* 首屏：整幅工位场景当环境（照 NeoWork 的整幅首屏），字压在左边 */}
+      <section style={{ position: 'relative', minHeight: 'calc(100svh - 64px)', display: 'flex', alignItems: 'center', color: '#fff' }}>
+        <SceneBackdrop onIndex={setSceneIdx} />
+        <div style={{ position: 'relative', width: '100%', maxWidth: 1180, margin: '0 auto', padding: '72px 28px' }}>
+          <div style={{ fontSize: 12, letterSpacing: 4, color: '#b3adff', fontWeight: 700 }}>百业AI｜真活 · REAL WORK, REAL TALENT</div>
+          <h1 style={{ fontSize: 'clamp(46px, 6vw, 84px)', lineHeight: 1.16, margin: '14px 0 18px', fontWeight: 700, letterSpacing: '.01em', fontFamily: serif, textShadow: '0 4px 30px rgba(0,0,0,.45)' }}>寻找真人才，<br /><span style={{ background: 'linear-gradient(90deg,#b3adff,#5fe3d2)', WebkitBackgroundClip: 'text', color: 'transparent' }}>看他干真活</span></h1>
+          <p style={{ fontSize: 'clamp(15px, 1.5vw, 18px)', color: 'rgba(255,255,255,.86)', lineHeight: 1.85, maxWidth: 560, margin: '0 0 22px', textShadow: '0 1px 10px rgba(0,0,0,.5)' }}>给一家企业、一个岗位，生成此刻真实的业务题；候选人在操作台上做，我们记录过程、逐条评价，并和 AI 基线对照。</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '8px 18px', marginBottom: 28, maxWidth: 440 }}>
             {['生成真实问题', '智能评价考核', '记录过程评估', 'AI 基线对照'].map(c => (
-              <div key={c} style={{ display: 'flex', gap: 9, alignItems: 'center', fontSize: 15, color: '#3b405a', fontWeight: 600 }}><span style={{ flexShrink: 0, width: 18, height: 18, borderRadius: '50%', background: 'linear-gradient(120deg,#6055f5,#12b5cb)', color: '#fff', fontSize: 11, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✓</span>{c}</div>
+              <div key={c} style={{ display: 'flex', gap: 9, alignItems: 'center', fontSize: 15, color: 'rgba(255,255,255,.9)', fontWeight: 600 }}><span style={{ flexShrink: 0, width: 18, height: 18, borderRadius: '50%', background: 'linear-gradient(120deg,#6055f5,#12b5cb)', color: '#fff', fontSize: 11, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✓</span>{c}</div>
             ))}
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link href="/work/mine" style={{ ...btn, textDecoration: 'none', height: 52, display: 'inline-flex', alignItems: 'center', padding: '0 28px' }}>出一道真活 →</Link>
-            <Link href="/work/T712yYY1swI" style={{ ...btnGhost, textDecoration: 'none', height: 52, display: 'inline-flex', alignItems: 'center' }}>先试一道示范题</Link>
+            <Link href="/work/mine" style={{ ...btn, textDecoration: 'none', height: 54, display: 'inline-flex', alignItems: 'center', padding: '0 30px' }}>出一道真活 →</Link>
+            <Link href="/work/T712yYY1swI" style={{ ...btnGhost, background: 'rgba(255,255,255,.12)', color: '#fff', borderColor: 'rgba(255,255,255,.45)', backdropFilter: 'blur(6px)', textDecoration: 'none', height: 54, display: 'inline-flex', alignItems: 'center' }}>先试一道示范题</Link>
           </div>
-          <div style={{ marginTop: 16, fontSize: 13, color: '#8a8fa8' }}>登录后出题 · 做题的人不用登录 · 出题约 2–3 分钟</div>
+          <div style={{ marginTop: 16, fontSize: 13, color: 'rgba(255,255,255,.6)' }}>登录后出题 · 做题的人不用登录 · 出题约 2–3 分钟</div>
         </div>
-        <SceneCarousel />
+        <div style={{ position: 'absolute', right: 28, bottom: 22, display: 'flex', alignItems: 'center', gap: 12, color: '#fff' }}>
+          <div style={{ textAlign: 'right' }}><div style={{ fontSize: 11, letterSpacing: 3, opacity: .7 }}>真活发生的地方</div><div style={{ fontSize: 15, fontWeight: 700, textShadow: '0 1px 8px rgba(0,0,0,.6)' }}>{SCENES[sceneIdx].cap}</div></div>
+          <div style={{ display: 'flex', gap: 5 }}>{SCENES.map((_, k) => <span key={k} style={{ width: k === sceneIdx ? 18 : 6, height: 6, borderRadius: 3, background: k === sceneIdx ? '#fff' : 'rgba(255,255,255,.45)', transition: 'width .3s' }} />)}</div>
+        </div>
       </section>
 
       {/* 同样的结果，不同的信号（照 NeoWork 的叙事，但用我们报告里真实出现过的证据） */}
