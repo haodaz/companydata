@@ -40,8 +40,8 @@ export default function HandoverPage() {
       <div className="lab-glass" style={{ padding: '18px 22px', marginTop: 16 }}>
         <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>差距清单 · 自 10-14 那包（bbaae9e）之后</div>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13.5 }}>
-          <thead><tr style={{ color: 'var(--ink3)', textAlign: 'left' }}><th style={th}>能力</th><th style={th}>多了什么</th><th style={th}>怎么拿</th><th style={th}>数据</th></tr></thead>
-          <tbody>{GAP.map(g => <tr key={g.area} style={{ borderTop: '1px solid var(--line)', verticalAlign: 'top' }}><td style={{ ...td, fontWeight: 700, whiteSpace: 'nowrap' }}>{g.area}</td><td style={td}>{g.what}</td><td style={{ ...td, whiteSpace: 'nowrap' }}>{g.how}</td><td style={{ ...td, color: 'var(--ink2)' }}>{g.data || '—'}</td></tr>)}</tbody>
+          <thead><tr style={{ color: 'var(--ink3)', textAlign: 'left' }}><th style={{ ...th, width: 180 }}>能力</th><th style={th}>多了什么</th><th style={{ ...th, width: 260 }}>怎么拿</th><th style={{ ...th, width: 150 }}>数据</th></tr></thead>
+          <tbody>{GAP.map(g => <tr key={g.area} style={{ borderTop: '1px solid var(--line)', verticalAlign: 'top' }}><td style={{ ...td, fontWeight: 700, whiteSpace: 'nowrap' }}>{g.area}</td><td style={td}>{g.what}</td><td style={td}>{g.how}</td><td style={{ ...td, color: 'var(--ink2)' }}>{g.data || '—'}</td></tr>)}</tbody>
         </table>
       </div>
 
