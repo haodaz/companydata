@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { JOB_FIELD_KEYS, jobCompleteness } from '@/lib/job-fields';
+import { resolveRegion } from '@/lib/region-codes';
+import { normalizeSkillTags } from '@/lib/job-defaults';
+import fos91 from '@/data/fos-91.json';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -16,7 +19,17 @@ export async function GET(_req: NextRequest, { params }: Ctx) {
       .eq('id', id)
       .single();
     if (error) throw error;
-    return NextResponse.json({ success: true, job: data });
+    // 相关专业 / 职业：库里是英文 key（「|」隔开），页面显示中文名（数据部门 10-19 #16）
+    const keys = (v: any) => String(v || '').split('|').map(x => x.trim()).filter(Boolean);
+    const fosName = new Map((fos91 as { key: string; name: string }[]).map(f => [f.key, f.name]));
+    const careerKeys = keys(data.related_career_ids);
+    const { data: occ } = careerKeys.length ? await supabaseAdmin.from('occupations').select('id, external_id, name').in('external_id', careerKeys) : { data: [] as any[] };
+    const occBy = new Map((occ || []).map((o: any) => [o.external_id, o]));
+    const tags = {
+      fos: keys(data.fos_ids).map(k => ({ key: k, name: fosName.get(k) || k })),
+      careers: careerKeys.map(k => ({ key: k, name: occBy.get(k)?.name || k, id: occBy.get(k)?.id || null })),
+    };
+    return NextResponse.json({ success: true, job: data, tags });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
@@ -44,6 +57,14 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
       locked.add(k);
     }
     for (const k of body.unlock || []) locked.delete(k);
+    // 人工改的地区写的是中文名：转回选项集编码；四个标签统一「；」（数据部门 10-19）
+    if (['country', 'province', 'city'].some(k => k in updates)) {
+      const r = resolveRegion({ country: updates.country ?? current.country, province: updates.province ?? current.province, city: updates.city ?? current.city, location: current.location });
+      if ('country' in updates) updates.country = r.country;
+      if ('province' in updates) updates.province = r.province;
+      if ('city' in updates) updates.city = r.city;
+    }
+    for (const k of ['skill_labels', 'skill_labels_jd', 'exp_labels', 'exp_labels_jd']) if (k in updates) updates[k] = normalizeSkillTags(Array.isArray(updates[k]) ? updates[k].join('；') : updates[k]);
     if (updates.name === null) return NextResponse.json({ success: false, error: '岗位名称不能为空' }, { status: 400 });
 
     if (body.human_review_status !== undefined) { updates.human_review_status = body.human_review_status; updates.human_review_at = now; }

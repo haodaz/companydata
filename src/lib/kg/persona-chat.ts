@@ -6,6 +6,7 @@
  *   chatReply        角色化回答：经历可以讲得有画面感，但数字、岗位、标准号只能用资料里的，句末标来源；资料没有就说拿不准
  * 只读 /lab 的表。
  */
+import { regionName } from '@/lib/region-codes';
 import { supabaseAdmin } from '@/lib/supabase';
 import { generateContent } from '@/lib/llm-client';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
@@ -131,14 +132,14 @@ export async function buildKnowledge(occ: any, spaceId?: string | null): Promise
   L.push(`\n【在招岗位】（实时）一共 ${openJobs.count || 0} 个在招 [${dJ}]`);
   if (jobs.length) {
     const byCo = new Map<string, { n: number; id: number | null }>(), byCity = new Map<string, number>();
-    for (const j of jobs) { const e = byCo.get(j.institute_or_company_name) || { n: 0, id: j.company_id || null }; e.n++; byCo.set(j.institute_or_company_name, e); const c = j.city || j.location; if (c) byCity.set(c, (byCity.get(c) || 0) + 1); }
+    for (const j of jobs) { const e = byCo.get(j.institute_or_company_name) || { n: 0, id: j.company_id || null }; e.n++; byCo.set(j.institute_or_company_name, e); const c = regionName('city', j.city) || j.location; if (c) byCity.set(c, (byCity.get(c) || 0) + 1); }
     // 招得多的公司各给一个 [C] 编号：聊天里点公司名能看企业资料
     L.push(`招得多的公司：${Array.from(byCo).sort((a, b) => b[1].n - a[1].n).slice(0, 6).map(([c, e]) => `${c}（${e.n}）${e.id ? `[${src('company', c, null, { kind: 'company', id: e.id })}]` : ''}`).join('、')}`);
     card(dJ, '在招岗位', [`实时在招 ${openJobs.count || 0} 个`, `招得多：${Array.from(byCo).sort((a, b) => b[1].n - a[1].n).slice(0, 3).map(([c]) => c).join('、')}`, byCity.size && `主要在 ${Array.from(byCity).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([c]) => c).join('、')}`]);
     L.push(`主要城市：${Array.from(byCity).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([c, n]) => `${c}（${n}）`).join('、')}`);
     for (const j of jobs.slice(0, 8)) {
-      const id = src('job', `${j.institute_or_company_name} · ${j.name}${j.city ? ` · ${j.city}` : ''}`, j.link || null, { kind: 'job', id: j.id });
-      L.push(`[${id}] ${j.institute_or_company_name}「${j.name}」${j.city || j.location || ''}${j.internship_salary_min ? ` ${j.internship_salary_min}${j.internship_salary_max && j.internship_salary_max !== j.internship_salary_min ? `-${j.internship_salary_max}` : ''}` : ''}${j.official_publish_date ? `，${j.official_publish_date} 发布` : ''}`);
+      const id = src('job', `${j.institute_or_company_name} · ${j.name}${j.city ? ` · ${regionName('city', j.city)}` : ''}`, j.link || null, { kind: 'job', id: j.id });
+      L.push(`[${id}] ${j.institute_or_company_name}「${j.name}」${regionName('city', j.city) || j.location || ''}${j.internship_salary_min ? ` ${j.internship_salary_min}${j.internship_salary_max && j.internship_salary_max !== j.internship_salary_min ? `-${j.internship_salary_max}` : ''}` : ''}${j.official_publish_date ? `，${j.official_publish_date} 发布` : ''}`);
     }
   }
 

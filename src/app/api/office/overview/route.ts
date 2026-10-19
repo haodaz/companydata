@@ -1,3 +1,4 @@
+import { regionName } from '@/lib/region-codes';
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 
@@ -29,7 +30,7 @@ export async function GET() {
     const recent = [
       occ && { agent: 'occupation', verb: '画好发展图谱', what: occ.name, meta: `${occ.career_map?.skills?.length || 0} 个技能 · ${occ.career_map?.ladder?.length || 0} 级阶梯`, at: occ.career_map_at },
       std && { agent: 'standard', verb: '核对入库', what: [std.code, std.title].filter(Boolean).join(' '), meta: std.status === 'current' ? '现行' : std.status === 'abolished' ? '已废止' : '标准规程', at: std.created_at },
-      job && { agent: 'structurer', verb: '提炼岗位', what: job.name, meta: [job.institute_or_company_name, job.city].filter(Boolean).join(' · '), at: job.created_at },
+      job && { agent: 'structurer', verb: '提炼岗位', what: job.name, meta: [job.institute_or_company_name, regionName('city', job.city)].filter(Boolean).join(' · '), at: job.created_at },
       co && { agent: 'profiler', verb: '建档企业', what: co.name, meta: co.industry || '企业画像', at: co.created_at },
       comp && { agent: 'radar', verb: '找到比赛', what: comp.name, meta: '赛事库', at: comp.created_at },
     ].filter(Boolean);

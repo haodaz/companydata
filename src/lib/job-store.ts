@@ -10,6 +10,7 @@
  */
 import { supabaseAdmin } from '@/lib/supabase';
 import { applyJobDefaults, companySearchNames } from '@/lib/job-defaults';
+import { resolveRegion } from '@/lib/region-codes';
 import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
 import { toSources } from '@/lib/source-tags';
 import { tagAndSave } from '@/lib/job-tagging';
@@ -92,7 +93,8 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
     for (const loc of cities.length ? cities : [job.location]) {
       const multi = cities.length > 1;
       // 拆城市时，工作地址是默认抄的工作地点的，跟着改成这一条的城市
-      const one = multi ? { ...job, location: loc, city: loc, address: job.address === job.location ? loc : job.address } : job;
+      // 城市存选项集编码（10-19），拆出来的这一条按自己的地点重新认
+      const one = multi ? { ...job, location: loc, ...(({ country, province, city }) => ({ country: country || job.country, province, city }))(resolveRegion({ country: job.country, location: loc })), address: job.address === job.location ? loc : job.address } : job;
       const key = jobDedupeKey(sharedReq ? { ...one, job_req_id: null } as any : one as any, log.company_id, log.company, log.target_url, multi ? loc : null);
       rows.set(key, {
         ...one,
@@ -204,7 +206,7 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
 
   // 关联专业 / 职业（数据部门 10-17）：这一页新进来、还没标过的岗位，用这次提炼选的模型打上
   if (list.length) {
-    const { data: untagged } = await supabaseAdmin.from('jobs').select('id').eq('source_log_id', logId).not('if_delete', 'is', true).or('fos_ids.is.null,fos_ids.eq.{}');
+    const { data: untagged } = await supabaseAdmin.from('jobs').select('id').eq('source_log_id', logId).not('if_delete', 'is', true).or('fos_ids.is.null,fos_ids.eq.');   // 10-19 起是「|」隔开的文本
     const ids = (untagged || []).map(r => r.id);
     if (ids.length && (process.env.CHEAP_MODEL || log.model_id || process.env.DEFAULT_MODEL)) await tagAndSave(ids, process.env.CHEAP_MODEL || log.model_id || process.env.DEFAULT_MODEL || '').catch(e => console.error('[job-store] 关联专业职业失败', e?.message || e));
   }

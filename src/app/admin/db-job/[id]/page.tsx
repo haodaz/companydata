@@ -7,6 +7,7 @@ import { ArrowLeftOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutl
 import dayjs from 'dayjs';
 import { EntityHero } from '@/components/admin/EntityHero';
 import { BRAND } from '@/lib/theme';
+import { regionName } from '@/lib/region-codes';
 import { JOB_FIELDS, JOB_GROUPS, JOB_STATUS, JOB_TYPE_LABELS, RECRUIT_SEASON_LABELS, REMOTE_TYPE_LABELS, JobFieldDef, formatJobValue, formatSalary } from '@/lib/job-fields';
 import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { SEGMENT_LABELS } from '@/lib/company-fields';
@@ -16,11 +17,15 @@ const { Text } = Typography;
 const LEFT_GROUPS: JobFieldDef['group'][] = ['content'];
 const RIGHT_GROUPS: JobFieldDef['group'][] = ['basic', 'requirement', 'location', 'salary', 'timeline', 'link'];
 
+/** 地区字段（编码）→ 编辑框里显示的中文名 */
+const editRegion = (f: JobFieldDef, v: any) => f.kind === 'string[]' ? (Array.isArray(v) ? v.map(x => regionName(f.region!, x)) : []) : (v ? regionName(f.region!, v) : v);
+
 export default function JobDetailPage() {
   const { message } = App.useApp();
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const [job, setJob] = useState<any>(null);
+  const [tags, setTags] = useState<{ fos: { key: string; name: string }[]; careers: { key: string; name: string; id: number | null }[] }>({ fos: [], careers: [] });
   const [loading, setLoading] = useState(true);
   const [editOpen, setEditOpen] = useState(false);
   const [note, setNote] = useState('');
@@ -30,7 +35,7 @@ export default function JobDetailPage() {
     try {
       const json = await (await fetch(`/api/db/jobs/${id}`)).json();
       if (!json.success) throw new Error(json.error);
-      setJob(json.job); setNote(json.job.human_review_note || '');
+      setJob(json.job); setNote(json.job.human_review_note || ''); setTags(json.tags || { fos: [], careers: [] });
     } catch (e: any) { message.error(`加载失败: ${e.message}`); }
     finally { setLoading(false); }
   }, [id]);
@@ -47,7 +52,8 @@ export default function JobDetailPage() {
 
   const openEdit = () => {
     const values: Record<string, any> = {};
-    for (const f of JOB_FIELDS) values[f.key] = f.kind === 'date' ? (job[f.key] ? dayjs(job[f.key]) : null) : job[f.key];
+    // 地区字段库里是编码，编辑时显示中文名，保存时接口再转回编码
+    for (const f of JOB_FIELDS) values[f.key] = f.kind === 'date' ? (job[f.key] ? dayjs(job[f.key]) : null) : f.region ? editRegion(f, job[f.key]) : job[f.key];
     form.setFieldsValue(values);
     setEditOpen(true);
   };
@@ -61,7 +67,7 @@ export default function JobDetailPage() {
         let v = values[f.key];
         if (f.kind === 'date') v = v ? dayjs(v).format('YYYY-MM-DD') : null;
         if (v === undefined || v === '') v = null;
-        const before = job[f.key] ?? null;
+        const before = (f.region ? editRegion(f, job[f.key]) : job[f.key]) ?? null;
         if (JSON.stringify(v ?? (f.kind === 'string[]' ? [] : null)) !== JSON.stringify(before ?? (f.kind === 'string[]' ? [] : null))) fields[f.key] = v;
       }
       if (Object.keys(fields).length === 0) { message.info('没有改动'); setEditOpen(false); return; }
@@ -84,7 +90,7 @@ export default function JobDetailPage() {
     const shown = formatJobValue(f.key, v);
     if (!shown) return <Text type="secondary">—</Text>;
     if (f.kind === 'url') return <a href={v} target="_blank" rel="noreferrer" style={{ wordBreak: 'break-all' }}>{v}</a>;
-    if (f.kind === 'string[]') return <Space size={4} wrap>{(v as string[]).map(s => <Tag key={s}>{s}</Tag>)}</Space>;
+    if (f.kind === 'string[]') return <Space size={4} wrap>{(v as string[]).map(s => <Tag key={s}>{f.region ? regionName(f.region, s) : s}</Tag>)}</Space>;
     return <span style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', lineHeight: 1.8 }}>{shown}</span>;
   };
 
@@ -154,7 +160,19 @@ export default function JobDetailPage() {
       />
 
       <Row gutter={16}>
-        <Col xs={24} xl={14}>{LEFT_GROUPS.map(renderGroup)}{renderGroup('requirement')}</Col>
+        <Col xs={24} xl={14}>{LEFT_GROUPS.map(renderGroup)}{renderGroup('requirement')}
+          {/* 相关专业 / 职业：库里存英文 key（「|」隔开），这里显示中文名（数据部门 10-19 #16） */}
+          <Card title="相关专业 / 职业" size="small" style={{ marginBottom: 16 }} extra={<Text type="secondary" style={{ fontSize: 12 }}>AI 按要求描述匹配，各最多 4 个</Text>}>
+            <div style={{ display: 'flex', gap: 12, padding: '4px 0' }}>
+              <div style={{ width: 130, flexShrink: 0, color: BRAND.ink3, fontSize: 12, paddingTop: 2 }}>相关专业</div>
+              <div>{tags.fos.length ? <Space size={4} wrap>{tags.fos.map(f => <Tooltip key={f.key} title={f.key}><Tag color="blue">{f.name}</Tag></Tooltip>)}</Space> : <Text type="secondary">—</Text>}</div>
+            </div>
+            <div style={{ display: 'flex', gap: 12, padding: '4px 0' }}>
+              <div style={{ width: 130, flexShrink: 0, color: BRAND.ink3, fontSize: 12, paddingTop: 2 }}>相关职业</div>
+              <div>{tags.careers.length ? <Space size={4} wrap>{tags.careers.map(c => <Tooltip key={c.key} title={c.key}><Tag color="purple" style={{ cursor: c.id ? 'pointer' : 'default' }} onClick={() => c.id && router.push(`/admin/db-occupation/${c.id}`)}>{c.name}</Tag></Tooltip>)}</Space> : <Text type="secondary">—</Text>}</div>
+            </div>
+          </Card>
+        </Col>
         <Col xs={24} xl={10}>
           <Card title="人工审核" size="small" style={{ marginBottom: 16 }}
             extra={job.human_review_status ? <Tag color={REVIEW_STATUS[job.human_review_status]?.color}>{REVIEW_STATUS[job.human_review_status]?.label}</Tag> : <Tag>未审核</Tag>}>

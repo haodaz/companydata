@@ -4,6 +4,7 @@
  * 输出「问题 → 任务 → 材料包 → 带依赖关系的 rubric（每条带依据）→ AI 基线答卷」。考核空间（工作台 / 报告）只消费这里的产物。
  * 只用材料、不编造：材料里没有的数字一律标「示例数据」；能指回来源的都指回去。
  */
+import { regionName } from '@/lib/region-codes';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { generateContent } from '@/lib/llm-client';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
@@ -100,7 +101,7 @@ export function renderContext(ctx: WorkContext): string {
   if (ctx.products.length) L.push(`## 产品（来源：企业产品子实体）\n${ctx.products.map(p => `- ${p.name}${p.is_flagship ? '（主打）' : ''}${p.category ? ` [${p.category}]` : ''}：${s(p.description, 200)}`).join('\n')}`);
   if (ctx.news.length) L.push(`## 近期动态（来源：企业动态子实体）\n${ctx.news.map(n => `- ${n.publish_date_str || ''} ${s(n.description, 240)}`).join('\n')}`);
   if (ctx.executives.length) L.push(`## 管理团队（来源：企业高管子实体）\n${ctx.executives.map(e => `- ${e.name}${e.title ? ' · ' + e.title : ''}`).join('\n')}`);
-  if (ctx.jobs.length) L.push(`## 在招岗位（来源：校招岗位库）\n${ctx.jobs.map(j => `- ${j.title_cn || j.name}${j.department ? ' · ' + j.department : ''}${j.job_function ? ' · ' + j.job_function : ''}${j.city ? ' · ' + j.city : ''}\n  概述：${s(j.summary_cn || j.overview, 300)}\n  职责：${s(j.responsibilities, 600)}\n  要求：${s(j.education_description, 100)} ${s(j.major_requirement, 120)} ${s(j.preferred_qualifications, 200)} 技能：${s(j.skill_labels, 150)}`).join('\n')}`);
+  if (ctx.jobs.length) L.push(`## 在招岗位（来源：校招岗位库）\n${ctx.jobs.map(j => `- ${j.title_cn || j.name}${j.department ? ' · ' + j.department : ''}${j.job_function ? ' · ' + j.job_function : ''}${j.city ? ' · ' + regionName('city', j.city) : ''}\n  概述：${s(j.summary_cn || j.overview, 300)}\n  职责：${s(j.responsibilities, 600)}\n  要求：${s(j.education_description, 100)} ${s(j.major_requirement, 120)} ${s(j.preferred_qualifications, 200)} 技能：${s(j.skill_labels, 150)}`).join('\n')}`);
   if (ctx.occupation) L.push(`## 职业（来源：职业实体库）\n${ctx.occupation.name}：${s(ctx.occupation.intro, 400)}\n职责：${s(ctx.occupation.responsibility, 500)}\n要求：${s(ctx.occupation.position_requirement, 300)}`);
   if (ctx.typical_tasks.length) L.push(`## 这个职业的典型任务（来源：职业典型任务库）\n${ctx.typical_tasks.map(t => `- ${t.name}：${s(t.summary, 200)}\n  目标：${s(t.goal, 150)}；成功标准：${s(t.success_criteria, 200)}；常见错误：${s(t.common_mistakes, 200)}`).join('\n')}`);
   if (ctx.standards.length) L.push(`## 行业标准 / 规程（来源：行业标准与规程库）\n${ctx.standards.map(x => `- ${x.code ? x.code + ' ' : ''}${x.title}：${s(x.key_points, 300)}${x.operation_relevance ? '；操作相关：' + s(x.operation_relevance, 150) : ''}`).join('\n')}`);
@@ -236,7 +237,7 @@ export async function searchCompanies(q: string, limit = 8) {
 export async function companyJobs(companyId: number, limit = 40) {
   const { data } = await db.from('jobs').select('name, title_cn, job_function, city, kind').eq('company_id', companyId).eq('if_delete', false).limit(300);
   const seen = new Map<string, any>();
-  for (const j of data || []) { const t = (j.title_cn || j.name || '').trim(); if (!t || seen.has(t)) continue; seen.set(t, { title: t, job_function: j.job_function, city: j.city, kind: j.kind }); }
+  for (const j of data || []) { const t = (j.title_cn || j.name || '').trim(); if (!t || seen.has(t)) continue; seen.set(t, { title: t, job_function: j.job_function, city: regionName('city', j.city), kind: j.kind }); }
   return [...seen.values()].slice(0, limit);
 }
 

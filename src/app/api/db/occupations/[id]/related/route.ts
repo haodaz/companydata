@@ -1,3 +1,4 @@
+import { regionName } from '@/lib/region-codes';
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { selectAll } from '@/lib/supabase-all';
@@ -38,7 +39,7 @@ export async function GET(req: Request, ctx: Ctx) {
         const k = j.company_id ? `c${j.company_id}` : `n${j.institute_or_company_name}`;
         const g = by.get(k) || { company_id: j.company_id, name: j.institute_or_company_name || '', open: 0, total: 0, cities: new Map() };
         g.total++; if (j.status === 'open') g.open++;
-        const c = (j.city || j.location || '').trim(); if (c) g.cities.set(c, (g.cities.get(c) || 0) + 1);
+        const c = (regionName('city', j.city) || j.location || '').trim(); if (c) g.cities.set(c, (g.cities.get(c) || 0) + 1);
         by.set(k, g);
       }
       const list = Array.from(by.values()).sort((a, b) => b.open - a.open || b.total - a.total).slice(0, 60);

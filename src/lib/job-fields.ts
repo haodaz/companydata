@@ -9,6 +9,8 @@
 
 export type JobFieldKind = 'string' | 'text' | 'number' | 'boolean' | 'date' | 'enum' | 'string[]' | 'url';
 
+import { regionName } from '@/lib/region-codes';
+
 export interface JobFieldDef {
   key: string;
   label: string;
@@ -21,6 +23,8 @@ export interface JobFieldDef {
   core?: boolean;
   /** 系统按规则推出来的字段：不让大模型填（不进提示词），sanitizeJob 里算 */
   derived?: boolean;
+  /** 地区字段：库里存选项集编码（数据部门 10-19 #14），显示时转中文名；提取时模型照样给中文名，入库前 applyJobDefaults 转成编码 */
+  region?: 'country' | 'province' | 'city';
 }
 
 export const JOB_TYPE_LABELS: Record<string, string> = {
@@ -114,8 +118,9 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'qianli_job_labels', label: '岗位标签', kind: 'string[]', group: 'basic', options: Object.fromEntries(QIANLI_JOB_LABELS.map(l => [l, l])), hint: `岗位标签，只能从这些里选（可多选）：${QIANLI_JOB_LABELS.join(' / ')}。` },
 
   { key: 'location', label: '工作地点', kind: 'string', group: 'location', core: true, hint: '工作地点原文；多个地点用英文分号 ; 分隔。' },
-  { key: 'country', label: '国家 / 地区', kind: 'string', group: 'location', hint: '主要工作地点所在国家或地区，用中文（如 美国 / 中国 / 中国香港 / 新加坡）。' },
-  { key: 'city', label: '城市', kind: 'string', group: 'location', hint: '主要工作城市，英文地名保持英文，中文地名保持中文。' },
+  { key: 'country', label: '国家 / 地区', kind: 'string', group: 'location', region: 'country', hint: '主要工作地点所在国家或地区，用中文（如 美国 / 中国 / 中国香港 / 新加坡）。' },
+  { key: 'province', label: '省份', kind: 'string[]', group: 'location', region: 'province', hint: '中国境内的岗位写省份中文全称（如 浙江省 / 北京市）；海外岗位留空数组。' },
+  { key: 'city', label: '城市', kind: 'string', group: 'location', region: 'city', hint: '主要工作城市，中国城市写地级市中文全称（如 杭州市 / 苏州市）；海外城市英文地名保持英文。' },
   { key: 'address', label: '工作地址', kind: 'string', group: 'location', hint: '具体办公 / 活动地址（到街道或园区）；没写时入库默认和工作地点一样（数据部门 10-14）。' },
   { key: 'form_of_play', label: '开展形式', kind: 'enum', group: 'location', options: FORM_OF_PLAY_LABELS, hint: '开展形式：线上 online / 线下 offline / 线上和线下 online_and_offline。' },
   { key: 'is_in_campus', label: '是否校内', kind: 'boolean', group: 'location', hint: '是否在校园内进行（校内宣讲 / 校园实验室岗位为 true），普通企业岗位为 false。' },
@@ -131,10 +136,10 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'education_description', label: '学历说明', kind: 'text', group: 'requirement', hint: '学历要求原文（如 "BS/MS in Computer Science or equivalent practical experience"）。' },
   { key: 'major_requirement', label: '专业要求', kind: 'string', group: 'requirement', hint: '专业 / 学科背景要求，用中文概括，专有名词保留原文。' },
   { key: 'exp_years', label: '最低工作年限', kind: 'number', group: 'requirement', hint: '最低工作经验年限（数字）；应届 / 无要求填 0；未说明为 null。' },
-  { key: 'exp_labels', label: '经验要求', kind: 'text', group: 'requirement', hint: '经验要求，用中文概括（如「有数据分析实习经历优先」）。' },
-  { key: 'exp_labels_jd', label: '经验标签（JD 原文）', kind: 'string', group: 'requirement', hint: 'JD 原文里关于经验的关键词，用 ; 分隔，保持原文。' },
-  { key: 'skill_labels', label: '技能关键词', kind: 'string[]', group: 'requirement', hint: '技能 / 工具 / 证书关键词数组（如 ["Python","SQL","CFA"]），最多 15 个，保持原文。' },
-  { key: 'skill_labels_jd', label: '技能标签（JD 原文）', kind: 'string', group: 'requirement', hint: 'JD 原文里关于技能 / 工具的关键词，标签之间用中文分号「；」分隔，保持原文。' },
+  { key: 'exp_labels', label: '经验标签（要求）', kind: 'string', group: 'requirement', hint: '「任职要求」里的经验标签（如 实习经验；项目经验；竞赛获奖），标签之间用中文分号「；」分隔。' },
+  { key: 'exp_labels_jd', label: '经验标签（职责）', kind: 'string', group: 'requirement', hint: '「岗位职责」里的经验标签，标签之间用中文分号「；」分隔。' },
+  { key: 'skill_labels', label: '技能标签（要求）', kind: 'string', group: 'requirement', hint: '「任职要求」里的技能标签（如 Python；SQL；CFA），标签之间用中文分号「；」分隔。' },
+  { key: 'skill_labels_jd', label: '技能标签（职责）', kind: 'string', group: 'requirement', hint: '「岗位职责」里的技能标签，标签之间用中文分号「；」分隔。' },
   { key: 'skiil_certification', label: '专业技能证书', kind: 'string', group: 'requirement', hint: '要求或优先的专业证书（如 CPA、CFA、PMP），没有则为 null。' },
   { key: 'gpa_min_requirement', label: '最低 GPA', kind: 'number', group: 'requirement', hint: '最低 GPA 要求（数字，如 3.0），未说明为 null。' },
   { key: 'grade', label: '年级要求', kind: 'string[]', group: 'requirement', options: GRADE_LABELS, hint: '面向的年级，只能从这些里选（可多选）：college_freshman 大一 / college_sophomore 大二 / college_junior 大三 / college_senior 大四 / college_student 大学生 / master_student 硕士生 / phd_student 博士生。' },
@@ -283,6 +288,7 @@ export function formatJobValue(key: string, v: any): string {
   if (v === null || v === undefined || v === '') return '';
   const f = JOB_FIELD_MAP[key];
   if (!f) return String(v);
+  if (f.region) return regionName(f.region, v);
   if (f.kind === 'boolean') return v ? '是' : '否';
   if (f.kind === 'enum') return f.options?.[v] || String(v);
   if (f.kind === 'string[]') return Array.isArray(v) ? v.map(x => f.options?.[x] || x).join('、') : String(v);

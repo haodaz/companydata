@@ -3,8 +3,10 @@
  *   主办方 organizer：空的就填这个岗位所属企业的名字
  *   年级要求 grade：空的、且学历说明有值时，按学历说明推（「本科及以上」→ college_student|master_student|phd_student）
  *   工作地址 address：空的就和工作地点 location 一样
- *   技能标签（JD 原文）skill_labels_jd：标签之间统一用中文「；」
+ *   四个标签 skill_labels / skill_labels_jd / exp_labels / exp_labels_jd：标签之间统一用中文「；」（10-19 起都是文本）
+ *   国家 / 省份 / 城市：存数据部门选项集的编码（10-19），见 region-codes.ts
  */
+import { resolveRegion } from '@/lib/region-codes';
 
 const UP: Record<string, string[]> = {
   college: ['college_student', 'master_student', 'phd_student'],
@@ -97,7 +99,18 @@ export function applyJobDefaults(job: Record<string, any>, company?: string | nu
   if (!job.organizer && company) job.organizer = company;
   if (!(Array.isArray(job.grade) && job.grade.length)) { const g = gradeFromEducation(job.education_description); if (g) job.grade = g; }
   if (!job.address && job.location) job.address = job.location;
-  if (job.skill_labels_jd) job.skill_labels_jd = normalizeSkillTags(job.skill_labels_jd);
+  // 四个标签（要求 / 职责 × 经验 / 技能）都是中文分号「；」隔开的文本（数据部门 10-19 #13）
+  for (const k of ['skill_labels', 'skill_labels_jd', 'exp_labels', 'exp_labels_jd']) {
+    if (Array.isArray(job[k])) job[k] = job[k].join('；');
+    if (job[k] !== undefined) job[k] = normalizeSkillTags(job[k]);
+  }
+  // 国家 / 省份 / 城市存选项集编码（数据部门 10-19 #14）；认不出的（海外城市、「全国」）留空，原文在 location
+  if (['country', 'province', 'city'].some(k => job[k] !== undefined)) {
+    const r = resolveRegion(job);
+    if (job.country !== undefined) job.country = r.country;
+    if (job.province !== undefined || r.province.length) job.province = r.province;
+    if (job.city !== undefined) job.city = r.city;
+  }
   applyLangFields(job);   // 中英文字段按对照表放好（数据部门 10-16）
   return job;
 }

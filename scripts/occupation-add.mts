@@ -42,6 +42,6 @@ if (created) {
   const { data } = await selectAll(() => db.from('jobs').select('id, name').not('if_delete', 'is', true).order('id'));
   const ids = (data as any[]).filter(j => { const n = String(j.name).replace(/\s+/g, '').toLowerCase(); return words.some(w => n.includes(w.toLowerCase())); }).map(j => j.id);
   console.log(`重新关联职业的岗位：${ids.length} 个`);
-  const n = await tagAndSave(ids, process.env.CHEAP_MODEL || MODEL);
+  const n = await tagAndSave(ids, process.env.CHEAP_MODEL || MODEL, { labels: false });   // 新职业只影响职业关联，四个标签不用重抽
   console.log(`已重打 ${n} 个`);
 }
