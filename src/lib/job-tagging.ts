@@ -67,11 +67,12 @@ ${lines}`;
   return out;
 }
 
-/** 四个标签：提示词照数据部门 10-19 给的（一次几个岗位，每个岗位要求 / 职责各截 4000 字） */
+/** 四个标签：提示词照数据部门 10-19 给的（一次几个岗位，每个岗位要求 / 职责各截 4000 字）。
+ *  没有单独「任职要求」的岗位（要求和职责写在一起），要求描述用职责代替，免得要求的两个标签全空（对方要求四个都有值） */
 export async function labelJobs(jobs: TagInput[], model: string): Promise<Map<number, JobLabels>> {
   const blocks = jobs.map((j, i) => `### 岗位 ${i + 1}：${j.name}
 【要求描述(overview)】
-${String(j.overview || '').slice(0, 4000) || '（无）'}
+${String(j.overview || j.responsibilities || j.summary_cn || '').slice(0, 4000) || '（无）'}
 
 【岗位职责描述(responsibilities)】
 ${String(j.responsibilities || j.summary_cn || '').slice(0, 4000) || '（无）'}`).join('\n\n');
