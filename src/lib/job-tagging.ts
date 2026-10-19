@@ -105,6 +105,45 @@ ${blocks}
   return out;
 }
 
+const LABEL_CN: Record<keyof JobLabels, string> = { exp_labels: '要求_经验标签', skill_labels: '要求_技能标签', exp_labels_jd: '职责_经验标签', skill_labels_jd: '职责_技能标签' };
+
+/**
+ * 补缺：四个标签里还空着的，单独再问一次（只问缺的那几个）。数据部门要求四个都有值；
+ * 校招岗位的任职要求常常只写学历 / 专业 / 性格，一次抽四个时模型会把「要求_经验」留空（10-19 回刷后还有 2349 个）。
+ */
+export async function fillMissingLabels(jobs: (TagInput & { missing: (keyof JobLabels)[] })[], model: string): Promise<Map<number, Partial<JobLabels>>> {
+  const todo = jobs.filter(j => j.missing.length && (j.overview || j.responsibilities || j.summary_cn));
+  const out = new Map<number, Partial<JobLabels>>();
+  if (!todo.length) return out;
+  const blocks = todo.map((j, i) => `### 岗位 ${i + 1}：${j.name}
+要补的字段：${j.missing.map(k => LABEL_CN[k]).join('、')}
+【要求描述】${squash(j.overview || j.responsibilities || j.summary_cn, 1500)}
+【岗位职责】${squash(j.responsibilities || j.summary_cn, 1500)}`).join('\n\n');
+  const prompt = `你是一名资深的招聘信息结构化专家。下面每个岗位都有几个标签字段还是空的，请只补这些字段，每个字段给 1-3 个标签，不能留空。
+- 经验标签：原文没写经验要求的，根据岗位名称、要求和职责归纳最相关的经验（如 实习经验、项目经验、行业经验、学生干部经验、竞赛获奖、科研经验、销售经验、教学经验）。
+- 技能标签：原文没写具体工具 / 技术的，归纳最相关的能力（如 沟通协调、数据分析、项目管理、英语读写、学习能力）。
+「要求_」开头的字段依据要求描述，「职责_」开头的字段依据岗位职责。
+
+${blocks}
+
+只返回 JSON：{"items":[{"n":岗位序号,"要求_经验标签":[],"要求_技能标签":[],"职责_经验标签":[],"职责_技能标签":[]}]}（只填要补的字段）`;
+  const r = await generateCheap(prompt, model, { jsonMode: true });
+  await logTokenUsage({ tool_name: 'job-tagging', task_name: 'Fill Missing Labels', institution: todo[0]?.company || '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
+  const keyOf: Record<string, keyof JobLabels> = { 要求_经验标签: 'exp_labels', 要求_技能标签: 'skill_labels', 职责_经验标签: 'exp_labels_jd', 职责_技能标签: 'skill_labels_jd' };
+  for (const it of parseJsonLoose(r.text)?.items || []) {
+    const j = todo[Number(it.n) - 1];
+    if (!j) continue;
+    const v: Partial<JobLabels> = {};
+    for (const [cn, k] of Object.entries(keyOf)) {
+      if (!j.missing.includes(k)) continue;
+      const arr = [...new Set((Array.isArray(it[cn]) ? it[cn] : []).map((x: any) => String(x).trim()).filter(Boolean))].slice(0, 5);
+      if (arr.length) v[k] = arr.join('；');
+    }
+    if (Object.keys(v).length) out.set(j.id, v);
+  }
+  return out;
+}
+
 /**
  * 给指定岗位打标签并写库（专业 / 职业 + 四个标签），每个岗位只写一次。入库后顺手调，或批量脚本用。
  * 人工锁定的字段不动。
@@ -121,10 +160,17 @@ export async function tagAndSave(ids: number[], model: string, opts: { batch?: n
     // 四个标签每次 5 个岗位（每个岗位要求 / 职责最多 8000 字）
     const l = new Map<number, JobLabels>();
     if (labels) for (let k = 0; k < chunk.length; k += 5) for (const [id, v] of await labelJobs(chunk.slice(k, k + 5), model).catch(() => new Map<number, JobLabels>())) l.set(id, v);
+    // 补缺：四个标签还空的再问一次（只问缺的）
+    if (labels) {
+      const LK = Object.keys(LABEL_CN) as (keyof JobLabels)[];
+      const need = chunk.map(j => ({ ...j, missing: LK.filter(k => !(l.get(j.id)?.[k])) })).filter(j => j.missing.length);
+      for (let k = 0; k < need.length; k += 10) for (const [id, v] of await fillMissingLabels(need.slice(k, k + 10), model).catch(() => new Map<number, Partial<JobLabels>>())) l.set(id, { ...(l.get(id) || { exp_labels: null, skill_labels: null, exp_labels_jd: null, skill_labels_jd: null }), ...v });
+    }
     for (const j of chunk) {
       const locked = new Set<string>(j.human_locked_fields || []);
       const patch: Record<string, any> = { ...(t.get(j.id) || {}), ...(l.get(j.id) || {}) };
-      for (const k of Object.keys(patch)) if (locked.has(k)) delete patch[k];
+      // 人工锁定的不动；这次没抽出来的（空值）不写，免得把库里已有的标签冲掉
+      for (const k of Object.keys(patch)) if (locked.has(k) || patch[k] === null || patch[k] === '') delete patch[k];
       if (!Object.keys(patch).length) continue;
       const { error } = await supabaseAdmin.from('jobs').update(patch).eq('id', j.id);
       if (!error) n++;
