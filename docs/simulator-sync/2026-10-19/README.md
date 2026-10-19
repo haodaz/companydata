@@ -105,6 +105,7 @@ npx tsx --env-file=.env.local scripts/import-pack.mts ai100-work-2026-10-19.json
 - 知识包里 `occupations` 是 630 条（有 4 条 `if_delete` 的没带），薪资 / 典型任务 / 实体关联只带这 630 条的；`industry_standards.search_id` 已置空（指向数据工厂的检索任务表，匹配靠 `professions`）。
 - 空间包导入顺序：skills → 空间 → 素材库 → 人物表 → 章节（`cover_cast` 指人物表）→ 规则出处；导入脚本会先删掉这些空间下已有的人物表 / 规则出处行再插（公司库对账脚本建过同编号不同 id 的行，`(task_id, code)` 唯一会撞）。
 - **10-19 公司导入时踩到的，这版包和脚本都已修**：薪资表 8 行指向已删职业、`search_id` 外键、`cover_cast` 顺序、人物表唯一键、`skill_tasks` 触发器自动生成的重复「第 1 章」（脚本插章节前会删掉这些空间下不在包里的章节）。
+- **导完必须对齐计数器**（simulator 10-19 部署后 503 踩到的，见它的 037 和 016 修订）：包按原 id 导入，职业 / 典型任务 / 场所 / 工具 / 标准 / 实体关联的自增序列和素材编号计数器 `lab_art_asset_no` 都落在后面，之后本库新建一条就撞主键 / 唯一键。导入脚本改不了序列（supabase-js 跑不了 SQL），所以导完跑一遍 simulator 的 `037` 那段 DO 块（所有整数列序列拨到 GREATEST(当前值, 最大 id)）和 `setval('lab_art_asset_no', 最大编号)`。
 
 ## 五、上线前要换掉 / 要知道的
 
