@@ -65,7 +65,7 @@ export async function buildSpacePack(ids?: string[]) {
   // 章节 sim / 空间 profile 里直接写的图片地址也可能指到素材库之外的文件：统一靠 collectAssets 兜住
   const body = { skills, spaces: tasks, chapters, cast, art, standard_links: links };
   const assets = collectAssets(body);
-  return { manifest: manifest('spaces', { counts: { skills: skills.length, spaces: tasks.length, chapters: chapters.length, lessons: chapters.filter(c => c.lesson).length, cast: cast.length, art: art.length, standard_links: links.length, assets: assets.length }, tables: ['skills', 'skill_tasks', 'lab_chapters', 'lab_cast', 'lab_art_assets', 'standard_links'], note: '按 id upsert；图片地址在 assets 里，导入时下载 → 传自己的桶 → 全文替换 url' }), ...body, assets };
+  return { manifest: manifest('spaces', { counts: { skills: skills.length, spaces: tasks.length, chapters: chapters.length, lessons: chapters.filter(c => c.lesson).length, cast: cast.length, art: art.length, standard_links: links.length, assets: assets.length }, tables: ['skills', 'skill_tasks', 'lab_art_assets', 'lab_cast', 'lab_chapters', 'standard_links'], note: '顺序：skills → skill_tasks → lab_art_assets → lab_cast → lab_chapters（cover_cast 指 lab_cast）→ standard_links；lab_cast / standard_links 先删掉这些空间下已有的再插（(task_id, code) 唯一，公司库对账脚本建过同编号不同 id 的行）；图片地址在 assets 里，导入时下载 → 传自己的桶 → 全文替换 url' }), ...body, assets };
 }
 
 /** 教案包：只有章节 id → 教案 */
@@ -74,14 +74,25 @@ export async function buildLessonPack() {
   return { manifest: manifest('lessons', { counts: { lessons: rows.length }, tables: ['lab_chapters'], note: '按 lab_chapters.id 更新 lesson / lesson_at；空间要先导过（id 一致）' }), lessons: rows };
 }
 
-/** 知识包：和我聊、规则出处、典型任务靠的那套底座 */
+/** 知识包：和我聊、规则出处、典型任务靠的那套底座。只带没删的职业，子表只带这些职业的（10-19 公司导入时薪资表里有 8 行指向已删职业，外键炸了） */
 export async function buildKnowledgePack() {
-  const tables = ['occupations', 'occupation_salaries', 'occupation_region_salaries', 'occupation_faqs', 'typical_tasks', 'work_places', 'work_stations', 'work_items', 'industry_standards', 'entity_links'];
-  const data: Record<string, any[]> = {};
-  for (const t of tables) data[t] = await all(t, q => (t === 'occupations' || t === 'typical_tasks' || /^work_/.test(t) || t === 'entity_links' ? q.or('if_delete.is.null,if_delete.eq.false') : q));
+  const occupations = await all('occupations', q => q.or('if_delete.is.null,if_delete.eq.false'));
+  const occIds = new Set(occupations.map(o => o.id));
+  const onlyLive = (rows: any[]) => rows.filter(r => occIds.has(r.occupation_id));
+  const data: Record<string, any[]> = { occupations };
+  data.occupation_salaries = onlyLive(await all('occupation_salaries'));
+  data.occupation_region_salaries = onlyLive(await all('occupation_region_salaries'));
+  data.occupation_faqs = onlyLive(await all('occupation_faqs'));
+  data.typical_tasks = onlyLive(await all('typical_tasks', q => q.or('if_delete.is.null,if_delete.eq.false')));
+  for (const t of ['work_places', 'work_stations', 'work_items']) data[t] = await all(t, q => q.or('if_delete.is.null,if_delete.eq.false'));
+  // search_id 指向标准获取工具的任务表（数据工厂的，不带）：置空，匹配靠 professions 字段
+  data.industry_standards = (await all('industry_standards')).map(r => ({ ...r, search_id: null }));
+  // 实体关联：指向已删职业的不带
+  data.entity_links = (await all('entity_links', q => q.or('if_delete.is.null,if_delete.eq.false'))).filter(l => (l.from_type !== 'occupation' || occIds.has(l.from_id)) && (l.to_type !== 'occupation' || occIds.has(l.to_id)));
+  const tables = Object.keys(data);
   const assets = collectAssets(data);
   const counts = Object.fromEntries(tables.map(t => [t, data[t].length]));
-  return { manifest: manifest('knowledge', { counts: { ...counts, assets: assets.length }, tables, note: '按 id upsert；occupations 先、再薪资 / 典型任务 / 实体关联（有外键）；标准库 dedupe_key 唯一' }), ...data, assets };
+  return { manifest: manifest('knowledge', { counts: { ...counts, assets: assets.length }, tables, note: '按 id upsert；occupations 先、再薪资 / 典型任务 / 实体关联（有外键）；标准库 dedupe_key 唯一，search_id 已置空' }), ...data, assets };
 }
 
 /** 真活包：示范题（含基线），不带作答 */

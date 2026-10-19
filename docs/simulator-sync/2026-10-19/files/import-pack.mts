@@ -40,11 +40,23 @@ const data = JSON.parse(text);
 
 // 3) upsert
 const ORDER: Record<string, string[]> = {
-  spaces: ['skills', 'spaces:skill_tasks', 'chapters:lab_chapters', 'art:lab_art_assets', 'cast:lab_cast', 'standard_links'],
+  // 顺序按外键：章节的 cover_cast 指人物表，所以人物表在章节前；人物表的 asset_id 指素材库
+  spaces: ['skills', 'spaces:skill_tasks', 'art:lab_art_assets', 'cast:lab_cast', 'chapters:lab_chapters', 'standard_links'],
   lessons: ['lessons:lab_chapters'],
   knowledge: ['occupations', 'occupation_salaries', 'occupation_region_salaries', 'occupation_faqs', 'typical_tasks', 'work_places', 'work_stations', 'work_items', 'industry_standards', 'entity_links'],
   work: ['work_tasks'],
 };
+// 空间包：人物表 (task_id, code) 唯一、规则出处 (standard_id, space_id, chapter_id, target) 唯一——公司库里这些空间下可能已有对账脚本建的同编号不同 id 的行，
+// 先把这些空间下的旧行删掉再插（章节 cover_cast 指向旧行的会被 SET NULL，随后章节 upsert 又指回包里的新行）
+if (data.manifest.kind === 'spaces' && !DRY) {
+  const spaceIds: string[] = (data.spaces || []).map((t: any) => t.id);
+  for (let i = 0; i < spaceIds.length; i += 50) {
+    const ids = spaceIds.slice(i, i + 50);
+    const d1 = await db.from('standard_links').delete().in('space_id', ids); if (d1.error) { console.error('清旧规则出处失败', d1.error.message); process.exit(1); }
+    const d2 = await db.from('lab_cast').delete().in('task_id', ids); if (d2.error) { console.error('清旧人物表失败', d2.error.message); process.exit(1); }
+  }
+  console.log(`清掉 ${spaceIds.length} 个空间下的旧人物表 / 规则出处`);
+}
 for (const spec of ORDER[data.manifest.kind] || []) {
   const [key, table] = spec.includes(':') ? spec.split(':') : [spec, spec];
   const rows: any[] = data[key] || []; if (!rows.length) continue;
