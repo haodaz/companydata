@@ -62,6 +62,18 @@ for (const spec of ORDER[data.manifest.kind] || []) {
   const rows: any[] = data[key] || []; if (!rows.length) continue;
   console.log(`${table}: ${rows.length} 行${DRY ? '（dry）' : ''}`);
   if (DRY) continue;
+  // 章节：skill_tasks 有个触发器（015 lab_sync_first_chapter），空间第一次写进去、还没有章节时会自动生成一条「第 1 章」（新 id）；
+  // 包里的第 1 章随后按自己的 id 插进去就成了两条 seq=1。插章节前把这些空间下不在包里的章节删掉（作答记录 chapter_id 会 SET NULL）
+  if (table === 'lab_chapters' && data.manifest.kind === 'spaces') {
+    const keep = new Set(rows.map(r => r.id)); const spaceIds: string[] = [...new Set(rows.map(r => r.task_id))];
+    let removed = 0;
+    for (let i = 0; i < spaceIds.length; i += 50) {
+      const r = await db.from('lab_chapters').select('id').in('task_id', spaceIds.slice(i, i + 50)); if (r.error) { console.error('查旧章节失败', r.error.message); process.exit(1); }
+      const extra = (r.data || []).map(x => x.id).filter(id => !keep.has(id));
+      if (extra.length) { const d = await db.from('lab_chapters').delete().in('id', extra); if (d.error) { console.error('清触发器生成的章节失败', d.error.message); process.exit(1); } removed += extra.length; }
+    }
+    console.log(`清掉触发器 / 旧数据生成的多余章节 ${removed} 条`);
+  }
   for (let i = 0; i < rows.length; i += 200) {
     const chunk = rows.slice(i, i + 200);
     // 教案包只更新两列，别把别的列覆盖掉
