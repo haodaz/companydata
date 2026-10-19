@@ -61,7 +61,8 @@ if (STEP === 'region') {
   await Promise.all(Array.from({ length: PAR }, async () => {
     while (next < batches.length) {
       const b = batches[next++];
-      try { const n = await tagAndSave(b, MODEL); saved += n; }   // 先 await 再加：`saved += await` 会先读旧值，并发时互相覆盖 catch (e: any) { console.error('批失败', String(e?.message || e).slice(0, 120)); }
+      // 先 await 再加：`saved += await` 会先读旧值，并发时互相覆盖
+      try { const n = await tagAndSave(b, MODEL); saved += n; } catch (e: any) { console.error('批失败', String(e?.message || e).slice(0, 120)); }
       done += b.length;
       if ((done / 20) % 20 === 0) {
         console.log(`${done}/${ids.length} 已写 ${saved}（${((Date.now() - t0) / 60000).toFixed(1)} 分钟）`);
