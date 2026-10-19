@@ -1,0 +1,564 @@
+diff --git a/package.json b/package.json
+index 21a1cde..8092d6f 100644
+--- a/package.json
++++ b/package.json
+@@ -11,6 +11,7 @@
+   "dependencies": {
+     "@ant-design/icons": "^6.3.4",
+     "@ant-design/nextjs-registry": "^1.3.0",
++    "@anthropic-ai/sdk": "^0.135.0",
+     "@antv/g6": "^5.1.1",
+     "@google/generative-ai": "^0.24.1",
+     "@mkkellogg/gaussian-splats-3d": "^0.4.7",
+diff --git a/src/lib/agents/search-llm.ts b/src/lib/agents/search-llm.ts
+index abaa12f..4352e52 100644
+--- a/src/lib/agents/search-llm.ts
++++ b/src/lib/agents/search-llm.ts
+@@ -6,10 +6,29 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
+ import { generateContent } from '@/lib/llm-client';
+ import { logTokenUsage, type TokenUsageParams } from '@/lib/token-logger';
+ 
++/** 从第一个「{」开始按括号配对（跳过字符串里的括号）截出完整对象 */
++function firstBalanced(s: string): string | null {
++  const start = s.indexOf('{');
++  if (start < 0) return null;
++  let depth = 0, inStr = false, esc = false;
++  for (let i = start; i < s.length; i++) {
++    const ch = s[i];
++    if (inStr) { if (esc) esc = false; else if (ch === '\\') esc = true; else if (ch === '"') inStr = false; continue; }
++    if (ch === '"') inStr = true;
++    else if (ch === '{') depth++;
++    else if (ch === '}' && --depth === 0) return s.slice(start, i + 1);
++  }
++  return null;
++}
++
+ /** 去掉 ```json 围栏，取第一个完整 JSON 对象 */
+ export function parseJsonLoose(text: string): any {
+   const clean = (text || '').replace(/^```(?:json)?\n?/i, '').replace(/\n?```$/i, '').trim();
+   try { return JSON.parse(clean); } catch { /* 联网检索模式下模型偶尔会在 JSON 前后带说明文字 */ }
++  // 先按括号配对取第一个完整对象：新版模型（qwen3.x 兼容接口）常在 JSON 后面再写一段带花括号的说明 / 第二个对象，
++  // 贪婪匹配会把两段连在一起解析失败（10-15 批量补岗位连着几家寻源报「after JSON at position …」）
++  const bal = firstBalanced(clean);
++  if (bal) { try { return JSON.parse(bal); } catch { try { return JSON.parse(repairJson(bal)); } catch { /* 退回老办法 */ } } }
+   const match = clean.match(/\{[\s\S]*\}/);
+   if (!match) { console.error('[parseJsonLoose] no JSON in response:', clean.slice(0, 800)); throw new Error(`大模型未返回有效 JSON${clean ? `（返回开头：${clean.slice(0, 120)}）` : '（返回为空）'}`); }
+   try { return JSON.parse(match[0]); } catch { /* 再试一次修补 */ }
+@@ -78,16 +97,22 @@ export async function resolveGroundingRedirects<T>(value: T): Promise<T> {
+   return replace(value);
+ }
+ 
+-export async function searchJson(prompt: string, modelId: string, log: Pick<TokenUsageParams, 'tool_name' | 'task_name' | 'institution' | 'batch_id'>): Promise<{ parsed: any; searchQueries: string[] }> {
++export async function searchJson(prompt: string, modelId: string, log: Pick<TokenUsageParams, 'tool_name' | 'task_name' | 'institution' | 'batch_id'>, opts: { lenient?: boolean } = {}): Promise<{ parsed: any; searchQueries: string[]; sources: { title: string; url: string }[] }> {
+   let text: string;
++  let sources: { title: string; url: string }[] = [];
+   let usageMetadata: any;
+   let searchQueries: string[] = [];
+ 
+   if (modelId.startsWith('qwen')) {
+     // 阿里云：通义千问 + 联网搜索（国内企业用这个，便宜、搜得到国内站点）
+     const result = await generateContent(prompt, modelId, { webSearch: true });
++    // 千问自己写进 JSON 的网址常是编的，真的链接在附带的「搜索来源」里：拆出来一并返回，调用方拿它校对
++    const tail = result.text.match(/\n\n## 搜索来源\n([\s\S]*)$/)?.[1] || '';
++    sources = tail.split('\n').map(l => l.match(/^\[\d+\]\s*(.*?)\s+(https?:\/\/\S+)\s*$/)).filter(Boolean).map(m => ({ title: m![1].trim(), url: m![2] }));
+     text = result.text.replace(/\n\n## 搜索来源[\s\S]*$/, '');
+     usageMetadata = result.usageMetadata;
++  } else if (process.env.DASHSCOPE_FREE_ONLY === '1') {
++    throw new Error(`已开「只用免费额度」，不调用付费模型 ${modelId} 联网检索`);
+   } else if (!modelId.startsWith('gpt-')) {
+     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+     // Gemini 联网检索偶尔整包空返回（没有 candidates，只消耗了思考 token）：先重试，仍为空就换一版 flash 兜底
+@@ -122,5 +147,8 @@ export async function searchJson(prompt: string, modelId: string, log: Pick<Toke
+ 
+   // 每次 searchJson 是一次带搜索的调用（Gemini 按 grounded prompt、阿里云 / OpenAI 按搜索调用计费）
+   await logTokenUsage({ ...log, model_id: modelId, usageMetadata, success: true, search_calls: 1 }).catch(e => console.error('Token logging failed', e));
+-  return { parsed: await resolveGroundingRedirects(parseJsonLoose(text)), searchQueries };
++  // lenient：只拿它找信源时，模型回了一段话而不是 JSON 也不算失败，信源照样返回给下一步去抓
++  let parsed: any;
++  try { parsed = parseJsonLoose(text); } catch (e) { if (!opts.lenient) throw e; parsed = {}; }
++  return { parsed: await resolveGroundingRedirects(parsed), searchQueries, sources };
+ }
+diff --git a/src/lib/cost/products.ts b/src/lib/cost/products.ts
+index 2546684..51bb456 100644
+--- a/src/lib/cost/products.ts
++++ b/src/lib/cost/products.ts
+@@ -6,7 +6,7 @@
+  */
+ export const COST_PRODUCTS = {
+   lab: { label: 'AI 百业', tools: ['skill-lab', 'lab-art', 'lab-3d'] },
+-  factory: { label: '智能企业数据工厂', tools: ['finder', 'fetcher', 'structurer-job', 'company-profile', 'company-pipeline', 'company-deep-research', 'competition-radar', 'standard-radar', 'occupation', 'office-chief', 'office-chat', 'flywheel'] },
++  factory: { label: '智能企业数据工厂', tools: ['finder', 'fetcher', 'structurer-job', 'company-profile', 'company-pipeline', 'company-deep-research', 'competition-radar', 'standard-radar', 'occupation', 'office-chief', 'office-chat', 'flywheel', 'job-tagging', 'work', 'unattributed', 'external'] },   // unattributed = llm-client 兜底记的；external = 系统外花费补记（Nebius 等）
+ } as const;
+ export type CostProduct = keyof typeof COST_PRODUCTS;
+ export const toolsOf = (p: CostProduct): string[] => [...COST_PRODUCTS[p].tools];
+diff --git a/src/lib/llm-client.ts b/src/lib/llm-client.ts
+index 46c21b7..7e57838 100644
+--- a/src/lib/llm-client.ts
++++ b/src/lib/llm-client.ts
+@@ -28,6 +28,8 @@ export interface LLMResponse {
+     promptTokenCount: number;
+     candidatesTokenCount: number;
+     totalTokenCount: number;
++    /** llm-client 兜底记账的记录编号（token-logger 回填） */
++    __logId?: number;
+   };
+ }
+ 
+@@ -37,6 +39,10 @@ function isOpenAIModel(modelId: string): boolean {
+   return modelId.startsWith('gpt-');
+ }
+ 
++function isClaudeModel(modelId: string): boolean {
++  return modelId.startsWith('claude-');
++}
++
+ // ──── Main entry point ────
+ 
+ /**
+@@ -61,58 +67,156 @@ export async function generateContent(
+   options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean },
+ ): Promise<LLMResponse> {
+   const resolvedModelId = resolveModel(modelId);
+-  if (isOpenAIModel(resolvedModelId)) {
+-    return generateOpenAI(prompt, resolvedModelId, options);
+-  }
+-  if (resolvedModelId.startsWith('qwen')) {
+-    return generateQwen(prompt, resolvedModelId, options);
+-  }
+-  return generateGemini(prompt, resolvedModelId, options);
++  // 本地「只用免费额度」：千问以外的模型（OpenAI / Gemini 都是付费的）一律不调
++  if (process.env.DASHSCOPE_FREE_ONLY === '1' && !resolvedModelId.startsWith('qwen')) throw new Error(`已开「只用免费额度」，不调用付费模型 ${resolvedModelId}`);
++  let res: LLMResponse;
++  if (isOpenAIModel(resolvedModelId)) res = await generateOpenAI(prompt, resolvedModelId, options);
++  else if (isClaudeModel(resolvedModelId)) res = await generateClaude(prompt, resolvedModelId, options);
++  else if (resolvedModelId.startsWith('qwen')) res = await generateQwen(prompt, resolvedModelId, options);
++  else res = await generateGemini(prompt, resolvedModelId, options);
++  await autoLog(res, resolvedModelId, options);
++  return res;
++}
++
++/**
++ * 记账兜底（2026-10-18，用户：「账要算全，职业画像 / 赛事 / 规范 / 企业画像都花了钱」）：
++ * 每一次成功的调用都先按「未归属」记一笔（免费额度、个人充值一样按市价算），记录编号留在 usageMetadata.__logId 上；
++ * 调用方随后 logTokenUsage 时会把这一条改成准确的功能 / 环节名，不会重复计。调用方忘了记的，账上也至少有「未归属」这笔。
++ */
++async function autoLog(res: LLMResponse, modelId: string, options?: { webSearch?: boolean }) {
++  if (process.env.LLM_AUTOLOG === '0') return;
++  try {
++    const { logTokenUsage, currentCost } = await import('@/lib/token-logger');
++    const ctx = currentCost();
++    await logTokenUsage({ tool_name: 'unattributed', task_name: ctx.task_name || ctx.tool_name || '（未归属）', model_id: res.model || modelId, usageMetadata: res.usageMetadata, search_calls: options?.webSearch ? 1 : 0 });
++    // 上下文里给了功能名就直接归过去（省得调用方再记一次）
++    if (ctx.tool_name && res.usageMetadata.__logId) await logTokenUsage({ tool_name: ctx.tool_name as any, task_name: ctx.task_name || ctx.tool_name, model_id: res.model || modelId, usageMetadata: res.usageMetadata, search_calls: options?.webSearch ? 1 : 0 });
++  } catch (e: any) { console.warn('[llm-client] 兜底记账失败：', String(e?.message).slice(0, 120)); }
+ }
+ 
+ // ──── 通义千问（阿里云百炼 DashScope 原生接口）────
+ /**
+  * 国内检索用阿里云：webSearch 时打开 enable_search（search_strategy turbo + 返回来源），
+  * 来源网址附在正文后面（「## 搜索来源」），调用方要真实链接时从这里取。用法和 zhiji-yida 的 src/lib/search.ts 一致。
++ *
++ * 本地挖数据省钱：.env.local 里配了 DASHSCOPE_FREE_KEY（阿里云国际站新加坡的免费额度，每个模型 100 万 token，
++ * 开了「用完即停」，用完返回 403 AllocationQuota.FreeTierOnly、不扣费）就先走免费额度，同档模型轮着用，
++ * 全用完再回到付费 key——除非 DASHSCOPE_FREE_ONLY=1（本地挖数据时开着：免费全用完就报错停下，一分钱不花）。
++ * 线上（Vercel）不配这些变量，不受影响。2026-10-15 实测国际站也能联网搜简中网页。
+  */
+-async function generateQwen(
+-  prompt: string,
+-  modelId: string,
+-  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean },
+-): Promise<LLMResponse> {
+-  const key = process.env.DASHSCOPE_API_KEY;
+-  if (!key) throw new Error('缺少 DASHSCOPE_API_KEY，无法调用通义千问');
+-  const base = (process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
+-  const parameters: Record<string, any> = { result_format: 'message' };
+-  if (options?.webSearch) {
+-    parameters.enable_search = true;
+-    parameters.search_options = { search_strategy: 'turbo', enable_source: true, forced_search: true };
+-  } else if (options?.jsonMode) {
+-    parameters.response_format = { type: 'json_object' };
+-  }
+-  let data: any = null, lastErr: any = null;
+-  for (let attempt = 0; attempt < 3 && !data; attempt++) {
++// 免费模型池完全由环境变量给出（DASHSCOPE_FREE_POOL_PLUS / DASHSCOPE_FREE_POOL_FLASH，逗号分隔），代码里不写死模型
++// 用完的模型（403 FreeTierOnly）整个跳过；只是不支持某种用法的（比如开源版不能联网搜，400）只在那种用法下跳过
++const freeExhausted = new Set<string>();
++const freeUnsupported = new Set<string>();
++
++async function callDashScope(base: string, key: string, model: string, prompt: string, parameters: Record<string, any>): Promise<any> {
++  let lastErr: any = null;
++  for (let attempt = 0; attempt < 3; attempt++) {
+     if (attempt) await new Promise(r => setTimeout(r, 3000 * attempt));
+     try {
+       const res = await fetch(`${base}/api/v1/services/aigc/text-generation/generation`, {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+-        body: JSON.stringify({ model: modelId, input: { messages: [{ role: 'user', content: prompt }] }, parameters }),
++        body: JSON.stringify({ model, input: { messages: [{ role: 'user', content: prompt }] }, parameters }),
+         signal: AbortSignal.timeout(180_000),
+       });
+       if (!res.ok) {
+         const t = await res.text().catch(() => '');
+-        const err = new Error(`DashScope ${res.status}: ${t.slice(0, 300)}`);
++        const err: any = new Error(`DashScope ${res.status}: ${t.slice(0, 300)}`);
++        err.status = res.status; err.freeTierOut = res.status === 403 && /FreeTierOnly|AllocationQuota/i.test(t);
+         if (res.status === 429 || res.status >= 500) { lastErr = err; continue; }
+         throw err;
+       }
+-      data = await res.json();
++      return await res.json();
+     } catch (e: any) {
+       lastErr = e;
+-      if (!/fetch failed|ECONNRESET|ETIMEDOUT|timeout|DashScope (429|5\d\d)/i.test(String(e?.message))) throw e;
++      if (e?.status || !/fetch failed|ECONNRESET|ETIMEDOUT|timeout|DashScope (429|5\d\d)/i.test(String(e?.message))) throw e;
+     }
+   }
+-  if (!data) throw lastErr;
++  throw lastErr;
++}
++
++/**
++ * 新版模型（qwen3.5 / 3.6 / 3.7 / 3.8 系列）在原生接口上报 400「url error」，要走 OpenAI 兼容接口；
++ * 兼容接口同样支持 enable_search。返回值转成原生接口的样子，下游不用改。
++ */
++const compatModels = new Set<string>();
++async function callCompat(base: string, key: string, model: string, prompt: string, parameters: Record<string, any>): Promise<any> {
++  const body: Record<string, any> = { model, messages: [{ role: 'user', content: prompt }] };
++  if (parameters.enable_search) { body.enable_search = true; body.search_options = parameters.search_options; }
++  if (parameters.response_format) body.response_format = parameters.response_format;
++  if ('enable_thinking' in parameters) body.enable_thinking = parameters.enable_thinking;
++  let lastErr: any = null;
++  for (let attempt = 0; attempt < 3; attempt++) {
++    if (attempt) await new Promise(r => setTimeout(r, 3000 * attempt));
++    const res = await fetch(`${base}/compatible-mode/v1/chat/completions`, {
++      method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
++      body: JSON.stringify(body), signal: AbortSignal.timeout(180_000),
++    }).catch(e => { lastErr = e; return null; });
++    if (!res) continue;
++    if (!res.ok) {
++      const t = await res.text().catch(() => '');
++      const err: any = new Error(`DashScope ${res.status}: ${t.slice(0, 300)}`);
++      err.status = res.status; err.freeTierOut = res.status === 403 && /FreeTierOnly|AllocationQuota/i.test(t);
++      if (res.status === 429 || res.status >= 500) { lastErr = err; continue; }
++      throw err;
++    }
++    const j: any = await res.json();
++    return { output: { choices: [{ message: { content: j.choices?.[0]?.message?.content || '' } }], search_info: j.search_info }, usage: { input_tokens: j.usage?.prompt_tokens, output_tokens: j.usage?.completion_tokens, total_tokens: j.usage?.total_tokens } };
++  }
++  throw lastErr;
++}
++
++async function generateQwen(
++  prompt: string,
++  modelId: string,
++  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean },
++): Promise<LLMResponse> {
++  const parameters: Record<string, any> = { result_format: 'message' };
++  if (options?.webSearch) {
++    parameters.enable_search = true;
++    parameters.search_options = { search_strategy: 'turbo', enable_source: true, forced_search: true };
++  } else if (options?.jsonMode) {
++    parameters.response_format = { type: 'json_object' };
++  }
++  let data: any = null, used = modelId;
++  const freeKey = process.env.DASHSCOPE_FREE_KEY;
++  if (freeKey) {
++    const tier = /flash|turbo/i.test(modelId) ? 'flash' : 'plus';
++    const poolOf = (t: string) => (process.env[`DASHSCOPE_FREE_POOL_${t.toUpperCase()}`] || '').split(',').map(x => x.trim()).filter(Boolean);
++    // flash 档用完了就接着用 plus 档（同样免费，只是慢一点）；plus 档不往 flash 降，联网检索要聪明的
++    const pool = tier === 'flash' ? [...new Set([...poolOf('flash'), ...poolOf('plus')])] : poolOf('plus');
++    const freeBase = (process.env.DASHSCOPE_FREE_BASE_URL || 'https://dashscope-intl.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
++    const mode = options?.webSearch ? 'search' : options?.jsonMode ? 'json' : 'text';
++    for (const m of pool) {
++      if (freeExhausted.has(m) || freeUnsupported.has(`${m}|${mode}`)) continue;
++      try {
++        // qwen3 系列商用版默认不思考，这里显式关掉，免得哪个快照默认开着、白耗额度
++        const p = /^qwen3/.test(m) ? { ...parameters, enable_thinking: false } : parameters;
++        if (compatModels.has(m)) data = await callCompat(freeBase, freeKey, m, prompt, p);
++        else {
++          try { data = await callDashScope(freeBase, freeKey, m, prompt, p); }
++          catch (e: any) {
++            if (e?.status !== 400 || !/url error/i.test(String(e.message))) throw e;
++            compatModels.add(m);
++            data = await callCompat(freeBase, freeKey, m, prompt, p);
++          }
++        }
++        used = m; break;
++      } catch (e: any) {
++        // 额度用完 / 这个模型在免费区不可用（400 / 403 / 404）：记下来换下一个；超时这类临时错误也换下一个，不拖着
++        if (e?.freeTierOut) { freeExhausted.add(m); console.warn(`[llm] 免费额度 ${m} 用完了，换下一个`); }
++        else if ([400, 403, 404].includes(e?.status)) { freeUnsupported.add(`${m}|${mode}`); console.warn(`[llm] 免费模型 ${m} 不支持这种用法（${mode}），换下一个：${String(e.message).slice(0, 100)}`); }
++      }
++    }
++    if (!data && process.env.DASHSCOPE_FREE_ONLY === '1') throw new Error(`免费额度（${tier} 档）全部用完或不可用，已按设置停下，不走付费 key。用完的：${[...freeExhausted].join('、') || '无'}`);
++  }
++  if (!data) {
++    const key = process.env.DASHSCOPE_API_KEY;
++    if (!key) throw new Error('缺少 DASHSCOPE_API_KEY，无法调用通义千问');
++    const base = (process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
++    data = await callDashScope(base, key, modelId, prompt, parameters);
++  }
+   let text: string = data.output?.choices?.[0]?.message?.content || '';
+   const sources: any[] = data.output?.search_info?.search_results || [];
+   if (options?.webSearch && sources.length) {
+@@ -121,6 +225,7 @@ async function generateQwen(
+   const u = data.usage || {};
+   return {
+     text,
++    model: used,
+     usageMetadata: {
+       promptTokenCount: u.input_tokens || 0,
+       candidatesTokenCount: u.output_tokens || 0,
+@@ -129,6 +234,38 @@ async function generateQwen(
+   };
+ }
+ 
++// ──── Claude（Anthropic）implementation ────
++// 2026-10-18 加：教案 / 讲解这类长文本生成用 Claude（用户：「claude 有钱，抓紧用」）。密钥 ANTHROPIC_API_KEY（.env.local，和 programcrawler 同一把）。
++// Opus 5.5 思考默认开着、effort 默认 medium；jsonMode 靠系统提示约束（这一代不支持 assistant 预填）。
++async function generateClaude(prompt: string, modelId: string, options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean }): Promise<LLMResponse> {
++  const { default: Anthropic } = await import('@anthropic-ai/sdk');
++  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
++  const system = options?.jsonMode
++    ? '你是一个只输出 JSON 的生成器：回复必须是一个合法的 JSON 对象，不要用 Markdown 代码块包裹，不要在 JSON 前后加任何说明文字。'
++    : undefined;
++  // 长输出（教案一章一万多 token）走流式，不然并发几路时会被连接超时掐掉（10-18 备课批量见过 4 章 timeout）
++  const res = await client.messages.stream({
++    model: modelId,
++    max_tokens: 64000,   // 教案一章可到 3.6 万字（潜水 255 下工位），32000 还会截断
++    ...(system ? { system } : {}),
++    ...(options?.webSearch ? { tools: [{ type: 'web_search_20260209' as any, name: 'web_search', max_uses: 5 }] as any } : {}),
++    messages: [{ role: 'user', content: prompt }],
++  }).finalMessage();
++  if (res.stop_reason === 'refusal') throw new Error(`Claude 拒绝了这次请求${res.stop_details?.explanation ? `：${res.stop_details.explanation}` : ''}`);
++  const text = res.content.filter((b): b is Extract<typeof b, { type: 'text' }> => b.type === 'text').map(b => b.text).join('\n');
++  if (res.stop_reason === 'max_tokens') console.warn('[Claude] 输出到了 max_tokens 上限，可能被截断');
++  const u = res.usage;
++  return {
++    text,
++    model: modelId,
++    usageMetadata: {
++      promptTokenCount: (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0),
++      candidatesTokenCount: u.output_tokens || 0,
++      totalTokenCount: (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0) + (u.output_tokens || 0),
++    },
++  };
++}
++
+ // ──── Gemini implementation ────
+ 
+ async function generateGemini(
+diff --git a/src/lib/model-context.tsx b/src/lib/model-context.tsx
+index acf4557..38d3585 100644
+--- a/src/lib/model-context.tsx
++++ b/src/lib/model-context.tsx
+@@ -2,21 +2,8 @@
+ 
+ import React, { createContext, useContext, useState, useEffect } from 'react';
+ 
+-/** badge：模型切换处显示的提醒标记（所有模型下拉共用，加新入口时不会漏） */
+-export const MODEL_OPTIONS: { id: string; label: string; provider: string; modelName: string; badge?: string }[] = [
+-  // Google Gemini
+-  { id: 'gemini-3.8-flash', label: 'Gemini 3.8 Flash', provider: 'Google', modelName: 'gemini-3.8-flash' },
+-  { id: 'gemini-3.6-flash', label: 'Gemini 3.6 Flash', provider: 'Google', modelName: 'gemini-3.6-flash' },
+-  { id: 'gemini-3.1-pro-preview', label: 'Gemini 3.1 Pro (Preview)', provider: 'Google', modelName: 'gemini-3.1-pro-preview' },
+-  { id: 'gemini-3.5-flash', label: 'Gemini 3.5 Flash', provider: 'Google', modelName: 'gemini-3.5-flash' },
+-  // 阿里云通义千问（联网检索走阿里云搜索，国内企业首选）
+-  { id: 'qwen-plus', label: '通义千问 Plus（阿里云搜索）', provider: 'Aliyun', modelName: 'qwen-plus', badge: '国内' },
+-  { id: 'qwen-max', label: '通义千问 Max（阿里云搜索）', provider: 'Aliyun', modelName: 'qwen-max' },
+-  // OpenAI GPT
+-  { id: 'gpt-6-astra', label: 'GPT-6 Astra', provider: 'OpenAI', modelName: 'gpt-6-astra', badge: '很贵🥹🥹' },
+-  { id: 'gpt-5.6-terra', label: 'GPT-5.6 Terra', provider: 'OpenAI', modelName: 'gpt-5.6-terra' },
+-  { id: 'gpt-5.6-luna', label: 'GPT-5.6 Luna', provider: 'OpenAI', modelName: 'gpt-5.6-luna' },
+-];
++export { MODEL_OPTIONS } from '@/lib/model-options';
++import { MODEL_OPTIONS } from '@/lib/model-options';
+ 
+ /** 「很贵」这类提醒标记的统一样式 */
+ export function ModelBadge({ text }: { text?: string }) {
+@@ -33,7 +20,8 @@ type ModelContextType = {
+ const ModelContext = createContext<ModelContextType | undefined>(undefined);
+ 
+ export function ModelProvider({ children }: { children: React.ReactNode }) {
+-  const [currentModel, setCurrentModel] = useState<string>('gemini-3.8-flash');
++  // 默认通义千问（国内服务；2026-10-14 起 Gemini 不再充值）。存过别的选择照旧
++  const [currentModel, setCurrentModel] = useState<string>('qwen-plus');
+ 
+   useEffect(() => {
+     const saved = localStorage.getItem('cd_current_model');
+diff --git a/src/lib/model-options.ts b/src/lib/model-options.ts
+new file mode 100644
+index 0000000..5edbf96
+--- /dev/null
++++ b/src/lib/model-options.ts
+@@ -0,0 +1,27 @@
++/**
++ * 模型选单：页面上所有模型下拉、命令行脚本的 --model 都从这里取，改模型只改这里。
++ * badge：模型切换处显示的提醒标记（所有模型下拉共用，加新入口时不会漏）。
++ */
++export const MODEL_OPTIONS: { id: string; label: string; provider: string; modelName: string; badge?: string }[] = [
++  // Google Gemini
++  { id: 'gemini-3.8-flash', label: 'Gemini 3.8 Flash', provider: 'Google', modelName: 'gemini-3.8-flash' },
++  { id: 'gemini-3.6-flash', label: 'Gemini 3.6 Flash', provider: 'Google', modelName: 'gemini-3.6-flash' },
++  { id: 'gemini-3.1-pro-preview', label: 'Gemini 3.1 Pro (Preview)', provider: 'Google', modelName: 'gemini-3.1-pro-preview' },
++  { id: 'gemini-3.5-flash', label: 'Gemini 3.5 Flash', provider: 'Google', modelName: 'gemini-3.5-flash' },
++  // 阿里云通义千问（联网检索走阿里云搜索，国内企业首选）
++  { id: 'qwen-plus', label: '通义千问 Plus（阿里云搜索）', provider: 'Aliyun', modelName: 'qwen-plus', badge: '国内' },
++  { id: 'qwen-max', label: '通义千问 Max（阿里云搜索）', provider: 'Aliyun', modelName: 'qwen-max' },
++  { id: 'qwen-flash', label: '通义千问 Flash（阿里云搜索）', provider: 'Aliyun', modelName: 'qwen-flash', badge: '便宜' },
++  { id: 'qwen3.7-plus', label: '通义千问 3.7 Plus（阿里云搜索）', provider: 'Aliyun', modelName: 'qwen3.7-plus' },
++  { id: 'qwen3.6-plus', label: '通义千问 3.6 Plus（阿里云搜索）', provider: 'Aliyun', modelName: 'qwen3.6-plus' },
++  { id: 'qwen3.7-max', label: '通义千问 3.7 Max（阿里云搜索）', provider: 'Aliyun', modelName: 'qwen3.7-max' },
++  // Anthropic Claude（教案 / 讲解这类长文本生成）
++  { id: 'claude-opus-5-5', label: 'Claude Opus 5.5', provider: 'Anthropic', modelName: 'claude-opus-5-5' },
++  { id: 'claude-sonnet-5-5', label: 'Claude Sonnet 5.5', provider: 'Anthropic', modelName: 'claude-sonnet-5-5' },
++  // OpenAI GPT
++  { id: 'gpt-6-astra', label: 'GPT-6 Astra', provider: 'OpenAI', modelName: 'gpt-6-astra', badge: '很贵🥹🥹' },
++  { id: 'gpt-5.6-terra', label: 'GPT-5.6 Terra', provider: 'OpenAI', modelName: 'gpt-5.6-terra' },
++  { id: 'gpt-5.6-luna', label: 'GPT-5.6 Luna', provider: 'OpenAI', modelName: 'gpt-5.6-luna' },
++];
++
++export const isKnownModel = (id: string) => MODEL_OPTIONS.some(m => m.id === id);
+diff --git a/src/lib/token-logger.ts b/src/lib/token-logger.ts
+index 486cc74..32797e9 100644
+--- a/src/lib/token-logger.ts
++++ b/src/lib/token-logger.ts
+@@ -12,6 +12,8 @@ export interface CostContext {
+   space_id?: string | null; chapter_id?: string | null; job_id?: string | null; actor?: string | null;
+   /** create 创造（建空间、生一天、设计工位）/ use 使用（考试评分、问问我、你教我）/ review 评审 / media 美术与 3D */
+   stage?: 'create' | 'use' | 'review' | 'media' | string | null;
++  /** 兜底记账用：llm-client 自动记的那一笔归到哪个功能 / 环节名（调用方随后 logTokenUsage 会把它改成更准的） */
++  tool_name?: string | null; task_name?: string | null;
+ }
+ const costStore = new AsyncLocalStorage<CostContext>();
+ export function withCost<T>(ctx: CostContext, fn: () => Promise<T>): Promise<T> {
+@@ -40,6 +42,11 @@ const PRICING: Record<string, { input: number; output: number }> = {
+   'gemini-3.1-pro-preview': { input: 2, output: 12 },
+   'gemini-1.5-pro': { input: 3.5, output: 10.5 },
+   'gemini-1.5-flash': { input: 0.075, output: 0.3 },
++  // Anthropic Claude（官方一手价，2026-09）
++  'claude-fable-5-1': { input: 10, output: 50 },   // 出题模式补记用（Claude Code 里跑的，按 API 价折算）
++  'claude-opus-5-5': { input: 4, output: 20 },
++  'claude-sonnet-5-5': { input: 2, output: 10 },
++  'claude-haiku-4-5': { input: 1, output: 5 },
+   // OpenAI GPT
+   'gpt-6-astra': { input: 10, output: 30 },
+   'gpt-5.6-terra': { input: 2.5, output: 10 },
+@@ -51,7 +58,10 @@ const PRICING: Record<string, { input: number; output: number }> = {
+ };
+ 
+ export interface TokenUsageParams {
+-  tool_name: 'finder' | 'fetcher' | 'structurer-job' | 'company-profile' | 'company-pipeline' | 'company-deep-research' | 'competition-radar' | 'standard-radar' | 'occupation' | 'office-chief' | 'office-chat' | 'skill-lab' | 'flywheel' | 'lab-art' | 'lab-3d';
++  tool_name: 'finder' | 'fetcher' | 'structurer-job' | 'company-profile' | 'company-pipeline' | 'company-deep-research' | 'competition-radar' | 'standard-radar' | 'occupation' | 'office-chief' | 'office-chat' | 'skill-lab' | 'flywheel' | 'lab-art' | 'lab-3d' | 'job-tagging'
++    | 'unattributed'   // llm-client 兜底记的、调用方没归属的（2026-10-18：账要算全）
++    | 'work'           // 真活台（出题 / 基线 / 工作台 AI / 评卷）
++    | 'external';      // 系统外的花费补记：Nebius 黑客松额度、其他平台充值（scripts/lab-log-cost.mts --usd）
+   task_name: string;      // e.g. "Careers URLs Search", "Extract Jobs"
+   institution?: string;   // 企业名或目标 URL（列名沿用院校版）
+   model_id: string;
+@@ -59,7 +69,11 @@ export interface TokenUsageParams {
+     promptTokenCount: number;
+     candidatesTokenCount: number;
+     totalTokenCount: number;
++    /** llm-client 兜底记账时写上的记录编号：再 logTokenUsage 就改那条，不重插 */
++    __logId?: number;
+   };
++  /** 直接给金额（美元）：系统外的花费补记，不按 token 算 */
++  cost_usd?: number;
+   success?: boolean;
+   error_message?: string;
+   batch_id?: number;
+@@ -86,6 +100,12 @@ async function priceOf(model: string): Promise<Price> {
+   const hit = priceCache.map.get(model), u = UNIT_PRICE[model];
+   if (hit) return hit.unit_price || !u ? hit : { ...hit, unit_price: u.price, unit: u.unit };
+   if (u) return { currency: u.currency, input_per_m: 0, output_per_m: 0, search_per_k: 0, unit_price: u.price, unit: u.unit };
++  // 千问库里没登记的型号（qwen-flash、qwen3.x 新快照…）：flash / turbo 档按 qwen-flash 价，其余按 qwen-plus 价（人民币，含联网搜索），
++  // 不再落到 Gemini 1.5 Flash 的美元兜底价上（2026-10-18 记账核对时发现）
++  if (/^qwen/.test(model)) {
++    const base = /flash|turbo/.test(model) ? priceCache.map.get('qwen-flash') : priceCache.map.get('qwen-plus');
++    return base || (/flash|turbo/.test(model) ? { currency: 'CNY', input_per_m: 0.15, output_per_m: 1.5, search_per_k: 4, unit_price: 0, unit: null } : { currency: 'CNY', input_per_m: 0.8, output_per_m: 2, search_per_k: 4, unit_price: 0, unit: null });
++  }
+   const p = PRICING[model] || { input: 0.075, output: 0.3 };
+   return { currency: 'USD', input_per_m: p.input, output_per_m: p.output, search_per_k: 0, unit_price: 0, unit: null };
+ }
+@@ -95,7 +115,8 @@ const USD_CNY = () => parseFloat(process.env.USD_CNY_RATE || '7.2');
+ export async function logTokenUsage(params: CostParams) {
+   try {
+     const { tool_name, task_name, institution, model_id, usageMetadata, success = true, error_message, batch_id, search_calls = 0, units = 0 } = params;
+-    const ctx = { ...currentCost(), ...Object.fromEntries((['space_id', 'chapter_id', 'job_id', 'actor', 'stage'] as const).filter(k => params[k] !== undefined).map(k => [k, params[k]])) };
++    const base = currentCost();
++    const ctx = Object.fromEntries((['space_id', 'chapter_id', 'job_id', 'actor', 'stage'] as const).map(k => [k, params[k] !== undefined ? params[k] : base[k]]));
+ 
+     const resolvedModelId = resolveModel(model_id);
+     const inputTokens = usageMetadata?.promptTokenCount || 0;
+@@ -109,7 +130,7 @@ export async function logTokenUsage(params: CostParams) {
+     const unitCost = units * price.unit_price;   // 出图按张、视频按秒
+     const rate = USD_CNY();
+     const toUsd = (v: number) => price.currency === 'CNY' ? v / rate : v;
+-    const costUsd = toUsd(tokenCost + searchCost + unitCost);
++    const costUsd = params.cost_usd != null ? params.cost_usd : toUsd(tokenCost + searchCost + unitCost);
+ 
+     const row: Record<string, any> = {
+         tool_name,
+@@ -132,18 +153,27 @@ export async function logTokenUsage(params: CostParams) {
+         ...(units ? { units, unit: price.unit } : {}),
+         ...Object.fromEntries(Object.entries(ctx).filter(([, v]) => v !== undefined && v !== null && v !== '')),
+     };
++    // llm-client 已经兜底记过这一笔：改那条的归属，不重插（2026-10-18）
++    if (usageMetadata?.__logId) {
++      const patch: Record<string, any> = { tool_name, task_name, institution: institution || '', success, error_message, batch_id, search_calls, search_cost_usd: toUsd(searchCost), total_cost_usd: costUsd, ...(units ? { units, unit: price.unit } : {}), ...Object.fromEntries(Object.entries(ctx).filter(([, v]) => v !== undefined && v !== null && v !== '')) };
++      const { error } = await supabase.from('token_usage_logs').update(patch).eq('id', usageMetadata.__logId);
++      if (!error) return;
++      console.warn('[Token Logger] 改兜底记录失败，改为新插一条：', error.message);
++    }
+     // 迁移 014 / 021 还没跑时缺列：报哪列缺就去掉哪列再写，不丢记录
+-    let { error } = await supabase.from('token_usage_logs').insert(row);
++    let { data: ins, error } = await supabase.from('token_usage_logs').insert(row).select('id').single();
+     for (let i = 0; error && i < 8; i++) {
+       const col = Object.keys(row).find(k => (error!.message || '').includes(`'${k}'`) || (error!.message || '').includes(`"${k}"`));
+       if (!col) break;
+       delete row[col];
+-      ({ error } = await supabase.from('token_usage_logs').insert(row));
++      ({ data: ins, error } = await supabase.from('token_usage_logs').insert(row).select('id').single());
+     }
+ 
+ 
+     if (error) {
+       console.error("[Token Logger] DB Insert error:", error);
++    } else if (usageMetadata && params.tool_name === 'unattributed' && ins?.id) {
++      usageMetadata.__logId = ins.id;   // 兜底记账：编号留在 usageMetadata 上，调用方随后正式记账时改这一条
+     }
+   } catch (err) {
+     console.error("[Token Logger] Failed to log usage:", err);
+diff --git a/supabase/migrations/033_token_usage_agg.sql b/supabase/migrations/033_token_usage_agg.sql
+new file mode 100644
+index 0000000..8999b30
+--- /dev/null
++++ b/supabase/migrations/033_token_usage_agg.sql
+@@ -0,0 +1,26 @@
++-- 用量页统计交给数据库汇总（2026-10-18）：以前每次打开 Token 用量页都把四万多条记账记录分三遍拉回来自己加，
++-- 二十多秒、线上一慢就超时，卡片和分析全空。这里按 模型 × 功能 × 环节名 × 流程环节 × 空间 分组求和，只回几百行。
++CREATE OR REPLACE FUNCTION token_usage_agg(p_tools TEXT[] DEFAULT NULL, p_since TIMESTAMPTZ DEFAULT NULL, p_model TEXT DEFAULT NULL)
++RETURNS TABLE (
++  model_id TEXT, tool_name TEXT, task_name TEXT, stage TEXT, space_id UUID,
++  n BIGINT, in_tok BIGINT, out_tok BIGINT, tok BIGINT, cost_usd NUMERIC, api_cny NUMERIC,
++  search_calls BIGINT, search_cost_usd NUMERIC, units NUMERIC
++)
++LANGUAGE sql STABLE
++AS $$
++  SELECT l.model_id, l.tool_name, regexp_replace(COALESCE(l.task_name, ''), '^\[Batch\] ', ''), l.stage, l.space_id,
++         COUNT(*), COALESCE(SUM(l.total_input_tokens), 0), COALESCE(SUM(l.total_output_tokens), 0), COALESCE(SUM(l.total_tokens), 0),
++         COALESCE(SUM(l.total_cost_usd), 0), COALESCE(SUM(l.api_cost_cny), 0),
++         COALESCE(SUM(l.search_calls), 0), COALESCE(SUM(l.search_cost_usd), 0), COALESCE(SUM(l.units), 0)
++  FROM token_usage_logs l
++  WHERE (p_tools IS NULL OR l.tool_name = ANY(p_tools))
++    AND (p_since IS NULL OR l.created_at >= p_since)
++    AND (p_model IS NULL OR p_model = '' OR l.model_id = p_model)
++  GROUP BY 1, 2, 3, 4, 5;
++$$;
++
++-- 只给后台服务端（service_role）用
++REVOKE ALL ON FUNCTION token_usage_agg(TEXT[], TIMESTAMPTZ, TEXT) FROM PUBLIC, anon, authenticated;
++GRANT EXECUTE ON FUNCTION token_usage_agg(TEXT[], TIMESTAMPTZ, TEXT) TO service_role;
++
++CREATE INDEX IF NOT EXISTS token_usage_logs_created_idx ON token_usage_logs (created_at DESC);

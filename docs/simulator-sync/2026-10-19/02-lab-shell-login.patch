@@ -1,0 +1,296 @@
+diff --git a/src/app/lab/LabShell.tsx b/src/app/lab/LabShell.tsx
+index 98d56f3..dad0808 100644
+--- a/src/app/lab/LabShell.tsx
++++ b/src/app/lab/LabShell.tsx
+@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
+ import { Select } from 'antd';
+ import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
+ import { UserProvider, useUser } from '@/lib/user-context';
+-import { GUEST_MODEL } from '@/lib/lab-guest';
++import { GUEST_MODEL, GUEST_MODELS } from '@/lib/lab-guest';
+ 
+ /**
+  * 数字技能空间（实验）独立外壳：浅色科技感，和数据后台 / 虚拟工厂刻意长得不一样。
+@@ -104,6 +104,15 @@ const LAB_CSS = `
+   background: rgba(8,10,22,.86) !important; border-bottom-color: rgba(255,255,255,.08) !important; color: #eef0fb;
+   --ink: #eef0fb; --ink2: #c0c5e2; --ink3: #878dae; --line: rgba(255,255,255,.12); }
+ .lab:not([data-theme="light"]):has(.sp-root) > header .lab-btn.ghost { color: #dfe2f5; background: rgba(255,255,255,.08); box-shadow: 0 0 0 1px rgba(255,255,255,.16); }
++/* 首页第一屏：顶栏透明、无底无线，压在整幅场景上；滚过第一屏 .clear 去掉就恢复 */
++.lab:has(.ai100-root) > header.lab-head { margin-bottom: -64px; transition: background .35s, border-color .35s, backdrop-filter .35s; }
++.lab:not([data-theme="light"]):has(.ai100-root) > header.clear, .lab[data-theme="light"]:has(.ai100-root) > header.clear, .lab:has(.ai100-root) > header.lab-head.clear {
++  background: transparent !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border-bottom-color: transparent !important; }
++.lab-brand-switch { margin-left: 6px; display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 700; letter-spacing: .5px; color: #fff; text-decoration: none; white-space: nowrap;
++  background: linear-gradient(135deg, #6055f5, #12b5cb); box-shadow: 0 4px 14px rgba(96,85,245,.28); transition: transform .2s, box-shadow .2s; }
++.lab-brand-switch:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(96,85,245,.36); color: #fff; }
++.lab-brand-switch-arrow { font-size: 11px; opacity: .85; }
++@media (max-width: 560px) { .lab-brand-switch { padding: 6px 9px; font-size: 12px; } }
+ /* 深色顶栏里的模型下拉。antd 新版结构是 .ant-select > .ant-select-content / .ant-select-suffix，
+    以前写的 .ant-select-selector / -selection-item / -arrow 是旧版类名，一条都没命中，深色字落在深底上看不见 */
+ .lab:not([data-theme="light"]):has(.ai100-root) > header .lab-head-model, .lab:not([data-theme="light"]):has(.sp-root) > header .lab-head-model {
+@@ -199,11 +208,26 @@ function Shell({ children }: { children: React.ReactNode }) {
+   const { currentModel, setCurrentModel } = useModel();
+   // 首页是公开的：没登录的人看不到模型下拉和后台入口，那是给干活的人用的
+   const { user, loading: userLoading } = useUser();
+-  // 游客（没登录）模型锁死在 Gemini 3.8 Flash：浏览器里存过别的模型也不算（接口那边也锁着，见 lib/lab-guest.ts）
+-  useEffect(() => { if (!userLoading && !user && currentModel !== GUEST_MODEL) setCurrentModel(GUEST_MODEL); }, [userLoading, user, currentModel, setCurrentModel]);
++  // 游客（没登录）只能在 GUEST_MODELS 里挑，默认通义千问（接口那边也只认这几个，见 lib/lab-guest.ts）。
++  // 老的游客锁（10-12）给每个游客浏览器都存了 Gemini：升级后第一次来统一切到千问一次，之后尊重自己的选择
++  useEffect(() => {
++    if (userLoading || user) return;
++    let first = false;
++    try { first = !localStorage.getItem('lab:guest-model-v2'); localStorage.setItem('lab:guest-model-v2', '1'); } catch { /* 无痕模式 */ }
++    if (first || !GUEST_MODELS.includes(currentModel)) { if (currentModel !== GUEST_MODEL) setCurrentModel(GUEST_MODEL); }
++  // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, [userLoading, user]);
+   // 深浅两套：大屏投放、学校一体机、白天的教室都可能更适合浅色。按设备记住；
+   // 也认 ?theme=light / ?theme=dark，方便把一体机的链接直接钉死成某一套。
+   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
++  // 首页第一屏顶栏透明（深浅色都一样），滚过第一屏才有导航底
++  const [clear, setClear] = useState(path === '/lab');
++  useEffect(() => {
++    if (path !== '/lab') { setClear(false); return; }
++    const on = () => setClear(window.scrollY < window.innerHeight - 72);
++    on(); window.addEventListener('scroll', on, { passive: true }); window.addEventListener('resize', on);
++    return () => { window.removeEventListener('scroll', on); window.removeEventListener('resize', on); };
++  }, [path]);
+   useEffect(() => {
+     const q = new URLSearchParams(window.location.search).get('theme');
+     let t: string | null = q === 'light' || q === 'dark' ? q : null;
+@@ -226,7 +250,7 @@ function Shell({ children }: { children: React.ReactNode }) {
+       <style>{LAB_CSS}</style>
+       <div className="lab-bg"><div className="lab-blob b1" /><div className="lab-blob b2" /><div className="lab-blob b3" /><div className="lab-grid" /></div>
+ 
+-      <header className="lab-head" style={{ position: 'sticky', top: 0, zIndex: 20, display: 'flex', alignItems: 'center', gap: 14, background: 'rgba(245,246,255,.72)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(106,92,255,.12)' }}>
++      <header className={`lab-head${clear ? ' clear' : ''}`} style={{ position: 'sticky', top: 0, zIndex: 20, display: 'flex', alignItems: 'center', gap: 14, background: 'rgba(245,246,255,.72)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(106,92,255,.12)' }}>
+         <div onClick={() => { if (!guest) router.push('/lab'); }} style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', minWidth: 0, flexShrink: 0 }}>
+           <div className="lab-orb" style={{ ['--s' as string]: '34px' }}><div className="ring" /><div className="core" /></div>
+           <div className="lab-head-brand" style={{ minWidth: 0 }}>
+@@ -252,8 +276,13 @@ function Shell({ children }: { children: React.ReactNode }) {
+             ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" /></svg>
+             : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" /></svg>}
+         </button>}
++        {/* 游客也能换模型，但只在便宜的几个里挑；默认千问（国内推荐） */}
++        {!guest && !user && !userLoading && (
++          <Select className="lab-head-model" size="small" variant="filled" value={GUEST_MODELS.includes(currentModel) ? currentModel : GUEST_MODEL} onChange={setCurrentModel} style={{ width: 190 }} popupMatchSelectWidth={210}
++            options={GUEST_MODELS.map(id => { const m = MODEL_OPTIONS.find(x => x.id === id); return { value: id, label: <span>{id === 'qwen-plus' ? '通义千问 Plus' : m?.label || id}{id === 'qwen-plus' && <ModelBadge text="国内推荐" />}</span> }; })} />
++        )}
+         {!guest && !user && !userLoading && (
+-          <button className="lab-btn ghost sm" onClick={() => router.push(`/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`)}>登录</button>
++          <button className="lab-btn ghost sm" onClick={() => router.push(`/lab/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`)}>登录</button>
+         )}
+         {!guest && user && <>
+         <Select className="lab-head-model" size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 170 }} popupMatchSelectWidth={250}
+@@ -263,6 +292,8 @@ function Shell({ children }: { children: React.ReactNode }) {
+           <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="1.5" y="9.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="9.5" width="5" height="5" rx="1.2" /></svg>
+         </button>
+         </>}
++        {/* 同公司另一个品牌：百业真活（放最右，和导航分开） */}
++        <a href="/work" className="lab-brand-switch" title="百业AI｜真活 · True work, true talent">百业真活<span className="lab-brand-switch-arrow">↗</span></a>
+       </header>
+ 
+       <div className="lab-wrap">{children}</div>
+diff --git a/src/app/lab/login/page.tsx b/src/app/lab/login/page.tsx
+new file mode 100644
+index 0000000..da0691d
+--- /dev/null
++++ b/src/app/lab/login/page.tsx
+@@ -0,0 +1,5 @@
++import { Suspense } from 'react';
++import { OverlayLogin } from '@/components/auth/OverlayLogin';
++
++export const metadata = { title: '登录' };
++export default function LabLoginPage() { return <Suspense><OverlayLogin brand="lab" /></Suspense>; }
+diff --git a/src/app/lab/page.tsx b/src/app/lab/page.tsx
+index 1b4064b..5dff4c9 100644
+--- a/src/app/lab/page.tsx
++++ b/src/app/lab/page.tsx
+@@ -49,7 +49,7 @@ const CSS = `
+ .ai100-bleed { margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); width: 100vw; }
+ 
+ /* banner：我们自己的三个空间（3D / 360° 实拍）串成的无缝循环当背景，字压在上面 */
+-.ai100-hero { position: relative; min-height: calc(100svh - 64px); display: flex; align-items: center; overflow: hidden; margin-top: -24px; }
++.ai100-hero { position: relative; min-height: 100svh; display: flex; align-items: center; overflow: hidden; margin-top: -24px; padding-top: 64px; box-sizing: border-box; }   /* 顶栏第一屏透明、压在首屏上（LabShell margin-bottom:-64px），所以首屏自己占满一屏并给顶栏留 64px */
+ .ai100-hero > video, .ai100-hero > img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+ .ai100-hero .veil { position: absolute; inset: 0;
+   background: linear-gradient(90deg, rgba(8,10,22,.9) 0%, rgba(8,10,22,.76) 34%, rgba(8,10,22,.32) 64%, rgba(8,10,22,.06) 100%),
+diff --git a/src/app/lab/studio/[id]/page.tsx b/src/app/lab/studio/[id]/page.tsx
+index c83d86a..64f369d 100644
+--- a/src/app/lab/studio/[id]/page.tsx
++++ b/src/app/lab/studio/[id]/page.tsx
+@@ -181,7 +181,7 @@ export default function StudioPage() {
+     message.success('已删除');
+   };
+ 
+-  if (!user) return <div className="lab-glass" style={{ padding: 40, textAlign: 'center', color: 'var(--ink3)' }}>百业工厂要登录后使用。<button className="lab-btn sm" style={{ marginLeft: 10 }} onClick={() => router.push(`/login?next=${encodeURIComponent(`/lab/studio/${id}`)}`)}>去登录</button></div>;
++  if (!user) return <div className="lab-glass" style={{ padding: 40, textAlign: 'center', color: 'var(--ink3)' }}>百业工厂要登录后使用。<button className="lab-btn sm" style={{ marginLeft: 10 }} onClick={() => router.push(`/lab/login?next=${encodeURIComponent(`/lab/studio/${id}`)}`)}>去登录</button></div>;
+   if (err) return <div className="lab-glass" style={{ padding: 40, textAlign: 'center', color: '#d6336c' }}>{err}</div>;
+   if (!data) return <div className="lab-glass lab-scan" style={{ height: 240, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink3)' }}><span className="lab-mono">LOADING<span className="lab-dots" /></span></div>;
+ 
+diff --git a/src/components/auth/OverlayLogin.tsx b/src/components/auth/OverlayLogin.tsx
+new file mode 100644
+index 0000000..7fc27b3
+--- /dev/null
++++ b/src/components/auth/OverlayLogin.tsx
+@@ -0,0 +1,58 @@
++'use client';
++
++/**
++ * 蒙版式登录：给 AI 百业（/lab）和真活（/work）用，和企业数据工厂的 /login 在感受上分开——
++ * 整页是各自产品的环境（真活：工作场所场景图 + 浅色蒙版；百业：光斑 + 细网格），中间一张卡片登录。
++ * 账号还是同一套（/api/auth/login），只是壳不同。登录完回 next（只认站内路径）。
++ */
++import React, { useState } from 'react';
++import { useRouter, useSearchParams } from 'next/navigation';
++import { WorkLogo } from '@/components/work/WorkLogo';
++
++const ART = 'https://jextsfzlbchbnsnxwgeu.supabase.co/storage/v1/object/public/lab-art';
++const WORK_SCENES = [`${ART}/muprqaib23zv-research_office.jpg`, `${ART}/muprkhvgjivf-structure_office.jpg`, `${ART}/mufry2fd3tn2-production_control_room.jpg`, `${ART}/muprgu4wkuxw-architect_studio.jpg`];
++
++export function OverlayLogin({ brand }: { brand: 'work' | 'lab' }) {
++  const router = useRouter(); const sp = useSearchParams();
++  const [email, setEmail] = useState(''); const [pw, setPw] = useState(''); const [err, setErr] = useState(''); const [busy, setBusy] = useState(false);
++  const scene = WORK_SCENES[Math.floor(Date.now() / 60000) % WORK_SCENES.length];
++  const next = sp.get('next') || '';
++  const dest = next.startsWith('/') && !next.startsWith('//') && !next.startsWith('/\\') ? next : (brand === 'work' ? '/work/mine' : '/lab/spaces');
++  const submit = async (e: React.FormEvent) => {
++    e.preventDefault(); if (!email.trim() || !pw) { setErr('邮箱和密码都要填'); return; }
++    setBusy(true); setErr('');
++    try {
++      const j = await (await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email.trim(), password: pw }) })).json();
++      if (!j.success) throw new Error(j.error || '登录失败');
++      router.push(dest); router.refresh();
++    } catch (e: any) { setErr(e.message || '网络错误'); setBusy(false); }
++  };
++  const isWork = brand === 'work';
++  return (
++    <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'grid', placeItems: 'center', padding: 16, fontFamily: "'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", color: '#1a1a2e' }}>
++      {/* 环境 */}
++      {isWork
++        ? <><div style={{ position: 'absolute', inset: 0, background: `url(${scene}) center / cover`, filter: 'blur(2px)', transform: 'scale(1.04)' }} /><div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(255,253,249,.72), rgba(255,253,249,.55))' }} /></>
++        : <><div style={{ position: 'absolute', inset: 0, background: '#f5f6ff' }} />
++            <div style={{ position: 'absolute', width: 620, height: 620, left: -160, top: -200, borderRadius: '50%', filter: 'blur(80px)', background: 'radial-gradient(circle, #cfc8ff, transparent 65%)' }} />
++            <div style={{ position: 'absolute', width: 560, height: 560, right: -140, top: '8%', borderRadius: '50%', filter: 'blur(80px)', background: 'radial-gradient(circle, #bdf0f6, transparent 65%)' }} />
++            <div style={{ position: 'absolute', width: 520, height: 520, left: '32%', bottom: -260, borderRadius: '50%', filter: 'blur(80px)', background: 'radial-gradient(circle, #ffd3e6, transparent 65%)' }} />
++            <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(106,92,255,.14) 1px, transparent 1px), linear-gradient(90deg, rgba(106,92,255,.14) 1px, transparent 1px)', backgroundSize: '44px 44px', maskImage: 'radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 80%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 80%)' }} /></>}
++      {/* 卡片 */}
++      <form onSubmit={submit} style={{ position: 'relative', width: '100%', maxWidth: 400, background: 'rgba(255,255,255,.86)', backdropFilter: 'blur(18px) saturate(1.3)', WebkitBackdropFilter: 'blur(18px) saturate(1.3)', border: '1px solid rgba(255,255,255,.9)', borderRadius: 22, padding: '30px 30px 26px', boxShadow: '0 24px 70px rgba(20,24,60,.16), 0 0 0 1px rgba(106,92,255,.12)' }}>
++        {isWork ? <div style={{ marginBottom: 6 }}><WorkLogo size="lg" href={null} /></div> : <><div style={{ fontSize: 11, letterSpacing: 3, color: '#6b6f86', fontWeight: 700 }}>PINGFANG · AI HUNDRED TRADES</div>
++        <div style={{ fontSize: 26, fontWeight: 800, margin: '6px 0 2px', letterSpacing: 1 }}>AI <span style={{ color: '#6a5cff' }}>百业</span></div></>}
++        <div style={{ fontSize: 13.5, color: '#4a4f66', marginBottom: 22 }}>{isWork ? '登录后出题；做题的人不用登录' : '登录进入你的空间和进度'}</div>
++        <label style={lab}>邮箱</label>
++        <input value={email} onChange={e => setEmail(e.target.value)} type="email" autoComplete="username" placeholder="name@company.com" style={inp} />
++        <label style={{ ...lab, marginTop: 12 }}>密码</label>
++        <input value={pw} onChange={e => setPw(e.target.value)} type="password" autoComplete="current-password" placeholder="密码" style={inp} />
++        {err && <div style={{ color: '#c0392b', fontSize: 13, marginTop: 10 }}>{err}</div>}
++        <button type="submit" disabled={busy} style={{ marginTop: 20, width: '100%', height: 46, border: 0, borderRadius: 12, background: 'linear-gradient(135deg,#6055f5,#12b5cb)', color: '#fff', fontWeight: 700, fontSize: 15, cursor: busy ? 'default' : 'pointer', opacity: busy ? .7 : 1 }}>{busy ? '登录中…' : '登录'}</button>
++        <div style={{ fontSize: 12, color: '#8a8fa8', marginTop: 14, textAlign: 'center' }}>没有账号？找管理员开通 · <a href={isWork ? '/work' : '/lab'} style={{ color: '#6055f5' }}>回首页</a></div>
++      </form>
++    </div>
++  );
++}
++const lab: React.CSSProperties = { display: 'block', fontSize: 12.5, color: '#4a4f66', fontWeight: 600, marginBottom: 5 };
++const inp: React.CSSProperties = { width: '100%', height: 42, border: '1px solid #d9dbe6', borderRadius: 10, padding: '0 12px', fontSize: 14, outline: 'none', background: '#fff', boxSizing: 'border-box' };
+diff --git a/src/components/work/WorkLogo.tsx b/src/components/work/WorkLogo.tsx
+new file mode 100644
+index 0000000..cfe4502
+--- /dev/null
++++ b/src/components/work/WorkLogo.tsx
+@@ -0,0 +1,39 @@
++'use client';
++
++/**
++ * 百业AI｜真活 的 logo：图形 = 渐变圆角方块里一个「真」字风格的印章感标记（一横一竖一勾：活是干出来的），
++ * 文字 = 百业AI｜真活 + 英文口号 TRUE WORK, TRUE TALENT（用户 10-18 定的）。
++ * size: lg 首页顶栏 / md 内页顶栏 / sm 登录卡片等
++ */
++import React from 'react';
++import Link from 'next/link';
++
++export function WorkMark({ size = 40 }: { size?: number }) {
++  return (
++    <svg width={size} height={size} viewBox="0 0 48 48" aria-hidden>
++      <defs><linearGradient id="wkg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#6055f5" /><stop offset="1" stopColor="#12b5cb" /></linearGradient></defs>
++      <rect x="2" y="2" width="44" height="44" rx="12" fill="url(#wkg)" />
++      {/* 工位台面 + 一只落下的手：看他干 */}
++      <path d="M12 33 H36" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" />
++      <path d="M16 33 V21 a8 8 0 0 1 16 0 V33" fill="none" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" />
++      <path d="M24 13 V9" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" />
++      <circle cx="24" cy="26" r="3" fill="#fff" />
++      <path d="M33 14 l4 4 l7 -7" fill="none" stroke="#fff" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" opacity=".95" />
++    </svg>
++  );
++}
++
++export function WorkLogo({ size = 'md', href = '/work', dark }: { size?: 'lg' | 'md' | 'sm'; href?: string | null; dark?: boolean }) {
++  const S = size === 'lg' ? { mark: 44, name: 24, cap: 10.5, gap: 12 } : size === 'md' ? { mark: 32, name: 18, cap: 9, gap: 10 } : { mark: 28, name: 16, cap: 8.5, gap: 8 };
++  const ink = dark ? '#fff' : '#1a1a2e', sub = dark ? 'rgba(255,255,255,.7)' : '#6b6f86';
++  const body = (
++    <span style={{ display: 'inline-flex', alignItems: 'center', gap: S.gap, textDecoration: 'none', color: ink }}>
++      <WorkMark size={S.mark} />
++      <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
++        <span style={{ fontSize: S.name, fontWeight: 900, letterSpacing: 1 }}>百业AI<span style={{ color: '#6055f5', fontWeight: 400, margin: '0 1px' }}>｜</span>真活</span>
++        <span style={{ fontSize: S.cap, letterSpacing: 2.2, color: sub, fontWeight: 700, marginTop: 3, fontFamily: 'ui-monospace, Menlo, monospace' }}>TRUE WORK, TRUE TALENT</span>
++      </span>
++    </span>
++  );
++  return href ? <Link href={href} style={{ textDecoration: 'none' }}>{body}</Link> : body;
++}
+diff --git a/src/proxy.ts b/src/proxy.ts
+index a51aa53..41811bc 100644
+--- a/src/proxy.ts
++++ b/src/proxy.ts
+@@ -36,11 +36,18 @@ export async function proxy(req: NextRequest) {
+     if (pathname === '/api/lab/landing' && req.method === 'GET') return NextResponse.next();
+     // 证书公开：链接本身就是验证方式，分享出去的人不该被拦去登录（改名字由路由自己核对访客编号）
+     if (pathname.startsWith('/api/lab/cert/')) return NextResponse.next();
++    // 真活台公开：参与链接 / 自助出题 / 出题人管理链接都靠 token 与 owner_key 自己核对，不走登录（/api/admin/work 仍要登录）
++    if (pathname.startsWith('/api/work/')) return NextResponse.next();
+     // 飞轮信号接入：以后的 ToC 带 FLYWHEEL_INGEST_KEY，没有登录态；放进去由路由自己验密钥
+     if (pathname === '/api/flywheel/signal' && req.method === 'POST' && req.headers.get('x-flywheel-key')) return NextResponse.next();
+     // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉
+     const headers = new Headers(req.headers);
+     headers.delete(INVITED); headers.delete(INVITED_BY); headers.delete(LAB_GUEST);
++    // 数据外采篮（Chrome 插件）不带 cookie，带篮子口令（Authorization: Bearer）
++    if (pathname.startsWith('/api/basket/')) {
++      const bearer = req.headers.get('authorization')?.match(/^Bearer\s+(.+)$/i)?.[1];
++      if (bearer && await verifyToken(bearer.trim())) return NextResponse.next({ request: { headers } });
++    }
+     const token = req.cookies.get('auth_token')?.value;
+     const payload = token ? await verifyToken(token) : null;
+     if (payload) return NextResponse.next({ request: { headers } });
+@@ -68,7 +75,7 @@ export async function proxy(req: NextRequest) {
+   // AI 百业首页公开：谁都能看见理念和这些人，点进任何一个空间才要求登录（LAB_PUBLIC=1 时整个 /lab 都公开）
+   // 百业工厂（列表 /lab/spaces、工作室 /lab/studio/*、素材库 /lab/assets、设计文档 /lab/logic、百业后台 /lab/admin）例外：放开时也要登录。
+   // 没登录的人只有首页和「体验百业」（/lab/gallery、各空间页、我的进度、证书、3D beta）。
+-  if (pathname.startsWith('/lab/cert/')) return NextResponse.next();
++  if (pathname.startsWith('/lab/cert/') || pathname === '/lab/login') return NextResponse.next();
+   if (pathname === '/lab' || (LAB_PUBLIC() && pathname.startsWith('/lab/') && !LAB_FACTORY_PAGE(pathname))) return NextResponse.next();
+ 
+   // 邀请链接 /lab/<id>?invite=…：票对得上这个空间，就不用登录
+@@ -78,14 +85,15 @@ export async function proxy(req: NextRequest) {
+     if (inv && inv.spaceId === pm[1]) return NextResponse.next();
+   }
+ 
+-  // Protect /admin and /office (虚拟工厂) routes
+-  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab')) {
++  // Protect /admin and /office (虚拟工厂) routes；真活台：出题 / 管理页要登录（/work/mine、/work/admin），做题页 /work/<token> 公开
++  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab') || pathname === '/work/mine' || pathname === '/work/new' || pathname.startsWith('/work/admin')) {
+     const token = req.cookies.get('auth_token')?.value;
+ 
+     if (!token) {
+       // 从公开首页点进来的，登录完要回到他想去的地方，而不是落到虚拟工厂
+-      const login = new URL('/login', req.url);
+-      if (pathname.startsWith('/lab')) login.searchParams.set('next', pathname + req.nextUrl.search);
++      // 百业 / 真活用各自的蒙版式登录页（账号同一套），别让人看见企业数据工厂的登录页
++      const login = new URL(pathname.startsWith('/lab') ? '/lab/login' : pathname.startsWith('/work') ? '/work/login' : '/login', req.url);
++      if (pathname.startsWith('/lab') || pathname.startsWith('/work')) login.searchParams.set('next', pathname + req.nextUrl.search);
+       return NextResponse.redirect(login);
+     }
+ 
+@@ -114,5 +122,5 @@ export async function proxy(req: NextRequest) {
+ }
+ 
+ export const config = {
+-  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/api/:path*', '/'],
++  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/work/mine', '/work/new', '/work/admin', '/api/:path*', '/'],
+ };

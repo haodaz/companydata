@@ -1,0 +1,115 @@
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { verifyToken } from '@/lib/jwt';
+import { INVITED, INVITED_BY, readInvite } from '@/lib/lab-invite';
+import { LAB_GUEST } from '@/lib/lab-guest';
+
+/** 受邀专家能碰的接口：这一位数字职人的空间本身（只读），以及向上学习的三步 */
+const INVITE_API = /^\/api\/lab\/spaces\/([^/]+)(?:\/(interview|submit|distill))?$/;
+const INVITE_PAGE = /^\/lab\/([^/]+)$/;
+
+/**
+ * 整个 /lab 免登录（海外这套用来给投资人 / CEO 融资演示，不能让人注册登录）。环境变量 LAB_PUBLIC=1 打开。
+ * 公司部署不开：/lab 照常要登录（他们有自己的统一认证）。只放 /lab 页面和 /api/lab/*，数据工厂的接口不受影响。
+ */
+const LAB_PUBLIC = () => process.env.LAB_PUBLIC === '1';
+const LAB_FACTORY_PAGE = (p: string) => /^\/lab\/(spaces|studio|assets|logic|admin)(\/|$)/.test(p);
+/** 放开时仍要登录的「工厂」操作：生成新空间 / 预置示范、删除空间、发邀请链接、蒸馏专家技能（花钱或改内容） */
+const LAB_PROTECTED = (pathname: string, method: string) =>
+  pathname.startsWith('/api/lab/studio/') ||   // 百业工厂：看草稿、改章节
+  pathname.startsWith('/api/lab/assets') ||    // 百业工厂：素材库
+  (method === 'POST' && (pathname === '/api/lab/spaces' || pathname === '/api/lab/seed')) ||
+  (method === 'DELETE' && /^\/api\/lab\/spaces\/[^/]+$/.test(pathname)) ||
+  (method === 'POST' && /^\/api\/lab\/spaces\/[^/]+\/(invite|distill)$/.test(pathname));
+
+export async function proxy(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+
+  // API：除登录 / 注册外全部需要登录（agent 接口会消耗 Token，数据接口走 service role）
+  if (pathname.startsWith('/api/')) {
+    if (pathname.startsWith('/api/auth/')) return NextResponse.next();
+    // 首页（/lab）是公开的宣传页，它只问这一个接口
+    if (pathname === '/api/lab/landing' && req.method === 'GET') return NextResponse.next();
+    // 证书公开：链接本身就是验证方式，分享出去的人不该被拦去登录（改名字由路由自己核对访客编号）
+    if (pathname.startsWith('/api/lab/cert/')) return NextResponse.next();
+    // 真活台公开：参与链接 / 出题人管理链接都靠 token 与 owner_key 自己核对，不走登录（/api/admin/work 仍要登录）
+    if (pathname.startsWith('/api/work/')) return NextResponse.next();
+    // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉
+    const headers = new Headers(req.headers);
+    headers.delete(INVITED); headers.delete(INVITED_BY); headers.delete(LAB_GUEST);
+    const token = req.cookies.get('auth_token')?.value;
+    const payload = token ? await verifyToken(token) : null;
+    if (payload) return NextResponse.next({ request: { headers } });
+    // 没登录的游客 / 受邀老师傅：打上游客标记，接口里模型锁在主力模型（不让游客挑贵的模型）
+    headers.set(LAB_GUEST, '1');
+    if (LAB_PUBLIC() && pathname.startsWith('/api/lab/') && !LAB_PROTECTED(pathname, req.method)) return NextResponse.next({ request: { headers } });
+
+    // 没登录：拿着邀请票的老师傅，只能碰票上那一位数字职人的几条学习接口
+    const m = pathname.match(INVITE_API);
+    if (m) {
+      const inv = await readInvite(req.headers.get('x-lab-invite'));
+      const methodOk = m[2] ? req.method === 'POST' : req.method === 'GET';
+      if (inv && inv.spaceId === m[1] && methodOk) {
+        headers.set(INVITED, m[1]); headers.set(INVITED_BY, encodeURIComponent(inv.by));
+        return NextResponse.next({ request: { headers } });
+      }
+    }
+    return NextResponse.json({ ok: false, error: '未登录或登录已过期' }, { status: 401 });
+  }
+
+  // public/lab/ 下的图和视频跟登录墙后的页面共用 /lab/ 前缀，别被当成页面拦去登录：
+  // 公开首页要用，图片优化器从服务端去取时也不带 cookie
+  if (/^\/lab\/(?:[^/]+\/)*[^/]+\.(png|jpe?g|webp|gif|svg|mp4|webm)$/i.test(pathname)) return NextResponse.next();
+
+  // AI 百业首页公开：谁都能看见理念和这些人，点进任何一个空间才要求登录（LAB_PUBLIC=1 时整个 /lab 都公开）
+  // 百业工厂（列表 /lab/spaces、工作室 /lab/studio/*、素材库 /lab/assets、设计文档 /lab/logic、百业后台 /lab/admin）例外：放开时也要登录。
+  // 没登录的人只有首页和「体验百业」（/lab/gallery、各空间页、我的进度、证书、3D beta）。
+  if (pathname.startsWith('/lab/cert/') || pathname === '/lab/login' || pathname === '/work/login') return NextResponse.next();
+  if (pathname === '/lab' || (LAB_PUBLIC() && pathname.startsWith('/lab/') && !LAB_FACTORY_PAGE(pathname))) return NextResponse.next();
+
+  // 邀请链接 /lab/<id>?invite=…：票对得上这个空间，就不用登录
+  const pm = pathname.match(INVITE_PAGE);
+  if (pm && pm[1] !== 'spaces') {
+    const inv = await readInvite(req.nextUrl.searchParams.get('invite'));
+    if (inv && inv.spaceId === pm[1]) return NextResponse.next();
+  }
+
+  // Protect /admin (后台) and /lab (数字技能空间) routes；真活台：出题 / 管理页要登录（/work/mine、/work/new、/work/admin），做题页 /work/<token> 公开
+  if (pathname.startsWith('/admin') || pathname.startsWith('/lab') || pathname === '/work/mine' || pathname === '/work/new' || pathname.startsWith('/work/admin')) {
+    const token = req.cookies.get('auth_token')?.value;
+
+    if (!token) {
+      // 从公开首页点进来的，登录完要回到他想去的地方，而不是落到虚拟工厂
+      // 百业 / 真活用各自的蒙版式登录页（账号同一套），别让人看见后台的登录页
+      const login = new URL(pathname.startsWith('/lab') ? '/lab/login' : pathname.startsWith('/work') ? '/work/login' : '/login', req.url);
+      if (pathname.startsWith('/lab') || pathname.startsWith('/work')) login.searchParams.set('next', pathname + req.nextUrl.search);
+      return NextResponse.redirect(login);
+    }
+
+    const payload = await verifyToken(token);
+    if (!payload) {
+      // Invalid token, clear it and redirect to login
+      const response = NextResponse.redirect(new URL('/login', req.url));
+      response.cookies.delete('auth_token');
+      return response;
+    }
+
+    // Role-based protection: only admin can access /admin/system-users
+    if (pathname.startsWith('/admin/system-users') && payload.role !== 'admin') {
+      return NextResponse.redirect(new URL('/admin/token-usage', req.url));
+    }
+
+    return NextResponse.next();
+  }
+
+  // 首页落在数字技能空间（未登录会被上面的规则拦到 /login）
+  if (pathname === '/') {
+    return NextResponse.redirect(new URL('/lab', req.url));
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ['/admin/:path*', '/lab/:path*', '/lab', '/work/mine', '/work/new', '/work/admin', '/api/:path*', '/'],
+};

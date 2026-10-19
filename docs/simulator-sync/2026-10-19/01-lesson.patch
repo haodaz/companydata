@@ -1,0 +1,820 @@
+diff --git a/src/app/api/lab/spaces/[id]/lesson/route.ts b/src/app/api/lab/spaces/[id]/lesson/route.ts
+new file mode 100644
+index 0000000..9b38fea
+--- /dev/null
++++ b/src/app/api/lab/spaces/[id]/lesson/route.ts
+@@ -0,0 +1,19 @@
++import { NextRequest, NextResponse } from 'next/server';
++import { buildLesson } from '@/lib/lab-lesson';
++import { labError } from '@/lib/skill-lab-server';
++
++export const runtime = 'nodejs';
++export const maxDuration = 120;
++
++/** 跟我学 · 这一章的教案：?chapter=<章节编号>（空 = 老空间的主流程）；&force=1 重新生成。游客也能看（模型锁默认） */
++export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
++  try {
++    const { id } = await params;
++    const q = req.nextUrl.searchParams;
++    // 教案是服务端备的课（批量预生成，缺了才现算），模型不跟用户的选单走；游客也不走模型锁
++    const lesson = await buildLesson(id, q.get('chapter') || null, { force: q.get('force') === '1' && !!req.cookies.get('auth_token') });
++    return NextResponse.json({ ok: true, lesson });
++  } catch (e: any) {
++    return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
++  }
++}
+diff --git a/src/app/lab/[id]/page.tsx b/src/app/lab/[id]/page.tsx
+index 90547e5..a8e2a25 100644
+--- a/src/app/lab/[id]/page.tsx
++++ b/src/app/lab/[id]/page.tsx
+@@ -1,6 +1,7 @@
+ 'use client';
+ 
+ import { beta3dForChapter, beta3dForSpace } from '@/lib/lab-3d-beta';
++import type { Lesson } from '@/lib/lab-lesson';
+ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+ import { useParams, useRouter, useSearchParams } from 'next/navigation';
+ import Image from 'next/image';
+@@ -20,6 +21,7 @@ const ALL_MODES: Mode[] = ['career', 'teach', 'test', 'learn', 'solve', 'ledger'
+ 
+ const MODES: { key: Mode; label: string; icon: string }[] = [
+   // 都是数字职人在说话：我教你 = 他上台演示给你看；考考你 = 你自己上手（考核，也是体验）
++  // 我教你 = 跟我学（2026-10-18 用户：别做成两套）：每步讲为什么，工位上我先做一遍、你再比着做，不发证书但有操作打分
+   { key: 'teach', label: '我教你', icon: 'play' },
+   { key: 'test', label: '考考你', icon: 'test' },
+   { key: 'learn', label: '你教我', icon: 'learn' },
+@@ -543,6 +545,34 @@ function castOf(space: any, sim: Sim | null) {
+   };
+   /** 演示模式：带着专家轨迹进故事线，每一步预填好、工位自己走 */
+   const [demo, setDemo] = useState<any | null>(null);
++  // 跟我学：这一章的教案（lab_chapters.lesson，批量预生成；没有就现算一次）
++  const [study, setStudy] = useState<Lesson | null>(null);
++  const [studyBusy, setStudyBusy] = useState(false);
++  /** 跟我学学完一段：不评分不留痕，提示去考考你 */
++  const finishStudy = (trace?: SimTrace) => {
++    const ch = chapter;
++    setAnswering(false); setStudy(null); setStageReport(null);
++    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
++    // 工位上「比着做」的操作打分（不发证书）：每个动作标准 / 调整 / 代做，违规扣分
++    const scores = Object.values(trace || {}).map((v: any) => v?.study).filter(Boolean) as { score: number; outcomes: { outcome: string }[]; violations: number }[];
++    const sc = scores.length ? Math.round(scores.reduce((a, x) => a + x.score, 0) / scores.length) : null;
++    const tally = scores.flatMap(x => x.outcomes).reduce((m, o) => ({ ...m, [o.outcome]: (m[o.outcome] || 0) + 1 }), {} as Record<string, number>);
++    modal.success({
++      title: sc != null ? `这一段学完了 · 操作打分 ${sc}` : '这一段学完了',
++      content: <div style={{ lineHeight: 1.8 }}>{sc != null && <div>比着做了 {scores.flatMap(x => x.outcomes).length} 下：标准 {tally.standard || 0} · 调整后到位 {tally.adjusted || 0} · 代做 {tally.assisted || 0}{scores.reduce((a, x) => a + x.violations, 0) ? ` · 违规 ${scores.reduce((a, x) => a + x.violations, 0)}` : ''}。这个分只记在你自己这儿，不发证书。</div>}每一步为什么这么做、依据是什么，都过了一遍。换你自己来——考考你按同一套规则打分、发成绩单。</div>,
++      okText: '去考考你', cancelText: '再学一遍', onOk: () => { setMode('test', true); if (ch?.id) pickChapter(ch.id); },
++    });
++  };
++  const startStudy = async () => {
++    if (!sim) return;
++    setStudyBusy(true);
++    try {
++      const j = await (await fetch(`/api/lab/spaces/${id}/lesson${chapter?.id ? `?chapter=${chapter.id}` : ''}`)).json();
++      if (!j.ok) throw new Error(j.error);
++      setStudy(j.lesson); setDemo(null); setIntro(true); setAnswering(true);
++      if (sim?.art) enterFullscreen();
++    } catch (e: any) { message.error(e.message); } finally { setStudyBusy(false); }
++  };
+   /** 「我的行当」：同行 / 在招 / 上下游，进这一层才拉 */
+   const [eco, setEco] = useState<any | null>(null);
+   const [ecoBusy, setEcoBusy] = useState(false);
+@@ -882,7 +912,7 @@ function castOf(space: any, sim: Sim | null) {
+   const allPortals: { key: Mode | 'chat'; label: string; icon: string; sub: string; main?: boolean; go?: () => void }[] = [
+     // 和我聊排第一：受邀来教的老师傅不出现
+     ...(!guest ? [{ key: 'chat' as const, label: '和我聊', icon: 'chat', sub: '聊聊这一行 · 每句有出处', main: true, go: () => router.push(`/lab/${id}/chat`) }] : []),
+-    { key: 'teach', label: '我教你', icon: 'play', sub: skill?.expert_trace && sim ? '看我把这一天走一遍' : '先让老师傅教我一遍', main: true },
++    { key: 'teach', label: '我教你', icon: 'play', sub: '一步一步讲，我做一遍你比着做', main: true },
+     { key: 'test', label: '考考你', icon: 'test', sub: stat[0].v ? `${stat[0].v} 人考过 · 换你上手` : '换你上手走一遍', main: true },
+     { key: 'learn', label: '你教我', icon: 'learn', sub: draft ? '等第一位老师傅' : `学自 ${skill.expert_name}`, main: true },
+     { key: 'solve', label: '问问我', icon: 'solve', sub: stat[2].v ? `解过 ${stat[2].v} 次` : '把真实问题交给我', main: true },
+@@ -1081,11 +1111,11 @@ function castOf(space: any, sim: Sim | null) {
+               </div>
+             </div>
+           ) : intro ? (
+-            <ChapterIntro chapter={chapter} chapters={chapters} space={space} sim={sim} demo={!!demo}
+-              profile={askProfile && !demo ? { name: rookie.name, note: rookie.note, location: rookie.location, set: (k: 'name' | 'note' | 'location', v: string) => setRookie(r => ({ ...r, [k]: v })) } : null}
+-              onStart={() => { if (askProfile && !demo) saveProfile(); setIntro(false); }} />
++            <ChapterIntro chapter={chapter} chapters={chapters} space={space} sim={sim} demo={!!demo} study={!!study}
++              profile={askProfile && !demo && !study ? { name: rookie.name, note: rookie.note, location: rookie.location, set: (k: 'name' | 'note' | 'location', v: string) => setRookie(r => ({ ...r, [k]: v })) } : null}
++              onStart={() => { if (askProfile && !demo && !study) saveProfile(); setIntro(false); }} />
+           ) : (
+-            <SimRunner key={runKey + (demo ? '-demo' : '')} startAt={startAt} demo={demo || undefined} sim={sim} role="rookie" busy={!!busy} backdrop={beta3dForChapter(String(id), chapter?.slot)} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); }} onFinish={trace => { const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, trace); }} />
++            <SimRunner key={runKey + (demo ? '-demo' : '') + (study ? '-study' : '')} startAt={startAt} demo={demo || undefined} study={study || undefined} sim={sim} role="rookie" busy={!!busy} backdrop={beta3dForChapter(String(id), chapter?.slot)} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); setStudy(null); }} onFinish={trace => { if (study) { finishStudy(trace); return; } const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, trace); }} />
+           )}
+         </SimStage>
+       )}
+@@ -1105,8 +1135,9 @@ function castOf(space: any, sim: Sim | null) {
+           ) : undefined}
+           top={mode === 'learn' ? learnTop : undefined}
+           bottom={mode === 'learn' && learnedPanel ? <div className="dayv-sec">{learnedPanel}</div> : undefined} onPick={pickChapter} onBareAI={() => submit('ai', false)}
+-          onStart={() => { if (sim?.art) enterFullscreen(); setDemo(null); setIntro(true); setAnswering(true); }}
+-          onTeach={() => { if (sim && chapterTrace) { setDemo(chapterTrace); setIntro(true); setAnswering(true); } }} />
++          onStart={() => { if (sim?.art) enterFullscreen(); setDemo(null); setStudy(null); setIntro(true); setAnswering(true); }}
++          onTeach={() => { if (sim && chapterTrace) { setDemo(chapterTrace); setStudy(null); setIntro(true); setAnswering(true); } }}
++          onStudy={startStudy} studyBusy={studyBusy} />
+       )}
+       {(mode === 'test' || mode === 'teach') && !isDay && !(answering && sim) && (
+         <div>
+@@ -1488,7 +1519,7 @@ function castOf(space: any, sim: Sim | null) {
+ }
+ 
+ /** 每一段开演前的介绍页：这一幕是什么、几点、会见到谁、在哪、用到什么（第一段也有） */
+-function ChapterIntro({ chapter, chapters, space, sim, demo, onStart, profile }: { chapter: any; chapters: any[]; space: any; sim: Sim; demo: boolean; onStart: () => void;
++function ChapterIntro({ chapter, chapters, space, sim, demo, study, onStart, profile }: { chapter: any; chapters: any[]; space: any; sim: Sim; demo: boolean; study?: boolean; onStart: () => void;
+   /** 第一次来：顺便问一下称呼（证书上用），只问这一次 */ profile?: { name: string; note: string; location: string; set: (k: 'name' | 'note' | 'location', v: string) => void } | null }) {
+   const idx = chapter ? chapters.indexOf(chapter) : 0;
+   const n = chapters.length;
+@@ -1538,7 +1569,7 @@ function ChapterIntro({ chapter, chapters, space, sim, demo, onStart, profile }:
+         </div>
+       )}
+       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 18, flexWrap: 'wrap' }}>
+-        <button className="lab-btn" onClick={onStart}>{demo ? `看 ${space?.profile?.name || '他'} 走这一段 →` : '开始这一段 →'}</button>
++        <button className="lab-btn" onClick={onStart}>{study ? '开始跟着学 →' : demo ? `看 ${space?.profile?.name || '他'} 走这一段 →` : '开始这一段 →'}</button>
+         <span style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{steps.length} 步{bench ? ' · 含虚拟工位' : ''} · 约 {Math.max(5, steps.length * 2)} 分钟</span>
+       </div>
+     </div>
+@@ -1600,9 +1631,9 @@ const DAYV_CSS = `
+  * 场景大图、这一段要交代的事、会遇到谁、在哪、这一段考什么，进入操作台 / 看他走一遍。
+  */
+ type DayMode = 'test' | 'teach' | 'learn';
+-function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach, busy, bareBusy, onBack, onMode, onPick, onStart, onTeach, onBareAI, actions, top, bottom, done }: {
++function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach, busy, bareBusy, onBack, onMode, onPick, onStart, onTeach, onBareAI, actions, top, bottom, done, onStudy, studyBusy }: {
+   mode: DayMode; modes: DayMode[]; space: any; chapters: any[]; chapter: any; sim: Sim | null; rubric: RubricItem[]; canTeach: boolean; busy: boolean; bareBusy?: boolean;
+-  onBack: (() => void) | null; onMode: (m: DayMode) => void; onPick: (id: string | null) => void; onStart: () => void; onTeach: () => void; onBareAI: () => void;
++  onBack: (() => void) | null; onMode: (m: DayMode) => void; onPick: (id: string | null) => void; onStart: () => void; onTeach: () => void; onBareAI: () => void; onStudy?: () => void; studyBusy?: boolean;
+   /** 横幅上的按钮（你教我用自己的）；横幅下方 / 页面底部插进来的内容 */ actions?: React.ReactNode; top?: React.ReactNode; bottom?: React.ReactNode;
+   /** 已经走过的段（时间轴上打 ✓） */ done?: Set<string>;
+ }) {
+@@ -1629,14 +1660,8 @@ function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach,
+         </button>}
+         <div className="dayv-h">{profile.role || '这一行'}的一天</div>
+         <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{chapters.length} 段 · 约 {minutes} 分钟</div>
+-        {/* 考核里不观摩：「考考你」只有自己上；想看老师傅怎么做，切到「我教你」 */}
+-        {modes.length > 1 && <div style={{ display: 'flex', gap: 4, marginTop: 12, padding: 3, borderRadius: 12, background: 'rgba(106,92,255,.08)', width: 'fit-content', flexWrap: 'wrap' }}>
+-          {([['test', '考考你'], ['teach', '我教你'], ['learn', '你教我']] as const).filter(([m]) => modes.includes(m)).map(([m, t]) => (
+-            <button key={m} onClick={() => onMode(m)} style={{ border: 0, cursor: 'pointer', fontFamily: 'inherit', fontSize: 12.5, fontWeight: 700, padding: '6px 12px', borderRadius: 9,
+-              background: mode === m ? '#fff' : 'transparent', color: mode === m ? 'var(--v)' : 'var(--ink3)', boxShadow: mode === m ? '0 2px 8px rgba(60,45,130,.12)' : 'none' }}>{t}</button>
+-          ))}
+-        </div>}
+-        <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.6 }}>{learn ? '请一位资深从业者把这一天走一遍，每段走完接受追问' : teach ? '看他怎么走：每一步按老师傅的做法' : '你来走：每段有成绩单，走完一整天领证书'}</div>
++        {/* 这里不放模式切换（2026-10-18 用户：容易点错，想自己操作却看 AI 操作）：模式在人物首页选 */}
++        <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.6 }}>{learn ? '请一位资深从业者把这一天走一遍，每段走完接受追问' : teach ? '跟着学：每一步讲为什么；工位上他先做一遍，你再比着做' : '你来走：每段有成绩单，走完一整天领证书'}</div>
+         <ol className="dayv-tl">
+           {chapters.map((c, i) => {
+             const on = c === chapter;
+@@ -1671,8 +1696,8 @@ function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach,
+         {/* 进入按钮放在大图下面（2026-10-12 用户：压在图上看不清） */}
+         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', margin: '14px 2px 4px', alignItems: 'center' }}>
+           {actions}
++          {teach && <button className="lab-btn" disabled={busy || studyBusy || !sim} onClick={onStudy} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>{studyBusy ? <>{profile.name || '他'}在备课<span className="lab-dots" /></> : `跟 ${profile.name || '他'} 学这一段 →`}</button>}
+           {!teach && !learn && <button className="lab-btn" disabled={busy || !sim} onClick={onStart} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>进入操作台</button>}
+-          {teach && <button className="lab-btn" disabled={busy || !canTeach} title={canTeach ? '' : '这一段还没有老师傅的示范'} onClick={onTeach} style={{ height: 46, padding: '0 26px', fontSize: 15 }}>看 {profile.name || '他'} 走一遍</button>}
+           {teach && <button className="lab-btn ghost" disabled={busy || bareBusy} onClick={onBareAI} title="没学过老师傅的通用模型自己走一遍，看看差在哪" style={{ height: 46 }}>{bareBusy ? <>通用 AI 走着呢<span className="lab-dots" /></> : '对比：没学过的通用 AI'}</button>}
+           <span style={{ fontSize: 13, color: 'var(--ink3)' }}>{steps.length} 步{steps.some(st => st.type === 'bench') ? ' · 含虚拟工位' : ''} · 约 {Math.max(5, steps.length * 2)} 分钟</span>
+         </div>
+diff --git a/src/components/lab/BenchRunner.tsx b/src/components/lab/BenchRunner.tsx
+index 4e41562..4f27a81 100644
+--- a/src/components/lab/BenchRunner.tsx
++++ b/src/components/lab/BenchRunner.tsx
+@@ -1,6 +1,6 @@
+ 'use client';
+ 
+-import React, { useCallback, useEffect, useRef, useState } from 'react';
++import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+ import { PLAY_TICK_MS, applyControl, benchEnv, evalExpr, finishBench, fmtT, initBench, layerPath, pointOnPath, projectOnPath, tickBench, type BenchSpec, type BenchState, type BenchTrace, type BenchEvent, type BenchLayer, type Pt } from '@/lib/bench';
+ import { HandCam, type HandPose } from '@/components/lab/HandCam';
+ import { ToolShape } from '@/components/lab/ToolShape';
+@@ -47,7 +47,7 @@ import type { Beta3DScene } from '@/lib/lab-3d-beta';
+ const TICK_MS = PLAY_TICK_MS, SNAP_EVERY_MS = 5000, SNAP_MAX = 16, SNAP_W = 320, SNAP_H = 180;
+ const VW = 1600, VH = 900; // 场景覆盖层坐标系（百分比 × 16 / × 9）
+ 
+-export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdrop }: { spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean; /** 演示模式：进来就自己走 */ demo?: boolean; /** 3D beta：工位画面四周是活的 3D 房间（跟着鼠标微动），工位本身也有一点视差 */ backdrop?: Beta3DScene | null }) {
++export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdrop, guided }: { spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean; /** 演示模式：进来就自己走 */ demo?: boolean; /** 跟我学：按老手脚本一步一步带着做——时钟走到下一个动作就停，说明做什么、为什么，人做对了再往下（lib/lab-lesson.ts 的 bench 教案） */ guided?: { before: string; actions: { i: number; say: string; basis?: string | null }[]; after: string } | null; /** 3D beta：工位画面四周是活的 3D 房间（跟着鼠标微动），工位本身也有一点视差 */ backdrop?: Beta3DScene | null }) {
+   const stRef = useRef<BenchState>(initBench(spec));
+   const panelRef = useRef<SVGSVGElement>(null);
+   const sceneRef = useRef<SVGSVGElement>(null);
+@@ -114,30 +114,80 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
+       }
+       // 轨迹走到哪里，落点就落在哪里——图案 / 切口跟着长出来
+       if (trackLayer?.control) { const h = pointOnPath(trackPts.current, s.controls[trackLayer.control] || 0); drop(h.x, h.y); }
+-      if (autoI.current >= script.length && s.t > script[script.length - 1].t + 4) { setAuto(false); setRunning(false); }
++      if (autoI.current >= script.length && s.t > script[script.length - 1].t + 4) { setAuto(false); setRunning(false); if (guided && gPhaseRef.current === 'demo') setGPhase('ready'); }
+       bump(v => v + 1);
+     }, TICK_MS);
+     return () => clearInterval(iv);
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [auto, running, spec]);
+ 
++  // ── 跟我学：老手脚本一个动作一个动作带着做。gPhase：before 先看 → act 做动作 → after 收尾确认 → done ──
++  const gScript = useMemo(() => [...(spec.expertScript || [])].sort((a, b) => a.t - b.t), [spec]);
++  // 两段式（2026-10-18 用户）：before 先看 → demo 我先做一遍（老手脚本自动走，边走边讲）→ ready → act 你比着做（一下一下） → after → done（操作打分）
++  const [gPhase, setGPhase] = useState<'before' | 'demo' | 'ready' | 'act' | 'after' | 'done'>(guided ? 'before' : 'done');
++  const gPhaseRef = useRef(gPhase); gPhaseRef.current = gPhase;
++  /** 你比着做：每一下的评价。standard 一次到位 · adjusted 调了几次才到 · assisted 让他代做 */
++  const [gOutcomes, setGOutcomes] = useState<{ i: number; outcome: 'standard' | 'adjusted' | 'assisted' }[]>([]);
++  const gTries = useRef(0);          // 当前这一下，学生拨了几次目标控件
++  const gDir = useRef(0);            // 旋钮上一次拨的方向（反向了才算一次调整）
++  const gActStart = useRef(0);       // 「换你比着做」时的事件数：之后的违规才算学生的
++  const [gi, setGi] = useState(0);                 // 下一个要做的动作
++  const [gPaused, setGPaused] = useState(!!guided); // 时钟停着等人做
++  const gPausedRef = useRef(!!guided); gPausedRef.current = gPaused;
++  const gEvents = useRef(0);                      // 发指令时的事件数（按钮类动作靠「有没有新按下」判断）
++  const gTarget = gi < gScript.length ? gScript[gi] : null;
++  const gCtl = gTarget ? spec.controls.find(c => c.id === gTarget.control) : null;
++  /** 当前动作做对了没有 */
++  const gMatched = () => {
++    if (!gTarget || !gCtl) return false;
++    const v = stRef.current.controls[gTarget.control] || 0;
++    if (gCtl.kind === 'knob') { const tol = Math.max(gCtl.step || 1, ((gCtl.max ?? 100) - (gCtl.min ?? 0)) * 0.06); return Math.abs(v - gTarget.value) <= tol; }
++    if (gCtl.kind === 'path') return v >= gTarget.value - 2;
++    if (gCtl.kind === 'button') return stRef.current.events.slice(gEvents.current).some(e => e.kind === 'control' && e.control === gTarget.control);
++    return (v ? 1 : 0) === (gTarget.value ? 1 : 0);
++  };
++  const gAdvance = (outcome: 'standard' | 'adjusted' | 'assisted' = 'standard') => {
++    setGOutcomes(o => [...o, { i: gi, outcome }]); gTries.current = 0; gDir.current = 0;
++    const next = gi + 1; setGi(next); gEvents.current = stRef.current.events.length;
++    if (next >= gScript.length) { setGPhase('after'); setGPaused(false); } else setGPaused(false);
++  };
++  useEffect(() => {
++    if (!guided || gPhase !== 'act' || !gPaused) return;
++    if (gMatched()) { const t = setTimeout(() => gAdvance(gTries.current <= 1 ? 'standard' : 'adjusted'), 450); return () => clearTimeout(t); }
++  // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, [guided, gPhase, gPaused, st.events.length, gi, ...spec.controls.map(c => st.controls[c.id])]);
++  /** 替我做一下：老手这一下直接帮你按了，看着它变 */
++  const gDoIt = () => { if (!gTarget) return; applyControl(spec, stRef.current, gTarget.control, gTarget.value); if (trackLayerRef.current?.control) { const h = pointOnPath(trackPts.current, stRef.current.controls[trackLayerRef.current.control] || 0); drop(h.x, h.y); } snapshot(); bump(v => v + 1); gAdvance('assisted'); };
++
+   // 模拟时钟
+   useEffect(() => {
+     if (!running) return;
+     const iv = setInterval(() => {
+       const s = stRef.current;
++      if (guided && gPausedRef.current) return;   // 跟我学：停着等人做
+       const before = s.events.length;
+       tickBench(spec, s, spec.timeScale * (TICK_MS / 1000));
++      // 跟我学：时钟走到下一个动作的时刻就停下来讲
++      if (guided && gPhase === 'act' && gi < gScript.length && s.t >= gScript[gi].t) { gEvents.current = s.events.length; setGPaused(true); }
++      if (guided && gPhase === 'after' && s.t >= (gScript[gScript.length - 1]?.t ?? 0) + 4) { setGPaused(true); setGPhase('done'); }
+       if (s.events.length > before) snapshot();
+       else if (Date.now() - lastSnap.current > SNAP_EVERY_MS) snapshot();
+       if (s.t >= spec.maxSeconds) setRunning(false);
+       bump(v => v + 1);
+     }, TICK_MS);
+     return () => clearInterval(iv);
+-  }, [running, spec, snapshot]);
++  // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, [running, spec, snapshot, guided, gPhase, gi]);
+ 
+   const act = (id: string, value: number) => {
+-    if (!running || auto) return;
++    if ((!running && !guided) || auto) return;
++    if (guided && gPhaseRef.current !== 'act' && gPhaseRef.current !== 'done') return;   // 看示范的时候别碰台面
++    if (guided && gPhaseRef.current === 'act' && gPausedRef.current) {
++      // 旋钮朝一个方向连着拨算一下；拨过头往回调、或摸了别的控件，才算「调整」
++      if (id !== gTarget?.control) gTries.current += 2;
++      else if (gCtl?.kind === 'knob') { const d = Math.sign(value - (stRef.current.controls[id] || 0)); if (!gTries.current || (gDir.current && d && d !== gDir.current)) gTries.current++; if (d) gDir.current = d; }
++      else gTries.current++;
++    }
+     applyControl(spec, stRef.current, id, value);
+     if (spec.controls.find(c => c.id === id)?.kind !== 'path') snapshot();
+     bump(v => v + 1);
+@@ -145,6 +195,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
+ 
+   // ── 轨迹工位（焊缝 / 拉花）：指针或手的位置 → 投影到折线上的进度 + 离折线的距离 ──
+   const trackLayer = scene?.layers.find(l => (l.kind === 'seam' || l.kind === 'pour') && l.control);
++  const trackLayerRef = useRef<typeof trackLayer>(undefined); trackLayerRef.current = trackLayer;
+   const trackPts = useRef<Pt[]>([]);
+   if (trackLayer && !trackPts.current.length) trackPts.current = layerPath(trackLayer);
+   const isLatte = trackLayer?.kind === 'pour';
+@@ -252,10 +303,15 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
+   const onScenePointerMove = (e: React.PointerEvent) => { const l = dragRef.current; if (!l?.control) return; const q = scenePoint(e.clientX, e.clientY); if (q) onTrack(l, q.x, q.y); };
+   const onScenePointerUp = () => { if (dragRef.current) pourEnd(); dragRef.current = null; };
+ 
++  /** 你比着做的操作打分：标准 100 · 调整 70 · 代做 30 的平均，学生自己那一遍里每条违规扣 10 */
++  const gViolations = () => stRef.current.events.slice(gActStart.current).filter(e => e.kind === 'rule' && e.severity === 'violation').length;
++  const gScore = () => { const w = { standard: 100, adjusted: 70, assisted: 30 }; const base = gOutcomes.length ? gOutcomes.reduce((a, o) => a + w[o.outcome], 0) / gOutcomes.length : 0; return Math.max(0, Math.min(100, Math.round(base - 10 * gViolations()))); };
+   const finish = async () => {
+     setRunning(false);
+     await snapshot(true);
+-    onFinish(finishBench(spec, stRef.current, true));
++    const tr: any = finishBench(spec, stRef.current, true);
++    if (guided) tr.study = { score: gScore(), outcomes: gOutcomes, violations: gViolations() };
++    onFinish(tr);
+   };
+   /** 从头再来：工位状态、落点、快照计数全清，时钟重新走（用户 2026-10-11 要的「重置」） */
+   // 不用 window.confirm（内嵌浏览器里弹窗会被拦掉，看起来像按钮坏了）：点一下「武装」，三秒内再点一下才执行
+@@ -263,6 +319,13 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
+   // 重来时台面组件整个重挂（它们自己的本地状态——补纸位置、刷过的点——也要清）
+   const [resetKey, setResetKey] = useState(0);
+   useEffect(() => { if (!armed) return; const t = setTimeout(() => setArmed(null), 3000); return () => clearTimeout(t); }, [armed]);
++  /** 清台面（不问）：工位状态、落点、快照计数全清 */
++  const hardReset = () => {
++    stRef.current = initBench(spec);
++    deposits.current = []; lastDrop.current = null; lastPt.current = null; dirRef.current = { x: 0, y: 0 };
++    snapCount.current = 0; lastSnap.current = 0; cutDepth.current = 0; cutProg.current = 0; grabAnchor.current = null; handRef.current = null;
++    autoI.current = 0; setAuto(false); setRunning(true); setResetKey(k => k + 1); bump(v => v + 1);
++  };
+   const reset = () => {
+     if (armed !== 'reset') { setArmed('reset'); return; }
+     setArmed(null);
+@@ -270,6 +333,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
+     deposits.current = []; lastDrop.current = null; lastPt.current = null; dirRef.current = { x: 0, y: 0 };
+     snapCount.current = 0; lastSnap.current = 0; cutDepth.current = 0; cutProg.current = 0; grabAnchor.current = null; handRef.current = null;
+     autoI.current = 0; setAuto(false); setRunning(true); setResetKey(k => k + 1); bump(v => v + 1);
++    if (guided) { setGPhase('before'); setGi(0); setGPaused(true); gEvents.current = 0; setGOutcomes([]); gTries.current = 0; gActStart.current = 0; }
+   };
+ 
+   const ev = (expr?: string) => { if (!expr) return 0; try { return evalExpr(expr, env); } catch { return 0; } };
+@@ -285,7 +349,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
+   const goalsDone = spec.goals.filter(g => st.goalDone[g.id] !== null).length;
+   const violations = st.events.filter(e => e.kind === 'rule' && e.severity === 'violation').length;
+   const recent = [...st.events].filter(e => e.kind !== 'snapshot').slice(-8).reverse();
+-  const canFinish = st.t > 30;
++  const canFinish = guided ? gPhase === 'done' : st.t > 30;
+   const pressed = (c: BenchSpec['controls'][number]) => c.kind === 'button' && st.events.some(e => e.kind === 'control' && e.control === c.id);
+ 
+   // ── 数字面板（SVG） ──
+@@ -393,8 +457,49 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
+   ) : null;
+ 
+   // ── 目标 + 事件流 + 按钮 ──
++  const demoNow = guided && gPhase === 'demo' ? guided.actions[Math.max(0, Math.min(guided.actions.length - 1, autoI.current - 1))] : null;
++  const tally = gOutcomes.reduce((m, o) => ({ ...m, [o.outcome]: (m[o.outcome] || 0) + 1 }), {} as Record<string, number>);
++  const guideCard = guided ? (
++    <div className={hud ? 'hud-card' : undefined} style={{ padding: 14, borderRadius: 14, background: 'rgba(106,92,255,.08)', border: '1.5px solid rgba(106,92,255,.45)', boxShadow: '0 0 0 4px rgba(106,92,255,.08)' }}>
++      <div className="lab-mono lab-cap" style={{ marginBottom: 6, color: 'var(--v)' }}>我教你 · {gPhase === 'before' ? '先看一眼' : gPhase === 'demo' ? `我先做一遍 · 第 ${Math.min(autoI.current, gScript.length)} / ${gScript.length} 下` : gPhase === 'ready' ? '我做完了' : gPhase === 'act' ? `换你比着做 · 第 ${gi + 1} / ${gScript.length} 下` : gPhase === 'after' ? '收尾' : `操作打分 ${gScore()}`}</div>
++      {gPhase === 'before' && <>
++        <div style={{ fontSize: 13.5, lineHeight: 1.75 }} className="hud-ink">{guided.before || '先把仪表和控件看一遍，知道每样东西管什么。'}</div>
++        <button className="lab-btn" style={{ marginTop: 10, width: '100%' }} onClick={() => { if (!gScript.length) { setGPhase('done'); setGPaused(true); return; } setGPhase('demo'); autoI.current = 0; setGPaused(false); setAuto(true); }}>先看我做一遍 →</button>
++      </>}
++      {gPhase === 'demo' && <>
++        <div style={{ fontSize: 14.5, fontWeight: 700, lineHeight: 1.6 }} className="hud-ink">{autoI.current === 0 ? '马上开始，看着仪表……' : demoNow?.say}</div>
++        {autoI.current > 0 && demoNow?.basis && <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, lineHeight: 1.6, color: 'var(--ink3)' }}>依据：{demoNow.basis}</div>}
++        <div className="hud-ink3" style={{ fontSize: 11.5, marginTop: 8, color: 'var(--ink3)' }}>看就行，先别动手；做完换你比着做</div>
++      </>}
++      {gPhase === 'ready' && <>
++        <div style={{ fontSize: 13.5, lineHeight: 1.75 }} className="hud-ink">{guided.after || '看看目标都达成了没有。'}</div>
++        <div className="hud-ink3" style={{ fontSize: 12, marginTop: 4, color: 'var(--ink3)' }}>我这一遍：目标 {goalsDone}/{spec.goals.length} · 违规 {violations}。台面清掉，换你一下一下比着做，每一下我都会评。</div>
++        <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
++          <button className="lab-btn" style={{ flex: 1 }} onClick={() => { hardReset(); setGOutcomes([]); gTries.current = 0; gActStart.current = 0; gEvents.current = 0; setGi(0); setGPhase('act'); setGPaused(false); }}>换你比着做 →</button>
++          <button className="lab-btn ghost sm" style={hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined} onClick={() => { hardReset(); setGPhase('demo'); autoI.current = 0; setGPaused(false); setAuto(true); }}>再看一遍</button>
++        </div>
++      </>}
++      {gPhase === 'act' && gTarget && (gPaused ? <>
++        <div style={{ fontSize: 14.5, fontWeight: 700, lineHeight: 1.6 }} className="hud-ink">{guided.actions[gi]?.say || `把「${gCtl?.label}」${gCtl?.kind === 'knob' ? `调到 ${gTarget.value}${gCtl.unit || ''}` : gCtl?.kind === 'switch' ? (gTarget.value ? '打开' : '关掉') : gCtl?.kind === 'path' ? `走到 ${gTarget.value}%` : '按下'}`}</div>
++        <div className="lab-mono" style={{ fontSize: 11.5, marginTop: 6, color: 'var(--v)' }}>▸ {gCtl?.label}{gCtl?.kind === 'knob' ? ` → ${gTarget.value}${gCtl.unit || ''}（现在 ${(st.controls[gTarget.control] ?? 0).toFixed?.(gCtl.step && gCtl.step < 1 ? 1 : 0)}${gCtl.unit || ''}）` : gCtl?.kind === 'switch' ? (gTarget.value ? ' → 开' : ' → 关') : gCtl?.kind === 'path' ? ` → ${gTarget.value}%` : ' → 按一下'}</div>
++        {guided.actions[gi]?.basis && <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, lineHeight: 1.6, color: 'var(--ink3)' }}>依据：{guided.actions[gi].basis}</div>}
++        <div style={{ display: 'flex', gap: 8, marginTop: 10, alignItems: 'center' }}>
++          <button className="lab-btn ghost sm" onClick={gDoIt} style={hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined}>替我做一下</button>
++          <span className="hud-ink3" style={{ fontSize: 11.5, color: 'var(--ink3)' }}>{gTries.current > 1 ? '回调过了，这一下算「调整后到位」' : '朝一个方向拨到位算「标准」'}</span>
++        </div>
++      </> : <div className="hud-ink3" style={{ fontSize: 13, color: 'var(--ink3)' }}>{gOutcomes.length ? <span style={{ color: gOutcomes[gOutcomes.length - 1].outcome === 'standard' ? '#3ddc97' : gOutcomes[gOutcomes.length - 1].outcome === 'adjusted' ? '#ffd166' : '#9aa0b8', fontWeight: 700 }}>{gOutcomes[gOutcomes.length - 1].outcome === 'standard' ? '✓ 标准' : gOutcomes[gOutcomes.length - 1].outcome === 'adjusted' ? '△ 调整后到位' : '○ 代做'}</span> : null} 看着它变化，到下一下再停 <span className="lab-dots" /></div>)}
++      {gPhase === 'after' && <div className="hud-ink3" style={{ fontSize: 13, color: 'var(--ink3)' }}>动作做完了，让它再走一会儿，看结果<span className="lab-dots" /></div>}
++      {gPhase === 'done' && <>
++        <div style={{ fontSize: 13.5, lineHeight: 1.75 }} className="hud-ink">{guided.after || '看看目标都达成了没有、事件流里有没有违规。'}</div>
++        <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, color: 'var(--ink3)' }}>你这一遍：目标 {goalsDone}/{spec.goals.length} · 违规 {gViolations()} · 一次到位 {tally.standard || 0} · 调整后到位 {tally.adjusted || 0} · 代做 {tally.assisted || 0}。不发证书，分记在你自己这儿；想再来一遍点「重来」，记住了就「完成操作」。</div>
++      </>}
++      {(gPhase === 'act' || gPhase === 'after') && gOutcomes.length > 0 && <div style={{ display: 'flex', gap: 4, marginTop: 8, flexWrap: 'wrap' }}>{gOutcomes.map(o => <span key={o.i} title={guided.actions[o.i]?.say} style={{ width: 14, height: 14, borderRadius: 4, background: o.outcome === 'standard' ? '#3ddc97' : o.outcome === 'adjusted' ? '#ffd166' : '#9aa0b8' }} />)}</div>}
++    </div>
++  ) : null;
++
+   const side = (
+     <>
++      {guideCard}
+       {handMirror}
+       <div className={hud ? 'hud-card' : undefined} style={{ padding: 14, borderRadius: 14, background: 'rgba(23,26,46,.04)', border: '1px solid var(--line)' }}>
+         <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>目标 {goalsDone}/{spec.goals.length}</div>
+@@ -418,7 +523,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
+         <button className="lab-btn ghost" onClick={reset} title="清掉这次的操作，从头再来" style={armed === 'reset' ? { background: '#ffd166', color: '#171a2e', borderColor: '#ffd166' } : hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined}>{armed === 'reset' ? '再点一下 · 重来' : '重来'}</button>
+         <button className="lab-btn ghost" onClick={() => { if (armed !== 'exit') { setArmed('exit'); return; } setArmed(null); onCancel(); }} style={armed === 'exit' ? { background: '#ff5fa2', color: '#fff', borderColor: '#ff5fa2' } : hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined}>{armed === 'exit' ? '再点一下 · 退出' : '退出'}</button>
+       </div>
+-      {!canFinish && <div style={{ fontSize: 11.5, color: hud ? 'rgba(255,255,255,.7)' : 'var(--ink3)' }}>至少操作 30 秒（模拟时间）后可提交。1 秒真实时间 = {spec.timeScale} 秒模拟时间。</div>}
++      {!canFinish && !guided && <div style={{ fontSize: 11.5, color: hud ? 'rgba(255,255,255,.7)' : 'var(--ink3)' }}>至少操作 30 秒（模拟时间）后可提交。1 秒真实时间 = {spec.timeScale} 秒模拟时间。</div>}
+     </>
+   );
+ 
+diff --git a/src/components/lab/SimRunner.tsx b/src/components/lab/SimRunner.tsx
+index 52374b3..5964b6b 100644
+--- a/src/components/lab/SimRunner.tsx
++++ b/src/components/lab/SimRunner.tsx
+@@ -8,6 +8,7 @@ import { BenchRunner, SnapshotStrip } from '@/components/lab/BenchRunner';
+ import { Splat3D } from '@/components/lab/Splat3D';
+ import type { Beta3DScene } from '@/lib/lab-3d-beta';
+ import type { BenchTrace } from '@/lib/bench';
++import type { Lesson } from '@/lib/lab-lesson';
+ 
+ /** 下钻 / 回复后浮现的数据面板：带动画的对比条 */
+ function RevealPanel({ reveal }: { reveal: SimReveal }) {
+@@ -72,7 +73,7 @@ export interface SimRunnerProps {
+ }
+ 
+ /** 模拟操作台：一步一步操作，每一步确认后才推进；下钻 / 询问会浮现新的信息 */
+-export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, backdrop }: SimRunnerProps & { /** 3D beta：这一章发生在已重建的 3D 场景里，用它代替平面背景 */ backdrop?: Beta3DScene | null; /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace; /** 从第几步开始：演示和取图时直接跳到工位那步 */ startAt?: number }) {
++export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, backdrop, study }: SimRunnerProps & { /** 跟我学：带教案（lib/lab-lesson.ts）——每步先讲看什么 / 为什么，自己选完再逐个选项讲对错，工位上一步一步带着做；不计时不评分 */ study?: Lesson; /** 3D beta：这一章发生在已重建的 3D 场景里，用它代替平面背景 */ backdrop?: Beta3DScene | null; /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace; /** 从第几步开始：演示和取图时直接跳到工位那步 */ startAt?: number }) {
+   const [idx, setIdx] = useState(Math.min(Math.max(0, startAt || 0), sim.steps.length - 1));
+   const [head3d, setHead3d] = useState(false);
+   // 评分要十几秒：按钮上走秒，让人知道没卡住
+@@ -124,7 +125,11 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt,
+ 
+   // choose 步骤选中后，确认才浮现对方的回复
+   const chosenReveal = step.type === 'choose' && confirmed ? step.options?.find(o => o.id === value)?.reveal : null;
+-  const needsReveal = step.type === 'choose' && !!step.options?.find(o => o.id === value)?.reveal;
++  const ls = study?.steps?.[step.id];
++  // 跟我学：每一步都先确认再讲评（选项逐个说对错、老手怎么做）
++  const needsReveal = (step.type === 'choose' && !!step.options?.find(o => o.id === value)?.reveal) || (!!study && step.type !== 'bench');
++  const verdictOf = (id: string) => (confirmed && ls?.options?.[id]) || null;
++  const vcolor = (v: 'best' | 'ok' | 'wrong') => v === 'best' ? '#12a150' : v === 'wrong' ? '#d6336c' : '#e08a1e';
+ 
+   const next = () => {
+     if (needsReveal && !confirmed) { setConfirmed(true); return; }
+@@ -144,18 +149,36 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt,
+       {(step.type === 'multi' || step.type === 'drill') && step.max && <span className="lab-mono" style={{ marginLeft: 10, fontSize: 12, color: 'var(--v)' }}>{(value || []).length}/{step.max}</span>}
+     </div>
+   );
++  // 跟我学：题面下面先讲「先看什么」；确认后讲「老手怎么想 · 老手怎么做」
++  const lessonTop = ls && step.type !== 'bench' ? (
++    <div className="lab-in" style={{ marginBottom: 14, padding: '12px 14px', borderRadius: 14, background: 'rgba(106,92,255,.07)', border: '1px solid rgba(106,92,255,.25)' }}>
++      <div className="lab-mono lab-cap" style={{ color: 'var(--v)', marginBottom: 4 }}>我教你 · 先看什么</div>
++      <div style={{ fontSize: 14, lineHeight: 1.75 }}>{ls.look || '先把题面和选项都读一遍，想想老手会盯住哪一点。'}</div>
++      {!confirmed && <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 4 }}>你先按自己的理解选，选完点「看看老手怎么做」——这里不计时、不计分。</div>}
++    </div>
++  ) : null;
++  const lessonBottom = ls && confirmed && step.type !== 'bench' ? (
++    <div className="lab-in" style={{ marginTop: 14, padding: '12px 14px', borderRadius: 14, background: 'rgba(18,161,80,.06)', border: '1px solid rgba(18,161,80,.25)' }}>
++      <div className="lab-mono lab-cap" style={{ color: '#12a150', marginBottom: 4 }}>老手怎么想</div>
++      <div style={{ fontSize: 14, lineHeight: 1.75 }}>{ls.think}</div>
++      {ls.master && <div style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 8, color: 'var(--ink2)' }}><b>老手这一步：</b>{ls.master}</div>}
++    </div>
++  ) : null;
+   const body = (
+     <>
++        {lessonTop}
+         {step.type === 'choose' && (
+           <div style={{ display: 'grid', gap: 10 }}>
+             {step.options!.map((o, i) => (
+-              <div key={o.id} style={tile(value === o.id, confirmed && value !== o.id)} onClick={() => !confirmed && set(o.id)}>
++              <div key={o.id} style={{ ...tile(value === o.id, confirmed && value !== o.id && !study), ...(verdictOf(o.id) ? { opacity: 1, borderColor: vcolor(verdictOf(o.id)!.verdict), background: verdictOf(o.id)!.verdict === 'best' ? 'rgba(18,161,80,.08)' : value === o.id ? 'rgba(214,51,108,.06)' : 'rgba(255,255,255,.7)' } : {}) }} onClick={() => !confirmed && set(o.id)}>
+                 <span className="lab-mono" style={{ color: 'var(--v)', fontWeight: 700, marginRight: 10 }}>{String.fromCharCode(65 + i)}</span>{o.label}
++                {verdictOf(o.id) && <span style={{ marginLeft: 8, fontSize: 11.5, fontWeight: 800, color: vcolor(verdictOf(o.id)!.verdict) }}>{verdictOf(o.id)!.verdict === 'best' ? '✓ 老手选这个' : verdictOf(o.id)!.verdict === 'wrong' ? '✗ 不该选' : '○ 也行'}</span>}
+                 {o.detail && <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 3, paddingLeft: 24 }}>{o.detail}</div>}
++                {verdictOf(o.id)?.note && <div className="lab-in" style={{ fontSize: 12.5, color: vcolor(verdictOf(o.id)!.verdict), marginTop: 4, paddingLeft: 24, lineHeight: 1.6 }}>{verdictOf(o.id)!.note}</div>}
+               </div>
+             ))}
+             {chosenReveal && <RevealPanel reveal={chosenReveal} />}
+-            {confirmed && !chosenReveal && <div className="lab-in" style={{ fontSize: 13, color: 'var(--ink3)' }}>（没有得到新的信息）</div>}
++            {confirmed && !chosenReveal && !study && <div className="lab-in" style={{ fontSize: 13, color: 'var(--ink3)' }}>（没有得到新的信息）</div>}
+           </div>
+         )}
+ 
+@@ -165,13 +188,15 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt,
+               const on = (value || []).includes(o.id);
+               const full = !on && !!step.max && (value || []).length >= step.max;
+               return (
+-                <div key={o.id} style={{ ...tile(on, full), alignSelf: 'start' }} onClick={() => !full && toggle(o.id)}>
++                <div key={o.id} style={{ ...tile(on, full && !confirmed), alignSelf: 'start', ...(verdictOf(o.id) ? { opacity: 1, borderColor: vcolor(verdictOf(o.id)!.verdict), background: verdictOf(o.id)!.verdict === 'best' ? 'rgba(18,161,80,.08)' : on ? 'rgba(214,51,108,.06)' : 'rgba(255,255,255,.7)' } : {}) }} onClick={() => !full && !confirmed && toggle(o.id)}>
+                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                     <span style={{ width: 18, height: 18, borderRadius: step.type === 'drill' ? 9 : 5, border: on ? 'none' : '1.5px solid rgba(106,92,255,.4)', background: on ? 'var(--v)' : 'transparent', color: '#fff', fontSize: 11, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{on ? '✓' : ''}</span>
+                     <span style={{ fontWeight: 600 }}>{o.label}</span>
+-                    {step.type === 'drill' && !on && <span className="lab-mono" style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--ink3)' }}>点击下钻</span>}
++                    {verdictOf(o.id) && <span style={{ marginLeft: 8, fontSize: 11.5, fontWeight: 800, color: vcolor(verdictOf(o.id)!.verdict) }}>{verdictOf(o.id)!.verdict === 'best' ? '✓ 该选' : verdictOf(o.id)!.verdict === 'wrong' ? '✗ 不该选' : '○ 也行'}</span>}
++                    {step.type === 'drill' && !on && !confirmed && <span className="lab-mono" style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--ink3)' }}>点击下钻</span>}
+                   </div>
+                   {o.detail && <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 3, paddingLeft: 28 }}>{o.detail}</div>}
++                  {verdictOf(o.id)?.note && <div className="lab-in" style={{ fontSize: 12.5, color: vcolor(verdictOf(o.id)!.verdict), marginTop: 4, paddingLeft: 28, lineHeight: 1.6 }}>{verdictOf(o.id)!.note}</div>}
+                   {step.type === 'drill' && on && o.reveal && <RevealPanel reveal={o.reveal} />}
+                 </div>
+               );
+@@ -188,7 +213,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt,
+           <div style={{ display: 'grid', gap: 10 }}>
+             {step.options!.map(o => (
+               <div key={o.id} style={{ ...tile(false), cursor: 'default', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+-                <div style={{ flex: '1 1 220px', minWidth: 0 }}><div style={{ fontWeight: 600 }}>{o.label}</div>{o.detail && <div style={{ fontSize: 12, color: 'var(--ink3)' }}>{o.detail}</div>}</div>
++                <div style={{ flex: '1 1 220px', minWidth: 0 }}><div style={{ fontWeight: 600 }}>{o.label}</div>{o.detail && <div style={{ fontSize: 12, color: 'var(--ink3)' }}>{o.detail}</div>}{verdictOf(o.id)?.note && <div className="lab-in" style={{ fontSize: 12.5, color: vcolor(verdictOf(o.id)!.verdict), marginTop: 4, lineHeight: 1.6 }}>{verdictOf(o.id)!.note}</div>}</div>
+                 <div style={{ display: 'flex', gap: 6 }}>
+                   {step.labels!.map(l => {
+                     const on = value?.[o.id] === l.id;
+@@ -230,14 +255,16 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt,
+         )}
+ 
+         {step.type === 'text' && <textarea className="lab-input" rows={9} value={value || ''} onChange={e => set(e.target.value)} placeholder={step.placeholder || '写下你的结论……'} />}
++        {lessonBottom}
+     </>
+   );
+   const buttons = (
+     <>
+       {!(step.type === 'bench' && !value?.finished) && <div style={{ display: 'flex', gap: 10, marginTop: 22, alignItems: 'center', flexWrap: 'wrap' }}>
+         <button className="lab-btn" disabled={!ready || busy} onClick={next}>
+-          {busy ? <>{role === 'expert' ? 'AI 核心在看你的操作' : 'AI 核心评分中'} · {waited} 秒{waited < 40 ? '（一般 15–30 秒）' : '（比平时慢，再等等）'}<span className="lab-dots" /></> : needsReveal && !confirmed ? '确认操作' : last ? (role === 'expert' ? '操作完毕，接受追问 →' : '操作完毕，请 AI 核心评分 →') : '下一步 →'}
++          {busy ? <>{role === 'expert' ? 'AI 核心在看你的操作' : 'AI 核心评分中'} · {waited} 秒{waited < 40 ? '（一般 15–30 秒）' : '（比平时慢，再等等）'}<span className="lab-dots" /></> : needsReveal && !confirmed ? (study ? '看看老手怎么做' : '确认操作') : last ? (study ? '这一段学完了 →' : role === 'expert' ? '操作完毕，接受追问 →' : '操作完毕，请 AI 核心评分 →') : (study && confirmed ? '明白了，下一步 →' : '下一步 →')}
+         </button>
++        {study && confirmed && step.type !== 'bench' && !busy && <button className="lab-btn ghost" onClick={() => setConfirmed(false)}>再选一次</button>}
+         {idx > 0 && !busy && <button className="lab-btn ghost" onClick={() => setIdx(i => i - 1)}>上一步</button>}
+         {/* 退出只留操作台右上角那一个：这里以前还有一个，全屏时 confirm 弹不出来，点了像没反应 */}
+       </div>}
+@@ -246,7 +273,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt,
+   const benchDone = step.type === 'bench' && step.bench && value?.finished ? (
+     <div className="lab-in" style={{ padding: '12px 14px', borderRadius: 14, background: 'rgba(18,161,80,.07)', border: '1px solid rgba(18,161,80,.25)' }}>
+       <div style={{ fontWeight: 700, color: '#0d7a3d', marginBottom: 4 }}>这段操作已记录</div>
+-      <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{describeStep(step, value)}</div>
++      <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{describeStep(step, value)}{(value as any)?.study && <span style={{ marginLeft: 8, fontWeight: 700, color: (value as any).study.score >= 80 ? '#0d7a3d' : (value as any).study.score >= 60 ? '#b7791f' : '#8a94a6' }}>· 操作打分 {(value as any).study.score}</span>}</div>
+       <SnapshotStrip trace={value as BenchTrace} />
+       <button className="lab-btn ghost" style={{ marginTop: 6 }} onClick={() => set(undefined)}>重新操作</button>
+     </div>
+@@ -267,7 +294,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt,
+         {!benchLive && !backdrop && <img key={bg} className="lab-game-bg lab-in" src={bg} alt="" />}
+         {!benchLive && <div className="lab-game-vignette" />}
+         <div className="lab-game-progress">
+-          <span className="lab-mono">{role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
++          <span className="lab-mono">{study ? 'LESSON · 我教你' : role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
+           {sim.steps.map((s, i) => <span key={s.id} style={{ flex: 1, height: 4, borderRadius: 2, background: i < idx ? 'linear-gradient(90deg,var(--v),var(--c))' : i === idx ? '#fff' : 'rgba(255,255,255,.25)' }} />)}
+         </div>
+         {phase === 'dialogue' && step.scene && <NpcDialogue key={step.id} scene={step.scene} portrait={portrait} onDone={() => setPhase('question')} cta={isBench ? '开始操作' : undefined} />}
+@@ -281,7 +308,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt,
+             </div>
+           </div>
+         )}
+-        {benchLive && <BenchRunner hud demo={!!demo} key={step.id} spec={step.bench!} role={role} onFinish={tr => set(tr)} onCancel={onCancel} backdrop={backdrop} />}
++        {benchLive && <BenchRunner hud demo={!!demo} guided={ls?.bench || null} key={step.id} spec={step.bench!} role={role} onFinish={tr => set(tr)} onCancel={onCancel} backdrop={backdrop} />}
+         {backdrop && !benchLive && (
+           <button onClick={() => setHead3d(v => !v)} title="摄像头只在本机算头的位置，不录、不传"
+             style={{ position: 'absolute', left: 16, bottom: 16, zIndex: 6, padding: '8px 14px', borderRadius: 999, border: '1px solid rgba(255,255,255,.3)', cursor: 'pointer', fontWeight: 700, fontSize: 12.5, color: '#fff', background: head3d ? 'linear-gradient(135deg,#3ddc97,#12b5cb)' : 'rgba(15,18,36,.72)', backdropFilter: 'blur(6px)' }}>
+@@ -297,7 +324,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt,
+     <div className={`lab-glass${busy ? ' lab-scan' : ''}`} style={{ padding: 'clamp(16px, 3vw, 28px)' }}>
+       {/* 进度轨 */}
+       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
+-        <span className="lab-mono lab-cap" style={{ marginRight: 6, whiteSpace: 'nowrap' }}>{role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
++        <span className="lab-mono lab-cap" style={{ marginRight: 6, whiteSpace: 'nowrap' }}>{study ? 'LESSON · 我教你' : role === 'expert' ? 'EXPERT RUN' : 'SIMULATION'} · {String(idx + 1).padStart(2, '0')}/{String(sim.steps.length).padStart(2, '0')}</span>
+         {sim.steps.map((s, i) => <span key={s.id} style={{ flex: 1, height: 4, borderRadius: 2, background: i < idx ? 'linear-gradient(90deg,var(--v),var(--c))' : i === idx ? 'var(--v)' : 'rgba(106,92,255,.14)', transition: 'background .4s' }} />)}
+       </div>
+       <div style={{ fontSize: 13, color: 'var(--ink3)', marginBottom: 20 }}>{sim.title}{idx === 0 ? ` —— ${sim.intro}` : ''}</div>
+@@ -310,14 +337,14 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt,
+           value?.finished ? (
+             <div className="lab-in" style={{ padding: '12px 14px', borderRadius: 14, background: 'rgba(18,161,80,.07)', border: '1px solid rgba(18,161,80,.25)' }}>
+               <div style={{ fontWeight: 700, color: '#0d7a3d', marginBottom: 4 }}>这段操作已记录</div>
+-              <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{describeStep(step, value)}</div>
++              <div style={{ fontSize: 13.5, color: 'var(--ink2)' }}>{describeStep(step, value)}{(value as any)?.study && <span style={{ marginLeft: 8, fontWeight: 700, color: (value as any).study.score >= 80 ? '#0d7a3d' : (value as any).study.score >= 60 ? '#b7791f' : '#8a94a6' }}>· 操作打分 {(value as any).study.score}</span>}</div>
+               <SnapshotStrip trace={value as BenchTrace} />
+               <button className="lab-btn ghost" style={{ marginTop: 6 }} onClick={() => set(undefined)}>重新操作</button>
+             </div>
+           ) : (
+             <div>
+               <div style={{ fontSize: 13.5, color: 'var(--ink2)', lineHeight: 1.75, marginBottom: 12, padding: '10px 14px', borderRadius: 12, background: 'rgba(106,92,255,.06)' }}>{step.bench.brief}</div>
+-              <BenchRunner demo={!!demo} key={step.id} spec={step.bench} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />
++              <BenchRunner demo={!!demo} guided={ls?.bench || null} key={step.id} spec={step.bench} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />
+             </div>
+           )
+         )}
+diff --git a/src/lib/agents/lab-chapters.ts b/src/lib/agents/lab-chapters.ts
+index 6dcbcdf..8024bdc 100644
+--- a/src/lib/agents/lab-chapters.ts
++++ b/src/lib/agents/lab-chapters.ts
+@@ -9,6 +9,7 @@
+  */
+ import { generateContent, resolveModel } from '@/lib/llm-client';
+ import { logTokenUsage, withCost } from '@/lib/token-logger';
++import { buildLesson } from '@/lib/lab-lesson';
+ import { parseJsonLoose } from '@/lib/agents/search-llm';
+ import { supabaseAdmin } from '@/lib/supabase';
+ import { sanitizeTrace, type Sim, type SimStep, type SimTrace } from '@/lib/skill-sim';
+@@ -294,6 +295,9 @@ ${CAST_RULES}
+   const { error: e3 } = await supabaseAdmin.from('lab_chapters').update({ sim: withArt, expert_trace: trace, ...(rubric ? { rubric } : {}), updated_at: new Date().toISOString() }).eq('id', chapterId);
+   if (e3) throw e3;
+   if (ch.seq === 1) await supabaseAdmin.from('skill_tasks').update({ sim: withArt }).eq('id', spaceId);
++  // 教案（跟我学 / 我教你）在生成时就备好，不让用户进来等「备课」（2026-10-18 用户）；失败不影响章节本身
++  await progress('备课', '每一步为什么这么做、工位上一下一下怎么做');
++  try { await buildLesson(spaceId, chapterId, { force: true }); } catch (e: any) { console.warn('[lab-chapters] 教案生成失败', e?.message); }
+   return { steps: sim.steps.length, newCast: cast.length - before0, drawn, reused: Math.max(0, reused) };
+ }
+ 
+diff --git a/src/lib/lab-cert-server.ts b/src/lib/lab-cert-server.ts
+index 97c1d70..9512df2 100644
+--- a/src/lib/lab-cert-server.ts
++++ b/src/lib/lab-cert-server.ts
+@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
+ import { chapterTask, loadSpace } from '@/lib/skill-lab-server';
+ import { band, bandLevel, certNo } from '@/lib/lab-cert';
+ import { generateCheap } from '@/lib/llm-client';
++import { withCost } from '@/lib/token-logger';
+ import { parseJsonLoose } from '@/lib/agents/search-llm';
+ 
+ /** 这一行对社会的价值（证书画作页用）：每个空间第一次开证书时用便宜模型写一次，存进 profile.social_value */
+@@ -11,14 +12,14 @@ async function socialValue(space: any): Promise<{ headline: string; lines: strin
+   if (cur?.headline) return cur;
+   try {
+     const jd = space.jd_snapshot || {};
+-    const r = await generateCheap(`
++    const r = await withCost({ space_id: space.id, stage: 'use', tool_name: 'skill-lab', task_name: '证书 · 社会价值' }, () => generateCheap(`
+ 职业：${space.profile?.role || jd.career?.profession || jd.title}（${jd.title || ''}）
+ 岗位职责：${String(jd.responsibilities || '').slice(0, 600)}
+ 写这个职业对社会的价值，用在职业体验证书的画作页上：
+ - headline：一句话，16 字以内，具体、有分量，不喊口号（例：「把每一台手术，做成病人能回家的那一台」）
+ - lines：3 条，每条 30 字以内，各讲一个具体的人群或场景（谁因为这一行而得到了什么）
+ - 不写任何数字、百分比、倍数和统计结论（这是给投资人和学生看的证书，编出来的数字是硬伤）
+-返回 JSON：{ "headline": "", "lines": ["", "", ""] }`, 'qwen-plus', { jsonMode: true });
++返回 JSON：{ "headline": "", "lines": ["", "", ""] }`, 'qwen-plus', { jsonMode: true }));
+     const p = parseJsonLoose(r.text);
+     const v = { headline: String(p.headline || '').slice(0, 40), lines: (Array.isArray(p.lines) ? p.lines : []).map((x: any) => String(x).slice(0, 60)).filter(Boolean).slice(0, 3) };
+     if (!v.headline) return null;
+diff --git a/src/lib/lab-guest.ts b/src/lib/lab-guest.ts
+index d870b88..801cc5e 100644
+--- a/src/lib/lab-guest.ts
++++ b/src/lib/lab-guest.ts
+@@ -1,9 +1,17 @@
+ /**
+- * 游客模型锁（2026-10-12，用户：「游客不要看到模型切换，默认锁在 Gemini 3.8 Flash」）。
++ * 游客模型（2026-10-12 起锁在一个便宜模型；2026-10-14 改成游客也能在 GUEST_MODELS 里挑，默认通义千问）。
+  * proxy 给没登录的请求（LAB_PUBLIC 放行的游客、受邀老师傅）打上 x-lab-guest，客户端自己带的会先被剥掉；
+- * 接口里取模型一律走 labModel：游客不管传什么都用默认模型，登录的人按自己选的。
++ * 接口里取模型一律走 labModel：游客只能用 GUEST_MODELS 里的（别的落回默认），登录的人按自己选的。
+  */
+ export const LAB_GUEST = 'x-lab-guest';
+-export const GUEST_MODEL = 'gemini-3.8-flash';
+-export const labModel = (req: Request, model: unknown): string | undefined =>
+-  req.headers.get(LAB_GUEST) === '1' ? GUEST_MODEL : (typeof model === 'string' && model ? model : undefined);
++/**
++ * 2026-10-14 用户：体验百业给投资人 / 国内用户演示，默认用通义千问（国内服务、中文顺），但不硬替换——
++ * 游客页头也有下拉，只能在这几个便宜的里挑；接口那边同样只认这几个，传别的一律落回默认。
++ */
++export const GUEST_MODELS = ['qwen-plus', 'gemini-3.8-flash'];
++export const GUEST_MODEL = 'qwen-plus';
++export const labModel = (req: Request, model: unknown): string | undefined => {
++  const m = typeof model === 'string' && model ? model : undefined;
++  if (req.headers.get(LAB_GUEST) === '1') return m && GUEST_MODELS.includes(m) ? m : GUEST_MODEL;
++  return m;
++};
+diff --git a/src/lib/lab-lesson.ts b/src/lib/lab-lesson.ts
+new file mode 100644
+index 0000000..1f07052
+--- /dev/null
++++ b/src/lib/lab-lesson.ts
+@@ -0,0 +1,160 @@
++/**
++ * 跟我学 · 教案（2026-10-18，迁移 034）。
++ * 用户：「AI 教学只是把选择题预填了，考核又手忙脚乱，没有静下来一步一步学的办法」。
++ * 一章一份教案：每一步「先看什么 → 老手怎么想 → 每个选项对在哪错在哪 → 老手这一步做了什么」；工位那步按老手脚本拆成一个个动作，
++ * 每个动作一句「做什么、为什么」，带依据（标准条款 / 老师傅经验 / 工位规则）。
++ * 材料只来自：这一章的剧情与题面、老手轨迹（expert_trace）、技能卡（真人老师傅的才算）、工位规则与目标、规则的出处（standard_links）。
++ * 不许编造：没有材料支撑的地方写「这一点要问老师傅」。
++ */
++import { supabaseAdmin } from '@/lib/supabase';
++import { generateContent } from '@/lib/llm-client';
++import { logTokenUsage, withCost } from '@/lib/token-logger';
++import { parseJsonLoose } from '@/lib/agents/search-llm';
++import { describeStep, type Sim, type SimTrace } from '@/lib/skill-sim';
++
++export interface LessonAction { i: number; say: string; basis?: string | null }
++export interface LessonStep {
++  look: string; think: string; master: string;
++  options?: Record<string, { verdict: 'best' | 'ok' | 'wrong'; note: string }>;
++  bench?: { before: string; actions: LessonAction[]; after: string };
++}
++export interface Lesson { steps: Record<string, LessonStep>; generated_at: string; model: string; version: 1 }
++
++const str = (v: any, n = 400) => String(v ?? '').trim().slice(0, n);
++
++export async function buildLesson(spaceId: string, chapterId: string | null, opts: { model?: string; force?: boolean } = {}): Promise<Lesson> {
++  const model = opts.model || 'claude-opus-5-5';   // 教案用 Claude（用户 10-18：「claude 有钱，抓紧用」）
++  const { data: space, error } = await supabaseAdmin.from('skill_tasks').select('id, title, profile, jd_snapshot, sim, skill:skills(name, card, source, expert_name, expert_trace)').eq('id', spaceId).single();
++  if (error || !space) throw new Error(error?.message || '空间不存在');
++  const skill: any = Array.isArray((space as any).skill) ? (space as any).skill[0] : (space as any).skill;
++  let chapter: any = null;
++  if (chapterId) {
++    const { data, error: e2 } = await supabaseAdmin.from('lab_chapters').select('id, title, slot, brief, sim, expert_trace').eq('id', chapterId).single();
++    if (e2 || !data) throw new Error(e2?.message || '章节不存在');
++    chapter = data;
++    // 缓存列（迁移 034）：没跑迁移就当没缓存，每次现算
++    const { data: cached } = await supabaseAdmin.from('lab_chapters').select('lesson').eq('id', chapterId).maybeSingle().then(r => r, () => ({ data: null as any }));
++    if (cached?.lesson?.version === 1 && !opts.force) return cached.lesson as Lesson;
++  }
++  const sim: Sim | null = chapter?.sim?.steps?.length ? chapter.sim : (space as any).sim?.steps?.length ? (space as any).sim : null;
++  if (!sim) throw new Error('这一章还没有内容');
++  const trace: SimTrace = (chapter?.expert_trace && Object.keys(chapter.expert_trace).length ? chapter.expert_trace : null) || skill?.expert_trace || {};
++  const why: Record<string, string> = (skill?.expert_trace?._why && typeof skill.expert_trace._why === 'object') ? skill.expert_trace._why : {};
++  const { data: links } = await supabaseAdmin.from('standard_links').select('chapter_id, target, basis, clause, evidence, standard:industry_standards(code, title)').eq('space_id', spaceId);
++  const basisOf = new Map<string, string>();
++  for (const l of links || []) {
++    if (chapterId && l.chapter_id && l.chapter_id !== chapterId) continue;
++    const std = Array.isArray(l.standard) ? l.standard[0] : l.standard;
++    const tag = l.basis === 'standard' ? `${(std as any)?.code || (std as any)?.title || '标准'}${l.clause ? ` ${l.clause}` : ''}` : l.basis === 'expert' ? '老师傅经验' : null;
++    if (tag) basisOf.set(String(l.target).split(' · ')[0], `${tag}：${str(l.evidence, 160)}`);
++  }
++  const role = (space as any).profile?.role || (space as any).jd_snapshot?.title || (space as any).title;
++  const realSkill = skill && skill.source !== 'jd-draft' ? skill : null;
++
++  // 工位材料（控件 / 仪表 / 规则 / 目标 + 老手脚本的一段）。脚本超过 CHUNK 下的，主调用只给前 CHUNK 下，其余分块另算（潜水章 255 下，一次写 8 万字会被截）
++  const CHUNK = 60;
++  const benchMat = (b: NonNullable<Sim['steps'][number]['bench']>, from: number, to: number): string[] => {
++    const lines: string[] = [];
++    lines.push(`工位「${b.name}」：${str(b.brief, 200)}`);
++    lines.push('控件：' + b.controls.filter(c => !c.hidden).map(c => `[${c.id}] ${c.label}${c.unit ? `（${c.unit}${c.min != null ? ` ${c.min}–${c.max}` : ''}）` : ''}${c.hint ? ` 提示：${str(c.hint, 60)}` : ''}`).join('；'));
++    if (b.gauges?.length) lines.push('仪表：' + b.gauges.map(g => `${g.label}（${g.unit}）`).join('、'));
++    lines.push('规则：' + b.rules.map(r => `[rule:${r.id}] ${r.severity === 'violation' ? '违规' : '提醒'}「${r.label}」${basisOf.has(`rule:${r.id}`) ? ` ← 依据 ${basisOf.get(`rule:${r.id}`)}` : ''}`).join('；'));
++    lines.push('目标：' + b.goals.map(g => `[goal:${g.id}] ${g.label}${basisOf.has(`goal:${g.id}`) ? ` ← 依据 ${basisOf.get(`goal:${g.id}`)}` : ''}`).join('；'));
++    const script = [...(b.expertScript || [])].sort((a, c) => a.t - c.t);
++    const part = script.slice(from, to);
++    lines.push(part.length ? `老手脚本（按时间，共 ${script.length} 下${script.length > to ? `，这里只列 #${from}–#${Math.min(to, script.length) - 1}，其余另算` : from ? `，这里是 #${from}–#${Math.min(to, script.length) - 1}` : ''}）：` + part.map((a, j) => { const i = from + j; const c = b.controls.find(x => x.id === a.control); return `#${i} t=${a.t}s ${c?.label || a.control}${c?.kind === 'knob' ? ` → ${a.value}${c.unit || ''}` : c?.kind === 'switch' ? (a.value ? ' 开' : ' 关') : c?.kind === 'path' ? ` 走到 ${a.value}%` : ' 按下'}`; }).join('；') : '老手脚本：没有');
++    return lines;
++  };
++  const stepsText = sim.steps.map((s, k) => {
++    const lines = [`### 第 ${k + 1} 步 id=${s.id} 题型=${s.type}`];
++    if (s.scene) lines.push(`剧情：${s.scene.who}${s.scene.time ? `（${s.scene.time}）` : ''}：${str(s.scene.text, 300)}`);
++    lines.push(`题面：${str(s.prompt, 300)}`);
++    if (s.options?.length) lines.push('选项：' + s.options.map(o => `[${o.id}] ${o.label}${o.detail ? `（${str(o.detail, 80)}）` : ''}`).join('；'));
++    if (s.labels?.length) lines.push('分类：' + s.labels.map(l => `[${l.id}] ${l.label}`).join('；'));
++    if (s.type === 'bench' && s.bench) {
++      lines.push(...benchMat(s.bench, 0, CHUNK));
++    } else if (trace[s.id] !== undefined) lines.push(`老手这一步的做法：${str(describeStep(s, trace[s.id]), 300)}`);
++    else lines.push('老手这一步的做法：（没有记录）');
++    if (why[s.id]) lines.push(`建空间时留下的追问：${str(why[s.id], 200)}`);
++    return lines.join('\n');
++  }).join('\n\n');
++
++  const prompt = `你是「${role}」这个岗位的资深带教，在给一个完全没入行的新人讲解下面这一段工作，让他能静下来一步一步学会。
++岗位：${role}。这一段：${chapter ? `${chapter.slot || ''} ${chapter.title}` : sim.title}。
++${chapter?.brief ? `这一段要交代的事：${str(chapter.brief, 400)}` : `开场：${str(sim.intro, 400)}`}
++${realSkill ? `\n真人老师傅 ${realSkill.expert_name} 的技能卡（可以引用，写作「老师傅说」）：\n规则：${(realSkill.card?.rules || []).slice(0, 12).map((r: string) => `- ${str(r, 120)}`).join('\n')}\n做法：${(realSkill.card?.steps || []).slice(0, 8).map((x: any) => `- ${str(x.title, 40)}：${str(x.detail, 120)}`).join('\n')}\n检查：${(realSkill.card?.checklist || []).slice(0, 8).map((r: string) => `- ${str(r, 100)}`).join('\n')}` : '\n（这个空间还没有真人老师傅的技能卡：只能引用题面、老手轨迹和工位规则的依据）'}
++
++${stepsText}
++
++写法要求（很重要）：
++- 只用上面的材料。材料里没有的事实（具体数值、现场习惯、某家公司的做法）一律不写；拿不准就写「这一点要问老师傅」。
++- 口语，像师傅带徒弟，不要教科书腔；每句都要落到「看什么、为什么、怎么做」。
++- 每一步：look = 动手前先看什么、注意什么（1–2 句）；think = 老手是怎么判断的、为什么这么选（2–3 句，有依据就点名：「标准 xx 要求…」「老师傅说…」）；master = 老手这一步做了什么（一句）。
++- 有选项的步骤（choose / multi / drill / classify）：options 里每个选项都给 verdict（best 最该选 / ok 也行 / wrong 不该选）和一句 note（为什么）。老手选了的是 best；分类题按老手的归法；没有老手记录就按题面判断并在 think 里说明「这是我的判断，待老师傅确认」。
++- 工位步骤：bench.before = 上手前要看的仪表 / 准备（1–2 句）；bench.actions = 老手脚本每一个动作 #i 一条（i 对应脚本序号，一个都不要漏，顺序照脚本）：say = 「把 xx 调到 xx，因为…」（一句，口语），basis = 这一下依据哪条规则 / 标准 / 老师傅经验（照材料里「依据」原样引用；没有就 null）；bench.after = 做完后怎么确认做对了（看哪个目标 / 仪表）。
++只返回 JSON：
++{ "steps": { "<step id>": { "look": "", "think": "", "master": "", "options": { "<option id>": { "verdict": "best|ok|wrong", "note": "" } }, "bench": { "before": "", "actions": [ { "i": 0, "say": "", "basis": null } ], "after": "" } } } }`;
++
++  const lesson = await withCost({ space_id: spaceId, chapter_id: chapterId, stage: 'use' }, async () => {
++    // 失败兜底（10-18 批量时见过：JSON 没写完、Claude 误判拒绝）：换 Sonnet 再换千问各试一次
++    const chain = [model, ...['claude-sonnet-5-5', 'qwen-plus'].filter(m => m !== model)];
++    let p: any = null, used = model, lastErr: any = null;
++    for (const m of chain) {
++      try {
++        const res = await generateContent(prompt, m, { jsonMode: true });
++        await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Lesson · 跟我学', institution: role, model_id: m, usageMetadata: res.usageMetadata, stage: 'use', space_id: spaceId, chapter_id: chapterId } as any).catch(() => {});
++        p = parseJsonLoose(res.text);
++        if (!p?.steps) throw new Error('大模型返回的 JSON 无法解析');
++        used = m; break;
++      } catch (e) { lastErr = e; console.warn(`[lesson] ${m} 失败，换下一个：${String((e as any)?.message).slice(0, 120)}`); }
++    }
++    if (!p?.steps) throw lastErr || new Error('教案生成失败');
++    // 超长工位脚本：剩下的动作按 CHUNK 下一批单独生成，合并进主结果
++    for (const s of sim.steps) {
++      if (s.type !== 'bench' || !s.bench) continue;
++      const total = (s.bench.expertScript || []).length;
++      for (let from = CHUNK; from < total; from += CHUNK) {
++        const to = Math.min(total, from + CHUNK);
++        const sub = `你是「${role}」的资深带教，正在给新人逐个动作讲工位「${s.bench.name}」上老手是怎么做的。下面是这一台的材料和老手脚本的第 #${from}–#${to - 1} 下。
++只用材料，不编造；每一下 say = 「把 xx 调到 xx，因为…」（一句，口语），basis = 依据哪条规则 / 标准 / 老师傅经验（照材料「依据」原样引用；没有就 null）。i 用材料里的绝对序号。
++${benchMat(s.bench, from, to).join('\n')}
++只返回 JSON：{ "actions": [ { "i": ${from}, "say": "", "basis": null } ] }`;
++        let got: any[] = [];
++        for (const m of chain) {
++          try {
++            const res = await generateContent(sub, m, { jsonMode: true });
++            await logTokenUsage({ tool_name: 'skill-lab', task_name: 'Lesson · 跟我学', institution: role, model_id: m, usageMetadata: res.usageMetadata, stage: 'use', space_id: spaceId, chapter_id: chapterId } as any).catch(() => {});
++            const q = parseJsonLoose(res.text); if (!Array.isArray(q?.actions)) throw new Error('分块 JSON 无法解析'); got = q.actions; break;
++          } catch (e) { console.warn(`[lesson] 工位分块 #${from} ${m} 失败：${String((e as any)?.message).slice(0, 100)}`); }
++        }
++        const x = (p.steps[s.id] ||= {}); x.bench ||= {}; x.bench.actions = [...(Array.isArray(x.bench.actions) ? x.bench.actions : []), ...got];
++      }
++    }
++    const out: Lesson = { steps: {}, generated_at: new Date().toISOString(), model: used, version: 1 };
++    for (const s of sim.steps) {
++      const x = p?.steps?.[s.id] || {};
++      const st: LessonStep = { look: str(x.look, 300), think: str(x.think, 500), master: str(x.master, 200) };
++      if (s.options?.length && x.options && typeof x.options === 'object') {
++        st.options = {};
++        for (const o of s.options) { const v = x.options[o.id]; if (v) st.options[o.id] = { verdict: ['best', 'ok', 'wrong'].includes(v.verdict) ? v.verdict : 'ok', note: str(v.note, 160) }; }
++        // 老手选过的一定是 best（材料优先于模型的发挥）
++        const tv = trace[s.id];
++        const chosen: string[] = s.type === 'choose' ? [tv].filter(Boolean) : Array.isArray(tv) ? tv : [];
++        for (const id of chosen) if (st.options[id]) st.options[id].verdict = 'best';
++      }
++      if (s.type === 'bench' && s.bench) {
++        const script = [...(s.bench.expertScript || [])].sort((a, c) => a.t - c.t);
++        const given = new Map<number, any>((Array.isArray(x.bench?.actions) ? x.bench.actions : []).map((a: any) => [parseInt(a.i), a]));
++        st.bench = {
++          before: str(x.bench?.before, 300),
++          actions: script.map((a, i) => { const c = s.bench!.controls.find(k => k.id === a.control); const g = given.get(i); return { i, say: str(g?.say, 200) || `把「${c?.label || a.control}」${c?.kind === 'knob' ? `调到 ${a.value}${c.unit || ''}` : c?.kind === 'switch' ? (a.value ? '打开' : '关掉') : c?.kind === 'path' ? `走到 ${a.value}%` : '按下'}`, basis: g?.basis ? str(g.basis, 160) : null }; }),
++          after: str(x.bench?.after, 300),
++        };
++      }
++      out.steps[s.id] = st;
++    }
++    return out;
++  });
++  if (chapterId) await supabaseAdmin.from('lab_chapters').update({ lesson, lesson_at: lesson.generated_at }).eq('id', chapterId).then(r => { if (r.error && !/lesson/.test(r.error.message)) console.warn('[lesson] 缓存失败', r.error.message); });
++  return lesson;
++}
+diff --git a/supabase/migrations/034_lab_lesson.sql b/supabase/migrations/034_lab_lesson.sql
+new file mode 100644
+index 0000000..5b3686b
+--- /dev/null
++++ b/supabase/migrations/034_lab_lesson.sql
+@@ -0,0 +1,5 @@
++-- 034 跟我学（2026-10-18）：每一章一份「教案」——每一步先看什么、老手为什么这么做、每个选项对在哪错在哪、工位上一步一步怎么做（引用老手轨迹 / 技能卡 / 标准依据）。
++-- 用户：现在「我教你」只是把选择题预填了，「考考你」又手忙脚乱，没有静下来一步一步学的办法。教案由 lib/lab-lesson.ts 生成，存这里；没跑迁移时每次现算不缓存。可重复执行。
++ALTER TABLE lab_chapters ADD COLUMN IF NOT EXISTS lesson JSONB;
++ALTER TABLE lab_chapters ADD COLUMN IF NOT EXISTS lesson_at TIMESTAMPTZ;
++NOTIFY pgrst, 'reload schema';
