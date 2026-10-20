@@ -2,6 +2,8 @@
  * 数据部门 10-20《AI工具反馈》岗位存量回刷（迁移 038 跑完之后）：
  *   --step qianli   潜历职能标签（单个 value）+ 特色标签一级 / 二级（value 用「|」隔开），提示词同步自数据部门线下脚本
  *   npx tsx scripts/fix-1020.mts --step qianli --model qwen-plus [--par 4] [--only-missing]
+ *   --step careers  相关专业 / 职业按收紧后的提示词重打（宁少勿多，对不上留空并记个体信号 → 市场新兴职业）
+ *   npx tsx scripts/fix-1020.mts --step careers --model qwen-plus [--par 3]
  * 地区编码（全球城市、港澳台改存 344/446/158）用 fix-1019：npx tsx scripts/fix-1019.mts --step region
  * 库是线上共用的：并发别开大；每 20 批测一次库速度，慢了歇 60 秒。
  */
@@ -12,10 +14,36 @@ const { qianliLabels } = await import('@/lib/qianli-labels');
 const { isKnownModel } = await import('@/lib/model-options');
 
 const opt = (k: string, d = '') => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
-if (opt('step') !== 'qianli') { console.error('--step qianli'); process.exit(1); }
+const STEP = opt('step');
+if (!['qianli', 'careers'].includes(STEP)) { console.error('--step qianli | careers'); process.exit(1); }
 const MODEL = opt('model', '');
 if (!MODEL || !isKnownModel(MODEL)) { console.error(`--model 要用模型选单里的（现在：${MODEL || '空'}）`); process.exit(1); }
 const PAR = Number(opt('par', '4'));
+
+if (STEP === 'careers') {
+  const { tagAndSave } = await import('@/lib/job-tagging');
+  const { data } = await selectAll(() => db.from('jobs').select('id').not('if_delete', 'is', true).order('id'));
+  const ids = (data as any[]).map(r => r.id);
+  const bs: number[][] = [];
+  for (let i = 0; i < ids.length; i += 20) bs.push(ids.slice(i, i + 20));
+  console.log(`重打相关专业 / 职业 ${ids.length} 个岗位，${bs.length} 批，模型 ${MODEL}，并发 ${PAR}`);
+  let nx = 0, dn = 0, sv = 0;
+  const t0 = Date.now();
+  await Promise.all(Array.from({ length: PAR }, async () => {
+    while (nx < bs.length) {
+      const b = bs[nx++];
+      try { const n = await tagAndSave(b, MODEL, { labels: false, qianli: false, strongModel: MODEL }); sv += n; } catch (e: any) { console.error('批失败', String(e?.message || e).slice(0, 120)); }
+      dn += b.length;
+      if ((dn / 20) % 20 === 0) {
+        const { count } = await db.from('occupation_signals').select('id', { count: 'exact', head: true });
+        console.log(`${dn}/${ids.length} 已写 ${sv}，个体信号 ${count}（${((Date.now() - t0) / 60000).toFixed(1)} 分钟）`);
+        const s0 = Date.now(); await db.from('jobs').select('id', { count: 'exact', head: true }); if (Date.now() - s0 > 2000) { console.log('库变慢，歇 60 秒'); await new Promise(r => setTimeout(r, 60_000)); }
+      }
+    }
+  }));
+  console.log(`完成：写了 ${sv}/${ids.length}，用时 ${((Date.now() - t0) / 60000).toFixed(1)} 分钟`);
+  process.exit(0);
+}
 
 const { data } = await selectAll(() => {
   let q = db.from('jobs').select('id, name, responsibilities, overview, summary_cn, institute_or_company_name, human_locked_fields').not('if_delete', 'is', true);
