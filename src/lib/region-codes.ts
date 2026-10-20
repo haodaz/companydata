@@ -2,9 +2,13 @@
  * 国家 / 省份 / 城市：库里存选项集的编码（value），页面上显示中文名（数据部门 10-19 反馈 #14）。
  * 选项集来自数据部门《选项集-国家、省份、城市.xlsx》→ src/data/region-options.json：
  *   国家 243 个（中国 156、美国 840、中国香港 344…）；省 34 个（浙江 33）；城市 348 个，只有中国的地级市（杭州 330100）。
- * 海外城市没有编码：city 留空，原文在 location 里。
+ * 海外城市（10-20 起）：数据部门《全球城市.xlsx》→ src/data/world-cities.json，21 国 6052 个城市、529 个州 / 省，
+ *   城市编码如 city_us_5_san_francisco、州 / 省如 state_ca_ontario；同名城市（伦敦、悉尼）按岗位的国家区分。
+ * 港澳台：国家存 中国香港 344 / 中国澳门 446 / 中国台湾 158，省市留空（数据部门 10-20 确认）。
+ * 认不出的（县级市、选项集里没有的海外城市）留空，原文在 location 里。
  */
 import opts from '@/data/region-options.json';
+import world from '@/data/world-cities.json';
 
 type Opt = { name: string; short?: string; value: string; parent: string; region?: string };
 const COUNTRY = opts.country as Opt[];
@@ -18,11 +22,38 @@ const byName = (list: Opt[]) => {
   return m;
 };
 const COUNTRY_BY = byName(COUNTRY), PROVINCE_BY = byName(PROVINCE), CITY_BY = byName(CITY);
+// 海外：城市 [中文名, 编码, 州省编码, 国家编码]；州省 编码 → [中文名, 国家编码]
+const WORLD_CITIES = world.cities as unknown as [string, string, string, string][];
+const WORLD_STATES = world.states as unknown as Record<string, [string, string]>;
+/** 英文 / 拉丁写法统一：小写、去变音符（Zürich → zurich）、标点换空格 */
+const latin = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9\u4e00-\u9fa5]+/g, ' ').trim();
+/** 国家编码 → (写法 → 城市)：中文名、去「市」的中文名、编码里带的英文名（city_us_5_san_francisco → san francisco） */
+const WORLD_BY = new Map<string, Map<string, [string, string, string, string]>>();
+const WORLD_ANY = new Map<string, [string, string, string, string][]>();
+for (const c of WORLD_CITIES) {
+  const en = c[1].replace(/^city_[a-z]{2}_(\d+_)?/, '').replace(/_/g, ' ');
+  const m = WORLD_BY.get(c[3]) || WORLD_BY.set(c[3], new Map()).get(c[3])!;
+  for (const k of new Set([c[0], c[0].replace(/市$/, ''), latin(en)].filter(Boolean))) {
+    if (!m.has(k)) m.set(k, c);
+    (WORLD_ANY.get(k) || WORLD_ANY.set(k, []).get(k)!).push(c);
+  }
+}
+/** 国家编码 → (写法 → 州省编码)：城市表里没有的大城市（东京只有「东京都」）按州 / 省认 */
+const STATE_BY = new Map<string, Map<string, string>>();
+for (const [v, [name, cv]] of Object.entries(WORLD_STATES)) {
+  const en = v.replace(/^state_[a-z]{2}_/, '').replace(/_/g, ' ');
+  const m = STATE_BY.get(cv) || STATE_BY.set(cv, new Map()).get(cv)!;
+  for (const k of new Set([name, name.replace(/(都|道|府|县|州|省|大区|地区)$/, ''), latin(en), latin(en).replace(/\b(metropolitan|prefecture|province|state|region|county|canton of)\b/g, '').replace(/\s+/g, ' ').trim()].filter(Boolean))) if (!m.has(k)) m.set(k, v);
+}
+/** 台湾、澳门的城市不在中国省市表里：按关键词直接认国家 */
+const SAR_TEXT: [RegExp, string][] = [[/台湾|台北|新北|台中|台南|高雄|新竹|桃园|taiwan|taipei|kaohsiung|hsinchu/i, '158'], [/澳门|macau|macao/i, '446'], [/香港|hong\s*kong/i, '344']];
 const NAME_OF = {
   country: new Map(COUNTRY.map(o => [o.value, o.name])),
-  province: new Map(PROVINCE.map(o => [o.value, o.name])),
-  city: new Map(CITY.map(o => [o.value, o.name])),
+  province: new Map([...PROVINCE.map(o => [o.value, o.name] as [string, string]), ...Object.entries(WORLD_STATES).map(([v, [n]]) => [v, n] as [string, string])]),
+  city: new Map([...CITY.map(o => [o.value, o.name] as [string, string]), ...WORLD_CITIES.map(c => [c[1], c[0]] as [string, string])]),
 };
+/** 港澳台：中国省表里的省编码 → 国家表里的编码 */
+const SAR: Record<string, string> = { '81': '344', '82': '446', '71': '158' };
 
 /** 常见别名 → 选项集里的叫法 */
 const COUNTRY_ALIAS: Record<string, string> = {
@@ -65,7 +96,7 @@ function cityOf(raw: string, provinceValue?: string): Opt | null {
 export function resolveRegion(input: { country?: any; province?: any; city?: any; location?: any }): { country: string | null; province: string[]; city: string | null } {
   const text = (v: any) => (Array.isArray(v) ? v.join('·') : String(v ?? '')).trim();
   // 已经是编码：原样
-  const isCode = (v: string, m: Map<string, string>) => /^\d+$/.test(v) && m.has(v);
+  const isCode = (v: string, m: Map<string, string>) => m.has(v) && (/^\d+$/.test(v) || /^(city|state)_/.test(v) || m === NAME_OF.province);
   let country: Opt | null = null, province: Opt | null = null, city: Opt | null = null;
 
   const c0 = text(input.country);
@@ -93,6 +124,35 @@ export function resolveRegion(input: { country?: any; province?: any; city?: any
       if (cv) { city = cv; break; }
     }
   }
+  // 海外城市：先在岗位的国家里找（同名城市按国家分），国家不明 / 默认填成中国的，全球只有一个同名城市时才认
+  let wc: [string, string, string, string] | null = null;
+  if (!city && !province) {
+    const srcText = [text(input.city), text(input.location)].filter(Boolean).join('·');
+    if (NAME_OF.city.has(text(input.city)) && /^city_/.test(text(input.city))) wc = WORLD_CITIES.find(c => c[1] === text(input.city)) || null;
+    const parts = srcText.split(/[·・\-－—/|,，;；:：]+/).map(p => p.trim()).filter(Boolean);
+    for (const p of wc ? [] : parts) {
+      for (const k of [p, p.replace(/市$/, ''), latin(p)]) {
+        const inCountry = country && WORLD_BY.get(country.value)?.get(k);
+        const any = WORLD_ANY.get(k);
+        const hit = inCountry || ((!country || country.value === '156') && any && new Set(any.map(c => c[3])).size === 1 ? any[0] : null);
+        if (hit) { wc = hit; break; }
+      }
+      if (wc) break;
+    }
+    if (wc) return { country: wc[3], province: wc[2] ? [wc[2]] : [], city: wc[1] };
+    // 城市表里没有、但州 / 省对得上（东京 → 东京都）：只存州省
+    for (const p of parts) for (const k of [p, latin(p)]) {
+      const sv = country && STATE_BY.get(country.value)?.get(k);
+      if (sv) return { country: country!.value, province: [sv], city: null };
+      // 国家不明 / 默认填成中国：全球只有一个同名州省才认
+      if (!country || country.value === '156') {
+        const hits = [...STATE_BY].flatMap(([cv, m]) => m.has(k) ? [[cv, m.get(k)!]] : []);
+        if (hits.length === 1) return { country: hits[0][0], province: [hits[0][1]], city: null };
+      }
+    }
+    const sarHit = SAR_TEXT.find(([re]) => re.test(srcText));
+    if (sarHit) return { country: sarHit[1], province: [], city: null };
+  }
   // 城市栏 / 地点里写的其实是国家（「越南」「日本」「国外」）：国家以它为准（国家栏常被默认填成中国）
   if (!city && !province) {
     const t = clean(text(input.city) || text(input.location)).split(/[·;；,，、/|]/)[0];
@@ -104,6 +164,9 @@ export function resolveRegion(input: { country?: any; province?: any; city?: any
   if (city && !province) province = PROVINCE.find(o => o.value === city!.parent) || null;
   if ((city || province) && !country) country = COUNTRY.find(o => o.value === '156') || null;
 
+  // 港澳台：国家存国家表里的编码（中国香港 344 / 中国澳门 446 / 中国台湾 158），省市留空（数据部门 10-20）
+  const sar = SAR[province?.value || ''] || SAR[city?.parent || ''];
+  if (sar) return { country: sar, province: [], city: null };
   return { country: country?.value || null, province: province ? [province.value] : [], city: city?.value || null };
 }
 

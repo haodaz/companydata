@@ -64,7 +64,8 @@ export function resolveModel(modelId?: string | null): string {
 export async function generateContent(
   prompt: string,
   modelId: string,
-  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean },
+  /** temperature：目前只有千问接了（打标签这类分类任务设 0，数据部门的提示词要求） */
+  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean; temperature?: number },
 ): Promise<LLMResponse> {
   const resolvedModelId = resolveModel(modelId);
   // 本地「只用免费额度」：千问以外的模型（OpenAI / Gemini 都是付费的）一律不调
@@ -146,6 +147,7 @@ async function callCompat(base: string, key: string, model: string, prompt: stri
   if (parameters.enable_search) { body.enable_search = true; body.search_options = parameters.search_options; }
   if (parameters.response_format) body.response_format = parameters.response_format;
   if ('enable_thinking' in parameters) body.enable_thinking = parameters.enable_thinking;
+  if (parameters.temperature !== undefined) body.temperature = parameters.temperature;
   let lastErr: any = null;
   for (let attempt = 0; attempt < 3; attempt++) {
     if (attempt) await new Promise(r => setTimeout(r, 3000 * attempt));
@@ -170,9 +172,10 @@ async function callCompat(base: string, key: string, model: string, prompt: stri
 async function generateQwen(
   prompt: string,
   modelId: string,
-  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean },
+  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean; temperature?: number },
 ): Promise<LLMResponse> {
   const parameters: Record<string, any> = { result_format: 'message' };
+  if (options?.temperature !== undefined) parameters.temperature = options.temperature;
   if (options?.webSearch) {
     parameters.enable_search = true;
     parameters.search_options = { search_strategy: 'turbo', enable_source: true, forced_search: true };
@@ -397,7 +400,7 @@ export const cheapModel = () => process.env.CHEAP_MODEL || 'qwen-plus';
 export async function generateCheap(
   prompt: string,
   fallbackModel: string,
-  options?: { jsonMode?: boolean; fast?: boolean },
+  options?: { jsonMode?: boolean; fast?: boolean; temperature?: number },
 ): Promise<LLMResponse> {
   const cheap = cheapModel();
   try {

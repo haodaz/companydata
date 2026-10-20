@@ -13,6 +13,7 @@ import { selectAll } from '@/lib/supabase-all';
 import { generateCheap } from '@/lib/llm-client';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
+import { qianliLabels, type QianliLabels } from '@/lib/qianli-labels';
 
 type Catalog = { fos: { key: string; name: string }[]; occ: { key: string; name: string }[]; fosSet: Set<string>; occSet: Set<string>; text: string };
 let cache: Catalog | null = null;
@@ -148,9 +149,10 @@ ${blocks}
  * 给指定岗位打标签并写库（专业 / 职业 + 四个标签），每个岗位只写一次。入库后顺手调，或批量脚本用。
  * 人工锁定的字段不动。
  */
-export async function tagAndSave(ids: number[], model: string, opts: { batch?: number; labels?: boolean; tags?: boolean } = {}) {
+export async function tagAndSave(ids: number[], model: string, opts: { batch?: number; labels?: boolean; tags?: boolean; qianliModel?: string } = {}) {
   if (!ids.length) return 0;
-  const { batch = 20, labels = true, tags = true } = opts;
+  // qianliModel：给了才打潜历职能 / 特色标签（数据部门 10-20 #15 #17；特色标签要守原文证据，用调用方指定的模型，不先试便宜模型）
+  const { batch = 20, labels = true, tags = true, qianliModel } = opts;
   const { data } = await supabaseAdmin.from('jobs').select('id, name, job_function, summary_cn, responsibilities, overview, institute_or_company_name, human_locked_fields').in('id', ids);
   const rows = (data || []).map((j: any) => ({ ...j, company: j.institute_or_company_name }));
   let n = 0;
@@ -166,9 +168,10 @@ export async function tagAndSave(ids: number[], model: string, opts: { batch?: n
       const need = chunk.map(j => ({ ...j, missing: LK.filter(k => !(l.get(j.id)?.[k])) })).filter(j => j.missing.length);
       for (let k = 0; k < need.length; k += 10) for (const [id, v] of await fillMissingLabels(need.slice(k, k + 10), model).catch(() => new Map<number, Partial<JobLabels>>())) l.set(id, { ...(l.get(id) || { exp_labels: null, skill_labels: null, exp_labels_jd: null, skill_labels_jd: null }), ...v });
     }
+    const q = qianliModel ? await qianliLabels(chunk, qianliModel).catch(() => new Map<number, QianliLabels>()) : new Map<number, QianliLabels>();
     for (const j of chunk) {
       const locked = new Set<string>(j.human_locked_fields || []);
-      const patch: Record<string, any> = { ...(t.get(j.id) || {}), ...(l.get(j.id) || {}) };
+      const patch: Record<string, any> = { ...(t.get(j.id) || {}), ...(l.get(j.id) || {}), ...(q.get(j.id) || {}) };
       // 人工锁定的不动；这次没抽出来的（空值）不写，免得把库里已有的标签冲掉
       for (const k of Object.keys(patch)) if (locked.has(k) || patch[k] === null || patch[k] === '') delete patch[k];
       if (!Object.keys(patch).length) continue;

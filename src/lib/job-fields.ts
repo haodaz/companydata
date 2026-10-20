@@ -10,6 +10,7 @@
 export type JobFieldKind = 'string' | 'text' | 'number' | 'boolean' | 'date' | 'enum' | 'string[]' | 'url';
 
 import { regionName } from '@/lib/region-codes';
+import { QIANLI_FUNCTION_NAMES, QIANLI_SPECIALTY_L1_NAMES, QIANLI_SPECIALTY_L2_NAMES } from '@/lib/qianli-tags';
 
 export interface JobFieldDef {
   key: string;
@@ -88,7 +89,6 @@ export const GRADE_LABELS: Record<string, string> = {
   college_freshman: '大一', college_sophomore: '大二', college_junior: '大三', college_senior: '大四', college_student: '大学生', master_student: '硕士生', phd_student: '博士生',
   high_school_student: '高中生', high_school_freshman: '高一', high_school_sophomore: '高二', high_school_senior: '高三', middle_school_stu: '初中生', primary_school_stu: '小学生',
 };
-export const QIANLI_JOB_LABELS = ['SWE', '数据分析师', '数据工程师', 'ML & AI', '产品经理', '设计/UIUX', '营销公关', '商业分析', '战略/咨询分析', '财务', '工程师', 'HR', '创意', 'Trainee管培', '客服', '合规法律', '销售BD', '研究员', '教师', '网络安全', '项目经理', '健康服务', '行政', '统计调查员', '秘书', '管理', '测试'];
 
 export const JOB_STATUS: Record<string, { label: string; color: string }> = {
   open: { label: '在招', color: 'success' },
@@ -115,7 +115,10 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'number_of_recruits', label: '招聘人数', kind: 'string', group: 'basic', hint: '招聘人数，页面明确写了才填（数字或「若干」）。' },
   { key: 'organizer', label: '主办方', kind: 'string', group: 'basic', hint: '主办方 / 招聘主体：这个岗位是哪家公司招的就填哪家（子公司、联合招聘的机构照实填）；没写时入库默认填所属企业名（数据部门 10-14）。' },
   { key: 'if_develop_management', label: '管培项目', kind: 'boolean', group: 'basic', derived: true, hint: '岗位名里有「管培」为是，否则为否（数据部门 2026-10-10 口径）。' },
-  { key: 'qianli_job_labels', label: '岗位标签', kind: 'string[]', group: 'basic', options: Object.fromEntries(QIANLI_JOB_LABELS.map(l => [l, l])), hint: `岗位标签，只能从这些里选（可多选）：${QIANLI_JOB_LABELS.join(' / ')}。` },
+  // 潜历标签：库里存 value、页面显示中文名；入库后由 qianli-labels.ts 按数据部门的提示词专门打（10-20 #15 #17）
+  { key: 'qianli_job_labels', label: '潜历职能标签', kind: 'enum', group: 'basic', derived: true, options: QIANLI_FUNCTION_NAMES, hint: '26 个职能标签选一个，存 value（如 mgmt_trainee = SWE）。' },
+  { key: 'qianli_job_specialty_labels', label: '潜历特色标签', kind: 'string', group: 'basic', derived: true, options: QIANLI_SPECIALTY_L1_NAMES, hint: '一级特色标签 value，多个用「|」隔开（由二级反推）。' },
+  { key: 'qianli_specialty_labels_reason', label: '潜历特色标签（二级）', kind: 'string', group: 'basic', derived: true, options: QIANLI_SPECIALTY_L2_NAMES, hint: '二级特色标签 value，多个用「|」隔开。' },
 
   { key: 'location', label: '工作地点', kind: 'string', group: 'location', core: true, hint: '工作地点原文；多个地点用英文分号 ; 分隔。' },
   { key: 'country', label: '国家 / 地区', kind: 'string', group: 'location', region: 'country', hint: '主要工作地点所在国家或地区，用中文（如 美国 / 中国 / 中国香港 / 新加坡）。' },
@@ -136,10 +139,10 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'education_description', label: '学历说明', kind: 'text', group: 'requirement', hint: '学历要求原文（如 "BS/MS in Computer Science or equivalent practical experience"）。' },
   { key: 'major_requirement', label: '专业要求', kind: 'string', group: 'requirement', hint: '专业 / 学科背景要求，用中文概括，专有名词保留原文。' },
   { key: 'exp_years', label: '最低工作年限', kind: 'number', group: 'requirement', hint: '最低工作经验年限（数字）；应届 / 无要求填 0；未说明为 null。' },
-  { key: 'exp_labels', label: '经验标签（要求）', kind: 'string', group: 'requirement', hint: '「任职要求」里的经验标签（如 实习经验；项目经验；竞赛获奖），标签之间用中文分号「；」分隔。' },
-  { key: 'exp_labels_jd', label: '经验标签（职责）', kind: 'string', group: 'requirement', hint: '「岗位职责」里的经验标签，标签之间用中文分号「；」分隔。' },
-  { key: 'skill_labels', label: '技能标签（要求）', kind: 'string', group: 'requirement', hint: '「任职要求」里的技能标签（如 Python；SQL；CFA），标签之间用中文分号「；」分隔。' },
-  { key: 'skill_labels_jd', label: '技能标签（职责）', kind: 'string', group: 'requirement', hint: '「岗位职责」里的技能标签，标签之间用中文分号「；」分隔。' },
+  { key: 'exp_labels', label: '经验标签（要求）', kind: 'string', group: 'requirement', derived: true, hint: '「任职要求」里的经验标签（如 实习经验；项目经验；竞赛获奖），标签之间用中文分号「；」分隔。' },
+  { key: 'exp_labels_jd', label: '经验标签（职责）', kind: 'string', group: 'requirement', derived: true, hint: '「岗位职责」里的经验标签，标签之间用中文分号「；」分隔。' },
+  { key: 'skill_labels', label: '技能标签（要求）', kind: 'string', group: 'requirement', derived: true, hint: '「任职要求」里的技能标签（如 Python；SQL；CFA），标签之间用中文分号「；」分隔。' },
+  { key: 'skill_labels_jd', label: '技能标签（职责）', kind: 'string', group: 'requirement', derived: true, hint: '「岗位职责」里的技能标签，标签之间用中文分号「；」分隔。' },
   { key: 'skiil_certification', label: '专业技能证书', kind: 'string', group: 'requirement', hint: '要求或优先的专业证书（如 CPA、CFA、PMP），没有则为 null。' },
   { key: 'gpa_min_requirement', label: '最低 GPA', kind: 'number', group: 'requirement', hint: '最低 GPA 要求（数字，如 3.0），未说明为 null。' },
   { key: 'grade', label: '年级要求', kind: 'string[]', group: 'requirement', options: GRADE_LABELS, hint: '面向的年级，只能从这些里选（可多选）：college_freshman 大一 / college_sophomore 大二 / college_junior 大三 / college_senior 大四 / college_student 大学生 / master_student 硕士生 / phd_student 博士生。' },
@@ -292,6 +295,8 @@ export function formatJobValue(key: string, v: any): string {
   if (f.kind === 'boolean') return v ? '是' : '否';
   if (f.kind === 'enum') return f.options?.[v] || String(v);
   if (f.kind === 'string[]') return Array.isArray(v) ? v.map(x => f.options?.[x] || x).join('、') : String(v);
+  // 「|」隔开的 value（潜历特色标签等）：逐个转中文名
+  if (f.options && typeof v === 'string') return v.split('|').map(x => f.options?.[x.trim()] || x.trim()).filter(Boolean).join('、');
   return String(v);
 }
 

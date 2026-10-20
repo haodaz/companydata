@@ -53,6 +53,9 @@ export function jobsOf(json: any): any[] {
   return Array.isArray(json?.jobs) ? json.jobs : [];
 }
 
+/** 入库后由 job-tagging 专门打的字段：重新提取时不覆盖 */
+const TAGGED_FIELDS = ['fos_ids', 'related_career_ids', 'exp_labels', 'skill_labels', 'exp_labels_jd', 'skill_labels_jd', 'qianli_job_labels', 'qianli_job_specialty_labels', 'qianli_specialty_labels_reason'];
+
 export async function upsertJobsFromLog(logId: number, structuredJson: any): Promise<number> {
   const { data: log, error: logErr } = await supabaseAdmin
     .from('job_crawl_logs')
@@ -161,6 +164,8 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
       await supabaseAdmin.from('jobs').update({ last_seen_at: now }).eq('id', e!.id);
       continue;
     }
+    // 入库后专门打的字段（专业 / 职业、四个标签、潜历标签）不写进行里：已有岗位保留原值，新岗位入库后再打
+    for (const k of TAGGED_FIELDS) delete (row as any)[k];
     const lockedFields = (e?.human_locked_fields || []) as string[];
     if (e && lockedFields.length) {
       const patch = { ...row };
@@ -208,7 +213,8 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
   if (list.length) {
     const { data: untagged } = await supabaseAdmin.from('jobs').select('id').eq('source_log_id', logId).not('if_delete', 'is', true).or('fos_ids.is.null,fos_ids.eq.');   // 10-19 起是「|」隔开的文本
     const ids = (untagged || []).map(r => r.id);
-    if (ids.length && (process.env.CHEAP_MODEL || log.model_id || process.env.DEFAULT_MODEL)) await tagAndSave(ids, process.env.CHEAP_MODEL || log.model_id || process.env.DEFAULT_MODEL || '').catch(e => console.error('[job-store] 关联专业职业失败', e?.message || e));
+    // 专业 / 职业、四个标签走便宜模型；潜历标签用这次提取在选单里选的模型（要守原文证据）
+    if (ids.length && (process.env.CHEAP_MODEL || log.model_id || process.env.DEFAULT_MODEL)) await tagAndSave(ids, process.env.CHEAP_MODEL || log.model_id || process.env.DEFAULT_MODEL || '', { qianliModel: log.model_id || process.env.DEFAULT_MODEL || process.env.CHEAP_MODEL }).catch(e => console.error('[job-store] 打标签失败', e?.message || e));
   }
   return list.length;
 }
