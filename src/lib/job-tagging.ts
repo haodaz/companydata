@@ -6,8 +6,7 @@
  * 2. 四个标签（数据部门 10-19 #13，提示词照对方给的）：要求_经验标签 exp_labels / 要求_技能标签 skill_labels /
  *    职责_经验标签 exp_labels_jd / 职责_技能标签 skill_labels_jd，中文分号「；」隔开；经验标签原文没直说也要按语义归纳 1–3 个。
  */
-import fs from 'node:fs';
-import path from 'node:path';
+import fos91 from '@/data/fos-91.json';
 import { supabaseAdmin } from '@/lib/supabase';
 import { selectAll } from '@/lib/supabase-all';
 import { generateCheap, generateContent } from '@/lib/llm-client';
@@ -16,19 +15,26 @@ import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
 import { qianliLabels, type QianliLabels } from '@/lib/qianli-labels';
 
-type Catalog = { fos: { key: string; name: string }[]; occ: { key: string; name: string }[]; fosSet: Set<string>; occSet: Set<string>; text: string };
+type Catalog = { fos: { key: string; name: string }[]; occ: { key: string; name: string }[]; fosSet: Set<string>; occSet: Set<string>; occByName: Map<string, string>; text: string };
 let cache: Catalog | null = null;
 
 let cachedAt = 0;
 export async function tagCatalog(): Promise<Catalog> {
   // 十分钟刷新一次：职业库会增补（飞轮职业缺口），旧清单打不出新职业
   if (cache && Date.now() - cachedAt < 10 * 60_000) return cache;
-  const fos = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/data/fos-91.json'), 'utf8')) as { key: string; name: string }[];
-  const { data } = await selectAll(() => supabaseAdmin.from('occupations').select('external_id, name').not('if_delete', 'is', true).not('external_id', 'is', null).order('id'));
-  const occ = (data as any[]).map(o => ({ key: String(o.external_id), name: String(o.name) }));
+  const fos = fos91 as { key: string; name: string }[];   // 直接导入（运行时读文件在 Vercel 上可能读不到）
+  const { data } = await selectAll(() => supabaseAdmin.from('occupations').select('external_id, name, aliases').not('if_delete', 'is', true).not('external_id', 'is', null).order('id'));
+  // 职业清单只给模型看中文名（带常用叫法），模型照抄中文名、代码换回 key（2026-10-20）：
+  // 给英文 key 时模型照 key 的英文意思挑——有的 key 是当初套的 O*NET 泛名、和中文名不是一个职业（electrical_engineers = 集成电路设计工程技术人员），
+  // 错配了 1400 多个岗位；改给编号又会抄错位（高中物理教师 → 隔壁的幼儿园教师）
+  const occ = (data as any[]).map(o => ({ key: String(o.external_id), name: String(o.name), aliases: (o.aliases || []).slice(0, 2) as string[] }));
+  const occByName = new Map<string, string>();
+  const nk = (x: string) => x.replace(/\s+/g, '').replace(/（.*?）|\(.*?\)/g, '');
+  for (const o of occ) occByName.set(nk(o.name), o.key);
+  for (const o of occ) for (const a of o.aliases) if (!occByName.has(nk(a))) occByName.set(nk(a), o.key);
   // 清单放在提示词最前面、每次一样：命中上下文缓存，批量打标签时省 token
-  const text = `【专业 FOS 清单（key：名称）】\n${fos.map(f => `${f.key}：${f.name}`).join('\n')}\n\n【职业清单（key：名称）】\n${occ.map(o => `${o.key}：${o.name}`).join('\n')}`;
-  cache = { fos, occ, fosSet: new Set(fos.map(f => f.key)), occSet: new Set(occ.map(o => o.key)), text };
+  const text = `【专业 FOS 清单（key：名称）】\n${fos.map(f => `${f.key}：${f.name}`).join('\n')}\n\n【职业清单（名称，括号里是常用叫法）】\n${occ.map(o => `${o.name}${o.aliases.length ? `（${o.aliases.join('/')}）` : ''}`).join('\n')}`;
+  cache = { fos, occ: occ.map(({ key, name }) => ({ key, name })), fosSet: new Set(fos.map(f => f.key)), occSet: new Set(occ.map(o => o.key)), occByName, text };
   cachedAt = Date.now();
   return cache;
 }
@@ -43,17 +49,17 @@ const squash = (v: any, n: number) => String(v || '').replace(/\s+/g, ' ').trim(
 /** 一批岗位（建议 ≤ 20 个）关联专业和职业，返回 id → { fos_ids: 'a|b', related_career_ids: 'x|y' } */
 export async function tagJobs(jobs: TagInput[], model: string, opts: { strongModel?: string } = {}): Promise<Map<number, JobTags>> {
   const cat = await tagCatalog();
-  // 按「要求描述」匹配（10-19 #16）；没有要求描述的才看职责 / 简介
-  const lines = jobs.map((j, i) => `${i + 1}. 【${j.name}】职能：${j.job_function || '—'}；要求描述：${squash(j.overview, 400) || '（无）'}${j.overview ? '' : `；职责：${squash(j.responsibilities || j.summary_cn, 220)}`}`).join('\n');
+  // 按「要求描述」匹配（10-19 #16），职责一起给：要求里常常只有学历 / 性格，具体做什么写在职责里（10-20：「高中物理教师」的要求里没有「高中」，被配成幼儿园教师）
+  const lines = jobs.map((j, i) => `${i + 1}. 【${j.name}】职能：${j.job_function || '—'}；要求描述：${squash(j.overview, 400) || '（无）'}；职责：${squash(j.responsibilities || j.summary_cn, 260) || '（无）'}`).join('\n');
   const prompt = `${cat.text}
 
 你是招聘数据标注员。根据每个岗位的「要求描述」挑：
-- related_career_ids：和岗位实际做的事属于同一类工作的职业，只能用【职业清单】里的 key。宁少勿多，通常 1-2 个就够，最多 ${MAX_TAGS} 个；
+- related_careers：和岗位实际做的事属于同一类工作的职业，只能从【职业清单】里选，名称原样照抄（不要抄括号里的叫法）。宁少勿多，通常 1-2 个就够，最多 ${MAX_TAGS} 个；
   字面沾边、实际工作内容不同的不算（如「海外运营」不能配「网约配送员」「导游」）；大类相同但方向不同的也不算（如「世界模型算法」不配「人工智能训练师」）。
-  职业清单里没有真正对得上的：related_career_ids 留空数组，在 wanted_career 写这个岗位该有的职业名（行业通行叫法，如「出海运营」「内容运营」）。
+  职业清单里没有真正对得上的：related_careers 留空数组，在 wanted_career 写这个岗位该有的职业名（行业通行叫法，如「出海运营」「内容运营」）。
 - fos_ids：最适合来做这个岗位的本科专业方向，最多 ${MAX_TAGS} 个，只能用【专业 FOS 清单】里的 key。
-按相关度从高到低排。不要硬凑，不要编清单外的 key。
-只返回 JSON：{"items":[{"n":序号,"related_career_ids":[],"wanted_career":"","fos_ids":[]}]}
+按相关度从高到低排。不要硬凑，不要编清单外的职业 / key。
+只返回 JSON：{"items":[{"n":序号,"related_careers":["职业名称"],"wanted_career":"","fos_ids":[]}]}
 
 岗位：
 ${lines}`;
@@ -67,7 +73,8 @@ ${lines}`;
     const j = jobs[Number(it.n) - 1];
     if (!j) continue;
     const fos = [...new Set((it.fos_ids || []).map(String) as string[])].filter(k => cat.fosSet.has(k)).slice(0, MAX_TAGS);
-    const occ = [...new Set((it.related_career_ids || []).map(String) as string[])].filter(k => cat.occSet.has(k)).slice(0, MAX_TAGS);
+    // 中文名换回 key（照抄清单名称，叫法也认；模型偶尔直接写 key，也认）
+    const occ = [...new Set(((it.related_careers || it.related_career_ids || []) as any[]).map(x => String(x).trim()).map(x => cat.occByName.get(x.replace(/\s+/g, '').replace(/（.*?）|\(.*?\)/g, '')) || x))].filter(k => cat.occSet.has(k)).slice(0, MAX_TAGS);
     out.set(j.id, { fos_ids: fos.join('|'), related_career_ids: occ.join('|') });
     // 个体信号：职业库里没有对得上的 → 记下模型认为该有的职业名（市场新兴职业的来源，见 occupation-signals.ts）
     const wanted = String(it.wanted_career || '').trim();
