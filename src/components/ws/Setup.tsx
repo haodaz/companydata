@@ -4,6 +4,7 @@
  * 企业落地向导（工作台里的「企业设置」也用它）：企业情况 → 岗位。
  * 公开信息回流平方（空的直接填，改动进待审核）；内部信息只留在工作台，给 AI 出题、建空间当上下文。
  */
+import { Skel } from '@/components/ws/Skel';
 import React, { useEffect, useState } from 'react';
 
 type F = { key: string; label: string; hint: string; long?: boolean };
@@ -14,7 +15,7 @@ export function Setup({ step: step0, onDone, embedded }: { step: 'context' | 'ro
   useEffect(() => { load(); }, []);
   const go = async (s: 'context' | 'roles' | 'done') => { await fetch('/api/ws/setup', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'step', step: s }) }).catch(() => {}); if (s === 'done') onDone(); else setStep(s); };
   if (err) return <div className="ws-page"><div className="ws-err">{err}</div></div>;
-  if (!d) return <div className="ws-page ws-muted">加载中…</div>;
+  if (!d) return <div className="ws-page"><Skel lines={3} /><div style={{ height: 18 }} /><Skel lines={8} card /></div>;
   return (
     <div className="ws-page">
       <div className="ws-steps">

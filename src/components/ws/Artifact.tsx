@@ -4,6 +4,7 @@
  * 工作台右侧的产物面板（像 Claude 的 artifact）：真活详情 / 作答与报告 / 职业空间（建造中显示进度，建好嵌空间页）。
  * 建空间：总控只给出 buildId + 参数，真正的构建由这里发起（POST /api/lab/spaces，3–5 分钟），并轮询进度；同一个 buildId 只发一次。
  */
+import { Skel } from '@/components/ws/Skel';
 import React, { useEffect, useState } from 'react';
 import { WorkTaskDetail } from '@/components/work/WorkTaskDetail';
 import { CandidateArt, ProjectArt } from '@/components/ws/Project';
@@ -20,11 +21,12 @@ export type Art =
 export const artKey = (a: Art) => (a.kind === 'space_build' ? a.buildId : a.kind === 'space' ? a.id : a.kind === 'company' ? 'company' : a.kind === 'project' ? `project:${a.id}` : a.kind === 'candidate' ? `cand:${a.id}` : `${a.kind}:${a.token}`);
 const started = new Set<string>();
 
-export function ArtifactPanel({ art, onClose, onSpaceDone, openArt }: { art: Art; onClose: () => void; onSpaceDone?: (buildId: string, id: string) => void; openArt?: (a: Art) => void }) {
+export function ArtifactPanel({ art, onClose, onSpaceDone, openArt, onResize }: { art: Art; onClose: () => void; onSpaceDone?: (buildId: string, id: string) => void; openArt?: (a: Art) => void; onResize?: (w: number) => void }) {
   const open = art.kind === 'work' || art.kind === 'results' ? `/work/${art.token}/owner?k=${encodeURIComponent(art.owner_key)}` : art.kind === 'space' ? `/lab/${art.id}` : null;
   const label = art.kind === 'work' ? '真活' : art.kind === 'results' ? '作答与报告' : art.kind === 'company' ? '档案 · 让 AI 更懂你们' : art.kind === 'project' ? '招聘项目' : art.kind === 'candidate' ? '候选人' : '职业空间';
   return (
     <aside className="ws-art">
+      {onResize && <div className="ws-art-grip" title="拖动调宽" onPointerDown={e => { e.preventDefault(); const move = (ev: PointerEvent) => onResize(Math.max(380, Math.min(window.innerWidth - 560, window.innerWidth - ev.clientX))); const up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); document.body.style.cursor = ''; }; document.body.style.cursor = 'col-resize'; window.addEventListener('pointermove', move); window.addEventListener('pointerup', up); }} />}
       <div className="ws-art-head">
         <div style={{ minWidth: 0 }}><div className="ws-cap">{label}</div><div className="ws-art-title">{art.title}</div></div>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 6 }}>
@@ -48,7 +50,7 @@ function WorkArt({ token, k, tab }: { token: string; k: string; tab: string }) {
   const [d, setD] = useState<any>(null); const [err, setErr] = useState('');
   useEffect(() => { setD(null); fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`).then(r => r.json()).then(j => j.ok ? setD(j) : setErr(j.error)).catch(e => setErr(e.message)); }, [token, k]);
   if (err) return <div className="ws-muted">{err}</div>;
-  if (!d) return <div className="ws-muted">加载中…</div>;
+  if (!d) return <Skel lines={7} card />;
   const link = typeof location !== 'undefined' ? `${location.origin}/work/${token}` : `/work/${token}`;
   return <WorkTaskDetail key={tab} task={d.task} sessions={d.sessions} shareLink={link} notes={d.task?.notes} defaultTab={tab} />;
 }
@@ -88,7 +90,7 @@ function CompanyArt() {
   const [d, setD] = useState<any>(null); const [err, setErr] = useState('');
   useEffect(() => { fetch('/api/ws/setup?checklist=1').then(r => r.json()).then(j => (j.ok ? setD(j) : setErr(j.error))).catch(e => setErr(e.message)); }, []);
   if (err) return <div className="ws-muted">{err}</div>;
-  if (!d) return <div className="ws-muted">加载中…</div>;
+  if (!d) return <Skel lines={7} card />;
   const Item = ({ i }: { i: any }) => (
     <div className={`ws-ki${i.value ? ' has' : ''}`}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span className="ws-ki-dot" /><b style={{ fontSize: 13.5 }}>{i.label}</b>{i.source && <span className="ws-chip-s">{i.source}</span>}{!i.value && i.weight >= 3 && <span className="ws-chip-s" style={{ color: '#b25e1f' }}>最要紧</span>}</div>

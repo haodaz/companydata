@@ -149,9 +149,9 @@ const CSS = `
 .wl-end { text-align:center; padding:96px 0 48px; }
 .wl-foot { margin-top:56px; font-size:13px; color:var(--ink3); }
 @media (max-width: 860px) {
-  .wl-nav { display:none; } .wl-bar { gap:10px; } .wl-btn { margin-left:auto; }
+  .wl-nav { display:none; } .wl-bar { gap:10px; } .wl-bar .wl-btn { margin-left:auto; }
   .wl-hero { padding-top:44px; } .wl-strip, .wl-rules { grid-template-columns:1fr 1fr; }
   .wl-split { grid-template-columns:1fr; gap:22px; } .wl-split.rev .wl-text { order:0; } .wl-sec { padding-top:52px; }
 }
-@media (max-width: 480px) { .wl-strip, .wl-rules { grid-template-columns:1fr; } }
+@media (max-width: 480px) { .wl-strip, .wl-rules { grid-template-columns:1fr; } .wl-ctas { flex-direction:column; align-items:stretch; } .wl-ctas > * { justify-content:center; text-align:center; } }
 `;

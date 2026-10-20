@@ -4,6 +4,7 @@
  * 招聘项目页 + 候选人详情（工作台）：一次招人 = 一个项目。
  * 项目页：环节进度、下一步建议、在项目里问 AI、候选人 / JD / 真活与空间 / 对话；候选人详情：适配、真活、人才检测（智查查 2.0）、阶段、备注。
  */
+import { Skel } from '@/components/ws/Skel';
 import React, { useEffect, useRef, useState } from 'react';
 
 export const STAGE_LABEL: Record<string, string> = { new: '新进', screening: '已筛', work: '做真活', verify: '人才检测', interview: '面试', offer: 'offer', hired: '已入职', rejected: '不合适' };
@@ -21,7 +22,7 @@ export function ProjectPage({ id, openArt, ask, openThread }: { id: string; open
   const [tab, setTab] = useState<'cands' | 'jd' | 'work' | 'threads'>('cands');
   const [q, setQ] = useState('');
   if (err) return <div className="ws-page"><div className="ws-err">{err}</div></div>;
-  if (!d) return <div className="ws-page ws-muted">加载中…</div>;
+  if (!d) return <div className="ws-page"><Skel lines={3} /><div style={{ height: 18 }} /><Skel lines={6} card /></div>;
   const p = d.project, cs: any[] = d.candidates, jd = p.brief?.jd;
   const count = (k: string) => cs.filter(c => c.stage === k).length;
   const next: [string, string][] = [];
@@ -100,7 +101,7 @@ function Jd({ jd }: { jd: any }) {
 export function ProjectArt({ id, tab, openArt }: { id: string; tab?: string; openArt: (a: any) => void }) {
   const { d, err } = useProject(id);
   if (err) return <div className="ws-muted">{err}</div>;
-  if (!d) return <div className="ws-muted">加载中…</div>;
+  if (!d) return <Skel lines={6} card />;
   const cs: any[] = d.candidates;
   return (
     <div>
@@ -120,7 +121,7 @@ export function CandidateArt({ id, openArt }: { id: string; openArt: (a: any) =>
   useEffect(() => { load(); }, [id]);   // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { if (d?.candidate?.audit?.status !== 'running') return; const iv = setInterval(load, 15000); return () => clearInterval(iv); }, [d?.candidate?.audit?.status]);   // eslint-disable-line react-hooks/exhaustive-deps
   if (err) return <div className="ws-muted">{err}</div>;
-  if (!d) return <div className="ws-muted">加载中…</div>;
+  if (!d) return <Skel lines={6} card />;
   const c = d.candidate, a = c.audit, f = c.fit;
   const act = async (action: string) => { setBusy(action === 'fit' ? '适配分析中…' : '交给智查查…'); const j = await (await fetch(`/api/ws/candidates/${id}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action }) })).json().catch(() => ({ ok: false, error: '网络错误' })); setBusy(j.ok ? '' : j.error); load(); };
   const stage = async (s: string) => { await fetch(`/api/ws/candidates/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ stage: s }) }); load(); };

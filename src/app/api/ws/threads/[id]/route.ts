@@ -17,6 +17,14 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   const { id } = await params; const r = await own(req, id); if (r.err) return r.err;
   return NextResponse.json({ ok: true, thread: r.thread });
 }
+/** 改名：{ title } */
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params; const r = await own(req, id); if (r.err) return r.err;
+  const b = await req.json().catch(() => ({})); const title = String(b.title || '').trim().slice(0, 60);
+  if (!title) return NextResponse.json({ ok: false, error: '名字不能为空' }, { status: 400 });
+  await db.from('ws_threads').update({ title }).eq('id', id);
+  return NextResponse.json({ ok: true });
+}
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params; const r = await own(req, id); if (r.err) return r.err;
   await db.from('ws_threads').delete().eq('id', id);

@@ -4,6 +4,7 @@
  * 百业 ToB 工作台 /workspace（2026-10-20）：照 Claude 的骨架——左侧栏（新对话 + 功能入口 + 最近对话）、中间 AI 总控对话、右侧产物面板。
  * 企业用户绑定一家企业，AI 只围绕自己企业干活（工具层把关，见 src/lib/ws/tools.ts）。底色是淡淡的纸张色。
  */
+import { Skel } from '@/components/ws/Skel';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { App, ConfigProvider } from 'antd';
@@ -22,7 +23,7 @@ type Item =
   | { k: 'error'; text: string };
 type View = 'chat' | 'roles' | 'work' | 'spaces' | 'people' | 'setup' | 'project';
 
-const TOOL_RUNNING: Record<string, string> = { org_profile: '读企业画像', list_roles: '查本企业岗位', propose_problems: '从企业动态和岗位职责里找业务问题', create_work_task: '出真活：任务书、材料包、评分标准（1–2 分钟）', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', list_work_tasks: '列本企业的真活', work_results: '看作答和报告', create_space: '准备建职业空间', list_spaces: '列本企业的职业空间' };
+const TOOL_RUNNING: Record<string, string> = { add_candidate: '读简历、加进候选人', org_profile: '读企业画像', list_roles: '查本企业岗位', propose_problems: '从企业动态和岗位职责里找业务问题', create_work_task: '出真活：任务书、材料包、评分标准（1–2 分钟）', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', list_work_tasks: '列本企业的真活', work_results: '看作答和报告', create_space: '准备建职业空间', list_spaces: '列本企业的职业空间' };
 const CHAT_MODELS = MODEL_OPTIONS.filter(m => /^(claude-|gpt-|gemini-|qwen)/.test(m.id));
 const DEFAULT_MODEL = 'claude-opus-5-5';
 const SUGGEST_R = [
@@ -75,6 +76,11 @@ function Inner({ edition }: { edition: Edition }) {
   const [art, setArt] = useState<Art | null>(null);
   const [model, setModel] = useState(DEFAULT_MODEL);
   const [side, setSide] = useState(true);
+  const [palette, setPalette] = useState(false);
+  const [drawer, setDrawer] = useState(false);   // 手机上的侧栏抽屉
+  const [artW, setArtW] = useState<number | null>(null);   // 右侧面板宽度（拖边调，记在本机）
+  useEffect(() => { try { const w = Number(localStorage.getItem('ws:artw')); if (w > 300) setArtW(w); } catch {} }, []);
+  const resizeArt = (w: number) => { setArtW(w); try { localStorage.setItem('ws:artw', String(Math.round(w))); } catch {} };
   const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => { try { const m = localStorage.getItem('ws:model'); if (m && CHAT_MODELS.some(x => x.id === m)) setModel(m); } catch {} }, []);
@@ -131,24 +137,51 @@ function Inner({ edition }: { edition: Edition }) {
   };
   const stop = () => { abortRef.current?.abort(); };
   sendRef.current = send;
+  // 项目对话里传简历：先进项目候选人，再让 AI 接着分析
+  const uploadResumes = async (pid: string, fs: File[]) => {
+    const names: string[] = [];
+    for (const f of fs) {
+      setItems(it => [...it, { k: 'tool', id: `up-${f.name}-${Date.now()}`, name: 'add_candidate', input: { file: f.name }, running: true, t0: Date.now() }]);
+      const fd = new FormData(); fd.append('file', f);
+      const j = await (await fetch(`/api/ws/projects/${pid}/candidates`, { method: 'POST', body: fd })).json().catch(() => ({ ok: false, error: '网络错误' }));
+      setItems(it => it.map(x => (x.k === 'tool' && x.name === 'add_candidate' && x.running ? { ...x, running: false, label: j.ok ? `读了「${f.name}」，加进候选人：${j.candidate.name}` : `「${f.name}」没读成`, error: j.ok ? undefined : j.error } : x)));
+      if (j.ok) names.push(j.candidate.name);
+    }
+    loadThreads();
+    if (names.length) setTimeout(() => sendRef.current?.(`我上传了 ${names.join('、')} 的简历，帮我做一下适配分析`, pid), 200);
+  };
+  // 快捷键：⌘K / Ctrl+K 搜索，Esc 关面板（输入框里按 Esc 不关）
+  useEffect(() => {
+    const on = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); setPalette(p => !p); }
+      else if (e.key === 'Escape') { if (palette) setPalette(false); else if (drawer) setDrawer(false); else if (art && !(e.target as HTMLElement)?.closest?.('textarea, input')) setArt(null); }
+    };
+    window.addEventListener('keydown', on); return () => window.removeEventListener('keydown', on);
+  }, [palette, drawer, art]);
 
-  if (org === undefined) return <Shell><div className="ws-center ws-muted">加载中…</div></Shell>;
+  if (org === undefined) return <Shell><div className="ws-boot"><span className="ws-brand-mark">百</span><div className="ws-boot-bar"><i /></div></div></Shell>;
   if (!org) return <Shell><Onboard edition={edition} err={bootErr} onDone={o => setOrg(o)} /></Shell>;
 
   return (
     <Shell>
-      <div className={`ws-root${art ? ' with-art' : ''}${side ? '' : ' no-side'}`}>
-        <Sidebar org={org} user={user} view={view} setView={v => { setView(v); if (v !== 'chat') setArt(null); }} threads={threads} threadId={threadId} openThread={openThread} newChat={() => newChat(null)} onHide={() => setSide(false)} projects={projects} projectId={view === 'project' ? projectId : chatProject} openProject={id => { setProjectId(id); setView('project'); setArt(null); }} newProject={() => { newChat(null); setTimeout(() => sendRef.current?.(org.kind === 'research' ? '我要引进一位研究人员，帮我开一个项目' : '我要招人，帮我开一个招聘项目', null), 0); }} />
+      <div className={`ws-root${art ? ' with-art' : ''}${side ? '' : ' no-side'}`} style={artW ? ({ ['--art-w' as string]: `${artW}px` } as React.CSSProperties) : undefined}>
+        {drawer && <div className="ws-scrim" onClick={() => setDrawer(false)} />}
+        <div className={`ws-side-wrap${drawer ? ' open' : ''}`} onClick={e => { if ((e.target as HTMLElement).closest('button')) setDrawer(false); }}>
+        <Sidebar reload={loadThreads} openPalette={() => setPalette(true)} org={org} user={user} view={view} setView={v => { setView(v); if (v !== 'chat') setArt(null); }} threads={threads} threadId={threadId} openThread={openThread} newChat={() => newChat(null)} onHide={() => setSide(false)} projects={projects} projectId={view === 'project' ? projectId : chatProject} openProject={id => { setProjectId(id); setView('project'); setArt(null); }} newProject={() => { newChat(null); setTimeout(() => sendRef.current?.(org.kind === 'research' ? '我要引进一位研究人员，帮我开一个项目' : '我要招人，帮我开一个招聘项目', null), 0); }} />
+        </div>
         <main className="ws-main">
           {!side && <button className="ws-ghost ws-showside" onClick={() => setSide(true)} aria-label="展开侧栏">☰</button>}
+          <button className="ws-ghost ws-burger" onClick={() => setDrawer(true)} aria-label="打开菜单">☰</button>
           {view === 'chat'
-            ? <Chat project={projects.find(x => x.id === chatProject)} openProject={() => { if (chatProject) { setProjectId(chatProject); setView('project'); } }} org={org} items={items} busy={busy} send={send} stop={stop} model={model} setModel={m => { setModel(m); try { localStorage.setItem('ws:model', m); } catch {} }} openArt={setArt} activeArt={art ? artKey(art) : ''} />
+            ? <Chat onFiles={chatProject ? fs => uploadResumes(chatProject, fs) : undefined} project={projects.find(x => x.id === chatProject)} openProject={() => { if (chatProject) { setProjectId(chatProject); setView('project'); } }} org={org} items={items} busy={busy} send={send} stop={stop} model={model} setModel={m => { setModel(m); try { localStorage.setItem('ws:model', m); } catch {} }} openArt={setArt} activeArt={art ? artKey(art) : ''} />
             : view === 'setup' ? <SetupPage />
             : view === 'project' && projectId ? <ProjectPage id={projectId} openArt={setArt} ask={t => askInProject(projectId, t)} openThread={openThread} />
             : <Lists view={view} org={org} openArt={setArt} ask={p => { newChat(); setTimeout(() => send(p), 0); }} />}
         </main>
-        {art && <ArtifactPanel key={artKey(art) + ((art as any)._n || '')} art={art} onClose={() => setArt(null)} openArt={setArt} />}
+        {art && <ArtifactPanel key={artKey(art) + ((art as any)._n || '')} art={art} onClose={() => setArt(null)} openArt={setArt} onResize={resizeArt} />}
       </div>
+      {palette && <Palette org={org} threads={threads} projects={projects} close={() => setPalette(false)} run={a => { setPalette(false); a(); }}
+        actions={{ newChat: () => newChat(null), newProject: () => { newChat(null); setTimeout(() => sendRef.current?.(org.kind === 'research' ? '我要引进一位研究人员，帮我开一个项目' : '我要招人，帮我开一个招聘项目', null), 0); }, view: (v: View) => { setView(v); setArt(null); }, thread: openThread, project: (id: string) => { setProjectId(id); setView('project'); setArt(null); }, ask: (p: string) => { newChat(null); setTimeout(() => sendRef.current?.(p, null), 0); } }} />}
     </Shell>
   );
 }
@@ -171,7 +204,29 @@ function fromHistory(ms: any[]): Item[] {
   return out;
 }
 
-function Sidebar({ org, user, view, setView, threads, threadId, openThread, newChat, onHide, projects, projectId, openProject, newProject }: { org: Org; user: any; view: View; setView: (v: View) => void; threads: any[]; threadId: string | null; openThread: (id: string) => void; newChat: () => void; onHide: () => void; projects: any[]; projectId: string | null; openProject: (id: string) => void; newProject: () => void }) {
+/** 「最近」按今天 / 昨天 / 7 天内 / 更早分组 */
+function groupByDay(ts: any[]): [string, any[]][] {
+  const day = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  const today = day(new Date()); const g: Record<string, any[]> = {}; const order = ['今天', '昨天', '7 天内', '更早'];
+  for (const t of ts) { const diff = (today - day(new Date(t.updated_at))) / 86400000; const k = diff < 1 ? '今天' : diff < 2 ? '昨天' : diff < 7 ? '7 天内' : '更早'; (g[k] ||= []).push(t); }
+  return order.filter(k => g[k]).map(k => [k, g[k]]);
+}
+/** 一条最近对话：悬停出「…」，可改名、删除（删除要点两下） */
+function Recent({ t, on, open, changed }: { t: any; on: boolean; open: () => void; changed: () => void }) {
+  const [menu, setMenu] = useState(false); const [edit, setEdit] = useState(false); const [name, setName] = useState(t.title || ''); const [arm, setArm] = useState(false);
+  const save = async () => { setEdit(false); if (name.trim() && name !== t.title) { await fetch(`/api/ws/threads/${t.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: name }) }); changed(); } };
+  const del = async () => { if (!arm) { setArm(true); setTimeout(() => setArm(false), 3000); return; } await fetch(`/api/ws/threads/${t.id}`, { method: 'DELETE' }); setMenu(false); changed(); };
+  if (edit) return <input className="ws-recent-edit" autoFocus value={name} onChange={e => setName(e.target.value)} onBlur={save} onKeyDown={e => { if (e.key === 'Enter') save(); if (e.key === 'Escape') { setEdit(false); setName(t.title); } }} />;
+  return (
+    <div className={`ws-recent-row${on ? ' on' : ''}${menu ? ' menu' : ''}`} onMouseLeave={() => { setMenu(false); setArm(false); }}>
+      <button className="ws-recent" onClick={open} title={t.title}>{t.project_id && <span className="ws-dot-p" />}{t.title || '未命名对话'}</button>
+      <button className="ws-recent-more" onClick={() => setMenu(m => !m)} aria-label="更多">⋯</button>
+      {menu && <div className="ws-menu"><button onClick={() => { setMenu(false); setEdit(true); }}>改名</button><button className="danger" onClick={del}>{arm ? '再点一下确认删除' : '删除'}</button></div>}
+    </div>
+  );
+}
+
+function Sidebar({ org, user, view, setView, threads, threadId, openThread, newChat, onHide, projects, projectId, openProject, newProject, reload, openPalette }: { org: Org; user: any; view: View; setView: (v: View) => void; threads: any[]; threadId: string | null; openThread: (id: string) => void; newChat: () => void; onHide: () => void; projects: any[]; projectId: string | null; openProject: (id: string) => void; newProject: () => void; reload: () => void; openPalette: () => void }) {
   const NAV: [View, string, string][] = [['chat', '对话', 'M4 5h16v11H8l-4 4z'], ['roles', '岗位', 'M4 7h16v12H4zM9 7V5h6v2'], ['work', '真活', 'M5 4h14v16H5zM8 9h8M8 13h8M8 17h5'], ['spaces', '职业空间', 'M12 3l8 4.5v9L12 21l-8-4.5v-9z'], ['people', '候选人', 'M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 20c0-3 3-5 6-5s6 2 6 5M17 11a2.5 2.5 0 1 0 0-5M21 19c0-2-1.5-3.5-4-4'], ['setup', '企业设置', 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z']];
   return (
     <nav className="ws-side">
@@ -181,13 +236,13 @@ function Sidebar({ org, user, view, setView, threads, threadId, openThread, newC
       </div>
       <div className="ws-org"><div className="ws-org-avatar">{org.name.slice(0, 1)}</div><div style={{ minWidth: 0 }}><div className="ws-org-name">{org.name}</div><div className="ws-cap">{org.role === 'owner' ? '管理员' : org.role === 'admin' ? '平台管理员' : '成员'}</div></div></div>
       <button className="ws-new" onClick={newChat}><span style={{ fontSize: 17, lineHeight: 1 }}>＋</span> 新对话</button>
+      <button className="ws-search" onClick={openPalette}><Ico d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4" size={14} />搜索<kbd>⌘K</kbd></button>
       <div className="ws-sec">功能</div>
       {NAV.map(([v, t, d]) => <button key={v} className={`ws-nav${view === v ? ' on' : ''}`} onClick={() => (v === 'chat' ? newChat() : setView(v))}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>{org.kind === 'research' && v === 'setup' ? '机构设置' : t}</button>)}
       <div className="ws-sec" style={{ display: 'flex', alignItems: 'center' }}>{org.kind === 'research' ? '引进项目' : '招聘项目'}<button className="ws-ghost" style={{ marginLeft: 'auto', padding: '0 6px', fontSize: 15 }} title="开一个招聘项目" onClick={newProject}>＋</button></div>
       {projects.length ? projects.slice(0, 8).map(p => <button key={p.id} className={`ws-proj${p.id === projectId ? ' on' : ''}`} onClick={() => openProject(p.id)} title={p.title}><span className="ws-proj-ico">{(p.role_title || p.title).slice(0, 1)}</span><span style={{ minWidth: 0, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.title}</span>{p.candidates ? <span className="ws-muted" style={{ fontSize: 11.5 }}>{p.candidates}</span> : null}</button>) : <div className="ws-muted" style={{ padding: '2px 10px 4px', fontSize: 12.5 }}>{org.kind === 'research' ? '一次引进就是一个项目' : '一次招人就是一个项目'}</div>}
-      <div className="ws-sec">最近</div>
       <div className="ws-recents">
-        {threads.length ? threads.map(t => <button key={t.id} className={`ws-recent${t.id === threadId && view === 'chat' ? ' on' : ''}`} onClick={() => openThread(t.id)} title={t.title}>{t.project_id && <span className="ws-dot-p" />}{t.title || '未命名对话'}</button>) : <div className="ws-muted" style={{ padding: '4px 10px', fontSize: 12.5 }}>还没有对话</div>}
+        {threads.length ? groupByDay(threads).map(([g, ts]) => <div key={g}><div className="ws-sec">{g}</div>{ts.map(t => <Recent key={t.id} t={t} on={t.id === threadId && view === 'chat'} open={() => openThread(t.id)} changed={reload} />)}</div>) : <><div className="ws-sec">最近</div><div className="ws-muted" style={{ padding: '4px 10px', fontSize: 12.5 }}>还没有对话</div></>}
       </div>
       <div className="ws-side-foot">
         <div className="ws-muted" style={{ fontSize: 12, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email}</div>
@@ -197,7 +252,7 @@ function Sidebar({ org, user, view, setView, threads, threadId, openThread, newC
   );
 }
 
-function Chat({ project, openProject, org, items, busy, send, stop, model, setModel, openArt, activeArt }: { project?: any; openProject: () => void; org: Org; items: Item[]; busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; openArt: (a: Art) => void; activeArt: string }) {
+function Chat({ project, openProject, org, items, busy, send, stop, model, setModel, openArt, activeArt, onFiles }: { onFiles?: (fs: File[]) => void; project?: any; openProject: () => void; org: Org; items: Item[]; busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; openArt: (a: Art) => void; activeArt: string }) {
   const endRef = useRef<HTMLDivElement>(null);
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [items]);
   const empty = !items.length;
@@ -217,22 +272,118 @@ function Chat({ project, openProject, org, items, busy, send, stop, model, setMo
         <>
           {project && <div className="ws-inproj"><button className="ws-ghost sm" onClick={openProject}>招聘项目 · {project.title} →</button></div>}
           <div className="ws-thread">
-            {(() => { const seen = new Set<string>(); return items.map((x, i) => { const k = x.k === 'tool' && x.ui && x.ui.kind !== 'problems' ? artKey(x.ui) : ''; const chip = !!k && !seen.has(k); if (k) seen.add(k); return <Row key={i} x={x} send={send} busy={busy} openArt={openArt} activeArt={activeArt} chip={chip} />; }); })()}
-            {busy && !(items[items.length - 1]?.k === 'tool' && (items[items.length - 1] as any).running) && <div className="ws-typing"><i /><i /><i /></div>}
+            {(() => {
+              // 连续的工具调用合成一组（像「做了 4 件事」），产物卡、候选问题卡放在组下面；同一个产物只出一张卡
+              const seen = new Set<string>(); const out: React.ReactNode[] = [];
+              const lastText = items.map((x, i) => (x.k === 'text' ? i : -1)).filter(i => i >= 0).pop();
+              const lastUser = [...items].reverse().find(x => x.k === 'user') as Extract<Item, { k: 'user' }> | undefined;
+              for (let i = 0; i < items.length; i++) {
+                const x = items[i];
+                if (x.k === 'tool') {
+                  const group: Extract<Item, { k: 'tool' }>[] = [];
+                  while (i < items.length && items[i].k === 'tool') { group.push(items[i] as any); i++; }
+                  i--;
+                  const chips: any[] = [];
+                  for (const g of group) { if (!g.ui || g.ui.kind === 'problems') continue; const k = artKey(g.ui); if (seen.has(k)) continue; seen.add(k); chips.push(g.ui); }
+                  out.push(<ToolGroup key={`g${i}`} tools={group} />);
+                  for (const g of group) if (g.ui?.kind === 'problems') out.push(<Problems key={`p${g.id}`} ui={g.ui} send={send} busy={busy} />);
+                  for (const ui of chips) out.push(<ArtChip key={`c${artKey(ui)}`} ui={ui} openArt={openArt} active={activeArt === artKey(ui)} />);
+                  continue;
+                }
+                out.push(<Row key={i} x={x} send={send} busy={busy} streaming={busy && i === items.length - 1 && x.k === 'text'} last={i === lastText && !busy} regen={lastUser ? () => send(lastUser.text) : undefined} />);
+              }
+              return out;
+            })()}
+            {busy && items[items.length - 1]?.k !== 'text' && !(items[items.length - 1]?.k === 'tool' && (items[items.length - 1] as any).running) && <div className="ws-typing"><span className="ws-avatar">百</span><i /><i /><i /></div>}
             <div ref={endRef} style={{ height: 8 }} />
           </div>
-          <div className="ws-dock"><Composer research={org.kind === 'research'} busy={busy} send={send} stop={stop} model={model} setModel={setModel} placeholder={pendingAsk ? '选上面一个，或者直接说你的想法…' : '接着说…'} /></div>
+          <div className="ws-dock"><Composer onFiles={onFiles} research={org.kind === 'research'} busy={busy} send={send} stop={stop} model={model} setModel={setModel} placeholder={pendingAsk ? '选上面一个，或者直接说你的想法…' : '接着说…'} /></div>
         </>
       )}
     </div>
   );
 }
 
-function Row({ x, send, busy, openArt, activeArt, chip = true }: { x: Item; send: (t: string) => void; busy: boolean; openArt: (a: Art) => void; activeArt: string; chip?: boolean }) {
+/** 工具图标：读 / 查 / 写 / 跑 / 核 / 人 */
+const TOOL_ICON: Record<string, string> = {
+  add_candidate: 'M14 3H6v18h12V7zM14 3v4h4M9 13h6M9 17h4',
+  org_profile: 'M4 20V6l8-3 8 3v14M9 20v-5h6v5', setup_checklist: 'M9 11l2 2 4-4M5 4h14v16H5z', enrich_company: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4',
+  list_roles: 'M4 7h16v12H4zM9 7V5h6v2', list_work_tasks: 'M5 4h14v16H5zM8 9h8M8 13h8', list_spaces: 'M12 3l8 4.5v9L12 21l-8-4.5v-9z', list_projects: 'M3 7h7l2 2h9v10H3z',
+  propose_problems: 'M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2', create_work_task: 'M4 20h4L18 10l-4-4L4 16zM13 7l4 4', write_jd: 'M4 20h4L18 10l-4-4L4 16zM13 7l4 4',
+  run_baseline: 'M7 5l12 7-12 7z', screen_candidates: 'M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 20c0-3 3-5 6-5s6 2 6 5M16 11l2 2 4-4', verify_candidate: 'M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z', check_verification: 'M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6zM9 12l2 2 4-4',
+  set_candidate_stage: 'M5 12h14M13 6l6 6-6 6', create_space: 'M12 3l8 4.5v9L12 21l-8-4.5v-9z', create_project: 'M3 7h7l2 2h9v10H3zM12 12v5M9.5 14.5h5', project_board: 'M4 5h16v14H4zM9 5v14M15 5v14',
+  save_company_info: 'M5 4h11l3 3v13H5zM8 4v5h8V4', add_role: 'M4 7h16v12H4zM12 10v6M9 13h6', finish_setup: 'M5 12l5 5L20 7', work_results: 'M5 19V9M12 19V5M19 19v-7',
+};
+function Ico({ d, size = 14 }: { d?: string; size?: number }) { return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d={d || 'M12 5v14M5 12h14'} /></svg>; }
+
+/** 一组工具调用：收着时一行「做了 N 件事」（进行中显示当前这步），展开看每一步 */
+function ToolGroup({ tools }: { tools: Extract<Item, { k: 'tool' }>[] }) {
+  const running = tools.find(t => t.running); const failed = tools.filter(t => t.error).length;
   const [open, setOpen] = useState(false); const [, tick] = useState(0);
-  useEffect(() => { if (x.k === 'tool' && x.running) { const iv = setInterval(() => tick(n => n + 1), 1000); return () => clearInterval(iv); } }, [x]);
+  useEffect(() => { if (running) { const iv = setInterval(() => tick(n => n + 1), 1000); return () => clearInterval(iv); } }, [running]);
+  const head = running ? `${TOOL_RUNNING[running.name] || running.name}` : tools.length === 1 ? (tools[0].error ? `${TOOL_RUNNING[tools[0].name] || tools[0].name}：${tools[0].error}` : tools[0].label) : `做了 ${tools.length} 件事${failed ? `，${failed} 件出错` : ''}`;
+  return (
+    <div className={`ws-tg${open ? ' open' : ''}`}>
+      <button className="ws-tg-head" onClick={() => setOpen(o => !o)}>
+        <span className={`ws-tool-dot${running ? ' run' : failed ? ' err' : ''}`} />
+        <span className="ws-tg-title">{head}</span>
+        {running && <span className="ws-muted" style={{ fontSize: 12 }}>{Math.round((Date.now() - running.t0) / 1000)}s</span>}
+        {!running && tools.length > 1 && <span className="ws-tg-icons">{tools.slice(0, 5).map(t => <span key={t.id}><Ico d={TOOL_ICON[t.name]} size={12} /></span>)}</span>}
+        <span className="ws-tg-caret"><Ico d="M9 6l6 6-6 6" size={12} /></span>
+      </button>
+      {open && <div className="ws-tg-body">{tools.map(t => <ToolLine key={t.id} t={t} />)}</div>}
+    </div>
+  );
+}
+function ToolLine({ t }: { t: Extract<Item, { k: 'tool' }> }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="ws-tl">
+      <button className="ws-tl-head" onClick={() => setOpen(o => !o)}>
+        <span className={`ws-tl-ico${t.error ? ' err' : t.running ? ' run' : ''}`}><Ico d={TOOL_ICON[t.name]} size={13} /></span>
+        <span style={{ flex: 1, minWidth: 0 }}>{t.running ? TOOL_RUNNING[t.name] || t.name : t.error ? `${TOOL_RUNNING[t.name] || t.name}：${t.error}` : t.label}</span>
+        <span className="ws-muted" style={{ fontSize: 11 }}>{open ? '收起' : '参数'}</span>
+      </button>
+      {open && <pre className="ws-tool-detail">{JSON.stringify(t.input || {}, null, 2)}</pre>}
+    </div>
+  );
+}
+function Problems({ ui, send, busy }: { ui: any; send: (t: string) => void; busy: boolean }) {
+  return <div className="ws-problems">{ui.items.map((p: any, i: number) => (
+    <button key={i} className="ws-card ws-problem" disabled={busy} onClick={() => send(`就第 ${i + 1} 个：${p.title}——${p.statement}`)}>
+      <div className="ws-cap">候选 {i + 1}</div><div style={{ fontWeight: 650, margin: '3px 0 6px' }}>{p.title}</div>
+      <div style={{ fontSize: 13.5, lineHeight: 1.6 }}>{p.statement}</div>
+      {p.why_now && <div className="ws-muted" style={{ fontSize: 12.5, marginTop: 6, lineHeight: 1.55 }}>为什么是现在：{p.why_now}</div>}
+      {!!p.evidence?.length && <div className="ws-muted" style={{ fontSize: 12, marginTop: 6, lineHeight: 1.5 }}>依据：{p.evidence.join('；')}</div>}
+    </button>))}</div>;
+}
+function ArtChip({ ui, openArt, active }: { ui: any; openArt: (a: Art) => void; active: boolean }) {
+  const kind = ui.kind === 'work' ? '真活 · 任务书、材料包、评分标准、AI 基线' : ui.kind === 'results' ? '作答与报告' : ui.kind === 'company' ? '档案' : ui.kind === 'project' ? '招聘项目' : ui.kind === 'candidate' ? '候选人' : '职业空间';
+  const d = ui.kind === 'space_build' || ui.kind === 'space' ? TOOL_ICON.create_space : ui.kind === 'candidate' ? TOOL_ICON.screen_candidates : ui.kind === 'project' ? TOOL_ICON.list_projects : ui.kind === 'company' ? TOOL_ICON.org_profile : TOOL_ICON.list_work_tasks;
+  return (
+    <button className={`ws-artchip${active ? ' on' : ''}`} onClick={() => openArt(ui)}>
+      <span className="ws-artchip-ico"><Ico d={d} size={16} /></span>
+      <span style={{ minWidth: 0 }}><span style={{ display: 'block', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ui.title}</span><span className="ws-muted" style={{ fontSize: 12 }}>{kind}</span></span>
+      <span className="ws-muted" style={{ marginLeft: 'auto', fontSize: 12 }}>{active ? '已打开' : '打开 →'}</span>
+    </button>
+  );
+}
+
+function Row({ x, send, busy, streaming, last, regen }: { x: Item; send: (t: string) => void; busy: boolean; streaming?: boolean; last?: boolean; regen?: () => void }) {
+  const [copied, setCopied] = useState(false);
   if (x.k === 'user') return <div className="ws-user"><div className="ws-bubble">{x.text}</div></div>;
-  if (x.k === 'text') return <div className="ws-ai"><Md text={x.text} /></div>;
+  if (x.k === 'text') return (
+    <div className={`ws-ai${streaming ? ' streaming' : ''}`}>
+      <span className="ws-avatar">百</span>
+      <div className="ws-ai-body">
+        <Md text={x.text} />
+        {!streaming && <div className={`ws-ai-act${last ? ' show' : ''}`}>
+          <button onClick={() => { navigator.clipboard?.writeText(x.text); setCopied(true); setTimeout(() => setCopied(false), 1400); }} title="复制"><Ico d={copied ? 'M5 12l5 5L20 7' : 'M8 8h11v11H8zM5 16V5h11'} size={13} />{copied ? '已复制' : '复制'}</button>
+          {last && regen && <button onClick={regen} disabled={busy} title="把上一句再问一次"><Ico d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4" size={13} />再说一次</button>}
+        </div>}
+      </div>
+    </div>
+  );
   if (x.k === 'error') return <div className="ws-err">{x.text}</div>;
   if (x.k === 'ask') return (
     <div className="ws-ask">
@@ -243,44 +394,58 @@ function Row({ x, send, busy, openArt, activeArt, chip = true }: { x: Item; send
       {x.answered && !x.options.includes(x.answered) && <div className="ws-muted" style={{ marginTop: 8, fontSize: 13 }}>你回答了：{x.answered}</div>}
     </div>
   );
-  const sec = x.running ? Math.round((Date.now() - x.t0) / 1000) : 0;
-  const ui = x.ui;
+  return null;
+}
+
+function Composer({ busy, send, stop, model, setModel, placeholder, autoFocus, research, onFiles }: { busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; placeholder?: string; autoFocus?: boolean; research?: boolean; onFiles?: (files: File[]) => void }) {
+  const [v, setV] = useState(''); const ta = useRef<HTMLTextAreaElement>(null); const fileRef = useRef<HTMLInputElement>(null); const [drag, setDrag] = useState(false);
+  useEffect(() => { const el = ta.current; if (!el) return; el.style.height = 'auto'; el.style.height = Math.min(220, el.scrollHeight) + 'px'; }, [v]);
+  const go = () => { if (!v.trim() || busy) return; send(v); setV(''); };
+  const take = (fl: FileList | null) => { const fs = Array.from(fl || []).filter(f => /\.(pdf|txt|md)$/i.test(f.name)); if (fs.length && onFiles) onFiles(fs); };
   return (
-    <div className="ws-tool">
-      <button className="ws-tool-line" onClick={() => setOpen(o => !o)}>
-        <span className={`ws-tool-dot${x.running ? ' run' : x.error ? ' err' : ''}`} />
-        <span>{x.running ? (TOOL_RUNNING[x.name] || x.name) : x.error ? `${TOOL_RUNNING[x.name] || x.name}：${x.error}` : x.label}</span>
-        {x.running && <span className="ws-muted" style={{ fontSize: 12 }}>{sec}s</span>}
-        <span className="ws-muted" style={{ marginLeft: 'auto', fontSize: 11 }}>{open ? '收起' : '详情'}</span>
-      </button>
-      {open && <pre className="ws-tool-detail">{JSON.stringify(x.input || {}, null, 2)}</pre>}
-      {ui?.kind === 'problems' && <div className="ws-problems">{ui.items.map((p: any, i: number) => (
-        <button key={i} className="ws-card ws-problem" disabled={busy} onClick={() => send(`就第 ${i + 1} 个：${p.title}——${p.statement}`)}>
-          <div className="ws-cap">候选 {i + 1}</div><div style={{ fontWeight: 650, margin: '3px 0 6px' }}>{p.title}</div>
-          <div style={{ fontSize: 13.5, lineHeight: 1.6 }}>{p.statement}</div>
-          {p.why_now && <div className="ws-muted" style={{ fontSize: 12.5, marginTop: 6, lineHeight: 1.55 }}>为什么是现在：{p.why_now}</div>}
-          {!!p.evidence?.length && <div className="ws-muted" style={{ fontSize: 12, marginTop: 6, lineHeight: 1.5 }}>依据：{p.evidence.join('；')}</div>}
-        </button>))}</div>}
-      {chip && ui && ui.kind !== 'problems' && <button className={`ws-artchip${activeArt === artKey(ui) ? ' on' : ''}`} onClick={() => openArt(ui)}>
-        <span className="ws-artchip-ico">{ui.kind === 'space_build' || ui.kind === 'space' ? '◇' : ui.kind === 'results' ? '≡' : '▤'}</span>
-        <span style={{ minWidth: 0 }}><span style={{ display: 'block', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ui.title}</span><span className="ws-muted" style={{ fontSize: 12 }}>{ui.kind === 'work' ? '真活 · 任务书、材料包、评分标准、AI 基线' : ui.kind === 'results' ? '作答与报告' : '职业空间'}</span></span>
-        <span className="ws-muted" style={{ marginLeft: 'auto', fontSize: 12 }}>打开 →</span>
-      </button>}
+    <div className={`ws-composer${drag ? ' drag' : ''}`} onDragOver={e => { if (onFiles) { e.preventDefault(); setDrag(true); } }} onDragLeave={() => setDrag(false)} onDrop={e => { if (!onFiles) return; e.preventDefault(); setDrag(false); take(e.dataTransfer.files); }}>
+      {drag && <div className="ws-drop">松手，简历会加进这个项目的候选人</div>}
+      <textarea ref={ta} value={v} autoFocus={autoFocus} rows={1} placeholder={placeholder || (research ? '比如：给界面表征方向的博士后出一道研究真活' : '比如：给供应链计划岗出一道真活')} onChange={e => setV(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); go(); } }} />
+      <div className="ws-composer-bar">
+        {onFiles && <><button className="ws-clip" title="上传简历（PDF，可多选；也可以直接拖进来）" onClick={() => fileRef.current?.click()} disabled={busy}><Ico d="M21 11l-8.5 8.5a5 5 0 0 1-7-7L14 4a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 0 1-3-3L15 7" size={16} /></button><input ref={fileRef} type="file" accept=".pdf,.txt,.md" multiple hidden onChange={e => { take(e.target.files); e.target.value = ''; }} /></>}
+        <select className="ws-model" value={model} onChange={e => setModel(e.target.value)} title="总控用哪个模型">{CHAT_MODELS.map(m => <option key={m.id} value={m.id}>{m.label}</option>)}</select>
+        <span className="ws-muted ws-scope" style={{ fontSize: 12, marginLeft: 8 }}>{research ? '只围绕本机构' : '只围绕本企业'}</span>
+        {busy ? <button className="ws-send stop" onClick={stop} aria-label="停止">■</button> : <button className="ws-send" onClick={go} disabled={!v.trim()} aria-label="发送">↑</button>}
+      </div>
     </div>
   );
 }
 
-function Composer({ busy, send, stop, model, setModel, placeholder, autoFocus, research }: { busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; placeholder?: string; autoFocus?: boolean; research?: boolean }) {
-  const [v, setV] = useState(''); const ta = useRef<HTMLTextAreaElement>(null);
-  useEffect(() => { const el = ta.current; if (!el) return; el.style.height = 'auto'; el.style.height = Math.min(220, el.scrollHeight) + 'px'; }, [v]);
-  const go = () => { if (!v.trim() || busy) return; send(v); setV(''); };
+/** ⌘K：搜对话、项目，也能直接执行常用动作 */
+function Palette({ org, threads, projects, close, run, actions }: { org: Org; threads: any[]; projects: any[]; close: () => void; run: (a: () => void) => void; actions: { newChat: () => void; newProject: () => void; view: (v: View) => void; thread: (id: string) => void; project: (id: string) => void; ask: (p: string) => void } }) {
+  const [q, setQ] = useState(''); const [i, setI] = useState(0);
+  const r = org.kind === 'research';
+  const all: { g: string; t: string; d?: string; ico: string; go: () => void }[] = [
+    { g: '动作', t: '新对话', ico: 'M12 5v14M5 12h14', go: actions.newChat },
+    { g: '动作', t: r ? '开一个人才引进项目' : '开一个招聘项目', ico: TOOL_ICON.create_project, go: actions.newProject },
+    { g: '动作', t: r ? '出一道研究真活' : '出一道真活', ico: TOOL_ICON.create_work_task, go: () => actions.ask(r ? '帮我给一个研究岗出一道研究真活' : '帮我给一个岗位出一道真活') },
+    { g: '动作', t: '建一个职业空间', ico: TOOL_ICON.create_space, go: () => actions.ask('帮我给一个岗位建职业空间') },
+    { g: '动作', t: r ? '机构设置' : '企业设置', ico: TOOL_ICON.save_company_info, go: () => actions.view('setup') },
+    { g: '页面', t: '岗位', ico: TOOL_ICON.list_roles, go: () => actions.view('roles') },
+    { g: '页面', t: '真活', ico: TOOL_ICON.list_work_tasks, go: () => actions.view('work') },
+    { g: '页面', t: '职业空间', ico: TOOL_ICON.list_spaces, go: () => actions.view('spaces') },
+    { g: '页面', t: '候选人', ico: TOOL_ICON.screen_candidates, go: () => actions.view('people') },
+    ...projects.map(p => ({ g: r ? '引进项目' : '招聘项目', t: p.title, d: `${p.candidates || 0} 位候选人`, ico: TOOL_ICON.list_projects, go: () => actions.project(p.id) })),
+    ...threads.map(t => ({ g: '对话', t: t.title || '未命名对话', d: new Date(t.updated_at).toLocaleDateString('zh-CN'), ico: 'M4 5h16v11H8l-4 4z', go: () => actions.thread(t.id) })),
+  ];
+  const qq = q.trim().toLowerCase();
+  const list = (qq ? all.filter(x => x.t.toLowerCase().includes(qq) || x.g.includes(qq)) : all.filter(x => x.g !== '对话').concat(all.filter(x => x.g === '对话').slice(0, 5))).slice(0, 40);
+  useEffect(() => { setI(0); }, [q]);
+  const key = (e: React.KeyboardEvent) => { if (e.key === 'ArrowDown') { e.preventDefault(); setI(n => Math.min(list.length - 1, n + 1)); } else if (e.key === 'ArrowUp') { e.preventDefault(); setI(n => Math.max(0, n - 1)); } else if (e.key === 'Enter' && list[i]) { e.preventDefault(); run(list[i].go); } else if (e.key === 'Escape') close(); };
+  let lastG = '';
   return (
-    <div className="ws-composer">
-      <textarea ref={ta} value={v} autoFocus={autoFocus} rows={1} placeholder={placeholder || (research ? '比如：给界面表征方向的博士后出一道研究真活' : '比如：给供应链计划岗出一道真活')} onChange={e => setV(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); go(); } }} />
-      <div className="ws-composer-bar">
-        <select className="ws-model" value={model} onChange={e => setModel(e.target.value)} title="总控用哪个模型">{CHAT_MODELS.map(m => <option key={m.id} value={m.id}>{m.label}</option>)}</select>
-        <span className="ws-muted" style={{ fontSize: 12, marginLeft: 8 }}>{research ? '只围绕本机构' : '只围绕本企业'}</span>
-        {busy ? <button className="ws-send stop" onClick={stop} aria-label="停止">■</button> : <button className="ws-send" onClick={go} disabled={!v.trim()} aria-label="发送">↑</button>}
+    <div className="ws-pal-scrim" onClick={close}>
+      <div className="ws-pal" onClick={e => e.stopPropagation()}>
+        <div className="ws-pal-in"><Ico d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4" size={16} /><input autoFocus value={q} onChange={e => setQ(e.target.value)} onKeyDown={key} placeholder="搜对话、项目，或者直接做点什么…" /><kbd>Esc</kbd></div>
+        <div className="ws-pal-list">
+          {list.length ? list.map((x, k) => { const head = x.g !== lastG ? (lastG = x.g, <div key={`h${k}`} className="ws-pal-g">{x.g}</div>) : null; return <React.Fragment key={k}>{head}<button className={`ws-pal-i${k === i ? ' on' : ''}`} onMouseEnter={() => setI(k)} onClick={() => run(x.go)}><span className="ws-pal-ico"><Ico d={x.ico} size={14} /></span><span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{x.t}</span>{x.d && <span className="ws-muted" style={{ fontSize: 12 }}>{x.d}</span>}</button></React.Fragment>; }) : <div className="ws-muted" style={{ padding: 18, textAlign: 'center' }}>没找到「{q}」</div>}
+        </div>
+        <div className="ws-pal-foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>↵</kbd> 打开</span><span><kbd>⌘K</kbd> 开关</span></div>
       </div>
     </div>
   );
@@ -299,7 +464,7 @@ function Lists({ view, org, openArt, ask }: { view: View; org: Org; openArt: (a:
         <button className="ws-primary" style={{ marginLeft: 'auto' }} onClick={() => ask(view === 'spaces' ? '帮我给一个岗位建职业空间' : view === 'people' ? '最近的真活谁做得最好？帮我对比一下' : '帮我给一个岗位出一道真活')}>{view === 'spaces' ? '建一个职业空间' : view === 'people' ? '让 AI 对比' : '出一道真活'}</button>
       </div>
       {err && <div className="ws-err">{err}</div>}
-      {!d && !err && <div className="ws-muted">加载中…</div>}
+      {!d && !err && <Skel lines={6} card />}
       {d && view === 'roles' && <Table empty="岗位库里还没有本企业的岗位；在对话里直接说岗位名也能出题、建空间" head={['岗位', '职能', '城市', '真活', '空间', '']} rows={d.roles.map((r: any) => [<b key="t">{r.title}</b>, r.function || '—', r.city || '—', r.work || '—', r.spaces || '—', <span key="a" style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}><button className="ws-ghost sm" onClick={() => ask(`给「${r.title}」出一道真活`)}>出真活</button><button className="ws-ghost sm" onClick={() => ask(`给「${r.title}」建一个职业空间，新人带教用`)}>建空间</button></span>])} />}
       {d && view === 'work' && <Table empty="还没有出过真活" head={['真活', '岗位', '参与 / 交卷', 'AI 基线', '日期']} rows={d.work.map((w: any) => [<a key="t" className="ws-rowlink" onClick={() => openArt({ kind: 'work', id: w.id, token: w.token, owner_key: w.owner_key, title: w.title })}>{w.title}</a>, w.role, `${w.joined} / ${w.submitted}`, w.baseline ?? '—', fmt(w.created_at)])} />}
       {d && view === 'spaces' && <Table empty="还没有建过职业空间" head={['职业空间', '岗位', '日期']} rows={d.spaces.map((s: any) => [<a key="t" className="ws-rowlink" onClick={() => openArt({ kind: 'space', id: s.id, title: s.title })}>{s.title}</a>, s.role || '—', fmt(s.created_at)])} />}
@@ -364,9 +529,10 @@ const CSS = `
 .ws-cap { font-size:11.5px; color:var(--ink3); letter-spacing:.02em; }
 .ws-center { min-height:100dvh; display:grid; place-items:center; padding:24px; }
 .ws-root { display:grid; grid-template-columns:260px minmax(0,1fr); height:100dvh; transition:grid-template-columns .25s; }
-.ws-root.with-art { grid-template-columns:260px minmax(0,1fr) minmax(420px,46%); }
+.ws-root.with-art { grid-template-columns:260px minmax(0,1fr) var(--art-w, minmax(420px,46%)); }
 .ws-root.no-side { grid-template-columns:0 minmax(0,1fr); }
-.ws-root.no-side.with-art { grid-template-columns:0 minmax(0,1fr) minmax(420px,46%); }
+.ws-root.no-side.with-art { grid-template-columns:0 minmax(0,1fr) var(--art-w, minmax(420px,46%)); }
+.ws-side-wrap { display:contents; } .ws-burger, .ws-scrim { display:none; }
 .ws-root.no-side .ws-side { visibility:hidden; }
 .ws-side { background:var(--side); border-right:1px solid var(--line); display:flex; flex-direction:column; padding:12px 10px; overflow:hidden; min-width:0; }
 .ws-side-top { display:flex; align-items:center; justify-content:space-between; padding:4px 6px 12px; }
@@ -383,6 +549,30 @@ const CSS = `
 .ws-recents { flex:1; overflow-y:auto; min-height:0; }
 .ws-recent { display:block; width:100%; padding:6px 10px; border-radius:8px; border:0; background:transparent; color:var(--ink2); font-size:13.5px; cursor:pointer; text-align:left; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .ws-recent.on { background:var(--hover); color:var(--ink); }
+.ws-recent-row { position:relative; display:flex; align-items:center; border-radius:8px; }
+.ws-recent-row:hover, .ws-recent-row.on, .ws-recent-row.menu { background:var(--hover); }
+.ws-recent-row .ws-recent { background:transparent !important; flex:1; min-width:0; }
+.ws-recent-row.on .ws-recent { color:var(--ink); }
+.ws-recent-more { opacity:0; border:0; background:transparent; color:var(--ink3); cursor:pointer; padding:2px 8px; font-size:15px; border-radius:6px; }
+.ws-recent-row:hover .ws-recent-more, .ws-recent-row.menu .ws-recent-more { opacity:1; } .ws-recent-more:hover { color:var(--ink); }
+.ws-menu { position:absolute; right:4px; top:30px; z-index:5; background:var(--card); border:1px solid var(--line); border-radius:10px; box-shadow:0 10px 30px rgba(40,30,10,.12); padding:4px; min-width:140px; }
+.ws-menu button { display:block; width:100%; text-align:left; border:0; background:transparent; padding:7px 10px; font-size:13px; border-radius:7px; cursor:pointer; color:var(--ink); }
+.ws-menu button:hover { background:var(--hover); } .ws-menu button.danger { color:#a33a2b; }
+.ws-recent-edit { width:100%; border:1px solid var(--accent); border-radius:8px; padding:5px 9px; font:inherit; font-size:13.5px; outline:0; background:var(--card); color:var(--ink); }
+.ws-search { display:flex; align-items:center; gap:8px; width:100%; padding:7px 10px; border-radius:9px; border:0; background:transparent; color:var(--ink2); font-size:14px; cursor:pointer; text-align:left; }
+.ws-search:hover { background:var(--hover); }
+.ws kbd { margin-left:auto; font-family:ui-monospace,Menlo,monospace; font-size:11px; color:var(--ink3); border:1px solid var(--line); border-bottom-width:2px; border-radius:5px; padding:0 5px; background:var(--card); }
+.ws-pal-scrim { position:fixed; inset:0; z-index:50; background:rgba(30,26,18,.18); backdrop-filter:blur(2px); display:flex; justify-content:center; align-items:flex-start; padding-top:12vh; animation:wsfade .12s ease-out; }
+.ws-pal { width:min(620px, 92vw); background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:0 30px 80px rgba(30,26,18,.22); overflow:hidden; animation:wspop .14s ease-out; }
+.ws-pal-in { display:flex; align-items:center; gap:10px; padding:14px 16px; border-bottom:1px solid var(--line2); color:var(--ink3); }
+.ws-pal-in input { flex:1; border:0; outline:0; font:inherit; font-size:16px; background:transparent; color:var(--ink); }
+.ws-pal-list { max-height:min(420px, 56vh); overflow-y:auto; padding:6px; }
+.ws-pal-g { font-size:11.5px; color:var(--ink3); padding:8px 10px 4px; letter-spacing:.04em; }
+.ws-pal-i { display:flex; align-items:center; gap:10px; width:100%; border:0; background:transparent; padding:8px 10px; border-radius:9px; font-size:14px; color:var(--ink); cursor:pointer; text-align:left; }
+.ws-pal-i.on { background:var(--hover); }
+.ws-pal-ico { width:24px; height:24px; border-radius:7px; background:var(--accent-soft); color:var(--accent); display:grid; place-items:center; flex-shrink:0; }
+.ws-pal-foot { display:flex; gap:16px; padding:8px 14px; border-top:1px solid var(--line2); font-size:12px; color:var(--ink3); } .ws-pal-foot kbd { margin:0 3px 0 0; }
+@keyframes wsfade { from { opacity:0 } } @keyframes wspop { from { opacity:0; transform:translateY(-6px) scale(.99); } }
 .ws-side-foot { border-top:1px solid var(--line); padding:10px 8px 2px; display:flex; flex-direction:column; gap:6px; }
 .ws-link { color:var(--ink2); text-decoration:none; } .ws-link:hover { color:var(--ink); text-decoration:underline; }
 .ws-main { position:relative; min-width:0; overflow:hidden; display:flex; flex-direction:column; }
@@ -405,7 +595,29 @@ const CSS = `
 .ws-dock { padding:8px 0 18px; } .ws-dock > * { width:min(760px,92%); margin:0 auto; }
 .ws-user { display:flex; justify-content:flex-end; margin:14px auto; }
 .ws-bubble { background:#ede9df; border-radius:16px; padding:10px 14px; max-width:80%; white-space:pre-wrap; line-height:1.65; }
-.ws-ai { margin:10px auto 6px; line-height:1.8; font-size:15px; }
+.ws-ai { margin:12px auto 6px; line-height:1.8; font-size:15px; display:flex; gap:12px; align-items:flex-start; }
+.ws-ai-body { flex:1; min-width:0; }
+.ws-avatar { width:24px; height:24px; border-radius:7px; background:var(--ink); color:var(--paper); display:grid; place-items:center; font-size:12px; font-family:var(--font-serif-sc),'Songti SC',serif; flex-shrink:0; margin-top:3px; }
+.ws[data-theme="cool"] .ws-avatar { background:#4b57d6; color:#fff; }
+.ws-ai.streaming .ws-md > :last-child::after { content:''; display:inline-block; width:7px; height:15px; margin-left:3px; vertical-align:-2px; background:var(--ink2); border-radius:1px; animation:wscaret 1s steps(2) infinite; }
+@keyframes wscaret { 50% { opacity:0; } }
+.ws-ai-act { display:flex; gap:4px; margin-top:2px; opacity:0; transition:opacity .15s; }
+.ws-ai:hover .ws-ai-act, .ws-ai-act.show { opacity:1; }
+.ws-ai-act button { display:inline-flex; align-items:center; gap:4px; border:0; background:transparent; color:var(--ink3); font-size:12px; padding:3px 7px; border-radius:6px; cursor:pointer; }
+.ws-ai-act button:hover:not(:disabled) { background:var(--hover); color:var(--ink); }
+.ws-tg { margin:8px auto; border:1px solid var(--line2); border-radius:12px; background:transparent; transition:background .15s; }
+.ws-tg.open { background:var(--card); border-color:var(--line); }
+.ws-tg-head { display:flex; align-items:center; gap:9px; width:100%; border:0; background:transparent; padding:8px 12px; color:var(--ink2); font-size:13.5px; cursor:pointer; text-align:left; border-radius:12px; }
+.ws-tg-head:hover { background:var(--hover); }
+.ws-tg-title { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ws-tg-icons { display:inline-flex; gap:3px; color:var(--ink3); margin-left:4px; } .ws-tg-icons span { width:20px; height:20px; border-radius:6px; background:var(--hover); display:grid; place-items:center; }
+.ws-tg-caret { margin-left:auto; color:var(--ink3); transition:transform .15s; display:inline-flex; } .ws-tg.open .ws-tg-caret { transform:rotate(90deg); }
+.ws-tg-body { border-top:1px solid var(--line2); padding:4px 6px 6px; }
+.ws-tl-head { display:flex; align-items:center; gap:9px; width:100%; border:0; background:transparent; padding:6px 6px; color:var(--ink2); font-size:13px; cursor:pointer; text-align:left; border-radius:8px; }
+.ws-tl-head:hover { background:var(--hover); }
+.ws-tl-ico { width:22px; height:22px; border-radius:6px; background:var(--accent-soft); color:var(--accent); display:grid; place-items:center; flex-shrink:0; }
+.ws-tl-ico.err { background:#f6e9e6; color:#a33a2b; } .ws-tl-ico.run { animation:wspulse 1.2s ease-in-out infinite; }
+.ws-typing { align-items:center; } .ws-typing .ws-avatar { margin:0 6px 0 0; }
 .ws-md p { margin:0 0 10px; } .ws-md ul, .ws-md ol { margin:0 0 10px; padding-left:22px; } .ws-md li { margin:2px 0; }
 .ws-md .ws-h { font-weight:700; margin:14px 0 6px; } .ws-md a { color:var(--accent); }
 .ws-code { background:#efece3; border-radius:5px; padding:1px 5px; font-size:.92em; font-family:ui-monospace,Menlo,monospace; }
@@ -420,7 +632,7 @@ const CSS = `
 .ws-tool-detail { margin:6px 0 0; background:#f4f2eb; border-radius:10px; padding:10px 12px; font-size:12px; color:var(--ink2); overflow:auto; max-height:200px; }
 .ws-problems { display:grid; gap:8px; margin-top:8px; }
 .ws-problem { padding:12px 14px; }
-.ws-artchip { display:flex; align-items:center; gap:12px; width:100%; margin-top:8px; border:1px solid var(--line); background:var(--card); border-radius:12px; padding:10px 14px; cursor:pointer; text-align:left; color:var(--ink); font-size:14px; }
+.ws-artchip { display:flex; align-items:center; gap:12px; margin:8px auto 0; border:1px solid var(--line); background:var(--card); border-radius:12px; padding:10px 14px; cursor:pointer; text-align:left; color:var(--ink); font-size:14px; }
 .ws-artchip:hover, .ws-artchip.on { border-color:#bdb6a2; }
 .ws-artchip-ico { width:34px; height:34px; border-radius:9px; background:var(--accent-soft); color:var(--accent); display:grid; place-items:center; font-size:16px; flex-shrink:0; }
 .ws-ask { border:1px solid var(--line); background:var(--card); border-radius:14px; padding:14px 16px; margin:10px auto; }
@@ -432,13 +644,30 @@ const CSS = `
 .ws-typing i:nth-child(2) { animation-delay:.15s } .ws-typing i:nth-child(3) { animation-delay:.3s }
 @keyframes wsdot { 0%,80%,100% { opacity:.25 } 40% { opacity:1 } }
 .ws-composer { background:#fff; border:1px solid var(--line); border-radius:18px; padding:12px 12px 8px 16px; box-shadow:0 2px 10px rgba(60,50,20,.05); }
-.ws-composer:focus-within { border-color:#c9c2ae; }
+.ws-composer:focus-within { border-color:#c9c2ae; box-shadow:0 2px 10px rgba(60,50,20,.05), 0 0 0 3px rgba(79,70,200,.06); }
+.ws-composer { position:relative; transition:border-color .15s, box-shadow .15s; }
+.ws-composer.drag { border-color:var(--accent); border-style:dashed; }
+.ws-drop { position:absolute; inset:0; border-radius:18px; background:rgba(236,235,250,.92); display:grid; place-items:center; color:var(--accent); font-weight:600; z-index:2; pointer-events:none; }
+.ws-clip { border:0; background:transparent; color:var(--ink3); cursor:pointer; padding:4px; border-radius:8px; display:inline-flex; margin-right:4px; }
+.ws-clip:hover:not(:disabled) { background:var(--hover); color:var(--ink); }
 .ws-composer textarea { width:100%; border:0; outline:0; resize:none; background:transparent; font:inherit; font-size:15px; line-height:1.6; color:var(--ink); min-height:26px; }
 .ws-composer-bar { display:flex; align-items:center; margin-top:4px; }
 .ws-model { border:0; background:transparent; color:var(--ink2); font:inherit; font-size:12.5px; cursor:pointer; padding:4px 2px; outline:0; }
 .ws-send { margin-left:auto; width:32px; height:32px; border-radius:10px; border:0; background:var(--ink); color:#fff; font-size:16px; cursor:pointer; }
 .ws-send:disabled { opacity:.25; cursor:default; } .ws-send.stop { background:#7a756a; font-size:11px; }
-.ws-art { border-left:1px solid var(--line); background:#fffefb; display:flex; flex-direction:column; min-width:0; min-height:0; }
+.ws-art .ant-descriptions-item-label { white-space:nowrap; width:1%; }
+@media (max-width: 560px) { .ws-art .ant-descriptions-item-label { padding:8px 10px !important; font-size:12.5px; } .ws-art .ant-descriptions-item-content { padding:8px 10px !important; } }
+.ws-art { position:relative; border-left:1px solid var(--line); background:#fffefb; display:flex; flex-direction:column; min-width:0; min-height:0; animation:wsslide .22s cubic-bezier(.2,.8,.2,1); }
+@keyframes wsslide { from { opacity:0; transform:translateX(18px); } }
+.ws-art-grip { position:absolute; left:-4px; top:0; bottom:0; width:8px; cursor:col-resize; z-index:3; }
+.ws-art-grip:hover, .ws-art-grip:active { background:linear-gradient(90deg, transparent 3px, var(--accent) 3px, var(--accent) 5px, transparent 5px); opacity:.5; }
+.ws-skel { display:flex; flex-direction:column; gap:12px; padding:4px 0; } .ws-skel.card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; }
+.ws-skel i { display:block; border-radius:6px; background:linear-gradient(90deg, var(--hover) 25%, var(--line2) 50%, var(--hover) 75%); background-size:200% 100%; animation:wsshimmer 1.3s linear infinite; }
+@keyframes wsshimmer { to { background-position:-200% 0; } }
+.ws-boot { min-height:100dvh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; }
+.ws-boot-bar { width:120px; height:3px; border-radius:2px; background:var(--hover); overflow:hidden; } .ws-boot-bar i { display:block; width:40%; height:100%; background:var(--accent); border-radius:2px; animation:wsboot 1s ease-in-out infinite; }
+@keyframes wsboot { from { transform:translateX(-100%); } to { transform:translateX(260%); } }
+.ws button:focus-visible, .ws a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
 .ws-art-head { display:flex; align-items:center; gap:10px; padding:12px 14px 12px 18px; border-bottom:1px solid var(--line2); }
 .ws-art-title { font-weight:650; font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .ws-art-body { flex:1; overflow:auto; padding:14px 18px; min-height:0; }
@@ -529,7 +758,12 @@ const CSS = `
 .ws-kind button.on { border-color:var(--accent); background:var(--accent-soft); }
 .ws-libjob { display:flex; align-items:center; gap:10px; padding:7px 2px; border-top:1px solid var(--line2); }
 @media (max-width: 900px) {
-  .ws-root, .ws-root.with-art { grid-template-columns:0 minmax(0,1fr); } .ws-side { visibility:hidden; }
+  .ws-root, .ws-root.with-art, .ws-root.no-side.with-art { grid-template-columns:0 minmax(0,1fr); } .ws-side { visibility:hidden; }
+  .ws-side-wrap { display:block; position:fixed; left:0; top:0; bottom:0; width:280px; z-index:40; transform:translateX(-100%); transition:transform .22s cubic-bezier(.2,.8,.2,1); }
+  .ws-side-wrap.open { transform:none; } .ws-side-wrap .ws-side { visibility:visible; height:100%; box-shadow:12px 0 40px rgba(30,26,18,.18); }
+  .ws-scrim { display:block; position:fixed; inset:0; z-index:39; background:rgba(30,26,18,.25); }
+  .ws-burger { display:inline-flex; position:absolute; left:10px; top:10px; z-index:5; } .ws-showside { display:none; }
+  .ws-hero { padding-top:56px; } .ws-scope { display:none; } .ws-art-grip { display:none; }
   .ws-art { position:fixed; inset:0; z-index:20; } .ws-suggest, .ws-form, .ws-two { grid-template-columns:1fr !important; } .ws-hello { font-size:28px; }
 }
 `;
