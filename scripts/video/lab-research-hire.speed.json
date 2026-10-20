@@ -1,0 +1,14 @@
+{
+ "ws_home": 0.567,
+ "ws_thinking": 1.576,
+ "ws_problems": 1.733,
+ "ws_task": 1.455,
+ "ws_baseline": 0.693,
+ "ws_send": 2.032,
+ "b_enter": 1.172,
+ "b_materials": 0.766,
+ "b_ai": 2.113,
+ "b_edit": 1.718,
+ "b_submit": 0.591,
+ "b_report": 2.454
+}

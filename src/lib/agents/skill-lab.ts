@@ -137,9 +137,15 @@ export async function gradeAnswer(task: TaskForGrading, answer: string, skill: S
     try { p = parseJsonLoose(await ask(prompt, modelId, 'Grade Answer')); break; }
     catch (e) { if (i >= 1) throw e; console.warn('[gradeAnswer] 评分 JSON 坏了，重评一次'); }
   }
-  const byKey = new Map<string, any>((Array.isArray(p.dimensions) ? p.dimensions : []).map((d: any) => [String(d.key), d]));
-  const dimensions = task.rubric.map(r => {
-    const d = byKey.get(r.key) || {};
+  // 模型有时不照抄英文 key，写成维度的中文名（2026-10-21 手套箱那章四个维度全被记 0 分）：先按 key，再按名称，最后按顺序对
+  const dims: any[] = Array.isArray(p.dimensions) ? p.dimensions : [];
+  const norm = (x: any) => String(x || '').replace(/\s/g, '').toLowerCase();
+  const byKey = new Map<string, any>(dims.map((d: any) => [norm(d.key), d]));
+  const pick = (r: { key: string; name: string }, i: number) => byKey.get(norm(r.key)) || byKey.get(norm(r.name))
+    || dims.find((d: any) => norm(d.name) === norm(r.name) || (norm(d.key) && norm(r.name).includes(norm(d.key))))
+    || (dims.length === task.rubric.length ? dims[i] : null) || {};
+  const dimensions = task.rubric.map((r, i) => {
+    const d = pick(r, i);
     return { key: r.key, score: Math.min(r.weight, Math.max(0, Math.round(Number(d.score) || 0))), evidence: String(d.evidence || '（未提及）'), comment: String(d.comment || '') };
   });
   const list = (v: any) => (Array.isArray(v) ? v.map(String).filter(Boolean).slice(0, 5) : []);

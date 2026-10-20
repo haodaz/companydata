@@ -109,7 +109,7 @@ export interface FolioData {
   id?: string;
   no: string; date: string; score: number; overall: number; level: string; match: number | null; beat: number | null; peers: number;
   candidate: { name: string; location?: string; note?: string };
-  space: { id: string; name: string; role: string; avatar: string; profession: string; company?: string };
+  space: { id: string; name: string; role: string; avatar: string; profession: string; company?: string; research?: boolean };
   chapter?: { n: number; total: number; slot: string; title: string; kind?: string } | null;
   skill?: { expert: string; location: string; draft: boolean } | null;
   /** at：这一段真正完成的时间（全天证书里每一段一项） */
@@ -158,15 +158,15 @@ function PageCert({ d }: { d: FolioData }) {
           <div style={{ textAlign: 'right' }}><div className="pg-cap">Certificate No.</div><div className="pg-mono" style={{ fontSize: '2cqi', fontWeight: 700 }}>{d.no}</div></div>
         </div>
         <div className="pg-serif" style={{ textAlign: 'center', marginTop: '5.5cqi' }}>
-          <div className="pg-mono" style={{ fontSize: '1.8cqi', letterSpacing: '.38em', color: '#6b7290' }}>CERTIFICATE OF PROFESSIONAL EXPERIENCE</div>
-          <div style={{ fontSize: '6.4cqi', fontWeight: 900, letterSpacing: '.28em', marginTop: '1.6cqi', paddingLeft: '.28em' }}>职业体验证书</div>
+          <div className="pg-mono" style={{ fontSize: '1.8cqi', letterSpacing: '.38em', color: '#6b7290' }}>{W(d).en}</div>
+          <div style={{ fontSize: '6.4cqi', fontWeight: 900, letterSpacing: '.28em', marginTop: '1.6cqi', paddingLeft: '.28em' }}>{W(d).zh}</div>
           <div style={{ fontSize: '2.6cqi', marginTop: '4.4cqi', color: '#4a5180' }}>兹证明</div>
           <div style={{ fontSize: '7cqi', fontWeight: 800, marginTop: '1cqi', display: 'inline-block', padding: '0 6cqi 1cqi', borderBottom: '.22cqi solid #1d2450' }}>{d.candidate.name || '匿名新兵'}</div>
           <div style={{ fontSize: '2.5cqi', lineHeight: 1.9, marginTop: '2.8cqi', color: '#2a3160' }}>
             于 {dateRange(d)} 在数字职人 {d.space.name} 的带领下，<br />{d.day ? <>走完了「{d.space.role}的一天」全部 {d.dims.length} 段</> : <>完成了「{d.space.role}的一天」{d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段` : ''}的全部操作</>}
           </div>
           {!d.day && d.chapter && <div className="pg-accent" style={{ fontSize: '3.6cqi', fontWeight: 900, marginTop: '2cqi', letterSpacing: '.06em' }}>{d.chapter.slot ? `${d.chapter.slot} · ` : ''}{d.chapter.title}</div>}
-          <div style={{ fontSize: '2.2cqi', marginTop: '3cqi', color: '#4a5180' }}>{d.day ? '按岗位标准逐段评定，全天综合等级' : '按岗位标准评定，综合等级'}</div>
+          <div style={{ fontSize: '2.2cqi', marginTop: '3cqi', color: '#4a5180' }}>{d.day ? `按${d.space.research ? '研究岗' : '岗位'}标准逐段评定，全天综合等级` : `按${d.space.research ? '研究岗' : '岗位'}标准评定，综合等级`}</div>
           <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '2cqi', marginTop: '1cqi' }}>
             <span className="pg-mono" style={{ fontSize: '7.6cqi', fontWeight: 900, letterSpacing: 0 }}>{bandText(d.overall)}</span>
             <span style={{ fontSize: '2.8cqi', fontWeight: 800 }}>{d.level || bandLevel(d.overall)}</span>
@@ -187,7 +187,7 @@ function PageCert({ d }: { d: FolioData }) {
             <span className="pg-script" style={{ fontSize: '4cqi', color: '#2c3a8c', borderBottom: '.12cqi solid #1d2450', paddingBottom: '.4cqi' }}>{d.space.name}</span>
             <span style={{ fontSize: '1.8cqi', color: '#4a5180' }}>数字职人 · {d.space.role}</span>
             <span className="pg-script" style={{ fontSize: '4cqi', color: '#2c3a8c', borderBottom: '.12cqi solid #1d2450', paddingBottom: '.4cqi', marginTop: '1.2cqi' }}>{d.skill?.expert || '方略研究院'}</span>
-            <span style={{ fontSize: '1.8cqi', color: '#4a5180' }}>{d.skill?.expert ? `技能来源 · ${d.skill.location}` : '职业能力评定'}</span>
+            <span style={{ fontSize: '1.8cqi', color: '#4a5180' }}>{d.skill?.expert ? `技能来源 · ${d.skill.location}` : W(d).eval}</span>
           </div>
           <Stamp />
           <div style={{ textAlign: 'right', fontSize: '1.9cqi', color: '#4a5180', lineHeight: 1.9 }}>
@@ -196,7 +196,7 @@ function PageCert({ d }: { d: FolioData }) {
           </div>
         </div>
         <div style={{ textAlign: 'center', fontSize: '1.5cqi', color: '#8a90aa', marginTop: '2cqi', lineHeight: 1.6 }}>
-          本证书凭编号可在 AI 百业查验 · 由 AI 核心按岗位标准评分，仅用于职业体验，不代表执业资格
+          本证书凭编号可在 AI 百业查验 · 由 AI 核心按{d.space.research ? '研究岗' : '岗位'}标准评分，仅用于{d.space.research ? '科研' : '职业'}体验，不代表{d.space.research ? '学位或任职' : '执业'}资格
         </div>
       </div>
     </div>
@@ -213,7 +213,7 @@ function PageArt({ d }: { d: FolioData }) {
       <div className="pg-holo" />
       <div style={{ position: 'absolute', inset: '3.2cqi', border: '.2cqi solid rgba(255,255,255,.35)', pointerEvents: 'none' }} />
       <div className="pg-in" style={{ inset: '7cqi 8cqi 7cqi' }}>
-        <div className="pg-mono" style={{ fontSize: '1.8cqi', letterSpacing: '.32em', opacity: .85 }}>THE PROFESSION</div>
+        <div className="pg-mono" style={{ fontSize: '1.8cqi', letterSpacing: '.32em', opacity: .85 }}>{d.space.research ? 'THE RESEARCH' : 'THE PROFESSION'}</div>
         <div className="pg-serif" style={{ fontSize: '7cqi', fontWeight: 900, marginTop: '1cqi', textShadow: '0 .6cqi 3cqi rgba(0,0,0,.5)' }}>{d.space.role}</div>
         {a?.place && <div style={{ fontSize: '2.1cqi', opacity: .85, marginTop: '.6cqi' }}>📍 {a.place}{!d.day && d.chapter?.slot ? ` · ${d.chapter.slot}` : d.day && d.dims.length > 1 ? ` 等 · 一整天 ${d.dims.length} 段` : ''}</div>}
         <div style={{ flex: 1 }} />
@@ -403,8 +403,8 @@ function Cover({ d, opening, onOpen, progress }: { d: FolioData; opening: boolea
             <text fill="url(#cv-g)" fontSize="12.5" fontWeight="700" letterSpacing="3.2"><textPath href="#cv-c">VISIONSQUARE · SQUARESTRATEGICS RESEARCH INSTITUTE ·</textPath></text>
             <text x="100" y="114" textAnchor="middle" fill="url(#cv-g)" fontSize="46" fontWeight="800" fontFamily="Georgia, serif">R²</text>
           </svg>
-          <div className="pg-mono" style={{ fontSize: '2cqi', letterSpacing: '.4em', marginTop: '6cqi', opacity: .75 }}>CERTIFICATE OF PROFESSIONAL EXPERIENCE</div>
-          <div className="pg-serif cover-foil" style={{ fontSize: '8.4cqi', fontWeight: 900, letterSpacing: '.3em', marginTop: '2cqi', paddingLeft: '.3em' }}>职业体验证书</div>
+          <div className="pg-mono" style={{ fontSize: '2cqi', letterSpacing: '.4em', marginTop: '6cqi', opacity: .75 }}>{W(d).en}</div>
+          <div className="pg-serif cover-foil" style={{ fontSize: '8.4cqi', fontWeight: 900, letterSpacing: '.3em', marginTop: '2cqi', paddingLeft: '.3em' }}>{W(d).zh}</div>
           <div style={{ width: '18cqi', height: '.25cqi', background: 'linear-gradient(90deg, transparent, #d2a95a, transparent)', margin: '4cqi 0' }} />
           <div className="pg-serif" style={{ fontSize: '4.6cqi', fontWeight: 800, color: '#f3e3b8' }}>{d.candidate.name || '匿名新兵'}的证书</div>
           <div style={{ fontSize: '2.5cqi', marginTop: '1.6cqi', opacity: .75 }}>{d.space.role}的一天{progress ? ` · 已通过 ${progress.done} / ${progress.total} 段` : d.day ? ` · 全天 ${d.dims.length} 段` : ''}</div>
@@ -434,6 +434,11 @@ export function ScoreFolio({ d }: { d: FolioData }) {
 }
 
 /** 页夹本体：两屏四页，翻页有动画；窄屏四页竖排；打印四页 A4 */
+/** 证书措辞：职业空间叫「职业体验证书」，科研版的研究岗 / 学科空间叫「科研体验证书」 */
+const W = (d: { space: { research?: boolean } }) => d.space.research
+  ? { zh: '科研体验证书', en: 'CERTIFICATE OF RESEARCH EXPERIENCE', eval: '科研能力评定' }
+  : { zh: '职业体验证书', en: 'CERTIFICATE OF PROFESSIONAL EXPERIENCE', eval: '职业能力评定' };
+
 export interface FolderData {
   /** 走完整天才有：证书、画作、全天成绩用它 */ day: FolioData | null;
   /** 每一段已完成的成绩（按时段先后） */ parts: FolioData[];

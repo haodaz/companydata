@@ -52,13 +52,13 @@ export function Splat3D({ scene: s, head = false, pan = 0, still = false, camCor
         if (dead) return;
         viewer = new GS.Viewer({
           rootElement: el, cameraUp: s.up, initialCameraPosition: s.position, initialCameraLookAt: s.lookAt,
-          useBuiltInControls: false, sharedMemoryForWorkers: false, selfDrivenMode: true, dynamicScene: false, sphericalHarmonicsDegree: 1,
+          useBuiltInControls: false, sharedMemoryForWorkers: false, selfDrivenMode: false, dynamicScene: false, sphericalHarmonicsDegree: 1,   // 不让库自己跑循环：挪机位 → 出画面 → 投影标签在同一帧里做完，标签才不会拖着画面飘
         });
         // 加载中途被卸载（换页）时，库内部的下载 promise 会以「Could not load file」拒绝；收尾等它结束再 dispose，别让它变成 uncaught
         loading = viewer.addSplatScene(s.url, { showLoadingUI: false, progressiveLoad: false, splatAlphaRemovalThreshold: 5, onProgress: (p: number) => setProgress(Math.round(p)) });
         await loading.catch(e => { if (!dead) throw e; });
         if (dead) return;
-        viewer.start();
+        // 不调 viewer.start()（自驱模式才用）：下面 tick 里手动 update / render
         setReady(true); onReady?.();
 
         // ── 物件标签：只记 3D 位置，每帧投影到屏幕，直接改 DOM（不走 React 状态，不加渲染负担） ──
@@ -85,6 +85,9 @@ export function Splat3D({ scene: s, head = false, pan = 0, still = false, camCor
           c.up.set(up[0], up[1], up[2]);
           // 跟着平移一起转一点点视线，镜头是在「走」，不是死盯一个点
           c.lookAt(s.lookAt[0] + right[0] * cur.pan * A * 2, s.lookAt[1] + right[1] * cur.pan * A * 2, s.lookAt[2] + right[2] * cur.pan * A * 2);
+          c.updateMatrixWorld();   // 先把这一帧的相机矩阵算好，出画面和标签投影用的是同一个相机
+          viewer.update();
+          if (viewer.shouldRender()) viewer.render();
           if (!hs.length) return;
           const r = el.getBoundingClientRect();
           for (const h of hs) {

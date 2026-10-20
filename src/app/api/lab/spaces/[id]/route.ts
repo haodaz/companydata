@@ -22,7 +22,16 @@ export async function GET(req: NextRequest, { params }: Ctx) {
     const jd: any = (space as any)?.jd_snapshot || {};
     const prof = jd.career?.profession || jd.title || '';
     if (prof) trackDemand(req, { source: 'lab_view', query: prof, profession: prof, company_name: jd.company || null, meta: { space: id } });
-    return NextResponse.json({ ok: true, space, submissions: subs.data || [], invocations: invs.data || [] });
+    // 空间挂在工作台的某家机构下（企业版 / 科研版建的）：把这家机构出的真活带上，主页上能直接去做（同岗位的排前面）
+    let orgWork: { title: string; role: string; token: string; company: string }[] = [];
+    const orgId = (space as any)?.org_id;
+    if (orgId) {
+      const { data: wt } = await supabaseAdmin.from('work_tasks').select('role, share_token, company_name, task, created_at').eq('org_id', orgId).order('created_at', { ascending: false }).limit(6);
+      orgWork = (wt || []).filter((w: any) => w.share_token && w.task?.title)
+        .map((w: any) => ({ title: w.task.title, role: w.role || '', token: w.share_token, company: w.company_name || '' }))
+        .sort((x, y) => Number(y.role === jd.title) - Number(x.role === jd.title)).slice(0, 3);
+    }
+    return NextResponse.json({ ok: true, space, submissions: subs.data || [], invocations: invs.data || [], orgWork });
   } catch (e: any) {
     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
   }

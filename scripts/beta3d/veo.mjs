@@ -1,6 +1,6 @@
 /**
  * 3D beta 探索：用 Veo（Gemini API）生成「镜头绕场一圈」的视频，后面拿去重建 3D 高斯。
- *   node scripts/beta3d/veo.mjs <输出.mp4> "<提示词>" [--model=veo-3.1-fast-generate-preview]
+ *   node scripts/beta3d/veo.mjs <输出.mp4> "<提示词>" [--model=veo-3.1-fast-generate-preview] [--image=首帧.png]
  * 重建要求场景完全静止、镜头平稳环绕：提示词里写死这些，负面提示词去掉人走动、转场、晃动。
  */
 import fs from 'node:fs';
@@ -19,7 +19,8 @@ const H = { 'x-goog-api-key': KEY, 'Content-Type': 'application/json' };
 const start = await fetch(`${BASE}/models/${MODEL}:predictLongRunning`, {
   method: 'POST', headers: H,
   body: JSON.stringify({
-    instances: [{ prompt }],
+    // --image=首帧.png：图生视频，从这一帧接着拍（补拍同一个场景的另一段弧时用，不然 Veo 会生成另一间屋子）
+    instances: [{ prompt, ...(flags.image ? { image: { bytesBase64Encoded: fs.readFileSync(flags.image).toString('base64'), mimeType: flags.image.endsWith('.png') ? 'image/png' : 'image/jpeg' } } : {}) }],
     parameters: { aspectRatio: '16:9', negativePrompt: 'people walking, moving objects, cuts, scene transitions, camera shake, motion blur, text, watermark, fisheye distortion' },
   }),
 }).then(r => r.json());

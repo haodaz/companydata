@@ -24,6 +24,8 @@ import { LiveStage } from '@/components/lab/surfaces/Live';
 import { KinderStage } from '@/components/lab/surfaces/Kinder';
 import { DiveStage } from '@/components/lab/surfaces/Dive';
 import { TestStandStage } from '@/components/lab/surfaces/TestStand';
+import { GloveboxStage } from '@/components/lab/surfaces/Glovebox';
+import { EisStage } from '@/components/lab/surfaces/Eis';
 import { ChipDeskStage } from '@/components/lab/surfaces/ChipDesk';
 import { SandtableStage } from '@/components/lab/surfaces/Sandtable';
 import { SwitchingStage } from '@/components/lab/surfaces/Switching';
@@ -559,6 +561,8 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
           setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
         {spec.surface === 'dive' && <DiveStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint} image={scene.image}
           setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
+        {spec.surface === 'glovebox' && <GloveboxStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
+          setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
         {spec.surface === 'teststand' && <TestStandStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
           setHidden={(id, v) => { applyControl(spec, stRef.current, id, v); bump(x => x + 1); }} />}
         {spec.surface === 'switching' && <SwitchingStage key={resetKey} st={st} running={running} auto={auto} act={act} toScene={scenePoint}
@@ -603,7 +607,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
         <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
       </div>
       {!!spec.expertScript?.length && (
-        <button onClick={() => { if (!auto) { autoI.current = 0; setAuto(true); } else setAuto(false); }} style={{ position: 'absolute', right: 12, bottom: 12, padding: '8px 15px', borderRadius: 999, border: '1px solid rgba(255,255,255,.35)', background: auto ? 'linear-gradient(135deg,#3ddc97,#12b5cb)' : 'rgba(15,18,36,.72)', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(6px)', zIndex: 3 }}>
+        <button onClick={() => { if (!auto) { if (stRef.current.t > 0.5) hardReset(); /* 示范从头放：已经走了一段时，前面的动作会挤在同一拍里一起执行 */ autoI.current = 0; setAuto(true); } else setAuto(false); }} style={{ position: 'absolute', right: 12, bottom: 12, padding: '8px 15px', borderRadius: 999, border: '1px solid rgba(255,255,255,.35)', background: auto ? 'linear-gradient(135deg,#3ddc97,#12b5cb)' : 'rgba(15,18,36,.72)', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(6px)', zIndex: 3 }}>
           {auto ? '■ 演示中 · 点此停下' : '▶ 看我操作一遍'}
         </button>
       )}
@@ -618,7 +622,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   ) : null;
 
   // 办公桌类台面（数据分析、财务、写代码……）：整屏、浅色、好读，像游戏里打开大盘 / 银行那一屏；背后不放房间
-  const LIGHT: Record<string, React.ComponentType<any>> = { desk: DeskStage, triage: TriageStage, complaint: ComplaintStage, audit: AuditStage, live: LiveStage, chipdesk: ChipDeskStage, sandtable: SandtableStage, cad: CadStage };
+  const LIGHT: Record<string, React.ComponentType<any>> = { desk: DeskStage, triage: TriageStage, complaint: ComplaintStage, audit: AuditStage, live: LiveStage, chipdesk: ChipDeskStage, sandtable: SandtableStage, cad: CadStage, eis: EisStage };
   // 母版 A / F：同一套浅色整屏版面，配置从 spec.surfaceConfig 来（直接放组件本身——包一层箭头函数的话每拍都是新组件，台面会重挂、输入框失焦）
   if (spec.surfaceConfig?.master === 'desktop') LIGHT.desktop = DesktopStage;
   if (spec.surfaceConfig?.master === 'dialog') LIGHT.dialog = DialogStage;

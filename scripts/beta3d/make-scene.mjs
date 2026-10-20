@@ -5,6 +5,7 @@
  *   node scripts/beta3d/make-scene.mjs <key> --subject "<英文场景描述>" --anchor "<镜头围着的硬结构物件>"
  *        [--video 已有.mp4]   第一轮直接用这条视频（不花 Veo 额度）
  *        [--tries 3] [--steps 15000] [--work 目录] [--no-upload] [--force]（风险词也照跑）
+ *        [--brush "--growth-grad-threshold 0.00002 --growth-select-fraction 0.3"]  透传给 Brush（高斯长不密、满屏拉丝时调）
  *
  *   真实 360° 素材（可选，不走 Veo）：
  *   node scripts/beta3d/make-scene.mjs <key> --equirect 全景.mp4 [--every 15] [--yaws 8] [--pitches 0] [--steps 15000] [--no-upload]
@@ -52,7 +53,7 @@ if (risks.length) {
 function train({ t, variant, prompt, sfm, res, credit, extra = [] }) {
   const out = path.join(W, `try${t}-out`); fs.mkdirSync(out, { recursive: true });
   log(`   训练 ${steps} 步（约 10 分钟）`);
-  const b = run(BRUSH, [sfm, '--total-steps', String(steps), '--export-every', String(steps), '--export-path', out, '--export-name', `${key}.ply`, '--max-resolution', '1280'], { cwd: out });
+  const b = run(BRUSH, [sfm, '--total-steps', String(steps), '--export-every', String(steps), '--export-path', out, '--export-name', `${key}.ply`, '--max-resolution', '1280', ...(argv.includes('--brush') ? String(argv[argv.indexOf('--brush') + 1] || '') : '').split(/\s+/).filter(Boolean)], { cwd: out });
   const ply = path.join(out, `${key}.ply`);
   if (!fs.existsSync(ply)) { log('训练没出 ply', b.out.slice(-300)); record({ try: t, variant, prompt, stage: 'brush', ok: false, sfm: res }); return false; }
   const splat = path.join(W, `beta3d-${key}.splat`);

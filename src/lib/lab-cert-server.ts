@@ -73,6 +73,8 @@ export async function certData(sid: string) {
     space: {
       id: space.id, title: space.title, name: space.profile?.name || '', role: space.profile?.role || '', avatar: space.profile?.avatar || '',
       profession: jd.career?.profession || jd.title || space.title, company: jd.kind === 'career' ? '' : jd.company || '',
+      // 科研版建的研究岗空间 / 学科空间：证书叫「科研体验证书」
+      research: jd.kind === 'research_post' || jd.kind === 'discipline',
     },
     chapters_all: chapters.map((c: any) => ({ id: c.id, slot: c.slot, title: c.title })),
     chapter: chapter ? { id: chapter.id, n: idx + 1, total: chapters.length, slot: chapter.slot || '', title: chapter.title, kind: chapter.kind } : null,

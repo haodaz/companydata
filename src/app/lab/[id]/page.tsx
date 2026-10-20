@@ -128,6 +128,10 @@ const HUB_CSS = `
 .hub-3d { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; color: #fff; font-size: 13.5px; font-weight: 700; text-decoration: none; white-space: nowrap;
   background: linear-gradient(120deg, #ff5fa2, #6a5cff); box-shadow: 0 8px 24px rgba(255,95,162,.3); transition: transform .2s, box-shadow .2s; }
 .hub-3d:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,95,162,.45); }
+.hub-work { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px 0 6px; border-radius: 999px; color: #fff; font-size: 13.5px; font-weight: 700; text-decoration: none; white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis;
+  background: rgba(15,18,36,.62); border: 1px solid rgba(255,255,255,.3); backdrop-filter: blur(8px); transition: transform .2s, border-color .2s; }
+.hub-work:hover { transform: translateY(-2px); border-color: #ffd166; }
+.hub-work-k { display: inline-flex; align-items: center; height: 28px; padding: 0 10px; border-radius: 999px; background: #ffd166; color: #171a2e; font-size: 12px; font-weight: 800; }
 .hub-portals { display: grid; grid-template-columns: var(--pc, repeat(4, minmax(0, 1fr)) repeat(3, minmax(0, .74fr))); gap: 10px; margin-top: 22px; position: relative; z-index: 3; }
 /* 只有第一个（和我聊）是实心渐变；其余主按钮是同尺寸的毛玻璃，顶上一道细色线 + 彩色图标——一个焦点，不是一排蓝 */
 .hub-portal.main { min-height: 104px; padding: 16px 18px; }
@@ -482,6 +486,8 @@ export default function SpacePage() {
   const [space, setSpace] = useState<any>(null);
   const [subs, setSubs] = useState<any[]>([]);
   const [invs, setInvs] = useState<any[]>([]);
+  /** 空间所属机构出的真活（工作台建的空间才有） */
+  const [orgWork, setOrgWork] = useState<{ title: string; role: string; token: string; company: string }[]>([]);
   const [loading, setLoading] = useState(true);
   // 模式跟着网址走：没有 m = 人物首页；有 m = 进了这位数字职人的某个独立空间。
   // 浏览器后退就回到人，每个空间也都有自己的链接。受邀的老师傅只有「教」这一个空间。
@@ -615,7 +621,7 @@ function castOf(space: any, sim: Sim | null) {
     try {
       const json = await (await fetch(`/api/lab/spaces/${id}`, { headers: inviteHdr })).json();
       if (!json.ok) throw new Error(json.error);
-      setSpace(json.space); setSubs(json.submissions); setInvs(json.invocations);
+      setSpace(json.space); setSubs(json.submissions); setInvs(json.invocations); setOrgWork(json.orgWork || []);
     } catch (e: any) { message.error(e.message); }
     finally { setLoading(false); }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1066,6 +1072,7 @@ function castOf(space: any, sim: Sim | null) {
           actions={<>
             {!guest && <NicknameEditor dark showName value={nicks[String(id)] || ''} original={profile.name || ''} onSave={n => setNickname(String(id), n)} />}
             {beta3dForSpace(String(id)) && <a className="hub-3d" href={`/lab/beta/3d/${beta3dForSpace(String(id))!.key}`}>走进{beta3dForSpace(String(id))!.title} · 3D BETA</a>}
+            {orgWork.slice(0, 1).map(w => <a key={w.token} className="hub-work" href={`/work/${w.token}`} target="_blank" rel="noreferrer" title={`${w.company} · ${w.role}`}><span className="hub-work-k">真活</span>{w.title} →</a>)}
           </>}
         />
       )}

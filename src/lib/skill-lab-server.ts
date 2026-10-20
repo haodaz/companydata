@@ -94,7 +94,8 @@ export { GENERIC_CHAPTER_RUBRIC };
  * 以前所有章都按第 1 章评，会诊那段拿阑尾手术的标准打分。
  */
 export function chapterTask(space: any, ch: LabChapter | null) {
-  if (!ch || ch.seq === 1 || !ch.id) return { title: space.title, brief: space.brief, materials: space.materials, deliverable: space.deliverable, rubric: space.rubric || [] };
+  // 第一章默认用空间的题面；第一章自己有评分标准（比如章节被收窄改写过）就按它自己的评
+  if (!ch || !ch.id || (ch.seq === 1 && !(Array.isArray(ch.rubric) && ch.rubric.length))) return { title: space.title, brief: space.brief, materials: space.materials, deliverable: space.deliverable, rubric: space.rubric || [] };
   const last = [...(ch.sim?.steps || [])].reverse().find((s: any) => s.type === 'text');
   return {
     title: `${ch.slot ? `${ch.slot} · ` : ''}${ch.title}`,

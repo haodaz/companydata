@@ -32,11 +32,13 @@ export default function Beta3DPage({ params }: { params: Promise<{ scene: string
   if (!mounted) return null;
   const showPano = !!s.pano && (!s.url || panoOn);
   return createPortal((
-    <div style={{ position: 'fixed', inset: 0, zIndex: 1000, background: '#0b0d1c', color: '#fff', overflow: 'hidden' }}>
+    <div style={{ position: 'fixed', inset: 0, zIndex: 1000, background: (!showPano && s.bg) || '#0b0d1c', color: '#fff', overflow: 'hidden' }}>
       {showPano ? <Pano360 key={s.pano!.url} src={s.pano!.url} kind={s.pano!.kind} yaw={s.pano!.yaw} head={cam} onHeadSeen={setHeadSeen} camCorner={{ right: 18, bottom: 150 }}
             spots={s.pano!.spots} nodes={s.pano!.nodes} walk={s.pano!.walk} showAll={allSpots} />
         : s.url ? <Splat3D scene={s} head={cam} onHeadSeen={setHeadSeen} camCorner={{ right: 18, bottom: 150 }} hotspots={s.hotspots} edit={edit} onPick={p => { setPicks(ps => [...ps, p]); (window as any).__picks = [...picks, p]; }} />
         : <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', color: '#c7cbe6' }}>这个场景还在重建中，稍后再来。</div>}
+      {/* 四周渐隐到底色（不挡点击；标签在中间，不受影响） */}
+      {!showPano && s.url && s.vignette && <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: `radial-gradient(ellipse 56% 58% at 50% 48%, transparent 62%, ${s.bg || '#0b0d1c'} 100%)` }} />}
 
       <div style={{ position: 'absolute', left: 20, top: 18, display: 'flex', alignItems: 'center', gap: 12 }}>
         <Link href={`/lab/${s.spaceId}`} style={{ color: '#c7cbe6', fontSize: 13, textDecoration: 'none', padding: '6px 12px', borderRadius: 999, background: 'rgba(15,18,36,.6)', border: '1px solid rgba(255,255,255,.18)' }}>← {s.role}</Link>
@@ -65,7 +67,7 @@ export default function Beta3DPage({ params }: { params: Promise<{ scene: string
           style={{ padding: '10px 16px', borderRadius: 999, border: '1px solid rgba(255,255,255,.3)', cursor: 'pointer', fontWeight: 700, fontSize: 13, color: '#fff', background: cam ? 'linear-gradient(135deg,#3ddc97,#12b5cb)' : 'rgba(15,18,36,.72)', backdropFilter: 'blur(6px)' }}>
           {cam ? '📷 跟着头看中 · 关闭' : '📷 用头看（打开摄像头）'}
         </button>
-        <div style={{ fontSize: 11, color: '#9aa0c8', textAlign: 'right', lineHeight: 1.6 }}>
+        <div style={{ fontSize: 11, color: !showPano && s.bg ? '#2a2e45' : '#9aa0c8', textAlign: 'right', lineHeight: 1.6, ...(!showPano && s.bg ? { background: 'rgba(255,255,255,.55)', padding: '4px 8px', borderRadius: 8 } : {}) }}>
           {showPano
             ? (cam ? (headSeen ? (s.pano?.nodes?.length ? '挪头转着看；往前凑 = 走近，对准地上的箭头再往前倾就走过去。' : '左右上下挪头转着看，往前凑 = 走近、往后靠 = 退远。') : '把脸放进画面里（先坐正，第一眼的距离当基准）…')
               : (s.pano?.nodes?.length ? '拖动转着看，点地上的箭头 / 按 W 往前走、S 往回走；滚轮拉近。' : '拖动转着看，滚轮 / 双指 / W S 走近走远；打开摄像头后跟着头转、往前凑就走近。'))
