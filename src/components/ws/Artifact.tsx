@@ -22,7 +22,7 @@ const started = new Set<string>();
 
 export function ArtifactPanel({ art, onClose, onSpaceDone, openArt }: { art: Art; onClose: () => void; onSpaceDone?: (buildId: string, id: string) => void; openArt?: (a: Art) => void }) {
   const open = art.kind === 'work' || art.kind === 'results' ? `/work/${art.token}/owner?k=${encodeURIComponent(art.owner_key)}` : art.kind === 'space' ? `/lab/${art.id}` : null;
-  const label = art.kind === 'work' ? '真活' : art.kind === 'results' ? '作答与报告' : art.kind === 'company' ? '企业档案 · 让 AI 更懂你们' : art.kind === 'project' ? '招聘项目' : art.kind === 'candidate' ? '候选人' : '职业空间';
+  const label = art.kind === 'work' ? '真活' : art.kind === 'results' ? '作答与报告' : art.kind === 'company' ? '档案 · 让 AI 更懂你们' : art.kind === 'project' ? '招聘项目' : art.kind === 'candidate' ? '候选人' : '职业空间';
   return (
     <aside className="ws-art">
       <div className="ws-art-head">

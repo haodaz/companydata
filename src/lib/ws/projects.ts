@@ -73,11 +73,12 @@ export async function writeJd(org: WsOrg, projectId: string, extra?: string) {
   const p = await ownProject(org, projectId);
   const wctx = await gatherContext(companyKey(org), p.role_title);
   const inside = await privateContext(org.id, p.role_title);
-  const prompt = `给「${org.name}」写一份「${p.role_title}」的招聘 JD（招 ${p.headcount} 人）。要像这家企业自己写的：职责具体到这家企业此刻的业务，不写空话。
+  const research = org.kind === 'research';
+  const prompt = research ? `给科研机构「${org.name}」写一份「${p.role_title}」的招聘启事（招 ${p.headcount} 人）。要像这个团队自己写的：研究方向、要做的课题具体到这个团队此刻的研究，不写空话；申请条件写清学历与代表性成果层次，支持条件写清平台、经费与待遇（材料里没有的写「面议」，不编数字）。` : `给「${org.name}」写一份「${p.role_title}」的招聘 JD（招 ${p.headcount} 人）。要像这家企业自己写的：职责具体到这家企业此刻的业务，不写空话。
 ${renderContext(wctx).slice(0, 7000)}
 ${inside}
 ${extra ? `用户补充：${s(extra, 600)}` : ''}
-只返回 JSON：{ "title": "", "summary": "两句话：这个岗位为什么现在要人、来了做什么", "responsibilities": ["4–6 条，动词开头，带这家企业的具体对象"], "requirements": ["4–6 条"], "must_haves": ["2–3 条硬性要求，筛人用"], "nice_to_haves": ["1–3 条"], "first90": "入职 90 天要做成什么" }`;
+只返回 JSON：{ "title": "", "summary": "两句话：这个岗位为什么现在要人、来了做什么", "responsibilities": ["4–6 条，动词开头，带这家企业的具体对象"], "requirements": ["4–6 条"], "must_haves": ["2–3 条硬性要求，筛人用"], "nice_to_haves": ["1–3 条"], "first90": "${research ? '第一年要做成什么' : '入职 90 天要做成什么'}" }`;
   const { parsed } = await withCost({ tool_name: 'workspace', task_name: '工作台 · 写 JD', stage: 'create' }, () => askJson(prompt, WORK_MODEL, '工作台 · 写 JD', org.name));
   const jd = { title: s(parsed.title, 40) || p.role_title, summary: s(parsed.summary, 300), responsibilities: (parsed.responsibilities || []).slice(0, 8).map((x: any) => s(x, 160)), requirements: (parsed.requirements || []).slice(0, 8).map((x: any) => s(x, 160)), must_haves: (parsed.must_haves || []).slice(0, 4).map((x: any) => s(x, 120)), nice_to_haves: (parsed.nice_to_haves || []).slice(0, 4).map((x: any) => s(x, 120)), first90: s(parsed.first90, 300), written_at: new Date().toISOString() };
   await db.from('ws_projects').update({ brief: { ...(p.brief || {}), jd }, updated_at: new Date().toISOString() }).eq('id', p.id);
@@ -111,7 +112,7 @@ export async function fitCandidate(org: WsOrg, candidateId: string) {
   const c = await ownCandidate(org, candidateId); const p = await ownProject(org, c.project_id);
   const inside = await privateContext(org.id, p.role_title);
   const jd = p.brief?.jd;
-  const prompt = `你是「${org.name}」招「${p.role_title}」的面试官助手。判断这位候选人和岗位合不合适，只根据简历里写了的，不脑补。
+  const prompt = `你是「${org.name}」招「${p.role_title}」的${org.kind === 'research' ? '引进评审助手。判断这位候选人和岗位合不合适：研究方向是否对口、成果的层次与独立性、要的研究技能有没有证据、能不能融进课题组' : '面试官助手。判断这位候选人和岗位合不合适'}，只根据简历里写了的，不脑补。
 ${jd ? `JD：${JSON.stringify({ responsibilities: jd.responsibilities, requirements: jd.requirements, must_haves: jd.must_haves })}` : `岗位：${p.role_title}`}
 ${inside}
 候选人「${c.name}」的简历：

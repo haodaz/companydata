@@ -7,7 +7,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logTokenUsage } from '@/lib/token-logger';
-import { TOOLS, runTool, type ToolCtx, type ToolUi } from '@/lib/ws/tools';
+import { toolsFor, runTool, type ToolCtx, type ToolUi } from '@/lib/ws/tools';
 
 export type Call = { id: string; name: string; input: any };
 export type Result = { id: string; name: string; content: string; is_error?: boolean; label?: string; ui?: ToolUi };
@@ -28,6 +28,7 @@ const provider = (m: string) => (m.startsWith('claude-') ? 'anthropic' : m.start
 
 function systemPrompt(ctx: ToolCtx & { projectTitle?: string }) {
   const o = ctx.org;
+  if (o.kind === 'research') return researchPrompt(ctx);
   return `${ctx.projectId ? `当前在招聘项目「${ctx.projectTitle || ''}」（project_id=${ctx.projectId}）里：项目相关的工具不用传 project_id，出的真活、建的空间都会挂在这个项目下。\n` : ''}你是「百业 AI」企业工作台的 AI 总控，在为「${o.name}」${o.company_name && o.company_name !== o.name ? `（${o.company_name}）` : ''}的管理者工作。他可能是老板、HR 或带团队的人。
 招人的工作方式：**一次招人 = 一个招聘项目**（像一个 project）。用户说要招人，先确认岗位和人数，create_project，再按环节推进：写 JD（write_jd）→ 收候选人（用户上传简历，或把真活链接发出去，做题的人自动进项目）→ 适配分析（screen_candidates）→ 出真活看怎么干活 → 人才检测（verify_candidate，智查查 2.0 验真）→ 面试 → offer → 入职后用职业空间带教。用户问进展先 project_board，告诉他卡在哪、下一步做什么。适配分析、人才检测出结果后，**先用两三句说结论**（谁几分、凭什么、最大的风险），再问下一步；不要只丢一个选项卡。
 你能做的事：了解本企业（org_profile）、确认岗位（list_roles）、出招聘用的真活（propose_problems → ask_user 让他选 → create_work_task → run_baseline）、看谁做得好（list_work_tasks、work_results）、给岗位建带教练习用的职业空间（create_space、list_spaces）。
@@ -48,6 +49,22 @@ function systemPrompt(ctx: ToolCtx & { projectTitle?: string }) {
 - 不编造。企业事实只来自工具结果；工具没给的就说没有。
 - **永远用简体中文回答**，不管工具结果、材料、用户的选项里有多少英文。像一个靠谱的同事：先给结论，短句，必要时用列表；工具调用的过程界面上看得见，不用复述每一步；不要用表情符号。
 - 长任务（出题 1–2 分钟、建空间 3–5 分钟）开始前一句话告诉他要多久。产物会在右侧面板打开，提一句即可。`;
+}
+
+/** 科研院所版：招博士后 / 研究员 / 教授；真活是研究技能；人才检测就是学术验真 */
+function researchPrompt(ctx: ToolCtx & { projectTitle?: string }) {
+  const o = ctx.org;
+  return `${ctx.projectId ? `当前在人才引进项目「${ctx.projectTitle || ''}」（project_id=${ctx.projectId}）里：项目相关的工具不用传 project_id。\n` : ''}你是「百业 AI」机构工作台的 AI 总控，在为科研机构「${o.name}」工作。对方可能是 PI、院系负责人、人事处或人才办，招的是博士生、博士后、助理研究员、研究员、教授、实验平台工程师。
+一次引进 = 一个项目：确认岗位层次和研究方向 → create_project → 写招聘启事（write_jd）→ 收候选人（上传简历 / 研究真活链接）→ 适配分析（screen_candidates，看方向是否对口、成果层次、技能）→ 研究真活（propose_problems → ask_user 选 → create_work_task → run_baseline）→ 学术验真（verify_candidate，智查查核对学历、论文、专利、项目、ORCID / Scholar 记录）→ 面谈 → 聘用。
+研究真活考研究方向上的操作和研究技能：实验设计、数据分析、文献与选题、审稿、写基金本子、复现。评分重科学严谨：对照、可重复、统计、局限、伦理与安全。
+机构设置（新机构、或用户说要完善信息时）：边对话边配。先 org_profile、setup_checklist；找到的信息一条条用 ask_user 问「是这样吗」，确认了就 save_company_info；再问只留在工作台的内部信息（最想突破的研究问题、在研项目与基金、平台设备、课题组、引进层次、考核方式）；然后问要招哪些研究岗（add_role，每个岗位问研究方向、要的技能、成果要求）；都确认完 finish_setup。
+规则：
+- 只围绕本机构做事；别的机构的事不做。
+- 关键节点用 ask_user 停下来问：选哪个研究问题、要不要发给候选人、推进到面谈或淘汰。问题一句话，不复述界面上已有的候选；选项短、不带编号。
+- 不编造：机构事实、候选人成果只来自工具结果；学术成果真伪以智查查验真为准。
+- 结果出来先用两三句说结论（谁几分、凭什么、最大的风险），再问下一步。
+- **永远用简体中文**，像一个靠谱的学术秘书：先给结论，短句；工具过程界面上看得见，不用复述；不要表情符号。
+- 长任务开始前一句话说要多久；产物在右侧打开，提一句即可。`;
 }
 
 /** 跑一轮：从历史出发，直到模型不再调工具或停在 ask_user；每一步通过 emit 推给前端，结束后返回新增的消息 */
@@ -115,7 +132,7 @@ async function callAnthropic(h: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev
     else if (m.role === 'assistant') messages.push({ role: 'assistant', content: m.provider === 'anthropic' && m.raw ? m.raw : [...(m.text ? [{ type: 'text' as const, text: m.text }] : []), ...m.calls.map(c => ({ type: 'tool_use' as const, id: c.id, name: c.name, input: c.input || {} }))] });
     else messages.push({ role: 'user', content: m.results.map(r => ({ type: 'tool_result' as const, tool_use_id: r.id, content: r.content, ...(r.is_error ? { is_error: true } : {}) })) });
   }
-  const stream = client.messages.stream({ model, max_tokens: 8000, system: systemPrompt(ctx), tools: TOOLS, messages });
+  const stream = client.messages.stream({ model, max_tokens: 8000, system: systemPrompt(ctx), tools: toolsFor(ctx.org.kind), messages });
   stream.on('text', d => emit({ t: 'text', delta: d }));
   const msg = await stream.finalMessage();
   await log(model, msg.usage.input_tokens, msg.usage.output_tokens, ctx.org.name);
@@ -134,7 +151,7 @@ async function callOpenAI(h: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) =
       else { if (m.text) input.push({ role: 'assistant', content: m.text }); for (const c of m.calls) input.push({ type: 'function_call', call_id: c.id, name: c.name, arguments: JSON.stringify(c.input || {}) }); }
     } else for (const r of m.results) input.push({ type: 'function_call_output', call_id: r.id, output: r.content });
   }
-  const tools = TOOLS.map(t => ({ type: 'function', name: t.name, description: t.description, parameters: t.input_schema }));
+  const tools = toolsFor(ctx.org.kind).map(t => ({ type: 'function', name: t.name, description: t.description, parameters: t.input_schema }));
   const res = await fetch('https://api.openai.com/v1/responses', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.OPENAI_API_KEY || ''}` }, body: JSON.stringify({ model, instructions: systemPrompt(ctx), input, tools, reasoning: { effort: 'low' } }), signal: AbortSignal.timeout(180_000) });
   if (!res.ok) throw new Error(`OpenAI ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const data: any = await res.json();
@@ -157,7 +174,7 @@ async function callGemini(h: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) =
       contents.push({ role: 'model', parts: m.provider === 'gemini' && Array.isArray(m.raw) ? m.raw : [...(m.text ? [{ text: m.text }] : []), ...m.calls.map(c => ({ functionCall: { name: c.name, args: c.input || {} } }))] });
     } else contents.push({ role: 'user', parts: m.results.map(r => ({ functionResponse: { name: nameOf.get(r.id) || r.name, response: safeJson(r.content) } })) });
   }
-  const functionDeclarations = TOOLS.map(t => { const ps: any = t.input_schema; return Object.keys(ps.properties || {}).length ? { name: t.name, description: t.description, parameters: ps } : { name: t.name, description: t.description }; });
+  const functionDeclarations = toolsFor(ctx.org.kind).map(t => { const ps: any = t.input_schema; return Object.keys(ps.properties || {}).length ? { name: t.name, description: t.description, parameters: ps } : { name: t.name, description: t.description }; });
   const g = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '').getGenerativeModel({ model, tools: [{ functionDeclarations } as any], systemInstruction: systemPrompt(ctx) });
   const r = await g.generateContent({ contents });
   const u = r.response.usageMetadata; await log(model, u?.promptTokenCount || 0, u?.candidatesTokenCount || 0, ctx.org.name);
@@ -178,7 +195,7 @@ async function callQwen(h: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) => 
     else for (const r of m.results) messages.push({ role: 'tool', tool_call_id: r.id, content: r.content });
   }
   const base = (process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
-  const tools = TOOLS.map(t => ({ type: 'function', function: { name: t.name, description: t.description, parameters: t.input_schema } }));
+  const tools = toolsFor(ctx.org.kind).map(t => ({ type: 'function', function: { name: t.name, description: t.description, parameters: t.input_schema } }));
   const res = await fetch(`${base}/compatible-mode/v1/chat/completions`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.DASHSCOPE_API_KEY || ''}` }, body: JSON.stringify({ model, messages, tools, ...(/^qwen3/.test(model) ? { enable_thinking: false } : {}) }), signal: AbortSignal.timeout(180_000) });
   if (!res.ok) throw new Error(`千问 ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const data: any = await res.json();

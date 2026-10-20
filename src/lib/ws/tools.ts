@@ -11,7 +11,8 @@ import { askJson, companyJobs, gatherContext, generateTask, renderContext, runBa
 import { withCost } from '@/lib/token-logger';
 import type { WsOrg } from '@/lib/ws/org';
 import { listProjects, createProject, projectBoard, writeJd, fitCandidate, verifyCandidate, checkVerify, setStage, ownCandidate, STAGES } from '@/lib/ws/projects';
-import { privateContext, saveContext, enrichCompany, addRole, checklist, PUBLIC_FIELDS, PRIVATE_FIELDS, ROLE_NOTES } from '@/lib/ws/setup';
+import { privateContext, saveContext, enrichCompany, addRole, checklist, knowhow, PUBLIC_FIELDS, PRIVATE_FIELDS, ROLE_NOTES } from '@/lib/ws/setup';
+import { RESEARCH_TASK_KINDS } from '@/lib/work/generator';
 
 export type ToolUi =
   | { kind: 'work'; id: string; token: string; owner_key: string; title: string; role: string }
@@ -55,8 +56,30 @@ export const TOOLS: Anthropic.Tool[] = [
   { name: 'finish_setup', description: '企业设置用：企业情况和岗位都确认完了，结束设置。', input_schema: { type: 'object', properties: {} } },
 ];
 
-const company = (org: WsOrg): ToolUi => ({ kind: 'company', title: `${org.name} · 企业档案` });
+const company = (org: WsOrg): ToolUi => ({ kind: 'company', title: `${org.name} · ${org.kind === 'research' ? '机构档案' : '企业档案'}` });
+/** 按机构类型给工具：科研院所换成研究的说法（研究问题、研究真活、招聘启事、学术验真） */
+export function toolsFor(kind?: string | null): Anthropic.Tool[] {
+  if (kind !== 'research') return TOOLS;
+  const K = knowhow('research');
+  const over: Record<string, string> = {
+    propose_problems: `给本机构的某个研究岗，从研究方向、在研项目、平台设备和岗位要求里找出 3 个「此刻真实的研究问题」候选，并给每个配一种研究真活类型（${RESEARCH_TASK_KINDS.map(k => k.split('（')[0]).join(' / ')}）。拿到候选后必须用 ask_user 让用户选。`,
+    create_work_task: '按用户确认的研究问题和真活类型，给本机构的研究岗出一道研究真活（任务书、材料包、带依赖的评分标准，重科学严谨），约 1–2 分钟。只能在用户确认之后调用。',
+    save_company_info: `机构设置用：把用户**确认过**的信息存下来。public 是公开字段（${K.pub.map(f => `${f.key}=${f.label}`).join('、')}），会回流平方机构库：空的直接写入，和现有记录不同的进审核；private 是只留在工作台的内部信息（${K.priv.map(f => `${f.key}=${f.label}`).join('、')}）。只存用户确认或亲口说的。`,
+    add_role: `机构设置用：把一个研究岗加进工作台（博士后 / 助理研究员 / 研究员 / 教授 / 实验平台工程师…）。jd_text 是岗位要求或招聘启事（40 字以上）；notes 是内部备注（${K.role.map(f => `${f.key}=${f.label}`).join('、')}）。`,
+    write_jd: '给项目写招聘启事：研究方向、岗位职责、申请条件（学历、成果）、支持条件（经费、平台、待遇）、聘期考核、第一年要做成什么。写完让用户看右侧确认。',
+    verify_candidate: '人才检测（学术验真）：交给智查查 2.0 核对学历、论文、专利、项目、ORCID / Google Scholar / OpenAlex 记录，再做能力扫描，要几分钟，在后台跑；之后 check_verification 取结果。科研岗引进前都值得做。',
+  };
+  return TOOLS.map(t => ({ ...t, description: over[t.name] || (t.description || '').replace(/本企业/g, '本机构').replace(/企业画像/g, '机构画像').replace(/企业/g, '机构').replace(/岗位库/g, '岗位库') }));
+}
+
+/** 科研版：进度文字里的「企业」换成「机构」 */
 export async function runTool(name: string, input: any, ctx: ToolCtx): Promise<ToolOut> {
+  const r = await runToolInner(name, input, ctx);
+  if (ctx.org.kind === 'research') r.label = r.label.replace(/本企业/g, '本机构').replace(/企业画像/g, '机构画像').replace(/企业档案/g, '机构档案');
+  return r;
+}
+
+async function runToolInner(name: string, input: any, ctx: ToolCtx): Promise<ToolOut> {
   const { org } = ctx;
   switch (name) {
     case 'org_profile': {
@@ -82,14 +105,14 @@ export async function runTool(name: string, input: any, ctx: ToolCtx): Promise<T
       const role = String(input.role || '').trim(); if (!role) throw new Error('缺岗位');
       const wctx = await gatherContext(companyKey(org), role);
       const inside = await privateContext(org.id, role);
-      const prompt = `你在帮「${org.name}」的管理者给「${role}」岗位出一道招聘用的真活。先别出题，只找起点：从下面的材料里找出 3 个这家企业此刻真实存在、需要这个岗位来解决的业务问题。
+      const prompt = org.kind === 'research' ? `你在帮科研机构「${org.name}」给「${role}」出一道引进人才用的研究真活。先别出题，只找起点：从下面的材料里找出 3 个这个团队此刻真实的研究问题，每个配一种研究真活类型（${RESEARCH_TASK_KINDS.join('；')}）。\n要求：每个都要能从材料里推出来（研究方向、在研项目、平台设备、岗位要求），写清为什么是现在、依据是哪几句；3 个用不同的真活类型。${input.hint ? `\n用户关注：${s(input.hint, 200)}` : ''}\n${renderContext(wctx).slice(0, 7000)}\n${inside ? `\n${inside}\n（机构自己说的眼下最想突破的问题要优先考虑）` : ''}\n只返回 JSON：{ "items": [ { "title": "8–14 字", "statement": "一句话研究问题 + 用哪种研究真活考", "why_now": "", "evidence": ["材料原句（来源）"] } ] }` : `你在帮「${org.name}」的管理者给「${role}」岗位出一道招聘用的真活。先别出题，只找起点：从下面的材料里找出 3 个这家企业此刻真实存在、需要这个岗位来解决的业务问题。
 要求：每个都必须能从材料里推出来（近期动态、产品、岗位职责、职业典型任务、行业规范），写清为什么是现在、依据是哪几句；3 个之间要有区别（比如一个偏数据核对、一个偏跨部门推动、一个偏风险判断）。${input.hint ? `\n用户关注：${s(input.hint, 200)}` : ''}
 ${renderContext(wctx).slice(0, 9000)}
 ${inside ? `\n${inside}\n（企业自己说的眼下重点要优先考虑，至少一个候选从这里来）` : ''}
 只返回 JSON：{ "items": [ { "title": "8–14 字", "statement": "一句话业务问题", "why_now": "", "evidence": ["材料原句（来源）"] } ] }`;
       const { parsed } = await withCost({ tool_name: 'workspace', task_name: '工作台 · 找业务问题', stage: 'create' }, () => askJson(prompt, WORK_MODEL, '工作台 · 找业务问题', org.name));
       const items = (Array.isArray(parsed.items) ? parsed.items : []).slice(0, 3).map((x: any) => ({ title: s(x.title, 30), statement: s(x.statement, 240), why_now: s(x.why_now, 240), evidence: (Array.isArray(x.evidence) ? x.evidence : []).slice(0, 3).map((e: any) => s(e, 200)) }));
-      return { label: `从企业动态和岗位职责里找了 ${items.length} 个业务问题`, ui: { kind: 'problems', role, items }, result: { role, items, gaps: wctx.notes } };
+      return { label: org.kind === 'research' ? `从研究方向和在研项目里找了 ${items.length} 个研究问题` : `从企业动态和岗位职责里找了 ${items.length} 个业务问题`, ui: { kind: 'problems', role, items }, result: { role, items, gaps: wctx.notes } };
     }
     case 'create_work_task': {
       const role = String(input.role || '').trim(), problem = String(input.problem || '').trim();
@@ -97,7 +120,7 @@ ${inside ? `\n${inside}\n（企业自己说的眼下重点要优先考虑，至�
       const env = (['doc', 'code', 'sheet', 'design', 'open'].includes(input.env) ? input.env : undefined) as WorkEnvType | undefined;
       const wctx = await gatherContext(companyKey(org), role);
       const inside = await privateContext(org.id, role);
-      const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题（工作台）', stage: 'create', actor: ctx.email }, () => generateTask(wctx, role, { model: WORK_MODEL, focus: `出题人确认的业务问题：${problem}${inside ? `\n${inside}` : ''}`, env }));
+      const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题（工作台）', stage: 'create', actor: ctx.email }, () => generateTask(wctx, role, { model: WORK_MODEL, focus: `出题人确认的${org.kind === 'research' ? '研究问题与真活类型' : '业务问题'}：${problem}${inside ? `\n${inside}` : ''}`, env, research: org.kind === 'research' }));
       const share_token = randomBytes(8).toString('base64url'), owner_key = randomBytes(12).toString('base64url');
       const row = { share_token, owner_key, owner: { name: ctx.email, contact: ctx.email }, status: 'published', company_id: wctx.company?.id ?? null, company_name: wctx.company?.name || org.name, role, context: wctx, problem: task.problem, task: { ...task.task, env: task.env }, materials: task.materials, rubric: task.rubric, model, created_by: ctx.email, org_id: org.id, ...(ctx.projectId ? { project_id: ctx.projectId } : {}) };
       const { data, error } = await db.from('work_tasks').insert(row).select('id').single();

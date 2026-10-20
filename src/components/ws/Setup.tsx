@@ -18,7 +18,7 @@ export function Setup({ step: step0, onDone, embedded }: { step: 'context' | 'ro
   return (
     <div className="ws-page">
       <div className="ws-steps">
-        {[['context', '企业情况'], ['roles', '岗位']].map(([k, t], i) => <button key={k} className={`ws-stepb${step === k ? ' on' : ''}`} onClick={() => setStep(k as any)}><span className="ws-stepn">{i + 2}</span>{t}</button>)}
+        {[['context', d.kind === 'research' ? '机构情况' : '企业情况'], ['roles', d.kind === 'research' ? '研究岗' : '岗位']].map(([k, t], i) => <button key={k} className={`ws-stepb${step === k ? ' on' : ''}`} onClick={() => setStep(k as any)}><span className="ws-stepn">{i + 2}</span>{t}</button>)}
         {!embedded && <span className="ws-muted" style={{ marginLeft: 'auto', fontSize: 12.5 }}>第 1 步「你在哪家企业」已完成</span>}
       </div>
       {step === 'context' ? <Context d={d} reload={load} next={() => go('roles')} embedded={embedded} /> : <Roles d={d} reload={load} done={() => go('done')} embedded={embedded} />}
@@ -48,7 +48,7 @@ function Context({ d, reload, next, embedded }: { d: any; reload: () => void; ne
   };
   return (
     <>
-      <h1 className="ws-title">把企业的情况告诉 AI</h1>
+      <h1 className="ws-title">{d.kind === 'research' ? '把机构的情况告诉 AI' : '把企业的情况告诉 AI'}</h1>
       <div className="ws-muted" style={{ marginBottom: 18, lineHeight: 1.7 }}>上面一块是平方数据库里你们的公开画像，核对、修改、补充都行，<b>改动会回流平方</b>（空的直接写入，和现有记录不同的进审核）。下面一块<b>只留在你的工作台</b>，AI 出题、建空间时会用到。</div>
       <div className="ws-box">
         <div className="ws-box-h">平方数据里的你们 <span className="ws-chip-s">{d.company ? `平方企业库 #${d.company.id}${d.company.completeness_score != null ? ` · 完整度 ${d.company.completeness_score}` : ''}` : '未关联'}</span>
@@ -85,7 +85,7 @@ function Roles({ d, reload, done, embedded }: { d: any; reload: () => void; done
   const del = async (id: string) => { await fetch(`/api/ws/roles?id=${id}`, { method: 'DELETE' }); reload(); };
   return (
     <>
-      <h1 className="ws-title">你要管哪些岗位</h1>
+      <h1 className="ws-title">{d.kind === 'research' ? '你要招哪些研究岗' : '你要管哪些岗位'}</h1>
       <div className="ws-muted" style={{ marginBottom: 18, lineHeight: 1.7 }}>每个岗位就是一个招聘项目的起点。从平方岗位库里选本企业的岗位，或者贴一份新 JD 建岗位（<b>会写回平方岗位库</b>，待审核）。每个岗位可以写几句内部备注，AI 出题时会用到。</div>
       <div className="ws-box">
         <div className="ws-box-h">已加入 <span className="ws-chip-s">{d.roles.length} 个</span></div>

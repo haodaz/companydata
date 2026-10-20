@@ -131,11 +131,18 @@ export interface WorkTask {
 }
 
 /** 第二步：问题 → 任务 → 材料包 → rubric（一次生成，JSON） */
-export async function generateTask(ctx: WorkContext, role: string, opts: { model?: string; focus?: string; env?: WorkEnvType } = {}): Promise<{ task: WorkTask; model: string }> {
+/** 研究真活（2026-10-20）：科研院所招博士后 / 研究员 / 教授，考的是研究方向上的操作和研究技能 */
+export const RESEARCH_TASK_KINDS = ['实验设计（给研究问题，设计方案、对照、变量与样本量）', '数据分析（给一份真实格式的实验 / 观测数据，找异常、选统计方法、下结论并说清局限）', '文献与选题（给一个方向，梳理进展、指出研究空白、提可做的课题）', '审稿（给一篇稿件或摘要，找方法和结论上的问题，写审稿意见）', '写基金本子（研究目标、技术路线、可行性与风险）', '复现（用代码复现论文里的一个结果并解释差异）'];
+
+export async function generateTask(ctx: WorkContext, role: string, opts: { model?: string; focus?: string; env?: WorkEnvType; research?: boolean } = {}): Promise<{ task: WorkTask; model: string }> {
   const model = opts.model || WORK_MODEL;
-  const name = ctx.company?.name || '这家企业';
-  const prompt = `你是「真活台」的出题人：拿一家企业**此刻真实的业务问题**给「${role}」岗位出一道真活，不是模拟职业、不是知识题。
-参照的方法：先锚定「这个岗位要替企业解决什么内部问题」，再把问题展开成一个开放的真实任务，配上做这件事会拿到的材料，最后把人写的粗标准展开成 agent 能逐条核对、**条目之间有依赖关系**的细 rubric（例：先设假设 → 再建模 → 再估值 → 再调整）。
+  const name = ctx.company?.name || (opts.research ? '这个科研团队' : '这家企业');
+  const prompt = `${opts.research
+    ? `你是「真活台」的出题人：拿一个科研团队**此刻真实的研究问题**给「${role}」出一道**研究真活**——考的是这个研究方向上的操作和研究技能，不是知识题、不是面试八股。
+研究真活的类型：${RESEARCH_TASK_KINDS.join('；')}。按岗位和出题人的要求挑最合适的一种（或组合两种）。
+参照的方法：先锚定「这个团队现在卡在哪个研究问题上、这个人来了要啃什么」，再展开成一个开放的研究任务，配上做这件事会拿到的材料（数据表、实验记录、审稿稿件、项目指南…，没有真实数据就按真实格式生成并标「示例数据」），最后把粗标准展开成能逐条核对、**条目之间有依赖关系**的细 rubric（例：先界定问题与假设 → 再设计对照与变量 → 再选统计方法 → 再解释结果与局限）。评分重点是科学严谨：对照、可重复、统计、局限、伦理与安全。`
+    : `你是「真活台」的出题人：拿一家企业**此刻真实的业务问题**给「${role}」岗位出一道真活，不是模拟职业、不是知识题。
+参照的方法：先锚定「这个岗位要替企业解决什么内部问题」，再把问题展开成一个开放的真实任务，配上做这件事会拿到的材料，最后把人写的粗标准展开成 agent 能逐条核对、**条目之间有依赖关系**的细 rubric（例：先设假设 → 再建模 → 再估值 → 再调整）。`}
 
 ## 材料（只许用这些；没有的数字写「示例数据」并说明；每条依据指回来源）
 ${renderContext(ctx)}
@@ -145,7 +152,7 @@ ${opts.env === 'open' ? '出题人指定：候选人用自己电脑上的软件�
 env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "tests": [ { "name": "", "code": "" } ], "csv": "", "params": [ { "name": "", "unit": "", "hint": "" } ], "sketch_hint": "" }（只填该环境用到的字段）。交付物要和环境匹配（code 的交付物是代码 + 说明，sheet 是表 + 口径说明，design 是参数表 + 草图 + 设计说明）。
 
 ## 要求
-- problem.statement：一句话说清 ${name} 现在的哪个业务问题需要「${role}」来解决，必须能从材料里推出来（近期动态 / 产品 / 岗位职责 / 典型任务）；why_now 说为什么是现在；evidence 列 2–4 条材料原句 + 来源名。
+- problem.statement：一句话说清 ${name} 现在的哪个${opts.research ? '研究问题' : '业务问题'}需要「${role}」来解决，必须能从材料里推出来（${opts.research ? '研究方向 / 在研项目 / 平台 / 岗位要求' : '近期动态 / 产品 / 岗位职责 / 典型任务'}）；why_now 说为什么是现在；evidence 列 2–4 条材料原句 + 来源名。
 - task：title（8–16 字）；brief（给做题人看的任务书，300–500 字，口吻像业务负责人交代活：背景、要你做什么、交给谁、什么时候要）；deliverables 2–3 个（id d1…，title，format 如「一页纸方案 / 表格 / 邮件」）；time_minutes 45–90；rules 3–5 条（必须含「可以随便用 AI，不算作弊；评的是你怎么用」和「材料里没有的数据要标注假设」）。
 - materials 3–5 份，做这件事真的会拿到的东西：kind ∈ doc/table/note/email/data；content 用 Markdown，每份 300–900 字，表格用 Markdown 表；source：db=全部来自材料、generated=为任务合理补写（必须贴近企业真实情况并在正文标「示例数据」）、mixed；basis 写它依据材料的哪一段。至少一份是「有坑」的（信息不全、口径不一致、过期），这是真活。
 - rubric 5–8 条：id r1…；title；desc（怎么算做到）；weight 加起来 100；depends_on 填前置条目 id（没有填 []）；basis 必须指向材料来源（「行业标准 xxx 第 n 点」「岗位职责：…」「典型任务：…」），实在没有写「出题人判断，待业务负责人确认」；levels L1–L4 各一句可观察的行为描述（BARS）。

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
 import { getOrg } from '@/lib/ws/org';
-import { checklist, enrichCompany, loadSetup, saveContext, PUBLIC_FIELDS, PRIVATE_FIELDS, ROLE_NOTES } from '@/lib/ws/setup';
+import { checklist, enrichCompany, loadSetup, saveContext, knowhow } from '@/lib/ws/setup';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -17,7 +17,7 @@ async function ctx(req: NextRequest) {
 export async function GET(req: NextRequest) {
   const c = await ctx(req); if (c.err) return c.err;
   if (req.nextUrl.searchParams.get('checklist')) { try { return NextResponse.json({ ok: true, ...(await checklist(c.org!)) }); } catch (e: any) { return NextResponse.json({ ok: false, error: e.message }, { status: 500 }); } }
-  try { return NextResponse.json({ ok: true, ...(await loadSetup(c.org as any)), fields: { public: PUBLIC_FIELDS, private: PRIVATE_FIELDS, role: ROLE_NOTES } }); }
+  try { return NextResponse.json({ ok: true, ...(await loadSetup(c.org as any)), fields: (() => { const K = knowhow(c.org!.kind); return { public: K.pub, private: K.priv, role: K.role }; })(), kind: c.org!.kind || 'company' }); }
   catch (e: any) { return NextResponse.json({ ok: false, error: e.message }, { status: 500 }); }
 }
 /** 保存企业情况：{ public, private }；公开的回流平方（空的直接填、不同的进待审核），内部的只存工作台 */

@@ -48,6 +48,34 @@ export const ROLE_NOTES: KnowItem[] = [
   { key: 'tools', label: '这个岗位用的工具', hint: 'SAP / Python / CAD…', why: '选操作台', weight: 1 },
 ];
 
+/** 科研院所（高校院系、研究院、国家实验室、新型研发机构）的一套：招博士后 / 研究员 / 教授，真活是研究技能 */
+export const RESEARCH_PUBLIC: KnowItem[] = [
+  { key: 'one_sentence', label: '一句话介绍', hint: '你们研究什么', why: '所有生成的第一句背景', weight: 2 },
+  { key: 'research_area', label: '研究方向', hint: '主要方向与学科', why: '研究真活的题目从这些方向里出', weight: 3, long: true },
+  { key: 'business_profile', label: '代表性成果与平台', hint: '重点实验室、大科学装置、代表论文 / 成果转化', why: '材料包里的真实平台和成果', weight: 2, long: true },
+  { key: 'introduction', label: '机构简介', hint: '隶属、规模、位置', why: '候选人看到的机构背景', weight: 1, long: true },
+  { key: 'industry', label: '学科领域', hint: '如 材料科学 / 生物医学工程', why: '挂学科规范和评审口径', weight: 2 },
+  { key: 'official_website', label: '官网', hint: 'https://…', why: '机构编号、AI 查公开资料的入口', weight: 1 },
+];
+export const RESEARCH_PRIVATE: KnowItem[] = [
+  { key: 'priorities', label: '眼下最想突破的研究问题', hint: '比如：固态电解质界面阻抗下不来、单细胞数据批次效应处理不好', why: '研究真活的问题直接从这里来', weight: 3 },
+  { key: 'projects', label: '在研项目与基金', hint: '国自然 / 重点研发 / 横向课题，各在做什么', why: '真活材料里的项目背景、经费和节点', weight: 2 },
+  { key: 'platform', label: '平台与设备', hint: '主要仪器、计算资源、样本库', why: '实验设计题能用什么、不能用什么', weight: 2 },
+  { key: 'team', label: '课题组与 PI', hint: '几个组、谁带谁、学生和博后多少', why: '材料里的协作关系；适配分析看能不能融进组', weight: 1 },
+  { key: 'level', label: '要引进的层次与条件', hint: '博士后 / 助理研究员 / 青年人才 / 领军人才；待遇、启动经费', why: '写招聘启事、判断候选人层次', weight: 2 },
+  { key: 'assessment', label: '考核方式与期望产出', hint: '聘期、非升即走、论文 / 项目 / 转化要求', why: '真活的交付物和评分重点照这个定', weight: 2 },
+];
+export const RESEARCH_ROLE: KnowItem[] = [
+  { key: 'direction', label: '具体研究方向', hint: '比如 锂金属负极界面', why: '真活就出在这个方向上', weight: 3 },
+  { key: 'skills', label: '要的研究技能', hint: '实验 / 计算 / 理论；会哪些表征、算法、平台', why: '决定出实验设计、数据分析还是复现题', weight: 3 },
+  { key: 'output', label: '代表性成果要求', hint: '论文、项目、专利的层次', why: '适配分析和人才检测的核对重点', weight: 2 },
+  { key: 'first_year', label: '第一年要做成什么', hint: '具体的课题或产出', why: '真活的交付物照这个定', weight: 2 },
+  { key: 'dealbreaker', label: '一票否决', hint: '比如 学术不端记录、方向完全不对口', why: '筛人时直接标红', weight: 2 },
+];
+export type OrgKindLike = 'company' | 'research' | undefined | null;
+/** 按机构类型拿 know-how 清单 */
+export const knowhow = (kind: OrgKindLike) => kind === 'research' ? { pub: RESEARCH_PUBLIC, priv: RESEARCH_PRIVATE, role: RESEARCH_ROLE } : { pub: PUBLIC_FIELDS, priv: PRIVATE_FIELDS, role: ROLE_NOTES };
+
 const PROFILE_MODEL = process.env.WS_PROFILE_MODEL || 'qwen-plus';
 const hostOf = (u: string) => { try { return new URL(/^https?:\/\//.test(u) ? u : `https://${u}`).hostname.replace(/^www\./, ''); } catch { return ''; } };
 
@@ -87,23 +115,24 @@ export async function enrichCompany(companyId: number): Promise<string[]> {
 /** 第二步的数据：平方里的公开画像 + 工作台里的内部信息 */
 /** 企业档案完成度：按 know-how 清单逐项看有没有、来源是哪（平方库 / 你确认 / 待审核） */
 export async function checklist(org: WsOrg) {
+  const K = knowhow(org.kind);
   const d = await loadSetup(org as any);
   const pend = new Set((d.contributions || []).filter((c: any) => c.status === 'pending').map((c: any) => c.field));
-  const pub = PUBLIC_FIELDS.map(f => ({ ...f, layer: 'public', value: d.company?.[f.key] || '', source: pend.has(f.key) ? '待审核' : d.company?.[f.key] ? '平方企业库' : '' }));
-  const priv = PRIVATE_FIELDS.map(f => ({ ...f, layer: 'private', value: d.context?.[f.key] || '', source: d.context?.[f.key] ? '你说的' : '' }));
-  const roles = (d.roles || []).map((r: any) => ({ title: r.title, linked: !!r.job_id, occupation: !!r.occupation_id, notes: ROLE_NOTES.map(f => ({ key: f.key, label: f.label, value: r.notes?.[f.key] || '', weight: f.weight })) }));
+  const pub = K.pub.map(f => ({ ...f, layer: 'public', value: d.company?.[f.key] || '', source: pend.has(f.key) ? '待审核' : d.company?.[f.key] ? '平方企业库' : '' }));
+  const priv = K.priv.map(f => ({ ...f, layer: 'private', value: d.context?.[f.key] || '', source: d.context?.[f.key] ? '你说的' : '' }));
+  const roles = (d.roles || []).map((r: any) => ({ title: r.title, linked: !!r.job_id, occupation: !!r.occupation_id, notes: K.role.map(f => ({ key: f.key, label: f.label, value: r.notes?.[f.key] || '', weight: f.weight })) }));
   const items = [...pub, ...priv];
   const score = (xs: { value: string; weight: number }[]) => { const tot = xs.reduce((a, x) => a + x.weight, 0) || 1; return Math.round(xs.filter(x => x.value).reduce((a, x) => a + x.weight, 0) / tot * 100); };
   const roleItems = roles.flatMap((r: any) => r.notes);
   const missing = [...items.filter(i => !i.value).map(i => ({ key: i.key, label: i.label, layer: i.layer, why: i.why, weight: i.weight })),
-    ...roles.flatMap((r: any) => r.notes.filter((n: any) => !n.value && n.weight >= 2).map((n: any) => ({ key: `${r.title}.${n.key}`, label: `${r.title}：${n.label}`, layer: 'role', why: ROLE_NOTES.find(f => f.key === n.key)!.why, weight: n.weight })))].sort((a, b) => b.weight - a.weight);
-  return { company: d.company ? { id: d.company.id, name: d.company.name, completeness: d.company.completeness_score } : null, items, roles, library_jobs: (d.jobs || []).length, score: score([...items, ...(roleItems.length ? roleItems : [{ value: '', weight: 6 }])]), missing, setup_step: d.setup_step };
+    ...roles.flatMap((r: any) => r.notes.filter((n: any) => !n.value && n.weight >= 2).map((n: any) => ({ key: `${r.title}.${n.key}`, label: `${r.title}：${n.label}`, layer: 'role', why: K.role.find(f => f.key === n.key)!.why, weight: n.weight })))].sort((a, b) => b.weight - a.weight);
+  return { kind: org.kind || 'company', company: d.company ? { id: d.company.id, name: d.company.name, completeness: d.company.completeness_score } : null, items, roles, library_jobs: (d.jobs || []).length, score: score([...items, ...(roleItems.length ? roleItems : [{ value: '', weight: 6 }])]), missing, setup_step: d.setup_step };
 }
 
 export async function loadSetup(org: WsOrg & { context?: any; website?: string | null; setup_step?: string }) {
   let company: any = null, jobs: any[] = [];
   if (org.company_id) {
-    const { data } = await db.from('companies').select(['id', 'name', 'brief_name', 'city', 'completeness_score', 'source', 'human_review_status', ...PUBLIC_FIELDS.map(f => f.key)].join(', ')).eq('id', org.company_id).maybeSingle();
+    const { data } = await db.from('companies').select(['id', 'name', 'brief_name', 'city', 'completeness_score', 'source', 'human_review_status', ...new Set([...PUBLIC_FIELDS, ...RESEARCH_PUBLIC].map(f => f.key))].join(', ')).eq('id', org.company_id).maybeSingle();
     company = data;
     const { data: js } = await db.from('jobs').select('id, name, title_cn, job_function, city, responsibilities').eq('company_id', org.company_id).eq('if_delete', false).limit(300);
     const seen = new Set<string>();
@@ -118,7 +147,7 @@ export async function loadSetup(org: WsOrg & { context?: any; website?: string |
 export async function saveContext(org: WsOrg, email: string, pub: Record<string, string>, priv: Record<string, string>) {
   const applied: string[] = [], pending: string[] = [];
   if (org.company_id && pub && Object.keys(pub).length) {
-    const keys = PUBLIC_FIELDS.map(f => f.key).filter(k => k in pub);
+    const keys = knowhow(org.kind).pub.map(f => f.key).filter(k => k in pub);
     const { data: c } = await db.from('companies').select(['human_locked_fields', ...keys].join(', ')).eq('id', org.company_id).single();
     const up: Record<string, any> = {};
     for (const k of keys) {
@@ -130,7 +159,7 @@ export async function saveContext(org: WsOrg, email: string, pub: Record<string,
     if (Object.keys(up).length) await db.from('companies').update({ ...up, updated_at: new Date().toISOString() }).eq('id', org.company_id);
   }
   const ctx: Record<string, string> = {};
-  for (const f of PRIVATE_FIELDS) if (priv && f.key in priv) ctx[f.key] = String(priv[f.key] || '').trim().slice(0, 2000);
+  for (const f of knowhow(org.kind).priv) if (priv && f.key in priv) ctx[f.key] = String(priv[f.key] || '').trim().slice(0, 2000);
   const { data: o } = await db.from('ws_orgs').select('context').eq('id', org.id).single();
   await db.from('ws_orgs').update({ context: { ...(o?.context || {}), ...ctx } }).eq('id', org.id);
   return { applied, pending };
@@ -149,7 +178,7 @@ export async function addRole(org: WsOrg, email: string, input: { title: string;
     await db.from('ws_contributions').insert({ org_id: org.id, entity_type: 'job', entity_id: String(j.id), field: '*', new_value: JSON.stringify({ name: title, responsibilities: jd.slice(0, 2000) }), status: 'applied', created_by: email });
   }
   const occ: any = await findOccupation({ name: title }).catch(() => null);
-  const notes: Record<string, string> = {}; for (const f of ROLE_NOTES) if (input.notes?.[f.key]) notes[f.key] = String(input.notes[f.key]).trim().slice(0, 1000);
+  const notes: Record<string, string> = {}; for (const f of knowhow(org.kind).role) if (input.notes?.[f.key]) notes[f.key] = String(input.notes[f.key]).trim().slice(0, 1000);
   const { data, error } = await db.from('ws_roles').insert({ org_id: org.id, title, job_id: jobId, occupation_id: occ?.id ?? null, city: input.city || null, jd_text: jd || null, notes, created_by: email }).select('*').single();
   if (error) throw new Error(error.message);
   return { role: data, created_job: created, occupation: occ ? { id: occ.id, name: occ.name } : null };
@@ -157,13 +186,14 @@ export async function addRole(org: WsOrg, email: string, input: { title: string;
 
 /** 给 AI 用的企业 / 岗位内部上下文（拼进出题、找问题的提示里） */
 export async function privateContext(orgId: string, roleTitle?: string): Promise<string> {
-  const { data: o } = await db.from('ws_orgs').select('context').eq('id', orgId).maybeSingle();
+  let r: any = await db.from('ws_orgs').select('context, kind').eq('id', orgId).maybeSingle(); if (r.error) r = await db.from('ws_orgs').select('context').eq('id', orgId).maybeSingle();
+  const o = r.data; const K = knowhow(o?.kind);
   const lines: string[] = [];
-  for (const f of PRIVATE_FIELDS) { const v = o?.context?.[f.key]; if (v) lines.push(`${f.label}：${v}`); }
+  for (const f of K.priv) { const v = o?.context?.[f.key]; if (v) lines.push(`${f.label}：${v}`); }
   if (roleTitle) {
     const { data: r } = await db.from('ws_roles').select('title, notes, jd_text').eq('org_id', orgId).ilike('title', `%${roleTitle}%`).limit(1);
     const role = r?.[0];
-    if (role) { for (const f of ROLE_NOTES) { const v = role.notes?.[f.key]; if (v) lines.push(`岗位「${role.title}」${f.label}：${v}`); } if (role.jd_text) lines.push(`岗位「${role.title}」企业提供的 JD：${role.jd_text.slice(0, 1500)}`); }
+    if (role) { for (const f of K.role) { const v = role.notes?.[f.key]; if (v) lines.push(`岗位「${role.title}」${f.label}：${v}`); } if (role.jd_text) lines.push(`岗位「${role.title}」企业提供的 JD：${role.jd_text.slice(0, 1500)}`); }
   }
-  return lines.length ? `企业自己填的内部情况（只在本企业工作台可见）：\n${lines.join('\n')}` : '';
+  return lines.length ? `${o?.kind === 'research' ? '本机构' : '企业'}自己填的内部情况（只在本工作台可见）：\n${lines.join('\n')}` : '';
 }

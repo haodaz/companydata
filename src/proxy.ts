@@ -86,14 +86,14 @@ export async function proxy(req: NextRequest) {
   }
 
   // Protect /admin and /office (虚拟工厂) routes；真活台：出题 / 管理页要登录（/work/mine、/work/admin），做题页 /work/<token> 公开
-  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab') || pathname === '/work/mine' || pathname === '/work/new' || pathname.startsWith('/work/admin') || pathname === '/workspace') {
+  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab') || pathname === '/work/mine' || pathname === '/work/new' || pathname.startsWith('/work/admin') || pathname === '/workspace' || pathname === '/research') {
     const token = req.cookies.get('auth_token')?.value;
 
     if (!token) {
       // 从公开首页点进来的，登录完要回到他想去的地方，而不是落到虚拟工厂
       // 百业 / 真活用各自的蒙版式登录页（账号同一套），别让人看见企业数据工厂的登录页
-      const login = new URL(pathname.startsWith('/lab') || pathname === '/workspace' ? '/lab/login' : pathname.startsWith('/work') ? '/work/login' : '/login', req.url);
-      if (pathname.startsWith('/lab') || pathname.startsWith('/work')) login.searchParams.set('next', pathname + req.nextUrl.search);
+      const login = new URL(pathname.startsWith('/lab') || pathname === '/workspace' || pathname === '/research' ? '/lab/login' : pathname.startsWith('/work') ? '/work/login' : '/login', req.url);
+      if (pathname.startsWith('/lab') || pathname.startsWith('/work') || pathname === '/research') login.searchParams.set('next', pathname + req.nextUrl.search);
       return NextResponse.redirect(login);
     }
 
@@ -122,5 +122,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/work/mine', '/work/new', '/work/admin', '/workspace', '/api/:path*', '/'],
+  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/work/mine', '/work/new', '/work/admin', '/workspace', '/research', '/api/:path*', '/'],
 };

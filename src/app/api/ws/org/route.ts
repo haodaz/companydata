@@ -15,6 +15,6 @@ export async function POST(req: NextRequest) {
   try {
     if (await getOrg(user)) return NextResponse.json({ ok: false, error: '这个账号已经绑定了一家企业' }, { status: 400 });
     const b = await req.json().catch(() => ({}));
-    return NextResponse.json({ ok: true, org: await createOrg(user, { name: b.name, company_id: b.company_id ? Number(b.company_id) : null, company_name: b.company_name, website: b.website || null }) });
+    return NextResponse.json({ ok: true, org: await createOrg(user, { name: b.name, company_id: b.company_id ? Number(b.company_id) : null, company_name: b.company_name, website: b.website || null, kind: b.kind === 'research' ? 'research' : 'company' }) });
   } catch (e: any) { return NextResponse.json({ ok: false, error: e.message }, { status: 500 }); }
 }
