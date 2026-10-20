@@ -2,6 +2,8 @@
  * 数据部门 10-20《AI工具反馈》岗位存量回刷（迁移 038 跑完之后）：
  *   --step qianli   潜历职能标签（单个 value）+ 特色标签一级 / 二级（value 用「|」隔开），提示词同步自数据部门线下脚本
  *   npx tsx scripts/fix-1020.mts --step qianli --model qwen-plus [--par 4] [--only-missing]
+ *   --step qianli-fn  只重打潜历职能标签（10-20：改成模型填中文名、代码换 value 之后重打）
+ *   npx tsx scripts/fix-1020.mts --step qianli-fn --model qwen-plus [--par 2]
  *   --step careers  相关专业 / 职业按收紧后的提示词重打（宁少勿多，对不上留空并记个体信号 → 市场新兴职业）
  *   npx tsx scripts/fix-1020.mts --step careers --model qwen-plus [--par 3]
  * 地区编码（全球城市、港澳台改存 344/446/158）用 fix-1019：npx tsx scripts/fix-1019.mts --step region
@@ -15,7 +17,7 @@ const { isKnownModel } = await import('@/lib/model-options');
 
 const opt = (k: string, d = '') => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const STEP = opt('step');
-if (!['qianli', 'careers'].includes(STEP)) { console.error('--step qianli | careers'); process.exit(1); }
+if (!['qianli', 'qianli-fn', 'careers'].includes(STEP)) { console.error('--step qianli | qianli-fn | careers'); process.exit(1); }
 const MODEL = opt('model', '');
 if (!MODEL || !isKnownModel(MODEL)) { console.error(`--model 要用模型选单里的（现在：${MODEL || '空'}）`); process.exit(1); }
 const PAR = Number(opt('par', '4'));
@@ -42,6 +44,33 @@ if (STEP === 'careers') {
     }
   }));
   console.log(`完成：写了 ${sv}/${ids.length}，用时 ${((Date.now() - t0) / 60000).toFixed(1)} 分钟`);
+  process.exit(0);
+}
+
+if (STEP === 'qianli-fn') {
+  const { tagJobFunctions } = await import('@/lib/qianli-labels');
+  const { data } = await selectAll(() => db.from('jobs').select('id, name, responsibilities, overview, summary_cn, human_locked_fields').not('if_delete', 'is', true).order('id'));
+  const rs = (data as any[]).filter(j => !(j.human_locked_fields || []).includes('qianli_job_labels'));
+  const bs: any[][] = [];
+  for (let i = 0; i < rs.length; i += 10) bs.push(rs.slice(i, i + 10));
+  console.log(`重打潜历职能标签 ${rs.length} 个岗位，${bs.length} 批，模型 ${MODEL}，并发 ${PAR}`);
+  let nx = 0, dn = 0, sv = 0, changed = 0;
+  const old = new Map((data as any[]).map(j => [j.id, null as string | null]));
+  const { data: cur } = await selectAll(() => db.from('jobs').select('id, qianli_job_labels').not('if_delete', 'is', true).order('id'));
+  for (const j of cur as any[]) old.set(j.id, j.qianli_job_labels);
+  const t0 = Date.now();
+  await Promise.all(Array.from({ length: PAR }, async () => {
+    while (nx < bs.length) {
+      const b = bs[nx++];
+      try {
+        const m = await tagJobFunctions(b, MODEL);
+        for (const [id, v] of m) { if (old.get(id) !== v) changed++; const { error } = await db.from('jobs').update({ qianli_job_labels: v }).eq('id', id); if (!error) sv++; }
+      } catch (e: any) { console.error('批失败', String(e?.message || e).slice(0, 120)); }
+      dn += b.length;
+      if ((dn / 10) % 40 === 0) console.log(`${dn}/${rs.length} 已写 ${sv}，和原来不同 ${changed}（${((Date.now() - t0) / 60000).toFixed(1)} 分钟）`);
+    }
+  }));
+  console.log(`完成：写了 ${sv}/${rs.length}，和原来不同 ${changed}，用时 ${((Date.now() - t0) / 60000).toFixed(1)} 分钟`);
   process.exit(0);
 }
 

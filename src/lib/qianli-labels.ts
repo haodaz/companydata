@@ -14,7 +14,6 @@ import { JOB_FUNCTION_PROMPT, JOB_FUNCTION_TAGS, SPECIALTY_BATCH, SPECIALTY_EXAM
 export type QianliInput = { id: number; name: string; company?: string | null; responsibilities?: string | null; overview?: string | null; summary_cn?: string | null };
 export type QianliLabels = { qianli_job_labels: string | null; qianli_job_specialty_labels: string | null; qianli_specialty_labels_reason: string | null };
 
-const FUNCTION_VALUES = new Set(JOB_FUNCTION_TAGS.map(t => t.value));
 const L2_PARENT = new Map(SPECIALTY_TAGS.map(t => [t.l2_value, t.l1_value]));
 const L1_ORDER = [...new Set(SPECIALTY_TAGS.map(t => t.l1_value))];
 const L2_ORDER = SPECIALTY_TAGS.map(t => t.l2_value);
@@ -23,18 +22,32 @@ export { QIANLI_FUNCTION_NAMES, QIANLI_SPECIALTY_L1_NAMES, QIANLI_SPECIALTY_L2_N
 
 const flat = (v: any, n: number) => String(v || '').replace(/\s+/g, ' ').trim().slice(0, n);
 
-/** 职能标签：提示词照 prompt.md，用它的「带 id 的岗位数组」输入格式 */
+/**
+ * 职能标签：提示词照 prompt.md，用它的「带 id 的岗位数组」输入格式。
+ * 只改一处输出：让模型填中文职能名（照抄标签体系里的名称），代码再换成 value。
+ * 原因（2026-10-20 回刷后抽查）：value 和名称的对应是历史口径、字面意思错位，提示词再三强调不许按语义纠正，模型还是被带跑——
+ *   教师岗被打成 edu_training（=网络安全）、兽医 / 临床医师打成 healthcare（=项目经理）、安全工程师 / 纪检打成 legal_compliance（=数据工程师）。
+ */
 export async function tagJobFunctions(jobs: QianliInput[], model: string): Promise<Map<number, string | null>> {
   const input = jobs.map(j => ({ id: String(j.id), 岗位名称: j.name, JD: flat(j.responsibilities || j.summary_cn || j.overview, 2500) }));
-  const prompt = `${JOB_FUNCTION_PROMPT}\n\n# 输入（带 id 的岗位数组）\n${JSON.stringify(input)}`;
+  const names = JOB_FUNCTION_TAGS.map(t => t.name);
+  const prompt = `${JOB_FUNCTION_PROMPT}
+
+# 输出要求的调整（以这里为准）
+上面「输出格式」里的 value 一律改为填写**中文职能名**，只能是这 26 个之一、原样照抄：${names.join('、')}；无匹配填 "无匹配"。不要填编码，程序会换成编码。
+带 id 的岗位数组时返回：{"results": [{"id": "<原样返回>", "label": "<中文职能名>", "confidence": "高|中|低", "reason": "<不超过30字>"}]}
+
+# 输入（带 id 的岗位数组）
+${JSON.stringify(input)}`;
   const r = await generateContent(prompt, model, { jsonMode: true, temperature: 0 });
   await logTokenUsage({ tool_name: 'job-tagging', task_name: 'Qianli Job Function', institution: jobs[0]?.company || '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
+  const byName = new Map(JOB_FUNCTION_TAGS.map(t => [t.name.replace(/\s+/g, '').toLowerCase(), t.value]));
   const out = new Map<number, string | null>();
   for (const it of parseJsonLoose(r.text)?.results || []) {
     const id = Number(it.id);
     if (!jobs.some(j => j.id === id)) continue;
-    const v = String(it.value || '').trim();
-    out.set(id, FUNCTION_VALUES.has(v) ? v : null);   // 「无匹配」或清单外的都留空
+    // 只认中文名（模型要是填了编码，宁可留空也不照收——编码正是被字面意思带跑的来源）
+    out.set(id, byName.get(String(it.label || '').replace(/\s+/g, '').toLowerCase()) || null);
   }
   return out;
 }
