@@ -15,25 +15,37 @@ import { withCost } from '@/lib/token-logger';
 import type { WsOrg } from '@/lib/ws/org';
 
 export const SOURCE = '企业工作台';
-/** 企业可以改、会回流平方的公开字段 */
-export const PUBLIC_FIELDS: { key: string; label: string; hint: string; long?: boolean }[] = [
-  { key: 'official_website', label: '官网', hint: 'https://…' },
-  { key: 'industry', label: '行业', hint: '如 新能源 / 动力电池' },
-  { key: 'one_sentence', label: '一句话介绍', hint: '你们是做什么的' },
-  { key: 'introduction', label: '企业简介', hint: '主营业务、规模、位置', long: true },
-  { key: 'business_profile', label: '业务与客户', hint: '业务线、主要客户、市场', long: true },
-  { key: 'product_area', label: '产品与服务', hint: '主要产品', long: true },
+/**
+ * Know-how：收集什么能让工作台对这家企业真正有用。每一项都写清「它让 AI 能做什么」——AI 按这张清单挑最值钱的先问，右侧企业档案按它显示完成度。
+ * weight：对出真活 / 建空间 / 筛人的作用大小（3 = 没有它题就出不真）。
+ */
+export interface KnowItem { key: string; label: string; hint: string; why: string; weight: 1 | 2 | 3; long?: boolean }
+/** 公开（回流平方企业库） */
+export const PUBLIC_FIELDS: KnowItem[] = [
+  { key: 'one_sentence', label: '一句话介绍', hint: '你们是做什么的', why: '所有生成的第一句背景', weight: 2 },
+  { key: 'business_profile', label: '业务与客户', hint: '业务线、主要客户、市场', why: '真活的业务场景从这里取：给谁做、做什么', weight: 3, long: true },
+  { key: 'product_area', label: '产品与服务', hint: '主要产品', why: '材料包里的产品、规格、术语', weight: 2, long: true },
+  { key: 'introduction', label: '企业简介', hint: '主营业务、规模、位置', why: '候选人看到的企业背景', weight: 1, long: true },
+  { key: 'industry', label: '行业', hint: '如 新能源 / 动力电池', why: '挂行业规范，评分标准有依据', weight: 2 },
+  { key: 'official_website', label: '官网', hint: 'https://…', why: '企业编号、AI 查公开资料的入口', weight: 1 },
 ];
-/** 只留在工作台的内部信息（AI 出题、建空间时的上下文） */
-export const PRIVATE_FIELDS: { key: string; label: string; hint: string }[] = [
-  { key: 'priorities', label: '眼下最想解决的事', hint: '比如：新厂爬坡供应跟不上、海外客户回款慢、新品上市要打通研产销' },
-  { key: 'team', label: '团队情况', hint: '人数、几个部门、谁带谁' },
-  { key: 'hiring', label: '用人偏好', hint: '看重什么、不要什么样的人' },
+/** 内部（只留在工作台，给 AI 当上下文） */
+export const PRIVATE_FIELDS: KnowItem[] = [
+  { key: 'priorities', label: '眼下最想解决的事', hint: '比如：新厂爬坡供应跟不上、海外客户回款慢、新品上市要打通研产销', why: '真活「为什么是现在」的业务问题直接从这里来', weight: 3 },
+  { key: 'team', label: '团队与汇报线', hint: '几个部门、多少人、谁带谁、跨部门找谁', why: '材料包里的邮件、会议纪要有真实的角色和协作关系', weight: 2 },
+  { key: 'tools', label: '日常用的软件和系统', hint: 'Excel / SAP / 飞书 / CAD / 自研系统…', why: '决定操作台用哪种（表格 / 代码 / 设计），或让候选人用自己的软件录屏', weight: 2 },
+  { key: 'terms', label: '内部常用说法', hint: '黑话、指标口径、缩写（比如「爬坡」「良率」「GWh 口径」）', why: '材料像你们自己写的，候选人能不能听懂也是考点', weight: 1 },
+  { key: 'hiring', label: '用人偏好', hint: '看重什么、不要什么样的人', why: '适配分析和最后推荐时的取舍', weight: 2 },
+  { key: 'process', label: '招聘流程与节奏', hint: '几轮面试、谁拍板、多久要到岗', why: '项目里 AI 推进到哪一步、什么时候提醒你', weight: 1 },
 ];
-export const ROLE_NOTES: { key: string; label: string; hint: string }[] = [
-  { key: 'reports_to', label: '汇报给谁', hint: '比如 供应链总监' },
-  { key: 'hardest', label: '这个岗位最难的地方', hint: '真实工作里最容易出错 / 最考人的环节' },
-  { key: 'want', label: '想要什么样的人', hint: '经验、性格、能力' },
+/** 每个岗位的内部备注 */
+export const ROLE_NOTES: KnowItem[] = [
+  { key: 'hardest', label: '这个岗位最难的地方', hint: '真实工作里最容易出错 / 最考人的环节', why: '真活就考这里，评分细则的重点', weight: 3 },
+  { key: 'first90', label: '入职 90 天要做成什么', hint: '具体的产出或指标', why: '真活的交付物照这个定；职业空间的练习目标', weight: 3 },
+  { key: 'want', label: '想要什么样的人', hint: '经验、性格、能力', why: '适配分析的打分依据', weight: 2 },
+  { key: 'dealbreaker', label: '一票否决', hint: '什么情况坚决不要', why: '筛人时直接标红', weight: 2 },
+  { key: 'reports_to', label: '汇报给谁', hint: '比如 供应链总监', why: '真活材料里的「交给谁」', weight: 1 },
+  { key: 'tools', label: '这个岗位用的工具', hint: 'SAP / Python / CAD…', why: '选操作台', weight: 1 },
 ];
 
 const PROFILE_MODEL = process.env.WS_PROFILE_MODEL || 'qwen-plus';
@@ -73,6 +85,21 @@ export async function enrichCompany(companyId: number): Promise<string[]> {
 }
 
 /** 第二步的数据：平方里的公开画像 + 工作台里的内部信息 */
+/** 企业档案完成度：按 know-how 清单逐项看有没有、来源是哪（平方库 / 你确认 / 待审核） */
+export async function checklist(org: WsOrg) {
+  const d = await loadSetup(org as any);
+  const pend = new Set((d.contributions || []).filter((c: any) => c.status === 'pending').map((c: any) => c.field));
+  const pub = PUBLIC_FIELDS.map(f => ({ ...f, layer: 'public', value: d.company?.[f.key] || '', source: pend.has(f.key) ? '待审核' : d.company?.[f.key] ? '平方企业库' : '' }));
+  const priv = PRIVATE_FIELDS.map(f => ({ ...f, layer: 'private', value: d.context?.[f.key] || '', source: d.context?.[f.key] ? '你说的' : '' }));
+  const roles = (d.roles || []).map((r: any) => ({ title: r.title, linked: !!r.job_id, occupation: !!r.occupation_id, notes: ROLE_NOTES.map(f => ({ key: f.key, label: f.label, value: r.notes?.[f.key] || '', weight: f.weight })) }));
+  const items = [...pub, ...priv];
+  const score = (xs: { value: string; weight: number }[]) => { const tot = xs.reduce((a, x) => a + x.weight, 0) || 1; return Math.round(xs.filter(x => x.value).reduce((a, x) => a + x.weight, 0) / tot * 100); };
+  const roleItems = roles.flatMap((r: any) => r.notes);
+  const missing = [...items.filter(i => !i.value).map(i => ({ key: i.key, label: i.label, layer: i.layer, why: i.why, weight: i.weight })),
+    ...roles.flatMap((r: any) => r.notes.filter((n: any) => !n.value && n.weight >= 2).map((n: any) => ({ key: `${r.title}.${n.key}`, label: `${r.title}：${n.label}`, layer: 'role', why: ROLE_NOTES.find(f => f.key === n.key)!.why, weight: n.weight })))].sort((a, b) => b.weight - a.weight);
+  return { company: d.company ? { id: d.company.id, name: d.company.name, completeness: d.company.completeness_score } : null, items, roles, library_jobs: (d.jobs || []).length, score: score([...items, ...(roleItems.length ? roleItems : [{ value: '', weight: 6 }])]), missing, setup_step: d.setup_step };
+}
+
 export async function loadSetup(org: WsOrg & { context?: any; website?: string | null; setup_step?: string }) {
   let company: any = null, jobs: any[] = [];
   if (org.company_id) {

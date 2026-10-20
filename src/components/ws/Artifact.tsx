@@ -11,14 +11,15 @@ export type Art =
   | { kind: 'work'; id: string; token: string; owner_key: string; title: string; role?: string }
   | { kind: 'results'; task_id: string; token: string; owner_key: string; title: string }
   | { kind: 'space_build'; buildId: string; payload: Record<string, any>; title: string }
-  | { kind: 'space'; id: string; title: string };
+  | { kind: 'space'; id: string; title: string }
+  | { kind: 'company'; title: string };
 
-export const artKey = (a: Art) => (a.kind === 'space_build' ? a.buildId : a.kind === 'space' ? a.id : `${a.kind}:${a.token}`);
+export const artKey = (a: Art) => (a.kind === 'space_build' ? a.buildId : a.kind === 'space' ? a.id : a.kind === 'company' ? 'company' : `${a.kind}:${a.token}`);
 const started = new Set<string>();
 
 export function ArtifactPanel({ art, onClose, onSpaceDone }: { art: Art; onClose: () => void; onSpaceDone?: (buildId: string, id: string) => void }) {
   const open = art.kind === 'work' || art.kind === 'results' ? `/work/${art.token}/owner?k=${encodeURIComponent(art.owner_key)}` : art.kind === 'space' ? `/lab/${art.id}` : null;
-  const label = art.kind === 'work' ? '真活' : art.kind === 'results' ? '作答与报告' : '职业空间';
+  const label = art.kind === 'work' ? '真活' : art.kind === 'results' ? '作答与报告' : art.kind === 'company' ? '企业档案 · 让 AI 更懂你们' : '职业空间';
   return (
     <aside className="ws-art">
       <div className="ws-art-head">
@@ -31,6 +32,7 @@ export function ArtifactPanel({ art, onClose, onSpaceDone }: { art: Art; onClose
       <div className="ws-art-body">
         {(art.kind === 'work' || art.kind === 'results') && <WorkArt token={art.token} k={art.owner_key} tab={art.kind === 'results' ? 's' : 'p'} />}
         {art.kind === 'space_build' && <SpaceBuild art={art} onDone={id => onSpaceDone?.(art.buildId, id)} />}
+        {art.kind === 'company' && <CompanyArt />}
         {art.kind === 'space' && <iframe src={`/lab/${art.id}`} className="ws-frame" title={art.title} />}
       </div>
     </aside>
@@ -72,6 +74,33 @@ function SpaceBuild({ art, onDone }: { art: Extract<Art, { kind: 'space_build' }
       <div style={{ fontWeight: 650, fontSize: 16, marginTop: 14 }}>{info?.error ? '没建成' : '正在建职业空间'}</div>
       <div className="ws-muted" style={{ marginTop: 6 }}>{info?.error || info?.phase || '读取岗位 JD'}{info?.detail ? ` · ${info.detail}` : ''}</div>
       {!info?.error && <div className="ws-muted" style={{ marginTop: 14, fontSize: 12.5 }}>已用 {Math.floor(sec / 60)} 分 {sec % 60} 秒 · 一般 3–5 分钟：拆任务、写一天的章节、画人物和场景、搭工位、定评分标准。可以先去做别的。</div>}
+    </div>
+  );
+}
+
+/** 企业档案：按 know-how 清单显示已有 / 缺的，每项带来源和「它让 AI 能做什么」；聊天里每存一条就刷新 */
+function CompanyArt() {
+  const [d, setD] = useState<any>(null); const [err, setErr] = useState('');
+  useEffect(() => { fetch('/api/ws/setup?checklist=1').then(r => r.json()).then(j => (j.ok ? setD(j) : setErr(j.error))).catch(e => setErr(e.message)); }, []);
+  if (err) return <div className="ws-muted">{err}</div>;
+  if (!d) return <div className="ws-muted">加载中…</div>;
+  const Item = ({ i }: { i: any }) => (
+    <div className={`ws-ki${i.value ? ' has' : ''}`}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span className="ws-ki-dot" /><b style={{ fontSize: 13.5 }}>{i.label}</b>{i.source && <span className="ws-chip-s">{i.source}</span>}{!i.value && i.weight >= 3 && <span className="ws-chip-s" style={{ color: '#b25e1f' }}>最要紧</span>}</div>
+      {i.value ? <div className="ws-ki-v">{String(i.value).slice(0, 240)}</div> : <div className="ws-ki-why">{i.why}</div>}
+    </div>
+  );
+  return (
+    <div>
+      <div className="ws-score"><div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}><b style={{ fontSize: 26 }}>{d.score}%</b><span className="ws-muted">AI 对你们的了解程度</span></div><div className="ws-bar"><i style={{ width: `${d.score}%` }} /></div>
+        <div className="ws-muted" style={{ fontSize: 12.5, marginTop: 6 }}>{d.company ? `平方企业库 #${d.company.id} ${d.company.name}` : '未关联平方企业库'} · 平方岗位库里有本企业 {d.library_jobs} 个岗位</div></div>
+      <div className="ws-sec" style={{ padding: '14px 0 6px' }}>公开信息 · 确认后回流平方</div>
+      {d.items.filter((i: any) => i.layer === 'public').map((i: any) => <Item key={i.key} i={i} />)}
+      <div className="ws-sec" style={{ padding: '14px 0 6px' }}>只给你自己的 AI 看</div>
+      {d.items.filter((i: any) => i.layer === 'private').map((i: any) => <Item key={i.key} i={i} />)}
+      <div className="ws-sec" style={{ padding: '14px 0 6px' }}>岗位</div>
+      {d.roles.length ? d.roles.map((r: any) => <div key={r.title} className="ws-ki has"><div style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span className="ws-ki-dot" /><b style={{ fontSize: 13.5 }}>{r.title}</b>{r.linked && <span className="ws-chip-s">平方岗位库</span>}{r.occupation && <span className="ws-chip-s">已对上职业库</span>}</div>
+        <div className="ws-ki-v">{r.notes.map((n: any) => <div key={n.key} style={{ color: n.value ? undefined : 'var(--ink3)' }}>{n.label}：{n.value || '—'}</div>)}</div></div>) : <div className="ws-ki"><div className="ws-ki-why">还没有岗位。每个岗位是一个招聘项目的起点，AI 会问你要管哪些。</div></div>}
     </div>
   );
 }

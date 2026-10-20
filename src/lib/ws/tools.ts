@@ -10,13 +10,14 @@ import { supabaseAdmin as db } from '@/lib/supabase';
 import { askJson, companyJobs, gatherContext, generateTask, renderContext, runBaseline, WORK_MODEL, type WorkEnvType } from '@/lib/work/generator';
 import { withCost } from '@/lib/token-logger';
 import type { WsOrg } from '@/lib/ws/org';
-import { privateContext } from '@/lib/ws/setup';
+import { privateContext, saveContext, enrichCompany, addRole, checklist, PUBLIC_FIELDS, PRIVATE_FIELDS, ROLE_NOTES } from '@/lib/ws/setup';
 
 export type ToolUi =
   | { kind: 'work'; id: string; token: string; owner_key: string; title: string; role: string }
   | { kind: 'space_build'; buildId: string; payload: Record<string, any>; title: string }
   | { kind: 'space'; id: string; title: string }
   | { kind: 'results'; task_id: string; token: string; owner_key: string; title: string }
+  | { kind: 'company'; title: string }
   | { kind: 'problems'; role: string; items: { title: string; statement: string; why_now: string; evidence: string[] }[] };
 export interface ToolOut { result: any; ui?: ToolUi; label: string }
 export interface ToolCtx { org: WsOrg; email: string }
@@ -36,8 +37,14 @@ export const TOOLS: Anthropic.Tool[] = [
   { name: 'work_results', description: '看一道真活的作答情况：每个人的分数、用时、问 AI 次数、一句话总结、最突出的高光和风险，以及 AI 基线。用来回答「谁做得好」「对比一下」。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'create_space', description: '给本企业的某个岗位建一个职业空间（数字职人 + 一天的章节 + 工位 + 评分标准），用于新人带教和练习，约 3–5 分钟，在右侧面板里跑。优先用本企业岗位库里的 JD；没有就需要 jd_text（让用户粘贴，或你根据企业画像和岗位职责起草一份 200 字以上的职责清单）。', input_schema: { type: 'object', properties: { role: { type: 'string' }, jd_text: { type: 'string', description: '没有库里的 JD 时才填' } }, required: ['role'] } },
   { name: 'list_spaces', description: '列出本企业建过的职业空间。', input_schema: { type: 'object', properties: {} } },
+  { name: 'enrich_company', description: '企业设置用：让 AI 联网查本企业的公开资料，补全平方企业库里空着的画像字段（约 30–60 秒）。新企业、画像很空时先调它，再用 org_profile 读回来逐条和用户确认。', input_schema: { type: 'object', properties: {} } },
+  { name: 'save_company_info', description: `企业设置用：把用户**确认过**的信息存下来。public 是公开字段（${PUBLIC_FIELDS.map(f => `${f.key}=${f.label}`).join('、')}），会回流平方企业库：平方里空的直接写入，和现有记录不同的进审核；private 是只留在工作台的内部信息（${PRIVATE_FIELDS.map(f => `${f.key}=${f.label}`).join('、')}）。只存用户确认或亲口说的，不要存你猜的。`, input_schema: { type: 'object', properties: { public: { type: 'object', additionalProperties: { type: 'string' } }, private: { type: 'object', additionalProperties: { type: 'string' } } } } },
+  { name: 'add_role', description: `企业设置用：把一个岗位加进本企业工作台。job_title 用平方岗位库里的名字可以直接关联；库里没有时给 jd_text（用户贴的 JD，或用户确认过的职责要求，40 字以上），会写回平方岗位库待审核。notes 是内部备注（${ROLE_NOTES.map(f => `${f.key}=${f.label}`).join('、')}）。`, input_schema: { type: 'object', properties: { title: { type: 'string' }, jd_text: { type: 'string' }, notes: { type: 'object', additionalProperties: { type: 'string' } } }, required: ['title'] } },
+  { name: 'setup_checklist', description: '企业设置用：看企业档案还缺什么。返回按重要程度排好的缺项（每项带「它让 AI 能做什么」）和已有的信息。设置过程中每存完一轮就看一次，挑权重最高的下一项去问。', input_schema: { type: 'object', properties: {} } },
+  { name: 'finish_setup', description: '企业设置用：企业情况和岗位都确认完了，结束设置。', input_schema: { type: 'object', properties: {} } },
 ];
 
+const company = (org: WsOrg): ToolUi => ({ kind: 'company', title: `${org.name} · 企业档案` });
 export async function runTool(name: string, input: any, ctx: ToolCtx): Promise<ToolOut> {
   const { org } = ctx;
   switch (name) {
@@ -45,13 +52,13 @@ export async function runTool(name: string, input: any, ctx: ToolCtx): Promise<T
       const C = 'id, name, brief_name, industry, sub_industry, city, one_sentence, introduction, business_profile, product_area, growth_signals, industry_position';
       const { data: c } = org.company_id ? await db.from('companies').select(C).eq('id', org.company_id).maybeSingle() : { data: null };
       const inside = await privateContext(org.id);
-      if (!c) return { label: `读了 ${org.name} 的画像（库里没有，按名字理解）`, result: { name: org.name, note: '平方企业库里没有这家企业的画像，生成时只能按名字和岗位常识来，事实会少。', inside } };
+      if (!c) return { ui: company(org), label: `读了 ${org.name} 的画像（库里没有，按名字理解）`, result: { name: org.name, note: '平方企业库里没有这家企业的画像，生成时只能按名字和岗位常识来，事实会少。', inside } };
       const [{ data: news }, { data: prods }, { count }] = await Promise.all([
         db.from('company_news').select('description, publish_date_str').eq('company_id', c.id).eq('if_delete', false).order('publish_date', { ascending: false, nullsFirst: false }).limit(5),
         db.from('company_products').select('name, category').eq('company_id', c.id).eq('if_delete', false).limit(6),
         db.from('jobs').select('id', { count: 'exact', head: true }).eq('company_id', c.id).eq('if_delete', false),
       ]);
-      return { label: `读了 ${c.brief_name || c.name} 的企业画像`, result: { name: c.name, industry: [c.industry, c.sub_industry].filter(Boolean).join(' / '), city: c.city, one_sentence: c.one_sentence, introduction: s(c.introduction, 500), business: s(c.business_profile, 400), position: s(c.industry_position, 300), growth_signals: s(c.growth_signals, 400), news: (news || []).map(n => `${n.publish_date_str || ''} ${s(n.description, 140)}`), products: (prods || []).map(p => p.name), open_jobs: count || 0, inside } };
+      return { ui: company(org), label: `读了 ${c.brief_name || c.name} 的企业画像`, result: { name: c.name, industry: [c.industry, c.sub_industry].filter(Boolean).join(' / '), city: c.city, one_sentence: c.one_sentence, introduction: s(c.introduction, 500), business: s(c.business_profile, 400), position: s(c.industry_position, 300), growth_signals: s(c.growth_signals, 400), news: (news || []).map(n => `${n.publish_date_str || ''} ${s(n.description, 140)}`), products: (prods || []).map(p => p.name), open_jobs: count || 0, inside } };
     }
     case 'list_roles': {
       const q = String(input?.query || '').trim().toLowerCase();
@@ -119,6 +126,30 @@ ${inside ? `\n${inside}\n（企业自己说的眼下重点要优先考虑，至�
     case 'list_spaces': {
       const { data } = await db.from('skill_tasks').select('id, title, profile, created_at').eq('org_id', org.id).order('created_at', { ascending: false }).limit(30);
       return { label: `列了本企业的职业空间（${data?.length || 0} 个）`, result: { spaces: (data || []).map(x => ({ id: x.id, title: x.title, role: x.profile?.role, link: `/lab/${x.id}`, created: x.created_at?.slice(0, 10) })) } };
+    }
+    case 'enrich_company': {
+      if (!org.company_id) throw new Error('没有对应的平方企业');
+      const filled = await enrichCompany(org.company_id);
+      return { ui: company(org), label: filled.length ? `联网补全了企业画像 ${filled.length} 项` : '联网没查到更多公开信息', result: { filled, next: '用 org_profile 读回来，挑关键几条用 ask_user 和用户确认' } };
+    }
+    case 'save_company_info': {
+      const r = await saveContext(org, ctx.email, input?.public || {}, input?.private || {});
+      const n = Object.keys(input?.private || {}).length;
+      return { ui: company(org), label: [r.applied.length ? `${r.applied.length} 项写进平方企业库` : '', r.pending.length ? `${r.pending.length} 项提交审核` : '', n ? `${n} 项内部信息存进工作台` : ''].filter(Boolean).join('，') || '没有新变化', result: r };
+    }
+    case 'add_role': {
+      let jobId: number | null = null;
+      if (org.company_id) { const { data } = await db.from('jobs').select('id').eq('company_id', org.company_id).eq('if_delete', false).or(`name.eq.${String(input.title).replace(/[,()]/g, ' ')},title_cn.eq.${String(input.title).replace(/[,()]/g, ' ')}`).limit(1); jobId = data?.[0]?.id ?? null; }
+      const r = await addRole(org, ctx.email, { title: input.title, job_id: jobId, jd_text: input.jd_text, notes: input.notes });
+      return { ui: company(org), label: `加入岗位「${r.role.title}」${r.created_job ? '，JD 写回平方岗位库' : jobId ? '，关联平方岗位库' : ''}`, result: { role: r.role.title, linked_job: !!jobId, created_job: r.created_job, occupation: r.occupation?.name || null } };
+    }
+    case 'finish_setup': {
+      await db.from('ws_orgs').update({ setup_step: 'done' }).eq('id', org.id);
+      return { ui: company(org), label: '企业设置完成', result: { done: true } };
+    }
+    case 'setup_checklist': {
+      const c = await checklist(org);
+      return { ui: company(org), label: `看了企业档案：完成度 ${c.score}%，还缺 ${c.missing.length} 项`, result: { score: c.score, missing: c.missing.slice(0, 8), known: c.items.filter((i: any) => i.value).map((i: any) => `${i.label}：${String(i.value).slice(0, 80)}`), roles: c.roles.map((r: any) => r.title), library_jobs: c.library_jobs } };
     }
     default: throw new Error(`没有这个工具：${name}`);
   }

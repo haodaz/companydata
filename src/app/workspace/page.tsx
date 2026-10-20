@@ -57,6 +57,9 @@ function Inner() {
   const loadThreads = useCallback(async () => { const j = await (await fetch('/api/ws/threads')).json(); if (j.ok) setThreads(j.threads); }, []);
   useEffect(() => { loadOrg(); }, [loadOrg]);
   useEffect(() => { if (org) loadThreads(); }, [org, loadThreads]);
+  // 新企业（设置还没走完）：一进来 AI 就开口，边聊边配，右边企业档案跟着长
+  const kicked = useRef(false);
+  useEffect(() => { if (org && (org.setup_step === 'context' || org.setup_step === 'roles') && !kicked.current) { kicked.current = true; setArt({ kind: 'company', title: `${org.name} · 企业档案` }); setTimeout(() => send('帮我把企业设置好'), 300); } }, [org]);   // eslint-disable-line react-hooks/exhaustive-deps
 
   const openThread = async (id: string) => {
     abortRef.current?.abort(); setBusy(false); setView('chat'); setThreadId(id); setItems([]); setArt(null);
@@ -96,7 +99,6 @@ function Inner() {
 
   if (org === undefined) return <Shell><div className="ws-center ws-muted">加载中…</div></Shell>;
   if (!org) return <Shell><Onboard err={bootErr} onDone={o => setOrg(o)} /></Shell>;
-  if (org.setup_step === 'context' || org.setup_step === 'roles') return <Shell><div className="ws-wizard"><div className="ws-brand" style={{ padding: '22px 28px 0' }}><span className="ws-brand-mark">百</span><span>百业 AI <span className="ws-muted" style={{ fontWeight: 400 }}>企业版 · {org.name}</span></span></div><Setup step={org.setup_step as any} onDone={() => setOrg({ ...org, setup_step: 'done' })} /></div></Shell>;
 
   return (
     <Shell>
@@ -448,6 +450,14 @@ const CSS = `
 .ws-note-b { margin-top:12px; color:var(--accent); font-size:13.5px; }
 .ws-note-ok { margin-top:12px; color:#3d6b32; background:#eef6ea; border:1px solid #d5e8cf; border-radius:10px; padding:8px 12px; font-size:13.5px; }
 .ws-role { border-top:1px solid var(--line2); padding:10px 2px; } .ws-role:first-of-type { border-top:0; }
+.ws-score { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+.ws-bar { height:6px; border-radius:3px; background:var(--hover); margin-top:8px; overflow:hidden; } .ws-bar i { display:block; height:100%; background:var(--accent); border-radius:3px; transition:width .5s; }
+.ws[data-theme="cool"] .ws-bar i { background:linear-gradient(90deg,#6d83f2,#9a8cf0); }
+.ws-ki { border:1px solid var(--line2); border-radius:10px; padding:9px 12px; margin-bottom:6px; background:var(--paper); }
+.ws-ki.has { background:var(--card); border-color:var(--line); }
+.ws-ki-dot { width:7px; height:7px; border-radius:50%; background:#d6d1c2; flex-shrink:0; } .ws-ki.has .ws-ki-dot { background:#5aa476; }
+.ws-ki-v { font-size:13px; color:var(--ink2); margin-top:4px; line-height:1.6; }
+.ws-ki-why { font-size:12.5px; color:var(--ink3); margin-top:3px; line-height:1.55; }
 .ws-libjob { display:flex; align-items:center; gap:10px; padding:7px 2px; border-top:1px solid var(--line2); }
 @media (max-width: 900px) {
   .ws-root, .ws-root.with-art { grid-template-columns:0 minmax(0,1fr); } .ws-side { visibility:hidden; }

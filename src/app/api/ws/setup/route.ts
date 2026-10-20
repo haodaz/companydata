@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
 import { getOrg } from '@/lib/ws/org';
-import { enrichCompany, loadSetup, saveContext, PUBLIC_FIELDS, PRIVATE_FIELDS, ROLE_NOTES } from '@/lib/ws/setup';
+import { checklist, enrichCompany, loadSetup, saveContext, PUBLIC_FIELDS, PRIVATE_FIELDS, ROLE_NOTES } from '@/lib/ws/setup';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -16,6 +16,7 @@ async function ctx(req: NextRequest) {
 /** 设置向导的数据：平方公开画像 / 内部信息 / 岗位库 / 已管理岗位 / 回流记录，外加字段定义 */
 export async function GET(req: NextRequest) {
   const c = await ctx(req); if (c.err) return c.err;
+  if (req.nextUrl.searchParams.get('checklist')) { try { return NextResponse.json({ ok: true, ...(await checklist(c.org!)) }); } catch (e: any) { return NextResponse.json({ ok: false, error: e.message }, { status: 500 }); } }
   try { return NextResponse.json({ ok: true, ...(await loadSetup(c.org as any)), fields: { public: PUBLIC_FIELDS, private: PRIVATE_FIELDS, role: ROLE_NOTES } }); }
   catch (e: any) { return NextResponse.json({ ok: false, error: e.message }, { status: 500 }); }
 }
