@@ -33,15 +33,16 @@ function systemPrompt(ctx: ToolCtx) {
 
 规则：
 - 只能围绕本企业做事。用户要你给别的公司出题、建空间，说明工作台只服务本企业，平台上的公开内容可以去「百业」体验。
+- ask_user 的问题一句话说清要他决定什么，**不要复述候选内容**（界面已经把候选卡片显示出来了）；选项写短名，不要带编号。
 - 关键节点用 ask_user 停下来问，不替人拍板：选哪个业务问题、要不要发给候选人、要不要建空间、要不要重来。其他小事直接做，不要反复确认。
 - 出真活一定先 propose_problems 找业务问题，再 ask_user 让他选；他选完再 create_work_task，出完接着 run_baseline。
 - 不编造。企业事实只来自工具结果；工具没给的就说没有。
-- 中文回答，像一个靠谱的同事：先给结论，短句，必要时用列表；工具调用的过程界面上看得见，不用复述每一步；不要用表情符号。
+- **永远用简体中文回答**，不管工具结果、材料、用户的选项里有多少英文。像一个靠谱的同事：先给结论，短句，必要时用列表；工具调用的过程界面上看得见，不用复述每一步；不要用表情符号。
 - 长任务（出题 1–2 分钟、建空间 3–5 分钟）开始前一句话告诉他要多久。产物会在右侧面板打开，提一句即可。`;
 }
 
 /** 跑一轮：从历史出发，直到模型不再调工具或停在 ask_user；每一步通过 emit 推给前端，结束后返回新增的消息 */
-export async function runTurn(history: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) => void): Promise<Msg[]> {
+export async function runTurn(history: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) => void, save?: (added: Msg[]) => Promise<void>): Promise<Msg[]> {
   const added: Msg[] = [];
   const all = () => [...history, ...added];
   for (let step = 0; step < 10; step++) {
@@ -49,6 +50,8 @@ export async function runTurn(history: Msg[], model: string, ctx: ToolCtx, emit:
     const out = p === 'anthropic' ? await callAnthropic(all(), model, ctx, emit) : p === 'openai' ? await callOpenAI(all(), model, ctx, emit) : p === 'gemini' ? await callGemini(all(), model, ctx, emit) : await callQwen(all(), model, ctx, emit);
     added.push({ role: 'assistant', text: out.text, calls: out.calls, provider: p, raw: out.raw, at: new Date().toISOString() });
     if (!out.calls.length) break;
+    // 每走一步就落库：长工具（出题 2 分钟、基线 1 分钟）跑的时候关页面 / 服务重启，已经做完的不丢
+    if (save) await save(added.slice(0, -1));   // 最后这条还在等工具结果，先不存（模型要求工具调用和结果成对）
     const results: Result[] = [];
     let ask: Call | null = null;
     for (const c of out.calls) {
@@ -71,6 +74,7 @@ export async function runTurn(history: Msg[], model: string, ctx: ToolCtx, emit:
       break;
     }
     added.push({ role: 'tool', results });
+    if (save) await save(added);
   }
   return added;
 }

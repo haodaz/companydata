@@ -10,15 +10,16 @@ import { App, ConfigProvider } from 'antd';
 import { Md } from '@/components/ws/Md';
 import { ArtifactPanel, artKey, type Art } from '@/components/ws/Artifact';
 import { MODEL_OPTIONS } from '@/lib/model-options';
+import { Setup } from '@/components/ws/Setup';
 
-type Org = { id: string; name: string; company_id: number | null; company_name: string | null; role: string };
+type Org = { id: string; name: string; company_id: number | null; company_name: string | null; role: string; setup_step?: string };
 type Item =
   | { k: 'user'; text: string }
   | { k: 'text'; text: string }
   | { k: 'tool'; id: string; name: string; input: any; label?: string; ui?: any; error?: string; running: boolean; t0: number }
   | { k: 'ask'; id: string; question: string; options: string[]; answered?: string }
   | { k: 'error'; text: string };
-type View = 'chat' | 'roles' | 'work' | 'spaces' | 'people';
+type View = 'chat' | 'roles' | 'work' | 'spaces' | 'people' | 'setup';
 
 const TOOL_RUNNING: Record<string, string> = { org_profile: '读企业画像', list_roles: '查本企业岗位', propose_problems: '从企业动态和岗位职责里找业务问题', create_work_task: '出真活：任务书、材料包、评分标准（1–2 分钟）', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', list_work_tasks: '列本企业的真活', work_results: '看作答和报告', create_space: '准备建职业空间', list_spaces: '列本企业的职业空间' };
 const CHAT_MODELS = MODEL_OPTIONS.filter(m => /^(claude-|gpt-|gemini-|qwen)/.test(m.id));
@@ -84,10 +85,10 @@ function Inner() {
     finally { setBusy(false); setItems(it => it.map(x => (x.k === 'tool' && x.running ? { ...x, running: false, label: x.label || '中断了' } : x))); loadThreads(); }
   };
   const onEvent = (e: any) => {
-    if (e.t === 'thread') { setThreadId(e.id); return; }
+    if (e.t === 'thread') { setThreadId(e.id); loadThreads(); return; }
     if (e.t === 'text') setItems(it => { const last = it[it.length - 1]; return last?.k === 'text' ? [...it.slice(0, -1), { k: 'text', text: last.text + e.delta }] : [...it, { k: 'text', text: e.delta }]; });
     else if (e.t === 'tool_start') setItems(it => [...it, { k: 'tool', id: e.id, name: e.name, input: e.input, running: true, t0: Date.now() }]);
-    else if (e.t === 'tool_end') { setItems(it => it.map(x => (x.k === 'tool' && x.id === e.id ? { ...x, running: false, label: e.label, ui: e.ui, error: e.error } : x))); if (e.ui && e.ui.kind !== 'problems') setArt(e.ui); }
+    else if (e.t === 'tool_end') { setItems(it => it.map(x => (x.k === 'tool' && x.id === e.id ? { ...x, running: false, label: e.label, ui: e.ui, error: e.error } : x))); if (e.ui && e.ui.kind !== 'problems') setArt({ ...e.ui, _n: Date.now() }); }
     else if (e.t === 'ask') setItems(it => [...it, { k: 'ask', id: e.id, question: e.question, options: e.options }]);
     else if (e.t === 'error') setItems(it => [...it, { k: 'error', text: e.message }]);
   };
@@ -95,6 +96,7 @@ function Inner() {
 
   if (org === undefined) return <Shell><div className="ws-center ws-muted">加载中…</div></Shell>;
   if (!org) return <Shell><Onboard err={bootErr} onDone={o => setOrg(o)} /></Shell>;
+  if (org.setup_step === 'context' || org.setup_step === 'roles') return <Shell><div className="ws-wizard"><div className="ws-brand" style={{ padding: '22px 28px 0' }}><span className="ws-brand-mark">百</span><span>百业 AI <span className="ws-muted" style={{ fontWeight: 400 }}>企业版 · {org.name}</span></span></div><Setup step={org.setup_step as any} onDone={() => setOrg({ ...org, setup_step: 'done' })} /></div></Shell>;
 
   return (
     <Shell>
@@ -104,9 +106,10 @@ function Inner() {
           {!side && <button className="ws-ghost ws-showside" onClick={() => setSide(true)} aria-label="展开侧栏">☰</button>}
           {view === 'chat'
             ? <Chat org={org} items={items} busy={busy} send={send} stop={stop} model={model} setModel={m => { setModel(m); try { localStorage.setItem('ws:model', m); } catch {} }} openArt={setArt} activeArt={art ? artKey(art) : ''} />
+            : view === 'setup' ? <SetupPage />
             : <Lists view={view} org={org} openArt={setArt} ask={p => { newChat(); setTimeout(() => send(p), 0); }} />}
         </main>
-        {art && <ArtifactPanel key={artKey(art)} art={art} onClose={() => setArt(null)} />}
+        {art && <ArtifactPanel key={artKey(art) + ((art as any)._n || '')} art={art} onClose={() => setArt(null)} />}
       </div>
     </Shell>
   );
@@ -131,7 +134,7 @@ function fromHistory(ms: any[]): Item[] {
 }
 
 function Sidebar({ org, user, view, setView, threads, threadId, openThread, newChat, onHide }: { org: Org; user: any; view: View; setView: (v: View) => void; threads: any[]; threadId: string | null; openThread: (id: string) => void; newChat: () => void; onHide: () => void }) {
-  const NAV: [View, string, string][] = [['chat', '对话', 'M4 5h16v11H8l-4 4z'], ['roles', '岗位', 'M4 7h16v12H4zM9 7V5h6v2'], ['work', '真活', 'M5 4h14v16H5zM8 9h8M8 13h8M8 17h5'], ['spaces', '职业空间', 'M12 3l8 4.5v9L12 21l-8-4.5v-9z'], ['people', '候选人', 'M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 20c0-3 3-5 6-5s6 2 6 5M17 11a2.5 2.5 0 1 0 0-5M21 19c0-2-1.5-3.5-4-4']];
+  const NAV: [View, string, string][] = [['chat', '对话', 'M4 5h16v11H8l-4 4z'], ['roles', '岗位', 'M4 7h16v12H4zM9 7V5h6v2'], ['work', '真活', 'M5 4h14v16H5zM8 9h8M8 13h8M8 17h5'], ['spaces', '职业空间', 'M12 3l8 4.5v9L12 21l-8-4.5v-9z'], ['people', '候选人', 'M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 20c0-3 3-5 6-5s6 2 6 5M17 11a2.5 2.5 0 1 0 0-5M21 19c0-2-1.5-3.5-4-4'], ['setup', '企业设置', 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z']];
   return (
     <nav className="ws-side">
       <div className="ws-side-top">
@@ -148,7 +151,7 @@ function Sidebar({ org, user, view, setView, threads, threadId, openThread, newC
       </div>
       <div className="ws-side-foot">
         <div className="ws-muted" style={{ fontSize: 12, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email}</div>
-        <div style={{ display: 'flex', gap: 10, fontSize: 12 }}><Link href="/lab" className="ws-link">百业</Link><Link href="/work" className="ws-link">真活</Link></div>
+        <div style={{ display: 'flex', gap: 10, fontSize: 12, alignItems: 'center' }}><Link href="/lab" className="ws-link">百业</Link><Link href="/work" className="ws-link">真活</Link><ThemeSwitch /></div>
       </div>
     </nav>
   );
@@ -173,7 +176,7 @@ function Chat({ org, items, busy, send, stop, model, setModel, openArt, activeAr
       ) : (
         <>
           <div className="ws-thread">
-            {items.map((x, i) => <Row key={i} x={x} send={send} busy={busy} openArt={openArt} activeArt={activeArt} />)}
+            {(() => { const seen = new Set<string>(); return items.map((x, i) => { const k = x.k === 'tool' && x.ui && x.ui.kind !== 'problems' ? artKey(x.ui) : ''; const chip = !!k && !seen.has(k); if (k) seen.add(k); return <Row key={i} x={x} send={send} busy={busy} openArt={openArt} activeArt={activeArt} chip={chip} />; }); })()}
             {busy && !(items[items.length - 1]?.k === 'tool' && (items[items.length - 1] as any).running) && <div className="ws-typing"><i /><i /><i /></div>}
             <div ref={endRef} style={{ height: 8 }} />
           </div>
@@ -184,7 +187,7 @@ function Chat({ org, items, busy, send, stop, model, setModel, openArt, activeAr
   );
 }
 
-function Row({ x, send, busy, openArt, activeArt }: { x: Item; send: (t: string) => void; busy: boolean; openArt: (a: Art) => void; activeArt: string }) {
+function Row({ x, send, busy, openArt, activeArt, chip = true }: { x: Item; send: (t: string) => void; busy: boolean; openArt: (a: Art) => void; activeArt: string; chip?: boolean }) {
   const [open, setOpen] = useState(false); const [, tick] = useState(0);
   useEffect(() => { if (x.k === 'tool' && x.running) { const iv = setInterval(() => tick(n => n + 1), 1000); return () => clearInterval(iv); } }, [x]);
   if (x.k === 'user') return <div className="ws-user"><div className="ws-bubble">{x.text}</div></div>;
@@ -194,7 +197,7 @@ function Row({ x, send, busy, openArt, activeArt }: { x: Item; send: (t: string)
     <div className="ws-ask">
       <div style={{ fontWeight: 600, marginBottom: 10 }}>{x.question}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-        {x.options.map((o, i) => <button key={i} className={`ws-opt${x.answered === o ? ' on' : ''}`} disabled={!!x.answered || busy} onClick={() => send(o)}><span className="ws-opt-n">{i + 1}</span>{o}</button>)}
+        {x.options.map((o, i) => <button key={i} className={`ws-opt${x.answered === o ? ' on' : ''}`} disabled={!!x.answered || busy} onClick={() => send(o)}><span className="ws-opt-n">{i + 1}</span>{o.replace(/^\s*\d+\s*[.、)）:：]?\s*/, '')}</button>)}
       </div>
       {x.answered && !x.options.includes(x.answered) && <div className="ws-muted" style={{ marginTop: 8, fontSize: 13 }}>你回答了：{x.answered}</div>}
     </div>
@@ -217,7 +220,7 @@ function Row({ x, send, busy, openArt, activeArt }: { x: Item; send: (t: string)
           {p.why_now && <div className="ws-muted" style={{ fontSize: 12.5, marginTop: 6, lineHeight: 1.55 }}>为什么是现在：{p.why_now}</div>}
           {!!p.evidence?.length && <div className="ws-muted" style={{ fontSize: 12, marginTop: 6, lineHeight: 1.5 }}>依据：{p.evidence.join('；')}</div>}
         </button>))}</div>}
-      {ui && ui.kind !== 'problems' && <button className={`ws-artchip${activeArt === artKey(ui) ? ' on' : ''}`} onClick={() => openArt(ui)}>
+      {chip && ui && ui.kind !== 'problems' && <button className={`ws-artchip${activeArt === artKey(ui) ? ' on' : ''}`} onClick={() => openArt(ui)}>
         <span className="ws-artchip-ico">{ui.kind === 'space_build' || ui.kind === 'space' ? '◇' : ui.kind === 'results' ? '≡' : '▤'}</span>
         <span style={{ minWidth: 0 }}><span style={{ display: 'block', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ui.title}</span><span className="ws-muted" style={{ fontSize: 12 }}>{ui.kind === 'work' ? '真活 · 任务书、材料包、评分标准、AI 基线' : ui.kind === 'results' ? '作答与报告' : '职业空间'}</span></span>
         <span className="ws-muted" style={{ marginLeft: 'auto', fontSize: 12 }}>打开 →</span>
@@ -270,11 +273,11 @@ function Table({ head, rows, empty }: { head: string[]; rows: React.ReactNode[][
 }
 
 function Onboard({ err, onDone }: { err: string; onDone: (o: Org) => void }) {
-  const [q, setQ] = useState(''); const [list, setList] = useState<any[]>([]); const [pick, setPick] = useState<any>(null); const [busy, setBusy] = useState(false); const [e2, setE2] = useState('');
+  const [q, setQ] = useState(''); const [site, setSite] = useState(''); const [list, setList] = useState<any[]>([]); const [pick, setPick] = useState<any>(null); const [busy, setBusy] = useState(false); const [e2, setE2] = useState('');
   useEffect(() => { if (!q.trim() || pick?.name === q) { setList([]); return; } const t = setTimeout(async () => { const j = await (await fetch(`/api/work/companies?q=${encodeURIComponent(q)}`)).json(); setList(j.companies || []); const exact = (j.companies || []).find((c: any) => c.name === q.trim() || c.brief_name === q.trim()); if (exact) setPick(exact); }, 250); return () => clearTimeout(t); }, [q]);   // eslint-disable-line react-hooks/exhaustive-deps
   const go = async () => {
     setBusy(true); setE2('');
-    const j = await (await fetch('/api/ws/org', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(pick ? { name: pick.brief_name || pick.name, company_id: pick.id, company_name: pick.name } : { name: q.trim() }) })).json();
+    const j = await (await fetch('/api/ws/org', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(pick ? { name: pick.brief_name || pick.name, company_id: pick.id, company_name: pick.name } : { name: q.trim(), company_name: q.trim(), website: site.trim() || null }) })).json();
     setBusy(false); if (!j.ok) { setE2(j.error); return; } onDone(j.org);
   };
   return (
@@ -286,7 +289,8 @@ function Onboard({ err, onDone }: { err: string; onDone: (o: Org) => void }) {
         {err && <div className="ws-err" style={{ marginBottom: 12 }}>{err}</div>}
         <input className="ws-input" value={q} onChange={e => { setQ(e.target.value); setPick(null); }} placeholder="输入企业名，比如 宁德时代" autoFocus />
         {!!list.length && !pick && <div className="ws-pick">{list.slice(0, 6).map(c => <button key={c.id} onClick={() => { setPick(c); setQ(c.name); setList([]); }}><b>{c.name}</b><span className="ws-muted"> {[c.industry, c.city].filter(Boolean).join(' · ')}{c.jobs ? ` · 在招 ${c.jobs}` : ''}</span></button>)}</div>}
-        <div className="ws-muted" style={{ fontSize: 12.5, margin: '8px 2px 18px' }}>{pick ? `已匹配平方企业库：${pick.name}${pick.has_profile ? ' · 有企业画像' : ''}${pick.jobs ? ` · 在招 ${pick.jobs} 个岗位` : ''}` : q.trim() ? '库里没有完全一样的名字，会按新企业建（企业事实会少一些）' : ''}</div>
+        <div className="ws-muted" style={{ fontSize: 12.5, margin: '8px 2px 12px' }}>{pick ? `已匹配平方企业库：${pick.name}${pick.has_profile ? ' · 有企业画像' : ''}${pick.jobs ? ` · 在招 ${pick.jobs} 个岗位` : ''}` : q.trim() ? '平方企业库里没有这家：会在库里新建，下一步 AI 联网补全你们的画像，你核对' : ''}</div>
+        {!pick && q.trim() && <input className="ws-input" style={{ marginBottom: 16 }} value={site} onChange={e => setSite(e.target.value)} placeholder="官网（选填，比如 https://www.example.com）——用来给企业编号、找公开资料" />}
         <button className="ws-primary" disabled={!q.trim() || busy} onClick={go} style={{ width: '100%', height: 44 }}>{busy ? '正在建…' : '进入工作台'}</button>
         {e2 && <div className="ws-err" style={{ marginTop: 10 }}>{e2}</div>}
       </div>
@@ -295,8 +299,20 @@ function Onboard({ err, onDone }: { err: string; onDone: (o: Org) => void }) {
 }
 
 function Shell({ children }: { children: React.ReactNode }) {
-  return <div className="ws">{children}<style>{CSS}</style></div>;
+  const [theme, setTheme] = useState('paper');
+  useEffect(() => { const read = () => { try { setTheme(localStorage.getItem('ws:theme') || 'paper'); } catch {} }; read(); window.addEventListener('ws-theme', read); return () => window.removeEventListener('ws-theme', read); }, []);
+  return <div className="ws" data-theme={theme}>{children}<style>{CSS}</style></div>;
 }
+
+/** 配色：纸张（默认，暖、雅致）/ 冷灰（和一答企业版一个家族） */
+function ThemeSwitch() {
+  const [t, setT] = useState('paper');
+  useEffect(() => { try { setT(localStorage.getItem('ws:theme') || 'paper'); } catch {} }, []);
+  const set = (v: string) => { setT(v); try { localStorage.setItem('ws:theme', v); } catch {} window.dispatchEvent(new Event('ws-theme')); };
+  return <span className="ws-theme" title="配色">{[['paper', '纸张'], ['cool', '冷灰']].map(([k, l]) => <button key={k} className={t === k ? 'on' : ''} onClick={() => set(k)}>{l}</button>)}</span>;
+}
+
+function SetupPage() { return <div style={{ flex: 1, overflowY: 'auto' }}><Setup step="context" embedded onDone={() => {}} /></div>; }
 
 const CSS = `
 .ws { --paper:#faf9f5; --side:#f2f0e9; --card:#fffefb; --line:#e6e2d6; --line2:#efece3; --ink:#26241f; --ink2:#5d5950; --ink3:#918c80; --accent:#4f46c8; --accent-soft:#ecebfa; --hover:#e9e6dc;
@@ -400,8 +416,41 @@ const CSS = `
 .ws-pick { margin-top:6px; border:1px solid var(--line); border-radius:12px; background:#fff; overflow:hidden; }
 .ws-pick button { display:block; width:100%; text-align:left; border:0; background:transparent; padding:9px 14px; cursor:pointer; font-size:14px; color:var(--ink); }
 .ws-pick button:hover { background:#f6f4ee; }
+/* 冷灰（照一答企业版 /ws）：中性灰底 + 极淡的蓝 / 浅紫极光，实色蓝紫 */
+.ws[data-theme="cool"] { --paper:#f8f9fb; --side:rgba(252,252,254,.85); --card:#ffffff; --line:#e4e6ec; --line2:#edf0f8; --ink:#1d1f24; --ink2:#3c4048; --ink3:#6b6f78; --accent:#4b57d6; --accent-soft:#eef1fb; --hover:#eef1fb;
+  background: radial-gradient(ellipse 55% 40% at 0% 0%, rgba(120,145,245,.10), transparent 70%), radial-gradient(ellipse 45% 35% at 100% 0%, rgba(165,145,240,.09), transparent 70%), #f8f9fb; }
+.ws[data-theme="cool"] .ws-side { backdrop-filter:blur(14px); }
+.ws[data-theme="cool"] .ws-bubble { background:#eceff8; }
+.ws[data-theme="cool"] .ws-nav.on, .ws[data-theme="cool"] .ws-recent.on { background:#e4e9fb; }
+.ws[data-theme="cool"] .ws-primary, .ws[data-theme="cool"] .ws-send { background:#4b57d6; }
+.ws[data-theme="cool"] .ws-brand-mark { background:#4b57d6; }
+.ws[data-theme="cool"] .ws-art { background:rgba(252,252,254,.92); }
+.ws[data-theme="cool"] .ws-tool-line:hover, .ws[data-theme="cool"] .ws-tool-detail { background:#f3f5fe; }
+.ws[data-theme="cool"] .ws-table th { background:#f6f8fe; }
+.ws-theme { margin-left:auto; display:inline-flex; gap:2px; padding:2px; border-radius:8px; background:var(--hover); }
+.ws-theme button { border:0; background:transparent; color:var(--ink3); font-size:11.5px; padding:2px 7px; border-radius:6px; cursor:pointer; }
+.ws-theme button.on { background:var(--card); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.06); }
+/* 企业落地向导 */
+.ws-wizard { min-height:100dvh; overflow-y:auto; }
+.ws-steps { display:flex; align-items:center; gap:6px; margin-bottom:22px; }
+.ws-stepb { display:flex; align-items:center; gap:8px; border:1px solid var(--line); background:var(--card); border-radius:999px; padding:5px 14px 5px 6px; cursor:pointer; color:var(--ink2); font-size:13.5px; }
+.ws-stepb.on { border-color:var(--accent); color:var(--ink); font-weight:600; }
+.ws-stepn { width:22px; height:22px; border-radius:50%; background:var(--accent-soft); color:var(--accent); display:grid; place-items:center; font-size:12px; font-weight:700; }
+.ws-box { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; }
+.ws-box-h { display:flex; align-items:center; gap:8px; font-weight:650; margin-bottom:12px; }
+.ws-chip-s { font-size:11.5px; font-weight:500; color:var(--ink3); background:var(--hover); border-radius:999px; padding:2px 9px; }
+.ws-form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px 14px; }
+.ws-form label { display:flex; flex-direction:column; gap:4px; font-size:12.5px; color:var(--ink3); }
+.ws-form label.wide { grid-column:1 / -1; }
+.ws-form input, .ws-form textarea { border:1px solid var(--line); border-radius:9px; padding:8px 10px; font:inherit; font-size:14px; color:var(--ink); background:var(--paper); outline:0; resize:vertical; }
+.ws-form input:focus, .ws-form textarea:focus { border-color:var(--accent); background:#fff; }
+.ws-input.sm { height:38px; font-size:14px; }
+.ws-note-b { margin-top:12px; color:var(--accent); font-size:13.5px; }
+.ws-note-ok { margin-top:12px; color:#3d6b32; background:#eef6ea; border:1px solid #d5e8cf; border-radius:10px; padding:8px 12px; font-size:13.5px; }
+.ws-role { border-top:1px solid var(--line2); padding:10px 2px; } .ws-role:first-of-type { border-top:0; }
+.ws-libjob { display:flex; align-items:center; gap:10px; padding:7px 2px; border-top:1px solid var(--line2); }
 @media (max-width: 900px) {
   .ws-root, .ws-root.with-art { grid-template-columns:0 minmax(0,1fr); } .ws-side { visibility:hidden; }
-  .ws-art { position:fixed; inset:0; z-index:20; } .ws-suggest { grid-template-columns:1fr; } .ws-hello { font-size:28px; }
+  .ws-art { position:fixed; inset:0; z-index:20; } .ws-suggest, .ws-form, .ws-two { grid-template-columns:1fr !important; } .ws-hello { font-size:28px; }
 }
 `;

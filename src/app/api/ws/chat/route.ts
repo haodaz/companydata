@@ -36,7 +36,8 @@ export async function POST(req: NextRequest) {
       const send = (o: any) => { try { controller.enqueue(enc.encode(JSON.stringify(o) + '\n')); } catch {} };
       send({ t: 'thread', id: thread.id, title: thread.title, model });
       let added: Msg[] = [];
-      try { added = await runTurn(history, model, { org, email: user.email }, e => send(e)); }
+      const save = async (a: Msg[]) => { await db.from('ws_threads').update({ messages: [...history, ...a], updated_at: new Date().toISOString() }).eq('id', thread.id); };
+      try { added = await runTurn(history, model, { org, email: user.email }, e => send(e), save); }
       catch (e: any) { send({ t: 'error', message: String(e?.message || e).slice(0, 400) }); }
       await db.from('ws_threads').update({ messages: [...history, ...added], updated_at: new Date().toISOString() }).eq('id', thread.id);
       send({ t: 'done' });
