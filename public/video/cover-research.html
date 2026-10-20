@@ -25,7 +25,7 @@
     if (q.get('sub')) document.getElementById('sub').textContent = q.get('sub');
     if (q.get('brand')) document.getElementById('brand').textContent = q.get('brand');
     if (q.get('line')) { const [a, b] = q.get('line').split('|'); const el = document.getElementById('line'); el.textContent = a; if (b) { el.appendChild(document.createElement('br')); const bb = document.createElement('b'); bb.textContent = b; el.appendChild(bb); } }
-    const tints = { teal: 'radial-gradient(ellipse 70% 62% at 50% 52%, rgba(6,30,40,.9), rgba(6,30,40,.72) 55%, rgba(6,30,40,.4) 100%)', wine: 'radial-gradient(ellipse 70% 62% at 50% 52%, rgba(38,10,24,.9), rgba(38,10,24,.72) 55%, rgba(38,10,24,.4) 100%)' };
+    const tints = { teal: 'radial-gradient(ellipse 70% 62% at 50% 52%, rgba(6,30,40,.9), rgba(6,30,40,.72) 55%, rgba(6,30,40,.4) 100%)', navy: 'radial-gradient(ellipse 70% 62% at 50% 52%, rgba(16,26,58,.82), rgba(16,26,58,.6) 55%, rgba(16,26,58,.28) 100%)', wine: 'radial-gradient(ellipse 70% 62% at 50% 52%, rgba(38,10,24,.9), rgba(38,10,24,.72) 55%, rgba(38,10,24,.4) 100%)' };
     if (tints[q.get('tint')]) document.getElementById('shade').style.background = tints[q.get('tint')];
   </script>
 </body></html>
