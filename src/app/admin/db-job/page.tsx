@@ -20,6 +20,9 @@ const { Text } = Typography;
 
 const toOptions = (m: Record<string, string>) => Object.entries(m).map(([value, label]) => ({ value, label }));
 
+/** 本标签页里记住的岗位库筛选（sessionStorage，关掉标签页就没了） */
+const FILTER_KEY = 'db-job:filters';
+
 export default function DbJobPage() {
   const { message } = App.useApp();
   const router = useRouter();
@@ -34,14 +37,19 @@ export default function DbJobPage() {
   const [pageSize, setPageSize] = useState(50);
   const [selected, setSelected] = useState<React.Key[]>([]);
   const [exporting, setExporting] = useState(false);
-  const [filters, setFilters] = useState({ search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false, missingJd: false, companyId: '', companyName: '', source: '', flag: '', ids: '', publishFrom: '', publishTo: '' });
+  const DEFAULT_FILTERS = { search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false, missingJd: false, companyId: '', companyName: '', source: '', flag: '', ids: '', publishFrom: '', publishTo: '' };
+  const [filters, setFilters] = useState(DEFAULT_FILTERS);
+  const [resetKey, setResetKey] = useState(0);   // 重置时让搜索框（非受控）一起清空
   const [sources, setSources] = useState<Record<string, number>>({});
   // 从「校招岗位提取」任务跳过来：?companyId=&companyName=&jobType=all 直接定位到刚提取的那批。
   // 以前跳过来是默认的「校招口径」，社招岗位被默认筛掉，看起来像「提取成功了库里却没有」。
   const [urlReady, setUrlReady] = useState(false);
   useEffect(() => {
     // 网址里的筛选 + 页码：从岗位详情返回时还原到原来那一页（数据部门 1009 反馈「从第 5 页进去，返回跳回第 1 页」）
-    const u = new URLSearchParams(window.location.search);
+    // 网址没带筛选（从左边导航点回来）：还原这个浏览器标签里上次的筛选（数据部门 10-20 #18）
+    let qs = window.location.search;
+    if (!qs) { try { qs = sessionStorage.getItem(FILTER_KEY) || ''; } catch { /* 无痕模式等读不了 */ } if (qs) window.history.replaceState(null, '', `?${qs.replace(/^\?/, '')}`); }
+    const u = new URLSearchParams(qs);
     const jt = u.get('jobType');
     setFilters(f => ({
       ...f,
@@ -69,7 +77,10 @@ export default function DbJobPage() {
     if (page > 1) q.set('page', String(page));
     if (pageSize !== 50) q.set('pageSize', String(pageSize));
     const s = q.toString();
-    window.history.replaceState(window.history.state, '', s ? `?${s}` : window.location.pathname);
+    // 第一个参数按 Next 文档传 null（传 window.history.state 会把 Next 自己的旧路由状态带过去）
+    window.history.replaceState(null, '', s ? `?${s}` : window.location.pathname);
+    // 记住筛选（外采篮带过来的「只看这一篮」不记，免得下次打开还被它筛着）
+    try { const keep = new URLSearchParams(s); keep.delete('ids'); sessionStorage.setItem(FILTER_KEY, keep.toString()); } catch { /* 读写不了就不记 */ }
   }, [filters, page, pageSize, urlReady]);
 
   const query = useCallback((extra: Record<string, string> = {}) => new URLSearchParams({
@@ -242,7 +253,7 @@ export default function DbJobPage() {
 
       <Panel padding={16}>
         <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-          <Input.Search key={urlReady ? 'ready' : 'init'} defaultValue={filters.search} placeholder="搜索岗位 / 企业 / 校招项目 / 地点" allowClear style={{ width: 300 }} onSearch={v => setFilter({ search: v })} />
+          <Input.Search key={urlReady ? `ready-${resetKey}` : 'init'} defaultValue={filters.search} placeholder="搜索岗位 / 企业 / 校招项目 / 地点" allowClear style={{ width: 300 }} onSearch={v => setFilter({ search: v })} />
           {filters.ids && <Tag closable color="orange" style={{ padding: '4px 10px', fontSize: 13 }} onClose={() => setFilter({ ids: '' })}>🧺 只看这一篮采到的 {filters.ids.split(',').filter(Boolean).length} 个岗位</Tag>}
           {filters.companyId && <Tag closable color="purple" style={{ padding: '4px 10px', fontSize: 13 }} onClose={() => setFilter({ companyId: '', companyName: '' })}>只看：{filters.companyName || `企业 #${filters.companyId}`}</Tag>}
           <Select value={filters.jobType} style={{ width: 170 }} onChange={v => setFilter({ jobType: v })}
@@ -263,6 +274,7 @@ export default function DbJobPage() {
           </Tooltip>
           <Checkbox checked={filters.overseas} onChange={e => setFilter({ overseas: e.target.checked })}>只看面向留学生</Checkbox>
           <Checkbox checked={filters.missingJd} onChange={e => setFilter({ missingJd: e.target.checked })}>只看缺 JD</Checkbox>
+          <Button onClick={() => { setFilters(DEFAULT_FILTERS); setPage(1); setSelected([]); setResetKey(k => k + 1); }}>重置筛选</Button>
           <Tooltip title={selected.length ? `打开选中 ${selected.length} 条岗位的详情页重新提取，只填空字段` : '打开当前筛选下所有「缺 JD 且有详情链接」的岗位详情页重新提取，只填空字段'}>
             <Button icon={<ThunderboltOutlined />} loading={!!enrich} onClick={runEnrich}>AI 补全 JD{selected.length ? `（${selected.length}）` : ''}</Button>
           </Tooltip>

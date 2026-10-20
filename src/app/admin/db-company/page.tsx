@@ -28,6 +28,9 @@ const LIST_PRESETS = [
 /** 来源的中文名；数据部门发来的来源原样显示 */
 const SOURCE_LABELS: Record<string, string> = { 'seed-wellknown': '知名企业种子名单' };
 
+/** 本标签页里记住的企业库筛选（sessionStorage，关掉标签页就没了） */
+const FILTER_KEY = 'db-company:filters';
+
 export default function DbCompanyPage() {
   const { message } = App.useApp();
   const router = useRouter();
@@ -63,8 +66,12 @@ export default function DbCompanyPage() {
 
   // 网址里的筛选 + 页码：从企业详情返回时还原到原来那一页（数据部门 1009 反馈）
   const [urlReady, setUrlReady] = useState(false);
+  const [resetKey, setResetKey] = useState(0);   // 重置时让搜索框（非受控）一起清空
   useEffect(() => {
-    const u = new URLSearchParams(window.location.search);
+    // 网址没带筛选（从左边导航点回来）：还原这个浏览器标签里上次的筛选（数据部门 10-20 #18）
+    let qs = window.location.search;
+    if (!qs) { try { qs = sessionStorage.getItem(FILTER_KEY) || ''; } catch { /* 读不了就算了 */ } if (qs) window.history.replaceState(null, '', `?${qs.replace(/^\?/, '')}`); }
+    const u = new URLSearchParams(qs);
     setSearch(u.get('search') || ''); setSegment(u.get('segment') || ''); setSource(u.get('source') || ''); setReview(u.get('review') || '');
     const p = parseInt(u.get('page') || ''), ps = parseInt(u.get('pageSize') || '');
     if (p > 0) setPage(p);
@@ -81,7 +88,8 @@ export default function DbCompanyPage() {
     if (page > 1) q.set('page', String(page));
     if (pageSize !== 50) q.set('pageSize', String(pageSize));
     const s = q.toString();
-    window.history.replaceState(window.history.state, '', s ? `?${s}` : window.location.pathname);
+    window.history.replaceState(null, '', s ? `?${s}` : window.location.pathname);   // 按 Next 文档传 null
+    try { sessionStorage.setItem(FILTER_KEY, s); } catch { /* 读写不了就不记 */ }
   }, [search, segment, source, review, page, pageSize, urlReady]);
 
   const load = useCallback(async () => {
@@ -274,13 +282,14 @@ export default function DbCompanyPage() {
 
       <Panel padding={16}>
         <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-          <Input.Search key={urlReady ? 'ready' : 'init'} defaultValue={search} placeholder="搜索企业名 / 英文名 / 行业" allowClear style={{ width: 300 }} onSearch={v => { setSearch(v); setPage(1); }} />
+          <Input.Search key={urlReady ? `ready-${resetKey}` : 'init'} defaultValue={search} placeholder="搜索企业名 / 英文名 / 行业" allowClear style={{ width: 300 }} onSearch={v => { setSearch(v); setPage(1); }} />
           <Select value={segment} style={{ width: 140 }} onChange={v => { setSegment(v); setPage(1); }}
             options={[{ value: '', label: '全部分类' }, ...SEGMENT_OPTIONS, { value: 'none', label: '未分类' }]} />
           <Select value={source} style={{ width: 170 }} onChange={v => { setSource(v); setPage(1); }} popupMatchSelectWidth={false}
             options={[{ value: '', label: '全部来源' }, ...Object.entries(sources).filter(([k]) => k !== 'none').sort((a, b) => b[1] - a[1]).map(([k, n]) => ({ value: k, label: `${SOURCE_LABELS[k] || k}（${n}）` })),
               { value: 'none', label: `未标来源（${sources.none || 0}）` }]} />
           <Select value={review} style={{ width: 120 }} onChange={v => { setReview(v); setPage(1); }} options={[{ value: '', label: '全部审核' }, { value: 'none', label: '未审核' }, ...REVIEW_STATUS_OPTIONS]} />
+          <Button onClick={() => { setSearch(''); setSegment(''); setSource(''); setReview(''); setPage(1); setResetKey(k => k + 1); }}>重置筛选</Button>
           <div style={{ flex: 1 }} />
           {selected.length > 0 && (
             <Space>
