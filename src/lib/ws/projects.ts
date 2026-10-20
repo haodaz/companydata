@@ -135,7 +135,7 @@ export async function checkVerify(org: WsOrg, candidateId: string) {
   const c = await ownCandidate(org, candidateId);
   if (!c.audit_report_id) return { status: 'none' };
   if (c.audit?.status === 'done' || c.audit?.status === 'failed') return c.audit;
-  const r = await pollVerification(c.audit_report_id);
+  const r = await pollVerification(c.audit_report_id, c.audit?.started_at);
   if (!r.done) return { status: 'running', started_at: c.audit?.started_at };
   const audit = { status: r.failed ? 'failed' : 'done', ...r.summary, finished_at: new Date().toISOString() };
   await db.from('ws_candidates').update({ audit, updated_at: new Date().toISOString() }).eq('id', c.id);
