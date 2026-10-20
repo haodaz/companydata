@@ -184,7 +184,7 @@ function Sidebar({ org, user, view, setView, threads, threadId, openThread, newC
       <div className="ws-sec">功能</div>
       {NAV.map(([v, t, d]) => <button key={v} className={`ws-nav${view === v ? ' on' : ''}`} onClick={() => (v === 'chat' ? newChat() : setView(v))}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>{org.kind === 'research' && v === 'setup' ? '机构设置' : t}</button>)}
       <div className="ws-sec" style={{ display: 'flex', alignItems: 'center' }}>{org.kind === 'research' ? '引进项目' : '招聘项目'}<button className="ws-ghost" style={{ marginLeft: 'auto', padding: '0 6px', fontSize: 15 }} title="开一个招聘项目" onClick={newProject}>＋</button></div>
-      {projects.length ? projects.slice(0, 8).map(p => <button key={p.id} className={`ws-proj${p.id === projectId ? ' on' : ''}`} onClick={() => openProject(p.id)} title={p.title}><span className="ws-proj-ico">{(p.role_title || p.title).slice(0, 1)}</span><span style={{ minWidth: 0, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.title}</span>{p.candidates ? <span className="ws-muted" style={{ fontSize: 11.5 }}>{p.candidates}</span> : null}</button>) : <div className="ws-muted" style={{ padding: '2px 10px 4px', fontSize: 12.5 }}>一次招人就是一个项目</div>}
+      {projects.length ? projects.slice(0, 8).map(p => <button key={p.id} className={`ws-proj${p.id === projectId ? ' on' : ''}`} onClick={() => openProject(p.id)} title={p.title}><span className="ws-proj-ico">{(p.role_title || p.title).slice(0, 1)}</span><span style={{ minWidth: 0, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.title}</span>{p.candidates ? <span className="ws-muted" style={{ fontSize: 11.5 }}>{p.candidates}</span> : null}</button>) : <div className="ws-muted" style={{ padding: '2px 10px 4px', fontSize: 12.5 }}>{org.kind === 'research' ? '一次引进就是一个项目' : '一次招人就是一个项目'}</div>}
       <div className="ws-sec">最近</div>
       <div className="ws-recents">
         {threads.length ? threads.map(t => <button key={t.id} className={`ws-recent${t.id === threadId && view === 'chat' ? ' on' : ''}`} onClick={() => openThread(t.id)} title={t.title}>{t.project_id && <span className="ws-dot-p" />}{t.title || '未命名对话'}</button>) : <div className="ws-muted" style={{ padding: '4px 10px', fontSize: 12.5 }}>还没有对话</div>}
@@ -209,7 +209,7 @@ function Chat({ project, openProject, org, items, busy, send, stop, model, setMo
         <div className="ws-hero">
           <h1 className="ws-hello">{hello}，{org.name}</h1>
           <div className="ws-muted" style={{ marginBottom: 22, fontSize: 15 }}>{org.kind === 'research' ? '招博士后、研究员、教授：说一句，AI 帮你干。' : '招人、带人、看团队：说一句，AI 帮你干。'}</div>
-          <Composer busy={busy} send={send} stop={stop} model={model} setModel={setModel} autoFocus />
+          <Composer research={org.kind === 'research'} busy={busy} send={send} stop={stop} model={model} setModel={setModel} autoFocus />
           <div className="ws-sec" style={{ margin: '26px 2px 10px' }}>可以从这里开始</div>
           <div className="ws-suggest">{(org.kind === 'research' ? SUGGEST_R : SUGGEST).map(s => <button key={s.t} className="ws-card" onClick={() => send(s.p)}><div style={{ fontWeight: 650, marginBottom: 4 }}>{s.t}</div><div className="ws-muted" style={{ fontSize: 13, lineHeight: 1.55 }}>{s.d}</div></button>)}</div>
         </div>
@@ -221,7 +221,7 @@ function Chat({ project, openProject, org, items, busy, send, stop, model, setMo
             {busy && !(items[items.length - 1]?.k === 'tool' && (items[items.length - 1] as any).running) && <div className="ws-typing"><i /><i /><i /></div>}
             <div ref={endRef} style={{ height: 8 }} />
           </div>
-          <div className="ws-dock"><Composer busy={busy} send={send} stop={stop} model={model} setModel={setModel} placeholder={pendingAsk ? '选上面一个，或者直接说你的想法…' : '接着说…'} /></div>
+          <div className="ws-dock"><Composer research={org.kind === 'research'} busy={busy} send={send} stop={stop} model={model} setModel={setModel} placeholder={pendingAsk ? '选上面一个，或者直接说你的想法…' : '接着说…'} /></div>
         </>
       )}
     </div>
@@ -270,16 +270,16 @@ function Row({ x, send, busy, openArt, activeArt, chip = true }: { x: Item; send
   );
 }
 
-function Composer({ busy, send, stop, model, setModel, placeholder, autoFocus }: { busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; placeholder?: string; autoFocus?: boolean }) {
+function Composer({ busy, send, stop, model, setModel, placeholder, autoFocus, research }: { busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; placeholder?: string; autoFocus?: boolean; research?: boolean }) {
   const [v, setV] = useState(''); const ta = useRef<HTMLTextAreaElement>(null);
   useEffect(() => { const el = ta.current; if (!el) return; el.style.height = 'auto'; el.style.height = Math.min(220, el.scrollHeight) + 'px'; }, [v]);
   const go = () => { if (!v.trim() || busy) return; send(v); setV(''); };
   return (
     <div className="ws-composer">
-      <textarea ref={ta} value={v} autoFocus={autoFocus} rows={1} placeholder={placeholder || '比如：给供应链计划岗出一道真活'} onChange={e => setV(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); go(); } }} />
+      <textarea ref={ta} value={v} autoFocus={autoFocus} rows={1} placeholder={placeholder || (research ? '比如：给界面表征方向的博士后出一道研究真活' : '比如：给供应链计划岗出一道真活')} onChange={e => setV(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); go(); } }} />
       <div className="ws-composer-bar">
         <select className="ws-model" value={model} onChange={e => setModel(e.target.value)} title="总控用哪个模型">{CHAT_MODELS.map(m => <option key={m.id} value={m.id}>{m.label}</option>)}</select>
-        <span className="ws-muted" style={{ fontSize: 12, marginLeft: 8 }}>只围绕本企业</span>
+        <span className="ws-muted" style={{ fontSize: 12, marginLeft: 8 }}>{research ? '只围绕本机构' : '只围绕本企业'}</span>
         {busy ? <button className="ws-send stop" onClick={stop} aria-label="停止">■</button> : <button className="ws-send" onClick={go} disabled={!v.trim()} aria-label="发送">↑</button>}
       </div>
     </div>

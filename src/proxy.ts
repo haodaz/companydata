@@ -90,6 +90,8 @@ export async function proxy(req: NextRequest) {
     const token = req.cookies.get('auth_token')?.value;
 
     if (!token) {
+      // 百业企业版 / 科研版：没登录先看介绍页（介绍页上有登录按钮）
+      if (pathname === '/workspace' || pathname === '/research') return NextResponse.redirect(new URL(`${pathname}/welcome`, req.url));
       // 从公开首页点进来的，登录完要回到他想去的地方，而不是落到虚拟工厂
       // 百业 / 真活用各自的蒙版式登录页（账号同一套），别让人看见企业数据工厂的登录页
       const login = new URL(pathname.startsWith('/lab') || pathname === '/workspace' || pathname === '/research' ? '/lab/login' : pathname.startsWith('/work') ? '/work/login' : '/login', req.url);
