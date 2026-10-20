@@ -108,6 +108,11 @@ function summarize(built: any) {
 }
 
 const CAREER_HINT = '这是面向高中生 / 大学生的「职业探索空间」，不是招聘考核：任务要让一个完全没入行的人也能上手体验这个职业最有代表性的一天，材料自解释、术语随手解释，难度比校招题降一档；故事线要有带教的前辈，让人感受到这个职业真实的工作节奏与判断方式。';
+/** 学科 / 研究领域体验空间（ToS / 百业学科体验）：面向想选专业、选方向的学生 */
+const DISCIPLINE_HINT = '这是面向高中生 / 本科生 / 研究生的「学科体验空间」，不是招聘考核：让一个没进过实验室的人也能走完这个学科研究者最有代表性的一天——读一篇文献、设计或做一次实验 / 计算、处理一份有异常的数据、在组会上汇报、回答导师追问。材料自解释、术语随手解释；评分看科学思维（对照、可重复、证据、局限），不看背了多少知识点。';
+/** 研究岗空间（ToS 科研版）：贴着具体实验室的在研项目、平台设备、导师要求，给新进博士生 / 博后带教 */
+const RESEARCH_POST_HINT = '这是某个课题组具体研究岗（博士生 / 博士后 / 研究助理）的带教空间：章节要贴着这个实验室的在研项目、平台设备和导师要求写，像新人进组第一个月真实会遇到的事（熟悉平台与安全规范、复现组里一个结果、设计一个子实验、处理一批数据、组会汇报、配合项目节点）；评分重科学严谨与安全规范。';
+
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   // 记账：这次构建的所有调用（任务、技能卡、工位、美术）记到同一个任务编号上，空间建好后补上空间编号（迁移 021）
@@ -119,14 +124,16 @@ async function build(req: Request, body: any, costJob: string) {
   let buildId = '';
   try {
     const { jobId, model, createdBy } = body; buildId = String(body.buildId || '');
-    const profession = String(body.profession || '').trim().slice(0, 40);
+    const discipline = String(body.discipline || '').trim().slice(0, 40);
+    const profession = String(body.profession || '').trim().slice(0, 40) || discipline;
+    const isDiscipline = !!discipline && !body.profession;
 
     if (profession) {
       // ── 职业探索：职业名 → 典型岗位 + 生涯地图 → 同一条流水线 ──
       trackDemand(req, { source: 'lab_space', query: profession, profession });
-      setBuild(buildId, { phase: '结构化职业 · 推断典型岗位' });
-      const { jd, career } = await structureCareer(profession, model || undefined);
-      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), { hint: CAREER_HINT });
+      setBuild(buildId, { phase: isDiscipline ? '结构化学科 · 推断典型研究岗' : '结构化职业 · 推断典型岗位' });
+      const { jd, career } = await structureCareer(profession, model || undefined, isDiscipline ? 'discipline' : 'career');
+      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), { hint: isDiscipline ? DISCIPLINE_HINT : CAREER_HINT });
       const { data: skill, error: skErr } = await supabaseAdmin.from('skills').insert({
         slug: `career-${Date.now().toString(36)}`, ...built.skill, interview: [],
         expert_name: '岗位 AI 自学草案', expert_title: '从职业公开知识推断 · 等待第一位从业者校正', expert_location: '云端', expert_note: '尚未有真人专家', tz_offset: 0,
@@ -135,7 +142,7 @@ async function build(req: Request, body: any, costJob: string) {
       if (skErr) throw skErr;
       const { data: created, error: insErr } = await supabaseAdmin.from('skill_tasks').insert({
         job_id: null, skill_id: skill.id,
-        jd_snapshot: { ...jd, kind: 'career', career, fetched_at: new Date().toISOString().slice(0, 10) },
+        jd_snapshot: { ...jd, kind: isDiscipline ? 'discipline' : 'career', career, fetched_at: new Date().toISOString().slice(0, 10) },
         ...built.task, created_by: createdBy || '', ...(body.orgId ? { org_id: String(body.orgId) } : {}), ...(body.projectId ? { project_id: String(body.projectId) } : {}),
       }).select('id').single();
       if (insErr) throw insErr;
@@ -155,7 +162,7 @@ async function build(req: Request, body: any, costJob: string) {
       const jd = { company: String(body.company || '').trim().slice(0, 60), title: String(body.title || '').trim().slice(0, 60) || '未命名岗位', responsibilities: pasted, qualifications: '' };
       setBuild(buildId, { phase: '读取岗位 JD' });
       trackDemand(req, { source: 'lab_space', query: `${jd.company} ${jd.title}`.trim(), company_name: jd.company || null, profession: jd.title });
-      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }));
+      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), body.researchPost ? { hint: RESEARCH_POST_HINT } : {});
       const { data: skill, error: skErr } = await supabaseAdmin.from('skills').insert({
         slug: `jd-paste-${Date.now().toString(36)}`, ...built.skill, interview: [],
         expert_name: '岗位 AI 自学草案', expert_title: '从 JD 与公开职业知识推断 · 等待第一位专家校正', expert_location: '云端', expert_note: '尚未有真人专家', tz_offset: 0,
@@ -164,7 +171,7 @@ async function build(req: Request, body: any, costJob: string) {
       if (skErr) throw skErr;
       const { data: created, error: insErr } = await supabaseAdmin.from('skill_tasks').insert({
         job_id: null, skill_id: skill.id,
-        jd_snapshot: { ...jd, kind: 'pasted', fetched_at: new Date().toISOString().slice(0, 10) },
+        jd_snapshot: { ...jd, kind: body.researchPost ? 'research_post' : 'pasted', fetched_at: new Date().toISOString().slice(0, 10) },
         ...built.task, created_by: createdBy || '', ...(body.orgId ? { org_id: String(body.orgId) } : {}), ...(body.projectId ? { project_id: String(body.projectId) } : {}),
       }).select('id').single();
       if (insErr) throw insErr;

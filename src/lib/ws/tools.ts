@@ -151,10 +151,12 @@ ${inside ? `\n${inside}\n（企业自己说的眼下重点要优先考虑，至�
       const role = String(input.role || '').trim(); if (!role) throw new Error('缺岗位');
       let job: any = null;
       if (org.company_id) { const { data } = await db.from('jobs').select('id, name, title_cn').eq('company_id', org.company_id).eq('if_delete', false).or(`name.ilike.%${role}%,title_cn.ilike.%${role}%`).not('responsibilities', 'is', null).limit(1); job = data?.[0] || null; }
-      const jd = String(input.jd_text || '').trim();
+      let jd = String(input.jd_text || '').trim();
+      // 科研版：研究岗空间贴着本课题组——没给 JD 就用岗位备注 + 机构内部情况（在研项目、平台、导师要求）拼一份
+      if (!jd && org.kind === 'research') { const inside = await privateContext(org.id, role); if (inside) jd = `研究岗：${role}\n${inside}`; }
       if (!job && jd.length < 60) return { label: '需要这个岗位的 JD', result: { error: 'need_jd', note: `本企业岗位库里没有「${role}」的 JD。请让用户粘贴 JD，或根据 org_profile 和岗位常识起草一份 200 字以上的职责清单，用 jd_text 再调一次。` } };
       const buildId = `ws-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
-      const payload = job ? { jobId: job.id, buildId, createdBy: ctx.email, orgId: org.id, projectId: ctx.projectId || undefined } : { jdText: jd, title: role, company: org.company_name || org.name, buildId, createdBy: ctx.email, orgId: org.id, projectId: ctx.projectId || undefined };
+      const payload = job ? { jobId: job.id, buildId, createdBy: ctx.email, orgId: org.id, projectId: ctx.projectId || undefined } : { jdText: jd, title: role, company: org.company_name || org.name, buildId, createdBy: ctx.email, orgId: org.id, projectId: ctx.projectId || undefined, ...(org.kind === 'research' ? { researchPost: true } : {}) };
       return { label: `开始建「${role}」的职业空间`, ui: { kind: 'space_build', buildId, payload, title: `${org.company_name || org.name} · ${role}` }, result: { started: true, from: job ? '本企业岗位库的 JD' : '用户提供 / AI 起草的 JD', note: '在右侧面板里跑，约 3–5 分钟；告诉用户可以先做别的' } };
     }
     case 'list_spaces': {

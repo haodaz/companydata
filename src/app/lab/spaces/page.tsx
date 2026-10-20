@@ -40,6 +40,7 @@ export default function LabHome() {
   const [jobsLoading, setJobsLoading] = useState(false);
   const [buildInfo, setBuildInfo] = useState<{ phase: string; detail?: string; error?: string } | null>(null);
   const [profession, setProfession] = useState('');
+  const [careerMode, setCareerMode] = useState<'career' | 'discipline'>('career');   // 职业 / 学科·研究领域（2026-10-20）
   // 粘贴一份全新 JD（不在岗位库里）
   const [paste, setPaste] = useState({ title: '', company: '', text: '' });
   const [buildSince, setBuildSince] = useState(0);
@@ -137,9 +138,9 @@ export default function LabHome() {
     setBuildInfo({ phase: prof ? '结构化职业 · 推断典型岗位' : '读取岗位 JD' }); setBuildSince(startedAt); setNow(startedAt);
     // 粘贴的 JD 也走「从 JD 建」的展示，公司 / 岗位名用填的（没填就叫新 JD）
     if (pasted) job = { institute_or_company_name: pasted.company.trim() || '新 JD', name: pasted.title.trim() || '未命名岗位' };
-    setBuilding(prof ? { company: '职业探索', title: prof, buildId, career: true } : { company: job.institute_or_company_name, title: job.name, buildId });
+    setBuilding(prof ? { company: careerMode === 'discipline' ? '学科体验' : '职业探索', title: prof, buildId, career: true } : { company: job.institute_or_company_name, title: job.name, buildId });
     try {
-      const payload = prof ? { profession: prof, model: currentModel, buildId }
+      const payload = prof ? (careerMode === 'discipline' ? { discipline: prof, model: currentModel, buildId } : { profession: prof, model: currentModel, buildId })
         : pasted ? { jdText: pasted.text.trim(), title: pasted.title.trim(), company: pasted.company.trim(), model: currentModel, buildId }
         : { jobId: job.id, model: currentModel, buildId };
       const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })).json();
@@ -184,7 +185,7 @@ export default function LabHome() {
     // 打标记只认「这人是干什么的」，不拿 tagline 和能力词那堆自由文本去撞——
     // 不然西点师会因为一句「面糊是有记忆的材料」被打上「高精尖材料」
     const tags = tagsOf([p.role, prof, jd.title, s.skill?.name, s.skill?.domain].filter(Boolean).join(' '));
-    tags.unshift(jd.kind === 'career' ? '职业探索' : jd.kind === 'pasted' ? '粘贴 JD' : '真实 JD');
+    tags.unshift(jd.kind === 'career' ? '职业探索' : jd.kind === 'discipline' ? '学科体验' : jd.kind === 'research_post' ? '研究岗' : jd.kind === 'pasted' ? '粘贴 JD' : '真实 JD');
     if (s.features?.immersive) tags.unshift('沉浸场景');
     if (s.features?.bench) tags.unshift('虚拟工位');
     return { s, tags, text: text.toLowerCase(), family: familyOf(prof, s.skill?.domain, jd.title, jd.company) };
@@ -545,18 +546,23 @@ export default function LabHome() {
 
           {pick === 'career' && <>
             <div className="lab-glass" style={{ padding: 18, marginBottom: 16, borderColor: 'rgba(18,181,203,.4)' }}>
-              <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 12, lineHeight: 1.75 }}>
+              <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
+                {([['career', '职业'], ['discipline', '学科 · 研究领域']] as const).map(([k, t]) => <button key={k} className={`lab-chip${careerMode === k ? '' : ' g'}`} style={{ cursor: 'pointer', fontSize: 13, padding: '5px 13px' }} onClick={() => { setCareerMode(k); setProfession(''); }}>{t}</button>)}
+              </div>
+              {careerMode === 'discipline' ? <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 12, lineHeight: 1.75 }}>
+                给一个学科或研究领域，AI 会先把它结构化成<b>典型研究岗 + 研究技能 + 从硕博到 PI 的成长路径</b>，再生成实验室里一天的故事线和虚拟工位：读文献、做实验或计算、处理有异常的数据、组会汇报。给想选专业、选方向的学生体验研究是怎么做的。
+              </div> : <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 12, lineHeight: 1.75 }}>
                 只给一个职业名，AI 会先把它结构化成<b>典型岗位 + 技能树 + 生涯地图</b>，再生成和 JD 路径同样的故事线与虚拟工位（约 2–4 分钟）。
                 难度比校招题降一档，术语随手解释——没入行的人也能把这个职业最有代表性的一天走完。
-              </div>
+              </div>}
               <div style={{ display: 'flex', gap: 8 }}>
-                <input className="lab-input" autoFocus value={profession} onChange={e => setProfession(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && profession.trim()) buildFromJob(null, profession.trim()); }} placeholder="输入一个职业，如：无人机飞手 / 临床营养师 / 游戏关卡策划" style={{ flex: 1, padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
-                <button className="lab-btn" disabled={!profession.trim()} onClick={() => buildFromJob(null, profession.trim())}>生成探索空间 →</button>
+                <input className="lab-input" autoFocus value={profession} onChange={e => setProfession(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && profession.trim()) buildFromJob(null, profession.trim()); }} placeholder={careerMode === 'discipline' ? '输入一个学科或研究领域，比如 材料科学与工程' : '输入一个职业，如：无人机飞手 / 临床营养师 / 游戏关卡策划'} style={{ flex: 1, padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
+                <button className="lab-btn" disabled={!profession.trim()} onClick={() => buildFromJob(null, profession.trim())}>{careerMode === 'discipline' ? '生成学科空间 →' : '生成探索空间 →'}</button>
               </div>
             </div>
             <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>换一个试试</div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              {['咖啡师', '蛋糕裱花师', '无人机飞手', '临床营养师', '游戏关卡策划', '汽车工艺工程师', '宠物医生', '民航机务维修', '景观设计师', '韣带康复治疗师'].map(t => (
+              {(careerMode === 'discipline' ? ['材料科学与工程', '计算生物学', '凝聚态物理', '神经科学', '有机化学', '机器学习', '环境科学', '临床医学研究'] : ['咖啡师', '蛋糕裱花师', '无人机飞手', '临床营养师', '游戏关卡策划', '汽车工艺工程师', '宠物医生', '民航机务维修', '景观设计师', '韣带康复治疗师']).map(t => (
                 <button key={t} className="lab-chip c" style={{ cursor: 'pointer', fontSize: 13, padding: '6px 13px' }} onClick={() => setProfession(t)}>{t}</button>
               ))}
             </div>

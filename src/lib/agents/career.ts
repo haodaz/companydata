@@ -25,9 +25,18 @@ export interface CareerMap {
 
 export interface CareerStructure { jd: JdInput & { location: string }; career: CareerMap }
 
-export async function structureCareer(profession: string, modelId = 'gemini-3.8-flash'): Promise<CareerStructure> {
+/**
+ * mode = 'discipline'（2026-10-20，ToS 科研版 / 百业学科体验）：输入的是学科或研究领域（材料科学与工程、计算生物学…），
+ * 「典型岗位」换成这个领域最有代表性的研究岗（某高校 / 研究所实验室的博士生、博后、研究助理，虚构），生涯地图换成研究者的日常与成长路径。
+ */
+export async function structureCareer(profession: string, modelId = 'gemini-3.8-flash', mode: 'career' | 'discipline' = 'career'): Promise<CareerStructure> {
+  const intro = mode === 'discipline'
+    ? `一位高中生 / 本科生 / 研究生想了解「${profession}」这个学科（研究领域）里的研究到底是怎么做的。请你以这个领域里带过很多学生的 PI（课题组长）的身份，把它结构化。
+    typical_job 写这个领域最有代表性的研究岗：虚构一个有代表性的实验室或研究所（写成「某大学……实验室（虚构）」或「某研究所……课题组（虚构）」），岗位是博士生 / 博士后 / 研究助理之一，职责写这个领域研究里真实要做的事（读文献、做实验或计算、处理数据、组会汇报、写论文 / 基金），要求写学历、专业背景和研究技能。
+    career 里：what_they_do 写这个领域的研究者在研究什么、怎么做；day_in_life 写实验室里典型的一天；skills 写核心研究技能（实验 / 计算 / 理论 / 写作）；entry_paths 写怎么进入（本科专业、保研考研、进实验室轮转、本科科研）；ladder 写硕博 → 博后 → 助理研究员 / 讲师 → 研究员 / 教授（PI）；salary_note 写研究岗待遇的大致情况；related 写相邻学科 / 方向。`
+    : `一位高中生 / 大学生想了解「${profession}」这个职业。请你以这个行业里带过很多新人的资深从业者的身份，把这个职业结构化。`;
   const result = await generateContent(`
-    一位高中生 / 大学生想了解「${profession}」这个职业。请你以这个行业里带过很多新人的资深从业者的身份，把这个职业结构化。
+    ${intro}
     只写公开的、行业里公认的常识；薪酬只给大致区间并注明「因城市 / 行业差异大」；不要编造具体企业的内部信息。全部中文。
 
     第一部分 typical_job：一份「典型岗位」——虚构一家有代表性的雇主（写成「某……（虚构）」），给出这个职业校招 / 初级岗位最典型的岗位职责（6–9 条，每条一句，像真实 JD）和任职要求（4–6 条）。它会被用来构建一个可操作的技能空间。
@@ -59,7 +68,7 @@ export async function structureCareer(profession: string, modelId = 'gemini-3.8-
   const tj = p.typical_job || {}; const c = p.career || {};
   const list = (v: any, n = 10) => (Array.isArray(v) ? v.map(String).filter(Boolean).slice(0, n) : []);
   const objs = <T,>(v: any, f: (x: any) => T | null, n = 10): T[] => (Array.isArray(v) ? v.map(f).filter((x): x is T => !!x).slice(0, n) : []);
-  const jd = { company: String(tj.employer || `某企业（虚构）`), title: String(tj.title || profession), location: String(tj.location || ''), responsibilities: String(tj.responsibilities || ''), qualifications: String(tj.qualifications || '') };
+  const jd = { company: String(tj.employer || (mode === 'discipline' ? '某研究所（虚构）' : '某企业（虚构）')), title: String(tj.title || profession), location: String(tj.location || ''), responsibilities: String(tj.responsibilities || ''), qualifications: String(tj.qualifications || '') };
   if (!jd.responsibilities) throw new Error('没有生成出典型岗位职责，请换个说法再试');
   const career: CareerMap = {
     profession, one_liner: String(c.one_liner || ''), typical_employer: jd.company,
