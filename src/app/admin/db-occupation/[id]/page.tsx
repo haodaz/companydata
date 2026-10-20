@@ -289,7 +289,9 @@ export default function OccupationDetailPage() {
           {o.career_category && <Tag color="blue">{CAREER_CATEGORY_LABELS[o.career_category] || o.career_category}</Tag>}
           {o.career_mid_category && <Tag>{CAREER_MID_LABELS[o.career_mid_category] || o.career_mid_category}</Tag>}
           {o.origin === 'market' && <Tooltip title="不在职业大典 / O*NET 里：从招聘岗位里反复出现、归并统计后升级成的职业"><Tag color="purple">市场新兴</Tag></Tooltip>}
-          {o.origin === 'framework' && <Tag color="geekblue">官方框架</Tag>}
+          {o.origin === 'framework' && (o.emergence?.official
+            ? <Tooltip title={<>{({ cn_dadian: '职业分类大典', cn_new: '人社部新职业', onet: 'O*NET' } as any)[o.emergence.official.framework] || ''} {o.emergence.official.code || ''}<br />{o.emergence.official.url || '出处待核实'}</>}><Tag color="geekblue">官方框架{o.emergence.official.verified ? '' : ' · 出处待核实'}</Tag></Tooltip>
+            : <Tag color="geekblue">官方框架</Tag>)}
           {o.source && <Tag>{SOURCE_LABELS[o.source] || o.source}</Tag>}
           <Tag color={REVIEW_STATUS[o.human_review_status]?.color}>{REVIEW_STATUS[o.human_review_status]?.label || '未审核'}</Tag>
           {(o.aliases || []).map((a: string) => <Tag key={a} color="default" style={{ color: BRAND.ink3 }}>{a}</Tag>)}
@@ -301,8 +303,8 @@ export default function OccupationDetailPage() {
           { label: '百业空间', value: d.related.spaces.length },
         ]} />
       {/* 市场新兴职业的涌现数据（飞轮每次检测刷新） */}
-      {o.origin === 'market' && o.emergence && (
-        <Card size="small" style={{ marginBottom: 16, borderLeft: '3px solid #722ed1' }} title="涌现数据 · 市场新兴职业"
+      {o.emergence && o.emergence.jobs !== undefined && (
+        <Card size="small" style={{ marginBottom: 16, borderLeft: '3px solid #722ed1' }} title={o.origin === 'market' ? '涌现数据 · 市场新兴职业' : '涌现数据 · 从招聘岗位里补进来的官方职业'}
           extra={<Text type="secondary" style={{ fontSize: 12 }}>{o.emergence.updated_at ? `更新于 ${String(o.emergence.updated_at).slice(0, 10)}` : ''}</Text>}>
           <Space size={16} wrap>
             <span>挂了 <b>{o.emergence.jobs ?? 0}</b> 个岗位</span>

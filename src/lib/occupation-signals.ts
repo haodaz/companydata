@@ -8,7 +8,7 @@
 import { supabaseAdmin } from '@/lib/supabase';
 import { selectAll } from '@/lib/supabase-all';
 import { generateContent } from '@/lib/llm-client';
-import { parseJsonLoose } from '@/lib/agents/search-llm';
+import { parseJsonLoose, searchJson } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
 import { regionName } from '@/lib/region-codes';
 
@@ -157,4 +157,44 @@ export async function refreshEmergence(log: (s: string) => void = () => {}) {
     n++;
   }
   if (n) log(`刷新市场新兴职业涌现数据 ${n} 个`);
+}
+
+export type OfficialCheck = { official: boolean; verified: boolean; framework: 'cn_dadian' | 'cn_new' | 'onet' | null; official_name: string | null; code: string | null; url: string | null; note: string };
+
+/**
+ * 建职业前先查官方身份（2026-10-20 用户定）：是不是《职业分类大典》、人社部发布的新职业或 O*NET 里已有的。
+ * 只是建议、由人确认（看板上弹窗：按官方建 / 按市场新兴建）——10-20 复查 40 个时模型把上一级大类、技术员当成同一职业。
+ * verified = 模型写的出处和这次真实搜索来源完全一致（千问写进 JSON 的网址常是编的）。
+ */
+export async function checkOfficial(name: string, aliases: string[], model: string, titles: string[] = []): Promise<OfficialCheck> {
+  // 联网搜索每次结果不一样：第一种问法没查到，换「做这些事的岗位对应哪个官方职业」再问一次
+  const first = await checkOfficialOnce(name, aliases, model, 'name');
+  if (first.official) return first;
+  const second = await checkOfficialOnce(name, aliases, model, 'duty', titles);
+  return second.official ? second : first;
+}
+
+async function checkOfficialOnce(name: string, aliases: string[], model: string, mode: 'name' | 'duty', titles: string[] = []): Promise<OfficialCheck> {
+  const ask = `联网查一下「${name}」${aliases.length ? `（也叫：${aliases.slice(0, 5).join('、')}）` : ''}这个职业是否已经被官方职业体系收录：
+1. 《中华人民共和国职业分类大典》（2022 年版）；
+2. 人力资源和社会保障部历年发布的新职业（含 2019 年以来各批次）；
+3. 美国劳工部 O*NET / SOC 职业分类。
+同一个职业换了叫法也算（如「药店店长」可能对应大典里的某个零售 / 连锁经营类职业）。但必须是做同样工作的那个职业：上一级的大类不算（如「集成电路工程技术人员」之于「数字后端工程师」），技术员和工程师不能互换（如「具身智能机器人应用技术员」不等于「具身智能算法工程师」）。
+只返回 JSON：{"official": true/false, "framework": "cn_dadian|cn_new|onet|null", "official_name": "官方名称（原样）", "code": "职业编码（大典如 4-01-02-01，O*NET 如 41-1011.00）", "url": "你看到它的那条搜索结果网址", "note": "一句话依据"}
+查不到确切出处的填 official=false，不要猜。`;
+  const prompt = mode === 'name' ? ask : `招聘市场上有一类岗位叫「${name}」${aliases.length ? `（也叫${aliases.slice(0, 5).join('、')}）` : ''}${titles.length ? `，代表岗位如：${titles.slice(0, 5).join('、')}` : ''}。
+联网查：做这类工作的人，在《中华人民共和国职业分类大典》（2022 年版）、人社部历年发布的新职业或 O*NET / SOC 里对应哪个职业？要工作内容基本一样的那个：上一级的大类不算，技术员和工程师不能互换。
+${ask.slice(ask.indexOf('只返回 JSON'))}`;
+  const r = await searchJson(prompt, model, { tool_name: 'occupation', task_name: 'Official Occupation Check', institution: name }, { lenient: true });
+  const p = r.parsed || {};
+  const name0 = String(p.official_name || '').trim();
+  const code = typeof p.code === 'string' && /^(\d-\d{2}-\d{2}-\d{2}|\d{2}-\d{4}(\.\d{2})?)/.test(p.code.trim()) ? p.code.trim() : null;   // 大典 4-01-02-03 / O*NET 41-1011.00
+  const fw = ['cn_dadian', 'cn_new', 'onet'].includes(p.framework) ? p.framework : null;
+  // 出处：模型写的网址和这次真实搜索来源完全一致才算「已核实」；来源标题里出现官方名称的只当参考链接（标题对上名字不等于官方收录）
+  const url0 = typeof p.url === 'string' && /^https?:/.test(p.url) ? p.url : null;
+  const hit = url0 ? r.sources.find(s => s.url === url0) : undefined;
+  const ref = hit || (name0 ? r.sources.find(s => s.title.includes(name0)) : undefined);
+  // 判定：有官方名称 + 编码或真实出处才算官方；只有编码、没对上真实出处的标「待核实」（2026-10-20：千问常查得到但网址是编的）
+  const official = (p.official === true || /收录|列入|属于|对应/.test(String(p.note || '')) && !!code) && !!name0 && !!fw && (!!ref || !!code);
+  return { official, verified: official && !!hit, framework: official ? fw : null, official_name: official ? name0 : null, code: official ? code : null, url: official && ref ? ref.url : null, note: String(p.note || '').slice(0, 200) };
 }

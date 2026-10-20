@@ -19,7 +19,7 @@ const today = () => new Date(Date.now() + 8 * 3600_000).toISOString().slice(0, 1
 const fmtTime = (s: string) => { const d = new Date(s); return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
 
 export default function FlywheelPage() {
-  const { message } = App.useApp();
+  const { message, modal } = App.useApp();
   const router = useRouter();
   const { currentModel } = useModel();
   const [data, setData] = useState<any>(null);
@@ -31,13 +31,40 @@ export default function FlywheelPage() {
   const [normalizing, setNormalizing] = useState(false);
   const [occBusy, setOccBusy] = useState<Record<string, number | 'busy'>>({});
   // 职业缺口（市场新兴职业）：建 / 并进 / 先不管，都要人点（建要联网生成画像、花钱）
-  const emergent = async (action: 'create' | 'merge' | 'ignore', c: any) => {
+  const callEmergent = async (body: Record<string, any>) => (await fetch('/api/flywheel/emergent', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: currentModel, ...body }) })).json();
+  /** 建职业前先查官方身份：查到疑似官方职业就让人选按官方建还是按市场新兴建（模型只给建议，10-20 复查时误判过上一级大类） */
+  const createEmergent = async (c: any) => {
     setOccBusy(b => ({ ...b, [c.name]: 'busy' }));
     try {
-      const j = await (await fetch('/api/flywheel/emergent', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action, candidate: c, model: currentModel }) })).json();
+      const chk = await callEmergent({ action: 'check', candidate: c });
+      if (!chk.ok) throw new Error(chk.error || '查官方身份失败');
+      const o = chk.official;
+      if (!o?.official) return emergent('create', c);
+      const FW: Record<string, string> = { cn_dadian: '职业分类大典', cn_new: '人社部新职业', onet: 'O*NET' };
+      const m = modal.confirm({
+        title: `「${c.name}」可能是官方职业`,
+        width: 520,
+        content: <div style={{ fontSize: 13, lineHeight: 1.8 }}>
+          <div>{FW[o.framework] || o.framework}：<b>{o.official_name}</b>{o.code ? `（${o.code}，编码仅供参考）` : ''}</div>
+          <div style={{ color: '#8c8c8c' }}>{o.note}</div>
+          <div>出处：{o.url ? <a href={o.url} target="_blank" rel="noreferrer">{o.url.slice(0, 70)}</a> : '没有'}{o.verified ? '' : <Tag color="warning" style={{ marginLeft: 6 }}>待核实</Tag>}</div>
+          <div style={{ marginTop: 6, color: '#8c8c8c' }}>注意：上一级的大类、技术员 ≠ 工程师都不算同一个职业。</div>
+        </div>,
+        footer: <Space style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 16 }}>
+          <Button onClick={() => { m.destroy(); setOccBusy(b => { const n = { ...b }; delete n[c.name]; return n; }); }}>取消</Button>
+          <Button onClick={() => { m.destroy(); emergent('create', c); }}>按市场新兴「{c.name}」建</Button>
+          <Button type="primary" onClick={() => { m.destroy(); emergent('create', c, o); }}>按官方「{o.official_name}」建</Button>
+        </Space>,
+      });
+    } catch (e: any) { setOccBusy(b => { const n = { ...b }; delete n[c.name]; return n; }); message.error(`${c.name}：${e.message}`); }
+  };
+  const emergent = async (action: 'create' | 'merge' | 'ignore', c: any, asOfficial?: any) => {
+    setOccBusy(b => ({ ...b, [c.name]: 'busy' }));
+    try {
+      const j = await callEmergent({ action, candidate: c, asOfficial });
       if (!j.ok) throw new Error(j.error || '操作失败');
       setOccBusy(b => ({ ...b, [c.name]: action === 'ignore' ? -1 : j.id }));
-      message.success(action === 'ignore' ? `「${c.name}」先不管了` : `${action === 'merge' ? `已并进「${j.name}」` : `已建「${j.name}」（市场新兴，待审核）`}，${j.linked} 个岗位挂上了`);
+      message.success(action === 'ignore' ? `「${c.name}」先不管了` : `${action === 'merge' ? `已并进「${j.name}」` : j.official ? `是官方职业，按「${j.name}」建（官方框架${j.official.verified ? '' : '，出处待核实'}）` : `已建「${j.name}」（市场新兴，待审核）`}，${j.linked} 个岗位挂上了`);
     } catch (e: any) { setOccBusy(b => { const n = { ...b }; delete n[c.name]; return n; }); message.error(`${c.name}：${e.message}`); }
   };
 
@@ -252,7 +279,7 @@ export default function FlywheelPage() {
                     : <Space size={0}>
                         {c.kind === 'merge'
                           ? <Button size="small" type="link" loading={st === 'busy'} onClick={() => emergent('merge', c)}>并进「{c.merge_into?.name}」</Button>
-                          : <Button size="small" type="link" loading={st === 'busy'} onClick={() => emergent('create', c)}>建这个职业</Button>}
+                          : <Button size="small" type="link" loading={st === 'busy'} onClick={() => createEmergent(c)}>建这个职业</Button>}
                         <Button size="small" type="link" style={{ color: '#8c8c8c' }} disabled={st === 'busy'} onClick={() => emergent('ignore', c)}>先不管</Button>
                       </Space>}
                 </div>
