@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
-import { getOrg } from '@/lib/ws/org';
+import { orgFor } from '@/lib/ws/org';
 import { addRole, knowhow } from '@/lib/ws/setup';
 
 export const runtime = 'nodejs';
 
 async function ctx(req: NextRequest) {
   const user = await getSessionUser(req); if (!user) return { err: NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 }) };
-  const org = await getOrg(user, req.nextUrl.searchParams.get('org')).catch(() => null);
+  const org = await orgFor(req, user).catch(() => null);
   if (!org) return { err: NextResponse.json({ ok: false, error: '没有企业' }, { status: 404 }) };
   return { user, org };
 }

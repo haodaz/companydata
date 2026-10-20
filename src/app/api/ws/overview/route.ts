@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
-import { getOrg } from '@/lib/ws/org';
+import { orgFor } from '@/lib/ws/org';
 import { companyJobs } from '@/lib/work/generator';
 
 export const runtime = 'nodejs';
@@ -9,7 +9,7 @@ export const runtime = 'nodejs';
 /** 侧栏几个功能页的数据：岗位 / 真活 / 职业空间 / 候选人。只认本企业（org_id、org.company_id） */
 export async function GET(req: NextRequest) {
   const user = await getSessionUser(req); if (!user) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
-  const org = await getOrg(user, req.nextUrl.searchParams.get('org')).catch(() => null); if (!org) return NextResponse.json({ ok: false, error: '没有企业' }, { status: 404 });
+  const org = await orgFor(req, user).catch(() => null); if (!org) return NextResponse.json({ ok: false, error: '没有企业' }, { status: 404 });
   const [{ data: tasks }, { data: spaces }, jobs] = await Promise.all([
     db.from('work_tasks').select('id, share_token, owner_key, role, task, baseline, status, created_at').eq('org_id', org.id).order('created_at', { ascending: false }).limit(100),
     db.from('skill_tasks').select('id, title, profile, created_at').eq('org_id', org.id).order('created_at', { ascending: false }).limit(100),

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
-import { getOrg } from '@/lib/ws/org';
+import { orgFor } from '@/lib/ws/org';
 import { appendUser, runTurn, WS_MODEL, type Msg } from '@/lib/ws/agent';
 import { isKnownModel } from '@/lib/model-options';
 import { ownProject } from '@/lib/ws/projects';
@@ -15,7 +15,7 @@ export const maxDuration = 300;
  */
 export async function POST(req: NextRequest) {
   const user = await getSessionUser(req); if (!user) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
-  const org = await getOrg(user, req.nextUrl.searchParams.get('org')).catch(() => null);
+  const org = await orgFor(req, user).catch(() => null);
   if (!org) return NextResponse.json({ ok: false, error: '先绑定你的企业' }, { status: 400 });
   const body = await req.json().catch(() => ({}));
   const text = String(body.text || '').trim().slice(0, 4000);

@@ -13,17 +13,30 @@ const COLS1 = 'id, name, company_id, company_name, website, context, setup_step'
 const COLS0 = 'id, name, company_id, company_name';   // 迁移 038 没跑时
 async function readOrg(id: string) { let r: any = await db.from('ws_orgs').select(COLS).eq('id', id).maybeSingle(); if (r.error) r = await db.from('ws_orgs').select(COLS1).eq('id', id).maybeSingle(); if (r.error) r = await db.from('ws_orgs').select(COLS0).eq('id', id).maybeSingle(); return r.data ? { kind: 'company', ...r.data } : null; }
 
-export async function getOrg(user: SessionUser, orgId?: string | null): Promise<WsOrg | null> {
+/**
+ * 当前机构：一个账号在两个版本里各有各的机构（企业版 company / 科研版 research，2026-10-20）。
+ * kind 来自页面写的 ws_edition cookie；不传就取第一家。平台管理员可以 ?org= 指定任意一家。
+ */
+export async function getOrg(user: SessionUser, orgId?: string | null, kind?: OrgKind | null): Promise<WsOrg | null> {
   if (orgId && user.role === 'admin') {
     const data = await readOrg(orgId);
     return data ? { ...data, role: 'admin' } as WsOrg : null;
   }
-  const { data: m, error } = await db.from('ws_members').select('org_id, role, created_at').eq('email', user.email).order('created_at', { ascending: true }).limit(1);
+  const { data: m, error } = await db.from('ws_members').select('org_id, role, created_at').eq('email', user.email).order('created_at', { ascending: true }).limit(20);
   if (error) throw new Error(/relation|does not exist|Could not find the table/.test(error.message) ? '工作台的表还没建：请先跑迁移 037_workspace.sql' : error.message);
-  if (!m?.length) return null;
-  const o = await readOrg(m[0].org_id);
-  return o ? { ...o, role: m[0].role } as WsOrg : null;
+  for (const x of m || []) {
+    const o = await readOrg(x.org_id);
+    if (o && (!kind || (o.kind || 'company') === kind)) return { ...o, role: x.role } as WsOrg;
+  }
+  return null;
 }
+
+/** 从请求里取当前机构：?org=（管理员）+ ws_edition cookie（企业版 / 科研版） */
+export function editionOf(req: { headers: Headers; cookies: { get: (k: string) => { value: string } | undefined } }): OrgKind | null {
+  const v = req.headers.get('x-ws-edition') || req.cookies.get('ws_edition')?.value;   // 页面请求头优先（两个版本同时开着时 cookie 会互相覆盖）
+  return v === 'research' ? 'research' : v === 'company' ? 'company' : null;
+}
+export async function orgFor(req: any, user: SessionUser) { return getOrg(user, req.nextUrl.searchParams.get('org'), editionOf(req)); }
 
 export async function createOrg(user: SessionUser, input: { name: string; company_id?: number | null; company_name?: string | null; website?: string | null; kind?: OrgKind }): Promise<WsOrg> {
   const kind: OrgKind = input.kind === 'research' ? 'research' : 'company';

@@ -43,7 +43,20 @@ export type Edition = 'company' | 'research';
 export const EDITION_PATH: Record<Edition, string> = { company: '/workspace', research: '/research' };
 export const EDITION_NAME: Record<Edition, string> = { company: '企业版', research: '科研版' };
 
+/** 这个页面发给 /api/ws/* 的请求都带上版本头，后端据此取本版本的机构 */
+let fetchPatched = false;
+function patchFetch(edition: Edition) {
+  if (typeof window === 'undefined' || fetchPatched) return; fetchPatched = true;
+  const orig = window.fetch.bind(window);
+  window.fetch = (input: RequestInfo | URL, init?: RequestInit) => {
+    const url = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url;
+    if (/^\/api\/ws\/|\/api\/ws\//.test(url)) { const h = new Headers(init?.headers || (input instanceof Request ? input.headers : undefined)); h.set('x-ws-edition', edition); return orig(input, { ...init, headers: h }); }
+    return orig(input, init);
+  };
+}
+
 export function WorkspaceApp({ edition = 'company' }: { edition?: Edition }) {
+  patchFetch(edition);
   return <ConfigProvider theme={{ token: { colorPrimary: '#4f46c8', borderRadius: 10, fontFamily: "'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" } }}><App><Inner edition={edition} /></App></ConfigProvider>;
 }
 
@@ -66,10 +79,9 @@ function Inner({ edition }: { edition: Edition }) {
 
   useEffect(() => { try { const m = localStorage.getItem('ws:model'); if (m && CHAT_MODELS.some(x => x.id === m)) setModel(m); } catch {} }, []);
   const loadOrg = useCallback(async () => {
+    document.cookie = `ws_edition=${edition}; path=/; max-age=31536000; samesite=lax`;   // 后端按这个取本版本的机构
     const r = await fetch('/api/ws/org'); if (r.status === 401) { location.href = `/lab/login?next=${EDITION_PATH[edition]}`; return; }
     const j = await r.json(); if (!j.ok) { setBootErr(j.error); setOrg(null); return; }
-    const k: Edition = j.org?.kind === 'research' ? 'research' : 'company';
-    if (j.org && k !== edition) { location.replace(EDITION_PATH[k]); return; }   // 账号绑的机构是另一个版本的
     setUser(j.user); setOrg(j.org);
   }, []);
   const loadThreads = useCallback(async () => { const j = await (await fetch('/api/ws/threads')).json(); if (j.ok) setThreads(j.threads); const k = await (await fetch('/api/ws/projects')).json().catch(() => ({})); if (k.ok) setProjects(k.projects); }, []);
