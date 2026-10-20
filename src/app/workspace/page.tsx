@@ -423,6 +423,8 @@ const CSS = `
 .ws-table table { width:100%; border-collapse:collapse; font-size:14px; }
 .ws-table th { text-align:left; font-weight:500; color:var(--ink3); font-size:12.5px; padding:10px 14px; border-bottom:1px solid var(--line); background:#f7f5ef; }
 .ws-table td { padding:11px 14px; border-bottom:1px solid var(--line2); vertical-align:top; }
+.ws-table th, .ws-table td:not(:first-child):not(:last-child) { white-space:nowrap; }
+.ws-table { overflow-x:auto; }
 .ws-table tr:last-child td { border-bottom:0; } .ws-table tr:hover td { background:#fbfaf6; }
 .ws-rowlink { color:var(--ink); cursor:pointer; font-weight:600; text-decoration:none; } .ws-rowlink:hover { color:var(--accent); text-decoration:underline; }
 .ws-emptybox { border:1px dashed #d8d2c2; border-radius:14px; padding:36px; text-align:center; color:var(--ink3); }
