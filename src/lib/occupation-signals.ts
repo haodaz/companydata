@@ -19,11 +19,16 @@ export const SIGNAL_MIN_COMPANIES = 5;
 export const signalKey = (name: string) => String(name || '').replace(/[（(【\[].*?[）)】\]]/g, '').replace(/\s+/g, '')
   .replace(/^(资深|高级|中级|初级|助理|实习)/, '').replace(/(实习生|管培生)$/, '').toLowerCase().slice(0, 40);
 
+/** 不是具体职业的叫法：培养项目 / 身份 / 太泛 / 招聘公告式（10-20 第一轮归并时冒出「研发工程师」「管理培训生 → 市场营销专员」） */
+const GENERIC = /^(研发工程师|工程师|研发|技术|技术岗|职能|职能岗|综合岗|综合管理岗?|通用岗|运营|销售|专员|助理|其他|实习生|管培生|管理培训生|培训生|储备干部|储备人才)$/;
+const PROGRAM = /管培|培训生|储备干部|无具体|不明确|通用岗|实习生（通用|（通用）$|（多学科）$|实习生$/;
+export const NOT_OCCUPATION = { test: (name: string) => { const n = String(name || '').replace(/\s+/g, ''); const core = n.replace(/[（(].*?[）)]/g, ''); return GENERIC.test(core) || PROGRAM.test(n); } };
+
 export type SignalInput = { job_id: number; job_name?: string | null; company_id?: number | null; wanted_name: string; reason?: string | null; source?: 'tagging' | 'audit' };
 
 /** 记个体信号（同一岗位同一叫法只记一次） */
 export async function recordSignals(rows: SignalInput[]) {
-  const clean = rows.filter(r => r.job_id && r.wanted_name && signalKey(r.wanted_name)).map(r => ({
+  const clean = rows.filter(r => r.job_id && r.wanted_name && signalKey(r.wanted_name) && !NOT_OCCUPATION.test(r.wanted_name.replace(/\s+/g, ''))).map(r => ({
     job_id: r.job_id, job_name: r.job_name || null, company_id: r.company_id || null, wanted_name: r.wanted_name.trim().slice(0, 60),
     norm_key: signalKey(r.wanted_name), reason: r.reason ? String(r.reason).slice(0, 200) : null, source: r.source || 'tagging',
   }));
@@ -51,7 +56,7 @@ export async function aggregateSignals(opts: { model: string; minJobs?: number; 
   const log = opts.log || (() => {});
   const minJobs = opts.minJobs ?? SIGNAL_MIN_JOBS, minCompanies = opts.minCompanies ?? SIGNAL_MIN_COMPANIES;
   const { data } = await selectAll(() => supabaseAdmin.from('occupation_signals').select('job_id, job_name, company_id, wanted_name, norm_key, created_at').eq('status', 'open').order('id'));
-  const sig = data as any[];
+  const sig = (data as any[]).filter(s => !NOT_OCCUPATION.test(String(s.wanted_name).replace(/\s+/g, '')));
   if (!sig.length) return { candidates: [] as EmergentCandidate[], merges: [] as EmergentCandidate[], longTail: 0, signals: 0 };
   // 1. 按 norm_key 聚合
   const byKey = new Map<string, { names: Map<string, number>; jobs: Set<number>; companies: Set<number>; titles: Map<string, number>; first: string }>();
@@ -76,7 +81,8 @@ ${occText}
 下面是招聘岗位里反复出现、但被判定为「职业库里没有对得上的职业」的叫法（后面是岗位数）。请：
 1. 把同一个职业的不同叫法归成一组（如「出海运营」「海外运营」「跨境运营」是一组），组名用行业通行的规范叫法；
 2. 每组判断职业库里有没有「同一个职业」（只是换个叫法、工作内容基本一样）：有就在 same_as 填那个职业名（必须从上面清单原样照抄），没有填 null。只是同一大类的不算。
-3. 太泛、不是职业的（如「工程师」「实习生」「其他」）不要成组。
+3. 不是具体职业的不要成组：太泛的（「工程师」「研发工程师」「职能岗」「运营」「其他」）；培养项目和身份（「管理培训生」「管培生」「实习生」「校招」「储备干部」「培训生」）；招聘公告式的叫法（「2027 届校园招聘」「通用岗」「无具体职能」）。
+4. same_as 只填「同一个职业」：上一级的大类不算（「自动驾驶算法工程师」≠「人工智能工程技术人员」），沾边的别的职业更不算（「管理培训生」≠「市场营销专员」）。
 只返回 JSON：{"groups":[{"name":"规范职业名","keys":["归进来的叫法，原样照抄"],"same_as":null,"why":"一句话"}]}
 
 叫法：

@@ -57,6 +57,7 @@ export async function tagJobs(jobs: TagInput[], model: string, opts: { strongMod
 - related_careers：和岗位实际做的事属于同一类工作的职业，只能从【职业清单】里选，名称原样照抄（不要抄括号里的叫法）。宁少勿多，通常 1-2 个就够，最多 ${MAX_TAGS} 个；
   字面沾边、实际工作内容不同的不算（如「海外运营」不能配「网约配送员」「导游」）；大类相同但方向不同的也不算（如「世界模型算法」不配「人工智能训练师」）。
   职业清单里没有真正对得上的：related_careers 留空数组，在 wanted_career 写这个岗位该有的职业名（行业通行叫法，如「出海运营」「内容运营」）。
+  岗位本身不具体的（招聘公告、通用岗、管培 / 实习 / 培训生项目、没写做什么）：related_careers 和 wanted_career 都留空。
 - fos_ids：最适合来做这个岗位的本科专业方向，最多 ${MAX_TAGS} 个，只能用【专业 FOS 清单】里的 key。
 按相关度从高到低排。不要硬凑，不要编清单外的职业 / key。
 只返回 JSON：{"items":[{"n":序号,"related_careers":["职业名称"],"wanted_career":"","fos_ids":[]}]}
