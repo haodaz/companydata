@@ -20,7 +20,7 @@ import { INDUSTRIES, JOB_FUNCTIONS, cleanProfession, isEmployer } from '@/lib/fl
 import { logDemand } from '@/lib/flywheel/signals';
 import { normalizeCompanyIndustries, normalizePending } from '@/lib/flywheel/normalize';
 import { computeBoard, type BoardRow } from '@/lib/flywheel/board';
-import { findOccupationGaps } from '@/lib/occupation-gaps';
+import { aggregateSignals, refreshEmergence } from '@/lib/occupation-signals';
 
 const DAY = 86_400_000;
 const BILLING = /402|Payment Required|credits are depleted|insufficient_quota|exceeded your current quota/i;
@@ -170,10 +170,12 @@ async function runDailyInner(opts: DailyOptions, day: string, log: (s: string) =
   // 5. 排产
   const actions = opts.plan === false ? [] : await planTasks(day, board, onboarded, model, log);
 
-  // 6. 职业缺口：近 30 天新进的岗位里，职业库对不上的职业。只出建议放看板，建不建由人点（要联网生成、花钱）
-  const occupation = opts.plan === false ? null : await tryModel(m => findOccupationGaps({ model: m, sinceDays: 30, top: 400, log }))
-    .then(r => ({ gaps: r.gaps.slice(0, 30), aliasHints: r.aliasHints.slice(0, 20) }))
+  // 6. 职业缺口（市场新兴职业，2026-10-20 起）：岗位打相关职业时记下的个体信号 → 同义归并、统计 →
+  //    过门槛的列在看板上（人点了才建，origin = market）；能并进已有职业的给「并进」；长尾的先不管。顺带刷新已建的市场新兴职业的涌现数据
+  const occupation = opts.plan === false ? null : await tryModel(m => aggregateSignals({ model: m, log }))
+    .then(r => ({ candidates: r.candidates.slice(0, 30), merges: r.merges.slice(0, 20), longTail: r.longTail, signals: r.signals }))
     .catch((e: any) => { log(`职业缺口检测失败：${String(e?.message || e).slice(0, 120)}`); return null; });
+  if (opts.plan !== false) await refreshEmergence(log).catch((e: any) => log(`刷新新兴职业涌现数据失败：${String(e?.message || e).slice(0, 120)}`));
 
   const stats = {
     totals: board.totals,

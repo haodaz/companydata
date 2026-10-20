@@ -10,7 +10,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { supabaseAdmin } from '@/lib/supabase';
 import { selectAll } from '@/lib/supabase-all';
-import { generateCheap } from '@/lib/llm-client';
+import { generateCheap, generateContent } from '@/lib/llm-client';
+import { recordSignals, type SignalInput } from '@/lib/occupation-signals';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
 import { qianliLabels, type QianliLabels } from '@/lib/qianli-labels';
@@ -40,31 +41,39 @@ const MAX_TAGS = 4;
 const squash = (v: any, n: number) => String(v || '').replace(/\s+/g, ' ').trim().slice(0, n);
 
 /** 一批岗位（建议 ≤ 20 个）关联专业和职业，返回 id → { fos_ids: 'a|b', related_career_ids: 'x|y' } */
-export async function tagJobs(jobs: TagInput[], model: string): Promise<Map<number, JobTags>> {
+export async function tagJobs(jobs: TagInput[], model: string, opts: { strongModel?: string } = {}): Promise<Map<number, JobTags>> {
   const cat = await tagCatalog();
   // 按「要求描述」匹配（10-19 #16）；没有要求描述的才看职责 / 简介
   const lines = jobs.map((j, i) => `${i + 1}. 【${j.name}】职能：${j.job_function || '—'}；要求描述：${squash(j.overview, 400) || '（无）'}${j.overview ? '' : `；职责：${squash(j.responsibilities || j.summary_cn, 220)}`}`).join('\n');
   const prompt = `${cat.text}
 
 你是招聘数据标注员。根据每个岗位的「要求描述」挑：
-- related_career_ids：最贴近的职业，最多 ${MAX_TAGS} 个，只能用【职业清单】里的 key；
+- related_career_ids：和岗位实际做的事属于同一类工作的职业，只能用【职业清单】里的 key。宁少勿多，通常 1-2 个就够，最多 ${MAX_TAGS} 个；
+  字面沾边、实际工作内容不同的不算（如「海外运营」不能配「网约配送员」「导游」）；大类相同但方向不同的也不算（如「世界模型算法」不配「人工智能训练师」）。
+  职业清单里没有真正对得上的：related_career_ids 留空数组，在 wanted_career 写这个岗位该有的职业名（行业通行叫法，如「出海运营」「内容运营」）。
 - fos_ids：最适合来做这个岗位的本科专业方向，最多 ${MAX_TAGS} 个，只能用【专业 FOS 清单】里的 key。
-按相关度从高到低排。实在对不上的留空数组，不要硬凑，不要编清单外的 key。
-只返回 JSON：{"items":[{"n":序号,"related_career_ids":[],"fos_ids":[]}]}
+按相关度从高到低排。不要硬凑，不要编清单外的 key。
+只返回 JSON：{"items":[{"n":序号,"related_career_ids":[],"wanted_career":"","fos_ids":[]}]}
 
 岗位：
 ${lines}`;
-  const r = await generateCheap(prompt, model, { jsonMode: true });
+  // 职业要从 600 多个里挑准，有强模型就用强模型（10-20 排查：qwen-flash 约 27% 是凑数的）
+  const r = opts.strongModel ? await generateContent(prompt, opts.strongModel, { jsonMode: true, temperature: 0 }) : await generateCheap(prompt, model, { jsonMode: true, temperature: 0 });
   await logTokenUsage({ tool_name: 'job-tagging', task_name: 'FOS + Career Tags', institution: jobs[0]?.company || '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
   const items: any[] = parseJsonLoose(r.text)?.items || [];
   const out = new Map<number, JobTags>();
+  const signals: SignalInput[] = [];
   for (const it of items) {
     const j = jobs[Number(it.n) - 1];
     if (!j) continue;
     const fos = [...new Set((it.fos_ids || []).map(String) as string[])].filter(k => cat.fosSet.has(k)).slice(0, MAX_TAGS);
     const occ = [...new Set((it.related_career_ids || []).map(String) as string[])].filter(k => cat.occSet.has(k)).slice(0, MAX_TAGS);
     out.set(j.id, { fos_ids: fos.join('|'), related_career_ids: occ.join('|') });
+    // 个体信号：职业库里没有对得上的 → 记下模型认为该有的职业名（市场新兴职业的来源，见 occupation-signals.ts）
+    const wanted = String(it.wanted_career || '').trim();
+    if (!occ.length && wanted) signals.push({ job_id: j.id, job_name: j.name, company_id: (j as any).company_id || null, wanted_name: wanted, source: 'tagging' });
   }
+  if (signals.length) await recordSignals(signals).catch(() => 0);
   return out;
 }
 
@@ -149,16 +158,17 @@ ${blocks}
  * 给指定岗位打标签并写库（专业 / 职业 + 四个标签），每个岗位只写一次。入库后顺手调，或批量脚本用。
  * 人工锁定的字段不动。
  */
-export async function tagAndSave(ids: number[], model: string, opts: { batch?: number; labels?: boolean; tags?: boolean; qianliModel?: string } = {}) {
+export async function tagAndSave(ids: number[], model: string, opts: { batch?: number; labels?: boolean; tags?: boolean; qianli?: boolean; strongModel?: string } = {}) {
   if (!ids.length) return 0;
-  // qianliModel：给了才打潜历职能 / 特色标签（数据部门 10-20 #15 #17；特色标签要守原文证据，用调用方指定的模型，不先试便宜模型）
-  const { batch = 20, labels = true, tags = true, qianliModel } = opts;
-  const { data } = await supabaseAdmin.from('jobs').select('id, name, job_function, summary_cn, responsibilities, overview, institute_or_company_name, human_locked_fields').in('id', ids);
+  // strongModel：挑职业、打潜历职能 / 特色标签用它（要从长清单里挑准 / 守原文证据，不先试便宜模型）；
+  // 潜历标签要给了 strongModel 才打（数据部门 10-20 #15 #17）
+  const { batch = 20, labels = true, tags = true, qianli = true, strongModel } = opts;
+  const { data } = await supabaseAdmin.from('jobs').select('id, name, job_function, summary_cn, responsibilities, overview, institute_or_company_name, company_id, human_locked_fields').in('id', ids);
   const rows = (data || []).map((j: any) => ({ ...j, company: j.institute_or_company_name }));
   let n = 0;
   for (let i = 0; i < rows.length; i += batch) {
     const chunk = rows.slice(i, i + batch);
-    const t = tags ? await tagJobs(chunk, model).catch(() => new Map<number, JobTags>()) : new Map<number, JobTags>();
+    const t = tags ? await tagJobs(chunk, model, { strongModel }).catch(() => new Map<number, JobTags>()) : new Map<number, JobTags>();
     // 四个标签每次 5 个岗位（每个岗位要求 / 职责最多 8000 字）
     const l = new Map<number, JobLabels>();
     if (labels) for (let k = 0; k < chunk.length; k += 5) for (const [id, v] of await labelJobs(chunk.slice(k, k + 5), model).catch(() => new Map<number, JobLabels>())) l.set(id, v);
@@ -168,12 +178,17 @@ export async function tagAndSave(ids: number[], model: string, opts: { batch?: n
       const need = chunk.map(j => ({ ...j, missing: LK.filter(k => !(l.get(j.id)?.[k])) })).filter(j => j.missing.length);
       for (let k = 0; k < need.length; k += 10) for (const [id, v] of await fillMissingLabels(need.slice(k, k + 10), model).catch(() => new Map<number, Partial<JobLabels>>())) l.set(id, { ...(l.get(id) || { exp_labels: null, skill_labels: null, exp_labels_jd: null, skill_labels_jd: null }), ...v });
     }
-    const q = qianliModel ? await qianliLabels(chunk, qianliModel).catch(() => new Map<number, QianliLabels>()) : new Map<number, QianliLabels>();
+    const q = qianli && strongModel ? await qianliLabels(chunk, strongModel).catch(() => new Map<number, QianliLabels>()) : new Map<number, QianliLabels>();
     for (const j of chunk) {
       const locked = new Set<string>(j.human_locked_fields || []);
       const patch: Record<string, any> = { ...(t.get(j.id) || {}), ...(l.get(j.id) || {}), ...(q.get(j.id) || {}) };
-      // 人工锁定的不动；这次没抽出来的（空值）不写，免得把库里已有的标签冲掉
-      for (const k of Object.keys(patch)) if (locked.has(k) || patch[k] === null || patch[k] === '') delete patch[k];
+      // 人工锁定的不动；这次没抽出来的（空值）不写，免得把库里已有的标签冲掉。
+      // 例外：模型对这个岗位回答了、明确说职业 / 专业没有对得上的 → 写空，把以前凑上的错的清掉（宁空不错）
+      const answered = t.has(j.id);
+      for (const k of Object.keys(patch)) {
+        if (locked.has(k)) { delete patch[k]; continue; }
+        if (patch[k] === null || patch[k] === '') { if (answered && (k === 'related_career_ids' || k === 'fos_ids')) patch[k] = null; else delete patch[k]; }
+      }
       if (!Object.keys(patch).length) continue;
       const { error } = await supabaseAdmin.from('jobs').update(patch).eq('id', j.id);
       if (!error) n++;

@@ -170,7 +170,7 @@ export default function DbOccupationPage() {
           columns={[
             { title: '职业', dataIndex: 'name', width: 220, fixed: 'left' as const, render: (v: string, r: any) => (
               <div style={{ cursor: 'pointer' }} onClick={() => router.push(`/admin/db-occupation/${r.id}`)}>
-                <div style={{ fontWeight: 600, color: BRAND.primary }}>{v}</div>
+                <div style={{ fontWeight: 600, color: BRAND.primary }}>{v}{r.origin === 'market' && <Tag color="purple" style={{ marginLeft: 6, fontWeight: 400 }}>市场新兴</Tag>}</div>
                 {r.name_lang_en && <div style={{ fontSize: 12, color: BRAND.ink3 }}>{r.name_lang_en}</div>}
               </div>) },
             { title: '大类 / 小类', dataIndex: 'career_category', width: 190, render: (v: string, r: any) => <div>

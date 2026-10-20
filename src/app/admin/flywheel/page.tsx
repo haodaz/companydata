@@ -30,16 +30,17 @@ export default function FlywheelPage() {
   const [forceAll, setForceAll] = useState(false);
   const [normalizing, setNormalizing] = useState(false);
   const [occBusy, setOccBusy] = useState<Record<string, number | 'busy'>>({});
-  // 职业缺口：人点了才建（职业查询同一个接口：联网生成画像 + 薪资，待审核）
-  const createOccupation = async (name: string, aliases: string[]) => {
-    setOccBusy(b => ({ ...b, [name]: 'busy' }));
+  // 职业缺口（市场新兴职业）：建 / 并进 / 先不管，都要人点（建要联网生成画像、花钱）
+  const emergent = async (action: 'create' | 'merge' | 'ignore', c: any) => {
+    setOccBusy(b => ({ ...b, [c.name]: 'busy' }));
     try {
-      const j = await (await fetch('/api/agents/occupation', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, aliases, model: currentModel }) })).json();
-      if (!j.success) throw new Error(j.error || '生成失败');
-      setOccBusy(b => ({ ...b, [name]: j.id }));
-      message.success(j.existed ? `「${name}」库里已有` : `已建「${name}」（待审核）`);
-    } catch (e: any) { setOccBusy(b => { const n = { ...b }; delete n[name]; return n; }); message.error(`${name}：${e.message}`); }
+      const j = await (await fetch('/api/flywheel/emergent', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action, candidate: c, model: currentModel }) })).json();
+      if (!j.ok) throw new Error(j.error || '操作失败');
+      setOccBusy(b => ({ ...b, [c.name]: action === 'ignore' ? -1 : j.id }));
+      message.success(action === 'ignore' ? `「${c.name}」先不管了` : `${action === 'merge' ? `已并进「${j.name}」` : `已建「${j.name}」（市场新兴，待审核）`}，${j.linked} 个岗位挂上了`);
+    } catch (e: any) { setOccBusy(b => { const n = { ...b }; delete n[c.name]; return n; }); message.error(`${c.name}：${e.message}`); }
   };
+
 
   const load = useCallback(async (quiet = false) => {
     if (!quiet) setLoading(true);
@@ -232,28 +233,31 @@ export default function FlywheelPage() {
         </Card>
       )}
 
-      {latest?.stats?.occupation?.gaps?.length > 0 && (
-        <Card size="small" style={{ marginBottom: 16 }} title={`${latest.day} 职业缺口 · 近 30 天新岗位里职业库对不上的`}
-          extra={<Text type="secondary" style={{ fontSize: 12 }}>已核对过近义职业；建不建由你定，点了才联网生成（待审核）</Text>}>
+      {(latest?.stats?.occupation?.candidates?.length > 0 || latest?.stats?.occupation?.merges?.length > 0) && (
+        <Card size="small" style={{ marginBottom: 16 }} title={`${latest.day} 职业缺口 · 市场新兴职业`}
+          extra={<Text type="secondary" style={{ fontSize: 12 }}>岗位在职业库里找不到对得上的职业 → 同义归并统计；过门槛（≥20 个岗位、≥5 家企业）才列；长尾 {latest.stats.occupation.longTail ?? 0} 种先不管</Text>}>
           <Space direction="vertical" style={{ width: '100%' }}>
-            {latest.stats.occupation.gaps.map((g: any) => {
-              const st = occBusy[g.name];
+            {[...(latest.stats.occupation.candidates || []).map((c: any) => ({ ...c, kind: 'new' })), ...(latest.stats.occupation.merges || []).map((c: any) => ({ ...c, kind: 'merge' }))].map((c: any) => {
+              const st = occBusy[c.name];
               return (
-                <div key={g.name} style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                  <Text strong>{g.name}</Text>
-                  <Tag>{g.jobs} 个岗位</Tag>
-                  <Tooltip title={g.why}><Text type="secondary" style={{ fontSize: 12 }}>{g.titles.slice(0, 5).join('、')}</Text></Tooltip>
-                  {typeof st === 'number'
+                <div key={`${c.kind}-${c.name}`} style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                  {c.kind === 'new' ? <Tag color="purple">新兴</Tag> : <Tag>可并进</Tag>}
+                  <Text strong>{c.name}</Text>
+                  <Tag>{c.jobs} 个岗位 · {c.companies} 家企业 · {c.cities} 个城市</Tag>
+                  {c.last_30d ? <Tag color="green">近 30 天 +{c.last_30d}</Tag> : null}
+                  <Tooltip title={<>叫法：{(c.names || []).join('、')}<br />{c.why}</>}><Text type="secondary" style={{ fontSize: 12 }}>{(c.titles || []).slice(0, 4).join('、')}</Text></Tooltip>
+                  {typeof st === 'number' && st > 0
                     ? <Button size="small" type="link" onClick={() => router.push(`/admin/db-occupation/${st}`)}>去看 →</Button>
-                    : <Button size="small" type="link" loading={st === 'busy'} onClick={() => createOccupation(g.name, g.aliases || [])}>建这个职业</Button>}
+                    : st === -1 ? <Text type="secondary" style={{ fontSize: 12 }}>先不管</Text>
+                    : <Space size={0}>
+                        {c.kind === 'merge'
+                          ? <Button size="small" type="link" loading={st === 'busy'} onClick={() => emergent('merge', c)}>并进「{c.merge_into?.name}」</Button>
+                          : <Button size="small" type="link" loading={st === 'busy'} onClick={() => emergent('create', c)}>建这个职业</Button>}
+                        <Button size="small" type="link" style={{ color: '#8c8c8c' }} disabled={st === 'busy'} onClick={() => emergent('ignore', c)}>先不管</Button>
+                      </Space>}
                 </div>
               );
             })}
-            {latest.stats.occupation.aliasHints?.length > 0 && (
-              <Text type="secondary" style={{ fontSize: 12 }}>
-                这些岗位名其实是现有职业的另一种叫法，可以在职业详情里加成别名：{latest.stats.occupation.aliasHints.slice(0, 10).map((a: any) => `${a.titles.slice(0, 2).join('/')} → ${a.occupation}`).join('；')}
-              </Text>
-            )}
           </Space>
         </Card>
       )}

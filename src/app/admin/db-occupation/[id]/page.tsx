@@ -11,7 +11,7 @@
  */
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { App, Avatar, Button, Card, Col, Descriptions, Empty, Form, Input, InputNumber, Modal, Popconfirm, Row, Segmented, Select, Space, Spin, Table, Tabs, Tag, Typography } from 'antd';
+import { App, Avatar, Button, Card, Col, Descriptions, Empty, Form, Input, InputNumber, Modal, Popconfirm, Row, Segmented, Select, Space, Spin, Table, Tabs, Tooltip, Tag, Typography } from 'antd';
 import { ArrowLeftOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, EditOutlined, ThunderboltOutlined, ApartmentOutlined, GlobalOutlined, ToolOutlined } from '@ant-design/icons';
 import { EntityHero } from '@/components/admin/EntityHero';
 import { OccupationCareerGraph } from '@/components/admin/OccupationCareerGraph';
@@ -288,6 +288,8 @@ export default function OccupationDetailPage() {
         tags={<>
           {o.career_category && <Tag color="blue">{CAREER_CATEGORY_LABELS[o.career_category] || o.career_category}</Tag>}
           {o.career_mid_category && <Tag>{CAREER_MID_LABELS[o.career_mid_category] || o.career_mid_category}</Tag>}
+          {o.origin === 'market' && <Tooltip title="不在职业大典 / O*NET 里：从招聘岗位里反复出现、归并统计后升级成的职业"><Tag color="purple">市场新兴</Tag></Tooltip>}
+          {o.origin === 'framework' && <Tag color="geekblue">官方框架</Tag>}
           {o.source && <Tag>{SOURCE_LABELS[o.source] || o.source}</Tag>}
           <Tag color={REVIEW_STATUS[o.human_review_status]?.color}>{REVIEW_STATUS[o.human_review_status]?.label || '未审核'}</Tag>
           {(o.aliases || []).map((a: string) => <Tag key={a} color="default" style={{ color: BRAND.ink3 }}>{a}</Tag>)}
@@ -298,6 +300,21 @@ export default function OccupationDetailPage() {
           { label: '岗位库在招', value: d.related.jobs_total, active: tab === 'jobs' },
           { label: '百业空间', value: d.related.spaces.length },
         ]} />
+      {/* 市场新兴职业的涌现数据（飞轮每次检测刷新） */}
+      {o.origin === 'market' && o.emergence && (
+        <Card size="small" style={{ marginBottom: 16, borderLeft: '3px solid #722ed1' }} title="涌现数据 · 市场新兴职业"
+          extra={<Text type="secondary" style={{ fontSize: 12 }}>{o.emergence.updated_at ? `更新于 ${String(o.emergence.updated_at).slice(0, 10)}` : ''}</Text>}>
+          <Space size={16} wrap>
+            <span>挂了 <b>{o.emergence.jobs ?? 0}</b> 个岗位</span>
+            <span><b>{o.emergence.companies ?? 0}</b> 家企业</span>
+            <span><b>{o.emergence.cities ?? 0}</b> 个城市</span>
+            <span>近 30 天 <b>+{o.emergence.last_30d ?? 0}</b></span>
+            {o.emergence.first_seen && <span>首次出现 {o.emergence.first_seen}</span>}
+          </Space>
+          {(o.emergence.titles || []).length > 0 && <div style={{ marginTop: 8, fontSize: 12, color: BRAND.ink3 }}>代表岗位：{o.emergence.titles.join('、')}</div>}
+          {(o.emergence.names || []).length > 0 && <div style={{ marginTop: 4, fontSize: 12, color: BRAND.ink3 }}>市场上的叫法：{o.emergence.names.join('、')}</div>}
+        </Card>
+      )}
 
       <Card styles={{ body: { paddingTop: 4 } }}>
         <Tabs activeKey={tab} onChange={switchTab} destroyOnHidden items={[

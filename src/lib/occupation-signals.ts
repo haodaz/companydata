@@ -1,0 +1,160 @@
+/**
+ * 市场新兴职业的信号（2026-10-20 用户口径，见记忆 emergent-occupations）：
+ *   个体信号：岗位打相关职业时，职业库里找不到真正对得上的 → occupation_signals 记一条（模型认为该有的职业名）
+ *   统计信号：同义叫法归并后看 岗位数 / 企业数 / 城市数 / 首次出现 / 近 30 天新增
+ *     过门槛（默认 ≥20 个岗位、≥5 家企业）的进飞轮看板「职业缺口」，人点了才建（origin = market，照常生成画像）；
+ *     能并进已有职业的给出「并进 X」（叫法记别名）；特别长尾、又归并不了的先不管——岗位不挂职业，信号照记。
+ */
+import { supabaseAdmin } from '@/lib/supabase';
+import { selectAll } from '@/lib/supabase-all';
+import { generateContent } from '@/lib/llm-client';
+import { parseJsonLoose } from '@/lib/agents/search-llm';
+import { logTokenUsage } from '@/lib/token-logger';
+import { regionName } from '@/lib/region-codes';
+
+export const SIGNAL_MIN_JOBS = 20;
+export const SIGNAL_MIN_COMPANIES = 5;
+
+/** 粗归一：去空格 / 括号 / 届别级别词，同一叫法的不同写法先并到一起（同义归并在 aggregate 里再让模型做） */
+export const signalKey = (name: string) => String(name || '').replace(/[（(【\[].*?[）)】\]]/g, '').replace(/\s+/g, '')
+  .replace(/^(资深|高级|中级|初级|助理|实习)/, '').replace(/(实习生|管培生)$/, '').toLowerCase().slice(0, 40);
+
+export type SignalInput = { job_id: number; job_name?: string | null; company_id?: number | null; wanted_name: string; reason?: string | null; source?: 'tagging' | 'audit' };
+
+/** 记个体信号（同一岗位同一叫法只记一次） */
+export async function recordSignals(rows: SignalInput[]) {
+  const clean = rows.filter(r => r.job_id && r.wanted_name && signalKey(r.wanted_name)).map(r => ({
+    job_id: r.job_id, job_name: r.job_name || null, company_id: r.company_id || null, wanted_name: r.wanted_name.trim().slice(0, 60),
+    norm_key: signalKey(r.wanted_name), reason: r.reason ? String(r.reason).slice(0, 200) : null, source: r.source || 'tagging',
+  }));
+  if (!clean.length) return 0;
+  const { error } = await supabaseAdmin.from('occupation_signals').upsert(clean, { onConflict: 'job_id,norm_key', ignoreDuplicates: true });
+  if (error) { console.warn('[signals] 记信号失败', error.message); return 0; }
+  return clean.length;
+}
+
+export type EmergentCandidate = {
+  name: string;                    // 建议的职业名
+  keys: string[];                  // 归进来的 norm_key
+  names: string[];                 // 归进来的各种叫法
+  jobs: number; companies: number; cities: number; first_seen: string; last_30d: number;
+  titles: string[];                // 代表岗位
+  merge_into?: { id: number; name: string } | null;   // 能并进的已有职业
+  why?: string;
+};
+
+/**
+ * 统计信号 → 新兴职业候选。先按 norm_key 聚合，再把岗位数够看的叫法交给模型做同义归并，
+ * 最后逐个核对职业库：已有同一个职业的给「并进」，没有的过门槛才算候选。
+ */
+export async function aggregateSignals(opts: { model: string; minJobs?: number; minCompanies?: number; log?: (s: string) => void }) {
+  const log = opts.log || (() => {});
+  const minJobs = opts.minJobs ?? SIGNAL_MIN_JOBS, minCompanies = opts.minCompanies ?? SIGNAL_MIN_COMPANIES;
+  const { data } = await selectAll(() => supabaseAdmin.from('occupation_signals').select('job_id, job_name, company_id, wanted_name, norm_key, created_at').eq('status', 'open').order('id'));
+  const sig = data as any[];
+  if (!sig.length) return { candidates: [] as EmergentCandidate[], merges: [] as EmergentCandidate[], longTail: 0, signals: 0 };
+  // 1. 按 norm_key 聚合
+  const byKey = new Map<string, { names: Map<string, number>; jobs: Set<number>; companies: Set<number>; titles: Map<string, number>; first: string }>();
+  for (const s of sig) {
+    const g = byKey.get(s.norm_key) || { names: new Map(), jobs: new Set(), companies: new Set(), titles: new Map(), first: s.created_at };
+    g.names.set(s.wanted_name, (g.names.get(s.wanted_name) || 0) + 1); g.jobs.add(s.job_id); if (s.company_id) g.companies.add(s.company_id);
+    if (s.job_name) g.titles.set(s.job_name, (g.titles.get(s.job_name) || 0) + 1);
+    if (s.created_at < g.first) g.first = s.created_at;
+    byKey.set(s.norm_key, g);
+  }
+  // 2. 同义归并：只拿有一定量的叫法（≥3 个岗位）给模型，长尾的不送
+  const big = [...byKey].filter(([, g]) => g.jobs.size >= 3).sort((a, b) => b[1].jobs.size - a[1].jobs.size).slice(0, 400);
+  const { data: occ } = await selectAll(() => supabaseAdmin.from('occupations').select('id, name, aliases').not('if_delete', 'is', true).order('id'));
+  const occByName = new Map((occ as any[]).map(o => [String(o.name).replace(/\s+/g, ''), o]));
+  const occText = (occ as any[]).map(o => o.name + ((o.aliases || []).length ? `（${o.aliases.slice(0, 3).join('/')}）` : '')).join('、');
+  const groups: { name: string; keys: string[]; same_as: string | null; why: string }[] = [];
+  for (let i = 0; i < big.length; i += 120) {
+    const chunk = big.slice(i, i + 120);
+    const r = await generateContent(`职业库现有职业（括号里是别名）：
+${occText}
+
+下面是招聘岗位里反复出现、但被判定为「职业库里没有对得上的职业」的叫法（后面是岗位数）。请：
+1. 把同一个职业的不同叫法归成一组（如「出海运营」「海外运营」「跨境运营」是一组），组名用行业通行的规范叫法；
+2. 每组判断职业库里有没有「同一个职业」（只是换个叫法、工作内容基本一样）：有就在 same_as 填那个职业名（必须从上面清单原样照抄），没有填 null。只是同一大类的不算。
+3. 太泛、不是职业的（如「工程师」「实习生」「其他」）不要成组。
+只返回 JSON：{"groups":[{"name":"规范职业名","keys":["归进来的叫法，原样照抄"],"same_as":null,"why":"一句话"}]}
+
+叫法：
+${chunk.map(([k, g]) => `${[...g.names.keys()][0]}｜key=${k}（${g.jobs.size}）`).join('\n')}`, opts.model, { jsonMode: true, temperature: 0 });
+    await logTokenUsage({ tool_name: 'occupation', task_name: 'Emergent Signals · Group', institution: '', model_id: r.model || opts.model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
+    for (const g of parseJsonLoose(r.text)?.groups || []) {
+      const keys = (g.keys || []).map((x: any) => String(x)).map((x: string) => byKey.has(x) ? x : signalKey(x)).filter((k: string) => byKey.has(k));
+      if (g.name && keys.length) groups.push({ name: String(g.name).trim(), keys: [...new Set(keys)] as string[], same_as: g.same_as ? String(g.same_as) : null, why: String(g.why || '') });
+    }
+  }
+  // 3. 统计 + 核对职业库
+  const grouped = new Set(groups.flatMap(g => g.keys));
+  const jobIds = [...new Set(groups.flatMap(g => g.keys.flatMap(k => [...byKey.get(k)!.jobs])))];
+  const jobInfo = new Map<number, { city: string | null; created_at: string }>();
+  for (let i = 0; i < jobIds.length; i += 300) {
+    const { data: js } = await supabaseAdmin.from('jobs').select('id, city, location, created_at').in('id', jobIds.slice(i, i + 300));
+    for (const j of js || []) jobInfo.set(j.id, { city: regionName('city', j.city) || j.location || null, created_at: j.created_at });
+  }
+  const since30 = new Date(Date.now() - 30 * 86_400_000).toISOString();
+  const all: EmergentCandidate[] = groups.map(g => {
+    const jobs = new Set<number>(), companies = new Set<number>(), titles = new Map<string, number>(), names = new Set<string>();
+    let first = '';
+    for (const k of g.keys) { const s = byKey.get(k)!; s.jobs.forEach(j => jobs.add(j)); s.companies.forEach(c => companies.add(c)); s.titles.forEach((n, t) => titles.set(t, (titles.get(t) || 0) + n)); s.names.forEach((_, n) => names.add(n)); if (!first || s.first < first) first = s.first; }
+    const cities = new Set([...jobs].map(j => jobInfo.get(j)?.city).filter(Boolean));
+    const last30 = [...jobs].filter(j => (jobInfo.get(j)?.created_at || '') >= since30).length;
+    const same = g.same_as ? occByName.get(g.same_as.replace(/（.*$/, '').replace(/\s+/g, '')) : null;   // 只认职业库里真有的名字
+    return { name: g.name, keys: g.keys, names: [...names].slice(0, 8), jobs: jobs.size, companies: companies.size, cities: cities.size, first_seen: first.slice(0, 10), last_30d: last30,
+      titles: [...titles].sort((a, b) => b[1] - a[1]).slice(0, 6).map(([t]) => t), merge_into: same ? { id: same.id, name: same.name } : null, why: g.why };
+  }).sort((a, b) => b.jobs - a.jobs);
+  const merges = all.filter(c => c.merge_into && c.jobs >= 3);
+  const candidates = all.filter(c => !c.merge_into && c.jobs >= minJobs && c.companies >= minCompanies);
+  const longTail = [...byKey.keys()].filter(k => !grouped.has(k)).length + all.filter(c => !c.merge_into && (c.jobs < minJobs || c.companies < minCompanies)).length;
+  log(`职业信号：${sig.length} 条（${byKey.size} 种叫法）→ 新兴职业候选 ${candidates.length} 个，可并进已有职业 ${merges.length} 组，长尾先不管 ${longTail} 种`);
+  return { candidates, merges, longTail, signals: sig.length };
+}
+
+/**
+ * 把一组信号落到某个职业上：岗位挂上这个职业（related_career_ids 追加），信号标 created / merged，叫法记进职业别名。
+ * 建职业（origin = market）和「并进已有职业」都走这里。
+ */
+export async function settleSignals(keys: string[], occupation: { id: number; external_id: string; name: string; aliases?: string[] | null }, status: 'created' | 'merged') {
+  const { data } = await selectAll(() => supabaseAdmin.from('occupation_signals').select('id, job_id, wanted_name').in('norm_key', keys).eq('status', 'open').order('id'));
+  const sig = data as any[];
+  const jobIds = [...new Set(sig.map(s => s.job_id))];
+  let linked = 0;
+  for (let i = 0; i < jobIds.length; i += 200) {
+    const { data: js } = await supabaseAdmin.from('jobs').select('id, related_career_ids, human_locked_fields').in('id', jobIds.slice(i, i + 200));
+    for (const j of js || []) {
+      if ((j.human_locked_fields || []).includes('related_career_ids')) continue;
+      const cur = String(j.related_career_ids || '').split('|').filter(Boolean);
+      if (cur.includes(occupation.external_id)) continue;
+      const { error } = await supabaseAdmin.from('jobs').update({ related_career_ids: [occupation.external_id, ...cur].slice(0, 4).join('|') }).eq('id', j.id);
+      if (!error) linked++;
+    }
+  }
+  const names = [...new Set(sig.map(s => s.wanted_name))].filter(n => n !== occupation.name);
+  const aliases = [...new Set([...(occupation.aliases || []), ...names])].slice(0, 30);
+  await supabaseAdmin.from('occupations').update({ aliases }).eq('id', occupation.id);
+  for (let i = 0; i < sig.length; i += 300) await supabaseAdmin.from('occupation_signals').update({ status, occupation_id: occupation.id }).in('id', sig.slice(i, i + 300).map(s => s.id));
+  return { signals: sig.length, linked };
+}
+
+/** 市场新兴职业的涌现数据：现在挂了多少岗位、多少家企业、几个城市、近 30 天新增（飞轮每次检测刷新） */
+export async function refreshEmergence(log: (s: string) => void = () => {}) {
+  const { data: occ } = await supabaseAdmin.from('occupations').select('id, external_id, name, emergence').eq('origin', 'market').not('if_delete', 'is', true);
+  const since30 = new Date(Date.now() - 30 * 86_400_000).toISOString();
+  let n = 0;
+  for (const o of occ || []) {
+    if (!o.external_id) continue;
+    const { data: js } = await selectAll(() => supabaseAdmin.from('jobs').select('id, name, company_id, city, location, created_at, related_career_ids').not('if_delete', 'is', true).ilike('related_career_ids', `%${o.external_id}%`).order('id'));
+    // ilike 是子串匹配：再按「|」拆开精确核对，免得 a_b 命中 a_b_c
+    const jobs = (js as any[]).filter(j => String(j.related_career_ids || '').split('|').includes(o.external_id));
+    const titles = new Map<string, number>(); for (const j of jobs) titles.set(j.name, (titles.get(j.name) || 0) + 1);
+    const em = { ...(o.emergence || {}), jobs: jobs.length, companies: new Set(jobs.map(j => j.company_id).filter(Boolean)).size,
+      cities: new Set(jobs.map(j => regionName('city', j.city) || j.location).filter(Boolean)).size, last_30d: jobs.filter(j => j.created_at >= since30).length,
+      titles: [...titles].sort((a, b) => b[1] - a[1]).slice(0, 6).map(([t]) => t), updated_at: new Date().toISOString() };
+    await supabaseAdmin.from('occupations').update({ emergence: em }).eq('id', o.id);
+    n++;
+  }
+  if (n) log(`刷新市场新兴职业涌现数据 ${n} 个`);
+}
