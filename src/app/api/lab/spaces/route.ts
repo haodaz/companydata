@@ -136,7 +136,7 @@ async function build(req: Request, body: any, costJob: string) {
       const { data: created, error: insErr } = await supabaseAdmin.from('skill_tasks').insert({
         job_id: null, skill_id: skill.id,
         jd_snapshot: { ...jd, kind: 'career', career, fetched_at: new Date().toISOString().slice(0, 10) },
-        ...built.task, created_by: createdBy || '', ...(body.orgId ? { org_id: String(body.orgId) } : {}),
+        ...built.task, created_by: createdBy || '', ...(body.orgId ? { org_id: String(body.orgId) } : {}), ...(body.projectId ? { project_id: String(body.projectId) } : {}),
       }).select('id').single();
       if (insErr) throw insErr;
       await attachCostToSpace(costJob, created.id);
@@ -165,7 +165,7 @@ async function build(req: Request, body: any, costJob: string) {
       const { data: created, error: insErr } = await supabaseAdmin.from('skill_tasks').insert({
         job_id: null, skill_id: skill.id,
         jd_snapshot: { ...jd, kind: 'pasted', fetched_at: new Date().toISOString().slice(0, 10) },
-        ...built.task, created_by: createdBy || '', ...(body.orgId ? { org_id: String(body.orgId) } : {}),
+        ...built.task, created_by: createdBy || '', ...(body.orgId ? { org_id: String(body.orgId) } : {}), ...(body.projectId ? { project_id: String(body.projectId) } : {}),
       }).select('id').single();
       if (insErr) throw insErr;
       await attachCostToSpace(costJob, created.id);
@@ -201,7 +201,7 @@ async function build(req: Request, body: any, costJob: string) {
       jd_snapshot: { ...jd, job_req_id: job.job_req_id, location: job.location, url: job.link || job.source_url },
       ...built.task,
       created_by: createdBy || '',
-      ...(body.orgId ? { org_id: String(body.orgId) } : {}),   // 企业工作台建的空间归这家企业（迁移 037）
+      ...(body.orgId ? { org_id: String(body.orgId) } : {}), ...(body.projectId ? { project_id: String(body.projectId) } : {}),   // 企业工作台建的空间归这家企业（迁移 037）
     }).select('id').single();
     if (insErr) throw insErr;
     await attachCostToSpace(costJob, created.id);

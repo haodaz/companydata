@@ -11,6 +11,7 @@ import { Md } from '@/components/ws/Md';
 import { ArtifactPanel, artKey, type Art } from '@/components/ws/Artifact';
 import { MODEL_OPTIONS } from '@/lib/model-options';
 import { Setup } from '@/components/ws/Setup';
+import { ProjectPage, STAGE_LABEL } from '@/components/ws/Project';
 
 type Org = { id: string; name: string; company_id: number | null; company_name: string | null; role: string; setup_step?: string };
 type Item =
@@ -19,7 +20,7 @@ type Item =
   | { k: 'tool'; id: string; name: string; input: any; label?: string; ui?: any; error?: string; running: boolean; t0: number }
   | { k: 'ask'; id: string; question: string; options: string[]; answered?: string }
   | { k: 'error'; text: string };
-type View = 'chat' | 'roles' | 'work' | 'spaces' | 'people' | 'setup';
+type View = 'chat' | 'roles' | 'work' | 'spaces' | 'people' | 'setup' | 'project';
 
 const TOOL_RUNNING: Record<string, string> = { org_profile: '读企业画像', list_roles: '查本企业岗位', propose_problems: '从企业动态和岗位职责里找业务问题', create_work_task: '出真活：任务书、材料包、评分标准（1–2 分钟）', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', list_work_tasks: '列本企业的真活', work_results: '看作答和报告', create_space: '准备建职业空间', list_spaces: '列本企业的职业空间' };
 const CHAT_MODELS = MODEL_OPTIONS.filter(m => /^(claude-|gpt-|gemini-|qwen)/.test(m.id));
@@ -41,6 +42,9 @@ function Inner() {
   const [bootErr, setBootErr] = useState('');
   const [view, setView] = useState<View>('chat');
   const [threads, setThreads] = useState<any[]>([]);
+  const [projects, setProjects] = useState<any[]>([]);
+  const [projectId, setProjectId] = useState<string | null>(null);   // 正在看的项目页
+  const [chatProject, setChatProject] = useState<string | null>(null);   // 当前对话挂在哪个项目
   const [threadId, setThreadId] = useState<string | null>(null);
   const [items, setItems] = useState<Item[]>([]);
   const [busy, setBusy] = useState(false);
@@ -54,7 +58,7 @@ function Inner() {
     const r = await fetch('/api/ws/org'); if (r.status === 401) { location.href = '/lab/login?next=/workspace'; return; }
     const j = await r.json(); if (!j.ok) { setBootErr(j.error); setOrg(null); return; } setUser(j.user); setOrg(j.org);
   }, []);
-  const loadThreads = useCallback(async () => { const j = await (await fetch('/api/ws/threads')).json(); if (j.ok) setThreads(j.threads); }, []);
+  const loadThreads = useCallback(async () => { const j = await (await fetch('/api/ws/threads')).json(); if (j.ok) setThreads(j.threads); const k = await (await fetch('/api/ws/projects')).json().catch(() => ({})); if (k.ok) setProjects(k.projects); }, []);
   useEffect(() => { loadOrg(); }, [loadOrg]);
   useEffect(() => { if (org) loadThreads(); }, [org, loadThreads]);
   // 新企业（设置还没走完）：一进来 AI 就开口，边聊边配，右边企业档案跟着长
@@ -64,19 +68,23 @@ function Inner() {
   const openThread = async (id: string) => {
     abortRef.current?.abort(); setBusy(false); setView('chat'); setThreadId(id); setItems([]); setArt(null);
     const j = await (await fetch(`/api/ws/threads/${id}`)).json(); if (!j.ok) return;
+    setChatProject(j.thread.project_id || null);
     setItems(fromHistory(j.thread.messages || []));
     const lastArt = [...(j.thread.messages || [])].reverse().flatMap((m: any) => (m.role === 'tool' ? [...m.results].reverse() : [])).find((r: any) => r.ui && r.ui.kind !== 'problems');
     if (lastArt) setArt(lastArt.ui);
   };
-  const newChat = () => { abortRef.current?.abort(); setBusy(false); setView('chat'); setThreadId(null); setItems([]); setArt(null); };
+  const newChat = (inProject: string | null = null) => { abortRef.current?.abort(); setBusy(false); setView('chat'); setThreadId(null); setItems([]); setArt(null); setChatProject(inProject); };
+  // 在项目里问一句：开一个挂在这个项目下的新对话
+  const askInProject = (pid: string, text: string) => { newChat(pid); setTimeout(() => sendRef.current?.(text, pid), 0); };
+  const sendRef = useRef<((t: string, pid?: string | null) => void) | null>(null);
 
-  const send = async (text: string) => {
+  const send = async (text: string, pid: string | null = chatProject) => {
     const t = text.trim(); if (!t || busy) return;
     setView('chat'); setBusy(true);
     setItems(it => [...it.map(x => (x.k === 'ask' && !x.answered ? { ...x, answered: t } : x)), { k: 'user', text: t }]);
     const ac = new AbortController(); abortRef.current = ac;
     try {
-      const res = await fetch('/api/ws/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ thread_id: threadId, text: t, model }), signal: ac.signal });
+      const res = await fetch('/api/ws/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ thread_id: threadId, text: t, model, project_id: pid }), signal: ac.signal });
       if (!res.ok || !res.body) { const j = await res.json().catch(() => ({})); setItems(it => [...it, { k: 'error', text: j.error || `出错了（${res.status}）` }]); return; }
       const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = '';
       for (;;) {
@@ -96,6 +104,7 @@ function Inner() {
     else if (e.t === 'error') setItems(it => [...it, { k: 'error', text: e.message }]);
   };
   const stop = () => { abortRef.current?.abort(); };
+  sendRef.current = send;
 
   if (org === undefined) return <Shell><div className="ws-center ws-muted">加载中…</div></Shell>;
   if (!org) return <Shell><Onboard err={bootErr} onDone={o => setOrg(o)} /></Shell>;
@@ -103,15 +112,16 @@ function Inner() {
   return (
     <Shell>
       <div className={`ws-root${art ? ' with-art' : ''}${side ? '' : ' no-side'}`}>
-        <Sidebar org={org} user={user} view={view} setView={v => { setView(v); if (v !== 'chat') setArt(null); }} threads={threads} threadId={threadId} openThread={openThread} newChat={newChat} onHide={() => setSide(false)} />
+        <Sidebar org={org} user={user} view={view} setView={v => { setView(v); if (v !== 'chat') setArt(null); }} threads={threads} threadId={threadId} openThread={openThread} newChat={() => newChat(null)} onHide={() => setSide(false)} projects={projects} projectId={view === 'project' ? projectId : chatProject} openProject={id => { setProjectId(id); setView('project'); setArt(null); }} newProject={() => { newChat(null); setTimeout(() => sendRef.current?.('我要招人，帮我开一个招聘项目', null), 0); }} />
         <main className="ws-main">
           {!side && <button className="ws-ghost ws-showside" onClick={() => setSide(true)} aria-label="展开侧栏">☰</button>}
           {view === 'chat'
-            ? <Chat org={org} items={items} busy={busy} send={send} stop={stop} model={model} setModel={m => { setModel(m); try { localStorage.setItem('ws:model', m); } catch {} }} openArt={setArt} activeArt={art ? artKey(art) : ''} />
+            ? <Chat project={projects.find(x => x.id === chatProject)} openProject={() => { if (chatProject) { setProjectId(chatProject); setView('project'); } }} org={org} items={items} busy={busy} send={send} stop={stop} model={model} setModel={m => { setModel(m); try { localStorage.setItem('ws:model', m); } catch {} }} openArt={setArt} activeArt={art ? artKey(art) : ''} />
             : view === 'setup' ? <SetupPage />
+            : view === 'project' && projectId ? <ProjectPage id={projectId} openArt={setArt} ask={t => askInProject(projectId, t)} openThread={openThread} />
             : <Lists view={view} org={org} openArt={setArt} ask={p => { newChat(); setTimeout(() => send(p), 0); }} />}
         </main>
-        {art && <ArtifactPanel key={artKey(art) + ((art as any)._n || '')} art={art} onClose={() => setArt(null)} />}
+        {art && <ArtifactPanel key={artKey(art) + ((art as any)._n || '')} art={art} onClose={() => setArt(null)} openArt={setArt} />}
       </div>
     </Shell>
   );
@@ -135,7 +145,7 @@ function fromHistory(ms: any[]): Item[] {
   return out;
 }
 
-function Sidebar({ org, user, view, setView, threads, threadId, openThread, newChat, onHide }: { org: Org; user: any; view: View; setView: (v: View) => void; threads: any[]; threadId: string | null; openThread: (id: string) => void; newChat: () => void; onHide: () => void }) {
+function Sidebar({ org, user, view, setView, threads, threadId, openThread, newChat, onHide, projects, projectId, openProject, newProject }: { org: Org; user: any; view: View; setView: (v: View) => void; threads: any[]; threadId: string | null; openThread: (id: string) => void; newChat: () => void; onHide: () => void; projects: any[]; projectId: string | null; openProject: (id: string) => void; newProject: () => void }) {
   const NAV: [View, string, string][] = [['chat', '对话', 'M4 5h16v11H8l-4 4z'], ['roles', '岗位', 'M4 7h16v12H4zM9 7V5h6v2'], ['work', '真活', 'M5 4h14v16H5zM8 9h8M8 13h8M8 17h5'], ['spaces', '职业空间', 'M12 3l8 4.5v9L12 21l-8-4.5v-9z'], ['people', '候选人', 'M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 20c0-3 3-5 6-5s6 2 6 5M17 11a2.5 2.5 0 1 0 0-5M21 19c0-2-1.5-3.5-4-4'], ['setup', '企业设置', 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z']];
   return (
     <nav className="ws-side">
@@ -147,9 +157,11 @@ function Sidebar({ org, user, view, setView, threads, threadId, openThread, newC
       <button className="ws-new" onClick={newChat}><span style={{ fontSize: 17, lineHeight: 1 }}>＋</span> 新对话</button>
       <div className="ws-sec">功能</div>
       {NAV.map(([v, t, d]) => <button key={v} className={`ws-nav${view === v ? ' on' : ''}`} onClick={() => (v === 'chat' ? newChat() : setView(v))}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>{t}</button>)}
+      <div className="ws-sec" style={{ display: 'flex', alignItems: 'center' }}>招聘项目<button className="ws-ghost" style={{ marginLeft: 'auto', padding: '0 6px', fontSize: 15 }} title="开一个招聘项目" onClick={newProject}>＋</button></div>
+      {projects.length ? projects.slice(0, 8).map(p => <button key={p.id} className={`ws-proj${p.id === projectId ? ' on' : ''}`} onClick={() => openProject(p.id)} title={p.title}><span className="ws-proj-ico">{(p.role_title || p.title).slice(0, 1)}</span><span style={{ minWidth: 0, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.title}</span>{p.candidates ? <span className="ws-muted" style={{ fontSize: 11.5 }}>{p.candidates}</span> : null}</button>) : <div className="ws-muted" style={{ padding: '2px 10px 4px', fontSize: 12.5 }}>一次招人就是一个项目</div>}
       <div className="ws-sec">最近</div>
       <div className="ws-recents">
-        {threads.length ? threads.map(t => <button key={t.id} className={`ws-recent${t.id === threadId && view === 'chat' ? ' on' : ''}`} onClick={() => openThread(t.id)} title={t.title}>{t.title || '未命名对话'}</button>) : <div className="ws-muted" style={{ padding: '4px 10px', fontSize: 12.5 }}>还没有对话</div>}
+        {threads.length ? threads.map(t => <button key={t.id} className={`ws-recent${t.id === threadId && view === 'chat' ? ' on' : ''}`} onClick={() => openThread(t.id)} title={t.title}>{t.project_id && <span className="ws-dot-p" />}{t.title || '未命名对话'}</button>) : <div className="ws-muted" style={{ padding: '4px 10px', fontSize: 12.5 }}>还没有对话</div>}
       </div>
       <div className="ws-side-foot">
         <div className="ws-muted" style={{ fontSize: 12, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email}</div>
@@ -159,7 +171,7 @@ function Sidebar({ org, user, view, setView, threads, threadId, openThread, newC
   );
 }
 
-function Chat({ org, items, busy, send, stop, model, setModel, openArt, activeArt }: { org: Org; items: Item[]; busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; openArt: (a: Art) => void; activeArt: string }) {
+function Chat({ project, openProject, org, items, busy, send, stop, model, setModel, openArt, activeArt }: { project?: any; openProject: () => void; org: Org; items: Item[]; busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; openArt: (a: Art) => void; activeArt: string }) {
   const endRef = useRef<HTMLDivElement>(null);
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [items]);
   const empty = !items.length;
@@ -177,6 +189,7 @@ function Chat({ org, items, busy, send, stop, model, setModel, openArt, activeAr
         </div>
       ) : (
         <>
+          {project && <div className="ws-inproj"><button className="ws-ghost sm" onClick={openProject}>招聘项目 · {project.title} →</button></div>}
           <div className="ws-thread">
             {(() => { const seen = new Set<string>(); return items.map((x, i) => { const k = x.k === 'tool' && x.ui && x.ui.kind !== 'problems' ? artKey(x.ui) : ''; const chip = !!k && !seen.has(k); if (k) seen.add(k); return <Row key={i} x={x} send={send} busy={busy} openArt={openArt} activeArt={activeArt} chip={chip} />; }); })()}
             {busy && !(items[items.length - 1]?.k === 'tool' && (items[items.length - 1] as any).running) && <div className="ws-typing"><i /><i /><i /></div>}
@@ -458,6 +471,29 @@ const CSS = `
 .ws-ki-dot { width:7px; height:7px; border-radius:50%; background:#d6d1c2; flex-shrink:0; } .ws-ki.has .ws-ki-dot { background:#5aa476; }
 .ws-ki-v { font-size:13px; color:var(--ink2); margin-top:4px; line-height:1.6; }
 .ws-ki-why { font-size:12.5px; color:var(--ink3); margin-top:3px; line-height:1.55; }
+.ws-proj { display:flex; align-items:center; gap:8px; width:100%; padding:6px 10px; border-radius:8px; border:0; background:transparent; color:var(--ink2); font-size:13.5px; cursor:pointer; text-align:left; }
+.ws-proj:hover { background:var(--hover); } .ws-proj.on { background:var(--hover); color:var(--ink); font-weight:600; }
+.ws-proj-ico { width:20px; height:20px; border-radius:6px; background:var(--accent-soft); color:var(--accent); display:grid; place-items:center; font-size:11px; font-weight:700; flex-shrink:0; }
+.ws-dot-p { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent); margin-right:6px; vertical-align:middle; }
+.ws-inproj { width:min(760px,92%); margin:10px auto 0; }
+.ws-flow { display:flex; gap:4px; flex-wrap:wrap; }
+.ws-flow-i { flex:1; min-width:64px; background:var(--card); border:1px solid var(--line2); border-radius:10px; padding:8px 10px; display:flex; flex-direction:column; gap:2px; }
+.ws-flow-i b { font-size:18px; color:var(--ink3); } .ws-flow-i span { font-size:12px; color:var(--ink3); }
+.ws-flow-i.has { border-color:var(--line); } .ws-flow-i.has b { color:var(--ink); } .ws-flow-i.rej b { color:#a33a2b; }
+.ws-pask { display:flex; align-items:center; gap:8px; margin-top:14px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:6px 6px 6px 14px; }
+.ws-pask input { flex:1; border:0; outline:0; font:inherit; font-size:14.5px; background:transparent; color:var(--ink); }
+.ws-tabs2 { display:inline-flex; gap:2px; padding:3px; border-radius:10px; background:var(--hover); margin-bottom:12px; }
+.ws-tabs2 button { border:0; background:transparent; padding:5px 12px; border-radius:8px; font-size:13px; color:var(--ink3); cursor:pointer; }
+.ws-tabs2 button.on { background:var(--card); color:var(--ink); font-weight:600; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+.ws-stage { font-size:12px; padding:2px 8px; border-radius:999px; background:var(--hover); color:var(--ink2); white-space:nowrap; }
+.ws-stage.s-screening, .ws-stage.s-work, .ws-stage.s-verify { background:var(--accent-soft); color:var(--accent); }
+.ws-stage.s-interview, .ws-stage.s-offer { background:#fbf1e3; color:#8a5a1f; } .ws-stage.s-hired { background:#e9f3e6; color:#3d6b32; } .ws-stage.s-rejected { background:#f6e9e6; color:#a33a2b; }
+.ws-stage-sel { margin-left:auto; border:1px solid var(--line); border-radius:8px; padding:4px 8px; font:inherit; font-size:13px; background:var(--paper); color:var(--ink); }
+.ws-cand { display:flex; align-items:center; gap:10px; width:100%; border:1px solid var(--line); background:var(--card); border-radius:10px; padding:9px 12px; margin-bottom:6px; cursor:pointer; text-align:left; font-size:14px; color:var(--ink); }
+.ws-cand:hover { border-color:#bdb6a2; }
+.ws-sub { font-size:12px; font-weight:700; color:var(--ink3); margin:12px 0 4px; }
+.ws-list { margin:0; padding-left:18px; font-size:13.5px; line-height:1.8; color:var(--ink2); }
+.ws-pre { white-space:pre-wrap; font-family:inherit; font-size:12.5px; line-height:1.7; color:var(--ink2); margin:8px 0 2px; max-height:320px; overflow:auto; }
 .ws-libjob { display:flex; align-items:center; gap:10px; padding:7px 2px; border-top:1px solid var(--line2); }
 @media (max-width: 900px) {
   .ws-root, .ws-root.with-art { grid-template-columns:0 minmax(0,1fr); } .ws-side { visibility:hidden; }

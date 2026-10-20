@@ -6,20 +6,23 @@
  */
 import React, { useEffect, useState } from 'react';
 import { WorkTaskDetail } from '@/components/work/WorkTaskDetail';
+import { CandidateArt, ProjectArt } from '@/components/ws/Project';
 
 export type Art =
   | { kind: 'work'; id: string; token: string; owner_key: string; title: string; role?: string }
   | { kind: 'results'; task_id: string; token: string; owner_key: string; title: string }
   | { kind: 'space_build'; buildId: string; payload: Record<string, any>; title: string }
   | { kind: 'space'; id: string; title: string }
-  | { kind: 'company'; title: string };
+  | { kind: 'company'; title: string }
+  | { kind: 'project'; id: string; title: string; tab?: string }
+  | { kind: 'candidate'; id: string; project_id: string; title: string };
 
-export const artKey = (a: Art) => (a.kind === 'space_build' ? a.buildId : a.kind === 'space' ? a.id : a.kind === 'company' ? 'company' : `${a.kind}:${a.token}`);
+export const artKey = (a: Art) => (a.kind === 'space_build' ? a.buildId : a.kind === 'space' ? a.id : a.kind === 'company' ? 'company' : a.kind === 'project' ? `project:${a.id}` : a.kind === 'candidate' ? `cand:${a.id}` : `${a.kind}:${a.token}`);
 const started = new Set<string>();
 
-export function ArtifactPanel({ art, onClose, onSpaceDone }: { art: Art; onClose: () => void; onSpaceDone?: (buildId: string, id: string) => void }) {
+export function ArtifactPanel({ art, onClose, onSpaceDone, openArt }: { art: Art; onClose: () => void; onSpaceDone?: (buildId: string, id: string) => void; openArt?: (a: Art) => void }) {
   const open = art.kind === 'work' || art.kind === 'results' ? `/work/${art.token}/owner?k=${encodeURIComponent(art.owner_key)}` : art.kind === 'space' ? `/lab/${art.id}` : null;
-  const label = art.kind === 'work' ? '真活' : art.kind === 'results' ? '作答与报告' : art.kind === 'company' ? '企业档案 · 让 AI 更懂你们' : '职业空间';
+  const label = art.kind === 'work' ? '真活' : art.kind === 'results' ? '作答与报告' : art.kind === 'company' ? '企业档案 · 让 AI 更懂你们' : art.kind === 'project' ? '招聘项目' : art.kind === 'candidate' ? '候选人' : '职业空间';
   return (
     <aside className="ws-art">
       <div className="ws-art-head">
@@ -33,6 +36,8 @@ export function ArtifactPanel({ art, onClose, onSpaceDone }: { art: Art; onClose
         {(art.kind === 'work' || art.kind === 'results') && <WorkArt token={art.token} k={art.owner_key} tab={art.kind === 'results' ? 's' : 'p'} />}
         {art.kind === 'space_build' && <SpaceBuild art={art} onDone={id => onSpaceDone?.(art.buildId, id)} />}
         {art.kind === 'company' && <CompanyArt />}
+        {art.kind === 'project' && <ProjectArt id={art.id} tab={art.tab} openArt={a => openArt?.(a)} />}
+        {art.kind === 'candidate' && <CandidateArt id={art.id} openArt={a => openArt?.(a)} />}
         {art.kind === 'space' && <iframe src={`/lab/${art.id}`} className="ws-frame" title={art.title} />}
       </div>
     </aside>

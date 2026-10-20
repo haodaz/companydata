@@ -10,6 +10,7 @@ import { supabaseAdmin as db } from '@/lib/supabase';
 import { askJson, companyJobs, gatherContext, generateTask, renderContext, runBaseline, WORK_MODEL, type WorkEnvType } from '@/lib/work/generator';
 import { withCost } from '@/lib/token-logger';
 import type { WsOrg } from '@/lib/ws/org';
+import { listProjects, createProject, projectBoard, writeJd, fitCandidate, verifyCandidate, checkVerify, setStage, ownCandidate, STAGES } from '@/lib/ws/projects';
 import { privateContext, saveContext, enrichCompany, addRole, checklist, PUBLIC_FIELDS, PRIVATE_FIELDS, ROLE_NOTES } from '@/lib/ws/setup';
 
 export type ToolUi =
@@ -18,15 +19,25 @@ export type ToolUi =
   | { kind: 'space'; id: string; title: string }
   | { kind: 'results'; task_id: string; token: string; owner_key: string; title: string }
   | { kind: 'company'; title: string }
+  | { kind: 'project'; id: string; title: string; tab?: string }
+  | { kind: 'candidate'; id: string; project_id: string; title: string }
   | { kind: 'problems'; role: string; items: { title: string; statement: string; why_now: string; evidence: string[] }[] };
 export interface ToolOut { result: any; ui?: ToolUi; label: string }
-export interface ToolCtx { org: WsOrg; email: string }
+export interface ToolCtx { org: WsOrg; email: string; projectId?: string | null }
 
 const s = (v: any, n = 400) => (v == null ? '' : typeof v === 'string' ? v : JSON.stringify(v)).slice(0, n);
 const companyKey = (org: WsOrg) => (org.company_id ? String(org.company_id) : org.company_name || org.name);
 
 /** 给模型看的工具说明。ask_user 不在这里执行：agent 遇到它就停下这一轮，等人点选 */
 export const TOOLS: Anthropic.Tool[] = [
+  { name: 'list_projects', description: '列出本企业的招聘项目（一次招人 = 一个项目）：岗位、人数、各阶段候选人数。', input_schema: { type: 'object', properties: {} } },
+  { name: 'create_project', description: '开一个招聘项目（挂在一个岗位上）。用户说「要招 xx」时先确认岗位和人数再开。开完建议接着 write_jd。', input_schema: { type: 'object', properties: { role_title: { type: 'string' }, headcount: { type: 'number' } }, required: ['role_title'] } },
+  { name: 'project_board', description: '看一个招聘项目的全景：JD 有没有、真活、职业空间、每个候选人的阶段 / 适配分 / 真活分 / 人才检测。不传 project_id 就是当前项目。回答「进展怎么样」「下一步干什么」先看它。', input_schema: { type: 'object', properties: { project_id: { type: 'string' } } } },
+  { name: 'write_jd', description: '给项目写 JD：用企业画像、职业库、企业自己的内部情况和岗位备注，写出职责 / 要求 / 硬性要求 / 入职 90 天目标。写完让用户看右侧确认。', input_schema: { type: 'object', properties: { project_id: { type: 'string' }, extra: { type: 'string', description: '用户的补充要求' } } } },
+  { name: 'screen_candidates', description: '适配分析：拿简历对 JD、硬性要求、用人偏好逐个打分，给理由、风险、面试要追问的问题。不传 candidate_ids 就把项目里还没分析过的都做一遍（一次最多 6 个）。', input_schema: { type: 'object', properties: { project_id: { type: 'string' }, candidate_ids: { type: 'array', items: { type: 'string' } } } } },
+  { name: 'verify_candidate', description: '人才检测：把候选人的简历交给智查查 2.0 验真（学历、经历、论文专利逐条核对，再做能力扫描），要几分钟，在后台跑；之后用 check_verification 取结果。值得进面试的人再做，不要一股脑全做。', input_schema: { type: 'object', properties: { candidate_id: { type: 'string' } }, required: ['candidate_id'] } },
+  { name: 'check_verification', description: '取人才检测（智查查）的结果：还在跑 / 验真结论 / 存疑项 / 能力分与优势风险。', input_schema: { type: 'object', properties: { candidate_id: { type: 'string' } }, required: ['candidate_id'] } },
+  { name: 'set_candidate_stage', description: `改候选人阶段（${STAGES.map(x => `${x.key}=${x.label}`).join('、')}）。推到面试、offer 或淘汰前先 ask_user 确认。`, input_schema: { type: 'object', properties: { candidate_id: { type: 'string' }, stage: { type: 'string' }, note: { type: 'string' } }, required: ['candidate_id', 'stage'] } },
   { name: 'org_profile', description: '读取本企业在平方数据库里的画像：简介、业务、近期动态、产品、在招岗位数。开始任何生成前先读一次，知道企业在干什么。', input_schema: { type: 'object', properties: {} } },
   { name: 'list_roles', description: '列出本企业在招 / 已有的岗位（来自平方岗位库），可按关键词筛。用来帮用户确认是哪个岗位。', input_schema: { type: 'object', properties: { query: { type: 'string', description: '岗位关键词，可空' } } } },
   { name: 'propose_problems', description: '给本企业的某个岗位，从企业动态、岗位职责、职业典型任务、行业规范里找出 3 个「此刻真实的业务问题」候选，作为出真活的起点。拿到候选后必须用 ask_user 让用户选一个（或让他自己说），不要替他选。', input_schema: { type: 'object', properties: { role: { type: 'string' }, hint: { type: 'string', description: '用户已经说过的关注点，可空' } }, required: ['role'] } },
@@ -88,7 +99,7 @@ ${inside ? `\n${inside}\n（企业自己说的眼下重点要优先考虑，至�
       const inside = await privateContext(org.id, role);
       const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题（工作台）', stage: 'create', actor: ctx.email }, () => generateTask(wctx, role, { model: WORK_MODEL, focus: `出题人确认的业务问题：${problem}${inside ? `\n${inside}` : ''}`, env }));
       const share_token = randomBytes(8).toString('base64url'), owner_key = randomBytes(12).toString('base64url');
-      const row = { share_token, owner_key, owner: { name: ctx.email, contact: ctx.email }, status: 'published', company_id: wctx.company?.id ?? null, company_name: wctx.company?.name || org.name, role, context: wctx, problem: task.problem, task: { ...task.task, env: task.env }, materials: task.materials, rubric: task.rubric, model, created_by: ctx.email, org_id: org.id };
+      const row = { share_token, owner_key, owner: { name: ctx.email, contact: ctx.email }, status: 'published', company_id: wctx.company?.id ?? null, company_name: wctx.company?.name || org.name, role, context: wctx, problem: task.problem, task: { ...task.task, env: task.env }, materials: task.materials, rubric: task.rubric, model, created_by: ctx.email, org_id: org.id, ...(ctx.projectId ? { project_id: ctx.projectId } : {}) };
       const { data, error } = await db.from('work_tasks').insert(row).select('id').single();
       if (error) throw new Error(error.message);
       return { label: `出好了真活「${task.task.title}」`, ui: { kind: 'work', id: data.id, token: share_token, owner_key, title: task.task.title, role },
@@ -120,7 +131,7 @@ ${inside ? `\n${inside}\n（企业自己说的眼下重点要优先考虑，至�
       const jd = String(input.jd_text || '').trim();
       if (!job && jd.length < 60) return { label: '需要这个岗位的 JD', result: { error: 'need_jd', note: `本企业岗位库里没有「${role}」的 JD。请让用户粘贴 JD，或根据 org_profile 和岗位常识起草一份 200 字以上的职责清单，用 jd_text 再调一次。` } };
       const buildId = `ws-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
-      const payload = job ? { jobId: job.id, buildId, createdBy: ctx.email, orgId: org.id } : { jdText: jd, title: role, company: org.company_name || org.name, buildId, createdBy: ctx.email, orgId: org.id };
+      const payload = job ? { jobId: job.id, buildId, createdBy: ctx.email, orgId: org.id, projectId: ctx.projectId || undefined } : { jdText: jd, title: role, company: org.company_name || org.name, buildId, createdBy: ctx.email, orgId: org.id, projectId: ctx.projectId || undefined };
       return { label: `开始建「${role}」的职业空间`, ui: { kind: 'space_build', buildId, payload, title: `${org.company_name || org.name} · ${role}` }, result: { started: true, from: job ? '本企业岗位库的 JD' : '用户提供 / AI 起草的 JD', note: '在右侧面板里跑，约 3–5 分钟；告诉用户可以先做别的' } };
     }
     case 'list_spaces': {
@@ -150,6 +161,48 @@ ${inside ? `\n${inside}\n（企业自己说的眼下重点要优先考虑，至�
     case 'setup_checklist': {
       const c = await checklist(org);
       return { ui: company(org), label: `看了企业档案：完成度 ${c.score}%，还缺 ${c.missing.length} 项`, result: { score: c.score, missing: c.missing.slice(0, 8), known: c.items.filter((i: any) => i.value).map((i: any) => `${i.label}：${String(i.value).slice(0, 80)}`), roles: c.roles.map((r: any) => r.title), library_jobs: c.library_jobs } };
+    }
+    case 'list_projects': {
+      const ps = await listProjects(org);
+      return { label: `列了本企业的招聘项目（${ps.length} 个）`, result: { projects: ps.map(p => ({ project_id: p.id, title: p.title, role: p.role_title, headcount: p.headcount, status: p.status, candidates: p.candidates, stages: p.stages })) } };
+    }
+    case 'create_project': {
+      const p = await createProject(org, ctx.email, { role_title: input.role_title, headcount: input.headcount });
+      return { label: `开了招聘项目「${p.title}」`, ui: { kind: 'project', id: p.id, title: p.title }, result: { project_id: p.id, title: p.title, next: '建议接着 write_jd' } };
+    }
+    case 'project_board': {
+      const pid = input?.project_id || ctx.projectId; if (!pid) throw new Error('没有指定项目：先 list_projects 或 create_project');
+      const b = await projectBoard(org, pid);
+      return { label: `看了「${b.project.title}」的进展：${b.candidates.length} 位候选人`, ui: { kind: 'project', id: b.project.id, title: b.project.title }, result: b };
+    }
+    case 'write_jd': {
+      const pid = input?.project_id || ctx.projectId; if (!pid) throw new Error('没有指定项目');
+      const jd = await writeJd(org, pid, input?.extra);
+      return { label: `写好 JD「${jd.title}」`, ui: { kind: 'project', id: pid, title: jd.title, tab: 'jd' }, result: { title: jd.title, must_haves: jd.must_haves, first90: jd.first90 } };
+    }
+    case 'screen_candidates': {
+      const pid = input?.project_id || ctx.projectId; if (!pid) throw new Error('没有指定项目');
+      let ids: string[] = Array.isArray(input?.candidate_ids) ? input.candidate_ids.map(String) : [];
+      if (!ids.length) { const { data } = await db.from('ws_candidates').select('id').eq('project_id', pid).is('fit', null).not('resume_text', 'is', null).limit(6); ids = (data || []).map(x => x.id); }
+      if (!ids.length) return { label: '没有要分析的候选人', result: { note: '项目里还没有带简历、没分析过的候选人。请用户在项目页上传简历，或把真活链接发出去。' } };
+      const out: any[] = [];
+      for (const id of ids.slice(0, 6)) { try { out.push(await fitCandidate(org, id)); } catch (e: any) { out.push({ id, error: String(e?.message).slice(0, 160) }); } }
+      return { label: `适配分析了 ${out.length} 位候选人`, ui: { kind: 'project', id: pid, title: '候选人' }, result: { results: out.map(r => ({ name: r.name, score: r.score, verdict: r.verdict, reasons: r.reasons, risks: r.risks, error: r.error })) } };
+    }
+    case 'verify_candidate': {
+      const c = await ownCandidate(org, input.candidate_id);
+      const r = await verifyCandidate(org, c.id);
+      return { label: r.already ? `「${c.name}」已经在做人才检测` : `把「${c.name}」交给智查查做人才检测`, ui: { kind: 'candidate', id: c.id, project_id: c.project_id, title: c.name }, result: { ...r, note: '验真要几分钟，在后台跑；过一会儿 check_verification 取结果' } };
+    }
+    case 'check_verification': {
+      const c = await ownCandidate(org, input.candidate_id);
+      const a: any = await checkVerify(org, c.id);
+      return { label: a.status === 'running' ? `「${c.name}」的人才检测还在跑` : a.status === 'none' ? `「${c.name}」还没做人才检测` : `取回「${c.name}」的人才检测结果`, ui: { kind: 'candidate', id: c.id, project_id: c.project_id, title: c.name }, result: a };
+    }
+    case 'set_candidate_stage': {
+      const c = await ownCandidate(org, input.candidate_id);
+      const r = await setStage(org, c.id, String(input.stage), input.note);
+      return { label: `「${r.name}」→ ${STAGES.find(x => x.key === r.stage)?.label}`, ui: { kind: 'project', id: c.project_id, title: '候选人' }, result: r };
     }
     default: throw new Error(`没有这个工具：${name}`);
   }

@@ -4,6 +4,7 @@ import { getSessionUser } from '@/lib/session';
 import { getOrg } from '@/lib/ws/org';
 import { appendUser, runTurn, WS_MODEL, type Msg } from '@/lib/ws/agent';
 import { isKnownModel } from '@/lib/model-options';
+import { ownProject } from '@/lib/ws/projects';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -21,13 +22,16 @@ export async function POST(req: NextRequest) {
   if (!text) return NextResponse.json({ ok: false, error: '说点什么' }, { status: 400 });
   const model = isKnownModel(String(body.model || '')) ? String(body.model) : WS_MODEL;
 
+  let project: any = null;
+  if (body.project_id) project = await ownProject(org, String(body.project_id)).catch(() => null);
   let thread: any = null;
   if (body.thread_id) ({ data: thread } = await db.from('ws_threads').select('*').eq('id', String(body.thread_id)).eq('org_id', org.id).maybeSingle());
   if (!thread) {
-    const { data, error } = await db.from('ws_threads').insert({ org_id: org.id, created_by: user.email, title: text.replace(/\s+/g, ' ').slice(0, 28), messages: [] }).select('*').single();
+    const { data, error } = await db.from('ws_threads').insert({ org_id: org.id, created_by: user.email, title: text.replace(/\s+/g, ' ').slice(0, 28), messages: [], ...(project ? { project_id: project.id } : {}) }).select('*').single();
     if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
     thread = data;
   }
+  if (!project && thread.project_id) project = await ownProject(org, thread.project_id).catch(() => null);
   const history: Msg[] = appendUser(thread.messages || [], text);
 
   const enc = new TextEncoder();
@@ -37,7 +41,7 @@ export async function POST(req: NextRequest) {
       send({ t: 'thread', id: thread.id, title: thread.title, model });
       let added: Msg[] = [];
       const save = async (a: Msg[]) => { await db.from('ws_threads').update({ messages: [...history, ...a], updated_at: new Date().toISOString() }).eq('id', thread.id); };
-      try { added = await runTurn(history, model, { org, email: user.email }, e => send(e), save); }
+      try { added = await runTurn(history, model, { org, email: user.email, projectId: project?.id || null, projectTitle: project?.title } as any, e => send(e), save); }
       catch (e: any) { send({ t: 'error', message: String(e?.message || e).slice(0, 400) }); }
       await db.from('ws_threads').update({ messages: [...history, ...added], updated_at: new Date().toISOString() }).eq('id', thread.id);
       send({ t: 'done' });
