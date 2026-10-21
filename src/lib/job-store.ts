@@ -10,6 +10,7 @@
  */
 import { supabaseAdmin } from '@/lib/supabase';
 import { applyJobDefaults, companySearchNames } from '@/lib/job-defaults';
+import { isGrounded } from '@/lib/jd-grounding';
 import { resolveRegion } from '@/lib/region-codes';
 import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
 import { toSources } from '@/lib/source-tags';
@@ -59,7 +60,7 @@ const TAGGED_FIELDS = ['fos_ids', 'related_career_ids', 'exp_labels', 'skill_lab
 export async function upsertJobsFromLog(logId: number, structuredJson: any): Promise<number> {
   const { data: log, error: logErr } = await supabaseAdmin
     .from('job_crawl_logs')
-    .select('id, company_id, company, target_url, model_id')
+    .select('id, company_id, company, target_url, model_id, raw_markdown')
     .eq('id', logId)
     .single();
   if (logErr) throw logErr;
@@ -71,6 +72,7 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
 
   const now = new Date().toISOString();
   const rows = new Map<string, any>();
+  const ungrounded = new Set<string>();   // 职责 / 要求和原文对不上的岗位名
   // 同一批里好几个岗位共用的链接不是岗位自己的详情页（多半是列表页，模型给每个岗位都填了它）：
   // 这种链接不拿来去重，不然一页几十个岗位会被合成一个（MiniMax 16 → 1）
   const linkCount = new Map<string, number>();
@@ -90,6 +92,12 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
     if (!job.accept_foreign && job.visa_sponsorship !== null) job.accept_foreign = job.visa_sponsorship ? 'accepted' : 'not_accepted';
     applyGradWindowDefault(job);
     applyJobDefaults(job, log.company);   // 主办方 / 年级要求 / 工作地址 / 技能标签分隔（数据部门 10-14）
+    // 职责 / 要求要能在这次抓到的原文里找到（数据部门 10-21：模型会编泛泛的职责）。对不上的这次不写：
+    // 已有岗位保留原值（可能是之前从详情页补的真内容），新岗位留空，打「详情待补」
+    const src = String(log.raw_markdown || '');
+    for (const k of ['responsibilities', 'overview'] as const) {
+      if (job[k] && !isGrounded(job[k], src)) { delete job[k]; ungrounded.add(String(job.name)); }
+    }
     if (!job.form_of_play && job.remote_type) job.form_of_play = { remote: 'online', onsite: 'offline', hybrid: 'online_and_offline' }[job.remote_type as string] || null;
     const sharedReq = job.job_req_id && (reqNames.get(String(job.job_req_id).trim())?.size || 0) > 1;
     const cities = splitLocations(job.location);
@@ -208,6 +216,16 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
 
   // 这个网址实测出了岗位：信息源库里标成「校招职位列表」+ 核实通过（数据部门 10-16：表层招聘官网和真正的岗位列表页常常不是一个网址）
   if (list.length && log.company_id) await markRealEntry(log.company_id, log.company || '', log.target_url, list.length).catch(e => console.error('[job-store] 标记信息源失败', e?.message || e));
+
+  // 职责 / 要求和原文对不上、这次没写进去的：打「详情待补」，岗位库能筛出来去详情页补
+  if (ungrounded.size) {
+    const { data: hit } = await supabaseAdmin.from('jobs').select('id, name, collect_flags').eq('source_log_id', logId).in('name', [...ungrounded]);
+    for (const j of hit || []) {
+      const f = new Set<string>(j.collect_flags || []); if (f.has('详情待补')) continue; f.add('详情待补');
+      await supabaseAdmin.from('jobs').update({ collect_flags: [...f] }).eq('id', j.id);
+    }
+    console.log(`[job-store] 日志 #${logId}：${ungrounded.size} 个岗位的职责 / 要求和原文对不上，没写入、标了详情待补`);
+  }
 
   // 关联专业 / 职业（数据部门 10-17）：这一页新进来、还没标过的岗位，用这次提炼选的模型打上
   if (list.length) {
