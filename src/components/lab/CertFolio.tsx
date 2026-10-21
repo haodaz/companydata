@@ -108,7 +108,8 @@ const ISSUERS = '平方创想 · 方略研究院';
 export interface FolioData {
   id?: string;
   no: string; date: string; score: number; overall: number; level: string; match: number | null; beat: number | null; peers: number;
-  candidate: { name: string; location?: string; note?: string };
+  /** type = 'ai'：百业大学给 AI 毕业生发的毕业证书（措辞不同） */
+  candidate: { name: string; location?: string; note?: string; type?: string };
   space: { id: string; name: string; role: string; avatar: string; profession: string; company?: string; research?: boolean };
   chapter?: { n: number; total: number; slot: string; title: string; kind?: string } | null;
   skill?: { expert: string; location: string; draft: boolean } | null;
@@ -163,10 +164,12 @@ function PageCert({ d }: { d: FolioData }) {
           <div style={{ fontSize: '2.6cqi', marginTop: '4.4cqi', color: '#4a5180' }}>兹证明</div>
           <div style={{ fontSize: '7cqi', fontWeight: 800, marginTop: '1cqi', display: 'inline-block', padding: '0 6cqi 1cqi', borderBottom: '.22cqi solid #1d2450' }}>{d.candidate.name || '匿名新兵'}</div>
           <div style={{ fontSize: '2.5cqi', lineHeight: 1.9, marginTop: '2.8cqi', color: '#2a3160' }}>
-            于 {dateRange(d)} 在数字职人 {d.space.name} 的带领下，<br />{d.day ? <>走完了「{d.space.role}的一天」全部 {d.dims.length} 段</> : <>完成了「{d.space.role}的一天」{d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段` : ''}的全部操作</>}
+            {isAI(d)
+              ? <>于 {dateRange(d)} 修完「{d.space.role}」{d.day ? `全部 ${d.dims.length} 门课程` : `第 ${d.chapter?.n || 1} / ${d.chapter?.total || 1} 门课程`}，<br />{d.day ? '经真活考核，准予毕业，可以上岗' : '通过这一门的真活考核'}</>
+              : <>于 {dateRange(d)} 在数字职人 {d.space.name} 的带领下，<br />{d.day ? <>走完了「{d.space.role}的一天」全部 {d.dims.length} 段</> : <>完成了「{d.space.role}的一天」{d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段` : ''}的全部操作</>}</>}
           </div>
           {!d.day && d.chapter && <div className="pg-accent" style={{ fontSize: '3.6cqi', fontWeight: 900, marginTop: '2cqi', letterSpacing: '.06em' }}>{d.chapter.slot ? `${d.chapter.slot} · ` : ''}{d.chapter.title}</div>}
-          <div style={{ fontSize: '2.2cqi', marginTop: '3cqi', color: '#4a5180' }}>{d.day ? `按${d.space.research ? '研究岗' : '岗位'}标准逐段评定，全天综合等级` : `按${d.space.research ? '研究岗' : '岗位'}标准评定，综合等级`}</div>
+          <div style={{ fontSize: '2.2cqi', marginTop: '3cqi', color: '#4a5180' }}>{isAI(d) ? (d.day ? '按岗位标准逐门评定，毕业综合等级' : '按岗位标准评定，本门等级') : d.day ? `按${d.space.research ? '研究岗' : '岗位'}标准逐段评定，全天综合等级` : `按${d.space.research ? '研究岗' : '岗位'}标准评定，综合等级`}</div>
           <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '2cqi', marginTop: '1cqi' }}>
             <span className="pg-mono" style={{ fontSize: '7.6cqi', fontWeight: 900, letterSpacing: 0 }}>{bandText(d.overall)}</span>
             <span style={{ fontSize: '2.8cqi', fontWeight: 800 }}>{d.level || bandLevel(d.overall)}</span>
@@ -184,8 +187,8 @@ function PageCert({ d }: { d: FolioData }) {
         <div style={{ flex: 1 }} />
         <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'end', gap: '2cqi' }}>
           <div style={{ display: 'grid', gap: '.6cqi' }}>
-            <span className="pg-script" style={{ fontSize: '4cqi', color: '#2c3a8c', borderBottom: '.12cqi solid #1d2450', paddingBottom: '.4cqi' }}>{d.space.name}</span>
-            <span style={{ fontSize: '1.8cqi', color: '#4a5180' }}>数字职人 · {d.space.role}</span>
+            <span className="pg-script" style={{ fontSize: '4cqi', color: '#2c3a8c', borderBottom: '.12cqi solid #1d2450', paddingBottom: '.4cqi' }}>{isAI(d) ? '百業大學' : d.space.name}</span>
+            <span style={{ fontSize: '1.8cqi', color: '#4a5180' }}>{isAI(d) ? 'BAIYE AI COLLEGE · 教务' : `数字职人 · ${d.space.role}`}</span>
             <span className="pg-script" style={{ fontSize: '4cqi', color: '#2c3a8c', borderBottom: '.12cqi solid #1d2450', paddingBottom: '.4cqi', marginTop: '1.2cqi' }}>{d.skill?.expert || '方略研究院'}</span>
             <span style={{ fontSize: '1.8cqi', color: '#4a5180' }}>{d.skill?.expert ? `技能来源 · ${d.skill.location}` : W(d).eval}</span>
           </div>
@@ -196,7 +199,9 @@ function PageCert({ d }: { d: FolioData }) {
           </div>
         </div>
         <div style={{ textAlign: 'center', fontSize: '1.5cqi', color: '#8a90aa', marginTop: '2cqi', lineHeight: 1.6 }}>
-          本证书凭编号可在 AI 百业查验 · 由 AI 核心按{d.space.research ? '研究岗' : '岗位'}标准评分，仅用于{d.space.research ? '科研' : '职业'}体验，不代表{d.space.research ? '学位或任职' : '执业'}资格
+          {isAI(d)
+            ? <>本证书凭编号可在百业大学查验 · 按岗位标准与真活评分，证明该数字职人修完课程、通过考核，不代表执业资格</>
+            : <>本证书凭编号可在 AI 百业查验 · 由 AI 核心按{d.space.research ? '研究岗' : '岗位'}标准评分，仅用于{d.space.research ? '科研' : '职业'}体验，不代表{d.space.research ? '学位或任职' : '执业'}资格</>}
         </div>
       </div>
     </div>
@@ -262,7 +267,9 @@ function PageRecord({ d }: { d: FolioData }) {
         <div className="pg-mono" style={{ textAlign: 'center', fontSize: '1.7cqi', letterSpacing: '.36em', color: '#6b7290' }}>TRANSCRIPT OF RECORDS</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '.8cqi 3cqi', fontSize: '2.1cqi', marginTop: '3.6cqi' }}>
           {[['姓名', d.candidate.name || '匿名新兵'], ['背景', [d.candidate.note, d.candidate.location].filter(Boolean).join(' · ') || '—'], ['职业', `${d.space.role}${d.space.company ? ` · ${d.space.company}` : ''}`],
-            ['场景', d.day ? `「${d.space.role}的一天」全部 ${d.dims.length} 段` : `${d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段 · ` : ''}${d.chapter?.slot ? `场景时间 ${d.chapter.slot} · ` : ''}${d.chapter?.title || ''}`], ['带教', `数字职人 ${d.space.name}${d.skill?.expert ? `（技能来源：${d.skill.expert} · ${d.skill.location}）` : ''}`]].map(([k, v]) => (
+            ...(isAI(d)
+              ? [['课程', d.day ? `「${d.space.role}」全部 ${d.dims.length} 门` : `第 ${d.chapter?.n || 1} / ${d.chapter?.total || 1} 门 · ${d.chapter?.title || ''}`], ['师承', d.skill?.expert ? `${d.skill.expert} · ${d.skill.location}` : '行业资深从业者 · 岗位标准 · 平方知识图谱']]
+              : [['场景', d.day ? `「${d.space.role}的一天」全部 ${d.dims.length} 段` : `${d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段 · ` : ''}${d.chapter?.slot ? `场景时间 ${d.chapter.slot} · ` : ''}${d.chapter?.title || ''}`], ['带教', `数字职人 ${d.space.name}${d.skill?.expert ? `（技能来源：${d.skill.expert} · ${d.skill.location}）` : ''}`]])].map(([k, v]) => (
             <React.Fragment key={k}><span style={{ color: '#6b7290' }}>{k}</span><b>{v}</b></React.Fragment>
           ))}
         </div>
@@ -406,8 +413,8 @@ function Cover({ d, opening, onOpen, progress }: { d: FolioData; opening: boolea
           <div className="pg-mono" style={{ fontSize: '2cqi', letterSpacing: '.4em', marginTop: '6cqi', opacity: .75 }}>{W(d).en}</div>
           <div className="pg-serif cover-foil" style={{ fontSize: '8.4cqi', fontWeight: 900, letterSpacing: '.3em', marginTop: '2cqi', paddingLeft: '.3em' }}>{W(d).zh}</div>
           <div style={{ width: '18cqi', height: '.25cqi', background: 'linear-gradient(90deg, transparent, #d2a95a, transparent)', margin: '4cqi 0' }} />
-          <div className="pg-serif" style={{ fontSize: '4.6cqi', fontWeight: 800, color: '#f3e3b8' }}>{d.candidate.name || '匿名新兵'}的证书</div>
-          <div style={{ fontSize: '2.5cqi', marginTop: '1.6cqi', opacity: .75 }}>{d.space.role}的一天{progress ? ` · 已通过 ${progress.done} / ${progress.total} 段` : d.day ? ` · 全天 ${d.dims.length} 段` : ''}</div>
+          <div className="pg-serif" style={{ fontSize: '4.6cqi', fontWeight: 800, color: '#f3e3b8' }}>{d.candidate.name || '匿名新兵'}的{isAI(d) ? '毕业证书' : '证书'}</div>
+          <div style={{ fontSize: '2.5cqi', marginTop: '1.6cqi', opacity: .75 }}>{isAI(d) ? `${d.space.role}${progress ? ` · 已通过 ${progress.done} / ${progress.total} 门` : d.day ? ` · 全部 ${d.dims.length} 门课程` : ''}` : <>{d.space.role}的一天{progress ? ` · 已通过 ${progress.done} / ${progress.total} 段` : d.day ? ` · 全天 ${d.dims.length} 段` : ''}</>}</div>
           {progress && <div style={{ fontSize: '2.1cqi', marginTop: '1.4cqi', opacity: .6, letterSpacing: '.12em' }}>证书待解锁 · 每段 60 分通过</div>}
           <div style={{ flex: 1.2 }} />
           <div className="pg-serif" style={{ fontSize: '2.3cqi', letterSpacing: '.3em', opacity: .8 }}>平方创想 · 方略研究院</div>
@@ -435,7 +442,11 @@ export function ScoreFolio({ d }: { d: FolioData }) {
 
 /** 页夹本体：两屏四页，翻页有动画；窄屏四页竖排；打印四页 A4 */
 /** 证书措辞：职业空间叫「职业体验证书」，科研版的研究岗 / 学科空间叫「科研体验证书」 */
-const W = (d: { space: { research?: boolean } }) => d.space.research
+/** AI 毕业生（百业大学）叫「毕业证书」 */
+const isAI = (d: { candidate?: { type?: string } }) => d.candidate?.type === 'ai';
+const W = (d: { space: { research?: boolean }; candidate?: { type?: string } }) => isAI(d)
+  ? { zh: '毕业证书', en: 'DIPLOMA · BAIYE AI COLLEGE', eval: '毕业考核评定' }
+  : d.space.research
   ? { zh: '科研体验证书', en: 'CERTIFICATE OF RESEARCH EXPERIENCE', eval: '科研能力评定' }
   : { zh: '职业体验证书', en: 'CERTIFICATE OF PROFESSIONAL EXPERIENCE', eval: '职业能力评定' };
 

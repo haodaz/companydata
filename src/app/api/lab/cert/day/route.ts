@@ -59,7 +59,7 @@ export async function GET(req: NextRequest) {
         candidate: list[list.length - 1].candidate, space, skill: list[0].skill, chapter: null,
         dims: list.map(c => ({ key: c.id, name: label(c), weight: 100, score: c.score || 0, band: c.overall, comment: typeof c.match === 'number' ? `${c.match}%` : '', at: c.date })),
         analysis: {
-          summary: `全天 ${list.length} 段，每段都过了 ${PASS_SCORE} 分，平均 ${avg} 分。${list.length > 1 ? `做得最好的是「${label(strongest)}」（${strongest.overall.toFixed(1)}），最需要加强的是「${label(weakest)}」（${weakest.overall.toFixed(1)}）。` : ''}${weakest.analysis.summary || ''}`,
+          summary: `${ai ? `全部 ${list.length} 门课程，每门` : `全天 ${list.length} 段，每段`}都过了 ${PASS_SCORE} 分，平均 ${avg} 分。${list.length > 1 ? `做得最好的是「${label(strongest)}」（${strongest.overall.toFixed(1)}），最需要加强的是「${label(weakest)}」（${weakest.overall.toFixed(1)}）。` : ''}${weakest.analysis.summary || ''}`,
           gaps: weakest.analysis.gaps.slice(0, 2), suggestions: weakest.analysis.suggestions.slice(0, 2),
         },
         art: { scene: first.art?.scene || '', place: first.art?.place || '', people, value: list.find(c => c.art?.value)?.art?.value || null },
