@@ -66,7 +66,7 @@ const imagesOf = (md: string, base: string) => {
   for (const m of md.matchAll(/!\[([^\]]{0,120})\]\((https?:\/\/[^)\s]+|\/[^)\s]*)\)(?: (\d+)x(\d+))?/g)) {
     try {
       const url = new URL(m[2], base).href;
-      if (/logo|icon|ewm|qrcode|qr-code|banner|sprite|avatar|wechat|weixin|\.svg(\?|$)|\.gif(\?|$)/i.test(url)) continue;
+      if (/logo|icon|ewm|qrcode|qr-code|banner|sprite|avatar|wechat|weixin|view-details?|button|btn[-_]|placeholder|loading|\.svg(\?|$)|\.gif(\?|$)/i.test(url)) continue;
       if (m[3] && (Number(m[3]) < 200 || Number(m[4]) < 150)) continue;
       out.push({ alt: m[1].trim(), url, w: m[3] ? Number(m[3]) : undefined, h: m[4] ? Number(m[4]) : undefined });
     } catch {}

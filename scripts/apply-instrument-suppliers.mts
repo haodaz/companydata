@@ -11,6 +11,7 @@ import fs from 'node:fs';
 const { supabaseAdmin: db } = await import('@/lib/supabase');
 const { resolveCompanyId, resolveCompanyLoose } = await import('@/lib/company-match');
 const { ensureCompanyFloraId } = await import('@/lib/company-flora-id');
+const { countryCn } = await import('@/lib/country-cn');
 
 const opt = (k: string, d = '') => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const IN = opt('in', 'reports/instrument-suppliers-verified.json'), APPLY = process.argv.includes('--apply');
@@ -85,7 +86,7 @@ for (const r of pass) {
     if (error) console.log(`  补类目失败 ${r.name_cn || r.name_en}：${error.message}`); else updated++;
   } else {
     const { data, error } = await db.from('companies').insert({
-      name: r.name_cn || r.name_en, name_en: r.name_en || null, country: r.is_domestic ? '中国' : (r.country || null),
+      name: r.name_cn || r.name_en, name_en: r.name_en || null, country: r.is_domestic ? '中国' : (countryCn(r.country) || r.country || null),   // 企业库存中文国名
       official_website: r.website_ok ? r.website : null, source: ['科研仪器'], supplier_categories: r.verified_categories, supplier_exhibitions: exhibitionsOf(r),
       human_review_status: 'review',
     }).select('id').single();
