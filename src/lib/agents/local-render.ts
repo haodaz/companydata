@@ -22,8 +22,11 @@ async function browser() {
   return browserP;
 }
 
-/** 打开页面、等渲染、往下滚两屏，返回「正文 + 页面链接」拼成的 Markdown；打不开 / 4xx 返回 null */
-export async function renderMarkdown(url: string): Promise<string | null> {
+/**
+ * 打开页面、等渲染、往下滚两屏，返回「正文 + 页面链接」拼成的 Markdown；打不开 / 4xx 返回 null。
+ * expand：页签 / 折叠按钮的文字（正则源码），先点开再读——产品页的「技术参数」「资料下载」常藏在页签里（科研产品库 10-21）
+ */
+export async function renderMarkdown(url: string, opts: { expand?: string } = {}): Promise<string | null> {
   if (!localRenderAvailable()) return null;
   if (open >= MAX_TABS) await new Promise<void>(r => waiters.push(r));
   open++;
@@ -37,15 +40,52 @@ export async function renderMarkdown(url: string): Promise<string | null> {
     if (status >= 400) return null;
     await new Promise(r => setTimeout(r, 1500));
     for (let i = 0; i < 3; i++) { await page.evaluate(() => window.scrollBy(0, window.innerHeight)).catch(() => {}); await new Promise(r => setTimeout(r, 500)); }
-    const { title, text, links, finalUrl } = await page.evaluate(() => ({
-      title: document.title,
-      text: document.body?.innerText || '',
-      links: [...document.querySelectorAll('a[href]')].map(a => ({ t: (a.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 80), h: (a as HTMLAnchorElement).href })).filter(l => /^https?:/.test(l.h) && l.t),
-      finalUrl: location.href,
-    }));
+    let hidden = '';
+    if (opts.expand) {
+      // 依次点开匹配的页签，每点一个把新露出来的文字记下来（页签切换后上一个会被藏起来）
+      const n = await page.evaluate((src: string) => {
+        const re = new RegExp(src, 'i');
+        const els = [...document.querySelectorAll('button, [role=tab], a, li, span, div, h2, h3, summary')]
+          .filter(e => { const t = (e.textContent || '').trim(); return t.length <= 24 && re.test(t) && (e as HTMLElement).offsetParent !== null; });
+        (window as any).__expand = els.slice(0, 8);
+        return (window as any).__expand.length;
+      }, opts.expand).catch(() => 0);
+      for (let i = 0; i < n; i++) {
+        await page.evaluate((k: number) => { const e = (window as any).__expand[k]; const a = e?.closest('a'); if (a && /^https?:/.test(a.href) && !a.href.includes('#')) return; e?.click(); }, i).catch(() => {});
+        await new Promise(r => setTimeout(r, 900));
+        hidden += '\n' + (await page.evaluate(() => document.body?.innerText || '').catch(() => ''));
+      }
+    }
+    const { title, text, links, images, finalUrl } = await page.evaluate(() => {
+      // 「了解详情 / Learn more」这类链接文字看不出是哪个产品：往上找卡片里的标题当链接文字（科研产品库 10-21，聚光的列表页全是「了解详情」）
+      const GENERIC = /^(了解详情|查看详情|详情|了解更多|查看更多|更多|more|learn more|read more|view details?|details?|>+|→)$/i;
+      const labelOf = (a: Element) => {
+        const t = (a.textContent || '').replace(/\s+/g, ' ').trim();
+        if (t && !GENERIC.test(t)) return t;
+        let e: Element | null = a;
+        for (let i = 0; i < 5 && e; i++, e = e.parentElement) {
+          const h = e.querySelector('h1,h2,h3,h4,h5,strong,[class*=title],[class*=name]');
+          const ht = (h?.textContent || '').replace(/\s+/g, ' ').trim();
+          if (ht && !GENERIC.test(ht)) return ht;
+        }
+        return (a as HTMLElement).getAttribute('title') || t;
+      };
+      return {
+        title: document.title,
+        text: document.body?.innerText || '',
+        links: [...document.querySelectorAll('a[href]')].map(a => ({ t: labelOf(a).slice(0, 80), h: (a as HTMLAnchorElement).href })).filter(l => /^https?:/.test(l.h) && l.t),
+        // 页面上的大图（≥ 200px，去掉 logo / 图标）：产品图要用（仪器图片很重要——用户 10-21）
+        images: [...document.querySelectorAll('img')].map(i => ({ alt: (i.alt || i.title || '').trim().slice(0, 80), src: i.currentSrc || i.src, w: i.naturalWidth, h: i.naturalHeight }))
+          .filter(i => /^https?:/.test(i.src) && i.w >= 200 && i.h >= 150 && !/logo|icon|ewm|qrcode|banner|sprite/i.test(i.src)),
+        finalUrl: location.href,
+      };
+    });
     if (text.trim().length < 50) return null;
     const uniq = [...new Map(links.map((l: any) => [l.h, l])).values()].slice(0, 400) as { t: string; h: string }[];
-    return `Title: ${title}\nURL Source: ${finalUrl}\n\nMarkdown Content:\n${text.slice(0, 120000)}\n\n## 页面链接\n${uniq.map(l => `[${l.t.replace(/[\[\]]/g, '')}](${l.h})`).join('\n')}\n`;
+    // 点开页签后新露出来的行补在正文后面（去掉和正文重复的行）
+    const seenLines = new Set(text.split('\n').map((l: string) => l.trim()));
+    const extra = [...new Set(hidden.split('\n').map(l => l.trim()).filter(l => l && !seenLines.has(l)))].join('\n');
+    return `Title: ${title}\nURL Source: ${finalUrl}\n\nMarkdown Content:\n${(text + (extra ? `\n\n## 页签里的内容\n${extra}` : '')).slice(0, 120000)}\n\n## 页面链接\n${uniq.map(l => `[${l.t.replace(/[\[\]]/g, '')}](${l.h})`).join('\n')}\n${images.length ? `\n## 页面图片\n${[...new Map(images.map((i: any) => [i.src, i])).values()].slice(0, 40).map((i: any) => `![${i.alt.replace(/[\[\]]/g, '')}](${i.src}) ${i.w}x${i.h}`).join('\n')}\n` : ''}`;
   } catch (e: any) {
     console.warn(`[local-render] ${url.slice(0, 80)}：${String(e?.message || e).slice(0, 100)}`);
     return null;

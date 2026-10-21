@@ -15,6 +15,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 const { supabaseAdmin: db } = await import('@/lib/supabase');
 const { fetchJinaUrl } = await import('@/lib/agents/fetcher');
+const { renderMarkdown, localRenderAvailable } = await import('@/lib/agents/local-render');
 const { generateContent } = await import('@/lib/llm-client');
 const { parseJsonLoose } = await import('@/lib/agents/search-llm');
 const { logTokenUsage } = await import('@/lib/token-logger');
@@ -54,12 +55,29 @@ console.log(`抓 ${suppliers.length} 家厂商的产品（每家最多 ${PER} �
 
 const linksOf = (md: string, base: string) => {
   const out: { text: string; url: string }[] = [];
-  for (const m of md.matchAll(/\[([^\]]{0,120})\]\((https?:\/\/[^)\s]+|\/[^)\s]*)\)/g)) {
+  for (const m of md.matchAll(/(?<!!)\[([^\]]{0,120})\]\((https?:\/\/[^)\s]+|\/[^)\s]*)\)/g)) {
     try { out.push({ text: m[1].replace(/!\[[^\]]*\]/g, '').trim(), url: new URL(m[2], base).href }); } catch {}
   }
   return [...new Map(out.map(l => [l.url, l])).values()];
 };
+/** 页面上的图（本机渲染带尺寸；Jina 的 ![](…) 没尺寸）——logo / 图标 / 二维码 / 横幅不要 */
+const imagesOf = (md: string, base: string) => {
+  const out: { alt: string; url: string; w?: number; h?: number }[] = [];
+  for (const m of md.matchAll(/!\[([^\]]{0,120})\]\((https?:\/\/[^)\s]+|\/[^)\s]*)\)(?: (\d+)x(\d+))?/g)) {
+    try {
+      const url = new URL(m[2], base).href;
+      if (/logo|icon|ewm|qrcode|qr-code|banner|sprite|avatar|wechat|weixin|\.svg(\?|$)|\.gif(\?|$)/i.test(url)) continue;
+      if (m[3] && (Number(m[3]) < 200 || Number(m[4]) < 150)) continue;
+      out.push({ alt: m[1].trim(), url, w: m[3] ? Number(m[3]) : undefined, h: m[4] ? Number(m[4]) : undefined });
+    } catch {}
+  }
+  return [...new Map(out.map(i => [i.url, i])).values()].slice(0, 40);
+};
 const sameSite = (u: string, base: string) => { try { const a = new URL(u).hostname.replace(/^www\./, ''), b = new URL(base).hostname.replace(/^www\./, ''); return a === b || a.endsWith('.' + b) || b.endsWith('.' + a); } catch { return false; } };
+/** 产品页上要点开的页签 */
+const TAB_RE = '技术参数|规格参数|产品参数|参数|规格|技术指标|性能指标|资料下载|文档下载|下载|资料|文档|说明书|specifications?|tech(nical)? (data|specs?)|downloads?|documents?|documentation|resources|literature|manuals?';
+/** 下载中心类页面 */
+const DL_PAGE_RE = /下载中心|资料下载|文档下载|资料中心|技术资料|说明书下载|download center|downloads?$|literature|documentation|document library|resource (center|library)|manuals/i;
 const IMG_RE = /\.(jpe?g|png|gif|webp|svg|bmp|ico|mp4|mov|webm)(\?|$)/i;   // 图片 / 视频不是资料
 const DOC_RE = /\.pdf(\?|$)|\.docx?(\?|$)|手册|说明书|规格书|彩页|样本|datasheet|data sheet|brochure|manual|catalog|catalogue|spec sheet|技术参数|下载|download|SDS|MSDS|COA|application note|应用(文献|报告|笔记)/i;
 
@@ -77,6 +95,7 @@ ${links.map((l, i) => `${i}. ${l.text || '(无文字)'} ${l.url}`).join('\n')}
 }
 
 async function extract(s: any, url: string, md: string, isCategory = false) {
+  const imgs = imagesOf(md, url);
   const docLinks = linksOf(md, url).filter(l => !IMG_RE.test(l.url) && DOC_RE.test(`${l.text} ${l.url}`)).slice(0, 40);
   const r = await generateContent(`从「${s.name}」官网的这个页面里抽取科研产品 / 服务。只用页面原文，不要补充页面上没有的信息；没有的字段留空。
 页面：${url}
@@ -84,7 +103,7 @@ ${md.slice(0, 14000)}
 
 每个产品 / 服务：
 - name 名称（页面原文）、brand 品牌、model_no 型号、specification 规格（如 100mL、10 万转、500 样本 / 天，原文写法）、price 价格（原文写法，没写就空）
-- kind：instrument 仪器设备 | consumable 耗材 | reagent 试剂 | service 服务（检测、维修、校准、定制合成、平台机时等）
+- kind：instrument 仪器设备（硬件）| software 软件（仪器软件、数据系统、LIMS、分析 / 仿真软件等现成的软件产品）| consumable 耗材 | reagent 试剂 | service 服务（检测、维修、校准、定制合成、平台机时、软件开发 / 定制开发等由人提供的服务）
 - category：从这些 key 里选一个最贴切的：${INSTRUMENT_CATEGORIES.map(c => `${c.key}=${c.name}`).join('，')}
 - intro 产品介绍（原文要点，可分段，不超过 600 字）
 - specs 规格参数（参数名 → 值，照抄页面上的参数表，没有就 {}）
@@ -94,16 +113,42 @@ ${md.slice(0, 14000)}
 页面上的资料链接：
 ${docLinks.map((l, i) => `${i}. ${l.text || '(无文字)'} ${l.url}`).join('\n') || '（无）'}
 
+页面上的图片（产品图要用）：
+${imgs.map((g, i) => `${i}. ${g.alt || '(无说明)'} ${g.url}${g.w ? ` ${g.w}x${g.h}` : ''}`).join('\n') || '（无）'}
+- images：这个产品自己的产品图（外观照、结构图），只从上面的图片里选序号，主图放第一个；场景配图、横幅、证书、人物照不要
+
 page_type：这个页面是单个产品 / 服务的详情页（detail），还是列了多个产品 / 大类的总览、分类、列表页（list）${isCategory ? '（这页是从分类入口进来的，多半是 list）' : ''}。
 - list 页：products 只放页面上写明了具体型号或货号的产品（只是产品大类名，如「液相色谱仪」，不要放），并把指向具体产品 / 服务详情页的链接放进 more（最多 ${PER} 个网址）。
 - 每个产品的 specs / intro / docs 只放属于它自己的，不要把页面通用内容复制给每个产品。
-只返回 JSON：{"page_type":"detail","products":[{"name":"","brand":"","model_no":"","specification":"","price":"","kind":"instrument","category":"","intro":"","specs":{},"disciplines":"","applications":"","service_mode":"","service_region":"","docs":[{"i":0,"doc_type":"manual","title":""}]}],"more":[""]}`, MODEL, { jsonMode: true, temperature: 0 });
+只返回 JSON：{"page_type":"detail","products":[{"name":"","brand":"","model_no":"","specification":"","price":"","kind":"instrument","category":"","intro":"","specs":{},"disciplines":"","applications":"","service_mode":"","service_region":"","docs":[{"i":0,"doc_type":"manual","title":""}],"images":[0]}],"more":[""]}`, MODEL, { jsonMode: true, temperature: 0 });
   await log('Research Product Extract', s.name, r);
   const v = parseJsonLoose(r.text) || {};
   const page = md.replace(/\s+/g, '').toLowerCase();
   const products = ((v.products || []) as any[]).filter(p => p?.name && page.includes(String(p.name).replace(/\s+/g, '').toLowerCase().slice(0, 12)))   // 名称要在页面里找得到
-    .map(p => ({ ...p, docs: ((p.docs || []) as any[]).filter(d => docLinks[Number(d.i)]).map(d => ({ ...d, url: docLinks[Number(d.i)].url, title: d.title || docLinks[Number(d.i)].text })) }));
+    .map(p => ({ ...p, images: [...new Set(((p.images || []) as any[]).map(Number))].filter(i => imgs[i]).slice(0, 5).map(i => imgs[i]), docs: ((p.docs || []) as any[]).filter(d => docLinks[Number(d.i)]).map(d => ({ ...d, url: docLinks[Number(d.i)].url, title: d.title || docLinks[Number(d.i)].text })) }));
   return { page_type: v.page_type === 'list' ? 'list' : 'detail', products, more: ((v.more || []) as string[]).filter(u => typeof u === 'string' && /^https?:/.test(u) && sameSite(u, s.official_website)) };
+}
+
+async function fetchImages(s: any, extId: string, list: any[]) {
+  const out: any[] = [];
+  for (const g of list) {
+    const img: any = { url: g.url, alt: g.alt || null, w: g.w || null, h: g.h || null };
+    try {
+      const res = await fetch(g.url, { signal: AbortSignal.timeout(30_000), headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140 Safari/537.36', Referer: s.official_website } });
+      const ct = res.headers.get('content-type') || '';
+      if (res.ok && /^image\//.test(ct)) {
+        const buf = Buffer.from(await res.arrayBuffer());
+        if (buf.length > 1500 && buf.length < 8 * 1024 * 1024 && !DRY) {
+          const ext = (ct.split('/')[1] || 'jpg').replace('jpeg', 'jpg').replace(/[^a-z0-9]/g, '');
+          const key = `${s.id}/${extId}/${crypto.createHash('md5').update(g.url).digest('hex').slice(0, 12)}.${ext}`;
+          const { error } = await db.storage.from('research-images').upload(key, buf, { contentType: ct, upsert: true });
+          if (!error) img.storage_path = key;
+        }
+      }
+    } catch {}
+    out.push(img);
+  }
+  return out;
 }
 
 async function fetchDoc(s: any, extId: string, d: any) {
@@ -149,7 +194,7 @@ const dropBrandLabels = (l: string | null, names: any[]) => {
   return a.length ? a.join('；') : null;
 };
 const norm = (x: any) => String(x || '').replace(/\s+/g, '').toLowerCase();
-const total = { products: 0, docs: 0, stored: 0, pages: 0 };
+const total: Record<string, number> = { products: 0, docs: 0, stored: 0, pages: 0, images: 0 };
 const report: any[] = [];
 let nx = 0;
 await Promise.all(Array.from({ length: PAR }, async () => {
@@ -164,18 +209,44 @@ await Promise.all(Array.from({ length: PAR }, async () => {
         const pg = queue.shift()!;
         if (seen.has(pg.url)) continue;
         seen.add(pg.url);
-        const md = (await fetchJinaUrl(pg.url)) || '';
+        // 产品页先用本机 Chrome 打开、点开「参数 / 下载」页签（大厂的参数表和资料列表多是点开才加载）；不行再走 Jina
+        const md = (localRenderAvailable() ? await renderMarkdown(pg.url, { expand: TAB_RE }) : null) || (await fetchJinaUrl(pg.url)) || '';
         total.pages++;
         if (md.length < 300) continue;
         const isCat = pg.kind === 'category';
         const { page_type, products: ps, more } = await extract(s, pg.url, md, isCat);
         // 列表 / 总览页（模型判的，或者一页抽出 3 个以上）只收写明型号 / 货号的、且不带页面通用的参数；大类名留给下一层详情页
         const listy = isCat || page_type === 'list' || ps.length >= 3;
-        const products = listy ? ps.filter((p: any) => p.model_no && String(p.model_no).trim()).map((p: any) => ({ ...p, specs: {} })) : ps;
+        // 列表页有详情链接就进详情页抽（详情页信息全、有图有资料），没有详情链接才收列表上写明型号的
+        const products = listy ? (more.length ? [] : ps.filter((p: any) => p.model_no && String(p.model_no).trim()).map((p: any) => ({ ...p, specs: {} }))) : ps;
         for (const p of products) if (got.length < PER && !got.some(g => norm(g.name) === norm(p.name) && norm(g.model_no) === norm(p.model_no))) got.push({ ...p, source_url: pg.url });
         if (listy) for (const u of more.slice(0, PER)) queue.unshift({ url: u, kind: 'detail' });
       }
     } catch (e: any) { console.log(`\n✗ ${s.name}：${String(e?.message || e).slice(0, 80)}`); }
+
+    // 下载中心：首页上的「资料下载 / Downloads」页，把里面的手册 / 规格书按型号挂到对应产品上
+    try {
+      const home = (await fetchJinaUrl(s.official_website)) || '';
+      const dl = linksOf(home, s.official_website).filter(l => sameSite(l.url, s.official_website) && DL_PAGE_RE.test(l.text)).slice(0, 2);
+      for (const l of dl) {
+        if (!got.length) break;
+        const md = (localRenderAvailable() ? await renderMarkdown(l.url, { expand: TAB_RE }) : null) || (await fetchJinaUrl(l.url)) || '';
+        const docs = linksOf(md, l.url).filter(x => !IMG_RE.test(x.url) && DOC_RE.test(`${x.text} ${x.url}`)).slice(0, 150);
+        if (!docs.length) continue;
+        const r = await generateContent(`下面是「${s.name}」官网下载中心的资料链接，和我们抓到的产品。把能确定属于某个产品的资料对上（标题里有它的型号 / 名称才算，拿不准的不要）。
+产品：
+${got.map((p, i) => `${i}. ${p.name}${p.model_no ? ` / ${p.model_no}` : ''}`).join('\n')}
+资料：
+${docs.map((d, i) => `${i}. ${d.text || '(无文字)'} ${d.url}`).join('\n')}
+doc_type：brochure 产品手册 | datasheet 规格书 | manual 操作手册 | app_note 应用文献 | sds 安全数据表 | coa 质检报告 | other
+只返回 JSON：{"pairs":[{"product":0,"doc":0,"doc_type":"manual"}]}`, MODEL, { jsonMode: true, temperature: 0 });
+        await log('Research Product Doc Match', s.name, r);
+        for (const pr of (parseJsonLoose(r.text)?.pairs || []) as any[]) {
+          const p = got[Number(pr.product)], d = docs[Number(pr.doc)];
+          if (p && d && !(p.docs || []).some((x: any) => x.url === d.url)) (p.docs ||= []).push({ url: d.url, title: d.text, doc_type: pr.doc_type });
+        }
+      }
+    } catch {}
 
     for (const p of got) {
       const kind = kindOf(p.kind) ? p.kind : 'instrument';
@@ -204,18 +275,19 @@ await Promise.all(Array.from({ length: PAR }, async () => {
         id = saved.id;
       }
       total.products++;
+      if (!DRY && id && p.images?.length) { const images = await fetchImages(s, extId, p.images); await db.from('research_products').update({ images }).eq('id', id); total.images += images.length; }
       const docs: any[] = [];
       for (const d of (p.docs || []).slice(0, 6)) {
         const doc = await fetchDoc(s, extId || 'dry', d);
         docs.push(doc); total.docs++; if (doc.storage_path) total.stored++;
         if (!DRY && id) await db.from('research_product_docs').upsert({ ...doc, product_id: id, supplier_id: s.id }, { onConflict: 'product_id,url' });
       }
-      report.push({ supplier: s.name, name: row.name, kind, category: row.category, labels: row.labels, specs: Object.keys(row.specs).length, price: row.price, docs: docs.map(d => `${d.doc_type}:${d.file_type || '?'}:${d.pages || ''}p:${d.storage_path ? '存' : '链'}`), url: row.source_url });
+      report.push({ supplier: s.name, name: row.name, kind, category: row.category, labels: row.labels, specs: Object.keys(row.specs).length, images: (p.images || []).length, price: row.price, docs: docs.map(d => `${d.doc_type}:${d.file_type || '?'}:${d.pages || ''}p:${d.storage_path ? '存' : '链'}`), url: row.source_url });
     }
     console.log(`✓ ${s.name}：${got.length} 个产品，资料 ${got.reduce((n, p) => n + (p.docs?.length || 0), 0)} 份`);
   }
 }));
 fs.writeFileSync(`reports/research-products-crawl${DRY ? '-dry' : ''}.json`, JSON.stringify({ at: new Date().toISOString(), model: MODEL, total, report }, null, 1));
-console.log(`\n完成：${suppliers.length} 家，看了 ${total.pages} 页，产品 ${total.products}，资料 ${total.docs} 份（存档 ${total.stored}）`);
+console.log(`\n完成：${suppliers.length} 家，看了 ${total.pages} 页，产品 ${total.products}，图片 ${total.images}，资料 ${total.docs} 份（存档 ${total.stored}）`);
 fs.rmSync(TMP, { recursive: true, force: true });
 process.exit(0);

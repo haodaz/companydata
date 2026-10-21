@@ -4,17 +4,19 @@
  */
 import { randomId } from '@/lib/entity-ids';
 
-/** kind 决定 external_id 前缀和 type；服务的前缀 kyfw_ 是我们提议，待数据部门确认 */
+/** kind 决定 external_id 前缀和 type；软件 kyrj_ / 服务 kyfw_ 是我们提议，待数据部门确认 */
 export const PRODUCT_KINDS = [
   { key: 'instrument', name: '仪器设备', prefix: 'kyyq_', type: 'instruments_and_equipment' },
   { key: 'consumable', name: '耗材', prefix: 'kyhc_', type: 'reagents_and_consumables' },
   { key: 'reagent', name: '试剂', prefix: 'kysj_', type: 'reagents_and_consumables' },
+  { key: 'software', name: '软件', prefix: 'kyrj_', type: 'software' },   // 用户 10-21：软件是软件，和硬件一样是产品；软件开发 / 定制开发才是服务
   { key: 'service', name: '服务', prefix: 'kyfw_', type: 'services' },
 ] as const;
 export type ProductKind = typeof PRODUCT_KINDS[number]['key'];
 export const PRODUCT_TYPES = [
   { value: 'instruments_and_equipment', name: '仪器设备' },
   { value: 'reagents_and_consumables', name: '试剂耗材' },
+  { value: 'software', name: '软件' },
   { value: 'services', name: '服务' },
 ];
 export const kindOf = (k: any) => PRODUCT_KINDS.find(x => x.key === k) || null;

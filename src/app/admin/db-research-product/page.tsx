@@ -6,7 +6,7 @@
  */
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { App, Checkbox, Descriptions, Drawer, Empty, Input, Select, Space, Table, Tag, Typography } from 'antd';
+import { App, Checkbox, Descriptions, Drawer, Empty, Image, Input, Select, Space, Table, Tag, Typography } from 'antd';
 import { AppstoreOutlined, DatabaseOutlined, FileTextOutlined, FlagOutlined, ProfileOutlined, ShopOutlined } from '@ant-design/icons';
 import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import { StatCards } from '@/components/admin/StatCards';
@@ -16,7 +16,7 @@ import { BRAND } from '@/lib/theme';
 
 const { Text } = Typography;
 const TYPE_NAME: Record<string, string> = Object.fromEntries(PRODUCT_TYPES.map(t => [t.value, t.name]));
-const TYPE_COLOR: Record<string, string> = { instruments_and_equipment: 'geekblue', reagents_and_consumables: 'green', services: 'orange' };
+const TYPE_COLOR: Record<string, string> = { instruments_and_equipment: 'geekblue', reagents_and_consumables: 'green', software: 'purple', services: 'orange' };
 const split = (s: any) => String(s || '').split(/[；;]/).map(x => x.trim()).filter(Boolean);
 const size = (b?: number | null) => !b ? '' : b > 1048576 ? `${(b / 1048576).toFixed(1)} MB` : `${Math.max(1, Math.round(b / 1024))} KB`;
 
@@ -59,10 +59,10 @@ export default function DbResearchProductPage() {
         description="科研仪器设备、试剂耗材和服务，每条挂在企业实体库的厂商上。产品手册、规格书、操作手册有的一并带回；信息只取自厂商官网原文。" />
 
       <StatCards loading={loading && !stats.products} items={[
-        { label: '产品 / 服务', value: stats.products, icon: <AppstoreOutlined />, color: BRAND.primary, hint: `仪器 ${byType('instruments_and_equipment')} · 试剂耗材 ${byType('reagents_and_consumables')} · 服务 ${byType('services')}` },
+        { label: '产品 / 服务', value: stats.products, icon: <AppstoreOutlined />, color: BRAND.primary, hint: `仪器 ${byType('instruments_and_equipment')} · 试剂耗材 ${byType('reagents_and_consumables')} · 软件 ${byType('software')} · 服务 ${byType('services')}` },
         { label: '厂商', value: stats.suppliers, icon: <ShopOutlined />, color: '#0891b2', hint: `覆盖 ${stats.categories_covered ?? 0} / ${stats.categories_total ?? 22} 类` },
         { label: '带资料的产品', value: stats.with_docs, icon: <FileTextOutlined />, color: '#16a34a', hint: `资料 ${stats.docs ?? 0} 份${(stats.docsByType || []).length ? '：' + stats.docsByType.map((d: any) => `${DOC_TYPE_NAMES[d.key] || d.key} ${d.n}`).join(' · ') : ''}` },
-        { label: '有规格参数', value: stats.with_specs, icon: <ProfileOutlined />, color: '#7c3aed', hint: `占 ${pct(stats.with_specs || 0)} · 有明码价格 ${stats.with_price ?? 0}` },
+        { label: '有规格参数', value: stats.with_specs, icon: <ProfileOutlined />, color: '#7c3aed', hint: `占 ${pct(stats.with_specs || 0)} · 有产品图 ${stats.with_images ?? 0} · 有明码价格 ${stats.with_price ?? 0}` },
         { label: '国产', value: stats.domestic, icon: <FlagOutlined />, color: '#d97706', hint: `占 ${pct(stats.domestic || 0)}` },
       ]} />
 
@@ -81,6 +81,9 @@ export default function DbResearchProductPage() {
           onRow={r => ({ onClick: () => open(r.id), style: { cursor: 'pointer' } })}
           pagination={{ current: page, pageSize: 50, total, showSizeChanger: false, onChange: setPage, showTotal: t => `${t} 条` }}
           columns={[
+            { title: '', dataIndex: 'image', width: 64, render: (src: string) => src
+              ? <img src={src} alt="" referrerPolicy="no-referrer" style={{ width: 52, height: 52, objectFit: 'contain', borderRadius: 6, background: '#f8fafc', border: `1px solid ${BRAND.border}` }} />
+              : <div style={{ width: 52, height: 52, borderRadius: 6, background: '#f8fafc', border: `1px dashed ${BRAND.border}` }} /> },
             { title: '名称', dataIndex: 'name', width: 260, render: (v: string, r: any) => (
               <div>
                 <div style={{ fontWeight: 600, color: BRAND.primary }}>{v}</div>
@@ -100,6 +103,13 @@ export default function DbResearchProductPage() {
         title={detail && !detail.loading ? <span>{detail.name} <Tag color={TYPE_COLOR[detail.type]} style={{ marginLeft: 6 }}>{kindOf(detail.kind)?.name || TYPE_NAME[detail.type]}</Tag></span> : '产品'}>
         {detail && !detail.loading && (
           <div>
+            {detail.images?.length > 0 && (
+              <Image.PreviewGroup>
+                <Space wrap style={{ marginBottom: 12 }}>
+                  {detail.images.map((g: any, i: number) => <Image key={i} src={g.src} alt={g.alt || ''} width={i === 0 ? 220 : 100} height={i === 0 ? 220 : 100} referrerPolicy="no-referrer" style={{ objectFit: 'contain', background: '#f8fafc', borderRadius: 8, border: `1px solid ${BRAND.border}` }} />)}
+                </Space>
+              </Image.PreviewGroup>
+            )}
             <Descriptions size="small" column={2} bordered items={[
               { key: 'brand', label: '品牌', children: detail.brand || '—' },
               { key: 'model', label: '型号', children: detail.model_no || '—' },
