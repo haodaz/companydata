@@ -69,6 +69,10 @@ export interface TokenUsageParams {
     promptTokenCount: number;
     candidatesTokenCount: number;
     totalTokenCount: number;
+    /** Gemini 思考 token：按输出价计费，但不在 candidatesTokenCount 里（10-21 对账：Gemini 3.8 记的账只有实付一半） */
+    thoughtsTokenCount?: number;
+    /** Gemini 联网检索时工具结果算进输入 */
+    toolUsePromptTokenCount?: number;
     /** llm-client 兜底记账时写上的记录编号：再 logTokenUsage 就改那条，不重插 */
     __logId?: number;
   };
@@ -119,8 +123,8 @@ export async function logTokenUsage(params: CostParams) {
     const ctx = Object.fromEntries((['space_id', 'chapter_id', 'job_id', 'actor', 'stage'] as const).map(k => [k, params[k] !== undefined ? params[k] : base[k]]));
 
     const resolvedModelId = resolveModel(model_id);
-    const inputTokens = usageMetadata?.promptTokenCount || 0;
-    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+    const inputTokens = (usageMetadata?.promptTokenCount || 0) + (usageMetadata?.toolUsePromptTokenCount || 0);
+    const outputTokens = (usageMetadata?.candidatesTokenCount || 0) + (usageMetadata?.thoughtsTokenCount || 0);
     const totalTokens = usageMetadata?.totalTokenCount || 0;
 
     // 费用 = token 费 + 联网搜索次数 × 单价；按价目表的币种算，统一折成美元存

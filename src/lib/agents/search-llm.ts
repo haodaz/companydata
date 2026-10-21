@@ -127,6 +127,8 @@ export async function searchJson(prompt: string, modelId: string, log: Pick<Toke
       } catch (e: any) {
         // 503 超时 / 429 限流 / 500：等一下换下一档（最后一档是 3.6-flash）再试；欠费 402 直接抛
         const msg = String(e?.message || '');
+        // 出错的这次也记一笔搜索（Grounding 失败也可能已计费；10-21 对账漏了 147 次失败）
+        await logTokenUsage({ ...log, model_id: attempts[i], success: false, error_message: msg.slice(0, 200), search_calls: 1 }).catch(() => {});
         if (/402|Payment Required|credits are depleted/i.test(msg) || i === attempts.length - 1 || !/503|429|500|Deadline|UNAVAILABLE|RESOURCE_EXHAUSTED|overloaded|fetch failed/i.test(msg)) throw e;
         console.warn(`[searchJson] ${attempts[i]} 出错（第 ${i + 1} 次），稍后重试：${msg.slice(0, 100)}`, log.task_name);
         await new Promise(r => setTimeout(r, 4000 * (i + 1)));
