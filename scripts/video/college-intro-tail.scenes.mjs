@@ -79,12 +79,37 @@ const hub = id => [
   { resume: true },
   { eval: run(`L.hideStats(); await L.sleep(3500); return 1;`), timeout: 15 },
 ];
+// 快闪一位职人：1.2 秒
+const hubFast = id => [
+  { pause: true },
+  { go: `${BASE}/lab/${id}`, wait: 6000 },
+  { eval: run(`await L.until(() => document.querySelector('img'), 20000); L.hideStats(); await L.sleep(800); return 1;`), timeout: 30 },
+  { resume: true },
+  { hold: 1.2 },
+];
+// 页面上某一块 + 左下角字卡，停 sec 秒
+const block = (url, sel, off, card, sec) => [
+  { pause: true },
+  { go: url, wait: 8000 },
+  { eval: run(`await L.until(() => document.querySelector(${JSON.stringify(sel)}), 20000); scrollTo(0, L.top(document.querySelector(${JSON.stringify(sel)}), ${off})); await L.sleep(1200); L.card(${JSON.stringify(card[0])}, ${JSON.stringify(card[1])}, ${JSON.stringify(card[2] || null)}); await L.sleep(800); return 1;`), timeout: 40 },
+  { resume: true },
+  { hold: sec },
+];
+const MORE = ['a7f8f2e7-f82d-4092-8057-283ec533c27d', 'fde330a0-5f71-4a1f-b843-5571339b09c9', '392bcbeb-3cd9-43ae-8645-d5268ecfb465', '61f1f7fb-9b56-4e32-8a13-dac7c66fdddf', 'd571b482-4f94-488a-ba21-224b099a32b9'];
 
 export default [
-  // ══ 毕业生：名录 → 几位不同行当的毕业生（不只数据分析师） ══
   { pause: true },
   { go: `${BASE}/lab/gallery`, wait: 4000 },
   { local: LAB_LOCAL, wait: 3000 },
+  // ══ 毕业证书（AI 毕业生专用的正文）：封皮 → 翻开 ══
+  { go: `${BASE}/college/g/a35a662d-2be8-4cc1-a255-4c3f8ad29139/diploma`, wait: 12000 },
+  { eval: run(`await L.until(() => document.querySelector('.folio-wrap'), 40000); scrollTo(0, L.top(document.querySelector('.folio-wrap'), 110)); await L.sleep(1500); return 1;`), timeout: 60 },
+  { resume: true },
+  { note: 'diploma' },
+  { eval: run(`await L.sleep(2200); const el = document.elementFromPoint(innerWidth / 2, innerHeight / 2); el && el.dispatchEvent(new MouseEvent('click', { bubbles: true })); await L.sleep(3200);
+      await L.glide(L.top(document.querySelector('.folio-wrap'), 90), 1500); await L.sleep(4500); return 1;`), timeout: 40 },
+  // ══ 毕业生：名录 → 几位不同行当的毕业生（不只数据分析师） ══
+  { pause: true },
   { go: `${BASE}/college/graduates`, wait: 8000 },
   { eval: run(`await L.until(() => document.querySelectorAll('.cg-card').length > 10, 30000); scrollTo(0, L.top(document.querySelector('#graduates'), 60)); await L.sleep(1200); return 1;`), timeout: 40 },
   { resume: true },
@@ -92,6 +117,7 @@ export default [
   { eval: run(`const g = document.querySelector('.cg-grid'); const y0 = L.top(g, 120); await L.glide(y0, 1200); await L.glide(y0 + 900, 3200); return 1;`), timeout: 20 },
   ...hub(ids.mkt),
   ...hub(ids.mech),
+  ...MORE.flatMap(hubFast),
   // 档案：机械设计工程师（能去哪些公司）
   { pause: true },
   { go: `${BASE}/college/g/${ids.mech}`, wait: 9000 },
@@ -100,10 +126,14 @@ export default [
   { note: 'profile' },
   { eval: run(`await L.sleep(1500); await L.glide(L.top(document.querySelector('.gp-grid'), 90), 1800); await L.sleep(2500); const j = document.querySelector('.gp-wide'); if (j) { await L.glide(L.top(j, 120), 2000); await L.sleep(3000); } return 1;`), timeout: 30 },
   // ══ 两个客户案例 ══
-  ...bench('7qcJtWqngHs', 'case1', '客户案例 · 出海团队', '要去海外，先配一支出海小队', ['出海市场分析师', '跨境合规专员', '多语种本地化编辑']),
+  ...bench('7qcJtWqngHs', 'case1', '客户案例 · 出海团队', '要去海外，先配一支出海小队', ['出海市场分析师', '跨境合规专员', '多语种本地化编辑', '多语种海外客服']),
+  ...block(`${BASE}/college/cases#overseas`, '#overseas .cs-team', 120, ['客户案例 · 出海团队', '团队里怎么配 AI'], 4),
   ...scene3d('rocket', 'case2', '客户案例 · 车间数据', '攒了两年数据，先想清楚该采什么', ['场景数据工程师', '工业数据采集工程师', '数据质检员'], 7),
   // ══ 供血 / 会自己长大 ══
-  ...scene3d('command', 'supply', 'AI NATIVE · 供血', '一个人，加一队数字职人，就是一家公司', null, 7),
+  // OPC：一个人加一队数字职人；AI Native：按环节配好人和 AI（替代 / 增强 / 协同）；最后落到 3D 指挥大厅
+  ...block(`${BASE}/college#industries`, '.cu-supply', 160, ['OPC · 一个人的公司', '一个人，加一队数字职人，就是一家公司'], 5).map((x, i) => (i === 3 ? [x, { note: 'supply' }] : [x])).flat(),
+  ...block(`${BASE}/college/cases#startup`, '#startup .cs-team', 120, ['AI NATIVE 组织', '按环节配好人和 AI', ['替代', '增强', '协同']], 6),
+  ...scene3d('command', null, 'AI NATIVE · 供血', '这所大学，给它们供血', null, 5),
   ...bench('2ebPYYMKopQ', 'flywheel', '会自己长大的大学', '好老师越多，课越多；干过的活越多，教材越厚', null),
   { note: 'tail_end' },
   { hold: 1 },
