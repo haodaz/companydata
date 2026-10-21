@@ -8,6 +8,31 @@ import fs from 'node:fs';
 const CHROME = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 export const localRenderAvailable = () => process.env.LOCAL_RENDER !== '0' && !process.env.VERCEL && fs.existsSync(CHROME);
 
+/**
+ * 读页面：正文、链接、大图。
+ * 「了解详情 / Learn more」这类链接文字看不出是哪个产品：往上找卡片里的标题当链接文字（科研产品库 10-21，聚光的列表页全是「了解详情」）
+ * 大图 ≥ 200px、去掉 logo / 图标：产品图要用（仪器图片很重要——用户 10-21）
+ */
+const PAGE_SCRIPT = `(() => {
+  var GENERIC = /^(了解详情|查看详情|详情|了解更多|查看更多|更多|more|learn more|read more|view details?|details?|>+|→)$/i;
+  var clean = function (x) { return (x || '').replace(/\\s+/g, ' ').trim(); };
+  var labelOf = function (a) {
+    var t = clean(a.textContent);
+    if (t && !GENERIC.test(t)) return t;
+    var e = a;
+    for (var i = 0; i < 5 && e; i++, e = e.parentElement) {
+      var h = e.querySelector('h1,h2,h3,h4,h5,strong,[class*=title],[class*=name]');
+      var ht = clean(h && h.textContent);
+      if (ht && !GENERIC.test(ht)) return ht;
+    }
+    return a.getAttribute('title') || t;
+  };
+  var links = Array.prototype.slice.call(document.querySelectorAll('a[href]')).map(function (a) { return { t: labelOf(a).slice(0, 80), h: a.href }; }).filter(function (l) { return /^https?:/.test(l.h) && l.t; });
+  var images = Array.prototype.slice.call(document.querySelectorAll('img')).map(function (i) { return { alt: (i.alt || i.title || '').trim().slice(0, 80), src: i.currentSrc || i.src, w: i.naturalWidth, h: i.naturalHeight }; })
+    .filter(function (i) { return /^https?:/.test(i.src) && i.w >= 200 && i.h >= 150 && !/logo|icon|ewm|qrcode|banner|sprite/i.test(i.src); });
+  return { title: document.title, text: (document.body && document.body.innerText) || '', links: links, images: images, finalUrl: location.href };
+})()`;
+
 let browserP: Promise<any> | null = null;
 let open = 0;
 const MAX_TABS = Number(process.env.LOCAL_RENDER_TABS || 6);
@@ -56,30 +81,8 @@ export async function renderMarkdown(url: string, opts: { expand?: string } = {}
         hidden += '\n' + (await page.evaluate(() => document.body?.innerText || '').catch(() => ''));
       }
     }
-    const { title, text, links, images, finalUrl } = await page.evaluate(() => {
-      // 「了解详情 / Learn more」这类链接文字看不出是哪个产品：往上找卡片里的标题当链接文字（科研产品库 10-21，聚光的列表页全是「了解详情」）
-      const GENERIC = /^(了解详情|查看详情|详情|了解更多|查看更多|更多|more|learn more|read more|view details?|details?|>+|→)$/i;
-      const labelOf = (a: Element) => {
-        const t = (a.textContent || '').replace(/\s+/g, ' ').trim();
-        if (t && !GENERIC.test(t)) return t;
-        let e: Element | null = a;
-        for (let i = 0; i < 5 && e; i++, e = e.parentElement) {
-          const h = e.querySelector('h1,h2,h3,h4,h5,strong,[class*=title],[class*=name]');
-          const ht = (h?.textContent || '').replace(/\s+/g, ' ').trim();
-          if (ht && !GENERIC.test(ht)) return ht;
-        }
-        return (a as HTMLElement).getAttribute('title') || t;
-      };
-      return {
-        title: document.title,
-        text: document.body?.innerText || '',
-        links: [...document.querySelectorAll('a[href]')].map(a => ({ t: labelOf(a).slice(0, 80), h: (a as HTMLAnchorElement).href })).filter(l => /^https?:/.test(l.h) && l.t),
-        // 页面上的大图（≥ 200px，去掉 logo / 图标）：产品图要用（仪器图片很重要——用户 10-21）
-        images: [...document.querySelectorAll('img')].map(i => ({ alt: (i.alt || i.title || '').trim().slice(0, 80), src: i.currentSrc || i.src, w: i.naturalWidth, h: i.naturalHeight }))
-          .filter(i => /^https?:/.test(i.src) && i.w >= 200 && i.h >= 150 && !/logo|icon|ewm|qrcode|banner|sprite/i.test(i.src)),
-        finalUrl: location.href,
-      };
-    });
+    // 页面里跑的脚本用字符串传：tsx 会给具名函数包一层 __name()，传函数进页面会报「__name is not defined」，整页拿不到（10-21 聚光 0 个产品就是这个）
+    const { title, text, links, images, finalUrl } = await page.evaluate(PAGE_SCRIPT);
     if (text.trim().length < 50) return null;
     const uniq = [...new Map(links.map((l: any) => [l.h, l])).values()].slice(0, 400) as { t: string; h: string }[];
     // 点开页签后新露出来的行补在正文后面（去掉和正文重复的行）
