@@ -57,8 +57,10 @@ async function httpCheck(url: string): Promise<{ status: string; issue: string; 
 }
 
 async function renderCheck(url: string, name: string): Promise<{ status: string; issue: string }> {
-  const md = await renderMarkdown(url);
-  if (!md) return { status: 'dead', issue: '用浏览器打开也读不到内容（多半已下线）' };
+  // 北森这类页面加载慢：读不到先等等再读一次；还读不到也不算打不开（国轩 10-21 实测页面是好的），标 suspect 待复查
+  let md = await renderMarkdown(url);
+  if (!md || md.split('\n## 页面链接')[0].length < 400) { await new Promise(r => setTimeout(r, 4000)); md = (await renderMarkdown(url)) || md; }
+  if (!md) return { status: 'suspect', issue: '浏览器读不到内容（可能加载慢，待复查）' };
   const body = md.split('\n## 页面链接')[0];
   if (BLOCK.test(body) && body.length < 3000) return { status: 'blocked', issue: '对方要验证' };
   if (GONE.test(body)) return { status: 'dead', issue: '页面提示岗位已下线 / 不存在' };
