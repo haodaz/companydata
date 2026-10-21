@@ -45,7 +45,7 @@ const FIELDS: Field[] = [
   { key: 'phone', label: '手机或微信', required: true, half: true },
   { key: 'email', label: '邮箱', half: true },
   { key: 'role', label: '你的职务', half: true },
-  { key: 'title', label: '模型名称', required: true, half: true, placeholder: '如：自研 7B 客服模型 / 某某 Agent' },
+  { key: 'title', label: '模型名称', required: true, half: true, placeholder: '如：自研 7B 行业模型 / 某某 Agent' },
   { key: 'model_source', label: '模型来源', half: true, type: 'select', options: ['自研基座模型', '开源模型微调', '商用大模型 API', '智能体（Agent）', '其他'] },
   { key: 'api_style', label: '接口形式', half: true, type: 'select', options: ['OpenAI 兼容', 'Anthropic Messages', '自定义 HTTP', '暂时没有接口'] },
   { key: 'endpoint', label: '接口地址（可选）', half: true, placeholder: 'https://…', hint: '只填地址，不要填密钥；对接时我们单独联系。' },

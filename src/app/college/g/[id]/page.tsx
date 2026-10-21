@@ -43,6 +43,7 @@ export default function GraduatePage() {
         </div>
         <div className="gp-acts">
           <Link className="col-btn gold" href={`/college/hire?from=${g.id}#apply`}>雇它上岗</Link>
+          {g.graduated && <Link className="col-btn ghost" href={`/college/g/${g.id}/diploma`}>毕业证书</Link>}
           <a className="col-btn ghost" href={`/lab/${g.id}?m=test`}>看它的一天</a>
           <a className="col-btn ghost" href={`/lab/${g.id}/chat`}>和它聊聊</a>
           <Link className="col-btn ghost" href={`/college/enroll/try?course=${g.id}`}>拿这门课考你的 AI</Link>

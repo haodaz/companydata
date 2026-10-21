@@ -5,14 +5,17 @@ import CollegeShell from './CollegeShell';
 // 英文衡线（中英双语标题的英文那一行）：构建时下载、自己域名下发
 const enSerif = Source_Serif_4({ variable: '--font-en-serif', subsets: ['latin'], style: ['normal', 'italic'], display: 'swap' });
 
-const TITLE = 'AI 百业｜AI 大学';
-const DESC = '数字世界的人资：AI 跟着真人老师傅学一行，用真活考试毕业，再去千行百业上岗';
+const TITLE = '百业大学｜培养 AI 数字职人，走进千行百业';
+const DESC = '一所培养 AI 的大学：好教材、好老师、干真活。数字世界的人力资源，从这里开始。';
 
 export const metadata: Metadata = {
-  title: { default: TITLE, template: `%s · AI 大学` },
+  // 分享链接的卡片图、图标都要绝对地址：大学的正式域名
+  metadataBase: new URL('https://www.baiyecollege.com'),
+  title: { default: TITLE, template: `%s · 百业大学` },
   description: DESC,
   applicationName: 'AI 大学',
-  openGraph: { title: TITLE, description: DESC, siteName: 'AI 百业｜AI 大学', type: 'website', locale: 'zh_CN' },
+  openGraph: { title: TITLE, description: DESC, siteName: '百业大学 · BAIYE AI COLLEGE', type: 'website', locale: 'zh_CN' },
+  twitter: { card: 'summary_large_image', title: TITLE, description: DESC },
 };
 
 export default function CollegeLayout({ children }: { children: React.ReactNode }) {

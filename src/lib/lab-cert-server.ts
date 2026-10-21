@@ -28,10 +28,14 @@ async function socialValue(space: any): Promise<{ headline: string; lines: strin
   } catch { return null; }
 }
 
-export async function certData(sid: string) {
+/**
+ * opts.ai：AI 大学的毕业证书（/college）用——只认 AI「上学后」（装了技能）的作答，证书上的名字统一叫 NOVA；
+ * 百业的体验证书照旧只发给真人。
+ */
+export async function certData(sid: string, opts: { ai?: boolean } = {}) {
   const { data: sub, error } = await supabaseAdmin.from('skill_submissions').select('*').eq('id', sid).single();
   if (error || !sub) throw new Error('证书不存在');
-  if (sub.candidate_type === 'ai') throw new Error('AI 的作答不发证书');
+  if (opts.ai ? sub.candidate_type !== 'ai' || !sub.with_skill_id : sub.candidate_type === 'ai') throw new Error(opts.ai ? '只有上学后的毕业考才进毕业证书' : 'AI 的作答不发证书');
   const space = await loadSpace(sub.task_id);
   const chapters: any[] = space.chapters || [];
   const chapter = chapters.find(c => c.id && c.id === sub.chapter_id) || chapters[0] || null;
@@ -66,7 +70,7 @@ export async function certData(sid: string) {
   const jd = space.jd_snapshot || {};
   return {
     id: sub.id, no: certNo(sub.id),
-    candidate: { name: sub.candidate_name, note: sub.candidate_note, location: sub.candidate_location, type: sub.candidate_type },
+    candidate: opts.ai ? { name: 'NOVA', note: '', location: '', type: 'ai' } : { name: sub.candidate_name, note: sub.candidate_note, location: sub.candidate_location, type: sub.candidate_type },
     date: sub.submitted_at, score: sub.score, overall, level: bandLevel(overall), match: sub.match, beat, peers: scores.length,
     dims,
     analysis: { summary: sub.grading?.summary || '', gaps: (sub.grading?.gaps || []).slice(0, 3), suggestions: (sub.grading?.suggestions || []).slice(0, 3) },

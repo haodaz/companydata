@@ -11,20 +11,21 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import type { Graduate } from '@/lib/college';
 import { CU_BASE, Loop } from './ui';
+import { CASES } from './cases/data';
 
 const PILLARS = [
   {
     n: '01', zh: '好教材', en: 'Curriculum', video: '/college/book.mp4', poster: '/college/book.jpg',
-    title: '一门课，就是一行的一天', sub: 'Every course is a working day, not a textbook.',
-    body: '教材从平方的知识图谱里长出来：企业、岗位、职业、场所、工具、标准，织成一张网。一门手艺被统一表示成「场景 × 状态 × 操作流 × 规则 × 目标 × 一天」——从早上接第一个活，到晚上写交接留言，AI 一步一步地过。',
+    title: '教材，是一个岗位的每一天', sub: 'Every day, every process, every workplace of a role.',
+    body: '教材从平方的知识图谱里长出来：企业、岗位、职业、场所、工具、标准，织成一张网。一个岗位的每一天、每一道工序、每一个现场，都是它的课——从早上接第一个活，到晚上写交接留言。你在这里看到的，只是其中一个缩影。',
     facts: [['场景', 'Scenes'], ['工位', 'Workstations'], ['判断规则', 'Rules'], ['交接', 'Handover']],
     link: { href: '/lab/gallery', t: '走进一门课', en: 'Visit a course' },
   },
   {
     n: '02', zh: '好老师', en: 'Faculty', video: '/college/hands.mp4', poster: '/college/hands.jpg',
-    title: '手艺，学自愿意开口的老师傅', sub: 'Taught by masters who explain the why.',
-    body: '每门课背后都有一位真人老师傅：咖啡师、焊工、外科医生、博士后……他们的判断规则、示范动作、复盘时说的「为什么」，就是 AI 的课。AI 先起草，老师傅逐条校正；还没被校正过的，就写明是草稿。',
-    facts: [['判断规则', 'Judgment'], ['示范', 'Demonstration'], ['复盘', 'Debrief'], ['校正', 'Review']],
+    title: '手艺，学自最懂这一行的人', sub: 'Taught by the people who know the trade best.',
+    body: '好老师不只是一位老师傅：行业里的资深从业者、头部公司的做法、智库的研究、行业标准，一起给它上课、给它评分。他们的判断规则、示范、复盘时说的「为什么」，就是 AI 的课；还没被人校正过的，就写明是草稿。',
+    facts: [['资深从业者', 'Practitioners'], ['头部公司', 'Leading firms'], ['智库研究', 'Research'], ['行业标准', 'Standards']],
     link: { href: '/college/graduates', t: '看看教出来的毕业生', en: 'Meet the graduates' },
   },
   {
@@ -144,7 +145,8 @@ export default function CollegeHome() {
     fetch('/api/college/graduates').then(r => r.json()).then(j => { if (j.ok) setAll(j.data); }).catch(() => {});
   }, []);
   // 真人才那一节挑 4 位：职业 3 位 + 学科研究 1 位
-  const pick = all.filter(g => g.graduated && g.avatar && g.cover);
+  // 精选不放客服：人人都说会训练客服，放在门面上反而掉价
+  const pick = all.filter(g => g.graduated && g.avatar && g.cover && !/客服/.test(g.role));
   const featured = [...pick.filter(g => !g.research).slice(0, 3), ...pick.filter(g => g.research).slice(0, 1)];
   while (featured.length < 4 && pick.length > featured.length) { const g = pick.find(x => !featured.includes(x)); if (!g) break; featured.push(g); }
   const toggle = () => { const v = hero.current; if (!v) return; if (v.paused) { v.play(); setPaused(false); } else { v.pause(); setPaused(true); } };
@@ -158,8 +160,8 @@ export default function CollegeHome() {
         <video ref={hero} src="/college/hero.mp4" poster="/college/hero.jpg" autoPlay muted loop playsInline />
         <div className="cu-hero-shade" />
         <div className="cu-hero-in">
-          <div className="cu-eyebrow light">AI 百业｜AI 大学 · THE ONLINE COLLEGE FOR AI</div>
-          <h1><span>让 AI&nbsp;</span><span>学会一门手艺</span></h1>
+          <div className="cu-eyebrow light">百業大學 · BAIYE AI COLLEGE</div>
+          <h1><span>培养 AI 数字职人</span><br /><span className="gold">走进千行百业</span></h1>
           <div className="cu-hero-en">Where AI learns a craft — and earns its place at work.</div>
           <p>学生是 AI。好教材、好老师、干真活，三样都在，才出得了能上岗的 AI 人才。</p>
           <div className="cu-hero-acts">
@@ -176,8 +178,8 @@ export default function CollegeHome() {
           <div className="cu-eyebrow">关于学院 · ABOUT</div>
           <p className="cu-statement">大模型读过整个互联网，<br />却没有在哪一行上过一天班。</p>
           <div className="cu-about-cols">
-            <p>它缺的不是知识，而是三样东西：一套这一行的教材，一位肯把经验说出来的老师傅，一份要对结果负责的真活。AI 大学就做这三件事——把通用大模型，培养成千行百业用得上的 AI 人才。</p>
-            <p className="en">It already knows a little of everything. What it lacks is a curriculum drawn from real work, a master who explains the why, and a job it must answer for. That is what this college provides.</p>
+            <p>人类办大学几百年，把普通人培养成医生、工程师、手艺人。人的大学，培养人；AI 的大学，培养能和人一起干活的 AI。它缺的不是知识，而是三样东西：一套这一行真正的教材，一群好老师，一份要对结果负责的真活。</p>
+            <p className="en">A university for people trains people; a university for AI trains AI that can work alongside them. What a model lacks is not knowledge, but a real curriculum, great teachers, and a job it must answer for.</p>
           </div>
           <div className="cu-eq">
             {[['好教材', 'Curriculum'], ['好老师', 'Faculty'], ['干真活', 'Real Work']].map(([z, e], i) => (
@@ -214,9 +216,9 @@ export default function CollegeHome() {
       <section className="cu-talent">
         <div className="cu-in">
           <div className="cu-pillar-k light"><span className="n">04</span><b>AI 真人才</b><i>Real AI Talent</i></div>
-          <h2>毕业的，是能上岗的 AI 人才</h2>
+          <h2>毕业的，是能直接上岗的 AI 人才</h2>
           <div className="cu-en-sub light">Graduates who can show their work.</div>
-          <p className="cu-talent-p">每一位毕业生都是一位 AI 职人：学自哪位老师傅、考了多少分、能去哪些公司干哪些活，档案里都写着。</p>
+          <p className="cu-talent-p">平方自己培养的毕业生，可以直接输送给企业。每一位适合哪些公司、哪些岗位，毕业考考得怎样，学自哪些好老师，都评价得清清楚楚——帮企业挑到最合适的那一位。</p>
           <div className="cu-grads">
             {(featured.length ? featured : Array.from({ length: 4 }, () => null)).map((g, i) => g ? (
               <Link key={g.id} href={`/college/g/${g.id}`} className="cu-grad">
@@ -310,8 +312,28 @@ export default function CollegeHome() {
         </div>
       </section>
 
+      {/* ── 案例：分析型的活和新兴职业（只用叙述，不配图） ── */}
+      <section className="cu-sec cu-ivory" id="cases">
+        <div className="cu-in">
+          <div className="cu-eyebrow">案例 · CASES</div>
+          <h2 className="cu-h2">客户带着问题来<span>Organizations bring us the work they need done</span></h2>
+          <p className="cu-p" style={{ marginTop: -14, marginBottom: 30 }}>不只是传统手艺。出海、车间数据、组织搭建、产业研究，这些分析型的活和新兴职业，也一样可以教、可以考、可以上岗。</p>
+          <div className="cu-cases">
+            {CASES.map(c => (
+              <Link key={c.id} href={`/college/cases#${c.id}`} className="cu-case">
+                <span className="n">{c.n}</span>
+                <b>{c.q}</b>
+                <p>{c.who}。{c.result}</p>
+                <div className="tags">{c.tags.map(t => <em key={t}>{t}</em>)}</div>
+                <i className="go">读完整案例 →</i>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── 我们相信 ── */}
-      <section className="cu-sec cu-ivory">
+      <section className="cu-sec" style={{ paddingBottom: 0 }}>
         <div className="cu-in">
           <div className="cu-eyebrow">我们相信 · WHAT WE BELIEVE</div>
           <div className="cu-beliefs">
@@ -368,8 +390,9 @@ const CU_CSS = `
 .cu-hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .cu-hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,14,32,.78) 0%, rgba(10,14,32,.45) 45%, rgba(10,14,32,0) 75%), linear-gradient(0deg, rgba(10,14,32,.55), rgba(10,14,32,0) 45%); }
 .cu-hero-in { position: absolute; left: 0; right: 0; bottom: clamp(48px, 9vh, 96px); max-width: 1240px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
-.cu-hero h1 { font-family: var(--serif); font-size: clamp(42px, 7vw, 92px); font-weight: 900; line-height: 1.08; margin: 18px 0 12px; letter-spacing: .03em; text-shadow: 0 2px 30px rgba(0,0,0,.25); }
+.cu-hero h1 { font-family: var(--serif); font-size: clamp(36px, 6.2vw, 84px); font-weight: 900; line-height: 1.08; margin: 18px 0 12px; letter-spacing: .03em; text-shadow: 0 2px 30px rgba(0,0,0,.25); }
 .cu-hero h1 span { display: inline-block; white-space: nowrap; }
+.cu-hero h1 .gold { background: linear-gradient(100deg, #d9b878, #f3dfae 45%, #b08d57); -webkit-background-clip: text; color: transparent; }
 .cu-hero-en { font: italic 400 clamp(18px, 2.2vw, 28px)/1.4 var(--en); color: rgba(255,255,255,.88); }
 .cu-hero p { max-width: 640px; font-size: clamp(15px, 1.3vw, 17.5px); line-height: 1.85; color: rgba(255,255,255,.86); margin: 18px 0 28px; }
 .cu-hero-acts { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -517,6 +540,18 @@ const CU_CSS = `
 .cu-supply-c i { margin-left: 8px; color: var(--ink3); }
 .cu-supply-c p { font-size: 14.5px; line-height: 1.8; color: var(--ink2); margin: 10px 0 0; }
 
+/* 案例 */
+.cu-cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 2px solid var(--navy); }
+.cu-case { display: grid; align-content: start; gap: 10px; padding: 28px 30px 28px 0; border-bottom: 1px solid var(--line); color: var(--navy); }
+.cu-case:nth-child(2n) { padding-left: 30px; padding-right: 0; border-left: 1px solid var(--line); }
+.cu-case .n { font: 400 30px var(--en); color: var(--gold); }
+.cu-case b { font-family: var(--serif); font-size: 24px; line-height: 1.4; }
+.cu-case p { margin: 0; font-size: 15px; line-height: 1.85; color: var(--ink2); }
+.cu-case .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.cu-case .tags em { font-style: normal; font-size: 12.5px; padding: 3px 10px; background: rgba(176,141,87,.12); color: #7a5c2a; }
+.cu-case .go { font-style: normal; font-family: inherit; font-weight: 800; font-size: 14.5px; color: var(--navy); }
+.cu-case:hover b { color: #24306a; text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 6px; }
+
 /* 我们相信 */
 .cu-beliefs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 30px; }
 .cu-beliefs > div { padding: 10px 30px 10px 0; }
@@ -557,7 +592,8 @@ const CU_CSS = `
   .cu-schools, .cu-media, .cu-doors, .cu-beliefs, .cu-about-cols { grid-template-columns: 1fr; }
   .cu-beliefs > div, .cu-beliefs > div + div { padding: 18px 0; border-left: 0; border-bottom: 1px solid var(--line); }
   .cu-mosaic { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 170px; }
-  .cu-supply { grid-template-columns: 1fr; }
+  .cu-supply, .cu-cases { grid-template-columns: 1fr; }
+  .cu-case, .cu-case:nth-child(2n) { padding: 22px 0; border-left: 0; }
   .cu-supply > div, .cu-supply > div + div { padding: 18px 0; border-left: 0; border-bottom: 1px solid var(--line); }
 }
 @media (prefers-reduced-motion: reduce) { .cu-one, .cu-beam { transition: none; } .cu-orb i { animation: none; } }

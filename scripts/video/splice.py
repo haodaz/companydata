@@ -21,7 +21,8 @@ missing = [n for n in names if n not in ftl or n not in {x['clip'] for x in tl}]
 if missing: raise SystemExit('两边都得有这些段：' + ' '.join(missing))
 
 src = os.path.join(D, 'cut.mp4'); keep = os.path.join(D, 'cut-before-splice.mp4')
-if not os.path.exists(keep): shutil.copy(src, keep)
+# 每次都从「当前」成片备份：连着换好几次时，前面换进去的段要保留（以前只在第一次备份，后一次会把前一次冲掉）
+shutil.copy(src, keep)
 shutil.copy(os.path.join(D, 'timeline.json'), os.path.join(D, 'timeline-before-splice.json'))
 fix_src = os.path.join(FIX, 'cut.mp4')
 

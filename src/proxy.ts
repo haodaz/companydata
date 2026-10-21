@@ -30,6 +30,8 @@ export async function proxy(req: NextRequest) {
   if (pathname === '/' && /(^|\.)aisimjob\.com$/.test(host)) return NextResponse.rewrite(new URL('/lab', req.url));
   // AI 大学的独立域名 baiyecollege.com：根路径直接显示 /college（里面的链接本来就是 /college/…）
   if (pathname === '/' && /(^|\.)baiyecollege\.com$/.test(host)) return NextResponse.rewrite(new URL('/college', req.url));
+  // 浏览器 / 分享卡片会直接要 /favicon.ico：大学域名给校徽
+  if (pathname === '/favicon.ico' && /(^|\.)baiyecollege\.com$/.test(host)) return NextResponse.rewrite(new URL('/college/favicon.ico', req.url));
 
   // API：除登录 / 注册外全部需要登录（agent 接口会消耗 Token，数据接口走 service role）
   if (pathname.startsWith('/api/')) {
@@ -129,5 +131,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/work/mine', '/work/new', '/work/admin', '/workspace', '/research', '/api/:path*', '/'],
+  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/work/mine', '/work/new', '/work/admin', '/workspace', '/research', '/api/:path*', '/', '/favicon.ico'],
 };

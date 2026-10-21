@@ -14,11 +14,13 @@ export async function GET(req: NextRequest) {
   try {
     const sids = (req.nextUrl.searchParams.get('s') || '').split(',').filter(Boolean).slice(0, 20);
     if (!sids.length) return NextResponse.json({ ok: false, error: '缺少作答编号' }, { status: 400 });
-    const certs = await Promise.all(sids.map(certData));
+    // ai=1：AI 大学的毕业证书（每段一份上学后的毕业考，名字叫 NOVA）；不查「是不是同一个访客」
+    const ai = req.nextUrl.searchParams.get('ai') === '1';
+    const certs = await Promise.all(sids.map(id => certData(id, { ai })));
     const space = certs[0].space;
     if (certs.some(c => c.space.id !== space.id)) throw new Error('这些作答不属于同一个空间');
     const who = certs[0].visitor_id;
-    if (certs.length > 1 && (!who || certs.some(c => c.visitor_id !== who))) throw new Error('这些作答不是同一个人的');
+    if (!ai && certs.length > 1 && (!who || certs.some(c => c.visitor_id !== who))) throw new Error('这些作答不是同一个人的');
     const total = certs[0].chapter?.total || 1;
     // 每段只留最好的一次
     const byN = new Map<number, (typeof certs)[number]>();

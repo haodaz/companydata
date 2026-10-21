@@ -124,12 +124,13 @@ for (const [i, sc] of scenes.entries()) {
   // { cookie: { name, value, url } }：先种登录 cookie（studio / 素材库在 LAB_PUBLIC 下也要登录）
   if (sc.cookie) await send('Network.setCookie', { name: sc.cookie.name, value: sc.cookie.value, url: sc.cookie.url, path: '/' });
   if (sc.go) {
+    const was = paused;                  // 跳转前是不是在暂停：跳完要还原（之前一律恢复抓帧，暂停里的跳转 + 等加载被录进了上一段）
     paused = true;                       // 导航中截图会挂起，先停抓
     await send('Page.navigate', { url: sc.go }, 15000);
     await sleep(sc.wait ?? 5000);
     // Next 开发态的「N / 1 Issue」角标别进片子：藏掉，并盯着别再冒出来
     await evaluate(`(() => { const hide = () => document.querySelectorAll('nextjs-portal').forEach(e => { e.style.display = 'none'; }); hide(); if (!window.__hidePortal) { window.__hidePortal = new MutationObserver(hide); window.__hidePortal.observe(document.body, { childList: true, subtree: false }); } return 1; })()`);
-    paused = false;
+    paused = was;
   }
   if (sc.scroll !== undefined) {
     const over = (sc.over ?? 2) * 1000;
@@ -207,7 +208,7 @@ for (const [i, sc] of scenes.entries()) {
 
   if (sc.local) {
     await evaluate(`(() => { const o = ${JSON.stringify(sc.local)}; for (const k in o) localStorage.setItem(k, typeof o[k] === 'string' ? o[k] : JSON.stringify(o[k])); location.reload(); return true; })()`);
-    paused = true; await sleep(sc.wait ?? 5000); paused = false;
+    { const was = paused; paused = true; await sleep(sc.wait ?? 5000); paused = was; }
   }
   if (sc.eval) {
     const r = await send('Runtime.evaluate', { expression: `(${sc.eval})()`, returnByValue: true, awaitPromise: true }, (sc.timeout ?? 120) * 1000);

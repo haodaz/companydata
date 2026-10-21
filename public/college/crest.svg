@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+<!-- 百業大學校徽：外圈环形校名（英文 + 汉字纪年）· 回纹圈 · 盾牌（上：碑刻体 AI；下：金色小篆「百業」）· 两侧月桂枝。中西古今。 -->
+<defs><path id="arcTop" d="M 47.9,255.5 A 256 256 0 0 1 552.1,255.5"/><path id="arcBot" d="M 34.1,346.9 A 270 270 0 0 0 565.9,346.9"/><radialGradient id="field" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#26346e"/><stop offset="1" stop-color="#16204a"/></radialGradient><linearGradient id="gold" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="600"><stop offset="0" stop-color="#e8cf9a"/><stop offset=".5" stop-color="#d9b878"/><stop offset="1" stop-color="#b08d57"/></linearGradient></defs>
+<circle cx="300" cy="300" r="294" fill="#16204a"/>
+<circle cx="300" cy="300" r="288" fill="none" stroke="url(#gold)" stroke-width="3"/>
+<circle cx="300" cy="300" r="226" fill="none" stroke="url(#gold)" stroke-width="2"/>
+<text font-family="Georgia, 'Times New Roman', serif" font-size="30" letter-spacing="9" fill="url(#gold)" font-weight="700"><textPath href="#arcTop" startOffset="50%" text-anchor="middle">BAIYE AI COLLEGE</textPath></text>
+<text font-family="'Songti SC', 'STSong', 'Noto Serif SC', serif" font-size="30" letter-spacing="10" fill="url(#gold)" font-weight="900"><textPath href="#arcBot" startOffset="50%" text-anchor="middle">百業大學 · 二〇二六</textPath></text>
+<path d="M 557.0,291.0 L 564.0,300.0 L 557.0,309.0 L 550.0,300.0 Z" fill="url(#gold)"/>
+<path d="M 43.0,291.0 L 50.0,300.0 L 43.0,309.0 L 36.0,300.0 Z" fill="url(#gold)"/>
+<path d="M 300.0,98.0 L 300.0,80.9 L 313.2,81.3 L 312.5,94.4 L 303.8,94.1 L 304.0,86.9 L 308.6,87.0" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 315.7,98.6 L 317.0,81.6 L 330.2,83.0 L 328.3,96.0 L 319.8,95.0 L 320.5,87.8 L 325.1,88.3" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 331.2,100.4 L 333.9,83.5 L 346.9,86.0 L 344.1,98.8 L 335.6,97.1 L 336.9,90.0 L 341.4,90.9" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 346.6,103.4 L 350.5,86.8 L 363.3,90.3 L 359.5,102.8 L 351.2,100.5 L 353.0,93.5 L 357.5,94.7" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 361.7,107.6 L 366.9,91.4 L 379.4,95.8 L 374.6,108.0 L 366.5,105.1 L 368.9,98.3 L 373.2,99.8" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 376.4,113.0 L 382.9,97.2 L 395.0,102.6 L 389.3,114.4 L 381.4,110.8 L 384.3,104.2 L 388.5,106.1" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 390.7,119.5 L 398.3,104.2 L 410.0,110.5 L 403.4,121.9 L 395.8,117.7 L 399.2,111.3 L 403.3,113.5" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 404.4,127.1 L 413.2,112.4 L 424.3,119.6 L 416.9,130.4 L 409.7,125.7 L 413.5,119.6 L 417.4,122.1" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 417.5,135.7 L 427.4,121.8 L 438.0,129.8 L 429.7,140.0 L 422.9,134.7 L 427.2,128.9 L 430.8,131.7" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 429.8,145.3 L 440.8,132.2 L 450.7,141.0 L 441.7,150.5 L 435.3,144.7 L 440.0,139.3 L 443.5,142.4" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 441.4,155.8 L 453.4,143.6 L 462.6,153.1 L 452.8,161.9 L 446.9,155.7 L 452.1,150.6 L 455.3,154.0" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 452.2,167.2 L 465.1,155.9 L 473.5,166.2 L 463.1,174.2 L 457.7,167.5 L 463.2,162.9 L 466.1,166.4" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 462.0,179.4 L 475.7,169.2 L 483.3,180.0 L 472.3,187.2 L 467.5,180.1 L 473.3,175.9 L 476.0,179.7" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 470.9,192.3 L 485.4,183.2 L 492.1,194.6 L 480.6,200.9 L 476.3,193.4 L 482.4,189.7 L 484.8,193.7" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 478.7,205.9 L 493.9,197.9 L 499.7,209.8 L 487.7,215.2 L 484.0,207.4 L 490.4,204.2 L 492.4,208.3" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 485.5,220.0 L 501.2,213.2 L 506.1,225.5 L 493.7,230.0 L 490.6,222.0 L 497.3,219.2 L 499.0,223.5" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 491.1,234.6 L 507.3,229.1 L 511.2,241.7 L 498.5,245.2 L 496.1,237.0 L 502.9,234.8 L 504.3,239.2" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 495.6,249.6 L 512.2,245.3 L 515.1,258.3 L 502.2,260.8 L 500.4,252.3 L 507.4,250.7 L 508.4,255.2" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 498.9,264.9 L 515.8,262.0 L 517.7,275.1 L 504.6,276.6 L 503.5,268.0 L 510.6,266.9 L 511.2,271.5" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 501.1,280.4 L 518.1,278.8 L 519.0,292.0 L 505.8,292.5 L 505.3,283.9 L 512.5,283.3 L 512.8,287.9" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 502.0,296.1 L 519.1,295.8 L 518.9,309.0 L 505.8,308.5 L 506.0,299.8 L 513.2,299.8 L 513.1,304.5" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 501.7,311.7 L 518.7,312.7 L 517.6,325.9 L 504.5,324.4 L 505.4,315.8 L 512.5,316.4 L 512.1,321.0" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 500.1,327.3 L 517.1,329.7 L 514.9,342.7 L 502.0,340.2 L 503.5,331.7 L 510.6,332.8 L 509.9,337.3" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 497.4,342.8 L 514.1,346.4 L 510.9,359.2 L 498.3,355.7 L 500.4,347.3 L 507.5,349.0 L 506.3,353.5" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 493.5,357.9 L 509.9,362.8 L 505.7,375.4 L 493.4,370.9 L 496.2,362.7 L 503.0,364.9 L 501.6,369.3" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 488.4,372.8 L 504.4,378.9 L 499.2,391.1 L 487.3,385.7 L 490.7,377.7 L 497.4,380.5 L 495.6,384.7" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 482.2,387.1 L 497.7,394.5 L 491.6,406.3 L 480.1,399.9 L 484.1,392.3 L 490.6,395.5 L 488.4,399.6" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 474.9,401.0 L 489.7,409.5 L 482.8,420.8 L 471.8,413.6 L 476.4,406.3 L 482.6,410.0 L 480.2,413.9" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 466.6,414.3 L 480.7,423.9 L 472.9,434.6 L 462.5,426.5 L 467.7,419.6 L 473.5,423.8 L 470.8,427.6" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 457.2,426.8 L 470.5,437.6 L 461.9,447.6 L 452.2,438.8 L 457.9,432.3 L 463.4,436.9 L 460.4,440.4" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 446.9,438.6 L 459.4,450.4 L 450.0,459.7 L 441.0,450.1 L 447.2,444.1 L 452.3,449.1 L 449.0,452.4" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 435.7,449.6 L 447.2,462.3 L 437.2,470.9 L 428.9,460.6 L 435.5,455.1 L 440.3,460.5 L 436.8,463.5" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 423.7,459.7 L 434.2,473.2 L 423.5,481.0 L 416.1,470.1 L 423.1,465.1 L 427.4,470.9 L 423.7,473.6" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 411.0,468.8 L 420.4,483.1 L 409.1,490.0 L 402.6,478.6 L 410.0,474.2 L 413.8,480.2 L 409.9,482.7" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 397.6,476.9 L 405.8,491.8 L 394.1,497.9 L 388.4,486.0 L 396.1,482.2 L 399.5,488.5 L 395.4,490.6" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 383.6,483.9 L 390.7,499.5 L 378.4,504.6 L 373.7,492.3 L 381.7,489.1 L 384.6,495.7 L 380.3,497.5" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 369.1,489.8 L 374.9,505.9 L 362.3,510.0 L 358.6,497.4 L 366.8,494.8 L 369.2,501.6 L 364.8,503.1" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 354.2,494.6 L 358.8,511.1 L 345.9,514.2 L 343.1,501.4 L 351.5,499.4 L 353.3,506.4 L 348.8,507.5" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 338.9,498.2 L 342.2,515.0 L 329.1,517.2 L 327.4,504.1 L 335.9,502.8 L 337.2,509.9 L 332.6,510.7" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 323.5,500.6 L 325.4,517.6 L 312.2,518.8 L 311.5,505.6 L 320.1,505.0 L 320.8,512.1 L 316.2,512.5" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 307.8,501.8 L 308.5,518.9 L 295.2,519.0 L 295.5,505.9 L 304.2,505.9 L 304.3,513.1 L 299.7,513.2" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 292.2,501.8 L 291.5,518.9 L 278.3,518.0 L 279.6,504.9 L 288.2,505.6 L 287.8,512.8 L 283.2,512.5" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 276.5,500.6 L 274.6,517.6 L 261.5,515.7 L 263.8,502.7 L 272.3,504.1 L 271.3,511.2 L 266.7,510.5" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 261.1,498.2 L 257.8,515.0 L 244.9,512.0 L 248.2,499.3 L 256.6,501.3 L 255.0,508.4 L 250.5,507.3" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 245.8,494.6 L 241.2,511.1 L 228.6,507.1 L 232.9,494.7 L 241.1,497.4 L 239.0,504.3 L 234.6,502.9" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 230.9,489.8 L 225.1,505.9 L 212.8,501.0 L 218.0,488.9 L 226.0,492.2 L 223.4,498.9 L 219.1,497.2" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 216.4,483.9 L 209.3,499.5 L 197.4,493.6 L 203.6,482.0 L 211.3,485.9 L 208.2,492.4 L 204.0,490.3" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 202.4,476.9 L 194.2,491.8 L 182.7,485.1 L 189.8,474.0 L 197.2,478.4 L 193.6,484.7 L 189.6,482.3" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 189.0,468.8 L 179.6,483.1 L 168.8,475.4 L 176.6,464.9 L 183.6,469.9 L 179.6,475.9 L 175.8,473.2" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 176.3,459.7 L 165.8,473.2 L 155.6,464.7 L 164.2,454.9 L 170.8,460.4 L 166.3,466.0 L 162.7,463.1" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 164.3,449.6 L 152.8,462.3 L 143.2,453.1 L 152.6,443.9 L 158.8,449.9 L 153.8,455.2 L 150.5,451.9" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 153.1,438.6 L 140.6,450.4 L 131.8,440.4 L 141.9,432.0 L 147.6,438.5 L 142.3,443.4 L 139.2,439.9" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 142.8,426.8 L 129.5,437.6 L 121.5,427.0 L 132.2,419.4 L 137.3,426.3 L 131.6,430.7 L 128.8,427.0" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 133.4,414.3 L 119.3,423.9 L 112.2,412.8 L 123.4,406.0 L 128.0,413.3 L 122.0,417.3 L 119.5,413.4" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 125.1,401.0 L 110.3,409.5 L 104.0,397.9 L 115.7,392.0 L 119.7,399.6 L 113.4,403.1 L 111.3,399.0" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 117.8,387.1 L 102.3,394.5 L 97.0,382.4 L 109.2,377.5 L 112.6,385.4 L 106.0,388.4 L 104.1,384.1" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 111.6,372.8 L 95.6,378.9 L 91.2,366.4 L 103.7,362.4 L 106.5,370.6 L 99.8,373.1 L 98.2,368.7" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 106.5,357.9 L 90.1,362.8 L 86.7,350.0 L 99.5,347.0 L 101.6,355.4 L 94.7,357.3 L 93.5,352.9" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 102.6,342.8 L 85.9,346.4 L 83.5,333.4 L 96.4,331.4 L 97.9,339.8 L 90.9,341.2 L 90.0,336.7" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 99.9,327.3 L 82.9,329.7 L 81.5,316.5 L 94.6,315.5 L 95.5,324.1 L 88.3,324.9 L 87.8,320.3" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 98.3,311.7 L 81.3,312.7 L 80.9,299.5 L 94.0,299.5 L 94.2,308.1 L 87.0,308.4 L 86.9,303.8" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 98.0,296.1 L 80.9,295.8 L 81.6,282.5 L 94.7,283.6 L 94.2,292.2 L 87.0,291.9 L 87.2,287.3" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 98.9,280.4 L 81.9,278.8 L 83.6,265.6 L 96.6,267.7 L 95.4,276.2 L 88.3,275.4 L 88.8,270.8" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 101.1,264.9 L 84.2,262.0 L 86.9,249.0 L 99.7,252.0 L 97.9,260.5 L 90.8,259.1 L 91.7,254.6" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 104.4,249.6 L 87.8,245.3 L 91.5,232.6 L 104.0,236.7 L 101.5,244.9 L 94.6,243.0 L 95.9,238.5" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 108.9,234.6 L 92.7,229.1 L 97.4,216.7 L 109.5,221.7 L 106.4,229.7 L 99.6,227.3 L 101.3,222.9" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 114.5,220.0 L 98.8,213.2 L 104.4,201.2 L 116.2,207.1 L 112.4,214.9 L 105.9,211.9 L 107.8,207.7" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 121.3,205.9 L 106.1,197.9 L 112.7,186.4 L 123.9,193.2 L 119.6,200.6 L 113.3,197.2 L 115.6,193.1" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 129.1,192.3 L 114.6,183.2 L 122.0,172.2 L 132.7,179.8 L 127.8,187.0 L 121.8,183.0 L 124.4,179.2" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 138.0,179.4 L 124.3,169.2 L 132.5,158.8 L 142.5,167.2 L 137.1,174.0 L 131.4,169.5 L 134.3,165.9" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 147.8,167.2 L 134.9,155.9 L 143.9,146.2 L 153.3,155.4 L 147.4,161.7 L 142.0,156.9 L 145.2,153.5" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 158.6,155.8 L 146.6,143.6 L 156.3,134.6 L 164.9,144.5 L 158.5,150.3 L 153.6,145.1 L 157.0,141.9" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 170.2,145.3 L 159.2,132.2 L 169.6,124.0 L 177.4,134.5 L 170.6,139.8 L 166.0,134.2 L 169.7,131.3" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 182.5,135.7 L 172.6,121.8 L 183.6,114.4 L 190.6,125.5 L 183.4,130.2 L 179.3,124.3 L 183.1,121.7" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 195.6,127.1 L 186.8,112.4 L 198.3,105.9 L 204.4,117.6 L 196.9,121.7 L 193.3,115.5 L 197.3,113.2" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 209.3,119.5 L 201.7,104.2 L 213.7,98.6 L 218.9,110.7 L 211.0,114.3 L 207.9,107.8 L 212.1,105.8" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 223.6,113.0 L 217.1,97.2 L 229.6,92.5 L 233.8,105.0 L 225.7,107.9 L 223.1,101.2 L 227.4,99.6" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 238.3,107.6 L 233.1,91.4 L 245.8,87.7 L 249.1,100.4 L 240.8,102.7 L 238.7,95.8 L 243.2,94.6" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 253.4,103.4 L 249.5,86.8 L 262.5,84.1 L 264.7,97.1 L 256.2,98.7 L 254.7,91.7 L 259.2,90.8" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 268.8,100.4 L 266.1,83.5 L 279.3,81.9 L 280.5,95.0 L 272.0,96.0 L 271.0,88.8 L 275.6,88.2" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M 284.3,98.6 L 283.0,81.6 L 296.3,80.9 L 296.5,94.1 L 287.9,94.4 L 287.4,87.2 L 292.1,87.0" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
+<circle cx="300" cy="300" r="202" fill="none" stroke="url(#gold)" stroke-width="1.6"/>
+<circle cx="300" cy="300" r="200" fill="url(#field)"/>
+<path d="M 258.7,462.2 A 150 150 0 0 1 207.7,199.8" fill="none" stroke="url(#gold)" stroke-width="2.4"/>
+<ellipse cx="246.1" cy="467.2" rx="15.0" ry="5.7" transform="rotate(158.0 246.1 467.2)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="250.7" cy="451.3" rx="15.0" ry="5.7" transform="rotate(234.0 250.7 451.3)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="220.2" cy="454.9" rx="14.6" ry="5.5" transform="rotate(168.5 220.2 454.9)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="227.4" cy="440.4" rx="14.6" ry="5.5" transform="rotate(244.5 227.4 440.4)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="197.0" cy="438.0" rx="14.1" ry="5.4" transform="rotate(179.0 197.0 438.0)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="206.4" cy="425.5" rx="14.1" ry="5.4" transform="rotate(255.0 206.4 425.5)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="177.3" cy="417.3" rx="13.7" ry="5.2" transform="rotate(189.5 177.3 417.3)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="188.4" cy="407.1" rx="13.7" ry="5.2" transform="rotate(265.5 188.4 407.1)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="161.6" cy="393.4" rx="13.2" ry="5.0" transform="rotate(200.0 161.6 393.4)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="174.0" cy="385.7" rx="13.2" ry="5.0" transform="rotate(276.0 174.0 385.7)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="150.6" cy="367.2" rx="12.8" ry="4.8" transform="rotate(210.5 150.6 367.2)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="163.7" cy="362.0" rx="12.8" ry="4.8" transform="rotate(286.5 163.7 362.0)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="144.4" cy="339.4" rx="12.3" ry="4.7" transform="rotate(221.0 144.4 339.4)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="157.8" cy="336.8" rx="12.3" ry="4.7" transform="rotate(297.0 157.8 336.8)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="143.4" cy="311.0" rx="11.8" ry="4.5" transform="rotate(231.5 143.4 311.0)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="156.5" cy="310.8" rx="11.8" ry="4.5" transform="rotate(307.5 156.5 310.8)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="147.5" cy="282.9" rx="11.4" ry="4.3" transform="rotate(242.0 147.5 282.9)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="159.9" cy="285.1" rx="11.4" ry="4.3" transform="rotate(318.0 159.9 285.1)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="156.5" cy="256.1" rx="10.9" ry="4.2" transform="rotate(252.5 156.5 256.1)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="167.9" cy="260.3" rx="10.9" ry="4.2" transform="rotate(328.5 167.9 260.3)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="170.3" cy="231.4" rx="10.5" ry="4.0" transform="rotate(263.0 170.3 231.4)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="180.2" cy="237.4" rx="10.5" ry="4.0" transform="rotate(339.0 180.2 237.4)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="188.2" cy="209.6" rx="10.1" ry="3.8" transform="rotate(273.5 188.2 209.6)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="196.6" cy="217.0" rx="10.1" ry="3.8" transform="rotate(349.5 196.6 217.0)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="209.7" cy="191.4" rx="9.6" ry="3.6" transform="rotate(284.0 209.7 191.4)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="216.3" cy="199.8" rx="9.6" ry="3.6" transform="rotate(360.0 216.3 199.8)" fill="url(#gold)" opacity=".95"/>
+<path d="M 341.3,462.2 A 150 150 0 0 0 392.3,199.8" fill="none" stroke="url(#gold)" stroke-width="2.4"/>
+<ellipse cx="349.3" cy="451.3" rx="15.0" ry="5.7" transform="rotate(-54.0 349.3 451.3)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="353.9" cy="467.2" rx="15.0" ry="5.7" transform="rotate(22.0 353.9 467.2)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="372.6" cy="440.4" rx="14.6" ry="5.5" transform="rotate(-64.5 372.6 440.4)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="379.8" cy="454.9" rx="14.6" ry="5.5" transform="rotate(11.5 379.8 454.9)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="393.6" cy="425.5" rx="14.1" ry="5.4" transform="rotate(-75.0 393.6 425.5)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="403.0" cy="438.0" rx="14.1" ry="5.4" transform="rotate(1.0 403.0 438.0)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="411.6" cy="407.1" rx="13.7" ry="5.2" transform="rotate(-85.5 411.6 407.1)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="422.7" cy="417.3" rx="13.7" ry="5.2" transform="rotate(-9.5 422.7 417.3)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="426.0" cy="385.7" rx="13.2" ry="5.0" transform="rotate(-96.0 426.0 385.7)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="438.4" cy="393.4" rx="13.2" ry="5.0" transform="rotate(-20.0 438.4 393.4)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="436.3" cy="362.0" rx="12.8" ry="4.8" transform="rotate(-106.5 436.3 362.0)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="449.4" cy="367.2" rx="12.8" ry="4.8" transform="rotate(-30.5 449.4 367.2)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="442.2" cy="336.8" rx="12.3" ry="4.7" transform="rotate(-117.0 442.2 336.8)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="455.6" cy="339.4" rx="12.3" ry="4.7" transform="rotate(-41.0 455.6 339.4)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="443.5" cy="310.8" rx="11.8" ry="4.5" transform="rotate(-127.5 443.5 310.8)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="456.6" cy="311.0" rx="11.8" ry="4.5" transform="rotate(-51.5 456.6 311.0)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="440.1" cy="285.1" rx="11.4" ry="4.3" transform="rotate(-138.0 440.1 285.1)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="452.5" cy="282.9" rx="11.4" ry="4.3" transform="rotate(-62.0 452.5 282.9)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="432.1" cy="260.3" rx="10.9" ry="4.2" transform="rotate(-148.5 432.1 260.3)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="443.5" cy="256.1" rx="10.9" ry="4.2" transform="rotate(-72.5 443.5 256.1)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="419.8" cy="237.4" rx="10.5" ry="4.0" transform="rotate(-159.0 419.8 237.4)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="429.7" cy="231.4" rx="10.5" ry="4.0" transform="rotate(-83.0 429.7 231.4)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="403.4" cy="217.0" rx="10.1" ry="3.8" transform="rotate(-169.5 403.4 217.0)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="411.8" cy="209.6" rx="10.1" ry="3.8" transform="rotate(-93.5 411.8 209.6)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="383.7" cy="199.8" rx="9.6" ry="3.6" transform="rotate(-180.0 383.7 199.8)" fill="url(#gold)" opacity=".95"/>
+<ellipse cx="390.3" cy="191.4" rx="9.6" ry="3.6" transform="rotate(-104.0 390.3 191.4)" fill="url(#gold)" opacity=".95"/>
+<path d="M 222,186 H 378 V 300 C 378,360 344,398 300,424 C 256,398 222,360 222,300 Z" fill="#1e2a5e" stroke="url(#gold)" stroke-width="3.2"/>
+<path d="M 230,194 H 370 V 300 C 370,354 339,389 300,413 C 261,389 230,354 230,300 Z" fill="none" stroke="url(#gold)" stroke-width="1" opacity=".7"/>
+<line x1="230" y1="252" x2="370" y2="252" stroke="url(#gold)" stroke-width="1.6"/>
+<text x="300" y="240" text-anchor="middle" font-family="'Trajan Pro', 'Cinzel', Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" letter-spacing="10" fill="url(#gold)">AI</text>
+
+<!-- 手绘小篆「百」「業」（等粗圆头线条，金色）；正式物料建议换成授权篆书字体或请设计师描字 -->
+<g transform="translate(238.0 268.0) scale(1.000)" fill="none" stroke="url(#gold)" stroke-width="4.60" stroke-linecap="round" stroke-linejoin="round"><path d="M5,6 H55"/><path d="M30,6 V18"/><path d="M30,18 C14,18 10,26 10,40 V78 Q10,86 18,86 H42 Q50,86 50,78 V40 C50,26 46,18 30,18 Z"/><path d="M10,50 H50"/></g>
+<g transform="translate(302.0 268.0) scale(1.000)" fill="none" stroke="url(#gold)" stroke-width="4.60" stroke-linecap="round" stroke-linejoin="round"><path d="M8,4 L14,12 L20,4"/><path d="M24,2 L30,10 L36,2"/><path d="M40,4 L46,12 L52,4"/><path d="M14,12 V24"/><path d="M30,10 V24"/><path d="M46,12 V24"/><path d="M6,24 H54"/><path d="M18,30 L24,38"/><path d="M42,30 L36,38"/><path d="M6,42 H54"/><path d="M30,24 V87"/><path d="M30,52 C22,60 14,65 6,68"/><path d="M30,52 C38,60 46,65 54,68"/><path d="M30,68 C24,76 16,82 8,86"/><path d="M30,68 C36,76 44,82 52,86"/></g>
+<polygon points="300.0,153.0 302.1,159.1 308.6,159.2 303.4,163.1 305.3,169.3 300.0,165.6 294.7,169.3 296.6,163.1 291.4,159.2 297.9,159.1" fill="url(#gold)"/>
+</svg>

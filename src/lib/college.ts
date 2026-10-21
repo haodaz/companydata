@@ -108,7 +108,7 @@ export async function graduateDetail(id: string) {
     canSolve: (space?.profile as any)?.can_solve || [],
     company: (space?.jd_snapshot as any)?.company || '',
     lessons: (chs || []).map((c: any) => ({ id: c.id, slot: c.slot, title: c.title, kind: c.kind, bench: Array.isArray(c.steps) && c.steps.some((x: any) => x?.type === 'bench') })),
-    exams: (subs || []).map(s => ({ id: s.id, score: s.score, after: !!s.with_skill_id, model: modelOf(s.candidate_note), chapter: (chs || []).find(c => c.id === s.chapter_id)?.title || '第一段', at: s.submitted_at })),
+    exams: (subs || []).map(s => ({ id: s.id, score: s.score, after: !!s.with_skill_id, model: modelOf(s.candidate_note), chapterId: s.chapter_id || null, chapter: (chs || []).find(c => c.id === s.chapter_id)?.title || '第一段', at: s.submitted_at })),
     jobs: jobs.map((j: any) => ({ company: j.institute_or_company_name, name: j.name, city: j.location, url: j.link || j.source_url || '' })),
   };
 }

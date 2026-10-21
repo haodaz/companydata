@@ -29,7 +29,8 @@ order = [m["note"] for m in marks]
 SEG = []
 for i, n in enumerate(order):
     a = t[n]; b = t[order[i + 1]] if i + 1 < len(order) else END
-    if b - a > 0.2: SEG.append((n, a, b, SPEED.get(n, 1.0)))
+    # 倍速写 0 = 这一段不要（录了但成片里删掉）
+    if b - a > 0.2 and SPEED.get(n, 1.0) > 0: SEG.append((n, a, b, SPEED.get(n, 1.0)))
 
 parts, concat, tl, cur = [], "", [], 0.0
 for i, (n, a, b, sp) in enumerate(SEG):

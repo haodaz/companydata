@@ -51,7 +51,7 @@ export default function Graduates() {
   }, []);
   const fams = useMemo(() => [...new Set((grads || []).map(g => g.family))].sort((a, b) => (a === '其他' ? 1 : 0) - (b === '其他' ? 1 : 0)), [grads]);
   // 「他们接得住的问题」：每位已毕业的挑一条它能解答的真问题，最多六条
-  const doing = useMemo(() => (grads || []).filter(g => g.graduated && g.avatar && g.canDo?.length).slice(0, 6).map(g => [g, `「${g.canDo[0].trim().replace(/^[「“"'『]+|[」”"'』]+$/g, '')}」`] as const), [grads]);
+  const doing = useMemo(() => (grads || []).filter(g => g.graduated && g.avatar && g.canDo?.length && !/客服/.test(g.role)).slice(0, 6).map(g => [g, `「${g.canDo[0].trim().replace(/^[「“"'『]+|[」”"'』]+$/g, '')}」`] as const), [grads]);
   const shown = useMemo(() => (grads || []).filter(g => (track === 'all' || (track === 'research') === g.research) && (!fam || g.family === fam)), [grads, track, fam]);
 
   return (
