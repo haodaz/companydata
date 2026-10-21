@@ -41,6 +41,8 @@ const NAV: NavItem[] = [
   // 百业 AI 工作台（2026-10-21）：企业版招人 / 科研版引才，同一套账号登录
   { key: 'ws-company',   icon: <BankOutlined />,       label: '企业版工作台', path: '/workspace',      group: '实验室', newWindow: true, badge: '新' },
   { key: 'ws-research',  icon: <ExperimentOutlined />, label: '科研版工作台', path: '/research',       group: '实验室', newWindow: true, badge: '新' },
+  // AI 大学（2026-10-21）：/college 上的入学申请和人才培养需求，提交即线索
+  { key: 'college-leads', icon: <TrophyOutlined />,     label: 'AI 大学申请', path: '/admin/college-leads', group: '实验室', badge: '新' },
   { key: 'journal-url',  icon: <FileSearchOutlined />, label: 'URL 日志',      path: '/admin/journal-url',  group: '运行日志' },
   { key: 'journal-job',  icon: <FileTextOutlined />,   label: '岗位爬取日志',  path: '/admin/journal-job',  group: '运行日志' },
   { key: 'journal-company', icon: <ProfileOutlined />, label: '企业画像日志',  path: '/admin/journal-company', group: '运行日志' },
