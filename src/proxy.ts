@@ -28,6 +28,8 @@ export async function proxy(req: NextRequest) {
   // 爱百业的独立域名 aisimjob.com：根路径直接显示 /lab（地址栏保持 aisimjob.com；里面的链接本来就是 /lab/…）
   const host = (req.headers.get('host') || '').replace(/:\d+$/, '');
   if (pathname === '/' && /(^|\.)aisimjob\.com$/.test(host)) return NextResponse.rewrite(new URL('/lab', req.url));
+  // AI 大学的独立域名 baiyecollege.com：根路径直接显示 /college（里面的链接本来就是 /college/…）
+  if (pathname === '/' && /(^|\.)baiyecollege\.com$/.test(host)) return NextResponse.rewrite(new URL('/college', req.url));
 
   // API：除登录 / 注册外全部需要登录（agent 接口会消耗 Token，数据接口走 service role）
   if (pathname.startsWith('/api/')) {
