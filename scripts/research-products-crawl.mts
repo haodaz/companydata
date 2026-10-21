@@ -84,13 +84,48 @@ const imagesOf = (md: string, base: string) => {
   }
   return [...new Map(out.map(i => [i.url, i])).values()].slice(0, 40);
 };
-const sameSite = (u: string, base: string) => { try { const a = new URL(u).hostname.replace(/^www\./, ''), b = new URL(base).hostname.replace(/^www\./, ''); return a === b || a.endsWith('.' + b) || b.endsWith('.' + a); } catch { return false; } };
+/** 品牌名那一段（ciqtek.com → ciqtek，agilent.com.cn → agilent） */
+const brandOf = (h: string) => h.replace(/^www\d?\./, '').split('.').filter(x => !/^(com|net|org|cn|co|de|jp|uk|eu|us|io|gov|edu|global|cn-cn|en)$/.test(x)).pop() || '';
+/** 同一家的站：同域名 / 子域名，或者跳转后的域名、品牌名相同的另一个域名（国仪 ciqtek.com 跳 ciqtekglobal.com、安捷伦跳地区站——10-21 41 家 0 产品就是链接全被当外站滤掉了） */
+const sameSite = (u: string, base: string) => {
+  try {
+    const a = new URL(u).hostname.replace(/^www\d?\./, ''), b = new URL(base).hostname.replace(/^www\d?\./, '');
+    if (a === b || a.endsWith('.' + b) || b.endsWith('.' + a)) return true;
+    const br = brandOf(b);
+    return br.length >= 4 && a.split('.').some(x => x.includes(br));
+  } catch { return false; }
+};
 /** 产品页上要点开的页签 */
 const TAB_RE = '技术参数|规格参数|产品参数|参数|规格|技术指标|性能指标|资料下载|文档下载|下载|资料|文档|说明书|specifications?|tech(nical)? (data|specs?)|downloads?|documents?|documentation|resources|literature|manuals?';
 /** 下载中心类页面 */
 const DL_PAGE_RE = /下载中心|资料下载|文档下载|资料中心|技术资料|说明书下载|download center|downloads?$|literature|documentation|document library|resource (center|library)|manuals/i;
 const IMG_RE = /\.(jpe?g|png|gif|webp|svg|bmp|ico|mp4|mov|webm)(\?|$)/i;   // 图片 / 视频不是资料
 const DOC_RE = /\.pdf(\?|$)|\.docx?(\?|$)|手册|说明书|规格书|彩页|样本|datasheet|data sheet|brochure|manual|catalog|catalogue|spec sheet|技术参数|下载|download|SDS|MSDS|COA|application note|应用(文献|报告|笔记)/i;
+
+/** sitemap.xml → 「[路径](网址)」的链接列表（只留像产品 / 服务页的，最多 400 条） */
+async function sitemapLinks(site: string): Promise<string> {
+  const UA = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140 Safari/537.36' };
+  const get = async (u: string) => { try { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(20_000) }); return r.ok ? await r.text() : ''; } catch { return ''; } };
+  let origin = '';
+  try { origin = new URL(site).origin; } catch { return ''; }
+  const robots = await get(`${origin}/robots.txt`);
+  const maps = [...robots.matchAll(/^sitemap:\s*(\S+)/gim)].map(m => m[1]);
+  if (!maps.length) maps.push(`${origin}/sitemap.xml`);
+  const locs: string[] = [];
+  for (const m of maps.slice(0, 3)) {
+    const xml = await get(m);
+    const ls = [...xml.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map(x => x[1]);
+    if (/<sitemapindex/i.test(xml)) {
+      // 索引：优先看名字里带 product 的子 sitemap
+      const subs = ls.sort((a, b) => Number(/product|produkt|chanpin|cp/i.test(b)) - Number(/product|produkt|chanpin|cp/i.test(a))).slice(0, 3);
+      for (const sub of subs) locs.push(...[...(await get(sub)).matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map(x => x[1]));
+    } else locs.push(...ls);
+    if (locs.length > 3000) break;
+  }
+  const prod = locs.filter(u => /product|produkt|instrument|solution|service|chanpin|\/p\/|item|detail/i.test(u));
+  const pick = (prod.length ? prod : locs).slice(0, 400);
+  return pick.length ? pick.map(u => `[${decodeURIComponent(u.replace(/^https?:\/\/[^/]+/, '')).slice(0, 100)}](${u})`).join('\n') : '';
+}
 
 async function pickPages(s: any, md: string) {
   const links = linksOf(md, s.official_website).filter(l => sameSite(l.url, s.official_website)).slice(0, 400);
@@ -213,8 +248,14 @@ await Promise.all(Array.from({ length: PAR }, async () => {
     const s = suppliers[nx++];
     const got: any[] = [];
     try {
-      const home = (await fetchJinaUrl(s.official_website)) || '';
-      const queue = home.length > 200 ? await pickPages(s, home) : [];
+      let home = (await fetchJinaUrl(s.official_website)) || "";
+      // Jina 被挡只拿到几百字（艾卡、思拓凡）：换本机 Chrome 再读一次首页
+      if (home.length < 2000 && localRenderAvailable()) home = (await renderMarkdown(s.official_website)) || home;
+      let queue = home.length > 200 ? await pickPages(s, home) : [];
+      // 首页挑不出（产品菜单是脚本加载的，安东帕）：本机 Chrome 再读一次首页；还不行读 sitemap
+      if (!queue.length && localRenderAvailable()) { const r = await renderMarkdown(s.official_website); if (r && r.length > 200) queue = await pickPages(s, r); }
+      if (!queue.length) { const sm = await sitemapLinks(s.official_website); if (sm) queue = await pickPages(s, sm); }
+      if (process.env.DEBUG_CRAWL) console.log(`[debug] ${s.name} 首页 ${home.length} 字，挑出 ${queue.length} 页：${queue.map(q => q.url).join(' ')}`);
       const seen = new Set<string>();
       const fallback: any[] = [];   // 列表页上的产品：详情页都没抽出东西时兜底用
       while (queue.length && got.length < PER && seen.size < PER * 3) {
@@ -229,6 +270,7 @@ await Promise.all(Array.from({ length: PAR }, async () => {
         // 有的站 Chrome 打开反而读不全（岛津、阿拉丁 10-21）：没抽出产品也没找到详情链接，换 Jina 再读一次
         if (!r.products.length && !r.more.length) { md = (await fetchJinaUrl(pg.url)) || ''; if (md.length >= 300) r = await extract(s, pg.url, md, isCat); }
         const { page_type, products: ps, more } = r;
+        if (process.env.DEBUG_CRAWL) console.log(`[debug]   ${pg.url} ${md.length} 字 → ${page_type}，产品 ${ps.length}，详情链接 ${more.length}`);
         // 列表 / 总览页（模型判的，或者一页抽出 3 个以上）只收写明型号 / 货号的、且不带页面通用的参数；大类名留给下一层详情页
         const listy = isCat || page_type === 'list' || ps.length >= 3;
         // 列表页有详情链接就进详情页抽（详情页信息全、有图有资料），没有详情链接才收列表上写明型号的
@@ -242,7 +284,9 @@ await Promise.all(Array.from({ length: PAR }, async () => {
 
     // 下载中心：首页上的「资料下载 / Downloads」页，把里面的手册 / 规格书按型号挂到对应产品上
     try {
-      const home = (await fetchJinaUrl(s.official_website)) || '';
+      let home = (await fetchJinaUrl(s.official_website)) || "";
+      // Jina 被挡只拿到几百字（艾卡、思拓凡）：换本机 Chrome 再读一次首页
+      if (home.length < 2000 && localRenderAvailable()) home = (await renderMarkdown(s.official_website)) || home;
       const dl = linksOf(home, s.official_website).filter(l => sameSite(l.url, s.official_website) && DL_PAGE_RE.test(l.text)).slice(0, 2);
       for (const l of dl) {
         if (!got.length) break;
