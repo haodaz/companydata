@@ -5,7 +5,7 @@
  *   2. 每个页面：只按原文抽产品（名称要在页面里找得到，规格参数照抄，不编），连同页面上的资料链接
  *   3. 资料：下载（≤ 30MB）存进存储桶 research-docs，PDF 用 PDFKit 抽全文；下载不了的只记链接
  *   4. 标签用数据部门给的 prompt；简介存不含图视频的 html；external_id 按类型加前缀（kyyq_ / kyhc_ / kysj_ / kyfw_）
- *   npx tsx scripts/research-products-crawl.mts --model qwen-plus (--ids 1,2,3 | --sample 12) [--per 8] [--par 2] [--dry]
+ *   npx tsx scripts/research-products-crawl.mts --model qwen-plus (--ids 1,2,3 | --sample 12 | --per-cat 12) [--per 8] [--par 2] [--dry]
  */
 process.loadEnvFile('.env.local');
 import fs from 'node:fs';
@@ -38,7 +38,18 @@ let q = db.from('companies').select('id, name, name_en, country, official_websit
 if (opt('ids')) q = q.in('id', opt('ids').split(',').map(Number));
 const { data: sups } = await q.order('id');
 let suppliers = (sups || []) as any[];
-if (!opt('ids')) {
+if (!opt('ids') && opt('per-cat')) {
+  // 铺开：每类挑 N 家还没抓过产品的（国内海外交替），一家算进它第一个类目
+  const { data: done } = await db.from('research_products').select('supplier_id');
+  const crawled = new Set((done || []).map((d: any) => d.supplier_id));
+  const N = Number(opt('per-cat')), picked: any[] = [];
+  for (const c of CAT_KEYS) {
+    const pool = suppliers.filter(x => x.supplier_categories.includes(c) && !crawled.has(x.id) && !picked.includes(x));
+    const dom = pool.filter(isDom), intl = pool.filter(x => !isDom(x));
+    for (let i = 0, k = 0; k < N && (dom.length || intl.length); i++) { const x = (i % 2 ? intl : dom).shift() || (i % 2 ? dom : intl).shift(); if (x) { picked.push(x); k++; } }
+  }
+  suppliers = picked;
+} else if (!opt('ids')) {
   // 样本：每类挑一家、国内海外交替，凑够 --sample 家
   const n = Number(opt('sample', '12')), picked: any[] = [];
   for (const c of CAT_KEYS) {
