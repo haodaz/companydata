@@ -60,6 +60,9 @@ async function domainStrict(r: any) {
   return !cn.length || cn.some(x => x.includes(me) || me.includes(x)) ? id : null;
 }
 
+/** 展会只记真从展商名单来的（模型说的「常参加哪些展」没核实过，不记——宁空不错） */
+const exhibitionsOf = (r: any) => /展商名单/.test(r.source || '') ? (r.exhibitions || []) : [];
+
 let created = 0, updated = 0;
 const how: Record<string, number> = {};
 for (const r of pass) {
@@ -76,14 +79,14 @@ for (const r of pass) {
     const { data: co } = await db.from('companies').select('supplier_categories, supplier_exhibitions, official_website').eq('id', r.company_id).single();
     const { error } = await db.from('companies').update({
       supplier_categories: [...new Set([...(co?.supplier_categories || []), ...r.verified_categories])],
-      supplier_exhibitions: [...new Set([...(co?.supplier_exhibitions || []), ...(r.exhibitions || [])])],
+      supplier_exhibitions: [...new Set([...(co?.supplier_exhibitions || []), ...exhibitionsOf(r)])],
       ...(!co?.official_website && r.website_ok ? { official_website: r.website } : {}),
     }).eq('id', r.company_id);
     if (error) console.log(`  补类目失败 ${r.name_cn || r.name_en}：${error.message}`); else updated++;
   } else {
     const { data, error } = await db.from('companies').insert({
       name: r.name_cn || r.name_en, name_en: r.name_en || null, country: r.is_domestic ? '中国' : (r.country || null),
-      official_website: r.website_ok ? r.website : null, source: ['科研仪器'], supplier_categories: r.verified_categories, supplier_exhibitions: r.exhibitions || [],
+      official_website: r.website_ok ? r.website : null, source: ['科研仪器'], supplier_categories: r.verified_categories, supplier_exhibitions: exhibitionsOf(r),
       human_review_status: 'review',
     }).select('id').single();
     if (error) { console.log(`  建档失败 ${r.name_cn || r.name_en}：${error.message}`); continue; }
