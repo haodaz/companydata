@@ -5,7 +5,7 @@
  * 两步：
  *   1. 直接请求（--stage http）：所有链接，打不开 / 404 / 资讯站先挑出来；招聘系统（Moka / 北森 / Hotjob…）的页面是脚本加载的空壳，这一步只记「待渲染」
  *   2. 本机 Chrome 打开（--stage render）：招聘系统的页面，看岗位名在不在、有没有「职位已下线」
- *   npx tsx scripts/check-job-links.mts --stage http|render [--par 8] [--limit N] [--apply]
+ *   npx tsx scripts/check-job-links.mts --stage http|render [--only <上轮状态>] [--par 8] [--limit N] [--apply]
  */
 process.loadEnvFile('.env.local');
 import fs from 'node:fs';
@@ -20,7 +20,7 @@ const STAGE = opt('stage', 'http'), PAR = Number(opt('par', STAGE === 'render' ?
 const SPA = /(^|\.)(mokahr\.com|zhiye\.com|hotjob\.cn|feishu\.cn|jobs\.bytedance\.com|dayee\.com|myworkdayjobs\.com|italent\.cn|beisen\.com|wintalent\.cn|nowcoder\.com|job\.tal\.com|talent\.baidu\.com|campus\.jd\.com|careers\.tencent\.com|join\.qq\.com|zhaopin\.meituan\.com|campus\.alibaba\.com|talent\.alibaba\.com|xiaomi\.jobs\.f\.mioffice\.cn)$/i;
 /** 资讯 / 新闻 / 自媒体站：不是招聘页（御风未来指到 skyfamily.com.cn 新闻稿） */
 const NEWS = /(^|\.)(skyfamily\.com\.cn|sohu\.com|sina\.com\.cn|sina\.cn|163\.com|qq\.com|toutiao\.com|baijiahao\.baidu\.com|zhihu\.com|weibo\.com|thepaper\.cn|ifeng\.com|36kr\.com|huxiu\.com|cnstock\.com|eastmoney\.com|xinhuanet\.com|people\.com\.cn|chinadaily\.com\.cn|cctv\.com|bilibili\.com|douyin\.com|xiaohongshu\.com|jiemian\.com|yicai\.com|caixin\.com|stcn\.com|cls\.cn)$/i;
-const JOB_HOST_OK = /(^|\.)(mp\.weixin\.qq\.com|join\.qq\.com|careers\.tencent\.com)$/i;   // 公众号招聘推文 / 腾讯招聘不算资讯站
+const JOB_HOST_OK = /(^|\.)(mp\.weixin\.qq\.com|join\.qq\.com|careers\.tencent\.com)$|^(jobs?|careers?|campus|hr|zhaopin|talent|join|recruit(ment)?|xiaoyuan)[.-]/i;   // 公众号招聘推文、各家自己的招聘站（job.xiaohongshu.com）不算资讯站
 const GONE = /职位不存在|职位已下线|职位已关闭|职位已失效|职位已过期|该职位已|岗位已下线|岗位不存在|岗位已关闭|岗位已失效|已停止招聘|招聘已结束|页面不存在|页面已删除|找不到页面|无法找到该页面|404 not found|page not found|job (is )?no longer available|position (has been )?(filled|closed)|this job (has )?expired|job not found/i;
 const BLOCK = /验证码|安全验证|人机验证|访问过于频繁|请完成验证|captcha|are you a robot|access denied|cloudflare/i;
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140 Safari/537.36';
@@ -34,17 +34,20 @@ const nameHit = (name: string, text: string) => {
 async function httpCheck(url: string): Promise<{ status: string; issue: string; text?: string }> {
   const h = hostOf(url);
   if (!h) return { status: 'dead', issue: '链接格式不对' };
-  if (NEWS.test(h) && !JOB_HOST_OK.test(h)) return { status: 'third_party', issue: `指向资讯站（${h}），不是招聘页` };
+  const jobPath = /\/(careers?|jobs?|campus|join|zhaopin|recruit)(\/|\?|#|$)/i.test(url);   // 资讯站自己的招聘页（zhihu.com/careers）
+  if (NEWS.test(h) && !JOB_HOST_OK.test(h) && !jobPath) return { status: 'third_party', issue: `指向资讯站（${h}），不是招聘页` };
   try {
     const res = await fetch(url, { redirect: 'follow', signal: AbortSignal.timeout(20_000), headers: { 'User-Agent': UA, 'Accept-Language': 'zh-CN,zh;q=0.9' } });
     const final = hostOf(res.url);
-    if (final && NEWS.test(final) && !JOB_HOST_OK.test(final)) return { status: 'third_party', issue: `跳到资讯站（${final}）` };
+    if (final && NEWS.test(final) && !JOB_HOST_OK.test(final) && !jobPath) return { status: 'third_party', issue: `跳到资讯站（${final}）` };
     if (res.status === 404 || res.status === 410) return { status: 'dead', issue: `打开是 ${res.status}` };
     if (res.status === 403 || res.status === 429 || res.status === 503) return { status: 'blocked', issue: `对方挡了机器访问（${res.status}），真人可能能打开` };
     if (res.status >= 400) return { status: 'dead', issue: `打开出错（${res.status}）` };
     const text = (await res.text()).slice(0, 300_000).replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' ');
     if (BLOCK.test(text) && text.length < 20_000) return { status: 'blocked', issue: '对方要验证 / 挡了机器访问' };
     if (GONE.test(text)) return { status: 'dead', issue: '页面提示岗位已下线 / 不存在' };
+    // 页面上没几个字：脚本加载的招聘页空壳（job.xiaohongshu.com），留给浏览器打开
+    if (text.replace(/\s+/g, '').length < 800) return { status: 'pending_render', issue: '页面是脚本加载的，要用浏览器打开才看得出' };
     return { status: 'ok', issue: '', text };
   } catch (e: any) {
     const m = String(e?.cause?.code || e?.message || e);
@@ -65,6 +68,8 @@ async function renderCheck(url: string, name: string): Promise<{ status: string;
 
 const { data } = await selectAll(() => db.from('jobs').select('id, name, link, application_website, link_status, link_issue').not('if_delete', 'is', true).order('id'));
 let jobs = (data as any[]).filter(j => j.link || j.application_website);
+// --only <状态>：只重查上一轮是这个状态的（规则改了以后复查，如 third_party 误判了各家自己的招聘站）
+if (opt('only')) jobs = jobs.filter(j => j.link_status === opt('only'));
 if (STAGE === 'render') {
   if (!localRenderAvailable()) { console.error('这台机器没有本机 Chrome，跑不了 render'); process.exit(1); }
   jobs = jobs.filter(j => j.link_status === 'pending_render');

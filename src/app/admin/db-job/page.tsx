@@ -263,7 +263,7 @@ export default function DbJobPage() {
           <Select value={filters.status} style={{ width: 110 }} onChange={v => setFilter({ status: v })} options={[{ value: '', label: '全部状态' }, ...Object.entries(JOB_STATUS).map(([value, m]) => ({ value, label: m.label }))]} />
           <Select value={filters.review} style={{ width: 120 }} onChange={v => setFilter({ review: v })} options={[{ value: '', label: '全部审核' }, { value: 'none', label: '未审核' }, ...REVIEW_STATUS_OPTIONS]} />
           <Select value={filters.flag} style={{ width: 150 }} onChange={v => setFilter({ flag: v })} popupMatchSelectWidth={false}
-            options={[{ value: '', label: '全部采集标记' }, ...['数据外采篮', '仅列表信息', '详情已补', '详情待补', '重点岗位', '支持内推码'].map(f => ({ value: f, label: f }))]} />
+            options={[{ value: '', label: '全部采集标记' }, ...['数据外采篮', '仅列表信息', '详情已补', '详情待补', '待核实', '重点岗位', '支持内推码'].map(f => ({ value: f, label: f }))]} />
           <Select value={filters.source} style={{ width: 160 }} onChange={v => setFilter({ source: v })} popupMatchSelectWidth={false}
             options={[{ value: '', label: '全部来源' }, ...Object.entries(sources).filter(([k]) => k !== 'none').sort((a, b) => b[1] - a[1]).map(([k, n]) => ({ value: k, label: `${JOB_SOURCE_LABELS[k] || k}（${n}）` })),
               ...(sources.none ? [{ value: 'none', label: `未标来源（${sources.none}）` }] : [])]} />
