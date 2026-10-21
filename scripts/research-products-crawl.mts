@@ -205,23 +205,28 @@ await Promise.all(Array.from({ length: PAR }, async () => {
       const home = (await fetchJinaUrl(s.official_website)) || '';
       const queue = home.length > 200 ? await pickPages(s, home) : [];
       const seen = new Set<string>();
-      while (queue.length && got.length < PER && seen.size < PER + 6) {
+      const fallback: any[] = [];   // 列表页上的产品：详情页都没抽出东西时兜底用
+      while (queue.length && got.length < PER && seen.size < PER * 3) {
         const pg = queue.shift()!;
         if (seen.has(pg.url)) continue;
         seen.add(pg.url);
         // 产品页先用本机 Chrome 打开、点开「参数 / 下载」页签（大厂的参数表和资料列表多是点开才加载）；不行再走 Jina
-        const md = (localRenderAvailable() ? await renderMarkdown(pg.url, { expand: TAB_RE }) : null) || (await fetchJinaUrl(pg.url)) || '';
+        let md = (localRenderAvailable() ? await renderMarkdown(pg.url, { expand: TAB_RE }) : null) || '';
         total.pages++;
-        if (md.length < 300) continue;
         const isCat = pg.kind === 'category';
-        const { page_type, products: ps, more } = await extract(s, pg.url, md, isCat);
+        let r = md.length >= 300 ? await extract(s, pg.url, md, isCat) : { page_type: 'detail', products: [] as any[], more: [] as string[] };
+        // 有的站 Chrome 打开反而读不全（岛津、阿拉丁 10-21）：没抽出产品也没找到详情链接，换 Jina 再读一次
+        if (!r.products.length && !r.more.length) { md = (await fetchJinaUrl(pg.url)) || ''; if (md.length >= 300) r = await extract(s, pg.url, md, isCat); }
+        const { page_type, products: ps, more } = r;
         // 列表 / 总览页（模型判的，或者一页抽出 3 个以上）只收写明型号 / 货号的、且不带页面通用的参数；大类名留给下一层详情页
         const listy = isCat || page_type === 'list' || ps.length >= 3;
         // 列表页有详情链接就进详情页抽（详情页信息全、有图有资料），没有详情链接才收列表上写明型号的
+        if (listy && more.length) for (const p of ps) fallback.push({ ...p, specs: {}, source_url: pg.url });
         const products = listy ? (more.length ? [] : ps.filter((p: any) => p.model_no && String(p.model_no).trim()).map((p: any) => ({ ...p, specs: {} }))) : ps;
         for (const p of products) if (got.length < PER && !got.some(g => norm(g.name) === norm(p.name) && norm(g.model_no) === norm(p.model_no))) got.push({ ...p, source_url: pg.url });
         if (listy) for (const u of more.slice(0, PER)) queue.unshift({ url: u, kind: 'detail' });
       }
+      if (!got.length) for (const p of fallback.slice(0, PER)) got.push(p);
     } catch (e: any) { console.log(`\n✗ ${s.name}：${String(e?.message || e).slice(0, 80)}`); }
 
     // 下载中心：首页上的「资料下载 / Downloads」页，把里面的手册 / 规格书按型号挂到对应产品上
