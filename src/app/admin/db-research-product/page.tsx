@@ -42,7 +42,13 @@ export default function DbResearchProductPage() {
     finally { setLoading(false); }
   }, [page, f, message]);
   // ?supplier= 从厂商页跳过来（不用 useSearchParams，免得整页要包 Suspense）
-  useEffect(() => { const s = new URLSearchParams(window.location.search).get('supplier'); if (s) setF(x => ({ ...x, supplier: s })); }, []);
+  // ?supplier= 从厂商页跳过来；?id= 直接打开某个产品（发链接 / 截图用）
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const s = q.get('supplier'); if (s) setF(x => ({ ...x, supplier: s }));
+    const id = Number(q.get('id')); if (id) open(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => { load(); }, [load]);
   const set = (p: Partial<typeof f>) => { setF(x => ({ ...x, ...p })); setPage(1); };
   const open = async (id: number) => {
