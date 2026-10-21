@@ -1,3 +1,4 @@
+import { kwText } from '@/lib/entity-ids';
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { SUB_ENTITIES, type SubEntityKey } from '@/lib/company-fields';
@@ -60,7 +61,7 @@ export async function PATCH(request: Request) {
     for (const k of EDITABLE[t.key]) {
       if (body[k] === undefined) continue;
       const v = body[k] === '' ? null : body[k];
-      updates[k] = v;
+      updates[k] = t.table === 'company_products' && k === 'tech_keywords' ? kwText(v) : v;   // 技术关键词存「；」文本（10-21 #19）
       if (JSON.stringify(v ?? null) !== JSON.stringify(current[k] ?? null)) locked.add(k);
     }
     for (const k of body.unlock || []) locked.delete(k);

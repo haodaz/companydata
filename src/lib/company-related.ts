@@ -7,11 +7,12 @@
  *   local      同城同标签（城市相同且类型标签 / 自定义标签重合）
  * 前后端共用的纯函数；数据由 API 一次性拉出来喂进来。
  */
+import { kwList } from '@/lib/entity-ids';
 import { TYPE_LABEL_LABELS } from '@/lib/company-fields';
 
 export interface RelatedInput {
   companies: { id: number; name: string; industry: string | null; sub_industry: string | null; city: string | null; type_label: string[] | null; tags: string[] | null; segment: string | null; completeness_score?: number | null }[];
-  products: { company_id: number; category: string | null; tech_keywords: string[] | null }[];
+  products: { company_id: number; category: string | null; tech_keywords: string[] | string | null }[];
   executives: { company_id: number; name: string }[];
   financings: { company_id: number; finance_enterprise: string | null }[];
 }
@@ -51,7 +52,7 @@ export function computeRelated(targetId: number, input: RelatedInput, limit = 8)
   const finMap = byCompany(input.financings);
 
   const myCats = new Set((prodMap.get(targetId) || []).map(p => norm(p.category)).filter(Boolean));
-  const myKws = new Set((prodMap.get(targetId) || []).flatMap(p => (p.tech_keywords || []).map(kw)).filter(Boolean));
+  const myKws = new Set((prodMap.get(targetId) || []).flatMap(p => kwList(p.tech_keywords).map(kw)).filter(Boolean));
   const myExecs = new Set((exeMap.get(targetId) || []).map(e => norm(e.name)).filter(x => x.length >= 2));
   const myInvestors = new Set((finMap.get(targetId) || []).flatMap(f => splitInvestors(f.finance_enterprise)));
   const myLabels = labelsOf(me);
@@ -76,7 +77,7 @@ export function computeRelated(targetId: number, input: RelatedInput, limit = 8)
     const ps = prodMap.get(c.id) || [];
     if (ps.length && (myCats.size || myKws.size)) {
       const cats = new Set(ps.map(p => norm(p.category)).filter(Boolean));
-      const kws = new Set(ps.flatMap(p => (p.tech_keywords || []).map(kw)).filter(Boolean));
+      const kws = new Set(ps.flatMap(p => kwList(p.tech_keywords).map(kw)).filter(Boolean));
       const catHit = [...cats].filter(x => myCats.has(x));
       const kwHit = [...kws].filter(x => myKws.has(x));
       const score = catHit.length * 2 + kwHit.length * 0.5;

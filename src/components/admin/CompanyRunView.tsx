@@ -1,5 +1,6 @@
 'use client';
 
+import { kwList } from '@/lib/entity-ids';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button, Card, Empty, Space, Spin, Table, Tabs, Tag, Timeline, Tooltip, Typography } from 'antd';
@@ -52,7 +53,7 @@ export const PRODUCT_COLUMNS = [
   { title: '品类', dataIndex: 'category', width: 130, render: (t: string) => t || '-', sorter: (a: any, b: any) => String(a.category || '').localeCompare(String(b.category || '')) },
   { title: '类型', dataIndex: 'kind', width: 100, render: (k: string) => k ? <Tag color={PRODUCT_KIND_LABELS[k]?.color}>{PRODUCT_KIND_LABELS[k]?.label || k}</Tag> : '-', sorter: (a: any, b: any) => String(a.kind || '').localeCompare(String(b.kind || '')) },
   { title: '状态', dataIndex: 'status', width: 90, render: (s: string) => <Tag color={PRODUCT_STATUS_LABELS[s]?.color}>{PRODUCT_STATUS_LABELS[s]?.label || s || '未知'}</Tag>, sorter: (a: any, b: any) => String(a.status || '').localeCompare(String(b.status || '')) },
-  { title: '技术关键词', dataIndex: 'tech_keywords', width: 220, render: (t: string[]) => <Space size={2} wrap>{(t || []).map(k => <Tag key={k} style={{ margin: 0 }}>{k}</Tag>)}</Space> },
+  { title: '技术关键词', dataIndex: 'tech_keywords', width: 220, render: (t: string[] | string) => <Space size={2} wrap>{kwList(t).map(k => <Tag key={k} style={{ margin: 0 }}>{k}</Tag>)}</Space> },
   { title: '说明', dataIndex: 'description', ellipsis: true, render: (t: string) => <Tooltip title={t}><span style={{ fontSize: 12 }}>{t || '-'}</span></Tooltip> },
   { title: '', width: 40, render: (_: any, r: any) => r.source_url ? <a href={r.source_url} target="_blank" rel="noreferrer"><LinkOutlined /></a> : null },
 ];

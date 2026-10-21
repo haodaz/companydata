@@ -3,6 +3,7 @@
  * 并把能回填的部分写回实体库：管线 → 核心产品表（品类写阶段）、股权 → 高管持股比例、财务 → 营收 / 利润（只填空）。
  * 每个值都要求带 source；找不到写 null，不推测。
  */
+import { randomId } from '@/lib/entity-ids';
 import { supabaseAdmin } from '@/lib/supabase';
 import { searchJson } from '@/lib/agents/search-llm';
 import { productKey } from '@/lib/company-merge';
@@ -67,7 +68,7 @@ export async function applyDeepTopic(companyId: number, key: string, data: any):
     const rows = pipe.map((p: any) => {
       const name = [p.name, p.indication].filter(Boolean).join(' · '); if (!name) return null;
       const dk = productKey(companyId, { name } as any); if (have.has(dk)) return null; have.add(dk);
-      return { company_id: companyId, name, category: `临床管线 · ${stageCn(p.stage)}`, tech_keywords: p.target ? [String(p.target)] : null, kind: 'other', status: 'unknown', is_flagship: false, description: [p.milestone, p.partner ? `合作方：${p.partner}` : '', p.region ? `地区：${p.region}` : ''].filter(Boolean).join('；'), source_url: typeof p.source === 'string' ? p.source : null, dedupe_key: dk, human_review_status: 'pending' };
+      return { company_id: companyId, name, category: `临床管线 · ${stageCn(p.stage)}`, tech_keywords: p.target ? String(p.target) : null, external_id: randomId(24), kind: 'other', status: 'unknown', is_flagship: false, description: [p.milestone, p.partner ? `合作方：${p.partner}` : '', p.region ? `地区：${p.region}` : ''].filter(Boolean).join('；'), source_url: typeof p.source === 'string' ? p.source : null, dedupe_key: dk, human_review_status: 'pending' };
     }).filter(Boolean);
     if (rows.length) { const { error } = await supabaseAdmin.from('company_products').insert(rows); if (error) throw error; }
     out.products = rows.length;

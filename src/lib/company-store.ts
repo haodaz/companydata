@@ -4,6 +4,7 @@
  *   refreshCompleteness — 重算完整度
  *   summarizeCost — 按 batch_id 汇总这次流水线的调用次数 / token / 费用
  */
+import { kwText, randomId } from '@/lib/entity-ids';
 import { supabaseAdmin } from '@/lib/supabase';
 import { PIPELINE_FIELDS, computeCompanyCompleteness, hasValue, type SubEntityKey } from '@/lib/company-fields';
 import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
@@ -41,7 +42,8 @@ export async function summarizeCost(batchId: number | null | undefined) {
 /** 子实体 upsert：新行插入；已有行只填空；人工定论（通过 / 不通过 / 隐藏）或人工锁定的字段不动 */
 async function upsertRows(table: string, companyId: number, logId: number, rows: Record<string, any>[], keyOf: (r: any) => string): Promise<number> {
   if (!rows.length) return 0;
-  const keyed = rows.map(r => ({ ...r, company_id: companyId, dedupe_key: keyOf(r), log_id: logId }));
+  // 产品技术关键词存「；」隔开的文本（数据部门 10-21 #19）
+  const keyed = rows.map(r => ({ ...r, ...(table === 'company_products' && 'tech_keywords' in r ? { tech_keywords: kwText(r.tech_keywords) } : {}), company_id: companyId, dedupe_key: keyOf(r), log_id: logId }));
   const keys = keyed.map(r => r.dedupe_key);
   const { data: existing } = await supabaseAdmin.from(table).select('*').in('dedupe_key', keys);
   const byKey = new Map<string, any>((existing || []).map(r => [r.dedupe_key, r]));
@@ -50,7 +52,8 @@ async function upsertRows(table: string, companyId: number, logId: number, rows:
 
   // 同一批里去重键相同的只留第一条（否则一次 insert 里两行同键会撞唯一约束，整家企业的落库都失败）
   const seenKeys = new Set<string>();
-  const inserts = keyed.filter(r => { if (byKey.has(r.dedupe_key) || seenKeys.has(r.dedupe_key)) return false; seenKeys.add(r.dedupe_key); return true; }).map(r => ({ ...r, human_review_status: 'review', created_at: now, updated_at: now }));
+  // 子实体 external_id：24 位小写字母 + 数字随机码（数据部门 10-21 #20）
+  const inserts = keyed.filter(r => { if (byKey.has(r.dedupe_key) || seenKeys.has(r.dedupe_key)) return false; seenKeys.add(r.dedupe_key); return true; }).map(r => ({ ...r, external_id: (r as any).external_id || randomId(24), human_review_status: 'review', created_at: now, updated_at: now }));
   if (inserts.length) {
     const { error } = await supabaseAdmin.from(table).insert(inserts);
     if (error) throw new Error(`${table} 写入失败: ${error.message}`);

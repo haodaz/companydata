@@ -5,6 +5,7 @@
  * + 深度尽调八个专题（上市与市值 / 财务 / 股权 / 管线 / BD 交易 / 团队 / 风险 / 校招），排成一份可打印的报告。
  * 每个值带来源链接；没找到的写「—」，不推测。
  */
+import { kwList } from '@/lib/entity-ids';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { App, Button, Space, Spin, Tag } from 'antd';
@@ -309,7 +310,7 @@ export default function CompanyReportPage() {
         </Sec>
 
         <Sec no="13" id="s13" title={`核心产品（实体库 ${coreProducts.length} 条）`}>
-          <Table head={['名称', '品类', '技术关键词', '形态', '状态', '拳头', '说明', '来源']} rows={coreProducts.map((p: any) => [<b key="n">{p.name}</b>, p.category || '', (p.tech_keywords || []).join('、'), p.kind || '', p.status || '', p.is_flagship ? '★' : '', <span key="d" className="dr-small">{p.description || ''}</span>, <Src key="s" u={p.source_url} />])} />
+          <Table head={['名称', '品类', '技术关键词', '形态', '状态', '拳头', '说明', '来源']} rows={coreProducts.map((p: any) => [<b key="n">{p.name}</b>, p.category || '', kwList(p.tech_keywords).join('、'), p.kind || '', p.status || '', p.is_flagship ? '★' : '', <span key="d" className="dr-small">{p.description || ''}</span>, <Src key="s" u={p.source_url} />])} />
         </Sec>
 
         <Sec no="14" id="s14" title="信息源与口径">
