@@ -195,7 +195,8 @@ export async function tagAndSave(ids: number[], model: string, opts: { batch?: n
       const answered = t.has(j.id);
       for (const k of Object.keys(patch)) {
         if (locked.has(k)) { delete patch[k]; continue; }
-        if (patch[k] === null || patch[k] === '') { if (answered && (k === 'related_career_ids' || k === 'fos_ids')) patch[k] = null; else delete patch[k]; }
+        // 潜历标签同理：模型答了、判不了（职能留空带原因 / 特色标签原文没证据）→ 写空，清掉以前的
+        if (patch[k] === null || patch[k] === '') { if ((answered && (k === 'related_career_ids' || k === 'fos_ids')) || (q.has(j.id) && k.startsWith('qianli_'))) patch[k] = null; else delete patch[k]; }
       }
       if (!Object.keys(patch).length) continue;
       const { error } = await supabaseAdmin.from('jobs').update(patch).eq('id', j.id);

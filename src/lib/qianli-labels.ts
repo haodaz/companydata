@@ -9,14 +9,13 @@
 import { generateContent } from '@/lib/llm-client';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
-import { JOB_FUNCTION_PROMPT, JOB_FUNCTION_TAGS, SPECIALTY_BATCH, SPECIALTY_EXAMPLES, SPECIALTY_SYSTEM, SPECIALTY_TAGS, SPECIALTY_USER } from '@/data/qianli-prompts';
+import { checkSpecialty } from '@/lib/qianli-evidence';
+import { JOB_FUNCTION_PROMPT, JOB_FUNCTION_TAGS, SPECIALTY_BATCH, SPECIALTY_EXAMPLES, SPECIALTY_SYSTEM, SPECIALTY_USER } from '@/data/qianli-prompts';
 
 export type QianliInput = { id: number; name: string; company?: string | null; responsibilities?: string | null; overview?: string | null; summary_cn?: string | null };
-export type QianliLabels = { qianli_job_labels: string | null; qianli_job_specialty_labels: string | null; qianli_specialty_labels_reason: string | null };
+export type QianliLabels = { qianli_job_labels: string | null; qianli_job_labels_reason: string | null; qianli_job_specialty_labels: string | null; qianli_specialty_labels_reason: string | null };
+export type JobFunction = { value: string | null; reason: string };
 
-const L2_PARENT = new Map(SPECIALTY_TAGS.map(t => [t.l2_value, t.l1_value]));
-const L1_ORDER = [...new Set(SPECIALTY_TAGS.map(t => t.l1_value))];
-const L2_ORDER = SPECIALTY_TAGS.map(t => t.l2_value);
 
 export { QIANLI_FUNCTION_NAMES, QIANLI_SPECIALTY_L1_NAMES, QIANLI_SPECIALTY_L2_NAMES } from '@/lib/qianli-tags';
 
@@ -28,26 +27,50 @@ const flat = (v: any, n: number) => String(v || '').replace(/\s+/g, ' ').trim().
  * 原因（2026-10-20 回刷后抽查）：value 和名称的对应是历史口径、字面意思错位，提示词再三强调不许按语义纠正，模型还是被带跑——
  *   教师岗被打成 edu_training（=网络安全）、兽医 / 临床医师打成 healthcare（=项目经理）、安全工程师 / 纪检打成 legal_compliance（=数据工程师）。
  */
-export async function tagJobFunctions(jobs: QianliInput[], model: string): Promise<Map<number, string | null>> {
+/**
+ * 陈彩瑛 10-21：
+ *   1.2 没 JD 的凭岗位名判断（模型按 prompt 第 14 条给「低」也收下），理由记「仅凭岗位名称判断」；
+ *   3   有 JD 但匹配度低的不硬塞——留空、记原因（qianli_job_labels_reason），不拿「管理」兜底：「管理」只给岗位名里真有管理头衔的。
+ */
+const JD_MIN = 20;
+const MGMT_TITLE = /总监|总经理|副总|总裁|VP|负责人|主管|经理|厂长|店长|主任|部长|director|head of|manager|chief|CEO|COO|CFO|CTO|lead/i;
+const normName = (s: any) => String(s || '').replace(/\s+/g, '').toLowerCase();
+const jdOf = (j: QianliInput) => flat(j.responsibilities || j.summary_cn || j.overview, 2500);
+
+export async function tagJobFunctions(jobs: QianliInput[], model: string): Promise<Map<number, JobFunction>> {
   const input = jobs.map(j => ({ id: String(j.id), 岗位名称: j.name, JD: flat(j.responsibilities || j.summary_cn || j.overview, 2500) }));
   const names = JOB_FUNCTION_TAGS.map(t => t.name);
   const prompt = `${JOB_FUNCTION_PROMPT}
 
 # 输出要求的调整（以这里为准）
 上面「输出格式」里的 value 一律改为填写**中文职能名**，只能是这 26 个之一、原样照抄：${names.join('、')}；无匹配填 "无匹配"。不要填编码，程序会换成编码。
-带 id 的岗位数组时返回：{"results": [{"id": "<原样返回>", "label": "<中文职能名>", "confidence": "高|中|低", "reason": "<不超过30字>"}]}
+带 id 的岗位数组时返回：{"results": [{"id": "<原样返回>", "岗位名称": "<原样抄回>", "label": "<中文职能名>", "confidence": "高|中|低", "reason": "<不超过30字>"}]}
+每个岗位单独判断，id 和岗位名称必须原样对应同一个输入岗位。
 
 # 输入（带 id 的岗位数组）
 ${JSON.stringify(input)}`;
   const r = await generateContent(prompt, model, { jsonMode: true, temperature: 0 });
   await logTokenUsage({ tool_name: 'job-tagging', task_name: 'Qianli Job Function', institution: jobs[0]?.company || '', model_id: r.model || model, usageMetadata: r.usageMetadata, success: true }).catch(() => {});
   const byName = new Map(JOB_FUNCTION_TAGS.map(t => [t.name.replace(/\s+/g, '').toLowerCase(), t.value]));
-  const out = new Map<number, string | null>();
+  const out = new Map<number, JobFunction>();
   for (const it of parseJsonLoose(r.text)?.results || []) {
-    const id = Number(it.id);
-    if (!jobs.some(j => j.id === id)) continue;
+    // 按抄回的岗位名对齐（10-21 发现按 id 会错位：A 岗位拿到 B 岗位的理由）；id 和名字对不上时以名字为准，名字在本批里不唯一 / 找不到就不收
+    const nm = normName(it['岗位名称']);
+    const byId = jobs.find(x => x.id === Number(it.id));
+    const sameName = jobs.filter(x => normName(x.name) === nm);
+    const j = byId && normName(byId.name) === nm ? byId : sameName.length === 1 ? sameName[0] : null;
+    if (!j || out.has(j.id)) continue;
+    const id = j.id;
+    const why = flat(it.reason, 40);
+    const titleOnly = jdOf(j).length < JD_MIN;
+    const label = String(it.label || '').replace(/\s+/g, '');
     // 只认中文名（模型要是填了编码，宁可留空也不照收——编码正是被字面意思带跑的来源）
-    out.set(id, byName.get(String(it.label || '').replace(/\s+/g, '').toLowerCase()) || null);
+    const value = byName.get(label.toLowerCase()) || null;
+    if (!value) { out.set(id, { value: null, reason: titleOnly ? '没有 JD，岗位名也看不出职能' : `26 个职能都对不上${why ? `：${why}` : ''}` }); continue; }
+    if (value === 'exec_mgmt' && !MGMT_TITLE.test(j.name)) { out.set(id, { value: null, reason: `匹配度低（岗位名没有管理头衔，不拿「管理」兜底）${why ? `：${why}` : ''}` }); continue; }
+    if (titleOnly) { out.set(id, { value, reason: '仅凭岗位名称判断' }); continue; }
+    if (it.confidence === '低') { out.set(id, { value: null, reason: `匹配度低${why ? `：${why}` : ''}` }); continue; }
+    out.set(id, { value, reason: why || '' });
   }
   return out;
 }
@@ -76,32 +99,42 @@ ${batchOut}
   for (const it of items) {
     const id = Number(it['岗位ID'] ?? it.id);
     if (!jobs.some(j => j.id === id)) continue;
-    // 只认清单里的二级；一级按二级反推（层级一致），顺序按 tags.xlsx
-    const l2 = L2_ORDER.filter(v => (it['二级标签'] || []).map(String).includes(v));
-    const l1 = L1_ORDER.filter(v => l2.some(x => L2_PARENT.get(x) === v));
+    // 只认清单里的二级，再过原文证据关（原文找不到字眼的去掉、只有 AI 类的不算培养新人、JD 空的全清）；一级按二级反推
+    const j = jobs.find(x => x.id === id)!;
+    const { l1, l2 } = checkSpecialty((it['二级标签'] || []).map(String), j);
     out.set(id, { l1, l2 });
   }
   return out;
 }
 
+/** 「岗位名称 + 岗位职责」完全相同的算同一个岗位（陈彩瑛 2：标签要一致）——只问一次，结果复制给其余的 */
+export const sameJobKey = (j: { name?: string | null; responsibilities?: string | null }) => `${String(j.name || '').replace(/\s+/g, '')}|${String(j.responsibilities || '').replace(/\s+/g, '')}`;
+
 /** 一批岗位打两种潜历标签，返回要写库的字段（没结果的岗位不在里面） */
-export async function qianliLabels(jobs: QianliInput[], model: string): Promise<Map<number, QianliLabels>> {
+export async function qianliLabels(all: QianliInput[], model: string): Promise<Map<number, QianliLabels>> {
   const out = new Map<number, QianliLabels>();
+  const rep = new Map<string, QianliInput>();
+  for (const j of all) if (!rep.has(sameJobKey(j))) rep.set(sameJobKey(j), j);
+  const jobs = [...rep.values()];
   for (let i = 0; i < jobs.length; i += 10) {
     const chunk = jobs.slice(i, i + 10);
     const [fn, sp] = await Promise.all([
-      tagJobFunctions(chunk, model).catch(e => { console.warn('[qianli] 职能标签失败', String(e?.message || e).slice(0, 100)); return new Map<number, string | null>(); }),
+      tagJobFunctions(chunk, model).catch(e => { console.warn('[qianli] 职能标签失败', String(e?.message || e).slice(0, 100)); return new Map<number, JobFunction>(); }),
       tagJobSpecialties(chunk, model).catch(e => { console.warn('[qianli] 特色标签失败', String(e?.message || e).slice(0, 100)); return new Map<number, { l1: string[]; l2: string[] }>(); }),
     ]);
     for (const j of chunk) {
       if (!fn.has(j.id) && !sp.has(j.id)) continue;
       const s = sp.get(j.id);
+      const f = fn.get(j.id);
       out.set(j.id, {
-        qianli_job_labels: fn.get(j.id) ?? null,
+        qianli_job_labels: f?.value ?? null,
+        qianli_job_labels_reason: f ? (f.reason || null) : null,
         qianli_job_specialty_labels: s ? (s.l1.join('|') || null) : null,
         qianli_specialty_labels_reason: s ? (s.l2.join('|') || null) : null,
       });
     }
   }
+  // 同名同职责的照抄代表岗位的结果
+  for (const j of all) { const r = rep.get(sameJobKey(j))!; if (r.id !== j.id && out.has(r.id)) out.set(j.id, { ...out.get(r.id)! }); }
   return out;
 }

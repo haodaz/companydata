@@ -1,19 +1,15 @@
 /**
- * 科研仪器供应商候选名单 → 核实（只出结果，加 --apply 才写企业库）：
+ * 科研仪器供应商候选名单 → 核实（只出结果；写企业库在 apply-instrument-suppliers.mts——企业实体库是全集，厂商页只是筛选视图）：
  *   1. 去掉模型写进名字里的批注；带「已剔除 / 已排除 / 重复」的直接丢
  *   2. 打开官网（Jina，被限流时本机 Chrome），看能不能打开
  *   3. 便宜模型按官网内容判：是不是这家公司、是不是做这一类仪器 / 试剂的厂商（研究机构、标准机构、不相干的公司剔掉）
- *   4. 和企业库比对：已有的补仪器类目 / 展会，没有的新建（来源「科研仪器」，待审核）
- *   npx tsx scripts/verify-instrument-suppliers.mts --model qwen-flash [--in reports/instrument-suppliers.json] [--par 3] [--apply]
+ *   npx tsx scripts/verify-instrument-suppliers.mts --model qwen-flash [--in reports/instrument-suppliers.json] [--par 3]
  */
 process.loadEnvFile('.env.local');
 import fs from 'node:fs';
-const { supabaseAdmin: db } = await import('@/lib/supabase');
 const { fetchJinaUrl } = await import('@/lib/agents/fetcher');
 const { generateContent } = await import('@/lib/llm-client');
 const { parseJsonLoose } = await import('@/lib/agents/search-llm');
-const { resolveCompanyId } = await import('@/lib/company-match');
-const { ensureCompanyFloraId } = await import('@/lib/company-flora-id');
 const { logTokenUsage } = await import('@/lib/token-logger');
 const { isKnownModel } = await import('@/lib/model-options');
 const { INSTRUMENT_CATEGORIES } = await import('@/lib/instrument-categories');
@@ -21,7 +17,7 @@ const { INSTRUMENT_CATEGORIES } = await import('@/lib/instrument-categories');
 const opt = (k: string, d = '') => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const MODEL = opt('model', '');
 if (!MODEL || !isKnownModel(MODEL)) { console.error(`--model 要用模型选单里的（现在：${MODEL || '空'}）`); process.exit(1); }
-const IN = opt('in', 'reports/instrument-suppliers.json'), PAR = Number(opt('par', '3')), APPLY = process.argv.includes('--apply');
+const IN = opt('in', 'reports/instrument-suppliers.json'), PAR = Number(opt('par', '3'));
 const keyOf = new Map(INSTRUMENT_CATEGORIES.map(c => [c.name, c.key]));
 
 const src = JSON.parse(fs.readFileSync(IN, 'utf8'));
@@ -71,29 +67,5 @@ const pass = results.filter(r => r.ok), fail = results.filter(r => !r.ok);
 console.log(`通过 ${pass.length} 家（国内 ${pass.filter(r => r.is_domestic).length}、官网核实 ${pass.filter(r => r.website_ok).length}），剔除 ${fail.length} 家`);
 for (const f of fail.slice(0, 30)) console.log(`  ✗ ${f.name_cn || f.name_en}：${f.why}`);
 
-// 和企业库比对
-let created = 0, updated = 0;
-for (const r of pass) {
-  r.company_id = await resolveCompanyId(r.name_cn || r.name_en).catch(() => null) || (r.name_en ? await resolveCompanyId(r.name_en).catch(() => null) : null);
-  if (!APPLY) continue;
-  if (r.company_id) {
-    const { data: co } = await db.from('companies').select('supplier_categories, supplier_exhibitions, official_website').eq('id', r.company_id).single();
-    await db.from('companies').update({
-      supplier_categories: [...new Set([...(co?.supplier_categories || []), ...r.verified_categories])],
-      supplier_exhibitions: [...new Set([...(co?.supplier_exhibitions || []), ...(r.exhibitions || [])])],
-      ...(!co?.official_website && r.website_ok ? { official_website: r.website } : {}),
-    }).eq('id', r.company_id);
-    updated++;
-  } else {
-    const { data, error } = await db.from('companies').insert({
-      name: r.name_cn || r.name_en, name_en: r.name_en || null, country: r.is_domestic ? '中国' : (r.country || null),
-      official_website: r.website_ok ? r.website : null, source: ['科研仪器'], supplier_categories: r.verified_categories, supplier_exhibitions: r.exhibitions || [],
-      human_review_status: 'review',
-    }).select('id').single();
-    if (error) { console.log(`  建档失败 ${r.name_cn}：${error.message}`); continue; }
-    r.company_id = data.id; created++;
-    await ensureCompanyFloraId(data.id).catch(() => {});   // 企业编号 = 国家码.主域名（数据部门口径）
-  }
-}
 fs.writeFileSync(IN.replace(/\.json$/, '-verified.json'), JSON.stringify({ at: new Date().toISOString(), pass, fail, dropped }, null, 1));
-console.log(APPLY ? `写库：新建 ${created} 家，已有企业补类目 ${updated} 家` : `已在库 ${pass.filter(r => r.company_id).length} 家、要新建 ${pass.filter(r => !r.company_id).length} 家（加 --apply 写库）`);
+console.log('核实结果已存；和企业库比对、写库用 scripts/apply-instrument-suppliers.mts');
