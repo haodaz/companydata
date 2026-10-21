@@ -93,7 +93,7 @@ export default function CompanyReportPage() {
 
   const listing = T('listing'), financials = T('financials'), share = T('shareholding'), pipe = T('pipeline'), deals = T('deals'), team = T('team'), risks = T('risks'), campus = T('campus');
   // 投资机构版尽调（基金 / 策略 / 案例与退出 / 合伙人 / 生态 / 事件）：只要跑过其中任一专题就按 VC 版式排
-  const fund = T('fund'), strategy = T('strategy'), portfolio = T('portfolio'), partners = T('partners'), network = T('network'), firmRisks = T('firm_risks');
+  const fund = T('fund'), strategy = T('strategy'), portfolio = T('portfolio'), partners = T('partners'), network = T('network'), firmRisks = T('firm_risks'), hiring = T('hiring');
   const isVC = !!(deep?.topics && ['fund', 'strategy', 'portfolio', 'partners', 'network', 'firm_risks'].some(k => deep.topics[k]));
   const hasDeep = deep?.topics && Object.keys(deep.topics).length > 0;
   const products = (d.products || []) as any[];
@@ -103,7 +103,7 @@ export default function CompanyReportPage() {
   const stamp = deep?.generatedAt ? new Date(deep.generatedAt).toLocaleDateString('zh-CN') : today;
   const latestFin = (financials.periods || [])[(financials.periods || []).length - 1];
   const toc = isVC ? [
-    ['s1', '一、机构概况'], ['v2', '二、基金与规模'], ['v3', '三、投资策略'], ['v4', '四、代表案例与退出'], ['v5', '五、合伙人团队'], ['v6', '六、生态与关联'], ['v7', '七、近 24 个月事件'],
+    ['s1', '一、机构概况'], ['v2', '二、基金与规模'], ['v3', '三、投资策略'], ['v4', '四、代表案例与退出'], ['v5', '五、合伙人团队'], ['v6', '六、生态与关联'], ['v7', '七、近 24 个月事件'], ['v8', '八、招聘与岗位能力'],
     ['s11', '八、融资历史'], ['s12', '九、近期动态'], ['s13', '十、核心产品 / 服务'], ['s14', '十一、信息源与口径'],
   ] : [
     ['s1', '一、公司概况'], ['s2', '二、上市与市值'], ['s3', '三、财务'], ['s4', '四、股权结构'], ['s5', '五、已获批产品'], ['s6', '六、临床管线'], ['s7', '七、BD 交易'],
@@ -222,6 +222,13 @@ export default function CompanyReportPage() {
           {firmRisks.summary && <p className="dr-note">{firmRisks.summary}</p>}
           {c.public_sentiment && <p className="dr-note"><b>实体库舆情摘要：</b>{c.public_sentiment}</p>}
         </Sec>
+        {/* 2026-10-21：出题要用——这家机构招人看重什么 */}
+        <Sec no="08" id="v8" title="招聘与岗位能力">
+          {hiring.what_they_look_for && <p className="dr-note"><b>看重什么：</b>{v(hiring.what_they_look_for)} <Src u={hiring.what_they_look_for?.source} /></p>}
+          {(hiring.jobs || []).length > 0
+            ? <Table head={['岗位', '城市', '学历 / 专业', '经验', '能力要求', '来源']} rows={(hiring.jobs as any[]).map((j: any) => [<b key="t">{j.title}</b>, j.city || '', [j.degree, j.major].filter(Boolean).join(' · '), [j.experience].flat().filter(Boolean).join('；'), [j.abilities || j.duties].flat().filter(Boolean).join('；'), <Src key="s" u={j.source} />])} />
+            : <p className="dr-small">没有检索到公开的招聘信息。</p>}
+        </Sec>
         </>)}
         {!isVC && (<>
         <Sec no="02" id="s2" title="上市与市值" lead={hasDeep ? '交易所披露、招股说明书与行情站点；市值与股价为检索时点数据，会变动。' : undefined}>
@@ -317,7 +324,7 @@ export default function CompanyReportPage() {
           <Table head={['类型', '页面', '链接']} rows={((d.urls || []) as any[]).map((u: any) => [u.type, u.title || u.subtype || '', <a key="u" href={u.url} target="_blank" rel="noreferrer" className="dr-small">{u.url}</a>])} widths={[90, 200, undefined]} />
           <ul className="dr-list">
             <li>画像流水线：定位官网 → 抓取官方页面原文 → 官方原文结构化 → 七路联网检索（工商 / 融资 / 动态舆情 / 团队 / 核心产品 / 行业 / 校招）→ 归并去重 → 完整度评分。</li>
-            {hasDeep && <li>{isVC ? '投资机构尽调检索：基金与规模 / 投资策略 / 代表案例与退出 / 合伙人团队 / 生态与关联 / 近 24 个月事件六个专题' : '深度尽调检索：上市与市值 / 财务 / 股权 / 管线 / BD / 团队 / 风险 / 校招八个专题'}，各一次联网检索；模型 {deep.model}。</li>}
+            {hasDeep && <li>{isVC ? '投资机构尽调检索：基金与规模 / 投资策略 / 代表案例与退出 / 合伙人团队 / 生态与关联 / 近 24 个月事件 / 招聘与岗位能力七个专题' : '深度尽调检索：上市与市值 / 财务 / 股权 / 管线 / BD / 团队 / 风险 / 校招八个专题'}，各一次联网检索；模型 {deep.model}。</li>}
             <li>官方优先：只认企业官网、交易所披露、政府公示与可核实的公开报道；第三方聚合站只作线索。找不到的字段留空，不推测。</li>
             <li>金额以披露币种为准；市值、股价为检索时点数据，会变动。人工审核通过后 AI 补全不再覆盖。</li>
           </ul>

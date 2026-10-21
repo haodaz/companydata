@@ -33,7 +33,9 @@ export async function POST(req: Request) {
     const kind = b.kind === 'hire' ? 'hire' : b.kind === 'enroll' ? 'enroll' : null;
     if (!kind) return NextResponse.json({ ok: false, error: '申请类型不对' }, { status: 400 });
     const f = (b.fields || {}) as Record<string, unknown>;
-    const org = clip(f.org, 200), contact = clip(f.contact, 100), phone = clip(f.phone, 100), title = clip(f.title, 200);
+    const org = clip(f.org, 200), contact = clip(f.contact, 100), phone = clip(f.phone, 100);
+    // 人才培养需求：岗位名可以不填（客户多半说不出职业名），用自然语言描述的头一句当标题
+    const title = clip(f.title, 200) || clip(String(f.jd || f.target || '').replace(/\s+/g, ' '), 40);
     const email = clip(f.email, 200).toLowerCase();
     if (!org || !contact || !phone || !title) return NextResponse.json({ ok: false, error: '带 * 的几项要填' }, { status: 400 });
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return NextResponse.json({ ok: false, error: '邮箱格式不对' }, { status: 400 });

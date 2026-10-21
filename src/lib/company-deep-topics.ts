@@ -20,6 +20,8 @@ export const DEEP_TOPICS_VC: { key: string; label: string; desc: string }[] = [
   { key: 'partners', label: '合伙人团队', desc: '创始 / 管理合伙人、合伙人、核心投资人：头衔、分管赛道、履历、代表项目' },
   { key: 'network', label: '生态与关联', desc: '母公司 / 产业方、关联基金与平台、常见联合投资方、高校 / 校友背景、政府合作' },
   { key: 'firm_risks', label: '近 24 个月事件', desc: '新基金关账、募资困难、合伙人变动 / 分家、监管处罚、诉讼、LP 纠纷、重大退出或减值、被投上市公司减持' },
+  // 2026-10-21：出题要用——这家机构招人看重什么、投资岗平时干什么活
+  { key: 'hiring', label: '招聘与岗位能力', desc: '在招 / 近期招过的岗位（投资经理 / 行业研究 / 投后…）、城市、学历专业、经验要求、原文里的能力要求、岗位日常职责' },
 ];
 export const isInvestmentFirm = (c: { name?: string | null; industry?: string | null; kind?: string | null } | null | undefined) =>
   !!c && (c.industry === '投资机构' || /资本|创投|基金|投资(集团|公司|管理)?$|Ventures|Capital|Partners|Fund\b/i.test(String(c.name || '')));

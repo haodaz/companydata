@@ -41,7 +41,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     const { topic, model, createdBy } = await req.json();
     const { DEEP_TOPIC_KEYS, runDeepTopic, saveDeepTopic, applyDeepTopic } = await import('@/lib/agents/company-deep-research');
     if (!DEEP_TOPIC_KEYS.includes(topic)) return NextResponse.json({ success: false, error: `未知专题 ${topic}` }, { status: 400 });
-    const { data: company, error } = await supabaseAdmin.from('companies').select('id, name').eq('id', companyId).single();
+    const { data: company, error } = await supabaseAdmin.from('companies').select('id, name, name_en, official_website, aliases').eq('id', companyId).single();
     if (error || !company) return NextResponse.json({ success: false, error: '企业不存在' }, { status: 404 });
     const modelId = model || 'gpt-5.6-luna';
     const r = await runDeepTopic(company, topic, modelId);

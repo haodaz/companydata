@@ -15,7 +15,7 @@ export default function Cases() {
     <div className="cu">
       <style>{CU_BASE + CS_CSS}</style>
       <SubHero crumb="案例" title="案例" en="How organizations put AI graduates to work" video="/college/work.mp4" poster="/college/work.jpg"
-        lead="不只是传统手艺。出海、车间数据、组织搭建、产业研究，这些分析型的活和新兴职业，也一样可以教、可以考、可以上岗。下面是四个示例场景。">
+        lead="不用先想职位名。直接说你要找什么样的人，我们就拿真活考有没有这个本事，过了再交给你。下面是四个示例场景。">
         <a className="cu-btn light" href={`#${CASES[0].id}`}>从第一个看起</a>
         <a className="cu-btn line" href="/college/hire#apply">说说你的场景 →</a>
       </SubHero>
@@ -36,27 +36,25 @@ export default function Cases() {
                 <div className="cs-who">{c.who}</div>
               </div>
             </div>
+            <div className="cs-said">
+              <span>我要找这样的人</span>
+              <q>{c.said}</q>
+            </div>
             <div className="cs-body">
-              <div className="cs-sit">
-                <h3>处境</h3>
-                <p>{c.situation}</p>
-                <h3>换来什么</h3>
-                <p className="cs-result">{c.result}</p>
-                <div className="cs-tags"><b>用到的新兴职业</b>{c.tags.map(t => <span key={t}>{t}</span>)}</div>
-              </div>
               <div className="cs-team">
-                <h3>团队里怎么配 AI</h3>
+                <h3>就考这几件事</h3>
                 <ul>
-                  {c.team.map(t => (
-                    <li key={t.role}>
-                      <div className="r"><b>{t.role}</b><em data-m={t.mode}>{t.mode}</em></div>
-                      <p>{t.does}</p>
-                    </li>
+                  {c.exams.map(([t, d]) => (
+                    <li key={t}><div className="r"><b>{t}</b></div><p>看：{d}</p></li>
                   ))}
                 </ul>
+              </div>
+              <div className="cs-sit">
+                <h3>交付</h3>
+                <ul className="cs-del">{c.deliver.map(x => <li key={x}>{x}</li>)}</ul>
                 <div className="cs-humans">{c.humans}</div>
-                <h3>怎么教，怎么考</h3>
-                <dl>{c.teach.map(([k, v]) => <React.Fragment key={k}><dt>{k}</dt><dd>{v}</dd></React.Fragment>)}</dl>
+                <h3 style={{ marginTop: 26 }}>换来什么</h3>
+                <p className="cs-result">{c.result}</p>
               </div>
             </div>
           </div>
@@ -66,7 +64,7 @@ export default function Cases() {
       <section className="cu-sec cu-navy">
         <div className="cu-in cs-end">
           <H2 light eyebrow="你的场景 · YOUR CASE" zh="你们的活，也可以这样配" en="Bring us your case" />
-          <p className="cu-p">把你们要干的活、卡着的问题和现有的材料交过来。我们一起拆：哪些交给 AI、哪些留给人、怎么教、怎么考。</p>
+          <p className="cu-p">不用想好职位名。直接说你要找什么样的人，再把手上的材料交过来。我们拿真活考有没有这个本事，过了再交给你。</p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Link className="cu-btn light" href="/college/hire#apply">提交人才培养需求</Link>
             <Link className="cu-btn line" href="/college/graduates">先看看毕业生 →</Link>
@@ -93,6 +91,11 @@ const CS_CSS = `
 .cs-body h3:not(:first-child) { margin-top: 30px; }
 .cs-sit p { font-size: 16.5px; line-height: 1.95; color: var(--ink2); margin: 0; }
 .cs-sit p.cs-result { font-family: var(--serif); font-size: 21px; line-height: 1.7; color: var(--navy); font-weight: 900; }
+.cs-said { margin: 0 0 40px 140px; padding: 22px 26px; background: rgba(176,141,87,.1); border-left: 3px solid var(--gold); }
+.cs-said span { display: block; font: 700 12px var(--en); letter-spacing: .2em; color: var(--gold); margin-bottom: 8px; }
+.cs-said q { font-family: var(--serif); font-size: 20px; line-height: 1.8; color: var(--navy); quotes: "「" "」"; }
+.cs-abl, .cs-del { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 15.5px; line-height: 1.8; color: var(--ink2); }
+.cs-del { margin-bottom: 14px; }
 .cs-tags { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .cs-tags b { font-size: 13px; color: var(--ink3); margin-right: 6px; }
 .cs-tags span { padding: 5px 12px; font-size: 13px; background: rgba(176,141,87,.12); color: #7a5c2a; }
@@ -112,6 +115,7 @@ const CS_CSS = `
   .cs-head { grid-template-columns: 1fr; gap: 0; }
   .cs-n { font-size: 60px; }
   .cs-body { grid-template-columns: 1fr; margin-left: 0; }
+  .cs-said { margin-left: 0; } .cs-said q { font-size: 17px; }
   .cs-index { top: 0; position: relative; }
 }
 `;

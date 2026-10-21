@@ -317,14 +317,14 @@ export default function CollegeHome() {
         <div className="cu-in">
           <div className="cu-eyebrow">案例 · CASES</div>
           <h2 className="cu-h2">客户带着问题来<span>Organizations bring us the work they need done</span></h2>
-          <p className="cu-p" style={{ marginTop: -14, marginBottom: 30 }}>不只是传统手艺。出海、车间数据、组织搭建、产业研究，这些分析型的活和新兴职业，也一样可以教、可以考、可以上岗。</p>
+          <p className="cu-p" style={{ marginTop: -14, marginBottom: 30 }}>不用先想职位名。直接说你要找什么样的人，我们就拿真活考有没有这个本事。</p>
           <div className="cu-cases">
             {CASES.map(c => (
               <Link key={c.id} href={`/college/cases#${c.id}`} className="cu-case">
                 <span className="n">{c.n}</span>
                 <b>{c.q}</b>
-                <p>{c.who}。{c.result}</p>
-                <div className="tags">{c.tags.map(t => <em key={t}>{t}</em>)}</div>
+                <p>{c.who}：「{c.said.length > 64 ? c.said.slice(0, 64) + '……' : c.said}」</p>
+                <div className="tags"><b style={{ fontSize: 12.5, color: 'var(--ink3)', marginRight: 4 }}>就考</b>{c.exams.slice(0, 2).map(([t]) => <em key={t}>{t}</em>)}</div>
                 <i className="go">读完整案例 →</i>
               </Link>
             ))}

@@ -6,7 +6,7 @@
 import { randomId } from '@/lib/entity-ids';
 import { supabaseAdmin } from '@/lib/supabase';
 import { searchJson } from '@/lib/agents/search-llm';
-import { productKey } from '@/lib/company-merge';
+import { productKey, executiveKey } from '@/lib/company-merge';
 
 export { DEEP_TOPICS, DEEP_TOPICS_VC, isInvestmentFirm, topicsFor, DEEP_TOPIC_KEYS } from '@/lib/company-deep-topics';
 import { DEEP_TOPICS, DEEP_TOPICS_VC, isInvestmentFirm, topicsFor, DEEP_TOPIC_KEYS } from '@/lib/company-deep-topics';
@@ -14,7 +14,9 @@ import { DEEP_TOPICS, DEEP_TOPICS_VC, isInvestmentFirm, topicsFor, DEEP_TOPIC_KE
 const RULES = `
 Rules: Only report values you actually found in public sources (official site, exchange filings, annual & interim reports, press releases, reputable financial media). Use null when not found; never guess. Chinese text for narrative fields; keep proper nouns / codes / product names as-is. For every non-null item give "source" (URL). Return ONLY a JSON object.`;
 
-export function buildDeepPrompt(name: string, key: string): string {
+/** hint：官网 / 英文名 / 别名，帮检索把同名、同团队的机构分开（如武岳峰资本 vs 鼎峰科创） */
+export function buildDeepPrompt(name: string, key: string, hint = ''): string {
+  if (hint) name = `${name} (${hint})`;
   const P: Record<string, string> = {
     listing: `Company: ${name}. Find its stock listings and market data. Return { "listings": [ { "exchange", "ticker", "listed_date", "ipo_price": { "value", "currency", "source" }, "ipo_raised": { "value", "currency", "source" }, "board" } ], "market_cap": { "value", "currency", "as_of", "source" }, "share_price": { "value", "currency", "as_of", "source" }, "total_shares": { "value", "source" }, "controlling_shareholder", "sources": {} }`,
     financials: `Company: ${name}. Find annual and latest interim financial results for the last 3 fiscal years and the latest interim period: revenue, product sales, net profit / loss, R&D expense, cash & bank balances, gross margin, employees. Return { "periods": [ { "period", "revenue", "product_sales", "net_profit", "rd_expense", "cash", "gross_margin", "employees", "currency", "source" } ], "notes" }`,
@@ -31,6 +33,7 @@ export function buildDeepPrompt(name: string, key: string): string {
     portfolio: `Investment firm: ${name}. Find representative portfolio companies and exits: for each company give Chinese name, English name, sector, the round this firm invested in, year, amount, whether it led, current status (private / IPO with exchange and ticker / acquired by whom), and any disclosed return multiple. Up to 30 companies; prioritise unicorns, IPOs and the last 5 years; do not include the firm's own fundraising. Return { "portfolio": [ { "company", "company_en", "sector", "round", "year", "amount", "lead", "status", "source" } ], "exits": [ { "company", "type", "date", "exchange_or_acquirer", "return", "source" } ], "notes" }.`,
     partners: `Investment firm: ${name}. Find the founding partners, managing partners, partners and key investment professionals: name (Chinese and English), title, sectors covered, background (education, prior employers), notable deals, and portfolio board seats. Return { "partners": [ { "name", "name_en", "title", "sectors", "background", "notable_deals", "board_seats", "source" } ], "notes" }.`,
     network: `Investment firm: ${name}. Find its ecosystem: parent group or anchor corporate, affiliated funds / platforms / incubators, frequent co-investors (with example deals), university or alumni affiliation (e.g. Tsinghua-related), and government or industrial partnerships. Return { "parent": { "value", "source" }, "affiliates": [ { "name", "relation", "source" } ], "co_investors": [ { "name", "deals", "source" } ], "affiliations": [ { "value", "source" } ], "partnerships": [ { "value", "source" } ], "notes" }.`,
+    hiring: `Investment firm: ${name}. Find its current and recent job postings (liepin 猎聘, zhaopin 智联, BOSS 直聘, LinkedIn, university career sites, its official site and WeChat articles): role title (投资经理 / 投资总监 / 行业研究员 / 投后管理 …), city, salary, required degree and majors, required years and kind of experience, the abilities it asks for (keep close to the original Chinese wording), and the day-to-day duties. Also summarize in Chinese what this firm looks for in investment people. Return { "jobs": [ { "title", "city", "salary", "degree", "major", "experience", "abilities", "duties", "date", "source" } ], "what_they_look_for": { "value", "source" } }.`,
     firm_risks: `Investment firm: ${name}. Find notable events and risks in the past 24 months: new fund closings, fundraising difficulties, partner departures or splits, regulatory penalties, litigation, LP disputes, major exits or write-downs, and selling of listed portfolio stakes. Return { "events": [ { "date", "kind", "summary", "impact", "source" } ], "summary", "notes" }.`,
   };
   const body = P[key] || V[key];
@@ -41,9 +44,10 @@ export function buildDeepPrompt(name: string, key: string): string {
 export interface DeepTopicResult { data: any; queries: string[]; seconds: number }
 
 /** 跑一个专题：联网检索 → JSON */
-export async function runDeepTopic(company: { id: number; name: string }, key: string, modelId: string): Promise<DeepTopicResult> {
+export async function runDeepTopic(company: { id: number; name: string; name_en?: string | null; official_website?: string | null; aliases?: string[] | null }, key: string, modelId: string): Promise<DeepTopicResult> {
   const t0 = Date.now();
-  const { parsed, searchQueries } = await searchJson(buildDeepPrompt(company.name, key), modelId, { tool_name: 'company-deep-research', task_name: `Deep · ${key}`, institution: company.name });
+  const hint = [company.name_en, company.official_website && `official site ${company.official_website}`, company.aliases?.length && `also known as ${company.aliases.join(' / ')}`].filter(Boolean).join('; ');
+  const { parsed, searchQueries } = await searchJson(buildDeepPrompt(company.name, key, hint), modelId, { tool_name: 'company-deep-research', task_name: `Deep · ${key}`, institution: company.name });
   return { data: parsed || {}, queries: searchQueries || [], seconds: Math.round((Date.now() - t0) / 1000) };
 }
 
@@ -95,6 +99,21 @@ export async function applyDeepTopic(companyId: number, key: string, data: any):
       if (c && !c.profit && annual.net_profit != null) patch.profit = `${annual.period} ${annual.net_profit}（${cur}）`;
       if (Object.keys(patch).length) { await supabaseAdmin.from('companies').update(patch).eq('id', companyId); out.fields = Object.keys(patch).length; }
     }
+  }
+  if (key === 'partners') {
+    // 投资机构的合伙人写进高管表（只补缺）：关联企业按共同高管自动算得出来（同一团队的几块牌子能连上）
+    const { data: execs } = await supabaseAdmin.from('company_executives').select('name').eq('company_id', companyId).eq('if_delete', false);
+    const have = new Set((execs || []).map(e => normName(e.name)));
+    const rows = (Array.isArray(data?.partners) ? data.partners : []).map((p: any) => {
+      const n = normName(p.name); if (!n || have.has(n)) return null; have.add(n);
+      const src = Array.isArray(p.source) ? p.source[0] : p.source;
+      const nm = String(p.name).replace(/[（(].*?[)）]/g, '').trim();
+      return { company_id: companyId, name: nm, dedupe_key: executiveKey(companyId, { name: nm } as any), human_review_status: 'review', title: p.title ? String(p.title).slice(0, 120) : null,
+        description: [p.background, p.sectors && `分管：${Array.isArray(p.sectors) ? p.sectors.join('、') : p.sectors}`, p.notable_deals && `代表项目：${Array.isArray(p.notable_deals) ? p.notable_deals.join('、') : p.notable_deals}`].filter(Boolean).join('；').slice(0, 1000) || null,
+        is_founder: /创始/.test(String(p.title || '')), source_url: src ? String(src).slice(0, 500) : null, external_id: randomId(24), if_delete: false };
+    }).filter(Boolean);
+    if (rows.length) { const { error } = await supabaseAdmin.from('company_executives').insert(rows); if (error) throw error; }
+    out.executives = rows.length;
   }
   return out;
 }

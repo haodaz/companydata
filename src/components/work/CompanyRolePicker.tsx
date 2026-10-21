@@ -42,7 +42,7 @@ export function CompanyRolePicker({ company, role, onCompany, onRole, size = 'la
         <Tag color={picked.has_profile ? 'blue' : 'default'}>{picked.has_profile ? `画像完整度 ${picked.completeness ?? '–'}` : '没有画像，只能按名字出题'}</Tag>
         <Tag color={picked.jobs ? 'purple' : 'default'}>在招岗位 {picked.jobs}</Tag>
       </div>}
-      <AutoComplete value={role} size={size} style={{ width: '100%' }} placeholder={picked ? `岗位：输入名字，会匹配 ${picked.name} 在招的岗位和职业库` : '岗位 / 职业：输入名字，会匹配职业库（如 供应链计划）'}
+      <AutoComplete value={role} size={size} style={{ width: '100%' }} placeholder="你要找什么样的人：直接说，如「一个能看懂人工智能行业、来做投资的人」；也可以写职位名"
         options={[
           ...(jobs.length ? [{ label: <span style={{ fontSize: 11, color: '#999' }}>这家在招</span>, options: jobs.map(j => ({ value: j.title, label: <div style={{ display: 'flex', gap: 8 }}><span>{j.title}</span><span style={{ color: '#888', fontSize: 12 }}>{[j.job_function, j.city].filter(Boolean).join(' · ')}</span></div> })) }] : []),
           ...(occs.length ? [{ label: <span style={{ fontSize: 11, color: '#999' }}>职业库</span>, options: occs.filter(o => !jobs.some(j => j.title === o.name)).map(o => ({ value: o.name, label: <div style={{ display: 'flex', gap: 8 }}><span>{o.name}</span><span style={{ color: '#888', fontSize: 12 }}>{o.category}</span></div> })) }] : []),

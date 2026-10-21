@@ -38,7 +38,7 @@ function Inner() {
   const [busy, setBusy] = useState('');
 
   const create = async () => {
-    if (!f.company.trim() || !f.role.trim()) return message.warning('企业和岗位都要填');
+    if (!f.company.trim() || !f.role.trim()) return message.warning('企业和要找的人都要填');
     setBusy('在拼这家企业的材料、出题、做材料包、定标准……约 2 分钟，别关页面');
     try {
       const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: f.company, company_id: picked?.id, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model }) });
@@ -67,7 +67,7 @@ function Inner() {
           <h1 style={{ fontSize: 24, margin: '0 0 4px' }}>出一道真活</h1>
           <div style={{ color: '#666', fontSize: 13.5, marginBottom: 22 }}>告诉它企业和岗位，AI 从企业画像、在招岗位、职业典型任务、行业规范里架构出一个此刻真实的业务问题，配材料、定标准、先做一遍当基线。</div>
 
-          <Sec n="1" t="企业和岗位" d="边输边搜：库里有就选中（能看到画像完整度、在招岗位）；搜不到就当新企业 / 新岗位照样出">
+          <Sec n="1" t="企业，和你要找的人" d="企业边输边搜，库里有就选中（会用上它的画像和深度尽调）。要找的人直接用一句话说，不用先想职位名">
             <CompanyRolePicker company={f.company} role={f.role} onCompany={(name, p) => { setF(x => ({ ...x, company: name })); setPicked(p); }} onRole={r => setF(x => ({ ...x, role: r }))} />
           </Sec>
           <Sec n="2" t="出题模型" d="默认通义千问，国内网络直接可用；要更强的推理可以切 Claude / GPT（按量计费）">

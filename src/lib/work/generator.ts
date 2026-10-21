@@ -24,7 +24,12 @@ export interface WorkContext {
   typical_tasks: { name: string; summary?: string; goal?: string; success_criteria?: any; process?: any; common_mistakes?: any }[];
   standards: { code?: string; title: string; key_points?: any; operation_relevance?: string }[];
   notes: string[];   // 哪些材料没找到
+  /** 企业深度画像专题（company_deep_research）：投资机构的基金 / 策略 / 被投 / 合伙人 / 招聘，药企的管线 / 交易…… */
+  deep?: { topic: string; label: string; text: string }[];
 }
+
+/** 出题人是用自然语言说要什么样的人（「我要一个能看懂人工智能行业的人来做投资」），还是给了个职位名 */
+export const isNeedText = (role: string) => role.trim().length > 14 || /[，,。、]|要一个|能看懂|能把|的人/.test(role);
 
 /** 带兜底链的 JSON 调用：Opus → Sonnet → 千问；记账 tool=work */
 export async function askJson(prompt: string, model: string, task_name: string, institution?: string, extra?: Record<string, any>): Promise<any> {
@@ -70,15 +75,21 @@ export async function gatherContext(companyQuery: string, role: string): Promise
       const { data } = await db.from('jobs').select(J).eq('company_id', cid).eq('if_delete', false).not('responsibilities', 'is', null).limit(3);
       ctx.jobs = data || []; if (ctx.jobs.length) ctx.notes.push(`这家企业没有「${role}」的在招岗位，取了同企业其他岗位做参考`);
     }
+    // 深度画像：每个专题压成一段（出题时最有用的材料：投资机构的被投企业、合伙人、招聘要求……）
+    const { data: deep } = await db.from('company_deep_research').select('topic, data').eq('company_id', cid);
+    const { DEEP_TOPICS, DEEP_TOPICS_VC } = await import('@/lib/company-deep-topics');
+    const label = Object.fromEntries([...DEEP_TOPICS, ...DEEP_TOPICS_VC].map(t => [t.key, t.label]));
+    const strip = (v: any): any => Array.isArray(v) ? v.map(strip) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).filter(([k]) => !/^(source|sources|queries)$/.test(k)).map(([k, x]) => [k, strip(x)])) : v;
+    ctx.deep = (deep || []).filter(d => d.data && JSON.stringify(d.data).length > 30).map(d => ({ topic: d.topic, label: label[d.topic] || d.topic, text: JSON.stringify(strip(d.data)).slice(0, 1500) }));
   } else ctx.notes.push(`企业库里没找到「${q}」，只能按名字出题，企业事实会少`);
-  // 职业层：名字 / 别名命中，命不中就模糊找
-  let occ: any = await findOccupation({ name: role });
-  if (!occ) { const { data } = await db.from('occupations').select('*').eq('if_delete', false).ilike('name', `%${role}%`).limit(1); occ = data?.[0] || null; }
+  // 职业层：名字 / 别名命中，命不中就模糊找。出题人用自然语言描述要什么样的人时，不硬套职业库
+  let occ: any = isNeedText(role) ? null : await findOccupation({ name: role });
+  if (!occ && !isNeedText(role)) { const { data } = await db.from('occupations').select('*').eq('if_delete', false).ilike('name', `%${role}%`).limit(1); occ = data?.[0] || null; }
   if (occ) {
     ctx.occupation = { id: occ.id, name: occ.name, intro: occ.intro, responsibility: occ.responsibility, position_requirement: occ.position_requirement };
     const { data: tt } = await db.from('typical_tasks').select('name, summary, goal, success_criteria, process, common_mistakes').eq('occupation_id', occ.id).eq('if_delete', false).limit(6);
     ctx.typical_tasks = tt || [];
-  } else ctx.notes.push(`职业库里没有「${role}」，典型任务这一层缺`);
+  } else if (!isNeedText(role)) ctx.notes.push(`职业库里没有「${role}」，典型任务这一层缺`);
   const profs = [role, occ?.name].filter(Boolean) as string[];
   const { data: std } = await db.from('industry_standards').select('code, title, key_points, operation_relevance, professions').overlaps('professions', profs).limit(6);
   ctx.standards = std || [];
@@ -104,6 +115,7 @@ export function renderContext(ctx: WorkContext): string {
   if (ctx.jobs.length) L.push(`## 在招岗位（来源：校招岗位库）\n${ctx.jobs.map(j => `- ${j.title_cn || j.name}${j.department ? ' · ' + j.department : ''}${j.job_function ? ' · ' + j.job_function : ''}${j.city ? ' · ' + regionName('city', j.city) : ''}\n  概述：${s(j.summary_cn || j.overview, 300)}\n  职责：${s(j.responsibilities, 600)}\n  要求：${s(j.education_description, 100)} ${s(j.major_requirement, 120)} ${s(j.preferred_qualifications, 200)} 技能：${s(j.skill_labels, 150)}`).join('\n')}`);
   if (ctx.occupation) L.push(`## 职业（来源：职业实体库）\n${ctx.occupation.name}：${s(ctx.occupation.intro, 400)}\n职责：${s(ctx.occupation.responsibility, 500)}\n要求：${s(ctx.occupation.position_requirement, 300)}`);
   if (ctx.typical_tasks.length) L.push(`## 这个职业的典型任务（来源：职业典型任务库）\n${ctx.typical_tasks.map(t => `- ${t.name}：${s(t.summary, 200)}\n  目标：${s(t.goal, 150)}；成功标准：${s(t.success_criteria, 200)}；常见错误：${s(t.common_mistakes, 200)}`).join('\n')}`);
+  if (ctx.deep?.length) L.push(`## 企业深度画像（来源：深度尽调专题，联网检索、逐条带出处）\n${ctx.deep.map(d => `### ${d.label}\n${d.text}`).join('\n')}`);
   if (ctx.standards.length) L.push(`## 行业标准 / 规程（来源：行业标准与规程库）\n${ctx.standards.map(x => `- ${x.code ? x.code + ' ' : ''}${x.title}：${s(x.key_points, 300)}${x.operation_relevance ? '；操作相关：' + s(x.operation_relevance, 150) : ''}`).join('\n')}`);
   if (ctx.notes.length) L.push(`## 材料缺口\n${ctx.notes.map(n => '- ' + n).join('\n')}`);
   return L.join('\n\n');
@@ -137,6 +149,13 @@ export const RESEARCH_TASK_KINDS = ['实验设计（给研究问题，设计方�
 export async function generateTask(ctx: WorkContext, role: string, opts: { model?: string; focus?: string; env?: WorkEnvType; research?: boolean } = {}): Promise<{ task: WorkTask; model: string }> {
   const model = opts.model || WORK_MODEL;
   const name = ctx.company?.name || (opts.research ? '这个科研团队' : '这家企业');
+  const need = isNeedText(role);
+  const needNote = need ? `
+## 出题人要找的人（自然语言，原话）
+「${role}」
+出题人没有说职位名，也不要你替他套一个职位名（不要写成「xx 分析师 / xx 专员」）。直接围绕「这个人有没有这样的本事」出真活：这道题做得好的人，就是他要找的人。
+task.role 写成 6–14 字的人话概括，说这个人能干什么（例：「能看懂人工智能行业、能做投资判断的人」），不要职位名。
+` : '';
   const prompt = `${opts.research
     ? `你是「真活台」的出题人：拿一个科研团队**此刻真实的研究问题**给「${role}」出一道**研究真活**——考的是这个研究方向上的操作和研究技能，不是知识题、不是面试八股。
 研究真活的类型：${RESEARCH_TASK_KINDS.join('；')}。按岗位和出题人的要求挑最合适的一种（或组合两种）。
@@ -144,6 +163,7 @@ export async function generateTask(ctx: WorkContext, role: string, opts: { model
     : `你是「真活台」的出题人：拿一家企业**此刻真实的业务问题**给「${role}」岗位出一道真活，不是模拟职业、不是知识题。
 参照的方法：先锚定「这个岗位要替企业解决什么内部问题」，再把问题展开成一个开放的真实任务，配上做这件事会拿到的材料，最后把人写的粗标准展开成 agent 能逐条核对、**条目之间有依赖关系**的细 rubric（例：先设假设 → 再建模 → 再估值 → 再调整）。`}
 
+${needNote}
 ## 材料（只许用这些；没有的数字写「示例数据」并说明；每条依据指回来源）
 ${renderContext(ctx)}
 ${opts.focus ? `\n## 出题人额外要求\n${opts.focus}\n` : ''}
@@ -153,7 +173,7 @@ env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "
 
 ## 要求
 - problem.statement：一句话说清 ${name} 现在的哪个${opts.research ? '研究问题' : '业务问题'}需要「${role}」来解决，必须能从材料里推出来（${opts.research ? '研究方向 / 在研项目 / 平台 / 岗位要求' : '近期动态 / 产品 / 岗位职责 / 典型任务'}）；why_now 说为什么是现在；evidence 列 2–4 条材料原句 + 来源名。
-- task：title（8–16 字）；brief（给做题人看的任务书，300–500 字，口吻像业务负责人交代活：背景、要你做什么、交给谁、什么时候要）；deliverables 2–3 个（id d1…，title，format 如「一页纸方案 / 表格 / 邮件」）；time_minutes 45–90；rules 3–5 条（必须含「可以随便用 AI，不算作弊；评的是你怎么用」和「材料里没有的数据要标注假设」）。
+- task：title（8–16 字）；brief（给做题人看的任务书，300–500 字，口吻像业务负责人交代活：背景、要你做什么、交给谁、什么时候要；「交给谁」写角色（如「交给投委会」），**不要给真实人物编邮箱、电话、微信**）；deliverables 2–3 个（id d1…，title，format 如「一页纸方案 / 表格 / 邮件」）；time_minutes 45–90；rules 3–5 条（必须含「可以随便用 AI，不算作弊；评的是你怎么用」和「材料里没有的数据要标注假设」）。
 - materials 3–5 份，做这件事真的会拿到的东西：kind ∈ doc/table/note/email/data；content 用 Markdown，每份 300–900 字，表格用 Markdown 表；source：db=全部来自材料、generated=为任务合理补写（必须贴近企业真实情况并在正文标「示例数据」）、mixed；basis 写它依据材料的哪一段。至少一份是「有坑」的（信息不全、口径不一致、过期），这是真活。
 - rubric 5–8 条：id r1…；title；desc（怎么算做到）；weight 加起来 100；depends_on 填前置条目 id（没有填 []）；basis 必须指向材料来源（「行业标准 xxx 第 n 点」「岗位职责：…」「典型任务：…」），实在没有写「出题人判断，待业务负责人确认」；levels L1–L4 各一句可观察的行为描述（BARS）。
 只返回 JSON：
@@ -172,7 +192,7 @@ env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "
   const task: WorkTask = {
     env,
     problem: { statement: s(p.problem?.statement, 400), why_now: s(p.problem?.why_now, 400), evidence: (Array.isArray(p.problem?.evidence) ? p.problem.evidence : []).slice(0, 6).map((e: any) => ({ text: s(e.text, 300), source: s(e.source, 80) })) },
-    task: { title: s(p.task?.title, 40) || `${name} · ${role} 真活`, role, brief: s(p.task?.brief, 2000), deliverables: (Array.isArray(p.task?.deliverables) ? p.task.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 60), format: s(d.format, 60) })), time_minutes: Math.min(120, Math.max(30, Number(p.task?.time_minutes) || 60)), rules: (Array.isArray(p.task?.rules) ? p.task.rules : []).slice(0, 6).map((r: any) => s(r, 120)) },
+    task: { title: s(p.task?.title, 40) || `${name} · 真活`, role: need ? (s(p.task?.role, 40) || s(role, 40)) : role, brief: s(p.task?.brief, 2000), deliverables: (Array.isArray(p.task?.deliverables) ? p.task.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 60), format: s(d.format, 60) })), time_minutes: Math.min(120, Math.max(30, Number(p.task?.time_minutes) || 60)), rules: (Array.isArray(p.task?.rules) ? p.task.rules : []).slice(0, 6).map((r: any) => s(r, 120)) },
     materials: (Array.isArray(p.materials) ? p.materials : []).slice(0, 6).map((m: any, i: number) => ({ id: m.id || `m${i + 1}`, title: s(m.title, 60), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, 6000), source: (['db', 'generated', 'mixed'].includes(m.source) ? m.source : 'generated'), basis: s(m.basis, 200) })),
     rubric: (Array.isArray(p.rubric) ? p.rubric : []).slice(0, 10).map((r: any, i: number) => ({ id: r.id || `r${i + 1}`, title: s(r.title, 60), desc: s(r.desc, 300), weight: Math.max(1, Number(r.weight) || 10), depends_on: Array.isArray(r.depends_on) ? r.depends_on.map(String) : [], basis: s(r.basis, 200), levels: { L1: s(r.levels?.L1, 160), L2: s(r.levels?.L2, 160), L3: s(r.levels?.L3, 160), L4: s(r.levels?.L4, 160) } })),
   };

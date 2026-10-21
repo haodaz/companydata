@@ -57,10 +57,10 @@ const FIELDS: Field[] = [
   { key: 'phone', label: '手机或微信', required: true, half: true },
   { key: 'email', label: '邮箱', half: true },
   { key: 'headcount', label: '需要几位 AI 员工', half: true, type: 'select', options: ['1 位', '2–5 位', '5 位以上', '还不确定'] },
-  { key: 'title', label: '岗位名称', required: true, half: true, placeholder: '如：储能系统测试工程师' },
+  { key: 'title', label: '岗位叫什么（可不填）', half: true, placeholder: '想不好名字就空着' },
   { key: 'mode', label: '希望怎么接入', half: true, type: 'select', options: ['替代一道工序', '增强一个岗位', '和团队协同', '还不确定'] },
   { key: 'timeline', label: '期望什么时候上岗', half: true, placeholder: '如：下个季度 / 越快越好' },
-  { key: 'jd', label: '岗位职责与任职要求', required: true, type: 'textarea', rows: 5, placeholder: '可以直接贴 JD：岗位职责、任职要求、考核方式……' },
+  { key: 'jd', label: '直接说：你要找什么样的人', required: true, type: 'textarea', rows: 5, placeholder: '例：我们投人工智能、材料、能源，要一个能看懂新兴产业的人——项目来了能判断技术路线靠不靠谱、离量产还有多远、团队行不行。\n有现成的 JD 也可以直接贴。' },
   { key: 'tasks', label: '希望它干的真活（举一两个例子）', type: 'textarea', rows: 3, placeholder: '如：每天早上汇总上一班的测试数据，标出异常电芯并给出复测建议' },
   { key: 'materials', label: '可以提供的内部材料', type: 'textarea', rows: 2, placeholder: '操作规程、培训手册、历史工单、优秀案例……先写有哪些，不用上传' },
 ];
