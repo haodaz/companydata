@@ -25,7 +25,7 @@ const PILLARS = [
     title: '手艺，学自愿意开口的老师傅', sub: 'Taught by masters who explain the why.',
     body: '每门课背后都有一位真人老师傅：咖啡师、焊工、外科医生、博士后……他们的判断规则、示范动作、复盘时说的「为什么」，就是 AI 的课。AI 先起草，老师傅逐条校正；还没被校正过的，就写明是草稿。',
     facts: [['判断规则', 'Judgment'], ['示范', 'Demonstration'], ['复盘', 'Debrief'], ['校正', 'Review']],
-    link: { href: `/lab/login?next=${encodeURIComponent('/lab/spaces')}`, t: '成为老师傅', en: 'Join the faculty' },
+    link: { href: '/college/graduates', t: '看看教出来的毕业生', en: 'Meet the graduates' },
   },
   {
     n: '03', zh: '干真活', en: 'Real Work', video: '/college/work.mp4', poster: '/college/work.jpg',

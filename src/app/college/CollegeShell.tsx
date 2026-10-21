@@ -20,7 +20,7 @@ const NAV = [
 
 function Shell({ children }: { children: React.ReactNode }) {
   const path = usePathname() || '/college';
-  const { user, loading, logout } = useUser();
+  const { user, loading } = useUser();
   // 首页和三个介绍页是整幅影像的官网版式，不套居中容器
   const home = ['/college', '/college/enroll', '/college/hire', '/college/graduates'].includes(path);
   return (
@@ -47,9 +47,9 @@ function Shell({ children }: { children: React.ReactNode }) {
         <nav className="col-nav">
           {NAV.map(n => <Link key={n.href} href={n.href} className={n.on(path) ? 'on' : ''}>{n.t}</Link>)}
         </nav>
-        {/* 右上角登录：登录后不显示邮箱（录屏会露出来），只给退出 */}
+        {/* 右上角登录：登录后不显示邮箱（录屏会露出来），只给退出——退出后留在大学页面，不跳去数据工厂的登录页 */}
         {!loading && (user
-          ? <button className="col-login out" onClick={async () => { await logout(); window.location.reload(); }}>退出登录</button>
+          ? <button className="col-login out" onClick={async () => { await fetch('/api/auth/logout', { method: 'POST' }); window.location.reload(); }}>退出登录</button>
           : <a className="col-login" href={`/lab/login?next=${encodeURIComponent(path)}`}>登录</a>)}
       </header>
       <main className={home ? 'col-full' : 'col-main'}>{children}</main>
