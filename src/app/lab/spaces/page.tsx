@@ -69,6 +69,8 @@ export default function LabHome() {
   // 列表筛选：搜一个词 + 选一个领域 + 勾若干标记（标记之间是「或」，人多了只想快速捞出一拨）
   const [q, setQ] = useState('');
   const [fam, setFam] = useState('');
+  /** 列表分两类：职业岗位体验 / 学科研究体验（研究岗空间、学科空间） */
+  const [track, setTrack] = useState<'career' | 'research'>('career');
   const [marks, setMarks] = useState<string[]>([]);
 
   const load = useCallback(async () => {
@@ -188,27 +190,29 @@ export default function LabHome() {
     tags.unshift(jd.kind === 'career' ? '职业探索' : jd.kind === 'discipline' ? '学科体验' : jd.kind === 'research_post' ? '研究岗' : jd.kind === 'pasted' ? '粘贴 JD' : '真实 JD');
     if (s.features?.immersive) tags.unshift('沉浸场景');
     if (s.features?.bench) tags.unshift('虚拟工位');
-    return { s, tags, text: text.toLowerCase(), family: familyOf(prof, s.skill?.domain, jd.title, jd.company) };
+    return { s, tags, text: text.toLowerCase(), family: familyOf(prof, s.skill?.domain, jd.title, jd.company), research: jd.kind === 'research_post' || jd.kind === 'discipline' };
   }), [spaces]);
+  const trackCount = { career: enriched.filter(e => !e.research).length, research: enriched.filter(e => e.research).length };
+  const inTrack = useMemo(() => enriched.filter(e => (track === 'research') === e.research), [enriched, track]);
 
   const famCount = useMemo(() => {
     const m = new Map<string, number>();
-    for (const e of enriched) m.set(e.family, (m.get(e.family) || 0) + 1);
+    for (const e of inTrack) m.set(e.family, (m.get(e.family) || 0) + 1);
     return [...m.entries()].sort((a, b) => b[1] - a[1]);
-  }, [enriched]);
+  }, [inTrack]);
   const tagCount = useMemo(() => {
     const m = new Map<string, number>();
-    for (const e of enriched) for (const t of e.tags) m.set(t, (m.get(t) || 0) + 1);
+    for (const e of inTrack) for (const t of e.tags) m.set(t, (m.get(t) || 0) + 1);
     return ALL_TAGS.filter(t => m.has(t)).map(t => [t, m.get(t)!] as [string, number]);
-  }, [enriched]);
+  }, [inTrack]);
 
   const shown = useMemo(() => {
     const kw = q.trim().toLowerCase();
-    return enriched.filter(e =>
+    return inTrack.filter(e =>
       (!fam || e.family === fam) &&
       (!marks.length || marks.some(t => e.tags.includes(t))) &&
       (!kw || e.text.includes(kw) || e.tags.some(t => t.toLowerCase().includes(kw)) || e.family.includes(kw)));
-  }, [enriched, q, fam, marks]);
+  }, [inTrack, q, fam, marks]);
   const filtering = !!(q.trim() || fam || marks.length);
   const toggleMark = (t: string) => setMarks(l => l.includes(t) ? l.filter(x => x !== t) : [...l, t]);
 
@@ -313,6 +317,12 @@ export default function LabHome() {
         .sp-ask .row { display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 14px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); }
         .sp-ask input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: #fff; font-size: 14.5px; font-family: inherit; }
         .sp-ask input::placeholder { color: rgba(255,255,255,.38); }
+        .sp-tabs { display: inline-flex; gap: 4px; padding: 4px; border-radius: 12px; background: rgba(106,92,255,.08); margin-bottom: 11px; max-width: 100%; }
+        .sp-tabs button { border: 0; background: transparent; padding: 7px 16px; border-radius: 9px; font-size: 14px; font-weight: 700; color: #4a5070; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+        .sp-tabs button span { font-size: 12px; font-weight: 600; opacity: .55; font-family: ui-monospace, Menlo, monospace; }
+        .sp-tabs button.on { background: #fff; color: #5b4bff !important; box-shadow: 0 1px 4px rgba(23,26,46,.12); }
+        .lab[data-theme="dark"] .sp-tabs { background: rgba(255,255,255,.06); }
+        .lab[data-theme="dark"] .sp-tabs button.on { background: rgba(255,255,255,.14); color: #fff; }
         .sp-ask .picks { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); margin-top: 12px; }
         .sp-ask .pick { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 14px; cursor: pointer; background: rgba(9,11,24,.55); border: 1px solid rgba(255,255,255,.12); transition: border-color .2s, transform .2s; }
         .sp-ask .pick:hover { border-color: rgba(159,145,255,.7); transform: translateY(-2px); }
@@ -377,17 +387,22 @@ export default function LabHome() {
       {/* 四十来号人之后，列表得能捞：搜一个词、挑一个领域、勾几个标记 */}
       {spaces.length > 3 && (
         <div className="lab-glass" style={{ padding: '14px 16px', marginBottom: 14 }}>
+          <div className="sp-tabs">
+            {([['career', '职业岗位体验'], ['research', '学科研究体验']] as const).map(([k, t]) => (
+              <button key={k} className={track === k ? 'on' : ''} onClick={() => { setTrack(k); setFam(''); setMarks([]); }}>{t}<span>{trackCount[k]}</span></button>
+            ))}
+          </div>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
             <input
               className="lab-input" value={q} onChange={e => setQ(e.target.value)}
-              placeholder="搜人、职业、企业、城市、技能——如：焊 / 星巴克 / 上海 / 潜水"
+              placeholder={track === 'research' ? '搜学科、研究方向、机构、技能——如：固态电池 / 结构生物学 / 研究院' : '搜人、职业、企业、城市、技能——如：焊 / 星巴克 / 上海 / 潜水'}
               style={{ flex: '1 1 280px', minWidth: 0, padding: '9px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }}
             />
             <select
               value={fam} onChange={e => setFam(e.target.value)}
               style={{ padding: '9px 12px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 13.5, background: '#fff', color: fam ? 'var(--v)' : 'var(--ink2)', fontWeight: fam ? 700 : 400, outline: 'none', cursor: 'pointer' }}
             >
-              <option value="">全部行业 · {spaces.length}</option>
+              <option value="">全部行业 · {inTrack.length}</option>
               {famCount.map(([f, n]) => <option key={f} value={f}>{f} · {n}</option>)}
             </select>
             {filtering && <button className="lab-btn sm ghost" onClick={() => { setQ(''); setFam(''); setMarks([]); }}>清空</button>}
@@ -410,7 +425,7 @@ export default function LabHome() {
         </div>
       )}
 
-      <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>SPACES · {shown.length}{filtering ? ` / ${spaces.length}` : ''}</div>
+      <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>SPACES · {shown.length}{filtering ? ` / ${inTrack.length}` : ''}</div>
       {loading ? (
         <div className="lab-glass lab-scan" style={{ height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink3)' }}><span className="lab-mono">LOADING<span className="lab-dots" /></span></div>
       ) : spaces.length === 0 ? (

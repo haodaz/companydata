@@ -24,6 +24,7 @@ const NAV: NavItem[] = [
   { key: 'basket',       icon: <ShoppingOutlined />,   label: '数据外采篮',    path: '/basket',            group: '采集工具', badge: '新', newWindow: true },   // 人机协同采集：插件下载 + 使用说明 + 口令 + 待采清单
   { key: 'db-company',   icon: <BankOutlined />,       label: '企业实体库',    path: '/admin/db-company',   group: '数据资产' },
   { key: 'db-supplier',  icon: <ShopOutlined />, label: '科研仪器厂商',  path: '/admin/db-supplier',  group: '数据资产', badge: '新' },
+  { key: 'db-research-product', icon: <ExperimentOutlined />, label: '科研产品库', path: '/admin/db-research-product', group: '数据资产', badge: '新' },
   { key: 'db-job',       icon: <ReadOutlined />,       label: '校招岗位库',    path: '/admin/db-job',       group: '数据资产' },
   { key: 'db-occupation', icon: <IdcardOutlined />,    label: '职业实体库',    path: '/admin/db-occupation', group: '数据资产', badge: '新' },
   { key: 'db-place',     icon: <EnvironmentOutlined />, label: '工作场所库',    path: '/admin/db-place',     group: '数据资产', badge: '新' },
@@ -37,6 +38,9 @@ const NAV: NavItem[] = [
   { key: 'flywheel',     icon: <FireOutlined />,       label: '需求飞轮',      path: '/admin/flywheel',     group: '数据资产', badge: '新' },
   { key: 'lab',          icon: <ExperimentOutlined />, label: '数字技能空间',  path: '/lab',                group: '实验室', newWindow: true },
   { key: 'work',         icon: <RocketOutlined />,     label: '真活台（百业AI｜真活）', path: '/work/admin',     group: '实验室', newWindow: true, badge: '新' },
+  // 百业 AI 工作台（2026-10-21）：企业版招人 / 科研版引才，同一套账号登录
+  { key: 'ws-company',   icon: <BankOutlined />,       label: '企业版工作台', path: '/workspace',      group: '实验室', newWindow: true, badge: '新' },
+  { key: 'ws-research',  icon: <ExperimentOutlined />, label: '科研版工作台', path: '/research',       group: '实验室', newWindow: true, badge: '新' },
   { key: 'journal-url',  icon: <FileSearchOutlined />, label: 'URL 日志',      path: '/admin/journal-url',  group: '运行日志' },
   { key: 'journal-job',  icon: <FileTextOutlined />,   label: '岗位爬取日志',  path: '/admin/journal-job',  group: '运行日志' },
   { key: 'journal-company', icon: <ProfileOutlined />, label: '企业画像日志',  path: '/admin/journal-company', group: '运行日志' },

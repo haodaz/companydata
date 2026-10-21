@@ -13,6 +13,13 @@ import { useNicknames } from '@/components/kg/useNicknames';
  * 只读：没有生成 / 编辑 / 删除。只列至少有一章已发布的空间（全是草稿的不出现）。
  */
 const GALLERY_CSS = `
+.gal-tabs { display: inline-flex; gap: 4px; padding: 4px; border-radius: 12px; background: rgba(106,92,255,.08); width: fit-content; max-width: 100%; }
+.gal-tabs button { border: 0; background: transparent; font-family: inherit; padding: 7px 16px; border-radius: 9px; font-size: 14px; font-weight: 700; color: #4a5070; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+.gal-tabs button span { font-size: 12px; font-weight: 600; opacity: .55; font-family: ui-monospace, Menlo, monospace; }
+.gal-tabs button.on { background: #fff; color: #5b4bff !important; box-shadow: 0 1px 4px rgba(23,26,46,.12); }
+.lab[data-theme="dark"] .gal-tabs { background: rgba(255,255,255,.06); }
+.lab[data-theme="dark"] .gal-tabs button.on { background: rgba(255,255,255,.14); color: #fff; }
+
 .gal-card { overflow: hidden; display: flex; flex-direction: column; padding: 0 !important; }
 .gal-cover { position: relative; aspect-ratio: 16 / 9; background: linear-gradient(135deg, #2b2463, #0f6c7a); overflow: hidden; }
 .gal-cover img.bg { object-fit: cover; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
@@ -43,6 +50,8 @@ export default function GalleryPage() {
   const [err, setErr] = useState('');
   const [q, setQ] = useState('');
   const [fam, setFam] = useState('');
+  /** 两类体验分开放：职业岗位 / 学科研究（研究岗空间、学科空间） */
+  const [track, setTrack] = useState<'career' | 'research'>('career');
 
   useEffect(() => {
     fetch('/api/lab/spaces').then(r => r.json())
@@ -57,21 +66,24 @@ export default function GalleryPage() {
       const prof = jd.career?.profession || '';
       const family = familyOf(prof, s.skill?.domain, jd.title, jd.company);
       const text = [p.name, p.role, p.tagline, prof, jd.title, jd.company, jd.location, s.skill?.domain, family].filter(Boolean).join(' ').toLowerCase();
-      return { s, jd, p, family, text };
+      const research = jd.kind === 'research_post' || jd.kind === 'discipline';
+      return { s, jd, p, family, text, research };
     })
     // 排序：精选名单最前；然后故事全（一整天的章节都发布了）且有工位的；再是有工位的、故事全的；同档里工位章节多、有场景图的靠前
     .sort((a, b) => rank(b.s) - rank(a.s)), [spaces]);
 
+  const trackCount = { career: items.filter(x => !x.research).length, research: items.filter(x => x.research).length };
+  const inTrack = useMemo(() => items.filter(x => (track === 'research') === x.research), [items, track]);
   const fams = useMemo(() => {
     const m = new Map<string, number>();
-    for (const x of items) m.set(x.family, (m.get(x.family) || 0) + 1);
+    for (const x of inTrack) m.set(x.family, (m.get(x.family) || 0) + 1);
     return [...m.entries()].sort((a, b) => b[1] - a[1]);
-  }, [items]);
+  }, [inTrack]);
 
   const shown = useMemo(() => {
     const kw = q.trim().toLowerCase();
-    return items.filter(x => (!fam || x.family === fam) && (!kw || x.text.includes(kw)));
-  }, [items, q, fam]);
+    return inTrack.filter(x => (!fam || x.family === fam) && (!kw || x.text.includes(kw)));
+  }, [inTrack, q, fam]);
 
   const share = async (id: string) => {
     const url = `${window.location.origin}/lab/${id}?m=test&from=gallery`;
@@ -85,7 +97,7 @@ export default function GalleryPage() {
       <div style={{ margin: '8px 0 18px' }}>
         <div className="lab-mono lab-cap">EXPERIENCE · 体验百业</div>
         <h1 style={{ fontSize: 'clamp(24px, 3.4vw, 34px)', fontWeight: 800, margin: '4px 0 6px', lineHeight: 1.25 }}>
-          {items.length || ''} 个职业的一天，点开就能上手
+          {track === 'research' ? `${trackCount.research || ''} 个研究方向的一天，跟着研究者做一回科研` : `${trackCount.career || ''} 个职业的一天，点开就能上手`}
         </h1>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
           <div style={{ fontSize: 14.5, color: 'var(--ink2)', flex: '1 1 320px' }}>跟着数字职人走一遍真实工作：接活、判断、操作设备，做完和老师傅的做法逐步对照。每一段有成绩单，走完一整天领证书。</div>
@@ -94,11 +106,16 @@ export default function GalleryPage() {
       </div>
 
       <div className="lab-glass" style={{ padding: '12px 14px', marginBottom: 16, display: 'grid', gap: 10 }}>
-        <input className="lab-input" value={q} onChange={e => setQ(e.target.value)} placeholder="搜职业、企业、城市——如：咖啡 / 焊接 / 护士"
+        <div className="gal-tabs">
+          {([['career', '职业岗位体验'], ['research', '学科研究体验']] as const).map(([k, t]) => (
+            <button key={k} className={track === k ? 'on' : ''} onClick={() => { setTrack(k); setFam(''); }}>{t}<span>{trackCount[k]}</span></button>
+          ))}
+        </div>
+        <input className="lab-input" value={q} onChange={e => setQ(e.target.value)} placeholder={track === 'research' ? '搜学科、研究方向、机构——如：固态电池 / 结构生物学 / 研究院' : '搜职业、企业、城市——如：咖啡 / 焊接 / 护士'}
           style={{ padding: '9px 14px', borderRadius: 12, fontSize: 14 }} />
         {fams.length > 1 && (
           <div className="gal-fams">
-            <button className={`lab-chip ${fam ? 'g' : ''}`} style={{ cursor: 'pointer' }} onClick={() => setFam('')}>全部 · {items.length}</button>
+            <button className={`lab-chip ${fam ? 'g' : ''}`} style={{ cursor: 'pointer' }} onClick={() => setFam('')}>全部 · {inTrack.length}</button>
             {fams.map(([f, n]) => (
               <button key={f} className={`lab-chip ${fam === f ? '' : 'g'}`} style={{ cursor: 'pointer' }} onClick={() => setFam(fam === f ? '' : f)}>{f} · {n}</button>
             ))}
@@ -112,7 +129,7 @@ export default function GalleryPage() {
         <div className="lab-glass lab-scan" style={{ height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink3)' }}><span className="lab-mono">LOADING<span className="lab-dots" /></span></div>
       ) : !shown.length ? (
         <div className="lab-glass" style={{ padding: 40, textAlign: 'center', color: 'var(--ink3)' }}>
-          {items.length ? <>没有符合条件的职业。<button className="lab-btn sm ghost" style={{ marginLeft: 10 }} onClick={() => { setQ(''); setFam(''); }}>清空筛选</button></> : '还没有发布的体验空间。'}
+          {inTrack.length ? <>没有符合条件的{track === 'research' ? '研究方向' : '职业'}。<button className="lab-btn sm ghost" style={{ marginLeft: 10 }} onClick={() => { setQ(''); setFam(''); }}>清空筛选</button></> : '还没有发布的体验空间。'}
         </div>
       ) : (
         <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))' }}>
