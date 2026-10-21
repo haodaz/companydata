@@ -7,6 +7,8 @@ import { AutoComplete, Tag } from 'antd';
 export type PickedCompany = { id: number; name: string; industry?: string; city?: string; completeness?: number; has_profile?: boolean; jobs?: number } | null;
 
 export function CompanyRolePicker({ company, role, onCompany, onRole, size = 'large' }: { company: string; role: string; onCompany: (name: string, picked: PickedCompany) => void; onRole: (role: string) => void; size?: 'large' | 'middle' }) {
+  // 和 lib/work/generator.ts 的 isNeedText 同一判断（那边是服务端模块）
+  const isNeed = role.trim().length > 14 || /[，,。、]|要一个|能看懂|能把|的人/.test(role);
   const [opts, setOpts] = useState<any[]>([]);
   const [picked, setPicked] = useState<PickedCompany>(null);
   const [searched, setSearched] = useState('');
@@ -51,7 +53,9 @@ export function CompanyRolePicker({ company, role, onCompany, onRole, size = 'la
       {role.trim().length >= 2 && roleSearched === role.trim() && <div style={{ marginTop: -4 }}>
         {roleHitJob ? <Tag color="purple">已匹配 · {picked?.name} 在招「{roleHitJob.title}」{roleHitJob.job_function ? ` · ${roleHitJob.job_function}` : ''}</Tag> : null}
         {roleHitOcc ? <Tag color="blue">职业库 · {roleHitOcc.name}{roleHitOcc.category ? `（${roleHitOcc.category}）` : ''}</Tag> : null}
-        {!roleHitJob && !roleHitOcc && <><Tag color="orange">新岗位「{role.trim()}」</Tag><span style={{ fontSize: 12, color: '#888' }}>{jobs.length || occs.length ? '下拉里有相近的，也可以直接用你写的' : '库里没有对应岗位 / 职业，照样出题，典型任务那层会缺'}</span></>}
+        {/* 一句话说要找什么样的人：不提示「新岗位 / 库里没有」，直接说会怎么出 */}
+        {isNeed && <><Tag color="green">要找的人</Tag><span style={{ fontSize: 12, color: '#888' }}>按这句话出题：不套职位名，直接考有没有这个本事</span></>}
+        {!isNeed && !roleHitJob && !roleHitOcc && <><Tag color="orange">新岗位「{role.trim()}」</Tag><span style={{ fontSize: 12, color: '#888' }}>{jobs.length || occs.length ? '下拉里有相近的，也可以直接用你写的' : '库里没有对应岗位 / 职业，照样出题，典型任务那层会缺'}</span></>}
       </div>}
     </>
   );

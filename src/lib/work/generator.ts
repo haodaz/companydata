@@ -218,6 +218,8 @@ export function sourcesOf(ctx: WorkContext) {
     occupation: ctx.occupation ? ctx.occupation.name : null, typical_tasks: ctx.typical_tasks.map(t => t.name),
     standards: ctx.standards.map(x => (x.code ? x.code + ' ' : '') + x.title),
     notes: ctx.notes,
+    // 深度画像用到了哪些专题（投资机构：基金 / 策略 / 被投 / 合伙人 / 招聘……）
+    deep: (ctx.deep || []).map(d => d.label),
   };
 }
 
