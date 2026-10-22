@@ -184,7 +184,7 @@ export default function DbCompanyPage() {
         <div style={{ cursor: 'pointer' }} onClick={() => router.push(`/admin/db-company/${r.id}`)}>
           <div style={{ fontWeight: 600, color: BRAND.primary, display: 'flex', alignItems: 'center', gap: 6 }}>
             {name}
-            {r.deep_topics > 0 && <Tag color="purple" style={{ margin: 0, fontSize: 11, lineHeight: '18px', cursor: 'pointer' }} title={`已有深度尽调报告（${r.deep_topics} 个专题），点开看报告`} onClick={e => { e.stopPropagation(); router.push(`/admin/db-company/${r.id}/report`); }}>尽调</Tag>}
+            {r.deep_topics > 0 && <Tag color="purple" style={{ margin: 0, fontSize: 11, lineHeight: '18px', cursor: 'pointer' }} title={`已有深度尽调报告（${r.deep_topics} 个专题），打开档案后在里面看`}>尽调</Tag>}
           </div>
           {r.name_en && r.name_en !== name && <div style={{ fontSize: 12, color: BRAND.ink3 }}>{r.name_en}</div>}
         </div>
@@ -214,7 +214,7 @@ export default function DbCompanyPage() {
       render: (_: any, r: any) => (
         <Space size={4}>
           <Button type="link" size="small" onClick={() => router.push(`/admin/db-company/${r.id}`)}>档案</Button>
-          <Button type="link" size="small" onClick={() => router.push(`/admin/tool-company?company=${r.id}&name=${encodeURIComponent(r.name)}`)}>画像</Button>
+          <Button type="link" size="small" onClick={() => router.push(`/admin/tool-company?company=${r.id}&name=${encodeURIComponent(r.name)}`)}>生成画像</Button>
         </Space>
       ),
     },
@@ -284,7 +284,7 @@ export default function DbCompanyPage() {
         <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap', alignItems: 'center' }}>
           <Input.Search key={urlReady ? `ready-${resetKey}` : 'init'} defaultValue={search} placeholder="搜索企业名 / 英文名 / 行业" allowClear style={{ width: 300 }} onSearch={v => { setSearch(v); setPage(1); }} />
           <Select value={segment} style={{ width: 140 }} onChange={v => { setSegment(v); setPage(1); }}
-            options={[{ value: '', label: '全部分类' }, ...SEGMENT_OPTIONS, { value: 'none', label: '未分类' }]} />
+            options={[{ value: '', label: '全部分类' }, ...SEGMENT_OPTIONS, { value: 'investor', label: `投资机构${stats.investor != null ? `（${stats.investor}）` : ''}` }, { value: 'none', label: '未分类' }]} />
           <Select value={source} style={{ width: 170 }} onChange={v => { setSource(v); setPage(1); }} popupMatchSelectWidth={false}
             options={[{ value: '', label: '全部来源' }, ...Object.entries(sources).filter(([k]) => k !== 'none').sort((a, b) => b[1] - a[1]).map(([k, n]) => ({ value: k, label: `${SOURCE_LABELS[k] || k}（${n}）` })),
               { value: 'none', label: `未标来源（${sources.none || 0}）` }]} />

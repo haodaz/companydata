@@ -1,3 +1,4 @@
+import { INVESTOR_OR, notInvestor } from '@/lib/company-deep-topics';
 import { ensureCompanyFloraId } from '@/lib/company-flora-id';
 import { NextResponse } from 'next/server';
 import { selectAll } from '@/lib/supabase-all';
@@ -32,6 +33,7 @@ export async function GET(request: Request) {
       if (review === 'none') query = query.is('human_review_status', null);
       else if (review) query = query.eq('human_review_status', review);
       if (segment === 'none') query = query.is('segment', null);
+      else if (segment === 'investor') query = notInvestor(query.or(INVESTOR_OR));   // 投资机构：不是存的分类，按行业 / 名字判
       else if (segment) query = query.eq('segment', segment);
       if (industry) query = query.eq('industry', industry);
       // 来源（数据部门会按 slug 发来每家企业的来源）：none = 没标来源
@@ -78,7 +80,7 @@ export async function GET(request: Request) {
       // 数据库直接数，缓存 60 秒（以前拉全表自己数）
       const r = await cachedStats('companies', async () => {
         const st = await countMany('companies', {
-          total: q => q, reviewed: q => q.eq('human_review_status', 'complete'), none: q => q.is('segment', null),
+          total: q => q, reviewed: q => q.eq('human_review_status', 'complete'), none: q => q.is('segment', null), investor: q => notInvestor(q.or(INVESTOR_OR)),
           ...Object.fromEntries(Object.keys(SEGMENT_LABELS).map(k => [k, (q: any) => q.eq('segment', k)])),
         });
         const src = await countMany('companies', {

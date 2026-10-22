@@ -23,6 +23,10 @@ export const DEEP_TOPICS_VC: { key: string; label: string; desc: string }[] = [
   // 2026-10-21：出题要用——这家机构招人看重什么、投资岗平时干什么活
   { key: 'hiring', label: '招聘与岗位能力', desc: '在招 / 近期招过的岗位（投资经理 / 行业研究 / 投后…）、城市、学历专业、经验要求、原文里的能力要求、岗位日常职责' },
 ];
+/** 投资机构筛选（企业库「投资机构」分类，2026-10-22）：和 isInvestmentFirm 同一套口径，写成 PostgREST or 条件 */
+export const INVESTOR_OR = ['industry.eq.投资机构', ...['资本', '创投', '基金', '投资公司', '投资管理', 'Ventures', 'Capital', 'Partners', 'Fund'].map(k => `name.ilike.*${k}*`)].join(',');
+/** 排除：公益基金会、名字带「投资集团」的国企（国家电力投资集团这类不是投资机构） */
+export const notInvestor = (q: any) => q.not('name', 'ilike', '*基金会*').not('name', 'ilike', '*投资集团*').not('name', 'ilike', '*WWF*');
 export const isInvestmentFirm = (c: { name?: string | null; industry?: string | null; kind?: string | null } | null | undefined) =>
   !!c && (c.industry === '投资机构' || /资本|创投|基金|投资(集团|公司|管理)?$|Ventures|Capital|Partners|Fund\b/i.test(String(c.name || '')));
 export const topicsFor = (c: Parameters<typeof isInvestmentFirm>[0]) => (isInvestmentFirm(c) ? DEEP_TOPICS_VC : DEEP_TOPICS);

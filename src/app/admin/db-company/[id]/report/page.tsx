@@ -13,6 +13,8 @@ import { ArrowLeftOutlined, PrinterOutlined, LinkOutlined, FilePdfOutlined, Pict
 import { ensureDownloadAllowed, guardLink } from '@/lib/download-gate';
 import { COMPANY_TYPE_LABELS, SEGMENT_LABELS, KIND_LABELS, FINANCE_ROUND_LABELS, NEWS_KIND_LABELS } from '@/lib/company-fields';
 
+/** 有的模型把每个字段都包成 { value, source }（2906 鼎峰科创那份）：只有这两个键的就取 value，递归拆；带 currency / as_of 的金额对象原样留着（页面单独渲染） */
+const unwrapVS = (x: any): any => Array.isArray(x) ? x.map(unwrapVS) : x && typeof x === 'object' ? (Object.keys(x).every(k => k === 'value' || k === 'source') && 'value' in x ? unwrapVS(x.value) : Object.fromEntries(Object.entries(x).map(([k, y]) => [k, unwrapVS(y)]))) : x;
 const v = (x: any) => (x && typeof x === 'object' && !Array.isArray(x) && 'value' in x) ? x.value : x;
 const srcOf = (x: any): string => { if (!x || typeof x !== 'object') return ''; const s = x.source || (x.sources && Object.values(x.sources)[0]); if (typeof s === 'string') return s; if (s && typeof s === 'object') { const first = Object.values(s)[0]; return typeof first === 'string' ? first : ''; } return ''; };
 const fmt = (x: any, unit = '') => x === null || x === undefined || x === '' ? '—' : `${typeof x === 'number' ? x.toLocaleString('zh-CN') : x}${unit}`;
@@ -83,7 +85,7 @@ export default function CompanyReportPage() {
     }, 1500);
     return () => { cancelled = true; clearTimeout(t); };
   }, [autoPrint, loading, d, id]);
-  const T = (k: string) => deep?.topics?.[k]?.data || {};
+  const T = (k: string) => unwrapVS(deep?.topics?.[k]?.data) || {};
   const c = d?.company;
   const pipeline = useMemo(() => (T('pipeline').pipeline || []) as any[], [deep]);
   const stageMix = useMemo(() => { const m: Record<string, number> = {}; for (const p of pipeline) { const k = stageCn(p.stage); m[k] = (m[k] || 0) + 1; } return Object.entries(m); }, [pipeline]);
