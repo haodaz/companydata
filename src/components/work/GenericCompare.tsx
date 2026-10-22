@@ -123,10 +123,10 @@ export function GenericCompare({ token, ownerKey, task }: { token: string; owner
         {c && (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 12, marginTop: 12 }}>
             <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '10px 16px' }}>
-              <Fold title={`通用模型原文（${c.text.length} 字${issues.length ? '，标红处是问题，悬停看原因' : ''}）`} open={!rv}><Plain text={c.text} issues={issues} /></Fold>
+              <Fold title={`通用模型原文（${c.text.length} 字${issues.length ? '，标红处是问题，悬停看原因' : ''}）`} open><Plain text={c.text} issues={issues} /></Fold>
             </div>
             <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '10px 16px' }}>
-              <Fold title={`平方出的完整题目（任务书 + ${mats.length} 份材料 + ${rub.length} 条评分标准）`}>
+              <Fold title={`平方出的完整题目（任务书 + ${mats.length} 份材料 + ${rub.length} 条评分标准）`} open>
                 <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6 }}>{task.task?.title}</div>
                 {task.problem?.statement && <p style={{ fontSize: 13, lineHeight: 1.75 }}><b>业务问题 · </b>{task.problem.statement}</p>}
                 {task.problem?.why_now && <p style={{ fontSize: 13, lineHeight: 1.75 }}><b>为什么是现在 · </b>{task.problem.why_now}</p>}
