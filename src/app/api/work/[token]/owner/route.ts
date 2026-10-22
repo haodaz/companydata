@@ -3,6 +3,7 @@ import { supabaseAdmin as db } from '@/lib/supabase';
 import { reviseTask, runBaseline, sourcesOf } from '@/lib/work/generator';
 import { withCost, logTokenUsage } from '@/lib/token-logger';
 import { generateContent } from '@/lib/llm-client';
+import { reviewGeneric } from '@/lib/work/compare';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -43,15 +44,20 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   const body = await req.json().catch(() => ({}));
   // 对比演示（2026-10-22 老板：垂直 vs 通用）：通用模型（千问，国内用户能直接用的），只给一句大白话让它出题，和平方出的并排看。存在题里，第二次秒开；{ force } 重问
   if (body.compare) {
-    if (t.task?.compare?.text && !body.force) return NextResponse.json({ ok: true, compare: t.task.compare });
     const prompt = `我们公司是${t.company_name}，要招人：${t.role}。请你出一道题给应聘者做，并给出评分标准。`;
     try {
-      const compare = await withCost({ tool_name: 'work', task_name: 'Compare · 通用大模型直接出题', stage: 'use' }, async () => {
+      let compare = t.task?.compare;
+      if (!compare?.text || body.force) compare = await withCost({ tool_name: 'work', task_name: 'Compare · 通用大模型直接出题', stage: 'use' }, async () => {
         for (const m of ['qwen-plus', 'deepseek-v4-pro']) {
           try { const r = await generateContent(prompt, m); await logTokenUsage({ tool_name: 'work', task_name: 'Compare · 通用大模型直接出题', institution: t.company_name || '', model_id: m, usageMetadata: r.usageMetadata } as any).catch(() => {}); if (r.text?.trim()) return { prompt, text: r.text.trim(), model: m, at: new Date().toISOString() }; } catch (e) { console.warn(`[work-compare] ${m} 失败：${String((e as any)?.message).slice(0, 100)}`); }
         }
         throw new Error('通用大模型没有回答');
       });
+      // 研判：对照库里核实过的企业资料标出通用模型的问题 + 两边压成同样几行（失败不挡对比本身）
+      if (!compare.review || body.force || body.review) {
+        try { compare = { ...compare, review: await withCost({ tool_name: 'work', task_name: 'Compare · 研判', stage: 'use' }, () => reviewGeneric(compare.text, t.context, t, t.company_name)) }; }
+        catch (e) { console.warn('[work-compare] 研判失败：', String((e as any)?.message).slice(0, 120)); }
+      }
       await db.from('work_tasks').update({ task: { ...t.task, compare } }).eq('id', t.id);
       return NextResponse.json({ ok: true, compare });
     } catch (e: any) { return NextResponse.json({ ok: false, error: String(e?.message || e) }, { status: 500 }); }
