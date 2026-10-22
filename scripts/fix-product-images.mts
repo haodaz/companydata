@@ -1,13 +1,15 @@
 /**
  * 科研产品破图（数据部门 10-22 #25：有的产品是破图，要换成正确的；没有产品图就留空）。
  * 每张图：存进桶的检查能不能打开；只有原图链的重新下载（带 / 不带来源页两种都试）存进桶；都不行就去掉。
- * 太小的（< 1.5KB，多半是占位图 / 透明像素）、不是图片的也去掉。
+ * 太小的（< 1.5KB）、不是图片的、内容几乎只有一个颜色的（白板 / 透明 / 灰块——懒加载占位图，10-22 Corning 那张）也去掉。
+ * 兜底（数据部门 10-22）：真拿不到产品图就留空，不放占位图、不拿别的图凑。
  *   npx tsx scripts/fix-product-images.mts [--apply]
  */
 process.loadEnvFile('.env.local');
 import crypto from 'node:crypto';
 const { supabaseAdmin: db } = await import('@/lib/supabase');
 const { selectAll } = await import('@/lib/supabase-all');
+const { isBlankImage: isBlank } = await import('@/lib/image-blank');
 const APPLY = process.argv.includes('--apply');
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140 Safari/537.36';
 const MIN = 1500;
@@ -18,7 +20,8 @@ async function grab(url: string, referer?: string): Promise<{ buf: Buffer; ct: s
     const ct = res.headers.get('content-type') || '';
     if (!res.ok || !/^image\//.test(ct) || /svg/.test(ct)) return null;
     const buf = Buffer.from(await res.arrayBuffer());
-    return buf.length >= MIN && buf.length < 8 * 1024 * 1024 ? { buf, ct } : null;
+    if (buf.length < MIN || buf.length >= 8 * 1024 * 1024) return null;
+    return (await isBlank(buf)) ? null : { buf, ct };
   } catch { return null; }
 }
 

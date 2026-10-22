@@ -23,6 +23,7 @@ const { isKnownModel } = await import('@/lib/model-options');
 const { INSTRUMENT_CATEGORIES, isDomesticCountry } = await import('@/lib/instrument-categories');
 const { PRODUCT_KINDS, kindOf, productExternalId, plainHtml, labelPrompt, cleanLabels, DOC_TYPES } = await import('@/lib/research-products');
 const { kwText } = await import('@/lib/entity-ids');
+const { isBlankImage } = await import('@/lib/image-blank');
 
 const opt = (k: string, d = '') => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const MODEL = opt('model', '');
@@ -184,6 +185,7 @@ async function fetchImages(s: any, extId: string, list: any[]) {
       const ct = res.headers.get('content-type') || '';
       if (res.ok && /^image\//.test(ct)) {
         const buf = Buffer.from(await res.arrayBuffer());
+        if (buf.length > 1500 && buf.length < 8 * 1024 * 1024 && await isBlankImage(buf)) { img.blank = true; continue; }   // 占位图（白板 / 透明）不收
         if (buf.length > 1500 && buf.length < 8 * 1024 * 1024 && !DRY) {
           const ext = (ct.split('/')[1] || 'jpg').replace('jpeg', 'jpg').replace(/[^a-z0-9]/g, '');
           const key = `${s.id}/${extId}/${crypto.createHash('md5').update(g.url).digest('hex').slice(0, 12)}.${ext}`;
