@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "真活插件",
+  "version": "0.1.0",
+  "description": "百业AI｜真活：用自己的工具答题时，只在答题期间记录打开的网页、页面上的文字（含 AI 对话）和打字粘贴的量，交卷后由 AI 回看过程。",
+  "permissions": ["sidePanel", "scripting", "storage", "tabs", "alarms", "notifications"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js" },
+  "side_panel": { "default_path": "sidepanel.html" },
+  "action": { "default_title": "打开真活插件", "default_icon": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" } },
+  "icons": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
+  "content_scripts": [
+    { "matches": ["https://www.aidataoffice.com/*", "https://aidataoffice.com/*", "http://localhost:3003/*"], "js": ["bridge.js"], "run_at": "document_idle" },
+    { "matches": ["<all_urls>"], "js": ["counter.js"], "run_at": "document_idle" }
+  ]
+}

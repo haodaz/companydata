@@ -6,7 +6,7 @@ import { Button, Descriptions, Drawer, Space, Table, Tabs, Tag, Typography, App 
 import { WorkReport } from '@/components/work/WorkReport';
 
 const { Text, Paragraph } = Typography;
-export const ENV_META: Record<string, { label: string; color: string }> = { doc: { label: '文档 / 对账台', color: 'purple' }, code: { label: '代码台', color: 'geekblue' }, sheet: { label: '表格 / 数据台', color: 'cyan' }, design: { label: '设计台', color: 'orange' }, open: { label: '自己录制电脑操作', color: 'green' } };
+export const ENV_META: Record<string, { label: string; color: string }> = { doc: { label: '文档 / 对账台', color: 'purple' }, code: { label: '代码台', color: 'geekblue' }, sheet: { label: '表格 / 数据台', color: 'cyan' }, design: { label: '设计台', color: 'orange' }, plugin: { label: '真活插件 · 自己的工具', color: 'magenta' }, open: { label: '自己录制电脑操作', color: 'green' } };
 
 export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab }: { task: any; sessions: any[]; shareLink: string; notes?: string[]; defaultTab?: string }) {
   // 出题人是不是用一句话说的要找什么样的人（和 lib/work/generator.ts 的 isNeedText 同一判断；那边是服务端模块，这里不能直接引）

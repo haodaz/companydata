@@ -14,13 +14,14 @@ import { CodeBench } from '@/components/work/benches/CodeBench';
 import { SheetBench } from '@/components/work/benches/SheetBench';
 import { DesignBench } from '@/components/work/benches/DesignBench';
 import { OpenBench } from '@/components/work/benches/OpenBench';
+import { PluginWork } from '@/components/work/benches/PluginWork';
 
 type Material = { id: string; title: string; kind: string; content: string; source: string };
-type Env = { type: 'doc' | 'code' | 'sheet' | 'design' | 'open'; language?: string; starter?: string; tests?: { name: string; code: string }[]; csv?: string; params?: { name: string; unit?: string; hint?: string }[]; sketch_hint?: string };
+type Env = { type: 'doc' | 'code' | 'sheet' | 'design' | 'open' | 'plugin'; language?: string; starter?: string; tests?: { name: string; code: string }[]; csv?: string; params?: { name: string; unit?: string; hint?: string }[]; sketch_hint?: string };
 type Task = { id: string; company_name: string; role: string; statement: string; task: { title: string; brief: string; deliverables: { id: string; title: string; format: string }[]; time_minutes: number; rules: string[]; env?: Env }; materials: Material[] };
 type Ev = { t: number; type: string; [k: string]: any };
 
-const ENV_NAME: Record<string, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台', open: '用自己的软件做（录屏）' };
+const ENV_NAME: Record<string, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台', open: '用自己的软件做（录屏）', plugin: '用自己的网页工具做（真活插件）' };
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 
 export default function WorkPage() {
@@ -31,7 +32,7 @@ export default function WorkPage() {
   const [phase, setPhase] = useState<'loading' | 'intro' | 'work' | 'grading' | 'report'>('loading');
   const [sid, setSid] = useState<string>('');
   const [name, setName] = useState(''); const [contact, setContact] = useState('');
-  const [mode, setMode] = useState<'bench' | 'open'>('bench');
+  const [mode, setMode] = useState<'bench' | 'open' | 'plugin'>('bench');
   const [report, setReport] = useState<any>(null);
   const [participant, setParticipant] = useState<any>(null);
   const [narrow, setNarrow] = useState(false);
@@ -41,11 +42,11 @@ export default function WorkPage() {
     (async () => {
       const j = await (await fetch(`/api/work/${token}`)).json();
       if (!j.ok) { setErr(j.error || '链接不可用'); setPhase('intro'); return; }
-      setTask(j.task); if (j.task?.task?.env?.type === 'open') setMode('open');   // 出题人指定了「自己录制电脑操作」：只有开放模式
+      setTask(j.task); if (j.task?.task?.env?.type === 'open') setMode('open'); if (j.task?.task?.env?.type === 'plugin') setMode('plugin');   // 出题人指定了「自己录制电脑操作」：只有开放模式
       const s = sp.get('s') || (typeof localStorage !== 'undefined' ? localStorage.getItem(`work:${token}`) : '') || '';
       if (s) {
         const r = await (await fetch(`/api/work/${token}/sessions/${s}`)).json();
-        if (r.ok) { setSid(s); setParticipant(r.session.participant); if (r.session.participant?.mode === 'open' || j.task?.task?.env?.type === 'open') setMode('open'); if (r.session.report?.auditing) { setPhase('grading'); return; } if (r.session.report) { setReport(r.session.report); setPhase('report'); return; } if (!r.session.submitted_at) { setPhase('work'); return; } }
+        if (r.ok) { setSid(s); setParticipant(r.session.participant); if (r.session.participant?.mode === 'open' || j.task?.task?.env?.type === 'open') setMode('open'); if (r.session.participant?.mode === 'plugin') setMode('plugin'); if (r.session.report?.auditing) { setPhase('grading'); return; } if (r.session.report) { setReport(r.session.report); setPhase('report'); return; } if (!r.session.submitted_at) { setPhase('work'); return; } }
       }
       setPhase('intro');
     })();
@@ -55,7 +56,7 @@ export default function WorkPage() {
     if (!name.trim()) return;
     const j = await (await fetch(`/api/work/${token}/sessions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, contact, mode }) })).json();
     if (!j.ok) { setErr(j.error); return; }
-    setSid(j.session_id); setParticipant({ name, contact, mode }); try { localStorage.setItem(`work:${token}`, j.session_id); } catch {}
+    setSid(j.session_id); setParticipant({ name, contact, mode, ...(j.code ? { code: j.code } : {}) }); try { localStorage.setItem(`work:${token}`, j.session_id); } catch {}
     setPhase('work');
   };
 
@@ -72,7 +73,9 @@ export default function WorkPage() {
         <Box title="任务书"><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{task.task.brief}</div></Box>
         <Box title="要交什么"><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol></Box>
         <Box title="规则"><ul style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.rules.map((r, i) => <li key={i}>{r}</li>)}</ul><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>操作台：{ENV_NAME[env.type]} · 建议用时 {task.task.time_minutes} 分钟（不强制停表，但用时会记）· 材料 {task.materials.length} 份 · 交卷后立刻出报告</div></Box>
-        {env.type === 'open'
+        {env.type === 'plugin'
+          ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用你自己的工具做。</b>在线文档、表格、设计工具、各家 AI 都可以。点「开始做」后会给你一个真活码，装好「真活插件」（一次就好，<a href="/work/plugin" target="_blank" rel="noreferrer">看说明</a>）、关联这次作答，插件只在答题期间记录你打开的网页、页面上的文字和打字粘贴的量。交付说明在插件侧边栏或本页写，做完点「结束作答」；到时间会自动交卷。</div></Box>
+          : env.type === 'open'
           ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用自己的软件做。</b>下载材料，用你顺手的 Excel / CAD / IDE / AI 做；浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。出题人指定了这种做法，过程由录屏还原。</div></Box>
           : <Box title="怎么做">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 10 }}>
@@ -116,7 +119,9 @@ export default function WorkPage() {
     </Shell>
   );
 
-  return <Workspace token={token} sid={sid} task={task} env={env} mode={mode} narrow={narrow} grading={phase === 'grading'} error={err} onSubmit={async (deliverable, events) => {
+  if (mode === 'plugin' && participant?.code) return <Shell><PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
+
+  return <Workspace token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} onSubmit={async (deliverable, events) => {
     setPhase('grading');
     const j = await (await fetch(`/api/work/${token}/sessions/${sid}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable, events }) })).json();
     if (!j.ok) { setErr(j.error || '交卷失败，再试一次'); setPhase('work'); return; }

@@ -50,13 +50,13 @@ export async function auditSegment(task: WorkTask, events: WorkEvent[], aiChat: 
   const inSeg = (t: number) => t >= seg.from && t < seg.to;
   const ev = events.filter(e => inSeg(e.t)).sort((a, b) => a.t - b.t);
   const chat = aiChat.filter(c => inSeg(c.t));
-  const lines = ev.slice(0, 200).map(e => `[${fmt(e.t)}] ${e.type}${e.id ? ' ' + e.id : ''}${e.chars ? ` ${e.chars}字` : ''}${e.delta != null ? ` Δ${e.delta}` : ''}${e.note ? ' ' + s(e.note, 100) : ''}`);
-  const chatLines = chat.slice(0, 20).map(c => `[${fmt(c.t)}] 问：${s(c.q, 300)}\n   答（摘）：${s(c.a, 240)}`);
+  const lines = ev.slice(0, 200).map(e => `[${fmt(e.t)}] ${e.type}${e.id ? ' ' + e.id : ''}${e.chars ? ` ${e.chars}字` : ''}${e.delta != null ? ` Δ${e.delta}` : ''}${e.host ? ' ' + e.host : ''}${e.note ? ' ' + s(e.note, 100) : ''}${e.text ? ' 「' + s(e.text, 220) + '」' : ''}`);
+  const chatLines = chat.slice(0, 20).map(c => (c as any).src === 'plugin' ? `[${fmt(c.t)}] ${s(c.q, 120)}\n   页面上的对话（摘）：${s(c.a, 900)}` : `[${fmt(c.t)}] 问：${s(c.q, 300)}\n   答（摘）：${s(c.a, 240)}`);
   const priorText = prior.map(p => `第 ${p.idx + 1} 段（${fmt(p.from)}–${fmt(p.to)}）：${p.so_far}；暂定 ${Object.entries(p.dims).map(([k, v]) => k + v).join(' ')}`).join('\n') || '（这是第一段）';
   const prompt = `你是「真活台」的过程审计员，正在**边看边记**一位候选人做题的过程。现在看到第 ${idx + 1} / ${total} 段（${fmt(seg.from)}–${fmt(seg.to)}）。只根据这一段的事件和对话写观察，前面几段的笔记只用来保持连续、修正暂定印象。措辞「观察到…」，每条观察指向具体时刻与证据；没什么可记就少写，不要硬凑。
 ## 任务（操作台：${task.env?.type || 'doc'}）
 ${task.task.title}：${task.task.brief.slice(0, 400)}
-事件类型：open_material 打开材料 · ai_ask 问 AI · adopt 把 AI 的话放进交付物 · paste 粘贴 · edit 自己改稿（Δ字数）· run_tests 跑自测 · set_param 改设计参数 · sketch 画草图 · idle 空闲超过 2 分钟 · download 下载材料 · rec_start/rec_stop 录屏 · screen 录屏抽帧看图的描述 · file 上传交付文件 · submit 交卷
+事件类型：open_material 打开材料 · ai_ask 问 AI · adopt 把 AI 的话放进交付物 · paste 粘贴 · edit 自己改稿（Δ字数）· run_tests 跑自测 · set_param 改设计参数 · sketch 画草图 · idle 空闲超过 2 分钟 · download 下载材料 · rec_start/rec_stop 录屏 · screen 录屏抽帧看图的描述 · file 上传交付文件 · submit 交卷 · 真活插件：plugin_start/plugin_stop 开始 / 结束记录 · visit 打开或切到某个网页（host · 标题）· page 网页上读到的文字（摘）· edit 在网页里打字（Δ字数）· paste 粘贴 · copy 复制 · 和 AI 的对话里「插件读到的 xx 页面」是候选人在外部 AI 网站上的对话原文（问和答混在一起，按语义区分）
 材料里故意留的坑：${task.materials.filter(m => m.source !== 'db').map(m => m.id + ' ' + m.title).join('、') || '无标注'}
 ## 前面几段的笔记
 ${priorText}

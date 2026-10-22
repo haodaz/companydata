@@ -117,7 +117,7 @@ ${inside ? `\n${inside}\n（企业自己说的眼下重点要优先考虑，至�
     case 'create_work_task': {
       const role = String(input.role || '').trim(), problem = String(input.problem || '').trim();
       if (!role || !problem) throw new Error('缺岗位或业务问题');
-      const env = (['doc', 'code', 'sheet', 'design', 'open'].includes(input.env) ? input.env : undefined) as WorkEnvType | undefined;
+      const env = (['doc', 'code', 'sheet', 'design', 'open', 'plugin'].includes(input.env) ? input.env : undefined) as WorkEnvType | undefined;
       const wctx = await gatherContext(companyKey(org), role);
       const inside = await privateContext(org.id, role);
       const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题（工作台）', stage: 'create', actor: ctx.email }, () => generateTask(wctx, role, { model: WORK_MODEL, focus: `出题人确认的${org.kind === 'research' ? '研究问题与真活类型' : '业务问题'}：${problem}${inside ? `\n${inside}` : ''}`, env, research: org.kind === 'research' }));

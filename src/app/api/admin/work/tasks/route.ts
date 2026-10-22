@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     const company = String(body.company || '').trim(), role = String(body.role || '').trim();
     if (!company || !role) return NextResponse.json({ ok: false, error: '企业和岗位都要填' }, { status: 400 });
     const ctx = await gatherContext(body.company_id ? String(body.company_id) : company, role, { intro: body.company_id ? undefined : String(body.intro || '').slice(0, 6000) });
-    const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题', stage: 'create', actor: user?.email || null }, () => generateTask(ctx, role, { model: isKnownModel(String(body.model || '')) ? String(body.model) : WORK_MODEL, focus: body.focus, env: ['doc', 'code', 'sheet', 'design', 'open'].includes(body.env) ? body.env : undefined }));
+    const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题', stage: 'create', actor: user?.email || null }, () => generateTask(ctx, role, { model: isKnownModel(String(body.model || '')) ? String(body.model) : WORK_MODEL, focus: body.focus, env: ['doc', 'code', 'sheet', 'design', 'open', 'plugin'].includes(body.env) ? body.env : undefined }));
     const share_token = randomBytes(8).toString('base64url'), owner_key = randomBytes(12).toString('base64url');
     const row = { share_token, owner_key, owner: { name: user?.email, contact: user?.email }, status: 'published', company_id: ctx.company?.id ?? null, company_name: ctx.company?.name || company, role, context: ctx, problem: task.problem, task: { ...task.task, env: task.env }, materials: task.materials, rubric: task.rubric, model, created_by: user?.email || null };
     const { data, error } = await db.from('work_tasks').insert(row).select('id, share_token').single();

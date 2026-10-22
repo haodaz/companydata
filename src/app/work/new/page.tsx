@@ -22,6 +22,7 @@ const ENVS: { value: string; label: string; desc: string }[] = [
   { value: 'code', label: '代码台', desc: '写函数 / 脚本，浏览器里跑自测用例' },
   { value: 'sheet', label: '表格 / 数据台', desc: '电子表格：列号、公式栏、CSV 源' },
   { value: 'design', label: '设计台', desc: '定参数写依据、画草图标尺寸' },
+  { value: 'plugin', label: '真活插件：用自己的工具做', desc: '候选人用自己浏览器里的在线文档 / 设计工具 / 各家 AI 做，装「真活插件」记录过程：打开了哪些网页、页面上的文字（含 AI 对话）、打字和粘贴；比录屏轻，过程看得更细' },
   { value: 'open', label: '候选人自己录制电脑操作', desc: '不用站内操作台：下载材料，用自己的 Excel / CAD / IDE 做，浏览器录屏 + 上传交付，AI 看录屏还原过程' },
 ];
 const DEFAULT_MODEL = 'qwen-plus';

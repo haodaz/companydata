@@ -82,12 +82,12 @@ export async function analyzeProcess(task: WorkTask, events: WorkEvent[], aiChat
   stats.paste_chars = ev.filter(e => e.type === 'paste').reduce((a, e) => a + (Number(e.chars) || 0), 0);
   stats.typed_chars = ev.filter(e => e.type === 'edit').reduce((a, e) => a + Math.max(0, Number(e.delta) || 0), 0);
   stats.deliverable_chars = deliverable.length;
-  const lines = ev.slice(0, 400).map(e => `[${fmt(e.t)}] ${e.type}${e.id ? ' ' + e.id : ''}${e.chars ? ` ${e.chars}字` : ''}${e.delta != null ? ` Δ${e.delta}` : ''}${e.note ? ' ' + s(e.note, 80) : ''}`);
+  const lines = ev.slice(0, 400).map(e => `[${fmt(e.t)}] ${e.type}${e.id ? ' ' + e.id : ''}${e.chars ? ` ${e.chars}字` : ''}${e.delta != null ? ` Δ${e.delta}` : ''}${e.host ? ' ' + e.host : ''}${e.note ? ' ' + s(e.note, 80) : ''}${e.text ? ' 「' + s(e.text, 160) + '」' : ''}`);
   const chat = aiChat.slice(0, 40).map(c => `[${fmt(c.t)}] 问：${s(c.q, 300)}\n   答（摘）：${s(c.a, 200)}`);
   const prompt = `你是「真活台」的过程分析 agent。只看事件流和 AI 对话，判断这个人做题的过程：什么是他自己判断的、什么交给了 AI、有没有核验材料、有没有发现材料里的坑。措辞用「观察到…」，每条高光 / 风险必须指向具体时刻和证据。
 ## 任务（操作台：${task.env?.type || 'doc'}）
 ${task.task.title}：${task.task.brief.slice(0, 600)}
-事件类型含义：open_material 打开材料 · ai_ask 问 AI · adopt 把 AI 的话放进交付物 · paste 粘贴 · edit 自己改稿（Δ字数）· run_tests 跑自测（note 里是通过数）· set_param 改设计参数 · sketch 画草图 · idle 空闲超过 2 分钟 · submit 交卷
+事件类型含义：open_material 打开材料 · ai_ask 问 AI · adopt 把 AI 的话放进交付物 · paste 粘贴 · edit 自己改稿（Δ字数）· run_tests 跑自测（note 里是通过数）· set_param 改设计参数 · sketch 画草图 · idle 空闲超过 2 分钟 · submit 交卷 · 真活插件：plugin_start/plugin_stop 开始 / 结束记录 · visit 打开或切到某个网页（host · 标题）· page 网页上读到的文字（摘）· edit 在网页里打字（Δ字数）· paste 粘贴 · copy 复制 · 和 AI 的对话里「插件读到的 xx 页面」是候选人在外部 AI 网站上的对话原文（问和答混在一起，按语义区分）
 开放模式（用自己的软件做）：download 下载材料 · rec_start / rec_stop 录屏起止 · screen 录屏抽帧看图得到的描述（note = 软件 · 动作 · 看到的内容，这是主要的过程证据）· file 上传交付文件
 材料里故意留的坑（看他有没有发现）：${task.materials.filter(m => m.source !== 'db').map(m => m.id + ' ' + m.title).join('、') || '无标注'}
 ## 统计

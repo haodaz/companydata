@@ -1,0 +1,29 @@
+* { box-sizing: border-box; }
+body { margin: 0; font: 14px/1.6 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; color: #1a1a2e; background: #f6f7fb; }
+header { display: flex; gap: 10px; align-items: center; padding: 12px 14px; background: #fff; border-bottom: 1px solid #e8e9f0; }
+header img { width: 30px; height: 30px; border-radius: 8px; }
+header b { display: block; font-size: 15px; } header small { color: #888; font-size: 12px; }
+main { padding: 14px; display: grid; gap: 12px; }
+.card { background: #fff; border: 1px solid #e8e9f0; border-radius: 12px; padding: 12px 14px; }
+.k { font-size: 12px; color: #6055f5; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; }
+.title { font-weight: 700; font-size: 15px; line-height: 1.45; }
+.muted { color: #888; font-size: 12.5px; }
+.clock { font: 800 40px/1 ui-monospace, Menlo, monospace; letter-spacing: 1px; text-align: center; padding: 6px 0 2px; }
+.clock.warn { color: #d46b08; } .clock.hot { color: #cf1322; }
+.rec { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #cf1322; }
+.rec i { width: 10px; height: 10px; border-radius: 50%; background: #cf1322; animation: blink 1.2s infinite; }
+.rec.off { color: #888; } .rec.off i { background: #bbb; animation: none; }
+@keyframes blink { 50% { opacity: .25; } }
+.stats { display: flex; gap: 14px; font-size: 12.5px; color: #555; margin-top: 6px; } .stats b { color: #1a1a2e; }
+.banner { border-radius: 10px; padding: 10px 12px; font-weight: 700; }
+.banner.w5 { background: #fff7e6; color: #ad4e00; border: 1px solid #ffd591; } .banner.w1 { background: #fff1f0; color: #a8071a; border: 1px solid #ffa39e; }
+textarea, input { width: 100%; border: 1px solid #d9d9e3; border-radius: 8px; padding: 8px 10px; font: inherit; resize: vertical; background: #fff; }
+textarea { min-height: 130px; }
+button { border: 0; border-radius: 10px; padding: 10px 14px; font: inherit; font-weight: 700; cursor: pointer; }
+.primary { background: #6055f5; color: #fff; width: 100%; } .primary:disabled { background: #b8b3f7; cursor: default; }
+.end { background: #cf1322; color: #fff; width: 100%; font-size: 16px; padding: 14px; }
+.ghost { background: #f0f0f7; color: #444; }
+.row { display: flex; gap: 8px; } .row > * { flex: 1; }
+.ok { color: #237a45; } .err { color: #cf1322; font-size: 13px; }
+ul { margin: 4px 0 0; padding-left: 18px; color: #555; font-size: 13px; }
+a { color: #6055f5; }
