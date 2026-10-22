@@ -58,7 +58,11 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
         try { compare = { ...compare, review: await withCost({ tool_name: 'work', task_name: 'Compare · 研判', stage: 'use' }, () => reviewGeneric(compare.text, t.context, t, t.company_name)) }; }
         catch (e) { console.warn('[work-compare] 研判失败：', String((e as any)?.message).slice(0, 120)); }
       }
-      await db.from('work_tasks').update({ task: { ...t.task, compare } }).eq('id', t.id);
+      // 并发保护：慢请求跑完时库里已经有更新的一份（另一次「重新问」），就不拿旧结果覆盖
+      const { data: now } = await db.from('work_tasks').select('task').eq('id', t.id).single();
+      const cur = now?.task?.compare;
+      if (cur?.at && cur.at > compare.at) return NextResponse.json({ ok: true, compare: cur });
+      await db.from('work_tasks').update({ task: { ...(now?.task || t.task), compare } }).eq('id', t.id);
       return NextResponse.json({ ok: true, compare });
     } catch (e: any) { return NextResponse.json({ ok: false, error: String(e?.message || e) }, { status: 500 }); }
   }
