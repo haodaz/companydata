@@ -3,18 +3,25 @@
 /**
  * 对比通用模型（2026-10-22，老板：「有垂直和没垂直，出题效果完全不一样」）：
  * 左边：国内用户能直接用的通用模型（千问），只给一句大白话让它出题；右边：平方拿企业库 / 深度画像 / 出题流程出的。
- * 研判（lib/work/compare）对照库里核实过的企业资料标出通用模型的问题，两边压成同样五行左右对齐；原文折叠，展开时问题处标红。
+ * 研判（lib/work/compare）：同一把尺子（7 项清单两边都打分）+ 企业事实核对（证实 / 有出入 / 未核实，「库里没有」不判错）+ 五行速览；原文里证实标绿、有出入标红、清单没做到标橙。
  */
 import React, { useState } from 'react';
 import { App, Button, Drawer, Tag, Tooltip } from 'antd';
 
 type Row = 'scenario' | 'task' | 'materials' | 'rubric' | 'facts';
-type Issue = { quote: string; type: string; why: string; row: Row; by: 'rule' | 'ai' };
-type Review = { verdict: string; generic: Record<Row, string>; ours: Record<Row, string>; issues: Issue[] };
+type Issue = { quote: string; type: string; why: string; row: Row; by: string; tone?: 'good' | 'bad' | 'warn' };
+type Mark = 'yes' | 'partial' | 'no';
+type Check = { key: string; label: string; a: { v: Mark; note: string; quote?: string }; b: { v: Mark; note: string } };
+type Fact = { quote: string; claim: string; status: '证实' | '有出入' | '未核实'; evidence: string; source: string };
+type Review = { v?: number; verdict: string; checklist?: Check[]; facts?: Fact[]; generic: Record<Row, string>; ours: Record<Row, string>; issues: Issue[] };
 type Compare = { prompt: string; text: string; model: string; at: string; review?: Review };
 
 const ROWS: [Row, string][] = [['scenario', '业务场景'], ['task', '要候选人做什么'], ['materials', '给考生的材料'], ['rubric', '评分标准'], ['facts', '用到的企业事实']];
 const RED = '#d4380d';
+const TONE = { bad: { bg: '#fff1e8', fg: RED }, warn: { bg: '#fff7e0', fg: '#ad6800' }, good: { bg: '#eafaf0', fg: '#237a45' } };
+const MARK: Record<Mark, { t: string; c: string; bg: string }> = { yes: { t: '✓ 是', c: '#237a45', bg: '#eafaf0' }, partial: { t: '△ 部分', c: '#ad6800', bg: '#fff7e0' }, no: { t: '✗ 否', c: RED, bg: '#fff1e8' } };
+const FACT: Record<Fact['status'], string> = { 证实: 'green', 有出入: 'volcano', 未核实: 'default' };
+const Pill = ({ v }: { v: Mark }) => <span style={{ display: 'inline-block', minWidth: 54, textAlign: 'center', fontSize: 12, fontWeight: 700, color: MARK[v].c, background: MARK[v].bg, borderRadius: 6, padding: '1px 6px', marginRight: 8 }}>{MARK[v].t}</span>;
 
 /** 一行文字里把问题引用标红（悬停看为什么） */
 function marked(line: string, issues: Issue[]) {
@@ -26,7 +33,7 @@ function marked(line: string, issues: Issue[]) {
     for (const i of hits) { const at = rest.indexOf(i.quote); if (at >= 0 && (!best || at < best.at)) best = { i, at }; }
     if (!best) { parts.push(rest); break; }
     if (best.at) parts.push(rest.slice(0, best.at));
-    parts.push(<Tooltip key={k++} title={`${best.i.type}：${best.i.why}`}><mark style={{ background: '#fff1e8', color: RED, borderBottom: `2px solid ${RED}`, padding: '0 1px', cursor: 'help' }}>{best.i.quote}</mark></Tooltip>);
+    const tn = TONE[best.i.tone || 'bad']; parts.push(<Tooltip key={k++} title={`${best.i.type}：${best.i.why}`}><mark style={{ background: tn.bg, color: tn.fg, borderBottom: `2px solid ${tn.fg}`, padding: '0 1px', cursor: 'help' }}>{best.i.quote}</mark></Tooltip>);
     rest = rest.slice(best.at + best.i.quote.length);
   }
   return parts;
@@ -60,7 +67,7 @@ export function GenericCompare({ token, ownerKey, task }: { token: string; owner
   const [busy, setBusy] = useState(false);
   const [c, setC] = useState<Compare | null>(task.task?.compare || null);
   const ask = async (force = false) => {
-    setOpen(true); if (c?.review && !force) return;
+    setOpen(true); if (c?.review?.v === 2 && !force) return;
     setBusy(true);
     try {
       const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(ownerKey)}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ compare: true, force }) })).json();
@@ -81,10 +88,27 @@ export function GenericCompare({ token, ownerKey, task }: { token: string; owner
           <span style={{ fontSize: 12, color: '#888', fontWeight: 700, letterSpacing: 1 }}>给通用模型的一句话</span>
           <span style={{ fontSize: 14, color: '#333' }}>{prompt}</span>
         </div>
-        {busy && !rv && <div style={{ background: '#fff', borderRadius: 14, padding: 24, color: '#888', textAlign: 'center' }}>{c ? '在对照这家企业的真实资料研判…（约 40 秒）' : '通用模型在出题，出完对照企业资料研判…（约 1 分钟）'}</div>}
-        {rv && (
+        {busy && rv?.v !== 2 && <div style={{ background: '#fff', borderRadius: 14, padding: 24, color: '#888', textAlign: 'center' }}>{c ? '按同一把尺子打分，并对照企业库、联网核实企业事实…（约 1 分钟）' : '通用模型在出题，出完对照企业资料研判…（约 1 分钟）'}</div>}
+        {rv?.v === 2 && !busy && (
           <>
-            {rv.verdict && <div style={{ background: '#fffaf0', border: '1px solid #ffd8a8', borderRadius: 12, padding: '10px 14px', marginBottom: 12, fontSize: 14, color: '#7a4a00' }}><b>研判 · </b>{rv.verdict}{issues.length ? `（通用模型这边标出 ${issues.length} 处问题）` : ''}</div>}
+            {rv.verdict && <div style={{ background: '#fffaf0', border: '1px solid #ffd8a8', borderRadius: 12, padding: '10px 14px', marginBottom: 12, fontSize: 14, color: '#7a4a00' }}><b>研判 · </b>{rv.verdict}</div>}
+            {/* 同一把尺子：7 项固定清单，两边都打分 */}
+            {!!rv.checklist?.length && (
+              <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, overflow: 'hidden', marginBottom: 12 }}>
+                <div style={{ ...grid, background: '#fafbff' }}>
+                  <div style={{ padding: '10px 14px', fontSize: 12, color: '#6055f5', fontWeight: 700 }}>同一把尺子</div>
+                  <div style={{ padding: '10px 14px', fontSize: 12, letterSpacing: 2, color: '#888', fontWeight: 700 }}>通用模型 · {rv.checklist.filter(x => x.a.v === 'yes').length}/{rv.checklist.length} 项做到</div>
+                  <div style={{ padding: '10px 14px', fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700, background: '#f6f4ff' }}>平方出的真活 · {rv.checklist.filter(x => x.b.v === 'yes').length}/{rv.checklist.length} 项做到</div>
+                </div>
+                {rv.checklist.map(x => (
+                  <div key={x.key} style={grid}>
+                    <div style={{ ...cell, color: '#333', fontWeight: 600, fontSize: 13 }}>{x.label}</div>
+                    <div style={cell}><Pill v={x.a.v} />{x.a.note}{x.a.quote && <div style={{ fontSize: 12.5, color: '#999', marginTop: 4 }}>原文：「{x.a.quote}」</div>}</div>
+                    <div style={{ ...cell, background: '#fcfbff' }}><Pill v={x.b.v} />{x.b.note}</div>
+                  </div>
+                ))}
+              </div>
+            )}
             {/* 同一把尺子：五行左右对齐 */}
             <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, overflow: 'hidden' }}>
               <div style={{ ...grid, background: '#fafbff' }}>
@@ -93,13 +117,11 @@ export function GenericCompare({ token, ownerKey, task }: { token: string; owner
                 <div style={{ padding: '10px 14px', fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700, background: '#f6f4ff' }}>平方出的真活</div>
               </div>
               {ROWS.map(([k, label]) => {
-                const iss = issues.filter(i => i.row === k);
                 return (
                   <div key={k} style={grid}>
                     <div style={{ ...cell, color: '#6055f5', fontWeight: 600, fontSize: 13 }}>{label}</div>
                     <div style={cell}>
                       {rv.generic[k] || '—'}
-                      {iss.map((i, n) => <div key={n} style={{ marginTop: 6, fontSize: 12.5, color: RED }}><Tag color="volcano" style={{ marginRight: 6 }}>{i.type}</Tag>「{i.quote}」<span style={{ color: '#a8071a' }}> {i.why}</span></div>)}
                     </div>
                     <div style={{ ...cell, background: '#fcfbff' }}>
                       {rv.ours[k] || '—'}
@@ -118,12 +140,25 @@ export function GenericCompare({ token, ownerKey, task }: { token: string; owner
                 </div>
               )}
             </div>
+            {/* 企业事实核对：库里没有不等于错 */}
+            {!!rv.facts?.length && (
+              <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '12px 16px', marginTop: 12 }}>
+                <div style={{ fontWeight: 700, color: '#1a1a2e', marginBottom: 2 }}>通用模型写的企业事实，逐条核对</div>
+                <div style={{ fontSize: 12, color: '#888', marginBottom: 8 }}>先对照企业库（含关联主体、深度画像），库里没有的再联网查。查不到只记「未核实」，不判错。证实 {rv.facts.filter(f => f.status === '证实').length} · 有出入 {rv.facts.filter(f => f.status === '有出入').length} · 未核实 {rv.facts.filter(f => f.status === '未核实').length}</div>
+                {rv.facts.map((f, i) => (
+                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '64px minmax(0, 1fr)', gap: 10, padding: '8px 0', borderTop: i ? '1px solid #f0f0f5' : undefined, fontSize: 13, lineHeight: 1.7 }}>
+                    <div><Tag color={FACT[f.status]} style={{ margin: 0 }}>{f.status}</Tag></div>
+                    <div>「{f.quote}」{f.evidence && <div style={{ color: '#666', fontSize: 12.5 }}>{f.evidence}{f.source && <span style={{ color: '#aaa' }}> · {f.source}</span>}</div>}</div>
+                  </div>
+                ))}
+              </div>
+            )}
           </>
         )}
         {c && (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 12, marginTop: 12 }}>
             <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '10px 16px' }}>
-              <Fold title={`通用模型原文（${c.text.length} 字${issues.length ? '，标红处是问题，悬停看原因' : ''}）`} open><Plain text={c.text} issues={issues} /></Fold>
+              <Fold title={`通用模型原文（${c.text.length} 字${issues.length ? '，绿 = 事实证实，红 = 有出入，橙 = 清单没做到，悬停看原因' : ''}）`} open><Plain text={c.text} issues={issues} /></Fold>
             </div>
             <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '10px 16px' }}>
               <Fold title={`平方出的完整题目（任务书 + ${mats.length} 份材料 + ${rub.length} 条评分标准）`} open>

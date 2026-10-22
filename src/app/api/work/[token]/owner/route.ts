@@ -54,7 +54,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
         throw new Error('通用大模型没有回答');
       });
       // 研判：对照库里核实过的企业资料标出通用模型的问题 + 两边压成同样几行（失败不挡对比本身）
-      if (!compare.review || body.force || body.review) {
+      if (!compare.review || compare.review.v !== 2 || body.force || body.review) {
         try { compare = { ...compare, review: await withCost({ tool_name: 'work', task_name: 'Compare · 研判', stage: 'use' }, () => reviewGeneric(compare.text, t.context, t, t.company_name)) }; }
         catch (e) { console.warn('[work-compare] 研判失败：', String((e as any)?.message).slice(0, 120)); }
       }
