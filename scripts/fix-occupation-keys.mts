@@ -7,6 +7,7 @@
  *   npx tsx scripts/fix-occupation-keys.mts --model qwen-plus [--apply]
  */
 process.loadEnvFile('.env.local');
+const { toList } = await import('@/lib/list-field');
 import fs from 'node:fs';
 const { supabaseAdmin: db } = await import('@/lib/supabase');
 const { selectAll } = await import('@/lib/supabase-all');
@@ -62,12 +63,12 @@ if (APPLY && ai.length) {
   for (const v of ai) {
     const { error } = await db.from('occupations').update({ external_id: v.key, key: v.key, ...(v.en ? { name_lang_en: v.en } : {}) }).eq('id', v.o.id);
     if (error) { console.log(`✗ #${v.o.id} ${v.o.name}：${error.message}`); continue; }
-    // 岗位里引用的旧 key 换成新 key（「|」隔开的文本，按整段替换，免得 a 命中 a_b）
-    const { data: js } = await selectAll(() => db.from('jobs').select('id, related_career_ids').ilike('related_career_ids', `%${v.o.external_id}%`).order('id'));
+    // 岗位里引用的旧 key 换成新 key（10-22 起是数组，按整项替换）
+    const { data: js } = await selectAll(() => db.from('jobs').select('id, related_career_ids').contains('related_career_ids', [v.o.external_id]).order('id'));
     for (const j of js as any[]) {
-      const parts = String(j.related_career_ids || '').split('|');
+      const parts = toList(j.related_career_ids);
       if (!parts.includes(v.o.external_id)) continue;
-      await db.from('jobs').update({ related_career_ids: parts.map(p => p === v.o.external_id ? v.key : p).join('|') }).eq('id', j.id);
+      await db.from('jobs').update({ related_career_ids: parts.map(p => p === v.o.external_id ? v.key : p) }).eq('id', j.id);
       jobsFixed++;
     }
   }

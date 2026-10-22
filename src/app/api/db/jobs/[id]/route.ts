@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
+import { toList } from '@/lib/list-field';
 import { JOB_FIELD_KEYS, jobCompleteness } from '@/lib/job-fields';
 import { resolveRegion } from '@/lib/region-codes';
 import { normalizeSkillTags } from '@/lib/job-defaults';
@@ -19,8 +20,8 @@ export async function GET(_req: NextRequest, { params }: Ctx) {
       .eq('id', id)
       .single();
     if (error) throw error;
-    // 相关专业 / 职业：库里是英文 key（「|」隔开），页面显示中文名（数据部门 10-19 #16）
-    const keys = (v: any) => String(v || '').split('|').map(x => x.trim()).filter(Boolean);
+    // 相关专业 / 职业：库里是英文 key（10-22 起是数组），页面显示中文名（数据部门 10-19 #16）
+    const keys = toList;
     const fosName = new Map((fos91 as { key: string; name: string }[]).map(f => [f.key, f.name]));
     const careerKeys = keys(data.related_career_ids);
     const { data: occ } = careerKeys.length ? await supabaseAdmin.from('occupations').select('id, external_id, name').in('external_id', careerKeys) : { data: [] as any[] };

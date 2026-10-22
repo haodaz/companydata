@@ -6,6 +6,7 @@
  *     能并进已有职业的给出「并进 X」（叫法记别名）；特别长尾、又归并不了的先不管——岗位不挂职业，信号照记。
  */
 import { supabaseAdmin } from '@/lib/supabase';
+import { toList } from '@/lib/list-field';
 import { selectAll } from '@/lib/supabase-all';
 import { generateContent } from '@/lib/llm-client';
 import { parseJsonLoose, searchJson } from '@/lib/agents/search-llm';
@@ -132,9 +133,9 @@ export async function settleSignals(keys: string[], occupation: { id: number; ex
     const { data: js } = await supabaseAdmin.from('jobs').select('id, related_career_ids, human_locked_fields').in('id', jobIds.slice(i, i + 200));
     for (const j of js || []) {
       if ((j.human_locked_fields || []).includes('related_career_ids')) continue;
-      const cur = String(j.related_career_ids || '').split('|').filter(Boolean);
+      const cur = toList(j.related_career_ids);
       if (cur.includes(occupation.external_id)) continue;
-      const { error } = await supabaseAdmin.from('jobs').update({ related_career_ids: [occupation.external_id, ...cur].slice(0, 4).join('|') }).eq('id', j.id);
+      const { error } = await supabaseAdmin.from('jobs').update({ related_career_ids: [...new Set([occupation.external_id, ...cur])].slice(0, 4) }).eq('id', j.id);
       if (!error) linked++;
     }
   }
@@ -154,7 +155,7 @@ export async function refreshEmergence(log: (s: string) => void = () => {}) {
     if (!o.external_id) continue;
     const { data: js } = await selectAll(() => supabaseAdmin.from('jobs').select('id, name, company_id, city, location, created_at, related_career_ids').not('if_delete', 'is', true).ilike('related_career_ids', `%${o.external_id}%`).order('id'));
     // ilike 是子串匹配：再按「|」拆开精确核对，免得 a_b 命中 a_b_c
-    const jobs = (js as any[]).filter(j => String(j.related_career_ids || '').split('|').includes(o.external_id));
+    const jobs = (js as any[]).filter(j => toList(j.related_career_ids).includes(o.external_id));
     const titles = new Map<string, number>(); for (const j of jobs) titles.set(j.name, (titles.get(j.name) || 0) + 1);
     const em = { ...(o.emergence || {}), jobs: jobs.length, companies: new Set(jobs.map(j => j.company_id).filter(Boolean)).size,
       cities: new Set(jobs.map(j => regionName('city', j.city) || j.location).filter(Boolean)).size, last_30d: jobs.filter(j => j.created_at >= since30).length,

@@ -10,6 +10,7 @@
 export type JobFieldKind = 'string' | 'text' | 'number' | 'boolean' | 'date' | 'enum' | 'string[]' | 'url';
 
 import { regionName } from '@/lib/region-codes';
+import { toList } from '@/lib/list-field';
 import { QIANLI_FUNCTION_NAMES, QIANLI_SPECIALTY_L1_NAMES, QIANLI_SPECIALTY_L2_NAMES } from '@/lib/qianli-tags';
 
 export interface JobFieldDef {
@@ -117,8 +118,8 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'if_develop_management', label: '管培项目', kind: 'boolean', group: 'basic', derived: true, hint: '岗位名里有「管培」为是，否则为否（数据部门 2026-10-10 口径）。' },
   // 潜历标签：库里存 value、页面显示中文名；入库后由 qianli-labels.ts 按数据部门的提示词专门打（10-20 #15 #17）
   { key: 'qianli_job_labels', label: '潜历职能标签', kind: 'enum', group: 'basic', derived: true, options: QIANLI_FUNCTION_NAMES, hint: '26 个职能标签选一个，存 value（如 mgmt_trainee = SWE）。' },
-  { key: 'qianli_job_specialty_labels', label: '潜历特色标签', kind: 'string', group: 'basic', derived: true, options: QIANLI_SPECIALTY_L1_NAMES, hint: '一级特色标签 value，多个用「|」隔开（由二级反推）。' },
-  { key: 'qianli_specialty_labels_reason', label: '潜历特色标签（二级）', kind: 'string', group: 'basic', derived: true, options: QIANLI_SPECIALTY_L2_NAMES, hint: '二级特色标签 value，多个用「|」隔开。' },
+  { key: 'qianli_job_specialty_labels', label: '潜历特色标签', kind: 'string[]', group: 'basic', derived: true, options: QIANLI_SPECIALTY_L1_NAMES, hint: '一级特色标签 value 数组（由二级反推）。' },
+  { key: 'qianli_specialty_labels_reason', label: '潜历特色标签（二级）', kind: 'string[]', group: 'basic', derived: true, options: QIANLI_SPECIALTY_L2_NAMES, hint: '二级特色标签 value 数组。' },
 
   { key: 'location', label: '工作地点', kind: 'string', group: 'location', core: true, hint: '工作地点原文；多个地点用英文分号 ; 分隔。' },
   { key: 'country', label: '国家 / 地区', kind: 'string', group: 'location', region: 'country', hint: '主要工作地点所在国家或地区，用中文（如 美国 / 中国 / 中国香港 / 新加坡）。' },
@@ -294,9 +295,8 @@ export function formatJobValue(key: string, v: any): string {
   if (f.region) return regionName(f.region, v);
   if (f.kind === 'boolean') return v ? '是' : '否';
   if (f.kind === 'enum') return f.options?.[v] || String(v);
-  if (f.kind === 'string[]') return Array.isArray(v) ? v.map(x => f.options?.[x] || x).join('、') : String(v);
-  // 「|」隔开的 value（潜历特色标签等）：逐个转中文名
-  if (f.options && typeof v === 'string') return v.split('|').map(x => f.options?.[x.trim()] || x.trim()).filter(Boolean).join('、');
+  // 多值（数组；迁移前的「|」文本也认）：逐个转中文名
+  if (f.kind === 'string[]' || (f.options && typeof v === 'string' && v.includes('|'))) return toList(v).map(x => f.options?.[x] || x).join('、');
   return String(v);
 }
 
