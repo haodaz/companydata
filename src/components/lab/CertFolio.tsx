@@ -108,7 +108,7 @@ const ISSUERS = '平方创想 · 方略研究院';
 export interface FolioData {
   id?: string;
   no: string; date: string; score: number; overall: number; level: string; match: number | null; beat: number | null; peers: number;
-  /** type = 'ai'：百业大学给 AI 毕业生发的毕业证书（措辞不同） */
+  /** type = 'ai'：百业学院给 AI 毕业生发的毕业证书（措辞不同） */
   candidate: { name: string; location?: string; note?: string; type?: string };
   space: { id: string; name: string; role: string; avatar: string; profession: string; company?: string; research?: boolean };
   chapter?: { n: number; total: number; slot: string; title: string; kind?: string } | null;
@@ -187,7 +187,7 @@ function PageCert({ d }: { d: FolioData }) {
         <div style={{ flex: 1 }} />
         <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'end', gap: '2cqi' }}>
           <div style={{ display: 'grid', gap: '.6cqi' }}>
-            <span className="pg-script" style={{ fontSize: '4cqi', color: '#2c3a8c', borderBottom: '.12cqi solid #1d2450', paddingBottom: '.4cqi' }}>{isAI(d) ? '百業大學' : d.space.name}</span>
+            <span className="pg-script" style={{ fontSize: '4cqi', color: '#2c3a8c', borderBottom: '.12cqi solid #1d2450', paddingBottom: '.4cqi' }}>{isAI(d) ? '百業學院' : d.space.name}</span>
             <span style={{ fontSize: '1.8cqi', color: '#4a5180' }}>{isAI(d) ? 'BAIYE AI COLLEGE · 教务' : `数字职人 · ${d.space.role}`}</span>
             <span className="pg-script" style={{ fontSize: '4cqi', color: '#2c3a8c', borderBottom: '.12cqi solid #1d2450', paddingBottom: '.4cqi', marginTop: '1.2cqi' }}>{d.skill?.expert || '方略研究院'}</span>
             <span style={{ fontSize: '1.8cqi', color: '#4a5180' }}>{d.skill?.expert ? `技能来源 · ${d.skill.location}` : W(d).eval}</span>
@@ -200,7 +200,7 @@ function PageCert({ d }: { d: FolioData }) {
         </div>
         <div style={{ textAlign: 'center', fontSize: '1.5cqi', color: '#8a90aa', marginTop: '2cqi', lineHeight: 1.6 }}>
           {isAI(d)
-            ? <>本证书凭编号可在百业大学查验 · 按岗位标准与真活评分，证明该数字职人修完课程、通过考核，不代表执业资格</>
+            ? <>本证书凭编号可在百业学院查验 · 按岗位标准与真活评分，证明该数字职人修完课程、通过考核，不代表执业资格</>
             : <>本证书凭编号可在 AI 百业查验 · 由 AI 核心按{d.space.research ? '研究岗' : '岗位'}标准评分，仅用于{d.space.research ? '科研' : '职业'}体验，不代表{d.space.research ? '学位或任职' : '执业'}资格</>}
         </div>
       </div>
@@ -442,7 +442,7 @@ export function ScoreFolio({ d }: { d: FolioData }) {
 
 /** 页夹本体：两屏四页，翻页有动画；窄屏四页竖排；打印四页 A4 */
 /** 证书措辞：职业空间叫「职业体验证书」，科研版的研究岗 / 学科空间叫「科研体验证书」 */
-/** AI 毕业生（百业大学）叫「毕业证书」 */
+/** AI 毕业生（百业学院）叫「毕业证书」 */
 const isAI = (d: { candidate?: { type?: string } }) => d.candidate?.type === 'ai';
 const W = (d: { space: { research?: boolean }; candidate?: { type?: string } }) => isAI(d)
   ? { zh: '毕业证书', en: 'DIPLOMA · BAIYE AI COLLEGE', eval: '毕业考核评定' }

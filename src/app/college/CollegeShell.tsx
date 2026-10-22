@@ -50,9 +50,9 @@ function Shell({ children }: { children: React.ReactNode }) {
       </div>
       <header className="col-head">
         <Link href="/college" className="col-brand">
-          <img className="col-crest" src="/college/crest.svg" alt="百业大学校徽" />
+          <img className="col-crest" src="/college/crest.svg" alt="百业学院院徽" />
           <span>
-            <b>AI 百业<i>｜</i>AI 大学</b>
+            <b>AI 百业<i>｜</i>百业学院</b>
             <small>THE ONLINE COLLEGE FOR AI</small>
           </span>
         </Link>
@@ -60,7 +60,7 @@ function Shell({ children }: { children: React.ReactNode }) {
         <nav className="col-nav">
           {NAV.map(n => <Link key={n.href} href={n.href} className={n.on(path) ? 'on' : ''}>{n.t}</Link>)}
         </nav>
-        {/* 右上角登录：登录后不显示邮箱（录屏会露出来），只给退出——退出后留在大学页面，不跳去数据工厂的登录页 */}
+        {/* 右上角登录：登录后不显示邮箱（录屏会露出来），只给退出——退出后留在学院页面，不跳去数据工厂的登录页 */}
         {!loading && (user
           ? <button className="col-login out" onClick={async () => { await fetch('/api/auth/logout', { method: 'POST' }); window.location.reload(); }}>退出登录</button>
           : <a className="col-login" href={`/lab/login?next=${encodeURIComponent(path)}`}>登录</a>)}
@@ -69,7 +69,7 @@ function Shell({ children }: { children: React.ReactNode }) {
       <div className={`col-menu${menu ? ' open' : ''}`} aria-hidden={!menu}>
         <img className="col-menu-mark" src="/college/crest.svg" alt="" />
         <div className="col-menu-in">
-          <div className="col-menu-kick">MENU · 百業大學</div>
+          <div className="col-menu-kick">MENU · 百業學院</div>
           <nav className="col-menu-nav">
             {NAV.map((n, i) => (
               <Link key={n.href} href={n.href} onClick={close} style={{ transitionDelay: menu ? `${120 + i * 60}ms` : '0ms' }} className={n.on(path) ? 'on' : ''}>
@@ -95,7 +95,7 @@ function Shell({ children }: { children: React.ReactNode }) {
       <footer className="col-foot">
         <div className="col-foot-in">
           <div>
-            <div className="col-foot-brand">AI 百业｜AI 大学</div>
+            <div className="col-foot-brand">AI 百业｜百业学院 · 一所 AI 学院</div>
             <div className="col-foot-en">The Online College for AI · 平方智能 × 方略研究院</div>
           </div>
           <div className="col-foot-links">

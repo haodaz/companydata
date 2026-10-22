@@ -1,7 +1,7 @@
 /**
  * 截真实页面（照 drive.mjs 的 CDP 做法，不抓帧只出 PNG）：给宣传页 / 封面用。
  *   node scripts/video/shot.mjs scripts/video/work.shots.mjs [--width=1600] [--height=900] [--dsf=1.2]
- * 分镜文件 export default 数组：{ go, wait } / { eval: 'async () => {...}' } / { hold } / { shot: 'public/work/xxx.png' }
+ * 分镜文件 export default 数组：{ go, wait } / { eval: 'async () => {...}' } / { hold } / { transparent: true } / { shot: 'public/work/xxx.png' }
  */
 import { spawn } from 'child_process';
 import fs from 'fs';
@@ -31,6 +31,7 @@ await send('Emulation.setDeviceMetricsOverride', { width: W, height: H, deviceSc
 const evaluate = expression => send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true });
 
 for (const sc of scenes) {
+  if (sc.transparent) await send('Emulation.setDefaultBackgroundColorOverride', { color: { r: 0, g: 0, b: 0, a: 0 } });   // 透明底（校徽、图标）
   if (sc.cookie) await send('Network.setCookie', { name: sc.cookie.name, value: sc.cookie.value, url: sc.cookie.url, path: '/' });
   if (sc.go) { await send('Page.navigate', { url: sc.go }, 15000); await sleep(sc.wait ?? 4000); }
   if (sc.eval) { const r = await evaluate(`(${sc.eval})()`); console.log('  eval →', JSON.stringify(r?.result?.value ?? r?.result?.description ?? r).slice(0, 160)); }

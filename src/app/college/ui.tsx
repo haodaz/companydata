@@ -28,7 +28,7 @@ export function SubHero({ crumb, title, en, lead, video, poster, children }: {
       <Loop src={video} poster={poster} />
       <div className="cu-sub-shade" />
       <div className="cu-sub-in">
-        <div className="cu-crumb"><Link href="/college">AI 大学</Link><span>/</span>{crumb}</div>
+        <div className="cu-crumb"><Link href="/college">百业学院</Link><span>/</span>{crumb}</div>
         <h1>{title}</h1>
         <div className="cu-sub-en">{en}</div>
         <p>{lead}</p>

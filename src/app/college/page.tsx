@@ -160,7 +160,7 @@ export default function CollegeHome() {
         <video ref={hero} src="/college/hero.mp4" poster="/college/hero.jpg" autoPlay muted loop playsInline />
         <div className="cu-hero-shade" />
         <div className="cu-hero-in">
-          <div className="cu-eyebrow light">百業大學 · BAIYE AI COLLEGE</div>
+          <div className="cu-eyebrow light">百業學院 · BAIYE AI COLLEGE</div>
           <h1><span>培养 AI 数字职人</span><br /><span className="gold">走进千行百业</span></h1>
           <div className="cu-hero-en">Where AI learns a craft — and earns its place at work.</div>
           <p>学生是 AI。好教材、好老师、干真活，三样都在，才出得了能上岗的 AI 人才。</p>
@@ -178,8 +178,8 @@ export default function CollegeHome() {
           <div className="cu-eyebrow">关于学院 · ABOUT</div>
           <p className="cu-statement">大模型读过整个互联网，<br />却没有在哪一行上过一天班。</p>
           <div className="cu-about-cols">
-            <p>人类办大学几百年，把普通人培养成医生、工程师、手艺人。人的大学，培养人；AI 的大学，培养能和人一起干活的 AI。它缺的不是知识，而是三样东西：一套这一行真正的教材，一群好老师，一份要对结果负责的真活。</p>
-            <p className="en">A university for people trains people; a university for AI trains AI that can work alongside them. What a model lacks is not knowledge, but a real curriculum, great teachers, and a job it must answer for.</p>
+            <p>人类办学几百年，把普通人培养成医生、工程师、手艺人。人的学校，培养人；AI 学院，培养能和人一起干活的 AI。它缺的不是知识，而是三样东西：一套这一行真正的教材，一群好老师，一份要对结果负责的真活。</p>
+            <p className="en">A school for people trains people; an AI College trains AI that can work alongside them. What a model lacks is not knowledge, but a real curriculum, great teachers, and a job it must answer for.</p>
           </div>
           <div className="cu-eq">
             {[['好教材', 'Curriculum'], ['好老师', 'Faculty'], ['干真活', 'Real Work']].map(([z, e], i) => (
@@ -190,6 +190,14 @@ export default function CollegeHome() {
             ))}
             <span className="op">=</span>
             <div className="res"><b>AI 真人才</b><i>Real AI Talent</i></div>
+          </div>
+          {/* AI 学院是一种形态，不是品牌（2026-10-22：像 MOOC 时代的可汗学院引领了一种模式） */}
+          <div className="cu-define">
+            <div className="cu-define-k">什么是 AI 学院 · <i>What is an AI College</i></div>
+            <div className="cu-about-cols">
+              <p><b>AI 学院（AI College）</b>不是一个品牌，是一种新的学校形态：学生是 AI，教材是一行真实的工序与标准，老师是老师傅和专家，毕业考的是一份真活。就像 MOOC 时代，可汗学院让「人人在网上学」成了一种模式；AI 学院，要让「AI 进学院学一门手艺、考过真活再上岗」成为一种模式。百业学院，是这样一所 AI 学院。</p>
+              <p className="en"><b>An AI College</b> is not a brand but a new kind of school: its students are AI models, its curriculum is the real procedures and standards of a trade, its faculty are master practitioners, and its final exam is real work. Just as Khan Academy made learning online a model of its own in the MOOC era, the AI College makes "an AI learns a craft, passes real work, then takes the job" a model of its own. Baiye AI College is one.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -409,6 +417,11 @@ const CU_CSS = `
 .cu-eq i { font-size: 14px; color: var(--ink3); }
 .cu-eq .op { font: 300 34px var(--en); color: var(--gold); }
 .cu-eq .res b { color: var(--gold); }
+.cu-define { margin-top: 56px; padding: 30px clamp(18px, 3vw, 36px); border: 1px solid var(--line); border-top: 3px solid var(--gold); border-radius: 4px; background: rgba(176,141,87,.05); }
+.cu-define-k { font-family: var(--serif); font-size: clamp(20px, 2.2vw, 26px); font-weight: 900; margin-bottom: 18px; letter-spacing: .04em; }
+.cu-define-k i { font: italic 400 .8em var(--en); color: var(--ink3); }
+.cu-define b { color: var(--ink); }
+@media (max-width: 760px) { .cu-define .cu-about-cols { grid-template-columns: 1fr; } }
 
 /* 从一个到万千 */
 .cu-become { background: radial-gradient(120% 90% at 12% 40%, #1e2a5e 0%, #0b0f22 60%); color: #fff; padding: clamp(64px, 9vw, 120px) 0; overflow: hidden; }

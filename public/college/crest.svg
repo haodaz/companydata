@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
-<!-- 百業大學校徽：外圈环形校名（英文 + 汉字纪年）· 回纹圈 · 盾牌（上：碑刻体 AI；下：金色小篆「百業」）· 两侧月桂枝。中西古今。 -->
+<!-- 百業學院院徽：外圈环形校名（英文 + 汉字纪年）· 回纹圈 · 盾牌（上：碑刻体 AI；下：金色小篆「百業」）· 两侧月桂枝。中西古今。 -->
 <defs><path id="arcTop" d="M 47.9,255.5 A 256 256 0 0 1 552.1,255.5"/><path id="arcBot" d="M 34.1,346.9 A 270 270 0 0 0 565.9,346.9"/><radialGradient id="field" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#26346e"/><stop offset="1" stop-color="#16204a"/></radialGradient><linearGradient id="gold" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="600" y2="600"><stop offset="0" stop-color="#e8cf9a"/><stop offset=".5" stop-color="#d9b878"/><stop offset="1" stop-color="#b08d57"/></linearGradient></defs>
 <circle cx="300" cy="300" r="294" fill="#16204a"/>
 <circle cx="300" cy="300" r="288" fill="none" stroke="url(#gold)" stroke-width="3"/>
 <circle cx="300" cy="300" r="226" fill="none" stroke="url(#gold)" stroke-width="2"/>
 <text font-family="Georgia, 'Times New Roman', serif" font-size="30" letter-spacing="9" fill="url(#gold)" font-weight="700"><textPath href="#arcTop" startOffset="50%" text-anchor="middle">BAIYE AI COLLEGE</textPath></text>
-<text font-family="'Songti SC', 'STSong', 'Noto Serif SC', serif" font-size="30" letter-spacing="10" fill="url(#gold)" font-weight="900"><textPath href="#arcBot" startOffset="50%" text-anchor="middle">百業大學 · 二〇二六</textPath></text>
+<text font-family="'Songti SC', 'STSong', 'Noto Serif SC', serif" font-size="30" letter-spacing="10" fill="url(#gold)" font-weight="900"><textPath href="#arcBot" startOffset="50%" text-anchor="middle">百業學院 · 二〇二六</textPath></text>
 <path d="M 557.0,291.0 L 564.0,300.0 L 557.0,309.0 L 550.0,300.0 Z" fill="url(#gold)"/>
 <path d="M 43.0,291.0 L 50.0,300.0 L 43.0,309.0 L 36.0,300.0 Z" fill="url(#gold)"/>
 <path d="M 300.0,98.0 L 300.0,80.9 L 313.2,81.3 L 312.5,94.4 L 303.8,94.1 L 304.0,86.9 L 308.6,87.0" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="miter"/>
