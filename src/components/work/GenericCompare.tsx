@@ -47,6 +47,9 @@ function Plain({ text, issues }: { text: string; issues: Issue[] }) {
   );
 }
 
+const Sub = ({ t, children }: { t: string; children: React.ReactNode }) => (
+  <div style={{ marginTop: 10, fontSize: 13, lineHeight: 1.75, color: '#333' }}><div style={{ fontWeight: 700, color: '#6055f5', marginBottom: 4 }}>{t}</div>{children}</div>
+);
 const Fold = ({ title, children, open }: { title: React.ReactNode; children: React.ReactNode; open?: boolean }) => (
   <details open={open} style={{ marginTop: 6 }}><summary style={{ cursor: 'pointer', color: '#6055f5', fontSize: 12.5 }}>{title}</summary><div style={{ marginTop: 6 }}>{children}</div></details>
 );
@@ -123,11 +126,17 @@ export function GenericCompare({ token, ownerKey, task }: { token: string; owner
               <Fold title={`通用模型原文（${c.text.length} 字${issues.length ? '，标红处是问题，悬停看原因' : ''}）`} open={!rv}><Plain text={c.text} issues={issues} /></Fold>
             </div>
             <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '10px 16px' }}>
-              <Fold title="平方出的完整题目">
+              <Fold title={`平方出的完整题目（任务书 + ${mats.length} 份材料 + ${rub.length} 条评分标准）`}>
                 <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 6 }}>{task.task?.title}</div>
                 {task.problem?.statement && <p style={{ fontSize: 13, lineHeight: 1.75 }}><b>业务问题 · </b>{task.problem.statement}</p>}
                 {task.problem?.why_now && <p style={{ fontSize: 13, lineHeight: 1.75 }}><b>为什么是现在 · </b>{task.problem.why_now}</p>}
                 {task.task?.brief && <p style={{ fontSize: 13, lineHeight: 1.75 }}><b>任务书 · </b>{task.task.brief}</p>}
+                {!!task.problem?.evidence?.length && <Sub t="依据（企业库原文）">{task.problem.evidence.map((e: any, i: number) => <div key={i}>「{e.text}」<span style={{ color: '#999' }}> — {e.source}</span></div>)}</Sub>}
+                {!!task.task?.deliverables?.length && <Sub t="交付物">{task.task.deliverables.map((d: any) => <div key={d.id}>{d.id} {d.title}<span style={{ color: '#999' }}> · {d.format}</span></div>)}</Sub>}
+                {!!task.task?.rules?.length && <Sub t="规则">{task.task.rules.map((r: string, i: number) => <div key={i}>· {r}</div>)}</Sub>}
+                <Sub t={`材料包 ${mats.length} 份（考生拿到的原样）`}>{mats.map((m: any) => <div key={m.id} style={{ marginBottom: 10 }}><b>{m.id} {m.title}</b><pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 12.5, background: '#fafbff', border: '1px solid #eef0f5', padding: 10, borderRadius: 8, margin: '4px 0 0' }}>{m.content}</pre></div>)}</Sub>
+                <Sub t={`评分标准 ${rub.length} 条（每条 L1–L4 行为锚定）`}>{rub.map((r: any) => <div key={r.id} style={{ marginBottom: 10 }}><b>{r.id} {r.title}</b><span style={{ color: '#999' }}> · 权重 {r.weight}{r.depends_on?.length ? ` · 依赖 ${r.depends_on.join('、')}` : ''}</span>{r.desc && <div>{r.desc}</div>}{r.basis && <div style={{ color: '#777' }}>依据：{r.basis}</div>}{r.levels && ['L1', 'L2', 'L3', 'L4'].map(l => r.levels[l] && <div key={l} style={{ color: '#555' }}><b>{l}</b> {r.levels[l]}</div>)}</div>)}</Sub>
+                {task.baseline?.result?.total != null && <Sub t="AI 基线">AI 用同一套标准先做一遍：{task.baseline.result.total} 分。{task.baseline.result.summary}</Sub>}
               </Fold>
             </div>
           </div>
