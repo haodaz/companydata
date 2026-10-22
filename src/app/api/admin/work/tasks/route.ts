@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ ok: true, role: user.role, tasks: mine.map(t => ({ ...t, demo: isDemo(t), task: { title: t.task?.title, time_minutes: t.task?.time_minutes, env: t.task?.env }, baseline: t.baseline ? { total: t.baseline.result?.total, model: t.baseline.model } : null, sessions: counts[t.id] || { n: 0, done: 0 } })) });
 }
 
-/** 出一道题：{ company, company_id?, role, env?, focus? }。登录即可（用户 10-18：出题走登录，做题免登录）。生成器是核心：先拼材料，再出 问题 → 任务 → 材料包 → rubric；AI 基线另一步跑 */
+/** 出一道题：{ company, company_id?, intro?（库里没有的企业：出题人贴的介绍）, role, env?, focus? }。登录即可（用户 10-18：出题走登录，做题免登录）。生成器是核心：先拼材料，再出 问题 → 任务 → 材料包 → rubric；AI 基线另一步跑 */
 export async function POST(req: NextRequest) {
   const user = await getSessionUser(req);
   if (!user) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const company = String(body.company || '').trim(), role = String(body.role || '').trim();
     if (!company || !role) return NextResponse.json({ ok: false, error: '企业和岗位都要填' }, { status: 400 });
-    const ctx = await gatherContext(body.company_id ? String(body.company_id) : company, role);
+    const ctx = await gatherContext(body.company_id ? String(body.company_id) : company, role, { intro: body.company_id ? undefined : String(body.intro || '').slice(0, 6000) });
     const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题', stage: 'create', actor: user?.email || null }, () => generateTask(ctx, role, { model: isKnownModel(String(body.model || '')) ? String(body.model) : WORK_MODEL, focus: body.focus, env: ['doc', 'code', 'sheet', 'design', 'open'].includes(body.env) ? body.env : undefined }));
     const share_token = randomBytes(8).toString('base64url'), owner_key = randomBytes(12).toString('base64url');
     const row = { share_token, owner_key, owner: { name: user?.email, contact: user?.email }, status: 'published', company_id: ctx.company?.id ?? null, company_name: ctx.company?.name || company, role, context: ctx, problem: task.problem, task: { ...task.task, env: task.env }, materials: task.materials, rubric: task.rubric, model, created_by: user?.email || null };

@@ -34,7 +34,7 @@ export default function NewPage() {
 function Inner() {
   const { message } = App.useApp();
   const router = useRouter();
-  const [f, setF] = useState({ company: '', role: '', env: '', focus: '', model: DEFAULT_MODEL });
+  const [f, setF] = useState({ company: '', role: '', env: '', focus: '', model: DEFAULT_MODEL, intro: '' });
   const [picked, setPicked] = useState<PickedCompany>(null);
   const [busy, setBusy] = useState('');
   // 出题等待的进度：gen 出题中 → base AI 基线中 → done 好了（GenProgress 一行一行列出平方在做什么）
@@ -44,7 +44,7 @@ function Inner() {
     if (!f.company.trim() || !f.role.trim()) return message.warning('企业和要找的人都要填');
     setBusy('在拼这家企业的材料、出题、做材料包、定标准……约 2 分钟，别关页面'); setPhase('gen');
     try {
-      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: f.company, company_id: picked?.id, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model }) });
+      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model }) });
       if (r.status === 401) { location.href = `/work/login?next=${encodeURIComponent('/work/new')}`; return; }
       const j = await r.json();
       if (!j.ok) throw new Error(j.error);
@@ -73,8 +73,17 @@ function Inner() {
 
           <Sec n="1" t="企业，和你要找的人" d="企业边输边搜，库里有就选中（会用上它的画像和深度尽调）。要找的人直接用一句话说，不用先想职位名">
             <CompanyRolePicker company={f.company} role={f.role} onCompany={(name, p) => { setF(x => ({ ...x, company: name })); setPicked(p); }} onRole={r => setF(x => ({ ...x, role: r }))} />
+            {/* 库里没有的企业：贴一段介绍，AI 先读懂这家公司再出题（2026-10-22） */}
+            {f.company.trim() && !picked && (
+              <div style={{ marginTop: 10, padding: '12px 14px', border: '1px dashed #c9c4f7', background: '#faf9ff', borderRadius: 12 }}>
+                <div style={{ fontSize: 13.5, fontWeight: 600, color: '#2b2670', marginBottom: 2 }}>「{f.company.trim()}」还不在企业库里，贴一段介绍，AI 先读懂这家公司</div>
+                <div style={{ fontSize: 12.5, color: '#77779a', lineHeight: 1.7, marginBottom: 8 }}>官网「关于我们」、BP 首页、公众号简介、口述都行，越具体题越准。最好包括：做什么（产品 / 客户）· 现在多大（人数、融资阶段）· 最近在推进什么（新业务、出海、融资、扩张）· 为什么要招这个人</div>
+                <Input.TextArea value={f.intro} onChange={e => setF(x => ({ ...x, intro: e.target.value }))} autoSize={{ minRows: 4, maxRows: 10 }} maxLength={6000} showCount
+                  placeholder={'例：我们是一家 30 人的工业 AI 初创公司，刚完成 A 轮，做钢铁厂的质检视觉系统，客户有宝武、沙钢。今年要把产品卖到东南亚，第一次搭海外销售团队……'} />
+              </div>
+            )}
           </Sec>
-          <Sec n="2" t="出题模型" d="默认通义千问，国内网络直接可用；要更强的推理可以切 Claude / GPT（按量计费）">
+          <Sec n="2" t="给答题者配一个 AI 助理" d="候选人做题时随手可问；默认通义千问，国内网络直接可用。也可以换成 Claude / GPT">
             <Select value={f.model} onChange={v => setF(x => ({ ...x, model: v }))} size="large" style={{ width: '100%' }} optionLabelProp="label"
               options={MODELS.map(m => ({ value: m.id, label: m.label, desc: m.provider + (m.badge ? ' · ' + m.badge : '') }))}
               optionRender={o => <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}><span>{o.data.label}</span><span style={{ color: '#999', fontSize: 12 }}>{o.data.desc}</span></div>} />
@@ -86,7 +95,7 @@ function Inner() {
             <Input.TextArea value={f.focus} onChange={e => setF(x => ({ ...x, focus: e.target.value }))} placeholder="例：聚焦德布勒森工厂爬坡期的欧洲供需平衡；给 3 年以内的人做；一小时内" autoSize={{ minRows: 2, maxRows: 5 }} />
           </Sec>
           <Button type="primary" size="large" block icon={<RocketOutlined />} loading={!!busy} onClick={create} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>出题（约 2–3 分钟）</Button>
-          {busy && <GenProgress phase={phase} company={f.company} picked={picked} role={f.role} focus={f.focus} env={f.env ? ENVS.find(e => e.value === f.env)?.label : undefined} />}
+          {busy && <GenProgress phase={phase} company={f.company} picked={picked} intro={picked ? '' : f.intro} role={f.role} focus={f.focus} env={f.env ? ENVS.find(e => e.value === f.env)?.label : undefined} />}
           <Text type="secondary" style={{ display: 'block', fontSize: 12, marginTop: 12 }}>题出好即发布，会直接进这道真活的空间：复制参与链接发给候选人就能做（不用登录）；觉得题不对，在空间里提意见让 AI 修订。</Text>
         </div>
 
@@ -94,10 +103,10 @@ function Inner() {
           <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 18, padding: '18px 20px' }}>
             <div style={{ fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700, marginBottom: 8 }}>这道真活会怎么出</div>
             <ol style={{ margin: 0, paddingLeft: 18, lineHeight: 1.9, fontSize: 13.5, color: '#3b405a' }}>
-              <li>拼材料：{picked ? `「${picked.name}」的画像与在招岗位` : '这家企业的画像（没有就按行业与公开信息）'} + 深度画像（投资机构：基金 / 被投 / 合伙人 / 招聘）+ 「{f.role || '要找的人'}」 + 行业规范</li>
+              <li>拼材料：{picked ? `「${picked.name}」的画像与在招岗位` : f.intro.trim() ? '你贴的企业介绍（AI 先解析成画像）' : '这家企业的画像（库里没有就贴一段介绍）'} + 深度画像（投资机构：基金 / 被投 / 合伙人 / 招聘）+ 「{f.role || '要找的人'}」 + 行业规范</li>
               <li>锚定一个此刻真实的业务问题，写成任务书</li>
               <li>做材料包（必有一份有坑）、定逐条有依赖的标准</li>
-              <li>{model?.label || '模型'} 先做一遍当基线</li>
+              <li>请 AI 助理先做一遍，分数当基线</li>
             </ol>
           </div>
           <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 18, padding: '18px 20px' }}>

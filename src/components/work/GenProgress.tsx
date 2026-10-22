@@ -11,9 +11,16 @@ import type { PickedCompany } from '@/components/work/CompanyRolePicker';
 type Line = { t: string; d?: string };
 const isNeedText = (role: string) => role.trim().length > 14 || /[，,。、]|要一个|能看懂|能把|的人/.test(role);
 
-function genLines(company: string, picked: PickedCompany, role: string, deep: string[], focus?: string, env?: string): Line[] {
+function genLines(company: string, picked: PickedCompany, role: string, deep: string[], focus?: string, env?: string, intro?: string): Line[] {
   const need = isNeedText(role);
-  const L: Line[] = [
+  const fresh = !picked && !!intro && intro.trim().length >= 20;
+  const L: Line[] = fresh ? [
+    { t: `在企业实体库里找「${company}」`, d: '库里还没有，用你贴的介绍起步' },
+    { t: '读你贴的企业介绍', d: `${intro!.trim().length} 字` },
+    { t: '拆出企业画像：做什么、客户是谁、现在多大' },
+    { t: '拆出正在推进的事：新业务、出海、融资、扩张' },
+    { t: '整理产品、近期动作、团队，按企业库的字段归好' },
+  ] : [
     { t: `打开企业实体库：${company}`, d: picked ? [picked.industry, picked.city, picked.completeness != null ? `画像完整度 ${picked.completeness}` : ''].filter(Boolean).join(' · ') : '库里没有，按名字和公开信息起步' },
     { t: '读企业画像：简介、业务、产品领域、技术优势、增长信号、行业位置' },
     { t: '读子实体：核心产品、近期动态、管理团队' },
@@ -53,7 +60,7 @@ const BASE_LINES: Line[] = [
 
 const need = (r: string) => r.trim().length > 30 ? r.trim().slice(0, 30) + '…' : r.trim();
 
-export function GenProgress({ phase, company, picked, role, focus, env }: { phase: 'gen' | 'base' | 'done'; company: string; picked: PickedCompany; role: string; focus?: string; env?: string }) {
+export function GenProgress({ phase, company, picked, role, focus, env, intro }: { phase: 'gen' | 'base' | 'done'; company: string; picked: PickedCompany; role: string; focus?: string; env?: string; intro?: string }) {
   const [deep, setDeep] = useState<string[]>([]);
   useEffect(() => {
     if (!picked?.id) return;
@@ -64,7 +71,7 @@ export function GenProgress({ phase, company, picked, role, focus, env }: { phas
         setDeep(Object.keys(j.topics || {}).map(k => label[k] || k));
       })).catch(() => {});
   }, [picked?.id]);
-  const gen = useMemo(() => genLines(company, picked, role, deep, focus, env), [company, picked, role, deep, focus, env]);
+  const gen = useMemo(() => genLines(company, picked, role, deep, focus, env, intro), [company, picked, role, deep, focus, env, intro]);
   const lines = useMemo(() => [...gen, ...BASE_LINES], [gen]);
 
   // 已经做完的行数：按节奏走；阶段切换时把前一阶段剩下的快速打勾

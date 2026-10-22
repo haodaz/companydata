@@ -50,15 +50,17 @@ export async function askJson(prompt: string, model: string, task_name: string, 
 const s = (v: any, n = 600) => (v == null ? '' : typeof v === 'string' ? v : JSON.stringify(v)).slice(0, n);
 
 /** 第一步：把企业 / 岗位 / 职业 / 标准四层材料拼起来（都是库里的，带来源） */
-export async function gatherContext(companyQuery: string, role: string): Promise<WorkContext> {
+export async function gatherContext(companyQuery: string, role: string, opts: { intro?: string } = {}): Promise<WorkContext> {
   const ctx: WorkContext = { company: null, products: [], news: [], executives: [], jobs: [], occupation: null, typical_tasks: [], standards: [], notes: [] };
   const q = companyQuery.trim();
+  const intro = String(opts.intro || '').trim();
   let company: any = null;
   const C = 'id, name, name_en, brief_name, industry, sub_industry, one_sentence, introduction, business_profile, product_area, company_specialties, company_case, tech_advantage, research_area, growth_signals, industry_position, public_sentiment, candidate_reputation, campus_overview, tags, city, province, official_website, company_scale, company_employees, info_founding_year, operating_revenue, stock_code';
   if (/^\d+$/.test(q)) ({ data: company } = await db.from('companies').select(C).eq('id', Number(q)).eq('if_delete', false).maybeSingle());
   if (!company && q) {
     const { data } = await db.from('companies').select(C).eq('if_delete', false).or(`name.ilike.%${q}%,name_en.ilike.%${q}%,brief_name.ilike.%${q}%`).order('id').limit(5);
-    company = (data || []).find((c: any) => c.name === q || c.brief_name === q) || data?.[0] || null;
+    // 贴了介绍 = 出题人说这家不在库里：只认名字完全对上的，不拿模糊匹配的别家顶替
+    company = (data || []).find((c: any) => c.name === q || c.brief_name === q) || (intro ? null : data?.[0]) || null;
   }
   const J = 'name, title_cn, department, job_function, summary_cn, responsibilities, overview, skill_labels, education_description, major_requirement, preferred_qualifications, city';
   if (company) {
@@ -81,6 +83,14 @@ export async function gatherContext(companyQuery: string, role: string): Promise
     const label = Object.fromEntries([...DEEP_TOPICS, ...DEEP_TOPICS_VC].map(t => [t.key, t.label]));
     const strip = (v: any): any => Array.isArray(v) ? v.map(strip) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).filter(([k]) => !/^(source|sources|queries)$/.test(k)).map(([k, x]) => [k, strip(x)])) : v;
     ctx.deep = (deep || []).filter(d => d.data && JSON.stringify(d.data).length > 30).map(d => ({ topic: d.topic, label: label[d.topic] || d.topic, text: JSON.stringify(strip(d.data)).slice(0, 1500) }));
+  } else if (intro.length >= 20) {
+    // 库里没有的企业（2026-10-22）：出题人贴一段介绍，先解析成画像再出题；之后再按单入库补全（make to order）
+    const parsed = await parseCompanyIntro(q, intro).catch(e => { console.warn('[work] 介绍解析失败：', String(e?.message).slice(0, 120)); return null; });
+    if (parsed) {
+      ctx.company = { ...parsed.company, name: parsed.company?.name || q, __src: '出题人提供的企业介绍，AI 解析' };
+      ctx.products = parsed.products; ctx.news = parsed.news; ctx.executives = parsed.executives;
+    } else ctx.company = { name: q, introduction: intro.slice(0, 1500), __src: '出题人提供的企业介绍' };
+    ctx.notes.push(`「${q}」还不在企业库里，企业事实来自出题人贴的介绍`);
   } else ctx.notes.push(`企业库里没找到「${q}」，只能按名字出题，企业事实会少`);
   // 职业层：名字 / 别名命中，命不中就模糊找。出题人用自然语言描述要什么样的人时，不硬套职业库
   let occ: any = isNeedText(role) ? null : await findOccupation({ name: role });
@@ -101,13 +111,33 @@ export async function gatherContext(companyQuery: string, role: string): Promise
   return ctx;
 }
 
+/** 出题人贴的企业介绍 → 和企业库同样字段的画像（只用介绍里有的，不编） */
+export async function parseCompanyIntro(name: string, intro: string): Promise<{ company: Record<string, any>; products: WorkContext['products']; news: WorkContext['news']; executives: WorkContext['executives'] }> {
+  const prompt = `下面是出题人贴的一段企业介绍（可能来自官网、BP、公众号或口述）。把它整理成企业画像 JSON，给出题用。
+规则：只用介绍里写到的信息，没写的字段留空字符串 / 空数组，绝不编造数字、客户、人名；原话里的关键事实尽量保留。
+企业名：${name}
+## 介绍原文
+${intro.slice(0, 6000)}
+## 输出 JSON
+{"company":{"name":"","industry":"行业","city":"","company_scale":"规模 / 人数 / 阶段（如 A 轮、初创 20 人）","one_sentence":"一句话说清它做什么","introduction":"简介","business_profile":"业务与客户","product_area":"产品领域","tech_advantage":"技术或能力优势","growth_signals":"正在推进的事：新业务、出海、融资、扩张、招人原因","industry_position":"在行业里的位置、竞争对手","public_sentiment":"介绍里提到的难点、风险或卡点"},
+"products":[{"name":"","description":""}],"news":[{"publish_date_str":"","description":"近期动作"}],"executives":[{"name":"","title":""}]}`;
+  const { parsed: p } = await askJson(prompt, 'qwen-plus', 'Generate · 解析企业介绍', name);
+  const arr = (v: any) => Array.isArray(v) ? v : [];
+  return {
+    company: Object.fromEntries(Object.entries(p.company || {}).filter(([, v]) => typeof v === 'string' && v.trim())),
+    products: arr(p.products).filter((x: any) => x?.name).slice(0, 8),
+    news: arr(p.news).filter((x: any) => x?.description).slice(0, 8),
+    executives: arr(p.executives).filter((x: any) => x?.name).slice(0, 6),
+  };
+}
+
 /** 材料渲染成给模型看的文本（每段带来源标签） */
 export function renderContext(ctx: WorkContext): string {
   const L: string[] = [];
   if (ctx.company) {
     const c = ctx.company;
     const f = (label: string, v: any, n = 500) => (v ? `${label}：${s(v, n)}\n` : '');
-    L.push(`## 企业画像（来源：企业实体库）\n名称：${c.name}${c.industry ? ` · 行业：${c.industry}${c.sub_industry ? ' / ' + c.sub_industry : ''}` : ''}${c.city ? ` · ${c.province || ''}${c.city}` : ''}${c.company_scale ? ` · 规模：${c.company_scale}` : ''}${c.info_founding_year ? ` · 成立：${c.info_founding_year}` : ''}${c.operating_revenue ? ` · 营收：${c.operating_revenue}` : ''}${c.stock_code ? ` · ${c.stock_code}` : ''}\n${f('一句话', c.one_sentence, 120)}${f('简介', c.introduction, 700)}${f('业务', c.business_profile, 500)}${f('产品领域', c.product_area, 200)}${f('专长', c.company_specialties, 300)}${f('技术优势', c.tech_advantage, 400)}${f('研发方向', c.research_area, 300)}${f('增长信号', c.growth_signals, 500)}${f('行业位置', c.industry_position, 500)}${f('合作案例', c.company_case, 400)}${f('舆情风险', c.public_sentiment, 500)}${f('求职者口碑', c.candidate_reputation, 300)}${f('校招概况', c.campus_overview, 300)}${c.tags?.length ? `标签：${c.tags.join('、')}\n` : ''}`);
+    L.push(`## 企业画像（来源：${c.__src || '企业实体库'}）\n名称：${c.name}${c.industry ? ` · 行业：${c.industry}${c.sub_industry ? ' / ' + c.sub_industry : ''}` : ''}${c.city ? ` · ${c.province || ''}${c.city}` : ''}${c.company_scale ? ` · 规模：${c.company_scale}` : ''}${c.info_founding_year ? ` · 成立：${c.info_founding_year}` : ''}${c.operating_revenue ? ` · 营收：${c.operating_revenue}` : ''}${c.stock_code ? ` · ${c.stock_code}` : ''}\n${f('一句话', c.one_sentence, 120)}${f('简介', c.introduction, 700)}${f('业务', c.business_profile, 500)}${f('产品领域', c.product_area, 200)}${f('专长', c.company_specialties, 300)}${f('技术优势', c.tech_advantage, 400)}${f('研发方向', c.research_area, 300)}${f('增长信号', c.growth_signals, 500)}${f('行业位置', c.industry_position, 500)}${f('合作案例', c.company_case, 400)}${f('舆情风险', c.public_sentiment, 500)}${f('求职者口碑', c.candidate_reputation, 300)}${f('校招概况', c.campus_overview, 300)}${c.tags?.length ? `标签：${c.tags.join('、')}\n` : ''}`);
   }
   if (ctx.products.length) L.push(`## 产品（来源：企业产品子实体）\n${ctx.products.map(p => `- ${p.name}${p.is_flagship ? '（主打）' : ''}${p.category ? ` [${p.category}]` : ''}：${s(p.description, 200)}`).join('\n')}`);
   if (ctx.news.length) L.push(`## 近期动态（来源：企业动态子实体）\n${ctx.news.map(n => `- ${n.publish_date_str || ''} ${s(n.description, 240)}`).join('\n')}`);
