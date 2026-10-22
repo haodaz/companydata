@@ -36,6 +36,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
               {T.sources.company && <div><Tag color="green">企业画像</Tag>{T.sources.company.name}{T.sources.company.industry ? `（${T.sources.company.industry}）` : ''} · 用到字段：{T.sources.company.fields.join('、') || '—'}</div>}
               <div><Tag color="green">子实体</Tag>产品 {T.sources.products.length} 个{T.sources.products.length ? `（${T.sources.products.slice(0, 5).join('、')}${T.sources.products.length > 5 ? '…' : ''}）` : ''} · 近期动态 {T.sources.news} 条 · 高管 {T.sources.executives} 位</div>
               {!!T.sources.deep?.length && <div><Tag color="geekblue">深度画像</Tag>{T.sources.deep.join('、')}</div>}
+              {!!T.sources.related?.length && <div><Tag color="cyan">关联主体</Tag>{T.sources.related.join('；')}</div>}
               {/* 出题人用一句话说要找什么样的人时，不查职业库、不配在招岗位：这两行不显示 */}
               {(T.sources.jobs.length > 0 || !isNeed) && <div><Tag color="purple">在招岗位</Tag>{T.sources.jobs.length ? T.sources.jobs.join('、') : '没有对口岗位'}</div>}
               {(T.sources.occupation || !isNeed) && <div><Tag color="blue">职业画像</Tag>{T.sources.occupation || '职业库里没有这个职业'}{T.sources.typical_tasks.length ? ` · 典型任务：${T.sources.typical_tasks.slice(0, 4).join('、')}` : ''}</div>}

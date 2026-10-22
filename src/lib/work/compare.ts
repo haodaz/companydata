@@ -49,29 +49,15 @@ function ruleIssues(text: string, now = new Date()): CompareIssue[] {
   return out;
 }
 
-/** 库里这家企业最新的资料（不用出题时的快照）：本体 + 别名 + 共同高管 ≥2 位的关联企业 */
+/** 库里这家企业最新的资料（不用出题时的快照）：本体 + 别名 + 关联主体（gatherContext 按共同高管 ≥2 位读） */
 async function loadFacts(companyId: number | null, companyName: string, role: string): Promise<string> {
   const ctx = await gatherContext(companyId ? String(companyId) : companyName, role).catch(() => null);
   const L: string[] = [];
   if (ctx?.company) {
     const { data: c } = await db.from('companies').select('aliases').eq('id', ctx.company.id).maybeSingle();
     if (c?.aliases?.length) L.push(`## 别名 / 品牌 / 主体（同一家）\n${c.aliases.join('、')}`);
-    L.push(renderContext(ctx).replace(/## 材料缺口[\s\S]*$/, '').slice(0, 9000));
-    const { data: ex } = await db.from('company_executives').select('name').eq('company_id', ctx.company.id).eq('if_delete', false);
-    const names = [...new Set((ex || []).map(e => e.name).filter(Boolean))];
-    if (names.length) {
-      const { data: other } = await db.from('company_executives').select('company_id, name').in('name', names).neq('company_id', ctx.company.id).eq('if_delete', false);
-      const cnt = new Map<number, Set<string>>();
-      for (const o of other || []) { if (!cnt.has(o.company_id)) cnt.set(o.company_id, new Set()); cnt.get(o.company_id)!.add(o.name); }
-      const rel = [...cnt.entries()].filter(([, s]) => s.size >= 2).sort((a, b) => b[1].size - a[1].size).slice(0, 2);
-      for (const [rid, shared] of rel) {
-        const { data: r } = await db.from('companies').select('name, aliases, one_sentence, introduction, industry_position, official_website').eq('id', rid).eq('if_delete', false).maybeSingle();
-        if (!r) continue;
-        const { data: news } = await db.from('company_news').select('description, publish_date_str').eq('company_id', rid).eq('if_delete', false).order('publish_date', { ascending: false, nullsFirst: false }).limit(8);
-        const { data: deep } = await db.from('company_deep_research').select('topic, data').eq('company_id', rid);
-        L.push(`## 关联主体：${r.name}（与本企业共同高管 ${[...shared].join('、')}，同一体系）\n${r.aliases?.length ? `别名：${r.aliases.join('、')}\n` : ''}${r.official_website ? `官网：${r.official_website}\n` : ''}${[r.one_sentence, r.introduction, r.industry_position].filter(Boolean).join('\n').slice(0, 1500)}\n${(news || []).map(n => `- ${n.publish_date_str || ''} ${String(n.description).slice(0, 200)}`).join('\n')}\n${(deep || []).map(d => `### ${d.topic}\n${JSON.stringify(d.data).slice(0, 800)}`).join('\n')}`);
-      }
-    }
+    L.push(renderContext(ctx).replace(/## 材料缺口[\s\S]*$/, '').slice(0, 14000));
+    // 关联主体（共同高管 ≥2 位）已由 gatherContext 读进来，renderContext 里带着
   }
   return L.join('\n\n').slice(0, 16000) || '（库里没有这家企业的资料）';
 }

@@ -26,6 +26,8 @@ export interface WorkContext {
   notes: string[];   // 哪些材料没找到
   /** 企业深度画像专题（company_deep_research）：投资机构的基金 / 策略 / 被投 / 合伙人 / 招聘，药企的管线 / 交易…… */
   deep?: { topic: string; label: string; text: string }[];
+  /** 关联主体（共同高管 ≥2 位，同一体系，如武岳峰资本 ↔ 鼎峰科创）：简介、近期动态、深度画像 */
+  related?: { id: number; name: string; shared: string[]; text: string; news: string[]; deep: string[] }[];
 }
 
 /** 出题人是用自然语言说要什么样的人（「我要一个能看懂人工智能行业的人来做投资」），还是给了个职位名 */
@@ -83,6 +85,7 @@ export async function gatherContext(companyQuery: string, role: string, opts: { 
     const label = Object.fromEntries([...DEEP_TOPICS, ...DEEP_TOPICS_VC].map(t => [t.key, t.label]));
     const strip = (v: any): any => Array.isArray(v) ? v.map(strip) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).filter(([k]) => !/^(source|sources|queries)$/.test(k)).map(([k, x]) => [k, strip(x)])) : v;
     ctx.deep = (deep || []).filter(d => d.data && JSON.stringify(d.data).length > 30).map(d => ({ topic: d.topic, label: label[d.topic] || d.topic, text: JSON.stringify(strip(d.data)).slice(0, 1500) }));
+    ctx.related = await relatedEntities(cid, label, strip).catch(() => []);
   } else if (intro.length >= 20) {
     // 库里没有的企业（2026-10-22）：出题人贴一段介绍，先解析成画像再出题；之后再按单入库补全（make to order）
     const parsed = await parseCompanyIntro(q, intro).catch(e => { console.warn('[work] 介绍解析失败：', String(e?.message).slice(0, 120)); return null; });
@@ -109,6 +112,30 @@ export async function gatherContext(companyQuery: string, role: string, opts: { 
   }
   if (!ctx.standards.length) ctx.notes.push('没有挂到这个职业 / 行业的标准，rubric 的依据只能来自企业材料和职业常识');
   return ctx;
+}
+
+/** 关联主体：和本企业共同高管 ≥2 位的企业（同一体系的品牌 / 主体），最多 2 家（2026-10-22：武岳峰资本 ↔ 鼎峰科创） */
+async function relatedEntities(cid: number, label: Record<string, string>, strip: (v: any) => any): Promise<NonNullable<WorkContext['related']>> {
+  const { data: ex } = await db.from('company_executives').select('name').eq('company_id', cid).eq('if_delete', false);
+  const names = [...new Set((ex || []).map(e => e.name).filter(Boolean))];
+  if (!names.length) return [];
+  const { data: other } = await db.from('company_executives').select('company_id, name').in('name', names).neq('company_id', cid).eq('if_delete', false);
+  const cnt = new Map<number, Set<string>>();
+  for (const o of other || []) { if (!cnt.has(o.company_id)) cnt.set(o.company_id, new Set()); cnt.get(o.company_id)!.add(o.name); }
+  const out: NonNullable<WorkContext['related']> = [];
+  for (const [rid, shared] of [...cnt.entries()].filter(([, x]) => x.size >= 2).sort((a, b) => b[1].size - a[1].size).slice(0, 2)) {
+    const { data: r } = await db.from('companies').select('id, name, aliases, one_sentence, introduction, industry_position').eq('id', rid).eq('if_delete', false).maybeSingle();
+    if (!r) continue;
+    const [{ data: news }, { data: deep }] = await Promise.all([
+      db.from('company_news').select('description, publish_date_str').eq('company_id', rid).eq('if_delete', false).order('publish_date', { ascending: false, nullsFirst: false }).limit(8),
+      db.from('company_deep_research').select('topic, data').eq('company_id', rid),
+    ]);
+    out.push({ id: r.id, name: r.name, shared: [...shared],
+      text: [r.aliases?.length ? `别名：${r.aliases.join('、')}` : '', r.one_sentence, r.introduction, r.industry_position].filter(Boolean).join('\n').slice(0, 1500),
+      news: (news || []).map(n => `${n.publish_date_str || ''} ${s(n.description, 240)}`),
+      deep: (deep || []).filter(d => d.data && JSON.stringify(d.data).length > 30).map(d => `${label[d.topic] || d.topic}：${JSON.stringify(strip(d.data)).slice(0, 900)}`) });
+  }
+  return out;
 }
 
 /** 出题人贴的企业介绍 → 和企业库同样字段的画像（只用介绍里有的，不编） */
@@ -145,6 +172,7 @@ export function renderContext(ctx: WorkContext): string {
   if (ctx.jobs.length) L.push(`## 在招岗位（来源：校招岗位库）\n${ctx.jobs.map(j => `- ${j.title_cn || j.name}${j.department ? ' · ' + j.department : ''}${j.job_function ? ' · ' + j.job_function : ''}${j.city ? ' · ' + regionName('city', j.city) : ''}\n  概述：${s(j.summary_cn || j.overview, 300)}\n  职责：${s(j.responsibilities, 600)}\n  要求：${s(j.education_description, 100)} ${s(j.major_requirement, 120)} ${s(j.preferred_qualifications, 200)} 技能：${s(j.skill_labels, 150)}`).join('\n')}`);
   if (ctx.occupation) L.push(`## 职业（来源：职业实体库）\n${ctx.occupation.name}：${s(ctx.occupation.intro, 400)}\n职责：${s(ctx.occupation.responsibility, 500)}\n要求：${s(ctx.occupation.position_requirement, 300)}`);
   if (ctx.typical_tasks.length) L.push(`## 这个职业的典型任务（来源：职业典型任务库）\n${ctx.typical_tasks.map(t => `- ${t.name}：${s(t.summary, 200)}\n  目标：${s(t.goal, 150)}；成功标准：${s(t.success_criteria, 200)}；常见错误：${s(t.common_mistakes, 200)}`).join('\n')}`);
+  if (ctx.related?.length) for (const r of ctx.related) L.push(`## 关联主体：${r.name}（与本企业共同高管 ${r.shared.join('、')}，同一体系；来源：企业实体库）\n${r.text}${r.news.length ? `\n近期动态：\n${r.news.map(n => '- ' + n).join('\n')}` : ''}${r.deep.length ? `\n深度画像：\n${r.deep.map(d => '- ' + d).join('\n')}` : ''}`);
   if (ctx.deep?.length) L.push(`## 企业深度画像（来源：深度尽调专题，联网检索、逐条带出处）\n${ctx.deep.map(d => `### ${d.label}\n${d.text}`).join('\n')}`);
   if (ctx.standards.length) L.push(`## 行业标准 / 规程（来源：行业标准与规程库）\n${ctx.standards.map(x => `- ${x.code ? x.code + ' ' : ''}${x.title}：${s(x.key_points, 300)}${x.operation_relevance ? '；操作相关：' + s(x.operation_relevance, 150) : ''}`).join('\n')}`);
   if (ctx.notes.length) L.push(`## 材料缺口\n${ctx.notes.map(n => '- ' + n).join('\n')}`);
@@ -250,6 +278,7 @@ export function sourcesOf(ctx: WorkContext) {
     notes: ctx.notes,
     // 深度画像用到了哪些专题（投资机构：基金 / 策略 / 被投 / 合伙人 / 招聘……）
     deep: (ctx.deep || []).map(d => d.label),
+    related: (ctx.related || []).map(r => `${r.name}（共同高管 ${r.shared.length} 位 · 动态 ${r.news.length} 条 · 深度画像 ${r.deep.length} 个专题）`),
   };
 }
 
