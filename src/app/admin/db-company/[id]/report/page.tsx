@@ -15,6 +15,16 @@ import { COMPANY_TYPE_LABELS, SEGMENT_LABELS, KIND_LABELS, FINANCE_ROUND_LABELS,
 
 /** 有的模型把每个字段都包成 { value, source }（2906 鼎峰科创那份）：只有这两个键的就取 value，递归拆；带 currency / as_of 的金额对象原样留着（页面单独渲染） */
 const unwrapVS = (x: any): any => Array.isArray(x) ? x.map(unwrapVS) : x && typeof x === 'object' ? (Object.keys(x).every(k => k === 'value' || k === 'source') && 'value' in x ? unwrapVS(x.value) : Object.fromEntries(Object.entries(x).map(([k, y]) => [k, unwrapVS(y)]))) : x;
+/** 模型给的结构五花八门（合伙人背景给成 { education, prior_employers }）：页面只把条目字段当文字显示，所以
+ * 条目下面的小对象 / 对象数组一律转成「键：值；…」文字；带 value 的金额对象、source 出处保留原样，页面单独渲染 */
+const KEEP = new Set(['source', 'sources']);
+const prim = (x: any): string => x == null ? '' : Array.isArray(x) ? x.map(prim).filter(Boolean).join('、') : typeof x === 'object' ? Object.entries(x).map(([k, y]) => { const t = prim(y); return t ? `${k}：${t}` : ''; }).filter(Boolean).join('；') : String(x);
+const field = (k: string, x: any): any => KEEP.has(k) || x == null || typeof x !== 'object' ? x
+  : Array.isArray(x) ? x.map(e => e && typeof e === 'object' ? prim(e) : e)
+  : 'value' in x ? x : prim(x);
+const item = (o: any) => o && typeof o === 'object' && !Array.isArray(o) ? Object.fromEntries(Object.entries(o).map(([k, y]) => [k, field(k, y)])) : o;
+const flattenTopic = (d: any) => d && typeof d === 'object' && !Array.isArray(d) ? Object.fromEntries(Object.entries(d).map(([k, x]) =>
+  [k, KEEP.has(k) || x == null || typeof x !== 'object' ? x : Array.isArray(x) ? x.map(e => (e && typeof e === 'object' ? item(e) : e)) : 'value' in x ? x : Object.values(x).every(y => y == null || typeof y !== 'object' || Array.isArray(y)) ? field(k, x) : item(x)])) : d;
 const v = (x: any) => (x && typeof x === 'object' && !Array.isArray(x) && 'value' in x) ? x.value : x;
 const srcOf = (x: any): string => { if (!x || typeof x !== 'object') return ''; const s = x.source || (x.sources && Object.values(x.sources)[0]); if (typeof s === 'string') return s; if (s && typeof s === 'object') { const first = Object.values(s)[0]; return typeof first === 'string' ? first : ''; } return ''; };
 const fmt = (x: any, unit = '') => x === null || x === undefined || x === '' ? '—' : `${typeof x === 'number' ? x.toLocaleString('zh-CN') : x}${unit}`;
@@ -85,7 +95,7 @@ export default function CompanyReportPage() {
     }, 1500);
     return () => { cancelled = true; clearTimeout(t); };
   }, [autoPrint, loading, d, id]);
-  const T = (k: string) => unwrapVS(deep?.topics?.[k]?.data) || {};
+  const T = (k: string) => flattenTopic(unwrapVS(deep?.topics?.[k]?.data)) || {};
   const c = d?.company;
   const pipeline = useMemo(() => (T('pipeline').pipeline || []) as any[], [deep]);
   const stageMix = useMemo(() => { const m: Record<string, number> = {}; for (const p of pipeline) { const k = stageCn(p.stage); m[k] = (m[k] || 0) + 1; } return Object.entries(m); }, [pipeline]);
