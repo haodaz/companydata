@@ -8,6 +8,7 @@ import { WorkLogo } from '@/components/work/WorkLogo';
 
 import { App, Button, ConfigProvider, Input, Space, Tag } from 'antd';
 import { WorkTaskDetail, ENV_META } from '@/components/work/WorkTaskDetail';
+import { GenericCompare } from '@/components/work/GenericCompare';
 
 export default function OwnerPage() {
   return <ConfigProvider theme={{ token: { colorPrimary: '#6055f5', borderRadius: 10 } }}><App><Inner /></App></ConfigProvider>;
@@ -64,6 +65,7 @@ function Inner() {
             <Button type="primary" onClick={() => { navigator.clipboard.writeText(share); message.success('参与链接已复制，甩出去就能做'); }}>复制参与链接</Button>
             {T.status === 'published' ? <Button onClick={() => setStatus('archived')}>下架</Button> : <Button onClick={() => setStatus('published')}>发布</Button>}
             <Button onClick={rerun} loading={busy}>重跑 AI 基线</Button>
+            <GenericCompare token={token} ownerKey={k} task={T} />
           </Space>
         </div>
         {/* 对题提意见：AI 按意见修订，没提到的不动；改完基线作废 */}
