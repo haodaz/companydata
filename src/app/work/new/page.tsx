@@ -103,7 +103,7 @@ function Inner() {
           <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 18, padding: '18px 20px' }}>
             <div style={{ fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700, marginBottom: 8 }}>这道真活会怎么出</div>
             <ol style={{ margin: 0, paddingLeft: 18, lineHeight: 1.9, fontSize: 13.5, color: '#3b405a' }}>
-              <li>拼材料：{picked ? `「${picked.name}」的画像与在招岗位` : f.intro.trim() ? '你贴的企业介绍（AI 先解析成画像）' : '这家企业的画像（库里没有就贴一段介绍）'} + 深度画像（投资机构：基金 / 被投 / 合伙人 / 招聘）+ 「{f.role || '要找的人'}」 + 行业规范</li>
+              <li>拼材料：{picked ? `「${picked.name}」的画像与在招岗位` : f.intro.trim() ? '你贴的企业介绍（AI 先解析成画像）' : '这家企业的画像（库里没有就贴一段介绍）'} + {picked ? '深度画像（投资机构：基金 / 被投 / 合伙人 / 招聘）+ ' : ''}「{f.role || '要找的人'}」 + 行业规范</li>
               <li>锚定一个此刻真实的业务问题，写成任务书</li>
               <li>做材料包（必有一份有坑）、定逐条有依赖的标准</li>
               <li>请 AI 助理先做一遍，分数当基线</li>

@@ -38,7 +38,7 @@ export function CompanyRolePicker({ company, role, onCompany, onRole, size = 'la
         options={opts.map(c => ({ value: c.name, label: <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}><b>{c.name}</b><span style={{ color: '#888', fontSize: 12 }}>{[c.industry, c.city].filter(Boolean).join(' · ')}</span><span style={{ marginLeft: 'auto', fontSize: 11, color: '#999' }}>{c.has_profile ? '画像 ✓' : '无画像'} · 岗位 {c.jobs}</span></div>, c }))}
         onChange={v => { onCompany(v, null); setPicked(null); }}
         onSelect={(_v, o: any) => { setPicked(o.c); onCompany(o.c.name, o.c); }} />
-      {!picked && company.trim().length >= 2 && searched === company.trim() && !opts.length && <div style={{ marginTop: -4 }}><Tag color="orange">库里没有「{company.trim()}」· 按新企业出题</Tag><span style={{ fontSize: 12, color: '#888' }}>没有画像和在招岗位，题里的企业事实会少，材料会标「示例数据」</span></div>}
+      {!picked && company.trim().length >= 2 && searched === company.trim() && !opts.length && <div style={{ marginTop: -4 }}><Tag color="orange">库里没有「{company.trim()}」· 按新企业出题</Tag><span style={{ fontSize: 12, color: '#888' }}>在下面贴一段介绍，AI 读懂再出题</span></div>}
       {picked && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: -4 }}>
         <Tag color="green">企业库 #{picked.id}</Tag>{picked.industry && <Tag>{picked.industry}</Tag>}{picked.city && <Tag>{picked.city}</Tag>}
         <Tag color={picked.has_profile ? 'blue' : 'default'}>{picked.has_profile ? `画像完整度 ${picked.completeness ?? '–'}` : '没有画像，只能按名字出题'}</Tag>
