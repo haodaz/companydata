@@ -429,8 +429,15 @@ export default function LabHome() {
       {loading ? (
         <div className="lab-glass lab-scan" style={{ height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink3)' }}><span className="lab-mono">LOADING<span className="lab-dots" /></span></div>
       ) : spaces.length === 0 ? (
-        <div className="lab-glass" style={{ padding: 48, textAlign: 'center', color: 'var(--ink3)', lineHeight: 2 }}>
-          这里还没有技能空间。<br />点上面的「<b style={{ color: 'var(--v)' }}>从岗位 JD 构建新空间</b>」，选一份 JD，看它被拆解成一个空间。
+        // 普通用户工厂里只列自己生成的：一个都没有时说清楚，并给出生成入口（别像是加载失败）
+        <div className="lab-glass" style={{ padding: '44px 28px', textAlign: 'center', color: 'var(--ink2)', lineHeight: 1.9 }}>
+          <div style={{ fontSize: 17, fontWeight: 800, color: 'var(--ink)', marginBottom: 6 }}>你还没有生成过职业模拟</div>
+          <div style={{ fontSize: 13.5, color: 'var(--ink3)' }}>百业工厂里只列你自己生成的空间。输入一个职业名，或从一份岗位 JD 开始，几分钟就能生成第一个。</div>
+          <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap', marginTop: 18 }}>
+            <button className="lab-btn" disabled={!!needMigration} onClick={() => setPick('career')}>＋ 输入一个职业生成</button>
+            <button className="lab-btn ghost" disabled={!!needMigration} onClick={() => { setPick('jd'); loadJds(); }}>＋ 从一份 JD 生成</button>
+          </div>
+          <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 16 }}>想先看看别人做的？所有空间都在 <a href="/lab/gallery" style={{ color: 'var(--v)', fontWeight: 700 }}>体验百业</a>。</div>
         </div>
       ) : (
         <div style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 440px), 1fr))' }}>
