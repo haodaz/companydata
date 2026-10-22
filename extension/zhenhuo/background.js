@@ -1,3 +1,4 @@
+importScripts('linkedin.js');
 // 真活插件后台：关联作答 → 人点「开始记录」才记 → 每 30 秒传一批 → 剩 5 / 1 分钟提醒 → 到时间没交卷就自动交卷
 // 记什么：打开 / 切到哪个网页（域名 · 标题）、页面上新出现的文字（AI 网站上的对话单独记）、打字 / 粘贴 / 复制的字数、切出浏览器
 const AI_HOSTS = ['chatgpt.com', 'chat.openai.com', 'claude.ai', 'gemini.google.com', 'kimi.moonshot.cn', 'kimi.com', 'doubao.com', 'tongyi.aliyun.com', 'qianwen.aliyun.com', 'chat.qwen.ai', 'chat.deepseek.com', 'yiyan.baidu.com', 'chatglm.cn', 'yuanbao.tencent.com', 'metaso.cn', 'poe.com', 'perplexity.ai', 'copilot.microsoft.com', 'tiangong.cn', 'xinghuo.xfyun.cn', 'hailuoai.com', 'chat.mistral.ai', 'grok.com'];
@@ -103,6 +104,7 @@ async function submit(auto, deliverable) {
 
 chrome.runtime.onMessage.addListener((m, sender, reply) => {
   (async () => {
+    if (m.type === 'linkedin') return readLinkedIn();   // 读本人 LinkedIn（只开 /in/me/）
     if (m.type === 'status') { const s = await getSess(); return { sess: s ? { code: s.code, title: s.title, recording: !!s.recording, submitted: !!s.submitted } : null }; }
     if (m.type === 'bind') {
       const r = await bind(m.code, m.api);

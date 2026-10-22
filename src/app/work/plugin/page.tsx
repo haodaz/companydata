@@ -36,10 +36,10 @@ function Inner() {
 
   useEffect(() => {
     fetch('/downloads/zhenhuo-plugin.json').then(r => r.json()).then(j => setVer(j.version)).catch(() => {});
-    // 插件装好后会在本页 <html> 上留一个标记
-    const check = () => setInstalled(document.documentElement.dataset.zhenhuo || null);
+    // 插件装好后会回 pong（0.1.0 的老版本在 <html> 上留标记）
+    const check = () => { window.postMessage({ source: 'zhenhuo-page', type: 'ping' }, location.origin); if (document.documentElement.dataset.zhenhuo) setInstalled(document.documentElement.dataset.zhenhuo); };
     check(); const id = setInterval(check, 1500);
-    const onMsg = (e: MessageEvent) => { if (e.source === window && e.data?.source === 'zhenhuo-ext' && (e.data.type === 'bound' || e.data.type === 'error')) { setBusy(false); setBound(e.data.type === 'error' ? { ok: false, error: e.data.error } : e.data); } };
+    const onMsg = (e: MessageEvent) => { if (e.source === window && e.data?.source === 'zhenhuo-ext' && e.data.type === 'pong') setInstalled(e.data.version || '0'); if (e.source === window && e.data?.source === 'zhenhuo-ext' && (e.data.type === 'bound' || e.data.type === 'error')) { setBusy(false); setBound(e.data.type === 'error' ? { ok: false, error: e.data.error } : e.data); } };
     window.addEventListener('message', onMsg);
     return () => { clearInterval(id); window.removeEventListener('message', onMsg); };
   }, []);
