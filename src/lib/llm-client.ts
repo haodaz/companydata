@@ -69,11 +69,12 @@ export async function generateContent(
 ): Promise<LLMResponse> {
   const resolvedModelId = resolveModel(modelId);
   // 本地「只用免费额度」：千问以外的模型（OpenAI / Gemini 都是付费的）一律不调
-  if (process.env.DASHSCOPE_FREE_ONLY === '1' && !resolvedModelId.startsWith('qwen')) throw new Error(`已开「只用免费额度」，不调用付费模型 ${resolvedModelId}`);
+  if (process.env.DASHSCOPE_FREE_ONLY === '1' && !/^(qwen|deepseek)/.test(resolvedModelId)) throw new Error(`已开「只用免费额度」，不调用付费模型 ${resolvedModelId}`);
   let res: LLMResponse;
   if (isOpenAIModel(resolvedModelId)) res = await generateOpenAI(prompt, resolvedModelId, options);
   else if (isClaudeModel(resolvedModelId)) res = await generateClaude(prompt, resolvedModelId, options);
-  else if (resolvedModelId.startsWith('qwen')) res = await generateQwen(prompt, resolvedModelId, options);
+  // DeepSeek 也走阿里云百炼（同一个 DashScope key，国内可用）
+  else if (/^(qwen|deepseek)/.test(resolvedModelId)) res = await generateQwen(prompt, resolvedModelId, options);
   else res = await generateGemini(prompt, resolvedModelId, options);
   await autoLog(res, resolvedModelId, options);
   return res;
