@@ -44,9 +44,16 @@ function Inner() {
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 28px', background: '#fff', borderBottom: '1px solid #e8e9f0' }}>
         <WorkLogo size="md" />
-        <span style={{ color: '#888', fontSize: 13 }}>我的真活</span>
-        {role === 'admin' && <Link href="/work/admin" style={{ fontSize: 13 }}>管理全部 ↗</Link>}
-        <Link href="/lab" style={{ fontSize: 13, color: '#666' }}>百业体验空间 ↗</Link>
+        {/* 顶栏导航：当前页「我的真活」高亮（浅紫底 + 深紫粗体），其余是普通链接 */}
+        <nav className="wm-nav">
+          <span className="on" aria-current="page">我的真活</span>
+          {role === 'admin' && <Link href="/work/admin">管理全部</Link>}
+          <Link href="/lab">百业体验空间</Link>
+        </nav>
+        <style>{`.wm-nav { display: flex; align-items: center; gap: 4px; margin-left: 6px; }
+          .wm-nav > * { padding: 6px 12px; border-radius: 999px; font-size: 13.5px; color: #6b6f86; text-decoration: none; transition: background .15s, color .15s; }
+          .wm-nav a:hover { background: #f1f0fb; color: #4c43c9; }
+          .wm-nav .on { background: #eeecff; color: #3f35c4; font-weight: 700; box-shadow: inset 0 0 0 1px #d8d4ff; }`}</style>
         <div style={{ marginLeft: 'auto' }}><Link href="/work/new"><Button type="primary" icon={<PlusOutlined />}>出一道真活</Button></Link></div>
       </div>
       <div style={{ maxWidth: 1180, margin: '0 auto', padding: '24px 28px 60px' }}>

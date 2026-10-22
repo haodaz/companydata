@@ -149,7 +149,7 @@ export default function WorkLanding() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '16px 28px', maxWidth: 1180, margin: '0 auto' }}>
           <WorkLogo size="lg" />
           <div style={{ marginLeft: 'auto', display: 'flex', gap: 16, fontSize: 13, alignItems: 'center' }}>
-            <Link href="/lab" style={lnk}>百业体验空间 ↗</Link>
+            <Link href="/lab" style={lnk}>百业体验空间</Link>
             <Link href="/work/login" style={lnk}>登录</Link>
             <Link href="/work/mine" style={{ ...lnk, color: '#fff', background: '#6055f5', padding: '7px 16px', borderRadius: 999 }}>出一道真活</Link>
           </div>

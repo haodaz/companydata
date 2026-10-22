@@ -11,6 +11,7 @@ import { WorkLogo } from '@/components/work/WorkLogo';
 import { useRouter } from 'next/navigation';
 import { App, Button, ConfigProvider, Input, Select, Typography } from 'antd';
 import { RocketOutlined } from '@ant-design/icons';
+import { GenProgress } from '@/components/work/GenProgress';
 import { CompanyRolePicker, type PickedCompany } from '@/components/work/CompanyRolePicker';
 import { MODEL_OPTIONS } from '@/lib/model-options';
 
@@ -36,18 +37,21 @@ function Inner() {
   const [f, setF] = useState({ company: '', role: '', env: '', focus: '', model: DEFAULT_MODEL });
   const [picked, setPicked] = useState<PickedCompany>(null);
   const [busy, setBusy] = useState('');
+  // 出题等待的进度：gen 出题中 → base AI 基线中 → done 好了（GenProgress 一行一行列出平方在做什么）
+  const [phase, setPhase] = useState<'gen' | 'base' | 'done'>('gen');
 
   const create = async () => {
     if (!f.company.trim() || !f.role.trim()) return message.warning('企业和要找的人都要填');
-    setBusy('在拼这家企业的材料、出题、做材料包、定标准……约 2 分钟，别关页面');
+    setBusy('在拼这家企业的材料、出题、做材料包、定标准……约 2 分钟，别关页面'); setPhase('gen');
     try {
       const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: f.company, company_id: picked?.id, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model }) });
       if (r.status === 401) { location.href = `/work/login?next=${encodeURIComponent('/work/new')}`; return; }
       const j = await r.json();
       if (!j.ok) throw new Error(j.error);
       if (j.notes?.length) message.info(j.notes.join('；'), 8);
-      setBusy('题出好了，AI 先做一遍当基线（约 1 分钟）…');
+      setBusy('题出好了，AI 先做一遍当基线（约 1 分钟）…'); setPhase('base');
       const b = await (await fetch(`/api/admin/work/tasks/${j.id}/baseline`, { method: 'POST' })).json();
+      setPhase('done'); await new Promise(r => setTimeout(r, 1800));   // 让剩下几行打完勾再跳
       message.success(b.ok ? `出题完成：${j.title}，AI 基线 ${b.baseline.total} 分` : `题出好了：${j.title}（基线没跑成，空间里可重跑）`, 8);
       router.push(j.share_token && j.owner_key ? `/work/${j.share_token}/owner?k=${encodeURIComponent(j.owner_key)}` : '/work/mine');
     } catch (e: any) { message.error(e.message); setBusy(''); }
@@ -82,7 +86,7 @@ function Inner() {
             <Input.TextArea value={f.focus} onChange={e => setF(x => ({ ...x, focus: e.target.value }))} placeholder="例：聚焦德布勒森工厂爬坡期的欧洲供需平衡；给 3 年以内的人做；一小时内" autoSize={{ minRows: 2, maxRows: 5 }} />
           </Sec>
           <Button type="primary" size="large" block icon={<RocketOutlined />} loading={!!busy} onClick={create} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>出题（约 2–3 分钟）</Button>
-          {busy && <div style={{ marginTop: 10, color: '#4c43c9' }}>{busy}</div>}
+          {busy && <GenProgress phase={phase} company={f.company} picked={picked} role={f.role} focus={f.focus} env={f.env ? ENVS.find(e => e.value === f.env)?.label : undefined} />}
           <Text type="secondary" style={{ display: 'block', fontSize: 12, marginTop: 12 }}>题出好即发布，会直接进这道真活的空间：复制参与链接发给候选人就能做（不用登录）；觉得题不对，在空间里提意见让 AI 修订。</Text>
         </div>
 
