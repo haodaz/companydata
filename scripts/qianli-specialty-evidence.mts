@@ -4,6 +4,7 @@
  * 不加 --apply 只统计：每个二级去掉多少、各一级前后覆盖率；结果存 reports/qianli-specialty-evidence.json
  */
 process.loadEnvFile('.env.local');
+const { toList } = await import('@/lib/list-field');
 import fs from 'node:fs';
 const { supabaseAdmin: db } = await import('@/lib/supabase');
 const { selectAll } = await import('@/lib/supabase-all');
@@ -13,9 +14,9 @@ const APPLY = process.argv.includes('--apply');
 const { data } = await selectAll(() => db.from('jobs').select('id, name, responsibilities, overview, qianli_job_specialty_labels, qianli_specialty_labels_reason')
   .not('if_delete', 'is', true).not('qianli_specialty_labels_reason', 'is', null).order('id'));
 const rows = data as any[];
-const split = (s: any) => String(s || '').split('|').map(x => x.trim()).filter(Boolean);
+const split = (s: any) => toList(s);   // 10-22 起是数组
 const dropBy: Record<string, Record<string, number>> = {}, l1Before: Record<string, number> = {}, l1After: Record<string, number> = {};
-const changes: { id: number; l1: string | null; l2: string | null }[] = [];
+const changes: { id: number; l1: string[] | null; l2: string[] | null }[] = [];
 const samples: any[] = [];
 for (const r of rows) {
   const before = split(r.qianli_specialty_labels_reason);
@@ -23,8 +24,8 @@ for (const r of rows) {
   const { l1, l2, dropped } = checkSpecialty(before, r);
   for (const v of l1) l1After[v] = (l1After[v] || 0) + 1;
   for (const [v, why] of Object.entries(dropped)) { (dropBy[v] ||= {})[why] = (dropBy[v][why] || 0) + 1; }
-  const nl1 = l1.join('|') || null, nl2 = l2.join('|') || null;
-  if (nl1 !== (r.qianli_job_specialty_labels || null) || nl2 !== (r.qianli_specialty_labels_reason || null)) {
+  const nl1 = l1.length ? l1 : null, nl2 = l2.length ? l2 : null;
+  if (JSON.stringify(nl1) !== JSON.stringify(split(r.qianli_job_specialty_labels).length ? split(r.qianli_job_specialty_labels) : null) || JSON.stringify(nl2) !== JSON.stringify(before.length ? before : null)) {
     changes.push({ id: r.id, l1: nl1, l2: nl2 });
     if (samples.length < 60 && Object.keys(dropped).length) samples.push({ id: r.id, name: r.name, before, after: l2, dropped });
   }

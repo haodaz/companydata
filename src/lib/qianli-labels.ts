@@ -1,7 +1,7 @@
 /**
  * 潜历标签打标（数据部门 10-20 #15 #17，提示词和他们线下脚本同步，见 src/data/qianli-prompts.ts）：
  *   职能标签 qianli_job_labels：一个岗位一个 value（26 选 1，「无匹配」留空）
- *   特色标签 一级 qianli_job_specialty_labels / 二级 qianli_specialty_labels_reason：value 用「|」隔开；
+ *   特色标签 一级 qianli_job_specialty_labels / 二级 qianli_specialty_labels_reason：value 数组（10-22 起，原来「|」隔开）；
  *     最小颗粒是二级，一级由二级反推（这里在代码里再按 tags.xlsx 推一遍，层级一定一致）
  * 一次最多 10 个岗位，temperature 0。只认清单里的 value。
  * 模型用调用方给的（不先试便宜模型）：10-20 对比，特色标签 qwen-flash 偏松（原文没写也给「AI 重度应用」），qwen-plus 更守原文证据。
@@ -13,7 +13,7 @@ import { checkSpecialty } from '@/lib/qianli-evidence';
 import { JOB_FUNCTION_PROMPT, JOB_FUNCTION_TAGS, SPECIALTY_BATCH, SPECIALTY_EXAMPLES, SPECIALTY_SYSTEM, SPECIALTY_USER } from '@/data/qianli-prompts';
 
 export type QianliInput = { id: number; name: string; company?: string | null; responsibilities?: string | null; overview?: string | null; summary_cn?: string | null };
-export type QianliLabels = { qianli_job_labels: string | null; qianli_job_labels_reason: string | null; qianli_job_specialty_labels: string | null; qianli_specialty_labels_reason: string | null };
+export type QianliLabels = { qianli_job_labels: string | null; qianli_job_labels_reason: string | null; qianli_job_specialty_labels: string[] | null; qianli_specialty_labels_reason: string[] | null };
 export type JobFunction = { value: string | null; reason: string };
 
 
@@ -129,8 +129,8 @@ export async function qianliLabels(all: QianliInput[], model: string): Promise<M
       out.set(j.id, {
         qianli_job_labels: f?.value ?? null,
         qianli_job_labels_reason: f ? (f.reason || null) : null,
-        qianli_job_specialty_labels: s ? (s.l1.join('|') || null) : null,
-        qianli_specialty_labels_reason: s ? (s.l2.join('|') || null) : null,
+        qianli_job_specialty_labels: s ? (s.l1.length ? s.l1 : null) : null,
+        qianli_specialty_labels_reason: s ? (s.l2.length ? s.l2 : null) : null,
       });
     }
   }

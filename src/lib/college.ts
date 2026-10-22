@@ -37,7 +37,7 @@ async function occupationOf(space: any) {
 
 async function hiringFor(key: string, limit = 4) {
   const { data, count } = await supabaseAdmin.from('jobs').select('institute_or_company_name, name, location, link, source_url', { count: 'exact' })
-    .ilike('related_career_ids', `%${key}%`).order('id', { ascending: false }).limit(limit);
+    .contains('related_career_ids', [key]).order('id', { ascending: false }).limit(limit);
   return { total: count || 0, rows: data || [] };
 }
 

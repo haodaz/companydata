@@ -4,6 +4,7 @@
  *   npx tsx scripts/audit-career-tags.mts --model qwen-flash [--par 2] [--limit 0] [--out reports/career-audit.json]
  */
 process.loadEnvFile('.env.local');
+const { toList } = await import('@/lib/list-field');
 import fs from 'node:fs';
 const { supabaseAdmin: db } = await import('@/lib/supabase');
 const { selectAll } = await import('@/lib/supabase-all');
@@ -21,7 +22,7 @@ const OUT = opt('out', 'reports/career-audit.json');
 const { data: occ } = await selectAll(() => db.from('occupations').select('external_id, name').not('if_delete', 'is', true).order('id'));
 const occName = new Map((occ as any[]).map(o => [String(o.external_id), String(o.name)]));
 const { data } = await selectAll(() => db.from('jobs').select('id, name, job_function, related_career_ids').not('if_delete', 'is', true).not('related_career_ids', 'is', null).neq('related_career_ids', '').order('id'));
-let jobs = (data as any[]).map(j => ({ id: j.id, name: String(j.name), fn: j.job_function || '', careers: String(j.related_career_ids).split('|').filter(Boolean) }));
+let jobs = (data as any[]).map(j => ({ id: j.id, name: String(j.name), fn: j.job_function || '', careers: toList(j.related_career_ids).filter(Boolean) }));
 // 同名岗位（按城市拆开的）只判一次
 const byTitle = new Map<string, typeof jobs[number] & { n: number }>();
 for (const j of jobs) { const k = `${j.name.replace(/[（(].*?[）)]/g, '').trim()}|${j.careers.join('|')}`; const e = byTitle.get(k); if (e) e.n++; else byTitle.set(k, { ...j, n: 1 }); }

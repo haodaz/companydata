@@ -229,7 +229,7 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
 
   // 关联专业 / 职业（数据部门 10-17）：这一页新进来、还没标过的岗位，用这次提炼选的模型打上
   if (list.length) {
-    const { data: untagged } = await supabaseAdmin.from('jobs').select('id').eq('source_log_id', logId).not('if_delete', 'is', true).or('fos_ids.is.null,fos_ids.eq.');   // 10-19 起是「|」隔开的文本
+    const { data: untagged } = await supabaseAdmin.from('jobs').select('id').eq('source_log_id', logId).not('if_delete', 'is', true).or('fos_ids.is.null,fos_ids.eq.{}');   // 10-22 起是数组
     const ids = (untagged || []).map(r => r.id);
     // 专业、四个标签走便宜模型；职业和潜历标签用这次提取在选单里选的模型（要挑准 / 守原文证据）
     if (ids.length && (process.env.CHEAP_MODEL || log.model_id || process.env.DEFAULT_MODEL)) await tagAndSave(ids, process.env.CHEAP_MODEL || log.model_id || process.env.DEFAULT_MODEL || '', { strongModel: log.model_id || process.env.DEFAULT_MODEL || process.env.CHEAP_MODEL }).catch(e => console.error('[job-store] 打标签失败', e?.message || e));

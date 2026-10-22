@@ -82,16 +82,16 @@ export function applyLangFields(job: Record<string, any>, opts: { overwrite?: st
 }
 
 /**
- * 查找名称 name_to_search：这家企业的各种叫法（全称 / 简称 / 工商名 / 英文名 / 别名），去重后用「|」连，
+ * 查找名称 name_to_search：这家企业的各种叫法（全称 / 简称 / 工商名 / 英文名 / 别名），去重后的数组（10-22 起，原来「|」连），
  * 写在它每个岗位上，方便按任何一个叫法搜到（数据部门 10-16：「就像我们公司也可以叫申请方、平方」）。
  */
-export function companySearchNames(c: { name?: string | null; brief_name?: string | null; registered_name?: string | null; name_en?: string | null; aliases?: string[] | null } | null | undefined): string | null {
+export function companySearchNames(c: { name?: string | null; brief_name?: string | null; registered_name?: string | null; name_en?: string | null; aliases?: string[] | null } | null | undefined): string[] | null {
   if (!c) return null;
   const all = [c.name, c.brief_name, c.registered_name, c.name_en, ...(c.aliases || [])]
     .map(x => String(x || '').trim()).filter(x => x && !/^并入#/.test(x));
   const seen = new Set<string>(), out: string[] = [];
   for (const x of all) { const k = x.replace(/\s/g, '').toLowerCase(); if (!seen.has(k)) { seen.add(k); out.push(x); } }
-  return out.length ? out.join('|') : null;
+  return out.length ? out : null;
 }
 
 /** 入库前补默认值。company 是这个岗位所属企业的名字 */

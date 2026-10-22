@@ -55,13 +55,13 @@ const { companySearchNames } = await import('../src/lib/job-defaults');
 const { data: cos } = await selectAll(() => db.from('companies').select('id, name, brief_name, registered_name, name_en, aliases').order('id'));
 const names = new Map((cos as any[]).map(c => [c.id, companySearchNames(c)]));
 const { data: js } = await selectAll(() => db.from('jobs').select('id, company_id, name_to_search').not('if_delete', 'is', true).order('id'));
-const todo2 = (js as any[]).filter(j => j.company_id && (names.get(j.company_id) || null) !== (j.name_to_search || null)).map(j => ({ id: j.id, v: names.get(j.company_id) || null }));
+const todo2 = (js as any[]).filter(j => j.company_id && JSON.stringify(names.get(j.company_id) || null) !== JSON.stringify(j.name_to_search || null)).map(j => ({ id: j.id, v: names.get(j.company_id) || null }));
 console.log(`查找名称：岗位 ${js!.length} 条，要写的 ${todo2.length} 条；样例：${todo2.slice(0, 3).map(t => t.v).join(' ／ ')}`);
 if (APPLY) {
   // 同一家企业的岗位一起写
-  const byVal = new Map<string, number[]>();
-  for (const t of todo2) { const k = t.v ?? ''; byVal.set(k, [...(byVal.get(k) || []), t.id]); }
+  const byVal = new Map<string, number[]>();   // 10-22 起查找名称是数组：按 JSON 分组
+  for (const t of todo2) { const k = JSON.stringify(t.v ?? null); byVal.set(k, [...(byVal.get(k) || []), t.id]); }
   let n = 0;
-  for (const [v, ids] of byVal) for (let i = 0; i < ids.length; i += 200) { const { error } = await db.from('jobs').update({ name_to_search: v || null }).in('id', ids.slice(i, i + 200)); if (error) console.log('✗', error.message); else n += Math.min(200, ids.length - i); }
+  for (const [v, ids] of byVal) for (let i = 0; i < ids.length; i += 200) { const { error } = await db.from('jobs').update({ name_to_search: JSON.parse(v) }).in('id', ids.slice(i, i + 200)); if (error) console.log('✗', error.message); else n += Math.min(200, ids.length - i); }
   console.log(`✓ 查找名称写了 ${n} 条`);
 }

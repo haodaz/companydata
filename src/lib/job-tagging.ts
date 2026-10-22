@@ -40,13 +40,13 @@ export async function tagCatalog(): Promise<Catalog> {
 }
 
 export type TagInput = { id: number; name: string; job_function?: string | null; summary_cn?: string | null; responsibilities?: string | null; overview?: string | null; company?: string | null };
-export type JobTags = { fos_ids: string; related_career_ids: string };
+export type JobTags = { fos_ids: string[] | null; related_career_ids: string[] | null };   // 10-22 起数组（原来「|」隔开）
 export type JobLabels = { exp_labels: string | null; skill_labels: string | null; exp_labels_jd: string | null; skill_labels_jd: string | null };
 
 const MAX_TAGS = 4;
 const squash = (v: any, n: number) => String(v || '').replace(/\s+/g, ' ').trim().slice(0, n);
 
-/** 一批岗位（建议 ≤ 20 个）关联专业和职业，返回 id → { fos_ids: 'a|b', related_career_ids: 'x|y' } */
+/** 一批岗位（建议 ≤ 20 个）关联专业和职业，返回 id → { fos_ids: ['a','b'], related_career_ids: ['x','y'] } */
 export async function tagJobs(jobs: TagInput[], model: string, opts: { strongModel?: string } = {}): Promise<Map<number, JobTags>> {
   const cat = await tagCatalog();
   // 按「要求描述」匹配（10-19 #16），职责一起给：要求里常常只有学历 / 性格，具体做什么写在职责里（10-20：「高中物理教师」的要求里没有「高中」，被配成幼儿园教师）
@@ -76,7 +76,7 @@ ${lines}`;
     const fos = [...new Set((it.fos_ids || []).map(String) as string[])].filter(k => cat.fosSet.has(k)).slice(0, MAX_TAGS);
     // 中文名换回 key（照抄清单名称，叫法也认；模型偶尔直接写 key，也认）
     const occ = [...new Set(((it.related_careers || it.related_career_ids || []) as any[]).map(x => String(x).trim()).map(x => cat.occByName.get(x.replace(/\s+/g, '').replace(/（.*?）|\(.*?\)/g, '')) || x))].filter(k => cat.occSet.has(k)).slice(0, MAX_TAGS);
-    out.set(j.id, { fos_ids: fos.join('|'), related_career_ids: occ.join('|') });
+    out.set(j.id, { fos_ids: fos.length ? fos : null, related_career_ids: occ.length ? occ : null });
     // 个体信号：职业库里没有对得上的 → 记下模型认为该有的职业名（市场新兴职业的来源，见 occupation-signals.ts）
     const wanted = String(it.wanted_career || '').trim();
     if (!occ.length && wanted) signals.push({ job_id: j.id, job_name: j.name, company_id: (j as any).company_id || null, wanted_name: wanted, source: 'tagging' });
@@ -196,7 +196,7 @@ export async function tagAndSave(ids: number[], model: string, opts: { batch?: n
       for (const k of Object.keys(patch)) {
         if (locked.has(k)) { delete patch[k]; continue; }
         // 潜历标签同理：模型答了、判不了（职能留空带原因 / 特色标签原文没证据）→ 写空，清掉以前的
-        if (patch[k] === null || patch[k] === '') { if ((answered && (k === 'related_career_ids' || k === 'fos_ids')) || (q.has(j.id) && k.startsWith('qianli_'))) patch[k] = null; else delete patch[k]; }
+        if (patch[k] === null || patch[k] === '' || (Array.isArray(patch[k]) && !patch[k].length)) { if ((answered && (k === 'related_career_ids' || k === 'fos_ids')) || (q.has(j.id) && k.startsWith('qianli_'))) patch[k] = null; else delete patch[k]; }
       }
       if (!Object.keys(patch).length) continue;
       const { error } = await supabaseAdmin.from('jobs').update(patch).eq('id', j.id);
