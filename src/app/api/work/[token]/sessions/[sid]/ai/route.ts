@@ -6,7 +6,8 @@ import { logTokenUsage, withCost } from '@/lib/token-logger';
 export const runtime = 'nodejs';
 export const maxDuration = 120;
 
-const ASSIST_MODEL = process.env.WORK_ASSIST_MODEL || 'claude-sonnet-5-5';
+// 做题 AI 锁定千问（2026-10-21 演示前定的：国内口径稳妥）；千问出错才退到 Claude 兜底
+const ASSIST_MODEL = 'qwen-plus';
 
 /** 工作台里的 AI：随便问（用 AI 不算作弊，评的是你怎么用）。每一问一答都记进 ai_chat，过程分析要看 */
 export async function POST(req: NextRequest, { params }: { params: Promise<{ token: string; sid: string }> }) {
@@ -31,7 +32,7 @@ ${q}`;
   try {
     const t0 = Date.now();
     const a = await withCost({ tool_name: 'work', task_name: 'Assist · 工作台 AI', stage: 'use' }, async () => {
-      for (const m of [ASSIST_MODEL, 'qwen-plus']) {
+      for (const m of [ASSIST_MODEL, 'claude-sonnet-5-5']) {
         try { const r = await generateContent(prompt, m); await logTokenUsage({ tool_name: 'work', task_name: 'Assist · 工作台 AI', institution: t.company_name || '', model_id: m, usageMetadata: r.usageMetadata } as any).catch(() => {}); if (r.text?.trim()) return r.text.trim(); } catch (e) { console.warn(`[work-assist] ${m} 失败：${String((e as any)?.message).slice(0, 100)}`); }
       }
       throw new Error('AI 没有回答');
