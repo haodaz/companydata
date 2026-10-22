@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { denyUnlessLabOwner } from '@/lib/lab-owner';
 import { supabaseAdmin } from '@/lib/supabase';
 import { labError } from '@/lib/skill-lab-server';
 
@@ -8,9 +9,10 @@ export const dynamic = 'force-dynamic';
 type Ctx = { params: Promise<{ id: string }> };
 
 /** 这个空间最近的生成任务（工作室轮询进度用） */
-export async function GET(_req: NextRequest, { params }: Ctx) {
+export async function GET(req: NextRequest, { params }: Ctx) {
   try {
     const { id } = await params;
+    const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
     const { data, error } = await supabaseAdmin.from('lab_jobs').select('*').eq('task_id', id).order('created_at', { ascending: false }).limit(20);
     if (error) throw error;
     // 超过 15 分钟没动静的「进行中」当作已中断（服务重启 / 超时）

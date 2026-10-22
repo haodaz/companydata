@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { denyUnlessLabOwner } from '@/lib/lab-owner';
 import { supabaseAdmin } from '@/lib/supabase';
 import { labError } from '@/lib/skill-lab-server';
 import { drawCastAsset } from '@/lib/lab-cast-server';
@@ -13,9 +14,10 @@ export const maxDuration = 180;
 type Ctx = { params: Promise<{ id: string; castId: string }> };
 
 /** 给角色现画一张（按外形 / 陈设描述），画完立刻归库并换上；约 20–60 秒 */
-export async function POST(_req: NextRequest, { params }: Ctx) {
+export async function POST(req: NextRequest, { params }: Ctx) {
   try {
     const { id, castId } = await params;
+    const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
     if (!artAvailable()) return NextResponse.json({ ok: false, error: '没有配置画图（DASHSCOPE_API_KEY）' }, { status: 400 });
     const [{ data: m, error }, { data: t }] = await Promise.all([
       supabaseAdmin.from('lab_cast').select('*').eq('id', castId).eq('task_id', id).single(),

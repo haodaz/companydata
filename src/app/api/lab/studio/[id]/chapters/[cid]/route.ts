@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { denyUnlessLabOwner } from '@/lib/lab-owner';
 import { supabaseAdmin } from '@/lib/supabase';
 import { labError } from '@/lib/skill-lab-server';
 import { loadStudio } from '@/lib/lab-studio-server';
@@ -20,6 +21,7 @@ const KINDS = ['daily', 'incident', 'assessment'];
 export async function PATCH(req: NextRequest, { params }: Ctx) {
   try {
     const { id, cid } = await params;
+    const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
     const body = await req.json().catch(() => ({}));
     const { data: cur, error: e0 } = await supabaseAdmin.from('lab_chapters').select('*').eq('id', cid).eq('task_id', id).single();
     if (e0) throw e0;
@@ -62,9 +64,10 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
 }
 
 /** 删一章（作答记录保留，chapter_id 置空）。最后一章不能删：那是删空间，走空间列表 */
-export async function DELETE(_req: NextRequest, { params }: Ctx) {
+export async function DELETE(req: NextRequest, { params }: Ctx) {
   try {
     const { id, cid } = await params;
+    const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
     const { data: all } = await supabaseAdmin.from('lab_chapters').select('id, seq').eq('task_id', id);
     if ((all || []).length <= 1) return NextResponse.json({ ok: false, error: '这是最后一章，不能删' }, { status: 400 });
     if ((all || []).find((c: any) => c.id === cid)?.seq === 1) return NextResponse.json({ ok: false, error: '第 1 章连着空间的技能和老数据，不能删；可以改成草稿让体验端看不到' }, { status: 400 });

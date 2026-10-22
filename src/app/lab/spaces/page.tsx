@@ -76,7 +76,7 @@ export default function LabHome() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const json = await (await fetch('/api/lab/spaces')).json();
+      const json = await (await fetch('/api/lab/spaces?mine=1')).json();   // 百业工厂只列自己生成的（管理员全部）；看所有空间去体验百业
       if (json.ok) { setSpaces(json.data); setTotals(json.totals || null); setNeedMigration(''); }
       else if (json.needMigration) setNeedMigration(json.error);
       else message.error(json.error);

@@ -617,11 +617,13 @@ function castOf(space: any, sim: Sim | null) {
   const [prob, setProb] = useState({ actor: '', location: '', context: '', problem: '' });
   const chatEnd = useRef<HTMLDivElement>(null);
 
+  // 能不能管这个空间（删除 / 发邀请链接）：自己生成的或管理员；别人的空间只体验
+  const [canManage, setCanManage] = useState(false);
   const load = useCallback(async () => {
     try {
       const json = await (await fetch(`/api/lab/spaces/${id}`, { headers: inviteHdr })).json();
       if (!json.ok) throw new Error(json.error);
-      setSpace(json.space); setSubs(json.submissions); setInvs(json.invocations); setOrgWork(json.orgWork || []);
+      setSpace(json.space); setSubs(json.submissions); setInvs(json.invocations); setOrgWork(json.orgWork || []); setCanManage(!!json.canManage);
     } catch (e: any) { message.error(e.message); }
     finally { setLoading(false); }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -990,7 +992,7 @@ function castOf(space: any, sim: Sim | null) {
           )}
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginTop: 12, flexWrap: 'wrap', fontSize: 13, color: 'var(--ink3)' }}>
             <span>{expertSaved ? '点上面的「示范这一段」开始，从哪一段开始都行。' : '只填这一次，填好就能从任意一段开始示范。'}</span>
-            {!guest && user && <button className="lab-btn ghost sm" disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '老师傅不在身边？发邀请链接'}</button>}
+            {!guest && user && canManage && <button className="lab-btn ghost sm" disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '老师傅不在身边？发邀请链接'}</button>}
           </div>
           {walkedLabels.length > 0 && <div style={{ marginTop: 10, fontSize: 13, color: '#12a150' }}>已示范：{walkedLabels.join('、')}</div>}
         </>
@@ -1059,13 +1061,13 @@ function castOf(space: any, sim: Sim | null) {
           scene={sim?.art?.cover || ''} level={lv.level} levelLabel={lv.label} stats={hubStats} skills={(profile.capabilities || []).slice(0, 4)} portals={portals}
           onEnter={m => (exp && m === 'learn' ? enterTeach() : setMode(m))}
           origin={draft
-            ? <>AI 自学草案 · 等一位从业者校正{!guest && !exp && user && <button className="hub-ghost" style={{ marginLeft: 10, height: 26, padding: '0 10px', fontSize: 12 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '请一位老师傅来教 →'}</button>}</>
+            ? <>AI 自学草案 · 等一位从业者校正{!guest && !exp && user && canManage && <button className="hub-ghost" style={{ marginLeft: 10, height: 26, padding: '0 10px', fontSize: 12 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '请一位老师傅来教 →'}</button>}</>
             : <>学自 <b className="hub-strong">{skill.expert_name}</b>（{skill.expert_location}）</>}
           top={<>
             <button className="hub-ghost" onClick={() => router.push(exp ? '/lab/gallery' : '/lab/spaces')}><Ico n="back" s={14} />{exp ? '体验百业' : '全部空间'}</button>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
               {jd.url && !exp && <a className="hub-ghost" href={jd.url} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>JD 原文 ↗</a>}
-              {!exp && <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="hub-ghost">删除空间</button></Popconfirm>}
+              {!exp && canManage && <Popconfirm title="删除这个技能空间？" description="作答、账本和蒸馏出的技能会一起删除。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="hub-ghost">删除空间</button></Popconfirm>}
             </div>
           </>}
           // 操作收在大按钮上面一行：名字（默认亮出来，能改，只有自己看得到）· 走进 3D；和我聊是第一个大按钮
@@ -1245,7 +1247,7 @@ function castOf(space: any, sim: Sim | null) {
                 {field(expert.location, v => setExpert(e => ({ ...e, location: v })), '所在地 *')}
               </div>
               <button className="lab-btn" style={{ marginTop: 14 }} onClick={() => { if (!expert.name.trim() || !expert.location.trim()) { message.warning('请填写专家姓名（或化名）和所在地——技能卡要写清楚手艺来自谁、来自哪儿'); return; } if (sim?.art) enterFullscreen(); setLearnStep(1); }}>开始 →</button>
-              {!guest && user && <button className="lab-btn ghost" style={{ marginTop: 14, marginLeft: 10 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '专家不在身边？发一条邀请链接'}</button>}
+              {!guest && user && canManage && <button className="lab-btn ghost" style={{ marginTop: 14, marginLeft: 10 }} disabled={inviting} onClick={makeInvite}>{inviting ? '生成中…' : '专家不在身边？发一条邀请链接'}</button>}
             </>}
 
             {learnStep === 1 && sim && <div style={{ fontSize: 13.5, color: 'var(--v)', fontWeight: 600 }}>操作台已在下方打开 ↓</div>}

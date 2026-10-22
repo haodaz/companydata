@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { denyUnlessLabOwner } from '@/lib/lab-owner';
 import { supabaseAdmin } from '@/lib/supabase';
 import { labError } from '@/lib/skill-lab-server';
 import { loadStudio } from '@/lib/lab-studio-server';
@@ -14,6 +15,7 @@ const KINDS = ['daily', 'incident', 'assessment'];
 export async function POST(req: NextRequest, { params }: Ctx) {
   try {
     const { id } = await params;
+    const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
     const body = await req.json().catch(() => ({}));
     const { data: last } = await supabaseAdmin.from('lab_chapters').select('seq').eq('task_id', id).order('seq', { ascending: false }).limit(1);
     const seq = (last?.[0]?.seq || 0) + 1;

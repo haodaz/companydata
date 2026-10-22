@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { denyUnlessLabOwner } from '@/lib/lab-owner';
 import { supabaseAdmin } from '@/lib/supabase';
 import { labError } from '@/lib/skill-lab-server';
 import { stepsUsing, type CastMember } from '@/lib/lab-cast';
@@ -13,6 +14,7 @@ type Ctx = { params: Promise<{ id: string; castId: string }> };
 export async function PATCH(req: NextRequest, { params }: Ctx) {
   try {
     const { id, castId } = await params;
+    const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
     const b = await req.json().catch(() => ({}));
     const { data: cur, error: e0 } = await supabaseAdmin.from('lab_cast').select('*').eq('id', castId).eq('task_id', id).single();
     if (e0) throw e0;
@@ -52,9 +54,10 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
 }
 
 /** 删角色：还有章节在用就不让删（先在章节里换掉）；数字职人本人不能删。素材留在库里 */
-export async function DELETE(_req: NextRequest, { params }: Ctx) {
+export async function DELETE(req: NextRequest, { params }: Ctx) {
   try {
     const { id, castId } = await params;
+    const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
     const { data: cur, error: e0 } = await supabaseAdmin.from('lab_cast').select('*, asset:lab_art_assets(id, url)').eq('id', castId).eq('task_id', id).single();
     if (e0) throw e0;
     if (cur.is_self) return NextResponse.json({ ok: false, error: '数字职人本人不能删' }, { status: 400 });

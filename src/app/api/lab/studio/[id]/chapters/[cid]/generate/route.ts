@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { denyUnlessLabOwner } from '@/lib/lab-owner';
 import { labError } from '@/lib/skill-lab-server';
 import { startJob } from '@/lib/lab-jobs';
 import { buildChapter } from '@/lib/agents/lab-chapters';
@@ -13,6 +14,7 @@ type Ctx = { params: Promise<{ id: string; cid: string }> };
 export async function POST(req: NextRequest, { params }: Ctx) {
   try {
     const { id, cid } = await params;
+    const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
     const b = await req.json().catch(() => ({}));
     const model = String(b.model || process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna');
     const job = await startJob(id, cid, 'build_chapter', async progress => {

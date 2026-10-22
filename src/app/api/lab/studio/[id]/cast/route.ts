@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { denyUnlessLabOwner } from '@/lib/lab-owner';
 import { supabaseAdmin } from '@/lib/supabase';
 import { labError } from '@/lib/skill-lab-server';
 import { findReusable, loadCast, registerAsset } from '@/lib/lab-cast-server';
@@ -16,6 +17,7 @@ type Ctx = { params: Promise<{ id: string }> };
 export async function POST(req: NextRequest, { params }: Ctx) {
   try {
     const { id } = await params;
+    const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
     const b = await req.json().catch(() => ({}));
     const kind = CAST_KINDS.some(k => k.k === b.kind) ? b.kind : 'person';
     const name = String(b.name || '').trim().slice(0, 40);

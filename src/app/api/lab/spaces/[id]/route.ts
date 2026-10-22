@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { denyUnlessLabOwner } from '@/lib/lab-owner';
+import { getSessionUser } from '@/lib/session';
 import { supabaseAdmin } from '@/lib/supabase';
 import { labError, loadSpace } from '@/lib/skill-lab-server';
 import { INVITED } from '@/lib/lab-invite';
@@ -12,7 +14,11 @@ type Ctx = { params: Promise<{ id: string }> };
 export async function GET(req: NextRequest, { params }: Ctx) {
   try {
     const { id } = await params;
-    const space = await loadSpace(id);
+    const loaded: any = await loadSpace(id);
+    // 生成者邮箱不往外给（体验页公开），只回一个「当前账号能不能管」：自己生成的或管理员 → 显示删除 / 发邀请链接
+    const me = await getSessionUser(req).catch(() => null);
+    const canManage = !!me && (me.role === 'admin' || loaded?.created_by === me.email);
+    const space = { ...loaded, created_by: undefined };
     // 受邀专家只看这位数字职人本身，别人的作答和账本（里面有姓名、所在地）不给
     if (req.headers.get(INVITED) === id) return NextResponse.json({ ok: true, space, submissions: [], invocations: [], invited: true });
     const [subs, invs] = await Promise.all([
@@ -31,16 +37,17 @@ export async function GET(req: NextRequest, { params }: Ctx) {
         .map((w: any) => ({ title: w.task.title, role: w.role || '', token: w.share_token, company: w.company_name || '' }))
         .sort((x, y) => Number(y.role === jd.title) - Number(x.role === jd.title)).slice(0, 3);
     }
-    return NextResponse.json({ ok: true, space, submissions: subs.data || [], invocations: invs.data || [], orgWork });
+    return NextResponse.json({ ok: true, space, submissions: subs.data || [], invocations: invs.data || [], orgWork, canManage });
   } catch (e: any) {
     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
   }
 }
 
 /** 删除技能空间（作答与账本级联删除；蒸馏出的技能一并删除） */
-export async function DELETE(_req: NextRequest, { params }: Ctx) {
+export async function DELETE(req: NextRequest, { params }: Ctx) {
   try {
     const { id } = await params;
+    const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;   // 只能删自己生成的（管理员不限）
     const space = await loadSpace(id);
     const { error } = await supabaseAdmin.from('skill_tasks').delete().eq('id', id);
     if (error) throw error;

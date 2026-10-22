@@ -8,6 +8,7 @@ import { reconcileCast } from '@/lib/lab-cast-server';
 import { trackDemand } from '@/lib/flywheel/signals';
 import { attachCostToSpace, withCost } from '@/lib/token-logger';
 import { ensureOccupationLater } from '@/lib/kg/ensure-occupation';
+import { getSessionUser } from '@/lib/session';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -17,14 +18,14 @@ export const maxDuration = 300;
 const builds = new Map<string, { phase: string; detail?: string; done: boolean; id?: string; error?: string; at: number }>();
 const setBuild = (id: string, patch: Partial<{ phase: string; detail?: string; done: boolean; id?: string; error?: string }>) => { if (!id) return; builds.set(id, { phase: '', done: false, ...(builds.get(id) || {}), ...patch, at: Date.now() }); for (const [k, v] of builds) if (Date.now() - v.at > 30 * 60_000) builds.delete(k); };
 
-/** 技能空间列表（每个公司岗位一个）；?build=<id> 查构建进度 */
+/** 技能空间列表（每个公司岗位一个）；?build=<id> 查构建进度；?mine=1 = 百业工厂用：普通用户只列自己生成的，管理员列全部（体验百业不带，列全部） */
 export async function GET(req: Request) {
   try {
     const buildId = new URL(req.url).searchParams.get('build');
     if (buildId) return NextResponse.json({ ok: true, build: builds.get(buildId) || null });
     const { data: spaces, error } = await supabaseAdmin
       .from('skill_tasks')
-      .select('id, title, profile, jd_snapshot, jd_breakdown, time_limit_min, is_demo, created_at, job_id, sim, skill:skills(id, name, domain, kind, summary, expert_name, expert_location, expert_note, distilled_at, card, interview, source)')
+      .select('id, title, created_by, profile, jd_snapshot, jd_breakdown, time_limit_min, is_demo, created_at, job_id, sim, skill:skills(id, name, domain, kind, summary, expert_name, expert_location, expert_note, distilled_at, card, interview, source)')
       .order('created_at', { ascending: true });
     if (error) throw error;
 
@@ -41,7 +42,7 @@ export async function GET(req: Request) {
       const ii = (invs.data || []).filter(x => x.task_id === s.id);
       const sim = s.sim as any;
       return {
-        ...s, sim: undefined,
+        ...s, sim: undefined, created_by: undefined,   // 生成者邮箱不往外给（体验百业是公开的）
         // 有工位：老空间看主 sim，按章节的看已发布章节里有没有工位步骤（体验馆按这个排序、打标记）
         features: (() => {
           const pubCh = ((chs as any).data || []).filter((c: any) => c.task_id === s.id && c.status === 'published');
@@ -77,6 +78,11 @@ export async function GET(req: Request) {
       served: (invs.data || []).reduce((a: number, x: any) => a + (x.volume || 1), 0),
       faces: data.map((s: any) => s.profile?.avatar).filter(Boolean).slice(0, 12),
     };
+    if (new URL(req.url).searchParams.get('mine') === '1') {
+      const me = await getSessionUser(req);
+      const own = (x: any) => !!me && (me.role === 'admin' || (spaces || []).find(s => s.id === x.id)?.created_by === me.email);
+      return NextResponse.json({ ok: true, data: data.filter(own), totals, role: me?.role || null });
+    }
     return NextResponse.json({ ok: true, data, totals });
   } catch (e: any) {
     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
@@ -117,6 +123,9 @@ export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   // 记账：这次构建的所有调用（任务、技能卡、工位、美术）记到同一个任务编号上，空间建好后补上空间编号（迁移 021）
   const costJob = `build-${String(body.buildId || '') || Date.now().toString(36)}`;
+  // 生成者按登录账号记（不信前端报的名字）：普通用户在百业工厂只能管自己生成的空间
+  const me = await getSessionUser(req).catch(() => null);
+  if (me?.email) body.createdBy = me.email;
   return withCost({ job_id: costJob, stage: 'create', actor: body.createdBy || null }, () => build(req, body, costJob));
 }
 

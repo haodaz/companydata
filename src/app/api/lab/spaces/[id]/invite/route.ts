@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { denyUnlessLabOwner } from '@/lib/lab-owner';
 import { verifyToken } from '@/lib/jwt';
 import { labError, loadSpace } from '@/lib/skill-lab-server';
 import { INVITE_DAYS, signInvite } from '@/lib/lab-invite';
@@ -9,6 +10,7 @@ export const runtime = 'nodejs';
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
+    const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
     const me = await verifyToken(req.cookies.get('auth_token')?.value || '');
     if (!me) return NextResponse.json({ ok: false, error: '未登录或登录已过期' }, { status: 401 });
     await loadSpace(id); // 空间不存在就别发票
