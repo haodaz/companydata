@@ -2,6 +2,7 @@
 
 /**
  * 真活台 · 管理页 /work/admin（迁移 035）：出题（生成器是核心）→ AI 基线 → 复制参与链接甩出去 → 看每个人的报告。
+ * 只给管理员（看 / 管全部）；普通用户进来转回 /work/mine，只管自己出的题（2026-10-23）。
  * 独立于 /lab 和数据实体后台（用户 10-18：管理端不要和数据实体管理掺合），只借后台的登录；数据后台里只留一个新窗口入口。
  */
 import React, { useCallback, useEffect, useState } from 'react';
@@ -32,7 +33,7 @@ function Inner() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    try { const r = await fetch('/api/admin/work/tasks', { cache: 'no-store' }); if (r.status === 401) { setNeedLogin(true); return; } const j = await r.json(); if (!j.ok) throw new Error(j.error); setList(j.tasks); }
+    try { const r = await fetch('/api/admin/work/tasks', { cache: 'no-store' }); if (r.status === 401) { setNeedLogin(true); return; } const j = await r.json(); if (!j.ok) throw new Error(j.error); if (j.role !== 'admin') { location.replace('/work/mine'); return; } setList(j.tasks); }
     catch (e: any) { message.error(e.message); } finally { setLoading(false); }
   }, [message]);
   useEffect(() => { load(); }, [load]);

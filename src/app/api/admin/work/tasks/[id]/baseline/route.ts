@@ -3,6 +3,7 @@ import { supabaseAdmin as db } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
 import { runBaseline, WORK_MODEL } from '@/lib/work/generator';
 import { withCost } from '@/lib/token-logger';
+import { canEditWorkTask } from '@/lib/work/access';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -12,6 +13,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const user = await getSessionUser(req);
   if (!user) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
   const { id } = await params;
+  if (!(await canEditWorkTask(user, id))) return NextResponse.json({ ok: false, error: '只能给自己出的题跑基线' }, { status: 403 });
   const { data: t } = await db.from('work_tasks').select('*').eq('id', id).maybeSingle();
   if (!t) return NextResponse.json({ ok: false, error: '没有这道题' }, { status: 404 });
   try {

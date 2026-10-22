@@ -1,22 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
+import { canEditWorkTask } from '@/lib/work/access';
 
 export const runtime = 'nodejs';
 
-/** 只能动自己出的题；示范题和别人的题只有管理员能动 */
-async function canEdit(user: { email: string; role: string }, id: string) {
-  if (user.role === 'admin') return true;
-  const { data } = await db.from('work_tasks').select('created_by').eq('id', id).maybeSingle();
-  return !!data && data.created_by === user.email;
-}
+const canEdit = canEditWorkTask;
 
 /** 一道题的全部：问题 / 任务 / 材料 / rubric / 基线 / 出题材料 + 所有作答 */
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  if (!(await getSessionUser(req))) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
+  const user = await getSessionUser(req);
+  if (!user) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
   const { id } = await params;
   const { data: task, error } = await db.from('work_tasks').select('*').eq('id', id).maybeSingle();
   if (error || !task) return NextResponse.json({ ok: false, error: error?.message || '没有这道题' }, { status: 404 });
+  // 普通用户只能看自己出的题和示范题；别人的题（含答题报告）只有管理员能看
+  if (user.role !== 'admin' && task.created_by !== user.email && task.owner?.contact !== 'demo') return NextResponse.json({ ok: false, error: '只能看自己出的题' }, { status: 403 });
   const { data: sessions } = await db.from('work_sessions').select('id, participant, started_at, submitted_at, score, report').eq('task_id', id).order('created_at', { ascending: false });
   return NextResponse.json({ ok: true, task, sessions: sessions || [] });
 }
