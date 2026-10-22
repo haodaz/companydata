@@ -39,10 +39,14 @@ let q = db.from('companies').select('id, name, name_en, country, official_websit
 if (opt('ids')) q = q.in('id', opt('ids').split(',').map(Number));
 const { data: sups } = await q.order('id');
 let suppliers = (sups || []) as any[];
+// 试过的厂商（不管抓没抓到）记在这里，--per-cat 铺开时跳过
+const ATTEMPTED = 'reports/research-products-attempted.json';
+const attempted: number[] = (() => { try { return JSON.parse(fs.readFileSync(ATTEMPTED, 'utf8')); } catch { return []; } })();
 if (!opt('ids') && opt('per-cat')) {
   // 铺开：每类挑 N 家还没抓过产品的（国内海外交替），一家算进它第一个类目
   const { data: done } = await db.from('research_products').select('supplier_id');
   const crawled = new Set((done || []).map((d: any) => d.supplier_id));
+  for (const id of attempted) crawled.add(id);   // 试过、抓不到的也不再挑（要重试用 --ids）
   const N = Number(opt('per-cat')), picked: any[] = [];
   for (const c of CAT_KEYS) {
     const pool = suppliers.filter(x => x.supplier_categories.includes(c) && !crawled.has(x.id) && !picked.includes(x));
@@ -346,6 +350,7 @@ doc_type：brochure 产品手册 | datasheet 规格书 | manual 操作手册 | a
       }
       report.push({ supplier: s.name, name: row.name, kind, category: row.category, labels: row.labels, specs: Object.keys(row.specs).length, images: (p.images || []).length, price: row.price, docs: docs.map(d => `${d.doc_type}:${d.file_type || '?'}:${d.pages || ''}p:${d.storage_path ? '存' : '链'}`), url: row.source_url });
     }
+    if (!DRY && !attempted.includes(s.id)) { attempted.push(s.id); fs.writeFileSync(ATTEMPTED, JSON.stringify(attempted)); }
     console.log(`✓ ${s.name}：${got.length} 个产品，资料 ${got.reduce((n, p) => n + (p.docs?.length || 0), 0)} 份`);
   }
 }));
