@@ -51,6 +51,8 @@ const BASE_LINES: Line[] = [
   { t: '发布这道题，生成参与链接' },
 ];
 
+const need = (r: string) => r.trim().length > 30 ? r.trim().slice(0, 30) + '…' : r.trim();
+
 export function GenProgress({ phase, company, picked, role, focus, env }: { phase: 'gen' | 'base' | 'done'; company: string; picked: PickedCompany; role: string; focus?: string; env?: string }) {
   const [deep, setDeep] = useState<string[]>([]);
   useEffect(() => {
@@ -91,6 +93,7 @@ export function GenProgress({ phase, company, picked, role, focus, env }: { phas
   useEffect(() => { const id = setInterval(() => tick(x => x + 1), 1000); return () => clearInterval(id); }, []);
 
   return (
+    <div className="gp-mask" role="status" aria-live="polite">
     <div className="gp">
       <style>{GP_CSS}</style>
       <div className="gp-head">
@@ -106,21 +109,26 @@ export function GenProgress({ phase, company, picked, role, focus, env }: { phas
           </div>
         ))}
       </div>
+      <div className="gp-foot">{company} · {need(role)}</div>
+    </div>
     </div>
   );
 }
 
 const GP_CSS = `
-.gp { margin-top: 14px; border: 1px solid #e3e1fb; background: #fbfaff; border-radius: 14px; padding: 14px 16px 10px; }
+.gp-mask { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 16px; background: rgba(246,245,255,.86); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: gpfade .3s ease both; }
+.gp { width: min(620px, 100%); border: 1px solid #e3e1fb; background: #fff; border-radius: 18px; padding: 22px 24px 16px; box-shadow: 0 24px 60px rgba(60,50,180,.16); }
+.gp-foot { margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ebe9fb; font-size: 12px; color: #9a99b4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@keyframes gpfade { from { opacity: 0; } to { opacity: 1; } }
 .gp-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.gp-head b { font-size: 15px; color: #2b2670; }
+.gp-head b { font-size: 18px; color: #2b2670; }
 .gp-head span { font-size: 12.5px; color: #8a89a8; font-variant-numeric: tabular-nums; }
 .gp-bar { height: 4px; border-radius: 4px; background: #ebe9fb; margin: 10px 0 8px; overflow: hidden; }
 .gp-bar i { display: block; height: 100%; background: linear-gradient(90deg, #6055f5, #12b5cb); transition: width .6s ease; }
-.gp-list { max-height: 260px; overflow-y: auto; display: grid; gap: 2px; padding-right: 4px; }
+.gp-list { max-height: min(56vh, 460px); overflow-y: auto; display: grid; gap: 2px; padding-right: 4px; }
 .gp-row { display: flex; gap: 10px; align-items: flex-start; padding: 5px 2px; animation: gpin .35s ease both; }
 .gp-ic { width: 18px; flex-shrink: 0; text-align: center; font-size: 12px; color: #12a37a; line-height: 22px; }
-.gp-t { font-size: 13.5px; color: #33335a; line-height: 22px; }
+.gp-t { font-size: 14.5px; color: #33335a; line-height: 22px; }
 .gp-row.on .gp-t { color: #2b2670; font-weight: 600; }
 .gp-d { font-size: 12px; color: #9a99b4; line-height: 1.5; }
 .gp-spin { display: inline-block; width: 12px; height: 12px; margin-top: 5px; border-radius: 50%; border: 2px solid #6055f5; border-top-color: transparent; animation: gpspin .8s linear infinite; }
