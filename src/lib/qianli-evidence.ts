@@ -77,13 +77,37 @@ export const hasJdText = (t: SpecialtyText) => `${t.responsibilities || ''}${t.o
  * 按原文过一遍模型给的二级标签，返回保留下来的一级 / 二级（层级一致、顺序按 tags.xlsx）和每个去掉的原因。
  * 原文 = 岗位名 + 职责 + 要求；不看 AI 写的 summary。
  */
+/**
+ * 原文里写法固定、一出现就该打的二级标签（陈彩瑛 10-23 #27 给的漏打例子）：直接按规则打上，不全靠模型。
+ * 只收确定的写法；「不转正」这类排除项照样由 checkSpecialty 去掉。
+ */
+const DETECT: Record<string, RegExp[]> = {
+  convertible: [/(有|可|获得|提供|有机会)[^。；;\n]{0,4}转正|转正机会|是否可转正[:：]\s*是|达标后[^。；;\n]{0,4}转正|择优转正/],
+  intern_to_full: [/实习[^。；;\n]{0,15}(转正|转全职|转为正式)/],
+  retainable: [/(表现|考核)[^。；;\n]{0,4}(优异|优秀)[^。；;\n]{0,8}(留用|转正)|留用(机会|offer|答辩)/i],
+  liberal_arts: [/(动画|数字媒体艺术|视觉传达|美术|艺术设计|平面设计|游戏美术|设计类|传媒|新闻|广告学|中文|汉语言|戏剧|影视|播音|编导|音乐|舞蹈|文学|历史学|哲学|社会学|人文社科)[^。；;\n]{0,12}(专业|背景)/],
+  ramp_up: [/无(工作)?经验(要求|也可|亦可|可|\s*[·|｜,，])|经验不限|不要求(工作)?经验|零基础|无经验但/],
+  self_learning: [/(愿意|乐于|渴望)学习|学习能力强亦可/],
+  global_bonus: [/海外[^。；;\n]{0,10}(学习|生活|实习|留学|求学)[^。；;\n]{0,8}(经历|经验|背景)|海外(顶尖|知名)?(院校|高校)|海内外知名高校|留学(经历|背景)|海归/],
+  cross_cultural: [/国际视野|跨文化/],
+  global_posting: [/(海外|国外|境外)[^。；;\n]{0,6}(出差|驻外|驻场|办公|派驻)|驻外|外派|海外区域出差/],
+  global_experience: [/国际(影视|内容|项目|业务|市场)|海外(内容|市场|业务|客户)|驻外方向/],
+};
+export function detectSpecialty(t: SpecialtyText): string[] {
+  if (!hasJdText(t)) return [];
+  const text = `${t.name || ''}\n${t.responsibilities || ''}\n${t.overview || ''}`;
+  return Object.entries(DETECT).filter(([, res]) => res.some(re => re.test(text))).map(([k]) => k);
+}
+
 export function checkSpecialty(l2In: string[], t: SpecialtyText): { l1: string[]; l2: string[]; dropped: Record<string, string> } {
   const dropped: Record<string, string> = {};
   if (!hasJdText(t)) { for (const v of l2In) dropped[v] = 'JD / 要求为空'; return { l1: [], l2: [], dropped }; }
   const text = `${t.name || ''}\n${t.responsibilities || ''}\n${t.overview || ''}`;
-  let l2 = L2_ORDER.filter(v => l2In.includes(v)).filter(v => {
+  const detected = new Set(detectSpecialty(t));   // 规则直接认出来的：本身就是原文证据
+  let l2 = L2_ORDER.filter(v => l2In.includes(v) || detected.has(v)).filter(v => {
     const r = RULES[v];
     if (!r) return true;
+    if (detected.has(v) && !r.none?.some(re => re.test(text))) return true;
     if (r.none?.some(re => re.test(text))) { dropped[v] = '原文有排除项'; return false; }
     if (!r.any.some(re => re.test(text)) && !(r.orNoMention && !r.orNoMention.test(text)) && !(r.orName && r.orName.test(t.name || ''))) { dropped[v] = '原文找不到对应字眼'; return false; }
     if (r.also && !r.also.test(text)) { dropped[v] = '缺另一半条件'; return false; }

@@ -11,9 +11,9 @@ const { selectAll } = await import('@/lib/supabase-all');
 const { checkSpecialty } = await import('@/lib/qianli-evidence');
 const APPLY = process.argv.includes('--apply');
 
-const { data } = await selectAll(() => db.from('jobs').select('id, name, responsibilities, overview, qianli_job_specialty_labels, qianli_specialty_labels_reason')
-  .not('if_delete', 'is', true).not('qianli_specialty_labels_reason', 'is', null).order('id'));
-const rows = data as any[];
+const { data } = await selectAll(() => db.from('jobs').select('id, name, responsibilities, overview, qianli_job_specialty_labels, qianli_specialty_labels_reason, human_locked_fields')
+  .not('if_delete', 'is', true).order('id'));   // 10-23 起全量过：规则能直接认出的写法要补打（陈彩瑛 #27）
+const rows = (data as any[]).filter(r => !(r.human_locked_fields || []).some((k: string) => k.startsWith('qianli_')));   // 人工锁定的不动
 const split = (s: any) => toList(s);   // 10-22 起是数组
 const dropBy: Record<string, Record<string, number>> = {}, l1Before: Record<string, number> = {}, l1After: Record<string, number> = {};
 const changes: { id: number; l1: string[] | null; l2: string[] | null }[] = [];
