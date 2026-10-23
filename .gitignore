@@ -60,3 +60,4 @@ scripts/.lab-full-day-*.log
 target/
 reports/
 agent-work/
+data/work-samples/
