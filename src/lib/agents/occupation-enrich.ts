@@ -7,6 +7,11 @@
 import { parseJsonLoose, searchJson } from '@/lib/agents/search-llm';
 import { generateContent } from '@/lib/llm-client';
 import { withCost } from '@/lib/token-logger';
+import fos91 from '@/data/fos-91.json';
+
+/** 相关专业只能是项目库那 91 个专业的 key（数据部门 10-23 #31） */
+const FOS91 = fos91 as { key: string; name: string }[];
+const FOS91_KEYS = new Set(FOS91.map(f => f.key));
 
 /**
  * 国内信息走国内联网检索（阿里云百炼 · 通义千问 enable_search，每次搜索约 ¥0.004，Gemini 搜索约 ¥0.25）：
@@ -51,7 +56,7 @@ export async function researchOccupation(o: { name: string; name_lang_en?: strin
   "salaries": 分工作年限的月薪（元，整数），year 取：${years}；格式 [{ "year": "year_0_2", "salary": 6000, "source_url": "..." }],
   "relevant_certificates": 相关职业资格 / 技能证书，顿号分隔（如「全国计算机等级二级、软件设计师」）,
   "relevant_celebrities": 这个领域的知名从业者 / 代表人物 2-5 位，顿号分隔（中国人物优先）,
-  "relevant_fos_ids": 相关本科专业的英文 key 数组（snake_case，如 ["computer_science","software_engineering","data_science"]）,
+  "relevant_fos_ids": 相关本科专业的 key 数组（最多 5 个），只能从这 91 个里选（key=中文名）：${FOS91.map(f => `${f.key}=${f.name}`).join("，")},
   "sources": { 每个非空字段名: 出处链接 }
 }
 规则：只报告检索到或有把握的事实；薪资必须来自可查的数据源并在 sources 里给链接，查不到就 null；中文字段用中文。
@@ -66,7 +71,7 @@ export async function researchOccupation(o: { name: string; name_lang_en?: strin
   if (fields.career_mid_category && CAREER_MID_CATEGORIES[fields.career_mid_category]) fields.career_category = CAREER_MID_CATEGORIES[fields.career_mid_category][1];
   if (fields.career_category && !(fields.career_category in CAREER_CATEGORY_LABELS)) delete fields.career_category;
   if (fields.career_mid_category && !(fields.career_mid_category in CAREER_MID_CATEGORIES)) delete fields.career_mid_category;
-  if (Array.isArray(fields.relevant_fos_ids)) fields.relevant_fos_ids = fields.relevant_fos_ids.map((x: any) => String(x).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')).filter(Boolean);
+  if (Array.isArray(fields.relevant_fos_ids)) fields.relevant_fos_ids = [...new Set(fields.relevant_fos_ids.map((x: any) => String(x).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')).filter((k: string) => FOS91_KEYS.has(k)))].slice(0, 5);   // 不在 91 个里的不收
   const salaries = (Array.isArray(p.salaries) ? p.salaries : [])
     .map((s: any) => ({ year: String(s?.year || ''), salary: parseInt(String(s?.salary ?? '').replace(/[^\d]/g, ''), 10), source_url: s?.source_url || null }))
     .filter((s: any) => s.year in SALARY_YEAR_LABELS && s.salary > 0);

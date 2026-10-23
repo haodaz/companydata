@@ -23,16 +23,19 @@ if (!MODEL || !isKnownModel(MODEL)) { console.error(`--model 要用模型选单�
 const XLSX_PATH = opt('xlsx', 'reports/analytica_export_2026_en.xlsx'), OUT = opt('out', 'reports/analytica-suppliers.json');
 const LOOKUP = opt('lookup-model', MODEL);   // 找海外小厂的官网：千问的搜索偏国内站，海外用 Gemini（谷歌搜索）更准
 if (!isKnownModel(LOOKUP)) { console.error(`--lookup-model 要用模型选单里的（现在：${LOOKUP}）`); process.exit(1); }
-const PAR = Number(opt('par', '3')), LIMIT = Number(opt('limit', '0')), EXHIBITION = 'analytica';
+// --names：已经整理好的展商 JSON（[{name_cn, name_en}]，如 OCR 出来的慕尼黑上海名单），配 --exhibition 写展会名
+const NAMES = opt('names'), PAR = Number(opt('par', '3')), LIMIT = Number(opt('limit', '0')), EXHIBITION = opt('exhibition', 'analytica');
 const CAT_NAMES = INSTRUMENT_CATEGORIES.map(c => c.name);
 
 // 表头在第 5 行：No. / Company / Postcode / City / Country/Region / Hall/Booth
-const wb = XLSX.readFile(XLSX_PATH);
-const rows = (XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 }) as any[][])
-  .filter(r => r[1] && /^\d+$/.test(String(r[0]).trim()))
-  .map(r => ({ name: String(r[1]).replace(/\s+/g, ' ').trim(), city: r[3] || '', country: r[4] && r[4] !== 'undefined' ? String(r[4]) : '' }));
+const rows: { name: string; city: string; country: string; name_cn?: string; name_en?: string }[] = NAMES
+  // 中文名带「有限公司 / 股份」的当国内企业；只有英文名的国家留空，找官网时再定
+  ? (JSON.parse(fs.readFileSync(NAMES, 'utf8')) as any[]).map(e => ({ name: String(e.name_cn || e.name_en).trim(), name_cn: e.name_cn || '', name_en: e.name_en || '', city: '', country: /有限公司|股份|集团|研究院/.test(e.name_cn || '') && !/中国分公司|（中国）|\(中国\)/.test(e.name_cn || '') ? 'China' : '' }))
+  : (() => { const wb = XLSX.readFile(XLSX_PATH); return (XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 }) as any[][])
+    .filter(r => r[1] && /^\d+$/.test(String(r[0]).trim()))
+    .map(r => ({ name: String(r[1]).replace(/\s+/g, ' ').trim(), city: r[3] || '', country: r[4] && r[4] !== 'undefined' ? String(r[4]) : '' })); })();
 const exhibitors = [...new Map(rows.map(r => [r.name.toLowerCase(), r])).values()].slice(0, LIMIT || undefined);
-console.log(`analytica 展商 ${exhibitors.length} 家`);
+console.log(`${EXHIBITION} 展商 ${exhibitors.length} 家`);
 
 async function pool<T>(items: T[], fn: (x: T) => Promise<void>) {
   let i = 0;
@@ -45,7 +48,7 @@ const BATCH = 20, batches: typeof exhibitors[] = [];
 for (let i = 0; i < exhibitors.length; i += BATCH) batches.push(exhibitors.slice(i, i + BATCH));
 const kept: any[] = [], skipped: any[] = [];
 await pool(batches, async b => {
-  const prompt = `下面是 analytica（慕尼黑分析生化展）的参展商。逐家判断：是不是「科研仪器 / 实验室设备 / 试剂耗材」的厂商或品牌商（卖给实验室、科研、检测、研发；大的经销商也算）。
+  const prompt = `下面是 ${EXHIBITION} 的参展商。逐家判断：是不是「科研仪器 / 实验室设备 / 试剂耗材」的厂商或品牌商（卖给实验室、科研、检测、研发；大的经销商也算）。
 剔掉：展团组织方 / 联合展台（如 Bayern International、各国展团）、协会、媒体出版社、大学研究所、纯检测服务 / 咨询 / 招聘 / 物流、和实验室无关的公司。
 只凭公司名和你已有的了解判断，不要写「官网显示」之类没看过的话；拿不准的 keep=true（下一步会打开官网核实）。每条把公司名原样抄回 name。categories 从这些里选（原样照抄，可多选，不知道就空）：${CAT_NAMES.join('、')}
 ${b.map((e, i) => `${i}. ${e.name}（${e.country}）`).join('\n')}
@@ -72,14 +75,14 @@ await pool(kept, async e => {
     const { data: co } = await db.from('companies').select('name, name_en, official_website').eq('id', id).single();
     if (co?.official_website) {
       fromDb++;
-      out.push({ name_cn: /[一-鿿]/.test(co.name) ? co.name : '', name_en: co.name_en || e.name, country: e.country, is_domestic: e.country === 'China', website: co.official_website, products: [], exhibitions: [EXHIBITION], categories: e.categories, source: 'analytica 2026 展商名单 + 企业库' });
+      out.push({ name_cn: /[一-鿿]/.test(co.name) ? co.name : '', name_en: co.name_en || e.name, country: e.country, is_domestic: e.country === 'China', website: co.official_website, products: [], exhibitions: [EXHIBITION], categories: e.categories, source: `${EXHIBITION} 展商名单 + 企业库` });
       return;
     }
   }
-  const prompt = `联网检索这家 analytica 2026 参展商的公司信息：${e.name}（${[e.city, e.country].filter(Boolean).join('，')}）。
+  const prompt = `联网检索这家 ${EXHIBITION} 参展商的公司信息：${[e.name_cn, e.name_en].filter(Boolean).join(' / ') || e.name}（${[e.city, e.country].filter(Boolean).join('，')}）。
 要求：官网用公司自己的域名，查不到填 null，不要编；中文名只填公司自己用的中文名（没有就空）；主营写 2–4 个代表的仪器 / 试剂产品线。
 categories 从这些里选（原样照抄，可多选）：${CAT_NAMES.join('、')}
-只返回 JSON：{"name_cn":"","name_en":"","website":"https://...","products":[""],"categories":[""],"source_url":"你看到它的网址"}`;
+只返回 JSON：{"name_cn":"","name_en":"","country":"中国 / 德国 …","website":"https://...","products":[""],"categories":[""],"source_url":"你看到它的网址"}`;
   try {
     const r = await searchJson(prompt, e.country === 'China' ? MODEL : LOOKUP, { tool_name: 'company-pipeline', task_name: 'Analytica Exhibitor Lookup', institution: e.name }, { lenient: true });
     const v = r.parsed || {};
@@ -90,9 +93,9 @@ categories 从这些里选（原样照抄，可多选）：${CAT_NAMES.join('、
     const site = typeof v.website === 'string' && /^https?:\/\//.test(v.website) ? v.website : fromSources ? new URL(fromSources).origin : null;
     const cats = [...new Set([...e.categories, ...((v.categories || []) as string[]).filter(c => CAT_NAMES.includes(c))])];
     out.push({
-      name_cn: v.name_cn || '', name_en: v.name_en || e.name, country: e.country, is_domestic: e.country === 'China',
+      name_cn: v.name_cn || '', name_en: v.name_en || e.name_en || (/[一-鿿]/.test(e.name) ? '' : e.name), country: e.country || v.country || '', is_domestic: e.country === 'China' || /中国|china/i.test(v.country || ''),
       website: site, website_from: site && site !== v.website ? 'sources' : 'model', search_sources: (r.sources || []).slice(0, 5).map((x: any) => x.url),
-      products: Array.isArray(v.products) ? v.products : [], exhibitions: [EXHIBITION], categories: cats, source_url: v.source_url || r.sources?.[0]?.url || null, source: 'analytica 2026 展商名单',
+      products: Array.isArray(v.products) ? v.products : [], exhibitions: [EXHIBITION], categories: cats, source_url: v.source_url || r.sources?.[0]?.url || null, source: `${EXHIBITION} 展商名单`,
     });
   } catch (err: any) { console.log(`\n  查不到 ${e.name}：${String(err?.message || err).slice(0, 60)}`); }
   process.stdout.write(`\r找官网 ${out.length}/${kept.length}（库里已有 ${fromDb}、联网查 ${searched}）`);
