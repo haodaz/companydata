@@ -71,7 +71,7 @@ export const ADMIN_CSS = `
 .ca-deans .k { font: 700 10px var(--en); letter-spacing: .24em; color: var(--gold); margin-bottom: 8px; }
 .ca-dean { display: flex; align-items: center; gap: 9px; padding: 4px 0; font-size: 13px; font-weight: 600; color: var(--navy); }
 .ca-dean .seal { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font: 700 11px var(--en); color: #1c1606; background: linear-gradient(135deg, #d9b878, #b08d57); flex-shrink: 0; }
-.ca-dean .seal.b { background: var(--navy); color: #fff; }
+.ca-dean .seal.b { background: var(--navy); color: #fff; } .ca-dean .seal.s { background: #fff; color: var(--navy); box-shadow: inset 0 0 0 1.5px var(--line); }
 .ca-dean small { display: block; font-size: 11.5px; font-weight: 500; color: var(--ink2); }
 .ca-side-foot { margin-top: auto; padding: 14px 20px 18px; font-size: 12.5px; color: var(--ink2); line-height: 1.7; border-top: 1px solid var(--line); }
 .ca-side-foot .motto { font-family: var(--serif); color: var(--navy); font-weight: 800; font-size: 14px; }

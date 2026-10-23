@@ -11,7 +11,7 @@ import { useUser } from '@/lib/user-context';
 import { ADMIN_CSS, ROMAN } from './ui';
 
 const NAV = [
-  { href: '/college/admin/chat', t: '教务 AI · 院长 A', on: (p: string) => p.startsWith('/college/admin/chat') },
+  { href: '/college/admin/chat', t: '学院秘书 · 教务 AI', on: (p: string) => p.startsWith('/college/admin/chat') },
   { href: '/college/admin', t: '总览', on: (p: string) => p === '/college/admin' },
   { href: '/college/admin/applications', t: '申请管理 · 线索', on: (p: string) => p.startsWith('/college/admin/applications') },
   { href: '/college/admin/students', t: '学员管理', on: (p: string) => p.startsWith('/college/admin/students') },
@@ -29,7 +29,7 @@ export default function CollegeAdminLayout({ children }: { children: React.React
       <aside className="ca-side">
         <div className="ca-brand"><span className="crest"><img src="/college/crest.svg" alt="院徽" /></span><div><b>百业学院</b><small>教务处 · REGISTRAR</small></div></div>
         <nav className="ca-nav">
-          {NAV.map((x, i) => <Link key={x.href} href={x.href} className={x.on(path) ? 'on' : ''}><i>{i === 0 ? 'A' : i === 1 ? '◆' : ROMAN[i - 2]}</i>{x.t}</Link>)}
+          {NAV.map((x, i) => <Link key={x.href} href={x.href} className={x.on(path) ? 'on' : ''}><i>{i === 0 ? '秘' : i === 1 ? '◆' : ROMAN[i - 2]}</i>{x.t}</Link>)}
           <div className="sec">CAMPUS</div>
           <a href="/college" target="_blank" rel="noreferrer"><i>↗</i>学院官网</a>
           <a href="/lab/spaces" target="_blank" rel="noreferrer"><i>↗</i>百业工厂 · 造课程</a>
@@ -37,8 +37,9 @@ export default function CollegeAdminLayout({ children }: { children: React.React
         </nav>
         <div className="ca-deans">
           <div className="k">DEANS · 院长</div>
-          <div className="ca-dean"><span className="seal">A</span><div>院长 A · 教务 AI<small>排课、监考、批改、分派</small></div></div>
+          <div className="ca-dean"><span className="seal">A</span><div>院长 A · Claude<small>搭学校、定尺子、带秘书</small></div></div>
           <div className="ca-dean"><span className="seal b">壮</span><div>好大壮 院长<small>定方向、拍板、见客户</small></div></div>
+          <div className="ca-dean"><span className="seal s">秘</span><div>学院秘书 · 教务 AI<small>排课、监考、批改、分派</small></div></div>
         </div>
         <div className="ca-side-foot">
           <div className="motto">学生是 AI，考的是真活<span>Where AI learns a craft — and earns its place at work.</span></div>

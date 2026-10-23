@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * 教务 AI · 院长 A（2026-10-23）：照 /workspace 的骨架——左最近对话、中对话、右产物。产物就是教务处的真页面（iframe），建课在面板里跑。
+ * 学院秘书 · 教务 AI（2026-10-23）：照 /workspace 的骨架——左最近对话、中对话、右产物。产物就是教务处的真页面（iframe），建课在面板里跑。
  * 校长一句话：「给这家基金培养一个能看懂具身智能的分析师」→ 找课 / 录学员 / 开学籍 / 按路径培养 / 派去向，关键处停下来问。
  */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -21,7 +21,7 @@ const MODELS = MODEL_OPTIONS.filter(m => /^(claude-|gpt-|gemini-|qwen)/.test(m.i
 const RUNNING: Record<string, string> = { overview: '看教务总览', list_leads: '看线索', admit_lead: '录取为学员', list_students: '查学员名册', register_student: '登记学员', list_courses: '翻课程目录', build_course: '让百业工厂造课', enroll: '开学籍', list_enrollments: '查学籍', record: '调学籍档案', advance: '按学习路径推进（每步 30–90 秒）', entrance_exam: '监考入学考', attend_class: '上课、记要点', final_exam: '监考毕业考', reflect: '带学员反思', list_work_tasks: '找真活', work_exam: '监考真活', regrade: '按学院口径重评', list_graduates: '翻毕业生名册', search_targets: '找去向', place: '派去向' };
 const SUGGEST = [
   { t: '学校现在什么情况？', d: '待办、在读、补训、毕业生、去向', p: '学校现在什么情况？今天有什么要处理的？' },
-  { t: '定向培养一位分析师', d: '从线索到毕业派遣，一句话交给院长 A', p: '给武岳峰资本培养一个能看懂具身智能的投资分析师：找对口的课，用通义千问做学员，按路径培养到毕业，然后派过去。' },
+  { t: '定向培养一位分析师', d: '从线索到毕业派遣，一句话交给学院秘书', p: '给武岳峰资本培养一个能看懂具身智能的投资分析师：找对口的课，用通义千问做学员，按路径培养到毕业，然后派过去。' },
   { t: '补训中的学籍卡在哪？', d: '看错题本和老师傅的关键动作', p: '补训中的学籍都卡在哪一章？老师傅的关键动作差在哪？' },
   { t: '毕业生谁还没安排去向？', d: '统筹与分配', p: '毕业生里谁还没安排去向？给我建议。' },
 ];
@@ -85,9 +85,9 @@ export default function CollegeChatPage() {
       <section className="cc-chat">
         {!items.length ? (
           <div className="cc-hero">
-            <div className="ca-eyebrow">Dean A · Registrar AI</div>
+            <div className="ca-eyebrow">College Secretary · Registrar AI</div>
             <h1>{hello}，好大壮院长</h1>
-            <p>我是院长 A。线索、学员、课程、学籍、考试、去向——说一句，我去办；该你拍板的地方我会停下来问。</p>
+            <p>我是学院秘书。线索、学员、课程、学籍、考试、去向——说一句，我去办；该您拍板的地方我会停下来问。</p>
             <Composer text={text} setText={setText} busy={busy} send={send} stop={() => abortRef.current?.abort()} model={model} setModel={setModel} autoFocus />
             <div className="cc-sec" style={{ margin: '24px 2px 10px' }}>可以从这里开始</div>
             <div className="cc-suggest">{SUGGEST.map(x => <button key={x.t} className="cc-card" onClick={() => send(x.p)}><b>{x.t}</b><span>{x.d}</span></button>)}</div>
@@ -97,7 +97,7 @@ export default function CollegeChatPage() {
             <div className="cc-thread">
               {items.map((x, i) => {
                 if (x.k === 'user') return <div key={i} className="cc-user"><div className="cc-bubble">{x.text}</div></div>;
-                if (x.k === 'text') return <div key={i} className={`cc-ai${busy && i === items.length - 1 ? ' streaming' : ''}`}><span className="cc-ava">A</span><div className="cc-ai-body"><Md text={x.text} /></div></div>;
+                if (x.k === 'text') return <div key={i} className={`cc-ai${busy && i === items.length - 1 ? ' streaming' : ''}`}><span className="cc-ava">秘</span><div className="cc-ai-body"><Md text={x.text} /></div></div>;
                 if (x.k === 'tool') return <div key={x.id} className="cc-tool"><span className={`cc-dot${x.running ? ' run' : x.error ? ' err' : ''}`} /><span className="cc-tool-t">{x.running ? `${RUNNING[x.name] || x.name}…` : x.label || x.name}</span>{x.ui && !x.running && <button className="cc-link" onClick={() => setArt({ ...x.ui, _n: Date.now() })}>看 →</button>}{x.error && <span className="cc-err-t">{x.error}</span>}</div>;
                 if (x.k === 'ask') return <div key={x.id} className="cc-ask"><div className="cc-ask-q">{x.question}</div><div className="cc-opts">{x.options.map((o, j) => <button key={o} className={`cc-opt${x.answered === o ? ' on' : ''}`} disabled={!!x.answered || busy} onClick={() => send(o)}><i>{j + 1}</i>{o}</button>)}</div>{x.answered && !x.options.includes(x.answered) && <div className="cc-mute" style={{ marginTop: 6 }}>你回答：{x.answered}</div>}</div>;
                 return <div key={i} className="cc-error">{x.text}</div>;
@@ -105,7 +105,7 @@ export default function CollegeChatPage() {
               {busy && items[items.length - 1]?.k !== 'text' && !(items[items.length - 1]?.k === 'tool' && (items[items.length - 1] as any).running) && <div className="cc-typing"><i /><i /><i /></div>}
               <div ref={endRef} style={{ height: 8 }} />
             </div>
-            <div className="cc-dock"><Composer text={text} setText={setText} busy={busy} send={send} stop={() => abortRef.current?.abort()} model={model} setModel={setModel} placeholder={pendingAsk ? '选一个，或者直接打字回答…' : '对院长 A 说…'} /></div>
+            <div className="cc-dock"><Composer text={text} setText={setText} busy={busy} send={send} stop={() => abortRef.current?.abort()} model={model} setModel={setModel} placeholder={pendingAsk ? '选一个，或者直接打字回答…' : '对学院秘书说…'} /></div>
           </>
         )}
       </section>
@@ -117,7 +117,7 @@ export default function CollegeChatPage() {
 function Composer({ text, setText, busy, send, stop, model, setModel, placeholder, autoFocus }: { text: string; setText: (t: string) => void; busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; placeholder?: string; autoFocus?: boolean }) {
   return (
     <div className="cc-composer">
-      <textarea value={text} autoFocus={autoFocus} rows={2} placeholder={placeholder || '对院长 A 说：给谁培养什么人、谁学得怎么样、谁该派去哪…'} onChange={e => setText(e.target.value)}
+      <textarea value={text} autoFocus={autoFocus} rows={2} placeholder={placeholder || '对学院秘书说：给谁培养什么人、谁学得怎么样、谁该派去哪…'} onChange={e => setText(e.target.value)}
         onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); send(text); } }} />
       <div className="cc-bar">
         <select className="cc-model" value={model} onChange={e => setModel(e.target.value)}>{MODELS.map(m => <option key={m.id} value={m.id}>{m.label}</option>)}</select>

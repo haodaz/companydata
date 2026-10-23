@@ -1,5 +1,5 @@
 /**
- * 百业学院 · 教务 AI 总控（院长 A，2026-10-23）。照企业工作台那套 agent 循环（lib/ws/agent.ts 的 AgentKit），换一套工具：
+ * 百业学院 · 学院秘书（教务 AI 总控，2026-10-23）。照企业工作台那套 agent 循环（lib/ws/agent.ts 的 AgentKit），换一套工具：
  * 工具就是教务处里能人工点的那些基础功能——两条路径同一套能力。校长 / 教务用自然语言：「给这家基金培养一个能看懂具身智能的分析师」，
  * 它去：看线索 → 挑课（没有就让百业工厂造）→ 录学员 → 开学籍 → 按路径入学考 / 上课 / 毕业考 / 反思 / 真活 → 毕业 → 派去向；关键处 ask_user 停下来问。
  * 给界面的东西放 ui：{ kind: 'college_page', path, title } 右侧面板直接打开教务处那一页（产物 = 真页面）；建课用 space_build（和工作台一样在前端跑）。
@@ -8,7 +8,7 @@ import type Anthropic from '@anthropic-ai/sdk';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import type { AgentKit } from '@/lib/ws/agent';
 import { MODEL_OPTIONS } from '@/lib/model-options';
-import { admitApplication, APP_STATUS, createEnrollment, createPlacement, createStudent, ENROLL_STATUS, enrollmentDetail, ensurePlatformStudents, listCourses, listEnrollments, listPlacements, listStudents, overview, searchTargets, type PlacementKind } from '@/lib/college-admin';
+import { admitApplication, APP_STATUS, createEnrollment, createPlacement, createStudent, ENROLL_STATUS, enrollmentDetail, ensurePlatformStudents, listCourses, listEnrollments, listPlacements, listStudents, overview, PLACE_STATUS, searchTargets, type PlacementKind, type PlacementStatus } from '@/lib/college-admin';
 import { advance, attendClass, nextStep, pickableWorkTasks, reflect, regradeEnrollment, runChapterExam, runWorkExam } from '@/lib/college-train';
 
 type Ui = { kind: 'college_page'; path: string; title: string } | { kind: 'space_build'; buildId: string; payload: Record<string, any>; title: string };
@@ -37,11 +37,13 @@ export const COLLEGE_TOOLS: Anthropic.Tool[] = [
   { name: 'list_graduates', description: '毕业生名册（含已有去向）。', input_schema: { type: 'object', properties: {} } },
   { name: 'search_targets', description: '找毕业生能派去的地方：工作台机构（企业版 / 科研版）、企业库企业、人才培养需求单。', input_schema: { type: 'object', properties: { query: { type: 'string' } }, required: ['query'] } },
   { name: 'place', description: '把一位毕业生派去一个去向（target_kind: ws_org / company / demand）。派之前用 ask_user 确认。', input_schema: { type: 'object', properties: { enrollment_id: { type: 'string' }, target_kind: { type: 'string', enum: ['ws_org', 'company', 'demand'] }, target_id: { type: 'string' }, target_name: { type: 'string' }, note: { type: 'string' } }, required: ['enrollment_id', 'target_kind', 'target_id', 'target_name'] } },
+  { name: 'list_placements', description: '看去向记录（可按学籍筛）：派去了哪、状态（拟派 / 已推荐 / 已上岗 / 已结束）、备注、placement_id。', input_schema: { type: 'object', properties: { enrollment_id: { type: 'string' } } } },
+  { name: 'update_placement', description: '改一条去向：status（proposed / offered / placed / ended）或 note（比如写给需求方的交付说明）。', input_schema: { type: 'object', properties: { placement_id: { type: 'string' }, status: { type: 'string', enum: ['proposed', 'offered', 'placed', 'ended'] }, note: { type: 'string' } }, required: ['placement_id'] } },
   { name: 'ask_user', description: '需要好大壮院长拍板时用：一句话的问题 + 2–4 个短选项（不带编号；也可以自己打字）。录取、造课、派去向、花钱多的批量培养之前要问。', input_schema: { type: 'object', properties: { question: { type: 'string' }, options: { type: 'array', items: { type: 'string' } } }, required: ['question'] } },
 ];
 
 export function collegeSystemPrompt(user: string) {
-  return `你是百业学院的教务 AI，院长 A。和你说话的是好大壮院长（${user}）或教务同事——他们懂管理，不一定懂 AI，所以你要把事办成，用人话汇报。
+  return `你是百业学院的学院秘书（教务 AI）。和你说话的是好大壮院长（${user}）、院长 A，或教务同事——他们懂管理，不一定懂 AI，所以你要把事办成，用人话汇报。
 学院是什么：学生是 AI 模型（学员）；课程是百业工厂里的职业空间（一个岗位一天的章节、工位、老师傅技能卡、每章教案）；学籍 = 学员 × 课程，同一个模型上不同的课就是不同的毕业生；考核按「学院口径」对照老师傅评（关键动作做到几个、行话与行规 / 具体执行 / 现场判断 / 交付可用），每章 ≥ 60 才毕业；毕业生派去工作台机构 / 企业库企业 / 培养需求单。
 学习路径：入学考（裸考看底子）→ 逐章上课（教案要点进笔记）→ 毕业考（技能卡 + 笔记）→ 没过的章反思进错题本再考 → 真活实习（和 AI 基线比）→ 毕业。advance 会按这个路径自动走；也可以单步点。
 申请管理是线索（CRM），不是台账；录取 / 立项只是从线索顺手建学员、建学籍。
@@ -112,6 +114,14 @@ async function run(name: string, input: any, user: string): Promise<{ result: an
     }
     case 'regrade': { const r = await regradeEnrollment(String(input.enrollment_id)); return { result: r, label: `按学院口径重评 ${r.length} 份`, ui: page(`/college/admin/training/${input.enrollment_id}`, '学籍') }; }
     case 'list_graduates': { const [xs, pls] = await Promise.all([listEnrollments({ status: 'graduated' }), listPlacements()]); return { result: xs.map(e => ({ enrollment_id: e.id, nova: e.nova_name, course: e.course?.role, student: e.student_name, final: e.final_score, graduated_at: e.graduated_at, placements: pls.filter((p: any) => p.enrollment_id === e.id).map((p: any) => `${p.target_name}（${p.status_label}）`) })), label: `毕业生 ${xs.length} 位`, ui: page('/college/admin/graduates', '毕业生管理') }; }
+    case 'list_placements': { const xs = await listPlacements({ enrollment_id: input.enrollment_id }); return { result: xs.map((p: any) => ({ placement_id: p.id, enrollment_id: p.enrollment_id, nova: p.nova, role: p.role, target: p.target_name, kind: p.kind_label, status: p.status, status_label: p.status_label, note: p.note })), label: `去向记录 ${xs.length} 条`, ui: page('/college/admin/graduates', '毕业生管理') }; }
+    case 'update_placement': {
+      const patch: Record<string, any> = { updated_at: new Date().toISOString() };
+      if (input.status && PLACE_STATUS[input.status as PlacementStatus]) patch.status = input.status;
+      if (typeof input.note === 'string') patch.note = input.note.slice(0, 2000);
+      const { error } = await db.from('college_placements').update(patch).eq('id', String(input.placement_id)); if (error) throw new Error(error.message);
+      return { result: { ok: true, ...patch }, label: `去向已更新${patch.status ? `：${PLACE_STATUS[patch.status as PlacementStatus]}` : ''}`, ui: page('/college/admin/graduates', '毕业生管理') };
+    }
     case 'search_targets': return { result: await searchTargets(String(input.query || '')), label: `找去向：${input.query}` };
     case 'place': { const p = await createPlacement({ enrollment_id: String(input.enrollment_id), target_kind: input.target_kind as PlacementKind, target_id: String(input.target_id), target_name: String(input.target_name), note: input.note }, user); return { result: { placement_id: p.id, status: p.status }, label: `派去 ${input.target_name}`, ui: page('/college/admin/graduates', '毕业生管理') }; }
     default: throw new Error(`不认识的工具 ${name}`);
