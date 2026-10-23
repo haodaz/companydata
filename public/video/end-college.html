@@ -27,4 +27,6 @@
     <div class="sign"><span><b>院长 A</b>Claude</span><span><b>好大壮 院长</b>平方智能</span></div>
   </div>
   <div class="foot">Baiye AI College · 平方创想 × 方略研究院</div>
+  <!-- ?nosign=1：不带两位院长的落款（对外用） -->
+  <script>if (new URLSearchParams(location.search).get('nosign')) { document.querySelector('.sign').innerHTML = '<span><b>平方智能</b></span>'; }</script>
 </body></html>
