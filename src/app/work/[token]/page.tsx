@@ -79,8 +79,8 @@ export default function WorkPage() {
           : env.type === 'open'
           ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用自己的软件做。</b>下载材料，用你顺手的 Excel / CAD / IDE / AI 做；浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。出题人指定了这种做法，过程由录屏还原。</div></Box>
           : <Box title="怎么做">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 10 }}>
-            {([['bench', '在本页的操作台做', `${ENV_NAME[env.type]}：材料、编辑区、AI 都在页面里，每一步自动记录。省事，推荐。`], ['open', '用自己的软件做', '下载材料，用你顺手的 Excel / CAD / IDE / AI 做；浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。']] as const).map(([k, t, d]) => (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
+            {([['bench', '在本页的操作台做', `${ENV_NAME[env.type]}：材料、编辑区、AI 都在页面里，每一步自动记录。省事，推荐。`], ['plugin', '用自己的网页工具做', '在线文档 / 表格 / 设计工具 / 各家 AI 都行。装一次「真活插件」，它只在答题期间记录你打开的网页和页面文字；交付说明在侧边栏写。'], ['open', '用自己的桌面软件做', '装在电脑上的 Excel / CAD / IDE：下载材料，浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。']] as const).map(([k, t, d]) => (
               <div key={k} onClick={() => setMode(k)} style={{ cursor: 'pointer', padding: '12px 14px', borderRadius: 12, border: `2px solid ${mode === k ? '#6055f5' : '#e8e9f0'}`, background: mode === k ? '#f3f2ff' : '#fff' }}><div style={{ fontWeight: 700 }}>{mode === k ? '● ' : '○ '}{t}</div><div style={{ fontSize: 13, color: '#666', lineHeight: 1.6, marginTop: 4 }}>{d}</div></div>
             ))}
           </div>
