@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import { Button, Descriptions, Drawer, Space, Table, Tabs, Tag, Typography, App } from 'antd';
 import { WorkReport } from '@/components/work/WorkReport';
+import { Md } from '@/components/ws/Md';
 
 const { Text, Paragraph } = Typography;
 export const ENV_META: Record<string, { label: string; color: string }> = { doc: { label: '文档 / 对账台', color: 'purple' }, code: { label: '代码台', color: 'geekblue' }, sheet: { label: '表格 / 数据台', color: 'cyan' }, design: { label: '设计台', color: 'orange' }, plugin: { label: '真活插件 · 自己的工具', color: 'magenta' }, open: { label: '自己录制电脑操作', color: 'green' } };
@@ -49,8 +50,8 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           <Paragraph type="secondary" style={{ fontSize: 13 }}>照深度样本出的案例推进式真活：候选人一步一步看信息、作答；参考答案和算式只有这里和评卷 AI 看得到。测算的数都由平台按算式重算过。</Paragraph>
           {T.task.stages.map((st: any) => <div key={st.id} style={{ marginBottom: 16, padding: '12px 14px', background: '#fafbff', borderRadius: 10 }}>
             <div><Tag color="purple">{st.id}</Tag><Tag>{({ structuring: '搭框架', judgement: '判断与洞察', numeracy: '测算', creativity: '出主意', synthesis: '综合建议' } as any)[st.type] || st.type}</Tag><b>{st.question}</b></div>
-            {st.reveal && <details style={{ marginTop: 6 }}><summary style={{ cursor: 'pointer', color: '#6055f5', fontSize: 13 }}>这一步给候选人的信息</summary><Paragraph style={{ whiteSpace: 'pre-wrap', fontSize: 13, marginTop: 6 }}>{st.reveal}</Paragraph></details>}
-            <div style={{ marginTop: 6, fontSize: 13 }}><Text type="secondary">参考答案：</Text><span style={{ whiteSpace: 'pre-wrap' }}>{st.expected}</span></div>
+            {st.reveal && <details style={{ marginTop: 6 }}><summary style={{ cursor: 'pointer', color: '#6055f5', fontSize: 13 }}>这一步给候选人的信息</summary><div style={{ fontSize: 13, marginTop: 6 }}><Md text={st.reveal} /></div></details>}
+            <div style={{ marginTop: 6, fontSize: 13 }}><Text type="secondary">参考答案</Text><Md text={st.expected} /></div>
             {!!st.calc?.length && <ul style={{ margin: '6px 0 0', paddingLeft: 18, fontSize: 13 }}>{st.calc.map((c: any, i: number) => <li key={i}>{c.label}：<code>{c.expr}</code> = <b>{c.value}</b>{c.verified === false && <Tag color="orange" style={{ marginLeft: 6 }}>算式没核上</Tag>}</li>)}</ul>}
           </div>)}
         </div> }] : []),
