@@ -118,6 +118,8 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'if_develop_management', label: '管培项目', kind: 'boolean', group: 'basic', derived: true, hint: '岗位名里有「管培」为是，否则为否（数据部门 2026-10-10 口径）。' },
   // 潜历标签：库里存 value、页面显示中文名；入库后由 qianli-labels.ts 按数据部门的提示词专门打（10-20 #15 #17）
   { key: 'qianli_job_labels', label: '潜历职能标签', kind: 'enum', group: 'basic', derived: true, options: QIANLI_FUNCTION_NAMES, hint: '26 个职能标签选一个，存 value（如 mgmt_trainee = SWE）。' },
+  // 陈彩瑛 10-23 #26：留空 / 凭岗位名判断的原因要在页面和导出里看得到，方便人工照原因改标签
+  { key: 'qianli_job_labels_reason', label: '职能标签说明', kind: 'string', group: 'basic', derived: true, hint: '职能标签怎么来的：仅凭岗位名称判断 / 没有 JD，岗位名也看不出职能 / 26 个职能都对不上：… / 匹配度低：…；正常判定的写判断依据。' },
   { key: 'qianli_job_specialty_labels', label: '潜历特色标签', kind: 'string[]', group: 'basic', derived: true, options: QIANLI_SPECIALTY_L1_NAMES, hint: '一级特色标签 value 数组（由二级反推）。' },
   { key: 'qianli_specialty_labels_reason', label: '潜历特色标签（二级）', kind: 'string[]', group: 'basic', derived: true, options: QIANLI_SPECIALTY_L2_NAMES, hint: '二级特色标签 value 数组。' },
 

@@ -55,7 +55,7 @@ export function jobsOf(json: any): any[] {
 }
 
 /** 入库后由 job-tagging 专门打的字段：重新提取时不覆盖 */
-const TAGGED_FIELDS = ['fos_ids', 'related_career_ids', 'exp_labels', 'skill_labels', 'exp_labels_jd', 'skill_labels_jd', 'qianli_job_labels', 'qianli_job_specialty_labels', 'qianli_specialty_labels_reason'];
+const TAGGED_FIELDS = ['fos_ids', 'related_career_ids', 'exp_labels', 'skill_labels', 'exp_labels_jd', 'skill_labels_jd', 'qianli_job_labels', 'qianli_job_labels_reason', 'qianli_job_specialty_labels', 'qianli_specialty_labels_reason'];
 
 export async function upsertJobsFromLog(logId: number, structuredJson: any): Promise<number> {
   const { data: log, error: logErr } = await supabaseAdmin
