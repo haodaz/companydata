@@ -141,7 +141,7 @@ export async function createEnrollment(studentId: string, spaceId: string, by: s
   return data;
 }
 
-export interface ChapterRow { id: string; seq: number; slot: string | null; title: string; kind: string; bench: boolean; lesson: boolean; before: number | null; after: number | null; runs: number; passed: boolean; latest: { id: string; score: number | null; match: number | null; after: boolean; model: string; at: string }[] }
+export interface ChapterRow { id: string; seq: number; slot: string | null; title: string; kind: string; bench: boolean; lesson: boolean; before: number | null; after: number | null; runs: number; passed: boolean; latest: { id: string; score: number | null; match: number | null; after: boolean; model: string; at: string; standard: string | null; moves: { done: number; total: number } | null; caps: string[]; summary: string; missed: string[] }[] }
 export interface WorkRow { id: string; task_id: string; title: string; role: string; company: string; score: number | null; baseline: number | null; at: string; summary: string }
 export interface EnrollmentDetail { [k: string]: any; id: string; space_id: string; status: EnrollmentStatus; model_id: string | null; notebook: any; graduated_at: string | null; demand_id: string | null; chapters: ChapterRow[]; work: WorkRow[]; teacher: any; placements: any[]; lessons: { done: number; total: number } }
 
@@ -152,7 +152,7 @@ export async function enrollmentDetail(id: string): Promise<EnrollmentDetail> {
   const en = shapeEnrollment(e);
   const [{ data: chs }, { data: subs }, { data: ws }, { data: pl }, { data: sp }] = await Promise.all([
     db.from('lab_chapters').select('id, seq, slot, title, kind, lesson_at, sim').eq('task_id', e.space_id).eq('status', 'published').order('seq'),
-    db.from('skill_submissions').select('id, chapter_id, score, match, with_skill_id, candidate_note, graded_by_model, submitted_at').eq('enrollment_id', id).order('submitted_at', { ascending: false }),
+    db.from('skill_submissions').select('id, chapter_id, score, match, with_skill_id, candidate_note, graded_by_model, submitted_at, grading').eq('enrollment_id', id).order('submitted_at', { ascending: false }),
     db.from('work_sessions').select('id, task_id, score, report, submitted_at, participant').eq('enrollment_id', id).order('created_at', { ascending: false }),
     db.from('college_placements').select('*').eq('enrollment_id', id).order('created_at', { ascending: false }),
     db.from('skill_tasks').select('skill:skills(id, name, source, expert_name, expert_location, card)').eq('id', e.space_id).single(),
@@ -165,7 +165,8 @@ export async function enrollmentDetail(id: string): Promise<EnrollmentDetail> {
     const before = mine.filter(s => !s.with_skill_id), after = mine.filter(s => s.with_skill_id);
     return { id: c.id, seq: c.seq, slot: c.slot, title: c.title, kind: c.kind, bench: Array.isArray(c.sim?.steps) && c.sim.steps.some((x: any) => x?.type === 'bench'), lesson: !!c.lesson_at,
       before: best(before), after: best(after), runs: mine.length, passed: (best(after) ?? -1) >= PASS_SCORE,
-      latest: mine.slice(0, 6).map(s => ({ id: s.id, score: s.score, match: s.match, after: !!s.with_skill_id, model: modelOfSubmission(s), at: s.submitted_at })) };
+      latest: mine.slice(0, 6).map(s => { const g: any = s.grading || {}; const km = Array.isArray(g.key_moves) ? g.key_moves : []; return { id: s.id, score: s.score, match: s.match, after: !!s.with_skill_id, model: modelOfSubmission(s), at: s.submitted_at,
+        standard: g.standard || null, moves: km.length ? { done: km.filter((m: any) => m.done).length, total: km.length } : null, caps: Array.isArray(g.caps) ? g.caps : [], summary: String(g.summary || '').slice(0, 200), missed: km.filter((m: any) => !m.done).map((m: any) => String(m.move || '')).slice(0, 6) }; }) };
   });
   const wids = [...new Set((ws || []).map(w => w.task_id))];
   const { data: wt } = wids.length ? await db.from('work_tasks').select('id, role, company_name, task, baseline').in('id', wids) : { data: [] as any[] };

@@ -16,7 +16,8 @@ const argv = process.argv.slice(2); const mi = argv.indexOf('--model'); const MO
 const ME = 'haoz214@gmail.com';
 const OUT = 'scripts/.college-demo.json';
 const state: any = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : {};
-const save = () => fs.writeFileSync(OUT, JSON.stringify(state, null, 2));
+// 几个脚本可能同时在跑：写之前先合并磁盘上的最新状态，别互相覆盖（10-23 出题脚本曾把课程 id 盖掉）
+const save = () => { const cur = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : {}; Object.assign(cur, state); fs.writeFileSync(OUT, JSON.stringify(cur, null, 2)); };
 const log = (s: string) => console.log(`[${new Date().toLocaleTimeString('zh-CN', { hour12: false })}] ${s}`);
 
 /* ───────── 用例 1 · 投资机构行业分析师（具身智能方向）─────────

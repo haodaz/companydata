@@ -1,6 +1,6 @@
 /**
  * 百业学院演示用例 · 开学籍并按学习路径培养到毕业（2026-10-23）。
- *   npx tsx scripts/college-demo-train.mts [--steps 14]
+ *   npx tsx scripts/college-demo-train.mts [--steps 14] [--case invest|bio]   （两个用例可以分两个进程同时跑）
  * 前置：college-demo-prep.mts 建好两门课（并已用 lab-build-full-day 扩成一天）、college-demo-work.mts 出好两道真活。
  * 用例 1：学员 通义千问 Plus（国内模型）上「行业分析师（具身智能方向）」，定向培养给武岳峰资本的需求单。
  * 用例 2：学员 Claude Sonnet 5.5 上「单细胞多组学方向博士后研究员」，定向培养给实验室的需求单。
@@ -13,9 +13,11 @@ const { ensurePlatformStudents, createEnrollment, enrollmentDetail, createPlacem
 const { nextStep, advance, runWorkExam } = await import('../src/lib/college-train');
 
 const argv = process.argv.slice(2); const si = argv.indexOf('--steps'); const MAX = si >= 0 ? Number(argv[si + 1]) : 14;
+const ci = argv.indexOf('--case'); const CASE = ci >= 0 ? argv[ci + 1] : '';
 const ME = 'haoz214@gmail.com', OUT = 'scripts/.college-demo.json';
 const state: any = JSON.parse(fs.readFileSync(OUT, 'utf8'));
-const save = () => fs.writeFileSync(OUT, JSON.stringify(state, null, 2));
+// 两个进程同时跑：写之前先合并磁盘上的最新状态，别互相覆盖
+const save = () => { const cur = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : {}; Object.assign(cur, state); fs.writeFileSync(OUT, JSON.stringify(cur, null, 2)); };
 const log = (s: string) => console.log(`[${new Date().toLocaleTimeString('zh-CN', { hour12: false })}] ${s}`);
 
 await ensurePlatformStudents();
@@ -43,7 +45,7 @@ async function train(key: string, model: string, spaceId: string, demandId: stri
   return en.id;
 }
 
-await train('invest_enrollment_id', 'qwen-plus', state.invest_space_id, state.invest_demand_id, state.invest_work_id, '武岳峰资本 · 能看懂具身智能的投资分析师');
-await train('bio_enrollment_id', 'claude-sonnet-5-5', state.bio_space_id, state.bio_demand_id, state.bio_work_id, '演示·肿瘤免疫单细胞多组学实验室 · 单细胞数据处理与文献分析研究员');
+if (!CASE || CASE === 'invest') await train('invest_enrollment_id', 'qwen-plus', state.invest_space_id, state.invest_demand_id, state.invest_work_id, '武岳峰资本 · 能看懂具身智能的投资分析师');
+if (!CASE || CASE === 'bio') await train('bio_enrollment_id', 'claude-sonnet-5-5', state.bio_space_id, state.bio_demand_id, state.bio_work_id, '演示·肿瘤免疫单细胞多组学实验室 · 单细胞数据处理与文献分析研究员');
 log('done');
 process.exit(0);

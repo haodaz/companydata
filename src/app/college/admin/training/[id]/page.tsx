@@ -28,7 +28,7 @@ export default function EnrollmentPage() {
       const j = await api(`/enrollments/${id}`, { method: 'POST', json: { action, ...body } }); const r = j.result;
       const line = action === 'entrance' || action === 'exam' ? `${label || STEP_LABEL[action]} · ${r.chapter}：${r.score} 分${r.match != null ? `，与示范吻合 ${r.match}%` : ''}${r.passed ? ' ✓' : ''}`
         : action === 'class' ? `上课 · ${r.chapter}：记下 ${r.points.length} 条要点` : action === 'reflect' ? `反思 · ${r.chapter}：${r.lesson}${r.rules.length ? `；记住 ${r.rules.length} 条规则` : ''}`
-        : action === 'work' ? `真活 · ${r.title}：${r.score} 分${r.baseline != null ? `（AI 基线 ${r.baseline}）` : ''}` : action === 'lessons' ? `补教案：生成 ${r.generated.length} 章` : action === 'advance' ? r.steps.map((s: any) => `${s.step.label} → ${s.error ? '出错：' + s.error : s.result?.score != null ? `${s.result.score} 分` : s.result?.points ? `${s.result.points.length} 条要点` : s.result?.rules ? `${s.result.rules.length} 条规则` : '完成'}`).join('；') + `。下一步：${r.next.label}` : '完成';
+        : action === 'work' ? `真活 · ${r.title}：${r.score} 分${r.baseline != null ? `（AI 基线 ${r.baseline}）` : ''}` : action === 'regrade' ? `重评 ${r.length} 份作答：${r.map((x: any) => `${x.before ?? '—'}→${x.after}`).join('、')}` : action === 'lessons' ? `补教案：生成 ${r.generated.length} 章` : action === 'advance' ? r.steps.map((s: any) => `${s.step.label} → ${s.error ? '出错：' + s.error : s.result?.score != null ? `${s.result.score} 分` : s.result?.points ? `${s.result.points.length} 条要点` : s.result?.rules ? `${s.result.rules.length} 条规则` : '完成'}`).join('；') + `。下一步：${r.next.label}` : '完成';
       setLog(l => [`${new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })} ${line}`, ...l].slice(0, 12));
       t.ok(line.slice(0, 80)); await load();
     } catch (e) { t.err(e); } finally { setBusy(''); }
@@ -60,6 +60,7 @@ export default function EnrollmentPage() {
       <Card eyebrow="Curriculum Path" title="学习路径" extra={<>
         {next && next.kind !== 'done' && next.kind !== 'blocked' && <Btn kind="gold" busy={busy === 'next'} disabled={!canRun || !!busy} onClick={() => run('next', 'advance', { steps: 1 })}>做下一步 · {next.label}</Btn>}
         {next && next.kind !== 'done' && next.kind !== 'blocked' && <Btn kind="navy" busy={busy === 'adv'} disabled={!canRun || !!busy} onClick={() => run('adv', 'advance', { steps: 3 })}>连做 3 步</Btn>}
+        <Btn kind="ghost" sm busy={busy === 'regrade'} disabled={!!busy} title="同一份答案、同一把尺：对照老师傅的技能卡和示范逐条重评" onClick={() => run('regrade', 'regrade')}>按学院口径重评</Btn>
         <Btn kind="ghost" sm busy={busy === 'recompute'} onClick={() => run('recompute', 'recompute')}>重算成绩</Btn></>}>
         <div className="ca-steps">{[['入学考', '裸考看底子'], ['上课', '要点进笔记'], ['毕业考', '技能卡 + 笔记'], ['补训', '反思再考'], ['真活', '企业的活'], ['毕业', '全章 ≥ 60']].map(([a, b], i) => <div key={a} className={`ca-step${i === stepIdx ? ' on' : i < stepIdx ? ' done' : ''}`}><i>{['I', 'II', 'III', 'IV', 'V', 'VI'][i]}</i><b>{a}</b>{b}</div>)}</div>
         {next && <div className="ca-note" style={{ marginTop: 12 }}>{next.kind === 'done' ? '已达到毕业要求。' : next.kind === 'blocked' ? `暂时做不了：${next.label}` : <>下一步：<b>{next.label}</b>。</>}{!canRun && ' 这位学员还没接上模型接口，去学员管理里先选一个平台模型代跑。'}</div>}
@@ -75,7 +76,7 @@ export default function EnrollmentPage() {
               <td><div className="ca-row" style={{ gap: 6 }}>{c.lesson ? <Pill tone="ok">教案</Pill> : <Pill tone="mute">无教案</Pill>}{nb.lessons?.[c.id] ? <Pill tone="ok">要点 {nb.lessons[c.id].length}</Pill> : <Pill tone="mute">未上课</Pill>}</div></td>
               <td className="num">{score(c.before)}</td>
               <td className="num">{score(c.after)}{c.after != null && (c.passed ? <span className="ca-ok" style={{ marginLeft: 4 }}>✓</span> : <span className="ca-bad" style={{ marginLeft: 4 }}>✗</span>)}</td>
-              <td className="ca-mute" style={{ fontSize: 12, whiteSpace: 'nowrap' }}>{c.runs ? `${c.runs} 次 · ${fmtTime(c.latest[0]?.at)}` : '—'}</td>
+              <td className="ca-mute" style={{ fontSize: 12, minWidth: 200 }}>{c.runs ? <>{c.runs} 次 · {fmtTime(c.latest[0]?.at)}{(() => { const l = c.latest.find((x: any) => x.after) || c.latest[0]; return l?.moves ? <div style={{ color: l.moves.done * 2 < l.moves.total ? '#b42318' : '#0d7a52' }}>老师傅的关键动作 {l.moves.done}/{l.moves.total}{l.caps?.length ? ' · 封顶' : ''}</div> : null; })()}</> : '—'}</td>
               <td style={{ whiteSpace: 'nowrap' }}><div className="ca-row" style={{ gap: 6 }}>
                 <Btn kind="ghost" sm busy={busy === `en${c.id}`} disabled={!canRun || !!busy} onClick={() => run(`en${c.id}`, 'entrance', { chapter_id: c.id })}>入学考</Btn>
                 <Btn kind="ghost" sm busy={busy === `cl${c.id}`} disabled={!canRun || !!busy} onClick={() => run(`cl${c.id}`, 'class', { chapter_id: c.id })}>上课</Btn>
@@ -90,6 +91,7 @@ export default function EnrollmentPage() {
           <div className="ca-notebook">
             <div><div className="ca-eyebrow sm">I · 技能卡</div>{d.teacher ? <div className="ca-kv">「{d.teacher.name}」· {d.teacher.rules} 条判断规则{d.teacher.expert ? `，学自 ${d.teacher.expert_name}` : '（AI 草案）'}</div> : <div className="ca-mute">还没有</div>}</div>
             <div><div className="ca-eyebrow sm">II · 教材要点</div><div className="ca-kv">{Object.keys(nb.lessons || {}).length} / {d.chapters.length} 章已上课</div>{Object.entries(nb.lessons || {}).slice(0, 1).map(([k, v]: any) => <ul key={k}>{v.slice(0, 3).map((p: string, i: number) => <li key={i}>{p}</li>)}</ul>)}</div>
+            <div><div className="ca-eyebrow sm">GAP · 量出来的差距</div>{(() => { const l = d.chapters.flatMap((c: any) => c.latest).sort((a: any, b: any) => String(b.at).localeCompare(String(a.at)))[0]; return l?.moves ? <><div className="ca-kv">最近一次：关键动作 {l.moves.done}/{l.moves.total}{l.caps?.length ? `（${l.caps[0]}）` : ''}</div>{l.missed?.length ? <ul>{l.missed.slice(0, 4).map((m: string, i: number) => <li key={i}>没做：{m}</li>)}</ul> : null}{l.summary && <div className="ca-mute" style={{ fontSize: 12.5, marginTop: 4 }}>{l.summary}</div>}</> : <div className="ca-mute">还没按学院口径考过</div>; })()}</div>
             <div><div className="ca-eyebrow sm">III · 错题本</div>{(nb.rules || []).length ? <ul>{nb.rules.slice(-6).map((r: string, i: number) => <li key={i}>{r}</li>)}</ul> : <div className="ca-mute">还没有反思过</div>}{(nb.mistakes || []).length > 0 && <div className="ca-mute" style={{ fontSize: 12, marginTop: 4 }}>最近：{nb.mistakes[nb.mistakes.length - 1].chapter} · {nb.mistakes[nb.mistakes.length - 1].lesson}</div>}</div>
             <div><div className="ca-eyebrow sm">V · 真活经验</div>{(nb.work || []).length ? <ul>{nb.work.slice(-3).map((w: any, i: number) => <li key={i}>{w.task}（{w.score} 分）：{w.lesson}</li>)}</ul> : <div className="ca-mute">还没做过真活</div>}</div>
           </div>
