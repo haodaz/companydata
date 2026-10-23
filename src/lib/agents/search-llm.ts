@@ -148,7 +148,9 @@ export async function searchJson(prompt: string, modelId: string, log: Pick<Toke
   }
 
   // 每次 searchJson 是一次带搜索的调用（Gemini 按 grounded prompt、阿里云 / OpenAI 按搜索调用计费）
-  await logTokenUsage({ ...log, model_id: modelId, usageMetadata, success: true, search_calls: 1 }).catch(e => console.error('Token logging failed', e));
+  // Gemini 一次调用会自己发好几条搜索、每条单独计费：按返回的搜索条数记（10-23 对账：系统按 1 条记，实付约是两倍）
+  const searches = modelId.startsWith('gemini') ? Math.max(1, searchQueries.length) : 1;
+  await logTokenUsage({ ...log, model_id: modelId, usageMetadata, success: true, search_calls: searches }).catch(e => console.error('Token logging failed', e));
   // lenient：只拿它找信源时，模型回了一段话而不是 JSON 也不算失败，信源照样返回给下一步去抓
   let parsed: any;
   try { parsed = parseJsonLoose(text); } catch (e) { if (!opts.lenient) throw e; parsed = {}; }
