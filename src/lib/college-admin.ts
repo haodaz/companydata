@@ -182,7 +182,8 @@ export async function recomputeEnrollment(id: string) {
   if (d.status === 'withdrawn') return d;
   const befores = d.chapters.map(c => c.before).filter((x): x is number => x != null);
   const afters = d.chapters.map(c => c.after).filter((x): x is number => x != null);
-  const entrance = befores.length ? Math.max(...befores) : null;
+  // 入学考和毕业考同一口径：各章最好成绩的平均（之前入学考取最高一章，和毕业考的平均对不上）
+  const entrance = befores.length ? Math.round(befores.reduce((a, b) => a + b, 0) / befores.length) : null;
   const final = afters.length ? Math.round(afters.reduce((a, b) => a + b, 0) / afters.length) : null;
   const allPassed = d.chapters.length > 0 && d.chapters.every(c => c.passed);
   const status: EnrollmentStatus = allPassed ? 'graduated' : afters.length ? (d.chapters.some(c => c.after != null && !c.passed) ? 'remedial' : 'examining') : (befores.length || d.work.length) ? 'training' : 'enrolled';
