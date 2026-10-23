@@ -16,7 +16,7 @@ import { BRAND } from '@/lib/theme';
 
 const { Text } = Typography;
 const TYPE_NAME: Record<string, string> = Object.fromEntries(PRODUCT_TYPES.map(t => [t.value, t.name]));
-const TYPE_COLOR: Record<string, string> = { instruments_and_equipment: 'geekblue', reagents_and_consumables: 'green', software: 'purple', services: 'orange' };
+const TYPE_COLOR: Record<string, string> = { instruments_and_equipment: 'geekblue', reagents_and_consumables: 'green', software_and_hardware_systems: 'purple', consulting_services: 'orange', practical_training: 'cyan' };
 const split = (s: any) => String(s || '').split(/[；;]/).map(x => x.trim()).filter(Boolean);
 const size = (b?: number | null) => !b ? '' : b > 1048576 ? `${(b / 1048576).toFixed(1)} MB` : `${Math.max(1, Math.round(b / 1024))} KB`;
 
@@ -65,7 +65,7 @@ export default function DbResearchProductPage() {
         description="科研仪器设备、试剂耗材和服务，每条挂在企业实体库的厂商上。产品手册、规格书、操作手册有的一并带回；信息只取自厂商官网原文。" />
 
       <StatCards loading={loading && !stats.products} items={[
-        { label: '产品 / 服务', value: stats.products, icon: <AppstoreOutlined />, color: BRAND.primary, hint: `仪器 ${byType('instruments_and_equipment')} · 试剂耗材 ${byType('reagents_and_consumables')} · 软件 ${byType('software')} · 服务 ${byType('services')}` },
+        { label: '产品 / 服务', value: stats.products, icon: <AppstoreOutlined />, color: BRAND.primary, hint: `仪器 ${byType('instruments_and_equipment')} · 试剂耗材 ${byType('reagents_and_consumables')} · 软硬件系统 ${byType('software_and_hardware_systems')} · 咨询服务 ${byType('consulting_services')} · 实训培训 ${byType('practical_training')}` },
         { label: '厂商', value: stats.suppliers, icon: <ShopOutlined />, color: '#0891b2', hint: `覆盖 ${stats.categories_covered ?? 0} / ${stats.categories_total ?? 22} 类` },
         { label: '带资料的产品', value: stats.with_docs, icon: <FileTextOutlined />, color: '#16a34a', hint: `资料 ${stats.docs ?? 0} 份${(stats.docsByType || []).length ? '：' + stats.docsByType.map((d: any) => `${DOC_TYPE_NAMES[d.key] || d.key} ${d.n}`).join(' · ') : ''}` },
         { label: '有规格参数', value: stats.with_specs, icon: <ProfileOutlined />, color: '#7c3aed', hint: `占 ${pct(stats.with_specs || 0)} · 有产品图 ${stats.with_images ?? 0} · 有明码价格 ${stats.with_price ?? 0}` },
@@ -127,7 +127,7 @@ export default function DbResearchProductPage() {
               { key: 'lab', label: '标签', span: 2, children: split(detail.labels).map((x: string) => <Tag key={x}>{x}</Tag>) },
               { key: 'dis', label: '适用学科', span: 2, children: split(detail.disciplines).join('、') || '—' },
               { key: 'app', label: '应用场景', span: 2, children: split(detail.applications).join('、') || '—' },
-              ...(detail.type === 'services' ? [{ key: 'mode', label: '服务方式', children: detail.service_mode || '—' }, { key: 'reg', label: '服务地区', children: detail.service_region || '—' }] : []),
+              ...(['consulting_services', 'practical_training'].includes(detail.type) ? [{ key: 'mode', label: '服务方式', children: detail.service_mode || '—' }, { key: 'reg', label: '服务地区', children: detail.service_region || '—' }] : []),
               { key: 'ext', label: '编号', children: <Text code style={{ fontSize: 12 }}>{detail.external_id}</Text> },
               { key: 'src', label: '来源', children: detail.source_url ? <a href={detail.source_url} target="_blank" rel="noreferrer">产品页</a> : '—' },
             ]} />

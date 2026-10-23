@@ -4,22 +4,29 @@
  */
 import { randomId } from '@/lib/entity-ids';
 
-/** kind 决定 external_id 前缀和 type；软件 kyrj_ / 服务 kyfw_ 是我们提议，待数据部门确认 */
+/**
+ * kind 决定 external_id 前缀和 type。type 照方略严选平台的 5 个选项（姜贺 10-23 #39）：仪器设备 / 试剂耗材 / 软硬件系统 / 智库咨询服务 / 实训培训；
+ * 前缀：kyyq_ / kyhc_ / kysj_ / ky_system_ / zkzx_ / sxpx_。科研算力（服务器、加速卡）和实验室软件都算软硬件系统（#41）。
+ */
 export const PRODUCT_KINDS = [
   { key: 'instrument', name: '仪器设备', prefix: 'kyyq_', type: 'instruments_and_equipment' },
   { key: 'consumable', name: '耗材', prefix: 'kyhc_', type: 'reagents_and_consumables' },
   { key: 'reagent', name: '试剂', prefix: 'kysj_', type: 'reagents_and_consumables' },
-  { key: 'software', name: '软件', prefix: 'kyrj_', type: 'software' },   // 用户 10-21：软件是软件，和硬件一样是产品；软件开发 / 定制开发才是服务
-  { key: 'service', name: '服务', prefix: 'kyfw_', type: 'services' },
+  { key: 'system', name: '软硬件系统', prefix: 'ky_system_', type: 'software_and_hardware_systems' },
+  { key: 'service', name: '智库咨询服务', prefix: 'zkzx_', type: 'consulting_services' },
+  { key: 'training', name: '实训培训', prefix: 'sxpx_', type: 'practical_training' },
 ] as const;
+/** 老 kind 的叫法（10-21 用过 software） */
+const KIND_ALIAS: Record<string, string> = { software: 'system', services: 'service' };
 export type ProductKind = typeof PRODUCT_KINDS[number]['key'];
 export const PRODUCT_TYPES = [
   { value: 'instruments_and_equipment', name: '仪器设备' },
   { value: 'reagents_and_consumables', name: '试剂耗材' },
-  { value: 'software', name: '软件' },
-  { value: 'services', name: '服务' },
+  { value: 'software_and_hardware_systems', name: '软硬件系统' },
+  { value: 'consulting_services', name: '智库咨询服务' },
+  { value: 'practical_training', name: '实训培训' },
 ];
-export const kindOf = (k: any) => PRODUCT_KINDS.find(x => x.key === k) || null;
+export const kindOf = (k: any) => PRODUCT_KINDS.find(x => x.key === (KIND_ALIAS[k] || k)) || null;
 /** 前缀 + 16 位小写字母数字 */
 export const productExternalId = (kind: ProductKind) => `${kindOf(kind)!.prefix}${randomId(16)}`;
 

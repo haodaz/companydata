@@ -154,7 +154,7 @@ ${md.slice(0, 14000)}
 
 每个产品 / 服务：
 - name 名称（页面原文）、brand 品牌、model_no 型号、specification 规格（如 100mL、10 万转、500 样本 / 天，原文写法）、price 价格（原文写法，没写就空）
-- kind：instrument 仪器设备（硬件）| software 软件（仪器软件、数据系统、LIMS、分析 / 仿真软件等现成的软件产品）| consumable 耗材 | reagent 试剂 | service 服务（检测、维修、校准、定制合成、平台机时、软件开发 / 定制开发等由人提供的服务）
+- kind：instrument 仪器设备 | system 软硬件系统（仪器软件、LIMS / ELN、分析 / 仿真软件、科研算力服务器、GPU / AI 加速卡、存储等）| consumable 耗材 | reagent 试剂 | training 实训培训（培训课程、实训、认证课）| service 智库咨询服务（检测、维修、校准、定制合成、平台机时、方案咨询、软件定制开发等由人提供的服务）
 - category：从这些 key 里选一个最贴切的：${INSTRUMENT_CATEGORIES.map(c => `${c.key}=${c.name}`).join('，')}
 - intro 产品介绍（原文要点，可分段，不超过 600 字）
 - specs 规格参数（参数名 → 值，照抄页面上的参数表，没有就 {}）
@@ -315,7 +315,9 @@ doc_type：brochure 产品手册 | datasheet 规格书 | manual 操作手册 | a
     } catch {}
 
     for (const p of got) {
-      const kind = kindOf(p.kind) ? p.kind : 'instrument';
+      // 科研算力硬件（服务器、加速卡）也算软硬件系统（数据部门 10-23 #41）
+      const k0 = kindOf(p.kind)?.key || 'instrument';
+      const kind = k0 === 'instrument' && p.category === 'computing' ? 'system' : k0;
       const k = kindOf(kind)!;
       const intro = String(p.intro || '').trim();
       const lr = await generateContent(labelPrompt({ name: p.name, brand: p.brand, specification: p.specification || p.model_no, company: s.name, type: k.name, intro }), MODEL, { temperature: 0 }).catch(() => null);
