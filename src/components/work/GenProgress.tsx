@@ -64,9 +64,9 @@ export function GenProgress({ phase, company, picked, role, focus, env, intro }:
   const [deep, setDeep] = useState<string[]>([]);
   useEffect(() => {
     if (!picked?.id) return;
-    // 这家企业实际有哪些深度画像专题（有就列出来）
+    // 这家企业实际有哪些深度画像专题（有就列出来）。这是数据工厂的接口，没有这个接口的部署（simulator）就当没有专题，不报错
     import('@/lib/company-deep-topics').then(({ DEEP_TOPICS, DEEP_TOPICS_VC }) =>
-      fetch(`/api/db/companies/${picked.id}/deep-research`).then(r => r.json()).then(j => {
+      fetch(`/api/db/companies/${picked.id}/deep-research`).then(r => (r.ok ? r.json() : { topics: {} })).then(j => {
         const label = Object.fromEntries([...DEEP_TOPICS, ...DEEP_TOPICS_VC].map(t => [t.key, t.label]));
         setDeep(Object.keys(j.topics || {}).map(k => label[k] || k));
       })).catch(() => {});

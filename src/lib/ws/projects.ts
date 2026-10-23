@@ -85,16 +85,26 @@ ${extra ? `用户补充：${s(extra, 600)}` : ''}
   return jd;
 }
 
-/** 简历 → 结构化（文本直接给模型；PDF 交给 Claude 读） */
+/** PDF 简历先抽成文字（unpdf，纯 JS，不用系统依赖）：没有 Claude key 或 Claude 读不了时的兜底，之后和文本简历一样交给千问 */
+async function pdfToText(pdfBase64: string) {
+  const { extractText, getDocumentProxy } = await import('unpdf');
+  const pdf = await getDocumentProxy(new Uint8Array(Buffer.from(pdfBase64, 'base64')));
+  const { text } = await extractText(pdf, { mergePages: true });
+  return String(text || '').replace(/[ \t]+\n/g, '\n').trim();
+}
+
+/** 简历 → 结构化（文本直接给千问；PDF 有 Claude key 就交给 Claude 整份读，否则 / 失败时抽字再给千问） */
 export async function parseResume(input: { text?: string; pdfBase64?: string }) {
   const ask = `从简历里提取，只返回 JSON：{ "name": "", "contact": "邮箱或电话", "headline": "一句话：现在是谁、几年经验", "education": [""], "experience": [""], "skills": [""], "text": "简历全文整理成纯文本（保留关键事实，最多 3000 字）" }`;
-  if (input.pdfBase64) {
+  if (input.pdfBase64 && process.env.ANTHROPIC_API_KEY) try {
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const msg = await client.messages.create({ model: 'claude-sonnet-5-5', max_tokens: 6000, messages: [{ role: 'user', content: [{ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: input.pdfBase64 } }, { type: 'text', text: ask }] }] });
     const t = msg.content.filter((b): b is Anthropic.TextBlock => b.type === 'text').map(b => b.text).join('');
     const m = t.match(/\{[\s\S]*\}/); return m ? JSON.parse(m[0]) : { text: t };
-  }
-  const { parsed } = await askJson(`${ask}\n简历：\n${s(input.text, 12000)}`, 'qwen-plus', '工作台 · 读简历');
+  } catch (e) { console.warn('[parseResume] Claude 读 PDF 失败，改抽字给千问：', (e as Error)?.message); }
+  const text = input.pdfBase64 ? await pdfToText(input.pdfBase64) : input.text;
+  if (!String(text || '').trim()) throw new Error('这份 PDF 抽不出文字（可能是扫描件），请粘贴简历文本');
+  const { parsed } = await askJson(`${ask}\n简历：\n${s(text, 12000)}`, 'qwen-plus', '工作台 · 读简历');
   return parsed;
 }
 

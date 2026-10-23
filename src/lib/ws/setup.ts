@@ -83,13 +83,16 @@ const hostOf = (u: string) => { try { return new URL(/^https?:\/\//.test(u) ? u 
 export async function createCompanyEntity(name: string, website: string | null, email: string): Promise<number> {
   const row: Record<string, any> = { name: name.trim(), source: [SOURCE], human_review_status: 'review' };   // companies.source 是数组（潜历二批 / ted …）
   if (website && hostOf(website)) row.official_website = /^https?:\/\//.test(website) ? website : `https://${website}`;
-  const { data, error } = await db.from('companies').insert(row).select('id').single();
+  let { data, error } = await db.from('companies').insert(row).select('id').single();
+  // companies.source 在老结构里是 text（公司 simulator 的库）：数组写不进去就退回写字符串，别存成 '["…"]' 字面量
+  if (error && /array|22P02|malformed|invalid input syntax/i.test(error.message)) { row.source = SOURCE; ({ data, error } = await db.from('companies').insert(row).select('id').single()); }
   if (error) {
     // 名字撞了（lower(name) 唯一）：就是库里那家
     const { data: ex } = await db.from('companies').select('id').ilike('name', name.trim()).limit(1);
     if (ex?.[0]) return ex[0].id;
     throw new Error(error.message);
   }
+  if (!data) throw new Error('新建企业没拿到 id');
   await ensureCompanyFloraId(data.id).catch(() => {});
   await db.from('ws_contributions').insert({ entity_type: 'company', entity_id: String(data.id), field: '*', new_value: JSON.stringify(row), status: 'applied', created_by: email });
   return data.id;
