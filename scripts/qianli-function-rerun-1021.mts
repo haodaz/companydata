@@ -46,7 +46,7 @@ await Promise.all(Array.from({ length: PAR }, async () => {
         if (f.value === 'exec_mgmt') stat.mgmtAfter++;
         if ((j.qianli_job_labels || null) !== f.value) { stat.changed++; if (samples.length < 80) samples.push({ id: j.id, name: j.name, before: j.qianli_job_labels, after: f.value, reason: f.reason }); }
         if (DRY) continue;
-        const { error } = await db.from('jobs').update({ qianli_job_labels: f.value, qianli_job_labels_reason: f.reason || null }).eq('id', j.id);
+        const { error } = await db.from('jobs').update({ qianli_job_labels: f.value ? [f.value] : null, qianli_job_labels_reason: f.reason || null }).eq('id', j.id);
         if (!error) stat.written++;
       }
     }

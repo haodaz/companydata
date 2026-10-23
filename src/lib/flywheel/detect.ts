@@ -269,7 +269,7 @@ async function campusRecruiterLeads(): Promise<number> {
 /** 站内前瞻：社招里「应届可投 / 经验不限」的岗位多的企业（≥ 2 个），两周内同一家只记一次 */
 async function entryLevelLeads(): Promise<number> {
   const { data } = await selectAll(() => supabaseAdmin.from('jobs').select('company_id, name, seniority, exp_years, job_type')
-    .eq('status', 'open').eq('job_type', 'full_time').not('company_id', 'is', null).or('seniority.eq.entry,exp_years.eq.0').order('id'));
+    .eq('status', 'open').eq('job_type', 'full_time').not('company_id', 'is', null).or('seniority.eq.entry,exp_years.in.(0,1,0-1)').order('id'));
   const byCo = new Map<number, string[]>();
   for (const j of data as any[]) byCo.set(j.company_id, [...(byCo.get(j.company_id) || []), j.name]);
   const hits = [...byCo].filter(([, names]) => names.length >= 2);

@@ -87,7 +87,7 @@ for (const r of pass) {
   } else {
     const { data, error } = await db.from('companies').insert({
       name: r.name_cn || r.name_en, name_en: r.name_en || null, country: r.is_domestic ? '中国' : (countryCn(r.country) || r.country || null),   // 企业库存中文国名
-      official_website: r.website_ok ? r.website : null, source: ['科研仪器'], supplier_categories: r.verified_categories, supplier_exhibitions: exhibitionsOf(r),
+      official_website: r.website_ok ? r.website : null, source: '科研仪器', supplier_categories: r.verified_categories, supplier_exhibitions: exhibitionsOf(r),
       human_review_status: 'review',
     }).select('id').single();
     if (error) { console.log(`  建档失败 ${r.name_cn || r.name_en}：${error.message}`); continue; }

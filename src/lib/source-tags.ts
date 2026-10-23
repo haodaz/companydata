@@ -5,10 +5,12 @@
 export const SOURCE_ORDER = ['潜历一批', '潜历二批', 'ted'];
 
 export function toSources(v: unknown): string[] {
-  const parts = Array.isArray(v) ? v : typeof v === 'string' ? v.split(/\s*[，,、|]\s*/) : [];
+  const parts = Array.isArray(v) ? v : typeof v === 'string' ? v.split(/\s*[，,、|；;]\s*/) : [];
   const set = [...new Set(parts.map(x => String(x || '').trim()).filter(Boolean))];
   return set.sort((a, b) => (SOURCE_ORDER.indexOf(a) + 1 || 99) - (SOURCE_ORDER.indexOf(b) + 1 || 99));
 }
 
-/** 显示 / 导出用：多个来源用「|」连（和订阅平台等多选字段一致） */
-export const sourcesText = (v: unknown) => toSources(v).join('|');
+/** 显示 / 导出 / 写库：多个来源用中文「；」连（数据部门 10-23 #38：来源是文本，示例「潜历一批；潜历二批」） */
+export const sourcesText = (v: unknown) => toSources(v).join('；');
+/** 写库用：空的写 null */
+export const sourcesValue = (v: unknown) => sourcesText(v) || null;
