@@ -86,7 +86,7 @@ export default function CollegeChatPage() {
         {!items.length ? (
           <div className="cc-hero">
             <div className="ca-eyebrow">Dean A · Registrar AI</div>
-            <h1>{hello}，院长 B</h1>
+            <h1>{hello}，好大壮院长</h1>
             <p>我是院长 A。线索、学员、课程、学籍、考试、去向——说一句，我去办；该你拍板的地方我会停下来问。</p>
             <Composer text={text} setText={setText} busy={busy} send={send} stop={() => abortRef.current?.abort()} model={model} setModel={setModel} autoFocus />
             <div className="cc-sec" style={{ margin: '24px 2px 10px' }}>可以从这里开始</div>

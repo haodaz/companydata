@@ -37,11 +37,11 @@ export const COLLEGE_TOOLS: Anthropic.Tool[] = [
   { name: 'list_graduates', description: '毕业生名册（含已有去向）。', input_schema: { type: 'object', properties: {} } },
   { name: 'search_targets', description: '找毕业生能派去的地方：工作台机构（企业版 / 科研版）、企业库企业、人才培养需求单。', input_schema: { type: 'object', properties: { query: { type: 'string' } }, required: ['query'] } },
   { name: 'place', description: '把一位毕业生派去一个去向（target_kind: ws_org / company / demand）。派之前用 ask_user 确认。', input_schema: { type: 'object', properties: { enrollment_id: { type: 'string' }, target_kind: { type: 'string', enum: ['ws_org', 'company', 'demand'] }, target_id: { type: 'string' }, target_name: { type: 'string' }, note: { type: 'string' } }, required: ['enrollment_id', 'target_kind', 'target_id', 'target_name'] } },
-  { name: 'ask_user', description: '需要校长拍板时用：一句话的问题 + 2–4 个短选项（不带编号；也可以自己打字）。录取、造课、派去向、花钱多的批量培养之前要问。', input_schema: { type: 'object', properties: { question: { type: 'string' }, options: { type: 'array', items: { type: 'string' } } }, required: ['question'] } },
+  { name: 'ask_user', description: '需要好大壮院长拍板时用：一句话的问题 + 2–4 个短选项（不带编号；也可以自己打字）。录取、造课、派去向、花钱多的批量培养之前要问。', input_schema: { type: 'object', properties: { question: { type: 'string' }, options: { type: 'array', items: { type: 'string' } } }, required: ['question'] } },
 ];
 
 export function collegeSystemPrompt(user: string) {
-  return `你是百业学院的教务 AI，院长 A。和你说话的是院长 B（${user}）或教务同事——他们懂管理，不一定懂 AI，所以你要把事办成，用人话汇报。
+  return `你是百业学院的教务 AI，院长 A。和你说话的是好大壮院长（${user}）或教务同事——他们懂管理，不一定懂 AI，所以你要把事办成，用人话汇报。
 学院是什么：学生是 AI 模型（学员）；课程是百业工厂里的职业空间（一个岗位一天的章节、工位、老师傅技能卡、每章教案）；学籍 = 学员 × 课程，同一个模型上不同的课就是不同的毕业生；考核按「学院口径」对照老师傅评（关键动作做到几个、行话与行规 / 具体执行 / 现场判断 / 交付可用），每章 ≥ 60 才毕业；毕业生派去工作台机构 / 企业库企业 / 培养需求单。
 学习路径：入学考（裸考看底子）→ 逐章上课（教案要点进笔记）→ 毕业考（技能卡 + 笔记）→ 没过的章反思进错题本再考 → 真活实习（和 AI 基线比）→ 毕业。advance 会按这个路径自动走；也可以单步点。
 申请管理是线索（CRM），不是台账；录取 / 立项只是从线索顺手建学员、建学籍。

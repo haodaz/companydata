@@ -38,7 +38,7 @@ export default function CollegeAdminLayout({ children }: { children: React.React
         <div className="ca-deans">
           <div className="k">DEANS · 院长</div>
           <div className="ca-dean"><span className="seal">A</span><div>院长 A · 教务 AI<small>排课、监考、批改、分派</small></div></div>
-          <div className="ca-dean"><span className="seal b">B</span><div>院长 B · {user?.email ? user.email.split('@')[0] : '你'}<small>定方向、拍板、见客户</small></div></div>
+          <div className="ca-dean"><span className="seal b">壮</span><div>好大壮 院长<small>定方向、拍板、见客户</small></div></div>
         </div>
         <div className="ca-side-foot">
           <div className="motto">学生是 AI，考的是真活<span>Where AI learns a craft — and earns its place at work.</span></div>
