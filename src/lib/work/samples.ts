@@ -94,9 +94,17 @@ export async function extractText(buf: Buffer, filename: string): Promise<string
 }
 
 /** 一份样本原文 → 骨架（固定用强模型；样本只解析一次，进库复用） */
-export async function parseSample(raw: string, opts: { title?: string; model?: string; actor?: string } = {}): Promise<SampleSkeleton> {
+/** kind = 'practical'（2026-10-24）：职业技能等级认定的实操考核（试卷 + 评分记录表 + 考场准备单）——没有「面试官一步步问」，骨架是工序 / 考核项目 + 评分标准 / 扣分点 */
+export async function parseSample(raw: string, opts: { title?: string; model?: string; actor?: string; kind?: 'case' | 'practical' } = {}): Promise<SampleSkeleton> {
   const model = opts.model || process.env.WORK_SAMPLE_MODEL || 'claude-opus-5-5';
-  const prompt = `下面是出题人交来的一份「好题」样本（商学院 / 咨询面试案例、公司内部考题、作业题都可能）。把它解析成**骨架**，之后平台会照这个骨架、换成别的企业的真实问题重新出题。
+  const practical = opts.kind === 'practical' ? `
+这份是**职业技能等级认定的实操考核文件**（技能考核试卷 / 样题、评分记录表、考场与考生准备通知单）。按下面的对应关系解析：
+- stages = 考核的工序或考核项目（按考核顺序；评分记录表里的「试题」「项目」各成一步，合并同类的细项）。type 一律用 other；question = 这一步要做什么（加工 / 操作 / 检测 / 文明生产……）；reveal = 这一步给考生的条件（图纸要求、材料、设备、时间）；expected = 评分标准原文要点：配分、怎么扣分、否定项（原样保留数字和公差）；calc 为空。
+- exhibits = 图纸 / 材料清单 / 设备清单（title + 它规定什么）。
+- style_notes = 这套考核「怎么评」的手法：配分扣完为止、超差不得分、否定项一票否决、文明生产扣分、自检与实测对比……3–6 条。
+- format 写「practical」；problem_type 写「实操考核」；industry 写行业；difficulty 按等级（三级 / 四级 / 五级）。
+` : '';
+  const prompt = `下面是出题人交来的一份「好题」样本（商学院 / 咨询面试案例、公司内部考题、作业题都可能）。把它解析成**骨架**，之后平台会照这个骨架、换成别的企业的真实问题重新出题。${practical}
 要求：
 - 不改写、不评价样本，只提取结构。原文有的数字原样保留；没有的不要编。
 - stages：按样本的推进顺序，每一步一条。type ∈ structuring（搭框架）/ judgement（看图表下判断）/ numeracy（测算）/ creativity（出主意）/ synthesis（综合建议）/ other。

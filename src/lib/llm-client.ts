@@ -219,7 +219,9 @@ async function generateQwen(
     const key = process.env.DASHSCOPE_API_KEY;
     if (!key) throw new Error('缺少 DASHSCOPE_API_KEY，无法调用通义千问');
     const base = (process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
-    data = await callDashScope(base, key, modelId, prompt, parameters);
+    // 付费 key 也一样：qwen3.x 系列原生接口报「url error」，走 OpenAI 兼容接口（2026-10-24，批量解析样本用 qwen3.7-plus 撞上）
+    const p = /^qwen3/.test(modelId) ? { ...parameters, enable_thinking: false } : parameters;
+    data = /^qwen3/.test(modelId) || compatModels.has(modelId) ? await callCompat(base, key, modelId, prompt, p) : await callDashScope(base, key, modelId, prompt, parameters);
   }
   let text: string = data.output?.choices?.[0]?.message?.content || '';
   const sources: any[] = data.output?.search_info?.search_results || [];
