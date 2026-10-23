@@ -11,6 +11,7 @@ import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
 import { findOccupation } from '@/lib/occupation-store';
 import { gradeResult } from '@/lib/work/grader';
+import { normalizeStages, renderSkeleton, STAGE_LABEL, verifyCalcs, type SampleSkeleton, type SampleStage } from '@/lib/work/samples';
 
 export const WORK_MODEL = process.env.WORK_MODEL || 'claude-opus-5-5';
 
@@ -195,7 +196,7 @@ export const ENV_LABELS: Record<WorkEnvType, string> = { doc: '文档 / 对账�
 export interface WorkTask {
   env: WorkEnv;
   problem: { statement: string; why_now: string; evidence: { text: string; source: string }[] };
-  task: { title: string; role: string; brief: string; deliverables: { id: string; title: string; format: string }[]; time_minutes: number; rules: string[] };
+  task: { title: string; role: string; brief: string; deliverables: { id: string; title: string; format: string }[]; time_minutes: number; rules: string[]; stages?: SampleStage[] };   // stages：案例推进式（照深度样本出）：一步步给信息、每步有问、有参考答案和要算的数（2026-10-23）
   materials: { id: string; title: string; kind: 'doc' | 'table' | 'note' | 'email' | 'data'; content: string; source: 'db' | 'generated' | 'mixed'; basis?: string }[];
   rubric: { id: string; title: string; desc: string; weight: number; depends_on: string[]; basis: string; levels: { L1: string; L2: string; L3: string; L4: string } }[];
 }
@@ -204,7 +205,7 @@ export interface WorkTask {
 /** 研究真活（2026-10-20）：科研院所招博士后 / 研究员 / 教授，考的是研究方向上的操作和研究技能 */
 export const RESEARCH_TASK_KINDS = ['实验设计（给研究问题，设计方案、对照、变量与样本量）', '数据分析（给一份真实格式的实验 / 观测数据，找异常、选统计方法、下结论并说清局限）', '文献与选题（给一个方向，梳理进展、指出研究空白、提可做的课题）', '审稿（给一篇稿件或摘要，找方法和结论上的问题，写审稿意见）', '写基金本子（研究目标、技术路线、可行性与风险）', '复现（用代码复现论文里的一个结果并解释差异）'];
 
-export async function generateTask(ctx: WorkContext, role: string, opts: { model?: string; focus?: string; env?: WorkEnvType; research?: boolean } = {}): Promise<{ task: WorkTask; model: string }> {
+export async function generateTask(ctx: WorkContext, role: string, opts: { model?: string; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire' } = {}): Promise<{ task: WorkTask; model: string }> {
   const model = opts.model || WORK_MODEL;
   const name = ctx.company?.name || (opts.research ? '这个科研团队' : '这家企业');
   const need = isNeedText(role);
@@ -224,7 +225,14 @@ task.role 写成 6–14 字的人话概括，说这个人能干什么（例：�
 ${needNote}
 ## 材料（只许用这些；没有的数字写「示例数据」并说明；每条依据指回来源）
 ${renderContext(ctx)}
-${opts.focus ? `\n## 出题人额外要求\n${opts.focus}\n` : ''}
+${ctx.notes.some(n => /取了同企业其他岗位做参考/.test(n)) ? `\n注意：材料里的在招岗位不是「${role}」本岗，只拿来理解这家企业的工作方式和用语；**题目主题由「${role}」决定**，不要被参考岗位的职能（如 ESG、合规、行政）带偏。\n` : ''}${opts.focus ? `\n## 出题人额外要求\n${opts.focus}\n` : ''}${opts.sample ? `
+## 深度样本（出题人给的参照：一道公认的好题）
+${renderSkeleton(opts.sample)}
+${opts.sampleMode === 'inspire'
+  ? `照它出：**推进结构、题型顺序、步数、难度和数字密度跟样本一致**，内容全部换成 ${name} 此刻真实的问题和材料（行业、公司、数字都不能照抄样本）。`
+  : `**改背景、换数字，再出一次**（老师从上一届作业里拿题的做法）：每一步的题型、问法、要算什么、答案的推导路径都**原样保留**；把故事背景换成 ${name} 此刻真实的处境（用材料里的事实），样本里的数据表换成同样结构、同样量级但不同的数字（每个数改 20%–60%，别只换单位），calc 的 expr 用新数字重写，value 平台会重算；expected 按新数字重写结论。样本里没有而材料里有的事实可以加进背景，不要加新的步骤。`}
+每一步只给当步需要的信息；测算要有可复核的算式；最后一步综合前面所有步骤。
+` : ''}
 ## 操作台（环境）
 ${opts.env === 'plugin' ? '出题人指定：候选人用自己浏览器里的网页工具做（在线文档 / 表格 / 设计工具 / 各家 AI 都行），装「真活插件」记录过程，最后在插件侧边栏交「交付说明 + 交付物链接」；所以 env 按 doc 出，交付物写成「在线文档或文件链接 + 交付说明」，材料要能下载后独立使用。' : opts.env === 'open' ? '出题人指定：候选人用自己电脑上的软件做（Excel / CAD / IDE 都行），全程录屏、最后上传交付文件；所以 env 按 doc 出，交付物写成「文件 + 交付说明」，材料要能下载后独立使用。' : opts.env ? `出题人指定环境：${opts.env}（${ENV_LABELS[opts.env]}）。` : '按岗位选最贴近真实工作媒介的环境：'}doc 文档 / 对账台（方案、对账、邮件、scorecard）· code 代码台（写函数 / 脚本；**starter 里的主函数必须命名为 solution**，tests 也调用 solution；language 用 js 时给 2–5 个自测用例：code 是一段 JS，拿到变量 solution（候选人的导出函数）后返回 true/false，如 "return solution([3,1,2]).join()==='1,2,3'"；其他语言不给 tests）· sheet 表格 / 数据台（csv 给起始表，含要对账 / 清洗的数据，5–30 行）· design 设计台（params 给 4–8 个要定的参数：name/unit/hint；sketch_hint 说明要画什么简图：零件轮廓、流程、布局）。
 env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "tests": [ { "name": "", "code": "" } ], "csv": "", "params": [ { "name": "", "unit": "", "hint": "" } ], "sketch_hint": "" }（只填该环境用到的字段）。交付物要和环境匹配（code 的交付物是代码 + 说明，sheet 是表 + 口径说明，design 是参数表 + 草图 + 设计说明）。
@@ -233,13 +241,13 @@ env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "
 - problem.statement：一句话说清 ${name} 现在的哪个${opts.research ? '研究问题' : '业务问题'}需要「${role}」来解决，必须能从材料里推出来（${opts.research ? '研究方向 / 在研项目 / 平台 / 岗位要求' : '近期动态 / 产品 / 岗位职责 / 典型任务'}）；why_now 说为什么是现在；evidence 列 2–4 条材料原句 + 来源名。
 - task：title（8–16 字）；brief（给做题人看的任务书，300–500 字，口吻像业务负责人交代活：背景、要你做什么、交给谁、什么时候要；「交给谁」写角色（如「交给投委会」），**不要给真实人物编邮箱、电话、微信**）；deliverables 2–3 个（id d1…，title，format 如「一页纸方案 / 表格 / 邮件」）；time_minutes 45–90；rules 3–5 条（必须含「可以随便用 AI，不算作弊；评的是你怎么用」和「材料里没有的数据要标注假设」）。
 - materials 3–5 份，做这件事真的会拿到的东西：kind ∈ doc/table/note/email/data；content 用 Markdown，每份 300–900 字，表格用 Markdown 表；source：db=全部来自材料、generated=为任务合理补写（必须贴近企业真实情况并在正文标「示例数据」）、mixed；basis 写它依据材料的哪一段。至少一份是「有坑」的（信息不全、口径不一致、过期），这是真活。
-- rubric 5–8 条：id r1…；title；desc（怎么算做到）；weight 加起来 100；depends_on 填前置条目 id（没有填 []）；basis 必须指向材料来源（「行业标准 xxx 第 n 点」「岗位职责：…」「典型任务：…」），实在没有写「出题人判断，待业务负责人确认」；levels L1–L4 各一句可观察的行为描述（BARS）。
+${opts.sample ? `- stages（必填，${opts.sample.stages.length} 步，和样本一一对应）：id q1…；type 同样本；question（这一步问候选人什么，一句话）；reveal（这一步才给的信息：背景、数据表、图表，Markdown，图表用 Markdown 表把数据给全，300–900 字；数据要和 materials 里的事实一致，材料没有的标「示例数据」）；expected（参考答案 / 关键结论，评卷用，候选人看不到，含关键数字）；calc（这一步要算的数：label、expr 只含数字和 + - * / ( )、value；没有测算填 []）。brief 里要告诉候选人「这道题分 ${opts.sample.stages.length} 步推进，每一步看完信息再答，答完再看下一步」，deliverables 按步骤对应。\n` : ''}- rubric 5–8 条：id r1…；title；desc（怎么算做到）；weight 加起来 100；${opts.sample ? '每一步至少对应一条（desc 里写明对应 q 几）；' : ''}depends_on 填前置条目 id（没有填 []）；basis 必须指向材料来源（「行业标准 xxx 第 n 点」「岗位职责：…」「典型任务：…」），实在没有写「出题人判断，待业务负责人确认」；levels L1–L4 各一句可观察的行为描述（BARS）。
 只返回 JSON：
 { "env": { "type": "doc" },
   "problem": { "statement": "", "why_now": "", "evidence": [ { "text": "", "source": "" } ] },
   "task": { "title": "", "role": "${role}", "brief": "", "deliverables": [ { "id": "d1", "title": "", "format": "" } ], "time_minutes": 60, "rules": [""] },
   "materials": [ { "id": "m1", "title": "", "kind": "doc", "content": "", "source": "db", "basis": "" } ],
-  "rubric": [ { "id": "r1", "title": "", "desc": "", "weight": 20, "depends_on": [], "basis": "", "levels": { "L1": "", "L2": "", "L3": "", "L4": "" } } ] }`;
+  "rubric": [ { "id": "r1", "title": "", "desc": "", "weight": 20, "depends_on": [], "basis": "", "levels": { "L1": "", "L2": "", "L3": "", "L4": "" } } ]${opts.sample ? ',\n  "stages": [ { "id": "q1", "type": "structuring", "question": "", "reveal": "", "expected": "", "calc": [ { "label": "", "expr": "", "value": 0 } ] } ]' : ''} }`;
   const { parsed: p, model: used } = await askJson(prompt, model, 'Generate · 出题', name);
   const e = p.env || {};
   const envType: WorkEnvType = opts.env || (['doc', 'code', 'sheet', 'design'].includes(e.type) ? e.type : 'doc');   // open / plugin 原样保留，参与页据此只给开放模式
@@ -259,6 +267,12 @@ env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "
   const sum = task.rubric.reduce((a, r) => a + r.weight, 0) || 1;
   for (const r of task.rubric) { r.weight = Math.round(r.weight / sum * 100); r.depends_on = r.depends_on.filter(d => ids.has(d) && d !== r.id); }
   if (!task.task.rules.some(r => /AI/.test(r))) task.task.rules.unshift('可以随便用 AI，不算作弊；评的是你怎么用、什么是你自己判断的');
+  // 案例推进式：步骤归一，测算在代码里真算一遍（模型给的「答案」和「数据」对不上是常事）
+  if (opts.sample) {
+    const { stages, fixed, failed } = verifyCalcs(normalizeStages(p.stages));
+    if (stages.length) task.task.stages = stages;
+    if (fixed || failed) console.warn(`[work] 测算核对：改了 ${fixed} 个值，${failed} 个算式算不出`);
+  }
   return { task, model: used };
 }
 
@@ -278,6 +292,7 @@ export function sourcesOf(ctx: WorkContext) {
     notes: ctx.notes,
     // 深度画像用到了哪些专题（投资机构：基金 / 策略 / 被投 / 合伙人 / 招聘……）
     deep: (ctx.deep || []).map(d => d.label),
+    sample: (ctx as any).sample ? { id: (ctx as any).sample.id, title: (ctx as any).sample.title } : null,
     related: (ctx.related || []).map(r => `${r.name}（共同高管 ${r.shared.length} 位 · 动态 ${r.news.length} 条 · 深度画像 ${r.deep.length} 个专题）`),
   };
 }
@@ -353,7 +368,7 @@ ${task.task.brief}
 ## 交付物
 ${task.task.deliverables.map(d => `- ${d.id} ${d.title}（${d.format}）`).join('\n')}
 ## 材料
-${task.materials.map(m => `### ${m.id} ${m.title}\n${m.content}`).join('\n\n')}`;
+${task.materials.map(m => `### ${m.id} ${m.title}\n${m.content}`).join('\n\n')}${task.task.stages?.length ? `\n## 推进步骤（按顺序一步一步答，每步用「## q1」这样的标题；测算写出算式）\n${task.task.stages.map(st => `### ${st.id}【${STAGE_LABEL[st.type]}】${st.question}\n这一步给的信息：\n${st.reveal}`).join('\n\n')}` : ''}`;
   let answer = '', used = model;
   for (const m of [model, 'claude-sonnet-5-5', 'qwen-plus']) {
     try {

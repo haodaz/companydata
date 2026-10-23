@@ -18,7 +18,8 @@ import { PluginWork } from '@/components/work/benches/PluginWork';
 
 type Material = { id: string; title: string; kind: string; content: string; source: string };
 type Env = { type: 'doc' | 'code' | 'sheet' | 'design' | 'open' | 'plugin'; language?: string; starter?: string; tests?: { name: string; code: string }[]; csv?: string; params?: { name: string; unit?: string; hint?: string }[]; sketch_hint?: string };
-type Task = { id: string; company_name: string; role: string; statement: string; task: { title: string; brief: string; deliverables: { id: string; title: string; format: string }[]; time_minutes: number; rules: string[]; env?: Env }; materials: Material[] };
+type Stage = { id: string; type: string; question: string; reveal: string };
+type Task = { id: string; company_name: string; role: string; statement: string; task: { title: string; brief: string; deliverables: { id: string; title: string; format: string }[]; time_minutes: number; rules: string[]; env?: Env; stages?: Stage[] }; materials: Material[] };
 type Ev = { t: number; type: string; [k: string]: any };
 
 const ENV_NAME: Record<string, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台', open: '用自己的软件做（录屏）', plugin: '用自己的网页工具做（真活插件）' };
@@ -184,6 +185,11 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   // 材料
   const [mat, setMat] = useState<Material | null>(null);
   const openMat = (m: Material) => { setMat(m); ev('open_material', { id: m.id }); };
+  // 案例推进式（深度样本出的题）：一步一步给信息，看完当步再答、答完再开下一步；每一步的揭示都记进过程
+  const stages = task?.task?.stages || [];
+  const [unlocked, setUnlocked] = useState(1);
+  const STAGE_CN: Record<string, string> = { structuring: '搭框架', judgement: '判断与洞察', numeracy: '测算', creativity: '出主意', synthesis: '综合建议', other: '' };
+  const openStage = (st: Stage, i: number) => { if (i >= unlocked) { setUnlocked(i + 1); ev('stage_unlock', { id: st.id }); } setMat({ id: st.id, title: `${st.id} · ${st.question}`, kind: 'stage', content: st.reveal || '（这一步没有新信息，直接作答）', source: 'stage' }); ev('open_stage', { id: st.id }); };
 
   // AI
   const [chat, setChat] = useState<{ q: string; a: string }[]>([]);
@@ -239,6 +245,14 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
       <div style={{ display: 'grid', gridTemplateColumns: narrow ? '1fr' : '300px 1fr 360px', gap: 0, minHeight: 'calc(100vh - 56px)' }}>
         {/* 材料 */}
         <aside style={{ borderRight: narrow ? undefined : `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, background: dark ? '#16171f' : '#fafbff', color: dark ? '#d6d8e6' : undefined, padding: 14, overflow: 'auto', maxHeight: narrow ? 320 : 'calc(100vh - 56px)' }}>
+          {stages.length > 0 && <div style={{ marginBottom: 14 }}>
+            <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>推进 · {stages.length} 步</div>
+            {stages.map((st, i) => { const locked = i >= unlocked; const on = mat?.id === st.id; return (
+              <div key={st.id} onClick={() => !locked || i === unlocked ? openStage(st, i) : undefined} style={{ padding: '9px 12px', borderRadius: 10, marginBottom: 6, cursor: locked && i !== unlocked ? 'not-allowed' : 'pointer', opacity: locked && i !== unlocked ? .45 : 1, background: on ? (dark ? '#2b2d3e' : '#fff') : 'transparent', border: `1px solid ${on ? '#6055f5' : dark ? '#2b2d3e' : '#e8e9f0'}` }}>
+                <div style={{ fontSize: 11, color: '#999', letterSpacing: 1 }}>{st.id.toUpperCase()}{STAGE_CN[st.type] ? ` · ${STAGE_CN[st.type]}` : ''}{locked ? (i === unlocked ? ' · 点开下一步' : ' · 先答上一步') : ''}</div>
+                <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.5, marginTop: 2 }}>{locked && i !== unlocked ? '…' : st.question}</div>
+              </div>); })}
+          </div>}
           <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>{dark ? 'EXPLORER · 材料' : `材料包 · ${task.materials.length} 份`}</div>
           {task.materials.map(m => dark
             ? <div key={m.id} onClick={() => openMat(m)} style={{ padding: '5px 8px', borderRadius: 6, cursor: 'pointer', fontFamily: 'ui-monospace, Menlo, monospace', fontSize: 12.5, background: mat?.id === m.id ? '#2b2d3e' : 'transparent', color: mat?.id === m.id ? '#fff' : '#b8bdd6', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{m.kind === 'data' ? '🗂' : m.kind === 'email' ? '✉️' : m.kind === 'table' ? '📊' : '📄'} {m.id}-{m.title}.{m.kind === 'table' || m.kind === 'data' ? 'csv' : 'md'}</div>
@@ -252,7 +266,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
           {mat && <div style={{ background: dark ? '#1e1f2b' : '#fff', color: dark ? '#d6d8e6' : undefined, border: `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, borderRadius: 12, padding: 14, maxHeight: 260, overflow: 'auto' }}><div style={{ display: 'flex', justifyContent: 'space-between' }}><b>{mat.title}</b><button onClick={() => setMat(null)} style={{ ...btnGhost, ...(dark ? { background: 'transparent', color: '#aab', borderColor: '#3a3d52' } : {}) }}>收起</button></div><pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13.5, lineHeight: 1.7, margin: '8px 0 0', color: dark ? '#cfd3e6' : '#333' }}>{mat.content}</pre></div>}
           <div style={{ flex: 1, minHeight: 520, display: 'flex', flexDirection: 'column' }}>
             {mode === 'open' && <OpenBench token={token} sid={sid} materials={task.materials} deliverables={task.task.deliverables} summary={summary} onSummary={setSummary} onEvent={(type, extra) => ev(type, extra)} uploads={uploads} onUploads={setUploads} recording={recording} onRecording={setRecording} t0={t0.current} />}
-            {mode !== 'open' && env.type === 'doc' && <DocBench value={doc} onChange={setDoc} onPaste={onPaste} deliverables={task.task.deliverables} title={task.task.title} />}
+            {mode !== 'open' && env.type === 'doc' && <DocBench value={doc} onChange={setDoc} onPaste={onPaste} deliverables={stages.length ? stages.map(st => ({ id: st.id, title: `${st.id} ${st.question}`, format: '' })) : task.task.deliverables} title={task.task.title} />}
             {mode !== 'open' && env.type === 'code' && <CodeBench code={code} onCode={setCode} notes={notes} onNotes={setNotes} tests={env.tests || []} language={env.language || 'js'} onRun={runTests} testOut={testOut} onPaste={onPaste} />}
             {mode !== 'open' && env.type === 'sheet' && <SheetBench csv={csv} onCsv={setCsv} notes={notes} onNotes={setNotes} onPaste={onPaste} />}
             {mode !== 'open' && env.type === 'design' && <DesignBench params={env.params || []} values={params} onParam={(k, v) => setParams(x => ({ ...x, [k]: v }))} onParamDone={k => ev('set_param', { id: k })} sketch={sketch} setSketch={f => setSketch(f)} hint={env.sketch_hint} notes={notes} onNotes={setNotes} onPaste={onPaste} onSketch={label => ev('sketch', { note: label })} />}

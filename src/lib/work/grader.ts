@@ -36,7 +36,7 @@ ${task.task.deliverables.map(d => `- ${d.id} ${d.title}（${d.format}）`).join(
 ${task.materials.map(m => `### ${m.id} ${m.title}\n${m.content.slice(0, 1500)}`).join('\n\n')}
 ## rubric
 ${task.rubric.map(r => `- ${r.id} ${r.title}（权重 ${r.weight}${r.depends_on.length ? '，依赖 ' + r.depends_on.join('/') : ''}）：${r.desc}\n  依据：${r.basis}\n  L1 ${r.levels.L1} | L2 ${r.levels.L2} | L3 ${r.levels.L3} | L4 ${r.levels.L4}`).join('\n')}
-## 交付物
+${task.task.stages?.length ? `## 推进步骤与参考答案（候选人看不到；测算按 value 核对，误差 ±5% 内算对；判断题看结论和理由是否成立，不要求措辞一致）\n${task.task.stages.map(st => `- ${st.id} 问：${st.question}\n  参考：${st.expected}${st.calc?.length ? `\n  数：${st.calc.map(c => `${c.label} = ${c.expr} = ${c.value}`).join('；')}` : ''}`).join('\n')}\n` : ''}## 交付物
 ${deliverable.slice(0, 12000)}
 
 只返回 JSON：{ "items": [ { "id": "r1", "score": 0, "level": "L1", "evidence": "引用原句", "note": "一句为什么" } ], "summary": "三句话总评（观察到什么，不下定性）", "strengths": ["", ""], "gaps": ["", ""] }`;

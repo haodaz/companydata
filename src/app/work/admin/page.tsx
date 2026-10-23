@@ -12,6 +12,7 @@ import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import Link from 'next/link';
 import { WorkTaskDetail } from '@/components/work/WorkTaskDetail';
 import { CompanyRolePicker, type PickedCompany } from '@/components/work/CompanyRolePicker';
+import { SamplesPanel } from '@/components/work/SamplesPanel';
 
 const { Text } = Typography;
 const ENV: Record<string, { label: string; color: string }> = { doc: { label: '文档 / 对账台', color: 'purple' }, code: { label: '代码台', color: 'geekblue' }, sheet: { label: '表格 / 数据台', color: 'cyan' }, design: { label: '设计台', color: 'orange' } };
@@ -81,6 +82,7 @@ function Inner() {
         </Space>
         {busy && <div style={{ marginTop: 8, color: '#6055f5' }}>{busy}</div>}
       </Panel>
+      <SamplesPanel />
       <Panel padding={0}>
         <Table size="small" rowKey="id" loading={loading} dataSource={list} pagination={{ pageSize: 20 }}
           columns={[

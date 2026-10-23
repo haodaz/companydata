@@ -45,6 +45,15 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           </div>}
           {!!T.task?.revisions?.length && <div style={{ marginTop: 12 }}><div style={{ fontWeight: 700, marginBottom: 4 }}>修订记录</div>{T.task.revisions.map((r: any, i: number) => <div key={i} style={{ fontSize: 13, padding: '6px 0', borderTop: '1px solid #f0f0f5' }}><Text type="secondary">{new Date(r.at).toLocaleString('zh-CN', { hour12: false })}</Text> · 意见：{r.feedback}<div style={{ color: '#12a150' }}>改动：{r.changelog}</div></div>)}</div>}
         </div> },
+        ...(T.task?.stages?.length ? [{ key: 'q', label: `推进步骤（${T.task.stages.length}）`, children: <div>
+          <Paragraph type="secondary" style={{ fontSize: 13 }}>照深度样本出的案例推进式真活：候选人一步一步看信息、作答；参考答案和算式只有这里和评卷 AI 看得到。测算的数都由平台按算式重算过。</Paragraph>
+          {T.task.stages.map((st: any) => <div key={st.id} style={{ marginBottom: 16, padding: '12px 14px', background: '#fafbff', borderRadius: 10 }}>
+            <div><Tag color="purple">{st.id}</Tag><Tag>{({ structuring: '搭框架', judgement: '判断与洞察', numeracy: '测算', creativity: '出主意', synthesis: '综合建议' } as any)[st.type] || st.type}</Tag><b>{st.question}</b></div>
+            {st.reveal && <details style={{ marginTop: 6 }}><summary style={{ cursor: 'pointer', color: '#6055f5', fontSize: 13 }}>这一步给候选人的信息</summary><Paragraph style={{ whiteSpace: 'pre-wrap', fontSize: 13, marginTop: 6 }}>{st.reveal}</Paragraph></details>}
+            <div style={{ marginTop: 6, fontSize: 13 }}><Text type="secondary">参考答案：</Text><span style={{ whiteSpace: 'pre-wrap' }}>{st.expected}</span></div>
+            {!!st.calc?.length && <ul style={{ margin: '6px 0 0', paddingLeft: 18, fontSize: 13 }}>{st.calc.map((c: any, i: number) => <li key={i}>{c.label}：<code>{c.expr}</code> = <b>{c.value}</b>{c.verified === false && <Tag color="orange" style={{ marginLeft: 6 }}>算式没核上</Tag>}</li>)}</ul>}
+          </div>)}
+        </div> }] : []),
         { key: 'm', label: `材料包（${(T.materials || []).length}）`, children: (T.materials || []).map((m: any) => <div key={m.id} style={{ marginBottom: 14 }}><b>{m.id} {m.title}</b> <Tag>{m.kind}</Tag><Tag color={m.source === 'db' ? 'green' : m.source === 'generated' ? 'orange' : 'gold'}>{m.source === 'db' ? '来自材料' : m.source === 'generated' ? '补写' : '混合'}</Tag>{m.basis && <Text type="secondary"> 依据：{m.basis}</Text>}<pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', background: '#fafbff', padding: 10, borderRadius: 8, fontSize: 13 }}>{m.content}</pre></div>) },
         { key: 'r', label: `rubric（${(T.rubric || []).length}）`, children: <Table size="small" rowKey="id" pagination={false} dataSource={T.rubric || []} columns={[
           { title: '#', dataIndex: 'id', width: 50 }, { title: '条目', dataIndex: 'title', render: (v: string, r: any) => <div><b>{v}</b><div style={{ fontSize: 12, color: '#666' }}>{r.desc}</div></div> },

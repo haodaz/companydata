@@ -4,12 +4,13 @@
  * 出一道真活 /work/new（要登录；用户 10-18：不用抽屉，单独一页）。
  * 企业 / 岗位边输边搜（库里有就选中，没有就当新的）→ 选模型（默认千问，国内用户顺手；可切 Claude / GPT）→ 选操作台（按岗位自动 / 四种站内台 / 候选人自己录制电脑操作）→ 出题 → 跑基线 → 进这道真活的空间。
  */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { WorkLogo } from '@/components/work/WorkLogo';
 
 import { useRouter } from 'next/navigation';
-import { App, Button, ConfigProvider, Input, Select, Typography } from 'antd';
+import { App, Button, ConfigProvider, Input, Select, Typography, Tag } from 'antd';
+import { SampleUpload, type SampleRow } from '@/components/work/SampleUpload';
 import { RocketOutlined } from '@ant-design/icons';
 import { GenProgress } from '@/components/work/GenProgress';
 import { CompanyRolePicker, type PickedCompany } from '@/components/work/CompanyRolePicker';
@@ -36,6 +37,10 @@ function Inner() {
   const { message } = App.useApp();
   const router = useRouter();
   const [f, setF] = useState({ company: '', role: '', env: '', focus: '', model: DEFAULT_MODEL, intro: '' });
+  // 参考资料（选填，2026-10-23）：出题人自己过往用过的题 / 内部考题，只用于他自己出题（照它改背景换数字）。平台内部的参照在后台自动挑，这里不露
+  const [refs, setRefs] = useState<SampleRow[]>([]);
+  const [ref, setRef] = useState<SampleRow | null>(null);
+  useEffect(() => { fetch('/api/admin/work/samples?mine=1').then(r => r.json()).then(j => j.ok && setRefs(j.samples)).catch(() => {}); }, []);
   const [picked, setPicked] = useState<PickedCompany>(null);
   const [busy, setBusy] = useState('');
   // 出题等待的进度：gen 出题中 → base AI 基线中 → done 好了（GenProgress 一行一行列出平方在做什么）
@@ -45,7 +50,7 @@ function Inner() {
     if (!f.company.trim() || !f.role.trim()) return message.warning('企业和要找的人都要填');
     setBusy('在拼这家企业的材料、出题、做材料包、定标准……约 2 分钟，别关页面'); setPhase('gen');
     try {
-      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model }) });
+      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, sample_id: ref?.id, sample_mode: 'reskin' }) });
       if (r.status === 401) { location.href = `/work/login?next=${encodeURIComponent('/work/new')}`; return; }
       const j = await r.json();
       if (!j.ok) throw new Error(j.error);
@@ -94,6 +99,13 @@ function Inner() {
           </Sec>
           <Sec n="4" t="你想考什么（选填）" d="聚焦哪个问题、给谁做、难度；没写就按岗位此刻最真实的问题出">
             <Input.TextArea value={f.focus} onChange={e => setF(x => ({ ...x, focus: e.target.value }))} placeholder="例：聚焦德布勒森工厂爬坡期的欧洲供需平衡；给 3 年以内的人做；一小时内" autoSize={{ minRows: 2, maxRows: 5 }} />
+          </Sec>
+          <Sec n="5" t="参考资料（选填）" d="你们过往用过的题、内部考题、认可的案例——上传或粘贴，AI 照它的路数出：题型、推进方式、算法保留，故事换成这家企业、数字换掉">
+            {refs.length > 0 && <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
+              {refs.map(sm => <Tag.CheckableTag key={sm.id} checked={ref?.id === sm.id} onChange={c => setRef(c ? sm : null)} style={{ padding: '4px 10px', fontSize: 13, border: '1px solid #e0e0ee' }}>{sm.title} <span style={{ opacity: .6 }}>· {sm.stages} 步</span></Tag.CheckableTag>)}
+            </div>}
+            <SampleUpload shared={false} onDone={s => { setRefs(x => [s, ...x]); setRef(s); }} pastePlaceholder="把整道题贴进来：背景、每一问、要给的数据、参考答案（有就带上）" />
+            {ref?.summary && <div style={{ marginTop: 8, fontSize: 12.5, color: '#555', background: '#faf9ff', padding: '8px 12px', borderRadius: 10 }}>照这份出：{ref.summary}</div>}
           </Sec>
           <Button type="primary" size="large" block icon={<RocketOutlined />} loading={!!busy} onClick={create} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>出题（约 2–3 分钟）</Button>
           {busy && <GenProgress phase={phase} company={f.company} picked={picked} intro={picked ? '' : f.intro} role={f.role} focus={f.focus} env={f.env ? ENVS.find(e => e.value === f.env)?.label : undefined} />}
