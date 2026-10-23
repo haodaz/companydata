@@ -42,7 +42,7 @@ export default function EnrollmentPage() {
   const stepIdx = d.status === 'graduated' ? 5 : next?.kind === 'entrance' ? 0 : next?.kind === 'class' ? 1 : next?.kind === 'exam' && d.chapters.some((c: any) => c.after != null && !c.passed) ? 3 : next?.kind === 'exam' ? 2 : next?.kind === 'reflect' ? 3 : next?.kind === 'work' ? 4 : 2;
   return (
     <div>
-      <PageHead eyebrow="III · Training · Record" zh={<>{d.course?.role}<span style={{ display: 'inline', fontSize: 18, color: 'var(--ink3)', marginLeft: 10 }}>{d.nova_name}</span></>} en={`${d.student_name} · ${d.model_label || 'no model endpoint'}`}
+      <PageHead eyebrow="III · Training · Record" zh={<>{d.course?.role}<span style={{ display: 'inline', fontSize: 18, color: 'var(--ink3)', marginLeft: 10 }}>{d.nova_name}</span></>} en={d.model_label && d.model_label !== d.student_name ? `${d.student_name} · ${d.model_label}` : d.student_name || 'no model endpoint'}
         extra={<><Link href="/college/admin/training"><Btn kind="ghost">← 学籍一览</Btn></Link><a href={`/lab/${d.space_id}`} target="_blank" rel="noreferrer"><Btn kind="ghost">看这门课 ↗</Btn></a>{d.status === 'graduated' && <a href={`/college/g/${d.space_id}`} target="_blank" rel="noreferrer"><Btn kind="gold">毕业生档案 ↗</Btn></a>}</>} />
 
       <div className="ca-hero">
@@ -52,7 +52,7 @@ export default function EnrollmentPage() {
           <div className="en">{d.course?.research ? 'School of Research' : 'School of Professions'}{d.demand_id ? ' · Commissioned' : ''}</div>
           <h2>{d.nova_name} <Pill tone={STATUS_TONE[d.status]}>{d.status_label}</Pill></h2>
           <div className="sub">课程「{d.course?.title}」{d.course?.company ? ` · ${d.course.company}` : ''} · {d.chapters.length} 章{d.teacher ? ` · ${d.teacher.expert ? `师承 ${d.teacher.expert_name}（${d.teacher.place || ''}）` : '技能卡为 AI 草案，等老师傅校正'} · ${d.teacher.rules} 条判断规则` : ' · 还没有技能卡'}</div>
-          <div className="sub">学员 {d.student_name}{d.student_org ? ` · ${d.student_org}` : ''} · {d.model_label || '未接模型接口'}</div>
+          <div className="sub">学员 {d.student_name}{d.student_org ? ` · ${d.student_org}` : ''}{d.model_label && d.model_label !== d.student_name ? ` · ${d.model_label}` : d.model_id ? '' : ' · 未接模型接口'}</div>
         </div>
         <div className="nums"><div><b>{d.entrance_score ?? '—'}</b><span>入学考</span></div><div><b>{d.final_score ?? '—'}</b><span>毕业考</span></div><div><b>{d.chapters.filter((c: any) => c.passed).length}/{d.chapters.length}</b><span>通过章节</span></div><div><b>{(nb.rules || []).length}</b><span>学到的规则</span></div></div>
       </div>

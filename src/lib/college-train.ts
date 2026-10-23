@@ -235,9 +235,13 @@ export async function nextStep(enrollmentId: string): Promise<Step> {
   if (!d.model_id) return { kind: 'blocked', label: '学员还没接上模型接口' };
   if (!d.chapters.length) return { kind: 'blocked', label: '这门课还没有已发布的章节' };
   const nb: Notebook = d.notebook || {};
-  // 1 入学考：挑考核章（没有就第一章）裸考一次
-  const entranceCh = d.chapters.find(c => c.kind === 'assessment') || d.chapters[0];
-  if (!d.chapters.some(c => c.before != null)) return { kind: 'entrance', chapter_id: entranceCh.id, label: `入学考 · ${entranceCh.title}` };
+  // 已经全章通过（比如归档进来的老作答）：只剩真活实习，不再回头补入学考
+  const allPassed = d.chapters.every(c => c.passed);
+  if (!allPassed) {
+    // 1 入学考：挑考核章（没有就第一章）裸考一次
+    const entranceCh = d.chapters.find(c => c.kind === 'assessment') || d.chapters[0];
+    if (!d.chapters.some(c => c.before != null)) return { kind: 'entrance', chapter_id: entranceCh.id, label: `入学考 · ${entranceCh.title}` };
+  }
   if (!d.teacher) return { kind: 'blocked', label: '这门课还没有技能卡（老师傅还没教）' };
   // 2 逐章：没上课先上课；上了课没考就考；考了没过 → 先反思（最近一次没过的作答没反思过）再考
   for (const c of d.chapters) {
