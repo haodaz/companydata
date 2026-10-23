@@ -1,8 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { DEFAULT_ROLE, ROLE_LABEL, ROLES } from '@/lib/roles';
+
 import { Table, Card, Typography, Button, Space, App, Popconfirm, Select, Modal, Form, Input, Tabs, Badge } from 'antd';
 import { PageHeader } from '@/components/admin/PageHeader';
+
+const ROLE_OPTIONS = ROLES.map(r => ({ label: ROLE_LABEL[r], value: r }));
 import { DeleteOutlined, ReloadOutlined, SafetyCertificateOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useUser } from '@/lib/user-context';
 import { useRouter } from 'next/navigation';
@@ -135,11 +139,8 @@ export default function SystemUsersPage() {
           size="small" 
           onChange={(v) => handleRoleChange(record.id, v)}
           disabled={record.email === 'haoz214@gmail.com'}
-          style={{ width: 120 }}
-          options={[
-            { label: 'Admin (管理员)', value: 'admin' },
-            { label: 'User (普通用户)', value: 'user' },
-          ]}
+          style={{ width: 200 }}
+          options={ROLE_OPTIONS}
         />
       )
     },
@@ -205,15 +206,15 @@ export default function SystemUsersPage() {
       </Card>
 
       <Modal title="添加账号" open={addOpen} onOk={handleAdd} onCancel={() => setAddOpen(false)} okText="创建" confirmLoading={adding} destroyOnHidden>
-        <Form form={addForm} layout="vertical" initialValues={{ role: 'user' }} style={{ marginTop: 8 }}>
+        <Form form={addForm} layout="vertical" initialValues={{ role: DEFAULT_ROLE }} style={{ marginTop: 8 }}>
           <Form.Item name="email" label="邮箱" rules={[{ required: true, message: '请输入邮箱' }, { type: 'email', message: '邮箱格式不正确' }]}>
             <Input placeholder="name@company.com" autoComplete="off" />
           </Form.Item>
           <Form.Item name="password" label="初始密码" rules={[{ required: true, message: '请输入密码' }, { min: 6, message: '至少 6 位' }]} extra="请把密码线下告诉对方，建议对方登录后自行修改。">
             <Input.Password placeholder="至少 6 位" autoComplete="new-password" />
           </Form.Item>
-          <Form.Item name="role" label="权限">
-            <Select options={[{ label: 'User (普通用户)', value: 'user' }, { label: 'Admin (管理员)', value: 'admin' }]} />
+          <Form.Item name="role" label="权限" extra="对外开的账号用「百业用户」：只能用百业的模拟、真活和 workspace，看不到任何数据资产。">
+            <Select options={ROLE_OPTIONS} />
           </Form.Item>
         </Form>
       </Modal>

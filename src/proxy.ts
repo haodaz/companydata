@@ -3,6 +3,25 @@ import type { NextRequest } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
 import { INVITED, INVITED_BY, readInvite } from '@/lib/lab-invite';
 import { LAB_GUEST } from '@/lib/lab-guest';
+import { supabaseAdmin } from '@/lib/supabase';
+import { baiyeApiAllowed, baiyePageAllowed, isBaiyeOnly } from '@/lib/roles';
+
+/**
+ * 角色按 system_users 实时判断（2026-10-23）：登录凭证 30 天有效，里面写的角色可能是旧的——降级 / 删号要立刻生效。
+ * 进程内缓存 20 秒，免得每个请求都查库。查不到这个人（删号）= 当没登录。
+ */
+const roleCache = new Map<string, { role: string | null; at: number }>();
+async function liveRole(id: string): Promise<string | null> {
+  const hit = roleCache.get(id);
+  if (hit && Date.now() - hit.at < 20_000) return hit.role;
+  const { data, error } = await supabaseAdmin.from('system_users').select('role').eq('id', id).maybeSingle();
+  if (error) throw error;   // 查库失败不放行（宁可报错，不能把百业账号放进数据资产）
+  const role = data?.role ?? null;
+  roleCache.set(id, { role, at: Date.now() });
+  if (roleCache.size > 2000) roleCache.clear();
+  return role;
+}
+const BAIYE_DENIED = () => NextResponse.json({ ok: false, error: '百业账号没有这个权限' }, { status: 403 });
 
 /** 受邀专家能碰的接口：这一位数字职人的空间本身（只读），以及向上学习的三步 */
 const INVITE_API = /^\/api\/lab\/spaces\/([^/]+)(?:\/(interview|submit|distill))?$/;
@@ -44,7 +63,8 @@ export async function proxy(req: NextRequest) {
     if (pathname.startsWith('/api/college/') && req.method === 'GET') return NextResponse.next();
     if (pathname === '/api/college/apply' && req.method === 'POST') return NextResponse.next();
     // 真活台公开：参与链接 / 自助出题 / 出题人管理链接都靠 token 与 owner_key 自己核对，不走登录（/api/admin/work 仍要登录）
-    if (pathname.startsWith('/api/work/')) return NextResponse.next();
+    // 例外：/api/work/companies 是企业库搜索（出题时挑企业用），属于数据资产，要登录
+    if (pathname.startsWith('/api/work/') && !pathname.startsWith('/api/work/companies')) return NextResponse.next();
     // 飞轮信号接入：以后的 ToC 带 FLYWHEEL_INGEST_KEY，没有登录态；放进去由路由自己验密钥
     if (pathname === '/api/flywheel/signal' && req.method === 'POST' && req.headers.get('x-flywheel-key')) return NextResponse.next();
     // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉
@@ -53,11 +73,23 @@ export async function proxy(req: NextRequest) {
     // 数据外采篮（Chrome 插件）不带 cookie，带篮子口令（Authorization: Bearer）
     if (pathname.startsWith('/api/basket/')) {
       const bearer = req.headers.get('authorization')?.match(/^Bearer\s+(.+)$/i)?.[1];
-      if (bearer && await verifyToken(bearer.trim())) return NextResponse.next({ request: { headers } });
+      const bp = bearer ? await verifyToken(bearer.trim()) : null;
+      if (bp) {
+        const role = await liveRole(bp.id);
+        if (!role) return NextResponse.json({ ok: false, error: '未登录或登录已过期' }, { status: 401 });
+        if (isBaiyeOnly(role)) return BAIYE_DENIED();   // 数据外采篮是数据资产的入口
+        return NextResponse.next({ request: { headers } });
+      }
     }
     const token = req.cookies.get('auth_token')?.value;
     const payload = token ? await verifyToken(token) : null;
-    if (payload) return NextResponse.next({ request: { headers } });
+    if (payload) {
+      const role = await liveRole(payload.id);
+      if (!role) return NextResponse.json({ ok: false, error: '未登录或登录已过期' }, { status: 401 });
+      // 百业用户只能调百业 / 真活 / workspace 的接口（白名单），数据资产接口一律 403
+      if (isBaiyeOnly(role) && !baiyeApiAllowed(pathname)) return BAIYE_DENIED();
+      return NextResponse.next({ request: { headers } });
+    }
     // 没登录的游客 / 受邀老师傅：打上游客标记，接口里模型锁死在默认那个（不让游客挑贵的模型）
     headers.set(LAB_GUEST, '1');
     if (LAB_PUBLIC() && pathname.startsWith('/api/lab/') && !LAB_PROTECTED(pathname, req.method)) return NextResponse.next({ request: { headers } });
@@ -114,16 +146,28 @@ export async function proxy(req: NextRequest) {
       return response;
     }
 
+    const role = await liveRole(payload.id);
+    if (!role) {
+      const response = NextResponse.redirect(new URL('/login', req.url));
+      response.cookies.delete('auth_token');
+      return response;
+    }
+    // 百业用户：数据后台、虚拟工厂这些一律不给，送回百业
+    if (isBaiyeOnly(role) && !baiyePageAllowed(pathname)) return NextResponse.redirect(new URL('/lab', req.url));
+
     // Role-based protection: only admin can access /admin/system-users
-    if (pathname.startsWith('/admin/system-users') && payload.role !== 'admin') {
+    if (pathname.startsWith('/admin/system-users') && role !== 'admin') {
       return NextResponse.redirect(new URL('/admin/db-company', req.url));
     }
 
     return NextResponse.next();
   }
 
-  // 首页落在虚拟工厂（未登录会被上面的规则拦到 /login）
+  // 首页落在虚拟工厂（未登录会被上面的规则拦到 /login）；百业用户落在百业
   if (pathname === '/') {
+    const token = req.cookies.get('auth_token')?.value;
+    const payload = token ? await verifyToken(token) : null;
+    if (payload && isBaiyeOnly(await liveRole(payload.id).catch(() => null))) return NextResponse.redirect(new URL('/lab', req.url));
     return NextResponse.redirect(new URL('/office', req.url));
   }
 

@@ -507,6 +507,8 @@ export default function LabHome() {
           <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: 14 }}>{pick === 'career' ? '不需要 JD。适合还没有具体岗位、只想先看看这一行在干什么的人。' : '从岗位库挑一条（抓取自企业官方招聘站），或者粘贴一份全新的 JD。'}</div>
 
           {pick === 'jd' && <>
+          {/* 岗位库搜索是数据资产：百业用户看不到，只能粘贴自己的 JD */}
+          {user?.role !== 'baiye_user' && (
           <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(106,92,255,.35)' }}>
             <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>ANY JD · 岗位 AI 自己生成</div>
             <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>在岗位库里任选一条 JD：岗位 AI 读完后自己生成 <b>技能集草案</b>、<b>检验故事线</b>、<b>虚拟操作空间</b> 和场景美术（约 2–4 分钟）。</div>
@@ -528,9 +530,10 @@ export default function LabHome() {
               </div>
             )}
           </div>
+          )}
           <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(18,181,203,.4)' }}>
             <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>NEW JD · 粘贴一份全新的 JD</div>
-            <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>岗位库里没有？把招聘页上的职责和要求整段贴进来，走同一条流水线生成。</div>
+            <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>{user?.role === 'baiye_user' ? '' : '岗位库里没有？'}把招聘页上的职责和要求整段贴进来，走同一条流水线生成。</div>
             <div style={{ display: 'flex', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
               <input className="lab-input" value={paste.title} onChange={e => setPaste(p => ({ ...p, title: e.target.value }))} placeholder="岗位名，如：储能系统测试工程师" style={{ flex: '2 1 220px', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
               <input className="lab-input" value={paste.company} onChange={e => setPaste(p => ({ ...p, company: e.target.value }))} placeholder="公司（可不填）" style={{ flex: '1 1 160px', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />

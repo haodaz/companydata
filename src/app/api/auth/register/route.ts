@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { hashPassword } from '@/lib/auth';
+import { DEFAULT_ROLE } from '@/lib/roles';
 
 export async function POST(req: Request) {
   try {
@@ -31,7 +32,7 @@ export async function POST(req: Request) {
       .insert({
         email,
         password_hash,
-        role: isFirstUser ? 'admin' : 'user', // 第一个注册的账号自动成为管理员
+        role: isFirstUser ? 'admin' : DEFAULT_ROLE, // 第一个注册的账号自动成为管理员；其余自助注册只开百业（数据资产要管理员手动升级）
       })
       .select('id, email, role')
       .single();

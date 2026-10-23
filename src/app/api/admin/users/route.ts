@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { DEFAULT_ROLE, isRole } from '@/lib/roles';
 import { supabaseAdmin } from '@/lib/supabase';
 import { verifyToken } from '@/lib/jwt';
 import { hashPassword } from '@/lib/auth';
@@ -36,7 +37,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const email = String(body.email || '').trim().toLowerCase();
     const password = String(body.password || '');
-    const role = body.role === 'admin' ? 'admin' : 'user';
+    const role = isRole(body.role) ? body.role : DEFAULT_ROLE;
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return NextResponse.json({ success: false, error: '邮箱格式不正确' }, { status: 400 });
     if (password.length < 6) return NextResponse.json({ success: false, error: '密码至少 6 位' }, { status: 400 });
 

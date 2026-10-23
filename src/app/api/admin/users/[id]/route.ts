@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { isRole } from '@/lib/roles';
 import { supabaseAdmin } from '@/lib/supabase';
 import { verifyToken } from '@/lib/jwt';
 import type { NextRequest } from 'next/server';
@@ -17,6 +18,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const { id } = await params;
     const body = await req.json();
     const { role } = body;
+    if (!isRole(role)) return NextResponse.json({ success: false, error: '未知角色' }, { status: 400 });
 
     const { error } = await supabaseAdmin
       .from('system_users')

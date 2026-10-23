@@ -467,6 +467,8 @@ export default function SpacePage() {
   const { message, modal } = App.useApp();
   const { currentModel } = useModel();
   const { user } = useUser();
+  // 能看数据后台（岗位库链接、去岗位库补岗位）的只有数据 / 产品同事和管理员；百业用户看不到数据资产入口
+  const dataUser = !!user && user.role !== 'baiye_user';
   // 拿着邀请链接来的老师傅：不登录，只做「向上学习」——走一遍、被追问、交给 AI 核心吸收
   const sp = useSearchParams();
   const invite = sp.get('invite');
@@ -1443,7 +1445,7 @@ function castOf(space: any, sim: Sim | null) {
                     {list.map((j: any) => (
                       <div key={j.id} style={{ padding: '8px 0', borderTop: '1px solid var(--line)', fontSize: 13, display: 'flex', gap: 10, alignItems: 'baseline', flexWrap: 'wrap' }}>
                         <span style={{ color: 'var(--ink3)', fontSize: 12.5 }}>{j.company}</span>
-                        {user && !exp ? <a href={`/admin/db-job/${j.id}`} target="_blank" rel="noreferrer" style={{ fontWeight: 700, color: 'var(--ink)' }}>{j.name}</a> : <b>{j.name}</b>}
+                        {dataUser && !exp ? <a href={`/admin/db-job/${j.id}`} target="_blank" rel="noreferrer" style={{ fontWeight: 700, color: 'var(--ink)' }}>{j.name}</a> : <b>{j.name}</b>}
                         {j.stage && <span className="lab-chip c">{j.stage}</span>}
                         {j.city && <span className="lab-chip g">{j.city}</span>}
                         {j.edu && <span className="lab-chip g">{j.edu}</span>}
@@ -1452,7 +1454,7 @@ function castOf(space: any, sim: Sim | null) {
                     ))}
                   </div>
                 ))}
-                {user && !exp && <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                {dataUser && !exp && <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   <a className="lab-btn ghost sm" href={`/admin/db-job?search=${encodeURIComponent(eco.profession.replace(/(工程师|技术员|操作工|师傅|技师|员|师)$/, ''))}&jobType=all`} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>在岗位库里看全部 ↗</a>
                   <a className="lab-btn ghost sm" href="/admin/tool-job" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>去岗位库补这个行当的岗位 ↗</a>
                 </div>}
