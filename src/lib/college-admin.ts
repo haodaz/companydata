@@ -31,10 +31,10 @@ export const modelOfSubmission = (s: { candidate_note?: string | null; graded_by
   return m && MODEL_OPTIONS.some(x => x.id === m) ? m : (s.graded_by_model || 'gemini-3.8-flash');
 };
 
-/** 教务是内部的事：登录且不是百业用户（数据 / 产品同事 + 管理员） */
+/** 教务处只给学院管理员（admin）：里面是评分口径、培养路径、线索这些核心逻辑，普通用户（数据 / 产品同事）和百业用户都不开 */
 export async function collegeStaff(req: Request) {
   const u = await getSessionUser(req).catch(() => null);
-  if (!u || u.role === 'baiye_user') return null;
+  if (!u || u.role !== 'admin') return null;
   return u;
 }
 const MIG = (e: any) => (/college_(students|enrollments|placements)|enrollment_id/.test(String(e?.message || '')) ? new Error('教务的表还没建：请先执行迁移 046_college_admin.sql') : e);

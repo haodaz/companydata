@@ -42,7 +42,7 @@ const NAV: NavItem[] = [
   { key: 'ws-company',   icon: <BankOutlined />,       label: '企业版工作台', path: '/workspace',      group: '实验室', newWindow: true, badge: '新' },
   { key: 'ws-research',  icon: <ExperimentOutlined />, label: '科研版工作台', path: '/research',       group: '实验室', newWindow: true, badge: '新' },
   // AI 大学（2026-10-21）：/college 上的入学申请和人才培养需求，提交即线索
-  { key: 'college-admin', icon: <TrophyOutlined />,     label: '百业学院教务', path: '/college/admin', group: '实验室', newWindow: true, badge: '新' },
+
   { key: 'journal-url',  icon: <FileSearchOutlined />, label: 'URL 日志',      path: '/admin/journal-url',  group: '运行日志' },
   { key: 'journal-job',  icon: <FileTextOutlined />,   label: '岗位爬取日志',  path: '/admin/journal-job',  group: '运行日志' },
   { key: 'journal-company', icon: <ProfileOutlined />, label: '企业画像日志',  path: '/admin/journal-company', group: '运行日志' },
@@ -181,7 +181,7 @@ function AdminLayoutGuard({ children }: { children: React.ReactNode }) {
 
   const NAV_WITH_AUTH: NavItem[] = [
     ...NAV,
-    ...(user?.role === 'admin' ? [{ key: 'system-users', icon: <SafetyCertificateOutlined />, label: '系统账号管理', path: '/admin/system-users', group: '系统' }] : []),
+    ...(user?.role === 'admin' ? [{ key: 'college-admin', icon: <TrophyOutlined />, label: '百业学院教务', path: '/college/admin', group: '实验室', newWindow: true, badge: '新' }, { key: 'system-users', icon: <SafetyCertificateOutlined />, label: '系统账号管理', path: '/admin/system-users', group: '系统' }] : []),
   ];
 
   // 有待审批的下载许可申请：系统账号管理亮红点，点进去直接到「下载许可」页签

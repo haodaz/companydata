@@ -39,7 +39,7 @@ function Shell({ children }: { children: React.ReactNode }) {
   // 教务管理（/college/admin）有自己的外壳：只套学院的配色变量，不要公开官网的页头页脚
   // 学生端（/college/s/<学籍>）也不要官网的页头页脚：AI 学员只看见自己的那门课
   if (path.startsWith('/college/admin') || path.startsWith('/college/s/')) return <div className="col"><style>{COLLEGE_CSS}</style>{children}</div>;
-  const staff = !!user && (user as any).role !== 'baiye_user';
+  const staff = !!user && (user as any).role === 'admin';   // 教务处只给学院管理员
   return (
     <div className="col">
       <style>{COLLEGE_CSS}</style>

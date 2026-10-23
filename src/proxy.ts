@@ -88,6 +88,8 @@ export async function proxy(req: NextRequest) {
       if (!role) return NextResponse.json({ ok: false, error: '未登录或登录已过期' }, { status: 401 });
       // 百业用户只能调百业 / 真活 / workspace 的接口（白名单），数据资产接口一律 403
       if (isBaiyeOnly(role) && !baiyeApiAllowed(pathname)) return BAIYE_DENIED();
+      // 百业学院教务接口只给管理员（核心业务逻辑）
+      if (pathname.startsWith('/api/college/admin') && role !== 'admin') return NextResponse.json({ ok: false, error: '教务处只对学院管理员开放' }, { status: 403 });
       return NextResponse.next({ request: { headers } });
     }
     // 没登录的游客 / 受邀老师傅：打上游客标记，接口里模型锁死在默认那个（不让游客挑贵的模型）
@@ -125,7 +127,7 @@ export async function proxy(req: NextRequest) {
   }
 
   // Protect /admin and /office (虚拟工厂) routes；真活台：出题 / 管理页要登录（/work/mine、/work/admin），做题页 /work/<token> 公开
-  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab') || pathname.startsWith('/college/admin') || pathname === '/work/mine' || pathname === '/work/new' || pathname.startsWith('/work/admin') || pathname === '/workspace' || pathname === '/research') {
+  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab') || pathname.startsWith('/college/admin') || pathname.startsWith('/college/s/') || pathname === '/work/mine' || pathname === '/work/new' || pathname.startsWith('/work/admin') || pathname === '/workspace' || pathname === '/research') {
     const token = req.cookies.get('auth_token')?.value;
 
     if (!token) {
@@ -154,6 +156,8 @@ export async function proxy(req: NextRequest) {
     }
     // 百业用户：数据后台、虚拟工厂这些一律不给——送到「权限不足」说明页（说清楚不是出错，给回百业的入口）
     if (isBaiyeOnly(role) && !baiyePageAllowed(pathname)) return NextResponse.redirect(new URL('/lab/no-access', req.url));
+    // 百业学院教务页面只给管理员
+    if ((pathname.startsWith('/college/admin') || pathname.startsWith('/college/s/')) && role !== 'admin') return NextResponse.redirect(new URL('/college/no-access', req.url));
 
     // Role-based protection: only admin can access /admin/system-users
     if (pathname.startsWith('/admin/system-users') && role !== 'admin') {
@@ -175,5 +179,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/college/admin', '/college/admin/:path*', '/work/mine', '/work/new', '/work/admin', '/workspace', '/research', '/api/:path*', '/', '/favicon.ico'],
+  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/college/admin', '/college/admin/:path*', '/college/s/:path*', '/work/mine', '/work/new', '/work/admin', '/workspace', '/research', '/api/:path*', '/', '/favicon.ico'],
 };
