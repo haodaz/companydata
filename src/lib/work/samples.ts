@@ -95,8 +95,15 @@ export async function extractText(buf: Buffer, filename: string): Promise<string
 
 /** 一份样本原文 → 骨架（固定用强模型；样本只解析一次，进库复用） */
 /** kind = 'practical'（2026-10-24）：职业技能等级认定的实操考核（试卷 + 评分记录表 + 考场准备单）——没有「面试官一步步问」，骨架是工序 / 考核项目 + 评分标准 / 扣分点 */
-export async function parseSample(raw: string, opts: { title?: string; model?: string; actor?: string; kind?: 'case' | 'practical' } = {}): Promise<SampleSkeleton> {
+export async function parseSample(raw: string, opts: { title?: string; model?: string; actor?: string; kind?: 'case' | 'practical' | 'takehome' } = {}): Promise<SampleSkeleton> {
   const model = opts.model || process.env.WORK_SAMPLE_MODEL || 'claude-opus-5-5';
+  const takehome = opts.kind === 'takehome' ? `
+这份是**工程 / 数据类岗位的 take-home 作业题**（候选人自己花几小时做完交一个仓库 / 文件）。按下面的对应关系解析：
+- stages = 题目要求的工作步骤或交付物（按做的顺序：取数 / 建模 / 加载 / 产出 / 文档 / 测试……，4–7 步）。type：搭方案 structuring、实现 other、分析与产出 judgement、取舍说明 synthesis；question = 这一步要做什么；reveal = 这一步给的输入（数据源、接口、文件、约束、时限）；expected = 评审看什么（原文的 evaluation / rubric / what we look for，没有就写「原文未给」）；calc 为空。
+- exhibits = 数据集 / 接口 / 示例文件（title + 它是什么）。
+- style_notes = 这类作业「好」在哪：限定时长、要可运行、README 说明取舍、边界情况、不追求完美但要诚实标注……3–6 条。
+- format 写「take-home」；problem_type 写岗位类型（数据工程 / 数据分析 / 后端开发……）；industry 写行业或「科技」；difficulty 按时长判断。
+` : '';
   const practical = opts.kind === 'practical' ? `
 这份是**职业技能等级认定的实操考核文件**（技能考核试卷 / 样题、评分记录表、考场与考生准备通知单）。按下面的对应关系解析：
 - stages = 考核的工序或考核项目（按考核顺序；评分记录表里的「试题」「项目」各成一步，合并同类的细项）。type 一律用 other；question = 这一步要做什么（加工 / 操作 / 检测 / 文明生产……）；reveal = 这一步给考生的条件（图纸要求、材料、设备、时间）；expected = 评分标准原文要点：配分、怎么扣分、否定项（原样保留数字和公差）；calc 为空。
@@ -104,7 +111,7 @@ export async function parseSample(raw: string, opts: { title?: string; model?: s
 - style_notes = 这套考核「怎么评」的手法：配分扣完为止、超差不得分、否定项一票否决、文明生产扣分、自检与实测对比……3–6 条。
 - format 写「practical」；problem_type 写「实操考核」；industry 写行业；difficulty 按等级（三级 / 四级 / 五级）。
 ` : '';
-  const prompt = `下面是出题人交来的一份「好题」样本（商学院 / 咨询面试案例、公司内部考题、作业题都可能）。把它解析成**骨架**，之后平台会照这个骨架、换成别的企业的真实问题重新出题。${practical}
+  const prompt = `下面是出题人交来的一份「好题」样本（商学院 / 咨询面试案例、公司内部考题、作业题都可能）。把它解析成**骨架**，之后平台会照这个骨架、换成别的企业的真实问题重新出题。${practical}${takehome}
 要求：
 - 不改写、不评价样本，只提取结构。原文有的数字原样保留；没有的不要编。
 - stages：按样本的推进顺序，每一步一条。type ∈ structuring（搭框架）/ judgement（看图表下判断）/ numeracy（测算）/ creativity（出主意）/ synthesis（综合建议）/ other。
@@ -160,6 +167,9 @@ export async function getSample(id: string): Promise<WorkSample | null> {
 }
 export async function removeSample(id: string) { const { error } = await db.from('work_samples').delete().eq('id', id); if (error) throw new Error(error.message); }
 export async function saveSample(k: SampleSkeleton, raw: string, meta: { source_name: string; created_by: string; shared: boolean }): Promise<WorkSample> {
+  // .doc 抽出来的文字里可能带 \u0000，Postgres 的 jsonb / text 不收（「unsupported Unicode escape sequence」）
+  const strip = (v: any): any => typeof v === 'string' ? v.replace(/\u0000/g, '') : Array.isArray(v) ? v.map(strip) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([a, b]) => [a, strip(b)])) : v;
+  k = strip(k); raw = strip(raw);
   const { data, error } = await db.from('work_samples').insert({ title: k.title, industry: k.industry, problem_type: k.problem_type, difficulty: k.difficulty, skeleton: k, raw: raw.slice(0, 60000), source_name: meta.source_name, created_by: meta.created_by, shared: meta.shared }).select(COLS).single();
   if (error) throw new Error(/work_samples/.test(error.message) ? '样本库还没建（迁移 047 待跑）' : error.message);
   return data as WorkSample;
