@@ -1,0 +1,102 @@
+diff --git a/src/lib/cost/products.ts b/src/lib/cost/products.ts
+index 51bb456..9fa89a6 100644
+--- a/src/lib/cost/products.ts
++++ b/src/lib/cost/products.ts
+@@ -6,7 +6,7 @@
+  */
+ export const COST_PRODUCTS = {
+   lab: { label: 'AI 百业', tools: ['skill-lab', 'lab-art', 'lab-3d'] },
+-  factory: { label: '智能企业数据工厂', tools: ['finder', 'fetcher', 'structurer-job', 'company-profile', 'company-pipeline', 'company-deep-research', 'competition-radar', 'standard-radar', 'occupation', 'office-chief', 'office-chat', 'flywheel', 'job-tagging', 'work', 'unattributed', 'external'] },   // unattributed = llm-client 兜底记的；external = 系统外花费补记（Nebius 等）
++  factory: { label: '智能企业数据工厂', tools: ['finder', 'fetcher', 'structurer-job', 'company-profile', 'company-pipeline', 'company-deep-research', 'competition-radar', 'standard-radar', 'occupation', 'office-chief', 'office-chat', 'flywheel', 'job-tagging', 'work', 'workspace', 'unattributed', 'external'] },   // unattributed = llm-client 兜底记的；external = 系统外花费补记（Nebius 等）
+ } as const;
+ export type CostProduct = keyof typeof COST_PRODUCTS;
+ export const toolsOf = (p: CostProduct): string[] => [...COST_PRODUCTS[p].tools];
+diff --git a/src/lib/llm-client.ts b/src/lib/llm-client.ts
+index 7e57838..818721c 100644
+--- a/src/lib/llm-client.ts
++++ b/src/lib/llm-client.ts
+@@ -64,15 +64,17 @@ export function resolveModel(modelId?: string | null): string {
+ export async function generateContent(
+   prompt: string,
+   modelId: string,
+-  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean },
++  /** temperature：目前只有千问接了（打标签这类分类任务设 0，数据部门的提示词要求） */
++  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean; temperature?: number },
+ ): Promise<LLMResponse> {
+   const resolvedModelId = resolveModel(modelId);
+   // 本地「只用免费额度」：千问以外的模型（OpenAI / Gemini 都是付费的）一律不调
+-  if (process.env.DASHSCOPE_FREE_ONLY === '1' && !resolvedModelId.startsWith('qwen')) throw new Error(`已开「只用免费额度」，不调用付费模型 ${resolvedModelId}`);
++  if (process.env.DASHSCOPE_FREE_ONLY === '1' && !/^(qwen|deepseek)/.test(resolvedModelId)) throw new Error(`已开「只用免费额度」，不调用付费模型 ${resolvedModelId}`);
+   let res: LLMResponse;
+   if (isOpenAIModel(resolvedModelId)) res = await generateOpenAI(prompt, resolvedModelId, options);
+   else if (isClaudeModel(resolvedModelId)) res = await generateClaude(prompt, resolvedModelId, options);
+-  else if (resolvedModelId.startsWith('qwen')) res = await generateQwen(prompt, resolvedModelId, options);
++  // DeepSeek 也走阿里云百炼（同一个 DashScope key，国内可用）
++  else if (/^(qwen|deepseek)/.test(resolvedModelId)) res = await generateQwen(prompt, resolvedModelId, options);
+   else res = await generateGemini(prompt, resolvedModelId, options);
+   await autoLog(res, resolvedModelId, options);
+   return res;
+@@ -146,6 +148,7 @@ async function callCompat(base: string, key: string, model: string, prompt: stri
+   if (parameters.enable_search) { body.enable_search = true; body.search_options = parameters.search_options; }
+   if (parameters.response_format) body.response_format = parameters.response_format;
+   if ('enable_thinking' in parameters) body.enable_thinking = parameters.enable_thinking;
++  if (parameters.temperature !== undefined) body.temperature = parameters.temperature;
+   let lastErr: any = null;
+   for (let attempt = 0; attempt < 3; attempt++) {
+     if (attempt) await new Promise(r => setTimeout(r, 3000 * attempt));
+@@ -170,9 +173,10 @@ async function callCompat(base: string, key: string, model: string, prompt: stri
+ async function generateQwen(
+   prompt: string,
+   modelId: string,
+-  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean },
++  options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean; temperature?: number },
+ ): Promise<LLMResponse> {
+   const parameters: Record<string, any> = { result_format: 'message' };
++  if (options?.temperature !== undefined) parameters.temperature = options.temperature;
+   if (options?.webSearch) {
+     parameters.enable_search = true;
+     parameters.search_options = { search_strategy: 'turbo', enable_source: true, forced_search: true };
+@@ -397,7 +401,7 @@ export const cheapModel = () => process.env.CHEAP_MODEL || 'qwen-plus';
+ export async function generateCheap(
+   prompt: string,
+   fallbackModel: string,
+-  options?: { jsonMode?: boolean; fast?: boolean },
++  options?: { jsonMode?: boolean; fast?: boolean; temperature?: number },
+ ): Promise<LLMResponse> {
+   const cheap = cheapModel();
+   try {
+diff --git a/src/lib/token-logger.ts b/src/lib/token-logger.ts
+index 32797e9..dd7b741 100644
+--- a/src/lib/token-logger.ts
++++ b/src/lib/token-logger.ts
+@@ -60,7 +60,7 @@ const PRICING: Record<string, { input: number; output: number }> = {
+ export interface TokenUsageParams {
+   tool_name: 'finder' | 'fetcher' | 'structurer-job' | 'company-profile' | 'company-pipeline' | 'company-deep-research' | 'competition-radar' | 'standard-radar' | 'occupation' | 'office-chief' | 'office-chat' | 'skill-lab' | 'flywheel' | 'lab-art' | 'lab-3d' | 'job-tagging'
+     | 'unattributed'   // llm-client 兜底记的、调用方没归属的（2026-10-18：账要算全）
+-    | 'work'           // 真活台（出题 / 基线 / 工作台 AI / 评卷）
++    | 'work' | 'workspace'           // 真活台（出题 / 基线 / 工作台 AI / 评卷）
+     | 'external';      // 系统外的花费补记：Nebius 黑客松额度、其他平台充值（scripts/lab-log-cost.mts --usd）
+   task_name: string;      // e.g. "Careers URLs Search", "Extract Jobs"
+   institution?: string;   // 企业名或目标 URL（列名沿用院校版）
+@@ -69,6 +69,10 @@ export interface TokenUsageParams {
+     promptTokenCount: number;
+     candidatesTokenCount: number;
+     totalTokenCount: number;
++    /** Gemini 思考 token：按输出价计费，但不在 candidatesTokenCount 里（10-21 对账：Gemini 3.8 记的账只有实付一半） */
++    thoughtsTokenCount?: number;
++    /** Gemini 联网检索时工具结果算进输入 */
++    toolUsePromptTokenCount?: number;
+     /** llm-client 兜底记账时写上的记录编号：再 logTokenUsage 就改那条，不重插 */
+     __logId?: number;
+   };
+@@ -119,8 +123,8 @@ export async function logTokenUsage(params: CostParams) {
+     const ctx = Object.fromEntries((['space_id', 'chapter_id', 'job_id', 'actor', 'stage'] as const).map(k => [k, params[k] !== undefined ? params[k] : base[k]]));
+ 
+     const resolvedModelId = resolveModel(model_id);
+-    const inputTokens = usageMetadata?.promptTokenCount || 0;
+-    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
++    const inputTokens = (usageMetadata?.promptTokenCount || 0) + (usageMetadata?.toolUsePromptTokenCount || 0);
++    const outputTokens = (usageMetadata?.candidatesTokenCount || 0) + (usageMetadata?.thoughtsTokenCount || 0);
+     const totalTokens = usageMetadata?.totalTokenCount || 0;
+ 
+     // 费用 = token 费 + 联网搜索次数 × 单价；按价目表的币种算，统一折成美元存

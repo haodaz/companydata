@@ -1,0 +1,369 @@
+diff --git a/src/app/api/lab/spaces/route.ts b/src/app/api/lab/spaces/route.ts
+index f4ffa01..ed5151e 100644
+--- a/src/app/api/lab/spaces/route.ts
++++ b/src/app/api/lab/spaces/route.ts
+@@ -8,6 +8,7 @@ import { reconcileCast } from '@/lib/lab-cast-server';
+ import { trackDemand } from '@/lib/flywheel/signals';
+ import { attachCostToSpace, withCost } from '@/lib/token-logger';
+ import { ensureOccupationLater } from '@/lib/kg/ensure-occupation';
++import { getSessionUser } from '@/lib/session';
+ 
+ export const runtime = 'nodejs';
+ export const dynamic = 'force-dynamic';
+@@ -17,14 +18,14 @@ export const maxDuration = 300;
+ const builds = new Map<string, { phase: string; detail?: string; done: boolean; id?: string; error?: string; at: number }>();
+ const setBuild = (id: string, patch: Partial<{ phase: string; detail?: string; done: boolean; id?: string; error?: string }>) => { if (!id) return; builds.set(id, { phase: '', done: false, ...(builds.get(id) || {}), ...patch, at: Date.now() }); for (const [k, v] of builds) if (Date.now() - v.at > 30 * 60_000) builds.delete(k); };
+ 
+-/** 技能空间列表（每个公司岗位一个）；?build=<id> 查构建进度 */
++/** 技能空间列表（每个公司岗位一个）；?build=<id> 查构建进度；?mine=1 = 百业工厂用：普通用户只列自己生成的，管理员列全部（体验百业不带，列全部） */
+ export async function GET(req: Request) {
+   try {
+     const buildId = new URL(req.url).searchParams.get('build');
+     if (buildId) return NextResponse.json({ ok: true, build: builds.get(buildId) || null });
+     const { data: spaces, error } = await supabaseAdmin
+       .from('skill_tasks')
+-      .select('id, title, profile, jd_snapshot, jd_breakdown, time_limit_min, is_demo, created_at, job_id, sim, skill:skills(id, name, domain, kind, summary, expert_name, expert_location, expert_note, distilled_at, card, interview, source)')
++      .select('id, title, created_by, profile, jd_snapshot, jd_breakdown, time_limit_min, is_demo, created_at, job_id, sim, skill:skills(id, name, domain, kind, summary, expert_name, expert_location, expert_note, distilled_at, card, interview, source)')
+       .order('created_at', { ascending: true });
+     if (error) throw error;
+ 
+@@ -41,7 +42,7 @@ export async function GET(req: Request) {
+       const ii = (invs.data || []).filter(x => x.task_id === s.id);
+       const sim = s.sim as any;
+       return {
+-        ...s, sim: undefined,
++        ...s, sim: undefined, created_by: undefined,   // 生成者邮箱不往外给（体验百业是公开的）
+         // 有工位：老空间看主 sim，按章节的看已发布章节里有没有工位步骤（体验馆按这个排序、打标记）
+         features: (() => {
+           const pubCh = ((chs as any).data || []).filter((c: any) => c.task_id === s.id && c.status === 'published');
+@@ -77,6 +78,11 @@ export async function GET(req: Request) {
+       served: (invs.data || []).reduce((a: number, x: any) => a + (x.volume || 1), 0),
+       faces: data.map((s: any) => s.profile?.avatar).filter(Boolean).slice(0, 12),
+     };
++    if (new URL(req.url).searchParams.get('mine') === '1') {
++      const me = await getSessionUser(req);
++      const own = (x: any) => !!me && (me.role === 'admin' || (spaces || []).find(s => s.id === x.id)?.created_by === me.email);
++      return NextResponse.json({ ok: true, data: data.filter(own), totals, role: me?.role || null });
++    }
+     return NextResponse.json({ ok: true, data, totals });
+   } catch (e: any) {
+     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
+@@ -108,10 +114,18 @@ function summarize(built: any) {
+ }
+ 
+ const CAREER_HINT = '这是面向高中生 / 大学生的「职业探索空间」，不是招聘考核：任务要让一个完全没入行的人也能上手体验这个职业最有代表性的一天，材料自解释、术语随手解释，难度比校招题降一档；故事线要有带教的前辈，让人感受到这个职业真实的工作节奏与判断方式。';
++/** 学科 / 研究领域体验空间（ToS / 百业学科体验）：面向想选专业、选方向的学生 */
++const DISCIPLINE_HINT = '这是面向高中生 / 本科生 / 研究生的「学科体验空间」，不是招聘考核：让一个没进过实验室的人也能走完这个学科研究者最有代表性的一天——读一篇文献、设计或做一次实验 / 计算、处理一份有异常的数据、在组会上汇报、回答导师追问。材料自解释、术语随手解释；评分看科学思维（对照、可重复、证据、局限），不看背了多少知识点。';
++/** 研究岗空间（ToS 科研版）：贴着具体实验室的在研项目、平台设备、导师要求，给新进博士生 / 博后带教 */
++const RESEARCH_POST_HINT = '这是某个课题组具体研究岗（博士生 / 博士后 / 研究助理）的带教空间：章节要贴着这个实验室的在研项目、平台设备和导师要求写，像新人进组第一个月真实会遇到的事（熟悉平台与安全规范、复现组里一个结果、设计一个子实验、处理一批数据、组会汇报、配合项目节点）；评分重科学严谨与安全规范。';
++
+ export async function POST(req: Request) {
+   const body = await req.json().catch(() => ({}));
+   // 记账：这次构建的所有调用（任务、技能卡、工位、美术）记到同一个任务编号上，空间建好后补上空间编号（迁移 021）
+   const costJob = `build-${String(body.buildId || '') || Date.now().toString(36)}`;
++  // 生成者按登录账号记（不信前端报的名字）：普通用户在百业工厂只能管自己生成的空间
++  const me = await getSessionUser(req).catch(() => null);
++  if (me?.email) body.createdBy = me.email;
+   return withCost({ job_id: costJob, stage: 'create', actor: body.createdBy || null }, () => build(req, body, costJob));
+ }
+ 
+@@ -119,14 +133,16 @@ async function build(req: Request, body: any, costJob: string) {
+   let buildId = '';
+   try {
+     const { jobId, model, createdBy } = body; buildId = String(body.buildId || '');
+-    const profession = String(body.profession || '').trim().slice(0, 40);
++    const discipline = String(body.discipline || '').trim().slice(0, 40);
++    const profession = String(body.profession || '').trim().slice(0, 40) || discipline;
++    const isDiscipline = !!discipline && !body.profession;
+ 
+     if (profession) {
+       // ── 职业探索：职业名 → 典型岗位 + 生涯地图 → 同一条流水线 ──
+       trackDemand(req, { source: 'lab_space', query: profession, profession });
+-      setBuild(buildId, { phase: '结构化职业 · 推断典型岗位' });
+-      const { jd, career } = await structureCareer(profession, model || undefined);
+-      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), { hint: CAREER_HINT });
++      setBuild(buildId, { phase: isDiscipline ? '结构化学科 · 推断典型研究岗' : '结构化职业 · 推断典型岗位' });
++      const { jd, career } = await structureCareer(profession, model || undefined, isDiscipline ? 'discipline' : 'career');
++      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), { hint: isDiscipline ? DISCIPLINE_HINT : CAREER_HINT });
+       const { data: skill, error: skErr } = await supabaseAdmin.from('skills').insert({
+         slug: `career-${Date.now().toString(36)}`, ...built.skill, interview: [],
+         expert_name: '岗位 AI 自学草案', expert_title: '从职业公开知识推断 · 等待第一位从业者校正', expert_location: '云端', expert_note: '尚未有真人专家', tz_offset: 0,
+@@ -135,8 +151,8 @@ async function build(req: Request, body: any, costJob: string) {
+       if (skErr) throw skErr;
+       const { data: created, error: insErr } = await supabaseAdmin.from('skill_tasks').insert({
+         job_id: null, skill_id: skill.id,
+-        jd_snapshot: { ...jd, kind: 'career', career, fetched_at: new Date().toISOString().slice(0, 10) },
+-        ...built.task, created_by: createdBy || '',
++        jd_snapshot: { ...jd, kind: isDiscipline ? 'discipline' : 'career', career, fetched_at: new Date().toISOString().slice(0, 10) },
++        ...built.task, created_by: createdBy || '', ...(body.orgId ? { org_id: String(body.orgId) } : {}), ...(body.projectId ? { project_id: String(body.projectId) } : {}),
+       }).select('id').single();
+       if (insErr) throw insErr;
+       await attachCostToSpace(costJob, created.id);
+@@ -155,7 +171,7 @@ async function build(req: Request, body: any, costJob: string) {
+       const jd = { company: String(body.company || '').trim().slice(0, 60), title: String(body.title || '').trim().slice(0, 60) || '未命名岗位', responsibilities: pasted, qualifications: '' };
+       setBuild(buildId, { phase: '读取岗位 JD' });
+       trackDemand(req, { source: 'lab_space', query: `${jd.company} ${jd.title}`.trim(), company_name: jd.company || null, profession: jd.title });
+-      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }));
++      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), body.researchPost ? { hint: RESEARCH_POST_HINT } : {});
+       const { data: skill, error: skErr } = await supabaseAdmin.from('skills').insert({
+         slug: `jd-paste-${Date.now().toString(36)}`, ...built.skill, interview: [],
+         expert_name: '岗位 AI 自学草案', expert_title: '从 JD 与公开职业知识推断 · 等待第一位专家校正', expert_location: '云端', expert_note: '尚未有真人专家', tz_offset: 0,
+@@ -164,8 +180,8 @@ async function build(req: Request, body: any, costJob: string) {
+       if (skErr) throw skErr;
+       const { data: created, error: insErr } = await supabaseAdmin.from('skill_tasks').insert({
+         job_id: null, skill_id: skill.id,
+-        jd_snapshot: { ...jd, kind: 'pasted', fetched_at: new Date().toISOString().slice(0, 10) },
+-        ...built.task, created_by: createdBy || '',
++        jd_snapshot: { ...jd, kind: body.researchPost ? 'research_post' : 'pasted', fetched_at: new Date().toISOString().slice(0, 10) },
++        ...built.task, created_by: createdBy || '', ...(body.orgId ? { org_id: String(body.orgId) } : {}), ...(body.projectId ? { project_id: String(body.projectId) } : {}),
+       }).select('id').single();
+       if (insErr) throw insErr;
+       await attachCostToSpace(costJob, created.id);
+@@ -201,6 +217,7 @@ async function build(req: Request, body: any, costJob: string) {
+       jd_snapshot: { ...jd, job_req_id: job.job_req_id, location: job.location, url: job.link || job.source_url },
+       ...built.task,
+       created_by: createdBy || '',
++      ...(body.orgId ? { org_id: String(body.orgId) } : {}), ...(body.projectId ? { project_id: String(body.projectId) } : {}),   // 企业工作台建的空间归这家企业（迁移 037）
+     }).select('id').single();
+     if (insErr) throw insErr;
+     await attachCostToSpace(costJob, created.id);
+diff --git a/src/app/lab/spaces/page.tsx b/src/app/lab/spaces/page.tsx
+index ee70ac3..0270521 100644
+--- a/src/app/lab/spaces/page.tsx
++++ b/src/app/lab/spaces/page.tsx
+@@ -40,6 +40,7 @@ export default function LabHome() {
+   const [jobsLoading, setJobsLoading] = useState(false);
+   const [buildInfo, setBuildInfo] = useState<{ phase: string; detail?: string; error?: string } | null>(null);
+   const [profession, setProfession] = useState('');
++  const [careerMode, setCareerMode] = useState<'career' | 'discipline'>('career');   // 职业 / 学科·研究领域（2026-10-20）
+   // 粘贴一份全新 JD（不在岗位库里）
+   const [paste, setPaste] = useState({ title: '', company: '', text: '' });
+   const [buildSince, setBuildSince] = useState(0);
+@@ -68,12 +69,14 @@ export default function LabHome() {
+   // 列表筛选：搜一个词 + 选一个领域 + 勾若干标记（标记之间是「或」，人多了只想快速捞出一拨）
+   const [q, setQ] = useState('');
+   const [fam, setFam] = useState('');
++  /** 列表分两类：职业岗位体验 / 学科研究体验（研究岗空间、学科空间） */
++  const [track, setTrack] = useState<'career' | 'research'>('career');
+   const [marks, setMarks] = useState<string[]>([]);
+ 
+   const load = useCallback(async () => {
+     setLoading(true);
+     try {
+-      const json = await (await fetch('/api/lab/spaces')).json();
++      const json = await (await fetch('/api/lab/spaces?mine=1')).json();   // 百业工厂只列自己生成的（管理员全部）；看所有空间去体验百业
+       if (json.ok) { setSpaces(json.data); setTotals(json.totals || null); setNeedMigration(''); }
+       else if (json.needMigration) setNeedMigration(json.error);
+       else message.error(json.error);
+@@ -137,9 +140,9 @@ export default function LabHome() {
+     setBuildInfo({ phase: prof ? '结构化职业 · 推断典型岗位' : '读取岗位 JD' }); setBuildSince(startedAt); setNow(startedAt);
+     // 粘贴的 JD 也走「从 JD 建」的展示，公司 / 岗位名用填的（没填就叫新 JD）
+     if (pasted) job = { institute_or_company_name: pasted.company.trim() || '新 JD', name: pasted.title.trim() || '未命名岗位' };
+-    setBuilding(prof ? { company: '职业探索', title: prof, buildId, career: true } : { company: job.institute_or_company_name, title: job.name, buildId });
++    setBuilding(prof ? { company: careerMode === 'discipline' ? '学科体验' : '职业探索', title: prof, buildId, career: true } : { company: job.institute_or_company_name, title: job.name, buildId });
+     try {
+-      const payload = prof ? { profession: prof, model: currentModel, buildId }
++      const payload = prof ? (careerMode === 'discipline' ? { discipline: prof, model: currentModel, buildId } : { profession: prof, model: currentModel, buildId })
+         : pasted ? { jdText: pasted.text.trim(), title: pasted.title.trim(), company: pasted.company.trim(), model: currentModel, buildId }
+         : { jobId: job.id, model: currentModel, buildId };
+       const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })).json();
+@@ -184,30 +187,32 @@ export default function LabHome() {
+     // 打标记只认「这人是干什么的」，不拿 tagline 和能力词那堆自由文本去撞——
+     // 不然西点师会因为一句「面糊是有记忆的材料」被打上「高精尖材料」
+     const tags = tagsOf([p.role, prof, jd.title, s.skill?.name, s.skill?.domain].filter(Boolean).join(' '));
+-    tags.unshift(jd.kind === 'career' ? '职业探索' : jd.kind === 'pasted' ? '粘贴 JD' : '真实 JD');
++    tags.unshift(jd.kind === 'career' ? '职业探索' : jd.kind === 'discipline' ? '学科体验' : jd.kind === 'research_post' ? '研究岗' : jd.kind === 'pasted' ? '粘贴 JD' : '真实 JD');
+     if (s.features?.immersive) tags.unshift('沉浸场景');
+     if (s.features?.bench) tags.unshift('虚拟工位');
+-    return { s, tags, text: text.toLowerCase(), family: familyOf(prof, s.skill?.domain, jd.title, jd.company) };
++    return { s, tags, text: text.toLowerCase(), family: familyOf(prof, s.skill?.domain, jd.title, jd.company), research: jd.kind === 'research_post' || jd.kind === 'discipline' };
+   }), [spaces]);
++  const trackCount = { career: enriched.filter(e => !e.research).length, research: enriched.filter(e => e.research).length };
++  const inTrack = useMemo(() => enriched.filter(e => (track === 'research') === e.research), [enriched, track]);
+ 
+   const famCount = useMemo(() => {
+     const m = new Map<string, number>();
+-    for (const e of enriched) m.set(e.family, (m.get(e.family) || 0) + 1);
++    for (const e of inTrack) m.set(e.family, (m.get(e.family) || 0) + 1);
+     return [...m.entries()].sort((a, b) => b[1] - a[1]);
+-  }, [enriched]);
++  }, [inTrack]);
+   const tagCount = useMemo(() => {
+     const m = new Map<string, number>();
+-    for (const e of enriched) for (const t of e.tags) m.set(t, (m.get(t) || 0) + 1);
++    for (const e of inTrack) for (const t of e.tags) m.set(t, (m.get(t) || 0) + 1);
+     return ALL_TAGS.filter(t => m.has(t)).map(t => [t, m.get(t)!] as [string, number]);
+-  }, [enriched]);
++  }, [inTrack]);
+ 
+   const shown = useMemo(() => {
+     const kw = q.trim().toLowerCase();
+-    return enriched.filter(e =>
++    return inTrack.filter(e =>
+       (!fam || e.family === fam) &&
+       (!marks.length || marks.some(t => e.tags.includes(t))) &&
+       (!kw || e.text.includes(kw) || e.tags.some(t => t.toLowerCase().includes(kw)) || e.family.includes(kw)));
+-  }, [enriched, q, fam, marks]);
++  }, [inTrack, q, fam, marks]);
+   const filtering = !!(q.trim() || fam || marks.length);
+   const toggleMark = (t: string) => setMarks(l => l.includes(t) ? l.filter(x => x !== t) : [...l, t]);
+ 
+@@ -312,6 +317,12 @@ export default function LabHome() {
+         .sp-ask .row { display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 14px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); }
+         .sp-ask input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: #fff; font-size: 14.5px; font-family: inherit; }
+         .sp-ask input::placeholder { color: rgba(255,255,255,.38); }
++        .sp-tabs { display: inline-flex; gap: 4px; padding: 4px; border-radius: 12px; background: rgba(106,92,255,.08); margin-bottom: 11px; max-width: 100%; }
++        .sp-tabs button { border: 0; background: transparent; padding: 7px 16px; border-radius: 9px; font-size: 14px; font-weight: 700; color: #4a5070; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
++        .sp-tabs button span { font-size: 12px; font-weight: 600; opacity: .55; font-family: ui-monospace, Menlo, monospace; }
++        .sp-tabs button.on { background: #fff; color: #5b4bff !important; box-shadow: 0 1px 4px rgba(23,26,46,.12); }
++        .lab[data-theme="dark"] .sp-tabs { background: rgba(255,255,255,.06); }
++        .lab[data-theme="dark"] .sp-tabs button.on { background: rgba(255,255,255,.14); color: #fff; }
+         .sp-ask .picks { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); margin-top: 12px; }
+         .sp-ask .pick { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 14px; cursor: pointer; background: rgba(9,11,24,.55); border: 1px solid rgba(255,255,255,.12); transition: border-color .2s, transform .2s; }
+         .sp-ask .pick:hover { border-color: rgba(159,145,255,.7); transform: translateY(-2px); }
+@@ -376,17 +387,22 @@ export default function LabHome() {
+       {/* 四十来号人之后，列表得能捞：搜一个词、挑一个领域、勾几个标记 */}
+       {spaces.length > 3 && (
+         <div className="lab-glass" style={{ padding: '14px 16px', marginBottom: 14 }}>
++          <div className="sp-tabs">
++            {([['career', '职业岗位体验'], ['research', '学科研究体验']] as const).map(([k, t]) => (
++              <button key={k} className={track === k ? 'on' : ''} onClick={() => { setTrack(k); setFam(''); setMarks([]); }}>{t}<span>{trackCount[k]}</span></button>
++            ))}
++          </div>
+           <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+             <input
+               className="lab-input" value={q} onChange={e => setQ(e.target.value)}
+-              placeholder="搜人、职业、企业、城市、技能——如：焊 / 星巴克 / 上海 / 潜水"
++              placeholder={track === 'research' ? '搜学科、研究方向、机构、技能——如：固态电池 / 结构生物学 / 研究院' : '搜人、职业、企业、城市、技能——如：焊 / 星巴克 / 上海 / 潜水'}
+               style={{ flex: '1 1 280px', minWidth: 0, padding: '9px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }}
+             />
+             <select
+               value={fam} onChange={e => setFam(e.target.value)}
+               style={{ padding: '9px 12px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 13.5, background: '#fff', color: fam ? 'var(--v)' : 'var(--ink2)', fontWeight: fam ? 700 : 400, outline: 'none', cursor: 'pointer' }}
+             >
+-              <option value="">全部行业 · {spaces.length}</option>
++              <option value="">全部行业 · {inTrack.length}</option>
+               {famCount.map(([f, n]) => <option key={f} value={f}>{f} · {n}</option>)}
+             </select>
+             {filtering && <button className="lab-btn sm ghost" onClick={() => { setQ(''); setFam(''); setMarks([]); }}>清空</button>}
+@@ -409,12 +425,19 @@ export default function LabHome() {
+         </div>
+       )}
+ 
+-      <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>SPACES · {shown.length}{filtering ? ` / ${spaces.length}` : ''}</div>
++      <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>SPACES · {shown.length}{filtering ? ` / ${inTrack.length}` : ''}</div>
+       {loading ? (
+         <div className="lab-glass lab-scan" style={{ height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink3)' }}><span className="lab-mono">LOADING<span className="lab-dots" /></span></div>
+       ) : spaces.length === 0 ? (
+-        <div className="lab-glass" style={{ padding: 48, textAlign: 'center', color: 'var(--ink3)', lineHeight: 2 }}>
+-          这里还没有技能空间。<br />点上面的「<b style={{ color: 'var(--v)' }}>从岗位 JD 构建新空间</b>」，选一份 JD，看它被拆解成一个空间。
++        // 普通用户工厂里只列自己生成的：一个都没有时说清楚，并给出生成入口（别像是加载失败）
++        <div className="lab-glass" style={{ padding: '44px 28px', textAlign: 'center', color: 'var(--ink2)', lineHeight: 1.9 }}>
++          <div style={{ fontSize: 17, fontWeight: 800, color: 'var(--ink)', marginBottom: 6 }}>你还没有生成过职业模拟</div>
++          <div style={{ fontSize: 13.5, color: 'var(--ink3)' }}>百业工厂里只列你自己生成的空间。输入一个职业名，或从一份岗位 JD 开始，几分钟就能生成第一个。</div>
++          <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap', marginTop: 18 }}>
++            <button className="lab-btn" disabled={!!needMigration} onClick={() => setPick('career')}>＋ 输入一个职业生成</button>
++            <button className="lab-btn ghost" disabled={!!needMigration} onClick={() => { setPick('jd'); loadJds(); }}>＋ 从一份 JD 生成</button>
++          </div>
++          <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 16 }}>想先看看别人做的？所有空间都在 <a href="/lab/gallery" style={{ color: 'var(--v)', fontWeight: 700 }}>体验百业</a>。</div>
+         </div>
+       ) : (
+         <div style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 440px), 1fr))' }}>
+@@ -484,6 +507,8 @@ export default function LabHome() {
+           <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: 14 }}>{pick === 'career' ? '不需要 JD。适合还没有具体岗位、只想先看看这一行在干什么的人。' : '从岗位库挑一条（抓取自企业官方招聘站），或者粘贴一份全新的 JD。'}</div>
+ 
+           {pick === 'jd' && <>
++          {/* 岗位库搜索是数据资产：百业用户看不到，只能粘贴自己的 JD */}
++          {user?.role !== 'baiye_user' && (
+           <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(106,92,255,.35)' }}>
+             <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>ANY JD · 岗位 AI 自己生成</div>
+             <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>在岗位库里任选一条 JD：岗位 AI 读完后自己生成 <b>技能集草案</b>、<b>检验故事线</b>、<b>虚拟操作空间</b> 和场景美术（约 2–4 分钟）。</div>
+@@ -505,9 +530,10 @@ export default function LabHome() {
+               </div>
+             )}
+           </div>
++          )}
+           <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(18,181,203,.4)' }}>
+             <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>NEW JD · 粘贴一份全新的 JD</div>
+-            <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>岗位库里没有？把招聘页上的职责和要求整段贴进来，走同一条流水线生成。</div>
++            <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>{user?.role === 'baiye_user' ? '' : '岗位库里没有？'}把招聘页上的职责和要求整段贴进来，走同一条流水线生成。</div>
+             <div style={{ display: 'flex', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
+               <input className="lab-input" value={paste.title} onChange={e => setPaste(p => ({ ...p, title: e.target.value }))} placeholder="岗位名，如：储能系统测试工程师" style={{ flex: '2 1 220px', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
+               <input className="lab-input" value={paste.company} onChange={e => setPaste(p => ({ ...p, company: e.target.value }))} placeholder="公司（可不填）" style={{ flex: '1 1 160px', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
+@@ -545,18 +571,23 @@ export default function LabHome() {
+ 
+           {pick === 'career' && <>
+             <div className="lab-glass" style={{ padding: 18, marginBottom: 16, borderColor: 'rgba(18,181,203,.4)' }}>
+-              <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 12, lineHeight: 1.75 }}>
++              <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
++                {([['career', '职业'], ['discipline', '学科 · 研究领域']] as const).map(([k, t]) => <button key={k} className={`lab-chip${careerMode === k ? '' : ' g'}`} style={{ cursor: 'pointer', fontSize: 13, padding: '5px 13px' }} onClick={() => { setCareerMode(k); setProfession(''); }}>{t}</button>)}
++              </div>
++              {careerMode === 'discipline' ? <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 12, lineHeight: 1.75 }}>
++                给一个学科或研究领域，AI 会先把它结构化成<b>典型研究岗 + 研究技能 + 从硕博到 PI 的成长路径</b>，再生成实验室里一天的故事线和虚拟工位：读文献、做实验或计算、处理有异常的数据、组会汇报。给想选专业、选方向的学生体验研究是怎么做的。
++              </div> : <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 12, lineHeight: 1.75 }}>
+                 只给一个职业名，AI 会先把它结构化成<b>典型岗位 + 技能树 + 生涯地图</b>，再生成和 JD 路径同样的故事线与虚拟工位（约 2–4 分钟）。
+                 难度比校招题降一档，术语随手解释——没入行的人也能把这个职业最有代表性的一天走完。
+-              </div>
++              </div>}
+               <div style={{ display: 'flex', gap: 8 }}>
+-                <input className="lab-input" autoFocus value={profession} onChange={e => setProfession(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && profession.trim()) buildFromJob(null, profession.trim()); }} placeholder="输入一个职业，如：无人机飞手 / 临床营养师 / 游戏关卡策划" style={{ flex: 1, padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
+-                <button className="lab-btn" disabled={!profession.trim()} onClick={() => buildFromJob(null, profession.trim())}>生成探索空间 →</button>
++                <input className="lab-input" autoFocus value={profession} onChange={e => setProfession(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && profession.trim()) buildFromJob(null, profession.trim()); }} placeholder={careerMode === 'discipline' ? '输入一个学科或研究领域，比如 材料科学与工程' : '输入一个职业，如：无人机飞手 / 临床营养师 / 游戏关卡策划'} style={{ flex: 1, padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
++                <button className="lab-btn" disabled={!profession.trim()} onClick={() => buildFromJob(null, profession.trim())}>{careerMode === 'discipline' ? '生成学科空间 →' : '生成探索空间 →'}</button>
+               </div>
+             </div>
+             <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>换一个试试</div>
+             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+-              {['咖啡师', '蛋糕裱花师', '无人机飞手', '临床营养师', '游戏关卡策划', '汽车工艺工程师', '宠物医生', '民航机务维修', '景观设计师', '韣带康复治疗师'].map(t => (
++              {(careerMode === 'discipline' ? ['材料科学与工程', '计算生物学', '凝聚态物理', '神经科学', '有机化学', '机器学习', '环境科学', '临床医学研究'] : ['咖啡师', '蛋糕裱花师', '无人机飞手', '临床营养师', '游戏关卡策划', '汽车工艺工程师', '宠物医生', '民航机务维修', '景观设计师', '韣带康复治疗师']).map(t => (
+                 <button key={t} className="lab-chip c" style={{ cursor: 'pointer', fontSize: 13, padding: '6px 13px' }} onClick={() => setProfession(t)}>{t}</button>
+               ))}
+             </div>
+diff --git a/src/lib/agents/career.ts b/src/lib/agents/career.ts
+index e16451c..c0fe343 100644
+--- a/src/lib/agents/career.ts
++++ b/src/lib/agents/career.ts
+@@ -25,9 +25,18 @@ export interface CareerMap {
+ 
+ export interface CareerStructure { jd: JdInput & { location: string }; career: CareerMap }
+ 
+-export async function structureCareer(profession: string, modelId = 'gemini-3.8-flash'): Promise<CareerStructure> {
++/**
++ * mode = 'discipline'（2026-10-20，ToS 科研版 / 百业学科体验）：输入的是学科或研究领域（材料科学与工程、计算生物学…），
++ * 「典型岗位」换成这个领域最有代表性的研究岗（某高校 / 研究所实验室的博士生、博后、研究助理，虚构），生涯地图换成研究者的日常与成长路径。
++ */
++export async function structureCareer(profession: string, modelId = 'gemini-3.8-flash', mode: 'career' | 'discipline' = 'career'): Promise<CareerStructure> {
++  const intro = mode === 'discipline'
++    ? `一位高中生 / 本科生 / 研究生想了解「${profession}」这个学科（研究领域）里的研究到底是怎么做的。请你以这个领域里带过很多学生的 PI（课题组长）的身份，把它结构化。
++    typical_job 写这个领域最有代表性的研究岗：虚构一个有代表性的实验室或研究所（写成「某大学……实验室（虚构）」或「某研究所……课题组（虚构）」），岗位是博士生 / 博士后 / 研究助理之一，职责写这个领域研究里真实要做的事（读文献、做实验或计算、处理数据、组会汇报、写论文 / 基金），要求写学历、专业背景和研究技能。
++    career 里：what_they_do 写这个领域的研究者在研究什么、怎么做；day_in_life 写实验室里典型的一天；skills 写核心研究技能（实验 / 计算 / 理论 / 写作）；entry_paths 写怎么进入（本科专业、保研考研、进实验室轮转、本科科研）；ladder 写硕博 → 博后 → 助理研究员 / 讲师 → 研究员 / 教授（PI）；salary_note 写研究岗待遇的大致情况；related 写相邻学科 / 方向。`
++    : `一位高中生 / 大学生想了解「${profession}」这个职业。请你以这个行业里带过很多新人的资深从业者的身份，把这个职业结构化。`;
+   const result = await generateContent(`
+-    一位高中生 / 大学生想了解「${profession}」这个职业。请你以这个行业里带过很多新人的资深从业者的身份，把这个职业结构化。
++    ${intro}
+     只写公开的、行业里公认的常识；薪酬只给大致区间并注明「因城市 / 行业差异大」；不要编造具体企业的内部信息。全部中文。
+ 
+     第一部分 typical_job：一份「典型岗位」——虚构一家有代表性的雇主（写成「某……（虚构）」），给出这个职业校招 / 初级岗位最典型的岗位职责（6–9 条，每条一句，像真实 JD）和任职要求（4–6 条）。它会被用来构建一个可操作的技能空间。
+@@ -59,7 +68,7 @@ export async function structureCareer(profession: string, modelId = 'gemini-3.8-
+   const tj = p.typical_job || {}; const c = p.career || {};
+   const list = (v: any, n = 10) => (Array.isArray(v) ? v.map(String).filter(Boolean).slice(0, n) : []);
+   const objs = <T,>(v: any, f: (x: any) => T | null, n = 10): T[] => (Array.isArray(v) ? v.map(f).filter((x): x is T => !!x).slice(0, n) : []);
+-  const jd = { company: String(tj.employer || `某企业（虚构）`), title: String(tj.title || profession), location: String(tj.location || ''), responsibilities: String(tj.responsibilities || ''), qualifications: String(tj.qualifications || '') };
++  const jd = { company: String(tj.employer || (mode === 'discipline' ? '某研究所（虚构）' : '某企业（虚构）')), title: String(tj.title || profession), location: String(tj.location || ''), responsibilities: String(tj.responsibilities || ''), qualifications: String(tj.qualifications || '') };
+   if (!jd.responsibilities) throw new Error('没有生成出典型岗位职责，请换个说法再试');
+   const career: CareerMap = {
+     profession, one_liner: String(c.one_liner || ''), typical_employer: jd.company,
+diff --git a/src/lib/skill-lab-server.ts b/src/lib/skill-lab-server.ts
+index 5733e1c..b58c0a3 100644
+--- a/src/lib/skill-lab-server.ts
++++ b/src/lib/skill-lab-server.ts
+@@ -94,7 +94,8 @@ export { GENERIC_CHAPTER_RUBRIC };
+  * 以前所有章都按第 1 章评，会诊那段拿阑尾手术的标准打分。
+  */
+ export function chapterTask(space: any, ch: LabChapter | null) {
+-  if (!ch || ch.seq === 1 || !ch.id) return { title: space.title, brief: space.brief, materials: space.materials, deliverable: space.deliverable, rubric: space.rubric || [] };
++  // 第一章默认用空间的题面；第一章自己有评分标准（比如章节被收窄改写过）就按它自己的评
++  if (!ch || !ch.id || (ch.seq === 1 && !(Array.isArray(ch.rubric) && ch.rubric.length))) return { title: space.title, brief: space.brief, materials: space.materials, deliverable: space.deliverable, rubric: space.rubric || [] };
+   const last = [...(ch.sim?.steps || [])].reverse().find((s: any) => s.type === 'text');
+   return {
+     title: `${ch.slot ? `${ch.slot} · ` : ''}${ch.title}`,
