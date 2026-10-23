@@ -7,6 +7,8 @@
 import fs from 'node:fs';
 const argv = process.argv.slice(2); const opt = (k: string, d: string) => { const i = argv.indexOf(`--${k}`); return i >= 0 ? argv[i + 1] : d; };
 const BASE = opt('base', 'http://localhost:3003'), MODEL = opt('model', 'claude-opus-5-5'), ONLY = opt('only', '').split(',').filter(Boolean).map(Number);
+// --resume <段号>:<线程 id>:<跳过前几句>：服务器中途挂了，从某一段的某一句接着跑（接在原线程上）
+const RESUME = opt('resume', '').split(':'); const R_SEG = Number(RESUME[0] || 0), R_TID = RESUME[1] || '', R_SKIP = Number(RESUME[2] || 0);
 const TOKEN = fs.readFileSync(process.env.TOKEN_FILE || '', 'utf8').trim();
 const OUT = 'scripts/.college-demo.json'; const state: any = JSON.parse(fs.readFileSync(OUT, 'utf8'));
 const save = () => { const cur = JSON.parse(fs.readFileSync(OUT, 'utf8')); Object.assign(cur, state); fs.writeFileSync(OUT, JSON.stringify(cur, null, 2)); };
@@ -93,13 +95,14 @@ const DAY: { title: string; lines: string[] }[] = [
   ] },
 ];
 
-fs.writeFileSync(LOG, '');
+if (!R_TID) fs.writeFileSync(LOG, '');
 state.day_threads = state.day_threads || {};
 for (let i = 0; i < DAY.length; i++) {
   if (ONLY.length && !ONLY.includes(i + 1)) continue;
   const seg = DAY[i]; log(`═══ ${seg.title} ═══`);
-  let tid: string | null = null;
-  for (const line of seg.lines) { try { tid = await say(tid, line); } catch (e: any) { log(`  失败：${e.message}`); } }
+  let tid: string | null = R_SEG === i + 1 && R_TID ? R_TID : null;
+  const lines = R_SEG === i + 1 ? seg.lines.slice(R_SKIP) : seg.lines;
+  for (const line of lines) { try { tid = await say(tid, line); } catch (e: any) { log(`  失败：${e.message}`); } }
   if (tid) { state.day_threads[seg.title] = tid; save(); }
 }
 log('done');
