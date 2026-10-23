@@ -26,7 +26,7 @@ function Training() {
           <table className="ca-table"><thead><tr><th>学籍</th><th>学员（模型）</th><th>Status</th><th className="num">入学考</th><th className="num">毕业考</th><th className="num">去向</th><th>Updated</th></tr></thead>
             <tbody>{rows.map(e => (
               <tr key={e.id} className="click" onClick={() => router.push(`/college/admin/training/${e.id}`)}>
-                <td><div className="ca-row" style={{ gap: 10 }}><Face src={e.course?.avatar} /><div><span className="serif">{e.course?.role || '—'}</span><div className="ca-mute" style={{ fontSize: 12.5 }}>{e.nova_name}{e.course?.company ? ` · ${e.course.company}` : ''}{e.course?.research ? ' · 学科研究' : ''}{e.demand_id ? ' · 定向培养' : ''}</div></div></div></td>
+                <td className="who"><div className="ca-row" style={{ gap: 12 }}><Face src={e.course?.avatar} /><div><span className="serif">{e.course?.role || '—'}</span><div className="ca-mute" style={{ fontSize: 12.5 }}>{e.nova_name}{e.course?.company ? ` · ${e.course.company}` : ''}{e.course?.research ? ' · 学科研究' : ''}{e.demand_id ? ' · 定向培养' : ''}</div></div></div></td>
                 <td>{e.student_name}{e.model_label && e.model_label !== e.student_name ? <div className="ca-mute" style={{ fontSize: 12 }}>{e.model_label}</div> : !e.model_id ? <div className="ca-mute" style={{ fontSize: 12 }}>未接接口</div> : null}</td>
                 <td><Pill tone={STATUS_TONE[e.status]}>{e.status_label}</Pill></td>
                 <td className="num">{score(e.entrance_score)}</td><td className="num">{score(e.final_score)}</td>

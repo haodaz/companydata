@@ -41,7 +41,7 @@ function Graduates() {
             <tbody>{shown.map(e => { const mine = pls.filter(p => p.enrollment_id === e.id); return (
               <React.Fragment key={e.id}>
                 <tr className="click" onClick={() => setOpen(open === e.id ? null : e.id)}>
-                  <td><div className="ca-row" style={{ gap: 10 }}><Face src={e.course?.avatar} /><div><span className="serif">{e.course?.role}</span><div className="ca-mute" style={{ fontSize: 12.5 }}>{e.nova_name}{e.course?.company ? ` · ${e.course.company}` : ''}{e.demand_id ? ' · 定向培养' : ''}</div></div></div></td>
+                  <td className="who"><div className="ca-row" style={{ gap: 12 }}><Face src={e.course?.avatar} /><div><span className="serif">{e.course?.role}</span><div className="ca-mute" style={{ fontSize: 12.5 }}>{e.nova_name}{e.course?.company ? ` · ${e.course.company}` : ''}{e.demand_id ? ' · 定向培养' : ''}</div></div></div></td>
                   <td>{e.student_name}{e.model_label && e.model_label !== e.student_name ? <div className="ca-mute" style={{ fontSize: 12 }}>{e.model_label}</div> : null}</td>
                   <td className="num">{score(e.entrance_score)}</td><td className="num">{score(e.final_score)}</td>
                   <td className="ca-mute" style={{ whiteSpace: 'nowrap' }}>{fmtDate(e.graduated_at)}</td>

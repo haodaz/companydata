@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { Modal, Select, Input } from 'antd';
-import { api, Btn, Card, Empty, Face, fmtTime, PageHead, Pill, Rule, score, STATUS_TONE, useToast } from '../../ui';
+import { api, Btn, Card, Empty, fmtTime, PageHead, Pill, Portrait, Rule, score, STATUS_TONE, useToast } from '../../ui';
 
 const STEP_LABEL: Record<string, string> = { entrance: '入学考', class: '上课', exam: '毕业考 / 补考', reflect: '反思', work: '真活实习', done: '已达毕业要求', blocked: '卡住了' };
 
@@ -47,8 +47,8 @@ export default function EnrollmentPage() {
 
       <div className="ca-hero">
         <img className="bg" src="/college/crest.svg" alt="" />
-        <Face src={d.course?.avatar} size={72} />
-        <div>
+        <Portrait src={d.course?.avatar} hero h={210} />
+        <div className="txt">
           <div className="en">{d.course?.research ? 'School of Research' : 'School of Professions'}{d.demand_id ? ' · Commissioned' : ''}</div>
           <h2>{d.nova_name} <Pill tone={STATUS_TONE[d.status]}>{d.status_label}</Pill></h2>
           <div className="sub">课程「{d.course?.title}」{d.course?.company ? ` · ${d.course.company}` : ''} · {d.chapters.length} 章{d.teacher ? ` · ${d.teacher.expert ? `师承 ${d.teacher.expert_name}（${d.teacher.place || ''}）` : '技能卡为 AI 草案，等老师傅校正'} · ${d.teacher.rules} 条判断规则` : ' · 还没有技能卡'}</div>

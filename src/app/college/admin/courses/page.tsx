@@ -25,7 +25,7 @@ export default function Courses() {
           <table className="ca-table"><thead><tr><th>课程</th><th>Faculty</th><th className="num">章节</th><th className="num">考核章</th><th className="num">教案</th><th className="num">学籍 / 毕业</th><th></th></tr></thead>
             <tbody>{shown.map(c => (
               <tr key={c.id}>
-                <td><div className="ca-row" style={{ gap: 10 }}><Face src={c.avatar} /><div><span className="serif">{c.role}</span><div className="ca-mute" style={{ fontSize: 12.5 }}>{c.nova}{c.company ? ` · ${c.company}` : ''}{c.research ? ' · 学科研究' : ''}</div></div></div></td>
+                <td className="who"><div className="ca-row" style={{ gap: 12 }}><Face src={c.avatar} /><div><span className="serif">{c.role}</span><div className="ca-mute" style={{ fontSize: 12.5 }}>{c.nova}{c.company ? ` · ${c.company}` : ''}{c.research ? ' · 学科研究' : ''}</div></div></div></td>
                 <td>{c.teacher ? (c.teacher.expert ? <>师承 <b>{c.teacher.name}</b><div className="ca-mute" style={{ fontSize: 12 }}>{c.teacher.place}</div></> : <Pill tone="mute">AI 草案 · 等老师傅</Pill>) : <Pill tone="warn">无技能卡</Pill>}</td>
                 <td className="num">{c.chapters}</td><td className="num">{c.assessments || <span className="ca-mute">—</span>}</td><td className="num">{c.lessons}/{c.chapters}</td><td className="num">{c.enrollments} / {c.graduates}</td>
                 <td style={{ whiteSpace: 'nowrap' }}><div className="ca-row" style={{ gap: 6 }}><Btn kind="navy" sm onClick={() => openPick(c)}>招学员</Btn><a href={`/lab/${c.id}`} target="_blank" rel="noreferrer"><Btn kind="ghost" sm>看课 ↗</Btn></a><a href={`/lab/studio/${c.id}`} target="_blank" rel="noreferrer"><Btn kind="ghost" sm>工作室 ↗</Btn></a></div></td>

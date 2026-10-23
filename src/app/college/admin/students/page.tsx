@@ -66,7 +66,7 @@ function Students() {
               {!ens ? <div className="ca-mute">读取中…</div> : !ens.length ? <Empty>还没有学籍。<br />点「录一门课」给 TA 挑一个百业空间。</Empty> : (
                 <table className="ca-table"><thead><tr><th>课程</th><th>Status</th><th className="num">入学</th><th className="num">毕业考</th></tr></thead>
                   <tbody>{ens.map(e => <tr key={e.id} className="click" onClick={() => router.push(`/college/admin/training/${e.id}`)}>
-                    <td><div className="ca-row" style={{ gap: 8 }}><Face src={e.course?.avatar} size={30} /><div><span className="serif">{e.course?.role}</span><div className="ca-mute" style={{ fontSize: 12 }}>{e.nova_name}{e.course?.company ? ` · ${e.course.company}` : ''}</div></div></div></td>
+                    <td className="who"><div className="ca-row" style={{ gap: 10 }}><Face src={e.course?.avatar} size={30} /><div><span className="serif">{e.course?.role}</span><div className="ca-mute" style={{ fontSize: 12 }}>{e.nova_name}{e.course?.company ? ` · ${e.course.company}` : ''}</div></div></div></td>
                     <td><Pill tone={STATUS_TONE[e.status]}>{e.status_label}</Pill></td><td className="num">{score(e.entrance_score)}</td><td className="num">{score(e.final_score)}</td></tr>)}</tbody></table>)}
               <div style={{ marginTop: 12 }}><Btn kind="navy" onClick={() => openEnroll(cur)}>录一门课</Btn></div>
             </Card>

@@ -5,7 +5,6 @@
  * 画面顺序：封面 → 学院官网 → 线索（基金来要人）→ 课程目录 → 这门课的一天 → 学员（通义千问）→ 学籍：路径 / 章节成绩 / 笔记 / 真活 / 去向 → 毕业生 → 档案 → 毕业证书 → 第二位学生（研究员）→ 片尾校训。
  */
 import fs from 'node:fs';
-import { run as runLab } from './lab-surgeon.scenes.mjs';
 
 const BASE = process.env.LAB_BASE || 'http://localhost:3003';
 const ST = JSON.parse(fs.readFileSync('scripts/.college-demo.json', 'utf8'));
