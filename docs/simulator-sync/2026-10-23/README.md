@@ -99,3 +99,16 @@ npx tsc --noEmit            # 演练：零错误
 - **账号层级 `baiye_user`**（海外这边 10-23 加的「只用百业、碰不到数据资产」的对外角色，角色按库实时判）。你们已经有 `trial` 在走类似的路，就不往这边硬合了；需要的话 companydata 的 `src/lib/roles.ts` + `src/proxy.ts`（`liveRole` 那段）可以当参考。真活的 `access.ts` 只认 `role === 'admin'`，和你们的角色表天然兼容。
 - 数据工厂的东西（企业 / 岗位 / 职业 / 科研产品库、千里标签、采集脚本、迁移 037_job_field_values…046_field_formats）。
 - `/lab` 这边 10-19 之后的其它改动（证书、素材库、工作室权限 `lab-owner`、首页改版）——按 10-19 的约定，公司版由产品经理按需求挑，这轮没要就没带。
+
+## 六、合入后的跟进（2026-10-23 晚，simulator 已合到 3dd5ea3）
+
+你们反馈的三处在 companydata `5cb96e6` 修了，打 `06-followup-1023.patch`（以 3dd5ea3 上的这三个文件为底，应当零拒绝），再 `npm i unpdf`：
+
+| 反馈 | 处理 |
+|---|---|
+| `/work/new` 调数据工厂的 `/api/db/companies/:id/deep-research` 404 | `GenProgress.tsx`：接口不 ok 就当这家没有深度画像专题，不报错、不再依赖 |
+| `companies.source` 老结构是 text，工作台写数组存成字面量 | `ws/setup.ts`：先按数组写，库报类型错就退回写字符串 `'企业工作台'`；你们已经存进去的那条「宁德时代」如果 source 是 `'["企业工作台"]'`，手工改一下 |
+| PDF 简历直接调 Claude，国内不通 | `ws/projects.ts`：有 `ANTHROPIC_API_KEY` 才试 Claude，没有或失败就用 `unpdf`（纯 JS）把 PDF 抽成文字，再和文本简历一样交给千问 qwen-plus；扫描件抽不出字会明确提示贴文本 |
+
+`recording.ts`（录屏看图）仍是 Claude、没 key 跳过，换 qwen-vl 还是留给你们。
+`WS_MODEL` 默认值改读你们的模型总控——对，这边不动。你们在测试账号下留的机构和题不用清。

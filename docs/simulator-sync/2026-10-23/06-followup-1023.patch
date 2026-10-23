@@ -1,0 +1,73 @@
+diff --git a/src/components/work/GenProgress.tsx b/src/components/work/GenProgress.tsx
+index 2ca29d3..af50e2b 100644
+--- a/src/components/work/GenProgress.tsx
++++ b/src/components/work/GenProgress.tsx
+@@ -64,9 +64,9 @@ export function GenProgress({ phase, company, picked, role, focus, env, intro }:
+   const [deep, setDeep] = useState<string[]>([]);
+   useEffect(() => {
+     if (!picked?.id) return;
+-    // 这家企业实际有哪些深度画像专题（有就列出来）
++    // 这家企业实际有哪些深度画像专题（有就列出来）。这是数据工厂的接口，没有这个接口的部署（simulator）就当没有专题，不报错
+     import('@/lib/company-deep-topics').then(({ DEEP_TOPICS, DEEP_TOPICS_VC }) =>
+-      fetch(`/api/db/companies/${picked.id}/deep-research`).then(r => r.json()).then(j => {
++      fetch(`/api/db/companies/${picked.id}/deep-research`).then(r => (r.ok ? r.json() : { topics: {} })).then(j => {
+         const label = Object.fromEntries([...DEEP_TOPICS, ...DEEP_TOPICS_VC].map(t => [t.key, t.label]));
+         setDeep(Object.keys(j.topics || {}).map(k => label[k] || k));
+       })).catch(() => {});
+diff --git a/src/lib/ws/projects.ts b/src/lib/ws/projects.ts
+index 4d5cc57..0a85b38 100644
+--- a/src/lib/ws/projects.ts
++++ b/src/lib/ws/projects.ts
+@@ -85,16 +85,26 @@ ${extra ? `用户补充：${s(extra, 600)}` : ''}
+   return jd;
+ }
+ 
+-/** 简历 → 结构化（文本直接给模型；PDF 交给 Claude 读） */
++/** PDF 简历先抽成文字（unpdf，纯 JS，不用系统依赖）：没有 Claude key 或 Claude 读不了时的兜底，之后和文本简历一样交给千问 */
++async function pdfToText(pdfBase64: string) {
++  const { extractText, getDocumentProxy } = await import('unpdf');
++  const pdf = await getDocumentProxy(new Uint8Array(Buffer.from(pdfBase64, 'base64')));
++  const { text } = await extractText(pdf, { mergePages: true });
++  return String(text || '').replace(/[ \t]+\n/g, '\n').trim();
++}
++
++/** 简历 → 结构化（文本直接给千问；PDF 有 Claude key 就交给 Claude 整份读，否则 / 失败时抽字再给千问） */
+ export async function parseResume(input: { text?: string; pdfBase64?: string }) {
+   const ask = `从简历里提取，只返回 JSON：{ "name": "", "contact": "邮箱或电话", "headline": "一句话：现在是谁、几年经验", "education": [""], "experience": [""], "skills": [""], "text": "简历全文整理成纯文本（保留关键事实，最多 3000 字）" }`;
+-  if (input.pdfBase64) {
++  if (input.pdfBase64 && process.env.ANTHROPIC_API_KEY) try {
+     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+     const msg = await client.messages.create({ model: 'claude-sonnet-5-5', max_tokens: 6000, messages: [{ role: 'user', content: [{ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: input.pdfBase64 } }, { type: 'text', text: ask }] }] });
+     const t = msg.content.filter((b): b is Anthropic.TextBlock => b.type === 'text').map(b => b.text).join('');
+     const m = t.match(/\{[\s\S]*\}/); return m ? JSON.parse(m[0]) : { text: t };
+-  }
+-  const { parsed } = await askJson(`${ask}\n简历：\n${s(input.text, 12000)}`, 'qwen-plus', '工作台 · 读简历');
++  } catch (e) { console.warn('[parseResume] Claude 读 PDF 失败，改抽字给千问：', (e as Error)?.message); }
++  const text = input.pdfBase64 ? await pdfToText(input.pdfBase64) : input.text;
++  if (!String(text || '').trim()) throw new Error('这份 PDF 抽不出文字（可能是扫描件），请粘贴简历文本');
++  const { parsed } = await askJson(`${ask}\n简历：\n${s(text, 12000)}`, 'qwen-plus', '工作台 · 读简历');
+   return parsed;
+ }
+ 
+diff --git a/src/lib/ws/setup.ts b/src/lib/ws/setup.ts
+index ee9ba23..435086a 100644
+--- a/src/lib/ws/setup.ts
++++ b/src/lib/ws/setup.ts
+@@ -83,13 +83,16 @@ const hostOf = (u: string) => { try { return new URL(/^https?:\/\//.test(u) ? u
+ export async function createCompanyEntity(name: string, website: string | null, email: string): Promise<number> {
+   const row: Record<string, any> = { name: name.trim(), source: [SOURCE], human_review_status: 'review' };   // companies.source 是数组（潜历二批 / ted …）
+   if (website && hostOf(website)) row.official_website = /^https?:\/\//.test(website) ? website : `https://${website}`;
+-  const { data, error } = await db.from('companies').insert(row).select('id').single();
++  let { data, error } = await db.from('companies').insert(row).select('id').single();
++  // companies.source 在老结构里是 text（公司 simulator 的库）：数组写不进去就退回写字符串，别存成 '["…"]' 字面量
++  if (error && /array|22P02|malformed|invalid input syntax/i.test(error.message)) { row.source = SOURCE; ({ data, error } = await db.from('companies').insert(row).select('id').single()); }
+   if (error) {
+     // 名字撞了（lower(name) 唯一）：就是库里那家
+     const { data: ex } = await db.from('companies').select('id').ilike('name', name.trim()).limit(1);
+     if (ex?.[0]) return ex[0].id;
+     throw new Error(error.message);
+   }
++  if (!data) throw new Error('新建企业没拿到 id');
+   await ensureCompanyFloraId(data.id).catch(() => {});
+   await db.from('ws_contributions').insert({ entity_type: 'company', entity_id: String(data.id), field: '*', new_value: JSON.stringify(row), status: 'applied', created_by: email });
+   return data.id;
