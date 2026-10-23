@@ -64,7 +64,7 @@ if (STEP === 'qianli-fn') {
       const b = bs[nx++];
       try {
         const m = await tagJobFunctions(b, MODEL);
-        for (const [id, f] of m) { if (old.get(id) !== f.value) changed++; const { error } = await db.from("jobs").update({ qianli_job_labels: f.value, qianli_job_labels_reason: f.reason || null }).eq("id", id); if (!error) sv++; }
+        for (const [id, f] of m) { if (old.get(id) !== f.value) changed++; const { error } = await db.from("jobs").update({ qianli_job_labels: f.value ? [f.value] : null, qianli_job_labels_reason: f.reason || null }).eq("id", id); if (!error) sv++; }
       } catch (e: any) { console.error('批失败', String(e?.message || e).slice(0, 120)); }
       dn += b.length;
       if ((dn / 10) % 40 === 0) console.log(`${dn}/${rs.length} 已写 ${sv}，和原来不同 ${changed}（${((Date.now() - t0) / 60000).toFixed(1)} 分钟）`);

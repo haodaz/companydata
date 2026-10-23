@@ -68,7 +68,7 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
   const { data: co } = log.company_id ? await supabaseAdmin.from('companies').select('source, name, brief_name, registered_name, name_en, aliases').eq('id', log.company_id).maybeSingle() : { data: null as any };
   // 多选（迁移 031 起企业、岗位的来源都是数组）；迁移前库里还是字符串，按企业那边的类型写，两边一起迁移
   const srcList = toSources(co?.source).length ? toSources(co?.source) : ['其他'];
-  const companySource: string[] | string = Array.isArray(co?.source) ? srcList : srcList.join('，');
+  const companySource = srcList.join('；');   // 来源是「；」隔开的文本（数据部门 10-23 #38）
 
   const now = new Date().toISOString();
   const rows = new Map<string, any>();

@@ -13,7 +13,7 @@ import { checkSpecialty } from '@/lib/qianli-evidence';
 import { JOB_FUNCTION_PROMPT, JOB_FUNCTION_TAGS, SPECIALTY_BATCH, SPECIALTY_EXAMPLES, SPECIALTY_SYSTEM, SPECIALTY_USER } from '@/data/qianli-prompts';
 
 export type QianliInput = { id: number; name: string; company?: string | null; responsibilities?: string | null; overview?: string | null; summary_cn?: string | null };
-export type QianliLabels = { qianli_job_labels: string | null; qianli_job_labels_reason: string | null; qianli_job_specialty_labels: string[] | null; qianli_specialty_labels_reason: string[] | null };
+export type QianliLabels = { qianli_job_labels: string[] | null; qianli_job_labels_reason: string | null; qianli_job_specialty_labels: string[] | null; qianli_specialty_labels_reason: string[] | null };
 export type JobFunction = { value: string | null; reason: string };
 
 
@@ -127,7 +127,7 @@ export async function qianliLabels(all: QianliInput[], model: string): Promise<M
       const s = sp.get(j.id);
       const f = fn.get(j.id);
       out.set(j.id, {
-        qianli_job_labels: f?.value ?? null,
+        qianli_job_labels: f?.value ? [f.value] : null,   // 数组（数据部门 10-23 #34），一般只有一个值
         qianli_job_labels_reason: f ? (f.reason || null) : null,
         qianli_job_specialty_labels: s ? (s.l1.length ? s.l1 : null) : null,
         qianli_specialty_labels_reason: s ? (s.l2.length ? s.l2 : null) : null,

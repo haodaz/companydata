@@ -90,7 +90,7 @@ type_label 只能从这些里选：${Object.keys(TYPE_LABEL_LABELS).join('|')}�
   console.log(`   企业库：${id ? `已有 #${id}` : '新建'}`);
   if (!APPLY) continue;
   if (!id) {
-    const { data, error } = await db.from('companies').insert({ name: c.name, name_en: c.name_en, official_website: p.official_website || null, country: p.country || null, source: ['对标分析'], human_review_status: 'review' }).select('id').single();
+    const { data, error } = await db.from('companies').insert({ name: c.name, name_en: c.name_en, official_website: p.official_website || null, country: p.country || null, source: '对标分析', human_review_status: 'review' }).select('id').single();
     if (error) { console.log(`   建档失败：${error.message}`); continue; }
     id = data.id; await ensureCompanyFloraId(data.id).catch(() => {});
   }

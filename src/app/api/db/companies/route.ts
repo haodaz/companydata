@@ -38,8 +38,8 @@ export async function GET(request: Request) {
       if (industry) query = query.eq('industry', industry);
       // 来源（数据部门会按 slug 发来每家企业的来源）：none = 没标来源
       // 来源多选（迁移 031 起是数组）
-      if (source === 'none') query = query.or('source.is.null,source.eq.{}');
-      else if (source) query = query.contains('source', [source]);
+      if (source === 'none') query = query.or('source.is.null,source.eq.');   // 来源是「；」隔开的文本（数据部门 10-23 #38）
+      else if (source) query = query.ilike('source', `%${source}%`);
       return query;
     };
     if (exportAll) {
@@ -84,8 +84,8 @@ export async function GET(request: Request) {
           ...Object.fromEntries(Object.keys(SEGMENT_LABELS).map(k => [k, (q: any) => q.eq('segment', k)])),
         });
         const src = await countMany('companies', {
-          ...Object.fromEntries(SOURCE_ORDER.map(k => [k, (q: any) => q.contains('source', [k])])),
-          none: q => q.or('source.is.null,source.eq.{}'),
+          ...Object.fromEntries(SOURCE_ORDER.map(k => [k, (q: any) => q.ilike('source', `%${k}%`)])),
+          none: q => q.or('source.is.null,source.eq.'),
         });
         return { stats: Object.fromEntries(Object.entries(st).filter(([k, n]) => n > 0 || k === 'total' || k === 'reviewed')), sources: Object.fromEntries(Object.entries(src).filter(([, n]) => n > 0)) };
       });

@@ -117,7 +117,7 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'organizer', label: '主办方', kind: 'string', group: 'basic', hint: '主办方 / 招聘主体：这个岗位是哪家公司招的就填哪家（子公司、联合招聘的机构照实填）；没写时入库默认填所属企业名（数据部门 10-14）。' },
   { key: 'if_develop_management', label: '管培项目', kind: 'boolean', group: 'basic', derived: true, hint: '岗位名里有「管培」为是，否则为否（数据部门 2026-10-10 口径）。' },
   // 潜历标签：库里存 value、页面显示中文名；入库后由 qianli-labels.ts 按数据部门的提示词专门打（10-20 #15 #17）
-  { key: 'qianli_job_labels', label: '潜历职能标签', kind: 'enum', group: 'basic', derived: true, options: QIANLI_FUNCTION_NAMES, hint: '26 个职能标签选一个，存 value（如 mgmt_trainee = SWE）。' },
+  { key: 'qianli_job_labels', label: '潜历职能标签', kind: 'string[]', group: 'basic', derived: true, options: QIANLI_FUNCTION_NAMES, hint: '26 个职能标签选一个，存 value（如 mgmt_trainee = SWE）。' },
   // 陈彩瑛 10-23 #26：留空 / 凭岗位名判断的原因要在页面和导出里看得到，方便人工照原因改标签
   { key: 'qianli_job_labels_reason', label: '职能标签说明', kind: 'string', group: 'basic', derived: true, hint: '职能标签怎么来的：仅凭岗位名称判断 / 没有 JD，岗位名也看不出职能 / 26 个职能都对不上：… / 匹配度低：…；正常判定的写判断依据。' },
   { key: 'qianli_job_specialty_labels', label: '潜历特色标签', kind: 'string[]', group: 'basic', derived: true, options: QIANLI_SPECIALTY_L1_NAMES, hint: '一级特色标签 value 数组（由二级反推）。' },
@@ -141,7 +141,7 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'education_requirement', label: '最低学历', kind: 'enum', group: 'requirement', core: true, options: EDUCATION_LABELS, hint: '最低学历要求。' },
   { key: 'education_description', label: '学历说明', kind: 'text', group: 'requirement', hint: '学历要求原文（如 "BS/MS in Computer Science or equivalent practical experience"）。' },
   { key: 'major_requirement', label: '专业要求', kind: 'string', group: 'requirement', hint: '专业 / 学科背景要求，用中文概括，专有名词保留原文。' },
-  { key: 'exp_years', label: '最低工作年限', kind: 'number', group: 'requirement', hint: '最低工作经验年限（数字）；应届 / 无要求填 0；未说明为 null。' },
+  { key: 'exp_years', label: '最低工作年限', kind: 'string', group: 'requirement', hint: '最低工作经验年限，字符串（如 "3"、"1-3"）；没写年限、应届、不限都为 null，不要写 0（数据部门 10-23 #32）。' },
   { key: 'exp_labels', label: '经验标签（要求）', kind: 'string', group: 'requirement', derived: true, hint: '「任职要求」里的经验标签（如 实习经验；项目经验；竞赛获奖），标签之间用中文分号「；」分隔。' },
   { key: 'exp_labels_jd', label: '经验标签（职责）', kind: 'string', group: 'requirement', derived: true, hint: '「岗位职责」里的经验标签，标签之间用中文分号「；」分隔。' },
   { key: 'skill_labels', label: '技能标签（要求）', kind: 'string', group: 'requirement', derived: true, hint: '「任职要求」里的技能标签（如 Python；SQL；CFA），标签之间用中文分号「；」分隔。' },
@@ -183,7 +183,7 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'application_rule', label: '投递规则', kind: 'string', group: 'link', hint: '投递规则：投递次数限制（如「仅限投递一个岗位」「最多 2 个志愿」）+ 投递渠道（如「只需投递到 xx@xx.com」「仅接受官网网申」），用一句中文写清；页面没说则为 null。' },
   { key: 'application_website', label: '投递入口', kind: 'url', group: 'link', hint: '投递 / Apply 按钮指向的完整 URL，没有则为 null。' },
   // ── 数据部门 10-14：来源 = 所属企业的名单批次；招聘渠道（原来的「来源」）单独一列；中英文字段由 scripts/fix-1014.mts --only job-lang 翻译回填（不进提取提示词） ──
-  { key: 'source', label: '来源', kind: 'string[]', group: 'link', derived: true, hint: '所属企业在数据部门名单里的批次：潜历一批 / 潜历二批 / ted / 其他（和企业的来源一致）。' },
+  { key: 'source', label: '来源', kind: 'string', group: 'link', derived: true, hint: '所属企业在数据部门名单里的批次：潜历一批 / 潜历二批 / ted / 其他（和企业的来源一致）。' },
   { key: 'recruit_channel', label: '招聘渠道', kind: 'enum', group: 'link', derived: true, options: JOB_SOURCE_LABELS, hint: '按岗位链接 / 来源页域名推出的招聘渠道。' },
   { key: 'name_lang_cn', label: '名称 (Cn)', kind: 'text', group: 'content', derived: true, hint: '名称（中文）。' },
   { key: 'name_lang_en', label: '名称 (En)', kind: 'text', group: 'content', derived: true, hint: '名称（英文）。' },
@@ -269,6 +269,8 @@ export function sanitizeJob(raw: Record<string, any>): Record<string, any> {
     }
   }
   if (out.minimum_working_days !== null) out.minimum_working_days = Math.round(out.minimum_working_days);
+  // 最低工作年限：字符串；0 / 不限 / 无要求 / 应届一律留空（数据部门 10-23 #32：没有经验年限的就是空值，不要写 0）
+  if (out.exp_years != null) { const e = String(out.exp_years).replace(/年|years?|\s/gi, ''); out.exp_years = !e || /^(0|0\.0|不限|无|无要求|应届|n\/?a)$/i.test(e) ? null : e; }
   out.if_develop_management = isManagementTrainee(out.name);
   return out;
 }

@@ -42,8 +42,8 @@ export const COMPANY_EDIT_FIELDS: { key: string; label: string; kind: 'string' |
   { key: 'brief_name', label: '公司简称', kind: 'string', group: '基本信息' },
   { key: 'historical_name', label: '曾用名', kind: 'string', group: '基本信息' },
   { key: 'aliases', label: '别名 / 简称', kind: 'tags', group: '基本信息' },
-  // 数据部门 10-22 #24：查找名称 = 全称 / 简称 / 工商名 / 英文名 / 曾用名 / 别名去重后的数组，数据库触发器自动维护（045）
-  { key: 'name_to_search', label: '查找名称', kind: 'tags', group: '基本信息' },
+  // 数据部门 10-22 #24 / 10-23 #37：查找名称 = 全称 / 简称 / 工商名 / 英文名 / 曾用名 / 别名去重，英文「;」隔开的文本，数据库触发器自动维护（046）
+  { key: 'name_to_search', label: '查找名称', kind: 'string', group: '基本信息' },
   { key: 'segment', label: '目标分类', kind: 'segment', group: '基本信息' },
   { key: 'company_type', label: '企业类型', kind: 'company_type', group: '基本信息' },
   { key: 'kind', label: '公司类型（法律形态）', kind: 'kind', group: '基本信息' },
@@ -180,7 +180,7 @@ export const PROFILE_TOPIC_KEYS = PROFILE_TOPICS.map(t => t.key);
 export const PIPELINE_FIELDS: string[] = Array.from(new Set(PROFILE_TOPICS.flatMap(t => t.fields)));
 
 /** 数组型字段（写库时保证是 string[]） */
-export const ARRAY_FIELDS = new Set(['type_label', 'tags', 'aliases', 'name_to_search', 'edu_service_category', 'qianli_label', 'qianli_label_type', 'qianli_specialty_labels_reason', 'subscription_platform', 'data_collection_channel']);
+export const ARRAY_FIELDS = new Set(['type_label', 'tags', 'aliases', 'edu_service_category', 'qianli_label', 'qianli_label_type', 'qianli_specialty_labels_reason', 'subscription_platform', 'data_collection_channel']);
 /** 整数型字段 */
 export const INT_FIELDS = new Set(['info_founding_year', 'company_employees', 'fortune_global_rank', 'ranking_year']);
 

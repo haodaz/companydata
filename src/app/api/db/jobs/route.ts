@@ -48,8 +48,8 @@ export async function GET(request: Request) {
     if (get('flag')) query = query.contains('collect_flags', [get('flag')]);
     // 数据外采篮「去岗位库看」：只看这一篮采到的那几个岗位
     if (get('ids')) { const ids = get('ids').split(',').map(Number).filter(Boolean).slice(0, 200); if (ids.length) query = query.in('id', ids); }
-    if (get('source') === 'none') query = query.or('source.is.null,source.eq.{}');
-    else if (get('source')) query = query.contains('source', [get('source')]);
+    if (get('source') === 'none') query = query.or('source.is.null,source.eq.');
+    else if (get('source')) query = query.ilike('source', `%${get('source')}%`);
     if (get('publishFrom')) query = query.gte('official_publish_date', get('publishFrom'));
     if (get('publishTo')) query = query.lte('official_publish_date', get('publishTo'));
     if (get('publish') === 'none') query = query.is('official_publish_date', null);
@@ -78,8 +78,8 @@ export async function GET(request: Request) {
           with_publish_date: q => q.not('official_publish_date', 'is', null),
         }, live);
         const src = await countMany('jobs', {
-          ...Object.fromEntries(SOURCE_ORDER.map(k => [k, (q: any) => q.contains('source', [k])])),
-          none: q => q.or('source.is.null,source.eq.{}'),
+          ...Object.fromEntries(SOURCE_ORDER.map(k => [k, (q: any) => q.ilike('source', `%${k}%`)])),
+          none: q => q.or('source.is.null,source.eq.'),
         }, live);
         return { stats: st, sources: Object.fromEntries(Object.entries(src).filter(([, n]) => n > 0)) };
       });
