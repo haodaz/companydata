@@ -52,7 +52,7 @@ const TOC: [string, string][] = [
   ['why', '0 · 为什么、终局'], ['history', '1 · 演进时间线'], ['pipeline', '2 · 总流程：从 JD 到空间'], ['parse', '3 · 解析与规划（起点）'],
   ['day', '4 · 一天：骨架 + 逐格'], ['data', '5 · 数据模型'], ['experience', '6 · 体验端：六扇门与证书'], ['bench', '7 · 虚拟工位与交互故事'],
   ['masters', '8 · 台面母版'], ['art', '9 · 美术与素材库'], ['3d', '10 · 3D 场景流水线'], ['quality', '11 · 质量体系'],
-  ['train', '12 · 留痕与训练数据'], ['agents', '13 · AI 自生成：编排路线'], ['rules', '14 · 原则与对外口径'], ['assets', '15 · 真实素材接入与空间加工'], ['issues', '16 · 已知问题 / 待办'], ['files', '17 · 文件索引'],
+  ['train', '12 · 留痕与训练数据'], ['agents', '13 · AI 自生成：编排路线'], ['rules', '14 · 原则与对外口径'], ['assets', '15 · 真实素材接入与空间加工'], ['college', '16 · 真活与百业学院：学生是 AI'], ['issues', '17 · 已知问题 / 待办'], ['files', '18 · 文件索引'],
 ];
 
 const F = (p: string) => <code>{p}</code>;
@@ -84,6 +84,8 @@ export default function LabLogicPage() {
           <li><time>10-10</time>批量扩成完整一天（潜导 / 拉花 / 焊工 / 律师 / 月嫂…）；演示视频流水线。</li>
           <li><time>10-11</time><b>先锋原则</b>：一个行业一个交互故事，十几种有代表性的台面（开腹、哄睡、古籍、数据分析、分诊、维修…）；<b>3D beta</b>（Veo 环绕视频 → COLMAP → 3D 高斯 + 头部追踪）；老王方向 → <b>第二批</b>（机器中介型 / 高风险型 / 一二产能数采）：芯片、CAD、应急沙盘 + 河堤、变电站、转炉、沥青、温室、火箭试车台；两条长片。</li>
           <li><time>10-12</time><b>AI 自生成工程化</b>：3D 流水线自动化、样板库、规则校验器 + AI 评审、人工修改留痕、台面母版化（本页）。</li>
+          <li><time>10-19</time><b>真活 /work</b>：企业真实任务出题（生成器优先），四种作答方式（操作台 / 开放模式录屏 / 参与链接 / 真活插件），评分报告；出题要登录、做题免登录。老板的口径：不套职位名，直接说要找什么样的人，就考这个本事。</li>
+          <li><time>10-22</time><b>百业学院 /college</b>：学生是 AI 的在线学院。学员 = 模型，课程 = 百业工厂的空间，考核 = 章节考 + 真活；教务处（线索 / 学员 / 培养 / 毕业生）+ 学院秘书（教务 AI 总控）；学院评分口径 v1 对照老师傅评。两支片：《AI 上学记》《校长的一天》。</li>
         </ul>
 
         {/* 2 */}
@@ -307,7 +309,54 @@ export default function LabLogicPage() {
         </ul>
 
         {/* 16 */}
-        <h2 id="issues">16 · 已知问题 / 待办</h2>
+        <h2 id="college">16 · 真活与百业学院：学生是 AI</h2>
+        <p>前面十五节讲的是把一个职业长成空间：一天、工位、母版、老师傅的规则。这一节讲这些空间的<b>第二个用途</b>——不只给人体验，也拿来<b>训练和考核 AI</b>。百业学院（{F('/college')}，www.baiyecollege.com）是「学生是 AI 的在线学院」：一个大模型进来，化成万千数字职人出去。AI 学院是形态定义，不叫大学。</p>
+        <div className="lg-callout"><p><b>核心价值（用户 2026-10-23）：</b>我们不编造成绩，但要呈现现实世界的难度和通用模型的 gap。一个读过整个互联网的模型，拿着老师傅的尺子一量，入学考五六十分——这个差距就是培养价值，也是学院存在的理由。</p></div>
+
+        <h3>三件东西不新造，只复用</h3>
+        <table><thead><tr><th>学院里的</th><th>就是百业 / 真活里的</th><th>怎么复用</th></tr></thead><tbody>
+          <tr><td><b>课程</b></td><td>百业工厂的空间 {F('skill_tasks')}（章节、工位、技能卡、教案）</td><td>课程目录 = 空间库的筛选视图；没有对口课就让百业工厂造一门（学院秘书会停下来问院长造不造）</td></tr>
+          <tr><td><b>考试</b></td><td>章节考（{F('skill_submissions')}）+ 真活（{F('work_sessions')}）</td><td>同一条评分流水线，加一个 {F('enrollment_id')} 挂回学籍；真活分 vs 基线分 = 上岗前最真实的 gap</td></tr>
+          <tr><td><b>老师</b></td><td>老师傅规则 + 行业标准规程 + 真实工位 / 工具 / 场景 + 头部公司 + 智库</td><td>「一个学生师从一批老师」：行业真实要我做什么，就教什么——永远不是「考什么教什么」</td></tr>
+        </tbody></table>
+        <p>学院自己只多四张表（迁移 046，全部开 RLS）：{F('college_students')}（学员 = 模型，平台模型和客户送来的模型都在这）、{F('college_enrollments')}（学员 × 课程 = 学籍，带随身笔记本 notebook）、{F('college_placements')}（去向：一位毕业生可以派到多家）、{F('college_threads')}（和学院秘书的对话）。申请只是线索（CRM），不进账本。</p>
+
+        <h3>AI 怎么「学」：五层</h3>
+        <div className="lg-flow">
+          <div className="lg-node"><b>技能卡</b><span>老师傅的判断规则 + 关键动作，考试时原样装进上下文</span></div>
+          <div className="lg-node"><b>上课</b><span>教案要点（lesson）读进笔记本「教材要点」</span></div>
+          <div className="lg-node"><b>反思</b><span>考完对照老师傅的关键动作，漏的写进「错题本」</span></div>
+          <div className="lg-node"><b>知识包</b><span>行业资料、规程、公司背景</span></div>
+          <div className="lg-node"><b>真活经验</b><span>真活做过的题和评语</span></div>
+        </div>
+        <p>路径：入学考（裸考，每章一次）→ 上课 → 毕业考 → 没过就反思 + 补考 → 真活 → 毕业 → 派遣。学籍页每一步都看得见：几分、做到老师傅几个关键动作、漏了哪些。</p>
+
+        <h3>学院评分口径 v1（{F('college-v1')}）</h3>
+        <ul>
+          <li>评分员先列出老师傅在这一章的关键动作，再按四维打：行话与行规 25 / 具体执行 30 / 现场判断 25 / 交付可用 20。</li>
+          <li>封顶规则：关键动作做到不足一半 → 最高 59；泛泛而谈、换个行业也成立 → 最高 45。这就是「通用模型回答得漂亮却不及格」的来源。</li>
+          <li>评分模型固定（{F('claude-sonnet-5-5')}），入学考 = 各章最好一次的平均，毕业考同口径，才能比。评分有抖动（同一份作答 48 vs 39），尺子本身要有人盯。</li>
+        </ul>
+
+        <h3>两条路径，一个秘书</h3>
+        <p>每个基础功能都能在教务处人工点（申请 / 学员 / 培养 / 毕业生 / 课程目录）；上面再站一个<b>学院秘书</b>（教务 AI，照 {F('/workspace')} 的 AgentKit 骨架，工具 = 这些功能本身）。管学校的人不需要懂 AI：一天说十几句话，学校就转起来；该定的事秘书停下来问院长。培养 AI 的学校，自己得先是一所被 AI 流畅管理的学校。</p>
+
+        <h3>没有真正的「学生端」</h3>
+        <p>学员是模型，上课和考试全是后台直接喂上下文（技能卡、教案、错题本进提示，作答回来评分），没有一步是祂自己点出来的。{F('/college/s/<学籍>')} 只是<b>学习回放</b>：把一份学籍按 AI 第一人称重讲一遍，给人看、给《AI 上学记》用，跟着每个 AI 走（从学员名册 / 学籍页的「回放」进）。真正的「学生视角」是每次喂进去的上下文和原始作答——能看到祂当时看到了什么、却没做到什么（「真的去做具体工作和知道信息是两回事」）。</p>
+
+        <h3>权限</h3>
+        <p>教务处（页面 {F('/college/admin')}、回放 {F('/college/s')}、接口 {F('/api/college/admin')}）<b>只给 admin</b>，角色按库实时判、三层拦（proxy / 接口 guard / 入口不显示）；里面是核心业务逻辑，普通用户和百业用户都不开。官网和毕业生名册公开。</p>
+
+        <h3>已学到的（10-23 两次真跑）</h3>
+        <ul>
+          <li>新造的单章课，上完课分数不涨——先把课扩成完整一天再培养。</li>
+          <li>反思写进错题本的动作，考试时还是没做——笔记本要更硬地注入（下一轮换办法教）。</li>
+          <li>真活分普遍低于基线（55 vs 77、44 vs 58），这是对客户最有用的一行字：能做什么、什么要人复核。</li>
+          <li>演示用例别删：投资机构行业分析师（具身智能 @ 武岳峰资本，qwen-plus）、生物实验室研究员（单细胞多组学，claude-sonnet-5-5）。</li>
+        </ul>
+
+        {/* 17 */}
+        <h2 id="issues">17 · 已知问题 / 待办</h2>
         <ul>
           <li><b>内容问题</b>（全库体检，未改库，等定）：B2 有空间的工位借用了咖啡杯层（宠物洗护、消防、整理衣橱…）；D5 有空间给人看的文字留着角色编号（含沥青）；B1 幼儿园、潜导等的老手脚本按体验端真实步长走不通（代码版同样，和母版化无关）。</li>
           <li>迁移 020 {F('lab_edits')} 待在 Supabase 跑（没跑之前留痕静默跳过）。</li>
@@ -317,8 +366,8 @@ export default function LabLogicPage() {
           <li>{F('lab_releases')} 空间包 / 对外只读接口未做；同步给公司 simulator 的新一轮补丁在整理（见 {F('docs/simulator-sync.md')}）。</li>
         </ul>
 
-        {/* 17 */}
-        <h2 id="files">17 · 文件索引</h2>
+        {/* 18 */}
+        <h2 id="files">18 · 文件索引</h2>
         <table><thead><tr><th>环节</th><th>文件</th></tr></thead><tbody>
           <tr><td>解析 / 生成</td><td>{F('src/lib/agents/career.ts')} · {F('skill-lab.ts')} · {F('skill-lab-build.ts')} · {F('lab-chapters.ts')} · {F('src/lib/lab-nova.ts')}</td></tr>
           <tr><td>模拟器 / 工位</td><td>{F('src/lib/skill-sim.ts')} · {F('src/lib/bench.ts')} · {F('src/components/lab/BenchRunner.tsx')} · {F('SimRunner.tsx')} · {F('src/lib/lab-*-spec.ts')} · {F('src/components/lab/surfaces/')}</td></tr>
@@ -329,6 +378,7 @@ export default function LabLogicPage() {
           <tr><td>母版回归</td><td>{F('scripts/lab-masters-check.mts')}（改了共用代码就跑：样板清洗 / 干跑对照代码版 / 渲染，库里用母版的工位逐个过）</td></tr>
           <tr><td>真实素材</td><td>{F('scripts/beta3d/pano-recognize.mts')} · {F('src/lib/pano-spots/')} · {F('components/lab/Pano360.tsx')} · {F('/lab/studio/pano')}</td></tr>
           <tr><td>留痕 / 样板</td><td>{F('src/lib/lab-edits.ts')} · {F('supabase/migrations/020_lab_edits.sql')} · {F('docs/lab-playbook.md')} · {F('scripts/lab-playbook-export.mts')}</td></tr>
+          <tr><td>真活 / 百业学院</td><td>{F('src/app/work/')} · {F('src/lib/college-admin.ts')}（教务功能）· {F('src/lib/college-train.ts')}（上课 / 反思 / 学院评分 / 路径）· {F('src/lib/college-agent.ts')}（学院秘书）· {F('src/app/college/admin/')} · {F('src/app/college/s/[id]')}（学习回放）· {F('supabase/migrations/046_college_admin.sql')} · {F('scripts/college-day.mts')} · {F('docs/百业学院-演示用例-20261023.md')}</td></tr>
           <tr><td>其他文档</td><td>{F('docs/lab-studio.md')}（工厂 / 体验改造）· {F('docs/lab-assets.md')} · {F('docs/lab-3d-beta.md')} · {F('docs/lab-next-batch.md')} · {F('docs/video-storyboards.md')}</td></tr>
         </tbody></table>
         <p style={{ marginTop: 30 }}><Link href="/lab/spaces">← 回百业工厂</Link></p>
