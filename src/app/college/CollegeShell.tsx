@@ -36,6 +36,9 @@ function Shell({ children }: { children: React.ReactNode }) {
   }, [menu]);
   const close = () => setMenu(false);
   const facultyHref = user ? '/lab/spaces' : `/lab/login?next=${encodeURIComponent('/lab/spaces')}`;
+  // 教务管理（/college/admin）有自己的外壳：只套学院的配色变量，不要公开官网的页头页脚
+  if (path.startsWith('/college/admin')) return <div className="col"><style>{COLLEGE_CSS}</style>{children}</div>;
+  const staff = !!user && (user as any).role !== 'baiye_user';
   return (
     <div className="col">
       <style>{COLLEGE_CSS}</style>
@@ -47,6 +50,7 @@ function Shell({ children }: { children: React.ReactNode }) {
         <Link href="/college/hire">人才培养需求</Link>
         <Link href="/college/graduates">查看毕业生</Link>
         <a href={facultyHref}>教职工入口</a>
+        {staff && <Link href="/college/admin">教务管理</Link>}
       </div>
       <header className="col-head">
         <Link href="/college" className="col-brand">

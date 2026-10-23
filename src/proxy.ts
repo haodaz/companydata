@@ -60,7 +60,7 @@ export async function proxy(req: NextRequest) {
     // 证书公开：链接本身就是验证方式，分享出去的人不该被拦去登录（改名字由路由自己核对访客编号）
     if (pathname.startsWith('/api/lab/cert/')) return NextResponse.next();
     // AI 大学（/college）公开：毕业生列表和档案只读；入学 / 人才培养申请不用登录（收集客户线索，接口自己防刷）
-    if (pathname.startsWith('/api/college/') && req.method === 'GET') return NextResponse.next();
+    if (pathname.startsWith('/api/college/') && !pathname.startsWith('/api/college/admin') && req.method === 'GET') return NextResponse.next();   // 教务接口 /api/college/admin 要登录
     if (pathname === '/api/college/apply' && req.method === 'POST') return NextResponse.next();
     // 真活台公开：参与链接 / 自助出题 / 出题人管理链接都靠 token 与 owner_key 自己核对，不走登录（/api/admin/work 仍要登录）
     // 例外：/api/work/companies 是企业库搜索（出题时挑企业用），属于数据资产，要登录
@@ -125,7 +125,7 @@ export async function proxy(req: NextRequest) {
   }
 
   // Protect /admin and /office (虚拟工厂) routes；真活台：出题 / 管理页要登录（/work/mine、/work/admin），做题页 /work/<token> 公开
-  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab') || pathname === '/work/mine' || pathname === '/work/new' || pathname.startsWith('/work/admin') || pathname === '/workspace' || pathname === '/research') {
+  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab') || pathname.startsWith('/college/admin') || pathname === '/work/mine' || pathname === '/work/new' || pathname.startsWith('/work/admin') || pathname === '/workspace' || pathname === '/research') {
     const token = req.cookies.get('auth_token')?.value;
 
     if (!token) {
@@ -133,8 +133,8 @@ export async function proxy(req: NextRequest) {
       if (pathname === '/workspace' || pathname === '/research') return NextResponse.redirect(new URL(`${pathname}/welcome`, req.url));
       // 从公开首页点进来的，登录完要回到他想去的地方，而不是落到虚拟工厂
       // 百业 / 真活用各自的蒙版式登录页（账号同一套），别让人看见企业数据工厂的登录页
-      const login = new URL(pathname.startsWith('/lab') || pathname === '/workspace' || pathname === '/research' ? '/lab/login' : pathname.startsWith('/work') ? '/work/login' : '/login', req.url);
-      if (pathname.startsWith('/lab') || pathname.startsWith('/work') || pathname === '/research') login.searchParams.set('next', pathname + req.nextUrl.search);
+      const login = new URL(pathname.startsWith('/lab') || pathname.startsWith('/college') || pathname === '/workspace' || pathname === '/research' ? '/lab/login' : pathname.startsWith('/work') ? '/work/login' : '/login', req.url);
+      if (pathname.startsWith('/lab') || pathname.startsWith('/work') || pathname.startsWith('/college') || pathname === '/research') login.searchParams.set('next', pathname + req.nextUrl.search);
       return NextResponse.redirect(login);
     }
 
@@ -175,5 +175,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/work/mine', '/work/new', '/work/admin', '/workspace', '/research', '/api/:path*', '/', '/favicon.ico'],
+  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/college/admin', '/college/admin/:path*', '/work/mine', '/work/new', '/work/admin', '/workspace', '/research', '/api/:path*', '/', '/favicon.ico'],
 };

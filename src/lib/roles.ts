@@ -20,6 +20,7 @@ export const isBaiyeOnly = (role?: string | null) => role === 'baiye_user';
 /** baiye_user 能进的页面：百业（模拟）、真活、企业版 / 科研版 workspace、百业学院 */
 export function baiyePageAllowed(pathname: string) {
   if (/^\/lab\/admin(\/|$)/.test(pathname)) return false;   // 百业后台（成本、交接包）只给内部
+  if (/^\/college\/admin(\/|$)/.test(pathname)) return false;   // 百业学院教务只给内部
   return /^\/(lab|work|workspace|research|college)(\/|$)/.test(pathname)
     || ['/login', '/register'].includes(pathname);
 }
@@ -27,6 +28,7 @@ export function baiyePageAllowed(pathname: string) {
 /** baiye_user 能调的接口。注意 /api/lab/admin（百业后台：成本、交接包）不给 */
 export function baiyeApiAllowed(pathname: string) {
   if (/^\/api\/lab\/admin(\/|$)/.test(pathname)) return false;
+  if (/^\/api\/college\/admin(\/|$)/.test(pathname)) return false;
   return /^\/api\/(auth|lab|work|ws|college)(\/|$)/.test(pathname)
     || /^\/api\/admin\/work(\/|$)/.test(pathname)   // 真活出题 / 管自己的题（路由里再按归属检查）
     || pathname === '/api/kg/chat';                  // 「和我聊」数字职人对话
