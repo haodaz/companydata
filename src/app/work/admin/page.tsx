@@ -6,7 +6,7 @@
  * 独立于 /lab 和数据实体后台（用户 10-18：管理端不要和数据实体管理掺合），只借后台的登录；数据后台里只留一个新窗口入口。
  */
 import React, { useCallback, useEffect, useState } from 'react';
-import { App, Button, ConfigProvider, Drawer, Input, Popconfirm, Select, Space, Table, Tag, Typography } from 'antd';
+import { App, Button, ConfigProvider, Drawer, Input, Popconfirm, Select, Space, Table, Tabs, Tag, Typography } from 'antd';
 import { CopyOutlined, DeleteOutlined, EyeOutlined, RocketOutlined, SendOutlined } from '@ant-design/icons';
 import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import Link from 'next/link';
@@ -73,6 +73,8 @@ function Inner() {
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}><span style={{ fontSize: 12, letterSpacing: 3, color: '#6055f5', fontWeight: 700 }}>百业AI｜真活</span><Link href="/work" target="_blank" style={{ fontSize: 13 }}>公开页 ↗</Link></div>
       <PageHeader title="真活台 · 管理" icon={<RocketOutlined />} description="拿一家企业的真实业务问题出题：问题 → 任务 → 材料包 → 带依赖的 rubric → AI 基线。链接甩出去，对方做完就有报告（结果逐条 + 过程高光 / 风险 + 和 AI 的差距）。独立于 /lab 和数据后台。" />
+      <Tabs defaultActiveKey="tasks" items={[
+        { key: 'tasks', label: `题库（${list.length}）`, children: <div>
       <Panel style={{ marginBottom: 16 }}>
         <Space wrap align="start">
           <div style={{ display: 'grid', gap: 8, width: 520 }}><CompanyRolePicker size="middle" company={form.company} role={form.role} onCompany={(name, p) => { setForm(f => ({ ...f, company: name })); setPicked(p); }} onRole={r => setForm(f => ({ ...f, role: r }))} /></div>
@@ -82,7 +84,6 @@ function Inner() {
         </Space>
         {busy && <div style={{ marginTop: 8, color: '#6055f5' }}>{busy}</div>}
       </Panel>
-      <SamplesPanel />
       <Panel padding={0}>
         <Table size="small" rowKey="id" loading={loading} dataSource={list} pagination={{ pageSize: 20 }}
           columns={[
@@ -101,6 +102,10 @@ function Inner() {
             </Space> },
           ]} />
       </Panel>
+
+        </div> },
+        { key: 'samples', label: '样本库 · 训练素材', children: <SamplesPanel /> },
+      ]} />
 
       <Drawer open={!!detail} onClose={() => setDetail(null)} width={Math.min(980, typeof window !== 'undefined' ? window.innerWidth - 40 : 980)} title={T ? <span>{T.task?.title} <Tag color={ENV[T.task?.env?.type]?.color}>{ENV[T.task?.env?.type]?.label}</Tag></span> : ''}
         extra={T && <Space><Button icon={<CopyOutlined />} onClick={() => copy(T)}>复制参与链接</Button><Button onClick={() => rerunBaseline(T)} loading={!!busy}>重跑 AI 基线</Button></Space>}>
