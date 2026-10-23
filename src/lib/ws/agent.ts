@@ -24,6 +24,9 @@ export type Ev =
   | { t: 'error'; message: string };
 
 export const WS_MODEL = process.env.WS_MODEL || 'claude-opus-5-5';
+/** 一套「总控」= 系统提示 + 工具表 + 执行器 + 记账用的机构名。企业 / 科研工作台用默认的；百业学院教务（lib/college-agent.ts）传自己的 */
+export interface AgentKit { system: string; tools: Anthropic.Tool[]; run: (name: string, input: any) => Promise<{ result: any; ui?: ToolUi; label: string }>; org: string; task?: string }
+const wsKit = (ctx: ToolCtx & { projectTitle?: string }): AgentKit => ({ system: systemPrompt(ctx), tools: toolsFor(ctx.org.kind), run: (n, i) => runTool(n, i, ctx), org: ctx.org.name });
 const provider = (m: string) => (m.startsWith('claude-') ? 'anthropic' : m.startsWith('gpt-') ? 'openai' : m.startsWith('gemini-') ? 'gemini' : m.startsWith('qwen') ? 'qwen' : 'anthropic');
 
 function systemPrompt(ctx: ToolCtx & { projectTitle?: string }) {
@@ -68,12 +71,13 @@ function researchPrompt(ctx: ToolCtx & { projectTitle?: string }) {
 }
 
 /** 跑一轮：从历史出发，直到模型不再调工具或停在 ask_user；每一步通过 emit 推给前端，结束后返回新增的消息 */
-export async function runTurn(history: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) => void, save?: (added: Msg[]) => Promise<void>): Promise<Msg[]> {
+export async function runTurn(history: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) => void, save?: (added: Msg[]) => Promise<void>, kitIn?: AgentKit): Promise<Msg[]> {
+  const kit = kitIn || wsKit(ctx as any);
   const added: Msg[] = [];
   const all = () => [...history, ...added];
   for (let step = 0; step < 10; step++) {
     const p = provider(model);
-    const out = p === 'anthropic' ? await callAnthropic(all(), model, ctx, emit) : p === 'openai' ? await callOpenAI(all(), model, ctx, emit) : p === 'gemini' ? await callGemini(all(), model, ctx, emit) : await callQwen(all(), model, ctx, emit);
+    const out = p === 'anthropic' ? await callAnthropic(all(), model, kit, emit) : p === 'openai' ? await callOpenAI(all(), model, kit, emit) : p === 'gemini' ? await callGemini(all(), model, kit, emit) : await callQwen(all(), model, kit, emit);
     added.push({ role: 'assistant', text: out.text, calls: out.calls, provider: p, raw: out.raw, at: new Date().toISOString() });
     if (!out.calls.length) break;
     // 每走一步就落库：长工具（出题 2 分钟、基线 1 分钟）跑的时候关页面 / 服务重启，已经做完的不丢
@@ -84,7 +88,7 @@ export async function runTurn(history: Msg[], model: string, ctx: ToolCtx, emit:
       if (c.name === 'ask_user') { ask = c; continue; }
       emit({ t: 'tool_start', id: c.id, name: c.name, input: c.input });
       try {
-        const r = await runTool(c.name, c.input || {}, ctx);
+        const r = await kit.run(c.name, c.input || {});
         results.push({ id: c.id, name: c.name, content: JSON.stringify(r.result).slice(0, 12000), label: r.label, ui: r.ui });
         emit({ t: 'tool_end', id: c.id, name: c.name, label: r.label, ui: r.ui });
       } catch (e: any) {
@@ -118,13 +122,13 @@ export function appendUser(history: Msg[], text: string): Msg[] {
   return [...history, { role: 'user', text, at: new Date().toISOString() }];
 }
 
-const log = (model: string, inTok: number, outTok: number, org: string) =>
-  logTokenUsage({ tool_name: 'workspace', task_name: '工作台 · 总控对话', institution: org, model_id: model, usageMetadata: { promptTokenCount: inTok, candidatesTokenCount: outTok, totalTokenCount: inTok + outTok } } as any).catch(() => {});
+const log = (model: string, inTok: number, outTok: number, org: string, task = '工作台 · 总控对话') =>
+  logTokenUsage({ tool_name: 'workspace', task_name: task, institution: org, model_id: model, usageMetadata: { promptTokenCount: inTok, candidatesTokenCount: outTok, totalTokenCount: inTok + outTok } } as any).catch(() => {});
 
 type Out = { text: string; calls: Call[]; raw?: any };
 
 // ──── Anthropic ────
-async function callAnthropic(h: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) => void): Promise<Out> {
+async function callAnthropic(h: Msg[], model: string, kit: AgentKit, emit: (e: Ev) => void): Promise<Out> {
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const messages: Anthropic.MessageParam[] = [];
   for (const m of h) {
@@ -132,17 +136,17 @@ async function callAnthropic(h: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev
     else if (m.role === 'assistant') messages.push({ role: 'assistant', content: m.provider === 'anthropic' && m.raw ? m.raw : [...(m.text ? [{ type: 'text' as const, text: m.text }] : []), ...m.calls.map(c => ({ type: 'tool_use' as const, id: c.id, name: c.name, input: c.input || {} }))] });
     else messages.push({ role: 'user', content: m.results.map(r => ({ type: 'tool_result' as const, tool_use_id: r.id, content: r.content, ...(r.is_error ? { is_error: true } : {}) })) });
   }
-  const stream = client.messages.stream({ model, max_tokens: 8000, system: systemPrompt(ctx), tools: toolsFor(ctx.org.kind), messages });
+  const stream = client.messages.stream({ model, max_tokens: 8000, system: kit.system, tools: kit.tools, messages });
   stream.on('text', d => emit({ t: 'text', delta: d }));
   const msg = await stream.finalMessage();
-  await log(model, msg.usage.input_tokens, msg.usage.output_tokens, ctx.org.name);
+  await log(model, msg.usage.input_tokens, msg.usage.output_tokens, kit.org, kit.task);
   const text = msg.content.filter((b): b is Anthropic.TextBlock => b.type === 'text').map(b => b.text).join('');
   const calls = msg.content.filter((b): b is Anthropic.ToolUseBlock => b.type === 'tool_use').map(b => ({ id: b.id, name: b.name, input: b.input }));
   return { text, calls: msg.stop_reason === 'max_tokens' ? [] : calls, raw: msg.content };
 }
 
 // ──── OpenAI（Responses API；推理模型不支持 chat/completions）────
-async function callOpenAI(h: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) => void): Promise<Out> {
+async function callOpenAI(h: Msg[], model: string, kit: AgentKit, emit: (e: Ev) => void): Promise<Out> {
   const input: any[] = [];
   for (const m of h) {
     if (m.role === 'user') input.push({ role: 'user', content: m.text });
@@ -151,11 +155,11 @@ async function callOpenAI(h: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) =
       else { if (m.text) input.push({ role: 'assistant', content: m.text }); for (const c of m.calls) input.push({ type: 'function_call', call_id: c.id, name: c.name, arguments: JSON.stringify(c.input || {}) }); }
     } else for (const r of m.results) input.push({ type: 'function_call_output', call_id: r.id, output: r.content });
   }
-  const tools = toolsFor(ctx.org.kind).map(t => ({ type: 'function', name: t.name, description: t.description, parameters: t.input_schema }));
-  const res = await fetch('https://api.openai.com/v1/responses', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.OPENAI_API_KEY || ''}` }, body: JSON.stringify({ model, instructions: systemPrompt(ctx), input, tools, reasoning: { effort: 'low' } }), signal: AbortSignal.timeout(180_000) });
+  const tools = kit.tools.map(t => ({ type: 'function', name: t.name, description: t.description, parameters: t.input_schema }));
+  const res = await fetch('https://api.openai.com/v1/responses', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.OPENAI_API_KEY || ''}` }, body: JSON.stringify({ model, instructions: kit.system, input, tools, reasoning: { effort: 'low' } }), signal: AbortSignal.timeout(180_000) });
   if (!res.ok) throw new Error(`OpenAI ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const data: any = await res.json();
-  await log(model, data.usage?.input_tokens || 0, data.usage?.output_tokens || 0, ctx.org.name);
+  await log(model, data.usage?.input_tokens || 0, data.usage?.output_tokens || 0, kit.org, kit.task);
   const output: any[] = data.output || [];
   const text = output.filter(o => o.type === 'message').flatMap(o => o.content || []).filter((c: any) => c.type === 'output_text').map((c: any) => c.text).join('');
   if (text) emit({ t: 'text', delta: text });
@@ -164,7 +168,7 @@ async function callOpenAI(h: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) =
 }
 
 // ──── Gemini ────
-async function callGemini(h: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) => void): Promise<Out> {
+async function callGemini(h: Msg[], model: string, kit: AgentKit, emit: (e: Ev) => void): Promise<Out> {
   const contents: any[] = [];
   const nameOf = new Map<string, string>();
   for (const m of h) {
@@ -174,10 +178,10 @@ async function callGemini(h: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) =
       contents.push({ role: 'model', parts: m.provider === 'gemini' && Array.isArray(m.raw) ? m.raw : [...(m.text ? [{ text: m.text }] : []), ...m.calls.map(c => ({ functionCall: { name: c.name, args: c.input || {} } }))] });
     } else contents.push({ role: 'user', parts: m.results.map(r => ({ functionResponse: { name: nameOf.get(r.id) || r.name, response: safeJson(r.content) } })) });
   }
-  const functionDeclarations = toolsFor(ctx.org.kind).map(t => { const ps: any = t.input_schema; return Object.keys(ps.properties || {}).length ? { name: t.name, description: t.description, parameters: ps } : { name: t.name, description: t.description }; });
-  const g = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '').getGenerativeModel({ model, tools: [{ functionDeclarations } as any], systemInstruction: systemPrompt(ctx) });
+  const functionDeclarations = kit.tools.map(t => { const ps: any = t.input_schema; return Object.keys(ps.properties || {}).length ? { name: t.name, description: t.description, parameters: ps } : { name: t.name, description: t.description }; });
+  const g = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '').getGenerativeModel({ model, tools: [{ functionDeclarations } as any], systemInstruction: kit.system });
   const r = await g.generateContent({ contents });
-  const u = r.response.usageMetadata; await log(model, u?.promptTokenCount || 0, u?.candidatesTokenCount || 0, ctx.org.name);
+  const u = r.response.usageMetadata; await log(model, u?.promptTokenCount || 0, u?.candidatesTokenCount || 0, kit.org, kit.task);
   const parts: any[] = r.response.candidates?.[0]?.content?.parts || [];
   const text = parts.filter(p => typeof p.text === 'string' && !p.thought).map(p => p.text).join('');
   if (text) emit({ t: 'text', delta: text });
@@ -187,19 +191,19 @@ async function callGemini(h: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) =
 }
 
 // ──── 千问（DashScope 兼容接口的 function calling）────
-async function callQwen(h: Msg[], model: string, ctx: ToolCtx, emit: (e: Ev) => void): Promise<Out> {
-  const messages: any[] = [{ role: 'system', content: systemPrompt(ctx) }];
+async function callQwen(h: Msg[], model: string, kit: AgentKit, emit: (e: Ev) => void): Promise<Out> {
+  const messages: any[] = [{ role: 'system', content: kit.system }];
   for (const m of h) {
     if (m.role === 'user') messages.push({ role: 'user', content: m.text });
     else if (m.role === 'assistant') messages.push({ role: 'assistant', content: m.text || '', ...(m.calls.length ? { tool_calls: m.calls.map(c => ({ id: c.id, type: 'function', function: { name: c.name, arguments: JSON.stringify(c.input || {}) } })) } : {}) });
     else for (const r of m.results) messages.push({ role: 'tool', tool_call_id: r.id, content: r.content });
   }
   const base = (process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
-  const tools = toolsFor(ctx.org.kind).map(t => ({ type: 'function', function: { name: t.name, description: t.description, parameters: t.input_schema } }));
+  const tools = kit.tools.map(t => ({ type: 'function', function: { name: t.name, description: t.description, parameters: t.input_schema } }));
   const res = await fetch(`${base}/compatible-mode/v1/chat/completions`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.DASHSCOPE_API_KEY || ''}` }, body: JSON.stringify({ model, messages, tools, ...(/^qwen3/.test(model) ? { enable_thinking: false } : {}) }), signal: AbortSignal.timeout(180_000) });
   if (!res.ok) throw new Error(`千问 ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const data: any = await res.json();
-  await log(model, data.usage?.prompt_tokens || 0, data.usage?.completion_tokens || 0, ctx.org.name);
+  await log(model, data.usage?.prompt_tokens || 0, data.usage?.completion_tokens || 0, kit.org, kit.task);
   const msg = data.choices?.[0]?.message || {};
   const text = msg.content || '';
   if (text) emit({ t: 'text', delta: text });

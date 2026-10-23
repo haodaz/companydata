@@ -11,6 +11,7 @@ import { useUser } from '@/lib/user-context';
 import { ADMIN_CSS, ROMAN } from './ui';
 
 const NAV = [
+  { href: '/college/admin/chat', t: '教务 AI · 院长 A', on: (p: string) => p.startsWith('/college/admin/chat') },
   { href: '/college/admin', t: '总览', on: (p: string) => p === '/college/admin' },
   { href: '/college/admin/applications', t: '申请管理 · 线索', on: (p: string) => p.startsWith('/college/admin/applications') },
   { href: '/college/admin/students', t: '学员管理', on: (p: string) => p.startsWith('/college/admin/students') },
@@ -28,7 +29,7 @@ export default function CollegeAdminLayout({ children }: { children: React.React
       <aside className="ca-side">
         <div className="ca-brand"><span className="crest"><img src="/college/crest.svg" alt="院徽" /></span><div><b>百业学院</b><small>教务处 · REGISTRAR</small></div></div>
         <nav className="ca-nav">
-          {NAV.map((x, i) => <Link key={x.href} href={x.href} className={x.on(path) ? 'on' : ''}><i>{i === 0 ? '◆' : ROMAN[i - 1]}</i>{x.t}</Link>)}
+          {NAV.map((x, i) => <Link key={x.href} href={x.href} className={x.on(path) ? 'on' : ''}><i>{i === 0 ? 'A' : i === 1 ? '◆' : ROMAN[i - 2]}</i>{x.t}</Link>)}
           <div className="sec">CAMPUS</div>
           <a href="/college" target="_blank" rel="noreferrer"><i>↗</i>学院官网</a>
           <a href="/lab/spaces" target="_blank" rel="noreferrer"><i>↗</i>百业工厂 · 造课程</a>
