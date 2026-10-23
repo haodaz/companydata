@@ -14,3 +14,16 @@ CREATE TABLE IF NOT EXISTS work_samples (
 );
 CREATE INDEX IF NOT EXISTS idx_work_samples_created ON work_samples(created_at DESC);
 ALTER TABLE work_samples ENABLE ROW LEVEL SECURITY;
+
+-- 聊着出题（2026-10-23）：出题人和 AI 的对话线程（照 college_threads）
+CREATE TABLE IF NOT EXISTS work_threads (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  created_by  TEXT,
+  title       TEXT NOT NULL DEFAULT '',
+  messages    JSONB NOT NULL DEFAULT '[]',
+  task_id     UUID,                      -- 这段对话出的题（有就挂上）
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS work_threads_updated_idx ON work_threads (updated_at DESC);
+ALTER TABLE work_threads ENABLE ROW LEVEL SECURITY;

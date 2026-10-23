@@ -127,7 +127,7 @@ export async function proxy(req: NextRequest) {
   }
 
   // Protect /admin and /office (虚拟工厂) routes；真活台：出题 / 管理页要登录（/work/mine、/work/admin），做题页 /work/<token> 公开
-  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab') || pathname.startsWith('/college/admin') || pathname.startsWith('/college/s/') || pathname === '/work/mine' || pathname === '/work/new' || pathname.startsWith('/work/admin') || pathname === '/workspace' || pathname === '/research') {
+  if (pathname.startsWith('/admin') || pathname.startsWith('/office') || pathname.startsWith('/lab') || pathname.startsWith('/college/admin') || pathname.startsWith('/college/s/') || pathname === '/work/mine' || pathname.startsWith('/work/new') || pathname.startsWith('/work/admin') || pathname === '/workspace' || pathname === '/research') {
     const token = req.cookies.get('auth_token')?.value;
 
     if (!token) {
@@ -179,5 +179,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/college/admin', '/college/admin/:path*', '/college/s/:path*', '/work/mine', '/work/new', '/work/admin', '/workspace', '/research', '/api/:path*', '/', '/favicon.ico'],
+  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/college/admin', '/college/admin/:path*', '/college/s/:path*', '/work/mine', '/work/new', '/work/new/:path*', '/work/admin', '/workspace', '/research', '/api/:path*', '/', '/favicon.ico'],
 };

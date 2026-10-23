@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isKnownModel } from '@/lib/model-options';
-import { randomBytes } from 'node:crypto';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
-import { gatherContext, generateTask, WORK_MODEL } from '@/lib/work/generator';
-import { withCost } from '@/lib/token-logger';
-import { autoPickSamples, getSample, listSamples } from '@/lib/work/samples';
+import { createWorkTask } from '@/lib/work/chat-agent';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -36,26 +33,9 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
   try {
     const body = await req.json();
-    const company = String(body.company || '').trim(), role = String(body.role || '').trim();
-    if (!company || !role) return NextResponse.json({ ok: false, error: '企业和岗位都要填' }, { status: 400 });
-    const ctx = await gatherContext(body.company_id ? String(body.company_id) : company, role, { intro: body.company_id ? undefined : String(body.intro || '').slice(0, 6000) });
-    // 参照（2026-10-23）：出题人自己交的参考资料（过往的题 / 内部考题）→ 照它改背景换数字；没有就在后台从内部训练素材里自动挑一份（用户看不见）→ 照结构出新题
-    let sample = body.sample_id ? await getSample(String(body.sample_id)) : null;
-    if (body.sample_id && !sample) return NextResponse.json({ ok: false, error: '参考资料不存在' }, { status: 400 });
-    if (sample && sample.created_by !== user.email && user.role !== 'admin' && !sample.shared) return NextResponse.json({ ok: false, error: '参考资料不存在' }, { status: 400 });
-    let sampleMode: 'reskin' | 'inspire' = body.sample_mode === 'inspire' ? 'inspire' : 'reskin';
-    if (!sample) {
-      const picks = await autoPickSamples({ company: ctx.company?.name, industry: ctx.company?.industry, role, focus: body.focus ? String(body.focus) : undefined }, await listSamples({ sharedOnly: true }), { actor: user.email });
-      if (picks[0]) { sample = picks[0]; sampleMode = 'inspire'; }
-    }
-    if (sample) (ctx as any).sample = { id: sample.id, title: sample.title, mode: sampleMode, auto: !body.sample_id };
-    const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题', stage: 'create', actor: user?.email || null }, () => generateTask(ctx, role, { sample: sample?.skeleton || null, sampleMode, model: isKnownModel(String(body.model || '')) ? String(body.model) : WORK_MODEL, focus: body.focus, env: ['doc', 'code', 'sheet', 'design', 'open', 'plugin'].includes(body.env) ? body.env : undefined }));
-    const share_token = randomBytes(8).toString('base64url'), owner_key = randomBytes(12).toString('base64url');
-    const row = { share_token, owner_key, owner: { name: user?.email, contact: user?.email }, status: 'published', company_id: ctx.company?.id ?? null, company_name: ctx.company?.name || company, role, context: ctx, problem: task.problem, task: { ...task.task, env: task.env }, materials: task.materials, rubric: task.rubric, model, created_by: user?.email || null };
-    const { data, error } = await db.from('work_tasks').insert(row).select('id, share_token').single();
-    if (error) throw new Error(error.message);
-    return NextResponse.json({ ok: true, id: data.id, share_token: data.share_token, owner_key, title: task.task.title, env: task.env.type, notes: ctx.notes });
+    const r = await createWorkTask({ email: user.email, role: user.role }, { company: String(body.company || ''), company_id: body.company_id, intro: body.intro ? String(body.intro) : undefined, role: String(body.role || ''), env: body.env ? String(body.env) : undefined, focus: body.focus ? String(body.focus) : undefined, model: isKnownModel(String(body.model || '')) ? String(body.model) : undefined, sample_id: body.sample_id ? String(body.sample_id) : undefined, sample_mode: body.sample_mode === 'inspire' ? 'inspire' : 'reskin' });
+    return NextResponse.json({ ok: true, id: r.id, share_token: r.share_token, owner_key: r.owner_key, title: r.title, env: r.env, notes: r.notes });
   } catch (e: any) {
-    return NextResponse.json({ ok: false, error: String(e?.message || e) }, { status: 500 });
+    return NextResponse.json({ ok: false, error: String(e?.message || e) }, { status: /都要填/.test(String(e?.message)) ? 400 : 500 });
   }
 }

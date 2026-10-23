@@ -71,6 +71,7 @@ function Inner() {
         <WorkLogo size="md" />
         <Link href="/work/mine" style={{ color: '#666', fontSize: 13 }}>我的真活</Link>
         <span style={{ color: '#888', fontSize: 13 }}>/ 出一道真活</span>
+        <div style={{ marginLeft: 'auto', display: 'flex', border: '1px solid #e0e0ee', borderRadius: 999, overflow: 'hidden', fontSize: 13 }}><span style={{ padding: '6px 14px', background: '#6055f5', color: '#fff', fontWeight: 700 }}>填表出题</span><Link href="/work/new/chat" style={{ padding: '6px 14px', color: '#666' }}>聊着出题</Link></div>
       </div>
       <div style={{ maxWidth: 1080, margin: '0 auto', padding: '28px 28px 60px', display: 'grid', gridTemplateColumns: 'minmax(0, 1.5fr) minmax(280px, 1fr)', gap: 24, alignItems: 'start' }}>
         <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 18, padding: '26px 28px' }}>
