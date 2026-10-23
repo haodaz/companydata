@@ -1,0 +1,19 @@
+{
+ "cover": 0.98,
+ "hero": 1.03,
+ "lead": 0.45,
+ "course": 0.81,
+ "day": 0.38,
+ "student": 0.87,
+ "record": 0.41,
+ "path": 0.71,
+ "chapters": 0.67,
+ "notebook": 0.42,
+ "work": 0.39,
+ "placement": 0.72,
+ "graduates": 0.73,
+ "profile": 1.02,
+ "diploma": 1.2,
+ "bio": 0.53,
+ "end": 1.06
+}
