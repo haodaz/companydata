@@ -88,10 +88,13 @@ export default function StudentView() {
 }
 
 const CSS = `
+.ca-por { display: inline-block; position: relative; aspect-ratio: 5 / 6; overflow: hidden; flex-shrink: 0; vertical-align: middle; }
+.ca-por img { position: absolute; left: 50%; top: 0; width: 100%; height: auto; transform: translateX(-50%); filter: drop-shadow(0 10px 18px rgba(22,32,74,.22)); }
+.ca-por.ph { display: inline-grid; place-items: center; } .ca-por.ph img { position: static; width: 60%; transform: none; opacity: .6; filter: none; }
 .sv { max-width: 1120px; margin: 0 auto; padding: 56px clamp(16px, 4vw, 40px) 80px; color: var(--navy); }
 .sv-eyebrow { font: 700 12px/1.4 var(--en); letter-spacing: .24em; color: var(--gold); text-transform: uppercase; }
 .sv-head { display: flex; gap: 32px; align-items: flex-end; padding: 0 0 28px; border-bottom: 1.5px solid var(--navy); margin-bottom: 36px; }
-.sv-head .ca-por.hero { height: 260px; margin: 0; }
+.sv-head .ca-por.hero { height: 260px; margin: 0 0 -28px; }
 .sv-id h1 { font-family: var(--serif); font-size: 40px; font-weight: 900; margin: 8px 0 6px; letter-spacing: .03em; display: flex; align-items: center; gap: 14px; }
 .sv-status { font: 700 13px var(--en), 'PingFang SC', sans-serif; letter-spacing: .04em; padding: 3px 12px; border-radius: 999px; background: rgba(176,141,87,.16); color: #6b4e1f; }
 .sv-status.ok { background: rgba(18,160,107,.13); color: #0b6b47; }

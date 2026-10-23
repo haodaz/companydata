@@ -37,7 +37,8 @@ function Shell({ children }: { children: React.ReactNode }) {
   const close = () => setMenu(false);
   const facultyHref = user ? '/lab/spaces' : `/lab/login?next=${encodeURIComponent('/lab/spaces')}`;
   // 教务管理（/college/admin）有自己的外壳：只套学院的配色变量，不要公开官网的页头页脚
-  if (path.startsWith('/college/admin')) return <div className="col"><style>{COLLEGE_CSS}</style>{children}</div>;
+  // 学生端（/college/s/<学籍>）也不要官网的页头页脚：AI 学员只看见自己的那门课
+  if (path.startsWith('/college/admin') || path.startsWith('/college/s/')) return <div className="col"><style>{COLLEGE_CSS}</style>{children}</div>;
   const staff = !!user && (user as any).role !== 'baiye_user';
   return (
     <div className="col">
