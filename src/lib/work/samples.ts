@@ -21,8 +21,8 @@ export interface SampleSkeleton {
   title: string; summary: string; problem_type: string; industry: string; difficulty: string; format: string;
   stages: SampleStage[]; exhibits: { title: string; desc: string }[]; style_notes: string[];
 }
-export interface WorkSample { id: string; title: string; industry: string; problem_type: string; difficulty: string; skeleton: SampleSkeleton; source_name: string; created_by: string; created_at: string; shared: boolean }
-const COLS = 'id, title, industry, problem_type, difficulty, skeleton, source_name, created_by, created_at, shared';
+export interface WorkSample { id: string; title: string; industry: string; problem_type: string; difficulty: string; skeleton: SampleSkeleton; source_name: string; created_by: string; created_at: string; shared: boolean; kind?: string; tags?: string[]; occupation_id?: number | null; occupation_name?: string | null; round?: string | null }
+const COLS = 'id, title, industry, problem_type, difficulty, skeleton, source_name, created_by, created_at, shared, kind, tags, occupation_id, occupation_name, round';
 
 const s = (v: any, n: number) => String(v ?? '').trim().slice(0, n);
 const TYPES: StageType[] = ['structuring', 'judgement', 'numeracy', 'creativity', 'synthesis', 'other'];
@@ -155,7 +155,7 @@ export function renderSkeleton(k: SampleSkeleton): string {
 
 /** 内部训练素材（shared）+ 这个人自己交的参考资料 */
 export async function listSamples(opts: { email?: string; sharedOnly?: boolean } = {}): Promise<WorkSample[]> {
-  let q = db.from('work_samples').select(COLS).order('created_at', { ascending: false }).limit(200);
+  let q = db.from('work_samples').select(COLS).order('created_at', { ascending: false }).limit(1000);
   q = opts.sharedOnly ? q.eq('shared', true) : opts.email ? q.or(`shared.eq.true,created_by.eq.${opts.email}`) : q;
   const { data, error } = await q;
   if (error) { if (/work_samples/.test(error.message)) return []; throw error; }   // 迁移 047 没跑
@@ -180,8 +180,14 @@ export async function saveSample(k: SampleSkeleton, raw: string, meta: { source_
  * 便宜模型做一次判断；库是空的或都不相干就不挑（这时和以前一样出开放题）。
  */
 export async function autoPickSamples(input: { company?: string; industry?: string; role: string; focus?: string }, library: WorkSample[], opts: { actor?: string } = {}): Promise<WorkSample[]> {
-  const lib = library.filter(x => x.shared && x.skeleton?.stages?.length);
-  if (!lib.length) return [];
+  const all = library.filter(x => x.shared && x.skeleton?.stages?.length);
+  if (!all.length) return [];
+  // 库大了（几百份）不能全塞给模型：先按关键词粗筛。岗位 / 要找的人 / 行业 / 要求 里的词，对样本的标题 / 行业 / 题型 / 标签 / 职业；实操类只在岗位像蓝领工种时才进候选
+  const q = `${input.role} ${input.industry || ''} ${input.focus || ''} ${input.company || ''}`.toLowerCase();
+  const toks = [...new Set((q.match(/[\u4e00-\u9fa5]{2,}|[a-z]{3,}/g) || []).flatMap(t => (/^[\u4e00-\u9fa5]+$/.test(t) && t.length > 2 ? [t, ...Array.from({ length: t.length - 1 }, (_, i) => t.slice(i, i + 2))] : [t])))];
+  const blue = /工|技师|操作|维修|装调|焊|车|铣|钳|电|数控|机床|模具|PLC|安装|护理|烹|厨|服务员|营业|质检|检验/.test(input.role);
+  const score = (x: WorkSample) => { const hay = `${x.title} ${x.industry || ''} ${x.problem_type || ''} ${(x.tags || []).join(' ')} ${x.occupation_name || ''} ${(x.skeleton.summary || '').slice(0, 120)}`.toLowerCase(); let n = 0; for (const t of toks) if (hay.includes(t)) n += t.length >= 3 ? 2 : 1; if (x.kind === 'practical' && !blue) n -= 3; if (x.kind !== 'practical' && blue) n -= 2; return n; };
+  const lib = [...all].map(x => ({ x, s: score(x) })).sort((a, b) => b.s - a.s).slice(0, 40).map(r => r.x);
   const prompt = `平台要给「${input.company || '一家企业'}${input.industry ? `（${input.industry}）` : ''}」的「${input.role}」出一道真实的业务题${input.focus ? `，出题人要求：${input.focus.slice(0, 300)}` : ''}。
 下面是题库里的参照题（每条：编号 · 标题 · 行业 · 类型 · 难度 · 概要）。挑出**题型和推进方式最适合拿来当模板**的 0–2 条：看的是「这个岗位真实工作里会不会遇到这种推进方式的问题」（比如战略 / 投资 / 市场类岗位适合分步推演 + 测算的案例），不是看行业名字像不像。都不合适就返回空。
 ${lib.map((x, i) => `${i + 1}. ${x.title} · ${x.industry || '—'} · ${x.problem_type || '—'} · ${x.difficulty || '—'} · ${(x.skeleton.summary || '').slice(0, 120)}`).join('\n')}
