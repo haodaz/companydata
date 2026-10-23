@@ -11,7 +11,7 @@ const log = (s: string) => console.log(`[${new Date().toLocaleTimeString('zh-CN'
 for (const key of ['invest_enrollment_id', 'bio_enrollment_id']) {
   const d = await enrollmentDetail(st[key]);
   for (const c of d.chapters.filter((c: any) => c.before == null)) {
-    try { const r = await runChapterExam(d.id, c.id, false); log(`${d.nova_name} 入学考 · ${c.title} → ${r.score} 分${r.moves ? '' : ''}`); }
+    try { const r = await runChapterExam(d.id, c.id, false); log(`${d.nova_name} 入学考 · ${c.title} → ${r.score} 分`); }
     catch (e: any) { log(`${d.nova_name} 入学考 · ${c.title} 失败：${e?.message}`); }
   }
   const f = await enrollmentDetail(d.id);
