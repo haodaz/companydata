@@ -170,10 +170,11 @@ ${COLLEGE_DIMS.map(d => `- ${d.key}｜${d.name}｜满分 ${d.weight}｜${d.descr
  "dimensions":[{"key":"trade","score":0,"evidence":"","comment":""},{"key":"execution","score":0,"evidence":"","comment":""},{"key":"judgement","score":0,"evidence":"","comment":""},{"key":"deliverable","score":0,"evidence":"","comment":""}],
  "caps":[],"summary":"","gaps":[],"suggestions":[]}`;
   let p: any = null;
-  for (let i = 0; i < 2 && !p; i++) {
+  // 评卷人引用作答原文时偶尔没转义引号，JSON 坏掉：再评一次（parseJsonLoose 会抛错，不是返回空）
+  for (let i = 0; i < 3 && !p; i++) {
     const r = await generateContent(prompt, GRADE_MODEL, { jsonMode: true, temperature: 0 });
     await logTokenUsage({ tool_name: 'college', task_name: `College · 学院口径评卷（${who}）`, institution: '百业学院', model_id: GRADE_MODEL, usageMetadata: r.usageMetadata } as any).catch(() => {});
-    p = parseJsonLoose(r.text);
+    try { p = parseJsonLoose(r.text); } catch (e) { console.warn('[college-grade] JSON 坏了，重评', String((e as any)?.message).slice(0, 80)); p = null; }
   }
   if (!p || typeof p !== 'object') throw new Error('评卷没有返回 JSON');
   const dims = COLLEGE_DIMS.map(d => { const x = (p.dimensions || []).find((y: any) => String(y.key).toLowerCase() === d.key) || {}; return { key: d.key, name: d.name, score: Math.min(d.weight, Math.max(0, Math.round(Number(x.score) || 0))), evidence: str(x.evidence, 300) || '（未提及）', comment: str(x.comment, 240) }; });
