@@ -12,7 +12,7 @@ import { ADMIN_CSS, ROMAN } from './ui';
 
 const NAV = [
   { href: '/college/admin', t: '总览', on: (p: string) => p === '/college/admin' },
-  { href: '/college/admin/applications', t: '申请管理', on: (p: string) => p.startsWith('/college/admin/applications') },
+  { href: '/college/admin/applications', t: '申请管理 · 线索', on: (p: string) => p.startsWith('/college/admin/applications') },
   { href: '/college/admin/students', t: '学员管理', on: (p: string) => p.startsWith('/college/admin/students') },
   { href: '/college/admin/training', t: '学员培养', on: (p: string) => p.startsWith('/college/admin/training') },
   { href: '/college/admin/graduates', t: '毕业生管理', on: (p: string) => p.startsWith('/college/admin/graduates') },
