@@ -240,7 +240,7 @@ function Shell({ children }: { children: React.ReactNode }) {
   const NAV = [
     { k: '/lab', t: '首页', on: (p: string) => p === '/lab' },
     { k: '/lab/spaces', t: '百业工厂', on: (p: string) => p.startsWith('/lab/spaces') || p.startsWith('/lab/studio') || p.startsWith('/lab/assets') || p.startsWith('/lab/logic') || p.startsWith('/lab/admin') },
-    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || /^\/lab\/(?!spaces|studio|gallery|assets|logic|beta|admin|me|cert)[^/]+$/.test(p) },
+    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || /^\/lab\/(?!spaces|studio|gallery|assets|logic|beta|admin|me|cert|no-access)[^/]+$/.test(p) },
     // 我的证书：游客也有（按浏览器本地的访客编号攒，里面有示范证书），登录后并上账号的
     { k: '/lab/me', t: '我的证书', on: (p: string) => p.startsWith('/lab/me') || p.startsWith('/lab/cert') },
   ];

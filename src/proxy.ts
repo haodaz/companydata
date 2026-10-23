@@ -21,7 +21,7 @@ async function liveRole(id: string): Promise<string | null> {
   if (roleCache.size > 2000) roleCache.clear();
   return role;
 }
-const BAIYE_DENIED = () => NextResponse.json({ ok: false, error: '百业账号没有这个权限' }, { status: 403 });
+const BAIYE_DENIED = () => NextResponse.json({ ok: false, error: '权限不足：这个账号只开通了 AI 百业，请回到 aisimjob.com 继续使用百业功能' }, { status: 403 });
 
 /** 受邀专家能碰的接口：这一位数字职人的空间本身（只读），以及向上学习的三步 */
 const INVITE_API = /^\/api\/lab\/spaces\/([^/]+)(?:\/(interview|submit|distill))?$/;
@@ -152,8 +152,8 @@ export async function proxy(req: NextRequest) {
       response.cookies.delete('auth_token');
       return response;
     }
-    // 百业用户：数据后台、虚拟工厂这些一律不给，送回百业
-    if (isBaiyeOnly(role) && !baiyePageAllowed(pathname)) return NextResponse.redirect(new URL('/lab', req.url));
+    // 百业用户：数据后台、虚拟工厂这些一律不给——送到「权限不足」说明页（说清楚不是出错，给回百业的入口）
+    if (isBaiyeOnly(role) && !baiyePageAllowed(pathname)) return NextResponse.redirect(new URL('/lab/no-access', req.url));
 
     // Role-based protection: only admin can access /admin/system-users
     if (pathname.startsWith('/admin/system-users') && role !== 'admin') {
