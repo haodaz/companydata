@@ -30,7 +30,7 @@ const CAT_NAMES = INSTRUMENT_CATEGORIES.map(c => c.name);
 // 表头在第 5 行：No. / Company / Postcode / City / Country/Region / Hall/Booth
 const rows: { name: string; city: string; country: string; name_cn?: string; name_en?: string }[] = NAMES
   // 中文名带「有限公司 / 股份」的当国内企业；只有英文名的国家留空，找官网时再定
-  ? (JSON.parse(fs.readFileSync(NAMES, 'utf8')) as any[]).map(e => ({ name: String(e.name_cn || e.name_en).trim(), name_cn: e.name_cn || '', name_en: e.name_en || '', city: '', country: /有限公司|股份|集团|研究院/.test(e.name_cn || '') && !/中国分公司|（中国）|\(中国\)/.test(e.name_cn || '') ? 'China' : '' }))
+  ? (JSON.parse(fs.readFileSync(NAMES, 'utf8')) as any[]).map(e => ({ name: String(e.name_cn || e.name_en).trim(), name_cn: e.name_cn || '', name_en: e.name_en || '', city: '', country: e.country ? String(e.country) : /有限公司|股份|集团|研究院/.test(e.name_cn || '') && !/中国分公司|（中国）|\(中国\)/.test(e.name_cn || '') ? 'China' : '' }))
   : (() => { const wb = XLSX.readFile(XLSX_PATH); return (XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 }) as any[][])
     .filter(r => r[1] && /^\d+$/.test(String(r[0]).trim()))
     .map(r => ({ name: String(r[1]).replace(/\s+/g, ' ').trim(), city: r[3] || '', country: r[4] && r[4] !== 'undefined' ? String(r[4]) : '' })); })();

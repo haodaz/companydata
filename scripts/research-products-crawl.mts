@@ -5,7 +5,7 @@
  *   2. 每个页面：只按原文抽产品（名称要在页面里找得到，规格参数照抄，不编），连同页面上的资料链接
  *   3. 资料：下载（≤ 30MB）存进存储桶 research-docs，PDF 用 PDFKit 抽全文；下载不了的只记链接
  *   4. 标签用数据部门给的 prompt；简介存不含图视频的 html；external_id 按类型加前缀（kyyq_ / kyhc_ / kysj_ / kyfw_）
- *   npx tsx scripts/research-products-crawl.mts --model qwen-plus (--ids 1,2,3 | --sample 12 | --per-cat 12) [--per 8] [--par 2] [--dry]
+ *   npx tsx scripts/research-products-crawl.mts --model qwen-plus (--ids 1,2,3 | --sample 12 | --per-cat 12) [--search-model gemini-3.8-flash [--search-first]] [--per 8] [--par 2] [--dry]
  */
 process.loadEnvFile('.env.local');
 import fs from 'node:fs';
@@ -28,6 +28,8 @@ const { isBlankImage } = await import('@/lib/image-blank');
 const opt = (k: string, d = '') => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const MODEL = opt('model', '');
 if (!MODEL || !isKnownModel(MODEL)) { console.error(`--model 要用模型选单里的（现在：${MODEL || '空'}）`); process.exit(1); }
+const SEARCH_MODEL = opt('search-model', ''), SEARCH_FIRST = process.argv.includes('--search-first');
+if (SEARCH_MODEL && !isKnownModel(SEARCH_MODEL)) { console.error(`--search-model 要用模型选单里的（现在：${SEARCH_MODEL}）`); process.exit(1); }
 const PER = Number(opt('per', '8')), PAR = Number(opt('par', '2')), DRY = process.argv.includes('--dry');
 const MAX_DOC = 30 * 1024 * 1024;
 const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'rp-'));
@@ -130,6 +132,14 @@ async function sitemapLinks(site: string): Promise<string> {
   const prod = locs.filter(u => /product|produkt|instrument|solution|service|chanpin|\/p\/|item|detail/i.test(u));
   const pick = (prod.length ? prod : locs).slice(0, 400);
   return pick.length ? pick.map(u => `[${decodeURIComponent(u.replace(/^https?:\/\/[^/]+/, '')).slice(0, 100)}](${u})`).join('\n') : '';
+}
+
+async function searchProductPages(s: any): Promise<{ url: string; kind: string }[]> {
+  const { searchJson } = await import('@/lib/agents/search-llm');
+  const r = await searchJson(`联网检索「${s.name}${s.name_en ? ` / ${s.name_en}` : ''}」官网（${s.official_website}）上具体的科研产品 / 仪器 / 试剂 / 服务详情页（每个页面介绍一个产品或型号，最好带规格参数或资料下载），最多 ${PER} 个。只要这家公司自己官网（含地区站）的网址，不要电商、经销商、新闻。
+只返回 JSON：{"pages":[{"url":"https://...","name":"产品名"}]}`, SEARCH_MODEL, { tool_name: 'company-pipeline', task_name: 'Research Product Search Pages', institution: s.name }, { lenient: true }).catch(() => null);
+  const urls = [...((r?.parsed?.pages || []) as any[]).map(x => x?.url), ...(r?.sources || []).map(x => x.url)].filter((u: any) => typeof u === 'string' && /^https?:/.test(u) && sameSite(u, s.official_website));
+  return [...new Set(urls)].slice(0, PER).map(u => ({ url: u, kind: 'detail' }));
 }
 
 async function pickPages(s: any, md: string) {
@@ -261,6 +271,9 @@ await Promise.all(Array.from({ length: PAR }, async () => {
       // 首页挑不出（产品菜单是脚本加载的，安东帕）：本机 Chrome 再读一次首页；还不行读 sitemap
       if (!queue.length && localRenderAvailable()) { const r = await renderMarkdown(s.official_website); if (r && r.length > 200) queue = await pickPages(s, r); }
       if (!queue.length) { const sm = await sitemapLinks(s.official_website); if (sm) queue = await pickPages(s, sm); }
+      // 还挑不出：联网搜这家官网上的产品页（--search-model，海外大厂被反爬 / 目录要搜索时用；用户 10-23：科研仪器线海外该用就用 Gemini）
+      // --search-first：以前从首页抓不到的厂商（重试用），先拿搜到的产品详情页，再接首页挑的
+      if (SEARCH_MODEL && (SEARCH_FIRST || !queue.length)) queue = [...(await searchProductPages(s)), ...queue];
       if (process.env.DEBUG_CRAWL) console.log(`[debug] ${s.name} 首页 ${home.length} 字，挑出 ${queue.length} 页：${queue.map(q => q.url).join(' ')}`);
       const seen = new Set<string>();
       const fallback: any[] = [];   // 列表页上的产品：详情页都没抽出东西时兜底用
