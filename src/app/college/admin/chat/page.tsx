@@ -39,6 +39,8 @@ export default function CollegeChatPage() {
   const endRef = useRef<HTMLDivElement>(null);
   const loadThreads = useCallback(() => fetch('/api/college/admin/threads', { cache: 'no-store' }).then(r => r.json()).then(j => j.ok && setThreads(j.data)).catch(() => {}), []);
   useEffect(() => { loadThreads(); }, [loadThreads]);
+  // ?thread=<id> 直接打开某段对话（录片 / 分享用）
+  useEffect(() => { const t = new URLSearchParams(window.location.search).get('thread'); if (t) openThread(t); }, []);  // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [items]);
 
   const openThread = async (id: string) => {
