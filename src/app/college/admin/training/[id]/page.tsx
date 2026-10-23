@@ -43,7 +43,7 @@ export default function EnrollmentPage() {
   return (
     <div>
       <PageHead eyebrow="III · Training · Record" zh={<>{d.course?.role}<span style={{ display: 'inline', fontSize: 18, color: 'var(--ink3)', marginLeft: 10 }}>{d.nova_name}</span></>} en={d.model_label && d.model_label !== d.student_name ? `${d.student_name} · ${d.model_label}` : d.student_name || 'no model endpoint'}
-        extra={<><Link href="/college/admin/training"><Btn kind="ghost">← 学籍一览</Btn></Link><a href={`/lab/${d.space_id}`} target="_blank" rel="noreferrer"><Btn kind="ghost">看这门课 ↗</Btn></a>{d.status === 'graduated' && <a href={`/college/g/${d.space_id}`} target="_blank" rel="noreferrer"><Btn kind="gold">毕业生档案 ↗</Btn></a>}</>} />
+        extra={<><Link href="/college/admin/training"><Btn kind="ghost">← 学籍一览</Btn></Link><a href={`/lab/${d.space_id}`} target="_blank" rel="noreferrer"><Btn kind="ghost">看这门课 ↗</Btn></a><a href={`/college/s/${d.id}`} target="_blank" rel="noreferrer"><Btn kind="ghost">学习回放 ↗</Btn></a>{d.status === 'graduated' && <a href={`/college/g/${d.space_id}`} target="_blank" rel="noreferrer"><Btn kind="gold">毕业生档案 ↗</Btn></a>}</>} />
 
       <div className="ca-hero">
         <img className="bg" src="/college/crest.svg" alt="" />
