@@ -26,7 +26,7 @@ const cover = (line, sub) => `${BASE}/video/cover-work.html?line=${encodeURIComp
 
 export default [
   { cookie: { name: 'auth_token', value: TOKEN, url: BASE } },
-  { pause: true }, { go: cover('像机考，|又是真活', '三种做法 · 设计台 · 代码台 · 插件 · 手机'), wait: 2500 }, { resume: true },
+  { pause: true }, { go: cover('三种做题方法：|考试台 · 真活插件 · 录屏提交', '候选人怎么做真活'), wait: 2500 }, { resume: true },
   { note: 'cover' }, { hold: 7 },
 
   // 三种做法
@@ -49,6 +49,6 @@ export default [
   { pause: true }, { go: `${BASE}/video/phone.html?url=${encodeURIComponent('/work/FV4cetwjYdw')}`, wait: 7000 }, { resume: true },
   { note: 'mobile' }, { eval: run(`await L.sleep(3000); const f = document.getElementById('f'); try { const d = f.contentDocument; const t0 = performance.now(); const y = 900; const step = now => { const t = Math.min(1, (now - t0) / 2600); d.documentElement.scrollTop = y * (t < .5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2) / 2); if (t < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); } catch {} await L.sleep(6000); return 1;`), timeout: 30 },
 
-  { pause: true }, { go: cover('操作台，|越收越多', '四种站内台 · 插件 · 录屏 · 下一步：自动校核的机考台'), wait: 2500 }, { resume: true },
+  { pause: true }, { go: cover('三条路，|操作都记得下', '考试台 · 真活插件 · 录屏提交 · 下一步：自动校核的机考台'), wait: 2500 }, { resume: true },
   { note: 'end' }, { hold: 7 },
 ];
