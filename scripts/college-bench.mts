@@ -26,12 +26,11 @@ const courses = COURSES.map(p => all.find((c: any) => c.id.startsWith(p))).filte
 log(`课程 ${courses.length}：${courses.map(c => `${c.role}（${c.company || c.title.slice(0, 10)}）`).join('、')}`);
 log(`模型 ${MODELS.join('、')}`);
 
-// 跑分学员：每个模型一位「Bench · 模型」学员（和日常学员分开，不混分数）
+// 学员 = 模型（college_students.model_id 唯一）：有就用，没有（如 deepseek）就建一位平台学员
 async function benchStudent(model: string) {
-  const name = `Bench · ${model}`;
-  const { data } = await db.from('college_students').select('id').eq('name', name).maybeSingle();
+  const { data } = await db.from('college_students').select('id').eq('model_id', model).maybeSingle();
   if (data) return data.id;
-  const { data: row, error } = await db.from('college_students').insert({ name, kind: 'platform', model_id: model, org: 'benchmark', created_by: 'bench' }).select('id').single();
+  const { data: row, error } = await db.from('college_students').insert({ name: model, kind: 'platform', model_id: model, org: 'benchmark', created_by: 'bench' }).select('id').single();
   if (error) throw error; return row.id;
 }
 
