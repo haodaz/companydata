@@ -42,23 +42,23 @@ const html = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><tit
   .top { display: flex; align-items: flex-start; justify-content: space-between; }
   .crest { display: flex; align-items: center; gap: 16px; } .crest img { width: 64px; height: 64px; } .crest b { display: block; font: 900 22px "Songti SC", "STSong", serif; letter-spacing: .14em; } .crest small { color: #6b7190; font-size: 12px; letter-spacing: .22em; }
   .eyebrow { font: 700 13px/1 ui-monospace, Menlo, monospace; letter-spacing: .3em; color: #b08d57; text-align: right; }
-  h1 { font: 900 50px/1.2 "Songti SC", "STSong", serif; margin: 22px 0 6px; letter-spacing: .02em; } h1 em { font-style: normal; color: #b08d57; }
-  .sub { font-size: 20px; color: #4a5070; margin: 0 0 20px; }
+  h1 { font: 900 46px/1.2 "Songti SC", "STSong", serif; margin: 22px 0 6px; letter-spacing: .02em; } h1 em { font-style: normal; color: #b08d57; }
+  .sub { font-size: 18px; color: #4a5070; margin: 0 0 14px; }
   .proto { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 0 0 20px; border: 1px solid rgba(22,32,74,.15); border-radius: 14px; overflow: hidden; background: rgba(255,255,255,.7); }
   .proto div { padding: 12px 18px; border-right: 1px solid rgba(22,32,74,.1); font-size: 14px; color: #3b405a; line-height: 1.5; } .proto div:last-child { border-right: 0; }
   .proto b { display: block; font-size: 16px; color: #16204a; margin-bottom: 2px; } .proto i { font-style: normal; font: 700 11px ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #b08d57; margin-right: 8px; }
   table { border-collapse: separate; border-spacing: 0; width: 100%; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 6px 30px rgba(22,32,74,.08); }
-  th { text-align: left; padding: 14px 18px; background: #16204a; color: #fff; font-size: 16px; font-weight: 700; } th.h small { display: block; font-weight: 400; color: rgba(255,255,255,.6); font-size: 12px; margin-top: 2px; }
+  th { text-align: left; padding: 10px 16px; background: #16204a; color: #fff; font-size: 16px; font-weight: 700; } th.h small { display: block; font-weight: 400; color: rgba(255,255,255,.6); font-size: 12px; margin-top: 2px; }
   th.m { background: #fff; color: #16204a; width: 250px; border-top: 1px solid #ebe7dc; } th.m b { font-size: 19px; } th.m small { display: block; font-weight: 400; color: #8a8fa6; font-size: 12px; margin-top: 2px; }
   thead th.m { background: #16204a; color: #fff; }
-  td.c { padding: 14px 18px; border-top: 1px solid #ebe7dc; vertical-align: middle; } td.avg { background: #fbf8f1; }
-  .row { display: flex; align-items: center; gap: 8px; } .pill { display: inline-block; min-width: 50px; text-align: center; font-weight: 800; font-size: 22px; padding: 5px 8px; border-radius: 9px; }
+  td.c { padding: 9px 16px; border-top: 1px solid #ebe7dc; vertical-align: middle; } td.avg { background: #fbf8f1; }
+  .row { display: flex; align-items: center; gap: 8px; } .pill { display: inline-block; min-width: 46px; text-align: center; font-weight: 800; font-size: 20px; padding: 4px 7px; border-radius: 9px; }
   .arr { width: 18px; height: 2px; background: #c9c3b4; position: relative; } .arr::after { content: ''; position: absolute; right: -1px; top: -4px; border: 5px solid transparent; border-left-color: #c9c3b4; }
   .g { font-size: 15px; font-weight: 800; } .g.up { color: #0d7a52; } .g.dn { color: #b42318; }
-  .w { margin-top: 7px; font-size: 14px; color: #4a5070; } .w b { font-size: 17px; color: #16204a; } .w span { color: #9aa0b4; } .w.muted { color: #c3c7d6; } .na { color: #c3c7d6; font-size: 18px; }
+  .w { margin-top: 4px; font-size: 13px; color: #4a5070; } .w b { font-size: 17px; color: #16204a; } .w span { color: #9aa0b4; } .w.muted { color: #c3c7d6; } .na { color: #c3c7d6; font-size: 18px; }
   .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
-  .card { background: rgba(255,255,255,.8); border: 1px solid rgba(22,32,74,.12); border-radius: 14px; padding: 14px 18px; } .card i { font-style: normal; font: 700 11px ui-monospace, Menlo, monospace; letter-spacing: .22em; color: #b08d57; } .card b { display: block; font: 900 26px "Songti SC", "STSong", serif; margin: 4px 0 2px; } .card p { margin: 0; font-size: 14px; color: #4a5070; line-height: 1.55; }
-  .foot { position: absolute; left: 72px; right: 72px; bottom: 34px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 13px; color: #6b7190; }
+  .card { background: rgba(255,255,255,.8); border: 1px solid rgba(22,32,74,.12); border-radius: 14px; padding: 14px 18px; } .card i { font-style: normal; font: 700 11px ui-monospace, Menlo, monospace; letter-spacing: .22em; color: #b08d57; } .card b { display: block; font: 900 23px "Songti SC", "STSong", serif; margin: 3px 0 2px; } .card p { margin: 0; font-size: 13px; color: #4a5070; line-height: 1.5; }
+  .foot { position: absolute; left: 72px; right: 72px; bottom: 26px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 13px; color: #6b7190; }
   .sign { font: 700 15px "Songti SC", "STSong", serif; color: #16204a; letter-spacing: .12em; } .sign small { display: block; font: 400 11px ui-monospace, Menlo, monospace; letter-spacing: .22em; color: #8a8fa6; margin-top: 3px; }
   .legend span { display: inline-block; width: 13px; height: 13px; border-radius: 3px; margin: 0 5px 0 12px; vertical-align: -2px; }
 </style></head><body><div class="page"><div class="frame"></div>
