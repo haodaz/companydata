@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>真活出题的两轮样本训练：方法、训练集与结果</title>
+<style>
+  @page { size: A4; margin: 18mm 18mm 20mm; }
+  html, body { margin: 0; font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif; color: #1a1a2e; background: #fff; font-size: 11.5pt; line-height: 1.75; }
+  .doc { max-width: 174mm; margin: 0 auto; }
+  h1 { font-size: 24pt; line-height: 1.3; margin: 0 0 6px; }
+  .meta { color: #666; font-size: 10pt; margin-bottom: 18px; }
+  .abstract { background: #f6f7fb; border-left: 3px solid #6055f5; padding: 10px 14px; font-size: 10.5pt; margin: 0 0 18px; }
+  h2 { font-size: 15pt; margin: 22px 0 8px; padding-top: 6px; border-top: 1px solid #e8e9f0; page-break-after: avoid; }
+  h3 { font-size: 12pt; margin: 14px 0 4px; page-break-after: avoid; }
+  p { margin: 0 0 8px; text-align: justify; }
+  ul, ol { margin: 0 0 8px; padding-left: 20px; } li { margin: 2px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 6px 0 10px; page-break-inside: avoid; }
+  th { text-align: left; padding: 5px 7px; background: #f3f2ff; font-weight: 700; } td { padding: 4px 7px; border-bottom: 1px solid #eee; vertical-align: top; }
+  td.n, th.n { text-align: right; white-space: nowrap; }
+  figure { margin: 10px 0 12px; page-break-inside: avoid; } figure img { width: 100%; border: 1px solid #e3e4ee; border-radius: 6px; display: block; }
+  figcaption { font-size: 9.5pt; color: #666; margin-top: 4px; }
+  a { color: #6055f5; text-decoration: none; }
+  .small { font-size: 9.5pt; color: #555; }
+  .kv { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 8px 0 12px; }
+  .kv div { border: 1px solid #e3e4ee; border-radius: 8px; padding: 8px 10px; font-size: 10pt; } .kv b { display: block; font-size: 16pt; color: #2b2670; }
+</style></head>
+<body><div class="doc">
+
+<h1>真活出题的两轮样本训练：方法、训练集与结果</h1>
+<div class="meta">百业AI｜真活 · 平方智能 · 2026-10-24</div>
+
+<div class="abstract">
+真活出题功能上线后，业务负责人在实际试用中反馈：生成的题目不像行家会出的题——主题被无关岗位带偏、贴进去的案例被当作题材而不是样板、题目缺少分步推进和可核算的数。针对这些反馈，我们在两天内做了两轮训练：第一轮用反馈时获取的两份案例记录作为样板，第二轮把公开的案例集、职业技能等级认定实操考核文件和工程作业题收集成 324 份骨架样本库，让生成器按岗位自动参照。用同一个出题模型、同一把评分尺比较训练前、第一轮、第二轮三组题，第二轮不仅在同一需求上出得更紧，还第一次出得了工程师类和蓝领实操类的题。本文说明问题、方法、训练集、结果与成本。
+</div>
+
+<h2>一、问题：试用反馈</h2>
+<p>真活的出题逻辑是：拿一家企业此刻真实的业务问题，配上材料和评分标准，考候选人能不能干这个活。生成器从企业画像、在招岗位、职业典型任务、行业标准里架构题目。上线后业务负责人实际出了几道题，反馈集中在三点：</p>
+<ol>
+  <li><b>主题被无关岗位带偏。</b>给高瓴资本出「投资分析师」的题，企业库里没有这个岗位，生成器取了同企业的 ESG 岗位做参考，两次都出成了「ESG-DCF 整合建模」，不是投资分析师的活。</li>
+  <li><b>给了好题也用不上。</b>把一份咨询面试案例（Space Explorer 太空旅游市场进入）整段贴进「额外要求」，生成器把它当成题材合并进题目，丢掉了案例最有价值的部分：一步一步给信息、每步有问、有参考答案和可算的数。</li>
+  <li><b>题目是开放的整理题。</b>没有推进结构，没有测算，像文书作业；评分标准泛泛。</li>
+</ol>
+<p>反馈里还有一个观察：商学院出作业的做法，就是从上一届的题里拿一份，改改故事背景、改改数字，再出一次。这是一件确定的事，机器应该做得好。于是决定做「样本训练」：给生成器一批好题当样板。</p>
+
+<h2>二、方法：样本是骨架，不是题库</h2>
+<p>一道好题进库，不是原样存，而是拆成<b>骨架</b>：</p>
+<ul>
+  <li><b>推进步骤</b>：几步、每步问什么（搭框架 / 看图表下判断 / 测算 / 出主意 / 综合建议）；</li>
+  <li><b>每步给的信息</b>：当步才披露的背景、数据表、图表；</li>
+  <li><b>参考答案</b>和<b>要算的数</b>：算式只含数字和四则运算，由代码真算一遍，模型给的「答案」和「数据」对不上就按算式改；</li>
+  <li><b>评法手法</b>：这份题好在哪（数据按需逐步披露、结论回扣目标、测算要解读商业含义、配分扣完为止、否定项一票否决……）。</li>
+</ul>
+<p>出题时的用法有两种。出题人自己交了参考资料（过往用过的题、内部考题），就「改背景换数字」：每一步的题型、问法、算法原样保留，故事换成这家企业此刻的真实处境，数据表换成同结构同量级但不同的数字，答案重算。出题人什么都不给，生成器在后台按岗位、行业、要求的关键词在库里粗筛 40 份，再让模型挑 0–2 份当参照，「照结构出新题」——这一层对用户不可见。</p>
+<p>出来的题多一层「推进步骤」：候选人一步一步看信息、作答，答完当步才能点开下一步；参考答案和算式只有出题人和评卷 AI 看得到；评卷按算出来的数核对（±5% 内算对），判断题看结论和理由是否成立。两轮训练的出题模型、评分模型、基线模型完全相同（Claude Opus 5.5），只有参照库不同。同时修正了第一点反馈：参考岗位不是本岗时，提示词明说「题目主题由岗位决定，不要被参考岗位带偏」。</p>
+
+<h2>三、第一轮：两份记录</h2>
+<p>反馈时获取了两份被认可的好题记录：</p>
+<table>
+  <thead><tr><th>记录</th><th>来源与形式</th><th>拆成的骨架</th></tr></thead>
+  <tbody>
+    <tr><td>McBurger Co · 中国市场增长战略</td><td>咨询面试案例，PDF 12 页，高难度，面试官推进</td><td>6 步：搭框架 → 读各层级城市收入分布图下结论 → 顾客参与度追平竞品的收入增幅（正推）→ 达到目标增幅所需的参与度变化（反推）→ 提升参与度的举措 → 向董事会汇报。9 组算式全部代码核算通过。</td></tr>
+    <tr><td>Space Explorer · 太空旅游市场进入</td><td>面试案例，docx，中等难度，分阶段给数据</td><td>5 步：搭框架 → 先定价再估市场规模与经济可行性 → 两类客群优先级 → 面对 Virgin Galactic 如何竞争 → 进入与否的建议与风险。</td></tr>
+  </tbody>
+</table>
+<p>照这两份出了四道题，全部用「改背景换数字」：百胜中国的战略分析师（照 McBurger，六步一一对应，数字全换，AI 基线 77）、高瓴资本的投资分析师（照 Space Explorer，基线 73）、武岳峰资本「能看懂具身智能的人来做投资」（自动挑参照，库里只有两份，挑到 Space Explorer，基线 79），以及用对话方式出的一道（基线 66）。</p>
+<figure><img src="case-百胜-推进步骤.png" alt=""><figcaption>图 1 · 第一轮：百胜中国「必胜客收购后增长路径诊断」的推进步骤页。六步与 McBurger 一一对应，每步的参考答案和算式只有出题人与评卷看得到。</figcaption></figure>
+<p>第一轮的局限很清楚：库里只有两份商业分析案例，出不了别的类型；每道题都要出题人手选样本。</p>
+
+<h2>四、第二轮：把源挖开</h2>
+<p>第二轮的目标是让库大到生成器能自己挑参照，并覆盖商业分析以外的岗位。按「哪里有行家公认的好题」找了三类来源，全部由工具批量收集、解析、入库，人只做抽查。</p>
+<h3>4.1 三类来源</h3>
+<table>
+  <thead><tr><th style="width:17%">大类</th><th style="width:30%">来源与细节</th><th style="width:25%">拆成什么骨架</th><th style="width:28%">适用的真活场景</th></tr></thead>
+  <tbody>
+    <tr><td><b>咨询 / 商学院案例</b><br><span class="small">276 道</span></td><td>11 本 MBA 咨询俱乐部公开的 casebook（2008–2025：Darden、Kellogg、Wharton、Stern、Yale、MIT、McGill、Ross）。每道：面试官脚本、分阶段才给的数据表、参考答案、评分提示。</td><td>面试官推进式：4–8 步，每步的披露信息、参考答案、算式；手法如数据按需披露、结论回扣目标。</td><td>战略 / 投资 / 咨询 / 产品 / 运营 / 市场类岗位，以及「直接说要找什么样的人」的需求。文档 / 对账台，分步推进。</td></tr>
+    <tr><td><b>职业技能等级认定实操考核</b><br><span class="small">42 份 · 26 个工种</span></td><td>广东省人社厅技工院校技能等级认定公开的技术文件：技能考核试卷 / 样题、评分记录表、考场与考生准备通知单，按三级 / 四级 / 通用分档。</td><td>实操式：考核项目 / 工序各一步，条件（图纸、材料、设备、时间）、评分标准原文（配分、扣分档位、否定项）。</td><td>制造 / 电气 / 机械 / 服务类蓝领与技师岗位：电工、PLC、数控、钳工、维修、机器人运维、烹调等。设计台当机考台雏形，评分沿用人社口径。</td></tr>
+    <tr><td><b>工程 take-home 作业</b><br><span class="small">4 份（待扩）</span></td><td>公司自己公开在 GitHub 上的数据工程、软件工程作业题，带数据源、时限（2–5 小时）和评审口径。</td><td>作业式：取数 → 建模 → 产出 → 文档 / 测试，3–6 步；手法：可运行、README 说取舍、诚实标注边界。</td><td>程序员 / 数据工程 / 数据分析等工程师岗位。代码台或表格台，也适合「用自己的工具做 + 插件记过程」。</td></tr>
+  </tbody>
+</table>
+<h3>4.2 明细</h3>
+<table>
+  <thead><tr><th>Casebook</th><th class="n">道</th><th>Casebook</th><th class="n">道</th></tr></thead>
+  <tbody>
+    <tr><td>Ross 2019</td><td class="n">51</td><td>Yale 2013</td><td class="n">20</td></tr>
+    <tr><td>Stern 2023-24</td><td class="n">30</td><td>Wharton 2024-25</td><td class="n">18</td></tr>
+    <tr><td>Kellogg 2012</td><td class="n">29</td><td>Wharton 2017</td><td class="n">18</td></tr>
+    <tr><td>Kellogg 2020</td><td class="n">27</td><td>Wharton 2008</td><td class="n">18</td></tr>
+    <tr><td>McGill 2013</td><td class="n">23</td><td>Darden 2020-21</td><td class="n">12</td></tr>
+    <tr><td>Darden 2012-13</td><td class="n">20</td><td>MIT Sloan 2015</td><td class="n">10</td></tr>
+  </tbody>
+</table>
+<p class="small">题型分布：盈利改善 82、投资判断 66、市场进入 63、增长战略 31、定价 8、市场估算 5、运营 7，其余零星。</p>
+<p class="small"><b>实操考核的 26 个工种</b>：车工（数控车床）、铣工（数控铣床）、机床装调维修工、模具工（注射模）、钳工、电工、工业机器人系统运维员、制冷空调系统安装维修工、广电通信设备电子装接工、物联网安装调试员、网络与信息安全管理员、人工智能训练师、无人机装调检修工、汽车车身涂装修复工、砌筑工、钢筋工、化学检验员、工业废水处理工、消防安全管理员、物流服务师、企业人力资源管理师、营销员、互联网营销师（直播销售员）、中式烹调师、西式烹调师、餐厅服务员。来源两批共 99 个工种，这次收了 30 个，其余可续收。</p>
+<p class="small"><b>take-home 四份</b>：SpotOn 数据工程（Olist 电商数据入库）、Analytics &amp; Automation 数据工程（Amazon 评论去重管道）、NYC Jobs 数据工程（岗位数据集处理）、软件工程师模块化编码作业。</p>
+<h3>4.3 工具链与入库</h3>
+<p>案例集 PDF 按页抽文字，模型按每页开头标出每道题的页范围（11 本全部一次切准），逐题解析成骨架入库；实操包解压后取试卷、评分记录表、准备单（.doc 用系统工具抽字），按等级合成一份解析；作业题按文件解析。解析模型用千问 3.7 plus 跑批，头两本用 Claude Sonnet 做基准核对质量。324 份零失败。每份样本带类型（案例 / 作业 / 实操）、训练轮次（r1 / r2）、行业、题型、标签和职业实体（occupation_id）；324 份里 101 份挂上了职业，电工、钳工、模具工、化学检验员等 19 个蓝领工种职业库里还没有，补上即可全挂。</p>
+<figure><img src="r2-样本库.png" alt=""><figcaption>图 2 · 后台「样本库 · 训练素材」：每份可看骨架（步骤、每步信息、参考答案、算式、手法），33 页、324 份。</figcaption></figure>
+
+<h2>五、结果：三组题</h2>
+<div class="kv">
+  <div><b>5 道</b>训练前 · 业务负责人实际试用出的题 · 基线 52–79</div>
+  <div><b>4 道</b>第一轮 · 两份记录做样板 · 基线 66–79</div>
+  <div><b>3 道</b>第二轮 · 324 份库自动挑参照 · 基线 79–88</div>
+</div>
+<table>
+  <thead><tr><th>组</th><th>题</th><th>企业 · 要找的人</th><th>参照</th><th class="n">步</th><th class="n">基线</th><th>链接</th></tr></thead>
+  <tbody>
+    <tr><td rowspan="5">训练前</td><td>ESG-DCF 整合建模：为隆基绿能重估</td><td>高瓴 · 投资分析师</td><td>—（被 ESG 岗位带偏）</td><td class="n">—</td><td class="n">52</td><td><a href="https://www.aidataoffice.com/work/qyf7vRcSVbY/owner?k=bMXH9AFNWZNLgZAS">qyf7vRcSVbY</a></td></tr>
+    <tr><td>基金 ESG 整合方法论交付</td><td>高瓴 · 投资分析师</td><td>—（同上）</td><td class="n">—</td><td class="n">53</td><td><a href="https://www.aidataoffice.com/work/pwAo_5R0K18/owner?k=rpQd-moj71NPpzIC">pwAo_5R0K18</a></td></tr>
+    <tr><td>Space Explorer 投资初筛</td><td>高瓴 · 投资分析师</td><td>案例贴进额外要求（被当题材合并）</td><td class="n">—</td><td class="n">65</td><td><a href="https://www.aidataoffice.com/work/KG_RRI1HVRc/owner?k=0vls-Uxm6OnlR31r">KG_RRI1HVRc</a></td></tr>
+    <tr><td>构建 AI for Computing 能力图谱</td><td>鼎峰科创 · 投资分析师 AI 方向</td><td>—</td><td class="n">—</td><td class="n">67</td><td><a href="https://www.aidataoffice.com/work/Icm2xXhPIC0/owner?k=tSoqv2n04iHpjjYx">Icm2xXhPIC0</a></td></tr>
+    <tr><td>鼎峰 AI 方向投资梳理与量巡速览</td><td>武岳峰 · 投资分析师 AI 方向</td><td>—</td><td class="n">—</td><td class="n">79</td><td><a href="https://www.aidataoffice.com/work/SRi1-_BfqFo/owner?k=7DL7NkqAJUU8aJJy">SRi1-_BfqFo</a></td></tr>
+    <tr><td rowspan="4">第一轮</td><td>必胜客收购后增长路径诊断</td><td>百胜中国 · 战略分析师</td><td>McBurger，改背景换数字</td><td class="n">6</td><td class="n">77</td><td><a href="https://www.aidataoffice.com/work/FV4cetwjYdw/owner?k=46UqP7yTJ2AdyXed">FV4cetwjYdw</a></td></tr>
+    <tr><td>擎天租自营机队追加投资研判</td><td>高瓴 · 投资分析师</td><td>Space Explorer，改背景换数字</td><td class="n">5</td><td class="n">73</td><td><a href="https://www.aidataoffice.com/work/JIZ2F6WCNts/owner?k=HH_Ec_gUGPM-HND0">JIZ2F6WCNts</a></td></tr>
+    <tr><td>飞捷科思跟投与具身布局判断</td><td>武岳峰 · 能看懂具身智能的人来做投资</td><td>自动挑（Space Explorer）</td><td class="n">5</td><td class="n">79</td><td><a href="https://www.aidataoffice.com/work/UlopPAQtXog/owner?k=ttoZjPgBUfT-TE2O">UlopPAQtXog</a></td></tr>
+    <tr><td>具身智能赛道研判与配置建议（对话出题）</td><td>武岳峰 · 同上</td><td>同上，修订一轮</td><td class="n">5</td><td class="n">66</td><td><a href="https://www.aidataoffice.com/work/LR03wMt3_nQ/owner?k=j-k452AC7glXkhcr">LR03wMt3_nQ</a></td></tr>
+    <tr><td rowspan="3">第二轮</td><td>具身智能三选一领投判断</td><td>武岳峰 · 能看懂具身智能的人来做投资</td><td>自动挑：Rock Energy（casebook）</td><td class="n">3</td><td class="n">88</td><td><a href="https://www.aidataoffice.com/work/7U1PRPxQWVg/owner?k=CR6s5lrlWXdkuzAe">7U1PRPxQWVg</a></td></tr>
+    <tr><td>千问导购推荐下单归因评测模块</td><td>阿里巴巴 · 数据工程师（代码台）</td><td>自动挑：软件工程师 take-home</td><td class="n">4</td><td class="n">84</td><td><a href="https://www.aidataoffice.com/work/4M3njYU9GM0/owner?k=p6KlyKFv0n5cr1mg">4M3njYU9GM0</a></td></tr>
+    <tr><td>德布勒森试产线电气排故与调试</td><td>宁德时代 · 电气维修技师 PLC（设计台）</td><td>自动挑：电工 · 三级技能考核样题</td><td class="n">4</td><td class="n">79</td><td><a href="https://www.aidataoffice.com/work/ZGAjovEtLYU/owner?k=jASTxlkwmwgx4yev">ZGAjovEtLYU</a></td></tr>
+  </tbody>
+</table>
+<p class="small">基线 = 出题后让 AI 先做一遍、用同一套评分标准评出的分数，三组同一把尺。链接带管理密钥，打开即出题人视角（推进步骤、材料包、评分标准、基线、做题情况）。</p>
+
+<h3>5.1 同一个需求的三代</h3>
+<p>「武岳峰资本，要一个能看懂具身智能的人来做投资」这个需求三组都出过。训练前是一道整理题：把近期投资梳理成表、写一张项目速览卡。第一轮是五步跟投测算：搭框架、算当前持股与稀释、判断该加注大脑层还是补位零部件、怎么拿到份额、给投委会建议。第二轮生成器自动挑到了一道 casebook 案例当参照，出成三步三选一领投判断：三个具身硬件项目算量产第一年的经营利润、排序、写一页纸领投建议。步数少了，每一步更重，基线从 79 到 88。</p>
+<figure><img src="r2-武岳峰-推进步骤.png" alt=""><figcaption>图 3 · 第二轮：武岳峰「具身智能三选一领投判断」的推进步骤页。</figcaption></figure>
+
+<h3>5.2 第二轮才出得了的两类</h3>
+<p><b>工程师类。</b>阿里巴巴的数据工程师，生成器挑到了软件工程师 take-home 作业当参照，题目变成「千问导购推荐下单归因评测模块」：三个函数逐步实现（购买映射 → 命中指示 → 指标计算），最后一步交可运行工程、README 和诚实的 Next Steps；每步的参考答案带数据样例与算式。代码台作答，自测用例在浏览器里跑。</p>
+<p><b>蓝领实操类。</b>宁德时代的电气维修技师（PLC 控制），生成器从 324 份里自己挑到了广东人社的电工三级实操样题：排故、PLC 多种液体混合控制、步进电机、变频器四个考核项目，原样换成德布勒森试产线的注液机真空泵、冷却液配比站、分度转台、出料输送线。设计台作答：左边分步推进，中间画接线图，右边参数表每项写着整定依据。评分沿用人社评分表的口径。</p>
+<figure><img src="r2-宁德-设计台.png" alt=""><figcaption>图 4 · 第二轮：宁德时代 PLC 题的候选人视角（设计台）。</figcaption></figure>
+
+<h3>5.3 观察与局限</h3>
+<ul>
+  <li>训练前的三点反馈在第二轮都不再出现：主题由岗位决定，参照只提供结构，题目有推进和可核算的数。</li>
+  <li>参照库覆盖决定了能出什么类型：第一轮只有商业分析，第二轮有了工程师和蓝领实操。take-home 只有 4 份，工程师类的参照还薄。</li>
+  <li>基线分数只反映「AI 自己做这道题能得几分」，不等于题目质量；哪一组更像一道能拿去用的题，要由行家判断。</li>
+  <li>评分有抖动（同一份作答两次评分可差 10 分左右），尺子本身需要持续校准。</li>
+</ul>
+
+<h2>六、成本</h2>
+<p>按 Claude Sonnet 5.5 单价折算（输入 3 美元 / 百万 token，输出 15 美元 / 百万）。模型调用的 token 数来自账本里的真实记录，工程与抽查按会话估算。</p>
+<table>
+  <thead><tr><th>项目</th><th class="n">调用</th><th class="n">输入</th><th class="n">输出</th><th class="n">费用（美元）</th></tr></thead>
+  <tbody>
+    <tr><td>样本解析 + 切题</td><td class="n">333</td><td class="n">130 万</td><td class="n">64 万</td><td class="n">13.4</td></tr>
+    <tr><td>出题 / 基线 / 评分 / 修订（12 道）</td><td class="n">52</td><td class="n">45 万</td><td class="n">36 万</td><td class="n">6.7</td></tr>
+    <tr><td>工程与抽查（写工具、看骨架、改提示、写文档）</td><td class="n">—</td><td class="n">≈ 200 万</td><td class="n">≈ 20 万</td><td class="n">9.0</td></tr>
+    <tr><td><b>合计</b></td><td></td><td></td><td></td><td class="n"><b>≈ 29</b></td></tr>
+  </tbody>
+</table>
+<p>以后同样 300 份一批用工具跑，解析约 13 美元，人只花抽查的时间。</p>
+
+<h2>七、下一步</h2>
+<ol>
+  <li><b>样本工程常态化</b>：每周一批——其余 60 多个广东工种、更多 casebook、各省人社实操文件、带评审口径的工程作业题；面经类碎片做统计，归纳每个职业的考核骨架。工具 + 单一模型跑，人只抽查。</li>
+  <li><b>把样本挂满实体图谱</b>：补齐职业库里缺的蓝领工种，实操样本对应行业标准和老师傅规则，出题先按职业取骨架再挑参照。</li>
+  <li><b>自主机考台</b>：电路 / PLC / CAD / 数控这一类需要能自动校核的考试台；现在的设计台（参数表 + 接线图草图 + 说明）是雏形。</li>
+</ol>
+
+</div></body></html>
