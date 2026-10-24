@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>手机预览</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #f6f7fb; font-family: ui-sans-serif, system-ui, -apple-system, "PingFang SC", sans-serif; overflow: hidden; }
+  .wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 70px; }
+  .phone { width: 390px; height: 800px; border-radius: 44px; background: #111; padding: 14px; box-shadow: 0 30px 80px rgba(20,24,60,.25); position: relative; }
+  .phone::before { content: ''; position: absolute; left: 50%; top: 22px; width: 120px; height: 28px; background: #111; border-radius: 14px; transform: translateX(-50%); z-index: 2; }
+  .phone iframe { width: 100%; height: 100%; border: 0; border-radius: 32px; background: #fff; }
+  .cap { max-width: 440px; color: #1a1a2e; }
+  .cap .eyebrow { font-size: 13px; letter-spacing: 3px; color: #6055f5; font-weight: 700; }
+  .cap h1 { font-size: 40px; margin: 8px 0 10px; }
+  .cap p { font-size: 18px; line-height: 1.8; color: #3b405a; }
+</style></head>
+<body>
+  <div class="wrap">
+    <div class="phone"><iframe id="f" src=""></iframe></div>
+    <div class="cap"><div class="eyebrow">手机上也能做</div><h1 id="h">候选人用手机打开参与链接</h1><p id="p">看题、看材料、选做法、留名字开始；在本页操作台做，或者用自己的工具做、装插件记过程。</p></div>
+  </div>
+  <script>
+    const q = new URLSearchParams(location.search);
+    document.getElementById('f').src = q.get('url') || '/work';
+    if (q.get('h')) document.getElementById('h').textContent = q.get('h');
+    if (q.get('p')) document.getElementById('p').textContent = q.get('p');
+  </script>
+</body></html>

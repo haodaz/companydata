@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>百业AI｜真活 · 训练素材与题目清单 2026-10-24</title>
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  html, body { margin: 0; font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif; color: #1a1a2e; background: #fff; }
+  .pg { width: 297mm; height: 210mm; box-sizing: border-box; padding: 14mm 16mm 12mm; page-break-after: always; position: relative; display: flex; flex-direction: column; }
+  .pg:last-child { page-break-after: auto; }
+  .eyebrow { font-size: 10px; letter-spacing: 3px; color: #6055f5; font-weight: 700; }
+  h1 { font-size: 34px; margin: 6px 0 10px; } h2 { font-size: 21px; margin: 4px 0 6px; } h3 { font-size: 14px; margin: 10px 0 4px; color: #2b2670; }
+  p, li { font-size: 12.5px; line-height: 1.7; color: #3b405a; }
+  .cover { background: linear-gradient(135deg, #f6f7fb, #ecebff); justify-content: center; } .cover h1 { font-size: 42px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .box { border: 1px solid #e3e4ee; border-radius: 12px; padding: 12px 16px; background: #fff; } .box b { display: block; font-size: 14px; margin-bottom: 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 6px; }
+  th { text-align: left; padding: 6px 8px; background: #f3f2ff; } td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+  td.n, th.n { text-align: right; }
+  a { color: #6055f5; text-decoration: none; word-break: break-all; }
+  .foot { position: absolute; left: 16mm; bottom: 8mm; font-size: 10px; color: #999; letter-spacing: 1px; }
+  .step { position: absolute; right: 16mm; top: 12mm; font-size: 12px; color: #999; letter-spacing: 2px; }
+  .tags span { display: inline-block; border: 1px solid #e0e0ee; border-radius: 999px; padding: 2px 9px; font-size: 11px; margin: 2px 4px 2px 0; color: #3b405a; }
+</style></head>
+<body>
+
+<section class="pg cover">
+  <div class="eyebrow">百业AI｜真活 · 样本工程</div>
+  <h1>训练素材与题目清单</h1>
+  <p style="font-size:15px; max-width: 760px; color:#1a1a2e">两轮训练用了什么素材、库里现在有什么、出了哪些题、花了多少钱。2026-10-23 至 10-24。</p>
+  <div class="cols" style="margin-top: 20px; max-width: 900px">
+    <div class="box"><b>第一轮 · 2 份</b><p>老王给的两份案例：McBurger 中国市场增长战略（咨询面试案例，PDF）、Space Explorer 太空旅游市场进入（面试案例，docx）。</p></div>
+    <div class="box"><b>第二轮 · 322 份</b><p>三大类：MBA 咨询 casebook 276 道；职业技能等级认定实操考核 42 份（26 个工种）；工程 take-home 4 份。库里合计 324 份。</p></div>
+    <div class="box"><b>题目 · 12 道</b><p>训练前 5 道（老王出的）、第一轮 4 道、第二轮 3 道，都带 AI 基线，链接在后页。</p></div>
+    <div class="box"><b>成本 · ≈ 29 美元</b><p>按 Sonnet 5.5 单价折算：解析切题 13.4、出题评分 6.7、工程抽查 9。</p></div>
+  </div>
+  <div class="foot">2026-10-24 · 平方智能 · 内部</div>
+</section>
+
+
+<section class="pg">
+  <div class="step">总览</div>
+  <div class="eyebrow">三大类训练集</div>
+  <h2>大类 · 细节 · 适用的真活场景</h2>
+  <table>
+    <thead><tr><th style="width:13%">大类</th><th style="width:27%">来源与细节</th><th style="width:27%">拆成什么骨架</th><th style="width:33%">适用场景（岗位 · 操作台 · 考什么）</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>1 · 咨询 / 商学院案例</b><br><span style="color:#999">276 道 · r2</span></td>
+        <td>11 本 MBA 咨询俱乐部 casebook（2008–2025，Darden / Kellogg / Wharton / Stern / Yale / MIT / McGill / Ross）。每道：面试官脚本、分阶段才给的 exhibit 数据表、参考答案、评分提示。题型：盈利改善 82、投资判断 66、市场进入 63、增长战略 31、定价 8、市场估算 / 运营等。</td>
+        <td>interviewer-led：搭框架 → 看图表下判断 → 测算（正推 / 反推）→ 出主意 → 综合建议，4–8 步；每步的 reveal（当步给的数据）、expected（参考答案）、calc（算式，代码真算）；style_notes 记手法（数据按需逐步披露、结论回扣目标、测算要解读商业含义）。</td>
+        <td>战略 / 投资 / 咨询 / 产品 / 运营 / 市场类岗位，以及「直接说要找什么样的人」的需求（能看懂某行业来做投资、能做增长测算的人）。<b>文档 / 对账台</b>，分步推进；评分核对测算数（±5%）和判断理由。第二轮示例：武岳峰 · 具身智能三选一领投判断（基线 88）。</td>
+      </tr>
+      <tr>
+        <td><b>2 · 工程 take-home 作业</b><br><span style="color:#999">4 份 · r2（待扩）</span></td>
+        <td>公司自己公开在 GitHub 的作业题：SpotOn、Analytics &amp; Automation、NYC Jobs 三份数据工程，一份软件工程。带数据源 / 接口、时限（2–5 小时）、评审口径（可运行、README、取舍、边界情况）。下一批：datadriven 等整理的 47 份带 rubric 的真题、数据分析 / 产品 / 设计类作业。</td>
+        <td>take-home：取数 → 建模 / 清洗 → 产出 → 文档 / 测试，3–6 步；每步 reveal 是输入（数据集、接口、约束），expected 是评审看什么；style_notes：限定时长、要可运行、README 说取舍、诚实标注未做的。</td>
+        <td>程序员 / 数据工程 / 数据分析 / 算法 / 后端等工程师岗位。<b>代码台</b>（浏览器里跑自测用例）或 <b>表格 / 数据台</b>；也适合「用自己的工具做 + 插件记过程」。第二轮示例：阿里 · 千问导购推荐下单归因评测模块（基线 84）。</td>
+      </tr>
+      <tr>
+        <td><b>3 · 职业技能等级认定实操考核</b><br><span style="color:#999">42 份 · 26 工种 · r2</span></td>
+        <td>广东人社厅技工院校技能等级认定的公开技术文件：技能考核试卷 / 样题、评分记录表、考场与考生准备通知单，按三级 / 四级 / 通用分档。工种覆盖数控车铣、机床装调、模具、钳工、电工、工业机器人、制冷、物联网、网络安全、AI 训练师、无人机、汽车涂装、砌筑、钢筋、化学检验、废水处理、消防、物流、HR、营销、直播销售、中西烹调、餐厅服务。其余 60 多个工种可续收。</td>
+        <td>practical：考核项目 / 工序各一步（排故、装调、编程、检测、文明生产），reveal 是条件（图纸、材料、设备、时间），expected 是评分标准原文（配分、扣分档位、否定项），calc 为空；style_notes：配分扣完为止、超差不得分、否定项一票否决、自检与实测对比。</td>
+        <td>制造 / 电气 / 机械 / 服务类蓝领与技师岗位：电工、PLC、数控、钳工、维修、机器人运维、烹调等。<b>设计台</b>（参数表 + 接线 / 工艺草图 + 说明）当机考台雏形，也可配录屏做真实操作；评分直接沿用人社评分表口径。第二轮示例：宁德时代 · 德布勒森试产线电气排故与调试（基线 79）。下一步：自主机考台（电路 / PLC / CAD / 数控可自动校核）。</td>
+      </tr>
+      <tr>
+        <td><b>第一轮 · 老王的 2 份</b><br><span style="color:#999">r1</span></td>
+        <td>McBurger 中国市场增长战略（咨询案例 PDF）、Space Explorer 太空旅游市场进入（docx）。</td>
+        <td>同第 1 类骨架；是第一轮「改背景换数字」的模板。</td>
+        <td>第一轮四道题全部由它们而来；第二轮也可被自动挑中（武岳峰 r1 那道挑的就是 Space Explorer）。</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="margin-top:8px">出题时的用法：出题人不给参考时，生成器按岗位 / 行业 / 要求的关键词先在库里粗筛 40 份（蓝领岗位优先实操类，其余类型优先案例与 take-home），再让模型挑 0–2 份当参照，照结构出新题；出题人自己交的参考资料则「改背景换数字」。</p>
+  <div class="foot">百业AI｜真活 · 训练素材 · 三大类总览</div>
+</section>
+<section class="pg">
+  <div class="step">素材 · 第一类</div>
+  <div class="eyebrow">咨询 / 商学院案例 · 276 道</div>
+  <h2>11 本 MBA 咨询俱乐部 casebook（公开 PDF）</h2>
+  <p>每道都是面试官脚本 + exhibit 数据 + 参考答案，考思辨与测算。工具按页切题、拆成骨架（步骤 / 每步给的信息 / 参考答案 / 算式代码核算）入库。题型分布：盈利改善 82、投资判断 66、市场进入 63、增长战略 31、定价 8、市场估算 5、运营 7，其余零星。</p>
+  <div class="cols">
+    <table><thead><tr><th>Casebook</th><th class="n">道</th></tr></thead><tbody>
+      <tr><td>Ross Casebook 2019</td><td class="n">51</td></tr>
+      <tr><td>Stern Casebook 2023-24</td><td class="n">30</td></tr>
+      <tr><td>Kellogg Casebook 2012</td><td class="n">29</td></tr>
+      <tr><td>Kellogg Casebook 2020</td><td class="n">27</td></tr>
+      <tr><td>McGill Casebook 2013</td><td class="n">23</td></tr>
+      <tr><td>Darden Casebook 2012-13</td><td class="n">20</td></tr>
+    </tbody></table>
+    <table><thead><tr><th>Casebook</th><th class="n">道</th></tr></thead><tbody>
+      <tr><td>Yale Casebook 2013</td><td class="n">20</td></tr>
+      <tr><td>Wharton Casebook 2024-25</td><td class="n">18</td></tr>
+      <tr><td>Wharton Casebook 2017</td><td class="n">18</td></tr>
+      <tr><td>Wharton Casebook 2008</td><td class="n">18</td></tr>
+      <tr><td>Darden Casebook 2020-21</td><td class="n">12</td></tr>
+      <tr><td>MIT Sloan Casebook 2015</td><td class="n">10</td></tr>
+      <tr><td><b>合计</b></td><td class="n"><b>276</b></td></tr>
+    </tbody></table>
+  </div>
+  <p style="margin-top:8px">来源：各校咨询俱乐部公开发布（hackingthecaseinterview、casebasix、caseinterview.com、学校 / 职业中心镜像）。原始 PDF 存 data/work-samples/casebooks/，不进代码仓库。</p>
+  <div class="foot">百业AI｜真活 · 训练素材</div>
+</section>
+
+<section class="pg">
+  <div class="step">素材 · 第二类</div>
+  <div class="eyebrow">职业技能等级认定实操考核 · 42 份 · 26 个工种</div>
+  <h2>广东省人社厅「技工院校职业技能等级认定体系建设」样题与技能操作考核准备通知单</h2>
+  <p>每个工种一个压缩包：技能考核试卷 / 样题、评分记录表、考场与考生准备通知单（理论考核不收）。按等级（三级 / 四级 / 通用）各合成一份骨架：考核项目 → 每项给的条件（图纸、材料、设备、时间）→ 评分标准原文（配分、扣分档位、否定项）→ 评法手法。这是蓝领岗位最权威的「老师傅怎么评」。</p>
+  <div class="cols">
+    <table><thead><tr><th>工种</th><th>等级</th></tr></thead><tbody>
+      <tr><td>车工（数控车床）</td><td>三级 · 四级</td></tr>
+      <tr><td>铣工（数控铣床）</td><td>三级 · 四级</td></tr>
+      <tr><td>机床装调维修工</td><td>三级 · 四级</td></tr>
+      <tr><td>模具工（注射模）</td><td>三级 · 四级</td></tr>
+      <tr><td>钳工</td><td>三级 · 四级</td></tr>
+      <tr><td>电工</td><td>三级 · 通用</td></tr>
+      <tr><td>工业机器人系统运维员</td><td>三级 · 四级</td></tr>
+      <tr><td>制冷空调系统安装维修工</td><td>三级 · 四级 · 通用</td></tr>
+      <tr><td>广电通信设备电子装接工</td><td>通用</td></tr>
+      <tr><td>物联网安装调试员</td><td>通用</td></tr>
+      <tr><td>网络与信息安全管理员</td><td>三级 · 四级</td></tr>
+      <tr><td>人工智能训练师</td><td>三级 · 四级</td></tr>
+      <tr><td>无人机装调检修工</td><td>通用</td></tr>
+    </tbody></table>
+    <table><thead><tr><th>工种</th><th>等级</th></tr></thead><tbody>
+      <tr><td>汽车车身涂装修复工</td><td>通用</td></tr>
+      <tr><td>砌筑工</td><td>三级 · 四级</td></tr>
+      <tr><td>钢筋工</td><td>三级 · 四级</td></tr>
+      <tr><td>化学检验员</td><td>三级 · 四级</td></tr>
+      <tr><td>工业废水处理工</td><td>通用</td></tr>
+      <tr><td>消防安全管理员</td><td>三级 · 四级</td></tr>
+      <tr><td>物流服务师</td><td>三级</td></tr>
+      <tr><td>企业人力资源管理师</td><td>四级</td></tr>
+      <tr><td>营销员</td><td>四级</td></tr>
+      <tr><td>互联网营销师（直播销售员）</td><td>三级 · 四级</td></tr>
+      <tr><td>中式烹调师</td><td>通用</td></tr>
+      <tr><td>西式烹调师</td><td>通用</td></tr>
+      <tr><td>餐厅服务员</td><td>通用</td></tr>
+      <tr><td><b>合计 26 个工种</b></td><td><b>42 份</b></td></tr>
+    </tbody></table>
+  </div>
+  <p style="margin-top:8px">来源：hrss.gd.gov.cn 两批共 99 个工种的公开附件，这次下了 30 个（3 个包服务器文件损坏、1 个仅理论）。其余 60 多个工种可随时续收。</p>
+  <div class="foot">百业AI｜真活 · 训练素材</div>
+</section>
+
+<section class="pg">
+  <div class="step">素材 · 第三类 与 第一轮</div>
+  <div class="eyebrow">工程 take-home 作业题 · 4 份</div>
+  <h2>公司自己公开在 GitHub 上的作业题（带评审口径）</h2>
+  <table><thead><tr><th>题</th><th>岗位类型</th><th>要交什么</th></tr></thead><tbody>
+    <tr><td>SpotOn · 数据工程 take-home（Olist 电商数据入库）</td><td>数据工程</td><td>Kaggle API 取数 → 对象存储 → Postgres 建模加载 → nextsteps.md</td></tr>
+    <tr><td>Analytics &amp; Automation · 数据工程 take-home（Amazon 评论去重管道）</td><td>数据工程</td><td>PySpark / Glue 读取、去重、两张聚合表、写回；2 小时</td></tr>
+    <tr><td>NYC Jobs · 数据工程 take-home（岗位数据集处理）</td><td>数据工程</td><td>数据画像、清洗转换函数、测试用例、部署说明</td></tr>
+    <tr><td>软件工程师 take-home（模块化编码作业）</td><td>软件工程</td><td>可运行工程 + README + 取舍说明 + 指标迭代</td></tr>
+  </tbody></table>
+  <p>骨架：按做的顺序拆成 3–6 步，每步写输入、要做什么、评审看什么；手法是限定时长、可运行、README 说取舍、诚实标注边界。</p>
+  <h2 style="margin-top:16px">第一轮 · 老王给的 2 份</h2>
+  <table><thead><tr><th>题</th><th>类型</th><th>骨架</th></tr></thead><tbody>
+    <tr><td>McBurger Co · 中国市场增长战略（咨询面试案例，PDF 12 页）</td><td>增长战略 · 高难度</td><td>6 步：搭框架 → 读收入分布图 → 参与度正推 → 反推 → 出主意 → 董事会汇报；9 组算式全部代码核算通过</td></tr>
+    <tr><td>Space Explorer · 太空旅游市场进入（面试案例，docx）</td><td>市场进入 · 中</td><td>5 步：搭框架 → 定价与市场估算 → 客群优先级 → 竞争 → 建议；分阶段才给的数据表</td></tr>
+  </tbody></table>
+  <h3>库的组织</h3>
+  <p>每份样本带：类型（case / takehome / practical）、训练轮次（r1 / r2）、行业、题型、标签、职业（occupation_id）。324 份里 101 份挂上职业；电工、钳工、模具工、化学检验员等 19 个蓝领工种职业库里还没有，补上即可全挂。后台「样本库 · 训练素材」可看每份骨架、可删；出题时生成器先按岗位 / 题型粗筛 40 份，再让模型挑 0–2 份当参照。</p>
+  <div class="foot">百业AI｜真活 · 训练素材</div>
+</section>
+
+<section class="pg">
+  <div class="step">题目清单</div>
+  <div class="eyebrow">12 道 · 都带 AI 基线 · 链接是出题人视角</div>
+  <h3>训练前（老王出的，10-22 ~ 23）</h3>
+  <table><thead><tr><th>题</th><th>企业 · 岗位</th><th>出题模型</th><th class="n">基线</th><th>链接</th></tr></thead><tbody>
+    <tr><td>ESG-DCF 整合建模：为隆基绿能重估</td><td>高瓴 · 投资分析师</td><td>qwen-plus</td><td class="n">52</td><td><a href="https://www.aidataoffice.com/work/qyf7vRcSVbY/owner?k=bMXH9AFNWZNLgZAS">qyf7vRcSVbY</a></td></tr>
+    <tr><td>基金 ESG 整合方法论交付</td><td>高瓴 · 投资分析师</td><td>qwen-plus</td><td class="n">53</td><td><a href="https://www.aidataoffice.com/work/pwAo_5R0K18/owner?k=rpQd-moj71NPpzIC">pwAo_5R0K18</a></td></tr>
+    <tr><td>Space Explorer 投资初筛</td><td>高瓴 · 投资分析师</td><td>GPT</td><td class="n">65</td><td><a href="https://www.aidataoffice.com/work/KG_RRI1HVRc/owner?k=0vls-Uxm6OnlR31r">KG_RRI1HVRc</a></td></tr>
+    <tr><td>构建 AI for Computing 能力图谱</td><td>鼎峰科创 · 投资分析师 AI 方向</td><td>qwen-plus</td><td class="n">67</td><td><a href="https://www.aidataoffice.com/work/Icm2xXhPIC0/owner?k=tSoqv2n04iHpjjYx">Icm2xXhPIC0</a></td></tr>
+    <tr><td>鼎峰 AI 方向投资梳理与量巡速览</td><td>武岳峰 · 投资分析师 AI 方向</td><td>qwen-plus</td><td class="n">79</td><td><a href="https://www.aidataoffice.com/work/SRi1-_BfqFo/owner?k=7DL7NkqAJUU8aJJy">SRi1-_BfqFo</a></td></tr>
+  </tbody></table>
+  <h3>第一轮（10-23 晚，参照老王的 2 份）</h3>
+  <table><thead><tr><th>题</th><th>企业 · 要找的人</th><th>参照</th><th class="n">步</th><th class="n">基线</th><th>链接</th></tr></thead><tbody>
+    <tr><td>必胜客收购后增长路径诊断</td><td>百胜中国 · 战略分析师</td><td>McBurger，改背景换数字</td><td class="n">6</td><td class="n">77</td><td><a href="https://www.aidataoffice.com/work/FV4cetwjYdw/owner?k=46UqP7yTJ2AdyXed">FV4cetwjYdw</a></td></tr>
+    <tr><td>擎天租自营机队追加投资研判</td><td>高瓴 · 投资分析师</td><td>Space Explorer，改背景换数字</td><td class="n">5</td><td class="n">73</td><td><a href="https://www.aidataoffice.com/work/JIZ2F6WCNts/owner?k=HH_Ec_gUGPM-HND0">JIZ2F6WCNts</a></td></tr>
+    <tr><td>飞捷科思跟投与具身布局判断</td><td>武岳峰 · 能看懂具身智能的人来做投资</td><td>自动挑，Space Explorer</td><td class="n">5</td><td class="n">79</td><td><a href="https://www.aidataoffice.com/work/UlopPAQtXog/owner?k=ttoZjPgBUfT-TE2O">UlopPAQtXog</a></td></tr>
+    <tr><td>具身智能赛道研判与配置建议（聊着出）</td><td>武岳峰 · 同上</td><td>同上，修订一轮</td><td class="n">5</td><td class="n">66</td><td><a href="https://www.aidataoffice.com/work/LR03wMt3_nQ/owner?k=j-k452AC7glXkhcr">LR03wMt3_nQ</a></td></tr>
+  </tbody></table>
+  <h3>第二轮（10-24，324 份库自动挑参照）</h3>
+  <table><thead><tr><th>题</th><th>企业 · 要找的人</th><th>自动挑到的参照</th><th class="n">步</th><th class="n">基线</th><th>链接</th></tr></thead><tbody>
+    <tr><td>具身智能三选一领投判断</td><td>武岳峰 · 能看懂具身智能的人来做投资</td><td>Rock Energy（casebook）</td><td class="n">3</td><td class="n">88</td><td><a href="https://www.aidataoffice.com/work/7U1PRPxQWVg/owner?k=CR6s5lrlWXdkuzAe">7U1PRPxQWVg</a></td></tr>
+    <tr><td>千问导购推荐下单归因评测模块</td><td>阿里巴巴 · 数据工程师（代码台）</td><td>软件工程师 take-home</td><td class="n">4</td><td class="n">84</td><td><a href="https://www.aidataoffice.com/work/4M3njYU9GM0/owner?k=p6KlyKFv0n5cr1mg">4M3njYU9GM0</a></td></tr>
+    <tr><td>德布勒森试产线电气排故与调试</td><td>宁德时代 · 电气维修技师 PLC（设计台）</td><td>电工 · 三级技能考核样题</td><td class="n">4</td><td class="n">79</td><td><a href="https://www.aidataoffice.com/work/ZGAjovEtLYU/owner?k=jASTxlkwmwgx4yev">ZGAjovEtLYU</a></td></tr>
+  </tbody></table>
+  <div class="foot">百业AI｜真活 · 题目清单</div>
+</section>
+
+<section class="pg">
+  <div class="step">成本</div>
+  <div class="eyebrow">按 Sonnet 5.5 单价折算</div>
+  <h2>这一批的训练成本</h2>
+  <p>输入 3 美元 / 百万 token，输出 15 美元 / 百万。token 数来自账本里的真实调用记录；工程与抽查按会话估算。</p>
+  <table><thead><tr><th>项目</th><th class="n">调用</th><th class="n">输入 token</th><th class="n">输出 token</th><th class="n">费用（美元）</th></tr></thead><tbody>
+    <tr><td>样本解析 + 切题</td><td class="n">333</td><td class="n">130 万</td><td class="n">64 万</td><td class="n">13.4</td></tr>
+    <tr><td>出题 / 基线 / 评分 / 修订（12 道）</td><td class="n">52</td><td class="n">45 万</td><td class="n">36 万</td><td class="n">6.7</td></tr>
+    <tr><td>工程与抽查（写工具、看骨架、改提示、写文档）</td><td class="n">—</td><td class="n">≈ 200 万</td><td class="n">≈ 20 万</td><td class="n">9.0</td></tr>
+    <tr><td><b>合计</b></td><td></td><td></td><td></td><td class="n"><b>≈ 29</b></td></tr>
+  </tbody></table>
+  <h3>以后怎么跑</h3>
+  <p>工具 + 单一模型跑批：切题、解析、入库、回填全是脚本（work-samples-ingest / ingest-gd / ingest-text / backfill），人只抽查。同样 300 份一批，解析约 13 美元。下一批源：其余 60 多个广东工种、更多 casebook、各省人社实操文件、面经统计出职业骨架。</p>
+  <div class="foot">百业AI｜真活 · 成本</div>
+</section>
+
+</body></html>
