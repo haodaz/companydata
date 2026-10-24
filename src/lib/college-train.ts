@@ -258,21 +258,11 @@ export async function runWorkExam(enrollmentId: string, workTaskId: string) {
   const { data: t, error } = await db.from('work_tasks').select('*').eq('id', workTaskId).single();
   if (error || !t) throw new Error('真活不存在');
   const task: WorkTask = { env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials || [], rubric: t.rubric || [] };
-  const envNote = task.env?.type === 'code' ? '这是代码台：先给完整代码（用 ``` 包起来，导出名为 solution 的函数），再写说明。'
-    : task.env?.type === 'sheet' ? `这是表格 / 数据台：交付物里先给处理后的表（CSV 或 Markdown 表），再写口径说明。起始表：\n${(task.env as any).csv || ''}`
-    : task.env?.type === 'design' ? '这是设计台：先给参数表，每个参数给值和依据；再写设计说明。'
-    : '这是文档 / 对账台：按交付物逐个写，Markdown。';
+  // 做题走真活共用的 solve.ts（和 AI 基线同一份提示，分步推进、操作台说明都在里面）；学院只多传笔记本里的规则和学员身份
   const rules = en.notebook.rules || [];
-  const prompt = `你是「${task.task.role}」，现在做这道真活。只能用下面的材料；材料里没有的数据要明确标注假设。总共 1200–2500 字。
-${envNote}
-${rules.length ? `## 你在学院里总结过的工作规则（照着做）\n${rules.map((r: string) => `- ${r}`).join('\n')}\n` : ''}## 任务书
-${task.task.brief}
-## 交付物
-${(task.task.deliverables || []).map(d => `- ${d.id} ${d.title}（${d.format}）`).join('\n')}
-## 材料
-${task.materials.map(m => `### ${m.id} ${m.title}\n${m.content}`).join('\n\n')}`;
-  const res = await generateContent(prompt, model);
-  await logTokenUsage({ tool_name: 'work', task_name: 'College · 学员做真活', institution: t.company_name || '', model_id: model, usageMetadata: res.usageMetadata } as any).catch(() => {});
+  const { solveWorkTask } = await import('@/lib/work/solve');
+  const { answer: raw } = await solveWorkTask(task, model, { persona: `${en.nova}，正在学院里做真活实习`, rules, task_name: 'College · 学员做真活', institution: t.company_name || '' });
+  const res = { text: raw };
   const answer = res.text.trim();
   if (answer.length < 50) throw new Error('模型没有给出像样的交付物');
   const result = await gradeResult(task, answer, { institution: t.company_name || '', who: en.nova });

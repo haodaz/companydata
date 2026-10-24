@@ -11,7 +11,7 @@ import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
 import { findOccupation } from '@/lib/occupation-store';
 import { gradeResult } from '@/lib/work/grader';
-import { normalizeStages, renderSkeleton, STAGE_LABEL, verifyCalcs, type SampleSkeleton, type SampleStage } from '@/lib/work/samples';
+import { normalizeStages, renderSkeleton, verifyCalcs, type SampleSkeleton, type SampleStage } from '@/lib/work/samples';
 
 export const WORK_MODEL = process.env.WORK_MODEL || 'claude-opus-5-5';
 
@@ -356,26 +356,13 @@ export async function suggestRoles(q: string, companyId?: number | null) {
 
 /** 第三步：最强模型先做一遍当基线（用和候选人一样的材料），再用同一套 rubric 评它 */
 export async function runBaseline(task: WorkTask, opts: { model?: string; institution?: string } = {}): Promise<{ model: string; answer: string; result: any }> {
+  // 做题走共用的 solve.ts（学院考学员也走它）；这里只多一层模型兜底
   const model = opts.model || WORK_MODEL;
-  const envNote = task.env?.type === 'code' ? `这是代码台（${task.env.language || 'js'}）：先给完整代码（用 \`\`\` 包起来，导出名为 solution 的函数），再写说明。${task.env.starter ? `起始代码：\n${task.env.starter}` : ''}${task.env.tests?.length ? `\n自测用例：${task.env.tests.map(t => t.name).join('、')}` : ''}`
-    : task.env?.type === 'sheet' ? `这是表格 / 数据台：交付物里先给处理后的表（CSV 或 Markdown 表），再写口径说明。起始表：\n${task.env.csv || ''}`
-    : task.env?.type === 'design' ? `这是设计台：先给参数表（${(task.env.params || []).map(p => p.name + (p.unit ? '/' + p.unit : '')).join('、')}），每个参数给值和依据；再用文字描述草图（${task.env.sketch_hint || ''}）；最后设计说明。`
-    : '这是文档 / 对账台：按交付物逐个写，Markdown。';
-  const prompt = `你是应聘「${task.task.role}」的候选人，现在做这道真活。只能用下面的材料；材料里没有的数据要明确标注假设。总共 1200–2500 字。
-${envNote}
-## 任务书
-${task.task.brief}
-## 交付物
-${task.task.deliverables.map(d => `- ${d.id} ${d.title}（${d.format}）`).join('\n')}
-## 材料
-${task.materials.map(m => `### ${m.id} ${m.title}\n${m.content}`).join('\n\n')}${task.task.stages?.length ? `\n## 推进步骤（按顺序一步一步答，每步用「## q1」这样的标题；测算写出算式）\n${task.task.stages.map(st => `### ${st.id}【${STAGE_LABEL[st.type]}】${st.question}\n这一步给的信息：\n${st.reveal}`).join('\n\n')}` : ''}`;
+  const { solveWorkTask } = await import('@/lib/work/solve');
   let answer = '', used = model;
   for (const m of [model, 'claude-sonnet-5-5', 'qwen-plus']) {
-    try {
-      const res = await generateContent(prompt, m);
-      await logTokenUsage({ tool_name: 'work', task_name: 'Baseline · AI 先做一遍', institution: opts.institution || '', model_id: m, usageMetadata: res.usageMetadata } as any).catch(() => {});
-      answer = res.text.trim(); used = m; if (answer) break;
-    } catch (e) { console.warn(`[work] 基线 ${m} 失败：${String((e as any)?.message).slice(0, 120)}`); }
+    try { const r = await solveWorkTask(task, m, { task_name: 'Baseline · AI 先做一遍', institution: opts.institution }); answer = r.answer; used = m; if (answer) break; }
+    catch (e) { console.warn(`[work] 基线 ${m} 失败：${String((e as any)?.message).slice(0, 120)}`); }
   }
   if (!answer) throw new Error('AI 基线没有生成');
   const result = await gradeResult(task, answer, { institution: opts.institution, who: 'AI 基线' });
