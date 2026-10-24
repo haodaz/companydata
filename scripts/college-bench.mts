@@ -8,7 +8,7 @@ for (const l of fs.readFileSync('.env.local', 'utf8').split('\n')) { const m = l
 const argv = process.argv.slice(2); const opt = (k: string, d: string) => { const i = argv.indexOf(`--${k}`); return i >= 0 ? argv[i + 1] : d; };
 const DRY = argv.includes('--dry');
 const MODELS = opt('models', 'qwen-plus,deepseek-v4-pro,gpt-5.6-terra,claude-sonnet-5-5').split(',');
-const COURSES = opt('courses', '640f3bc6,b0614543,a35a662d,c9783880,f9add4b9').split(',');
+const COURSES = opt('courses', 'b0614543,a35a662d,065fd7f4,a7f8f2e7,f9add4b9,adcf442a').split(',');
 const OUT = 'scripts/.college-bench.json';
 const LOG = 'scripts/.college-bench.log';
 const log = (s: string) => { const line = `[${new Date().toLocaleTimeString('zh-CN', { hour12: false })}] ${s}`; console.log(line); fs.appendFileSync(LOG, line + '\n'); };
@@ -47,9 +47,9 @@ for (const c of courses) {
       const sid = await benchStudent(model);
       const en = await createEnrollment(sid, c.id, 'bench');
       cell.enrollment_id = en.id;
-      if (cell.entrance == null) { const r = await runChapterExam(en.id, null, false); cell.entrance = r.score; log(`  ${model} 入学考 ${r.score}`); }
-      if (!cell.classed) { const d = await enrollmentDetail(en.id); for (const ch of d.chapters) { try { await attendClass(en.id, ch.id); } catch (e: any) { log(`   上课 ${ch.title} 失败：${String(e.message).slice(0, 80)}`); } } cell.classed = true; log(`  ${model} 上完课 ${(await enrollmentDetail(en.id)).chapters.length} 章`); }
-      if (cell.final == null) { const r = await runChapterExam(en.id, null, true); cell.final = r.score; log(`  ${model} 毕业考 ${r.score}`); }
+      if (cell.entrance == null) { const r = await runChapterExam(en.id, null, false); cell.entrance = r.score; save(); log(`  ${model} 入学考 ${r.score}`); }
+      if (!cell.classed) { const d = await enrollmentDetail(en.id); for (const ch of d.chapters) { try { await attendClass(en.id, ch.id); } catch (e: any) { log(`   上课 ${ch.title} 失败：${String(e.message).slice(0, 80)}`); } } cell.classed = true; save(); log(`  ${model} 上完课 ${(await enrollmentDetail(en.id)).chapters.length} 章`); }
+      if (cell.final == null) { const r = await runChapterExam(en.id, null, true); cell.final = r.score; save(); log(`  ${model} 毕业考 ${r.score}`); }
       if (related && cell.work == null) { const r = await runWorkExam(en.id, related.id); cell.work = r.score; cell.work_baseline = r.baseline; log(`  ${model} 真活 ${r.score}（基线 ${r.baseline}）`); }
       cell.seconds = Math.round((Date.now() - t0) / 1000); save();
     } catch (e: any) { cell.error = String(e?.message || e).slice(0, 200); save(); log(`  ${model} 失败：${cell.error}`); }
