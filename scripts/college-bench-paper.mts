@@ -5,6 +5,7 @@
  */
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
+const PLAIN = process.argv.includes('--plain');   // 打印版：白底、无边框、数字不带色块
 const COURSES = ['b0614543', 'a35a662d', '065fd7f4', 'a7f8f2e7', 'f9add4b9', 'adcf442a'];
 const st = JSON.parse(fs.readFileSync('scripts/.college-bench.json', 'utf8'));
 const cells: any[] = Object.values(st.cells).filter((c: any) => COURSES.some(p => c.course_id.startsWith(p))).sort((a: any, b: any) => COURSES.findIndex(p => a.course_id.startsWith(p)) - COURSES.findIndex(p => b.course_id.startsWith(p)));
@@ -28,7 +29,7 @@ const name = (m: string) => LABEL[m]?.[0] || m;
 const cn = (c: string) => CN[c] || c;
 const info = (cid: string) => INFO[Object.keys(INFO).find(k => cid.startsWith(k)) || ''];
 const tone = (v: number | null) => v == null ? ['#eceef4', '#9aa0b4'] : v >= 80 ? ['#16204a', '#fff'] : v >= 60 ? ['#2c3768', '#fff'] : v >= 45 ? ['#b08d57', '#fff'] : ['#d9c9a8', '#4a3b1e'];
-const pill = (v: number | null) => { const [bg, fg] = tone(v); return `<span class="pill" style="background:${bg};color:${fg}">${v ?? '—'}</span>`; };
+const pill = (v: number | null) => { if (PLAIN) return `<span class="pill">${v ?? '—'}</span>`; const [bg, fg] = tone(v); return `<span class="pill" style="background:${bg};color:${fg}">${v ?? '—'}</span>`; };
 
 const done = cells.filter(c => c.final != null);
 const overall = { e: avg(done.map(c => c.entrance)), f: avg(done.map(c => c.final)), w: avg(done.map(c => c.work)) };
@@ -87,6 +88,16 @@ const html = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><tit
   table.t { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 4px 0 6px; background: #fff; } .t th { text-align: left; padding: 5px 8px; background: #16204a; color: #fff; } .t td { padding: 4px 8px; border-bottom: 1px solid #e6e1d4; } .t td.n, .t th.n { text-align: right; }
   .foot { position: absolute; left: 16mm; right: 16mm; bottom: 9mm; display: flex; justify-content: space-between; font-size: 8.5pt; color: #6b7190; } .foot b { font: 700 9.5pt "Songti SC", serif; color: #16204a; letter-spacing: .08em; }
   .legend span { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin: 0 4px 0 8px; vertical-align: -1px; }
+  ${PLAIN ? `
+  .pg { background: #fff; } .frame { display: none; } .lead { background: #fff; border-left: 2px solid #16204a; }
+  table.mx { box-shadow: none; border-radius: 0; border: 1px solid #cfd2dc; } .mx th { background: #fff; color: #16204a; border-bottom: 1.5px solid #16204a; } .mx th small { color: #6b7190; }
+  .mx thead th.avg { background: #fff; } .mx td.avg, .mx th.avg { background: #fff; } .mx tr.sum th, .mx tr.sum td { background: #fff; border-top: 1.5px solid #16204a; }
+  .mx td { border-top: 1px solid #e3e5ec; } .mx tbody th.c1 { border-top: 1px solid #e3e5ec; }
+  .pill { background: none !important; color: #16204a !important; padding: 0; min-width: 0; font-size: 10.5pt; border-radius: 0; }
+  .arr { background: #16204a; opacity: .5; } .g.up, .g.dn { color: #16204a; font-weight: 600; }
+  .card, .box { background: #fff; border: 1px solid #cfd2dc; border-radius: 0; } .card i, .eyebrow { color: #6b7190; } h1 em { color: #16204a; }
+  table.t th { background: #fff; color: #16204a; border-bottom: 1.5px solid #16204a; } table.t td { border-bottom: 1px solid #e3e5ec; }
+  .legend { display: none; }` : ''}
 </style></head><body>
 
 <section class="pg"><div class="frame"></div>
@@ -163,7 +174,8 @@ ${[[0, '投资与数据'], [2, '工程'], [4, '蓝领操作与安全']].map(([i,
   ${foot}
 </section>
 </body></html>`;
-fs.writeFileSync('docs/百业Bench-v0-报告.html', html);
-const pdf = `${process.env.HOME}/Desktop/AI百业演示/百业Bench-v0-跑分报告.pdf`;
-execFileSync('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', ['--headless=new', '--disable-gpu', '--no-pdf-header-footer', `--print-to-pdf=${pdf}`, `file://${process.cwd()}/docs/百业Bench-v0-报告.html`], { stdio: 'ignore' });
+const htmlFile = PLAIN ? 'docs/百业Bench-v0-报告-打印版.html' : 'docs/百业Bench-v0-报告.html';
+fs.writeFileSync(htmlFile, html);
+const pdf = `${process.env.HOME}/Desktop/AI百业演示/百业Bench-v0-跑分报告${PLAIN ? '-打印版' : ''}.pdf`;
+execFileSync('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', ['--headless=new', '--disable-gpu', '--no-pdf-header-footer', `--print-to-pdf=${pdf}`, `file://${process.cwd()}/${htmlFile}`], { stdio: 'ignore' });
 console.log('→', pdf, '·', done.length, '格');
