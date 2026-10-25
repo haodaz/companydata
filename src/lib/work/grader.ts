@@ -12,12 +12,16 @@ const s = (v: any, n = 600) => (v == null ? '' : typeof v === 'string' ? v : JSO
 
 async function askJson(prompt: string, task_name: string, institution?: string): Promise<any> {
   let lastErr: any = null;
+  // 每个模型两次机会：第一次解析失败（常见是字符串里夹了未转义的英文双引号），第二次把「严格 JSON」的要求说死再要一次，比换模型便宜
+  const STRICT = '\n\n上一次返回的 JSON 无法解析。这次只返回一个合法 JSON 对象：字符串里不要出现英文双引号（引用用「」），不要在字符串里换行，不要尾随逗号，JSON 前后不要任何说明文字。';
   for (const m of [GRADE_MODEL, 'claude-sonnet-5-5', 'qwen-plus']) {
-    try {
-      const res = await generateContent(prompt, m, { jsonMode: true });
-      await logTokenUsage({ tool_name: 'work', task_name, institution: institution || '', model_id: m, usageMetadata: res.usageMetadata } as any).catch(() => {});
-      const p = parseJsonLoose(res.text); if (!p || typeof p !== 'object') throw new Error('不是 JSON'); return p;
-    } catch (e) { lastErr = e; console.warn(`[work-grade] ${m} 失败：${String((e as any)?.message).slice(0, 120)}`); }
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const res = await generateContent(prompt + (attempt ? STRICT : ''), m, { jsonMode: true });
+        await logTokenUsage({ tool_name: 'work', task_name, institution: institution || '', model_id: m, usageMetadata: res.usageMetadata } as any).catch(() => {});
+        const p = parseJsonLoose(res.text); if (!p || typeof p !== 'object') throw new Error('不是 JSON'); return p;
+      } catch (e) { lastErr = e; const msg = String((e as any)?.message); console.warn(`[work-grade] ${m}${attempt ? '（严格重试）' : ''} 失败：${msg.slice(0, 120)}`); if (!/JSON/.test(msg)) break; }
+    }
   }
   throw lastErr;
 }
