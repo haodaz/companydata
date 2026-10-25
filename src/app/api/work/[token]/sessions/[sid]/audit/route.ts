@@ -1,3 +1,4 @@
+import { refreshSignals } from '@/lib/work/question-bank';
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { buildReport } from '@/lib/work/grader';
@@ -48,7 +49,7 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ to
     }
     const base = await withCost({ tool_name: 'work', task_name: 'Grade · 报告', stage: 'use' }, () => buildReport(task, t.baseline, deliverable, events, chat, t.company_name, r.audit || []));
     const report = { ...base, audit: r.audit || [], mode: r.mode, ...(r.recording ? { recording: r.recording } : {}) };
-    await db.from('work_sessions').update({ report, score: report.result.total }).eq('id', sid);
+    await db.from('work_sessions').update({ report, score: report.result.total }).eq('id', sid); refreshSignals(t.id);
     return NextResponse.json({ ok: true, done: true, report, score: report.result.total });
   } catch (e: any) {
     await db.from('work_sessions').update({ report: { ...r, running_since: null, last_error: String(e?.message || e).slice(0, 200) } }).eq('id', sid);

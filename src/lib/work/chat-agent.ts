@@ -10,6 +10,7 @@ import type { AgentKit } from '@/lib/ws/agent';
 import { withCost } from '@/lib/token-logger';
 import { attachmentsToMaterials, companyJobs, gatherContext, generateTask, reviseTask, runBaseline, searchCompanies, suggestRoles, verbatimTask, WORK_MODEL, type Attachment, type WorkEnvType } from '@/lib/work/generator';
 import { autoPickSamples, getSample, listSamples, parseSample, saveSample } from '@/lib/work/samples';
+import { bankTask, pickBankRefs, refreshSignals, renderBankRefs } from '@/lib/work/question-bank';
 import { randomBytes } from 'node:crypto';
 
 type Ui = { kind: 'work_task'; token: string; owner_key: string; title: string; task_id: string };
@@ -59,13 +60,17 @@ export async function createWorkTask(user: { email: string; role: string }, body
     if (picks[0]) { sample = picks[0]; sampleMode = 'inspire'; }
   }
   if (sample) (ctx as any).sample = { id: sample.id, title: sample.title, mode: sampleMode, auto: !body.sample_id };
+  // 题目资产库：同企业 / 同行业出过的好题当结构参照（内部，不对用户讲）
+  const bankRefs = await pickBankRefs({ company_id: ctx.company?.id ?? null, industry: ctx.company?.industry ?? null, role }).catch(() => []);
+  if (bankRefs.length) (ctx as any).bank_refs = bankRefs.map(r => ({ id: r.id, title: r.title, company: r.company_name }));
   const env = body.env && ENV_TYPES.includes(body.env) ? (body.env as WorkEnvType) : undefined;
-  const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题', stage: 'create', actor: user.email }, () => generateTask(ctx, role, { attachments: atts, sample: sample?.skeleton || null, sampleMode, model: body.model || WORK_MODEL, focus: body.focus ? String(body.focus).slice(0, 1500) : undefined, env, research: false }));
+  const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题', stage: 'create', actor: user.email }, () => generateTask(ctx, role, { attachments: atts, sample: sample?.skeleton || null, sampleMode, bankRefs: renderBankRefs(bankRefs, ctx.company?.id ?? null), model: body.model || WORK_MODEL, focus: body.focus ? String(body.focus).slice(0, 1500) : undefined, env, research: false }));
   if (atts.length) { task.materials = [...task.materials, ...attachmentsToMaterials(atts, task.materials.length + 1)]; (ctx as any).attachments = atts.map(a => ({ name: a.name, url: a.url })); }
   const share_token = randomBytes(8).toString('base64url'), owner_key = randomBytes(12).toString('base64url');
   const row = { share_token, owner_key, owner: { name: user.email, contact: user.email }, status: 'published', company_id: ctx.company?.id ?? null, company_name: ctx.company?.name || company, role, context: ctx, problem: task.problem, task: { ...task.task, env: task.env }, materials: task.materials, rubric: task.rubric, model, created_by: user.email };
   const { data, error } = await db.from('work_tasks').insert(row).select('id, share_token').single();
   if (error) throw new Error(error.message);
+  bankTask(data.id).catch(() => {});   // 沉淀进题目资产库
   return { id: data.id as string, share_token: data.share_token as string, owner_key, title: task.task.title, env: task.env.type, notes: ctx.notes, task, company_name: row.company_name };
 }
 
@@ -113,6 +118,7 @@ async function run(name: string, input: any, user: { email: string; role: string
       const t = await loadMine(user, String(input.task_id));
       const baseline = await withCost({ tool_name: 'work', task_name: 'Baseline · AI 先做一遍', stage: 'create', actor: user.email }, () => runBaseline({ env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric }, { institution: t.company_name }));
       await db.from('work_tasks').update({ baseline, updated_at: new Date().toISOString() }).eq('id', t.id);
+      refreshSignals(t.id);
       return { result: { total: baseline.result.total, model: baseline.model, summary: s(baseline.result.summary, 400), gaps: baseline.result.gaps }, ui: ui({ ...t, baseline }), label: `AI 基线 ${baseline.result.total} 分` };
     }
     case 'revise_task': {
@@ -122,6 +128,7 @@ async function run(name: string, input: any, user: { email: string; role: string
       const revisions = [...(t.task?.revisions || []), { at: new Date().toISOString(), feedback: feedback.slice(0, 1200), changelog, model }];
       const { error } = await db.from('work_tasks').update({ problem: next.problem, task: { ...next.task, env: next.env, revisions }, materials: next.materials, rubric: next.rubric, baseline: null, updated_at: new Date().toISOString() }).eq('id', t.id);
       if (error) throw new Error(error.message);
+      refreshSignals(t.id);
       return { result: { changelog, baseline_cleared: true }, ui: ui(t), label: '按意见改了' };
     }
     default: return { result: { error: `没有 ${name} 这个工具` }, label: name };

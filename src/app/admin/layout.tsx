@@ -2,7 +2,8 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { IdcardOutlined, MessageOutlined, EnvironmentOutlined, ToolOutlined, ControlOutlined, ApiOutlined, UserOutlined, SwapOutlined, DownOutlined, GlobalOutlined, LogoutOutlined, LinkOutlined, BankOutlined, ReadOutlined, FileSearchOutlined, FileTextOutlined, BarChartOutlined, SafetyCertificateOutlined, MenuOutlined, ExperimentOutlined, RocketOutlined, ExportOutlined, ProfileOutlined, HeartOutlined, TrophyOutlined, FireOutlined, BookOutlined, ShoppingOutlined, ShopOutlined } from '@ant-design/icons';
+import { IdcardOutlined, MessageOutlined, EnvironmentOutlined, ToolOutlined, ControlOutlined, ApiOutlined, UserOutlined, SwapOutlined, DownOutlined, GlobalOutlined, LogoutOutlined, LinkOutlined, BankOutlined, ReadOutlined, FileSearchOutlined, FileTextOutlined, BarChartOutlined, SafetyCertificateOutlined, MenuOutlined, ExperimentOutlined, RocketOutlined, ExportOutlined, ProfileOutlined, HeartOutlined, TrophyOutlined, FireOutlined, BookOutlined, ShoppingOutlined, ShopOutlined, DatabaseOutlined,
+} from '@ant-design/icons';
 import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
 import { UserProvider, useUser } from '@/lib/user-context';
 import { BRAND } from '@/lib/theme';
@@ -31,6 +32,7 @@ const NAV: NavItem[] = [
   { key: 'db-station',   icon: <ControlOutlined />,    label: '工位 / 操作台库', path: '/admin/db-station', group: '数据资产', badge: '新' },
   { key: 'db-item',      icon: <ToolOutlined />,       label: '工具设备库',    path: '/admin/db-item',      group: '数据资产', badge: '新' },
   { key: 'kg-questions', icon: <MessageOutlined />,    label: '职业问答日志',  path: '/admin/kg-questions', group: '数据资产', badge: '新' },
+  { key: 'db-question',  icon: <DatabaseOutlined />,   label: '题目资产库',    path: '/admin/db-question',  group: '数据资产', badge: '新' },   // 出过的真活沉淀的题骨架 + 质量信号（迁移 049）
   { key: 'db-url',       icon: <LinkOutlined />,       label: '信息源库',      path: '/admin/db-url',       group: '数据资产' },
   { key: 'db-competition', icon: <TrophyOutlined />,    label: '企业赛事库',    path: '/admin/db-competition', group: '数据资产' },
   { key: 'db-standard',  icon: <BookOutlined />,       label: '行业标准与规程库', path: '/admin/db-standard', group: '数据资产', badge: '新' },

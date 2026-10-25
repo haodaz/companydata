@@ -1,3 +1,4 @@
+import { refreshSignals } from '@/lib/work/question-bank';
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { buildReport } from '@/lib/work/grader';
@@ -51,7 +52,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     const base = await withCost({ tool_name: 'work', task_name: 'Grade · 报告', stage: 'use' }, () =>
       buildReport({ env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric }, t.baseline, deliverable, events, s.ai_chat || [], t.company_name));
     const report = { ...base, ...(recording ? { recording } : {}), mode: open ? 'open' : plugin ? 'plugin' : 'bench' };
-    await db.from('work_sessions').update({ report, score: report.result.total }).eq('id', sid);
+    await db.from('work_sessions').update({ report, score: report.result.total }).eq('id', sid); refreshSignals(t.id);
     return NextResponse.json({ ok: true, report, score: report.result.total });
   } catch (e: any) {
     return NextResponse.json({ ok: false, error: String(e?.message || e) }, { status: 500 });

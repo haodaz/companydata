@@ -248,7 +248,7 @@ export interface WorkTask {
 /** 研究真活（2026-10-20）：科研院所招博士后 / 研究员 / 教授，考的是研究方向上的操作和研究技能 */
 export const RESEARCH_TASK_KINDS = ['实验设计（给研究问题，设计方案、对照、变量与样本量）', '数据分析（给一份真实格式的实验 / 观测数据，找异常、选统计方法、下结论并说清局限）', '文献与选题（给一个方向，梳理进展、指出研究空白、提可做的课题）', '审稿（给一篇稿件或摘要，找方法和结论上的问题，写审稿意见）', '写基金本子（研究目标、技术路线、可行性与风险）', '复现（用代码复现论文里的一个结果并解释差异）'];
 
-export async function generateTask(ctx: WorkContext, role: string, opts: { model?: string; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire'; attachments?: Attachment[] } = {}): Promise<{ task: WorkTask; model: string }> {
+export async function generateTask(ctx: WorkContext, role: string, opts: { model?: string; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire'; attachments?: Attachment[] ; bankRefs?: string } = {}): Promise<{ task: WorkTask; model: string }> {
   const model = opts.model || WORK_MODEL;
   const name = ctx.company?.name || (opts.research ? '这个科研团队' : '这家企业');
   const need = isNeedText(role);
@@ -269,7 +269,9 @@ ${needNote}
 ## 材料（只许用这些；没有的数字写「示例数据」并说明；每条依据指回来源）
 ${renderContext(ctx)}
 ${ctx.notes.some(n => /取了同企业其他岗位做参考/.test(n)) ? `\n注意：材料里的在招岗位不是「${role}」本岗，只拿来理解这家企业的工作方式和用语；**题目主题由「${role}」决定**，不要被参考岗位的职能（如 ESG、合规、行政）带偏。\n` : ''}${opts.focus ? `\n## 出题人额外要求\n${opts.focus}\n` : ''}${opts.attachments?.length ? `\n## 出题人上传的题目附件（会原样发给候选人；文字是从文件里抽出来的，图片只有文件名）\n${opts.attachments.map((a, i) => `[附件 ${i + 1}] ${a.name}${a.text ? `：\n${a.text.slice(0, 4000)}` : '（图片 / 无文字）'}`).join('\n\n')}\n题目要围绕这些附件出：任务书里写明候选人要看哪份附件做什么；materials 里不要重复抄附件内容，平台会把附件原件挂进材料包。\n` : ''}${opts.sample ? `
-## 深度样本（出题人给的参照：一道公认的好题）
+${opts.bankRefs ? `## 这家企业 / 这个行业以前出过的题（题目资产库；只借推进结构、交付形态、评分依赖——**业务问题要换一个角度，不要和过往题撞题**）
+${opts.bankRefs}
+` : ''}## 深度样本（出题人给的参照：一道公认的好题）
 ${renderSkeleton(opts.sample)}
 ${opts.sampleMode === 'inspire'
   ? `照它出：**推进结构、题型顺序、步数、难度和数字密度跟样本一致**，内容全部换成 ${name} 此刻真实的问题和材料（行业、公司、数字都不能照抄样本）。`
