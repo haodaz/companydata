@@ -20,7 +20,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ toke
   const { token } = await params;
   const t = await auth(token, req);
   if (!t) return NextResponse.json({ ok: false, error: '管理链接不对' }, { status: 404 });
-  const { data: sessions } = await db.from('work_sessions').select('id, participant, started_at, submitted_at, score, report, deliverable, summary').eq('task_id', t.id).order('created_at', { ascending: false });
+  const { data: sessions } = await db.from('work_sessions').select('id, participant, started_at, submitted_at, score, report, deliverable').eq('task_id', t.id).order('created_at', { ascending: false });
   const { owner_key: _k, context: ctx, ...task } = t;
   return NextResponse.json({ ok: true, task: { ...task, notes: ctx?.notes || [], sources: ctx ? sourcesOf(ctx) : null }, sessions: sessions || [] });
 }

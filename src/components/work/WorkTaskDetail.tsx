@@ -75,8 +75,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
         {report && <>
           {/* 先看他交了什么，再看 AI 怎么评（王刚 10-24：出题人的视角是先看提交的答案本身，AI 只是辅助评价） */}
           <div style={{ marginBottom: 14, border: '1px solid #e8e9f0', borderRadius: 10, overflow: 'hidden' }}>
-            <div style={{ padding: '8px 12px', background: '#fafbff', fontWeight: 700, fontSize: 13 }}>交付物原文{report.summary ? ' · 交付说明' : ''}</div>
-            {report.summary && <div style={{ padding: '8px 12px', fontSize: 13, whiteSpace: 'pre-wrap', borderBottom: '1px solid #f0f0f5', color: '#444' }}>{report.summary}</div>}
+            <div style={{ padding: '8px 12px', background: '#fafbff', fontWeight: 700, fontSize: 13 }}>交付物原文</div>
             <pre style={{ margin: 0, padding: 12, fontSize: 13, lineHeight: 1.7, whiteSpace: 'pre-wrap', fontFamily: 'inherit', maxHeight: 360, overflow: 'auto' }}>{report.deliverable || '（没有交付物文本：开放模式 / 插件作答看上传文件与交付说明）'}</pre>
           </div>
           <WorkReport report={report.report} participant={report.participant} />
