@@ -27,7 +27,7 @@ const ENVS: { value: string; label: string; desc: string }[] = [
   { value: 'plugin', label: '真活插件：用自己的工具做', desc: '候选人用自己浏览器里的在线文档 / 设计工具 / 各家 AI 做，装「真活插件」记录过程：打开了哪些网页、页面上的文字（含 AI 对话）、打字和粘贴；比录屏轻，过程看得更细' },
   { value: 'open', label: '候选人自己录制电脑操作', desc: '不用站内操作台：下载材料，用自己的 Excel / CAD / IDE 做，浏览器录屏 + 上传交付，AI 看录屏还原过程' },
 ];
-const DEFAULT_MODEL = 'qwen-plus';
+const DEFAULT_MODEL = 'claude-sonnet-5-5';   // 2026-10-25 阿里云百炼欠费，临时默认 Sonnet；充值后改回 qwen-plus
 const MODELS = MODEL_OPTIONS.filter(m => m.provider !== 'Google');   // 出题走千问 / Claude / GPT；Gemini 没接 JSON 出题链
 
 export default function NewPage() {

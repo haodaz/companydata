@@ -19,10 +19,16 @@ for (const s of segs) {
   if (!fs.existsSync(f) && process.env.TTS_ENGINE === 'openai') {
     // 备选：OpenAI TTS（2026-10-25 阿里云百炼欠费时用）。gpt-4o-mini-tts 可带 instructions 定语气；voice 默认 nova
     const OK = fs.readFileSync(path.join(ROOT, '.env.local'), 'utf8').split('\n').find(l => l.startsWith('OPENAI_API_KEY=')).split('=')[1].trim().replace(/^"|"$/g, '');
-    const r = await fetch('https://api.openai.com/v1/audio/speech', { method: 'POST', headers: { Authorization: `Bearer ${OK}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: process.env.TTS_MODEL || 'gpt-4o-mini-tts', voice: process.env.VOICE || 'nova', input: spoken(s.text), response_format: 'wav', instructions: process.env.TTS_STYLE || '普通话，女声，产品演示旁白：语速中等偏慢，清楚、平和、自然，不要播音腔。' }) });
-    if (!r.ok) { console.log('fail', s.id, r.status, (await r.text()).slice(0, 200)); continue; }
-    fs.writeFileSync(f, Buffer.from(await r.arrayBuffer()));
+    let ok = false;
+    for (let attempt = 0; attempt < 3 && !ok; attempt++) {   // 单次 60 秒超时，最多三次（接口偶尔挂住不回）
+      try {
+        const r = await fetch('https://api.openai.com/v1/audio/speech', { method: 'POST', headers: { Authorization: `Bearer ${OK}`, 'Content-Type': 'application/json' }, signal: AbortSignal.timeout(60000),
+          body: JSON.stringify({ model: process.env.TTS_MODEL || 'gpt-4o-mini-tts', voice: process.env.VOICE || 'nova', input: spoken(s.text), response_format: 'wav', instructions: process.env.TTS_STYLE || '普通话，女声，产品演示旁白：语速中等偏慢，清楚、平和、自然，不要播音腔。' }) });
+        if (!r.ok) { console.log('fail', s.id, r.status, (await r.text()).slice(0, 200)); break; }
+        fs.writeFileSync(f, Buffer.from(await r.arrayBuffer())); ok = true;
+      } catch (e) { console.log('retry', s.id, attempt + 1, String(e?.message || e).slice(0, 80)); }
+    }
+    if (!ok) continue;
   }
   if (!fs.existsSync(f)) {
     const r = await fetch('https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation', {
