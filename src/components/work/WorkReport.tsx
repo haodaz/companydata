@@ -18,15 +18,15 @@ export function WorkReport({ report, participant }: { report: any; participant?:
       <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'stretch' }}>
         <Card title="结果" style={{ flex: '1 1 200px' }}>
           <div style={{ fontSize: 40, fontWeight: 800, color: col(r.total) }}>{r.total}<span style={{ fontSize: 14, color: '#8c8c8c', fontWeight: 500 }}> / 100</span></div>
-          {c && <div style={{ fontSize: 13, color: '#555' }}>AI 基线 {c.baseline_total} · 你{c.delta >= 0 ? '高' : '低'} {Math.abs(c.delta)} 分{c.delta < 0 && <span style={{ color: '#8c8c8c' }}>（大部分人做不过 AI，差距就是要练的地方）</span>}</div>}
+          {c && <div style={{ fontSize: 13, color: '#555' }}>AI 基线 {c?.baseline_total} · 你{c?.delta >= 0 ? '高' : '低'} {Math.abs(c?.delta)} 分{c?.delta < 0 && <span style={{ color: '#8c8c8c' }}>（大部分人做不过 AI，差距就是要练的地方）</span>}</div>}
           <div style={{ marginTop: 8, color: '#444' }}>{r.summary}</div>
         </Card>
         {!p && <Card title="过程" style={{ flex: '1 1 260px' }}><div style={{ color: '#888', fontSize: 13 }}>{report.who === 'college' ? 'AI 学员做的，没有人工操作过程' : '这次作答没有过程记录'}</div></Card>}
         {p && <Card title="过程" style={{ flex: '1 1 260px' }}>
-          <div style={{ color: '#555', fontSize: 13 }}>用时 {fmt(p.duration_s)} · 问 AI {p.stats?.ai_asks || 0} 次 · 看了 {p.stats?.materials_opened || 0}/{p.stats?.materials_total || 0} 份材料 · 粘贴 {p.stats?.paste_chars || 0} 字 · 自己敲 {p.stats?.typed_chars || 0} 字</div>
-          <div style={{ marginTop: 8 }}>{p.delegation}</div>
-          {!!p.phases?.length && <div style={{ display: 'flex', marginTop: 10, height: 10, borderRadius: 5, overflow: 'hidden', background: '#eee' }}>{p.phases.map((ph: any, i: number) => <div key={i} title={`${ph.label} ${fmt(ph.from)}–${fmt(ph.to)}`} style={{ flex: Math.max(1, ph.to - ph.from), background: ['#6055f5', '#12b5cb', '#3ddc97', '#ffd166', '#fa8c16', '#eb2f96', '#8c8c8c', '#1677ff'][i % 8] }} />)}</div>}
-          {!!p.phases?.length && <div style={{ fontSize: 12, color: '#777', marginTop: 4 }}>{p.phases.map((ph: any) => ph.label).join(' → ')}</div>}
+          <div style={{ color: '#555', fontSize: 13 }}>用时 {fmt(p?.duration_s)} · 问 AI {p?.stats?.ai_asks || 0} 次 · 看了 {p?.stats?.materials_opened || 0}/{p?.stats?.materials_total || 0} 份材料 · 粘贴 {p?.stats?.paste_chars || 0} 字 · 自己敲 {p?.stats?.typed_chars || 0} 字</div>
+          <div style={{ marginTop: 8 }}>{p?.delegation}</div>
+          {!!p?.phases?.length && <div style={{ display: 'flex', marginTop: 10, height: 10, borderRadius: 5, overflow: 'hidden', background: '#eee' }}>{p?.phases.map((ph: any, i: number) => <div key={i} title={`${ph.label} ${fmt(ph.from)}–${fmt(ph.to)}`} style={{ flex: Math.max(1, ph.to - ph.from), background: ['#6055f5', '#12b5cb', '#3ddc97', '#ffd166', '#fa8c16', '#eb2f96', '#8c8c8c', '#1677ff'][i % 8] }} />)}</div>}
+          {!!p?.phases?.length && <div style={{ fontSize: 12, color: '#777', marginTop: 4 }}>{p?.phases.map((ph: any) => ph.label).join(' → ')}</div>}
         </Card>}
       </div>
       {report.recording && <Card title="录屏回放 · 用自己的软件做的">
@@ -53,15 +53,15 @@ export function WorkReport({ report, participant }: { report: any; participant?:
         </div> : null}
       </Card>
       <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-        <Card title="高光时刻" style={{ flex: '1 1 280px' }}>{p.highlights?.length ? p.highlights.map((h: any, i: number) => <Moment key={i} m={h} color="#12a150" />) : <span style={{ color: '#999' }}>没有观察到明显的高光</span>}</Card>
-        <Card title="风险时刻" style={{ flex: '1 1 280px' }}>{p.risks?.length ? p.risks.map((h: any, i: number) => <Moment key={i} m={h} color="#c0392b" />) : <span style={{ color: '#999' }}>没有观察到明显的风险</span>}</Card>
+        <Card title="高光时刻" style={{ flex: '1 1 280px' }}>{p?.highlights?.length ? p?.highlights.map((h: any, i: number) => <Moment key={i} m={h} color="#12a150" />) : <span style={{ color: '#999' }}>没有观察到明显的高光</span>}</Card>
+        <Card title="风险时刻" style={{ flex: '1 1 280px' }}>{p?.risks?.length ? p?.risks.map((h: any, i: number) => <Moment key={i} m={h} color="#c0392b" />) : <span style={{ color: '#999' }}>没有观察到明显的风险</span>}</Card>
       </div>
       {!!report.audit?.length && <Card title="审计过程（交卷后一段一段看的笔记，总评和它连续）">
         <div style={{ display: 'grid', gap: 10 }}>{report.audit.map((seg: any) => <Segment key={seg.idx} seg={seg} compact />)}</div>
       </Card>}
       <Card title="人机协作六维（观察到的，不是定性）">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
-          {Object.entries(p.skills || {}).map(([k, v]: any) => <div key={k} style={{ padding: '10px 12px', borderRadius: 10, background: '#fafbff', borderLeft: `4px solid ${LV[v.level]}` }}><div style={{ fontWeight: 700 }}>{k} <span style={{ fontSize: 12, color: '#777' }}>{v.level}</span></div><div style={{ fontSize: 13, color: '#555' }}>{v.note}</div></div>)}
+          {Object.entries(p?.skills || {}).map(([k, v]: any) => <div key={k} style={{ padding: '10px 12px', borderRadius: 10, background: '#fafbff', borderLeft: `4px solid ${LV[v.level]}` }}><div style={{ fontWeight: 700 }}>{k} <span style={{ fontSize: 12, color: '#777' }}>{v.level}</span></div><div style={{ fontSize: 13, color: '#555' }}>{v.note}</div></div>)}
         </div>
       </Card>
       <div style={{ fontSize: 12, color: '#999' }}>{participant?.name ? `${participant.name} · ` : ''}报告生成于 {report.generated_at ? new Date(report.generated_at).toLocaleString('zh-CN') : ''} · 结果按出题 rubric 逐条核对，过程看工作台事件流；这是练习与预筛信号，不是能力定性。</div>
