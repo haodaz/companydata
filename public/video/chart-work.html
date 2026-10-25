@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>真活 · 图卡</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #fff; color: #1a1a2e; font-family: ui-sans-serif, system-ui, -apple-system, "PingFang SC", sans-serif; overflow: hidden; }
+  .page { position: absolute; inset: 0; padding: 48px 84px; box-sizing: border-box; }
+  .eyebrow { font-size: 16px; color: #8c8fa6; letter-spacing: .12em; animation: up .6s ease-out both; }
+  h1 { font-size: 40px; margin: 14px 0 6px; font-weight: 800; letter-spacing: .02em; animation: up .7s .1s ease-out both; }
+  .sub { font-size: 20px; color: #5b5f78; margin-bottom: 36px; animation: up .7s .2s ease-out both; }
+  .grid { display: grid; gap: 22px; }
+  .card { border-radius: 16px; padding: 22px 24px; background: #fff; border: 1px solid #e6e8f0; box-shadow: 0 10px 30px rgba(20,24,60,.06); animation: up .7s ease-out both; animation-delay: calc(.25s + var(--i) * .12s); }
+  .card .k { font-size: 13px; letter-spacing: .14em; color: #8c8fa6; margin-bottom: 8px; }
+  .card h2 { font-size: 26px; margin: 0 0 12px; font-weight: 800; }
+  .card ul { margin: 0; padding-left: 18px; font-size: 18px; line-height: 1.75; color: #3b405a; }
+  .card.a { border-top: 5px solid #6055f5; } .card.b { border-top: 5px solid #12b5cb; } .card.c { border-top: 5px solid #f59e0b; } .card.d { border-top: 5px solid #22c55e; } .card.e { border-top: 5px solid #ef4444; }
+  .tone-a { background: #f3f2ff; } .tone-b { background: #eafafc; } .tone-c { background: #fff7e6; } .tone-d { background: #ecfdf3; } .tone-e { background: #fff1f0; }
+  .flow { display: flex; align-items: stretch; gap: 0; margin-top: 10px; }
+  .step { flex: 1; position: relative; border-radius: 14px; padding: 20px 18px; border: 1px solid #e6e8f0; background: #fafbff; animation: up .6s ease-out both; animation-delay: calc(.25s + var(--i) * .14s); }
+  .step .n { width: 30px; height: 30px; border-radius: 999px; background: linear-gradient(135deg,#6055f5,#12b5cb); color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 15px; margin-bottom: 10px; }
+  .step h3 { margin: 0 0 6px; font-size: 21px; } .step p { margin: 0; font-size: 15.5px; line-height: 1.6; color: #5b5f78; }
+  .arrow { width: 34px; display: grid; place-items: center; color: #c9c9dc; font-size: 26px; }
+  .pill { display: inline-block; font-size: 14px; padding: 3px 10px; border-radius: 999px; background: #f3f2ff; color: #4c43c9; font-weight: 700; margin-right: 6px; }
+  .foot { position: absolute; left: 84px; right: 84px; bottom: 40px; font-size: 16px; color: #8c8fa6; animation: up .8s .9s ease-out both; }
+  .vs { display: grid; place-items: center; font-size: 22px; color: #c9c9dc; font-weight: 800; }
+  @keyframes up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+</style></head>
+<body><div class="page" id="p"></div>
+<script>
+const T = {
+  'two-ways': { h: '出一道真活，两种出法', s: '同一套出题引擎；一个是一次填完，一个是聊着问清', grid: 'grid-template-columns: 1fr 60px 1fr', cards: [
+    { c: 'a', k: '方式一', h: '填表出题', li: ['企业、要找的人——两栏必填，其余选填', '想考什么、给谁做、多长时间，一句话', '题目素材和参考资料各自一栏', '适合心里已经有数的人'] },
+    { vs: 'VS' },
+    { c: 'b', k: '方式二', h: '聊着出题', li: ['说要找什么样的人，缺什么它问什么', '自己去库里认企业、看材料厚不厚', '问要不要给候选人素材、有没有过往的题', '复述题意确认后再出，出完当场改'] } ] },
+  'pipeline': { h: '出题的两三分钟里，发生了什么', s: '每一步都落在这家企业此刻的真实材料上', flow: [
+    ['拼材料', '企业画像、最近动态、在招岗位、深度尽调、行业规范'], ['锚定问题', '这个岗位此刻要替企业解决的一个真实业务问题'], ['写任务书', '像业务负责人交代活：背景、要做什么、交给谁、何时要'], ['做材料包', '表、邮件、BP、规范摘录；必有一份有坑'], ['定标准', '逐条可核对、条目之间有依赖的评分标准'], ['AI 先做一遍', '当基线，看题难不难、标准准不准'] ] },
+  'three-ways': { h: '候选人怎么做，三选一', s: '做法不同，评价一样：评交付物，也评过程', grid: 'grid-template-columns: 1fr 1fr 1fr', cards: [
+    { c: 'a', k: '做法一', h: '在本页的操作台做', li: ['材料、编辑区、AI 都在页面里', '每一步编辑、切换、提问自动记录', '省事，推荐'] },
+    { c: 'b', k: '做法二', h: '用自己的网页工具做', li: ['在线文档、表格、设计工具、各家 AI 都行', '装一次「真活插件」，记录打开的网页和页面文字', '交付说明在插件侧栏写'] },
+    { c: 'c', k: '做法三', h: '用桌面软件做', li: ['Excel、CAD、IDE 都可以', '下载材料，浏览器录屏', '做完上传交付文件 + 交付说明'] } ] },
+  'modules': { h: '操作台不是一种，是按交付物挂的模组', s: '一道题要交几样，就挂几个台子；标签切换，都要做', grid: 'grid-template-columns: repeat(5, 1fr)', cards: [
+    { c: 'a', k: '文档', h: '备忘录 · 报告 · 邮件', li: ['Markdown 编辑', '标题、列表、表格、预览'] },
+    { c: 'b', k: '表格', h: '对账表 · 测算表', li: ['加行加列、排序、求和', '口径说明随表交'] },
+    { c: 'c', k: '代码', h: '脚本 · 函数 · SQL', li: ['编辑器 + 自测', '测试结果进记录'] },
+    { c: 'd', k: '参数草图', h: '设计参数 · 草图', li: ['参数表逐项填', '画板画草图'] },
+    { c: 'e', k: '画布', h: '流程图 · 泳道图 · 导图', li: ['拖节点、连线、泳道', '交付自动转文字进评分'] } ] },
+  'grading': { h: '评什么', s: '交卷后一两分钟，评价体系逐条核对，出一份报告', grid: 'grid-template-columns: 1fr 1fr 1fr', cards: [
+    { c: 'a', k: '一', h: '交付物', li: ['对着评分标准一条一条核', '条目有依赖：前一步错，后面连着扣', '数字要能从算式复核'] },
+    { c: 'b', k: '二', h: '过程', li: ['材料看了哪些、什么时候看的', 'AI 问了什么、采纳了什么、改了什么', '改稿节奏、空闲、切换'] },
+    { c: 'c', k: '三', h: '和 AI 基线比', li: ['同一道题，AI 先做过一遍', '候选人高在哪、低在哪', '出题人看报告：交付物原文 + 逐条评分'] } ] },
+};
+const id = new URLSearchParams(location.search).get('id') || 'two-ways'; const t = T[id];
+const p = document.getElementById('p');
+let html = `<div class="eyebrow">百业AI｜真活 · 平方智能 · 真活 1.0 使用演示</div><h1>${t.h}</h1><div class="sub">${t.s}</div>`;
+if (t.cards) html += `<div class="grid" style="${t.grid}">` + t.cards.map((c, i) => c.vs ? `<div class="vs">${c.vs}</div>` : `<div class="card ${c.c}" style="--i:${i}"><div class="k">${c.k}</div><h2>${c.h}</h2><ul>${c.li.map(x => `<li>${x}</li>`).join('')}</ul></div>`).join('') + '</div>';
+if (t.flow) html += `<div class="flow">` + t.flow.map(([h, d], i) => `<div class="step" style="--i:${i}"><div class="n">${i + 1}</div><h3>${h}</h3><p>${d}</p></div>${i < t.flow.length - 1 ? '<div class="arrow">›</div>' : ''}`).join('') + '</div>';
+html += `<div class="foot">${t.foot || '百业AI｜真活 · www.aidataoffice.com'}</div>`;
+p.innerHTML = html;
+</script></body></html>
