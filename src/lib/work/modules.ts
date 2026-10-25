@@ -12,7 +12,7 @@ export const MODULES: Record<Module, { label: string; short: string; hint: strin
 };
 export function moduleOf(format: string | undefined, fallback: Module = 'doc'): Module {
   const f = String(format || '');
-  if (/流程图|泳道|思维导图|脑图|架构图|关系图|mind ?map|flow ?chart|swim ?lane|canvas|画布|逻辑图|路径图|地图/i.test(f)) return 'canvas';
+  if (/流程图|泳道|思维导图|脑图|架构图|关系图|结构图|产业链图|组织图|mind ?map|flow ?chart|swim ?lane|canvas|画布|逻辑图|路径图|地图/i.test(f)) return 'canvas';
   if (/表格|表\b|excel|csv|xlsx|模型|测算表|对账表|数据表|清单表|spreadsheet|sheet/i.test(f) && !/文档|word|报告/.test(f)) return 'sheet';
   if (/代码|脚本|sql|python|函数|程序|script|code|notebook/i.test(f)) return 'code';
   if (/参数|草图|设计稿|cad|尺寸/i.test(f)) return 'design';
@@ -23,7 +23,7 @@ export const isModule = (v: any): v is Module => ['doc', 'sheet', 'code', 'desig
 /** 模型给的 module 和 format 字面打架时以 format 的强信号为准（「流程图」被标成 design 就纠回 canvas） */
 export function resolveModule(format: string | undefined, given: any, fallback: Module = 'doc'): Module {
   const byFormat = moduleOf(format, fallback);
-  const strong = /流程图|泳道|思维导图|脑图|架构图|关系图|逻辑图|表格|excel|csv|测算表|对账表|代码|脚本|sql|python/i.test(String(format || ''));
+  const strong = /流程图|泳道|思维导图|脑图|架构图|关系图|结构图|产业链图|组织图|逻辑图|地图|表格|excel|csv|测算表|对账表|代码|脚本|sql|python/i.test(String(format || ''));
   if (strong && byFormat !== fallback) return byFormat;
   return isModule(given) ? given : byFormat;
 }
