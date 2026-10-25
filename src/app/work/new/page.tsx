@@ -41,6 +41,8 @@ function Inner() {
   // 参考资料（选填，2026-10-23）：出题人自己过往用过的题 / 内部考题，只用于他自己出题（照它改背景换数字）。平台内部的参照在后台自动挑，这里不露
   // 出题方式（2026-10-24，王刚：一道题本来很干净，什么都不改直接发出去也得行）：平方出题 / 原题直发
   const [way, setWay] = useState<'gen' | 'verbatim'>('gen');
+  // 填表分两页（2026-10-25 王刚：先关注题目本身，再关注出题台）
+  const [page, setPage] = useState<1 | 2>(1);
   const [verbatim, setVerbatim] = useState('');
   // 题目素材：给候选人的表格 / 图纸 / 截图 / PDF（和参考资料是两回事）
   const [atts, setAtts] = useState<Attachment[]>([]);
@@ -91,6 +93,11 @@ function Inner() {
           </div>}
           {way === 'gen' && <div style={{ color: '#666', fontSize: 13.5, marginBottom: 22 }}>告诉它企业和岗位，AI 从企业画像、在招岗位、职业典型任务、行业规范里架构出一个此刻真实的业务问题，配材料、定标准、先做一遍当基线。</div>}
 
+          {way === 'gen' && <div style={{ display: 'flex', gap: 8, alignItems: 'center', margin: '0 0 18px', fontSize: 13 }}>
+            {([[1, '题目'], [2, '出题台']] as const).map(([n, t]) => <div key={n} onClick={() => n === 1 && setPage(1)} style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: n === 1 ? 'pointer' : 'default', color: page === n ? '#1a1a2e' : '#999', fontWeight: page === n ? 700 : 500 }}><span style={{ width: 22, height: 22, borderRadius: 99, display: 'grid', placeItems: 'center', fontSize: 12, background: page === n ? '#6055f5' : page > n ? '#22c55e' : '#e8e9f0', color: page >= n ? '#fff' : '#888' }}>{page > n ? '✓' : n}</span>{t}</div>)}
+            <span style={{ color: '#aaa', margin: '0 2px' }}>→</span><span style={{ color: '#999' }}>出题</span>
+          </div>}
+          {(way === 'verbatim' || page === 1) && <>
           <Sec n="1" t="企业，和你要找的人" d="企业边输边搜，库里有就选中（会用上它的画像和深度尽调）。要找的人直接用一句话说，不用先想职位名">
             <CompanyRolePicker company={f.company} role={f.role} onCompany={(name, p) => { setF(x => ({ ...x, company: name })); setPicked(p); }} onRole={r => setF(x => ({ ...x, role: r }))} />
             {/* 库里没有的企业：贴一段介绍，AI 先读懂这家公司再出题（2026-10-22） */}
@@ -103,28 +110,37 @@ function Inner() {
               </div>
             )}
           </Sec>
-          <Sec n="2" t="给答题者配一个 AI 助理" d="候选人做题时随手可问；默认通义千问，国内网络直接可用。也可以换成 Claude / GPT">
-            <Select value={f.model} onChange={v => setF(x => ({ ...x, model: v }))} size="large" style={{ width: '100%' }} optionLabelProp="label"
-              options={MODELS.map(m => ({ value: m.id, label: m.label, desc: m.provider + (m.badge ? ' · ' + m.badge : '') }))}
-              optionRender={o => <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}><span>{o.data.label}</span><span style={{ color: '#999', fontSize: 12 }}>{o.data.desc}</span></div>} />
-          </Sec>
-          <Sec n="3" t="操作台" d={env.desc}>
-            <Select value={f.env} onChange={v => setF(x => ({ ...x, env: v }))} size="large" style={{ width: '100%' }} options={ENVS.map(e => ({ value: e.value, label: e.value ? e.label : '操作台：' + e.label }))} />
-          </Sec>
-          <Sec n="4" t="你想考什么（选填）" d="聚焦哪个问题、给谁做、难度；没写就按岗位此刻最真实的问题出">
+          <Sec n="2" t="你想考什么（选填）" d="聚焦哪个问题、给谁做、难度；没写就按岗位此刻最真实的问题出">
             <Input.TextArea value={f.focus} onChange={e => setF(x => ({ ...x, focus: e.target.value }))} placeholder="例：聚焦德布勒森工厂爬坡期的欧洲供需平衡；给 3 年以内的人做；一小时内" autoSize={{ minRows: 2, maxRows: 5 }} />
           </Sec>
-          <Sec n="5" t="题目素材（选填）" d="题里要发给候选人看的东西：数据表、图纸、截图、PDF。表格 / PDF / Word 会抽出文字，出题和评卷都能读；图片候选人能看，AI 出题时只知道文件名">
+          <Sec n="3" t="题目素材（选填）" d="题里要发给候选人看的东西：数据表、图纸、截图、PDF。表格 / PDF / Word 会抽出文字，出题和评卷都能读；图片候选人能看，AI 出题时只知道文件名">
             <AttachUpload value={atts} onChange={setAtts} />
           </Sec>
-          <Sec n="6" t="参考资料（选填）" d="你们过往用过的题、内部考题、认可的案例——上传或粘贴，AI 照它的路数出：题型、推进方式、算法保留，故事换成这家企业、数字换掉">
+          <Sec n="4" t="参考资料（选填）" d="你们过往用过的题、内部考题、认可的案例——上传或粘贴，AI 照它的路数出：题型、推进方式、算法保留，故事换成这家企业、数字换掉">
             {refs.length > 0 && <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
               {refs.map(sm => <Tag.CheckableTag key={sm.id} checked={ref?.id === sm.id} onChange={c => setRef(c ? sm : null)} style={{ padding: '4px 10px', fontSize: 13, border: '1px solid #e0e0ee' }}>{sm.title} <span style={{ opacity: .6 }}>· {sm.stages} 步</span></Tag.CheckableTag>)}
             </div>}
             <SampleUpload shared={false} onDone={s => { setRefs(x => [s, ...x]); setRef(s); }} pastePlaceholder="把整道题贴进来：背景、每一问、要给的数据、参考答案（有就带上）" />
             {ref?.summary && <div style={{ marginTop: 8, fontSize: 12.5, color: '#555', background: '#faf9ff', padding: '8px 12px', borderRadius: 10 }}>照这份出：{ref.summary}</div>}
           </Sec>
-          <Button type="primary" size="large" block icon={<RocketOutlined />} loading={!!busy} onClick={create} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>出题（约 2–3 分钟）</Button>
+          {way === 'gen' && <Button type="primary" size="large" block onClick={() => { if (!f.company.trim() || !f.role.trim()) return message.warning('企业和要找的人都要填'); setPage(2); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>下一步：出题台 →</Button>}
+          </>}
+          {way === 'gen' && page === 2 && <>
+            <div style={{ fontSize: 13, color: '#666', marginBottom: 14, padding: '10px 14px', background: '#fafbff', border: '1px solid #e8e9f0', borderRadius: 12 }}><b>{f.company || '（企业）'}</b> · 要找：{f.role || '—'}{f.focus ? ` · 考：${f.focus.slice(0, 40)}` : ''}{atts.length ? ` · 素材 ${atts.length} 份` : ''}{ref ? ' · 有参考' : ''} <a onClick={() => setPage(1)} style={{ marginLeft: 8 }}>改题目</a></div>
+          <Sec n="1" t="给答题者配一个 AI 助理" d="候选人做题时随手可问；默认通义千问，国内网络直接可用。也可以换成 Claude / GPT">
+            <Select value={f.model} onChange={v => setF(x => ({ ...x, model: v }))} size="large" style={{ width: '100%' }} optionLabelProp="label"
+              options={MODELS.map(m => ({ value: m.id, label: m.label, desc: m.provider + (m.badge ? ' · ' + m.badge : '') }))}
+              optionRender={o => <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}><span>{o.data.label}</span><span style={{ color: '#999', fontSize: 12 }}>{o.data.desc}</span></div>} />
+          </Sec>
+          <Sec n="2" t="操作台（模组）" d={env.desc + '；不选就按每个交付物自动挂模组（文档 / 表格 / 代码 / 草图 / 画布可混用）'}>
+            <Select value={f.env} onChange={v => setF(x => ({ ...x, env: v }))} size="large" style={{ width: '100%' }} options={ENVS.map(e => ({ value: e.value, label: e.value ? e.label : '操作台：' + e.label }))} />
+          </Sec>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <Button size="large" onClick={() => setPage(1)} style={{ height: 50, width: 120 }}>← 上一步</Button>
+          <Button type="primary" size="large" icon={<RocketOutlined />} loading={!!busy} onClick={create} style={{ height: 50, fontWeight: 700, flex: 1 }}>出题（约 2–3 分钟）</Button>
+            </div>
+          </>}
+          {way === 'verbatim' && <Button type="primary" size="large" block icon={<RocketOutlined />} loading={!!busy} onClick={create} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>发出去（约 1 分钟）</Button>}
           {busy && <GenProgress phase={phase} company={f.company} picked={picked} intro={picked ? '' : f.intro} role={f.role} focus={f.focus} env={f.env ? ENVS.find(e => e.value === f.env)?.label : undefined} />}
           <Text type="secondary" style={{ display: 'block', fontSize: 12, marginTop: 12 }}>题出好即发布，会直接进这道真活的空间：复制参与链接发给候选人就能做（不用登录）；觉得题不对，在空间里提意见让 AI 修订。</Text>
         </div>

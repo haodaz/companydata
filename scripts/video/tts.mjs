@@ -7,7 +7,9 @@ const ROOT = path.resolve(import.meta.dirname, '../..');
 // 念的稿和字幕分开：NOVA-45 让语音模型一个字母一个字母拼，念成「诺瓦 45」；字幕照样显示 NOVA-45
 // 「长成 / 长出」模型会念成 cháng：念稿换成「变成 / 生出」，字幕不变；「一行一行」会念成 yì xíng：念稿换成同音的「一杭一杭」
 const spoken = (t) => t.replace(/NOVA[-\s]?(\d+)/gi, '诺瓦 $1').replace(/\bNOVA\b/gi, '诺瓦').replace(/长成/g, '变成').replace(/长出/g, '生出').replace(/一行一行/g, '一杭一杭').replace(/一行/g, '一杭');
-const KEY = fs.readFileSync(path.join(ROOT, '.env.local'), 'utf8').split('\n').find(l => l.startsWith('DASHSCOPE_API_KEY=')).split('=')[1].trim().replace(/^"|"$/g, '');
+// TTS_KEY / TTS_BASE 可覆盖：国内站欠费时用国际站（dashscope-intl）免费额度，同样有 qwen3-tts-flash + Serena（2026-10-25）
+const KEY = process.env.TTS_KEY || fs.readFileSync(path.join(ROOT, '.env.local'), 'utf8').split('\n').find(l => l.startsWith('DASHSCOPE_API_KEY=')).split('=')[1].trim().replace(/^"|"$/g, '');
+const DS_BASE = (process.env.TTS_BASE || 'https://dashscope.aliyuncs.com').replace(/\/$/, '');
 const F = path.join(ROOT, 'node_modules', 'ffmpeg-static', 'ffmpeg');
 const [NARR, OUT] = process.argv.slice(2);
 const segs = JSON.parse(fs.readFileSync(NARR, 'utf8'));
@@ -31,7 +33,7 @@ for (const s of segs) {
     if (!ok) continue;
   }
   if (!fs.existsSync(f)) {
-    const r = await fetch('https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation', {
+    const r = await fetch(`${DS_BASE}/api/v1/services/aigc/multimodal-generation/generation`, {
       method: 'POST', headers: { Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json' },
       // qwen-tts 在 2026-10-10 前后下线（Model not exist），换 qwen3-tts-flash；TTS_MODEL 可以覆盖
       // language_type 锁中文：短句（「急诊护士，预检台前先看谁、分几级。」）曾被模型猜成日语念出来
