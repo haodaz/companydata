@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 
 export type SketchLine = { pts: [number, number][]; label: string };
-export function DesignBench({ params, values, onParam, onParamDone, sketch, setSketch, hint, notes, onNotes, onPaste, onSketch }: {
+export function DesignBench({ params, values, onParam, onParamDone, sketch, setSketch, hint, notes, onNotes, onPaste, onSketch, leading }: { leading?: React.ReactNode;
   params: { name: string; unit?: string; hint?: string }[]; values: Record<string, string>; onParam: (k: string, v: string) => void; onParamDone: (k: string) => void;
   sketch: SketchLine[]; setSketch: (f: (s: SketchLine[]) => SketchLine[]) => void; hint?: string; notes: string; onNotes: (v: string) => void; onPaste: (e: React.ClipboardEvent) => void; onSketch: (label: string) => void;
 }) {
@@ -24,8 +24,8 @@ export function DesignBench({ params, values, onParam, onParamDone, sketch, setS
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#f4f5f9', borderRadius: 14, overflow: 'hidden', border: '1px solid #d9dbe6' }}>
       {/* 顶部菜单条 */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '7px 12px', background: '#2b2d3e', color: '#d6d8e6', fontSize: 12.5, whiteSpace: 'nowrap' }}>
-        <span style={{ fontWeight: 800, color: '#fff' }}>✎ 设计台</span>{['文件', '编辑', '视图', '标注', '校核'].map(m => <span key={m} style={{ color: '#aab' }}>{m}</span>)}
-        <span style={{ marginLeft: 'auto', color: '#aab', overflow: 'hidden', textOverflow: 'ellipsis' }}>{hint ? `要画：${hint.slice(0, 60)}${hint.length > 60 ? '…' : ''}` : '草图'}</span>
+        {leading}
+        <span style={{ marginLeft: 'auto', color: '#aab', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: 12 }}>{hint ? hint.slice(0, 40) : ''}</span>
       </div>
       <div style={{ display: 'flex', flex: 1, minHeight: 420 }}>
         {/* 左工具栏 */}

@@ -8,7 +8,7 @@ import React, { useRef, useState } from 'react';
 import type { CanvasEdge, CanvasGraph, CanvasNode } from '@/lib/work/modules';
 
 const W = 180, H = 46;
-export function CanvasBench({ graph, onChange, notes, onNotes, onPaste, onEvent, hint }: { graph: CanvasGraph; onChange: (f: (g: CanvasGraph) => CanvasGraph) => void; notes: string; onNotes: (v: string) => void; onPaste: (e: React.ClipboardEvent) => void; onEvent?: (type: string, extra?: Record<string, any>) => void; hint?: string }) {
+export function CanvasBench({ graph, onChange, notes, onNotes, onPaste, onEvent, hint, leading }: { leading?: React.ReactNode; graph: CanvasGraph; onChange: (f: (g: CanvasGraph) => CanvasGraph) => void; notes: string; onNotes: (v: string) => void; onPaste: (e: React.ClipboardEvent) => void; onEvent?: (type: string, extra?: Record<string, any>) => void; hint?: string }) {
   const svg = useRef<SVGSVGElement>(null);
   const [sel, setSel] = useState<string | null>(null);
   const [linking, setLinking] = useState<string | null>(null);
@@ -25,16 +25,18 @@ export function CanvasBench({ graph, onChange, notes, onNotes, onPaste, onEvent,
   const edgeLabel = (e: CanvasEdge, i: number) => { const l = prompt('连线上的字（可空）', e.label || ''); if (l === null) return; onChange(g => ({ ...g, edges: g.edges.map((x, j) => j === i ? { ...x, label: l } : x) })); };
   const height = Math.max(520, graph.lanes.length * laneH, ...graph.nodes.map(n => n.y + H + 60));
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, flex: 1, minHeight: 0 }}>
-      <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', fontSize: 13 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, background: '#fff', borderRadius: 14, overflow: 'hidden', border: '1px solid #d9dbe6' }}>
+      <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', fontSize: 13, padding: '8px 12px', background: '#f3f5f9', borderBottom: '1px solid #d9dbe6' }}>
+        {leading}{leading && <span style={{ width: 1, height: 18, background: '#e0e0ee', margin: '0 2px' }} />}
         <button onClick={add} style={btn}>＋ 节点</button>
         <button onClick={() => { if (!sel) return; setLinking(linking ? null : sel); }} disabled={!sel} style={{ ...btn, ...(linking ? { background: '#6055f5', color: '#fff' } : {}) }}>{linking ? '点另一个节点连上 · 取消' : '连线（先选起点）'}</button>
         <button onClick={del} disabled={!sel} style={btn}>删除</button>
         <span style={{ color: '#888' }}>泳道</span>
         <select value={graph.lanes.length} onChange={e => setLanes(Number(e.target.value))} style={{ ...btn, padding: '4px 8px' }}>{[0, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n ? `${n} 条` : '无'}</option>)}</select>
-        <span style={{ color: '#999', marginLeft: 'auto' }}>双击节点改字 · 点连线改标签{hint ? ` · ${hint}` : ''}</span>
+        <span style={{ color: '#aaa', marginLeft: 'auto', fontSize: 12 }}>双击改字 · 点线改标签</span>
       </div>
-      <div style={{ flex: 1, border: '1px solid #e8e9f0', borderRadius: 12, background: '#fff', overflow: 'auto', minHeight: 420 }}>
+      {hint && <div style={{ padding: '7px 12px', fontSize: 13, color: '#555', borderBottom: '1px solid #e6e8f0' }}>{hint}</div>}
+      <div style={{ flex: 1, background: '#fff', overflow: 'auto', minHeight: 420 }}>
         <svg ref={svg} width="100%" height={height} style={{ display: 'block', minWidth: 900, userSelect: 'none', cursor: drag ? 'grabbing' : 'default' }} onMouseMove={move} onMouseUp={() => { if (drag) onEvent?.('canvas_move'); setDrag(null); }} onMouseLeave={() => setDrag(null)} onClick={() => { setSel(null); setLinking(null); }}>
           <defs><marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6055f5" /></marker></defs>
           {graph.lanes.map((l, i) => <g key={i}><rect x={0} y={i * laneH} width="100%" height={laneH} fill={i % 2 ? '#fafbff' : '#fff'} stroke="#e8e9f0" /><foreignObject x={8} y={i * laneH + 6} width={220} height={28}><input value={l} placeholder={`泳道 ${i + 1}：谁 / 哪个部门`} onChange={e => onChange(g => ({ ...g, lanes: g.lanes.map((x, j) => j === i ? e.target.value : x) }))} onClick={e => e.stopPropagation()} style={{ fontSize: 12, border: 0, background: 'transparent', color: '#6055f5', fontWeight: 700, width: 210, outline: 0 }} /></foreignObject></g>)}
@@ -48,7 +50,7 @@ export function CanvasBench({ graph, onChange, notes, onNotes, onPaste, onEvent,
           {!graph.nodes.length && <text x={40} y={60} fontSize={14} fill="#aaa">点「＋ 节点」开始；需要分部门 / 分角色就开泳道。</text>}
         </svg>
       </div>
-      <textarea value={notes} onChange={e => onNotes(e.target.value)} onPaste={onPaste} placeholder="图的说明：每个节点 / 分支的含义、关键判断、没画出来的前提（评卷会读）" style={{ minHeight: 80, border: '1px solid #e8e9f0', borderRadius: 10, padding: 10, font: 'inherit', fontSize: 13.5, resize: 'vertical' }} />
+      <div style={{ borderTop: '1px solid #e6e8f0', padding: '8px 12px', background: '#fafbff' }}><div style={{ fontSize: 12, color: '#888', marginBottom: 4 }}>图的说明</div><textarea value={notes} onChange={e => onNotes(e.target.value)} onPaste={onPaste} placeholder="每个节点 / 分支的含义、关键判断、没画出来的前提" style={{ width: '100%', minHeight: 64, border: '1px solid #e8e9f0', borderRadius: 8, padding: 8, font: 'inherit', fontSize: 13.5, resize: 'vertical', background: '#fff' }} /></div>
     </div>
   );
 }

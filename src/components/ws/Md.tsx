@@ -23,8 +23,18 @@ export function Md({ text }: { text: string }) {
   const blocks: React.ReactNode[] = []; let list: { ordered: boolean; items: string[] } | null = null; let para: string[] = [];
   const flushPara = () => { if (para.length) { blocks.push(<p key={'p' + blocks.length}>{inline(para.join(' '), 'p' + blocks.length)}</p>); para = []; } };
   const flushList = () => { if (list) { const L = list.ordered ? 'ol' : 'ul'; blocks.push(React.createElement(L, { key: 'l' + blocks.length }, list.items.map((it, k) => <li key={k}>{inline(it, `l${blocks.length}-${k}`)}</li>))); list = null; } };
-  for (const raw of lines) {
+  // 表格（| a | b |）、引用（> ）、代码块（```）：材料正文和 AI 回答都常见（2026-10-25）
+  const cells = (row: string) => row.trim().replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+  for (let li = 0; li < lines.length; li++) {
+    const raw = lines[li];
     const l = raw.trimEnd();
+    if (/^```/.test(l.trim())) { flushPara(); flushList(); const buf: string[] = []; li++; while (li < lines.length && !/^```/.test(lines[li].trim())) { buf.push(lines[li]); li++; } blocks.push(<pre key={'c' + blocks.length} className="ws-pre">{buf.join('\n')}</pre>); continue; }
+    if (/^\s*\|/.test(l) && li + 1 < lines.length && /^\s*\|?\s*:?-{2,}/.test(lines[li + 1])) {
+      flushPara(); flushList(); const head = cells(l); const rows: string[][] = []; li += 2;
+      while (li < lines.length && /^\s*\|/.test(lines[li])) { rows.push(cells(lines[li])); li++; } li--;
+      blocks.push(<div key={'t' + blocks.length} className="ws-tw"><table className="ws-table"><thead><tr>{head.map((c, i) => <th key={i}>{inline(c, 'th' + i)}</th>)}</tr></thead><tbody>{rows.map((r, i) => <tr key={i}>{r.map((c, j) => <td key={j}>{inline(c, 'td' + i + '_' + j)}</td>)}</tr>)}</tbody></table></div>); continue;
+    }
+    if (/^>\s?/.test(l)) { flushPara(); flushList(); const buf: string[] = [l.replace(/^>\s?/, '')]; while (li + 1 < lines.length && /^>\s?/.test(lines[li + 1])) { li++; buf.push(lines[li].replace(/^>\s?/, '')); } blocks.push(<blockquote key={'q' + blocks.length} className="ws-quote">{inline(buf.join(' '), 'q' + blocks.length)}</blockquote>); continue; }
     const h = /^(#{1,4})\s+(.*)$/.exec(l), ul = /^\s*[-*]\s+(.*)$/.exec(l), ol = /^\s*\d+[.)、]\s+(.*)$/.exec(l);
     if (!l.trim()) { flushPara(); flushList(); continue; }
     if (h) { flushPara(); flushList(); blocks.push(<div key={'h' + blocks.length} className="ws-h">{inline(h[2], 'h' + blocks.length)}</div>); continue; }

@@ -7,7 +7,7 @@ const parse = (csv: string): string[][] => csv.split(/\r?\n/).filter((l, i, a) =
 const ser = (rows: string[][]) => rows.map(r => r.join(',')).join('\n');
 const colName = (i: number) => { let s = ''; i++; while (i > 0) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
 
-export function SheetBench({ csv, onCsv, notes, onNotes, onPaste, onCell }: { csv: string; onCsv: (v: string) => void; notes: string; onNotes: (v: string) => void; onPaste: (e: React.ClipboardEvent) => void; onCell?: () => void }) {
+export function SheetBench({ csv, onCsv, notes, onNotes, onPaste, onCell, leading, caption }: { csv: string; onCsv: (v: string) => void; notes: string; onNotes: (v: string) => void; onPaste: (e: React.ClipboardEvent) => void; onCell?: () => void; leading?: React.ReactNode; caption?: string }) {
   const rows = useMemo(() => parse(csv), [csv]);
   const cols = Math.max(1, ...rows.map(r => r.length));
   const [sel, setSel] = useState<[number, number]>([0, 0]);
@@ -21,11 +21,12 @@ export function SheetBench({ csv, onCsv, notes, onNotes, onPaste, onCell }: { cs
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#fff', borderRadius: 14, overflow: 'hidden', border: '1px solid #d9dbe6' }}>
       {/* 工具栏 */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', background: '#f3f5f9', borderBottom: '1px solid #d9dbe6', fontSize: 12.5 }}>
-        <span style={{ fontWeight: 700, color: '#1a7f4b' }}>▦ 表格</span>
+        {leading}{leading && <span style={{ width: 1, height: 18, background: '#d9dbe6', margin: '0 4px' }} />}
         <button onClick={addRow} style={tb}>＋ 行</button><button onClick={addCol} style={tb}>＋ 列</button>
         <button onClick={() => setRaw(r => !r)} style={{ ...tb, background: raw ? '#dfe3ee' : undefined }}>{raw ? '表格视图' : 'CSV 源'}</button>
-        <span style={{ marginLeft: 'auto', color: '#888' }}>{rows.length} 行 × {cols} 列 · 单元格直接改，逗号会换成全角</span>
+        <span style={{ marginLeft: 'auto', color: '#aaa', whiteSpace: 'nowrap' }}>{rows.length} × {cols}</span>
       </div>
+      {caption && <div style={{ padding: '7px 12px', fontSize: 13, color: '#555', borderBottom: '1px solid #e6e8f0', background: '#fff' }}>{caption}</div>}
       {/* 公式栏 */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 12px', borderBottom: '1px solid #e6e8f0', fontFamily: mono, fontSize: 13 }}>
         <span style={{ width: 56, padding: '3px 8px', border: '1px solid #d9dbe6', borderRadius: 4, textAlign: 'center', color: '#555', background: '#fafbff' }}>{colName(sel[1])}{sel[0] + 1}</span>
