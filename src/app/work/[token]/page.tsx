@@ -47,8 +47,8 @@ function partsOf(task: Task, env: Env): Part[] {
 // 线性小图标（16px，currentColor）：左栏 / AI / 最大化 / 分屏 / 最小化 / 关闭
 function Ico({ k }: { k: 'left' | 'ai' | 'max' | 'split' | 'min' | 'close' }) {
   const P: Record<string, React.ReactNode> = {
-    left: <><rect x="2" y="3" width="12" height="10" rx="2" /><path d="M6 3v10" /></>,
-    ai: <><rect x="2" y="3" width="12" height="10" rx="2" /><path d="M10 3v10" /><path d="M5 7.5h2.5M5 9.5h1.5" /></>,
+    left: <path d="M2 4.5A1.5 1.5 0 0 1 3.5 3h3l1.5 1.5H12.5A1.5 1.5 0 0 1 14 6v6a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 12z" />,   // 文件夹：材料包
+    ai: <><path d="M8 2.5c.5 2.7 2.3 4.5 5 5-2.7.5-4.5 2.3-5 5-.5-2.7-2.3-4.5-5-5 2.7-.5 4.5-2.3 5-5z" fill="currentColor" stroke="none" /><path d="M12.5 1.5c.2 1 .8 1.6 1.8 1.8-1 .2-1.6.8-1.8 1.8-.2-1-.8-1.6-1.8-1.8 1-.2 1.6-.8 1.8-1.8z" fill="currentColor" stroke="none" /></>,   // 星芒：AI 助手
     max: <><path d="M9 3h4v4" /><path d="M7 13H3V9" /><path d="M13 3L9 7" /><path d="M3 13l4-4" /></>,
     split: <><rect x="2" y="2" width="12" height="12" rx="2" /><path d="M2 8h12" /></>,
     min: <path d="M3 8h10" />,
