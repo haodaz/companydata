@@ -104,7 +104,7 @@ export default function WorkChatPage() {
             <>
               <div className="wc-thread">
                 {items.map((x, i) => {
-                  if (x.k === 'user') { const lines = String(x.text || '').split('\n'); const atts = lines.filter(l => l.startsWith('【素材】')).map(l => l.slice(4).split('｜')[0]); const plain = lines.filter(l => !l.startsWith('【素材】')).join('\n').trim(); return <div key={i} className="wc-user"><div className="wc-bubble">{plain}{atts.length > 0 && <div className="wc-atts">{atts.map((n, j) => <span key={j} className="wc-att">📎 {n}</span>)}</div>}</div></div>; }
+                  if (x.k === 'user') { const lines = String(x.text || '').split('\n'); const isF = (l: string) => l.startsWith('【文件】') || l.startsWith('【素材】'); const atts = lines.filter(isF).map(l => l.slice(4).split('｜')[0]); const plain = lines.filter(l => !isF(l)).join('\n').trim(); return <div key={i} className="wc-user"><div className="wc-bubble">{plain}{atts.length > 0 && <div className="wc-atts">{atts.map((n, j) => <span key={j} className="wc-att">📎 {n}</span>)}</div>}</div></div>; }
                   if (x.k === 'text') return <div key={i} className="wc-ai"><span className="wc-ava">题</span><div className="wc-ai-body"><Md text={x.text} /></div></div>;
                   if (x.k === 'tool') return <div key={x.id} className="wc-tool"><span className={`wc-dot${x.running ? ' run' : x.error ? ' err' : ''}`} /><span className="wc-tool-t">{x.running ? `${RUNNING[x.name] || x.name}…` : x.label || x.name}</span>{x.ui && !x.running && <button className="wc-link" onClick={() => setArt({ ...x.ui, _n: Date.now() })}>看 →</button>}{x.error && <span className="wc-err-t">{x.error}</span>}</div>;
                   if (x.k === 'ask') return <div key={x.id} className="wc-ask"><div className="wc-ask-q">{x.question}</div><div className="wc-opts">{x.options.map((o, j) => <button key={o} className={`wc-opt${x.answered === o ? ' on' : ''}`} disabled={!!x.answered || busy} onClick={() => send(o)}><i>{j + 1}</i>{o}</button>)}</div>{x.answered && !x.options.includes(x.answered) && <div className="wc-mute" style={{ marginTop: 8 }}>你答：{x.answered}</div>}</div>;
@@ -128,12 +128,12 @@ export default function WorkChatPage() {
 }
 
 function Composer({ text, setText, busy, send, stop, model, setModel, placeholder, autoFocus }: { text: string; setText: (t: string) => void; busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; placeholder?: string; autoFocus?: boolean }) {
-  // 题目素材：上传后以【素材】行附进消息，出题助理会把它们挂进材料包
+  // 上传文件：以【文件】行附进消息；是素材还是参考资料由出题助理按语境判断（默认素材）
   const fileRef = useRef<HTMLInputElement>(null);
   const [up, setUp] = useState(false);
   const attach = async (files: FileList | null) => {
     if (!files?.length) return; setUp(true);
-    try { const lines: string[] = []; for (const f of Array.from(files).slice(0, 6)) { const fd = new FormData(); fd.append('file', f); const j = await (await fetch('/api/admin/work/attach', { method: 'POST', body: fd })).json(); if (j.ok) lines.push(`【素材】${j.name}｜${j.url}｜${j.mime}${j.text ? `｜文字摘录：${String(j.text).slice(0, 1500).replace(/\s+/g, ' ')}` : j.image ? '｜图片' : ''}`); }
+    try { const lines: string[] = []; for (const f of Array.from(files).slice(0, 6)) { const fd = new FormData(); fd.append('file', f); const j = await (await fetch('/api/admin/work/attach', { method: 'POST', body: fd })).json(); if (j.ok) lines.push(`【文件】${j.name}｜${j.url}｜${j.mime}${j.text ? `｜文字摘录：${String(j.text).slice(0, 1500).replace(/\s+/g, ' ')}` : j.image ? '｜图片' : ''}`); }
       if (lines.length) setText((text ? text + '\n' : '') + lines.join('\n')); }
     finally { setUp(false); }
   };
@@ -143,7 +143,7 @@ function Composer({ text, setText, busy, send, stop, model, setModel, placeholde
         onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); send(text); } }} />
       <div className="wc-bar">
         <select className="wc-model" value={model} onChange={e => setModel(e.target.value)}>{MODELS.map(m => <option key={m.id} value={m.id}>{m.label}</option>)}</select>
-        <button className="wc-clip" title="上传题目素材（表格 / 图纸 / 截图 / PDF）" disabled={busy || up} onClick={() => fileRef.current?.click()}>{up ? '上传中…' : '📎 素材'}</button>
+        <button className="wc-clip" title="上传文件：给候选人的素材，或让 AI 照着出的参考资料——传完说一句是哪种就行" disabled={busy || up} onClick={() => fileRef.current?.click()}>{up ? '上传中…' : '📎 文件'}</button>
         <input ref={fileRef} type="file" multiple accept=".pdf,.docx,.txt,.md,.csv,.xlsx,.png,.jpg,.jpeg,.webp,.gif" style={{ display: 'none' }} onChange={e => { attach(e.target.files); e.target.value = ''; }} />
         {busy ? <button className="wc-send stop" onClick={stop}>停</button> : <button className="wc-send" disabled={!text.trim()} onClick={() => send(text)}>↑</button>}
       </div>
