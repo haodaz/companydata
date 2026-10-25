@@ -32,7 +32,7 @@ ${q}`;
   try {
     const t0 = Date.now();
     const a = await withCost({ tool_name: 'work', task_name: 'Assist · 工作台 AI', stage: 'use' }, async () => {
-      for (const m of [ASSIST_MODEL, 'deepseek-v4-pro']) {
+      for (const m of [ASSIST_MODEL, 'claude-sonnet-5-5', 'deepseek-v4-pro']) {   // 默认模型（千问）不可用时退到 Sonnet、DeepSeek，候选人端不能没回答
         try { const r = await generateContent(prompt, m); await logTokenUsage({ tool_name: 'work', task_name: 'Assist · 工作台 AI', institution: t.company_name || '', model_id: m, usageMetadata: r.usageMetadata } as any).catch(() => {}); if (r.text?.trim()) return r.text.trim(); } catch (e) { console.warn(`[work-assist] ${m} 失败：${String((e as any)?.message).slice(0, 100)}`); }
       }
       throw new Error('AI 没有回答');

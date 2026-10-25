@@ -15,6 +15,7 @@ import { SheetBench } from '@/components/work/benches/SheetBench';
 import { DesignBench } from '@/components/work/benches/DesignBench';
 import { OpenBench } from '@/components/work/benches/OpenBench';
 import { CanvasBench } from '@/components/work/benches/CanvasBench';
+import { Md } from '@/components/ws/Md';
 import { MODULES, canvasToText, resolveModule, type CanvasGraph, type Module } from '@/lib/work/modules';
 import { PluginWork } from '@/components/work/benches/PluginWork';
 
@@ -259,65 +260,118 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const [arm, setArm] = useState(false);
   const dark = curPart.module === 'code';
   const [localErr, setLocalErr] = useState('');
-  const submit = () => { if (mode === 'open' && !recording) { setLocalErr('先录一段屏再交卷：点「开始录屏」，做完点停止'); setTimeout(() => setLocalErr(''), 5000); return; } if (!arm) { setArm(true); setTimeout(() => setArm(false), 5000); return; } setArm(false); const events = buf.current.splice(0); onSubmit(deliverable, events); };
+  // 布局（2026-10-25，王刚：作答区别太固定，要像 AI workspace）：材料栏可收、材料面板高度可拖 / 占满 / 收成一条 / 关闭、AI 助手是可收的卡片
+  const [leftOpen, setLeftOpen] = useState(!narrow);
+  const [aiOpen, setAiOpen] = useState(!narrow);
+  const [matMode, setMatMode] = useState<'split' | 'full' | 'bar'>('split');
+  const [matH, setMatH] = useState(300);
+  const dragRef = useRef<{ y: number; h: number } | null>(null);
+  useEffect(() => {
+    const mv = (e: MouseEvent) => { if (!dragRef.current) return; setMatH(Math.max(120, Math.min(window.innerHeight - 260, dragRef.current.h + (e.clientY - dragRef.current.y)))); };
+    const up = () => { if (dragRef.current) { dragRef.current = null; document.body.style.cursor = ''; document.body.style.userSelect = ''; } };
+    window.addEventListener('mousemove', mv); window.addEventListener('mouseup', up); return () => { window.removeEventListener('mousemove', mv); window.removeEventListener('mouseup', up); };
+  }, []);
+  const showMat = (m: Material) => { openMat(m); if (matMode === 'bar') setMatMode('split'); };
+  const filledOf = (id: string) => { const x = ps[id]; return !!(x && (x.doc.trim() || x.csv.trim() || x.code.trim() || x.notes.trim() || x.graph.nodes.length || Object.keys(x.params).length)); };
+  const emptyParts = mode === 'open' ? [] : parts.filter(p => !filledOf(p.id));
+  const line = dark ? '#2b2d3e' : '#e8e9f0', panel = dark ? '#1e1f2b' : '#fff', ink2 = dark ? '#aab' : '#777';
+  const iconBtn = (on: boolean): React.CSSProperties => ({ border: `1px solid ${on ? '#6055f5' : line}`, background: on ? (dark ? '#2b2a4a' : '#f3f2ff') : 'transparent', color: on ? '#6055f5' : ink2, borderRadius: 8, padding: '4px 10px', cursor: 'pointer', font: 'inherit', fontSize: 12.5, whiteSpace: 'nowrap' });
+  const miniBtn: React.CSSProperties = { border: `1px solid ${line}`, background: 'transparent', color: ink2, borderRadius: 6, padding: '2px 8px', cursor: 'pointer', font: 'inherit', fontSize: 12 };
+  const submit = () => {
+    if (mode === 'open' && !recording) { setLocalErr('先录一段屏再交卷：点「开始录屏」，做完点停止'); setTimeout(() => setLocalErr(''), 5000); return; }
+    if (!arm) { setArm(true); if (emptyParts.length) { setLocalErr(`${emptyParts.map(p => `${p.id} ${p.title}`).join('、')} 还没动笔。确定要交就再点一次交卷`); setTimeout(() => setLocalErr(''), 6000); } setTimeout(() => setArm(false), 6000); return; }
+    setArm(false); const events = buf.current.splice(0); onSubmit(deliverable, events);
+  };
   const over = now > task.task.time_minutes * 60;
+
+  const matBody = mat && <>
+    {mat.kind === 'file' && mat.url && (/^image\//.test(mat.mime || '') ? <a href={mat.url} target="_blank" rel="noreferrer"><img src={mat.url} alt={mat.name || mat.title} style={{ maxWidth: '100%', display: 'block', margin: '8px 0', borderRadius: 8, border: `1px solid ${line}` }} /></a> : <a href={mat.url} target="_blank" rel="noreferrer" style={{ display: 'inline-block', margin: '8px 0 0', color: '#6055f5', fontWeight: 600 }}>打开 / 下载附件：{mat.name || mat.title} ↗</a>)}
+    {isSheet(mat) ? <SheetView text={mat.content} dark={dark} /> : <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13.5, lineHeight: 1.75, margin: '8px 0 0', color: dark ? '#cfd3e6' : '#333' }}>{mat.content}</pre>}
+  </>;
 
   return (
     <Shell dark={dark}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '10px 18px', borderBottom: `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, background: dark ? '#16171f' : '#fff', color: dark ? '#e6e8f0' : undefined, position: 'sticky', top: 0, zIndex: 5 }}>
+      <style>{`.wk-md p{margin:0 0 8px}.wk-md ul,.wk-md ol{margin:0 0 8px;padding-left:20px}.wk-md li{margin:2px 0}.wk-md .ws-h{font-weight:700;margin:10px 0 4px}.wk-md a{color:#6055f5}.wk-md .ws-code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:rgba(96,85,245,.08);padding:1px 5px;border-radius:4px}.wk-md>:last-child{margin-bottom:0}.wk-ta:focus{outline:none;border-color:#6055f5!important;box-shadow:0 0 0 3px rgba(96,85,245,.12)}`}</style>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 14px', borderBottom: `1px solid ${line}`, background: dark ? '#16171f' : '#fff', color: dark ? '#e6e8f0' : undefined, position: 'sticky', top: 0, zIndex: 5, height: 52, boxSizing: 'border-box' }}>
         <div style={{ fontSize: 11, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台</div>
-        <div style={{ fontWeight: 700, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{task.task.title} <span style={{ color: '#888', fontWeight: 400, fontSize: 13 }}>{task.company_name} · {task.role} · {mode === 'open' ? '用自己的软件做' : modulesLabel(task, env)}</span></div>
-        <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{fmt(now)}<span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span></div>
-        <button onClick={submit} disabled={grading} style={{ ...btnPrimary, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '再点一次确认交卷（交后不能改）' : '交卷 →'}</button>
+        <div style={{ fontWeight: 700, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 14 }}>{task.task.title} <span style={{ color: '#888', fontWeight: 400, fontSize: 12.5 }}>{task.company_name} · {task.role} · {mode === 'open' ? '用自己的软件做' : modulesLabel(task, env)}</span></div>
+        {!narrow && <button onClick={() => setLeftOpen(v => !v)} style={iconBtn(leftOpen)} title="材料包 / 要交什么">☰ 材料</button>}
+        {!narrow && <button onClick={() => setAiOpen(v => !v)} style={iconBtn(aiOpen)} title="AI 助手">✦ AI</button>}
+        <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, fontSize: 13.5, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{fmt(now)}<span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span></div>
+        <button onClick={submit} disabled={grading} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '再点一次确认交卷' : '交卷 →'}</button>
       </div>
-      {grading && <div style={{ padding: '14px 18px', background: '#f3f2ff', color: '#4c43c9', fontSize: 14 }}>交卷了。正在逐条核对交付物、回看过程、和 AI 基线比——大约 1–2 分钟，别关页面。</div>}
-      {(error || localErr) && !grading && <div style={{ padding: '10px 18px', background: '#fff1f0', color: '#c0392b', fontSize: 14 }}>{error || localErr}</div>}
-      <div style={{ display: 'grid', gridTemplateColumns: narrow ? '1fr' : '300px 1fr 360px', gap: 0, minHeight: 'calc(100vh - 56px)' }}>
-        {/* 材料 */}
-        <aside style={{ borderRight: narrow ? undefined : `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, background: dark ? '#16171f' : '#fafbff', color: dark ? '#d6d8e6' : undefined, padding: 14, overflow: 'auto', maxHeight: narrow ? 320 : 'calc(100vh - 56px)' }}>
+      {grading && <div style={{ padding: '12px 18px', background: '#f3f2ff', color: '#4c43c9', fontSize: 13.5 }}>交卷了。正在逐条核对交付物、回看过程、和 AI 基线比——大约 1–2 分钟，别关页面。</div>}
+      {(error || localErr) && !grading && <div style={{ padding: '10px 18px', background: '#fff1f0', color: '#c0392b', fontSize: 13.5 }}>{error || localErr}</div>}
+      <div style={{ display: 'flex', flexDirection: narrow ? 'column' : 'row', height: narrow ? undefined : 'calc(100vh - 52px)', minHeight: narrow ? 'calc(100vh - 52px)' : undefined }}>
+        {/* 材料包 · 要交什么（可收） */}
+        {(narrow || leftOpen) && <aside style={{ width: narrow ? undefined : 272, flex: 'none', borderRight: narrow ? undefined : `1px solid ${line}`, background: dark ? '#16171f' : '#fafbff', color: dark ? '#d6d8e6' : undefined, padding: 14, overflow: 'auto', maxHeight: narrow ? 300 : undefined }}>
           {stages.length > 0 && <div style={{ marginBottom: 14 }}>
             <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>推进 · {stages.length} 步</div>
-            {stages.map((st, i) => { const locked = i >= unlocked; const on = mat?.id === st.id; return (
-              <div key={st.id} onClick={() => !locked || i === unlocked ? openStage(st, i) : undefined} style={{ padding: '9px 12px', borderRadius: 10, marginBottom: 6, cursor: locked && i !== unlocked ? 'not-allowed' : 'pointer', opacity: locked && i !== unlocked ? .45 : 1, background: on ? (dark ? '#2b2d3e' : '#fff') : 'transparent', border: `1px solid ${on ? '#6055f5' : dark ? '#2b2d3e' : '#e8e9f0'}` }}>
-                <div style={{ fontSize: 11, color: '#999', letterSpacing: 1 }}>{st.id.toUpperCase()}{STAGE_CN[st.type] ? ` · ${STAGE_CN[st.type]}` : ''}{locked ? (i === unlocked ? ' · 点开下一步' : ' · 先答上一步') : ''}</div>
-                <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.5, marginTop: 2 }}>{locked && i !== unlocked ? '…' : st.question}</div>
+            {stages.map((st2, i) => { const locked = i >= unlocked; const on = mat?.id === st2.id; return (
+              <div key={st2.id} onClick={() => { if (!locked || i === unlocked) { openStage(st2, i); if (matMode === 'bar') setMatMode('split'); } }} style={{ padding: '9px 12px', borderRadius: 10, marginBottom: 6, cursor: locked && i !== unlocked ? 'not-allowed' : 'pointer', opacity: locked && i !== unlocked ? .45 : 1, background: on ? panel : 'transparent', border: `1px solid ${on ? '#6055f5' : line}` }}>
+                <div style={{ fontSize: 11, color: '#999', letterSpacing: 1 }}>{st2.id.toUpperCase()}{STAGE_CN[st2.type] ? ` · ${STAGE_CN[st2.type]}` : ''}{locked ? (i === unlocked ? ' · 点开下一步' : ' · 先答上一步') : ''}</div>
+                <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.5, marginTop: 2 }}>{locked && i !== unlocked ? '…' : st2.question}</div>
               </div>); })}
           </div>}
-          <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>{dark ? 'EXPLORER · 材料' : `材料包 · ${task.materials.length} 份`}</div>
-          {task.materials.map(m => dark
-            ? <div key={m.id} onClick={() => openMat(m)} style={{ padding: '5px 8px', borderRadius: 6, cursor: 'pointer', fontFamily: 'ui-monospace, Menlo, monospace', fontSize: 12.5, background: mat?.id === m.id ? '#2b2d3e' : 'transparent', color: mat?.id === m.id ? '#fff' : '#b8bdd6', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{m.kind === 'data' ? '🗂' : m.kind === 'email' ? '✉️' : m.kind === 'table' ? '📊' : '📄'} {m.id}-{m.title}.{m.kind === 'table' || m.kind === 'data' ? 'csv' : 'md'}</div>
-            : <div key={m.id} onClick={() => openMat(m)} style={{ padding: '10px 12px', borderRadius: 10, marginBottom: 6, cursor: 'pointer', background: mat?.id === m.id ? '#fff' : 'transparent', border: `1px solid ${mat?.id === m.id ? '#6055f5' : '#e8e9f0'}` }}><div style={{ fontWeight: 600, fontSize: 13 }}>{m.title}</div><div style={{ fontSize: 11, color: '#999' }}>{m.id} · {m.kind === 'file' ? (/^image\//.test(m.mime || '') ? '附图' : '附件') : m.kind}</div></div>)}
+          <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>材料包 · {task.materials.length} 份</div>
+          {task.materials.map(m => <div key={m.id} onClick={() => showMat(m)} style={{ padding: '9px 12px', borderRadius: 10, marginBottom: 6, cursor: 'pointer', background: mat?.id === m.id ? panel : 'transparent', border: `1px solid ${mat?.id === m.id ? '#6055f5' : line}` }}><div style={{ fontWeight: 600, fontSize: 13, lineHeight: 1.4 }}>{m.title}</div><div style={{ fontSize: 11, color: '#999', marginTop: 2 }}>{m.id} · {m.kind === 'file' ? (/^image\//.test(m.mime || '') ? '附图' : '附件') : m.kind}</div></div>)}
           <div style={{ ...capStyle, marginTop: 16, color: dark ? '#8b8fa8' : capStyle.color }}>要交什么</div>
           <ol style={{ margin: 0, paddingLeft: 18, fontSize: 13, lineHeight: 1.7 }}>{task.task.deliverables.map(d => <li key={d.id}>{d.title} <span style={{ color: '#999' }}>{d.format}</span></li>)}</ol>
           <details style={{ marginTop: 12, fontSize: 13 }}><summary style={{ cursor: 'pointer', color: dark ? '#8f87ff' : '#6055f5' }}>任务书</summary><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.7, color: dark ? '#b8bdd6' : '#444', marginTop: 6 }}>{task.task.brief}</div></details>
-        </aside>
-        {/* 操作台：四种台子长相不同（在线文档 / IDE / 电子表格 / CAD），材料面板按台子换风格 */}
-        <main style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 12, minWidth: 0, background: dark ? '#14151e' : undefined }}>
-          {mat && <div style={{ background: dark ? '#1e1f2b' : '#fff', color: dark ? '#d6d8e6' : undefined, border: `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, borderRadius: 12, padding: 14, maxHeight: mat.kind === 'file' ? 560 : 260, overflow: 'auto' }}><div style={{ display: 'flex', justifyContent: 'space-between' }}><b>{mat.title}</b><button onClick={() => setMat(null)} style={{ ...btnGhost, ...(dark ? { background: 'transparent', color: '#aab', borderColor: '#3a3d52' } : {}) }}>收起</button></div>{mat.kind === 'file' && mat.url && (/^image\//.test(mat.mime || '') ? <a href={mat.url} target="_blank" rel="noreferrer"><img src={mat.url} alt={mat.name || mat.title} style={{ maxWidth: '100%', maxHeight: 400, display: 'block', margin: '8px 0', borderRadius: 8, border: '1px solid #e8e9f0' }} /></a> : <a href={mat.url} target="_blank" rel="noreferrer" style={{ display: 'inline-block', margin: '8px 0 0', color: '#6055f5', fontWeight: 600 }}>打开 / 下载附件：{mat.name || mat.title} ↗</a>)}{isSheet(mat) ? <SheetView text={mat.content} dark={dark} /> : <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13.5, lineHeight: 1.7, margin: '8px 0 0', color: dark ? '#cfd3e6' : '#333' }}>{mat.content}</pre>}</div>}
-          <div style={{ flex: 1, minHeight: 520, display: 'flex', flexDirection: 'column' }}>
+        </aside>}
+        {/* 作答区：交付物标签常驻 → 材料面板（可拖高 / 占满 / 一条 / 关）→ 操作台 */}
+        <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 10, padding: '10px 12px', background: dark ? '#14151e' : undefined, minHeight: 0 }}>
+          {mode !== 'open' && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
+            {parts.map(p => { const on = p.id === cur; const filled = filledOf(p.id); return <button key={p.id} onClick={() => { setCur(p.id); ev('switch_part', { id: p.id }); }} style={{ border: `1px solid ${on ? '#6055f5' : line}`, background: on ? '#6055f5' : panel, color: on ? '#fff' : dark ? '#d6d8e6' : '#444', borderRadius: 999, padding: '5px 12px 5px 8px', cursor: 'pointer', font: 'inherit', fontSize: 13, display: 'flex', gap: 7, alignItems: 'center', maxWidth: 420 }}><span style={{ fontSize: 11, opacity: .85, border: `1px solid ${on ? 'rgba(255,255,255,.5)' : '#c9c9dc'}`, borderRadius: 4, padding: '0 5px', flex: 'none' }}>{MODULES[p.module].label}</span><span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.id} {p.title}</span><span style={{ width: 7, height: 7, borderRadius: 99, flex: 'none', background: filled ? '#22c55e' : on ? 'rgba(255,255,255,.4)' : '#d9dbe6' }} title={filled ? '已动笔' : '还没动笔'} /></button>; })}
+            <span style={{ fontSize: 12, color: ink2, marginLeft: 'auto', whiteSpace: 'nowrap' }}>{parts.length} 个交付物都要做 · 已动笔 {parts.length - emptyParts.length} / {parts.length}</span>
+          </div>}
+          {mat && <div style={{ background: panel, color: dark ? '#d6d8e6' : undefined, border: `1px solid ${line}`, borderRadius: 12, display: 'flex', flexDirection: 'column', flex: matMode === 'full' ? 1 : 'none', height: matMode === 'split' ? matH : undefined, minHeight: 0, overflow: 'hidden' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderBottom: matMode === 'bar' ? 0 : `1px solid ${line}` }}>
+              <b style={{ fontSize: 13.5, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{mat.title}</b>
+              <button onClick={() => setMatMode('full')} style={{ ...miniBtn, ...(matMode === 'full' ? { color: '#6055f5', borderColor: '#6055f5' } : {}) }} title="材料占满，作答区收成一条">占满</button>
+              <button onClick={() => setMatMode('split')} style={{ ...miniBtn, ...(matMode === 'split' ? { color: '#6055f5', borderColor: '#6055f5' } : {}) }} title="上下分，中间可拖">分屏</button>
+              <button onClick={() => setMatMode('bar')} style={{ ...miniBtn, ...(matMode === 'bar' ? { color: '#6055f5', borderColor: '#6055f5' } : {}) }} title="只留标题一条">收起</button>
+              <button onClick={() => setMat(null)} style={miniBtn} title="关闭材料面板">✕</button>
+            </div>
+            {matMode !== 'bar' && <div style={{ flex: 1, minHeight: 0, overflow: 'auto', padding: '4px 14px 14px' }}>{matBody}</div>}
+          </div>}
+          {mat && matMode === 'split' && <div onMouseDown={e => { dragRef.current = { y: e.clientY, h: matH }; document.body.style.cursor = 'row-resize'; document.body.style.userSelect = 'none'; }} style={{ height: 10, margin: '-6px 0', cursor: 'row-resize', display: 'flex', alignItems: 'center', justifyContent: 'center' }} title="拖动调整材料 / 作答高度"><div style={{ width: 48, height: 4, borderRadius: 4, background: dark ? '#3a3d52' : '#d9dbe6' }} /></div>}
+          {mat && matMode === 'full'
+            ? <div onClick={() => setMatMode('split')} style={{ flex: 'none', border: `1px solid ${line}`, background: panel, borderRadius: 12, padding: '9px 14px', fontSize: 13, color: ink2, cursor: 'pointer', display: 'flex', justifyContent: 'space-between' }}><span>作答区 · {mode === 'open' ? '用自己的软件做' : `${curPart.id} ${curPart.title}`}</span><span style={{ color: '#6055f5' }}>展开 ▴</span></div>
+            : <div style={{ flex: 1, minHeight: mode === 'open' ? 420 : 320, display: 'flex', flexDirection: 'column' }}>
             {mode === 'open' && <OpenBench token={token} sid={sid} materials={task.materials} deliverables={task.task.deliverables} summary={summary} onSummary={setSummary} onEvent={(type, extra) => ev(type, extra)} uploads={uploads} onUploads={setUploads} recording={recording} onRecording={setRecording} t0={t0.current} />}
-            {mode !== 'open' && parts.length > 1 && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 2 }}>
-              {parts.map(p => { const on = p.id === cur; const x = ps[p.id]; const filled = x && (x.doc || x.csv || x.code || x.notes || x.graph.nodes.length || Object.keys(x.params).length); return <button key={p.id} onClick={() => { setCur(p.id); ev('switch_part', { id: p.id }); }} style={{ border: `1px solid ${on ? '#6055f5' : dark ? '#3a3d52' : '#e0e0ee'}`, background: on ? '#6055f5' : dark ? '#1e1f2b' : '#fff', color: on ? '#fff' : dark ? '#d6d8e6' : '#444', borderRadius: 999, padding: '6px 14px', cursor: 'pointer', font: 'inherit', fontSize: 13, display: 'flex', gap: 8, alignItems: 'center' }}><span style={{ fontSize: 11, opacity: .8, border: `1px solid ${on ? 'rgba(255,255,255,.5)' : '#c9c9dc'}`, borderRadius: 4, padding: '0 5px' }}>{MODULES[p.module].label}</span>{p.id} {p.title}{filled ? ' ·' : ''}</button>; })}
-            </div>}
             {mode !== 'open' && curPart.module === 'doc' && <DocBench key={cur} value={st.doc} onChange={setDoc} onPaste={onPaste} deliverables={stages.length && parts.findIndex(p => p.module === 'doc') === parts.findIndex(p => p.id === cur) ? stages.map(s2 => ({ id: s2.id, title: `${s2.id} ${s2.question}`, format: '' })) : [curPart]} title={parts.length > 1 ? `${task.task.title} · ${curPart.title}` : task.task.title} />}
             {mode !== 'open' && curPart.module === 'code' && <CodeBench key={cur} code={st.code} onCode={setCode} notes={st.notes} onNotes={setNotes} tests={env.tests || []} language={env.language || 'js'} onRun={runTests} testOut={testOut} onPaste={onPaste} />}
             {mode !== 'open' && curPart.module === 'sheet' && <SheetBench key={cur} csv={st.csv} onCsv={setCsv} notes={st.notes} onNotes={setNotes} onPaste={onPaste} />}
             {mode !== 'open' && curPart.module === 'canvas' && <CanvasBench key={cur} graph={st.graph} onChange={f => setPart(x => ({ graph: f(x.graph) }))} notes={st.notes} onNotes={setNotes} onPaste={onPaste} onEvent={(t2, extra) => ev(t2, extra)} hint={curPart.format} />}
             {mode !== 'open' && curPart.module === 'design' && <DesignBench key={cur} params={env.params || []} values={st.params} onParam={(k, v) => setPart(x => ({ params: { ...x.params, [k]: v } }))} onParamDone={k => ev('set_param', { id: k })} sketch={st.sketch} setSketch={f => setPart(x => ({ sketch: f(x.sketch) }))} hint={env.sketch_hint} notes={st.notes} onNotes={setNotes} onPaste={onPaste} onSketch={label => ev('sketch', { label })} />}
-          </div>
+          </div>}
         </main>
-        {/* AI */}
-        <aside style={{ borderLeft: narrow ? undefined : `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, background: dark ? '#16171f' : undefined, color: dark ? '#d6d8e6' : undefined, display: 'flex', flexDirection: 'column', maxHeight: narrow ? 480 : 'calc(100vh - 56px)' }}>
-          <div style={{ padding: '12px 14px', borderBottom: `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}` }}><div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>AI 助手</div><div style={{ fontSize: 12, color: '#888' }}>随便问，不算作弊；评的是你怎么用、什么是你自己定的。它看得到你当前打开的材料。</div></div>
-          <div style={{ flex: 1, overflow: 'auto', padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {chat.map((c, i) => <div key={i}><div style={{ background: '#6055f5', color: '#fff', padding: '8px 12px', borderRadius: '12px 12px 2px 12px', fontSize: 13.5, marginLeft: 30, whiteSpace: 'pre-wrap' }}>{c.q}</div><div style={{ background: dark ? '#1e1f2b' : '#fafbff', border: `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, padding: '8px 12px', borderRadius: '12px 12px 12px 2px', fontSize: 13.5, marginTop: 6, marginRight: 30, whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>{c.a}<div style={{ marginTop: 6 }}><button onClick={() => adopt(c.a)} style={{ ...btnGhost, fontSize: 12 }}>放进交付物</button></div></div></div>)}
-            {asking && <div style={{ color: '#888', fontSize: 13 }}>AI 在想…</div>}
+        {/* AI 助手：卡片（可收） */}
+        {(narrow || aiOpen) && <aside style={{ width: narrow ? undefined : 352, flex: 'none', padding: narrow ? '0 12px 12px' : '10px 12px 10px 0', display: 'flex', flexDirection: 'column', minHeight: 0, maxHeight: narrow ? 520 : undefined }}>
+          <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', background: panel, color: dark ? '#d6d8e6' : undefined, border: `1px solid ${line}`, borderRadius: 16, boxShadow: dark ? 'none' : '0 6px 24px rgba(30,30,60,.06)', overflow: 'hidden' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', borderBottom: `1px solid ${line}` }}>
+              <span style={{ width: 22, height: 22, borderRadius: 7, background: 'linear-gradient(135deg,#6055f5,#12b5cb)', color: '#fff', fontSize: 12, display: 'grid', placeItems: 'center' }}>✦</span>
+              <b style={{ fontSize: 13.5, flex: 1 }}>AI 助手</b>
+              <span style={{ fontSize: 11.5, color: ink2 }}>看得到你打开的材料</span>
+              {!narrow && <button onClick={() => setAiOpen(false)} style={miniBtn} title="收起">✕</button>}
+            </div>
+            <div style={{ flex: 1, overflow: 'auto', padding: 14, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {!chat.length && <div style={{ fontSize: 12.5, color: ink2, lineHeight: 1.7, padding: '4px 2px' }}>随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。可以让它核算、起草、挑毛病，但结论要你自己写。</div>}
+              {chat.map((c, i) => <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <div style={{ alignSelf: 'flex-end', maxWidth: '88%', background: '#6055f5', color: '#fff', padding: '8px 12px', borderRadius: '14px 14px 4px 14px', fontSize: 13.5, whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>{c.q}</div>
+                <div style={{ alignSelf: 'flex-start', maxWidth: '94%', background: dark ? '#262838' : '#f7f7fb', padding: '10px 12px', borderRadius: '4px 14px 14px 14px', fontSize: 13.5, lineHeight: 1.65 }} className="wk-md"><Md text={c.a} /><div style={{ marginTop: 8 }}><button onClick={() => adopt(c.a)} style={{ ...miniBtn, color: '#6055f5', borderColor: 'rgba(96,85,245,.4)' }}>放进当前交付物</button></div></div>
+              </div>)}
+              {asking && <div style={{ color: ink2, fontSize: 13 }}>AI 在想…</div>}
+            </div>
+            <div style={{ padding: 10, borderTop: `1px solid ${line}` }}>
+              <div style={{ border: `1px solid ${line}`, borderRadius: 14, background: dark ? '#1a1b26' : '#fff', padding: '8px 8px 8px 12px', display: 'flex', alignItems: 'flex-end', gap: 8 }}>
+                <textarea className="wk-ta" value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } }} placeholder="问 AI… Enter 发送，Shift+Enter 换行" rows={2} style={{ flex: 1, border: 0, outline: 'none', resize: 'none', font: 'inherit', fontSize: 13.5, lineHeight: 1.5, background: 'transparent', color: 'inherit', minHeight: 40, maxHeight: 140 }} />
+                <button onClick={ask} disabled={asking || !q.trim()} style={{ width: 32, height: 32, borderRadius: 10, border: 0, background: q.trim() && !asking ? 'linear-gradient(135deg,#6055f5,#12b5cb)' : (dark ? '#2b2d3e' : '#e8e9f0'), color: '#fff', cursor: q.trim() ? 'pointer' : 'default', fontSize: 15, flex: 'none' }} title="发送">↑</button>
+              </div>
+            </div>
           </div>
-          <div style={{ padding: 12, borderTop: `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, display: 'flex', gap: 8 }}>
-            <textarea value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } }} placeholder="问 AI（Enter 发送，Shift+Enter 换行）" style={{ ...ta, minHeight: 44, flex: 1, ...(dark ? { background: '#1e1f2b', color: '#e6e8f0', borderColor: '#3a3d52' } : {}) }} />
-            <button onClick={ask} disabled={asking || !q.trim()} style={btnPrimary}>问</button>
-          </div>
-        </aside>
+        </aside>}
       </div>
     </Shell>
   );
