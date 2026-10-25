@@ -14,6 +14,8 @@ import { CodeBench } from '@/components/work/benches/CodeBench';
 import { SheetBench } from '@/components/work/benches/SheetBench';
 import { DesignBench } from '@/components/work/benches/DesignBench';
 import { OpenBench } from '@/components/work/benches/OpenBench';
+import { CanvasBench } from '@/components/work/benches/CanvasBench';
+import { MODULES, canvasToText, resolveModule, type CanvasGraph, type Module } from '@/lib/work/modules';
 import { PluginWork } from '@/components/work/benches/PluginWork';
 
 type Material = { id: string; title: string; kind: string; content: string; source: string; url?: string; mime?: string; name?: string };
@@ -31,9 +33,17 @@ function SheetView({ text, dark }: { text: string; dark: boolean }) {
 }
 type Env = { type: 'doc' | 'code' | 'sheet' | 'design' | 'open' | 'plugin'; language?: string; starter?: string; tests?: { name: string; code: string }[]; csv?: string; params?: { name: string; unit?: string; hint?: string }[]; sketch_hint?: string };
 type Stage = { id: string; type: string; question: string; reveal: string };
-type Task = { id: string; company_name: string; role: string; statement: string; task: { title: string; brief: string; deliverables: { id: string; title: string; format: string }[]; time_minutes: number; rules: string[]; env?: Env; stages?: Stage[] }; materials: Material[] };
+type Task = { id: string; company_name: string; role: string; statement: string; task: { title: string; brief: string; deliverables: { id: string; title: string; format: string; module?: string }[]; time_minutes: number; rules: string[]; env?: Env; stages?: Stage[] }; materials: Material[] };
 type Ev = { t: number; type: string; [k: string]: any };
 
+// 操作台模组按交付物挂（2026-10-25，王刚：交付物不止一个 Word，表 / 脚本 / 流程图可以混用；考试台不是在线 Word）
+type Part = { id: string; title: string; format: string; module: Module };
+function partsOf(task: Task, env: Env): Part[] {
+  const fb = (['doc', 'sheet', 'code', 'design'].includes(env.type) ? env.type : 'doc') as Module;
+  const ds = task.task.deliverables.length ? task.task.deliverables : [{ id: 'd1', title: '按题目要求作答', format: '' }];
+  return ds.map(d => ({ id: d.id, title: d.title, format: d.format, module: resolveModule(d.format, d.module, fb) }));
+}
+const modulesLabel = (task: Task, env: Env) => [...new Set(partsOf(task, env).map(p => MODULES[p.module].label))].join(' + ');
 const ENV_NAME: Record<string, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台', open: '用自己的软件做（录屏）', plugin: '用自己的网页工具做（真活插件）' };
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 
@@ -85,14 +95,14 @@ export default function WorkPage() {
         <div style={{ color: '#666', marginBottom: 20 }}>{task.statement}</div>
         <Box title="任务书"><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>{task.task.brief}</div></Box>
         <Box title="要交什么"><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol></Box>
-        <Box title="规则"><ul style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.rules.map((r, i) => <li key={i}>{r}</li>)}</ul><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>操作台：{ENV_NAME[env.type]} · 建议用时 {task.task.time_minutes} 分钟（不强制停表，但用时会记）· 材料 {task.materials.length} 份 · 交卷后立刻出报告</div></Box>
+        <Box title="规则"><ul style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9 }}>{task.task.rules.map((r, i) => <li key={i}>{r}</li>)}</ul><div style={{ color: '#888', fontSize: 13, marginTop: 6 }}>操作台：{modulesLabel(task, env)}（按交付物切换） · 建议用时 {task.task.time_minutes} 分钟（不强制停表，但用时会记）· 材料 {task.materials.length} 份 · 交卷后立刻出报告</div></Box>
         {env.type === 'plugin'
           ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用你自己的工具做。</b>在线文档、表格、设计工具、各家 AI 都可以。点「开始做」后会给你一个真活码，装好「真活插件」（一次就好，<a href="/work/plugin" target="_blank" rel="noreferrer">看说明</a>）、关联这次作答，插件只在答题期间记录你打开的网页、页面上的文字和打字粘贴的量。交付说明在插件侧边栏或本页写，做完点「结束作答」；到时间会自动交卷。</div></Box>
           : env.type === 'open'
           ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用自己的软件做。</b>下载材料，用你顺手的 Excel / CAD / IDE / AI 做；浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。出题人指定了这种做法，过程由录屏还原。</div></Box>
           : <Box title="怎么做">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
-            {([['bench', '在本页的操作台做', `${ENV_NAME[env.type]}：材料、编辑区、AI 都在页面里，每一步自动记录。省事，推荐。`], ['plugin', '用自己的网页工具做', '在线文档 / 表格 / 设计工具 / 各家 AI 都行。装一次「真活插件」，它只在答题期间记录你打开的网页和页面文字；交付说明在侧边栏写。'], ['open', '用自己的桌面软件做', '装在电脑上的 Excel / CAD / IDE：下载材料，浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。']] as const).map(([k, t, d]) => (
+            {([['bench', '在本页的操作台做', `${modulesLabel(task, env)}：每个交付物一个标签页，材料、编辑区、AI 都在页面里，每一步自动记录。省事，推荐。`], ['plugin', '用自己的网页工具做', '在线文档 / 表格 / 设计工具 / 各家 AI 都行。装一次「真活插件」，它只在答题期间记录你打开的网页和页面文字；交付说明在侧边栏写。'], ['open', '用自己的桌面软件做', '装在电脑上的 Excel / CAD / IDE：下载材料，浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。']] as const).map(([k, t, d]) => (
               <div key={k} onClick={() => setMode(k)} style={{ cursor: 'pointer', padding: '12px 14px', borderRadius: 12, border: `2px solid ${mode === k ? '#6055f5' : '#e8e9f0'}`, background: mode === k ? '#f3f2ff' : '#fff' }}><div style={{ fontWeight: 700 }}>{mode === k ? '● ' : '○ '}{t}</div><div style={{ fontSize: 13, color: '#666', lineHeight: 1.6, marginTop: 4 }}>{d}</div></div>
             ))}
           </div>
@@ -152,24 +162,32 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const now_s = () => Math.round((Date.now() - t0.current) / 1000);
   const ev = useCallback((type: string, extra: Record<string, any> = {}) => { buf.current.push({ t: now_s(), type, ...extra }); lastAct.current = Date.now(); idleMarked.current = false; }, []);
 
-  // 各环境的工作内容
-  const [doc, setDoc] = useState('');
-  const [code, setCode] = useState(env.starter || '');
-  const [csv, setCsv] = useState(env.csv || '');
-  const [params, setParams] = useState<Record<string, string>>({});
-  const [sketch, setSketch] = useState<{ pts: [number, number][]; label: string }[]>([]);
-  const [notes, setNotes] = useState('');
+  // 每个交付物一个模组、一份工作内容（文档 / 表格 / 代码 / 参数草图 / 画布），标签页切换
+  const parts = useMemo(() => partsOf(task, env), [task, env]);
+  type PartState = { doc: string; code: string; csv: string; notes: string; params: Record<string, string>; sketch: { pts: [number, number][]; label: string }[]; graph: CanvasGraph };
+  const blank = (): PartState => ({ doc: '', code: '', csv: '', notes: '', params: {}, sketch: [], graph: { nodes: [], edges: [], lanes: [] } });
+  const [ps, setPs] = useState<Record<string, PartState>>(() => { const o: Record<string, PartState> = {}; let seededCode = false, seededCsv = false; for (const p of parts) { const st = blank(); if (p.module === 'code' && !seededCode) { st.code = env.starter || ''; seededCode = true; } if (p.module === 'sheet' && !seededCsv) { st.csv = env.csv || ''; seededCsv = true; } o[p.id] = st; } return o; });
+  const [cur, setCur] = useState(parts[0]?.id || 'd1');
+  const curPart = parts.find(p => p.id === cur) || parts[0];
+  const st = ps[cur] || blank();
+  const setPart = (patch: Partial<PartState> | ((x: PartState) => Partial<PartState>)) => setPs(all => { const x = all[cur] || blank(); return { ...all, [cur]: { ...x, ...(typeof patch === 'function' ? patch(x) : patch) } }; });
+  const setDoc = (v: string) => setPart({ doc: v }); const setCode = (v: string) => setPart({ code: v }); const setCsv = (v: string) => setPart({ csv: v }); const setNotes = (v: string | ((n: string) => string)) => setPart(x => ({ notes: typeof v === 'function' ? v(x.notes) : v }));
   const [testOut, setTestOut] = useState<string>('');
   const [summary, setSummary] = useState(''); const [uploads, setUploads] = useState<{ name: string; size: number; url: string }[]>([]); const [recording, setRecording] = useState<{ url: string; duration: number } | null>(null);
   const lastLen = useRef(0);
 
   const deliverable = useMemo(() => {
     if (mode === 'open') return summary;
-    if (env.type === 'code') return `\`\`\`${env.language || 'js'}\n${code}\n\`\`\`\n\n## 说明\n${notes}`;
-    if (env.type === 'sheet') return `## 表\n\`\`\`csv\n${csv}\n\`\`\`\n\n## 口径说明\n${notes}`;
-    if (env.type === 'design') return `## 参数表\n| 参数 | 值 | 单位 |\n|---|---|---|\n${(env.params || []).map(p => `| ${p.name} | ${params[p.name] || ''} | ${p.unit || ''} |`).join('\n')}\n\n## 草图（${sketch.length} 条线）\n${sketch.map((l, i) => `- 线 ${i + 1}「${l.label || '未标注'}」：${l.pts.map(p => `(${p[0]},${p[1]})`).join(' → ')}`).join('\n')}\n\n## 设计说明\n${notes}`;
-    return doc;
-  }, [env, mode, summary, doc, code, csv, params, sketch, notes]);
+    const body = (p: Part, x: PartState) => {
+      if (p.module === 'code') return `\`\`\`${env.language || 'js'}\n${x.code}\n\`\`\`\n\n### 说明\n${x.notes}`;
+      if (p.module === 'sheet') return `\`\`\`csv\n${x.csv}\n\`\`\`\n\n### 口径说明\n${x.notes}`;
+      if (p.module === 'design') return `### 参数表\n| 参数 | 值 | 单位 |\n|---|---|---|\n${(env.params || []).map(q => `| ${q.name} | ${x.params[q.name] || ''} | ${q.unit || ''} |`).join('\n')}\n\n### 草图（${x.sketch.length} 条线）\n${x.sketch.map((l, i) => `- 线 ${i + 1}「${l.label || '未标注'}」：${l.pts.map(q => `(${Math.round(q[0])},${Math.round(q[1])})`).join(' ')}`).join('\n')}\n\n### 说明\n${x.notes}`;
+      if (p.module === 'canvas') return `${canvasToText(x.graph)}\n\n### 图的说明\n${x.notes}`;
+      return x.doc;
+    };
+    if (parts.length === 1) return body(parts[0], ps[parts[0].id] || blank());
+    return parts.map(p => `## ${p.id} ${p.title}（${p.format}）\n\n${body(p, ps[p.id] || blank())}`).join('\n\n');
+  }, [env, mode, summary, parts, ps]);
 
   // 时钟 + 改稿事件（每 20 秒把字数变化记一次）+ 空闲 + 同步
   useEffect(() => {
@@ -214,13 +232,13 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
       setChat(c => [...c, { q: text, a: j.ok ? j.a : `（出错：${j.error}）` }]);
     } finally { setAsking(false); }
   };
-  const adopt = (a: string) => { ev('adopt', { chars: a.length }); if (env.type === 'code') setNotes(n => n + '\n' + a); else if (env.type === 'doc') setDoc(d => d + (d ? '\n\n' : '') + a); else setNotes(n => n + (n ? '\n\n' : '') + a); };
+  const adopt = (a: string) => { ev('adopt', { chars: a.length }); if (curPart.module === 'doc') setPart(x => ({ doc: x.doc + (x.doc ? '\n\n' : '') + a })); else setNotes(n => n + (n ? '\n\n' : '') + a); };
   const onPaste = (e: React.ClipboardEvent) => { const n = e.clipboardData.getData('text').length; if (n > 20) ev('paste', { chars: n }); };
 
   // 代码自测（只跑 js，在 Worker 里，3 秒超时）
   const runTests = () => {
     if (!env.tests?.length) return;
-    const src = code.replace(/export\s+(default\s+)?/g, '');
+    const src = st.code.replace(/export\s+(default\s+)?/g, '');
     const worker = new Worker(URL.createObjectURL(new Blob([`
       self.onmessage = (e) => { const { src, tests } = e.data; let solution; const out = [];
         try {
@@ -239,7 +257,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
 
 
   const [arm, setArm] = useState(false);
-  const dark = env.type === 'code';
+  const dark = curPart.module === 'code';
   const [localErr, setLocalErr] = useState('');
   const submit = () => { if (mode === 'open' && !recording) { setLocalErr('先录一段屏再交卷：点「开始录屏」，做完点停止'); setTimeout(() => setLocalErr(''), 5000); return; } if (!arm) { setArm(true); setTimeout(() => setArm(false), 5000); return; } setArm(false); const events = buf.current.splice(0); onSubmit(deliverable, events); };
   const over = now > task.task.time_minutes * 60;
@@ -248,7 +266,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     <Shell dark={dark}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '10px 18px', borderBottom: `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, background: dark ? '#16171f' : '#fff', color: dark ? '#e6e8f0' : undefined, position: 'sticky', top: 0, zIndex: 5 }}>
         <div style={{ fontSize: 11, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台</div>
-        <div style={{ fontWeight: 700, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{task.task.title} <span style={{ color: '#888', fontWeight: 400, fontSize: 13 }}>{task.company_name} · {task.role} · {mode === 'open' ? '用自己的软件做' : ENV_NAME[env.type]}</span></div>
+        <div style={{ fontWeight: 700, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{task.task.title} <span style={{ color: '#888', fontWeight: 400, fontSize: 13 }}>{task.company_name} · {task.role} · {mode === 'open' ? '用自己的软件做' : modulesLabel(task, env)}</span></div>
         <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{fmt(now)}<span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span></div>
         <button onClick={submit} disabled={grading} style={{ ...btnPrimary, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '再点一次确认交卷（交后不能改）' : '交卷 →'}</button>
       </div>
@@ -278,10 +296,14 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
           {mat && <div style={{ background: dark ? '#1e1f2b' : '#fff', color: dark ? '#d6d8e6' : undefined, border: `1px solid ${dark ? '#2b2d3e' : '#e8e9f0'}`, borderRadius: 12, padding: 14, maxHeight: mat.kind === 'file' ? 560 : 260, overflow: 'auto' }}><div style={{ display: 'flex', justifyContent: 'space-between' }}><b>{mat.title}</b><button onClick={() => setMat(null)} style={{ ...btnGhost, ...(dark ? { background: 'transparent', color: '#aab', borderColor: '#3a3d52' } : {}) }}>收起</button></div>{mat.kind === 'file' && mat.url && (/^image\//.test(mat.mime || '') ? <a href={mat.url} target="_blank" rel="noreferrer"><img src={mat.url} alt={mat.name || mat.title} style={{ maxWidth: '100%', maxHeight: 400, display: 'block', margin: '8px 0', borderRadius: 8, border: '1px solid #e8e9f0' }} /></a> : <a href={mat.url} target="_blank" rel="noreferrer" style={{ display: 'inline-block', margin: '8px 0 0', color: '#6055f5', fontWeight: 600 }}>打开 / 下载附件：{mat.name || mat.title} ↗</a>)}{isSheet(mat) ? <SheetView text={mat.content} dark={dark} /> : <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13.5, lineHeight: 1.7, margin: '8px 0 0', color: dark ? '#cfd3e6' : '#333' }}>{mat.content}</pre>}</div>}
           <div style={{ flex: 1, minHeight: 520, display: 'flex', flexDirection: 'column' }}>
             {mode === 'open' && <OpenBench token={token} sid={sid} materials={task.materials} deliverables={task.task.deliverables} summary={summary} onSummary={setSummary} onEvent={(type, extra) => ev(type, extra)} uploads={uploads} onUploads={setUploads} recording={recording} onRecording={setRecording} t0={t0.current} />}
-            {mode !== 'open' && env.type === 'doc' && <DocBench value={doc} onChange={setDoc} onPaste={onPaste} deliverables={stages.length ? stages.map(st => ({ id: st.id, title: `${st.id} ${st.question}`, format: '' })) : task.task.deliverables} title={task.task.title} />}
-            {mode !== 'open' && env.type === 'code' && <CodeBench code={code} onCode={setCode} notes={notes} onNotes={setNotes} tests={env.tests || []} language={env.language || 'js'} onRun={runTests} testOut={testOut} onPaste={onPaste} />}
-            {mode !== 'open' && env.type === 'sheet' && <SheetBench csv={csv} onCsv={setCsv} notes={notes} onNotes={setNotes} onPaste={onPaste} />}
-            {mode !== 'open' && env.type === 'design' && <DesignBench params={env.params || []} values={params} onParam={(k, v) => setParams(x => ({ ...x, [k]: v }))} onParamDone={k => ev('set_param', { id: k })} sketch={sketch} setSketch={f => setSketch(f)} hint={env.sketch_hint} notes={notes} onNotes={setNotes} onPaste={onPaste} onSketch={label => ev('sketch', { note: label })} />}
+            {mode !== 'open' && parts.length > 1 && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 2 }}>
+              {parts.map(p => { const on = p.id === cur; const x = ps[p.id]; const filled = x && (x.doc || x.csv || x.code || x.notes || x.graph.nodes.length || Object.keys(x.params).length); return <button key={p.id} onClick={() => { setCur(p.id); ev('switch_part', { id: p.id }); }} style={{ border: `1px solid ${on ? '#6055f5' : dark ? '#3a3d52' : '#e0e0ee'}`, background: on ? '#6055f5' : dark ? '#1e1f2b' : '#fff', color: on ? '#fff' : dark ? '#d6d8e6' : '#444', borderRadius: 999, padding: '6px 14px', cursor: 'pointer', font: 'inherit', fontSize: 13, display: 'flex', gap: 8, alignItems: 'center' }}><span style={{ fontSize: 11, opacity: .8, border: `1px solid ${on ? 'rgba(255,255,255,.5)' : '#c9c9dc'}`, borderRadius: 4, padding: '0 5px' }}>{MODULES[p.module].label}</span>{p.id} {p.title}{filled ? ' ·' : ''}</button>; })}
+            </div>}
+            {mode !== 'open' && curPart.module === 'doc' && <DocBench key={cur} value={st.doc} onChange={setDoc} onPaste={onPaste} deliverables={stages.length && parts.findIndex(p => p.module === 'doc') === parts.findIndex(p => p.id === cur) ? stages.map(s2 => ({ id: s2.id, title: `${s2.id} ${s2.question}`, format: '' })) : [curPart]} title={parts.length > 1 ? `${task.task.title} · ${curPart.title}` : task.task.title} />}
+            {mode !== 'open' && curPart.module === 'code' && <CodeBench key={cur} code={st.code} onCode={setCode} notes={st.notes} onNotes={setNotes} tests={env.tests || []} language={env.language || 'js'} onRun={runTests} testOut={testOut} onPaste={onPaste} />}
+            {mode !== 'open' && curPart.module === 'sheet' && <SheetBench key={cur} csv={st.csv} onCsv={setCsv} notes={st.notes} onNotes={setNotes} onPaste={onPaste} />}
+            {mode !== 'open' && curPart.module === 'canvas' && <CanvasBench key={cur} graph={st.graph} onChange={f => setPart(x => ({ graph: f(x.graph) }))} notes={st.notes} onNotes={setNotes} onPaste={onPaste} onEvent={(t2, extra) => ev(t2, extra)} hint={curPart.format} />}
+            {mode !== 'open' && curPart.module === 'design' && <DesignBench key={cur} params={env.params || []} values={st.params} onParam={(k, v) => setPart(x => ({ params: { ...x.params, [k]: v } }))} onParamDone={k => ev('set_param', { id: k })} sketch={st.sketch} setSketch={f => setPart(x => ({ sketch: f(x.sketch) }))} hint={env.sketch_hint} notes={st.notes} onNotes={setNotes} onPaste={onPaste} onSketch={label => ev('sketch', { label })} />}
           </div>
         </main>
         {/* AI */}
