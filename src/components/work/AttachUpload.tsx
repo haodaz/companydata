@@ -32,7 +32,7 @@ export function AttachUpload({ value, onChange, size = 'middle', label = '上传
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
         <Button size={size} icon={<PaperClipOutlined />} loading={busy} onClick={() => ref.current?.click()}>{label}</Button>
         <input ref={ref} type="file" multiple accept=".pdf,.docx,.txt,.md,.csv,.xlsx,.png,.jpg,.jpeg,.webp,.gif,.dwg,.dxf" style={{ display: 'none' }} onChange={e => { upload(e.target.files); e.target.value = ''; }} />
-        {value.map((a, i) => <Tag key={a.url} closable onClose={() => onChange(value.filter((_, j) => j !== i))} color={a.image ? 'geekblue' : a.text ? 'green' : 'default'}>{a.name}{a.text ? ` · 已读 ${Math.round(a.text.length / 100) / 10}k 字` : a.image ? ' · 图片' : ''}</Tag>)}
+        {value.map((a, i) => <Tag key={a.url} closable onClose={() => onChange(value.filter((_, j) => j !== i))} color={a.image ? 'geekblue' : a.text ? 'green' : 'default'}>{a.name}{a.image ? (a.text ? ' · 图片，已看图' : ' · 图片') : a.text ? ` · 已读 ${Math.round(a.text.length / 100) / 10}k 字` : ''}</Tag>)}
       </div>
     </div>
   );

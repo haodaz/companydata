@@ -91,14 +91,14 @@ function Inner() {
             <div style={{ fontSize: 12.5, color: '#888', marginBottom: 6 }}>你手里已经有一道干净的题：整段贴进来，<b>一字不改</b>发给候选人。平台只整理交付物和评分点（只从题目自己的要求里推），生成参与链接。企业和岗位可不填，填了只当标签。</div>
             <Input.TextArea value={verbatim} onChange={e => setVerbatim(e.target.value)} autoSize={{ minRows: 8, maxRows: 24 }} maxLength={12000} showCount placeholder="把题目原文贴这里：背景、要求、要交什么、时间……" />
           </div>}
-          {way === 'gen' && <div style={{ color: '#666', fontSize: 13.5, marginBottom: 22 }}>告诉它企业和岗位，AI 从企业画像、在招岗位、职业典型任务、行业规范里架构出一个此刻真实的业务问题，配材料、定标准、先做一遍当基线。</div>}
+
 
           {way === 'gen' && <div style={{ display: 'flex', gap: 8, alignItems: 'center', margin: '0 0 18px', fontSize: 13 }}>
             {([[1, '题目'], [2, '出题台']] as const).map(([n, t]) => <div key={n} onClick={() => n === 1 && setPage(1)} style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: n === 1 ? 'pointer' : 'default', color: page === n ? '#1a1a2e' : '#999', fontWeight: page === n ? 700 : 500 }}><span style={{ width: 22, height: 22, borderRadius: 99, display: 'grid', placeItems: 'center', fontSize: 12, background: page === n ? '#6055f5' : page > n ? '#22c55e' : '#e8e9f0', color: page >= n ? '#fff' : '#888' }}>{page > n ? '✓' : n}</span>{t}</div>)}
             <span style={{ color: '#aaa', margin: '0 2px' }}>→</span><span style={{ color: '#999' }}>出题</span>
           </div>}
           {(way === 'verbatim' || page === 1) && <>
-          <Sec n="1" t="企业，和你要找的人" d="企业边输边搜，库里有就选中（会用上它的画像和深度尽调）。要找的人直接用一句话说，不用先想职位名">
+          <Sec n="1" t="企业，和你要找的人" d="">
             <CompanyRolePicker company={f.company} role={f.role} onCompany={(name, p) => { setF(x => ({ ...x, company: name })); setPicked(p); }} onRole={r => setF(x => ({ ...x, role: r }))} />
             {/* 库里没有的企业：贴一段介绍，AI 先读懂这家公司再出题（2026-10-22） */}
             {f.company.trim() && !picked && (
@@ -110,13 +110,13 @@ function Inner() {
               </div>
             )}
           </Sec>
-          <Sec n="2" t="想考什么？（选填）" d="聚焦哪个问题、给谁做、难度；没写就按岗位此刻最真实的问题出">
+          <Sec n="2" t="想考什么？（选填）" d="">
             <Input.TextArea value={f.focus} onChange={e => setF(x => ({ ...x, focus: e.target.value }))} placeholder="例：聚焦德布勒森工厂爬坡期的欧洲供需平衡；给 3 年以内的人做；一小时内" autoSize={{ minRows: 2, maxRows: 5 }} />
           </Sec>
-          <Sec n="3" t="题里要给候选人什么素材？（选填）" d="题里要发给候选人看的东西：数据表、图纸、截图、PDF。表格 / PDF / Word 会抽出文字，出题和评卷都能读；图片候选人能看，AI 出题时只知道文件名">
+          <Sec n="3" t="题里要给做题人什么素材？（选填）" d="这些会直接出现在考题里，做题人看得到。建议给做这件事真实要用的东西：数据表、报表截图、图纸、合同要点">
             <AttachUpload value={atts} onChange={setAtts} />
           </Sec>
-          <Sec n="4" t="有没有以前用过的题可以参照？（选填）" d="你们过往用过的题、内部考题、认可的案例——上传或粘贴，AI 照它的路数出：题型、推进方式、算法保留，故事换成这家企业、数字换掉">
+          <Sec n="4" t="有没有以前用过的题可以参照？（选填）" d="这些不会给做题人看。你们过往用过的题、内部考题、认可的案例，AI 出题时照它的路数出">
             {refs.length > 0 && <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
               {refs.map(sm => <Tag.CheckableTag key={sm.id} checked={ref?.id === sm.id} onChange={c => setRef(c ? sm : null)} style={{ padding: '4px 10px', fontSize: 13, border: '1px solid #e0e0ee' }}>{sm.title} <span style={{ opacity: .6 }}>· {sm.stages} 步</span></Tag.CheckableTag>)}
             </div>}
@@ -127,12 +127,12 @@ function Inner() {
           </>}
           {way === 'gen' && page === 2 && <>
             <div style={{ fontSize: 13, color: '#666', marginBottom: 14, padding: '10px 14px', background: '#fafbff', border: '1px solid #e8e9f0', borderRadius: 12 }}><b>{f.company || '（企业）'}</b> · 要找：{f.role || '—'}{f.focus ? ` · 考：${f.focus.slice(0, 40)}` : ''}{atts.length ? ` · 素材 ${atts.length} 份` : ''}{ref ? ' · 有参考' : ''} <a onClick={() => setPage(1)} style={{ marginLeft: 8 }}>改题目</a></div>
-          <Sec n="1" t="给答题的人配哪个 AI？" d="候选人做题时随手可问；默认通义千问，国内网络直接可用。也可以换成 Claude / GPT">
+          <Sec n="1" t="给答题的人配哪个 AI？" d="">
             <Select value={f.model} onChange={v => setF(x => ({ ...x, model: v }))} size="large" style={{ width: '100%' }} optionLabelProp="label"
               options={MODELS.map(m => ({ value: m.id, label: m.label, desc: m.provider + (m.badge ? ' · ' + m.badge : '') }))}
               optionRender={o => <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}><span>{o.data.label}</span><span style={{ color: '#999', fontSize: 12 }}>{o.data.desc}</span></div>} />
           </Sec>
-          <Sec n="2" t="要指定操作台吗？" d={env.desc + '；不选就按每个交付物自动挂模组（文档 / 表格 / 代码 / 草图 / 画布可混用）'}>
+          <Sec n="2" t="要指定操作台吗？" d="">
             <Select value={f.env} onChange={v => setF(x => ({ ...x, env: v }))} size="large" style={{ width: '100%' }} options={ENVS.map(e => ({ value: e.value, label: e.value ? e.label : '操作台：' + e.label }))} />
           </Sec>
             <div style={{ display: 'flex', gap: 10 }}>
@@ -170,6 +170,6 @@ function Sec({ n, t, d, children }: { n: string; t: string; d: string; children:
   return <div style={{ marginBottom: 20 }}>
     <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 6 }}><span style={{ fontSize: 11, fontWeight: 800, color: '#6055f5', letterSpacing: 1 }}>0{n}</span><span style={{ fontWeight: 700 }}>{t}</span></div>
     {children}
-    <div style={{ fontSize: 12.5, color: '#888', marginTop: 6 }}>{d}</div>
+    {d && <div style={{ fontSize: 12.5, color: '#888', marginTop: 6 }}>{d}</div>}
   </div>;
 }

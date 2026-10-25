@@ -35,5 +35,7 @@ export async function POST(req: NextRequest) {
     // Excel：每个 sheet 抽成 CSV 文字（候选人端按表格渲染；出题 / 评卷能读）
     try { const XLSX = await import('xlsx'); const wb = XLSX.read(buf, { type: 'buffer' }); text = wb.SheetNames.slice(0, 5).map(n => `## ${n}\n` + XLSX.utils.sheet_to_csv(wb.Sheets[n])).join('\n\n').slice(0, 20000); } catch {}
   } else if (/pdf|word|officedocument|text\/|csv/.test(mime) || /\.(pdf|docx|txt|md|csv)$/i.test(safe)) { try { text = (await extractText(buf, safe)).slice(0, 20000); } catch {} }
-  return NextResponse.json({ ok: true, url, name: safe, mime, size: file.size, text, image: /^image\//.test(mime) });
+  const image = /^image\//.test(mime);
+  if (image && !text) { try { const { describeImage } = await import('@/lib/work/vision'); text = await describeImage(buf, mime, safe); } catch (e) { console.warn('[attach] 看图失败', String((e as any)?.message).slice(0, 100)); } }
+  return NextResponse.json({ ok: true, url, name: safe, mime, size: file.size, text, image });
 }

@@ -201,7 +201,7 @@ export const ENV_LABELS: Record<WorkEnvType, string> = { doc: '文档 / 对账�
 export interface Attachment { url: string; name: string; mime?: string; size?: number; text?: string; image?: boolean }
 /** 把上传的附件挂成材料（kind=file）：有文字的带文字（评卷和 AI 做题能读），图片只有链接和说明 */
 export function attachmentsToMaterials(atts: Attachment[], startAt: number): WorkTask['materials'] {
-  return atts.map((a, i) => ({ id: `m${startAt + i}`, title: a.name, kind: 'file' as const, content: a.text ? a.text.slice(0, 8000) : `附件文件：${a.name}（${a.image ? '图片，请打开查看' : '请下载查看'}）`, source: 'upload' as const, basis: '出题人上传', url: a.url, mime: a.mime, name: a.name }));
+  return atts.map((a, i) => ({ id: `m${startAt + i}`, title: a.name, kind: 'file' as const, content: a.image ? (a.text ? `图片说明（AI 看图整理，以原图为准）：\n${a.text.slice(0, 4000)}` : `附图：${a.name}`) : a.text ? a.text.slice(0, 8000) : `附件：${a.name}`, source: 'upload' as const, basis: a.image ? '出题人上传的素材图 + AI 看图说明' : '出题人上传的素材', url: a.url, mime: a.mime, name: a.name }));
 }
 
 /**
