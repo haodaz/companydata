@@ -193,11 +193,50 @@ export interface WorkEnv {
 }
 export const ENV_LABELS: Record<WorkEnvType, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台', open: '自己录制电脑操作', plugin: '真活插件 · 自己的网页工具' };
 
+export interface Attachment { url: string; name: string; mime?: string; size?: number; text?: string; image?: boolean }
+/** 把上传的附件挂成材料（kind=file）：有文字的带文字（评卷和 AI 做题能读），图片只有链接和说明 */
+export function attachmentsToMaterials(atts: Attachment[], startAt: number): WorkTask['materials'] {
+  return atts.map((a, i) => ({ id: `m${startAt + i}`, title: a.name, kind: 'file' as const, content: a.text ? a.text.slice(0, 8000) : `附件文件：${a.name}（${a.image ? '图片，请打开查看' : '请下载查看'}）`, source: 'upload' as const, basis: '出题人上传', url: a.url, mime: a.mime, name: a.name }));
+}
+
+/**
+ * 原题直发（2026-10-24，王刚：一道题本来很干净，什么都不改直接发出去）：不改写题面，只整理成平台的结构（标题 / 交付物 / 评分点）。
+ * 评分点只从题目自己的要求里推，不加题里没有的。
+ */
+export async function verbatimTask(text: string, opts: { company?: string; role?: string; env?: WorkEnvType; model?: string; attachments?: Attachment[] } = {}): Promise<{ task: WorkTask; model: string }> {
+  const model = opts.model || WORK_MODEL;
+  const prompt = `出题人交来一道现成的题，要**原样**发给候选人做，不许改写、不许增删要求。你只做整理：
+- title：题里有标题就用，没有就用 8–16 字概括。
+- deliverables：题里要求交什么（2–4 个，id d1…）；没写就一条「按题目要求作答」。
+- time_minutes：题里写了就用，没写 60。
+- materials：题里如果有明显独立的材料段（数据表、背景资料、附录），拆成材料，**文字原样**（kind 按内容：table / doc / data），source 写 generated、basis 写「原题附带」；没有就 []。题里只是**提到**「附件 / 附表 / 附图」而正文没给内容的，不要造材料（附件由出题人另外上传）。
+- rubric：从题目自己的要求里推出评分点，5–8 条，basis 写「题目要求：…」并引原句；levels 四档可观察；weight 加起来 100。不加题里没有的要求。
+- env：按题的作答媒介选 doc / code / sheet / design。
+${opts.attachments?.length ? `\n题目附件（会原样挂给候选人）：${opts.attachments.map(a => a.name).join('、')}` : ''}
+## 原题
+${text.slice(0, 12000)}
+只返回 JSON：{ "env": { "type": "doc" }, "title": "", "deliverables": [ { "id": "d1", "title": "", "format": "" } ], "time_minutes": 60, "materials": [ { "id": "m1", "title": "", "kind": "doc", "content": "" } ], "rubric": [ { "id": "r1", "title": "", "desc": "", "weight": 20, "depends_on": [], "basis": "", "levels": { "L1": "", "L2": "", "L3": "", "L4": "" } } ] }`;
+  const { parsed: p, model: used } = await askJson(prompt, model, 'Generate · 原题直发', opts.company);
+  const envType: WorkEnvType = opts.env || (['doc', 'code', 'sheet', 'design'].includes(p.env?.type) ? p.env.type : 'doc');
+  const task: WorkTask = {
+    env: { type: envType },
+    problem: { statement: `出题人给的原题${opts.company ? `（${opts.company}）` : ''}`, why_now: '', evidence: [] },
+    task: { title: s(p.title, 40) || '真活', role: opts.role || '候选人', brief: text.slice(0, 6000), deliverables: (Array.isArray(p.deliverables) ? p.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 60), format: s(d.format, 60) })), time_minutes: Math.min(180, Math.max(20, Number(p.time_minutes) || 60)), rules: ['题目原样，不改一字', '可以随便用 AI，不算作弊；评的是你怎么用', '材料里没有的数据要标注假设'] },
+    // 模型拆出的材料：内容空的、或和上传附件重名的都丢掉（附件另挂）
+    materials: (Array.isArray(p.materials) ? p.materials : []).filter((m: any) => String(m.content || '').trim().length >= 20 && !(opts.attachments || []).some(a => a.name && String(m.title || '').includes(a.name.replace(/\.[^.]+$/, '')))).slice(0, 6).map((m: any, i: number) => ({ id: `m${i + 1}`, title: s(m.title, 60), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, 8000), source: 'generated' as const, basis: '原题附带' })),
+    rubric: (Array.isArray(p.rubric) ? p.rubric : []).slice(0, 10).map((r: any, i: number) => ({ id: r.id || `r${i + 1}`, title: s(r.title, 60), desc: s(r.desc, 300), weight: Math.max(1, Number(r.weight) || 10), depends_on: Array.isArray(r.depends_on) ? r.depends_on.map(String) : [], basis: s(r.basis, 200), levels: { L1: s(r.levels?.L1, 160), L2: s(r.levels?.L2, 160), L3: s(r.levels?.L3, 160), L4: s(r.levels?.L4, 160) } })),
+  };
+  if (!task.task.deliverables.length) task.task.deliverables = [{ id: 'd1', title: '按题目要求作答', format: '文档' }];
+  const ids = new Set(task.rubric.map(r => r.id)); const sum = task.rubric.reduce((a, r) => a + r.weight, 0) || 1;
+  for (const r of task.rubric) { r.weight = Math.round(r.weight / sum * 100); r.depends_on = r.depends_on.filter(d => ids.has(d) && d !== r.id); }
+  return { task, model: used };
+}
+
 export interface WorkTask {
   env: WorkEnv;
   problem: { statement: string; why_now: string; evidence: { text: string; source: string }[] };
   task: { title: string; role: string; brief: string; deliverables: { id: string; title: string; format: string }[]; time_minutes: number; rules: string[]; stages?: SampleStage[] };   // stages：案例推进式（照深度样本出）：一步步给信息、每步有问、有参考答案和要算的数（2026-10-23）
-  materials: { id: string; title: string; kind: 'doc' | 'table' | 'note' | 'email' | 'data'; content: string; source: 'db' | 'generated' | 'mixed'; basis?: string }[];
+  materials: { id: string; title: string; kind: 'doc' | 'table' | 'note' | 'email' | 'data' | 'file'; content: string; source: 'db' | 'generated' | 'mixed' | 'upload'; basis?: string; url?: string; mime?: string; name?: string }[];   // file = 出题人上传的附件（表格 / 图纸 / 截图 / PDF），候选人能看原件；content 是抽出的文字或说明
   rubric: { id: string; title: string; desc: string; weight: number; depends_on: string[]; basis: string; levels: { L1: string; L2: string; L3: string; L4: string } }[];
 }
 
@@ -205,7 +244,7 @@ export interface WorkTask {
 /** 研究真活（2026-10-20）：科研院所招博士后 / 研究员 / 教授，考的是研究方向上的操作和研究技能 */
 export const RESEARCH_TASK_KINDS = ['实验设计（给研究问题，设计方案、对照、变量与样本量）', '数据分析（给一份真实格式的实验 / 观测数据，找异常、选统计方法、下结论并说清局限）', '文献与选题（给一个方向，梳理进展、指出研究空白、提可做的课题）', '审稿（给一篇稿件或摘要，找方法和结论上的问题，写审稿意见）', '写基金本子（研究目标、技术路线、可行性与风险）', '复现（用代码复现论文里的一个结果并解释差异）'];
 
-export async function generateTask(ctx: WorkContext, role: string, opts: { model?: string; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire' } = {}): Promise<{ task: WorkTask; model: string }> {
+export async function generateTask(ctx: WorkContext, role: string, opts: { model?: string; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire'; attachments?: Attachment[] } = {}): Promise<{ task: WorkTask; model: string }> {
   const model = opts.model || WORK_MODEL;
   const name = ctx.company?.name || (opts.research ? '这个科研团队' : '这家企业');
   const need = isNeedText(role);
@@ -225,7 +264,7 @@ task.role 写成 6–14 字的人话概括，说这个人能干什么（例：�
 ${needNote}
 ## 材料（只许用这些；没有的数字写「示例数据」并说明；每条依据指回来源）
 ${renderContext(ctx)}
-${ctx.notes.some(n => /取了同企业其他岗位做参考/.test(n)) ? `\n注意：材料里的在招岗位不是「${role}」本岗，只拿来理解这家企业的工作方式和用语；**题目主题由「${role}」决定**，不要被参考岗位的职能（如 ESG、合规、行政）带偏。\n` : ''}${opts.focus ? `\n## 出题人额外要求\n${opts.focus}\n` : ''}${opts.sample ? `
+${ctx.notes.some(n => /取了同企业其他岗位做参考/.test(n)) ? `\n注意：材料里的在招岗位不是「${role}」本岗，只拿来理解这家企业的工作方式和用语；**题目主题由「${role}」决定**，不要被参考岗位的职能（如 ESG、合规、行政）带偏。\n` : ''}${opts.focus ? `\n## 出题人额外要求\n${opts.focus}\n` : ''}${opts.attachments?.length ? `\n## 出题人上传的题目附件（会原样发给候选人；文字是从文件里抽出来的，图片只有文件名）\n${opts.attachments.map((a, i) => `[附件 ${i + 1}] ${a.name}${a.text ? `：\n${a.text.slice(0, 4000)}` : '（图片 / 无文字）'}`).join('\n\n')}\n题目要围绕这些附件出：任务书里写明候选人要看哪份附件做什么；materials 里不要重复抄附件内容，平台会把附件原件挂进材料包。\n` : ''}${opts.sample ? `
 ## 深度样本（出题人给的参照：一道公认的好题）
 ${renderSkeleton(opts.sample)}
 ${opts.sampleMode === 'inspire'

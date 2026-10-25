@@ -128,12 +128,23 @@ export default function WorkChatPage() {
 }
 
 function Composer({ text, setText, busy, send, stop, model, setModel, placeholder, autoFocus }: { text: string; setText: (t: string) => void; busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; placeholder?: string; autoFocus?: boolean }) {
+  // 题目素材：上传后以【素材】行附进消息，出题助理会把它们挂进材料包
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [up, setUp] = useState(false);
+  const attach = async (files: FileList | null) => {
+    if (!files?.length) return; setUp(true);
+    try { const lines: string[] = []; for (const f of Array.from(files).slice(0, 6)) { const fd = new FormData(); fd.append('file', f); const j = await (await fetch('/api/admin/work/attach', { method: 'POST', body: fd })).json(); if (j.ok) lines.push(`【素材】${j.name}｜${j.url}｜${j.mime}${j.text ? `｜文字摘录：${String(j.text).slice(0, 1500).replace(/\s+/g, ' ')}` : j.image ? '｜图片' : ''}`); }
+      if (lines.length) setText((text ? text + '\n' : '') + lines.join('\n')); }
+    finally { setUp(false); }
+  };
   return (
     <div className="wc-composer">
       <textarea value={text} autoFocus={autoFocus} rows={2} placeholder={placeholder || '比如：给宁德时代找一个能做欧洲交付计划的人，出一道题'} onChange={e => setText(e.target.value)}
         onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); send(text); } }} />
       <div className="wc-bar">
         <select className="wc-model" value={model} onChange={e => setModel(e.target.value)}>{MODELS.map(m => <option key={m.id} value={m.id}>{m.label}</option>)}</select>
+        <button className="wc-clip" title="上传题目素材（表格 / 图纸 / 截图 / PDF）" disabled={busy || up} onClick={() => fileRef.current?.click()}>{up ? '上传中…' : '📎 素材'}</button>
+        <input ref={fileRef} type="file" multiple accept=".pdf,.docx,.txt,.md,.csv,.xlsx,.png,.jpg,.jpeg,.webp,.gif" style={{ display: 'none' }} onChange={e => { attach(e.target.files); e.target.value = ''; }} />
         {busy ? <button className="wc-send stop" onClick={stop}>停</button> : <button className="wc-send" disabled={!text.trim()} onClick={() => send(text)}>↑</button>}
       </div>
     </div>
@@ -205,6 +216,7 @@ const CSS = `
 .wc-composer textarea { width: 100%; border: 0; outline: 0; resize: none; background: transparent; font: inherit; font-size: 15px; line-height: 1.6; color: #1a1a2e; }
 .wc-bar { display: flex; align-items: center; margin-top: 4px; }
 .wc-model { border: 0; background: transparent; color: #666; font: inherit; font-size: 12.5px; cursor: pointer; padding: 4px 2px; outline: 0; }
+.wc-clip { border: 1px solid #e0e0ee; background: #fff; color: #555; font: inherit; font-size: 12.5px; border-radius: 8px; padding: 3px 10px; margin-left: 8px; cursor: pointer; } .wc-clip:disabled { opacity: .5; }
 .wc-send { margin-left: auto; width: 32px; height: 32px; border-radius: 10px; border: 0; background: #6055f5; color: #fff; font-size: 16px; cursor: pointer; }
 .wc-send:disabled { opacity: .25; cursor: default; } .wc-send.stop { background: #7a756a; font-size: 12px; }
 .wc-art { border-left: 1px solid #e8e9f0; background: #fff; display: flex; flex-direction: column; min-width: 0; min-height: 0; }

@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
   try {
     const body = await req.json();
-    const r = await createWorkTask({ email: user.email, role: user.role }, { company: String(body.company || ''), company_id: body.company_id, intro: body.intro ? String(body.intro) : undefined, role: String(body.role || ''), env: body.env ? String(body.env) : undefined, focus: body.focus ? String(body.focus) : undefined, model: isKnownModel(String(body.model || '')) ? String(body.model) : undefined, sample_id: body.sample_id ? String(body.sample_id) : undefined, sample_mode: body.sample_mode === 'inspire' ? 'inspire' : 'reskin' });
+    const r = await createWorkTask({ email: user.email, role: user.role }, { company: String(body.company || ''), company_id: body.company_id, intro: body.intro ? String(body.intro) : undefined, role: String(body.role || ''), env: body.env ? String(body.env) : undefined, focus: body.focus ? String(body.focus) : undefined, model: isKnownModel(String(body.model || '')) ? String(body.model) : undefined, sample_id: body.sample_id ? String(body.sample_id) : undefined, sample_mode: body.sample_mode === 'inspire' ? 'inspire' : 'reskin', attachments: Array.isArray(body.attachments) ? body.attachments : [], verbatim: body.verbatim ? String(body.verbatim) : undefined });
     return NextResponse.json({ ok: true, id: r.id, share_token: r.share_token, owner_key: r.owner_key, title: r.title, env: r.env, notes: r.notes });
   } catch (e: any) {
     return NextResponse.json({ ok: false, error: String(e?.message || e) }, { status: /都要填/.test(String(e?.message)) ? 400 : 500 });

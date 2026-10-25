@@ -11,6 +11,7 @@ import { WorkLogo } from '@/components/work/WorkLogo';
 import { useRouter } from 'next/navigation';
 import { App, Button, ConfigProvider, Input, Select, Typography, Tag } from 'antd';
 import { SampleUpload, type SampleRow } from '@/components/work/SampleUpload';
+import { AttachUpload, type Attachment } from '@/components/work/AttachUpload';
 import { RocketOutlined } from '@ant-design/icons';
 import { GenProgress } from '@/components/work/GenProgress';
 import { CompanyRolePicker, type PickedCompany } from '@/components/work/CompanyRolePicker';
@@ -38,6 +39,11 @@ function Inner() {
   const router = useRouter();
   const [f, setF] = useState({ company: '', role: '', env: '', focus: '', model: DEFAULT_MODEL, intro: '' });
   // 参考资料（选填，2026-10-23）：出题人自己过往用过的题 / 内部考题，只用于他自己出题（照它改背景换数字）。平台内部的参照在后台自动挑，这里不露
+  // 出题方式（2026-10-24，王刚：一道题本来很干净，什么都不改直接发出去也得行）：平方出题 / 原题直发
+  const [way, setWay] = useState<'gen' | 'verbatim'>('gen');
+  const [verbatim, setVerbatim] = useState('');
+  // 题目素材：给候选人的表格 / 图纸 / 截图 / PDF（和参考资料是两回事）
+  const [atts, setAtts] = useState<Attachment[]>([]);
   const [refs, setRefs] = useState<SampleRow[]>([]);
   const [ref, setRef] = useState<SampleRow | null>(null);
   useEffect(() => { fetch('/api/admin/work/samples?mine=1').then(r => r.json()).then(j => j.ok && setRefs(j.samples)).catch(() => {}); }, []);
@@ -47,10 +53,10 @@ function Inner() {
   const [phase, setPhase] = useState<'gen' | 'base' | 'done'>('gen');
 
   const create = async () => {
-    if (!f.company.trim() || !f.role.trim()) return message.warning('企业和要找的人都要填');
-    setBusy('在拼这家企业的材料、出题、做材料包、定标准……约 2 分钟，别关页面'); setPhase('gen');
+    if (way === 'verbatim' ? verbatim.trim().length < 60 : (!f.company.trim() || !f.role.trim())) return message.warning(way === 'verbatim' ? '把整道题贴进来（60 字以上）' : '企业和要找的人都要填');
+    setBusy(way === 'verbatim' ? '原题不改，正在整理成交付物和评分点……约 1 分钟' : '在拼这家企业的材料、出题、做材料包、定标准……约 2 分钟，别关页面'); setPhase('gen');
     try {
-      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, sample_id: ref?.id, sample_mode: 'reskin' }) });
+      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, sample_id: ref?.id, sample_mode: 'reskin', attachments: atts, verbatim: way === 'verbatim' ? verbatim.trim() : undefined }) });
       if (r.status === 401) { location.href = `/work/login?next=${encodeURIComponent('/work/new')}`; return; }
       const j = await r.json();
       if (!j.ok) throw new Error(j.error);
@@ -76,7 +82,14 @@ function Inner() {
       <div style={{ maxWidth: 1080, margin: '0 auto', padding: '28px 28px 60px', display: 'grid', gridTemplateColumns: 'minmax(0, 1.5fr) minmax(280px, 1fr)', gap: 24, alignItems: 'start' }}>
         <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 18, padding: '26px 28px' }}>
           <h1 style={{ fontSize: 24, margin: '0 0 4px' }}>出一道真活</h1>
-          <div style={{ color: '#666', fontSize: 13.5, marginBottom: 22 }}>告诉它企业和岗位，AI 从企业画像、在招岗位、职业典型任务、行业规范里架构出一个此刻真实的业务问题，配材料、定标准、先做一遍当基线。</div>
+          <div style={{ display: 'inline-flex', border: '1px solid #e0e0ee', borderRadius: 999, overflow: 'hidden', fontSize: 13, margin: '6px 0 10px' }}>
+            {([['gen', '平方出题'], ['verbatim', '原题直发']] as const).map(([k, t]) => <span key={k} onClick={() => setWay(k)} style={{ padding: '6px 14px', cursor: 'pointer', background: way === k ? '#6055f5' : '#fff', color: way === k ? '#fff' : '#666', fontWeight: way === k ? 700 : 400 }}>{t}</span>)}
+          </div>
+          {way === 'verbatim' && <div style={{ marginBottom: 18 }}>
+            <div style={{ fontSize: 12.5, color: '#888', marginBottom: 6 }}>你手里已经有一道干净的题：整段贴进来，<b>一字不改</b>发给候选人。平台只整理交付物和评分点（只从题目自己的要求里推），生成参与链接。企业和岗位可不填，填了只当标签。</div>
+            <Input.TextArea value={verbatim} onChange={e => setVerbatim(e.target.value)} autoSize={{ minRows: 8, maxRows: 24 }} maxLength={12000} showCount placeholder="把题目原文贴这里：背景、要求、要交什么、时间……" />
+          </div>}
+          {way === 'gen' && <div style={{ color: '#666', fontSize: 13.5, marginBottom: 22 }}>告诉它企业和岗位，AI 从企业画像、在招岗位、职业典型任务、行业规范里架构出一个此刻真实的业务问题，配材料、定标准、先做一遍当基线。</div>}
 
           <Sec n="1" t="企业，和你要找的人" d="企业边输边搜，库里有就选中（会用上它的画像和深度尽调）。要找的人直接用一句话说，不用先想职位名">
             <CompanyRolePicker company={f.company} role={f.role} onCompany={(name, p) => { setF(x => ({ ...x, company: name })); setPicked(p); }} onRole={r => setF(x => ({ ...x, role: r }))} />
@@ -101,7 +114,10 @@ function Inner() {
           <Sec n="4" t="你想考什么（选填）" d="聚焦哪个问题、给谁做、难度；没写就按岗位此刻最真实的问题出">
             <Input.TextArea value={f.focus} onChange={e => setF(x => ({ ...x, focus: e.target.value }))} placeholder="例：聚焦德布勒森工厂爬坡期的欧洲供需平衡；给 3 年以内的人做；一小时内" autoSize={{ minRows: 2, maxRows: 5 }} />
           </Sec>
-          <Sec n="5" t="参考资料（选填）" d="你们过往用过的题、内部考题、认可的案例——上传或粘贴，AI 照它的路数出：题型、推进方式、算法保留，故事换成这家企业、数字换掉">
+          <Sec n="5" t="题目素材（选填）" d="题里要发给候选人看的东西：数据表、图纸、截图、PDF。表格 / PDF / Word 会抽出文字，出题和评卷都能读；图片候选人能看，AI 出题时只知道文件名">
+            <AttachUpload value={atts} onChange={setAtts} />
+          </Sec>
+          <Sec n="6" t="参考资料（选填）" d="你们过往用过的题、内部考题、认可的案例——上传或粘贴，AI 照它的路数出：题型、推进方式、算法保留，故事换成这家企业、数字换掉">
             {refs.length > 0 && <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
               {refs.map(sm => <Tag.CheckableTag key={sm.id} checked={ref?.id === sm.id} onChange={c => setRef(c ? sm : null)} style={{ padding: '4px 10px', fontSize: 13, border: '1px solid #e0e0ee' }}>{sm.title} <span style={{ opacity: .6 }}>· {sm.stages} 步</span></Tag.CheckableTag>)}
             </div>}
