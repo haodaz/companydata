@@ -26,8 +26,8 @@ export function CanvasBench({ graph, onChange, notes, onNotes, onPaste, onEvent,
   const height = Math.max(520, graph.lanes.length * laneH, ...graph.nodes.map(n => n.y + H + 60));
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, background: '#fff', borderRadius: 14, overflow: 'hidden', border: '1px solid #d9dbe6' }}>
-      <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', fontSize: 13, padding: '8px 12px', background: '#f3f5f9', borderBottom: '1px solid #d9dbe6' }}>
-        {leading}{leading && <span style={{ width: 1, height: 18, background: '#e0e0ee', margin: '0 2px' }} />}
+      {leading && <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px', background: '#fff', borderBottom: '1px solid #eef0f5' }}>{leading}<span style={{ marginLeft: 'auto', fontSize: 12, color: '#aaa' }}>{graph.nodes.length} 节点 · {graph.edges.length} 线</span></div>}
+      <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', fontSize: 13, padding: '6px 10px', background: '#f3f5f9', borderBottom: '1px solid #d9dbe6' }}>
         <button onClick={add} style={btn}>＋ 节点</button>
         <button onClick={() => { if (!sel) return; setLinking(linking ? null : sel); }} disabled={!sel} style={{ ...btn, ...(linking ? { background: '#6055f5', color: '#fff' } : {}) }}>{linking ? '点另一个节点连上 · 取消' : '连线（先选起点）'}</button>
         <button onClick={del} disabled={!sel} style={btn}>删除</button>

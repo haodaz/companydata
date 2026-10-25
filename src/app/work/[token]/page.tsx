@@ -44,6 +44,18 @@ function partsOf(task: Task, env: Env): Part[] {
   const ds = task.task.deliverables.length ? task.task.deliverables : [{ id: 'd1', title: '按题目要求作答', format: '' }];
   return ds.map(d => ({ id: d.id, title: d.title, format: d.format, module: resolveModule(d.format, d.module, fb) }));
 }
+// 线性小图标（16px，currentColor）：左栏 / AI / 最大化 / 分屏 / 最小化 / 关闭
+function Ico({ k }: { k: 'left' | 'ai' | 'max' | 'split' | 'min' | 'close' }) {
+  const P: Record<string, React.ReactNode> = {
+    left: <><rect x="2" y="3" width="12" height="10" rx="2" /><path d="M6 3v10" /></>,
+    ai: <><rect x="2" y="3" width="12" height="10" rx="2" /><path d="M10 3v10" /><path d="M5 7.5h2.5M5 9.5h1.5" /></>,
+    max: <><path d="M9 3h4v4" /><path d="M7 13H3V9" /><path d="M13 3L9 7" /><path d="M3 13l4-4" /></>,
+    split: <><rect x="2" y="2" width="12" height="12" rx="2" /><path d="M2 8h12" /></>,
+    min: <path d="M3 8h10" />,
+    close: <path d="M4 4l8 8M12 4l-8 8" />,
+  };
+  return <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">{P[k]}</svg>;
+}
 const modulesLabel = (task: Task, env: Env) => [...new Set(partsOf(task, env).map(p => MODULES[p.module].label))].join(' + ');
 const ENV_NAME: Record<string, string> = { doc: '文档 / 对账台', code: '代码台', sheet: '表格 / 数据台', design: '设计台', open: '用自己的软件做（录屏）', plugin: '用自己的网页工具做（真活插件）' };
 const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
@@ -283,7 +295,8 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const tabsEl = mode === 'open' ? null : <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>{parts.map(p => { const on = p.id === cur; const filled = filledOf(p.id); return <button key={p.id} onClick={() => switchPart(p.id)} title={`${p.title}${p.format ? `（${p.format}）` : ''}`} style={{ border: 0, background: on ? '#6055f5' : 'transparent', color: on ? '#fff' : dark ? '#b8bdd6' : '#555', borderRadius: 8, padding: '4px 10px', cursor: 'pointer', font: 'inherit', fontSize: 12.5, fontWeight: on ? 700 : 500, display: 'flex', gap: 6, alignItems: 'center', whiteSpace: 'nowrap' }}>{p.id} {MODULES[p.module].label}<span style={{ width: 6, height: 6, borderRadius: 99, background: filled ? '#22c55e' : on ? 'rgba(255,255,255,.45)' : '#d9dbe6' }} /></button>; })}</div>;
   const emptyParts = mode === 'open' ? [] : parts.filter(p => !filledOf(p.id));
   const line = dark ? '#2b2d3e' : '#e8e9f0', panel = dark ? '#1e1f2b' : '#fff', ink2 = dark ? '#aab' : '#777';
-  const iconBtn = (on: boolean): React.CSSProperties => ({ border: `1px solid ${on ? '#6055f5' : line}`, background: on ? (dark ? '#2b2a4a' : '#f3f2ff') : 'transparent', color: on ? '#6055f5' : ink2, borderRadius: 8, padding: '4px 10px', cursor: 'pointer', font: 'inherit', fontSize: 12.5, whiteSpace: 'nowrap' });
+  const viewBtn = (on: boolean): React.CSSProperties => ({ width: 30, height: 26, border: 0, background: on ? (dark ? '#2b2a4a' : '#e9e7ff') : 'transparent', color: on ? '#4c43c9' : ink2, borderRadius: 6, cursor: 'pointer', display: 'grid', placeItems: 'center', padding: 0 });
+  const iconBtn = (on: boolean): React.CSSProperties => ({ width: 26, height: 24, border: 0, background: on ? (dark ? '#2b2a4a' : '#e9e7ff') : 'transparent', color: on ? '#4c43c9' : ink2, borderRadius: 6, cursor: 'pointer', display: 'grid', placeItems: 'center', padding: 0 });
   const miniBtn: React.CSSProperties = { border: `1px solid ${line}`, background: 'transparent', color: ink2, borderRadius: 6, padding: '2px 8px', cursor: 'pointer', font: 'inherit', fontSize: 12 };
   const submit = () => {
     if (mode === 'open' && !recording) { setLocalErr('先录一段屏再交卷：点「开始录屏」，做完点停止'); setTimeout(() => setLocalErr(''), 5000); return; }
@@ -303,8 +316,10 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 14px', borderBottom: `1px solid ${line}`, background: dark ? '#16171f' : '#fff', color: dark ? '#e6e8f0' : undefined, position: 'sticky', top: 0, zIndex: 5, height: 52, boxSizing: 'border-box' }}>
         <div style={{ fontSize: 11, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台</div>
         <div style={{ fontWeight: 700, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 14 }}>{task.task.title} <span style={{ color: '#888', fontWeight: 400, fontSize: 12.5 }}>{task.company_name} · {task.role} · {mode === 'open' ? '用自己的软件做' : modulesLabel(task, env)}</span></div>
-        {!narrow && <button onClick={() => setLeftOpen(v => !v)} style={iconBtn(leftOpen)} title="材料包 / 要交什么">☰ 材料</button>}
-        {!narrow && <button onClick={() => setAiOpen(v => !v)} style={iconBtn(aiOpen)} title="AI 助手">✦ AI</button>}
+        {!narrow && <div style={{ display: 'flex', gap: 2, padding: 2, border: `1px solid ${line}`, borderRadius: 8 }}>
+          <button onClick={() => setLeftOpen(v => !v)} style={viewBtn(leftOpen)} title={leftOpen ? '收起材料栏' : '展开材料栏'}><Ico k="left" /></button>
+          <button onClick={() => setAiOpen(v => !v)} style={viewBtn(aiOpen)} title={aiOpen ? '收起 AI 助手' : '展开 AI 助手'}><Ico k="ai" /></button>
+        </div>}
         <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, fontSize: 13.5, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{fmt(now)}<span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span></div>
         <button onClick={submit} disabled={grading} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '再点一次确认交卷' : '交卷 →'}</button>
       </div>
@@ -333,10 +348,10 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
           {mat && <div style={{ background: panel, color: dark ? '#d6d8e6' : undefined, border: `1px solid ${line}`, borderRadius: 12, display: 'flex', flexDirection: 'column', flex: matMode === 'full' ? 1 : 'none', height: matMode === 'split' ? matH : undefined, minHeight: 0, overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderBottom: matMode === 'bar' ? 0 : `1px solid ${line}` }}>
               <b style={{ fontSize: 13.5, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{mat.title}</b>
-              <button onClick={() => setMatMode('full')} style={{ ...miniBtn, ...(matMode === 'full' ? { color: '#6055f5', borderColor: '#6055f5' } : {}) }} title="材料占满，作答区收成一条">占满</button>
-              <button onClick={() => setMatMode('split')} style={{ ...miniBtn, ...(matMode === 'split' ? { color: '#6055f5', borderColor: '#6055f5' } : {}) }} title="上下分，中间可拖">分屏</button>
-              <button onClick={() => setMatMode('bar')} style={{ ...miniBtn, ...(matMode === 'bar' ? { color: '#6055f5', borderColor: '#6055f5' } : {}) }} title="只留标题一条">收起</button>
-              <button onClick={() => setMat(null)} style={miniBtn} title="关闭材料面板">✕</button>
+              <button onClick={() => setMatMode('full')} style={iconBtn(matMode === 'full')} title="最大化：材料占满，作答区收成一条"><Ico k="max" /></button>
+              <button onClick={() => setMatMode('split')} style={iconBtn(matMode === 'split')} title="分屏：上下分，中间可拖"><Ico k="split" /></button>
+              <button onClick={() => setMatMode('bar')} style={iconBtn(matMode === 'bar')} title="最小化：只留标题一条"><Ico k="min" /></button>
+              <button onClick={() => setMat(null)} style={iconBtn(false)} title="关闭"><Ico k="close" /></button>
             </div>
             {matMode !== 'bar' && <div style={{ flex: 1, minHeight: 0, overflow: 'auto', padding: '4px 14px 14px' }}>{matBody}</div>}
           </div>}

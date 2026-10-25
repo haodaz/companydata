@@ -23,8 +23,9 @@ export function DesignBench({ params, values, onParam, onParamDone, sketch, setS
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#f4f5f9', borderRadius: 14, overflow: 'hidden', border: '1px solid #d9dbe6' }}>
       {/* 顶部菜单条 */}
+      {leading && <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px', background: '#fff', borderBottom: '1px solid #eef0f5' }}>{leading}</div>}
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '7px 12px', background: '#2b2d3e', color: '#d6d8e6', fontSize: 12.5, whiteSpace: 'nowrap' }}>
-        {leading}
+        <span style={{ fontWeight: 700, color: '#fff' }}>草图</span>
         <span style={{ marginLeft: 'auto', color: '#aab', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: 12 }}>{hint ? hint.slice(0, 40) : ''}</span>
       </div>
       <div style={{ display: 'flex', flex: 1, minHeight: 420 }}>

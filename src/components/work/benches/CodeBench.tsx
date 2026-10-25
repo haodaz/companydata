@@ -14,8 +14,8 @@ export function CodeBench({ code, onCode, notes, onNotes, tests, language, onRun
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#1e1f2b', borderRadius: 14, overflow: 'hidden', border: '1px solid #2b2d3e', color: '#d6d8e6' }}>
       {/* 标签栏 */}
+      {leading && <div style={{ display: 'flex', alignItems: 'center', padding: '6px 10px', background: '#16171f', borderBottom: '1px solid #2b2d3e' }}>{leading}</div>}
       <div style={{ display: 'flex', alignItems: 'center', background: '#16171f', borderBottom: '1px solid #2b2d3e', fontSize: 12.5, fontFamily: mono }}>
-        {leading && <div style={{ padding: '0 8px', fontFamily: 'inherit' }}>{leading}</div>}
         {([['main', `solution.${ext}`], ['tests', `solution.test.${ext}`], ['notes', 'NOTES.md']] as const).map(([k, l]) => <button key={k} onClick={() => setTab(k)} style={{ padding: '9px 16px', border: 0, borderRight: '1px solid #2b2d3e', background: tab === k ? '#1e1f2b' : 'transparent', color: tab === k ? '#fff' : '#8b8fa8', cursor: 'pointer', borderTop: tab === k ? '2px solid #6a5cff' : '2px solid transparent', fontFamily: mono }}>{k === 'tests' ? '🧪 ' : k === 'notes' ? '📝 ' : '📄 '}{l}</button>)}
         <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 8, paddingRight: 10 }}>
           <span style={{ color: '#8b8fa8' }}>{language || 'js'} · {lines} 行</span>
