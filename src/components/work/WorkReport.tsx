@@ -12,6 +12,7 @@ export function WorkReport({ report, participant }: { report: any; participant?:
   if (!report) return null;
   if (report.auditing) return <div style={{ padding: '14px 18px', background: '#f3f2ff', borderRadius: 14, color: '#4c43c9', fontSize: 14 }}>AI 审计中：过程 {report.total} 段，已看 {report.stage} 段{report.audit?.length ? `，到 ${fmt(report.audit[report.audit.length - 1].to)} 为止的过程信号 ${report.audit[report.audit.length - 1].tentative}（暂定）` : ''}。候选人那边做完最后一步就出正式报告。</div>;
   const r = report.result, p = report.process, c = report.compare;
+  if (!r) return null;
   return (
     <div style={{ display: 'grid', gap: 16, fontSize: 14, lineHeight: 1.7, color: '#1a1a2e' }}>
       <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'stretch' }}>
@@ -20,12 +21,13 @@ export function WorkReport({ report, participant }: { report: any; participant?:
           {c && <div style={{ fontSize: 13, color: '#555' }}>AI 基线 {c.baseline_total} · 你{c.delta >= 0 ? '高' : '低'} {Math.abs(c.delta)} 分{c.delta < 0 && <span style={{ color: '#8c8c8c' }}>（大部分人做不过 AI，差距就是要练的地方）</span>}</div>}
           <div style={{ marginTop: 8, color: '#444' }}>{r.summary}</div>
         </Card>
-        <Card title="过程" style={{ flex: '1 1 260px' }}>
+        {!p && <Card title="过程" style={{ flex: '1 1 260px' }}><div style={{ color: '#888', fontSize: 13 }}>{report.who === 'college' ? 'AI 学员做的，没有人工操作过程' : '这次作答没有过程记录'}</div></Card>}
+        {p && <Card title="过程" style={{ flex: '1 1 260px' }}>
           <div style={{ color: '#555', fontSize: 13 }}>用时 {fmt(p.duration_s)} · 问 AI {p.stats?.ai_asks || 0} 次 · 看了 {p.stats?.materials_opened || 0}/{p.stats?.materials_total || 0} 份材料 · 粘贴 {p.stats?.paste_chars || 0} 字 · 自己敲 {p.stats?.typed_chars || 0} 字</div>
           <div style={{ marginTop: 8 }}>{p.delegation}</div>
           {!!p.phases?.length && <div style={{ display: 'flex', marginTop: 10, height: 10, borderRadius: 5, overflow: 'hidden', background: '#eee' }}>{p.phases.map((ph: any, i: number) => <div key={i} title={`${ph.label} ${fmt(ph.from)}–${fmt(ph.to)}`} style={{ flex: Math.max(1, ph.to - ph.from), background: ['#6055f5', '#12b5cb', '#3ddc97', '#ffd166', '#fa8c16', '#eb2f96', '#8c8c8c', '#1677ff'][i % 8] }} />)}</div>}
           {!!p.phases?.length && <div style={{ fontSize: 12, color: '#777', marginTop: 4 }}>{p.phases.map((ph: any) => ph.label).join(' → ')}</div>}
-        </Card>
+        </Card>}
       </div>
       {report.recording && <Card title="录屏回放 · 用自己的软件做的">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14, alignItems: 'start' }}>
