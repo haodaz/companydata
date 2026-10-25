@@ -55,10 +55,10 @@ function Inner() {
       const j = await r.json();
       if (!j.ok) throw new Error(j.error);
       if (j.notes?.length) message.info(j.notes.join('；'), 8);
-      setBusy('题出好了，AI 先做一遍当基线（约 1 分钟）…'); setPhase('base');
-      const b = await (await fetch(`/api/admin/work/tasks/${j.id}/baseline`, { method: 'POST' })).json();
-      setPhase('done'); await new Promise(r => setTimeout(r, 1800));   // 让剩下几行打完勾再跳
-      message.success(b.ok ? `出题完成：${j.title}，AI 基线 ${b.baseline.total} 分` : `题出好了：${j.title}（基线没跑成，空间里可重跑）`, 8);
+      // AI 基线放后台跑（约 1 分钟），不让出题人等；真活空间里会显示「基线跑着」，跑完自动有分，也能手动重跑
+      fetch(`/api/admin/work/tasks/${j.id}/baseline`, { method: 'POST', keepalive: true }).catch(() => {});
+      setPhase('done'); await new Promise(r => setTimeout(r, 1200));
+      message.success(`出题完成：${j.title}。AI 基线在后台跑，一分钟后在空间里看`, 6);
       router.push(j.share_token && j.owner_key ? `/work/${j.share_token}/owner?k=${encodeURIComponent(j.owner_key)}` : '/work/mine');
     } catch (e: any) { message.error(e.message); setBusy(''); }
   };

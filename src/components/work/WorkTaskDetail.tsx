@@ -62,7 +62,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           { title: '依据', dataIndex: 'basis', width: 200, render: (v: string) => <span style={{ fontSize: 12 }}>{v}</span> },
           { title: 'BARS', dataIndex: 'levels', width: 320, render: (l: any) => <div style={{ fontSize: 12 }}>{['L1', 'L2', 'L3', 'L4'].map(k => <div key={k}><b>{k}</b> {l?.[k]}</div>)}</div> },
         ]} /> },
-        { key: 'b', label: `AI 基线${T.baseline ? ` · ${T.baseline.result?.total} 分` : ''}`, children: T.baseline ? <div><Paragraph>AI 先做了一遍，用同一套 rubric 评：<b>{T.baseline.result?.total}</b> 分。{T.baseline.result?.summary}</Paragraph><Table size="small" rowKey="id" pagination={false} dataSource={T.baseline.result?.items || []} columns={[{ title: '条目', dataIndex: 'title' }, { title: '等级', dataIndex: 'level', width: 60 }, { title: '分', dataIndex: 'score', width: 60 }, { title: '证据 / 说明', render: (_: any, i: any) => <span style={{ fontSize: 12 }}>{i.evidence && <i>“{i.evidence}” </i>}{i.note}</span> }]} /><details style={{ marginTop: 12 }}><summary>AI 的答卷</summary><pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13, background: '#fafbff', padding: 10, borderRadius: 8 }}>{T.baseline.answer}</pre></details></div> : <Text type="secondary">还没跑 AI 基线</Text> },
+        { key: 'b', label: `AI 基线${T.baseline ? ` · ${T.baseline.result?.total} 分` : ''}`, children: T.baseline ? <div><Paragraph>AI 先做了一遍，用同一套 rubric 评：<b>{T.baseline.result?.total}</b> 分。{T.baseline.result?.summary}</Paragraph><Table size="small" rowKey="id" pagination={false} dataSource={T.baseline.result?.items || []} columns={[{ title: '条目', dataIndex: 'title' }, { title: '等级', dataIndex: 'level', width: 60 }, { title: '分', dataIndex: 'score', width: 60 }, { title: '证据 / 说明', render: (_: any, i: any) => <span style={{ fontSize: 12 }}>{i.evidence && <i>“{i.evidence}” </i>}{i.note}</span> }]} /><details style={{ marginTop: 12 }}><summary>AI 的答卷</summary><pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13, background: '#fafbff', padding: 10, borderRadius: 8 }}>{T.baseline.answer}</pre></details></div> : <Text type="secondary">AI 基线还没出来。出题后它在后台跑，约一分钟，刷新这页就有；也可以点上面的「重跑 AI 基线」现在跑。基线 = 一个通用 AI 直接做这道题能得几分，是候选人分数的参照。</Text> },
         { key: 's', label: `做题情况与评分（${sessions.length}）`, children: <Table size="small" rowKey="id" pagination={false} dataSource={sessions} columns={[
           { title: '谁', render: (_: any, s: any) => <span>{s.participant?.name} <Text type="secondary">{s.participant?.contact}</Text></span> },
           { title: '开始', dataIndex: 'started_at', render: (v: string) => new Date(v).toLocaleString('zh-CN', { hour12: false }) },
@@ -72,7 +72,15 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
         ]} /> },
       ]} />
       <Drawer open={!!report} onClose={() => setReport(null)} width={Math.min(900, typeof window !== 'undefined' ? window.innerWidth - 60 : 900)} title={report ? `${report.participant?.name} 的报告` : ''}>
-        {report && <WorkReport report={report.report} participant={report.participant} />}
+        {report && <>
+          {/* 先看他交了什么，再看 AI 怎么评（王刚 10-24：出题人的视角是先看提交的答案本身，AI 只是辅助评价） */}
+          <div style={{ marginBottom: 14, border: '1px solid #e8e9f0', borderRadius: 10, overflow: 'hidden' }}>
+            <div style={{ padding: '8px 12px', background: '#fafbff', fontWeight: 700, fontSize: 13 }}>交付物原文{report.summary ? ' · 交付说明' : ''}</div>
+            {report.summary && <div style={{ padding: '8px 12px', fontSize: 13, whiteSpace: 'pre-wrap', borderBottom: '1px solid #f0f0f5', color: '#444' }}>{report.summary}</div>}
+            <pre style={{ margin: 0, padding: 12, fontSize: 13, lineHeight: 1.7, whiteSpace: 'pre-wrap', fontFamily: 'inherit', maxHeight: 360, overflow: 'auto' }}>{report.deliverable || '（没有交付物文本：开放模式 / 插件作答看上传文件与交付说明）'}</pre>
+          </div>
+          <WorkReport report={report.report} participant={report.participant} />
+        </>}
       </Drawer>
     </>
   );
