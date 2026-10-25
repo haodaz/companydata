@@ -36,7 +36,7 @@ for i, x in enumerate(tl):
     d = nf / 30
     out.append({**seg, 'start': round(t, 2), 'end': round(t + d, 2)}); t += d
 lst = os.path.join(D, 'concat.txt')
-open(lst, 'w', encoding='utf-8').write(''.join(f"file '{p}'\n" for p in parts))
+open(lst, 'w', encoding='utf-8').write(''.join(f"file '{os.path.abspath(p)}'\n" for p in parts))   # concat 列表里的路径相对列表文件所在目录，写绝对路径才不会双拼
 subprocess.run([F, '-loglevel', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', lst, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '19', '-pix_fmt', 'yuv420p', '-r', '30', '-fps_mode', 'cfr', '-an', src], check=True)
 json.dump(out, open(os.path.join(D, 'timeline.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 if not os.environ.get('KEEP_PARTS'):

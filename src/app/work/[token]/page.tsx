@@ -274,7 +274,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
 
 
   const [arm, setArm] = useState(false);
-  const dark = curPart.module === 'code';
+  const dark = false;   // 代码台也用浅色（2026-10-25）：整页一个色调，别忽然深一块
   const [localErr, setLocalErr] = useState('');
   // 布局（2026-10-25，王刚：作答区别太固定，要像 AI workspace）：材料栏可收、材料面板高度可拖 / 占满 / 收成一条 / 关闭、AI 助手是可收的卡片
   const [leftOpen, setLeftOpen] = useState(!narrow);
