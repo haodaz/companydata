@@ -110,13 +110,13 @@ function Inner() {
               </div>
             )}
           </Sec>
-          <Sec n="2" t="你想考什么（选填）" d="聚焦哪个问题、给谁做、难度；没写就按岗位此刻最真实的问题出">
+          <Sec n="2" t="想考什么？（选填）" d="聚焦哪个问题、给谁做、难度；没写就按岗位此刻最真实的问题出">
             <Input.TextArea value={f.focus} onChange={e => setF(x => ({ ...x, focus: e.target.value }))} placeholder="例：聚焦德布勒森工厂爬坡期的欧洲供需平衡；给 3 年以内的人做；一小时内" autoSize={{ minRows: 2, maxRows: 5 }} />
           </Sec>
-          <Sec n="3" t="题目素材（选填）" d="题里要发给候选人看的东西：数据表、图纸、截图、PDF。表格 / PDF / Word 会抽出文字，出题和评卷都能读；图片候选人能看，AI 出题时只知道文件名">
+          <Sec n="3" t="题里要给候选人什么素材？（选填）" d="题里要发给候选人看的东西：数据表、图纸、截图、PDF。表格 / PDF / Word 会抽出文字，出题和评卷都能读；图片候选人能看，AI 出题时只知道文件名">
             <AttachUpload value={atts} onChange={setAtts} />
           </Sec>
-          <Sec n="4" t="参考资料（选填）" d="你们过往用过的题、内部考题、认可的案例——上传或粘贴，AI 照它的路数出：题型、推进方式、算法保留，故事换成这家企业、数字换掉">
+          <Sec n="4" t="有没有以前用过的题可以参照？（选填）" d="你们过往用过的题、内部考题、认可的案例——上传或粘贴，AI 照它的路数出：题型、推进方式、算法保留，故事换成这家企业、数字换掉">
             {refs.length > 0 && <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
               {refs.map(sm => <Tag.CheckableTag key={sm.id} checked={ref?.id === sm.id} onChange={c => setRef(c ? sm : null)} style={{ padding: '4px 10px', fontSize: 13, border: '1px solid #e0e0ee' }}>{sm.title} <span style={{ opacity: .6 }}>· {sm.stages} 步</span></Tag.CheckableTag>)}
             </div>}
@@ -127,12 +127,12 @@ function Inner() {
           </>}
           {way === 'gen' && page === 2 && <>
             <div style={{ fontSize: 13, color: '#666', marginBottom: 14, padding: '10px 14px', background: '#fafbff', border: '1px solid #e8e9f0', borderRadius: 12 }}><b>{f.company || '（企业）'}</b> · 要找：{f.role || '—'}{f.focus ? ` · 考：${f.focus.slice(0, 40)}` : ''}{atts.length ? ` · 素材 ${atts.length} 份` : ''}{ref ? ' · 有参考' : ''} <a onClick={() => setPage(1)} style={{ marginLeft: 8 }}>改题目</a></div>
-          <Sec n="1" t="给答题者配一个 AI 助理" d="候选人做题时随手可问；默认通义千问，国内网络直接可用。也可以换成 Claude / GPT">
+          <Sec n="1" t="给答题的人配哪个 AI？" d="候选人做题时随手可问；默认通义千问，国内网络直接可用。也可以换成 Claude / GPT">
             <Select value={f.model} onChange={v => setF(x => ({ ...x, model: v }))} size="large" style={{ width: '100%' }} optionLabelProp="label"
               options={MODELS.map(m => ({ value: m.id, label: m.label, desc: m.provider + (m.badge ? ' · ' + m.badge : '') }))}
               optionRender={o => <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}><span>{o.data.label}</span><span style={{ color: '#999', fontSize: 12 }}>{o.data.desc}</span></div>} />
           </Sec>
-          <Sec n="2" t="操作台（模组）" d={env.desc + '；不选就按每个交付物自动挂模组（文档 / 表格 / 代码 / 草图 / 画布可混用）'}>
+          <Sec n="2" t="要指定操作台吗？" d={env.desc + '；不选就按每个交付物自动挂模组（文档 / 表格 / 代码 / 草图 / 画布可混用）'}>
             <Select value={f.env} onChange={v => setF(x => ({ ...x, env: v }))} size="large" style={{ width: '100%' }} options={ENVS.map(e => ({ value: e.value, label: e.value ? e.label : '操作台：' + e.label }))} />
           </Sec>
             <div style={{ display: 'flex', gap: 10 }}>
