@@ -230,7 +230,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   }, [token, sid]);
 
   // 材料
-  const [mat, setMat] = useState<Material | null>(null);
+  const [mat, setMat] = useState<Material | null>(() => task.materials?.[0] || null);   // 默认打开第一份材料：进来就是材料 + 作答分屏
   const openMat = (m: Material) => { setMat(m); ev('open_material', { id: m.id }); };
   // 案例推进式（深度样本出的题）：一步一步给信息，看完当步再答、答完再开下一步；每一步的揭示都记进过程
   const stages = task?.task?.stages || [];
@@ -278,6 +278,9 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const [localErr, setLocalErr] = useState('');
   // 布局（2026-10-25，王刚：作答区别太固定，要像 AI workspace）：材料栏可收、材料面板高度可拖 / 占满 / 收成一条 / 关闭、AI 助手是可收的卡片
   const [leftOpen, setLeftOpen] = useState(!narrow);
+  // 第一次进来的引导（看过一次就不弹；顶栏「?」可重看）
+  const [tour, setTour] = useState<number | null>(null);
+  useEffect(() => { let seen = false; try { seen = localStorage.getItem('work-tour-done') === '1'; } catch {} if (!seen && !narrow) { const t = setTimeout(() => setTour(0), 600); return () => clearTimeout(t); } }, [narrow]);
   const [aiOpen, setAiOpen] = useState(!narrow);
   const [matMode, setMatMode] = useState<'split' | 'full' | 'bar'>('split');
   const [matH, setMatH] = useState(300);
@@ -292,7 +295,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   // 20 分钟还没打开的交付物：弹一次气泡（别等到交卷才说）
   useEffect(() => { if (nudged.current || mode === 'open') return; if (now >= 1200) { const miss = parts.filter(p => !opened.has(p.id)); if (miss.length) { nudged.current = true; setNudge(`${miss.map(p => `${p.id} ${MODULES[p.module].label}`).join('、')} 还没打开过，别漏了`); ev('nudge', { parts: miss.map(p => p.id) }); } } }, [now, parts, opened, mode, ev]);
   const switchPart = (id: string) => { setCur(id); setOpened(o => new Set(o).add(id)); ev('switch_part', { id }); };
-  const tabsEl = mode === 'open' ? null : <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>{parts.map(p => { const on = p.id === cur; const filled = filledOf(p.id); return <button key={p.id} onClick={() => switchPart(p.id)} title={`${p.title}${p.format ? `（${p.format}）` : ''}`} style={{ border: 0, background: on ? '#6055f5' : 'transparent', color: on ? '#fff' : dark ? '#b8bdd6' : '#555', borderRadius: 8, padding: '4px 10px', cursor: 'pointer', font: 'inherit', fontSize: 12.5, fontWeight: on ? 700 : 500, display: 'flex', gap: 6, alignItems: 'center', whiteSpace: 'nowrap' }}>{p.id} {MODULES[p.module].label}<span style={{ width: 6, height: 6, borderRadius: 99, background: filled ? '#22c55e' : on ? 'rgba(255,255,255,.45)' : '#d9dbe6' }} /></button>; })}</div>;
+  const tabsEl = mode === 'open' ? null : <div data-tour="tabs" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>{parts.map(p => { const on = p.id === cur; const filled = filledOf(p.id); return <button key={p.id} onClick={() => switchPart(p.id)} title={`${p.title}${p.format ? `（${p.format}）` : ''}`} style={{ border: 0, background: on ? '#6055f5' : 'transparent', color: on ? '#fff' : dark ? '#b8bdd6' : '#555', borderRadius: 8, padding: '4px 10px', cursor: 'pointer', font: 'inherit', fontSize: 12.5, fontWeight: on ? 700 : 500, display: 'flex', gap: 6, alignItems: 'center', whiteSpace: 'nowrap' }}>{p.id} {MODULES[p.module].label}<span style={{ width: 6, height: 6, borderRadius: 99, background: filled ? '#22c55e' : on ? 'rgba(255,255,255,.45)' : '#d9dbe6' }} /></button>; })}</div>;
   const emptyParts = mode === 'open' ? [] : parts.filter(p => !filledOf(p.id));
   const line = dark ? '#2b2d3e' : '#e8e9f0', panel = dark ? '#1e1f2b' : '#fff', ink2 = dark ? '#aab' : '#777';
   const viewBtn = (on: boolean): React.CSSProperties => ({ width: 30, height: 26, border: 0, background: on ? (dark ? '#2b2a4a' : '#e9e7ff') : 'transparent', color: on ? '#4c43c9' : ink2, borderRadius: 6, cursor: 'pointer', display: 'grid', placeItems: 'center', padding: 0 });
@@ -316,18 +319,22 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 14px', borderBottom: `1px solid ${line}`, background: dark ? '#16171f' : '#fff', color: dark ? '#e6e8f0' : undefined, position: 'sticky', top: 0, zIndex: 5, height: 52, boxSizing: 'border-box' }}>
         <div style={{ fontSize: 11, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台</div>
         <div style={{ fontWeight: 700, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 14 }}>{task.task.title} <span style={{ color: '#888', fontWeight: 400, fontSize: 12.5 }}>{task.company_name} · {task.role} · {mode === 'open' ? '用自己的软件做' : modulesLabel(task, env)}</span></div>
-        {!narrow && <div style={{ display: 'flex', gap: 2, padding: 2, border: `1px solid ${line}`, borderRadius: 8 }}>
+        {!narrow && <div data-tour="views" style={{ display: 'flex', gap: 2, padding: 2, border: `1px solid ${line}`, borderRadius: 8 }}>
           <button onClick={() => setLeftOpen(v => !v)} style={viewBtn(leftOpen)} title={leftOpen ? '收起材料栏' : '展开材料栏'}><Ico k="left" /></button>
           <button onClick={() => setAiOpen(v => !v)} style={viewBtn(aiOpen)} title={aiOpen ? '收起 AI 助手' : '展开 AI 助手'}><Ico k="ai" /></button>
         </div>}
+        <button onClick={() => setTour(0)} title="界面说明" style={{ ...viewBtn(false), border: `1px solid ${line}`, fontWeight: 700, fontSize: 13 }}>?</button>
+        <div data-tour="clock" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, fontSize: 13.5, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{fmt(now)}<span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span></div>
         <button onClick={submit} disabled={grading} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '再点一次确认交卷' : '交卷 →'}</button>
+        </div>
       </div>
+      {tour != null && <Tour step={tour} steps={TOUR_STEPS.filter(t => mode !== 'open' || t.key !== 'tabs')} onStep={setTour} onDone={() => { setTour(null); try { localStorage.setItem('work-tour-done', '1'); } catch {} }} />}
       {grading && <div style={{ padding: '12px 18px', background: '#f3f2ff', color: '#4c43c9', fontSize: 13.5 }}>交卷了。正在逐条核对交付物、回看过程、和 AI 基线比——大约 1–2 分钟，别关页面。</div>}
       {(error || localErr) && !grading && <div style={{ padding: '10px 18px', background: '#fff1f0', color: '#c0392b', fontSize: 13.5 }}>{error || localErr}</div>}
       <div style={{ display: 'flex', flexDirection: narrow ? 'column' : 'row', height: narrow ? undefined : 'calc(100vh - 52px)', minHeight: narrow ? 'calc(100vh - 52px)' : undefined }}>
         {/* 材料包 · 要交什么（可收） */}
-        {(narrow || leftOpen) && <aside style={{ width: narrow ? undefined : 272, flex: 'none', borderRight: narrow ? undefined : `1px solid ${line}`, background: dark ? '#16171f' : '#fafbff', color: dark ? '#d6d8e6' : undefined, padding: 14, overflow: 'auto', maxHeight: narrow ? 300 : undefined }}>
+        {(narrow || leftOpen) && <aside data-tour="materials" style={{ width: narrow ? undefined : 272, flex: 'none', borderRight: narrow ? undefined : `1px solid ${line}`, background: dark ? '#16171f' : '#fafbff', color: dark ? '#d6d8e6' : undefined, padding: 14, overflow: 'auto', maxHeight: narrow ? 300 : undefined }}>
           {stages.length > 0 && <div style={{ marginBottom: 14 }}>
             <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>推进 · {stages.length} 步</div>
             {stages.map((st2, i) => { const locked = i >= unlocked; const on = mat?.id === st2.id; return (
@@ -368,7 +375,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
           </div>}
         </main>
         {/* AI 助手：卡片（可收） */}
-        {(narrow || aiOpen) && <aside style={{ width: narrow ? undefined : 352, flex: 'none', padding: narrow ? '0 12px 12px' : '10px 12px 10px 0', display: 'flex', flexDirection: 'column', minHeight: 0, maxHeight: narrow ? 520 : undefined }}>
+        {(narrow || aiOpen) && <aside data-tour="ai" style={{ width: narrow ? undefined : 352, flex: 'none', padding: narrow ? '0 12px 12px' : '10px 12px 10px 0', display: 'flex', flexDirection: 'column', minHeight: 0, maxHeight: narrow ? 520 : undefined }}>
           <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', background: panel, color: dark ? '#d6d8e6' : undefined, border: `1px solid ${line}`, borderRadius: 16, boxShadow: dark ? 'none' : '0 6px 24px rgba(30,30,60,.06)', overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', borderBottom: `1px solid ${line}` }}>
               <span style={{ width: 22, height: 22, borderRadius: 7, background: 'linear-gradient(135deg,#6055f5,#12b5cb)', color: '#fff', fontSize: 12, display: 'grid', placeItems: 'center' }}>✦</span>
@@ -401,6 +408,41 @@ function CsvPreview({ csv }: { csv: string }) {
   const rows = useMemo(() => csv.split(/\r?\n/).filter(l => l.trim()).slice(0, 60).map(l => l.split(',')), [csv]);
   if (!rows.length) return null;
   return <div style={{ overflow: 'auto', border: '1px solid #e8e9f0', borderRadius: 10, maxHeight: 260 }}><table style={{ borderCollapse: 'collapse', fontSize: 12.5, minWidth: '100%' }}><tbody>{rows.map((r, i) => <tr key={i} style={{ background: i === 0 ? '#fafbff' : undefined }}>{r.map((c, j) => <td key={j} style={{ padding: '4px 8px', borderBottom: '1px solid #f0f0f0', borderRight: '1px solid #f5f5f5', fontWeight: i === 0 ? 700 : 400, whiteSpace: 'nowrap' }}>{c}</td>)}</tr>)}</tbody></table></div>;
+}
+
+/** 第一次进来的引导：遮罩 + 高亮框（box-shadow 挖洞）+ 小卡片，一步一个区域 */
+const TOUR_STEPS: { key: string; title: string; text: string }[] = [
+  { key: 'materials', title: '材料包', text: '题目给你的材料都在这里，点一份在中间看。材料面板可以拖高、占满、收成一条或关掉。「要交什么」和「任务书」也在这一栏。' },
+  { key: 'tabs', title: '作答区有几个标签，都要做', text: '每个交付物一个标签（文档 / 表格 / 代码 / 画布），切着做。小圆点变绿表示动过笔；20 分钟还没打开的会提醒你。' },
+  { key: 'ai', title: 'AI 助手', text: '随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。它看得到你当前打开的材料；回答可以一键放进当前交付物。' },
+  { key: 'clock', title: '时间和交卷', text: '右上角看用时；到时不强制停表，但会记录。做完点「交卷」，再点一次确认——交了就不能改。' },
+  { key: 'views', title: '两侧可以收起', text: '文件夹 = 材料栏，星芒 = AI 助手，点一下收起或展开，给作答区腾地方。随时点「?」再看这份说明。' },
+];
+function Tour({ step, steps, onStep, onDone }: { step: number; steps: { key: string; title: string; text: string }[]; onStep: (n: number) => void; onDone: () => void }) {
+  const [rect, setRect] = useState<{ x: number; y: number; w: number; h: number } | null>(null);
+  const cur = steps[Math.min(step, steps.length - 1)];
+  useEffect(() => {
+    const find = () => { const el = document.querySelector(`[data-tour="${cur.key}"]`) as HTMLElement | null; if (!el) { setRect(null); return; } const r = el.getBoundingClientRect(); setRect({ x: r.left - 6, y: r.top - 6, w: r.width + 12, h: r.height + 12 }); };
+    find(); const t = setTimeout(find, 300); window.addEventListener('resize', find); return () => { clearTimeout(t); window.removeEventListener('resize', find); };
+  }, [cur.key]);
+  useEffect(() => { const k = (e: KeyboardEvent) => { if (e.key === 'Escape') onDone(); if (e.key === 'Enter' || e.key === 'ArrowRight') (step >= steps.length - 1 ? onDone() : onStep(step + 1)); }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k); }, [step, steps.length, onStep, onDone]);
+  const vw = typeof window !== 'undefined' ? window.innerWidth : 1200, vh = typeof window !== 'undefined' ? window.innerHeight : 800;
+  const W = 320; let cx = 24, cy = 80;
+  if (rect) { const below = rect.y + rect.h + 14; cx = Math.min(vw - W - 16, Math.max(16, rect.x + rect.w / 2 - W / 2)); cy = below + 190 < vh ? below : Math.max(16, rect.y - 190); if (rect.w < vw * 0.6 && rect.h > vh * 0.5) { cx = rect.x + rect.w + 14 <= vw - W - 16 ? rect.x + rect.w + 14 : Math.max(16, rect.x - W - 14); cy = Math.max(16, Math.min(vh - 200, rect.y + 24)); } }
+  return <div style={{ position: 'fixed', inset: 0, zIndex: 60 }} onClick={onDone}>
+    {rect ? <div style={{ position: 'absolute', left: rect.x, top: rect.y, width: rect.w, height: rect.h, borderRadius: 12, boxShadow: '0 0 0 9999px rgba(20,22,40,.5), 0 0 0 2px #6055f5', pointerEvents: 'none', transition: 'all .25s ease' }} /> : <div style={{ position: 'absolute', inset: 0, background: 'rgba(20,22,40,.5)' }} />}
+    <div onClick={e => e.stopPropagation()} style={{ position: 'absolute', left: cx, top: cy, width: W, background: '#fff', color: '#1a1a2e', borderRadius: 14, padding: '14px 16px 12px', boxShadow: '0 12px 40px rgba(10,10,40,.25)', fontSize: 13.5, lineHeight: 1.65 }}>
+      <div style={{ fontSize: 11, letterSpacing: 1.5, color: '#6055f5', fontWeight: 700, marginBottom: 4 }}>界面说明 · {step + 1} / {steps.length}</div>
+      <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{cur.title}</div>
+      <div style={{ color: '#444' }}>{cur.text}</div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 12 }}>
+        <div style={{ display: 'flex', gap: 4 }}>{steps.map((_, i) => <span key={i} style={{ width: 6, height: 6, borderRadius: 99, background: i === step ? '#6055f5' : '#d9dbe6' }} />)}</div>
+        <button onClick={onDone} style={{ marginLeft: 'auto', border: 0, background: 'transparent', color: '#888', cursor: 'pointer', font: 'inherit', fontSize: 12.5 }}>跳过</button>
+        {step > 0 && <button onClick={() => onStep(step - 1)} style={{ border: '1px solid #e0e0ee', background: '#fff', borderRadius: 8, padding: '5px 10px', cursor: 'pointer', font: 'inherit', fontSize: 12.5 }}>上一步</button>}
+        <button onClick={() => (step >= steps.length - 1 ? onDone() : onStep(step + 1))} style={{ border: 0, background: '#6055f5', color: '#fff', borderRadius: 8, padding: '5px 14px', cursor: 'pointer', font: 'inherit', fontSize: 12.5, fontWeight: 700 }}>{step >= steps.length - 1 ? '开始做题' : '下一步'}</button>
+      </div>
+    </div>
+  </div>;
 }
 
 function Shell({ children, dark }: { children: React.ReactNode; dark?: boolean }) { return <div style={{ minHeight: '100vh', background: dark ? '#14151e' : '#f6f7fb', color: dark ? '#e6e8f0' : '#1a1a2e', fontFamily: 'var(--font-geist-sans), -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif' }}>{children}</div>; }
