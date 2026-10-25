@@ -24,6 +24,7 @@ export const WORK_CHAT_TOOLS: Anthropic.Tool[] = [
   { name: 'read_reference', description: '用户在对话里贴了一道过往的题 / 内部考题（200 字以上）：读成结构（几步、每步问什么、参考答案、要算的数）存成他自己的参考资料，出题时照它改背景换数字。要 1 分钟。', input_schema: { type: 'object', properties: { title: { type: 'string' }, text: { type: 'string' } }, required: ['text'] } },
   { name: 'create_task', description: '出题：拼企业材料 → 锚定业务问题 → 任务书 → 材料包 → 带依赖的评分标准（约 2 分钟）。company_id 库里有就传；库里没有就把用户贴的介绍放 intro。role 写用户要找的人（原话也行）。focus 放用户说的「想考什么、给谁做、难度、时长」。reference_id 是他选的参考资料；没有就不传（平台会在后台自动参照）。env 不传就按岗位自动选。attachments：用户上传的、给候选人的素材（消息里【文件】行给的 url / name / mime / text），原样传进来，会挂进材料包给候选人；被当成参考资料的文件不要放这里。', input_schema: { type: 'object', properties: { company: { type: 'string' }, company_id: { type: 'number' }, intro: { type: 'string' }, role: { type: 'string' }, focus: { type: 'string' }, env: { type: 'string', enum: ['doc', 'code', 'sheet', 'design', 'open', 'plugin'] }, reference_id: { type: 'string' }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['company', 'role'] } },
   { name: 'publish_verbatim', description: '原题直发：用户手里已经有一道干净的题，要一字不改发给候选人。把原题文字（text，60 字以上）传进来，平台只整理交付物和评分点（只从题目自己的要求里推），生成链接。company / role 可不传。attachments 同 create_task。约 1 分钟。', input_schema: { type: 'object', properties: { text: { type: 'string' }, company: { type: 'string' }, role: { type: 'string' }, env: { type: 'string', enum: ['doc', 'code', 'sheet', 'design'] }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['text'] } },
+  { name: 'publish_task', description: '发布：出题人确认题没问题后，把题从「待发布」改成「已发布」，参与链接才能给候选人用。没确认别调。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'task_summary', description: '看一道已出的题的要点：业务问题、任务书、推进步骤、材料清单、评分标准、基线分。回答用户「题是什么样」「哪条标准是什么意思」用它。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'run_baseline', description: 'AI 先做一遍当基线（约 1 分钟）。出完题接着调。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'revise_task', description: '按用户的意见修订这道题（没提到的部分不动；修订后基线作废，要重跑）。用户说「材料太少」「难度降一点」「换个角度」都用它。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, feedback: { type: 'string' } }, required: ['task_id', 'feedback'] } },
@@ -43,7 +44,7 @@ export async function createWorkTask(user: { email: string; role: string }, body
     const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 原题直发', stage: 'create', actor: user.email }, () => verbatimTask(text, { company: company || undefined, role: role || undefined, env, model: body.model, attachments: atts }));
     if (atts.length) task.materials = [...task.materials, ...attachmentsToMaterials(atts, task.materials.length + 1)];
     const share_token = randomBytes(8).toString('base64url'), owner_key = randomBytes(12).toString('base64url');
-    const row = { share_token, owner_key, owner: { name: user.email, contact: user.email }, status: 'published', company_id: null, company_name: company || '原题直发', role: role || task.task.role, context: { verbatim: true, notes: ['原题直发：题面原样，没有用企业库材料'], attachments: atts.map(a => ({ name: a.name, url: a.url })) }, problem: task.problem, task: { ...task.task, env: task.env }, materials: task.materials, rubric: task.rubric, model, created_by: user.email };
+    const row = { share_token, owner_key, owner: { name: user.email, contact: user.email }, status: 'ready', company_id: null, company_name: company || '原题直发', role: role || task.task.role, context: { verbatim: true, notes: ['原题直发：题面原样，没有用企业库材料'], attachments: atts.map(a => ({ name: a.name, url: a.url })) }, problem: task.problem, task: { ...task.task, env: task.env }, materials: task.materials, rubric: task.rubric, model, created_by: user.email };
     const { data, error } = await db.from('work_tasks').insert(row).select('id, share_token').single();
     if (error) throw new Error(error.message);
     return { id: data.id as string, share_token: data.share_token as string, owner_key, title: task.task.title, env: task.env.type, notes: row.context.notes, task, company_name: row.company_name };
@@ -67,7 +68,7 @@ export async function createWorkTask(user: { email: string; role: string }, body
   const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题', stage: 'create', actor: user.email }, () => generateTask(ctx, role, { attachments: atts, sample: sample?.skeleton || null, sampleMode, bankRefs: renderBankRefs(bankRefs, ctx.company?.id ?? null), model: body.model || WORK_MODEL, focus: body.focus ? String(body.focus).slice(0, 1500) : undefined, env, research: false }));
   if (atts.length) { task.materials = [...task.materials, ...attachmentsToMaterials(atts, task.materials.length + 1)]; (ctx as any).attachments = atts.map(a => ({ name: a.name, url: a.url })); }
   const share_token = randomBytes(8).toString('base64url'), owner_key = randomBytes(12).toString('base64url');
-  const row = { share_token, owner_key, owner: { name: user.email, contact: user.email }, status: 'published', company_id: ctx.company?.id ?? null, company_name: ctx.company?.name || company, role, context: ctx, problem: task.problem, task: { ...task.task, env: task.env }, materials: task.materials, rubric: task.rubric, model, created_by: user.email };
+  const row = { share_token, owner_key, owner: { name: user.email, contact: user.email }, status: 'ready', company_id: ctx.company?.id ?? null, company_name: ctx.company?.name || company, role, context: ctx, problem: task.problem, task: { ...task.task, env: task.env }, materials: task.materials, rubric: task.rubric, model, created_by: user.email };
   const { data, error } = await db.from('work_tasks').insert(row).select('id, share_token').single();
   if (error) throw new Error(error.message);
   bankTask(data.id).catch(() => {});   // 沉淀进题目资产库
@@ -106,12 +107,17 @@ async function run(name: string, input: any, user: { email: string; role: string
     case 'create_task': {
       const r = await createWorkTask(user, { company: String(input.company || ''), company_id: input.company_id ? Number(input.company_id) : null, intro: input.intro ? String(input.intro) : undefined, role: String(input.role || ''), env: input.env, focus: input.focus ? String(input.focus) : undefined, sample_id: input.reference_id ? String(input.reference_id) : undefined, sample_mode: 'reskin', attachments: Array.isArray(input.attachments) ? input.attachments : [] });
       const t = await loadMine(user, r.id);
-      return { result: { ...brief(t), share_link: `/work/${r.share_token}`, owner_link: `/work/${r.share_token}/owner?k=${r.owner_key}` }, ui: ui(t), label: `出好了：${r.title}` };
+      return { result: { ...brief(t), share_link: `/work/${r.share_token}`, owner_link: `/work/${r.share_token}/owner?k=${r.owner_key}` }, ui: ui(t), label: `出好了（待发布）：${r.title}` };
     }
     case 'publish_verbatim': {
       const r = await createWorkTask(user, { company: String(input.company || ''), role: String(input.role || ''), env: input.env, verbatim: String(input.text || ''), attachments: Array.isArray(input.attachments) ? input.attachments : [] });
       const t = await loadMine(user, r.id);
-      return { result: { ...brief(t), share_link: `/work/${r.share_token}`, owner_link: `/work/${r.share_token}/owner?k=${r.owner_key}` }, ui: ui(t), label: `原题直发好了：${r.title}` };
+      return { result: { ...brief(t), share_link: `/work/${r.share_token}`, owner_link: `/work/${r.share_token}/owner?k=${r.owner_key}` }, ui: ui(t), label: `整理好了（待发布）：${r.title}` };
+    }
+    case 'publish_task': {
+      const t = await loadMine(user, String(input.task_id));
+      await db.from('work_tasks').update({ status: 'published', updated_at: new Date().toISOString() }).eq('id', t.id);
+      return { result: { published: true, share_link: `/work/${t.share_token}` }, ui: ui({ ...t, status: 'published' }), label: '已发布' };
     }
     case 'task_summary': { const t = await loadMine(user, String(input.task_id)); return { result: brief(t), ui: ui(t), label: `看了「${t.task?.title}」` }; }
     case 'run_baseline': {
@@ -145,7 +151,7 @@ export function workChatSystemPrompt(user: string) {
 - 用户上传的文件在消息里是【文件】行（name / url / mime / 抽出的文字）。**哪种用途由你按语境判断**，不要让他选按钮：默认是给候选人的素材，出题时原样放进 create_task 的 attachments，复述题意时说一句用了哪些；他说这是「以前的题」「内部考题」「参照这个出」，就是参考资料——把抽出的文字交给 read_reference，之后 create_task 传 reference_id；同一条消息里既有素材又有参考，按他的话分开。实在分不清（比如传了个文档一句话没说）才问一句「这是给候选人做题用的，还是让我照着出题的参考？」。
 - 他手里已经有一道现成的题、想一字不改发出去：用 publish_verbatim，不要走 create_task 改写。
 - 问一句有没有过往用过的题或内部考题可以参照：有就让他贴进来或上传，read_reference 读成结构；之后 create_task 传 reference_id，题会照它的路数（题型、推进、算法保留，故事换成这家企业、数字换掉）。没有就不传，平台自己有参照。
-- 出题前用 ask_user 用一句话复述题意（企业 + 要找的人 + 考什么）让他确认；确认了 create_task（告诉他要 2 分钟），出完接着 run_baseline（1 分钟），然后用三五句话说这道题：业务问题、要交什么、几步推进、基线几分。
+- 出题前用 ask_user 用一句话复述题意（企业 + 要找的人 + 考什么）让他确认；确认了 create_task（告诉他要 2 分钟），出完接着 run_baseline（1 分钟），然后用三五句话说这道题：业务问题、要交什么、几步推进、基线几分。**出好的题是待发布**：告诉他右边空间里可以「预览做题台」看候选人会看到什么、哪里不对说一句就改；他说「可以了 / 发布」再调 publish_task，参与链接才生效。
 - 他说哪里不对，revise_task 改；改完提醒基线要重跑，问要不要跑。
 - 他问「这条标准什么意思」「材料里有什么」，task_summary 看了再答。
 

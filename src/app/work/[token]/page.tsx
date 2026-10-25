@@ -64,6 +64,7 @@ export default function WorkPage() {
   const { token } = useParams<{ token: string }>();
   const sp = useSearchParams();
   const [task, setTask] = useState<Task | null>(null);
+  const [preview, setPreview] = useState(false);   // 出题人预览（待发布的题，带管理密钥进来）
   const [err, setErr] = useState('');
   const [phase, setPhase] = useState<'loading' | 'intro' | 'work' | 'grading' | 'report'>('loading');
   const [sid, setSid] = useState<string>('');
@@ -76,7 +77,8 @@ export default function WorkPage() {
   useEffect(() => { const f = () => setNarrow(window.innerWidth < 980); f(); window.addEventListener('resize', f); return () => window.removeEventListener('resize', f); }, []);
   useEffect(() => {
     (async () => {
-      const j = await (await fetch(`/api/work/${token}`)).json();
+      const j = await (await fetch(`/api/work/${token}${sp.get('k') ? `?k=${encodeURIComponent(sp.get('k')!)}` : ''}`)).json();
+      if (j.ok) setPreview(!!j.preview);
       if (!j.ok) { setErr(j.error || '链接不可用'); setPhase('intro'); return; }
       setTask(j.task); if (j.task?.task?.env?.type === 'open') setMode('open'); if (j.task?.task?.env?.type === 'plugin') setMode('plugin');   // 出题人指定了「自己录制电脑操作」：只有开放模式
       const s = sp.get('s') || (typeof localStorage !== 'undefined' ? localStorage.getItem(`work:${token}`) : '') || '';
@@ -90,7 +92,7 @@ export default function WorkPage() {
 
   const start = async () => {
     if (!name.trim()) return;
-    const j = await (await fetch(`/api/work/${token}/sessions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, contact, mode }) })).json();
+    const j = await (await fetch(`/api/work/${token}/sessions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, contact, mode, k: sp.get('k') || undefined }) })).json();
     if (!j.ok) { setErr(j.error); return; }
     setSid(j.session_id); setParticipant({ name, contact, mode, ...(j.code ? { code: j.code } : {}) }); try { localStorage.setItem(`work:${token}`, j.session_id); } catch {}
     setPhase('work');
@@ -155,7 +157,7 @@ export default function WorkPage() {
     </Shell>
   );
 
-  if (mode === 'plugin' && participant?.code) return <Shell><PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
+  if (mode === 'plugin' && participant?.code) return <Shell>{preview && <div style={{ background: '#fff7e6', borderBottom: '1px solid #ffd591', color: '#8a5a00', fontSize: 13, padding: '8px 18px', textAlign: 'center' }}>出题人预览 · 这道题还没发布，候选人现在打不开；在这里看到的就是候选人会看到的</div>}<PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
 
   return <Workspace token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} onSubmit={async (deliverable, events) => {
     setPhase('grading');

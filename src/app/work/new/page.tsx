@@ -142,7 +142,7 @@ function Inner() {
           </>}
           {way === 'verbatim' && <Button type="primary" size="large" block icon={<RocketOutlined />} loading={!!busy} onClick={create} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>发出去（约 1 分钟）</Button>}
           {busy && <GenProgress phase={phase} company={f.company} picked={picked} intro={picked ? '' : f.intro} role={f.role} focus={f.focus} env={f.env ? ENVS.find(e => e.value === f.env)?.label : undefined} />}
-          <Text type="secondary" style={{ display: 'block', fontSize: 12, marginTop: 12 }}>题出好即发布，会直接进这道真活的空间：复制参与链接发给候选人就能做（不用登录）；觉得题不对，在空间里提意见让 AI 修订。</Text>
+          {way === 'gen' && page === 2 && <Text type="secondary" style={{ display: 'block', fontSize: 12, marginTop: 12 }}>出好的题先是「待发布」：你可以预览做题台、哪里不对让 AI 改，确认后再发布给候选人。</Text>}
         </div>
 
         <div style={{ position: 'sticky', top: 20, display: 'grid', gap: 14 }}>
