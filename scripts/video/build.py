@@ -24,7 +24,15 @@ SPEED = {"gallery": 1.2, "hub": 1.0, "day": 0.75, "ch1_intro": 1.0, "ch1_steps":
          "ch2_intro": 1.0, "bench": 6.0, "bench_done": 1.6, "day_tour": 1.0, "me": 1.0, "cover": 1.0,
          "cert": 1.0, "scores": 1.0, "dayscore": 1.0, "end": 1.0}
 # 第二个参数：这条片子自己的分段速度（json），盖在默认表上
-if len(sys.argv) > 2: SPEED.update(json.load(open(sys.argv[2], encoding="utf-8")))
+ZOOM = {}
+if len(sys.argv) > 2:
+    sp_cfg = json.load(open(sys.argv[2], encoding="utf-8"))
+    ZOOM = sp_cfg.pop("_zoom", {})        # {note: [x, y, w, h]}：讲局部时把这一块裁出来放大（按源片像素；源片录成 2 倍清晰度放大才不糊）
+    FINAL = sp_cfg.pop("_final", "1920x1080")
+    SPEED.update(sp_cfg)
+else:
+    FINAL = "1920x1080"
+FW, FH = [int(x) for x in FINAL.split("x")]
 order = [m["note"] for m in marks]
 SEG = []
 for i, n in enumerate(order):
@@ -34,7 +42,9 @@ for i, n in enumerate(order):
 
 parts, concat, tl, cur = [], "", [], 0.0
 for i, (n, a, b, sp) in enumerate(SEG):
-    parts.append(f"[0:v]trim=start={a}:end={b},setpts=(PTS-STARTPTS)/{sp}[v{i}]"); concat += f"[v{i}]"
+    z = ZOOM.get(n)
+    crop = f"crop={int(z[2])}:{int(z[3])}:{int(z[0])}:{int(z[1])}," if z else ""
+    parts.append(f"[0:v]trim=start={a}:end={b},setpts=(PTS-STARTPTS)/{sp},{crop}scale={FW}:{FH}:flags=lanczos,setsar=1[v{i}]"); concat += f"[v{i}]"
     d = (b - a) / sp; tl.append({"clip": n, "start": round(cur, 2), "end": round(cur + d, 2), "src": [round(a, 2), round(b, 2)], "speed": sp}); cur += d
 fc = ";".join(parts) + f";{concat}concat=n={len(SEG)}:v=1:a=0[cat];[cat]fps=30[out]"
 json.dump(tl, open(os.path.join(D, "timeline.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
