@@ -104,7 +104,7 @@ export default function WorkChatPage() {
             <>
               <div className="wc-thread">
                 {items.map((x, i) => {
-                  if (x.k === 'user') return <div key={i} className="wc-user"><div className="wc-bubble">{x.text}</div></div>;
+                  if (x.k === 'user') { const lines = String(x.text || '').split('\n'); const atts = lines.filter(l => l.startsWith('【素材】')).map(l => l.slice(4).split('｜')[0]); const plain = lines.filter(l => !l.startsWith('【素材】')).join('\n').trim(); return <div key={i} className="wc-user"><div className="wc-bubble">{plain}{atts.length > 0 && <div className="wc-atts">{atts.map((n, j) => <span key={j} className="wc-att">📎 {n}</span>)}</div>}</div></div>; }
                   if (x.k === 'text') return <div key={i} className="wc-ai"><span className="wc-ava">题</span><div className="wc-ai-body"><Md text={x.text} /></div></div>;
                   if (x.k === 'tool') return <div key={x.id} className="wc-tool"><span className={`wc-dot${x.running ? ' run' : x.error ? ' err' : ''}`} /><span className="wc-tool-t">{x.running ? `${RUNNING[x.name] || x.name}…` : x.label || x.name}</span>{x.ui && !x.running && <button className="wc-link" onClick={() => setArt({ ...x.ui, _n: Date.now() })}>看 →</button>}{x.error && <span className="wc-err-t">{x.error}</span>}</div>;
                   if (x.k === 'ask') return <div key={x.id} className="wc-ask"><div className="wc-ask-q">{x.question}</div><div className="wc-opts">{x.options.map((o, j) => <button key={o} className={`wc-opt${x.answered === o ? ' on' : ''}`} disabled={!!x.answered || busy} onClick={() => send(o)}><i>{j + 1}</i>{o}</button>)}</div>{x.answered && !x.options.includes(x.answered) && <div className="wc-mute" style={{ marginTop: 8 }}>你答：{x.answered}</div>}</div>;
@@ -192,6 +192,7 @@ const CSS = `
 .wc-thread { flex: 1; overflow-y: auto; padding: 28px 0 12px; } .wc-thread > * { width: min(780px, 92%); margin-left: auto; margin-right: auto; }
 .wc-dock { padding: 8px 0 18px; } .wc-dock > * { width: min(780px, 92%); margin: 0 auto; }
 .wc-user { display: flex; justify-content: flex-end; margin: 14px auto; }
+.wc-atts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; } .wc-att { font-size: 12px; background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35); border-radius: 6px; padding: 2px 8px; }
 .wc-bubble { background: #ecebff; border-radius: 16px; padding: 10px 14px; max-width: 80%; white-space: pre-wrap; line-height: 1.65; font-size: 14.5px; }
 .wc-ai { margin: 12px auto 6px; line-height: 1.8; font-size: 15px; display: flex; gap: 12px; align-items: flex-start; }
 .wc-ai-body { flex: 1; min-width: 0; } .wc-ai-body .ws-md p { margin: 0 0 10px; } .wc-ai-body .ws-md ul, .wc-ai-body .ws-md ol { margin: 0 0 10px; padding-left: 22px; }
