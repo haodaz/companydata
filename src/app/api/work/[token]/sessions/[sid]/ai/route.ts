@@ -7,7 +7,7 @@ export const runtime = 'nodejs';
 export const maxDuration = 120;
 
 // 做题 AI 锁定千问（2026-10-21 演示前定的：国内口径稳妥）；千问出错退到 DeepSeek（同在阿里云百炼）；Claude 国内用不了，不进这条链
-const ASSIST_MODEL = 'claude-sonnet-5-5';   // 2026-10-25 阿里云百炼欠费，临时默认 Sonnet（失败再退 deepseek）；充值后改回 qwen-plus
+const ASSIST_MODEL = 'qwen-plus';   // 默认千问；不可用时退到 Sonnet、DeepSeek
 
 /** 工作台里的 AI：随便问（用 AI 不算作弊，评的是你怎么用）。每一问一答都记进 ai_chat，过程分析要看 */
 export async function POST(req: NextRequest, { params }: { params: Promise<{ token: string; sid: string }> }) {

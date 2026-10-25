@@ -50,7 +50,10 @@ ${(task.materials || []).map(m => `### ${m.id} ${m.title}\n${m.content}`).join('
 /** 用指定模型做一遍；返回交付物文本（不评分，评分走 grader.gradeResult） */
 export async function solveWorkTask(task: WorkTask, model: string, opts: SolveOpts = {}): Promise<{ answer: string; model: string }> {
   const prompt = buildSolvePrompt(task, opts);
-  const res = await generateContent(prompt, model);
-  await logTokenUsage({ tool_name: 'work', task_name: opts.task_name || 'Solve · 做一遍', institution: opts.institution || '', model_id: model, usageMetadata: res.usageMetadata, actor: opts.actor } as any).catch(() => {});
-  return { answer: res.text.trim(), model };
+  // 指定模型不可用（欠费 / 限流）就退到 Sonnet，基线和学员做题都不能空着
+  let res: any, used = model;
+  try { res = await generateContent(prompt, model); }
+  catch (e) { if (model === 'claude-sonnet-5-5') throw e; console.warn(`[work-solve] ${model} 失败，换 Sonnet：${String((e as any)?.message).slice(0, 100)}`); used = 'claude-sonnet-5-5'; res = await generateContent(prompt, used); }
+  await logTokenUsage({ tool_name: 'work', task_name: opts.task_name || 'Solve · 做一遍', institution: opts.institution || '', model_id: used, usageMetadata: res.usageMetadata, actor: opts.actor } as any).catch(() => {});
+  return { answer: res.text.trim(), model: used };
 }
