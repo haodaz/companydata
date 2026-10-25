@@ -77,8 +77,12 @@ export async function gatherContext(companyQuery: string, role: string, opts: { 
     ]);
     ctx.products = products || []; ctx.news = news || []; ctx.executives = execs || []; ctx.jobs = jobs || [];
     if (!ctx.jobs.length) {
-      const { data } = await db.from('jobs').select(J).eq('company_id', cid).eq('if_delete', false).not('responsibilities', 'is', null).limit(3);
-      ctx.jobs = data || []; if (ctx.jobs.length) ctx.notes.push(`这家企业没有「${role}」的在招岗位，取了同企业其他岗位做参考`);
+      // 没有同名岗位：拉一批，按「要找的人」的字面相关度挑 3 条（投资岗别挑成 HRD / 架构师，2026-10-25 高瓴演示前发现）
+      const { data } = await db.from('jobs').select(J).eq('company_id', cid).eq('if_delete', false).not('responsibilities', 'is', null).limit(80);
+      const grams = new Set<string>(); const rr = role.replace(/[\s，。、“”「」（）()的人来做一个能]/g, ''); for (let i = 0; i + 2 <= rr.length; i++) grams.add(rr.slice(i, i + 2));
+      const score = (j: any) => { const t = `${j.name || ''} ${j.title_cn || ''} ${j.department || ''} ${j.job_function || ''} ${String(j.responsibilities || '').slice(0, 600)}`; let n = 0; for (const g of grams) if (t.includes(g)) n++; if (/投资|投后|研究|分析|行业/.test(t) && /投资|研究|分析|行业/.test(rr)) n += 2; if (/Portfolio|被投企业/.test(t)) n -= 2; return n; };
+      ctx.jobs = (data || []).map(j => ({ j, s: score(j) })).sort((a, b) => b.s - a.s).slice(0, 3).map(x => x.j);
+      if (ctx.jobs.length) ctx.notes.push(`这家企业没有「${role}」的在招岗位，取了同企业最接近的岗位做参考`);
     }
     // 深度画像：每个专题压成一段（出题时最有用的材料：投资机构的被投企业、合伙人、招聘要求……）
     const { data: deep } = await db.from('company_deep_research').select('topic, data').eq('company_id', cid);
@@ -170,7 +174,7 @@ export function renderContext(ctx: WorkContext): string {
   if (ctx.products.length) L.push(`## 产品（来源：企业产品子实体）\n${ctx.products.map(p => `- ${p.name}${p.is_flagship ? '（主打）' : ''}${p.category ? ` [${p.category}]` : ''}：${s(p.description, 200)}`).join('\n')}`);
   if (ctx.news.length) L.push(`## 近期动态（来源：企业动态子实体）\n${ctx.news.map(n => `- ${n.publish_date_str || ''} ${s(n.description, 240)}`).join('\n')}`);
   if (ctx.executives.length) L.push(`## 管理团队（来源：企业高管子实体）\n${ctx.executives.map(e => `- ${e.name}${e.title ? ' · ' + e.title : ''}`).join('\n')}`);
-  if (ctx.jobs.length) L.push(`## 在招岗位（来源：校招岗位库）\n${ctx.jobs.map(j => `- ${j.title_cn || j.name}${j.department ? ' · ' + j.department : ''}${j.job_function ? ' · ' + j.job_function : ''}${j.city ? ' · ' + regionName('city', j.city) : ''}\n  概述：${s(j.summary_cn || j.overview, 300)}\n  职责：${s(j.responsibilities, 600)}\n  要求：${s(j.education_description, 100)} ${s(j.major_requirement, 120)} ${s(j.preferred_qualifications, 200)} 技能：${s(j.skill_labels, 150)}`).join('\n')}`);
+  if (ctx.jobs.length) L.push(`## 在招岗位（来源：岗位库，校招 / 社招）\n${ctx.jobs.map(j => `- ${j.title_cn || j.name}${j.department ? ' · ' + j.department : ''}${j.job_function ? ' · ' + j.job_function : ''}${j.city ? ' · ' + regionName('city', j.city) : ''}\n  概述：${s(j.summary_cn || j.overview, 300)}\n  职责：${s(j.responsibilities, 600)}\n  要求：${s(j.education_description, 100)} ${s(j.major_requirement, 120)} ${s(j.preferred_qualifications, 200)} 技能：${s(j.skill_labels, 150)}`).join('\n')}`);
   if (ctx.occupation) L.push(`## 职业（来源：职业实体库）\n${ctx.occupation.name}：${s(ctx.occupation.intro, 400)}\n职责：${s(ctx.occupation.responsibility, 500)}\n要求：${s(ctx.occupation.position_requirement, 300)}`);
   if (ctx.typical_tasks.length) L.push(`## 这个职业的典型任务（来源：职业典型任务库）\n${ctx.typical_tasks.map(t => `- ${t.name}：${s(t.summary, 200)}\n  目标：${s(t.goal, 150)}；成功标准：${s(t.success_criteria, 200)}；常见错误：${s(t.common_mistakes, 200)}`).join('\n')}`);
   if (ctx.related?.length) for (const r of ctx.related) L.push(`## 关联主体：${r.name}（与本企业共同高管 ${r.shared.join('、')}，同一体系；来源：企业实体库）\n${r.text}${r.news.length ? `\n近期动态：\n${r.news.map(n => '- ' + n).join('\n')}` : ''}${r.deep.length ? `\n深度画像：\n${r.deep.map(d => '- ' + d).join('\n')}` : ''}`);
