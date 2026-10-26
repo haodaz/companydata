@@ -19,6 +19,8 @@ type Art = { kind: 'college_page'; path: string; title: string } | { kind: 'spac
 
 const MODELS = MODEL_OPTIONS.filter(m => /^(claude-|gpt-|gemini-|qwen)/.test(m.id));
 const RUNNING: Record<string, string> = { overview: '看教务总览', list_leads: '看线索', admit_lead: '录取为学员', list_students: '查学员名册', register_student: '登记学员', list_courses: '翻课程目录', build_course: '让百业工厂造课', enroll: '开学籍', list_enrollments: '查学籍', record: '调学籍档案', advance: '按学习路径推进（每步 30–90 秒）', entrance_exam: '监考入学考', attend_class: '上课、记要点', final_exam: '监考毕业考', reflect: '带学员反思', list_work_tasks: '找真活', work_exam: '监考真活', regrade: '按学院口径重评', list_graduates: '翻毕业生名册', search_targets: '找去向', place: '派去向' };
+/** 首页铺一张蓝色铜版画（2026-10-26）：湖岸学院，只给情绪、不承担信息；上半部天空更淡、下半部景物更实 */
+const SCENE = '/college/ws/h-campus.jpg';
 const SUGGEST = [
   { t: '学校现在什么情况？', d: '待办、在读、补训、毕业生、去向', p: '学校现在什么情况？今天有什么要处理的？' },
   { t: '定向培养一位分析师', d: '从线索到毕业派遣，一句话交给学院秘书', p: '给武岳峰资本培养一个能看懂具身智能的投资分析师：找对口的课，用通义千问做学员，按路径培养到毕业，然后派过去。' },
@@ -28,7 +30,6 @@ const SUGGEST = [
 
 export default function CollegeChatPage() {
   const { user } = useUser();
-  const [threads, setThreads] = useState<any[]>([]);
   const [threadId, setThreadId] = useState<string | null>(null);
   const [items, setItems] = useState<Item[]>([]);
   const [busy, setBusy] = useState(false);
@@ -37,8 +38,20 @@ export default function CollegeChatPage() {
   const [text, setText] = useState('');
   const abortRef = useRef<AbortController | null>(null);
   const endRef = useRef<HTMLDivElement>(null);
-  const loadThreads = useCallback(() => fetch('/api/college/admin/threads', { cache: 'no-store' }).then(r => r.json()).then(j => j.ok && setThreads(j.data)).catch(() => {}), []);
-  useEffect(() => { loadThreads(); }, [loadThreads]);
+  // 对话历史在左侧栏（layout）：这里只通知它刷新 / 高亮，并接它发来的「打开某段 / 新对话」
+  const loadThreads = useCallback(() => { window.dispatchEvent(new Event('college-threads')); }, []);
+  const hadThread = useRef(false);
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('college-thread', { detail: threadId }));
+    // 首次挂载 threadId 还是 null，别把地址里的 ?thread= 先删了（下面那个 effect 要读它）
+    if (!threadId && !hadThread.current) return;
+    hadThread.current = !!threadId || hadThread.current;
+    try { const u = new URL(window.location.href); if (threadId) u.searchParams.set('thread', threadId); else u.searchParams.delete('thread'); window.history.replaceState(window.history.state, '', u.toString()); } catch {}
+  }, [threadId]);
+  useEffect(() => {
+    const on = (e: Event) => { const id = (e as CustomEvent).detail; if (id) openThread(id); else newChat(); };
+    window.addEventListener('college-open', on); return () => window.removeEventListener('college-open', on);
+  });
   // ?thread=<id> 直接打开某段对话（录片 / 分享用）
   useEffect(() => { const t = new URLSearchParams(window.location.search).get('thread'); if (t) openThread(t); }, []);  // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [items]);
@@ -78,13 +91,8 @@ export default function CollegeChatPage() {
   return (
     <div className={`cc${art ? ' with-art' : ''}`}>
       <style>{CSS}</style>
-      <aside className="cc-recent">
-        <button className="cc-new" onClick={newChat}>＋ 新对话</button>
-        <div className="cc-sec">最近</div>
-        {threads.map(t => <button key={t.id} className={`cc-th${threadId === t.id ? ' on' : ''}`} onClick={() => openThread(t.id)}>{t.title || '对话'}</button>)}
-        {!threads.length && <div className="cc-mute" style={{ padding: '6px 10px' }}>还没有对话</div>}
-      </aside>
       <section className="cc-chat">
+        {!items.length && <div className="cc-scene" aria-hidden style={{ backgroundImage: `url(${SCENE})` }} />}
         {!items.length ? (
           <div className="cc-hero">
             <div className="ca-eyebrow">College Secretary · Registrar AI</div>
@@ -172,16 +180,14 @@ function fromHistory(ms: any[]): Item[] {
 }
 
 const CSS = `
-.cc { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 0; margin: -30px clamp(-44px, -3vw, -18px) -70px; min-height: 100vh; height: 100vh; }
-.cc.with-art { grid-template-columns: 200px minmax(0, 1fr) minmax(420px, 44%); }
-.cc-recent { border-right: 1px solid var(--line); padding: 14px 10px; overflow-y: auto; background: rgba(255,255,255,.5); }
-.cc-new { width: 100%; border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: 9px 12px; font: inherit; font-size: 14px; font-weight: 700; color: var(--navy); cursor: pointer; text-align: left; }
-.cc-new:hover { border-color: var(--gold); }
+.cc { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; margin: -30px clamp(-44px, -3vw, -18px) -70px; min-height: 100vh; height: 100vh; }
+.cc.with-art { grid-template-columns: minmax(0, 1fr) minmax(420px, 44%); }
 .cc-sec { font: 700 10.5px var(--en); letter-spacing: .24em; color: var(--ink3); padding: 14px 10px 6px; }
-.cc-th { display: block; width: 100%; text-align: left; border: 0; background: transparent; padding: 7px 10px; border-radius: 8px; font: inherit; font-size: 13.5px; color: var(--navy2); cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.cc-th:hover { background: rgba(22,32,74,.05); } .cc-th.on { background: rgba(176,141,87,.14); color: var(--navy); font-weight: 700; }
-.cc-chat { display: flex; flex-direction: column; min-height: 0; }
-.cc-hero { width: min(760px, 92%); margin: auto; padding: 40px 0 60px; }
+.cc-chat { display: flex; flex-direction: column; min-height: 0; position: relative; overflow: hidden; }
+.cc-hero { width: min(760px, 92%); margin: auto; padding: 40px 0 60px; position: relative; z-index: 1; }
+.cc-scene { position: absolute; inset: 0; background: center bottom / cover no-repeat; mix-blend-mode: multiply; opacity: .72; filter: brightness(1.08) contrast(1.08) saturate(.8); pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.28) 0%, rgba(0,0,0,.36) 40%, rgba(0,0,0,.8) 62%, #000 80%); mask-image: linear-gradient(to bottom, rgba(0,0,0,.28) 0%, rgba(0,0,0,.36) 40%, rgba(0,0,0,.8) 62%, #000 80%); }
+.cc-hero .cc-card { background: rgba(255,253,247,.88); }
 .cc-hero h1 { font-family: var(--serif); font-size: 36px; font-weight: 900; margin: 8px 0 8px; letter-spacing: .02em; }
 .cc-hero p { color: var(--ink2); font-size: 15px; line-height: 1.8; margin: 0 0 22px; }
 .cc-suggest { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -223,5 +229,5 @@ const CSS = `
 .cc-art-b { flex: 1; min-height: 0; } .cc-art-b iframe { width: 100%; height: 100%; border: 0; }
 .cc-build { display: flex; gap: 12px; align-items: flex-start; padding: 22px; font-size: 14px; }
 .cc-mute { color: var(--ink2); font-size: 13px; }
-@media (max-width: 1100px) { .cc, .cc.with-art { grid-template-columns: minmax(0, 1fr); } .cc-recent { display: none; } .cc-art { position: fixed; inset: 0; z-index: 30; } }
+@media (max-width: 1100px) { .cc, .cc.with-art { grid-template-columns: minmax(0, 1fr); } .cc-art { position: fixed; inset: 0; z-index: 30; } }
 `;

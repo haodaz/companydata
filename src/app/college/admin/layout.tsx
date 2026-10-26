@@ -2,16 +2,18 @@
 
 /**
  * 百业学院教务（2026-10-23）：申请管理 / 学员管理 / 学员培养 / 毕业生管理 / 课程。只给 admin（proxy 按库里角色实时拦；核心业务逻辑不对普通用户和百业用户开放）。
- * 两条路径：每个基础功能都能在这里人工点；教务 AI（院长 A）再把它们串起来。气质沿用学院官网（象牙 / 深蓝 / 金 / 衬线）。
+ * 两条路径：每个基础功能都能在这里人工点；教务 AI（学院秘书）再把它们串起来。气质沿用学院官网（象牙 / 深蓝 / 金 / 衬线）。
+ * 2026-10-26：侧栏照一答工作台——新对话 + 导航 + 「最近」对话历史在同一条侧栏里，底部是账号（头衔写在这里）。
+ * 和秘书页之间用 window 事件通信：college-threads（刷新列表）/ college-thread（当前对话 id）/ college-open（打开某段或新对话）。
  */
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useUser } from '@/lib/user-context';
+import { usePathname, useRouter } from 'next/navigation';
 import { ADMIN_CSS, ROMAN } from './ui';
 
+const CHAT = '/college/admin/chat';
 const NAV = [
-  { href: '/college/admin/chat', t: '学院秘书 · 教务 AI', on: (p: string) => p.startsWith('/college/admin/chat') },
+  { href: CHAT, t: '学院秘书', on: (p: string) => p.startsWith(CHAT) },
   { href: '/college/admin', t: '总览', on: (p: string) => p === '/college/admin' },
   { href: '/college/admin/applications', t: '申请管理 · 线索', on: (p: string) => p.startsWith('/college/admin/applications') },
   { href: '/college/admin/students', t: '学员管理', on: (p: string) => p.startsWith('/college/admin/students') },
@@ -19,33 +21,98 @@ const NAV = [
   { href: '/college/admin/graduates', t: '毕业生管理', on: (p: string) => p.startsWith('/college/admin/graduates') },
   { href: '/college/admin/courses', t: '课程目录', on: (p: string) => p.startsWith('/college/admin/courses') },
 ];
+const FOLD_KEY = 'college-side-fold';
 
 export default function CollegeAdminLayout({ children }: { children: React.ReactNode }) {
   const path = usePathname() || '';
-  const { user } = useUser();
+  const router = useRouter();
+  const [threads, setThreads] = useState<{ id: string; title?: string }[]>([]);
+  const [cur, setCur] = useState<string | null>(null);
+  const [fold, setFold] = useState<Record<string, boolean>>({});
+  const [menu, setMenu] = useState(false);
+  // 被学院秘书的右侧面板用 iframe 嵌进去时，不再套一条侧栏
+  const [embed, setEmbed] = useState(false);
+  useEffect(() => { try { setEmbed(window.self !== window.top); } catch { setEmbed(true); } }, []);
+  const load = useCallback(() => fetch('/api/college/admin/threads', { cache: 'no-store' }).then(r => r.json()).then(j => j.ok && setThreads(j.data)).catch(() => {}), []);
+  useEffect(() => { load(); }, [load]);
+  useEffect(() => { try { setFold(JSON.parse(localStorage.getItem(FOLD_KEY) || '{}')); } catch {} }, []);
+  useEffect(() => {
+    const onList = () => load();
+    const onCur = (e: Event) => setCur((e as CustomEvent).detail || null);
+    window.addEventListener('college-threads', onList); window.addEventListener('college-thread', onCur);
+    return () => { window.removeEventListener('college-threads', onList); window.removeEventListener('college-thread', onCur); };
+  }, [load]);
+  useEffect(() => { if (!path.startsWith(CHAT)) setCur(null); setMenu(false); }, [path]);
+  const toggle = (k: string) => setFold(f => { const n = { ...f, [k]: !f[k] }; try { localStorage.setItem(FOLD_KEY, JSON.stringify(n)); } catch {} return n; });
+  // 在秘书页里就直接切对话（不整页跳），别的页先跳过去
+  const open = (id: string | null) => {
+    if (path.startsWith(CHAT)) window.dispatchEvent(new CustomEvent('college-open', { detail: id }));
+    else router.push(id ? `${CHAT}?thread=${id}` : CHAT);
+  };
   return (
-    <div className="ca">
-      <style>{ADMIN_CSS}</style>
+    <div className={`ca${embed ? ' embed' : ''}`}>
+      <style>{ADMIN_CSS + SIDE_CSS}</style>
       <aside className="ca-side">
         <div className="ca-brand"><span className="crest"><img src="/college/crest.svg" alt="院徽" /></span><div><b>百业学院</b><small>教务处 · REGISTRAR</small></div></div>
-        <nav className="ca-nav">
-          {NAV.map((x, i) => <Link key={x.href} href={x.href} className={x.on(path) ? 'on' : ''}><i>{i === 0 ? '秘' : i === 1 ? '◆' : ROMAN[i - 2]}</i>{x.t}</Link>)}
-          <div className="sec">CAMPUS</div>
-          <a href="/college" target="_blank" rel="noreferrer"><i>↗</i>学院官网</a>
-          <a href="/lab/spaces" target="_blank" rel="noreferrer"><i>↗</i>百业工厂 · 造课程</a>
-          <a href="/work/mine" target="_blank" rel="noreferrer"><i>↗</i>真活台 · 出考题</a>
-        </nav>
-        <div className="ca-deans">
-          <div className="k">DEANS · 院长</div>
-          <div className="ca-dean"><span className="seal">A</span><div>院长 A · Claude<small>搭学校、定尺子、带秘书</small></div></div>
-          <div className="ca-dean"><span className="seal b">壮</span><div>好大壮 院长<small>定方向、拍板、见客户</small></div></div>
-          <div className="ca-dean"><span className="seal s">秘</span><div>学院秘书 · 教务 AI<small>排课、监考、批改、分派</small></div></div>
+        <div className="cs-scroll">
+          <button className="cs-new" onClick={() => open(null)}><i>＋</i>新对话</button>
+          <nav className="ca-nav">
+            {NAV.map((x, i) => <Link key={x.href} href={x.href} className={x.on(path) && !(i === 0 && cur) ? 'on' : ''}><i>{i === 0 ? '秘' : i === 1 ? '◆' : ROMAN[i - 2]}</i>{x.t}</Link>)}
+          </nav>
+          <button className={`cs-group${fold.recent ? ' folded' : ''}`} onClick={() => toggle('recent')}>最近<span>›</span></button>
+          {!fold.recent && <div className="cs-list">
+            {threads.slice(0, 30).map(t => <button key={t.id} className={`cs-item${cur === t.id ? ' on' : ''}`} title={t.title || '对话'} onClick={() => open(t.id)}>{t.title || '对话'}</button>)}
+            {!threads.length && <div className="cs-empty">还没有对话</div>}
+          </div>}
+          <button className={`cs-group${fold.campus ? ' folded' : ''}`} onClick={() => toggle('campus')}>校园<span>›</span></button>
+          {!fold.campus && <div className="ca-nav cs-campus">
+            <a href="/college" target="_blank" rel="noreferrer"><i>↗</i>学院官网</a>
+            <a href="/lab/spaces" target="_blank" rel="noreferrer"><i>↗</i>百业工厂 · 造课程</a>
+            <a href="/work/mine" target="_blank" rel="noreferrer"><i>↗</i>真活台 · 出考题</a>
+          </div>}
         </div>
-        <div className="ca-side-foot">
-          <div className="motto">学生是 AI，考的是真活<span>Where AI learns a craft — and earns its place at work.</span></div>
+        <div className="cs-foot">
+          {menu && <div className="cs-menu">
+            <a href="/college" target="_blank" rel="noreferrer">学院官网</a>
+            <button onClick={async () => { await fetch('/api/auth/logout', { method: 'POST' }); window.location.href = '/college'; }}>退出登录</button>
+          </div>}
+          <button className="cs-acct" onClick={() => setMenu(m => !m)} aria-expanded={menu}>
+            <span className="seal">壮</span>
+            <span className="who"><b>好大壮</b><small>院长 · 定方向、拍板、见客户</small></span>
+            <span className="chev">⌃</span>
+          </button>
         </div>
       </aside>
       <main className="ca-main">{children}</main>
     </div>
   );
 }
+
+const SIDE_CSS = `
+.ca-side { width: 252px; }
+.ca.embed .ca-side { display: none; } .ca.embed .ca-main { padding: 20px 22px 40px; }
+.cs-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 10px 10px 14px; }
+.cs-scroll .ca-nav { padding: 0; }
+.cs-new { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; margin-bottom: 4px; border: 1px solid var(--line); background: #fff; border-radius: 8px; font: inherit; font-size: 14.5px; font-weight: 700; color: var(--navy); cursor: pointer; text-align: left; }
+.cs-new i { font-style: normal; color: var(--gold); width: 26px; font-weight: 700; }
+.cs-new:hover { border-color: var(--gold); }
+.cs-group { display: flex; align-items: center; gap: 6px; width: 100%; border: 0; background: transparent; padding: 16px 12px 4px; font: 700 11px var(--en), 'PingFang SC', sans-serif; letter-spacing: .2em; color: var(--ink3); cursor: pointer; text-align: left; }
+.cs-group span { opacity: 0; transform: rotate(90deg); transition: transform .15s, opacity .15s; font-size: 13px; }
+.cs-group:hover span { opacity: 1; } .cs-group.folded span { opacity: 1; transform: rotate(0deg); }
+.cs-list { display: grid; gap: 1px; }
+.cs-item { display: block; width: 100%; text-align: left; border: 0; background: transparent; padding: 7px 12px; border-radius: 8px; font: inherit; font-size: 13.5px; color: var(--navy2); cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cs-item:hover { background: rgba(22,32,74,.05); color: var(--navy); }
+.cs-item.on { background: rgba(176,141,87,.13); color: var(--navy); font-weight: 700; }
+.cs-empty { padding: 6px 12px; font-size: 13px; color: var(--ink3); }
+.cs-foot { position: relative; padding: 10px; border-top: 1px solid var(--line); }
+.cs-acct { display: flex; align-items: center; gap: 10px; width: 100%; border: 0; background: transparent; padding: 8px 10px; border-radius: 10px; cursor: pointer; font: inherit; text-align: left; color: var(--navy); }
+.cs-acct:hover, .cs-acct[aria-expanded="true"] { background: rgba(22,32,74,.05); }
+.cs-acct .seal { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--navy); color: #fff; font-weight: 700; font-size: 13px; flex-shrink: 0; box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(176,141,87,.55); }
+.cs-acct .who { flex: 1; min-width: 0; } .cs-acct .who b { display: block; font-size: 14px; }
+.cs-acct .who small { display: block; font-size: 11.5px; color: var(--ink2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cs-acct .chev { color: var(--ink3); font-size: 12px; }
+.cs-menu { position: absolute; left: 10px; right: 10px; bottom: calc(100% - 4px); background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 6px; box-shadow: 0 8px 24px rgba(22,32,74,.12); display: grid; gap: 2px; z-index: 5; }
+.cs-menu a, .cs-menu button { display: block; border: 0; background: transparent; text-align: left; padding: 8px 10px; border-radius: 8px; font: inherit; font-size: 13.5px; color: var(--navy); cursor: pointer; }
+.cs-menu a:hover, .cs-menu button:hover { background: rgba(22,32,74,.05); }
+@media (max-width: 960px) { .cs-scroll { overflow: visible; } .cs-list, .cs-group, .cs-foot { display: none; } }
+`;
