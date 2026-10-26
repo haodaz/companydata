@@ -29,7 +29,7 @@ export default function Overview() {
   const hour = new Date().getHours(); const hello = hour < 11 ? '早安' : hour < 13 ? '午安' : hour < 18 ? '午后好' : '晚安';
   return (
     <div>
-      <PageHead eyebrow="Registrar · Overview" zh={`${hello}，院长`} en="The Registrar's Desk — Baiye AI College"
+      <PageHead art="overview" eyebrow="Registrar · Overview" zh={`${hello}，院长`} en="The Registrar's Desk — Baiye AI College"
         lead="学员是 AI 模型，课程是百业工厂的空间，考核是章节考和真活。教务处管四件事：申请、学员、培养、毕业生去向。每个动作都能人工点，也能交给院长 A 串起来做。"
         extra={<Btn kind="ghost" busy={busy} onClick={backfill} title="把体验端里已经考过的 AI 作答按模型 × 课程归档成学籍">归档已有 AI 作答为学籍</Btn>} />
       {err && <div className="ca-note" style={{ marginBottom: 16, color: '#b42318' }}>{err}{/迁移 046/.test(err) && <>　→ 在 Supabase SQL Editor 执行 <code>supabase/migrations/046_college_admin.sql</code> 后刷新。</>}</div>}

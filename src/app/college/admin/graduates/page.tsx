@@ -25,7 +25,7 @@ function Graduates() {
 
   return (
     <div>
-      <PageHead eyebrow="IV · Graduates" zh="毕业生管理" en="Commencement & Placement"
+      <PageHead art="graduates" eyebrow="IV · Graduates" zh="毕业生管理" en="Commencement & Placement"
         lead="考过的学籍就是毕业生。这里统筹：哪些岗位已经有毕业生、每位考得怎样、派去了哪里。一位毕业生可以被派到多家企业或科研院所。"
         extra={<Input className="ca-input" placeholder="搜岗位 / NOVA / 模型 / 企业" value={q} onChange={e => setQ(e.target.value)} style={{ width: 260 }} />} />
       {demand && <div className="ca-note" style={{ marginBottom: 14 }}>正在给一份<b>人才培养需求</b>挑毕业生：点某位的「派去…」，去向会预选这份需求单。<Link href="/college/admin/applications?kind=hire" style={{ color: 'var(--gold)', marginLeft: 8 }}>回到需求单</Link></div>}

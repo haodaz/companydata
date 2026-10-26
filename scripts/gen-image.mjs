@@ -1,6 +1,6 @@
 /**
  * 阿里云 DashScope 文生图（通义万相）：为技能空间的虚拟工位生成场景底图（密钥从本仓库或同级 programcrawler 的 .env.local 读取）。
- *   node scripts/gen-image.mjs <输出文件> "<提示词>" [--size=1664*928] [--model=wan2.2-t2i-flash] [--n=1]
+ *   node scripts/gen-image.mjs <输出文件> "<提示词>" [--size=1664*928] [--model=wan2.2-t2i-flash] [--n=1] [--extend=0 关掉提示词自动扩写]
  * 异步提交 → 轮询 → 下载 PNG。
  */
 import fs from 'fs';
@@ -33,7 +33,7 @@ const submit = await fetch('https://dashscope.aliyuncs.com/api/v1/services/aigc/
   body: JSON.stringify({
     model: MODEL,
     input: { prompt, negative_prompt: NEG },
-    parameters: { size: SIZE, n: N, prompt_extend: true, watermark: false },
+    parameters: { size: SIZE, n: N, prompt_extend: flags.extend !== '0', watermark: false },
   }),
 });
 const sub = await submit.json();

@@ -20,9 +20,11 @@ export function useToast() { const { message } = App.useApp(); return { ok: (t: 
 export const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
 
 /** 页首：金色小标 + 衬线大标题 + 斜体英文 + 引言；右侧放动作 */
-export function PageHead({ eyebrow, zh, en, lead, extra }: { eyebrow: string; zh: React.ReactNode; en: string; lead?: React.ReactNode; extra?: React.ReactNode }) {
+/** art：右上角一张和本页功能有关的铜版画（/college/ws/head-*.jpg），只做装饰，正片叠底融进底色 */
+export function PageHead({ eyebrow, zh, en, lead, extra, art }: { eyebrow: string; zh: React.ReactNode; en: string; lead?: React.ReactNode; extra?: React.ReactNode; art?: string }) {
   return (
-    <div className="ca-head">
+    <div className={`ca-head${art ? ' has-art' : ''}`}>
+      {art && <img className="ca-head-art" src={`/college/ws/head-${art}.jpg`} alt="" aria-hidden />}
       <div><div className="ca-eyebrow">{eyebrow}</div><h1>{zh}<span>{en}</span></h1>{lead && <p>{lead}</p>}</div>
       {extra && <div className="ca-row">{extra}</div>}
     </div>
@@ -82,6 +84,18 @@ export const ADMIN_CSS = `
 .ca-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
 .ca-head h1 { font-family: var(--serif); font-size: 32px; font-weight: 900; margin: 8px 0 0; letter-spacing: .03em; line-height: 1.2; }
 .ca-head h1 span { display: block; font: italic 400 15px var(--en); color: var(--ink2); letter-spacing: .01em; margin-top: 6px; }
+.ca-head.has-art { position: relative; min-height: 150px; }
+.ca-head.has-art > div { position: relative; z-index: 1; }
+.ca-head.has-art > div:not(.ca-row) { max-width: calc(100% - 360px); }
+.ca-head-art { position: absolute; right: 0; top: -26px; height: 196px; width: auto; max-width: 46%; object-fit: contain; object-position: right top; mix-blend-mode: multiply; opacity: .78; filter: saturate(.45); pointer-events: none; user-select: none; }
+@media (max-width: 1100px) { .ca-head-art { display: none; } .ca-head.has-art { min-height: 0; } }
+.ca-tabs { display: flex; align-items: flex-end; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+.ca-tabs button { border: 0; background: transparent; padding: 10px 16px 11px; font: inherit; font-size: 15px; font-weight: 700; color: var(--ink2); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; font-family: var(--serif); }
+.ca-tabs button i { font: 600 12px var(--en); font-style: normal; margin-left: 7px; padding: 1px 7px; border-radius: 999px; background: rgba(22,32,74,.06); color: var(--ink2); }
+.ca-tabs button:hover { color: var(--navy); }
+.ca-tabs button.on { color: var(--navy); border-bottom-color: var(--gold); }
+.ca-tabs button.on i { background: rgba(176,141,87,.18); color: var(--navy); }
+.ca-tabs-note { margin-left: auto; padding-bottom: 11px; font-size: 12.5px; color: var(--ink3); }
 .ca-head p { margin: 10px 0 0; color: var(--ink2); font-size: 14.5px; font-weight: 500; max-width: 760px; line-height: 1.8; }
 .ca-rule { display: flex; align-items: center; gap: 12px; margin: 6px 0 18px; color: var(--gold); font-size: 11px; }
 .ca-rule i { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(176,141,87,.6), transparent); }

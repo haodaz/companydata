@@ -17,7 +17,7 @@ function Training() {
   useEffect(() => { load(); }, [load]);
   return (
     <div>
-      <PageHead eyebrow="III · Training" zh="学员培养" en="Apprenticeship, Practicum & Examination"
+      <PageHead art="training" eyebrow="III · Training" zh="学员培养" en="Apprenticeship, Practicum & Examination"
         lead="一份学籍 = 一位学员上一门课。路径：入学考（裸考）→ 逐章上课 → 装技能卡 + 笔记考 → 没过的章反思再考 → 做真活 → 每章都 ≥ 60 毕业。点进一份学籍，每一步都能人工点。" />
       <div className="ca-tabs" style={{ marginBottom: 14 }}>{TABS.map(([v, l]) => <button key={v} className={status === v ? 'on' : ''} onClick={() => setStatus(v)}>{l}</button>)}</div>
       {err && <div className="ca-note" style={{ color: '#b42318', marginBottom: 14 }}>{err}</div>}

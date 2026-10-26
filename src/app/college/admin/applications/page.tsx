@@ -28,7 +28,7 @@ function Applications() {
 
   return (
     <div>
-      <PageHead eyebrow="I · Leads" zh="申请管理 · 线索" en="Inquiries & Leads — not the ledger"
+      <PageHead art="applications" eyebrow="I · Leads" zh="申请管理 · 线索" en="Inquiries & Leads — not the ledger"
         lead="这里是线索：官网上提交的「申请模型入学」和「人才培养需求」，记谁来问过、跟进到哪。学员、学籍、去向是另一套台账，不依赖线索——「录取为学员」「立项」只是从线索顺手建过去，在学员管理 / 课程目录里直接建效果一样。" />
       <div className="ca-tabs" style={{ marginBottom: 14 }}>{[['', '全部'], ['enroll', '模型入学'], ['hire', '人才培养需求']].map(([v, l]) => <button key={v} className={kind === v ? 'on' : ''} onClick={() => setKind(v)}>{l}</button>)}</div>
       {err && <div className="ca-note" style={{ color: '#b42318', marginBottom: 14 }}>{err}</div>}

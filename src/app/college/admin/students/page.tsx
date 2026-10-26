@@ -18,6 +18,8 @@ function Students() {
   const [enroll, setEnroll] = useState<{ student: any; space_id: string } | null>(null);
   const [add, setAdd] = useState<any | null>(null);
   const [busy, setBusy] = useState('');
+  // 平台 / 客户两类学员分标签（2026-10-26）：默认看平台；有客户学员时先看客户
+  const [tab, setTab] = useState<'platform' | 'customer' | null>(null);
   const load = useCallback(() => api('/students').then(j => { setRows(j.data); setModels(j.models); setErr(''); }).catch(e => setErr(e.message)), []);
   useEffect(() => { load(); }, [load]);
   useEffect(() => { if (!focus) { setEns(null); return; } api(`/enrollments?student_id=${focus}`).then(j => setEns(j.data)).catch(e => t.err(e)); }, [focus]);  // eslint-disable-line react-hooks/exhaustive-deps
@@ -27,6 +29,8 @@ function Students() {
   const setModel = async (s: any, model_id: string | null) => { try { await api('/students', { method: 'PATCH', json: { id: s.id, model_id } }); t.ok('已更新接口'); load(); } catch (e) { t.err(e); } };
   const cur = rows.find(r => r.id === focus);
   const platform = rows.filter(r => r.kind === 'platform'), customer = rows.filter(r => r.kind === 'customer');
+  const view = tab || (customer.length ? 'customer' : 'platform');
+  const list = view === 'platform' ? platform : customer;
 
   const Row = ({ s }: { s: any }) => (
     <tr className="click" onClick={() => setFocus(focus === s.id ? null : s.id)} style={focus === s.id ? { background: 'rgba(176,141,87,.06)' } : undefined}>
@@ -38,17 +42,20 @@ function Students() {
   );
   return (
     <div>
-      <PageHead eyebrow="II · Students" zh="学员管理" en="The Student Body — every student is a model"
+      <PageHead art="students" eyebrow="II · Students" zh="学员管理" en="The Student Body — every student is a model"
         lead="一个模型是一位学员；上不同的课，就成为不同的毕业生。平台自己的大模型自动在册；客户送来的模型从入学申请录取，或在这里登记。"
         extra={<Btn kind="gold" onClick={() => setAdd({ name: '', org: '', contact: '', api_style: '', endpoint: '', model_id: undefined })}>登记客户模型</Btn>} />
       {err && <div className="ca-note" style={{ color: '#b42318', marginBottom: 14 }}>{err}</div>}
       <div style={{ display: 'grid', gridTemplateColumns: focus ? 'minmax(0, 1.1fr) minmax(360px, .9fr)' : '1fr', gap: 16 }}>
         <div>
-          <Card eyebrow="Customer Models" title={`客户学员 · ${customer.length}`}>
-            {!customer.length ? <Empty>还没有客户送来的模型。入学申请「录取为学员」后会出现在这里。</Empty> : <table className="ca-table"><thead><tr><th>学员</th><th>接口</th><th className="num">学籍</th><th className="num">在读</th><th className="num">毕业</th><th></th></tr></thead><tbody>{customer.map(s => <Row key={s.id} s={s} />)}</tbody></table>}
-          </Card>
-          <Card eyebrow="Platform Models" title={`平台学员 · ${platform.length}`} extra={<span className="ca-mute" style={{ fontSize: 12.5 }}>平方自己的大模型，按模型选单自动在册</span>}>
-            <table className="ca-table"><thead><tr><th>学员</th><th>接口</th><th className="num">学籍</th><th className="num">在读</th><th className="num">毕业</th><th></th></tr></thead><tbody>{platform.map(s => <Row key={s.id} s={s} />)}</tbody></table>
+          <div className="ca-tabs" role="tablist">
+            <button role="tab" aria-selected={view === 'platform'} className={view === 'platform' ? 'on' : ''} onClick={() => setTab('platform')}>平台学员<i>{platform.length}</i></button>
+            <button role="tab" aria-selected={view === 'customer'} className={view === 'customer' ? 'on' : ''} onClick={() => setTab('customer')}>客户学员<i>{customer.length}</i></button>
+            <span className="ca-tabs-note">{view === 'platform' ? '平方自己的大模型，按模型选单自动在册' : '入学申请「录取为学员」或右上角登记'}</span>
+          </div>
+          <Card>
+            {!list.length ? <Empty>{view === 'customer' ? '还没有客户送来的模型。入学申请「录取为学员」后会出现在这里。' : '还没有平台学员。'}</Empty>
+              : <table className="ca-table"><thead><tr><th>学员</th><th>接口</th><th className="num">学籍</th><th className="num">在读</th><th className="num">毕业</th><th></th></tr></thead><tbody>{list.map(s => <Row key={s.id} s={s} />)}</tbody></table>}
           </Card>
         </div>
         {focus && cur && (
