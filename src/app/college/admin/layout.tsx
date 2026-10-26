@@ -9,17 +9,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { ADMIN_CSS, ROMAN } from './ui';
+import { ChevronsUpDown, ClipboardCheck, Factory, Feather, GraduationCap, Hammer, Landmark, LayoutDashboard, Library, MailOpen, SquarePen, Users, type LucideIcon } from 'lucide-react';
+import { ADMIN_CSS } from './ui';
 
 const CHAT = '/college/admin/chat';
 const NAV = [
-  { href: CHAT, t: '学院秘书', on: (p: string) => p.startsWith(CHAT) },
-  { href: '/college/admin', t: '总览', on: (p: string) => p === '/college/admin' },
-  { href: '/college/admin/applications', t: '申请管理 · 线索', on: (p: string) => p.startsWith('/college/admin/applications') },
-  { href: '/college/admin/students', t: '学员管理', on: (p: string) => p.startsWith('/college/admin/students') },
-  { href: '/college/admin/training', t: '学员培养', on: (p: string) => p.startsWith('/college/admin/training') },
-  { href: '/college/admin/graduates', t: '毕业生管理', on: (p: string) => p.startsWith('/college/admin/graduates') },
-  { href: '/college/admin/courses', t: '课程目录', on: (p: string) => p.startsWith('/college/admin/courses') },
+  { ic: Feather as LucideIcon, href: CHAT, t: '学院秘书', on: (p: string) => p.startsWith(CHAT) },
+  { ic: LayoutDashboard as LucideIcon, href: '/college/admin', t: '总览', on: (p: string) => p === '/college/admin' },
+  { ic: MailOpen as LucideIcon, href: '/college/admin/applications', t: '申请管理 · 线索', on: (p: string) => p.startsWith('/college/admin/applications') },
+  { ic: Users as LucideIcon, href: '/college/admin/students', t: '学员管理', on: (p: string) => p.startsWith('/college/admin/students') },
+  { ic: Hammer as LucideIcon, href: '/college/admin/training', t: '学员培养', on: (p: string) => p.startsWith('/college/admin/training') },
+  { ic: GraduationCap as LucideIcon, href: '/college/admin/graduates', t: '毕业生管理', on: (p: string) => p.startsWith('/college/admin/graduates') },
+  { ic: Library as LucideIcon, href: '/college/admin/courses', t: '课程目录', on: (p: string) => p.startsWith('/college/admin/courses') },
 ];
 const FOLD_KEY = 'college-side-fold';
 
@@ -55,9 +56,9 @@ export default function CollegeAdminLayout({ children }: { children: React.React
       <aside className="ca-side">
         <div className="ca-brand"><span className="crest"><img src="/college/crest.svg" alt="院徽" /></span><div><b>百业学院</b><small>教务处 · REGISTRAR</small></div></div>
         <div className="cs-scroll">
-          <button className="cs-new" onClick={() => open(null)}><i>＋</i>新对话</button>
+          <button className="cs-new" onClick={() => open(null)}><Ic I={SquarePen} />新对话</button>
           <nav className="ca-nav">
-            {NAV.map((x, i) => <Link key={x.href} href={x.href} className={x.on(path) && !(i === 0 && cur) ? 'on' : ''}><i>{i === 0 ? '秘' : i === 1 ? '◆' : ROMAN[i - 2]}</i>{x.t}</Link>)}
+            {NAV.map((x, i) => <Link key={x.href} href={x.href} className={x.on(path) && !(i === 0 && cur) ? 'on' : ''}><Ic I={x.ic} />{x.t}</Link>)}
           </nav>
           <button className={`cs-group${fold.recent ? ' folded' : ''}`} onClick={() => toggle('recent')}>最近<span>›</span></button>
           {!fold.recent && <div className="cs-list">
@@ -66,9 +67,9 @@ export default function CollegeAdminLayout({ children }: { children: React.React
           </div>}
           <button className={`cs-group${fold.campus ? ' folded' : ''}`} onClick={() => toggle('campus')}>校园<span>›</span></button>
           {!fold.campus && <div className="ca-nav cs-campus">
-            <a href="/college" target="_blank" rel="noreferrer"><i>↗</i>学院官网</a>
-            <a href="/lab/spaces" target="_blank" rel="noreferrer"><i>↗</i>百业工厂 · 造课程</a>
-            <a href="/work/mine" target="_blank" rel="noreferrer"><i>↗</i>真活台 · 出考题</a>
+            <a href="/college" target="_blank" rel="noreferrer"><Ic I={Landmark} />学院官网</a>
+            <a href="/lab/spaces" target="_blank" rel="noreferrer"><Ic I={Factory} />百业工厂 · 造课程</a>
+            <a href="/work/mine" target="_blank" rel="noreferrer"><Ic I={ClipboardCheck} />真活台 · 出考题</a>
           </div>}
         </div>
         <div className="cs-foot">
@@ -79,7 +80,7 @@ export default function CollegeAdminLayout({ children }: { children: React.React
           <button className="cs-acct" onClick={() => setMenu(m => !m)} aria-expanded={menu}>
             <span className="seal">壮</span>
             <span className="who"><b>好大壮</b><small>院长 · 定方向、拍板、见客户</small></span>
-            <span className="chev">⌃</span>
+            <ChevronsUpDown className="chev" size={15} strokeWidth={1.7} />
           </button>
         </div>
       </aside>
@@ -89,13 +90,17 @@ export default function CollegeAdminLayout({ children }: { children: React.React
   );
 }
 
+/** 侧栏图标（2026-10-26）：lucide 细线图标，按功能取意，代替原来的「秘 / ◆ / 罗马数字」 */
+function Ic({ I }: { I: LucideIcon }) { return <span className="ic"><I size={17} strokeWidth={1.6} /></span>; }
+
 const SIDE_CSS = `
+.ca-nav a .ic, .cs-new .ic { width: 24px; height: 24px; display: grid; place-items: center; flex-shrink: 0; color: var(--gold); }
+.ca-nav a.on .ic { color: var(--navy); } .ca-nav a:hover .ic { color: var(--navy2); }
 .ca-side { width: 252px; }
 .ca.embed .ca-side { display: none; } .ca.embed .ca-main { padding: 20px 22px 40px; }
 .cs-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 10px 10px 14px; }
 .cs-scroll .ca-nav { padding: 0; }
 .cs-new { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; margin-bottom: 4px; border: 1px solid var(--line); background: #fff; border-radius: 8px; font: inherit; font-size: 14.5px; font-weight: 700; color: var(--navy); cursor: pointer; text-align: left; }
-.cs-new i { font-style: normal; color: var(--gold); width: 26px; font-weight: 700; }
 .cs-new:hover { border-color: var(--gold); }
 .cs-group { display: flex; align-items: center; gap: 6px; width: 100%; border: 0; background: transparent; padding: 16px 12px 4px; font: 700 11px var(--en), 'PingFang SC', sans-serif; letter-spacing: .2em; color: var(--ink3); cursor: pointer; text-align: left; }
 .cs-group span { opacity: 0; transform: rotate(90deg); transition: transform .15s, opacity .15s; font-size: 13px; }
@@ -111,7 +116,7 @@ const SIDE_CSS = `
 .cs-acct .seal { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--navy); color: #fff; font-weight: 700; font-size: 13px; flex-shrink: 0; box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(176,141,87,.55); }
 .cs-acct .who { flex: 1; min-width: 0; } .cs-acct .who b { display: block; font-size: 14px; }
 .cs-acct .who small { display: block; font-size: 11.5px; color: var(--ink2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.cs-acct .chev { color: var(--ink3); font-size: 12px; }
+.cs-acct .chev { color: var(--ink3); flex-shrink: 0; }
 .cs-menu { position: absolute; left: 10px; right: 10px; bottom: calc(100% - 4px); background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 6px; box-shadow: 0 8px 24px rgba(22,32,74,.12); display: grid; gap: 2px; z-index: 5; }
 .cs-menu a, .cs-menu button { display: block; border: 0; background: transparent; text-align: left; padding: 8px 10px; border-radius: 8px; font: inherit; font-size: 13.5px; color: var(--navy); cursor: pointer; }
 .cs-menu a:hover, .cs-menu button:hover { background: rgba(22,32,74,.05); }

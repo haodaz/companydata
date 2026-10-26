@@ -17,7 +17,6 @@ export async function api<T = any>(path: string, init?: RequestInit & { json?: a
 }
 export function useToast() { const { message } = App.useApp(); return { ok: (t: string) => message.success(t), err: (e: any) => message.error(String(e?.message || e)) }; }
 
-export const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
 
 /** 页首：金色小标 + 衬线大标题 + 斜体英文 + 引言；右侧放动作 */
 /** art：右上角一张和本页功能有关的铜版画（/college/ws/head-*.jpg），只做装饰，正片叠底融进底色 */
