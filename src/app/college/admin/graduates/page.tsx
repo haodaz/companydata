@@ -25,15 +25,15 @@ function Graduates() {
 
   return (
     <div>
-      <PageHead art="graduates" eyebrow="IV · Graduates" zh="毕业生管理" en="Commencement & Placement"
+      <PageHead art="graduates" eyebrow="Graduates" zh="毕业生管理" en="Commencement & Placement"
         lead="考过的学籍就是毕业生。这里统筹：哪些岗位已经有毕业生、每位考得怎样、派去了哪里。一位毕业生可以被派到多家企业或科研院所。"
         extra={<Input className="ca-input" placeholder="搜岗位 / NOVA / 模型 / 企业" value={q} onChange={e => setQ(e.target.value)} style={{ width: 260 }} />} />
       {demand && <div className="ca-note" style={{ marginBottom: 14 }}>正在给一份<b>人才培养需求</b>挑毕业生：点某位的「派去…」，去向会预选这份需求单。<Link href="/college/admin/applications?kind=hire" style={{ color: 'var(--gold)', marginLeft: 8 }}>回到需求单</Link></div>}
       {err && <div className="ca-note" style={{ color: '#b42318', marginBottom: 14 }}>{err}</div>}
       {rows && <div className="ca-grid" style={{ marginBottom: 16 }}>
-        <div className="ca-stat"><i>I</i><b>{rows.length}</b><span>毕业生</span><small>{byRole.size} 个岗位 / 方向</small></div>
-        <div className="ca-stat"><i>II</i><b>{pls.filter(p => p.status === 'placed').length}</b><span>已上岗</span><small>已推荐 {pls.filter(p => p.status === 'offered').length} · 拟派 {pls.filter(p => p.status === 'proposed').length}</small></div>
-        <div className="ca-stat"><i>III</i><b>{rows.filter(e => !e.placements).length}</b><span>还没安排去向</span><small>优先给培养需求单和工作台机构</small></div>
+        <div className="ca-stat"><b>{rows.length}</b><span>毕业生</span><small>{byRole.size} 个岗位 / 方向</small></div>
+        <div className="ca-stat"><b>{pls.filter(p => p.status === 'placed').length}</b><span>已上岗</span><small>已推荐 {pls.filter(p => p.status === 'offered').length} · 拟派 {pls.filter(p => p.status === 'proposed').length}</small></div>
+        <div className="ca-stat"><b>{rows.filter(e => !e.placements).length}</b><span>还没安排去向</span><small>优先给培养需求单和工作台机构</small></div>
       </div>}
       <Card>
         {!rows ? <div className="ca-mute">读取中…</div> : !shown.length ? <Empty>还没有毕业生。学籍里每一章毕业考都 ≥ 60 就会出现在这里。</Empty> : (

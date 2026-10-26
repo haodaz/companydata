@@ -16,7 +16,7 @@ export default function Courses() {
   const shown = (rows || []).filter(c => !q || [c.role, c.title, c.company, c.teacher?.name].join(' ').toLowerCase().includes(q.toLowerCase()));
   return (
     <div>
-      <PageHead art="courses" eyebrow="V · Curriculum" zh="课程目录" en="Course Catalog — every course is a Baiye workplace"
+      <PageHead art="courses" eyebrow="Curriculum" zh="课程目录" en="Course Catalog — every course is a Baiye workplace"
         lead="一门课就是百业工厂里的一个职业空间：一个岗位一天的章节、工位、老师傅的技能卡、每章的教案。要新课，去百业工厂生成；这里给某门课招学员。"
         extra={<><Input className="ca-input" placeholder="搜岗位 / 企业 / 老师傅" value={q} onChange={e => setQ(e.target.value)} style={{ width: 240 }} /><a href="/lab/spaces" target="_blank" rel="noreferrer"><Btn kind="gold">去百业工厂造新课 ↗</Btn></a></>} />
       {err && <div className="ca-note" style={{ color: '#b42318', marginBottom: 14 }}>{err}</div>}

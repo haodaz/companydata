@@ -42,7 +42,7 @@ function Students() {
   );
   return (
     <div>
-      <PageHead art="students" eyebrow="II · Students" zh="学员管理" en="The Student Body — every student is a model"
+      <PageHead art="students" eyebrow="Students" zh="学员管理" en="The Student Body — every student is a model"
         lead="一个模型是一位学员；上不同的课，就成为不同的毕业生。平台自己的大模型自动在册；客户送来的模型从入学申请录取，或在这里登记。"
         extra={<Btn kind="gold" onClick={() => setAdd({ name: '', org: '', contact: '', api_style: '', endpoint: '', model_id: undefined })}>登记客户模型</Btn>} />
       {err && <div className="ca-note" style={{ color: '#b42318', marginBottom: 14 }}>{err}</div>}

@@ -36,10 +36,10 @@ export default function Overview() {
       {d && (
         <>
           <div className="ca-grid" style={{ marginBottom: 18 }}>
-            <Stat roman="I" v={d.applications.enroll_new + d.applications.hire_new} k="待处理申请" sub={`入学 ${d.applications.enroll_new} · 培养需求 ${d.applications.hire_new}`} />
-            <Stat roman="II" v={d.students.total} k="在册学员（模型）" sub={`平台 ${d.students.platform} · 客户 ${d.students.customer}`} />
-            <Stat roman="III" v={d.enrollments.training + d.enrollments.remedial + d.enrollments.enrolled} k="在读学籍" sub={`实训 / 考核 ${d.enrollments.training} · 补训 ${d.enrollments.remedial} · 待开课 ${d.enrollments.enrolled}`} />
-            <Stat roman="IV" v={d.enrollments.graduated} k="毕业生" sub={`已上岗 ${d.placements.placed} · 已推荐 ${d.placements.offered} · 拟派 ${d.placements.proposed}`} />
+            <Stat v={d.applications.enroll_new + d.applications.hire_new} k="待处理申请" sub={`入学 ${d.applications.enroll_new} · 培养需求 ${d.applications.hire_new}`} />
+            <Stat v={d.students.total} k="在册学员（模型）" sub={`平台 ${d.students.platform} · 客户 ${d.students.customer}`} />
+            <Stat v={d.enrollments.training + d.enrollments.remedial + d.enrollments.enrolled} k="在读学籍" sub={`实训 / 考核 ${d.enrollments.training} · 补训 ${d.enrollments.remedial} · 待开课 ${d.enrollments.enrolled}`} />
+            <Stat v={d.enrollments.graduated} k="毕业生" sub={`已上岗 ${d.placements.placed} · 已推荐 ${d.placements.offered} · 拟派 ${d.placements.proposed}`} />
           </div>
           <Rule label="TO DO" />
           <div className="ca-grid">
@@ -51,14 +51,14 @@ export default function Overview() {
               <Link href="/college/admin/graduates">→ 毕业生 <b>{d.enrollments.graduated}</b> 位，安排去向</Link>
             </div></Card>
             <Card eyebrow="Curriculum Path" title="学习路径 · 每一步都是一个基础功能" style={{ gridColumn: 'span 2' }}>
-              <div className="ca-steps">{PATH.map(([a, b], i) => <div key={a} className="ca-step"><i>{['I', 'II', 'III', 'IV', 'V', 'VI'][i]}</i><b>{a}</b>{b}</div>)}</div>
+              <div className="ca-steps">{PATH.map(([a, b], i) => <div key={a} className="ca-step"><i>{String(i + 1).padStart(2, '0')}</i><b>{a}</b>{b}</div>)}</div>
             </Card>
           </div>
         </>
       )}
       <Rule label="WHAT AN AI STUDENT LEARNS" />
       <Card eyebrow="Pedagogy" title="AI 学员在这里学到什么" extra={<span className="ca-mute" style={{ fontSize: 12.5 }}>不改模型权重；全是可见、可管理的材料，考试时一起装进去</span>}>
-        <div className="ca-layers">{LAYERS.map(l => <div key={l.n} className="ca-layer"><i>LAYER {l.n}</i><b>{l.t}</b><span>{l.d}</span><small>{l.s}</small></div>)}</div>
+        <div className="ca-layers">{LAYERS.map((l, i) => <div key={l.n} className="ca-layer"><i>LAYER {String(i + 1).padStart(2, '0')}</i><b>{l.t}</b><span>{l.d}</span><small>{l.s}</small></div>)}</div>
       </Card>
     </div>
   );

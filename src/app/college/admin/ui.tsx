@@ -38,7 +38,7 @@ export function Pill({ tone = 'navy', children }: { tone?: 'navy' | 'gold' | 'ok
 export function Btn({ kind = 'ghost', sm, busy, children, ...rest }: React.ButtonHTMLAttributes<HTMLButtonElement> & { kind?: 'navy' | 'gold' | 'ghost' | 'danger'; sm?: boolean; busy?: boolean }) {
   return <button {...rest} disabled={rest.disabled || busy} className={`ca-btn ${kind}${sm ? ' sm' : ''}`}>{busy ? <span className="ca-spin" /> : null}{children}</button>;
 }
-export function Stat({ v, k, sub, roman }: { v: React.ReactNode; k: string; sub?: string; roman?: string }) { return <div className="ca-stat">{roman && <i>{roman}</i>}<b>{v}</b><span>{k}</span>{sub && <small>{sub}</small>}</div>; }
+export function Stat({ v, k, sub }: { v: React.ReactNode; k: string; sub?: string }) { return <div className="ca-stat"><b>{v}</b><span>{k}</span>{sub && <small>{sub}</small>}</div>; }
 export function Empty({ children }: { children: React.ReactNode }) { return <div className="ca-empty"><div className="ca-empty-mark">✦</div>{children}</div>; }
 export const fmtDate = (s?: string | null) => (s ? new Date(s).toLocaleDateString('zh-CN', { month: 'numeric', day: 'numeric' }) : '—');
 export const fmtTime = (s?: string | null) => (s ? new Date(s).toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—');
