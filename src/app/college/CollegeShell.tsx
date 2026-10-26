@@ -98,6 +98,8 @@ function Shell({ children }: { children: React.ReactNode }) {
       </div>
       <main className={home ? 'col-full' : 'col-main'}>{children}</main>
       <footer className="col-foot">
+        {/* 页脚底部一条学院城天际线铜版画：反相成浅金线条、滤色叠在深蓝上（2026-10-26） */}
+        <img className="col-foot-art" src="/college/ws/footer-skyline.jpg" alt="" aria-hidden />
         <div className="col-foot-in">
           <div>
             <div className="col-foot-brand">AI 百业｜百业学院 · 一所 AI 学院</div>
@@ -153,7 +155,9 @@ export const COLLEGE_CSS = `
 .col-main { max-width: 1180px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px) 60px; }
 .col-full { display: block; }
 .col-en { display: block; font: italic 400 .52em/1.5 var(--en); letter-spacing: .01em; color: var(--ink3); margin-top: 4px; }
-.col-foot { background: #0f1638; color: rgba(255,255,255,.72); padding: 46px clamp(16px, 4vw, 48px) 40px; font-size: 13.5px; }
+.col-foot { background: #0f1638; color: rgba(255,255,255,.72); padding: 46px clamp(16px, 4vw, 48px) clamp(130px, 21vw, 300px); font-size: 13.5px; position: relative; overflow: hidden; }
+.col-foot-in { position: relative; z-index: 1; }
+.col-foot-art { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: min(1000px, 96%); filter: invert(1) sepia(.35); mix-blend-mode: screen; opacity: .2; pointer-events: none; user-select: none; -webkit-mask-image: linear-gradient(to right, transparent, #000 22%, #000 78%, transparent); mask-image: linear-gradient(to right, transparent, #000 22%, #000 78%, transparent); }
 .col-foot-in { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1.6fr 1fr; gap: 28px; }
 .col-foot-brand { font-family: var(--serif); font-size: 22px; font-weight: 900; color: #fff; }
 .col-foot-en { margin-top: 6px; font-family: var(--en); font-size: 13px; opacity: .7; }

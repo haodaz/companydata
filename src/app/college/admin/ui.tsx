@@ -86,7 +86,7 @@ export const ADMIN_CSS = `
 .ca-head h1 span { display: block; font: italic 400 15px var(--en); color: var(--ink2); letter-spacing: .01em; margin-top: 6px; }
 .ca-head.has-art { position: relative; min-height: 150px; }
 .ca-head.has-art > div { position: relative; z-index: 1; }
-.ca-head.has-art > div:not(.ca-row) { max-width: calc(100% - 360px); }
+@media (min-width: 1101px) { .ca-head.has-art > div:not(.ca-row) { max-width: calc(100% - 360px); } }
 .ca-head-art { position: absolute; right: 0; top: -26px; height: 196px; width: auto; max-width: 46%; object-fit: contain; object-position: right top; mix-blend-mode: multiply; opacity: .78; filter: saturate(.45); pointer-events: none; user-select: none; }
 @media (max-width: 1100px) { .ca-head-art { display: none; } .ca-head.has-art { min-height: 0; } }
 .ca-tabs { display: flex; align-items: flex-end; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 14px; }

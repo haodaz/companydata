@@ -83,7 +83,8 @@ export default function CollegeAdminLayout({ children }: { children: React.React
           </button>
         </div>
       </aside>
-      <main className="ca-main">{children}</main>
+      {/* 总览起的各页：内容最宽 1500 居中，两边留白随屏幕；学院秘书是满幅工作台，不套 */}
+      <main className="ca-main">{path.startsWith(CHAT) ? children : <div className="ca-wrap">{children}</div>}</main>
     </div>
   );
 }
@@ -114,5 +115,22 @@ const SIDE_CSS = `
 .cs-menu { position: absolute; left: 10px; right: 10px; bottom: calc(100% - 4px); background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 6px; box-shadow: 0 8px 24px rgba(22,32,74,.12); display: grid; gap: 2px; z-index: 5; }
 .cs-menu a, .cs-menu button { display: block; border: 0; background: transparent; text-align: left; padding: 8px 10px; border-radius: 8px; font: inherit; font-size: 13.5px; color: var(--navy); cursor: pointer; }
 .cs-menu a:hover, .cs-menu button:hover { background: rgba(22,32,74,.05); }
-@media (max-width: 960px) { .cs-scroll { overflow: visible; } .cs-list, .cs-group, .cs-foot { display: none; } }
+.ca-wrap { max-width: 1500px; margin: 0 auto; }
+/* 中等宽度：侧栏还是一列竖排，只是收窄（不要把导航挤成一行） */
+@media (max-width: 960px) {
+  .ca { flex-direction: row; }
+  .ca-side { position: sticky; top: 0; height: 100vh; width: 212px; }
+  .ca-brand { padding: 18px 14px 14px; } .ca-brand .crest { width: 38px; height: 38px; } .ca-brand .crest img { width: 31px; height: 31px; } .ca-brand b { font-size: 17px; }
+  .cs-scroll .ca-nav { display: grid; } .ca-nav a { padding: 9px 10px; gap: 8px; font-size: 14px; } .ca-nav a i { width: 22px; }
+}
+/* 手机：侧栏变成顶部一条，导航横向滑动；最近对话、校园、账号收起 */
+@media (max-width: 799px) {
+  .ca { flex-direction: column; }
+  .ca-side { position: static; height: auto; width: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+  .ca-brand { border-bottom: 0; padding-bottom: 6px; }
+  .cs-scroll { overflow: visible; padding: 4px 10px 10px; }
+  .cs-new, .cs-group, .cs-list, .cs-scroll .ca-nav.cs-campus, .cs-foot { display: none; }
+  .cs-scroll .ca-nav { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 4px; scrollbar-width: none; }
+  .cs-scroll .ca-nav a { flex-shrink: 0; white-space: nowrap; }
+}
 `;
