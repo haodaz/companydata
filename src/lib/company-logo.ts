@@ -172,7 +172,7 @@ export async function wikidataLogo(name: string | null | undefined, website?: st
   } catch { return null; }
 }
 
-/** 让 Gemini 看一眼：这张图是不是这家企业的 logo（百科给小公司自动生成的「公司名 + 楼房插画」卡片、招聘平台自己的 logo 都要排除） */
+/** 让千问看图模型看一眼：这张图是不是这家企业的 logo（百科给小公司自动生成的「公司名 + 楼房插画」卡片、招聘平台自己的 logo 都要排除） */
 export async function looksLikeLogo(url: string, company: string): Promise<boolean> {
   try {
     const r = await fetch(url, { headers: { 'User-Agent': UA }, redirect: 'follow', signal: AbortSignal.timeout(20000) });
@@ -182,16 +182,24 @@ export async function looksLikeLogo(url: string, company: string): Promise<boole
     if (ct.includes('svg') || /\.svg(\?|$)/i.test(r.url)) return buf.length > 200;   // 矢量图基本都是正式 logo，模型也看不了
     const mime = /^image\/(png|jpeg|webp|heic|heif)$/.test(ct) ? ct : buf.subarray(0, 4).toString('hex') === '89504e47' ? 'image/png' : buf.subarray(0, 2).toString('hex') === 'ffd8' ? 'image/jpeg' : '';
     if (!mime || buf.length < 300) return false;
-    const { GoogleGenerativeAI } = await import('@google/generative-ai');
-    const model = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '').getGenerativeModel({ model: 'gemini-3.8-flash', generationConfig: { responseMimeType: 'application/json' } });
-    const res = await model.generateContent([
-      { inlineData: { mimeType: mime, data: buf.toString('base64') } },
-      `Is this image the brand logo (logo mark and/or wordmark) of the company "${company}"? Answer false for: auto-generated placeholder cards that just print the company name over a generic illustration, photos of buildings / people / products, logos of a different company or of a recruiting platform. Return JSON {"logo": true|false}.`,
-    ]);
-    const u = res.response.usageMetadata;
+    // 用千问看图（用户 10-26：画像流水线不碰 Gemini，Gemini 是用户自己充值的）；OpenAI 兼容接口，图片走 data URI
+    const key = process.env.DASHSCOPE_API_KEY;
+    if (!key) return false;
+    const base = (process.env.DASHSCOPE_BASE_URL || 'https://dashscope.aliyuncs.com').replace(/\/compatible-mode\/v1\/?$/, '').replace(/\/$/, '');
+    const VL_MODEL = process.env.LOGO_VL_MODEL || 'qwen3-vl-plus';
+    const res = await fetch(`${base}/compatible-mode/v1/chat/completions`, {
+      method: 'POST', headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, signal: AbortSignal.timeout(60000),
+      body: JSON.stringify({ model: VL_MODEL, temperature: 0, messages: [{ role: 'user', content: [
+        { type: 'image_url', image_url: { url: `data:${mime};base64,${buf.toString('base64')}` } },
+        { type: 'text', text: `Is this image the brand logo (logo mark and/or wordmark) of the company "${company}"? Answer false for: auto-generated placeholder cards that just print the company name over a generic illustration, photos of buildings / people / products, logos of a different company or of a recruiting platform. Return only JSON {"logo": true|false}.` },
+      ] }] }),
+    });
+    if (!res.ok) return false;
+    const j: any = await res.json();
+    const u = j.usage || {};
     const { logTokenUsage } = await import('@/lib/token-logger');
-    await logTokenUsage({ tool_name: 'company-profile', task_name: 'Logo 识图', institution: company, model_id: 'gemini-3.8-flash', usageMetadata: { promptTokenCount: u?.promptTokenCount || 0, candidatesTokenCount: u?.candidatesTokenCount || 0, totalTokenCount: u?.totalTokenCount || 0 } }).catch(() => {});
-    return /"logo"\s*:\s*true/.test(res.response.text());
+    await logTokenUsage({ tool_name: 'company-profile', task_name: 'Logo 识图', institution: company, model_id: VL_MODEL, usageMetadata: { promptTokenCount: u.prompt_tokens || 0, candidatesTokenCount: u.completion_tokens || 0, totalTokenCount: u.total_tokens || 0 } }).catch(() => {});
+    return /"logo"\s*:\s*true/.test(String(j.choices?.[0]?.message?.content || ''));
   } catch { return false; }
 }
 

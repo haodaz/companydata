@@ -53,6 +53,7 @@ const PRICING: Record<string, { input: number; output: number }> = {
   'gpt-5.6-luna': { input: 0.5, output: 2 },
   // 通义千问（按人民币价折美元的粗估；联网搜索另按次计费，这里没算）
   'qwen-plus': { input: 0.11, output: 0.28 },
+  'qwen3-vl-plus': { input: 0.2, output: 1.6 },   // 看图（Logo 识图，10-26 从 Gemini 换过来），按百炼公开价约 ¥1.5 / ¥12 每百万 token 折算
   'qwen-max': { input: 0.33, output: 1.33 },
   'qwen-turbo': { input: 0.04, output: 0.08 },
 };
