@@ -28,6 +28,8 @@ export interface LLMResponse {
     promptTokenCount: number;
     candidatesTokenCount: number;
     totalTokenCount: number;
+    /** Claude 联网检索实际发出的搜索次数（$10 / 千次，记账按这个算） */
+    webSearchRequests?: number;
     /** llm-client 兜底记账的记录编号（token-logger 回填） */
     __logId?: number;
   };
@@ -90,9 +92,9 @@ async function autoLog(res: LLMResponse, modelId: string, options?: { webSearch?
   try {
     const { logTokenUsage, currentCost } = await import('@/lib/token-logger');
     const ctx = currentCost();
-    await logTokenUsage({ tool_name: 'unattributed', task_name: ctx.task_name || ctx.tool_name || '（未归属）', model_id: res.model || modelId, usageMetadata: res.usageMetadata, search_calls: options?.webSearch ? 1 : 0 });
+    await logTokenUsage({ tool_name: 'unattributed', task_name: ctx.task_name || ctx.tool_name || '（未归属）', model_id: res.model || modelId, usageMetadata: res.usageMetadata, search_calls: options?.webSearch ? Math.max(1, res.usageMetadata.webSearchRequests || 0) : 0 });
     // 上下文里给了功能名就直接归过去（省得调用方再记一次）
-    if (ctx.tool_name && res.usageMetadata.__logId) await logTokenUsage({ tool_name: ctx.tool_name as any, task_name: ctx.task_name || ctx.tool_name, model_id: res.model || modelId, usageMetadata: res.usageMetadata, search_calls: options?.webSearch ? 1 : 0 });
+    if (ctx.tool_name && res.usageMetadata.__logId) await logTokenUsage({ tool_name: ctx.tool_name as any, task_name: ctx.task_name || ctx.tool_name, model_id: res.model || modelId, usageMetadata: res.usageMetadata, search_calls: options?.webSearch ? Math.max(1, res.usageMetadata.webSearchRequests || 0) : 0 });
   } catch (e: any) { console.warn('[llm-client] 兜底记账失败：', String(e?.message).slice(0, 120)); }
 }
 
@@ -254,11 +256,19 @@ async function generateClaude(prompt: string, modelId: string, options?: { jsonM
     model: modelId,
     max_tokens: 64000,   // 教案一章可到 3.6 万字（潜水 255 下工位），32000 还会截断
     ...(system ? { system } : {}),
-    ...(options?.webSearch ? { tools: [{ type: 'web_search_20260209' as any, name: 'web_search', max_uses: 5 }] as any } : {}),
+    // Haiku 4.5 只支持老版搜索工具；批量画像用它省钱，每次最多搜 2 次（搜回来的网页全文按输入 token 计费，10-26 Sonnet 搜 5 次一家 $1.4）
+    ...(options?.webSearch ? { tools: [/haiku-4-5/.test(modelId) ? { type: 'web_search_20250305', name: 'web_search', max_uses: 2 } : { type: 'web_search_20260209', name: 'web_search', max_uses: 5 }] as any } : {}),
     messages: [{ role: 'user', content: prompt }],
   }).finalMessage();
   if (res.stop_reason === 'refusal') throw new Error(`Claude 拒绝了这次请求${res.stop_details?.explanation ? `：${res.stop_details.explanation}` : ''}`);
-  const text = res.content.filter((b): b is Extract<typeof b, { type: 'text' }> => b.type === 'text').map(b => b.text).join('\n');
+  // 联网检索时 Claude 会边搜边说（「我先搜一下…」），答案在最后一次搜索之后；真实来源从搜索结果块里取，按千问的「## 搜索来源」格式附在后面
+  const lastSearch = options?.webSearch ? res.content.map(b => b.type as string).lastIndexOf('web_search_tool_result') : -1;
+  let text = res.content.slice(lastSearch + 1).filter((b): b is Extract<typeof b, { type: 'text' }> => b.type === 'text').map(b => b.text).join('\n');
+  if (options?.webSearch) {
+    const seen = new Set<string>(), src: string[] = [];
+    for (const b of res.content as any[]) if (b.type === 'web_search_tool_result' && Array.isArray(b.content)) for (const r of b.content) if (r?.url && !seen.has(r.url)) { seen.add(r.url); src.push(`[${src.length + 1}] ${(r.title || '').replace(/\s+/g, ' ')} ${r.url}`); }
+    if (src.length) text += `\n\n## 搜索来源\n${src.join('\n')}`;
+  }
   if (res.stop_reason === 'max_tokens') console.warn('[Claude] 输出到了 max_tokens 上限，可能被截断');
   const u = res.usage;
   return {
@@ -268,6 +278,7 @@ async function generateClaude(prompt: string, modelId: string, options?: { jsonM
       promptTokenCount: (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0),
       candidatesTokenCount: u.output_tokens || 0,
       totalTokenCount: (u.input_tokens || 0) + (u.cache_read_input_tokens || 0) + (u.cache_creation_input_tokens || 0) + (u.output_tokens || 0),
+      webSearchRequests: u.server_tool_use?.web_search_requests || 0,
     },
   };
 }

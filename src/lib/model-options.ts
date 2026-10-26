@@ -18,6 +18,7 @@ export const MODEL_OPTIONS: { id: string; label: string; provider: string; model
   // Anthropic Claude（教案 / 讲解这类长文本生成）
   { id: 'claude-opus-5-5', label: 'Claude Opus 5.5', provider: 'Anthropic', modelName: 'claude-opus-5-5' },
   { id: 'claude-sonnet-5-5', label: 'Claude Sonnet 5.5', provider: 'Anthropic', modelName: 'claude-sonnet-5-5' },
+  { id: 'claude-haiku-4-5-20251001', label: 'Claude Haiku 4.5（海外检索）', provider: 'Anthropic', modelName: 'claude-haiku-4-5-20251001', badge: '便宜' },
   // OpenAI GPT
   { id: 'gpt-6-astra', label: 'GPT-6 Astra', provider: 'OpenAI', modelName: 'gpt-6-astra', badge: '很贵🥹🥹' },
   { id: 'gpt-5.6-terra', label: 'GPT-5.6 Terra', provider: 'OpenAI', modelName: 'gpt-5.6-terra' },

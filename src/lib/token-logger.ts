@@ -47,6 +47,7 @@ const PRICING: Record<string, { input: number; output: number }> = {
   'claude-opus-5-5': { input: 4, output: 20 },
   'claude-sonnet-5-5': { input: 2, output: 10 },
   'claude-haiku-4-5': { input: 1, output: 5 },
+  'claude-haiku-4-5-20251001': { input: 1, output: 5 },
   // OpenAI GPT
   'gpt-6-astra': { input: 10, output: 30 },
   'gpt-5.6-terra': { input: 2.5, output: 10 },
@@ -112,7 +113,8 @@ async function priceOf(model: string): Promise<Price> {
     return base || (/flash|turbo/.test(model) ? { currency: 'CNY', input_per_m: 0.15, output_per_m: 1.5, search_per_k: 4, unit_price: 0, unit: null } : { currency: 'CNY', input_per_m: 0.8, output_per_m: 2, search_per_k: 4, unit_price: 0, unit: null });
   }
   const p = PRICING[model] || { input: 0.075, output: 0.3 };
-  return { currency: 'USD', input_per_m: p.input, output_per_m: p.output, search_per_k: 0, unit_price: 0, unit: null };
+  // Claude 联网搜索 $10 / 千次（官方价）
+  return { currency: 'USD', input_per_m: p.input, output_per_m: p.output, search_per_k: /^claude-/.test(model) ? 10 : 0, unit_price: 0, unit: null };
 }
 export const invalidatePriceCache = () => { priceCache = null; };
 const USD_CNY = () => parseFloat(process.env.USD_CNY_RATE || '7.2');
