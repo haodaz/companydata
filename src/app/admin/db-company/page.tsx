@@ -11,6 +11,7 @@ import { SEGMENT_LABELS, SEGMENT_OPTIONS, COMPANY_TYPE_LABELS, COMPANY_EDIT_FIEL
 import { exportToCsv } from '@/lib/export-csv';
 import { ensureDownloadAllowed, clearDownloadPermissionCache } from '@/lib/download-gate';
 import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
+import { COMPLETENESS_BUCKETS } from '@/lib/completeness-filter';
 import { BRAND } from '@/lib/theme';
 
 const { Text } = Typography;
@@ -46,6 +47,8 @@ export default function DbCompanyPage() {
   const [source, setSource] = useState('');
   const [sources, setSources] = useState<Record<string, number>>({});
   const [review, setReview] = useState('');
+  const [comp, setComp] = useState('');   // 完整度分档（数据部门 10-26）
+  const [sort, setSort] = useState('');   // comp_desc / comp_asc
   const [exporting, setExporting] = useState(false);
   const [selected, setSelected] = useState<React.Key[]>([]);
 
@@ -72,7 +75,7 @@ export default function DbCompanyPage() {
     let qs = window.location.search;
     if (!qs) { try { qs = sessionStorage.getItem(FILTER_KEY) || ''; } catch { /* 读不了就算了 */ } if (qs) window.history.replaceState(null, '', `?${qs.replace(/^\?/, '')}`); }
     const u = new URLSearchParams(qs);
-    setSearch(u.get('search') || ''); setSegment(u.get('segment') || ''); setSource(u.get('source') || ''); setReview(u.get('review') || '');
+    setSearch(u.get('search') || ''); setSegment(u.get('segment') || ''); setSource(u.get('source') || ''); setReview(u.get('review') || ''); setComp(u.get('comp') || ''); setSort(u.get('sort') || '');
     const p = parseInt(u.get('page') || ''), ps = parseInt(u.get('pageSize') || '');
     if (p > 0) setPage(p);
     if (ps > 0) setPageSize(ps);
@@ -85,24 +88,26 @@ export default function DbCompanyPage() {
     if (segment) q.set('segment', segment);
     if (source) q.set('source', source);
     if (review) q.set('review', review);
+    if (comp) q.set('comp', comp);
+    if (sort) q.set('sort', sort);
     if (page > 1) q.set('page', String(page));
     if (pageSize !== 50) q.set('pageSize', String(pageSize));
     const s = q.toString();
     window.history.replaceState(null, '', s ? `?${s}` : window.location.pathname);   // 按 Next 文档传 null
     try { sessionStorage.setItem(FILTER_KEY, s); } catch { /* 读写不了就不记 */ }
-  }, [search, segment, source, review, page, pageSize, urlReady]);
+  }, [search, segment, source, review, comp, sort, page, pageSize, urlReady]);
 
   const load = useCallback(async () => {
     if (!urlReady) return;
     setLoading(true);
     try {
-      const qs = new URLSearchParams({ page: String(page), pageSize: String(pageSize), search, segment, source, review });
+      const qs = new URLSearchParams({ page: String(page), pageSize: String(pageSize), search, segment, source, review, comp, sort });
       const json = await (await fetch(`/api/db/companies?${qs}`)).json();
       if (!json.success) throw new Error(json.error);
       setData(json.data); setTotal(json.total);
     } catch (e: any) { message.error(`加载失败: ${e.message}`); }
     finally { setLoading(false); }
-  }, [page, pageSize, search, segment, source, review, urlReady]);
+  }, [page, pageSize, search, segment, source, review, comp, sort, urlReady]);
 
   useEffect(() => { load(); }, [load]);
   // 顶部统计是全库口径：打开页面时单独取一次（接口里让数据库直接数），翻页 / 筛选不再重新数
@@ -207,7 +212,7 @@ export default function DbCompanyPage() {
       render: (_: any, r: any) => r.counts?.jobs_total ? <span><Text strong style={{ color: BRAND.success }}>{r.counts.jobs_open}</Text><Text type="secondary"> / {r.counts.jobs_total}</Text></span> : <Text type="secondary">0</Text>,
     },
     { title: '审核', dataIndex: 'human_review_status', width: 90, render: (s: string) => s ? <Tag color={REVIEW_STATUS[s]?.color}>{REVIEW_STATUS[s]?.label || s}</Tag> : <Tag>未审核</Tag> },
-    { title: '完整度', dataIndex: 'completeness_score', width: 110, render: (n: number, r: any) => n != null ? <Tooltip title={r.profile_crawled_at ? `画像流水线 ${new Date(r.profile_crawled_at).toLocaleDateString('zh-CN')}` : '未跑过画像流水线'}><Progress percent={n} size="small" style={{ width: 80 }} strokeColor={n >= 80 ? BRAND.success : n >= 50 ? '#fa8c16' : '#f5222d'} /></Tooltip> : <Text type="secondary">—</Text> },
+    { title: '完整度', dataIndex: 'completeness_score', width: 110, sorter: true, sortDirections: ['descend', 'ascend'] as any, sortOrder: (sort === 'comp_desc' ? 'descend' : sort === 'comp_asc' ? 'ascend' : null) as any, render: (n: number, r: any) => n != null ? <Tooltip title={r.profile_crawled_at ? `画像流水线 ${new Date(r.profile_crawled_at).toLocaleDateString('zh-CN')}` : '未跑过画像流水线'}><Progress percent={n} size="small" style={{ width: 80 }} strokeColor={n >= 80 ? BRAND.success : n >= 50 ? '#fa8c16' : '#f5222d'} /></Tooltip> : <Text type="secondary">—</Text> },
     { title: '子实体', width: 110, align: 'center' as const, render: (_: any, r: any) => r.counts ? <Tooltip title="融资 / 动态 / 高管"><span style={{ fontSize: 12 }}>{r.counts.financings_total || 0} / {r.counts.news_total || 0} / {r.counts.executives_total || 0}</span></Tooltip> : <Text type="secondary">0 / 0 / 0</Text> },
     {
       title: '操作', width: 150, fixed: 'right' as const,
@@ -289,7 +294,8 @@ export default function DbCompanyPage() {
             options={[{ value: '', label: '全部来源' }, ...Object.entries(sources).filter(([k]) => k !== 'none').sort((a, b) => b[1] - a[1]).map(([k, n]) => ({ value: k, label: `${SOURCE_LABELS[k] || k}（${n}）` })),
               { value: 'none', label: `未标来源（${sources.none || 0}）` }]} />
           <Select value={review} style={{ width: 120 }} onChange={v => { setReview(v); setPage(1); }} options={[{ value: '', label: '全部审核' }, { value: 'none', label: '未审核' }, ...REVIEW_STATUS_OPTIONS]} />
-          <Button onClick={() => { setSearch(''); setSegment(''); setSource(''); setReview(''); setPage(1); setResetKey(k => k + 1); }}>重置筛选</Button>
+          <Select value={comp} style={{ width: 140 }} onChange={v => { setComp(v); setPage(1); }} options={[{ value: '', label: '全部完整度' }, ...COMPLETENESS_BUCKETS]} />
+          <Button onClick={() => { setSearch(''); setSegment(''); setSource(''); setReview(''); setComp(''); setSort(''); setPage(1); setResetKey(k => k + 1); }}>重置筛选</Button>
           <div style={{ flex: 1 }} />
           {selected.length > 0 && (
             <Space>
@@ -311,6 +317,7 @@ export default function DbCompanyPage() {
         <Table
           rowKey="id" size="small" loading={loading} dataSource={data} columns={columns} scroll={{ x: 1600 }}
           rowSelection={{ selectedRowKeys: selected, onChange: setSelected }}
+          onChange={(_p, _f, sorter: any, extra) => { if (extra.action === 'sort') { setSort(sorter?.order === 'ascend' ? 'comp_asc' : sorter?.order === 'descend' ? 'comp_desc' : ''); setPage(1); } }}
           pagination={{ current: page, pageSize, total, showSizeChanger: true, showTotal: t => `共 ${t} 家`, onChange: (p, ps) => { setPage(p); setPageSize(ps); } }}
           locale={{ emptyText: <div style={{ padding: 40, color: BRAND.ink3 }}>企业库还是空的。点右上角「AI 建名单」从无到有生成第一批目标企业。</div> }}
         />

@@ -3,6 +3,7 @@ import { ensureCompanyFloraId } from '@/lib/company-flora-id';
 import { NextResponse } from 'next/server';
 import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
+import { completenessOrder, filterCompleteness } from '@/lib/completeness-filter';
 import { orIlike, pageParams } from '@/lib/pg-filter';
 import { COMPANY_EDITABLE_KEYS, SEGMENT_LABELS } from '@/lib/company-fields';
 import { trackDemand } from '@/lib/flywheel/signals';
@@ -26,9 +27,15 @@ export async function GET(request: Request) {
     const source = searchParams.get('source') || '';
 
     const review = searchParams.get('review') || '';
+    const comp = searchParams.get('comp') || '', sort = searchParams.get('sort') || '';
     // 导出要翻页读全量，所以查询写成「每次新建」的函数
     const build = () => {
-      let query = supabaseAdmin.from('companies').select('*', { count: 'exact' }).order('id', { ascending: false });
+      let query = supabaseAdmin.from('companies').select('*', { count: 'exact' });
+      // 完整度排序 / 筛选（数据部门 10-26）
+      const co = completenessOrder(sort);
+      if (co) query = query.order(co.column, { ascending: co.ascending, nullsFirst: co.nullsFirst });
+      query = query.order('id', { ascending: false });
+      if (comp) query = filterCompleteness(query, comp);
       if (search) query = query.or(orIlike(['name', 'name_en', 'registered_name', 'industry'], search));
       if (review === 'none') query = query.is('human_review_status', null);
       else if (review) query = query.eq('human_review_status', review);

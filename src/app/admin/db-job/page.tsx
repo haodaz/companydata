@@ -15,6 +15,7 @@ import { SEGMENT_LABELS } from '@/lib/company-fields';
 import { BRAND } from '@/lib/theme';
 import { useModel } from '@/lib/model-context';
 import { sourcesText } from '@/lib/source-tags';
+import { COMPLETENESS_BUCKETS } from '@/lib/completeness-filter';
 
 const { Text } = Typography;
 
@@ -37,7 +38,7 @@ export default function DbJobPage() {
   const [pageSize, setPageSize] = useState(50);
   const [selected, setSelected] = useState<React.Key[]>([]);
   const [exporting, setExporting] = useState(false);
-  const DEFAULT_FILTERS = { search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false, missingJd: false, companyId: '', companyName: '', source: '', flag: '', ids: '', publishFrom: '', publishTo: '' };
+  const DEFAULT_FILTERS = { search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false, missingJd: false, companyId: '', companyName: '', source: '', flag: '', ids: '', publishFrom: '', publishTo: '', comp: '', sort: '' };
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const [resetKey, setResetKey] = useState(0);   // 重置时让搜索框（非受控）一起清空
   const [sources, setSources] = useState<Record<string, number>>({});
@@ -58,6 +59,7 @@ export default function DbJobPage() {
       season: u.get('season') || '', remote: u.get('remote') || '', status: u.get('status') || '', review: u.get('review') || '',
       overseas: u.get('overseas') === '1', missingJd: u.get('missingJd') === '1',
       source: u.get('source') || '', flag: u.get('flag') || '', publishFrom: u.get('publishFrom') || '', publishTo: u.get('publishTo') || '',
+      comp: u.get('comp') || '', sort: u.get('sort') || '',
     }));
     const p = parseInt(u.get('page') || ''), ps = parseInt(u.get('pageSize') || '');
     if (p > 0) setPage(p);
@@ -74,6 +76,7 @@ export default function DbJobPage() {
     put('season', filters.season); put('remote', filters.remote); put('status', filters.status); put('review', filters.review);
     put('overseas', filters.overseas); put('missingJd', filters.missingJd); put('companyId', filters.companyId); put('companyName', filters.companyName); put('ids', filters.ids);
     put('source', filters.source); put('flag', filters.flag); put('publishFrom', filters.publishFrom); put('publishTo', filters.publishTo);
+    put('comp', filters.comp); put('sort', filters.sort);
     if (page > 1) q.set('page', String(page));
     if (pageSize !== 50) q.set('pageSize', String(pageSize));
     const s = q.toString();
@@ -86,7 +89,7 @@ export default function DbJobPage() {
   const query = useCallback((extra: Record<string, string> = {}) => new URLSearchParams({
     search: filters.search, jobType: filters.jobType, season: filters.season, remote: filters.remote,
     status: filters.status, review: filters.review, overseas: filters.overseas ? '1' : '', missingJd: filters.missingJd ? '1' : '', companyId: filters.companyId, ids: filters.ids,
-    source: filters.source, flag: filters.flag, publishFrom: filters.publishFrom, publishTo: filters.publishTo, ...extra,
+    source: filters.source, flag: filters.flag, publishFrom: filters.publishFrom, publishTo: filters.publishTo, comp: filters.comp, sort: filters.sort, ...extra,
   }), [filters]);
 
   const load = useCallback(async () => {
@@ -212,7 +215,7 @@ export default function DbJobPage() {
     { title: '留学生', dataIndex: 'accepts_overseas_students', width: 80, align: 'center' as const, render: (v: boolean | null) => v === true ? <Tag color="blue">面向</Tag> : v === false ? <Tag>不面向</Tag> : <Text type="secondary">—</Text> },
     { title: '薪资', width: 170, render: (_: any, r: any) => formatSalary(r) || (r.salary_description ? <Tooltip title={r.salary_description}><Text type="secondary">见说明</Text></Tooltip> : '-') },
     { title: '网申截止', dataIndex: 'application_end_date_str', width: 110, render: (d: string) => d ? <span style={{ color: new Date(d) < new Date() ? BRAND.ink4 : BRAND.ink }}>{d}</span> : '-' },
-    { title: '完整度', dataIndex: 'completeness_score', width: 100, render: (n: number) => <Progress percent={n || 0} size="small" strokeColor={n >= 70 ? BRAND.success : n >= 40 ? BRAND.warning : BRAND.danger} format={p => `${p}`} /> },
+    { title: '完整度', dataIndex: 'completeness_score', width: 100, sorter: true, sortDirections: ['descend', 'ascend'] as any, sortOrder: (filters.sort === 'comp_desc' ? 'descend' : filters.sort === 'comp_asc' ? 'ascend' : null) as any, render: (n: number) => <Progress percent={n || 0} size="small" strokeColor={n >= 70 ? BRAND.success : n >= 40 ? BRAND.warning : BRAND.danger} format={p => `${p}`} /> },
     { title: '状态', dataIndex: 'status', width: 80, render: (s: string) => <Tag color={JOB_STATUS[s]?.color}>{JOB_STATUS[s]?.label || s}</Tag> },
     { title: '审核', dataIndex: 'human_review_status', width: 90, render: (s: string) => s ? <Tag color={REVIEW_STATUS[s]?.color}>{REVIEW_STATUS[s]?.label || s}</Tag> : <Tag>未审核</Tag> },
     { title: '更新', dataIndex: 'updated_at', width: 110, render: (t: string) => <Text type="secondary" style={{ fontSize: 12 }}>{new Date(t).toLocaleDateString('zh-CN')}</Text> },
@@ -272,6 +275,7 @@ export default function DbJobPage() {
               value={[filters.publishFrom ? dayjs(filters.publishFrom) : null, filters.publishTo ? dayjs(filters.publishTo) : null]}
               onChange={v => setFilter({ publishFrom: v?.[0]?.format('YYYY-MM-DD') || '', publishTo: v?.[1]?.format('YYYY-MM-DD') || '' })} />
           </Tooltip>
+          <Select value={filters.comp} style={{ width: 140 }} onChange={v => setFilter({ comp: v })} options={[{ value: '', label: '全部完整度' }, ...COMPLETENESS_BUCKETS]} />
           <Checkbox checked={filters.overseas} onChange={e => setFilter({ overseas: e.target.checked })}>只看面向留学生</Checkbox>
           <Checkbox checked={filters.missingJd} onChange={e => setFilter({ missingJd: e.target.checked })}>只看缺 JD</Checkbox>
           <Button onClick={() => { setFilters(DEFAULT_FILTERS); setPage(1); setSelected([]); setResetKey(k => k + 1); }}>重置筛选</Button>
@@ -307,6 +311,7 @@ export default function DbJobPage() {
         <Table
           rowKey="id" size="small" loading={loading} dataSource={data} columns={columns} scroll={{ x: 1900 }}
           rowSelection={{ selectedRowKeys: selected, onChange: setSelected }}
+          onChange={(_p, _f, sorter: any, extra) => { if (extra.action === 'sort') setFilter({ sort: sorter?.order === 'ascend' ? 'comp_asc' : sorter?.order === 'descend' ? 'comp_desc' : '' }); }}
           pagination={{ current: page, pageSize, total, showSizeChanger: true, showTotal: t => `共 ${t} 条`, onChange: (p, ps) => { setPage(p); setPageSize(ps); } }}
         />
       </Panel>
