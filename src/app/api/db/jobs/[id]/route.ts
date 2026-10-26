@@ -66,6 +66,8 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
       if ('city' in updates) updates.city = r.city;
     }
     for (const k of ['skill_labels', 'skill_labels_jd', 'exp_labels', 'exp_labels_jd']) if (k in updates) updates[k] = normalizeSkillTags(Array.isArray(updates[k]) ? updates[k].join('；') : updates[k]);
+    // 改了工作地点：活动地址 (Cn) / (En) 跟着改成一样的（数据部门 10-26）
+    if ('location' in updates) { const loc = String(updates.location ?? '').trim() || null; updates.address_lang_cn = loc; updates.address_lang_en = loc; }
     if (updates.name === null) return NextResponse.json({ success: false, error: '岗位名称不能为空' }, { status: 400 });
 
     if (body.human_review_status !== undefined) { updates.human_review_status = body.human_review_status; updates.human_review_at = now; }

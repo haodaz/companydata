@@ -59,8 +59,10 @@ export function normalizeSkillTags(v: string | null | undefined): string | null 
  */
 export const LANG_SOURCE: Record<string, string> = {
   name: 'name', description: 'summary_cn', schedule: 'recruit_process', overview: 'overview', process: 'application_website',
-  organizer: 'organizer', responsibilities: 'responsibilities', welfare: 'welfare', address: 'address',
+  organizer: 'organizer', responsibilities: 'responsibilities', welfare: 'welfare',
 };
+/** 活动地址 (Cn) / (En) 都和「工作地点」一致，不分语言、跟着改（数据部门周赞灵 10-26） */
+export const ADDRESS_LANG_SOURCE = 'location';
 export const isZhText = (s: string) => (s.match(/[一-鿿]/g) || []).length >= Math.max(1, s.replace(/\s/g, '').length * 0.15);
 
 /**
@@ -78,6 +80,8 @@ export function applyLangFields(job: Record<string, any>, opts: { overwrite?: st
       if (!job[key] || opts.overwrite?.includes(k)) { if (job[key] !== v) patch[key] = v; job[key] = v; }
     }
   }
+  const loc = String(job[ADDRESS_LANG_SOURCE] ?? '').trim() || null;
+  for (const key of ['address_lang_cn', 'address_lang_en']) if ((job[key] ?? null) !== loc) { patch[key] = loc as any; job[key] = loc; }
   return patch;
 }
 
