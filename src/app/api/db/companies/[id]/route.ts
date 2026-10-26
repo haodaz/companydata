@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { COMPANY_EDITABLE_KEYS } from '@/lib/company-fields';
+import { getSessionUser } from '@/lib/session';
+import { COMPANY_REVIEW_ISSUE_LABEL } from '@/lib/review-status';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -53,7 +55,12 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
     }
     for (const k of body.unlock || []) locked.delete(k);
     updates.human_locked_fields = Array.from(locked);
-    if (body.human_review_status !== undefined) { updates.human_review_status = body.human_review_status; updates.human_review_at = now; }
+    if (body.human_review_status !== undefined) {
+      updates.human_review_status = body.human_review_status; updates.human_review_at = now;
+      // 画像批次验收：记下谁审的、勾了哪些问题（审核通过也可以带小问题）
+      updates.human_review_by = (await getSessionUser(req))?.email || null;
+      if (Array.isArray(body.human_review_issues)) updates.human_review_issues = body.human_review_issues.filter((x: string) => COMPANY_REVIEW_ISSUE_LABEL[x]);
+    }
     if (body.human_review_note !== undefined) updates.human_review_note = body.human_review_note;
     if (updates.name === null) return NextResponse.json({ success: false, error: '企业名称不能为空' }, { status: 400 });
 

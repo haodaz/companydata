@@ -1,5 +1,6 @@
 'use client';
 
+import { TaskQcCard } from '@/components/admin/TaskQcCard';
 import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button, Card, Checkbox, Empty, Form, Input, Modal, Popconfirm, Progress, Select, Space, Spin, Table, Tag, Tooltip, Typography, App } from 'antd';
@@ -307,6 +308,8 @@ function ToolCompanyInner() {
           </div>
           {progress.total > 0 && <Progress style={{ marginTop: 16 }} percent={pct} status={taskBusy ? 'active' : (activeTask.status === 'failed' ? 'exception' : undefined)} format={() => `${progress.completed}/${progress.total} 完成${progress.failed ? ` · ${progress.failed} 失败` : ''}`} />}
         </Card>
+
+        {progress.completed > 0 && <TaskQcCard taskId={activeTask.id} refreshKey={progress.completed} />}
 
         <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
           {!taskBusy && (<>

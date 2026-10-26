@@ -12,7 +12,7 @@ import { useModel } from '@/lib/model-context';
 import { BRAND } from '@/lib/theme';
 import { COMPANY_EDIT_FIELDS, COMPANY_TYPE_LABELS, COMPANY_TYPE_OPTIONS, SEGMENT_LABELS, SEGMENT_OPTIONS, KIND_LABELS, KIND_OPTIONS, hasValue } from '@/lib/company-fields';
 import { JOB_STATUS, JOB_TYPE_LABELS, RECRUIT_SEASON_LABELS, REMOTE_TYPE_LABELS } from '@/lib/job-fields';
-import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
+import { COMPANY_REVIEW_ISSUES, COMPANY_REVIEW_ISSUE_LABEL, REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { URL_TYPE_ORDER, URL_TYPES, subtypeLabel, urlTypeMeta } from '@/lib/url-types';
 import { RELATION_LABELS, type RelatedResult, type RelationKind } from '@/lib/company-related';
 
@@ -49,12 +49,13 @@ export default function CompanyDetailPage() {
   const [report, setReport] = useState<any>(null);
   const [deepTopics, setDeepTopics] = useState<string[]>([]);   // 已落库的尽调专题（有就在头部打标并给下载入口）
   const [note, setNote] = useState('');
+  const [issues, setIssues] = useState<string[]>([]);   // 画像验收勾的问题类型
 
   const load = useCallback(async () => {
     try {
       const json = await (await fetch(`/api/db/companies/${id}`)).json();
       if (!json.success) throw new Error(json.error);
-      setCompany(json.company); setUrls(json.urls); setJobs(json.jobs); setJournals(json.journals); setNote(json.company?.human_review_note || '');
+      setCompany(json.company); setUrls(json.urls); setJobs(json.jobs); setJournals(json.journals); setNote(json.company?.human_review_note || ''); setIssues(json.company?.human_review_issues || []);
       setFinancings(json.financings || []); setNews(json.news || []); setExecutives(json.executives || []); setProfileLogs(json.profileLogs || []); setProducts(json.products || []);
     } catch (e: any) { message.error(`加载失败: ${e.message}`); }
     finally { setLoading(false); }
@@ -358,15 +359,22 @@ export default function CompanyDetailPage() {
           <Card title="人工审核" size="small" style={{ marginBottom: 16 }}
             extra={company.human_review_status ? <Tag color={REVIEW_STATUS[company.human_review_status]?.color}>{REVIEW_STATUS[company.human_review_status]?.label}</Tag> : <Tag>未审核</Tag>}>
             <Space wrap style={{ marginBottom: 10 }}>
-              <Button type="primary" size="small" icon={<CheckCircleOutlined />} onClick={() => review({ human_review_status: 'complete', human_review_note: note }, '已审核通过')}>审核通过</Button>
-              <Button danger size="small" icon={<CloseCircleOutlined />} onClick={() => review({ human_review_status: 'rejected', human_review_note: note }, '已标记不通过')}>不通过</Button>
-              <Select size="small" style={{ width: 120 }} placeholder="其他状态" value={null} options={REVIEW_STATUS_OPTIONS.filter(o => !['complete', 'rejected'].includes(o.value))} onChange={v => v && review({ human_review_status: v, human_review_note: note }, '审核状态已更新')} />
+              <Button type="primary" size="small" icon={<CheckCircleOutlined />} onClick={() => review({ human_review_status: 'complete', human_review_note: note, human_review_issues: issues }, '已审核通过')}>审核通过</Button>
+              <Button danger size="small" icon={<CloseCircleOutlined />} onClick={() => review({ human_review_status: 'rejected', human_review_note: note, human_review_issues: issues }, '已标记不通过')}>不通过</Button>
+              <Select size="small" style={{ width: 120 }} placeholder="其他状态" value={null} options={REVIEW_STATUS_OPTIONS.filter(o => !['complete', 'rejected'].includes(o.value))} onChange={v => v && review({ human_review_status: v, human_review_note: note, human_review_issues: issues }, '审核状态已更新')} />
             </Space>
-            <Input.TextArea rows={2} placeholder="审核备注（随审核操作一起保存）" value={note} onChange={e => setNote(e.target.value)} />
+            <div style={{ fontSize: 12, color: BRAND.ink3, marginBottom: 6 }}>有问题就勾上（可多选，随审核一起保存；全对不用勾）</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 10 }}>
+              {COMPANY_REVIEW_ISSUES.map(i => (
+                <Tag.CheckableTag key={i.value} checked={issues.includes(i.value)} style={{ border: `1px solid ${issues.includes(i.value) ? 'transparent' : BRAND.border}`, margin: 0 }}
+                  onChange={on => setIssues(on ? [...issues, i.value] : issues.filter(x => x !== i.value))}>{i.label}</Tag.CheckableTag>
+              ))}
+            </div>
+            <Input.TextArea rows={2} placeholder="审核备注（哪里不对、对的应该是什么；随审核操作一起保存）" value={note} onChange={e => setNote(e.target.value)} />
             <div style={{ fontSize: 12, color: BRAND.ink4, marginTop: 8, lineHeight: 1.7 }}>
               通过 / 不通过 / 隐藏后，AI 补全不再覆盖这家企业；人工编辑过的字段会锁定 <LockOutlined style={{ color: BRAND.warning }} />。
               {(company.human_locked_fields || []).length > 0 && <div>已锁定：{(company.human_locked_fields as string[]).map(k => COMPANY_EDIT_FIELDS.find(f => f.key === k)?.label || k).join('、')} <a onClick={() => review({ unlock: company.human_locked_fields }, '已解除全部锁定')}>解除</a></div>}
-              {company.human_review_at && <div>上次审核 {new Date(company.human_review_at).toLocaleString('zh-CN')}</div>}
+              {company.human_review_at && <div>上次审核 {new Date(company.human_review_at).toLocaleString('zh-CN')}{company.human_review_by ? ` · ${company.human_review_by}` : ''}{(company.human_review_issues || []).length ? ` · ${(company.human_review_issues as string[]).map(k => COMPANY_REVIEW_ISSUE_LABEL[k] || k).join('、')}` : ''}</div>}
             </div>
           </Card>
 

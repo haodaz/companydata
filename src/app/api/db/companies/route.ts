@@ -10,6 +10,7 @@ import { trackDemand } from '@/lib/flywheel/signals';
 import { requireDownload } from '@/lib/download-permission';
 import { SOURCE_ORDER, toSources } from '@/lib/source-tags';
 import { cachedStats, countMany } from '@/lib/db-stats';
+import { getSessionUser } from '@/lib/session';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -28,6 +29,13 @@ export async function GET(request: Request) {
 
     const review = searchParams.get('review') || '';
     const comp = searchParams.get('comp') || '', sort = searchParams.get('sort') || '';
+    // 画像批次：只看某个画像任务里跑成功的企业（画像批次验收，10-26）
+    const task = searchParams.get('task') || '';
+    let taskIds: number[] | null = null;
+    if (task) {
+      const { data: logs } = await selectAll(() => supabaseAdmin.from('company_crawl_logs').select('company_id').eq('task_id', task).eq('status', 'success').order('id'));
+      taskIds = [...new Set((logs || []).map((l: any) => l.company_id))];
+    }
     // 导出要翻页读全量，所以查询写成「每次新建」的函数
     const build = () => {
       let query = supabaseAdmin.from('companies').select('*', { count: 'exact' });
@@ -36,6 +44,7 @@ export async function GET(request: Request) {
       if (co) query = query.order(co.column, { ascending: co.ascending, nullsFirst: co.nullsFirst });
       query = query.order('id', { ascending: false });
       if (comp) query = filterCompleteness(query, comp);
+      if (taskIds) query = query.in('id', taskIds.length ? taskIds : [-1]);
       if (search) query = query.or(orIlike(['name', 'name_en', 'registered_name', 'industry'], search));
       if (review === 'none') query = query.is('human_review_status', null);
       else if (review) query = query.eq('human_review_status', review);
@@ -154,9 +163,10 @@ export async function POST(request: Request) {
 export async function PATCH(request: Request) {
   try {
     const { ids, human_review_status } = await request.json();
+    const by = (await getSessionUser(request))?.email || null;
     if (!Array.isArray(ids) || !ids.length) return NextResponse.json({ success: false, error: 'Missing ids' }, { status: 400 });
     const now = new Date().toISOString();
-    const { error } = await supabaseAdmin.from('companies').update({ human_review_status, human_review_at: now, updated_at: now }).in('id', ids);
+    const { error } = await supabaseAdmin.from('companies').update({ human_review_status, human_review_at: now, human_review_by: by, updated_at: now }).in('id', ids);
     if (error) throw error;
     return NextResponse.json({ success: true, updated: ids.length });
   } catch (error: any) {
