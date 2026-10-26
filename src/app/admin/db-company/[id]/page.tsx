@@ -12,7 +12,7 @@ import { useModel } from '@/lib/model-context';
 import { BRAND } from '@/lib/theme';
 import { COMPANY_EDIT_FIELDS, COMPANY_TYPE_LABELS, COMPANY_TYPE_OPTIONS, SEGMENT_LABELS, SEGMENT_OPTIONS, KIND_LABELS, KIND_OPTIONS, hasValue } from '@/lib/company-fields';
 import { JOB_STATUS, JOB_TYPE_LABELS, RECRUIT_SEASON_LABELS, REMOTE_TYPE_LABELS } from '@/lib/job-fields';
-import { COMPANY_REVIEW_ISSUES, COMPANY_REVIEW_ISSUE_LABEL, REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
+import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { URL_TYPE_ORDER, URL_TYPES, subtypeLabel, urlTypeMeta } from '@/lib/url-types';
 import { RELATION_LABELS, type RelatedResult, type RelationKind } from '@/lib/company-related';
 
@@ -21,6 +21,15 @@ const { Text, Paragraph } = Typography;
 const FIELD_LABEL: Record<string, string> = Object.fromEntries(COMPANY_EDIT_FIELDS.map(f => [f.key, f.label]));
 /** 档案与画像卡片按这些分组展示（招聘入口在「校招入口」卡片里单独展示） */
 const PROFILE_GROUPS = ['基本信息', '企业画像', '业务与行业', '校招与口碑'];
+
+// 审核按钮的提示，和项目库（programcrawler）同一套写法——数据部门两边用的是一个习惯
+const REVIEW_HINTS: Record<string, string> = {
+  review: 'AI 处理后的默认状态',
+  complete: '人工核验数据无误',
+  rejected: '数据存在问题，留待处理',
+  incomplete: '信息还不全，可后续重新跑画像',
+  hidden: '企业已注销 / 不在收录范围',
+};
 
 export default function CompanyDetailPage() {
   const { message } = App.useApp();
@@ -49,13 +58,13 @@ export default function CompanyDetailPage() {
   const [report, setReport] = useState<any>(null);
   const [deepTopics, setDeepTopics] = useState<string[]>([]);   // 已落库的尽调专题（有就在头部打标并给下载入口）
   const [note, setNote] = useState('');
-  const [issues, setIssues] = useState<string[]>([]);   // 画像验收勾的问题类型
+  const [editGroup, setEditGroup] = useState<string | null>(null);   // 只编辑这一组字段（档案画像里每组的「编辑」）
 
   const load = useCallback(async () => {
     try {
       const json = await (await fetch(`/api/db/companies/${id}`)).json();
       if (!json.success) throw new Error(json.error);
-      setCompany(json.company); setUrls(json.urls); setJobs(json.jobs); setJournals(json.journals); setNote(json.company?.human_review_note || ''); setIssues(json.company?.human_review_issues || []);
+      setCompany(json.company); setUrls(json.urls); setJobs(json.jobs); setJournals(json.journals); setNote(json.company?.human_review_note || '');
       setFinancings(json.financings || []); setNews(json.news || []); setExecutives(json.executives || []); setProfileLogs(json.profileLogs || []); setProducts(json.products || []);
     } catch (e: any) { message.error(`加载失败: ${e.message}`); }
     finally { setLoading(false); }
@@ -102,7 +111,7 @@ export default function CompanyDetailPage() {
     message.success(ok); load();
   };
 
-  const openEdit = () => { form.setFieldsValue(company); setEditOpen(true); };
+  const openEdit = (group: string | null = null) => { form.setFieldsValue(company); setEditGroup(group); setEditOpen(true); };
 
   /** 子实体审核 / 软删 */
   const entityReview = async (entity: string, row: any, status: string) => {
@@ -155,6 +164,11 @@ export default function CompanyDetailPage() {
       {sources[key] && <Tooltip title={`AI 补全来源：${sources[key]}`}><a href={sources[key]} target="_blank" rel="noreferrer" style={{ marginLeft: 6, color: BRAND.ink4 }}><LinkOutlined /></a></Tooltip>}
     </span>
   );
+  // 🤖 AI：画像流水线 / 补全填的字段（有 AI 来源、人工没改过），和项目库同样标法；人工改过的锁定，不再算 AI
+  const lockedSet = new Set<string>(company.human_locked_fields || []);
+  const isAi = (key: string) => !!sources[key] && !lockedSet.has(key);
+  const aiTag = (key: string) => isAi(key) ? <Tag color="green" style={{ fontSize: 9, lineHeight: '14px', padding: '0 3px', marginLeft: 4, verticalAlign: 'middle' }}>🤖 AI</Tag> : lockedSet.has(key) ? <Tooltip title="人工改过，AI 补全不覆盖"><LockOutlined style={{ color: BRAND.warning, marginLeft: 4, fontSize: 11 }} /></Tooltip> : null;
+  const aiBg = (key: string): React.CSSProperties => isAi(key) ? { background: '#f6ffed', padding: '2px 4px', borderRadius: 4 } : {};
   const val = (key: string) => company[key] ?? null;
   const link = (key: string) => val(key) ? withSource(key, <a href={val(key)} target="_blank" rel="noreferrer" style={{ wordBreak: 'break-all' }}>{val(key)}</a>) : <Text type="secondary">—</Text>;
   const text = (key: string, fmt?: (v: any) => React.ReactNode) => val(key) !== null && val(key) !== '' ? withSource(key, fmt ? fmt(val(key)) : String(val(key))) : <Text type="secondary">—</Text>;
@@ -203,7 +217,7 @@ export default function CompanyDetailPage() {
           <Tooltip title="投资尽调维度：上市与市值 / 财务 / 股权 / 管线 / BD 交易 / 团队 / 风险 / 校招——八个专题逐个联网检索，结果落库并回填管线 / 持股 / 营收，约 4 分钟"><Button icon={<SearchOutlined />} loading={deepRunning} onClick={runDeep}>深度尽调</Button></Tooltip>
           <Tooltip title={deepTopics.length ? `已有深度尽调报告（${deepTopics.length} 个专题）：实体库全部档案 + 尽调专题排成一份可打印的报告` : '还没跑过深度尽调，报告里只有画像流水线的档案；先点「深度尽调」'}><Button type="primary" icon={<ProfileOutlined />} onClick={() => router.push(`/admin/db-company/${company.id}/report`)}>{deepTopics.length ? `深度报告 · ${deepTopics.length} 专题` : '报告'}</Button></Tooltip>
           {deepTopics.length > 0 && <Tooltip title="下载 PDF 版深度报告"><Button icon={<FilePdfOutlined />} href={`/api/db/companies/${company.id}/report-pdf`} onClick={guardLink}>下载 PDF</Button></Tooltip>}
-          <Button icon={<EditOutlined />} onClick={openEdit}>编辑</Button>
+          <Button icon={<EditOutlined />} onClick={() => openEdit()}>编辑</Button>
           <Popconfirm title="删除这家企业？" description="关联的信息源与岗位会保留，但解除与企业的关联。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消">
             <Button danger icon={<DeleteOutlined />} />
           </Popconfirm>
@@ -223,6 +237,7 @@ export default function CompanyDetailPage() {
           {company.fortune_global_rank && <Tag color="gold">世界 500 强 #{company.fortune_global_rank}{company.ranking_year ? `（${company.ranking_year}）` : ''}</Tag>}
           {company.stock_code && <Tag>{company.stock_code}</Tag>}
           {company.human_review_status ? <Tag color={REVIEW_STATUS[company.human_review_status]?.color}>{REVIEW_STATUS[company.human_review_status]?.label}</Tag> : <Tag>未审核</Tag>}
+          {lockedSet.size > 0 && <Tag icon={<LockOutlined />}>{lockedSet.size} 字段已锁定</Tag>}
           {(company.tags || []).map((t: string) => <Tag key={t}>{t}</Tag>)}
         </>}
         metrics={[
@@ -262,21 +277,24 @@ export default function CompanyDetailPage() {
                         <div key={group} style={{ marginTop: 12 }}>
                           <div style={{ fontSize: 12, fontWeight: 600, color: BRAND.ink2, margin: '0 0 8px', borderLeft: `3px solid ${BRAND.primary}`, paddingLeft: 8, display: 'flex', justifyContent: 'space-between' }}>
                             <span>{group}</span>
-                            {fields.length > filled.length && <Text type="secondary" style={{ fontWeight: 400 }}>空缺 {fields.length - filled.length} 项</Text>}
+                            <span>
+                              {fields.length > filled.length && <Text type="secondary" style={{ fontWeight: 400 }}>空缺 {fields.length - filled.length} 项</Text>}
+                              <Button type="text" size="small" icon={<EditOutlined />} onClick={() => openEdit(group)} style={{ marginLeft: 4, height: 20 }}>编辑</Button>
+                            </span>
                           </div>
                           {shortOnes.length > 0 && (
                             <Descriptions column={1} size="small" styles={{ label: { width: 100 } }}>
                               {shortOnes.map(f => (
-                                <Descriptions.Item key={f.key} label={f.label}>
-                                  {f.kind === 'url' ? link(f.key) : withSource(f.key, formatProfileValue(f.key, company[f.key]))}
+                                <Descriptions.Item key={f.key} label={<span>{f.label}{aiTag(f.key)}</span>}>
+                                  <span style={aiBg(f.key)}>{f.kind === 'url' ? link(f.key) : withSource(f.key, formatProfileValue(f.key, company[f.key]))}</span>
                                 </Descriptions.Item>
                               ))}
                             </Descriptions>
                           )}
                           {longOnes.map(f => (
                             <div key={f.key} style={{ margin: '8px 0 4px' }}>
-                              <div style={{ fontSize: 12, color: BRAND.ink3, marginBottom: 2 }}>{f.label}{sources[f.key] && <a href={sources[f.key]} target="_blank" rel="noreferrer" style={{ marginLeft: 6, color: BRAND.ink4 }}><LinkOutlined /></a>}</div>
-                              <Paragraph style={{ marginBottom: 0, whiteSpace: 'pre-wrap', lineHeight: 1.7, fontSize: 13 }} ellipsis={{ rows: 3, expandable: true, symbol: '展开' }}>{formatProfileValue(f.key, company[f.key])}</Paragraph>
+                              <div style={{ fontSize: 12, color: BRAND.ink3, marginBottom: 2 }}>{f.label}{aiTag(f.key)}{sources[f.key] && <a href={sources[f.key]} target="_blank" rel="noreferrer" style={{ marginLeft: 6, color: BRAND.ink4 }}><LinkOutlined /></a>}</div>
+                              <Paragraph style={{ marginBottom: 0, whiteSpace: 'pre-wrap', lineHeight: 1.7, fontSize: 13, ...aiBg(f.key) }} ellipsis={{ rows: 3, expandable: true, symbol: '展开' }}>{formatProfileValue(f.key, company[f.key])}</Paragraph>
                             </div>
                           ))}
                         </div>
@@ -356,26 +374,31 @@ export default function CompanyDetailPage() {
         </Col>
 
         <Col xs={24} xl={9}>
-          <Card title="人工审核" size="small" style={{ marginBottom: 16 }}
-            extra={company.human_review_status ? <Tag color={REVIEW_STATUS[company.human_review_status]?.color}>{REVIEW_STATUS[company.human_review_status]?.label}</Tag> : <Tag>未审核</Tag>}>
-            <Space wrap style={{ marginBottom: 10 }}>
-              <Button type="primary" size="small" icon={<CheckCircleOutlined />} onClick={() => review({ human_review_status: 'complete', human_review_note: note, human_review_issues: issues }, '已审核通过')}>审核通过</Button>
-              <Button danger size="small" icon={<CloseCircleOutlined />} onClick={() => review({ human_review_status: 'rejected', human_review_note: note, human_review_issues: issues }, '已标记不通过')}>不通过</Button>
-              <Select size="small" style={{ width: 120 }} placeholder="其他状态" value={null} options={REVIEW_STATUS_OPTIONS.filter(o => !['complete', 'rejected'].includes(o.value))} onChange={v => v && review({ human_review_status: v, human_review_note: note, human_review_issues: issues }, '审核状态已更新')} />
-            </Space>
-            <div style={{ fontSize: 12, color: BRAND.ink3, marginBottom: 6 }}>有问题就勾上（可多选，随审核一起保存；全对不用勾）</div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 10 }}>
-              {COMPANY_REVIEW_ISSUES.map(i => (
-                <Tag.CheckableTag key={i.value} checked={issues.includes(i.value)} style={{ border: `1px solid ${issues.includes(i.value) ? 'transparent' : BRAND.border}`, margin: 0 }}
-                  onChange={on => setIssues(on ? [...issues, i.value] : issues.filter(x => x !== i.value))}>{i.label}</Tag.CheckableTag>
+          {/* 人工审核：和项目库（programcrawler）同一套——状态按钮、备注、清除标记、锁定字段 */}
+          <Card title="人工审核" size="small" style={{ marginBottom: 16 }}>
+            <div style={{ marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+              {company.human_review_status ? <Tag color={REVIEW_STATUS[company.human_review_status]?.color} style={{ margin: 0 }}>{REVIEW_STATUS[company.human_review_status]?.label}</Tag> : <Tag style={{ margin: 0 }}>未标记</Tag>}
+              {company.human_review_at && <Text type="secondary" style={{ fontSize: 11 }}>{new Date(company.human_review_at).toLocaleString('zh-CN')}{company.human_review_by ? ` · ${company.human_review_by}` : ''}</Text>}
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+              {REVIEW_STATUS_OPTIONS.map(o => (
+                <Tooltip key={o.value} title={REVIEW_HINTS[o.value]}>
+                  <Button size="small" type={company.human_review_status === o.value ? 'primary' : 'default'} onClick={() => review({ human_review_status: o.value, human_review_note: note }, '审核状态已更新')}>{o.label}</Button>
+                </Tooltip>
               ))}
+              <Button size="small" onClick={() => review({ human_review_status: null, human_review_note: note }, '已清除标记')} disabled={!company.human_review_status}>清除标记</Button>
             </div>
-            <Input.TextArea rows={2} placeholder="审核备注（哪里不对、对的应该是什么；随审核操作一起保存）" value={note} onChange={e => setNote(e.target.value)} />
-            <div style={{ fontSize: 12, color: BRAND.ink4, marginTop: 8, lineHeight: 1.7 }}>
-              通过 / 不通过 / 隐藏后，AI 补全不再覆盖这家企业；人工编辑过的字段会锁定 <LockOutlined style={{ color: BRAND.warning }} />。
-              {(company.human_locked_fields || []).length > 0 && <div>已锁定：{(company.human_locked_fields as string[]).map(k => COMPANY_EDIT_FIELDS.find(f => f.key === k)?.label || k).join('、')} <a onClick={() => review({ unlock: company.human_locked_fields }, '已解除全部锁定')}>解除</a></div>}
-              {company.human_review_at && <div>上次审核 {new Date(company.human_review_at).toLocaleString('zh-CN')}{company.human_review_by ? ` · ${company.human_review_by}` : ''}{(company.human_review_issues || []).length ? ` · ${(company.human_review_issues as string[]).map(k => COMPANY_REVIEW_ISSUE_LABEL[k] || k).join('、')}` : ''}</div>}
-            </div>
+            <Input.TextArea rows={2} style={{ marginTop: 10 }} placeholder="审核备注，如：高管是母公司的 / 产品不对 / 成立年份应为 1998" value={note} onChange={e => setNote(e.target.value)} />
+            <div style={{ fontSize: 11, color: BRAND.ink3, marginTop: 6 }}>审核通过 / 不通过 / 失效隐藏后，重新跑画像不会覆盖这家企业。字段不对就点该组的「编辑」直接改，改过的字段锁定；高管、产品等在各自页签里逐条通过 / 不通过 / 删除。</div>
+            {lockedSet.size > 0 && (
+              <div style={{ marginTop: 12 }}>
+                <div style={{ fontSize: 11, color: BRAND.ink3, marginBottom: 4 }}><LockOutlined /> 已锁定 {lockedSet.size} 个字段（人工改过，AI 补全 / 画像不覆盖）<a onClick={() => review({ unlock: company.human_locked_fields }, '已解除全部锁定')} style={{ marginLeft: 6 }}>解除</a></div>
+                <Space size={[4, 4]} wrap>
+                  {[...lockedSet].slice(0, 8).map(f => <Tag key={f} style={{ margin: 0, fontSize: 11 }}>{FIELD_LABEL[f] || f}</Tag>)}
+                  {lockedSet.size > 8 && <Tooltip title={[...lockedSet].slice(8).map(f => FIELD_LABEL[f] || f).join('、')}><Tag style={{ margin: 0, fontSize: 11, cursor: 'help' }}>等 {lockedSet.size - 8} 个</Tag></Tooltip>}
+                </Space>
+              </div>
+            )}
           </Card>
 
           <Card title="校招入口" size="small" style={{ marginBottom: 16 }}
@@ -414,9 +437,9 @@ export default function CompanyDetailPage() {
         </Col>
       </Row>
 
-      <Modal title="编辑企业" open={editOpen} onOk={saveEdit} onCancel={() => setEditOpen(false)} okText="保存" width={760} destroyOnHidden>
+      <Modal title={editGroup ? `编辑 · ${editGroup}` : '编辑企业'} open={editOpen} onOk={saveEdit} onCancel={() => setEditOpen(false)} okText="保存" width={760} destroyOnHidden>
         <Form form={form} layout="vertical" style={{ maxHeight: '64vh', overflowY: 'auto', paddingRight: 8 }}>
-          {Array.from(new Set(COMPANY_EDIT_FIELDS.map(f => f.group))).map(group => (
+          {Array.from(new Set(COMPANY_EDIT_FIELDS.map(f => f.group))).filter(g => !editGroup || g === editGroup).map(group => (
             <div key={group}>
               <div style={{ fontWeight: 600, color: BRAND.ink2, margin: '8px 0 12px', borderLeft: `3px solid ${BRAND.primary}`, paddingLeft: 8 }}>{group}</div>
               <Row gutter={12}>

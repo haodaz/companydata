@@ -2,17 +2,19 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Input, Table, Tag, Space, Select, Modal, Form, Typography, Tooltip, InputNumber, Alert, Progress, App, Dropdown } from 'antd';
-import { BankOutlined, PlusOutlined, RobotOutlined, ThunderboltOutlined, GlobalOutlined, FlagOutlined, TeamOutlined, ApartmentOutlined, ImportOutlined, CheckCircleOutlined, DownOutlined, SafetyCertificateOutlined, ProfileOutlined, DownloadOutlined } from '@ant-design/icons';
+import { Button, Input, Table, Tag, Space, Select, Modal, Form, Typography, Tooltip, InputNumber, Alert, Progress, App, Dropdown, Drawer } from 'antd';
+import { BankOutlined, PlusOutlined, RobotOutlined, ThunderboltOutlined, GlobalOutlined, FlagOutlined, TeamOutlined, ApartmentOutlined, ImportOutlined, CheckCircleOutlined, DownOutlined, SafetyCertificateOutlined, ProfileOutlined, DownloadOutlined, LockOutlined } from '@ant-design/icons';
 import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import { StatCards } from '@/components/admin/StatCards';
 import { useModel } from '@/lib/model-context';
 import { SEGMENT_LABELS, SEGMENT_OPTIONS, COMPANY_TYPE_LABELS, COMPANY_EDIT_FIELDS, KIND_LABELS } from '@/lib/company-fields';
 import { exportToCsv } from '@/lib/export-csv';
 import { ensureDownloadAllowed, clearDownloadPermissionCache } from '@/lib/download-gate';
-import { COMPANY_REVIEW_ISSUE_LABEL, REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
+import { REVIEW_STATUS, REVIEW_STATUS_OPTIONS } from '@/lib/review-status';
 import { COMPLETENESS_BUCKETS } from '@/lib/completeness-filter';
 import { BRAND } from '@/lib/theme';
+
+const FIELD_LABELS: Record<string, string> = Object.fromEntries(COMPANY_EDIT_FIELDS.map(f => [f.key, f.label]));
 
 const { Text } = Typography;
 
@@ -51,6 +53,7 @@ export default function DbCompanyPage() {
   const [sort, setSort] = useState('');   // comp_desc / comp_asc
   const [task, setTask] = useState('');   // 画像批次（画像任务 id）：只看这一批跑成功的企业，用来逐家验收
   const [qc, setQc] = useState<any>(null);
+  const [peek, setPeek] = useState<number | null>(null);   // 批次验收时点企业：右侧抽屉打开档案，审完关掉接着下一家（同项目库流水线页）
   const [exporting, setExporting] = useState(false);
   const [selected, setSelected] = useState<React.Key[]>([]);
 
@@ -194,7 +197,7 @@ export default function DbCompanyPage() {
     {
       title: '企业', dataIndex: 'name', width: 260, fixed: 'left' as const,
       render: (name: string, r: any) => (
-        <div style={{ cursor: 'pointer' }} onClick={() => router.push(`/admin/db-company/${r.id}`)}>
+        <div style={{ cursor: 'pointer' }} onClick={() => task ? setPeek(r.id) : router.push(`/admin/db-company/${r.id}`)}>
           <div style={{ fontWeight: 600, color: BRAND.primary, display: 'flex', alignItems: 'center', gap: 6 }}>
             {name}
             {r.deep_topics > 0 && <Tag color="purple" style={{ margin: 0, fontSize: 11, lineHeight: '18px', cursor: 'pointer' }} title={`已有深度尽调报告（${r.deep_topics} 个专题），打开档案后在里面看`}>尽调</Tag>}
@@ -219,10 +222,19 @@ export default function DbCompanyPage() {
       title: '校招岗位', width: 100, align: 'center' as const,
       render: (_: any, r: any) => r.counts?.jobs_total ? <span><Text strong style={{ color: BRAND.success }}>{r.counts.jobs_open}</Text><Text type="secondary"> / {r.counts.jobs_total}</Text></span> : <Text type="secondary">0</Text>,
     },
-    { title: '审核', dataIndex: 'human_review_status', width: 90, render: (s: string, r: any) => {
-      const tag = s ? <Tag color={(r.human_review_issues || []).length && s === 'complete' ? 'warning' : REVIEW_STATUS[s]?.color}>{REVIEW_STATUS[s]?.label || s}</Tag> : <Tag>未审核</Tag>;
-      const tip = [(r.human_review_issues || []).map((k: string) => COMPANY_REVIEW_ISSUE_LABEL[k] || k).join('、'), r.human_review_note, r.human_review_by].filter(Boolean).join(' · ');
-      return tip ? <Tooltip title={tip}>{tag}</Tooltip> : tag;
+    // 审核状态：和项目库（programcrawler）同一套——悬停看标记时间和备注，人工改过的字段打「已修改」
+    { title: '审核', dataIndex: 'human_review_status', width: 150, render: (st: string, r: any) => {
+      const c = st ? REVIEW_STATUS[st] : null;
+      const locked: string[] = r.human_locked_fields || [];
+      return (
+        <Space size={4} wrap>
+          {c ? <Tooltip title={[r.human_review_at && `标记于 ${new Date(r.human_review_at).toLocaleString('zh-CN')}${r.human_review_by ? `（${r.human_review_by}）` : ''}`, r.human_review_note].filter(Boolean).join('：') || undefined}>
+                <Tag color={c.color} style={{ margin: 0 }}>{c.label}</Tag>
+              </Tooltip>
+            : <Text type="secondary" style={{ fontSize: 11 }}>未标记</Text>}
+          {locked.length > 0 && <Tooltip title={`人工改过：${locked.map(f => FIELD_LABELS[f] || f).join('、')}（AI 补全不覆盖）`}><Tag icon={<LockOutlined />} style={{ margin: 0, fontSize: 10 }}>已修改</Tag></Tooltip>}
+        </Space>
+      );
     } },
     { title: '完整度', dataIndex: 'completeness_score', width: 110, sorter: true, sortDirections: ['descend', 'ascend'] as any, sortOrder: (sort === 'comp_desc' ? 'descend' : sort === 'comp_asc' ? 'ascend' : null) as any, render: (n: number, r: any) => n != null ? <Tooltip title={r.profile_crawled_at ? `画像流水线 ${new Date(r.profile_crawled_at).toLocaleDateString('zh-CN')}` : '未跑过画像流水线'}><Progress percent={n} size="small" style={{ width: 80 }} strokeColor={n >= 80 ? BRAND.success : n >= 50 ? '#fa8c16' : '#f5222d'} /></Tooltip> : <Text type="secondary">—</Text> },
     { title: '子实体', width: 110, align: 'center' as const, render: (_: any, r: any) => r.counts ? <Tooltip title="融资 / 动态 / 高管"><span style={{ fontSize: 12 }}>{r.counts.financings_total || 0} / {r.counts.news_total || 0} / {r.counts.executives_total || 0}</span></Tooltip> : <Text type="secondary">0 / 0 / 0</Text> },
@@ -326,11 +338,14 @@ export default function DbCompanyPage() {
         {task && (
           <Alert type="info" showIcon style={{ marginBottom: 12 }} closable onClose={() => { setTask(''); setPage(1); }}
             message={<span>画像批次验收：<b>{qc?.name || '加载中…'}</b>（只显示这一批跑成功的 {qc?.total ?? '–'} 家）</span>}
-            description={qc && <span>已验收 {qc.reviewed}/{qc.total}：通过 {qc.passed}（其中有小问题 {qc.passed - qc.passed_clean}）、不通过 {qc.rejected}。点企业进详情，在「人工审核」里勾问题类型再点通过 / 不通过；汇总在画像任务页。</span>} />
+            description={qc && <span>已审 {qc.reviewed}/{qc.total}：审核通过 {qc.passed}、不通过 {qc.rejected}。点企业名在右侧打开档案，对照来源逐项看，不对的字段点「编辑」直接改，高管 / 产品逐条判，最后在「人工审核」里标状态；汇总在画像任务页。</span>} />
         )}
         {enrich && (
           <Alert type="info" style={{ marginBottom: 12 }} message={<div><div style={{ marginBottom: 4 }}>正在补全：{enrich.current}（{enrich.done + 1}/{enrich.total}）</div><Progress percent={Math.round((enrich.done / enrich.total) * 100)} size="small" /></div>} />
         )}
+        <Drawer open={!!peek} onClose={() => { setPeek(null); load(); }} width="75%" destroyOnHidden styles={{ body: { padding: 0 } }} title="企业档案">
+          {peek && <iframe src={`/admin/db-company/${peek}`} style={{ width: '100%', height: '100%', border: 0 }} />}
+        </Drawer>
         <Table
           rowKey="id" size="small" loading={loading} dataSource={data} columns={columns} scroll={{ x: 1600 }}
           rowSelection={{ selectedRowKeys: selected, onChange: setSelected }}
