@@ -39,11 +39,27 @@ export async function summarizeCost(batchId: number | null | undefined) {
   };
 }
 
+/**
+ * 日期字段里模型偶尔写出不存在的日子（「2026-06-31」）：数据库整批拒收，整家企业落库失败（10-26 南京汇诚）。
+ * 不合法的日期留空，其余照写。
+ */
+function validDates<T extends Record<string, any>>(r: T): T {
+  const out: Record<string, any> = { ...r };
+  for (const [k, v] of Object.entries(r)) {
+    if (!/date/i.test(k) || typeof v !== 'string') continue;
+    const m = v.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+    if (!m) continue;
+    const d = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
+    if (d.getUTCFullYear() !== +m[1] || d.getUTCMonth() !== +m[2] - 1 || d.getUTCDate() !== +m[3]) out[k] = null;
+  }
+  return out as T;
+}
+
 /** 子实体 upsert：新行插入；已有行只填空；人工定论（通过 / 不通过 / 隐藏）或人工锁定的字段不动 */
 async function upsertRows(table: string, companyId: number, logId: number, rows: Record<string, any>[], keyOf: (r: any) => string): Promise<number> {
   if (!rows.length) return 0;
   // 产品技术关键词存「；」隔开的文本（数据部门 10-21 #19）
-  const keyed = rows.map(r => ({ ...r, ...(table === 'company_products' && 'tech_keywords' in r ? { tech_keywords: kwText(r.tech_keywords) } : {}), company_id: companyId, dedupe_key: keyOf(r), log_id: logId }));
+  const keyed = rows.map(r => ({ ...validDates(r), ...(table === 'company_products' && 'tech_keywords' in r ? { tech_keywords: kwText(r.tech_keywords) } : {}), company_id: companyId, dedupe_key: keyOf(r), log_id: logId }));
   const keys = keyed.map(r => r.dedupe_key);
   const { data: existing } = await supabaseAdmin.from(table).select('*').in('dedupe_key', keys);
   const byKey = new Map<string, any>((existing || []).map(r => [r.dedupe_key, r]));
