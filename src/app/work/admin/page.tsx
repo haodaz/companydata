@@ -5,6 +5,7 @@
  * 只给管理员（看 / 管全部）；普通用户进来转回 /work/mine，只管自己出的题（2026-10-23）。
  * 独立于 /lab 和数据实体后台（用户 10-18：管理端不要和数据实体管理掺合），只借后台的登录；数据后台里只留一个新窗口入口。
  */
+import { WorkTopBar } from '@/components/work/WorkTopBar';
 import React, { useCallback, useEffect, useState } from 'react';
 import { App, Button, ConfigProvider, Drawer, Input, Popconfirm, Select, Space, Table, Tabs, Tag, Typography } from 'antd';
 import { CopyOutlined, DeleteOutlined, EyeOutlined, RocketOutlined, SendOutlined } from '@ant-design/icons';
@@ -67,11 +68,11 @@ function Inner() {
   const rerunBaseline = async (t: any) => { setBusy('AI 基线重跑中…'); try { const b = await (await fetch(`/api/admin/work/tasks/${t.id}/baseline`, { method: 'POST' })).json(); if (!b.ok) throw new Error(b.error); message.success(`AI 基线 ${b.baseline.total} 分`); await open(t.id); await load(); } catch (e: any) { message.error(e.message); } finally { setBusy(''); } };
 
   const T = detail?.task;
-  if (needLogin) return <div style={{ padding: 40, textAlign: 'center' }}>这页要登录平方智能后台账号。<Link href="/login">去登录</Link></div>;
+  if (needLogin) return <div style={{ padding: 40, textAlign: 'center' }}>这页要先登录。<Link href="/work/login?next=/work/admin">去登录</Link></div>;
   return (
-    <div style={{ minHeight: '100vh', background: '#f6f7fb', padding: '20px 24px 60px' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}><span style={{ fontSize: 12, letterSpacing: 3, color: '#6055f5', fontWeight: 700 }}>百业AI｜真活</span><Link href="/work" target="_blank" style={{ fontSize: 13 }}>公开页 ↗</Link></div>
+    <div style={{ minHeight: '100vh', background: '#f6f7fb' }}>
+      <WorkTopBar active="admin" />
+      <div style={{ maxWidth: 1240, margin: '0 auto', padding: '20px 24px 60px' }}>
       <PageHeader title="真活台 · 管理" icon={<RocketOutlined />} description="拿一家企业的真实业务问题出题：问题 → 任务 → 材料包 → 带依赖的 rubric → AI 基线。链接甩出去，对方做完就有报告（结果逐条 + 过程高光 / 风险 + 和 AI 的差距）。独立于 /lab 和数据后台。" />
       <Tabs defaultActiveKey="tasks" items={[
         { key: 'tasks', label: `题库（${list.length}）`, children: <div>

@@ -4,9 +4,8 @@
  * 出一道真活 /work/new（要登录；用户 10-18：不用抽屉，单独一页）。
  * 企业 / 岗位边输边搜（库里有就选中，没有就当新的）→ 选模型（默认千问，国内用户顺手；可切 Claude / GPT）→ 选操作台（按岗位自动 / 四种站内台 / 候选人自己录制电脑操作）→ 出题 → 跑基线 → 进这道真活的空间。
  */
+import { NewModeSwitch, WorkTopBar } from '@/components/work/WorkTopBar';
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { WorkLogo } from '@/components/work/WorkLogo';
 
 import { useRouter } from 'next/navigation';
 import { App, Button, ConfigProvider, Input, Select, Typography, Tag } from 'antd';
@@ -75,12 +74,7 @@ function Inner() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 28px', background: '#fff', borderBottom: '1px solid #e8e9f0' }}>
-        <WorkLogo size="md" />
-        <Link href="/work/mine" style={{ color: '#666', fontSize: 13 }}>我的真活</Link>
-        <span style={{ color: '#888', fontSize: 13 }}>/ 出一道真活</span>
-        <div style={{ marginLeft: 'auto', display: 'flex', border: '1px solid #e0e0ee', borderRadius: 999, overflow: 'hidden', fontSize: 13 }}><span style={{ padding: '6px 14px', background: '#6055f5', color: '#fff', fontWeight: 700 }}>填表出题</span><Link href="/work/new/chat" style={{ padding: '6px 14px', color: '#666' }}>聊着出题</Link></div>
-      </div>
+      <WorkTopBar active="new" right={<NewModeSwitch mode="form" />} />
       <div style={{ maxWidth: 1080, margin: '0 auto', padding: '28px 28px 60px', display: 'grid', gridTemplateColumns: 'minmax(0, 1.5fr) minmax(280px, 1fr)', gap: 24, alignItems: 'start' }}>
         <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 18, padding: '26px 28px' }}>
           <h1 style={{ fontSize: 24, margin: '0 0 4px' }}>出一道真活</h1>

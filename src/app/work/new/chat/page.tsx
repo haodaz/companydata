@@ -4,10 +4,9 @@
  * 聊着出题 /work/new/chat（2026-10-23）：和填表出题并排的第二种模式。出题 AI 追问缺的信息、解释、修订；题出好在右侧打开真活空间。
  * 骨架照学院秘书 / 企业工作台（NDJSON 流 + ask_user 停下来问），配色换成真活的浅色 + #6055f5。
  */
+import { NewModeSwitch, WorkTopBar } from '@/components/work/WorkTopBar';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import { Md } from '@/components/ws/Md';
-import { WorkLogo } from '@/components/work/WorkLogo';
 import { MODEL_OPTIONS } from '@/lib/model-options';
 
 type Item =
@@ -77,12 +76,7 @@ export default function WorkChatPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e', display: 'flex', flexDirection: 'column' }}>
       <style>{CSS}</style>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 24px', background: '#fff', borderBottom: '1px solid #e8e9f0' }}>
-        <WorkLogo size="md" />
-        <Link href="/work/mine" style={{ color: '#666', fontSize: 13 }}>我的真活</Link>
-        <span style={{ color: '#888', fontSize: 13 }}>/ 出一道真活</span>
-        <div className="wc-mode"><Link href="/work/new">填表出题</Link><span className="on">聊着出题</span></div>
-      </div>
+      <WorkTopBar active="new" right={<NewModeSwitch mode="chat" />} />
       <div className={`wc${art ? ' with-art' : ''}`}>
         <aside className="wc-recent">
           <button className="wc-new" onClick={newChat}>＋ 新对话</button>
@@ -172,7 +166,7 @@ function fromHistory(ms: any[]): Item[] {
 const CSS = `
 .wc-mode { margin-left: auto; display: flex; border: 1px solid #e0e0ee; border-radius: 999px; overflow: hidden; font-size: 13px; }
 .wc-mode a, .wc-mode span { padding: 6px 14px; color: #666; text-decoration: none; } .wc-mode .on { background: #6055f5; color: #fff; font-weight: 700; }
-.wc { flex: 1; display: grid; grid-template-columns: 210px minmax(0, 1fr); min-height: 0; height: calc(100vh - 57px); }
+.wc { flex: 1; display: grid; grid-template-columns: 210px minmax(0, 1fr); min-height: 0; height: calc(100vh - 60px); }
 .wc.with-art { grid-template-columns: 210px minmax(0, 1fr) minmax(440px, 46%); }
 .wc-recent { border-right: 1px solid #e8e9f0; padding: 14px 10px; overflow-y: auto; background: #fff; }
 .wc-new { width: 100%; border: 1px solid #e0e0ee; background: #fff; border-radius: 10px; padding: 9px 12px; font: inherit; font-size: 14px; font-weight: 700; color: #1a1a2e; cursor: pointer; text-align: left; }

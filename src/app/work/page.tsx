@@ -4,6 +4,7 @@
  * 百业AI｜真活 · 公开首页（照 /lab 首页和 NeoWork 的宣传效果：整幅环境、标题直说、真实界面当信息不当装饰）。
  * 出题 / 管理在 /work/mine（要登录），做题 /work/<token> 免登录。截图由 scripts/video/shot.mjs 截到 public/work/。
  */
+import { WORK_BAR_CSS, WorkAccount, useMe } from '@/components/work/WorkTopBar';
 import React from 'react';
 import Link from 'next/link';
 import { WorkLogo } from '@/components/work/WorkLogo';
@@ -139,6 +140,7 @@ function Strip({ segs, legend }: { segs: readonly (readonly [string, number])[];
 
 export default function WorkLanding() {
   const [sceneIdx, setSceneIdx] = React.useState(0);
+  const me = useMe();
   const [scrolled, setScrolled] = React.useState(false);
   React.useEffect(() => { const f = () => setScrolled(window.scrollY > 80); f(); window.addEventListener('scroll', f, { passive: true }); return () => window.removeEventListener('scroll', f); }, []);
   return (
@@ -150,8 +152,9 @@ export default function WorkLanding() {
           <WorkLogo size="lg" />
           <div style={{ marginLeft: 'auto', display: 'flex', gap: 16, fontSize: 13, alignItems: 'center' }}>
             <Link href="/lab" style={lnk}>百业体验空间</Link>
-            <Link href="/work/login" style={lnk}>登录</Link>
-            <Link href="/work/mine" style={{ ...lnk, color: '#fff', background: '#6055f5', padding: '7px 16px', borderRadius: 999 }}>出一道真活</Link>
+            <Link href="/work/mine" style={{ ...lnk, color: '#fff', background: '#6055f5', padding: '7px 16px', borderRadius: 999 }}>{me ? '我的真活' : '出一道真活'}</Link>
+            {/* 登录了显示账号（名字 + 菜单），没登录才显示「登录」 */}
+            <style>{WORK_BAR_CSS}</style><WorkAccount me={me} dark />
           </div>
         </div>
       </div>

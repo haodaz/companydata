@@ -158,7 +158,7 @@ export default function WorkPage() {
     </Shell>
   );
 
-  if (mode === 'plugin' && participant?.code) return <Shell>{preview && <div style={{ background: '#fff7e6', borderBottom: '1px solid #ffd591', color: '#8a5a00', fontSize: 13, padding: '8px 18px', textAlign: 'center' }}>出题人预览 · 这道题还没发布，候选人现在打不开；在这里看到的就是候选人会看到的</div>}<PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
+  if (mode === 'plugin' && participant?.code) return <Shell><PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
 
   return <Workspace token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} onSubmit={async (deliverable, events) => {
     setPhase('grading');
@@ -421,7 +421,16 @@ const TOUR_STEPS: TourStep[] = [
   { key: 'views', title: '两侧可以收起', text: '文件夹 = 材料栏，星芒 = AI 助手，点一下收起或展开，给作答区腾地方。随时点「?」再看这份说明。' },
 ];
 
-function Shell({ children, dark }: { children: React.ReactNode; dark?: boolean }) { return <div style={{ minHeight: '100vh', background: dark ? '#14151e' : '#f6f7fb', color: dark ? '#e6e8f0' : '#1a1a2e', fontFamily: 'var(--font-geist-sans), -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif' }}>{children}</div>; }
+/** 出题人带管理密钥来预览做题台（?k=）：每个阶段顶上一条提示 + 回到真活空间（候选人的链接没有 k，看不到） */
+function OwnerPreviewBar() {
+  const { token } = useParams<{ token: string }>(); const k = useSearchParams().get('k');
+  if (!k) return null;
+  return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, flexWrap: 'wrap', background: '#fff7e6', borderBottom: '1px solid #ffd591', color: '#8a5a00', fontSize: 13, padding: '8px 18px' }}>
+    <span>出题人预览 · 在这里看到的就是候选人会看到的</span>
+    <a href={`/work/${token}/owner?k=${encodeURIComponent(k)}`} style={{ color: '#6055f5', fontWeight: 700, textDecoration: 'none' }}>← 回到真活空间</a>
+  </div>;
+}
+function Shell({ children, dark }: { children: React.ReactNode; dark?: boolean }) { return <div style={{ minHeight: '100vh', background: dark ? '#14151e' : '#f6f7fb', color: dark ? '#e6e8f0' : '#1a1a2e', fontFamily: 'var(--font-geist-sans), -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif' }}><OwnerPreviewBar />{children}</div>; }
 function Box({ title, children }: { title: string; children: React.ReactNode }) { return <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', marginBottom: 14 }}><div style={capStyle}>{title}</div>{children}</div>; }
 const capStyle: React.CSSProperties = { fontSize: 11, letterSpacing: 1.5, color: '#8c8c8c', marginBottom: 6, fontWeight: 600 };
 const inp: React.CSSProperties = { padding: '9px 12px', border: '1px solid #d9dbe6', borderRadius: 10, fontSize: 14, outline: 'none' };

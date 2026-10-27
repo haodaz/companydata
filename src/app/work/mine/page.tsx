@@ -4,9 +4,9 @@
  * 我的真活 /work/mine（要登录；用户 10-18：出题做在登录后，只有做题免登录）：
  * 出真活（/work/new 独立页）、管真活、分享、看考评。列表 = 我出的 + 示范题（所有账号都看得到）；管理员看全部。点卡片进这道真活自己的空间。
  */
+import { WorkTopBar } from '@/components/work/WorkTopBar';
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { WorkLogo } from '@/components/work/WorkLogo';
 
 import { App, Button, ConfigProvider, Tag, Typography } from 'antd';
 import { CopyOutlined, EyeOutlined, PlusOutlined, RocketOutlined } from '@ant-design/icons';
@@ -42,20 +42,7 @@ function Inner() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 28px', background: '#fff', borderBottom: '1px solid #e8e9f0' }}>
-        <WorkLogo size="md" />
-        {/* 顶栏导航：当前页「我的真活」高亮（浅紫底 + 深紫粗体），其余是普通链接 */}
-        <nav className="wm-nav">
-          <span className="on" aria-current="page">我的真活</span>
-          {role === 'admin' && <Link href="/work/admin">管理全部</Link>}
-          <Link href="/lab">百业体验空间</Link>
-        </nav>
-        <style>{`.wm-nav { display: flex; align-items: center; gap: 4px; margin-left: 6px; }
-          .wm-nav > * { padding: 6px 12px; border-radius: 999px; font-size: 13.5px; color: #6b6f86; text-decoration: none; transition: background .15s, color .15s; }
-          .wm-nav a:hover { background: #f1f0fb; color: #4c43c9; }
-          .wm-nav .on { background: #eeecff; color: #3f35c4; font-weight: 700; box-shadow: inset 0 0 0 1px #d8d4ff; }`}</style>
-        <div style={{ marginLeft: 'auto' }}><Link href="/work/new"><Button type="primary" icon={<PlusOutlined />}>出一道真活</Button></Link></div>
-      </div>
+      <WorkTopBar active="mine" />
       <div style={{ maxWidth: 1180, margin: '0 auto', padding: '24px 28px 60px' }}>
         <h1 style={{ fontSize: 26, margin: '0 0 6px' }}>我的真活</h1>
         <div style={{ color: '#666', marginBottom: 18 }}>出题、分享参与链接、看每个人的考评，都在这一页。做题的人不用登录，留个名字就能做。</div>

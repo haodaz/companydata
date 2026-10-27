@@ -1,11 +1,10 @@
 'use client';
 
 /** 真活台 · 出题人管理页（凭 ?k=<owner_key>，不用登录）：看题、复制参与链接、发布 / 下架、重跑基线、看每个人的报告 */
+import { WorkTopBar } from '@/components/work/WorkTopBar';
 import { Tour, type TourStep } from '@/components/work/Tour';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
-import { WorkLogo } from '@/components/work/WorkLogo';
 
 import { App, Button, ConfigProvider, Input, Space, Tag } from 'antd';
 import { WorkTaskDetail, ENV_META } from '@/components/work/WorkTaskDetail';
@@ -49,12 +48,8 @@ function Inner() {
   return (
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e' }}>
       {tour != null && <Tour step={tour} steps={OWNER_TOUR} doneLabel="知道了" onStep={setTour} onDone={() => { setTour(null); try { localStorage.setItem('work-owner-tour-done', '1'); } catch {} }} />}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 28px', background: '#fff', borderBottom: '1px solid #e8e9f0' }}>
-        <WorkLogo size="md" />
-        <Link href="/work/mine" style={{ color: '#6055f5', fontSize: 13 }}>← 我的真活</Link>
-        <span style={{ color: '#999', fontSize: 12, marginLeft: 'auto' }}>真活空间 · 这条链接带管理密钥，可转给同事</span>
-        <button onClick={() => setTour(0)} title="界面说明" style={{ width: 26, height: 24, border: '1px solid #e0e0ee', background: '#fff', borderRadius: 6, cursor: 'pointer', fontWeight: 700, fontSize: 13, color: '#666' }}>?</button>
-      </div>
+      <WorkTopBar active="mine" crumbs={[{ label: '我的真活', href: '/work/mine' }, { label: [T.company_name, T.task?.title || T.role].filter(Boolean).join(' · ') }]}
+        crumbRight={<><span>真活空间 · 这条链接带管理密钥，可转给同事</span><button onClick={() => setTour(0)} title="界面说明" style={{ width: 26, height: 24, border: '1px solid #e0e0ee', background: '#fff', borderRadius: 6, cursor: 'pointer', fontWeight: 700, fontSize: 13, color: '#666' }}>?</button></>} />
       {/* 封面头部：操作台界面做底 */}
       <div style={{ position: 'relative', overflow: 'hidden', background: 'linear-gradient(135deg, #2b2463, #0f6c7a)', color: '#fff' }}>
         <img src={`/work/shot-${env}.png`} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', opacity: .35 }} onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />
