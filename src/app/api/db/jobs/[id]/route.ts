@@ -3,7 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { toList } from '@/lib/list-field';
 import { JOB_FIELD_KEYS, jobCompleteness } from '@/lib/job-fields';
 import { resolveRegion } from '@/lib/region-codes';
-import { normalizeSkillTags } from '@/lib/job-defaults';
+import { addressLangOf, normalizeSkillTags } from '@/lib/job-defaults';
 import fos91 from '@/data/fos-91.json';
 
 export const runtime = 'nodejs';
@@ -66,8 +66,12 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
       if ('city' in updates) updates.city = r.city;
     }
     for (const k of ['skill_labels', 'skill_labels_jd', 'exp_labels', 'exp_labels_jd']) if (k in updates) updates[k] = normalizeSkillTags(Array.isArray(updates[k]) ? updates[k].join('；') : updates[k]);
-    // 改了工作地点：活动地址 (Cn) / (En) 跟着改成一样的（数据部门 10-26）
-    if ('location' in updates) { const loc = String(updates.location ?? '').trim() || null; updates.address_lang_cn = loc; updates.address_lang_en = loc; }
+    // 工作地点真改了：活动地址跟着按语言放一边（中文 → Cn、英文 → En，另一边空；数据部门 10-26 / 10-27 #51）。
+    // 只动这次没手填的那栏——表单会把工作地点原样带上，以前在这里一律覆盖，手补的 Cn 被冲掉、En 被填成中文
+    if ('location' in updates && String(updates.location ?? '').trim() !== String(current.location ?? '').trim()) {
+      const a = addressLangOf(updates.location);
+      for (const k of ['address_lang_cn', 'address_lang_en'] as const) if (!(k in (body.fields || {})) || (body.fields[k] ?? '') === (current[k] ?? '')) updates[k] = a[k];
+    }
     if (updates.name === null) return NextResponse.json({ success: false, error: '岗位名称不能为空' }, { status: 400 });
 
     if (body.human_review_status !== undefined) { updates.human_review_status = body.human_review_status; updates.human_review_at = now; }
