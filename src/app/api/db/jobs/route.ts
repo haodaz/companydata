@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { selectAll } from '@/lib/supabase-all';
 import { supabaseAdmin } from '@/lib/supabase';
 import { completenessOrder, filterCompleteness } from '@/lib/completeness-filter';
+import { filterLink } from '@/lib/link-filter';
 import { orIlike, pageParams } from '@/lib/pg-filter';
 import { requireDownload } from '@/lib/download-permission';
 import { trackDemand } from '@/lib/flywheel/signals';
@@ -36,6 +37,7 @@ export async function GET(request: Request) {
     if (co) query = query.order(co.column, { ascending: co.ascending, nullsFirst: co.nullsFirst });
     query = query.order('updated_at', { ascending: false }).order('id', { ascending: false });
     if (get('comp')) query = filterCompleteness(query, get('comp'));
+    if (get('link')) query = filterLink(query, get('link'));
 
     // 合并掉的重复岗位（if_delete）默认不出现：同一岗位前后两次抓取留下的旧那条
     if (get('deleted') !== '1') query = query.not('if_delete', 'is', true);

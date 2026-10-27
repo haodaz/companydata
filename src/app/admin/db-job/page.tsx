@@ -16,6 +16,7 @@ import { BRAND } from '@/lib/theme';
 import { useModel } from '@/lib/model-context';
 import { sourcesText } from '@/lib/source-tags';
 import { COMPLETENESS_BUCKETS } from '@/lib/completeness-filter';
+import { LINK_FILTERS } from '@/lib/link-filter';
 
 const { Text } = Typography;
 
@@ -38,7 +39,7 @@ export default function DbJobPage() {
   const [pageSize, setPageSize] = useState(50);
   const [selected, setSelected] = useState<React.Key[]>([]);
   const [exporting, setExporting] = useState(false);
-  const DEFAULT_FILTERS = { search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false, missingJd: false, companyId: '', companyName: '', source: '', flag: '', ids: '', publishFrom: '', publishTo: '', comp: '', sort: '' };
+  const DEFAULT_FILTERS = { search: '', jobType: CAMPUS_JOB_TYPES.join(','), season: '', remote: '', status: '', review: '', overseas: false, missingJd: false, companyId: '', companyName: '', source: '', flag: '', ids: '', publishFrom: '', publishTo: '', comp: '', sort: '', link: '' };
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const [resetKey, setResetKey] = useState(0);   // 重置时让搜索框（非受控）一起清空
   const [sources, setSources] = useState<Record<string, number>>({});
@@ -59,7 +60,7 @@ export default function DbJobPage() {
       season: u.get('season') || '', remote: u.get('remote') || '', status: u.get('status') || '', review: u.get('review') || '',
       overseas: u.get('overseas') === '1', missingJd: u.get('missingJd') === '1',
       source: u.get('source') || '', flag: u.get('flag') || '', publishFrom: u.get('publishFrom') || '', publishTo: u.get('publishTo') || '',
-      comp: u.get('comp') || '', sort: u.get('sort') || '',
+      comp: u.get('comp') || '', sort: u.get('sort') || '', link: u.get('link') || '',
     }));
     const p = parseInt(u.get('page') || ''), ps = parseInt(u.get('pageSize') || '');
     if (p > 0) setPage(p);
@@ -76,7 +77,7 @@ export default function DbJobPage() {
     put('season', filters.season); put('remote', filters.remote); put('status', filters.status); put('review', filters.review);
     put('overseas', filters.overseas); put('missingJd', filters.missingJd); put('companyId', filters.companyId); put('companyName', filters.companyName); put('ids', filters.ids);
     put('source', filters.source); put('flag', filters.flag); put('publishFrom', filters.publishFrom); put('publishTo', filters.publishTo);
-    put('comp', filters.comp); put('sort', filters.sort);
+    put('comp', filters.comp); put('sort', filters.sort); put('link', filters.link);
     if (page > 1) q.set('page', String(page));
     if (pageSize !== 50) q.set('pageSize', String(pageSize));
     const s = q.toString();
@@ -89,7 +90,7 @@ export default function DbJobPage() {
   const query = useCallback((extra: Record<string, string> = {}) => new URLSearchParams({
     search: filters.search, jobType: filters.jobType, season: filters.season, remote: filters.remote,
     status: filters.status, review: filters.review, overseas: filters.overseas ? '1' : '', missingJd: filters.missingJd ? '1' : '', companyId: filters.companyId, ids: filters.ids,
-    source: filters.source, flag: filters.flag, publishFrom: filters.publishFrom, publishTo: filters.publishTo, comp: filters.comp, sort: filters.sort, ...extra,
+    source: filters.source, flag: filters.flag, publishFrom: filters.publishFrom, publishTo: filters.publishTo, comp: filters.comp, sort: filters.sort, link: filters.link, ...extra,
   }), [filters]);
 
   const load = useCallback(async () => {
@@ -221,7 +222,7 @@ export default function DbJobPage() {
     { title: '更新', dataIndex: 'updated_at', width: 110, render: (t: string) => <Text type="secondary" style={{ fontSize: 12 }}>{new Date(t).toLocaleDateString('zh-CN')}</Text> },
     {
       title: '链接', width: 70, fixed: 'right' as const,
-      render: (_: any, r: any) => (r.link || r.source_url) ? <a href={r.link || r.source_url} target="_blank" rel="noreferrer">{r.link ? '原文' : '来源'}</a> : '-',
+      render: (_: any, r: any) => (r.link || r.source_url) ? <Tooltip title={r.link_issue || undefined}><a href={r.link || r.source_url} target="_blank" rel="noreferrer" style={r.link_issue === '列表页，未找到该岗位详情' || r.link_status === 'dead' ? { color: BRAND.danger } : undefined}>{r.link ? '原文' : '来源'}</a></Tooltip> : '-',
     },
   ];
 
@@ -276,6 +277,7 @@ export default function DbJobPage() {
               onChange={v => setFilter({ publishFrom: v?.[0]?.format('YYYY-MM-DD') || '', publishTo: v?.[1]?.format('YYYY-MM-DD') || '' })} />
           </Tooltip>
           <Select value={filters.comp} style={{ width: 140 }} onChange={v => setFilter({ comp: v })} options={[{ value: '', label: '全部完整度' }, ...COMPLETENESS_BUCKETS]} />
+          <Select value={filters.link} style={{ width: 170 }} onChange={v => setFilter({ link: v })} popupMatchSelectWidth={false} options={[{ value: '', label: '全部链接' }, ...LINK_FILTERS]} />
           <Checkbox checked={filters.overseas} onChange={e => setFilter({ overseas: e.target.checked })}>只看面向留学生</Checkbox>
           <Checkbox checked={filters.missingJd} onChange={e => setFilter({ missingJd: e.target.checked })}>只看缺 JD</Checkbox>
           <Button onClick={() => { setFilters(DEFAULT_FILTERS); setPage(1); setSelected([]); setResetKey(k => k + 1); }}>重置筛选</Button>
