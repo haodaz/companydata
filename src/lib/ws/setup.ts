@@ -80,12 +80,12 @@ const PROFILE_MODEL = process.env.WS_PROFILE_MODEL || 'qwen-plus';
 const hostOf = (u: string) => { try { return new URL(/^https?:\/\//.test(u) ? u : `https://${u}`).hostname.replace(/^www\./, ''); } catch { return ''; } };
 
 /** 第一步：在平方企业库里新建一家（库里没有时） */
-export async function createCompanyEntity(name: string, website: string | null, email: string): Promise<number> {
-  const row: Record<string, any> = { name: name.trim(), source: [SOURCE], human_review_status: 'review' };   // companies.source 是数组（潜历二批 / ted …）
+export async function createCompanyEntity(name: string, website: string | null, email: string, source: string = SOURCE): Promise<number> {
+  // companies.source 在本库是 text（如「科研仪器」）：先按字符串写；写数组会被存成 '["…"]' 字面量（10-27 踩过）。老结构是数组的库再退回数组
+  const row: Record<string, any> = { name: name.trim(), source, human_review_status: 'review' };
   if (website && hostOf(website)) row.official_website = /^https?:\/\//.test(website) ? website : `https://${website}`;
   let { data, error } = await db.from('companies').insert(row).select('id').single();
-  // companies.source 在老结构里是 text（公司 simulator 的库）：数组写不进去就退回写字符串，别存成 '["…"]' 字面量
-  if (error && /array|22P02|malformed|invalid input syntax/i.test(error.message)) { row.source = SOURCE; ({ data, error } = await db.from('companies').insert(row).select('id').single()); }
+  if (error && /array|22P02|malformed|invalid input syntax/i.test(error.message)) { row.source = [source]; ({ data, error } = await db.from('companies').insert(row).select('id').single()); }
   if (error) {
     // 名字撞了（lower(name) 唯一）：就是库里那家
     const { data: ex } = await db.from('companies').select('id').ilike('name', name.trim()).limit(1);

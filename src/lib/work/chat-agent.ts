@@ -4,6 +4,7 @@
  * 问有没有过往的题可以参照（粘贴进对话就行）；出题前 ask_user 确认一句话题意；出完跑基线；用户提意见就修订。
  * 工具就是填表出题背后那几个函数——两种模式同一套能力。
  */
+import { ensureWorkCompany } from './company-entity';
 import type Anthropic from '@anthropic-ai/sdk';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import type { AgentKit } from '@/lib/ws/agent';
@@ -51,6 +52,11 @@ export async function createWorkTask(user: { email: string; role: string }, body
   }
   if (!company || !role) throw new Error('企业和岗位都要填');
   const ctx = await gatherContext(body.company_id ? String(body.company_id) : company, role, { intro: body.company_id ? undefined : String(body.intro || '').slice(0, 6000) });
+  // 库里没有、出题人贴了介绍的企业：按单入库（来源「真活出题」、待审核），题目挂上这家的 id
+  if (!ctx.company?.id && ctx.company && String(body.intro || '').trim().length >= 20) {
+    const cid = await ensureWorkCompany(ctx.company.name || company, ctx.company, user.email);
+    if (cid) { ctx.company = { ...ctx.company, id: cid }; ctx.notes.push(`「${ctx.company.name || company}」已按出题人的介绍新建进企业库（待审核，编号 ${cid}）`); }
+  }
   // 参照：出题人自己交的参考资料 → 照它改背景换数字；没有就在后台从内部训练素材里自动挑（用户看不见）→ 照结构出新题
   let sample = body.sample_id ? await getSample(String(body.sample_id)) : null;
   if (body.sample_id && !sample) throw new Error('参考资料不存在');
