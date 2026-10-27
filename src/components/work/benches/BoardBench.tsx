@@ -9,7 +9,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import '@excalidraw/excalidraw/index.css';
-import { buildBoardLibrary } from './boardLibrary';
+import { BOARD_LIBRARY, buildBoardLibrary } from './boardLibrary';
 
 const Excalidraw = dynamic(() => import('@excalidraw/excalidraw').then(m => m.Excalidraw), { ssr: false, loading: () => <div style={{ display: 'grid', placeItems: 'center', height: '100%', color: '#999', fontSize: 13 }}>白板加载中…</div> });
 
@@ -27,6 +27,8 @@ export function BoardBench({ value, onChange, notes, onNotes, caption, leading, 
   const timer = useRef<any>(null);
   const setApi = useCallback((a: any) => {
     api.current = a; if (apiRef) apiRef.current = a;
+    // 录屏 / 调试用：把白板接口和组件骨架挂到 window 上（录演示片时程序化摆组件；对作答没有影响）
+    import('@excalidraw/excalidraw').then(m => { (window as any).__workBoard = { api: a, lib: BOARD_LIBRARY, convert: m.convertToExcalidrawElements }; }).catch(() => {});
     // 组件库：白板就绪后放进素材库。按 id 替换我们自己的那批（开发模式会初始化两次，不能叠加），用户自己存的条目保留
     if (!a || libLoading) return;
     libLoading = import('@excalidraw/excalidraw').then(({ convertToExcalidrawElements }) => {

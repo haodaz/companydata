@@ -28,7 +28,7 @@ export const BOARD_LIBRARY: { name: string; sk: Sk[] }[] = [
   { name: '复选框', sk: [rect(0, 2, 20, 20, { strokeColor: LINE }), text(30, 1, '选项文字')] },
   { name: '弹窗', sk: [round(0, 0, 300, 200, { backgroundColor: '#ffffff', fillStyle: 'solid', strokeColor: LINE }), text(20, 20, '弹窗标题', { fontSize: 18 }), text(20, 58, '说明这一步要用户确认什么，\n以及确认之后会发生什么。', { fontSize: 14, strokeColor: MUTED }), round(20, 140, 120, 40, { label: { text: '取消', fontSize: 15 } }), round(160, 140, 120, 40, { backgroundColor: INK, fillStyle: 'solid', label: { text: '确认', strokeColor: '#ffffff', fontSize: 15 } })] },
   { name: '轻提示', sk: [round(0, 0, 220, 44, { backgroundColor: '#343a40', fillStyle: 'solid', strokeColor: '#343a40', label: { text: '已保存', strokeColor: '#ffffff', fontSize: 15 } })] },
-  { name: '标签', sk: [round(0, 0, 72, 28, { backgroundColor: FILL, fillStyle: 'solid', strokeColor: FILL, label: { text: '标签', fontSize: 13 } })] },
+  { name: '标签', sk: [round(0, 0, 72, 28, { backgroundColor: FILL, fillStyle: 'solid', strokeColor: FILL, label: { text: '标签', fontSize: 13, strokeColor: INK } })] },
   // —— 视觉 / IP ——
   { name: '色板', sk: [...['#1e1e1e', '#6055f5', '#12b5cb', '#ffd43b', '#ff8787'].map((c, i) => rect(i * 56, 0, 48, 48, { backgroundColor: c, fillStyle: 'solid', strokeColor: c })), text(0, 56, '主色 · 辅色 · 点缀色（改成你的）', { fontSize: 12, strokeColor: MUTED })] },
   { name: '九宫格辅助线', sk: [rect(0, 0, 300, 300, { strokeColor: LINE, strokeStyle: 'dashed' }), line(100, 0, 0, 300, { strokeStyle: 'dashed' }), line(200, 0, 0, 300, { strokeStyle: 'dashed' }), line(0, 100, 300, 0, { strokeStyle: 'dashed' }), line(0, 200, 300, 0, { strokeStyle: 'dashed' })] },
