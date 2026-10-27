@@ -9,8 +9,11 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import '@excalidraw/excalidraw/index.css';
+import { buildBoardLibrary } from './boardLibrary';
 
 const Excalidraw = dynamic(() => import('@excalidraw/excalidraw').then(m => m.Excalidraw), { ssr: false, loading: () => <div style={{ display: 'grid', placeItems: 'center', height: '100%', color: '#999', fontSize: 13 }}>白板加载中…</div> });
+
+let libLoading: Promise<void> | null = null;   // 素材库是整页共用的一份（开发模式会挂两个白板实例）：整页只装一次
 
 export type BoardValue = { elements: any[]; files: Record<string, any> };
 export const emptyBoard = (): BoardValue => ({ elements: [], files: {} });
@@ -22,7 +25,15 @@ export function BoardBench({ value, onChange, notes, onNotes, caption, leading, 
   const api = useRef<any>(null);
   const lastCount = useRef(value.elements.filter(e => !e.isDeleted).length);
   const timer = useRef<any>(null);
-  const setApi = useCallback((a: any) => { api.current = a; if (apiRef) apiRef.current = a; }, [apiRef]);
+  const setApi = useCallback((a: any) => {
+    api.current = a; if (apiRef) apiRef.current = a;
+    // 组件库：白板就绪后放进素材库。按 id 替换我们自己的那批（开发模式会初始化两次，不能叠加），用户自己存的条目保留
+    if (!a || libLoading) return;
+    libLoading = import('@excalidraw/excalidraw').then(({ convertToExcalidrawElements }) => {
+      const ours = buildBoardLibrary(convertToExcalidrawElements as any);
+      a.updateLibrary?.({ libraryItems: (cur: any[]) => [...(cur || []).filter(x => !String(x.id).startsWith('work-lib-')), ...ours], merge: false });
+    }).catch(() => {});
+  }, [apiRef]);
   // Excalidraw 每次指针移动都会触发 onChange：攒 400ms 再写回父组件；元素数变化记一条事件
   const change = useCallback((els: readonly any[], _st: any, files: any) => {
     clearTimeout(timer.current);
@@ -60,6 +71,7 @@ export function BoardBench({ value, onChange, notes, onNotes, caption, leading, 
         <button style={btn} onClick={() => addTemplate('phone')}>手机屏</button>
         <button style={btn} onClick={() => addTemplate('web')}>网页屏</button>
         <button style={btn} onClick={() => addTemplate('note')}>便签</button>
+        <button style={{ ...btn, borderColor: '#d8d4ff', color: '#4c43c9', fontWeight: 600 }} onClick={() => { api.current?.toggleSidebar?.({ name: 'default', tab: 'library', force: true }); onEvent?.('board_library'); }}>组件库</button>
       </div>
       <div style={{ flex: 1, minHeight: 360, position: 'relative' }}>
         <Excalidraw
