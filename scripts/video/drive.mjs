@@ -217,10 +217,12 @@ for (const [i, sc] of scenes.entries()) {
     const o = sc.drag || sc.clickAt; let ox = 0, oy = 0;
     if (o.rel) { const r = await evaluate(`(() => { const e = document.querySelector(${JSON.stringify(o.rel)}); if (!e) return null; const b = e.getBoundingClientRect(); return [b.left, b.top]; })()`); [ox, oy] = r?.result?.value || [0, 0]; }
     const a = sc.drag ? o.from : o.at, b = sc.drag ? o.to : o.at, n = sc.drag ? (o.steps || 16) : 1;
-    await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: ox + a[0], y: oy + a[1] });
-    await send('Input.dispatchMouseEvent', { type: 'mousePressed', x: ox + a[0], y: oy + a[1], button: 'left', buttons: 1, clickCount: 1 });
-    for (let i = 1; i <= n; i++) { await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: ox + a[0] + (b[0] - a[0]) * i / n, y: oy + a[1] + (b[1] - a[1]) * i / n, button: 'left', buttons: 1 }); await sleep(28); }
-    await send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: ox + b[0], y: oy + b[1], button: 'left', buttons: 0, clickCount: 1 });
+    // 录屏这边 Chrome 把鼠标坐标当设备像素收（shot.mjs 不会）：乘上缩放
+    const K = DSF; ox *= K; oy *= K; const A = [a[0] * K, a[1] * K], B = [b[0] * K, b[1] * K];
+    await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: ox + A[0], y: oy + A[1] });
+    await send('Input.dispatchMouseEvent', { type: 'mousePressed', x: ox + A[0], y: oy + A[1], button: 'left', buttons: 1, clickCount: 1 });
+    for (let i = 1; i <= n; i++) { await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: ox + A[0] + (B[0] - A[0]) * i / n, y: oy + A[1] + (B[1] - A[1]) * i / n, button: 'left', buttons: 1 }); await sleep(28); }
+    await send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: ox + B[0], y: oy + B[1], button: 'left', buttons: 0, clickCount: 1 });
     await sleep(350);
   }
   if (sc.eval) {
