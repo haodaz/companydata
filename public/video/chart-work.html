@@ -46,10 +46,18 @@ const T = {
     { c: 'a', k: '一', h: '交付物', li: ['对着评分标准一条一条核', '条目有依赖：前一步错，后面连着扣', '数字要能从算式复核'] },
     { c: 'b', k: '二', h: '过程', li: ['材料看了哪些、什么时候看的', 'AI 问了什么、采纳了什么、改了什么', '改稿节奏、空闲、切换'] },
     { c: 'c', k: '三', h: '和 AI 基线比', li: ['同一道题，AI 先做过一遍', '候选人高在哪、低在哪', '出题人看报告：交付物原文 + 逐条评分'] } ] },
+  'library': { eb: '百业AI｜真活 · 1.01 更新', h: '任务库：看上哪道，拿来就用', s: '各行业挑好的任务，企业名都去掉了；选一道，两种用法', grid: 'grid-template-columns: 1fr 60px 1fr', cards: [
+    { c: 'a', k: '用法一', h: '原题直出，换成你们公司', li: ['结构、交付物、材料和里面的坑都照搬', '企业背景和数字换成你们自己的', '只用告诉我们：是哪家企业'] },
+    { vs: '或' },
+    { c: 'b', k: '用法二', h: '仅做参考', li: ['只借它的题型和推进方式', '给你们公司出一道新的', '不会和原题撞题'] } ] },
+  'board': { eb: '百业AI｜真活 · 1.01 更新', h: '新操作台：白板', s: '给产品、UI、视觉和品牌设计：想到什么画什么', grid: 'grid-template-columns: repeat(3, 1fr)', cards: [
+    { c: 'a', k: '能画什么', h: '线框 · 界面 · 海报 · IP', li: ['方框、箭头、文字、手绘', '贴参考图、画框分屏', '手机屏、网页屏、便签模板'] },
+    { c: 'b', k: '和其它台子', h: '按交付物混着用', li: ['IP 形象用白板', '测算用表格，流程用画布', '一道任务里标签切换'] },
+    { c: 'c', k: '交上来', h: '图和文字都留着', li: ['整板存成一张图给你看', '图里的内容转成文字进评分', '设计说明随图一起交'] } ] },
 };
 const id = new URLSearchParams(location.search).get('id') || 'two-ways'; const t = T[id];
 const p = document.getElementById('p');
-let html = `<div class="eyebrow">百业AI｜真活 · 平方智能 · 真活 1.0 使用演示</div><h1>${t.h}</h1><div class="sub">${t.s}</div>`;
+let html = `<div class="eyebrow">${t.eb || '百业AI｜真活 · 平方智能 · 真活 1.0 使用演示'}</div><h1>${t.h}</h1><div class="sub">${t.s}</div>`;
 if (t.cards) html += `<div class="grid" style="${t.grid}">` + t.cards.map((c, i) => c.vs ? `<div class="vs">${c.vs}</div>` : `<div class="card ${c.c}" style="--i:${i}"><div class="k">${c.k}</div><h2>${c.h}</h2><ul>${c.li.map(x => `<li>${x}</li>`).join('')}</ul></div>`).join('') + '</div>';
 if (t.flow) html += `<div class="flow">` + t.flow.map(([h, d], i) => `<div class="step" style="--i:${i}"><div class="n">${i + 1}</div><h3>${h}</h3><p>${d}</p></div>${i < t.flow.length - 1 ? '<div class="arrow">›</div>' : ''}`).join('') + '</div>';
 html += `<div class="foot">${t.foot || '百业AI｜真活 · www.aidataoffice.com'}</div>`;
