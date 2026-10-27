@@ -23,7 +23,7 @@ export function useMe(): Me | undefined {   // undefined = 还在问（先什么
 
 export type Crumb = { label: React.ReactNode; href?: string };
 
-export function WorkTopBar({ active, right, crumbs, crumbRight }: { active?: 'mine' | 'new' | 'admin'; right?: React.ReactNode; crumbs?: Crumb[]; crumbRight?: React.ReactNode }) {
+export function WorkTopBar({ active, right, crumbs, crumbRight }: { active?: 'mine' | 'library' | 'new' | 'admin'; right?: React.ReactNode; crumbs?: Crumb[]; crumbRight?: React.ReactNode }) {
   const me = useMe(); const role = me?.role || null;
   return (
     <>
@@ -32,6 +32,7 @@ export function WorkTopBar({ active, right, crumbs, crumbRight }: { active?: 'mi
         <WorkLogo size="md" href="/work/mine" />
         <nav className="wtb-nav" aria-label="真活导航">
           <NavLink href="/work/mine" on={active === 'mine'}>我的真活</NavLink>
+          <NavLink href="/work/library" on={active === 'library'}>任务库</NavLink>
           {role === 'admin' && <NavLink href="/work/admin" on={active === 'admin'}>管理全部</NavLink>}
           <NavLink href="/lab">百业体验空间</NavLink>
         </nav>
@@ -84,6 +85,7 @@ export function WorkAccount({ me, dark }: { me: Me | undefined; dark?: boolean }
         <div className="wtb-menu" role="menu">
           <div className="wtb-menu-h">{me.email}{me.role === 'admin' ? <i>管理员</i> : null}</div>
           <Link href="/work/mine" role="menuitem">我的真活</Link>
+          <Link href="/work/library" role="menuitem">任务库</Link>
           {me.role === 'admin' && <Link href="/work/admin" role="menuitem">管理全部</Link>}
           <Link href="/work/new" role="menuitem">出一道真活</Link>
           <button role="menuitem" onClick={async () => { await fetch('/api/auth/logout', { method: 'POST' }).catch(() => {}); meCache = undefined; window.location.href = '/work'; }}>退出登录</button>

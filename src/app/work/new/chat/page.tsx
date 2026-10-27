@@ -39,6 +39,12 @@ export default function WorkChatPage() {
   const loadThreads = useCallback(() => fetch('/api/admin/work/chat', { cache: 'no-store' }).then(r => { if (r.status === 401) location.href = `/work/login?next=${encodeURIComponent('/work/new/chat')}`; return r.json(); }).then(j => j.ok && setThreads(j.data)).catch(() => {}), []);
   useEffect(() => { loadThreads(); }, [loadThreads]);
   useEffect(() => { const t = new URLSearchParams(window.location.search).get('thread'); if (t) openThread(t); }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+  // 从任务库来（?lib=&use=）：把挑好的任务和用法写进输入框，用户补一句企业就能发；助理只问还不知道的
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search); const id = q.get('lib'); if (!id) return;
+    const ref = q.get('use') === 'ref';
+    fetch('/api/work/library').then(r => r.json()).then(j => { const it = j.ok && j.items.find((x: any) => x.id === id); if (it) setText(`我想用任务库里的「${it.title}」（编号 ${it.id}），${ref ? '只做参考，照它的思路出一道' : '原题直出，换成我们公司'}。我们公司是：`); }).catch(() => {});
+  }, []);
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [items]);
 
   const openThread = async (id: string) => {

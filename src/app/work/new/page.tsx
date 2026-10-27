@@ -49,6 +49,15 @@ function Inner() {
   const [ref, setRef] = useState<SampleRow | null>(null);
   useEffect(() => { fetch('/api/admin/work/samples?mine=1').then(r => r.json()).then(j => j.ok && setRefs(j.samples)).catch(() => {}); }, []);
   const [picked, setPicked] = useState<PickedCompany>(null);
+  // 从任务库来（?lib=&use=，2026-10-27）：题已经挑好，只问企业；要找的人默认沿用；不问想考什么、不选参照、不翻第二页
+  const [lib, setLib] = useState<{ id: string; title: string; role: string; industry: string; direction: string; env?: string } | null>(null);
+  const [use, setUse] = useState<'base' | 'ref'>('base');
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search); const id = q.get('lib'); if (!id) return;
+    setUse(q.get('use') === 'ref' ? 'ref' : 'base');
+    fetch('/api/work/library').then(r => r.json()).then(j => { const it = j.ok && j.items.find((x: any) => x.id === id); if (it) { setLib(it); setF(x => ({ ...x, role: x.role || it.role })); } }).catch(() => {});
+  }, []);
+  const dropLib = () => { setLib(null); window.history.replaceState(null, '', '/work/new'); };
   const [busy, setBusy] = useState('');
   // 出题等待的进度：gen 出题中 → base AI 基线中 → done 好了（GenProgress 一行一行列出平方在做什么）
   const [phase, setPhase] = useState<'gen' | 'base' | 'done'>('gen');
@@ -57,7 +66,7 @@ function Inner() {
     if (way === 'verbatim' ? verbatim.trim().length < 60 : (!f.company.trim() || !f.role.trim())) return message.warning(way === 'verbatim' ? '把整道题贴进来（60 字以上）' : '企业和要找的人都要填');
     setBusy(way === 'verbatim' ? '原题不改，正在整理成交付物和评分点……约 1 分钟' : '在拼这家企业的材料、出任务、做材料包、定标准……约 2 分钟，别关页面'); setPhase('gen');
     try {
-      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, sample_id: ref?.id, sample_mode: 'reskin', attachments: atts, verbatim: way === 'verbatim' ? verbatim.trim() : undefined }) });
+      const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, ...(lib ? { showcase_id: lib.id, showcase_use: use } : {}), sample_id: ref?.id, sample_mode: 'reskin', attachments: atts, verbatim: way === 'verbatim' ? verbatim.trim() : undefined }) });
       if (r.status === 401) { location.href = `/work/login?next=${encodeURIComponent('/work/new')}`; return; }
       const j = await r.json();
       if (!j.ok) throw new Error(j.error);
@@ -78,21 +87,34 @@ function Inner() {
       <div style={{ maxWidth: 1080, margin: '0 auto', padding: '28px 28px 60px', display: 'grid', gridTemplateColumns: 'minmax(0, 1.5fr) minmax(280px, 1fr)', gap: 24, alignItems: 'start' }}>
         <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 18, padding: '26px 28px' }}>
           <h1 style={{ fontSize: 24, margin: '0 0 4px' }}>出一道真活</h1>
+          {lib && <div style={{ margin: '10px 0 18px', padding: '14px 16px', border: '1px solid #d8d4ff', background: '#f8f7ff', borderRadius: 14 }}>
+            <div style={{ fontSize: 12, color: '#6055f5', fontWeight: 700 }}>照任务库 · {lib.industry} · {lib.direction}</div>
+            <div style={{ fontSize: 16, fontWeight: 800, margin: '4px 0 10px' }}>{lib.title}</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
+              <div style={{ display: 'inline-flex', border: '1px solid #d8d4ff', borderRadius: 999, overflow: 'hidden', fontSize: 13, background: '#fff' }}>
+                {([['base', '原题直出，换成我们公司'], ['ref', '仅做参考']] as const).map(([k, t]) => <span key={k} onClick={() => setUse(k)} style={{ padding: '6px 14px', cursor: 'pointer', background: use === k ? '#6055f5' : '#fff', color: use === k ? '#fff' : '#555', fontWeight: use === k ? 700 : 400 }}>{t}</span>)}
+              </div>
+              <a href="/work/library" style={{ fontSize: 13, color: '#6055f5' }}>换一道</a>
+              <a onClick={dropLib} style={{ fontSize: 13, color: '#999', cursor: 'pointer' }}>不用任务库</a>
+            </div>
+          </div>}
+          {!lib && <>
           <div style={{ display: 'inline-flex', border: '1px solid #e0e0ee', borderRadius: 999, overflow: 'hidden', fontSize: 13, margin: '6px 0 10px' }}>
             {([['gen', '平方出任务'], ['verbatim', '原题直发']] as const).map(([k, t]) => <span key={k} onClick={() => setWay(k)} style={{ padding: '6px 14px', cursor: 'pointer', background: way === k ? '#6055f5' : '#fff', color: way === k ? '#fff' : '#666', fontWeight: way === k ? 700 : 400 }}>{t}</span>)}
           </div>
-          {way === 'verbatim' && <div style={{ marginBottom: 18 }}>
+          </>}
+          {way === 'verbatim' && !lib && <div style={{ marginBottom: 18 }}>
             <div style={{ fontSize: 12.5, color: '#888', marginBottom: 6 }}>你手里已经有一道干净的题：整段贴进来，<b>一字不改</b>发给候选人。平台只整理交付物和评分点（只从题目自己的要求里推），生成参与链接。企业和岗位可不填，填了只当标签。</div>
             <Input.TextArea value={verbatim} onChange={e => setVerbatim(e.target.value)} autoSize={{ minRows: 8, maxRows: 24 }} maxLength={12000} showCount placeholder="把题目原文贴这里：背景、要求、要交什么、时间……" />
           </div>}
 
 
-          {way === 'gen' && <div style={{ display: 'flex', gap: 8, alignItems: 'center', margin: '0 0 18px', fontSize: 13 }}>
+          {way === 'gen' && !lib && <div style={{ display: 'flex', gap: 8, alignItems: 'center', margin: '0 0 18px', fontSize: 13 }}>
             {([[1, '题目'], [2, '任务设置']] as const).map(([n, t]) => <div key={n} onClick={() => n === 1 && setPage(1)} style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: n === 1 ? 'pointer' : 'default', color: page === n ? '#1a1a2e' : '#999', fontWeight: page === n ? 700 : 500 }}><span style={{ width: 22, height: 22, borderRadius: 99, display: 'grid', placeItems: 'center', fontSize: 12, background: page === n ? '#6055f5' : page > n ? '#22c55e' : '#e8e9f0', color: page >= n ? '#fff' : '#888' }}>{page > n ? '✓' : n}</span>{t}</div>)}
             <span style={{ color: '#aaa', margin: '0 2px' }}>→</span><span style={{ color: '#999' }}>出任务</span>
           </div>}
           {(way === 'verbatim' || page === 1) && <>
-          <Sec n="1" t="企业，和你要找的人" d="">
+          <Sec n="1" t={lib ? '换成你们公司' : '企业，和你要找的人'} d={lib ? '要找的人已经按这道任务填好，可以改' : ''}>
             <CompanyRolePicker company={f.company} role={f.role} onCompany={(name, p) => { setF(x => ({ ...x, company: name })); setPicked(p); }} onRole={r => setF(x => ({ ...x, role: r }))} />
             {/* 库里没有的企业：贴一段介绍，AI 先读懂这家公司再出任务（2026-10-22） */}
             {f.company.trim() && !picked && (
@@ -104,20 +126,21 @@ function Inner() {
               </div>
             )}
           </Sec>
-          <Sec n="2" t="想考什么？（选填）" d="">
+          {!lib && <Sec n="2" t="想考什么？（选填）" d="">
             <Input.TextArea value={f.focus} onChange={e => setF(x => ({ ...x, focus: e.target.value }))} placeholder="例：聚焦德布勒森工厂爬坡期的欧洲供需平衡；给 3 年以内的人做；一小时内" autoSize={{ minRows: 2, maxRows: 5 }} />
-          </Sec>
-          <Sec n="3" t="题里要给做题人什么素材？（选填）" d="这些会直接出现在考题里，做题人看得到。建议给做这件事真实要用的东西：数据表、报表截图、图纸、合同要点">
+          </Sec>}
+          <Sec n={lib ? '2' : '3'} t="题里要给做题人什么素材？（选填）" d="这些会直接出现在考题里，做题人看得到。建议给做这件事真实要用的东西：数据表、报表截图、图纸、合同要点">
             <AttachUpload value={atts} onChange={setAtts} />
           </Sec>
-          <Sec n="4" t="有没有以前用过的题可以参照？（选填）" d="这些不会给做题人看。你们过往用过的题、内部考题、认可的案例，AI 出任务时照它的路数出">
+          {!lib && <Sec n="4" t="有没有以前用过的题可以参照？（选填）" d="这些不会给做题人看。你们过往用过的题、内部考题、认可的案例，AI 出任务时照它的路数出">
             {refs.length > 0 && <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
               {refs.map(sm => <Tag.CheckableTag key={sm.id} checked={ref?.id === sm.id} onChange={c => setRef(c ? sm : null)} style={{ padding: '4px 10px', fontSize: 13, border: '1px solid #e0e0ee' }}>{sm.title} <span style={{ opacity: .6 }}>· {sm.stages} 步</span></Tag.CheckableTag>)}
             </div>}
             <SampleUpload shared={false} onDone={s => { setRefs(x => [s, ...x]); setRef(s); }} pastePlaceholder="把整道题贴进来：背景、每一问、要给的数据、参考答案（有就带上）" />
             {ref?.summary && <div style={{ marginTop: 8, fontSize: 12.5, color: '#555', background: '#faf9ff', padding: '8px 12px', borderRadius: 10 }}>照这份出：{ref.summary}</div>}
-          </Sec>
-          {way === 'gen' && <Button type="primary" size="large" block onClick={() => { if (!f.company.trim() || !f.role.trim()) return message.warning('企业和要找的人都要填'); setPage(2); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>下一步：任务设置 →</Button>}
+          </Sec>}
+          {lib && <Button type="primary" size="large" block icon={<RocketOutlined />} loading={!!busy} onClick={() => { if (!f.company.trim()) return message.warning('先说是哪家企业'); create(); }} style={{ height: 50, fontWeight: 700 }}>出任务（约 2–3 分钟）</Button>}
+          {way === 'gen' && !lib && <Button type="primary" size="large" block onClick={() => { if (!f.company.trim() || !f.role.trim()) return message.warning('企业和要找的人都要填'); setPage(2); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>下一步：任务设置 →</Button>}
           </>}
           {way === 'gen' && page === 2 && <>
             <div style={{ fontSize: 13, color: '#666', marginBottom: 14, padding: '10px 14px', background: '#fafbff', border: '1px solid #e8e9f0', borderRadius: 12 }}><b>{f.company || '（企业）'}</b> · 要找：{f.role || '—'}{f.focus ? ` · 考：${f.focus.slice(0, 40)}` : ''}{atts.length ? ` · 素材 ${atts.length} 份` : ''}{ref ? ' · 有参考' : ''} <a onClick={() => setPage(1)} style={{ marginLeft: 8 }}>改题目</a></div>
@@ -139,7 +162,12 @@ function Inner() {
           {way === 'gen' && page === 2 && <Text type="secondary" style={{ display: 'block', fontSize: 12, marginTop: 12 }}>出好的题先是「待发布」：你可以预览做题台、哪里不对让 AI 改，确认后再发布给候选人。</Text>}
         </div>
 
-        <div style={{ position: 'sticky', top: 20, display: 'grid', gap: 14 }}>
+        <div style={{ position: 'sticky', top: 80, display: 'grid', gap: 14 }}>
+          {!lib && <a href="/work/library" style={{ display: 'block', textDecoration: 'none', color: 'inherit', background: 'linear-gradient(135deg, #f4f2ff, #eef9fb)', border: '1px solid #ddd9ff', borderRadius: 18, padding: '16px 20px' }}>
+            <div style={{ fontWeight: 800, fontSize: 15 }}>不想从零开始？</div>
+            <div style={{ fontSize: 13, color: '#555', margin: '4px 0 8px', lineHeight: 1.7 }}>任务库里有各行业挑好的任务，可以原题拿来换成你们公司，也可以照它的思路出。</div>
+            <span style={{ fontSize: 13, color: '#6055f5', fontWeight: 700 }}>去任务库挑一道 →</span>
+          </a>}
           <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 18, padding: '18px 20px' }}>
             <div style={{ fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700, marginBottom: 8 }}>这道真活会怎么出</div>
             <ol style={{ margin: 0, paddingLeft: 18, lineHeight: 1.9, fontSize: 13.5, color: '#3b405a' }}>

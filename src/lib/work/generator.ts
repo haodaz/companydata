@@ -250,7 +250,7 @@ export interface WorkTask {
 /** 研究真活（2026-10-20）：科研院所招博士后 / 研究员 / 教授，考的是研究方向上的操作和研究技能 */
 export const RESEARCH_TASK_KINDS = ['实验设计（给研究问题，设计方案、对照、变量与样本量）', '数据分析（给一份真实格式的实验 / 观测数据，找异常、选统计方法、下结论并说清局限）', '文献与选题（给一个方向，梳理进展、指出研究空白、提可做的课题）', '审稿（给一篇稿件或摘要，找方法和结论上的问题，写审稿意见）', '写基金本子（研究目标、技术路线、可行性与风险）', '复现（用代码复现论文里的一个结果并解释差异）'];
 
-export async function generateTask(ctx: WorkContext, role: string, opts: { model?: string; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire'; attachments?: Attachment[] ; bankRefs?: string } = {}): Promise<{ task: WorkTask; model: string }> {
+export async function generateTask(ctx: WorkContext, role: string, opts: { model?: string; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire'; attachments?: Attachment[] ; bankRefs?: string; base?: { text: string; mode: 'base' | 'ref'; title: string } } = {}): Promise<{ task: WorkTask; model: string }> {
   const model = opts.model || WORK_MODEL;
   const name = ctx.company?.name || (opts.research ? '这个科研团队' : '这家企业');
   const need = isNeedText(role);
@@ -279,6 +279,12 @@ ${opts.sampleMode === 'inspire'
   ? `照它出：**推进结构、题型顺序、步数、难度和数字密度跟样本一致**，内容全部换成 ${name} 此刻真实的问题和材料（行业、公司、数字都不能照抄样本）。`
   : `**改背景、换数字，再出一次**（老师从上一届作业里拿题的做法）：每一步的题型、问法、要算什么、答案的推导路径都**原样保留**；把故事背景换成 ${name} 此刻真实的处境（用材料里的事实），样本里的数据表换成同样结构、同样量级但不同的数字（每个数改 20%–60%，别只换单位），calc 的 expr 用新数字重写，value 平台会重算；expected 按新数字重写结论。样本里没有而材料里有的事实可以加进背景，不要加新的步骤。`}
 每一步只给当步需要的信息；测算要有可复核的算式；最后一步综合前面所有步骤。
+` : ''}
+${opts.base ? `## 任务库里的原题（出题人从「任务库」选的：「${opts.base.title}」）
+${opts.base.text}
+${opts.base.mode === 'base'
+  ? `**原题直出，换成 ${name}**（出题人要的就是这道题，只是要变成自己公司的）：任务结构、交付物（数量、名称的意思、format、module）、材料的种类和各自的作用、材料里埋的坑、评分要点**原样保留**；企业、背景故事、工厂 / 项目 / 产品 / 人名换成 ${name} 此刻的真实处境（用上面「材料」里的事实），数字换成同结构、同量级、符合 ${name} 的数（材料没有的标「示例数据」）。**原题里的企业名、地名、项目名一个都不能留**。题面要读起来就是 ${name} 自己的活。`
+  : `**仅做参考**：只借这道题的题型、推进方式、交付形态和难度；业务问题、背景、材料、数字全部按 ${name} 此刻的真实情况重新出，不要和原题撞题。`}
 ` : ''}
 ## 操作台（环境）
 ${opts.env === 'plugin' ? '出题人指定：候选人用自己浏览器里的网页工具做（在线文档 / 表格 / 设计工具 / 各家 AI 都行），装「真活插件」记录过程，最后在插件侧边栏交「交付说明 + 交付物链接」；所以 env 按 doc 出，交付物写成「在线文档或文件链接 + 交付说明」，材料要能下载后独立使用。' : opts.env === 'open' ? '出题人指定：候选人用自己电脑上的软件做（Excel / CAD / IDE 都行），全程录屏、最后上传交付文件；所以 env 按 doc 出，交付物写成「文件 + 交付说明」，材料要能下载后独立使用。' : opts.env ? `出题人指定环境：${opts.env}（${ENV_LABELS[opts.env]}）。` : '按岗位选最贴近真实工作媒介的环境：'}doc 文档 / 对账台（方案、对账、邮件、scorecard）· code 代码台（写函数 / 脚本；**starter 里的主函数必须命名为 solution**，tests 也调用 solution；language 用 js 时给 2–5 个自测用例：code 是一段 JS，拿到变量 solution（候选人的导出函数）后返回 true/false，如 "return solution([3,1,2]).join()==='1,2,3'"；其他语言不给 tests）· sheet 表格 / 数据台（csv 给起始表，含要对账 / 清洗的数据，5–30 行）· design 设计台（params 给 4–8 个要定的参数：name/unit/hint；sketch_hint 说明要画什么简图：零件轮廓、流程、布局）。

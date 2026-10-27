@@ -44,13 +44,18 @@ function Inner() {
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e' }}>
       <WorkTopBar active="mine" />
       <div style={{ maxWidth: 1180, margin: '0 auto', padding: '24px 28px 60px' }}>
-        <h1 style={{ fontSize: 26, margin: '0 0 6px' }}>我的真活</h1>
-        <div style={{ color: '#666', marginBottom: 18 }}>出任务、分享参与链接、看每个人的考评，都在这一页。做题的人不用登录，留个名字就能做。</div>
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 16, flexWrap: 'wrap', marginBottom: 18 }}>
+          <div style={{ flex: 1, minWidth: 260 }}>
+            <h1 style={{ fontSize: 26, margin: '0 0 6px' }}>我的真活</h1>
+            <div style={{ color: '#666' }}>出任务、分享参与链接、看每个人的考评，都在这一页。做题的人不用登录，留个名字就能做。</div>
+          </div>
+          <Link href="/work/library"><Button>从任务库挑一道 →</Button></Link>
+        </div>
         {!loading && !list.length && <div style={{ background: '#fff', border: '1px dashed #d9dbe6', borderRadius: 14, padding: '28px 24px', textAlign: 'center', marginBottom: 16 }}>
           <RocketOutlined style={{ fontSize: 28, color: '#6055f5' }} />
-          <div style={{ fontWeight: 700, marginTop: 8 }}>还没有出过题</div>
+          <div style={{ fontWeight: 700, marginTop: 8 }}>还没有出过任务</div>
           <div style={{ color: '#666', fontSize: 13, margin: '4px 0 14px' }}>填企业和岗位，两分钟出一道带材料包、逐条标准和 AI 基线的真活</div>
-          <Link href="/work/new"><Button type="primary" size="large" icon={<PlusOutlined />}>出一道真活</Button></Link>
+          <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}><Link href="/work/new"><Button type="primary" size="large" icon={<PlusOutlined />}>出一道真活</Button></Link><Link href="/work/library"><Button size="large">从任务库挑一道</Button></Link></div>
         </div>}
         {!!list.length && <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 18, marginBottom: 20 }}>
           {list.map(t => { const env = t.task?.env?.type || 'doc'; const href = space(t); return (
