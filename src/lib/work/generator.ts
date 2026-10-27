@@ -214,7 +214,7 @@ export async function verbatimTask(text: string, opts: { company?: string; role?
 - title：题里有标题就用，没有就用 8–16 字概括。
 - deliverables：题里要求交什么（2–4 个，id d1…）；没写就一条「按题目要求作答」。
 - time_minutes：题里写了就用，没写 60。
-- deliverables 的 module：doc 文档 / sheet 表格或测算 / code 脚本 / design 参数草图 / canvas 流程图、泳道图、思维导图、架构图；按题目要交的形态选，可混用。
+- deliverables 的 module：doc 文档 / sheet 表格或测算 / code 脚本 / design 工程参数与草图（结构 / 机械 / 电气这类要定尺寸的设计）/ canvas 流程图、泳道图、思维导图、架构图 / board 白板（线框图、界面草图、海报、IP 形象、视觉方案这类自由画的设计）；按题目要交的形态选，可混用。
 - materials：题里如果有明显独立的材料段（数据表、背景资料、附录），拆成材料，**文字原样**（kind 按内容：table / doc / data），source 写 generated、basis 写「原题附带」；没有就 []。题里只是**提到**「附件 / 附表 / 附图」而正文没给内容的，不要造材料（附件由出题人另外上传）。
 - rubric：从题目自己的要求里推出评分点，5–8 条，basis 写「题目要求：…」并引原句；levels 四档可观察；weight 加起来 100。不加题里没有的要求。
 - env：按题的作答媒介选 doc / code / sheet / design。
@@ -241,7 +241,7 @@ ${text.slice(0, 12000)}
 export interface WorkTask {
   env: WorkEnv;
   problem: { statement: string; why_now: string; evidence: { text: string; source: string }[] };
-  task: { title: string; role: string; brief: string; deliverables: { id: string; title: string; format: string; module?: 'doc' | 'sheet' | 'code' | 'design' | 'canvas' }[]; time_minutes: number; rules: string[]; stages?: SampleStage[] };   // stages：案例推进式（照深度样本出）：一步步给信息、每步有问、有参考答案和要算的数（2026-10-23）
+  task: { title: string; role: string; brief: string; deliverables: { id: string; title: string; format: string; module?: 'doc' | 'sheet' | 'code' | 'design' | 'canvas' | 'board' }[]; time_minutes: number; rules: string[]; stages?: SampleStage[] };   // stages：案例推进式（照深度样本出）：一步步给信息、每步有问、有参考答案和要算的数（2026-10-23）
   materials: { id: string; title: string; kind: 'doc' | 'table' | 'note' | 'email' | 'data' | 'file'; content: string; source: 'db' | 'generated' | 'mixed' | 'upload'; basis?: string; url?: string; mime?: string; name?: string }[];   // file = 出题人上传的附件（表格 / 图纸 / 截图 / PDF），候选人能看原件；content 是抽出的文字或说明
   rubric: { id: string; title: string; desc: string; weight: number; depends_on: string[]; basis: string; levels: { L1: string; L2: string; L3: string; L4: string } }[];
 }
@@ -293,7 +293,7 @@ env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "
 ## 要求
 - 企业是出题的客户：**企业自身的负面舆情**（监管立案、减持套现、高管离职、募资遇冷、亏损传闻）**不进 problem / why_now / 任务书**；只有候选人做这件事确实要处理它时，才在材料里作中性、带来源的一句陈述，不渲染。
 - problem.statement：一句话说清 ${name} 现在的哪个${opts.research ? '研究问题' : '业务问题'}需要「${role}」来解决，必须能从材料里推出来（${opts.research ? '研究方向 / 在研项目 / 平台 / 岗位要求' : '近期动态 / 产品 / 岗位职责 / 典型任务'}）；why_now 说为什么是现在；evidence 列 2–4 条材料原句 + 来源名。
-- task：title（8–16 字）；brief（给做题人看的任务书，300–500 字，口吻像业务负责人交代活：背景、要你做什么、交给谁、什么时候要；「交给谁」写角色（如「交给投委会」），**不要给真实人物编邮箱、电话、微信**）；deliverables 2–3 个（id d1…，title，format 如「一页纸方案 / 估值表 / 筛选脚本 / 流程图」，**module** 从 doc / sheet / code / design / canvas 里选：文档类 doc，表格 / 模型 / 测算表 sheet，脚本 / SQL / 函数 code，参数表 + 草图 design，流程图 / 泳道图 / 思维导图 / 架构图 canvas——**一道题的交付物可以混用模组**，这个岗位真实工作里会交什么就交什么，别为了省事全写成文档）；time_minutes 45–90；rules 3–5 条（必须含「可以随便用 AI，不算作弊；评的是你怎么用」和「材料里没有的数据要标注假设」）。
+- task：title（8–16 字）；brief（给做题人看的任务书，300–500 字，口吻像业务负责人交代活：背景、要你做什么、交给谁、什么时候要；「交给谁」写角色（如「交给投委会」），**不要给真实人物编邮箱、电话、微信**）；deliverables 2–3 个（id d1…，title，format 如「一页纸方案 / 估值表 / 筛选脚本 / 流程图」，**module** 从 doc / sheet / code / design / canvas / board 里选：文档类 doc，表格 / 模型 / 测算表 sheet，脚本 / SQL / 函数 code，工程参数表 + 尺寸草图 design（只给结构 / 机械 / 电气这类要定尺寸的工程设计），流程图 / 泳道图 / 思维导图 / 架构图 canvas，线框图 / 界面草图 / 海报 / IP 形象 / 视觉方案这类自由画的设计 board（产品经理、UI / 视觉 / 品牌设计师用这个，不要给他们 design）——**一道题的交付物可以混用模组**，这个岗位真实工作里会交什么就交什么，别为了省事全写成文档）；time_minutes 45–90；rules 3–5 条（必须含「可以随便用 AI，不算作弊；评的是你怎么用」和「材料里没有的数据要标注假设」）。
 - materials 3–5 份，做这件事真的会拿到的东西：kind ∈ doc/table/note/email/data；content 用 Markdown，每份 300–900 字，表格用 Markdown 表；source：db=全部来自材料、generated=为任务合理补写（必须贴近企业真实情况并在正文标「示例数据」）、mixed；basis 写它依据材料的哪一段。至少一份是「有坑」的（信息不全、口径不一致、过期），这是真活。
 ${opts.sample ? `- stages（必填，${opts.sample.stages.length} 步，和样本一一对应）：id q1…；type 同样本；question（这一步问候选人什么，一句话）；reveal（这一步才给的信息：背景、数据表、图表，Markdown，图表用 Markdown 表把数据给全，300–900 字；数据要和 materials 里的事实一致，材料没有的标「示例数据」）；expected（参考答案 / 关键结论，评卷用，候选人看不到，含关键数字）；calc（这一步要算的数：label、expr 只含数字和 + - * / ( )、value；没有测算填 []）。brief 里要告诉候选人「这道题分 ${opts.sample.stages.length} 步推进，每一步看完信息再答，答完再看下一步」，deliverables 按步骤对应。\n` : ''}- rubric 5–8 条：id r1…；title；desc（怎么算做到）；weight 加起来 100；${opts.sample ? '每一步至少对应一条（desc 里写明对应 q 几）；' : ''}depends_on 填前置条目 id（没有填 []）；basis 必须指向材料来源（「行业标准 xxx 第 n 点」「岗位职责：…」「典型任务：…」），实在没有写「出题人判断，待业务负责人确认」；levels L1–L4 各一句可观察的行为描述（BARS）。
 只返回 JSON：

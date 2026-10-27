@@ -15,9 +15,10 @@ import { SheetBench } from '@/components/work/benches/SheetBench';
 import { DesignBench } from '@/components/work/benches/DesignBench';
 import { OpenBench } from '@/components/work/benches/OpenBench';
 import { CanvasBench } from '@/components/work/benches/CanvasBench';
+import { BoardBench, emptyBoard, type BoardValue } from '@/components/work/benches/BoardBench';
 import { Md } from '@/components/ws/Md';
 import { Tour, type TourStep } from '@/components/work/Tour';
-import { MODULES, canvasToText, resolveModule, type CanvasGraph, type Module } from '@/lib/work/modules';
+import { MODULES, boardToText, canvasToText, resolveModule, type CanvasGraph, type Module } from '@/lib/work/modules';
 import { PluginWork } from '@/components/work/benches/PluginWork';
 
 type Material = { id: string; title: string; kind: string; content: string; source: string; url?: string; mime?: string; name?: string };
@@ -180,8 +181,8 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
 
   // 每个交付物一个模组、一份工作内容（文档 / 表格 / 代码 / 参数草图 / 画布），标签页切换
   const parts = useMemo(() => partsOf(task, env), [task, env]);
-  type PartState = { doc: string; code: string; csv: string; notes: string; params: Record<string, string>; sketch: { pts: [number, number][]; label: string }[]; graph: CanvasGraph };
-  const blank = (): PartState => ({ doc: '', code: '', csv: '', notes: '', params: {}, sketch: [], graph: { nodes: [], edges: [], lanes: [] } });
+  type PartState = { doc: string; code: string; csv: string; notes: string; params: Record<string, string>; sketch: { pts: [number, number][]; label: string }[]; graph: CanvasGraph; board: BoardValue };
+  const blank = (): PartState => ({ doc: '', code: '', csv: '', notes: '', params: {}, sketch: [], graph: { nodes: [], edges: [], lanes: [] }, board: emptyBoard() });
   // 要求印在试卷里（文档开头印标题 + 形态，代码开头一行注释），不堆在顶栏；seed 用来判断有没有真动笔
   const seedOf = (p: Part) => p.module === 'doc' ? `# ${p.title}\n${p.format ? `（${p.format}）\n` : ''}\n` : p.module === 'code' ? `// ${p.title}${p.format ? `（${p.format}）` : ''}\n` : '';
   const [ps, setPs] = useState<Record<string, PartState>>(() => { const o: Record<string, PartState> = {}; let seededCode = false, seededCsv = false; for (const p of parts) { const st = blank(); const seed = seedOf(p); if (p.module === 'doc') st.doc = seed; if (p.module === 'code' && !seededCode) { st.code = seed + (env.starter || ''); seededCode = true; } else if (p.module === 'code') st.code = seed; if (p.module === 'sheet' && !seededCsv) { st.csv = env.csv || ''; seededCsv = true; } o[p.id] = st; } return o; });
@@ -196,9 +197,11 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const [summary, setSummary] = useState(''); const [uploads, setUploads] = useState<{ name: string; size: number; url: string }[]>([]); const [recording, setRecording] = useState<{ url: string; duration: number } | null>(null);
   const lastLen = useRef(0);
 
-  const deliverable = useMemo(() => {
+  // 交付内容（文本，评卷读）。白板交卷时另存一张 PNG，shots[id] = 图的地址
+  const build = useCallback((shots: Record<string, string>) => {
     if (mode === 'open') return summary;
     const body = (p: Part, x: PartState) => {
+      if (p.module === 'board') return `${shots[p.id] ? `![${p.title}](${shots[p.id]})\n\n` : ''}${boardToText(x.board.elements)}\n\n### 设计说明\n${x.notes}`;
       if (p.module === 'code') return `\`\`\`${env.language || 'js'}\n${x.code}\n\`\`\`\n\n### 说明\n${x.notes}`;
       if (p.module === 'sheet') return `\`\`\`csv\n${x.csv}\n\`\`\`\n\n### 口径说明\n${x.notes}`;
       if (p.module === 'design') return `### 参数表\n| 参数 | 值 | 单位 |\n|---|---|---|\n${(env.params || []).map(q => `| ${q.name} | ${x.params[q.name] || ''} | ${q.unit || ''} |`).join('\n')}\n\n### 草图（${x.sketch.length} 条线）\n${x.sketch.map((l, i) => `- 线 ${i + 1}「${l.label || '未标注'}」：${l.pts.map(q => `(${Math.round(q[0])},${Math.round(q[1])})`).join(' ')}`).join('\n')}\n\n### 说明\n${x.notes}`;
@@ -208,6 +211,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     if (parts.length === 1) return body(parts[0], ps[parts[0].id] || blank());
     return parts.map(p => `## ${p.id} ${p.title}（${p.format}）\n\n${body(p, ps[p.id] || blank())}`).join('\n\n');
   }, [env, mode, summary, parts, ps]);
+  const deliverable = useMemo(() => build({}), [build]);
 
   // 时钟 + 改稿事件（每 20 秒把字数变化记一次）+ 空闲 + 同步
   useEffect(() => {
@@ -286,6 +290,9 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   useEffect(() => { let seen = false; try { seen = localStorage.getItem('work-tour-done') === '1'; } catch {} if (!seen && !narrow) { const t = setTimeout(() => setTour(0), 600); return () => clearTimeout(t); } }, [narrow]);
   const [aiOpen, setAiOpen] = useState(!narrow);
   const [matMode, setMatMode] = useState<'split' | 'full' | 'bar'>('split');
+  // 白板要地方画：第一次切到白板交付物时，材料面板收成一条（点一下还能展开）
+  const boardSeen = useRef<Set<string>>(new Set());
+  useEffect(() => { if (curPart?.module === 'board' && !boardSeen.current.has(cur)) { boardSeen.current.add(cur); setMatMode(m => (m === 'split' ? 'bar' : m)); } }, [cur, curPart?.module]);
   const [matH, setMatH] = useState(300);
   const dragRef = useRef<{ y: number; h: number } | null>(null);
   useEffect(() => {
@@ -294,7 +301,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     window.addEventListener('mousemove', mv); window.addEventListener('mouseup', up); return () => { window.removeEventListener('mousemove', mv); window.removeEventListener('mouseup', up); };
   }, []);
   const showMat = (m: Material) => { openMat(m); if (matMode === 'bar') setMatMode('split'); };
-  const filledOf = (id: string) => { const x = ps[id]; const p = parts.find(q => q.id === id); if (!x || !p) return false; const seed = seedOf(p).trim(); const docReal = x.doc.trim() && x.doc.trim() !== seed; const codeReal = x.code.trim() && x.code.trim() !== seed && x.code.trim() !== (seed + (env.starter || '')).trim(); return !!(docReal || x.csv.trim() || codeReal || x.notes.trim() || x.graph.nodes.length || Object.keys(x.params).length); };
+  const filledOf = (id: string) => { const x = ps[id]; const p = parts.find(q => q.id === id); if (!x || !p) return false; const seed = seedOf(p).trim(); const docReal = x.doc.trim() && x.doc.trim() !== seed; const codeReal = x.code.trim() && x.code.trim() !== seed && x.code.trim() !== (seed + (env.starter || '')).trim(); return !!(docReal || x.csv.trim() || codeReal || x.notes.trim() || x.graph.nodes.length || Object.keys(x.params).length || x.board.elements.some((e: any) => !e.isDeleted)); };
   // 20 分钟还没打开的交付物：弹一次气泡（别等到交卷才说）
   useEffect(() => { if (nudged.current || mode === 'open') return; if (now >= 1200) { const miss = parts.filter(p => !opened.has(p.id)); if (miss.length) { nudged.current = true; setNudge(`${miss.map(p => `${p.id} ${MODULES[p.module].label}`).join('、')} 还没打开过，别漏了`); ev('nudge', { parts: miss.map(p => p.id) }); } } }, [now, parts, opened, mode, ev]);
   const switchPart = (id: string) => { setCur(id); setOpened(o => new Set(o).add(id)); ev('switch_part', { id }); };
@@ -307,7 +314,24 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const submit = () => {
     if (mode === 'open' && !recording) { setLocalErr('先录一段屏再交卷：点「开始录屏」，做完点停止'); setTimeout(() => setLocalErr(''), 5000); return; }
     if (!arm) { setArm(true); if (emptyParts.length) { setLocalErr(`${emptyParts.map(p => `${p.id} ${p.title}`).join('、')} 还没动笔。确定要交就再点一次交卷`); setTimeout(() => setLocalErr(''), 6000); } setTimeout(() => setArm(false), 6000); return; }
-    setArm(false); const events = buf.current.splice(0); onSubmit(deliverable, events);
+    setArm(false); const events = buf.current.splice(0);
+    // 白板：交卷前把每张画板导出 PNG 存起来（给出任务的人看），文字版照样进交付内容
+    const boards = parts.filter(p => p.module === 'board' && (ps[p.id]?.board.elements || []).some((e: any) => !e.isDeleted));
+    if (!boards.length) { onSubmit(deliverable, events); return; }
+    (async () => {
+      const shots: Record<string, string> = {};
+      try {
+        const { exportToBlob } = await import('@excalidraw/excalidraw');
+        for (const p of boards) {
+          const b = ps[p.id].board;
+          const blob = await exportToBlob({ elements: b.elements.filter((e: any) => !e.isDeleted), files: b.files, mimeType: 'image/png', appState: { exportBackground: true, viewBackgroundColor: '#ffffff' }, exportPadding: 24 } as any);
+          const fd = new FormData(); fd.append('file', new File([blob], `${p.id}-board.png`, { type: 'image/png' })); fd.append('kind', 'file');
+          const j = await (await fetch(`/api/work/${token}/sessions/${sid}/upload`, { method: 'POST', body: fd })).json();
+          if (j.ok) shots[p.id] = j.url;
+        }
+      } catch (e) { console.warn('[work] 白板截图失败，只交文字版', e); }
+      onSubmit(build(shots), events);
+    })();
   };
   const over = now > task.task.time_minutes * 60;
 
@@ -374,6 +398,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
             {mode !== 'open' && curPart.module === 'code' && <CodeBench key={cur} leading={tabsEl} code={st.code} onCode={setCode} notes={st.notes} onNotes={setNotes} tests={env.tests || []} language={env.language || 'js'} onRun={runTests} testOut={testOut} onPaste={onPaste} />}
             {mode !== 'open' && curPart.module === 'sheet' && <SheetBench key={cur} leading={tabsEl} caption={`${curPart.title}${curPart.format ? `（${curPart.format}）` : ''}`} csv={st.csv} onCsv={setCsv} notes={st.notes} onNotes={setNotes} onPaste={onPaste} />}
             {mode !== 'open' && curPart.module === 'canvas' && <CanvasBench key={cur} leading={tabsEl} graph={st.graph} onChange={f => setPart(x => ({ graph: f(x.graph) }))} notes={st.notes} onNotes={setNotes} onPaste={onPaste} onEvent={(t2, extra) => ev(t2, extra)} hint={`${curPart.title}${curPart.format ? `（${curPart.format}）` : ''}`} />}
+            {mode !== 'open' && curPart.module === 'board' && <BoardBench key={cur} leading={tabsEl} caption={`${curPart.title}${curPart.format ? `（${curPart.format}）` : ''}`} value={st.board} onChange={v => setPart({ board: v })} notes={st.notes} onNotes={setNotes} onEvent={(t, d) => ev(t, d || {})} />}
             {mode !== 'open' && curPart.module === 'design' && <DesignBench key={cur} leading={tabsEl} params={env.params || []} values={st.params} onParam={(k, v) => setPart(x => ({ params: { ...x.params, [k]: v } }))} onParamDone={k => ev('set_param', { id: k })} sketch={st.sketch} setSketch={f => setPart(x => ({ sketch: f(x.sketch) }))} hint={env.sketch_hint} notes={st.notes} onNotes={setNotes} onPaste={onPaste} onSketch={label => ev('sketch', { label })} />}
           </div>}
         </main>

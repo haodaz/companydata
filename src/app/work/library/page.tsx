@@ -10,7 +10,7 @@ import { App, ConfigProvider, Drawer } from 'antd';
 import { WorkTopBar } from '@/components/work/WorkTopBar';
 
 type Item = { id: string; industry: string; direction: string; role: string; title: string; scenario: string; deliverables: { title: string; format?: string; module?: string }[]; materials: string[]; time_minutes?: number | null; env?: string };
-const MOD: Record<string, string> = { doc: '文档', sheet: '表格', code: '代码', design: '参数草图', canvas: '画布' };
+const MOD: Record<string, string> = { doc: '文档', sheet: '表格', code: '代码', design: '参数草图', canvas: '画布', board: '白板' };
 const USES = [
   { k: 'base', t: '原题直出', d: '就用这道任务。原来的企业去掉，背景、材料和数字换成你们公司的。' },
   { k: 'ref', t: '仅做参考', d: '照它的题型和推进方式，给你们公司出一道新的。' },
