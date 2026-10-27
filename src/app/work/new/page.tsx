@@ -27,7 +27,7 @@ const ENVS: { value: string; label: string; desc: string }[] = [
   { value: 'open', label: '候选人自己录制电脑操作', desc: '不用站内操作台：下载材料，用自己的 Excel / CAD / IDE 做，浏览器录屏 + 上传交付，AI 看录屏还原过程' },
 ];
 const DEFAULT_MODEL = 'qwen-plus';
-const MODELS = MODEL_OPTIONS.filter(m => m.provider !== 'Google');   // 出题走千问 / Claude / GPT；Gemini 没接 JSON 出题链
+const MODELS = MODEL_OPTIONS.filter(m => m.provider !== 'Google');   // 出任务走千问 / Claude / GPT；Gemini 没接 JSON 出任务链
 
 export default function NewPage() {
   return <ConfigProvider theme={{ token: { colorPrimary: '#6055f5', borderRadius: 10 } }}><App><Inner /></App></ConfigProvider>;
@@ -55,7 +55,7 @@ function Inner() {
 
   const create = async () => {
     if (way === 'verbatim' ? verbatim.trim().length < 60 : (!f.company.trim() || !f.role.trim())) return message.warning(way === 'verbatim' ? '把整道题贴进来（60 字以上）' : '企业和要找的人都要填');
-    setBusy(way === 'verbatim' ? '原题不改，正在整理成交付物和评分点……约 1 分钟' : '在拼这家企业的材料、出题、做材料包、定标准……约 2 分钟，别关页面'); setPhase('gen');
+    setBusy(way === 'verbatim' ? '原题不改，正在整理成交付物和评分点……约 1 分钟' : '在拼这家企业的材料、出任务、做材料包、定标准……约 2 分钟，别关页面'); setPhase('gen');
     try {
       const r = await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: f.company, company_id: picked?.id, intro: picked ? undefined : f.intro.trim() || undefined, role: f.role, env: f.env || undefined, focus: f.focus || undefined, model: f.model, sample_id: ref?.id, sample_mode: 'reskin', attachments: atts, verbatim: way === 'verbatim' ? verbatim.trim() : undefined }) });
       if (r.status === 401) { location.href = `/work/login?next=${encodeURIComponent('/work/new')}`; return; }
@@ -65,7 +65,7 @@ function Inner() {
       // AI 基线放后台跑（约 1 分钟），不让出题人等；真活空间里会显示「基线跑着」，跑完自动有分，也能手动重跑
       fetch(`/api/admin/work/tasks/${j.id}/baseline`, { method: 'POST', keepalive: true }).catch(() => {});
       setPhase('done'); await new Promise(r => setTimeout(r, 1200));
-      message.success(`出题完成：${j.title}。AI 基线在后台跑，一分钟后在空间里看`, 6);
+      message.success(`任务出好了：${j.title}。AI 基线在后台跑，一分钟后在空间里看`, 6);
       router.push(j.share_token && j.owner_key ? `/work/${j.share_token}/owner?k=${encodeURIComponent(j.owner_key)}` : '/work/mine');
     } catch (e: any) { message.error(e.message); setBusy(''); }
   };
@@ -79,7 +79,7 @@ function Inner() {
         <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 18, padding: '26px 28px' }}>
           <h1 style={{ fontSize: 24, margin: '0 0 4px' }}>出一道真活</h1>
           <div style={{ display: 'inline-flex', border: '1px solid #e0e0ee', borderRadius: 999, overflow: 'hidden', fontSize: 13, margin: '6px 0 10px' }}>
-            {([['gen', '平方出题'], ['verbatim', '原题直发']] as const).map(([k, t]) => <span key={k} onClick={() => setWay(k)} style={{ padding: '6px 14px', cursor: 'pointer', background: way === k ? '#6055f5' : '#fff', color: way === k ? '#fff' : '#666', fontWeight: way === k ? 700 : 400 }}>{t}</span>)}
+            {([['gen', '平方出任务'], ['verbatim', '原题直发']] as const).map(([k, t]) => <span key={k} onClick={() => setWay(k)} style={{ padding: '6px 14px', cursor: 'pointer', background: way === k ? '#6055f5' : '#fff', color: way === k ? '#fff' : '#666', fontWeight: way === k ? 700 : 400 }}>{t}</span>)}
           </div>
           {way === 'verbatim' && <div style={{ marginBottom: 18 }}>
             <div style={{ fontSize: 12.5, color: '#888', marginBottom: 6 }}>你手里已经有一道干净的题：整段贴进来，<b>一字不改</b>发给候选人。平台只整理交付物和评分点（只从题目自己的要求里推），生成参与链接。企业和岗位可不填，填了只当标签。</div>
@@ -88,13 +88,13 @@ function Inner() {
 
 
           {way === 'gen' && <div style={{ display: 'flex', gap: 8, alignItems: 'center', margin: '0 0 18px', fontSize: 13 }}>
-            {([[1, '题目'], [2, '出题台']] as const).map(([n, t]) => <div key={n} onClick={() => n === 1 && setPage(1)} style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: n === 1 ? 'pointer' : 'default', color: page === n ? '#1a1a2e' : '#999', fontWeight: page === n ? 700 : 500 }}><span style={{ width: 22, height: 22, borderRadius: 99, display: 'grid', placeItems: 'center', fontSize: 12, background: page === n ? '#6055f5' : page > n ? '#22c55e' : '#e8e9f0', color: page >= n ? '#fff' : '#888' }}>{page > n ? '✓' : n}</span>{t}</div>)}
-            <span style={{ color: '#aaa', margin: '0 2px' }}>→</span><span style={{ color: '#999' }}>出题</span>
+            {([[1, '题目'], [2, '任务设置']] as const).map(([n, t]) => <div key={n} onClick={() => n === 1 && setPage(1)} style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: n === 1 ? 'pointer' : 'default', color: page === n ? '#1a1a2e' : '#999', fontWeight: page === n ? 700 : 500 }}><span style={{ width: 22, height: 22, borderRadius: 99, display: 'grid', placeItems: 'center', fontSize: 12, background: page === n ? '#6055f5' : page > n ? '#22c55e' : '#e8e9f0', color: page >= n ? '#fff' : '#888' }}>{page > n ? '✓' : n}</span>{t}</div>)}
+            <span style={{ color: '#aaa', margin: '0 2px' }}>→</span><span style={{ color: '#999' }}>出任务</span>
           </div>}
           {(way === 'verbatim' || page === 1) && <>
           <Sec n="1" t="企业，和你要找的人" d="">
             <CompanyRolePicker company={f.company} role={f.role} onCompany={(name, p) => { setF(x => ({ ...x, company: name })); setPicked(p); }} onRole={r => setF(x => ({ ...x, role: r }))} />
-            {/* 库里没有的企业：贴一段介绍，AI 先读懂这家公司再出题（2026-10-22） */}
+            {/* 库里没有的企业：贴一段介绍，AI 先读懂这家公司再出任务（2026-10-22） */}
             {f.company.trim() && !picked && (
               <div style={{ marginTop: 10, padding: '12px 14px', border: '1px dashed #c9c4f7', background: '#faf9ff', borderRadius: 12 }}>
                 <div style={{ fontSize: 13.5, fontWeight: 600, color: '#2b2670', marginBottom: 2 }}>「{f.company.trim()}」还不在企业库里，贴一段介绍，AI 先读懂这家公司</div>
@@ -110,14 +110,14 @@ function Inner() {
           <Sec n="3" t="题里要给做题人什么素材？（选填）" d="这些会直接出现在考题里，做题人看得到。建议给做这件事真实要用的东西：数据表、报表截图、图纸、合同要点">
             <AttachUpload value={atts} onChange={setAtts} />
           </Sec>
-          <Sec n="4" t="有没有以前用过的题可以参照？（选填）" d="这些不会给做题人看。你们过往用过的题、内部考题、认可的案例，AI 出题时照它的路数出">
+          <Sec n="4" t="有没有以前用过的题可以参照？（选填）" d="这些不会给做题人看。你们过往用过的题、内部考题、认可的案例，AI 出任务时照它的路数出">
             {refs.length > 0 && <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
               {refs.map(sm => <Tag.CheckableTag key={sm.id} checked={ref?.id === sm.id} onChange={c => setRef(c ? sm : null)} style={{ padding: '4px 10px', fontSize: 13, border: '1px solid #e0e0ee' }}>{sm.title} <span style={{ opacity: .6 }}>· {sm.stages} 步</span></Tag.CheckableTag>)}
             </div>}
             <SampleUpload shared={false} onDone={s => { setRefs(x => [s, ...x]); setRef(s); }} pastePlaceholder="把整道题贴进来：背景、每一问、要给的数据、参考答案（有就带上）" />
             {ref?.summary && <div style={{ marginTop: 8, fontSize: 12.5, color: '#555', background: '#faf9ff', padding: '8px 12px', borderRadius: 10 }}>照这份出：{ref.summary}</div>}
           </Sec>
-          {way === 'gen' && <Button type="primary" size="large" block onClick={() => { if (!f.company.trim() || !f.role.trim()) return message.warning('企业和要找的人都要填'); setPage(2); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>下一步：出题台 →</Button>}
+          {way === 'gen' && <Button type="primary" size="large" block onClick={() => { if (!f.company.trim() || !f.role.trim()) return message.warning('企业和要找的人都要填'); setPage(2); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>下一步：任务设置 →</Button>}
           </>}
           {way === 'gen' && page === 2 && <>
             <div style={{ fontSize: 13, color: '#666', marginBottom: 14, padding: '10px 14px', background: '#fafbff', border: '1px solid #e8e9f0', borderRadius: 12 }}><b>{f.company || '（企业）'}</b> · 要找：{f.role || '—'}{f.focus ? ` · 考：${f.focus.slice(0, 40)}` : ''}{atts.length ? ` · 素材 ${atts.length} 份` : ''}{ref ? ' · 有参考' : ''} <a onClick={() => setPage(1)} style={{ marginLeft: 8 }}>改题目</a></div>
@@ -131,7 +131,7 @@ function Inner() {
           </Sec>
             <div style={{ display: 'flex', gap: 10 }}>
               <Button size="large" onClick={() => setPage(1)} style={{ height: 50, width: 120 }}>← 上一步</Button>
-          <Button type="primary" size="large" icon={<RocketOutlined />} loading={!!busy} onClick={create} style={{ height: 50, fontWeight: 700, flex: 1 }}>出题（约 2–3 分钟）</Button>
+          <Button type="primary" size="large" icon={<RocketOutlined />} loading={!!busy} onClick={create} style={{ height: 50, fontWeight: 700, flex: 1 }}>出任务（约 2–3 分钟）</Button>
             </div>
           </>}
           {way === 'verbatim' && <Button type="primary" size="large" block icon={<RocketOutlined />} loading={!!busy} onClick={create} style={{ height: 50, fontWeight: 700, marginTop: 6 }}>发出去（约 1 分钟）</Button>}

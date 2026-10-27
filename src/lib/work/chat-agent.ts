@@ -22,14 +22,14 @@ export const WORK_CHAT_TOOLS: Anthropic.Tool[] = [
   { name: 'company_brief', description: '一家库里企业的材料有多厚：画像有哪些字段、在招岗位有哪些、有没有深度画像专题。决定要不要让用户补介绍。', input_schema: { type: 'object', properties: { company_id: { type: 'number' } }, required: ['company_id'] } },
   { name: 'suggest_roles', description: '按关键词找岗位：这家企业在招的 + 职业库里的。用户说得含糊时用它给选项；用户直接说「我要一个能……的人」就不用套职位名。', input_schema: { type: 'object', properties: { query: { type: 'string' }, company_id: { type: 'number' } }, required: ['query'] } },
   { name: 'my_references', description: '用户以前交过的参考资料（过往的题 / 内部考题）。', input_schema: { type: 'object', properties: {} } },
-  { name: 'read_reference', description: '用户在对话里贴了一道过往的题 / 内部考题（200 字以上）：读成结构（几步、每步问什么、参考答案、要算的数）存成他自己的参考资料，出题时照它改背景换数字。要 1 分钟。', input_schema: { type: 'object', properties: { title: { type: 'string' }, text: { type: 'string' } }, required: ['text'] } },
-  { name: 'create_task', description: '出题：拼企业材料 → 锚定业务问题 → 任务书 → 材料包 → 带依赖的评分标准（约 2 分钟）。company_id 库里有就传；库里没有就把用户贴的介绍放 intro。role 写用户要找的人（原话也行）。focus 放用户说的「想考什么、给谁做、难度、时长」。reference_id 是他选的参考资料；没有就不传（平台会在后台自动参照）。env 不传就按岗位自动选。attachments：用户上传的、给候选人的素材（消息里【文件】行给的 url / name / mime / text），原样传进来，会挂进材料包给候选人；被当成参考资料的文件不要放这里。', input_schema: { type: 'object', properties: { company: { type: 'string' }, company_id: { type: 'number' }, intro: { type: 'string' }, role: { type: 'string' }, focus: { type: 'string' }, env: { type: 'string', enum: ['doc', 'code', 'sheet', 'design', 'open', 'plugin'] }, reference_id: { type: 'string' }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['company', 'role'] } },
+  { name: 'read_reference', description: '用户在对话里贴了一道过往的题 / 内部考题（200 字以上）：读成结构（几步、每步问什么、参考答案、要算的数）存成他自己的参考资料，出任务时照它改背景换数字。要 1 分钟。', input_schema: { type: 'object', properties: { title: { type: 'string' }, text: { type: 'string' } }, required: ['text'] } },
+  { name: 'create_task', description: '出任务：拼企业材料 → 锚定业务问题 → 任务书 → 材料包 → 带依赖的评分标准（约 2 分钟）。company_id 库里有就传；库里没有就把用户贴的介绍放 intro。role 写用户要找的人（原话也行）。focus 放用户说的「想考什么、给谁做、难度、时长」。reference_id 是他选的参考资料；没有就不传（平台会在后台自动参照）。env 不传就按岗位自动选。attachments：用户上传的、给候选人的素材（消息里【文件】行给的 url / name / mime / text），原样传进来，会挂进材料包给候选人；被当成参考资料的文件不要放这里。', input_schema: { type: 'object', properties: { company: { type: 'string' }, company_id: { type: 'number' }, intro: { type: 'string' }, role: { type: 'string' }, focus: { type: 'string' }, env: { type: 'string', enum: ['doc', 'code', 'sheet', 'design', 'open', 'plugin'] }, reference_id: { type: 'string' }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['company', 'role'] } },
   { name: 'publish_verbatim', description: '原题直发：用户手里已经有一道干净的题，要一字不改发给候选人。把原题文字（text，60 字以上）传进来，平台只整理交付物和评分点（只从题目自己的要求里推），生成链接。company / role 可不传。attachments 同 create_task。约 1 分钟。', input_schema: { type: 'object', properties: { text: { type: 'string' }, company: { type: 'string' }, role: { type: 'string' }, env: { type: 'string', enum: ['doc', 'code', 'sheet', 'design'] }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['text'] } },
-  { name: 'publish_task', description: '发布：出题人确认题没问题后，把题从「待发布」改成「已发布」，参与链接才能给候选人用。没确认别调。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
+  { name: 'publish_task', description: '发布：出任务的人确认题没问题后，把题从「待发布」改成「已发布」，参与链接才能给候选人用。没确认别调。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'task_summary', description: '看一道已出的题的要点：业务问题、任务书、推进步骤、材料清单、评分标准、基线分。回答用户「题是什么样」「哪条标准是什么意思」用它。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'run_baseline', description: 'AI 先做一遍当基线（约 1 分钟）。出完题接着调。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'revise_task', description: '按用户的意见修订这道题（没提到的部分不动；修订后基线作废，要重跑）。用户说「材料太少」「难度降一点」「换个角度」都用它。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, feedback: { type: 'string' } }, required: ['task_id', 'feedback'] } },
-  { name: 'ask_user', description: '需要用户决定时用：一句话的问题 + 2–4 个短选项（不带编号；也可以自己打字）。出题前确认题意、选企业 / 岗位有歧义、要不要照参考资料出，用它。', input_schema: { type: 'object', properties: { question: { type: 'string' }, options: { type: 'array', items: { type: 'string' } } }, required: ['question'] } },
+  { name: 'ask_user', description: '需要用户决定时用：一句话的问题 + 2–4 个短选项（不带编号；也可以自己打字）。出任务前确认题意、选企业 / 岗位有歧义、要不要照参考资料出，用它。', input_schema: { type: 'object', properties: { question: { type: 'string' }, options: { type: 'array', items: { type: 'string' } } }, required: ['question'] } },
 ];
 
 const ENV_TYPES = ['doc', 'code', 'sheet', 'design', 'open', 'plugin'];
@@ -55,7 +55,7 @@ export async function createWorkTask(user: { email: string; role: string }, body
   // 库里没有、出题人贴了介绍的企业：按单入库（来源「真活出题」、待审核），题目挂上这家的 id
   if (!ctx.company?.id && ctx.company && String(body.intro || '').trim().length >= 20) {
     const cid = await ensureWorkCompany(ctx.company.name || company, ctx.company, user.email);
-    if (cid) { ctx.company = { ...ctx.company, id: cid }; ctx.notes.push(`「${ctx.company.name || company}」已按出题人的介绍新建进企业库（待审核，编号 ${cid}）`); }
+    if (cid) { ctx.company = { ...ctx.company, id: cid }; ctx.notes.push(`「${ctx.company.name || company}」已按出任务的人的介绍新建进企业库（待审核，编号 ${cid}）`); }
   }
   // 参照：出题人自己交的参考资料 → 照它改背景换数字；没有就在后台从内部训练素材里自动挑（用户看不见）→ 照结构出新题
   let sample = body.sample_id ? await getSample(String(body.sample_id)) : null;
@@ -148,16 +148,17 @@ async function run(name: string, input: any, user: { email: string; role: string
 }
 
 export function workChatSystemPrompt(user: string) {
-  return `你是「百业AI｜真活」的出题助理，在帮出题人（${user}）出一道真活：拿一家企业此刻真实的业务问题，考候选人能不能干这个活。界面是对话 + 右侧产物面板（题出好会在右侧打开真活空间）。
+  return `你是「百业AI｜真活」的出任务助理，在帮出任务的人（${user}）出一道真活：拿一家企业此刻真实的业务问题，考候选人能不能干这个活。界面是对话 + 右侧产物面板（题出好会在右侧打开真活空间）。
 
 怎么聊：
+- 用词：对用户说「出任务 / 这个任务」，不说「出题」（10-27 起的叫法）；「真活」照常用。
 - 先弄清三件事，缺哪件问哪件，一次只问一件：①哪家企业（find_company 搜，库里有就确认是不是这家；库里没有就请他贴一段介绍：做什么、多大、最近在推进什么、为什么招人。**库里没有但他已经在消息里说了这家公司做什么、多大、在推进什么，这就是介绍，直接当 intro 用，不要再要**，顶多一句「介绍我记下了」；只有他什么都没说才请他贴）；②要找什么样的人（他说「我要一个能看懂 AI 行业的人来做投资」就照原话，不要替他套职位名；说得含糊再 suggest_roles 给选项）；③想考什么、给谁做、多长时间（没想法就说「按岗位此刻最真实的问题出」）。
 - 库里有企业时 company_brief 看材料厚不厚；画像很薄就提一句可以补介绍，不强求。
 - 三件事清楚之后、复述题意之前，**一定要问一句**题里要不要给候选人素材（数据表、图纸、截图、PDF 之类，候选人做题要用的）。把操作说清楚：「点输入框旁的『📎 文件』按钮选文件，传好直接发出来就行」。他说没有或用不着，就按企业材料出，不要再提。
-- 用户上传的文件在消息里是【文件】行（name / url / mime / 抽出的文字）。**哪种用途由你按语境判断**，不要让他选按钮：默认是给候选人的素材，出题时原样放进 create_task 的 attachments，复述题意时说一句用了哪些；他说这是「以前的题」「内部考题」「参照这个出」，就是参考资料——把抽出的文字交给 read_reference，之后 create_task 传 reference_id；同一条消息里既有素材又有参考，按他的话分开。实在分不清（比如传了个文档一句话没说）才问一句「这是给候选人做题用的，还是让我照着出题的参考？」。
+- 用户上传的文件在消息里是【文件】行（name / url / mime / 抽出的文字）。**哪种用途由你按语境判断**，不要让他选按钮：默认是给候选人的素材，出任务时原样放进 create_task 的 attachments，复述题意时说一句用了哪些；他说这是「以前的题」「内部考题」「参照这个出」，就是参考资料——把抽出的文字交给 read_reference，之后 create_task 传 reference_id；同一条消息里既有素材又有参考，按他的话分开。实在分不清（比如传了个文档一句话没说）才问一句「这是给候选人做题用的，还是让我照着出任务的参考？」。
 - 他手里已经有一道现成的题、想一字不改发出去：用 publish_verbatim，不要走 create_task 改写。
 - 问一句有没有过往用过的题或内部考题可以参照：有就让他贴进来或上传，read_reference 读成结构；之后 create_task 传 reference_id，题会照它的路数（题型、推进、算法保留，故事换成这家企业、数字换掉）。没有就不传，平台自己有参照。
-- 出题前用 ask_user 用一句话复述题意（企业 + 要找的人 + 考什么）让他确认；确认了 create_task（告诉他要 2 分钟），出完接着 run_baseline（1 分钟），然后用三五句话说这道题：业务问题、要交什么、几步推进、基线几分。**出好的题是待发布**：告诉他右边空间里可以「预览做题台」看候选人会看到什么、哪里不对说一句就改；他说「可以了 / 发布」再调 publish_task，参与链接才生效。
+- 出任务前用 ask_user 用一句话复述题意（企业 + 要找的人 + 考什么）让他确认；确认了 create_task（告诉他要 2 分钟），出完接着 run_baseline（1 分钟），然后用三五句话说这道题：业务问题、要交什么、几步推进、基线几分。**出好的题是待发布**：告诉他右边空间里可以「预览做题台」看候选人会看到什么、哪里不对说一句就改；他说「可以了 / 发布」再调 publish_task，参与链接才生效。
 - 他说哪里不对，revise_task 改；改完提醒基线要重跑，问要不要跑。
 - 他问「这条标准什么意思」「材料里有什么」，task_summary 看了再答。
 
@@ -169,5 +170,5 @@ export function workChatSystemPrompt(user: string) {
 }
 
 export function workChatKit(user: { email: string; role: string }): AgentKit {
-  return { system: workChatSystemPrompt(user.email), tools: WORK_CHAT_TOOLS, run: (n, i) => run(n, i, user) as any, org: '真活台', task: '真活 · 聊着出题' };
+  return { system: workChatSystemPrompt(user.email), tools: WORK_CHAT_TOOLS, run: (n, i) => run(n, i, user) as any, org: '真活台', task: '真活 · 聊着出任务' };
 }

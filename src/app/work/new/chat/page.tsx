@@ -18,10 +18,10 @@ type Item =
 type Art = { kind: 'work_task'; token: string; owner_key: string; title: string; task_id: string; _n?: number };
 
 const MODELS = MODEL_OPTIONS.filter(m => /^(claude-|gpt-|qwen)/.test(m.id));
-const RUNNING: Record<string, string> = { find_company: '在企业库里搜', company_brief: '看这家企业的材料', suggest_roles: '找岗位', my_references: '看参考资料', read_reference: '读参考资料（约 1 分钟）', create_task: '出题中（约 2 分钟：拼材料、锚定问题、写任务书、做材料包、定标准）', task_summary: '看这道题', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', revise_task: '按意见修订' };
+const RUNNING: Record<string, string> = { find_company: '在企业库里搜', company_brief: '看这家企业的材料', suggest_roles: '找岗位', my_references: '看参考资料', read_reference: '读参考资料（约 1 分钟）', create_task: '出任务中（约 2 分钟：拼材料、锚定问题、写任务书、做材料包、定标准）', task_summary: '看这道题', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', revise_task: '按意见修订' };
 const SUGGEST = [
   { t: '直接说要找什么样的人', d: '不用先想职位名', p: '我要给武岳峰资本找一个能看懂具身智能的人来做投资，出一道题。' },
-  { t: '给一个岗位出题', d: '说企业和岗位就行，其余它来问', p: '给宁德时代的供应链计划岗出一道题。' },
+  { t: '给一个岗位出任务', d: '说企业和岗位就行，其余它来问', p: '给宁德时代的供应链计划岗出一道题。' },
   { t: '照我们以前的题出', d: '把过往用过的题贴给它，它换成这家企业', p: '我有一道以前校招用过的题，想照它的路数给宁德时代的供应链计划岗出一道。' },
   { t: '先聊聊再出', d: '它一件一件问：企业、要找的人、考什么', p: '帮我出一道真活，你问我。' },
 ];
@@ -87,7 +87,7 @@ export default function WorkChatPage() {
         <section className="wc-chat">
           {!items.length ? (
             <div className="wc-hero">
-              <div className="wc-eyebrow">TRUE WORK, TRUE TALENT · 出题助理</div>
+              <div className="wc-eyebrow">TRUE WORK, TRUE TALENT · 出任务助理</div>
               <h1>说说你要找什么样的人</h1>
               <p>企业、要找的人、想考什么——缺哪件我问哪件；有过往用过的题可以直接贴给我，我照它的路数出。题出好在右边打开，不对就当场改。</p>
               <Composer text={text} setText={setText} busy={busy} send={send} stop={() => abortRef.current?.abort()} model={model} setModel={setModel} autoFocus />

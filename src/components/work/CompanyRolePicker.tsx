@@ -39,10 +39,10 @@ export function CompanyRolePicker({ company, role, onCompany, onRole, size = 'la
         options={opts.map(c => ({ value: c.name, label: <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}><b>{c.name}</b><span style={{ color: '#888', fontSize: 12 }}>{[c.industry, c.city].filter(Boolean).join(' · ')}</span><span style={{ marginLeft: 'auto', fontSize: 11, color: '#999' }}>{c.has_profile ? '画像 ✓' : '无画像'} · 岗位 {c.jobs}</span></div>, c }))}
         onChange={v => { onCompany(v, null); setPicked(null); }}
         onSelect={(_v, o: any) => { setPicked(o.c); onCompany(o.c.name, o.c); }} />
-      {!picked && company.trim().length >= 2 && searched === company.trim() && !opts.length && <div style={{ marginTop: -4 }}><Tag color="orange">库里没有「{company.trim()}」· 按新企业出题</Tag><span style={{ fontSize: 12, color: '#888' }}>在下面贴一段介绍，AI 读懂再出题</span></div>}
+      {!picked && company.trim().length >= 2 && searched === company.trim() && !opts.length && <div style={{ marginTop: -4 }}><Tag color="orange">库里没有「{company.trim()}」· 按新企业出任务</Tag><span style={{ fontSize: 12, color: '#888' }}>在下面贴一段介绍，AI 读懂再出任务</span></div>}
       {picked && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: -4 }}>
         <Tag color="green">企业库 #{picked.id}</Tag>{picked.industry && <Tag>{picked.industry}</Tag>}{picked.city && <Tag>{picked.city}</Tag>}
-        <Tag color={picked.has_profile ? 'blue' : 'default'}>{picked.has_profile ? `画像完整度 ${picked.completeness ?? '–'}` : '没有画像，只能按名字出题'}</Tag>
+        <Tag color={picked.has_profile ? 'blue' : 'default'}>{picked.has_profile ? `画像完整度 ${picked.completeness ?? '–'}` : '没有画像，只能按名字出任务'}</Tag>
         <Tag color={picked.jobs ? 'purple' : 'default'}>在招岗位 {picked.jobs}</Tag>
       </div>}
       <div style={{ fontSize: 14.5, fontWeight: 600, color: '#2b2b40', margin: '18px 0 6px' }}>你在找什么样的人？</div>
@@ -58,8 +58,8 @@ export function CompanyRolePicker({ company, role, onCompany, onRole, size = 'la
         {roleHitJob ? <Tag color="purple">已匹配 · {picked?.name} 在招「{roleHitJob.title}」{roleHitJob.job_function ? ` · ${roleHitJob.job_function}` : ''}</Tag> : null}
         {roleHitOcc ? <Tag color="blue">职业库 · {roleHitOcc.name}{roleHitOcc.category ? `（${roleHitOcc.category}）` : ''}</Tag> : null}
         {/* 一句话说要找什么样的人：不提示「新岗位 / 库里没有」，直接说会怎么出 */}
-        {isNeed && <><Tag color="green">要找的人</Tag><span style={{ fontSize: 12, color: '#888' }}>按这句话出题：不套职位名，直接考有没有这个本事</span></>}
-        {!isNeed && !roleHitJob && !roleHitOcc && <><Tag color="orange">新岗位「{role.trim()}」</Tag><span style={{ fontSize: 12, color: '#888' }}>{jobs.length || occs.length ? '下拉里有相近的，也可以直接用你写的' : '库里没有对应岗位 / 职业，照样出题，典型任务那层会缺'}</span></>}
+        {isNeed && <><Tag color="green">要找的人</Tag><span style={{ fontSize: 12, color: '#888' }}>按这句话出任务：不套职位名，直接考有没有这个本事</span></>}
+        {!isNeed && !roleHitJob && !roleHitOcc && <><Tag color="orange">新岗位「{role.trim()}」</Tag><span style={{ fontSize: 12, color: '#888' }}>{jobs.length || occs.length ? '下拉里有相近的，也可以直接用你写的' : '库里没有对应岗位 / 职业，照样出任务，典型任务那层会缺'}</span></>}
       </div>}
     </>
   );

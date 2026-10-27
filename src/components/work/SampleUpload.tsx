@@ -20,7 +20,7 @@ export function SampleUpload({ shared, onDone, size = 'middle', pastePlaceholder
       const j = await (await fetch('/api/admin/work/samples', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, shared }) })).json();
       if (!j.ok) throw new Error(j.error);
       onDone(j.sample); setPasting(false); setText('');
-      message.success(shared ? `已入库：${j.sample.title}，${j.sample.stages} 步` : `已读完：${j.sample.title}，出题时会照它的路数`);
+      message.success(shared ? `已入库：${j.sample.title}，${j.sample.stages} 步` : `已读完：${j.sample.title}，出任务时会照它的路数`);
     } catch (e: any) { message.error(e.message); } finally { setBusy(''); }
   };
   const onFile = (file: File) => { const rd = new FileReader(); rd.onload = () => submit({ filename: file.name, file: String(rd.result).split(',')[1] }); rd.readAsDataURL(file); };

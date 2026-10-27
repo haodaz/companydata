@@ -14,7 +14,7 @@ type Bound = { ok: boolean; title?: string; error?: string; submitted?: boolean 
 
 /** 四步做完一道题：每步配真实截图（[图, 说明, 是否竖长的侧边栏图]） */
 const FLOW: { t: string; d: string; imgs: [string, string, boolean?][] }[] = [
-  { t: '拿到真活码，去关联', d: '打开出题人发的参与链接，留个名字点「开始做」。答题页会给一个 6 位真活码，点「去装插件 / 关联」来到这一页，点「关联这次作答」。看到「已关联」就好。', imgs: [['/work/plugin/02-launch-bound.jpg', '插件页：真活码、已检测到插件、关联好了']] },
+  { t: '拿到真活码，去关联', d: '打开出任务的人发的参与链接，留个名字点「开始做」。答题页会给一个 6 位真活码，点「去装插件 / 关联」来到这一页，点「关联这次作答」。看到「已关联」就好。', imgs: [['/work/plugin/02-launch-bound.jpg', '插件页：真活码、已检测到插件、关联好了']] },
   { t: '打开侧边栏，同意并开始记录', d: '点浏览器右上角的真活图标，打开侧边栏。上面是题目和剩余时间，中间说清楚会记什么。看完点「同意并开始记录」。', imgs: [['/work/plugin/03-panel-before.jpg', '侧边栏：还没开始记录，同意并开始记录', true]] },
   { t: '用自己的工具做，交付说明写在侧边栏', d: '在线文档、表格、设计工具、各家 AI 随你用。侧边栏一直显示剩余时间和记了多少，剩 5 分钟、1 分钟各提醒一次。交付物链接和说明写在侧边栏里，自动保存，答题页上也能看到同一份。', imgs: [['/work/plugin/04-panel-recording.jpg', '侧边栏：记录中、倒计时、交付说明', true], ['/work/plugin/05-answer-page.jpg', '答题页：真活码、记录状态、任务书与材料、交付说明']] },
   { t: '结束作答，等报告', d: '点侧边栏底下的「结束作答（交卷）」。时间到还没交，会自动交卷。交卷后记录停止，报告页自动打开，AI 一段一段回看你的过程，看完出报告。', imgs: [['/work/plugin/06-panel-submitted.jpg', '侧边栏：已交卷，AI 正在回看过程', true]] },
@@ -92,7 +92,7 @@ function Inner() {
       <section className="zp-sec">
         <div className="zp-in">
           <div className="zp-k">为什么要有插件</div>
-          <h3>同一道真活，三种做法，出题人选</h3>
+          <h3>同一道真活，三种做法，出任务的人选</h3>
           <div className="zp-cols">
             {[
               ['站内操作台', '材料、编辑区、AI 都在答题页里。每一步自动记，最省事。', '工具只能用我们给的'],
@@ -124,7 +124,7 @@ function Inner() {
               <li>不点、不翻、不提交，不替你操作任何页面</li>
             </ul></div>
           </div>
-          <div className="zp-note">开始记录前侧边栏会再说一遍，你点「同意并开始记录」才开始；中途可以暂停（暂停也会记在过程里）。交卷或时间到，自动停止。记录只用于这道题的过程评价，出题人在报告里看得到。</div>
+          <div className="zp-note">开始记录前侧边栏会再说一遍，你点「同意并开始记录」才开始；中途可以暂停（暂停也会记在过程里）。交卷或时间到，自动停止。记录只用于这道题的过程评价，出任务的人在报告里看得到。</div>
         </div>
       </section>
 
@@ -162,7 +162,7 @@ function Inner() {
         <div className="zp-in zp-faq">
           <div className="zp-k">常见问题</div>
           <details><summary>做下一道题要重装吗？</summary><p>不用。每道题有自己的真活码，来这一页点「关联这次作答」，或者在侧边栏粘贴新码就行。</p></details>
-          <details><summary>可以用桌面版 Word / Excel 吗？</summary><p>插件只看得到浏览器里的网页。要用桌面软件，出题人可以选「录屏上传」，或者用站内操作台。</p></details>
+          <details><summary>可以用桌面版 Word / Excel 吗？</summary><p>插件只看得到浏览器里的网页。要用桌面软件，出任务的人可以选「录屏上传」，或者用站内操作台。</p></details>
           <details><summary>中途断网了怎么办？</summary><p>记录先存在你的浏览器里，联网后自动补传。</p></details>
           <details><summary>和数据外采篮是一个插件吗？</summary><p>不是。真活插件只用于答题，和数据部门的采集工具没有关系。</p></details>
         </div>

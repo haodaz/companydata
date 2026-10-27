@@ -45,7 +45,7 @@ function Inner() {
       <WorkTopBar active="mine" />
       <div style={{ maxWidth: 1180, margin: '0 auto', padding: '24px 28px 60px' }}>
         <h1 style={{ fontSize: 26, margin: '0 0 6px' }}>我的真活</h1>
-        <div style={{ color: '#666', marginBottom: 18 }}>出题、分享参与链接、看每个人的考评，都在这一页。做题的人不用登录，留个名字就能做。</div>
+        <div style={{ color: '#666', marginBottom: 18 }}>出任务、分享参与链接、看每个人的考评，都在这一页。做题的人不用登录，留个名字就能做。</div>
         {!loading && !list.length && <div style={{ background: '#fff', border: '1px dashed #d9dbe6', borderRadius: 14, padding: '28px 24px', textAlign: 'center', marginBottom: 16 }}>
           <RocketOutlined style={{ fontSize: 28, color: '#6055f5' }} />
           <div style={{ fontWeight: 700, marginTop: 8 }}>还没有出过题</div>

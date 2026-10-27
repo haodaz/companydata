@@ -65,7 +65,7 @@ export default function WorkPage() {
   const { token } = useParams<{ token: string }>();
   const sp = useSearchParams();
   const [task, setTask] = useState<Task | null>(null);
-  const [preview, setPreview] = useState(false);   // 出题人预览（待发布的题，带管理密钥进来）
+  const [preview, setPreview] = useState(false);   // 出任务的人预览（待发布的题，带管理密钥进来）
   const [err, setErr] = useState('');
   const [phase, setPhase] = useState<'loading' | 'intro' | 'work' | 'grading' | 'report'>('loading');
   const [sid, setSid] = useState<string>('');
@@ -81,7 +81,7 @@ export default function WorkPage() {
       const j = await (await fetch(`/api/work/${token}${sp.get('k') ? `?k=${encodeURIComponent(sp.get('k')!)}` : ''}`)).json();
       if (j.ok) setPreview(!!j.preview);
       if (!j.ok) { setErr(j.error || '链接不可用'); setPhase('intro'); return; }
-      setTask(j.task); if (j.task?.task?.env?.type === 'open') setMode('open'); if (j.task?.task?.env?.type === 'plugin') setMode('plugin');   // 出题人指定了「自己录制电脑操作」：只有开放模式
+      setTask(j.task); if (j.task?.task?.env?.type === 'open') setMode('open'); if (j.task?.task?.env?.type === 'plugin') setMode('plugin');   // 出任务的人指定了「自己录制电脑操作」：只有开放模式
       const s = sp.get('s') || (typeof localStorage !== 'undefined' ? localStorage.getItem(`work:${token}`) : '') || '';
       if (s) {
         const r = await (await fetch(`/api/work/${token}/sessions/${s}`)).json();
@@ -115,7 +115,7 @@ export default function WorkPage() {
         {env.type === 'plugin'
           ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用你自己的工具做。</b>在线文档、表格、设计工具、各家 AI 都可以。点「开始做」后会给你一个真活码，装好「真活插件」（一次就好，<a href="/work/plugin" target="_blank" rel="noreferrer">看说明</a>）、关联这次作答，插件只在答题期间记录你打开的网页、页面上的文字和打字粘贴的量。交付说明在插件侧边栏或本页写，做完点「结束作答」；到时间会自动交卷。</div></Box>
           : env.type === 'open'
-          ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用自己的软件做。</b>下载材料，用你顺手的 Excel / CAD / IDE / AI 做；浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。出题人指定了这种做法，过程由录屏还原。</div></Box>
+          ? <Box title="怎么做"><div style={{ lineHeight: 1.8 }}><b>用自己的软件做。</b>下载材料，用你顺手的 Excel / CAD / IDE / AI 做；浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。出任务的人指定了这种做法，过程由录屏还原。</div></Box>
           : <Box title="怎么做">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
             {([['bench', '在本页的操作台做', `${modulesLabel(task, env)}：每个交付物一个标签页，材料、编辑区、AI 都在页面里，每一步自动记录。省事，推荐。`], ['plugin', '用自己的网页工具做', '在线文档 / 表格 / 设计工具 / 各家 AI 都行。装一次「真活插件」，它只在答题期间记录你打开的网页和页面文字；交付说明在侧边栏写。'], ['open', '用自己的桌面软件做', '装在电脑上的 Excel / CAD / IDE：下载材料，浏览器录屏（不用装东西），做完上传交付文件 + 写交付说明。']] as const).map(([k, t, d]) => (
@@ -426,7 +426,7 @@ function OwnerPreviewBar() {
   const { token } = useParams<{ token: string }>(); const k = useSearchParams().get('k');
   if (!k) return null;
   return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, flexWrap: 'wrap', background: '#fff7e6', borderBottom: '1px solid #ffd591', color: '#8a5a00', fontSize: 13, padding: '8px 18px' }}>
-    <span>出题人预览 · 在这里看到的就是候选人会看到的</span>
+    <span>出任务的人预览 · 在这里看到的就是候选人会看到的</span>
     <a href={`/work/${token}/owner?k=${encodeURIComponent(k)}`} style={{ color: '#6055f5', fontWeight: 700, textDecoration: 'none' }}>← 回到真活空间</a>
   </div>;
 }

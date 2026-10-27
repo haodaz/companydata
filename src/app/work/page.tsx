@@ -26,7 +26,7 @@ const DEMO_VIDEO = `${MEDIA}/work-demo-720.mp4`, DEMO_POSTER = `${MEDIA}/work-de
 
 const I = (d: string) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>;
 const STEPS = [
-  { t: '出题', d: '填企业和岗位，两三分钟出一道真活：任务书、材料包、逐条标准，AI 先做一遍。', icon: I('M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z M14 4v6h6 M8 14h8 M8 18h5') },
+  { t: '出任务', d: '填企业和岗位，两三分钟出一道真活：任务书、材料包、逐条标准，AI 先做一遍。', icon: I('M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z M14 4v6h6 M8 14h8 M8 18h5') },
   { t: '分享', d: '参与链接发给候选人或团队，留个名字就能做，不用登录。', icon: I('M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1 M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1') },
   { t: '候选人做真活', d: '在操作台上做，或用自己的软件做并录屏；每一步都留痕。', icon: I('M3 5h18v11H3z M2 20h20 M9 9l3 3 4-4') },
   { t: '看考评', d: '结果逐条有证据，过程有高光和风险时刻，还和 AI 基线比。', icon: I('M4 20V10 M10 20V4 M16 20v-7 M22 20H2') },
@@ -175,7 +175,7 @@ export default function WorkLanding() {
             <Link href="/work/mine" style={{ ...btn, textDecoration: 'none', height: 54, display: 'inline-flex', alignItems: 'center', padding: '0 30px' }}>出一道真活 →</Link>
             <Link href="/work/T712yYY1swI" style={{ ...btnGhost, textDecoration: 'none', height: 54, display: 'inline-flex', alignItems: 'center' }}>先试一道示范题</Link>
           </div>
-          <div style={{ marginTop: 16, fontSize: 13, color: '#6b6f86' }}>登录后出题 · 做题的人不用登录 · 出题约 2–3 分钟</div>
+          <div style={{ marginTop: 16, fontSize: 13, color: '#6b6f86' }}>登录后出任务 · 做题的人不用登录 · 出任务约 2–3 分钟</div>
         </div>
         <div style={{ position: 'absolute', right: 28, bottom: 26, display: 'flex', alignItems: 'center', gap: 12, color: '#1a1a2e' }}>
           <div style={{ textAlign: 'right' }}><div style={{ fontSize: 11, letterSpacing: 3, color: '#6b6f86' }}>真活发生的地方</div><div style={{ fontSize: 15, fontWeight: 700 }}>{SCENES[sceneIdx].cap}</div></div>
@@ -294,7 +294,7 @@ export default function WorkLanding() {
       {/* 数据底座 */}
       <section id="infra" style={{ maxWidth: 1180, margin: '0 auto', padding: '56px 28px 8px' }}>
         <h2 style={h2}>题从平方数据基础设施里长出来</h2>
-        <div style={{ color: '#4a4f66', marginBottom: 18, maxWidth: 820, lineHeight: 1.8 }}>不是题库，不是模拟。行业的标准与规范、企业的画像与动态、职业的典型任务与图谱——三层数据和知识互相链接，生成器在这上面出题。给个企业名，出的是这家企业此刻的真活，每条标准都能指回出处。</div>
+        <div style={{ color: '#4a4f66', marginBottom: 18, maxWidth: 820, lineHeight: 1.8 }}>不是题库，不是模拟。行业的标准与规范、企业的画像与动态、职业的典型任务与图谱——三层数据和知识互相链接，生成器在这上面出任务。给个企业名，出的是这家企业此刻的真活，每条标准都能指回出处。</div>
         <div style={{ ...card, padding: '22px 24px' }}><InfraChart /></div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12, marginTop: 14 }}>
           {[['10,000+', '企业画像', '12 个维度 + 产品 / 动态 / 高管 / 舆情子实体'], ['20,000+', '在招岗位', '按城市拆分、职责要求结构化'], ['630+', '职业画像', '典型任务 · 工位 · 工具 · 发展图谱'], ['标准与规程', '行业规范库', '条款级可引用，rubric 的依据']].map(([n, l, d]) => <div key={l} style={{ background: '#fffdf9', border: '1px solid #ebe7de', borderRadius: 14, padding: '14px 16px' }}><div style={{ fontSize: 24, fontWeight: 800, background: 'linear-gradient(90deg,#6055f5,#12b5cb)', WebkitBackgroundClip: 'text', color: 'transparent' }}>{n}</div><div style={{ fontSize: 14, fontWeight: 700 }}>{l}</div><div style={{ fontSize: 12.5, color: '#6b6f86', lineHeight: 1.6 }}>{d}</div></div>)}
@@ -306,7 +306,7 @@ export default function WorkLanding() {
         <div style={{ borderRadius: 20, padding: '34px 32px', background: 'linear-gradient(135deg,#6055f5,#12b5cb)', color: '#fff', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, alignItems: 'center' }}>
           <div>
             <h2 style={{ ...h2, color: '#fff', marginBottom: 8 }}>出一道真活</h2>
-            <div style={{ color: 'rgba(255,255,255,.9)', lineHeight: 1.8 }}>填企业和岗位，两三分钟出题。每道真活有自己的空间：管理、分享、看做题情况、看评分报告。出题要登录，做题的人不用。</div>
+            <div style={{ color: 'rgba(255,255,255,.9)', lineHeight: 1.8 }}>填企业和岗位，两三分钟出任务。每道真活有自己的空间：管理、分享、看做题情况、看评分报告。出任务要登录，做题的人不用。</div>
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             <Link href="/work/mine" style={{ ...btn, background: '#fff', color: '#6055f5', textDecoration: 'none', height: 52, display: 'inline-flex', alignItems: 'center', padding: '0 28px' }}>进入我的真活 →</Link>

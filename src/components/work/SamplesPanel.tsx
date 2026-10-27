@@ -28,7 +28,7 @@ export function SamplesPanel() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16, flexWrap: 'wrap', marginBottom: 10 }}>
         <div>
           <div style={{ fontWeight: 700 }}>样本库 · 内部训练素材</div>
-          <div style={{ fontSize: 12.5, color: '#888', marginTop: 2 }}>交一道公认的好题（商学院案例、咨询面试案例、内部考题），AI 拆成推进步骤、每步给的信息、参考答案和要算的数。之后每一道真活出题时，生成器都会在后台按岗位和题型自动挑最像的当参照——用户看不见这层。标「参考资料」的是出题人自己交的，只用于他自己出题。</div>
+          <div style={{ fontSize: 12.5, color: '#888', marginTop: 2 }}>交一道公认的好题（商学院案例、咨询面试案例、内部考题），AI 拆成推进步骤、每步给的信息、参考答案和要算的数。之后每一道真活出任务时，生成器都会在后台按岗位和题型自动挑最像的当参照——用户看不见这层。标「参考资料」的是出任务的人自己交的，只用于他自己出任务。</div>
         </div>
         <SampleUpload shared onDone={() => load()} size="small" />
       </div>
@@ -45,7 +45,7 @@ export function SamplesPanel() {
       <Drawer open={!!cur} onClose={() => setCur(null)} width={Math.min(860, typeof window !== 'undefined' ? window.innerWidth - 40 : 860)} title={cur?.title}>
         {k && <div>
           <Paragraph><Tag>{k.problem_type}</Tag><Tag>{k.industry}</Tag><Tag>难度 {k.difficulty}</Tag><Tag>{k.format}</Tag>{k.summary}</Paragraph>
-          {!!k.style_notes?.length && <div style={{ marginBottom: 14 }}><b>好在哪（出题时保留的手法）</b><ul style={{ margin: '4px 0 0', paddingLeft: 18 }}>{k.style_notes.map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></div>}
+          {!!k.style_notes?.length && <div style={{ marginBottom: 14 }}><b>好在哪（出任务时保留的手法）</b><ul style={{ margin: '4px 0 0', paddingLeft: 18 }}>{k.style_notes.map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></div>}
           {(k.stages || []).map((st: any) => <div key={st.id} style={{ marginBottom: 14, padding: '12px 14px', background: '#fafbff', borderRadius: 10 }}>
             <div><Tag color="purple">{st.id}</Tag><Tag>{TYPE_CN[st.type] || st.type}</Tag><b>{st.question}</b></div>
             {st.reveal && <details style={{ marginTop: 6 }}><summary style={{ cursor: 'pointer', color: '#6055f5', fontSize: 13 }}>这一步给的信息</summary><div style={{ fontSize: 13, marginTop: 6 }}><Md text={st.reveal} /></div></details>}

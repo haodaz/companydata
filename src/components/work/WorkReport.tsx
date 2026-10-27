@@ -64,7 +64,7 @@ export function WorkReport({ report, participant }: { report: any; participant?:
           {Object.entries(p?.skills || {}).map(([k, v]: any) => <div key={k} style={{ padding: '10px 12px', borderRadius: 10, background: '#fafbff', borderLeft: `4px solid ${LV[v.level]}` }}><div style={{ fontWeight: 700 }}>{k} <span style={{ fontSize: 12, color: '#777' }}>{v.level}</span></div><div style={{ fontSize: 13, color: '#555' }}>{v.note}</div></div>)}
         </div>
       </Card>
-      <div style={{ fontSize: 12, color: '#999' }}>{participant?.name ? `${participant.name} · ` : ''}报告生成于 {report.generated_at ? new Date(report.generated_at).toLocaleString('zh-CN') : ''} · 结果按出题 rubric 逐条核对，过程看工作台事件流；这是练习与预筛信号，不是能力定性。</div>
+      <div style={{ fontSize: 12, color: '#999' }}>{participant?.name ? `${participant.name} · ` : ''}报告生成于 {report.generated_at ? new Date(report.generated_at).toLocaleString('zh-CN') : ''} · 结果按出任务 rubric 逐条核对，过程看工作台事件流；这是练习与预筛信号，不是能力定性。</div>
     </div>
   );
 }

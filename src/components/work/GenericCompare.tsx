@@ -82,13 +82,13 @@ export function GenericCompare({ token, ownerKey, task }: { token: string; owner
   return (
     <>
       <Button onClick={() => ask()}>对比通用模型</Button>
-      <Drawer open={open} onClose={() => setOpen(false)} width="min(1200px, 100vw)" title="同一个需求，两种出题方式" styles={{ body: { padding: 16, background: '#f6f7fb' } }}
+      <Drawer open={open} onClose={() => setOpen(false)} width="min(1200px, 100vw)" title="同一个需求，两种出任务方式" styles={{ body: { padding: 16, background: '#f6f7fb' } }}
         extra={c && <Button size="small" loading={busy} onClick={() => ask(true)}>重新问一次</Button>}>
         <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '12px 16px', marginBottom: 12, display: 'flex', gap: 12, alignItems: 'baseline', flexWrap: 'wrap' }}>
           <span style={{ fontSize: 12, color: '#888', fontWeight: 700, letterSpacing: 1 }}>给通用模型的一句话</span>
           <span style={{ fontSize: 14, color: '#333' }}>{prompt}</span>
         </div>
-        {busy && rv?.v !== 2 && <div style={{ background: '#fff', borderRadius: 14, padding: 24, color: '#888', textAlign: 'center' }}>{c ? '按同一把尺子打分，并对照企业库、联网核实企业事实…（约 1 分钟）' : '通用模型在出题，出完对照企业资料研判…（约 1 分钟）'}</div>}
+        {busy && rv?.v !== 2 && <div style={{ background: '#fff', borderRadius: 14, padding: 24, color: '#888', textAlign: 'center' }}>{c ? '按同一把尺子打分，并对照企业库、联网核实企业事实…（约 1 分钟）' : '通用模型在出任务，出完对照企业资料研判…（约 1 分钟）'}</div>}
         {rv?.v === 2 && !busy && (
           <>
             {rv.verdict && <div style={{ background: '#fffaf0', border: '1px solid #ffd8a8', borderRadius: 12, padding: '10px 14px', marginBottom: 12, fontSize: 14, color: '#7a4a00' }}><b>研判 · </b>{rv.verdict}</div>}

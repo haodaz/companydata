@@ -97,8 +97,8 @@ export function WorkAccount({ me, dark }: { me: Me | undefined; dark?: boolean }
 export function NewModeSwitch({ mode }: { mode: 'form' | 'chat' }) {
   return (
     <div className="wtb-mode">
-      {mode === 'form' ? <span className="on">填表出题</span> : <Link href="/work/new">填表出题</Link>}
-      {mode === 'chat' ? <span className="on">聊着出题</span> : <Link href="/work/new/chat">聊着出题</Link>}
+      {mode === 'form' ? <span className="on">填表出任务</span> : <Link href="/work/new">填表出任务</Link>}
+      {mode === 'chat' ? <span className="on">聊着出任务</span> : <Link href="/work/new/chat">聊着出任务</Link>}
     </div>
   );
 }

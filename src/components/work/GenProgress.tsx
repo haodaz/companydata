@@ -84,7 +84,7 @@ export function GenProgress({ phase, company, picked, role, focus, env, intro }:
       setDone(d => {
         const genN = gen.length, total = lines.length;
         if (phase === 'done') return Math.min(total, d + 1);
-        if (phase === 'base' && d < genN) return d + 1;                     // 出题已经回来：快进
+        if (phase === 'base' && d < genN) return d + 1;                     // 出任务已经回来：快进
         const [from, to, span, start] = phase === 'gen' ? [0, genN, 120_000, t0.current] : [genN, total, 60_000, phaseAt.current];
         const target = from + Math.floor(((Date.now() - start) / span) * (to - from));
         return Math.min(Math.max(d, Math.min(target, to - 1)), to - 1);    // 本阶段最后一行留着转，直到真的做完
@@ -104,7 +104,7 @@ export function GenProgress({ phase, company, picked, role, focus, env, intro }:
     <div className="gp">
       <style>{GP_CSS}</style>
       <div className="gp-head">
-        <b>{phase === 'base' ? 'AI 在做基线' : phase === 'done' ? '好了' : '平方在出题'}</b>
+        <b>{phase === 'base' ? 'AI 在做基线' : phase === 'done' ? '好了' : '平方在出任务'}</b>
         <span>{Math.floor(sec / 60)}:{String(sec % 60).padStart(2, '0')} · 通常 2–3 分钟，别关页面</span>
       </div>
       <div className="gp-bar"><i style={{ width: `${Math.round(Math.min(done + 0.5, lines.length) / lines.length * 100)}%` }} /></div>

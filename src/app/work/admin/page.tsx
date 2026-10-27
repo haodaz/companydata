@@ -17,7 +17,7 @@ import { SamplesPanel } from '@/components/work/SamplesPanel';
 
 const { Text } = Typography;
 const ENV: Record<string, { label: string; color: string }> = { doc: { label: '文档 / 对账台', color: 'purple' }, code: { label: '代码台', color: 'geekblue' }, sheet: { label: '表格 / 数据台', color: 'cyan' }, design: { label: '设计台', color: 'orange' } };
-const STATUS: Record<string, { label: string; color: string }> = { draft: { label: '生成中', color: 'default' }, ready: { label: '已出题', color: 'blue' }, published: { label: '已发布', color: 'green' }, archived: { label: '已下架', color: 'default' } };
+const STATUS: Record<string, { label: string; color: string }> = { draft: { label: '生成中', color: 'default' }, ready: { label: '已出任务', color: 'blue' }, published: { label: '已发布', color: 'green' }, archived: { label: '已下架', color: 'default' } };
 
 export default function WorkAdminPage() {
   return <ConfigProvider theme={{ token: { colorPrimary: '#6055f5', borderRadius: 10 } }}><App><Inner /></App></ConfigProvider>;
@@ -45,14 +45,14 @@ function Inner() {
 
   const create = async () => {
     if (!form.company.trim() || !form.role.trim()) return message.warning('企业和岗位都要填');
-    setBusy('出题中（拼材料 → 问题 → 任务 → 材料包 → rubric，约 1–2 分钟）…');
+    setBusy('出任务中（拼材料 → 问题 → 任务 → 材料包 → rubric，约 1–2 分钟）…');
     try {
       const j = await (await fetch('/api/admin/work/tasks', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ company: form.company, company_id: picked?.id, role: form.role, env: form.env || undefined, focus: form.focus || undefined }) })).json();
       if (!j.ok) throw new Error(j.error);
       if (j.notes?.length) message.info(j.notes.join('；'), 6);
       setBusy('题出好了，AI 先做一遍当基线（约 1 分钟）…');
       const b = await (await fetch(`/api/admin/work/tasks/${j.id}/baseline`, { method: 'POST' })).json();
-      if (!b.ok) message.warning(`基线没跑成：${b.error}（可在详情里重跑）`); else message.success(`出题完成，AI 基线 ${b.baseline.total} 分`);
+      if (!b.ok) message.warning(`基线没跑成：${b.error}（可在详情里重跑）`); else message.success(`任务出好了，AI 基线 ${b.baseline.total} 分`);
       setForm(f => ({ ...f, focus: '' }));
       await load();
     } catch (e: any) { message.error(e.message); } finally { setBusy(''); }
@@ -73,14 +73,14 @@ function Inner() {
     <div style={{ minHeight: '100vh', background: '#f6f7fb' }}>
       <WorkTopBar active="admin" />
       <div style={{ maxWidth: 1240, margin: '0 auto', padding: '20px 24px 60px' }}>
-      <PageHeader title="真活台 · 管理" icon={<RocketOutlined />} description="拿一家企业的真实业务问题出题：问题 → 任务 → 材料包 → 带依赖的 rubric → AI 基线。链接甩出去，对方做完就有报告（结果逐条 + 过程高光 / 风险 + 和 AI 的差距）。独立于 /lab 和数据后台。" />
+      <PageHeader title="真活台 · 管理" icon={<RocketOutlined />} description="拿一家企业的真实业务问题出任务：问题 → 任务 → 材料包 → 带依赖的 rubric → AI 基线。链接甩出去，对方做完就有报告（结果逐条 + 过程高光 / 风险 + 和 AI 的差距）。独立于 /lab 和数据后台。" />
       <Tabs defaultActiveKey="tasks" items={[
         { key: 'tasks', label: `题库（${list.length}）`, children: <div>
       <Panel style={{ marginBottom: 16 }}>
         <Space wrap align="start">
           <div style={{ display: 'grid', gap: 8, width: 520 }}><CompanyRolePicker size="middle" company={form.company} role={form.role} onCompany={(name, p) => { setForm(f => ({ ...f, company: name })); setPicked(p); }} onRole={r => setForm(f => ({ ...f, role: r }))} /></div>
           <Select value={form.env} onChange={v => setForm(f => ({ ...f, env: v }))} style={{ width: 170 }} options={[{ value: '', label: '操作台：按岗位自动选' }, ...Object.entries(ENV).map(([v, x]) => ({ value: v, label: x.label }))]} />
-          <Input.TextArea value={form.focus} onChange={e => setForm(f => ({ ...f, focus: e.target.value }))} placeholder="出题人额外要求（选填：聚焦哪个问题、给谁看、难度）" autoSize={{ minRows: 1, maxRows: 3 }} style={{ width: 360 }} />
+          <Input.TextArea value={form.focus} onChange={e => setForm(f => ({ ...f, focus: e.target.value }))} placeholder="出任务的人额外要求（选填：聚焦哪个问题、给谁看、难度）" autoSize={{ minRows: 1, maxRows: 3 }} style={{ width: 360 }} />
           <Button type="primary" icon={<RocketOutlined />} loading={!!busy} onClick={create}>出一道真活</Button>
         </Space>
         {busy && <div style={{ marginTop: 8, color: '#6055f5' }}>{busy}</div>}
@@ -94,7 +94,7 @@ function Inner() {
             { title: '状态', dataIndex: 'status', width: 90, render: (v: string) => <Tag color={STATUS[v]?.color}>{STATUS[v]?.label || v}</Tag> },
             { title: 'AI 基线', dataIndex: ['baseline', 'total'], width: 90, align: 'right' as const, render: (v: number) => (v == null ? <Text type="secondary">–</Text> : <b>{v}</b>) },
             { title: '作答', width: 90, render: (_: any, t: any) => `${t.sessions.done} / ${t.sessions.n}` },
-            { title: '出题时间', dataIndex: 'created_at', width: 150, render: (v: string) => new Date(v).toLocaleString('zh-CN', { hour12: false }) },
+            { title: '出任务时间', dataIndex: 'created_at', width: 150, render: (v: string) => new Date(v).toLocaleString('zh-CN', { hour12: false }) },
             { title: '', width: 300, render: (_: any, t: any) => <Space size={4}>
               <Button size="small" icon={<CopyOutlined />} onClick={() => copy(t)}>复制链接</Button>
               <Button size="small" icon={<EyeOutlined />} onClick={() => open(t.id)}>详情</Button>
