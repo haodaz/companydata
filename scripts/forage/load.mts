@@ -13,7 +13,9 @@ const { parsePage } = await import('./parse.mjs');
 
 const opt = (k: string, d = '') => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const DIR = opt('dir'), APPLY = process.argv.includes('--apply');
-const norm = (s: string) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/\b(usa|us|uk|au|inc|ltd|llp|plc|group|global|tech|the)\b/g, '').replace(/[^a-z0-9一-龥]+/g, '');
+// Forage 上的公司名常带地区（KPMG U.S. / Deloitte Australia）：去掉地区后对企业库里的品牌名；企业库里带地区的（德勤中国 Deloitte China）规范化后不相等，不会被错挂
+const REGION = /\b(u\.?s\.?a?|uk|au|apac|emea|anz|nz|australia|canada|ca|india|ireland|singapore|hong kong|europe|south africa|new zealand|inc|ltd|llp|llc|plc|group|global|tech|the)\b\.?/g;
+const norm = (s: string) => (s || '').toLowerCase().replace(/&/g, 'and').replace(REGION, '').replace(/[^a-z0-9一-龥]+/g, '');
 
 const { data: cs } = await selectAll(() => db.from('companies').select('id, name, name_en, brief_name, aliases').not('if_delete', 'is', true).order('id'));
 const byName = new Map<string, number>();
