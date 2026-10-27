@@ -33,6 +33,7 @@ const NAV: NavItem[] = [
   { key: 'db-item',      icon: <ToolOutlined />,       label: '工具设备库',    path: '/admin/db-item',      group: '数据资产', badge: '新' },
   { key: 'kg-questions', icon: <MessageOutlined />,    label: '职业问答日志',  path: '/admin/kg-questions', group: '数据资产', badge: '新' },
   { key: 'db-question',  icon: <DatabaseOutlined />,   label: '题目资产库',    path: '/admin/db-question',  group: '数据资产', badge: '新' },   // 出过的真活沉淀的题骨架 + 质量信号（迁移 049）
+  { key: 'db-external-sim', icon: <DatabaseOutlined />, label: '外部模拟参照', path: '/admin/db-external-sim', group: '数据资产', badge: '新' },   // Forage 等平台公开模拟的外层（迁移 051）
   { key: 'db-url',       icon: <LinkOutlined />,       label: '信息源库',      path: '/admin/db-url',       group: '数据资产' },
   { key: 'db-competition', icon: <TrophyOutlined />,    label: '企业赛事库',    path: '/admin/db-competition', group: '数据资产' },
   { key: 'db-standard',  icon: <BookOutlined />,       label: '行业标准与规程库', path: '/admin/db-standard', group: '数据资产', badge: '新' },
