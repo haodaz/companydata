@@ -343,7 +343,7 @@ export default function DbCompanyPage() {
         {enrich && (
           <Alert type="info" style={{ marginBottom: 12 }} message={<div><div style={{ marginBottom: 4 }}>正在补全：{enrich.current}（{enrich.done + 1}/{enrich.total}）</div><Progress percent={Math.round((enrich.done / enrich.total) * 100)} size="small" /></div>} />
         )}
-        <Drawer open={!!peek} onClose={() => { setPeek(null); load(); }} width="75%" destroyOnHidden styles={{ body: { padding: 0 } }} title="企业档案">
+        <Drawer open={!!peek} onClose={() => { setPeek(null); load(); }} size="75%" destroyOnHidden styles={{ body: { padding: 0 } }} title="企业档案">
           {peek && <iframe src={`/admin/db-company/${peek}`} style={{ width: '100%', height: '100%', border: 0 }} />}
         </Drawer>
         <Table
