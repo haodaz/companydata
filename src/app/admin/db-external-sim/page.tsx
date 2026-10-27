@@ -24,14 +24,14 @@ export default function DbExternalSimPage() {
   return (
     <div>
       <PageHeader title="外部模拟参照" icon={<DatabaseOutlined />} description="Forage 等平台公开的企业职业模拟，只收外层：谁家、什么岗位、扮演谁干什么活、练什么技能、学员评价、任务结构（不收题目正文）。出题时按行业 / 职能当结构参照，每条都能点回原页溯源。" />
-      <StatCards loading={loading} items={[{ label: '模拟', value: stats.total || 0 }, { label: '企业', value: stats.companies || 0 }, { label: '对上企业库', value: stats.linked || 0 }, { label: '职业方向', value: stats.careers || 0 }, { label: '任务', value: stats.tasks || 0 }, { label: '平均评分', value: stats.rating ?? '—' }]} />
+      <StatCards loading={loading} items={[{ label: '模拟', value: stats.total || 0 }, { label: '企业', value: stats.companies || 0 }, { label: '对上企业库', value: stats.linked || 0 }, { label: '职业方向', value: stats.careers || 0 }, { label: '任务', value: stats.tasks || 0 }, { label: '平均评分', value: stats.rating != null ? Number(stats.rating).toFixed(1) : '—' }]} />
       <Panel>
         <Space wrap style={{ marginBottom: 12 }}>
           <Input.Search allowClear placeholder="模拟名 / 企业" style={{ width: 280 }} onSearch={v => setF(x => ({ ...x, q: v }))} />
           <Select allowClear placeholder="职业方向" style={{ width: 200 }} value={f.career || undefined} onChange={v => setF(x => ({ ...x, career: v || '' }))} options={Object.entries(careers).sort((a, b) => b[1] - a[1]).map(([k, n]) => ({ value: k, label: `${k}（${n}）` }))} />
           <Select allowClear placeholder="难度" style={{ width: 120 }} value={f.difficulty || undefined} onChange={v => setF(x => ({ ...x, difficulty: v || '' }))} options={Object.entries(DIFF).map(([k, d]) => ({ value: k, label: d.label }))} />
         </Space>
-        <Table size="small" rowKey="id" loading={loading} dataSource={data} pagination={{ pageSize: 30, showSizeChanger: false }}
+        <Table size="small" rowKey="id" loading={loading} dataSource={data} scroll={{ x: 1200 }} pagination={{ pageSize: 30, showSizeChanger: false }}
           expandable={{ expandedRowRender: (r: any) => (
             <div style={{ fontSize: 12.5, lineHeight: 1.75, display: 'grid', gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)', gap: 16 }}>
               <div>
@@ -56,7 +56,7 @@ export default function DbExternalSimPage() {
             </div>
           ) }}
           columns={[
-            { title: '模拟', dataIndex: 'title', render: (v: string, r: any) => <div><a href={r.url} target="_blank" rel="noreferrer" style={{ color: BRAND.ink, fontWeight: 600 }}>{v}</a><div style={{ fontSize: 12, color: BRAND.ink3 }}>{r.tagline}</div></div> },
+            { title: '模拟', dataIndex: 'title', width: 300, render: (v: string, r: any) => <div><a href={r.url} target="_blank" rel="noreferrer" style={{ color: BRAND.ink, fontWeight: 600 }}>{v}</a><div style={{ fontSize: 12, color: BRAND.ink3 }}>{r.tagline}</div></div> },
             { title: '企业', dataIndex: 'company_name', width: 200, render: (v: string, r: any) => r.company_id ? <a href={`/admin/db-company/${r.company_id}`}>{v}</a> : <span>{v}</span> },
             { title: '职业方向', dataIndex: 'career_areas', width: 170, render: (v: string[]) => <Space size={4} wrap>{(v || []).map(c => <Tag key={c} style={{ margin: 0 }}>{c}</Tag>)}</Space> },
             { title: '难度 / 时长', width: 130, render: (_: any, r: any) => <span>{r.difficulty ? <Tag color={DIFF[r.difficulty]?.color}>{DIFF[r.difficulty]?.label || r.difficulty}</Tag> : null}<span style={{ fontSize: 12 }}>{r.time_guidance}</span></span> },
