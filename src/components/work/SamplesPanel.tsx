@@ -49,7 +49,7 @@ export function SamplesPanel() {
           {(k.stages || []).map((st: any) => <div key={st.id} style={{ marginBottom: 14, padding: '12px 14px', background: '#fafbff', borderRadius: 10 }}>
             <div><Tag color="purple">{st.id}</Tag><Tag>{TYPE_CN[st.type] || st.type}</Tag><b>{st.question}</b></div>
             {st.reveal && <details style={{ marginTop: 6 }}><summary style={{ cursor: 'pointer', color: '#6055f5', fontSize: 13 }}>这一步给的信息</summary><div style={{ fontSize: 13, marginTop: 6 }}><Md text={st.reveal} /></div></details>}
-            <div style={{ marginTop: 6, fontSize: 13 }}><Text type="secondary">参考答案</Text><Md text={st.expected} /></div>
+            <div style={{ marginTop: 6, fontSize: 13 }}><Text type="secondary">{k.format === '岗位模拟' ? '评审看什么' : '参考答案'}</Text><Md text={k.format === '岗位模拟' ? String(st.expected || '').replace(/^评审看[：:]\s*/, '') : st.expected} /></div>
             {!!st.calc?.length && <ul style={{ margin: '6px 0 0', paddingLeft: 18, fontSize: 13 }}>{st.calc.map((c: any, i: number) => <li key={i}>{c.label}：<code>{c.expr}</code> = <b>{c.value}</b>{c.verified === false && <Tag color="orange" style={{ marginLeft: 6 }}>算式没核上</Tag>}</li>)}</ul>}
           </div>)}
           {!!k.exhibits?.length && <div><b>图表</b><ul style={{ margin: '4px 0 0', paddingLeft: 18 }}>{k.exhibits.map((e: any, i: number) => <li key={i}>{e.title} <Text type="secondary">{e.desc}</Text></li>)}</ul></div>}
