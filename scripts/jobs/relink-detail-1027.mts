@@ -13,12 +13,12 @@ const { renderMarkdown, localRenderAvailable } = await import('@/lib/agents/loca
 const { FROZEN_REVIEW_STATUSES } = await import('@/lib/review-status');
 const { atsOf, hotjobMarkdown, beisenMarkdown, siteAdapterMarkdown, siteKey } = await import('@/lib/agents/ats-adapters');
 const opt = (k: string, d = '') => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
-const LIMIT = Number(opt('limit', '0')), APPLY = process.argv.includes('--apply'), HOST = opt('host');   // --host hotjob.cn：只跑这类站
+const LIMIT = Number(opt('limit', '0')), APPLY = process.argv.includes('--apply'), HOST = opt('host'), ONLY_MISSING = process.argv.includes('--only-missing');   // --host hotjob.cn：只跑这类站
 if (!localRenderAvailable()) { console.error('本机 Chrome 不可用'); process.exit(1); }
 
-const { data } = await selectAll(() => db.from('jobs').select('id, name, link, link_status, human_review_status, human_locked_fields').not('if_delete', 'is', true).order('id'));
+const { data } = await selectAll(() => db.from('jobs').select('id, name, link, link_status, link_issue, human_review_status, human_locked_fields').not('if_delete', 'is', true).order('id'));
 const count = new Map<string, number>(); for (const j of data as any[]) if (j.link) count.set(j.link, (count.get(j.link) || 0) + 1);
-const todo = (data as any[]).filter(j => j.link && !FROZEN_REVIEW_STATUSES.has(j.human_review_status || '') && !(j.human_locked_fields || []).includes('link') && (count.get(j.link)! >= 2 || j.link_status === 'suspect'));
+const todo = (data as any[]).filter(j => j.link && !FROZEN_REVIEW_STATUSES.has(j.human_review_status || '') && !(j.human_locked_fields || []).includes('link') && (ONLY_MISSING ? j.link_issue === '列表页，未找到该岗位详情' : (count.get(j.link)! >= 2 || j.link_status === 'suspect')));
 const groups = new Map<string, any[]>(); for (const j of todo) groups.set(j.link, [...(groups.get(j.link) || []), j]);
 let links = [...groups.keys()].filter(u => !HOST || u.includes(HOST)); if (LIMIT) links = links.slice(0, LIMIT);
 console.log(`待处理岗位 ${todo.length}，链接 ${groups.size}${LIMIT ? `（这次 ${links.length} 个）` : ''}`);
@@ -59,17 +59,19 @@ for (const [n, link] of links.entries()) {
     const pick = exact.length ? exact : near;
     const a = k.length >= 2 && pick.length === 1 ? { u: pick[0] } : (pick.includes(link) ? { u: link } : null);
     // 找到的就是它现在的链接：本来就是详情页（多是 hotjob 这类渲染不出岗位名、被误判「找不到」的），确认一下
-    if (a && a.u === link && count.get(link) === 1) same.push(j.id);
+    // 岗位按城市拆（数据部门口径）：同名的几条共用一个详情页是对的，不算「分不清」
+    if (a && a.u === link) same.push(j.id);
     else if (a && a.u !== link) hits.push({ id: j.id, u: a.u }); else miss.push(j.id);
   }
-  // 同一个详情链接被找给了好几个岗位 = 没分清（同名岗位），这几个不换
-  const dup = new Map<string, number>(); for (const h of hits) dup.set(h.u, (dup.get(h.u) || 0) + 1);
-  const good = hits.filter(h => dup.get(h.u) === 1); miss.push(...hits.filter(h => dup.get(h.u)! > 1).map(h => h.id));
+  // 同一个详情链接找给了几个岗位：同名的（按城市拆的）都换；不同名的撞到一个链接 = 没分清，不换
+  const nameOf = new Map(jobs.map(j => [j.id, norm(j.name)]));
+  const namesAt = new Map<string, Set<string>>(); for (const h of hits) namesAt.set(h.u, new Set([...(namesAt.get(h.u) || []), nameOf.get(h.id)!]));
+  const good = hits.filter(h => namesAt.get(h.u)!.size === 1); miss.push(...hits.filter(h => namesAt.get(h.u)!.size > 1).map(h => h.id));
   found += good.length; missed += miss.length; confirmed += same.length;
   console.log(`[${n + 1}/${links.length}] ${jobs.length} 个岗位 → 找回 ${good.length}，确认本来就是详情页 ${same.length}，没找到 ${miss.length}  ${link.slice(0, 90)}`);
   if (APPLY) {
     for (const h of good) await db.from('jobs').update({ link: h.u, link_status: null, link_issue: '已从列表页找回详情链接', link_checked_at: null }).eq('id', h.id);
-    if (same.length) await db.from('jobs').update({ link_status: 'ok', link_issue: '招聘平台接口确认是该岗位详情页', link_checked_at: new Date().toISOString() }).in('id', same);
+    for (let i = 0; i < same.length; i += 200) await db.from('jobs').update({ link_status: 'ok', link_issue: '招聘平台接口确认是该岗位详情页', link_checked_at: new Date().toISOString() }).in('id', same.slice(i, i + 200));
     for (let i = 0; i < miss.length; i += 200) await db.from('jobs').update({ link_issue: '列表页，未找到该岗位详情' }).in('id', miss.slice(i, i + 200));
   }
 }

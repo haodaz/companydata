@@ -6,7 +6,7 @@
  *
  * 有官网那一档由数据库触发器算（迁移 018 fill_company_flora_id，所有写入路径都覆盖，重名先用完整主机名再加 -2）；
  * 拼音那一档数据库算不了，在这里补：新建企业时调 ensureCompanyFloraId，存量用 scripts/fix-1010.mts。
- * 先按拼音建的企业，之后补上官网会被触发器升级成域名那一档。
+ * 编号一旦定下来就不再改（数据部门 10-28 #55，迁移 052）：先按拼音建的企业之后补上官网，也保留拼音那一档。
  */
 import { pinyin } from 'pinyin-pro';
 import { supabaseAdmin } from '@/lib/supabase';

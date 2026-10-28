@@ -86,14 +86,14 @@ ${lines}`;
 }
 
 /** 四个标签：提示词照数据部门 10-19 给的（一次几个岗位，每个岗位要求 / 职责各截 4000 字）。
- *  没有单独「任职要求」的岗位（要求和职责写在一起），要求描述用职责代替，免得要求的两个标签全空（对方要求四个都有值） */
+ *  来源按 10-28《字段需求》：要求的两个标签只看要求描述，JD 的两个只看岗位职责，不再拿另一段顶替（以前没有要求描述时用职责代替，为了「四个都有值」）。 */
 export async function labelJobs(jobs: TagInput[], model: string): Promise<Map<number, JobLabels>> {
   const blocks = jobs.map((j, i) => `### 岗位 ${i + 1}：${j.name}
 【要求描述(overview)】
-${String(j.overview || j.responsibilities || j.summary_cn || '').slice(0, 4000) || '（无）'}
+${String(j.overview || '').slice(0, 4000) || '（无）'}
 
 【岗位职责描述(responsibilities)】
-${String(j.responsibilities || j.summary_cn || '').slice(0, 4000) || '（无）'}`).join('\n\n');
+${String(j.responsibilities || '').slice(0, 4000) || '（无）'}`).join('\n\n');
   const prompt = `你是一名资深的招聘信息结构化专家。请从下面每个岗位的岗位要求与岗位职责文本中，提取结构化标签信息，并严格按 JSON 格式返回。
 
 ## 输入信息
@@ -130,13 +130,13 @@ const LABEL_CN: Record<keyof JobLabels, string> = { exp_labels: '要求_经验�
  * 校招岗位的任职要求常常只写学历 / 专业 / 性格，一次抽四个时模型会把「要求_经验」留空（10-19 回刷后还有 2349 个）。
  */
 export async function fillMissingLabels(jobs: (TagInput & { missing: (keyof JobLabels)[] })[], model: string): Promise<Map<number, Partial<JobLabels>>> {
-  const todo = jobs.filter(j => j.missing.length && (j.overview || j.responsibilities || j.summary_cn));
+  const todo = jobs.filter(j => j.missing.length && (j.overview || j.responsibilities));
   const out = new Map<number, Partial<JobLabels>>();
   if (!todo.length) return out;
   const blocks = todo.map((j, i) => `### 岗位 ${i + 1}：${j.name}
 要补的字段：${j.missing.map(k => LABEL_CN[k]).join('、')}
-【要求描述】${squash(j.overview || j.responsibilities || j.summary_cn, 1500)}
-【岗位职责】${squash(j.responsibilities || j.summary_cn, 1500)}`).join('\n\n');
+【要求描述】${squash(j.overview, 1500) || '（无）'}
+【岗位职责】${squash(j.responsibilities, 1500) || '（无）'}`).join('\n\n');
   const prompt = `你是一名资深的招聘信息结构化专家。下面每个岗位都有几个标签字段还是空的，请只补这些字段，每个字段给 1-3 个标签，不能留空。
 - 经验标签：原文没写经验要求的，根据岗位名称、要求和职责归纳最相关的经验（如 实习经验、项目经验、行业经验、学生干部经验、竞赛获奖、科研经验、销售经验、教学经验）。
 - 技能标签：原文没写具体工具 / 技术的，归纳最相关的能力（如 沟通协调、数据分析、项目管理、英语读写、学习能力）。

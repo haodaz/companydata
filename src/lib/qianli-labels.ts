@@ -35,10 +35,11 @@ const flat = (v: any, n: number) => String(v || '').replace(/\s+/g, ' ').trim().
 const JD_MIN = 20;
 const MGMT_TITLE = /总监|总经理|副总|总裁|VP|负责人|主管|经理|厂长|店长|主任|部长|director|head of|manager|chief|CEO|COO|CFO|CTO|lead/i;
 const normName = (s: any) => String(s || '').replace(/\s+/g, '').toLowerCase();
-const jdOf = (j: QianliInput) => flat(j.responsibilities || j.summary_cn || j.overview, 2500);
+// 职能标签只看岗位名称 + 岗位职责（数据部门 10-28《字段需求》）；没有职责就只凭名称（理由里会写「仅凭岗位名称判断」）
+const jdOf = (j: QianliInput) => flat(j.responsibilities, 2500);
 
 export async function tagJobFunctions(jobs: QianliInput[], model: string): Promise<Map<number, JobFunction>> {
-  const input = jobs.map(j => ({ id: String(j.id), 岗位名称: j.name, JD: flat(j.responsibilities || j.summary_cn || j.overview, 2500) }));
+  const input = jobs.map(j => ({ id: String(j.id), 岗位名称: j.name, JD: flat(j.responsibilities, 2500) }));
   const names = JOB_FUNCTION_TAGS.map(t => t.name);
   const prompt = `${JOB_FUNCTION_PROMPT}
 
@@ -81,7 +82,7 @@ export async function tagJobSpecialties(jobs: QianliInput[], model: string): Pro
   const standards = SPECIALTY_USER.slice(SPECIALTY_USER.indexOf('【标签体系与判定标准】'), SPECIALTY_USER.indexOf('【输出格式】'));
   const batchHead = SPECIALTY_BATCH.slice(0, SPECIALTY_BATCH.indexOf('（判定标准同上）'));
   const batchOut = SPECIALTY_BATCH.slice(SPECIALTY_BATCH.indexOf('【输出格式】'));
-  const lines = jobs.map((j, i) => `${i + 1}) 岗位ID：${j.id}｜岗位名称：${j.name}｜公司：${j.company || ''}｜岗位职责描述：${flat(j.responsibilities || j.summary_cn, 2500) || '（空）'}｜要求描述：${flat(j.overview, 1500) || '（空）'}`).join('\n');
+  const lines = jobs.map((j, i) => `${i + 1}) 岗位ID：${j.id}｜岗位名称：${j.name}｜公司：${j.company || ''}｜岗位职责描述：${flat(j.responsibilities, 2500) || '（空）'}｜要求描述：${flat(j.overview, 1500) || '（空）'}`).join('\n');
   const prompt = `${SPECIALTY_SYSTEM}
 
 ${batchHead.replace('{n}', String(jobs.length)).replace(/1\) 岗位ID：\{id1\}[\s\S]*$/, lines)}

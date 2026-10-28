@@ -224,8 +224,23 @@ function tsType(f: JobFieldDef): string {
 }
 
 /** Structurer 提示词里的单个岗位 schema */
+/**
+ * 字段能不能让 AI 生成（数据部门 10-28《字段需求》）：
+ *   verbatim = 必须与原文一致，原文没有就留空，不许推断 / 改写；summary = 可以基于原文总结，原文没有相关信息就留空。
+ * 标签类（潜历标签、技能 / 经验标签、证书）各有指定的来源字段，在 job-tagging / qianli-labels 里按来源取，不在这里。
+ */
+export const JOB_FIELD_RULE: Record<string, 'verbatim' | 'summary'> = {
+  name: 'verbatim', location: 'verbatim', address: 'verbatim', country: 'verbatim', province: 'verbatim', city: 'verbatim',
+  application_end_date_str: 'verbatim', application_website: 'verbatim', link: 'verbatim', contact_email: 'verbatim', contact_phone: 'verbatim',
+  minimum_working_days: 'verbatim', number_of_recruits: 'verbatim', official_publish_date: 'verbatim', organizer: 'verbatim',
+  overview: 'verbatim', responsibilities: 'verbatim',
+  accept_foreign: 'summary', exp_years: 'summary', gpa_min_requirement: 'summary', grad_window_start: 'summary', grad_window_end: 'summary',
+  grade: 'summary', internship_salary_min: 'summary', internship_salary_max: 'summary', salary_unit: 'summary', recruit_process: 'summary',
+};
+const RULE_NOTE = { verbatim: ' 【原文照录：必须与原文一致；原文没有就留空，不许推断或改写】', summary: ' 【可基于原文总结；原文没有相关信息就留空】' };
+
 export function jobSchemaForPrompt(indent = '            '): string {
-  return JOB_FIELDS.filter(f => !f.derived).map(f => `${indent}"${f.key}": <${tsType(f)}> // ${f.label}. ${f.hint}`).join('\n');
+  return JOB_FIELDS.filter(f => !f.derived).map(f => `${indent}"${f.key}": <${tsType(f)}> // ${f.label}. ${f.hint}${JOB_FIELD_RULE[f.key] ? RULE_NOTE[JOB_FIELD_RULE[f.key]] : ''}`).join('\n');
 }
 
 const isFilled = (v: unknown) => v !== null && v !== undefined && v !== '' && !(Array.isArray(v) && v.length === 0);
