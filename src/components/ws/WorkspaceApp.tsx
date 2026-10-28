@@ -260,7 +260,7 @@ function Chat({ project, openProject, org, items, busy, send, stop, model, setMo
   const pendingAsk = [...items].reverse().find(x => x.k === 'ask' && !x.answered) as Extract<Item, { k: 'ask' }> | undefined;
   return (
     <div className={`ws-chat${empty ? ' empty' : ''}`}>
-      {empty && <div className="ws-scene" aria-hidden />}
+      {empty && <div className={`ws-scene${org.kind === 'research' ? ' research' : ''}`} aria-hidden />}
       {empty ? (
         <div className="ws-hero">
           <h1 className="ws-hello">{hello}，{org.name}</h1>
@@ -584,6 +584,7 @@ const CSS = `
 .ws-scene { position:absolute; left:50%; transform:translateX(-50%); bottom:-4%; width:min(1180px, 100%); height:min(38%, 340px); background:url(/workspace/h-port.jpg) center 40% / 100% auto no-repeat; mix-blend-mode:multiply; opacity:.5; filter:saturate(.5) contrast(1.05); pointer-events:none;
   -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.55) 28%, #000 68%), linear-gradient(to right, transparent 0%, #000 22%, #000 78%, transparent 100%); -webkit-mask-composite:source-in;
   mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.55) 28%, #000 68%), linear-gradient(to right, transparent 0%, #000 22%, #000 78%, transparent 100%); mask-composite:intersect; }
+.ws-scene.research { background-image:url(/workspace/h-campus-research.jpg); background-position:center 42%; }   /* 科研版：大学与研究园区 */
 .ws-chat.empty .ws-hero { position:relative; z-index:1; }
 .ws-ph { position:relative; display:flex; align-items:flex-end; gap:16px; margin-bottom:18px; min-height:132px; }
 .ws-ph > div, .ws-ph > button { position:relative; z-index:1; }

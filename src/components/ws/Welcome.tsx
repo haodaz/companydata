@@ -105,35 +105,36 @@ function Shot({ src, alt, big }: { src: string; alt: string; big?: boolean }) {
 }
 
 const CSS = `
-.wl { --paper:#faf9f5; --card:#fffefb; --line:#e6e2d6; --line2:#efece3; --ink:#26241f; --ink2:#5d5950; --ink3:#918c80; --accent:#4f46c8; --accent-soft:#ecebfa;
-  min-height:100dvh; background:var(--paper); color:var(--ink); font-family:'PingFang SC',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
+/* 2026-10-28：和工作台一起换浅色（照一答 /v2：极光白 + 中性灰 + 主色实色按钮、无衬线标题），不再用牛皮纸 + 黑按钮 */
+.wl { --paper:#f8f9fd; --card:#ffffff; --line:#e6e7ec; --line2:#eff0f3; --ink:#1d2030; --ink2:#4a4f63; --ink3:#7c8193; --accent:#6055f5; --accent-soft:#efedfe;
+  min-height:100dvh; background:radial-gradient(1100px 680px at 88% -12%, rgba(150,180,255,.20), transparent 62%), radial-gradient(900px 620px at 8% 112%, rgba(186,168,255,.16), transparent 60%), linear-gradient(180deg, #f9fbff 0%, #f7f7fd 100%); background-attachment:fixed; color:var(--ink); font-family:'PingFang SC',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
 .wl * { box-sizing:border-box; }
 .wl a { color:inherit; }
 .wl-in { width:min(1120px, calc(100% - 32px)); margin:0 auto; }
 .wl-muted { color:var(--ink3); font-weight:400; }
-.wl-top { position:sticky; top:0; z-index:10; background:rgba(250,249,245,.86); backdrop-filter:blur(12px); border-bottom:1px solid var(--line2); }
+.wl-top { position:sticky; top:0; z-index:10; background:rgba(255,255,255,.72); backdrop-filter:blur(12px); border-bottom:1px solid var(--line2); }
 .wl-bar { display:flex; align-items:center; gap:20px; height:60px; }
 .wl-brand { display:flex; align-items:center; gap:9px; font-weight:700; font-size:16px; white-space:nowrap; }
-.wl-mark { width:28px; height:28px; border-radius:8px; background:var(--ink); color:var(--paper); display:grid; place-items:center; font-size:14px; font-family:var(--font-serif-sc),'Songti SC',serif; }
+.wl-mark { width:28px; height:28px; border-radius:8px; background:var(--accent); color:#fff; display:grid; place-items:center; font-size:14px; font-weight:700; }
 .wl-nav { display:flex; gap:20px; margin-left:auto; font-size:14px; color:var(--ink2); }
 .wl-nav a { text-decoration:none; } .wl-nav a:hover { color:var(--ink); }
-.wl-btn { display:inline-flex; align-items:center; height:36px; padding:0 16px; border-radius:10px; background:var(--ink); color:#faf9f5 !important; text-decoration:none; font-weight:600; font-size:14px; white-space:nowrap; }
+.wl-btn { display:inline-flex; align-items:center; height:36px; padding:0 16px; border-radius:10px; background:var(--accent); color:#fff !important; text-decoration:none; font-weight:600; font-size:14px; white-space:nowrap; }
 .wl-btn.lg, .wl-ghost.lg { height:48px; padding:0 22px; font-size:15px; border-radius:12px; }
 .wl-ghost { display:inline-flex; align-items:center; border:1px solid var(--line); border-radius:10px; text-decoration:none; color:var(--ink); background:var(--card); }
 .wl-hero { padding:72px 0 28px; text-align:center; }
 .wl-kicker { font-size:12.5px; letter-spacing:.08em; color:var(--accent); font-weight:600; margin-bottom:10px; }
-.wl-h1 { font-family:var(--font-serif-sc),'Songti SC',serif; font-weight:700; font-size:clamp(38px, 6vw, 64px); line-height:1.15; letter-spacing:.01em; margin:0 0 18px; }
+.wl-h1 { font-weight:800; font-size:clamp(38px, 6vw, 64px); line-height:1.15; letter-spacing:.01em; margin:0 0 18px; }
 .wl-accent { color:var(--accent); }
 .wl-lead { font-size:clamp(16px, 2vw, 18.5px); line-height:1.8; color:var(--ink2); max-width:720px; margin:0 auto 26px; }
 .wl-ctas { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:44px; }
-.wl-shot { margin:0; background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 24px 60px rgba(60,50,20,.10), 0 2px 8px rgba(60,50,20,.05); }
+.wl-shot { margin:0; background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 24px 60px rgba(40,44,90,.10), 0 2px 8px rgba(40,44,90,.05); }
 .wl-shot img { display:block; width:100%; height:auto; }
-.wl-dots { display:flex; gap:6px; padding:9px 12px; border-bottom:1px solid var(--line2); background:#f5f3ec; } .wl-dots i { width:9px; height:9px; border-radius:50%; background:#dcd7c9; }
+.wl-dots { display:flex; gap:6px; padding:9px 12px; border-bottom:1px solid var(--line2); background:#f6f7fb; } .wl-dots i { width:9px; height:9px; border-radius:50%; background:#dcdeea; }
 .wl-strip { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:10px; margin:22px 0 10px; }
 .wl-strip > div { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; display:flex; flex-direction:column; gap:4px; }
 .wl-strip b { font-size:15px; } .wl-strip span { font-size:13px; color:var(--ink3); line-height:1.55; }
 .wl-sec { padding:72px 0 8px; }
-.wl-h2 { font-family:var(--font-serif-sc),'Songti SC',serif; font-weight:700; font-size:clamp(28px, 3.6vw, 38px); line-height:1.3; margin:0 0 14px; }
+.wl-h2 { font-weight:800; font-size:clamp(28px, 3.6vw, 38px); line-height:1.3; margin:0 0 14px; }
 .wl-p { font-size:16px; line-height:1.85; color:var(--ink2); margin:0 0 14px; max-width:720px; }
 .wl-flow { list-style:none; padding:0; margin:26px 0 0; display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px; }
 .wl-flow li { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; display:flex; flex-direction:column; gap:5px; }
@@ -144,7 +145,7 @@ const CSS = `
 .wl-ul { margin:4px 0 0; padding-left:20px; color:var(--ink2); line-height:1.9; font-size:15px; list-style:disc; }
 .wl-ul li::marker { color:var(--accent); }
 .wl-rules { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:10px; margin-top:22px; }
-.wl-rules > div { border-top:2px solid var(--ink); padding:14px 2px 0; display:flex; flex-direction:column; gap:6px; }
+.wl-rules > div { border-top:2px solid var(--accent); padding:14px 2px 0; display:flex; flex-direction:column; gap:6px; }
 .wl-rules b { font-size:16px; } .wl-rules span { font-size:13.5px; color:var(--ink2); line-height:1.65; }
 .wl-end { text-align:center; padding:96px 0 48px; }
 .wl-foot { margin-top:56px; font-size:13px; color:var(--ink3); }

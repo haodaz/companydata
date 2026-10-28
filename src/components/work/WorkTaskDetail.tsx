@@ -94,10 +94,10 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           { title: '', width: 180, render: (_: any, s: any) => <Space>{s.report && <Button size="small" type="primary" ghost onClick={() => setReport(s)}>看报告</Button>}<Button size="small" onClick={() => { navigator.clipboard.writeText(`${shareLink}?s=${s.id}`); message.success('报告链接已复制'); }}>报告链接</Button></Space> },
         ]} /></> },
       ]} />
-      <Drawer open={cmpOpen} onClose={() => setCmpOpen(false)} width={Math.min(1100, typeof window !== 'undefined' ? window.innerWidth - 40 : 1100)} title="并排对比">
+      <Drawer open={cmpOpen} onClose={() => setCmpOpen(false)} size={Math.min(1100, typeof window !== 'undefined' ? window.innerWidth - 40 : 1100)} title="并排对比">
         {cmpOpen && <Compare rubric={T.rubric || []} people={picked.map(id => sessions.find((s: any) => s.id === id)).filter(Boolean)} baseline={T.baseline} rankOf={rankOf} />}
       </Drawer>
-      <Drawer open={!!report} onClose={() => setReport(null)} width={Math.min(900, typeof window !== 'undefined' ? window.innerWidth - 60 : 900)} title={report ? `${report.participant?.name} 的报告` : ''}>
+      <Drawer open={!!report} onClose={() => setReport(null)} size={Math.min(900, typeof window !== 'undefined' ? window.innerWidth - 60 : 900)} title={report ? `${report.participant?.name} 的报告` : ''}>
         {report && <>
           {/* 先看他交了什么，再看 AI 怎么评（王刚 10-24：出任务的人的视角是先看提交的答案本身，AI 只是辅助评价） */}
           <div style={{ marginBottom: 14, border: '1px solid #e8e9f0', borderRadius: 10, overflow: 'hidden' }}>

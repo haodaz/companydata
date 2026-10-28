@@ -82,7 +82,7 @@ export function GenericCompare({ token, ownerKey, task }: { token: string; owner
   return (
     <>
       <Button onClick={() => ask()}>对比通用模型</Button>
-      <Drawer open={open} onClose={() => setOpen(false)} width="min(1200px, 100vw)" title="同一个需求，两种出任务方式" styles={{ body: { padding: 16, background: '#f6f7fb' } }}
+      <Drawer open={open} onClose={() => setOpen(false)} size="min(1200px, 100vw)" title="同一个需求，两种出任务方式" styles={{ body: { padding: 16, background: '#f6f7fb' } }}
         extra={c && <Button size="small" loading={busy} onClick={() => ask(true)}>重新问一次</Button>}>
         <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '12px 16px', marginBottom: 12, display: 'flex', gap: 12, alignItems: 'baseline', flexWrap: 'wrap' }}>
           <span style={{ fontSize: 12, color: '#888', fontWeight: 700, letterSpacing: 1 }}>给通用模型的一句话</span>

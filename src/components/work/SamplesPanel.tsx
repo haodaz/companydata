@@ -42,7 +42,7 @@ export function SamplesPanel() {
         { title: '谁交的', dataIndex: 'created_by', width: 200, render: (v: string, s: SampleRow) => <Text type="secondary" style={{ fontSize: 12 }}>{v} · {s.created_at ? new Date(s.created_at).toLocaleDateString('zh-CN') : ''}</Text> },
         { title: '', width: 110, render: (_: any, s: SampleRow) => <Space size={4}><Button size="small" icon={<EyeOutlined />} onClick={() => setCur(s)} /><Popconfirm title="删掉这份？" onConfirm={() => remove(s)}><Button size="small" danger icon={<DeleteOutlined />} /></Popconfirm></Space> },
       ]} />
-      <Drawer open={!!cur} onClose={() => setCur(null)} width={Math.min(860, typeof window !== 'undefined' ? window.innerWidth - 40 : 860)} title={cur?.title}>
+      <Drawer open={!!cur} onClose={() => setCur(null)} size={Math.min(860, typeof window !== 'undefined' ? window.innerWidth - 40 : 860)} title={cur?.title}>
         {k && <div>
           <Paragraph><Tag>{k.problem_type}</Tag><Tag>{k.industry}</Tag><Tag>难度 {k.difficulty}</Tag><Tag>{k.format}</Tag>{k.summary}</Paragraph>
           {!!k.style_notes?.length && <div style={{ marginBottom: 14 }}><b>好在哪（出任务时保留的手法）</b><ul style={{ margin: '4px 0 0', paddingLeft: 18 }}>{k.style_notes.map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></div>}
