@@ -1,0 +1,20 @@
+# 推 GitLab（ma.applysquare.net/zhuangzhuang/company-data）时不带的：百业 AI 模拟（/lab）、真活（/work）、百业学院（/college）及其素材 / 脚本。
+# 每行一个正则，按仓库相对路径匹配。数据工厂（企业 / 岗位 / 信息源 / 职业 / 科研产品 / 外采篮 / 虚拟工厂 / 报告）都带。
+^src/app/(lab|work|college|workspace|research)(/|$)
+^src/app/api/(lab|work|college|ws)(/|$)
+^src/app/api/admin/(work|questions|external-sims)(/|$)
+^src/app/api/kg/chat(/|$)
+^src/app/admin/(college-leads|db-question|db-external-sim)(/|$)
+^src/lib/(lab-(?!invite\.ts$|guest\.ts$|cert\.ts$)|college|skill-lab|skill-sim|bench\.ts$|masters/|pano-spots/|work/|ws/)
+^src/lib/agents/(lab-|skill-lab|career\.ts$)
+^src/lib/kg/persona-chat
+^src/components/(lab|work|ws)(/|$)
+^public/(lab|lab-landing|college|work|ws-welcome|video)(/|$)
+^scripts/(video|lab|beta3d|college|bench|work|forage)(/|[-.])
+^scripts/(lab-|college-|work-|seed-lab|skill-lab|kg-trial|migrate-lab)
+^scripts/gitlab/
+^docs/
+^reports/
+^hl2\.md$
+^[^/]*\.xlsx$
+^\.claude/

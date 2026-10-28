@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "push:all": "git push && bash scripts/gitlab/push-datafactory.sh"
   },
   "dependencies": {
     "@ant-design/icons": "^6.3.4",
