@@ -13,6 +13,8 @@ function hand(cx: number, cy: number, palm: number, gap: number, noise = 0): Lm[
   const lm: Lm[] = Array.from({ length: 21 }, () => ({ x: cx, y: cy, z: 0 }));
   lm[0] = { x: cx, y: cy + palm, z: 0 };                 // 手腕
   lm[9] = { x: cx, y: cy, z: 0 };                        // 中指根
+  lm[5] = { x: cx + palm * 0.35, y: cy + palm * 0.05 };   // 食指根
+  lm[17] = { x: cx - palm * 0.35, y: cy + palm * 0.1 };   // 小指根
   lm[4] = { x: cx - gap * palm / 2, y: cy - palm * 0.3 }; // 拇指尖
   lm[8] = { x: cx + gap * palm / 2, y: cy - palm * 0.3 }; // 食指尖
   return lm.map(p => ({ x: p.x + gauss() * noise, y: p.y + gauss() * noise, z: 0 }));
@@ -81,6 +83,29 @@ const check = (name: string, ok: boolean, detail: string) => { console.log(`${ok
     if (i) { jumpNew += Math.abs(n - ln); jumpOld += Math.abs(o - lo); } ln = n; lo = o;
   }
   check('捏下去不跳', jumpNew < jumpOld / 3, `位置漂移 新 ${(jumpNew * 100).toFixed(1)}% / 原来 ${(jumpOld * 100).toFixed(1)}%`);
+}
+
+// ⑦ 只动食指去够拇指（真实的捏法：拇指基本不动、食指往下收），捏住后继续收紧：握着走的点漂多少
+{
+  const s = new HandStabilizer(); let jumpMid = 0, jumpGrip = 0, lm0: any = null, lg = 0, lx = 0;
+  for (let i = 0; i <= 12; i++) {
+    const palm = 0.2, cx = 0.5, cy = 0.5, lm = hand(cx, cy, palm, 0.8);
+    const gap = Math.max(0.02, 0.8 - 0.08 * i);
+    lm[4] = { x: cx - 0.4 * palm, y: cy - palm * 0.3 };                        // 拇指尖不动
+    lm[8] = { x: lm[4].x + gap * palm, y: cy - palm * (0.3 + 0.25 * (0.8 - gap)) };   // 食指尖往拇指收、还往下压
+    const o = s.update(lm, i * 33)!;
+    if (lm0) { jumpMid += Math.abs(o.x - lx); jumpGrip += Math.abs(o.gx - lg); } lm0 = lm; lx = o.x; lg = o.gx;
+  }
+  check('捏的时候握点不漂', jumpGrip < jumpMid / 4 && jumpGrip < 0.005, `指尖中点漂 ${(jumpMid * 100).toFixed(1)}% / 手掌点漂 ${(jumpGrip * 100).toFixed(2)}%`);
+}
+
+// ⑧ 手往前倾（手腕—中指根在画面里被压到 45%）时真捏住了（间距 = 0.2 个手掌）：要认出来；只看手掌长度会漏判
+{
+  const lm = hand(0.5, 0.5, 0.2, 0.2);
+  lm[0] = { x: 0.5, y: 0.5 + 0.2 * 0.45, z: 0 };
+  const oldR = Math.hypot(lm[4].x - lm[8].x, lm[4].y - lm[8].y) / Math.hypot(lm[0].x - lm[9].x, lm[0].y - lm[9].y);
+  const p = new HandStabilizer().update(lm, 0)!;
+  check('手倾斜也认得出捏', p.pinch && oldR > 0.32, `新的捏合度 ${p.ratio.toFixed(2)}（门槛 0.32，认出）；只看手掌长度是 ${oldR.toFixed(2)}（漏判）`);
 }
 
 console.log(fails ? `\n${fails} 项没过` : '\n全部通过');

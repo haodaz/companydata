@@ -288,12 +288,14 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   const onPose = (p: HandPose | null) => {
     if (!p) { handRef.current = null; grabAnchor.current = null; return; }
     const px = p.x * VW, py = p.y * VH;
+    // 握着走按手掌点算位移（捏住后手指还在收，指尖中点会漂；2026-10-28）
+    const gx = (p.gx ?? p.x) * VW, gy = (p.gy ?? p.y) * VH;
     let x = px, y = py, holding = false;
     if (trackLayer?.control && running && !auto && p.pinch) {
       const prog = stRef.current.controls[trackLayer.control] || 0;
-      if (!grabAnchor.current) grabAnchor.current = { hand: { x: px, y: py }, tool: pointOnPath(trackPts.current, prog) };
+      if (!grabAnchor.current) grabAnchor.current = { hand: { x: gx, y: gy }, tool: pointOnPath(trackPts.current, prog) };
       const a = grabAnchor.current;
-      x = a.tool.x + (px - a.hand.x) * HAND_GAIN; y = a.tool.y + (py - a.hand.y) * HAND_GAIN;
+      x = a.tool.x + (gx - a.hand.x) * HAND_GAIN; y = a.tool.y + (gy - a.hand.y) * HAND_GAIN;
       holding = true; pourStart();
       // 识别丢帧（宽限内沿用上一帧）不往轨迹里写：没有新信息
       if (!p.lost) onTrack(trackLayer, x, y, 0.6);

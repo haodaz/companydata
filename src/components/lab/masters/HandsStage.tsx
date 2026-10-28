@@ -349,14 +349,15 @@ export function HandsStage({ spec, cfg, st, running, auto, act, setHidden, toSce
     const was = !!camHand.current?.holding;
     if (!p) { camHand.current = null; anchor.current = null; if (was) camRelease(); redraw(v => v + 1); return; }
     const px = p.x * 1600, py = p.y * 900;
+    const gx = (p.gx ?? p.x) * 1600, gy = (p.gy ?? p.y) * 900;   // 握着走按手掌点算位移（捏的时候不漂）
     let x = px, y = py, holding = false;
     if (camG && canAct && p.pinch) {
       if (!anchor.current) {
-        anchor.current = { hand: { x: px, y: py }, tool: toolAt(camG) };
+        anchor.current = { hand: { x: gx, y: gy }, tool: toolAt(camG) };
         if (!active.current && ok(camG.when, fresh())) press(camG, anchor.current.tool, 'cam', false);
       }
       const an = anchor.current;
-      x = an.tool.x + (px - an.hand.x) * (camCfg!.gain ?? 0.55); y = an.tool.y + (py - an.hand.y) * (camCfg!.gain ?? 0.55);
+      x = an.tool.x + (gx - an.hand.x) * (camCfg!.gain ?? 0.55); y = an.tool.y + (gy - an.hand.y) * (camCfg!.gain ?? 0.55);
       holding = active.current?.src === 'cam';
       // 识别丢帧（宽限内沿用上一帧）不往里写：没有新信息
       if (holding && !p.lost) drive(active.current!, { x, y }, camG.track ? camCfg!.smooth ?? 0.6 : 1);

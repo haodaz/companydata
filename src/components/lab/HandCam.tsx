@@ -10,7 +10,7 @@ import { HandStabilizer } from '@/lib/hand-filter';
  *   - 捏合 = 握住道具；松开 = 放下。上层拿这个去驱动工位里的 path 控件（焊枪沿焊缝走）
  * 模型与 wasm 从 jsdelivr / Google 存储加载，首次约 10 MB。
  */
-export interface HandPose { x: number; y: number; pinch: boolean; pinchDist: number; /** 捏合程度（拇指—食指 ÷ 手掌），0 贴住 ~1 张开 */ ratio?: number; /** 这一帧没识别到，沿用上一帧（宽限内） */ lost?: boolean }
+export interface HandPose { x: number; y: number; pinch: boolean; pinchDist: number; /** 捏合程度（拇指—食指 ÷ 手掌），0 贴住 ~1 张开 */ ratio?: number; /** 这一帧没识别到，沿用上一帧（宽限内） */ lost?: boolean; /** 手掌点（捏合时不漂）：握着走算位移用 */ gx?: number; gy?: number }
 
 const MP_VERSION = '0.10.14';
 const MP_URL = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MP_VERSION}`;
@@ -58,7 +58,7 @@ export function HandCam({ onPose, onStatus, hold = '焊枪', width = 260 }: { on
           ctx.save(); ctx.scale(-1, 1); ctx.drawImage(v, -c.width, 0, c.width, c.height); ctx.restore();
           const lm = res?.landmarks?.[0];
           const pose = stab.update(lm || null, now);
-          if (!lm) { onPose(pose ? { x: pose.x, y: pose.y, pinch: pose.pinch, pinchDist: pose.ratio, ratio: pose.ratio, lost: true } : null); return; }
+          if (!lm) { onPose(pose ? { x: pose.x, y: pose.y, gx: pose.gx, gy: pose.gy, pinch: pose.pinch, pinchDist: pose.ratio, ratio: pose.ratio, lost: true } : null); return; }
           const pt = (i: number) => ({ x: (1 - lm[i].x) * c.width, y: lm[i].y * c.height });
           const tip = pt(8), thumb = pt(4);
           const pinch = !!pose?.pinch;
@@ -67,7 +67,11 @@ export function HandCam({ onPose, onStatus, hold = '焊枪', width = 260 }: { on
           ctx.fillStyle = '#fff'; for (let i = 0; i < 21; i++) { const p = pt(i); ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2); ctx.fill(); }
           ctx.fillStyle = pinch ? '#ff5fa2' : '#ffd166'; ctx.beginPath(); ctx.arc(tip.x, tip.y, 9, 0, Math.PI * 2); ctx.fill();
           ctx.beginPath(); ctx.arc(thumb.x, thumb.y, 7, 0, Math.PI * 2); ctx.fill();
-          if (pose) onPose({ x: pose.x, y: pose.y, pinch: pose.pinch, pinchDist: pose.ratio, ratio: pose.ratio });
+          // 捏合进度环（2026-10-28）：两指中点外一圈，手指越收越满，满了就是握住——让人看得见还差多少
+          if (pose) { const mid = { x: (tip.x + thumb.x) / 2, y: (tip.y + thumb.y) / 2 }; const k = pinch ? 1 : Math.max(0, Math.min(1, (0.9 - pose.ratio) / (0.9 - 0.32)));
+            ctx.lineWidth = 4; ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.beginPath(); ctx.arc(mid.x, mid.y, 22, 0, Math.PI * 2); ctx.stroke();
+            ctx.strokeStyle = pinch ? '#ff5fa2' : '#ffd166'; ctx.beginPath(); ctx.arc(mid.x, mid.y, 22, -Math.PI / 2, -Math.PI / 2 + k * Math.PI * 2); ctx.stroke(); }
+          if (pose) onPose({ x: pose.x, y: pose.y, gx: pose.gx, gy: pose.gy, pinch: pose.pinch, pinchDist: pose.ratio, ratio: pose.ratio });
         };
         loop();
       } catch (e: any) {
