@@ -52,7 +52,7 @@ export async function createWorkTask(user: { email: string; role: string }, body
     return { id: data.id as string, share_token: data.share_token as string, owner_key, title: task.task.title, env: task.env.type, notes: row.context.notes, task, company_name: row.company_name };
   }
   // 任务库：选了一道明牌任务——要找的人没填就沿用任务库里的；生成时回读原题全文
-  const show = showcaseById(body.showcase_id);
+  const show = await showcaseById(body.showcase_id);
   if (body.showcase_id && !show) throw new Error('任务库里没有这道任务');
   const roleUse = role || show?.role || '';
   if (!company || !roleUse) throw new Error('企业和岗位都要填');

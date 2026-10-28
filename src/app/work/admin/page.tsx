@@ -5,6 +5,7 @@
  * 只给管理员（看 / 管全部）；普通用户进来转回 /work/mine，只管自己出的题（2026-10-23）。
  * 独立于 /lab 和数据实体后台（用户 10-18：管理端不要和数据实体管理掺合），只借后台的登录；数据后台里只留一个新窗口入口。
  */
+import { ShowcaseAdmin } from '@/components/work/ShowcaseAdmin';
 import { WorkTopBar } from '@/components/work/WorkTopBar';
 import React, { useCallback, useEffect, useState } from 'react';
 import { App, Button, ConfigProvider, Drawer, Input, Popconfirm, Select, Space, Table, Tabs, Tag, Typography } from 'antd';
@@ -106,6 +107,7 @@ function Inner() {
 
         </div> },
         { key: 'samples', label: '样本库 · 训练素材', children: <SamplesPanel /> },
+        { key: 'showcase', label: '任务库上架', children: <ShowcaseAdmin /> },
       ]} />
 
       <Drawer open={!!detail} onClose={() => setDetail(null)} width={Math.min(980, typeof window !== 'undefined' ? window.innerWidth - 40 : 980)} title={T ? <span>{T.task?.title} <Tag color={ENV[T.task?.env?.type]?.color}>{ENV[T.task?.env?.type]?.label}</Tag></span> : ''}

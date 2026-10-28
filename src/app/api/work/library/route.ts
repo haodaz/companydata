@@ -8,5 +8,5 @@ export const runtime = 'nodejs';
 export async function GET(req: NextRequest) {
   const user = await getSessionUser(req);
   if (!user) return NextResponse.json({ ok: false, error: '需要登录' }, { status: 401 });
-  return NextResponse.json({ ok: true, items: publicShowcase() });
+  return NextResponse.json({ ok: true, items: await publicShowcase() });
 }
