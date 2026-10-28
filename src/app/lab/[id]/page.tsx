@@ -420,21 +420,52 @@ function ReportBody({ sub, rubric, sim, skill, actions }: { sub: any; rubric: an
 }
 
 /** 职业地图：给高中生 / 大学生看的生涯概览（做什么、一天、技能树、进入路径、阶梯、相关职业、适不适合） */
-function CareerPanel({ career: c, onTry }: { career: any; onTry: () => void }) {
+/** 研究岗空间的学科地图（2026-10-28）：第一次打开现生成（约 1 分钟），之后读缓存；版式复用职业地图 */
+function DisciplinePanel({ id, role, onTry }: { id: string; role: string; onTry: () => void }) {
+  const [m, setM] = useState<any>(null); const [err, setErr] = useState('');
+  useEffect(() => { fetch(`/api/lab/spaces/${id}/discipline`).then(r => r.json()).then(j => (j.ok ? setM(j.map) : setErr(j.error || '没生成出来'))).catch(e => setErr(String(e?.message || e))); }, [id]);
+  if (err) return <div className="lab-glass" style={{ padding: 22, color: '#b23a48' }}>{err}</div>;
+  if (!m) return <div className="lab-glass lab-in" style={{ padding: 28, textAlign: 'center', color: 'var(--ink3)', lineHeight: 1.8 }}>正在整理这个方向所在学科的地图……<br /><span style={{ fontSize: 12.5 }}>第一次打开要一分钟左右，之后直接看</span></div>;
+  const hero = (
+    <div className="lab-glass" style={{ padding: 22, background: 'linear-gradient(135deg, rgba(18,181,203,.08), rgba(106,92,255,.08))' }}>
+      <div className="lab-mono lab-cap">DISCIPLINE MAP · {m.discipline}{m.subfield ? ` · ${m.subfield}` : ''}</div>
+      <div style={{ fontSize: 22, fontWeight: 800, margin: '4px 0 6px' }}>{m.one_liner}</div>
+      {m.position && <div style={{ fontSize: 14, lineHeight: 1.85, margin: '10px 0 4px', padding: '12px 14px', borderRadius: 12, background: 'rgba(255,255,255,.55)', border: '1px solid var(--line)' }}><b>「{role}」在这个学科里的位置：</b>{m.position}</div>}
+      <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.7, marginTop: 8 }}>下面是这个学科公开、公认的常识，由 AI 整理；「考考你」里的研究任务和操作台是这个研究岗自己的。</div>
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 12 }}>
+        <button className="lab-btn" onClick={onTry}>🔬 亲手做一回这个研究岗的一天 →</button>
+        {m.space_id && <a className="lab-btn ghost" href={`/lab/${m.space_id}`}>去「{m.discipline}」学科空间 →</a>}
+      </div>
+    </div>
+  );
+  const week = !!m.first_week?.length && (
+    <div className="lab-glass" style={{ padding: 20 }}>
+      <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>新人进组的第一周</div>
+      <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 170px), 1fr))' }}>
+        {m.first_week.map((d: any, i: number) => <div key={i} style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid var(--line)', background: 'rgba(255,255,255,.6)' }}><div className="lab-mono" style={{ color: 'var(--v)', fontSize: 12, letterSpacing: 0 }}>{d.day}</div><div style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 4 }}>{d.activity}</div></div>)}
+      </div>
+    </div>
+  );
+  return <CareerPanel career={m} onTry={onTry} disc hero={hero} after={week} />;
+}
+
+function CareerPanel({ career: c, onTry, disc, hero, after }: { career: any; onTry: () => void; disc?: boolean; hero?: React.ReactNode; after?: React.ReactNode }) {
+  const L = disc ? { what: '这个学科在研究什么', day: '实验室典型的一天', skills: '核心研究技能 · 现在就能怎么练', entry: '怎么进入', ladder: '研究者的成长阶梯', related: '相邻的学科 / 方向' } : { what: '这个职业在做什么', day: '典型的一天', skills: '需要的核心技能 · 现在就能怎么练', entry: '怎么进入', ladder: '成长阶梯', related: '相邻的职业' };
   const Sec = ({ cap, children, style }: { cap: string; children: React.ReactNode; style?: React.CSSProperties }) => <div className="lab-glass" style={{ padding: 20, minWidth: 0, ...style }}><div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>{cap}</div>{children}</div>;
   return (
     <div className="lab-in" style={{ display: 'grid', gap: 16 }}>
-      <div className="lab-glass" style={{ padding: 22, background: 'linear-gradient(135deg, rgba(106,92,255,.08), rgba(18,181,203,.08))' }}>
+      {hero || <div className="lab-glass" style={{ padding: 22, background: 'linear-gradient(135deg, rgba(106,92,255,.08), rgba(18,181,203,.08))' }}>
         <div className="lab-mono lab-cap">CAREER MAP · {c.profession}</div>
         <div style={{ fontSize: 22, fontWeight: 800, margin: '4px 0 6px' }}>{c.one_liner}</div>
         <div style={{ fontSize: 13.5, color: 'var(--ink3)', lineHeight: 1.7 }}>下面这些是这个职业公开、公认的常识，由 AI 整理；「亲手试一天」里的任务、操作台和评分是为你生成的体验。典型雇主：{c.typical_employer}。</div>
         <button className="lab-btn" style={{ marginTop: 12 }} onClick={onTry}>🎯 亲手体验这个职业的一天 →</button>
-      </div>
+      </div>}
+      {after}
       <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', alignItems: 'start' }}>
-        <Sec cap="这个职业在做什么">{(c.what_they_do || []).map((x: string) => <div key={x} style={{ fontSize: 14, lineHeight: 1.9 }}>· {x}</div>)}</Sec>
-        <Sec cap="典型的一天">{(c.day_in_life || []).map((d: any, i: number) => <div key={i} style={{ display: 'flex', gap: 10, fontSize: 13.5, lineHeight: 1.8 }}><span className="lab-mono" style={{ color: 'var(--v)', minWidth: 52, letterSpacing: 0 }}>{d.time}</span><span>{d.activity}</span></div>)}</Sec>
+        <Sec cap={L.what}>{(c.what_they_do || []).map((x: string) => <div key={x} style={{ fontSize: 14, lineHeight: 1.9 }}>· {x}</div>)}</Sec>
+        <Sec cap={L.day}>{(c.day_in_life || []).map((d: any, i: number) => <div key={i} style={{ display: 'flex', gap: 10, fontSize: 13.5, lineHeight: 1.8 }}><span className="lab-mono" style={{ color: 'var(--v)', minWidth: 52, letterSpacing: 0 }}>{d.time}</span><span>{d.activity}</span></div>)}</Sec>
       </div>
-      <Sec cap="需要的核心技能 · 现在就能怎么练">
+      <Sec cap={L.skills}>
         <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))' }}>
           {(c.skills || []).map((s: any) => (
             <div key={s.name} style={{ padding: '12px 14px', borderRadius: 14, border: '1px solid var(--line)', background: 'rgba(255,255,255,.6)' }}>
@@ -446,8 +477,8 @@ function CareerPanel({ career: c, onTry }: { career: any; onTry: () => void }) {
         </div>
       </Sec>
       <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', alignItems: 'start' }}>
-        <Sec cap="怎么进入">{(c.entry_paths || []).map((p: any) => <div key={p.path} style={{ fontSize: 13.5, lineHeight: 1.8, marginBottom: 4 }}><b>{p.path}</b><span style={{ color: 'var(--ink3)' }}> · {p.detail}</span></div>)}</Sec>
-        <Sec cap="成长阶梯">
+        <Sec cap={L.entry}>{(c.entry_paths || []).map((p: any) => <div key={p.path} style={{ fontSize: 13.5, lineHeight: 1.8, marginBottom: 4 }}><b>{p.path}</b><span style={{ color: 'var(--ink3)' }}> · {p.detail}</span></div>)}</Sec>
+        <Sec cap={L.ladder}>
           {(c.ladder || []).map((l: any, i: number) => <div key={i} style={{ display: 'flex', gap: 10, padding: '6px 0', borderBottom: '1px solid var(--line)', fontSize: 13.5, lineHeight: 1.7 }}><span className="lab-mono" style={{ color: 'var(--v)', minWidth: 64, letterSpacing: 0 }}>{l.years}</span><div><b>{l.title || l.stage}</b><div style={{ color: 'var(--ink3)', fontSize: 12.5 }}>{l.focus}</div></div></div>)}
           {c.salary_note && <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.7 }}>💰 {c.salary_note}</div>}
         </Sec>
@@ -455,7 +486,7 @@ function CareerPanel({ career: c, onTry }: { career: any; onTry: () => void }) {
       <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', alignItems: 'start' }}>
         <Sec cap="你可能适合，如果你……">{(c.fit_signs || []).map((x: string) => <div key={x} style={{ fontSize: 13.5, lineHeight: 1.9, color: '#0d7a3d' }}>✓ {x}</div>)}</Sec>
         <Sec cap="你可能不适合，如果你……">{(c.misfit_signs || []).map((x: string) => <div key={x} style={{ fontSize: 13.5, lineHeight: 1.9, color: '#b23a48' }}>✗ {x}</div>)}</Sec>
-        <Sec cap="相邻的职业">{(c.related || []).map((r: any) => <div key={r.name} style={{ fontSize: 13.5, lineHeight: 1.8, marginBottom: 4 }}><b>{r.name}</b><span style={{ color: 'var(--ink3)' }}> · {r.difference}</span></div>)}</Sec>
+        <Sec cap={L.related}>{(c.related || []).map((r: any) => <div key={r.name} style={{ fontSize: 13.5, lineHeight: 1.8, marginBottom: 4 }}><b>{r.name}</b><span style={{ color: 'var(--ink3)' }}> · {r.difference}</span></div>)}</Sec>
       </div>
     </div>
   );
@@ -937,6 +968,7 @@ function castOf(space: any, sim: Sim | null) {
     { key: 'learn', label: '你教我', icon: 'learn', sub: draft ? '等第一位老师傅' : `学自 ${skill.expert_name}`, main: true },
     { key: 'solve', label: '问问我', icon: 'solve', sub: stat[2].v ? `解过 ${stat[2].v} 次` : '把真实问题交给我', main: true },
     { key: 'ledger', label: '我被用在哪', icon: 'ledger', sub: served ? `${places} 地 · ${served} 人次` : '每一次调用都记账' },
+    ...(jd.kind === 'research_post' ? [{ key: 'career' as Mode, label: '学科地图', icon: 'career', sub: jd.discipline_map ? `${jd.discipline_map.discipline} · 新人第一周` : '这个方向在学科里的位置' }] : []),
     ...(jd.kind !== 'career' ? [{ key: 'jd' as Mode, label: '我的来历', icon: 'jd', sub: jd.company || '岗位 JD' }] : []),
   ];
   // 「你教我」在体验视角也有（专业数采）：点了领一张邀请票进去示范，之后照样过示范评审
@@ -1391,6 +1423,7 @@ function castOf(space: any, sim: Sim | null) {
 
       {/* ── 职业地图（职业探索空间） ── */}
       {mode === 'career' && jd.career && <CareerPanel career={jd.career} onTry={() => setMode('test')} />}
+      {mode === 'career' && !jd.career && jd.kind === 'research_post' && <DisciplinePanel id={String(id)} role={profile.role || jd.title || ''} onTry={() => setMode('test')} />}
 
       {/* ── JD 拆解 ── */}
       {mode === 'eco' && (
