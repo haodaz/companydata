@@ -441,8 +441,8 @@ function DisciplinePanel({ id, role, onTry }: { id: string; role: string; onTry:
   const week = !!m.first_week?.length && (
     <div className="lab-glass" style={{ padding: 20 }}>
       <div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>新人进组的第一周</div>
-      <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 170px), 1fr))' }}>
-        {m.first_week.map((d: any, i: number) => <div key={i} style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid var(--line)', background: 'rgba(255,255,255,.6)' }}><div className="lab-mono" style={{ color: 'var(--v)', fontSize: 12, letterSpacing: 0 }}>{d.day}</div><div style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 4 }}>{d.activity}</div></div>)}
+      <div style={{ display: 'grid', rowGap: 14, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 170px), 1fr))', margin: '0 -14px' }}>
+        {m.first_week.map((d: any, i: number) => <div key={i} className="cp-day" style={{ padding: '2px 14px' }}><div className="lab-mono" style={{ color: 'var(--v)', fontSize: 12, letterSpacing: 0 }}>{d.day}</div><div style={{ fontSize: 13.5, lineHeight: 1.7, marginTop: 4 }}>{d.activity}</div></div>)}
       </div>
     </div>
   );
@@ -451,9 +451,10 @@ function DisciplinePanel({ id, role, onTry }: { id: string; role: string; onTry:
 
 function CareerPanel({ career: c, onTry, disc, hero, after }: { career: any; onTry: () => void; disc?: boolean; hero?: React.ReactNode; after?: React.ReactNode }) {
   const L = disc ? { what: '这个学科在研究什么', day: '实验室典型的一天', skills: '核心研究技能 · 现在就能怎么练', entry: '怎么进入', ladder: '研究者的成长阶梯', related: '相邻的学科 / 方向' } : { what: '这个职业在做什么', day: '典型的一天', skills: '需要的核心技能 · 现在就能怎么练', entry: '怎么进入', ladder: '成长阶梯', related: '相邻的职业' };
-  const Sec = ({ cap, children, style }: { cap: string; children: React.ReactNode; style?: React.CSSProperties }) => <div className="lab-glass" style={{ padding: 20, minWidth: 0, ...style }}><div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>{cap}</div>{children}</div>;
+  const Sec = ({ cap, children, style, flat }: { cap: string; children: React.ReactNode; style?: React.CSSProperties; flat?: boolean }) => <div className={flat ? 'cp-cell' : 'lab-glass'} style={{ padding: 20, minWidth: 0, ...style }}><div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>{cap}</div>{children}</div>;
   return (
     <div className="lab-in" style={{ display: 'grid', gap: 16 }}>
+      <style>{`.cp-row { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr)); padding:0; overflow:hidden; } .cp-cell + .cp-cell, .cp-day + .cp-day { border-left:1px solid var(--line); } @media (max-width: 760px) { .cp-cell + .cp-cell { border-left:0; border-top:1px solid var(--line); } }`}</style>
       {hero || <div className="lab-glass" style={{ padding: 22, background: 'linear-gradient(135deg, rgba(106,92,255,.08), rgba(18,181,203,.08))' }}>
         <div className="lab-mono lab-cap">CAREER MAP · {c.profession}</div>
         <div style={{ fontSize: 22, fontWeight: 800, margin: '4px 0 6px' }}>{c.one_liner}</div>
@@ -461,14 +462,14 @@ function CareerPanel({ career: c, onTry, disc, hero, after }: { career: any; onT
         <button className="lab-btn" style={{ marginTop: 12 }} onClick={onTry}>🎯 亲手体验这个职业的一天 →</button>
       </div>}
       {after}
-      <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', alignItems: 'start' }}>
-        <Sec cap={L.what}>{(c.what_they_do || []).map((x: string) => <div key={x} style={{ fontSize: 14, lineHeight: 1.9 }}>· {x}</div>)}</Sec>
-        <Sec cap={L.day}>{(c.day_in_life || []).map((d: any, i: number) => <div key={i} style={{ display: 'flex', gap: 10, fontSize: 13.5, lineHeight: 1.8 }}><span className="lab-mono" style={{ color: 'var(--v)', minWidth: 52, letterSpacing: 0 }}>{d.time}</span><span>{d.activity}</span></div>)}</Sec>
+      <div className="lab-glass cp-row">
+        <Sec flat cap={L.what}>{(c.what_they_do || []).map((x: string) => <div key={x} style={{ fontSize: 14, lineHeight: 1.9 }}>· {x}</div>)}</Sec>
+        <Sec flat cap={L.day}>{(c.day_in_life || []).map((d: any, i: number) => <div key={i} style={{ display: 'flex', gap: 10, fontSize: 13.5, lineHeight: 1.8 }}><span className="lab-mono" style={{ color: 'var(--v)', minWidth: 52, letterSpacing: 0 }}>{d.time}</span><span>{d.activity}</span></div>)}</Sec>
       </div>
       <Sec cap={L.skills}>
-        <div style={{ display: 'grid', gap: 10, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))' }}>
+        <div style={{ display: 'grid', columnGap: 28, rowGap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))' }}>
           {(c.skills || []).map((s: any) => (
-            <div key={s.name} style={{ padding: '12px 14px', borderRadius: 14, border: '1px solid var(--line)', background: 'rgba(255,255,255,.6)' }}>
+            <div key={s.name} style={{ padding: '4px 0 14px', borderBottom: '1px solid var(--line)' }}>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}><span className={`lab-chip ${s.kind === 'hard' ? 'c' : 'p'}`}>{s.kind === 'hard' ? '硬技能' : '软技能'}</span><b style={{ fontSize: 14.5 }}>{s.name}</b></div>
               <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.7, marginTop: 6 }}>{s.why}</div>
               <div style={{ fontSize: 13, lineHeight: 1.7, marginTop: 4 }}>→ {s.how_to_build}</div>
@@ -476,17 +477,17 @@ function CareerPanel({ career: c, onTry, disc, hero, after }: { career: any; onT
           ))}
         </div>
       </Sec>
-      <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', alignItems: 'start' }}>
-        <Sec cap={L.entry}>{(c.entry_paths || []).map((p: any) => <div key={p.path} style={{ fontSize: 13.5, lineHeight: 1.8, marginBottom: 4 }}><b>{p.path}</b><span style={{ color: 'var(--ink3)' }}> · {p.detail}</span></div>)}</Sec>
-        <Sec cap={L.ladder}>
+      <div className="lab-glass cp-row">
+        <Sec flat cap={L.entry}>{(c.entry_paths || []).map((p: any) => <div key={p.path} style={{ fontSize: 13.5, lineHeight: 1.8, marginBottom: 4 }}><b>{p.path}</b><span style={{ color: 'var(--ink3)' }}> · {p.detail}</span></div>)}</Sec>
+        <Sec flat cap={L.ladder}>
           {(c.ladder || []).map((l: any, i: number) => <div key={i} style={{ display: 'flex', gap: 10, padding: '6px 0', borderBottom: '1px solid var(--line)', fontSize: 13.5, lineHeight: 1.7 }}><span className="lab-mono" style={{ color: 'var(--v)', minWidth: 64, letterSpacing: 0 }}>{l.years}</span><div><b>{l.title || l.stage}</b><div style={{ color: 'var(--ink3)', fontSize: 12.5 }}>{l.focus}</div></div></div>)}
           {c.salary_note && <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.7 }}>💰 {c.salary_note}</div>}
         </Sec>
       </div>
-      <div style={{ display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', alignItems: 'start' }}>
-        <Sec cap="你可能适合，如果你……">{(c.fit_signs || []).map((x: string) => <div key={x} style={{ fontSize: 13.5, lineHeight: 1.9, color: '#0d7a3d' }}>✓ {x}</div>)}</Sec>
-        <Sec cap="你可能不适合，如果你……">{(c.misfit_signs || []).map((x: string) => <div key={x} style={{ fontSize: 13.5, lineHeight: 1.9, color: '#b23a48' }}>✗ {x}</div>)}</Sec>
-        <Sec cap={L.related}>{(c.related || []).map((r: any) => <div key={r.name} style={{ fontSize: 13.5, lineHeight: 1.8, marginBottom: 4 }}><b>{r.name}</b><span style={{ color: 'var(--ink3)' }}> · {r.difference}</span></div>)}</Sec>
+      <div className="lab-glass cp-row">
+        <Sec flat cap="你可能适合，如果你……">{(c.fit_signs || []).map((x: string) => <div key={x} style={{ fontSize: 13.5, lineHeight: 1.9, color: '#0d7a3d' }}>✓ {x}</div>)}</Sec>
+        <Sec flat cap="你可能不适合，如果你……">{(c.misfit_signs || []).map((x: string) => <div key={x} style={{ fontSize: 13.5, lineHeight: 1.9, color: '#b23a48' }}>✗ {x}</div>)}</Sec>
+        <Sec flat cap={L.related}>{(c.related || []).map((r: any) => <div key={r.name} style={{ fontSize: 13.5, lineHeight: 1.8, marginBottom: 4 }}><b>{r.name}</b><span style={{ color: 'var(--ink3)' }}> · {r.difference}</span></div>)}</Sec>
       </div>
     </div>
   );
