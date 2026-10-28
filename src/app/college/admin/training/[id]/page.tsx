@@ -67,6 +67,7 @@ export default function EnrollmentPage() {
         {log.length > 0 && <div className="ca-log">{log.map((l, i) => <div key={i}>{l}</div>)}</div>}
       </Card>
 
+      <Growth d={d} nb={nb} />
       <Card eyebrow="Chapters" title={`课程章节 · ${d.chapters.length}`} extra={<>{d.lessons.done < d.lessons.total && <Btn kind="ghost" sm busy={busy === 'lessons'} onClick={() => run('lessons', 'lessons')}>补教案（{d.lessons.total - d.lessons.done} 章没有）</Btn>}<span className="ca-mute" style={{ fontSize: 12.5 }}>每一步都能单独点</span></>}>
         <table className="ca-table"><thead><tr><th>#</th><th>章节</th><th>材料</th><th className="num">入学考</th><th className="num">毕业考</th><th>最近</th><th>动作</th></tr></thead>
           <tbody>{d.chapters.map((c: any) => { const last = c.latest.find((x: any) => x.after) || c.latest[0]; return (
@@ -114,5 +115,56 @@ export default function EnrollmentPage() {
         </div>}
       </Modal>
     </div>
+  );
+}
+
+/**
+ * 培养前后（2026-10-28）：入学裸考 → 毕业考，每章一条哑铃（灰点入学、金点毕业），再列「涨分靠什么」——
+ * 装进考试的技能卡、上课记下的要点、反思写进错题本的规则。只有考过两头的章节才算进涨幅。
+ */
+function Growth({ d, nb }: { d: any; nb: any }) {
+  const rows = (d.chapters || []).map((c: any) => ({ id: c.id, seq: c.seq, title: String(c.title || ''), before: typeof c.before === 'number' ? c.before : null, after: typeof c.after === 'number' ? c.after : null, passed: !!c.passed, notes: (nb?.lessons?.[c.id] || []).length }));
+  const both = rows.filter((r: any) => r.before != null && r.after != null);
+  if (!both.length) return null;
+  const avg = (xs: number[]) => Math.round(xs.reduce((a, b) => a + b, 0) / xs.length);
+  const b0 = avg(both.map((r: any) => r.before)), a0 = avg(both.map((r: any) => r.after)), gain = a0 - b0;
+  const up = both.filter((r: any) => r.after - r.before >= 5).length;
+  const best = [...both].sort((x: any, y: any) => (y.after - y.before) - (x.after - x.before))[0];
+  const rules: string[] = (nb?.rules || []).slice(-4);
+  const W = 100;
+  return (
+    <section className="ca-card" style={{ padding: '18px 22px', marginBottom: 16 }}>
+      <div className="ca-eyebrow sm">Before · After</div>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, flexWrap: 'wrap', margin: '4px 0 12px' }}>
+        <h3 style={{ margin: 0, fontFamily: 'var(--serif)', fontSize: 20 }}>培养前后</h3>
+        <span style={{ fontSize: 15 }}>入学 <b style={{ fontSize: 22, color: '#8a8fa6' }}>{b0}</b> → 毕业 <b style={{ fontSize: 22, color: 'var(--gold)' }}>{a0}</b> <b style={{ color: gain >= 0 ? '#0d7a52' : '#b42318', marginLeft: 6 }}>{gain >= 0 ? '+' : ''}{gain}</b></span>
+        <span className="ca-mute" style={{ fontSize: 13 }}>{both.length} 章考过两头 · {up} 章涨了 5 分以上{best && best.after - best.before > 0 ? ` · 涨得最多：第 ${best.seq} 章 +${best.after - best.before}` : ''}</span>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.4fr) minmax(260px, 1fr)', gap: 22 }}>
+        <div style={{ display: 'grid', gap: 7 }}>
+          {rows.map((r: any) => (
+            <div key={r.id} style={{ display: 'grid', gridTemplateColumns: '170px 1fr 74px', gap: 10, alignItems: 'center', fontSize: 12.5 }}>
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--navy2)' }} title={r.title}>{r.seq}. {r.title}</span>
+              <div style={{ position: 'relative', height: 14 }}>
+                <div style={{ position: 'absolute', left: 0, right: 0, top: 6, height: 2, background: 'rgba(22,32,74,.07)', borderRadius: 2 }} />
+                <div style={{ position: 'absolute', left: '60%', top: 0, bottom: 0, width: 1, background: 'rgba(176,141,87,.35)' }} title="及格线 60" />
+                {r.before != null && r.after != null && <div style={{ position: 'absolute', top: 6, height: 2, left: `${Math.min(r.before, r.after) / W * 100}%`, width: `${Math.abs(r.after - r.before) / W * 100}%`, background: r.after >= r.before ? 'var(--gold)' : '#b42318', opacity: .7 }} />}
+                {r.before != null && <div title={`入学 ${r.before}`} style={{ position: 'absolute', top: 2, width: 10, height: 10, marginLeft: -5, left: `${r.before / W * 100}%`, borderRadius: '50%', background: '#b9bccb' }} />}
+                {r.after != null && <div title={`毕业 ${r.after}`} style={{ position: 'absolute', top: 1, width: 12, height: 12, marginLeft: -6, left: `${r.after / W * 100}%`, borderRadius: '50%', background: 'var(--gold)', boxShadow: '0 0 0 2px #fff' }} />}
+              </div>
+              <span style={{ textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{r.before ?? '—'} → <b>{r.after ?? '—'}</b></span>
+            </div>
+          ))}
+          <div className="ca-mute" style={{ fontSize: 11.5, display: 'flex', gap: 14, marginTop: 2 }}><span><i style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#b9bccb', marginRight: 4 }} />入学裸考</span><span><i style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: 'var(--gold)', marginRight: 4 }} />毕业考</span><span>竖线 = 及格 60</span></div>
+        </div>
+        <div style={{ borderLeft: '1px solid var(--line)', paddingLeft: 18, fontSize: 13, lineHeight: 1.75 }}>
+          <div className="ca-eyebrow sm" style={{ marginBottom: 4 }}>涨分靠的是什么</div>
+          <div>· 技能卡：{d.teacher ? <><b>{d.teacher.rules}</b> 条老师傅的判断规则{d.teacher.expert ? `（学自 ${d.teacher.expert_name}）` : '（AI 草案）'}</> : '还没有'}</div>
+          <div>· 上课：<b>{rows.filter((r: any) => r.notes).length}</b> / {rows.length} 章记了要点，共 {rows.reduce((n: number, r: any) => n + r.notes, 0)} 条</div>
+          <div>· 错题本：反思沉淀 <b>{(nb?.rules || []).length}</b> 条工作规则</div>
+          {!!rules.length && <ul style={{ margin: '6px 0 0', paddingLeft: 18, color: 'var(--ink2)' }}>{rules.map((x, i) => <li key={i}>{x}</li>)}</ul>}
+        </div>
+      </div>
+    </section>
   );
 }
