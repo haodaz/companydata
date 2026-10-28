@@ -7,7 +7,7 @@
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { MODEL_OPTIONS } from '@/lib/model-options';
 
-export type LbRow = { model: string; label: string; provider: string; courses: number; before: number | null; after: number | null; gain: number | null };
+export type LbRow = { model: string; student_id?: string; label: string; provider: string; courses: number; before: number | null; after: number | null; gain: number | null };
 export type LbBoard = { space_id: string; role: string; company: string; rows: LbRow[] };
 export type Leaderboard = { updated: string; models: LbRow[]; boards: LbBoard[]; totals: { models: number; courses: number; exams: number } };
 
@@ -25,13 +25,14 @@ export async function buildLeaderboard(): Promise<Leaderboard> {
   const label = (m: string) => { const o = MODEL_OPTIONS.find(x => x.id === m); return { label: o?.label || m, provider: (o as any)?.provider || '' }; };
   const scored = (ens || []).filter((e: any) => stu.has(e.student_id) && (e.entrance_score != null || e.final_score != null));
   // 同一模型同一门课可能有多份学籍：取最近一份
+  const studentOf = new Map<string, string>(); for (const s of stu.values() as any) if (!studentOf.has(s.model_id)) studentOf.set(s.model_id, s.id);
   const latest = new Map<string, any>();
   for (const e of scored) { const s: any = stu.get(e.student_id); const k = `${s.model_id}|${e.space_id}`; const cur = latest.get(k); if (!cur || String(e.updated_at) > String(cur.updated_at)) latest.set(k, { ...e, model: s.model_id }); }
   const rows = [...latest.values()];
   const row = (model: string, list: any[]): LbRow => {
     const b = list.map(x => x.entrance_score).filter((v: any) => typeof v === 'number'), a = list.map(x => x.final_score).filter((v: any) => typeof v === 'number');
     const both = list.filter(x => typeof x.entrance_score === 'number' && typeof x.final_score === 'number');
-    return { model, ...label(model), courses: list.length, before: avg(b), after: avg(a), gain: both.length ? avg(both.map(x => x.final_score - x.entrance_score)) : null };
+    return { model, student_id: studentOf.get(model), ...label(model), courses: list.length, before: avg(b), after: avg(a), gain: both.length ? avg(both.map(x => x.final_score - x.entrance_score)) : null };
   };
   const byModel = new Map<string, any[]>(); for (const r of rows) byModel.set(r.model, [...(byModel.get(r.model) || []), r]);
   const rank = (x: LbRow, y: LbRow) => (y.after ?? y.before ?? -1) - (x.after ?? x.before ?? -1) || (y.before ?? -1) - (x.before ?? -1);

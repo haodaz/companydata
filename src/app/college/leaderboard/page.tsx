@@ -22,7 +22,7 @@ function Table({ rows, big }: { rows: LbRow[]; big?: boolean }) {
       <tbody>{rows.map((r, i) => (
         <tr key={r.model}>
           <td className="rk">{i + 1}</td>
-          <td><div className="lb-m">{clean(r.label)}</div>{r.provider && <div className="lb-p">{r.provider}</div>}</td>
+          <td>{r.student_id ? <Link href={`/college/transcript/${r.student_id}`} className="lb-m lb-link">{clean(r.label)}</Link> : <div className="lb-m">{clean(r.label)}</div>}{r.provider && <div className="lb-p">{r.provider}</div>}</td>
           {big && <td className="n">{r.courses}</td>}
           <td><div className="lb-s"><span>{r.before ?? '—'}</span>{bar(r.before, '#c9ccd8')}</div></td>
           <td><div className="lb-s"><b>{r.after ?? '—'}</b>{bar(r.after, 'var(--gold)')}</div></td>
@@ -96,7 +96,7 @@ const CSS = `
 .lb-t .n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .lb-t .rk { font-family: var(--serif); font-weight: 900; color: var(--gold); width: 28px; }
 .lb-t .top { color: #0d7a52; font-weight: 800; }
-.lb-m { font-weight: 700; color: var(--navy); } .lb-p { font-size: 12px; color: var(--ink3); }
+.lb-m { font-weight: 700; color: var(--navy); } .lb-link { display: block; text-decoration: none; } .lb-link:hover { color: var(--gold); text-decoration: underline; } .lb-p { font-size: 12px; color: var(--ink3); }
 .lb-s { display: flex; align-items: center; gap: 10px; min-width: 150px; } .lb-s span, .lb-s b { width: 28px; text-align: right; font-variant-numeric: tabular-nums; }
 .lb-bar { flex: 1; height: 7px; border-radius: 4px; background: rgba(22,32,74,.06); overflow: hidden; } .lb-bar i { display: block; height: 100%; border-radius: 4px; }
 .lb-t.big td { padding: 13px 10px; font-size: 15px; } .lb-t.big .lb-m { font-size: 16px; }
