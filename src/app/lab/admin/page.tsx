@@ -19,7 +19,7 @@ const STAGES: Record<string, { label: string; hint: string; color: string }> = {
   review: { label: 'AI 评审', hint: '按规则给一整天打分', color: '#d6336c' },
   media: { label: '美术与 3D', hint: '出图 · 视频 · 全景识别', color: '#12b5cb' },
 };
-const LINKS: [string, string][] = [['/lab/admin', '成本'], ['/lab/admin/handover', '交接包'], ['/lab/assets', '素材库'], ['/lab/studio/pano', '360° 上传'], ['/lab/logic', '设计文档'], ['/lab/spaces', '百业工厂']];
+const LINKS: [string, string][] = [['/lab/admin', '成本'], ['/lab/admin/handover', '交接包'], ['/lab/admin/suite', '一个 JD 生成整套'], ['/lab/assets', '素材库'], ['/lab/studio/pano', '360° 上传'], ['/lab/logic', '设计文档'], ['/lab/spaces', '百业工厂']];
 
 export default function LabAdminPage() {
   const [days, setDays] = useState(30);
