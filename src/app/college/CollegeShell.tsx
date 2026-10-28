@@ -17,13 +17,14 @@ const NAV = [
   { href: '/college#industries', t: '千行百业', on: () => false },
   { href: '/college/cases', t: '案例', on: (p: string) => p.startsWith('/college/cases') },
   { href: '/college/graduates', t: '毕业生', on: (p: string) => p.startsWith('/college/g') },
+  { href: '/college/leaderboard', t: '能力榜', on: (p: string) => p.startsWith('/college/leaderboard') },
 ];
 
 function Shell({ children }: { children: React.ReactNode }) {
   const path = usePathname() || '/college';
   const { user, loading } = useUser();
   // 首页和三个介绍页是整幅影像的官网版式，不套居中容器
-  const home = ['/college', '/college/enroll', '/college/hire', '/college/graduates', '/college/cases'].includes(path);
+  const home = ['/college', '/college/enroll', '/college/hire', '/college/graduates', '/college/cases', '/college/leaderboard'].includes(path);
   // 手机：右上角菜单按钮 → 全屏菜单（换页、按 Esc 关掉；开着的时候背后不滚）
   const [menu, setMenu] = useState(false);
   useEffect(() => { setMenu(false); }, [path]);
@@ -111,6 +112,7 @@ function Shell({ children }: { children: React.ReactNode }) {
             <Link href="/college#industries">千行百业</Link>
             <Link href="/college/cases">案例</Link>
             <Link href="/college/graduates">毕业生</Link>
+            <Link href="/college/leaderboard">能力榜</Link>
             <a href="/lab">百业体验</a>
           </div>
           <div className="col-foot-motto">人 · 求真 · 心智世界<br /><span>People · Truth · The World of Mind</span></div>
