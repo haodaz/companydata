@@ -25,7 +25,7 @@ type View = 'chat' | 'roles' | 'work' | 'spaces' | 'people' | 'setup' | 'project
 
 const TOOL_RUNNING: Record<string, string> = { add_candidate: '读简历、加进候选人', org_profile: '读企业画像', list_roles: '查本企业岗位', propose_problems: '从企业动态和岗位职责里找业务问题', create_work_task: '出真活：任务书、材料包、评分标准（1–2 分钟）', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', list_work_tasks: '列本企业的真活', work_results: '看作答和报告', create_space: '准备建职业空间', list_spaces: '列本企业的职业空间' };
 const CHAT_MODELS = MODEL_OPTIONS.filter(m => /^(claude-|gpt-|gemini-|qwen)/.test(m.id));
-const DEFAULT_MODEL = 'claude-opus-5-5';
+const DEFAULT_MODEL = 'qwen3.7-plus';   // 对话默认千问（2026-10-28 用户：国内用；用户可自己换。后台出题 / 评分的模型另算，见 lib/work/generator.ts）
 const SUGGEST_R = [
   { t: '开一个人才引进项目', d: '招博士后、研究员或教授：写招聘启事、收简历、评审、验真', p: '我要引进一位研究人员，帮我开一个项目' },
   { t: '出一道研究真活', d: '实验设计、数据分析、审稿、写本子：看候选人真实的研究功夫', p: '帮我给一个研究岗出一道研究真活' },
