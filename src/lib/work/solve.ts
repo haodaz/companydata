@@ -53,7 +53,7 @@ export async function solveWorkTask(task: WorkTask, model: string, opts: SolveOp
   // 指定模型不可用（欠费 / 限流）就退到 Sonnet，基线和学员做题都不能空着
   let res: any, used = model;
   try { res = await generateContent(prompt, model); }
-  catch (e) { if (model === 'claude-sonnet-5-5') throw e; console.warn(`[work-solve] ${model} 失败，换 Sonnet：${String((e as any)?.message).slice(0, 100)}`); used = 'claude-sonnet-5-5'; res = await generateContent(prompt, used); }
+  catch (e) { if (model === 'qwen-plus') throw e; console.warn(`[work-solve] ${model} 失败，千问 Plus 兜底：${String((e as any)?.message).slice(0, 100)}`); used = 'qwen-plus'; res = await generateContent(prompt, used); }
   await logTokenUsage({ tool_name: 'work', task_name: opts.task_name || 'Solve · 做一遍', institution: opts.institution || '', model_id: used, usageMetadata: res.usageMetadata, actor: opts.actor } as any).catch(() => {});
   return { answer: res.text.trim(), model: used };
 }

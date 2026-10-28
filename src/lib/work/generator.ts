@@ -14,7 +14,10 @@ import { gradeResult } from '@/lib/work/grader';
 import { normalizeStages, renderSkeleton, verifyCalcs, type SampleSkeleton, type SampleStage } from '@/lib/work/samples';
 import { resolveModule } from '@/lib/work/modules';
 
+/** 模型（2026-10-28 用户：「优先 Claude，但是保证千问兜底」）：真活在国内用，Claude 时通时不通——
+ *  主力 Claude（质量最好），连不上 20 秒内放弃（llm-client 首字节看门狗），兜底一律国内：千问 3.7 Plus → 千问 Plus → DeepSeek */
 export const WORK_MODEL = process.env.WORK_MODEL || 'claude-opus-5-5';
+export const DOMESTIC_FALLBACK = ['qwen3.7-plus', 'qwen-plus', 'deepseek-v4-pro'];
 
 export interface WorkContext {
   company: Record<string, any> | null;   // companies 的画像字段（introduction / business_profile / growth_signals / industry_position / public_sentiment …）
@@ -37,7 +40,7 @@ export const isNeedText = (role: string) => role.trim().length > 14 || /[，,。
 
 /** 带兜底链的 JSON 调用：Opus → Sonnet → 千问；记账 tool=work */
 export async function askJson(prompt: string, model: string, task_name: string, institution?: string, extra?: Record<string, any>): Promise<any> {
-  const chain = [model, ...['claude-sonnet-5-5', 'qwen-plus'].filter(m => m !== model)];
+  const chain = [model, ...DOMESTIC_FALLBACK.filter(m => m !== model)];
   let lastErr: any = null;
   for (const m of chain) {
     try {
@@ -414,7 +417,7 @@ export async function runBaseline(task: WorkTask, opts: { model?: string; instit
   const model = opts.model || WORK_MODEL;
   const { solveWorkTask } = await import('@/lib/work/solve');
   let answer = '', used = model;
-  for (const m of [model, 'claude-sonnet-5-5', 'qwen-plus']) {
+  for (const m of [model, ...DOMESTIC_FALLBACK.filter(x => x !== model)]) {
     try { const r = await solveWorkTask(task, m, { task_name: 'Baseline · AI 先做一遍', institution: opts.institution }); answer = r.answer; used = m; if (answer) break; }
     catch (e) { console.warn(`[work] 基线 ${m} 失败：${String((e as any)?.message).slice(0, 120)}`); }
   }

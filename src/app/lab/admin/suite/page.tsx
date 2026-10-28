@@ -26,11 +26,11 @@ const STEPS: { k: StepKey; t: string; d: string }[] = [
   { k: 'course', t: '开课', d: '给几位平台学员（大模型）开学籍，入学考到教务里跑' },
 ];
 const N_CHAPTERS = 3, MAX_FIX = 3;
-/** 建空间 / 写章节用的模型：先 GPT（不传会落到 Gemini——要先问、还常欠费）；GPT 欠费 / 额度用完 / 限流就换 Claude Opus 重试。
- *  审稿在服务端用 Claude Sonnet，和这两个都不是同一个模型 */
-const GEN_MODELS = ['gpt-5.6-luna', 'claude-opus-5-5'];
-const QUOTA = /402|429|quota|insufficient|billing|credit|rate.?limit|余额|欠费|额度/i;
-/** 用第一个模型跑，碰到额度类错误换下一个 */
+/** 建空间 / 写章节用的模型：Claude Opus 优先，失败用千问 3.7 Plus / 千问 Max 兜底（不传会落到 Gemini）。
+ *  审稿在服务端用 Claude Sonnet，连不上退千问 */
+const GEN_MODELS = ['claude-opus-5-5', 'qwen3.7-plus', 'qwen-max'];   // 优先 Claude，千问兜底
+const QUOTA = /./;   // 出什么错都换下一个（兜底只有一层）
+/** 用第一个模型跑，失败了换下一个 */
 async function withModels<T>(f: (model: string) => Promise<T>, onSwitch?: (m: string) => void): Promise<T> {
   let last: any;
   for (let i = 0; i < GEN_MODELS.length; i++) {
@@ -115,7 +115,7 @@ function Suite() {
         const buildId = Math.random().toString(36).slice(2);
         let done = false;
         (async () => { while (!done) { await sleep(3000); const b = await api(`/api/lab/spaces?build=${buildId}`).catch(() => null); if (b?.build?.phase && !done) set('space', 'run', `${b.build.phase}${b.build.detail ? ` · ${b.build.detail}` : ''}`); } })();
-        const r = await withModels(model => post('/api/lab/spaces', { jdText: form.jd.trim(), title: form.title.trim(), company: form.company.trim(), buildId, model }), m => set('space', 'run', `GPT 额度不够，换 ${m} 重试`)).finally(() => { done = true; });
+        const r = await withModels(model => post('/api/lab/spaces', { jdText: form.jd.trim(), title: form.title.trim(), company: form.company.trim(), buildId, model }), m => set('space', 'run', `千问没成，换 ${m} 重试`)).finally(() => { done = true; });
         id = r.id; setSpaceId(id);
         window.history.replaceState(null, '', `/lab/admin/suite?space=${id}`);
         return `空间建好：${r.summary?.title || ''}（${r.summary?.steps || 0} 步、工位 ${r.summary?.bench ? r.summary.bench.name : '无'}）`;
@@ -124,7 +124,7 @@ function Suite() {
       await step('day', async () => {
         const s = (await refresh(id))!.studio;
         if ((s?.chapters?.length || 0) >= 4) return `已有 ${s.chapters.length} 格`;
-        const job = await withModels(async model => { const j = await post(`/api/lab/studio/${id}/day`, { model }); return waitJob(id, j.job.id, 'day', '排一天'); }, m => set('day', 'run', `GPT 额度不够，换 ${m} 重试`));
+        const job = await withModels(async model => { const j = await post(`/api/lab/studio/${id}/day`, { model }); return waitJob(id, j.job.id, 'day', '排一天'); }, m => set('day', 'run', `千问没成，换 ${m} 重试`));
         return job.detail || '排好了';
       });
       // 3 章节
@@ -134,7 +134,7 @@ function Suite() {
         const todo = chs.filter(c => !hasSteps(c) && !c.locked).slice(0, Math.max(0, N_CHAPTERS - written));
         for (const c of todo) {
           set('chapters', 'run', `写《${c.title}》`);
-          await withModels(async model => { const j = await post(`/api/lab/studio/${id}/chapters/${c.id}/generate`, { art: true, model }); return waitJob(id, j.job.id, 'chapters', `写《${c.title}》`); }, m => set('chapters', 'run', `GPT 额度不够，换 ${m} 重试`));
+          await withModels(async model => { const j = await post(`/api/lab/studio/${id}/chapters/${c.id}/generate`, { art: true, model }); return waitJob(id, j.job.id, 'chapters', `写《${c.title}》`); }, m => set('chapters', 'run', `千问没成，换 ${m} 重试`));
           written++;
         }
         chs = (await refresh(id))!.studio?.chapters || [];

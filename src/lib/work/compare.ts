@@ -101,7 +101,7 @@ scenario 业务场景 · task 要候选人做什么 · materials 给考生的材
 只输出 JSON：
 {"checklist":[{"key":"c1","a":{"v":"","note":"","quote":""},"b":{"v":"","note":""}}],"facts":[{"quote":"","claim":"","status":"","evidence":"","source":""}],"generic":{"scenario":"","task":"","materials":"","rubric":"","facts":""},"ours":{同上},"verdict":""}`;
   let p: any = null, lastErr: any = null;
-  for (const m of ['claude-sonnet-5-5', 'qwen-plus']) {
+  for (const m of ['claude-sonnet-5-5', 'qwen-plus', 'deepseek-v4-pro']) {   // 优先 Claude，千问兜底
     try {
       const r = await generateContent(prompt, m, { jsonMode: true, temperature: 0 });
       await logTokenUsage({ tool_name: 'work', task_name: 'Compare · 研判', institution: company, model_id: m, usageMetadata: r.usageMetadata } as any).catch(() => {});

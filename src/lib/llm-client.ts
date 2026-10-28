@@ -247,19 +247,25 @@ async function generateQwen(
 // Opus 5.5 思考默认开着、effort 默认 medium；jsonMode 靠系统提示约束（这一代不支持 assistant 预填）。
 async function generateClaude(prompt: string, modelId: string, options?: { jsonMode?: boolean; webSearch?: boolean; fast?: boolean }): Promise<LLMResponse> {
   const { default: Anthropic } = await import('@anthropic-ai/sdk');
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  // 国内连 Claude 时通时不通（2026-10-28）：重试只留 1 次，并且 20 秒内一个字节都没回就放弃（首字节看门狗），好让上层尽快换千问兜底
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, maxRetries: 1 });
+  const firstByteMs = Number(process.env.CLAUDE_FIRST_BYTE_MS || 20000);
   const system = options?.jsonMode
     ? '你是一个只输出 JSON 的生成器：回复必须是一个合法的 JSON 对象，不要用 Markdown 代码块包裹，不要在 JSON 前后加任何说明文字。'
     : undefined;
   // 长输出（教案一章一万多 token）走流式，不然并发几路时会被连接超时掐掉（10-18 备课批量见过 4 章 timeout）
-  const res = await client.messages.stream({
+  const stream = client.messages.stream({
     model: modelId,
     max_tokens: 64000,   // 教案一章可到 3.6 万字（潜水 255 下工位），32000 还会截断
     ...(system ? { system } : {}),
     // Haiku 4.5 只支持老版搜索工具；批量画像用它省钱，每次最多搜 2 次（搜回来的网页全文按输入 token 计费，10-26 Sonnet 搜 5 次一家 $1.4）
     ...(options?.webSearch ? { tools: [/haiku-4-5/.test(modelId) ? { type: 'web_search_20250305', name: 'web_search', max_uses: 2 } : { type: 'web_search_20260209', name: 'web_search', max_uses: 5 }] as any } : {}),
     messages: [{ role: 'user', content: prompt }],
-  }).finalMessage();
+  });
+  let started = false;
+  stream.on('streamEvent', () => { started = true; });
+  const watchdog = setTimeout(() => { if (!started) stream.abort(); }, firstByteMs);
+  const res = await stream.finalMessage().catch((e: any) => { throw started ? e : new Error(`Claude ${firstByteMs / 1000} 秒没有回应（可能连不上）：${String(e?.message || e).slice(0, 120)}`); }).finally(() => clearTimeout(watchdog));
   if (res.stop_reason === 'refusal') throw new Error(`Claude 拒绝了这次请求${res.stop_details?.explanation ? `：${res.stop_details.explanation}` : ''}`);
   // 联网检索时 Claude 会边搜边说（「我先搜一下…」），答案在最后一次搜索之后；真实来源从搜索结果块里取，按千问的「## 搜索来源」格式附在后面
   const lastSearch = options?.webSearch ? res.content.map(b => b.type as string).lastIndexOf('web_search_tool_result') : -1;

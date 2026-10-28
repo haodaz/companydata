@@ -193,10 +193,10 @@ export async function autoPickSamples(input: { company?: string; industry?: stri
 ${lib.map((x, i) => `${i + 1}. ${x.title} · ${x.industry || '—'} · ${x.problem_type || '—'} · ${x.difficulty || '—'} · ${(x.skeleton.summary || '').slice(0, 120)}`).join('\n')}
 只返回 JSON：{ "picks": [1], "why": "一句" }`;
   try {
-    // 挑参照默认走千问（便宜）；千问不可用（欠费 / 限流）时退到 Sonnet，不能因为挑不到参照就裸出
+    // 挑参照默认走千问（便宜）；千问不可用（欠费 / 限流）时退到 DeepSeek（国内），不能因为挑不到参照就裸出
     let res: any;
     try { res = await generateContent(prompt, process.env.WORK_PICK_MODEL || 'qwen-plus', { jsonMode: true }); }
-    catch (e) { console.warn('[work] 挑参照：千问失败，换 Sonnet', String((e as any)?.message).slice(0, 80)); res = await generateContent(prompt, 'claude-sonnet-5-5', { jsonMode: true }); }
+    catch (e) { console.warn('[work] 挑参照：千问失败，换 DeepSeek', String((e as any)?.message).slice(0, 80)); res = await generateContent(prompt, 'deepseek-v4-pro', { jsonMode: true }); }
     await logTokenUsage({ tool_name: 'work', task_name: 'Sample · 自动挑参照', institution: input.company || '', model_id: process.env.WORK_PICK_MODEL || 'qwen-plus', usageMetadata: res.usageMetadata, actor: opts.actor } as any).catch(() => {});
     const p = parseJsonLoose(res.text);
     const picks = (Array.isArray(p.picks) ? p.picks : []).map((n: any) => lib[Number(n) - 1]).filter(Boolean).slice(0, 2);

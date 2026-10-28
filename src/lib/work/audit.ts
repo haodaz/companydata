@@ -35,7 +35,7 @@ export function planSegments(events: WorkEvent[]): { from: number; to: number }[
 
 async function askJson(prompt: string, institution?: string): Promise<any> {
   let lastErr: any = null;
-  for (const m of [AUDIT_MODEL, 'qwen-plus']) {
+  for (const m of [AUDIT_MODEL, 'qwen-plus', 'deepseek-v4-pro']) {
     try {
       const res = await generateContent(prompt, m, { jsonMode: true });
       await logTokenUsage({ tool_name: 'work', task_name: 'Grade · 分段审计', institution: institution || '', model_id: m, usageMetadata: res.usageMetadata } as any).catch(() => {});

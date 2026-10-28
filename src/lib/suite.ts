@@ -10,9 +10,10 @@ import { createWorkTask } from '@/lib/work/chat-agent';
 import { reviseTask } from '@/lib/work/generator';
 import { createEnrollment, ensurePlatformStudents } from '@/lib/college-admin';
 
-/** 生成用的模型：空间 / 章节走 GPT 系，真活走出题默认（Claude Opus）；审稿用 Claude Sonnet——和两边都不是同一个模型，才算交叉（10-28 试过千问 Max，审得太泛） */
+/** 模型（2026-10-28 用户：优先 Claude，保证千问兜底）：空间 / 章节 / 真活都是 Claude 优先、千问兜底；
+ *  审稿用 Claude Sonnet（和出题的 Opus 不是一个模型；千问 Max 审过一次太泛），连不上时 askJson 退到千问 / DeepSeek */
 const PLAN_MODEL = 'qwen-plus';
-const REVIEW_MODEL = 'claude-sonnet-5-5';
+const REVIEW_MODEL = process.env.SUITE_REVIEW_MODEL || 'claude-sonnet-5-5';
 /** 开课时先录哪几位学员（平台自己的模型，有就录） */
 const FIRST_STUDENTS = ['qwen-plus', 'deepseek-v4-pro', 'gpt-5.6-luna'];
 

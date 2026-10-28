@@ -7,14 +7,14 @@ import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
 import type { WorkTask } from '@/lib/work/generator';
 
-const GRADE_MODEL = process.env.WORK_GRADE_MODEL || 'claude-opus-5-5';
+const GRADE_MODEL = process.env.WORK_GRADE_MODEL || 'claude-opus-5-5';   // 优先 Claude，千问兜底（2026-10-28）
 const s = (v: any, n = 600) => (v == null ? '' : typeof v === 'string' ? v : JSON.stringify(v)).slice(0, n);
 
 async function askJson(prompt: string, task_name: string, institution?: string): Promise<any> {
   let lastErr: any = null;
   // 每个模型两次机会：第一次解析失败（常见是字符串里夹了未转义的英文双引号），第二次把「严格 JSON」的要求说死再要一次，比换模型便宜
   const STRICT = '\n\n上一次返回的 JSON 无法解析。这次只返回一个合法 JSON 对象：字符串里不要出现英文双引号（引用用「」），不要在字符串里换行，不要尾随逗号，JSON 前后不要任何说明文字。';
-  for (const m of [GRADE_MODEL, 'claude-sonnet-5-5', 'qwen-plus']) {
+  for (const m of [GRADE_MODEL, 'qwen3.7-plus', 'qwen-plus', 'deepseek-v4-pro'].filter((x, i, a) => a.indexOf(x) === i)) {
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
         const res = await generateContent(prompt + (attempt ? STRICT : ''), m, { jsonMode: true });
