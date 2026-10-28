@@ -6,7 +6,7 @@
  * 上面一行放交付物标签（leading）+ 本交付物的要求；再一行放模板（手机屏 / 网页屏 / 便签）；下面是说明框。
  * 交卷时父组件用 apiRef 导出 PNG 存图给人看，boardToText 转成文字给评卷读。
  */
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import '@excalidraw/excalidraw/index.css';
 import { BOARD_LIBRARY, buildBoardLibrary } from './boardLibrary';
@@ -18,10 +18,25 @@ let libLoading: Promise<void> | null = null;   // 素材库是整页共用的一
 export type BoardValue = { elements: any[]; files: Record<string, any> };
 export const emptyBoard = (): BoardValue => ({ elements: [], files: {} });
 
-export function BoardBench({ value, onChange, notes, onNotes, caption, leading, onEvent, apiRef }: {
+/** 图片缩到长边 ≤ 1600 再转 dataURL（白板状态存在内存里，原图太大会拖慢） */
+async function toDataUrl(src: Blob): Promise<{ url: string; w: number; h: number; mime: string }> {
+  const raw: string = await new Promise((ok, no) => { const r = new FileReader(); r.onload = () => ok(String(r.result)); r.onerror = no; r.readAsDataURL(src); });
+  const img: HTMLImageElement = await new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = no; i.src = raw; });
+  const k = Math.min(1, 1600 / Math.max(img.width, img.height));
+  if (k === 1 && src.size < 900_000) return { url: raw, w: img.width, h: img.height, mime: src.type || 'image/png' };
+  const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+  c.getContext('2d')!.drawImage(img, 0, 0, c.width, c.height);
+  return { url: c.toDataURL('image/jpeg', 0.86), w: c.width, h: c.height, mime: 'image/jpeg' };
+}
+
+export function BoardBench({ value, onChange, notes, onNotes, caption, leading, onEvent, apiRef, refs = [] }: {
   value: BoardValue; onChange: (v: BoardValue) => void; notes: string; onNotes: (v: string) => void; caption?: string;
   leading?: React.ReactNode; onEvent?: (type: string, data?: any) => void; apiRef?: React.MutableRefObject<any>;
+  /** 材料里的图片：可以一键贴到白板上当参考（比如做 IP 变体时贴原形象） */
+  refs?: { title: string; url: string }[];
 }) {
+  const [refOpen, setRefOpen] = useState(false);
+  const fileIn = useRef<HTMLInputElement>(null);
   const api = useRef<any>(null);
   const lastCount = useRef(value.elements.filter(e => !e.isDeleted).length);
   const timer = useRef<any>(null);
@@ -63,6 +78,24 @@ export function BoardBench({ value, onChange, notes, onNotes, caption, leading, 
     onEvent?.('board_template', { kind });
   };
 
+  // 贴参考图：本机图片或材料里的图，放在现有内容右边，记一条事件（评卷看得到参考了什么）
+  const addImage = async (blob: Blob, from: string) => {
+    const a = api.current; if (!a) return;
+    const { convertToExcalidrawElements } = await import('@excalidraw/excalidraw');
+    const { url, w, h, mime } = await toDataUrl(blob);
+    const id = `ref-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+    a.addFiles([{ id, dataURL: url, mimeType: mime, created: Date.now() }]);
+    const cur = a.getSceneElements();
+    const k = Math.min(1, 480 / Math.max(w, h));
+    const x0 = cur.length ? Math.max(...cur.map((e: any) => e.x + (e.width || 0))) + 60 : 40;
+    const el = convertToExcalidrawElements([{ type: 'image', x: x0, y: 40, width: Math.round(w * k), height: Math.round(h * k), fileId: id } as any]).map((e: any) => ({ ...e, status: 'saved' }));
+    a.updateScene({ elements: [...cur, ...el] });
+    a.scrollToContent(el, { fitToContent: false, animate: true });
+    onEvent?.('board_ref', { from });
+    setRefOpen(false);
+  };
+  const addRef = async (r: { title: string; url: string }) => { try { addImage(await (await fetch(r.url)).blob(), r.title); } catch { setRefOpen(false); } };
+
   const btn: React.CSSProperties = { border: '1px solid #e0e0ee', background: '#fff', borderRadius: 7, padding: '4px 10px', fontSize: 12.5, cursor: 'pointer', color: '#3b405a' };
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, background: '#fff' }}>
@@ -73,6 +106,14 @@ export function BoardBench({ value, onChange, notes, onNotes, caption, leading, 
         <button style={btn} onClick={() => addTemplate('phone')}>手机屏</button>
         <button style={btn} onClick={() => addTemplate('web')}>网页屏</button>
         <button style={btn} onClick={() => addTemplate('note')}>便签</button>
+        <span style={{ position: 'relative' }}>
+          <button style={btn} onClick={() => (refs.length ? setRefOpen(v => !v) : fileIn.current?.click())}>贴参考图</button>
+          {refOpen && <div style={{ position: 'absolute', right: 0, top: 30, zIndex: 20, background: '#fff', border: '1px solid #e0e0ee', borderRadius: 10, boxShadow: '0 8px 24px rgba(20,20,60,.12)', padding: 6, width: 240 }}>
+            {refs.map(r => <div key={r.url} onClick={() => addRef(r)} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 8px', borderRadius: 7, cursor: 'pointer', fontSize: 12.5 }} onMouseEnter={e => (e.currentTarget.style.background = '#f4f3ff')} onMouseLeave={e => (e.currentTarget.style.background = '')}><img src={r.url} alt="" style={{ width: 34, height: 34, objectFit: 'cover', borderRadius: 5, border: '1px solid #eee' }} /><span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.title}</span></div>)}
+            <div onClick={() => fileIn.current?.click()} style={{ padding: '7px 8px', borderTop: '1px solid #f0f0f5', marginTop: 4, fontSize: 12.5, color: '#4c43c9', cursor: 'pointer' }}>从电脑选一张…</div>
+          </div>}
+          <input ref={fileIn} type="file" accept="image/*" hidden onChange={e => { const f = e.target.files?.[0]; e.target.value = ''; if (f) addImage(f, '本机图片'); }} />
+        </span>
         <button style={{ ...btn, borderColor: '#d8d4ff', color: '#4c43c9', fontWeight: 600 }} onClick={() => { api.current?.toggleSidebar?.({ name: 'default', tab: 'library', force: true }); onEvent?.('board_library'); }}>组件库</button>
       </div>
       <div style={{ flex: 1, minHeight: 360, position: 'relative' }}>
