@@ -115,7 +115,7 @@ function Overview({ items, cmp }: { items: any[]; cmp: any }) {
     </Card>
   );
 }
-function Radar({ rows }: { rows: { title: string; score: number; base?: number }[] }) {
+export function Radar({ rows }: { rows: { title: string; score: number; base?: number }[] }) {
   const N = rows.length, R = 92, C = 130, ang = (i: number) => -Math.PI / 2 + (2 * Math.PI * i) / N;
   const pt = (i: number, v: number) => [C + (R * v / 100) * Math.cos(ang(i)), C + (R * v / 100) * Math.sin(ang(i))];
   const poly = (vals: number[]) => vals.map((v, i) => pt(i, v).join(',')).join(' ');

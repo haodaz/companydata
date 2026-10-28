@@ -141,6 +141,9 @@ export default function WorkPage() {
       <div style={{ maxWidth: 1040, margin: '0 auto', padding: '28px 20px' }}>
         <div style={{ fontSize: 12, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台 · 报告</div>
         <h1 style={{ fontSize: 24, margin: '6px 0 16px' }}>{task.task.title} <span style={{ fontSize: 14, color: '#888', fontWeight: 400 }}>{task.company_name} · {task.role}</span></h1>
+        {report?.result && <a href={`/work/${token}/card?s=${sid}`} style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16, padding: '14px 18px', borderRadius: 14, textDecoration: 'none', color: 'inherit', background: 'linear-gradient(135deg, #f4f2ff, #eef9fb)', border: '1px solid #ddd9ff' }}>
+          <div style={{ fontSize: 26 }}>🎖️</div><div style={{ flex: 1 }}><div style={{ fontWeight: 800 }}>领取你的真活成绩单</div><div style={{ fontSize: 13, color: '#666' }}>总分、等级、逐条雷达和做得好的地方，一页可以分享、可以存成 PDF</div></div><span style={{ color: '#6055f5', fontWeight: 700 }}>去看 →</span>
+        </a>}
         <WorkReport report={report} participant={participant} />
         <div style={{ marginTop: 16, fontSize: 13, color: '#888' }}>这页的链接：<code>{typeof location !== 'undefined' ? `${location.origin}/work/${token}?s=${sid}` : ''}</code></div>
       </div>
