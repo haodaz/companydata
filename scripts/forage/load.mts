@@ -17,9 +17,11 @@ const DIR = opt('dir'), APPLY = process.argv.includes('--apply');
 const REGION = /\b(u\.?s\.?a?|uk|au|apac|emea|anz|nz|australia|canada|ca|india|ireland|singapore|hong kong|europe|south africa|new zealand|inc|ltd|llp|llc|plc|group|global|tech|the)\b\.?/g;
 const norm = (s: string) => (s || '').toLowerCase().replace(/&/g, 'and').replace(REGION, '').replace(/[^a-z0-9一-龥]+/g, '');
 
-const { data: cs } = await selectAll(() => db.from('companies').select('id, name, name_en, brief_name, aliases').not('if_delete', 'is', true).order('id'));
+const { data: cs0 } = await selectAll(() => db.from('companies').select('id, name, name_en, brief_name, aliases, entity_level').not('if_delete', 'is', true).order('id'));
+// 集团 / 品牌实体优先（迁移 053）：「PwC US」挂集团「普华永道」，不挂中国的普华永道
+const cs = [...(cs0 as any[])].sort((a, b) => (a.entity_level === 'group' ? 0 : 1) - (b.entity_level === 'group' ? 0 : 1));
 const byName = new Map<string, number>();
-for (const c of cs as any[]) for (const n of [c.name, c.name_en, c.brief_name, ...(c.aliases || [])]) { const k = norm(n); if (k.length >= 3 && !byName.has(k)) byName.set(k, c.id); }
+for (const c of cs) for (const n of [c.name, c.name_en, c.brief_name, ...(c.aliases || [])]) { const k = norm(n); if (k.length >= 3 && !byName.has(k)) byName.set(k, c.id); }
 
 const rows: any[] = [];
 const bad: string[] = [];
