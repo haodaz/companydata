@@ -46,6 +46,8 @@ export default function CompanyDetailPage() {
   const [news, setNews] = useState<any[]>([]);
   const [executives, setExecutives] = useState<any[]>([]);
   const [products, setProducts] = useState<any[]>([]);
+  const [parent, setParent] = useState<any>(null);   // 所属集团（迁移 053）
+  const [children, setChildren] = useState<any[]>([]);   // 集团：旗下企业
   const [related, setRelated] = useState<RelatedResult | null>(null);
   const [profileLogs, setProfileLogs] = useState<any[]>([]);
   const [enriching, setEnriching] = useState(false);
@@ -64,7 +66,7 @@ export default function CompanyDetailPage() {
     try {
       const json = await (await fetch(`/api/db/companies/${id}`)).json();
       if (!json.success) throw new Error(json.error);
-      setCompany(json.company); setUrls(json.urls); setJobs(json.jobs); setJournals(json.journals); setNote(json.company?.human_review_note || '');
+      setCompany(json.company); setParent(json.parent || null); setChildren(json.children || []); setUrls(json.urls); setJobs(json.jobs); setJournals(json.journals); setNote(json.company?.human_review_note || '');
       setFinancings(json.financings || []); setNews(json.news || []); setExecutives(json.executives || []); setProfileLogs(json.profileLogs || []); setProducts(json.products || []);
     } catch (e: any) { message.error(`加载失败: ${e.message}`); }
     finally { setLoading(false); }
@@ -230,6 +232,8 @@ export default function CompanyDetailPage() {
         title={company.name}
         subtitle={[company.name_en !== company.name && company.name_en, company.jv_partners].filter(Boolean).join(' · ') || undefined}
         tags={<>
+          {company.entity_level === 'group' && <Tag color="geekblue">集团 / 品牌</Tag>}
+          {parent && <Tag color="geekblue" style={{ cursor: 'pointer' }} onClick={() => router.push(`/admin/db-company/${parent.id}`)}>所属集团：{parent.name}</Tag>}
           {company.segment && <Tag color={SEGMENT_LABELS[company.segment]?.color}>{SEGMENT_LABELS[company.segment]?.label}</Tag>}
           {company.company_type && <Tag>{COMPANY_TYPE_LABELS[company.company_type]}</Tag>}
           {company.kind && <Tag>{KIND_LABELS[company.kind] || company.kind}</Tag>}
@@ -400,6 +404,17 @@ export default function CompanyDetailPage() {
               </div>
             )}
           </Card>
+
+          {children.length > 0 && (
+            <Card title={`旗下企业（${children.length}）`} size="small" style={{ marginBottom: 16 }}>
+              {children.map(c => (
+                <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', gap: 8, padding: '4px 0', borderBottom: `1px solid ${BRAND.borderSoft}` }}>
+                  <a onClick={() => router.push(`/admin/db-company/${c.id}`)}>{c.name}</a>
+                  <span style={{ fontSize: 12, color: BRAND.ink3, whiteSpace: 'nowrap' }}>{[c.country, c.city].filter(Boolean).join(' · ')}{c.completeness_score != null ? ` · 完整度 ${c.completeness_score}` : ''}</span>
+                </div>
+              ))}
+            </Card>
+          )}
 
           <Card title="校招入口" size="small" style={{ marginBottom: 16 }}
             extra={!company.campus_url && <Button type="link" size="small" onClick={() => router.push(toolUrlHref)}>去检索 →</Button>}>

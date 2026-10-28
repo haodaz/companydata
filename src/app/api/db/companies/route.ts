@@ -49,6 +49,7 @@ export async function GET(request: Request) {
       if (review === 'none') query = query.is('human_review_status', null);
       else if (review) query = query.eq('human_review_status', review);
       if (segment === 'none') query = query.is('segment', null);
+      else if (segment === 'group') query = query.eq('entity_level', 'group');   // 集团 / 品牌实体（迁移 053）
       else if (segment === 'investor') query = notInvestor(query.or(INVESTOR_OR));   // 投资机构：不是存的分类，按行业 / 名字判
       else if (segment) query = query.eq('segment', segment);
       if (industry) query = query.eq('industry', industry);

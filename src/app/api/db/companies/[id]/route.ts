@@ -28,8 +28,14 @@ export async function GET(_req: NextRequest, { params }: Ctx) {
       supabaseAdmin.from('company_products').select('*').eq('company_id', id).eq('if_delete', false).order('is_flagship', { ascending: false }).order('id', { ascending: true }).limit(100),
     ]);
 
+    // 集团 / 品牌实体（迁移 053）：子公司带上所属集团，集团带上旗下企业
+    const [{ data: parent }, { data: children }] = await Promise.all([
+      company.parent_company_id ? supabaseAdmin.from('companies').select('id, name, name_en, entity_level').eq('id', company.parent_company_id).maybeSingle() : Promise.resolve({ data: null } as any),
+      supabaseAdmin.from('companies').select('id, name, name_en, country, city, completeness_score').eq('parent_company_id', id).not('if_delete', 'is', true).order('id').limit(200),
+    ]);
+
     return NextResponse.json({
-      success: true, company, urls: urls.data || [], jobs: jobs.data || [], journals: journals.data || [],
+      success: true, company, parent: parent || null, children: children || [], urls: urls.data || [], jobs: jobs.data || [], journals: journals.data || [],
       financings: financings.data || [], news: news.data || [], executives: executives.data || [], profileLogs: profileLogs.data || [], products: products.data || [],
     });
   } catch (error: any) {
