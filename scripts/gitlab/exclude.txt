@@ -18,3 +18,8 @@
 ^hl2\.md$
 ^[^/]*\.xlsx$
 ^\.claude/
+^src/app/api/admin/college-leads(/|$)
+^supabase/migrations/\d+_(skill_lab|lab_|persona_chat|work|workspace|ws_|college|external_simulations)
+^scripts/(build-zhenhuo|import-forage-samples|find-weld-jd|chroma-key|gen-image|global-deep-cards)
+^extension/zhenhuo/
+^public/downloads/zhenhuo

@@ -15,7 +15,7 @@ git -C "$MIRROR" reset -q --hard origin/main
 OUT=$(mktemp -d)
 git archive HEAD | tar -x -C "$OUT"
 # 删掉不推的
-(cd "$OUT" && git -C "$ROOT" ls-files | python3 -c "
+(cd "$OUT" && git -C "$ROOT" -c core.quotepath=false ls-files | python3 -c "
 import re,sys,os
 pats=[re.compile(l.strip()) for l in open('$ROOT/scripts/gitlab/exclude.txt',encoding='utf-8') if l.strip() and not l.startswith('#')]
 for p in sys.stdin.read().splitlines():
