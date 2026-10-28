@@ -508,17 +508,17 @@ function Onboard({ edition, err, onDone }: { edition: Edition; err: string; onDo
 }
 
 function Shell({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState('paper');
-  useEffect(() => { const read = () => { try { setTheme(localStorage.getItem('ws:theme') || 'paper'); } catch {} }; read(); window.addEventListener('ws-theme', read); return () => window.removeEventListener('ws-theme', read); }, []);
+  const [theme, setTheme] = useState('light');
+  useEffect(() => { const read = () => { try { setTheme(localStorage.getItem('ws:theme2') || 'light'); } catch {} }; read(); window.addEventListener('ws-theme', read); return () => window.removeEventListener('ws-theme', read); }, []);
   return <div className="ws" data-theme={theme}>{children}<style>{CSS}</style></div>;
 }
 
-/** 配色：纸张（默认，暖、雅致）/ 冷灰（和一答企业版一个家族） */
+/** 配色：浅色（默认，2026-10-28 起照一答 /v2 工作区：极光白 + 中性灰 + 主色实色按钮）/ 纸张（暖色旧版）。换了存储键，大家默认都回到浅色 */
 function ThemeSwitch() {
-  const [t, setT] = useState('paper');
-  useEffect(() => { try { setT(localStorage.getItem('ws:theme') || 'paper'); } catch {} }, []);
-  const set = (v: string) => { setT(v); try { localStorage.setItem('ws:theme', v); } catch {} window.dispatchEvent(new Event('ws-theme')); };
-  return <span className="ws-theme" title="配色">{[['paper', '纸张'], ['cool', '冷灰']].map(([k, l]) => <button key={k} className={t === k ? 'on' : ''} onClick={() => set(k)}>{l}</button>)}</span>;
+  const [t, setT] = useState('light');
+  useEffect(() => { try { setT(localStorage.getItem('ws:theme2') || 'light'); } catch {} }, []);
+  const set = (v: string) => { setT(v); try { localStorage.setItem('ws:theme2', v); } catch {} window.dispatchEvent(new Event('ws-theme')); };
+  return <span className="ws-theme" title="配色">{[['light', '浅色'], ['paper', '纸张']].map(([k, l]) => <button key={k} className={t === k ? 'on' : ''} onClick={() => set(k)}>{l}</button>)}</span>;
 }
 
 function SetupPage() { return <div style={{ flex: 1, overflowY: 'auto' }}><Setup step="context" embedded onDone={() => {}} /></div>; }
@@ -707,6 +707,20 @@ const CSS = `
 .ws-pick button { display:block; width:100%; text-align:left; border:0; background:transparent; padding:9px 14px; cursor:pointer; font-size:14px; color:var(--ink); }
 .ws-pick button:hover { background:#f6f4ee; }
 /* 冷灰（照一答企业版 /ws）：中性灰底 + 极淡的蓝 / 浅紫极光，实色蓝紫 */
+.ws[data-theme="light"] { --paper:#f8f9fd; --side:rgba(255,255,255,.55); --card:#ffffff; --line:#e6e7ec; --line2:#eff0f3; --ink:#1d2030; --ink2:#4a4f63; --ink3:#7c8193; --accent:#6055f5; --accent-soft:#efedfe; --hover:#f0f0f8;
+  background:radial-gradient(1100px 680px at 88% -12%, rgba(150,180,255,.20), transparent 62%), radial-gradient(900px 620px at 8% 112%, rgba(186,168,255,.16), transparent 60%), linear-gradient(180deg, #f9fbff 0%, #f7f7fd 100%); background-attachment:fixed; }
+.ws[data-theme="light"] .ws-side { backdrop-filter:blur(12px); border-right-color:rgba(220,222,238,.8); }
+.ws[data-theme="light"] .ws-primary, .ws[data-theme="light"] .ws-send { background:#6055f5; color:#fff; }
+.ws[data-theme="light"] .ws-primary:hover, .ws[data-theme="light"] .ws-send:hover { background:#4f46e5; }
+.ws[data-theme="light"] .ws-brand-mark, .ws[data-theme="light"] .ws-avatar { background:#6055f5; color:#fff; font-family:inherit; }
+.ws[data-theme="light"] .ws-me-av { background:#efedfe; color:#4f46e5; }
+.ws[data-theme="light"] .ws-hello, .ws[data-theme="light"] .ws-title { font-family:inherit; font-weight:700; letter-spacing:0; }
+.ws[data-theme="light"] .ws-nav.on, .ws[data-theme="light"] .ws-recent.on { background:#efedfe; color:#4f46e5; }
+.ws[data-theme="light"] .ws-bubble { background:#efedfe; }
+.ws[data-theme="light"] .ws-table th { background:#f7f8fc; }
+.ws[data-theme="light"] .ws-art { background:rgba(255,255,255,.92); }
+.ws[data-theme="light"] .ws-scene { opacity:.38; filter:saturate(.3) hue-rotate(10deg); }
+.ws[data-theme="light"] .ws-ph-art { opacity:.5; }
 .ws[data-theme="cool"] { --paper:#f8f9fb; --side:rgba(252,252,254,.85); --card:#ffffff; --line:#e4e6ec; --line2:#edf0f8; --ink:#1d1f24; --ink2:#3c4048; --ink3:#6b6f78; --accent:#4b57d6; --accent-soft:#eef1fb; --hover:#eef1fb;
   background: radial-gradient(ellipse 55% 40% at 0% 0%, rgba(120,145,245,.10), transparent 70%), radial-gradient(ellipse 45% 35% at 100% 0%, rgba(165,145,240,.09), transparent 70%), #f8f9fb; }
 .ws[data-theme="cool"] .ws-side { backdrop-filter:blur(14px); }
