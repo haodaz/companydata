@@ -245,7 +245,7 @@ function Sidebar({ org, user, view, setView, threads, threadId, openThread, newC
         {threads.length ? groupByDay(threads).map(([g, ts]) => <div key={g}><div className="ws-sec">{g}</div>{ts.map(t => <Recent key={t.id} t={t} on={t.id === threadId && view === 'chat'} open={() => openThread(t.id)} changed={reload} />)}</div>) : <><div className="ws-sec">最近</div><div className="ws-muted" style={{ padding: '4px 10px', fontSize: 12.5 }}>还没有对话</div></>}
       </div>
       <div className="ws-side-foot">
-        <div className="ws-muted" style={{ fontSize: 12, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email}</div>
+        <div className="ws-me"><span className="ws-me-av">{(user?.name || user?.email || '我').slice(0, 1).toUpperCase()}</span><div style={{ minWidth: 0 }}><div className="ws-me-name">{user?.name || String(user?.email || '').split('@')[0]}</div><div className="ws-cap" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email}</div></div></div>
         <div style={{ display: 'flex', gap: 10, fontSize: 12, alignItems: 'center' }}><Link href="/lab" className="ws-link">百业</Link><Link href="/work" className="ws-link">真活</Link><ThemeSwitch /></div>
       </div>
     </nav>
@@ -260,6 +260,7 @@ function Chat({ project, openProject, org, items, busy, send, stop, model, setMo
   const pendingAsk = [...items].reverse().find(x => x.k === 'ask' && !x.answered) as Extract<Item, { k: 'ask' }> | undefined;
   return (
     <div className={`ws-chat${empty ? ' empty' : ''}`}>
+      {empty && <div className="ws-scene" aria-hidden />}
       {empty ? (
         <div className="ws-hero">
           <h1 className="ws-hello">{hello}，{org.name}</h1>
@@ -459,7 +460,8 @@ function Lists({ view, org, openArt, ask }: { view: View; org: Org; openArt: (a:
   const fmt = (s: string) => (s ? new Date(s).toLocaleDateString('zh-CN', { month: 'numeric', day: 'numeric' }) : '');
   return (
     <div className="ws-page">
-      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 16, marginBottom: 18 }}>
+      <div className="ws-ph">
+        <img className="ws-ph-art" src={`/workspace/head-${view}.jpg`} alt="" aria-hidden />
         <div><h1 className="ws-title">{title}</h1><div className="ws-muted">{sub}</div></div>
         <button className="ws-primary" style={{ marginLeft: 'auto' }} onClick={() => ask(view === 'spaces' ? '帮我给一个岗位建职业空间' : view === 'people' ? '最近的真活谁做得最好？帮我对比一下' : '帮我给一个岗位出一道真活')}>{view === 'spaces' ? '建一个职业空间' : view === 'people' ? '让 AI 对比' : '出一道真活'}</button>
       </div>
@@ -573,7 +575,22 @@ const CSS = `
 .ws-pal-ico { width:24px; height:24px; border-radius:7px; background:var(--accent-soft); color:var(--accent); display:grid; place-items:center; flex-shrink:0; }
 .ws-pal-foot { display:flex; gap:16px; padding:8px 14px; border-top:1px solid var(--line2); font-size:12px; color:var(--ink3); } .ws-pal-foot kbd { margin:0 3px 0 0; }
 @keyframes wsfade { from { opacity:0 } } @keyframes wspop { from { opacity:0; transform:translateY(-6px) scale(.99); } }
-.ws-side-foot { border-top:1px solid var(--line); padding:10px 8px 2px; display:flex; flex-direction:column; gap:6px; }
+.ws-side-foot { border-top:1px solid var(--line); padding:10px 8px 2px; display:flex; flex-direction:column; gap:8px; }
+.ws-me { display:flex; align-items:center; gap:9px; min-width:0; }
+.ws-me-av { width:28px; height:28px; flex:none; border-radius:50%; display:grid; place-items:center; background:var(--ink); color:var(--paper); font-size:12.5px; font-weight:650; }
+.ws-me-name { font-size:13px; font-weight:600; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+/* 版画（2026-10-28）：首页底部一张淡淡的海港园区，上半更透明、下半清楚；各功能页右上角一张和本页有关的小插图，四边渐隐、正片叠底融进纸色 */
+.ws-chat.empty { position:relative; }
+.ws-scene { position:absolute; left:50%; transform:translateX(-50%); bottom:-4%; width:min(1180px, 100%); height:min(38%, 340px); background:url(/workspace/h-port.jpg) center 40% / 100% auto no-repeat; mix-blend-mode:multiply; opacity:.5; filter:saturate(.5) contrast(1.05); pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.55) 28%, #000 68%), linear-gradient(to right, transparent 0%, #000 22%, #000 78%, transparent 100%); -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.55) 28%, #000 68%), linear-gradient(to right, transparent 0%, #000 22%, #000 78%, transparent 100%); mask-composite:intersect; }
+.ws-chat.empty .ws-hero { position:relative; z-index:1; }
+.ws-ph { position:relative; display:flex; align-items:flex-end; gap:16px; margin-bottom:18px; min-height:132px; }
+.ws-ph > div, .ws-ph > button { position:relative; z-index:1; }
+.ws-ph-art { position:absolute; right:150px; top:-30px; height:176px; width:auto; max-width:48%; object-fit:contain; mix-blend-mode:multiply; opacity:.62; filter:saturate(.4); pointer-events:none; user-select:none;
+  -webkit-mask-image:linear-gradient(to right, transparent 0%, #000 38%, #000 78%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 22%, #000 70%, transparent 100%); -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right, transparent 0%, #000 38%, #000 78%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 22%, #000 70%, transparent 100%); mask-composite:intersect; }
+@media (max-width: 900px) { .ws-ph-art { display:none; } .ws-ph { min-height:0; } .ws-scene { height:34%; opacity:.35; } }
 .ws-link { color:var(--ink2); text-decoration:none; } .ws-link:hover { color:var(--ink); text-decoration:underline; }
 .ws-main { position:relative; min-width:0; overflow:hidden; display:flex; flex-direction:column; }
 .ws-showside { position:absolute; left:12px; top:12px; z-index:2; }
