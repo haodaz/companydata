@@ -76,7 +76,8 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           {/* 先看他交了什么，再看 AI 怎么评（王刚 10-24：出任务的人的视角是先看提交的答案本身，AI 只是辅助评价） */}
           <div style={{ marginBottom: 14, border: '1px solid #e8e9f0', borderRadius: 10, overflow: 'hidden' }}>
             <div style={{ padding: '8px 12px', background: '#fafbff', fontWeight: 700, fontSize: 13 }}>交付物原文</div>
-            <pre style={{ margin: 0, padding: 12, fontSize: 13, lineHeight: 1.7, whiteSpace: 'pre-wrap', fontFamily: 'inherit', maxHeight: 360, overflow: 'auto' }}>{report.deliverable || '（没有交付物文本：开放模式 / 插件作答看上传文件与交付说明）'}</pre>
+            {/* 按 Markdown 渲染：表格、标题、白板 / 画布交卷截图都直接看得到 */}
+            <div className="wk-deliv" style={{ padding: 12, fontSize: 13.5, lineHeight: 1.75, maxHeight: 460, overflow: 'auto' }}>{report.deliverable ? <Md text={report.deliverable} /> : <span style={{ color: '#999' }}>（没有交付物文本：开放模式 / 插件作答看上传文件与交付说明）</span>}</div>
           </div>
           <WorkReport report={report.report} participant={report.participant} />
         </>}

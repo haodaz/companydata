@@ -29,6 +29,7 @@ export function WorkReport({ report, participant }: { report: any; participant?:
           {!!p?.phases?.length && <div style={{ fontSize: 12, color: '#777', marginTop: 4 }}>{p?.phases.map((ph: any) => ph.label).join(' → ')}</div>}
         </Card>}
       </div>
+      {r.items?.length >= 2 && <Overview items={r.items} cmp={c} />}
       {report.recording && <Card title="录屏回放 · 用自己的软件做的">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14, alignItems: 'start' }}>
           <video controls preload="metadata" src={report.recording.url} style={{ width: '100%', borderRadius: 10, background: '#000' }} />
@@ -78,3 +79,54 @@ function Moment({ m, color }: { m: any; color: string }) {
 const th: React.CSSProperties = { padding: '6px 8px', fontWeight: 500 };
 const td: React.CSSProperties = { padding: '8px' };
 const ul: React.CSSProperties = { margin: '4px 0 0', paddingLeft: 18 };
+
+/**
+ * 一眼看懂（2026-10-28）：雷达图（逐条得分，叠 AI 基线）+ 逐条对照条 + 一句话结论。
+ * 雷达只在 3–10 条时画；条目太少或太多就只留对照条。
+ */
+function Overview({ items, cmp }: { items: any[]; cmp: any }) {
+  const rows = items.map((i: any) => ({ id: i.id, title: String(i.title || i.id), score: Number(i.score) || 0, base: cmp?.items?.find((x: any) => x.id === i.id)?.baseline as number | undefined }));
+  const hasBase = rows.some(x => typeof x.base === 'number');
+  const diffs = rows.filter(x => typeof x.base === 'number').map(x => ({ ...x, d: x.score - (x.base as number) }));
+  const ahead = diffs.filter(x => x.d >= 8).sort((a, b) => b.d - a.d).slice(0, 2), behind = diffs.filter(x => x.d <= -8).sort((a, b) => a.d - b.d).slice(0, 2);
+  const short = (t: string) => (t.length > 12 ? t.slice(0, 12) + '…' : t);
+  const line = !hasBase ? null
+    : ahead.length && behind.length ? `比 AI 强在「${ahead.map(x => short(x.title)).join('」「')}」；「${behind.map(x => short(x.title)).join('」「')}」上 AI 做得更好`
+    : ahead.length ? `「${ahead.map(x => short(x.title)).join('」「')}」明显强过 AI，其余和 AI 相当`
+    : behind.length ? `整体没有超过 AI，差距最大的是「${behind.map(x => short(x.title)).join('」「')}」——这正是要练的地方`
+    : '每一条都和 AI 基线相当';
+  const radar = rows.length >= 3 && rows.length <= 10;
+  return (
+    <Card title="一眼看懂">
+      {line && <div style={{ fontSize: 15, fontWeight: 700, color: '#2b2670', marginBottom: 10 }}>{line}</div>}
+      <div style={{ display: 'grid', gridTemplateColumns: radar ? 'minmax(240px, 340px) minmax(0, 1fr)' : '1fr', gap: 18, alignItems: 'center' }}>
+        {radar && <Radar rows={rows} />}
+        <div style={{ display: 'grid', gap: 8 }}>
+          {rows.map(x => (
+            <div key={x.id}>
+              <div style={{ display: 'flex', fontSize: 12.5, color: '#3b405a', marginBottom: 2 }}><span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={x.title}>{x.title}</span><b style={{ color: col(x.score), marginLeft: 8 }}>{x.score}</b>{typeof x.base === 'number' && <span style={{ color: '#999', marginLeft: 6 }}>AI {x.base}</span>}</div>
+              <div style={{ height: 7, borderRadius: 4, background: '#f0f0f6', overflow: 'hidden' }}><div style={{ width: `${Math.max(2, x.score)}%`, height: '100%', background: '#6055f5', borderRadius: 4 }} /></div>
+              {typeof x.base === 'number' && <div style={{ height: 4, borderRadius: 3, background: '#f5f5f8', overflow: 'hidden', marginTop: 2 }}><div style={{ width: `${Math.max(2, x.base)}%`, height: '100%', background: '#b8bacb', borderRadius: 3 }} /></div>}
+            </div>
+          ))}
+          {hasBase && <div style={{ display: 'flex', gap: 14, fontSize: 11.5, color: '#888', marginTop: 2 }}><span><i style={{ display: 'inline-block', width: 10, height: 6, background: '#6055f5', borderRadius: 2, marginRight: 4 }} />这次作答</span><span><i style={{ display: 'inline-block', width: 10, height: 4, background: '#b8bacb', borderRadius: 2, marginRight: 4 }} />AI 基线</span></div>}
+        </div>
+      </div>
+    </Card>
+  );
+}
+function Radar({ rows }: { rows: { title: string; score: number; base?: number }[] }) {
+  const N = rows.length, R = 92, C = 130, ang = (i: number) => -Math.PI / 2 + (2 * Math.PI * i) / N;
+  const pt = (i: number, v: number) => [C + (R * v / 100) * Math.cos(ang(i)), C + (R * v / 100) * Math.sin(ang(i))];
+  const poly = (vals: number[]) => vals.map((v, i) => pt(i, v).join(',')).join(' ');
+  const hasBase = rows.every(r => typeof r.base === 'number');
+  return (
+    <svg viewBox="-56 0 372 260" style={{ width: "100%", maxWidth: 340 }} role="img" aria-label="逐条得分雷达图">
+      {[25, 50, 75, 100].map(g => <polygon key={g} points={poly(rows.map(() => g))} fill="none" stroke="#e6e7ef" strokeWidth={1} />)}
+      {rows.map((_, i) => { const [x, y] = pt(i, 100); return <line key={i} x1={C} y1={C} x2={x} y2={y} stroke="#eceef4" />; })}
+      {hasBase && <polygon points={poly(rows.map(r => r.base as number))} fill="rgba(140,143,166,.12)" stroke="#9a9db0" strokeDasharray="4 3" strokeWidth={1.4} />}
+      <polygon points={poly(rows.map(r => r.score))} fill="rgba(96,85,245,.18)" stroke="#6055f5" strokeWidth={2} />
+      {rows.map((r, i) => { const [x, y] = pt(i, 118); const t = r.title.length > 7 ? r.title.slice(0, 7) + '…' : r.title; return <text key={i} x={x} y={y} fontSize={10} fill="#6b6f86" textAnchor={Math.abs(x - C) < 8 ? 'middle' : x > C ? 'start' : 'end'} dominantBaseline="middle">{t}</text>; })}
+    </svg>
+  );
+}
