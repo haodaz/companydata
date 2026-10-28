@@ -49,7 +49,7 @@ import type { Beta3DScene } from '@/lib/lab-3d-beta';
 const TICK_MS = PLAY_TICK_MS, SNAP_EVERY_MS = 5000, SNAP_MAX = 16, SNAP_W = 320, SNAP_H = 180;
 const VW = 1600, VH = 900; // 场景覆盖层坐标系（百分比 × 16 / × 9）
 
-export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdrop, guided }: { spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean; /** 演示模式：进来就自己走 */ demo?: boolean; /** 跟我学：按老手脚本一步一步带着做——时钟走到下一个动作就停，说明做什么、为什么，人做对了再往下（lib/lab-lesson.ts 的 bench 教案） */ guided?: { before: string; actions: { i: number; say: string; basis?: string | null }[]; after: string } | null; /** 3D beta：工位画面四周是活的 3D 房间（跟着鼠标微动），工位本身也有一点视差 */ backdrop?: Beta3DScene | null }) {
+export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdrop, guided, exam }: { /** 分步考（2026-10-28）：考试也一步一步来——时钟停着、只提示该动哪个控件（不给数值、不给依据、不能代做），照常计分 */ exam?: boolean; spec: BenchSpec; role: 'rookie' | 'expert'; onFinish: (trace: BenchTrace) => void; onCancel: () => void; /** 沉浸模式：场景撑满，面板 / 控件 / 目标 / 事件流叠成 HUD */ hud?: boolean; /** 演示模式：进来就自己走 */ demo?: boolean; /** 跟我学：按老手脚本一步一步带着做——时钟走到下一个动作就停，说明做什么、为什么，人做对了再往下（lib/lab-lesson.ts 的 bench 教案） */ guided?: { before: string; actions: { i: number; say: string; basis?: string | null }[]; after: string } | null; /** 3D beta：工位画面四周是活的 3D 房间（跟着鼠标微动），工位本身也有一点视差 */ backdrop?: Beta3DScene | null }) {
   const stRef = useRef<BenchState>(initBench(spec));
   const panelRef = useRef<SVGSVGElement>(null);
   const sceneRef = useRef<SVGSVGElement>(null);
@@ -126,7 +126,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   // ── 跟我学：老手脚本一个动作一个动作带着做。gPhase：before 先看 → act 做动作 → after 收尾确认 → done ──
   const gScript = useMemo(() => [...(spec.expertScript || [])].sort((a, b) => a.t - b.t), [spec]);
   // 两段式（2026-10-18 用户）：before 先看 → demo 我先做一遍（老手脚本自动走，边走边讲）→ ready → act 你比着做（一下一下） → after → done（操作打分）
-  const [gPhase, setGPhase] = useState<'before' | 'demo' | 'ready' | 'act' | 'after' | 'done'>(guided ? 'before' : 'done');
+  const [gPhase, setGPhase] = useState<'before' | 'demo' | 'ready' | 'act' | 'after' | 'done'>(guided ? (exam ? 'act' : 'before') : 'done');
   const gPhaseRef = useRef(gPhase); gPhaseRef.current = gPhase;
   /** 你比着做：每一下的评价。standard 一次到位 · adjusted 调了几次才到 · assisted 让他代做 */
   const [gOutcomes, setGOutcomes] = useState<{ i: number; outcome: 'standard' | 'adjusted' | 'assisted' }[]>([]);
@@ -134,8 +134,8 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   const gDir = useRef(0);            // 旋钮上一次拨的方向（反向了才算一次调整）
   const gActStart = useRef(0);       // 「换你比着做」时的事件数：之后的违规才算学生的
   const [gi, setGi] = useState(0);                 // 下一个要做的动作
-  const [gPaused, setGPaused] = useState(!!guided); // 时钟停着等人做
-  const gPausedRef = useRef(!!guided); gPausedRef.current = gPaused;
+  const [gPaused, setGPaused] = useState(!!guided && !exam); // 时钟停着等人做（分步考一开始就走，到下一个动作的点再停）
+  const gPausedRef = useRef(!!guided && !exam); gPausedRef.current = gPaused;
   const gEvents = useRef(0);                      // 发指令时的事件数（按钮类动作靠「有没有新按下」判断）
   const gTarget = gi < gScript.length ? gScript[gi] : null;
   const gCtl = gTarget ? spec.controls.find(c => c.id === gTarget.control) : null;
@@ -313,6 +313,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
     await snapshot(true);
     const tr: any = finishBench(spec, stRef.current, true);
     if (guided) tr.study = { score: gScore(), outcomes: gOutcomes, violations: gViolations() };
+    if (guided && exam) (tr as any).stepwise = true;   // 分步考：照常评分，记录上标一下
     onFinish(tr);
   };
   /** 从头再来：工位状态、落点、快照计数全清，时钟重新走（用户 2026-10-11 要的「重置」） */
@@ -335,7 +336,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
     deposits.current = []; lastDrop.current = null; lastPt.current = null; dirRef.current = { x: 0, y: 0 };
     snapCount.current = 0; lastSnap.current = 0; cutDepth.current = 0; cutProg.current = 0; grabAnchor.current = null; handRef.current = null;
     autoI.current = 0; setAuto(false); setRunning(true); setResetKey(k => k + 1); bump(v => v + 1);
-    if (guided) { setGPhase('before'); setGi(0); setGPaused(true); gEvents.current = 0; setGOutcomes([]); gTries.current = 0; gActStart.current = 0; }
+    if (guided) { setGPhase(exam ? 'act' : 'before'); setGi(0); setGPaused(!exam); gEvents.current = 0; setGOutcomes([]); gTries.current = 0; gActStart.current = 0; }
   };
 
   const ev = (expr?: string) => { if (!expr) return 0; try { return evalExpr(expr, env); } catch { return 0; } };
@@ -463,7 +464,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   const tally = gOutcomes.reduce((m, o) => ({ ...m, [o.outcome]: (m[o.outcome] || 0) + 1 }), {} as Record<string, number>);
   const guideCard = guided ? (
     <div className={hud ? 'hud-card' : undefined} style={{ padding: 14, borderRadius: 14, background: 'rgba(106,92,255,.08)', border: '1.5px solid rgba(106,92,255,.45)', boxShadow: '0 0 0 4px rgba(106,92,255,.08)' }}>
-      <div className="lab-mono lab-cap" style={{ marginBottom: 6, color: 'var(--v)' }}>我教你 · {gPhase === 'before' ? '先看一眼' : gPhase === 'demo' ? `我先做一遍 · 第 ${Math.min(autoI.current, gScript.length)} / ${gScript.length} 下` : gPhase === 'ready' ? '我做完了' : gPhase === 'act' ? `换你比着做 · 第 ${gi + 1} / ${gScript.length} 下` : gPhase === 'after' ? '收尾' : `操作打分 ${gScore()}`}</div>
+      <div className="lab-mono lab-cap" style={{ marginBottom: 6, color: 'var(--v)' }}>{exam ? `分步考 · 第 ${Math.min(gi + 1, gScript.length)} / ${gScript.length} 个动作` : <>我教你 · {gPhase === 'before' ? '先看一眼' : gPhase === 'demo' ? `我先做一遍 · 第 ${Math.min(autoI.current, gScript.length)} / ${gScript.length} 下` : gPhase === 'ready' ? '我做完了' : gPhase === 'act' ? `换你比着做 · 第 ${gi + 1} / ${gScript.length} 下` : gPhase === 'after' ? '收尾' : `操作打分 ${gScore()}`}</>}</div>
       {gPhase === 'before' && <>
         <div style={{ fontSize: 13.5, lineHeight: 1.75 }} className="hud-ink">{guided.before || '先把仪表和控件看一遍，知道每样东西管什么。'}</div>
         <button className="lab-btn" style={{ marginTop: 10, width: '100%' }} onClick={() => { if (!gScript.length) { setGPhase('done'); setGPaused(true); return; } setGPhase('demo'); autoI.current = 0; setGPaused(false); setAuto(true); }}>先看我做一遍 →</button>
@@ -481,7 +482,11 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
           <button className="lab-btn ghost sm" style={hud ? { color: '#fff', borderColor: 'rgba(255,255,255,.5)' } : undefined} onClick={() => { hardReset(); setGPhase('demo'); autoI.current = 0; setGPaused(false); setAuto(true); }}>再看一遍</button>
         </div>
       </>}
-      {gPhase === 'act' && gTarget && (gPaused ? <>
+      {gPhase === 'act' && gTarget && exam && gPaused && <>
+        <div style={{ fontSize: 14.5, fontWeight: 700, lineHeight: 1.6 }} className="hud-ink">该动「{gCtl?.label}」了</div>
+        <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, lineHeight: 1.6, color: 'var(--ink3)' }}>调到多少、怎么动，你自己判断；做出动作时钟才继续走。这一下照常计分。</div>
+      </>}
+      {gPhase === 'act' && gTarget && !exam && (gPaused ? <>
         <div style={{ fontSize: 14.5, fontWeight: 700, lineHeight: 1.6 }} className="hud-ink">{guided.actions[gi]?.say || `把「${gCtl?.label}」${gCtl?.kind === 'knob' ? `调到 ${gTarget.value}${gCtl.unit || ''}` : gCtl?.kind === 'switch' ? (gTarget.value ? '打开' : '关掉') : gCtl?.kind === 'path' ? `走到 ${gTarget.value}%` : '按下'}`}</div>
         <div className="lab-mono" style={{ fontSize: 11.5, marginTop: 6, color: 'var(--v)' }}>▸ {gCtl?.label}{gCtl?.kind === 'knob' ? ` → ${gTarget.value}${gCtl.unit || ''}（现在 ${(st.controls[gTarget.control] ?? 0).toFixed?.(gCtl.step && gCtl.step < 1 ? 1 : 0)}${gCtl.unit || ''}）` : gCtl?.kind === 'switch' ? (gTarget.value ? ' → 开' : ' → 关') : gCtl?.kind === 'path' ? ` → ${gTarget.value}%` : ' → 按一下'}</div>
         {guided.actions[gi]?.basis && <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, lineHeight: 1.6, color: 'var(--ink3)' }}>依据：{guided.actions[gi].basis}</div>}
@@ -491,7 +496,8 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
         </div>
       </> : <div className="hud-ink3" style={{ fontSize: 13, color: 'var(--ink3)' }}>{gOutcomes.length ? <span style={{ color: gOutcomes[gOutcomes.length - 1].outcome === 'standard' ? '#3ddc97' : gOutcomes[gOutcomes.length - 1].outcome === 'adjusted' ? '#ffd166' : '#9aa0b8', fontWeight: 700 }}>{gOutcomes[gOutcomes.length - 1].outcome === 'standard' ? '✓ 标准' : gOutcomes[gOutcomes.length - 1].outcome === 'adjusted' ? '△ 调整后到位' : '○ 代做'}</span> : null} 看着它变化，到下一下再停 <span className="lab-dots" /></div>)}
       {gPhase === 'after' && <div className="hud-ink3" style={{ fontSize: 13, color: 'var(--ink3)' }}>动作做完了，让它再走一会儿，看结果<span className="lab-dots" /></div>}
-      {gPhase === 'done' && <>
+      {gPhase === 'done' && exam && <div style={{ fontSize: 13.5, lineHeight: 1.75 }} className="hud-ink">这一段的动作都做完了：目标 {goalsDone}/{spec.goals.length} · 违规 {gViolations()}。点交卷，照常评分。</div>}
+      {gPhase === 'done' && !exam && <>
         <div style={{ fontSize: 13.5, lineHeight: 1.75 }} className="hud-ink">{guided.after || '看看目标都达成了没有、事件流里有没有违规。'}</div>
         <div className="hud-ink3" style={{ fontSize: 12, marginTop: 6, color: 'var(--ink3)' }}>你这一遍：目标 {goalsDone}/{spec.goals.length} · 违规 {gViolations()} · 一次到位 {tally.standard || 0} · 调整后到位 {tally.adjusted || 0} · 代做 {tally.assisted || 0}。不发证书，分记在你自己这儿；想再来一遍点「重来」，记住了就「完成操作」。</div>
       </>}
@@ -606,7 +612,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
       <div className="lab-mono" style={{ position: 'absolute', left: 12, top: hud ? 34 : 10, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,.6)', letterSpacing: '.06em' }}>
         <span style={{ width: 8, height: 8, borderRadius: 4, background: running ? '#ff3b5c' : '#777', boxShadow: running ? '0 0 8px #ff3b5c' : 'none' }} />CAM 01 · 数字工位 · T+{fmtT(st.t)}
       </div>
-      {!!spec.expertScript?.length && (
+      {!!spec.expertScript?.length && !exam && (
         <button onClick={() => { if (!auto) { if (stRef.current.t > 0.5) hardReset(); /* 示范从头放：已经走了一段时，前面的动作会挤在同一拍里一起执行 */ autoI.current = 0; setAuto(true); } else setAuto(false); }} style={{ position: 'absolute', right: 12, bottom: 12, padding: '8px 15px', borderRadius: 999, border: '1px solid rgba(255,255,255,.35)', background: auto ? 'linear-gradient(135deg,#3ddc97,#12b5cb)' : 'rgba(15,18,36,.72)', color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(6px)', zIndex: 3 }}>
           {auto ? '■ 演示中 · 点此停下' : '▶ 看我操作一遍'}
         </button>

@@ -73,7 +73,7 @@ export interface SimRunnerProps {
 }
 
 /** 模拟操作台：一步一步操作，每一步确认后才推进；下钻 / 询问会浮现新的信息 */
-export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, backdrop, study }: SimRunnerProps & { /** 跟我学：带教案（lib/lab-lesson.ts）——每步先讲看什么 / 为什么，自己选完再逐个选项讲对错，工位上一步一步带着做；不计时不评分 */ study?: Lesson; /** 3D beta：这一章发生在已重建的 3D 场景里，用它代替平面背景 */ backdrop?: Beta3DScene | null; /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace; /** 从第几步开始：演示和取图时直接跳到工位那步 */ startAt?: number }) {
+export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, backdrop, study, stepExam }: SimRunnerProps & { /** 分步考（2026-10-28）：考试模式下工位那一步一步一步来（只提示该动哪个控件），照常计分 */ stepExam?: Lesson; /** 跟我学：带教案（lib/lab-lesson.ts）——每步先讲看什么 / 为什么，自己选完再逐个选项讲对错，工位上一步一步带着做；不计时不评分 */ study?: Lesson; /** 3D beta：这一章发生在已重建的 3D 场景里，用它代替平面背景 */ backdrop?: Beta3DScene | null; /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace; /** 从第几步开始：演示和取图时直接跳到工位那步 */ startAt?: number }) {
   const [idx, setIdx] = useState(Math.min(Math.max(0, startAt || 0), sim.steps.length - 1));
   const [head3d, setHead3d] = useState(false);
   // 评分要十几秒：按钮上走秒，让人知道没卡住
@@ -308,7 +308,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
             </div>
           </div>
         )}
-        {benchLive && <BenchRunner hud demo={!!demo} guided={ls?.bench || null} key={step.id} spec={step.bench!} role={role} onFinish={tr => set(tr)} onCancel={onCancel} backdrop={backdrop} />}
+        {benchLive && <BenchRunner hud demo={!!demo} guided={ls?.bench || (stepExam && !study ? stepExam.steps?.[step.id]?.bench || null : null)} exam={!!stepExam && !study} key={step.id} spec={step.bench!} role={role} onFinish={tr => set(tr)} onCancel={onCancel} backdrop={backdrop} />}
         {backdrop && !benchLive && (
           <button onClick={() => setHead3d(v => !v)} title="摄像头只在本机算头的位置，不录、不传"
             style={{ position: 'absolute', left: 16, bottom: 16, zIndex: 6, padding: '8px 14px', borderRadius: 999, border: '1px solid rgba(255,255,255,.3)', cursor: 'pointer', fontWeight: 700, fontSize: 12.5, color: '#fff', background: head3d ? 'linear-gradient(135deg,#3ddc97,#12b5cb)' : 'rgba(15,18,36,.72)', backdropFilter: 'blur(6px)' }}>
@@ -344,7 +344,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
           ) : (
             <div>
               <div style={{ fontSize: 13.5, color: 'var(--ink2)', lineHeight: 1.75, marginBottom: 12, padding: '10px 14px', borderRadius: 12, background: 'rgba(106,92,255,.06)' }}>{step.bench.brief}</div>
-              <BenchRunner demo={!!demo} guided={ls?.bench || null} key={step.id} spec={step.bench} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />
+              <BenchRunner demo={!!demo} guided={ls?.bench || (stepExam && !study ? stepExam.steps?.[step.id]?.bench || null : null)} exam={!!stepExam && !study} key={step.id} spec={step.bench} role={role} onFinish={tr => set(tr)} onCancel={onCancel} />
             </div>
           )
         )}

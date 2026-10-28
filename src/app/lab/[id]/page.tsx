@@ -556,6 +556,9 @@ function castOf(space: any, sim: Sim | null) {
   // 跟我学：这一章的教案（lab_chapters.lesson，批量预生成；没有就现算一次）
   const [study, setStudy] = useState<Lesson | null>(null);
   const [studyBusy, setStudyBusy] = useState(false);
+  // 分步考（2026-10-28）：考考你也能一步一步来——工位那一步停着等你，只提示该动哪个控件，照常计分。借跟我学的教案拿老手的动作顺序
+  const [stepwise, setStepwise] = useState(false);
+  const [stepLesson, setStepLesson] = useState<Lesson | null>(null);
   /** 跟我学学完一段：不评分不留痕，提示去考考你 */
   const finishStudy = (trace?: SimTrace) => {
     const ch = chapter;
@@ -681,6 +684,13 @@ function castOf(space: any, sim: Sim | null) {
   // 多段的空间：考 / 教都进「一天」页（左时间轴、右整段内容）
   // 考 / 教 / 你教我都先落在「一天」页（只有一段的老空间也一样，时间轴上就一段）；没有操作台的纯文字老空间走老版
   const { map: nicks, setNickname } = useNicknames();
+  // 分步考：开了才去拿这一章的教案（老手动作顺序）
+  useEffect(() => {
+    if (!stepwise || !sim) { setStepLesson(null); return; }
+    let on = true;
+    fetch(`/api/lab/spaces/${id}/lesson${chapter?.id ? `?chapter=${chapter.id}` : ''}`).then(r => r.json()).then(j => { if (on && j.ok) setStepLesson(j.lesson); }).catch(() => {});
+    return () => { on = false; };
+  }, [stepwise, sim, id, chapter?.id]);
   const isDay = (mode === 'test' || mode === 'teach' || mode === 'learn') && !!sim && chapters.length >= 1;
   // 这一段的评分标准：第 1 段用空间的，后面的用章节自己的（没有就用通用四项），和评分接口一致
   const chapterRubric: RubricItem[] = !chapter || chapter.seq === 1 || !chapter.id ? (space?.rubric || []) : (Array.isArray(chapter.rubric) && chapter.rubric.length ? chapter.rubric : GENERIC_CHAPTER_RUBRIC);
@@ -1122,11 +1132,11 @@ function castOf(space: any, sim: Sim | null) {
               </div>
             </div>
           ) : intro ? (
-            <ChapterIntro chapter={chapter} chapters={chapters} space={space} sim={sim} demo={!!demo} study={!!study}
+            <ChapterIntro chapter={chapter} chapters={chapters} space={space} sim={sim} demo={!!demo} study={!!study} stepwise={!study && !demo ? { on: stepwise, set: setStepwise } : undefined}
               profile={askProfile && !demo && !study ? { name: rookie.name, note: rookie.note, location: rookie.location, set: (k: 'name' | 'note' | 'location', v: string) => setRookie(r => ({ ...r, [k]: v })) } : null}
               onStart={() => { if (askProfile && !demo && !study) saveProfile(); setIntro(false); }} />
           ) : (
-            <SimRunner key={runKey + (demo ? '-demo' : '') + (study ? '-study' : '')} startAt={startAt} demo={demo || undefined} study={study || undefined} sim={sim} role="rookie" busy={!!busy} backdrop={beta3dForChapter(String(id), chapter?.slot)} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); setStudy(null); }} onFinish={trace => { if (study) { finishStudy(trace); return; } const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, trace); }} />
+            <SimRunner key={runKey + (demo ? '-demo' : '') + (study ? '-study' : '') + (stepLesson ? '-step' : '')} startAt={startAt} demo={demo || undefined} study={study || undefined} stepExam={!study && !demo && stepLesson ? stepLesson : undefined} sim={sim} role="rookie" busy={!!busy} backdrop={beta3dForChapter(String(id), chapter?.slot)} onCancel={() => { setStageReport(null); setAnswering(false); setDemo(null); setStudy(null); }} onFinish={trace => { if (study) { finishStudy(trace); return; } const d = !!demo; setDemo(null); submit(d ? 'ai' : 'human', d, trace); }} />
           )}
         </SimStage>
       )}
@@ -1530,7 +1540,7 @@ function castOf(space: any, sim: Sim | null) {
 }
 
 /** 每一段开演前的介绍页：这一幕是什么、几点、会见到谁、在哪、用到什么（第一段也有） */
-function ChapterIntro({ chapter, chapters, space, sim, demo, study, onStart, profile }: { chapter: any; chapters: any[]; space: any; sim: Sim; demo: boolean; study?: boolean; onStart: () => void;
+function ChapterIntro({ chapter, chapters, space, sim, demo, study, onStart, profile, stepwise }: { chapter: any; chapters: any[]; space: any; sim: Sim; demo: boolean; study?: boolean; onStart: () => void; stepwise?: { on: boolean; set: (v: boolean) => void };
   /** 第一次来：顺便问一下称呼（证书上用），只问这一次 */ profile?: { name: string; note: string; location: string; set: (k: 'name' | 'note' | 'location', v: string) => void } | null }) {
   const idx = chapter ? chapters.indexOf(chapter) : 0;
   const n = chapters.length;
@@ -1582,6 +1592,9 @@ function ChapterIntro({ chapter, chapters, space, sim, demo, study, onStart, pro
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 18, flexWrap: 'wrap' }}>
         <button className="lab-btn" onClick={onStart}>{study ? '开始跟着学 →' : demo ? `看 ${space?.profile?.name || '他'} 走这一段 →` : '开始这一段 →'}</button>
         <span style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{steps.length} 步{bench ? ' · 含虚拟工位' : ''} · 约 {Math.max(5, steps.length * 2)} 分钟</span>
+        {stepwise && bench && <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--ink2)', cursor: 'pointer' }} title="工位那一步：时钟停着等你，只提示该动哪个控件（不给数值、不能代做），照常计分">
+          <input type="checkbox" checked={stepwise.on} onChange={e => stepwise.set(e.target.checked)} /> 分步考（手忙脚乱时用：一步一步来，照常计分）
+        </label>}
       </div>
     </div>
   );
