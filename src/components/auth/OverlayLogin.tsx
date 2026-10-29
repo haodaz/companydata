@@ -24,6 +24,8 @@ export function OverlayLogin({ brand }: { brand: 'work' | 'lab' }) {
     try {
       const j = await (await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email.trim(), password: pw }) })).json();
       if (!j.success) throw new Error(j.error || '登录失败');
+      // 管理员建的 / 重置过的账号：先去设新密码，改完再回 dest
+      if (j.user?.must_change_password) { router.push(`/account/password?next=${encodeURIComponent(dest)}`); return; }
       router.push(dest); router.refresh();
     } catch (e: any) { setErr(e.message || '网络错误'); setBusy(false); }
   };

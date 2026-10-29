@@ -35,7 +35,8 @@ export async function POST(req: Request) {
     });
 
     // Set cookie
-    const response = NextResponse.json({ success: true, user: { id: user.id, email: user.email, role: user.role } });
+    // must_change_password：管理员建的 / 重置过的账号，登录页据此直接带去改密码（迁移 055；没跑时这一列不存在，当 false）
+    const response = NextResponse.json({ success: true, user: { id: user.id, email: user.email, role: user.role, must_change_password: !!user.must_change_password } });
     response.cookies.set('auth_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

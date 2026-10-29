@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { DEFAULT_ROLE, ROLE_LABEL, ROLES } from '@/lib/roles';
 
-import { Table, Card, Typography, Button, Space, App, Popconfirm, Select, Modal, Form, Input, Tabs, Badge } from 'antd';
+import { Table, Card, Typography, Button, Space, App, Popconfirm, Select, Modal, Form, Input, Tabs, Badge, Tag } from 'antd';
 import { PageHeader } from '@/components/admin/PageHeader';
 
 const ROLE_OPTIONS = ROLES.map(r => ({ label: ROLE_LABEL[r], value: r }));
@@ -107,6 +107,17 @@ export default function SystemUsersPage() {
     }
   };
 
+  /** 密码相关（2026-10-29）：要求 / 取消「下次登录先改密码」，或重置成临时密码（重置后也要求先改） */
+  const patchUser = async (id: string, body: Record<string, unknown>, ok: string) => {
+    try {
+      const json = await (await fetch(`/api/admin/users/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json();
+      if (json.success) { message.success(ok); fetchUsers(); return true; }
+      message.error(json.error || '更新失败'); return false;
+    } catch { message.error('网络错误'); return false; }
+  };
+  const tempPassword = () => { const a = 'abcdefghjkmnpqrstuvwxyz', d = '23456789'; let s = ''; for (let i = 0; i < 6; i++) s += a[Math.floor(Math.random() * a.length)]; for (let i = 0; i < 4; i++) s += d[Math.floor(Math.random() * d.length)]; return s; };
+  const [reset, setReset] = useState<{ id: string; email: string; pw: string } | null>(null);
+
   const handleDelete = async (id: string) => {
     try {
       const res = await fetch(`/api/admin/users/${id}`, { method: 'DELETE' });
@@ -145,6 +156,13 @@ export default function SystemUsersPage() {
       )
     },
     {
+      title: '密码',
+      dataIndex: 'must_change_password',
+      key: 'pw',
+      width: 130,
+      render: (v: boolean) => v ? <Tag color="orange">等本人改密码</Tag> : <Tag>本人已设</Tag>,
+    },
+    {
       title: '注册时间',
       dataIndex: 'created_at',
       key: 'created_at',
@@ -153,8 +171,11 @@ export default function SystemUsersPage() {
     {
       title: '操作',
       key: 'action',
-      width: 100,
+      width: 320,
       render: (_: any, record: any) => (
+        <Space size={0} wrap>
+        {record.email !== 'haoz214@gmail.com' && <Button type="text" size="small" onClick={() => patchUser(record.id, { must_change_password: !record.must_change_password }, record.must_change_password ? '已取消' : '下次登录会先要求改密码')}>{record.must_change_password ? '取消改密码要求' : '下次登录改密码'}</Button>}
+        {record.email !== 'haoz214@gmail.com' && <Button type="text" size="small" onClick={() => setReset({ id: record.id, email: record.email, pw: tempPassword() })}>重置密码</Button>}
         <Popconfirm
           title="删除该用户"
           description="确认删除此账号吗？此操作不可逆转。"
@@ -171,6 +192,7 @@ export default function SystemUsersPage() {
             删除
           </Button>
         </Popconfirm>
+        </Space>
       ),
     },
   ];
@@ -217,6 +239,11 @@ export default function SystemUsersPage() {
             <Select options={ROLE_OPTIONS} />
           </Form.Item>
         </Form>
+      </Modal>
+      <Modal open={!!reset} title={`重置密码 · ${reset?.email || ''}`} okText="重置" cancelText="取消" onCancel={() => setReset(null)}
+        onOk={async () => { if (reset && await patchUser(reset.id, { password: reset.pw }, '已重置：把临时密码发给对方，他登录后会先改密码')) setReset(null); }}>
+        <div style={{ marginBottom: 8, color: '#666' }}>设成下面这个临时密码（可改），对方下次登录会被要求先换成自己的：</div>
+        <Input value={reset?.pw} onChange={e => setReset(r => r && { ...r, pw: e.target.value })} addonAfter={<a onClick={() => { navigator.clipboard?.writeText(reset?.pw || ''); message.success('已复制'); }}>复制</a>} />
       </Modal>
     </div>
   );

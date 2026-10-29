@@ -12,15 +12,21 @@ import { baiyeApiAllowed, baiyePageAllowed, isBaiyeOnly } from '@/lib/roles';
  */
 const roleCache = new Map<string, { role: string | null; at: number }>();
 async function liveRole(id: string): Promise<string | null> {
-  const hit = roleCache.get(id);
-  if (hit && Date.now() - hit.at < 20_000) return hit.role;
-  const { data, error } = await supabaseAdmin.from('system_users').select('role').eq('id', id).maybeSingle();
-  if (error) throw error;   // 查库失败不放行（宁可报错，不能把百业账号放进数据资产）
-  const role = data?.role ?? null;
-  roleCache.set(id, { role, at: Date.now() });
-  if (roleCache.size > 2000) roleCache.clear();
-  return role;
+  return (await liveUser(id)).role;
 }
+/** 角色 + 是否要先改密码（迁移 055；没跑迁移时当作不用改）。要改密码的不进缓存：改完立刻放行 */
+async function liveUser(id: string): Promise<{ role: string | null; mustChange: boolean }> {
+  const hit = roleCache.get(id);
+  if (hit && Date.now() - hit.at < 20_000) return { role: hit.role, mustChange: false };
+  let { data, error } = await supabaseAdmin.from('system_users').select('role, must_change_password').eq('id', id).maybeSingle();
+  if (error && /must_change_password/.test(error.message)) ({ data, error } = await supabaseAdmin.from('system_users').select('role').eq('id', id).maybeSingle() as any);
+  if (error) throw error;   // 查库失败不放行（宁可报错，不能把百业账号放进数据资产）
+  const role = data?.role ?? null, mustChange = !!(data as any)?.must_change_password;
+  if (!mustChange) roleCache.set(id, { role, at: Date.now() });
+  if (roleCache.size > 2000) roleCache.clear();
+  return { role, mustChange };
+}
+const MUST_CHANGE = () => NextResponse.json({ ok: false, success: false, must_change_password: true, error: '首次登录请先修改密码' }, { status: 403 });
 const BAIYE_DENIED = () => NextResponse.json({ ok: false, error: '权限不足：这个账号只开通了 AI 百业，请回到 aisimjob.com 继续使用百业功能' }, { status: 403 });
 
 /** 受邀专家能碰的接口：这一位数字职人的空间本身（只读），以及向上学习的三步 */
@@ -84,8 +90,10 @@ export async function proxy(req: NextRequest) {
     const token = req.cookies.get('auth_token')?.value;
     const payload = token ? await verifyToken(token) : null;
     if (payload) {
-      const role = await liveRole(payload.id);
+      const { role, mustChange } = await liveUser(payload.id);
       if (!role) return NextResponse.json({ ok: false, error: '未登录或登录已过期' }, { status: 401 });
+      // 管理员建的 / 重置过密码的账号：先改密码，其余接口一律不给（/api/auth/* 在上面已经放行了）
+      if (mustChange) return MUST_CHANGE();
       // 百业用户只能调百业 / 真活 / workspace 的接口（白名单），数据资产接口一律 403
       if (isBaiyeOnly(role) && !baiyeApiAllowed(pathname)) return BAIYE_DENIED();
       // 百业学院教务接口只给管理员（核心业务逻辑）
@@ -148,12 +156,14 @@ export async function proxy(req: NextRequest) {
       return response;
     }
 
-    const role = await liveRole(payload.id);
+    const { role, mustChange } = await liveUser(payload.id);
     if (!role) {
       const response = NextResponse.redirect(new URL('/login', req.url));
       response.cookies.delete('auth_token');
       return response;
     }
+    // 首次登录要先改密码：哪儿都先去改密码页，改完回原处
+    if (mustChange) { const u = new URL('/account/password', req.url); u.searchParams.set('next', pathname + req.nextUrl.search); return NextResponse.redirect(u); }
     // 百业用户：数据后台、虚拟工厂这些一律不给——送到「权限不足」说明页（说清楚不是出错，给回百业的入口）
     if (isBaiyeOnly(role) && !baiyePageAllowed(pathname)) return NextResponse.redirect(new URL('/lab/no-access', req.url));
     // 百业学院教务页面只给管理员
