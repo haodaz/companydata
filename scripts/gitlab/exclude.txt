@@ -23,3 +23,7 @@
 ^scripts/(build-zhenhuo|import-forage-samples|find-weld-jd|chroma-key|gen-image|global-deep-cards)
 ^extension/zhenhuo/
 ^public/downloads/zhenhuo
+# 2026-10-29 补：一个 JD 生成整套（含学院开学籍）、工作台版画、百业手部识别——都不是数据工厂
+^src/lib/(suite|hand-filter)\.ts$
+^public/workspace(/|$)
+^scripts/hand-filter-test\.mts$
