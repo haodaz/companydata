@@ -18,7 +18,7 @@ if (!localRenderAvailable()) { console.error('本机 Chrome 不可用'); process
 
 const { data } = await selectAll(() => db.from('jobs').select('id, name, link, link_status, link_issue, human_review_status, human_locked_fields').not('if_delete', 'is', true).order('id'));
 const count = new Map<string, number>(); for (const j of data as any[]) if (j.link) count.set(j.link, (count.get(j.link) || 0) + 1);
-const todo = (data as any[]).filter(j => j.link && !FROZEN_REVIEW_STATUSES.has(j.human_review_status || '') && !(j.human_locked_fields || []).includes('link') && (ONLY_MISSING ? j.link_issue === '列表页，未找到该岗位详情' : (count.get(j.link)! >= 2 || j.link_status === 'suspect')));
+const todo = (data as any[]).filter(j => j.link && !FROZEN_REVIEW_STATUSES.has(j.human_review_status || '') && !(j.human_locked_fields || []).includes('link') && (ONLY_MISSING ? j.link_issue === '列表页，未找到该岗位详情' : !j.link_issue && (count.get(j.link)! >= 2 || j.link_status === 'suspect')));
 const groups = new Map<string, any[]>(); for (const j of todo) groups.set(j.link, [...(groups.get(j.link) || []), j]);
 let links = [...groups.keys()].filter(u => !HOST || u.includes(HOST)); if (LIMIT) links = links.slice(0, LIMIT);
 console.log(`待处理岗位 ${todo.length}，链接 ${groups.size}${LIMIT ? `（这次 ${links.length} 个）` : ''}`);
@@ -33,10 +33,12 @@ async function pageOf(url: string): Promise<string | null> {
   const ats = atsOf(url), key = ats === 'hotjob' || ats === 'beisen' ? siteKey(url) : url;
   if (siteCache.has(key)) return siteCache.get(key)!;
   let md: string | null = null;
+  // 单页最多等 90 秒：10-29 夜里有一页一直不返回，整个任务卡了 6 小时
+  const timeout = new Promise<null>(r => setTimeout(() => r(null), 90_000));
   try {
-    if (ats === 'hotjob') md = (await hotjobMarkdown(url, 'all'))?.markdown || null;
-    else if (ats === 'beisen') md = (await beisenMarkdown(url, 'all'))?.markdown || null;
-    else md = (await siteAdapterMarkdown(url))?.markdown || await renderMarkdown(url);
+    if (ats === 'hotjob') md = await Promise.race([hotjobMarkdown(url, 'all').then(x => x?.markdown || null), timeout]);
+    else if (ats === 'beisen') md = await Promise.race([beisenMarkdown(url, 'all').then(x => x?.markdown || null), timeout]);
+    else md = await Promise.race([(async () => (await siteAdapterMarkdown(url))?.markdown || await renderMarkdown(url))(), timeout]);
   } catch { md = null; }
   siteCache.set(key, md);
   return md;
