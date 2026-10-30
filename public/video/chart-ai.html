@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>真活 1.1 · 图卡</title>
+<!-- 真活 1.1「AI 使用能力」更新片的图卡（2026-10-30）：1600×900 设计，字大、一屏一个意思；浅色基调 + 柔和渐变 + 玻璃卡。?id=why|parts|vary -->
+<style>
+  :root { --ink: #161a33; --ink2: #4a4f6a; --ink3: #8a8fa8; --v: #6055f5; --c: #12b5cb; }
+  html, body { margin: 0; height: 100%; overflow: hidden; color: var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, "PingFang SC", sans-serif; background: #f7f8ff; }
+  .bg { position: absolute; inset: 0; overflow: hidden; }
+  .bg i { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55; animation: drift 14s ease-in-out infinite alternate; }
+  .bg i:nth-child(1) { width: 760px; height: 760px; left: -220px; top: -260px; background: #cfc8ff; }
+  .bg i:nth-child(2) { width: 680px; height: 680px; right: -200px; top: 120px; background: #bff0f7; animation-delay: -4s; }
+  .bg i:nth-child(3) { width: 560px; height: 560px; left: 38%; bottom: -320px; background: #ffd9ea; animation-delay: -8s; }
+  .bg::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(96,85,245,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(96,85,245,.06) 1px, transparent 1px); background-size: 48px 48px; }
+  @keyframes drift { to { transform: translate(40px, 30px) scale(1.06); } }
+  .page { position: absolute; inset: 0; padding: 64px 96px; box-sizing: border-box; }
+  .eb { display: inline-flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; color: var(--v); letter-spacing: .08em; padding: 8px 18px; border-radius: 999px; background: rgba(255,255,255,.7); border: 1px solid rgba(96,85,245,.18); animation: up .6s both; }
+  .eb b { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--v), var(--c)); }
+  h1 { font-size: 68px; line-height: 1.15; margin: 26px 0 0; font-weight: 900; letter-spacing: .01em; animation: up .7s .1s both; }
+  h1 em { font-style: normal; background: linear-gradient(120deg, var(--v), var(--c)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .glass { background: rgba(255,255,255,.72); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); border: 1px solid rgba(255,255,255,.9); box-shadow: 0 30px 70px -30px rgba(40,44,110,.28), 0 2px 10px rgba(40,44,110,.06); border-radius: 28px; }
+  @keyframes up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @keyframes pop { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: none; } }
+
+  /* why：左标题，右三块竖排 */
+  .why { display: grid; grid-template-columns: 1fr 760px; gap: 70px; align-items: center; height: 100%; }
+  .why .lead { font-size: 30px; line-height: 1.6; color: var(--ink2); margin-top: 26px; animation: up .7s .2s both; }
+  .stack { display: grid; gap: 22px; }
+  .tile { display: grid; grid-template-columns: 92px 1fr; gap: 24px; align-items: center; padding: 28px 34px; animation: up .7s both; animation-delay: calc(.35s + var(--i) * .22s); }
+  .tile .ic { width: 92px; height: 92px; border-radius: 26px; display: grid; place-items: center; font-size: 44px; color: #fff; }
+  .tile .k { font-size: 19px; letter-spacing: .14em; color: var(--ink3); font-weight: 700; }
+  .tile h3 { margin: 4px 0 4px; font-size: 38px; font-weight: 900; }
+  .tile p { margin: 0; font-size: 23px; color: var(--ink2); line-height: 1.5; }
+
+  /* parts：环形结构 */
+  .parts { position: relative; height: 100%; }
+  .parts .hd { position: absolute; left: 0; top: 0; }
+  .orbit { position: absolute; left: 50%; top: 60%; width: 0; height: 0; }
+  .core { position: absolute; width: 236px; height: 236px; left: -118px; top: -118px; border-radius: 50%; display: grid; place-items: center; text-align: center; color: #fff; font-size: 36px; font-weight: 900; line-height: 1.25; background: radial-gradient(circle at 30% 25%, #8f86ff, #6055f5 55%, #12b5cb); box-shadow: 0 30px 80px -20px rgba(96,85,245,.6), inset 0 0 0 10px rgba(255,255,255,.18); animation: pop .8s .2s both; }
+  .core small { display: block; font-size: 19px; font-weight: 600; opacity: .85; letter-spacing: .1em; margin-top: 6px; }
+  .ring { position: absolute; width: 640px; height: 640px; left: -320px; top: -320px; border-radius: 50%; border: 2px dashed rgba(96,85,245,.22); animation: pop .8s .1s both; }
+  .node { position: absolute; width: 300px; margin: -64px 0 0 -150px; box-sizing: border-box; padding: 22px 26px; text-align: left; animation: pop .7s both; animation-delay: calc(.5s + var(--i) * .18s); }
+  .node .t { display: flex; align-items: center; gap: 12px; font-size: 36px; font-weight: 900; }
+  .node .t i { font-style: normal; width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; color: #fff; font-size: 22px; }
+  .node p { margin: 8px 0 0; font-size: 22px; color: var(--ink2); line-height: 1.45; }
+
+  /* vary：左右对比 + 刻度 + 环节标签 + 变量 */
+  .vary .hd { margin-bottom: 30px; }
+  .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; }
+  .side { padding: 30px 34px; animation: up .7s both; animation-delay: calc(.3s + var(--i) * .25s); }
+  .side .who { font-size: 20px; letter-spacing: .1em; color: var(--ink3); font-weight: 700; }
+  .side h3 { margin: 6px 0 16px; font-size: 40px; font-weight: 900; }
+  .gauge { position: relative; height: 16px; border-radius: 999px; background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e, #12b5cb); margin: 8px 0 8px; }
+  .gauge b { position: absolute; top: 50%; width: 34px; height: 34px; border-radius: 50%; background: #fff; border: 6px solid var(--ink); transform: translate(-50%, -50%); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
+  .gauge-l { display: flex; justify-content: space-between; font-size: 17px; color: var(--ink3); margin-bottom: 18px; }
+  .row { display: flex; align-items: center; gap: 14px; font-size: 25px; padding: 9px 0; border-top: 1px solid rgba(22,26,51,.07); }
+  .chip { flex: none; font-size: 19px; font-weight: 800; padding: 5px 14px; border-radius: 999px; color: #fff; }
+  .go { background: #22c55e; } .self { background: #f59e0b; } .no { background: #ef4444; }
+  .vars { display: flex; gap: 16px; margin-top: 30px; align-items: center; animation: up .7s 1s both; }
+  .vars span { font-size: 20px; color: var(--ink3); font-weight: 700; letter-spacing: .06em; margin-right: 6px; }
+  .vars i { font-style: normal; font-size: 24px; font-weight: 800; padding: 12px 22px; border-radius: 16px; background: rgba(255,255,255,.8); border: 1px solid rgba(96,85,245,.2); color: var(--v); }
+</style></head>
+<body><div class="bg"><i></i><i></i><i></i></div><div class="page" id="p"></div>
+<script>
+const id = new URLSearchParams(location.search).get('id') || 'why';
+const EB = '<div class="eb"><b></b>百业AI｜真活 1.1 更新</div>';
+const P = {
+  why: `<div class="why"><div>${EB}<h1>人人都在用 AI，<br><em>差距在怎么用</em></h1><div class="lead">同一个 AI 谁都能打开。<br>企业要招的，是把它用对的人。</div></div>
+    <div class="stack">
+      ${[['🌐', 'linear-gradient(135deg,#8f86ff,#6055f5)', '现状', 'AI 进到了每份工作', '写报告、做表、查资料都在用'],
+         ['⚖️', 'linear-gradient(135deg,#ffb35c,#f59e0b)', '差距', '差在怎么用', '问得清吗？能发现它说错吗？'],
+         ['🎯', 'linear-gradient(135deg,#4ade80,#16a34a)', '企业要的', '把 AI 用对的人', '关键判断自己负责，守得住规矩']]
+        .map(([ic, g, k, h, p], i) => `<div class="tile glass" style="--i:${i}"><div class="ic" style="background:${g}">${ic}</div><div><div class="k">${k}</div><h3>${h}</h3><p>${p}</p></div></div>`).join('')}
+    </div></div>`,
+  parts: (() => {
+    const N = [['提问', '拆清问题，给足上下文', '#6055f5'], ['核验', '对照材料，发现 AI 说错', '#12b5cb'], ['取舍', '采纳什么，丢掉什么', '#f59e0b'], ['分工', '体力活给 AI，判断自己做', '#16a34a'], ['整合', '改写成自己的，不照搬', '#ef4444']];
+    // 五边形手摆（中心在画面 60% 高处）：上、右上、右下、左下、左上
+    const pos = [[0, -228], [440, -70], [285, 208], [-285, 208], [-440, -70]];
+    return `<div class="parts"><div class="hd">${EB}<h1>AI 使用能力，<em>拆开看</em></h1></div>
+      <div class="orbit"><div class="ring" style="width:880px;height:440px;left:-440px;top:-210px"></div>
+        <div class="core"><div>AI 使用能力<small>五件事 · 都有证据</small></div></div>
+        ${N.map(([t, p, c], i) => `<div class="node glass" style="--i:${i};left:${pos[i][0]}px;top:${pos[i][1]}px"><div class="t"><i style="background:${c}">${i + 1}</i>${t}</div><p>${p}</p></div>`).join('')}
+      </div></div>`;
+  })(),
+  vary: `<div class="vary"><div class="hd">${EB}<h1>用得好不好，<em>没有统一答案</em></h1></div>
+    <div class="cmp">
+      ${[['投资机构 · AI 方向分析师', 'AI 是提效工具', 62, [['go', '放手用', '整理项目动态、抽字段'], ['self', '自己定', '口径、优先级、投资判断'], ['no', '不能', '被投企业 BP 原样喂给外部 AI']]],
+         ['律所 · 跨境并购律师', '谨慎用，重保密', 28, [['go', '可以用', '价格测算、复算'], ['self', '自己定', '风险定级、条款取舍'], ['no', '不能', '给客户的结论交给 AI']]]]
+        .map(([who, h, g, rows], i) => `<div class="side glass" style="--i:${i}"><div class="who">${who}</div><h3>${h}</h3>
+          <div class="gauge"><b style="left:${g}%"></b></div><div class="gauge-l"><span>谨慎</span><span>放手用 AI</span></div>
+          ${rows.map(([c, l, t]) => `<div class="row"><span class="chip ${c}">${l}</span>${t}</div>`).join('')}</div>`).join('')}
+    </div>
+    <div class="vars"><span>标准跟着变</span><i>公司对 AI 的态度</i><i>岗位职责</i><i>行业规范</i><i>法规政策</i></div></div>`,
+};
+document.getElementById('p').innerHTML = P[id] || P.why;
+</script></body></html>

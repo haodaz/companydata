@@ -67,7 +67,7 @@ def pieces(text, limit=32):
     return merged
 
 cues, k = [], 1
-text_of = {n["id"]: n["text"] for n in narr}
+text_of = {n["id"]: n.get("sub") or n["text"] for n in narr}   # sub：字幕和旁白分开写（旁白为配音读对写「一点一」，字幕写「1.1」）
 for nid, s in starts:
     merged = pieces(text_of[nid]); total = sum(len(x) for x in merged); t = s
     for x in merged:
