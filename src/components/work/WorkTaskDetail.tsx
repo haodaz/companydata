@@ -2,7 +2,7 @@
 
 /** 真活台 · 一道题的详情（后台和出题人管理页共用）：问题与任务 / 材料包 / rubric / AI 基线 / 作答 */
 import React, { useState } from 'react';
-import { Button, Descriptions, Drawer, Space, Table, Tabs, Tag, Typography, App } from 'antd';
+import { Button, Descriptions, Drawer, Space, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
 import { WorkReport } from '@/components/work/WorkReport';
 import { Md } from '@/components/ws/Md';
 
@@ -95,6 +95,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           { title: 'BARS', dataIndex: 'levels', width: 320, render: (l: any) => <div style={{ fontSize: 12 }}>{['L1', 'L2', 'L3', 'L4'].map(k => <div key={k}><b>{k}</b> {l?.[k]}</div>)}</div> },
         ]} /> },
         { key: 'b', label: `AI 基线${T.baseline ? ` · ${T.baseline.result?.total} 分` : ''}`, children: T.baseline ? <div><Paragraph>AI 先做了一遍，用同一套 rubric 评：<b>{T.baseline.result?.total}</b> 分。{T.baseline.result?.summary}</Paragraph><Table size="small" rowKey="id" pagination={false} dataSource={T.baseline.result?.items || []} columns={[{ title: '条目', dataIndex: 'title' }, { title: '等级', dataIndex: 'level', width: 60 }, { title: '分', dataIndex: 'score', width: 60 }, { title: '证据 / 说明', render: (_: any, i: any) => <span style={{ fontSize: 12 }}>{i.evidence && <i>“{i.evidence}” </i>}{i.note}</span> }]} /><details style={{ marginTop: 12 }}><summary>AI 的答卷</summary><pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13, background: '#fafbff', padding: 10, borderRadius: 8 }}>{T.baseline.answer}</pre></details></div> : <Text type="secondary">AI 基线还没出来。出任务后它在后台跑，约一分钟，刷新这页就有；也可以点上面的「重跑 AI 基线」现在跑。基线 = 一个通用 AI 直接做这道题能得几分，是候选人分数的参照。</Text> },
+        { key: 'ai', label: 'AI 使用标准', children: <AiPolicyView task={T} shareLink={shareLink} ownerKey={ownerKey} /> },
         { key: 's', label: `做题情况与评分（${sessions.length}）`, children: <>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 10, flexWrap: 'wrap' }}>
             <Text type="secondary" style={{ fontSize: 13 }}>交卷 {graded.length} 人，按分数排名；勾 2–4 人可以并排对比</Text>
@@ -129,6 +130,52 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
         </>}
       </Drawer>
     </>
+  );
+}
+
+/**
+ * 这道任务的 AI 使用标准（2026-10-30）：企业对 AI 的态度、各环节能不能用、什么算用得好、治理红线、五项权重——每条都标出处（悬停看原文）。
+ * 评「AI 使用能力」照它评。没有就点生成（第一次有人交卷时也会自动生成）。
+ */
+const USE: Record<string, { t: string; c: string }> = { encourage: { t: '鼓励用', c: 'green' }, allow: { t: '可以用', c: 'blue' }, caution: { t: '慎用', c: 'orange' }, forbid: { t: '不能用', c: 'red' } };
+const STANCE: Record<string, string> = { ai_native: 'AI-native：默认深度用 AI', digitalizing: '数字化中：鼓励在合适环节用', traditional: '传统企业：谨慎用、重合规' };
+const W_LABEL: Record<string, string> = { ask: '提问', verify: '核验', select: '取舍', divide: '分工', integrate: '整合' };
+function AiPolicyView({ task: T, shareLink, ownerKey }: { task: any; shareLink: string; ownerKey?: string }) {
+  const { message } = App.useApp();
+  const [pol, setPol] = useState<any>(T.task?.ai_policy || null);
+  const [busy, setBusy] = useState(false);
+  const gen = async (force = false) => {
+    const token = (shareLink.match(/\/work\/([^/?#]+)/) || [])[1];
+    if (!token || !ownerKey) return message.warning('要从出任务的人的管理页打开才能生成');
+    setBusy(true);
+    try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(ownerKey)}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ai_policy: true, force }) })).json(); if (!j.ok) throw new Error(j.error); setPol(j.policy); }
+    catch (e: any) { message.error(e.message || '没生成出来'); } finally { setBusy(false); }
+  };
+  if (!pol) return <div style={{ padding: '20px 4px', color: '#666', lineHeight: 1.8 }}>
+    <div>还没有这道任务的 AI 使用标准。生成时会读这家企业的画像和动态、这个岗位在职业库里的职责和典型任务、相关行业规范、任务书和材料，以及适用的法规，每一条都标出处。</div>
+    <div style={{ marginTop: 6, color: '#999', fontSize: 13 }}>不点也行：第一位候选人交卷时会自动生成，评「AI 使用能力」照它评。</div>
+    <Button type="primary" style={{ marginTop: 12 }} loading={busy} onClick={() => gen()}>生成 AI 使用标准</Button>
+  </div>;
+  const B = ({ ids }: { ids: string[] }) => <>{(ids || []).map(id => <Tooltip key={id} title={pol.sources?.[id] || id}><Tag style={{ marginLeft: 4, fontSize: 11, cursor: 'help' }}>{id.startsWith('G:') ? '法规' : id}</Tag></Tooltip>)}</>;
+  const sec: React.CSSProperties = { fontSize: 12, color: '#888', letterSpacing: 1, fontWeight: 600, margin: '16px 0 6px' };
+  return (
+    <div style={{ fontSize: 13.5, lineHeight: 1.75 }}>
+      <div style={{ padding: '12px 14px', borderRadius: 10, background: '#f6f5ff', border: '1px solid #e4e1ff' }}>
+        <b style={{ fontSize: 15 }}>{STANCE[pol.stance?.level] || pol.stance?.level}</b><B ids={pol.stance?.basis} />
+        <div style={{ color: '#444', marginTop: 2 }}>{pol.stance?.why}</div>
+        {!!pol.stance?.signals?.length && <div style={{ color: '#888', fontSize: 12.5, marginTop: 4 }}>企业资料里的 AI 信号 {pol.stance.signals.length} 条：{pol.stance.signals.slice(0, 3).map((x: string) => `「${x}」`).join(' ')}</div>}
+        <div style={{ marginTop: 6 }}>{pol.summary}</div>
+      </div>
+      <div style={sec}>各环节能不能用 AI</div>
+      {(pol.stages || []).map((x: any, i: number) => <div key={i} style={{ padding: '6px 0', borderBottom: '1px solid #f2f2f6' }}><Tag color={USE[x.use]?.c}>{USE[x.use]?.t || x.use}</Tag><b>{x.stage}</b> <span style={{ color: '#555' }}>{x.why}</span><B ids={x.basis} /></div>)}
+      <div style={sec}>这个岗位里「AI 用得好」的样子</div>
+      <ul style={{ margin: 0, paddingLeft: 18 }}>{(pol.good || []).map((x: any, i: number) => <li key={i}>{x.text}<B ids={x.basis} /></li>)}</ul>
+      <div style={sec}>治理红线</div>
+      {(pol.red_lines || []).length ? <ul style={{ margin: 0, paddingLeft: 18, color: '#b42318' }}>{pol.red_lines.map((x: any, i: number) => <li key={i}>{x.text}<B ids={x.basis} /></li>)}</ul> : <div style={{ color: '#999' }}>这道任务没有特别的治理红线（材料里没有个人信息、受监管数据）</div>}
+      <div style={sec}>五项怎么算（按这个岗位调的权重）</div>
+      <div style={{ display: 'flex', height: 26, borderRadius: 6, overflow: 'hidden', fontSize: 12, color: '#fff' }}>{Object.entries(pol.weights || {}).map(([k, v]: any, i) => <div key={k} style={{ width: `${v}%`, background: ['#6055f5', '#12a150', '#2f80ed', '#b7791f', '#12b5cb'][i], display: 'grid', placeItems: 'center', whiteSpace: 'nowrap', overflow: 'hidden' }}>{W_LABEL[k]} {v}%</div>)}</div>
+      <div style={{ marginTop: 14, display: 'flex', gap: 8, alignItems: 'center' }}><Text type="secondary" style={{ fontSize: 12 }}>生成于 {new Date(pol.built_at).toLocaleString('zh-CN', { hour12: false })} · 出处标签悬停看原文</Text>{ownerKey && <Button size="small" loading={busy} onClick={() => gen(true)}>重新生成</Button>}</div>
+    </div>
   );
 }
 

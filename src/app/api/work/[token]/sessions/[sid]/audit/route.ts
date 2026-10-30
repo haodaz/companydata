@@ -1,7 +1,7 @@
 import { refreshSignals } from '@/lib/work/question-bank';
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
-import { buildReport } from '@/lib/work/grader';
+import { buildReport, ensureAiPolicy } from '@/lib/work/grader';
 import { auditSegment } from '@/lib/work/audit';
 import { withCost } from '@/lib/token-logger';
 
@@ -47,7 +47,7 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ to
       await db.from('work_sessions').update({ report: next }).eq('id', sid);
       return NextResponse.json({ ok: true, done: false, ...view(next), latest: seg });
     }
-    const base = await withCost({ tool_name: 'work', task_name: 'Grade · 报告', stage: 'use' }, () => buildReport(task, t.baseline, deliverable, events, chat, t.company_name, r.audit || []));
+    const base = await withCost({ tool_name: 'work', task_name: 'Grade · 报告', stage: 'use' }, async () => buildReport(task, t.baseline, deliverable, events, chat, t.company_name, r.audit || [], await ensureAiPolicy(t)));
     const report = { ...base, audit: r.audit || [], mode: r.mode, ...(r.recording ? { recording: r.recording } : {}) };
     await db.from('work_sessions').update({ report, score: report.result.total }).eq('id', sid); refreshSignals(t.id);
     return NextResponse.json({ ok: true, done: true, report, score: report.result.total });

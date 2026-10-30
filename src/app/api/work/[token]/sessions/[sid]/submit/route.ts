@@ -1,7 +1,7 @@
 import { refreshSignals } from '@/lib/work/question-bank';
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
-import { buildReport } from '@/lib/work/grader';
+import { buildReport, ensureAiPolicy } from '@/lib/work/grader';
 import { planSegments } from '@/lib/work/audit';
 import { describeFrames, framesFromRecording, readTextFiles } from '@/lib/work/recording';
 import { withCost } from '@/lib/token-logger';
@@ -49,8 +49,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     return NextResponse.json({ ok: true, staged: true, total: segments.length });
   }
   try {
-    const base = await withCost({ tool_name: 'work', task_name: 'Grade · 报告', stage: 'use' }, () =>
-      buildReport({ env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric }, t.baseline, deliverable, events, s.ai_chat || [], t.company_name));
+    const base = await withCost({ tool_name: 'work', task_name: 'Grade · 报告', stage: 'use' }, async () =>
+      buildReport({ env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric }, t.baseline, deliverable, events, s.ai_chat || [], t.company_name, undefined, await ensureAiPolicy(t)));
     const report = { ...base, ...(recording ? { recording } : {}), mode: open ? 'open' : plugin ? 'plugin' : 'bench' };
     await db.from('work_sessions').update({ report, score: report.result.total }).eq('id', sid); refreshSignals(t.id);
     return NextResponse.json({ ok: true, report, score: report.result.total });

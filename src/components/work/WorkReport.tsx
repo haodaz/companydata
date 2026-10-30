@@ -82,11 +82,15 @@ export function AiUse({ u }: { u: any }) {
   const chips: [string, string][] = [['问 AI', `${st.asks ?? 0} 次`], ['追问', `${st.followups ?? 0} 次`], ['采纳进交付物', `${st.adopted ?? 0} 次`], ['交付物里原样来自 AI', `${st.verbatim_ratio ?? 0}%`], ['第一次问之前看了材料', `${st.materials_before_first_ask ?? 0} 份`]];
   return (
     <Card title="AI 使用能力 · 怎么问、怎么核、怎么取舍">
+      {u.standard && <div style={{ fontSize: 13, color: '#555', marginBottom: 10, padding: '8px 12px', borderRadius: 8, background: '#fafaff', border: '1px solid #eeeefa' }}>照这家企业、这个岗位的 AI 使用标准评：<b>{u.standard.stance}</b>。{u.standard.summary}</div>}
+      {!!u.violations?.length && <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 8, background: '#fff4f2', border: '1px solid #ffd6cf', color: '#b42318', fontSize: 13 }}>
+        <b>碰了治理红线（每条扣 8 分）</b>{u.violations.map((v: any, k: number) => <div key={k}><span style={{ fontFamily: 'ui-monospace, Menlo, monospace' }}>{fmt(v.t)}</span> {v.what}{v.quote ? `：${v.quote}` : ''}</div>)}
+      </div>}
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>{chips.map(([k, v]) => <span key={k} style={{ fontSize: 12.5, padding: '3px 10px', borderRadius: 999, background: '#f4f3ff', color: '#4c43c9' }}>{k} <b>{v}</b></span>)}</div>
       <div style={{ display: 'grid', gap: 12 }}>
         {(u.items || []).map((i: any) => (
           <div key={i.key} style={{ display: 'grid', gridTemplateColumns: '56px 1fr', gap: 12, alignItems: 'start' }}>
-            <div><b style={{ fontSize: 14 }}>{i.title}</b><div style={{ fontSize: 20, fontWeight: 800, color: col(i.score), lineHeight: 1.2 }}>{i.score}</div></div>
+            <div><b style={{ fontSize: 14 }}>{i.title}</b><div style={{ fontSize: 20, fontWeight: 800, color: col(i.score), lineHeight: 1.2 }}>{i.score}</div>{u.standard?.weights?.[i.key] != null && <div style={{ fontSize: 11, color: '#999' }}>权重 {u.standard.weights[i.key]}%</div>}</div>
             <div style={{ minWidth: 0 }}>
               <div style={{ height: 6, borderRadius: 3, background: '#eef0f5', overflow: 'hidden', margin: '6px 0 6px' }}><div style={{ width: `${i.score}%`, height: '100%', background: col(i.score) }} /></div>
               <div style={{ fontSize: 13.5, color: '#333' }}>{i.note}</div>

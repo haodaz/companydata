@@ -5,7 +5,7 @@ import { reviseTask, runBaseline, sourcesOf } from '@/lib/work/generator';
 import { withCost, logTokenUsage } from '@/lib/token-logger';
 import { generateContent } from '@/lib/llm-client';
 import { reviewGeneric } from '@/lib/work/compare';
-import { analyzeAiUse } from '@/lib/work/grader';
+import { analyzeAiUse, ensureAiPolicy } from '@/lib/work/grader';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -44,16 +44,25 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   const t = await auth(token, req);
   if (!t) return NextResponse.json({ ok: false, error: '管理链接不对' }, { status: 404 });
   const body = await req.json().catch(() => ({}));
+  // 这道任务的 AI 使用标准（2026-10-30）：{ ai_policy: true } 读（没有就生成），{ ai_policy: true, force: true } 重新生成
+  if (body.ai_policy) {
+    try {
+      if (body.force) { const { ai_policy: _old, ...rest } = t.task || {}; t.task = rest; }
+      const policy = await withCost({ tool_name: 'work', task_name: 'Grade · AI 使用标准', stage: 'use' }, () => ensureAiPolicy(t));
+      return policy ? NextResponse.json({ ok: true, policy }) : NextResponse.json({ ok: false, error: '没生成出来，稍后再试' }, { status: 500 });
+    } catch (e: any) { return NextResponse.json({ ok: false, error: String(e?.message || e) }, { status: 500 }); }
+  }
   // 补算 AI 使用能力（2026-10-30）：给这道任务下已经出了报告、还没有这一项的作答补上；一次最多 4 份（2 路并发），前端循环到 remaining = 0
   if (body.ai_use) {
     const { data: ss } = await db.from('work_sessions').select('id, report, events, ai_chat, deliverable').eq('task_id', t.id).not('report', 'is', null);
     const todo = (ss || []).filter((x: any) => x.report?.result && !x.report?.auditing && (body.force || !('ai_use' in x.report)));
     const batch = todo.slice(0, 4);
     const task = { env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials, rubric: t.rubric };
+    const policy = await ensureAiPolicy(t);
     let done = 0;
     for (let i = 0; i < batch.length; i += 2) await Promise.all(batch.slice(i, i + 2).map(async (x: any) => {
       try {
-        const ai_use = await withCost({ tool_name: 'work', task_name: 'Grade · AI 使用（补算）', stage: 'use' }, () => analyzeAiUse(task as any, x.events || [], x.ai_chat || [], String(x.deliverable || ''), { institution: t.company_name }));
+        const ai_use = await withCost({ tool_name: 'work', task_name: 'Grade · AI 使用（补算）', stage: 'use' }, () => analyzeAiUse(task as any, x.events || [], x.ai_chat || [], String(x.deliverable || ''), { institution: t.company_name, policy }));
         await db.from('work_sessions').update({ report: { ...x.report, ai_use } }).eq('id', x.id); done++;
       } catch (e) { console.warn('[work] 补算 AI 使用失败', x.id, String((e as any)?.message).slice(0, 120)); }
     }));

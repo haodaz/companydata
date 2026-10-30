@@ -6,6 +6,8 @@ import { generateContent } from '@/lib/llm-client';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
 import { logTokenUsage } from '@/lib/token-logger';
 import type { WorkTask } from '@/lib/work/generator';
+import { supabaseAdmin as db } from '@/lib/supabase';
+import { buildAiPolicy, hardRedFlags, STANCE_LABEL, USE_LABEL, type AiPolicy } from '@/lib/work/ai-policy';
 
 const GRADE_MODEL = process.env.WORK_GRADE_MODEL || 'claude-opus-5-5';   // 优先 Claude，千问兜底（2026-10-28）
 const s = (v: any, n = 600) => (v == null ? '' : typeof v === 'string' ? v : JSON.stringify(v)).slice(0, n);
@@ -126,6 +128,11 @@ export const AI_USE_ITEMS = [
 ] as const;
 export interface AiUseReport {
   score: number | null; level: 'L1' | 'L2' | 'L3' | 'L4' | null; verdict: string;
+  /** 照哪份标准评的（这家企业 / 这个岗位的 AI 使用标准）；没有标准时按通用口径 */
+  standard?: { stance: string; summary: string; weights: Record<string, number> } | null;
+  /** 碰了治理红线：程序查到的（贴了手机号 / 身份证…）+ 对照标准判断的；每条扣 8 分，最多 24 */
+  violations?: { t: number; what: string; quote: string; by: 'program' | 'review' }[];
+  raw_score?: number | null;
   items: { key: string; title: string; score: number; note: string; evidence: { t: number; quote: string }[] }[];
   stats: { asks: number; followups: number; adopted: number; adopted_chars: number; verbatim_ratio: number; first_ask_s: number | null; materials_before_first_ask: number };
 }
@@ -137,7 +144,20 @@ function verbatimRatio(deliverable: string, answers: string[]) {
   const hit = sents.filter(x => pool.some(a => a.includes(x))).reduce((n, x) => n + x.length, 0);
   return Math.round((hit / sents.reduce((n, x) => n + x.length, 0)) * 100);
 }
-export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], deliverable: string, opts: { institution?: string } = {}): Promise<AiUseReport> {
+/** 这道任务的 AI 使用标准：存在 work_tasks.task.ai_policy；没有就按依据现生成、存回去（t 是 work_tasks 的整行） */
+export async function ensureAiPolicy(t: any): Promise<AiPolicy | null> {
+  if (t?.task?.ai_policy?.v) return t.task.ai_policy as AiPolicy;
+  try {
+    const task = { env: t.task?.env || { type: 'doc' }, problem: t.problem, task: t.task, materials: t.materials || [], rubric: t.rubric || [] } as any;
+    const policy = await buildAiPolicy(task, t.context || {}, askJson);
+    const { data: now } = await db.from('work_tasks').select('task').eq('id', t.id).single();
+    await db.from('work_tasks').update({ task: { ...(now?.task || t.task), ai_policy: policy } }).eq('id', t.id);
+    return policy;
+  } catch (e) { console.warn('[work-grade] AI 使用标准没生成出来，按通用口径评', String((e as any)?.message).slice(0, 120)); return null; }
+}
+
+export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], deliverable: string, opts: { institution?: string; policy?: AiPolicy | null } = {}): Promise<AiUseReport> {
+  const pol = opts.policy || null;
   const ev = [...events].sort((a, b) => a.t - b.t);
   const chat = [...aiChat].sort((a, b) => a.t - b.t);
   const adopts = ev.filter(e => e.type === 'adopt');
@@ -152,7 +172,9 @@ export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: 
   };
   // 开放模式 / 插件：AI 用在他自己的工具里（ChatGPT、Copilot…），只能从录屏描述和插件事件里看
   const outside = ev.filter(e => (e.type === 'screen' || /^plugin_/.test(e.type)) && /AI|GPT|Copilot|Claude|千问|豆包|Kimi|DeepSeek|文心|智谱|元宝|Gemini|对话|提问|生成/i.test(String(e.note || e.text || e.host || '')));
-  if (!chat.length && !outside.length) return { score: null, level: null, verdict: '这次没用 AI：全程自己做的。', items: [], stats };
+  const standard = pol ? { stance: STANCE_LABEL[pol.stance.level], summary: pol.summary, weights: pol.weights } : null;
+  if (!chat.length && !outside.length) return { score: null, level: null, verdict: pol && pol.stance.level === 'ai_native' ? '这次没用 AI：这家企业期待深度用 AI，这一点要留意。' : '这次没用 AI：全程自己做的。', items: [], stats, standard, violations: [] };
+  const flags = hardRedFlags(chat);
   const lines = ev.filter(e => ['open_material', 'ai_ask', 'adopt', 'paste', 'edit', 'submit', 'screen'].includes(e.type) || /^plugin_/.test(e.type)).slice(0, 300)
     .map(e => `[${fmt(e.t)}] ${e.type}${e.id ? ' ' + e.id : ''}${e.chars ? ` ${e.chars}字` : ''}${e.delta != null ? ` Δ${e.delta}` : ''}${e.note ? ' ' + s(e.note, 100) : ''}`);
   const prompt = `你在评一个候选人的「AI 使用能力」：他做一道真实业务任务时，怎么用 AI 助手。企业要招的是会用 AI 的人——不是不用，也不是全交给 AI，而是把 AI 用对。
@@ -168,24 +190,38 @@ ${lines.join('\n')}
 ## 交付物（节选）
 ${deliverable.slice(0, 2500)}
 
+${pol ? `## 这家企业、这个岗位的 AI 使用标准（照它评，不要用你自己的通用口径）
+企业对 AI 的态度：${STANCE_LABEL[pol.stance.level]}（${pol.stance.why}）
+各环节：${pol.stages.map(x => `${x.stage}【${USE_LABEL[x.use]}】${x.why}`).join('；')}
+用得好的样子：${pol.good.map(x => x.text).join('；')}
+治理红线：${pol.red_lines.map(x => x.text).join('；') || '（无）'}
+${pol.summary}
+` : ''}${flags.length ? `程序查到问 AI 时贴了：${flags.map(f => `${fmt(f.t)} ${f.what}`).join('、')}\n` : ''}
 五个子项各打 0–100，每项一句观察 + 1–2 条证据（证据写时刻和原话 / 原文片段）：
 ${AI_USE_ITEMS.map(i => `- ${i.key} ${i.title}：${i.desc}`).join('\n')}
 打分口径：90+ 主动、有依据、能纠 AI 的错；75 稳定会用；60 会用但照单全收较多；40 以下 基本是把题丢给 AI 或问得很空。原样照搬比例高、AI 编的数字被直接写进交付物，核验和整合要明显扣分。
-措辞用「观察到…」。verdict 一句话总评（30–60 字），说清他是怎么用 AI 的。只返回 JSON：
-{ "items": [ { "key": "ask", "score": 0, "note": "", "evidence": [ { "t": 0, "quote": "" } ] } ], "verdict": "" }`;
+${pol ? '对照标准：在「不能用 / 慎用」的环节把判断整个交给 AI、碰了治理红线，分工和核验要扣；在「鼓励用」的环节完全不用，提问和整合也不该给高分。red_line_hits 只写确实碰了上面红线的时刻（没有就空数组）。\n' : ''}措辞用「观察到…」。verdict 一句话总评（30–60 字），说清他是怎么用 AI 的${pol ? '，以及合不合这家企业的标准' : ''}。只返回 JSON：
+{ "items": [ { "key": "ask", "score": 0, "note": "", "evidence": [ { "t": 0, "quote": "" } ] } ], "red_line_hits": [ { "t": 0, "what": "碰了哪条红线", "quote": "" } ], "verdict": "" }`;
   const p = await askJson(prompt, 'Grade · AI 使用', opts.institution);
   const items = AI_USE_ITEMS.map(i => {
     const x = (Array.isArray(p.items) ? p.items : []).find((y: any) => y?.key === i.key) || {};
     return { key: i.key, title: i.title, score: Math.max(0, Math.min(100, Math.round(Number(x.score) || 0))), note: s(x.note, 200), evidence: (Array.isArray(x.evidence) ? x.evidence : []).slice(0, 2).map((e: any) => ({ t: Math.max(0, Number(e?.t) || 0), quote: s(e?.quote, 160) })) };
   });
-  const score = Math.round(items.reduce((n, i) => n + i.score, 0) / items.length);
-  return { score, level: score >= 90 ? 'L4' : score >= 75 ? 'L3' : score >= 60 ? 'L2' : 'L1', verdict: s(p.verdict, 160), items, stats };
+  // 按标准的权重加权（没有标准就平均）；碰红线每条扣 8，最多 24
+  const w: Record<string, number> = pol?.weights || { ask: 20, verify: 20, select: 20, divide: 20, integrate: 20 };
+  const raw = Math.round(items.reduce((n, i) => n + i.score * (w[i.key] ?? 20), 0) / (items.reduce((n, i) => n + (w[i.key] ?? 20), 0) || 1));
+  const violations: NonNullable<AiUseReport['violations']> = [
+    ...flags.map(f => ({ t: f.t, what: `问 AI 时贴了${f.what}`, quote: f.quote, by: 'program' as const })),
+    ...(pol?.red_lines.length && Array.isArray(p.red_line_hits) ? p.red_line_hits : []).slice(0, 4).map((h: any) => ({ t: Math.max(0, Number(h?.t) || 0), what: s(h?.what, 80), quote: s(h?.quote, 120), by: 'review' as const })).filter((h: any) => h.what),
+  ].slice(0, 6);
+  const score = Math.max(0, raw - Math.min(24, violations.length * 8));
+  return { score, raw_score: raw, level: score >= 90 ? 'L4' : score >= 75 ? 'L3' : score >= 60 ? 'L2' : 'L1', verdict: s(p.verdict, 180), items, stats, standard, violations };
 }
 
 /** 整份报告：结果 + 过程 + AI 使用能力 + 和 AI 基线逐条比 */
-export async function buildReport(task: WorkTask, baseline: { result?: ResultReport } | null, deliverable: string, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], institution?: string, audit?: any[]) {
+export async function buildReport(task: WorkTask, baseline: { result?: ResultReport } | null, deliverable: string, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], institution?: string, audit?: any[], policy?: AiPolicy | null) {
   const [result, process, ai_use] = await Promise.all([gradeResult(task, deliverable, { institution, who: '候选人' }), analyzeProcess(task, events, aiChat, deliverable, { institution, audit }),
-    analyzeAiUse(task, events, aiChat, deliverable, { institution }).catch(e => { console.warn('[work-grade] AI 使用能力没评出来', String(e?.message).slice(0, 120)); return null; })]);
+    analyzeAiUse(task, events, aiChat, deliverable, { institution, policy }).catch(e => { console.warn('[work-grade] AI 使用能力没评出来', String(e?.message).slice(0, 120)); return null; })]);
   const b = baseline?.result;
   const compare = b ? { baseline_total: b.total, delta: result.total - b.total, items: result.items.map(i => ({ id: i.id, title: i.title, mine: i.score, baseline: b.items.find(x => x.id === i.id)?.score ?? null })) } : null;
   return { result, process, ai_use, compare, generated_at: new Date().toISOString() };
