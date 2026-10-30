@@ -112,10 +112,81 @@ ${opts.audit?.length ? `## 分段审计笔记（边看边记的，总评要和�
   return { duration_s: duration, phases: (Array.isArray(p.phases) ? p.phases : []).slice(0, 8).map((x: any) => ({ from: Number(x.from) || 0, to: Number(x.to) || 0, label: s(x.label, 30) })), highlights: pick(p.highlights), risks: pick(p.risks), skills, delegation: s(p.delegation, 400), stats };
 }
 
-/** 整份报告：结果 + 过程 + 和 AI 基线逐条比 */
+/**
+ * AI 使用能力（2026-10-30，潜历：主打用发任务的方式招会用 AI 的人）：和结果分并列的一项 0–100。
+ * 证据全来自过程：每一轮问了什么、AI 答了什么、哪些被采纳进交付物、采纳后自己改了多少、问之前看没看材料。
+ * 五个子项各 0–100 + 指到时刻的证据；硬指标（问几次、追问几次、采纳几次、交付物里原样来自 AI 的比例）程序算。没用 AI 的不打分（score = null）。
+ */
+export const AI_USE_ITEMS = [
+  { key: 'ask', title: '提问', desc: '会不会拆问题、给足上下文（材料里的数字、约束）、追问到点上' },
+  { key: 'verify', title: '核验', desc: 'AI 的回答有没有对照材料核对，发现 AI 说错、说漏、编数字' },
+  { key: 'select', title: '取舍', desc: '采纳什么、丢掉什么，理由站得住；不照单全收' },
+  { key: 'divide', title: '分工', desc: '让 AI 干体力活（整理、起草、算），关键判断自己做' },
+  { key: 'integrate', title: '整合', desc: 'AI 的内容改写融进自己的交付物，口径一致，不是原样贴' },
+] as const;
+export interface AiUseReport {
+  score: number | null; level: 'L1' | 'L2' | 'L3' | 'L4' | null; verdict: string;
+  items: { key: string; title: string; score: number; note: string; evidence: { t: number; quote: string }[] }[];
+  stats: { asks: number; followups: number; adopted: number; adopted_chars: number; verbatim_ratio: number; first_ask_s: number | null; materials_before_first_ask: number };
+}
+/** 交付物里原样来自 AI 回答的比例：交付物按句切，长度 ≥ 14 的句子在任一 AI 回答里原样出现就算 */
+function verbatimRatio(deliverable: string, answers: string[]) {
+  const sents = deliverable.split(/[。！？\n；;]+/).map(x => x.replace(/\s+/g, '').trim()).filter(x => x.length >= 14);
+  if (!sents.length) return 0;
+  const pool = answers.map(a => a.replace(/\s+/g, ''));
+  const hit = sents.filter(x => pool.some(a => a.includes(x))).reduce((n, x) => n + x.length, 0);
+  return Math.round((hit / sents.reduce((n, x) => n + x.length, 0)) * 100);
+}
+export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], deliverable: string, opts: { institution?: string } = {}): Promise<AiUseReport> {
+  const ev = [...events].sort((a, b) => a.t - b.t);
+  const chat = [...aiChat].sort((a, b) => a.t - b.t);
+  const adopts = ev.filter(e => e.type === 'adopt');
+  const firstAsk = chat[0]?.t ?? null;
+  const stats: AiUseReport['stats'] = {
+    asks: chat.length,
+    // 追问：和上一问隔不到 3 分钟、中间没交付物大改的，算接着上一轮问
+    followups: chat.filter((c, i) => i > 0 && c.t - chat[i - 1].t < 180).length,
+    adopted: adopts.length, adopted_chars: adopts.reduce((n, e) => n + (Number(e.chars) || 0), 0),
+    verbatim_ratio: verbatimRatio(deliverable, chat.map(c => c.a || '')),
+    first_ask_s: firstAsk, materials_before_first_ask: new Set(ev.filter(e => e.type === 'open_material' && (firstAsk == null || e.t <= firstAsk)).map(e => e.id)).size,
+  };
+  // 开放模式 / 插件：AI 用在他自己的工具里（ChatGPT、Copilot…），只能从录屏描述和插件事件里看
+  const outside = ev.filter(e => (e.type === 'screen' || /^plugin_/.test(e.type)) && /AI|GPT|Copilot|Claude|千问|豆包|Kimi|DeepSeek|文心|智谱|元宝|Gemini|对话|提问|生成/i.test(String(e.note || e.text || e.host || '')));
+  if (!chat.length && !outside.length) return { score: null, level: null, verdict: '这次没用 AI：全程自己做的。', items: [], stats };
+  const lines = ev.filter(e => ['open_material', 'ai_ask', 'adopt', 'paste', 'edit', 'submit', 'screen'].includes(e.type) || /^plugin_/.test(e.type)).slice(0, 300)
+    .map(e => `[${fmt(e.t)}] ${e.type}${e.id ? ' ' + e.id : ''}${e.chars ? ` ${e.chars}字` : ''}${e.delta != null ? ` Δ${e.delta}` : ''}${e.note ? ' ' + s(e.note, 100) : ''}`);
+  const prompt = `你在评一个候选人的「AI 使用能力」：他做一道真实业务任务时，怎么用 AI 助手。企业要招的是会用 AI 的人——不是不用，也不是全交给 AI，而是把 AI 用对。
+## 任务
+${task.task.title}：${task.task.brief.slice(0, 500)}
+材料：${task.materials.map(m => `${m.id} ${m.title}`).join('；')}
+## 硬指标（程序算的，照这个说，别自己改数）
+问了 ${stats.asks} 次，其中追问 ${stats.followups} 次；把 AI 的回答采纳进交付物 ${stats.adopted} 次（${stats.adopted_chars} 字）；交付物里原样来自 AI 回答的句子占 ${stats.verbatim_ratio}%；第一次问 AI 在 ${firstAsk == null ? '—' : fmt(firstAsk)}，那之前打开过 ${stats.materials_before_first_ask} 份材料。
+## 和 AI 的每一轮（按时间）
+${chat.slice(0, 40).map(c => `[${fmt(c.t)}] 问：${s(c.q, 400)}\n   答：${s(c.a, 500)}`).join('\n') || '（站内没问过；看下面录屏 / 插件里的外部 AI 使用）'}
+## 过程事件（open_material 打开材料 · ai_ask 问 AI · adopt 采纳进交付物 · paste 粘贴 · edit 自己改稿 Δ字数 · screen 录屏看到的）
+${lines.join('\n')}
+## 交付物（节选）
+${deliverable.slice(0, 2500)}
+
+五个子项各打 0–100，每项一句观察 + 1–2 条证据（证据写时刻和原话 / 原文片段）：
+${AI_USE_ITEMS.map(i => `- ${i.key} ${i.title}：${i.desc}`).join('\n')}
+打分口径：90+ 主动、有依据、能纠 AI 的错；75 稳定会用；60 会用但照单全收较多；40 以下 基本是把题丢给 AI 或问得很空。原样照搬比例高、AI 编的数字被直接写进交付物，核验和整合要明显扣分。
+措辞用「观察到…」。verdict 一句话总评（30–60 字），说清他是怎么用 AI 的。只返回 JSON：
+{ "items": [ { "key": "ask", "score": 0, "note": "", "evidence": [ { "t": 0, "quote": "" } ] } ], "verdict": "" }`;
+  const p = await askJson(prompt, 'Grade · AI 使用', opts.institution);
+  const items = AI_USE_ITEMS.map(i => {
+    const x = (Array.isArray(p.items) ? p.items : []).find((y: any) => y?.key === i.key) || {};
+    return { key: i.key, title: i.title, score: Math.max(0, Math.min(100, Math.round(Number(x.score) || 0))), note: s(x.note, 200), evidence: (Array.isArray(x.evidence) ? x.evidence : []).slice(0, 2).map((e: any) => ({ t: Math.max(0, Number(e?.t) || 0), quote: s(e?.quote, 160) })) };
+  });
+  const score = Math.round(items.reduce((n, i) => n + i.score, 0) / items.length);
+  return { score, level: score >= 90 ? 'L4' : score >= 75 ? 'L3' : score >= 60 ? 'L2' : 'L1', verdict: s(p.verdict, 160), items, stats };
+}
+
+/** 整份报告：结果 + 过程 + AI 使用能力 + 和 AI 基线逐条比 */
 export async function buildReport(task: WorkTask, baseline: { result?: ResultReport } | null, deliverable: string, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], institution?: string, audit?: any[]) {
-  const [result, process] = await Promise.all([gradeResult(task, deliverable, { institution, who: '候选人' }), analyzeProcess(task, events, aiChat, deliverable, { institution, audit })]);
+  const [result, process, ai_use] = await Promise.all([gradeResult(task, deliverable, { institution, who: '候选人' }), analyzeProcess(task, events, aiChat, deliverable, { institution, audit }),
+    analyzeAiUse(task, events, aiChat, deliverable, { institution }).catch(e => { console.warn('[work-grade] AI 使用能力没评出来', String(e?.message).slice(0, 120)); return null; })]);
   const b = baseline?.result;
   const compare = b ? { baseline_total: b.total, delta: result.total - b.total, items: result.items.map(i => ({ id: i.id, title: i.title, mine: i.score, baseline: b.items.find(x => x.id === i.id)?.score ?? null })) } : null;
-  return { result, process, compare, generated_at: new Date().toISOString() };
+  return { result, process, ai_use, compare, generated_at: new Date().toISOString() };
 }

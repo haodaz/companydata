@@ -110,9 +110,9 @@ function Inner() {
         { key: 'showcase', label: '任务库上架', children: <ShowcaseAdmin /> },
       ]} />
 
-      <Drawer open={!!detail} onClose={() => setDetail(null)} width={Math.min(980, typeof window !== 'undefined' ? window.innerWidth - 40 : 980)} title={T ? <span>{T.task?.title} <Tag color={ENV[T.task?.env?.type]?.color}>{ENV[T.task?.env?.type]?.label}</Tag></span> : ''}
+      <Drawer open={!!detail} onClose={() => setDetail(null)} size={Math.min(980, typeof window !== 'undefined' ? window.innerWidth - 40 : 980)} title={T ? <span>{T.task?.title} <Tag color={ENV[T.task?.env?.type]?.color}>{ENV[T.task?.env?.type]?.label}</Tag></span> : ''}
         extra={T && <Space><Button icon={<CopyOutlined />} onClick={() => copy(T)}>复制参与链接</Button><Button onClick={() => rerunBaseline(T)} loading={!!busy}>重跑 AI 基线</Button></Space>}>
-        {T && <WorkTaskDetail task={T} sessions={detail!.sessions} shareLink={link(T)} notes={T.context?.notes} />}
+        {T && <WorkTaskDetail task={T} sessions={detail!.sessions} shareLink={link(T)} notes={T.context?.notes} ownerKey={T.owner_key} />}
       </Drawer>
       </div>
     </div>

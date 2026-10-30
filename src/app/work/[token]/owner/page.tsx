@@ -86,7 +86,7 @@ function Inner() {
           {!!T.task?.revisions?.length && <div style={{ marginTop: 10, fontSize: 12.5, color: '#444', background: '#fafbff', border: '1px solid #e8e9f0', borderRadius: 10, padding: '8px 12px' }}><b>修订记录</b>{T.task.revisions.slice(-3).reverse().map((r: any, i: number) => <div key={i} style={{ marginTop: 4 }}><span style={{ color: '#999' }}>{String(r.at).slice(5, 16).replace('T', ' ')}</span> · 意见：{r.feedback} <span style={{ color: '#6055f5' }}>→ {r.changelog}</span></div>)}</div>}
         </div>
         <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '8px 18px 18px' }}>
-          <div data-tour="detail"><WorkTaskDetail task={T} sessions={d.sessions} shareLink={share} notes={T.notes} defaultTab={d.sessions.length ? 's' : 'p'} /></div>
+          <div data-tour="detail"><WorkTaskDetail task={T} sessions={d.sessions} shareLink={share} notes={T.notes} defaultTab={d.sessions.length ? 's' : 'p'} ownerKey={k} /></div>
         </div>
       </div>
     </div>

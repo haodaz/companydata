@@ -52,7 +52,7 @@ function WorkArt({ token, k, tab }: { token: string; k: string; tab: string }) {
   if (err) return <div className="ws-muted">{err}</div>;
   if (!d) return <Skel lines={7} card />;
   const link = typeof location !== 'undefined' ? `${location.origin}/work/${token}` : `/work/${token}`;
-  return <WorkTaskDetail key={tab} task={d.task} sessions={d.sessions} shareLink={link} notes={d.task?.notes} defaultTab={tab} />;
+  return <WorkTaskDetail key={tab} task={d.task} sessions={d.sessions} shareLink={link} notes={d.task?.notes} defaultTab={tab} ownerKey={k} />;
 }
 
 function SpaceBuild({ art, onDone }: { art: Extract<Art, { kind: 'space_build' }>; onDone: (id: string) => void }) {

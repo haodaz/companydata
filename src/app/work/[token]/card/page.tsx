@@ -56,6 +56,9 @@ export default function CardPage() {
           </div>
           {rows.length >= 3 && rows.length <= 10 && <div className="zc-radar"><Radar rows={rows} /></div>}
         </div>
+        {d.s.report.ai_use?.score != null && <div className="zc-sec"><div className="zc-h">AI 使用能力 · <b style={{ color: '#6055f5' }}>{d.s.report.ai_use.score}</b> / 100</div>
+          <div className="zc-ai">{(d.s.report.ai_use.items || []).map((i: any) => <span key={i.key}>{i.title} <b>{i.score}</b></span>)}</div>
+          {d.s.report.ai_use.verdict && <div style={{ fontSize: 13, color: '#555', marginTop: 4 }}>{d.s.report.ai_use.verdict}</div>}</div>}
         {!!r.strengths?.length && <div className="zc-sec"><div className="zc-h">做得好的地方</div><ul>{r.strengths.slice(0, 3).map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></div>}
         <div className="zc-foot">
           <div>完成于 {when.toLocaleDateString('zh-CN')} · 验证码 {code}</div>
@@ -80,6 +83,7 @@ const CSS = `
 .zc-meta { margin-top: 2px; font-size: 13px; color: #8a8ea3; }
 .zc-mid { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.2fr); gap: 18px; align-items: center; margin: 22px 0 10px; }
 .zc-num { font-size: 72px; font-weight: 900; line-height: 1; } .zc-num span { font-size: 18px; color: #9a9db0; font-weight: 600; margin-left: 4px; }
+.zc-ai { display: flex; gap: 8px; flex-wrap: wrap; font-size: 13px; } .zc-ai span { padding: 2px 10px; border-radius: 999px; background: #f4f3ff; color: #4c43c9; }
 .zc-grade { display: inline-block; margin-top: 10px; color: #fff; font-weight: 800; padding: 4px 14px; border-radius: 999px; font-size: 14px; letter-spacing: .1em; }
 .zc-base { margin-top: 10px; font-size: 13px; color: #8a8ea3; }
 .zc-sec { border-top: 1px solid #f0f0f6; padding-top: 14px; margin-top: 6px; }

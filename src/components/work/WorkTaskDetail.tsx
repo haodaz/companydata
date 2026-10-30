@@ -9,7 +9,7 @@ import { Md } from '@/components/ws/Md';
 const { Text, Paragraph } = Typography;
 export const ENV_META: Record<string, { label: string; color: string }> = { doc: { label: '文档 / 对账台', color: 'purple' }, code: { label: '代码台', color: 'geekblue' }, sheet: { label: '表格 / 数据台', color: 'cyan' }, design: { label: '设计台', color: 'orange' }, plugin: { label: '真活插件 · 自己的工具', color: 'magenta' }, open: { label: '自己录制电脑操作', color: 'green' } };
 
-export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab }: { task: any; sessions: any[]; shareLink: string; notes?: string[]; defaultTab?: string }) {
+export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab, ownerKey }: { task: any; sessions: any[]; shareLink: string; notes?: string[]; defaultTab?: string; /** 有管理密钥才能补算 AI 使用分 */ ownerKey?: string }) {
   // 出题人是不是用一句话说的要找什么样的人（和 lib/work/generator.ts 的 isNeedText 同一判断；那边是服务端模块，这里不能直接引）
   const isNeed = String(T.role || '').trim().length > 14 || /[，,。、]|要一个|能看懂|能把|的人/.test(String(T.role || ''));
   const { message } = App.useApp();
@@ -20,11 +20,29 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
   const graded = sessions.filter((s: any) => s.score != null && !s.participant?.preview).sort((a: any, b: any) => b.score - a.score);
   const rankOf = new Map(graded.map((s: any, i: number) => [s.id, i + 1]));
   const ordered = [...graded, ...sessions.filter((s: any) => !rankOf.has(s.id))];
+  // 补算 AI 使用能力（2026-10-30）：老答卷没有这一项，一次 4 份循环补到底，补完刷新
+  const [aiBusy, setAiBusy] = useState('');
+  const needAi = graded.filter((s: any) => s.report?.result && !('ai_use' in (s.report || {}))).length;
+  const backfillAi = async () => {
+    const token = (shareLink.match(/\/work\/([^/?#]+)/) || [])[1];
+    if (!token || !ownerKey) return;
+    try {
+      for (let n = 0, left = needAi; left > 0 && n < 30; n++) {
+        setAiBusy(`补算中，还剩 ${left} 份`);
+        const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(ownerKey)}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ai_use: true }) })).json();
+        if (!j.ok) throw new Error(j.error || '补算失败');
+        if (!j.done && j.remaining) throw new Error('有几份没算出来，稍后再试');
+        left = j.remaining;
+      }
+      message.success('AI 使用分补好了'); window.location.reload();
+    } catch (e: any) { message.error(e.message); setAiBusy(''); }
+  };
+  const aiOf = (s: any) => s.report?.ai_use;
   const exportCsv = () => {
     const items: any[] = T.rubric || [];
     const esc = (v: any) => `"${String(v ?? '').replace(/"/g, '""')}"`;
-    const head = ['名次', '姓名', '联系方式', '总分', ...items.map((r: any) => r.title), '交卷时间', '报告链接'];
-    const lines = graded.map((s: any, i: number) => { const it = s.report?.result?.items || []; return [i + 1, s.participant?.name, s.participant?.contact, s.score, ...items.map((r: any) => it.find((x: any) => x.id === r.id)?.score ?? ''), s.submitted_at ? new Date(s.submitted_at).toLocaleString('zh-CN', { hour12: false }) : '', `${shareLink}?s=${s.id}`].map(esc).join(','); });
+    const head = ['名次', '姓名', '联系方式', '总分', 'AI 使用', ...items.map((r: any) => r.title), '交卷时间', '报告链接'];
+    const lines = graded.map((s: any, i: number) => { const it = s.report?.result?.items || []; return [i + 1, s.participant?.name, s.participant?.contact, s.score, aiOf(s) ? (aiOf(s).score ?? '没用 AI') : '', ...items.map((r: any) => it.find((x: any) => x.id === r.id)?.score ?? ''), s.submitted_at ? new Date(s.submitted_at).toLocaleString('zh-CN', { hour12: false }) : '', `${shareLink}?s=${s.id}`].map(esc).join(','); });
     const blob = new Blob(['\ufeff' + [head.map(esc).join(','), ...lines].join('\n')], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `候选名单-${(T.task?.title || '真活').slice(0, 20)}.csv`; a.click(); URL.revokeObjectURL(a.href);
   };
@@ -82,6 +100,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
             <Text type="secondary" style={{ fontSize: 13 }}>交卷 {graded.length} 人，按分数排名；勾 2–4 人可以并排对比</Text>
             <span style={{ flex: 1 }} />
             <Button size="small" type="primary" disabled={picked.length < 2} onClick={() => setCmpOpen(true)}>对比所选（{picked.length}）</Button>
+            {!!needAi && ownerKey && <Button size="small" loading={!!aiBusy} onClick={backfillAi}>{aiBusy || `补算 AI 使用分（${needAi} 份）`}</Button>}
             <Button size="small" disabled={!graded.length} onClick={exportCsv}>导出候选名单</Button>
           </div>
           <Table size="small" rowKey="id" pagination={false} dataSource={ordered}
@@ -91,6 +110,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
           { title: '开始', dataIndex: 'started_at', render: (v: string) => new Date(v).toLocaleString('zh-CN', { hour12: false }) },
           { title: '交卷', dataIndex: 'submitted_at', render: (v: string) => (v ? new Date(v).toLocaleString('zh-CN', { hour12: false }) : <Text type="secondary">做着呢</Text>) },
           { title: '结果', dataIndex: 'score', width: 70, render: (v: number) => (v == null ? '–' : <b>{v}</b>) },
+          { title: 'AI 使用', width: 80, render: (_: any, s: any) => { const u = aiOf(s); return !u ? <Text type="secondary">–</Text> : u.score == null ? <Text type="secondary" style={{ fontSize: 12 }}>没用</Text> : <b style={{ color: '#6055f5' }}>{u.score}</b>; } },
           { title: '', width: 180, render: (_: any, s: any) => <Space>{s.report && <Button size="small" type="primary" ghost onClick={() => setReport(s)}>看报告</Button>}<Button size="small" onClick={() => { navigator.clipboard.writeText(`${shareLink}?s=${s.id}`); message.success('报告链接已复制'); }}>报告链接</Button></Space> },
         ]} /></> },
       ]} />
@@ -127,6 +147,7 @@ function Compare({ rubric, people, baseline, rankOf }: { rubric: any[]; people: 
         </tr></thead>
         <tbody>
           <tr style={{ background: '#faf9ff' }}><td style={{ ...cell, textAlign: 'left', fontWeight: 700 }}>总分</td>{people.map(p => <td key={p.id} style={{ ...cell, fontSize: 20, fontWeight: 900, color: '#4c43c9' }}>{p.score}</td>)}{baseline && <td style={{ ...cell, color: '#999' }}>{baseline.result?.total}</td>}</tr>
+          <tr style={{ background: '#faf9ff' }}><td style={{ ...cell, textAlign: 'left', fontWeight: 700 }}>AI 使用能力</td>{people.map(p => { const u = p.report?.ai_use; return <td key={p.id} style={{ ...cell, fontSize: 17, fontWeight: 800, color: '#6055f5' }} title={u?.verdict || ''}>{!u ? '–' : u.score ?? '没用 AI'}</td>; })}{baseline && <td style={{ ...cell, color: '#999' }}>–</td>}</tr>
           {rubric.map((r: any) => { const vals = people.map(p => sc(p, r.id)).filter((v: any) => typeof v === 'number'); const top = vals.length ? Math.max(...vals) : null; return (
             <tr key={r.id}><td style={{ ...cell, textAlign: 'left' }}>{r.title}<span style={{ color: '#aaa', fontSize: 12, marginLeft: 6 }}>权重 {r.weight}</span></td>
               {people.map(p => { const v = sc(p, r.id); return <td key={p.id} style={{ ...cell, fontWeight: v != null && v === top ? 800 : 400, color: v != null && v === top ? '#12a150' : '#333' }}>{v ?? '–'}</td>; })}

@@ -11,7 +11,7 @@ const col = (v: number) => (v >= 80 ? '#12a150' : v >= 60 ? '#b7791f' : '#c0392b
 export function WorkReport({ report, participant }: { report: any; participant?: { name?: string } }) {
   if (!report) return null;
   if (report.auditing) return <div style={{ padding: '14px 18px', background: '#f3f2ff', borderRadius: 14, color: '#4c43c9', fontSize: 14 }}>AI 审计中：过程 {report.total} 段，已看 {report.stage} 段{report.audit?.length ? `，到 ${fmt(report.audit[report.audit.length - 1].to)} 为止的过程信号 ${report.audit[report.audit.length - 1].tentative}（暂定）` : ''}。候选人那边做完最后一步就出正式报告。</div>;
-  const r = report.result, p = report.process, c = report.compare;
+  const r = report.result, p = report.process, c = report.compare, u = report.ai_use;
   if (!r) return null;
   return (
     <div style={{ display: 'grid', gap: 16, fontSize: 14, lineHeight: 1.7, color: '#1a1a2e' }}>
@@ -21,6 +21,11 @@ export function WorkReport({ report, participant }: { report: any; participant?:
           {c && <div style={{ fontSize: 13, color: '#555' }}>AI 基线 {c?.baseline_total} · 你{c?.delta >= 0 ? '高' : '低'} {Math.abs(c?.delta)} 分{c?.delta < 0 && <span style={{ color: '#8c8c8c' }}>（大部分人做不过 AI，差距就是要练的地方）</span>}</div>}
           <div style={{ marginTop: 8, color: '#444' }}>{r.summary}</div>
         </Card>
+        {u && <Card title="AI 使用能力" style={{ flex: '1 1 200px' }}>
+          {u.score == null ? <div style={{ fontSize: 22, fontWeight: 800, color: '#8c8c8c', margin: '6px 0' }}>没用 AI</div>
+            : <div style={{ fontSize: 40, fontWeight: 800, color: col(u.score) }}>{u.score}<span style={{ fontSize: 14, color: '#8c8c8c', fontWeight: 500 }}> / 100</span></div>}
+          <div style={{ marginTop: 4, color: '#444' }}>{u.verdict}</div>
+        </Card>}
         {!p && <Card title="过程" style={{ flex: '1 1 260px' }}><div style={{ color: '#888', fontSize: 13 }}>{report.who === 'college' ? 'AI 学员做的，没有人工操作过程' : '这次作答没有过程记录'}</div></Card>}
         {p && <Card title="过程" style={{ flex: '1 1 260px' }}>
           <div style={{ color: '#555', fontSize: 13 }}>用时 {fmt(p?.duration_s)} · 问 AI {p?.stats?.ai_asks || 0} 次 · 看了 {p?.stats?.materials_opened || 0}/{p?.stats?.materials_total || 0} 份材料 · 粘贴 {p?.stats?.paste_chars || 0} 字 · 自己敲 {p?.stats?.typed_chars || 0} 字</div>
@@ -30,6 +35,7 @@ export function WorkReport({ report, participant }: { report: any; participant?:
         </Card>}
       </div>
       {r.items?.length >= 2 && <Overview items={r.items} cmp={c} />}
+      {u?.score != null && <AiUse u={u} />}
       {report.recording && <Card title="录屏回放 · 用自己的软件做的">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14, alignItems: 'start' }}>
           <video controls preload="metadata" src={report.recording.url} style={{ width: '100%', borderRadius: 10, background: '#000' }} />
@@ -67,6 +73,29 @@ export function WorkReport({ report, participant }: { report: any; participant?:
       </Card>
       <div style={{ fontSize: 12, color: '#999' }}>{participant?.name ? `${participant.name} · ` : ''}报告生成于 {report.generated_at ? new Date(report.generated_at).toLocaleString('zh-CN') : ''} · 结果按出任务 rubric 逐条核对，过程看工作台事件流；这是练习与预筛信号，不是能力定性。</div>
     </div>
+  );
+}
+
+/** AI 使用能力（2026-10-30）：五个子项 + 证据 + 硬指标 */
+export function AiUse({ u }: { u: any }) {
+  const st = u.stats || {};
+  const chips: [string, string][] = [['问 AI', `${st.asks ?? 0} 次`], ['追问', `${st.followups ?? 0} 次`], ['采纳进交付物', `${st.adopted ?? 0} 次`], ['交付物里原样来自 AI', `${st.verbatim_ratio ?? 0}%`], ['第一次问之前看了材料', `${st.materials_before_first_ask ?? 0} 份`]];
+  return (
+    <Card title="AI 使用能力 · 怎么问、怎么核、怎么取舍">
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>{chips.map(([k, v]) => <span key={k} style={{ fontSize: 12.5, padding: '3px 10px', borderRadius: 999, background: '#f4f3ff', color: '#4c43c9' }}>{k} <b>{v}</b></span>)}</div>
+      <div style={{ display: 'grid', gap: 12 }}>
+        {(u.items || []).map((i: any) => (
+          <div key={i.key} style={{ display: 'grid', gridTemplateColumns: '56px 1fr', gap: 12, alignItems: 'start' }}>
+            <div><b style={{ fontSize: 14 }}>{i.title}</b><div style={{ fontSize: 20, fontWeight: 800, color: col(i.score), lineHeight: 1.2 }}>{i.score}</div></div>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ height: 6, borderRadius: 3, background: '#eef0f5', overflow: 'hidden', margin: '6px 0 6px' }}><div style={{ width: `${i.score}%`, height: '100%', background: col(i.score) }} /></div>
+              <div style={{ fontSize: 13.5, color: '#333' }}>{i.note}</div>
+              {(i.evidence || []).map((e: any, k: number) => <div key={k} style={{ fontSize: 12.5, color: '#777', marginTop: 2 }}><span style={{ fontFamily: 'ui-monospace, Menlo, monospace', color: '#6055f5' }}>{fmt(e.t)}</span> {e.quote}</div>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Card>
   );
 }
 
