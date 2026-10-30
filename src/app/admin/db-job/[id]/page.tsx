@@ -175,7 +175,7 @@ export default function JobDetailPage() {
         </Col>
         <Col xs={24} xl={10}>
           <Card title="人工审核" size="small" style={{ marginBottom: 16 }}
-            extra={job.human_review_status ? <Tag color={REVIEW_STATUS[job.human_review_status]?.color}>{REVIEW_STATUS[job.human_review_status]?.label}</Tag> : <Tag>未审核</Tag>}>
+            extra={job.human_review_status ? <Tag color={REVIEW_STATUS[job.human_review_status]?.color}>{REVIEW_STATUS[job.human_review_status]?.label}</Tag> : <Tag color={REVIEW_STATUS.review.color}>{REVIEW_STATUS.review.label}</Tag>}>
             <Space wrap style={{ marginBottom: 12 }}>
               <Button type="primary" icon={<CheckCircleOutlined />} onClick={() => patch({ human_review_status: 'complete', human_review_note: note }, '已审核通过')}>审核通过</Button>
               <Button danger icon={<CloseCircleOutlined />} onClick={() => patch({ human_review_status: 'rejected', human_review_note: note }, '已标记不通过')}>不通过</Button>

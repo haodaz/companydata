@@ -112,8 +112,11 @@ export default function DbJobPage() {
   const [otherScope, setOtherScope] = useState<number | null>(null);
 
   useEffect(() => { load(); }, [load]);
-  // 顶部统计是全库口径：打开页面时单独取一次（接口里让数据库直接数），翻页 / 筛选不再重新数
-  useEffect(() => { fetch('/api/db/jobs?page=1&pageSize=1&withStats=1').then(r => r.json()).then(j => { if (j.success) { setStats(j.stats || {}); setSources(j.sources || {}); } }).catch(() => {}); }, []);
+  // 顶部统计跟着筛选变（数据部门 10-30）：筛选一变就按同样的条件让数据库重数一次（翻页不重数）
+  useEffect(() => {
+    if (!urlReady) return;
+    fetch(`/api/db/jobs?${query({ page: '1', pageSize: '1', withStats: '1' })}`).then(r => r.json()).then(j => { if (j.success) { setStats(j.stats || {}); setSources(j.sources || {}); } }).catch(() => {});
+  }, [query, urlReady]);
 
   const setFilter = (patch: Partial<typeof filters>) => { setFilters(f => ({ ...f, ...patch })); setPage(1); setSelected([]); };
 
@@ -179,7 +182,7 @@ export default function DbJobPage() {
         { key: 'recruit_channel', header: '招聘渠道', formatter: v => (v && JOB_SOURCE_LABELS[v]) || v || '' },
         ...JOB_FIELDS.map(f => ({ key: f.key, header: f.label, formatter: (v: any) => formatJobValue(f.key, v) })),
         { key: 'status', header: '在招状态', formatter: v => JOB_STATUS[v]?.label || v || '' },
-        { key: 'human_review_status', header: '审核状态', formatter: v => REVIEW_STATUS[v]?.label || '未审核' },
+        { key: 'human_review_status', header: '审核状态', formatter: v => REVIEW_STATUS[v]?.label || '待审核' },
         { key: 'completeness_score', header: '完整度' },
         { key: 'source_url', header: '来源页面' },
         { key: 'first_seen_at', header: '首次发现' },
@@ -218,7 +221,7 @@ export default function DbJobPage() {
     { title: '网申截止', dataIndex: 'application_end_date_str', width: 110, render: (d: string) => d ? <span style={{ color: new Date(d) < new Date() ? BRAND.ink4 : BRAND.ink }}>{d}</span> : '-' },
     { title: '完整度', dataIndex: 'completeness_score', width: 100, sorter: true, sortDirections: ['descend', 'ascend'] as any, sortOrder: (filters.sort === 'comp_desc' ? 'descend' : filters.sort === 'comp_asc' ? 'ascend' : null) as any, render: (n: number) => <Progress percent={n || 0} size="small" strokeColor={n >= 70 ? BRAND.success : n >= 40 ? BRAND.warning : BRAND.danger} format={p => `${p}`} /> },
     { title: '状态', dataIndex: 'status', width: 80, render: (s: string) => <Tag color={JOB_STATUS[s]?.color}>{JOB_STATUS[s]?.label || s}</Tag> },
-    { title: '审核', dataIndex: 'human_review_status', width: 90, render: (s: string) => s ? <Tag color={REVIEW_STATUS[s]?.color}>{REVIEW_STATUS[s]?.label || s}</Tag> : <Tag>未审核</Tag> },
+    { title: '审核', dataIndex: 'human_review_status', width: 90, render: (s: string) => <Tag color={REVIEW_STATUS[s || 'review']?.color}>{REVIEW_STATUS[s || 'review']?.label || s}</Tag> },   // 没标的就是待审核（数据部门 10-30：两者一个意思）
     { title: '更新', dataIndex: 'updated_at', width: 110, render: (t: string) => <Text type="secondary" style={{ fontSize: 12 }}>{new Date(t).toLocaleDateString('zh-CN')}</Text> },
     {
       title: '链接', width: 70, fixed: 'right' as const,
@@ -265,11 +268,11 @@ export default function DbJobPage() {
           <Select value={filters.season} style={{ width: 130 }} onChange={v => setFilter({ season: v })} options={[{ value: '', label: '全部招聘季' }, ...toOptions(RECRUIT_SEASON_LABELS)]} />
           <Select value={filters.remote} style={{ width: 130 }} onChange={v => setFilter({ remote: v })} options={[{ value: '', label: '全部办公方式' }, ...toOptions(REMOTE_TYPE_LABELS)]} />
           <Select value={filters.status} style={{ width: 110 }} onChange={v => setFilter({ status: v })} options={[{ value: '', label: '全部状态' }, ...Object.entries(JOB_STATUS).map(([value, m]) => ({ value, label: m.label }))]} />
-          <Select value={filters.review} style={{ width: 120 }} onChange={v => setFilter({ review: v })} options={[{ value: '', label: '全部审核' }, { value: 'none', label: '未审核' }, ...REVIEW_STATUS_OPTIONS]} />
+          <Select value={filters.review} style={{ width: 120 }} onChange={v => setFilter({ review: v })} options={[{ value: '', label: '全部审核' }, { value: 'pending', label: '待审核' }, ...REVIEW_STATUS_OPTIONS.filter(o => o.value !== 'review')]} />
           <Select value={filters.flag} style={{ width: 150 }} onChange={v => setFilter({ flag: v })} popupMatchSelectWidth={false}
             options={[{ value: '', label: '全部采集标记' }, ...['数据外采篮', '仅列表信息', '详情已补', '详情待补', '待核实', '重点岗位', '支持内推码'].map(f => ({ value: f, label: f }))]} />
-          <Select value={filters.source} style={{ width: 160 }} onChange={v => setFilter({ source: v })} popupMatchSelectWidth={false}
-            options={[{ value: '', label: '全部来源' }, ...Object.entries(sources).filter(([k]) => k !== 'none').sort((a, b) => b[1] - a[1]).map(([k, n]) => ({ value: k, label: `${JOB_SOURCE_LABELS[k] || k}（${n}）` })),
+          <Select mode="multiple" allowClear maxTagCount="responsive" placeholder="全部来源" value={filters.source ? filters.source.split(',') : []} style={{ width: 200 }} onChange={(v: string[]) => setFilter({ source: v.join(',') })} popupMatchSelectWidth={false}
+            options={[...Object.entries(sources).filter(([k]) => k !== 'none').sort((a, b) => b[1] - a[1]).map(([k, n]) => ({ value: k, label: `${JOB_SOURCE_LABELS[k] || k}（${n}）` })),
               ...(sources.none ? [{ value: 'none', label: `未标来源（${sources.none}）` }] : [])]} />
           <Tooltip title={`按岗位页面写明的发布日期筛（${stats.with_publish_date || 0} / ${stats.total || 0} 条有发布日期，没写的不会出现在日期筛选结果里）`}>
             <DatePicker.RangePicker style={{ width: 240 }} placeholder={['发布日期起', '止']} allowEmpty={[true, true]}

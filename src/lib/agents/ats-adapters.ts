@@ -176,7 +176,8 @@ export async function hotjobMarkdown(rawUrl: string, scope: 'campus' | 'all'): P
       r.recruitNumStr && `招聘人数：${r.recruitNumStr}`,
       r.postCode && `岗位编号：${r.postCode}`,
       r.publishFirstDate && `发布时间：${r.publishFirstDate}`,
-      r.endDate && `截止时间：${r.endDate}`,
+      // hotjob 没有截止日期时返回占位的「3000-01-01」：不是真日期，不写（数据部门 10-30）
+      r.endDate && !/^(2[1-9]|[3-9])\d{2}/.test(String(r.endDate)) && `截止时间：${r.endDate}`,
       (d.subject || r.subject) && `专业要求：${strip(d.subject || r.subject)}`,
       subs && `子岗位：属于「${r.postName}」招聘帖（共 ${subs.length} 个子岗位）`,
       p.duty && `\n## 工作职责\n${p.duty}`,
@@ -224,7 +225,7 @@ export async function beisenMarkdown(url: string, scope: 'campus' | 'all'): Prom
       r.Degree ? `学历要求：${r.Degree}` : '',
       r.HeadCount ? `招聘人数：${r.HeadCount}` : '',
       r.PostDate && !/^0001/.test(r.PostDate) ? `发布日期：${String(r.PostDate).slice(0, 10)}` : '',
-      r.EndTime && !/^0001/.test(r.EndTime) ? `截止日期：${String(r.EndTime).slice(0, 10)}` : '',
+      r.EndTime && !/^(0001|2[1-9]\d{2}|[3-9]\d{3})/.test(r.EndTime) ? `截止日期：${String(r.EndTime).slice(0, 10)}` : '',
       r.Org ? `所属组织：${r.Org}` : '',
     ].filter(Boolean).join('\n');
     return `### Source: [${r.JobAdName}](${link})\n\n# ${r.JobAdName}\n\n${meta}\n\n## 工作职责\n${strip(r.Duty)}\n\n## 任职要求\n${strip(r.Require)}\n`;

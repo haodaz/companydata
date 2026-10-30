@@ -274,7 +274,8 @@ export function sanitizeJob(raw: Record<string, any>): Record<string, any> {
         out[f.key] = typeof v === 'string' && f.options && v in f.options ? v : null;
         break;
       case 'date':
-        out[f.key] = typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v.trim()) ? v.trim() : null;
+        // 2100 年以后的是招聘平台「不限期」的占位值（hotjob 的 3000-01-01），不是真日期
+        out[f.key] = typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v.trim()) && +v.trim().slice(0, 4) < 2100 ? v.trim() : null;
         break;
       case 'url':
         out[f.key] = typeof v === 'string' && /^https?:\/\//i.test(v.trim()) ? v.trim() : null;

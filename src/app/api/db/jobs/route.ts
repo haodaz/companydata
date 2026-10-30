@@ -28,14 +28,8 @@ export async function GET(request: Request) {
     ].filter(Boolean) as any);
 
     // 导出要翻页读全量，所以查询写成「每次新建」的函数
-    const build = () => {
-    let query = supabaseAdmin
-      .from('jobs')
-      .select('*, company_ref:companies(id, name, name_en, segment, industry)', { count: 'exact' });
-    // 完整度排序 / 筛选（数据部门 10-26）：选了按完整度排就排在最前，其余照旧
-    const co = completenessOrder(get('sort'));
-    if (co) query = query.order(co.column, { ascending: co.ascending, nullsFirst: co.nullsFirst });
-    query = query.order('updated_at', { ascending: false }).order('id', { ascending: false });
+    // 筛选条件单独成函数：列表和顶部统计卡片共用（数据部门 10-30：筛选时上面的数字跟着变）
+    const applyFilters = (query: any) => {
     if (get('comp')) query = filterCompleteness(query, get('comp'));
     if (get('link')) query = filterLink(query, get('link'));
 
@@ -54,15 +48,29 @@ export async function GET(request: Request) {
     if (get('flag')) query = query.contains('collect_flags', [get('flag')]);
     // 数据外采篮「去岗位库看」：只看这一篮采到的那几个岗位
     if (get('ids')) { const ids = get('ids').split(',').map(Number).filter(Boolean).slice(0, 200); if (ids.length) query = query.in('id', ids); }
-    if (get('source') === 'none') query = query.or('source.is.null,source.eq.');
-    else if (get('source')) query = query.ilike('source', `%${get('source')}%`);
+    // 来源多选（数据部门 10-30）：逗号分开，满足任一个；none = 没标来源
+    if (get('source')) {
+      const parts = get('source').split(',').map(x => x.trim()).filter(Boolean);
+      const ors = parts.flatMap(x => x === 'none' ? ['source.is.null', 'source.eq.'] : [`source.ilike.%${x.replace(/[,()]/g, '')}%`]);
+      if (ors.length) query = query.or(ors.join(','));
+    }
     if (get('publishFrom')) query = query.gte('official_publish_date', get('publishFrom'));
     if (get('publishTo')) query = query.lte('official_publish_date', get('publishTo'));
     if (get('publish') === 'none') query = query.is('official_publish_date', null);
     if (get('missingJd') === '1') query = query.or('responsibilities.is.null,responsibilities.eq.');
-    if (get('review') === 'none') query = query.is('human_review_status', null);
+    // 「未审核」和「待审核」是一个意思（数据部门 10-30）：pending = 没标的 + 待审核
+    if (get('review') === 'pending') query = query.or('human_review_status.is.null,human_review_status.eq.review');
+    else if (get('review') === 'none') query = query.is('human_review_status', null);
     else if (get('review')) query = query.eq('human_review_status', get('review'));
     return query;
+    };
+    const build = () => {
+      let query = supabaseAdmin.from('jobs').select('*, company_ref:companies(id, name, name_en, segment, industry)', { count: 'exact' });
+      // 完整度排序 / 筛选（数据部门 10-26）：选了按完整度排就排在最前，其余照旧
+      const co = completenessOrder(get('sort'));
+      if (co) query = query.order(co.column, { ascending: co.ascending, nullsFirst: co.nullsFirst });
+      query = query.order('updated_at', { ascending: false }).order('id', { ascending: false });
+      return applyFilters(query);
     };
 
     const { data, count, error } = exportAll
@@ -74,7 +82,9 @@ export async function GET(request: Request) {
     let sources: Record<string, number> | undefined;
     if (searchParams.get('withStats') === '1') {
       // 让数据库直接数（只回数字），缓存 60 秒；以前是把全库岗位连职责全文拉回来自己数
-      const r = await cachedStats('jobs', async () => {
+      // 卡片按当前筛选数（缓存键带上筛选条件）；来源下拉的数量仍是全库口径
+      const filterKey = ['search', 'jobType', 'season', 'remote', 'status', 'overseas', 'companyId', 'flag', 'ids', 'source', 'publishFrom', 'publishTo', 'publish', 'missingJd', 'review', 'comp', 'link', 'deleted'].map(k => `${k}=${get(k)}`).join('&');
+      const r = await cachedStats(`jobs?${filterKey}`, async () => {
         const live = (q: any) => q.not('if_delete', 'is', true);
         const st = await countMany('jobs', {
           total: q => q, open: q => q.eq('status', 'open'),
@@ -82,7 +92,7 @@ export async function GET(request: Request) {
           remote: q => q.eq('remote_type', 'remote'), overseas: q => q.eq('accepts_overseas_students', true),
           reviewed: q => q.eq('human_review_status', 'complete'), missing_jd: q => q.is('responsibilities', null),
           with_publish_date: q => q.not('official_publish_date', 'is', null),
-        }, live);
+        }, applyFilters);
         const src = await countMany('jobs', {
           ...Object.fromEntries(SOURCE_ORDER.map(k => [k, (q: any) => q.ilike('source', `%${k}%`)])),
           none: q => q.or('source.is.null,source.eq.'),
