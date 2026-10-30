@@ -15,6 +15,7 @@ import Link from 'next/link';
 import { WorkTaskDetail } from '@/components/work/WorkTaskDetail';
 import { CompanyRolePicker, type PickedCompany } from '@/components/work/CompanyRolePicker';
 import { SamplesPanel } from '@/components/work/SamplesPanel';
+import { GovernancePanel } from '@/components/work/GovernancePanel';
 
 const { Text } = Typography;
 const ENV: Record<string, { label: string; color: string }> = { doc: { label: '文档 / 对账台', color: 'purple' }, code: { label: '代码台', color: 'geekblue' }, sheet: { label: '表格 / 数据台', color: 'cyan' }, design: { label: '设计台', color: 'orange' } };
@@ -108,6 +109,7 @@ function Inner() {
         </div> },
         { key: 'samples', label: '样本库 · 训练素材', children: <SamplesPanel /> },
         { key: 'showcase', label: '任务库上架', children: <ShowcaseAdmin /> },
+        { key: 'governance', label: '法规清单', children: <GovernancePanel /> },
       ]} />
 
       <Drawer open={!!detail} onClose={() => setDetail(null)} size={Math.min(980, typeof window !== 'undefined' ? window.innerWidth - 40 : 980)} title={T ? <span>{T.task?.title} <Tag color={ENV[T.task?.env?.type]?.color}>{ENV[T.task?.env?.type]?.label}</Tag></span> : ''}
