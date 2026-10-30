@@ -5,7 +5,7 @@
  *
  * 所以每道真活先按依据生成一份标准，评 AI 使用能力时照它评。规矩：
  *   - 每一条都要带出处编号：企业画像 [C*] / 新闻 [N*] / 产品 [P*] / 职业 [O*] / 典型任务 [T*] / 行业规范 [S*] / 任务书 [K*] / 材料 [M*] / 法规 [G:*]，
- *     出处不在本题依据里的条目直接丢掉（不让模型编）。
+ *     出处不在本题依据里的条目直接丢掉（不让模型编）；真实案例 [X:*] 从 CASES 里挑，用来说明为什么。
  *   - 法规只从 GOVERNANCE 里挑：这里只收确定存在的法律法规 / 行业规范，只写名称和大意，不写条款号。
  *   - 公司对 AI 的态度先由程序数企业资料里的 AI 信号（命中的句子留作证据），再由模型判断。
  * 结果存在 work_tasks.task.ai_policy（JSON，不用迁移），评分时读；没有就现生成。
@@ -50,6 +50,23 @@ export const GOVERNANCE: { id: string; name: string; scope: RegExp | 'all'; poin
   { id: 'miit', name: '《工业和信息化领域数据安全管理办法（试行）》（工信部，2023 年施行）', scope: /制造|工业|工厂|生产|产线|电信|通信|软件|半导体|电池|设备/, point: '工业数据、电信数据分类分级管理，重要数据和核心数据重点保护', url: 'https://cs.com.cn/xwzx/hg/202212/t20221214_6313475.html' },
   { id: 'auto', name: '《汽车数据安全管理若干规定（试行）》（2021）', scope: /汽车|整车|车企|自动驾驶|智能网联|主机厂/, point: '汽车数据处理遵循车内处理、默认不收集、最小必要等原则，重要数据按规定管理' },
   { id: 'deepsyn', name: '《互联网信息服务深度合成管理规定》（2022）', scope: /媒体|新媒体|内容|运营|营销|广告|直播|编辑|记者|短视频|设计|品牌|公关/, point: '用深度合成技术生成的图像、音视频、文本要按规定标识，不得用于制作传播虚假信息' },
+  // 2026-10-30 第二批（逐条核实）
+  { id: 'ethics', name: '《新一代人工智能伦理规范》（国家新一代人工智能治理专业委员会，2021）', scope: 'all', point: '使用者不得用人工智能产品和服务从事不法活动，发现安全漏洞要及时反馈，并主动提升使用能力', url: 'https://www.ncsti.gov.cn/kjdt/ztbd/gjjcyfw/rengongzhineng/rengongzhinengzczc/202109/t20210926_45232.html' },
+  { id: 'ethreview', name: '《科技伦理审查办法（试行）》（国科发监〔2023〕167号）', scope: /科研|研究员|研究所|博士后|课题|实验室|算法|模型|临床|医学|生物/, point: '涉及人、个人数据、算法和模型设计等的科技活动要按办法做伦理审查', url: 'https://www.hankunlaw.com/portal/article/index/cid/8/id/13680.html' },
+  { id: 'fudan', name: '复旦大学《关于在本科毕业论文（设计）中使用 AI 工具的规定（试行）》（2024）', scope: /高校|大学|本科|研究生|论文|学生|学术|导师|教务/, point: '研究方案、创新性方法、论文结构等关键环节不得用 AI；不得用 AI 生成或修改原始数据和实验结果；可在文献整理、辅助制图等环节经导师同意后使用', url: 'https://m.thepaper.cn/newsDetail_forward_29580082' },
+];
+
+/**
+ * 真实案例（2026-10-30，逐条核实）：「AI 用错了」真发生过的事。生成标准时作为出处 [X:*]，说明「为什么这么定」；只写核实到的事实，不写传闻里的细节。
+ */
+export const CASES: { id: string; title: string; when: string; what: string; lesson: string; scope: RegExp | 'all'; url: string }[] = [
+  { id: 'samsung', title: '三星员工把芯片源代码贴进 ChatGPT', when: '2023', what: '三星半导体部门放开使用 ChatGPT 后 20 天内出了 3 起机密外泄：设备测量源代码排错、良率相关代码优化、会议内容做摘要；三星随后在公司设备和内网禁用生成式 AI', lesson: '公司代码、良率数据、会议内容不能原样贴给外部 AI', scope: 'all', url: 'https://www.36kr.com/p/2199588798164105' },
+  { id: 'mata', title: '美国律师用 ChatGPT 查判例，引用了不存在的案例', when: '2023', what: 'Mata v. Avianca 案中律师提交的文书引用了 ChatGPT 编造的判例，纽约南区联邦法院认定其恶意，罚款 5000 美元', lesson: 'AI 给出的出处、判例、数字必须回原文核对', scope: /律师|律所|法律|法务|合规|诉讼|研究|分析|咨询/, url: 'https://www.lawnext.com/2023/06/court-imposes-sanctions-on-lawyers-who-filed-bogus-cases-after-relying-on-chatgpt-for-legal-research.html' },
+  { id: 'deloitte', title: '德勤澳大利亚的政府报告出现 AI 编造的引用', when: '2025', what: '德勤澳大利亚为联邦政府做的福利系统审查报告里，出现不存在的学术文献和捏造的法官引语，同意退还部分费用', lesson: '交付给客户的报告，AI 生成的引用和引语要逐条核实', scope: /咨询|顾问|分析|报告|研究|审计|战略|投资|政策/, url: 'https://fortune.com/2025/10/07/deloitte-ai-australia-government-report-hallucinations-technology-290000-refund' },
+  { id: 'aircanada', title: '加拿大航空客服机器人说错退票政策，公司担责', when: '2024', what: 'Moffatt v. Air Canada：聊天机器人告诉乘客可以事后申请丧亲优惠票价，航空公司拒付；仲裁庭认定公司要对网站上包括机器人在内的所有信息负责', lesson: '对客户说出去的话由公司负责，AI 的回答不能直接当对外口径', scope: /客服|客户|运营|销售|服务|营销|电商|航空|售后/, url: 'https://www.americanbar.org/groups/business_law/resources/business-law-today/2024-february/bc-tribunal-confirms-companies-remain-liable-information-provided-ai-chatbot/' },
+  { id: 'bjimg', title: '北京互联网法院 AI 文生图著作权案', when: '2023', what: '法院认定用 Stable Diffusion 生成、经过提示词设计和参数调整的图片有独创性，受著作权法保护，作者是使用 AI 的人；被告去掉署名使用，判赔礼道歉并赔偿', lesson: 'AI 生成的作品也有权利人，别人的不能随便拿来用；自己的创作投入要说得清', scope: /设计|视觉|品牌|内容|新媒体|运营|营销|编辑|插画|美术|广告/, url: 'https://www.thepaper.cn/newsDetail_forward_25725671' },
+  { id: 'bjvoice', title: '北京互联网法院 AI 声音人格权案', when: '2024', what: '未经授权把配音师的声音做成 AI 文本转语音产品，法院认定侵权，判赔 25 万元并书面道歉', lesson: '用 AI 生成他人的声音、形象要有授权', scope: /配音|音频|视频|内容|直播|营销|广告|主播|新媒体|产品/, url: 'https://cs.com.cn/5g/202404/t20240430_6406485.html' },
+  { id: 'pingliang', title: '甘肃平凉：用 ChatGPT 编造「火车撞人」假新闻', when: '2023', what: '嫌疑人用 ChatGPT 改写新闻要素，编造「火车撞上修路工人致 9 人死亡」的假新闻在多个账号发布，被以涉嫌寻衅滋事采取刑事强制措施', lesson: 'AI 生成的内容对外发布前必须核实，不能编造事实', scope: /媒体|新闻|记者|编辑|内容|运营|新媒体|自媒体|公关/, url: 'https://www.cls.cn/detail/1343380' },
 ];
 
 /** 程序先数企业资料里的 AI 信号：命中的句子留作证据（不靠模型「觉得」） */
@@ -80,6 +97,7 @@ export function policySources(task: WorkTask, ctx: WorkContext | any): Record<st
   task.materials.slice(0, 8).forEach((m: any, j: number) => { S[`M${j + 1}`] = `材料 ${m.id}《${m.title}》（${m.kind || ''}）：${cut(m.content, 120)}`; });
   const scopeText = `${c.industry || ''} ${c.name || ''} ${ctx?.occupation?.name || ''} ${task.task.role || ''} ${(task.task as any).title || ''}`;
   for (const g of GOVERNANCE) if (g.scope === 'all' || g.scope.test(scopeText)) S[`G:${g.id}`] = `${g.name}：${g.point}`;
+  for (const c of CASES) if (c.scope === 'all' || c.scope.test(scopeText)) S[`X:${c.id}`] = `真实案例（${c.when}）${c.title}：${c.what}。教训：${c.lesson}`;
   return S;
 }
 
@@ -92,7 +110,7 @@ export async function buildAiPolicy(task: WorkTask, ctx: WorkContext | any, askJ
 企业：${ctx?.company?.name || '（未知）'}；行业：${ctx?.company?.industry || '（未知）'}；岗位 / 要找的人：${task.task.role || ''}
 程序在企业资料里找到的 AI 信号 ${signals.length} 条：${signals.map(s => `「${s}」`).join('；') || '（没有）'}
 
-## 依据（只能引用这些编号，编号以外的事一律不写）
+## 依据（只能引用这些编号，编号以外的事一律不写；[X:*] 是真实发生过的案例，可以用来说明为什么这么定）
 ${Object.entries(sources).map(([k, v]) => `[${k}] ${v}`).join('\n')}
 
 要求：

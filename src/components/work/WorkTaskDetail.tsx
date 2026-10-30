@@ -156,7 +156,7 @@ function AiPolicyView({ task: T, shareLink, ownerKey }: { task: any; shareLink: 
     <div style={{ marginTop: 6, color: '#999', fontSize: 13 }}>不点也行：第一位候选人交卷时会自动生成，评「AI 使用能力」照它评。</div>
     <Button type="primary" style={{ marginTop: 12 }} loading={busy} onClick={() => gen()}>生成 AI 使用标准</Button>
   </div>;
-  const B = ({ ids }: { ids: string[] }) => <>{(ids || []).map(id => <Tooltip key={id} title={pol.sources?.[id] || id}><Tag style={{ marginLeft: 4, fontSize: 11, cursor: 'help' }}>{id.startsWith('G:') ? '法规' : id}</Tag></Tooltip>)}</>;
+  const B = ({ ids }: { ids: string[] }) => <>{(ids || []).map(id => <Tooltip key={id} title={pol.sources?.[id] || id}><Tag style={{ marginLeft: 4, fontSize: 11, cursor: 'help' }}>{id.startsWith('G:') ? '法规' : id.startsWith('X:') ? '案例' : id}</Tag></Tooltip>)}</>;
   const sec: React.CSSProperties = { fontSize: 12, color: '#888', letterSpacing: 1, fontWeight: 600, margin: '16px 0 6px' };
   return (
     <div style={{ fontSize: 13.5, lineHeight: 1.75 }}>

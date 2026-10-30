@@ -8,29 +8,49 @@ import React, { useEffect, useState } from 'react';
 import { Empty, Input, Segmented, Tag, Tooltip, Typography } from 'antd';
 
 const { Text } = Typography;
+type Case = { id: string; title: string; when: string; what: string; lesson: string; url: string; scope: string; all: boolean; cited: number; tasks: { id: string; company: string; role: string }[] };
 type Item = { id: string; name: string; point: string; url: string | null; scope: string; all: boolean; cited: number; tasks: { id: string; company: string; role: string }[] };
 
 export function GovernancePanel() {
-  const [d, setD] = useState<{ items: Item[]; policies: number } | null>(null);
+  const [d, setD] = useState<{ items: Item[]; cases: Case[]; policies: number } | null>(null);
   const [err, setErr] = useState('');
   const [q, setQ] = useState('');
-  const [kind, setKind] = useState<'all' | 'general' | 'industry'>('all');
+  const [kind, setKind] = useState<'all' | 'general' | 'industry' | 'cases'>('all');
   useEffect(() => { fetch('/api/admin/work/governance', { cache: 'no-store' }).then(r => r.json()).then(j => (j.ok ? setD(j) : setErr(j.error))).catch(e => setErr(String(e?.message || e))); }, []);
   if (err) return <div style={{ padding: 16, color: '#b42318' }}>{err}</div>;
   if (!d) return <div style={{ padding: 16, color: '#999' }}>读取中…</div>;
-  const items = d.items.filter(x => (kind === 'all' || (kind === 'general' ? x.all : !x.all)) && (!q.trim() || `${x.name}${x.point}${x.scope}`.includes(q.trim())));
+  const cases = (d.cases || []).filter(x => (kind === 'all' || kind === 'cases') && (!q.trim() || `${x.title}${x.what}${x.lesson}${x.scope}`.includes(q.trim())));
+  const items = kind === 'cases' ? [] : d.items.filter(x => (kind === 'all' || (kind === 'general' ? x.all : !x.all)) && (!q.trim() || `${x.name}${x.point}${x.scope}`.includes(q.trim())));
   return (
     <div style={{ display: 'grid', gap: 14 }}>
       <div style={{ fontSize: 13, color: '#666', lineHeight: 1.75 }}>
         每道真活生成「AI 使用标准」时，治理红线只能从这份清单里挑（挑清单以外的会被丢掉，不让模型编法规）。
         只收逐条核实过的法规和行业规范，只写名称和大意，不写条款号；通用的人人适用，行业的按企业行业和岗位关键词匹配。
-        目前共 <b>{d.items.length}</b> 条，已有 <b>{d.policies}</b> 道真活生成了 AI 使用标准。
+        目前法规 / 规范 <b>{d.items.length}</b> 条、真实案例 <b>{(d.cases || []).length}</b> 个（案例用来说明「为什么这么定」），已有 <b>{d.policies}</b> 道真活生成了 AI 使用标准。
       </div>
       <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-        <Segmented value={kind} onChange={v => setKind(v as any)} options={[{ label: `全部 ${d.items.length}`, value: 'all' }, { label: `通用 ${d.items.filter(x => x.all).length}`, value: 'general' }, { label: `行业 / 岗位 ${d.items.filter(x => !x.all).length}`, value: 'industry' }]} />
+        <Segmented value={kind} onChange={v => setKind(v as any)} options={[{ label: `全部 ${d.items.length}`, value: 'all' }, { label: `通用 ${d.items.filter(x => x.all).length}`, value: 'general' }, { label: `行业 / 岗位 ${d.items.filter(x => !x.all).length}`, value: 'industry' }, { label: `真实案例 ${(d.cases || []).length}`, value: 'cases' }]} />
         <Input.Search allowClear placeholder="搜名称、要点、适用岗位（如 医疗、审计）" value={q} onChange={e => setQ(e.target.value)} style={{ width: 340 }} />
       </div>
-      {!items.length ? <Empty description="没有匹配的" /> : <div style={{ display: 'grid', gap: 10 }}>
+      {!!cases.length && <div style={{ display: 'grid', gap: 10 }}>
+        {kind === 'all' && <div style={{ fontSize: 12.5, color: '#888', letterSpacing: 1, fontWeight: 600, marginTop: 4 }}>真实案例 · AI 用错了的事</div>}
+        {cases.map(x => (
+          <div key={x.id} style={{ padding: '14px 16px', border: '1px solid #ffe2c7', borderRadius: 12, background: '#fffaf4', display: 'grid', gridTemplateColumns: '1fr 150px', gap: 16 }}>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'baseline', flexWrap: 'wrap' }}><Tag color="orange">{x.when}</Tag><b style={{ fontSize: 15 }}>{x.title}</b><a href={x.url} target="_blank" rel="noreferrer" style={{ fontSize: 12 }}>核实来源 ↗</a></div>
+              <div style={{ fontSize: 13.5, color: '#444', marginTop: 4, lineHeight: 1.7 }}>{x.what}</div>
+              <div style={{ fontSize: 13.5, color: '#b45309', marginTop: 4, fontWeight: 600 }}>教训：{x.lesson}</div>
+              <div style={{ fontSize: 12.5, color: '#888', marginTop: 4 }}>适用：{x.scope}</div>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: 24, fontWeight: 800, color: x.cited ? '#b45309' : '#ccc', lineHeight: 1.1 }}>{x.cited}</div>
+              <Text type="secondary" style={{ fontSize: 12 }}>道真活引用</Text>
+            </div>
+          </div>
+        ))}
+      </div>}
+      {kind === 'all' && !!items.length && <div style={{ fontSize: 12.5, color: '#888', letterSpacing: 1, fontWeight: 600, marginTop: 4 }}>法规与行业规范</div>}
+      {!items.length && !cases.length ? <Empty description="没有匹配的" /> : !items.length ? null : <div style={{ display: 'grid', gap: 10 }}>
         {items.map(x => (
           <div key={x.id} style={{ padding: '14px 16px', border: '1px solid #e8e9f0', borderRadius: 12, background: '#fff', display: 'grid', gridTemplateColumns: '1fr 150px', gap: 16 }}>
             <div style={{ minWidth: 0 }}>
