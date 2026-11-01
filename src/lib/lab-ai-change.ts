@@ -59,7 +59,14 @@ async function tasksOf(occ: any): Promise<{ tasks: { name: string; detail: strin
   try { const arr = typeof r === 'string' && r.trim().startsWith('[') ? JSON.parse(r) : null; if (Array.isArray(arr)) lines = arr.map(String); } catch { /* 不是 JSON 就按行拆 */ }
   if (!lines.length) lines = String(r || '').split(/\n|；|;/);
   const tasks = dedupe(lines.map(x => x.replace(/^\s*\d+[、.．)]\s*/, '').replace(/[；;。]\s*$/, '').trim()).filter(x => x.length >= 4).map(x => ({ name: S(x, 40), detail: x.length > 40 ? S(x, 120) : '' }))).slice(0, 12);
-  return { tasks, from: '职业库 · 岗位职责' };
+  if (tasks.length >= 3) return { tasks, from: '职业库 · 岗位职责' };
+  // 典型任务和职责都不够（库里 116 个职业是这样）：按职业介绍 / 任职要求推断，来源明确标成「AI 推断」，依据比上面两种弱
+  const basis = [occ.intro, occ.responsibility, occ.position_requirement].map(x => S(x, 600)).filter(Boolean).join('\n');
+  if (!basis) return { tasks, from: '职业库 · 岗位职责' };
+  const { parsed: p } = await askJson(`下面是职业「${occ.name}」在职业库里的介绍和要求。列出这个职业最典型的 6–8 项日常工作任务（每项一句动宾短语，≤20 字，是这个职业真实在做的事，不编具体公司和数字）。只返回 JSON：{ "tasks": [""] }
+${basis}`, MODEL, 'Lab · AI 改变 · 推断任务');
+  const inferred = dedupe<{ name: string; detail: string }>((Array.isArray(p?.tasks) ? p.tasks : []).map((x: any) => ({ name: S(x, 40), detail: '' })).filter((x: any) => x.name.length >= 4)).slice(0, 8);
+  return inferred.length >= 3 ? { tasks: inferred, from: '职业介绍 · AI 推断' } : { tasks, from: '职业库 · 岗位职责' };
 }
 
 export type ChangeResult = {
