@@ -5,6 +5,7 @@ import { refreshCompleteness, upsertSalaries } from '@/lib/occupation-store';
 import { spaceOccupationMap } from '@/lib/kg/space-occupation';
 import { orIlike } from '@/lib/pg-filter';
 import { linksOf } from '@/lib/entity-store';
+import { aiExposureTable } from '@/lib/lab-ai-change';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -43,13 +44,16 @@ export async function GET(_req: Request, ctx: Ctx) {
         ? supabaseAdmin.from('occupations').select('id, name, aliases').eq('if_delete', false).or(`name.in.(${nextNames.map(n => JSON.stringify(n)).join(',')}),aliases.ov.{${nextNames.map(n => JSON.stringify(n)).join(',')}}`)
         : Promise.resolve({ data: [] } as any),
     ]);
+    // AI 替代性（职业子实体，2026-11-01）
+    const axTable = await aiExposureTable();
+    const aiExposure = axTable ? (await supabaseAdmin.from(axTable).select('*').eq('occupation_id', id).maybeSingle()).data : null;
     const roleLinks: Record<string, number> = {};
     for (const n of nextNames) { const hit = (linked.data || []).find((x: any) => x.name === n || (x.aliases || []).includes(n)); if (hit) roleLinks[n] = hit.id; }
     const order = (y: string) => SALARY_YEARS.indexOf(y);
     return NextResponse.json({
       success: true, occupation: o,
       salaries: (salaries.data || []).sort((a: any, b: any) => order(a.year) - order(b.year)),
-      regions: regions.data || [], roleLinks,
+      regions: regions.data || [], roleLinks, ai_exposure: aiExposure,
       links: await linksOf('occupation', id).catch(() => []),
       tasks: await (async () => {
         const { data: ts } = await supabaseAdmin.from('typical_tasks').select('*').eq('occupation_id', id).eq('if_delete', false).order('difficulty', { ascending: true, nullsFirst: false }).order('id');

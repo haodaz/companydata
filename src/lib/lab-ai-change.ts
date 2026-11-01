@@ -4,7 +4,7 @@
  *   → AI 暴露分（程序按三类占比算这一行的基准；贴了简历的再按经历加减，每条必须引用简历原文，引不上就丢）
  *   → 强项 / 风险各两条，带下一步 → 接「亲手试一天」（百业空间）和「做一道真活」（任务库）。
  * 数据全来自我们自己的库：职业（631）、典型任务（953）、职责、年限月薪（职友集来源）。不编薪资涨幅；「相关名人」没核实过，不展示。
- * 模型：Claude 优先、千问兜底（askJson 的链）。职业这一层缓存在 lab_ai_change_cache（迁移 056），个人那一层（按简历）不缓存。
+ * 模型：Claude 优先、千问兜底（askJson 的链）。职业这一层是职业实体的 AI 替代性数据（occupation_ai_exposure，搜过就存、不再重算），个人那一层（按简历）不存。
  */
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { askJson } from '@/lib/work/generator';
@@ -81,21 +81,29 @@ const BAND: Record<string, string> = { year_0_2: '1 年以内', year_2_4: '1–3
 type Item3 = { title: string; why: string; next: string };
 type OccLayer = { tasks: ChangeResult['tasks']; task_source: string; new_tasks: ChangeResult['new_tasks']; strengths: Item3[]; risks: Item3[]; verdict: string; baseline: number; cached: boolean };
 const CACHE_VERSION = 1;
+/** 存哪张表：职业子实体 occupation_ai_exposure（迁移 057 改名）；还没改名时用 056 的 lab_ai_change_cache */
+let TABLE: string | null = null;
+export async function aiExposureTable(): Promise<string | null> {
+  if (TABLE) return TABLE;
+  for (const t of ['occupation_ai_exposure', 'lab_ai_change_cache']) { const { error } = await db.from(t).select('occupation_id').limit(1); if (!error) return (TABLE = t); }
+  return null;
+}
 const three = (arr: any): Item3[] => (Array.isArray(arr) ? arr : []).slice(0, 2).map((x: any) => ({ title: S(x?.title, 30), why: S(x?.why, 120), next: S(x?.next, 120) })).filter((x: Item3) => x.title);
 /** 任务清单的指纹：库里的任务变了就重算缓存 */
 const hashOf = (tasks: { name: string }[]) => { let h = 0; const t = tasks.map(x => x.name).join('|'); for (let i = 0; i < t.length; i++) h = (h * 31 + t.charCodeAt(i)) | 0; return `${tasks.length}:${(h >>> 0).toString(36)}`; };
 
 /**
- * 职业这一层（缓存在 lab_ai_change_cache，迁移 056）：任务三分、新增任务、基准分、通用强项风险。
+ * 职业这一层 = 职业实体的「AI 替代性」子实体（occupation_ai_exposure，迁移 056 建、057 改名）：任务三分、新增任务、基准分、通用强项风险。
  * 同一职业第一次分析时调模型并存下来，之后直接读——基准分固定、不再花钱。表还没建时照常现算，只是不缓存。
  */
-async function occLayer(occ: any): Promise<OccLayer> {
+export async function occLayer(occ: any, opts: { count?: boolean } = {}): Promise<OccLayer> {
   const { tasks, from } = await tasksOf(occ);
   if (tasks.length < 3) throw new Error('这个职业在库里的任务太少，换一个相近的职业试试');
   const hash = hashOf(tasks);
-  const { data: hit, error: cacheErr } = await db.from('lab_ai_change_cache').select('*').eq('occupation_id', occ.id).maybeSingle();
+  const table = await aiExposureTable();
+  const { data: hit } = table ? await db.from(table).select('*').eq('occupation_id', occ.id).maybeSingle() : { data: null as any };
   if (hit && hit.version === CACHE_VERSION && hit.task_hash === hash) {
-    db.from('lab_ai_change_cache').update({ hits: (hit.hits || 0) + 1 }).eq('occupation_id', occ.id).then(() => {}, () => {});
+    if (opts.count !== false) db.from(table!).update({ hits: (hit.hits || 0) + 1 }).eq('occupation_id', occ.id).then(() => {}, () => {});
     return { tasks: hit.tasks, task_source: hit.task_source, new_tasks: hit.new_tasks, strengths: hit.strengths, risks: hit.risks, verdict: hit.verdict || '', baseline: hit.baseline, cached: true };
   }
   const { parsed: p, model } = await askJson(`你在帮人看清：AI 会怎么改变「${occ.name}」这一行。只根据下面给的职业资料说话，不编数字、不编公司和人名。全部中文，说人话。
@@ -119,7 +127,7 @@ ${tasks.map((t, i) => `${i + 1}. ${t.name}${t.detail ? `：${t.detail}` : ''}`).
     new_tasks: (Array.isArray(p?.new_tasks) ? p.new_tasks : []).slice(0, 2).map((x: any) => ({ name: S(x?.name, 40), why: S(x?.why, 120) })).filter((x: any) => x.name),
     strengths: three(p?.strengths), risks: three(p?.risks), verdict: S(p?.verdict, 120),
   };
-  if (!cacheErr) await db.from('lab_ai_change_cache').upsert({ occupation_id: occ.id, version: CACHE_VERSION, task_hash: hash, task_source: from, tasks: layer.tasks, new_tasks: layer.new_tasks, strengths: layer.strengths, risks: layer.risks, verdict: layer.verdict, baseline, model, hits: 0, built_at: new Date().toISOString(), updated_at: new Date().toISOString() }).then(() => {}, () => {});
+  if (table) await db.from(table).upsert({ occupation_id: occ.id, version: CACHE_VERSION, task_hash: hash, task_source: from, tasks: layer.tasks, new_tasks: layer.new_tasks, strengths: layer.strengths, risks: layer.risks, verdict: layer.verdict, baseline, model, hits: 0, built_at: new Date().toISOString(), updated_at: new Date().toISOString() }).then(() => {}, () => {});
   return layer;
 }
 

@@ -136,6 +136,7 @@ export default function DbOccupationPage() {
       <StatCards loading={loading && !stats.total} items={[
         { label: '职业总数', value: stats.total || 0, icon: <IdcardOutlined /> },
         { label: '有分年限薪资', value: stats.with_salary || 0, color: '#d97706' },
+        { label: '已算 AI 替代性', value: stats.with_ai_exposure || 0, color: '#6055f5' },
         { label: '数据部门导入', value: stats.imported || 0, color: '#2f54eb' },
         { label: 'AI 生成', value: stats.ai || 0, color: '#8b5cf6' },
         { label: '审核通过', value: stats.reviewed || 0, color: '#16a34a' },
@@ -190,6 +191,11 @@ export default function DbOccupationPage() {
                 </div>
               </Tooltip>;
             } },
+            { title: <Tooltip title="AI 能接手这一行工作的比例（0–100）：按任务分成 AI 接手 / 人机协作 / 人来做，程序按占比算">AI 替代性</Tooltip>, dataIndex: 'ai_exposure', width: 150, render: (v: any) => !v ? <Text type="secondary">—</Text> : <div>
+              <Text strong style={{ color: v.baseline >= 60 ? '#ef4444' : v.baseline >= 40 ? '#6055f5' : '#16a34a' }}>{v.baseline}</Text><Text type="secondary" style={{ fontSize: 12 }}> / 100</Text>
+              <div style={{ display: 'flex', height: 5, borderRadius: 3, overflow: 'hidden', marginTop: 3, width: 110 }}>{[['ai', '#ef4444'], ['hybrid', '#6055f5'], ['human', '#16a34a']].map(([k, c]) => <i key={k} style={{ flex: v[k] || 0, background: c }} />)}</div>
+              <Text type="secondary" style={{ fontSize: 11 }}>AI {v.ai} · 协作 {v.hybrid} · 人 {v.human}</Text>
+            </div> },
             { title: '相关专业', dataIndex: 'relevant_fos_ids', width: 200, render: (v: string[]) => <Space size={2} wrap>{(v || []).slice(0, 3).map(p => <Tag key={p} style={{ margin: 0, fontSize: 11 }}>{p}</Tag>)}{(v || []).length > 3 && <Text type="secondary">+{v.length - 3}</Text>}</Space> },
             { title: '完整度', dataIndex: 'completeness_score', width: 110, render: (v: number) => <Progress percent={v || 0} size="small" strokeColor={(v || 0) >= 80 ? '#16a34a' : (v || 0) >= 50 ? '#d97706' : '#dc2626'} /> },
             { title: '来源', dataIndex: 'source', width: 100, render: (v: string) => v ? <Tag>{SOURCE_LABELS[v] || v}</Tag> : '—' },

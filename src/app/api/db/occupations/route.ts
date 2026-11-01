@@ -5,6 +5,7 @@ import { orIlike, pageParams } from '@/lib/pg-filter';
 import { requireDownload } from '@/lib/download-permission';
 import { upsertOccupation, upsertSalaries } from '@/lib/occupation-store';
 import { SALARY_YEARS } from '@/lib/occupation-fields';
+import { aiExposureTable } from '@/lib/lab-ai-change';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -53,6 +54,14 @@ export async function GET(request: Request) {
       const by = new Map<number, Record<string, number>>();
       for (const s of sal) by.set(s.occupation_id, { ...(by.get(s.occupation_id) || {}), [s.year]: s.salary });
       for (const r of rows) { r.salaries = by.get(r.id) || {}; for (const y of SALARY_YEARS) r[`salary_${y}`] = r.salaries[y] ?? null; }
+      // AI 替代性（职业子实体 occupation_ai_exposure，2026-11-01）：基准分 + 三类任务数
+      const table = await aiExposureTable();
+      if (table) {
+        const ax: any[] = [];
+        for (let i = 0; i < ids.length; i += 500) { const { data: part } = await supabaseAdmin.from(table).select('occupation_id, baseline, tasks, built_at').in('occupation_id', ids.slice(i, i + 500)); ax.push(...(part || [])); }
+        const am = new Map(ax.map(a => [a.occupation_id, a]));
+        for (const r of rows) { const a: any = am.get(r.id); r.ai_exposure = a ? { baseline: a.baseline, ai: (a.tasks || []).filter((t: any) => t.kind === 'ai').length, hybrid: (a.tasks || []).filter((t: any) => t.kind === 'hybrid').length, human: (a.tasks || []).filter((t: any) => t.kind === 'human').length, built_at: a.built_at } : null; r.ai_exposure_baseline = a?.baseline ?? null; }
+      }
     }
 
     let stats: Record<string, number> | undefined;
@@ -61,7 +70,9 @@ export async function GET(request: Request) {
       const { data: all } = await selectAll(() => supabaseAdmin.from('occupations').select('id, career_category, recent_year_monthly_salary, human_review_status, source, completeness_score').eq('if_delete', false).order('id'));
       const { data: salAll } = await selectAll(() => supabaseAdmin.from('occupation_salaries').select('occupation_id').eq('if_delete', false).order('id'));
       const withSal = new Set((salAll || []).map((s: any) => s.occupation_id));
-      stats = { total: 0, reviewed: 0, with_salary: 0, imported: 0, ai: 0, avg_completeness: 0 };
+      stats = { total: 0, reviewed: 0, with_salary: 0, imported: 0, ai: 0, avg_completeness: 0, with_ai_exposure: 0 };
+      const axTable = await aiExposureTable();
+      if (axTable) { const { count } = await supabaseAdmin.from(axTable).select('occupation_id', { count: 'exact', head: true }); stats.with_ai_exposure = count || 0; }
       categories = {};
       let comp = 0;
       for (const r of all || []) {

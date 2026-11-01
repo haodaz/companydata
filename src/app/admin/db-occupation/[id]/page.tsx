@@ -323,6 +323,7 @@ export default function OccupationDetailPage() {
           { key: 'info', label: '职业信息', children: infoTab },
           { key: 'graph', label: `发展图谱${o.career_map?.skills?.length ? '' : '（未生成）'}`, children: <OccupationCareerGraph graph={o.career_map} uses={skillUses} roleLinks={d.roleLinks || {}} onOpenRole={rid => router.push(`/admin/db-occupation/${rid}?tab=graph`)} onQueryRole={queryRole} /> },
           { key: 'tasks', label: `典型任务${(d.tasks || []).length ? `（${d.tasks.length}）` : ''}`, children: <OccupationTasksTab tasks={d.tasks || []} skills={o.career_map?.skills || []} busy={busy === 'tasks'} onGenerate={() => runAgent('tasks')} /> },
+          { key: 'ai', label: `AI 替代性${(d as any).ai_exposure ? `（${(d as any).ai_exposure.baseline}）` : '（未算）'}`, children: <AiExposureTab ax={(d as any).ai_exposure} /> },
           { key: 'context', label: `场所与工具${(d.links || []).filter((l: any) => l.other_type === 'place' || l.other_type === 'item').length ? `（${(d.links || []).filter((l: any) => l.other_type === 'place' || l.other_type === 'item').length}）` : ''}`, children: <OccupationContextTab links={(d.links || []).filter((l: any) => l.dir === 'out')} skills={o.career_map?.skills || []} busy={busy === 'context'} onGenerate={() => runAgent('context')} /> },
           { key: 'salary', label: `薪资${d.regions.length ? `（${d.regions.length} 地）` : ''}`, children: salaryTab },
           { key: 'companies', label: '热门公司', children: <CompaniesTab id={id} router={router} /> },
@@ -351,6 +352,37 @@ export default function OccupationDetailPage() {
           </Row>
         </Form>
       </Modal>
+    </div>
+  );
+}
+
+/** AI 替代性（职业子实体 occupation_ai_exposure，2026-11-01）：任务三分、基准分、新增任务、强项风险；百业「AI 与我的工作」和全库批量共用这一份 */
+function AiExposureTab({ ax }: { ax: any }) {
+  if (!ax) return <div style={{ padding: '24px 4px', color: '#888', lineHeight: 1.8 }}>还没算。百业「AI 与我的工作」第一次有人查到这个职业时会算并存下来，或者跑全库批量（scripts/occupation-ai-exposure.mts）。</div>;
+  const K: Record<string, { t: string; c: string }> = { ai: { t: 'AI 接手', c: '#ef4444' }, hybrid: { t: '人机协作', c: '#6055f5' }, human: { t: '人来做', c: '#16a34a' } };
+  const tasks: any[] = ax.tasks || [];
+  return (
+    <div style={{ padding: '8px 4px', fontSize: 13.5, lineHeight: 1.7 }}>
+      <div style={{ display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap', marginBottom: 14 }}>
+        <div><div style={{ fontSize: 40, fontWeight: 800, lineHeight: 1, color: ax.baseline >= 60 ? '#ef4444' : ax.baseline >= 40 ? '#6055f5' : '#16a34a' }}>{ax.baseline}<span style={{ fontSize: 14, color: '#999', fontWeight: 400 }}> / 100</span></div><div style={{ color: '#888', fontSize: 12 }}>AI 替代性（AI 接手算 1、人机协作算 0.5、人来做算 0，按任务占比）</div></div>
+        <div style={{ flex: 1, minWidth: 260 }}>
+          <div style={{ display: 'flex', height: 10, borderRadius: 5, overflow: 'hidden' }}>{Object.keys(K).map(k => <i key={k} style={{ flex: tasks.filter(t => t.kind === k).length, background: K[k].c }} />)}</div>
+          <div style={{ display: 'flex', gap: 14, marginTop: 6, color: '#666', fontSize: 12.5 }}>{Object.keys(K).map(k => <span key={k}><b style={{ color: K[k].c }}>{tasks.filter(t => t.kind === k).length}</b> {K[k].t}</span>)}</div>
+        </div>
+      </div>
+      {ax.verdict && <div style={{ padding: '8px 12px', background: '#f6f5ff', borderRadius: 8, marginBottom: 14 }}>{ax.verdict}</div>}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 12 }}>
+        {Object.keys(K).map(k => <div key={k}>
+          <div style={{ fontWeight: 700, color: K[k].c, marginBottom: 6 }}>{K[k].t}</div>
+          {tasks.filter(t => t.kind === k).map((t, i) => <div key={i} style={{ border: '1px solid #eee', borderLeft: `3px solid ${K[k].c}`, borderRadius: 6, padding: '6px 10px', marginBottom: 6 }}><b>{t.name}</b>{t.how && <div style={{ color: '#666', fontSize: 12.5 }}>{t.how}</div>}</div>)}
+        </div>)}
+      </div>
+      {!!(ax.new_tasks || []).length && <><div style={{ fontWeight: 700, margin: '14px 0 6px' }}>AI 时代新增的任务</div>{ax.new_tasks.map((t: any, i: number) => <div key={i}>· <b>{t.name}</b> <span style={{ color: '#666' }}>{t.why}</span></div>)}</>}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 14 }}>
+        <div><div style={{ fontWeight: 700, color: '#16a34a', marginBottom: 4 }}>AI 拿不走的</div>{(ax.strengths || []).map((x: any, i: number) => <div key={i} style={{ marginBottom: 6 }}><b>{x.title}</b>：{x.why}<div style={{ color: '#4c43c9', fontSize: 12.5 }}>下一步：{x.next}</div></div>)}</div>
+        <div><div style={{ fontWeight: 700, color: '#ef4444', marginBottom: 4 }}>最先被 AI 接手的</div>{(ax.risks || []).map((x: any, i: number) => <div key={i} style={{ marginBottom: 6 }}><b>{x.title}</b>：{x.why}<div style={{ color: '#4c43c9', fontSize: 12.5 }}>下一步：{x.next}</div></div>)}</div>
+      </div>
+      <div style={{ color: '#999', fontSize: 12, marginTop: 14 }}>依据：{ax.task_source || '—'} · 模型 {ax.model || '—'} · 生成于 {ax.built_at ? new Date(ax.built_at).toLocaleString('zh-CN', { hour12: false }) : '—'} · 被查 {ax.hits || 0} 次</div>
     </div>
   );
 }
