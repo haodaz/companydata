@@ -240,7 +240,9 @@ function Shell({ children }: { children: React.ReactNode }) {
   const NAV = [
     { k: '/lab', t: '首页', on: (p: string) => p === '/lab' },
     { k: '/lab/spaces', t: '百业工厂', on: (p: string) => p.startsWith('/lab/spaces') || p.startsWith('/lab/studio') || p.startsWith('/lab/assets') || p.startsWith('/lab/logic') || p.startsWith('/lab/admin') },
-    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || /^\/lab\/(?!spaces|studio|gallery|assets|logic|beta|admin|me|cert|no-access)[^/]+$/.test(p) },
+    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || /^\/lab\/(?!spaces|studio|gallery|assets|logic|beta|admin|me|cert|no-access|ai-change)[^/]+$/.test(p) },
+    // AI 与我的工作（2026-11-01）：输入职位 / JD / 简历，看 AI 会怎么改变这份工作，再去试一天、做一道真活
+    { k: '/lab/ai-change', t: 'AI 与我的工作', on: (p: string) => p.startsWith('/lab/ai-change') },
     // 我的证书：游客也有（按浏览器本地的访客编号攒，里面有示范证书），登录后并上账号的
     { k: '/lab/me', t: '我的证书', on: (p: string) => p.startsWith('/lab/me') || p.startsWith('/lab/cert') },
   ];
