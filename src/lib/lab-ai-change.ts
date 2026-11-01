@@ -82,11 +82,12 @@ type Item3 = { title: string; why: string; next: string };
 type OccLayer = { tasks: ChangeResult['tasks']; task_source: string; new_tasks: ChangeResult['new_tasks']; strengths: Item3[]; risks: Item3[]; verdict: string; baseline: number; cached: boolean };
 const CACHE_VERSION = 1;
 /** 存哪张表：职业子实体 occupation_ai_exposure（迁移 057 改名）；还没改名时用 056 的 lab_ai_change_cache */
-let TABLE: string | null = null;
-export async function aiExposureTable(): Promise<string | null> {
-  if (TABLE) return TABLE;
-  for (const t of ['occupation_ai_exposure', 'lab_ai_change_cache']) { const { error } = await db.from(t).select('occupation_id').limit(1); if (!error) return (TABLE = t); }
-  return null;
+// 表名只记 1 分钟，读写报「表不存在」也会重新探测——跑批中途改名不会掉数据（11-01 改名时踩过）
+let TABLE: { name: string; at: number } | null = null;
+export async function aiExposureTable(fresh = false): Promise<string | null> {
+  if (TABLE && !fresh && Date.now() - TABLE.at < 60_000) return TABLE.name;
+  for (const t of ['occupation_ai_exposure', 'lab_ai_change_cache']) { const { error } = await db.from(t).select('occupation_id').limit(1); if (!error) { TABLE = { name: t, at: Date.now() }; return t; } }
+  TABLE = null; return null;
 }
 const three = (arr: any): Item3[] => (Array.isArray(arr) ? arr : []).slice(0, 2).map((x: any) => ({ title: S(x?.title, 30), why: S(x?.why, 120), next: S(x?.next, 120) })).filter((x: Item3) => x.title);
 /** 任务清单的指纹：库里的任务变了就重算缓存 */
@@ -100,8 +101,9 @@ export async function occLayer(occ: any, opts: { count?: boolean } = {}): Promis
   const { tasks, from } = await tasksOf(occ);
   if (tasks.length < 3) throw new Error('这个职业在库里的任务太少，换一个相近的职业试试');
   const hash = hashOf(tasks);
-  const table = await aiExposureTable();
-  const { data: hit } = table ? await db.from(table).select('*').eq('occupation_id', occ.id).maybeSingle() : { data: null as any };
+  let table = await aiExposureTable();
+  let { data: hit, error: readErr } = table ? await db.from(table).select('*').eq('occupation_id', occ.id).maybeSingle() : { data: null as any, error: null as any };
+  if (readErr) { table = await aiExposureTable(true); ({ data: hit } = table ? await db.from(table).select('*').eq('occupation_id', occ.id).maybeSingle() : { data: null as any }); }
   if (hit && hit.version === CACHE_VERSION && hit.task_hash === hash) {
     if (opts.count !== false) db.from(table!).update({ hits: (hit.hits || 0) + 1 }).eq('occupation_id', occ.id).then(() => {}, () => {});
     return { tasks: hit.tasks, task_source: hit.task_source, new_tasks: hit.new_tasks, strengths: hit.strengths, risks: hit.risks, verdict: hit.verdict || '', baseline: hit.baseline, cached: true };
@@ -127,6 +129,7 @@ ${tasks.map((t, i) => `${i + 1}. ${t.name}${t.detail ? `：${t.detail}` : ''}`).
     new_tasks: (Array.isArray(p?.new_tasks) ? p.new_tasks : []).slice(0, 2).map((x: any) => ({ name: S(x?.name, 40), why: S(x?.why, 120) })).filter((x: any) => x.name),
     strengths: three(p?.strengths), risks: three(p?.risks), verdict: S(p?.verdict, 120),
   };
+  table = await aiExposureTable();
   if (table) await db.from(table).upsert({ occupation_id: occ.id, version: CACHE_VERSION, task_hash: hash, task_source: from, tasks: layer.tasks, new_tasks: layer.new_tasks, strengths: layer.strengths, risks: layer.risks, verdict: layer.verdict, baseline, model, hits: 0, built_at: new Date().toISOString(), updated_at: new Date().toISOString() }).then(() => {}, () => {});
   return layer;
 }
