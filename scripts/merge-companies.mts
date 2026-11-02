@@ -7,6 +7,8 @@ process.loadEnvFile('.env.local');
 const { supabaseAdmin: db } = await import('@/lib/supabase');
 const opt = (k: string) => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? Number(process.argv[i + 1]) : 0; };
 const KEEP = opt('keep'), DROP = opt('drop'), APPLY = process.argv.includes('--apply');
+// --no-fill：只挪关联、被并的软删（数据部门给对应关系时的口径），不拿被并那条的字段去补保留那条，只把它的名字加进别名方便搜
+const NO_FILL = process.argv.includes('--no-fill');
 if (!KEEP || !DROP || KEEP === DROP) { console.error('need --keep and --drop'); process.exit(1); }
 
 // 所有挂 company_id 的表（按迁移文件梳理，10-27）
@@ -14,7 +16,7 @@ const REFS: [string, string][] = [
   ['jobs', 'company_id'], ['url_sources', 'company_id'], ['url_journal', 'company_id'], ['company_crawl_logs', 'company_id'], ['job_crawl_logs', 'company_id'],
   ['company_deep_research', 'company_id'], ['competition_searches', 'company_id'], ['competitions', 'organizer_company_id'], ['demand_signals', 'company_id'],
   ['occupation_signals', 'company_id'], ['work_external_simulations', 'company_id'], ['work_question_bank', 'company_id'], ['work_tasks', 'company_id'],
-  ['ws_orgs', 'company_id'], ['research_products', 'supplier_id'],
+  ['ws_orgs', 'company_id'], ['research_products', 'supplier_id'], ['companies', 'parent_company_id'],
 ];
 const SUBS = ['company_executives', 'company_financings', 'company_news', 'company_products'];
 
@@ -26,12 +28,12 @@ console.log(`保留 #${KEEP} ${k.name}（完整度 ${k.completeness_score}）  �
 const empty = (v: any) => v == null || v === '' || (Array.isArray(v) && !v.length) || (typeof v === 'object' && !Array.isArray(v) && !Object.keys(v).length);
 const SKIP = new Set(['id', 'external_id', 'name', 'created_at', 'updated_at', 'if_delete', 'human_review_status', 'human_review_at', 'human_review_by', 'human_review_note', 'human_locked_fields', 'completeness_score']);
 const fill: Record<string, any> = {};
-for (const [c, v] of Object.entries(d)) if (!SKIP.has(c) && !empty(v) && empty(k[c])) fill[c] = v;
+if (!NO_FILL) for (const [c, v] of Object.entries(d)) if (!SKIP.has(c) && !empty(v) && empty(k[c])) fill[c] = v;
 // 别名 / 来源合并
 const aliases = [...new Set([...(k.aliases || []), ...(d.aliases || []), d.name, d.brief_name].filter(Boolean))].filter(a => a !== k.name);
 fill.aliases = aliases;
-if (d.source && k.source && d.source !== k.source) fill.source = [...new Set(`${k.source}；${d.source}`.split('；').filter(Boolean))].join('；');
-if (d.profile_source && k.profile_source) fill.profile_source = { ...d.profile_source, ...k.profile_source };
+if (!NO_FILL && d.source && k.source && d.source !== k.source) fill.source = [...new Set(`${k.source}；${d.source}`.split('；').filter(Boolean))].join('；');
+if (!NO_FILL && d.profile_source && k.profile_source) fill.profile_source = { ...d.profile_source, ...k.profile_source };
 console.log('补字段：', Object.keys(fill).join('、') || '无');
 
 for (const [t, col] of REFS) {
