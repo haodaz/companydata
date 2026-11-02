@@ -120,9 +120,9 @@ ${opts.audit?.length ? `## 分段审计笔记（边看边记的，总评要和�
  * 五个子项各 0–100 + 指到时刻的证据；硬指标（问几次、追问几次、采纳几次、交付物里原样来自 AI 的比例）程序算。没用 AI 的不打分（score = null）。
  */
 export const AI_USE_ITEMS = [
-  { key: 'ask', title: '提问', desc: '会不会拆问题、给足上下文（材料里的数字、约束）、追问到点上' },
-  { key: 'verify', title: '核验', desc: 'AI 的回答有没有对照材料核对，发现 AI 说错、说漏、编数字' },
-  { key: 'select', title: '取舍', desc: '采纳什么、丢掉什么，理由站得住；不照单全收' },
+  { key: 'ask', title: '提问', desc: '会不会拆问题、给足上下文（材料里的数字、约束）、追问到点上；更好的是让 AI 挑战题目本身——这道题真正要解决什么、漏了哪些相关方、约束和前提' },
+  { key: 'verify', title: '核验', desc: 'AI 的回答有没有对照材料核对，发现 AI 说错、说漏、编数字；更好的是反向验证——让 AI 反驳自己的结论、换一种算法或口径复算' },
+  { key: 'select', title: '取舍', desc: '采纳什么、丢掉什么，理由站得住；不照单全收；清楚自己的交付哪里还不可靠、再给时间先改哪里' },
   { key: 'divide', title: '分工', desc: '让 AI 干体力活（整理、起草、算），关键判断自己做' },
   { key: 'integrate', title: '整合', desc: 'AI 的内容改写融进自己的交付物，口径一致，不是原样贴' },
 ] as const;
@@ -175,6 +175,7 @@ export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: 
   const standard = pol ? { stance: STANCE_LABEL[pol.stance.level], summary: pol.summary, weights: pol.weights } : null;
   if (!chat.length && !outside.length) return { score: null, level: null, verdict: pol && pol.stance.level === 'ai_native' ? '这次没用 AI：这家企业期待深度用 AI，这一点要留意。' : '这次没用 AI：全程自己做的。', items: [], stats, standard, violations: [] };
   const flags = hardRedFlags(chat);
+  const nextStep = nextStepOf(events);
   const lines = ev.filter(e => ['open_material', 'ai_ask', 'adopt', 'paste', 'edit', 'submit', 'screen'].includes(e.type) || /^plugin_/.test(e.type)).slice(0, 300)
     .map(e => `[${fmt(e.t)}] ${e.type}${e.id ? ' ' + e.id : ''}${e.chars ? ` ${e.chars}字` : ''}${e.delta != null ? ` Δ${e.delta}` : ''}${e.note ? ' ' + s(e.note, 100) : ''}`);
   const prompt = `你在评一个候选人的「AI 使用能力」：他做一道真实业务任务时，怎么用 AI 助手。企业要招的是会用 AI 的人——不是不用，也不是全交给 AI，而是把 AI 用对。
@@ -189,7 +190,10 @@ ${chat.slice(0, 40).map(c => `[${fmt(c.t)}] 问：${s(c.q, 400)}\n   答：${s(c
 ${lines.join('\n')}
 ## 交付物（节选）
 ${deliverable.slice(0, 2500)}
-
+${nextStep ? `## 交卷时他写的「如果再给一天，先改哪里」（选填）
+${s(nextStep, 600)}
+（算进「取舍」：说得出自己哪里还不可靠、改的方向有依据，加分；空泛的不加不扣）
+` : ''}
 ${pol ? `## 这家企业、这个岗位的 AI 使用标准（照它评，不要用你自己的通用口径）
 企业对 AI 的态度：${STANCE_LABEL[pol.stance.level]}（${pol.stance.why}）
 各环节：${pol.stages.map(x => `${x.stage}【${USE_LABEL[x.use]}】${x.why}`).join('；')}
@@ -218,11 +222,17 @@ ${pol ? '对照标准：在「不能用 / 慎用」的环节把判断整个交�
   return { score, raw_score: raw, level: score >= 90 ? 'L4' : score >= 75 ? 'L3' : score >= 60 ? 'L2' : 'L1', verdict: s(p.verdict, 180), items, stats, standard, violations };
 }
 
+/** 交卷时选填的「如果再给一天，先改哪里」：存成事件 next_step（2026-11-02，借潜历「迭代与判断」的一问） */
+export function nextStepOf(events: WorkEvent[]): string {
+  const e = [...events].reverse().find(x => x.type === 'next_step' && (x as any).text);
+  return e ? String((e as any).text).slice(0, 1000) : '';
+}
+
 /** 整份报告：结果 + 过程 + AI 使用能力 + 和 AI 基线逐条比 */
 export async function buildReport(task: WorkTask, baseline: { result?: ResultReport } | null, deliverable: string, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], institution?: string, audit?: any[], policy?: AiPolicy | null) {
   const [result, process, ai_use] = await Promise.all([gradeResult(task, deliverable, { institution, who: '候选人' }), analyzeProcess(task, events, aiChat, deliverable, { institution, audit }),
     analyzeAiUse(task, events, aiChat, deliverable, { institution, policy }).catch(e => { console.warn('[work-grade] AI 使用能力没评出来', String(e?.message).slice(0, 120)); return null; })]);
   const b = baseline?.result;
   const compare = b ? { baseline_total: b.total, delta: result.total - b.total, items: result.items.map(i => ({ id: i.id, title: i.title, mine: i.score, baseline: b.items.find(x => x.id === i.id)?.score ?? null })) } : null;
-  return { result, process, ai_use, compare, generated_at: new Date().toISOString() };
+  return { result, process, ai_use, compare, next_step: nextStepOf(events) || undefined, generated_at: new Date().toISOString() };
 }

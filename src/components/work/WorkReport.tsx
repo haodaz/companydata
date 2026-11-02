@@ -36,6 +36,7 @@ export function WorkReport({ report, participant }: { report: any; participant?:
       </div>
       {r.items?.length >= 2 && <Overview items={r.items} cmp={c} />}
       {u?.score != null && <AiUse u={u} />}
+      {report.next_step && <Card title="如果再给一天，先改哪里（候选人交卷时写的）"><div style={{ fontSize: 13.5, lineHeight: 1.75, whiteSpace: 'pre-wrap' }}>{report.next_step}</div></Card>}
       {report.recording && <Card title="录屏回放 · 用自己的软件做的">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14, alignItems: 'start' }}>
           <video controls preload="metadata" src={report.recording.url} style={{ width: '100%', borderRadius: 10, background: '#000' }} />

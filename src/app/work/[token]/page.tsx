@@ -284,6 +284,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
 
 
   const [arm, setArm] = useState(false);
+  const [nextStep, setNextStep] = useState('');   // 交卷前选填：如果再给一天，先改哪里
   const dark = false;   // 代码台也用浅色（2026-10-25）：整页一个色调，别忽然深一块
   const [localErr, setLocalErr] = useState('');
   // 布局（2026-10-25，王刚：作答区别太固定，要像 AI workspace）：材料栏可收、材料面板高度可拖 / 占满 / 收成一条 / 关闭、AI 助手是可收的卡片
@@ -321,8 +322,11 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const miniBtn: React.CSSProperties = { border: `1px solid ${line}`, background: 'transparent', color: ink2, borderRadius: 6, padding: '2px 8px', cursor: 'pointer', font: 'inherit', fontSize: 12 };
   const submit = () => {
     if (mode === 'open' && !recording) { setLocalErr('先录一段屏再交卷：点「开始录屏」，做完点停止'); setTimeout(() => setLocalErr(''), 5000); return; }
-    if (!arm) { setArm(true); if (emptyParts.length) { setLocalErr(`${emptyParts.map(p => `${p.id} ${p.title}`).join('、')} 还没动笔。确定要交就再点一次交卷`); setTimeout(() => setLocalErr(''), 6000); } setTimeout(() => setArm(false), 6000); return; }
-    setArm(false); const events = buf.current.splice(0);
+    // 第一次点：展开确认条（未动笔的交付物提醒 + 选填「再给一天先改哪里」），不自动收起，免得写到一半没了
+    if (!arm) { setArm(true); if (emptyParts.length) setLocalErr(`${emptyParts.map(p => `${p.id} ${p.title}`).join('、')} 还没动笔。确定要交就点「确认交卷」`); return; }
+    setArm(false); setLocalErr('');
+    if (nextStep.trim()) ev('next_step', { text: nextStep.trim().slice(0, 1000) });
+    const events = buf.current.splice(0);
     // 白板：交卷前把每张画板导出 PNG 存起来（给出任务的人看），文字版照样进交付内容
     const boards = parts.filter(p => p.module === 'board' && (ps[p.id]?.board.elements || []).some((e: any) => !e.isDeleted));
     if (!boards.length) { onSubmit(deliverable, events); return; }
@@ -361,12 +365,21 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
         <button onClick={() => setTour(0)} title="界面说明" style={{ ...viewBtn(false), border: `1px solid ${line}`, fontWeight: 700, fontSize: 13 }}>?</button>
         <div data-tour="clock" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, fontSize: 13.5, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{fmt(now)}{!narrow && <span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span>}</div>
-        <button onClick={submit} disabled={grading} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '再点一次确认交卷' : '交卷 →'}</button>
+        <button onClick={submit} disabled={grading} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '确认交卷' : '交卷 →'}</button>
         </div>
       </div>
       {tour != null && <Tour step={tour} steps={TOUR_STEPS.filter(t => mode !== 'open' || t.key !== 'tabs')} onStep={setTour} onDone={() => { setTour(null); try { localStorage.setItem('work-tour-done', '1'); } catch {} }} />}
       {grading && <div style={{ padding: '12px 18px', background: '#f3f2ff', color: '#4c43c9', fontSize: 13.5 }}>交卷了。正在逐条核对交付物、回看过程、和 AI 基线比——大约 1–2 分钟，别关页面。</div>}
       {(error || localErr) && !grading && <div style={{ padding: '10px 18px', background: '#fff1f0', color: '#c0392b', fontSize: 13.5 }}>{error || localErr}</div>}
+      {arm && !grading && <div style={{ padding: '12px 18px', background: dark ? '#1c1b2e' : '#f6f5ff', borderBottom: `1px solid ${line}`, color: dark ? '#e6e8f0' : '#1a1a2e' }}>
+        <div style={{ fontSize: 13.5, fontWeight: 600, marginBottom: 6 }}>交卷前最后一问（选填）：如果再给你一天，你会先改哪里、为什么？</div>
+        <textarea className="wk-ta" value={nextStep} onChange={e => setNextStep(e.target.value)} rows={narrow ? 3 : 2} placeholder="比如：第三部分的市场规模是 AI 给的估算，我只核了一个来源，会先找两份行业报告交叉验证" style={{ width: '100%', boxSizing: 'border-box', border: `1px solid ${line}`, borderRadius: 8, padding: '8px 10px', font: 'inherit', fontSize: 13.5, resize: 'vertical', background: dark ? '#16171f' : '#fff', color: 'inherit' }} />
+        <div style={{ display: 'flex', gap: 10, marginTop: 8, alignItems: 'center' }}>
+          <button onClick={submit} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, background: '#c0392b' }}>确认交卷</button>
+          <button onClick={() => { setArm(false); setLocalErr(''); }} style={{ ...miniBtn, padding: '6px 12px', fontSize: 13 }}>再改改</button>
+          <span style={{ fontSize: 12, color: ink2 }}>交了就不能改；这一问不写也行</span>
+        </div>
+      </div>}
       <div ref={boxRef} style={{ display: 'flex', flexDirection: narrow ? 'column' : 'row', height: narrow ? (boxH ?? 'calc(100dvh - 110px)') : 'calc(100vh - 52px)' }}>
         {/* 材料包 · 要交什么（可收） */}
         {(narrow ? pane === 'mat' && !mat : leftOpen) && <aside data-tour="materials" style={{ width: narrow ? undefined : 272, flex: narrow ? 1 : 'none', borderRight: narrow ? undefined : `1px solid ${line}`, background: dark ? '#16171f' : '#fafbff', color: dark ? '#d6d8e6' : undefined, padding: 14, overflow: 'auto', minHeight: 0 }}>
@@ -456,7 +469,7 @@ const TOUR_STEPS: TourStep[] = [
   { key: 'materials', title: '材料包', text: '题目给你的材料都在这里，点一份在中间看。材料面板可以拖高、占满、收成一条或关掉。「要交什么」和「任务书」也在这一栏。' },
   { key: 'tabs', title: '作答区有几个标签，都要做', text: '每个交付物一个标签（文档 / 表格 / 代码 / 画布），切着做。小圆点变绿表示动过笔；20 分钟还没打开的会提醒你。' },
   { key: 'ai', title: 'AI 助手', text: '随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。它看得到你当前打开的材料；回答可以一键放进当前交付物。' },
-  { key: 'clock', title: '时间和交卷', text: '右上角看用时；到时不强制停表，但会记录。做完点「交卷」，再点一次确认——交了就不能改。' },
+  { key: 'clock', title: '时间和交卷', text: '右上角看用时；到时不强制停表，但会记录。做完点「交卷」，可以选填「再给一天先改哪里」，再点确认——交了就不能改。' },
   { key: 'views', title: '两侧可以收起', text: '文件夹 = 材料栏，星芒 = AI 助手，点一下收起或展开，给作答区腾地方。随时点「?」再看这份说明。' },
 ];
 
