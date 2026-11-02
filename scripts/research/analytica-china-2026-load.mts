@@ -99,7 +99,11 @@ const norm = (s: string) => (s || '').toLowerCase().replace(/[\s\-_/·（）()]+
 const ids = Object.keys(J.details).filter(id => J.details[id]?.detail);
 const todo = LIMIT ? ids.slice(0, LIMIT) : ids;
 const stat = { companies: 0, matched: 0, created: 0, products: 0, images: 0, how: {} as Record<string, number>, kinds: {} as Record<string, number> };
-for (const [n, id] of todo.entries()) {
+let done = 0;
+// 3 路并行（线上共用库，总并发不超过 3–4）：一家展商 + 它的商品为一个单位
+const queue = [...todo];
+async function worker() { while (queue.length) { const id = queue.shift()!; try { await one(id); } catch (e: any) { console.log(`  ${id} 出错：${e.message}`); } } }
+async function one(id: string) {
   const m = J.members[id] || {}, d = J.details[id].detail;
   const cn = CJK.test(d.title || '') ? d.title : null, en = d.etitle || (!cn ? d.title : null);
   const cats = [...new Set(mapCats(d.products || m.products).map(c => c.cat).filter(Boolean) as string[])];
@@ -124,7 +128,7 @@ for (const [n, id] of todo.entries()) {
         source: '科研仪器', supplier_categories: cats, supplier_exhibitions: [EXHIBITION], human_review_status: 'review',
         profile_source: { introduction: PAGE(id), official_website: PAGE(id) },
       }).select('id').single();
-      if (error) { console.log(`  建档失败 ${cn || en}：${error.message}`); continue; }
+      if (error) { console.log(`  建档失败 ${cn || en}：${error.message}`); return; }
       cid = data.id; stat.created++;
       await ensureCompanyFloraId(data.id).catch(() => {});
     }
@@ -163,7 +167,8 @@ for (const [n, id] of todo.entries()) {
       if (imgs.length) { await db.from('research_products').update({ images: imgs }).eq('id', saved.id); stat.images += imgs.length; }
     }
   }
-  if ((n + 1) % 50 === 0) console.log(`${n + 1}/${todo.length}：展商已在库 ${stat.matched}、新建 ${stat.created}；商品 ${stat.products}、图 ${stat.images}`);
+  if (++done % 50 === 0) console.log(`${done}/${todo.length}：展商已在库 ${stat.matched}、新建 ${stat.created}；商品 ${stat.products}、图 ${stat.images}`);
 }
+await Promise.all([worker(), worker(), worker()]);
 console.log(JSON.stringify(stat));
 fs.writeFileSync('reports/analytica-china-2026-load.json', JSON.stringify({ at: new Date().toISOString(), apply: APPLY, stat }, null, 1));
