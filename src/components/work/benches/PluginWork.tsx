@@ -17,6 +17,10 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
   const [err, setErr] = useState('');
   const [now, setNow] = useState(Date.now());
   const [open, setOpen] = useState<string | null>(null);
+  // 最后一问（选填）：如果再给一天，先改哪里；和交付说明一样边写边存
+  const [nextStep, setNextStep] = useState<string | null>(null);
+  const [nextSaved, setNextSaved] = useState('');
+  const nextTimer = useRef<any>(null);
   const timer = useRef<any>(null);
   const editing = useRef(false);
 
@@ -26,6 +30,7 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
     setSt(j);
     if (j.submitted) { onSubmitted(); return; }
     if (!editing.current) setDraft(j.deliverable || '');
+    setNextStep(v => v ?? (j.next_step || ''));
   }, [code, onSubmitted]);
   useEffect(() => { poll(); const a = setInterval(poll, 5000); const b = setInterval(() => setNow(Date.now()), 1000); return () => { clearInterval(a); clearInterval(b); }; }, [poll]);
 
@@ -35,6 +40,14 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
     timer.current = setTimeout(async () => {
       const r = await fetch(`/api/work/plugin/${code}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable: v }) }).then(x => x.json()).catch(() => ({ ok: false }));
       setSaved(r.ok ? '已保存（插件侧边栏里也能看到）' : '没保存上，检查网络'); editing.current = false;
+    }, 1200);
+  };
+  const saveNext = (v: string) => {
+    setNextStep(v); setNextSaved('保存中…');
+    clearTimeout(nextTimer.current);
+    nextTimer.current = setTimeout(async () => {
+      const r = await fetch(`/api/work/plugin/${code}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ next_step: v }) }).then(x => x.json()).catch(() => ({ ok: false }));
+      setNextSaved(r.ok ? '已保存' : '没保存上，检查网络');
     }, 1200);
   };
   const submit = async () => {
@@ -100,11 +113,20 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
         <div style={k}>④ 交付说明（和插件侧边栏是同一份）</div>
         <div style={{ fontSize: 13, color: '#666', marginBottom: 6 }}>贴上交付物链接（在线文档 / 设计稿 / 网盘），写清结论、关键数字、口径和假设。</div>
         <textarea value={draft ?? ''} onChange={e => save(e.target.value)} onFocus={() => { editing.current = true; }} onBlur={() => { if (!timer.current) editing.current = false; }} rows={8} placeholder={'交付物链接：\n结论：\n假设与口径：'} style={{ width: '100%', border: '1px solid #d9d9e3', borderRadius: 8, padding: '8px 10px', font: 'inherit', resize: 'vertical' }} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 8, flexWrap: 'wrap' }}>
-          <button style={{ ...primary, background: '#cf1322' }} onClick={submit} disabled={busy}>{busy ? '交卷中…' : '结束作答（交卷）'}</button>
-          <span style={{ fontSize: 12.5, color: '#888' }}>{saved}</span>
-          {err && <span style={{ color: '#cf1322', fontSize: 13 }}>{err}</span>}
-        </div>
+        {saved && <div style={{ fontSize: 12.5, color: '#888', marginTop: 4 }}>{saved}</div>}
+      </div>
+
+      <div style={{ ...card, marginTop: 14, borderStyle: 'dashed' }}>
+        <div style={k}>⑤ 最后一问 · 选填</div>
+        <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 4 }}>如果再给你一天，你会先改哪里、为什么？</div>
+        <div style={{ fontSize: 13, color: '#666', marginBottom: 6 }}>有余力就写，不写不扣分。写清楚交付里哪里还不够可靠、你会先补什么，算进评价。</div>
+        <textarea value={nextStep ?? ''} onChange={e => saveNext(e.target.value)} rows={3} placeholder="比如：第二部分的转化率是 AI 按行业均值估的，我只核了一份材料，会先拉真实漏斗数据再算一遍" style={{ width: '100%', border: '1px solid #d9d9e3', borderRadius: 8, padding: '8px 10px', font: 'inherit', resize: 'vertical', boxSizing: 'border-box' }} />
+        {nextSaved && <div style={{ fontSize: 12.5, color: '#888', marginTop: 4 }}>{nextSaved}</div>}
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 16, flexWrap: 'wrap' }}>
+        <button style={{ ...primary, background: '#cf1322' }} onClick={submit} disabled={busy}>{busy ? '交卷中…' : '结束作答（交卷）'}</button>
+        {err && <span style={{ color: '#cf1322', fontSize: 13 }}>{err}</span>}
       </div>
     </div>
   );

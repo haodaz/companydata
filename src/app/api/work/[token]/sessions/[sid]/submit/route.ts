@@ -39,6 +39,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     // 真活插件：交付 = 交付说明 + 链接；到时间自动收卷时没写也照收（按未交付评）
     if (deliverable.trim().length < 20) { if (!body.auto) return NextResponse.json({ ok: false, error: '交付说明太短了：贴上交付物链接，写清结论和假设' }, { status: 400 }); deliverable = `（时间到，自动交卷；候选人没写完交付说明）\n${deliverable}`; }
   } else if (deliverable.trim().length < 50) return NextResponse.json({ ok: false, error: '交付物太短了，至少写点东西' }, { status: 400 });
+  // 插件模式的最后一问（选填）存在 participant 里，交卷时转成事件
+  if (s.participant?.next_step?.trim() && !events.some(e => e.type === 'next_step')) events = [...events, { t: tsec, type: 'next_step', text: String(s.participant.next_step).trim().slice(0, 1000) }];
   events = [...events, { t: tsec, type: 'submit', chars: deliverable.length }];
   await db.from('work_sessions').update({ deliverable, events, submitted_at: new Date().toISOString() }).eq('id', sid);
   // 默认「AI 审计中」渐进式：先存一份半成品 report（auditing），前端一段一段调 /audit 推进；{ sync: true } 才一次出完（脚本用）
