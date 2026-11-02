@@ -284,7 +284,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
 
 
   const [arm, setArm] = useState(false);
-  const [nextStep, setNextStep] = useState('');   // 交卷前选填：如果再给一天，先改哪里
+  const [nextStep, setNextStep] = useState('');   // 最后一问（选填）：如果再给一天，先改哪里；占作答时间，交卷时存成 next_step 事件
   const dark = false;   // 代码台也用浅色（2026-10-25）：整页一个色调，别忽然深一块
   const [localErr, setLocalErr] = useState('');
   // 布局（2026-10-25，王刚：作答区别太固定，要像 AI workspace）：材料栏可收、材料面板高度可拖 / 占满 / 收成一条 / 关闭、AI 助手是可收的卡片
@@ -310,6 +310,13 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     window.addEventListener('mousemove', mv); window.addEventListener('mouseup', up); return () => { window.removeEventListener('mousemove', mv); window.removeEventListener('mouseup', up); };
   }, []);
   const showMat = (m: Material) => { openMat(m); if (matMode === 'bar') setMatMode('split'); };
+  // 题目列表最后一问（选填）：在材料面板里直接写
+  const NEXT_Q = '如果再给你一天，你会先改哪里、为什么？';
+  const openNext = () => { setMat({ id: 'next', title: `选填 · ${NEXT_Q}`, kind: 'next', content: '', source: 'next' }); ev('open_next_step'); if (matMode === 'bar') setMatMode('split'); };
+  const nextQCard = (label: string, locked: boolean) => <div onClick={() => { if (!locked) openNext(); }} style={{ padding: '9px 12px', borderRadius: 10, marginBottom: 6, cursor: locked ? 'not-allowed' : 'pointer', opacity: locked ? .45 : 1, background: mat?.id === 'next' ? panel : 'transparent', border: `1px dashed ${mat?.id === 'next' ? '#6055f5' : line}` }}>
+    <div style={{ fontSize: 11, color: '#999', letterSpacing: 1 }}>{label} · 选填{locked ? ' · 先答上一步' : nextStep.trim() ? ' · 已写' : ''}</div>
+    <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.5, marginTop: 2 }}>{locked ? '…' : NEXT_Q}</div>
+  </div>;
   const filledOf = (id: string) => { const x = ps[id]; const p = parts.find(q => q.id === id); if (!x || !p) return false; const seed = seedOf(p).trim(); const docReal = x.doc.trim() && x.doc.trim() !== seed; const codeReal = x.code.trim() && x.code.trim() !== seed && x.code.trim() !== (seed + (env.starter || '')).trim(); return !!(docReal || x.csv.trim() || codeReal || x.notes.trim() || x.graph.nodes.length || Object.keys(x.params).length || x.board.elements.some((e: any) => !e.isDeleted)); };
   // 20 分钟还没打开的交付物：弹一次气泡（别等到交卷才说）
   useEffect(() => { if (nudged.current || mode === 'open') return; if (now >= 1200) { const miss = parts.filter(p => !opened.has(p.id)); if (miss.length) { nudged.current = true; setNudge(`${miss.map(p => `${p.id} ${MODULES[p.module].label}`).join('、')} 还没打开过，别漏了`); ev('nudge', { parts: miss.map(p => p.id) }); } } }, [now, parts, opened, mode, ev]);
@@ -322,9 +329,8 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const miniBtn: React.CSSProperties = { border: `1px solid ${line}`, background: 'transparent', color: ink2, borderRadius: 6, padding: '2px 8px', cursor: 'pointer', font: 'inherit', fontSize: 12 };
   const submit = () => {
     if (mode === 'open' && !recording) { setLocalErr('先录一段屏再交卷：点「开始录屏」，做完点停止'); setTimeout(() => setLocalErr(''), 5000); return; }
-    // 第一次点：展开确认条（未动笔的交付物提醒 + 选填「再给一天先改哪里」），不自动收起，免得写到一半没了
-    if (!arm) { setArm(true); if (emptyParts.length) setLocalErr(`${emptyParts.map(p => `${p.id} ${p.title}`).join('、')} 还没动笔。确定要交就点「确认交卷」`); return; }
-    setArm(false); setLocalErr('');
+    if (!arm) { setArm(true); if (emptyParts.length) { setLocalErr(`${emptyParts.map(p => `${p.id} ${p.title}`).join('、')} 还没动笔。确定要交就再点一次交卷`); setTimeout(() => setLocalErr(''), 6000); } setTimeout(() => setArm(false), 6000); return; }
+    setArm(false);
     if (nextStep.trim()) ev('next_step', { text: nextStep.trim().slice(0, 1000) });
     const events = buf.current.splice(0);
     // 白板：交卷前把每张画板导出 PNG 存起来（给出任务的人看），文字版照样进交付内容
@@ -347,10 +353,13 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   };
   const over = now > task.task.time_minutes * 60;
 
-  const matBody = mat && <>
+  const matBody = mat && (mat.kind === 'next' ? <div style={{ marginTop: 8 }}>
+    <div style={{ fontSize: 13, color: ink2, lineHeight: 1.7, marginBottom: 8 }}>有余力就写，不写不扣分。写清楚交付里哪里还不够可靠、你会先补什么，算进评价。</div>
+    <textarea className="wk-ta" value={nextStep} onChange={e => setNextStep(e.target.value)} rows={6} placeholder="比如：第二部分的转化率是 AI 按行业均值估的，我只核了一份材料，会先拉真实漏斗数据再算一遍" style={{ width: '100%', boxSizing: 'border-box', border: `1px solid ${line}`, borderRadius: 8, padding: '8px 10px', font: 'inherit', fontSize: 13.5, resize: 'vertical', background: dark ? '#16171f' : '#fff', color: 'inherit' }} />
+  </div> : <>
     {mat.kind === 'file' && mat.url && (/^image\//.test(mat.mime || '') ? <a href={mat.url} target="_blank" rel="noreferrer"><img src={mat.url} alt={mat.name || mat.title} style={{ maxWidth: '100%', display: 'block', margin: '8px 0', borderRadius: 8, border: `1px solid ${line}` }} /></a> : <a href={mat.url} target="_blank" rel="noreferrer" style={{ display: 'inline-block', margin: '8px 0 0', color: '#6055f5', fontWeight: 600 }}>打开 / 下载附件：{mat.name || mat.title} ↗</a>)}
     {isSheet(mat) ? <SheetView text={mat.content} dark={dark} /> : mat.kind === 'stage' || /^(data)$/.test(mat.kind) && !/\|/.test(mat.content) ? <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13.5, lineHeight: 1.75, margin: '8px 0 0', color: dark ? '#cfd3e6' : '#333' }}>{mat.content}</pre> : <div className="wk-md wk-mat" style={{ fontSize: 13.5, lineHeight: 1.75, color: dark ? '#cfd3e6' : '#333', marginTop: 6 }}><Md text={mat.content} /></div>}
-  </>;
+  </>);
 
   return (
     <Shell dark={dark}>
@@ -365,36 +374,29 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
         <button onClick={() => setTour(0)} title="界面说明" style={{ ...viewBtn(false), border: `1px solid ${line}`, fontWeight: 700, fontSize: 13 }}>?</button>
         <div data-tour="clock" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <div style={{ fontFamily: 'ui-monospace, Menlo, monospace', fontWeight: 700, fontSize: 13.5, color: over ? '#ff8a80' : dark ? '#e6e8f0' : '#1a1a2e' }}>{fmt(now)}{!narrow && <span style={{ color: '#aaa', fontWeight: 400 }}> / {task.task.time_minutes}:00</span>}</div>
-        <button onClick={submit} disabled={grading} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '确认交卷' : '交卷 →'}</button>
+        <button onClick={submit} disabled={grading} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '再点一次确认交卷' : '交卷 →'}</button>
         </div>
       </div>
       {tour != null && <Tour step={tour} steps={TOUR_STEPS.filter(t => mode !== 'open' || t.key !== 'tabs')} onStep={setTour} onDone={() => { setTour(null); try { localStorage.setItem('work-tour-done', '1'); } catch {} }} />}
       {grading && <div style={{ padding: '12px 18px', background: '#f3f2ff', color: '#4c43c9', fontSize: 13.5 }}>交卷了。正在逐条核对交付物、回看过程、和 AI 基线比——大约 1–2 分钟，别关页面。</div>}
       {(error || localErr) && !grading && <div style={{ padding: '10px 18px', background: '#fff1f0', color: '#c0392b', fontSize: 13.5 }}>{error || localErr}</div>}
-      {arm && !grading && <div style={{ padding: '12px 18px', background: dark ? '#1c1b2e' : '#f6f5ff', borderBottom: `1px solid ${line}`, color: dark ? '#e6e8f0' : '#1a1a2e' }}>
-        <div style={{ fontSize: 13.5, fontWeight: 600, marginBottom: 6 }}>交卷前最后一问（选填）：如果再给你一天，你会先改哪里、为什么？</div>
-        <textarea className="wk-ta" value={nextStep} onChange={e => setNextStep(e.target.value)} rows={narrow ? 3 : 2} placeholder="比如：第三部分的市场规模是 AI 给的估算，我只核了一个来源，会先找两份行业报告交叉验证" style={{ width: '100%', boxSizing: 'border-box', border: `1px solid ${line}`, borderRadius: 8, padding: '8px 10px', font: 'inherit', fontSize: 13.5, resize: 'vertical', background: dark ? '#16171f' : '#fff', color: 'inherit' }} />
-        <div style={{ display: 'flex', gap: 10, marginTop: 8, alignItems: 'center' }}>
-          <button onClick={submit} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, background: '#c0392b' }}>确认交卷</button>
-          <button onClick={() => { setArm(false); setLocalErr(''); }} style={{ ...miniBtn, padding: '6px 12px', fontSize: 13 }}>再改改</button>
-          <span style={{ fontSize: 12, color: ink2 }}>交了就不能改；这一问不写也行</span>
-        </div>
-      </div>}
       <div ref={boxRef} style={{ display: 'flex', flexDirection: narrow ? 'column' : 'row', height: narrow ? (boxH ?? 'calc(100dvh - 110px)') : 'calc(100vh - 52px)' }}>
         {/* 材料包 · 要交什么（可收） */}
         {(narrow ? pane === 'mat' && !mat : leftOpen) && <aside data-tour="materials" style={{ width: narrow ? undefined : 272, flex: narrow ? 1 : 'none', borderRight: narrow ? undefined : `1px solid ${line}`, background: dark ? '#16171f' : '#fafbff', color: dark ? '#d6d8e6' : undefined, padding: 14, overflow: 'auto', minHeight: 0 }}>
           {stages.length > 0 && <div style={{ marginBottom: 14 }}>
-            <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>推进 · {stages.length} 步</div>
+            <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>推进 · {stages.length + 1} 步</div>
             {stages.map((st2, i) => { const locked = i >= unlocked; const on = mat?.id === st2.id; return (
               <div key={st2.id} onClick={() => { if (!locked || i === unlocked) { openStage(st2, i); if (matMode === 'bar') setMatMode('split'); } }} style={{ padding: '9px 12px', borderRadius: 10, marginBottom: 6, cursor: locked && i !== unlocked ? 'not-allowed' : 'pointer', opacity: locked && i !== unlocked ? .45 : 1, background: on ? panel : 'transparent', border: `1px solid ${on ? '#6055f5' : line}` }}>
                 <div style={{ fontSize: 11, color: '#999', letterSpacing: 1 }}>{st2.id.toUpperCase()}{STAGE_CN[st2.type] ? ` · ${STAGE_CN[st2.type]}` : ''}{locked ? (i === unlocked ? ' · 点开下一步' : ' · 先答上一步') : ''}</div>
                 <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.5, marginTop: 2 }}>{locked && i !== unlocked ? '…' : st2.question}</div>
               </div>); })}
+            {nextQCard(`Q${stages.length + 1}`, unlocked < stages.length)}
           </div>}
           <div style={{ ...capStyle, color: dark ? '#8b8fa8' : capStyle.color }}>材料包 · {task.materials.length} 份</div>
           {task.materials.map(m => <div key={m.id} onClick={() => showMat(m)} style={{ padding: '9px 12px', borderRadius: 10, marginBottom: 6, cursor: 'pointer', background: mat?.id === m.id ? panel : 'transparent', border: `1px solid ${mat?.id === m.id ? '#6055f5' : line}` }}><div style={{ fontWeight: 600, fontSize: 13, lineHeight: 1.4 }}>{m.title}</div><div style={{ fontSize: 11, color: '#999', marginTop: 2 }}>{m.id} · {m.kind === 'file' ? (/^image\//.test(m.mime || '') ? '附图' : '附件') : m.kind}</div></div>)}
           <div style={{ ...capStyle, marginTop: 16, color: dark ? '#8b8fa8' : capStyle.color }}>要交什么</div>
           <ol style={{ margin: 0, paddingLeft: 18, fontSize: 13, lineHeight: 1.7 }}>{task.task.deliverables.map(d => <li key={d.id}>{d.title} <span style={{ color: '#999' }}>{d.format}</span></li>)}</ol>
+          {!stages.length && <div style={{ marginTop: 8 }}>{nextQCard('最后一问', false)}</div>}
           <details style={{ marginTop: 12, fontSize: 13 }}><summary style={{ cursor: 'pointer', color: dark ? '#8f87ff' : '#6055f5' }}>任务书</summary><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.7, color: dark ? '#b8bdd6' : '#444', marginTop: 6 }}>{task.task.brief}</div></details>
         </aside>}
         {/* 作答区：交付物标签常驻 → 材料面板（可拖高 / 占满 / 一条 / 关）→ 操作台 */}
@@ -469,7 +471,7 @@ const TOUR_STEPS: TourStep[] = [
   { key: 'materials', title: '材料包', text: '题目给你的材料都在这里，点一份在中间看。材料面板可以拖高、占满、收成一条或关掉。「要交什么」和「任务书」也在这一栏。' },
   { key: 'tabs', title: '作答区有几个标签，都要做', text: '每个交付物一个标签（文档 / 表格 / 代码 / 画布），切着做。小圆点变绿表示动过笔；20 分钟还没打开的会提醒你。' },
   { key: 'ai', title: 'AI 助手', text: '随便问，不算作弊。评的是你怎么用、哪些判断是你自己定的。它看得到你当前打开的材料；回答可以一键放进当前交付物。' },
-  { key: 'clock', title: '时间和交卷', text: '右上角看用时；到时不强制停表，但会记录。做完点「交卷」，可以选填「再给一天先改哪里」，再点确认——交了就不能改。' },
+  { key: 'clock', title: '时间和交卷', text: '右上角看用时；到时不强制停表，但会记录。做完点「交卷」，再点一次确认——交了就不能改。' },
   { key: 'views', title: '两侧可以收起', text: '文件夹 = 材料栏，星芒 = AI 助手，点一下收起或展开，给作答区腾地方。随时点「?」再看这份说明。' },
 ];
 
