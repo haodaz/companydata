@@ -18,7 +18,8 @@ main { padding: 14px; display: grid; gap: 12px; }
 .banner { border-radius: 10px; padding: 10px 12px; font-weight: 700; }
 .banner.w5 { background: #fff7e6; color: #ad4e00; border: 1px solid #ffd591; } .banner.w1 { background: #fff1f0; color: #a8071a; border: 1px solid #ffa39e; }
 textarea, input { width: 100%; border: 1px solid #d9d9e3; border-radius: 8px; padding: 8px 10px; font: inherit; resize: vertical; background: #fff; }
-textarea { min-height: 130px; }
+textarea { min-height: 130px; } textarea.short { min-height: 70px; margin-top: 6px; }
+.card.dashed { border-style: dashed; }
 button { border: 0; border-radius: 10px; padding: 10px 14px; font: inherit; font-weight: 700; cursor: pointer; }
 .primary { background: #6055f5; color: #fff; width: 100%; } .primary:disabled { background: #b8b3f7; cursor: default; }
 .end { background: #cf1322; color: #fff; width: 100%; font-size: 16px; padding: 14px; }

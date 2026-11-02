@@ -1,9 +1,11 @@
-// 真活插件侧边栏：关联作答 → 开始记录 → 倒计时（剩 5 / 1 分钟提醒）→ 写交付说明 → 结束作答（交卷）
+// 真活插件侧边栏：关联作答 → 开始记录 → 倒计时（剩 5 / 1 分钟提醒）→ 写交付说明 → 最后一问（选填）→ 结束作答（交卷）
 const $ = s => document.querySelector(s);
 const app = $('#app');
 const send = m => chrome.runtime.sendMessage(m);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-let sess = null, remote = null, err = '', saveTimer = null, draft = null;
+let sess = null, remote = null, err = '', saveTimer = null, draft = null, nextDraft = null, nextTimer = null;
+// 正在写的输入框：后台刷新时不重绘，免得打字被打断
+const typing = () => ['deliv', 'next'].includes(document.activeElement?.id);
 
 async function load() {
   sess = (await chrome.storage.local.get('sess')).sess || null;
@@ -11,6 +13,7 @@ async function load() {
     remote = await fetch(`${sess.api}/api/work/plugin/${sess.code}`).then(r => r.json()).catch(() => null);
     if (remote?.ok && remote.submitted && !sess.submitted) { sess = { ...sess, submitted: true, recording: false }; await chrome.storage.local.set({ sess }); }
     if (draft === null && remote?.ok) draft = remote.deliverable || '';
+    if (nextDraft === null && remote?.ok) nextDraft = remote.next_step || '';
   }
   render();
 }
@@ -27,7 +30,7 @@ function render() {
         ${err ? `<div class="err">${esc(err)}</div>` : ''}
       </div>
       <div class="card muted">真活插件只在你点「开始记录」之后、交卷之前记录。说明页：<a href="https://www.aidataoffice.com/work/plugin" target="_blank">www.aidataoffice.com/work/plugin</a></div>`;
-    $('#bind').onclick = async () => { const r = await send({ type: 'bind', code: $('#code').value }); err = r.ok ? '' : r.error; draft = null; load(); };
+    $('#bind').onclick = async () => { const r = await send({ type: 'bind', code: $('#code').value }); err = r.ok ? '' : r.error; draft = null; nextDraft = null; load(); };
     return;
   }
   if (sess.submitted) {
@@ -36,7 +39,7 @@ function render() {
         <div class="muted" style="margin-top:6px">${sess.warn === 'end' ? '时间到，已自动交卷。' : ''}记录已停止。AI 正在回看你的过程，一段一段记，看完出报告。</div>
         <div style="margin-top:10px"><a href="${sess.api}/work/${sess.share_token}?s=${sess.sid}" target="_blank">打开报告页 →</a></div></div>
       <button class="ghost" id="unbind">做下一道题（解除关联）</button>`;
-    $('#unbind').onclick = async () => { await send({ type: 'unbind' }); sess = null; remote = null; draft = null; render(); };
+    $('#unbind').onclick = async () => { await send({ type: 'unbind' }); sess = null; remote = null; draft = null; nextDraft = null; render(); };
     return;
   }
   const ms = left(), rec = sess.recording;
@@ -61,6 +64,12 @@ function render() {
       <div class="muted" id="saved"></div>
       <div style="margin-top:6px"><a href="${sess.api}/work/${sess.share_token}?s=${sess.sid}" target="_blank">打开答题页（任务书、材料下载）</a></div>
     </div>
+    <div class="card dashed"><div class="k">最后一问 · 选填</div>
+      <div class="title" style="font-size:14px">如果再给你一天，你会先改哪里、为什么？</div>
+      <div class="muted">有余力就写，不写不扣分。写清楚交付里哪里还不够可靠、你会先补什么，算进评价。和答题页是同一份。</div>
+      <textarea id="next" class="short" placeholder="比如：第二部分的数字是 AI 估的，我只核了一个来源，会先找两份报告交叉验证">${esc(nextDraft ?? '')}</textarea>
+      <div class="muted" id="nsaved"></div>
+    </div>
     <button class="end" id="end">结束作答（交卷）</button>
     ${err ? `<div class="err">${esc(err)}</div>` : ''}`;
   $('#start') && ($('#start').onclick = async () => { await send({ type: 'start' }); load(); });
@@ -70,6 +79,13 @@ function render() {
     clearTimeout(saveTimer); saveTimer = setTimeout(async () => {
       const r = await fetch(`${sess.api}/api/work/plugin/${sess.code}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable: draft }) }).then(x => x.json()).catch(() => ({ ok: false }));
       const el = $('#saved'); if (el) el.textContent = r.ok ? '已保存' : '没保存上，检查网络';
+    }, 1200);
+  };
+  $('#next').oninput = e => {
+    nextDraft = e.target.value; $('#nsaved').textContent = '保存中…';
+    clearTimeout(nextTimer); nextTimer = setTimeout(async () => {
+      const r = await fetch(`${sess.api}/api/work/plugin/${sess.code}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ next_step: nextDraft }) }).then(x => x.json()).catch(() => ({ ok: false }));
+      const el = $('#nsaved'); if (el) el.textContent = r.ok ? '已保存' : '没保存上，检查网络';
     }, 1200);
   };
   $('#end').onclick = async () => {
@@ -83,6 +99,6 @@ function render() {
 
 // 倒计时每秒走；记录量每 15 秒刷新
 setInterval(() => { const el = $('#clock'); if (el && sess && !sess.submitted) { const ms = left(); el.textContent = fmt(ms); if ((ms <= 300_000 && !$('.banner')) || (ms <= 60_000 && !$('.banner.w1'))) render(); } }, 1000);
-setInterval(() => { if (sess?.code && !sess.submitted && document.activeElement?.id !== 'deliv') load(); }, 15000);
-chrome.storage.onChanged.addListener(c => { if (c.sess && document.activeElement?.id !== 'deliv') { sess = c.sess.newValue || null; if (!sess) { remote = null; draft = null; } render(); } });
+setInterval(() => { if (sess?.code && !sess.submitted && !typing()) load(); }, 15000);
+chrome.storage.onChanged.addListener(c => { if (c.sess && !typing()) { sess = c.sess.newValue || null; if (!sess) { remote = null; draft = null; nextDraft = null; } render(); } });
 load();

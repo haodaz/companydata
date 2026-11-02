@@ -21,6 +21,7 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
   const [nextStep, setNextStep] = useState<string | null>(null);
   const [nextSaved, setNextSaved] = useState('');
   const nextTimer = useRef<any>(null);
+  const nextEditing = useRef(false);   // 侧边栏也能写同一份：没在这边写时，轮询到的覆盖本地
   const timer = useRef<any>(null);
   const editing = useRef(false);
 
@@ -30,7 +31,7 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
     setSt(j);
     if (j.submitted) { onSubmitted(); return; }
     if (!editing.current) setDraft(j.deliverable || '');
-    setNextStep(v => v ?? (j.next_step || ''));
+    if (!nextEditing.current) setNextStep(j.next_step || '');
   }, [code, onSubmitted]);
   useEffect(() => { poll(); const a = setInterval(poll, 5000); const b = setInterval(() => setNow(Date.now()), 1000); return () => { clearInterval(a); clearInterval(b); }; }, [poll]);
 
@@ -43,11 +44,11 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
     }, 1200);
   };
   const saveNext = (v: string) => {
-    setNextStep(v); setNextSaved('保存中…');
+    setNextStep(v); setNextSaved('保存中…'); nextEditing.current = true;
     clearTimeout(nextTimer.current);
     nextTimer.current = setTimeout(async () => {
       const r = await fetch(`/api/work/plugin/${code}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ next_step: v }) }).then(x => x.json()).catch(() => ({ ok: false }));
-      setNextSaved(r.ok ? '已保存' : '没保存上，检查网络');
+      setNextSaved(r.ok ? '已保存（插件侧边栏里也能看到）' : '没保存上，检查网络'); nextEditing.current = false;
     }, 1200);
   };
   const submit = async () => {
