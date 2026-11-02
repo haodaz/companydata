@@ -103,15 +103,16 @@ const hashOf = (tasks: { name: string }[]) => { let h = 0; const t = tasks.map(x
 /**
  * 职业这一层 = 职业实体的「AI 替代性」子实体（occupation_ai_exposure，迁移 056 建、057 改名）：任务三分、新增任务、基准分、通用强项风险。
  * 同一职业第一次分析时调模型并存下来，之后直接读——基准分固定、不再花钱。表还没建时照常现算，只是不缓存。
+ * force：后台「重算」用，不管缓存重新分一遍、覆盖旧的（被查次数清零）。
  */
-export async function occLayer(occ: any, opts: { count?: boolean } = {}): Promise<OccLayer> {
+export async function occLayer(occ: any, opts: { count?: boolean; force?: boolean } = {}): Promise<OccLayer> {
   const { tasks, from } = await tasksOf(occ);
   if (tasks.length < 3) throw new Error('这个职业在库里的任务太少，换一个相近的职业试试');
   const hash = hashOf(tasks);
   let table = await aiExposureTable();
   let { data: hit, error: readErr } = table ? await db.from(table).select('*').eq('occupation_id', occ.id).maybeSingle() : { data: null as any, error: null as any };
   if (readErr) { table = await aiExposureTable(true); ({ data: hit } = table ? await db.from(table).select('*').eq('occupation_id', occ.id).maybeSingle() : { data: null as any }); }
-  if (hit && hit.version === CACHE_VERSION && hit.task_hash === hash) {
+  if (hit && !opts.force && hit.version === CACHE_VERSION && hit.task_hash === hash) {
     if (opts.count !== false) db.from(table!).update({ hits: (hit.hits || 0) + 1 }).eq('occupation_id', occ.id).then(() => {}, () => {});
     return { tasks: hit.tasks, task_source: hit.task_source, new_tasks: hit.new_tasks, strengths: hit.strengths, risks: hit.risks, verdict: hit.verdict || '', baseline: hit.baseline, cached: true };
   }

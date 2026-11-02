@@ -323,7 +323,7 @@ export default function OccupationDetailPage() {
           { key: 'info', label: '职业信息', children: infoTab },
           { key: 'graph', label: `发展图谱${o.career_map?.skills?.length ? '' : '（未生成）'}`, children: <OccupationCareerGraph graph={o.career_map} uses={skillUses} roleLinks={d.roleLinks || {}} onOpenRole={rid => router.push(`/admin/db-occupation/${rid}?tab=graph`)} onQueryRole={queryRole} /> },
           { key: 'tasks', label: `典型任务${(d.tasks || []).length ? `（${d.tasks.length}）` : ''}`, children: <OccupationTasksTab tasks={d.tasks || []} skills={o.career_map?.skills || []} busy={busy === 'tasks'} onGenerate={() => runAgent('tasks')} /> },
-          { key: 'ai', label: `AI 替代性${(d as any).ai_exposure ? `（${(d as any).ai_exposure.baseline}）` : '（未算）'}`, children: <AiExposureTab ax={(d as any).ai_exposure} /> },
+          { key: 'ai', label: `AI 替代性${(d as any).ai_exposure ? `（${(d as any).ai_exposure.baseline}）` : '（未算）'}`, children: <AiExposureTab id={id} ax={(d as any).ai_exposure} onDone={ax => setD(x => x && ({ ...x, ai_exposure: ax }))} /> },
           { key: 'context', label: `场所与工具${(d.links || []).filter((l: any) => l.other_type === 'place' || l.other_type === 'item').length ? `（${(d.links || []).filter((l: any) => l.other_type === 'place' || l.other_type === 'item').length}）` : ''}`, children: <OccupationContextTab links={(d.links || []).filter((l: any) => l.dir === 'out')} skills={o.career_map?.skills || []} busy={busy === 'context'} onGenerate={() => runAgent('context')} /> },
           { key: 'salary', label: `薪资${d.regions.length ? `（${d.regions.length} 地）` : ''}`, children: salaryTab },
           { key: 'companies', label: '热门公司', children: <CompaniesTab id={id} router={router} /> },
@@ -357,8 +357,20 @@ export default function OccupationDetailPage() {
 }
 
 /** AI 替代性（职业子实体 occupation_ai_exposure，2026-11-01）：任务三分、基准分、新增任务、强项风险；百业「AI 与我的工作」和全库批量共用这一份 */
-function AiExposureTab({ ax }: { ax: any }) {
-  if (!ax) return <div style={{ padding: '24px 4px', color: '#888', lineHeight: 1.8 }}>还没算。百业「AI 与我的工作」第一次有人查到这个职业时会算并存下来，或者跑全库批量（scripts/occupation-ai-exposure.mts）。</div>;
+function AiExposureTab({ id, ax, onDone }: { id: string | number; ax: any; onDone: (ax: any) => void }) {
+  const { message } = App.useApp();
+  const [busy, setBusy] = useState(false);
+  // 重算：任务补全 / 改过之后，或觉得分得不对时点；约半分钟，记账「AI 替代性 · 后台重算」
+  const rebuild = async () => {
+    setBusy(true);
+    try {
+      const j = await (await fetch(`/api/db/occupations/${id}/ai-exposure`, { method: 'POST' })).json();
+      if (!j.success) throw new Error(j.error || '没算成');
+      onDone(j.ai_exposure); message.success(`重算好了：${j.ai_exposure?.baseline ?? '—'} 分`);
+    } catch (e: any) { message.error(e.message); } finally { setBusy(false); }
+  };
+  const btn = <Popconfirm title="重新分一遍这个职业的任务？" description="按库里现在的任务重算，覆盖旧结果；约半分钟。" onConfirm={rebuild} okText="重算" cancelText="取消"><Button size="small" icon={<ThunderboltOutlined />} loading={busy}>{ax ? '重算' : '现在算'}</Button></Popconfirm>;
+  if (!ax) return <div style={{ padding: '24px 4px', color: '#888', lineHeight: 1.8 }}>还没算。百业「AI 与我的工作」第一次有人查到这个职业时会算并存下来，也可以现在算。<div style={{ marginTop: 10 }}>{btn}</div></div>;
   const K: Record<string, { t: string; c: string }> = { ai: { t: 'AI 接手', c: '#ef4444' }, hybrid: { t: '人机协作', c: '#6055f5' }, human: { t: '人来做', c: '#16a34a' } };
   const tasks: any[] = ax.tasks || [];
   return (
@@ -382,7 +394,7 @@ function AiExposureTab({ ax }: { ax: any }) {
         <div><div style={{ fontWeight: 700, color: '#16a34a', marginBottom: 4 }}>AI 拿不走的</div>{(ax.strengths || []).map((x: any, i: number) => <div key={i} style={{ marginBottom: 6 }}><b>{x.title}</b>：{x.why}<div style={{ color: '#4c43c9', fontSize: 12.5 }}>下一步：{x.next}</div></div>)}</div>
         <div><div style={{ fontWeight: 700, color: '#ef4444', marginBottom: 4 }}>最先被 AI 接手的</div>{(ax.risks || []).map((x: any, i: number) => <div key={i} style={{ marginBottom: 6 }}><b>{x.title}</b>：{x.why}<div style={{ color: '#4c43c9', fontSize: 12.5 }}>下一步：{x.next}</div></div>)}</div>
       </div>
-      <div style={{ color: '#999', fontSize: 12, marginTop: 14 }}>依据：{ax.task_source || '—'} · 模型 {ax.model || '—'} · 生成于 {ax.built_at ? new Date(ax.built_at).toLocaleString('zh-CN', { hour12: false }) : '—'} · 被查 {ax.hits || 0} 次</div>
+      <div style={{ color: '#999', fontSize: 12, marginTop: 14, display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>{btn}<span>依据：{ax.task_source || '—'} · 模型 {ax.model || '—'} · 生成于 {ax.built_at ? new Date(ax.built_at).toLocaleString('zh-CN', { hour12: false }) : '—'} · 被查 {ax.hits || 0} 次</span></div>
     </div>
   );
 }
