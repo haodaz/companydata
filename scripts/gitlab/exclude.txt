@@ -27,3 +27,5 @@
 ^src/lib/(suite|hand-filter)\.ts$
 ^public/workspace(/|$)
 ^scripts/hand-filter-test\.mts$
+^src/app/api/db/occupations/\[id\]/ai-exposure(/|$)
+^scripts/occupation-ai-exposure

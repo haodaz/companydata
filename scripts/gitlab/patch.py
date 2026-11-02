@@ -16,3 +16,8 @@ edit('src/app/admin/layout.tsx', nav)
 
 # 登录浮层：真活的 logo 换成纯文字
 edit('src/components/auth/OverlayLogin.tsx', lambda s: s.replace("import { WorkLogo } from '@/components/work/WorkLogo';\n", "const WorkLogo = (_: { size?: string; href?: string | null }) => <b>真活</b>;\n"))
+
+# 职业 AI 替代性（lab-ai-change，暂不推 GitLab）：职业接口里的引用换成「没有这张表」，列表 / 详情照常，只是不带 AI 替代性
+AI_STUB = "const aiExposureTable = async (_fresh = false): Promise<string | null> => null;   // GitLab 版不带职业 AI 替代性\n"
+for rel in ['src/app/api/db/occupations/route.ts', 'src/app/api/db/occupations/[id]/route.ts']:
+    edit(rel, lambda s: s.replace("import { aiExposureTable } from '@/lib/lab-ai-change';\n", AI_STUB))
