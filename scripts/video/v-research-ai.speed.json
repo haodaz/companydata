@@ -1,0 +1,35 @@
+{
+ "cover": 0.8,
+ "ch_gap": 0.56,
+ "hire": 1.27,
+ "hire_form": 0.71,
+ "ch_layers": 0.79,
+ "core_day": 1.06,
+ "core_ch": 1.54,
+ "methods": 0.5,
+ "ch_exams": 0.8,
+ "ch_results": 0.78,
+ "ch_human": 0.82,
+ "end": 1.11,
+ "_zoom": {
+  "hire_form": [
+   1440,
+   120,
+   1760,
+   990
+  ],
+  "core_ch": [
+   400,
+   200,
+   2400,
+   1350
+  ],
+  "methods": [
+   1600,
+   100,
+   1600,
+   900
+  ]
+ },
+ "_final": "1920x1080"
+}
