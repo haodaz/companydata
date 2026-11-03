@@ -140,9 +140,43 @@
       "problem": "Second citation with impossible 2025 publication year; compound error reinforcing suspicion of fabricated references."
      }
     ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 0.39,
+      "how": "对每组：|@k-A*PO - PKPO(k_train=k)|；OLMo-3-7B/k=2: |76.98 - 77.38| = 0.40；OLMo-3-7B/k=4: |84.39 - 83.92| = 0.47；Qwen3-4B/k=2: |70.48 - 70.77| = 0.29；Qwen3-4B/k=4: |78.63 - 78.65| = 0.02；四个绝对差为0.40, 0.47, 0.29, 0.02，最大值是0.47",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 0.29,
+      "how": "70.77 - 70.48 = 0.29",
+      "note": ""
+     }
+    ]
    }
   },
-  "A_full": 42
+  "A_full": 42,
+  "D": {
+   "right": 1,
+   "of": 2,
+   "detail": [
+    {
+     "i": 1,
+     "value": 0.39,
+     "answer": 0.47,
+     "ok": false
+    },
+    {
+     "i": 2,
+     "value": 0.29,
+     "answer": 0.29,
+     "ok": true
+    }
+   ]
+  }
  },
  {
   "model": "qwen-plus",
@@ -282,9 +316,55 @@
       "problem": "Citation suspicious: 'Romero and Feng, 2023' is cited in-text and assigned a fabricated title and venue ('arXiv preprint') *only in parentheses*, with no corresponding entry in the reference list (not provided, but the instruction explicitly adds it *as if* it were valid). Crucially, no such paper exists on arXiv as of 2024-06: searching arXiv.org for 'Fine-grained experts and the hook overhead problem in sparse training' returns zero results; authors 'L. Romero' and 'Y. Feng' have no jointly authored arXiv paper matching this title or topic. This is a likely invented citation — especially suspicious because it is introduced mid-sentence with editorial phrasing ('and in the references add:') rather than standard academic attribution, suggesting post-hoc fabrication to bolster the 'E-scaling' claim."
      }
     ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 11.659999999999997,
+      "how": "用表格中 'Standard (no expert clip)' 的 Step ms (Δ) 值 95.5 和 'Sonar-MoE' 的 84.4，按口径计算：(95.5 - 84.4) / 95.5 × 100%",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 11.375,
+      "how": "用表格中 per-expert 的 Step ms 139.7 减 batched 的 116.1 得差值 23.6 ms；调用次数差为 2048 - 32 = 2016；23.6 / 2016 × 1000 = 微秒增量",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 22.56544502617801,
+      "how": "用表格中 'Sonar-MoE' 的 451.7 减 'Std. (global)' 的 368.5，再除以 368.5，乘以 100%",
+      "note": ""
+     }
+    ]
    }
   },
-  "A_full": 50
+  "A_full": 50,
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 11.659999999999997,
+     "answer": 11.62,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 11.375,
+     "answer": 11.71,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 22.56544502617801,
+     "answer": 22.58,
+     "ok": true
+    }
+   ]
+  }
  },
  {
   "model": "qwen-plus",
@@ -426,9 +506,55 @@
       "problem": "Reference is explicitly flagged in the text as forged ('[伪造文献：...]'), constituting a clear case of fabricated citation."
      }
     ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 0.997,
+      "how": "对γ=16：max(1.1354,1.1468,1.1445)=1.1468，min=1.1354，(1.1468−1.1354)/1.1354×100≈1.004；对γ=64：max=1.2145，min=1.1992，(1.2145−1.1992)/1.1992×100≈1.276；取二者中较大者1.276，保留三位小数得1.276",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 0.0089,
+      "how": "仅用accuracy均值（忽略±后标准差）；γ=16,GD组：0.2057,0.1978,0.1969 → max−min=0.2057−0.1969=0.0088；γ=16,Muon：0.1580,0.1566,0.1577 → 0.1580−0.1566=0.0014；γ=64,GD：0.0356,0.0344,0.0341 → 0.0356−0.0341=0.0015；γ=64,Muon：0.0272,0.0269,0.0271 → 0.0272−0.0269=0.0003；最大极差为0.0088，四舍五入到小数点后4位为0.0088，但题干要求‘个百分点’且未限定小数位，表格中accuracy给到4位小数，差值精确计算为0.2057−0.1969=0.0088，即0.0088个百分点",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 0.451,
+      "how": "对每个(γ,optimizer)组合取saturated ρ均值（忽略±后标准差）；γ=16,GD：2.4550,2.4610,2.4608 → min=2.4550, max=2.4610 → (2.4610−2.4550)/2.4550×100≈0.244；γ=16,Muon：2.1624,2.1461,2.1502 → min=2.1461, max=2.1624 → (2.1624−2.1461)/2.1461×100≈0.759；γ=64,GD：0.9384,0.9412,0.9410 → min=0.9384, max=0.9412 → (0.9412−0.9384)/0.9384×100≈0.298；γ=64,Muon：0.7825,0.7750,0.7753 → min=0.7750, max=0.7825 → (0.7825−0.7750)/0.7750×100≈0.968；最大为0.968，保留三位小数得0.968",
+      "note": ""
+     }
+    ]
    }
   },
-  "A_full": 50
+  "A_full": 50,
+  "D": {
+   "right": 0,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 0.997,
+     "answer": 1.28,
+     "ok": false
+    },
+    {
+     "i": 2,
+     "value": 0.0089,
+     "answer": 0.88,
+     "ok": false
+    },
+    {
+     "i": 3,
+     "value": 0.451,
+     "answer": 0.97,
+     "ok": false
+    }
+   ]
+  }
  },
  {
   "model": "deepseek-v4-pro",
@@ -549,9 +675,43 @@
       "problem": "引用可疑且编辑错误。该句与前文几乎重复，且将 PKPO 同时描述为“遵循 Zhang and Ortega (2025) 的多样本评估协议”以及“专用的 pass@k 优化算法”，混淆了方法归属，句子结构不完整。"
      }
     ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 0.47,
+      "how": "匹配预算下，逐个计算|PKPO - @k-A*PO|：OLMo-7B k=2: |77.38-76.98|=0.40; k=4: |83.92-84.39|=0.47; Qwen3-4B k=2: |70.77-70.48|=0.29; k=4: |78.65-78.63|=0.02。最大值为0.47个百分点。",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 0.29,
+      "how": "PKPO(k_train=2)的pass@2为70.77，@2-A*PO的pass@2为70.48，差值为70.77 - 70.48 = 0.29个百分点。",
+      "note": ""
+     }
+    ]
    }
   },
-  "A_full": 33
+  "A_full": 33,
+  "D": {
+   "right": 2,
+   "of": 2,
+   "detail": [
+    {
+     "i": 1,
+     "value": 0.47,
+     "answer": 0.47,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 0.29,
+     "answer": 0.29,
+     "ok": true
+    }
+   ]
+  }
  },
  {
   "model": "deepseek-v4-pro",
@@ -692,9 +852,55 @@
       "problem": "结论超出证据。前文明确给出 batch size 32 时峰值分配内存节省为 none，与“在任何批量大小和模型规模下至少节省20%峰值内存”直接矛盾。"
      }
     ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 11.6,
+      "how": "(95.5 - 84.4) / 95.5 × 100% = 11.6%",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 11.7,
+      "how": "(139.7 - 116.1) / (2048 - 32) × 1000 = 11.7 μs",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 22.6,
+      "how": "(451.7 - 368.5) / 368.5 × 100% = 22.6%",
+      "note": ""
+     }
+    ]
    }
   },
-  "A_full": 42
+  "A_full": 42,
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 11.6,
+     "answer": 11.62,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 11.7,
+     "answer": 11.71,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 22.6,
+     "answer": 22.58,
+     "ok": true
+    }
+   ]
+  }
  },
  {
   "model": "deepseek-v4-pro",
@@ -838,9 +1044,55 @@
       "problem": "引用可疑：稿件中直接标注了‘伪造文献’，表明 Zhou & Kumar (2024) 可能是一篇不存在的文献，构成虚假引用。"
      }
     ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 1.28,
+      "how": "γ=16时(max-min)/min*100=1.00%，γ=64时为1.28%，取最大值1.28%",
+      "note": "精确值：γ=64时 (1.2145-1.1992)/1.1992*100 ≈ 1.2759%"
+     },
+     {
+      "i": 2,
+      "value": 0.88,
+      "how": "四个组合中γ=16,GD的极差最大：0.2057-0.1969=0.0088，即0.88个百分点",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 0.97,
+      "how": "四个组合中γ=64,Muon的相对变化最大：(0.7825-0.7750)/0.7750*100≈0.97%",
+      "note": "精确值：0.9677%"
+     }
+    ]
    }
   },
-  "A_full": 42
+  "A_full": 42,
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 1.28,
+     "answer": 1.28,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 0.88,
+     "answer": 0.88,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 0.97,
+     "answer": 0.97,
+     "ok": true
+    }
+   ]
+  }
  },
  {
   "model": "claude-sonnet-5-5",
@@ -994,9 +1246,43 @@
       "problem": "成本节省的结论只算了 rollout 数量。图注又说有单次参考校准和 ≤5% 的训练时间开销，节选中没有给出实际墙钟时间或总算力对比，数字来源不明，“reducing training cost” 因此证据不足。"
      }
     ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 0.47,
+      "how": "匹配预算下的 4 个绝对差：OLMo k=2 为|76.98−77.38|=0.40，OLMo k=4 为|84.39−83.92|=0.47，Qwen k=2 为|70.48−70.77|=0.29，Qwen k=4 为|78.63−78.65|=0.02，最大值为 0.47。",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 0.29,
+      "how": "70.77 − 70.48 = 0.29 个百分点。",
+      "note": ""
+     }
+    ]
    }
   },
-  "A_full": 50
+  "A_full": 50,
+  "D": {
+   "right": 2,
+   "of": 2,
+   "detail": [
+    {
+     "i": 1,
+     "value": 0.47,
+     "answer": 0.47,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 0.29,
+     "answer": 0.29,
+     "ok": true
+    }
+   ]
+  }
  },
  {
   "model": "claude-sonnet-5-5",
@@ -1146,9 +1432,55 @@
       "problem": "这是前文已有句子的重复，并新增了一条可疑引用 Romero and Feng (2023)。该文献标题（Fine-grained experts and the hook overhead problem in sparse training）与本文主题贴得过紧，只标注“arXiv preprint”而无编号，我无法确认其真实存在。原句有 Dai 等和 DeepSeek-AI 支撑，没有必要再加它。建议核实，查不到就删除。"
      }
     ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 11.62,
+      "how": "(95.5 − 84.4)/95.5 × 100% = 11.1/95.5 × 100% ≈ 11.62%",
+      "note": "表中括号里的 Δ（−12.4%、−22.7%）所用基准表中未给出，因此未采用，只用两个步长时间直接计算。"
+     },
+     {
+      "i": 2,
+      "value": 11.71,
+      "how": "步长时间差 139.7 − 116.1 = 23.6 ms，调用次数差 2048 − 32 = 2016，23.6/2016 ≈ 0.011706 ms ≈ 11.71 μs/次",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 22.58,
+      "how": "(451.7 − 368.5)/368.5 × 100% = 83.2/368.5 × 100% ≈ 22.58%",
+      "note": "表中没有写明单位，这里默认 Std. (global) 和 Sonar-MoE 两列都是步长时间。"
+     }
+    ]
    }
   },
-  "A_full": 50
+  "A_full": 50,
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 11.62,
+     "answer": 11.62,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 11.71,
+     "answer": 11.71,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 22.58,
+     "answer": 22.58,
+     "ok": true
+    }
+   ]
+  }
  },
  {
   "model": "claude-sonnet-5-5",
@@ -1293,8 +1625,54 @@
       "problem": "引用可疑。Zhou & Kumar (2024)《Gaussian Weight Noise as a Proxy for Catastrophic Forgetting in Language Models》疑似不存在，我无法确认，稿件里也已被标为伪造文献。前文只引用了 Springer et al. (2025) 支持这一说法，这里新增的引用应核实或删除。"
      }
     ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 1.276,
+      "how": "γ=16：(1.1468−1.1354)/1.1354×100≈1.004%；γ=64：(1.2145−1.1992)/1.1992×100≈1.276%；取较大值。",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 0.88,
+      "how": "各组合的极差：GD γ=16 为 0.2057−0.1969=0.0088；Muon γ=16 为 0.0014；GD γ=64 为 0.0015；Muon γ=64 为 0.0003。最大是 0.0088，即 0.88 个百分点。",
+      "note": "只用了表中均值，没有用 ± 的误差。"
+     },
+     {
+      "i": 3,
+      "value": 0.9677,
+      "how": "各组合的相对变化：GD16 为 0.006/2.4550≈0.244%；Muon16 为 0.0163/2.1461≈0.760%；GD64 为 0.0028/0.9384≈0.298%；Muon64 为 0.0075/0.7750≈0.968%。取最大值。",
+      "note": "最大值出自 γ=64 的 Muon；只用了表中均值，没有用 ± 的误差。"
+     }
+    ]
    }
   },
-  "A_full": 50
+  "A_full": 50,
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 1.276,
+     "answer": 1.28,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 0.88,
+     "answer": 0.88,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 0.9677,
+     "answer": 0.97,
+     "ok": true
+    }
+   ]
+  }
  }
 ]

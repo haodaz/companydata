@@ -166,6 +166,25 @@
     "ok": true,
     "note": "原文只引用了 Springer et al. (2025)，未提及 Zhou & Kumar (2024) 或其伪造的文献。"
    }
+  ],
+  "recompute": [
+   {
+    "i": 1,
+    "value": 5.62,
+    "ok": true,
+    "note": "千问算成 5.62；按表格复核（γ=64：(1.2145−1.1992)/1.1992≈1.28%）答案无误，论文正文写「at most 1.3%」。表格删去了空的 Muon 行。",
+    "resolved_by": "AI 代导师复核"
+   },
+   {
+    "i": 2,
+    "value": 0.88,
+    "ok": true
+   },
+   {
+    "i": 3,
+    "value": 0.94,
+    "ok": true
+   }
   ]
  },
  "design_key_full": {
@@ -206,5 +225,37 @@
    "five random seeds per data budget",
    "We train the linear memory for T=10^{4} full-batch steps from W_{0}=0 at constant learning rates across three seeds."
   ]
- }
+ },
+ "recompute": [
+  {
+   "i": 1,
+   "table": "| γ | optimizer | lr | 𝓡 |\n|---|---|---|---|\n| 16 | GD | 0.005 (×1/4) | 1.1354 |\n| 16 | GD | 0.02 | 1.1468 |\n| 16 | GD | 0.08 (×4) | 1.1445 |\n| 64 | GD | 0.005 (×1/4) | 1.1992 |\n| 64 | GD | 0.02 | 1.2145 |\n| 64 | GD | 0.08 (×4) | 1.2138 |",
+   "question": "在每个 γ 内，用三种学习率设置下 𝓡 的最大值与最小值计算相对变化：(max−min)/min×100。两个 γ 中，这一相对变化最大是多少（%）？",
+   "answer": 1.28,
+   "unit": "%",
+   "tolerance": 0.1,
+   "formula": "γ=16：(1.1468−1.1354)/1.1354≈1.00%；γ=64：(1.2145−1.1992)/1.1992≈1.28%；取最大值 ≈1.28%",
+   "quote": "Across the 16\\times learning-rate range, accuracy moves by less than one percentage point and \\rho by less than 1\\% , far below the gap between the two optimizers, and the ratio \\mathcal{R} between them by at most 1.3\\% (Section E.3.1); the comparison in Section 4.2 is therefore not an artefact of the learning rates."
+  },
+  {
+   "i": 2,
+   "table": "| γ | optimizer | lr | accuracy |\n|---|---|---|---|\n| 16 | GD | 0.005 (×1/4) | 0.2057 ± 0.0031 |\n| 16 | Muon | 0.00125 (×1/4) | 0.1580 ± 0.0031 |\n| 16 | GD | 0.02 | 0.1978 ± 0.0014 |\n| 16 | Muon | 0.005 | 0.1566 ± 0.0024 |\n| 16 | GD | 0.08 (×4) | 0.1969 ± 0.0017 |\n| 16 | Muon | 0.02 (×4) | 0.1577 ± 0.0042 |\n| 64 | GD | 0.005 (×1/4) | 0.0356 ± 0.0013 |\n| 64 | Muon | 0.00125 (×1/4) | 0.0272 ± 0.0013 |\n| 64 | GD | 0.02 | 0.0344 ± 0.0012 |\n| 64 | Muon | 0.005 | 0.0269 ± 0.0015 |\n| 64 | GD | 0.08 (×4) | 0.0341 ± 0.0011 |\n| 64 | Muon | 0.02 (×4) | 0.0271 ± 0.0014 |",
+   "question": "对每个 (γ, 优化器) 组合，计算三种学习率下 accuracy 均值的极差（max−min），并换算为百分点。所有组合中，最大的极差是多少个百分点？",
+   "answer": 0.88,
+   "unit": "百分点",
+   "tolerance": 0.02,
+   "formula": "GD γ=16 的极差最大：(0.2057−0.1969)×100 = 0.88 百分点",
+   "quote": "Across the 16\\times learning-rate range, accuracy moves by less than one percentage point and \\rho by less than 1\\% , far below the gap between the two optimizers, and the ratio \\mathcal{R} between them by at most 1.3\\% (Section E.3.1); the comparison in Section 4.2 is therefore not an artefact of the learning rates."
+  },
+  {
+   "i": 3,
+   "table": "| γ | optimizer | lr | saturated ρ |\n|---|---|---|---|\n| 16 | GD | 0.005 (×1/4) | 2.4550 ± 0.0136 |\n| 16 | Muon | 0.00125 (×1/4) | 2.1624 ± 0.0133 |\n| 16 | GD | 0.02 | 2.4610 ± 0.0144 |\n| 16 | Muon | 0.005 | 2.1461 ± 0.0123 |\n| 16 | GD | 0.08 (×4) | 2.4608 ± 0.0145 |\n| 16 | Muon | 0.02 (×4) | 2.1502 ± 0.0112 |\n| 64 | GD | 0.005 (×1/4) | 0.9384 ± 0.0128 |\n| 64 | Muon | 0.00125 (×1/4) | 0.7825 ± 0.0073 |\n| 64 | GD | 0.02 | 0.9412 ± 0.0129 |\n| 64 | Muon | 0.005 | 0.7750 ± 0.0070 |\n| 64 | GD | 0.08 (×4) | 0.9410 ± 0.0128 |\n| 64 | Muon | 0.02 (×4) | 0.7753 ± 0.0073 |",
+   "question": "对每个 (γ, 优化器) 组合，用三种学习率下 saturated ρ 的均值计算相对变化：(max−min)/min×100。所有组合中，最大的相对变化是多少（%）？",
+   "answer": 0.97,
+   "unit": "%",
+   "tolerance": 0.05,
+   "formula": "Muon γ=64 的相对变化最大：(0.7825−0.7750)/0.7750×100 ≈ 0.97%",
+   "quote": "Across the 16\\times learning-rate range, accuracy moves by less than one percentage point and \\rho by less than 1\\% , far below the gap between the two optimizers, and the ratio \\mathcal{R} between them by at most 1.3\\% (Section E.3.1); the comparison in Section 4.2 is therefore not an artefact of the learning rates."
+  }
+ ]
 }

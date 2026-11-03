@@ -6,12 +6,13 @@
  *   brief   value = 盲测简介全文
  *   prop    item = 论断编号 i   fields: statement / truth / discard
  *   planted item = 埋错序号（0 起）fields: changed / why_wrong / discard（改了 changed，稿件节选里同步替换）
+ *   recompute item = 复算题编号 i   fields: question / answer / tolerance / discard
  */
 import { randomBytes } from 'crypto';
 import { supabaseAdmin as db } from '@/lib/supabase';
 
 export type ExamRow = { id: string; title: string; url: string | null; license: string | null; field: string | null; scope: 'public' | 'private'; org: string | null; status: string; mentor: string | null; checker: string | null; exam: any; corrections: any[]; review_token: string | null; reviewer: any; reviewed_at: string | null; built_at: string | null; updated_at: string | null };
-export type Edit = { part: 'design' | 'brief' | 'prop' | 'planted'; item?: string | number; field?: string; value: any; note?: string };
+export type Edit = { part: 'design' | 'brief' | 'prop' | 'planted' | 'recompute'; item?: string | number; field?: string; value: any; note?: string };
 
 const LIST_KEYS = ['independent', 'dependent', 'baselines', 'data'];
 
@@ -58,6 +59,11 @@ export async function applyCorrections(token: string, reviewer: { name: string; 
       const p = (ex.propositions || []).find((x: any) => x.i === Number(e.item)); if (!p || !e.field) continue;
       const f = e.field, v = f === 'truth' || f === 'discard' ? !!e.value : String(e.value || '').trim();
       if (!same(p[f] ?? (f === 'discard' ? false : undefined), v)) { log.push({ by, at, part: 'prop', item: p.i, field: f, before: p[f], after: v, note }); p[f] = v; }
+    } else if (e.part === 'recompute') {
+      const x = (ex.recompute || []).find((y: any) => y.i === Number(e.item)); if (!x || !e.field) continue;
+      const f = e.field, v = f === 'discard' ? !!e.value : f === 'answer' || f === 'tolerance' ? Number(e.value) : String(e.value || '').trim();
+      if ((f === 'answer' || f === 'tolerance') && !Number.isFinite(v as number)) continue;
+      if (!same(x[f] ?? (f === 'discard' ? false : undefined), v)) { log.push({ by, at, part: 'recompute', item: x.i, field: f, before: x[f], after: v, note }); x[f] = v; }
     } else if (e.part === 'planted') {
       const i = Number(e.item); const p = (ex.planted || [])[i]; if (!p || !e.field) continue;
       const f = e.field, v = f === 'discard' ? !!e.value : String(e.value || '').trim();

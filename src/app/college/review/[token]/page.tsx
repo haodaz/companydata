@@ -22,6 +22,7 @@ export default function Review() {
   const [brief, setBrief] = useState('');
   const [props, setProps] = useState<any[]>([]);
   const [planted, setPlanted] = useState<any[]>([]);
+  const [calc, setCalc] = useState<any[]>([]);
   const [notes, setNotes] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(''); const [msg, setMsg] = useState('');
   const load = async () => {
@@ -32,6 +33,7 @@ export default function Review() {
     setDesign(Object.fromEntries(DESIGN.map(([k]) => [k, asText(ex.design_key?.[k])])));
     setProps((ex.propositions || []).map((p: any) => ({ ...p })));
     setPlanted((ex.planted || []).map((p: any) => ({ ...p })));
+    setCalc((ex.recompute || []).map((p: any) => ({ ...p })));
     if (d.reviewer?.name) setMe({ name: d.reviewer.name, org: d.reviewer.org || '', contact: d.reviewer.contact || '' });
     else try { const m = JSON.parse(localStorage.getItem('college:reviewer') || 'null'); if (m) setMe(m); } catch { /* 无痕模式 */ }
   };
@@ -47,8 +49,9 @@ export default function Review() {
     if (brief !== (ex.blind_brief || '')) out.push({ part: 'brief', value: brief, note: notes.brief });
     for (const p of props) { const o = (ex.propositions || []).find((x: any) => x.i === p.i) || {}; for (const f of ['statement', 'truth', 'discard']) if ((p[f] ?? (f === 'discard' ? false : '')) !== (o[f] ?? (f === 'discard' ? false : ''))) out.push({ part: 'prop', item: p.i, field: f, value: p[f], note: notes[`p:${p.i}`] }); }
     planted.forEach((p, i) => { const o = (ex.planted || [])[i] || {}; for (const f of ['changed', 'why_wrong', 'discard']) if ((p[f] ?? (f === 'discard' ? false : '')) !== (o[f] ?? (f === 'discard' ? false : ''))) out.push({ part: 'planted', item: i, field: f, value: p[f], note: notes[`c:${i}`] }); });
+    for (const x of calc) { const o = (ex.recompute || []).find((y: any) => y.i === x.i) || {}; for (const f of ['question', 'answer', 'tolerance', 'discard']) if (String(x[f] ?? (f === 'discard' ? false : '')) !== String(o[f] ?? (f === 'discard' ? false : ''))) out.push({ part: 'recompute', item: x.i, field: f, value: x[f], note: notes[`r:${x.i}`] }); }
     return out;
-  }, [r, design, brief, props, planted, notes, ex]);
+  }, [r, design, brief, props, planted, calc, notes, ex]);
 
   const save = async (done: boolean) => {
     if (!me.name.trim()) { setMsg('先在上面写上你的名字：每一处修改都会署名'); return; }
@@ -74,7 +77,7 @@ export default function Review() {
         <span className={`rv-st ${r.status}`}>{r.status === 'mentor_reviewed' ? '导师已校正' : 'AI 初稿，待导师校正'}</span>
       </div>
       <div className="rv-lead">
-        这份题由 <b>{r.mentor}</b> 出完整初稿，<b>{r.checker}</b> 对照原文逐条核对过。请您逐项看：<b>对的不用动，不对就在原处改</b>，或者作废这一条。每一处修改都会署上您的名字。三道题都有标准答案：A 还原研究设计、B 盲测预测、C 找出稿件里埋下的错。
+        这份题由 <b>{r.mentor}</b> 出完整初稿，<b>{r.checker}</b> 对照原文逐条核对过。请您逐项看：<b>对的不用动，不对就在原处改</b>，或者作废这一条。每一处修改都会署上您的名字。每道题都有标准答案：A 还原研究设计、B 盲测预测、C 找出稿件里埋下的错、D 用表格复算论文的结论数字。
       </div>
       <div className="rv-me">
         <label>您的名字<input value={me.name} onChange={e => setMe({ ...me, name: e.target.value })} placeholder="必填" /></label>
@@ -135,6 +138,27 @@ export default function Review() {
         })}
       </section>
 
+      {calc.length > 0 && <section>
+        <h2><i>D</i>复算</h2>
+        <p className="rv-d">给学员论文表格里的原始数字，让它算出正文写的结论数字，程序按误差判。请确认：表格够算、问题口径清楚、答案对（和论文正文那句话一致）。</p>
+        {calc.map(x => {
+          const o = (ex.recompute || []).find((y: any) => y.i === x.i) || {}; const c = (check.recompute || []).find((y: any) => y.i === x.i);
+          const changed = ['question', 'answer', 'tolerance', 'discard'].some(f => String(x[f] ?? '') !== String(o[f] ?? ''));
+          const set = (f: string, v: any) => setCalc(cs => cs.map(y => y.i === x.i ? { ...y, [f]: v } : y));
+          return <div key={x.i} className={`rv-item ${changed ? 'ch' : ''} ${x.discard ? 'off' : ''}`}>
+            <div className="rv-row"><b>复算 {x.i}</b>
+              {c && <span className="rv-v" style={{ color: c.ok ? '#0d7a52' : '#b42318' }}>核对：另一个模型独立算出 {String(c.value)}{c.ok ? ' ✓ 一致' : ' ⚠ 不一致'}{c.note ? `（${c.note}）` : ''}</span>}
+              <label className="rv-x"><input type="checkbox" checked={!!x.discard} onChange={e => set('discard', e.target.checked)} />作废这一题</label></div>
+            <pre className="rv-tab">{x.table}</pre>
+            <small className="rv-l">问题</small><textarea rows={2} value={x.question} onChange={e => set('question', e.target.value)} />
+            <div className="rv-row"><small className="rv-l">答案</small><input style={{ width: 120 }} value={x.answer} onChange={e => set('answer', e.target.value)} /><span>{x.unit}</span><small className="rv-l">容许误差 ±</small><input style={{ width: 90 }} value={x.tolerance} onChange={e => set('tolerance', e.target.value)} /></div>
+            <div className="rv-q"><span>算法</span>{x.formula}</div>
+            <div className="rv-q"><span>论文原话</span>{x.quote}</div>
+            {changed && note(`r:${x.i}`)}
+          </div>;
+        })}
+      </section>}
+
       <div className="rv-bar">
         <span>{edits.length ? `改了 ${edits.length} 处，还没保存` : '没有改动'}</span>
         {msg && <span className="rv-msg">{msg}</span>}
@@ -143,7 +167,7 @@ export default function Review() {
       </div>
 
       {(r.corrections || []).length > 0 && <section><h2>修改记录</h2>
-        <ul className="rv-log">{[...r.corrections].reverse().map((c: any, i: number) => <li key={i}><b>{c.by}</b> · {new Date(c.at).toLocaleString('zh-CN', { hour12: false })} · {c.part === 'design' ? `A ${c.item}` : c.part === 'brief' ? 'B 简介' : c.part === 'prop' ? `B 论断 ${c.item} ${c.field}` : `C 第 ${Number(c.item) + 1} 处 ${c.field}`}{c.note ? `：${c.note}` : ''}</li>)}</ul></section>}
+        <ul className="rv-log">{[...r.corrections].reverse().map((c: any, i: number) => <li key={i}><b>{c.by}</b> · {new Date(c.at).toLocaleString('zh-CN', { hour12: false })} · {c.part === 'design' ? `A ${c.item}` : c.part === 'brief' ? 'B 简介' : c.part === 'prop' ? `B 论断 ${c.item} ${c.field}` : c.part === 'recompute' ? `D 复算 ${c.item} ${c.field}` : `C 第 ${Number(c.item) + 1} 处 ${c.field}`}{c.note ? `：${c.note}` : ''}</li>)}</ul></section>}
       <p className="rv-foot">百业学院 · 一所 AI 学院 · 题目只用公开授权（CC BY）的论文；私域课的数据只给提供方用。</p>
     </div></div>
   );
@@ -186,6 +210,7 @@ const CSS = `
 .rv-bar span { color: #5b6380; font-size: 14px; margin-right: auto; } .rv-msg { color: #0d7a52 !important; font-weight: 700; margin-right: 0 !important; }
 .rv-bar button { border: 1px solid #14204a; background: #fff; color: #14204a; border-radius: 8px; padding: 9px 18px; font: inherit; font-weight: 700; cursor: pointer; }
 .rv-bar button.pri { background: #14204a; color: #fff; } .rv-bar button:disabled { opacity: .45; cursor: default; }
+.rv-tab { white-space: pre; overflow: auto; font: 12.5px/1.6 ui-monospace, Menlo, monospace; background: #faf8f2; padding: 10px 12px; border-radius: 8px; margin: 0; }
 .rv-log { padding-left: 18px; color: #3a4260; font-size: 14px; }
 .rv-foot { margin-top: 40px; color: #8a8fa8; font-size: 12.5px; text-align: center; }
 @media (max-width: 680px) { .rv-me { grid-template-columns: 1fr; } .rv-x { margin-left: 0; } }

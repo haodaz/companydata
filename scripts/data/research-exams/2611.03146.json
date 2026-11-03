@@ -162,6 +162,18 @@
     "ok": true,
     "note": "原文 Baselines 部分仅提到 'We also compare a KAPPO-adjusted A^{*} PO algorithm with PKPO (Walder and Karkhanis, 2025)...'，并未提及 'Zhang and Ortega (2025)' 或其论文 'Multi-Sample Verifiable Rewards for Broad Reason"
    }
+  ],
+  "recompute": [
+   {
+    "i": 1,
+    "value": 0.46,
+    "ok": true
+   },
+   {
+    "i": 2,
+    "value": 0.29,
+    "ok": true
+   }
   ]
  },
  "design_key_full": {
@@ -202,5 +214,27 @@
    "Following common practice in RLVR, we use GRPO without a KL regularization term",
    "requiring only a single-time reference calibration at \\leq 5\\% training time overhead"
   ]
- }
+ },
+ "recompute": [
+  {
+   "i": 1,
+   "table": "| Model | Method | pass@2 | pass@4 |\n|---|---|---|---|\n| OLMo-3-7B | @2-A*PO | 76.98 | 84.38 |\n| | PKPO (k_train=2) | 77.38 | 84.73 |\n| | @4-A*PO | 76.51 | 84.39 |\n| | PKPO (k_train=4) | 76.18 | 83.92 |\n| Qwen3-4B | @2-A*PO | 70.48 | 79.39 |\n| | PKPO (k_train=2) | 70.77 | 78.77 |\n| | @4-A*PO | 70.14 | 78.63 |\n| | PKPO (k_train=4) | 69.91 | 78.65 |",
+   "question": "在评估预算与训练目标匹配时（k_train=2 看 pass@2，k_train=4 看 pass@4），共 4 组对比（2 个模型 × 2 个 k）。逐组计算 @k-A*PO 与对应 PKPO 的绝对差（百分点），这 4 个绝对差中的最大值是多少？",
+   "answer": 0.47,
+   "unit": "百分点",
+   "tolerance": 0.01,
+   "formula": "OLMo k=2: |76.98−77.38|=0.40；OLMo k=4: |84.39−83.92|=0.47；Qwen k=2: |70.48−70.77|=0.29；Qwen k=4: |78.63−78.65|=0.02；取最大值 0.47（<0.5）",
+   "quote": "At the evaluation budget matching the training objective,\n\\mathrm{@k} - A^{\\star} PO is within 0.5 percentage points of\nPKPO in every comparison."
+  },
+  {
+   "i": 2,
+   "table": "| Model | Method | pass@2 |\n|---|---|---|\n| Qwen3-4B | @2-A*PO | 70.48 |\n| | PKPO (k_train=2) | 70.77 |",
+   "question": "对 Qwen3-4B、k_train=2 的设置，在匹配预算 pass@2 上，PKPO 比 @2-A*PO 高多少个百分点？（用 PKPO 减去 @2-A*PO）",
+   "answer": 0.29,
+   "unit": "百分点",
+   "tolerance": 0.01,
+   "formula": "70.77 − 70.48 = 0.29",
+   "quote": "At the evaluation budget matching the training objective,\n\\mathrm{@k} - A^{\\star} PO is within 0.5 percentage points of\nPKPO in every comparison."
+  }
+ ]
 }

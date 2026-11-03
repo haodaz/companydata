@@ -5,6 +5,7 @@
  * 每篇论文出三题，全部有客观答案：
  *   A 读懂：给方法 / 实验设置原文，还原研究设计（问题、自变量、因变量、对照 / 基线、数据、规模与重复、指标）——对照导师的答案逐项判
  *   B 盲测：只给不含结果的研究简介（AI 改写成「预注册」口吻，核对过不泄露结果）+ 6 条论断（真的、反过来的各半），学员给每条为真的概率——程序算准确率和 Brier（校准）
+ *   D 复算（11-03 加）：论文表格里的原始数字 → 算出正文写的结论数字（比如「峰值显存降低 19%」），程序按误差判；答案是论文自己的，不用下载数据
  *   C 埋错审稿：给一段方法 + 结果原文，悄悄埋 3 处错（数字前后不一致、结论超出证据、编一条参考文献）——看找到几处、误报几处
  * 论文只用 arXiv 上 CC BY 授权的、最近发表的（被考模型没见过，盲测才算数）。
  * 分层（用户 11-03）：公共课 = 平台用公开论文 / 数据先建好（scope: public）；私域课 = 实验室拿未发表数据、组内 SOP 来联合培养，只给这一家用（scope: private + org）。流水线一样，只是材料来源和归属不同。
@@ -75,6 +76,19 @@ ${planted.map((p: any, i: number) => `${i + 1}. [${p.kind}] 改后：「${p.chan
   const nz = (x: string) => String(x).replace(/\s+/g, '');
   return { props: vs, brief_leaks: (c.brief_leaks || []).map(String).filter((x: string) => x.length >= 6 && nz(brief).includes(nz(x).slice(0, 20))), planted_ok: (c.planted || []).map((x: any) => ({ i: Number(x.i), ok: !!x.is_error, note: S(x.note, 200) })) };
 }
+/** D 复算：AI 代导师从表格里挑能复算的结论数字；千问不看答案独立算一遍，对不上的标疑问 */
+async function addRecompute(ex: any, full: string) {
+  const d = await ask(`你是这一方向的导师。从下面论文里挑 2–3 个「正文报告的结论数字，能用论文表格里的原始数字算出来」的地方（比如降低了百分之几、平均值、比值、差值），出复算题。只用原文，表格照原样抄成 Markdown，不要改数字。
+## 论文：${ex.title}
+${full}
+只返回 JSON：{ "items": [ { "table": "原文表格（Markdown，只保留算这一题需要的行和列）", "question": "要算什么（写清口径，不透露答案）", "answer": 0, "unit": "%|x|…", "tolerance": 0.5, "formula": "怎么算", "quote": "原文报告这个数的句子（一字不改）" } ] }`, MENTOR, '出题 · D 复算');
+  const items = (d.items || []).slice(0, 3).map((x: any, i: number) => ({ i: i + 1, table: S(x.table, 3000), question: S(x.question, 400), answer: Number(x.answer), unit: S(x.unit, 10), tolerance: Math.max(0.01, Number(x.tolerance) || 0.5), formula: S(x.formula, 300), quote: S(x.quote, 400) })).filter((x: any) => x.table && x.question && Number.isFinite(x.answer));
+  const c = await ask(`按下面的表格和问题算出数值，只返回 JSON：{ "answers": [ { "i": 1, "value": 0 } ] }
+${items.map((x: any) => `### 题 ${x.i}\n${x.table}\n问题：${x.question}`).join('\n\n')}`, CHECKER, '交叉核对 · D 复算');
+  ex.recompute = items;
+  ex.check = { ...(ex.check || {}), recompute: items.map((x: any) => { const v = Number((c.answers || []).find((y: any) => Number(y.i) === x.i)?.value); return { i: x.i, value: v, ok: Number.isFinite(v) && Math.abs(v - x.answer) <= x.tolerance }; }) };
+  return ex;
+}
 async function fullText(id: string) {
   const html = await (await fetch(`https://arxiv.org/html/${id}v1`)).text();
   return htmlToSections(html).map(s => `## ${s.title}\n${s.text}`).join('\n').slice(0, 160000);
@@ -128,6 +142,7 @@ ${full}
 
 /** 学员作答：三题分开问（同一个学员模型） */
 async function sit(exam: any, model: string) {
+  if (exam._onlyD) return { A: null, B: null, C: null, D: (exam.recompute || []).length ? await askD(exam, model) : null };
   const A = await ask(`你在做一份科研能力测评。读下面这篇论文的方法 / 实验设置原文，还原它的研究设计。只根据原文，原文没写的就写「原文未报告」，不要补充原文没有的信息。
 ## ${exam.title}
 ${exam.method_excerpt}
@@ -142,7 +157,19 @@ ${exam.propositions.map((p: any) => `${p.i}. ${p.statement}`).join('\n')}
 ## 稿件节选
 ${exam.review_excerpt}
 只返回 JSON：{ "issues": [ { "quote": "", "problem": "" } ] }`, model, `学员作答 C（${model}）`);
-  return { A, B, C };
+  const D = (exam.recompute || []).length ? await askD(exam, model) : null;
+  return { A, B, C, D };
+}
+async function askD(exam: any, model: string) {
+  return ask(`你在做一份科研能力测评（复算）。用每题给的表格算出数值，只用表格里的数字；表格不够就在 note 里说明，不要编数字。
+${exam.recompute.map((x: any) => `### 题 ${x.i}\n${x.table}\n问题：${x.question}`).join('\n\n')}
+只返回 JSON：{ "answers": [ { "i": 1, "value": 0, "how": "一句话怎么算", "note": "" } ] }`, model, `学员作答 D（${model}）`);
+}
+/** D 程序判：和论文报告的数在误差内算对 */
+function gradeD(exam: any, D: any) {
+  if (!(exam.recompute || []).length || !D) return null;
+  const det = exam.recompute.map((x: any) => { const v = Number((D.answers || []).find((y: any) => Number(y.i) === x.i)?.value); return { i: x.i, value: Number.isFinite(v) ? v : null, answer: x.answer, ok: Number.isFinite(v) && Math.abs(v - x.answer) <= x.tolerance }; });
+  return { right: det.filter((x: any) => x.ok).length, of: det.length, detail: det };
 }
 
 async function grade(exam: any, ans: any) {
@@ -166,10 +193,13 @@ C：每处埋的错有没有被找到（找到 = 指出了那个片段且说对�
   const found = (g.C?.found || []).filter(Boolean).length;
   // 防幻觉：作答里引了材料没有的文献
   const fake = fabricatedCitations(JSON.stringify(ans), [exam.method_excerpt, exam.blind_brief, exam.review_excerpt].join('\n'));
-  return { A: aScore, B: { accuracy: Math.round(acc * 100), brier: Math.round(brier * 1000) / 1000, detail: bs }, C: { found, of: exam.planted.length, false_alarms: Number(g.C?.false_alarms) || 0, note: S(g.C?.note, 300) }, fabricated: fake, judge_note: S(g.A?.note, 300) };
+  return { D: gradeD(exam, ans.D), A: aScore, B: { accuracy: Math.round(acc * 100), brier: Math.round(brier * 1000) / 1000, detail: bs }, C: { found, of: exam.planted.length, false_alarms: Number(g.C?.false_alarms) || 0, note: S(g.C?.note, 300) }, fabricated: fake, judge_note: S(g.A?.note, 300) };
 }
 
-if (cmd === 'sync') {
+if (cmd === 'addcalc') {
+  for (const id of args) { const f = `${DIR}/${id}.json`; const ex = JSON.parse(fs.readFileSync(f, 'utf8')); await addRecompute(ex, await fullText(id)); await saveExam(f, ex);
+    console.log(`${id}：复算 ${ex.recompute.length} 题，核对对上 ${ex.check.recompute.filter((x: any) => x.ok).length}/${ex.recompute.length}`); }
+} else if (cmd === 'sync') {
   // 把 JSON 里的题写进库（迁移 060 跑完后一次）
   for (const f of fs.readdirSync(DIR).filter(f => f.endsWith('.json'))) { const ex = JSON.parse(fs.readFileSync(`${DIR}/${f}`, 'utf8')); await upsertExam(ex); console.log('写库', ex.id, ex.title); }
 } else if (cmd === 'rekey') {
@@ -214,12 +244,17 @@ ${JSON.stringify(r.answers.A)}
   const file = `${OUT}/${new Date().toISOString().slice(0, 10)}.json`;
   const res: any[] = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : [];
   for (const model of args) for (const ex of exams) {
-    if (res.some(r => r.model === model && r.paper === ex.id)) continue;
+    const had = res.find(r => r.model === model && r.paper === ex.id);
+    if (had) {
+      // 老成绩没有 D 复算：只补考 D
+      if (!had.D && (ex.recompute || []).length) { try { const D = (await sit({ ...ex, _onlyD: true }, model)).D; had.answers.D = D; had.D = gradeD(ex, D); console.log(`${model} × ${ex.id}：补 D 复算 ${had.D?.right}/${had.D?.of}`); fs.writeFileSync(file, JSON.stringify(res, null, 1)); } catch (e: any) { console.log(`✗ ${model} × ${ex.id} D：${String(e?.message).slice(0, 100)}`); } }
+      continue;
+    }
     try { const ans = await sit(ex, model); const g = await grade(ex, ans); res.push({ model, paper: ex.id, title: ex.title, ...g, answers: ans }); console.log(`${model} × ${ex.id}：A 读懂 ${g.A} · B 盲测 准确 ${g.B.accuracy}% Brier ${g.B.brier} · C 审稿 找到 ${g.C.found}/${g.C.of} 误报 ${g.C.false_alarms}${g.fabricated.length ? ` · 编造引用 ${g.fabricated.length}` : ''}`); }
     catch (e: any) { console.log(`✗ ${model} × ${ex.id}：${String(e?.message).slice(0, 120)}`); }
     fs.writeFileSync(file, JSON.stringify(res, null, 1));
   }
-  console.log('\n模型 | A 读懂 | B 盲测准确 | B Brier（越低越好，0.25 = 全猜 0.5） | C 找到埋错 | C 误报');
+  console.log('\n模型 | D 复算 | A 读懂 | B 盲测准确 | B Brier（越低越好，0.25 = 全猜 0.5） | C 找到埋错 | C 误报');
   for (const model of args) { const rs = res.filter(r => r.model === model); if (!rs.length) continue; const av = (f: (r: any) => number) => Math.round(rs.reduce((n, r) => n + f(r), 0) / rs.length * 100) / 100;
-    console.log(`${model} | ${av(r => r.A)} | ${av(r => r.B.accuracy)}% | ${av(r => r.B.brier)} | ${rs.reduce((n, r) => n + r.C.found, 0)}/${rs.reduce((n, r) => n + r.C.of, 0)} | ${rs.reduce((n, r) => n + r.C.false_alarms, 0)}`); }
+    console.log(`${model} | ${rs.reduce((n, r) => n + (r.D?.right || 0), 0)}/${rs.reduce((n, r) => n + (r.D?.of || 0), 0)} | ${av(r => r.A)} | ${av(r => r.B.accuracy)}% | ${av(r => r.B.brier)} | ${rs.reduce((n, r) => n + r.C.found, 0)}/${rs.reduce((n, r) => n + r.C.of, 0)} | ${rs.reduce((n, r) => n + r.C.false_alarms, 0)}`); }
 }

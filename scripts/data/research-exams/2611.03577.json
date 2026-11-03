@@ -161,6 +161,23 @@
     "ok": true,
     "note": "原文引用中不包含 Romero and Feng (2023)，该参考文献为虚构。"
    }
+  ],
+  "recompute": [
+   {
+    "i": 1,
+    "value": 11.62,
+    "ok": true
+   },
+   {
+    "i": 2,
+    "value": 11.73,
+    "ok": true
+   },
+   {
+    "i": 3,
+    "value": 22.58,
+    "ok": true
+   }
   ]
  },
  "design_key_full": {
@@ -204,5 +221,37 @@
    "\"All results use one GPU\"",
    "\"Table 8 sweeps A\\in\\{1,2,4,8\\} .\""
   ]
- }
+ },
+ "recompute": [
+  {
+   "i": 1,
+   "table": "| Model | Backend | Method | Step ms (Δ) |\n|---|---|---|---|\n| Granite-3.1-3B | SonicMoE | Standard (no expert clip) | 95.5 ( - 12.4%) |\n| Granite-3.1-3B | SonicMoE | Sonar-MoE | 84.4 ( - 22.7%) |",
+   "question": "在 Granite-3.1-3B、SonicMoE 后端上，以“Standard (no expert clip)”的步长时间为基准，Sonar-MoE 的步长时间缩短了百分之多少？口径为（基准 − Sonar-MoE）/ 基准 × 100%。",
+   "answer": 11.62,
+   "unit": "%",
+   "tolerance": 0.1,
+   "formula": "(95.5 − 84.4) / 95.5 × 100% = 11.1 / 95.5 × 100% ≈ 11.62%",
+   "quote": "On Granite Sonar-MoE is a further 11.6% faster than that baseline, which §5.3 traces to idle GPU time."
+  },
+  {
+   "i": 2,
+   "table": "| Model | Hooks | Calls | Peak GB | Step ms | Held-out |\n|---|---|---|---|---|---|\n| OLMoE | batched | 32 | 43.57 | 116.1 | 1.2596 |\n| OLMoE | per-expert | 2048 | 43.58 | 139.7 | 1.2600 |",
+   "question": "在 OLMoE 上，与 batched hooks 相比，per-expert hooks 每多出一次优化器调用，平均增加多少微秒的步长时间？口径为：步长时间差（ms）÷ 调用次数差，结果换算为 μs。",
+   "answer": 11.71,
+   "unit": "μs",
+   "tolerance": 0.5,
+   "formula": "(139.7 − 116.1) ms / (2048 − 32) = 23.6 ms / 2016 ≈ 0.01171 ms ≈ 11.71 μs",
+   "quote": "Third, attaching hooks per expert keeps the memory saving but adds 23.6 ms per step on OLMoE, about 12 \\mu s per extra optimizer call (Table 3)."
+  },
+  {
+   "i": 3,
+   "table": "| A | Std. (global) | Std. (no exp.) | Sonar-MoE | Peak GB |\n|---|---|---|---|---|\n| 4 | 368.5 | 341.7 | 451.7 | 57.21 / 44.31 |",
+   "question": "在梯度累积 A=4 时，以“Std. (global)”的步长时间为基准，Sonar-MoE 的步长时间慢了百分之多少？口径为（Sonar-MoE − 基准）/ 基准 × 100%。",
+   "answer": 22.58,
+   "unit": "%",
+   "tolerance": 0.5,
+   "formula": "(451.7 − 368.5) / 368.5 × 100% = 83.2 / 368.5 × 100% ≈ 22.58%",
+   "quote": "With accumulation it runs the optimizer A times per step and is slower than standard training with global clipping, by 5% at A{=}2 , 23% at A{=}4 and 35% at A{=}8 , while still saving 12.9 GB."
+  }
+ ]
 }
