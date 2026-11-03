@@ -64,7 +64,11 @@ export async function orgByLabToken(token: string) {
 export async function labAction(orgId: string, who: string, a: { action: 'add' | 'update' | 'confirm' | 'delete'; id?: string; kind?: Kind; title?: string; body?: string; file_url?: string | null }) {
   const by = String(who || '').trim().slice(0, 40); if (!by) throw new Error('先写上你的名字（会记在每一处修改上）');
   const at = new Date().toISOString();
-  if (a.action === 'add') return { id: await addMaterial({ org_id: orgId, kind: a.kind as Kind, title: a.title || '', body: a.body || '', file_url: a.file_url || null, source: 'lab', created_by: by }) };
+  if (a.action === 'add') {
+    const id = await addMaterial({ org_id: orgId, kind: a.kind as Kind, title: a.title || '', body: a.body || '', file_url: a.file_url || null, source: 'lab', created_by: by });
+    await db.from('college_private_materials').update({ history: [{ by, at, action: 'add' }], confirmed_by: by, confirmed_at: at }).eq('id', id);
+    return { id };
+  }
   const { data: m } = await db.from('college_private_materials').select('*').eq('id', a.id || '').eq('org_id', orgId).eq('if_delete', false).maybeSingle();
   if (!m) throw new Error('这份材料不存在');
   const hist = [...(m.history || [])];
