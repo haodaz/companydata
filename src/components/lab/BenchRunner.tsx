@@ -104,16 +104,28 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   // ── AI 演示：拿老手脚本自己把这台工位走一遍，人在旁边看 ──
   const [auto, setAuto] = useState(!!demo);
   const autoI = useRef(0);
+  const autoRef = useRef(auto); autoRef.current = auto;
+  /** 老手脚本里到点的动作：放在模拟时钟每一拍推进之前做（2026-11-03）。以前演示单独开一个定时器，
+   *  和时钟错拍时一拍里会连挪两下焊枪，速度冲过 8 mm/s，老手自己被记「行走过快」 */
+  const applyDue = (s: BenchState) => {
+    const script = demoScript.current;
+    while (autoI.current < script.length && script[autoI.current].t <= s.t) { const a = script[autoI.current++]; applyControl(spec, s, a.control, a.value); }
+    // 沿路径走的控件（焊枪、搅拌头）：脚本常是 0.5 秒一个采样，比一拍粗——按时间在前后两个采样之间插值，每拍匀速挪一点
+    for (const [id, pts] of demoPaths.current) {
+      const j = pts.findIndex(x => x.t > s.t); if (j <= 0) continue;
+      const a = pts[j - 1], b = pts[j]; applyControl(spec, s, id, a.value + (b.value - a.value) * (s.t - a.t) / (b.t - a.t));
+    }
+  };
+  const demoPaths = useRef<[string, { t: number; value: number }[]][]>([]);
+  demoPaths.current = useMemo(() => spec.controls.filter(c => c.kind === 'path').map(c => [c.id, [...(spec.expertScript || [])].filter(x => x.control === c.id).sort((a, b) => a.t - b.t)] as [string, { t: number; value: number }[]]).filter(([, pts]) => pts.length > 1), [spec]);
+  const demoScript = useRef<{ t: number; control: string; value: number }[]>([]);
+  demoScript.current = useMemo(() => [...(spec.expertScript || [])].sort((a, b) => a.t - b.t), [spec]);
   useEffect(() => {
     if (!auto || !running) return;
-    const script = [...(spec.expertScript || [])].sort((a, b) => a.t - b.t);
+    const script = demoScript.current;
     if (!script.length) return;
     const iv = setInterval(() => {
       const s = stRef.current;
-      while (autoI.current < script.length && script[autoI.current].t <= s.t) {
-        const a = script[autoI.current++];
-        applyControl(spec, s, a.control, a.value);
-      }
       // 轨迹走到哪里，落点就落在哪里——图案 / 切口跟着长出来
       if (trackLayer?.control) { const h = pointOnPath(trackPts.current, s.controls[trackLayer.control] || 0); drop(h.x, h.y); }
       if (autoI.current >= script.length && s.t > script[script.length - 1].t + 4) { setAuto(false); setRunning(false); if (guided && gPhaseRef.current === 'demo') setGPhase('ready'); }
@@ -168,6 +180,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
       const s = stRef.current;
       if (guided && gPausedRef.current) return;   // 跟我学：停着等人做
       const before = s.events.length;
+      if (autoRef.current) applyDue(s);
       tickBench(spec, s, spec.timeScale * (TICK_MS / 1000));
       // 跟我学：时钟走到下一个动作的时刻就停下来讲
       if (guided && gPhase === 'act' && gi < gScript.length && s.t >= gScript[gi].t) { gEvents.current = s.events.length; setGPaused(true); }

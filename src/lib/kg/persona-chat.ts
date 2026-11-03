@@ -248,7 +248,10 @@ ${history.slice(-10).map(m => `${m.role === 'user' ? '对方' : persona.nickname
     p = parseJsonLoose(r.text) || p;
     reply = tidy(String(p.reply || reply));
     flagged = await unsupportedSentences(reply, checkBase, model, occ.name);
-    for (const f of flagged) reply = reply.replace(f, '');
+    // 删句子时连同紧跟着的来源标记一起删；只剩来源标记的空句（「[D3]。」）也清掉——以前会留在开头（2026-11-03）
+    const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    for (const f of flagged) reply = reply.replace(new RegExp(esc(f) + '\\s*(?:\\[[A-Z]\\d+\\]\\s*)*'), '');
+    reply = reply.replace(/(^|[。！？；\n])\s*(?:\[[A-Z]\d+\]\s*)+[。！？；]/g, '$1');
     reply = reply.replace(/\s{2,}/g, ' ').replace(/^[，。；、,.;\s]+/, '').replace(/([。！？])[，；、]+/g, '$1').trim() || '这个平方的资料里还没有，我不乱说。';
   }
   const cited = Array.from(new Set(reply.match(/\[([JSTDCWF]\d+)\]/g)?.map(x => x.slice(1, -1)) || []));

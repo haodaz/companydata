@@ -183,10 +183,10 @@ export const BENCH_WELD: BenchSpec = {
   },
 };
 
-/** 匀速走完焊缝的脚本片段：从 t0 起以 mmPerS 走，每 0.5 秒一个采样 */
+/** 匀速走完焊缝的脚本片段：从 t0 起以 mmPerS 走，每 0.25 秒（体验端一拍）一个采样——采样比一拍粗，速度会在 2 倍和 0 之间跳，老手也被记「过快 / 停顿」 */
 const walk = (t0: number, mmPerS: number, from = 0, to = 100): BenchAction[] => {
   const out: BenchAction[] = []; const pctPerS = mmPerS / 2;
-  for (let t = t0, v = from; v < to; t += 0.5) { v = Math.min(to, from + (t - t0) * pctPerS); out.push({ t, control: 'torch', value: v }); if (v >= to) break; }
+  for (let t = t0, v = from; v < to; t += 0.25) { v = Math.min(to, from + (t - t0) * pctPerS); out.push({ t, control: 'torch', value: v }); if (v >= to) break; }
   return out;
 };
 
