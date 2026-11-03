@@ -164,6 +164,26 @@ const COLLEGE_DIMS = [
   { key: 'judgement', name: '现场判断', weight: 25, description: '识别并处理这一章场景里的关键风险 / 坑（老师傅示范里处理了的点）；漏掉的按条扣' },
   { key: 'deliverable', name: '交付可用', weight: 20, description: '产出能直接交给该交的人用：有结论、有依据、有下一步；格式和口径对得上岗位' },
 ];
+/** 防幻觉（2026-11-03）：作答里引用的文献（DOI、「X et al.」、「某某等（2021）」「Smith, 2020」）在题面 / 材料 / 技能卡里都找不到 → 判为编造。
+ *  程序逐条对，不靠评卷模型，没有评分波动。情境虚构的文献照样算「给到的」，只要原文里有。 */
+export function fabricatedCitations(answer: string, source: string) {
+  const norm = (x: string) => x.toLowerCase().replace(/\s+/g, '');
+  const src = norm(source);
+  const found = new Set<string>();
+  for (const m of answer.matchAll(/\b10\.\d{4,9}\/[^\s，。；、)）"」]+/g)) found.add(m[0].replace(/[.,;]+$/, ''));
+  for (const m of answer.matchAll(/([A-Z][A-Za-z'\-]+)\s+et\s+al\.?,?\s*[（(]?\s*((?:19|20)\d{2})?/g)) found.add(m[0].trim());
+  for (const m of answer.matchAll(/([A-Z][A-Za-z'\-]+)\s*(?:&|and)?\s*(?:[A-Z][A-Za-z'\-]+)?\s*[,，]\s*((?:19|20)\d{2})/g)) found.add(m[0].trim());
+  for (const m of answer.matchAll(/([\u4e00-\u9fa5]{1,4})等[人]?\s*[（(]\s*((?:19|20)\d{2})\s*[)）]/g)) found.add(m[0].trim());
+  const out: string[] = [];
+  for (const c of found) {
+    const name = (c.match(/^[A-Za-z\u4e00-\u9fa5'\-]+/) || [''])[0];
+    const year = (c.match(/(?:19|20)\d{2}/) || [''])[0];
+    const ok = c.startsWith('10.') ? src.includes(norm(c)) : (!!name && src.includes(norm(name)) && (!year || src.includes(year)));
+    if (!ok) out.push(c);
+  }
+  return out.slice(0, 6);
+}
+
 export async function gradeCollege(task: { title: string; brief: string; materials?: string; deliverable?: string }, answer: string, ref: { skill: { name: string; card: any } | null; expertText: string; chapterBrief?: string }, who = '学员') {
   const prompt = `你是百业学院的评卷人，按「学院口径」评一份 AI 学员的作答。这一行的老师傅不在场，你手里有他的技能卡和这一章的示范。
 评卷目的：量出通用大模型和这一行真实手艺之间的差距。通用模型很会写结构完整、文笔流畅、面面俱到的回答——这些**不加分**；加分的只有：说对这一行的行话和规矩、给出能照着做的具体步骤、处理了这一章现场的坑、交付能直接用。
@@ -215,8 +235,11 @@ ${COLLEGE_DIMS.map(d => `- ${d.key}｜${d.name}｜满分 ${d.weight}｜${d.descr
   const doneRatio = moves.length ? moves.filter((m: any) => m.done).length / moves.length : 1;
   if (moves.length && doneRatio < 0.5 && score > 59) { score = 59; if (!caps.some(c => /一半|59/.test(c))) caps.push(`关键动作只做到 ${moves.filter((m: any) => m.done).length}/${moves.length}，总分封顶 59`); }
   if (caps.some(c => /45|通用建议/.test(c)) && score > 45) score = 45;
+  // 防幻觉硬检查：引用了材料里没有的文献，封顶 45（程序判，不看评卷模型）
+  const fake = fabricatedCitations(answer, [task.title, task.brief, task.materials, task.deliverable, ref.chapterBrief, ref.expertText, ref.skill ? skillCardToPrompt(ref.skill.name, ref.skill.card) : ''].filter(Boolean).join('\n'));
+  if (fake.length) { caps.push(`引用了材料里没有的文献（疑似编造）：${fake.join('；')}，总分封顶 45`); if (score > 45) score = 45; }
   const list = (v: any) => (Array.isArray(v) ? v.map((x: any) => str(x, 200)).filter(Boolean).slice(0, 6) : []);
-  return { score, grading: { standard: COLLEGE_STANDARD, grader: GRADE_MODEL, dimensions: dims, key_moves: moves, caps, summary: str(p.summary, 500), gaps: list(p.gaps), suggestions: list(p.suggestions) } };
+  return { score, grading: { standard: COLLEGE_STANDARD, grader: GRADE_MODEL, dimensions: dims, key_moves: moves, caps, fabricated: fake, summary: str(p.summary, 500), gaps: list(p.gaps), suggestions: list(p.suggestions) } };
 }
 
 /** 评卷用的参照：这一章老师傅的示范（有工位就是示范轨迹的文字，没有就用技能卡里的做法 + 好的样子） */
