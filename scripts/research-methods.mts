@@ -124,11 +124,15 @@ ${menu}
 ${b.map(x => `#${x.id} ${x.name}（${x.type}/${x.category || '—'}）${S(x.labels, 60)} ${S(String(x.description || '').replace(/<[^>]+>/g, ''), 160)}`).join('\n')}
 每个产品：methods 是 0–3 个方法 key（通用耗材如移液枪头可以挂多个最常用的；和清单都不沾边就空数组）；disciplines 是 1–4 个教育部一级学科名（中文分号隔开）；applications 是 1–3 个应用场景短语（中文分号隔开，如「细胞培养；药物筛选」）。
 只返回 JSON：{ "items": [ { "id": 0, "methods": [], "disciplines": "", "applications": "" } ] }`, 'qwen3.7-plus', '实验方法 · 产品归类'));
-      for (const it of Array.isArray(p?.items) ? p.items : []) {
-        const id = Number(it?.id); if (!b.some(x => x.id === id)) continue;
+      // 模型有时把列表叫别的名字、编号带「#」：放宽解析；一条都没对上算失败（别静默跳过）
+      const list = Array.isArray(p) ? p : Array.isArray(p?.items) ? p.items : (Object.values(p || {}).find(v => Array.isArray(v)) as any[]) || [];
+      let got = 0;
+      for (const it of list) {
+        const id = Number(String(it?.id ?? '').replace(/[^\d]/g, '')); if (!b.some(x => x.id === id)) continue; got++;
         res[id] = { methods: (Array.isArray(it.methods) ? it.methods : []).map((k: any) => String(k)).filter((k: string) => keys.has(k)).slice(0, 3), disciplines: S(it.disciplines, 80), applications: S(it.applications, 80) };
       }
       save(PF, res);
+      if (!got) throw new Error(`回来的 JSON 对不上编号：${JSON.stringify(p).slice(0, 160)}`);
     } catch (e: any) { failed++; console.log(`  ✗ 一批失败：${String(e?.message).slice(0, 80)}`); }
     if (++done % 25 === 0) console.log(`[${done}/${batches.length} 批] ${Math.round((Date.now() - t0) / 60000)} 分钟`);
   });
