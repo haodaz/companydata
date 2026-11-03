@@ -66,6 +66,35 @@
   .arw { display: grid; place-items: center; font-size: 40px; color: var(--v); font-weight: 900; }
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 30px; }
   .two div { padding: 20px 26px; font-size: 22px; color: var(--ink2); } .two b { display: block; font-size: 27px; color: var(--ink); margin-bottom: 4px; }
+
+  /* 《百业学院怎么培养一位科研 AI》（11-03 第二支）新增：exams4 / catch / fields / brier / traits / private */
+  .exams.x4 { grid-template-columns: repeat(4, 1fr); gap: 22px; } .exams.x4 .ex { padding: 26px 24px; } .exams.x4 h3 { font-size: 29px; } .exams.x4 p { font-size: 20px; }
+  .catch { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 26px; margin-top: 44px; }
+  .catch .card { padding: 30px 32px; } .catch .k { font-size: 19px; letter-spacing: .1em; color: var(--ink3); font-weight: 700; }
+  .catch .big { font-size: 54px; font-weight: 900; margin: 14px 0 8px; } .catch .sm { font-size: 21px; color: var(--ink2); line-height: 1.55; }
+  .catch .nums { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; } .catch .nums span { font-size: 27px; font-weight: 800; padding: 8px 14px; border-radius: 12px; background: #fff; border: 1px solid rgba(96,85,245,.18); }
+  .catch .bad .big { color: var(--red); } .catch .good .big { color: var(--green); } .catch .good { box-shadow: 0 0 0 3px rgba(22,163,74,.5), 0 30px 70px -30px rgba(22,163,74,.35); }
+  .fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 44px; }
+  .fd { padding: 30px 30px; } .fd .ic { font-size: 46px; } .fd h3 { margin: 10px 0 4px; font-size: 32px; font-weight: 900; } .fd .s { font-size: 20px; color: var(--v); font-weight: 800; margin-bottom: 14px; }
+  .fd ul { margin: 0; padding: 0; list-style: none; } .fd li { font-size: 19px; color: var(--ink2); line-height: 1.45; padding: 8px 0; border-top: 1px dashed rgba(96,85,245,.22); }
+  .grid3 { display: grid; grid-template-columns: 260px repeat(3, 1fr); gap: 14px; margin-top: 40px; align-items: center; }
+  .grid3 .h { font-size: 22px; font-weight: 800; color: var(--ink3); text-align: center; letter-spacing: .04em; } .grid3 .m { font-size: 27px; font-weight: 900; }
+  .cell { height: 92px; border-radius: 18px; display: grid; place-items: center; font-size: 34px; font-weight: 900; animation: up .7s both; animation-delay: calc(.4s + var(--i) * .12s); }
+  .cell small { display: block; font-size: 17px; font-weight: 700; margin-top: -6px; }
+  .cell.w { background: #ffe4e4; color: #b42318; } .cell.ok { background: #dcfce7; color: #166534; }
+  .traits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 44px; }
+  .tr { padding: 30px 30px; } .tr h3 { margin: 0 0 6px; font-size: 32px; font-weight: 900; } .tr .who { font-size: 21px; font-weight: 800; color: var(--v); margin-bottom: 16px; }
+  .tr .p { font-size: 22px; line-height: 1.5; padding: 10px 0; border-top: 1px dashed rgba(96,85,245,.22); } .tr .p b { color: var(--green); } .tr .p i { font-style: normal; color: var(--red); font-weight: 800; }
+  .pv { display: grid; gap: 22px; margin-top: 44px; }
+  .pv .row { grid-template-columns: 300px 1fr 1fr; } .bar.g i { background: linear-gradient(90deg, #9aa0bc, #c3c7da); }
+  .page.c { display: flex; flex-direction: column; justify-content: center; padding-bottom: 130px; } .page.c > .eb { align-self: flex-start; }
+  .page.c h1 { font-size: 64px; }
+  .exams.x4 .ex { padding: 32px 28px; } .exams.x4 h3 { font-size: 36px; } .exams.x4 p { font-size: 24px; } .exams.x4 .ans { font-size: 22px; } .page.c .src, .page.c .note { font-size: 24px; }
+  .catch .big { font-size: 50px; white-space: nowrap; } .catch .nums { gap: 8px; } .catch .nums span { font-size: 23px; padding: 6px 10px; } .catch .sm { font-size: 23px; } .catch .card { padding: 36px 32px; }
+  .fd { padding: 36px 34px; } .fd h3 { font-size: 38px; } .fd .s { font-size: 23px; } .fd li { font-size: 24px; padding: 12px 0; }
+  .cell { height: 124px; font-size: 44px; } .cell small { font-size: 20px; margin-top: -10px; } .grid3 .m { font-size: 32px; } .grid3 .h { font-size: 25px; }
+  .tr { padding: 36px 34px; } .tr h3 { font-size: 40px; } .tr .who { font-size: 24px; } .tr .p { font-size: 25px; padding: 14px 0; }
+  .pv .row { padding: 26px 30px; } .pv .bar { height: 52px; } .pv .bar span { font-size: 25px; } .pv .row.h { font-size: 22px; }
 </style></head>
 <body><div class="bg"><i></i><i></i><i></i></div><div class="page" id="p"></div>
 <script>
@@ -113,6 +142,54 @@ const P = {
       <div class="st glass d hl" style="--i:2"><div class="k">第三步</div><h3>导师只改</h3><p>看一遍、改不对的地方，每处改动留痕</p></div>
     </div>
     <div class="two"><div class="glass d" style="--i:3"><b>公共课</b>平台用公开论文和数据先建好，谁来都能上</div><div class="glass d" style="--i:4"><b>私域课</b>实验室拿自己的数据和组内规范来，联合培养，只给这一家用</div></div>`,
+  exams4: () => `${EB}<h1>拿刚发表的论文出题：<em>四道都有标准答案</em></h1>
+    <div class="exams x4">
+      ${[['A', '#6055f5', '读懂', '只给方法部分，还原研究设计：问题、变量、对照、重复', '答案：论文原文'],
+         ['B', '#12b5cb', '盲测', '藏起结果，判断 6 条结论为真的概率；拿不准就说拿不准', '答案：论文的结果'],
+         ['C', '#f59e0b', '审稿', '稿件里悄悄埋 3 处错：数字矛盾、夸大结论、编造的文献', '答案：我们埋的'],
+         ['D', '#16a34a', '复算', '用论文给的原始数字，算出正文报告的结论数字', '答案：程序按误差判']]
+        .map(([l, c, h, p, a], i) => `<div class="ex glass d" style="--i:${i}"><div class="l" style="background:${c}">${l}</div><h3>${h}</h3><p>${p}</p><div class="ans">${a}</div></div>`).join('')}
+    </div>
+    <div class="src">论文都是 CC BY 授权、最近一两个月才发表的：被考的模型没读过，盲测才算数。</div>`,
+  catch: () => `${EB}<h1>出复算题时，<em>论文自己对不上</em></h1>
+    <div class="catch">
+      <div class="card glass d" style="--i:0"><div class="k">原文给的五个批次 · 分化效率</div><div class="nums"><span>65%</span><span>62%</span><span>58%</span><span>50%</span><span>52%</span></div>
+        <div class="sm" style="margin-top:18px">视网膜类器官论文 · 2026 年 10 月<br>Front. Cell Dev. Biol.，CC BY</div></div>
+      <div class="card glass bad d" style="--i:1"><div class="k">论文里写的</div><div class="big">55% ± 3%</div><div class="sm">均值和标准差</div></div>
+      <div class="card glass good d" style="--i:2"><div class="k">按这五个数算</div><div class="big">57.4% ± 6.4%</div><div class="sm">样本标准差（n−1），人工核过</div></div>
+    </div>
+    <div class="note" style="font-size:24px">这道题留给学员：看它会不会照抄原文，还是自己算出来、指出对不上。</div>`,
+  fields: () => `${EB}<h1>同一套考法，<em>铺到三个学科</em></h1>
+    <div class="fields">
+      ${[['🧠', 'AI 研发', '模型训练 · arXiv', ['训练稳定性', '显存与吞吐优化', '数据配比与评测']],
+         ['🔋', '电池材料', '固态电池 · arXiv', ['硫化物电解质的保护涂层', '机器学习势预测电解液输运', '电子化合物里的钠离子快速迁移']],
+         ['🧫', '生命科学', '细胞与分子生物学 · Europe PMC', ['HDAC 抑制剂增强阿霉素毒性', '3D 打印模具热成型培养耗材', '植物基生物墨水做骨类器官']]]
+        .map(([ic, h, s, xs], i) => `<div class="fd glass d" style="--i:${i}"><div class="ic">${ic}</div><h3>${h}</h3><div class="s">${s}</div><ul>${xs.map(x => `<li>${x}</li>`).join('')}</ul></div>`).join('')}
+    </div>
+    <div class="src">每个学科 3 篇，每篇四道题：AI 代导师出题，另一家的模型对照原文核对。</div>`,
+  brier: () => { const d = [['qwen', [.179, .26, .253]], ['DeepSeek', [.197, .302, .208]], ['Claude', [.198, .285, .191]]];
+    let i = 0;
+    return `${EB}<h1>越陌生的方向，<em>越敢猜</em></h1>
+    <div class="grid3"><div></div><div class="h">AI 研发</div><div class="h">电池材料</div><div class="h">生命科学</div>
+      ${d.map(([m, v]) => `<div class="m">${m}</div>${v.map(x => `<div class="cell ${x > .25 ? 'w' : 'ok'}" style="--i:${i++}">${x.toFixed(2)}<small>${x > .25 ? '不如说「不知道」' : '比「不知道」好'}</small></div>`).join('')}`).join('')}
+    </div>
+    <div class="note">盲测的校准分（越低越好）。每条都答「五五开」，也就是「不知道」，得 0.25；红格是猜得比这还差。</div>`; },
+  traits: () => `${EB}<h1>三个学员，<em>换了学科还是一个样</em></h1>
+    <div class="traits">
+      ${[['Claude', '会读、会挑错', ['<b>读懂</b> 三个学科都在 80 上下', '<b>审稿</b> 埋的 27 处错全找到', '<i>误报 22 处</i>，像过度挑刺的审稿人']],
+         ['DeepSeek', '算得准、不乱说', ['<b>复算</b> 23 道全对', '<b>误报</b> 三个学员里最少', '<i>读懂</i> 偏弱，研究设计常漏项']],
+         ['qwen', '盲测在 AI 研发最好', ['<b>盲测</b> AI 研发猜对 72%', '<i>复算</i> 23 道错 8 道', '<i>编造引用</i> 1 处，被程序抓到']]]
+        .map(([h, w, ps], i) => `<div class="tr glass d" style="--i:${i}"><h3>${h}</h3><div class="who">${w}</div>${ps.map(p => `<div class="p">${p}</div>`).join('')}</div>`).join('')}
+    </div>
+    <div class="note">每格只有 3 篇论文，只看方向。差在哪里，正是每个学员要补的课。</div>`,
+  private: () => { const d = [['qwen · 盲测猜对', 50, 67, '%'], ['Claude · 盲测猜对', 17, 50, '%'], ['qwen · 审稿找到埋错', 0, 67, '0 → 2/3']];
+    return `${EB}<h1>带上实验室的资料，<em>判断更靠谱</em></h1>
+    <div class="pv"><div class="row h"><div>同一道私域题</div><div>只靠自己</div><div>带上这家实验室的规格和经验</div></div>
+      ${d.map(([m, a, b, u], i) => `<div class="row glass d" style="--i:${i}"><div class="m" style="font-size:24px">${m}</div>
+        <div class="bar g"><i style="width:${Math.max(a, 4)}%;--i:${i}"></i><span>${u === '%' ? a + '%' : '0'}</span></div>
+        <div class="bar"><i style="width:${b}%;--i:${i}"></i><span>${u === '%' ? b + '%' : '2 / 3'}</span></div></div>`).join('')}
+    </div>
+    <div class="note">题目出自这家实验室未发表的组内报告；Claude 只靠自己时，猜得很自信，可大多猜错了。</div>`; },
 };
-document.getElementById('p').innerHTML = (P[id] || P.gap)();
+const el = document.getElementById('p'); el.innerHTML = (P[id] || P.gap)(); if (['exams4', 'catch', 'fields', 'brier', 'traits', 'private'].includes(id)) el.classList.add('c');
 </script></body></html>
