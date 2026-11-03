@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { guard, fail, ok } from '../../_guard';
 import { enrollmentDetail, recomputeEnrollment } from '@/lib/college-admin';
-import { advance, attendClass, ensureLessons, nextStep, pickableWorkTasks, reflect, regradeEnrollment, runChapterExam, runWorkExam } from '@/lib/college-train';
+import { advance, attendClass, studyMethods, ensureLessons, nextStep, pickableWorkTasks, reflect, regradeEnrollment, runChapterExam, runWorkExam } from '@/lib/college-train';
 export const runtime = 'nodejs'; export const maxDuration = 300;
 
 /** 一份学籍：GET 全部（章节成绩、真活、笔记、分配、下一步、可考的真活）
@@ -31,6 +31,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     switch (b.action) {
       case 'entrance': return ok({ result: await runChapterExam(id, b.chapter_id || null, false) });
       case 'class': return ok({ result: await attendClass(id, String(b.chapter_id)) });
+      case 'methods': return ok({ result: await studyMethods(id, Array.isArray(b.keys) ? b.keys.map(String) : undefined) });   // 修方法课（科研课）
       case 'exam': return ok({ result: await runChapterExam(id, String(b.chapter_id), true) });
       case 'reflect': return ok({ result: await reflect(id, String(b.submission_id)) });
       case 'work': return ok({ result: await runWorkExam(id, String(b.work_task_id)) });

@@ -29,3 +29,7 @@
 ^scripts/hand-filter-test\.mts$
 ^src/app/api/db/occupations/\[id\]/ai-exposure(/|$)
 ^scripts/occupation-ai-exposure
+# 2026-11-03 补：学院素材 / 方法课、对外手册（真活 / 百业）、实验方法落百业的示范脚本
+^public/(college|lab-guide|work-guide)(/|$)
+^scripts/(work-guide|lab-guide)/
+^scripts/research-method-showcase\.mts$

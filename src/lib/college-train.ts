@@ -5,7 +5,7 @@
  *   1 技能卡     老师傅的判断规则 / 做法 / 好坏样例（skills.card，拜师 = 装上它）
  *   2 教材要点   每一章教案 + 示范轨迹提炼出的要点（上课 attendClass → notebook.lessons[章]）
  *   3 错题本     每次考完对照评分证据和示范轨迹反思「错在哪、下次记住什么」（reflect → notebook.mistakes / rules）
- *   4 知识包     这一行的平方图谱（标准 / 工具 / 场所 / 典型任务；和我聊同一套，按需）
+ *   4 知识包     这一行的平方图谱（标准 / 工具 / 场所 / 典型任务；和我聊同一套，按需）。科研课先接实验方法库：修方法课 studyMethods → notebook.methods，考试时装方法卡（college-methods.ts）
  *   5 真活经验   做过的真活和复盘（runWorkExam → notebook.work）
  * 学习路径：入学考（裸考）→ 逐章上课 → 装技能卡 + 笔记考 → 没过的章反思再考 → 做真活 → 每章都 ≥ 60 毕业。
  */
@@ -21,6 +21,7 @@ import { gradeResult } from '@/lib/work/grader';
 import type { WorkTask } from '@/lib/work/generator';
 import { buildLesson } from '@/lib/lab-lesson';
 import { enrollmentDetail, recomputeEnrollment } from '@/lib/college-admin';
+import { loadMethods, methodRules, methodsForSpace, type MethodCard } from '@/lib/college-methods';
 
 /** 提炼要点、写错题本这类整理活用便宜的国内模型（不联网） */
 const NOTE_MODEL = process.env.COLLEGE_NOTE_MODEL || 'qwen-plus';
@@ -31,6 +32,7 @@ export interface Notebook {
   mistakes?: { chapter: string; chapter_id?: string | null; score: number | null; lesson: string; at: string }[];
   rules?: string[];                                                      // 从错题里总结出来、下次要记住的规则
   work?: { task: string; score: number | null; lesson: string; at: string }[];
+  methods?: string[];                                                    // 修过的方法课（实验方法库 key），考试时装方法卡
 }
 
 async function loadEnrollment(id: string) {
@@ -43,15 +45,27 @@ async function loadEnrollment(id: string) {
 const needModel = (en: { model: string | null }) => { if (!en.model) throw new Error('这位学员还没接上模型接口（客户模型对接后才能上课和考试）'); return en.model; };
 async function saveNotebook(id: string, nb: Notebook) { await db.from('college_enrollments').update({ notebook: nb, updated_at: new Date().toISOString() }).eq('id', id); }
 
-/** 装进考试的东西 = 技能卡 + 这一章的教材要点 + 错题本总结的规则（当成「这位学员自己的补充规则」） */
-function augmentSkill(skill: { name: string; card: any } | null, nb: Notebook, chapterId?: string | null, nova = 'NOVA') {
+/** 装进考试的东西 = 技能卡 + 这一章的教材要点 + 错题本总结的规则（当成「这位学员自己的补充规则」）+ 修过的方法卡 */
+function augmentSkill(skill: { name: string; card: any } | null, nb: Notebook, chapterId?: string | null, nova = 'NOVA', methods: MethodCard[] = []) {
   const points = (chapterId && nb.lessons?.[chapterId]) || [];
   const rules = nb.rules || [];
   if (!skill) return null;
-  if (!points.length && !rules.length) return skill;
+  if (!points.length && !rules.length && !methods.length) return skill;
+  const mr = methodRules(methods);
   return { name: skill.name, card: { ...skill.card,
-    rules: [...(skill.card?.rules || []), ...rules.map((r: string) => `（${nova} 从错题里总结）${r}`)],
-    checklist: [...(skill.card?.checklist || []), ...points.slice(0, 8).map(p => `（这一章教材要点）${p}`)] } };
+    steps: [...(skill.card?.steps || []), ...mr.steps],
+    rules: [...(skill.card?.rules || []), ...rules.map((r: string) => `（${nova} 从错题里总结）${r}`), ...mr.rules],
+    checklist: [...(skill.card?.checklist || []), ...points.slice(0, 8).map(p => `（这一章教材要点）${p}`), ...mr.checklist] } };
+}
+
+/* ───────────── 方法课：实验方法库的方法卡进笔记（不调模型、不花钱） ───────────── */
+export async function studyMethods(enrollmentId: string, keys?: string[]) {
+  const en = await loadEnrollment(enrollmentId);
+  const ms = keys?.length ? await loadMethods(keys) : await methodsForSpace(en.space_id);
+  if (!ms.length) throw new Error('这门课在实验方法库里没对上方法（不是实验类课程，或方法库还没有）');
+  const nb: Notebook = { ...en.notebook, methods: [...new Set([...(en.notebook.methods || []), ...ms.map(m => m.key)])].slice(0, 6) };
+  await saveNotebook(en.id, nb);
+  return { methods: ms.map(m => ({ key: m.key, name: m.name, steps: m.steps?.length || 0, pitfalls: m.pitfalls?.length || 0, reviewed: m.human_review_status === 'complete' })) };
 }
 
 /* ───────────── 上课：教案 + 示范轨迹 → 要点进笔记 ───────────── */
@@ -199,14 +213,15 @@ function expertReference(space: any, chapter: any, skill: { name: string; card: 
 
 /* ───────────── 章节考 ───────────── */
 /** withSkill=false 入学考（裸考，看底子）；true = 装上技能卡 + 笔记的毕业考 */
-export async function runChapterExam(enrollmentId: string, chapterId: string | null, withSkill: boolean) {
+export async function runChapterExam(enrollmentId: string, chapterId: string | null, withSkill: boolean, opts: { noMethods?: boolean } = {}) {
   const en = await loadEnrollment(enrollmentId); const model = needModel(en);
   const space = await loadSpace(en.space_id);
   const skill = skillRef(space.skill);
   if (withSkill && !skill) throw new Error('这门课还没有技能卡（老师傅还没教），只能跑入学考');
   const chapter = pickChapter(space, chapterId);
   const useSkill = withSkill && !!skill;
-  const equipped = useSkill ? augmentSkill(skill, en.notebook, chapter?.id, en.nova) : null;
+  const methods = useSkill && !opts.noMethods ? await loadMethods(en.notebook.methods || []) : [];
+  const equipped = useSkill ? augmentSkill(skill, en.notebook, chapter?.id, en.nova, methods) : null;
   const cost = { space_id: en.space_id, chapter_id: chapter?.id || null, stage: 'use', actor: `college:${en.id}` };
   const sim: Sim | null = chapter?.sim?.steps?.length ? chapter.sim : null;
   const task = chapterTask(space, chapter);
@@ -219,7 +234,7 @@ export async function runChapterExam(enrollmentId: string, chapterId: string | n
   const { score, grading } = await withCost(cost, () => gradeCollege(task, answer, { skill, expertText: expertReference(space, chapter, skill), chapterBrief: chapter?.brief || undefined }, en.nova));
   const row: Record<string, any> = {
     task_id: en.space_id, candidate_name: `${en.nova} · ${useSkill ? '毕业考' : '入学考'}`, candidate_type: 'ai',
-    candidate_note: `${model}${useSkill ? ` · 装配「${skill!.name}」` : ' · 未装配技能'}`, candidate_location: '百业学院',
+    candidate_note: `${model}${useSkill ? ` · 装配「${skill!.name}」${methods.length ? ` + 方法卡 ${methods.map(m => m.name).join('、')}` : ''}` : ' · 未装配技能'}`, candidate_location: '百业学院',
     with_skill_id: useSkill ? space.skill_id : null, answer, score, grading, trace,
     match: sim && trace ? traceMatch(sim, trace, chapterExpertTrace(chapter, space)) : null,
     graded_with_skill_id: skill ? space.skill_id : null, graded_by_model: GRADE_MODEL, enrollment_id: en.id,
