@@ -52,7 +52,7 @@ const TOC: [string, string][] = [
   ['why', '0 · 为什么、终局'], ['history', '1 · 演进时间线'], ['pipeline', '2 · 总流程：从 JD 到空间'], ['parse', '3 · 解析与规划（起点）'],
   ['day', '4 · 一天：骨架 + 逐格'], ['data', '5 · 数据模型'], ['experience', '6 · 体验端：六扇门与证书'], ['bench', '7 · 虚拟工位与交互故事'],
   ['masters', '8 · 台面母版'], ['art', '9 · 美术与素材库'], ['3d', '10 · 3D 场景流水线'], ['quality', '11 · 质量体系'],
-  ['train', '12 · 留痕与训练数据'], ['agents', '13 · AI 自生成：编排路线'], ['rules', '14 · 原则与对外口径'], ['assets', '15 · 真实素材接入与空间加工'], ['college', '16 · 真活与百业学院：学生是 AI'], ['issues', '17 · 已知问题 / 待办'], ['files', '18 · 文件索引'],
+  ['train', '12 · 留痕与训练数据'], ['agents', '13 · AI 自生成：编排路线'], ['rules', '14 · 原则与对外口径'], ['assets', '15 · 真实素材接入与空间加工'], ['college', '16 · 真活与百业学院：学生是 AI'], ['research', '16b · 科研 AI 培养'], ['issues', '17 · 已知问题 / 待办'], ['files', '18 · 文件索引'],
 ];
 
 const F = (p: string) => <code>{p}</code>;
@@ -359,6 +359,37 @@ export default function LabLogicPage() {
           <li>演示用例别删：投资机构行业分析师（具身智能 @ 武岳峰资本，qwen-plus）、生物实验室研究员（单细胞多组学，claude-sonnet-5-5）。</li>
         </ul>
 
+        {/* 16b */}
+        <h2 id="research">16b · 科研 AI 培养：研究所、导师来订学员</h2>
+        <p>2026-11-03 起，百业学院除了给企业培养 AI 员工，也给<b>研究所、课题组、导师</b>培养科研 AI（{F('/college/hire?for=research')}）。教务流程和企业方向完全一样（学员 / 课程 / 学籍 / 入学考 → 上课 → 毕业考 → 反思 → 真活 → 毕业 → 派遣到研究所），从院校管理的角度看只是多了一个专业方向；不一样的是<b>课程怎么组织</b>和<b>怎么评分</b>。</p>
+        <div className="lg-callout"><p><b>两条原则（用户 2026-11-03）：</b>① <b>人只做校正，不做起草</b>——挑论文、定答案、埋错、方法卡，全部由「AI 代导师」先出完整初稿（标 ai_draft），另一个模型对照原文交叉核对；真人导师以后进来只改，改动留痕。否则探索工作转不起来。② <b>公共课 / 私域课分层</b>——公共课用公开论文和数据由平台先建好（scope: public）；实验室拿未发表数据、组内 SOP 来联合培养的是私域课（scope: private + org），流水线一样，只是材料来源和归属不同。</p></div>
+
+        <h3>课程三层（对应院校的说法）</h3>
+        <table><thead><tr><th>层</th><th>院校里叫</th><th>是什么</th><th>现在</th></tr></thead><tbody>
+          <tr><td><b>1 研究方法论</b></td><td>学位基础课，所有方向必修</td><td>博士第一年的关键时刻：读文献、写综述（防幻觉）、找研究空白、设计预实验、数据不好看时的诚信、组会被追问、审稿、可重复记录。每段埋一个 AI 最容易犯的错的诱惑；情境文献一律虚构并标注</td><td>空间 {F('d742fcf4')}（7 段，{F('scripts/college-research-core.mts')}）</td></tr>
+          <tr><td><b>2 实验方法课</b></td><td>专业基础课，跨方向互认</td><td>实验方法库（迁移 058，121 个方法 × 标准步骤 / 常见坑 / 安全 / 对得上的真实仪器）。学分记在学员身上（迁移 059 {F('method_credits')}），修过一次，换方向也装</td><td>{F('src/lib/college-methods.ts')} · 教务接口 action=methods</td></tr>
+          <tr><td><b>3 方向课</b></td><td>方向课</td><td>某个课题组的一天：电池材料博士后、单细胞博士后、细胞培养实验员、新材料科研员……</td><td>{F('scripts/research-method-showcase.mts')}（从一个方法落成空间 + 真活）</td></tr>
+        </tbody></table>
+
+        <h3>科研和干活不一样：评分要找客观答案</h3>
+        <p>干活的做法是已知的，老师傅的做法基本就是答案，所以学院口径 v1「对照老师傅关键动作」合适。研究是在不确定中产生可靠的新知识，答案事先不知道、路不止一条——拿一位导师的做法当唯一标准，会把合理的另一条路判错。所以科研训练优先用<b>有客观答案的任务</b>：已发表、带数据的论文本身就是答案。</p>
+        <table><thead><tr><th>题型</th><th>考什么</th><th>答案从哪来</th><th>怎么评</th></tr></thead><tbody>
+          <tr><td><b>A 读懂</b></td><td>从方法原文还原研究设计（问题 / 自变量 / 因变量 / 对照 / 数据 / 规模与重复）</td><td>原文</td><td>六项各 0–2 分，写了原文没有的按错</td></tr>
+          <tr><td><b>B 盲测预测</b></td><td>只给不含结果的「预注册」简介 + 6 条论断（真 / 反各半随机），给每条为真的概率</td><td>论文的结果部分</td><td>程序算准确率和 Brier（<b>校准</b>：知道自己几成把握，是防幻觉最根本的一层）</td></tr>
+          <tr><td><b>C 埋错审稿</b></td><td>一段方法 + 结果里悄悄埋 3 处错：数字前后矛盾、结论超出证据、编一条参考文献</td><td>我们自己埋的</td><td>找到几处、误报几处</td></tr>
+          <tr><td>以后</td><td>数据复现（给公开原始数据复算一张图）、方法复现（对照 protocols.io）、撤稿案例（GRIM 等）、时间胶囊（只给某年前的文献，预测之后的方向）</td><td>公开数据 / 撤稿库 / 后来发表的论文</td><td>数据复现要下载数据文件，先问用户</td></tr>
+        </tbody></table>
+        <p>流水线 {F('scripts/research-exam.mts')}：build（AI 代导师 Claude Opus 出题 → 千问交叉核对答案、简介有没有泄露、埋错是不是真错 → {F('scripts/data/research-exams/<arXiv id>.json')}，status: ai_draft，corrections 留给导师）；run（学员三题分开答，B 程序评、A / C 由 Opus 对照答案评 → {F('docs/科研能力测评/')}）。论文只用 arXiv 上 <b>CC BY</b>、<b>最近发表</b>的（被考模型没见过，盲测才算数）。第一批：AI 研发 · 模型训练方向，跑通再扩学科。</p>
+
+        <h3>防幻觉：程序硬检查</h3>
+        <p>学院评卷 {F('gradeCollege')} 加了一道不靠评卷模型的检查 {F('fabricatedCitations')}：作答里引用的文献（DOI、「X et al.」「某某等（2021）」「Smith, 2020」）在题面 / 材料 / 技能卡里都找不到，判编造，总分封顶 45，记进 {F('grading.fabricated')}。所有课程都适用。</p>
+
+        <h3>已学到的（11-03 两轮对照）</h3>
+        <ul>
+          <li><b>老师傅的技能卡是真的有用</b>：电池材料博士后裸考约 50，装上技能卡约 65。细胞培养那门 qwen 裸考就 70 多，技能卡拉不开。</li>
+          <li><b>通用方法卡不稳定</b>（qwen-plus，6 章 × 每种两次，评卷波动同条件最多差 12 分）：平均 裸考 61 / 技能卡 68 / 整门装方法卡 68 / 按章装方法卡 66。对口的章节有帮助（「冻存细胞复苏翻车」71 → 77），做方案类章节反而被通用知识冲淡（「PI 布置联用实验方案」69 → 59 / 49）。<b>结论：模型缺的不是教科书式的方法知识（它本来就会），而是具体情境里的判断和老实</b>——几次作答都编了冷冻电镜的排期（材料里只说没定）。所以科研训练的重点放在第 1 层（诚信、防幻觉、校准）和有客观答案的题型上；方法卡留作知识包和对外的课程目录。</li>
+        </ul>
+
         {/* 17 */}
         <h2 id="issues">17 · 已知问题 / 待办</h2>
         <ul>
@@ -383,6 +414,7 @@ export default function LabLogicPage() {
           <tr><td>真实素材</td><td>{F('scripts/beta3d/pano-recognize.mts')} · {F('src/lib/pano-spots/')} · {F('components/lab/Pano360.tsx')} · {F('/lab/studio/pano')}</td></tr>
           <tr><td>留痕 / 样板</td><td>{F('src/lib/lab-edits.ts')} · {F('supabase/migrations/020_lab_edits.sql')} · {F('docs/lab-playbook.md')} · {F('scripts/lab-playbook-export.mts')}</td></tr>
           <tr><td>真活 / 百业学院</td><td>{F('src/app/work/')} · {F('src/lib/college-admin.ts')}（教务功能）· {F('src/lib/college-train.ts')}（上课 / 反思 / 学院评分 / 路径）· {F('src/lib/college-agent.ts')}（学院秘书）· {F('src/app/college/admin/')} · {F('src/app/college/s/[id]')}（学习回放）· {F('supabase/migrations/046_college_admin.sql')} · {F('scripts/college-day.mts')} · {F('docs/百业学院-演示用例-20261023.md')}</td></tr>
+          <tr><td>科研 AI 培养</td><td>{F('src/lib/college-methods.ts')}（方法课）· {F('scripts/college-research-core.mts')}（研究方法论）· {F('scripts/research-exam.mts')}（论文三题）· {F('scripts/college-method-ab.mts')} / {F('ab2')}（方法卡对照）· {F('src/app/college/hire/page.tsx')}（?for=research）· 迁移 058 / 059</td></tr>
           <tr><td>其他文档</td><td>{F('docs/lab-studio.md')}（工厂 / 体验改造）· {F('docs/lab-assets.md')} · {F('docs/lab-3d-beta.md')} · {F('docs/lab-next-batch.md')} · {F('docs/video-storyboards.md')}</td></tr>
         </tbody></table>
         <p style={{ marginTop: 30 }}><Link href="/lab/spaces">← 回百业工厂</Link></p>

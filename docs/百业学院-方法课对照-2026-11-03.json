@@ -1,0 +1,86 @@
+[
+ {
+  "course": "电池材料博士后",
+  "enrollment": "8e196c4c-777d-4bf5-9ea8-b83ca88329b0",
+  "chapter": "08:00 拿到小周的数据",
+  "bare": 50,
+  "skill": [
+   59,
+   62
+  ],
+  "methods": [
+   64,
+   60
+  ]
+ },
+ {
+  "course": "电池材料博士后",
+  "enrollment": "8e196c4c-777d-4bf5-9ea8-b83ca88329b0",
+  "chapter": "10:20 原位EIS数据拟合",
+  "bare": 51,
+  "skill": [
+   71,
+   59
+  ],
+  "methods": [
+   61,
+   61
+  ]
+ },
+ {
+  "course": "电池材料博士后",
+  "enrollment": "8e196c4c-777d-4bf5-9ea8-b83ca88329b0",
+  "chapter": "17:30 PI布置联用实验方案",
+  "bare": 49,
+  "skill": [
+   64,
+   73
+  ],
+  "methods": [
+   59,
+   59
+  ]
+ },
+ {
+  "course": "细胞培养实验员",
+  "enrollment": "528e56c2-c7f2-4045-98b7-8962eccbfaf9",
+  "chapter": "09:15 污染瓶隔离与清场",
+  "bare": 74,
+  "skill": [
+   74,
+   81
+  ],
+  "methods": [
+   78,
+   76
+  ]
+ },
+ {
+  "course": "细胞培养实验员",
+  "enrollment": "528e56c2-c7f2-4045-98b7-8962eccbfaf9",
+  "chapter": "13:30 计数接种与铺匀",
+  "bare": 76,
+  "skill": [
+   69,
+   63
+  ],
+  "methods": [
+   74,
+   67
+  ]
+ },
+ {
+  "course": "细胞培养实验员",
+  "enrollment": "528e56c2-c7f2-4045-98b7-8962eccbfaf9",
+  "chapter": "15:00 冻存细胞复苏翻车",
+  "bare": 65,
+  "skill": [
+   73,
+   69
+  ],
+  "methods": [
+   76,
+   77
+  ]
+ }
+]

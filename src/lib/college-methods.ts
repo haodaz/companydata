@@ -39,3 +39,16 @@ export function methodRules(ms: MethodCard[]) {
     checklist: ms.flatMap(m => m.safety ? [`（方法卡·${m.name}·安全）${String(m.safety).slice(0, 240)}`] : []),
   };
 }
+
+/** 按章节装（2026-11-03 对照实验：整门课的方法卡一股脑装上，做方案这类章节反而掉分——通用知识冲淡了这一章现场的事）：
+ *  只留这一章正文里提到的方法；每个方法只带和这一章最相关的 4 个坑 + 安全要点，不带通用步骤。这一章没提到任何方法就不装。 */
+export function chapterMethods(ms: MethodCard[], chapter: any): MethodCard[] {
+  if (!chapter) return [];
+  const text = [chapter.title, chapter.brief, JSON.stringify(chapter.sim || '')].filter(Boolean).join('\n');
+  const grams = (x: string) => { const t = String(x).replace(/\s+/g, ''); const g = new Set<string>(); for (let i = 0; i < t.length - 1; i++) g.add(t.slice(i, i + 2)); return g; };
+  const tg = grams(text);
+  const overlap = (x: string) => { let n = 0; for (const g of grams(x)) if (tg.has(g)) n++; return n; };
+  const names = (m: any) => [m.name, ...(m.aliases || []), ...String(m.name).split(/[（()）/]/)].map((x: string) => String(x).trim()).filter((x: string) => x.length >= 3);
+  return ms.filter(m => names(m).some(n => text.includes(n))).map(m => ({ ...m, steps: [],
+    pitfalls: [...(m.pitfalls || [])].sort((a, b) => overlap(b.symptom + b.cause) - overlap(a.symptom + a.cause)).slice(0, 4) }));
+}

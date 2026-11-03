@@ -21,7 +21,7 @@ import { gradeResult } from '@/lib/work/grader';
 import type { WorkTask } from '@/lib/work/generator';
 import { buildLesson } from '@/lib/lab-lesson';
 import { enrollmentDetail, recomputeEnrollment } from '@/lib/college-admin';
-import { loadMethods, methodRules, methodsForSpace, type MethodCard } from '@/lib/college-methods';
+import { chapterMethods, loadMethods, methodRules, methodsForSpace, type MethodCard } from '@/lib/college-methods';
 
 /** 提炼要点、写错题本这类整理活用便宜的国内模型（不联网） */
 const NOTE_MODEL = process.env.COLLEGE_NOTE_MODEL || 'qwen-plus';
@@ -260,7 +260,7 @@ export async function runChapterExam(enrollmentId: string, chapterId: string | n
   if (withSkill && !skill) throw new Error('这门课还没有技能卡（老师傅还没教），只能跑入学考');
   const chapter = pickChapter(space, chapterId);
   const useSkill = withSkill && !!skill;
-  const methods = useSkill && !opts.noMethods ? await loadMethods(await methodKeysFor(en)) : [];
+  const methods = useSkill && !opts.noMethods ? chapterMethods(await loadMethods(await methodKeysFor(en)), chapter) : [];
   const equipped = useSkill ? augmentSkill(skill, en.notebook, chapter?.id, en.nova, methods) : null;
   const cost = { space_id: en.space_id, chapter_id: chapter?.id || null, stage: 'use', actor: `college:${en.id}` };
   const sim: Sim | null = chapter?.sim?.steps?.length ? chapter.sim : null;
