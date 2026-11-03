@@ -1,0 +1,1300 @@
+[
+ {
+  "model": "qwen-plus",
+  "paper": "2611.03146",
+  "title": "Controlling Sharpening in LLM Post-Training",
+  "A": 67,
+  "B": {
+   "accuracy": 100,
+   "brier": 0.141,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.45,
+     "truth": false,
+     "correct": true,
+     "brier": 0.2025
+    },
+    {
+     "i": 2,
+     "p": 0.52,
+     "truth": true,
+     "correct": true,
+     "brier": 0.2304
+    },
+    {
+     "i": 3,
+     "p": 0.38,
+     "truth": false,
+     "correct": true,
+     "brier": 0.1444
+    },
+    {
+     "i": 4,
+     "p": 0.32,
+     "truth": false,
+     "correct": true,
+     "brier": 0.1024
+    },
+    {
+     "i": 5,
+     "p": 0.68,
+     "truth": true,
+     "correct": true,
+     "brier": 0.10239999999999996
+    },
+    {
+     "i": 6,
+     "p": 0.75,
+     "truth": true,
+     "correct": true,
+     "brier": 0.0625
+    }
+   ]
+  },
+  "C": {
+   "found": 1,
+   "of": 3,
+   "false_alarms": 2,
+   "note": "错误1（@k-DPO 并无 k=4 运行，正文与图注矛盾）未找到。错误2（「证明发现基础分布之外的推理策略」超出证据）已找到，理由正确。错误3：学员引用了 Zhang and Ortega 片段，但给出的理由是「2025 年是不可能的未来年份」，而不是该文献不在参考文献表中、正文也从未提及该评测协议；同样的理由会把真实引用也判错，因此不算找到。误报2处：PKPO (Walder and Karkhanis, 2025) 是真实引用，被以年份为由误判为伪造；AIME 2026 是原文合法的测试集，被误判为时间不一致。"
+  },
+  "fabricated": [],
+  "judge_note": "question：抓住了「KAPPO 通过 @k 压力控制 sharpening」以及二元/连续两类奖励，但漏掉三个具体检验点：仅用单个在线补全的 A*PO 能否获得 @k 压力、在不带 KL 的 GRPO 上是否仍有效、与 PKPO 的对比，记 1 分。independent：底层优化器 A*PO 与 GRPO、k 值（含 k=1 基线）、奖励/任务类型、KL 正则与否均已覆盖，无编造内容；与 PKPO 的方法对比未列为自变量，但已在 baselines 中体现，记 2 分。dependent：只写了笼统的「数学/代码表现」，没有指出数学用 AIME 2026 上的 @k、代码用 max@k",
+  "answers": {
+   "A": {
+    "question": "How does KAPPO control sharpening in LLM post-training, specifically in terms of its effect on @k optimization pressure under binary (mathematical reasoning) and continuous (code generation) reward settings?",
+    "independent": [
+     "KAPPO instantiation (A*PO vs. GRPO)",
+     "KAPPO parameter k (adaptive @k pressure, including k=1 baseline)",
+     "reward type (binary correctness vs. continuous pass rate)",
+     "algorithm variant (KL-regularized vs. KL-free GRPO)"
+    ],
+    "dependent": [
+     "mathematical reasoning performance (binary reward: correctness)",
+     "code generation performance (continuous reward: test case pass rate)",
+     "pass@k optimization pressure (implied via comparison to PKPO and A*PO behavior)"
+    ],
+    "baselines": [
+     "k=1 KAPPO (i.e., unmodified underlying @1 optimizer)",
+     "PKPO (Walder and Karkhanis, 2025)"
+    ],
+    "data": [
+     "MATH training split (for RL training)",
+     "MATH test split (for in-distribution validation)",
+     "AIME 2026 (for final evaluation, binary rewards)",
+     "LeetCodeDataset training split (for RL training, continuous rewards)",
+     "LeetCodeDataset test split (for validation, continuous rewards)"
+    ],
+    "scale": "原文未报告"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.45,
+      "why": "Sharpening reduction via @k training improves diversity early (helping pass@1 under low budget), but often at the cost of marginal accuracy per sample; as budget grows, k=1’s sharper, higher-expected-reward policies tend to dominate—yet the paper’s KAPPO design (prompt-adaptive regularization) may partially mitigate decay, making strong reversal unlikely; hence slight lean against full reversal."
+     },
+     {
+      "i": 2,
+      "p_true": 0.52,
+      "why": "Single-sample A*PO already approximates pass@1 gradients well in practice, and GRPO’s multi-sample advantage is most salient for variance reduction in low-signal regimes (e.g., sparse rewards); with binary rewards and sufficient model capacity, the gap is often small—but not negligible—so near-even odds."
+     },
+     {
+      "i": 3,
+      "p_true": 0.38,
+      "why": "KAPPO’s reference calibration is lightweight (one-time offline sampling + fitting), not iterative training time; the paper states it’s done pre-training and takes <5% of total compute—so 'half training time' is implausibly high and contradicts the method description."
+     },
+     {
+      "i": 4,
+      "p_true": 0.32,
+      "why": "Code tasks have continuous rewards (test-case pass ratio), where sharpening harms robustness across diverse failure modes; k=1 training exacerbates overfitting to dominant-but-fragile solutions, so max@k gains typically plateau or degrade faster than @k variants—making stable, budget-agnostic superiority of k=1 unlikely."
+     },
+     {
+      "i": 5,
+      "p_true": 0.68,
+      "why": "The core theoretical insight of the paper is that @k-DPO induces prompt-adaptive KL penalties, which—unlike fixed-β DPO—better balance exploration/exploitation across difficulty; this benefit scales with evaluation budget, and the ablation across two distinct architectures (OLMo, Qwen) strengthens generalizability."
+     },
+     {
+      "i": 6,
+      "p_true": 0.75,
+      "why": "The closed-form derivation in the paper explicitly assumes binary reward to equate max@k gradient with a KL-regularized policy update; for continuous rewards, max@k gradients depend on order statistics of the reward distribution, and exact equivalence requires reward-dependent reweighting (e.g., via quantile-aware transformation), which the paper proves is necessary and sufficient."
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "PKPO (Walder and Karkhanis, 2025)",
+      "problem": "Citation of a paper from 2025 — current year is 2024; this is an impossible future publication date, indicating a fabricated or erroneous reference."
+     },
+     {
+      "quote": "Figure 2: \\mathrm{pass@k}_{\\mathrm{eval}} on AIME 2026",
+      "problem": "AIME 2026 does not exist yet (as of 2024); referencing a future contest year as empirical evaluation data suggests either fabrication or severe temporal inconsistency."
+     },
+     {
+      "quote": "This proves that KAPPO-trained models discover reasoning strategies lying outside the base model's distribution.",
+      "problem": "Conclusion exceeds evidence: the results show improved pass@k performance and shifted gain profiles, but provide no direct evidence (e.g., behavioral analysis, sampling from novel regions, divergence metrics) that the discovered strategies lie *outside* the base model's support or distribution — 'outside the distribution' is a strong, unverified claim."
+     },
+     {
+      "quote": "We also compare a KAPPO-adjusted A^{*} PO algorithm with PKPO (Walder and Karkhanis, 2025), following the multi-sample evaluation protocol of Zhang and Ortega (2025, \"Multi-Sample Verifiable Rewards for Broad Reasoning Coverage\")",
+      "problem": "Second citation with impossible 2025 publication year; compound error reinforcing suspicion of fabricated references."
+     }
+    ]
+   }
+  },
+  "A_full": 42
+ },
+ {
+  "model": "qwen-plus",
+  "paper": "2611.03577",
+  "title": "Sonar-MoE: In-Backward Expert Updates for Memory-Efficient Mixture-of-Experts Training",
+  "A": 67,
+  "B": {
+   "accuracy": 50,
+   "brier": 0.203,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.65,
+     "truth": false,
+     "correct": false,
+     "brier": 0.42250000000000004
+    },
+    {
+     "i": 2,
+     "p": 0.55,
+     "truth": false,
+     "correct": false,
+     "brier": 0.30250000000000005
+    },
+    {
+     "i": 3,
+     "p": 0.3,
+     "truth": false,
+     "correct": true,
+     "brier": 0.09
+    },
+    {
+     "i": 4,
+     "p": 0.75,
+     "truth": true,
+     "correct": true,
+     "brier": 0.0625
+    },
+    {
+     "i": 5,
+     "p": 0.45,
+     "truth": true,
+     "correct": false,
+     "brier": 0.30250000000000005
+    },
+    {
+     "i": 6,
+     "p": 0.8,
+     "truth": true,
+     "correct": true,
+     "brier": 0.03999999999999998
+    }
+   ]
+  },
+  "C": {
+   "found": 1,
+   "of": 3,
+   "false_alarms": 2,
+   "note": "埋错1（41.2 ms 与约 24 ms 的计算不符）：学员引用的是未改动的 23.6 ms 原句，未发现被改成的 41.2 ms，算未找到。其论证本身也有误：按 2,016 次额外调用、每次约 12 μs 计算，额外开销约 24 ms，原文数字是自洽的，因此这一条属于误报。埋错2（「任何批大小、任何模型规模都保证至少 20% 峰值显存节省」）：学员没有指出这句。其第二条质疑的是 18%→8% 与 4.0% 两处数字，但两者对比的基线不同：前者对比全局裁剪的标准训练，后者对比更新规则相同的标准训练，原文并不矛盾，也属误报。埋错3（虚构引用 Romero and Feng, 2023）：学员准确"
+  },
+  "fabricated": [],
+  "judge_note": "question：学员问到了速度、显存和吞吐的对比，但没写方法机制：在每层 W_up/W_down 上用 register_post_accumulate_grad_hook 触发融合 AdamW 并把梯度置 None，非专家参数在步末统一更新。也没提到摘录中的“removes the floor”。给 1 分。independent：三个自变量（5 种方法、2 个内核库、2 个模型）都对，没有编造内容。缺少层数、专家数、top-k 等细节，也没说明只有 Table 1 用了 ScatterMoE，但主体正确，给 2 分。dependent：四个指标完全一致。held-out 指标摘录未给出，",
+  "answers": {
+   "A": {
+    "question": "How does Sonar-MoE’s in-backward expert update affect training speed, memory efficiency, and throughput compared to standard MoE training variants and ablations?",
+    "independent": [
+     "Training method (Sonar-MoE vs. standard training with global clipping vs. standard training without expert-gradient clipping vs. all-parameter optimizer-in-backward vs. Sonar-MoE with per-expert hooks)",
+     "Expert-kernel library (SonicMoE vs. ScatterMoE)",
+     "Model architecture (OLMoE-1B-7B-0924 vs. granite-3.1-3b-a800m-base)"
+    ],
+    "dependent": [
+     "Median step time (over steps 201–2000, with GPU synchronization at end of each step)",
+     "Throughput (supervised response tokens per second, ≈111 per step)",
+     "Peak allocated GPU memory",
+     "Peak reserved GPU memory"
+    ],
+    "baselines": [
+     "Standard training with global clipping",
+     "Standard training without expert-gradient clipping",
+     "All-parameter optimizer-in-backward",
+     "Sonar-MoE with per-expert hooks",
+     "SonicMoE (as default kernel) and ScatterMoE (as alternative kernel)"
+    ],
+    "data": [
+     "Alpaca dataset (8,000 training examples, indices 0–7999 of seed-42 shuffle)",
+     "Held-out validation set (500 examples, indices 8000–8499 of same seed-42 shuffle)",
+     "Input sequences: ≤256 tokens, batch size = 2, no gradient accumulation"
+    ],
+    "scale": "Small-scale fine-tuning (2,000 steps, 8k examples, two public MoE models), single-GPU or multi-GPU setup not specified —原文未报告"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.65,
+      "why": "MoE模型中专家梯度显存通常占总梯度显存主导（尤其在bf16、大专家数下），但激活显存随深度和序列长增长显著；SonicMoE作为优化后端可能已压缩激活（如重计算/分片），且OLMoE-1B-7B和Granite-3.1-3B-A800M参数量级下，专家梯度缓冲区（≈2×#experts×expert_size×2 bytes）预估超4–6 GB，故3/1.5 GB下降暗示激活仍是峰值主因，但‘远小于’略强——部分场景梯度仍可主导，故不取过高置信。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.55,
+      "why": "优化器与反向传播重叠理论上可隐藏优化开销，但AdamW逐元素更新在GPU上带宽受限，且OLMoE的专家稀疏激活可能使重叠收益受限；15%提速需显著重叠时序，而实际中梯度计算与更新调度受CUDA流依赖约束，效果中等偏弱更可能，故略高于0.5但不过度自信。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.3,
+      "why": "AdamW核计算量固定（每参数3–4访存+少量算术），不随反向内更新而减小；42→65 ms变化更可能源于内存访问模式改善（如梯度就地更新减少读取）或流水线效率提升，而非核本身变轻；GPU忙碌时间下降通常反映计算/访存重叠增强，而非单核计算量下降，该论断混淆了原因。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.75,
+      "why": "逐专家钩子引入O(#experts)次独立CUDA kernel launch、同步及元数据开销，而批量张量钩子可融合更新；步时增幅（20–72%）符合典型kernel launch延迟放大效应（尤其Granite专家数更多），且显存无差异（钩子本身不增张量），故该论断机制合理、证据链清晰，置信度较高。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.45,
+      "why": "梯度裁剪是强非线性操作，三步即改变近半专家权重说明裁剪剧烈且影响早期方向；但2000步后损失差仅0.0014，暗示训练鲁棒性高或裁剪差异被后续动态补偿——然而如此微小损失差在bf16+有限步下易被随机性淹没，且未说明统计显著性，故倾向略低于0.5。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.8,
+      "why": "Sonar-MoE节省的显存主要来自提前释放专家梯度缓冲区，其大小正比于批大小×专家数×梯度尺寸；但总峰值显存含固定部分（模型参数、激活、优化器状态），当批大小增大，固定开销占比上升，相对节省下降；32批时梯度缓冲区可能被其他开销掩盖或触发显存碎片/预留策略，零净节省合理，趋势可信。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "On OLMoE ( E{=}64 ), per-expert hooks add 23.6 ms per step (+20%), about 12 \\mu s per extra optimizer call. On Granite ( E{=}40 , 32 layers) they add 61.1 ms (+72%), about 24 \\mu s per extra call.",
+      "problem": "Digital inconsistency: The text states '2EL optimizer calls instead of 2L' earlier, implying per-expert layout incurs (E−1)×2L extra optimizer calls vs batched (i.e., 2L(E−1) extra calls). For OLMoE with E=64, that’s 2×63×L = 126L extra calls — yet '12 μs per extra optimizer call' × 23.6 ms implies 23.6 ms / 12 μs ≈ 1967 calls, incompatible with any plausible L (e.g., L=32 → 126×32=4032 extra calls; 23.6 ms / 4032 ≈ 5.8 μs/call, not 12 μs). Similarly, Granite: 61.1 ms / 24 μs ≈ 2546 calls, but 2×(40−1)×32 = 2496 — close but inconsistent with prior claim that 'per-expert layout pays 2EL τ_hook' (which is total cost, not *extra* cost); the text conflates *total* hook cost (2EL τ_hook) with *incremental* cost over batched (2L(E−1) τ_hook), then misattributes the measured latency difference to 'per extra optimizer call' using mismatched denominators. The quoted numbers (23.6 ms, 61.1 ms) are presented as *additions* ('add 23.6 ms'), but the per-call latency (12 μs, 24 μs) does not reconcile with the stated E and L values under the given model."
+     },
+     {
+      "quote": "The cost of clipping expert gradients is fixed per step (22–29 ms), so the speedup over standard training shrinks from 18% at batch size 2 to 8% at batch size 32 (Figure 4). With the same update rule, Sonar-MoE and standard training are within \\pm 1.1% at batch sizes 2–16, and at batch size 32 Sonar-MoE is 4.0% faster.",
+      "problem": "Conclusion exceeds evidence: The claim 'Sonar-MoE is 4.0% faster' at batch size 32 is presented as a factual performance comparison, but the preceding sentence says 'the speedup over standard training shrinks from 18% [...] to 8%', and no data or figure (Figure 4) is provided in the excerpt to support the precise 4.0% value — nor is there any explanation of how '4.0% faster' coexists with 'speedup shrinks to 8%'. These two statements are numerically incompatible without clarification (e.g., 4.0% faster *than what baseline?* — 'standard training' is ambiguous: is it standard MoE training *with* global-norm clipping? Without? With different hook layout?). The 4.0% figure appears pulled without anchoring to defined baselines or error bounds, and contradicts the earlier '8%' speedup claim for the same batch size."
+     },
+     {
+      "quote": "Modern MoE designs favour many small experts (Dai et al., 2024; DeepSeek-AI, 2024; Romero and Feng, 2023), which makes the gap grow with E .（并在参考文献中加入：Romero, L. and Feng, Y. (2023). Fine-grained experts and the hook overhead problem in sparse training. arXiv preprint.）",
+      "problem": "Citation suspicious: 'Romero and Feng, 2023' is cited in-text and assigned a fabricated title and venue ('arXiv preprint') *only in parentheses*, with no corresponding entry in the reference list (not provided, but the instruction explicitly adds it *as if* it were valid). Crucially, no such paper exists on arXiv as of 2024-06: searching arXiv.org for 'Fine-grained experts and the hook overhead problem in sparse training' returns zero results; authors 'L. Romero' and 'Y. Feng' have no jointly authored arXiv paper matching this title or topic. This is a likely invented citation — especially suspicious because it is introduced mid-sentence with editorial phrasing ('and in the references add:') rather than standard academic attribution, suggesting post-hoc fabrication to bolster the 'E-scaling' claim."
+     }
+    ]
+   }
+  },
+  "A_full": 50
+ },
+ {
+  "model": "qwen-plus",
+  "paper": "2611.03633",
+  "title": "Pretraining Data Scale Reverses the Muon-AdamW Fine-Tuning Gap",
+  "A": 75,
+  "B": {
+   "accuracy": 67,
+   "brier": 0.194,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.45,
+     "truth": true,
+     "correct": false,
+     "brier": 0.30250000000000005
+    },
+    {
+     "i": 2,
+     "p": 0.65,
+     "truth": true,
+     "correct": true,
+     "brier": 0.12249999999999998
+    },
+    {
+     "i": 3,
+     "p": 0.78,
+     "truth": true,
+     "correct": true,
+     "brier": 0.04839999999999999
+    },
+    {
+     "i": 4,
+     "p": 0.35,
+     "truth": false,
+     "correct": true,
+     "brier": 0.12249999999999998
+    },
+    {
+     "i": 5,
+     "p": 0.22,
+     "truth": false,
+     "correct": true,
+     "brier": 0.0484
+    },
+    {
+     "i": 6,
+     "p": 0.72,
+     "truth": false,
+     "correct": false,
+     "brier": 0.5184
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 0,
+   "note": "第1处：学员指出 9.6B 被称作小预算、却又说 2.4B 后已反转，前后矛盾，判对。第2处：学员指出 'every model scale/every fine-tuning distribution' 属于超出证据的普适化。其中把模型规模说成约三个有误，原文是五个规模，但问题定性正确。第3处：学员识别出 Zhou & Kumar (2024) 是伪造引用。不过理由依赖文本中的标注，没有通过核对参考文献列表来论证，仍算找到。无误报。"
+  },
+  "fabricated": [],
+  "judge_note": "question：抓住了「数据规模是否使差距反转」这一主线，但没有提到「不同模型规模和数据预算下哪种优化器的前沿更好」和「从哪个预算开始转为正值（crossover）」这两个具体子问题。independent：优化器、数据预算、模型规模、微调学习率扫描、两种预训练超参数选取设定都写到了，与答案一致。微调数据集未列为自变量，但已在 data 中给出；未写摘录未给出的项，也没有编造，不扣分。dependent：学习损失、遗忘损失、前沿、G_FT（100 个等弧长采样点、欧氏距离）、crossover TPR 均齐全，只缺 G_FT 的负号约定，算一致。baselines：AdamW 正确。把 Mu",
+  "answers": {
+   "A": {
+    "question": "预训练数据规模是否逆转Muon与AdamW在微调中的学习-遗忘权衡差距（即 fine-tuning gap）？",
+    "independent": [
+     "预训练数据规模（150M–154B DCLM tokens）",
+     "优化器类型（AdamW vs. Muon）",
+     "预训练模型大小（30M–600M参数）",
+     "微调学习率（AdamW：10^{-4}–10^{-2}；Muon：6×10^{-4}–2×10^{-2}）",
+     "预训练超参数配置（在最低预训练损失设置和最佳前沿设置下分别变化）"
+    ],
+    "dependent": [
+     "学习-遗忘权衡前沿（learning-forgetting frontier）",
+     "微调差距 G_FT（基于AdamW前沿上100个等弧长采样点到Muon前沿的欧氏距离定义）",
+     "交叉点TPR（G_FT > 0 的最小预训练数据预算）",
+     "预训练损失（在DCLM held-out数据上）",
+     "微调损失（在各微调任务held-out数据上）"
+    ],
+    "baselines": [
+     "AdamW优化器",
+     "Muon优化器（仅更新隐藏权重矩阵；嵌入层、输出层、归一化层仍用AdamW更新）"
+    ],
+    "data": [
+     "DCLM（预训练数据，规模150M–154B tokens，用于预训练损失评估和预训练）",
+     "GSM8K（Cobbe et al., 2021）",
+     "StackMathQA（Zhang, 2024）",
+     "Alpaca（Taori et al., 2023）",
+     "MusicPile（Yuan et al., 2024）"
+    ],
+    "scale": "预训练数据规模（150M–154B tokens）"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.45,
+      "why": "Crossover TPR (where Muon’s fine-tuning gap becomes worse than AdamW’s) decreasing with scale is plausible—larger models may overfit faster to pretrain data, making them more fragile to forgetting—but the reported drop from 320→10 TPR is extreme and unsupported by existing scaling laws or empirical reports; such a dramatic inverse scaling lacks mechanistic grounding in the described theory or prior work, making it unlikely but not impossible."
+     },
+     {
+      "i": 2,
+      "p_true": 0.65,
+      "why": "The premise that Muon achieves lower pretrain loss than AdamW across all budgets/sizes is consistent with prior reports (e.g., Muon’s adaptive gradient norm control improves convergence), but 'all budget and model size' is too strong—especially at very low TPR where optimization dynamics are unstable and initialization dominates; modest violation is likely, yet the core claim holds in most regimes."
+     },
+     {
+      "i": 3,
+      "p_true": 0.78,
+      "why": "The statement is carefully hedged ('step one analysis', 'sign替身', 'MSR比值曲线形状相同', 'γ=64 → 0.93 < 1') and aligns with how the authors position their theory: they explicitly build the one-step argument around GD for tractability, and the sign-approximated AdamW yielding sub-unity MSR reinforces that the reversal is not generic to first-order methods—it’s a GD-specific artifact amplified by Muon’s update structure."
+     },
+     {
+      "i": 4,
+      "p_true": 0.35,
+      "why": "The design includes 'large-scale scan of fine-tuning optimizers and learning rates' for both base types, and the central question is about *pretrain-optimizer-induced differences in adaptability*, not optimizer coupling; no mechanistic or empirical precedent suggests Muon-pretrained models *require* Muon for fine-tuning—indeed, most production fine-tuning uses AdamW regardless of pretrain optimizer."
+     },
+     {
+      "i": 5,
+      "p_true": 0.22,
+      "why": "Replay and EWC mitigate forgetting but introduce trade-offs (e.g., replay dilutes task signal; EWC’s Fisher approximation degrades under distribution shift), and the claim of 'complete elimination of reversal in all datasets and budgets' is extraordinarily strong—robustness checks are meant to test sensitivity, not guarantee dominance; full elimination contradicts known limitations of these methods in multi-domain settings like math + music."
+     },
+     {
+      "i": 6,
+      "p_true": 0.72,
+      "why": "In linear associative memory models, higher dimensionality d typically increases capacity and delays overfitting, but here the reversal (MSR > 1) reflects *relative instability* of Muon vs GD under limited data; theory and simulation in similar setups (e.g., gradient descent on isotropic Gaussians) show that larger d sharpens the transition in generalization error—so γ* shifting left with d is well-motivated and numerically plausible given the reported values."
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "At small pretraining data budgets ( 9.6 B tokens), Muon Pareto-dominates AdamW (Figure 1) and the fine-tuning gap is negative. At larger pretraining data budgets, this trend reverses: beyond 2.4 B tokens, AdamW achieves lower fine-tuning loss with less forgetting than Muon.",
+      "problem": "Digital inconsistency: Claims 'small pretraining data budgets (9.6 B tokens)' but then says reversal occurs 'beyond 2.4 B tokens' — 2.4 B < 9.6 B, so 'beyond 2.4 B' cannot be 'larger' than '9.6 B' while also being the reversal threshold; the ordering contradicts itself. Either 9.6 B is mislabeled as 'small', or 2.4 B is misstated as the reversal point."
+     },
+     {
+      "quote": "This establishes that Muon’s orthogonalized update causally induces forgetting, and the reversal will therefore hold at every model scale and for every fine-tuning distribution.",
+      "problem": "Conclusion exceeds evidence: The empirical results are limited to StackMathQA and a few additional datasets in Appendix D (not 'every fine-tuning distribution'), and only three model sizes (30M, 600M — and one implied intermediate, per Figure 2); 'every model scale' and 'every fine-tuning distribution' is an unwarranted universal generalization."
+     },
+     {
+      "quote": "Springer et al. (2025) and Zhou & Kumar (2024) show that adding isotropic Gaussian noise to pretrained weights reproduces key empirical trends in forgetting after fine-tuning. [伪造文献：Zhou, H. & Kumar, R. (2024). Gaussian Weight Noise as a Proxy for Catastrophic Forgetting in Language Models.]",
+      "problem": "Reference is explicitly flagged in the text as forged ('[伪造文献：...]'), constituting a clear case of fabricated citation."
+     }
+    ]
+   }
+  },
+  "A_full": 50
+ },
+ {
+  "model": "deepseek-v4-pro",
+  "paper": "2611.03146",
+  "title": "Controlling Sharpening in LLM Post-Training",
+  "A": 75,
+  "B": {
+   "accuracy": 67,
+   "brier": 0.181,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.7,
+     "truth": false,
+     "correct": false,
+     "brier": 0.48999999999999994
+    },
+    {
+     "i": 2,
+     "p": 0.65,
+     "truth": true,
+     "correct": true,
+     "brier": 0.12249999999999998
+    },
+    {
+     "i": 3,
+     "p": 0.5,
+     "truth": false,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 4,
+     "p": 0.4,
+     "truth": false,
+     "correct": true,
+     "brier": 0.16000000000000003
+    },
+    {
+     "i": 5,
+     "p": 0.8,
+     "truth": true,
+     "correct": true,
+     "brier": 0.03999999999999998
+    },
+    {
+     "i": 6,
+     "p": 0.85,
+     "truth": true,
+     "correct": true,
+     "brier": 0.022500000000000006
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 0,
+   "note": "错误1：学员准确指出图注写的是 k∈{1,2}，而正文出现了 k=4，算找到。错误2：学员指出 pass@k 的改善不足以『证明』模型发现了基础分布之外的推理策略，属于结论超出证据，算找到。错误3：学员定位到了 Zhang and Ortega (2025) 这句，并判为『引用可疑』，但给出的理由集中在句子重复和方法归属混淆上，没有点明该文献在参考文献表中不存在、是编造的。按宽松标准算找到，不过论证不充分。学员没有其他误报。"
+  },
+  "fabricated": [],
+  "judge_note": "question：只复述了在数学（二元奖励）和代码（连续奖励）两类任务上评估，缺少三个具体研究问题：(1) 仅用单个在线补全的 A*PO 能否获得 @k 压力；(2) 不带 KL 正则的 GRPO 上是否仍有效；(3) 与 PKPO 对比。independent：列出了 A*PO/GRPO、k=1 与 k>1、PKPO，但缺少任务/奖励类型这一维度，也没交代 A*PO 每提示仅 1 个在线补全、GRPO 去掉 KL 正则的设定。dependent：把奖励定义误当作因变量，没写数学的 @k、代码的 max@k 指标，也漏了 MATH 测试划分上的分布内验证；只提到 AIME 2026 和更难的代",
+  "answers": {
+   "A": {
+    "question": "We evaluate KAPPO on mathematical reasoning with binary rewards and code generation with continuous rewards. We investigate all instantiations of KAPPO.",
+    "independent": "Underlying RL optimizer (A*PO, GRPO), KAPPO-induced adaptive @k pressure (k=1 vs. k>1), and dedicated pass@k optimizer (PKPO).",
+    "dependent": "Binary reward (correctness) for math; continuous reward in [0,1] (test case pass rate) for code. Final evaluation on held-out test sets: AIME 2026 for math, a newer and harder problem source for code.",
+    "baselines": "k=1 (leaves underlying @1 optimizer unchanged) as primary baseline; PKPO (a dedicated pass@k algorithm requiring n≥k new on-policy completions per prompt).",
+    "data": "Math: train on MATH training split, validate on MATH test split, final test on AIME 2026. Code: train on LeetCodeDataset training split, validate on its test split (temporal cutoff July 2024), final test on a newer and substantially harder problem source (原文未报告具体名称).",
+    "scale": "Code experiments use Qwen3-4B-Base. Model for math experiments: 原文未报告. Training data size, compute, and other scale parameters: 原文未报告."
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.7,
+      "why": "@k训练使模型更重视覆盖多种解法，在小采样预算下这种稳健性可能提升pass@1，但预算增大时专注于单次最优的k=1会反超，符合sharpening的权衡直觉。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.65,
+      "why": "pass@1训练目标本身不需要多样本；单样本A*PO与多样本GRPO在优化目标上可能差异不大，但GRPO的额外样本可能带来方差减小等微弱优势，故接近而非完全相等。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.5,
+      "why": "参考校准是一次性离线计算，其占训练时间的比例取决于具体实现；论断中“一半训练时间”可能是特定实验设置的结果，缺乏足够信息判断真伪。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.4,
+      "why": "连续奖励下max@k训练旨在提升大预算时的覆盖率，若k=1在所有预算下均最优则违背研究动机；更可能k=1在小预算下领先，大预算时被k>1反超。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.8,
+      "why": "标准DPO优化pass@1在小预算有优势，@k-DPO优化pass@k在大预算下反超，这与@k目标的设计一致，且跨模型验证增加可信度。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.85,
+      "why": "二值奖励下@k可简化为prompt自适应正则化；连续奖励因单条奖励值影响最大化，等价关系必然更复杂，需通过奖励变换才能保持精确等价，理论推导大概率得出此结论。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "Figure 2(b) exhibits the same effect for the regularization-side interface. Standard DPO produces gains concentrated at small evaluation budgets, whereas \\mathrm{@k} -DPO trained with k=4 overtakes it as k_{\\mathrm{eval}} increases.",
+      "problem": "数字前后不一致。前文说明 Figure 2(b) 中 @k-DPO 的训练参数为 k ∈ {1,2}，此处却提及其以 k=4 训练。"
+     },
+     {
+      "quote": "This proves that KAPPO-trained models discover reasoning strategies lying outside the base model's distribution.",
+      "problem": "结论超出证据。实验结果显示 pass@k 在大采样预算下改善，这最多表明模型行为分布发生变化，但“证明……发现基础模型分布之外的推理策略”这一论断过强，缺乏直接证据支撑。"
+     },
+     {
+      "quote": "We also compare a KAPPO-adjusted A^{*} PO algorithm with PKPO (Walder and Karkhanis, 2025), following the multi-sample evaluation protocol of Zhang and Ortega (2025, \"Multi-Sample Verifiable Rewards for Broad Reasoning Coverage\"), a dedicated \\mathrm{pass@k} optimization algorithm",
+      "problem": "引用可疑且编辑错误。该句与前文几乎重复，且将 PKPO 同时描述为“遵循 Zhang and Ortega (2025) 的多样本评估协议”以及“专用的 pass@k 优化算法”，混淆了方法归属，句子结构不完整。"
+     }
+    ]
+   }
+  },
+  "A_full": 33
+ },
+ {
+  "model": "deepseek-v4-pro",
+  "paper": "2611.03577",
+  "title": "Sonar-MoE: In-Backward Expert Updates for Memory-Efficient Mixture-of-Experts Training",
+  "A": 58,
+  "B": {
+   "accuracy": 33,
+   "brier": 0.237,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.5,
+     "truth": false,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 2,
+     "p": 0.5,
+     "truth": false,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 3,
+     "p": 0.3,
+     "truth": false,
+     "correct": true,
+     "brier": 0.09
+    },
+    {
+     "i": 4,
+     "p": 0.7,
+     "truth": true,
+     "correct": true,
+     "brier": 0.09000000000000002
+    },
+    {
+     "i": 5,
+     "p": 0.5,
+     "truth": true,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 6,
+     "p": 0.3,
+     "truth": true,
+     "correct": false,
+     "brier": 0.48999999999999994
+    }
+   ]
+  },
+  "C": {
+   "found": 2,
+   "of": 3,
+   "false_alarms": 0,
+   "note": "第 1 处找到：学员指出 23.6 ms 与 41.2 ms 矛盾，并指出 41.2 ms 与每次约 12 μs 的单次开销不符。第 2 处找到：学员指出“任何批大小至少节省 20%”与批大小 32 时峰值已分配显存零节省直接矛盾。第 3 处未找到：学员没有发现伪造的 Romero and Feng (2023) 引用。学员没有误报。"
+  },
+  "fabricated": [],
+  "judge_note": "question：标准答案根据摘录给出了明确的研究问题，包括显存是否降低、步时与吞吐的对比，以及 register_post_accumulate_grad_hook 的具体做法。学员写「原文未报告」，判错，0 分。independent：5 种训练方法和 2 个内核库都写全了。缺少两个模型这一自变量（学员把模型放进了 scale），也没交代 Table 1 用两个内核库、其余实验只用 SonicMoE，给 1 分。dependent：中位步时（第 201–2000 步，每步末 GPU 同步）、吞吐、峰值已分配显存、峰值保留显存四项都对。未提每步约 111 个 token 和 held-out",
+  "answers": {
+   "A": {
+    "question": "原文未报告",
+    "independent": [
+     "训练方法（Standard training with global clipping, Standard training without expert-gradient clipping, All-parameter optimizer-in-backward, Sonar-MoE, Sonar-MoE with per-expert hooks）",
+     "专家kernel库（SonicMoE, ScatterMoE）"
+    ],
+    "dependent": [
+     "中位步骤时间（步骤201-2000，每步末尾GPU同步）",
+     "吞吐量（监督响应token每秒）",
+     "峰值分配GPU内存",
+     "峰值保留GPU内存"
+    ],
+    "baselines": [
+     "Standard training with global clipping",
+     "Standard training without expert-gradient clipping"
+    ],
+    "data": [
+     "Alpaca数据集：8000条训练样本",
+     "留出测试集：500条样本（索引8000–8499，seed=42 shuffle）"
+    ],
+    "scale": [
+     "模型：allenai/OLMoE-1B-7B-0924（16个MoE层，64个专家，top-8）",
+     "模型：ibm-granite/granite-3.1-3b-a800m-base（32个MoE层，40个专家）",
+     "训练步数：2000步",
+     "批次大小：2",
+     "序列最大长度：256 tokens",
+     "学习率：峰值2e-5，100步热身，余弦衰减至2e-6",
+     "优化器：AdamW（β=(0.9,0.95), ε=1e-8, 无权重衰减）",
+     "精度：bf16（权重、梯度、AdamW状态），无fp32 master weights",
+     "随机种子：42"
+    ]
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.5,
+      "why": "MoE 中激活显存可能主导，但具体节省量受实现与模型结构影响，无法确定数字是否准确。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.5,
+      "why": "重叠优化器与反向传播可以带来提速，但 15% 是否主要来自重叠而非其他因素难以事前确定。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.3,
+      "why": "反向内更新不会减少 AdamW 的计算量，空闲时间不变反而提示重叠效果有限，提速原因存疑。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.7,
+      "why": "逐元素挂钩会引入更多 kernel launch 开销，步时明显增加合理；显存占用相同也符合直觉。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.5,
+      "why": "裁剪可能改变早期更新，但长期损失差异很小符合深度学习中常见的鲁棒性，具体 47% 难以判断。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.3,
+      "why": "专家梯度缓冲区大小通常随批大小增加而增大，节省量应增加或持平；不增反降直至零与直觉相悖。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "On OLMoE ( E{=}64 ), per-expert hooks add 23.6 ms per step (+20%), about 12 \\mu s per extra optimizer call.",
+      "problem": "与后文“attaching hooks per expert keeps the memory saving but adds 41.2 ms per step on OLMoE, about 12 \\mu s per extra optimizer call (Table 3)”矛盾，同一模型、同一机制下的额外耗时一个为23.6 ms，另一个为41.2 ms，且41.2 ms对应的每次额外调用开销约为20.4 μs，与文中12 μs不符。"
+     },
+     {
+      "quote": "Sonar-MoE helps most when batches are small relative to the model, and it therefore guarantees at least a 20% peak-memory saving at any batch size and model scale.",
+      "problem": "结论超出证据。前文明确给出 batch size 32 时峰值分配内存节省为 none，与“在任何批量大小和模型规模下至少节省20%峰值内存”直接矛盾。"
+     }
+    ]
+   }
+  },
+  "A_full": 42
+ },
+ {
+  "model": "deepseek-v4-pro",
+  "paper": "2611.03633",
+  "title": "Pretraining Data Scale Reverses the Muon-AdamW Fine-Tuning Gap",
+  "A": 58,
+  "B": {
+   "accuracy": 67,
+   "brier": 0.173,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.4,
+     "truth": true,
+     "correct": false,
+     "brier": 0.36
+    },
+    {
+     "i": 2,
+     "p": 0.65,
+     "truth": true,
+     "correct": true,
+     "brier": 0.12249999999999998
+    },
+    {
+     "i": 3,
+     "p": 0.7,
+     "truth": true,
+     "correct": true,
+     "brier": 0.09000000000000002
+    },
+    {
+     "i": 4,
+     "p": 0.35,
+     "truth": false,
+     "correct": true,
+     "brier": 0.12249999999999998
+    },
+    {
+     "i": 5,
+     "p": 0.3,
+     "truth": false,
+     "correct": true,
+     "brier": 0.09
+    },
+    {
+     "i": 6,
+     "p": 0.5,
+     "truth": false,
+     "correct": false,
+     "brier": 0.25
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 0,
+   "note": "第 1 处：准确指出 9.6B 与 2.4B 反转阈值自相矛盾。第 2 处：指出把假设夸大为因果结论并外推到所有尺度与分布，判断正确。第 3 处：识别出 Zhou & Kumar (2024) 为虚假引用，但依据只是稿件中的标注，没有通过核对参考文献列表来论证，理由偏弱，仍算找到。无误报。"
+  },
+  "fabricated": [],
+  "judge_note": "question：摘录明确给出了研究问题，即预训练数据规模如何影响 Muon 与 AdamW 在微调中的学习–遗忘差距、哪种优化器的前沿更好、crossover 出现在哪个预算。学员写「原文未报告」，判错。independent：优化器、数据预算、模型规模、微调学习率、微调数据集、两种超参选取设定、预训练超参扫描都列出了，覆盖完整。小缺漏有三处：未说明 Muon 只更新隐藏层矩阵；未注明摘录没给出 TPR 定义；未注明摘录没给出微调优化器如何与预训练优化器配对。dependent：列出了 G_FT、crossover TPR 和前沿的两种损失，但没写 G_FT 的计算方式（沿 AdamW 前沿",
+  "answers": {
+   "A": {
+    "question": "原文未报告",
+    "independent": [
+     "pretraining optimizer (AdamW vs Muon)",
+     "pretraining data scale (tokens from 150M to 154B)",
+     "model size (30M to 600M parameters)",
+     "fine-tuning learning rate (AdamW: 10^{-4} to 10^{-2}; Muon: 6×10^{-4} to 2×10^{-2})",
+     "fine-tuning dataset (GSM8K, StackMathQA, Alpaca, MusicPile)",
+     "evaluation setting (lowest-pretraining-loss setting vs best-frontier setting)",
+     "pretraining hyperparameters (swept broadly, details in Appendix C)"
+    ],
+    "dependent": [
+     "fine-tuning gap (G_FT)",
+     "crossover TPR",
+     "learning–forgetting frontier (fine-tuning loss and pretraining loss on held-out data)"
+    ],
+    "baselines": [
+     "AdamW optimizer (pretraining and fine-tuning baseline)"
+    ],
+    "data": [
+     "pretraining data: DCLM tokens (150M to 154B)",
+     "fine-tuning datasets: GSM8K, StackMathQA, Alpaca, MusicPile",
+     "evaluation data: held-out fine-tuning data, held-out pretraining (DCLM) data"
+    ],
+    "scale": [
+     "model sizes: 30M to 600M parameters",
+     "pretraining tokens: 150M to 154B",
+     "sequence length: 4096",
+     "global batch size: 2^{20} tokens"
+    ]
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.4,
+      "why": "具体数字太精确且crossover随规模增大而大幅提前的幅度似乎过于极端，可能是作者发现的趋势但数值属于特定次运行结果，不确定是否为稳健结论。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.65,
+      "why": "近期报告普遍显示Muon在预训练损失上优于AdamW，但“所有预算和规模下”的绝对优势可能在极小或极大端存在例外，整体倾向可信。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.7,
+      "why": "作者在理论部分特意用AdamW的sign近似代替GD并显示MSR未超过1来区分GD反转，这符合论文中为突出Muon特性而做的受控对照实验逻辑。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.35,
+      "why": "说“必须用Muon微调”过于绝对，微调优化器扫描可能显示Muon模型对优化器更敏感，但通常AdamW等也可取得接近效果，完全无影响也不可信。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.3,
+      "why": "“完全消除反转”且“所有数据集、所有预算上都不劣于”是非常强的全称宣称，正则化通常能缓解但难以完美消除所有差距，可能仅在部分条件下成立。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.5,
+      "why": "维度增大使反转所需数据预算前移在理论上可能（高维更易过拟合），但具体数值和单调趋势纯属推测，没有额外信息支撑或反对。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "At small pretraining data budgets ( 9.6 B tokens), Muon Pareto-dominates AdamW (Figure 1) and the fine-tuning gap is negative. At larger pretraining data budgets, this trend reverses: beyond 2.4 B tokens, AdamW achieves lower fine-tuning loss with less forgetting than Muon.",
+      "problem": "数字前后不一致：小预训练数据预算标注为 9.6B tokens，而反转阈值标注为 beyond 2.4B tokens。9.6B 远大于 2.4B，两者同单位，无法构成‘小预算时优势、更大预算时反转’的逻辑。"
+     },
+     {
+      "quote": "This establishes that Muon’s orthogonalized update causally induces forgetting, and the reversal will therefore hold at every model scale and for every fine-tuning distribution.",
+      "problem": "结论超出证据：实验仅在特定模型尺度、特定微调数据集（如 StackMathQA）和特定条件下进行，无法由此断言 Muon 的正交更新‘因果地引发遗忘’，更无法保证反转在‘所有模型尺度和所有微调分布’上都成立。"
+     },
+     {
+      "quote": "Springer et al. (2025) and Zhou & Kumar (2024) show that adding isotropic Gaussian noise to pretrained weights reproduces key empirical trends in forgetting after fine-tuning. [伪造文献：Zhou, H. & Kumar, R. (2024). Gaussian Weight Noise as a Proxy for Catastrophic Forgetting in Language Models.]",
+      "problem": "引用可疑：稿件中直接标注了‘伪造文献’，表明 Zhou & Kumar (2024) 可能是一篇不存在的文献，构成虚假引用。"
+     }
+    ]
+   }
+  },
+  "A_full": 42
+ },
+ {
+  "model": "claude-sonnet-5-5",
+  "paper": "2611.03146",
+  "title": "Controlling Sharpening in LLM Post-Training",
+  "A": 92,
+  "B": {
+   "accuracy": 67,
+   "brier": 0.094,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.04,
+     "truth": false,
+     "correct": true,
+     "brier": 0.0016
+    },
+    {
+     "i": 2,
+     "p": 0.5,
+     "truth": true,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 3,
+     "p": 0.1,
+     "truth": false,
+     "correct": true,
+     "brier": 0.010000000000000002
+    },
+    {
+     "i": 4,
+     "p": 0.12,
+     "truth": false,
+     "correct": true,
+     "brier": 0.0144
+    },
+    {
+     "i": 5,
+     "p": 0.5,
+     "truth": true,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 6,
+     "p": 0.8,
+     "truth": true,
+     "correct": true,
+     "brier": 0.03999999999999998
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 4,
+   "note": "三处埋的错都已找到，且问题说对了：k=4 的 @k-DPO 与图注 k∈{1,2} 矛盾；“proves” 属于过度断言，与作者自己承认的局限矛盾；Zhang and Ortega (2025) 不在参考文献中，是可疑的编造引用。另外四条（易题转向难题的论断缺证据、图注中的 “consistently”、“state-of-the-art” 措辞、训练成本节省证据不足）针对的都是原文本身的表述，不是埋入的错，按误报计。"
+  },
+  "fabricated": [],
+  "judge_note": "question：学员覆盖了 KAPPO 控制 sharpening、A*PO 单个在线补全获得 @k 压力、GRPO 无 KL 设定这几点，也对应到了 pass@k/max@k。但漏掉了第三个子问题「与专门的 pass@k 优化算法 PKPO 相比表现如何」。另外把接口写成「对奖励或有效正则化进行自适应调整」，与标准答案的「奖励侧接口」不完全一致。因此判部分正确。independent：四项自变量（k 值、底层优化器、任务/奖励类型、与 PKPO 对比）均与标准答案一致，未编造具体 k 值。dependent：MATH 分布内验证、AIME 2026 最终测试、LeetCodeDataset",
+  "answers": {
+   "A": {
+    "question": "能否通过 KAPPO（对奖励或有效正则化进行自适应调整的 @k 压力接口）在 LLM 后训练中控制“锐化”（sharpening），即在只用单个在线 completion 的优化器（如 A*PO）以及 GRPO（无 KL 项）上诱导 pass@k / max@k 的优化压力，并在更难、分布偏移的测试集上提升表现。",
+    "independent": [
+     "是否应用 KAPPO 以及 k 的取值（k=1 时底层 @1 优化器不变，作为对照）",
+     "底层 RL 优化器：A*PO（每个 prompt 仅一个在线 completion）与 GRPO（不带 KL 正则项）",
+     "奖励类型/任务：数学推理为二元奖励（最终答案正确为 1，否则为 0），代码生成为连续奖励（测试用例通过率，取值 [0,1]），对应 pass@k 与 max@k 目标",
+     "是否使用 PKPO（需要每个 prompt 至少 n≥k 个新的 on-policy completion）作为专门的 pass@k 优化方法与 KAPPO 调整后的 A*PO 比较"
+    ],
+    "dependent": [
+     "数学任务：MATH 测试集上的分布内验证表现，以及 AIME 2026 上的最终测试表现（二元奖励下的正确率/@k 类指标）",
+     "代码任务：LeetCodeDataset 测试集上的验证表现（max@k，按测试用例通过率的连续奖励）",
+     "原文未报告具体的指标名称列表及各 k 值的评估设置"
+    ],
+    "baselines": [
+     "k=1 的基线（KAPPO 在 k=1 时不改变底层 @1 优化器，用于隔离自适应 @k 压力的效果）",
+     "PKPO（Walder and Karkhanis, 2025），专门的 pass@k 优化算法，与 KAPPO 调整后的 A*PO 比较",
+     "未应用 KAPPO 的 A*PO 与 GRPO（即 k=1 的情形）"
+    ],
+    "data": [
+     "数学：在 MATH 训练集上做 RL，用 MATH 测试集做分布内验证（Hendrycks et al., 2021），在 AIME 2026 上做最终评估（比 MATH 最高难度更难，且晚于两个模型初始化检查点，避免直接污染）；奖励为二元",
+     "代码：在 LeetCodeDataset 训练集上训练，用其测试集验证（Xia et al., 2025），两个划分同源同格式，以 2024 年 7 月为时间截断；奖励为通过测试用例的比例；代码实验使用 Qwen3-4B-Base",
+     "代码任务的最终测试数据集原文未报告"
+    ],
+    "scale": "数学实验提到有“两个模型初始化检查点”，但具体模型名称原文未报告；代码 max@k 实验使用 Qwen3-4B-Base（4B 参数）；训练样本数量、k 取值、训练步数、随机种子数、超参数等原文未报告。"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.04,
+      "why": "论断的趋势与论文主旨相反：k>1 预期在大预算下优于 k=1，而不是被反超。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.5,
+      "why": "A*PO 单样本与 GRPO 在 pass@1 下可能接近，这是论文动机之一，但具体表述无法确定。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.1,
+      "why": "论文更可能主张校准成本很小，用很少时间就能与 PKPO 持平或更好，而不是必须占一半训练时间。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.12,
+      "why": "代码任务中 k=1 在所有预算下都稳定领先的说法太强，大预算下 k>1 很可能更好。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.5,
+      "why": "方向合理，但“在 OLMo 和 Qwen 上都成立”且只有 k=2 的说法过于具体，不一定如此。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.8,
+      "why": "连续奖励下 max@k 的有效正则强度依赖单条样本的奖励，所以精确等价需要通过奖励变换实现，这一表述合理。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "This proves that KAPPO-trained models discover reasoning strategies lying outside the base model's distribution.",
+      "problem": "结论超出证据。pass@k 曲线在大 k 处的提升只能间接提示模型获得了新行为，不能证明发现了基座分布之外的推理策略。文中没有分布外覆盖或策略层面的分析，也没有排除 pass@k 估计方差和采样温度等替代解释。应把“proves”改成“suggests”或“is consistent with”。"
+     },
+     {
+      "quote": "-DPO trained with k=4 overtakes it as k_{\\mathrm{eval}} increases",
+      "problem": "与图 2 说明文字不一致。图注写明 @k-DPO 只训练了 k∈{1,2}，正文却说 k=4 的 @k-DPO 超过了标准 DPO。要么图注有误，要么正文引用了图中没有的设置。"
+     },
+     {
+      "quote": "following the multi-sample evaluation protocol of Zhang and Ortega (2025, \"Multi-Sample Verifiable Rewards for Broad Reasoning Coverage\")",
+      "problem": "引用可疑。这句话重复了前文对 PKPO 的比较说明，还凭空加入了一个“评测协议”，与上文用 matched prompt batches 和 n=k 的设置对不上。Zhang and Ortega (2025) 及其标题在节选中没有其他出处，需要核实是否真实存在、是否确实提出该协议。这句话在“algorithm”处截断，也像是误插入的残句。"
+     },
+     {
+      "quote": "shifts optimization pressure from already-easy tasks toward difficult tasks where successful behavior remains rare",
+      "problem": "论断没有直接证据支持。所展示的只有总体 pass@k 随 k_eval 变化的曲线，没有按题目难度拆分的训练信号、梯度权重或成功率变化，因此不能说明压力从易题转向了难题。"
+     },
+     {
+      "quote": "Setting k>1 during training consistently reduces sharpening.",
+      "problem": "措辞过强，与正文不一致。正文承认 k>1 “typically (but not always)” 保留更少的 pass@1 增益，而且只有一部分设置下观察到超越。图注把这种趋势说成 “consistently”，没有统计不确定性（多个种子、置信区间）支撑。"
+     },
+     {
+      "quote": "We next verify that a KAPPO adaptation of a single-completion optimizer can match the performance of a state-of-the-art dedicated multi-completion",
+      "problem": "“state-of-the-art” 没有依据，也没有引用支持。仅凭 MATH Level 5 验证集上的一张图和 k∈{2,4}，就断言“match”，再说它“supports our central prediction”，推理过度，缺少显著性检验。"
+     },
+     {
+      "quote": "while requiring only a fraction of the on-policy rollouts, reducing training cost.",
+      "problem": "成本节省的结论只算了 rollout 数量。图注又说有单次参考校准和 ≤5% 的训练时间开销，节选中没有给出实际墙钟时间或总算力对比，数字来源不明，“reducing training cost” 因此证据不足。"
+     }
+    ]
+   }
+  },
+  "A_full": 50
+ },
+ {
+  "model": "claude-sonnet-5-5",
+  "paper": "2611.03577",
+  "title": "Sonar-MoE: In-Backward Expert Updates for Memory-Efficient Mixture-of-Experts Training",
+  "A": 75,
+  "B": {
+   "accuracy": 50,
+   "brier": 0.228,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.12,
+     "truth": false,
+     "correct": true,
+     "brier": 0.0144
+    },
+    {
+     "i": 2,
+     "p": 0.2,
+     "truth": false,
+     "correct": true,
+     "brier": 0.04000000000000001
+    },
+    {
+     "i": 3,
+     "p": 0.2,
+     "truth": false,
+     "correct": true,
+     "brier": 0.04000000000000001
+    },
+    {
+     "i": 4,
+     "p": 0.4,
+     "truth": true,
+     "correct": false,
+     "brier": 0.36
+    },
+    {
+     "i": 5,
+     "p": 0.3,
+     "truth": true,
+     "correct": false,
+     "brier": 0.48999999999999994
+    },
+    {
+     "i": 6,
+     "p": 0.35,
+     "truth": true,
+     "correct": false,
+     "brier": 0.42250000000000004
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 2,
+   "note": "三处埋错全部找到：41.2 ms 的数字矛盾、「任何批大小保证 20%」的过度声称、Romero and Feng (2023) 的虚假引用。另有两处误报：「18% 到 8%」那条和「±1.1%」那条。原文中这两组数字的比较对象不同，前者对比全局裁剪的标准训练，后者对比不裁剪专家梯度的标准训练，并不矛盾。"
+  },
+  "fabricated": [],
+  "judge_note": "question：核心问题与答案一致，即反向 hook 中更新专家张量能否降显存，并比较速度。但学员把 floor 解释成「梯度 floor」，而摘录并未说明 floor 的含义，属于自行补充。另加的「保持训练效果」在答案中也没有对应。independent：Sonar-MoE、按专家切片的消融、两个内核库、两个模型的规格都写对了；granite 的 top-k 学员没有编造。三种标准/对照训练方法放到了 baselines 栏，整体设计信息仍然齐全。dependent：四项指标全部一致，held-out 集指标注明原文未报告，算对。baselines：三种对照写对，但漏了答案列入的按专家切片",
+  "answers": {
+   "A": {
+    "question": "能否通过在反向传播过程中（利用 register_post_accumulate_grad_hook）立即对批量专家张量做融合 AdamW 更新并释放梯度，来降低 MoE 训练的显存占用（去掉梯度“floor”），同时保持训练效果并提高或不损害速度？（研究问题由原文方法描述推断，原文未明确写成问句）",
+    "independent": [
+     "训练/更新方法：Sonar-MoE（对每层批量专家张量 W_up、W_down 各注册一个 hook，反向中做融合 AdamW 更新后将梯度置 None；其余参数如注意力、嵌入、路由器仍在步末更新）",
+     "Sonar-MoE 的 hook 粒度消融：每个专家切片一个优化器的 per-expert hooks 版本",
+     "专家 kernel 库：SonicMoE 与 ScatterMoE（Table 1 两者都报告，其他实验用 SonicMoE）",
+     "模型：allenai/OLMoE-1B-7B-0924（16 个 MoE 层，64 个专家，top-8）与 ibm-granite/granite-3.1-3b-a800m-base（32 个 MoE 层，40 个专家）"
+    ],
+    "dependent": [
+     "步时间中位数（第 201–2,000 步，每步末做 GPU 同步）",
+     "吞吐量（每秒监督响应 token 数，每步约 111 个）",
+     "峰值已分配（allocated）GPU 显存",
+     "峰值保留（reserved）GPU 显存",
+     "在留出的 500 条样本上的评估（原文方法部分提到留出集，但具体指标原文未报告）"
+    ],
+    "baselines": [
+     "标准训练 + 全局梯度裁剪：反向后将所有参数的全局梯度范数裁剪到 1.0，再做一次融合 AdamW 步（通常默认做法）",
+     "标准训练但不对专家梯度裁剪：只裁剪非专家参数，其更新与 Sonar-MoE 完全一致，用于隔离更新时机带来的速度差异",
+     "全参数 optimizer-in-backward：每个参数在各自的反向 hook 中更新，因此无法做裁剪"
+    ],
+    "data": [
+     "Alpaca（Taori et al., 2023）8,000 条训练样本（seed 42 打乱）",
+     "留出集：同一 seed-42 打乱的索引 8000–8499 共 500 条样本，与训练集不相交",
+     "批大小 2，序列最长 256 token，无梯度累积",
+     "学习率峰值 2e-5，100 步预热，余弦衰减至 2e-6；AdamW β=(0.9,0.95)，ε=1e-8，无权重衰减",
+     "bf16 训练，权重、梯度、AdamW 状态均为 bf16，无 fp32 主权重；所有方案使用 seed 42 和相同数据顺序（通过哈希前几个批次验证）"
+    ],
+    "scale": "两个模型（OLMoE-1B-7B 和 Granite-3.1-3B-A800M），每个微调 2,000 步，8,000 条训练样本 + 500 条留出样本，批大小 2；使用 GPU 的型号与数量、重复运行次数原文未报告"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.12,
+      "why": "研究动机是专家梯度占显存的大头，且论断中的数字偏小；更可能是节省约十几 GB，OLMoE 与批大小 2 时的 12 GB 相近，与论断矛盾。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.2,
+      "why": "提速多半来自优化器核更少、更融合，而不是简单重叠；且对比对象是否为「不裁剪」的标准训练也存疑，数字和归因都像是拼凑的。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.2,
+      "why": "更可能是空闲时间（CPU 启动开销、同步）减少，而不是 AdamW 核计算量变小；AdamW 计算量本身不会因为融进反向传播而变少。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.4,
+      "why": "逐专家钩子很可能显存相同而更慢，方向合理，但具体数字（23.6 ms、61.1 ms、+20%、+72%）精确匹配的概率有限。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.3,
+      "why": "「三步后改变 47% 专家权重」和「损失只差 0.0014」这类具体数字不太可能同时吻合，且裁剪在 Adam 下影响的机制也可能不同。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.35,
+      "why": "节省随批大小增大而缩小、在批大小 32 时已分配显存节省为零，方向合理，但具体数值很难全部命中。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "adds 41.2 ms per step on OLMoE, about 12 \\mu s per extra optimizer call",
+      "problem": "与前文数字矛盾。前文说 OLMoE 上 per-expert 钩子每步增加 23.6 ms（+20%），约 12 μs/次。额外调用数为 2048−32=2016，23.6 ms 对应约 11.7 μs，与 12 μs 吻合。41.2 ms 除以 2016 约为 20 μs，与 12 μs 对不上，也与 23.6 ms 冲突。两处中必有一处写错。"
+     },
+     {
+      "quote": "so the speedup over standard training shrinks from 18% at batch size 2 to 8% at batch size 32 (Figure 4)",
+      "problem": "与下一句内部矛盾。下一句说在 batch size 2–16 时两者相差在 ±1.1% 以内，batch size 32 时 Sonar-MoE 快 4.0%。这与 bs=2 时快 18%、bs=32 时快 8% 不一致，比较口径或数字有误。"
+     },
+     {
+      "quote": "Sonar-MoE and standard training are within \\pm 1.1% at batch sizes 2–16, and at batch size 32 Sonar-MoE is 4.0% faster",
+      "problem": "与前文说裁剪开销（约 25 ms）几乎解释了标准训练与 Sonar-MoE 的全部差距矛盾。按 OLMoE 约 118 ms 的步长推算，25 ms 约占 20%，不可能让两者在小 batch 下仅差 ≤1.1%。此处的 4.0% 也与前一句的 8% 不一致。"
+     },
+     {
+      "quote": "it therefore guarantees at least a 20% peak-memory saving at any batch size and model scale",
+      "problem": "结论超出证据，且与自身数据相悖。同一段给出 batch size 32 时峰值分配内存节省为零，且节省量随 batch 增大而下降。数据只涉及 OLMoE（和 Granite），无法推出任何 batch 和任何模型规模下都“保证”20%。下一句也承认只有梯度而非激活决定峰值时才成立。"
+     },
+     {
+      "quote": "Modern MoE designs favour many small experts (Dai et al., 2024; DeepSeek-AI, 2024; Romero and Feng, 2023), which makes the gap grow with E .",
+      "problem": "这是前文已有句子的重复，并新增了一条可疑引用 Romero and Feng (2023)。该文献标题（Fine-grained experts and the hook overhead problem in sparse training）与本文主题贴得过紧，只标注“arXiv preprint”而无编号，我无法确认其真实存在。原句有 Dai 等和 DeepSeek-AI 支撑，没有必要再加它。建议核实，查不到就删除。"
+     }
+    ]
+   }
+  },
+  "A_full": 50
+ },
+ {
+  "model": "claude-sonnet-5-5",
+  "paper": "2611.03633",
+  "title": "Pretraining Data Scale Reverses the Muon-AdamW Fine-Tuning Gap",
+  "A": 83,
+  "B": {
+   "accuracy": 50,
+   "brier": 0.272,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.3,
+     "truth": true,
+     "correct": false,
+     "brier": 0.48999999999999994
+    },
+    {
+     "i": 2,
+     "p": 0.3,
+     "truth": true,
+     "correct": false,
+     "brier": 0.48999999999999994
+    },
+    {
+     "i": 3,
+     "p": 0.35,
+     "truth": true,
+     "correct": false,
+     "brier": 0.42250000000000004
+    },
+    {
+     "i": 4,
+     "p": 0.25,
+     "truth": false,
+     "correct": true,
+     "brier": 0.0625
+    },
+    {
+     "i": 5,
+     "p": 0.07,
+     "truth": false,
+     "correct": true,
+     "brier": 0.004900000000000001
+    },
+    {
+     "i": 6,
+     "p": 0.4,
+     "truth": false,
+     "correct": true,
+     "brier": 0.16000000000000003
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 0,
+   "note": "三处埋错都找到了，问题也说对了。第一条和第二条都指向 9.6B 与 2.4B 的数字矛盾，属于同一处错误，不算误报。第三条明确把 Zhou & Kumar (2024) 判为可疑或伪造引用，并指出前文只引用了 Springer et al. (2025)，算作找到。"
+  },
+  "fabricated": [],
+  "judge_note": "question：核心问题抓得准，包括 G_FT、随数据量反转、crossover TPR。independent：优化器、数据预算、模型规模、两种超参选取设定、微调学习率扫描、微调数据集和附录 C 都对上了；但没有指出微调阶段优化器如何配对、TPR 定义在摘录中未给出，属轻微遗漏。dependent：G_FT 的取负条件写错了。答案是当 AdamW 采样点本身更靠近原点时取负，学员写成「若该最近点更靠近原点」，判断对象不对。另外没有说明 G_FT 的最终聚合方式摘录未给出。baselines：只列了 AdamW，漏了 lowest-pretraining-loss 设定作为与 best-fr",
+  "answers": {
+   "A": {
+    "question": "预训练数据规模如何影响 Muon 与 AdamW 在微调阶段的学习–遗忘权衡差距（G_FT）？即 Muon 预训练的模型相对 AdamW 预训练模型在微调时是否存在优势，以及该优势是否随预训练数据量变化而出现反转（交叉点 TPR）。",
+    "independent": [
+     "预训练优化器：AdamW 与 Muon（Muon 更新隐藏层权重矩阵，其余参数——嵌入、输出层和归一化层——由 AdamW 更新）",
+     "预训练数据量：约 150M 到 154B DCLM tokens",
+     "模型规模：OLMo 风格的 30M 到 600M 参数模型",
+     "微调数据集：GSM8K、StackMathQA、Alpaca、MusicPile",
+     "微调学习率：AdamW 为 1e-4 到 1e-2，Muon 为 6e-4 到 2e-2（广泛扫描）",
+     "预训练超参数设置（两种评估设定）：(1) 最低预训练损失设定：每个优化器、每个数据预算和模型规模下，选择使预训练损失最小的超参数；(2) 最佳前沿设定：对所有预训练与微调配置做扫描，得到可达到的最优学习–遗忘前沿",
+     "原文提到对预训练超参数做了广泛扫描，具体细节在附录 C（本段未给出）"
+    ],
+    "dependent": [
+     "微调损失（在留出的微调数据上）",
+     "预训练损失（在留出的 DCLM 预训练数据上，用于衡量遗忘）",
+     "学习–遗忘前沿（由各微调检查点的微调损失与预训练损失近似得到）",
+     "微调差距 G_FT：沿 AdamW 前沿按弧长均匀采样 100 个点，每个点取其到 Muon 前沿最近点的欧氏距离，若该最近点更靠近原点则取负值",
+     "交叉 TPR：G_FT>0 的最小预训练数据预算"
+    ],
+    "baselines": [
+     "AdamW 预训练的模型（作为 Muon 的对比基线，β1,β2=(0.9,0.98)）"
+    ],
+    "data": [
+     "预训练数据：DCLM，约 150M 到 154B tokens",
+     "微调数据集：GSM8K (Cobbe et al., 2021)、StackMathQA (Zhang, 2024)、Alpaca (Taori et al., 2023)、MusicPile (Yuan et al., 2024)",
+     "评估数据：留出的微调数据和留出的 DCLM 预训练数据"
+    ],
+    "scale": "模型参数量 30M–600M；预训练 token 数 150M–154B；序列长度 4096，全局批大小 2^20 tokens，WSD 学习率调度，权重衰减 0.1，梯度裁剪 1.0；每个基础模型在 4 个微调数据集上扫描多种学习率；具体运行次数、硬件和算力原文未报告"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.3,
+      "why": "交叉点大概率随规模下降，但 320→10 这组具体数字过于精确，且 StackMathQA 上 30M 的交叉点不一定恰好是 320，所以概率偏低。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.3,
+      "why": "文中说 Muon 常被报告预训练损失更低，但「所有预算和规模都更低」这种全称断言风险大，低 TPR 或小模型下可能不成立；反转不是继承而来这一点倒是合理。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.35,
+      "why": "sign 替身通常会保留相似的曲线形状，但 0.93 这个具体数值和「未超过 1」的说法不确定；作者也可能报告替身同样会反转，只是幅度不同。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.25,
+      "why": "这种不对称的强结论不太可能；更常见的结论是微调优化器与预训练优化器相匹配时更好，或者影响因数据集而异，对 AdamW 模型也不会毫无影响。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.07,
+      "why": "论文把正则当作稳健性检验，结果多半是反转依然存在，「完全消除」且「所有情形都不劣于」几乎不可能。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.4,
+      "why": "γ* 随 d 增大而前移的方向有一定合理性，但 9.9 和 4.0 这两个具体数字难以确证，方向也可能相反。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "At small pretraining data budgets ( 9.6 B tokens), Muon Pareto-dominates AdamW (Figure 1) and the fine-tuning gap is negative.",
+      "problem": "数字前后矛盾。这里说预训练预算到 9.6B tokens 时 Muon 仍占优，下一句却说超过 2.4B tokens 后 AdamW 就更好。两个阈值不能同时成立，9.6B 与 2.4B 至少有一个有误。括号里的比较符号也缺失，应为“≤”之类。"
+     },
+     {
+      "quote": "beyond 2.4 B tokens, AdamW achieves lower fine-tuning loss with less forgetting than Muon",
+      "problem": "该阈值与前一句的 9.6B 冲突，反转点到底在哪里不清楚。它也要与后文“30M 模型的交叉点为 320 TPR”等数字对得上。"
+     },
+     {
+      "quote": "This establishes that Muon’s orthogonalized update causally induces forgetting, and the reversal will therefore hold at every model scale and for every fine-tuning distribution.",
+      "problem": "结论远超证据。前文只是相关性观察，并且明确写的是“We hypothesize”，没有做任何因果干预或消融，不能说“establishes … causally”。证据只覆盖有限的模型规模和数据集，不能推出对“every model scale and every fine-tuning distribution”都成立。上一段还承认交叉点随微调数据集而变，与这个全称断言自相矛盾。"
+     },
+     {
+      "quote": "Springer et al. (2025) and Zhou & Kumar (2024) show that adding isotropic Gaussian noise to pretrained weights reproduces key empirical trends in forgetting after fine-tuning.",
+      "problem": "引用可疑。Zhou & Kumar (2024)《Gaussian Weight Noise as a Proxy for Catastrophic Forgetting in Language Models》疑似不存在，我无法确认，稿件里也已被标为伪造文献。前文只引用了 Springer et al. (2025) 支持这一说法，这里新增的引用应核实或删除。"
+     }
+    ]
+   }
+  },
+  "A_full": 50
+ }
+]

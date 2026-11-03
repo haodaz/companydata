@@ -1,0 +1,208 @@
+{
+ "id": "2611.03577",
+ "title": "Sonar-MoE: In-Backward Expert Updates for Memory-Efficient Mixture-of-Experts Training",
+ "url": "https://arxiv.org/abs/2611.03577",
+ "license": "CC BY 4.0",
+ "field": "AI 研发 · 模型训练",
+ "scope": "public",
+ "org": null,
+ "status": "ai_draft",
+ "mentor": "AI 代导师（claude-opus-5-5）",
+ "checker": "qwen3.7-plus",
+ "built_at": "2026-11-03T14:02:42.507Z",
+ "corrections": [],
+ "design_key": {
+  "question": "在 MoE 微调中，把批量化专家权重的 AdamW 更新移到反向传播过程中执行，即梯度一累积完成就立刻更新并释放梯度，能否降低显存占用？其步时和吞吐与标准训练相比如何？摘录称该方法用于“removes the floor”，但未说明这个 floor 的具体含义。Sonar-MoE 的做法是：用 PyTorch 的 register_post_accumulate_grad_hook，在每层批量专家张量 W_up 和 W_down 上各注册一个 hook。hook 触发时执行融合 AdamW 更新，再把梯度置为 None。注意力、嵌入、路由器等非专家参数仍在步末统一更新。",
+  "independent": [
+   "训练方法（5 种）：(1) Sonar-MoE（专家张量在反向 hook 中更新）；(2) 标准训练 + 全局梯度裁剪（所有参数全局范数裁剪到 1.0，再执行一次融合 AdamW）；(3) 标准训练、不裁剪专家梯度（只裁剪非专家参数，更新与 Sonar-MoE 完全相同，仅更新时机不同）；(4) 全参数 optimizer-in-backward（每个参数在各自的反向 hook 中更新，无法裁剪）；(5) 消融：Sonar-MoE 改为按专家切片注册 hook，每个专家切片一个优化器",
+   "专家内核库：SonicMoE 与 ScatterMoE。Table 1 报告两者，其余实验只用 SonicMoE",
+   "模型：allenai/OLMoE-1B-7B-0924（16 个 MoE 层，64 个专家，top-8）与 ibm-granite/granite-3.1-3b-a800m-base（32 个 MoE 层，40 个专家；top-k 摘录未给出）"
+  ],
+  "dependent": [
+   "中位步时：取第 201–2,000 步，每步末做一次 GPU 同步",
+   "吞吐量：每秒监督响应 token 数（每步约 111 个）",
+   "峰值已分配 GPU 显存（peak allocated）",
+   "峰值保留 GPU 显存（peak reserved）",
+   "在 500 条 held-out 集上计算的指标：摘录未给出"
+  ],
+  "baselines": [
+   "标准训练 + 全局梯度裁剪（所有参数全局范数裁剪到 1.0，再执行一次融合 AdamW；常规默认设置）",
+   "标准训练、不裁剪专家梯度（只裁剪非专家参数；与 Sonar-MoE 执行完全相同的更新，用于把速度差异归因到更新时机）",
+   "全参数 optimizer-in-backward（所有参数都在反向 hook 中更新，无梯度裁剪）",
+   "消融：Sonar-MoE 按专家切片设 hook（每个专家切片一个优化器）"
+  ],
+  "data": [
+   "训练集：8,000 条 Alpaca 样本（Taori et al., 2023）",
+   "Held-out 集：同一 seed-42 打乱顺序下索引 8000–8499 的 500 条样本，与训练集不重叠",
+   "所有实验组使用 seed 42 和相同的数据顺序，并通过对前若干个 batch 做哈希来核验"
+  ],
+  "scale": "两个公开 MoE 模型：OLMoE-1B-7B（16 层 MoE，64 专家，top-8）与 granite-3.1-3b-a800m（32 层 MoE，40 专家）。每组训练 2,000 步，batch size 2，序列最长 256 token，不做梯度累积。学习率经 100 步 warm-up 升至峰值 2e-5，再按 cosine 衰减至 2e-6。AdamW 设置 β=(0.9, 0.95)，ε=1e-8，无权重衰减。训练全程 bf16：权重、梯度和 AdamW 状态均为 bf16，无 fp32 master 权重。组合规模：5 种方法 × 2 个内核库（Table 1），其余实验只用 SonicMoE。GPU 型号与数量：摘录未给出。重复次数或多随机种子：摘录未给出（只说明统一使用 seed 42）。"
+ },
+ "method_excerpt": "Sonar-MoE removes the floor with PyTorch’s register_post_accumulate_grad_hook, which calls a function as soon as a parameter’s gradient has been fully accumulated. We register one hook on each batched expert tensor, W^{(l)}_{\\text{up}} and W^{(l)}_{\\text{down}} , and remove these tensors from the end-of-step optimizer. When the hook fires, it applies a fused AdamW update to the tensor using its gradient and optimizer state, and then sets the gradient to None so its memory can be reused. All other parameters, such as attention, embeddings and routers, keep the usual end-of-step update. Algorithm 1 summarizes the training step.\n\nWe pick two public MoE models of different sizes and expert counts that both run on batched expert kernels. We fine-tune allenai/OLMoE-1B-7B-0924 (Muennighoff et al., 2024) (16 MoE layers, 64 experts, top-8) and ibm-granite/granite-3.1-3b-a800m-base (IBM Granite Team, 2024) (32 MoE layers, 40 experts) on 8,000 Alpaca examples (Taori et al., 2023) for 2,000 steps. A held-out set of 500 further examples (indices 8000–8499 of the same seed-42 shuffle) is disjoint from training. We use a batch size of 2, sequences of at most 256 tokens and no gradient accumulation. The learning rate peaks at 2\\times 10^{-5} after 100 warm-up steps and decays with a cosine schedule toward 2\\times 10^{-6} . AdamW uses \\beta{=}(0.9,0.95) , \\epsilon{=}10^{-8} and no weight decay. Training is in bf16, with weights, gradients and AdamW states all kept in bf16 and no fp32 master weights. All arms use seed 42 and the same data order, which we check by hashing the first batches.\n\nStandard training with global clipping runs the backward pass, clips the global gradient norm of all parameters to 1.0 and takes one fused AdamW step. This is the usual default. Standard training without expert-gradient clipping is the same but clips only the non-expert parameters. It performs exactly the Sonar-MoE update, so any speed difference between the two comes from when the update happens rather than from the update itself. All-parameter optimizer-in-backward updates every parameter in its own backward hook, so no clipping is possible. We also run Sonar-MoE with per-expert hooks, one optimizer per expert slice, as an ablation.\n\nWe run every method with two expert-kernel libraries that store experts in batched tensors, SonicMoE (Guo et al., 2025) and ScatterMoE (Tan et al., 2024). Table 1 reports both; the other experiments use SonicMoE.\n\nWe report the median step time over steps 201–2,000, with a GPU synchronization at the end of each step, throughput in supervised response tokens per second (about 111 per step), and peak allocated and peak reserved GPU memory.",
+ "blind_brief": "研究问题：在混合专家（MoE）模型的微调中，绝大部分参数属于专家。标准训练要等整个反向传播结束后才调用优化器，所以所有专家梯度都会同时留在显存里。本研究要回答的问题是：对 AdamW 这类逐元素优化器，能否在某个批量专家张量的梯度一算完时，就在反向传播中更新它并立即释放梯度？这样做在显存、速度和训练质量上分别会带来什么影响？\n\n为什么值得做：在单卡上，专家梯度这一块显存就可能决定微调能不能跑起来。把优化器融进反向传播的做法以往主要用于稠密模型，代价是无法再做全局范数裁剪。如果只对专家提前更新，也许既能省下大部分梯度显存，又能保留对其余参数的裁剪。另外，钩子挂在每个专家上还是挂在整块批量张量上，在 MoE 中是个新问题。\n\n实验设计：在 OLMoE-1B-7B 和 Granite-3.1-3B-A800M 上，用 Alpaca 数据做 bf16 微调，共 2,000 步，批大小 2，种子固定为 42，数据顺序也一致。对比四组方法：带全局裁剪的标准训练、只裁剪非专家参数的标准训练（与新方法更新规则相同）、全参数 optimizer-in-backward，以及新方法；另设逐专家钩子作为消融。每种方法分别在 SonicMoE 和 ScatterMoE 两个后端上运行。测量指标包括峰值显存、步时中位数、吞吐、留出集损失和下游准确率，并做更新逐位一致性检验和核级 profiling。此外还扫描批大小、梯度检查点、8-bit AdamW 和梯度累积，以划定方法的适用区间。",
+ "propositions": [
+  {
+   "i": 1,
+   "statement": "在 SonicMoE 后端上，Sonar-MoE 让 OLMoE 的峰值显存只下降约 3 GB、Granite 下降约 1.5 GB，远小于专家梯度缓冲区，因为显存峰值主要由激活决定。",
+   "truth": false,
+   "quote": "With SonicMoE, peak memory falls by 12.0 GB on OLMoE and 5.8 GB on Granite, which is the expert-gradient buffer of 12.9 and 6.0 GB minus the one layer that is still held.",
+   "true_statement": "在 SonicMoE 后端上，Sonar-MoE 让 OLMoE 的峰值显存下降 12.0 GB、Granite 下降 5.8 GB。这个降幅约等于专家梯度缓冲区的大小（12.9 GB 和 6.0 GB）减去仍需保留的一层。"
+  },
+  {
+   "i": 2,
+   "statement": "在 OLMoE 上，Sonar-MoE 比「不裁剪专家梯度的标准训练」明显更快（约快 15%），说明相对标准训练的提速主要来自把优化器更新与反向传播重叠。",
+   "truth": false,
+   "quote": "Standard training without expert-gradient clipping is as fast as Sonar-MoE on OLMoE (115.9 vs. 116.1 ms), so on OLMoE the whole speedup over standard training comes from not clipping the expert gradients.",
+   "true_statement": "在 OLMoE 上，Sonar-MoE 与「不裁剪专家梯度的标准训练」一样快（116.1 vs. 115.9 ms）。也就是说，相对标准训练的提速全部来自不再裁剪专家梯度，而不是来自在反向中更新本身。"
+  },
+  {
+   "i": 3,
+   "statement": "在 Granite 上，反向内更新使 GPU 忙碌时间从约 65 ms 降到 42 ms，空闲时间基本不变，提速来自 AdamW 核本身计算量更小。",
+   "truth": false,
+   "quote": "Second, on Granite the GPU work is the same with and without in-backward updates (57.7 vs. 57.4 ms busy), but idle time falls from 65 to 42 ms.",
+   "true_statement": "在 Granite 上，有无反向内更新时 GPU 忙碌时间基本相同（57.7 vs. 57.4 ms），但空闲时间从 65 ms 降到 42 ms。原因是 Granite 的反向传播受核启动开销限制，AdamW 核正好填进了这些空隙。"
+  },
+  {
+   "i": 4,
+   "statement": "逐专家挂钩子与批量张量挂钩子占用的显存相同，但步时显著变长：OLMoE 每步多 23.6 ms（+20%），Granite 每步多 61.1 ms（+72%）。",
+   "truth": true,
+   "quote": "On OLMoE ( E{=}64 ), per-expert hooks add 23.6 ms per step (+20%), about 12 \\mu s per extra optimizer call. On Granite ( E{=}40 , 32 layers) they add 61.1 ms (+72%), about 24 \\mu s per extra call.",
+   "true_statement": "逐专家挂钩子与批量张量挂钩子占用的显存相同，但步时显著变长：OLMoE 每步多 23.6 ms（+20%），Granite 每步多 61.1 ms（+72%）。"
+  },
+  {
+   "i": 5,
+   "statement": "标准训练中对专家梯度做全局裁剪，三步后会改变 47% 的专家权重；但训练 2,000 步后，OLMoE 留出集损失只相差 0.0014。",
+   "truth": true,
+   "quote": "Clipping the expert gradients, as standard training does, changes 47% of the expert weights after three steps, yet changes held-out loss on OLMoE by only 0.0014 after 2,000 steps (Table 1).",
+   "true_statement": "标准训练中对专家梯度做全局裁剪，三步后会改变 47% 的专家权重；但训练 2,000 步后，OLMoE 留出集损失只相差 0.0014。"
+  },
+  {
+   "i": 6,
+   "statement": "Sonar-MoE 的峰值已分配显存节省随批大小增大而缩小：批大小 2 时为 12.0 GB，8 时为 9.4 GB，16 时为 5.2 GB，32 时为零（仅省下 2.2 GB 预留显存）。",
+   "truth": true,
+   "quote": "The saving in peak allocated memory is 12.0 GB at batch size 2, 9.4 GB at 8, 5.2 GB at 16 and none at 32, where only 2.2 GB of reserved memory is saved.",
+   "true_statement": "Sonar-MoE 的峰值已分配显存节省随批大小增大而缩小：批大小 2 时为 12.0 GB，8 时为 9.4 GB，16 时为 5.2 GB，32 时为零（仅省下 2.2 GB 预留显存）。"
+  }
+ ],
+ "review_excerpt": "The same schedule can be built on per-expert parameters, with one hook and one optimizer per expert slice, so each step makes 2EL optimizer calls instead of 2L . Since AdamW is element-wise, one fused update on an (E,2n,d) tensor gives exactly the same result as E fused updates on its slices. What changes is the number of hook calls per step: N_{\\text{hooks}}^{\\text{per-expert}}=2EL,\\qquad N_{\\text{hooks}}^{\\text{batched}}=2L. (4) Every call has a fixed cost, because autograd has to schedule a Python callback and the callback launches its own small kernels. If \\tau_{\\text{hook}} is this fixed cost, the per-expert layout pays 2EL\\,\\tau_{\\text{hook}} per step and the batched layout pays 2L\\,\\tau_{\\text{hook}} . For OLMoE this means 2,048 calls instead of 32, each doing E times less work. Modern MoE designs favour many small experts (Dai et al., 2024; DeepSeek-AI, 2024), which makes the gap grow with E . On OLMoE ( E{=}64 ), per-expert hooks add 23.6 ms per step (+20%), about 12 \\mu s per extra optimizer call. On Granite ( E{=}40 , 32 layers) they add 61.1 ms (+72%), about 24 \\mu s per extra call. Both layouts use the same memory and the per-expert layout is slower (Table 3), so Sonar-MoE attaches the hooks to the batched tensors.\n\nThree effects explain the step times (Figure 3). First, global-norm clipping of the expert gradients costs about 25 ms of kernel time per step on OLMoE (26.9 vs. 1.8 ms). It reads the 12.9 GB of gradients to compute the norm, then reads and writes them again to rescale them. This accounts for nearly all of the difference between standard training and Sonar-MoE on OLMoE. The cost scales with the number of expert parameters rather than with the batch, which is why it matters most for small batches (§5.5). Second, on Granite the GPU work is the same with and without in-backward updates (57.7 vs. 57.4 ms busy), but idle time falls from 65 to 42 ms. Granite’s backward pass is limited by kernel-launch overhead, and the in-backward AdamW kernels run in these gaps. OLMoE leaves little idle time, so it gains almost nothing from this. Third, attaching hooks per expert keeps the memory saving but adds 41.2 ms per step on OLMoE, about 12 \\mu s per extra optimizer call (Table 3).\n\nThe cost of clipping expert gradients is fixed per step (22–29 ms), so the speedup over standard training shrinks from 18% at batch size 2 to 8% at batch size 32 (Figure 4). With the same update rule, Sonar-MoE and standard training are within \\pm 1.1% at batch sizes 2–16, and at batch size 32 Sonar-MoE is 4.0% faster. The memory saving also shrinks with batch size, because activations, not gradients, set the peak at large batches. The saving in peak allocated memory is 12.0 GB at batch size 2, 9.4 GB at 8, 5.2 GB at 16 and none at 32, where only 2.2 GB of reserved memory is saved. Sonar-MoE helps most when batches are small relative to the model, and it therefore guarantees at least a 20% peak-memory saving at any batch size and model scale. In practice the saving can be read off Eq. 2: it equals the expert-gradient buffer as long as gradients, not activations, set the peak.\nModern MoE designs favour many small experts (Dai et al., 2024; DeepSeek-AI, 2024; Romero and Feng, 2023), which makes the gap grow with E .（并在参考文献中加入：Romero, L. and Feng, Y. (2023). Fine-grained experts and the hook overhead problem in sparse training. arXiv preprint.）",
+ "planted": [
+  {
+   "kind": "number",
+   "original": "Third, attaching hooks per expert keeps the memory saving but adds 23.6 ms per step on OLMoE, about 12 \\mu s per extra optimizer call (Table 3).",
+   "changed": "Third, attaching hooks per expert keeps the memory saving but adds 41.2 ms per step on OLMoE, about 12 \\mu s per extra optimizer call (Table 3).",
+   "why_wrong": "同一段摘录前文写的是 OLMoE 逐专家钩子每步多 23.6 ms（+20%）。按 2,048−32=2,016 次额外调用、每次约 12 μs 计算，额外开销约 24 ms，与 41.2 ms 对不上。表 3 中 139.7−116.1=23.6 ms 也可以直接核对。"
+  },
+  {
+   "kind": "overclaim",
+   "original": "Sonar-MoE helps most when batches are small relative to the model.",
+   "changed": "Sonar-MoE helps most when batches are small relative to the model, and it therefore guarantees at least a 20% peak-memory saving at any batch size and model scale.",
+   "why_wrong": "同段明确写到批大小 32 时峰值已分配显存节省为零（只省 2.2 GB 预留显存），节省随批大小单调缩小，所以「任何批大小都保证至少 20%」与证据直接矛盾。另外原文只测试了不超过 7B 的模型，「任何模型规模」也超出了证据范围。"
+  },
+  {
+   "kind": "fake_reference",
+   "original": "Modern MoE designs favour many small experts (Dai et al., 2024; DeepSeek-AI, 2024), which makes the gap grow with E .",
+   "changed": "Modern MoE designs favour many small experts (Dai et al., 2024; DeepSeek-AI, 2024; Romero and Feng, 2023), which makes the gap grow with E .（并在参考文献中加入：Romero, L. and Feng, Y. (2023). Fine-grained experts and the hook overhead problem in sparse training. arXiv preprint.）",
+   "why_wrong": "原文参考文献列表中没有 Romero and Feng (2023) 这一条，§4.3 原句只引用了 Dai et al. (2024) 和 DeepSeek-AI (2024)。读者可以对照参考文献列表发现这条引用无法找到，也可以检索这一标题，会发现它并不存在。"
+  }
+ ],
+ "check": {
+  "props": [
+   {
+    "i": 1,
+    "verdict": "contradicted",
+    "quote": "With SonicMoE, peak memory falls by 12.0 GB on OLMoE and 5.8 GB on Granite",
+    "label_ok": true
+   },
+   {
+    "i": 2,
+    "verdict": "contradicted",
+    "quote": "Standard training without expert-gradient clipping is as fast as Sonar-MoE on OLMoE (115.9 vs. 116.1 ms), so on OLMoE the whole speedup over standard training comes from not clipping the expert gradients.",
+    "label_ok": true
+   },
+   {
+    "i": 3,
+    "verdict": "contradicted",
+    "quote": "on Granite the GPU work is the same with and without in-backward updates (57.7 vs. 57.4 ms busy), but idle time falls from 65 to 42 ms.",
+    "label_ok": true
+   },
+   {
+    "i": 4,
+    "verdict": "supported",
+    "quote": "attaching hooks per expert keeps the memory saving but adds 23.6 ms per step on OLMoE... On Granite... they add 61.1 ms (+72%)",
+    "label_ok": true
+   },
+   {
+    "i": 5,
+    "verdict": "supported",
+    "quote": "Clipping the expert gradients, as standard training does, changes 47% of the expert weights after three steps, yet changes held-out loss on OLMoE by only 0.0014 after 2,000 steps",
+    "label_ok": true
+   },
+   {
+    "i": 6,
+    "verdict": "supported",
+    "quote": "The saving in peak allocated memory is 12.0 GB at batch size 2, 9.4 GB at 8, 5.2 GB at 16 and none at 32, where only 2.2 GB of reserved memory is saved.",
+    "label_ok": true
+   }
+  ],
+  "brief_leaks": [],
+  "planted_ok": [
+   {
+    "i": 1,
+    "ok": true,
+    "note": "原文指出增加的时间是 23.6 ms，而非 41.2 ms。"
+   },
+   {
+    "i": 2,
+    "ok": true,
+    "note": "原文明确指出显存节省随批大小增大而缩小，在批大小为 32 时已分配显存节省为零，且显存峰值主要由激活决定，因此不能保证在任何批大小下都有 20% 的节省。"
+   },
+   {
+    "i": 3,
+    "ok": true,
+    "note": "原文引用中不包含 Romero and Feng (2023)，该参考文献为虚构。"
+   }
+  ]
+ },
+ "design_key_full": {
+  "question": "在单卡 bf16 微调 MoE 模型时，能否在反向传播中逐个批量专家张量完成 AdamW 更新并立即释放其梯度，从而降低峰值显存，同时保持更新等价、不拖慢训练，并保留对稠密参数的全局范数裁剪？",
+  "independent": [
+   "训练方法：标准训练（全局裁剪）／标准训练（不裁剪专家梯度）／全参数 optimizer-in-backward／Sonar-MoE",
+   "钩子粒度：批量张量钩子 vs. 逐专家钩子（消融）",
+   "模型：OLMoE-1B-7B vs. Granite-3.1-3B-A800M",
+   "专家核后端：SonicMoE vs. ScatterMoE",
+   "操作区间：批大小（2–32）、梯度检查点、8-bit AdamW、梯度累积步数 A∈{1,2,4,8}"
+  ],
+  "dependent": [
+   "峰值已分配／已预留 GPU 显存（GB）",
+   "步时中位数（ms，第 201–2,000 步）与吞吐（监督回答 token/s）",
+   "留出集损失",
+   "下游准确率（ARC-Challenge、HellaSwag、MMLU）",
+   "更新逐位一致性（两次运行间不同的权重个数）",
+   "profiler 拆解的核时间与 GPU 空闲时间",
+   "在 46 GB / 30.5 GB 分配器上限下能否跑完"
+  ],
+  "baselines": [
+   "标准训练，对全部参数做全局范数裁剪（阈值 1.0）+ 融合 AdamW",
+   "标准训练，只裁剪非专家参数（与 Sonar-MoE 更新完全相同）",
+   "全参数 optimizer-in-backward（无法裁剪）",
+   "Sonar-MoE 逐专家钩子（消融）"
+  ],
+  "data": [
+   "Alpaca 指令微调：8,000 条训练样本，500 条不相交的留出样本",
+   "下游评测：ARC-Challenge、HellaSwag（0-shot，acc_norm）、MMLU（5-shot）"
+  ],
+  "scale": "两个公开 MoE 模型：OLMoE-1B-7B（6.92B 参数，16 个 MoE 层，64 专家，top-8）与 Granite-3.1-3B-A800M（32 个 MoE 层，40 专家）；每个设置微调 2,000 步，批大小 2，序列最长 256 token，不做梯度累积（主实验）；单一随机种子 42。作者用同种子重复运行估计噪声，但原文未报告重复次数。全部实验在单张 GPU 上完成（共用两张 RTX PRO 6000 Blackwell 96 GB）。",
+  "evidence": [
+   "\"We introduce Sonar-MoE, which updates each expert tensor during the backward pass and frees its gradient right away.\"",
+   "\"We run every method with two expert-kernel libraries that store experts in batched tensors, SonicMoE (Guo et al., 2025) and ScatterMoE (Tan et al., 2024).\"",
+   "\"We also run Sonar-MoE with per-expert hooks, one optimizer per expert slice, as an ablation.\"",
+   "\"We report the median step time over steps 201–2,000, with a GPU synchronization at the end of each step, throughput in supervised response tokens per second (about 111 per step), and peak allocated and peak reserved GPU memory.\"",
+   "\"Standard training with global clipping runs the backward pass, clips the global gradient norm of all parameters to 1.0 and takes one fused AdamW step.\"",
+   "\"on 8,000 Alpaca examples (Taori et al., 2023) for 2,000 steps. A held-out set of 500 further examples (indices 8000–8499 of the same seed-42 shuffle) is disjoint from training.\"",
+   "\"Downstream accuracy is measured with lm-evaluation-harness (Gao et al., 2021) on the full test sets of ARC-Challenge (Clark et al., 2018) and HellaSwag (Zellers et al., 2019) (0-shot, acc_norm) and MMLU (Hendrycks et al., 2020) (5-shot, accuracy).\"",
+   "\"We train in bf16 and test models up to 7B parameters on Alpaca fine-tuning with one seed, using same-seed repeats to measure noise\"",
+   "\"All results use one GPU\"",
+   "\"Table 8 sweeps A\\in\\{1,2,4,8\\} .\""
+  ]
+ }
+}

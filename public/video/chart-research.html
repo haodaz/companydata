@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>科研 AI · 图卡</title>
+<!-- 《给课题组订一位科研 AI》图卡（2026-11-03）：1600×900 设计，和 chart-method.html 同一套浅色 + 玻璃卡。?id=gap|layers|exams|results|human；results 读 ?d=<json> -->
+<style>
+  :root { --ink: #161a33; --ink2: #4a4f6a; --ink3: #8a8fa8; --v: #6055f5; --c: #12b5cb; --red: #e5484d; --green: #16a34a; }
+  html, body { margin: 0; height: 100%; overflow: hidden; color: var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, "PingFang SC", sans-serif; background: #f7f8ff; }
+  .bg { position: absolute; inset: 0; overflow: hidden; }
+  .bg i { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55; animation: drift 14s ease-in-out infinite alternate; }
+  .bg i:nth-child(1) { width: 760px; height: 760px; left: -220px; top: -260px; background: #cfc8ff; }
+  .bg i:nth-child(2) { width: 680px; height: 680px; right: -200px; top: 120px; background: #bff0f7; animation-delay: -4s; }
+  .bg i:nth-child(3) { width: 560px; height: 560px; left: 38%; bottom: -320px; background: #ffe2d1; animation-delay: -8s; }
+  .bg::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(96,85,245,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(96,85,245,.06) 1px, transparent 1px); background-size: 48px 48px; }
+  @keyframes drift { to { transform: translate(40px, 30px) scale(1.06); } }
+  .page { position: absolute; inset: 0; padding: 60px 96px; box-sizing: border-box; }
+  .eb { display: inline-flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; color: var(--v); letter-spacing: .08em; padding: 8px 18px; border-radius: 999px; background: rgba(255,255,255,.7); border: 1px solid rgba(96,85,245,.18); animation: up .6s both; }
+  .eb b { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--v), var(--c)); }
+  h1 { font-size: 60px; line-height: 1.18; margin: 22px 0 0; font-weight: 900; animation: up .7s .1s both; }
+  h1 em { font-style: normal; background: linear-gradient(120deg, var(--v), var(--c)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .glass { background: rgba(255,255,255,.78); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); border: 1px solid rgba(255,255,255,.9); box-shadow: 0 30px 70px -30px rgba(40,44,110,.28), 0 2px 10px rgba(40,44,110,.06); border-radius: 26px; }
+  @keyframes up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  .d { animation: up .7s both; animation-delay: calc(.35s + var(--i) * .25s); }
+
+  /* gap：通用模型的回答 vs 实际 */
+  .gap { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; margin-top: 44px; }
+  .gap .card { padding: 30px 34px; }
+  .gap .k { font-size: 19px; letter-spacing: .1em; color: var(--ink3); font-weight: 700; }
+  .gap h3 { margin: 6px 0 16px; font-size: 34px; font-weight: 900; }
+  .gap .q { font-size: 25px; line-height: 1.6; padding: 16px 20px; border-radius: 16px; background: #fff; border-left: 5px solid var(--ink3); }
+  .gap .bad .q { border-color: var(--red); } .gap .good .q { border-color: var(--green); }
+  .gap .q mark { background: #ffe1e1; color: #b42318; padding: 0 4px; border-radius: 4px; }
+  .gap .q mark.ok { background: #dcfce7; color: #166534; }
+  .gap .foot { margin-top: 14px; font-size: 21px; color: var(--ink2); }
+  .tag { display: inline-block; font-size: 18px; font-weight: 800; padding: 4px 12px; border-radius: 999px; color: #fff; margin-right: 8px; }
+
+  /* layers：三层课程 */
+  .layers { display: grid; gap: 18px; margin-top: 40px; }
+  .layer { display: grid; grid-template-columns: 120px 1fr 360px; gap: 26px; align-items: center; padding: 22px 30px; }
+  .layer .n { font-size: 58px; font-weight: 900; background: linear-gradient(120deg, var(--v), var(--c)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .layer h3 { margin: 0 0 6px; font-size: 32px; font-weight: 900; } .layer p { margin: 0; font-size: 22px; color: var(--ink2); line-height: 1.5; }
+  .layer .u { font-size: 21px; font-weight: 800; color: var(--v); text-align: right; }
+  .layer.hl { box-shadow: 0 0 0 3px rgba(96,85,245,.5), 0 30px 70px -30px rgba(96,85,245,.4); }
+
+  /* exams：三道有客观答案的题 */
+  .exams { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 44px; }
+  .ex { padding: 30px 30px; }
+  .ex .l { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; color: #fff; font-size: 32px; font-weight: 900; margin-bottom: 16px; }
+  .ex h3 { margin: 0 0 10px; font-size: 32px; font-weight: 900; } .ex p { margin: 0 0 14px; font-size: 22px; color: var(--ink2); line-height: 1.55; }
+  .ex .ans { font-size: 20px; font-weight: 800; color: var(--v); border-top: 1px dashed rgba(96,85,245,.3); padding-top: 12px; }
+  .src { margin-top: 26px; font-size: 21px; color: var(--ink2); animation: up .7s 1.4s both; }
+
+  /* results */
+  .res { margin-top: 34px; display: grid; gap: 16px; }
+  .row { display: grid; grid-template-columns: 250px 1fr 1fr 1fr; gap: 22px; align-items: center; padding: 18px 28px; }
+  .row.h { background: none; box-shadow: none; border: 0; padding: 0 28px; font-size: 19px; font-weight: 800; color: var(--ink3); letter-spacing: .06em; }
+  .row .m { font-size: 27px; font-weight: 900; }
+  .bar { position: relative; height: 40px; border-radius: 10px; background: rgba(96,85,245,.08); overflow: hidden; }
+  .bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 10px; background: linear-gradient(90deg, var(--v), var(--c)); transform-origin: left; animation: grow 1s both; animation-delay: calc(.6s + var(--i) * .15s); }
+  .bar span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 21px; font-weight: 900; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.25); }
+  @keyframes grow { from { transform: scaleX(0); } to { transform: none; } }
+  .note { margin-top: 22px; font-size: 22px; color: var(--ink2); animation: up .7s 1.6s both; }
+
+  /* human：人只做校正 */
+  .flow { display: grid; grid-template-columns: 1fr 70px 1fr 70px 1fr; align-items: stretch; margin-top: 46px; }
+  .st { padding: 28px 28px; } .st .k { font-size: 18px; letter-spacing: .1em; color: var(--ink3); font-weight: 700; } .st h3 { margin: 6px 0 10px; font-size: 31px; font-weight: 900; } .st p { margin: 0; font-size: 21px; color: var(--ink2); line-height: 1.55; }
+  .st.hl { box-shadow: 0 0 0 3px rgba(22,163,74,.55), 0 30px 70px -30px rgba(22,163,74,.35); }
+  .arw { display: grid; place-items: center; font-size: 40px; color: var(--v); font-weight: 900; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 30px; }
+  .two div { padding: 20px 26px; font-size: 22px; color: var(--ink2); } .two b { display: block; font-size: 27px; color: var(--ink); margin-bottom: 4px; }
+</style></head>
+<body><div class="bg"><i></i><i></i><i></i></div><div class="page" id="p"></div>
+<script>
+const q = new URLSearchParams(location.search);
+const id = q.get('id') || 'gap';
+const EB = '<div class="eb"><b></b>百业学院 · 科研 AI</div>';
+const P = {
+  gap: () => `${EB}<h1>它什么都能聊，<em>但会替你把空白补上</em></h1>
+    <div class="gap">
+      <div class="card glass bad d" style="--i:0"><div class="k">材料里写的</div><h3>冷冻电镜：排期还没定</h3>
+        <div class="q">「XPS 只有周四上午，冷冻电镜看小林能不能挤出空。」</div>
+        <div class="foot"><span class="tag" style="background:var(--ink3)">原文</span>只知道这么多</div></div>
+      <div class="card glass bad d" style="--i:1"><div class="k">通用大模型交上来的实验方案</div><h3>它替你把排期定了</h3>
+        <div class="q">「冷冻电镜界面截面：<mark>已联系小林，确认周五上午可做</mark>。」</div>
+        <div class="foot"><span class="tag" style="background:var(--red)">编造</span>写得很专业，但没有依据</div></div>
+    </div>`,
+  layers: () => `${EB}<h1>科研 AI 的课，<em>分三层</em></h1>
+    <div class="layers">
+      ${[['1', '研究方法论', '博士第一年：读文献、写综述、设计预实验、数据不好看时守住诚信、组会被追问、审稿', '所有方向必修', true],
+         ['2', '实验方法课', '121 个实验方法：标准步骤、新手常踩的坑、对得上的真实仪器', '跨方向互认学分', false],
+         ['3', '方向课', '某个课题组的一天：电池材料、单细胞、细胞培养……', '按导师的方向配', false]]
+        .map(([n, h, p, u, hl], i) => `<div class="layer glass d ${hl ? 'hl' : ''}" style="--i:${i}"><div class="n">${n}</div><div><h3>${h}</h3><p>${p}</p></div><div class="u">${u}</div></div>`).join('')}
+    </div>`,
+  exams: () => `${EB}<h1>用论文出题：<em>每道都有标准答案</em></h1>
+    <div class="exams">
+      ${[['A', '#6055f5', '读懂', '只给方法部分，还原研究设计：问题、变量、对照、规模、重复', '答案：论文原文'],
+         ['B', '#12b5cb', '盲测预测', '藏起结果，判断 6 条结论为真的概率——拿不准就说拿不准', '答案：论文的结果 · 同时量「校准」'],
+         ['C', '#f59e0b', '埋错审稿', '在一段稿件里悄悄埋 3 处错：数字矛盾、过度结论、编造的参考文献', '答案：我们自己埋的']]
+        .map(([l, c, h, p, a], i) => `<div class="ex glass d" style="--i:${i}"><div class="l" style="background:${c}">${l}</div><h3>${h}</h3><p>${p}</p><div class="ans">${a}</div></div>`).join('')}
+    </div>
+    <div class="src">论文：arXiv 上 CC BY 授权、刚发表的模型训练论文——被考的模型没读过，盲测才算数。</div>`,
+  results: () => { const d = JSON.parse(q.get('d') || '[]');
+    return `${EB}<h1>三个模型，<em>同一套题</em></h1>
+    <div class="res">
+      <div class="row h"><div>学员</div><div>A 读懂（满分 100）</div><div>B 盲测：猜对几成</div><div>C 埋的 9 处错，找到几处</div></div>
+      ${d.map((r, i) => `<div class="row glass d" style="--i:${i}"><div class="m">${r.name}</div>
+        <div class="bar"><i style="width:${r.A}%;--i:${i}"></i><span>${r.A}</span></div>
+        <div class="bar"><i style="width:${r.B}%;--i:${i}"></i><span>${r.B}%</span></div>
+        <div class="bar"><i style="width:${Math.round(r.C / r.Cof * 100)}%;--i:${i}"></i><span>${r.C} / ${r.Cof}</span></div></div>`).join('')}
+    </div><div class="note">${q.get('note') || ''}</div>`; },
+  human: () => `${EB}<h1>人只做校正，<em>不做起草</em></h1>
+    <div class="flow">
+      <div class="st glass d" style="--i:0"><div class="k">第一步</div><h3>AI 代导师出题</h3><p>挑论文、定答案、埋错，先出一份完整初稿</p></div><div class="arw">→</div>
+      <div class="st glass d" style="--i:1"><div class="k">第二步</div><h3>另一个模型核对</h3><p>对照原文逐条查：答案对不对、有没有泄露结果</p></div><div class="arw">→</div>
+      <div class="st glass d hl" style="--i:2"><div class="k">第三步</div><h3>导师只改</h3><p>看一遍、改不对的地方，每处改动留痕</p></div>
+    </div>
+    <div class="two"><div class="glass d" style="--i:3"><b>公共课</b>平台用公开论文和数据先建好，谁来都能上</div><div class="glass d" style="--i:4"><b>私域课</b>实验室拿自己的数据和组内规范来，联合培养，只给这一家用</div></div>`,
+};
+document.getElementById('p').innerHTML = (P[id] || P.gap)();
+</script></body></html>

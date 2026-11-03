@@ -1,0 +1,210 @@
+{
+ "id": "2611.03633",
+ "title": "Pretraining Data Scale Reverses the Muon-AdamW Fine-Tuning Gap",
+ "url": "https://arxiv.org/abs/2611.03633",
+ "license": "CC BY 4.0",
+ "field": "AI 研发 · 模型训练",
+ "scope": "public",
+ "org": null,
+ "status": "ai_draft",
+ "mentor": "AI 代导师（claude-opus-5-5）",
+ "checker": "qwen3.7-plus",
+ "built_at": "2026-11-03T13:59:20.600Z",
+ "corrections": [],
+ "design_key": {
+  "question": "预训练数据规模（预训练 token 预算）如何影响 Muon 与 AdamW 预训练模型在微调中的学习–遗忘权衡差距？标题称这一差距会随数据规模反转。具体问题是：在不同模型规模和数据预算下，哪种预训练优化器能得到更好的学习–遗忘前沿？差距从哪个预算开始转为正值（crossover）？",
+  "independent": [
+   "预训练优化器：AdamW vs Muon。Muon 只更新隐藏层权重矩阵，embedding、输出层和 norm 仍由 AdamW 更新。",
+   "预训练数据预算：150M 至 154B 个 DCLM token。crossover 以 TPR 表示，摘录未给出 TPR 的定义。",
+   "模型规模：OLMo 风格，30M–600M 参数。",
+   "预训练超参数的选取方式：(1) lowest-pretraining-loss 设定，每个优化器按最小预训练损失调参；(2) best-frontier 设定，遍历全部预训练与微调配置，取最优学习–遗忘前沿。",
+   "微调学习率扫描：AdamW 为 1e-4 至 1e-2，Muon 为 6e-4 至 2e-2。用于覆盖完整的学习–遗忘谱。",
+   "微调数据集：GSM8K、StackMathQA、Alpaca、MusicPile。",
+   "预训练超参数扫描（best-frontier 设定）：摘录称范围很广，细节见附录 C，摘录未给出具体取值。",
+   "微调阶段的优化器与预训练优化器如何配对：摘录未给出。"
+  ],
+  "dependent": [
+   "学习：每个微调 checkpoint 在 held-out 微调数据上的微调损失。",
+   "遗忘：每个微调 checkpoint 在 held-out 预训练（DCLM）数据上的预训练损失。",
+   "学习–遗忘前沿：由所有微调运行在上述两种损失构成的平面中拟合得到。",
+   "微调差距 G_FT：沿 AdamW 前沿按弧长均匀采样 100 个点，取每点到 Muon 前沿最近点的欧氏距离；若该 AdamW 点更靠近原点，距离取负。G_FT 的完整定义在第 2 节，摘录未给出最终的聚合方式。",
+   "Crossover TPR：G_FT > 0 时对应的最小数据预算。"
+  ],
+  "baselines": [
+   "AdamW 预训练模型，作为与 Muon 对比的标准优化器。",
+   "lowest-pretraining-loss 设定：即常规的、按最小预训练损失选取模型的做法，与 best-frontier 设定对照。",
+   "摘录未给出其他外部基线方法。"
+  ],
+  "data": [
+   "预训练：DCLM，150M–154B token。",
+   "微调：GSM8K (Cobbe et al., 2021)、StackMathQA (Zhang, 2024)、Alpaca (Taori et al., 2023)、MusicPile (Yuan et al., 2024)。",
+   "评估：上述微调数据的 held-out 部分，以及 DCLM 预训练数据的 held-out 部分。",
+   "数据划分比例与具体样本量：摘录未给出。"
+  ],
+  "scale": "模型为 OLMo 风格，参数量 30M–600M。预训练 token 预算为 150M–154B（DCLM），序列长度 4096，全局 batch 为 2^20 token。学习率调度为 WSD，weight decay 0.1，梯度裁剪 1.0；AdamW 取 (β1, β2) = (0.9, 0.98)。具体的模型规模档位、数据预算档位、扫描点数、总运行数和计算开销：摘录未给出。"
+ },
+ "method_excerpt": "Pretraining. We pretrain OLMo-style 30M–600M models on 150 M to 154 B DCLM tokens, comparing AdamW and Muon under a warmup–stable–decay (WSD) schedule. We sweep hyperparameters broadly and report the complete pretraining methodology in Appendix C.\nFine-tuning. For each base model, we evaluate the learning–forgetting tradeoff on four standard datasets: GSM8K (Cobbe et al., 2021), StackMathQA (Zhang, 2024), Alpaca (Taori et al., 2023), and MusicPile (Yuan et al., 2024), sweeping AdamW learning rates from 10^{-4} to 10^{-2} and Muon learning rates from 6\\times 10^{-4} to 2\\times 10^{-2} (Section C.2). [...] We then plot the learning–forgetting frontier over the resulting runs. We choose a broad learning-rate range to ensure we capture the complete learning–forgetting tradeoff spectrum: higher learning rates favor learning at the expense of forgetting, while lower rates preserve pretraining knowledge but learn less.\nEvaluating the learning–forgetting tradeoff. For each fine-tuned checkpoint, we compute the fine-tuning loss and pretraining loss on held-out fine-tuning and pretraining (DCLM) data, and use these checkpoints to approximate the learning–forgetting tradeoff. [...] We evaluate the learning–forgetting tradeoff in two settings: lowest-pretraining-loss setting, and the best-frontier setting.\n1. Lowest-pretraining-loss setting: Pretraining hyperparameters are typically selected to minimize pretraining loss. Therefore, for each optimizer, we tune the pretraining hyperparameters to minimize pretraining loss for a given pretraining data budget and model size. We then sweep across all fine-tuning configurations for each of the lowest-loss pretrained models, and evaluate the resulting frontier.\n2. Best-frontier setting: However, prior studies find that the lowest-loss pretrained model is not always the best model after fine-tuning: models pretrained with other hyperparameters can offer a better learning–forgetting tradeoff (Watts et al., 2026). Therefore, for each pretraining optimizer, we additionally sweep across all pretraining and fine-tuning configurations to achieve the best possible learning–forgetting frontier for a given pretraining data budget and model size (Section C.1.3).\nOptimization. Every model is pretrained with sequence length 4096 , a global batch of 2^{20} tokens, a warmup–stable–decay (WSD) schedule, weight decay 0.1 and gradient clipping at 1.0 . AdamW uses (\\beta_{1},\\beta_{2})=(0.9,0.98) . Muon updates the hidden weight matrices; the remaining parameters (embeddings, output layer and norms) are updated by AdamW.\nFine-tuning gap and crossover. We estimate the fine-tuning gap G_{\\mathrm{FT}} of Section 2 from 100 points sampled uniformly by arc length along the AdamW frontier, each assigned its Euclidean distance to the nearest point of the Muon frontier, negative when that point lies closer to the origin. The crossover TPR is the smallest budget at which G_{\\mathrm{FT}}>0 .",
+ "blind_brief": "研究问题：近来 Muon 在大语言模型预训练中常被报告比 AdamW 更快降低预训练损失。但实际部署的模型几乎都要经过微调，真正重要的是学习–遗忘权衡：模型既要学会目标任务，又要保住预训练知识。本研究要回答的是：Muon 在预训练阶段的优势，能否延续到微调后的这一权衡上？这种比较又如何随预训练数据量和模型规模变化？\n\n为什么值得做：业界通常按预训练损失挑选优化器和超参。如果预训练损失不能很好地代表模型的可适应性，这种做法就需要重新审视。\n\n实验设计：用 AdamW 和 Muon 分别预训练 OLMo 风格的 30M–600M 模型，在 DCLM 上覆盖从很少到远超计算最优的数据量（以每参数 token 数 TPR 计）。每个基座模型在数学、指令跟随、音乐四个数据集上微调，并大范围扫描微调优化器和学习率。以微调集损失衡量学习，以留出预训练数据损失衡量遗忘，取帕累托前沿，并用带符号的前沿距离（fine-tuning gap）比较两种优化器。基座模型的选取分两种：只取预训练损失最低的模型，或在多组预训练超参中取最佳前沿。另设 replay、EWC 等微调正则作为稳健性检验。机制层面，作者提出一个基于输出 logit 的鲁棒性指标，并在高斯线性联想记忆模型中对比 GD 与 Muon，做单步理论推导和多步仿真，同时用高斯权重扰动作为辅助探针。",
+ "propositions": [
+  {
+   "i": 1,
+   "statement": "crossover TPR 随模型规模增大而下降：在 StackMathQA 上，30M 模型的交叉点是 320 TPR，600M 模型只有 10 TPR。",
+   "truth": true,
+   "quote": "On StackMathQA, the crossover is 320 TPR for 30M models but only 10 TPR for 600M models (Figure 2).",
+   "true_statement": "crossover TPR 随模型规模增大而下降：在 StackMathQA 上，30M 模型的交叉点是 320 TPR，600M 模型只有 10 TPR。"
+  },
+  {
+   "i": 2,
+   "statement": "在所有预算和模型规模下，损失最优的 Muon 模型的预训练损失都低于 AdamW。因此微调后的反转不是从预训练损失继承来的。",
+   "truth": true,
+   "quote": "Figure 9 shows that the loss-optimal Muon model reaches a lower pretraining loss than its AdamW counterpart at every budget and model size, so the reversal is not inherited from pretraining loss.",
+   "true_statement": "在所有预算和模型规模下，损失最优的 Muon 模型的预训练损失都低于 AdamW。因此微调后的反转不是从预训练损失继承来的。"
+  },
+  {
+   "i": 3,
+   "statement": "在线性联想记忆的一步分析中，若用 AdamW 首步（sign）替身代替 GD，MSR 比值曲线形状相同，但在 γ=64 时只到 0.93（未超过 1）。作者因此强调，一步反转是关于 GD 而非 AdamW 的结论。",
+   "truth": true,
+   "quote": "its \\mathcal{R} has the same shape but reaches only 0.93 at \\gamma=64 , so over the data budgets we ran the one-step reversal is a statement about GD, not about AdamW.",
+   "true_statement": "在线性联想记忆的一步分析中，若用 AdamW 首步（sign）替身代替 GD，MSR 比值曲线形状相同，但在 γ=64 时只到 0.93（未超过 1）。作者因此强调，一步反转是关于 GD 而非 AdamW 的结论。"
+  },
+  {
+   "i": 4,
+   "statement": "微调优化器的选择对 Muon 预训练模型影响很大（必须用 Muon 微调才能发挥优势），对 AdamW 预训练模型则几乎无影响。",
+   "truth": false,
+   "quote": "First, the fine-tuning optimizer matters for AdamW-pretrained models but not for Muon-pretrained ones: on AdamW-pretrained models, AdamW fine-tuning dominates Muon fine-tuning at every budget, whereas the two frontiers of a Muon-pretrained model lie close together with no consistent winner.",
+   "true_statement": "微调优化器的选择对 AdamW 预训练模型有影响（AdamW 微调在所有预算下都优于 Muon 微调），对 Muon 预训练模型则基本无影响，两条前沿接近、没有一致的赢家。"
+  },
+  {
+   "i": 5,
+   "statement": "replay 和 EWC 能完全消除反转：加入正则后，Muon 前沿在所有数据集、所有预算上都不劣于 AdamW。",
+   "truth": false,
+   "quote": "Both regularizers reduce forgetting and can move the crossover to larger budgets (from 80 to 320 TPR on Alpaca and StackMathQA), but AdamW’s frontier is better at large budgets on every dataset under both (Figure 18), with one exception: under EWC on StackMathQA the gap turns negative again at the largest budget, 2{,}560 TPR.",
+   "true_statement": "replay 和 EWC 能减少遗忘，并可把交叉点推后（Alpaca 和 StackMathQA 上从 80 推到 320 TPR），但大预算下 AdamW 前沿仍在所有数据集上更优。唯一例外是 EWC 下的 StackMathQA，在 2,560 TPR 时 gap 重新转负。"
+  },
+  {
+   "i": 6,
+   "statement": "线性记忆多步训练中，MSR 比值越过 1 的数据预算 γ* 随维度 d 增大而前移：d=64 时约 9.9，d=512 时降到约 4.0。",
+   "truth": false,
+   "quote": "the crossing \\mathcal{R}=1 moving to larger data budgets as d grows: \\gamma^{\\ast}\\approx 4.0 , 4.4 , 5.4 and 9.9 at d=64 , 128 , 256 and 512 .",
+   "true_statement": "线性记忆多步训练中，MSR 比值越过 1 的数据预算 γ* 随维度 d 增大而后移：d=64、128、256、512 时 γ* 分别约为 4.0、4.4、5.4、9.9。"
+  }
+ ],
+ "review_excerpt": "Main result: Pretraining data scale reverses the Muon–AdamW fine-tuning gap. We compare the fine-tuning gap for AdamW and Muon at different pretraining data budgets in the lowest-pretraining-loss setting, using StackMathQA as the fine-tuning dataset (Figure 3a). At small pretraining data budgets ( 9.6 B tokens), Muon Pareto-dominates AdamW (Figure 1) and the fine-tuning gap is negative. At larger pretraining data budgets, this trend reverses: beyond 2.4 B tokens, AdamW achieves lower fine-tuning loss with less forgetting than Muon. The trend also holds in the best-frontier setting (Figure 12), and for additional fine-tuning datasets in Appendix D.\nAs model size scales, AdamW surpasses Muon at progressively smaller data budgets. We find that the crossover TPR decreases with model size. On StackMathQA, the crossover is 320 TPR for 30M models but only 10 TPR for 600M models (Figure 2). The specific crossover TPR depends on the fine-tuning dataset, but the broader trend persists; as model size grows, the crossover TPR decreases, and Muon’s advantage reverses with substantially smaller data budgets.\nWe hypothesize that in the lowest-pretraining-loss setting, this scaling trend is driven by two factors: Muon’s shrinking pretraining loss advantage and increased degradation relative to AdamW (Figure 3b,c). For each optimizer and model size, we compare its base pretraining loss and its degradation \\mathcal{L}_{\\mathrm{PT}}(\\theta_{\\mathrm{FT}})-\\mathcal{L}_{\\mathrm{PT}}(\\theta_{\\mathrm{PT}}) , after fine-tuning on StackMathQA. First, for a fixed TPR, the gap in pretraining loss between Muon and AdamW shrinks as model size increases, reducing Muon’s advantage as a lower-loss base model. Additionally, for a fixed TPR and fine-tuning loss, Muon forgets increasingly more than AdamW as model size grows. Consequently, as model size scales, Muon’s pretraining advantage over AdamW narrows, while its forgetting relative to AdamW increases, enabling AdamW to overtake Muon at progressively smaller data budgets. This establishes that Muon’s orthogonalized update causally induces forgetting, and the reversal will therefore hold at every model scale and for every fine-tuning distribution.\nSetup. Springer et al. (2025) show that adding isotropic Gaussian noise to pretrained weights reproduces key empirical trends in forgetting after fine-tuning. Motivated by this connection, we study Gaussian weight perturbations as a simpler setting in which to investigate why the learning–forgetting gap between Muon and AdamW changes with pretraining budget. At the same checkpoints as in Section 3, we add isotropic Gaussian noise to each weight matrix, scaled to a fraction \\delta of the matrix’s norm, and measure the loss increase \\Delta_{\\mathrm{noise}}(\\theta_{\\mathrm{PT}};\\delta):=\\mathcal{L}_{\\mathrm{PT}}(\\widetilde{\\theta}_{\\delta})-\\mathcal{L}_{\\mathrm{PT}}(\\theta_{\\mathrm{PT}}) , where \\widetilde{\\theta}_{\\delta} denotes the perturbed weights; a smaller increase indicates greater perturbation robustness. See Section E.2 for full experimental details.\nLanguage models. We measure MSR as in Section 4.3 and degradation by the held-out loss increase of Section B.1.1. The robustness threshold \\delta^{\\ast} is the perturbation magnitude at which this increase reaches \\Delta L nats. Across checkpoints, \\rho and \\delta^{\\ast} are strongly correlated for both \\Delta L=0.05 and 0.1 (Figure 7b): the Spearman correlation over the 72 checkpoints is +0.83 at both thresholds, and within each optimizer it is +0.87 to +0.89 for AdamW and +0.92 to +0.93 for Muon. Full experimental details appear in Section E.3.\nSpringer et al. (2025) and Zhou & Kumar (2024) show that adding isotropic Gaussian noise to pretrained weights reproduces key empirical trends in forgetting after fine-tuning. [伪造文献：Zhou, H. & Kumar, R. (2024). Gaussian Weight Noise as a Proxy for Catastrophic Forgetting in Language Models.]",
+ "planted": [
+  {
+   "kind": "number",
+   "original": "At small pretraining data budgets ( 2.4 B tokens), Muon Pareto-dominates AdamW (Figure 1) and the fine-tuning gap is negative.",
+   "changed": "At small pretraining data budgets ( 9.6 B tokens), Muon Pareto-dominates AdamW (Figure 1) and the fine-tuning gap is negative.",
+   "why_wrong": "同段下一句写的是 beyond 2.4 B tokens, AdamW achieves lower fine-tuning loss with less forgetting than Muon。若 9.6B 时仍是 Muon 占优，就和 2.4B 之后 AdamW 已占优自相矛盾。原文图 1 也写明 At 2.4 B tokens, Muon’s frontier dominates AdamW’s。"
+  },
+  {
+   "kind": "overclaim",
+   "original": "Consequently, as model size scales, Muon’s pretraining advantage over AdamW narrows, while its forgetting relative to AdamW increases, enabling AdamW to overtake Muon at progressively smaller data budgets.",
+   "changed": "Consequently, as model size scales, Muon’s pretraining advantage over AdamW narrows, while its forgetting relative to AdamW increases, enabling AdamW to overtake Muon at progressively smaller data budgets. This establishes that Muon’s orthogonalized update causally induces forgetting, and the reversal will therefore hold at every model scale and for every fine-tuning distribution.",
+   "why_wrong": "本段开头作者只说 We hypothesize，属于假设而非因果证明。实验只覆盖 30M–600M 和四个微调集。结论部分还明确写道 We do not necessarily expect this for every fine-tuning distribution；附录 D.4 中 EWC 下的 StackMathQA 在 2,560 TPR 时 gap 重新转负。新增句子把相关性假设夸大成了普适因果结论。"
+  },
+  {
+   "kind": "fake_reference",
+   "original": "Springer et al. (2025) show that adding isotropic Gaussian noise to pretrained weights reproduces key empirical trends in forgetting after fine-tuning.",
+   "changed": "Springer et al. (2025) and Zhou & Kumar (2024) show that adding isotropic Gaussian noise to pretrained weights reproduces key empirical trends in forgetting after fine-tuning. [伪造文献：Zhou, H. & Kumar, R. (2024). Gaussian Weight Noise as a Proxy for Catastrophic Forgetting in Language Models.]",
+   "why_wrong": "原文参考文献列表中没有 Zhou & Kumar (2024)。原文在正文和相关工作中把高斯扰动与微调遗忘的联系只归于 Springer et al. (2025)，即 Overtrained language models are harder to fine-tune。读者核对参考文献列表即可发现该条目不存在。"
+  }
+ ],
+ "check": {
+  "props": [
+   {
+    "i": 1,
+    "verdict": "supported",
+    "quote": "On StackMathQA, the crossover is 320 TPR for 30M models but only 10 TPR for 600M models (Figure 2).",
+    "label_ok": true
+   },
+   {
+    "i": 2,
+    "verdict": "supported",
+    "quote": "Figure 9 shows that the loss-optimal Muon model reaches a lower pretraining loss than its AdamW counterpart at every budget and model size, so the reversal is not inherited from pretraining loss.",
+    "label_ok": true
+   },
+   {
+    "i": 3,
+    "verdict": "supported",
+    "quote": "The bottom row runs the same comparison against the AdamW surrogate: its \\mathcal{R} has the same shape but reaches only 0.93 at \\gamma=64 , so over the data budgets we ran the one-step reversal is a statement about GD, not about AdamW.",
+    "label_ok": true
+   },
+   {
+    "i": 4,
+    "verdict": "contradicted",
+    "quote": "First, the fine-tuning optimizer matters for AdamW-pretrained models but not for Muon-pretrained ones: on AdamW-pretrained models, AdamW fine-tuning dominates Muon fine-tuning at every budget, whereas the two frontiers of a Muon-pretrained model lie close together with no consistent winner.",
+    "label_ok": true
+   },
+   {
+    "i": 5,
+    "verdict": "contradicted",
+    "quote": "Both regularizers reduce forgetting and can move the crossover to larger budgets ... but AdamW’s frontier is better at large budgets on every dataset under both (Figure 18), with one exception: under EWC on StackMathQA the gap turns negative again at the largest budget, 2{,}560 TPR.",
+    "label_ok": true
+   },
+   {
+    "i": 6,
+    "verdict": "contradicted",
+    "quote": "\\gamma^*\\approx 4.0 , 4.4 , 5.4 and 9.9 at d=64 , 128 , 256 and 512 .",
+    "label_ok": true
+   }
+  ],
+  "brief_leaks": [],
+  "planted_ok": [
+   {
+    "i": 1,
+    "ok": true,
+    "note": "原文指出在 small pretraining data budgets (2.4 B tokens) 时 Muon 占优，而非 9.6 B。"
+   },
+   {
+    "i": 2,
+    "ok": true,
+    "note": "原文明确表示 'We do not necessarily expect this for every fine-tuning distribution'，且未声称证明了因果性（causally induces），仅提出了假设和理论解释。"
+   },
+   {
+    "i": 3,
+    "ok": true,
+    "note": "原文只引用了 Springer et al. (2025)，未提及 Zhou & Kumar (2024) 或其伪造的文献。"
+   }
+  ]
+ },
+ "design_key_full": {
+  "question": "预训练数据量和模型规模变化时，Muon 相对 AdamW 在预训练损失上的优势，能否延续到微调后的学习–遗忘权衡？如果不能，可以用什么机制解释？",
+  "independent": [
+   "预训练优化器（AdamW vs Muon）",
+   "预训练数据量（token–parameter ratio, TPR，5–2,560）",
+   "模型规模（30M、60M、100M、300M、600M）",
+   "超参选择方式（lowest-pretraining-loss setting vs best-frontier setting）",
+   "微调优化器与学习率（AdamW 10^-4–10^-2，Muon 6×10^-4–2×10^-2）",
+   "附加条件：微调正则（replay、EWC）；理论模型中的数据预算 γ=N/d 与维度 d"
+  ],
+  "dependent": [
+   "学习–遗忘前沿（微调集 loss vs 留出 DCLM loss）",
+   "fine-tuning gap G_FT（带符号的前沿平均最小欧氏距离）",
+   "crossover TPR",
+   "margin-to-spread ratio（MSR）",
+   "高斯权重扰动下的 loss 增量 Δ_noise、δ*；线性记忆中的 σ_50"
+  ],
+  "baselines": [
+   "AdamW 预训练模型（标准优化器基线）",
+   "线性联想记忆中的全批量梯度下降（GD），用作 AdamW 的可解析替身",
+   "一步分析中额外记录的 AdamW 首步（sign）替身"
+  ],
+  "data": [
+   "预训练：DCLM",
+   "微调：GSM8K、StackMathQA、Alpaca、MusicPile",
+   "理论/仿真：高斯键值线性联想记忆（多步实验使用 Zipf 查询分布）"
+  ],
+  "scale": "OLMo 风格 30M–600M 模型，预训练 150M–154B DCLM tokens；共约 600 次预训练、29,000 次微调；每次微调 20M tokens（约 305 步）。语言模型实验原文未报告重复次数（随机种子数）；高斯扰动每个检查点取 3 次噪声抽样平均；线性记忆一步实验 d=512、每个预算 5 个种子；多步实验 T=10^4 步、3 个种子。",
+  "evidence": [
+   "we pretrain OLMo-style 30M–600M models (Groeneveld et al., 2024; Team OLMo et al., 2025) on 150 M to 154 B DCLM tokens",
+   "for nearly 600 pretraining runs and 29,000 fine-tuning runs in total",
+   "our budgets range from 5 to 2{,}560 TPR",
+   "we define as the signed mean minimum Euclidean distance between the AdamW and Muon frontier",
+   "Each base model is fine-tuned for 20M tokens on each of Alpaca (Taori et al., 2023), GSM8K (Cobbe et al., 2021), MusicPile (Yuan et al., 2024) and StackMathQA (Zhang, 2024)",
+   "We average over three noise draws per checkpoint and magnitude",
+   "five random seeds per data budget",
+   "We train the linear memory for T=10^{4} full-batch steps from W_{0}=0 at constant learning rates across three seeds."
+  ]
+ }
+}

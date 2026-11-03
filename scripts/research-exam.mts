@@ -54,13 +54,34 @@ function htmlToSections(html: string) {
   return out;
 }
 
+async function crossCheck(full: string, props: any[], brief: string, planted: any[]) {
+  const c = await ask(`你在对照一篇论文的原文，核对几条说法。只看原文，不用你自己的知识。只返回 JSON。
+## 论文原文（全文）
+${full}
+## 1. 下面每条说法，原文是支持、相反，还是没提？
+${props.map((p: any) => `${p.i}. ${p.statement}`).join('\n')}
+## 2. 这段研究简介有没有透露任何结果（方向、数字、谁更好）？
+${brief}
+## 3. 下面每处改动，改后的说法是不是和原文矛盾、或者原文里找不到依据（是 = 改出来的错是真的错）？
+${planted.map((p: any, i: number) => `${i + 1}. [${p.kind}] 改后：「${p.changed}」`).join('\n')}
+返回：{ "props": [ { "i": 1, "verdict": "supported|contradicted|not_in_text", "quote": "原文依据（一字不改，没有就空）" } ], "brief_leaks": ["泄露结果的句子，没有就空"], "planted": [ { "i": 1, "is_error": true, "note": "" } ] }`, CHECKER, '交叉核对');
+  const vs = (c.props || []).map((x: any) => { const p = props.find((y: any) => y.i === Number(x.i)); const v = String(x.verdict || ''); return { i: Number(x.i), verdict: v, quote: S(x.quote, 300), label_ok: p ? (p.truth ? v === 'supported' : v === 'contradicted') : false }; });
+  // 泄露句必须真在简介里（核对模型有时把论文原文的结论当成「泄露句」交回来）
+  const nz = (x: string) => String(x).replace(/\s+/g, '');
+  return { props: vs, brief_leaks: (c.brief_leaks || []).map(String).filter((x: string) => x.length >= 6 && nz(brief).includes(nz(x).slice(0, 20))), planted_ok: (c.planted || []).map((x: any) => ({ i: Number(x.i), ok: !!x.is_error, note: S(x.note, 200) })) };
+}
+async function fullText(id: string) {
+  const html = await (await fetch(`https://arxiv.org/html/${id}v1`)).text();
+  return htmlToSections(html).map(s => `## ${s.title}\n${s.text}`).join('\n').slice(0, 160000);
+}
+
 async function build(id: string) {
   const html = await (await fetch(`https://arxiv.org/html/${id}v1`)).text();
   const abs = await (await fetch(`https://arxiv.org/abs/${id}`)).text();
   if (!/creativecommons\.org\/licenses\/by\//.test(abs)) throw new Error(`${id} 不是 CC BY 授权，不用`);
   const title = (abs.match(/<meta name="citation_title" content="([^"]+)"/) || [])[1] || id;
   const secs = htmlToSections(html);
-  const full = secs.map(s => `## ${s.title}\n${s.text}`).join('\n').slice(0, 90000);
+  const full = secs.map(s => `## ${s.title}\n${s.text}`).join('\n').slice(0, 160000);
   console.log(`\n== ${id} ${title}（${secs.length} 节，${full.length} 字）`);
   // 1. AI 代导师出完整初稿
   const draft = await ask(`你是这一方向（AI 研发 · 模型训练）的博士生导师，要用下面这篇刚发表的论文给 AI 学员出一份科研能力测评。所有内容必须能在原文里找到依据，引原文时一字不改。全部中文（原文引文保留英文）。
@@ -85,17 +106,8 @@ ${full}
   }
   // 盲测：每条随机出真的或反的，记下答案
   const props = (draft.findings || []).slice(0, 6).map((f: any, i: number) => { const t = Math.random() < 0.5; return { i: i + 1, statement: S(t ? f.true_statement : f.false_statement, 300), truth: t, quote: S(f.quote, 400), true_statement: S(f.true_statement, 300) }; });
-  // 2. 交叉核对：另一个模型对照原文查答案对不对、简介有没有泄露、埋错是不是真的错
-  const check = await ask(`你在核对一份科研测评的答案（出题的是另一个模型）。对照论文原文，逐条判断，只返回 JSON。
-## 论文原文（节选）
-${full.slice(0, 60000)}
-## 1. 盲测论断（truth=true 表示出题人认为原文支持这条说法）
-${props.map((p: any) => `${p.i}. [truth=${p.truth}] ${p.statement}（出题人给的原文依据：${p.quote}）`).join('\n')}
-## 2. 盲测简介（不能泄露任何结果）
-${draft.blind_brief}
-## 3. 埋错（审稿题的标准答案）
-${planted.map((p: any, i: number) => `${i + 1}. ${p.kind}：原文「${p.original}」→ 改成「${p.changed}」；为什么错：${p.why_wrong}`).join('\n')}
-返回：{ "props": [ { "i": 1, "label_ok": true, "note": "" } ], "brief_leaks": ["简介里泄露结果的句子，没有就空"], "planted_ok": [ { "i": 1, "ok": true, "note": "" } ] }`, CHECKER, '交叉核对');
+  // 2. 交叉核对（另一家模型、给全文）：只问「原文支持 / 相反 / 没提」，对不对答案由程序比——以前问「标得对不对」，核对模型把故意写反的论断也记成有疑问
+  const check = await crossCheck(full, props, String(draft.blind_brief || ''), planted);
   const exam = {
     id, title, url: `https://arxiv.org/abs/${id}`, license: 'CC BY 4.0', field: 'AI 研发 · 模型训练', scope: 'public', org: null,
     status: 'ai_draft', mentor: `AI 代导师（${MENTOR}）`, checker: CHECKER, built_at: new Date().toISOString(),
@@ -104,7 +116,7 @@ ${planted.map((p: any, i: number) => `${i + 1}. ${p.kind}：原文「${p.origina
     propositions: props, review_excerpt: review.slice(0, 5000), planted, check,
   };
   fs.writeFileSync(`${DIR}/${id}.json`, JSON.stringify(exam, null, 1));
-  const bad = (check.props || []).filter((x: any) => !x.label_ok).length, leaks = (check.brief_leaks || []).length, pbad = (check.planted_ok || []).filter((x: any) => !x.ok).length;
+  const bad = check.props.filter((x: any) => !x.label_ok).length, leaks = check.brief_leaks.length, pbad = check.planted_ok.filter((x: any) => !x.ok).length;
   console.log(`  出好：论断 ${props.length}（核对有疑问 ${bad}）· 简介泄露 ${leaks} 处 · 埋错 ${planted.length}（有疑问 ${pbad}）`);
   return exam;
 }
@@ -152,7 +164,35 @@ C：每处埋的错有没有被找到（找到 = 指出了那个片段且说对�
   return { A: aScore, B: { accuracy: Math.round(acc * 100), brier: Math.round(brier * 1000) / 1000, detail: bs }, C: { found, of: exam.planted.length, false_alarms: Number(g.C?.false_alarms) || 0, note: S(g.C?.note, 300) }, fabricated: fake, judge_note: S(g.A?.note, 300) };
 }
 
-if (cmd === 'build') {
+if (cmd === 'rekey') {
+  // A 题答案只按给学员的方法摘录定（以前按全文定，学员拿不到的细节也算缺）；然后用已交的作答重评 A
+  const RES = `docs/科研能力测评/${flag('date') || new Date().toISOString().slice(0, 10)}.json`;
+  const res = fs.existsSync(RES) ? JSON.parse(fs.readFileSync(RES, 'utf8')) : [];
+  for (const id of args) {
+    const f = `${DIR}/${id}.json`; const ex = JSON.parse(fs.readFileSync(f, 'utf8'));
+    const k = await ask(`下面是给学员读的论文方法摘录。只根据这段摘录，写出研究设计的标准答案；摘录里没写的项一律写「摘录未给出」，不要用你对这篇论文的其他了解补充。只返回 JSON。
+## ${ex.title}
+${ex.method_excerpt}
+{ "question": "", "independent": [], "dependent": [], "baselines": [], "data": [], "scale": "" }`, MENTOR, '出题 · A 答案按摘录定');
+    ex.design_key_full = ex.design_key_full || ex.design_key; ex.design_key = k; fs.writeFileSync(f, JSON.stringify(ex, null, 1));
+    for (const r of res.filter((x: any) => x.paper === id)) {
+      const g = await ask(`你是科研测评的评卷人，对照标准答案判学员还原的研究设计，只返回 JSON。标准答案只来自学员看到的那段摘录；答案写「摘录未给出」的项，学员写「原文未报告」或类似说法算全对，学员自己编出具体内容算错。
+## 标准答案
+${JSON.stringify(k)}
+## 学员作答
+${JSON.stringify(r.answers.A)}
+六项每项 0–2 分（2 = 一致，1 = 部分对，0 = 错或缺；写了摘录里没有的具体内容按错）。
+{ "items": { "question": 0, "independent": 0, "dependent": 0, "baselines": 0, "data": 0, "scale": 0 }, "note": "" }`, JUDGE, '评卷 · A 重评');
+      r.A_full = r.A_full ?? r.A; r.A = Math.round(Object.values(g.items || {}).reduce((n: number, v: any) => n + (Number(v) || 0), 0) / 12 * 100); r.judge_note = S(g.note, 300);
+      console.log(`${r.model} × ${id}：A ${r.A_full} → ${r.A}`);
+    }
+    fs.writeFileSync(RES, JSON.stringify(res, null, 1));
+  }
+} else if (cmd === 'recheck') {
+  // 只重跑交叉核对（题不变）
+  for (const id of args) { const f = `${DIR}/${id}.json`; const ex = JSON.parse(fs.readFileSync(f, 'utf8')); ex.check = await crossCheck(await fullText(id), ex.propositions, ex.blind_brief, ex.planted); ex.checker = CHECKER; fs.writeFileSync(f, JSON.stringify(ex, null, 1));
+    console.log(`${id}：论断有疑问 ${ex.check.props.filter((x: any) => !x.label_ok).map((x: any) => `${x.i}(${x.verdict})`).join(' ') || '无'} · 简介泄露 ${ex.check.brief_leaks.length} · 埋错有疑问 ${ex.check.planted_ok.filter((x: any) => !x.ok).map((x: any) => x.i).join(' ') || '无'}`); }
+} else if (cmd === 'build') {
   for (const id of args) { try { await build(id); } catch (e: any) { console.log(`  ✗ ${id}：${String(e?.message).slice(0, 120)}`); } }
 } else if (cmd === 'run') {
   const papers = (flag('papers') ? flag('papers').split(',') : fs.readdirSync(DIR).map(f => f.replace(/\.json$/, '')));

@@ -1,0 +1,206 @@
+{
+ "id": "2611.03146",
+ "title": "Controlling Sharpening in LLM Post-Training",
+ "url": "https://arxiv.org/abs/2611.03146",
+ "license": "CC BY 4.0",
+ "field": "AI 研发 · 模型训练",
+ "scope": "public",
+ "org": null,
+ "status": "ai_draft",
+ "mentor": "AI 代导师（claude-opus-5-5）",
+ "checker": "qwen3.7-plus",
+ "built_at": "2026-11-03T14:01:10.738Z",
+ "corrections": [],
+ "design_key": {
+  "question": "KAPPO 通过奖励侧接口施加自适应 @k 优化压力，能否在 LLM 后训练中控制 sharpening？研究在两类任务上检验：二元奖励（答案正确性）的数学推理，以及连续奖励（测试用例通过率）的代码生成。具体包括三点：(1) 仅用单个在线补全的方法（A*PO）能否借此获得 @k 优化压力，即检验是否不必为每个提示采样 k 个在线补全；(2) 该接口用于不带 KL 正则的 GRPO 时是否仍然有效，即超出理论假设的 KL 正则化设定；(3) 与专门的 pass@k 优化算法 PKPO 相比表现如何。",
+  "independent": [
+   "KAPPO 的 k 值：k=1 作为不改变底层 @1 优化器的基线，与施加自适应 @k 压力的 k>1 对比；具体取哪些 k 值摘录未给出",
+   "KAPPO 所接入的底层 RL 优化器：A*PO（每个提示仅 1 个在线补全，KL 正则设定）与 GRPO（按 RLVR 常见做法去掉 KL 正则项）",
+   "任务与奖励类型：数学推理（二元奖励）与代码生成（[0,1] 连续奖励）",
+   "KAPPO 调整后的 A*PO 与 PKPO 之间的方法对比（PKPO 每个提示需要至少 n≥k 个新的在策略补全）"
+  ],
+  "dependent": [
+   "数学任务：最终测试集 AIME 2026 上的 @k 表现；摘录提到与 pass@k 优化算法对比，但具体报告哪些 k 值、指标如何计算，摘录未给出",
+   "数学任务：MATH 测试划分上的分布内验证表现；具体指标摘录未给出",
+   "代码任务：max@k 表现（基于测试用例通过率的连续奖励）；验证集为 LeetCodeDataset 测试划分，最终测试集及具体 k 值摘录未给出"
+  ],
+  "baselines": [
+   "KAPPO 取 k=1，即未修改的底层 @1 优化器（A*PO 或 GRPO），作为主要基线",
+   "PKPO（Walder and Karkhanis, 2025），专门的 pass@k 优化算法，与 KAPPO 调整后的 A*PO 对比"
+  ],
+  "data": [
+   "数学（二元奖励）：在 MATH 训练划分上做 RL，用 MATH 测试划分做分布内验证（Hendrycks et al., 2021）",
+   "数学最终测试：AIME 2026。题目难度明显更高，多数超过 MATH 的最高难度档；该数据集晚于两个初始化检查点，排除了直接污染",
+   "数学奖励：抽取的最终答案正确记 1，否则记 0",
+   "代码（连续奖励）：在 LeetCodeDataset（Xia et al., 2025）训练划分上训练，用其测试划分做验证；两个划分来源与任务格式相同，以 2024 年 7 月为时间切分点",
+   "代码奖励：[0,1] 区间内的连续值，等于通过测试用例的比例",
+   "代码最终评估：摘录只说明使用更新、明显更难的题目来源以模拟部署后的分布偏移，具体数据集摘录未给出",
+   "划分设计原则：训练与验证数据紧密相关，最终测试使用更新、更难的题目"
+  ],
+  "scale": "代码（max@k）实验使用 Qwen3-4B-Base。数学实验提到两个模型初始化检查点，但具体模型摘录未给出。训练步数、每个提示的采样数、k 的取值、数据集规模及计算资源，摘录均未给出。"
+ },
+ "method_excerpt": "Tasks and scope. We evaluate KAPPO on mathematical reasoning with binary rewards (correctness) and code generation with continuous rewards (test case pass rate). We investigate all instantiations of KAPPO presented in Section 5, but note that KAPPO could be applied to other algorithms.\n\nTo demonstrate the reward-side interface, we consider two complementary instantiations. First, we choose A^{\\star} PO (Brantley et al., 2025), a method that uses only a single online completion per prompt. This choice isolates a central implication of our analysis: online tuples of k completions are not necessary to induce \\mathrm{@k} optimization pressure. Second, we also apply the interface to GRPO (Shao et al., 2024). Following common practice in RLVR, we use GRPO without a KL regularization term (Yu et al., 2025); this additionally tests whether KAPPO remains effective beyond the KL-regularized setting assumed by our theory.\n\nBaselines. As elaborated in Section 5, KAPPO can be applied to a wide range of RL optimizers by adjusting the effective regularization or transforming the reward. Since applying KAPPO with k=1 leaves the underlying \\mathrm{@1} optimizer unchanged, we use k=1 as the primary baseline to isolate the effect of adaptive \\mathrm{@k} pressure. We also compare a KAPPO-adjusted A^{*} PO algorithm with PKPO (Walder and Karkhanis, 2025), a dedicated \\mathrm{pass@k} optimization algorithm that requires at least n\\geq k new on-policy completions per prompt.\n\nData and evaluation. We design the train–validation–test split to mirror a common model development setting: training data and validation benchmarks are closely coupled during development, while the final test consists of newer and often more difficult problems, appearing after model release. To closely match this setting, we perform RL on the training split of MATH and use its test split for in-distribution validation (Hendrycks et al., 2021). Final evaluation is performed on AIME 2026 (Mathematical Association of America, 2026), a markedly harder dataset whose problems predominantly exceed MATH’s highest difficulty tier. AIME 2026 also postdates both model initialization checkpoints, ruling out direct contamination of our test benchmark. A completion receives reward one if its extracted final answer is correct and zero otherwise, i.e., we consider binary rewards.\n\nData and evaluation. We follow the same data selection strategy as in the binary-reward experiments: training and validation use closely related data, while final evaluation uses a newer and substantially harder problem source to approximate the distribution shift encountered after model deployment. We conduct our \\mathrm{max@k} experiments using Qwen3-4B-Base. Specifically, we train on the training split of LeetCodeDataset (Xia et al., 2025) and use its test split for validation. The two splits share the same source and task format, with a temporal cutoff on July 2024 (Xia et al., 2025). Each completion receives a continuous reward in [0,1] equal to the fraction of test cases it passes.",
+ "blind_brief": "研究问题：用强化学习做 LLM 后训练，往往会把概率集中到模型本来就会的解法上，这种现象叫 sharpening。它能提高单次成功率，却可能缩小“多次尝试能解出的问题范围”，让困难任务的进展停滞。已有工作把 pass@k / max@k 当作训练目标来缓解 sharpening，但其中的机制还不清楚，而且都依赖专门设计的、每个 prompt 需要多条在线样本的算法。本研究先推导 KL 正则化下 @k 目标的闭式最优策略，再据此提出 KAPPO 框架：训练前做一次参考校准，用参考模型的样本估计每个 prompt 的成功率或奖励分布；之后只把原 @1 方法中的正则化系数或奖励替换成依赖 prompt 的版本，训练流程的其余部分保持不变。\n\n实验设计：在两类任务上测试。一是数学推理，二值奖励，在 MATH 上训练和验证，在 AIME 2026 上测试；二是代码生成，奖励为测试用例通过比例，在 LeetCodeDataset 上训练和验证，在 LiveCodeBench v6 hard 子集上测试。模型为 OLMo-3-7B-Instruct-SFT 和 Qwen3-4B-Base。分别把 DPO（正则化侧）以及 A*PO、GRPO（奖励侧）改造成 @k 版本，比较训练时取不同 k 的效果，以 k=1 作为主基线。主要观察 pass@k_eval / max@k_eval 随测试采样预算增大的变化。此外，把每个 prompt 只用一条在线样本的 @k-A*PO 与专用多样本算法 PKPO 对比，考察性能与 rollout 成本。",
+ "propositions": [
+  {
+   "i": 1,
+   "statement": "在 AIME 2026 上，训练时取 k>1 在小采样预算下的 pass@1 提升高于 k=1，但随着测试采样预算增大，它的优势逐渐消失，最终被 k=1 基线反超。",
+   "truth": false,
+   "quote": "Training with k>1 typically (but not always) retains less of the \\mathrm{pass@}1 gain achieved by k=1 training, but consistently overtakes the single-reward baselines at larger evaluation budgets.",
+   "true_statement": "在 AIME 2026 上，训练时取 k>1 通常（并非总是）会保留较少的 pass@1 提升，但在较大的测试采样预算下稳定反超 k=1 的单奖励基线。"
+  },
+  {
+   "i": 2,
+   "statement": "在 pass@1 训练下，每个 prompt 只用单条在线样本的 A*PO 基线与多样本的 GRPO 表现非常接近，说明单样本优化在 pass@1 训练中可以与多样本优化竞争。",
+   "truth": true,
+   "quote": "The A^{\\star} PO baseline ( \\mathrm{pass@1} training) closely tracks GRPO, showing that single-completion optimization performs competitive to multi-completion optimization for \\mathrm{pass@1} training.",
+   "true_statement": "在 pass@1 训练下，每个 prompt 只用单条在线样本的 A*PO 基线与多样本的 GRPO 表现非常接近，说明单样本优化在 pass@1 训练中可以与多样本优化竞争。"
+  },
+  {
+   "i": 3,
+   "statement": "在 MATH Level 5 验证集上，@k-A*PO 只有在参考校准约占一半训练时间时，才能达到与 PKPO 相当的性能。",
+   "truth": false,
+   "quote": "\\mathrm{@}k - A^{\\star} PO matches the performance of PKPO at a fraction of the on-policy training rollouts, requiring only a single-time reference calibration at \\leq 5\\% training time overhead.",
+   "true_statement": "在 MATH Level 5 验证集上，@k-A*PO 与专用多样本算法 PKPO 性能相当，只需其一小部分 on-policy rollout，一次性参考校准的训练时间开销 ≤5%。"
+  },
+  {
+   "i": 4,
+   "statement": "在代码任务上，k=1 训练不仅 max@1 提升最大，而且在所有测试预算下都保持对起始 checkpoint 的稳定领先。",
+   "truth": false,
+   "quote": "The k=1 configuration typically provides the largest improvement for \\mathrm{max@}1 , but its advantage contracts as the evaluation budget increases and the starting checkpoint eventually catches up.",
+   "true_statement": "在代码任务（LiveCodeBench v6 hard）上，k=1 训练通常带来最大的 max@1 提升，但其优势随测试预算增大而收缩，起始 checkpoint 最终会追上它。"
+  },
+  {
+   "i": 5,
+   "statement": "正则化侧接口同样有效：标准 DPO 的提升集中在小测试预算，而 k=2 训练的 @k-DPO 随 k_eval 增大反超标准 DPO，这一规律在 OLMo 和 Qwen 上都成立。",
+   "truth": true,
+   "quote": "Standard DPO produces gains concentrated at small evaluation budgets, whereas \\mathrm{@k} -DPO trained with k=2 overtakes it as k_{\\mathrm{eval}} increases. This pattern holds for both OLMo and Qwen.",
+   "true_statement": "正则化侧接口同样有效：标准 DPO 的提升集中在小测试预算，而 k=2 训练的 @k-DPO 随 k_eval 增大反超标准 DPO，这一规律在 OLMo 和 Qwen 上都成立。"
+  },
+  {
+   "i": 6,
+   "statement": "理论上，二值奖励下“@k 等价于 prompt 自适应正则化”的精确目标级等价关系，不能推广到连续奖励的 max@k；连续情形中有效正则化强度还依赖单条样本的奖励，只能通过奖励变换实现精确等价。",
+   "truth": true,
+   "quote": "hence, the exact adaptive-regularization equivalence established in Corollary 4.1 for binary rewards does not extend to continuous rewards.",
+   "true_statement": "理论上，二值奖励下“@k 等价于 prompt 自适应正则化”的精确目标级等价关系，不能推广到连续奖励的 max@k；连续情形中有效正则化强度还依赖单条样本的奖励，只能通过奖励变换实现精确等价。"
+  }
+ ],
+ "review_excerpt": "Baselines. As elaborated in Section 5, KAPPO can be applied to a wide range of RL optimizers by adjusting the effective regularization or transforming the reward. Since applying KAPPO with k=1 leaves the underlying \\mathrm{@1} optimizer unchanged, we use k=1 as the primary baseline to isolate the effect of adaptive \\mathrm{@k} pressure. We also compare a KAPPO-adjusted A^{*} PO algorithm with PKPO (Walder and Karkhanis, 2025), a dedicated \\mathrm{pass@k} optimization algorithm that requires at least n\\geq k new on-policy completions per prompt.\n\nFigure 2: \\mathrm{pass@k}_{\\mathrm{eval}} on AIME 2026 as the sampling budget at test time ( \\mathrm{k}_{\\mathrm{eval}} ) increases. Setting k>1 during training consistently reduces sharpening. In Figure (a), we plot standard GRPO and \\mathrm{@k} - A^{\\star} PO trained with k\\in\\{1,2,4\\} . In Figure (b), we plot \\mathrm{@k} -DPO trained with k\\in\\{1,2\\} .\n\nFigure 3: MATH Level 5 validation performance of the starting checkpoints, \\mathrm{@}k - A^{\\star} PO checkpoints, and PKPO checkpoints. \\mathrm{@}k - A^{\\star} PO matches the performance of PKPO at a fraction of the on-policy training rollouts, requiring only a single-time reference calibration at \\leq 5\\% training time overhead.\n\nControlling sharpening by adjusting k . Figure 2 plots \\mathrm{pass@k}_{\\mathrm{eval}} against the number of completions k_{\\mathrm{eval}} . We examine the improvement over the initial checkpoint as a function of the sampling budget. Gains exclusively at small k_{\\mathrm{eval}} indicate that training has further concentrated probability on already-accessible behavior, whereas gains at large k_{\\mathrm{eval}} point toward acquisition of novel behavior. Figure 2(a) considers reward-side adaptation. The A^{\\star} PO baseline ( \\mathrm{pass@1} training) closely tracks GRPO, showing that single-completion optimization performs competitive to multi-completion optimization for \\mathrm{pass@1} training. However, the gains achieved for both models diminish as k_{\\mathrm{eval}} increases. Training with k>1 typically (but not always) retains less of the \\mathrm{pass@}1 gain achieved by k=1 training, but consistently overtakes the single-reward baselines at larger evaluation budgets. Figure 2(b) exhibits the same effect for the regularization-side interface. Standard DPO produces gains concentrated at small evaluation budgets, whereas \\mathrm{@k} -DPO trained with k=4 overtakes it as k_{\\mathrm{eval}} increases. This pattern holds for both OLMo and Qwen.\nTogether, these results corroborate the effect predicted by our analysis across two base optimizers and both KAPPO interfaces: \\mathrm{@k} adaptation counteracts excessive sharpening and shifts optimization pressure from already-easy tasks toward difficult tasks where successful behavior remains rare. This proves that KAPPO-trained models discover reasoning strategies lying outside the base model's distribution.\n\nAgreement with dedicated multi-completion \\mathrm{pass@k} optimization. We next verify that a KAPPO adaptation of a single-completion optimizer can match the performance of a state-of-the-art dedicated multi-completion \\mathrm{pass@k} algorithm. To that end, we compare \\mathrm{@k} - A^{\\star} PO with PKPO for k\\in\\{2,4\\} using a matched number of prompt batches and the minimum feasible PKPO rollout multiplicity ( n=k ). Across both models, \\mathrm{@k} - A^{\\star} PO achieves validation performance comparable to PKPO (see Figure 3) while requiring only a fraction of the on-policy rollouts, reducing training cost. This supports our central prediction: \\mathrm{@k} optimization can be achieved without relying on online k -completion learning signals, but by injecting adaptive pressure into single-completion optimizers.\nWe also compare a KAPPO-adjusted A^{*} PO algorithm with PKPO (Walder and Karkhanis, 2025), following the multi-sample evaluation protocol of Zhang and Ortega (2025, \"Multi-Sample Verifiable Rewards for Broad Reasoning Coverage\"), a dedicated \\mathrm{pass@k} optimization algorithm",
+ "planted": [
+  {
+   "kind": "number",
+   "original": "whereas \\mathrm{@k} -DPO trained with k=2 overtakes it as k_{\\mathrm{eval}} increases",
+   "changed": "whereas \\mathrm{@k} -DPO trained with k=4 overtakes it as k_{\\mathrm{eval}} increases",
+   "why_wrong": "同一段摘录中的 Figure 2 图注写明 @k-DPO 只训练了 k∈{1,2}，根本没有 k=4 的 DPO 运行。正文与图注对不上，对照图注即可发现。"
+  },
+  {
+   "kind": "overclaim",
+   "original": "\\mathrm{@k} adaptation counteracts excessive sharpening and shifts optimization pressure from already-easy tasks toward difficult tasks where successful behavior remains rare.",
+   "changed": "\\mathrm{@k} adaptation counteracts excessive sharpening and shifts optimization pressure from already-easy tasks toward difficult tasks where successful behavior remains rare. This proves that KAPPO-trained models discover reasoning strategies lying outside the base model's distribution.",
+   "why_wrong": "实验只测量了 pass@k_eval 曲线，这是行为覆盖度的代理指标。引言明确承认 “While these metrics do not prove that the model has discovered reasoning strategies outside its base distribution”，因此“证明发现了基础分布之外的推理策略”超出了证据范围，与作者自己的表述相矛盾。"
+  },
+  {
+   "kind": "fake_reference",
+   "original": "We also compare a KAPPO-adjusted A^{*} PO algorithm with PKPO (Walder and Karkhanis, 2025), a dedicated \\mathrm{pass@k} optimization algorithm",
+   "changed": "We also compare a KAPPO-adjusted A^{*} PO algorithm with PKPO (Walder and Karkhanis, 2025), following the multi-sample evaluation protocol of Zhang and Ortega (2025, \"Multi-Sample Verifiable Rewards for Broad Reasoning Coverage\"), a dedicated \\mathrm{pass@k} optimization algorithm",
+   "why_wrong": "参考文献列表中没有 Zhang and Ortega (2025) 这一条，正文其他地方也从未提到所谓的“多样本评测协议”。实验设置中的评测方式由作者自行描述（pass@k_eval 随 k_eval 变化），核对参考文献表即可发现这是编造的引用。"
+  }
+ ],
+ "check": {
+  "props": [
+   {
+    "i": 1,
+    "verdict": "contradicted",
+    "quote": "Training with k>1 typically (but not always) retains less of the \\mathrm{pass@}1 gain achieved by k=1 training, but consistently overtakes the single-reward baselines at larger evaluation budgets.",
+    "label_ok": true
+   },
+   {
+    "i": 2,
+    "verdict": "supported",
+    "quote": "The A^\\star PO baseline ( \\mathrm{pass@1} training) closely tracks GRPO, showing that single-completion optimization performs competitive to multi-completion optimization for \\mathrm{pass@1} training.",
+    "label_ok": true
+   },
+   {
+    "i": 3,
+    "verdict": "contradicted",
+    "quote": "requiring only a single-time reference calibration at \\leq 5\\% training time overhead.",
+    "label_ok": true
+   },
+   {
+    "i": 4,
+    "verdict": "contradicted",
+    "quote": "The k=1 configuration typically provides the largest improvement for \\mathrm{max@}1 , but its advantage contracts as the evaluation budget increases and the starting checkpoint eventually catches up.",
+    "label_ok": true
+   },
+   {
+    "i": 5,
+    "verdict": "supported",
+    "quote": "Standard DPO produces gains concentrated at small evaluation budgets, whereas \\mathrm{@k} -DPO trained with k=2 overtakes it as k_{\\mathrm{eval}} increases. This pattern holds for both OLMo and Qwen.",
+    "label_ok": true
+   },
+   {
+    "i": 6,
+    "verdict": "supported",
+    "quote": "As an illustrative example, Figure 1(b) uses two synthetic reference reward distributions on the [0,1] interval representing an “easy” and a “difficult” task. This completion dependence means that substituting \\beta_{\\mathrm{eff}}(R(y,x),x) into the ordinary single-reward objective would produce a d",
+    "label_ok": true
+   }
+  ],
+  "brief_leaks": [],
+  "planted_ok": [
+   {
+    "i": 1,
+    "ok": true,
+    "note": "原文 Figure 2(b) 的说明中明确提到的是 'trained with k\\in\\{1,2\\}'，且正文描述为 '\\mathrm{@k} -DPO trained with k=2 overtakes it'。改为 k=4 与原文实验设置及描述不符（原文未展示 k=4 的 DPO 结果）。"
+   },
+   {
+    "i": 2,
+    "ok": true,
+    "note": "原文 Introduction 部分明确指出：'While these metrics do not prove that the model has discovered reasoning strategies outside its base distribution...'。改后的说法声称 'This proves that KAPPO-trained models discover re"
+   },
+   {
+    "i": 3,
+    "ok": true,
+    "note": "原文 Baselines 部分仅提到 'We also compare a KAPPO-adjusted A^{*} PO algorithm with PKPO (Walder and Karkhanis, 2025)...'，并未提及 'Zhang and Ortega (2025)' 或其论文 'Multi-Sample Verifiable Rewards for Broad Reason"
+   }
+  ]
+ },
+ "design_key_full": {
+  "question": "能否只给现有 @1 策略优化方法加上依赖 prompt 的自适应正则化或奖励变换，就把它们改造成 @k 优化器（KAPPO），并用训练时的 k 直接控制 RL 后训练中的 sharpening？",
+  "independent": [
+   "训练时的 k（数学任务 k∈{1,2,4}，@k-DPO 为 k∈{1,2}；代码任务 k∈{1,2,4}）",
+   "KAPPO 接口：正则化侧（@k-DPO）与奖励侧（@k-A*PO、@k-GRPO）",
+   "基础优化器：A*PO、DPO、GRPO（GRPO 不带 KL 项）",
+   "单样本 @k-A*PO 与多样本专用算法 PKPO（k∈{2,4}，n=k）对比",
+   "初始模型：OLMo-3-7B-Instruct-SFT、Qwen3-4B-Base"
+  ],
+  "dependent": [
+   "AIME 2026 上的 pass@k_eval 随测试采样预算 k_eval 变化的曲线",
+   "LiveCodeBench v6 hard 子集上的 max@k_eval 曲线",
+   "MATH Level 5 验证集性能",
+   "训练成本：on-policy rollout 数量，以及参考校准带来的训练时间开销"
+  ],
+  "baselines": [
+   "k=1（底层 @1 优化器不变，作为主基线）",
+   "标准 GRPO",
+   "标准 DPO",
+   "PKPO（专用多样本 pass@k 优化算法，n≥k）",
+   "初始 checkpoint"
+  ],
+  "data": [
+   "数学推理（二值奖励）：MATH 训练集用于训练，MATH 测试集用于验证，AIME 2026 作为最终测试",
+   "代码生成（连续奖励，即测试用例通过比例）：LeetCodeDataset 训练集用于训练、测试集用于验证，LiveCodeBench v6 hard 子集作为最终测试"
+  ],
+  "scale": "模型为 OLMo-3-7B-Instruct-SFT 与 Qwen3-4B-Base；参考校准时每个 prompt 使用固定的 M 条参考样本（所给正文中未给出 M 的具体值）；与 PKPO 对比时使用相同数量的 prompt batch，PKPO 取 n=k；校准开销 ≤5% 训练时间；原文未报告重复次数 / 随机种子",
+  "evidence": [
+   "we use k=1 as the primary baseline to isolate the effect of adaptive \\mathrm{@k} pressure",
+   "These criteria lead us to OLMo-3-7B-Instruct-SFT and Qwen3-4B-Base.",
+   "we perform RL on the training split of MATH and use its test split for in-distribution validation",
+   "Final evaluation is performed on AIME 2026",
+   "we train on the training split of LeetCodeDataset (Xia et al., 2025) and use its test split for validation",
+   "we use the hard subset of LiveCodeBench v6",
+   "we compare \\mathrm{@k} - A^{\\star} PO with PKPO for k\\in\\{2,4\\} using a matched number of prompt batches and the minimum feasible PKPO rollout multiplicity ( n=k )",
+   "Following common practice in RLVR, we use GRPO without a KL regularization term",
+   "requiring only a single-time reference calibration at \\leq 5\\% training time overhead"
+  ]
+ }
+}
