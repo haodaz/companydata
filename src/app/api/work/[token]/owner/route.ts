@@ -1,7 +1,7 @@
 import { refreshSignals } from '@/lib/work/question-bank';
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
-import { reviseTask, runBaseline, sourcesOf } from '@/lib/work/generator';
+import { reviseTask, runBaseline, sourcesOf, withMinutes } from '@/lib/work/generator';
 import { withCost, logTokenUsage } from '@/lib/token-logger';
 import { generateContent } from '@/lib/llm-client';
 import { reviewGeneric } from '@/lib/work/compare';
@@ -33,6 +33,12 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ to
   const t = await auth(token, req);
   if (!t) return NextResponse.json({ ok: false, error: '管理链接不对' }, { status: 404 });
   const body = await req.json().catch(() => ({}));
+  // 改建议用时（20–240 分钟，题面里写的时长一起换）
+  if (body.time_minutes != null) {
+    const r = withMinutes(t.task, body.time_minutes);
+    await db.from('work_tasks').update({ task: r.task, updated_at: new Date().toISOString() }).eq('id', t.id);
+    return NextResponse.json({ ok: true, time_minutes: r.mins });
+  }
   if (!['published', 'archived'].includes(body.status)) return NextResponse.json({ ok: false, error: '状态不对' }, { status: 400 });
   await db.from('work_tasks').update({ status: body.status, updated_at: new Date().toISOString() }).eq('id', t.id);
   return NextResponse.json({ ok: true });

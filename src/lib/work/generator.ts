@@ -38,6 +38,16 @@ export interface WorkContext {
 /** 出题人是用自然语言说要什么样的人（「我要一个能看懂人工智能行业的人来做投资」），还是给了个职位名 */
 export const isNeedText = (role: string) => role.trim().length > 14 || /[，,。、]|要一个|能看懂|能把|的人/.test(role);
 
+/** 建议用时：20–240 分钟（以前出题卡 120、修订也卡 120，出任务的人说改 180 改不动，2026-11-03） */
+export const clampMinutes = (v: any, d: number) => Math.min(240, Math.max(20, Math.round(Number(v) || d)));
+/** 改建议用时：计时器用的 time_minutes 和任务书 / 规则里写的「120 分钟」「2 小时」一起换，别出现计时器和题面对不上 */
+export function withMinutes(task: any, v: any) {
+  const old = Number(task?.time_minutes) || 60, mins = clampMinutes(v, old);
+  const label = mins % 60 === 0 ? `${mins / 60} 小时` : `${mins} 分钟`;
+  const swap = (x: string) => { let y = String(x || '').replace(new RegExp(`${old}\\s*分钟`, 'g'), `${mins} 分钟`); if (old % 60 === 0) y = y.replace(new RegExp(`${old / 60}\\s*个?小时`, 'g'), label); return y; };
+  return { old, mins, task: { ...task, time_minutes: mins, brief: swap(task?.brief), rules: (task?.rules || []).map(swap) } };
+}
+
 /** 带兜底链的 JSON 调用：Opus → Sonnet → 千问；记账 tool=work */
 export async function askJson(prompt: string, model: string, task_name: string, institution?: string, extra?: Record<string, any>): Promise<any> {
   const chain = [model, ...DOMESTIC_FALLBACK.filter(m => m !== model)];
@@ -168,7 +178,10 @@ ${intro.slice(0, 6000)}
 }
 
 /** 材料渲染成给模型看的文本（每段带来源标签） */
-export function renderContext(ctx: WorkContext): string {
+/** 原题直发 / 老题的 context 没有这些数组：修订会崩、管理页打不开（2026-11-03），用前补齐 */
+const normCtx = (raw: any): WorkContext => ({ company: null, occupation: null, products: [], news: [], executives: [], jobs: [], typical_tasks: [], standards: [], notes: [], ...((raw || {}) as Partial<WorkContext>) } as WorkContext);
+export function renderContext(raw: WorkContext): string {
+  const ctx = normCtx(raw);
   const L: string[] = [];
   if (ctx.company) {
     const c = ctx.company;
@@ -230,7 +243,7 @@ ${text.slice(0, 12000)}
   const task: WorkTask = {
     env: { type: envType },
     problem: { statement: `出题人给的原题${opts.company ? `（${opts.company}）` : ''}`, why_now: '', evidence: [] },
-    task: { title: s(p.title, 40) || '真活', role: opts.role || '候选人', brief: text.slice(0, 6000), deliverables: (Array.isArray(p.deliverables) ? p.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 60), format: s(d.format, 60), module: resolveModule(s(d.format, 60), d.module) })), time_minutes: Math.min(180, Math.max(20, Number(p.time_minutes) || 60)), rules: ['题目原样，不改一字', '可以随便用 AI，不算作弊；评的是你怎么用', '材料里没有的数据要标注假设'] },
+    task: { title: s(p.title, 40) || '真活', role: opts.role || '候选人', brief: text.slice(0, 6000), deliverables: (Array.isArray(p.deliverables) ? p.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 60), format: s(d.format, 60), module: resolveModule(s(d.format, 60), d.module) })), time_minutes: clampMinutes(p.time_minutes, 60), rules: ['题目原样，不改一字', '可以随便用 AI，不算作弊；评的是你怎么用', '材料里没有的数据要标注假设'] },
     // 模型拆出的材料：内容空的、或和上传附件重名的都丢掉（附件另挂）
     materials: (Array.isArray(p.materials) ? p.materials : []).filter((m: any) => String(m.content || '').trim().length >= 20 && !(opts.attachments || []).some(a => a.name && String(m.title || '').includes(a.name.replace(/\.[^.]+$/, '')))).slice(0, 6).map((m: any, i: number) => ({ id: `m${i + 1}`, title: s(m.title, 60), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, 8000), source: 'generated' as const, basis: '原题附带' })),
     rubric: (Array.isArray(p.rubric) ? p.rubric : []).slice(0, 10).map((r: any, i: number) => ({ id: r.id || `r${i + 1}`, title: s(r.title, 60), desc: s(r.desc, 300), weight: Math.max(1, Number(r.weight) || 10), depends_on: Array.isArray(r.depends_on) ? r.depends_on.map(String) : [], basis: s(r.basis, 200), levels: { L1: s(r.levels?.L1, 160), L2: s(r.levels?.L2, 160), L3: s(r.levels?.L3, 160), L4: s(r.levels?.L4, 160) } })),
@@ -296,7 +309,7 @@ env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "
 ## 要求
 - 企业是出题的客户：**企业自身的负面舆情**（监管立案、减持套现、高管离职、募资遇冷、亏损传闻）**不进 problem / why_now / 任务书**；只有候选人做这件事确实要处理它时，才在材料里作中性、带来源的一句陈述，不渲染。
 - problem.statement：一句话说清 ${name} 现在的哪个${opts.research ? '研究问题' : '业务问题'}需要「${role}」来解决，必须能从材料里推出来（${opts.research ? '研究方向 / 在研项目 / 平台 / 岗位要求' : '近期动态 / 产品 / 岗位职责 / 典型任务'}）；why_now 说为什么是现在；evidence 列 2–4 条材料原句 + 来源名。
-- task：title（8–16 字）；brief（给做题人看的任务书，300–500 字，口吻像业务负责人交代活：背景、要你做什么、交给谁、什么时候要；「交给谁」写角色（如「交给投委会」），**不要给真实人物编邮箱、电话、微信**）；deliverables 2–3 个（id d1…，title，format 如「一页纸方案 / 估值表 / 筛选脚本 / 流程图」，**module** 从 doc / sheet / code / design / canvas / board 里选：文档类 doc，表格 / 模型 / 测算表 sheet，脚本 / SQL / 函数 code，工程参数表 + 尺寸草图 design（只给结构 / 机械 / 电气这类要定尺寸的工程设计），流程图 / 泳道图 / 思维导图 / 架构图 canvas，线框图 / 界面草图 / 海报 / IP 形象 / 视觉方案这类自由画的设计 board（产品经理、UI / 视觉 / 品牌设计师用这个，不要给他们 design）——**一道题的交付物可以混用模组**，这个岗位真实工作里会交什么就交什么，别为了省事全写成文档）；time_minutes 45–90；rules 3–5 条（必须含「可以随便用 AI，不算作弊；评的是你怎么用」和「材料里没有的数据要标注假设」）。
+- task：title（8–16 字）；brief（给做题人看的任务书，300–500 字，口吻像业务负责人交代活：背景、要你做什么、交给谁、什么时候要；「交给谁」写角色（如「交给投委会」），**不要给真实人物编邮箱、电话、微信**）；deliverables 2–3 个（id d1…，title，format 如「一页纸方案 / 估值表 / 筛选脚本 / 流程图」，**module** 从 doc / sheet / code / design / canvas / board 里选：文档类 doc，表格 / 模型 / 测算表 sheet，脚本 / SQL / 函数 code，工程参数表 + 尺寸草图 design（只给结构 / 机械 / 电气这类要定尺寸的工程设计），流程图 / 泳道图 / 思维导图 / 架构图 canvas，线框图 / 界面草图 / 海报 / IP 形象 / 视觉方案这类自由画的设计 board（产品经理、UI / 视觉 / 品牌设计师用这个，不要给他们 design）——**一道题的交付物可以混用模组**，这个岗位真实工作里会交什么就交什么，别为了省事全写成文档）；time_minutes 45–90（出任务的人说了时长就照他说的，最多 240）；rules 3–5 条（必须含「可以随便用 AI，不算作弊；评的是你怎么用」和「材料里没有的数据要标注假设」）。
 - materials 3–5 份，做这件事真的会拿到的东西：kind ∈ doc/table/note/email/data；content 用 Markdown，每份 300–900 字，表格用 Markdown 表；source：db=全部来自材料、generated=为任务合理补写（必须贴近企业真实情况并在正文标「示例数据」）、mixed；basis 写它依据材料的哪一段。至少一份是「有坑」的（信息不全、口径不一致、过期），这是真活。
 ${opts.sample ? `- stages（必填，${opts.sample.stages.length} 步，和样本一一对应）：id q1…；type 同样本；question（这一步问候选人什么，一句话）；reveal（这一步才给的信息：背景、数据表、图表，Markdown，图表用 Markdown 表把数据给全，300–900 字；数据要和 materials 里的事实一致，材料没有的标「示例数据」）；expected（参考答案 / 关键结论，评卷用，候选人看不到，含关键数字）；calc（这一步要算的数：label、expr 只含数字和 + - * / ( )、value；没有测算填 []）。brief 里要告诉候选人「这道题分 ${opts.sample.stages.length} 步推进，每一步看完信息再答，答完再看下一步」，deliverables 按步骤对应。\n` : ''}- rubric 5–8 条：id r1…；title；desc（怎么算做到）；weight 加起来 100；${opts.sample ? '每一步至少对应一条（desc 里写明对应 q 几）；' : ''}depends_on 填前置条目 id（没有填 []）；basis 必须指向材料来源（「行业标准 xxx 第 n 点」「岗位职责：…」「典型任务：…」），实在没有写「出题人判断，待业务负责人确认」；levels L1–L4 各一句可观察的行为描述（BARS）。
 只返回 JSON：
@@ -315,7 +328,7 @@ ${opts.sample ? `- stages（必填，${opts.sample.stages.length} 步，和样�
   const task: WorkTask = {
     env,
     problem: { statement: s(p.problem?.statement, 400), why_now: s(p.problem?.why_now, 400), evidence: (Array.isArray(p.problem?.evidence) ? p.problem.evidence : []).slice(0, 6).map((e: any) => ({ text: s(e.text, 300), source: s(e.source, 80) })) },
-    task: { title: s(p.task?.title, 40) || `${name} · 真活`, role: need ? (s(p.task?.role, 40) || s(role, 40)) : role, brief: s(p.task?.brief, 2000), deliverables: (Array.isArray(p.task?.deliverables) ? p.task.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 60), format: s(d.format, 60), module: resolveModule(s(d.format, 60), d.module) })), time_minutes: Math.min(120, Math.max(30, Number(p.task?.time_minutes) || 60)), rules: (Array.isArray(p.task?.rules) ? p.task.rules : []).slice(0, 6).map((r: any) => s(r, 120)) },
+    task: { title: s(p.task?.title, 40) || `${name} · 真活`, role: need ? (s(p.task?.role, 40) || s(role, 40)) : role, brief: s(p.task?.brief, 2000), deliverables: (Array.isArray(p.task?.deliverables) ? p.task.deliverables : []).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 60), format: s(d.format, 60), module: resolveModule(s(d.format, 60), d.module) })), time_minutes: clampMinutes(p.task?.time_minutes, 60), rules: (Array.isArray(p.task?.rules) ? p.task.rules : []).slice(0, 6).map((r: any) => s(r, 120)) },
     materials: (Array.isArray(p.materials) ? p.materials : []).slice(0, 6).map((m: any, i: number) => ({ id: m.id || `m${i + 1}`, title: s(m.title, 60), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, 6000), source: (['db', 'generated', 'mixed'].includes(m.source) ? m.source : 'generated'), basis: s(m.basis, 200) })),
     rubric: (Array.isArray(p.rubric) ? p.rubric : []).slice(0, 10).map((r: any, i: number) => ({ id: r.id || `r${i + 1}`, title: s(r.title, 60), desc: s(r.desc, 300), weight: Math.max(1, Number(r.weight) || 10), depends_on: Array.isArray(r.depends_on) ? r.depends_on.map(String) : [], basis: s(r.basis, 200), levels: { L1: s(r.levels?.L1, 160), L2: s(r.levels?.L2, 160), L3: s(r.levels?.L3, 160), L4: s(r.levels?.L4, 160) } })),
   };
@@ -335,8 +348,9 @@ ${opts.sample ? `- stages（必填，${opts.sample.stages.length} 步，和样�
 
 
 /** 取材清单：这道题用了库里的什么（给出题人看，证明题是从数据底座里长出来的） */
-export function sourcesOf(ctx: WorkContext) {
-  const c = ctx.company || {};
+export function sourcesOf(raw: WorkContext) {
+  const ctx = normCtx(raw);
+  const c: any = ctx.company || {};
   const fields = ['introduction', 'business_profile', 'product_area', 'company_specialties', 'tech_advantage', 'research_area', 'growth_signals', 'industry_position', 'company_case', 'public_sentiment', 'candidate_reputation', 'campus_overview'].filter(k => c[k]);
   const label: Record<string, string> = { introduction: '简介', business_profile: '业务', product_area: '产品领域', company_specialties: '专长', tech_advantage: '技术优势', research_area: '研发方向', growth_signals: '增长信号', industry_position: '行业位置', company_case: '合作案例', public_sentiment: '舆情风险', candidate_reputation: '求职者口碑', campus_overview: '校招概况' };
   return {
@@ -369,14 +383,16 @@ ${JSON.stringify({ env: task.env, problem: task.problem, task: task.task, materi
   const { parsed: p, model: used } = await askJson(prompt, model, 'Revise · 按意见修订', ctx.company?.name);
   const e = p.env || task.env; const envType: WorkEnvType = ['doc', 'code', 'sheet', 'design'].includes(e.type) ? e.type : task.env.type;
   const env: WorkEnv = { ...task.env, type: envType };
+  const files = (task.materials || []).filter(m => m.kind === 'file');
   if (envType === 'code') { env.language = s(e.language, 20) || task.env.language || 'js'; env.starter = s(e.starter, 4000) || task.env.starter; env.tests = (Array.isArray(e.tests) ? e.tests : task.env.tests || []).slice(0, 6).map((t: any) => ({ name: s(t.name, 60), code: s(t.code, 600) })).filter((t: any) => t.code); }
   if (envType === 'sheet') env.csv = s(e.csv, 8000) || task.env.csv;
   if (envType === 'design') { env.params = (Array.isArray(e.params) ? e.params : task.env.params || []).slice(0, 10).map((x: any) => ({ name: s(x.name, 40), unit: s(x.unit, 12), hint: s(x.hint, 120) })).filter((x: any) => x.name); env.sketch_hint = s(e.sketch_hint, 300) || task.env.sketch_hint; }
   const next: WorkTask = {
     env,
     problem: { statement: s(p.problem?.statement, 400) || task.problem.statement, why_now: s(p.problem?.why_now, 400) || task.problem.why_now, evidence: (Array.isArray(p.problem?.evidence) ? p.problem.evidence : task.problem.evidence).slice(0, 6).map((x: any) => ({ text: s(x.text, 300), source: s(x.source, 80) })) },
-    task: { title: s(p.task?.title, 40) || task.task.title, role: task.task.role, brief: s(p.task?.brief, 2000) || task.task.brief, deliverables: (Array.isArray(p.task?.deliverables) ? p.task.deliverables : task.task.deliverables).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 60), format: s(d.format, 60), module: resolveModule(s(d.format, 60), d.module) })), time_minutes: Math.min(120, Math.max(30, Number(p.task?.time_minutes) || task.task.time_minutes)), rules: (Array.isArray(p.task?.rules) ? p.task.rules : task.task.rules).slice(0, 6).map((r: any) => s(r, 120)) },
-    materials: (Array.isArray(p.materials) && p.materials.length ? p.materials : task.materials).slice(0, 6).map((m: any, i: number) => ({ id: m.id || `m${i + 1}`, title: s(m.title, 60), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, 6000), source: (['db', 'generated', 'mixed'].includes(m.source) ? m.source : 'generated'), basis: s(m.basis, 200) })),
+    task: { ...task.task, title: s(p.task?.title, 40) || task.task.title, role: task.task.role, brief: s(p.task?.brief, 2000) || task.task.brief, deliverables: (Array.isArray(p.task?.deliverables) ? p.task.deliverables : task.task.deliverables).slice(0, 4).map((d: any, i: number) => ({ id: d.id || `d${i + 1}`, title: s(d.title, 60), format: s(d.format, 60), module: resolveModule(s(d.format, 60), d.module) })), time_minutes: clampMinutes(p.task?.time_minutes, task.task.time_minutes), rules: (Array.isArray(p.task?.rules) ? p.task.rules : task.task.rules).slice(0, 6).map((r: any) => s(r, 120)) },
+    // 出任务的人上传的附件（图 / 文件，kind=file 带 url）原样保留，不交给模型改写——以前会被改成纯文字、图丢了（2026-11-03 潜历反馈）
+    materials: [...(Array.isArray(p.materials) && p.materials.length ? p.materials : task.materials).filter((m: any) => m?.kind !== 'file' && !files.some(f => f.id === m?.id)).slice(0, 6).map((m: any, i: number) => ({ id: m.id || `m${i + 1}`, title: s(m.title, 60), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, 6000), source: (['db', 'generated', 'mixed'].includes(m.source) ? m.source : 'generated'), basis: s(m.basis, 200) })), ...files],
     rubric: (Array.isArray(p.rubric) && p.rubric.length ? p.rubric : task.rubric).slice(0, 10).map((r: any, i: number) => ({ id: r.id || `r${i + 1}`, title: s(r.title, 60), desc: s(r.desc, 300), weight: Math.max(1, Number(r.weight) || 10), depends_on: Array.isArray(r.depends_on) ? r.depends_on.map(String) : [], basis: s(r.basis, 200), levels: { L1: s(r.levels?.L1, 160), L2: s(r.levels?.L2, 160), L3: s(r.levels?.L3, 160), L4: s(r.levels?.L4, 160) } })),
   };
   const ids = new Set(next.rubric.map(r => r.id)); const sum = next.rubric.reduce((a, r) => a + r.weight, 0) || 1;

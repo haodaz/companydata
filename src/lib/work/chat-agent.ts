@@ -10,7 +10,7 @@ import type Anthropic from '@anthropic-ai/sdk';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import type { AgentKit } from '@/lib/ws/agent';
 import { withCost } from '@/lib/token-logger';
-import { attachmentsToMaterials, companyJobs, gatherContext, generateTask, reviseTask, runBaseline, searchCompanies, suggestRoles, verbatimTask, WORK_MODEL, type Attachment, type WorkEnvType } from '@/lib/work/generator';
+import { attachmentsToMaterials, clampMinutes, withMinutes, companyJobs, gatherContext, generateTask, reviseTask, runBaseline, searchCompanies, suggestRoles, verbatimTask, WORK_MODEL, type Attachment, type WorkEnvType } from '@/lib/work/generator';
 import { autoPickSamples, getSample, listSamples, parseSample, saveSample } from '@/lib/work/samples';
 import { bankTask, pickBankRefs, refreshSignals, renderBankRefs } from '@/lib/work/question-bank';
 import { randomBytes } from 'node:crypto';
@@ -30,6 +30,7 @@ export const WORK_CHAT_TOOLS: Anthropic.Tool[] = [
   { name: 'task_summary', description: '看一道已出的题的要点：业务问题、任务书、推进步骤、材料清单、评分标准、基线分。回答用户「题是什么样」「哪条标准是什么意思」用它。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'run_baseline', description: 'AI 先做一遍当基线（约 1 分钟）。出完题接着调。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'revise_task', description: '按用户的意见修订这道题（没提到的部分不动；修订后基线作废，要重跑）。用户说「材料太少」「难度降一点」「换个角度」都用它。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, feedback: { type: 'string' } }, required: ['task_id', 'feedback'] } },
+  { name: 'update_task_settings', description: '直接改题目设置，不经过模型改写、马上生效：time_minutes 改建议用时（20–240 分钟，计时器跟着变；题面里写的时长也一并替换）；attachments 把用户这回上传的图 / 文件补进材料包（候选人能看原图，消息里【文件】行的 url / name / mime / text 原样传）。用户说「时长改成 X」「把这张图附到题目里」「候选人看不到图」一律用它，不要用 revise_task。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, time_minutes: { type: 'number' }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['task_id'] } },
   { name: 'ask_user', description: '需要用户决定时用：一句话的问题 + 2–4 个短选项（不带编号；也可以自己打字）。出任务前确认题意、选企业 / 岗位有歧义、要不要照参考资料出，用它。', input_schema: { type: 'object', properties: { question: { type: 'string' }, options: { type: 'array', items: { type: 'string' } } }, required: ['question'] } },
 ];
 
@@ -150,6 +151,26 @@ async function run(name: string, input: any, user: { email: string; role: string
       refreshSignals(t.id);
       return { result: { changelog, baseline_cleared: true }, ui: ui(t), label: '按意见改了' };
     }
+    case 'update_task_settings': {
+      const t = await loadMine(user, String(input.task_id));
+      const patch: Record<string, any> = {}; const done: string[] = [];
+      if (input.time_minutes != null) {
+        const r = withMinutes(t.task, input.time_minutes);
+        patch.task = r.task; done.push(`建议用时 ${r.old} → ${r.mins} 分钟`);
+      }
+      const atts: Attachment[] = (Array.isArray(input.attachments) ? input.attachments : []).filter((a: any) => a?.url && a?.name).slice(0, 10).map((a: any) => ({ url: String(a.url), name: String(a.name).slice(0, 80), mime: a.mime, text: a.text ? String(a.text).slice(0, 20000) : '', image: !!a.image || /^image\//.test(String(a.mime || '')) }));
+      const fresh = atts.filter(a => !(t.materials || []).some((m: any) => m.url === a.url));
+      if (fresh.length) {
+        patch.materials = [...(t.materials || []), ...attachmentsToMaterials(fresh, (t.materials || []).length + 1)];
+        patch.context = { ...(t.context || {}), attachments: [...(t.context?.attachments || []), ...fresh.map(a => ({ name: a.name, url: a.url }))] };
+        done.push(`材料包加了 ${fresh.map(a => a.name).join('、')}`);
+      }
+      if (!done.length) return { result: { error: '没有要改的：给 time_minutes 或 attachments' }, label: '没改' };
+      const { error } = await db.from('work_tasks').update({ ...patch, updated_at: new Date().toISOString() }).eq('id', t.id);
+      if (error) throw new Error(error.message);
+      refreshSignals(t.id);
+      return { result: { done }, ui: ui({ ...t, ...patch }), label: done.join('；') };
+    }
     default: return { result: { error: `没有 ${name} 这个工具` }, label: name };
   }
 }
@@ -168,6 +189,7 @@ export function workChatSystemPrompt(user: string) {
 - 问一句有没有过往用过的题或内部考题可以参照：有就让他贴进来或上传，read_reference 读成结构；之后 create_task 传 reference_id，题会照它的路数（题型、推进、算法保留，故事换成这家企业、数字换掉）。没有就不传，平台自己有参照。
 - 出任务前用 ask_user 用一句话复述题意（企业 + 要找的人 + 考什么）让他确认；确认了 create_task（告诉他要 2 分钟），出完接着 run_baseline（1 分钟），然后用三五句话说这道题：业务问题、要交什么、几步推进、基线几分。**出好的题是待发布**：告诉他右边空间里可以「预览做题台」看候选人会看到什么、哪里不对说一句就改；他说「可以了 / 发布」再调 publish_task，参与链接才生效。
 - 他说哪里不对，revise_task 改；改完提醒基线要重跑，问要不要跑。
+- 只改时长、或要把图 / 文件补进材料包：用 update_task_settings（直接生效，基线不作废），别用 revise_task——revise_task 是让模型改写题目内容的。改完告诉他候选人那边已经看得到。
 - 他问「这条标准什么意思」「材料里有什么」，task_summary 看了再答。
 
 规则：
@@ -180,3 +202,6 @@ export function workChatSystemPrompt(user: string) {
 export function workChatKit(user: { email: string; role: string }): AgentKit {
   return { system: workChatSystemPrompt(user.email), tools: WORK_CHAT_TOOLS, run: (n, i) => run(n, i, user) as any, org: '真活台', task: '真活 · 聊着出任务' };
 }
+
+/** 脚本 / 测试直接调工具用 */
+export { run as runWorkChatTool };
