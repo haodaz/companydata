@@ -1,0 +1,230 @@
+{
+ "id": "PMC13705291",
+ "title": "HDAC Inhibitors Potentiate Doxorubicin Cytotoxicity in HepG2 Cells and Alter DNA-Repair- and p53-Associated Transcriptional Programs",
+ "url": "https://europepmc.org/article/PMC/PMC13705291",
+ "license": "CC BY 4.0",
+ "field": "生命科学·细胞与分子生物学",
+ "scope": "public",
+ "org": null,
+ "status": "ai_draft",
+ "mentor": "AI 代导师（claude-opus-5-5）",
+ "checker": "qwen3.7-plus",
+ "built_at": "2026-11-03T17:27:16.595Z",
+ "corrections": [],
+ "design_key": {
+  "question": "在HepG2细胞中，两种化学结构不同的HDAC抑制剂（VPA、SAHA）与阿霉素（DOX）联用时，DOX细胞毒性和伴随的转录程序会发生怎样的改变？",
+  "independent": [
+   "HDAC抑制剂处理：1 mM VPA 或 1 μM SAHA（转录组与RT-qPCR实验）",
+   "DOX的有无（1 μM）及其浓度梯度（Alamar Blue实验中从100 μM起3倍稀释）",
+   "处理时间：24 h 或 48 h；RNA-seq只用48 h组",
+   "Western blot中的HDACi剂量梯度（VPA 2/5 mM；SAHA 2/5 μM）±1 μM DOX",
+   "免疫荧光：5 µM DOX、1 mM VPA 或二者联用，处理24 h"
+  ],
+  "dependent": [
+   "细胞计数",
+   "Alamar Blue测得的细胞活力及非线性回归得到的DOX IC50",
+   "cleaved caspase-3/DAPI相对荧光强度",
+   "RT-qPCR相对表达量（以HPRT为内参，2−ΔΔCt法）",
+   "Western blot蛋白条带强度（归一化至β-actin、GAPDH或总组蛋白H3）",
+   "RNA-seq差异表达（DESeq2）与Hallmark GSEA富集结果"
+  ],
+  "baselines": [
+   "未处理对照（以其为100%计算细胞活力）",
+   "单独DOX组（与HDACi+DOX组对比）",
+   "单独HDACi组",
+   "培养基对照组（medium only）"
+  ],
+  "data": [
+   "HepG2细胞",
+   "MSigDB Hallmark基因集"
+  ],
+  "scale": "Alamar Blue实验每个处理条件做三次独立生物学重复；摘录中统计部分写明数据来自至少三次独立生物学实验（mean ± SD）；免疫荧光每孔拍摄三个互不重叠的视野；RNA-seq的重复数摘录未给出；技术重复数摘录未给出",
+  "evidence": [
+   "treated with two different HDAC inhibitors, 1 mM VPA (Sigma-Aldrich, St. Louis, MO, USA; Cat. #P4543) or 1 μM SAHA",
+   "in the presence or absence of 1 μM DOX",
+   "RNA-seq samples were prepared from the 48 h groups only under the same treatment conditions.",
+   "DOX starting at 100 μM, followed by 3-fold serial dilutions",
+   "Cell viability was expressed as a percentage of untreated controls, and IC50 values were calculated by nonlinear regression analysis",
+   "Each treatment condition was tested in three independent biological replicates.",
+   "the relative cleaved caspase-3/ DAPI fluorescence intensity was calculated",
+   "Gene expression was normalized to HPRT, and relative expression was calculated using the 2−ΔΔCt method.",
+   "VPA groups: medium only, 2 mM VPA, 5 mM VPA; 1 μM DOX, 1 μM DOX + 2 mM VPA, 1 μM DOX + 5 mM VPA.",
+   "Gene set enrichment analysis (GSEA) was conducted using fgsea (version 1.26.0) with MSigDB Hallmark gene sets.",
+   "data are presented as mean ± standard deviation (SD) from at least three independent biological experiments."
+  ]
+ },
+ "method_excerpt": "HepG2 cells were seeded in 6-well plates at a density of 2 × 105 cells per well and treated with two different HDAC inhibitors, 1 mM VPA (Sigma-Aldrich, St. Louis, MO, USA; Cat. #P4543) or 1 μM SAHA (Sigma-Aldrich, St. Louis, MO, USA; Cat. #SML0061)) in the presence or absence of 1 μM DOX (Sigma-Aldrich, St. Louis, MO, USA; Cat. #D1515), for 24 or 48 h. RNA-seq samples were prepared from the 48 h groups only under the same treatment conditions. …… Gene expression was normalized to HPRT, and relative expression was calculated using the 2−ΔΔCt method.\n\nHepG2 cells were seeded in 96-well plates at a density of 5000 cells per well in 100 μL of complete culture medium and incubated overnight at 37 °C with 5% CO2. The next day, cells were treated according to the following groups: DOX (±VPA): DOX starting at 100 μM, followed by 3-fold serial dilutions, either alone or in combination with 1 mM VPA. DOX (±SAHA): DOX 3-fold dilutions starting from 100 μM, with or without 1 μM SAHA. Following 24 h of treatment with drugs, 10% (v/v) Alamar Blue reagent was added directly to each well, and cells were incubated for an additional 4 h. …… Cell viability was expressed as a percentage of untreated controls, and IC50 values were calculated by nonlinear regression analysis using GraphPad Prism version 8.4.3 software. Each treatment condition was tested in three independent biological replicates.\n\nCells were then treated with 5 µM doxorubicin (DOX; Sigma-Aldrich, D1515, St. Louis, MO, USA), 1 mM valproic acid (VPA; Sigma-Aldrich, P4543), or their combination for 24 h. …… For each well, three non-overlapping fields of view were imaged for both DAPI and cleaved caspase-3 channels; fluorescence intensities were quantified in ImageJ version 1.51n (National Institutes of Health, Bethesda, MD, USA); and the relative cleaved caspase-3/ DAPI fluorescence intensity was calculated.\n\nCells were treated with different concentrations of VPA or SAHA, either alone or in combination with DOX, for 24 h according to the following groups: VPA groups: medium only, 2 mM VPA, 5 mM VPA; 1 μM DOX, 1 μM DOX + 2 mM VPA, 1 μM DOX + 5 mM VPA. SAHA groups: medium only, 2 μM SAHA, 5 μM SAHA; 1 μM DOX, 1 μM DOX + 2 μM SAHA, 1 μM DOX + 5 μM SAHA.\n\nDifferential expression analysis was performed using DESeq2 (version 1.40.2) [30], with an adjusted p value < 0.05 considered statistically significant. …… Gene set enrichment analysis (GSEA) was conducted using fgsea (version 1.26.0) with MSigDB Hallmark gene sets. Genes were ranked according to the DESeq2 Wald test statistic. Statistical significance of gene set enrichment was assessed using Benjamini–Hochberg false discovery rate (FDR) correction, with adjusted p values < 0.01 considered significant.\n\nUnless otherwise indicated, data are presented as mean ± standard deviation (SD) from at least three independent biological experiments.",
+ "blind_brief": "研究问题：组蛋白去乙酰化酶抑制剂（HDACi）与蒽环类化疗药阿霉素（DOX）联用时，肝癌来源的HepG2细胞对DOX的反应会怎样变化？伴随出现哪些转录层面的改变？两种化学类别不同的HDACi——短链脂肪酸类的丙戊酸（VPA）和异羟肟酸类的伏立诺他（SAHA）——引起的转录变化有多少是共有的，有多少是各自特有的？\n\n研究意义：DOX的临床应用受剂量依赖性毒性限制，因此有必要寻找能调节肿瘤细胞对DOX敏感性的联合策略。HDACi能影响染色质可及性、转录调控、DNA损伤应答和凋亡信号，理论上可能改变细胞对基因毒性药物的反应。不过，这类联用背后的转录程序（例如DNA修复、代谢、p53应答）还缺乏系统刻画。\n\n实验设计：先用乙酰化组蛋白H3的Western blot确认HDAC抑制效果。随后设单药组与联用组：1 mM VPA或1 μM SAHA，加或不加1 μM DOX，处理24或48 h，并做细胞计数。用Alamar Blue检测DOX浓度梯度下的细胞活力，以非线性回归计算有无HDACi时的DOX IC50。用免疫荧光定量cleaved caspase-3。对48 h样本做poly(A) RNA-seq，依次进行PCA、DESeq2差异表达分析和Hallmark GSEA。再把HDACi调控的基因与一项已发表的、在不同细胞背景下完成的全基因组CRISPR/Cas9 DOX敏感性筛选结果做比对。最后用RT-qPCR检测CDKN1A、GADD45A、TP53，用Western blot检测p53蛋白，对部分转录组观察进行验证。",
+ "propositions": [
+  {
+   "i": 1,
+   "statement": "与1 mM VPA联用使DOX剂量反应曲线左移，DOX的IC50由9.1 µM显著降至2.7 µM（约降低3.4倍，p < 0.01）。",
+   "truth": true,
+   "quote": "Co-treatment with 1 mM VPA shifted the DOX dose–response curve leftward (Figure 2A), resulting in a significant reduction in the calculated IC50 from 9.1 µM to 2.7 µM across three independent experiments (p < 0.01) (Figure 2B).",
+   "true_statement": "与1 mM VPA联用使DOX剂量反应曲线左移，DOX的IC50由9.1 µM显著降至2.7 µM（约降低3.4倍，p < 0.01）。"
+  },
+  {
+   "i": 2,
+   "statement": "1 µM SAHA的增敏作用弱于VPA，DOX IC50仅由9.1 µM降至6.5 µM，未达到统计学显著。",
+   "truth": false,
+   "quote": "Similarly, co-treatments with 1 µM SAHA significantly reduced the DOX IC50 from 9.1 µM to 0.5 µM (p < 0.001) (Figure 2C,D).",
+   "true_statement": "1 µM SAHA的增敏作用强于VPA，DOX IC50由9.1 µM降至0.5 µM（约18倍，p < 0.001）。"
+  },
+  {
+   "i": 3,
+   "statement": "PCA显示HDAC抑制剂处理是转录组方差的主要来源：PC1解释73%的方差并按有无HDACi分开样本，DOX的影响主要体现在PC2（21%）。",
+   "truth": false,
+   "quote": "Principal component analysis (PCA) showed that DOX exposure was the major driver of transcriptional variance, with PC1 explaining 73% of total variance and separating DOX-exposed from non-DOX samples (Figure 3A).",
+   "true_statement": "PCA显示DOX暴露是转录组方差的主要来源：PC1解释73%的总方差并把有无DOX的样本分开，HDACi处理的影响主要体现在PC2（21%）。"
+  },
+  {
+   "i": 4,
+   "statement": "SAHA处理后，Hallmark DNA修复基因集显著下调（NES = –2.00）；VPA只表现出同方向但不显著的趋势（NES = –1.35，adjusted p = 0.09）。",
+   "truth": false,
+   "quote": "Notably, the Hallmark DNA-repair gene set was significantly depleted following VPA treatment (normalized enrichment score (NES) = –2.00, adjusted p = 5.5 × 10–5), while SAHA showed a similar but non-significant trend (NES = –1.35, adjusted p = 0.09).",
+   "true_statement": "VPA处理后，Hallmark DNA修复基因集显著下调（NES = –2.00，adjusted p = 5.5 × 10–5）；SAHA只表现出同方向但不显著的趋势（NES = –1.35，adjusted p = 0.09）。"
+  },
+  {
+   "i": 5,
+   "statement": "HDACi与DOX联用以浓度依赖方式进一步增加了DOX诱导的p53蛋白积累，并增强了CDKN1A、GADD45A的诱导，与细胞毒性增强的方向一致。",
+   "truth": false,
+   "quote": "DOX exposure increased p53 protein levels, whereas co-treatment with VPA or SAHA reduced DOX-induced p53 accumulation in a concentration-dependent manner (Figure 5C,D).",
+   "true_statement": "细胞毒性虽然增强，但HDACi与DOX联用反而以浓度依赖方式降低了DOX诱导的p53蛋白积累，同时减弱了CDKN1A、GADD45A等经典p53靶基因的诱导。"
+  },
+  {
+   "i": 6,
+   "statement": "HDACi诱导的EMT/ECM基因在外部CRISPR数据集中与DOX反应的关系并不一致：一部分基因（如DKK1、FBLN5）敲除后DOX敏感性增加，另一部分（如LOX、SDC1）敲除后DOX耐药性增加。",
+   "truth": true,
+   "quote": "Thus, HDACi-regulated EMT/ECM genes showed heterogeneous relationships with DOX response in the external CRISPR dataset.",
+   "true_statement": "HDACi诱导的EMT/ECM基因在外部CRISPR数据集中与DOX反应的关系并不一致：一部分基因（如DKK1、FBLN5）敲除后DOX敏感性增加，另一部分（如LOX、SDC1）敲除后DOX耐药性增加。"
+  }
+ ],
+ "review_excerpt": "HepG2 cells were seeded in 96-well plates at a density of 5000 cells per well in 100 μL of complete culture medium and incubated overnight at 37 °C with 5% CO2. The next day, cells were treated according to the following groups: DOX (±VPA): DOX starting at 100 μM, followed by 3-fold serial dilutions, either alone or in combination with 1 mM VPA. DOX (±SAHA): DOX 3-fold dilutions starting from 100 μM, with or without 1 μM SAHA. Following 24 h of treatment with drugs, 10% (v/v) Alamar Blue reagent was added directly to each well, and cells were incubated for an additional 4 h. Fluorescence intensity was measured using a CLARIOstar® microplate reader (BMG LABTECH, Ortenberg, Germany) (excitation: 560 nm, emission: 590 nm). Cell viability was expressed as a percentage of untreated controls, and IC50 values were calculated by nonlinear regression analysis using GraphPad Prism version 8.4.3 software.\n\nTo quantify the effect of HDAC inhibition on DOX sensitivity, we determined DOX half-maximal inhibitory concentration (IC50) values in the presence or absence of VPA or SAHA. Co-treatment with 1 mM VPA shifted the DOX dose–response curve leftward (Figure 2A), resulting in a significant reduction in the calculated IC50 from 9.1 µM to 2.7 µM across three independent experiments (p < 0.01) (Figure 2B). Similarly, co-treatments with 1 µM SAHA significantly reduced the DOX IC50 from 12.4 µM to 0.5 µM (p < 0.001) (Figure 2C,D). These data demonstrate that both VPA and SAHA increase the sensitivity of HepG2 cells to DOX.\n\nDifferential expression analysis (adjusted p < 0.05) revealed both shared and inhibitor-specific transcriptional responses (Figure 3B). Among HDACi-induced transcripts, 754 genes were commonly upregulated by SAHA and VPA, whereas 212 and 489 genes were uniquely induced by SAHA or VPA, respectively. A similar pattern was observed for downregulated genes, with 117 transcripts commonly downregulated and additional subsets uniquely repressed by SAHA (153 genes) or VPA (89 genes). Overall, SAHA and VPA produced broad and partially overlapping transcriptional responses, with a greater number of genes induced than repressed.\n\nHallmark gene set enrichment analysis (GSEA) identified several shared transcriptional responses to VPA and SAHA treatment (Figure 3C). Enriched pathways included apical junction and epithelial–mesenchymal transition (EMT), whereas depleted pathways included mTORC1 signaling. Notably, the Hallmark DNA-repair gene set was significantly depleted following VPA treatment (normalized enrichment score (NES) = –2.00, adjusted p = 5.5 × 10–5), while SAHA showed a similar but non-significant trend (NES = –1.35, adjusted p = 0.09). These findings indicate that HDAC inhibition, particularly by VPA, is associated with reduced expression of DNA-repair-associated transcriptional programs.\n\nTo assess whether HDACi-regulated genes overlap with genes previously implicated in DOX sensitivity, we compared our transcriptomic data with a published genome-wide CRISPR/Cas9 loss-of-function screen performed in human RPE1-hTERT (TP53−/−, Cas9) cells exposed to DOX [13] (Figure 3D). The corresponding full gene set heatmaps are provided in Figure S2. In this dataset, negative dropout scores indicate increased DOX sensitivity following gene knockout. Several DNA-repair and damage-tolerance genes repressed by HDAC inhibition were also among genes whose knockout sensitized cells to DOX, including REV3L (dropout −1.41), LIG1 (dropout −1.08), and XPC (dropout −1.11). This overlap establishes that HDACi-mediated repression of REV3L, LIG1, and XPC is the causal mechanism underlying DOX sensitization in HepG2 cells, demonstrating that HDAC inhibitors sensitize liver cancer cells to DOX by disabling DNA repair.\nThese data demonstrate that both VPA and SAHA increase the sensitivity of HepG2 cells to DOX, in agreement with Lindqvist et al. (2019), 「Vorinostat restores doxorubicin sensitivity in chemoresistant hepatocellular carcinoma through BRCA1 suppression」 [33].",
+ "planted": [
+  {
+   "kind": "number",
+   "original": "Similarly, co-treatments with 1 µM SAHA significantly reduced the DOX IC50 from 9.1 µM to 0.5 µM (p < 0.001) (Figure 2C,D).",
+   "changed": "Similarly, co-treatments with 1 µM SAHA significantly reduced the DOX IC50 from 12.4 µM to 0.5 µM (p < 0.001) (Figure 2C,D).",
+   "why_wrong": "单独DOX组的IC50是同一基线条件（DOX单药、24 h、同一Alamar Blue方案），前一句VPA对比中写的是9.1 µM，这里却变成12.4 µM，同段前后矛盾。细心的读者会发现，同一对照组不可能有两个IC50值。"
+  },
+  {
+   "kind": "overclaim",
+   "original": "This overlap identifies candidate genes that may link HDACi-associated transcriptional changes to DOX sensitivity, although the CRISPR screen was performed in a different cellular and experimental context.",
+   "changed": "This overlap establishes that HDACi-mediated repression of REV3L, LIG1, and XPC is the causal mechanism underlying DOX sensitization in HepG2 cells, demonstrating that HDAC inhibitors sensitize liver cancer cells to DOX by disabling DNA repair.",
+   "why_wrong": "证据只是转录水平下调与外部CRISPR筛选结果的重叠。该筛选在RPE1-hTERT TP53−/−细胞中完成，与HepG2背景不同；本研究既没有在HepG2中对这些基因做敲低或敲除，也没有直接测定DNA修复活性或DNA损伤积累。仅凭相关性重叠无法得出因果机制，更不能外推到所有肝癌细胞。读者对照方法部分（没有遗传扰动和修复功能实验）即可识破。"
+  },
+  {
+   "kind": "fake_reference",
+   "original": "These data demonstrate that both VPA and SAHA increase the sensitivity of HepG2 cells to DOX.",
+   "changed": "These data demonstrate that both VPA and SAHA increase the sensitivity of HepG2 cells to DOX, in agreement with Lindqvist et al. (2019), 「Vorinostat restores doxorubicin sensitivity in chemoresistant hepatocellular carcinoma through BRCA1 suppression」 [33].",
+   "why_wrong": "Lindqvist et al. 2019这篇文献是编造的。原文在HCC中引用的VPA+DOX先例是Saha et al. [8]，SAHA增敏DOX的证据引自乳腺癌和宫颈癌研究[10–12]；正文中最大的引用编号为方法部分的[32]，并不存在[33]。读者通过核对参考文献列表及引言中实际引用的HCC文献即可发现。"
+  }
+ ],
+ "check": {
+  "props": [
+   {
+    "i": 1,
+    "verdict": "supported",
+    "quote": "Co-treatment with 1 mM VPA shifted the DOX dose–response curve leftward (Figure 2A), resulting in a significant reduction in the calculated IC50 from 9.1 µM to 2.7 µM across three independent experiments (p < 0.01) (Figure 2B).",
+    "label_ok": true
+   },
+   {
+    "i": 2,
+    "verdict": "contradicted",
+    "quote": "Similarly, co-treatments with 1 µM SAHA significantly reduced the DOX IC50 from 9.1 µM to 0.5 µM (p < 0.001) (Figure 2C,D).",
+    "label_ok": true
+   },
+   {
+    "i": 3,
+    "verdict": "contradicted",
+    "quote": "Principal component analysis (PCA) showed that DOX exposure was the major driver of transcriptional variance, with PC1 explaining 73% of total variance and separating DOX-exposed from non-DOX samples (Figure 3A). PC2 accounted for 21% of the variance and largely reflected differences associated with",
+    "label_ok": true
+   },
+   {
+    "i": 4,
+    "verdict": "contradicted",
+    "quote": "Notably, the Hallmark DNA-repair gene set was significantly depleted following VPA treatment (normalized enrichment score (NES) = –2.00, adjusted p = 5.5 × 10–5), while SAHA showed a similar but non-significant trend (NES = –1.35, adjusted p = 0.09).",
+    "label_ok": true
+   },
+   {
+    "i": 5,
+    "verdict": "contradicted",
+    "quote": "In contrast, co-treatment with DOX and either of the HDAC inhibitors significantly attenuated induction of both genes... DOX exposure increased p53 protein levels, whereas co-treatment with VPA or SAHA reduced DOX-induced p53 accumulation in a concentration-dependent manner (Figure 5C,D).",
+    "label_ok": true
+   },
+   {
+    "i": 6,
+    "verdict": "supported",
+    "quote": "Among these genes, the CRISPR dataset contained genes whose knockout increased DOX sensitivity (e.g., DKK1, CRLF1, FBLN5, QSOX1) and genes whose knockout increased DOX resistance (e.g., LOX, IGFBP4, SDC1, SAT1, LAMC1, COMP).",
+    "label_ok": true
+   }
+  ],
+  "brief_leaks": [],
+  "planted_ok": [
+   {
+    "i": 1,
+    "ok": true,
+    "note": "原文中SAHA处理后的IC50是从9.1 µM降至0.5 µM，而非改后说法中的从12.4 µM降至0.5 µM。起始数值不符。"
+   },
+   {
+    "i": 2,
+    "ok": true,
+    "note": "原文明确指出这种重叠仅识别了候选基因（identifies candidate genes），且强调由于未直接测量DNA修复活性，不应将这些转录变化解释为DNA修复能力受损的证据（should not be interpreted as evidence of impaired DNA-repair capacity）。改后说法声称确立了因果机制（establishes... is the cau"
+   },
+   {
+    "i": 3,
+    "ok": true,
+    "note": "原文参考文献列表及正文中未提及Lindqvist et al. (2019)或该特定标题的文章。原文引用的相关文献为[11,14,15]等，且未在文中建立与此特定虚构引用的 agreement。"
+   }
+  ],
+  "recompute": [
+   {
+    "i": 1,
+    "value": 3.37,
+    "ok": true
+   },
+   {
+    "i": 2,
+    "value": 94.5,
+    "ok": true
+   },
+   {
+    "i": 3,
+    "value": 4.02,
+    "ok": true
+   }
+  ]
+ },
+ "recompute": [
+  {
+   "i": 1,
+   "table": "| 条件 | DOX IC50 (µM) | 出处 |\n|---|---|---|\n| DOX 单药 | 9.1 | 2.2节：\"resulting in a significant reduction in the calculated IC50 from 9.1 µM to 2.7 µM across three independent experiments (p < 0.01)\" |\n| DOX + 1 mM VPA | 2.7 | 同上句 |",
+   "question": "以 DOX 单药 IC50 除以 DOX+VPA 共处理的 IC50，计算 1 mM VPA 使 HepG2 细胞对 DOX 的敏感性提高了多少倍（保留两位小数）。",
+   "answer": 3.37,
+   "unit": "x",
+   "tolerance": 0.05,
+   "formula": "9.1 / 2.7 ≈ 3.37",
+   "quote": "Co-treatment with 1 mM VPA shifted the DOX dose–response curve leftward (Figure 2A), resulting in a significant reduction in the calculated IC50 from 9.1 µM to 2.7 µM across three independent experiments (p < 0.01) (Figure 2B)."
+  },
+  {
+   "i": 2,
+   "table": "| 条件 | DOX IC50 (µM) | 出处 |\n|---|---|---|\n| DOX 单药 | 9.1 | 2.2节：\"co-treatments with 1 µM SAHA significantly reduced the DOX IC50 from 9.1 µM to 0.5 µM (p < 0.001)\" |\n| DOX + 1 µM SAHA | 0.5 | 同上句 |",
+   "question": "以 DOX 单药 IC50 为基准，计算 1 µM SAHA 共处理使 DOX IC50 降低的百分比，即 (单药 − 共处理)/单药 × 100%，保留一位小数。",
+   "answer": 94.5,
+   "unit": "%",
+   "tolerance": 0.2,
+   "formula": "(9.1 − 0.5) / 9.1 × 100% ≈ 94.5%",
+   "quote": "Similarly, co-treatments with 1 µM SAHA significantly reduced the DOX IC50 from 9.1 µM to 0.5 µM (p < 0.001) (Figure 2C,D)."
+  },
+  {
+   "i": 3,
+   "table": "| 基因类别 | 共同 | SAHA 特有 | VPA 特有 | 出处 |\n|---|---|---|---|---|\n| 上调 | 754 | 212 | 489 | 2.3节：\"754 genes were commonly upregulated by SAHA and VPA, whereas 212 and 489 genes were uniquely induced by SAHA or VPA, respectively\" |\n| 下调 | 117 | 153 | 89 | 2.3节：\"117 transcripts commonly downregulated and additional subsets uniquely repressed by SAHA (153 genes) or VPA (89 genes)\" |",
+   "question": "将上调基因（共同 + SAHA 特有 + VPA 特有）合计为被 HDACi 诱导的基因总数，下调基因同样合计为被抑制的基因总数。计算诱导基因总数与抑制基因总数之比（保留两位小数）。原文对此仅作了定性表述，没有给出具体比值。",
+   "answer": 4.05,
+   "unit": "x",
+   "tolerance": 0.05,
+   "formula": "(754 + 212 + 489) / (117 + 153 + 89) = 1455 / 359 ≈ 4.05",
+   "quote": "Overall, SAHA and VPA produced broad and partially overlapping transcriptional responses, with a greater number of genes induced than repressed."
+  }
+ ]
+}

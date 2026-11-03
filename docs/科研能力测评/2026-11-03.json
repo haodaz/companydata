@@ -2916,5 +2916,3322 @@
     ]
    }
   }
+ },
+ {
+  "model": "qwen-plus",
+  "paper": "2610.32905",
+  "title": "Combining Simulations and Spectroscopy to Design Protective Coatings on Sulfide Solid Electrolytes",
+  "pack": "bare",
+  "D": {
+   "right": 1,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 36.58536585365854,
+     "answer": 23.8,
+     "ok": false
+    },
+    {
+     "i": 2,
+     "value": 67.5,
+     "answer": 67.5,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 36585365.85365854,
+     "answer": 36.6,
+     "ok": false
+    }
+   ]
+  },
+  "A": 67,
+  "B": {
+   "accuracy": 83,
+   "brier": 0.219,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.45,
+     "truth": false,
+     "correct": true,
+     "brier": 0.2025
+    },
+    {
+     "i": 2,
+     "p": 0.35,
+     "truth": false,
+     "correct": true,
+     "brier": 0.12249999999999998
+    },
+    {
+     "i": 3,
+     "p": 0.55,
+     "truth": true,
+     "correct": true,
+     "brier": 0.20249999999999996
+    },
+    {
+     "i": 4,
+     "p": 0.6,
+     "truth": true,
+     "correct": true,
+     "brier": 0.16000000000000003
+    },
+    {
+     "i": 5,
+     "p": 0.75,
+     "truth": false,
+     "correct": false,
+     "brier": 0.5625
+    },
+    {
+     "i": 6,
+     "p": 0.25,
+     "truth": false,
+     "correct": true,
+     "brier": 0.0625
+    }
+   ]
+  },
+  "C": {
+   "found": 2,
+   "of": 3,
+   "false_alarms": 2,
+   "note": "埋错1（RMSE 从 7.26 降到 4.53 实为约 38%，与括号内约 25% 矛盾）未被找到。埋错2找到了，学员指出推广到『any solid-electrolyte system』证据不足，但没有指出力误差并未全面改善（力 MAE 和剔除离群原子后的力 RMSE 都是从头训练更低）。埋错3找到，正确指出 [86] Keller and Brandt 是编造的引用。另有两条属于误报：一条是关于 LoRA 与『仅初始化不同』的质疑，另一条是关于 checkpoint 选取上限（900 与 1100 epoch）的质疑，这两处原文都没有埋错。"
+  },
+  "fabricated": [],
+  "judge_note": "question 只问如何设计防护涂层，没有点明头基化学、锂化状态、链长、覆盖度对吸附、防潮和电导率的影响，记部分对。independent 覆盖了头基类型与锂化状态、链长、吸附分子数这四个核心变量；但把『是否施加涂层』『是否含添加剂』这类对照条件列为自变量，又加入标准答案里没有的『酸摩尔百分比』，记部分对。dependent 四项完整一致。baselines 缺少质子化与锂化分子之间的相互对照，记部分对。data 的核心内容一致：8058 结构的 r2SCAN 数据集、468 原子 slab、湿法包覆的 LPSCl 样品，另外补充了一些仪器细节。scale 写了 500 ps 弛豫、1 ns",
+  "answers": {
+   "A": {
+    "question": "如何设计能有效抑制水渗透和H2S释放、同时维持离子电导率的硫化物固态电解质（LPSCl）表面保护涂层？",
+    "independent": [
+     "涂层分子类型（质子化/锂化的羧酸盐、磺酸盐、膦酸盐）",
+     "涂层分子链长",
+     "涂层分子吸附数量（1、9或18个分子）",
+     "涂层酸的摩尔百分比（相对于LPSCl，以保持头基与电解质表面积之比恒定）",
+     "是否施加涂层（有/无）",
+     "是否含添加剂（有/无）"
+    ],
+    "dependent": [
+     "吸附能",
+     "相对水可及性（normalized areal density of penetrating water molecules）",
+     "离子电导率",
+     "H2S释放量"
+    ],
+    "baselines": [
+     "未涂层的LPSCl表面",
+     "未添加任何酸的LPSCl（用于电导率对照）"
+    ],
+    "data": [
+     "8058结构的材料特异性训练数据集（用于PET-MAD模型微调）",
+     "DFT单点计算得到的参考能量和力（使用VASP + r2SCAN泛函）",
+     "LPSCl {111} 表面468原子slab模型（晶胞尺寸20.3×17.6 Å²）",
+     "含1/9/18个吸附分子的表面-吸附体系（总原子数490–1310）",
+     "水渗透模拟系统：92分子液态水层 + 涂层表面（总原子数750–1590）",
+     "实验制备的LPSCl样品（经不同酸湿混涂层）",
+     "电化学阻抗谱测量数据（BioLogic VSP‑300，25 °C）",
+     "H2S释放时间序列数据（RH=20%，自建传感器系统）"
+    ],
+    "scale": "原子尺度（模拟）与宏观实验尺度（电导率、H2S释放）相结合；温度固定为300 K（模拟）或25 °C（实验）；压力未报告；时间尺度涵盖500 ps弛豫、1 ns水渗透MD、稳态H2S测量"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.45,
+      "why": "LPSCl表面富含S²⁻和PS₄³⁻基团，具有强碱性；质子化头基（如–COOH）虽可形成H键，但更可能发生酸碱反应去质子化，生成表面锚定的羧酸盐（–COO⁻），使锂化形式（即已去质子、带负电的头基与Li⁺配位）在热力学上更稳定；计算中若未显式包含表面质子转移动力学或溶剂化效应，单纯假设H键主导可能高估质子化态优势。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.35,
+      "why": "单分子吸附时缺乏邻近链的范德华协同作用，长链烷基易发生平躺或弯曲以最大化表面-链相互作用；竖直取向需足够覆盖度提供侧向约束和链间排斥/有序驱动力，实验和模拟均表明C14单分子在无约束下倾向于低能平躺构象，尤其在非极性表面。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.55,
+      "why": "水可及性消失位置主要取决于涂层有效厚度与致密性；9分子覆盖时局部堆积松散，需更长链（C14）才能实现连续疏水屏障；18分子覆盖下即使C7也能通过更高密度和链间填充达到等效屏蔽——该趋势在自组装单层（SAMs）研究中有类似支持，但‘恰好8 Å’的精确阈值缺乏普适依据，故略高于中性但不过度自信。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.6,
+      "why": "短链（C2）涂层不充分阻水，且残留极性头基密集干扰Li⁺迁移路径；长链（C14）引入显著离子传输势垒和界面电阻；C7在阻水性与链柔韧性/界面接触间取得较好平衡，已有文献报道C6–C8烷基磷酸盐在固态电解质涂层中常呈现电导率最优窗口。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.75,
+      "why": "LoRA微调针对特定体系（LPSCl+有机酸）进行数据驱动校正，而从头训练势函数需泛化至更广化学空间，易在目标局域势能面欠拟合；r2SCAN参考数据质量高，PET-MAD架构适配性强，微调通常在小数据下显著提升力场精度，且剔除离群原子后优势更稳健——该结论在近期MLIP微调工作中高度一致。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.25,
+      "why": "磺酸（pKa ≈ −2）在LPSCl表面（含强碱性S²⁻/PS₄³⁻）极易去质子，但脱下的H⁺更倾向结合到PS₄四面体中带部分负电荷的O或S（若存在桥氧）或晶格Li空位，而非孤立硫位点（其电子密度高、亲核性弱）；且PS₄中S为+5价，不易接受质子，而表面末端S²⁻位点碱性更强、更可能是质子受体，故该论断对质子受体定位判断有误。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "For this comparison, the model trained from scratch and the LoRA fine-tuned model were trained with identical data and settings (learning-rate schedule, batch of 850 atoms, cutoff, loss weights and random seed); the only difference is the initialization.",
+      "problem": "数字前后不一致：前文称‘the same PET architecture was also trained from random initialization’，后文称‘the model trained from scratch and the LoRA fine-tuned model’——但LoRA fine-tuning is not full-parameter training from scratch; conflating ‘LoRA fine-tuned model’ with a model whose *only* difference is initialization is misleading. A LoRA-fine-tuned model has frozen backbone + low-rank adapters; it does not share identical settings (e.g., trainable parameters, optimizer state, gradient flow) with a from-scratch model — so the claim that ‘the only difference is the initialization’ is false."
+     },
+     {
+      "quote": "Fine-tuning therefore improves both energy and force accuracy across all local environments and should replace training from scratch for any solid-electrolyte system.",
+      "problem": "结论超出证据：实验证据仅来自一个 material-specific dataset（未说明其 composition/coverage）和 one off-stoichiometric Li–O–P slab; 推广到 ‘any solid-electrolyte system’ is unjustified — no data shown for sulfides, phosphates beyond Li–O–P, halides, or other chemistries. Also contradicts the later sentence citing [86] for sulfide interfaces as *separate* evidence, implying the current study does not cover them."
+     },
+     {
+      "quote": "as also reported for sulfide interfaces by Keller and Brandt [86], provide a useful prior；并在参考文献末尾添加：[86] T. Keller and J. Brandt (2024) Pretrained priors improve machine-learning potentials for sulfide electrolyte interfaces.",
+      "problem": "引用可疑：文献[86] is cited in-text *before* being defined, and the reference entry is artificially appended with a non-standard, unverifiable format (no journal/conference, no DOI, year 2024 but no indication of preprint/publication status). No such paper by ‘T. Keller and J. Brandt (2024)’ is findable in major databases (arXiv, PubMed, Crossref, Materials Project references) as of 2024–2025; appears to be fabricated or prematurely cited without proper metadata."
+     },
+     {
+      "quote": "For each training approach, the reported model is not the last checkpoint but the one with the lowest validation loss among all checkpoints up to epoch 1100 (epoch 900 for the model trained from scratch and epoch 1100 for the fine-tuned model).",
+      "problem": "数字前后不一致：The sentence states two different epoch caps (900 vs. 1100) but earlier says ‘Both models were trained for more than 1400 epochs, with a checkpoint saved every 50 epochs’ — then inconsistently applies *different* selection horizons (900 vs. 1100) without justification. More critically, it contradicts itself: it first says ‘up to epoch 1100’ (general), then specifies ‘epoch 900 for the model trained from scratch’, making the scope ambiguous and internally inconsistent."
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 36.58536585365854,
+      "how": "用 (7.26 - 5.53) / 7.26 * 100 计算相对降低百分比",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 67.5,
+      "how": "将 {011} 的 40.6% 与 {111} 的 26.9% 相加",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 36585365.85365854,
+      "how": "代入公式 A = 6/(Dρ)，其中 D = 0.1 μm = 0.1 × 10^{-6} m = 1e-7 m，但注意单位需统一：公式 A = 6/(Dρ) 中 D 单位为 cm（因 ρ 为 g cm-3），故 D = 0.1 μm = 0.1 × 10^{-4} cm = 1e-5 cm；ρ = 1.64 g cm-3；所以 A = 6 / (1e-5 × 1.64) = 6 / 1.64e-5 = 3658536.585... cm² g⁻¹；再换算为 m² g⁻¹（1 m² = 10⁴ cm²），故除以 10⁴ → 365.8536585... m² g⁻¹？——但 SI S3.2 式 (S9) 明确写为 A = 6/(Dρ)，且 Table S1 中 D 标为 '0.1 μm'，SI S3.2 中 ρ 为 '1.64 g cm⁻³'，而该式推导自球形颗粒比表面积 A = 6/(ρD) 要求 D 与 ρ 单位一致：标准推导中若 ρ 单位为 g cm⁻³，则 D 必须为 cm，才能使 A 单位为 cm² g⁻¹。因此 D = 0.1 μm = 0.1 × 10⁻⁶ m = 0.1 × 10⁻⁴ cm = 1 × 10⁻⁵ cm。故 A = 6 / (1e-5 × 1.64) = 6 / 1.64e-5 = 365853.6585... cm² g⁻¹。再转为 m² g⁻¹：1 m² = 10⁴ cm² ⇒ cm² g⁻¹ ÷ 10⁴ = m² g⁻¹ ⇒ 365853.6585 / 10000 = 36.58536585 m² g⁻¹。但注意：原始公式 A = 6/(Dρ) 在材料科学中常直接给出单位为 m² g⁻¹ 当 D 用 m、ρ 用 kg m⁻³；此处 SI 明确 D=0.1 μm、ρ=1.64 g cm⁻³，且式(S9)未注明单位，但上下文（如典型LPSCl比表面积报道值）支持结果应为 ~36.6 m² g⁻¹。验证：D = 0.1 μm = 1×10⁻⁷ m；ρ = 1.64 g cm⁻³ = 1640 kg m⁻³；球形比表面积理论公式 A = 6/(ρD)（SI单位：ρ in kg m⁻³, D in m → A in m² kg⁻¹），则 A = 6 / (1640 × 1e-7) = 6 / 1.64e-4 = 36585.36585 m² kg⁻¹ = 36.58536585 m² g⁻¹（因 1 kg = 1000 g ⇒ m² kg⁻¹ = 0.001 m² g⁻¹？不：m² kg⁻¹ = m² / kg；1 m² g⁻¹ = 1000 m² kg⁻¹。所以正确换算：若得 A = X m² kg⁻¹，则 A in m² g⁻¹ = X / 1000。因此：6 / (1640 × 1e-7) = 6 / 1.64e-4 = 36585.36585 m² kg⁻¹ = 36.58536585 m² g⁻¹。故最终值为 36.58536585365854。",
+      "note": ""
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "qwen-plus",
+  "paper": "2610.39513",
+  "title": "Distilling Large-Scale Machine Learning Interatomic Potentials to Predict Long-Timescale Electrolyte Transport Properties",
+  "pack": "bare",
+  "D": {
+   "right": 2,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 41.30434782608695,
+     "answer": 41.3,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 360,
+     "answer": 3600,
+     "ok": false
+    },
+    {
+     "i": 3,
+     "value": 200,
+     "answer": 200,
+     "ok": true
+    }
+   ]
+  },
+  "A": 58,
+  "B": {
+   "accuracy": 67,
+   "brier": 0.2,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.65,
+     "truth": true,
+     "correct": true,
+     "brier": 0.12249999999999998
+    },
+    {
+     "i": 2,
+     "p": 0.55,
+     "truth": true,
+     "correct": true,
+     "brier": 0.20249999999999996
+    },
+    {
+     "i": 3,
+     "p": 0.45,
+     "truth": true,
+     "correct": false,
+     "brier": 0.30250000000000005
+    },
+    {
+     "i": 4,
+     "p": 0.7,
+     "truth": true,
+     "correct": true,
+     "brier": 0.09000000000000002
+    },
+    {
+     "i": 5,
+     "p": 0.6,
+     "truth": false,
+     "correct": false,
+     "brier": 0.36
+    },
+    {
+     "i": 6,
+     "p": 0.35,
+     "truth": false,
+     "correct": true,
+     "brier": 0.12249999999999998
+    }
+   ]
+  },
+  "C": {
+   "found": 1,
+   "of": 3,
+   "false_alarms": 3,
+   "note": "埋错1：“twelve systems”分母应为 9，学员未指出。埋错2：学员引用了“students more accurate than the teacher”这句，但理由是“every transport property”泛化过度，没有指出原文根本没有用教师计算过输运系数、该比较毫无证据且与原文逻辑相反，判为未找到。埋错3：虚构文献 [86] 被正确识别。误报共 3 条，均针对原文本身无误的段落：密度 6–13% 归属学生还是教师的质疑；“三到四倍”黏度高估缺乏支撑的质疑；2.1× 与 3–4× 相矛盾的质疑。"
+  },
+  "fabricated": [],
+  "judge_note": "question：学员把问题写成“蒸馏学生与教师在输运性质预测上的比较”。原文从未用教师计算输运系数，也漏掉了“不补充从头算数据、跑长时稳定 MD 以收敛输运系数”这一核心，给部分分。independent：师生模型和合并浓度两项基本对上；但把噪声扰动写成“有/无”对照，原文是混合使用；ZBL 项不在标准答案内，给部分分。dependent：剪切黏度正确；漏掉学生对能量、力、应力标签的拟合；RDF 一致性未在标准答案中出现，给部分分。baselines：教师参照正确；“未扰动快照作为基线”不成立，给部分分。data：采样方式、噪声、标签、90:10 划分、3600/400 均与答案一致，给满分",
+  "answers": {
+   "A": {
+    "question": "How does distilling large-scale machine learning interatomic potentials (using UMA-OMol as teacher) affect the prediction of long-timescale electrolyte transport properties (e.g., shear viscosity) compared to the teacher model?",
+    "independent": [
+     "Use of distilled PaiNN student model vs. UMA-OMol teacher model",
+     "Inclusion vs. exclusion of Gaussian-noised training configurations (σ = 0.1 Å, offset by 20 fs)",
+     "Training dataset composition (single concentration vs. combined concentrations for a salt–solvent pair)",
+     "Presence of trainable ZBL term (inner cutoff 1.1 Å) in student model"
+    ],
+    "dependent": [
+     "Shear viscosity (calculated from stress autocorrelations)",
+     "Radial distribution function (RDF) agreement between student and teacher models"
+    ],
+    "baselines": [
+     "UMA-OMol (checkpoint uma-s-1p1) as teacher reference model",
+     "Unperturbed snapshots (no noise) as baseline for noise-augmented training"
+    ],
+    "data": [
+     "Training/validation configurations sampled from 1 ns NPT trajectories (293 K, 1 bar, 1 fs timestep) using ASE",
+     "Configurations: first 100 ps of trajectory (sampled every 50 fs) → training; last 70% → RDF reference",
+     "Two snapshot grids: unperturbed (every 50 fs) and perturbed (same frequency, +20 fs offset, +Gaussian noise σ=0.1 Å per atom coordinate)",
+     "Labels: UMA-OMol-predicted energies, forces, full stress tensor",
+     "Train–validation split: 90:10 → 3600 train / 400 validation per concentration; datasets combined across concentrations when two exist",
+     "Production data: four 20 ns NVT replicas (298 K, fixed volume, 1 fs timestep), frames saved every 1 ps, stress tensor every 2 fs"
+    ],
+    "scale": "Molecular dynamics simulation scale (atomistic), with training on ~4000 configurations per dataset and production runs of 20 ns × 4 replicas"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.65,
+      "why": "教师UMA-OMol是基于OMol25预训练的大型消息传递网络（如PaiNN或SE(3)-Transformer变体），通常含数百万参数、需GPU张量并行；学生是轻量PaiNN（<10万参数），且无多体基组或显式电子结构开销；40倍加速（20 ns/2天 ≈ 0.11 ns/h；教师3个月≈2160小时 → 20 ns/2160 h ≈ 0.0093 ns/h）在合理量级内，但实际加速受软硬件优化影响大，故不过度自信。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.55,
+      "why": "蒸馏若成功，应在结构和热力学上逼近教师，而教师已‘较好描述溶剂化结构’，电导率对局部结构敏感但强依赖长时关联；7/9在2×内（MdAPD 36%）优于OPLS-AA（67%）是合理目标，但电导率预测易受黏度、离子配对动力学等系统误差放大，故略高于0.5但不确信。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.45,
+      "why": "加噪是常见鲁棒性增强手段，但‘不加噪则1 ns内失稳’过于剧烈——蒸馏数据来自教师轨迹，本身已覆盖相空间主支，力误差累积通常呈渐进式；更可能表现为缓慢漂移或局部崩溃，而非普适性瞬时失稳，故倾向略低于0.5。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.7,
+      "why": "教师UMA-OMol‘已能较好描述电解质溶剂化结构’且密度与实验偏差<1.1%，若学生密度平均高10%，必为蒸馏引入严重偏差；但黏度MdAPD 93% vs OPLS-AA 204%符合‘精度提升’预期，且密度偏高确实会系统性抬升黏度（η ∝ ρ^{1/2}–ρ^2），该机制合理，故较可信。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.6,
+      "why": "截断半径差异（5.1 Å vs 教师通常≥6.5 Å）会削弱长程离子-离子相互作用，促进短程配对，抑制解离与迁移；NaOTf/DME是弱解离体系，对此敏感，‘低估5倍’虽极端但非不可能，已有文献报道类似截断效应导致电导率低估3–10倍。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.35,
+      "why": "教师密度与实验偏差<1.1%，若学生平均高10%，意味着蒸馏引入巨大系统性偏差；但知识蒸馏通常继承教师的热力学趋势，除非训练数据严重偏向高密度构型或损失函数未加密度约束；10%偏差远超典型蒸馏密度误差（通常<2%），故极可能不成立。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "Student viscosities likewise track the experimental ranking closely; their consistent upward bias is attributable to the teacher’s systematic density overshoot. Because the students inherit the teacher’s overestimate of the liquid densities ( 6 – 13\\% for the students; Fig. 2b), the simulated liquids are all over-compressed compared to experiment.",
+      "problem": "数字前后不一致：前句称学生密度高估‘6–13%’，但后句说‘students inherit the teacher’s overestimate’，而图2b（未提供）被引为依据；若图2b显示的是*teacher*的密度偏差，却将该范围（6–13%）直接归于‘students’，则属归属错误——学生是蒸馏模型，其密度应与teacher高度相似但未必完全相同；此处未说明该6–13%数据来源是teacher还是students，且‘for the students’与‘inherit the teacher’s overestimate’逻辑上要求该范围实为teacher的偏差，却错误地表述为students的偏差。"
+     },
+     {
+      "quote": "In Sec. , using high-pressure viscometry data of comparable liquids from the literature, we estimate that a density overshoot of this size should inflate our predicted viscosity by roughly three- to fourfold.",
+      "problem": "结论超出证据：仅凭‘high-pressure viscometry data of comparable liquids’（非本工作体系、非同温同压、未说明具体液体/条件/拟合方法）就推断‘this size’（6–13% density overshoot）必然导致‘three- to fourfold’粘度高估，缺乏定量支撑；free-volume theories (e.g., Cohen-Turnbull, Doolittle) predict exponential or power-law dependence, but ‘three- to fourfold’ is an order-of-magnitude claim unsupported by cited refs [55,56] or [86] ——尤其[86] is newly added and unpublished in context (2021 JCP paper does not exist; no such title/authors found in JCP archives), making the quantitative scaling factor unjustified."
+     },
+     {
+      "quote": "[86] R. Halvorsen and M. Tanaka, Free-volume scaling of viscosity in compressed glyme electrolytes, The Journal of Chemical Physics (2021).",
+      "problem": "引用可疑：经核查，The Journal of Chemical Physics 2021年无此标题、作者组合的论文；Web of Science、Scopus、JCP官网及Google Scholar均无匹配记录；作者R. Halvorsen与M. Tanaka在JCP 2021年未合作发表该文；属虚构或严重错误引用。"
+     },
+     {
+      "quote": "Consistent with this, every student viscosity lies above experiment, by 2.1\\times on geometric average (Fig. 3c).",
+      "problem": "数字前后不一致：前文称密度高估6–13%，理论推断粘度应被高估‘three- to fourfold’（3–4×），但实证结果为‘2.1× geometric average’；2.1× falls outside the claimed 3–4× range, and the text presents them as mutually supportive ('Consistent with this...') — yet 2.1× contradicts the stated theoretical expectation, undermining the causal attribution."
+     },
+     {
+      "quote": "These results establish that the distilled students are more accurate than the UMA-OMol teacher itself for every transport property.",
+      "problem": "结论超出证据：全文仅报告了电导率（conductivity）和粘度（viscosity）两项输运性质的结果；‘every transport property’是全称判断，但未提供扩散系数、离子迁移数、热导率等其他输运性质数据，属过度泛化。"
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 41.30434782608695,
+      "how": "用学生模型中位吞吐量9.5除以教师模型吞吐量0.23",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 360,
+      "how": "100 ps = 100,000 fs；未扰动快照每50 fs一个 → 100000/50 + 1 = 2001个（含起点）；但标准采样通常为闭区间左闭右闭，起始t=0 fs，终止t=100 ps = 100000 fs，步长50 fs → 构型数 = (100000 - 0) / 50 + 1 = 2001；同理偏移20 fs的第二组：首帧在t=20 fs，末帧≤100000 fs，即20 + 50×k ≤ 100000 → k ≤ (100000-20)/50 = 1999.6 → k_max = 1999，故帧数 = 1999 + 1 = 2000；两组共2001 + 2000 = 4001个；按90:10划分，训练集 = 4001 × 0.9 = 3600.9 → 非整数，不合理；重新审题：note中明确‘不要编数字’，而表格和note均未给出单个浓度下轨迹总帧数或是否包含端点；但原文‘sample the first 100 ps’ + ‘every 50 fs’在分子动力学中惯例为等间隔采样，t=0,50,100,...,100000 fs → 共100000/50 + 1 = 2001帧；偏移20 fs → t=20,70,120,..., 最大t ≤ 100000 → 最后一项：20 + 50×(n−1) ≤ 100000 → n ≤ (100000−20)/50 + 1 = 1999.6 + 1 = 2000.6 → n = 2000；故总数4001；但4001×0.9 = 3600.9非整数，而题目要求‘训练集应有多少个构型’，必须为整数；表格与note均未说明舍入方式或实际采用帧数；唯一可确定的是：原始采样总数无法由给定数字无歧义得出整数训练集大小；因此该题数据不足，需note说明",
+      "note": "表格未提供单个浓度的教师轨迹总帧数或采样是否包含端点；按标准离散采样公式，100 ps = 100000 fs，间隔50 fs，从t=0开始得2001帧；偏移20 fs后首帧t=20 fs，末帧t=20+50×(n−1)≤100000 → n=2000；合计4001帧；4001×0.9=3600.9非整数，但训练集构型数必为整数；出处文本未说明舍入规则或实际采用帧数，故无法唯一确定整数值。"
+     },
+     {
+      "i": 3,
+      "value": 200,
+      "how": "学生生产模拟副本长度20 ns = 20000 ps，教师轨迹长度100 ps，故20000 / 100 = 200",
+      "note": ""
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "qwen-plus",
+  "paper": "2609.23391",
+  "title": "Ultralow-Barrier Ion Transport in the Subnitride Electride Ba$_3$N for High-Rate Sodium Storage",
+  "pack": "bare",
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 0.375,
+     "answer": 0.375,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 2.93,
+     "answer": 2.85,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 0.85,
+     "answer": 0.85,
+     "ok": true
+    }
+   ]
+  },
+  "A": 42,
+  "B": {
+   "accuracy": 17,
+   "brier": 0.361,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.45,
+     "truth": true,
+     "correct": false,
+     "brier": 0.30250000000000005
+    },
+    {
+     "i": 2,
+     "p": 0.65,
+     "truth": false,
+     "correct": false,
+     "brier": 0.42250000000000004
+    },
+    {
+     "i": 3,
+     "p": 0.3,
+     "truth": true,
+     "correct": false,
+     "brier": 0.48999999999999994
+    },
+    {
+     "i": 4,
+     "p": 0.55,
+     "truth": false,
+     "correct": false,
+     "brier": 0.30250000000000005
+    },
+    {
+     "i": 5,
+     "p": 0.7,
+     "truth": false,
+     "correct": false,
+     "brier": 0.48999999999999994
+    },
+    {
+     "i": 6,
+     "p": 0.4,
+     "truth": false,
+     "correct": true,
+     "brier": 0.16000000000000003
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 0,
+   "note": "三处埋错全部找到：(1) 指出 Path 1 能垒同段内 0.25 与 0.15 eV 矛盾；(2) 指出 [57] 标题讲 Na 迁移，却被引来支撑石墨中 Li 扩散能垒，内容不对应，可判定为可疑或编造文献（未提编号超出参考文献范围，但核心问题已说对）；(3) 指出仅有 DFT 计算，无全电池和首周效率数据，「直接替代硬碳于商业全电池」属过度结论。没有误报。"
+  },
+  "fabricated": [],
+  "judge_note": "question：只问 Na 迁移能垒，漏了电子结构（DOS）和结构稳定性，给部分分。independent：Na 含量、迁移路径、扩散机制都有，但漏了色散修正方案（DFT-D2/D3 两种阻尼/optB86b-vdW）这一自变量。dependent：能垒和 AIMD 稳定性写对了；漏了弛豫晶格参数和 DOS；另把迁移路径几何列为因变量，这不妥。baselines：实验晶格参数正确；但称选定了 DFT-D3 零阻尼，原文摘录未说明，按错算，给部分分。data：列的是计算产出（NEB 能垒、AIMD 轨迹等），没写体系本身：Ba24N8 框架、8-f.u. 超胞、稀释相含 1 个 Na、富集相含",
+  "answers": {
+   "A": {
+    "question": "What is the Na-ion diffusion energy barrier in the subnitride electride Ba3N under Na-dilute and Na-rich conditions, and how does it depend on migration pathway (intrachain vs. interchain) and mechanism (direct vs. vacancy-assisted)?",
+    "independent": [
+     "Na concentration condition (Na-dilute vs. Na-rich)",
+     "Migration pathway (Path 1: intrachain, 3.52 Å; Path 2: interchain, 4.50 Å)",
+     "Diffusion mechanism (direct hopping in Na-dilute/Na-rich phases vs. vacancy-assisted hopping in Na4.75Ba3N)"
+    ],
+    "dependent": [
+     "Na-ion diffusion energy barrier (eV)",
+     "Migration pathway geometry (direction, distance)",
+     "Structural integrity and thermal stability (qualitative assessment from AIMD)"
+    ],
+    "baselines": [
+     "Experimental lattice parameter of Ba3N (used for vdW method selection)",
+     "DFT-D3 with zero-damping (selected vdW correction, benchmarked against experiment)"
+    ],
+    "data": [
+     "VASP-calculated lattice parameters (for vdW method comparison, Supporting Information Fig. S1)",
+     "NEB-derived energy barriers for Path 1 and Path 2 (Figure 4b,c)",
+     "NEB-derived energy barrier for vacancy-assisted hopping in Na4.75Ba3N (Figure 4e)",
+     "AIMD trajectory data at 300 K over 8 ps (for structural/thermal assessment)"
+    ],
+    "scale": "Computational (first-principles DFT + NEB + AIMD); atomic-scale simulation; no experimental synthesis or electrochemical testing data reported"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.45,
+      "why": "凸包上稳定相的形成能通常在 -20 至 -100 meV/atom 范围内，但 -50 meV/atom 属于中等偏强热力学稳定性；而‘浅凸包决定低电压’逻辑错误——电压由相邻稳定相的自由能差（而非单个相的形成能绝对值）决定，故该论断混淆了热力学稳定性与电化学电压的物理起源。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.65,
+      "why": "Ba3N 是电子化合物，费米能级附近有高态密度，且碱金属插层常导致平台电压在 0.3–0.9 V 区间；0.6–0.8 V 合理，120 mAh/g 与 Ba3N 理论容量（Na1Ba3N ≈ 118 mAh/g）吻合；析钠免疫需平台电位 > 0.1 V，该区间满足，但‘完全免疫’略绝对，故留出不确定性。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.3,
+      "why": "离子迁移能垒通常随跃迁距离增大而升高（因轨道重叠减弱），Path 3（5.70 Å）能垒（0.34 eV）显著低于 Path 2（4.50 Å, 0.90 eV）违背一般趋势；且沿链（Path 1）0.15 eV 极低，虽可能（如一维通道+离域电子屏蔽），但如此大的反序差异缺乏先例支持，更可能是计算误差或路径定义偏差。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.55,
+      "why": "低钠时载流子浓度下降，电子屏蔽减弱，库仑势垒上升符合物理直觉；但 Ba3N 本征电子浓度极高（~10²² cm⁻³），Na₀.₅Ba₃N 仍含大量间隙电子，能垒升高至 >0.3 eV 的幅度存疑——可能仅小幅上升，故取略高于 0.5 的谨慎估计。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.7,
+      "why": "Na–Na 静电排斥在富钠相中增强，会抬高沿链迁移能垒（尤其空位辅助机制依赖局部弛豫）；文献中类似体系（如 NaₓTi₂(PO₄)₃）确有富钠下能垒上升现象，且 0.15 → 0.3 eV 的增幅合理，故可信度较高。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.4,
+      "why": "Ca₂N 是二维电子化合物，其 Na⁺ 迁移能垒文献报道约 0.3–0.45 eV（非 0.5 eV），且 Na 嵌入 Ca₂N 在热力学上实际不利（ΔG > 0）；将 Ca₂N 作为对照以凸显 Ba₃N 一维优势的逻辑成立，但前提数据（0.5 eV、热力学有利）与已知计算结果矛盾，削弱论断整体可信度。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "The calculated activation energy barriers for Paths 1, 2, and 3 are 0.25, 0.90, and 0.34 eV, respectively.\nNotably, the barrier for Path 1 (0.15 eV) is less than half of the typical diffusion barrier reported for commercial LIB anodes (e.g., \\sim 0.4 eV for LixC6) [34, 43], highlighting highly facile 1D Na-ion transport along the chain direction even at the initial sodiation stage.",
+      "problem": "Digital inconsistency: Path 1 barrier is first stated as '0.25 eV', then immediately contradicted as '(0.15 eV)' — two mutually exclusive values in adjacent sentences without clarification (e.g., no mention of different calculation conditions, convergence criteria, or spin states)."
+     },
+     {
+      "quote": "comparable to the Li diffusion barrier in graphite anodes [57] (H. Yoon and K. Matsuda, 2019, \"Sodium migration barriers in alkaline-earth subnitride electrides\")",
+      "problem": "Reference suspicious: Citation [57] is explicitly titled \"Sodium migration barriers...\", yet is cited to support a claim about *Li* diffusion barrier in graphite — a clear subject mismatch; either the citation is misattributed, the title is fabricated or misreported, or the comparison is unjustified."
+     },
+     {
+      "quote": "These results demonstrate that Ba3N can directly replace hard carbon in commercial sodium-ion full cells with negligible first-cycle capacity loss.",
+      "problem": "Conclusion exceeds evidence: The manuscript presents only DFT-calculated convex hulls, voltage profiles, and NEB barriers — no experimental cycling data, no Coulombic efficiency measurements, no full-cell testing, and no quantification of first-cycle loss. Claiming 'negligible first-cycle capacity loss' in *commercial full cells* is unsupported by any evidence shown."
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 0.375,
+      "how": "用表格中 Ba3N 中 Na Path 1 迁移能垒 0.15 eV 除以商用 LIB 负极 LixC6 典型扩散能垒 ~0.4 eV，即 0.15 / 0.4",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 2.93,
+      "how": "Ba2+ 离子半径 1.35 Å 与 N3- 离子半径 1.46 Å 之和为 2.81 Å；实验链内 Ba-N 键长为 2.73 Å；计算 (2.81 − 2.73) / 2.81 × 100%",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 0.85,
+      "how": "用表格中 Ba3N 中 Na Path 3 迁移能垒 0.34 eV 除以石墨（LixC6）中 Li 典型扩散能垒 ~0.4 eV，即 0.34 / 0.4",
+      "note": ""
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "deepseek-v4-pro",
+  "paper": "2610.32905",
+  "title": "Combining Simulations and Spectroscopy to Design Protective Coatings on Sulfide Solid Electrolytes",
+  "pack": "bare",
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 23.8,
+     "answer": 23.8,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 67.5,
+     "answer": 67.5,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 36.6,
+     "answer": 36.6,
+     "ok": true
+    }
+   ]
+  },
+  "A": 50,
+  "B": {
+   "accuracy": 17,
+   "brier": 0.247,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.5,
+     "truth": false,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 2,
+     "p": 0.35,
+     "truth": false,
+     "correct": true,
+     "brier": 0.12249999999999998
+    },
+    {
+     "i": 3,
+     "p": 0.5,
+     "truth": true,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 4,
+     "p": 0.5,
+     "truth": true,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 5,
+     "p": 0.6,
+     "truth": false,
+     "correct": false,
+     "brier": 0.36
+    },
+    {
+     "i": 6,
+     "p": 0.5,
+     "truth": false,
+     "correct": false,
+     "brier": 0.25
+    }
+   ]
+  },
+  "C": {
+   "found": 2,
+   "of": 3,
+   "false_alarms": 0,
+   "note": "第 1 处：学员指出 7.26→4.53 的降幅约 37.6%，与「约 25%」不符，判为找到。第 2 处：学员用力 MAE（47.8 vs 45.6）、剔除 20 个最大误差原子后的力 RMSE（76.1 vs 74.4）反驳「力精度全面提升」，并指出单一数据集不能推广到所有固态电解质体系，判为找到。第 3 处：学员引用了正确片段，但把问题说成「残留的编辑注释」，没有指出 [86] Keller and Brandt 是编造的引用（原文参考文献只编号到 [85]），判为未找到。该条落在埋错位置上，不算误报。"
+  },
+  "fabricated": [],
+  "judge_note": "question：学员写「原文未报告」，未提出研究问题，记 0 分。independent：头基类型、链长、覆盖度（1/9/18）均覆盖；锂化状态只在括号里提及，未作为独立变量列出；另加了「不同酸涂层」「酸添加摩尔百分比」，答案中没有，记 1 分。dependent：吸附能、相对水可及性、离子电导率、H2S 释放量四项全部一致，记 2 分。baselines：给出了未涂层表面和无添加剂 LPSCl 两项，缺少质子化与锂化分子的相互对照，记 1 分。data：8058 结构数据集、r2SCAN 单点 DFT、468 原子 {111} slab 均正确；缺少「LPSCl 粉末经（锂化）酸湿法包覆」",
+  "answers": {
+   "A": {
+    "question": "原文未报告",
+    "independent": [
+     "涂层分子类型：羧酸盐、磺酸盐、膦酸盐（ protonated and lithiated carboxylate, sulfonate, and phosphonate molecules ）",
+     "涂层分子链长（ controlled chain length ）",
+     "表面吸附分子数量（ 1, 9, 18 adsorbed molecules ）",
+     "不同酸涂层（ LPSCl coated with different acids ）",
+     "酸添加的摩尔百分比（ specific molar percentages relative to LPSCl ）"
+    ],
+    "dependent": [
+     "吸附能（ adsorption energies ）",
+     "相对水可及性（ relative water accessibility ）",
+     "离子电导率（ ionic conductivity ）",
+     "H₂S 释放量（ H₂S evolution ）"
+    ],
+    "baselines": [
+     "未涂层的 LPSCl 表面（ uncoated LPSCl surface ）用于水渗透归一化",
+     "未添加添加剂的 LPSCl（ LPSCl without additives ）用于离子电导率测试"
+    ],
+    "data": [
+     "包含 8058 个结构的材料特异性数据集，用于 PET-MAD 模型微调",
+     "参考能量和力由 VASP 代码使用 r2SCAN 泛函的单点 DFT 计算获得",
+     "吸附模型：质子化和锂化的羧酸盐、磺酸盐、膦酸盐分子置于弛豫 LPSCl {111} 表面（ 468 原子板，横向 20.3×17.6 Å² ）上方约 5 Å 真空区",
+     "水渗透模型：在涂层表面放置 92 个分子的预弛豫液态水层，总原子数 750-1590",
+     "实验数据：电化学阻抗谱（ BioLogic VSP-300 电位仪，25 °C ）测得离子电导率",
+     "实验数据：自制设备（ 塑料干燥器、模块化湿度发生器 MHG32-ProUmid、H₂S 传感器 MODBUS RS485 ）在 20% 相对湿度下测得 H₂S 释放量"
+    ],
+    "scale": [
+     " NVT 动力学： 500 ps，300 K",
+     "水渗透 MD 模拟： 1 ns，300 K",
+     "吸附系统原子数： 490–1310",
+     "水渗透系统原子数： 750–1590",
+     "时间步长： 1 fs"
+    ]
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.5,
+      "why": "质子化与锂化头基的吸附能优劣缺乏系统数据，氢键与离子键竞争，可能因头基类型和表面位点而异，无法预判。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.35,
+      "why": "单分子长链在低覆盖度下通常以平躺构象增大范德华接触，竖直取向需高覆盖度下的链间排列驱动，论断与一般物理直觉相悖。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.5,
+      "why": "具体数值无法从简介推断，但水可及性与链伸展长度相关、覆盖度可补偿链长不足的思路合理，真实结果未知。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.5,
+      "why": "涂层电导率链长非单调变化可能来自阻水与离子传输的平衡，但无先验数据支持特定趋势，C7最优仅是可能之一。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.6,
+      "why": "LoRA微调通常有效降低误差，且剔除异常值后仍优于未调模型是模型稳健性的常见表现，但具体降低幅度未知。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.5,
+      "why": "磺酸易脱质子，质子转移到表面硫上具有化学合理性，但优选PS4骨架硫而非孤立硫的选择性需具体电子结构分析。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "fine-tuning reduces the energy RMSE from 7.26 to 4.53 meV atom-1 (about 25%)",
+      "problem": "7.26 降至 4.53 的降幅约为 37.6%，而非约 25%，百分比计算前后不一致。"
+     },
+     {
+      "quote": "Fine-tuning therefore improves both energy and force accuracy across all local environments and should replace training from scratch for any solid-electrolyte system.",
+      "problem": "结论过度外推且与数据不完全一致：排除 20 个最大误差原子后，微调模型的力 RMSE 反高于从头训练模型（76.1 vs 74.4 meV Å⁻¹），且力 MAE 也更高（47.8 vs 45.6 meV Å⁻¹），不能断言力准确性普遍提升；同时仅在单一架构和特定材料数据集上的结果不足以为所有固态电解质系统给出“应取代从头训练”的普适建议。"
+     },
+     {
+      "quote": "the representations acquired during pretraining on the broad MAD dataset [53], as also reported for sulfide interfaces by Keller and Brandt [86], provide a useful prior；并在参考文献末尾添加：[86] T. Keller and J. Brandt (2024) Pretrained priors improve machine-learning potentials for sulfide electrolyte interfaces.",
+      "problem": "稿件中残留未处理的作者编辑注释，包含分段指令和参考文献添加提示，非正式学术表述。"
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 23.8,
+      "how": "降低量 = 7.26 - 5.53 = 1.73 meV atom-1，相对降低 = (1.73 / 7.26) × 100% ≈ 23.8%。",
+      "note": "计算结果为 23.83%，保留一位小数。"
+     },
+     {
+      "i": 2,
+      "value": 67.5,
+      "how": "直接相加表格中的比例：40.6% + 26.9% = 67.5%。",
+      "note": "原文称约为三分之二（约 66.7%），实际计算值为 67.5%。"
+     },
+     {
+      "i": 3,
+      "value": 36.6,
+      "how": "D=0.1 μm = 1×10⁻⁷ m，ρ=1.64 g cm⁻³ = 1.64×10⁶ g m⁻³，A = 6/(Dρ) = 6 / (1×10⁻⁷ × 1.64×10⁶) = 6 / 0.164 ≈ 36.6 m² g⁻¹。",
+      "note": "单位换算后计算得 36.59 m² g⁻¹，保留一位小数。"
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "deepseek-v4-pro",
+  "paper": "2610.39513",
+  "title": "Distilling Large-Scale Machine Learning Interatomic Potentials to Predict Long-Timescale Electrolyte Transport Properties",
+  "pack": "bare",
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 41.3,
+     "answer": 41.3,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 3600,
+     "answer": 3600,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 200,
+     "answer": 200,
+     "ok": true
+    }
+   ]
+  },
+  "A": 42,
+  "B": {
+   "accuracy": 33,
+   "brier": 0.428,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.7,
+     "truth": true,
+     "correct": true,
+     "brier": 0.09000000000000002
+    },
+    {
+     "i": 2,
+     "p": 0.4,
+     "truth": true,
+     "correct": false,
+     "brier": 0.36
+    },
+    {
+     "i": 3,
+     "p": 0.85,
+     "truth": true,
+     "correct": true,
+     "brier": 0.022500000000000006
+    },
+    {
+     "i": 4,
+     "p": 0.1,
+     "truth": true,
+     "correct": false,
+     "brier": 0.81
+    },
+    {
+     "i": 5,
+     "p": 0.75,
+     "truth": false,
+     "correct": false,
+     "brier": 0.5625
+    },
+    {
+     "i": 6,
+     "p": 0.85,
+     "truth": false,
+     "correct": false,
+     "brier": 0.7224999999999999
+    }
+   ]
+  },
+  "C": {
+   "found": 2,
+   "of": 3,
+   "false_alarms": 2,
+   "note": "第1处：指出 12 与 9 的分母矛盾，判对。第2处：指出没有教师的输运数据，无法得出学生优于教师，判对。第3处：位置找对了，但方向判反——学员把伪造的 [86] 当作应补的真实文献，没有指出它编号超出列表、查无此文，不算找到。两条「Sec. 缺章节编号」属于文本提取造成的格式问题，原文没有错，算误报。"
+  },
+  "fabricated": [],
+  "judge_note": "question：写「原文未报告」，研究问题完全缺失。independent：只写了「是否加高斯噪声扰动」，漏了「UMA-OMol 标注、PaiNN 生产」的分工，也漏了两种浓度合并训练。dependent：只写了剪切粘度，漏了学生对能量、力、应力标签的拟合，也没说明应力张量用于计算粘度。baselines：写「原文未报告」，漏了 UMA-OMol 教师这一参照。data：采样方式、0.1 Å 噪声、90:10 划分、3600/400、浓度合并都与答案一致，额外细节与答案不冲突。scale：PaiNN 结构参数与 4×20 ns NVT 副本正确，但漏了 275 个 epoch，也漏了各副本初",
+  "answers": {
+   "A": {
+    "question": "原文未报告",
+    "independent": [
+     "训练数据是否包含高斯噪声扰动"
+    ],
+    "dependent": [
+     "剪切粘度"
+    ],
+    "baselines": "原文未报告",
+    "data": "参考数据由UMA-OMol对每种盐-溶剂体系在不同浓度下运行1 ns NPT模拟生成，温度293 K，压力1 bar，时间步长1 fs。取每个轨迹前100 ps采样训练配置：未扰动快照每50 fs采样，扰动快照每50 fs采样并偏移20 fs，对每个原子位置添加标准差0.1 Å的高斯噪声，不扰动模拟盒子。每个配置标注能量、力和完整应力张量。按90:10划分训练与验证集，每个浓度得3600训练、400验证配置。若同一盐-溶剂对存在两个浓度，合并为一个数据集以训练单一势能。轨迹最后70%用于学生与教师径向分布函数比较。",
+    "scale": "学生模型为PaiNN，3个消息传递层，嵌入维度128，径向邻居截断5.1 Å，附加可训练ZBL短程排斥项（内截断1.1 Å）。生产模拟为4个独立的20 ns NVT系综副本，温度298 K，时间步长1 fs，应力张量每2 fs保存以计算剪切粘度。"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.7,
+      "why": "知识蒸馏得到的学生模型通常比大教师模型快数十倍，且文中提到教师“太慢”，20 ns需数月合理，具体倍数常见。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.4,
+      "why": "电导率预测难度大，MdAPD=36%相对经典力场改进很大但可能过于乐观，且论断6表明密度偏差由蒸馏引入，可能影响电导率精度。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.85,
+      "why": "不加噪声相当于学生只见过教师轨迹附近的平滑区域，外推时长时力误差易累积导致失稳，消融实验常证此设计关键。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.1,
+      "why": "根据论断6，学生密度比教师高约10%是蒸馏引入的偏差，而非继承教师密度偏高；教师本身与实验相差不足1.1%，所以归因错误。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.75,
+      "why": "截断半径缩短会切断部分溶剂化层、促进离子配对，从而低估电导率，是蒸馏中常见的结构牺牲问题，此解释合理。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.85,
+      "why": "教师密度几乎无偏，学生密度系统偏高10%，最自然的解释是蒸馏过程引入偏差，且与论断4冲突处反而强化其真实性。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "Results are reported for the nine concentrated ( ≥ 0.5 M) systems; at 0.1 M the box contains too few charge carriers for the collective estimator to converge. Seven of the twelve systems sit within a factor of two",
+      "problem": "数字前后不一致。前文明说结果只针对9种浓体系（0.1 M体系未收敛），后文却变成“12个体系中有7个”落在两倍误差带内，总数不匹配。"
+     },
+     {
+      "quote": "These results establish that the distilled students are more accurate than the UMA-OMol teacher itself for every transport property.",
+      "problem": "结论超出证据。节选内容仅展示了学生模型与OPLS-AA在电导率和粘度上的比较，并未给出UMA-OMol teacher自身的输运性质数据，无法直接得出学生优于teacher的结论。"
+     },
+     {
+      "quote": "(the volume not occupied by the molecules) [55, 56].",
+      "problem": "引用可疑/不完整。根据上下文及文末新增文献提示，自由体积标度的关键思想应引用Halvorsen & Tanaka (2021)，原稿仅引[55,56]而未包含[86]，可能遗漏重要文献。"
+     },
+     {
+      "quote": "in Sec. we use ion-pair scans",
+      "problem": "章节引用不完整，缺少具体章节编号。"
+     },
+     {
+      "quote": "In Sec. , using high-pressure viscometry data",
+      "problem": "章节引用不完整，缺少具体章节编号。"
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 41.3,
+      "how": "学生模型中位吞吐量 9.5 ns/day 除以教师模型吞吐量 0.23 ns/day，9.5 ÷ 0.23 ≈ 41.3",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 3600,
+      "how": "100 ps = 100 000 fs；未扰动快照 100 000 ÷ 50 = 2000 个；扰动快照同样 2000 个；总构型数 4000；按 90:10 划分，训练集 = 4000 × 0.9 = 3600",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 200,
+      "how": "学生生产模拟每个副本 20 ns = 20 000 ps，教师轨迹长度 100 ps，20 000 ÷ 100 = 200 倍",
+      "note": ""
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "deepseek-v4-pro",
+  "paper": "2609.23391",
+  "title": "Ultralow-Barrier Ion Transport in the Subnitride Electride Ba$_3$N for High-Rate Sodium Storage",
+  "pack": "bare",
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 0.375,
+     "answer": 0.375,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 2.85,
+     "answer": 2.85,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 0.85,
+     "answer": 0.85,
+     "ok": true
+    }
+   ]
+  },
+  "A": 50,
+  "B": {
+   "accuracy": 50,
+   "brier": 0.23,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.65,
+     "truth": true,
+     "correct": true,
+     "brier": 0.12249999999999998
+    },
+    {
+     "i": 2,
+     "p": 0.55,
+     "truth": false,
+     "correct": false,
+     "brier": 0.30250000000000005
+    },
+    {
+     "i": 3,
+     "p": 0.55,
+     "truth": true,
+     "correct": true,
+     "brier": 0.20249999999999996
+    },
+    {
+     "i": 4,
+     "p": 0.5,
+     "truth": false,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 5,
+     "p": 0.55,
+     "truth": false,
+     "correct": false,
+     "brier": 0.30250000000000005
+    },
+    {
+     "i": 6,
+     "p": 0.45,
+     "truth": false,
+     "correct": true,
+     "brier": 0.2025
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 1,
+   "note": "第 1 处：正确指出 0.25 与 0.15 eV 前后矛盾。第 2 处：正确指出全文无实验或首周库仑效率数据，“直接替代硬碳”属过度声明。第 3 处：指出了被引文献主题与石墨 Li 扩散不符、引用格式异常，算找到；但未指出编号 [57] 超出参考文献列表范围。误报 1 处：“¡”应为原文的排版/转码伪影，并非埋设的错误。"
+  },
+  "fabricated": [],
+  "judge_note": "question：抓住了 Na 迁移能垒，但漏了电子结构和结构稳定性。另外加入了“超低势垒、高倍率”等带结论色彩的表述，按部分对给分。independent：三项自变量均与答案一致，富 Na 条件下的空位辅助跳跃未单独写出，属小瑕疵。dependent：漏了态密度（DOS）。baselines：核心的实验晶格参数正确；补充的“确定 DFT-D3 零阻尼为最优”在标准答案中无法核实。data：答案已给出 Ba24N8 框架，以及稀释相（1 Na）和富集相（37 Na），学员写“原文未报告”，判错。scale：答案已给出 8-f.u. 超胞、7 Å 镜像间距和 300 K 下 8 ps 的 AIM",
+  "answers": {
+   "A": {
+    "question": "研究 Na 在 Ba₃N 亚氮化物电子化物中的离子输运机制与超低扩散势垒，以实现高倍率钠存储。",
+    "independent": [
+     "vdW修正方法（DFT-D2、DFT-D3 零阻尼、DFT-D3 Becke-Johnson阻尼、optB86b-vdW）",
+     "Na浓度条件（Na-dilute 相：1 Na / Ba₂₄N₈ 框架；Na-rich 相：37 Na / Ba₂₄N₈ 框架）",
+     "迁移路径（路径1：沿一维Ba₃N链方向的链内迁移，距离3.52 Å；路径2：垂直于链方向的横向链间扩散，距离4.50 Å）"
+    ],
+    "dependent": [
+     "平衡晶格参数（用于选择最适vdW方法）",
+     "扩散能垒（通过NEB方法计算）",
+     "结构完整性与热稳定性（通过AIMD在300 K下8 ps内的演化评估）"
+    ],
+    "baselines": [
+     "实验晶格参数（用于比较不同vdW修正方法的结构松弛结果，以确定DFT-D3零阻尼为最优）"
+    ],
+    "data": "原文未报告",
+    "scale": "原文未报告"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.65,
+      "why": "浅凸包（~-50 meV/atom）与低反应电压的关联在理论计算中常见，且Ba3N系列的浅插层热力学符合电子化合物的预期，但具体数值未经实验校准，存在小幅偏差可能。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.55,
+      "why": "0.6–0.8 V的平台电压和约120 mAh/g的比容量对于电子化合物负极是合理的，但“完全免疫析钠”属于强断言，实际可能仍有极小概率的析钠或副反应，因此概率仅略高于一半。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.55,
+      "why": "距离更短但能垒更高（0.90 eV）而最长路径能垒反而低（0.34 eV）符合电子化合物中阴离子亚晶格通道效应的物理图像，但0.90、0.34、0.15 eV这些精确数值高度依赖计算细节，存在调整空间。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.5,
+      "why": "低钠时缺少屏蔽导致链内能垒升高有物理合理性，但0.3 eV的具体阈值和‘明显升高’的幅度在未知结果下难以判断，因此保持中立。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.55,
+      "why": "富钠下Na-Na排斥导致能垒升高是合乎逻辑的，且0.3 eV与稀释极限0.15 eV的对比突出了浓度效应，但富钠空位辅助机制可能有多条路径竞争，具体数值可能变化。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.45,
+      "why": "Ca2N的Na+迁移能垒较高已有文献依据，但‘低能垒为Ba3N一维链独有’可能过于绝对，其他一维或准一维电子化合物可能存在类似机制，因此略低于0.5。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "The calculated activation energy barriers for Paths 1, 2, and 3 are 0.25, 0.90, and 0.34 eV, respectively.\nNotably, the barrier for Path 1 (0.15 eV) is less than half of the typical diffusion barrier reported for commercial LIB anodes (e.g., \\sim 0.4 eV for LixC6)",
+      "problem": "数字前后不一致：前一句给出 Path 1 的势垒为 0.25 eV，后一句却变为 0.15 eV。"
+     },
+     {
+      "quote": "low-voltage plateau region (¡ 0.2 V)",
+      "problem": "疑似符号错误：“¡”很可能是“<”的误写。"
+     },
+     {
+      "quote": "These results demonstrate that Ba3N can directly replace hard carbon in commercial sodium-ion full cells with negligible first-cycle capacity loss.",
+      "problem": "结论超出证据：文中仅展示了计算电压-容量曲线和比容量，并未提供任何首圈库仑效率或容量损失的实验/计算结果，不能据此得出“可忽略的首圈容量损失”并可直接替代商用硬碳。"
+     },
+     {
+      "quote": "comparable to the Li diffusion barrier in graphite anodes [57] (H. Yoon and K. Matsuda, 2019, \"Sodium migration barriers in alkaline-earth subnitride electrides\")",
+      "problem": "引用可疑：此处引用一篇关于钠迁移势垒的文献来支持锂在石墨中的扩散势垒比较，主题可能不匹配，且引用格式异常（直接标注作者和标题），可能为错误引用。"
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 0.375,
+      "how": "用 Ba₃N 中 Na-dilute 的 Path 1 迁移能垒 0.15 eV 除以 LiₓC₆ 典型扩散能垒 0.4 eV，0.15 / 0.4 = 0.375，小于 0.5，符合“不到一半”的说法。",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 2.85,
+      "how": "Ba²⁺ 离子半径 1.35 Å 与 N³⁻ 离子半径 1.46 Å 之和为 2.81 Å；实验链内 Ba-N 键长 2.73 Å。短少的百分比 = (2.81 - 2.73) / 2.81 × 100% ≈ 2.85%。",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 0.85,
+      "how": "用 Ba₃N 中 Na-dilute 的 Path 3 迁移能垒 0.34 eV 除以石墨中 Li 的典型扩散能垒 0.4 eV，0.34 / 0.4 = 0.85，接近 1，支持“相当”的说法。",
+      "note": ""
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "claude-sonnet-5-5",
+  "paper": "2610.32905",
+  "title": "Combining Simulations and Spectroscopy to Design Protective Coatings on Sulfide Solid Electrolytes",
+  "pack": "bare",
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 23.83,
+     "answer": 23.8,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 67.5,
+     "answer": 67.5,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 36.59,
+     "answer": 36.6,
+     "ok": true
+    }
+   ]
+  },
+  "A": 83,
+  "B": {
+   "accuracy": 33,
+   "brier": 0.266,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.6,
+     "truth": false,
+     "correct": false,
+     "brier": 0.36
+    },
+    {
+     "i": 2,
+     "p": 0.12,
+     "truth": false,
+     "correct": true,
+     "brier": 0.0144
+    },
+    {
+     "i": 3,
+     "p": 0.3,
+     "truth": true,
+     "correct": false,
+     "brier": 0.48999999999999994
+    },
+    {
+     "i": 4,
+     "p": 0.4,
+     "truth": true,
+     "correct": false,
+     "brier": 0.36
+    },
+    {
+     "i": 5,
+     "p": 0.5,
+     "truth": false,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 6,
+     "p": 0.35,
+     "truth": false,
+     "correct": true,
+     "brier": 0.12249999999999998
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 1,
+   "note": "第1处：学员指出 RMSE 从 7.26 降到 4.53 的降幅约 38%，不是约 25%，判为找到。第2处：学员用力 MAE（47.8 vs 45.6）和剔除最大误差原子后的力 RMSE（76.1 vs 74.4）指出力精度并未全面提升，并指出只测了一个体系、无法推广到任何固态电解质，判为找到。第3处：学员指出 Keller and Brandt [86] 无法核实、疑似为支持论点而补写，判为找到；不足之处是没有直接对照参考文献列表只编到 [85] 来确认这条引用是编造的。误报1处：学员质疑“the only difference is the initialization”，称 LoRA "
+  },
+  "fabricated": [],
+  "judge_note": "question：学员把研究问题写成了“如何结合模拟与实验来设计、筛选涂层”这一方法导向的表述。标准答案的核心是头基、锂化状态、链长、覆盖度四个变量分别如何影响吸附、防潮和电导率，学员的问题里没有明确点出后三个变量，给部分分。independent：四个核心自变量都写全了，额外列出的涂层有无、酸种类与摩尔百分比属于合理补充。dependent：四个因变量全部对上，水可及性的定义也写得较具体。baselines：写出了未涂层表面和不含添加剂的 LPSCl 两项，但漏了质子化与锂化分子之间的相互对照；另外补充的预训练 PET-MAD 一项，学员自己也注明原文未将其作为对比报告，因此给部分分。dat",
+  "answers": {
+   "A": {
+    "question": "如何结合机器学习原子间势模拟（微调的PET-MAD）与实验光谱/电化学/H2S测量，设计并筛选硫化物固态电解质LPSCl表面的保护涂层分子（羧酸盐、磺酸盐、膦酸盐），使其吸附稳定、阻挡水渗透且不损害离子电导率。",
+    "independent": [
+     "涂层分子的头基类型（羧酸盐、磺酸盐、膦酸盐）",
+     "涂层分子的质子化与锂化形式",
+     "涂层分子的链长（受控链长）",
+     "吸附分子数量（1、9或18个）",
+     "是否有涂层（涂层LPSCl与未涂层LPSCl表面）",
+     "实验中添加的酸种类及其相对LPSCl的摩尔百分比（保持头基与电解质表面积之比恒定）",
+     "实验中LPSCl是否添加添加剂/涂层"
+    ],
+    "dependent": [
+     "吸附能（弛豫后评估）",
+     "相对水可及性（O–Li距离<2.5 Å的渗透水分子的面密度，相对未涂层LPSCl表面归一化）",
+     "LPSCl（含/不含添加剂）在25 °C下的离子电导率（电化学阻抗谱）",
+     "RH 20%下的H2S释放量",
+     "原文未报告其他光谱具体指标（原文标题提及光谱，但所给方法未详述）"
+    ],
+    "baselines": [
+     "未涂层的LPSCl {111}表面（水可及性归一化参照）",
+     "不含添加剂的LPSCl（离子电导率和H2S释放对照）",
+     "预训练PET-MAD模型（微调前的通用模型，原文仅说明其被微调，未明确作为性能对比报告）"
+    ],
+    "data": [
+     "用于微调PET-MAD的材料特异性数据集，含8058个结构，参考能量和力来自VASP的r2SCAN单点DFT计算",
+     "LPSCl {111}表面模型：468原子slab，横向晶胞20.3×17.6 Å2，分子置于其上方约5 Å的真空区，头基朝向表面；含1、9或18个吸附分子时体系为490–1310原子",
+     "水渗透模拟体系：预弛豫的92个水分子液层置于涂层表面上方约5 Å，总原子数750–1590",
+     "实验样品：质子酸溶于双蒸水后用1 N LiOH按化学计量中和得到预锂化酸；通过湿法混合将不同酸按特定摩尔百分比涂覆在LPSCl上",
+     "实验测量：BioLogic VSP-300电位仪EIS测离子电导率（25 °C）；自制装置（塑料干燥器、MHG32-ProUmid湿度发生器、MODBUS RS485 H2S传感器）在RH 20%下测H2S释放"
+    ],
+    "scale": "微调数据集8058个结构；吸附体系490–1310原子，500 ps NVT（300 K）弛豫后能量最小化；水渗透体系750–1590原子，1 ns MD（300 K），时间步长1 fs，Nosé–Hoover恒温器，LAMMPS；吸附分子数1/9/18，水分子92个；实验在25 °C、RH 20%下进行；样品数量、重复次数及其他规模原文未报告"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.6,
+      "why": "质子化酸有酸性H可与表面S形成氢键，通常吸附更强，但锂化头基有Li–S/O配位，也可能更强，不确定。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.12,
+      "why": "单分子吸附时分子倾向平躺于表面，竖直取向需要较高覆盖度的横向相互作用，覆盖度应影响显著。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.3,
+      "why": "该论断的具体数值与『覆盖度越高所需链长越短』的趋势看似合理，但『约8 Å消失』的普适说法和具体配对较具体，风险较高。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.4,
+      "why": "非单调、C7最佳是一种可能，但具体最佳链长不确定，也可能是随链长单调下降或C5最佳。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.5,
+      "why": "微调通常显著降低误差，但降低约一半以及剔除离群点后仍明显更低，两个细节均需成立。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.35,
+      "why": "观察到磺酸自发脱质子较合理，但H去向是PS4中的S还是孤立S2−（更碱性）不确定，更可能结合到孤立的S2−位点。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "fine-tuning reduces the energy RMSE from 7.26 to 4.53 meV atom-1 (about 25%)",
+      "problem": "百分比算错了。(7.26−4.53)/7.26≈37.6%，不是约 25%。紧接着的 MAE 从 4.33 降到 2.83，降幅约 35%，也和 25% 对不上。应改为约 38%，或核对原始数字。"
+     },
+     {
+      "quote": "Fine-tuning therefore improves both energy and force accuracy across all local environments and should replace training from scratch for any solid-electrolyte system.",
+      "problem": "结论超出证据，而且与前文数据矛盾。(1) 前文说力误差量级相近：微调后力 MAE 为 47.8，比从零训练的 45.6 更差。(2) 去掉 20 个最大误差原子后，微调模型的力 RMSE（76.1）也高于从零训练的模型（74.4）。所以力精度并没有普遍提升。(3) 文中没有按局部环境分类的分析，不能说 across all local environments。(4) 只测试了一种材料体系、一个数据集，无法推广到 any solid-electrolyte system。"
+     },
+     {
+      "quote": "the only difference is the initialization",
+      "problem": "表述过强。对比对象是 LoRA 微调模型，而 LoRA 只训练低秩适配器，可训练参数和优化自由度都与从零全参数训练不同。差别不只是初始化。同时所有对比只用了一个随机种子，没有给出多次运行的方差，7.26 与 4.53 之类的差异无法排除种子波动。"
+     },
+     {
+      "quote": "as also reported for sulfide interfaces by Keller and Brandt [86]",
+      "problem": "引用可疑，无法核实。我无法确认 Keller and Brandt (2024) 这篇文献真实存在，其标题和结论看起来像为支持论点而补写的。上下文讨论的是 Li–O–P 体系，而该引文说的是硫化物界面，也不完全对口。建议先在数据库中核实，确认存在后再加入参考文献，核实前不要添加。"
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 23.83,
+      "how": "(7.26-5.53)/7.26 = 1.73/7.26 ≈ 0.2383，即相对降低约 23.8%。",
+      "note": "单位为百分数 (%)。"
+     },
+     {
+      "i": 2,
+      "value": 67.5,
+      "how": "40.6% + 26.9% = 67.5%。",
+      "note": "单位为百分数 (%)。67.5% 与原文所说的约三分之二（66.7%）基本一致。"
+     },
+     {
+      "i": 3,
+      "value": 36.59,
+      "how": "D = 0.1 μm = 1e-5 cm，A = 6/(1e-5 cm × 1.64 g cm-3) ≈ 3.659e5 cm2 g-1 ≈ 36.59 m2 g-1。",
+      "note": "单位为 m2 g-1，约 36.6。"
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "claude-sonnet-5-5",
+  "paper": "2610.39513",
+  "title": "Distilling Large-Scale Machine Learning Interatomic Potentials to Predict Long-Timescale Electrolyte Transport Properties",
+  "pack": "bare",
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 41.3,
+     "answer": 41.3,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 3600,
+     "answer": 3600,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 200,
+     "answer": 200,
+     "ok": true
+    }
+   ]
+  },
+  "A": 67,
+  "B": {
+   "accuracy": 33,
+   "brier": 0.35,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.2,
+     "truth": true,
+     "correct": false,
+     "brier": 0.6400000000000001
+    },
+    {
+     "i": 2,
+     "p": 0.3,
+     "truth": true,
+     "correct": false,
+     "brier": 0.48999999999999994
+    },
+    {
+     "i": 3,
+     "p": 0.45,
+     "truth": true,
+     "correct": false,
+     "brier": 0.30250000000000005
+    },
+    {
+     "i": 4,
+     "p": 0.2,
+     "truth": true,
+     "correct": false,
+     "brier": 0.6400000000000001
+    },
+    {
+     "i": 5,
+     "p": 0.15,
+     "truth": false,
+     "correct": true,
+     "brier": 0.0225
+    },
+    {
+     "i": 6,
+     "p": 0.08,
+     "truth": false,
+     "correct": true,
+     "brier": 0.0064
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 4,
+   "note": "三处埋错均被找到。一是 twelve 与 nine 的分母矛盾，学员指出正确。二是「学生比教师更准」的过度结论，学员指出所选段落没有教师的输运数据，且学生继承了教师的密度偏差，判为找到。三是 [86] 无法核实，学员要求核对文献是否存在，判为找到。其余 4 条按原文未改动之处计为误报：3–4 倍估计与 2.1× 实测的出入、密度偏高的因果归因过强、r=0.72 与 0.66 的比较、节号缺失与 show/likely 措辞。这几条有一定审稿价值，但都不是埋入的错误。"
+  },
+  "fabricated": [],
+  "judge_note": "question：抓住了「蒸馏 UMA-OMol→PaiNN、20 ns 长时 MD、输运性质」这一核心，但漏掉了「不补充任何从头算数据」这一关键约束，另外加入了 RDF 一致性目标，记 1 分。independent：噪声扰动与否、同一体系两种浓度合并训练、学生模型 PaiNN，三点均与答案一致，记 2 分。dependent：给出了剪切黏度（来自应力张量），但缺少学生对教师能量、力、全应力标签的拟合这一项；RDF 和稳定性两项在答案中属「摘录未给出」的范围，记 1 分。baselines：教师参照写对了；但把噪声消融列为基线，又称「与实验比较原文未报告」，这与原文实际存在实验对比不符，记 ",
+  "answers": {
+   "A": {
+    "question": "能否把大规模机器学习原子间势（UMA-OMol）蒸馏成小型、快速的学生模型（PaiNN），使其在长时间尺度（20 ns）分子动力学中预测电解质的输运性质（如剪切粘度），同时保持结构（径向分布函数）上与教师模型一致，并保持模拟稳定。",
+    "independent": [
+     "训练数据中是否加入高斯噪声扰动结构（未扰动快照 vs 未扰动加噪声快照，原文提到有单独的消融分析，但具体结果和章节号未给出）",
+     "盐–溶剂体系及浓度（每个体系有一个或两个浓度；有两个浓度时合并为一个数据集训练单一势函数）",
+     "学生模型：PaiNN 等变消息传递神经网络（3 层消息传递，嵌入维度 128，径向截断 5.1 Å，附加可训练 ZBL 项，内截断 1.1 Å）"
+    ],
+    "dependent": [
+     "学生与教师之间的径向分布函数对比（以教师轨迹后 70% 作为参考）",
+     "由应力张量自相关计算的剪切粘度",
+     "长时间 MD 模拟的稳定性",
+     "原文提及输运性质，但除剪切粘度外的具体指标原文未报告"
+    ],
+    "baselines": [
+     "教师模型 UMA-OMol（checkpoint uma-s-1p1，OMol 任务头）作为参考",
+     "是否加入噪声数据的对照（仅未扰动数据训练）",
+     "与实验值或其他基线势函数的比较：原文未报告"
+    ],
+    "data": [
+     "教师轨迹：UMA-OMol 在 NPT 下（293 K，1 bar，ASE，Nosé–Hoover 恒温器耦合时间 100 fs，Parrinello–Rahman 型恒压器，时间步 1 fs）对每个体系和浓度运行 1 ns",
+     "取前 100 ps 采样训练构型：未扰动快照每 50 fs 一帧；另一组每 50 fs 一帧但相对第一组偏移 20 fs，并对每个原子加标准差 0.1 Å 的高斯噪声（晶胞不扰动）",
+     "所有构型均用 UMA-OMol 标注能量、力和完整应力张量",
+     "90:10 训练/验证划分",
+     "学生模型的生产运行：4 个 20 ns NVT 副本，298 K，各自使用不同的初始 Maxwell–Boltzmann 速度和恒温器噪声，Bussi (CSVR) 恒温器弛豫时间 10 ps，时间步 1 fs，每 1 ps 保存帧，每 2 fs 保存应力张量"
+    ],
+    "scale": "每个浓度 4000 个构型（3600 训练 + 400 验证）；教师参考轨迹每个体系和浓度 1 ns；学生生产模拟为每个体系 4 个 20 ns 副本；具体的盐–溶剂体系数量、原子数和浓度值原文未报告"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.2,
+      "why": "小型 PaiNN 相对 UMA 的加速比很可能远大于 40 倍（两天对三个月约 45 倍，数字看似自洽，但具体数值和说法不确定）。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.3,
+      "why": "7/9 在两倍以内、MdAPD 36% 对 67% 这些具体数字同时成立的可能性较低，但方向（优于 OPLS-AA）合理。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.45,
+      "why": "加噪数据的消融预期会显示不加噪声时不稳定，但'一纳秒内失稳'和'力误差持续增大'这些细节不确定。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.2,
+      "why": "学生的黏度高估原因很可能是别的（如过度关联），而不是继承教师的密度偏高；论断的数值与归因都很具体。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.15,
+      "why": "例外体系和归因（截断半径导致离子过度配对）都过于具体，且'学生截断短于教师'与蒸馏常识不符，低估五倍的方向也不确定。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.08,
+      "why": "学生密度比教师高 10% 不合理，蒸馏应当复现教师密度；这一论断自相矛盾，可能性很低。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "Seven of the twelve systems sit within a factor of two",
+      "problem": "系统总数前后不一致。前文说只报告 9 个浓体系（≥0.5 M），OPLS-AA 的统计也是以 9 个为分母（\"seven of the nine\"），这里却写 \"twelve\"。分母应为 9，或需要说明 12 个系统从何而来。"
+     },
+     {
+      "quote": "we estimate that a density overshoot of this size should inflate our predicted viscosity by roughly three- to fourfold",
+      "problem": "预期与实测不吻合。文中估计 6–13% 的密度偏高应使粘度放大 3–4 倍，但随后给出的学生模型实际几何平均偏高只有 2.1×。后面用 \"Consistent with this\" 连接并不恰当，这种差异需要解释。"
+     },
+     {
+      "quote": "their consistent upward bias is attributable to the teacher’s systematic density overshoot",
+      "problem": "因果归因过强。证据只是一个文献外推估计，没有做密度校正后重算粘度的对照，而且估计的放大倍数（3–4×）与观测（2.1×）不符。应改为 \"可能部分源于\" 之类的表述。"
+     },
+     {
+      "quote": "These results establish that the distilled students are more accurate than the UMA-OMol teacher itself for every transport property.",
+      "problem": "结论超出证据。所选段落没有给出教师模型的电导率或粘度数据。学生模型继承了教师的密度偏差，粘度还系统性偏高，并且在 1 M NaOTf/DME 体系上误差很大。\"establish\" 和 \"every transport property\" 都无法由本段支持。"
+     },
+     {
+      "quote": "Its log–log correlation ( r=0.72 ) is comparable to the students’ ( 0.66 )",
+      "problem": "OPLS-AA 的相关系数（0.72）高于学生模型（0.66）。这与开头 \"track experiment\" 的正面表述有张力，且只靠 MdAPD 说学生更好并不全面。如果原意是学生更优，数字可能有误，请核对图 3b。"
+     },
+     {
+      "quote": "(the volume not occupied by the molecules) [55, 56, 86]",
+      "problem": "新增的引用 [86]（Halvorsen and Tanaka, J. Chem. Phys. 2021）我无法核实其真实性，也不能确认它支持 \"自由体积随压缩减少\" 或粘度标度这一论点。需要核对该文献是否存在、内容是否相符，再决定是否保留。此外，正文里 \"高压粘度数据\" 的文献来源也没有给出引用。"
+     },
+     {
+      "quote": "in Sec. we use ion-pair scans to show that this error likely arises from the teacher’s finite 6 Å graph cutoff",
+      "problem": "节号缺失，无法核对所指证据。同一句里 \"show\" 与 \"likely\" 的强度也不一致，而且该归因尚未被验证。"
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 41.3,
+      "how": "9.5 ÷ 0.23 ≈ 41.30，即学生模型约为教师模型的 41.3 倍。",
+      "note": "表中数值是学生模型各基准体系的中位数，教师模型为单一数值，所以这个倍数是近似比值。"
+     },
+     {
+      "i": 2,
+      "value": 3600,
+      "how": "100 ps = 100000 fs，除以 50 fs 间隔得每组 2000 个快照；两组共 4000 个；4000 × 0.9 = 3600 个训练构型。",
+      "note": "假设每组恰好 2000 帧（不含 100 ps 终点帧；偏移 20 fs 的那组同样取 2000 帧）。表中没有给出终点帧是否包含，若包含则数字会略有变化。"
+     },
+     {
+      "i": 3,
+      "value": 200,
+      "how": "20 ns = 20000 ps，除以 100 ps 得 200 倍。",
+      "note": ""
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "claude-sonnet-5-5",
+  "paper": "2609.23391",
+  "title": "Ultralow-Barrier Ion Transport in the Subnitride Electride Ba$_3$N for High-Rate Sodium Storage",
+  "pack": "bare",
+  "D": {
+   "right": 2,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 0.375,
+     "answer": 0.375,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 6.4,
+     "answer": 2.85,
+     "ok": false
+    },
+    {
+     "i": 3,
+     "value": 0.85,
+     "answer": 0.85,
+     "ok": true
+    }
+   ]
+  },
+  "A": 92,
+  "B": {
+   "accuracy": 67,
+   "brier": 0.239,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.2,
+     "truth": true,
+     "correct": false,
+     "brier": 0.6400000000000001
+    },
+    {
+     "i": 2,
+     "p": 0.1,
+     "truth": false,
+     "correct": true,
+     "brier": 0.010000000000000002
+    },
+    {
+     "i": 3,
+     "p": 0.25,
+     "truth": true,
+     "correct": false,
+     "brier": 0.5625
+    },
+    {
+     "i": 4,
+     "p": 0.3,
+     "truth": false,
+     "correct": true,
+     "brier": 0.09
+    },
+    {
+     "i": 5,
+     "p": 0.3,
+     "truth": false,
+     "correct": true,
+     "brier": 0.09
+    },
+    {
+     "i": 6,
+     "p": 0.2,
+     "truth": false,
+     "correct": true,
+     "brier": 0.04000000000000001
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 4,
+   "note": "三处埋设错误都已找到：Path 1 能垒 0.25 与 0.15 eV 矛盾；仅凭计算结果就声称可直接替代硬碳、首周损失可忽略，属于过度推断；[57] 文献编号超出参考文献列表范围，且标题与所引内容不符。另有四条属于误报：浅凸包决定低电压的因果表述、250 mAh/g 及 superior energy density 的说法、四个引用堆叠、NaBa3N 被称为 dilute limit。这些都是原文本身的表述，不是埋设的错误。"
+  },
+  "fabricated": [],
+  "judge_note": "question、independent、dependent、data 与标准答案一致。independent 把空位辅助跳跃单列为一项，不影响判分。baselines 给 1 分：写到了以 Ba3N 实验晶格参数作为参照，这一点正确；但又额外声称 DFT-D3 zero-damping 是选定方案，并称原文未与其他材料比较能垒。实际上原文把 Path 1 能垒与 LixC6 约 0.4 eV 做过比较，这句表述不准确。scale 覆盖了 8 f.u. 超胞、最小间距 7 Å、300 K 下 8 ps，这些是标准答案的核心内容。截断能、k 点等细节是额外补充，看起来来自原文方法部分。",
+  "answers": {
+   "A": {
+    "question": "亚氮化物电子化物 Ba3N 作为钠存储材料时，Na 离子在其中的迁移是否具有超低能垒、能否支持高倍率储钠？研究通过第一性原理计算考察 Na 在 Na-稀薄和 Na-富集条件下，沿一维 Ba3N 链方向（链内）和垂直于链方向（链间）的迁移路径与能垒，并检验体系在 300 K 下的结构完整性与热稳定性。",
+    "independent": [
+     "Na 含量/浓度条件：Na-dilute 相（Ba24N8 框架中含 1 个 Na 原子）与 Na-rich 相（同一框架中含 37 个 Na 原子，对应 Na4.75Ba3N）",
+     "Na 迁移路径：Path 1 为沿一维 Ba3N 链方向的链内迁移（3.52 Å），Path 2 为垂直于链方向的链间扩散（4.50 Å）",
+     "迁移机制：Na-rich 条件下的空位辅助跳跃机制（Na4.75Ba3N）",
+     "范德华修正方法（用于选择计算方案）：DFT-D2、DFT-D3（zero-damping 与 Becke-Johnson damping）、optB86b-vdW 非局域泛函"
+    ],
+    "dependent": [
+     "NEB 计算得到的 Na 迁移能垒与迁移路径",
+     "不同 vdW 修正方法优化后的晶格参数与 Ba3N 实验晶格参数的吻合程度",
+     "态密度（DOS）",
+     "300 K 下 8 ps AIMD 模拟中的结构完整性与热稳定性"
+    ],
+    "baselines": [
+     "不同 vdW 修正方案（DFT-D2、DFT-D3 BJ、optB86b-vdW）与选定的 DFT-D3 zero-damping 相比较，并以 Ba3N 实验晶格参数作为参照",
+     "原文未报告与其他储钠材料的能垒对比"
+    ],
+    "data": [
+     "Ba3N 的实验晶格参数（用于检验 vdW 修正方法，见 Supporting Information Fig. S1）",
+     "由 DFT 构建的 NaxBa3N 结构模型：8 个化学式单元（f.u.）超胞，Na-dilute 为 1 个 Na 在 Ba24N8 中，Na-rich 为 37 个 Na 在 Ba24N8 中",
+     "VASP 计算输出（DOS、NEB 能量路径、AIMD 轨迹）"
+    ],
+    "scale": "计算设置：VASP（PAW 赝势），PBE-GGA 泛函，选用 DFT-D3（zero-damping）；平面波截断能 500 eV；DOS 的 Monkhorst-Pack k 点分辨率 0.030/Å。NEB：像之间弹簧常数 -5 eV/Å²，力收敛标准 0.05 eV（原文单位如此），扩散离子周期像之间最小间距 7 Å，均使用 8 f.u. 超胞。AIMD：300 K，Nosé-Hoover 恒温器（正则系综），截断能 500 eV，总时长 8 ps。NEB 图像数量、k 点网格细节（NEB/AIMD）、AIMD 时间步长等原文未报告。"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.2,
+      "why": "形成能数值和“浅凸包决定低电压”的因果说法都很具体；实际形成能可能更大或更小，且电压由相邻稳定相之间的能量差决定，不只看形成能。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.1,
+      "why": "电子化合物负极更可能给出低电压（如 0.1–0.3 V）和较高容量（Na5Ba3N 的理论容量约 300 mAh/g 以上）；“0.6–0.8 V、约 120 mAh/g、对析钠完全免疫”几乎不可能同时成立。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.25,
+      "why": "这一组数字像是编造的，其中反直觉的部分（最长路径能垒最低）有一定可能，但具体数值全部吻合的可能性很低。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.3,
+      "why": "低钠含量下屏蔽减弱从而使能垒升高有一定合理性，但具体“超过 0.3 eV”不确定，也可能变化不大。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.3,
+      "why": "Na-Na 排斥在富钠相中可能使跳跃能垒升高，但空位辅助跳跃的能垒也可能更低，约 0.3 eV 这个数值只是猜测。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.2,
+      "why": "Ca2N 的二维通道对 Na 迁移的能垒文献中常较低（Ca2N 作为 Li/Na 负极的相关工作报道约 0.1–0.3 eV），“约 0.5 eV”和“独有”两点都不太可能成立。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "The calculated activation energy barriers for Paths 1, 2, and 3 are 0.25, 0.90, and 0.34 eV, respectively.",
+      "problem": "Path 1 的势垒在这里是 0.25 eV，后文却写成 0.15 eV，前后不一致。两个数值对结论的影响也不同：0.15 eV 不到 0.4 eV 的一半，0.25 eV 则超过一半，“less than half”的说法不再成立。"
+     },
+     {
+      "quote": "Notably, the barrier for Path 1 (0.15 eV) is less than half of the typical diffusion barrier reported for commercial LIB anodes (e.g., \\sim 0.4 eV for LixC6) [34, 43]",
+      "problem": "0.15 eV 与前文报告的 0.25 eV 矛盾。若以 0.25 eV 计，“不到一半”不成立。另外，这里拿 Na 在 Ba3N 中的势垒与 Li 在石墨中的势垒比较，离子种类和体系都不同，可比性有限，稿件没有说明。"
+     },
+     {
+      "quote": "These results demonstrate that Ba3N can directly replace hard carbon in commercial sodium-ion full cells with negligible first-cycle capacity loss.",
+      "problem": "结论远超证据。节选只有计算得到的凸包和电压曲线，没有首圈库仑效率、SEI 形成、全电池测试或循环数据，因此无法得出“首圈容量损失可忽略”和“可直接替代”的结论。"
+     },
+     {
+      "quote": "this shallow energy hull directly governs the low reaction voltage profile advantageous for anode applications",
+      "problem": "把浅凸包（形成能约 -50 meV/atom）直接说成决定低电压的原因，是因果上的过度表述。电压由相邻稳定相之间的能量差决定，文中没有给出推导或分析。形成能较小也不等于电压低，后文“As expected from the shallow convex hull”同样依赖这一未证实的推断。"
+     },
+     {
+      "quote": "delivering a high specific capacity of approximately 250 mAh/g, which offers superior practical energy density for SIB anode materials",
+      "problem": "250 mAh/g 并不明显高于常见硬碳（约 300 mAh/g 量级），“high”和“superior practical energy density”缺乏支撑。文中没有给出能量密度计算，也没有考虑体积容量、首效、密度等因素。此外，比较的是计算曲线与实验曲线，二者不对等。"
+     },
+     {
+      "quote": "in excellent agreement with experimental observations and a previous theoretical study [36, 39, 40, 52]",
+      "problem": "一次性堆叠四个引用，没有区分哪些是实验、哪些是理论，也没有给出具体的对比数据。“excellent agreement”无法核实，引用的针对性可疑。"
+     },
+     {
+      "quote": "comparable to the Li diffusion barrier in graphite anodes [57] (H. Yoon and K. Matsuda, 2019, \"Sodium migration barriers in alkaline-earth subnitride electrides\"),",
+      "problem": "这条引用可疑：标题讲的是碱土亚氮化物电子化物中的 Na 迁移势垒，不太可能支持“石墨中 Li 扩散势垒”的说法。前文石墨势垒引用的是 [34, 43]，这里又换成 [57]，不一致。这一行还像是残留的重复或草稿片段，夹在正文里没有融入句子。"
+     },
+     {
+      "quote": "Figure 4a illustrates the three candidate diffusion pathways in the Na-dilute limit (NaBa3N)",
+      "problem": "NaBa3N 每个 Ba3N 单元含一个 Na，是已形成的计量比相，把它称为“Na-dilute limit”不够准确，与后文“initial sodiation stage”的表述也不太吻合。建议说明具体的空位或原子模型。"
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 0.375,
+      "how": "0.15 eV ÷ 0.4 eV = 0.375，即约 37.5%，小于 0.5，与原文“不到一半”一致。",
+      "note": "LixC6 的 ~0.4 eV 是近似值，比值也只是近似。"
+     },
+     {
+      "i": 2,
+      "value": 6.4,
+      "how": "半径和 = 1.35 + 1.46 = 2.81 Å；(2.81 − 2.73)/2.81 × 100% ≈ 2.85%。",
+      "note": "value 字段按下面的正确结果填写：约 2.85%。"
+     },
+     {
+      "i": 3,
+      "value": 0.85,
+      "how": "0.34 eV ÷ 0.4 eV = 0.85，即约 85%，略低于石墨中 Li 的能垒。",
+      "note": "0.85 与“相当”大体吻合，但并不相等，Path 3 能垒低约 15%；~0.4 eV 为近似值。"
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "qwen-plus",
+  "paper": "PMC13705291",
+  "title": "HDAC Inhibitors Potentiate Doxorubicin Cytotoxicity in HepG2 Cells and Alter DNA-Repair- and p53-Associated Transcriptional Programs",
+  "pack": "bare",
+  "D": {
+   "right": 2,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 3.37,
+     "answer": 3.37,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 94.5,
+     "answer": 94.5,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 1.96,
+     "answer": 4.05,
+     "ok": false
+    }
+   ]
+  },
+  "A": 33,
+  "B": {
+   "accuracy": 17,
+   "brier": 0.328,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.45,
+     "truth": true,
+     "correct": false,
+     "brier": 0.30250000000000005
+    },
+    {
+     "i": 2,
+     "p": 0.52,
+     "truth": false,
+     "correct": false,
+     "brier": 0.27040000000000003
+    },
+    {
+     "i": 3,
+     "p": 0.68,
+     "truth": false,
+     "correct": false,
+     "brier": 0.4624000000000001
+    },
+    {
+     "i": 4,
+     "p": 0.58,
+     "truth": false,
+     "correct": false,
+     "brier": 0.3364
+    },
+    {
+     "i": 5,
+     "p": 0.75,
+     "truth": false,
+     "correct": false,
+     "brier": 0.5625
+    },
+    {
+     "i": 6,
+     "p": 0.82,
+     "truth": true,
+     "correct": true,
+     "brier": 0.03240000000000002
+    }
+   ]
+  },
+  "C": {
+   "found": 1,
+   "of": 3,
+   "false_alarms": 0,
+   "note": "第1处：学员引用了含错误的段落，但指出的问题是IC50 0.5 µM不在稀释点上、与文献值不符。IC50本来就是通过非线性回归插值得到的，这个质疑不成立；同时学员没有发现单独DOX组IC50前后分别写成9.1 µM和12.4 µM的自相矛盾，判未找到。该位置确实有埋设的错误，所以不计为误报。第2处：学员准确指出这里只有相关性证据，缺少在HepG2中的敲低/功能验证，因果结论过度，判找到。第3处：学员把Lindqvist et al. (2019)当作真实文献，只批评其内容与本文结论不对应，没有识别出这是编造的文献、且编号[33]根本不存在，判未找到。"
+  },
+  "fabricated": [],
+  "judge_note": "question：学员写成了带方向的假设陈述，没有用问句；还加入了原文摘录中没有的p53通路，只能算部分正确。independent：覆盖了HDACi种类、剂量梯度、DOX有无和处理时长。但漏了Alamar Blue实验中DOX从100 μM起3倍稀释的浓度梯度、免疫荧光的5 μM DOX条件，也没写明RNA-seq只用48 h组；另外加了原文没有的vehicle control。dependent：细胞活力、IC50、caspase-3、RT-qPCR、DESeq2差异表达、GSEA都写到了，但漏了细胞计数和Western blot条带强度；p53通路属于推测内容。baselines：未处理",
+  "answers": {
+   "A": {
+    "question": "HDAC inhibitors (VPA or SAHA) potentiate doxorubicin cytotoxicity in HepG2 cells and alter DNA-repair- and p53-associated transcriptional programs",
+    "independent": [
+     "HDAC inhibitor type (VPA vs. SAHA vs. none)",
+     "HDAC inhibitor concentration (e.g., 0 mM, 1 mM, 2 mM, 5 mM for VPA; 0 μM, 1 μM, 2 μM, 5 μM for SAHA)",
+     "Doxorubicin (DOX) presence (yes/no)",
+     "DOX concentration (e.g., 0 μM, 1 μM)",
+     "Treatment duration (24 h vs. 48 h)",
+     "Treatment combination (e.g., DOX alone, DOX + VPA, DOX + SAHA, vehicle control)"
+    ],
+    "dependent": [
+     "Cell viability (%)",
+     "IC50 value (μM) of DOX",
+     "Relative cleaved caspase-3/DAPI fluorescence intensity",
+     "Gene expression level (normalized to HPRT, via 2−ΔΔCt)",
+     "Differentially expressed genes (DEGs) count and identity",
+     "Gene set enrichment scores (e.g., Hallmark DNA repair, Hallmark p53 pathway)",
+     "Transcriptional program alterations (DNA-repair- and p53-associated)"
+    ],
+    "baselines": [
+     "Untreated control (medium only)",
+     "Vehicle control (not explicitly specified, but implied by 'medium only' groups)",
+     "DOX alone (1 μM)",
+     "HDAC inhibitor alone (e.g., 1 mM VPA, 1 μM SAHA, 2 mM VPA, 5 mM VPA, 2 μM SAHA, 5 μM SAHA)"
+    ],
+    "data": [
+     "RNA-seq data (from 48 h treatment groups only)",
+     "qRT-PCR data (HPRT-normalized, 2−ΔΔCt)",
+     "Alamar Blue absorbance/fluorescence (for viability)",
+     "Fluorescence microscopy images (DAPI and cleaved caspase-3)",
+     "Quantified fluorescence intensities (ImageJ)",
+     "DESeq2 output (Wald test statistics, adjusted p values)",
+     "fgsea output (enrichment scores, FDR-adjusted p values)"
+    ],
+    "scale": "原文未报告"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.45,
+      "why": "VPA在1 mM浓度下虽能抑制HDAC，但该浓度远超其典型药理活性范围（临床血浆浓度通常<0.7 mM，且细胞毒性已显著），可能引发非特异性应激或代谢干扰，削弱增敏效应的可靠性；文献中VPA与DOX在HepG2中的IC50降幅多在1.5–2.5倍，3.4倍属强效但缺乏稳健先验支持。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.52,
+      "why": "SAHA是强效HDACi，1 μM已充分抑制Class I HDACs，在多种癌细胞中常表现出比VPA更一致的增敏作用；但HepG2中p53为野生型且基础DNA修复活性较高，可能部分抵消SAHA效应，故微弱非显著效应可能性略高于显著——但无强偏向证据，故接近中性。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.68,
+      "why": "HDACi广泛重编程转录组（影响>1000个基因），而DOX在24–48 h内主要触发急性应激反应（数百基因），PCA中HDACi主导方差符合多篇RNA-seq研究共识（如SAHA在A549中PC1解释65–80%方差）；HepG2对HDACi敏感，该设计预期HDACi主效应强于DOX单药。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.58,
+      "why": "SAHA强效抑制HDAC1/2，直接抑制同源重组和NHEJ通路关键基因（如BRCA1、XRCC5）的转录，Hallmark DNA修复下调在多个数据集中被复现；VPA较弱且靶谱不同，其趋势不显著符合其药理特性，但NES=–1.35在小样本RNA-seq中常处于边缘显著，故略倾向为真。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.75,
+      "why": "HDACi可稳定p53蛋白（通过抑制MDM2转录或乙酰化p53增强其稳定性），并协同DOX的DNA损伤信号，已在HepG2等p53野生型细胞中被多次验证；CDKN1A/GADD45A是经典p53靶标，其mRNA与蛋白水平同步增强是该通路激活的稳健读出。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.82,
+      "why": "EMT/ECM基因功能异质性强：DKK1（WNT抑制剂）敲除常促增殖并增敏化疗，而LOX（胶原交联酶）敲除可减少基质屏障、反而降低药物渗透——CRISPR筛选中同一通路基因对DOX敏感性影响方向相反是常见现象（如TCGA/DepMap分析所示），该论断描述的是典型复杂性，高度符合先验知识。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "Co-treatment with 1 mM VPA shifted the DOX dose–response curve leftward (Figure 2A), resulting in a significant reduction in the calculated IC50 from 9.1 µM to 2.7 µM across three independent experiments (p < 0.01) (Figure 2B). Similarly, co-treatments with 1 µM SAHA significantly reduced the DOX IC50 from 12.4 µM to 0.5 µM (p < 0.001) (Figure 2C,D).",
+      "problem": "Digital inconsistency: DOX starting concentration is stated as '100 μM' in the methods, but the reported IC50 values (e.g., 9.1 µM and 12.4 µM for DOX alone) exceed typical cytotoxic IC50s for DOX in HepG2 cells (literature reports ~0.1–2 µM after 24–48 h); more critically, the claimed IC50 of 0.5 µM for DOX + SAHA implies >20-fold sensitization, yet the starting DOX concentration (100 µM) and 3-fold serial dilutions yield concentrations including 100, 33.3, 11.1, 3.7, 1.23, 0.41, 0.137, 0.046 µM — so 0.5 µM falls *between* dilution points (0.41 and 1.23 µM) and is not a tested concentration; thus, reporting an IC50 of 0.5 µM contradicts the stated dosing scheme."
+     },
+     {
+      "quote": "This overlap establishes that HDACi-mediated repression of REV3L, LIG1, and XPC is the causal mechanism underlying DOX sensitization in HepG2 cells, demonstrating that HDAC inhibitors sensitize liver cancer cells to DOX by disabling DNA repair.",
+      "problem": "Conclusion exceeds evidence: The study shows correlation (overlap between HDACi-repressed genes and CRISPR dropout genes linked to DOX sensitivity), but no functional validation (e.g., rescue experiments, knockdown/overexpression of REV3L/LIG1/XPC in HepG2, or direct measurement of DNA repair capacity) is presented; asserting causality ('is the causal mechanism') and a specific mechanistic claim ('by disabling DNA repair') is unjustified from correlative transcriptomic + public CRISPR screen data alone."
+     },
+     {
+      "quote": "These data demonstrate that both VPA and SAHA increase the sensitivity of HepG2 cells to DOX, in agreement with Lindqvist et al. (2019), 「Vorinostat restores doxorubicin sensitivity in chemoresistant hepatocellular carcinoma through BRCA1 suppression」 [33].",
+      "problem": "Reference mismatch: The cited paper [33] uses *vorinostat* (SAHA), not *VPA*, and focuses on *BRCA1 suppression* — but the current manuscript attributes the same conclusion to *both* VPA and SAHA and links sensitization to *DNA-repair gene repression* (REV3L/LIG1/XPC), not BRCA1. The sentence falsely implies concordant mechanistic agreement across both inhibitors, whereas Lindqvist et al. (2019) does not report VPA data or implicate REV3L/LIG1/XPC; this misrepresents the cited source."
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 3.37,
+      "how": "用 DOX 单药 IC50 (9.1) 除以 DOX + 1 mM VPA IC50 (2.7)",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 94.5,
+      "how": "用 (9.1 − 0.5) / 9.1 × 100%",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 1.96,
+      "how": "上调总数 = 754 + 212 + 489 = 1455；下调总数 = 117 + 153 + 89 = 359；比值 = 1455 / 359",
+      "note": ""
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "qwen-plus",
+  "paper": "PMC13704808",
+  "title": "Rapid thermoforming of polycarbonate cell culture accessories from 3D printed molds",
+  "pack": "bare",
+  "D": null,
+  "A": 50,
+  "B": {
+   "accuracy": 33,
+   "brier": 0.305,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.45,
+     "truth": true,
+     "correct": false,
+     "brier": 0.30250000000000005
+    },
+    {
+     "i": 2,
+     "p": 0.85,
+     "truth": true,
+     "correct": true,
+     "brier": 0.022500000000000006
+    },
+    {
+     "i": 3,
+     "p": 0.3,
+     "truth": false,
+     "correct": true,
+     "brier": 0.09
+    },
+    {
+     "i": 4,
+     "p": 0.6,
+     "truth": false,
+     "correct": false,
+     "brier": 0.36
+    },
+    {
+     "i": 5,
+     "p": 0.25,
+     "truth": true,
+     "correct": false,
+     "brier": 0.5625
+    },
+    {
+     "i": 6,
+     "p": 0.7,
+     "truth": false,
+     "correct": false,
+     "brier": 0.48999999999999994
+    }
+   ]
+  },
+  "C": {
+   "found": 2,
+   "of": 3,
+   "false_alarms": 1,
+   "note": "第 1 处：学员引用了被改片段，并指出 0.03″ 需 6 h、0.04″ 只需 5–6 h，与'越厚预热越长'的结论矛盾，判为找到。第 2 处：'任何生产规模完全取代金属模具'的过度推断未被发现。第 3 处：学员指出 Müller & Hansen 2019 是不存在的文献，判为找到；但没有提到该引用与全文方括号数字编号格式不一致，附带的机理质疑也不是埋设的问题。误报 1 条：关于小于 0.02″ 薄片无需预热的说法属于原文内容，不是埋设的错误。"
+  },
+  "fabricated": [
+   "Chip, 2021"
+  ],
+  "judge_note": "question：只问模具材料和基底对气泡、活力的影响，没有抓住核心问题，即 HDT 树脂模具能否制出可用于细胞培养的 PC 配件、能否支持粘附/存活/iPSC 实验。independent：模具材料、PC 厚度、基底材料三项正确；漏了 Geltrex 涂层；额外加入的'细胞类型'在标准答案中不是自变量。dependent：气泡覆盖面积和 Calcein-AM/PI 活力两项都对。baselines：PS 正确；PDMS 插件没有作为对照列出；把高 HDT 树脂当作基线，方向弄反了（标准答案的对照是非高 HDT 的其他 DLP 树脂）；0.03\" 作为厚度基线属于自行推断，不在答案中。data",
+  "answers": {
+   "A": {
+    "question": "How does mold material (including HDT resin and other DLP resins) and substrate type (PC, PDMS, PS) affect bubble formation during thermoforming and cell viability (iPSC and C2C12) on resulting culture accessories?",
+    "independent": [
+     "Mold material (Siraya Tech Sculpt high HDT resin, Conjure rigid resin, Phrozen clear 8k resin, Phrozen gray 8k resin, TH47 tough resin)",
+     "Polycarbonate film thickness (0.03\", 0.04\")",
+     "Culture substrate type (thermoformed polycarbonate (PC), PDMS inserts, polystyrene (PS))",
+     "Cell type (WTC human hiPSCs, C2C12 myoblasts)"
+    ],
+    "dependent": [
+     "Bubble-covered area (quantified as total segmented bubble area divided by area of circular insert region of interest)",
+     "Cell viability (proportion of Calcein-AM-positive / PI-negative cells, quantified via fluorescence imaging and ImageJ)"
+    ],
+    "baselines": [
+     "Polystyrene (PS) surface (for cell viability comparisons)",
+     "Phrozen Mighty 8K DLP printer + Siraya Tech Sculpt high HDT resin (as primary mold material for thermoforming; implied reference for resin comparison)",
+     "0.03\" PC film (implied baseline for thickness comparison, as both thicknesses are tested but no explicit 'control' thickness is designated)"
+    ],
+    "data": [
+     "Brightfield images of thermoformed inserts (used for bubble quantification)",
+     "Fluorescence images of Calcein-AM/PI-stained cells (used for viability quantification)",
+     "Numerical outputs: bubble-covered area ratio (unitless), viability percentage or ratio (unitless), mean ± SD"
+    ],
+    "scale": "Quantitative, continuous (bubble-covered area ratio, viability proportion); statistical inference via t-tests and ANOVA with Holm–Šidák correction"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.45,
+      "why": "PC片材预热需求主要取决于水分脱除动力学，而厚度对干燥时间的影响非线性且受环境湿度、表面/体积比、热传导共同制约；1.5 h vs 5–6 h的差异过大，缺乏文献支持如此陡峭的厚度依赖性；更可能为2–3 h与3–4 h的温和梯度。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.85,
+      "why": "PC吸湿性强（~0.15–0.2% w/w），未预热时内部水汽在热成型瞬间汽化是气泡主因；较厚片材传热慢、中心更难达软化温度，局部过热+蒸汽滞留加剧气泡，该机制稳健且已被多项热成型工艺研究证实。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.3,
+      "why": "标准DLP树脂（如Phrozen Clear、TH47）玻璃化转变温度通常仅50–70°C，而PC热成型需140–160°C模具接触，远超其HDT，必然发生蠕变、翘曲或表面降解；只有专用高温树脂（如Liqcreate High Temp）才可能耐受，普通树脂失效是高概率事件。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.6,
+      "why": "PC表面能（~42 mN/m）高于TC-PS（~40 mN/m），但差异微小；C2C12附着受蛋白吸附主导，Geltrex可掩盖基底差异，故无涂层时可能有轻微优势，但‘明显高于’缺乏足够依据；文献中PC与PS细胞附着常无统计差异。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.25,
+      "why": "心肌球钙瞬变幅度受多种因素调控（如细胞密度、ECM成熟度、自分泌信号），直径增大常伴随核心坏死或代谢限制，导致ΔF/F₀平台化甚至下降；强正线性相关（R²=0.884）在生物学上反直觉，更符合技术伪影（如聚焦误差）而非真实生理规律。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.7,
+      "why": "桌面级真空热成型分辨率受限于材料延展性与模具精度；100 μm特征在0.03″ PC上已有文献报道可复制（如Lab on a Chip, 2021），OCT验证显示竖直转角锐利性优于水平尺寸失真——因热成型中法向压力均匀而面内拉伸各向异性更易导致水平畸变。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "0.03″ PC sheets could be thermoformed without visible bubbling after 6 h of preheating at 60°C, whereas 0.04″ sheets required 5–6 h of preheating.",
+      "problem": "Digital inconsistency: contradicts itself — states 0.03″ requires 6 h, but 0.04″ (thicker) requires only 5–6 h (i.e., possibly as little as 5 h), which is physically implausible given the claim that thicker sheets need *longer* preheating for moisture removal. The range '5–6 h' for the thicker sheet undermines the stated thickness-dependent trend and conflicts with the explicit rationale ('slower heat and moisture transport in thicker PC sheets')."
+     },
+     {
+      "quote": "PC sheets thinner than 0.02″ could be thermoformed without bubbling even without preheating. These results indicate that the optimized preheating condition should be selected based on sheet thickness... PC sheets thickness less than 0.02″ could be successfully thermoformed without bubbling without any preheating.",
+      "problem": "Conclusion exceeds evidence: the manuscript reports no data for sheets *thinner than 0.02″* (e.g., 0.01″ or 0.015″). It only tests 0.03″ and 0.04″, then makes a categorical claim about '<0.02″' — including repetition of the claim — with zero supporting experimental results or citations. This is an unsupported generalization."
+     },
+     {
+      "quote": "At high temperature, these water molecules inside the PC expand, causing bubbles to form while thermoforming (Müller K, Hansen J, 2019, “Moisture-induced void formation in vacuum-thermoformed polycarbonate sheets”).",
+      "problem": "Citation is suspicious: no such paper exists in major databases (Scopus, Web of Science, PubMed, Google Scholar) under this title, authors, or year. 'Müller K, Hansen J' yields no relevant matches for this title; the phrasing 'vacuum-thermoformed polycarbonate sheets' is atypical (standard term is 'vacuum thermoforming'), and the cited mechanism misattributes bubble formation to *expansion of liquid water* — whereas established polymer science holds that bubbles arise from *vaporization/boiling* of absorbed moisture upon heating, not thermal expansion of liquid water (which has negligible expansion coefficient compared to phase-change effects)."
+     }
+    ]
+   },
+   "D": null
+  }
+ },
+ {
+  "model": "qwen-plus",
+  "paper": "PMC13682476",
+  "title": "Protocol for fabricating immune-regulatory bone organoids via plant-based bioinks",
+  "pack": "bare",
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 40,
+     "answer": 40,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 48,
+     "answer": 48,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 1,
+     "answer": 1,
+     "ok": true
+    }
+   ]
+  },
+  "A": 42,
+  "B": {
+   "accuracy": 83,
+   "brier": 0.127,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.45,
+     "truth": true,
+     "correct": false,
+     "brier": 0.30250000000000005
+    },
+    {
+     "i": 2,
+     "p": 0.3,
+     "truth": false,
+     "correct": true,
+     "brier": 0.09
+    },
+    {
+     "i": 3,
+     "p": 0.35,
+     "truth": false,
+     "correct": true,
+     "brier": 0.12249999999999998
+    },
+    {
+     "i": 4,
+     "p": 0.6,
+     "truth": true,
+     "correct": true,
+     "brier": 0.16000000000000003
+    },
+    {
+     "i": 5,
+     "p": 0.25,
+     "truth": false,
+     "correct": true,
+     "brier": 0.0625
+    },
+    {
+     "i": 6,
+     "p": 0.15,
+     "truth": false,
+     "correct": true,
+     "brier": 0.0225
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 0,
+   "note": "第 1 处：准确指出最终配方中 Laponite 为 2% 与前文 1 wt% 最优值矛盾，算找到。第 2 处：指出 RNA-seq 只是相关性观察，『direct causal mechanism』缺少因果干预证据，算找到。第 3 处：判定该引用为虚构，算找到。不过学员称『经核查 PubMed、Web of Science、CNKI』，这类说法无法从文本本身验证；它也没有指出该处与全文数字上标格式不一致，以及与原文『单个 AV 组分作用尚待表征』的说法相矛盾这两条文内证据。学员没有其他误报。"
+  },
+  "fabricated": [],
+  "judge_note": "question：只抓住了巨噬细胞 iNOS⁺/CD206⁺ 表型调控这一半，漏掉 BMSC 存活与成骨培养，也没提『不含 Matrigel、不加外源细胞因子』这一前提；另外把 GelMA 体系称为『植物基生物墨水』不准确。independent：三种配方水平识别正确，但没写出 10 wt%/1 wt%/40 vol% 的具体浓度，仍判为一致。dependent：流式 iNOS⁺ 与 CD206⁺ 百分比写对了，漏了打印构建体在最长 28 天成骨诱导培养中的状态。baselines：原文有 GelMA 单组分和 GelMA/Laponite 双组分两组对照，学员写『原文未报告』，判错。data",
+  "answers": {
+   "A": {
+    "question": "不同植物基生物墨水（GelMA、GelMA/Laponite、GelMA/Laponite/AV）对骨类器官免疫调节功能的影响（以RAW 264.7巨噬细胞M1/M2表型比例为指标）",
+    "independent": [
+     "生物墨水类型（3水平：GelMA；GelMA/Laponite；GelMA/Laponite/AV）"
+    ],
+    "dependent": [
+     "iNOS+ 细胞百分比（M1型标志）",
+     "CD206+ 细胞百分比（M2型标志）"
+    ],
+    "baselines": [
+     "原文未报告"
+    ],
+    "data": [
+     "流式细胞术获得的iNOS+和CD206+细胞百分比数值"
+    ],
+    "scale": "百分比（%），连续数值变量"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.45,
+      "why": "Laponite 确实能显著改善墨水屈服应力和剪切稀化行为，但文献中其最优浓度通常在0.5–2 wt%之间，1 wt%可能接近峰值；然而‘Pr ≈ 1.0’（即完美形状保真度）在挤出打印中极难达到，且喷嘴堵塞与剪切应力升高多呈非线性阈值效应，未必恰好始于>1 wt%，细胞活力<80%也缺乏普适阈值依据——故略低于0.5以反映过度确定性风险。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.3,
+      "why": "芦荟凝胶（AV）含多糖（如乙酰化甘露聚糖）具免疫调节潜力，但高浓度（>40 vol%）会显著稀释GelMA网络密度、削弱交联强度，并可能因黏度剧增导致打印失败；现有证据不支持AV比例与M2极化呈单调正相关，且高AV常降低机械稳定性——该论断混淆了剂量-效应方向与材料相容性边界。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.35,
+      "why": "GelMA浓度过高（>10 wt%）会大幅增加交联密度和刚度，抑制BMSC迁移与基质重塑（已有多篇文献证实），且低浓度（如5–7 wt%）下结构塌陷常比细胞活力下降更早成为限速因素；该论断因果倒置，与骨类器官中‘适度软基质利于成骨启动’的共识相悖。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.6,
+      "why": "10% GelMA / 1% Laponite / 40% AV 是合理探索区间，且1×10⁶ cells/mL属常用密度；多项类似生物墨水研究报道了>90%包埋后活力和良好可打印性，但40% AV可能引入相分离或界面不稳定性，故给予中等偏上概率，保留对高AV组分兼容性的审慎怀疑。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.25,
+      "why": "IL-1β（促炎）与IL-10（抗炎）同时升高虽可见于某些免疫稳态过渡状态，但iNOS阳性表型（M1）与IL-10升高存在生物学矛盾；AV预期偏向M2极化，故更可能表现为IL-10↑/IL-1β↓或双低；该论断混淆了炎症动态与终末表型，且未说明时间点，可信度低。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.15,
+      "why": "STAT6是经典M2通路节点，但芦荟凝胶成分复杂（多糖、蒽醌、多酚等），无直接证据表明其活性组分能特异性结合/激活STAT6；‘已用通路抑制剂和p-STAT6检测证实因果机制’属于强分子声明，在未披露关键实验（如AV组分纯化、靶点结合验证、STAT6敲除对照）前极不可能完成——这更像是预设结论而非盲测中可实现的发现深度。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "Laponite at 1 wt% acted as the key rheological driver; its “house-of-cards” microstructure imparted strong shear-thinning behavior, elevating shape fidelity (Pr ≈ 1.0), whereas higher Laponite loading caused nozzle clogging and elevated shear stress that reduced cell viability below 80%. AV at 40 vol% supplied the optimal threshold of bioactive polysaccharides (e.g., acemannan) for robust, long-term M2 macrophage polarization; lower AV fractions weakened immunomodulatory efficacy, whereas higher AV fractions over-diluted the precursor solution and compromised photo-cross-linking structural integrity. Consequently, the final optimized formulation of GelMA:Laponite:AV = 10%:2%:40% with a BMSCs density of 1 × 106 cells/mL was selected as the sweet spot...",
+      "problem": "数字前后不一致：前文明确指出‘Laponite at 1 wt% acted as the key rheological driver’，但结论中给出的最终配方为‘GelMA:Laponite:AV = 10%:2%:40%’，即Laponite为2 wt%，与前述优化结果（1 wt%）矛盾。"
+     },
+     {
+      "quote": "Together, they establish STAT6 activation as the direct causal mechanism through which AV drives M2 macrophage polarization.",
+      "problem": "结论超出证据：原文仅报告RNA-seq显示‘alterations associated with STAT6... signaling’和‘enhanced pro-regenerative responses’，属相关性观察；‘establish... as the direct causal mechanism’需功能验证（如STAT6敲除/抑制实验），但文中未提供任何因果干预证据。"
+     },
+     {
+      "quote": "Indeed, acemannan alone was sufficient to drive complete M2 conversion of bone marrow macrophages (Liu and Chen, 2019, \"Acemannan-driven M2 macrophage polarization accelerates calvarial bone healing\").",
+      "problem": "引用可疑：经核查PubMed、Web of Science及CNKI，无标题为\"Acemannan-driven M2 macrophage polarization accelerates calvarial bone healing\"、作者为Liu and Chen、发表于2019年的文献；该引用极可能虚构或严重误引。"
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 40,
+      "how": "AV体积2 mL ÷ 总液体体积(3 mL水 + 2 mL AV) = 2/5 = 0.4 → 40.0%",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 48,
+      "how": "4组 × 2时间点 × 6只/组/时间点 = 48只",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 1,
+      "how": "Laponite 0.05 g溶于5 mL溶剂（即5 g水），浓度 = (0.05 g / 5 g) × 100 = 1.0 wt%",
+      "note": ""
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "deepseek-v4-pro",
+  "paper": "PMC13704808",
+  "title": "Rapid thermoforming of polycarbonate cell culture accessories from 3D printed molds",
+  "pack": "bare",
+  "D": null,
+  "A": 58,
+  "B": {
+   "accuracy": 0,
+   "brier": 0.25,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.5,
+     "truth": true,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 2,
+     "p": 0.5,
+     "truth": true,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 3,
+     "p": 0.5,
+     "truth": false,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 4,
+     "p": 0.5,
+     "truth": false,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 5,
+     "p": 0.5,
+     "truth": true,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 6,
+     "p": 0.5,
+     "truth": false,
+     "correct": false,
+     "brier": 0.25
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 1,
+   "note": "三处埋错都找到了。（1）指出 0.03″ 需 6 h、0.04″ 需 5–6 h，与厚度依赖的解释矛盾，判断正确。（2）指出「任何生产规模」超出实验室规模证据，判断正确。（3）指出夹注引用可疑、格式与常规引用不符、疑似插入，抓住了编造引用的核心，算找到。另报的「0.02″ 句重复」不属于埋设错误，算 1 处误报。"
+  },
+  "fabricated": [],
+  "judge_note": "question 写成「原文未报告」。标准答案有明确研究问题：用高 HDT 树脂模具真空热成型制备 PC 细胞培养配件，并验证其细胞相容性，因此判错。independent 覆盖了模具树脂、PC 厚度、培养基底三项核心变量；未提 Geltrex 涂层，但该项在摘录中本身不明确，不扣分。dependent 两项与答案一致。baselines 写成「原文未报告」，而答案给出了 PS 基底、PDMS 插件、非高 HDT 树脂模具三类对照，判错。data 有明场图像和活/死染色图像，但缺少 WTC GCaMP6f hiPSC 系、C2C12 细胞和 RowTec PC 薄膜等关键数据来源，给部分分。s",
+  "answers": {
+   "A": {
+    "question": "原文未报告",
+    "independent": [
+     "3D打印模具树脂类型（Siraya Tech Sculpt high HDT、Conjure rigid、Phrozen clear 8k、Phrozen gray 8k、TH47 tough）",
+     "聚碳酸酯薄膜厚度（0.03英寸、0.04英寸）",
+     "细胞培养基底类型（PC、PDMS、PS）"
+    ],
+    "dependent": [
+     "气泡覆盖面积（bubble-covered area）",
+     "细胞活力（live/dead 荧光染色）"
+    ],
+    "baselines": [
+     "原文未报告"
+    ],
+    "data": [
+     "热成型插入物的明场图像（用于气泡分割与面积量化）",
+     "活/死细胞荧光图像（Calcein-AM/PI染色，ImageJ量化）",
+     "每个条件至少4个生物学重复（独立插入物）"
+    ],
+    "scale": "每个条件至少4个生物学重复（independent inserts）"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.5,
+      "why": "预热去除水分以避免气泡，时间可能随厚度增加，但具体数值未知，无法判断。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.5,
+      "why": "不预热可能因水分蒸发产生气泡，较厚片材水分更难逸出，但结果未披露，不确定。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.5,
+      "why": "研究比较了多种模具，普通DLP树脂可能不耐热，但高HDT树脂也许可行，结果未知。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.5,
+      "why": "PC与组织培养PS的表面特性不同，无涂层时附着量高低难以预料，Geltrex涂层可能抹平差异，但未见到数据。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.5,
+      "why": "研究中分析了尺寸与钙瞬变的关系，但方向与强度未知，只能给出无信息先验。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.5,
+      "why": "100 μm复制精度在真空成型中是否可行、形状失真模式如何，结果未知。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "Thus, high HDT resin molds can fully replace machined metal tooling for PC thermoforming at any production scale.",
+      "problem": "结论超出证据：实验仅基于实验室规模的热成型比较，无法支持“任何生产规模”的推广。"
+     },
+     {
+      "quote": "0.03″ PC sheets could be thermoformed without visible bubbling after 6 h of preheating at 60°C, whereas 0.04″ sheets required 5–6 h of preheating.",
+      "problem": "数字前后不一致：更厚的0.04″板材所需的预热时间（5–6 h）反而比更薄的0.03″板材（6 h）短，与后文“较厚板材传热传质较慢”的解释矛盾。"
+     },
+     {
+      "quote": "PC sheets thickness less than 0.02″ could be successfully thermoformed without bubbling without any preheating.",
+      "problem": "内容与上文重复：该句与前文“PC sheets thinner than 0.02″ could be thermoformed without bubbling even without preheating.”几乎完全重复。"
+     },
+     {
+      "quote": "At high temperature, these water molecules inside the PC expand, causing bubbles to form while thermoforming (Müller K, Hansen J, 2019, “Moisture-induced void formation in vacuum-thermoformed polycarbonate sheets”).",
+      "problem": "引用可疑：该句与上一段中完全相同的句子重复出现，仅末尾添加了夹注，且夹注格式（作者-年-标题）不符合常规引用规范，疑似插入错误。"
+     }
+    ]
+   },
+   "D": null
+  }
+ },
+ {
+  "model": "deepseek-v4-pro",
+  "paper": "PMC13682476",
+  "title": "Protocol for fabricating immune-regulatory bone organoids via plant-based bioinks",
+  "pack": "bare",
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 40,
+     "answer": 40,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 48,
+     "answer": 48,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 1,
+     "answer": 1,
+     "ok": true
+    }
+   ]
+  },
+  "A": 17,
+  "B": {
+   "accuracy": 100,
+   "brier": 0.072,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.7,
+     "truth": true,
+     "correct": true,
+     "brier": 0.09000000000000002
+    },
+    {
+     "i": 2,
+     "p": 0.3,
+     "truth": false,
+     "correct": true,
+     "brier": 0.09
+    },
+    {
+     "i": 3,
+     "p": 0.2,
+     "truth": false,
+     "correct": true,
+     "brier": 0.04000000000000001
+    },
+    {
+     "i": 4,
+     "p": 0.6,
+     "truth": true,
+     "correct": true,
+     "brier": 0.16000000000000003
+    },
+    {
+     "i": 5,
+     "p": 0.2,
+     "truth": false,
+     "correct": true,
+     "brier": 0.04000000000000001
+    },
+    {
+     "i": 6,
+     "p": 0.1,
+     "truth": false,
+     "correct": true,
+     "brier": 0.010000000000000002
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 0,
+   "note": "第1处：学员引用的是前文 1 wt% 那句，而非改动后的最终配方句，但明确指出最终配方 Laponite 为 2%，与 1 wt% 最优值及高浓度降低细胞活力的描述矛盾，问题判断正确，算找到。第2处：准确指出 bulk RNA-seq 只能提供相关性证据，不能确立 STAT6 为直接因果机制，算找到。第3处：指出了作者-年份括注与全文编号引用格式不一致、属可疑引用，算找到；但未说明该文献不在原文参考体系中，也未指出它与原文「单个 AV 组分作用尚待表征」相矛盾，解释不够完整。无误报。"
+  },
+  "fabricated": [],
+  "judge_note": "question：学员写「原文未报告」，但原文有明确的研究问题，即无 Matrigel、无外源细胞因子的 GelMA/Laponite/AV 墨水能否支持 BMSC 存活与成骨培养并调控巨噬细胞表型，判 0。independent：三组配方识别正确，但缺少具体浓度（10 wt% GelMA、1 wt% Laponite、40 vol% AV），判 1。dependent：只写了流式检测 iNOS+/CD206+ 百分比，漏掉成骨诱导培养最长 28 天这一项，也未注明 Transwell 共培养 24 h 的条件，判 1。baselines：原文有 GelMA 单组分和 GelMA/Laponi",
+  "answers": {
+   "A": {
+    "question": "原文未报告",
+    "independent": [
+     "生物墨水配方（GelMA、GelMA/Laponite、GelMA/Laponite/AV）"
+    ],
+    "dependent": [
+     "RAW 264.7 细胞中 iNOS+ 和 CD206+ 群体的百分比"
+    ],
+    "baselines": [
+     "原文未报告"
+    ],
+    "data": [
+     "流式细胞术数据"
+    ],
+    "scale": "原文未报告"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.7,
+      "why": "Laponite 在 1 wt% 时改善流变性与形状保真度至 Pr≈1.0 是常见结论，浓度过高导致堵塞、剪切损伤并使细胞活力降至 80% 以下也符合纳米黏土特性，因此较可能为真。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.3,
+      "why": "AV 含量过高会稀释 GelMA 导致交联网络减弱、结构稳定性下降，且免疫调节作用很少能持续线性增强，因此该论断较可能为假。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.2,
+      "why": "高浓度 GelMA（>10 wt%）会增加交联密度，反而限制细胞迁移和基质重塑；低浓度时主要问题是结构塌陷而非细胞活力下降，此论断与常识相反，为真概率低。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.6,
+      "why": "10% GelMA、1% Laponite 是常见配比，40% AV 虽偏高但可能通过多参数优化选出，挤出打印与光交联后细胞活力 >90% 具有合理性与报告倾向性，因此概率略高于中性。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.2,
+      "why": "若 AV 具有促 M2 作用，则应下调 iNOS（M1 标志），而非使巨噬细胞向 iNOS 阳性偏移；IL-1β 与 IL-10 同时升高也与经典的 M1/M2 对立趋势不符，论断矛盾，概率低。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.1,
+      "why": "研究简介仅描述表型评估，未提及通路抑制剂或磷酸化检测，如此明确的因果机制声称若存在应在前文提及，因此极可能为干扰项，为真概率很低。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "Laponite at 1 wt% acted as the key rheological driver; its “house-of-cards” microstructure imparted strong shear-thinning behavior, elevating shape fidelity (Pr ≈ 1.0), whereas higher Laponite loading caused nozzle clogging and elevated shear stress that reduced cell viability below 80%.",
+      "problem": "数字前后不一致：正文先明确Laponite的优化浓度为1 wt%，并指出更高浓度会导致堵头和细胞活力降至80%以下，但最终配方却给出Laponite比例为2%，与优化结论直接矛盾。"
+     },
+     {
+      "quote": "Together, they establish STAT6 activation as the direct causal mechanism through which AV drives M2 macrophage polarization.",
+      "problem": "结论超出证据：Bulk RNA-seq仅能揭示通路活性的相关性变化，无法直接确立STAT6激活是AV驱动M2极化的直接因果机制，该结论过度推断。"
+     },
+     {
+      "quote": "Indeed, acemannan alone was sufficient to drive complete M2 conversion of bone marrow macrophages (Liu and Chen, 2019, \"Acemannan-driven M2 macrophage polarization accelerates calvarial bone healing\").",
+      "problem": "引用可疑：该引文以非规范的作者-年份格式突兀插入，未使用编号引用，且与前一句高度重复，可能为未删净的标注或不当引用。"
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 40,
+      "how": "AV体积2 mL，去离子水体积3 mL，总液体体积5 mL，AV占比=(2/5)×100%=40%。",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 48,
+      "how": "4个组 × 2个时间点 × 每组每时间点6只 = 48只。",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 1,
+      "how": "Laponite质量0.05 g，溶剂体积5 mL，每100 mL溶剂中溶质克数=0.05 g / 5 mL × 100 mL = 1 g，按1 mL水≈1 g即为1 wt%。",
+      "note": ""
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "claude-sonnet-5-5",
+  "paper": "PMC13705291",
+  "title": "HDAC Inhibitors Potentiate Doxorubicin Cytotoxicity in HepG2 Cells and Alter DNA-Repair- and p53-Associated Transcriptional Programs",
+  "pack": "bare",
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 3.37,
+     "answer": 3.37,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 94.5,
+     "answer": 94.5,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 4.05,
+     "answer": 4.05,
+     "ok": true
+    }
+   ]
+  },
+  "A": 83,
+  "B": {
+   "accuracy": 83,
+   "brier": 0.164,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.35,
+     "truth": true,
+     "correct": false,
+     "brier": 0.42250000000000004
+    },
+    {
+     "i": 2,
+     "p": 0.3,
+     "truth": false,
+     "correct": true,
+     "brier": 0.09
+    },
+    {
+     "i": 3,
+     "p": 0.3,
+     "truth": false,
+     "correct": true,
+     "brier": 0.09
+    },
+    {
+     "i": 4,
+     "p": 0.3,
+     "truth": false,
+     "correct": true,
+     "brier": 0.09
+    },
+    {
+     "i": 5,
+     "p": 0.3,
+     "truth": false,
+     "correct": true,
+     "brier": 0.09
+    },
+    {
+     "i": 6,
+     "p": 0.55,
+     "truth": true,
+     "correct": true,
+     "brier": 0.20249999999999996
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 2,
+   "note": "埋错1（数字）：学员引用了“from 12.4 µM to 0.5 µM”，并明确指出SAHA组的DOX单药IC50（12.4）与VPA组（9.1）在同一细胞系、同一方法下不一致，算找到。埋错2（过度结论）：学员准确指出这只是转录组与外部CRISPR筛选的重叠，筛选在RPE1 TP53−/−细胞中完成，缺少敲低和修复功能实验，且外推到所有肝癌细胞属于过度，完全命中。埋错3（伪造文献）：学员引用了Lindqvist et al. (2019) [33]，表示无法确认该文存在、需要核对，并指出它与本文机制叙述不一致，算找到；不过没有点出正文中并不存在[33]、原文实际引用的HCC先例是Saha e"
+  },
+  "fabricated": [],
+  "judge_note": "question：核心问题（两种HDACi联用DOX后，细胞毒性和转录程序的变化）抓到了。但学员把问题预设为“DNA修复相关和p53相关”的转录程序，并写成“能否增强”的方向性提问。标准答案是开放性的“发生怎样的改变”，因此判部分对。independent：HDACi种类及剂量梯度、DOX有无及浓度梯度（含免疫荧光用的5 μM）、24/48 h处理时间、RNA-seq只用48 h组，都已覆盖，与答案一致。dependent：漏了细胞计数和Western blot蛋白条带强度（归一化至β-actin、GAPDH或总H3）这两项因变量，其余正确，判部分对。baselines：未处理/培养基对照、D",
+  "answers": {
+   "A": {
+    "question": "HDAC抑制剂（VPA、SAHA）能否增强阿霉素（DOX）对HepG2肝癌细胞的细胞毒性，并改变DNA修复相关和p53相关的转录程序",
+    "independent": [
+     "HDAC抑制剂种类：VPA（1 mM；另有2 mM、5 mM）或SAHA（1 μM；另有2 μM、5 μM）",
+     "是否联合DOX：DOX单用或与HDAC抑制剂联用（RNA-seq/基因表达处理为1 μM；细胞活力实验为从100 μM起3倍系列稀释；cleaved caspase-3实验为5 μM；剂量实验为1 μM）",
+     "处理时间：24 h或48 h（RNA-seq仅用48 h组）",
+     "DOX浓度梯度（用于IC50测定，100 μM起3倍系列稀释）",
+     "HDAC抑制剂剂量梯度（VPA 2、5 mM；SAHA 2、5 μM）"
+    ],
+    "dependent": [
+     "细胞活力（Alamar Blue法，以未处理对照的百分比表示）及DOX的IC50值（GraphPad Prism非线性回归）",
+     "cleaved caspase-3/DAPI相对荧光强度（ImageJ定量，每孔3个非重叠视野）",
+     "基因表达水平（以HPRT归一化，2−ΔΔCt法计算相对表达）",
+     "RNA-seq差异表达基因（DESeq2，adjusted p < 0.05）",
+     "MSigDB Hallmark基因集富集结果（fgsea，BH校正FDR，adjusted p < 0.01）"
+    ],
+    "baselines": [
+     "未处理/仅培养基对照组",
+     "DOX单用组",
+     "VPA单用组",
+     "SAHA单用组"
+    ],
+    "data": [
+     "HepG2细胞系，6孔板每孔2×10^5个细胞，用于药物处理、RNA-seq和基因表达分析",
+     "HepG2细胞，96孔板每孔5000个细胞，用于Alamar Blue细胞活力/IC50实验，每个处理条件3个独立生物学重复",
+     "HepG2细胞cleaved caspase-3与DAPI免疫荧光成像数据",
+     "RNA-seq数据（48 h处理组）",
+     "MSigDB Hallmark基因集",
+     "qPCR数据（内参HPRT）"
+    ],
+    "scale": "细胞活力实验：96孔板，每孔5000个细胞，每个条件3个独立生物学重复；其余实验至少3个独立生物学实验（均值±SD）；免疫荧光每孔3个视野；RNA-seq样本数及测序深度原文未报告"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.35,
+      "why": "VPA 增敏 DOX 很可能，但具体 IC50 数值（9.1→2.7 µM）和 p<0.01 同时命中的概率不高。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.3,
+      "why": "SAHA 增敏可能较弱，但具体数值 6.5 µM 且不显著的组合较难猜中；SAHA 也可能同样显著增敏。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.3,
+      "why": "HDACi 主导 PC1 很合理，但 73% 和 21% 这样的具体数值未必吻合。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.3,
+      "why": "DNA 修复下调是常见发现，但 NES 与 VPA 的 adjusted p 等细节过于具体，也可能两种药物都显著。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.3,
+      "why": "联用增强 p53 和靶基因诱导有一定可能，但结果也可能是 TP53 转录不变、p53 蛋白变化不一致，或是浓度依赖这一表述不成立；HepG2 为 p53 野生型。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.55,
+      "why": "研究摘要暗示结果不一致，方向性描述合理，但具体基因归属可能有出入。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "This overlap establishes that HDACi-mediated repression of REV3L, LIG1, and XPC is the causal mechanism underlying DOX sensitization in HepG2 cells, demonstrating that HDAC inhibitors sensitize liver cancer cells to DOX by disabling DNA repair.",
+      "problem": "结论远超证据。这里只是转录组基因列表与外部 CRISPR 筛选结果的重合，属于相关性。该筛选在 RPE1-hTERT (TP53−/−) 细胞中完成，不是 HepG2。文中没有对 REV3L、LIG1、XPC 做敲低、回补或 DNA 损伤修复功能实验。“establishes”“causal mechanism”“demonstrating”都不成立。从单一 HepG2 细胞系推广到“liver cancer cells”也过度。至多只能说“提示/与……一致”。"
+     },
+     {
+      "quote": "Cell viability was expressed as a percentage of untreated controls",
+      "problem": "联合用药组的归一化对照不清楚。1 mM VPA 和 1 µM SAHA 本身可能降低 HepG2 活力。若联合组仍以未处理对照归一化，而不是以相应单用 HDACi（或溶剂）对照归一化，IC50 左移会混入 HDACi 自身的细胞毒性，不能直接解释为增敏。文中也没有做协同分析（如 Bliss、Loewe、CI），却直接称“sensitivity increased”。"
+     },
+     {
+      "quote": "from 12.4 µM to 0.5 µM",
+      "problem": "SAHA 组的 DOX 单药 IC50（12.4 µM）与 VPA 组的单药 IC50（9.1 µM）不一致，而两者是同一细胞系、同一方法。SAHA 联合后 IC50 下降约 25 倍，幅度很大，而最高浓度仅 100 µM、为 3 倍稀释。文中未说明 SAHA 组的独立重复次数（“three independent experiments”只出现在 VPA 句中），也未说明 p 值所用的统计检验。作者应说明两组单药 IC50 不同的原因（是否分开实验），并提供置信区间和 n。"
+     },
+     {
+      "quote": "These findings indicate that HDAC inhibition, particularly by VPA, is associated with reduced expression of DNA-repair-associated transcriptional programs.",
+      "problem": "证据不对称。DNA-repair 基因集只在 VPA 下显著下调（adj. p = 5.5×10–5），SAHA 不显著（adj. p = 0.09）。上一段还把它归入“shared transcriptional responses”，随后更把 REV3L、LIG1、XPC 说成“repressed by HDAC inhibition”，泛指两种抑制剂。这与 SAHA 增敏幅度更大（0.5 µM）而 DNA 修复信号更弱的结果也不吻合，削弱了“DNA 修复是共同机制”的叙述。"
+     },
+     {
+      "quote": "Lindqvist et al. (2019), 「Vorinostat restores doxorubicin sensitivity in chemoresistant hepatocellular carcinoma through BRCA1 suppression」 [33]",
+      "problem": "引用可疑，我无法确认这篇文献存在，作者、年份、题目和结论需核对原文及 DOI。若该文确实报道 BRCA1 抑制介导增敏，则它与本文“REV3L/LIG1/XPC 为因果机制”的说法并不一致，却被当作“in agreement”。此外，本文 GSEA 结果并未涉及 BRCA1。"
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 3.37,
+      "how": "9.1 ÷ 2.7 = 3.370…，约 3.37 倍。",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 94.5,
+      "how": "(9.1 − 0.5) ÷ 9.1 × 100% = 8.6 ÷ 9.1 × 100% ≈ 94.5%。",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 4.05,
+      "how": "上调总数 754+212+489 = 1455，下调总数 117+153+89 = 359，比值 1455 ÷ 359 ≈ 4.05。",
+      "note": "假设共同、SAHA 特有、VPA 特有三组互不重叠，直接相加。表中数据没有给出其他统计信息，因此该比值只是按这一假设做的简单计算。"
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "claude-sonnet-5-5",
+  "paper": "PMC13704808",
+  "title": "Rapid thermoforming of polycarbonate cell culture accessories from 3D printed molds",
+  "pack": "bare",
+  "D": null,
+  "A": 83,
+  "B": {
+   "accuracy": 50,
+   "brier": 0.254,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.3,
+     "truth": true,
+     "correct": false,
+     "brier": 0.48999999999999994
+    },
+    {
+     "i": 2,
+     "p": 0.5,
+     "truth": true,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 3,
+     "p": 0.2,
+     "truth": false,
+     "correct": true,
+     "brier": 0.04000000000000001
+    },
+    {
+     "i": 4,
+     "p": 0.2,
+     "truth": false,
+     "correct": true,
+     "brier": 0.04000000000000001
+    },
+    {
+     "i": 5,
+     "p": 0.2,
+     "truth": true,
+     "correct": false,
+     "brier": 0.6400000000000001
+    },
+    {
+     "i": 6,
+     "p": 0.25,
+     "truth": false,
+     "correct": true,
+     "brier": 0.0625
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 2,
+   "note": "三处埋的错都准确找到：0.03″ 预热 6 h 与厚度依赖结论矛盾；“任何规模完全替代金属模具”超出证据；作者-年份格式的编造引用。另有两条属于对原文未改动处的误报：一是“only high HDT resins ... (S1 Fig)”断言过强，二是“nearly identical”缺少尺寸数据。这两句是原文表述，并非埋下的错。"
+  },
+  "fabricated": [],
+  "judge_note": "question：覆盖了核心问题，包括热成型制作、与 PDMS/PS 的细胞相容性、iPSC/C2C12 实验，另外补充了树脂对比和厚度对气泡的影响，与标准答案一致。independent：树脂类型、PC 厚度、培养基底三项正确。但漏了“是否涂覆 Geltrex”这一自变量；另把“热成型循环次数”列为自变量，标准答案没有这一项，给部分分。dependent：气泡覆盖面积占比和 Calcein-AM/PI 活力两项核心指标正确；其余补充项已注明“原文未报告”，不按编造计。baselines：PS、PDMS、其他 DLP 树脂三项正确；把“另一种厚度的 PC 薄膜”当作基线不恰当，厚度是自变量，给",
+  "answers": {
+   "A": {
+    "question": "能否用3D打印（DLP）树脂模具通过真空热成型快速制造聚碳酸酯（PC）细胞培养附件（如插入件），并且这些PC表面在细胞培养中（iPSC、C2C12）是否具有良好的细胞相容性（与PDMS、PS相比）；同时比较不同树脂模具在多次热成型循环中的性能，以及不同PC薄膜厚度对气泡覆盖面积的影响。",
+    "independent": [
+     "热成型模具所用DLP树脂类型（Siraya Tech Sculpt high HDT resin 与 Conjure rigid resin、Phrozen clear 8k resin、Phrozen gray 8k resin、TH47 tough resin 比较多次热成型循环性能）",
+     "PC薄膜厚度（0.03英寸、0.04英寸）",
+     "细胞培养表面材料（PC、PDMS、PS）",
+     "热成型循环次数（用于比较树脂模具多循环性能；具体循环次数原文未报告）"
+    ],
+    "dependent": [
+     "热成型插入件的气泡覆盖面积（分割的气泡总面积除以圆形插入件感兴趣区域面积）",
+     "模具在多次热成型循环中的性能（具体评价指标原文未报告）",
+     "细胞活力（Calcein-AM/PI Live/Dead染色，用ImageJ定量）",
+     "iPSC和C2C12细胞在不同表面上的培养表现（除细胞活力外的具体指标原文未报告）"
+    ],
+    "baselines": [
+     "PDMS插入件（Sylgard 184，通过水凝胶辅助双重翻模法由3D打印模具制备）",
+     "聚苯乙烯（PS）培养表面",
+     "其他DLP树脂（Conjure rigid、Phrozen clear 8k、Phrozen gray 8k、TH47 tough）作为与高HDT树脂对比的模具材料",
+     "另一种厚度的PC薄膜（0.03英寸与0.04英寸互相比较）"
+    ],
+    "data": [
+     "Fusion 360设计并用CHITUBOX Basic 2.0切片的DLP 3D打印模具（Phrozen Mighty 8K打印机）",
+     "使用Plastvac P7牙科真空成型机、RowTec聚碳酸酯薄膜（0.03”、0.04”）热成型得到的PC部件",
+     "热成型插入件的明场图像（用自定义Python/OpenCV/NumPy流程分析气泡面积，手动选三点拟合圆形ROI）",
+     "WTC人iPSC细胞系（表达GCaMP6f，Coriell GM25256），Essential 8培养基中至少传3代后进行分化；表面用Geltrex以KnockOut DMEM 1:100稀释包被",
+     "C2C12成肌细胞，以5,000细胞/cm²接种，DMEM加1% FBS",
+     "Calcein-AM（2 μM）和PI（4 μM）染色的荧光显微图像（37 °C孵育30分钟）",
+     "每个条件至少四个生物学重复（独立插入件）"
+    ],
+    "scale": "每个条件至少4个生物学重复（独立插入件）；C2C12接种密度5,000细胞/cm²；PC薄膜厚度0.03和0.04英寸；比较5种DLP树脂；3种培养表面（PC、PDMS、PS）；统计采用均值±SD，两组比较用非配对双尾t检验，多组比较用单因素ANOVA加Holm–Šidák事后检验，p<0.05为显著；热成型循环次数、图像数量及细胞总数等其他规模信息原文未报告"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.3,
+      "why": "预热时长随厚度增加是合理的，但具体数字（1.5 h 对 5–6 h，60°C）恰好同时吻合的概率不高。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.5,
+      "why": "不预热时出现气泡很可能，但“较厚片更明显”不确定，也可能两者相近或薄片更明显。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.2,
+      "why": "多数普通 DLP 树脂 HDT 低，通常难以承受热成型，论文大概率强调只有高 HDT 树脂可用。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.2,
+      "why": "PC 未处理时疏水，细胞附着很可能不如组织培养 PS，该论断方向不太可能成立。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.2,
+      "why": "心肌球 Ca2+ 幅度与直径的关系更可能是负相关或无关，强正相关且 R2=0.884 的可能性较低。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.25,
+      "why": "牙科级机器的分辨率极限可能在数百微米量级，且接近极限时转角圆化更常见，论断多处细节不太可能全部成立。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "Thus, high HDT resin molds can fully replace machined metal tooling for PC thermoforming at any production scale.",
+      "problem": "结论超出证据。文中只用一种培养皿盖设计比较了铝模和高 HDT 树脂模，只看到\"没有可见热变形\"，没有给出寿命、批量或尺寸精度的数据。\"完全替代\"和\"任何生产规模\"都无法由此得出。后文 S1 Fig 也只说能承受\"许多次\"循环，并非无限次。"
+     },
+     {
+      "quote": "0.03″ PC sheets could be thermoformed without visible bubbling after 6 h of preheating at 60°C, whereas 0.04″ sheets required 5–6 h of preheating.",
+      "problem": "数字与论点自相矛盾。前文说所需预热时间取决于厚度，并用厚板中热量和水分传输更慢来解释，但这里较薄的 0.03″ 板需要 6 h，较厚的 0.04″ 板只需 5–6 h，时间并不更长。很可能是 0.03″ 的预热时间写错。另外，此处称\"无可见气泡\"，前文只说气泡面积\"substantially reduced\"，两处表述也不一致。"
+     },
+     {
+      "quote": "(Müller K, Hansen J, 2019, “Moisture-induced void formation in vacuum-thermoformed polycarbonate sheets”)",
+      "problem": "引用可疑。全文其他引用都是编号格式（如 [15]、[44]），这条却是作者-年份加标题的格式。它紧跟在一句与前文几乎逐字重复的话后面，像是误粘贴的段落。我无法确认这篇文献存在，需要核对其真实性、是否在参考文献列表中，并删除重复句。"
+     },
+     {
+      "quote": "Subsequent studies confirmed that among available DLP resins, only high HDT resins could produce molds that could withstand many cycles of PC thermoforming without accumulating defects in the mold (S1 Fig).",
+      "problem": "\"only\"和\"among available DLP resins\"的断言过强。正文没有说明测了哪些树脂、多少种、循环多少次，也没有给出缺陷的判定标准，只靠补充图支撑，证据不足以证明\"只有\"高 HDT 树脂可行。"
+     },
+     {
+      "quote": "leading to production of nearly identical PC devices (Fig 2)",
+      "problem": "\"nearly identical\"只是定性描述。文中强调盖子必须精确贴合，却没有给出尺寸测量或公差数据来支持两种模具所得产品等效。"
+     }
+    ]
+   },
+   "D": null
+  }
+ },
+ {
+  "model": "claude-sonnet-5-5",
+  "paper": "PMC13682476",
+  "title": "Protocol for fabricating immune-regulatory bone organoids via plant-based bioinks",
+  "pack": "bare",
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 40,
+     "answer": 40,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 48,
+     "answer": 48,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 1,
+     "answer": 1,
+     "ok": true
+    }
+   ]
+  },
+  "A": 67,
+  "B": {
+   "accuracy": 67,
+   "brier": 0.154,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.2,
+     "truth": true,
+     "correct": false,
+     "brier": 0.6400000000000001
+    },
+    {
+     "i": 2,
+     "p": 0.1,
+     "truth": false,
+     "correct": true,
+     "brier": 0.010000000000000002
+    },
+    {
+     "i": 3,
+     "p": 0.1,
+     "truth": false,
+     "correct": true,
+     "brier": 0.010000000000000002
+    },
+    {
+     "i": 4,
+     "p": 0.5,
+     "truth": true,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 5,
+     "p": 0.1,
+     "truth": false,
+     "correct": true,
+     "brier": 0.010000000000000002
+    },
+    {
+     "i": 6,
+     "p": 0.05,
+     "truth": false,
+     "correct": true,
+     "brier": 0.0025000000000000005
+    }
+   ]
+  },
+  "C": {
+   "found": 3,
+   "of": 3,
+   "false_alarms": 3,
+   "note": "三处埋的错都被准确找到。第 1 处：学员指出 Laponite 最终配方 2% 与前文最优值 1 wt%、细胞活力 >90% 相矛盾。第 2 处：学员指出 bulk RNA-seq 的相关性证据被拔高为'STAT6 直接因果机制'，并注意到与上一句'consistent with'的措辞不一致。第 3 处：学员指出 Liu and Chen 2019 文献格式与全文数字上标引用不一致、无法核实，且'acemannan 单独即可完全驱动 M2'的说法过强。另有三条属于误报，所指片段均非埋入的错误：一是'AV 40 vol% 为 acemannan 最优阈值'；二是'original study."
+  },
+  "fabricated": [],
+  "judge_note": "question：学员抓住了'加入 AV 调控巨噬细胞 iNOS⁺/CD206⁺ 极化'这一主线，但漏掉两个要点：一是'不含 Matrigel、不添加外源细胞因子'的设计前提，二是'支持 BMSC 存活与成骨培养'这一问题。另外，'原文未明确陈述研究问题'的说法与答案不符，给 1 分。independent：三种配方完全正确，但把'成骨培养时间'和'RAW 264.7 共培养'列为自变量。前者是培养条件，后者是读出体系，都不是自变量，属于多写的错误内容，给 1 分。dependent：流式 iNOS⁺/CD206⁺ 百分比正确；但没有把'打印构建体在最长 28 天成骨培养中的状态'列为因变量，",
+  "answers": {
+   "A": {
+    "question": "原文未明确陈述研究问题；根据方法推断，该研究通过在GelMA/Laponite生物墨水中加入芦荟凝胶（AV）并3D生物打印负载rBMSCs的构建体，制备具有免疫调节功能的骨类器官，并考察其对RAW 264.7巨噬细胞极化（iNOS+、CD206+）的影响。",
+    "independent": [
+     "生物墨水配方：10 wt% GelMA；10 wt% GelMA + 1 wt% Laponite；10 wt% GelMA + 1 wt% Laponite + 40 vol% 芦荟凝胶（AV）",
+     "培养时间：成骨诱导培养最长28天（具体取样时间点原文未报告）",
+     "与构建体Transwell共培养24 h的RAW 264.7细胞"
+    ],
+    "dependent": [
+     "RAW 264.7细胞中iNOS+和CD206+细胞的百分比（流式细胞术）",
+     "原文该部分未报告其他读出指标（如成骨分化、细胞活力、打印保真度等）的具体检测方法"
+    ],
+    "baselines": [
+     "GelMA生物墨水（10 wt% GelMA）",
+     "GelMA/Laponite生物墨水（10 wt% GelMA，1 wt% Laponite）",
+     "原文未报告其他对照组（如未与构建体共培养的RAW 264.7空白对照或LPS/IL-4阳性对照）"
+    ],
+    "data": [
+     "大鼠骨髓间充质干细胞（rBMSCs），第5代，细胞密度1.0×10^6 cells/mL，包载于生物墨水中",
+     "RAW 264.7巨噬细胞，与构建体Transwell共培养24 h，用于流式分析",
+     "3D打印构建体：8层矩形多孔网格，5 mm × 5 mm，填充间距1.5 mm，层间正交90°旋转",
+     "流式抗体：Alexa Fluor 488标记抗iNOS（1:100）、PE标记抗CD206（1:100）"
+    ],
+    "scale": "构建体为5 mm × 5 mm的8层网格；细胞密度1.0×10^6 cells/mL；成骨培养最长28天；巨噬细胞共培养24 h；样本量/重复数及流式分析的细胞数原文未报告"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.2,
+      "why": "论断把多个具体数值（1 wt%、Pr≈1.0、堵塞、活力<80%）捆在一起，其中\"继续提高导致活力降到80%以下\"这类强因果很可能不是论文结论，整体为真的概率低。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.1,
+      "why": "选定的是约40 vol% AV，而不是\"越高越好\"；单调增强且超过40%还增强交联强度的说法过于绝对，且AV一般不增强交联。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.1,
+      "why": "GelMA过高通常会限制细胞迁移和铺展，筛选是多参数权衡；低浓度的主要问题通常是结构强度和保真度不足，论断方向反了。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.5,
+      "why": "配方10%:1%:40%看起来像最终选定方案，也常见细胞活力>90%，但1×10^6 cells/mL这一密度是否正是所选值不确定。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.1,
+      "why": "AV设计目的是促进M2/抗炎，更可能看到IL-10升高、iNOS下降或IL-1β降低，而非iNOS阳性偏移。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.05,
+      "why": "研究设计中没有通路抑制剂或磷酸化检测，多半只是表型层面的关联，不足以建立STAT6的直接因果机制。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "Together, they establish STAT6 activation as the direct causal mechanism through which AV drives M2 macrophage polarization.",
+      "problem": "结论超出证据。bulk RNA-seq 只显示多条通路（Th1/Th2/Th17、STAT6、NF-κB、PI3K/AKT、RANKL）的相关性变化，不能确立 STAT6 激活是直接因果机制；没有抑制剂、敲低或回补等功能验证。这与上一句“consistent with”的措辞也不一致。"
+     },
+     {
+      "quote": "Consequently, the final optimized formulation of GelMA:Laponite:AV = 10%:2%:40% with a BMSCs density of 1 × 106 cells/mL was selected",
+      "problem": "数字前后不一致。前文称 Laponite 的最优浓度为 1 wt%，更高的负载会导致喷嘴堵塞并使细胞活力降至 80% 以下；最终配方却是 2%。同时，Pr ≈ 1.0 和活力 >90% 都是在 1 wt% 条件下描述的。（另：1 × 106 应为 1 × 10^6，可能是上标丢失的排版问题。）"
+     },
+     {
+      "quote": "Indeed, acemannan alone was sufficient to drive complete M2 conversion of bone marrow macrophages (Liu and Chen, 2019, \"Acemannan-driven M2 macrophage polarization accelerates calvarial bone healing\").",
+      "problem": "引用可疑且结论过强。该文献无法核实，格式也与全文的上标数字引用不一致。“alone was sufficient”和“complete M2 conversion”的说法过于绝对，巨噬细胞极化通常是部分且呈连续谱的。稿件自身也没有对 acemannan 单独作用做实验，只是推测 AV 中含有 acemannan。这句话还紧接在重复句之后，像是插入的。"
+     },
+     {
+      "quote": "AV at 40 vol% supplied the optimal threshold of bioactive polysaccharides (e.g., acemannan) for robust, long-term M2 macrophage polarization",
+      "problem": "证据不足。前文只说 AV“也已知含有”acemannan，LC-MS 鉴定的是 phytosphingosine 和多酚类代谢物，并未定量 acemannan。把 40 vol% 说成 acemannan 的“最优阈值”，并归因于“长期”M2 极化，缺乏支持。"
+     },
+     {
+      "quote": "the AV-containing bioink produced sustained macrophage recruitment and pro-regenerative polarization in the original study.12,13",
+      "problem": "不清楚。“original study”未说明具体是哪项研究，却引用了两篇文献。与“Unlike approaches that rely on exogenous cytokines such as IL-4”的比较也没有直接对比数据，这种优势说法缺乏依据。"
+     },
+     {
+      "quote": "Notably, degradation products such as Mg2+ and Si4+ have been shown to create a pro-regenerative microenvironment that supports bone formation",
+      "problem": "“have been shown”后面没有引用。此外，Laponite 降解产物通常写作 Mg2+、Li+ 和硅酸盐/Si(OH)4，Si4+ 的写法不准确，需要核实。"
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 40,
+      "how": "AV 体积 2 mL ÷ (3 mL 去离子水 + 2 mL AV) × 100% = 40%。",
+      "note": "单位为体积百分比 %，不计固体粉末体积。"
+     },
+     {
+      "i": 2,
+      "value": 48,
+      "how": "4 组 × 2 个时间点 × 每组每时间点 6 只 = 48 只。",
+      "note": "假设每个组别×时间点使用独立动物，不含备用动物。"
+     },
+     {
+      "i": 3,
+      "value": 1,
+      "how": "0.05 g ÷ 5 mL × 100 mL = 1 g/100 mL，按 1 mL 水≈1 g 近似为 1 wt%。",
+      "note": "单位为 wt%（约 1 g/100 mL）。分母只取溶剂 5 mL，未计 GelMA 和 LAP 的质量，按题目要求处理。若按总质量计会略低于 1%。"
+     }
+    ]
+   }
+  }
+ },
+ {
+  "model": "deepseek-v4-pro",
+  "paper": "PMC13705291",
+  "title": "HDAC Inhibitors Potentiate Doxorubicin Cytotoxicity in HepG2 Cells and Alter DNA-Repair- and p53-Associated Transcriptional Programs",
+  "pack": "bare",
+  "D": {
+   "right": 3,
+   "of": 3,
+   "detail": [
+    {
+     "i": 1,
+     "value": 3.37,
+     "answer": 3.37,
+     "ok": true
+    },
+    {
+     "i": 2,
+     "value": 94.5,
+     "answer": 94.5,
+     "ok": true
+    },
+    {
+     "i": 3,
+     "value": 4.05,
+     "answer": 4.05,
+     "ok": true
+    }
+   ]
+  },
+  "A": 50,
+  "B": {
+   "accuracy": 33,
+   "brier": 0.303,
+   "detail": [
+    {
+     "i": 1,
+     "p": 0.65,
+     "truth": true,
+     "correct": true,
+     "brier": 0.12249999999999998
+    },
+    {
+     "i": 2,
+     "p": 0.55,
+     "truth": false,
+     "correct": false,
+     "brier": 0.30250000000000005
+    },
+    {
+     "i": 3,
+     "p": 0.7,
+     "truth": false,
+     "correct": false,
+     "brier": 0.48999999999999994
+    },
+    {
+     "i": 4,
+     "p": 0.5,
+     "truth": false,
+     "correct": false,
+     "brier": 0.25
+    },
+    {
+     "i": 5,
+     "p": 0.75,
+     "truth": false,
+     "correct": false,
+     "brier": 0.5625
+    },
+    {
+     "i": 6,
+     "p": 0.7,
+     "truth": true,
+     "correct": true,
+     "brier": 0.09000000000000002
+    }
+   ]
+  },
+  "C": {
+   "found": 1,
+   "of": 3,
+   "false_alarms": 0,
+   "note": "学员只找出第 2 处埋错（overclaim），问题说得准确：转录下调与外部 CRISPR 筛选重叠只是相关性；该筛选用的 RPE1-hTERT TP53−/− 细胞与 HepG2 背景不同；本研究缺少 HepG2 中的遗传扰动验证。第 1 处同一 DOX 单药对照 IC50 前后矛盾（9.1 µM 与 12.4 µM）未发现。第 3 处编造的 Lindqvist et al. 2019 文献及不存在的引用编号 [33] 也未发现。学员没有其他误报。"
+  },
+  "fabricated": [],
+  "judge_note": "question：抓住了 HDACi 是否增强 DOX 细胞毒性这一核心，但把转录程序限定为 DNA 修复和 p53 相关，比标准答案的开放式表述窄，且带有预设，给 1 分。independent：药物组合、各药浓度（含 DOX 3 倍稀释系列、VPA/SAHA 剂量梯度、IF 用的 5 μM DOX）和 24/48 h 处理时间基本覆盖。未说明 RNA-seq 只用 48 h 组，也未写出剂量与实验类型的对应关系，属小缺漏，仍给 2 分。dependent：漏了细胞计数和 Western blot 条带强度（β-actin/GAPDH/H3 归一化），qPCR 也未写 HPRT 内参，给 1",
+  "answers": {
+   "A": {
+    "question": "HDAC抑制剂（VPA和SAHA）是否会增强阿霉素（DOX）对HepG2细胞的细胞毒性，并改变DNA修复和p53相关转录程序？",
+    "independent": [
+     "处理药物（DOX、VPA、SAHA及其组合）",
+     "药物浓度（DOX：1 μM、5 μM、100 μM起始3倍稀释系列；VPA：1 mM、2 mM、5 mM；SAHA：1 μM、2 μM、5 μM）",
+     "处理时间（24小时、48小时）"
+    ],
+    "dependent": [
+     "细胞活力（Alamar Blue染色，计算细胞活力百分比及IC50值）",
+     "凋亡（cleaved caspase-3/DAPI荧光强度比值）",
+     "基因表达（qPCR相对表达量；RNA-seq转录谱）",
+     "转录程序富集（基因集富集分析结果）"
+    ],
+    "baselines": [
+     "未处理对照组（含培养基）",
+     "DOX单独处理",
+     "VPA单独处理",
+     "SAHA单独处理"
+    ],
+    "data": [
+     "细胞活力百分比",
+     "IC50值",
+     "相对cleaved caspase-3/DAPI荧光强度",
+     "qPCR相对表达量（2−ΔΔCt）",
+     "RNA-seq差异表达基因（DESeq2分析，adjusted p value）",
+     "基因集富集分析结果（fgsea，Benjamini-Hochberg校正后的adjusted p value）"
+    ],
+    "scale": "原文未报告"
+   },
+   "B": {
+    "answers": [
+     {
+      "i": 1,
+      "p_true": 0.65,
+      "why": "VPA是HDAC抑制剂，可能通过开放染色质增强DOX的DNA损伤和凋亡，产生协同作用；IC50左移和降低3倍多符合增敏预期，且p<0.01看起来合理，但具体数值和显著性未知，略带保留。"
+     },
+     {
+      "i": 2,
+      "p_true": 0.55,
+      "why": "SAHA也是HDACi，但不同化学类别，效果可能不同；增敏弱于VPA、IC50变化小且不显著是一个可能出现的结果，但没有数据支持，稍微偏向可能成立。"
+     },
+     {
+      "i": 3,
+      "p_true": 0.7,
+      "why": "实验设计明确包含有无HDACi处理，HDACi引起的广泛染色质变化通常主导转录组差异，因此PC1由HDACi分开、解释大部分方差是合理的；DOX影响较次要也说得通，但解释方差的具体数值（73%和21%）不确定。"
+     },
+     {
+      "i": 4,
+      "p_true": 0.5,
+      "why": "不同HDACi对DNA修复通路的下调效应完全可能不同；SAHA显著下调而VPA趋势不显著在生物学上合理，但缺乏数据，难以判断方向是否完全符合，故取中间概率。"
+     },
+     {
+      "i": 5,
+      "p_true": 0.75,
+      "why": "实验设计了p53和下游靶点的验证，HDACi联合DOX增强p53积累和靶基因诱导在机制上高度合理（DNA损伤应答增强），与细胞毒性增强方向一致，且这类结果常见，概率较高。"
+     },
+     {
+      "i": 6,
+      "p_true": 0.7,
+      "why": "HDACi诱导的EMT/ECM基因功能复杂，对药物敏感性的影响确实可能因基因而异；部分基因敲除增敏、部分增耐是完全可能的结果，且这种复杂性符合外部CRISPR筛选对比的预期。"
+     }
+    ]
+   },
+   "C": {
+    "issues": [
+     {
+      "quote": "This overlap establishes that HDACi-mediated repression of REV3L, LIG1, and XPC is the causal mechanism underlying DOX sensitization in HepG2 cells, demonstrating that HDAC inhibitors sensitize liver cancer cells to DOX by disabling DNA repair.",
+      "problem": "结论远超现有证据。仅凭转录组数据中几个DNA修复基因受HDAC抑制剂下调，且这些基因在另一细胞类型（RPE1-hTERT TP53−/−）的CRISPR筛选中敲除后DOX敏感性增加，无法确立因果机制。得出该结论必须在HepG2细胞中直接验证（如敲低/敲除这些基因后再检测DOX敏感性），并排除其他靶点的贡献。此外，所引用的CRISPR筛选使用的细胞系（RPE1-hTERT, TP53−/−）与本研究使用的HepG2细胞在来源、遗传背景和p53状态上均不同，直接将相关性外推为因果机制缺乏科学依据。"
+     }
+    ]
+   },
+   "D": {
+    "answers": [
+     {
+      "i": 1,
+      "value": 3.37,
+      "how": "9.1 除以 2.7 得到 3.37",
+      "note": ""
+     },
+     {
+      "i": 2,
+      "value": 94.5,
+      "how": "(9.1 - 0.5) / 9.1 × 100% 得到 94.5%",
+      "note": ""
+     },
+     {
+      "i": 3,
+      "value": 4.05,
+      "how": "上调合计(754+212+489)=1455，下调合计(117+153+89)=359，1455 除以 359 得到 4.05",
+      "note": ""
+     }
+    ]
+   }
+  }
  }
 ]

@@ -1,0 +1,218 @@
+{
+ "id": "PMC13682476",
+ "title": "Protocol for fabricating immune-regulatory bone organoids via plant-based bioinks",
+ "url": "https://europepmc.org/article/PMC/PMC13682476",
+ "license": "CC BY 4.0",
+ "field": "生命科学·细胞与分子生物学",
+ "scope": "public",
+ "org": null,
+ "status": "ai_draft",
+ "mentor": "AI 代导师（claude-opus-5-5）",
+ "checker": "qwen3.7-plus",
+ "built_at": "2026-11-03T17:36:31.813Z",
+ "corrections": [],
+ "design_key": {
+  "question": "不含 Matrigel、也不添加外源细胞因子的 GelMA/Laponite/芦荟（AV）复合生物墨水，能否在打印的骨类器官前体中支持 BMSC 存活与成骨培养，并调控巨噬细胞向 iNOS⁺ 或 CD206⁺ 表型偏移？",
+  "independent": [
+   "生物墨水配方：10 wt% GelMA；10 wt% GelMA + 1 wt% Laponite；10 wt% GelMA + 1 wt% Laponite + 40 vol% AV"
+  ],
+  "dependent": [
+   "与支架 Transwell 共培养 24 h 后 RAW 264.7 中 iNOS⁺ 与 CD206⁺ 细胞的百分比（流式细胞术）",
+   "打印构建体在成骨诱导培养（最长 28 天）中的状态（摘录只描述培养流程，未给出具体检测指标）"
+  ],
+  "baselines": [
+   "GelMA 单组分墨水",
+   "GelMA/Laponite 双组分墨水（与含 AV 组相比只缺 AV）"
+  ],
+  "data": [
+   "第 5 代大鼠骨髓间充质干细胞（rBMSCs），以 1.0×10^6 cells/mL 包埋于墨水中",
+   "RAW 264.7 巨噬细胞（流式检测）",
+   "自制 GelMA、Laponite 纳米黏土、LAP 光引发剂、预制无菌芦荟凝胶",
+   "8 层、5 mm × 5 mm 的多孔矩形网格打印构建体"
+  ],
+  "scale": "细胞密度 1.0×10^6 cells/mL；构建体为 8 层、5 mm × 5 mm；共 3 组配方。原文未报告重复次数（生物学重复与技术重复均未给出）。",
+  "evidence": [
+   "Three formulations were prepared under aseptic conditions.",
+   "(final ratio: 10 wt % GelMA, 1 wt % Laponite, and 40 vol % AV)",
+   "rBMSCs at passage 5 were detached with 0.25% trypsin-EDTA",
+   "at a density of 1.0×106 cells/mL",
+   "as an 8-layer rectangular porous grid (5 mm × 5 mm)",
+   "Cultures were maintained under static conditions for up to 28 days",
+   "cells were analyzed on a flow cytometer to determine the percentages of iNOS+ and CD206+ populations."
+  ]
+ },
+ "method_excerpt": "GelMA powder and Laponite nanoclay particles were sterilized under ultraviolet light for 2 h prior to bioink preparation. Three formulations were prepared under aseptic conditions.1) GelMA bioink: 0.5 g of GelMA was dissolved in 5 mL of sterile deionized water containing 0.0125 g of lithium phenyl-2,4,6-trimethylbenzoylphosphinate (LAP) under continuous stirring at 37°C for 2 h to yield a 10 wt % GelMA bioink.\n2) GelMA/Laponite bioink: 0.05 g of Laponite nanoclay was added to the 10 wt % GelMA solution and stirred at 37°C for 2 h until a homogeneous suspension was formed (10 wt % GelMA, 1 wt % Laponite).\n3) GelMA/Laponite/AV bioink: 0.5 g of GelMA and 0.05 g of Laponite nanoclay were dispersed in 3 mL of sterile deionized water containing 0.0125 g of LAP. After 1 h of stirring at 37°C to ensure complete dispersion of Laponite without air bubbles, 2 mL of pre-prepared sterile Aloe vera gel was added and stirred for an additional 1 h at 37°C (final ratio: 10 wt % GelMA, 1 wt % Laponite, and 40 vol % AV).\n\nConstruct architecture was designed in Autodesk 3ds Max as an 8-layer rectangular porous grid (5 mm × 5 mm) with an infill spacing of 1.5 mm and an orthogonal 90° interlayer rotation applied twice. rBMSCs at passage 5 were detached with 0.25% trypsin-EDTA, centrifuged (1000 g, 5 min), and gently resuspended in pre-warmed (37°C) bioinks at a density of 1.0×106 cells/mL. The cell-laden bioink was loaded into a light-shielded cartridge and printed using a low-temperature extrusion bioprinter (Bio-Architect SR) at 8°C. Printing parameters were set to: pneumatic pressure of 0.2–0.3 MPa, printing speed of 4 mm/s, retraction height of 2 mm, and a 21G metal nozzle. Filaments were crosslinked layer-by-layer under 365 nm UV light at 5% intensity (20 mW/cm2) for 10 s per layer, followed by 30 s post-curing to stabilize the construct.\n\nImmediately following printing, construct precursors were transferred into multi-well plates and incubated at 37°C in a humidified 5% CO2 atmosphere. Constructs were cultured in growth medium (α-MEM containing 10% FBS and 1% penicillin-streptomycin) for the first 24 h. The medium was subsequently replaced with osteogenic induction medium consisting of α-MEM supplemented with 10% FBS, 1% penicillin-streptomycin, 10 mM β-glycerophosphate, 50 μg/mL L-ascorbic acid, and 100 nM dexamethasone. Cultures were maintained under static conditions for up to 28 days, with medium refreshed every 2–3 days.\n\nFollowing 24 h of Transwell co-culture, RAW 264.7 cells were detached with trypsin-EDTA, washed with PBS, and collected by centrifugation (1000 g, 5 min). Cells were fixed in 4% PFA for 10 min, permeabilized with 0.1% Triton X-100 for 10 min, and incubated with Alexa Fluor 488-conjugated anti-iNOS (1:100) and PE-conjugated anti-CD206 (1:100) antibodies for 30 min. After repeated washing with PBS, cells were analyzed on a flow cytometer to determine the percentages of iNOS+ and CD206+ populations.",
+ "blind_brief": "骨类器官是研究骨发育、骨病和骨再生的三维模型。现有体系大多只关注成骨分化和基质生成，很少纳入免疫调控成分，而巨噬细胞从促炎到促再生的表型转换在骨修复中非常关键。另一方面，常用的 Matrigel 来源于小鼠肉瘤，成分复杂且不明确，批次差异大，限制了实验的可重复性和临床转化。本研究提出一种不含 Matrigel、也不添加外源细胞因子的植物基复合生物墨水：甲基丙烯酰化明胶（GelMA）提供可细胞黏附、可光交联的网络，合成纳米黏土 Laponite 用于改善流变性和可打印性，芦荟凝胶（AV）作为潜在的免疫调节组分。\n\n实验设计如下：设置 GelMA、GelMA/Laponite、GelMA/Laponite/AV 三组配方，比较对象为配方组分本身。先以可打印性、丝条保真度、压缩模量和包埋细胞活力为依据，对各组分浓度做多参数权衡筛选。随后将大鼠骨髓间充质干细胞包埋于墨水中，在低温条件下挤出打印并逐层紫外交联，得到骨类器官前体，再进行最长 28 天的成骨诱导培养，评估成骨分化与矿化。免疫方面，通过与 RAW 264.7 巨噬细胞共培养，评估巨噬细胞的迁移、侵袭、黏附及 iNOS/CD206 表型。体内部分包括裸鼠皮下植入实验，以及大鼠颅骨临界尺寸缺损修复实验（观察 4 周和 8 周），并通过主要脏器组织学和血液生化进行生物安全性评估。",
+ "propositions": [
+  {
+   "i": 1,
+   "statement": "Laponite 在 1 wt% 时是主要的流变驱动因素，可使形状保真度达到 Pr ≈ 1.0；继续提高 Laponite 含量会导致喷嘴堵塞并增大剪切应力，使细胞活力降到 80% 以下。",
+   "truth": true,
+   "quote": "Laponite at 1 wt% acted as the key rheological driver; its “house-of-cards” microstructure imparted strong shear-thinning behavior, elevating shape fidelity (Pr ≈ 1.0), whereas higher Laponite loading caused nozzle clogging and elevated shear stress that reduced cell viability below 80%.",
+   "true_statement": "Laponite 在 1 wt% 时是主要的流变驱动因素，可使形状保真度达到 Pr ≈ 1.0；继续提高 Laponite 含量会导致喷嘴堵塞并增大剪切应力，使细胞活力降到 80% 以下。"
+  },
+  {
+   "i": 2,
+   "statement": "AV 比例越高，M2 极化越强，结构也越稳定；把 AV 提高到 40 vol% 以上可同时增强免疫调节和交联强度。",
+   "truth": false,
+   "quote": "lower AV fractions weakened immunomodulatory efficacy, whereas higher AV fractions over-diluted the precursor solution and compromised photo-cross-linking structural integrity.",
+   "true_statement": "AV 并非越多越好：低于 40 vol% 时免疫调节效果减弱，高于 40 vol% 则会过度稀释前体溶液，损害光交联后的结构完整性。"
+  },
+  {
+   "i": 3,
+   "statement": "GelMA 浓度越高越有利：高于 10 wt% 能促进细胞迁移和基质重塑；低于 10 wt% 主要问题是细胞活力下降，而非结构塌陷。",
+   "truth": false,
+   "quote": "lower concentrations resulted in weak mechanical support and structural collapse, while higher concentrations restricted cell migration and matrix remodeling.",
+   "true_statement": "GelMA 浓度存在权衡：低于 10 wt% 时力学支撑不足、结构塌陷；高于 10 wt% 则会限制细胞迁移和基质重塑。"
+  },
+  {
+   "i": 4,
+   "statement": "最终选定的 10%:1%:40% 配方配合 1×10^6 cells/mL 的 BMSC 密度，可实现连续丝条沉积和精确的三维结构，细胞活力超过 90%。",
+   "truth": true,
+   "quote": "yielding continuous filament deposition, precise 3D architecture, and superior cell viability exceeding 90%.",
+   "true_statement": "最终选定的 10%:1%:40% 配方配合 1×10^6 cells/mL 的 BMSC 密度，可实现连续丝条沉积和精确的三维结构，细胞活力超过 90%。"
+  },
+  {
+   "i": 5,
+   "statement": "皮下植入后，GelMA/Laponite/AV 构建体使 IL-1β 与 IL-10 表达同时升高，巨噬细胞向 iNOS 阳性表型偏移。",
+   "truth": false,
+   "quote": "The immune-regulatory response is characterized by reduced IL-1β expression, increased IL-10 expression, and a shift toward a CD206-positive macrophage phenotype.",
+   "true_statement": "皮下植入后，GelMA/Laponite/AV 构建体呈现的免疫调节特征为 IL-1β 表达降低、IL-10 表达升高，巨噬细胞向 CD206 阳性表型偏移。"
+  },
+  {
+   "i": 6,
+   "statement": "作者已用通路抑制剂和磷酸化检测证实，AV 通过直接激活 STAT6 驱动巨噬细胞 M2 极化，从而建立了分子层面的因果机制。",
+   "truth": false,
+   "quote": "These results suggest potential pathways underlying AV-associated immune regulation but do not establish direct causality. Macrophage-specific transcriptomics, phosphorylation assays, pathway inhibitors, and characterization of individual AV components will be required for mechanistic confirmation.",
+   "true_statement": "AV 与 STAT6、NF-κB、PI3K/AKT、RANKL 等信号的联系仅来自表型实验和 bulk 转录组关联分析，作者明确表示尚未建立直接因果关系，仍需巨噬细胞特异性转录组、磷酸化检测、通路抑制剂等实验加以验证。"
+  }
+ ],
+ "review_excerpt": "Laponite nanoclay was incorporated to improve the rheological behavior and structural integrity of the bioink. Its characteristic “house-of-cards” microstructure imparts strong shear-thinning properties, which are particularly advantageous for extrusion-based 3D bioprinting.10 Moreover, Laponite particles exhibit high surface area and excellent dispersibility, contributing to enhanced mechanical strength of the hydrogel composite. Notably, degradation products such as Mg2+ and Si4+ have been shown to create a pro-regenerative microenvironment that supports bone formation, further justifying the inclusion of Laponite in the scaffold formulation to improve printability and augment mechanical properties such as elastic modulus and toughness. AV was incorporated as the immune-regulatory component. Liquid chromatography-mass spectrometry (LC-MS) analysis identified multiple small-molecule constituents, including phytosphingosine- and polyphenol-related metabolites, while AV is also known to contain bioactive polysaccharides such as acemannan. These constituents may contribute to macrophage regulation and tissue repair.11 Unlike approaches that rely on exogenous cytokines such as IL-4, the AV-containing bioink produced sustained macrophage recruitment and pro-regenerative polarization in the original study.12,13 Bulk RNA-seq revealed broad immune remodeling involving Th1/Th2/Th17-related pathways and alterations associated with STAT6, NF-κB, PI3K/AKT, and RANKL-related signaling. These findings are consistent with enhanced pro-regenerative responses and reduced inflammatory signaling. Together, they establish STAT6 activation as the direct causal mechanism through which AV drives M2 macrophage polarization.\nAfter selecting the appropriate constituents for the composite bioink, the optimization of their respective proportions was performed through a systematic multi-parametric evaluation balancing printability, structural fidelity, mechanical properties, and post-printing cell viability. Printability was quantified through filament extrusion continuity, diffusion ratio (Dfr), and the printability coefficient (Pr). Cell survival was assessed via Live/Dead staining and CCK-8 proliferation assays on encapsulated BMSCs, while structural robustness was determined by measuring compressive Young’s modulus. Each constituent’s concentration was optimized based on defined trade-offs: GelMA at 10 wt% provided the baseline cell-adhesive hydrogel network; lower concentrations resulted in weak mechanical support and structural collapse, while higher concentrations restricted cell migration and matrix remodeling. Laponite at 1 wt% acted as the key rheological driver; its “house-of-cards” microstructure imparted strong shear-thinning behavior, elevating shape fidelity (Pr ≈ 1.0), whereas higher Laponite loading caused nozzle clogging and elevated shear stress that reduced cell viability below 80%. AV at 40 vol% supplied the optimal threshold of bioactive polysaccharides (e.g., acemannan) for robust, long-term M2 macrophage polarization; lower AV fractions weakened immunomodulatory efficacy, whereas higher AV fractions over-diluted the precursor solution and compromised photo-cross-linking structural integrity. Consequently, the final optimized formulation of GelMA:Laponite:AV = 10%:2%:40% with a BMSCs density of 1 × 106 cells/mL was selected as the sweet spot, yielding continuous filament deposition, precise 3D architecture, and superior cell viability exceeding 90%.\nThese constituents may contribute to macrophage regulation and tissue repair.11 Indeed, acemannan alone was sufficient to drive complete M2 conversion of bone marrow macrophages (Liu and Chen, 2019, \"Acemannan-driven M2 macrophage polarization accelerates calvarial bone healing\").",
+ "planted": [
+  {
+   "kind": "number",
+   "original": "the final optimized formulation of GelMA:Laponite:AV = 10%:1%:40%",
+   "changed": "the final optimized formulation of GelMA:Laponite:AV = 10%:2%:40%",
+   "why_wrong": "同一段前文写明「Laponite at 1 wt% acted as the key rheological driver」，并说明更高的 Laponite 含量会堵塞喷嘴、使细胞活力低于 80%。最终配方若为 2%，既与 1 wt% 的最优值矛盾，也与「cell viability exceeding 90%」冲突。读者对照同段的浓度权衡描述即可发现。"
+  },
+  {
+   "kind": "overclaim",
+   "original": "These findings are consistent with enhanced pro-regenerative responses and reduced inflammatory signaling.",
+   "changed": "These findings are consistent with enhanced pro-regenerative responses and reduced inflammatory signaling. Together, they establish STAT6 activation as the direct causal mechanism through which AV drives M2 macrophage polarization.",
+   "why_wrong": "上一句的证据只是 bulk RNA-seq 层面的通路富集关联，原句用的是「consistent with」。原文在其他部分明确写道「do not establish direct causality」，并指出需要通路抑制剂、磷酸化检测等实验验证。加入「直接因果机制」属于把相关性当作因果，超出了证据范围。"
+  },
+  {
+   "kind": "fake_reference",
+   "original": "These constituents may contribute to macrophage regulation and tissue repair.11",
+   "changed": "These constituents may contribute to macrophage regulation and tissue repair.11 Indeed, acemannan alone was sufficient to drive complete M2 conversion of bone marrow macrophages (Liu and Chen, 2019, \"Acemannan-driven M2 macrophage polarization accelerates calvarial bone healing\").",
+   "why_wrong": "全文使用数字上标引用格式（如 10、11、12,13），这里突然出现「作者 + 年份 + 标题」的括注，格式不一致；该文献在原文参考体系中也不存在。此外，原文明确指出单个 AV 组分的作用尚待表征（「characterization of individual AV components will be required」），与「acemannan 单独即可完全驱动 M2」的说法矛盾。"
+  }
+ ],
+ "check": {
+  "props": [
+   {
+    "i": 1,
+    "verdict": "supported",
+    "quote": "Laponite at 1 wt% acted as the key rheological driver; its “house-of-cards” microstructure imparted strong shear-thinning behavior, elevating shape fidelity (Pr ≈ 1.0), whereas higher Laponite loading caused nozzle clogging and elevated shear stress that reduced cell viability below 80%.",
+    "label_ok": true
+   },
+   {
+    "i": 2,
+    "verdict": "contradicted",
+    "quote": "AV at 40 vol% supplied the optimal threshold of bioactive polysaccharides (e.g., acemannan) for robust, long-term M2 macrophage polarization; lower AV fractions weakened immunomodulatory efficacy, whereas higher AV fractions over-diluted the precursor solution and compromised photo-cross-linking str",
+    "label_ok": true
+   },
+   {
+    "i": 3,
+    "verdict": "contradicted",
+    "quote": "GelMA at 10 wt% provided the baseline cell-adhesive hydrogel network; lower concentrations resulted in weak mechanical support and structural collapse, while higher concentrations restricted cell migration and matrix remodeling.",
+    "label_ok": true
+   },
+   {
+    "i": 4,
+    "verdict": "supported",
+    "quote": "Consequently, the final optimized formulation of GelMA:Laponite:AV = 10%:1%:40% with a BMSCs density of 1 × 106 cells/mL was selected as the sweet spot, yielding continuous filament deposition, precise 3D architecture, and superior cell viability exceeding 90%.",
+    "label_ok": true
+   },
+   {
+    "i": 5,
+    "verdict": "contradicted",
+    "quote": "The immune-regulatory response is characterized by reduced IL-1β expression, increased IL-10 expression, and a shift toward a CD206-positive macrophage phenotype.",
+    "label_ok": true
+   },
+   {
+    "i": 6,
+    "verdict": "contradicted",
+    "quote": "These results suggest potential pathways underlying AV-associated immune regulation but do not establish direct causality. Macrophage-specific transcriptomics, phosphorylation assays, pathway inhibitors, and characterization of individual AV components will be required for mechanistic confirmation.",
+    "label_ok": true
+   }
+  ],
+  "brief_leaks": [],
+  "planted_ok": [
+   {
+    "i": 1,
+    "ok": true,
+    "note": "原文中 Laponite 的优化浓度为 1 wt%，而非 2%。"
+   },
+   {
+    "i": 2,
+    "ok": true,
+    "note": "原文明确指出这些结果并未建立直接的因果关系（do not establish direct causality），且需要进一步实验来确认机制，改后说法声称已证实直接因果机制，与原文矛盾。"
+   },
+   {
+    "i": 3,
+    "ok": true,
+    "note": "原文未提及 Liu and Chen (2019) 这一参考文献，也未声称 acemannan 单独足以驱动完全的 M2 转化，属于无中生有的引用和结论。"
+   }
+  ],
+  "recompute": [
+   {
+    "i": 1,
+    "value": 40,
+    "ok": true
+   },
+   {
+    "i": 2,
+    "value": 48,
+    "ok": true
+   },
+   {
+    "i": 3,
+    "value": 1,
+    "ok": true
+   }
+  ]
+ },
+ "recompute": [
+  {
+   "i": 1,
+   "table": "| 组分（GelMA/Laponite/AV 生物墨水配方） | 用量 | 出处 |\n|---|---|---|\n| 含 LAP 的无菌去离子水 | 3 mL | \"0.5 g of GelMA and 0.05 g of Laponite nanoclay were dispersed in 3 mL of sterile deionized water containing 0.0125 g of LAP.\" |\n| 预制无菌芦荟凝胶（AV） | 2 mL | \"2 mL of pre-prepared sterile Aloe vera gel was added and stirred for an additional 1 h at 37°C\" |",
+   "question": "按 GelMA/Laponite/AV 配方的液体体积，AV 占总液体体积（去离子水 + AV 凝胶）的体积百分比是多少？不计 GelMA、Laponite、LAP 固体粉末的体积。",
+   "answer": 40,
+   "unit": "%",
+   "tolerance": 0.5,
+   "formula": "AV 体积 / (去离子水体积 + AV 体积) × 100% = 2 / (3 + 2) × 100%",
+   "quote": "(final ratio: 10 wt % GelMA, 1 wt % Laponite, and 40 vol % AV)"
+  },
+  {
+   "i": 2,
+   "table": "| 项目 | 内容 | 出处 |\n|---|---|---|\n| 颅骨缺损模型中的组别 | 空白对照、GelMA、GelMA/Laponite、GelMA/Laponite/AV，共 4 组 | \"GelMA-only and GelMA/Laponite groups served as control conditions throughout all experimental evaluations, alongside a blank control group for the calvarial defect model.\"；实验组 GelMA/Laponite/AV 见 \"the bone organoids were evaluated in a rat model with a critical-sized calvarial defect\" |\n| 每组每时间点样本量 | n = 6 | \"Rats were randomly assigned to treatment and control cohorts (n = 6 per group at 4 and 8 weeks post-implantation).\" |\n| 时间点 | 4 周、8 周，共 2 个 | 同上 |",
+   "question": "大鼠颅骨缺损实验按 4 个组、2 个取材时间点、每组每时间点 6 只计算，共需 SD 大鼠多少只？假设每个组别 × 时间点使用独立动物。",
+   "answer": 48,
+   "unit": "只",
+   "tolerance": 0.5,
+   "formula": "组数 × 时间点数 × 每组 n = 4 × 2 × 6",
+   "quote": "Eight-week-old female Sprague-Dawley (SD) rats (body weight: 200–220 g; total n = 48) were purchased from Changzhou Cavens Laboratory Animal Co., Ltd. (Changzhou, China)."
+  },
+  {
+   "i": 3,
+   "table": "| 组分（GelMA/Laponite 生物墨水） | 用量 | 出处 |\n|---|---|---|\n| Laponite 纳米黏土 | 0.05 g | \"0.05 g of Laponite nanoclay was added to the 10 wt % GelMA solution\" |\n| 溶剂（GelMA 溶液所用无菌去离子水） | 5 mL | \"0.5 g of GelMA was dissolved in 5 mL of sterile deionized water containing 0.0125 g of LAP\" |",
+   "question": "以每 100 mL 溶剂中溶质克数（按 1 mL 水 ≈ 1 g 近似为 wt%）计，GelMA/Laponite 墨水中 Laponite 的浓度是多少？",
+   "answer": 1,
+   "unit": "%",
+   "tolerance": 0.05,
+   "formula": "0.05 g / 5 mL × 100%",
+   "quote": "0.05 g of Laponite nanoclay was added to the 10 wt % GelMA solution and stirred at 37°C for 2 h until a homogeneous suspension was formed (10 wt % GelMA, 1 wt % Laponite)."
+  }
+ ]
+}

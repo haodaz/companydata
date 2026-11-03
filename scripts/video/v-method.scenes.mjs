@@ -68,5 +68,5 @@ export default [
   { resume: true }, { note: 'work_mat' }, { hold: 4 },
   { eval: run(`const el = [...document.querySelectorAll('.wk-mat')][0]; const box = el?.closest('div[style*="overflow"]') || el?.parentElement; if (box) await L.glideEl(box, 900, 5000); return 1;`), timeout: 20 }, { hold: 2 },
 
-  { pause: true }, { go: cover('九十块钱的数据//|一堂课 · 一道真活', '平方数据工厂 · 企业库 · 北辰严选 · 百业', 92), wait: 2500 }, { resume: true }, { note: 'end' }, { hold: 5 },
+  { pause: true }, { go: cover('九十块钱的数据//|一堂课 · 一道真活', '平方数据工厂 · 企业库 · 方略研选 · 百业', 92), wait: 2500 }, { resume: true }, { note: 'end' }, { hold: 5 },
 ];

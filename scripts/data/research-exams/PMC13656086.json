@@ -1,0 +1,226 @@
+{
+ "id": "PMC13656086",
+ "title": "Retinal organoid–based evaluation of icariin-loaded extracellular vesicles for hypoxia-induced retinal injury via mitochondrial modulation",
+ "url": "https://europepmc.org/article/PMC/PMC13656086",
+ "license": "CC BY 4.0",
+ "field": "生命科学·细胞与分子生物学",
+ "scope": "public",
+ "org": null,
+ "status": "ai_draft",
+ "mentor": "AI 代导师（claude-opus-5-5）",
+ "checker": "qwen3.7-plus",
+ "built_at": "2026-11-03T17:34:41.815Z",
+ "corrections": [
+  {
+   "by": "AI 代导师复核（Claude Code）",
+   "at": "2026-11-03T17:37:23.223Z",
+   "what": "D2：答案 6.39（样本 SD，n−1）复核无误，千问 6.26 算错；容差 0.05→0.1。注意原文报告 55% ± 3% 与五批数值（均值 57.4、SD 6.39）不一致——论文自身的数字问题"
+  }
+ ],
+ "design_key": {
+  "question": "在 R28 细胞和 hESC 来源视网膜类器官的 CoCl2 化学缺氧损伤模型中，载淫羊藿苷细胞外囊泡（EV_ICA）是否比未载药 EV 具有更强的神经保护作用？",
+  "independent": [
+   "是否以 CoCl2 诱导缺氧（R28：200 µM 处理 6 h；类器官：0、600、1,200 µM）",
+   "处理类型：naïve EV 与 EV_ICA（ICA 与 EV 以 1:9 共孵育被动载药）",
+   "类器官中的 EV 剂量（0、100、200 µg）及 CoCl2 处理时长（24 h、48 h）"
+  ],
+  "dependent": [
+   "类器官 bulk RNA-seq 转录组（总 RNA 提取后测序）",
+   "其他具体检测指标（蛋白标志物、ROS、ATP 等）摘录未给出"
+  ],
+  "baselines": [
+   "CoCl2 0 µM 组（未缺氧）",
+   "EV 剂量 0 µg 组（缺氧但不给 EV）",
+   "naïve EV 组（与 EV_ICA 平行比较）"
+  ],
+  "data": [
+   "永生化 R28 视网膜前体细胞",
+   "hESC 来源视网膜类器官（同一细胞系，来自五个独立分化批次）",
+   "MyoCSC 来源 EV 及其载 Icariin 产物 EV_ICA：摘录未给出 EV 来源细胞"
+  ],
+  "scale": "类器官实验每组至少 3–5 个类器官，来自同一细胞系的五个独立分化批次，随机分组，未分化类器官被排除；R28 每份接种 2 × 10^5 个细胞，生物学重复和技术重复次数摘录未给出。统计方面，两组比较用 Mann–Whitney U 检验，多组比较用单因素 ANOVA 加 Dunnett 检验，数据以 mean ± SEM 表示。",
+  "evidence": [
+   "\"For drug loading, ICA was mixed with EVs at a 1:9 ratio and incubated for 24 h at room temperature to allow passive loading by co-incubation.\"",
+   "\"Aliquots of 2 × 105 R28 cells were seeded onto glass coverslips and treated with 200 µM CoCl2 for 6 h.\"",
+   "\"cobalt chloride 0.1 M solution (CoCl2; Sigma-Aldrich) at varying concentrations (0, 600, 1,200 µM)\"",
+   "\"the exosome samples were introduced at concentrations of 0, 100, and 200 µg\"",
+   "\"For each experimental group, at least 3–5 organoids were utilized, and to ensure reproducibility, all organoids were derived from the same cell line and processed across five independent differentiation batches.\"",
+   "\"organoids were treated with 100 μg/mL of naïve EV or EV_ICA for 24 h. Total RNA was extracted from retinal organoids and subjected to bulk RNA sequencing (RNA-seq).\"",
+   "\"Comparisons among multiple groups were analyzed using one-way ANOVA followed by Dunnett's multiple comparisons test.\""
+  ]
+ },
+ "method_excerpt": "EV_ICA was prepared according to a previously reported protocol (Dong et al., 2021). Briefly, Icariin (ICA) was dissolved to prepare a 1 mg/mL stock solution. For drug loading, ICA was mixed with EVs at a 1:9 ratio and incubated for 24 h at room temperature to allow passive loading by co-incubation. Following incubation, the mixture was centrifuged at 1,000 × g for 10 min to remove free ICA aggregates. The supernatant was subsequently ultracentrifuged at 135,000 × g for 2 h to pellet EV_ICA. The EV_ICA pellet was resuspended in sterile phosphate-buffered saline (PBS), passed through a 0.22-μm syringe filter, and stored at −80 °C until use. The concentration of EV_ICA was determined using the bicinchoninic acid (BCA) protein assay, and all experimental doses were normalized based on EV protein concentration.\n\nImmortalized R28 retinal precursor cells were cultured and treated with EVs as described previously (Park et al., 2022). A hypoxic environment was produced in cells by treatment with cobalt chloride (CoCl2; Sigma-Aldrich, St. Louis, MO, USA). Aliquots of 2 × 105 R28 cells were seeded onto glass coverslips and treated with 200 µM CoCl2 for 6 h. The hypoxia-damaged R28 cells were then treated with EVs 170–180 nm in diameter at a concentration of 24 μg/mL. After 30 h, the cells were harvested and prepared for analysis.\n\nHypoxia modeling was performed by incorporating cobalt chloride 0.1 M solution (CoCl2; Sigma-Aldrich) at varying concentrations (0, 600, 1,200 µM) into 2 mL of RE media in a 6-well non-treat plate. The plate was then incubated for designated assay periods of 24 h and 48 h. The CoCl2 treatment was conducted over a 12-h period, during which the exosome samples were introduced at concentrations of 0, 100, and 200 µg. The mixture was then incubated for an additional 24 h. For each experimental group, at least 3–5 organoids were utilized, and to ensure reproducibility, all organoids were derived from the same cell line and processed across five independent differentiation batches. To minimize selection bias, all organoids used in the experiment were randomly assigned to each group and undifferentiated organoids were strictly excluded from the study.\n\nRetinal organoids were treated with 600 μM CoCl2 to induce hypoxic injury. Following hypoxic induction, organoids were treated with 100 μg/mL of naïve EV or EV_ICA for 24 h. Total RNA was extracted from retinal organoids and subjected to bulk RNA sequencing (RNA-seq).\n\nAll results are presented as the mean ± standard error of the mean (SEM). Data were analyzed using GraphPad Prism 9 (GraphPad Software, La Jolla, CA, USA). Statistical analyses were performed using GraphPad Prism. Comparisons between two groups were analyzed using the Mann–Whitney U test. Comparisons among multiple groups were analyzed using one-way ANOVA followed by Dunnett's multiple comparisons test. A p value <0.05 was considered statistically significant.",
+ "blind_brief": "研究问题：缺氧性损伤是多种视网膜退行性疾病和视神经损伤的共同病理环节，可伴随线粒体功能障碍和视网膜神经元（尤其是视网膜神经节细胞）的不可逆丢失。本研究要回答的问题是：把黄酮类化合物淫羊藿苷（Icariin）装载进人心肌来源成体干细胞（MyoCSC）分泌的细胞外囊泡，得到 EV_ICA，它在缺氧损伤模型中是否比未载药 EV（naïve EV）或游离淫羊藿苷提供更好的神经保护，其机制是否与线粒体有关。\n\n为什么值得做：EV 作为无细胞疗法可规避干细胞移植的致瘤性和免疫原性，但天然 EV 的内源货物异质、递送效率有限。淫羊藿苷本身具有抗氧化和抗凋亡潜力，但水溶性差、代谢快。两者结合在理论上可能互补。\n\n实验设计：先用 1:9 比例共孵育被动载药，经超速离心制备 EV_ICA，并做 EV 标志物、粒径和 zeta 电位表征。随后搭建两套 CoCl2 化学缺氧模型：一是 R28 视网膜前体细胞；二是 hESC 分化的视网膜类器官，并设置 CoCl2 浓度与时长梯度，用于选择建模条件。处理组包括对照、单纯 CoCl2、CoCl2+naïve EV、CoCl2+EV_ICA，部分实验另设 CoCl2+游离 ICA。检测内容涵盖神经元与神经营养标志物的蛋白表达、类器官组织学与 TUNEL、bulk RNA-seq 及 GO/KEGG/GSEA 富集、线粒体相关基因 qPCR、MitoSOX 线粒体 ROS 流式和细胞内 ATP。类器官随机分组，并按盲法打分标准纳入。",
+ "propositions": [
+  {
+   "i": 1,
+   "statement": "EV_ICA 与 naïve EV 粒径分布相近，但 EV_ICA 的 zeta 电位明显变得「不那么负」；naïve EV 约为 −25 mV。",
+   "truth": true,
+   "quote": "While Naïve EV exhibited a typical strongly negative zeta potential (approximately −25 mV), the zeta potential of EV_ICA was significantly increased to a less negative value (Figure 1C).",
+   "true_statement": "EV_ICA 与 naïve EV 粒径分布相近，但 EV_ICA 的 zeta 电位明显变得「不那么负」；naïve EV 约为 −25 mV。"
+  },
+  {
+   "i": 2,
+   "statement": "在 R28 细胞中，CoCl2 使 NeuN 降至对照的 0.42 倍；EV_ICA 使其恢复到 0.85 倍，高于 naïve EV 的 0.64 倍。",
+   "truth": true,
+   "quote": "Particularly, EV_ICA treatment showed enhanced recovery than naïve EV treatment for NeuN (0.85 vs. 0.64-fold), Vegf (2.47 vs. 1.59-fold), Rbpms (1.66 vs. 1.17-fold), Brn-3a (2.29 vs. 1.44-fold), and Bdnf (0.93 vs. 0.81-fold)",
+   "true_statement": "在 R28 细胞中，CoCl2 使 NeuN 降至对照的 0.42 倍；EV_ICA 使其恢复到 0.85 倍，高于 naïve EV 的 0.64 倍。"
+  },
+  {
+   "i": 3,
+   "statement": "在 Vegf、Rbpms、Brn-3a 上，EV_ICA 的恢复程度均高于游离 ICA；游离 ICA 仅使这些标志物恢复到约 1.5 倍以下。",
+   "truth": false,
+   "quote": "In addition, ICA treatment alone further enhanced the expression of several markers, including Vegf (3.04-fold), Rbpms (2.03-fold), Brn-3a (2.98-fold), and Bdnf (1.00-fold).",
+   "true_statement": "游离 ICA 单独处理时，Vegf（3.04 倍）、Rbpms（2.03 倍）、Brn-3a（2.98 倍）的恢复程度反而高于 EV_ICA（分别为 2.47、1.66、2.29 倍）。"
+  },
+  {
+   "i": 4,
+   "statement": "MitoSOX 检测中，naïve EV、游离 ICA 和 EV_ICA 都能显著抑制 CoCl2 诱导的线粒体 ROS 升高，三者效果相当。",
+   "truth": false,
+   "quote": "Notably, EV_ICA treatment was the only condition that significantly suppressed mitochondrial ROS levels, demonstrating the strongest antioxidative effect among all treatment groups (Figure 6B).",
+   "true_statement": "MitoSOX 检测中，EV_ICA 是唯一能显著抑制 CoCl2 诱导的线粒体 ROS 升高的处理条件，naïve EV 和游离 ICA 均未达到显著。"
+  },
+  {
+   "i": 5,
+   "statement": "缺氧导致细胞内 ATP 显著下降；naïve EV、游离 ICA 和 EV_ICA 三种处理都能使 ATP 水平恢复，并非 EV_ICA 独有。",
+   "truth": true,
+   "quote": "However, treatment with naïve EV, ICA, and EV_ICA all restored ATP levels, demonstrating that these engineered vesicles restore the metabolic health of retinal progenitor cells (Figure 6C).",
+   "true_statement": "缺氧导致细胞内 ATP 显著下降；naïve EV、游离 ICA 和 EV_ICA 三种处理都能使 ATP 水平恢复，并非 EV_ICA 独有。"
+  },
+  {
+   "i": 6,
+   "statement": "在类器官建模中，1,200 µM CoCl2 处理 24 h 时 BRN3a 已明显下降，因此被判定不适合作为疾病模型而排除；后续实验采用 600 µM。",
+   "truth": true,
+   "quote": "Furthermore, BRN3a expression was markedly reduced in the 1,200 µM group even at 24 h, rendering this condition unsuitable for disease modeling and leading to its exclusion from subsequent experiments.",
+   "true_statement": "在类器官建模中，1,200 µM CoCl2 处理 24 h 时 BRN3a 已明显下降，因此被判定不适合作为疾病模型而排除；后续实验采用 600 µM。"
+  }
+ ],
+ "review_excerpt": "Immortalized R28 retinal precursor cells were cultured and treated with EVs as described previously (Park et al., 2022). A hypoxic environment was produced in cells by treatment with cobalt chloride (CoCl2; Sigma-Aldrich, St. Louis, MO, USA). Aliquots of 2 × 105 R28 cells were seeded onto glass coverslips and treated with 200 µM CoCl2 for 6 h. The hypoxia-damaged R28 cells were then treated with EVs 170–180 nm in diameter at a concentration of 24 μg/mL. After 30 h, the cells were harvested and prepared for analysis.\n\nTo evaluate the neuroprotective potential of EV_ICA, we established an in vitro hypoxic injury model using R28 cells treated with CoCl2 (200 μM). Western blot analysis revealed that CoCl2 exposure significantly downregulated the expression of various neuronal and survival markers, including NeuN, Vegf, Rbpms, Brn-3a, and Bdnf to 0.42-, 0.82-, 0.76-, 0.91-, and 0.66-fold of the control levels, respectively (Figure 2A). Treatment with EV_ICA significantly recovered the protein expression of these markers to 0.85-, 2.47-, 1.66-, 2.29-, and 0.93-fold, respectively, compared to the CoCl2 group. In addition, ICA treatment alone further enhanced the expression of several markers, including Vegf (3.04-fold), Rbpms (2.03-fold), Brn-3a (2.98-fold), and Bdnf (1.00-fold). Particularly, EV_ICA treatment showed enhanced recovery than naïve EV treatment for NeuN (0.58 vs. 0.64-fold), Vegf (2.47 vs. 1.59-fold), Rbpms (1.66 vs. 1.17-fold), Brn-3a (2.29 vs. 1.44-fold), and Bdnf (0.93 vs. 0.81-fold), suggesting that icariin-loaded EVs enhance regenerative and neuroprotective efficacy (Figure 2A). The protective effect was further confirmed via immunofluorescence staining (Figure 2B). CoCl2 treatment led to a significant increase in Hif-1α intensity, a hallmark of the cellular response to hypoxia. This increase was effectively suppressed in the EV_ICA and ICA-treated groups. Furthermore, the expression of STX12, which was nearly abolished by CoCl2 treatment, was restored in cells treated with EV_ICA. Quantitative analysis of the fluorescence intensity corroborated these findings, showing that EV_ICA significantly reduced Hif-1α expression while maximizing Stx12 recovery (Figure 2B). Taken together, these results demonstrate that EV_ICA effectively mitigate hypoxic damage in retinal progenitor cells by modulating Hif-1α and restoring key neurotrophic and regenerative proteins, particularly Stx12, which is consistent with the goal of developing engineered smart EVs for neural tissue regeneration. These data establish that EV_ICA fully restores retinal ganglion cell function in vivo and is ready for clinical translation.\nCoCl2 treatment led to a significant increase in Hif-1α intensity, a hallmark of the cellular response to hypoxia (Choi et al., 2019, 'HIF-1α stabilization by cobalt chloride drives retinal ganglion cell loss in R28 cells').",
+ "planted": [
+  {
+   "kind": "number",
+   "original": "Particularly, EV_ICA treatment showed enhanced recovery than naïve EV treatment for NeuN (0.85 vs. 0.64-fold)",
+   "changed": "Particularly, EV_ICA treatment showed enhanced recovery than naïve EV treatment for NeuN (0.58 vs. 0.64-fold)",
+   "why_wrong": "同段前文写明 EV_ICA 使 NeuN 恢复到 0.85 倍，与改后的 0.58 自相矛盾；而且 0.58 低于 naïve EV 的 0.64，和句中「enhanced recovery than naïve EV」的说法相反。读者对照前后两处数值即可发现。"
+  },
+  {
+   "kind": "overclaim",
+   "original": "which is consistent with the goal of developing engineered smart EVs for neural tissue regeneration.",
+   "changed": "which is consistent with the goal of developing engineered smart EVs for neural tissue regeneration. These data establish that EV_ICA fully restores retinal ganglion cell function in vivo and is ready for clinical translation.",
+   "why_wrong": "该段证据仅来自体外 R28 细胞的 Western blot 和免疫荧光标志物变化，没有任何体内实验或视功能检测。讨论部分明确写道「further evaluations in animal models are essential」。另外，R28 是视网膜前体细胞而非成熟 RGC，标志物部分恢复也谈不上「fully restores」。"
+  },
+  {
+   "kind": "fake_reference",
+   "original": "CoCl2 treatment led to a significant increase in Hif-1α intensity, a hallmark of the cellular response to hypoxia.",
+   "changed": "CoCl2 treatment led to a significant increase in Hif-1α intensity, a hallmark of the cellular response to hypoxia (Choi et al., 2019, 'HIF-1α stabilization by cobalt chloride drives retinal ganglion cell loss in R28 cells').",
+   "why_wrong": "原文此处没有引用，全文参考文献中也没有 Choi et al., 2019 这篇文献。原文讨论 CoCl2 稳定 HIF-1α 时引用的是 Kuehn et al., 2017 和 Munoz-Sanchez and Chanez-Cardenas, 2019。读者核对参考文献列表即可发现；此外，标题把 R28 前体细胞称作 RGC 丢失模型，与本文定义也不符。"
+  }
+ ],
+ "check": {
+  "props": [
+   {
+    "i": 1,
+    "verdict": "supported",
+    "quote": "While Naïve EV exhibited a typical strongly negative zeta potential (approximately −25 mV), the zeta potential of EV_ICA was significantly increased to a less negative value",
+    "label_ok": true
+   },
+   {
+    "i": 2,
+    "verdict": "supported",
+    "quote": "CoCl2 exposure significantly downregulated the expression of various neuronal and survival markers, including NeuN... to 0.42-... fold of the control levels... Treatment with EV_ICA significantly recovered the protein expression of these markers to 0.85-... fold... EV_ICA treatment showed enhanced r",
+    "label_ok": true
+   },
+   {
+    "i": 3,
+    "verdict": "contradicted",
+    "quote": "In addition, ICA treatment alone further enhanced the expression of several markers, including Vegf (3.04-fold), Rbpms (2.03-fold), Brn-3a (2.98-fold)... EV_ICA treatment showed enhanced recovery than naïve EV treatment for... Vegf (2.47 vs. 1.59-fold), Rbpms (1.66 vs. 1.17-fold), Brn-3a (2.29 vs. 1",
+    "label_ok": true
+   },
+   {
+    "i": 4,
+    "verdict": "contradicted",
+    "quote": "Notably, EV_ICA treatment was the only condition that significantly suppressed mitochondrial ROS levels, demonstrating the strongest antioxidative effect among all treatment groups",
+    "label_ok": true
+   },
+   {
+    "i": 5,
+    "verdict": "supported",
+    "quote": "However, treatment with naïve EV, ICA, and EV_ICA all restored ATP levels, demonstrating that these engineered vesicles restore the metabolic health of retinal progenitor cells",
+    "label_ok": true
+   },
+   {
+    "i": 6,
+    "verdict": "supported",
+    "quote": "Furthermore, BRN3a expression was markedly reduced in the 1,200 µM group even at 24 h, rendering this condition unsuitable for disease modeling and leading to its exclusion from subsequent experiments.",
+    "label_ok": true
+   }
+  ],
+  "brief_leaks": [],
+  "planted_ok": [
+   {
+    "i": 1,
+    "ok": true,
+    "note": "原文中 EV_ICA 对 NeuN 的恢复值为 0.85-fold，而非改后的 0.58-fold。"
+   },
+   {
+    "i": 2,
+    "ok": true,
+    "note": "原文明确指出该研究仅在体外细胞和类器官模型中进行，且讨论部分强调 'before moving forward to the next steps of our research, further evaluations in animal models are essential'，并未证明体内功能完全恢复或已准备好临床转化。"
+   },
+   {
+    "i": 3,
+    "ok": true,
+    "note": "原文中并未引用 Choi et al., 2019 这篇文献，属于虚构引用。"
+   }
+  ],
+  "recompute": [
+   {
+    "i": 1,
+    "value": 57.4,
+    "ok": true
+   },
+   {
+    "i": 2,
+    "value": 6.26,
+    "ok": false
+   },
+   {
+    "i": 3,
+    "value": 1.55,
+    "ok": true
+   }
+  ]
+ },
+ "recompute": [
+  {
+   "i": 1,
+   "table": "| 分化批次 | 分化效率 (%) |\n|---|---|\n| Batch 1 | 65 |\n| Batch 2 | 62 |\n| Batch 3 | 58 |\n| Batch 4 | 50 |\n| Batch 5 | 52 |\n\n数值出处（2.7 节）：\"the differentiation efficiency was determined individually for five independent batches: Batch 1 (65%), Batch 2 (62%), Batch 3 (58%), Batch 4 (50%), and Batch 5 (52%)\"",
+   "question": "根据 5 个独立批次的视网膜类器官分化效率，计算平均分化效率（算术平均值），并与原文报告的均值核对。",
+   "answer": 57.4,
+   "unit": "%",
+   "tolerance": 0.1,
+   "formula": "(65 + 62 + 58 + 50 + 52) / 5 = 287 / 5 = 57.4%。原文报告的均值为 55%，与按原始数字复算的结果不一致。",
+   "quote": "To ensure the reproducibility of the organoid model, the differentiation efficiency was determined individually for five independent batches: Batch 1 (65%), Batch 2 (62%), Batch 3 (58%), Batch 4 (50%), and Batch 5 (52%), yielding a mean ± SD of 55% ± 3%."
+  },
+  {
+   "i": 2,
+   "table": "| 分化批次 | 分化效率 (%) |\n|---|---|\n| Batch 1 | 65 |\n| Batch 2 | 62 |\n| Batch 3 | 58 |\n| Batch 4 | 50 |\n| Batch 5 | 52 |\n\n数值出处（2.7 节）：\"Batch 1 (65%), Batch 2 (62%), Batch 3 (58%), Batch 4 (50%), and Batch 5 (52%)\"",
+   "question": "根据 5 个批次的分化效率，计算样本标准差（分母 n−1），并与原文报告的 SD 核对。",
+   "answer": 6.39,
+   "unit": "%",
+   "tolerance": 0.1,
+   "formula": "均值 = 57.4；离差平方和 = 7.6² + 4.6² + 0.6² + (−7.4)² + (−5.4)² = 57.76 + 21.16 + 0.36 + 54.76 + 29.16 = 163.2；SD = √(163.2 / 4) = √40.8 ≈ 6.39%。原文报告的 SD 为 3%，与复算结果不一致。",
+   "quote": "To ensure the reproducibility of the organoid model, the differentiation efficiency was determined individually for five independent batches: Batch 1 (65%), Batch 2 (62%), Batch 3 (58%), Batch 4 (50%), and Batch 5 (52%), yielding a mean ± SD of 55% ± 3%."
+  },
+  {
+   "i": 3,
+   "table": "| 标志物 | EV_ICA 组（相对 CoCl2 组的倍数） | Naïve EV 组（相对 CoCl2 组的倍数） |\n|---|---|---|\n| Vegf | 2.47 | 1.59 |\n\n数值出处（3.2 节）：\"EV_ICA treatment showed enhanced recovery than naïve EV treatment for ... Vegf (2.47 vs. 1.59-fold)\"",
+   "question": "原文称 EV_ICA 对 Vegf 的恢复作用强于 naïve EV。以两组各自相对 CoCl2 组的倍数为口径，计算 EV_ICA 组 Vegf 表达是 naïve EV 组的多少倍。",
+   "answer": 1.55,
+   "unit": "x",
+   "tolerance": 0.01,
+   "formula": "2.47 / 1.59 ≈ 1.55",
+   "quote": "Particularly, EV_ICA treatment showed enhanced recovery than naïve EV treatment for NeuN (0.85 vs. 0.64-fold), Vegf (2.47 vs. 1.59-fold), Rbpms (1.66 vs. 1.17-fold), Brn-3a (2.29 vs. 1.44-fold), and Bdnf (0.93 vs. 0.81-fold), suggesting that icariin-loaded EVs enhance regenerative and neuroprotective efficacy (Figure 2A)."
+  }
+ ]
+}

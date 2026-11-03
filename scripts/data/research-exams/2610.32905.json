@@ -1,0 +1,223 @@
+{
+ "id": "2610.32905",
+ "title": "Combining Simulations and Spectroscopy to Design Protective Coatings on Sulfide Solid Electrolytes",
+ "url": "https://arxiv.org/abs/2610.32905",
+ "license": "CC BY 4.0",
+ "field": "电池材料·固态电池",
+ "scope": "public",
+ "org": null,
+ "status": "ai_draft",
+ "mentor": "AI 代导师（claude-opus-5-5）",
+ "checker": "qwen3.7-plus",
+ "built_at": "2026-11-03T17:25:55.963Z",
+ "corrections": [],
+ "design_key": {
+  "question": "在 Li6PS5Cl 硫化物固态电解质表面，分子涂层的头基化学（羧酸 / 磺酸 / 膦酸）、锂化状态、烷基链长和表面覆盖度如何影响涂层的吸附、防潮能力和离子电导率？",
+  "independent": [
+   "头基种类：羧酸盐、磺酸盐、膦酸盐（CA / SA / PA）",
+   "锂化状态：质子化与锂化（实验中为预锂化）",
+   "烷基链长（controlled chain length）",
+   "表面吸附分子数（覆盖度）：1、9、18 个"
+  ],
+  "dependent": [
+   "吸附能（adsorption energies）",
+   "相对水可及性（relative water accessibility）",
+   "离子电导率（电化学阻抗谱测定）",
+   "H2S 释放量（20% RH 下测定）"
+  ],
+  "baselines": [
+   "未涂层 LPSCl 表面（作为水可及性的归一化基准）",
+   "质子化分子与锂化分子之间的相互对照",
+   "不含添加剂的 LPSCl（电导率测试中的 \"without additives\"）"
+  ],
+  "data": [
+   "含 8058 个结构的材料专用数据集，参考能量与力由 r2SCAN 单点 DFT 计算得到",
+   "LPSCl {111} 表面模型（468 原子 slab）",
+   "LPSCl 粉末样品（摘录未给出供应商），用各类（锂化）酸以湿法包覆"
+  ],
+  "scale": "模拟：468 原子 slab，吸附 1/9/18 个分子时体系为 490–1310 原子；吸附体系先进行 500 ps NVT 弛豫；水渗透体系放置 92 个水分子，模拟 1 ns，共 750–1590 原子。实验：摘录未给出样本量。原文未报告重复次数。",
+  "evidence": [
+   "\"we fine-tuned a PET-MAD model on a material-specific dataset containing 8058 structures\"",
+   "\"placing protonated and lithiated carboxylate, sulfonate, and phosphonate molecules of controlled chain length\"",
+   "\"With 1, 9, or 18 adsorbed molecules, these systems contain 490-1310 atoms.\"",
+   "\"placing a pre-relaxed liquid water layer of 92 molecules approximately 5 Å above the coated surface, followed by 1 ns of MD simulation at 300 K\"",
+   "\"normalized by that of the uncoated LPSCl surface, gives the relative water accessibility\"",
+   "\"The ionic conductivity of LPSCl, both with and without additives, was evaluated by electrochemical impedance spectroscopy\"",
+   "\"After stabilization of the relative humidity (RH) at 20% the \\mathrm{H_{2}S} evolution was measured.\""
+  ]
+ },
+ "method_excerpt": "To obtain an accurate description of LPSCl surfaces and their interactions with coating molecules, we fine-tuned a PET-MAD model on a material-specific dataset containing 8058 structures. Fine-tuning was performed by low-rank adaptation (LoRA), [30] in which the pretrained weights are kept fixed and low-rank corrections to them are optimized. Reference energies and forces were obtained from single-point DFT calculations using the Vienna Ab initio Simulation Package (VASP) code [38] with the renormalized Strongly Constrained and Appropriately Normed (r2SCAN) functional. [69, 25, 20]\n\nAll simulations used the fine-tuned PET-MAD potential. Molecular dynamics simulations were performed in LAMMPS [73] with a time step of 1 fs and a Nosé–Hoover thermostat. ...\n\nAdsorption models were built by placing protonated and lithiated carboxylate, sulfonate, and phosphonate molecules of controlled chain length approximately 5 Å above the relaxed LPSCl \\{111\\} surface (468-atom slab, lateral cell of 20.3\\times 17.6 Å2), in the vacuum region, with the head group oriented toward the surface. The surface–adsorbate systems were relaxed by 500 ps of NVT dynamics at 300 K followed by minimization, after which adsorption energies were evaluated (SI Sec. S1.6). With 1, 9, or 18 adsorbed molecules, these systems contain 490-1310 atoms.\n\nWater penetration was simulated by placing a pre-relaxed liquid water layer of 92 molecules approximately 5 Å above the coated surface, followed by 1 ns of MD simulation at 300 K (750–1590 atoms in total). Water molecules whose oxygen reached an \\mathrm{O} –Li distance below 2.5 Å were counted as penetrating the coating; the resulting areal density, normalized by that of the uncoated LPSCl surface, gives the relative water accessibility, which provides a dynamic accessibility metric rather than a reaction energy.\n\nPrelithiated acids were obtained by dissolving the acid in double-distilled (DD) water followed by stoichiometric addition of 1 N LiOH to neutralize each acidic proton. LPSCl coated with different acids was prepared by wet mixing the corresponding acids at specific molar percentages relative to LPSCl, in order to keep the ratio between the acid head group and the electrolyte surface area constant. ...\n\nThe ionic conductivity of LPSCl, both with and without additives, was evaluated by electrochemical impedance spectroscopy at 25 °C using a BioLogic VSP‑300 potentiostat. ...\n\n\\mathrm{H_{2}S} evolution was measured using a home-built setup consisting of a plastic desiccator, a modular humidity generator (MHG32-ProUmid) and a \\mathrm{H_{2}S} sensor (MODBUS RS485). After stabilization of the relative humidity (RH) at 20% the \\mathrm{H_{2}S} evolution was measured.",
+ "blind_brief": "硫化物固态电解质（如银柱石型 Li6PS5Cl）离子电导率高、易于加工，是全固态电池的热门候选材料。但它对水分极其敏感，即使在干燥间里也会与水反应，释放有毒的 H2S 气体，同时材料本身发生降解。用分子涂层包覆颗粒表面是一种可放大的防护思路。然而，究竟哪些分子特征决定涂层与表面的结合强度，哪些决定涂层的阻水能力，目前仍缺乏系统认识。尤其是头基化学的系统比较，以及烷基链长的影响，此前几乎无人研究。本研究把机器学习势驱动的大尺度分子动力学与针对性实验结合起来。计算部分：以 r2SCAN 数据对基础势 PET-MAD 做 LoRA 微调，在 LPSCl 表面构建吸附模型。模型中放置质子化或锂化的羧酸、磺酸、膦酸分子，系统改变链长和吸附分子数（1、9、18 个），计算吸附能；再在涂层上方放置液态水层，进行纳秒级模拟，以\"相对水可及性\"量化水分子接近表面 Li 的程度。实验部分：用 THF 湿法将不同酸及其预锂化盐包覆在 LPSCl 上，通过阻抗谱测离子电导率，并在 20% 相对湿度下监测 H2S 释放；另用 FTIR、Raman、TGA 等手段辅助表征。请学员据此预判各变量可能产生的影响，并思考计算与实验应如何相互印证。",
+ "propositions": [
+  {
+   "i": 1,
+   "statement": "在所测试的表面模型中，质子化头基的吸附能总体比对应的锂化头基更有利（更负），因为酸性 H 能与表面硫形成更强的氢键。",
+   "truth": false,
+   "quote": "Within the tested surface models, the lithiated species generally show more favorable adsorption energies than their protonated counterparts.",
+   "true_statement": "在所测试的表面模型中，锂化头基的吸附能总体比对应的质子化头基更有利（更负）。"
+  },
+  {
+   "i": 2,
+   "statement": "即使只有单个分子吸附，长链（如 C14）羧酸锂也会自发竖直取向，形成直立构象；覆盖度对分子取向影响不大。",
+   "truth": false,
+   "quote": "Thus, increasing the chain length does not make an isolated molecule stand up; instead, the longer chain remains in contact with the substrate",
+   "true_statement": "单个吸附分子无论链长多少（C2 到 C14）都近乎平躺在表面上；链长增加并不会让孤立分子竖起来，只有在高覆盖度下，链间堆积才把长链推成直立的刷状层。"
+  },
+  {
+   "i": 3,
+   "statement": "无论覆盖度如何，水可及性都在涂层竖直伸展约 8 Å 处消失：9 分子覆盖时需 C14（7.8 Å）才能达到，18 分子覆盖时 C7（7.7 Å）即可达到。",
+   "truth": true,
+   "quote": "At both coverages, the water accessibility decreases with increasing extension and vanishes at approximately 8 Å, which is reached by n=14 at 9 molecules (7.8 Å) and by n=7 at 18 molecules (7.7 Å).",
+   "true_statement": "无论覆盖度如何，水可及性都在涂层竖直伸展约 8 Å 处消失：9 分子覆盖时需 C14（7.8 Å）才能达到，18 分子覆盖时 C7（7.7 Å）即可达到。"
+  },
+  {
+   "i": 4,
+   "statement": "Cn-CALi 涂层的离子电导率随链长呈非单调变化：短链造成较大的电导损失，很长的链（C14）也会降低电导率，在 C2、C5、C7、C14 四种链长中 C7 保持得最好。",
+   "truth": true,
+   "quote": "Among the four chain lengths tested (C2, C5, C7, and C14), ionic transport is best preserved for C7.",
+   "true_statement": "Cn-CALi 涂层的离子电导率随链长呈非单调变化：短链造成较大的电导损失，很长的链（C14）也会降低电导率，在 C2、C5、C7、C14 四种链长中 C7 保持得最好。"
+  },
+  {
+   "i": 5,
+   "statement": "与从头训练相比，微调把力 RMSE 降低了约一半；即使剔除误差最大的 20 个原子，微调模型的力 RMSE 仍明显低于从头训练模型。",
+   "truth": false,
+   "quote": "Excluding the 20 atoms with the largest errors, the force RMSEs of the two models are 74.4 (scratch) and 76.1 meV Å-1 (fine-tuned).",
+   "true_statement": "与从头训练相比，微调把能量 RMSE 降低约 25%（7.26→5.53 meV/atom），但力误差量级相近；剔除误差最大的 20 个原子后，从头训练模型的力 RMSE（74.4）反而略低于微调模型（76.1 meV/Å）。"
+  },
+  {
+   "i": 6,
+   "statement": "有限温度 MD 中观察到磺酸头基自发脱质子，脱离的 H 主要结合到 PS4 四面体骨架中的 S 原子上，而不是孤立的类硫化物 S 位点。",
+   "truth": false,
+   "quote": "Within the inspected trajectories, detached H atoms were found mainly near isolated sulfide-like S sites rather than S atoms within \\mathrm{PS_{4}} tetrahedra (Fig. S15b).",
+   "true_statement": "有限温度 MD 中观察到磺酸头基自发脱质子，脱离的 H 主要迁移到孤立的类硫化物 S 位点附近，而不是 PS4 四面体中的 S。"
+  }
+ ],
+ "review_excerpt": "To assess the benefit of pretrained initialization, the same PET architecture was also trained from random initialization using the same material-specific dataset and evaluated on the same held-out test set. For this comparison, the model trained from scratch and the LoRA fine-tuned model were trained with identical data and settings (learning-rate schedule, batch of 850 atoms, cutoff, loss weights and random seed); the only difference is the initialization. Both models were trained for more than 1400 epochs, with a checkpoint saved every 50 epochs. For each training approach, the reported model is not the last checkpoint but the one with the lowest validation loss among all checkpoints up to epoch 1100 (epoch 900 for the model trained from scratch and epoch 1100 for the fine-tuned model). Note also that beyond 1100 epochs the model trained from scratch starts to overfit: its training error keeps decreasing faster than the validation error. On the other hand, the fine-tuned model is converged at this point: the validation energy and force RMSEs of all later checkpoints up to epoch 1500 differ from those of the selected checkpoint by less than 0.4 meV atom-1 and 0.6 meV Å-1, respectively. As shown in Fig. S1, fine-tuning reduces the energy RMSE from 7.26 to 4.53 meV atom-1 (about 25%) and the corresponding MAE from 4.33 to 2.83 meV atom-1. The force errors of the two models are of similar magnitude, with RMSEs of 82.90 meV Å-1 (scratch) and 78.17 meV Å-1 (fine-tuned) and MAEs of 45.6 and 47.8 meV Å-1, respectively. The small difference in force RMSE comes mainly from a few large errors (enlarged markers in Fig. S1d): the largest force-component errors of the model trained from scratch reach 7.4 eV Å-1, mostly on O atoms in a single test structure: an off-stoichiometric Li–O–P slab containing O–O bonded species, with DFT forces of up to 15 eV Å-1 on these atoms. This chemistry is represented by only 15 of the 6448 training structures, none with the same composition, and the fine-tuned model predicts all atoms of this structure with errors below 1.4 eV Å-1. Excluding the 20 atoms with the largest errors, the force RMSEs of the two models are 74.4 (scratch) and 76.1 meV Å-1 (fine-tuned). The fine-tuned model also converges faster and more smoothly: after 100 epochs its validation energy RMSE is 9.6 meV atom-1, compared with 33.5 meV atom-1 for the model trained from scratch, which needs about 500 epochs to reach a similar value (11.0 meV atom-1; values averaged over 20 epochs). Overall, fine-tuning lowers the energy error, gives fewer extreme force outliers and converges much faster, while typical force errors remain of similar magnitude. Fine-tuning therefore improves both energy and force accuracy across all local environments and should replace training from scratch for any solid-electrolyte system. This suggests that the representations acquired during pretraining on the broad MAD dataset [53] provide a useful prior for local environments that are only sparsely represented in the material-specific dataset, rather than requiring all relevant local interactions to be learned from scratch.\nthe representations acquired during pretraining on the broad MAD dataset [53], as also reported for sulfide interfaces by Keller and Brandt [86], provide a useful prior；并在参考文献末尾添加：[86] T. Keller and J. Brandt (2024) Pretrained priors improve machine-learning potentials for sulfide electrolyte interfaces.",
+ "planted": [
+  {
+   "kind": "number",
+   "original": "fine-tuning reduces the energy RMSE from 7.26 to 5.53 meV atom-1 (about 25%)",
+   "changed": "fine-tuning reduces the energy RMSE from 7.26 to 4.53 meV atom-1 (about 25%)",
+   "why_wrong": "从 7.26 降到 4.53 的降幅约为 38%，与同句括号里的 \"about 25%\" 自相矛盾。正文 II.1 也写明微调模型能量 RMSE 为 5.53 meV atom-1（(7.26−5.53)/7.26≈24%）。读者只需自己算一下百分比，或对照正文数值即可发现。"
+  },
+  {
+   "kind": "overclaim",
+   "original": "Overall, fine-tuning lowers the energy error, gives fewer extreme force outliers and converges much faster, while typical force errors remain of similar magnitude.",
+   "changed": "Overall, fine-tuning lowers the energy error, gives fewer extreme force outliers and converges much faster, while typical force errors remain of similar magnitude. Fine-tuning therefore improves both energy and force accuracy across all local environments and should replace training from scratch for any solid-electrolyte system.",
+   "why_wrong": "同段数据并不支持\"力精度全面提升\"：力 MAE 是从头训练更低（45.6 vs 47.8 meV Å-1），剔除 20 个最大误差原子后，从头训练的力 RMSE 也更低（74.4 vs 76.1）。此外，该比较只针对 LPS/LPSCl 这一个数据集、一组超参数和一个随机种子，无法推广到\"任何固态电解质体系\"。"
+  },
+  {
+   "kind": "fake_reference",
+   "original": "the representations acquired during pretraining on the broad MAD dataset [53] provide a useful prior",
+   "changed": "the representations acquired during pretraining on the broad MAD dataset [53], as also reported for sulfide interfaces by Keller and Brandt [86], provide a useful prior；并在参考文献末尾添加：[86] T. Keller and J. Brandt (2024) Pretrained priors improve machine-learning potentials for sulfide electrolyte interfaces.",
+   "why_wrong": "原文参考文献只编号到 [85]，不存在 [86]，也没有 Keller 与 Brandt 的这篇文章。原句只引用了 MAD 数据集 [53]。读者核对参考文献列表的编号和作者即可发现这条引用是编造的。"
+  }
+ ],
+ "check": {
+  "props": [
+   {
+    "i": 1,
+    "verdict": "contradicted",
+    "quote": "Within the tested surface models, the lithiated species generally show more favorable adsorption energies than their protonated counterparts.",
+    "label_ok": true
+   },
+   {
+    "i": 2,
+    "verdict": "contradicted",
+    "quote": "For a single adsorbed ... molecule, this height remains small and changes only weakly with chain length. ... both the short-chain (C2, bottom left) and long-chain (C14, bottom right) molecules lie nearly flat on the surface after 500 ps relaxation. Thus, increasing the chain length does not make an ",
+    "label_ok": true
+   },
+   {
+    "i": 3,
+    "verdict": "supported",
+    "quote": "Notably, irrespective of surface coverage, the onset of the water protection in both cases (C14 and C7 at coverages of 9 and 18 molecules, respectively, see Fig. 5) is at a coating thickness of approximately 8 Å ... vanishes at approximately 8 Å, which is reached by n=14 at 9 molecules (7.8 Å) and b",
+    "label_ok": true
+   },
+   {
+    "i": 4,
+    "verdict": "supported",
+    "quote": "Among the four chain lengths tested (C2, C5, C7, and C14), ionic transport is best preserved for C7. ... short-chain additives lead to stronger conductivity losses ... In contrast, very long chains (e.g., C14) also reduce conductivity",
+    "label_ok": true
+   },
+   {
+    "i": 5,
+    "verdict": "contradicted",
+    "quote": "fine-tuning reduces the energy RMSE from 7.26 to 5.53 meV atom-1 (about 25%) ... Excluding the 20 atoms with the largest errors, the force RMSEs of the two models are 74.4 (scratch) and 76.1 meV Å-1 (fine-tuned).",
+    "label_ok": true
+   },
+   {
+    "i": 6,
+    "verdict": "contradicted",
+    "quote": "Within the inspected trajectories, detached H atoms were found mainly near isolated sulfide-like S sites rather than S atoms within \\mathrm{PS_{4}} tetrahedra",
+    "label_ok": true
+   }
+  ],
+  "brief_leaks": [],
+  "planted_ok": [
+   {
+    "i": 1,
+    "ok": true,
+    "note": "原文数据为从 7.26 降至 5.53 meV atom-1，而非 4.53。"
+   },
+   {
+    "i": 2,
+    "ok": true,
+    "note": "原文仅指出微调在能量误差、极端力异常值和收敛速度上有优势，且典型力误差幅度相似，并未声称在所有局部环境中力精度都提高，也未建议在任何固态电解质系统中取代从头训练（这是过度推断）。"
+   },
+   {
+    "i": 3,
+    "ok": true,
+    "note": "原文参考文献列表中没有 [86] Keller and Brandt 这篇文献，属于虚构引用。"
+   }
+  ],
+  "recompute": [
+   {
+    "i": 1,
+    "value": 23.83,
+    "ok": true
+   },
+   {
+    "i": 2,
+    "value": 67.5,
+    "ok": true
+   },
+   {
+    "i": 3,
+    "value": 36.59,
+    "ok": true
+   }
+  ]
+ },
+ "recompute": [
+  {
+   "i": 1,
+   "table": "| 模型 | 测试集能量 RMSE (meV atom-1) |\n|---|---|\n| 从头训练 (Scratch) | 7.26 |\n| LoRA 微调 (Fine-tuned) | 5.53 |\n\n来源：SI S1.1 \"fine-tuning reduces the energy RMSE from 7.26 to 5.53 meV atom-1\"（括号内的百分比结论已从表中去除）",
+   "question": "以从头训练模型的能量 RMSE 为基准，LoRA 微调后测试集能量 RMSE 相对降低了百分之几？",
+   "answer": 23.8,
+   "unit": "%",
+   "tolerance": 0.5,
+   "formula": "(7.26 − 5.53) / 7.26 × 100% = 1.73 / 7.26 × 100% ≈ 23.8%。原文写作“about 25%”，复算值约为 23.8%。",
+   "quote": "As shown in Fig. S1, fine-tuning reduces the energy RMSE from 7.26 to 5.53 meV atom-1 (about 25%) and the corresponding MAE from 4.33 to 2.83 meV atom-1."
+  },
+  {
+   "i": 2,
+   "table": "| 晶面族 | 占总表面积比例 (%) |\n|---|---|\n| {011} | 40.6 |\n| {111} | 26.9 |\n\n来源：SI S1.5 \"In the full surface set, they account for 40.6% and 26.9% of the total surface area, respectively\"",
+   "question": "在完整晶面集合的 Wulff 构型中，{011} 与 {111} 两个晶面族合计占总表面积的百分之几？原文称约为三分之二。",
+   "answer": 67.5,
+   "unit": "%",
+   "tolerance": 0.1,
+   "formula": "40.6% + 26.9% = 67.5%（≈ 2/3）",
+   "quote": "In the full surface set, they account for 40.6% and 26.9% of the total surface area, respectively, corresponding to approximately two thirds of the predicted equilibrium surface."
+  },
+  {
+   "i": 3,
+   "table": "| 参数 | 数值 | 出处 |\n|---|---|---|\n| 平均粒径 D | 0.1 μm | Table S1 第一行 \"0.1 μm\" |\n| 密度 ρ | 1.64 g cm-3 | SI S3.2 \"For particles of diameter D and density ρ=1.64 g cm-3\" |\n| 比表面积公式 | A = 6/(Dρ) | SI S3.2 式 (S9) |",
+   "question": "按球形颗粒假设和式 (S9)，平均粒径为 0.1 μm 的 LPSCl 颗粒比表面积是多少 m2 g-1？",
+   "answer": 36.6,
+   "unit": "m2 g-1",
+   "tolerance": 0.1,
+   "formula": "A = 6/(Dρ) = 6 / (1×10⁻⁵ cm × 1.64 g cm⁻³) ≈ 3.66×10⁵ cm² g⁻¹ ≈ 36.6 m² g⁻¹",
+   "quote": "Table S1: Theoretical particle and specific surface areas as a function of average particle size. （0.1 μm 行：Specific surface area 36.6 m2 g-1）"
+  }
+ ]
+}

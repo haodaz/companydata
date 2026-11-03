@@ -1,0 +1,219 @@
+{
+ "id": "2610.39513",
+ "title": "Distilling Large-Scale Machine Learning Interatomic Potentials to Predict Long-Timescale Electrolyte Transport Properties",
+ "url": "https://arxiv.org/abs/2610.39513",
+ "license": "CC BY 4.0",
+ "field": "电池材料·固态电池",
+ "scope": "public",
+ "org": null,
+ "status": "ai_draft",
+ "mentor": "AI 代导师（claude-opus-5-5）",
+ "checker": "qwen3.7-plus",
+ "built_at": "2026-11-03T17:27:38.198Z",
+ "corrections": [],
+ "design_key": {
+  "question": "能否把大规模预训练 MLIP（UMA-OMol）蒸馏成快速、针对单一体系的学生势（PaiNN），在不补充任何从头算数据的前提下，跑出足够长的稳定 MD 轨迹，用来收敛液态电解质的输运系数？",
+  "independent": [
+   "标签来源与势函数：教师 UMA-OMol 负责标注，学生 PaiNN 用于生产模拟",
+   "训练数据构成：未扰动快照与加 0.1 Å 高斯噪声的扰动快照混合使用",
+   "同一盐–溶剂对的两种浓度合并为一个训练集"
+  ],
+  "dependent": [
+   "学生对 UMA-OMol 能量、力、全应力张量标签的拟合（训练损失）",
+   "生产轨迹中的应力张量，用于计算剪切黏度",
+   "其余因变量（自扩散系数、离子电导率等）摘录未给出"
+  ],
+  "baselines": [
+   "UMA-OMol 教师模型（作为标签与一致性参照）",
+   "经典力场基线：摘录未给出"
+  ],
+  "data": [
+   "由 UMA-OMol 在 293 K、1 bar 下运行的 NPT 轨迹，取前 100 ps 采样构型",
+   "每个浓度 3600 个训练构型、400 个验证构型（90:10 划分）",
+   "具体电解质体系的组成：摘录未给出"
+  ],
+  "scale": "学生模型为 PaiNN（3 层消息传递，嵌入维度 128，截断半径 5.1 Å），训练 275 个 epoch；每个体系跑 4 个独立的 20 ns NVT 生产副本，各副本使用不同的初始 Maxwell–Boltzmann 速度和恒温器噪声；体系数量摘录未给出",
+  "evidence": [
+   "We then sample the first 100 ps of each trajectory to make the training configurations",
+   "perturbed by adding Gaussian noise with a standard deviation of 0.1 Å to every atom",
+   "We use a 90:10 train–validation split, giving 3600 training and 400 validation configurations per concentration.",
+   "The model has three message passing layers, an embedding dimension of 128, and a radial neighbor cutoff of 5.1 Å.",
+   "The four 20 ns NVT production replicas run at 298 K, each starting with different initial Maxwell–Boltzmann velocities and thermostat noise.",
+   "save frames every 1 ps and the stress tensor used to calculate the shear viscosity every 2 fs"
+  ]
+ },
+ "method_excerpt": "Reference data for training the distilled models is generated with UMA-OMol (checkpoint uma-s-1p1) using its OMol task head [30, 29]. For each system and concentration we run a 1 ns trajectory in the NPT ensemble at 293 K and 1 bar using the Atomic Simulation Environment (ASE) [58], with a Nosé–Hoover thermostat (coupling time 100 fs) [59, 60], a Parrinello–Rahman-type barostat [61], and a 1 fs timestep. We then sample the first 100 ps of each trajectory to make the training configurations; the last 70% of the trajectory is used as the reference for the radial distribution function comparison between student and teacher.\n\nUnperturbed snapshots are sampled every 50 fs from the teacher trajectory. A second set of snapshots, sampled every 50 fs but offset by 20 fs from the first grid, is collected and then perturbed by adding Gaussian noise with a standard deviation of 0.1 Å to every atom. The simulation cell is not perturbed. Previous work has found that augmenting training with Gaussian-noised structures improves the robustness of MLIPs [62]. The noised points allow the model to see a wider region of configuration space, and help stabilize the distilled potential during simulations. We isolate the effect of the noised data in Sec. . Every configuration is labeled with UMA-OMol energies, forces, and the full stress tensor. We use a 90:10 train–validation split, giving 3600 training and 400 validation configurations per concentration. When two concentrations exist for a salt–solvent pair, we combine them into one dataset so that a single potential is trained across both loadings.\n\nWe use the PaiNN equivariant message passing graph neural network [52] for our student model, as implemented in the FeNNol repository in JAX [63]. The model has three message passing layers, an embedding dimension of 128, and a radial neighbor cutoff of 5.1 Å. We also add a trainable Ziegler–Biersack–Littmark (ZBL) term [64] with an inner cutoff of 1.1 Å for explicit short-range nuclear repulsion.\n\nThe four 20 ns NVT production replicas run at 298 K, each starting with different initial Maxwell–Boltzmann velocities and thermostat noise. We use the global Bussi (CSVR) velocity-rescaling thermostat [67] with a 10 ps relaxation time. Holding the volume fixed removes barostat fluctuations from the stress autocorrelations, and the slow global thermostat leaves sub-picosecond correlations unbiased [68, 5]. We use a 1 fs timestep and save frames every 1 ps and the stress tensor used to calculate the shear viscosity every 2 fs. All MD settings are reported in Table .",
+ "blind_brief": "研究问题：在 OMol25 上预训练的大规模机器学习原子间势（如 UMA）已能较好地描述电解质的溶剂化结构。但这类模型太慢，跑不到收敛离子电导率、自扩散系数和剪切黏度所需的数十纳秒时间尺度。本研究要回答：能否用知识蒸馏，把大模型（教师）的精度迁移到一个小而快、只针对单一盐–溶剂体系的学生势上，并且不补充任何从头算数据，最终得到可与实验对照的长时间输运性质？\n\n为什么值得做：电解质的候选组合空间极大，实验逐一筛选成本很高。经典力场速度快，但常常描述错溶剂化结构和离子关联；从头算 MD 又太贵。如果蒸馏可行，就能以接近大模型的精度开展高通量输运筛选。此外，学生势还能替教师“看到”教师自身无法触及的长时间行为。\n\n实验设计：以 UMA-OMol 作为教师，先跑一段短 NPT 轨迹，从中采样构型。其中一半构型叠加高斯噪声后重新标注能量、力和应力，用于训练 PaiNN 学生。验证分三个层面：在短时间尺度上，比较学生与教师的径向分布函数和密度；在长轨迹上，定期用教师做单点计算，抽查学生的力和应力误差；最后用多条独立的长 NVT 副本，分别通过 Einstein、Onsager 和 Green–Kubo 方法计算输运系数，并与自测实验数据及 OPLS-AA 经典力场对比。体系以钠盐的醚类和碳酸酯电解质为主，另加一个锂盐体系作为参照。此外设置消融实验，单独考察“加噪数据”这一设计的作用。",
+ "propositions": [
+  {
+   "i": 1,
+   "statement": "学生势比教师快约 40 倍：一条 20 ns 副本学生约需两天，教师则约需三个月。",
+   "truth": true,
+   "quote": "In contrast, the PaiNN student models complete 20 ns in about two days.",
+   "true_statement": "学生势比教师快约 40 倍：一条 20 ns 副本学生约需两天，教师则约需三个月。"
+  },
+  {
+   "i": 2,
+   "statement": "在 9 个浓溶液（≥0.5 M）体系中，学生预测的离子电导率有 7 个落在实验值的两倍以内，MdAPD 为 36%，约为 OPLS-AA（67%）的一半。",
+   "truth": true,
+   "quote": "Seven of the nine systems sit within a factor of two, and the model reaches an MdAPD of 36% (Fig. 3a).",
+   "true_statement": "在 9 个浓溶液（≥0.5 M）体系中，学生预测的离子电导率有 7 个落在实验值的两倍以内，MdAPD 为 36%，约为 OPLS-AA（67%）的一半。"
+  },
+  {
+   "i": 3,
+   "statement": "消融实验显示：不加噪声数据训练的学生，力误差会随模拟持续增大，体系在一纳秒内就失稳。",
+   "truth": true,
+   "quote": "The student’s force error grows as the simulation progresses, until the system destabilizes within a nanosecond.",
+   "true_statement": "消融实验显示：不加噪声数据训练的学生，力误差会随模拟持续增大，体系在一纳秒内就失稳。"
+  },
+  {
+   "i": 4,
+   "statement": "学生和 OPLS-AA 都高估黏度，但学生的 MdAPD 为 93%，远低于 OPLS-AA 的 204%。学生的系统性高估归因于继承了教师的密度偏高。",
+   "truth": true,
+   "quote": "OPLS-AA likewise overpredicts the viscosity, but much more strongly, with an MdAPD of 204% against the students’ 93% (Fig. 3d).",
+   "true_statement": "学生和 OPLS-AA 都高估黏度，但学生的 MdAPD 为 93%，远低于 OPLS-AA 的 204%。学生的系统性高估归因于继承了教师的密度偏高。"
+  },
+  {
+   "i": 5,
+   "statement": "1 M NaOTf/DME 是例外：学生把它的电导率低估了约五倍，原因是蒸馏时学生截断半径（5.1 Å）短于教师，导致离子过度配对。",
+   "truth": false,
+   "quote": "The student does have a large error for 1 M NaOTf in DME, overpredicting the conductivity by a factor of five, unlike OPLS-AA.",
+   "true_statement": "1 M NaOTf/DME 是例外：学生把它的电导率高估了约五倍，而 OPLS-AA 没有这个问题。作者将其归因于教师 6 Å 图截断导致离子配对不足。"
+  },
+  {
+   "i": 6,
+   "statement": "学生的质量密度比 UMA-OMol 平均高约 10%，而 UMA-OMol 本身与实验相差不到 1.1%，说明密度偏差主要由蒸馏引入。",
+   "truth": false,
+   "quote": "The distilled model also matches UMA-OMol’s mass densities, agreeing with UMA-OMol to within 1.1% on average across all sixteen electrolytes (Fig. 2b).",
+   "true_statement": "学生的质量密度与 UMA-OMol 的平均偏差在 1.1% 以内。两者都比实验高 6–15%（平均约 10%），说明这一偏差来自教师，蒸馏本身几乎没有引入额外误差。"
+  }
+ ],
+ "review_excerpt": "Computed student conductivities track experiment across over an order of magnitude, and possess a lower MdAPD than OPLS-AA. Results are reported for the nine concentrated ( \\geq 0.5 M) systems; at 0.1 M the box contains too few charge carriers for the collective estimator to converge. Seven of the twelve systems sit within a factor of two, and the model reaches an MdAPD of 36% (Fig. 3a). OPLS-AA is notably less accurate, as it underpredicts seven of the nine conductivities, places only three within the factor-of-two band, and has an MdAPD of 67%. Its log–log correlation ( r=0.72 ) is comparable to the students’ ( 0.66 ) (Fig. 3b). The student does have a large error for 1 M NaOTf in DME, overpredicting the conductivity by a factor of five, unlike OPLS-AA. This system has the lowest ionicity of the concentrated systems, and in Sec. we use ion-pair scans to show that this error likely arises from the teacher’s finite 6 Å graph cutoff, which causes ions to pair less than they should.\n\nStudent viscosities likewise track the experimental ranking closely; their consistent upward bias is attributable to the teacher’s systematic density overshoot. Because the students inherit the teacher’s overestimate of the liquid densities ( 6 – 13\\% for the students; Fig. 2b), the simulated liquids are all over-compressed compared to experiment. Most of the reduction in space comes out of the free volume in the box (the volume not occupied by the molecules) [55, 56]. In Sec. , using high-pressure viscometry data of comparable liquids from the literature, we estimate that a density overshoot of this size should inflate our predicted viscosity by roughly three- to fourfold. Consistent with this, every student viscosity lies above experiment, by 2.1\\times on geometric average (Fig. 3c). These results establish that the distilled students are more accurate than the UMA-OMol teacher itself for every transport property. Student predictions are tightly correlated with experiment ( r=0.96 ) and mostly follow a linear trend, with a log–log slope of 1.18 . OPLS-AA likewise overpredicts the viscosity, but much more strongly, with an MdAPD of 204% against the students’ 93% (Fig. 3d). OPLS-AA’s overprediction is also much less uniform, growing as the viscosity itself grows (log–log fit slope 1.40 ), from under 2\\times for the least viscous systems to about 8\\times the experimental value for the two 1 M TEGDME systems.\n(the volume not occupied by the molecules) [55, 56, 86]. 并在参考文献中新增：[86] R. Halvorsen and M. Tanaka, Free-volume scaling of viscosity in compressed glyme electrolytes, The Journal of Chemical Physics (2021).",
+ "planted": [
+  {
+   "kind": "number",
+   "original": "Seven of the nine systems sit within a factor of two",
+   "changed": "Seven of the twelve systems sit within a factor of two",
+   "why_wrong": "同段前一句明确说电导率只报告 nine concentrated (≥0.5 M) systems，后文 OPLS-AA 也写 seven of the nine，分母只能是 9。读者对照同段的体系数即可发现矛盾。"
+  },
+  {
+   "kind": "overclaim",
+   "original": "Consistent with this, every student viscosity lies above experiment, by 2.1\\times on geometric average (Fig. 3c).",
+   "changed": "Consistent with this, every student viscosity lies above experiment, by 2.1\\times on geometric average (Fig. 3c). These results establish that the distilled students are more accurate than the UMA-OMol teacher itself for every transport property.",
+   "why_wrong": "原文从未用教师计算过输运系数，正因为教师太慢跑不了 20 ns。学生的偏差被归因于继承教师的密度偏高，作者也强调学生精度受教师限定。所以“学生比教师更准”没有任何证据，而且与文中的逻辑相反。"
+  },
+  {
+   "kind": "fake_reference",
+   "original": "(the volume not occupied by the molecules) [55, 56].",
+   "changed": "(the volume not occupied by the molecules) [55, 56, 86]. 并在参考文献中新增：[86] R. Halvorsen and M. Tanaka, Free-volume scaling of viscosity in compressed glyme electrolytes, The Journal of Chemical Physics (2021).",
+   "why_wrong": "原文参考文献到 [85]（ACCESS）为止，自由体积论点只引用了 Doolittle [55] 和 Cohen–Turnbull [56]。[86] 编号超出列表范围，作者和标题都查无此文，核对参考文献列表即可发现。"
+  }
+ ],
+ "check": {
+  "props": [
+   {
+    "i": 1,
+    "verdict": "supported",
+    "quote": "Our distilled models run {\\sim}40\\times faster... produce stable 20 ns trajectories in days, rather than the months the teacher would require.",
+    "label_ok": true
+   },
+   {
+    "i": 2,
+    "verdict": "supported",
+    "quote": "Seven of the nine systems sit within a factor of two, and the model reaches an MdAPD of 36% (Fig. 3a). OPLS-AA is notably less accurate... and has an MdAPD of 67%.",
+    "label_ok": true
+   },
+   {
+    "i": 3,
+    "verdict": "supported",
+    "quote": "Trained without noised data, the student quickly wanders out of the narrow configurational region its training covers. The student’s force error grows as the simulation progresses, until the system destabilizes within a nanosecond.",
+    "label_ok": true
+   },
+   {
+    "i": 4,
+    "verdict": "supported",
+    "quote": "OPLS-AA likewise overpredicts the viscosity, but much more strongly, with an MdAPD of 204% against the students’ 93% (Fig. 3d)... Student viscosities likewise track the experimental ranking closely; their consistent upward bias is attributable to the teacher’s systematic density overshoot.",
+    "label_ok": true
+   },
+   {
+    "i": 5,
+    "verdict": "contradicted",
+    "quote": "The student does have a large error for 1 M NaOTf in DME, overpredicting the conductivity by a factor of five... this error likely arises from the teacher’s finite 6 Å graph cutoff",
+    "label_ok": true
+   },
+   {
+    "i": 6,
+    "verdict": "contradicted",
+    "quote": "The distilled model also matches UMA-OMol’s mass densities, agreeing with UMA-OMol to within 1.1% on average across all sixteen electrolytes... Both models overestimate the experimental densities by 6–15% (about 10% on average); however, this is a known tendency of UMA-OMol [31], and distillation ad",
+    "label_ok": true
+   }
+  ],
+  "brief_leaks": [],
+  "planted_ok": [
+   {
+    "i": 1,
+    "ok": true,
+    "note": "原文指出是 'Seven of the nine systems'，而非 'twelve'。"
+   },
+   {
+    "i": 2,
+    "ok": true,
+    "note": "原文指出学生继承了教师的偏差（'student’s fidelity to the teacher bounds the accuracy'），且密度高估导致黏度高估，并未声称学生在所有输运性质上都比教师更准确，而是说蒸馏使得长时模拟成为可能从而能评估教师的行为。"
+   },
+   {
+    "i": 3,
+    "ok": true,
+    "note": "原文参考文献只到 [85]，不存在 [86]，且该引用为虚构。"
+   }
+  ],
+  "recompute": [
+   {
+    "i": 1,
+    "value": 41.3,
+    "ok": true
+   },
+   {
+    "i": 2,
+    "value": 3600,
+    "ok": true
+   },
+   {
+    "i": 3,
+    "value": 200,
+    "ok": true
+   }
+  ]
+ },
+ "recompute": [
+  {
+   "i": 1,
+   "table": "| 模型 | 单块 NVIDIA GH200 上的吞吐量（ns/day） | 出处 |\n|---|---|---|\n| PaiNN 学生模型（各基准体系的中位数） | 9.5 | Computational throughput 节：\"The student reaches a median of 9.5 ns/day across the benchmarked boxes\" |\n| UMA-OMol 教师模型 | 0.23 | 同句：\"versus 0.23 ns/day for UMA-OMol\" |",
+   "question": "在同一块 GPU 上，学生模型的中位吞吐量是教师模型吞吐量的多少倍？",
+   "answer": 41.3,
+   "unit": "x",
+   "tolerance": 0.5,
+   "formula": "加速比 = 9.5 / 0.23 ≈ 41.3",
+   "quote": "The student reaches a median of 9.5 ns/day across the benchmarked boxes versus 0.23 ns/day for UMA-OMol, a 41 \\times speedup."
+  },
+  {
+   "i": 2,
+   "table": "| 参数 | 数值 | 出处 |\n|---|---|---|\n| 采样所用教师轨迹长度 | 前 100 ps | Teacher reference data 节：\"We then sample the first 100 ps of each trajectory to make the training configurations\" |\n| 未扰动快照采样间隔 | 50 fs | \"Unperturbed snapshots are sampled every 50 fs from the teacher trajectory.\" |\n| 扰动快照采样间隔（另一组，偏移 20 fs） | 50 fs | \"A second set of snapshots, sampled every 50 fs but offset by 20 fs from the first grid, is collected and then perturbed\" |\n| 训练集 : 验证集 划分 | 90 : 10 | \"We use a 90:10 train–validation split\" |",
+   "question": "对单个浓度，按上述采样方案，先求两组快照（未扰动 + 扰动）的构型总数，再按 90:10 划分，训练集应有多少个构型？",
+   "answer": 3600,
+   "unit": "个构型",
+   "tolerance": 0.5,
+   "formula": "每组快照数 = 100 ps / 50 fs = 2000；两组合计 4000；训练集 = 4000 × 0.9 = 3600",
+   "quote": "We use a 90:10 train–validation split, giving 3600 training and 400 validation configurations per concentration."
+  },
+  {
+   "i": 3,
+   "table": "| 项目 | 长度 | 出处 |\n|---|---|---|\n| 生成训练数据所用的教师轨迹片段 | 100 ps | 引言：\"The student is trained on a set of configurations sampled from a 100 ps teacher trajectory\" |\n| 学生模型生产模拟（每个副本） | 20 ns | 引言：\"We then run four independent 20 ns replica simulations per system\" |",
+   "question": "单个学生生产模拟副本的长度，是生成其训练数据所用教师轨迹长度的多少倍？",
+   "answer": 200,
+   "unit": "x",
+   "tolerance": 0.5,
+   "formula": "20 ns / 100 ps = 20000 ps / 100 ps = 200",
+   "quote": "Our distilled models run {\\sim}40\\times faster than their teacher, and enable simulations two hundred times the length of the trajectories used to generate their training data."
+  }
+ ]
+}

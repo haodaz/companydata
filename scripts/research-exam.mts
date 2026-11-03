@@ -31,6 +31,7 @@ const S = (v: any, n = 600) => String(v ?? '').trim().slice(0, n);
 const [cmd, ...rest] = process.argv.slice(2);
 const flag = (k: string) => (rest.find(a => a.startsWith(`--${k}=`)) || '').split('=')[1] || '';
 const args = rest.filter(a => !a.startsWith('--'));
+const FIELD = decodeURIComponent(flag('field')) || 'AI 研发 · 模型训练';   // 扩学科（11-03）：--field=电池材料 / 生命科学 · 细胞生物学 …
 
 async function ask(prompt: string, model: string, task: string, tries = 3): Promise<any> {
   let last: any;
@@ -78,10 +79,10 @@ ${planted.map((p: any, i: number) => `${i + 1}. [${p.kind}] 改后：「${p.chan
 }
 /** D 复算：AI 代导师从表格里挑能复算的结论数字；千问不看答案独立算一遍，对不上的标疑问 */
 async function addRecompute(ex: any, full: string) {
-  const d = await ask(`你是这一方向的导师。从下面论文里挑 2–3 个「正文报告的结论数字，能用论文表格里的原始数字算出来」的地方（比如降低了百分之几、平均值、比值、差值），出复算题。只用原文，表格照原样抄成 Markdown，不要改数字。
+  const d = await ask(`你是这一方向的导师。从下面论文里挑 2–3 个「正文报告的结论数字，能用论文给出的原始数字算出来」的地方（比如降低了百分之几、平均值、比值、倍数、差值），出复算题。原始数字优先取表格；原文没有表格的（生命科学论文多见），用正文 / 图注里给出的各组数值（均值、计数、n）整理成表，每个数注明出自哪句。只用原文，不要改数字，表里不能出现要算的那个结论数字。
 ## 论文：${ex.title}
 ${full}
-只返回 JSON：{ "items": [ { "table": "原文表格（Markdown，只保留算这一题需要的行和列）", "question": "要算什么（写清口径，不透露答案）", "answer": 0, "unit": "%|x|…", "tolerance": 0.5, "formula": "怎么算", "quote": "原文报告这个数的句子（一字不改）" } ] }`, MENTOR, '出题 · D 复算');
+只返回 JSON：{ "items": [ { "table": "原文表格或整理出的原始数字表（Markdown，只保留算这一题需要的行和列）", "question": "要算什么（写清口径，不透露答案）", "answer": 0, "unit": "%|x|…", "tolerance": 0.5, "formula": "怎么算", "quote": "原文报告这个数的句子（一字不改）" } ] }`, MENTOR, '出题 · D 复算');
   const items = (d.items || []).slice(0, 3).map((x: any, i: number) => ({ i: i + 1, table: S(x.table, 3000), question: S(x.question, 400), answer: Number(x.answer), unit: S(x.unit, 10), tolerance: Math.max(0.01, Number(x.tolerance) || 0.5), formula: S(x.formula, 300), quote: S(x.quote, 400) })).filter((x: any) => x.table && x.question && Number.isFinite(x.answer));
   const c = await ask(`按下面的表格和问题算出数值，只返回 JSON：{ "answers": [ { "i": 1, "value": 0 } ] }
 ${items.map((x: any) => `### 题 ${x.i}\n${x.table}\n问题：${x.question}`).join('\n\n')}`, CHECKER, '交叉核对 · D 复算');
@@ -94,7 +95,26 @@ async function fullText(id: string) {
   return htmlToSections(html).map(s => `## ${s.title}\n${s.text}`).join('\n').slice(0, 160000);
 }
 
+/** Europe PMC 全文（JATS XML）→ 分节文字；表格按行 | 分隔，图注保留（生命科学的数字多在图注和正文里） */
+function jatsToSections(xml: string) {
+  const body = (xml.match(/<body>([\s\S]*)<\/body>/) || [])[1] || '';
+  const abs = (xml.match(/<abstract[^>]*>([\s\S]*?)<\/abstract>/) || [])[1] || '';
+  const h = `<h2>Abstract</h2>${abs}${body}`.replace(/<sec[^>]*>\s*(?:<label>([\s\S]*?)<\/label>)?\s*<title>([\s\S]*?)<\/title>/g, (_, l, t) => `<h2>${l ? `${l} ` : ""}${t}</h2>`)
+    .replace(/<label>([\s\S]*?)<\/label>/g, '$1 ').replace(/<\/(title|label)>/g, '\n');
+  return htmlToSections(h);
+}
+async function buildPmc(id: string) {
+  const xml = await (await fetch(`https://www.ebi.ac.uk/europepmc/webservices/rest/${id}/fullTextXML`)).text();
+  if (!/creativecommons\.org\/licenses\/by\/\d/.test(xml)) throw new Error(`${id} 不是 CC BY 授权，不用`);
+  const title = ((xml.match(/<article-title>([\s\S]*?)<\/article-title>/) || [])[1] || id).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  const journal = ((xml.match(/<journal-title>([\s\S]*?)<\/journal-title>/) || [])[1] || '').trim();
+  const secs = jatsToSections(xml);
+  const full = secs.map(s => `## ${s.title}\n${s.text}`).join('\n').slice(0, 160000);
+  console.log(`\n== ${id} ${title}（${journal}，${secs.length} 节，${full.length} 字）`);
+  return buildCore({ id, title, url: `https://europepmc.org/article/PMC/${id}`, license: 'CC BY 4.0', field: FIELD, scope: 'public', org: null, source: `${journal}，${id}，CC BY 4.0` }, full);
+}
 async function build(id: string) {
+  if (/^PMC\d+$/.test(id)) return buildPmc(id);
   const html = await (await fetch(`https://arxiv.org/html/${id}v1`)).text();
   const abs = await (await fetch(`https://arxiv.org/abs/${id}`)).text();
   if (!/creativecommons\.org\/licenses\/by\//.test(abs)) throw new Error(`${id} 不是 CC BY 授权，不用`);
@@ -102,7 +122,7 @@ async function build(id: string) {
   const secs = htmlToSections(html);
   const full = secs.map(s => `## ${s.title}\n${s.text}`).join('\n').slice(0, 160000);
   console.log(`\n== ${id} ${title}（${secs.length} 节，${full.length} 字）`);
-  return buildCore({ id, title, url: `https://arxiv.org/abs/${id}`, license: 'CC BY 4.0', field: 'AI 研发 · 模型训练', scope: 'public', org: null, source: `arXiv:${id}，CC BY 4.0` }, full);
+  return buildCore({ id, title, url: `https://arxiv.org/abs/${id}`, license: 'CC BY 4.0', field: FIELD, scope: 'public', org: null, source: `arXiv:${id}，CC BY 4.0` }, full);
 }
 
 /** 出题本体：任何来源的全文（公开论文 / 实验室内部文献）→ 四道题 + 交叉核对 + 写库 */
@@ -115,7 +135,7 @@ ${full}
 
 出三题，只返回 JSON：
 {
- "design_key": { "question": "研究问题一句话", "independent": ["自变量 / 被比较的条件"], "dependent": ["因变量 / 主要指标"], "baselines": ["对照 / 基线"], "data": ["数据集 / 任务"], "scale": "模型规模、训练量、重复次数 / 随机种子（原文没写重复就写「原文未报告重复次数」）", "evidence": ["每项的原文依据（短引文）"] },
+ "design_key": { "question": "研究问题一句话", "independent": ["自变量 / 被比较的条件"], "dependent": ["因变量 / 主要指标"], "baselines": ["对照 / 基线"], "data": ["数据集 / 任务 / 材料 / 样本 / 细胞系"], "scale": "规模与重复：样本量 / 模型规模、重复次数（生物学重复、技术重复、随机种子；原文没写就写「原文未报告重复次数」）", "evidence": ["每项的原文依据（短引文）"] },   // design_key 只按下面的 method_excerpt 定：摘录里没写的项写「摘录未给出」
  "method_excerpt": "给学员读的方法 / 实验设置原文（从原文摘，1500–3000 字符，不含任何结果）",
  "blind_brief": "给学员的盲测简介（中文，300–500 字）：研究问题、为什么值得做、实验怎么设计的——像预注册，绝不能透露任何结果、方向或数字",
  "findings": [ { "true_statement": "原文支持的一条具体发现（带方向，最好带量级）", "false_statement": "把它反过来或改错量级的版本（看起来同样合理）", "quote": "原文依据（一字不改）" } ]   // 6 条，覆盖主结论、消融、反直觉的发现；别出靠常识就能猜对的
@@ -140,7 +160,7 @@ ${full}
     design_key: draft.design_key, method_excerpt: S(draft.method_excerpt, 4000), blind_brief: S(draft.blind_brief, 1200),
     propositions: props, review_excerpt: review.slice(0, 5000), planted, check,
   };
-  if (meta.scope === 'private') await addRecompute(exam, full);   // 私域题一起出 D 复算（公开论文的是后来补的 addcalc）
+  await addRecompute(exam, full);   // D 复算一起出（最早三篇 AI 论文是后来用 addcalc 补的）
   await saveExam(`${DIR}/${id}.json`, exam);
   const bad = check.props.filter((x: any) => !x.label_ok).length, leaks = check.brief_leaks.length, pbad = check.planted_ok.filter((x: any) => !x.ok).length;
   console.log(`  出好：论断 ${props.length}（核对有疑问 ${bad}）· 简介泄露 ${leaks} 处 · 埋错 ${planted.length}（有疑问 ${pbad}）`);

@@ -1,0 +1,174 @@
+{
+ "id": "PMC13704808",
+ "title": "Rapid thermoforming of polycarbonate cell culture accessories from 3D printed molds",
+ "url": "https://europepmc.org/article/PMC/PMC13704808",
+ "license": "CC BY 4.0",
+ "field": "生命科学·细胞与分子生物学",
+ "scope": "public",
+ "org": null,
+ "status": "ai_draft",
+ "mentor": "AI 代导师（claude-opus-5-5）",
+ "checker": "qwen3.7-plus",
+ "built_at": "2026-11-03T17:32:41.400Z",
+ "corrections": [],
+ "design_key": {
+  "question": "用 DLP 打印的高热变形温度（HDT）树脂模具做真空热成型，能否制出可用于细胞培养的定制聚碳酸酯（PC）配件？这些配件能否支持细胞粘附、存活和 iPSC 相关实验？",
+  "independent": [
+   "模具材料：Siraya Tech Sculpt 高 HDT 树脂，对比 Conjure rigid、Phrozen clear 8k、Phrozen gray 8k、TH47 tough 等 DLP 树脂（比较多次热成型循环中的表现）",
+   "PC 片材厚度：0.03” 与 0.04”",
+   "培养基底材料：PC、PDMS、PS",
+   "基底是否涂覆 Geltrex（摘录明确写了 iPSC 实验中各条件均涂 Geltrex；C2C12 是否设无涂层组，摘录未给出）"
+  ],
+  "dependent": [
+   "热成型件的气泡覆盖面积占比（气泡总面积 / 圆形插件 ROI 面积）",
+   "细胞活力：Calcein-AM（活）与 PI（死）染色，用 ImageJ 定量"
+  ],
+  "baselines": [
+   "标准组织培养聚苯乙烯（PS）基底",
+   "PDMS 插件（Sylgard 184，用水凝胶辅助双重模塑法制备）",
+   "非高 HDT 的其他 DLP 树脂模具"
+  ],
+  "data": [
+   "Wild Type C（WTC）人 hiPSC 系，单拷贝表达 GCaMP6f（Coriell GM25256）",
+   "C2C12 小鼠成肌细胞",
+   "RowTec® 聚碳酸酯薄膜（0.03”、0.04”）",
+   "热成型插件的明场图像"
+  ],
+  "scale": "每个条件至少 4 个生物学重复（独立插件）；数据以 mean ± SD 表示。技术重复次数摘录未给出。",
+  "evidence": [
+   "Other DLP resins including Conjure rigid resin, Phrozen clear 8k resin, Phrozen gray 8k resin, TH47 tough resin are used to compare the performance of HDT resins in multiple cycles of thermoforming.",
+   "We used RowTec® Polycarbonate Film of thickness (0.03”, 0.04”).",
+   "Bubble-covered area was expressed as the total segmented bubble area divided by the area of the circular insert region of interest.",
+   "On all the conditions (PC, PDMS, and PS), culture surface was coated with Geltrex™",
+   "All iPSC experiments were conducted with Wild Type C (WTC) human hiPSC line which express single copy of GCaMP6f (Coriell Repository # GM25256).",
+   "A minimum of four biological replicates (independent inserts) were used for each condition."
+  ]
+ },
+ "method_excerpt": "All the designs are made with Autodesk Fusion 360 and sliced with CHITUBOX Basic (Version 2.0). We used Phrozen Mighty 8K DLP printer and Siraya Tech Sculpt high HDT resin to print the thermoforming molds. Other DLP resins including Conjure rigid resin, Phrozen clear 8k resin, Phrozen gray 8k resin, TH47 tough resin are used to compare the performance of HDT resins in multiple cycles of thermoforming. An additional 3D printed mold is printed for making PDMS inserts. The PDMS inserts are prepared using Sylgard 184 and hydrogel-assisted double molding method [20] by creating a soft negative mold of the 3D print.\n\nWe used Plastvac P7 Dental Vacuum Forming Machine (Bioart, Brazil) for thermoforming PC parts. We used RowTec® Polycarbonate Film of thickness (0.03”, 0.04”).\n\nBubble-covered area was quantified from brightfield images of thermoformed inserts using a custom Python image-analysis pipeline based on OpenCV and NumPy. Images were imported in batches and processed sequentially. Each image was converted to 8-bit grayscale, and the outer boundary of the formed insert was defined manually by selecting three points along its circumference; these points were used to fit a circular region of interest. To compensate for spatial variations in illumination, bubble features were identified from the absolute local intensity deviation normalized by the local intensity standard deviation. Bubbles were then segmented using a fixed local-contrast threshold, with identical background-correction, thresholding, and morphological-processing parameters applied within each sheet-thickness comparison. Morphological closing and region filling were used to join fragmented bubble boundaries and calculate their projected area (See S3 Fig). Bubble-covered area was expressed as the total segmented bubble area divided by the area of the circular insert region of interest.\n\nAll iPSC experiments were conducted with Wild Type C (WTC) human hiPSC line which express single copy of GCaMP6f (Coriell Repository # GM25256). These cells undergo at least 3 passages in Essential 8 medium before starting the differentiation protocol. On all the conditions (PC, PDMS, and PS), culture surface was coated with Geltrex™ (Thermo Fisher Scientific, Waltham, MA) diluted in KnockOut™ DMEM (Thermo Fisher Scientific) at a ratio of 1: 100 to ensure cell attachment.\n\nC2C12 myoblasts were seeded onto various surfaces at a density of 5,000 cells per cm2 using Dulbecco’s Modified Eagle Medium (DMEM; Thermo Fisher Scientific) supplemented with 1% fetal bovine serum (FBS; Thermo Fisher Scientific).\n\nCell viability was evaluated using Calcein-AM and Propidium Iodide (PI) staining (Live/Dead Imaging Kit, Thermo Scientific). Cells were incubated with 2 μM Calcein-AM and 4 μM PI in PBS at 37 °C for 30 minutes, protected from light. After washing with PBS, fluorescence imaging was performed using a fluorescence microscope. Live cells fluoresced green (Calcein-AM), and dead cells fluoresced red (PI). Quantification was done using ImageJ.\n\nAll data are presented as mean ± standard deviation (SD). For comparisons between two groups, statistical significance was assessed using unpaired two-tailed Student’s t-tests. For comparisons involving more than two groups, one-way ANOVA followed by Holm–Šidák post hoc tests was used to correct for multiple comparisons. A minimum of four biological replicates (independent inserts) were used for each condition. Statistical significance was defined as p < 0.05.",
+ "blind_brief": "研究问题：能否用桌面级真空热成型机，把聚碳酸酯（PC）片材压在 DLP 3D 打印的高热变形温度（HDT）树脂模具上，快速、低成本地做出透明、可高压灭菌、几何形状由用户自定义的细胞培养配件（孔板插件、培养皿盖、染色槽、微孔阵列等）？\n\n为什么值得做：商品化 PS 培养器皿的几何形状是固定的。工程化心肌组织等研究需要定制的孔径、腔高、盖子和刺激接口。常用的 PDMS 定制件有几个问题：吸附疏水小分子；刚性不足；3D 打印模具会抑制 PDMS 固化或产生浸出物。CNC 加工和注塑成本高、周期长，不适合早期反复迭代设计。\n\n实验设计：\n① 工艺部分：比较铝、PLA 和多种 DLP 树脂作为模具在反复热成型中的耐受性；考察 0.03″ 与 0.04″ PC 片材在是否预热条件下的气泡问题，用自编图像分析流程定量气泡面积占比；用 OCT 评估图案复制的分辨率极限。\n② 材料性能：比较 PC、PDMS、PS 的光学吸收，以及对疏水探针 Rhodamine 6G 的吸附。\n③ 生物相容性：在有或无 Geltrex 涂层的 PC、PDMS、PS 上培养 C2C12 成肌细胞和人 iPSC，评估粘附与活死染色；在 PC 插件上进行 iPSC 向心肌细胞分化，检测肌节、钙瞬变和收缩。\n④ 应用：用 U 形微孔 PC 插件形成不同尺寸的心肌球，分析尺寸与钙瞬变幅度的关系。\n\n每个条件至少 4 个独立插件。",
+ "propositions": [
+  {
+   "i": 1,
+   "statement": "预热时长取决于片材厚度：0.03″ PC 片在 60°C 预热 1.5 h 即可热成型而无可见气泡，0.04″ 片需要预热 5–6 h。",
+   "truth": true,
+   "quote": "0.03″ PC sheets could be thermoformed without visible bubbling after 1.5 h of preheating at 60°C, whereas 0.04″ sheets required 5–6 h of preheating.",
+   "true_statement": "预热时长取决于片材厚度：0.03″ PC 片在 60°C 预热 1.5 h 即可热成型而无可见气泡，0.04″ 片需要预热 5–6 h。"
+  },
+  {
+   "i": 2,
+   "statement": "不预热时，0.03″ 和 0.04″ PC 片热成型后都出现可见气泡，且较厚的 0.04″ 片更明显。",
+   "truth": true,
+   "quote": "Without preheating, both 0.03″ and 0.04″ PC sheets showed visible bubble formation after thermoforming, with the effect being more pronounced in the thicker 0.04″ sheets",
+   "true_statement": "不预热时，0.03″ 和 0.04″ PC 片热成型后都出现可见气泡，且较厚的 0.04″ 片更明显。"
+  },
+  {
+   "i": 3,
+   "statement": "普通 DLP 树脂（如 Phrozen clear 8k、TH47 tough）同样能承受多次 PC 热成型循环而不积累缺陷，只有 PLA 模具会失效。",
+   "truth": false,
+   "quote": "Subsequent studies confirmed that among available DLP resins, only high HDT resins could produce molds that could withstand many cycles of PC thermoforming without accumulating defects in the mold (S1 Fig).",
+   "true_statement": "在所测试的 DLP 树脂中，只有高 HDT 树脂做成的模具能承受多次 PC 热成型循环而不积累缺陷；PLA 模具在热成型中不能保持形状。"
+  },
+  {
+   "i": 4,
+   "statement": "无涂层时，C2C12 在 PC 上的附着量明显高于组织培养 PS；涂覆 Geltrex 后两者无差别。",
+   "truth": false,
+   "quote": "we found that although C2C12 myoblasts cultured on PC substrate and tissue culture polystyrene were morphologically similar (Fig 5a), overall cell attachment was lower on PC substrates.",
+   "true_statement": "无涂层时，C2C12 在 PC 上的形态与在 PS 上相似，但总体附着量低于 PS；涂覆 Geltrex 后，PC 上的粘附与 Geltrex 涂层 PS 无差别。"
+  },
+  {
+   "i": 5,
+   "statement": "在 PC 微孔中形成的心肌球，峰值 Ca2+ 瞬变幅度（ΔF/F₀）随直径增大而升高，两者呈强正线性相关（R2 = 0.884）。",
+   "truth": true,
+   "quote": "We have observed that peak Ca2+ transient amplitude (ΔF/F₀) increases with cardiosphere size (diameter, Fig 8c, 8d, 8f), with the two measures showing a strong positive linear correlation (R2 = 0.884; Fig 8e).",
+   "true_statement": "在 PC 微孔中形成的心肌球，峰值 Ca2+ 瞬变幅度（ΔF/F₀）随直径增大而升高，两者呈强正线性相关（R2 = 0.884）。"
+  },
+  {
+   "i": 6,
+   "statement": "用牙科级真空成型机和 0.03” 片材，可稳定复制约 100 μm 的图案；接近极限时竖直转角保持锐利，主要是水平尺寸失真。",
+   "truth": false,
+   "quote": "the smallest pattern dimension that could be achieved was 1 mm (Fig 7a). However, as the dimension came closer to this limit, the shape integrity was compromised, while horizontal dimensions of such small features were relatively well preserved, vertical corners became severely filleted (Fig 7).",
+   "true_statement": "用牙科级真空成型机和 0.03” 片材，可实现的最小图案尺寸为 1 mm；接近这一极限时，水平尺寸保持较好，竖直转角却严重圆角化。"
+  }
+ ],
+ "review_excerpt": "We first assessed the feasibility of PC thermoforming off molds made from several candidate tooling materials: aluminum, PLA, and high HDT resin. For these studies, we chose to replicate custom designed lids for a commercially available 70 mm petri dish (Corning). Such lids find application in studies where external accessories must be placed close to the cell culture surface. For example, in our prior work [15], magnets were placed close to the surface of magnetically-responsive PDMS substrates to elicit dynamic changes in substrate elasticity, while imaging through the bottom of the cell culture surface with an inverted microscope. This required a custom lid, as standard well plate lids create too large a gap between the magnet and the substrate. For this application to be feasible, the custom lid must fit precisely above the well surface, allowing gas exchange without excessive evaporation.\nPLA molds failed to keep shape integrity during thermoforming, compromising the dimensional accuracy of the PC part. In contrast, machined aluminum and high HDT molds both withstood high temperature cycles without any visible thermal distortion, leading to production of nearly identical PC devices (Fig 2). Thus, high HDT resin molds can fully replace machined metal tooling for PC thermoforming at any production scale. Subsequent studies confirmed that among available DLP resins, only high HDT resins could produce molds that could withstand many cycles of PC thermoforming without accumulating defects in the mold (S1 Fig). A Comparison of the mechanical and thermal properties of different DLP resins are listed in supplementary table 1.\nLike many other thermoplastics, PC is hygroscopic [44] and absorbs moisture even with the relatively low humidity levels found in typical lab environments. At high temperature, these water molecules inside the PC expand, causing bubbles to form while thermoforming. We therefore tested whether preheating PC sheets before thermoforming would reduce bubble formation. Without preheating, both 0.03″ and 0.04″ PC sheets showed visible bubble formation after thermoforming, with the effect being more pronounced in the thicker 0.04″ sheets (Fig 3a, 3c, 3d). In contrast, optimized preheating substantially reduced the bubble-covered area in both sheet thicknesses, producing optically clearer thermoformed parts (Fig 3b–3d). The required preheating duration depended on sheet thickness: 0.03″ PC sheets could be thermoformed without visible bubbling after 6 h of preheating at 60°C, whereas 0.04″ sheets required 5–6 h of preheating. PC sheets thinner than 0.02″ could be thermoformed without bubbling even without preheating. These results indicate that the optimized preheating condition should be selected based on sheet thickness, consistent with slower heat and moisture transport in thicker PC sheets. PC sheets thickness less than 0.02″ could be successfully thermoformed without bubbling without any preheating. This likely reflects the ability of these thinner sheets to heat rapidly enough during the thermoforming process to evaporate any surface moisture before the PC itself becomes pliable.\nAt high temperature, these water molecules inside the PC expand, causing bubbles to form while thermoforming (Müller K, Hansen J, 2019, “Moisture-induced void formation in vacuum-thermoformed polycarbonate sheets”).",
+ "planted": [
+  {
+   "kind": "number",
+   "original": "0.03″ PC sheets could be thermoformed without visible bubbling after 1.5 h of preheating at 60°C",
+   "changed": "0.03″ PC sheets could be thermoformed without visible bubbling after 6 h of preheating at 60°C",
+   "why_wrong": "同段紧接着写 0.04″ 片需要 5–6 h，并据此总结为「consistent with slower heat and moisture transport in thicker PC sheets」，即越厚所需预热越长。改成 6 h 后，较薄片的预热时间反而不短于较厚片，与同段的厚度依赖结论自相矛盾。"
+  },
+  {
+   "kind": "overclaim",
+   "original": "leading to production of nearly identical PC devices (Fig 2).",
+   "changed": "leading to production of nearly identical PC devices (Fig 2). Thus, high HDT resin molds can fully replace machined metal tooling for PC thermoforming at any production scale.",
+   "why_wrong": "证据只是用一种 70 mm 培养皿盖设计做的比较，加上 S1 Fig 中「many cycles」的观察，没有给出寿命或批量数据。全文把该方法定位为早期原型和小批量制作（Table 1：「Intended for early-stage prototyping and small-batch fabrication」）。「任何生产规模都能完全取代金属模具」远超证据。"
+  },
+  {
+   "kind": "fake_reference",
+   "original": "At high temperature, these water molecules inside the PC expand, causing bubbles to form while thermoforming.",
+   "changed": "At high temperature, these water molecules inside the PC expand, causing bubbles to form while thermoforming (Müller K, Hansen J, 2019, “Moisture-induced void formation in vacuum-thermoformed polycarbonate sheets”).",
+   "why_wrong": "原文对这一机理没有引用任何文献。全文采用方括号数字编号的引文格式（如同句前的 [44]），突然出现作者-年份格式的引用本身就不一致；该条目也不在参考文献列表中，属于编造的文献。"
+  }
+ ],
+ "check": {
+  "props": [
+   {
+    "i": 1,
+    "verdict": "supported",
+    "quote": "The required preheating duration depended on sheet thickness: 0.03″ PC sheets could be thermoformed without visible bubbling after 1.5 h of preheating at 60°C, whereas 0.04″ sheets required 5–6 h of preheating.",
+    "label_ok": true
+   },
+   {
+    "i": 2,
+    "verdict": "supported",
+    "quote": "Without preheating, both 0.03″ and 0.04″ PC sheets showed visible bubble formation after thermoforming, with the effect being more pronounced in the thicker 0.04″ sheets (Fig 3a, 3c, 3d).",
+    "label_ok": true
+   },
+   {
+    "i": 3,
+    "verdict": "contradicted",
+    "quote": "Subsequent studies confirmed that among available DLP resins, only high HDT resins could produce molds that could withstand many cycles of PC thermoforming without accumulating defects in the mold (S1 Fig).",
+    "label_ok": true
+   },
+   {
+    "i": 4,
+    "verdict": "contradicted",
+    "quote": "Consistent with these prior reports, we found that although C2C12 myoblasts cultured on PC substrate and tissue culture polystyrene were morphologically similar (Fig 5a), overall cell attachment was lower on PC substrates.",
+    "label_ok": true
+   },
+   {
+    "i": 5,
+    "verdict": "supported",
+    "quote": "We have observed that peak Ca2+ transient amplitude (ΔF/F₀) increases with cardiosphere size (diameter, Fig 8c, 8d, 8f), with the two measures showing a strong positive linear correlation (R2 = 0.884; Fig 8e).",
+    "label_ok": true
+   },
+   {
+    "i": 6,
+    "verdict": "contradicted",
+    "quote": "However, as the dimension came closer to this limit, the shape integrity was compromised, while horizontal dimensions of such small features were relatively well preserved, vertical corners became severely filleted (Fig 7).",
+    "label_ok": true
+   }
+  ],
+  "brief_leaks": [],
+  "planted_ok": [
+   {
+    "i": 1,
+    "ok": true,
+    "note": "原文指出 0.03″ PC 片在 60°C 预热 1.5 小时即可，而非改后的 6 小时。"
+   },
+   {
+    "i": 2,
+    "ok": true,
+    "note": "原文仅说明 HDT 树脂模具适合早期原型设计和小批量生产，且金属模具加工成本高、不适合频繁迭代，并未声称 HDT 树脂模具可以在任何生产规模下完全取代金属模具。"
+   },
+   {
+    "i": 3,
+    "ok": true,
+    "note": "原文中关于 PC 吸湿导致气泡的描述没有引用 Müller K, Hansen J, 2019 这篇文献，属于虚构引用。"
+   }
+  ],
+  "recompute": []
+ },
+ "recompute": []
+}

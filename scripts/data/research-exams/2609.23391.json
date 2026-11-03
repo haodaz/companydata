@@ -1,0 +1,222 @@
+{
+ "id": "2609.23391",
+ "title": "Ultralow-Barrier Ion Transport in the Subnitride Electride Ba$_3$N for High-Rate Sodium Storage",
+ "url": "https://arxiv.org/abs/2609.23391",
+ "license": "CC BY 4.0",
+ "field": "电池材料·固态电池",
+ "scope": "public",
+ "org": null,
+ "status": "ai_draft",
+ "mentor": "AI 代导师（claude-opus-5-5）",
+ "checker": "qwen3.7-plus",
+ "built_at": "2026-11-03T17:29:46.067Z",
+ "corrections": [],
+ "design_key": {
+  "question": "用第一性原理计算考察准一维亚氮化物电子化合物 Ba3N 作为钠离子电池负极时的 Na 迁移能垒、电子结构与结构稳定性。",
+  "independent": [
+   "色散（vdW）修正方案：DFT-D2、DFT-D3（零阻尼 / Becke-Johnson 阻尼）、optB86b-vdW",
+   "Na 含量条件：Na 稀释相（Ba24N8 框架中含 1 个 Na）与 Na 富集相（同一框架中含 37 个 Na）",
+   "Na 迁移路径：沿链方向的链内迁移（Path 1，3.52 Å）与垂直于链的链间迁移（Path 2，4.50 Å）等；富 Na 条件下为空位辅助跳跃"
+  ],
+  "dependent": [
+   "弛豫后的晶格参数（用于与实验值比对）",
+   "NEB 扩散能 / 迁移能垒",
+   "态密度（DOS）",
+   "300 K AIMD 下的结构完整性与热稳定性"
+  ],
+  "baselines": [
+   "Ba3N 的实验晶格参数（用于筛选 vdW 修正方案）",
+   "与石墨、硬碳等对照材料的比较：摘录未给出"
+  ],
+  "data": [
+   "NaxBa3N 体系：Ba3N 框架（8 个化学式单元超胞，即 Ba24N8）",
+   "Na 稀释相（含 1 个 Na）与 Na 富集相（含 37 个 Na，对应 Na4.75Ba3N 的空位辅助跳跃）"
+  ],
+  "scale": "8 个化学式单元（8-f.u.）超胞；扩散离子周期性镜像之间最小间距 7 Å；AIMD 在 300 K 下共运行 8 ps。计算模拟无生物学 / 技术重复意义上的重复，原文未报告重复次数。",
+  "evidence": [
+   "All calculations were performed using the Vienna ab initio simulation package (VASP) with the projector-augmented wave (PAW) method [20, 21].",
+   "such as the DFT-D2, DFT-D3 (with zero-damping and Becke-Johnson damping), and the nonlocal optB86b-vdW functionals [8, 6, 7, 16]",
+   "the resulting lattice parameters were compared with the experimental lattice parameter of Ba3N (Supporting Information Fig.S1)",
+   "The diffusion energies were calculated using the nudged elastic band (NEB) method [10].",
+   "an 8-f.u. supercell was employed for both the Na-dilute phase (containing 1 Na atom in a Ba24N8 framework) and the Na-rich phase (containing 37 Na atoms within the same framework)",
+   "Path 1 (cyan arrow, Figure 4b) corresponds to intrachain migration along the 1D Ba3N chain direction over a distance of 3.52 Å",
+   "NEB calculations were performed for the vacancy-assisted hopping mechanism in Na4.75Ba3N (Figure 4e)",
+   "AIMD simulations were conducted at 300 K to assess the structural integrity and thermal stability of the system over time.",
+   "The total simulation duration was 8 ps ."
+  ]
+ },
+ "method_excerpt": "All calculations were performed using the Vienna ab initio simulation package (VASP) with the projector-augmented wave (PAW) method [20, 21]. The exchange-correlation interactions were consistently treated with the Perdew–Burke–Ernzerhof (PBE) functional within the generalized gradient approximation (GGA) [33]. To account for long-range dispersion forces, various van der Waals (vdW) correction methods were employed, such as the DFT-D2, DFT-D3 (with zero-damping and Becke-Johnson damping), and the nonlocal optB86b-vdW functionals [8, 6, 7, 16]. To determine the most appropriate vdW correction scheme for this system, structural relaxation tests were performed using each method, and the resulting lattice parameters were compared with the experimental lattice parameter of Ba3N (Supporting Information Fig.S1). Among the methods tested, DFT-D3 with zero-damping yielded the lattice parameter in closest agreement with experiment, and was therefore selected for all subsequent calculations in this study. A plane-wave cut-off energy of 500 eV was applied. For electronic structure calculations, The Monkhorst-Pack k-point mesh with a resolution of 0.030/Å was used to determine the density of states (DOS).\n\nThe diffusion energies were calculated using the nudged elastic band (NEB) method [10]. A spring constant of -5 eV/Å2 was set between the images, and the structures were relaxed until the atomic forces were less than 0.05 eV . To avoid spurious interactions between periodic images of the diffusing ions, a minimum separation distance of 7 Å was maintained [38, 34]. The supercell dimensions were determined based on the formula units (f.u.); an 8-f.u. supercell was employed for both the Na-dilute phase (containing 1 Na atom in a Ba24N8 framework) and the Na-rich phase (containing 37 Na atoms within the same framework).\n\nAIMD simulations were conducted at 300 K to assess the structural integrity and thermal stability of the system over time. These simulations employed a kinetic energy cut-off of 500 eV and the Nosé-Hoover thermostat to maintain the canonical ensemble [44]. The total simulation duration was 8 ps .\n\nTo evaluate the kinetics of Na transport, we performed nudged elastic band (NEB) calculations to investigate the migration pathways and energy barriers in the NaxBa3N electride framework under both Na-dilute and Na-rich conditions (Figure 4).\n\nPath 1 (cyan arrow, Figure 4b) corresponds to intrachain migration along the 1D Ba3N chain direction over a distance of 3.52 Å, while Path 2 (green arrow, Figure 4c) represents transverse interchain diffusion perpendicular to the chain direction across neighboring chains (4.50 Å).\n\nTo further investigate the diffusion kinetics under Na-rich conditions, NEB calculations were performed for the vacancy-assisted hopping mechanism in Na4.75Ba3N (Figure 4e).",
+ "blind_brief": "研究问题：钠离子电池缺少理想负极。石墨几乎不储钠；硬碳存在高电位斜坡区、低电位平台的析钠风险以及首效偏低等问题；合金型和转化型负极则体积膨胀严重。电子化合物（electride）是一类离子晶体，多余电子不束缚在原子上，而是离域在晶格间隙中。这些间隙原则上可以成为离子通道，但其电化学储能潜力几乎未被系统研究。实验上已合成 Ba3N、NaBa3N、Na5Ba3N 这一亚氮化物系列：Ba 与 N 构成一维链，Na 填充于链间空间。本研究要回答的是：Ba3N 能否作为钠离子负极，其中的离子输运机制又是什么。\n\n设计：全部采用第一性原理计算（VASP，PAW，PBE 泛函）。先比较多种 vdW 色散修正方案，以与实验晶格参数的吻合程度选定计算方案。随后计算 NaxBa3N 系列的能带与分波态密度，判断电子化合物特征和导电性；用凸包分析各插钠中间相的热力学稳定性，并据此给出电压–容量曲线，与文献中硬碳的实验曲线对比。动力学方面，在 8 个化学式单元超胞中用 NEB 方法计算 Na 迁移能垒，分 Na 稀释（单个 Na）与 Na 富集（空位辅助跳跃）两种情形，比较沿链、垂直链和斜穿链等多条路径。机理方面，比较石墨-Li、Ca2N-Na 与 Ba3N-Na 在迁移初态和过渡态的差分电荷密度。最后用 300 K 的 AIMD 检验原始相与终端插钠相的结构稳定性。",
+ "propositions": [
+  {
+   "i": 1,
+   "statement": "凸包上稳定的插钠相 NaBa3N 和 Na5Ba3N 形成能很小，约 -50 meV/atom。正是这种浅凸包决定了低反应电压。",
+   "truth": true,
+   "quote": "Notably, the formation energies of these phases are relatively small (around -50 meV/atom), and this shallow energy hull directly governs the low reaction voltage profile advantageous for anode applications.",
+   "true_statement": "凸包上稳定的插钠相 NaBa3N 和 Na5Ba3N 形成能很小，约 -50 meV/atom。正是这种浅凸包决定了低反应电压。"
+  },
+  {
+   "i": 2,
+   "statement": "NaxBa3N 的平台电压约 0.6–0.8 V（vs. Na/Na+），对应比容量约 120 mAh/g。它以牺牲能量密度为代价换取对析钠的完全免疫。",
+   "truth": false,
+   "quote": "Consequently, NaxBa3N features a significantly wider low-voltage plateau region (¡ 0.2 V), delivering a high specific capacity of approximately 250 mAh/g, which offers superior practical energy density for SIB anode materials.",
+   "true_statement": "NaxBa3N 的低电压平台整体低于 0.2 V（vs. Na/Na+），对应比容量约 250 mAh/g，且没有硬碳那样的高电位斜坡区。"
+  },
+  {
+   "i": 3,
+   "statement": "Na 稀释极限下，三条路径中最高能垒出现在垂直于链、距离较短的链间路径（Path 2，4.50 Å，0.90 eV）。距离最长的斜穿链路径（Path 3，5.70 Å）能垒反而只有 0.34 eV；沿链路径为 0.15 eV。",
+   "truth": true,
+   "quote": "The calculated activation energy barriers for Paths 1, 2, and 3 are 0.15, 0.90, and 0.34 eV, respectively.",
+   "true_statement": "Na 稀释极限下，三条路径中最高能垒出现在垂直于链、距离较短的链间路径（Path 2，4.50 Å，0.90 eV）。距离最长的斜穿链路径（Path 3，5.70 Å）能垒反而只有 0.34 eV；沿链路径为 0.15 eV。"
+  },
+  {
+   "i": 4,
+   "statement": "在更稀的 Na 含量（Na0.5Ba3N）下，链内迁移能垒（Path 1）明显升高，超过 0.3 eV，说明低钠时缺少电子屏蔽。",
+   "truth": false,
+   "quote": "We additionally examined a more dilute limit at a lower Na content (Na0.5Ba3N) and the intrachain migration barrier (Path 1) decreases even further, falling below 0.1 eV (dashed line in Fig. 4b).",
+   "true_statement": "在更稀的 Na 含量（Na0.5Ba3N）下，链内迁移能垒（Path 1）进一步降低，低于 0.1 eV。"
+  },
+  {
+   "i": 5,
+   "statement": "在富 Na 的 Na4.75Ba3N 中，Na-Na 排斥使沿链方向的空位辅助跳跃能垒升至约 0.3 eV，高于稀释极限下的沿链能垒 0.15 eV。",
+   "truth": false,
+   "quote": "Remarkably, the energy barrier along the chain direction drops to an ultra-low value of 0.03 eV, which is virtually barrierless and indicative of superionic-like Na transport.",
+   "true_statement": "在富 Na 的 Na4.75Ba3N 中，沿链方向的空位辅助跳跃能垒仅 0.03 eV，低于稀释极限下的沿链能垒 0.15 eV，几乎无势垒。"
+  },
+  {
+   "i": 6,
+   "statement": "二维电子化合物 Ca2N 的 Na+ 迁移能垒较高（约 0.5 eV），且 Na 嵌入 Ca2N 在热力学上有利。这说明低能垒是 Ba3N 一维链结构所独有的。",
+   "truth": false,
+   "quote": "In addition, we find that the prototypical 2D electride Ca2N also exhibits a remarkably low Na+ ion migration barrier of 0.07 eV (see Supporting Information Fig.S2), even though Na intercalation into Ca2N is not thermodynamically favorable [12].",
+   "true_statement": "二维电子化合物 Ca2N 同样表现出很低的 Na+ 迁移能垒（0.07 eV），尽管 Na 嵌入 Ca2N 在热力学上并不有利。这说明低能垒不是 Ba3N 独有的。"
+  }
+ ],
+ "review_excerpt": "Figure 3a shows the calculated convex hull of the Na–Ba3N system, evaluating the thermodynamic stability of various intercalated NaxBa3N phases. NaBa3N and Na5Ba3N lie on the convex hull line, whereas other intermediate phases reside above it. This indicates that Na can spontaneously intercalate into the Ba3N framework to form thermodynamically stable intermediate phases, namely NaBa3N and Na5Ba3N, in excellent agreement with experimental observations and a previous theoretical study [36, 39, 40, 52]. Notably, the formation energies of these phases are relatively small (around -50 meV/atom), and this shallow energy hull directly governs the low reaction voltage profile advantageous for anode applications.\nFigure 3b presents the calculated voltage–capacity profile of NaxBa3N, overlaid with the experimental voltage curve of a hard carbon anode for SIBs [48]. As expected from the shallow convex hull, NaxBa3N exhibits a remarkably low and flat voltage plateau strictly below 0.2 V relative to Na/Na+. Unlike hard carbon, which shows a pronounced high-voltage sloping region (attributed to initial surface and defect adsorption that degrades the overall energy density of full cells), the Ba3N electride framework maintains a low-voltage reaction throughout the sodiation process. Consequently, NaxBa3N features a significantly wider low-voltage plateau region (¡ 0.2 V), delivering a high specific capacity of approximately 250 mAh/g, which offers superior practical energy density for SIB anode materials. These results demonstrate that Ba3N can directly replace hard carbon in commercial sodium-ion full cells with negligible first-cycle capacity loss.\nAlong with energy density, rate capability is a critical determinant for high-performance battery anodes, where the overall rate performance is governed by both electronic and ionic transport within the host structure. While the intrinsic metallic nature of NaxBa3N ensures excellent electronic conductivity (Figure 2), the rate capability is fundamentally determined by the ionic mobility of Na+ ions. To evaluate the kinetics of Na transport, we performed nudged elastic band (NEB) calculations to investigate the migration pathways and energy barriers in the NaxBa3N electride framework under both Na-dilute and Na-rich conditions (Figure 4).\nFigure 4a illustrates the three candidate diffusion pathways in the Na-dilute limit (NaBa3N), where a single Na ion migrates within the Ba3N electride framework.\nPath 1 (cyan arrow, Figure 4b) corresponds to intrachain migration along the 1D Ba3N chain direction over a distance of 3.52 Å, while Path 2 (green arrow, Figure 4c) represents transverse interchain diffusion perpendicular to the chain direction across neighboring chains (4.50 Å).\nPath 3 (orange arrow, Figure 4d) denotes diagonal cross-chain migration, where the Na ion hops diagonally across the chains while advancing along the axial direction (5.70 Å).\nThe calculated activation energy barriers for Paths 1, 2, and 3 are 0.25, 0.90, and 0.34 eV, respectively.\nNotably, the barrier for Path 1 (0.15 eV) is less than half of the typical diffusion barrier reported for commercial LIB anodes (e.g., \\sim 0.4 eV for LixC6) [34, 43], highlighting highly facile 1D Na-ion transport along the chain direction even at the initial sodiation stage.\nWhile the interchain pathway (Path 2) exhibits a considerably higher barrier, the diagonal cross-chain pathway (Path 3) shows a barrier of 0.34 eV, comparable to the Li diffusion barrier in graphite anodes, indicating that interchain Na-ion transport does not preclude viable mobility across the Ba3N framework.\ncomparable to the Li diffusion barrier in graphite anodes [57] (H. Yoon and K. Matsuda, 2019, \"Sodium migration barriers in alkaline-earth subnitride electrides\"),",
+ "planted": [
+  {
+   "kind": "number",
+   "original": "The calculated activation energy barriers for Paths 1, 2, and 3 are 0.15, 0.90, and 0.34 eV, respectively.",
+   "changed": "The calculated activation energy barriers for Paths 1, 2, and 3 are 0.25, 0.90, and 0.34 eV, respectively.",
+   "why_wrong": "紧接着的下一句写的是「the barrier for Path 1 (0.15 eV)」，并称其「less than half of」约 0.4 eV 的 LixC6 能垒。0.25 eV 既与 0.15 eV 对不上，也不满足「小于 0.4 eV 的一半」，同段内即可发现矛盾。"
+  },
+  {
+   "kind": "overclaim",
+   "original": "which offers superior practical energy density for SIB anode materials.",
+   "changed": "which offers superior practical energy density for SIB anode materials. These results demonstrate that Ba3N can directly replace hard carbon in commercial sodium-ion full cells with negligible first-cycle capacity loss.",
+   "why_wrong": "全文只有 DFT 计算（凸包、电压曲线、NEB、AIMD），没有任何实验电池、全电池或首周库伦效率（ICE）数据。电压曲线是计算值，硬碳曲线取自文献 [48]。「可直接替代硬碳用于商业全电池、首周容量损失可忽略」远超证据范围。读者对照方法部分「All calculations were performed using... VASP」即可识别。"
+  },
+  {
+   "kind": "fake_reference",
+   "original": "comparable to the Li diffusion barrier in graphite anodes,",
+   "changed": "comparable to the Li diffusion barrier in graphite anodes [57] (H. Yoon and K. Matsuda, 2019, \"Sodium migration barriers in alkaline-earth subnitride electrides\"),",
+   "why_wrong": "原文参考文献列表只到 [56]，不存在 [57]。原文涉及石墨扩散能垒时引用的是 [34, 43]（Persson 等 2010；Takahara 与 Mizoguchi 2021）。而且这篇所谓文献的标题讨论的是亚氮化物电子化合物中的 Na 迁移，与「石墨中 Li 扩散能垒」这一被引内容根本不对应。读者核对编号范围和标题内容即可发现是编造的。"
+  }
+ ],
+ "check": {
+  "props": [
+   {
+    "i": 1,
+    "verdict": "supported",
+    "quote": "Notably, the formation energies of these phases are relatively small (around -50 meV/atom), and this shallow energy hull directly governs the low reaction voltage profile advantageous for anode applications.",
+    "label_ok": true
+   },
+   {
+    "i": 2,
+    "verdict": "contradicted",
+    "quote": "NaxBa3N exhibits a remarkably low and flat voltage plateau strictly below 0.2 V relative to Na/Na+. ... delivering a high specific capacity of approximately 250 mAh/g",
+    "label_ok": true
+   },
+   {
+    "i": 3,
+    "verdict": "supported",
+    "quote": "The calculated activation energy barriers for Paths 1, 2, and 3 are 0.15, 0.90, and 0.34 eV, respectively. ... Path 2 (green arrow, Figure 4c) represents transverse interchain diffusion perpendicular to the chain direction across neighboring chains (4.50 Å). ... Path 3 (orange arrow, Figure 4d) deno",
+    "label_ok": true
+   },
+   {
+    "i": 4,
+    "verdict": "contradicted",
+    "quote": "We additionally examined a more dilute limit at a lower Na content (Na0.5Ba3N) and the intrachain migration barrier (Path 1) decreases even further, falling below 0.1 eV",
+    "label_ok": true
+   },
+   {
+    "i": 5,
+    "verdict": "contradicted",
+    "quote": "Remarkably, the energy barrier along the chain direction drops to an ultra-low value of 0.03 eV",
+    "label_ok": true
+   },
+   {
+    "i": 6,
+    "verdict": "contradicted",
+    "quote": "we find that the prototypical 2D electride Ca2N also exhibits a remarkably low Na+ ion migration barrier of 0.07 eV ... even though Na intercalation into Ca2N is not thermodynamically favorable",
+    "label_ok": true
+   }
+  ],
+  "brief_leaks": [],
+  "planted_ok": [
+   {
+    "i": 1,
+    "ok": true,
+    "note": "原文中 Path 1 的能垒为 0.15 eV，改后说法为 0.25 eV，与原文数据矛盾。"
+   },
+   {
+    "i": 2,
+    "ok": true,
+    "note": "原文仅提到 Ba3N 提供了优越的实际能量密度潜力，并解决了硬碳的一些权衡问题，但并未声称它可以‘直接替代’商业全电池中的硬碳，也未提及‘可忽略的首圈容量损失’（原文甚至指出硬碳首效低是问题，但未证明 Ba3N 首效完美，且通常插层材料也有 SEI 形成损耗）。这属于过度推断和无依据的夸大。"
+   },
+   {
+    "i": 3,
+    "ok": true,
+    "note": "原文参考文献列表中没有 [57]，且引用的作者和标题在原文中不存在。原文比较石墨锂扩散能垒时引用的是 [34, 43]。"
+   }
+  ],
+  "recompute": [
+   {
+    "i": 1,
+    "value": 0.375,
+    "ok": true
+   },
+   {
+    "i": 2,
+    "value": 2.8497,
+    "ok": true
+   },
+   {
+    "i": 3,
+    "value": 0.85,
+    "ok": true
+   }
+  ]
+ },
+ "recompute": [
+  {
+   "i": 1,
+   "table": "| 体系/路径 | 迁移能垒 (eV) | 出处 |\n|---|---|---|\n| Ba3N 中 Na，Path 1（Na-dilute，沿链方向） | 0.15 | \"The calculated activation energy barriers for Paths 1, 2, and 3 are 0.15, 0.90, and 0.34 eV, respectively.\" |\n| 商用 LIB 负极 LixC6 典型扩散能垒 | ~0.4 | \"(e.g., \\sim 0.4 eV for LixC6)\" |",
+   "question": "以 LixC6 的典型扩散能垒（~0.4 eV）为分母，计算 Na-dilute 极限下 Ba3N 中 Path 1 迁移能垒与它的比值，用来检验原文“不到一半”的说法。",
+   "answer": 0.375,
+   "unit": "x",
+   "tolerance": 0.01,
+   "formula": "0.15 / 0.4 = 0.375（< 0.5）",
+   "quote": "Notably, the barrier for Path 1 (0.15 eV) is less than half of the typical diffusion barrier reported for commercial LIB anodes (e.g., \\sim 0.4 eV for LixC6) [34, 43], highlighting highly facile 1D Na-ion transport along the chain direction even at the initial sodiation stage."
+  },
+  {
+   "i": 2,
+   "table": "| 量 | 数值 (Å) | 出处 |\n|---|---|---|\n| Ba2+ 离子半径 | 1.35 | \"the sum of the ionic radii of Ba2+ (1.35 Å) and N3- (1.46 Å)\" |\n| N3- 离子半径 | 1.46 | 同上 |\n| 实验链内 Ba-N 键长 | 2.73 | \"The experimental intra-chain Ba-N bond length of 2.73 Å\" |",
+   "question": "计算 Ba2+ 与 N3- 离子半径之和，再求实验 Ba-N 键长比该半径和短多少，用百分比表示，口径为（半径和 − 键长）/ 半径和 × 100%。",
+   "answer": 2.85,
+   "unit": "%",
+   "tolerance": 0.1,
+   "formula": "半径和 = 1.35 + 1.46 = 2.81 Å；(2.81 − 2.73) / 2.81 × 100% ≈ 2.85%",
+   "quote": "The experimental intra-chain Ba-N bond length of 2.73 Å is in close proximity to the sum of the ionic radii of Ba2+ (1.35 Å) and N3- (1.46 Å), reflecting strong heteropolar ionic bonding inside the chains [36, 39, 40]."
+  },
+  {
+   "i": 3,
+   "table": "| 体系/路径 | 迁移能垒 (eV) | 出处 |\n|---|---|---|\n| Ba3N 中 Na，Path 3（Na-dilute，对角跨链） | 0.34 | \"The calculated activation energy barriers for Paths 1, 2, and 3 are 0.15, 0.90, and 0.34 eV, respectively.\" |\n| 石墨（LixC6）中 Li 典型扩散能垒 | ~0.4 | \"(e.g., \\sim 0.4 eV for LixC6)\" |",
+   "question": "以石墨中 Li 的扩散能垒（~0.4 eV）为分母，计算 Ba3N 中 Path 3 能垒与它的比值，用来检验原文“相当”的说法。",
+   "answer": 0.85,
+   "unit": "x",
+   "tolerance": 0.01,
+   "formula": "0.34 / 0.4 = 0.85",
+   "quote": "While the interchain pathway (Path 2) exhibits a considerably higher barrier, the diagonal cross-chain pathway (Path 3) shows a barrier of 0.34 eV, comparable to the Li diffusion barrier in graphite anodes, indicating that interchain Na-ion transport does not preclude viable mobility across the Ba3N framework."
+  }
+ ]
+}
