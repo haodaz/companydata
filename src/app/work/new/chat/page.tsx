@@ -129,23 +129,37 @@ export default function WorkChatPage() {
 
 function Composer({ text, setText, busy, send, stop, model, setModel, placeholder, autoFocus }: { text: string; setText: (t: string) => void; busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; placeholder?: string; autoFocus?: boolean }) {
   // 上传文件：以【文件】行附进消息；是素材还是参考资料由出题助理按语境判断（默认素材）
+  // 2026-11-03：文件先显示成输入框上方的小卡片（不再把一长串【文件】行塞进输入框）；还在上传 / 看图时锁住发送——以前图没处理完就发出去，图就没带上（潜历反馈）
   const fileRef = useRef<HTMLInputElement>(null);
-  const [up, setUp] = useState(false);
-  const attach = async (files: FileList | null) => {
-    if (!files?.length) return; setUp(true);
-    try { const lines: string[] = []; for (const f of Array.from(files).slice(0, 6)) { const fd = new FormData(); fd.append('file', f); const j = await (await fetch('/api/admin/work/attach', { method: 'POST', body: fd })).json(); if (j.ok) lines.push(`【文件】${j.name}｜${j.url}｜${j.mime}${j.text ? `｜文字摘录：${String(j.text).slice(0, 1500).replace(/\s+/g, ' ')}` : j.image ? '｜图片' : ''}`); }
-      if (lines.length) setText((text ? text + '\n' : '') + lines.join('\n')); }
-    finally { setUp(false); }
+  const [files, setFiles] = useState<{ key: string; name: string; line?: string; err?: string }[]>([]);
+  const up = files.some(f => !f.line && !f.err);
+  const attach = async (list: FileList | null) => {
+    if (!list?.length) return;
+    const picked = Array.from(list).slice(0, 6).map(f => ({ f, key: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}` }));
+    setFiles(x => [...x, ...picked.map(({ f, key }) => ({ key, name: f.name }))]);
+    await Promise.all(picked.map(async ({ f, key }) => {
+      try {
+        const fd = new FormData(); fd.append('file', f);
+        const j = await (await fetch('/api/admin/work/attach', { method: 'POST', body: fd })).json();
+        if (!j.ok) throw new Error(j.error || '没传上');
+        const line = `【文件】${j.name}｜${j.url}｜${j.mime}${j.text ? `｜文字摘录：${String(j.text).slice(0, 1500).replace(/\s+/g, ' ')}` : j.image ? '｜图片' : ''}`;
+        setFiles(x => x.map(y => y.key === key ? { ...y, name: j.name || y.name, line } : y));
+      } catch (e: any) { setFiles(x => x.map(y => y.key === key ? { ...y, err: e.message || '没传上' } : y)); }
+    }));
   };
+  const ready = files.filter(f => f.line);
+  const canSend = !up && (!!text.trim() || ready.length > 0);
+  const go = () => { if (!canSend) return; send([text.trim() || '（附上文件）', ...ready.map(f => f.line!)].join('\n')); setFiles([]); };
   return (
     <div className="wc-composer">
+      {files.length > 0 && <div className="wc-files">{files.map(f => <span key={f.key} className={`wc-file${f.err ? ' err' : !f.line ? ' busy' : ''}`}>📎 {f.name}<em>{f.err ? f.err : !f.line ? '上传中，图片要先看一遍…' : '已就绪'}</em><button onClick={() => setFiles(x => x.filter(y => y.key !== f.key))} title="去掉">×</button></span>)}</div>}
       <textarea value={text} autoFocus={autoFocus} rows={2} placeholder={placeholder || '比如：给宁德时代找一个能做欧洲交付计划的人，出一道题'} onChange={e => setText(e.target.value)}
-        onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); send(text); } }} />
+        onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); go(); } }} />
       <div className="wc-bar">
         <select className="wc-model" value={model} onChange={e => setModel(e.target.value)}>{MODELS.map(m => <option key={m.id} value={m.id}>{m.label}</option>)}</select>
-        <button className="wc-clip" title="上传文件：给候选人的素材，或让 AI 照着出的参考资料——传完说一句是哪种就行" disabled={busy || up} onClick={() => fileRef.current?.click()}>{up ? '上传中…' : '📎 文件'}</button>
+        <button className="wc-clip" title="上传文件：给候选人的素材，或让 AI 照着出的参考资料——传完说一句是哪种就行" disabled={busy} onClick={() => fileRef.current?.click()}>📎 文件</button>
         <input ref={fileRef} type="file" multiple accept=".pdf,.docx,.txt,.md,.csv,.xlsx,.png,.jpg,.jpeg,.webp,.gif" style={{ display: 'none' }} onChange={e => { attach(e.target.files); e.target.value = ''; }} />
-        {busy ? <button className="wc-send stop" onClick={stop}>停</button> : <button className="wc-send" disabled={!text.trim()} onClick={() => send(text)}>↑</button>}
+        {busy ? <button className="wc-send stop" onClick={stop}>停</button> : <button className="wc-send" disabled={!canSend} title={up ? '文件还在处理，好了再发' : ''} onClick={go}>↑</button>}
       </div>
     </div>
   );
@@ -217,6 +231,11 @@ const CSS = `
 .wc-composer textarea { width: 100%; border: 0; outline: 0; resize: none; background: transparent; font: inherit; font-size: 15px; line-height: 1.6; color: #1a1a2e; }
 .wc-bar { display: flex; align-items: center; margin-top: 4px; }
 .wc-model { border: 0; background: transparent; color: #666; font: inherit; font-size: 12.5px; cursor: pointer; padding: 4px 2px; outline: 0; }
+.wc-files { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 12px 0; }
+.wc-file { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; background: #f1f0ff; color: #3f35c4; border: 1px solid #dcd8ff; border-radius: 8px; padding: 3px 4px 3px 9px; }
+.wc-file em { font-style: normal; color: #0d7a52; font-size: 11.5px; }
+.wc-file.busy em { color: #8a5a00; } .wc-file.err { background: #fff1f0; border-color: #ffccc7; color: #a8071a; } .wc-file.err em { color: #a8071a; }
+.wc-file button { border: 0; background: transparent; color: #888; cursor: pointer; font-size: 14px; line-height: 1; padding: 0 4px; }
 .wc-clip { border: 1px solid #e0e0ee; background: #fff; color: #555; font: inherit; font-size: 12.5px; border-radius: 8px; padding: 3px 10px; margin-left: 8px; cursor: pointer; } .wc-clip:disabled { opacity: .5; }
 .wc-send { margin-left: auto; width: 32px; height: 32px; border-radius: 10px; border: 0; background: #6055f5; color: #fff; font-size: 16px; cursor: pointer; }
 .wc-send:disabled { opacity: .25; cursor: default; } .wc-send.stop { background: #7a756a; font-size: 12px; }

@@ -1,0 +1,51 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>看答卷、比候选人 · 真活操作手册</title><style>
+:root { --v: #6055f5; --ink: #1a1a2e; --ink2: #4a4f66; --ink3: #8a8fa8; --mark: #ff5a36; --line: #e8e9f0; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f6fb; color: var(--ink); font: 15px/1.75 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 36px 20px 56px; }
+.eb { font-size: 12px; letter-spacing: .14em; color: var(--v); font-weight: 700; }
+h1 { font-size: 34px; line-height: 1.25; margin: 8px 0 10px; }
+h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 10px; }
+.meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.meta span { font-size: 13px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; color: var(--ink2); }
+.lead { font-size: 16px; color: var(--ink2); background: #fff; border-left: 4px solid var(--v); border-radius: 0 12px 12px 0; padding: 12px 16px; margin: 0 0 26px; }
+.step { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 20px 20px 18px; margin-bottom: 22px; box-shadow: 0 10px 30px -22px rgba(40,44,110,.35); }
+.step h2 { display: flex; align-items: center; gap: 12px; font-size: 21px; margin: 0 0 6px; }
+.step h2 i { font-style: normal; flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--v); color: #fff; display: grid; place-items: center; font-size: 17px; }
+.step .d { color: var(--ink2); margin: 0 0 14px 46px; }
+.shot { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+.shot img { display: block; width: 100%; }
+.box { position: absolute; border: 3px solid var(--mark); border-radius: 8px; }
+.tag { position: absolute; left: -3px; transform: translateY(-100%); display: flex; align-items: center; gap: 6px; white-space: nowrap; background: var(--mark); color: #fff; font-size: 12.5px; font-weight: 700; padding: 3px 9px 3px 4px; border-radius: 8px 8px 8px 0; max-width: 520px; overflow: hidden; text-overflow: ellipsis; }
+.tag.below { transform: none; top: calc(100% + 4px); border-radius: 0 8px 8px 8px; }
+.tag.below.right { border-radius: 8px 0 8px 8px; }
+.tag.right { left: auto; right: -3px; border-radius: 8px 8px 0 8px; }
+.tag b, .notes b { flex: none; width: 19px; height: 19px; border-radius: 50%; background: #fff; color: var(--mark); display: grid; place-items: center; font-size: 12px; }
+.notes { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.notes li { display: flex; gap: 8px; align-items: flex-start; font-size: 14.5px; }
+.notes b { background: var(--mark); color: #fff; margin-top: 3px; }
+.foot { text-align: center; color: var(--ink3); font-size: 12.5px; margin-top: 28px; }
+@media (max-width: 640px) { h1 { font-size: 26px; } .step .d { margin-left: 0; } .tag { font-size: 11px; max-width: 70vw; } }
+</style></head><body><div class="wrap">
+<div class="eb">百业AI｜真活 · 操作手册 05</div>
+<h1>看答卷、比候选人</h1>
+<div class="meta"><span>给出任务的人</span><span>随时</span></div>
+<p class="lead">候选人交卷后，在这道题的空间里看分数、看报告、把几个人并排比。</p>
+<section class="step"><h2><i>1</i>题目空间：先看总数</h2><p class="d">顶部四个数：多少人参与、多少人交卷、平均分、AI 基线（AI 自己做一遍的分）。这个空间的链接带管理密钥，可以转给同事，别发给候选人。</p>
+      <div class="shot"><img src="img/own-1.png" alt=""><div class="box" style="left:13.00%;top:26.80%;width:16.60%;height:8.40%"><span class="tag"><b>1</b>参与 / 交卷 / 平均分 / AI 基线</span></div><div class="box" style="left:51.20%;top:65.80%;width:9.20%;height:5.20%"><span class="tag"><b>2</b>「做题情况与评分」看每个人</span></div></div>
+      <ul class="notes"><li><b>1</b><span>参与 / 交卷 / 平均分 / AI 基线</span></li><li><b>2</b><span>「做题情况与评分」看每个人</span></li></ul></section>
+<section class="step"><h2><i>2</i>每个人的分数和报告</h2><p class="d">按分数排好了。「报告链接」可以单独发给同事看。</p>
+      <div class="shot"><div style="aspect-ratio:109440/52200;overflow:hidden"><img src="img/rev-1.png" alt="" style="width:131.579%;max-width:none;margin-left:-15.789%;margin-top:-29.605%"></div><div class="box" style="left:63.68%;top:25.52%;width:7.63%;height:68.28%"><span class="tag right"><b>1</b>总分</span></div><div class="box" style="left:79.47%;top:33.10%;width:6.05%;height:61.03%"><span class="tag right"><b>2</b>看报告</span></div><div class="box" style="left:85.79%;top:33.10%;width:7.11%;height:61.03%"><span class="tag right"><b>3</b>报告链接</span></div></div>
+      <ul class="notes"><li><b>1</b><span>总分</span></li><li><b>2</b><span>看报告</span></li><li><b>3</b><span>报告链接</span></li></ul></section>
+<section class="step"><h2><i>3</i>报告里看什么</h2><p class="d">上面是交付物原文，下面是结果和过程；再往下是逐条评分（每条有证据）、AI 使用能力、和 AI 基线逐条比。</p>
+      <div class="shot"><div style="aspect-ratio:90720/90000;overflow:hidden"><img src="img/rev-2.png" alt="" style="width:158.730%;max-width:none;margin-left:-58.730%;margin-top:-0.000%"></div><div class="box" style="left:3.17%;top:65.80%;width:43.81%;height:28.40%"><span class="tag"><b>1</b>总分，和 AI 基线差多少</span></div><div class="box" style="left:47.62%;top:65.80%;width:48.57%;height:28.40%"><span class="tag"><b>2</b>过程：用时、问了几次 AI、哪些自己做、哪些交给 AI</span></div></div>
+      <ul class="notes"><li><b>1</b><span>总分，和 AI 基线差多少</span></li><li><b>2</b><span>过程：用时、问了几次 AI、哪些自己做、哪些交给 AI</span></li></ul></section>
+<section class="step"><h2><i>4</i>勾几个人，并排对比</h2><p class="d">勾 2–4 个人点「对比所选」；「导出候选名单」出一张表。</p>
+      <div class="shot"><div style="aspect-ratio:109440/52200;overflow:hidden"><img src="img/rev-4.png" alt="" style="width:131.579%;max-width:none;margin-left:-15.789%;margin-top:-29.605%"></div><div class="box" style="left:4.47%;top:33.10%;width:3.68%;height:25.17%"><span class="tag"><b>1</b>勾 2–4 个人</span></div><div class="box" style="left:62.11%;top:17.59%;width:11.58%;height:8.28%"><span class="tag right"><b>2</b>对比所选</span></div><div class="box" style="left:86.84%;top:17.59%;width:9.74%;height:8.28%"><span class="tag right"><b>3</b>导出候选名单</span></div></div>
+      <ul class="notes"><li><b>1</b><span>勾 2–4 个人</span></li><li><b>2</b><span>对比所选</span></li><li><b>3</b><span>导出候选名单</span></li></ul></section>
+<section class="step"><h2><i>5</i>逐条比，看谁哪里强</h2><p class="d">每条评分标准逐人对比，最高的标绿；下面是每个人做得好的和差的地方。</p>
+      <div class="shot"><div style="aspect-ratio:110880/82800;overflow:hidden"><img src="img/rev-5.png" alt="" style="width:129.870%;max-width:none;margin-left:-29.870%;margin-top:-0.000%"></div><div class="box" style="left:2.60%;top:9.78%;width:95.58%;height:45.00%"><span class="tag"><b>1</b>逐条对比，最高的标绿</span></div><div class="box" style="left:2.60%;top:55.87%;width:95.58%;height:40.65%"><span class="tag"><b>2</b>每个人做得好的 / 差的地方</span></div></div>
+      <ul class="notes"><li><b>1</b><span>逐条对比，最高的标绿</span></li><li><b>2</b><span>每个人做得好的 / 差的地方</span></li></ul></section>
+<div class="foot">百业AI｜真活 · 操作手册 05 · 看答卷、比候选人</div>
+</div></body></html>

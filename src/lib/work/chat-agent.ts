@@ -90,8 +90,11 @@ export async function createWorkTask(user: { email: string; role: string }, body
 }
 
 async function loadMine(user: { email: string; role: string }, id: string) {
-  const { data: t } = await db.from('work_tasks').select('*').eq('id', id).maybeSingle();
-  if (!t) throw new Error('没有这道题');
+  // 用户报的常是参与链接里的编号（share_token），不是内部 id：两个都认（2026-11-03）
+  const key = String(id || '').trim().replace(/^.*\/work\/([^/?#]+).*$/, '$1');
+  const isUuid = /^[0-9a-f-]{36}$/i.test(key);
+  const { data: t } = await db.from('work_tasks').select('*').eq(isUuid ? 'id' : 'share_token', key).maybeSingle();
+  if (!t) throw new Error('没有这道题：把参与链接或管理链接整条贴给我');
   if (user.role !== 'admin' && t.created_by !== user.email) throw new Error('只能改自己出的题');
   return t;
 }
