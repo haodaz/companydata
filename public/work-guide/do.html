@@ -30,14 +30,22 @@ h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 
 .ex ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
 .ex li { background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 15px; }
 .ex p { margin: 10px 0 0; color: var(--ink2); font-size: 14px; }
+@media print { body { background: #fff; font-size: 16px; } .notes li { font-size: 15.5px; } .step .d { font-size: 15.5px; } .step, .ex, .lead { break-inside: avoid; } .wrap { padding-top: 8px; } }
+.pb { break-before: page; }
+.divider { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; background: linear-gradient(135deg, #f3f2ff, #eefbfd); border-radius: 24px; }
+.divider .no { font-size: 120px; font-weight: 900; line-height: 1; background: linear-gradient(120deg, var(--v), #12b5cb); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.divider h2 { font-size: 46px; margin: 18px 0 12px; } .divider .m { color: var(--ink2); font-size: 17px; margin-bottom: 18px; } .divider p { font-size: 18px; color: var(--ink2); max-width: 720px; }
+.cover { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; }
+.cover h1 { font-size: 64px; } .cover .ver { margin-top: 28px; display: grid; gap: 8px; font-size: 17px; color: var(--ink2); } .cover .ver b { color: var(--ink); }
+.toc a { display: flex; gap: 18px; align-items: baseline; text-decoration: none; color: inherit; padding: 16px 0; border-bottom: 1px solid var(--line); } .toc i { font-style: normal; font-weight: 900; color: var(--v); font-size: 26px; width: 48px; } .toc b { font-size: 21px; } .toc span { color: var(--ink2); font-size: 14.5px; display: block; }
 .foot { text-align: center; color: var(--ink3); font-size: 12.5px; margin-top: 28px; }
 @media (max-width: 640px) { h1 { font-size: 26px; } .step .d { margin-left: 0; } .tag { font-size: 11px; max-width: 70vw; } }
 </style></head><body><div class="wrap">
 <div class="eb">百业AI｜真活 · 操作手册 04</div>
 <h1>候选人怎么做题</h1>
 <div class="meta"><span>给候选人（出任务的人也可以转发）</span><span>按题目建议用时</span></div>
-<p class="lead">打开出任务的人发来的链接就能做，不用注册。材料、作答、AI 都在一个页面里，每一步自动记录，交卷后出报告。</p>
-
+<p class="lead">打开出任务的人发来的链接就能做，不用注册。材料、作答、AI 都在一个页面里，每一步自动记录，交卷后出报告。AI 随便用，像平时干活跟同事商量一样问它就行；评的是你怎么用，关键判断要自己做。</p>
+<section class="ex"><h3>可以这样问 AI</h3><ul><li>「「m1 和 m3 里的销量对不上，帮我看看差在哪」」</li><li>「「我打算先算缺口再排补位，这个顺序有没有漏掉什么」」</li><li>「「这是我的结论，你挑挑毛病：哪句证据不够」」</li><li>「「把这三段整理成一页纸的结构，数字我自己核」」</li></ul><p>少这样用：把整道题丢给 AI、原样照抄它的回答、不核对就用它给的数字——报告里会看得出来。</p></section>
 <section class="step"><h2><i>1</i>先读任务书和规则</h2><p class="d">任务书说清了要你做什么、交给谁；规则里写着可以随便用 AI，评的是你怎么用。</p>
       <div class="shot"><div style="aspect-ratio:92160/73800;overflow:hidden"><img src="img/do-1.png" alt="" style="width:156.250%;max-width:none;margin-left:-28.125%;margin-top:-4.492%"></div><div class="box" style="left:7.19%;top:13.29%;width:85.94%;height:36.10%"><span class="tag"><b>1</b>任务书：要做什么、交给谁</span></div><div class="box" style="left:7.19%;top:65.37%;width:85.94%;height:28.29%"><span class="tag"><b>2</b>规则：可以用 AI；材料里没有的数据要标注假设</span></div></div>
       <ul class="notes"><li><b>1</b><span>任务书：要做什么、交给谁</span></li><li><b>2</b><span>规则：可以用 AI；材料里没有的数据要标注假设</span></li></ul></section>
@@ -53,5 +61,5 @@ h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 
 <section class="step"><h2><i>5</i>交卷：点两次</h2><p class="d">点「交卷」后按钮变红，再点一次才交上；交了就不能改。约 1–2 分钟出报告。</p>
       <div class="shot"><div style="aspect-ratio:72000/30600;overflow:hidden"><img src="img/do-4.png" alt="" style="width:200.000%;max-width:none;margin-left:-100.000%;margin-top:-0.000%"></div><div class="box" style="left:78.40%;top:2.35%;width:20.40%;height:15.29%"><span class="tag below right"><b>1</b>再点一次确认交卷</span></div></div>
       <ul class="notes"><li><b>1</b><span>再点一次确认交卷</span></li></ul></section>
-<div class="foot">百业AI｜真活 · 操作手册 04 · 候选人怎么做题</div>
+<div class="foot">百业AI｜真活 · 编写于 2026-11-03 · 适用 百业AI｜真活 1.1（2026-11-03 线上版本） · 操作手册 04 · 候选人怎么做题</div>
 </div></body></html>
