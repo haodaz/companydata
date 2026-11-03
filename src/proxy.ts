@@ -68,7 +68,8 @@ export async function proxy(req: NextRequest) {
     // AI 大学（/college）公开：毕业生列表和档案只读；入学 / 人才培养申请不用登录（收集客户线索，接口自己防刷）
     if (pathname.startsWith('/api/college/') && !pathname.startsWith('/api/college/admin') && req.method === 'GET') return NextResponse.next();   // 教务接口 /api/college/admin 要登录
     if (pathname === '/api/college/apply' && req.method === 'POST') return NextResponse.next();
-    if (pathname.startsWith('/api/college/review/')) return NextResponse.next();   // 导师校正科研测评题：凭链接里的密钥，接口自己校验（迁移 060）
+    if (pathname.startsWith('/api/college/review/')) return NextResponse.next();
+    if (pathname.startsWith('/api/college/lab/')) return NextResponse.next();   // 实验室入口（私域课材料）：凭链接里的密钥，接口自己校验（迁移 062）   // 导师校正科研测评题：凭链接里的密钥，接口自己校验（迁移 060）
     // 真活台公开：参与链接 / 自助出题 / 出题人管理链接都靠 token 与 owner_key 自己核对，不走登录（/api/admin/work 仍要登录）
     // 例外：/api/work/companies 是企业库搜索（出题时挑企业用），属于数据资产，要登录
     if (pathname.startsWith('/api/work/') && !pathname.startsWith('/api/work/companies')) return NextResponse.next();
