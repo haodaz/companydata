@@ -9,13 +9,18 @@
  * 论文只用 arXiv 上 CC BY 授权的、最近发表的（被考模型没见过，盲测才算数）。
  * 分层（用户 11-03）：公共课 = 平台用公开论文 / 数据先建好（scope: public）；私域课 = 实验室拿未发表数据、组内 SOP 来联合培养，只给这一家用（scope: private + org）。流水线一样，只是材料来源和归属不同。
  *   npx tsx --env-file=.env.local scripts/research-exam.mts build <arXiv id>...      出题（AI 代导师 + 交叉核对）→ scripts/data/research-exams/<id>.json
- *   npx tsx --env-file=.env.local scripts/research-exam.mts run <模型>... [--papers=id,id]   考 → docs/科研能力测评/<日期>.json + 汇总表
+ *   npx tsx --env-file=.env.local scripts/research-exam.mts run <模型>... [--papers=id,id]   考 → docs/科研能力测评/<日期>.json + 汇总表（优先用库里导师校正过的版本）
+ *   sync：把 JSON 里的题写进库（迁移 060）；导师校正入口 /college/review/<token>，教务处「科研测评题」发链接
  */
 import fs from 'node:fs';
 import { generateContent } from '../src/lib/llm-client';
 import { parseJsonLoose } from '../src/lib/agents/search-llm';
 import { logTokenUsage } from '../src/lib/token-logger';
 import { fabricatedCitations } from '../src/lib/college-train';
+import { upsertExam } from '../src/lib/college-exams';
+import { supabaseAdmin as db } from '../src/lib/supabase';
+/** 写 JSON 备份 + 写库（迁移 060；没跑时只留 JSON） */
+const saveExam = async (f: string, ex: any) => { fs.writeFileSync(f, JSON.stringify(ex, null, 1)); await upsertExam(ex).catch(e => console.warn('  （没写进库：', String(e?.message).slice(0, 80), '）')); };
 
 const MENTOR = 'claude-opus-5-5';          // AI 代导师：出题、定答案、埋错
 const CHECKER = 'qwen3.7-plus';            // 交叉核对（和出题的不是一家；GPT 额度 11-03 用完）
@@ -115,7 +120,7 @@ ${full}
     design_key: draft.design_key, method_excerpt: S(draft.method_excerpt, 4000), blind_brief: S(draft.blind_brief, 1200),
     propositions: props, review_excerpt: review.slice(0, 5000), planted, check,
   };
-  fs.writeFileSync(`${DIR}/${id}.json`, JSON.stringify(exam, null, 1));
+  await saveExam(`${DIR}/${id}.json`, exam);
   const bad = check.props.filter((x: any) => !x.label_ok).length, leaks = check.brief_leaks.length, pbad = check.planted_ok.filter((x: any) => !x.ok).length;
   console.log(`  出好：论断 ${props.length}（核对有疑问 ${bad}）· 简介泄露 ${leaks} 处 · 埋错 ${planted.length}（有疑问 ${pbad}）`);
   return exam;
@@ -164,7 +169,10 @@ C：每处埋的错有没有被找到（找到 = 指出了那个片段且说对�
   return { A: aScore, B: { accuracy: Math.round(acc * 100), brier: Math.round(brier * 1000) / 1000, detail: bs }, C: { found, of: exam.planted.length, false_alarms: Number(g.C?.false_alarms) || 0, note: S(g.C?.note, 300) }, fabricated: fake, judge_note: S(g.A?.note, 300) };
 }
 
-if (cmd === 'rekey') {
+if (cmd === 'sync') {
+  // 把 JSON 里的题写进库（迁移 060 跑完后一次）
+  for (const f of fs.readdirSync(DIR).filter(f => f.endsWith('.json'))) { const ex = JSON.parse(fs.readFileSync(`${DIR}/${f}`, 'utf8')); await upsertExam(ex); console.log('写库', ex.id, ex.title); }
+} else if (cmd === 'rekey') {
   // A 题答案只按给学员的方法摘录定（以前按全文定，学员拿不到的细节也算缺）；然后用已交的作答重评 A
   const RES = `docs/科研能力测评/${flag('date') || new Date().toISOString().slice(0, 10)}.json`;
   const res = fs.existsSync(RES) ? JSON.parse(fs.readFileSync(RES, 'utf8')) : [];
@@ -174,7 +182,7 @@ if (cmd === 'rekey') {
 ## ${ex.title}
 ${ex.method_excerpt}
 { "question": "", "independent": [], "dependent": [], "baselines": [], "data": [], "scale": "" }`, MENTOR, '出题 · A 答案按摘录定');
-    ex.design_key_full = ex.design_key_full || ex.design_key; ex.design_key = k; fs.writeFileSync(f, JSON.stringify(ex, null, 1));
+    ex.design_key_full = ex.design_key_full || ex.design_key; ex.design_key = k; await saveExam(f, ex);
     for (const r of res.filter((x: any) => x.paper === id)) {
       const g = await ask(`你是科研测评的评卷人，对照标准答案判学员还原的研究设计，只返回 JSON。标准答案只来自学员看到的那段摘录；答案写「摘录未给出」的项，学员写「原文未报告」或类似说法算全对，学员自己编出具体内容算错。
 ## 标准答案
@@ -190,13 +198,18 @@ ${JSON.stringify(r.answers.A)}
   }
 } else if (cmd === 'recheck') {
   // 只重跑交叉核对（题不变）
-  for (const id of args) { const f = `${DIR}/${id}.json`; const ex = JSON.parse(fs.readFileSync(f, 'utf8')); ex.check = await crossCheck(await fullText(id), ex.propositions, ex.blind_brief, ex.planted); ex.checker = CHECKER; fs.writeFileSync(f, JSON.stringify(ex, null, 1));
+  for (const id of args) { const f = `${DIR}/${id}.json`; const ex = JSON.parse(fs.readFileSync(f, 'utf8')); ex.check = await crossCheck(await fullText(id), ex.propositions, ex.blind_brief, ex.planted); ex.checker = CHECKER; await saveExam(f, ex);
     console.log(`${id}：论断有疑问 ${ex.check.props.filter((x: any) => !x.label_ok).map((x: any) => `${x.i}(${x.verdict})`).join(' ') || '无'} · 简介泄露 ${ex.check.brief_leaks.length} · 埋错有疑问 ${ex.check.planted_ok.filter((x: any) => !x.ok).map((x: any) => x.i).join(' ') || '无'}`); }
 } else if (cmd === 'build') {
   for (const id of args) { try { await build(id); } catch (e: any) { console.log(`  ✗ ${id}：${String(e?.message).slice(0, 120)}`); } }
 } else if (cmd === 'run') {
   const papers = (flag('papers') ? flag('papers').split(',') : fs.readdirSync(DIR).map(f => f.replace(/\.json$/, '')));
-  const exams = papers.map(p => JSON.parse(fs.readFileSync(`${DIR}/${p}.json`, 'utf8')));
+  // 优先用库里的版本（导师校正过的），跳过导师作废的论断 / 埋错
+  const exams = await Promise.all(papers.map(async p => {
+    const { data: row } = await db.from('college_research_exams').select('*').eq('id', p).maybeSingle();
+    const ex = row ? { id: row.id, title: row.title, status: row.status, ...row.exam } : JSON.parse(fs.readFileSync(`${DIR}/${p}.json`, 'utf8'));
+    return { ...ex, propositions: (ex.propositions || []).filter((x: any) => !x.discard), planted: (ex.planted || []).filter((x: any) => !x.discard) };
+  }));
   const OUT = `docs/科研能力测评`; fs.mkdirSync(OUT, { recursive: true });
   const file = `${OUT}/${new Date().toISOString().slice(0, 10)}.json`;
   const res: any[] = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : [];

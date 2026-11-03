@@ -33,3 +33,6 @@
 ^public/(college|lab-guide|work-guide)(/|$)
 ^scripts/(work-guide|lab-guide)/
 ^scripts/research-method-showcase\.mts$
+^scripts/research-exam\.mts$
+^scripts/data/research-exams/
+^scripts/college-research-core\.mts$
