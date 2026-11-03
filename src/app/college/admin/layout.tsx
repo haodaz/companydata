@@ -9,7 +9,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { ChevronsUpDown, ClipboardCheck, Factory, Feather, GraduationCap, Hammer, Landmark, LayoutDashboard, Library, MailOpen, SquarePen, Users, type LucideIcon, FlaskConical } from 'lucide-react';
+import { ChevronsUpDown, ClipboardCheck, Factory, Feather, GraduationCap, Hammer, Landmark, LayoutDashboard, Library, MailOpen, SquarePen, Users, type LucideIcon, FlaskConical, Lock } from 'lucide-react';
 import { ADMIN_CSS } from './ui';
 
 const CHAT = '/college/admin/chat';
@@ -22,6 +22,7 @@ const NAV = [
   { ic: GraduationCap as LucideIcon, href: '/college/admin/graduates', t: '毕业生管理', on: (p: string) => p.startsWith('/college/admin/graduates') },
   { ic: Library as LucideIcon, href: '/college/admin/courses', t: '课程目录', on: (p: string) => p.startsWith('/college/admin/courses') },
   { ic: FlaskConical as LucideIcon, href: '/college/admin/exams', t: '科研测评题', on: (p: string) => p.startsWith('/college/admin/exams') },
+  { ic: Lock as LucideIcon, href: '/college/admin/private', t: '私域课', on: (p: string) => p.startsWith('/college/admin/private') },
 ];
 const FOLD_KEY = 'college-side-fold';
 

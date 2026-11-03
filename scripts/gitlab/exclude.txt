@@ -36,3 +36,5 @@
 ^scripts/research-exam\.mts$
 ^scripts/data/research-exams/
 ^scripts/college-research-core\.mts$
+^scripts/college-private-demo\.mts$
+^scripts/data/private/

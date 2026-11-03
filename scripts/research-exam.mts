@@ -102,9 +102,15 @@ async function build(id: string) {
   const secs = htmlToSections(html);
   const full = secs.map(s => `## ${s.title}\n${s.text}`).join('\n').slice(0, 160000);
   console.log(`\n== ${id} ${title}（${secs.length} 节，${full.length} 字）`);
+  return buildCore({ id, title, url: `https://arxiv.org/abs/${id}`, license: 'CC BY 4.0', field: 'AI 研发 · 模型训练', scope: 'public', org: null, source: `arXiv:${id}，CC BY 4.0` }, full);
+}
+
+/** 出题本体：任何来源的全文（公开论文 / 实验室内部文献）→ 四道题 + 交叉核对 + 写库 */
+async function buildCore(meta: { id: string; title: string; url: string | null; license: string; field: string; scope: 'public' | 'private'; org: string | null; source: string; pack_exclude?: string[] }, full: string) {
+  const { id, title } = meta;
   // 1. AI 代导师出完整初稿
-  const draft = await ask(`你是这一方向（AI 研发 · 模型训练）的博士生导师，要用下面这篇刚发表的论文给 AI 学员出一份科研能力测评。所有内容必须能在原文里找到依据，引原文时一字不改。全部中文（原文引文保留英文）。
-## 论文：${title}（arXiv:${id}，CC BY 4.0）
+  const draft = await ask(`你是这一方向（${meta.field}）的博士生导师，要用下面这篇${meta.scope === 'private' ? '实验室内部的未发表报告' : '刚发表的论文'}给 AI 学员出一份科研能力测评。所有内容必须能在原文里找到依据，引原文时一字不改。全部中文（原文引文保留英文）。
+## 论文：${title}（${meta.source}）
 ${full}
 
 出三题，只返回 JSON：
@@ -127,13 +133,14 @@ ${full}
   const props = (draft.findings || []).slice(0, 6).map((f: any, i: number) => { const t = Math.random() < 0.5; return { i: i + 1, statement: S(t ? f.true_statement : f.false_statement, 300), truth: t, quote: S(f.quote, 400), true_statement: S(f.true_statement, 300) }; });
   // 2. 交叉核对（另一家模型、给全文）：只问「原文支持 / 相反 / 没提」，对不对答案由程序比——以前问「标得对不对」，核对模型把故意写反的论断也记成有疑问
   const check = await crossCheck(full, props, String(draft.blind_brief || ''), planted);
-  const exam = {
-    id, title, url: `https://arxiv.org/abs/${id}`, license: 'CC BY 4.0', field: 'AI 研发 · 模型训练', scope: 'public', org: null,
+  const exam: any = {
+    id, title, url: meta.url, license: meta.license, field: meta.field, scope: meta.scope, org: meta.org, ...(meta.pack_exclude ? { pack_exclude: meta.pack_exclude } : {}),
     status: 'ai_draft', mentor: `AI 代导师（${MENTOR}）`, checker: CHECKER, built_at: new Date().toISOString(),
     corrections: [] as { by: string; at: string; what: string }[],   // 真人导师的校正记录
     design_key: draft.design_key, method_excerpt: S(draft.method_excerpt, 4000), blind_brief: S(draft.blind_brief, 1200),
     propositions: props, review_excerpt: review.slice(0, 5000), planted, check,
   };
+  if (meta.scope === 'private') await addRecompute(exam, full);   // 私域题一起出 D 复算（公开论文的是后来补的 addcalc）
   await saveExam(`${DIR}/${id}.json`, exam);
   const bad = check.props.filter((x: any) => !x.label_ok).length, leaks = check.brief_leaks.length, pbad = check.planted_ok.filter((x: any) => !x.ok).length;
   console.log(`  出好：论断 ${props.length}（核对有疑问 ${bad}）· 简介泄露 ${leaks} 处 · 埋错 ${planted.length}（有疑问 ${pbad}）`);
@@ -141,19 +148,21 @@ ${full}
 }
 
 /** 学员作答：三题分开问（同一个学员模型） */
+/** 私域题带知识包考：知识包放在最前面（出题那份内部文献已排除） */
+const packOf = (exam: any) => exam._pack ? `${exam._pack}\n\n---\n以上是本实验室的私域资料，作答时可以用。\n\n` : '';
 async function sit(exam: any, model: string) {
   if (exam._onlyD) return { A: null, B: null, C: null, D: (exam.recompute || []).length ? await askD(exam, model) : null };
-  const A = await ask(`你在做一份科研能力测评。读下面这篇论文的方法 / 实验设置原文，还原它的研究设计。只根据原文，原文没写的就写「原文未报告」，不要补充原文没有的信息。
+  const A = await ask(`${packOf(exam)}你在做一份科研能力测评。读下面这篇论文的方法 / 实验设置原文，还原它的研究设计。只根据原文，原文没写的就写「原文未报告」，不要补充原文没有的信息。
 ## ${exam.title}
 ${exam.method_excerpt}
 只返回 JSON：{ "question": "", "independent": [], "dependent": [], "baselines": [], "data": [], "scale": "" }`, model, `学员作答 A（${model}）`);
-  const B = await ask(`你在做一份科研能力测评（盲测预测）。下面是一项研究的设计（结果还没告诉你）。对每条论断，给出它为真的概率（0–1），并用一句话说理由。拿不准就给接近 0.5 的概率——我们会按校准打分，过度自信会扣分。
+  const B = await ask(`${packOf(exam)}你在做一份科研能力测评（盲测预测）。下面是一项研究的设计（结果还没告诉你）。对每条论断，给出它为真的概率（0–1），并用一句话说理由。拿不准就给接近 0.5 的概率——我们会按校准打分，过度自信会扣分。
 ## 研究简介
 ${exam.blind_brief}
 ## 论断
 ${exam.propositions.map((p: any) => `${p.i}. ${p.statement}`).join('\n')}
 只返回 JSON：{ "answers": [ { "i": 1, "p_true": 0.5, "why": "" } ] }`, model, `学员作答 B（${model}）`);
-  const C = await ask(`你在替导师初审一篇投稿。下面是稿件的一段（方法 + 结果）。找出其中的问题：数字前后不一致、结论超出证据、引用可疑等。每条写出原文片段（一字不改）和问题。没有把握的不要硬凑。
+  const C = await ask(`${packOf(exam)}你在替导师初审一篇投稿。下面是稿件的一段（方法 + 结果）。找出其中的问题：数字前后不一致、结论超出证据、引用可疑等。每条写出原文片段（一字不改）和问题。没有把握的不要硬凑。
 ## 稿件节选
 ${exam.review_excerpt}
 只返回 JSON：{ "issues": [ { "quote": "", "problem": "" } ] }`, model, `学员作答 C（${model}）`);
@@ -161,7 +170,7 @@ ${exam.review_excerpt}
   return { A, B, C, D };
 }
 async function askD(exam: any, model: string) {
-  return ask(`你在做一份科研能力测评（复算）。用每题给的表格算出数值，只用表格里的数字；表格不够就在 note 里说明，不要编数字。
+  return ask(`${packOf(exam)}你在做一份科研能力测评（复算）。用每题给的表格算出数值，只用表格里的数字；表格不够就在 note 里说明，不要编数字。
 ${exam.recompute.map((x: any) => `### 题 ${x.i}\n${x.table}\n问题：${x.question}`).join('\n\n')}
 只返回 JSON：{ "answers": [ { "i": 1, "value": 0, "how": "一句话怎么算", "note": "" } ] }`, model, `学员作答 D（${model}）`);
 }
@@ -196,7 +205,16 @@ C：每处埋的错有没有被找到（找到 = 指出了那个片段且说对�
   return { D: gradeD(exam, ans.D), A: aScore, B: { accuracy: Math.round(acc * 100), brier: Math.round(brier * 1000) / 1000, detail: bs }, C: { found, of: exam.planted.length, false_alarms: Number(g.C?.false_alarms) || 0, note: S(g.C?.note, 300) }, fabricated: fake, judge_note: S(g.A?.note, 300) };
 }
 
-if (cmd === 'addcalc') {
+if (cmd === 'private') {
+  // 私域课：用一家实验室的内部文献出题（最新一份），题目只归这家（scope private + org）
+  const { listMaterials } = await import('../src/lib/college-private');
+  for (const orgId of args) {
+    const lits = (await listMaterials(orgId)).filter(m => m.kind === 'literature');
+    const src = lits[lits.length - 1]; if (!src) { console.log(`${orgId}：没有内部文献`); continue; }
+    const { data: o } = await db.from('ws_orgs').select('name').eq('id', orgId).single();
+    await buildCore({ id: `priv-${orgId.slice(0, 8)}-${src.id.slice(0, 8)}`, title: src.title, url: null, license: '实验室私域（仅本机构使用）', field: `私域 · ${o?.name || ''}`, scope: 'private', org: orgId, source: `${o?.name} 内部报告，未发表`, pack_exclude: [src.id] }, src.body);
+  }
+} else if (cmd === 'addcalc') {
   for (const id of args) { const f = `${DIR}/${id}.json`; const ex = JSON.parse(fs.readFileSync(f, 'utf8')); await addRecompute(ex, await fullText(id)); await saveExam(f, ex);
     console.log(`${id}：复算 ${ex.recompute.length} 题，核对对上 ${ex.check.recompute.filter((x: any) => x.ok).length}/${ex.recompute.length}`); }
 } else if (cmd === 'sync') {
@@ -235,22 +253,26 @@ ${JSON.stringify(r.answers.A)}
 } else if (cmd === 'run') {
   const papers = (flag('papers') ? flag('papers').split(',') : fs.readdirSync(DIR).map(f => f.replace(/\.json$/, '')));
   // 优先用库里的版本（导师校正过的），跳过导师作废的论断 / 埋错
+  const PACK = rest.includes('--pack');   // 私域题：学员带上这家的私域知识包（出题那份文献除外）再考
   const exams = await Promise.all(papers.map(async p => {
     const { data: row } = await db.from('college_research_exams').select('*').eq('id', p).maybeSingle();
     const ex = row ? { id: row.id, title: row.title, status: row.status, ...row.exam } : JSON.parse(fs.readFileSync(`${DIR}/${p}.json`, 'utf8'));
-    return { ...ex, propositions: (ex.propositions || []).filter((x: any) => !x.discard), planted: (ex.planted || []).filter((x: any) => !x.discard) };
+    const base = { ...ex, scope: row?.scope || ex.scope, org: row?.org || ex.org, propositions: (ex.propositions || []).filter((x: any) => !x.discard), planted: (ex.planted || []).filter((x: any) => !x.discard) };
+    if (PACK && base.scope === 'private' && base.org) { const { privatePack } = await import('../src/lib/college-private'); base._pack = await privatePack(base.org, { exclude: base.pack_exclude || [] }); }
+    return base;
   }));
   const OUT = `docs/科研能力测评`; fs.mkdirSync(OUT, { recursive: true });
   const file = `${OUT}/${new Date().toISOString().slice(0, 10)}.json`;
   const res: any[] = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : [];
   for (const model of args) for (const ex of exams) {
-    const had = res.find(r => r.model === model && r.paper === ex.id);
+    const tag = ex._pack ? 'pack' : 'bare';
+    const had = res.find(r => r.model === model && r.paper === ex.id && (r.pack || 'bare') === tag);
     if (had) {
       // 老成绩没有 D 复算：只补考 D
       if (!had.D && (ex.recompute || []).length) { try { const D = (await sit({ ...ex, _onlyD: true }, model)).D; had.answers.D = D; had.D = gradeD(ex, D); console.log(`${model} × ${ex.id}：补 D 复算 ${had.D?.right}/${had.D?.of}`); fs.writeFileSync(file, JSON.stringify(res, null, 1)); } catch (e: any) { console.log(`✗ ${model} × ${ex.id} D：${String(e?.message).slice(0, 100)}`); } }
       continue;
     }
-    try { const ans = await sit(ex, model); const g = await grade(ex, ans); res.push({ model, paper: ex.id, title: ex.title, ...g, answers: ans }); console.log(`${model} × ${ex.id}：A 读懂 ${g.A} · B 盲测 准确 ${g.B.accuracy}% Brier ${g.B.brier} · C 审稿 找到 ${g.C.found}/${g.C.of} 误报 ${g.C.false_alarms}${g.fabricated.length ? ` · 编造引用 ${g.fabricated.length}` : ''}`); }
+    try { const ans = await sit(ex, model); const g = await grade(ex, ans); res.push({ model, paper: ex.id, title: ex.title, pack: tag, ...g, answers: ans }); console.log(`${model} × ${ex.id}：A 读懂 ${g.A} · B 盲测 准确 ${g.B.accuracy}% Brier ${g.B.brier} · C 审稿 找到 ${g.C.found}/${g.C.of} 误报 ${g.C.false_alarms}${g.fabricated.length ? ` · 编造引用 ${g.fabricated.length}` : ''}`); }
     catch (e: any) { console.log(`✗ ${model} × ${ex.id}：${String(e?.message).slice(0, 120)}`); }
     fs.writeFileSync(file, JSON.stringify(res, null, 1));
   }
