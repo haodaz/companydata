@@ -1,0 +1,64 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>找一个职业，走进它的一天 · 百业体验手册</title><style>
+:root { --v: #6055f5; --ink: #1a1a2e; --ink2: #4a4f66; --ink3: #8a8fa8; --mark: #ff5a36; --line: #e8e9f0; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f6fb; color: var(--ink); font: 15px/1.75 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 36px 20px 56px; }
+.eb { font-size: 12px; letter-spacing: .14em; color: var(--v); font-weight: 700; }
+h1 { font-size: 34px; line-height: 1.25; margin: 8px 0 10px; }
+h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 10px; }
+.meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.meta span { font-size: 13px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; color: var(--ink2); }
+.lead { font-size: 16px; color: var(--ink2); background: #fff; border-left: 4px solid var(--v); border-radius: 0 12px 12px 0; padding: 12px 16px; margin: 0 0 26px; }
+.step { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 20px 20px 18px; margin-bottom: 22px; box-shadow: 0 10px 30px -22px rgba(40,44,110,.35); }
+.step h2 { display: flex; align-items: center; gap: 12px; font-size: 21px; margin: 0 0 6px; }
+.step h2 i { font-style: normal; flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--v); color: #fff; display: grid; place-items: center; font-size: 17px; }
+.step .d { color: var(--ink2); margin: 0 0 14px 46px; }
+.shot { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+.shot img { display: block; width: 100%; }
+.box { position: absolute; border: 3px solid var(--mark); border-radius: 8px; }
+.tag { position: absolute; left: -3px; transform: translateY(-100%); display: flex; align-items: center; gap: 6px; white-space: nowrap; background: var(--mark); color: #fff; font-size: 12.5px; font-weight: 700; padding: 3px 9px 3px 4px; border-radius: 8px 8px 8px 0; max-width: 520px; overflow: hidden; text-overflow: ellipsis; }
+.tag.below { transform: none; top: calc(100% + 4px); border-radius: 0 8px 8px 8px; }
+.tag.below.right { border-radius: 8px 0 8px 8px; }
+.tag.right { left: auto; right: -3px; border-radius: 8px 8px 0 8px; }
+.tag b, .notes b { flex: none; width: 19px; height: 19px; border-radius: 50%; background: #fff; color: var(--mark); display: grid; place-items: center; font-size: 12px; }
+.notes { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.notes li { display: flex; gap: 8px; align-items: flex-start; font-size: 14.5px; }
+.notes b { background: var(--mark); color: #fff; margin-top: 3px; }
+.ex { background: linear-gradient(135deg, #f3f2ff, #eefbfd); border: 1px solid #dcd8ff; border-radius: 16px; padding: 16px 20px; margin: 0 0 24px; }
+.ex h3 { margin: 0 0 8px; font-size: 17px; color: var(--v); }
+.ex ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.ex li { background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 15px; }
+.ex p { margin: 10px 0 0; color: var(--ink2); font-size: 14px; }
+@media print { body { background: #fff; font-size: 16px; } .notes li { font-size: 15.5px; } .step .d { font-size: 15.5px; } .step, .ex, .lead { break-inside: avoid; } .wrap { padding-top: 8px; } }
+.pb { break-before: page; }
+.divider { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; background: linear-gradient(135deg, #f3f2ff, #eefbfd); border-radius: 24px; }
+.divider .no { font-size: 120px; font-weight: 900; line-height: 1; background: linear-gradient(120deg, var(--v), #12b5cb); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.divider h2 { font-size: 46px; margin: 18px 0 12px; } .divider .m { color: var(--ink2); font-size: 17px; margin-bottom: 18px; } .divider p { font-size: 18px; color: var(--ink2); max-width: 720px; }
+.cover { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; }
+.cover h1 { font-size: 64px; } .cover .ver { margin-top: 28px; display: grid; gap: 8px; font-size: 17px; color: var(--ink2); } .cover .ver b { color: var(--ink); }
+.toc a { display: flex; gap: 18px; align-items: baseline; text-decoration: none; color: inherit; padding: 16px 0; border-bottom: 1px solid var(--line); } .toc i { font-style: normal; font-weight: 900; color: var(--v); font-size: 26px; width: 48px; } .toc b { font-size: 21px; } .toc span { color: var(--ink2); font-size: 14.5px; display: block; }
+.faq { display: grid; gap: 12px; } .qa { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; break-inside: avoid; } .qa b { font-size: 17px; } .qa p { margin: 6px 0 0; color: var(--ink2); }
+.foot { text-align: center; color: var(--ink3); font-size: 12.5px; margin-top: 28px; }
+@media (max-width: 640px) { h1 { font-size: 26px; } .step .d { margin-left: 0; } .tag { font-size: 11px; max-width: 70vw; } }
+</style></head><body><div class="wrap">
+<div class="eb">AI 百业 · 操作手册 01</div>
+<h1>找一个职业，走进它的一天</h1>
+<div class="meta"><span>想体验的人</span><span>约 2 分钟</span></div>
+<p class="lead">顶部「体验百业」里是所有职业的一天。挑一个点进去，先到这位数字职人的主页：它是谁、学自哪位老师傅；下面一排是各种玩法，从「考考你」开始就是走它的一天。</p>
+
+<section class="step"><h2><i>1</i>搜一个职业，或按行业挑</h2><p class="d">可以搜职业、企业、城市。每张卡是一个职业的一天：几段、几点到几点，有没有虚拟工位、沉浸场景。</p>
+      <div class="shot"><div style="aspect-ratio:144000/77400;overflow:hidden"><img src="img/g-2.jpg" alt="" style="width:100.000%;max-width:none;margin-left:-0.000%;margin-top:-0.000%"></div><div class="box" style="left:9.50%;top:30.81%;width:18.00%;height:4.65%"><span class="tag"><b>1</b>职业岗位体验 / 学科研究体验</span></div><div class="box" style="left:8.50%;top:37.21%;width:83.00%;height:6.98%"><span class="tag"><b>2</b>搜职业、企业、城市，比如「焊」</span></div><div class="box" style="left:7.50%;top:51.74%;width:27.50%;height:43.60%"><span class="tag"><b>3</b>一张卡 = 一个职业的一天</span></div><div class="box" style="left:28.00%;top:89.53%;width:6.60%;height:4.42%"><span class="tag"><b>4</b>开始体验</span></div></div>
+      <ul class="notes"><li><b>1</b><span>职业岗位体验 / 学科研究体验</span></li><li><b>2</b><span>搜职业、企业、城市，比如「焊」</span></li><li><b>3</b><span>一张卡 = 一个职业的一天</span></li><li><b>4</b><span>开始体验</span></li></ul></section>
+<section class="step"><h2><i>2</i>想体验科研：切到「学科研究体验」</h2><p class="d">跟着博士后、实验员做一回科研：读数据、做实验、组会汇报。</p>
+      <div class="shot"><div style="aspect-ratio:144000/77400;overflow:hidden"><img src="img/g-3.jpg" alt="" style="width:100.000%;max-width:none;margin-left:-0.000%;margin-top:-0.000%"></div><div class="box" style="left:19.00%;top:30.81%;width:8.60%;height:4.65%"><span class="tag"><b>1</b>学科研究体验</span></div><div class="box" style="left:7.50%;top:51.74%;width:85.00%;height:46.51%"><span class="tag"><b>2</b>研究方向的一天：电池材料、细胞培养……</span></div></div>
+      <ul class="notes"><li><b>1</b><span>学科研究体验</span></li><li><b>2</b><span>研究方向的一天：电池材料、细胞培养……</span></li></ul></section>
+<section class="step"><h2><i>3</i>空间主页：它是谁，怎么玩</h2><p class="d">右边是这位数字职人：学自哪位老师傅、多少人考过；下面一排是玩法，每个模块都有单独的手册。有 3D 场景的职业，名字旁边还会多一个「3D BETA」按钮。</p>
+      <div class="shot"><img src="img/w-hub.jpg" alt=""><div class="box" style="left:52.00%;top:13.00%;width:39.00%;height:47.00%"><span class="tag"><b>1</b>它是谁：学自哪位老师傅、多少人考过</span></div><div class="box" style="left:7.50%;top:85.00%;width:85.00%;height:14.00%"><span class="tag"><b>2</b>玩法：和我聊、我教你、考考你、你教我、问问我……</span></div></div>
+      <ul class="notes"><li><b>1</b><span>它是谁：学自哪位老师傅、多少人考过</span></li><li><b>2</b><span>玩法：和我聊、我教你、考考你、你教我、问问我……</span></li></ul></section>
+<section class="step"><h2><i>4</i>一天总览：几点做什么</h2><p class="d">点「考考你」先到这一页：左边一天分几段，红色是突发；点一段看情境、会遇到谁，再点「进入操作台」开始。</p>
+      <div class="shot"><img src="img/w-day.jpg" alt=""><div class="box" style="left:6.50%;top:12.00%;width:21.00%;height:88.00%"><span class="tag"><b>1</b>一天分几段，红色的是突发</span></div><div class="box" style="left:30.50%;top:10.00%;width:62.00%;height:43.00%"><span class="tag"><b>2</b>这一段的情境</span></div><div class="box" style="left:30.60%;top:54.20%;width:9.40%;height:5.00%"><span class="tag"><b>3</b>进入操作台</span></div></div>
+      <ul class="notes"><li><b>1</b><span>一天分几段，红色的是突发</span></li><li><b>2</b><span>这一段的情境</span></li><li><b>3</b><span>进入操作台</span></li></ul></section>
+
+<div class="foot">AI 百业 · 编写于 2026-11-03 · 适用 AI 百业 · 数字技能空间（2026-11-03 线上版本） · 操作手册 01 · 找一个职业，走进它的一天</div>
+</div></body></html>

@@ -1,0 +1,53 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>常见问题 · 百业体验手册</title><style>
+:root { --v: #6055f5; --ink: #1a1a2e; --ink2: #4a4f66; --ink3: #8a8fa8; --mark: #ff5a36; --line: #e8e9f0; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f6fb; color: var(--ink); font: 15px/1.75 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 36px 20px 56px; }
+.eb { font-size: 12px; letter-spacing: .14em; color: var(--v); font-weight: 700; }
+h1 { font-size: 34px; line-height: 1.25; margin: 8px 0 10px; }
+h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 10px; }
+.meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.meta span { font-size: 13px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; color: var(--ink2); }
+.lead { font-size: 16px; color: var(--ink2); background: #fff; border-left: 4px solid var(--v); border-radius: 0 12px 12px 0; padding: 12px 16px; margin: 0 0 26px; }
+.step { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 20px 20px 18px; margin-bottom: 22px; box-shadow: 0 10px 30px -22px rgba(40,44,110,.35); }
+.step h2 { display: flex; align-items: center; gap: 12px; font-size: 21px; margin: 0 0 6px; }
+.step h2 i { font-style: normal; flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--v); color: #fff; display: grid; place-items: center; font-size: 17px; }
+.step .d { color: var(--ink2); margin: 0 0 14px 46px; }
+.shot { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+.shot img { display: block; width: 100%; }
+.box { position: absolute; border: 3px solid var(--mark); border-radius: 8px; }
+.tag { position: absolute; left: -3px; transform: translateY(-100%); display: flex; align-items: center; gap: 6px; white-space: nowrap; background: var(--mark); color: #fff; font-size: 12.5px; font-weight: 700; padding: 3px 9px 3px 4px; border-radius: 8px 8px 8px 0; max-width: 520px; overflow: hidden; text-overflow: ellipsis; }
+.tag.below { transform: none; top: calc(100% + 4px); border-radius: 0 8px 8px 8px; }
+.tag.below.right { border-radius: 8px 0 8px 8px; }
+.tag.right { left: auto; right: -3px; border-radius: 8px 8px 0 8px; }
+.tag b, .notes b { flex: none; width: 19px; height: 19px; border-radius: 50%; background: #fff; color: var(--mark); display: grid; place-items: center; font-size: 12px; }
+.notes { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.notes li { display: flex; gap: 8px; align-items: flex-start; font-size: 14.5px; }
+.notes b { background: var(--mark); color: #fff; margin-top: 3px; }
+.ex { background: linear-gradient(135deg, #f3f2ff, #eefbfd); border: 1px solid #dcd8ff; border-radius: 16px; padding: 16px 20px; margin: 0 0 24px; }
+.ex h3 { margin: 0 0 8px; font-size: 17px; color: var(--v); }
+.ex ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.ex li { background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 15px; }
+.ex p { margin: 10px 0 0; color: var(--ink2); font-size: 14px; }
+@media print { body { background: #fff; font-size: 16px; } .notes li { font-size: 15.5px; } .step .d { font-size: 15.5px; } .step, .ex, .lead { break-inside: avoid; } .wrap { padding-top: 8px; } }
+.pb { break-before: page; }
+.divider { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; background: linear-gradient(135deg, #f3f2ff, #eefbfd); border-radius: 24px; }
+.divider .no { font-size: 120px; font-weight: 900; line-height: 1; background: linear-gradient(120deg, var(--v), #12b5cb); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.divider h2 { font-size: 46px; margin: 18px 0 12px; } .divider .m { color: var(--ink2); font-size: 17px; margin-bottom: 18px; } .divider p { font-size: 18px; color: var(--ink2); max-width: 720px; }
+.cover { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; }
+.cover h1 { font-size: 64px; } .cover .ver { margin-top: 28px; display: grid; gap: 8px; font-size: 17px; color: var(--ink2); } .cover .ver b { color: var(--ink); }
+.toc a { display: flex; gap: 18px; align-items: baseline; text-decoration: none; color: inherit; padding: 16px 0; border-bottom: 1px solid var(--line); } .toc i { font-style: normal; font-weight: 900; color: var(--v); font-size: 26px; width: 48px; } .toc b { font-size: 21px; } .toc span { color: var(--ink2); font-size: 14.5px; display: block; }
+.faq { display: grid; gap: 12px; } .qa { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; break-inside: avoid; } .qa b { font-size: 17px; } .qa p { margin: 6px 0 0; color: var(--ink2); }
+.foot { text-align: center; color: var(--ink3); font-size: 12.5px; margin-top: 28px; }
+@media (max-width: 640px) { h1 { font-size: 26px; } .step .d { margin-left: 0; } .tag { font-size: 11px; max-width: 70vw; } }
+</style></head><body><div class="wrap">
+<div class="eb">AI 百业 · 常见问题 11</div>
+<h1>常见问题</h1>
+<div class="meta"><span>所有人</span><span>随时</span></div>
+<p class="lead">用的时候最常被问到的问题。页面报错、打不开，截图并附上网址，发给对接你的人。</p>
+
+
+<section class="faq"><div class="qa"><b>要登录吗？</b><p>首页谁都能看；点进一个职业去体验要登录，用发给你的账号。管理员新建或重置过密码的账号，第一次登录会先让你换一个自己的密码。</p></div><div class="qa"><b>用手机还是电脑？</b><p>建议用电脑上的 Chrome 或 Edge 浏览器。手机能看、能答选择题，但操作台要拖动、3D 场景要显卡，手机上不好用。</p></div><div class="qa"><b>右上角那个模型选哪个？</b><p>它决定数字职人回答你、批改你写的内容用哪个 AI。没有特别需要就用默认的「通义千问 Plus」，国内访问最稳。</p></div><div class="qa"><b>页面太暗或太亮？</b><p>右上角的太阳按钮切换深浅色。投影、一体机上用浅色更清楚。</p></div><div class="qa"><b>分数怎么算？多少分算过？</b><p>每段走完都有成绩单，按这一行老师傅的标准逐项打分，并引用你写的原话。每段 60 分算过（证书和「我的证书」里换算成 10 分制显示）。没过可以「再走一遍」，或在「我的证书」里点「重做」。</p></div><div class="qa"><b>证书怎么拿？谁发的？</b><p>一个职业的一天每段都过了，就能领这个职业的体验证书，由平方创想和方略研究院签发，带编号。可以复制链接给别人看，也能打印或存 PDF。证书上的名字在「我的证书」页最上面改。</p></div><div class="qa"><b>「我教你」和「考考你」有什么区别？</b><p>是同一天、同样的段落。「我教你」每一步有讲解，操作台它先做一遍给你看，不算分；「考考你」自己做、出成绩单、算进证书。</p></div><div class="qa"><b>数字职人说的话靠谱吗？</b><p>「和我聊」每句话都带来源，点开能看到出自平方的哪份资料（职业库、岗位、行业标准、企业）。资料里没有的它会直接说没有；去网上查的会说明是网上的。</p></div><div class="qa"><b>3D 场景打不开或很慢？</b><p>3D 是 BETA，只有部分职业有。第一次打开要等半分钟左右，电脑显卡越好越顺。打不开不影响其他玩法。</p></div><div class="qa"><b>操作台能用摄像头吗？</b><p>能。焊工这类操作台有「用摄像头握焊枪」按钮，浏览器问要不要摄像头权限时点允许。画面只在你自己的电脑上用来识别手的位置。</p></div><div class="qa"><b>我想要的职业没有？</b><p>有账号的机构用户可以在「百业工厂」用一份 JD 自己生成；没有账号，告诉对接你的人想要哪个职业。</p></div><div class="qa"><b>遇到问题找谁？</b><p>截图、附上网址，说明当时点了什么，发给对接你的人。</p></div></section>
+<div class="foot">AI 百业 · 编写于 2026-11-03 · 适用 AI 百业 · 数字技能空间（2026-11-03 线上版本） · 操作手册 11 · 常见问题</div>
+</div></body></html>

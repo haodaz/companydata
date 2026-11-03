@@ -1,0 +1,207 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>百业体验手册 · 合集</title><style>
+:root { --v: #6055f5; --ink: #1a1a2e; --ink2: #4a4f66; --ink3: #8a8fa8; --mark: #ff5a36; --line: #e8e9f0; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f6fb; color: var(--ink); font: 15px/1.75 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 36px 20px 56px; }
+.eb { font-size: 12px; letter-spacing: .14em; color: var(--v); font-weight: 700; }
+h1 { font-size: 34px; line-height: 1.25; margin: 8px 0 10px; }
+h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 10px; }
+.meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.meta span { font-size: 13px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; color: var(--ink2); }
+.lead { font-size: 16px; color: var(--ink2); background: #fff; border-left: 4px solid var(--v); border-radius: 0 12px 12px 0; padding: 12px 16px; margin: 0 0 26px; }
+.step { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 20px 20px 18px; margin-bottom: 22px; box-shadow: 0 10px 30px -22px rgba(40,44,110,.35); }
+.step h2 { display: flex; align-items: center; gap: 12px; font-size: 21px; margin: 0 0 6px; }
+.step h2 i { font-style: normal; flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--v); color: #fff; display: grid; place-items: center; font-size: 17px; }
+.step .d { color: var(--ink2); margin: 0 0 14px 46px; }
+.shot { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+.shot img { display: block; width: 100%; }
+.box { position: absolute; border: 3px solid var(--mark); border-radius: 8px; }
+.tag { position: absolute; left: -3px; transform: translateY(-100%); display: flex; align-items: center; gap: 6px; white-space: nowrap; background: var(--mark); color: #fff; font-size: 12.5px; font-weight: 700; padding: 3px 9px 3px 4px; border-radius: 8px 8px 8px 0; max-width: 520px; overflow: hidden; text-overflow: ellipsis; }
+.tag.below { transform: none; top: calc(100% + 4px); border-radius: 0 8px 8px 8px; }
+.tag.below.right { border-radius: 8px 0 8px 8px; }
+.tag.right { left: auto; right: -3px; border-radius: 8px 8px 0 8px; }
+.tag b, .notes b { flex: none; width: 19px; height: 19px; border-radius: 50%; background: #fff; color: var(--mark); display: grid; place-items: center; font-size: 12px; }
+.notes { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.notes li { display: flex; gap: 8px; align-items: flex-start; font-size: 14.5px; }
+.notes b { background: var(--mark); color: #fff; margin-top: 3px; }
+.ex { background: linear-gradient(135deg, #f3f2ff, #eefbfd); border: 1px solid #dcd8ff; border-radius: 16px; padding: 16px 20px; margin: 0 0 24px; }
+.ex h3 { margin: 0 0 8px; font-size: 17px; color: var(--v); }
+.ex ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.ex li { background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 15px; }
+.ex p { margin: 10px 0 0; color: var(--ink2); font-size: 14px; }
+@media print { body { background: #fff; font-size: 16px; } .notes li { font-size: 15.5px; } .step .d { font-size: 15.5px; } .step, .ex, .lead { break-inside: avoid; } .wrap { padding-top: 8px; } }
+.pb { break-before: page; }
+.divider { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; background: linear-gradient(135deg, #f3f2ff, #eefbfd); border-radius: 24px; }
+.divider .no { font-size: 120px; font-weight: 900; line-height: 1; background: linear-gradient(120deg, var(--v), #12b5cb); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.divider h2 { font-size: 46px; margin: 18px 0 12px; } .divider .m { color: var(--ink2); font-size: 17px; margin-bottom: 18px; } .divider p { font-size: 18px; color: var(--ink2); max-width: 720px; }
+.cover { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; }
+.cover h1 { font-size: 64px; } .cover .ver { margin-top: 28px; display: grid; gap: 8px; font-size: 17px; color: var(--ink2); } .cover .ver b { color: var(--ink); }
+.toc a { display: flex; gap: 18px; align-items: baseline; text-decoration: none; color: inherit; padding: 16px 0; border-bottom: 1px solid var(--line); } .toc i { font-style: normal; font-weight: 900; color: var(--v); font-size: 26px; width: 48px; } .toc b { font-size: 21px; } .toc span { color: var(--ink2); font-size: 14.5px; display: block; }
+.faq { display: grid; gap: 12px; } .qa { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; break-inside: avoid; } .qa b { font-size: 17px; } .qa p { margin: 6px 0 0; color: var(--ink2); }
+.foot { text-align: center; color: var(--ink3); font-size: 12.5px; margin-top: 28px; }
+@media (max-width: 640px) { h1 { font-size: 26px; } .step .d { margin-left: 0; } .tag { font-size: 11px; max-width: 70vw; } }
+</style></head><body><div class="wrap">
+<section class="cover"><div class="eb">AI 百业 · 百业体验手册合集</div><h1>AI 百业怎么玩</h1>
+<p class="lead">走进一个职业的一天、跟数字职人学和聊、拿证书、看 AI 会怎么改变你的工作。一份手册讲一件事，每步一张真实截图，框出来的地方就是要点；最后一份是常见问题。</p>
+<div class="ver"><div><b>编写日期</b>　2026-11-03</div><div><b>适用版本</b>　AI 百业 · 数字技能空间（2026-11-03 线上版本）</div><div><b>网页版</b>　www.aisimjob.com/lab-guide/（界面以后再更新时，以网页版为准）</div></div></section>
+<section class="pb"><div class="eb">目录</div><h1>11 个模块</h1><div class="toc"><a href="#m01"><i>01</i><div><b>找一个职业，走进它的一天</b><span>想体验的人 · 约 2 分钟</span></div></a><a href="#m02"><i>02</i><div><b>考考你：自己走一段，拿成绩单</b><span>想体验的人 · 每段约 10 分钟</span></div></a><a href="#m03"><i>03</i><div><b>我教你：看它先做一遍，再比着做</b><span>想体验的人 · 每段约 10 分钟</span></div></a><a href="#m04"><i>04</i><div><b>和我聊：问数字职人这一行</b><span>想了解一个职业的人 · 随时</span></div></a><a href="#m05"><i>05</i><div><b>问问我：把手头的真问题交给它</b><span>在岗的人、老板、老师 · 约 1 分钟</span></div></a><a href="#m06"><i>06</i><div><b>它从哪来：来历、被用在哪</b><span>想知道数字职人靠不靠谱的人 · 随时</span></div></a><a href="#m07"><i>07</i><div><b>3D 场景：走进它工作的地方</b><span>想体验的人 · 首次加载约半分钟</span></div></a><a href="#m08"><i>08</i><div><b>我的证书：每段的成绩和证书</b><span>想体验的人 · 随时</span></div></a><a href="#m09"><i>09</i><div><b>AI 与我的工作：看 AI 会怎么改变你这一行</b><span>在岗的人、学生 · 约 1 分钟</span></div></a><a href="#m10"><i>10</i><div><b>百业工厂：用一份 JD 生成一个职业空间</b><span>有账号的机构用户、我们的同事 · 生成约 2–4 分钟</span></div></a><a href="#m11"><i>11</i><div><b>常见问题</b><span>所有人 · 随时</span></div></a></div></section>
+<section class="pb divider" id="m01"><div class="eb">模块 01</div><div class="no">01</div><h2>找一个职业，走进它的一天</h2><div class="m">想体验的人 · 约 2 分钟</div><p>顶部「体验百业」里是所有职业的一天。挑一个点进去，先到这位数字职人的主页：它是谁、学自哪位老师傅；下面一排是各种玩法，从「考考你」开始就是走它的一天。</p></section>
+<section class="pb"><div class="eb">AI 百业 · 操作手册 01</div>
+<h1>找一个职业，走进它的一天</h1>
+<div class="meta"><span>想体验的人</span><span>约 2 分钟</span></div>
+<p class="lead">顶部「体验百业」里是所有职业的一天。挑一个点进去，先到这位数字职人的主页：它是谁、学自哪位老师傅；下面一排是各种玩法，从「考考你」开始就是走它的一天。</p>
+
+<section class="step"><h2><i>1</i>搜一个职业，或按行业挑</h2><p class="d">可以搜职业、企业、城市。每张卡是一个职业的一天：几段、几点到几点，有没有虚拟工位、沉浸场景。</p>
+      <div class="shot"><div style="aspect-ratio:144000/77400;overflow:hidden"><img src="img/g-2.jpg" alt="" style="width:100.000%;max-width:none;margin-left:-0.000%;margin-top:-0.000%"></div><div class="box" style="left:9.50%;top:30.81%;width:18.00%;height:4.65%"><span class="tag"><b>1</b>职业岗位体验 / 学科研究体验</span></div><div class="box" style="left:8.50%;top:37.21%;width:83.00%;height:6.98%"><span class="tag"><b>2</b>搜职业、企业、城市，比如「焊」</span></div><div class="box" style="left:7.50%;top:51.74%;width:27.50%;height:43.60%"><span class="tag"><b>3</b>一张卡 = 一个职业的一天</span></div><div class="box" style="left:28.00%;top:89.53%;width:6.60%;height:4.42%"><span class="tag"><b>4</b>开始体验</span></div></div>
+      <ul class="notes"><li><b>1</b><span>职业岗位体验 / 学科研究体验</span></li><li><b>2</b><span>搜职业、企业、城市，比如「焊」</span></li><li><b>3</b><span>一张卡 = 一个职业的一天</span></li><li><b>4</b><span>开始体验</span></li></ul></section>
+<section class="step"><h2><i>2</i>想体验科研：切到「学科研究体验」</h2><p class="d">跟着博士后、实验员做一回科研：读数据、做实验、组会汇报。</p>
+      <div class="shot"><div style="aspect-ratio:144000/77400;overflow:hidden"><img src="img/g-3.jpg" alt="" style="width:100.000%;max-width:none;margin-left:-0.000%;margin-top:-0.000%"></div><div class="box" style="left:19.00%;top:30.81%;width:8.60%;height:4.65%"><span class="tag"><b>1</b>学科研究体验</span></div><div class="box" style="left:7.50%;top:51.74%;width:85.00%;height:46.51%"><span class="tag"><b>2</b>研究方向的一天：电池材料、细胞培养……</span></div></div>
+      <ul class="notes"><li><b>1</b><span>学科研究体验</span></li><li><b>2</b><span>研究方向的一天：电池材料、细胞培养……</span></li></ul></section>
+<section class="step"><h2><i>3</i>空间主页：它是谁，怎么玩</h2><p class="d">右边是这位数字职人：学自哪位老师傅、多少人考过；下面一排是玩法，每个模块都有单独的手册。有 3D 场景的职业，名字旁边还会多一个「3D BETA」按钮。</p>
+      <div class="shot"><img src="img/w-hub.jpg" alt=""><div class="box" style="left:52.00%;top:13.00%;width:39.00%;height:47.00%"><span class="tag"><b>1</b>它是谁：学自哪位老师傅、多少人考过</span></div><div class="box" style="left:7.50%;top:85.00%;width:85.00%;height:14.00%"><span class="tag"><b>2</b>玩法：和我聊、我教你、考考你、你教我、问问我……</span></div></div>
+      <ul class="notes"><li><b>1</b><span>它是谁：学自哪位老师傅、多少人考过</span></li><li><b>2</b><span>玩法：和我聊、我教你、考考你、你教我、问问我……</span></li></ul></section>
+<section class="step"><h2><i>4</i>一天总览：几点做什么</h2><p class="d">点「考考你」先到这一页：左边一天分几段，红色是突发；点一段看情境、会遇到谁，再点「进入操作台」开始。</p>
+      <div class="shot"><img src="img/w-day.jpg" alt=""><div class="box" style="left:6.50%;top:12.00%;width:21.00%;height:88.00%"><span class="tag"><b>1</b>一天分几段，红色的是突发</span></div><div class="box" style="left:30.50%;top:10.00%;width:62.00%;height:43.00%"><span class="tag"><b>2</b>这一段的情境</span></div><div class="box" style="left:30.60%;top:54.20%;width:9.40%;height:5.00%"><span class="tag"><b>3</b>进入操作台</span></div></div>
+      <ul class="notes"><li><b>1</b><span>一天分几段，红色的是突发</span></li><li><b>2</b><span>这一段的情境</span></li><li><b>3</b><span>进入操作台</span></li></ul></section>
+</section>
+<section class="pb divider" id="m02"><div class="eb">模块 02</div><div class="no">02</div><h2>考考你：自己走一段，拿成绩单</h2><div class="m">想体验的人 · 每段约 10 分钟</div><p>每段像一小场戏：有情境、有人跟你说话，你来做判断、写记录。走完马上出成绩单，逐项打分，还会引用你写的原话。每段 60 分算过。</p></section>
+<section class="pb"><div class="eb">AI 百业 · 操作手册 02</div>
+<h1>考考你：自己走一段，拿成绩单</h1>
+<div class="meta"><span>想体验的人</span><span>每段约 10 分钟</span></div>
+<p class="lead">每段像一小场戏：有情境、有人跟你说话，你来做判断、写记录。走完马上出成绩单，逐项打分，还会引用你写的原话。每段 60 分算过。</p>
+<section class="ex"><h3>写记录的那一步，可以这样写</h3><ul><li>「「今天试制新结构样件平板对接试板，依据现行焊接工艺卡第 3 版；焊丝批次按标签记录并拍照；起弧前先确认保护气通气正常。」」</li><li>「「F1 浑浊、有细丝，判断污染，已经灭活封袋、擦净安全柜；F2、F3 镜下正常，先暂停共用的那瓶培养基。」」</li></ul><p>写成交接给同事看的样子：做了什么、看到了什么、依据是什么、下一步干什么。空话（「注意安全」）不得分。</p></section>
+<section class="step"><h2><i>1</i>先看这一段的情境</h2><p class="d">在哪、几点、会遇到谁、要用到哪些东西。看完点「开始这一段」。</p>
+      <div class="shot"><div style="aspect-ratio:100800/59400;overflow:hidden"><img src="img/c-intro.jpg" alt="" style="width:142.857%;max-width:none;margin-left:-21.429%;margin-top:-17.857%"></div><div class="box" style="left:11.43%;top:14.39%;width:77.14%;height:76.52%"><span class="tag"><b>1</b>这一段：在哪、遇到谁、要干什么</span></div><div class="box" style="left:14.29%;top:79.09%;width:12.86%;height:6.97%"><span class="tag"><b>2</b>开始这一段</span></div></div>
+      <ul class="notes"><li><b>1</b><span>这一段：在哪、遇到谁、要干什么</span></li><li><b>2</b><span>开始这一段</span></li></ul></section>
+<section class="step"><h2><i>2</i>剧情对话，点一下往下走</h2><p class="d">有人跟你交代事情、提醒你注意什么。这些话里常藏着后面要用的信息，别跳太快。</p>
+      <div class="shot"><img src="img/c-dialog.jpg" alt=""><div class="box" style="left:30.00%;top:74.50%;width:62.70%;height:18.80%"><span class="tag"><b>1</b>谁在说话、说了什么；点一下继续</span></div></div>
+      <ul class="notes"><li><b>1</b><span>谁在说话、说了什么；点一下继续</span></li></ul></section>
+<section class="step"><h2><i>3</i>做判断：选、多选、分类、排优先级</h2><p class="d">按你的判断来，没有标准答案提示。有的题能多选，有的要拖分值、排先后。</p>
+      <div class="shot"><div style="aspect-ratio:115200/72000;overflow:hidden"><img src="img/c-step1.jpg" alt="" style="width:125.000%;max-width:none;margin-left:-12.500%;margin-top:-11.719%"></div><div class="box" style="left:11.88%;top:12.13%;width:76.25%;height:75.37%"><span class="tag"><b>1</b>题目和选项</span></div><div class="box" style="left:14.50%;top:77.50%;width:8.75%;height:5.88%"><span class="tag"><b>2</b>选好点「下一步」</span></div></div>
+      <ul class="notes"><li><b>1</b><span>题目和选项</span></li><li><b>2</b><span>选好点「下一步」</span></li></ul></section>
+<section class="step"><h2><i>4</i>走完出成绩单</h2><p class="d">这一段的分数、逐项打分和理由。没过 60 分可以「再走一遍」；过了就「进入下一段」。一天每段都过了，才能领证书。</p>
+      <div class="shot"><img src="img/c-report.jpg" alt=""><div class="box" style="left:17.50%;top:16.50%;width:8.00%;height:12.00%"><span class="tag"><b>1</b>这一段的分数</span></div><div class="box" style="left:59.60%;top:19.80%;width:22.40%;height:5.40%"><span class="tag right"><b>2</b>进入下一段</span></div><div class="box" style="left:38.80%;top:19.80%;width:20.40%;height:5.40%"><span class="tag"><b>3</b>再走一遍 / 查看成绩单</span></div><div class="box" style="left:18.00%;top:41.50%;width:64.00%;height:56.00%"><span class="tag"><b>4</b>逐项打分，引你写的原话</span></div></div>
+      <ul class="notes"><li><b>1</b><span>这一段的分数</span></li><li><b>2</b><span>进入下一段</span></li><li><b>3</b><span>再走一遍 / 查看成绩单</span></li><li><b>4</b><span>逐项打分，引你写的原话</span></li></ul></section>
+</section>
+<section class="pb divider" id="m03"><div class="eb">模块 03</div><div class="no">03</div><h2>我教你：看它先做一遍，再比着做</h2><div class="m">想体验的人 · 每段约 10 分钟</div><p>没把握就先选「我教你」：每一步它先讲要看什么、为什么，遇到操作台它先完整做一遍给你看，再换你比着做。这里不算分，放心试。</p></section>
+<section class="pb"><div class="eb">AI 百业 · 操作手册 03</div>
+<h1>我教你：看它先做一遍，再比着做</h1>
+<div class="meta"><span>想体验的人</span><span>每段约 10 分钟</span></div>
+<p class="lead">没把握就先选「我教你」：每一步它先讲要看什么、为什么，遇到操作台它先完整做一遍给你看，再换你比着做。这里不算分，放心试。</p>
+
+<section class="step"><h2><i>1</i>在主页点「我教你」</h2><p class="d">和「考考你」是同一天、同样的段落，只是每一步多了讲解和示范。</p>
+      <div class="shot"><div style="aspect-ratio:144000/22500;overflow:hidden"><img src="img/w-hub.jpg" alt="" style="width:100.000%;max-width:none;margin-left:-0.000%;margin-top:-46.875%"></div><div class="box" style="left:20.70%;top:40.00%;width:12.30%;height:56.00%"><span class="tag"><b>1</b>我教你</span></div></div>
+      <ul class="notes"><li><b>1</b><span>我教你</span></li></ul></section>
+<section class="step"><h2><i>2</i>到操作台：先听它讲</h2><p class="d">右边是它的讲解和这一段的目标；下面是操作区：开关、旋钮、拖着焊枪沿焊缝走。电脑有摄像头的话，也可以用手握「焊枪」。</p>
+      <div class="shot"><img src="img/b-1.jpg" alt=""><div class="box" style="left:76.00%;top:20.00%;width:22.50%;height:19.00%"><span class="tag right"><b>1</b>它先讲：看什么、为什么</span></div><div class="box" style="left:76.50%;top:33.50%;width:21.50%;height:4.60%"><span class="tag right"><b>2</b>先看我做一遍</span></div><div class="box" style="left:76.00%;top:42.00%;width:22.50%;height:21.00%"><span class="tag right"><b>3</b>这一段的目标</span></div><div class="box" style="left:0.50%;top:84.00%;width:74.00%;height:15.00%"><span class="tag"><b>4</b>操作区</span></div><div class="box" style="left:1.50%;top:26.50%;width:8.50%;height:3.00%"><span class="tag"><b>5</b>用摄像头握焊枪</span></div></div>
+      <ul class="notes"><li><b>1</b><span>它先讲：看什么、为什么</span></li><li><b>2</b><span>先看我做一遍</span></li><li><b>3</b><span>这一段的目标</span></li><li><b>4</b><span>操作区</span></li><li><b>5</b><span>用摄像头握焊枪</span></li></ul></section>
+<section class="step"><h2><i>3</i>看它做一遍</h2><p class="d">它边做边讲：每一下是为什么，依据是哪位老师傅的经验。仪表、目标、事件记录跟着实时变化。</p>
+      <div class="shot"><img src="img/b-2.jpg" alt=""><div class="box" style="left:76.00%;top:20.80%;width:22.50%;height:13.40%"><span class="tag right"><b>1</b>这一下在做什么、依据哪位老师傅</span></div><div class="box" style="left:76.00%;top:39.50%;width:22.50%;height:20.50%"><span class="tag right"><b>2</b>目标做到一项亮一项</span></div><div class="box" style="left:76.00%;top:65.00%;width:22.50%;height:20.00%"><span class="tag right"><b>3</b>每个动作都记下来</span></div><div class="box" style="left:62.50%;top:80.80%;width:10.50%;height:3.40%"><span class="tag right"><b>4</b>演示中，点一下停</span></div></div>
+      <ul class="notes"><li><b>1</b><span>这一下在做什么、依据哪位老师傅</span></li><li><b>2</b><span>目标做到一项亮一项</span></li><li><b>3</b><span>每个动作都记下来</span></li><li><b>4</b><span>演示中，点一下停</span></li></ul></section>
+<section class="step"><h2><i>4</i>做完看总结，再换你</h2><p class="d">目标全亮了，它会总结这一遍的关键参数。点「换你比着做」，它一下一下带你做。</p>
+      <div class="shot"><img src="img/b-3.jpg" alt=""><div class="box" style="left:76.00%;top:18.30%;width:23.00%;height:22.50%"><span class="tag right"><b>1</b>这一遍的总结</span></div><div class="box" style="left:76.60%;top:42.70%;width:15.20%;height:4.40%"><span class="tag right"><b>2</b>换你比着做</span></div><div class="box" style="left:76.00%;top:51.70%;width:23.00%;height:21.60%"><span class="tag right"><b>3</b>6 个目标全过</span></div></div>
+      <ul class="notes"><li><b>1</b><span>这一遍的总结</span></li><li><b>2</b><span>换你比着做</span></li><li><b>3</b><span>6 个目标全过</span></li></ul></section>
+</section>
+<section class="pb divider" id="m04"><div class="eb">模块 04</div><div class="no">04</div><h2>和我聊：问数字职人这一行</h2><div class="m">想了解一个职业的人 · 随时</div><p>想知道这一行挣多少、怎么入行、往上怎么走，直接问它。它说的每句话都带来源，点开能看到出自平方的哪份资料；资料里没有的，它会说没有，不编。</p></section>
+<section class="pb"><div class="eb">AI 百业 · 操作手册 04</div>
+<h1>和我聊：问数字职人这一行</h1>
+<div class="meta"><span>想了解一个职业的人</span><span>随时</span></div>
+<p class="lead">想知道这一行挣多少、怎么入行、往上怎么走，直接问它。它说的每句话都带来源，点开能看到出自平方的哪份资料；资料里没有的，它会说没有，不编。</p>
+<section class="ex"><h3>可以这样问</h3><ul><li>「「刚入行能拿多少钱？往上怎么走？」」</li><li>「「我是机械专业的，转焊接工艺要补哪些证？」」</li><li>「「现在哪些公司在招，在哪些城市？」」</li><li>「「你说的『气先于弧』到底怎么操作才算不违规？」」</li></ul><p>可以给它起个名字（只有你自己看得到）。问得越具体，答得越具体。</p></section>
+<section class="step"><h2><i>1</i>在主页点「和我聊」</h2><p class="d">空间里任何一页的右下角也有「和我聊」按钮。</p>
+      <div class="shot"><div style="aspect-ratio:144000/22500;overflow:hidden"><img src="img/w-hub.jpg" alt="" style="width:100.000%;max-width:none;margin-left:-0.000%;margin-top:-46.875%"></div><div class="box" style="left:7.50%;top:40.00%;width:12.20%;height:56.00%"><span class="tag"><b>1</b>和我聊</span></div></div>
+      <ul class="notes"><li><b>1</b><span>和我聊</span></li></ul></section>
+<section class="step"><h2><i>2</i>问它，看出处</h2><p class="d">回答里的小角标就是来源，下面的卡片能展开看原始资料；右边还有几个顺着往下问的建议。</p>
+      <div class="shot"><img src="img/chat-2.jpg" alt=""><div class="box" style="left:80.00%;top:16.70%;width:19.00%;height:5.00%"><span class="tag right"><b>1</b>你的问题</span></div><div class="box" style="left:67.70%;top:23.30%;width:31.20%;height:21.70%"><span class="tag"><b>2</b>回答，小角标是来源</span></div><div class="box" style="left:67.70%;top:46.70%;width:31.20%;height:21.60%"><span class="tag"><b>3</b>来源卡：职业图谱、薪资……</span></div><div class="box" style="left:67.50%;top:72.50%;width:31.50%;height:18.50%"><span class="tag"><b>4</b>快捷提问、顺着问</span></div><div class="box" style="left:1.60%;top:73.00%;width:25.00%;height:17.00%"><span class="tag"><b>5</b>它是谁，可以给它起名字</span></div></div>
+      <ul class="notes"><li><b>1</b><span>你的问题</span></li><li><b>2</b><span>回答，小角标是来源</span></li><li><b>3</b><span>来源卡：职业图谱、薪资……</span></li><li><b>4</b><span>快捷提问、顺着问</span></li><li><b>5</b><span>它是谁，可以给它起名字</span></li></ul></section>
+</section>
+<section class="pb divider" id="m05"><div class="eb">模块 05</div><div class="no">05</div><h2>问问我：把手头的真问题交给它</h2><div class="m">在岗的人、老板、老师 · 约 1 分钟</div><p>工作里遇到的真实问题，写下来交给它。它按这一行老师傅的做法给出现场能照做的办法，并说明是根据什么判断的。别人问过的问题和它的回答，右边可以参考。</p></section>
+<section class="pb"><div class="eb">AI 百业 · 操作手册 05</div>
+<h1>问问我：把手头的真问题交给它</h1>
+<div class="meta"><span>在岗的人、老板、老师</span><span>约 1 分钟</span></div>
+<p class="lead">工作里遇到的真实问题，写下来交给它。它按这一行老师傅的做法给出现场能照做的办法，并说明是根据什么判断的。别人问过的问题和它的回答，右边可以参考。</p>
+<section class="ex"><h3>可以这样写</h3><ul><li>「「新招的焊工焊的角焊缝，每一道起头 2–3 厘米都有一串小孔，后面就正常。要不要把电流调小一点？」」</li><li>「「客户说我们的报价单看不懂，怎么改得让人一眼看明白？」」</li></ul><p>写清楚：你是谁、在哪、遇到了什么现象、你已经试过什么。</p></section>
+<section class="step"><h2><i>1</i>写下问题，交给它</h2><p class="d">「你是谁」「你在哪」选填，帮它判断场景；问题越具体越好。</p>
+      <div class="shot"><img src="img/w-solve.jpg" alt=""><div class="box" style="left:7.50%;top:19.00%;width:41.50%;height:49.00%"><span class="tag"><b>1</b>写下你遇到的问题</span></div><div class="box" style="left:9.20%;top:63.70%;width:9.60%;height:4.10%"><span class="tag"><b>2</b>交给 AI 核心</span></div><div class="box" style="left:50.70%;top:20.80%;width:41.80%;height:44.20%"><span class="tag"><b>3</b>别人问过的问题和回答</span></div></div>
+      <ul class="notes"><li><b>1</b><span>写下你遇到的问题</span></li><li><b>2</b><span>交给 AI 核心</span></li><li><b>3</b><span>别人问过的问题和回答</span></li></ul></section>
+</section>
+<section class="pb divider" id="m06"><div class="eb">模块 06</div><div class="no">06</div><h2>它从哪来：来历、被用在哪</h2><div class="m">想知道数字职人靠不靠谱的人 · 随时</div><p>每位数字职人都有出处：照着哪份真实岗位 JD 搭的、学自哪位老师傅、被谁用过。「你教我」是给老师傅的：老师傅亲手示范一遍，它就照着学。</p></section>
+<section class="pb"><div class="eb">AI 百业 · 操作手册 06</div>
+<h1>它从哪来：来历、被用在哪</h1>
+<div class="meta"><span>想知道数字职人靠不靠谱的人</span><span>随时</span></div>
+<p class="lead">每位数字职人都有出处：照着哪份真实岗位 JD 搭的、学自哪位老师傅、被谁用过。「你教我」是给老师傅的：老师傅亲手示范一遍，它就照着学。</p>
+
+<section class="step"><h2><i>1</i>我的来历：照着哪份 JD 搭的</h2><p class="d">左边是真实的岗位 JD 原文和链接；右边是每条职责拆成了这个空间里的哪一段练习。</p>
+      <div class="shot"><img src="img/w-jd.jpg" alt=""><div class="box" style="left:7.50%;top:20.00%;width:41.70%;height:80.00%"><span class="tag"><b>1</b>岗位 JD 原文和链接</span></div><div class="box" style="left:50.70%;top:22.00%;width:41.80%;height:63.00%"><span class="tag"><b>2</b>每条职责拆成哪一段练习</span></div></div>
+      <ul class="notes"><li><b>1</b><span>岗位 JD 原文和链接</span></li><li><b>2</b><span>每条职责拆成哪一段练习</span></li></ul></section>
+<section class="step"><h2><i>2</i>我被用在哪：每一次调用都记账</h2><p class="d">多少天、多少地方、多少人用过；下面是一条条记录：谁在哪儿用、得了多少分、解决了什么问题。</p>
+      <div class="shot"><img src="img/w-ledger.jpg" alt=""><div class="box" style="left:7.50%;top:19.00%;width:85.00%;height:14.00%"><span class="tag"><b>1</b>跨越天数、地点、调用、服务人次</span></div><div class="box" style="left:7.50%;top:37.00%;width:85.00%;height:62.00%"><span class="tag"><b>2</b>每一次使用的记录</span></div></div>
+      <ul class="notes"><li><b>1</b><span>跨越天数、地点、调用、服务人次</span></li><li><b>2</b><span>每一次使用的记录</span></li></ul></section>
+</section>
+<section class="pb divider" id="m07"><div class="eb">模块 07</div><div class="no">07</div><h2>3D 场景：走进它工作的地方</h2><div class="m">想体验的人 · 首次加载约半分钟</div><p>部分职业有 3D 场景（BETA），入口在空间主页名字旁边的「走进 XX · 3D BETA」。目前有：手术室、咖啡吧台、婴儿房、数据分析工位、火箭总装厂房、应急指挥大厅、手套箱间、珊瑚礁。</p></section>
+<section class="pb"><div class="eb">AI 百业 · 操作手册 07</div>
+<h1>3D 场景：走进它工作的地方</h1>
+<div class="meta"><span>想体验的人</span><span>首次加载约半分钟</span></div>
+<p class="lead">部分职业有 3D 场景（BETA），入口在空间主页名字旁边的「走进 XX · 3D BETA」。目前有：手术室、咖啡吧台、婴儿房、数据分析工位、火箭总装厂房、应急指挥大厅、手套箱间、珊瑚礁。</p>
+
+<section class="step"><h2><i>1</i>在空间主页点「3D BETA」</h2><p class="d">以火箭总装工程师为例，入口在名字下面那一行。没有这个按钮的职业，暂时还没有 3D 场景。</p>
+      <div class="shot"><img src="img/r-hub.jpg" alt=""><div class="box" style="left:22.90%;top:79.50%;width:17.70%;height:3.80%"><span class="tag"><b>1</b>走进总装厂房 · 发动机段 · 3D BETA</span></div></div>
+      <ul class="notes"><li><b>1</b><span>走进总装厂房 · 发动机段 · 3D BETA</span></li></ul></section>
+<section class="step"><h2><i>2</i>拖动、滚轮看四周</h2><p class="d">鼠标拖动转视角，滚轮前后走；点场景里的标签，看这样东西是干什么的。也可以打开摄像头，用头的转动来看。建议用电脑浏览器，第一次打开要等一会儿。</p>
+      <div class="shot"><img src="img/r-3d.jpg" alt=""><div class="box" style="left:0.30%;top:0.50%;width:9.80%;height:4.60%"><span class="tag below"><b>1</b>3D BETA</span></div></div>
+      <ul class="notes"><li><b>1</b><span>3D BETA</span></li></ul></section>
+</section>
+<section class="pb divider" id="m08"><div class="eb">模块 08</div><div class="no">08</div><h2>我的证书：每段的成绩和证书</h2><div class="m">想体验的人 · 随时</div><p>「我的证书」里是你走过的每一段和分数。一个职业的一天每段都过了 60 分，就能领这个职业的体验证书，由平方创想和方略研究院签发，带编号。</p></section>
+<section class="pb"><div class="eb">AI 百业 · 操作手册 08</div>
+<h1>我的证书：每段的成绩和证书</h1>
+<div class="meta"><span>想体验的人</span><span>随时</span></div>
+<p class="lead">「我的证书」里是你走过的每一段和分数。一个职业的一天每段都过了 60 分，就能领这个职业的体验证书，由平方创想和方略研究院签发，带编号。</p>
+
+<section class="step"><h2><i>1</i>先把证书上的名字改好</h2><p class="d">每个职业一行，每段一格：过了的显示分数，没过的点「重做」。右边是这个职业的证书，全过才解锁。</p>
+      <div class="shot"><img src="img/me-1.jpg" alt=""><div class="box" style="left:7.50%;top:22.50%;width:85.00%;height:7.00%"><span class="tag"><b>1</b>证书上的名字，先改好</span></div><div class="box" style="left:8.90%;top:45.50%;width:71.30%;height:15.00%"><span class="tag"><b>2</b>每段的分数，没过的点「重做」</span></div><div class="box" style="left:81.50%;top:48.70%;width:9.60%;height:22.30%"><span class="tag right"><b>3</b>证书：全过才解锁</span></div><div class="box" style="left:86.00%;top:13.30%;width:6.80%;height:4.50%"><span class="tag right"><b>4</b>去体验馆接着走</span></div></div>
+      <ul class="notes"><li><b>1</b><span>证书上的名字，先改好</span></li><li><b>2</b><span>每段的分数，没过的点「重做」</span></li><li><b>3</b><span>证书：全过才解锁</span></li><li><b>4</b><span>去体验馆接着走</span></li></ul></section>
+<section class="step"><h2><i>2</i>领到的证书</h2><p class="d">写着你的名字、走完的是哪个职业的一天、每段的分数和综合等级。可以复制链接发给别人，也能打印或存 PDF。</p>
+      <div class="shot"><img src="img/cert-1.jpg" alt=""><div class="box" style="left:2.60%;top:24.00%;width:47.50%;height:76.00%"><span class="tag"><b>1</b>你的名字、每段分数、综合等级</span></div><div class="box" style="left:74.50%;top:13.50%;width:25.00%;height:3.80%"><span class="tag right"><b>2</b>复制链接、打印 / 存 PDF</span></div></div>
+      <ul class="notes"><li><b>1</b><span>你的名字、每段分数、综合等级</span></li><li><b>2</b><span>复制链接、打印 / 存 PDF</span></li></ul></section>
+</section>
+<section class="pb divider" id="m09"><div class="eb">模块 09</div><div class="no">09</div><h2>AI 与我的工作：看 AI 会怎么改变你这一行</h2><div class="m">在岗的人、学生 · 约 1 分钟</div><p>写下你的职位（贴一段 JD 或简历也行），它对着平方职业库，把这一行的工作拆成一项项任务：哪些 AI 会接手、哪些人机协作、哪些还得人来做，再告诉你这周可以做点什么。简历只用来分析这一次，不会保存。</p></section>
+<section class="pb"><div class="eb">AI 百业 · 操作手册 09</div>
+<h1>AI 与我的工作：看 AI 会怎么改变你这一行</h1>
+<div class="meta"><span>在岗的人、学生</span><span>约 1 分钟</span></div>
+<p class="lead">写下你的职位（贴一段 JD 或简历也行），它对着平方职业库，把这一行的工作拆成一项项任务：哪些 AI 会接手、哪些人机协作、哪些还得人来做，再告诉你这周可以做点什么。简历只用来分析这一次，不会保存。</p>
+<section class="ex"><h3>可以这样写</h3><ul><li>「「焊工」」</li><li>「「我在一家咨询公司做数据分析，三年，主要做客户的销售数据看板」」</li><li>「直接贴一段招聘 JD 或你的简历」</li></ul><p>写职位名最快；贴了简历，结果会按你的经历加减分。</p></section>
+<section class="step"><h2><i>1</i>写下你的职位</h2><p class="d">顶部「AI 与我的工作」。写职位名，或贴 JD、简历，点「开始」。下面几个是例子，点一下就填好。</p>
+      <div class="shot"><div style="aspect-ratio:100800/64800;overflow:hidden"><img src="img/a-1.jpg" alt="" style="width:142.857%;max-width:none;margin-left:-21.429%;margin-top:-13.393%"></div><div class="box" style="left:18.00%;top:52.78%;width:63.71%;height:30.56%"><span class="tag"><b>1</b>职位、JD 或简历</span></div><div class="box" style="left:29.14%;top:88.89%;width:40.14%;height:4.17%"><span class="tag"><b>2</b>试试这几个</span></div></div>
+      <ul class="notes"><li><b>1</b><span>职位、JD 或简历</span></li><li><b>2</b><span>试试这几个</span></li></ul></section>
+<section class="step"><h2><i>2</i>先看这一行的 AI 替代性</h2><p class="d">它会先确认最像的职业，然后给一个分数：这一行的工作 AI 能接手多少。分数越高，越该早做准备。</p>
+      <div class="shot"><div style="aspect-ratio:120960/68400;overflow:hidden"><img src="img/a-3.jpg" alt="" style="width:119.048%;max-width:none;margin-left:-9.524%;margin-top:-5.952%"></div><div class="box" style="left:6.55%;top:24.47%;width:19.88%;height:34.21%"><span class="tag"><b>1</b>AI 替代性分数</span></div><div class="box" style="left:84.52%;top:87.63%;width:8.33%;height:5.53%"><span class="tag right"><b>2</b>下一步</span></div></div>
+      <ul class="notes"><li><b>1</b><span>AI 替代性分数</span></li><li><b>2</b><span>下一步</span></li></ul></section>
+<section class="step"><h2><i>3</i>这一行的任务分三类</h2><p class="d">每项任务写清楚 AI 做什么、人做什么。</p>
+      <div class="shot"><img src="img/a-4.jpg" alt=""><div class="box" style="left:13.50%;top:27.50%;width:73.00%;height:72.00%"><span class="tag"><b>1</b>AI 接手 / 人机协作 / 人来做</span></div></div>
+      <ul class="notes"><li><b>1</b><span>AI 接手 / 人机协作 / 人来做</span></li></ul></section>
+<section class="step"><h2><i>4</i>你的强项，和要提前准备的</h2><p class="d">左边是 AI 拿不走的本事，右边是最先被 AI 接手的部分；每条都给了一件这周就能做的事。</p>
+      <div class="shot"><img src="img/a-6.jpg" alt=""><div class="box" style="left:13.50%;top:26.70%;width:34.50%;height:45.00%"><span class="tag"><b>1</b>AI 拿不走的</span></div><div class="box" style="left:50.30%;top:26.70%;width:36.30%;height:45.00%"><span class="tag"><b>2</b>最先被 AI 接手的</span></div></div>
+      <ul class="notes"><li><b>1</b><span>AI 拿不走的</span></li><li><b>2</b><span>最先被 AI 接手的</span></li></ul></section>
+</section>
+<section class="pb divider" id="m10"><div class="eb">模块 10</div><div class="no">10</div><h2>百业工厂：用一份 JD 生成一个职业空间</h2><div class="m">有账号的机构用户、我们的同事 · 生成约 2–4 分钟</div><p>想要的职业还没有？在「百业工厂」用一份真实岗位 JD 生成一个新空间：AI 读 JD，搭出技能树、故事线、虚拟工位和场景美术。也可以只给一个职业名。</p></section>
+<section class="pb"><div class="eb">AI 百业 · 操作手册 10</div>
+<h1>百业工厂：用一份 JD 生成一个职业空间</h1>
+<div class="meta"><span>有账号的机构用户、我们的同事</span><span>生成约 2–4 分钟</span></div>
+<p class="lead">想要的职业还没有？在「百业工厂」用一份真实岗位 JD 生成一个新空间：AI 读 JD，搭出技能树、故事线、虚拟工位和场景美术。也可以只给一个职业名。</p>
+<section class="ex"><h3>可以这样开始</h3><ul><li>「从岗位库里搜「华为 软件」「比亚迪 工艺」，挑一份 JD」</li><li>「岗位库里没有，就把招聘页上的职责和要求整段贴进来」</li><li>「只想要一个职业：点「新职业」，写「锅炉工」「育婴师」」</li></ul><p>生成好的空间先是草稿，看一遍再给别人用。</p></section>
+<section class="step"><h2><i>1</i>在「百业工厂」选怎么建</h2><p class="d">顶部「百业工厂」。三种：从一份 JD 建、只给一个职业名、去素材库管人物 / 场景 / 道具。也可以先用一句话说你的问题，它帮你找合适的数字职人。</p>
+      <div class="shot"><img src="img/f-1.jpg" alt=""><div class="box" style="left:47.40%;top:18.80%;width:45.30%;height:4.90%"><span class="tag"><b>1</b>新岗位 / 新职业 / 素材库</span></div><div class="box" style="left:7.50%;top:26.70%;width:85.50%;height:4.60%"><span class="tag"><b>2</b>一句话说问题，帮你找职人</span></div></div>
+      <ul class="notes"><li><b>1</b><span>新岗位 / 新职业 / 素材库</span></li><li><b>2</b><span>一句话说问题，帮你找职人</span></li></ul></section>
+<section class="step"><h2><i>2</i>挑一份 JD，或者贴一份</h2><p class="d">从岗位库挑一条，或者粘贴一份新的 JD（正文至少 40 字），点「用这份 JD 构建空间」。</p>
+      <div class="shot"><div style="aspect-ratio:100800/82800;overflow:hidden"><img src="img/f-2.jpg" alt="" style="width:142.857%;max-width:none;margin-left:-21.429%;margin-top:-7.143%"></div><div class="box" style="left:10.00%;top:17.93%;width:79.43%;height:16.30%"><span class="tag"><b>1</b>从岗位库挑一份 JD</span></div><div class="box" style="left:10.00%;top:36.96%;width:79.43%;height:42.93%"><span class="tag"><b>2</b>或者粘贴一份新 JD</span></div><div class="box" style="left:70.00%;top:73.15%;width:18.29%;height:4.78%"><span class="tag right"><b>3</b>约 2–4 分钟生成</span></div></div>
+      <ul class="notes"><li><b>1</b><span>从岗位库挑一份 JD</span></li><li><b>2</b><span>或者粘贴一份新 JD</span></li><li><b>3</b><span>约 2–4 分钟生成</span></li></ul></section>
+</section>
+<section class="pb divider" id="m11"><div class="eb">模块 11</div><div class="no">11</div><h2>常见问题</h2><div class="m">所有人 · 随时</div><p>用的时候最常被问到的问题。页面报错、打不开，截图并附上网址，发给对接你的人。</p></section>
+<section class="pb"><div class="eb">AI 百业 · 常见问题 11</div>
+<h1>常见问题</h1>
+<div class="meta"><span>所有人</span><span>随时</span></div>
+<p class="lead">用的时候最常被问到的问题。页面报错、打不开，截图并附上网址，发给对接你的人。</p>
+
+
+<section class="faq"><div class="qa"><b>要登录吗？</b><p>首页谁都能看；点进一个职业去体验要登录，用发给你的账号。管理员新建或重置过密码的账号，第一次登录会先让你换一个自己的密码。</p></div><div class="qa"><b>用手机还是电脑？</b><p>建议用电脑上的 Chrome 或 Edge 浏览器。手机能看、能答选择题，但操作台要拖动、3D 场景要显卡，手机上不好用。</p></div><div class="qa"><b>右上角那个模型选哪个？</b><p>它决定数字职人回答你、批改你写的内容用哪个 AI。没有特别需要就用默认的「通义千问 Plus」，国内访问最稳。</p></div><div class="qa"><b>页面太暗或太亮？</b><p>右上角的太阳按钮切换深浅色。投影、一体机上用浅色更清楚。</p></div><div class="qa"><b>分数怎么算？多少分算过？</b><p>每段走完都有成绩单，按这一行老师傅的标准逐项打分，并引用你写的原话。每段 60 分算过（证书和「我的证书」里换算成 10 分制显示）。没过可以「再走一遍」，或在「我的证书」里点「重做」。</p></div><div class="qa"><b>证书怎么拿？谁发的？</b><p>一个职业的一天每段都过了，就能领这个职业的体验证书，由平方创想和方略研究院签发，带编号。可以复制链接给别人看，也能打印或存 PDF。证书上的名字在「我的证书」页最上面改。</p></div><div class="qa"><b>「我教你」和「考考你」有什么区别？</b><p>是同一天、同样的段落。「我教你」每一步有讲解，操作台它先做一遍给你看，不算分；「考考你」自己做、出成绩单、算进证书。</p></div><div class="qa"><b>数字职人说的话靠谱吗？</b><p>「和我聊」每句话都带来源，点开能看到出自平方的哪份资料（职业库、岗位、行业标准、企业）。资料里没有的它会直接说没有；去网上查的会说明是网上的。</p></div><div class="qa"><b>3D 场景打不开或很慢？</b><p>3D 是 BETA，只有部分职业有。第一次打开要等半分钟左右，电脑显卡越好越顺。打不开不影响其他玩法。</p></div><div class="qa"><b>操作台能用摄像头吗？</b><p>能。焊工这类操作台有「用摄像头握焊枪」按钮，浏览器问要不要摄像头权限时点允许。画面只在你自己的电脑上用来识别手的位置。</p></div><div class="qa"><b>我想要的职业没有？</b><p>有账号的机构用户可以在「百业工厂」用一份 JD 自己生成；没有账号，告诉对接你的人想要哪个职业。</p></div><div class="qa"><b>遇到问题找谁？</b><p>截图、附上网址，说明当时点了什么，发给对接你的人。</p></div></section></section>
+<div class="foot">AI 百业 · 编写于 2026-11-03 · 适用 AI 百业 · 数字技能空间（2026-11-03 线上版本）</div></div></body></html>

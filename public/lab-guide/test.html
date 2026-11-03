@@ -1,0 +1,64 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>考考你：自己走一段，拿成绩单 · 百业体验手册</title><style>
+:root { --v: #6055f5; --ink: #1a1a2e; --ink2: #4a4f66; --ink3: #8a8fa8; --mark: #ff5a36; --line: #e8e9f0; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f6fb; color: var(--ink); font: 15px/1.75 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 36px 20px 56px; }
+.eb { font-size: 12px; letter-spacing: .14em; color: var(--v); font-weight: 700; }
+h1 { font-size: 34px; line-height: 1.25; margin: 8px 0 10px; }
+h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 10px; }
+.meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.meta span { font-size: 13px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; color: var(--ink2); }
+.lead { font-size: 16px; color: var(--ink2); background: #fff; border-left: 4px solid var(--v); border-radius: 0 12px 12px 0; padding: 12px 16px; margin: 0 0 26px; }
+.step { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 20px 20px 18px; margin-bottom: 22px; box-shadow: 0 10px 30px -22px rgba(40,44,110,.35); }
+.step h2 { display: flex; align-items: center; gap: 12px; font-size: 21px; margin: 0 0 6px; }
+.step h2 i { font-style: normal; flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--v); color: #fff; display: grid; place-items: center; font-size: 17px; }
+.step .d { color: var(--ink2); margin: 0 0 14px 46px; }
+.shot { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+.shot img { display: block; width: 100%; }
+.box { position: absolute; border: 3px solid var(--mark); border-radius: 8px; }
+.tag { position: absolute; left: -3px; transform: translateY(-100%); display: flex; align-items: center; gap: 6px; white-space: nowrap; background: var(--mark); color: #fff; font-size: 12.5px; font-weight: 700; padding: 3px 9px 3px 4px; border-radius: 8px 8px 8px 0; max-width: 520px; overflow: hidden; text-overflow: ellipsis; }
+.tag.below { transform: none; top: calc(100% + 4px); border-radius: 0 8px 8px 8px; }
+.tag.below.right { border-radius: 8px 0 8px 8px; }
+.tag.right { left: auto; right: -3px; border-radius: 8px 8px 0 8px; }
+.tag b, .notes b { flex: none; width: 19px; height: 19px; border-radius: 50%; background: #fff; color: var(--mark); display: grid; place-items: center; font-size: 12px; }
+.notes { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.notes li { display: flex; gap: 8px; align-items: flex-start; font-size: 14.5px; }
+.notes b { background: var(--mark); color: #fff; margin-top: 3px; }
+.ex { background: linear-gradient(135deg, #f3f2ff, #eefbfd); border: 1px solid #dcd8ff; border-radius: 16px; padding: 16px 20px; margin: 0 0 24px; }
+.ex h3 { margin: 0 0 8px; font-size: 17px; color: var(--v); }
+.ex ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.ex li { background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 15px; }
+.ex p { margin: 10px 0 0; color: var(--ink2); font-size: 14px; }
+@media print { body { background: #fff; font-size: 16px; } .notes li { font-size: 15.5px; } .step .d { font-size: 15.5px; } .step, .ex, .lead { break-inside: avoid; } .wrap { padding-top: 8px; } }
+.pb { break-before: page; }
+.divider { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; background: linear-gradient(135deg, #f3f2ff, #eefbfd); border-radius: 24px; }
+.divider .no { font-size: 120px; font-weight: 900; line-height: 1; background: linear-gradient(120deg, var(--v), #12b5cb); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.divider h2 { font-size: 46px; margin: 18px 0 12px; } .divider .m { color: var(--ink2); font-size: 17px; margin-bottom: 18px; } .divider p { font-size: 18px; color: var(--ink2); max-width: 720px; }
+.cover { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; }
+.cover h1 { font-size: 64px; } .cover .ver { margin-top: 28px; display: grid; gap: 8px; font-size: 17px; color: var(--ink2); } .cover .ver b { color: var(--ink); }
+.toc a { display: flex; gap: 18px; align-items: baseline; text-decoration: none; color: inherit; padding: 16px 0; border-bottom: 1px solid var(--line); } .toc i { font-style: normal; font-weight: 900; color: var(--v); font-size: 26px; width: 48px; } .toc b { font-size: 21px; } .toc span { color: var(--ink2); font-size: 14.5px; display: block; }
+.faq { display: grid; gap: 12px; } .qa { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; break-inside: avoid; } .qa b { font-size: 17px; } .qa p { margin: 6px 0 0; color: var(--ink2); }
+.foot { text-align: center; color: var(--ink3); font-size: 12.5px; margin-top: 28px; }
+@media (max-width: 640px) { h1 { font-size: 26px; } .step .d { margin-left: 0; } .tag { font-size: 11px; max-width: 70vw; } }
+</style></head><body><div class="wrap">
+<div class="eb">AI 百业 · 操作手册 02</div>
+<h1>考考你：自己走一段，拿成绩单</h1>
+<div class="meta"><span>想体验的人</span><span>每段约 10 分钟</span></div>
+<p class="lead">每段像一小场戏：有情境、有人跟你说话，你来做判断、写记录。走完马上出成绩单，逐项打分，还会引用你写的原话。每段 60 分算过。</p>
+<section class="ex"><h3>写记录的那一步，可以这样写</h3><ul><li>「「今天试制新结构样件平板对接试板，依据现行焊接工艺卡第 3 版；焊丝批次按标签记录并拍照；起弧前先确认保护气通气正常。」」</li><li>「「F1 浑浊、有细丝，判断污染，已经灭活封袋、擦净安全柜；F2、F3 镜下正常，先暂停共用的那瓶培养基。」」</li></ul><p>写成交接给同事看的样子：做了什么、看到了什么、依据是什么、下一步干什么。空话（「注意安全」）不得分。</p></section>
+<section class="step"><h2><i>1</i>先看这一段的情境</h2><p class="d">在哪、几点、会遇到谁、要用到哪些东西。看完点「开始这一段」。</p>
+      <div class="shot"><div style="aspect-ratio:100800/59400;overflow:hidden"><img src="img/c-intro.jpg" alt="" style="width:142.857%;max-width:none;margin-left:-21.429%;margin-top:-17.857%"></div><div class="box" style="left:11.43%;top:14.39%;width:77.14%;height:76.52%"><span class="tag"><b>1</b>这一段：在哪、遇到谁、要干什么</span></div><div class="box" style="left:14.29%;top:79.09%;width:12.86%;height:6.97%"><span class="tag"><b>2</b>开始这一段</span></div></div>
+      <ul class="notes"><li><b>1</b><span>这一段：在哪、遇到谁、要干什么</span></li><li><b>2</b><span>开始这一段</span></li></ul></section>
+<section class="step"><h2><i>2</i>剧情对话，点一下往下走</h2><p class="d">有人跟你交代事情、提醒你注意什么。这些话里常藏着后面要用的信息，别跳太快。</p>
+      <div class="shot"><img src="img/c-dialog.jpg" alt=""><div class="box" style="left:30.00%;top:74.50%;width:62.70%;height:18.80%"><span class="tag"><b>1</b>谁在说话、说了什么；点一下继续</span></div></div>
+      <ul class="notes"><li><b>1</b><span>谁在说话、说了什么；点一下继续</span></li></ul></section>
+<section class="step"><h2><i>3</i>做判断：选、多选、分类、排优先级</h2><p class="d">按你的判断来，没有标准答案提示。有的题能多选，有的要拖分值、排先后。</p>
+      <div class="shot"><div style="aspect-ratio:115200/72000;overflow:hidden"><img src="img/c-step1.jpg" alt="" style="width:125.000%;max-width:none;margin-left:-12.500%;margin-top:-11.719%"></div><div class="box" style="left:11.88%;top:12.13%;width:76.25%;height:75.37%"><span class="tag"><b>1</b>题目和选项</span></div><div class="box" style="left:14.50%;top:77.50%;width:8.75%;height:5.88%"><span class="tag"><b>2</b>选好点「下一步」</span></div></div>
+      <ul class="notes"><li><b>1</b><span>题目和选项</span></li><li><b>2</b><span>选好点「下一步」</span></li></ul></section>
+<section class="step"><h2><i>4</i>走完出成绩单</h2><p class="d">这一段的分数、逐项打分和理由。没过 60 分可以「再走一遍」；过了就「进入下一段」。一天每段都过了，才能领证书。</p>
+      <div class="shot"><img src="img/c-report.jpg" alt=""><div class="box" style="left:17.50%;top:16.50%;width:8.00%;height:12.00%"><span class="tag"><b>1</b>这一段的分数</span></div><div class="box" style="left:59.60%;top:19.80%;width:22.40%;height:5.40%"><span class="tag right"><b>2</b>进入下一段</span></div><div class="box" style="left:38.80%;top:19.80%;width:20.40%;height:5.40%"><span class="tag"><b>3</b>再走一遍 / 查看成绩单</span></div><div class="box" style="left:18.00%;top:41.50%;width:64.00%;height:56.00%"><span class="tag"><b>4</b>逐项打分，引你写的原话</span></div></div>
+      <ul class="notes"><li><b>1</b><span>这一段的分数</span></li><li><b>2</b><span>进入下一段</span></li><li><b>3</b><span>再走一遍 / 查看成绩单</span></li><li><b>4</b><span>逐项打分，引你写的原话</span></li></ul></section>
+
+<div class="foot">AI 百业 · 编写于 2026-11-03 · 适用 AI 百业 · 数字技能空间（2026-11-03 线上版本） · 操作手册 02 · 考考你：自己走一段，拿成绩单</div>
+</div></body></html>

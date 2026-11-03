@@ -1,0 +1,49 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>百业体验手册</title><style>
+:root { --v: #6055f5; --ink: #1a1a2e; --ink2: #4a4f66; --ink3: #8a8fa8; --mark: #ff5a36; --line: #e8e9f0; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f6fb; color: var(--ink); font: 15px/1.75 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 36px 20px 56px; }
+.eb { font-size: 12px; letter-spacing: .14em; color: var(--v); font-weight: 700; }
+h1 { font-size: 34px; line-height: 1.25; margin: 8px 0 10px; }
+h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 10px; }
+.meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.meta span { font-size: 13px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; color: var(--ink2); }
+.lead { font-size: 16px; color: var(--ink2); background: #fff; border-left: 4px solid var(--v); border-radius: 0 12px 12px 0; padding: 12px 16px; margin: 0 0 26px; }
+.step { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 20px 20px 18px; margin-bottom: 22px; box-shadow: 0 10px 30px -22px rgba(40,44,110,.35); }
+.step h2 { display: flex; align-items: center; gap: 12px; font-size: 21px; margin: 0 0 6px; }
+.step h2 i { font-style: normal; flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--v); color: #fff; display: grid; place-items: center; font-size: 17px; }
+.step .d { color: var(--ink2); margin: 0 0 14px 46px; }
+.shot { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+.shot img { display: block; width: 100%; }
+.box { position: absolute; border: 3px solid var(--mark); border-radius: 8px; }
+.tag { position: absolute; left: -3px; transform: translateY(-100%); display: flex; align-items: center; gap: 6px; white-space: nowrap; background: var(--mark); color: #fff; font-size: 12.5px; font-weight: 700; padding: 3px 9px 3px 4px; border-radius: 8px 8px 8px 0; max-width: 520px; overflow: hidden; text-overflow: ellipsis; }
+.tag.below { transform: none; top: calc(100% + 4px); border-radius: 0 8px 8px 8px; }
+.tag.below.right { border-radius: 8px 0 8px 8px; }
+.tag.right { left: auto; right: -3px; border-radius: 8px 8px 0 8px; }
+.tag b, .notes b { flex: none; width: 19px; height: 19px; border-radius: 50%; background: #fff; color: var(--mark); display: grid; place-items: center; font-size: 12px; }
+.notes { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.notes li { display: flex; gap: 8px; align-items: flex-start; font-size: 14.5px; }
+.notes b { background: var(--mark); color: #fff; margin-top: 3px; }
+.ex { background: linear-gradient(135deg, #f3f2ff, #eefbfd); border: 1px solid #dcd8ff; border-radius: 16px; padding: 16px 20px; margin: 0 0 24px; }
+.ex h3 { margin: 0 0 8px; font-size: 17px; color: var(--v); }
+.ex ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.ex li { background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 15px; }
+.ex p { margin: 10px 0 0; color: var(--ink2); font-size: 14px; }
+@media print { body { background: #fff; font-size: 16px; } .notes li { font-size: 15.5px; } .step .d { font-size: 15.5px; } .step, .ex, .lead { break-inside: avoid; } .wrap { padding-top: 8px; } }
+.pb { break-before: page; }
+.divider { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; background: linear-gradient(135deg, #f3f2ff, #eefbfd); border-radius: 24px; }
+.divider .no { font-size: 120px; font-weight: 900; line-height: 1; background: linear-gradient(120deg, var(--v), #12b5cb); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.divider h2 { font-size: 46px; margin: 18px 0 12px; } .divider .m { color: var(--ink2); font-size: 17px; margin-bottom: 18px; } .divider p { font-size: 18px; color: var(--ink2); max-width: 720px; }
+.cover { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; }
+.cover h1 { font-size: 64px; } .cover .ver { margin-top: 28px; display: grid; gap: 8px; font-size: 17px; color: var(--ink2); } .cover .ver b { color: var(--ink); }
+.toc a { display: flex; gap: 18px; align-items: baseline; text-decoration: none; color: inherit; padding: 16px 0; border-bottom: 1px solid var(--line); } .toc i { font-style: normal; font-weight: 900; color: var(--v); font-size: 26px; width: 48px; } .toc b { font-size: 21px; } .toc span { color: var(--ink2); font-size: 14.5px; display: block; }
+.faq { display: grid; gap: 12px; } .qa { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; break-inside: avoid; } .qa b { font-size: 17px; } .qa p { margin: 6px 0 0; color: var(--ink2); }
+.foot { text-align: center; color: var(--ink3); font-size: 12.5px; margin-top: 28px; }
+@media (max-width: 640px) { h1 { font-size: 26px; } .step .d { margin-left: 0; } .tag { font-size: 11px; max-width: 70vw; } }
+
+.cards { display: grid; gap: 14px; } .card { display: flex; gap: 16px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; text-decoration: none; color: inherit; box-shadow: 0 10px 30px -22px rgba(40,44,110,.35); }
+.card i { font-style: normal; flex: none; width: 46px; height: 46px; border-radius: 12px; background: var(--v); color: #fff; display: grid; place-items: center; font-weight: 800; }
+.card b { display: block; font-size: 18px; } .card span { color: var(--ink2); font-size: 14px; }</style></head><body><div class="wrap">
+<div class="eb">AI 百业 · 百业体验手册</div><h1>AI 百业怎么玩</h1><p class="lead">一份手册讲一件事，每步一张真实截图，框出来的地方就是要点的地方。</p>
+<div class="cards"><a class="card" href="enter.html"><i>01</i><div><b>找一个职业，走进它的一天</b><span>想体验的人 · 约 2 分钟<br>顶部「体验百业」里是所有职业的一天。挑一个点进去，先到这位数字职人的主页：它是谁、学自哪位老师傅；下面一排是各种玩法，从「考考你」开始就是走它的一天。</span></div></a><a class="card" href="test.html"><i>02</i><div><b>考考你：自己走一段，拿成绩单</b><span>想体验的人 · 每段约 10 分钟<br>每段像一小场戏：有情境、有人跟你说话，你来做判断、写记录。走完马上出成绩单，逐项打分，还会引用你写的原话。每段 60 分算过。</span></div></a><a class="card" href="teach.html"><i>03</i><div><b>我教你：看它先做一遍，再比着做</b><span>想体验的人 · 每段约 10 分钟<br>没把握就先选「我教你」：每一步它先讲要看什么、为什么，遇到操作台它先完整做一遍给你看，再换你比着做。这里不算分，放心试。</span></div></a><a class="card" href="chat.html"><i>04</i><div><b>和我聊：问数字职人这一行</b><span>想了解一个职业的人 · 随时<br>想知道这一行挣多少、怎么入行、往上怎么走，直接问它。它说的每句话都带来源，点开能看到出自平方的哪份资料；资料里没有的，它会说没有，不编。</span></div></a><a class="card" href="solve.html"><i>05</i><div><b>问问我：把手头的真问题交给它</b><span>在岗的人、老板、老师 · 约 1 分钟<br>工作里遇到的真实问题，写下来交给它。它按这一行老师傅的做法给出现场能照做的办法，并说明是根据什么判断的。别人问过的问题和它的回答，右边可以参考。</span></div></a><a class="card" href="origin.html"><i>06</i><div><b>它从哪来：来历、被用在哪</b><span>想知道数字职人靠不靠谱的人 · 随时<br>每位数字职人都有出处：照着哪份真实岗位 JD 搭的、学自哪位老师傅、被谁用过。「你教我」是给老师傅的：老师傅亲手示范一遍，它就照着学。</span></div></a><a class="card" href="3d.html"><i>07</i><div><b>3D 场景：走进它工作的地方</b><span>想体验的人 · 首次加载约半分钟<br>部分职业有 3D 场景（BETA），入口在空间主页名字旁边的「走进 XX · 3D BETA」。目前有：手术室、咖啡吧台、婴儿房、数据分析工位、火箭总装厂房、应急指挥大厅、手套箱间、珊瑚礁。</span></div></a><a class="card" href="cert.html"><i>08</i><div><b>我的证书：每段的成绩和证书</b><span>想体验的人 · 随时<br>「我的证书」里是你走过的每一段和分数。一个职业的一天每段都过了 60 分，就能领这个职业的体验证书，由平方创想和方略研究院签发，带编号。</span></div></a><a class="card" href="ai-change.html"><i>09</i><div><b>AI 与我的工作：看 AI 会怎么改变你这一行</b><span>在岗的人、学生 · 约 1 分钟<br>写下你的职位（贴一段 JD 或简历也行），它对着平方职业库，把这一行的工作拆成一项项任务：哪些 AI 会接手、哪些人机协作、哪些还得人来做，再告诉你这周可以做点什么。简历只用来分析这一次，不会保存。</span></div></a><a class="card" href="factory.html"><i>10</i><div><b>百业工厂：用一份 JD 生成一个职业空间</b><span>有账号的机构用户、我们的同事 · 生成约 2–4 分钟<br>想要的职业还没有？在「百业工厂」用一份真实岗位 JD 生成一个新空间：AI 读 JD，搭出技能树、故事线、虚拟工位和场景美术。也可以只给一个职业名。</span></div></a><a class="card" href="faq.html"><i>11</i><div><b>常见问题</b><span>所有人 · 随时<br>用的时候最常被问到的问题。页面报错、打不开，截图并附上网址，发给对接你的人。</span></div></a></div>
+<p class="lead" style="margin-top:20px">编写于 2026-11-03 · 适用 AI 百业 · 数字技能空间（2026-11-03 线上版本） · <a href="all.html">看合集（可打印 / 存 PDF）</a></p><div class="foot">AI 百业 · 编写于 2026-11-03 · 适用 AI 百业 · 数字技能空间（2026-11-03 线上版本）</div></div></body></html>

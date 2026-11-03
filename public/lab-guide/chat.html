@@ -1,0 +1,58 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>和我聊：问数字职人这一行 · 百业体验手册</title><style>
+:root { --v: #6055f5; --ink: #1a1a2e; --ink2: #4a4f66; --ink3: #8a8fa8; --mark: #ff5a36; --line: #e8e9f0; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f6fb; color: var(--ink); font: 15px/1.75 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 36px 20px 56px; }
+.eb { font-size: 12px; letter-spacing: .14em; color: var(--v); font-weight: 700; }
+h1 { font-size: 34px; line-height: 1.25; margin: 8px 0 10px; }
+h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 10px; }
+.meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.meta span { font-size: 13px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; color: var(--ink2); }
+.lead { font-size: 16px; color: var(--ink2); background: #fff; border-left: 4px solid var(--v); border-radius: 0 12px 12px 0; padding: 12px 16px; margin: 0 0 26px; }
+.step { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 20px 20px 18px; margin-bottom: 22px; box-shadow: 0 10px 30px -22px rgba(40,44,110,.35); }
+.step h2 { display: flex; align-items: center; gap: 12px; font-size: 21px; margin: 0 0 6px; }
+.step h2 i { font-style: normal; flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--v); color: #fff; display: grid; place-items: center; font-size: 17px; }
+.step .d { color: var(--ink2); margin: 0 0 14px 46px; }
+.shot { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+.shot img { display: block; width: 100%; }
+.box { position: absolute; border: 3px solid var(--mark); border-radius: 8px; }
+.tag { position: absolute; left: -3px; transform: translateY(-100%); display: flex; align-items: center; gap: 6px; white-space: nowrap; background: var(--mark); color: #fff; font-size: 12.5px; font-weight: 700; padding: 3px 9px 3px 4px; border-radius: 8px 8px 8px 0; max-width: 520px; overflow: hidden; text-overflow: ellipsis; }
+.tag.below { transform: none; top: calc(100% + 4px); border-radius: 0 8px 8px 8px; }
+.tag.below.right { border-radius: 8px 0 8px 8px; }
+.tag.right { left: auto; right: -3px; border-radius: 8px 8px 0 8px; }
+.tag b, .notes b { flex: none; width: 19px; height: 19px; border-radius: 50%; background: #fff; color: var(--mark); display: grid; place-items: center; font-size: 12px; }
+.notes { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.notes li { display: flex; gap: 8px; align-items: flex-start; font-size: 14.5px; }
+.notes b { background: var(--mark); color: #fff; margin-top: 3px; }
+.ex { background: linear-gradient(135deg, #f3f2ff, #eefbfd); border: 1px solid #dcd8ff; border-radius: 16px; padding: 16px 20px; margin: 0 0 24px; }
+.ex h3 { margin: 0 0 8px; font-size: 17px; color: var(--v); }
+.ex ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.ex li { background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 15px; }
+.ex p { margin: 10px 0 0; color: var(--ink2); font-size: 14px; }
+@media print { body { background: #fff; font-size: 16px; } .notes li { font-size: 15.5px; } .step .d { font-size: 15.5px; } .step, .ex, .lead { break-inside: avoid; } .wrap { padding-top: 8px; } }
+.pb { break-before: page; }
+.divider { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; background: linear-gradient(135deg, #f3f2ff, #eefbfd); border-radius: 24px; }
+.divider .no { font-size: 120px; font-weight: 900; line-height: 1; background: linear-gradient(120deg, var(--v), #12b5cb); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.divider h2 { font-size: 46px; margin: 18px 0 12px; } .divider .m { color: var(--ink2); font-size: 17px; margin-bottom: 18px; } .divider p { font-size: 18px; color: var(--ink2); max-width: 720px; }
+.cover { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; }
+.cover h1 { font-size: 64px; } .cover .ver { margin-top: 28px; display: grid; gap: 8px; font-size: 17px; color: var(--ink2); } .cover .ver b { color: var(--ink); }
+.toc a { display: flex; gap: 18px; align-items: baseline; text-decoration: none; color: inherit; padding: 16px 0; border-bottom: 1px solid var(--line); } .toc i { font-style: normal; font-weight: 900; color: var(--v); font-size: 26px; width: 48px; } .toc b { font-size: 21px; } .toc span { color: var(--ink2); font-size: 14.5px; display: block; }
+.faq { display: grid; gap: 12px; } .qa { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; break-inside: avoid; } .qa b { font-size: 17px; } .qa p { margin: 6px 0 0; color: var(--ink2); }
+.foot { text-align: center; color: var(--ink3); font-size: 12.5px; margin-top: 28px; }
+@media (max-width: 640px) { h1 { font-size: 26px; } .step .d { margin-left: 0; } .tag { font-size: 11px; max-width: 70vw; } }
+</style></head><body><div class="wrap">
+<div class="eb">AI 百业 · 操作手册 04</div>
+<h1>和我聊：问数字职人这一行</h1>
+<div class="meta"><span>想了解一个职业的人</span><span>随时</span></div>
+<p class="lead">想知道这一行挣多少、怎么入行、往上怎么走，直接问它。它说的每句话都带来源，点开能看到出自平方的哪份资料；资料里没有的，它会说没有，不编。</p>
+<section class="ex"><h3>可以这样问</h3><ul><li>「「刚入行能拿多少钱？往上怎么走？」」</li><li>「「我是机械专业的，转焊接工艺要补哪些证？」」</li><li>「「现在哪些公司在招，在哪些城市？」」</li><li>「「你说的『气先于弧』到底怎么操作才算不违规？」」</li></ul><p>可以给它起个名字（只有你自己看得到）。问得越具体，答得越具体。</p></section>
+<section class="step"><h2><i>1</i>在主页点「和我聊」</h2><p class="d">空间里任何一页的右下角也有「和我聊」按钮。</p>
+      <div class="shot"><div style="aspect-ratio:144000/22500;overflow:hidden"><img src="img/w-hub.jpg" alt="" style="width:100.000%;max-width:none;margin-left:-0.000%;margin-top:-46.875%"></div><div class="box" style="left:7.50%;top:40.00%;width:12.20%;height:56.00%"><span class="tag"><b>1</b>和我聊</span></div></div>
+      <ul class="notes"><li><b>1</b><span>和我聊</span></li></ul></section>
+<section class="step"><h2><i>2</i>问它，看出处</h2><p class="d">回答里的小角标就是来源，下面的卡片能展开看原始资料；右边还有几个顺着往下问的建议。</p>
+      <div class="shot"><img src="img/chat-2.jpg" alt=""><div class="box" style="left:80.00%;top:16.70%;width:19.00%;height:5.00%"><span class="tag right"><b>1</b>你的问题</span></div><div class="box" style="left:67.70%;top:23.30%;width:31.20%;height:21.70%"><span class="tag"><b>2</b>回答，小角标是来源</span></div><div class="box" style="left:67.70%;top:46.70%;width:31.20%;height:21.60%"><span class="tag"><b>3</b>来源卡：职业图谱、薪资……</span></div><div class="box" style="left:67.50%;top:72.50%;width:31.50%;height:18.50%"><span class="tag"><b>4</b>快捷提问、顺着问</span></div><div class="box" style="left:1.60%;top:73.00%;width:25.00%;height:17.00%"><span class="tag"><b>5</b>它是谁，可以给它起名字</span></div></div>
+      <ul class="notes"><li><b>1</b><span>你的问题</span></li><li><b>2</b><span>回答，小角标是来源</span></li><li><b>3</b><span>来源卡：职业图谱、薪资……</span></li><li><b>4</b><span>快捷提问、顺着问</span></li><li><b>5</b><span>它是谁，可以给它起名字</span></li></ul></section>
+
+<div class="foot">AI 百业 · 编写于 2026-11-03 · 适用 AI 百业 · 数字技能空间（2026-11-03 线上版本） · 操作手册 04 · 和我聊：问数字职人这一行</div>
+</div></body></html>
