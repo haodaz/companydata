@@ -143,6 +143,7 @@ export function EntityDetailPage({ type, id }: { type: T; id: string }) {
   const places = d.links.filter(l => l.other_type === 'place');
   const tasks = d.links.filter(l => l.other_type === 'task');
   const stations = d.links.filter(l => l.other_type === 'station');
+  const methods = d.links.filter(l => l.other_type === 'method');   // 实验方法库（058）：这件设备用在哪些实验方法里
   const groups = Array.from(new Set(c.fields.map(f => f.group)));
   const goto = (t: string, oid: number) => router.push(t === 'occupation' ? `/admin/db-occupation/${oid}` : t === 'task' ? '#' : `${ENTITY_TABLES[t as T].path}/${oid}`);
 
@@ -223,6 +224,9 @@ export function EntityDetailPage({ type, id }: { type: T; id: string }) {
           </Card>}
         </Col>
         <Col xs={24} lg={10}>
+          {!!methods.length && <Card size="small" title={`用在这些实验方法里（${methods.length}）`} style={{ marginBottom: 16 }}>
+            <Space wrap>{methods.map(l => <Tag key={l.id} color="purple" style={{ cursor: 'pointer' }} onClick={() => router.push(`/admin/db-method?id=${l.other_id}`)}>{l.other.name}</Tag>)}</Space>
+          </Card>}
           <Card size="small" title={`${type === 'item' ? '要会用它的职业' : type === 'station' ? '在这个工位上工作的职业' : '在这里工作的职业'}（${occ.length}）`} style={{ marginBottom: 16 }}>
             {occ.length ? occ.map(l => <div key={l.id} style={{ marginBottom: 8 }}>
               <a onClick={() => goto('occupation', l.other_id)} style={{ fontWeight: 600 }}>{l.other.name}</a>

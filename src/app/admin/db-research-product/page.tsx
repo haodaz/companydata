@@ -27,14 +27,15 @@ export default function DbResearchProductPage() {
   const [data, setData] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const [stats, setStats] = useState<any>({});
-  const [f, setF] = useState({ type: '', category: '', origin: '', supplier: '', search: '', doc: false, price: false });
+  const [f, setF] = useState({ type: '', category: '', origin: '', supplier: '', method: '', search: '', doc: false, price: false });
+  const [methodNames, setMethodNames] = useState<Record<string, { id: number; name: string }>>({});
   const [page, setPage] = useState(1);
   const [detail, setDetail] = useState<any>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const q = new URLSearchParams({ page: String(page), pageSize: '50', type: f.type, category: f.category, origin: f.origin, supplier: f.supplier, search: f.search, doc: f.doc ? '1' : '', price: f.price ? '1' : '' });
+      const q = new URLSearchParams({ page: String(page), pageSize: '50', type: f.type, category: f.category, origin: f.origin, supplier: f.supplier, method: f.method, search: f.search, doc: f.doc ? '1' : '', price: f.price ? '1' : '' });
       const j = await (await fetch(`/api/db/research-products?${q}`)).json();
       if (!j.success) throw new Error(j.error);
       setData(j.data); setTotal(j.total); setStats(j.stats);
@@ -46,6 +47,8 @@ export default function DbResearchProductPage() {
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
     const s = q.get('supplier'); if (s) setF(x => ({ ...x, supplier: s }));
+    const m = q.get('method'); if (m) setF(x => ({ ...x, method: m }));
+    fetch('/api/db/research-methods').then(r => r.json()).then(j => { if (j.success) setMethodNames(Object.fromEntries(j.data.map((x: any) => [x.key, { id: x.id, name: x.name }]))); }).catch(() => {});
     const id = Number(q.get('id')); if (id) open(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -81,6 +84,7 @@ export default function DbResearchProductPage() {
           <Checkbox checked={f.doc} onChange={e => set({ doc: e.target.checked })}>有资料</Checkbox>
           <Checkbox checked={f.price} onChange={e => set({ price: e.target.checked })}>有明码价格</Checkbox>
           {f.supplier && <Tag closable onClose={() => set({ supplier: '' })}>只看厂商 #{f.supplier}</Tag>}
+          {f.method && <Tag color="purple" closable onClose={() => set({ method: '' })}>只看方法：{methodNames[f.method]?.name || f.method}</Tag>}
         </Space>
         <Table rowKey="id" size="small" loading={loading} dataSource={data}
           locale={{ emptyText: <Empty description="还没有产品——先从厂商官网抓一批" /> }}
@@ -127,6 +131,7 @@ export default function DbResearchProductPage() {
               { key: 'lab', label: '标签', span: 2, children: split(detail.labels).map((x: string) => <Tag key={x}>{x}</Tag>) },
               { key: 'dis', label: '适用学科', span: 2, children: split(detail.disciplines).join('、') || '—' },
               { key: 'app', label: '应用场景', span: 2, children: split(detail.applications).join('、') || '—' },
+              { key: 'met', label: '实验方法', span: 2, children: String(detail.methods || '').split(',').filter(Boolean).map((k: string) => <Tag key={k} color="purple" style={{ cursor: 'pointer' }} onClick={() => methodNames[k] && router.push(`/admin/db-method?id=${methodNames[k].id}`)}>{methodNames[k]?.name || k}</Tag>) },
               ...(['consulting_services', 'practical_training'].includes(detail.type) ? [{ key: 'mode', label: '服务方式', children: detail.service_mode || '—' }, { key: 'reg', label: '服务地区', children: detail.service_region || '—' }] : []),
               { key: 'ext', label: '编号', children: <Text code style={{ fontSize: 12 }}>{detail.external_id}</Text> },
               { key: 'src', label: '来源', children: detail.source_url ? <a href={detail.source_url} target="_blank" rel="noreferrer">产品页</a> : '—' },

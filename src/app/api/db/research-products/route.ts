@@ -26,12 +26,12 @@ export async function GET(req: Request) {
       const { data: docs } = await supabaseAdmin.from('research_product_docs').select('id, doc_type, title, url, file_type, size_bytes, lang, storage_path, pages, fetched_at').eq('product_id', id).not('if_delete', 'is', true).order('doc_type');
       return NextResponse.json({ success: true, data: { ...p, images: ((p.images || []) as any[]).map(g => ({ ...g, src: imgUrl(g) })), docs: docs || [] } });
     }
-    const type = u.get('type') || '', category = u.get('category') || '', supplier = u.get('supplier') || '', origin = u.get('origin') || '';
+    const type = u.get('type') || '', category = u.get('category') || '', supplier = u.get('supplier') || '', origin = u.get('origin') || '', method = u.get('method') || '';
     const onlyDoc = u.get('doc') === '1', onlyPrice = u.get('price') === '1', search = (u.get('search') || '').trim().toLowerCase();
     const page = Math.max(1, parseInt(u.get('page') || '1')), pageSize = Math.min(200, Math.max(10, parseInt(u.get('pageSize') || '50')));
 
     const { data } = await selectAll(() => supabaseAdmin.from('research_products')
-      .select('id, external_id, name, brand, model_no, specification, price, type, kind, category, labels, disciplines, applications, brand_origin, service_mode, status, supplier_id, source_url, specs, images, human_review_status, updated_at')
+      .select('id, external_id, name, brand, model_no, specification, price, type, kind, category, labels, disciplines, applications, methods, brand_origin, service_mode, status, supplier_id, source_url, specs, images, human_review_status, updated_at')
       .not('if_delete', 'is', true).order('id'));
     const all = data as any[];
     const { data: docRows } = await selectAll(() => supabaseAdmin.from('research_product_docs').select('product_id, doc_type').not('if_delete', 'is', true).order('id'));
@@ -62,6 +62,7 @@ export async function GET(req: Request) {
     if (type) rows = rows.filter(p => p.type === type);
     if (category) rows = rows.filter(p => p.category === category);
     if (supplier) rows = rows.filter(p => String(p.supplier_id) === supplier);
+    if (method) rows = rows.filter(p => String(p.methods || '').split(',').includes(method));   // 实验方法库（058）跳过来
     if (origin === 'domestic') rows = rows.filter(p => p.brand_origin === 'domestic' || (!p.brand_origin && isDomesticCountry(sups.get(p.supplier_id)?.country)));
     if (origin === 'imported') rows = rows.filter(p => !(p.brand_origin === 'domestic' || (!p.brand_origin && isDomesticCountry(sups.get(p.supplier_id)?.country))));
     if (onlyDoc) rows = rows.filter(p => docsBy.has(p.id));

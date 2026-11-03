@@ -89,7 +89,7 @@ export async function linksOf(type: string, id: number) {
   const tables: Record<string, [string, string]> = {
     occupation: ['occupations', 'id, name, career_category'], place: ['work_places', 'id, name, category, image_url'], item: ['work_items', 'id, name, kind, category, image_url, lab_bench'],
     station: ['work_stations', 'id, name, image_url, lab_bench'], task: ['typical_tasks', 'id, name, occupation_id, difficulty, frequency'],
-    standard: ['industry_standards', 'id, code, title'], company: ['companies', 'id, name, logo_url'],
+    standard: ['industry_standards', 'id, code, title'], company: ['companies', 'id, name, logo_url'], method: ['research_methods', 'id, name, field'],
   };
   const lookup: Record<string, Map<number, any>> = {};
   await Promise.all(Object.entries(tables).map(async ([t, [table, cols]]) => {

@@ -26,6 +26,7 @@ const NAV: NavItem[] = [
   { key: 'db-company',   icon: <BankOutlined />,       label: '企业实体库',    path: '/admin/db-company',   group: '数据资产' },
   { key: 'db-supplier',  icon: <ShopOutlined />, label: '科研仪器厂商',  path: '/admin/db-supplier',  group: '数据资产', badge: '新' },
   { key: 'db-research-product', icon: <ExperimentOutlined />, label: '科研产品库', path: '/admin/db-research-product', group: '数据资产', badge: '新' },
+  { key: 'db-method',    icon: <ExperimentOutlined />, label: '实验方法库',    path: '/admin/db-method',    group: '数据资产', badge: '新' },
   { key: 'db-job',       icon: <ReadOutlined />,       label: '校招岗位库',    path: '/admin/db-job',       group: '数据资产' },
   { key: 'db-occupation', icon: <IdcardOutlined />,    label: '职业实体库',    path: '/admin/db-occupation', group: '数据资产', badge: '新' },
   { key: 'db-place',     icon: <EnvironmentOutlined />, label: '工作场所库',    path: '/admin/db-place',     group: '数据资产', badge: '新' },
