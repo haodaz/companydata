@@ -25,6 +25,11 @@ h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 
 .notes { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
 .notes li { display: flex; gap: 8px; align-items: flex-start; font-size: 14.5px; }
 .notes b { background: var(--mark); color: #fff; margin-top: 3px; }
+.ex { background: linear-gradient(135deg, #f3f2ff, #eefbfd); border: 1px solid #dcd8ff; border-radius: 16px; padding: 16px 20px; margin: 0 0 24px; }
+.ex h3 { margin: 0 0 8px; font-size: 17px; color: var(--v); }
+.ex ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.ex li { background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 15px; }
+.ex p { margin: 10px 0 0; color: var(--ink2); font-size: 14px; }
 .foot { text-align: center; color: var(--ink3); font-size: 12.5px; margin-top: 28px; }
 @media (max-width: 640px) { h1 { font-size: 26px; } .step .d { margin-left: 0; } .tag { font-size: 11px; max-width: 70vw; } }
 </style></head><body><div class="wrap">
@@ -32,6 +37,7 @@ h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 
 <h1>看答卷、比候选人</h1>
 <div class="meta"><span>给出任务的人</span><span>随时</span></div>
 <p class="lead">候选人交卷后，在这道题的空间里看分数、看报告、把几个人并排比。</p>
+
 <section class="step"><h2><i>1</i>题目空间：先看总数</h2><p class="d">顶部四个数：多少人参与、多少人交卷、平均分、AI 基线（AI 自己做一遍的分）。这个空间的链接带管理密钥，可以转给同事，别发给候选人。</p>
       <div class="shot"><img src="img/own-1.png" alt=""><div class="box" style="left:13.00%;top:26.80%;width:16.60%;height:8.40%"><span class="tag"><b>1</b>参与 / 交卷 / 平均分 / AI 基线</span></div><div class="box" style="left:51.20%;top:65.80%;width:9.20%;height:5.20%"><span class="tag"><b>2</b>「做题情况与评分」看每个人</span></div></div>
       <ul class="notes"><li><b>1</b><span>参与 / 交卷 / 平均分 / AI 基线</span></li><li><b>2</b><span>「做题情况与评分」看每个人</span></li></ul></section>

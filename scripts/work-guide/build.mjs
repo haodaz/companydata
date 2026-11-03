@@ -33,6 +33,11 @@ h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 
 .notes { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
 .notes li { display: flex; gap: 8px; align-items: flex-start; font-size: 14.5px; }
 .notes b { background: var(--mark); color: #fff; margin-top: 3px; }
+.ex { background: linear-gradient(135deg, #f3f2ff, #eefbfd); border: 1px solid #dcd8ff; border-radius: 16px; padding: 16px 20px; margin: 0 0 24px; }
+.ex h3 { margin: 0 0 8px; font-size: 17px; color: var(--v); }
+.ex ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.ex li { background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 15px; }
+.ex p { margin: 10px 0 0; color: var(--ink2); font-size: 14px; }
 .foot { text-align: center; color: var(--ink3); font-size: 12.5px; margin-top: 28px; }
 @media (max-width: 640px) { h1 { font-size: 26px; } .step .d { margin-left: 0; } .tag { font-size: 11px; max-width: 70vw; } }
 `;
@@ -59,6 +64,7 @@ function page(g) {
 <h1>${esc(g.title)}</h1>
 <div class="meta"><span>${esc(g.who)}</span><span>${esc(g.time)}</span></div>
 <p class="lead">${esc(g.lead)}</p>
+${g.examples ? `<section class="ex"><h3>开头可以这样说</h3><ul>${g.examples.say.map(x => `<li>「${esc(x)}」</li>`).join('')}</ul>${g.examples.skip ? `<p>${esc(g.examples.skip)}</p>` : ''}</section>` : ''}
 ${steps}
 <div class="foot">百业AI｜真活 · 操作手册 ${g.no} · ${esc(g.title)}</div>
 </div></body></html>`;

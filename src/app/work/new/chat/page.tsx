@@ -18,12 +18,13 @@ type Item =
 type Art = { kind: 'work_task'; token: string; owner_key: string; title: string; task_id: string; _n?: number };
 
 const MODELS = MODEL_OPTIONS.filter(m => /^(claude-|gpt-|qwen)/.test(m.id));
-const RUNNING: Record<string, string> = { find_company: '在企业库里搜', company_brief: '看这家企业的材料', suggest_roles: '找岗位', my_references: '看参考资料', read_reference: '读参考资料（约 1 分钟）', create_task: '出任务中（约 2 分钟：拼材料、锚定问题、写任务书、做材料包、定标准）', task_summary: '看这道题', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', revise_task: '按意见修订' };
+const RUNNING: Record<string, string> = { find_company: '在企业库里搜', company_brief: '看这家企业的材料', suggest_roles: '找岗位', my_references: '看参考资料', read_reference: '读参考资料（约 1 分钟）', create_task: '出任务中（约 2 分钟：拼材料、锚定问题、写任务书、做材料包、定标准）', task_summary: '看这道题', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', revise_task: '按意见修订', update_task_settings: '改设置' };
+// 2026-11-03：引导用户先用大白话说一句最实际的要求（不用一次说全，缺的助理会问）；点卡片把例句放进输入框改，不直接发
 const SUGGEST = [
-  { t: '直接说要找什么样的人', d: '不用先想职位名', p: '我要给武岳峰资本找一个能看懂具身智能的人来做投资，出一道题。' },
-  { t: '给一个岗位出任务', d: '说企业和岗位就行，其余它来问', p: '给宁德时代的供应链计划岗出一道题。' },
-  { t: '照我们以前的题出', d: '把过往用过的题贴给它，它换成这家企业', p: '我有一道以前校招用过的题，想照它的路数给宁德时代的供应链计划岗出一道。' },
-  { t: '先聊聊再出', d: '它一件一件问：企业、要找的人、考什么', p: '帮我出一道真活，你问我。' },
+  { t: '说你缺什么样的人', p: '我们要招一个能把 IP 形象延展成表情包、海报、短视频封面的设计师，想看看他真实干活的样子。' },
+  { t: '说你最近卡在哪', p: '我们新用户注册转化一直往下掉，想找个能把数据理清楚、说出问题到底在哪的人。' },
+  { t: '照以前用过的题出', p: '我们去年校招用过一道题，想照这个思路换成今年的业务再出一道，题我等下贴给你。' },
+  { t: '还没想好', p: '想给宁德时代出一道真活，但还没想好考什么，你先问我。' },
 ];
 
 export default function WorkChatPage() {
@@ -94,11 +95,11 @@ export default function WorkChatPage() {
           {!items.length ? (
             <div className="wc-hero">
               <div className="wc-eyebrow">TRUE WORK, TRUE TALENT · 出任务助理</div>
-              <h1>说说你要找什么样的人</h1>
-              <p>企业、要找的人、想考什么——缺哪件我问哪件；有过往用过的题可以直接贴给我，我照它的路数出。题出好在右边打开，不对就当场改。</p>
+              <h1>像跟同事交代一样，说一句最实际的要求</h1>
+              <p>不用一次说全。哪家企业、找什么样的人、考什么、做多久——缺的我一件件问，没说的先按常理定好给你确认。素材和以前用过的题，随时传给我。题出好在右边打开，不对就当场改。</p>
               <Composer text={text} setText={setText} busy={busy} send={send} stop={() => abortRef.current?.abort()} model={model} setModel={setModel} autoFocus />
-              <div className="wc-sec" style={{ margin: '24px 2px 10px' }}>可以从这里开始</div>
-              <div className="wc-suggest">{SUGGEST.map(x => <button key={x.t} className="wc-card" onClick={() => send(x.p)}><b>{x.t}</b><span>{x.d}</span></button>)}</div>
+              <div className="wc-sec" style={{ margin: '24px 2px 10px' }}>比如这样说（点一下放进输入框，改成你的话再发）</div>
+              <div className="wc-suggest">{SUGGEST.map(x => <button key={x.t} className="wc-card" onClick={() => { setText(x.p); setTimeout(() => (document.querySelector('.wc-composer textarea') as HTMLTextAreaElement | null)?.focus(), 0); }}><b>{x.t}</b><span>「{x.p}」</span></button>)}</div>
             </div>
           ) : (
             <>
@@ -153,7 +154,7 @@ function Composer({ text, setText, busy, send, stop, model, setModel, placeholde
   return (
     <div className="wc-composer">
       {files.length > 0 && <div className="wc-files">{files.map(f => <span key={f.key} className={`wc-file${f.err ? ' err' : !f.line ? ' busy' : ''}`}>📎 {f.name}<em>{f.err ? f.err : !f.line ? '上传中，图片要先看一遍…' : '已就绪'}</em><button onClick={() => setFiles(x => x.filter(y => y.key !== f.key))} title="去掉">×</button></span>)}</div>}
-      <textarea value={text} autoFocus={autoFocus} rows={2} placeholder={placeholder || '比如：给宁德时代找一个能做欧洲交付计划的人，出一道题'} onChange={e => setText(e.target.value)}
+      <textarea value={text} autoFocus={autoFocus} rows={2} placeholder={placeholder || '说一句最实际的要求，比如：我们缺一个能把销售数据理清楚的人'} onChange={e => setText(e.target.value)}
         onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); go(); } }} />
       <div className="wc-bar">
         <select className="wc-model" value={model} onChange={e => setModel(e.target.value)}>{MODELS.map(m => <option key={m.id} value={m.id}>{m.label}</option>)}</select>
