@@ -43,6 +43,19 @@ async function loadEnrollment(id: string) {
   return { ...e, student: st, model: (st?.model_id as string | null) || null, nova: (e.nova_name as string) || 'NOVA', notebook: (e.notebook || {}) as Notebook };
 }
 const needModel = (en: { model: string | null }) => { if (!en.model) throw new Error('这位学员还没接上模型接口（客户模型对接后才能上课和考试）'); return en.model; };
+/** 学员的方法课学分（迁移 059 没跑时静默跳过，学籍笔记里照样有） */
+async function saveCredits(en: { student: any }, credits: Record<string, any>) {
+  if (!en.student?.id || !('method_credits' in (en.student || {}))) return;
+  await db.from('college_students').update({ method_credits: credits, updated_at: new Date().toISOString() }).eq('id', en.student.id).then(() => {}, () => {});
+}
+/** 这份学籍考试时装哪些方法卡：学籍里修过的 + 学员在别的方向修过、这门课也用得上的（学分互认） */
+async function methodKeysFor(en: { space_id: string; notebook: Notebook; student: any }) {
+  const own = en.notebook.methods || [];
+  const credited = Object.keys(en.student?.method_credits || {});
+  if (!credited.length) return own;
+  const usable = (await methodsForSpace(en.space_id, 8)).map(m => m.key).filter(k => credited.includes(k));
+  return [...new Set([...own, ...usable])].slice(0, 6);
+}
 async function saveNotebook(id: string, nb: Notebook) { await db.from('college_enrollments').update({ notebook: nb, updated_at: new Date().toISOString() }).eq('id', id); }
 
 /** 装进考试的东西 = 技能卡 + 这一章的教材要点 + 错题本总结的规则（当成「这位学员自己的补充规则」）+ 修过的方法卡 */
@@ -65,6 +78,10 @@ export async function studyMethods(enrollmentId: string, keys?: string[]) {
   if (!ms.length) throw new Error('这门课在实验方法库里没对上方法（不是实验类课程，或方法库还没有）');
   const nb: Notebook = { ...en.notebook, methods: [...new Set([...(en.notebook.methods || []), ...ms.map(m => m.key)])].slice(0, 6) };
   await saveNotebook(en.id, nb);
+  // 学分记在学员身上（迁移 059）：换一个科研方向不用重修
+  const credits = { ...(en.student?.method_credits || {}) };
+  for (const m of ms) credits[m.key] = { exams: [], ...(credits[m.key] || {}), name: m.name, studied_at: credits[m.key]?.studied_at || new Date().toISOString(), from_enrollment: credits[m.key]?.from_enrollment || en.id };
+  await saveCredits(en, credits);
   return { methods: ms.map(m => ({ key: m.key, name: m.name, steps: m.steps?.length || 0, pitfalls: m.pitfalls?.length || 0, reviewed: m.human_review_status === 'complete' })) };
 }
 
@@ -220,7 +237,7 @@ export async function runChapterExam(enrollmentId: string, chapterId: string | n
   if (withSkill && !skill) throw new Error('这门课还没有技能卡（老师傅还没教），只能跑入学考');
   const chapter = pickChapter(space, chapterId);
   const useSkill = withSkill && !!skill;
-  const methods = useSkill && !opts.noMethods ? await loadMethods(en.notebook.methods || []) : [];
+  const methods = useSkill && !opts.noMethods ? await loadMethods(await methodKeysFor(en)) : [];
   const equipped = useSkill ? augmentSkill(skill, en.notebook, chapter?.id, en.nova, methods) : null;
   const cost = { space_id: en.space_id, chapter_id: chapter?.id || null, stage: 'use', actor: `college:${en.id}` };
   const sim: Sim | null = chapter?.sim?.steps?.length ? chapter.sim : null;
@@ -247,8 +264,14 @@ export async function runChapterExam(enrollmentId: string, chapterId: string | n
     if (useSkill) await recordInvocation({ ...base, kind: 'answer', actor: `${en.nova} · 学院毕业考`, actor_location: '百业学院', context: '学员装配老师傅技能卡和学习笔记后走一遍这一章。', output_summary: `得分 ${score}` });
     await recordInvocation({ ...base, kind: 'grade', actor: `${en.nova} · ${useSkill ? '毕业考' : '入学考'}`, actor_location: '百业学院', context: '按这一章的评分标准评学员的作答。', output_summary: `得分 ${score}` });
   }
+  // 装了方法卡的考试记进这门方法的学分（按方法出成绩单用）
+  if (methods.length && en.student?.method_credits) {
+    const credits = { ...en.student.method_credits };
+    for (const m of methods) { const c = credits[m.key] || { name: m.name, studied_at: new Date().toISOString(), from_enrollment: en.id, exams: [] }; credits[m.key] = { ...c, exams: [...(c.exams || []), { enrollment: en.id, chapter: chapter?.title || '', chapter_id: chapter?.id || null, submission: sub.id, score: Number(sub.score), at: new Date().toISOString() }].slice(-40) }; }
+    await saveCredits(en, credits);
+  }
   await recomputeEnrollment(en.id);
-  return { id: sub.id, score: Number(sub.score), match: sub.match, chapter: chapter?.title || '', withSkill: useSkill, passed: Number(sub.score) >= 60 };
+  return { id: sub.id, score: Number(sub.score), match: sub.match, chapter: chapter?.title || '', withSkill: useSkill, passed: Number(sub.score) >= 60, methods: methods.map(m => m.name) };
 }
 
 /** 用学院口径重评一份学籍已有的作答（同一份答案、同一把尺）：不改作答，只改分数和评语 */
