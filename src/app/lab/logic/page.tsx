@@ -381,6 +381,13 @@ export default function LabLogicPage() {
         </tbody></table>
         <p>流水线 {F('scripts/research-exam.mts')}：build（AI 代导师 Claude Opus 出题 → 千问交叉核对答案、简介有没有泄露、埋错是不是真错 → {F('scripts/data/research-exams/<arXiv id>.json')}，status: ai_draft，corrections 留给导师）；run（学员三题分开答，B 程序评、A / C 由 Opus 对照答案评 → {F('docs/科研能力测评/')}）。论文只用 arXiv 上 <b>CC BY</b>、<b>最近发表</b>的（被考模型没见过，盲测才算数）。第一批：AI 研发 · 模型训练方向，跑通再扩学科。</p>
 
+        <h3>D 复算与导师校正入口（11-03）</h3>
+        <p><b>D 复算</b>：模型训练类论文大多不公开数据和代码，复现要重训，不现实；改成用论文表格里的原始数字复算正文的结论数字（答案是论文自己的，不用下载数据），千问不看答案独立算，对不上的标疑问。<b>导师校正入口</b>：题目在库里（迁移 060 {F('college_research_exams')}），导师凭链接 {F('/college/review/<token>')} 不用注册，逐项「通过 / 改 / 作废」，改动署名留痕；教务处「科研测评题」发链接；考试优先用导师校正过的版本、跳过作废项。</p>
+
+        <h3>私域课（11-03，迁移 061）</h3>
+        <p>实验室拿六类材料来联合培养：研究方向 / 组内规格 / 实验要求 / 内部文献 / 组内设备 / 私域知识（{F('college_private_materials')}，只归这一家）。最新一份内部文献出私域题（scope private + org）；学员考这家的题时，其余材料拼成私域知识包（{F('privatePack')}，出题那份排除）。演示材料由 AI 按机构档案起草（{F('scripts/college-private-demo.mts')}，设备型号取科研产品库真实产品），实验室只改。教务处「私域课」页按六类看 / 加 / 改。</p>
+        <p>演示（演示·先进能源材料研究院，3 模型 × 带 / 不带知识包，样本小只看方向）：盲测 qwen 50→67%、Claude 17→50%（不带时自信地猜错，Brier 0.39，比全猜一半还差）；审稿 qwen 埋错找到 0→2/3（规格里的数字一对就露馅）；复算、读懂不受知识包影响。<b>私域数据的价值在没见过的研究上判断得更靠谱。</b></p>
+
         <h3>防幻觉：程序硬检查</h3>
         <p>学院评卷 {F('gradeCollege')} 加了一道不靠评卷模型的检查 {F('fabricatedCitations')}：作答里引用的文献（DOI、「X et al.」「某某等（2021）」「Smith, 2020」）在题面 / 材料 / 技能卡里都找不到，判编造，总分封顶 45，记进 {F('grading.fabricated')}。所有课程都适用。</p>
 
