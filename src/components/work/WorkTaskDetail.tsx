@@ -1,9 +1,10 @@
 'use client';
 
 /** 真活台 · 一道题的详情（后台和出题人管理页共用）：问题与任务 / 材料包 / rubric / AI 基线 / 作答 */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Descriptions, Drawer, InputNumber, Space, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
 import { WorkReport } from '@/components/work/WorkReport';
+import { WorkProcess } from '@/components/work/WorkProcess';
 import { Md } from '@/components/ws/Md';
 
 const { Text, Paragraph } = Typography;
@@ -14,6 +15,12 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
   const isNeed = String(T.role || '').trim().length > 14 || /[，,。、]|要一个|能看懂|能把|的人/.test(String(T.role || ''));
   const { message } = App.useApp();
   const [report, setReport] = useState<any>(null);
+  // 打开某人的报告时再取全过程（事件 + 问 AI 原文 + 稿子快照），列表里不带，免得一次拉太大
+  const [proc, setProc] = useState<{ id: string; events: any[]; ai_chat: any[] } | null>(null);
+  useEffect(() => {
+    if (!report?.id || proc?.id === report.id) return;
+    fetch(`/api/work/${T.share_token}/sessions/${report.id}?full=1`).then(r => r.json()).then(j => j.ok && setProc({ id: report.id, events: j.session.events || [], ai_chat: j.session.ai_chat || [] })).catch(() => {});
+  }, [report?.id]); // eslint-disable-line react-hooks/exhaustive-deps
   // 一道任务发给一批人（2026-10-28）：交了卷的按分排名；勾 2–4 人并排对比；导出候选名单
   const [picked, setPicked] = useState<string[]>([]);
   const [cmpOpen, setCmpOpen] = useState(false);
@@ -140,6 +147,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
             {/* 按 Markdown 渲染：表格、标题、白板 / 画布交卷截图都直接看得到 */}
             <div className="wk-deliv" style={{ padding: 12, fontSize: 13.5, lineHeight: 1.75, maxHeight: 460, overflow: 'auto' }}>{report.deliverable ? <Md text={report.deliverable} /> : <span style={{ color: '#999' }}>（没有交付物文本：开放模式 / 插件作答看上传文件与交付说明）</span>}</div>
           </div>
+          {proc && proc.id === report.id ? <div style={{ marginBottom: 14 }}><WorkProcess events={proc.events} aiChat={proc.ai_chat} materials={T.materials} deliverables={T.task?.deliverables} /></div> : <div style={{ color: '#999', fontSize: 13, marginBottom: 14 }}>读取答题历程…</div>}
           <WorkReport report={report.report} participant={report.participant} />
         </>}
       </Drawer>

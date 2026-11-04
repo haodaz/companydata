@@ -53,9 +53,18 @@ export async function describeFrames(frames: { t: number; jpeg: Buffer }[], task
 export async function readTextFiles(files: { name: string; url: string; size: number }[]): Promise<string> {
   const parts: string[] = [];
   for (const f of files) {
+    const head = `### 文件 [${f.name}](${f.url})`;
     if (/\.(txt|md|csv|json|tsv)$/i.test(f.name) && f.size < 400_000) {
-      try { const txt = await (await fetch(f.url)).text(); parts.push(`### 文件 ${f.name}\n${txt.slice(0, 12000)}`); } catch { parts.push(`### 文件 ${f.name}（读取失败）`); }
-    } else parts.push(`### 文件 ${f.name}（${Math.round(f.size / 1024)} KB，未解析，按交付说明评）`);
+      try { const txt = await (await fetch(f.url)).text(); parts.push(`${head}\n${txt.slice(0, 12000)}`); } catch { parts.push(`${head}（读取失败）`); }
+    } else if (/\.(pdf|docx|xlsx?)$/i.test(f.name) && f.size < 30_000_000) {
+      try {
+        const buf = Buffer.from(await (await fetch(f.url)).arrayBuffer());
+        let txt = '';
+        if (/\.xlsx?$/i.test(f.name)) { const XLSX = await import('xlsx'); const wb = XLSX.read(buf, { type: 'buffer' }); txt = wb.SheetNames.slice(0, 6).map(n => `#### ${n}\n` + XLSX.utils.sheet_to_csv(wb.Sheets[n])).join('\n\n'); }
+        else { const { extractText } = await import('./samples'); txt = await extractText(buf, f.name); }
+        parts.push(txt.trim() ? `${head}（抽出的文字，以原文件为准）\n${txt.slice(0, 12000)}` : `${head}（${Math.round(f.size / 1024)} KB，没抽出文字，按交付说明评）`);
+      } catch { parts.push(`${head}（${Math.round(f.size / 1024)} KB，解析失败，按交付说明评）`); }
+    } else parts.push(`${head}（${Math.round(f.size / 1024)} KB，未解析，按交付说明评）`);
   }
   return parts.join('\n\n');
 }

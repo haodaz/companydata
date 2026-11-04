@@ -80,7 +80,7 @@ const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${Str
 
 /** 过程：事件流 → 阶段 / 高光 / 风险 / 六维。事件来自站内工作台（打开材料、问 AI、采纳、粘贴、改稿、空闲、交卷） */
 export async function analyzeProcess(task: WorkTask, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], deliverable: string, opts: { institution?: string; audit?: { idx: number; from: number; to: number; label: string; so_far: string; observations: { t: number; skill: string; signal: string; note: string }[] }[] } = {}): Promise<ProcessReport> {
-  const ev = [...events].sort((a, b) => a.t - b.t);
+  const ev = events.filter(e => e.type !== 'draft').sort((a, b) => a.t - b.t);
   const duration = Math.round(ev.length ? ev[ev.length - 1].t : 0);
   const stats: Record<string, number> = {};
   for (const e of ev) stats[e.type] = (stats[e.type] || 0) + 1;
@@ -158,7 +158,7 @@ export async function ensureAiPolicy(t: any): Promise<AiPolicy | null> {
 
 export async function analyzeAiUse(task: WorkTask, events: WorkEvent[], aiChat: { t: number; q: string; a: string }[], deliverable: string, opts: { institution?: string; policy?: AiPolicy | null } = {}): Promise<AiUseReport> {
   const pol = opts.policy || null;
-  const ev = [...events].sort((a, b) => a.t - b.t);
+  const ev = events.filter(e => e.type !== 'draft').sort((a, b) => a.t - b.t);
   const chat = [...aiChat].sort((a, b) => a.t - b.t);
   const adopts = ev.filter(e => e.type === 'adopt');
   const firstAsk = chat[0]?.t ?? null;

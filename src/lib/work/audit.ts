@@ -48,7 +48,7 @@ async function askJson(prompt: string, institution?: string): Promise<any> {
 /** 审一段：只看这一段的事件 + 对话，带着前面几段的笔记，追加观察、更新暂定六维 */
 export async function auditSegment(task: WorkTask, events: WorkEvent[], aiChat: Chat[], seg: { from: number; to: number }, idx: number, total: number, prior: AuditSegment[], opts: { institution?: string; deliverableHead?: string } = {}): Promise<AuditSegment> {
   const inSeg = (t: number) => t >= seg.from && t < seg.to;
-  const ev = events.filter(e => inSeg(e.t)).sort((a, b) => a.t - b.t);
+  const ev = events.filter(e => inSeg(e.t) && e.type !== 'draft').sort((a, b) => a.t - b.t);
   const chat = aiChat.filter(c => inSeg(c.t));
   const lines = ev.slice(0, 200).map(e => `[${fmt(e.t)}] ${e.type}${e.id ? ' ' + e.id : ''}${e.chars ? ` ${e.chars}字` : ''}${e.delta != null ? ` Δ${e.delta}` : ''}${e.host ? ' ' + e.host : ''}${e.note ? ' ' + s(e.note, 100) : ''}${e.text ? ' 「' + s(e.text, 220) + '」' : ''}`);
   const chatLines = chat.slice(0, 20).map(c => (c as any).src === 'plugin' ? `[${fmt(c.t)}] ${s(c.q, 120)}\n   页面上的对话（摘）：${s(c.a, 900)}` : `[${fmt(c.t)}] 问：${s(c.q, 300)}\n   答（摘）：${s(c.a, 240)}`);
