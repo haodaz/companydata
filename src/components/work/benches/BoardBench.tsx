@@ -11,6 +11,8 @@ import dynamic from 'next/dynamic';
 import '@excalidraw/excalidraw/index.css';
 import { BOARD_LIBRARY, buildBoardLibrary } from './boardLibrary';
 
+// 白板字体放本站（public/excalidraw-assets/fonts，从包里拷的）：默认从海外 CDN esm.sh 拉，国内网络会卡住导出截图（11-05 国内版验收）
+if (typeof window !== 'undefined') (window as any).EXCALIDRAW_ASSET_PATH = '/excalidraw-assets/';
 const Excalidraw = dynamic(() => import('@excalidraw/excalidraw').then(m => m.Excalidraw), { ssr: false, loading: () => <div style={{ display: 'grid', placeItems: 'center', height: '100%', color: '#999', fontSize: 13 }}>白板加载中…</div> });
 
 let libLoading: Promise<void> | null = null;   // 素材库是整页共用的一份（开发模式会挂两个白板实例）：整页只装一次

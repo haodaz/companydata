@@ -361,6 +361,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     (async () => {
       const shots: Record<string, string> = {};
       try {
+        (window as any).EXCALIDRAW_ASSET_PATH = '/excalidraw-assets/';   // 字体走本站，不走 esm.sh
         const { exportToBlob } = await import('@excalidraw/excalidraw');
         for (const p of boards) {
           const b = ps[p.id].board;

@@ -48,6 +48,18 @@ export function withMinutes(task: any, v: any) {
   return { old, mins, task: { ...task, time_minutes: mins, brief: swap(task?.brief), rules: (task?.rules || []).map(swap) } };
 }
 
+/** 原题直出 / 参照原题后清掉原企业痕迹（11-05） */
+export function scrubOrigin(task: WorkTask, origin: string[], name: string) {
+  const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(origin.map(esc).join('|'), 'g');
+  const has = new RegExp(re.source);   // 判断用不带 g 的（带 g 的 test 会记位置，逐句判断时漏判）
+  const basis = (b?: string) => { if (!b) return b; const keep = b.split(/(?<=[；;。\n])/).filter(x => !has.test(x) && !/原题|参照|对标|照搬|任务库/.test(x)); const out = keep.join('').trim(); return out || '按任务库同类任务的结构，结合本企业公开信息生成'; };
+  const swap = (v: any): any => typeof v === 'string' ? v.replace(re, name) : Array.isArray(v) ? v.map(swap) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, swap(x)])) : v;
+  for (const m of task.materials) m.basis = basis(m.basis);
+  for (const r of task.rubric) r.basis = basis(r.basis) || '';
+  task.problem = swap(task.problem); task.task = swap(task.task); task.materials = swap(task.materials); task.rubric = swap(task.rubric);
+}
+
 /** 改岗位名 / 要找的人：work_tasks.role 和 task.role 都换；题面、问题里出现的旧名字一起换（不经模型改写） */
 export function withRole(t: { role?: string; task?: any; problem?: any }, v: any) {
   const role = String(v || '').trim().slice(0, 120); if (!role) throw new Error('岗位名不能为空');
@@ -274,7 +286,7 @@ export interface WorkTask {
 /** 研究真活（2026-10-20）：科研院所招博士后 / 研究员 / 教授，考的是研究方向上的操作和研究技能 */
 export const RESEARCH_TASK_KINDS = ['实验设计（给研究问题，设计方案、对照、变量与样本量）', '数据分析（给一份真实格式的实验 / 观测数据，找异常、选统计方法、下结论并说清局限）', '文献与选题（给一个方向，梳理进展、指出研究空白、提可做的课题）', '审稿（给一篇稿件或摘要，找方法和结论上的问题，写审稿意见）', '写基金本子（研究目标、技术路线、可行性与风险）', '复现（用代码复现论文里的一个结果并解释差异）'];
 
-export async function generateTask(ctx: WorkContext, role: string, opts: { model?: string; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire'; attachments?: Attachment[] ; bankRefs?: string; base?: { text: string; mode: 'base' | 'ref'; title: string } } = {}): Promise<{ task: WorkTask; model: string }> {
+export async function generateTask(ctx: WorkContext, role: string, opts: { model?: string; /** 出题人点名的台子（一样交付物一个，11-05） */ modules?: string[]; focus?: string; env?: WorkEnvType; research?: boolean; sample?: SampleSkeleton | null; sampleMode?: 'reskin' | 'inspire'; attachments?: Attachment[] ; bankRefs?: string; base?: { text: string; mode: 'base' | 'ref'; title: string; origin?: string[] } } = {}): Promise<{ task: WorkTask; model: string }> {
   const model = opts.model || WORK_MODEL;
   const name = ctx.company?.name || (opts.research ? '这个科研团队' : '这家企业');
   const need = isNeedText(role);
@@ -310,7 +322,7 @@ ${opts.base.mode === 'base'
   ? `**原题直出，换成 ${name}**（出题人要的就是这道题，只是要变成自己公司的）：任务结构、交付物（数量、名称的意思、format、module）、材料的种类和各自的作用、材料里埋的坑、评分要点**原样保留**；企业、背景故事、工厂 / 项目 / 产品 / 人名换成 ${name} 此刻的真实处境（用上面「材料」里的事实），数字换成同结构、同量级、符合 ${name} 的数（材料没有的标「示例数据」）。**原题里的企业名、地名、项目名一个都不能留**。题面要读起来就是 ${name} 自己的活。`
   : `**仅做参考**：只借这道题的题型、推进方式、交付形态和难度；业务问题、背景、材料、数字全部按 ${name} 此刻的真实情况重新出，不要和原题撞题。`}
 ` : ''}
-## 操作台（环境）
+${opts.modules?.length ? `## 出题人指定的交付物（必须照办）\n交付物正好 ${opts.modules.length} 样，按顺序分别用这些台子：${opts.modules.join('、')}（doc 文档 / sheet 表格 / code 代码 / canvas 画布流程图 / board 白板 / design 参数草图）。不要多出、不要换台子。\n` : ''}## 操作台（环境）
 ${opts.env === 'plugin' ? '出题人指定：候选人用自己浏览器里的网页工具做（在线文档 / 表格 / 设计工具 / 各家 AI 都行），装「真活插件」记录过程，最后在插件侧边栏交「交付说明 + 交付物链接」；所以 env 按 doc 出，交付物写成「在线文档或文件链接 + 交付说明」，材料要能下载后独立使用。' : opts.env === 'open' ? '出题人指定：候选人用自己电脑上的软件做（Excel / CAD / IDE 都行），全程录屏、最后上传交付文件；所以 env 按 doc 出，交付物写成「文件 + 交付说明」，材料要能下载后独立使用。' : opts.env ? `出题人指定环境：${opts.env}（${ENV_LABELS[opts.env]}）。` : '按岗位选最贴近真实工作媒介的环境：'}doc 文档 / 对账台（方案、对账、邮件、scorecard）· code 代码台（写函数 / 脚本；**starter 里的主函数必须命名为 solution**，tests 也调用 solution；language 用 js 时给 2–5 个自测用例：code 是一段 JS，拿到变量 solution（候选人的导出函数）后返回 true/false，如 "return solution([3,1,2]).join()==='1,2,3'"；其他语言不给 tests）· sheet 表格 / 数据台（csv 给起始表，含要对账 / 清洗的数据，5–30 行）· design 设计台（params 给 4–8 个要定的参数：name/unit/hint；sketch_hint 说明要画什么简图：零件轮廓、流程、布局）。
 env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "tests": [ { "name": "", "code": "" } ], "csv": "", "params": [ { "name": "", "unit": "", "hint": "" } ], "sketch_hint": "" }（只填该环境用到的字段）。交付物要和环境匹配（code 的交付物是代码 + 说明，sheet 是表 + 口径说明，design 是参数表 + 草图 + 设计说明）。
 
@@ -340,6 +352,13 @@ ${opts.sample ? `- stages（必填，${opts.sample.stages.length} 步，和样�
     materials: (Array.isArray(p.materials) ? p.materials : []).slice(0, 6).map((m: any, i: number) => ({ id: m.id || `m${i + 1}`, title: s(m.title, 60), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, 6000), source: (['db', 'generated', 'mixed'].includes(m.source) ? m.source : 'generated'), basis: s(m.basis, 200) })),
     rubric: (Array.isArray(p.rubric) ? p.rubric : []).slice(0, 10).map((r: any, i: number) => ({ id: r.id || `r${i + 1}`, title: s(r.title, 60), desc: s(r.desc, 300), weight: Math.max(1, Number(r.weight) || 10), depends_on: Array.isArray(r.depends_on) ? r.depends_on.map(String) : [], basis: s(r.basis, 200), levels: { L1: s(r.levels?.L1, 160), L2: s(r.levels?.L2, 160), L3: s(r.levels?.L3, 160), L4: s(r.levels?.L4, 160) } })),
   };
+  // 出题人点名了台子和数量：程序强制（模型常多出一样、或把白板换成画布）
+  if (opts.modules?.length) {
+    const want = opts.modules.filter(m => ['doc', 'sheet', 'code', 'canvas', 'board', 'design'].includes(m)).slice(0, 4);
+    if (want.length) { task.task.deliverables = task.task.deliverables.slice(0, want.length).map((d, i) => ({ ...d, module: want[i] as any })); if (!task.task.deliverables.length) task.task.deliverables = want.map((m, i) => ({ id: `d${i + 1}`, title: '按任务要求交付', format: m, module: m as any })); }
+  }
+  // 照任务库原题出的：原题企业名不许留下（客户在任务空间能看到「取材依据」）——取材依据里提到原题 / 原企业的句子删掉，正文里的原企业名换成新企业
+  if (opts.base?.origin?.length) scrubOrigin(task, opts.base.origin, name);
   // 权重归一到 100；依赖只认存在的条目
   const ids = new Set(task.rubric.map(r => r.id));
   const sum = task.rubric.reduce((a, r) => a + r.weight, 0) || 1;

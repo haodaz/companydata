@@ -40,13 +40,32 @@ export async function baseTaskText(item: ShowcaseItem): Promise<string> {
   const L: string[] = [];
   L.push(`### 任务书：${T.title || item.title}`, String(T.brief || ''));
   if (t.problem?.statement) L.push(`业务问题：${t.problem.statement}`);
-  L.push('### 交付物', ...(T.deliverables || []).map((d: any) => `- ${d.title}（format：${d.format || '—'}；module：${d.module || '—'}）${d.desc ? `：${d.desc}` : ''}`));
+  // 任务库里标的台子优先（11-05：IP 设计题原任务用的是参数草图台，按口径应该用白板）
+  L.push('### 交付物', ...(T.deliverables || []).map((d: any, i: number) => { const m = item.deliverables?.[i]?.module || d.module; return `- ${item.deliverables?.[i]?.module && item.deliverables[i].module !== d.module ? item.deliverables[i].title : d.title}（format：${(item.deliverables?.[i]?.module !== d.module && item.deliverables?.[i]?.format) || d.format || '—'}；module：${m || '—'}）${d.desc ? `：${d.desc}` : ''}`; }));
   if (T.rules?.length) L.push('### 规则', ...T.rules.map((r: string) => `- ${r}`));
-  L.push(`### 操作台：${T.env?.type || item.env || 'doc'}；建议用时 ${T.time_minutes || item.time_minutes || '—'} 分钟`);
+  L.push(`### 操作台：${item.env || T.env?.type || 'doc'}；建议用时 ${T.time_minutes || item.time_minutes || '—'} 分钟`);
   L.push('### 材料（原题的材料，看它们各自的作用和埋的坑）');
   for (const m of (t.materials || []) as any[]) L.push(`#### ${m.title}（${m.kind || ''}）\n${String(m.content || '').slice(0, 1800)}`);
   if (Array.isArray(t.rubric) && t.rubric.length) L.push('### 评分要点', ...t.rubric.map((r: any) => `- ${r.title}（${r.weight ?? ''}%）：${String(r.desc || '').slice(0, 200)}`));
   return L.join('\n').slice(0, 16000);
+}
+
+/** 原题企业的各种叫法（11-05 国内版验收：原题直出后「取材依据」里还留着「参照宁德时代原题」「宁德德布勒森」）——生成后从题目里清掉 */
+export async function originNames(item: ShowcaseItem): Promise<string[]> {
+  const { data: t } = await db.from('work_tasks').select('company_name, company_id').eq('id', item.source_task_id).maybeSingle();
+  if (!t?.company_name) return [];
+  const names = new Set<string>([t.company_name]);
+  if (t.company_id) { const { data: c } = await db.from('companies').select('name, name_en, brief_name, aliases').eq('id', t.company_id).maybeSingle(); for (const n of [c?.name, c?.name_en, c?.brief_name, ...(c?.aliases || [])]) if (n) names.add(String(n)); }
+  // 开头的地名不算简称（「上海武岳峰…」取「上海」会把题面里所有「上海」都换掉）
+  const REGION = /^(北京|上海|天津|重庆|深圳|广州|杭州|苏州|南京|武汉|成都|西安|宁波|厦门|青岛|合肥|长沙|郑州|济南|无锡|东莞|佛山|珠海|香港|澳门|台湾|中国|浙江|江苏|广东|山东|福建|湖北|湖南|四川|河南|河北|安徽|辽宁)(市|省)?/;
+  for (const n of [...names]) {
+    const core = n.replace(/[（(][^）)]*[）)]/g, '').replace(/(股份)?有限(责任)?公司|集团|控股|股份|公司/g, '').replace(/[,，]?\s*\b(Inc|Ltd|Limited|Co|Corp|Corporation|Group|LLC|PLC)\b\.?/gi, '').replace(/\s+/g, ' ').trim();
+    if (core.length >= 2 && !REGION.test(core.replace(REGION, '') ? '' : core)) names.add(core);
+    const local = core.replace(REGION, '');
+    if (/^[\u4e00-\u9fa5]{4,}$/.test(local)) names.add(local.slice(0, 2));   // 宁德时代 → 宁德
+  }
+  const BAD = /^(北京|上海|天津|重庆|深圳|广州|杭州|苏州|南京|武汉|成都|西安|香港|中国|国际|科技|资本|投资|管理|演示|平方|鲜橙)$/;   // 常见词当简称会误伤题面（「200 平方米」）
+  return [...names].filter(n => n.length >= 2 && !BAD.test(n)).sort((a, b) => b.length - a.length);
 }
 
 /**
