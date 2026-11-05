@@ -169,6 +169,7 @@ export const CHAT_CSS = `
 /* 能传什么：不常驻在输入框里，鼠标放到 📎 上才弹（11-05 用户：这种话别堆在这里）；拖文件进来时、传错格式时也会说 */
 .wc-clip-w { position: relative; display: inline-flex; }
 .wc-tip { position: absolute; left: 0; bottom: calc(100% + 8px); width: 300px; background: #1b1d36; color: #fff; font-size: 12.5px; line-height: 1.7; border-radius: 10px; padding: 9px 12px; box-shadow: 0 10px 28px rgba(27,29,54,.2); opacity: 0; visibility: hidden; transform: translateY(4px); transition: opacity .15s, transform .15s; pointer-events: none; z-index: 8; }
+@media (max-width: 640px), (hover: none) { .wc-tip { display: none; } }   /* 手机没有悬停；藏着的浮层也别把页面撑宽 */
 .wc-clip-w:hover .wc-tip, .wc-clip:focus-visible + .wc-tip { opacity: 1; visibility: visible; transform: none; }
 .wc-drop small { display: block; font-size: 12.5px; font-weight: 500; color: #6b6f86; margin-top: 4px; text-align: center; }
 .wc-composer textarea { width: 100%; border: 0; outline: 0; resize: none; background: transparent; font: inherit; font-size: 15px; line-height: 1.6; color: #1a1a2e; }

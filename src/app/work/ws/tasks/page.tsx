@@ -31,7 +31,7 @@ export default function TasksPage() {
         {[['all', '全部'], ['published', '已发布'], ['ready', '待发布'], ['archived', '已下架']].map(([k, t]) => <button key={k} className={`wws-chip${st === k ? ' on' : ''}`} onClick={() => setSt(k)}>{t} {tasks ? n(k) : ''}</button>)}
       </div>
       <div className="wws-card" style={{ overflowX: 'auto' }}>
-        <table className="wws-table">
+        <table className="wws-table t-tasks">
           <thead><tr>{[['TASK', '题目'], ['STATUS', '状态'], ['TAKERS', '参与 / 交卷'], ['AVG', '平均'], ['BEST', '最高'], ['AI', '基线'], ['LAST', '最近交卷'], ['', '']].map(([e, z], i) => <th key={i}>{e}<small>{z}</small></th>)}</tr></thead>
           <tbody>
             {tasks == null && <tr><td colSpan={8} className="wws-muted">读取中…</td></tr>}

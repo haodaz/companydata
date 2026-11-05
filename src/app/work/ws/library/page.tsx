@@ -68,7 +68,7 @@ function Library() {
 }
 
 const CSS = `
-.lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+.lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 12px; }
 .lib-card { text-align: left; padding: 18px 20px 16px; cursor: pointer; font: inherit; color: inherit; display: flex; flex-direction: column; gap: 6px; }
 .lib-card:hover { border-color: var(--acc); }
 .lib-t { font: 800 16.5px/1.45 var(--serif); letter-spacing: .02em; }

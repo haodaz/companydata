@@ -63,7 +63,7 @@ function AllTasks() {
         <span className="wws-muted" style={{ marginLeft: 'auto' }}>{tasks ? `${list.length} / ${tasks.length} 道` : ''}</span>
       </div>
       <div className="wws-card" style={{ overflowX: 'auto' }}>
-        <table className="wws-table">
+        <table className="wws-table t-all">
           <thead><tr>{[['TASK', '题目'], ['BY', '谁出的'], ['STATUS', '状态'], ['TAKERS', '参与 / 交卷'], ['AVG', '平均'], ['AI', '基线'], ['CREATED', '出题时间'], ['', '']].map(([e, z], i) => <th key={i}>{e}<small>{z}</small></th>)}</tr></thead>
           <tbody>
             {tasks == null && <tr><td colSpan={8} className="wws-muted">读取中…</td></tr>}
@@ -95,7 +95,7 @@ function Assets() {
     ['题目资产库', 'Question bank', '/admin/db-question', '所有出过的题按企业 / 行业 / 职能沉淀，出题时自动挑来参照（对客户不讲）。'],
     ['外部参照', 'External simulations', '/admin/db-external-sim', 'Forage / Extern 的公开模拟和作品墙，看行业真活怎么出、学员交什么。'],
   ];
-  return <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 12 }}>{L.map(([t, en, href, d]) => <a key={href} href={href} target="_blank" rel="noreferrer" className="wws-card lined pad" style={{ textDecoration: 'none' }}><div className="wws-eyebrow">{en}</div><div style={{ font: '800 17px var(--serif)', margin: '6px 0' }}>{t} ↗</div><div className="wws-muted" style={{ lineHeight: 1.75 }}>{d}</div></a>)}</div>;
+  return <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: 12 }}>{L.map(([t, en, href, d]) => <a key={href} href={href} target="_blank" rel="noreferrer" className="wws-card lined pad" style={{ textDecoration: 'none' }}><div className="wws-eyebrow">{en}</div><div style={{ font: '800 17px var(--serif)', margin: '6px 0' }}>{t} ↗</div><div className="wws-muted" style={{ lineHeight: 1.75 }}>{d}</div></a>)}</div>;
 }
 
 const lnk: React.CSSProperties = { border: 0, background: 'none', cursor: 'pointer', font: 'inherit', fontWeight: 700, fontSize: 13, marginRight: 10, padding: 0 };

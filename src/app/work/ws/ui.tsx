@@ -38,7 +38,7 @@ export function WsTour({ id, steps }: { id: string; steps: TourStep[] }) {
     let seen = false; try { seen = localStorage.getItem(`wws-tour-${id}`) === '1'; } catch {}
     if (seen && !force) return;
     const t = setTimeout(() => {
-      const vis = steps.filter(s => { const el = document.querySelector(`[data-tour="${s.key}"]`) as HTMLElement | null; return !!el && el.offsetWidth > 0 && el.offsetHeight > 0; });
+      const vis = steps.filter(s => { const el = document.querySelector(`[data-tour="${s.key}"]`) as HTMLElement | null; if (!el || !el.offsetWidth || !el.offsetHeight) return false; const r = el.getBoundingClientRect(); return r.right > 0 && r.left < document.documentElement.clientWidth; });
       if (vis.length) { setStep(0); setList(vis); }
     }, 900);
     return () => clearTimeout(t);

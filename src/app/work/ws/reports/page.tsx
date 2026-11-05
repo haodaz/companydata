@@ -35,7 +35,7 @@ function Reports() {
         <span className="wws-muted" style={{ marginLeft: 'auto' }}>{people ? `${list.length} 份` : ''}{picked.length ? ` · 已勾 ${picked.length} 人${picked.length > 1 && !sameTask ? '（不是同一道题，没法逐条比）' : ''}` : ''}</span>
       </div>
       <div className="wws-card" style={{ overflowX: 'auto' }}>
-        <table className="wws-table">
+        <table className="wws-table t-reports">
           <thead><tr>{[['', ''], ['NAME', '谁'], ['TASK', '题目'], ['MODE', '方式'], ['SUBMITTED', '交卷'], ['TIME', '用时'], ['SCORE', '总分'], ['AI USE', 'AI 使用'], ['IN A LINE', '一句话'], ['', '']].map(([e, z], i) => <th key={i}>{e}<small>{z}</small></th>)}</tr></thead>
           <tbody>
             {people == null && <tr><td colSpan={10} className="wws-muted">读取中…</td></tr>}

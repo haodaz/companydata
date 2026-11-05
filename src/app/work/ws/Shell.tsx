@@ -13,7 +13,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { TOUR_IDS } from './ui';
-import { BookOpen, ChevronsUpDown, ClipboardList, Database, House, Library, ShieldCheck, SquarePen, Users, type LucideIcon } from 'lucide-react';
+import { BookOpen, ChevronsUpDown, ClipboardList, Database, House, Library, Menu, ShieldCheck, SquarePen, Users, X, type LucideIcon } from 'lucide-react';
 import { canManageBaiye } from '@/lib/roles';
 
 const HOME = '/work/ws', CHAT = '/work/ws/chat', LOGIN = '/work/ws/login';
@@ -32,6 +32,9 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   const [cur, setCur] = useState<string | null>(null);
   const [me, setMe] = useState<{ email?: string; name?: string; role?: string } | null>(null);
   const [menu, setMenu] = useState(false);
+  const [drawer, setDrawer] = useState(false);   // 手机上：侧栏收成左边抽屉，顶栏汉堡打开
+  useEffect(() => { setDrawer(false); setMenu(false); }, [path]);
+  useEffect(() => { document.body.style.overflow = drawer ? 'hidden' : ''; return () => { document.body.style.overflow = ''; }; }, [drawer]);
   const logout = async () => { await fetch('/api/auth/logout', { method: 'POST' }).catch(() => {}); location.href = '/work'; };
   const [embed, setEmbed] = useState(false);
   useEffect(() => { try { setEmbed(window.self !== window.top); } catch { setEmbed(true); } }, []);
@@ -51,6 +54,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   }, [load]);
   useEffect(() => { if (path !== CHAT) setCur(null); }, [path]);
   const open = (id: string | null) => {
+    setDrawer(false);
     if (path === CHAT) window.dispatchEvent(new CustomEvent('wws-open', { detail: id }));
     else router.push(id ? `${CHAT}?thread=${id}` : CHAT);
   };
@@ -60,7 +64,14 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div className="wws">
       <style>{CSS}</style>
-      <aside className="wws-side">
+      <header className="wws-mtop">
+        <button className="wws-ham" data-tour="ham" aria-label="打开菜单" aria-expanded={drawer} onClick={() => setDrawer(true)}><Menu size={21} strokeWidth={1.8} /></button>
+        <Link href="/work/ws" className="wws-mbrand"><span className="mk">真</span><b>百业AI｜真活</b></Link>
+        <button className="wws-ham" aria-label="新对话" onClick={() => open(null)}><SquarePen size={19} strokeWidth={1.8} /></button>
+      </header>
+      {drawer && <div className="wws-scrim" onClick={() => setDrawer(false)} />}
+      <aside className={`wws-side${drawer ? ' open' : ''}`}>
+        <button className="wws-ham wws-close" aria-label="关闭菜单" onClick={() => setDrawer(false)}><X size={20} strokeWidth={1.8} /></button>
         <Link href="/work/ws" className="wws-brand"><span className="mk">真</span><div><b>百业AI｜真活</b><small>TRUE WORK · DESK</small></div></Link>
         <div className="wws-scroll">
           <button data-tour="nav-new" className={`wws-new${path === CHAT && !cur ? ' on' : ''}`} onClick={() => open(null)}><Ic I={SquarePen} />新对话</button>
@@ -188,12 +199,44 @@ const CSS = `
 .wws-menu-m a, .wws-menu-m button { display: block; text-align: left; border: 0; background: transparent; padding: 9px 12px; border-radius: 8px; font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); cursor: pointer; text-decoration: none; }
 .wws-menu-m small { display: block; font-weight: 500; font-size: 12px; color: var(--ink3); margin-top: 2px; }
 .wws-menu-m a:hover, .wws-menu-m button:hover { background: var(--acc-soft); }
+/* 手机（11-05）：照 Claude 的 H5——顶栏汉堡 + 新对话，侧栏整个收成左边抽屉（内容和桌面一样：新对话、导航、最近、账号） */
+.wws-mtop, .wws-close { display: none; }
 @media (max-width: 860px) {
   .wws { flex-direction: column; }
-  .wws-side { position: static; width: auto; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
-  .wws-brand { border-bottom: 0; padding: 14px 16px 8px; }
-  .wws-scroll { padding: 0 10px 10px; } .wws-new, .wws-grp, .wws-list, .wws-foot { display: none; }
-  .wws-scroll > .wws-nav { display: flex; overflow-x: auto; gap: 4px; } .wws-nav a { white-space: nowrap; flex-shrink: 0; }
-  .wws-page { padding: 20px 16px 40px; } .wws-head h1 { font-size: 24px; }
+  .wws-mtop { display: flex; align-items: center; gap: 6px; position: sticky; top: 0; z-index: 30; height: 52px; padding: 0 8px; background: var(--paper); border-bottom: 1px solid var(--line); }
+  .wws-ham { width: 40px; height: 40px; border: 0; background: transparent; border-radius: 10px; display: grid; place-items: center; color: var(--ink); cursor: pointer; flex-shrink: 0; }
+  .wws-ham:active { background: rgba(27,29,54,.06); }
+  .wws-mbrand { display: flex; align-items: center; gap: 8px; text-decoration: none; margin-right: auto; min-width: 0; }
+  .wws-mbrand .mk { width: 28px; height: 28px; border-radius: 50%; background: var(--acc); color: #fff; display: grid; place-items: center; font: 900 14px var(--serif); flex-shrink: 0; }
+  .wws-mbrand b { font: 900 15.5px var(--serif); letter-spacing: .05em; white-space: nowrap; }
+  .wws-side { position: fixed; left: 0; top: 0; bottom: 0; height: 100%; width: min(84vw, 300px); z-index: 50; transform: translateX(-104%); transition: transform .22s ease; box-shadow: 8px 0 30px rgba(27,29,54,.16); }
+  .wws-side.open { transform: none; }
+  .wws-close { display: grid; position: absolute; right: 8px; top: 14px; z-index: 2; }
+  .wws-brand { padding-right: 52px; }
+  .wws-scrim { position: fixed; inset: 0; background: rgba(27,29,54,.32); z-index: 45; }
+  .wws-page { padding: 20px 16px 48px; } .wws-head h1 { font-size: 24px; } .wws-head p { font-size: 13.5px; }
+  .wws-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wws-stat { padding: 12px 14px; } .wws-stat b { font-size: 26px; }
+  .wws-menu-m { right: auto; left: 0; max-width: calc(100vw - 32px); }
+  .wws-tabs button { padding: 9px 12px 10px; font-size: 14px; } .wws-tabs button small { display: none; }
+  .wws-in { min-width: 0 !important; max-width: 100%; }
+  .wws-table th, .wws-table td { padding: 10px 9px; } .wws-table td { overflow-wrap: anywhere; }
+  /* 窄屏只留关键列（其余横滑也看不清）：管理真活 / 任务报告 / 用户管理 / 全部真活 / 素材 */
+  .t-tasks tr > :nth-child(5), .t-tasks tr > :nth-child(6), .t-tasks tr > :nth-child(7),
+  .t-reports tr > :nth-child(4), .t-reports tr > :nth-child(6), .t-reports tr > :nth-child(8), .t-reports tr > :nth-child(9),
+  .t-users tr > :nth-child(4),
+  .t-all tr > :nth-child(2), .t-all tr > :nth-child(5), .t-all tr > :nth-child(6), .t-all tr > :nth-child(7),
+  .t-assets tr > :nth-child(3), .t-assets tr > :nth-child(4) { display: none; }
+  .wws-table td[colspan] { display: table-cell !important; }
+}
+/* 手机竖屏：表格每行变成一张小卡片——主信息（第一格）占一整行，其余跟在下面，操作靠右；表头不要 */
+@media (max-width: 640px) {
+  .wws-table, .wws-table tbody { display: block; } .wws-table thead { display: none; }
+  .wws-table tr { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 12px 14px; border-bottom: 1px solid var(--line2); }
+  .wws-table tr:hover td { background: none; }
+  .wws-table td { display: block; padding: 0 !important; border: 0; min-width: 0 !important; }
+  .wws-table td:first-child { flex-basis: 100%; } .wws-table td:last-child:not(:first-child) { margin-left: auto; }
+  .wws-table td[colspan] { display: block !important; flex-basis: 100%; }
+  .t-reports td:first-child { flex-basis: auto; } .t-reports td:nth-child(2) { flex-basis: calc(100% - 40px); } .t-reports td:nth-child(3) { flex-basis: 100%; }
+}
 }
 `;

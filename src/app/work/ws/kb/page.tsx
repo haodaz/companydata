@@ -143,7 +143,7 @@ function Samples() {
       <section>
         <div className="wws-card-h"><h2 className="wws-h2">平台任务库<small>From the library · {lib?.length ?? '…'}</small></h2><Link href="/work/ws/library" className="wws-back" style={{ marginLeft: 'auto' }}>完整任务库 →</Link></div>
         <p className="wws-muted" style={{ margin: '0 0 10px' }}>挑一道原题直出换成你们公司，或者只做参考。</p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 10 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: 10 }}>
           {(lib || []).slice(0, 24).map(x => <div key={x.id} className="wws-card pad">
             <div style={{ font: '800 15px/1.5 var(--serif)' }}>{x.title}</div><div className="wws-muted" style={{ margin: '4px 0 10px' }}>{[x.industry, x.role].filter(Boolean).join(' · ')}{x.time_minutes ? ` · ${x.time_minutes} 分钟` : ''}</div>
             <div style={{ display: 'flex', gap: 6 }}>
@@ -162,7 +162,7 @@ function Assets() {
   useEffect(() => { fetch('/api/admin/work/kb?tab=asset', { cache: 'no-store' }).then(r => r.json()).then(j => setItems(j.ok ? j.items : [])).catch(() => setItems([])); }, []);
   return (
     <div className="wws-card" style={{ overflowX: 'auto' }}>
-      <table className="wws-table">
+      <table className="wws-table t-assets">
         <thead><tr>{[['FILE', '文件'], ['USED IN', '用在'], ['COMPANY', '企业'], ['DATE', '时间'], ['', '']].map(([e, z], i) => <th key={i}>{e}<small>{z}</small></th>)}</tr></thead>
         <tbody>
           {items == null && <tr><td colSpan={5} className="wws-muted">读取中…</td></tr>}

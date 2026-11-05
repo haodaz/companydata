@@ -59,7 +59,7 @@ function Users() {
         <span className="wws-muted" style={{ marginLeft: 'auto' }}>{d ? `${list.length} 个账号` : ''}</span>
       </div>
       <div className="wws-card" style={{ overflowX: 'auto' }}>
-        <table className="wws-table">
+        <table className="wws-table t-users">
           <thead><tr>{[['EMAIL', '邮箱'], ['ROLE', '身份'], ['STATUS', '状态'], ['CREATED', '开通时间'], ['', '']].map(([e, z], i) => <th key={i}>{e}<small>{z}</small></th>)}</tr></thead>
           <tbody>
             {!d && <tr><td colSpan={5} className="wws-muted">读取中…</td></tr>}
