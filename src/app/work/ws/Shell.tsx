@@ -70,7 +70,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         </div>
         <div className="wws-foot">
           <div className="wws-acct"><span className="av">{(who || '我').slice(0, 1).toUpperCase()}</span><span className="who"><b>{who || '出任务的人'}</b><small>出任务 · 看答卷 · 定人</small></span></div>
-          <Link href="/work/mine" className="wws-classic"><Ic I={ArrowLeftRight} />切换到传统版</Link>
+          <Link href="/work/classic" className="wws-classic"><Ic I={ArrowLeftRight} />切换到传统版</Link>
           <a href="/work/about" className="wws-classic"><Ic I={Info} />关于真活</a>
         </div>
       </aside>
