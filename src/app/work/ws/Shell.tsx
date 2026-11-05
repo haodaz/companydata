@@ -12,7 +12,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { ArrowLeftRight, BookOpen, Info, ClipboardList, Database, House, Library, ShieldCheck, SquarePen, type LucideIcon } from 'lucide-react';
+import { BookOpen, ChevronsUpDown, ClipboardList, Database, House, Library, ShieldCheck, SquarePen, type LucideIcon } from 'lucide-react';
 
 const HOME = '/work/ws', CHAT = '/work/ws/chat', LOGIN = '/work/ws/login';
 const NAV = [
@@ -29,6 +29,8 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   const [threads, setThreads] = useState<{ id: string; title?: string }[]>([]);
   const [cur, setCur] = useState<string | null>(null);
   const [me, setMe] = useState<{ email?: string; name?: string; role?: string } | null>(null);
+  const [menu, setMenu] = useState(false);
+  const logout = async () => { await fetch('/api/auth/logout', { method: 'POST' }).catch(() => {}); location.href = '/work'; };
   const [embed, setEmbed] = useState(false);
   useEffect(() => { try { setEmbed(window.self !== window.top); } catch { setEmbed(true); } }, []);
   // 嵌在对话右边：点「问助理」不在小框里跳，交给外面的对话接着聊
@@ -69,9 +71,9 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         <div className="wws-foot">
-          <div className="wws-acct"><span className="av">{(who || '我').slice(0, 1).toUpperCase()}</span><span className="who"><b>{who || '出任务的人'}</b><small>出任务 · 看答卷 · 定人</small></span></div>
-          <Link href="/work/classic" className="wws-classic"><Ic I={ArrowLeftRight} />切换到传统版</Link>
-          <a href="/work/about" className="wws-classic"><Ic I={Info} />关于真活</a>
+          {menu && <div className="wws-acct-m" onMouseLeave={() => setMenu(false)}><button onClick={logout}>退出登录</button></div>}
+          <button className="wws-acct" onClick={() => setMenu(m => !m)} aria-expanded={menu}><span className="av">{(who || '我').slice(0, 1).toUpperCase()}</span><span className="who"><b>{who || '出任务的人'}</b><small>出任务 · 看答卷 · 定人</small></span><ChevronsUpDown className="chev" size={15} strokeWidth={1.7} /></button>
+          <div className="wws-minor"><Link href="/work/classic">传统版</Link><i>·</i><a href="/work/about">关于真活</a></div>
         </div>
       </aside>
       <main className="wws-main">{children}</main>
@@ -110,9 +112,16 @@ const CSS = `
 .wws-item:hover { background: rgba(27,29,54,.04); color: var(--ink); } .wws-item.on { background: var(--acc-soft); color: var(--ink); font-weight: 700; }
 .wws-empty { padding: 6px 12px; font-size: 13px; color: var(--ink3); }
 .wws-foot { border-top: 1px solid var(--line2); padding: 10px; display: grid; gap: 2px; }
-.wws-acct { display: flex; align-items: center; gap: 10px; padding: 6px 8px; }
+.wws-foot { position: relative; }
+.wws-acct { display: flex; align-items: center; gap: 10px; padding: 6px 8px; width: 100%; border: 0; background: transparent; border-radius: 10px; cursor: pointer; font: inherit; text-align: left; color: var(--ink); }
+.wws-acct:hover, .wws-acct[aria-expanded="true"] { background: rgba(27,29,54,.04); }
+.wws-acct .chev { margin-left: auto; color: var(--ink3); flex-shrink: 0; }
+.wws-acct-m { position: absolute; left: 10px; right: 10px; bottom: calc(100% - 4px); background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 6px; box-shadow: 0 10px 30px rgba(27,29,54,.14); z-index: 5; }
+.wws-acct-m button { display: block; width: 100%; text-align: left; border: 0; background: transparent; padding: 9px 10px; border-radius: 8px; font: inherit; font-size: 13.5px; color: var(--ink); cursor: pointer; } .wws-acct-m button:hover { background: var(--acc-soft); }
 .wws-acct .av { width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font: 700 13px var(--en); flex-shrink: 0; box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(168,139,92,.5); }
 .wws-acct .who { min-width: 0; } .wws-acct b { display: block; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .wws-acct small { display: block; font-size: 11.5px; color: var(--ink3); }
+.wws-minor { display: flex; align-items: center; gap: 6px; padding: 2px 8px 0 50px; font-size: 12px; color: var(--ink3); }
+.wws-minor a { color: var(--ink3); text-decoration: none; } .wws-minor a:hover { color: var(--acc); } .wws-minor i { font-style: normal; }
 .wws-classic { display: flex; align-items: center; gap: 10px; padding: 7px 8px; border-radius: 8px; font-size: 13px; color: var(--ink2); text-decoration: none; }
 .wws-classic:hover { background: rgba(27,29,54,.04); color: var(--ink); }
 .wws-main { flex: 1; min-width: 0; }
