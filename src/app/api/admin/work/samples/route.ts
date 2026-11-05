@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { isBaiyeOnly } from '@/lib/roles';
 import { getSessionUser } from '@/lib/session';
 import { extractText, getSample, listSamples, parseSample, removeSample, saveSample } from '@/lib/work/samples';
 import { withCost } from '@/lib/token-logger';
@@ -35,7 +36,7 @@ export async function POST(req: NextRequest) {
     if (raw.length < 200) return NextResponse.json({ ok: false, error: '样本太短（不到 200 字），或者文件里抽不出文字（扫描件请粘贴文本）' }, { status: 400 });
     const skeleton = await withCost({ tool_name: 'work', task_name: 'Sample · 解析深度样本', stage: 'create', actor: user.email }, () => parseSample(raw, { title: body.title ? String(body.title) : undefined, actor: user.email }));
     if (!skeleton.stages.length) return NextResponse.json({ ok: false, error: '没解析出推进步骤：这份材料可能不是一道题。换一份，或把题目部分单独贴进来' }, { status: 422 });
-    const shared = body.shared === true && user.role !== 'baiye_user';
+    const shared = body.shared === true && !isBaiyeOnly(user.role);
     const saved = await saveSample(skeleton, raw, { source_name: source, created_by: user.email, shared });
     return NextResponse.json({ ok: true, sample: { id: saved.id, title: saved.title, industry: saved.industry, problem_type: saved.problem_type, difficulty: saved.difficulty, stages: skeleton.stages.length, format: skeleton.format, summary: skeleton.summary, skeleton, shared, created_by: user.email, created_at: saved.created_at } });
   } catch (e: any) { return NextResponse.json({ ok: false, error: String(e?.message || e) }, { status: 500 }); }

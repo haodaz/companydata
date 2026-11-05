@@ -5,6 +5,7 @@
  * 平时想改密码也能直接打开。改完回 next（只认站内路径）。样子照百业的蒙版式登录。
  */
 import React, { Suspense, useEffect, useState } from 'react';
+import { isBaiyeOnly } from '@/lib/roles';
 import { useSearchParams } from 'next/navigation';
 
 export default function PasswordPage() { return <Suspense fallback={null}><Inner /></Suspense>; }
@@ -21,7 +22,7 @@ function Inner() {
       setMe(j.user);
     }).catch(() => setErr('网络错误'));
   }, [next]);
-  const dest = next.startsWith('/') && !next.startsWith('//') && !next.startsWith('/\\') ? next : me?.role === 'baiye_user' ? '/lab' : '/office';
+  const dest = next.startsWith('/') && !next.startsWith('//') && !next.startsWith('/\\') ? next : isBaiyeOnly(me?.role) ? '/lab' : '/office';
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setErr('');
     if (!f.current || !f.next) return setErr('三栏都要填');

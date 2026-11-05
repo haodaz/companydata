@@ -13,7 +13,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { TOUR_IDS } from './ui';
-import { BookOpen, ChevronsUpDown, ClipboardList, Database, House, Library, ShieldCheck, SquarePen, type LucideIcon } from 'lucide-react';
+import { BookOpen, ChevronsUpDown, ClipboardList, Database, House, Library, ShieldCheck, SquarePen, Users, type LucideIcon } from 'lucide-react';
+import { canManageBaiye } from '@/lib/roles';
 
 const HOME = '/work/ws', CHAT = '/work/ws/chat', LOGIN = '/work/ws/login';
 const NAV = [
@@ -64,7 +65,10 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         <div className="wws-scroll">
           <button data-tour="nav-new" className={`wws-new${path === CHAT && !cur ? ' on' : ''}`} onClick={() => open(null)}><Ic I={SquarePen} />新对话</button>
           <nav className="wws-nav">{NAV.map(x => <Link key={x.href} href={x.href} data-tour={(x as { tour?: string }).tour} className={x.on(path) ? 'on' : ''}><Ic I={x.ic} />{x.t}</Link>)}</nav>
-          {me?.role === 'admin' && <nav className="wws-nav wws-admin"><Link href={`${HOME}/admin`} className={path.startsWith(`${HOME}/admin`) ? 'on' : ''}><Ic I={ShieldCheck} />全站管理</Link></nav>}
+          {canManageBaiye(me?.role) && <nav className="wws-nav wws-admin">
+            <Link href={`${HOME}/users`} className={path.startsWith(`${HOME}/users`) ? 'on' : ''}><Ic I={Users} />用户管理</Link>
+            {me?.role === 'admin' && <Link href={`${HOME}/admin`} className={path.startsWith(`${HOME}/admin`) ? 'on' : ''}><Ic I={ShieldCheck} />全站管理</Link>}
+          </nav>}
           <div className="wws-grp">RECENT<span>最近</span></div>
           <div className="wws-list" data-tour="recent">
             {threads.slice(0, 40).map(t => <button key={t.id} className={`wws-item${cur === t.id ? ' on' : ''}`} title={t.title || '对话'} onClick={() => open(t.id)}>{t.title || '对话'}</button>)}

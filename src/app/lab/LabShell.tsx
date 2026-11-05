@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { isBaiyeOnly } from '@/lib/roles';
 import { usePathname, useRouter } from 'next/navigation';
 import { Select } from 'antd';
 import { ModelProvider, useModel, MODEL_OPTIONS, ModelBadge } from '@/lib/model-context';
@@ -290,7 +291,7 @@ function Shell({ children }: { children: React.ReactNode }) {
         <Select className="lab-head-model" size="small" variant="filled" value={currentModel} onChange={setCurrentModel} style={{ width: 170 }} popupMatchSelectWidth={250}
           options={MODEL_OPTIONS.map(m => ({ value: m.id, label: <span>{m.label}<ModelBadge text={m.badge} /></span> }))} />
         {/* 百业自己的后台（成本、价目表、素材库…）；数据工厂的后台是另一个产品，不从这里进（2026-10-12 拆开） */}
-        {user?.role !== 'baiye_user' && <button className="lab-btn ghost sm" title="百业后台" aria-label="百业后台" style={{ width: 34, padding: 0 }} onClick={() => router.push('/lab/admin')}>
+        {!isBaiyeOnly(user?.role) && <button className="lab-btn ghost sm" title="百业后台" aria-label="百业后台" style={{ width: 34, padding: 0 }} onClick={() => router.push('/lab/admin')}>
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="1.5" width="5" height="5" rx="1.2" /><rect x="1.5" y="9.5" width="5" height="5" rx="1.2" /><rect x="9.5" y="9.5" width="5" height="5" rx="1.2" /></svg>
         </button>}
         </>}

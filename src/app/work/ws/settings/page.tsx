@@ -9,7 +9,7 @@ import { MODELS } from '@/components/work/ChatKit';
 import { Head } from '../ui';
 import { MODEL_KEY, savedModel } from '../ask';
 
-const ROLE: Record<string, string> = { admin: '管理员', user: '同事', baiye_user: '百业用户' };
+const ROLE: Record<string, string> = { admin: '管理员', user: '同事', baiye_admin: '百业管理员', baiye_user: '百业用户' };
 
 export default function SettingsPage() {
   const [me, setMe] = useState<{ email?: string; role?: string } | null>(null);

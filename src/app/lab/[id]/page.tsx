@@ -1,6 +1,7 @@
 'use client';
 
 import { beta3dForChapter, beta3dForSpace } from '@/lib/lab-3d-beta';
+import { isBaiyeOnly } from '@/lib/roles';
 import type { Lesson } from '@/lib/lab-lesson';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
@@ -500,7 +501,7 @@ export default function SpacePage() {
   const { currentModel } = useModel();
   const { user } = useUser();
   // 能看数据后台（岗位库链接、去岗位库补岗位）的只有数据 / 产品同事和管理员；百业用户看不到数据资产入口
-  const dataUser = !!user && user.role !== 'baiye_user';
+  const dataUser = !!user && !isBaiyeOnly(user.role);
   // 拿着邀请链接来的老师傅：不登录，只做「向上学习」——走一遍、被追问、交给 AI 核心吸收
   const sp = useSearchParams();
   const invite = sp.get('invite');

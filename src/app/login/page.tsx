@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { isBaiyeOnly } from '@/lib/roles';
 import { App, Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
@@ -25,7 +26,7 @@ export default function LoginPage() {
         message.success('登录成功');
         // 从公开首页点进空间被拦过来的，登录完回原处；只认站内路径，别被拿去做开放跳转
         const next = new URLSearchParams(window.location.search).get('next') || '';
-        const to = next.startsWith('/') && !next.startsWith('//') && !next.startsWith('/\\') ? next : data.user?.role === 'baiye_user' ? '/lab' : '/office';   // 百业用户落在百业
+        const to = next.startsWith('/') && !next.startsWith('//') && !next.startsWith('/\\') ? next : isBaiyeOnly(data.user?.role) ? '/lab' : '/office';   // 百业用户落在百业
         router.push(data.user?.must_change_password ? `/account/password?next=${encodeURIComponent(to)}` : to);   // 管理员建的 / 重置过的账号先设新密码
       } else {
         message.error(data.error || '登录失败');
