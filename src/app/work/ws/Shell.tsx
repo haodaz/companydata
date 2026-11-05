@@ -12,7 +12,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { ArrowLeftRight, BookOpen, ClipboardList, Database, House, Library, ShieldCheck, SquarePen, type LucideIcon } from 'lucide-react';
+import { ArrowLeftRight, BookOpen, Info, ClipboardList, Database, House, Library, ShieldCheck, SquarePen, type LucideIcon } from 'lucide-react';
 
 const HOME = '/work/ws', CHAT = '/work/ws/chat', LOGIN = '/work/ws/login';
 const NAV = [
@@ -37,7 +37,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
     const on = (e: MouseEvent) => { const a = (e.target as HTMLElement).closest?.('a'); const href = a?.getAttribute('href') || ''; if (!href.startsWith(CHAT)) return; e.preventDefault(); window.parent.postMessage({ type: 'wws-ask', href }, location.origin); };
     document.addEventListener('click', on, true); return () => document.removeEventListener('click', on, true);
   }, [embed]);
-  const load = useCallback(() => fetch('/api/admin/work/chat', { cache: 'no-store' }).then(r => { if (r.status === 401 && location.pathname !== LOGIN) location.href = `${LOGIN}?next=${encodeURIComponent(location.pathname + location.search)}`; return r.json(); }).then(j => j.ok && setThreads(j.data)).catch(() => {}), []);
+  const load = useCallback(() => fetch('/api/admin/work/chat', { cache: 'no-store' }).then(r => { if (r.status === 401 && location.pathname !== LOGIN) location.href = `/work?next=${encodeURIComponent(location.pathname + location.search)}`; return r.json(); }).then(j => j.ok && setThreads(j.data)).catch(() => {}), []);
   useEffect(() => { if (embed || path === LOGIN) return; load(); fetch('/api/auth/me').then(r => r.json()).then(j => setMe(j.user || j)).catch(() => {}); }, [load, embed, path === LOGIN]);
   useEffect(() => {
     const onList = () => load();
@@ -71,6 +71,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         <div className="wws-foot">
           <div className="wws-acct"><span className="av">{(who || '我').slice(0, 1).toUpperCase()}</span><span className="who"><b>{who || '出任务的人'}</b><small>出任务 · 看答卷 · 定人</small></span></div>
           <Link href="/work/mine" className="wws-classic"><Ic I={ArrowLeftRight} />切换到传统版</Link>
+          <a href="/work/about" className="wws-classic"><Ic I={Info} />关于真活</a>
         </div>
       </aside>
       <main className="wws-main">{children}</main>

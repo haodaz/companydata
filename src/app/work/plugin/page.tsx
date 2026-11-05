@@ -51,7 +51,7 @@ function Inner() {
   return (
     <div className="zp">
       <style>{CSS}</style>
-      <div className="zp-top"><WorkLogo size="md" /><span>真活插件</span><Link href="/work" className="zp-toplink">真活首页</Link></div>
+      <div className="zp-top"><WorkLogo size="md" /><span>真活插件</span><Link href="/work/about" className="zp-toplink">关于真活</Link></div>
 
       {/* ── 启动：带着真活码来的 ── */}
       {code && (

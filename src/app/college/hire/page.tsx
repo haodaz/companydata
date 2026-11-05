@@ -203,7 +203,7 @@ export default function Hire() {
               <H2 eyebrow="干真活 · REAL WORK" zh={lab ? '它在实验室里的样子' : '它干活的样子'} en={lab ? 'What it looks like in the lab' : 'What real work looks like'} />
               <p className="cu-p">{lab ? '它要过的不是题库，是一间实验室的一天：开工前核对、发现污染、计数接种、复苏翻车、写记录。每一步都留痕，按老师傅的做法评分，漏掉的步骤记进错题本，补训到会为止。'
                 : '交给它的不是题库，是你们真实的活：一份要核的表、一段要改的规则、一份要交的报告。它一步一步做，每一步都留痕，按你们的岗位标准评分。干对了，才有资格出题考别人。'}</p>
-              <a className="hi-more" href="/work" target="_blank" rel="noreferrer">看看真活 <i>See real tasks</i> →</a>
+              <a className="hi-more" href="/work/about" target="_blank" rel="noreferrer">看看真活 <i>See real tasks</i> →</a>
             </div>
           </div>
           <div className="hi-work">

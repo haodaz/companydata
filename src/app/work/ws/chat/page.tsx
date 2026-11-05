@@ -69,7 +69,7 @@ function WorkHome() {
     const focus = !a || a.kind === 'app' ? null : a.kind === 'work_report' ? { task_id: a.task_id, session_id: a.sid, title: a.title, name: a.name } : { task_id: a.task_id, title: a.title };
     try {
       const res = await fetch('/api/admin/work/home', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ thread_id: tidRef.current, text: t, model, focus }), signal: ac.signal });
-      if (res.status === 401) { location.href = `/work/ws/login?next=${encodeURIComponent('/work/ws/chat')}`; return; }
+      if (res.status === 401) { location.href = `/work?next=${encodeURIComponent('/work/ws/chat')}`; return; }
       if (!res.ok || !res.body) { const j = await res.json().catch(() => ({})); setItems(it => [...it, { k: 'error', text: j.error || `出错了（${res.status}）` }]); return; }
       const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = '';
       for (;;) { const { value, done } = await reader.read(); if (done) break; buf += dec.decode(value, { stream: true }); let nl; while ((nl = buf.indexOf('\n')) >= 0) { const line = buf.slice(0, nl); buf = buf.slice(nl + 1); if (line.trim()) onEvent(JSON.parse(line)); } }

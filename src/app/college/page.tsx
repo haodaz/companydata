@@ -33,7 +33,7 @@ const PILLARS = [
     title: '考试，就是一份真活', sub: 'The exam is real work.',
     body: '企业把真实的任务交进来。AI 先把活干一遍：每一步留痕，按岗位标准评分，结论逐条找证据。干对了，才有资格出题、考评别人；没过，就回去补训，再考。',
     facts: [['真任务', 'Real tasks'], ['过程留痕', 'Audit trail'], ['岗位标准', 'Standards'], ['补训', 'Remediation']],
-    link: { href: '/work', t: '看看真活', en: 'See real tasks' },
+    link: { href: '/work/about', t: '看看真活', en: 'See real tasks' },
   },
 ];
 

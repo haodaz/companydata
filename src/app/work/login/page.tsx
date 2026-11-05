@@ -1,5 +1,7 @@
-import { Suspense } from 'react';
-import { OverlayLogin } from '@/components/auth/OverlayLogin';
+import { redirect } from 'next/navigation';
 
-export const metadata = { title: '登录 · 百业AI｜真活' };
-export default function WorkLoginPage() { return <Suspense><OverlayLogin brand="work" /></Suspense>; }
+/** 旧的真活登录页：2026-11-05 起统一到 /work（工作台的登录页），带上 next */
+export default async function WorkLoginPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
+  const next = (await searchParams).next;
+  redirect(next ? `/work?next=${encodeURIComponent(next)}` : '/work');
+}

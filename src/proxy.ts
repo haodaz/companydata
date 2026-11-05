@@ -145,7 +145,7 @@ export async function proxy(req: NextRequest) {
       if (pathname === '/workspace' || pathname === '/research') return NextResponse.redirect(new URL(`${pathname}/welcome`, req.url));
       // 从公开首页点进来的，登录完要回到他想去的地方，而不是落到虚拟工厂
       // 百业 / 真活用各自的蒙版式登录页（账号同一套），别让人看见企业数据工厂的登录页
-      const login = new URL(pathname.startsWith('/lab') || pathname.startsWith('/college') || pathname === '/workspace' || pathname === '/research' ? '/lab/login' : pathname.startsWith('/work') ? '/work/login' : '/login', req.url);
+      const login = new URL(pathname.startsWith('/lab') || pathname.startsWith('/college') || pathname === '/workspace' || pathname === '/research' ? '/lab/login' : pathname.startsWith('/work') ? '/work' : '/login', req.url);
       if (pathname.startsWith('/lab') || pathname.startsWith('/work') || pathname.startsWith('/college') || pathname === '/research') login.searchParams.set('next', pathname + req.nextUrl.search);
       return NextResponse.redirect(login);
     }

@@ -295,7 +295,7 @@ function Shell({ children }: { children: React.ReactNode }) {
         </button>}
         </>}
         {/* 同公司另一个品牌：百业真活（放最右，和导航分开） */}
-        <a href="/work" className="lab-brand-switch" title="百业AI｜真活 · True work, true talent">百业真活<span className="lab-brand-switch-arrow">↗</span></a>
+        <a href="/work/about" className="lab-brand-switch" title="百业AI｜真活 · True work, true talent">百业真活<span className="lab-brand-switch-arrow">↗</span></a>
       </header>
 
       <div className="lab-wrap">{children}</div>
