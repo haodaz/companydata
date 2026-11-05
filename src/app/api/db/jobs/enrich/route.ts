@@ -72,6 +72,8 @@ export async function POST(req: Request) {
           const missing = JOB_FIELDS.map(f => f.key).filter(k => k !== 'name' && !locked.has(k) && isEmpty(merged()[k]));
           const found = await searchJobFields({ name: job.name, company: job.institute_or_company_name || '', program_name: job.program_name, location: job.location, source_url: job.source_url }, missing, model || undefined);
           const clean = sanitizeJob({ ...Object.fromEntries(JOB_FIELDS.map(f => [f.key, null])), ...found.fields });
+          // 网申起止日期只认岗位自己的页面，联网检索来的不写（数据部门 10-30 / 11-05：官网没写，系统里却有截止日期）
+          for (const k of ['application_start_date_str', 'application_end_date_str', 'application_end_date_time_description']) clean[k] = null;
           const before = base.filled.length;
           take(clean, found.sources.link || found.fields.link || '联网检索', found.sources);
           base.steps.push(base.filled.length > before ? '联网检索' : '联网检索无新信息');

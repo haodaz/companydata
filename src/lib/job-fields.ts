@@ -83,6 +83,17 @@ export const KIND_LABELS: Record<string, string> = {
   campus_fulltime: '校招全职', company_internship: '公司实习', social_position: '社招', research_internship: '科研实习', phd_open_position: 'PhD 直招',
   summer_school: '暑期学校', camp: '高校营', competition: '竞赛', lecture: '讲座', conference: '学术会议', volunteer: '公益项目',
 };
+/** 企业找到的岗位 / 项目只用这三个（数据部门 11-05 #81，周赞灵）；其他 key 是项目库那边的，这里只留着显示老数据 */
+export const COMPANY_JOB_KINDS = ['campus_fulltime', 'company_internship', 'social_position'] as const;
+export const COMPANY_JOB_KIND_LABELS: Record<string, string> = Object.fromEntries(COMPANY_JOB_KINDS.map(k => [k, KIND_LABELS[k]]));
+/** 不在三个里的归过去：PhD 直招 → 校招全职（#81），科研实习 → 公司实习；其他按 job_type 推，推不出留空 */
+export function companyJobKind(kind: unknown, jobType?: unknown): string | null {
+  const k = String(kind || '');
+  if ((COMPANY_JOB_KINDS as readonly string[]).includes(k)) return k;
+  if (k === 'phd_open_position') return 'campus_fulltime';
+  if (k === 'research_internship') return 'company_internship';
+  return KIND_BY_JOB_TYPE[String(jobType || '')] || null;
+}
 export const KIND_BY_JOB_TYPE: Record<string, string> = { graduate: 'campus_fulltime', program: 'campus_fulltime', intern: 'company_internship', part_time: 'company_internship', full_time: 'social_position', contract: 'social_position' };
 export const ACCEPT_FOREIGN_LABELS: Record<string, string> = { accepted: '接受', not_accepted: '不接受' };
 export const FORM_OF_PLAY_LABELS: Record<string, string> = { online: '线上', offline: '线下', online_and_offline: '线上和线下' };
@@ -108,7 +119,7 @@ export const JOB_FIELDS: JobFieldDef[] = [
   { key: 'job_req_id', label: '岗位编号', kind: 'string', group: 'basic', hint: '企业内部岗位编号 / Requisition ID / Job ID，页面上没有则为 null。' },
   { key: 'department', label: '部门 / 团队', kind: 'string', group: 'basic', hint: '所属部门、团队或业务线，保持原文。' },
   { key: 'job_function', label: '职能类别', kind: 'string', group: 'basic', core: true, hint: '职能类别，用中文归类，取其一：研发 / 算法与数据 / 产品 / 设计 / 运营 / 市场 / 销售 / 客户服务 / 咨询 / 金融与投资 / 财务 / 法务与合规 / 人力资源 / 行政 / 供应链与采购 / 生产制造 / 硬件与工程 / 医疗与生命科学 / 教育 / 管理 / 其他。' },
-  { key: 'kind', label: '类型', kind: 'enum', group: 'basic', options: KIND_LABELS, hint: '类型：校招全职 campus_fulltime / 公司实习 company_internship / 科研实习 research_internship / 社招 social_position / PhD 直招 phd_open_position。' },
+  { key: 'kind', label: '类型', kind: 'enum', group: 'basic', options: COMPANY_JOB_KIND_LABELS, hint: '类型，只能三选一：校招全职 campus_fulltime（含应届、管培、博士 / PhD 招聘）/ 公司实习 company_internship（含科研实习）/ 社招 social_position。' },
   { key: 'job_type', label: '岗位类型', kind: 'enum', group: 'basic', core: true, options: JOB_TYPE_LABELS, hint: '岗位类型。校园招聘 / 应届生 / new grad 填 graduate；实习填 intern；管培生 / 轮岗 / 专项人才计划（整个项目而非单个岗位）填 program；要求工作经验的社会招聘填 full_time。' },
   { key: 'program_name', label: '所属校招项目', kind: 'string', group: 'basic', core: true, hint: '所属校招 / 实习项目的官方名称（如 "2027 届秋季校园招聘"、"STEP Internship"、"未来之星管培生计划"），保持原文。' },
   { key: 'recruit_season', label: '招聘季', kind: 'enum', group: 'basic', options: RECRUIT_SEASON_LABELS, hint: '招聘季：秋招 autumn / 春招 spring / 暑期实习 summer_intern / 寒假实习 winter_intern / 日常实习 daily_intern / 常年 rolling。' },

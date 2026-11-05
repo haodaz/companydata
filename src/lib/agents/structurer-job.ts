@@ -188,7 +188,7 @@ ${jobSchemaForPrompt()}
 }
 
 /** 求职最关键的字段：这些还缺时，触发联网检索补全 */
-export const JOB_SEARCH_TRIGGER_FIELDS = ['responsibilities', 'overview', 'application_end_date_str', 'location', 'education_requirement', 'graduation_year', 'link', 'program_name', 'job_type'];
+export const JOB_SEARCH_TRIGGER_FIELDS = ['responsibilities', 'overview', 'location', 'education_requirement', 'graduation_year', 'link', 'program_name', 'job_type'];
 
 /**
  * 联网检索补全岗位字段：知道企业 + 岗位名，去官方渠道找这条岗位的信息，只返回找到的字段，并附来源链接。

@@ -10,12 +10,12 @@
  */
 import { supabaseAdmin } from '@/lib/supabase';
 import { applyJobDefaults, companySearchNames } from '@/lib/job-defaults';
-import { isGrounded } from '@/lib/jd-grounding';
+import { isGrounded, isDateGrounded } from '@/lib/jd-grounding';
 import { resolveRegion } from '@/lib/region-codes';
 import { FROZEN_REVIEW_STATUSES } from '@/lib/review-status';
 import { toSources } from '@/lib/source-tags';
 import { tagAndSave } from '@/lib/job-tagging';
-import { sanitizeJob, jobCompleteness, KIND_BY_JOB_TYPE, splitLocations, normCity, jobSourceOf } from '@/lib/job-fields';
+import { sanitizeJob, jobCompleteness, companyJobKind, splitLocations, normCity, jobSourceOf } from '@/lib/job-fields';
 
 const normUrl = (u: string) => u.trim().toLowerCase().replace(/[#?].*$/, '').replace(/\/+$/, '');
 
@@ -88,7 +88,7 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
     if (typeof job.is_in_campus !== 'boolean') job.is_in_campus = false;
     delete job.if_delete;
     // 对方的枚举字段：AI 没直接给出时，从我们自己的字段推导
-    if (!job.kind && job.job_type) job.kind = KIND_BY_JOB_TYPE[job.job_type] || null;
+    job.kind = companyJobKind(job.kind, job.job_type);   // 只三选一（数据部门 11-05 #81）
     if (!job.accept_foreign && job.visa_sponsorship !== null) job.accept_foreign = job.visa_sponsorship ? 'accepted' : 'not_accepted';
     applyGradWindowDefault(job);
     applyJobDefaults(job, log.company);   // 主办方 / 年级要求 / 工作地址 / 技能标签分隔（数据部门 10-14）
@@ -97,6 +97,10 @@ export async function upsertJobsFromLog(logId: number, structuredJson: any): Pro
     const src = String(log.raw_markdown || '');
     for (const k of ['responsibilities', 'overview'] as const) {
       if (job[k] && !isGrounded(job[k], src)) { delete job[k]; ungrounded.add(String(job.name)); }
+    }
+    // 网申起止日期也要在原文里写着，模型按「秋招一般 X 月截止」补的不要（数据部门 10-30 / 11-05）
+    for (const k of ['application_start_date_str', 'application_end_date_str'] as const) {
+      if (job[k] && !isDateGrounded(job[k], src)) job[k] = null;
     }
     if (!job.form_of_play && job.remote_type) job.form_of_play = { remote: 'online', onsite: 'offline', hybrid: 'online_and_offline' }[job.remote_type as string] || null;
     const sharedReq = job.job_req_id && (reqNames.get(String(job.job_req_id).trim())?.size || 0) > 1;

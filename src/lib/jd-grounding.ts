@@ -26,3 +26,25 @@ export function groundedRatio(text: string, source: string): number {
 }
 
 export const isGrounded = (text: string | null | undefined, source: string) => !text || source.length < 200 || groundedRatio(text, source) >= GROUNDED_MIN;
+
+const EN_MON = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+/**
+ * 日期要在原文里写着（数据部门 10-30 / 11-05：官网没写截止日期，系统里却有）。
+ * 认 2026-11-30 / 2026/11/30 / 2026.11.30 / 2026年11月30日 / 11月30日 / 11-30 / Nov 30 / 30 Nov 这些写法；原文太短（没抓到正文）不判。
+ */
+export function isDateGrounded(date: string | null | undefined, source: string): boolean {
+  if (!date) return true;
+  if (source.length < 200) return true;
+  const m = String(date).match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if (!m) return true;
+  const [y, mo, d] = [m[1], Number(m[2]), Number(m[3])];
+  const p = (n: number) => `0?${n}`;
+  const res = [
+    new RegExp(`${y}\\s*[-/.年]\\s*${p(mo)}\\s*[-/.月]\\s*${p(d)}(?!\\d)`),
+    new RegExp(`(?<!\\d)${p(mo)}\\s*月\\s*${p(d)}\\s*[日号]`),
+    new RegExp(`(?<![\\d/.-])${p(mo)}[-/.]${p(d)}(?![\\d/.-]?\\d)`),
+    new RegExp(`${EN_MON[mo - 1]}[a-z]*\\.?\\s+${p(d)}(?!\\d)`, 'i'),
+    new RegExp(`(?<!\\d)${p(d)}(st|nd|rd|th)?\\s+${EN_MON[mo - 1]}`, 'i'),
+  ];
+  return res.some(r => r.test(source));
+}
