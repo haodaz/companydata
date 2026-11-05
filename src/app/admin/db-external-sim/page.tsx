@@ -10,6 +10,7 @@ import { DatabaseOutlined, LinkOutlined, StarFilled } from '@ant-design/icons';
 import { PageHeader, Panel } from '@/components/admin/PageHeader';
 import { StatCards } from '@/components/admin/StatCards';
 import { BRAND } from '@/lib/theme';
+import { Md } from '@/components/ws/Md';
 
 const { Text } = Typography;
 const SRC: Record<string, string> = { forage: 'Forage', extern: 'Extern' };
@@ -145,7 +146,7 @@ function ExternDetail({ r }: { r: any }) {
       {(m.skill_sentences || []).length ? <ul style={{ margin: 0, paddingLeft: 20, lineHeight: 1.75, color: BRAND.ink2 }}>{m.skill_sentences.map((o: string, i: number) => <li key={i}>{o}</li>)}</ul> : <Text type="secondary">—</Text>}
       <div style={{ marginTop: 10, color: BRAND.ink3 }}>带教导师：{m.host_title || '—'}（只记职位）</div>
       <H>学员作品墙{works ? `（${works.length} 份，Top performer ${works.filter(w => w.top_performer).length} 份）` : ''}</H>
-      {m.works_summary && <div style={{ background: '#f6f5ff', border: '1px solid #e3e1fb', borderRadius: 10, padding: '10px 14px', marginBottom: 10 }}><Pre text={m.works_summary} /></div>}
+      {m.works_summary && <div style={{ background: '#f6f5ff', border: '1px solid #e3e1fb', borderRadius: 10, padding: '10px 14px', marginBottom: 10 }}><div style={{ fontSize: 13, lineHeight: 1.75, color: BRAND.ink2 }}><Md text={m.works_summary} /></div></div>}
       {works === null ? <Text type="secondary">读取中…</Text> : missing ? <Text type="secondary">作品表还没建（迁移 063 跑完后才有）</Text> : !works.length ? <Text type="secondary">这个项目还没有学员公开挂出来的作品</Text> : <>
         <Space style={{ marginBottom: 8 }}><a onClick={() => setTop(!top)}>{top ? '看全部' : '只看 Top performer'}</a><Text type="secondary" style={{ fontSize: 12 }}>学员公开挂出来的作品，已脱敏：不含姓名、联系方式、学校、作品链接</Text></Space>
         {shown.slice(0, 80).map(w => (
