@@ -16,8 +16,8 @@ type Art =
   | { kind: 'work_task'; token: string; owner_key: string; title: string; task_id: string; _n?: number }
   | { kind: 'work_report'; token: string; sid: string; title: string; name: string; task_id: string; _n?: number }
   | { kind: 'app'; url: string; title: string; _n?: number };
-// 新对话的底部装饰：铜版画手工艺村（水车磨坊、陶窑、染坊、码头——百业），通义万相生成、紫墨，正片叠底融进纸色（照学院秘书页）
-const SCENE = '/work/ws/h-village.jpg';
+// 新对话的底部装饰：铜版画工坊内景（拱窗、工作台、各自埋头干活的工匠——看他干真活），通义万相生成、紫墨，正片叠底融进纸色（照学院秘书页）
+const SCENE = '/work/ws/h-atelier.jpg';
 const APPS = [{ url: '/work/ws/tasks', title: '管理真活' }, { url: '/work/ws/reports', title: '任务报告' }, { url: '/work/ws/kb', title: '知识库' }, { url: '/work/ws/library', title: '任务库' }];
 const artKey = (a: Art) => (a.kind === 'work_report' ? a.sid : a.kind === 'app' ? a.url : a.task_id) + (a._n || '');
 
