@@ -2,6 +2,7 @@
 
 /** 第一次进来的引导（候选人页 / 出题人空间共用）：遮罩 + 高亮框（box-shadow 挖洞）+ 小卡片，一步一个区域。锚点用 data-tour="key"。 */
 import React, { useEffect, useState } from 'react';
+const DIM = 'rgba(20,22,40,.28)';
 export type TourStep = { key: string; title: string; text: string };
 export function Tour({ step, steps, onStep, onDone, doneLabel = '开始做题' }: { step: number; steps: TourStep[]; onStep: (n: number) => void; onDone: () => void; doneLabel?: string }) {
   const [rect, setRect] = useState<{ x: number; y: number; w: number; h: number } | null>(null);
@@ -13,9 +14,14 @@ export function Tour({ step, steps, onStep, onDone, doneLabel = '开始做题' }
   useEffect(() => { const k = (e: KeyboardEvent) => { if (e.key === 'Escape') onDone(); if (e.key === 'Enter' || e.key === 'ArrowRight') (step >= steps.length - 1 ? onDone() : onStep(step + 1)); }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k); }, [step, steps.length, onStep, onDone]);
   const vw = typeof window !== 'undefined' ? window.innerWidth : 1200, vh = typeof window !== 'undefined' ? window.innerHeight : 800;
   const W = 320; let cx = 24, cy = 80;
-  if (rect) { const below = rect.y + rect.h + 14; cx = Math.min(vw - W - 16, Math.max(16, rect.x + rect.w / 2 - W / 2)); cy = below + 190 < vh ? below : Math.max(16, rect.y - 190); if (rect.w < vw * 0.6 && rect.h > vh * 0.5) { cx = rect.x + rect.w + 14 <= vw - W - 16 ? rect.x + rect.w + 14 : Math.max(16, rect.x - W - 14); cy = Math.max(16, Math.min(vh - 200, rect.y + 24)); } }
+  if (rect) { const below = rect.y + rect.h + 14; cx = Math.min(vw - W - 16, Math.max(16, rect.x + rect.w / 2 - W / 2)); cy = below + 190 < vh ? below : Math.max(16, rect.y - 190); if ((rect.w < vw * 0.6 && rect.h > vh * 0.5) || (rect.x + rect.w < Math.min(340, vw * 0.3) && vw > 700)) {   // 高的竖条、或左边侧栏里的一项：卡片放右边，别挡住下面一项
+       cx = rect.x + rect.w + 14 <= vw - W - 16 ? rect.x + rect.w + 14 : Math.max(16, rect.x - W - 14); cy = Math.max(16, Math.min(vh - 200, rect.y + 24)); } }
   return <div style={{ position: 'fixed', inset: 0, zIndex: 60 }} onClick={onDone}>
-    {rect ? <div style={{ position: 'absolute', left: rect.x, top: rect.y, width: rect.w, height: rect.h, borderRadius: 12, boxShadow: '0 0 0 9999px rgba(20,22,40,.28), 0 0 0 2px #6055f5', pointerEvents: 'none', transition: 'all .25s ease' }} /> : <div style={{ position: 'absolute', inset: 0, background: 'rgba(20,22,40,.28)' }} />}
+    {/* 遮罩：高亮框四周各一块半透明（11-05 起不用 9999px 的 box-shadow 挖洞——有的浏览器只画出一角） */}
+    {rect ? <>
+      {[{ left: 0, top: 0, width: '100%', height: Math.max(0, rect.y) }, { left: 0, top: rect.y + rect.h, width: '100%', bottom: 0 }, { left: 0, top: rect.y, width: Math.max(0, rect.x), height: rect.h }, { left: rect.x + rect.w, top: rect.y, right: 0, height: rect.h }].map((st, i) => <div key={i} style={{ position: 'absolute', background: DIM, transition: 'all .25s ease', ...st }} />)}
+      <div style={{ position: 'absolute', left: rect.x, top: rect.y, width: rect.w, height: rect.h, borderRadius: 12, boxShadow: '0 0 0 2px #6055f5, 0 0 0 6px rgba(96,85,245,.18)', pointerEvents: 'none', transition: 'all .25s ease' }} />
+    </> : <div style={{ position: 'absolute', inset: 0, background: DIM }} />}
     <div onClick={e => e.stopPropagation()} style={{ position: 'absolute', left: cx, top: cy, width: W, background: '#fff', color: '#1a1a2e', borderRadius: 14, padding: '14px 16px 12px', boxShadow: '0 12px 40px rgba(10,10,40,.25)', fontSize: 13.5, lineHeight: 1.65 }}>
       <div style={{ fontSize: 11, letterSpacing: 1.5, color: '#6055f5', fontWeight: 700, marginBottom: 4 }}>界面说明 · {step + 1} / {steps.length}</div>
       <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{cur.title}</div>

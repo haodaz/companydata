@@ -6,9 +6,22 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { CHAT_CSS, Composer } from '@/components/work/ChatKit';
 import { askHref, CMDS, col, savedModel, STATUS, when } from './ask';
-import { Empty, Rule } from './ui';
+import { Empty, Rule, WsTour } from './ui';
+import type { TourStep } from '@/components/work/Tour';
 
 const hello = () => { const h = new Date().getHours(); return h < 6 ? '夜深了' : h < 11 ? '早上好' : h < 14 ? '中午好' : h < 18 ? '下午好' : '晚上好'; };
+// 第一次进工作台的引导：从输入框讲到侧栏每个入口，最后是账号菜单
+const HOME_TOUR: TourStep[] = [
+  { key: 'ask', title: '有事直接说', text: '出一道任务、看谁做得好、分析一份报告、改题、上下架，都在这里说一句，AI 来办。打「/」能看常用指令。' },
+  { key: 'desk', title: '案头', text: '最近交卷的人、最近出的题。每一行的「问助理」会把这个人或这道题带进对话，接着往下问。' },
+  { key: 'nav-new', title: '新对话', text: '每件事开一段对话，都会存着；做出来的题、报告在对话右边打开。' },
+  { key: 'recent', title: '最近的对话', text: '聊过的都在这里，点开接着聊。' },
+  { key: 'nav-tasks', title: '管理真活', text: '你出过的每道题：状态、多少人做、平均分。右上「＋ 新建」也能手动一项项填。' },
+  { key: 'nav-reports', title: '任务报告', text: '所有交卷的人一张表。看报告，或者勾同一道题的几个人让助理并排比。' },
+  { key: 'nav-kb', title: '知识库', text: '企业介绍、岗位要求、你过往的题和素材存在这里。助理出任务前会先查，不用每次重说。' },
+  { key: 'nav-library', title: '任务库', text: '平台上现成的好任务，可以原题直出换成你们公司，或者只做参考。' },
+  { key: 'account', title: '账号菜单', text: '设置、使用教程、切换到传统版、退出登录都在这里。想再看一遍这份引导，也点这里的「新手引导」。' },
+];
 const TONE: Record<string, string> = { published: 'ok', ready: 'warn', archived: 'mute' };
 
 export default function HomePage() {
@@ -24,16 +37,17 @@ export default function HomePage() {
   return (
     <div className="wws-page">
       <style>{CHAT_CSS + CSS}</style>
+      <WsTour id="home" steps={HOME_TOUR} />
       <section className="h-hero">
         <div className="wws-eyebrow">TRUE WORK, TRUE TALENT</div>
         <h1>{greet}。你需要做什么，让 AI 来办<span>Tell it what you need. It drafts, reads, compares — you decide.</span></h1>
-        <Composer text={text} setText={setText} busy={false} send={go} stop={() => {}} model={model} setModel={setModel} autoFocus commands={CMDS} placeholder="说你要做什么，或者打 / 看常用指令" />
+        <div data-tour="ask"><Composer text={text} setText={setText} busy={false} send={go} stop={() => {}} model={model} setModel={setModel} autoFocus commands={CMDS} placeholder="说你要做什么，或者打 / 看常用指令" /></div>
       </section>
 
       <Rule zh="案头" en="At a glance" />
       <div className="wws-stats">{nums.map(([en, zh, v]) => <div key={en} className="wws-card wws-stat"><i>{en}</i><b>{d ? v ?? 0 : '…'}</b><span>{zh}</span></div>)}</div>
 
-      <div className="h-cols">
+      <div className="h-cols" data-tour="desk">
         <section className="wws-card lined pad">
           <div className="wws-card-h"><h2 className="wws-h2">最近交卷<small>Latest submissions</small></h2><Link href={askHref('最近交卷的这几个人里，谁值得我先看？为什么？')} style={{ marginLeft: 'auto' }}><button className="wws-ask">问助理：先看谁</button></Link></div>
           {d && !d.recent.length && <Empty>还没有人交卷。题发布后，把参与链接发给候选人。</Empty>}

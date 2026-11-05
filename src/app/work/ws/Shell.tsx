@@ -12,15 +12,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { TOUR_IDS } from './ui';
 import { BookOpen, ChevronsUpDown, ClipboardList, Database, House, Library, ShieldCheck, SquarePen, type LucideIcon } from 'lucide-react';
 
 const HOME = '/work/ws', CHAT = '/work/ws/chat', LOGIN = '/work/ws/login';
 const NAV = [
   { ic: House as LucideIcon, href: HOME, t: '首页', on: (p: string) => p === HOME },
-  { ic: ClipboardList as LucideIcon, href: `${HOME}/tasks`, t: '管理真活', on: (p: string) => p.startsWith(`${HOME}/tasks`) },
-  { ic: Database as LucideIcon, href: `${HOME}/reports`, t: '任务报告', on: (p: string) => p.startsWith(`${HOME}/reports`) },
-  { ic: Library as LucideIcon, href: `${HOME}/kb`, t: '知识库', on: (p: string) => p.startsWith(`${HOME}/kb`) },
-  { ic: BookOpen as LucideIcon, href: `${HOME}/library`, t: '任务库', on: (p: string) => p.startsWith(`${HOME}/library`) },
+  { ic: ClipboardList as LucideIcon, tour: 'nav-tasks', href: `${HOME}/tasks`, t: '管理真活', on: (p: string) => p.startsWith(`${HOME}/tasks`) },
+  { ic: Database as LucideIcon, tour: 'nav-reports', href: `${HOME}/reports`, t: '任务报告', on: (p: string) => p.startsWith(`${HOME}/reports`) },
+  { ic: Library as LucideIcon, tour: 'nav-kb', href: `${HOME}/kb`, t: '知识库', on: (p: string) => p.startsWith(`${HOME}/kb`) },
+  { ic: BookOpen as LucideIcon, tour: 'nav-library', href: `${HOME}/library`, t: '任务库', on: (p: string) => p.startsWith(`${HOME}/library`) },
 ];
 
 export default function Shell({ children }: { children: React.ReactNode }) {
@@ -61,11 +62,11 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       <aside className="wws-side">
         <Link href="/work/ws" className="wws-brand"><span className="mk">真</span><div><b>百业AI｜真活</b><small>TRUE WORK · DESK</small></div></Link>
         <div className="wws-scroll">
-          <button className={`wws-new${path === CHAT && !cur ? ' on' : ''}`} onClick={() => open(null)}><Ic I={SquarePen} />新对话</button>
-          <nav className="wws-nav">{NAV.map(x => <Link key={x.href} href={x.href} className={x.on(path) ? 'on' : ''}><Ic I={x.ic} />{x.t}</Link>)}</nav>
+          <button data-tour="nav-new" className={`wws-new${path === CHAT && !cur ? ' on' : ''}`} onClick={() => open(null)}><Ic I={SquarePen} />新对话</button>
+          <nav className="wws-nav">{NAV.map(x => <Link key={x.href} href={x.href} data-tour={(x as { tour?: string }).tour} className={x.on(path) ? 'on' : ''}><Ic I={x.ic} />{x.t}</Link>)}</nav>
           {me?.role === 'admin' && <nav className="wws-nav wws-admin"><Link href={`${HOME}/admin`} className={path.startsWith(`${HOME}/admin`) ? 'on' : ''}><Ic I={ShieldCheck} />全站管理</Link></nav>}
           <div className="wws-grp">RECENT<span>最近</span></div>
-          <div className="wws-list">
+          <div className="wws-list" data-tour="recent">
             {threads.slice(0, 40).map(t => <button key={t.id} className={`wws-item${cur === t.id ? ' on' : ''}`} title={t.title || '对话'} onClick={() => open(t.id)}>{t.title || '对话'}</button>)}
             {!threads.length && <div className="wws-empty">还没有对话</div>}
           </div>
@@ -73,13 +74,14 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         <div className="wws-foot">
           {menu && <div className="wws-acct-m" onMouseLeave={() => setMenu(false)}>
             <Link href={`${HOME}/settings`} onClick={() => setMenu(false)}>设置</Link>
+            <button onClick={() => { for (const k of TOUR_IDS) try { localStorage.removeItem(`wws-tour-${k}`); } catch {} location.href = `${HOME}?tour=1`; }}>新手引导</button>
             <a href="/work-guide-v2/" target="_blank" rel="noreferrer">使用教程 ↗</a>
             <a href="/work/about">关于真活</a>
             <Link href="/work/classic">切换到传统版</Link>
             <hr />
             <button onClick={logout}>退出登录</button>
           </div>}
-          <button className="wws-acct" onClick={() => setMenu(m => !m)} aria-expanded={menu}><span className="av">{(who || '我').slice(0, 1).toUpperCase()}</span><span className="who"><b>{who || '出任务的人'}</b><small>出任务 · 看答卷 · 定人</small></span><ChevronsUpDown className="chev" size={15} strokeWidth={1.7} /></button>
+          <button data-tour="account" className="wws-acct" onClick={() => setMenu(m => !m)} aria-expanded={menu}><span className="av">{(who || '我').slice(0, 1).toUpperCase()}</span><span className="who"><b>{who || '出任务的人'}</b><small>出任务 · 看答卷 · 定人</small></span><ChevronsUpDown className="chev" size={15} strokeWidth={1.7} /></button>
         </div>
       </aside>
       <main className="wws-main">{children}</main>

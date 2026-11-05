@@ -11,6 +11,8 @@ import { Md } from '@/components/ws/Md';
 import { ReportView } from '@/components/work/ReportView';
 import { CHAT_CSS, CmdChips, Composer, fillComposer, fromHistory, QuickCards, RUNNING, type Item } from '@/components/work/ChatKit';
 import { CMDS, CMDS_REPORT, CMDS_TASK, QUICK, savedModel } from '../ask';
+import { WsTour } from '../ui';
+import type { TourStep } from '@/components/work/Tour';
 
 type Art =
   | { kind: 'work_task'; token: string; owner_key: string; title: string; task_id: string; _n?: number }
@@ -18,6 +20,12 @@ type Art =
   | { kind: 'app'; url: string; title: string; _n?: number };
 // 新对话的底部装饰：铜版画工坊内景（拱窗、工作台、各自埋头干活的工匠——看他干真活），通义万相生成、紫墨，正片叠底融进纸色（照学院秘书页）
 const SCENE = '/work/ws/h-atelier.jpg';
+// 第一次进新对话的引导
+const CHAT_TOUR: TourStep[] = [
+  { key: 'chat-ask', title: '说你要做什么', text: '一句大白话就行，缺的助理会一件件问。打「/」弹出常用指令；可以传文件（素材、过往的题），点 📎 或直接拖进来。' },
+  { key: 'quick', title: '不知道从哪开始', text: '点一张卡，话会放进输入框，把【】里的换成你的情况再发。' },
+  { key: 'recent', title: '对话会存着', text: '做出来的题、报告在右边打开；以后从左边「最近」点回来接着聊。' },
+];
 const APPS = [{ url: '/work/ws/tasks', title: '管理真活' }, { url: '/work/ws/reports', title: '任务报告' }, { url: '/work/ws/kb', title: '知识库' }, { url: '/work/ws/library', title: '任务库' }];
 const artKey = (a: Art) => (a.kind === 'work_report' ? a.sid : a.kind === 'app' ? a.url : a.task_id) + (a._n || '');
 
@@ -117,8 +125,9 @@ function WorkHome() {
           <div className="wc-hero">
             <div className="wws-eyebrow">TRUE WORK · DESK</div>
             <h1>你需要做什么，让 AI 来办<span>Tell it what you need. It drafts, reads, compares — you decide.</span></h1>
-            {composer(true)}
-            <QuickCards items={QUICK} setText={setText} />
+            <div data-tour="chat-ask">{composer(true)}</div>
+            <div data-tour="quick"><QuickCards items={QUICK} setText={setText} /></div>
+            <WsTour id="chat" steps={CHAT_TOUR} />
           </div>
         ) : (
           <>
