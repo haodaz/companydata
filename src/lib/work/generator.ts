@@ -327,7 +327,7 @@ ${opts.env === 'plugin' ? '出题人指定：候选人用自己浏览器里的�
 env 字段：{ "type": "doc|code|sheet|design", "language": "", "starter": "", "tests": [ { "name": "", "code": "" } ], "csv": "", "params": [ { "name": "", "unit": "", "hint": "" } ], "sketch_hint": "" }（只填该环境用到的字段）。交付物要和环境匹配（code 的交付物是代码 + 说明，sheet 是表 + 口径说明，design 是参数表 + 草图 + 设计说明）。
 
 ## 要求
-- 企业是出题的客户：**企业自身的负面舆情**（监管立案、减持套现、高管离职、募资遇冷、亏损传闻）**不进 problem / why_now / 任务书**；只有候选人做这件事确实要处理它时，才在材料里作中性、带来源的一句陈述，不渲染。
+- 企业是出题的客户：**企业自身的负面舆情**（监管立案、减持套现、高管离职、募资遇冷、亏损传闻）**不进 problem / why_now / 任务书**；只有候选人做这件事确实要处理它时，才在材料里作中性、带来源的一句陈述，不渲染。（这条是给你的出题约束，**不要写进 rules 或任何候选人看得到的地方**——写出来本身就点出了负面话题）
 - problem.statement：一句话说清 ${name} 现在的哪个${opts.research ? '研究问题' : '业务问题'}需要「${role}」来解决，必须能从材料里推出来（${opts.research ? '研究方向 / 在研项目 / 平台 / 岗位要求' : '近期动态 / 产品 / 岗位职责 / 典型任务'}）；why_now 说为什么是现在；evidence 列 2–4 条材料原句 + 来源名。
 - task：title（8–16 字）；brief（给做题人看的任务书，300–500 字，口吻像业务负责人交代活：背景、要你做什么、交给谁、什么时候要；「交给谁」写角色（如「交给投委会」），**不要给真实人物编邮箱、电话、微信**）；deliverables 2–3 个（id d1…，title，format 如「一页纸方案 / 估值表 / 筛选脚本 / 流程图」，**module** 从 doc / sheet / code / design / canvas / board 里选：文档类 doc，表格 / 模型 / 测算表 sheet，脚本 / SQL / 函数 code，工程参数表 + 尺寸草图 design（只给结构 / 机械 / 电气这类要定尺寸的工程设计），流程图 / 泳道图 / 思维导图 / 架构图 canvas，线框图 / 界面草图 / 海报 / IP 形象 / 视觉方案这类自由画的设计 board（产品经理、UI / 视觉 / 品牌设计师用这个，不要给他们 design）——**一道题的交付物可以混用模组**，这个岗位真实工作里会交什么就交什么，别为了省事全写成文档）；time_minutes 45–90（出任务的人说了时长就照他说的，最多 240）；rules 3–5 条（必须含「可以随便用 AI，不算作弊；评的是你怎么用」和「材料里没有的数据要标注假设」）。
 - materials 3–5 份，做这件事真的会拿到的东西：kind ∈ doc/table/note/email/data；content 用 Markdown，每份 300–900 字，表格用 Markdown 表；source：db=全部来自材料、generated=为任务合理补写（必须贴近企业真实情况并在正文标「示例数据」）、mixed；basis 写它依据材料的哪一段。至少一份是「有坑」的（信息不全、口径不一致、过期），这是真活。
@@ -363,6 +363,8 @@ ${opts.sample ? `- stages（必填，${opts.sample.stages.length} 步，和样�
   const ids = new Set(task.rubric.map(r => r.id));
   const sum = task.rubric.reduce((a, r) => a + r.weight, 0) || 1;
   for (const r of task.rubric) { r.weight = Math.round(r.weight / sum * 100); r.depends_on = r.depends_on.filter(d => ids.has(d) && d !== r.id); }
+  // 出题的内部约束（企业负面舆情不进题等）是给出题模型看的，不许印进候选人看的规则——那句话本身就点出了负面话题（11-05 国内版验收）
+  task.task.rules = task.task.rules.filter(r => !/负面|舆情/.test(r) && !(/(严禁|不得|不要|禁止|切勿).{0,12}(提及|涉及|出现|谈及)/.test(r) && /监管|减持|丑闻|传闻|亏损|离职|处罚|立案/.test(r)));
   if (!task.task.rules.some(r => /AI/.test(r))) task.task.rules.unshift('可以随便用 AI，不算作弊；评的是你怎么用、什么是你自己判断的');
   // 案例推进式：步骤归一，测算在代码里真算一遍（模型给的「答案」和「数据」对不上是常事）
   if (opts.sample) {

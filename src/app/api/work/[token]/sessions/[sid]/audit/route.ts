@@ -24,7 +24,8 @@ const view = (r: any) => ({ auditing: !!r?.auditing, stage: r?.stage || 0, total
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ token: string; sid: string }> }) {
   const { token, sid } = await params; const { t, s, err } = await load(token, sid);
   if (err || !t) return NextResponse.json({ ok: false, error: err }, { status: 404 });
-  if (!s.report) return NextResponse.json({ ok: false, error: '还没交卷' }, { status: 400 });
+  // 交卷请求还在处理（读附件、看截图要十几秒），审计面板已经开始轮询：说「处理中」，别报错（11-05 国内版验收）
+  if (!s.report) return NextResponse.json({ ok: true, pending: true, stage: 0, total: 0, audit: [] });
   return s.report.auditing ? NextResponse.json({ ok: true, done: false, ...view(s.report) }) : NextResponse.json({ ok: true, done: true, report: s.report, score: s.score });
 }
 
@@ -32,7 +33,7 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ to
   const { token, sid } = await params; const { t, s, err } = await load(token, sid);
   if (err || !t) return NextResponse.json({ ok: false, error: err }, { status: 404 });
   const r = s.report;
-  if (!r) return NextResponse.json({ ok: false, error: '还没交卷' }, { status: 400 });
+  if (!r) return NextResponse.json({ ok: true, pending: true, stage: 0, total: 0, audit: [] });
   if (!r.auditing) return NextResponse.json({ ok: true, done: true, report: r, score: s.score });
   // 有人正在推进这一段（3 分钟内）：不重复跑，回当前进度
   if (r.running_since && Date.now() - new Date(r.running_since).getTime() < 180_000) return NextResponse.json({ ok: true, done: false, ...view(r) });

@@ -26,6 +26,7 @@ export function AuditPanel({ token, sid, readonly, onDone }: { token: string; si
           if (!j.ok) { setErr(j.error || '审计出错了，重试中…'); await new Promise(r => setTimeout(r, 4000)); continue; }
           setErr('');
           if (j.done) { onDone?.(j.report); return; }
+          if (j.pending) { await new Promise(r => setTimeout(r, 1500)); continue; }   // 交卷还在处理
           setSt({ stage: j.stage, total: j.total, audit: j.audit, running: j.running });
           if (j.stage >= j.total) setFinalizing(true);
         } catch { setErr('网络不稳，重试中…'); }
