@@ -73,6 +73,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         <div className="wws-foot">
           {menu && <div className="wws-acct-m" onMouseLeave={() => setMenu(false)}>
             <Link href={`${HOME}/settings`} onClick={() => setMenu(false)}>设置</Link>
+            <a href="/work-guide-v2/" target="_blank" rel="noreferrer">使用教程 ↗</a>
             <a href="/work/about">关于真活</a>
             <Link href="/work/classic">切换到传统版</Link>
             <hr />
