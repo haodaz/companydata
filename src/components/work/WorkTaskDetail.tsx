@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Descriptions, Drawer, Input, InputNumber, Space, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
 import { WorkReport } from '@/components/work/WorkReport';
-import { WorkProcess } from '@/components/work/WorkProcess';
+import { ReportView } from '@/components/work/ReportView';
 import { Md } from '@/components/ws/Md';
 
 const { Text, Paragraph } = Typography;
@@ -183,16 +183,8 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
         {cmpOpen && <Compare rubric={T.rubric || []} people={picked.map(id => sessions.find((s: any) => s.id === id)).filter(Boolean)} baseline={T.baseline} rankOf={rankOf} />}
       </Drawer>
       <Drawer open={!!report} onClose={() => setReport(null)} size={Math.min(900, typeof window !== 'undefined' ? window.innerWidth - 60 : 900)} title={report ? `${report.participant?.name} 的报告` : ''}>
-        {report && <>
-          {/* 先看他交了什么，再看 AI 怎么评（王刚 10-24：出任务的人的视角是先看提交的答案本身，AI 只是辅助评价） */}
-          <div style={{ marginBottom: 14, border: '1px solid #e8e9f0', borderRadius: 10, overflow: 'hidden' }}>
-            <div style={{ padding: '8px 12px', background: '#fafbff', fontWeight: 700, fontSize: 13 }}>交付物原文</div>
-            {/* 按 Markdown 渲染：表格、标题、白板 / 画布交卷截图都直接看得到 */}
-            <div className="wk-deliv" style={{ padding: 12, fontSize: 13.5, lineHeight: 1.75, maxHeight: 460, overflow: 'auto' }}>{report.deliverable ? <Md text={report.deliverable} /> : <span style={{ color: '#999' }}>（没有交付物文本：开放模式 / 插件作答看上传文件与交付说明）</span>}</div>
-          </div>
-          {proc && proc.id === report.id ? <div style={{ marginBottom: 14 }}><WorkProcess events={proc.events} aiChat={proc.ai_chat} materials={T.materials} deliverables={T.task?.deliverables} shots={report.report?.recording?.gallery || []} /></div> : <div style={{ color: '#999', fontSize: 13, marginBottom: 14 }}>读取答题历程…</div>}
-          <WorkReport report={report.report} participant={report.participant} />
-        </>}
+        {/* 三栏：交了什么 / 怎么做的 / 评得怎样；出任务的人先看交了什么（产品负责人 10-24：先看提交的答案本身，AI 只是辅助评价） */}
+        {report && <ReportView report={report.report} participant={report.participant} deliverable={report.deliverable} events={proc && proc.id === report.id ? proc.events : null} aiChat={proc && proc.id === report.id ? proc.ai_chat : []} materials={T.materials} deliverables={T.task?.deliverables} defaultTab="deliv" />}
       </Drawer>
     </>
   );

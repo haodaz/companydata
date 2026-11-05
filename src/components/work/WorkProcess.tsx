@@ -18,7 +18,7 @@ type Row = { t: number; to?: number; kind: string; color: string; label: string;
 const C = { mat: '#12b5cb', ai: '#6055f5', write: '#16a34a', paste: '#f59e0b', file: '#0ea5e9', away: '#b0b4c6', draft: '#8b5cf6', end: '#1a1a2e', screen: '#64748b' };
 const FILTERS: [string, string][] = [['all', '全部'], ['ai', '问 AI'], ['mat', '材料与文件'], ['draft', '稿子快照']];
 
-export function WorkProcess({ events, aiChat, materials, deliverables, shots = [] }: { events: Ev[]; aiChat: Chat[]; materials?: { id: string; title: string }[]; deliverables?: { id: string; title: string }[]; /** 开放模式整屏截图（11-05，报告里 recording.gallery） */ shots?: { t: number; url: string }[] }) {
+export function WorkProcess({ events, aiChat, materials, deliverables, shots = [], part = 'all' }: { /** files 只出交付文件；timeline 只出截图 + 时间轴（报告三栏用，11-05） */ part?: 'all' | 'files' | 'timeline'; events: Ev[]; aiChat: Chat[]; materials?: { id: string; title: string }[]; deliverables?: { id: string; title: string }[]; /** 开放模式整屏截图（11-05，报告里 recording.gallery） */ shots?: { t: number; url: string }[] }) {
   const near = (t: number) => { let best: { t: number; url: string } | null = null; for (const s of shots) if (Math.abs(s.t - t) <= 60 && (!best || Math.abs(s.t - t) < Math.abs(best.t - t))) best = s; return best; };
   const [filter, setFilter] = useState('all');
   const [open, setOpen] = useState<Record<number, boolean>>({});
@@ -73,7 +73,7 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
 
   return (
     <div style={{ display: 'grid', gap: 14 }}>
-      {(files.length > 0 || recs.length > 0) && <div style={box}>
+      {part !== 'timeline' && (files.length > 0 || recs.length > 0) && <div style={box}>
         <div style={head}>交付文件（候选人上传的原文件）</div>
         <div style={{ padding: '6px 12px 10px' }}>{[...files, ...recs].map((f, i) => <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'center', padding: '6px 0', borderTop: i ? '1px solid #f1f2f6' : 0, fontSize: 13.5 }}>
           <span>{f.type === 'recording' ? '🎬' : '📎'}</span><span style={{ flex: 1, wordBreak: 'break-all' }}>{f.type === 'recording' ? '录屏' : f.name}</span>
@@ -81,11 +81,11 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
           <a href={f.url} target="_blank" rel="noreferrer" style={{ color: '#6055f5', fontWeight: 700 }}>{f.type === 'recording' ? '播放' : '下载'}</a>
         </div>)}</div>
       </div>}
-      {shots.length > 0 && <div style={box}>
+      {part !== 'files' && shots.length > 0 && <div style={box}>
         <div style={head}>屏幕截图（每 10 秒一张，画面没变的不存；这里列 {shots.length} 张，点开看大图）</div>
         <div style={{ display: 'flex', gap: 6, overflowX: 'auto', padding: '8px 12px 10px' }}>{shots.map(s => <a key={s.t} href={s.url} target="_blank" rel="noreferrer" style={{ flex: '0 0 auto', textAlign: 'center', textDecoration: 'none' }}><img src={s.url} alt={fmt(s.t)} loading="lazy" style={{ width: 128, height: 80, objectFit: 'cover', borderRadius: 4, border: '1px solid #e8e9f0', display: 'block' }} /><span style={{ fontSize: 11, color: '#8a8fa8', fontFamily: 'ui-monospace, Menlo, monospace' }}>{fmt(s.t)}</span></a>)}</div>
       </div>}
-      <div style={box}>
+      {part !== 'files' && <div style={box}>
         <div style={{ ...head, display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
           <span>答题历程</span><span style={{ fontWeight: 400, color: '#8a8fa8', fontSize: 12 }}>用时 {fmt(real)} · 问 AI {n('ai')} 条 · 材料 / 文件 {n('mat')} 次 · 稿子快照 {n('draft')} 份</span>
           <span style={{ flex: 1 }} />
@@ -111,7 +111,7 @@ export function WorkProcess({ events, aiChat, materials, deliverables, shots = [
               </div>
             </div>); })}
         </div>
-      </div>
+      </div>}
     </div>
   );
 }

@@ -8,7 +8,9 @@ const fmt = (t: number) => `${String(Math.floor(t / 60)).padStart(2, '0')}:${Str
 const LV: Record<string, string> = { L1: '#c9ccd6', L2: '#ffd166', L3: '#3ddc97', L4: '#12a150' };
 const col = (v: number) => (v >= 80 ? '#12a150' : v >= 60 ? '#b7791f' : '#c0392b');
 
-export function WorkReport({ report, participant }: { report: any; participant?: { name?: string } }) {
+/** section（11-05 报告分「交了什么 / 怎么做的 / 评得怎样」三栏）：grade 只出评分那几张、process 只出过程那几张；不传 = 整篇（老用法） */
+export function WorkReport({ report, participant, section = 'all' }: { report: any; participant?: { name?: string }; section?: 'all' | 'grade' | 'process' }) {
+  const G = section !== 'process', Pr = section !== 'grade';
   if (!report) return null;
   if (report.auditing) return <div style={{ padding: '14px 18px', background: '#f3f2ff', borderRadius: 14, color: '#4c43c9', fontSize: 14 }}>AI 审计中：过程 {report.total} 段，已看 {report.stage} 段{report.audit?.length ? `，到 ${fmt(report.audit[report.audit.length - 1].to)} 为止的过程信号 ${report.audit[report.audit.length - 1].tentative}（暂定）` : ''}。候选人那边做完最后一步就出正式报告。</div>;
   const r = report.result, p = report.process, c = report.compare, u = report.ai_use;
@@ -16,35 +18,35 @@ export function WorkReport({ report, participant }: { report: any; participant?:
   return (
     <div style={{ display: 'grid', gap: 16, fontSize: 14, lineHeight: 1.7, color: '#1a1a2e' }}>
       <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'stretch' }}>
-        <Card title="结果" style={{ flex: '1 1 200px' }}>
-          <div style={{ fontSize: 40, fontWeight: 800, color: col(r.total) }}>{r.total}<span style={{ fontSize: 14, color: '#8c8c8c', fontWeight: 500 }}> / 100</span></div>
+        {G && <Card title="结果" style={{ flex: '1 1 200px' }}>
+          {section === 'all' && <div style={{ fontSize: 40, fontWeight: 800, color: col(r.total) }}>{r.total}<span style={{ fontSize: 14, color: '#8c8c8c', fontWeight: 500 }}> / 100</span></div>}
           {c && <div style={{ fontSize: 13, color: '#555' }}>AI 基线 {c?.baseline_total} · 你{c?.delta >= 0 ? '高' : '低'} {Math.abs(c?.delta)} 分{c?.delta < 0 && <span style={{ color: '#8c8c8c' }}>（大部分人做不过 AI，差距就是要练的地方）</span>}</div>}
           <div style={{ marginTop: 8, color: '#444' }}>{r.summary}</div>
-        </Card>
-        {u && <Card title="AI 使用能力" style={{ flex: '1 1 200px' }}>
+        </Card>}
+        {G && u && <Card title="AI 使用能力" style={{ flex: '1 1 200px' }}>
           {u.score == null ? <div style={{ fontSize: 22, fontWeight: 800, color: '#8c8c8c', margin: '6px 0' }}>没用 AI</div>
-            : <div style={{ fontSize: 40, fontWeight: 800, color: col(u.score) }}>{u.score}<span style={{ fontSize: 14, color: '#8c8c8c', fontWeight: 500 }}> / 100</span></div>}
+            : section !== 'all' ? null : <div style={{ fontSize: 40, fontWeight: 800, color: col(u.score) }}>{u.score}<span style={{ fontSize: 14, color: '#8c8c8c', fontWeight: 500 }}> / 100</span></div>}
           <div style={{ marginTop: 4, color: '#444' }}>{u.verdict}</div>
         </Card>}
-        {!p && <Card title="过程" style={{ flex: '1 1 260px' }}><div style={{ color: '#888', fontSize: 13 }}>{report.who === 'college' ? 'AI 学员做的，没有人工操作过程' : '这次作答没有过程记录'}</div></Card>}
-        {p && <Card title="过程" style={{ flex: '1 1 260px' }}>
+        {Pr && !p && <Card title="过程" style={{ flex: '1 1 260px' }}><div style={{ color: '#888', fontSize: 13 }}>{report.who === 'college' ? 'AI 学员做的，没有人工操作过程' : '这次作答没有过程记录'}</div></Card>}
+        {Pr && p && <Card title="过程" style={{ flex: '1 1 260px' }}>
           <div style={{ color: '#555', fontSize: 13 }}>用时 {fmt(p?.duration_s)} · 问 AI {p?.stats?.ai_asks || 0} 次 · 看了 {p?.stats?.materials_opened || 0}/{p?.stats?.materials_total || 0} 份材料 · 粘贴 {p?.stats?.paste_chars || 0} 字 · 自己敲 {p?.stats?.typed_chars || 0} 字</div>
           <div style={{ marginTop: 8 }}>{p?.delegation}</div>
           {!!p?.phases?.length && <div style={{ display: 'flex', marginTop: 10, height: 10, borderRadius: 5, overflow: 'hidden', background: '#eee' }}>{p?.phases.map((ph: any, i: number) => <div key={i} title={`${ph.label} ${fmt(ph.from)}–${fmt(ph.to)}`} style={{ flex: Math.max(1, ph.to - ph.from), background: ['#6055f5', '#12b5cb', '#3ddc97', '#ffd166', '#fa8c16', '#eb2f96', '#8c8c8c', '#1677ff'][i % 8] }} />)}</div>}
           {!!p?.phases?.length && <div style={{ fontSize: 12, color: '#777', marginTop: 4 }}>{p?.phases.map((ph: any) => ph.label).join(' → ')}</div>}
         </Card>}
       </div>
-      {r.items?.length >= 2 && <Overview items={r.items} cmp={c} />}
-      {u?.score != null && <AiUse u={u} />}
-      {report.next_step && <Card title="如果再给一天，先改哪里（候选人交卷时写的）"><div style={{ fontSize: 13.5, lineHeight: 1.75, whiteSpace: 'pre-wrap' }}>{report.next_step}</div></Card>}
-      {report.recording && <Card title={report.recording.url ? '录屏回放 · 用自己的软件做的' : `屏幕记录 · 用自己的软件做的（整屏截图 ${report.recording.shots || 0} 张）`}>
+      {G && r.items?.length >= 2 && <Overview items={r.items} cmp={c} />}
+      {G && u?.score != null && <AiUse u={u} />}
+      {section === 'all' && report.next_step && <Card title="如果再给一天，先改哪里（候选人交卷时写的）"><div style={{ fontSize: 13.5, lineHeight: 1.75, whiteSpace: 'pre-wrap' }}>{report.next_step}</div></Card>}
+      {Pr && report.recording && <Card title={report.recording.url ? '录屏回放 · 用自己的软件做的' : `屏幕记录 · 用自己的软件做的（整屏截图 ${report.recording.shots || 0} 张）`}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14, alignItems: 'start' }}>
           {report.recording.url ? <video controls preload="metadata" src={report.recording.url} style={{ width: '100%', borderRadius: 10, background: '#000' }} />
             : <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 4 }}>{(report.recording.gallery || []).filter((_: any, i: number, a: any[]) => a.length <= 12 || i % Math.ceil(a.length / 12) === 0).slice(0, 12).map((g: any) => <a key={g.t} href={g.url} target="_blank" rel="noreferrer" title={fmt(g.t)}><img src={g.url} alt={fmt(g.t)} style={{ width: '100%', aspectRatio: '16/10', objectFit: 'cover', borderRadius: 4, border: '1px solid #e8e9f0' }} /></a>)}</div>}
           <div style={{ fontSize: 13.5, lineHeight: 1.7 }}><div style={{ color: '#888', fontSize: 12, marginBottom: 4 }}>时长 {fmt(report.recording.duration || 0)} · {report.recording.url ? '抽帧' : '挑'} {report.recording.frames} 张看图{report.recording.url ? '' : '（全部截图在下面的答题历程里）'}</div>{report.recording.summary}</div>
         </div>
       </Card>}
-      <Card title="逐条（每条都有证据；前置没做到的，后置封顶）">
+      {G && <Card title="逐条（每条都有证据；前置没做到的，后置封顶）">
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
           <thead><tr style={{ color: '#8c8c8c', textAlign: 'left' }}><th style={th}>条目</th><th style={th}>等级</th><th style={th}>得分</th>{c && <th style={th}>AI 基线</th>}<th style={th}>证据 / 说明</th></tr></thead>
           <tbody>{r.items.map((i: any) => { const b = c?.items?.find((x: any) => x.id === i.id)?.baseline; return (
@@ -60,20 +62,20 @@ export function WorkReport({ report, participant }: { report: any; participant?:
           {!!r.strengths?.length && <div style={{ flex: 1 }}><div style={{ color: '#12a150', fontWeight: 700 }}>做得好的</div><ul style={ul}>{r.strengths.map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></div>}
           {!!r.gaps?.length && <div style={{ flex: 1 }}><div style={{ color: '#c0392b', fontWeight: 700 }}>差的地方</div><ul style={ul}>{r.gaps.map((x: string, i: number) => <li key={i}>{x}</li>)}</ul></div>}
         </div> : null}
-      </Card>
-      <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+      </Card>}
+      {Pr && <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
         <Card title="高光时刻" style={{ flex: '1 1 280px' }}>{p?.highlights?.length ? p?.highlights.map((h: any, i: number) => <Moment key={i} m={h} color="#12a150" />) : <span style={{ color: '#999' }}>没有观察到明显的高光</span>}</Card>
         <Card title="风险时刻" style={{ flex: '1 1 280px' }}>{p?.risks?.length ? p?.risks.map((h: any, i: number) => <Moment key={i} m={h} color="#c0392b" />) : <span style={{ color: '#999' }}>没有观察到明显的风险</span>}</Card>
-      </div>
-      {!!report.audit?.length && <Card title="审计过程（交卷后一段一段看的笔记，总评和它连续）">
+      </div>}
+      {Pr && !!report.audit?.length && <Card title="审计过程（交卷后一段一段看的笔记，总评和它连续）">
         <div style={{ display: 'grid', gap: 10 }}>{report.audit.map((seg: any) => <Segment key={seg.idx} seg={seg} compact />)}</div>
       </Card>}
-      <Card title="人机协作六维（观察到的，不是定性）">
+      {Pr && <Card title="人机协作六维（观察到的，不是定性）">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
           {Object.entries(p?.skills || {}).map(([k, v]: any) => <div key={k} style={{ padding: '10px 12px', borderRadius: 10, background: '#fafbff', borderLeft: `4px solid ${LV[v.level]}` }}><div style={{ fontWeight: 700 }}>{k} <span style={{ fontSize: 12, color: '#777' }}>{v.level}</span></div><div style={{ fontSize: 13, color: '#555' }}>{v.note}</div></div>)}
         </div>
-      </Card>
-      <div style={{ fontSize: 12, color: '#999' }}>{participant?.name ? `${participant.name} · ` : ''}报告生成于 {report.generated_at ? new Date(report.generated_at).toLocaleString('zh-CN') : ''} · 结果按出任务 rubric 逐条核对，过程看工作台事件流；这是练习与预筛信号，不是能力定性。</div>
+      </Card>}
+      {G && <div style={{ fontSize: 12, color: '#999' }}>{participant?.name ? `${participant.name} · ` : ''}报告生成于 {report.generated_at ? new Date(report.generated_at).toLocaleString('zh-CN') : ''} · 结果按出任务 rubric 逐条核对，过程看工作台事件流；这是练习与预筛信号，不是能力定性。</div>}
     </div>
   );
 }

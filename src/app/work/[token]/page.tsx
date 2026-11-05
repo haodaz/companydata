@@ -9,7 +9,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useParams, useSearchParams } from 'next/navigation';
 import { WorkReport } from '@/components/work/WorkReport';
 import { roleLabel } from '@/lib/work/role-label';
-import { WorkProcess } from '@/components/work/WorkProcess';
+import { ReportView } from '@/components/work/ReportView';
 import { AuditPanel } from '@/components/work/AuditPanel';
 import { DocBench } from '@/components/work/benches/DocBench';
 import { CodeBench } from '@/components/work/benches/CodeBench';
@@ -146,8 +146,7 @@ export default function WorkPage() {
         {report?.result && <a href={`/work/${token}/card?s=${sid}`} style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16, padding: '14px 18px', borderRadius: 14, textDecoration: 'none', color: 'inherit', background: 'linear-gradient(135deg, #f4f2ff, #eef9fb)', border: '1px solid #ddd9ff' }}>
           <div style={{ fontSize: 26 }}>🎖️</div><div style={{ flex: 1 }}><div style={{ fontWeight: 800 }}>领取你的真活成绩单</div><div style={{ fontSize: 13, color: '#666' }}>总分、等级、逐条雷达和做得好的地方，一页可以分享、可以存成 PDF</div></div><span style={{ color: '#6055f5', fontWeight: 700 }}>去看 →</span>
         </a>}
-        <ReportOriginal token={token} sid={sid} task={task} />
-        <WorkReport report={report} participant={participant} />
+        <ReportFull token={token} sid={sid} task={task} report={report} participant={participant} />
         <div style={{ marginTop: 16, fontSize: 13, color: '#888' }}>这页的链接：<code>{typeof location !== 'undefined' ? `${location.origin}/work/${token}?s=${sid}` : ''}</code></div>
       </div>
     </Shell>
@@ -537,18 +536,9 @@ const ta: React.CSSProperties = { ...inp, width: '100%', resize: 'vertical', lin
 const btnPrimary: React.CSSProperties = { padding: '9px 18px', borderRadius: 999, border: 0, background: 'linear-gradient(135deg,#6055f5,#12b5cb)', color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: 14 };
 const btnGhost: React.CSSProperties = { padding: '5px 12px', borderRadius: 999, border: '1px solid #d9dbe6', background: '#fff', color: '#444', cursor: 'pointer', fontSize: 13 };
 
-/** 报告页先放「交了什么」和「怎么做的」：交付物原文 + 交付文件 + 答题历程（潜历 11-03：报告里要能看原始作答、附件和整个过程） */
-function ReportOriginal({ token, sid, task }: { token: string; sid: string; task: Task }) {
+/** 报告页（11-05 重排）：三栏 交了什么 / 怎么做的 / 评得怎样，候选人默认看评得怎样；事件 + 问 AI 原文交卷后才给（?full=1） */
+function ReportFull({ token, sid, task, report, participant }: { token: string; sid: string; task: Task; report: any; participant: any }) {
   const [s, setS] = useState<any>(null);
   useEffect(() => { fetch(`/api/work/${token}/sessions/${sid}?full=1`).then(r => r.json()).then(j => j.ok && setS(j.session)).catch(() => {}); }, [token, sid]);
-  if (!s) return null;
-  return (
-    <div style={{ display: 'grid', gap: 14, marginBottom: 16 }}>
-      <details open style={{ border: '1px solid #e8e9f0', borderRadius: 10, background: '#fff' }}>
-        <summary style={{ padding: '8px 12px', background: '#fafbff', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>交付物原文</summary>
-        <div className="wk-deliv" style={{ padding: 12, fontSize: 13.5, lineHeight: 1.75, maxHeight: 460, overflow: 'auto' }}>{s.deliverable ? <Md text={s.deliverable} /> : <span style={{ color: '#999' }}>（没有交付物文本）</span>}</div>
-      </details>
-      {Array.isArray(s.events) && <WorkProcess events={s.events} aiChat={s.ai_chat || []} materials={(task as any).materials} deliverables={task.task.deliverables} shots={s.report?.recording?.gallery || []} />}
-    </div>
-  );
+  return <ReportView report={report} participant={participant} deliverable={s?.deliverable} events={s ? s.events || [] : null} aiChat={s?.ai_chat || []} materials={(task as any).materials} deliverables={task.task.deliverables} defaultTab="grade" />;
 }
