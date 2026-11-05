@@ -47,3 +47,7 @@ export const QUICK = [
   { t: '比一比候选人', d: '并排看，给进面试的建议和追问', p: '把【题目】交卷的人并排比一下，推荐谁进面试，各自要追问什么。' },
   { t: '这道题出得怎么样？', d: '大家卡在哪、要不要改', p: '【题目】大家做得怎么样？卡在哪？是不是出得太难，要不要改？' },
 ];
+
+/** 对话默认模型：设置页存在本机，首页和新对话读它（取不到就用 Claude Opus 5.5） */
+export const MODEL_KEY = 'wws-model';
+export const savedModel = () => { try { return localStorage.getItem(MODEL_KEY) || 'claude-opus-5-5'; } catch { return 'claude-opus-5-5'; } };

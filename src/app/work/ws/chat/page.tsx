@@ -10,7 +10,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Md } from '@/components/ws/Md';
 import { ReportView } from '@/components/work/ReportView';
 import { CHAT_CSS, CmdChips, Composer, fillComposer, fromHistory, QuickCards, RUNNING, type Item } from '@/components/work/ChatKit';
-import { CMDS, CMDS_REPORT, CMDS_TASK, QUICK } from '../ask';
+import { CMDS, CMDS_REPORT, CMDS_TASK, QUICK, savedModel } from '../ask';
 
 type Art =
   | { kind: 'work_task'; token: string; owner_key: string; title: string; task_id: string; _n?: number }
@@ -88,7 +88,7 @@ function WorkHome() {
     const q = new URLSearchParams(window.location.search);
     if (q.get('thread')) { openThread(q.get('thread')!); return; }
     let pending: any = null; try { pending = JSON.parse(sessionStorage.getItem('wws-pending') || 'null'); sessionStorage.removeItem('wws-pending'); } catch {}
-    if (pending?.model) setModel(pending.model);
+    setModel(pending?.model || savedModel());
     if (q.get('ask') || q.get('task')) { window.history.replaceState(null, '', '/work/ws/chat'); takeAsk(q); }
     else if (pending?.text) setTimeout(() => send(pending.text), 0);
   }, []);  // eslint-disable-line react-hooks/exhaustive-deps

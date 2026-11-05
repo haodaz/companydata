@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { CHAT_CSS, Composer } from '@/components/work/ChatKit';
-import { askHref, CMDS, col, STATUS, when } from './ask';
+import { askHref, CMDS, col, savedModel, STATUS, when } from './ask';
 import { Empty, Rule } from './ui';
 
 const hello = () => { const h = new Date().getHours(); return h < 6 ? '夜深了' : h < 11 ? '早上好' : h < 14 ? '中午好' : h < 18 ? '下午好' : '晚上好'; };
@@ -15,7 +15,7 @@ export default function HomePage() {
   const router = useRouter();
   const [text, setText] = useState(''); const [model, setModel] = useState('claude-opus-5-5');
   const [greet, setGreet] = useState('你好');
-  useEffect(() => setGreet(hello()), []);
+  useEffect(() => { setGreet(hello()); setModel(savedModel()); }, []);
   const go = (t: string) => { try { sessionStorage.setItem('wws-pending', JSON.stringify({ text: t, model })); } catch {} router.push('/work/ws/chat'); };
   const [d, setD] = useState<any>(null);
   useEffect(() => { fetch('/api/admin/work/home?view=overview', { cache: 'no-store' }).then(r => r.json()).then(j => setD(j.ok ? j : { stats: {}, tasks: [], recent: [] })).catch(() => setD({ stats: {}, tasks: [], recent: [] })); }, []);

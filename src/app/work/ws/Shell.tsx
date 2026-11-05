@@ -71,9 +71,14 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         <div className="wws-foot">
-          {menu && <div className="wws-acct-m" onMouseLeave={() => setMenu(false)}><button onClick={logout}>退出登录</button></div>}
+          {menu && <div className="wws-acct-m" onMouseLeave={() => setMenu(false)}>
+            <Link href={`${HOME}/settings`} onClick={() => setMenu(false)}>设置</Link>
+            <a href="/work/about">关于真活</a>
+            <Link href="/work/classic">切换到传统版</Link>
+            <hr />
+            <button onClick={logout}>退出登录</button>
+          </div>}
           <button className="wws-acct" onClick={() => setMenu(m => !m)} aria-expanded={menu}><span className="av">{(who || '我').slice(0, 1).toUpperCase()}</span><span className="who"><b>{who || '出任务的人'}</b><small>出任务 · 看答卷 · 定人</small></span><ChevronsUpDown className="chev" size={15} strokeWidth={1.7} /></button>
-          <div className="wws-minor"><Link href="/work/classic">传统版</Link><i>·</i><a href="/work/about">关于真活</a></div>
         </div>
       </aside>
       <main className="wws-main">{children}</main>
@@ -117,11 +122,10 @@ const CSS = `
 .wws-acct:hover, .wws-acct[aria-expanded="true"] { background: rgba(27,29,54,.04); }
 .wws-acct .chev { margin-left: auto; color: var(--ink3); flex-shrink: 0; }
 .wws-acct-m { position: absolute; left: 10px; right: 10px; bottom: calc(100% - 4px); background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 6px; box-shadow: 0 10px 30px rgba(27,29,54,.14); z-index: 5; }
-.wws-acct-m button { display: block; width: 100%; text-align: left; border: 0; background: transparent; padding: 9px 10px; border-radius: 8px; font: inherit; font-size: 13.5px; color: var(--ink); cursor: pointer; } .wws-acct-m button:hover { background: var(--acc-soft); }
+.wws-acct-m hr { border: 0; border-top: 1px solid var(--line2); margin: 4px 6px; }
+.wws-acct-m a, .wws-acct-m button { display: block; text-decoration: none; width: 100%; text-align: left; border: 0; background: transparent; padding: 9px 10px; border-radius: 8px; font: inherit; font-size: 13.5px; color: var(--ink); cursor: pointer; } .wws-acct-m a:hover, .wws-acct-m button:hover { background: var(--acc-soft); }
 .wws-acct .av { width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font: 700 13px var(--en); flex-shrink: 0; box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(168,139,92,.5); }
 .wws-acct .who { min-width: 0; } .wws-acct b { display: block; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .wws-acct small { display: block; font-size: 11.5px; color: var(--ink3); }
-.wws-minor { display: flex; align-items: center; gap: 6px; padding: 2px 8px 0 50px; font-size: 12px; color: var(--ink3); }
-.wws-minor a { color: var(--ink3); text-decoration: none; } .wws-minor a:hover { color: var(--acc); } .wws-minor i { font-style: normal; }
 .wws-classic { display: flex; align-items: center; gap: 10px; padding: 7px 8px; border-radius: 8px; font-size: 13px; color: var(--ink2); text-decoration: none; }
 .wws-classic:hover { background: rgba(27,29,54,.04); color: var(--ink); }
 .wws-main { flex: 1; min-width: 0; }
