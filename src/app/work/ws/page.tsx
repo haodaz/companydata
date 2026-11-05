@@ -25,7 +25,6 @@ export default function HomePage() {
     <div className="wws-page">
       <style>{CHAT_CSS + CSS}</style>
       <section className="h-hero">
-        <img className="h-desk" src="/work/ws/desk.jpg" alt="" aria-hidden />
         <div className="wws-eyebrow">TRUE WORK, TRUE TALENT</div>
         <h1>{greet}。你需要做什么，让 AI 来办<span>Tell it what you need. It drafts, reads, compares — you decide.</span></h1>
         <Composer text={text} setText={setText} busy={false} send={go} stop={() => {}} model={model} setModel={setModel} autoFocus commands={CMDS} placeholder="说你要做什么，或者打 / 看常用指令" />
@@ -61,8 +60,6 @@ export default function HomePage() {
 
 const CSS = `
 .h-hero { max-width: 800px; margin: 26px auto 8px; position: relative; }
-.h-desk { position: absolute; right: -96px; top: -34px; width: 140px; mix-blend-mode: multiply; opacity: .9; pointer-events: none; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }
-@media (max-width: 1180px) { .h-desk { display: none; } }
 .h-hero h1 { font: 900 32px/1.3 var(--serif); letter-spacing: .03em; margin: 10px 0 18px; }
 .h-hero h1 span { display: block; font: italic 400 15.5px var(--en); color: var(--ink2); margin-top: 8px; letter-spacing: .005em; }
 .h-hero .wc-composer { background: var(--paper); border-color: var(--line); box-shadow: 0 18px 40px -28px rgba(27,29,54,.35); }

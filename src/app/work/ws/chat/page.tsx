@@ -112,7 +112,6 @@ function WorkHome() {
     <div className={`wc${art ? ' with-art' : ''}`}>
       <style>{CHAT_CSS + CSS}</style>
       <section className="wc-chat">
-        {!art && <div className="wws-top">{appMenu}</div>}
         {!items.length && <div className="wc-scene" aria-hidden style={{ backgroundImage: `url(${SCENE})` }} />}
         {!items.length ? (
           <div className="wc-hero">
@@ -165,7 +164,7 @@ const CSS = `
 .wc.with-art { grid-template-columns: minmax(0, 1fr) minmax(460px, 50%); }
 .wc-chat { position: relative; }
 .wc-scene { position: absolute; inset: 0; background: center bottom / cover no-repeat; mix-blend-mode: multiply; opacity: .55; filter: saturate(.85) brightness(1.06); pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.25) 30%, #000 62%); mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.25) 30%, #000 62%); }
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 46%, rgba(0,0,0,.6) 66%, #000 82%); mask-image: linear-gradient(to bottom, transparent 0%, transparent 46%, rgba(0,0,0,.6) 66%, #000 82%); }
 .wc-hero { position: relative; z-index: 1; width: min(820px, 92%); }
 .wc-hero p { text-shadow: 0 0 12px var(--bg), 0 0 4px var(--bg); }
 .wc-quick button { background: rgba(255,254,251,.88); border-color: var(--line); color: var(--ink); } .wc-quick b { font: 800 15.5px var(--serif); letter-spacing: .03em; } .wc-quick span { color: var(--ink2); } .wc-quick button:hover { border-color: var(--acc); }
@@ -188,7 +187,6 @@ const CSS = `
 .wc-art-t { font: 800 16px var(--serif); letter-spacing: .02em; }
 .wc-art-h .wc-eyebrow.sm { font: 600 10.5px var(--en); letter-spacing: .22em; color: var(--brass); text-transform: uppercase; }
 .wc-art-b { overflow: hidden; }
-.wws-top { position: absolute; top: 14px; right: 20px; z-index: 3; }
 .wws-apps { position: relative; }
 .wws-apps-m { position: absolute; right: 0; top: calc(100% + 6px); background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 6px; box-shadow: 0 10px 30px rgba(27,29,54,.14); display: grid; gap: 2px; min-width: 150px; z-index: 5; }
 .wws-apps-m button { border: 0; background: transparent; text-align: left; padding: 8px 10px; border-radius: 8px; font: inherit; font-size: 13.5px; font-weight: 700; color: var(--ink); cursor: pointer; } .wws-apps-m button:hover { background: var(--acc-soft); }
