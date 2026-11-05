@@ -21,6 +21,43 @@ async function load() {
 const left = () => sess?.deadline ? Math.max(0, new Date(sess.deadline).getTime() - Date.now()) : 0;
 const fmt = ms => { const s = Math.ceil(ms / 1000); return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`; };
 
+// ---- 整屏截图（11-05，潜历：插件只记浏览器，PS / 本地 AI 记不到）：选填；每 10 秒一张、缩到 1280 宽、画面没变跳过、边做边传 ----
+const EVERY = 10;
+let cap = null;   // { stream, video, worker, n, last, err }
+async function capStart() {
+  const id = await new Promise(res => chrome.desktopCapture.chooseDesktopMedia(['screen', 'window'], res));
+  if (!id) return;
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { mandatory: { chromeMediaSource: 'desktop', chromeMediaSourceId: id, maxWidth: 1920, maxHeight: 1080, maxFrameRate: 1 } } });
+    const video = document.createElement('video'); video.muted = true; video.srcObject = stream; await video.play();
+    const worker = new Worker('ticker.js'); worker.onmessage = () => capGrab();
+    cap = { stream, video, worker, n: cap?.n || 0, last: '', err: '' };
+    stream.getVideoTracks()[0].addEventListener('ended', capStop);
+    worker.postMessage(EVERY * 1000); setTimeout(capGrab, 1500); render();
+  } catch (e) { cap = { n: cap?.n || 0, err: '没开始：' + (e?.message || e) }; render(); }
+}
+function capStop() {
+  if (!cap) return; cap.worker?.terminate(); cap.stream?.getTracks().forEach(t => t.stop());
+  cap = { n: cap.n, err: cap.err }; render();
+}
+async function capGrab() {
+  if (!cap?.stream || !sess?.code || sess.submitted) { if (sess?.submitted) capStop(); return; }
+  const track = cap.stream.getVideoTracks()[0]; let src = null, w0 = 0, h0 = 0;
+  try { if (window.ImageCapture) { const bm = await new ImageCapture(track).grabFrame(); src = bm; w0 = bm.width; h0 = bm.height; } } catch {}
+  if (!src) { const v = cap.video; if (!v?.videoWidth) return; src = v; w0 = v.videoWidth; h0 = v.videoHeight; }
+  const w = Math.min(1280, w0), h = Math.round(h0 * w / w0);
+  const c = new OffscreenCanvas(w, h); c.getContext('2d').drawImage(src, 0, 0, w, h);
+  const tiny = new OffscreenCanvas(32, 18); tiny.getContext('2d').drawImage(c, 0, 0, 32, 18);
+  const px = tiny.getContext('2d').getImageData(0, 0, 32, 18).data; let sig = ''; for (let i = 0; i < px.length; i += 4) sig += String.fromCharCode(48 + ((px[i] + px[i + 1] + px[i + 2]) / 48 | 0));
+  if (sig === cap.last) return; cap.last = sig;
+  const blob = await c.convertToBlob({ type: 'image/jpeg', quality: 0.6 });
+  const fd = new FormData(); fd.append('file', blob, 'shot.jpg');
+  for (let k = 0; k < 3; k++) {
+    try { const j = await fetch(`${sess.api}/api/work/plugin/${sess.code}`, { method: 'POST', body: fd }).then(r => r.json()); if (!j.ok) throw new Error(j.error); cap.n += 1; cap.err = ''; const el = $('#capn'); if (el) el.textContent = cap.n; return; }
+    catch (e) { if (k === 2) { cap.err = '有一张没传上去：' + (e?.message || e); const el = $('#caperr'); if (el) el.textContent = cap.err; } else await new Promise(r => setTimeout(r, 2000)); }
+  }
+}
+
 function render() {
   if (!sess?.code) {
     app.innerHTML = `
@@ -34,6 +71,7 @@ function render() {
     return;
   }
   if (sess.submitted) {
+    if (cap?.stream) capStop();
     app.innerHTML = `
       <div class="card"><div class="k">已交卷</div><div class="title">${esc(sess.title)}</div>
         <div class="muted" style="margin-top:6px">${sess.warn === 'end' ? '时间到，已自动交卷。' : ''}记录已停止。AI 正在回看你的过程，一段一段记，看完出报告。</div>
@@ -58,6 +96,11 @@ function render() {
         : `<div class="muted" style="margin:6px 0 8px">点开始之后，答题期间你在浏览器里打开的网页、页面上显示的文字（包括 AI 网站上的对话）、打字和粘贴的字数会被记录，交卷后 AI 据此回看你是怎么做的。不记打字的具体内容；交卷或时间到就停止。</div>
            <button class="primary" id="start">同意并开始记录</button>`}
     </div>
+    <div class="card dashed"><div class="k">也记录整个屏幕 · 选填，推荐</div>
+      ${cap?.stream
+        ? `<div class="rec"><i></i>屏幕记录中 · 已存 <b id="capn">${cap.n}</b> 张</div><div class="muted" style="margin-top:4px">每 ${EVERY} 秒截一张，画面没变不存。这个侧边栏别关（可以切去别的软件）。</div><div class="err" id="caperr">${esc(cap.err || '')}</div><div style="margin-top:8px"><button class="ghost" id="capstop">停止记录屏幕</button></div>`
+        : `<div class="muted" style="margin:4px 0 8px">用 PS、Excel、本地 AI 这些浏览器外的软件时，浏览器记录看不到。打开后每 ${EVERY} 秒截一张你选的屏幕或窗口，边做边传；不录视频、不录声音，交卷就停。${cap?.n ? `已存 ${cap.n} 张。` : ''}</div>${cap?.err ? `<div class="err">${esc(cap.err)}</div>` : ''}<button class="ghost" id="capstart">${cap?.n ? '继续记录屏幕' : '开始记录屏幕'}</button>`}
+    </div>
     <div class="card"><div class="k">交付说明</div>
       <div class="muted">贴上交付物链接（在线文档 / 设计稿 / 网盘），写清结论、关键数字、口径和假设。自动保存。</div>
       <textarea id="deliv" placeholder="交付物链接：\n结论：\n假设与口径：">${esc(draft ?? '')}</textarea>
@@ -73,6 +116,8 @@ function render() {
     <button class="end" id="end">结束作答（交卷）</button>
     ${err ? `<div class="err">${esc(err)}</div>` : ''}`;
   $('#start') && ($('#start').onclick = async () => { await send({ type: 'start' }); load(); });
+  $('#capstart') && ($('#capstart').onclick = capStart);
+  $('#capstop') && ($('#capstop').onclick = capStop);
   $('#pause') && ($('#pause').onclick = async () => { await send({ type: 'pause' }); load(); });
   $('#deliv').oninput = e => {
     draft = e.target.value; $('#saved').textContent = '保存中…';

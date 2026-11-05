@@ -37,3 +37,18 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ co
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true });
 }
+
+/** 插件整屏截图（11-05，潜历：插件只能记浏览器，PS / 本地 AI 记不到）：侧边栏每 10 秒传一张 JPEG，存 lab-media/work/<sid>/shots/<秒>.jpg，
+ *  和开放模式同一个位置；交卷时挑 30 张看图，进答题历程和报告 */
+export async function POST(req: NextRequest, { params }: { params: Promise<{ code: string }> }) {
+  const { code } = await params;
+  const x = await sessionByCode(code);
+  if (!x) return NextResponse.json({ ok: false, error: '真活码不对' }, { status: 404 });
+  if (x.s.submitted_at) return NextResponse.json({ ok: false, error: '已经交卷了' }, { status: 409 });
+  const file = (await req.formData().catch(() => null))?.get('file') as File | null;
+  if (!file || file.size > 3 * 1024 * 1024) return NextResponse.json({ ok: false, error: '截图不对' }, { status: 400 });
+  const t = Math.max(0, Math.round((Date.now() - new Date(x.s.started_at).getTime()) / 1000));
+  const { error } = await db.storage.from('lab-media').upload(`work/${x.s.id}/shots/${String(t).padStart(6, '0')}.jpg`, Buffer.from(await file.arrayBuffer()), { contentType: 'image/jpeg', upsert: true });
+  if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+  return NextResponse.json({ ok: true, t });
+}

@@ -39,6 +39,14 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
       recording = shots.length ? { url: '', duration: shots[shots.length - 1].t - shots[0].t, summary: frames.summary, frames: frames.n, shots: shots.length, gallery: thin(shots, 120) } : { url: rec!.url, duration: rec!.duration || 0, summary: frames.summary, frames: frames.n };
     } catch (e) { console.warn('[work] 录屏分析失败：', String((e as any)?.message).slice(0, 160)); recording = shots.length ? { url: '', duration: shots[shots.length - 1].t - shots[0].t, summary: '（截图看图失败，过程只按上传 / 下载事件评）', frames: 0, shots: shots.length, gallery: thin(shots, 120) } : { url: rec!.url, duration: rec!.duration || 0, summary: '（录屏分析失败，过程只按上传 / 下载事件评）', frames: 0 }; }
   } else if (plugin) {
+    const shots = await listShots(sid);   // 插件整屏截图（11-05，选填）
+    if (shots.length) {
+      try {
+        const frames = await withCost({ tool_name: 'work', task_name: 'Grade · 录屏看图', stage: 'use' }, async () => { const fr = await framesFromShots(shots); const d = await describeFrames(fr, t.task?.brief || '', t.company_name); return { ...d, n: fr.length }; });
+        events = [...events, ...frames.events].sort((a, b) => a.t - b.t);
+        recording = { url: '', duration: shots[shots.length - 1].t - shots[0].t, summary: frames.summary, frames: frames.n, shots: shots.length, gallery: thin(shots, 120) };
+      } catch (e) { console.warn('[work] 插件截图分析失败：', String((e as any)?.message).slice(0, 160)); recording = { url: '', duration: shots[shots.length - 1].t - shots[0].t, summary: '（截图看图失败）', frames: 0, shots: shots.length, gallery: thin(shots, 120) }; }
+    }
     // 真活插件：交付 = 交付说明 + 链接；到时间自动收卷时没写也照收（按未交付评）
     if (deliverable.trim().length < 20) { if (!body.auto) return NextResponse.json({ ok: false, error: '交付说明太短了：贴上交付物链接，写清结论和假设' }, { status: 400 }); deliverable = `（时间到，自动交卷；候选人没写完交付说明）\n${deliverable}`; }
   } else if (deliverable.trim().length < 50) return NextResponse.json({ ok: false, error: '交付物太短了，至少写点东西' }, { status: 400 });
