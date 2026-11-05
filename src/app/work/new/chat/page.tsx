@@ -128,15 +128,22 @@ export default function WorkChatPage() {
   );
 }
 
+const OK_EXT = /\.(pdf|docx|txt|md|csv|xlsx|xls|png|jpe?g|webp|gif)$/i;
+
 function Composer({ text, setText, busy, send, stop, model, setModel, placeholder, autoFocus }: { text: string; setText: (t: string) => void; busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; placeholder?: string; autoFocus?: boolean }) {
   // 上传文件：以【文件】行附进消息；是素材还是参考资料由出题助理按语境判断（默认素材）
   // 2026-11-03：文件先显示成输入框上方的小卡片（不再把一长串【文件】行塞进输入框）；还在上传 / 看图时锁住发送——以前图没处理完就发出去，图就没带上（潜历反馈）
   const fileRef = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<{ key: string; name: string; line?: string; err?: string }[]>([]);
   const up = files.some(f => !f.line && !f.err);
-  const attach = async (list: FileList | null) => {
+  // 11-05 潜历：能拖进来、说清楚能传什么。拖拽 / 粘贴截图 / 📎 三个入口都走这里；不支持的格式和超大文件在这儿就挡下
+  const [drag, setDrag] = useState(false);
+  const attach = async (list: FileList | File[] | null) => {
     if (!list?.length) return;
-    const picked = Array.from(list).slice(0, 6).map(f => ({ f, key: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}` }));
+    const all = Array.from(list as ArrayLike<File>);
+    const bad = all.filter(f => !OK_EXT.test(f.name) || f.size > 20 * 1024 * 1024);
+    if (bad.length) setFiles(x => [...x, ...bad.map(f => ({ key: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, name: f.name, err: f.size > 20 * 1024 * 1024 ? '超过 20MB' : '这种格式传不了' }))]);
+    const picked = all.filter(f => !bad.includes(f)).slice(0, 6).map(f => ({ f, key: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}` }));
     setFiles(x => [...x, ...picked.map(({ f, key }) => ({ key, name: f.name }))]);
     await Promise.all(picked.map(async ({ f, key }) => {
       try {
@@ -152,14 +159,20 @@ function Composer({ text, setText, busy, send, stop, model, setModel, placeholde
   const canSend = !up && (!!text.trim() || ready.length > 0);
   const go = () => { if (!canSend) return; send([text.trim() || '（附上文件）', ...ready.map(f => f.line!)].join('\n')); setFiles([]); };
   return (
-    <div className="wc-composer">
+    <div className={`wc-composer${drag ? ' drag' : ''}`}
+      onDragOver={e => { if (e.dataTransfer?.types?.includes('Files')) { e.preventDefault(); if (!drag) setDrag(true); } }}
+      onDragLeave={e => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setDrag(false); }}
+      onDrop={e => { if (!e.dataTransfer?.files?.length) return; e.preventDefault(); setDrag(false); if (!busy) attach(e.dataTransfer.files); }}>
+      {drag && <div className="wc-drop">松手就上传</div>}
       {files.length > 0 && <div className="wc-files">{files.map(f => <span key={f.key} className={`wc-file${f.err ? ' err' : !f.line ? ' busy' : ''}`}>📎 {f.name}<em>{f.err ? f.err : !f.line ? '上传中，图片要先看一遍…' : '已就绪'}</em><button onClick={() => setFiles(x => x.filter(y => y.key !== f.key))} title="去掉">×</button></span>)}</div>}
       <textarea value={text} autoFocus={autoFocus} rows={2} placeholder={placeholder || '说一句最实际的要求，比如：我们缺一个能把销售数据理清楚的人'} onChange={e => setText(e.target.value)}
+        onPaste={e => { const fs2 = Array.from(e.clipboardData?.files || []); if (fs2.length) { e.preventDefault(); attach(fs2.map((f, i) => f.name && f.name !== 'image.png' ? f : new File([f], `截图-${new Date().toTimeString().slice(0, 8).replace(/:/g, '')}${i ? '-' + i : ''}.png`, { type: f.type || 'image/png' }))); } }}
         onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); go(); } }} />
       <div className="wc-bar">
         <select className="wc-model" value={model} onChange={e => setModel(e.target.value)}>{MODELS.map(m => <option key={m.id} value={m.id}>{m.label}</option>)}</select>
         <button className="wc-clip" title="上传文件：给候选人的素材，或让 AI 照着出的参考资料——传完说一句是哪种就行" disabled={busy} onClick={() => fileRef.current?.click()}>📎 文件</button>
-        <input ref={fileRef} type="file" multiple accept=".pdf,.docx,.txt,.md,.csv,.xlsx,.png,.jpg,.jpeg,.webp,.gif" style={{ display: 'none' }} onChange={e => { attach(e.target.files); e.target.value = ''; }} />
+        <input ref={fileRef} type="file" multiple accept=".pdf,.docx,.txt,.md,.csv,.xlsx,.xls,.png,.jpg,.jpeg,.webp,.gif" style={{ display: 'none' }} onChange={e => { attach(e.target.files); e.target.value = ''; }} />
+        <span className="wc-fmt" title="Word 请存成 .docx；PPT 请导出成 PDF">可拖进来或粘贴截图 · PDF / Word(docx) / Excel / CSV / TXT / 图片，单个 20MB 内</span>
         {busy ? <button className="wc-send stop" onClick={stop}>停</button> : <button className="wc-send" disabled={!canSend} title={up ? '文件还在处理，好了再发' : ''} onClick={go}>↑</button>}
       </div>
     </div>
@@ -229,6 +242,11 @@ const CSS = `
 .wc-typing i:nth-child(2) { animation-delay: .15s } .wc-typing i:nth-child(3) { animation-delay: .3s } @keyframes wcdot { 0%,80%,100% { opacity: .25 } 40% { opacity: 1 } }
 .wc-composer { background: #fff; border: 1px solid #e8e9f0; border-radius: 18px; padding: 12px 12px 8px 16px; box-shadow: 0 2px 10px rgba(20,24,60,.05); }
 .wc-composer:focus-within { border-color: #6055f5; }
+.wc-composer { position: relative; }
+.wc-composer.drag { border-color: #6055f5; border-style: dashed; background: #f6f5ff; }
+.wc-drop { position: absolute; inset: 0; display: grid; place-items: center; border-radius: 18px; background: rgba(246,245,255,.92); color: #4c43c9; font-weight: 700; font-size: 15px; pointer-events: none; z-index: 2; }
+.wc-clip { white-space: nowrap; flex: none; }
+.wc-fmt { font-size: 11.5px; color: #9a9db0; margin-right: auto; margin-left: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .wc-composer textarea { width: 100%; border: 0; outline: 0; resize: none; background: transparent; font: inherit; font-size: 15px; line-height: 1.6; color: #1a1a2e; }
 .wc-bar { display: flex; align-items: center; margin-top: 4px; }
 .wc-model { border: 0; background: transparent; color: #666; font: inherit; font-size: 12.5px; cursor: pointer; padding: 4px 2px; outline: 0; }

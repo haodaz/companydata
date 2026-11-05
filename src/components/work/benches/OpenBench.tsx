@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useRef, useState } from 'react';
 
-type Material = { id: string; title: string; kind: string; content: string };
+type Material = { id: string; title: string; kind: string; content: string; url?: string; mime?: string; name?: string };
 type Up = { name: string; size: number; url: string };
 export type Rec = { url: string; duration: number; shots?: number };
 const EVERY = 10;   // 秒
@@ -30,6 +30,7 @@ export function OpenBench({ token, sid, materials, deliverables, summary, onSumm
   useEffect(() => { if (rec !== 'on') return; const iv = setInterval(() => setSecs(Math.round((Date.now() - started.current) / 1000)), 1000); return () => clearInterval(iv); }, [rec]);
 
   const download = (m: Material) => {
+    if (m.kind === 'file' && m.url) { window.open(m.url, '_blank'); onEvent('download', { id: m.id }); return; }   // 上传的文件给原文件，不给抽出的文字（11-05）
     const ext = m.kind === 'table' || m.kind === 'data' ? 'csv' : 'md';
     const body = ext === 'csv' ? m.content.replace(/^```\w*\n?|```$/g, '') : m.content;
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + body], { type: ext === 'csv' ? 'text/csv' : 'text/markdown' })); a.download = `${m.id}-${m.title}.${ext}`; a.click();
@@ -96,7 +97,7 @@ export function OpenBench({ token, sid, materials, deliverables, summary, onSumm
       {/* 材料 */}
       <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px' }}>
         <div style={{ fontWeight: 700, marginBottom: 6 }}>第二步：把材料拿走，用你顺手的软件做</div>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>{materials.map(m => <button key={m.id} onClick={() => download(m)} style={chip}>⬇ {m.id} {m.title}.{m.kind === 'table' || m.kind === 'data' ? 'csv' : 'md'}</button>)}</div>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>{materials.map(m => <button key={m.id} onClick={() => download(m)} style={chip}>⬇ {m.id} {m.kind === 'file' && m.url ? (m.name || m.title) : `${m.title}.${m.kind === 'table' || m.kind === 'data' ? 'csv' : 'md'}`}</button>)}</div>
         <div style={{ fontSize: 12.5, color: '#666', marginTop: 8 }}>Excel、CAD、IDE、浏览器、任何 AI 都行——评的是你怎么用。</div>
       </div>
       {/* 交付 */}

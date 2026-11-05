@@ -10,7 +10,7 @@ import type Anthropic from '@anthropic-ai/sdk';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import type { AgentKit } from '@/lib/ws/agent';
 import { withCost } from '@/lib/token-logger';
-import { attachmentsToMaterials, clampMinutes, withMinutes, withRole, companyJobs, gatherContext, generateTask, reviseTask, runBaseline, searchCompanies, suggestRoles, verbatimTask, WORK_MODEL, type Attachment, type WorkEnvType } from '@/lib/work/generator';
+import { attachmentsToMaterials, mergeAttachmentDupes, clampMinutes, withMinutes, withRole, companyJobs, gatherContext, generateTask, reviseTask, runBaseline, searchCompanies, suggestRoles, verbatimTask, WORK_MODEL, type Attachment, type WorkEnvType } from '@/lib/work/generator';
 import { autoPickSamples, getSample, listSamples, parseSample, saveSample } from '@/lib/work/samples';
 import { bankTask, pickBankRefs, refreshSignals, renderBankRefs } from '@/lib/work/question-bank';
 import { randomBytes } from 'node:crypto';
@@ -90,6 +90,7 @@ export async function createWorkTask(user: { email: string; role: string }, body
   const env = body.env && ENV_TYPES.includes(body.env) ? (body.env as WorkEnvType) : (show && body.showcase_use !== 'ref' && show.env && ENV_TYPES.includes(show.env) ? (show.env as WorkEnvType) : undefined);
   const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题', stage: 'create', actor: user.email }, () => generateTask(ctx, roleUse, { modules: body.modules, base, attachments: atts, sample: sample?.skeleton || null, sampleMode, bankRefs: renderBankRefs(bankRefs, ctx.company?.id ?? null), model: body.model || WORK_MODEL, focus: body.focus ? String(body.focus).slice(0, 1500) : undefined, env, research: false }));
   if (atts.length) { task.materials = [...task.materials, ...attachmentsToMaterials(atts, task.materials.length + 1)]; (ctx as any).attachments = atts.map(a => ({ name: a.name, url: a.url })); }
+  Object.assign(task, mergeAttachmentDupes(task as any));   // 出题 AI 另写的「附件1：xx.png」文字材料和真文件合成一份
   const want = Number(body.time_minutes) || minutesFromText(String(body.focus || ''));
   if (want) task.task = withMinutes(task.task, want).task;
   const share_token = randomBytes(8).toString('base64url'), owner_key = randomBytes(12).toString('base64url');
@@ -181,6 +182,8 @@ async function run(name: string, input: any, user: { email: string; role: string
       if (fresh.length) {
         patch.materials = [...(t.materials || []), ...attachmentsToMaterials(fresh, (t.materials || []).length + 1)];
         patch.context = { ...(t.context || {}), attachments: [...(t.context?.attachments || []), ...fresh.map(a => ({ name: a.name, url: a.url }))] };
+        const merged = mergeAttachmentDupes({ task: patch.task || t.task, problem: t.problem, rubric: t.rubric, materials: patch.materials });
+        patch.materials = merged.materials; if (merged.task !== (patch.task || t.task)) patch.task = merged.task; if (merged.rubric !== t.rubric) patch.rubric = merged.rubric; if (merged.problem !== t.problem) patch.problem = merged.problem;
         done.push(`材料包加了 ${fresh.map(a => a.name).join('、')}`);
       }
       if (!done.length) return { result: { error: '没有要改的：给 time_minutes、role 或 attachments' }, label: '没改' };

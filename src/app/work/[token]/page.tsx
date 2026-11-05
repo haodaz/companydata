@@ -167,7 +167,7 @@ export default function WorkPage() {
 
   if (mode === 'plugin' && participant?.code) return <Shell><PluginWork code={participant.code} task={task as any} onSubmitted={() => setPhase('grading')} /></Shell>;
 
-  return <Workspace token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} onSubmit={async (deliverable, events) => {
+  return <Workspace token={token} sid={sid} task={task} env={env} mode={mode as 'bench' | 'open'} narrow={narrow} grading={phase === 'grading'} error={err} onRestart={() => { try { localStorage.removeItem(`work:${token}`); } catch {} setSid(''); setParticipant(null); setPhase('intro'); window.scrollTo(0, 0); }} onSubmit={async (deliverable, events) => {
     setPhase('grading');
     const j = await (await fetch(`/api/work/${token}/sessions/${sid}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deliverable, events }) })).json();
     if (!j.ok) { setErr(j.error || '交卷失败，再试一次'); setPhase('work'); return; }
@@ -176,7 +176,7 @@ export default function WorkPage() {
   }} />;
 }
 
-function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubmit }: { token: string; sid: string; task: Task; env: Env; mode: 'bench' | 'open'; narrow: boolean; grading: boolean; error?: string; onSubmit: (deliverable: string, events: Ev[]) => Promise<void> }) {
+function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubmit, onRestart }: { token: string; sid: string; task: Task; env: Env; mode: 'bench' | 'open'; narrow: boolean; grading: boolean; error?: string; onRestart?: () => void; onSubmit: (deliverable: string, events: Ev[]) => Promise<void> }) {
   const t0 = useRef(Date.now());
   const [now, setNow] = useState(0);
   const buf = useRef<Ev[]>([]);
@@ -195,6 +195,11 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const [opened, setOpened] = useState<Set<string>>(() => new Set(parts[0] ? [parts[0].id] : []));
   const [nudge, setNudge] = useState<string | null>(null); const nudged = useRef(false);
   const [cur, setCur] = useState(parts[0]?.id || 'd1');
+  const [brief, setBrief] = useState(false);   // 「← 任务说明」面板（11-05 潜历：选了作答方式后想回去看任务说明）
+  // 草稿存在本机（11-05）：各台子的内容以前只在内存里，刷新 / 误关就没了。按作答编号存，打开时恢复
+  const draftKey = `work:draft:${sid}`; const restored = useRef(false);   // 恢复的草稿不算「打字」
+  useEffect(() => { try { const raw = localStorage.getItem(draftKey); if (raw) { const o = JSON.parse(raw); if (o && typeof o === 'object') { setPs(x => ({ ...x, ...o })); restored.current = true; } } } catch { /* 无痕 / 坏数据 */ } }, [draftKey]);
+  useEffect(() => { const h = setTimeout(() => { try { localStorage.setItem(draftKey, JSON.stringify(ps)); } catch { /* 太大（白板贴了很多图）就不存 */ } }, 800); return () => clearTimeout(h); }, [ps, draftKey]);
   const curPart = parts.find(p => p.id === cur) || parts[0];
   const st = ps[cur] || blank();
   const setPart = (patch: Partial<PartState> | ((x: PartState) => Partial<PartState>)) => setPs(all => { const x = all[cur] || blank(); return { ...all, [cur]: { ...x, ...(typeof patch === 'function' ? patch(x) : patch) } }; });
@@ -241,6 +246,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   useEffect(() => {
     const iv = setInterval(() => {
       setNow(now_s());
+      if (restored.current) { lastLen.current = deliverable.length; restored.current = false; }
       const d = deliverable.length - lastLen.current;
       if (d !== 0 && now_s() % 20 === 0) { buf.current.push({ t: now_s(), type: 'edit', delta: d }); lastLen.current = deliverable.length; }
       if (now_s() % 180 === 0 && deliverable.trim() && deliverable !== lastSnap.current) { buf.current.push({ t: now_s(), type: 'draft', chars: deliverable.length, text: deliverable.slice(0, 12000) }); lastSnap.current = deliverable; }
@@ -388,7 +394,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
     <Shell dark={dark}>
       <style>{`.wk-md p{margin:0 0 8px}.wk-md ul,.wk-md ol{margin:0 0 8px;padding-left:20px}.wk-md li{margin:2px 0}.wk-md .ws-h{font-weight:700;margin:10px 0 4px}.wk-md a{color:#6055f5}.wk-md .ws-code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:rgba(96,85,245,.08);padding:1px 5px;border-radius:4px}.wk-md>:last-child{margin-bottom:0}.wk-md .ws-tw{overflow:auto;margin:6px 0 10px}.wk-md .ws-table{border-collapse:collapse;font-size:12.5px;min-width:60%}.wk-md .ws-table th,.wk-md .ws-table td{border:1px solid rgba(120,120,160,.25);padding:5px 9px;text-align:left;vertical-align:top}.wk-md .ws-table th{background:rgba(96,85,245,.06);font-weight:600;white-space:nowrap}.wk-md .ws-quote{margin:6px 0 10px;padding:6px 12px;border-left:3px solid #c9c9dc;color:#666;background:rgba(120,120,160,.05);border-radius:0 8px 8px 0}.wk-md .ws-pre{white-space:pre-wrap;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:rgba(120,120,160,.08);padding:10px 12px;border-radius:8px;margin:6px 0 10px}.wk-mat .ws-h{font-size:14px;margin:12px 0 4px}.wk-ta:focus{outline:none;border-color:#6055f5!important;box-shadow:0 0 0 3px rgba(96,85,245,.12)}`}</style>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 14px', borderBottom: `1px solid ${line}`, background: dark ? '#16171f' : '#fff', color: dark ? '#e6e8f0' : undefined, position: 'sticky', top: 0, zIndex: 5, height: 52, boxSizing: 'border-box' }}>
-        <div style={{ fontSize: 11, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台</div>
+        {!grading ? <button onClick={() => setBrief(true)} title="看任务说明（作答不受影响）" style={{ border: `1px solid ${line}`, background: 'transparent', color: '#6055f5', borderRadius: 8, padding: '3px 9px', fontSize: 12, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>← 任务说明</button> : <div style={{ fontSize: 11, letterSpacing: 2, color: '#6055f5', fontWeight: 700 }}>真活台</div>}
         <div style={{ fontWeight: 700, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 14 }}>{task.task.title} <span style={{ color: '#888', fontWeight: 400, fontSize: 12.5 }}>{task.company_name} · {task.role} · {mode === 'open' ? '用自己的软件做' : modulesLabel(task, env)}</span></div>
         {!narrow && <div data-tour="views" style={{ display: 'flex', gap: 2, padding: 2, border: `1px solid ${line}`, borderRadius: 8 }}>
           <button onClick={() => setLeftOpen(v => !v)} style={viewBtn(leftOpen)} title={leftOpen ? '收起材料栏' : '展开材料栏'}><Ico k="left" /></button>
@@ -400,6 +406,16 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
         <button onClick={submit} disabled={grading} style={{ ...btnPrimary, padding: '7px 16px', fontSize: 13.5, ...(arm ? { background: '#c0392b' } : {}) }}>{grading ? '评卷中…' : arm ? '再点一次确认交卷' : '交卷 →'}</button>
         </div>
       </div>
+      {brief && <div onClick={() => setBrief(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(10,12,30,.35)', zIndex: 40, display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '40px 16px', overflow: 'auto' }}>
+        <div onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: 760, background: '#fff', color: '#1a1a2e', borderRadius: 16, padding: '22px 26px', boxShadow: '0 20px 60px rgba(20,20,60,.25)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}><b style={{ fontSize: 18, flex: 1 }}>{task.task.title}</b><button onClick={() => setBrief(false)} style={{ border: '1px solid #e0e0ee', background: '#fff', borderRadius: 8, padding: '4px 12px', cursor: 'pointer' }}>继续作答</button></div>
+          <div style={{ color: '#666', fontSize: 13, margin: '4px 0 14px' }}>{task.company_name} · {roleLabel(task.role, (task.task as any).role)} · 建议 {task.task.time_minutes} 分钟 · 作答进度都在，关掉这个面板就回去</div>
+          <div style={{ fontWeight: 700, margin: '10px 0 4px' }}>任务书</div><div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8, fontSize: 14 }}>{task.task.brief}</div>
+          <div style={{ fontWeight: 700, margin: '14px 0 4px' }}>要交什么</div><ol style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9, fontSize: 14 }}>{task.task.deliverables.map(d => <li key={d.id}><b>{d.title}</b> <span style={{ color: '#888' }}>{d.format}</span></li>)}</ol>
+          <div style={{ fontWeight: 700, margin: '14px 0 4px' }}>规则</div><ul style={{ margin: 0, paddingLeft: 20, lineHeight: 1.9, fontSize: 14 }}>{task.task.rules.map((r, i) => <li key={i}>{r}</li>)}</ul>
+          {onRestart && <div style={{ marginTop: 18, paddingTop: 12, borderTop: '1px solid #eee', fontSize: 13, color: '#666', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}><span style={{ flex: 1 }}>想换一种作答方式（用自己的软件 / 网页工具）？会重新开始一次作答，这次不交卷就不算。</span><button onClick={() => { if (confirm('换一种方式会重新开始一次作答，这次写的内容不交卷就不算。确定吗？')) onRestart(); }} style={{ border: '1px solid #c9c3ff', background: '#fff', color: '#6055f5', borderRadius: 999, padding: '6px 14px', cursor: 'pointer', fontWeight: 600 }}>换一种方式重新开始</button></div>}
+        </div>
+      </div>}
       {tour != null && <Tour step={tour} steps={TOUR_STEPS.filter(t => mode !== 'open' || t.key !== 'tabs')} onStep={setTour} onDone={() => { setTour(null); try { localStorage.setItem('work-tour-done', '1'); } catch {} }} />}
       {grading && <div style={{ padding: '12px 18px', background: '#f3f2ff', color: '#4c43c9', fontSize: 13.5 }}>交卷了。正在逐条核对交付物、回看过程、和 AI 基线比——大约 1–2 分钟，别关页面。</div>}
       {(error || localErr) && !grading && <div style={{ padding: '10px 18px', background: '#fff1f0', color: '#c0392b', fontSize: 13.5 }}>{error || localErr}</div>}

@@ -1,7 +1,7 @@
 import { refreshSignals } from '@/lib/work/question-bank';
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
-import { reviseTask, runBaseline, sourcesOf, withMinutes, withRole } from '@/lib/work/generator';
+import { attachmentsToMaterials, mergeAttachmentDupes, reviseTask, runBaseline, sourcesOf, withMinutes, withRole } from '@/lib/work/generator';
 import { withCost, logTokenUsage } from '@/lib/token-logger';
 import { generateContent } from '@/lib/llm-client';
 import { reviewGeneric } from '@/lib/work/compare';
@@ -38,6 +38,22 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ to
     const r = withMinutes(t.task, body.time_minutes);
     await db.from('work_tasks').update({ task: r.task, updated_at: new Date().toISOString() }).eq('id', t.id);
     return NextResponse.json({ ok: true, time_minutes: r.mins });
+  }
+  // 补素材（11-05 潜历：出好后想再传文件）：{ add_attachments: [{ url, name, mime, text, image }] }，传完按出任务时一样处理（去重合并）
+  if (Array.isArray(body.add_attachments) && body.add_attachments.length) {
+    const atts = body.add_attachments.filter((a: any) => a?.url && a?.name).slice(0, 10).map((a: any) => ({ url: String(a.url), name: String(a.name).slice(0, 80), mime: a.mime, text: a.text ? String(a.text).slice(0, 20000) : '', image: !!a.image || /^image\//.test(String(a.mime || '')) }));
+    const fresh = atts.filter((a: any) => !(t.materials || []).some((m: any) => m.url === a.url));
+    const merged = mergeAttachmentDupes({ task: t.task, problem: t.problem, rubric: t.rubric, materials: [...(t.materials || []), ...attachmentsToMaterials(fresh, (t.materials || []).length + 1)] });
+    await db.from('work_tasks').update({ materials: merged.materials, task: merged.task, problem: merged.problem, rubric: merged.rubric, context: { ...(t.context || {}), attachments: [...(t.context?.attachments || []), ...fresh.map((a: any) => ({ name: a.name, url: a.url }))] }, updated_at: new Date().toISOString() }).eq('id', t.id);
+    return NextResponse.json({ ok: true, materials: merged.materials });
+  }
+  // 删素材：只删上传的文件（AI 写的材料按意见修订去改）
+  if (body.remove_material) {
+    const m = (t.materials || []).find((x: any) => x.id === body.remove_material);
+    if (!m || m.kind !== 'file') return NextResponse.json({ ok: false, error: '只能删上传的文件；AI 写的材料用「按意见修订」改' }, { status: 400 });
+    const materials = (t.materials || []).filter((x: any) => x.id !== m.id);
+    await db.from('work_tasks').update({ materials, context: { ...(t.context || {}), attachments: (t.context?.attachments || []).filter((a: any) => a.url !== m.url) }, updated_at: new Date().toISOString() }).eq('id', t.id);
+    return NextResponse.json({ ok: true, materials });
   }
   // 改岗位名 / 要找的人（页头那个；题面里的旧名字一起换）
   if (body.role != null) {

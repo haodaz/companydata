@@ -236,6 +236,26 @@ export const ENV_LABELS: Record<WorkEnvType, string> = { doc: '文档 / 对账�
 
 export interface Attachment { url: string; name: string; mime?: string; size?: number; text?: string; image?: boolean }
 /** 把上传的附件挂成材料（kind=file）：有文字的带文字（评卷和 AI 做题能读），图片只有链接和说明 */
+/**
+ * 附件去重（11-05 潜历：「聊着出任务上传的附件，做题的人看不到」）：出题 AI 常另写一份文字材料叫「附件1：潜仔和小鸥.png（原始图片）」，
+ * 真文件排在最后——候选人点开「附件1」只看到文字。合成一份：留 AI 写的说明和它的编号，挂上原文件；题面里指向真文件编号的改指过来。
+ */
+export function mergeAttachmentDupes<T extends { problem?: any; task?: any; rubric?: any; materials: any[] }>(t: T): T {
+  const mats = [...(t.materials || [])]; let changed = false; const remap: Record<string, string> = {};
+  for (const f of mats.filter(m => m.kind === 'file' && m.url)) {
+    const nm = String(f.name || f.title || ''); const stem = nm.replace(/\.[A-Za-z0-9]{1,6}$/, '');
+    if (stem.length < 2) continue;
+    const d = mats.find(m => m !== f && m.kind !== 'file' && !m.url && (String(m.title || '').includes(nm) || String(m.title || '').includes(stem)));
+    if (!d) continue;
+    Object.assign(d, { kind: 'file', url: f.url, mime: f.mime, name: f.name || nm, content: [d.content, f.content].filter(Boolean).join('\n\n').slice(0, 20000), source: 'upload' });
+    mats.splice(mats.indexOf(f), 1); remap[f.id] = d.id; changed = true;
+  }
+  if (!changed) return t;
+  const re = new RegExp(`\\b(${Object.keys(remap).join('|')})\\b`, 'g');
+  const swap = (v: any): any => typeof v === 'string' ? v.replace(re, x => remap[x] || x) : Array.isArray(v) ? v.map(swap) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, swap(x)])) : v;
+  return { ...t, materials: mats, ...(t.task ? { task: swap(t.task) } : {}), ...(t.problem ? { problem: swap(t.problem) } : {}), ...(t.rubric ? { rubric: swap(t.rubric) } : {}) };
+}
+
 export function attachmentsToMaterials(atts: Attachment[], startAt: number): WorkTask['materials'] {
   return atts.map((a, i) => ({ id: `m${startAt + i}`, title: a.name, kind: 'file' as const, content: a.image ? (a.text ? `图片说明（AI 看图整理，以原图为准）：\n${a.text.slice(0, 4000)}` : `附图：${a.name}`) : a.text ? a.text.slice(0, 8000) : `附件：${a.name}`, source: 'upload' as const, basis: a.image ? '出题人上传的素材图 + AI 看图说明' : '出题人上传的素材', url: a.url, mime: a.mime, name: a.name }));
 }
@@ -424,6 +444,7 @@ ${JSON.stringify({ env: task.env, problem: task.problem, task: task.task, materi
     materials: [...(Array.isArray(p.materials) && p.materials.length ? p.materials : task.materials).filter((m: any) => m?.kind !== 'file' && !files.some(f => f.id === m?.id)).slice(0, 6).map((m: any, i: number) => ({ id: m.id || `m${i + 1}`, title: s(m.title, 60), kind: (['doc', 'table', 'note', 'email', 'data'].includes(m.kind) ? m.kind : 'doc'), content: s(m.content, 6000), source: (['db', 'generated', 'mixed'].includes(m.source) ? m.source : 'generated'), basis: s(m.basis, 200) })), ...files],
     rubric: (Array.isArray(p.rubric) && p.rubric.length ? p.rubric : task.rubric).slice(0, 10).map((r: any, i: number) => ({ id: r.id || `r${i + 1}`, title: s(r.title, 60), desc: s(r.desc, 300), weight: Math.max(1, Number(r.weight) || 10), depends_on: Array.isArray(r.depends_on) ? r.depends_on.map(String) : [], basis: s(r.basis, 200), levels: { L1: s(r.levels?.L1, 160), L2: s(r.levels?.L2, 160), L3: s(r.levels?.L3, 160), L4: s(r.levels?.L4, 160) } })),
   };
+  Object.assign(next, mergeAttachmentDupes(next as any));
   const ids = new Set(next.rubric.map(r => r.id)); const sum = next.rubric.reduce((a, r) => a + r.weight, 0) || 1;
   for (const r of next.rubric) { r.weight = Math.round(r.weight / sum * 100); r.depends_on = r.depends_on.filter(d => ids.has(d) && d !== r.id); }
   return { task: next, model: used, changelog: s(p.changelog, 400) || '按意见做了修订' };

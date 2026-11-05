@@ -71,6 +71,31 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
       setRole(j.role); setRoleEdit(null); message.success('岗位名改好了，题面里的旧名字也一起换了');
     } catch (e: any) { message.error(e.message); }
   };
+  // 材料包：补传 / 删上传的文件（11-05 潜历：出好任务后还想加文件、换文件）
+  const [mats, setMats] = useState<any[]>(T.materials || []); const [matBusy, setMatBusy] = useState(false);
+  const tokOf = () => (shareLink.match(/\/work\/([^/?#]+)/) || [])[1];
+  const addMats = async (list: FileList | null) => {
+    const token = tokOf(); if (!list?.length || !token || !ownerKey) return; setMatBusy(true);
+    try {
+      const atts: any[] = [];
+      for (const f of Array.from(list).slice(0, 6)) {
+        if (f.size > 20 * 1024 * 1024) { message.error(`${f.name} 超过 20MB`); continue; }
+        const fd = new FormData(); fd.append('file', f);
+        const j = await (await fetch(`/api/work/${token}/owner/attach?k=${encodeURIComponent(ownerKey)}`, { method: 'POST', body: fd })).json();
+        if (!j.ok) { message.error(`${f.name}：${j.error || '没传上'}`); continue; }
+        atts.push({ url: j.url, name: j.name, mime: j.mime, text: j.text, image: j.image });
+      }
+      if (atts.length) {
+        const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(ownerKey)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ add_attachments: atts }) })).json();
+        if (!j.ok) throw new Error(j.error || '没加进去'); setMats(j.materials); message.success(`加了 ${atts.length} 份素材，候选人刷新就能看到`);
+      }
+    } catch (e: any) { message.error(e.message); } finally { setMatBusy(false); }
+  };
+  const delMat = async (m: any) => {
+    const token = tokOf(); if (!token || !ownerKey || !confirm(`删掉素材「${m.title}」？候选人就看不到了。`)) return;
+    try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(ownerKey)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ remove_material: m.id }) })).json(); if (!j.ok) throw new Error(j.error); setMats(j.materials); message.success('删掉了'); }
+    catch (e: any) { message.error(e.message); }
+  };
   const exportCsv = () => {
     const items: any[] = T.rubric || [];
     const esc = (v: any) => `"${String(v ?? '').replace(/"/g, '""')}"`;
@@ -122,7 +147,11 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
             {!!st.calc?.length && <ul style={{ margin: '6px 0 0', paddingLeft: 18, fontSize: 13 }}>{st.calc.map((c: any, i: number) => <li key={i}>{c.label}：<code>{c.expr}</code> = <b>{c.value}</b>{c.verified === false && <Tag color="orange" style={{ marginLeft: 6 }}>算式没核上</Tag>}</li>)}</ul>}
           </div>)}
         </div> }] : []),
-        { key: 'm', label: `材料包（${(T.materials || []).length}）`, children: (T.materials || []).map((m: any) => <div key={m.id} style={{ marginBottom: 14 }}><b>{m.id} {m.title}</b> <Tag>{m.kind === 'file' ? '附件' : m.kind}</Tag>{m.kind === 'file' && m.url && <a href={m.url} target="_blank" rel="noreferrer" style={{ marginRight: 8 }}>打开 ↗</a>}<Tag color={m.source === 'db' ? 'green' : m.source === 'generated' ? 'orange' : 'gold'}>{m.source === 'db' ? '来自材料' : m.source === 'generated' ? '补写' : '混合'}</Tag>{m.basis && <Text type="secondary"> 依据：{m.basis}</Text>}<pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', background: '#fafbff', padding: 10, borderRadius: 8, fontSize: 13 }}>{m.content}</pre></div>) },
+        { key: 'm', label: `材料包（${mats.length}）`, children: <>{ownerKey && <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12, padding: '8px 12px', border: '1px dashed #d9dbe6', borderRadius: 10, flexWrap: 'wrap' }}>
+            <label style={{ cursor: 'pointer', color: '#6055f5', fontWeight: 600 }}>{matBusy ? '上传中…' : '＋ 上传素材'}<input type="file" multiple accept=".pdf,.docx,.txt,.md,.csv,.xlsx,.xls,.png,.jpg,.jpeg,.webp,.gif" style={{ display: 'none' }} disabled={matBusy} onChange={e => { addMats(e.target.files); e.target.value = ''; }} /></label>
+            <Text type="secondary" style={{ fontSize: 12 }}>给候选人的文件：PDF / Word(docx) / Excel / CSV / TXT / 图片，单个 20MB 内。图片会让 AI 看一遍写说明，文档会抽出文字。改文件就是删掉再传新的；AI 写的材料用「按意见修订」改。</Text>
+          </div>}
+          {mats.map((m: any) => <div key={m.id} style={{ marginBottom: 14 }}><b>{m.id} {m.title}</b> <Tag>{m.kind === 'file' ? '附件' : m.kind}</Tag>{m.kind === 'file' && m.url && <a href={m.url} target="_blank" rel="noreferrer" style={{ marginRight: 8 }}>打开 ↗</a>}{ownerKey && m.kind === 'file' && <a onClick={() => delMat(m)} style={{ marginRight: 8, color: '#c0392b' }}>删除</a>}<Tag color={m.source === 'db' ? 'green' : m.source === 'generated' ? 'orange' : 'gold'}>{m.source === 'db' ? '来自材料' : m.source === 'generated' ? '补写' : '混合'}</Tag>{m.basis && <Text type="secondary"> 依据：{m.basis}</Text>}<pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', background: '#fafbff', padding: 10, borderRadius: 8, fontSize: 13 }}>{m.content}</pre></div>)}</> },
         { key: 'r', label: `rubric（${(T.rubric || []).length}）`, children: <Table size="small" rowKey="id" pagination={false} dataSource={T.rubric || []} columns={[
           { title: '#', dataIndex: 'id', width: 50 }, { title: '条目', dataIndex: 'title', render: (v: string, r: any) => <div><b>{v}</b><div style={{ fontSize: 12, color: '#666' }}>{r.desc}</div></div> },
           { title: '权重', dataIndex: 'weight', width: 60 }, { title: '依赖', dataIndex: 'depends_on', width: 80, render: (v: string[]) => v?.join('、') || '–' },

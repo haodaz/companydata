@@ -80,10 +80,10 @@ function Inner() {
         <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', marginBottom: 16 }}>
           <div data-tour="revise" style={{ fontWeight: 700, marginBottom: 6 }}>这道题哪里不对？说一句，按你的意见改</div>
           <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-            <Input.TextArea value={fb} onChange={e => setFb(e.target.value)} placeholder="比如：缺口补位那条标准太宽，要求按月给出具体调拨量；材料 m3 的良率改成 78%；时间压到 60 分钟；去掉邮件这个交付物" autoSize={{ minRows: 2, maxRows: 5 }} style={{ flex: 1, minWidth: 320 }} />
+            <Input.TextArea value={fb} onChange={e => setFb(e.target.value)} placeholder="比如：缺口补位那条标准太宽，要求按月给出具体调拨量；材料 m3 的良率改成 78%；去掉邮件这个交付物" autoSize={{ minRows: 2, maxRows: 5 }} style={{ flex: 1, minWidth: 320 }} />
             <Button type="primary" loading={revising} onClick={revise} disabled={!fb.trim()}>按意见修订（约 1 分钟）</Button>
           </div>
-          <div style={{ fontSize: 12, color: '#888', marginTop: 6 }}>没提到的部分原样保留；改完 AI 基线作废，记得重跑。{T.task?.revisions?.length ? `已修订 ${T.task.revisions.length} 次。` : ''}{!T.baseline ? ' 现在没有基线。' : ''}</div>
+          <div style={{ fontSize: 12, color: '#888', marginTop: 6 }}>没提到的部分原样保留；改完 AI 基线作废，记得重跑。和在出任务的聊天里提意见是同一个 AI、同样的改法。改用时、改岗位名、加删素材不用在这里说，在下面「题的全部」里直接改，马上生效。{T.task?.revisions?.length ? `已修订 ${T.task.revisions.length} 次。` : ''}{!T.baseline ? ' 现在没有基线。' : ''}</div>
           {!!T.task?.revisions?.length && <div style={{ marginTop: 10, fontSize: 12.5, color: '#444', background: '#fafbff', border: '1px solid #e8e9f0', borderRadius: 10, padding: '8px 12px' }}><b>修订记录</b>{T.task.revisions.slice(-3).reverse().map((r: any, i: number) => <div key={i} style={{ marginTop: 4 }}><span style={{ color: '#999' }}>{String(r.at).slice(5, 16).replace('T', ' ')}</span> · 意见：{r.feedback} <span style={{ color: '#6055f5' }}>→ {r.changelog}</span></div>)}</div>}
         </div>
         <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '8px 18px 18px' }}>

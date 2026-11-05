@@ -7,7 +7,7 @@
  */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-type Material = { id: string; title: string; kind: string; content: string };
+type Material = { id: string; title: string; kind: string; content: string; url?: string; mime?: string; name?: string };
 
 export function PluginWork({ code, task, onSubmitted }: { code: string; task: { task: { title: string; brief: string; time_minutes: number; deliverables: { id: string; title: string; format: string }[] }; materials: Material[]; company_name: string; role: string }; onSubmitted: () => void }) {
   const [st, setSt] = useState<any>(null);
@@ -103,10 +103,12 @@ export function PluginWork({ code, task, onSubmitted }: { code: string; task: { 
           {task.materials.map(m => (
             <span key={m.id} style={{ display: 'inline-flex', gap: 4 }}>
               <button style={ghost} onClick={() => setOpen(open === m.id ? null : m.id)}>{open === m.id ? '收起' : '看'} {m.id} {m.title}</button>
-              <button style={ghost} onClick={() => download(m)}>⬇</button>
+              {m.kind === 'file' && m.url ? <a style={{ ...ghost, textDecoration: 'none', color: 'inherit' }} href={m.url} target="_blank" rel="noreferrer" title="原文件">⬇ 原文件</a> : <button style={ghost} onClick={() => download(m)}>⬇</button>}
             </span>
           ))}
         </div>
+        {/* 上传的文件（11-05 潜历：附件看不到）：图片直接显示、其他给原文件链接，下面是 AI 抽出的文字 */}
+        {open && (() => { const m = task.materials.find(x => x.id === open); return m?.kind === 'file' && m.url ? (/^image\//.test(m.mime || '') ? <a href={m.url} target="_blank" rel="noreferrer"><img src={m.url} alt={m.name || m.title} style={{ maxWidth: '100%', display: 'block', marginTop: 10, borderRadius: 8, border: '1px solid #eef0f5' }} /></a> : <a href={m.url} target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginTop: 10, color: '#6055f5', fontWeight: 600 }}>打开原文件：{m.name || m.title} ↗</a>) : null; })()}
         {open && <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13, background: '#fafbff', border: '1px solid #eef0f5', borderRadius: 8, padding: 10, marginTop: 10 }}>{task.materials.find(m => m.id === open)?.content}</pre>}
       </div>
 
