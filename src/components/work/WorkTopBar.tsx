@@ -35,6 +35,7 @@ export function WorkTopBar({ active, right, crumbs, crumbRight }: { active?: 'mi
           <NavLink href="/work/library" on={active === 'library'}>任务库</NavLink>
           {role === 'admin' && <NavLink href="/work/admin" on={active === 'admin'}>管理全部</NavLink>}
           <NavLink href="/lab">百业体验空间</NavLink>
+          {me && <NavLink href="/work/ws">工作台 beta</NavLink>}
         </nav>
         <div className="wtb-right">
           {right ?? (active !== 'new' && <Link href="/work/new" className="wtb-cta">＋ 出一道真活</Link>)}

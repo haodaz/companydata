@@ -9,21 +9,18 @@
 import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Md } from '@/components/ws/Md';
 import { ReportView } from '@/components/work/ReportView';
-import { CHAT_CSS, Composer, fromHistory, RUNNING, type Item } from '@/components/work/ChatKit';
+import { CHAT_CSS, CmdChips, Composer, fillComposer, fromHistory, QuickCards, RUNNING, type Item } from '@/components/work/ChatKit';
+import { CMDS, CMDS_REPORT, CMDS_TASK, QUICK } from '../ask';
 
 type Art =
   | { kind: 'work_task'; token: string; owner_key: string; title: string; task_id: string; _n?: number }
   | { kind: 'work_report'; token: string; sid: string; title: string; name: string; task_id: string; _n?: number }
   | { kind: 'app'; url: string; title: string; _n?: number };
-const APPS = [{ url: '/work/ws/tasks', title: '管理真活' }, { url: '/work/ws/reports', title: '任务报告' }, { url: '/work/library', title: '任务库' }];
+// 新对话标题旁的一幅小插图：稿纸、钢笔、怀表——案头考核（通义万相生成、紫墨，正片叠底融进纸色）
+const DESK = '/work/ws/desk.jpg';
+const APPS = [{ url: '/work/ws/tasks', title: '管理真活' }, { url: '/work/ws/reports', title: '任务报告' }, { url: '/work/ws/kb', title: '知识库' }, { url: '/work/library', title: '任务库' }];
 const artKey = (a: Art) => (a.kind === 'work_report' ? a.sid : a.kind === 'app' ? a.url : a.task_id) + (a._n || '');
 
-const SUGGEST = [
-  { t: '最近怎么样', p: '我出的题最近有人做吗？哪道题值得我去看一下？' },
-  { t: '分析一道题的作答', p: '帮我看看我最近那道题大家做得怎么样，卡在哪，题是不是出得太难了。' },
-  { t: '比一比候选人', p: '把我最近那道题交卷的人并排比一下，推荐谁进面试，各自要追问什么。' },
-  { t: '出一道新任务', p: '我们要招一个能把销售数据理清楚、说出问题在哪的人，帮我出一道真活。' },
-];
 
 export default function Page() { return <Suspense><WorkHome /></Suspense>; }
 
@@ -85,7 +82,7 @@ function WorkHome() {
     const task = q.get('task'), sid = q.get('sid'), token = q.get('token'), title = q.get('title') || '', name = q.get('name') || '';
     if (sid && token && task) setArt({ kind: 'work_report', token, sid, task_id: task, title, name, _n: Date.now() });
     else if (task && token && q.get('k')) setArt({ kind: 'work_task', token, owner_key: q.get('k')!, task_id: task, title, _n: Date.now() });
-    const ask = q.get('ask'); if (ask) setTimeout(() => send(ask), 0);
+    const ask = q.get('ask'); if (ask) { if (q.get('fill')) fillComposer(setText, ask); else setTimeout(() => send(ask), 0); }
   };
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
@@ -102,8 +99,10 @@ function WorkHome() {
   }, []);
 
   const pendingAsk = [...items].reverse().find(x => x.k === 'ask' && !x.answered) as Extract<Item, { k: 'ask' }> | undefined;
-  const composer = (hero: boolean) => <Composer text={text} setText={setText} busy={busy} send={send} stop={() => abortRef.current?.abort()} model={model} setModel={setModel} autoFocus={hero}
-    placeholder={pendingAsk ? '选一个，或者直接打字回答…' : art && art.kind !== 'app' ? `问这${art.kind === 'work_report' ? `份报告（${art.name}）` : '道题'}，或者说别的事…` : hero ? '说你要做什么：出一道任务、看谁做得好、分析一份报告、改题……' : '接着说…'} />;
+  const ctxCmds = art?.kind === 'work_report' ? CMDS_REPORT : art?.kind === 'work_task' ? CMDS_TASK : null;
+  const cmds = ctxCmds ? [...ctxCmds, ...CMDS] : CMDS;
+  const composer = (hero: boolean) => <Composer text={text} setText={setText} busy={busy} send={send} stop={() => abortRef.current?.abort()} model={model} setModel={setModel} autoFocus={hero} commands={cmds}
+    placeholder={pendingAsk ? '选一个，或者直接打字回答…' : art && art.kind !== 'app' ? `问这${art.kind === 'work_report' ? `份报告（${art.name}）` : '道题'}，或者打 / 看常用指令…` : hero ? '说你要做什么，或者打 / 看常用指令' : '接着说…（打 / 看常用指令）'} />;
 
   const appMenu = <div className="wws-apps">
     <button className="wc-link" onClick={() => setApps(v => !v)} aria-expanded={apps}>应用 ▾</button>
@@ -116,12 +115,11 @@ function WorkHome() {
         {!art && <div className="wws-top">{appMenu}</div>}
         {!items.length ? (
           <div className="wc-hero">
-            <div className="wc-eyebrow">TRUE WORK, TRUE TALENT · 真活工作台</div>
-            <h1>今天要做什么？</h1>
-            <p>出任务、看谁做了、读报告、几个人并排比、看一道题大家卡在哪、改题、上下架——直接说。做出来的东西在右边打开；右上「应用」也能自己打开管理真活、任务报告、任务库。</p>
+            <img className="wc-desk" src={DESK} alt="" aria-hidden />
+            <div className="wws-eyebrow">TRUE WORK · DESK</div>
+            <h1>你需要做什么，让 AI 来办<span>Tell it what you need. It drafts, reads, compares — you decide.</span></h1>
             {composer(true)}
-            <div className="wc-sec" style={{ margin: '24px 2px 10px' }}>比如这样说（点一下放进输入框）</div>
-            <div className="wc-suggest">{SUGGEST.map(x => <button key={x.t} className="wc-card" onClick={() => { setText(x.p); setTimeout(() => (document.querySelector('.wc-composer textarea') as HTMLTextAreaElement | null)?.focus(), 0); }}><b>{x.t}</b><span>「{x.p}」</span></button>)}</div>
+            <QuickCards items={QUICK} setText={setText} />
           </div>
         ) : (
           <>
@@ -136,7 +134,7 @@ function WorkHome() {
               {busy && items[items.length - 1]?.k !== 'text' && !(items[items.length - 1]?.k === 'tool' && (items[items.length - 1] as any).running) && <div className="wc-typing"><i /><i /><i /></div>}
               <div ref={endRef} style={{ height: 8 }} />
             </div>
-            <div className="wc-dock">{composer(false)}</div>
+            <div className="wc-dock">{ctxCmds && !pendingAsk && !busy && <CmdChips small cmds={ctxCmds} setText={setText} />}{composer(false)}</div>
           </>
         )}
       </section>
@@ -163,14 +161,36 @@ function ReportPanel({ token, sid }: { token: string; sid: string }) {
 }
 
 const CSS = `
-.wc { height: 100vh; grid-template-columns: minmax(0, 1fr); }
+.wc { height: 100vh; grid-template-columns: minmax(0, 1fr); background: transparent; }
 .wc.with-art { grid-template-columns: minmax(0, 1fr) minmax(460px, 50%); }
-.wc-art-b { overflow: hidden; }
 .wc-chat { position: relative; }
-.wc-art-h { position: relative; z-index: 4; }
+.wc-desk { position: absolute; right: 0; top: -64px; width: 168px; mix-blend-mode: multiply; opacity: .9; pointer-events: none; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }
+@media (max-width: 900px) { .wc-desk { display: none; } }
+.wc-hero { position: relative; z-index: 1; width: min(820px, 92%); }
+.wc-hero p { text-shadow: 0 0 12px var(--bg), 0 0 4px var(--bg); }
+.wc-quick button { background: rgba(255,254,251,.88); border-color: var(--line); color: var(--ink); } .wc-quick b { font: 800 15.5px var(--serif); letter-spacing: .03em; } .wc-quick span { color: var(--ink2); } .wc-quick button:hover { border-color: var(--acc); }
+.wc-hero h1 { font: 900 32px/1.3 var(--serif); letter-spacing: .03em; margin: 10px 0 10px; }
+.wc-hero h1 span { display: block; font: italic 400 15.5px var(--en); color: var(--ink2); margin-top: 8px; letter-spacing: .005em; }
+.wc-hero p { color: var(--ink2); font-size: 14.5px; line-height: 1.85; }
+.wc-composer { background: var(--paper); border-color: var(--line); box-shadow: 0 18px 40px -30px rgba(27,29,54,.35); }
+.wc-composer:focus-within { border-color: var(--acc); }
+.wc-cmds button { background: transparent; border-color: var(--line); color: var(--ink2); }
+.wc-cmds button:hover { background: var(--paper); border-color: var(--acc); color: var(--acc); }
+.wc-ai { color: var(--ink); } .wc-ai-body { font-size: 15px; line-height: 1.9; }
+.wc-ai-body .ws-md h1, .wc-ai-body .ws-md h2, .wc-ai-body .ws-md h3 { font-family: var(--serif); }
+.wc-ava { background: var(--acc); font: 900 13px var(--serif); box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px rgba(81,72,214,.3); }
+.wc-bubble { background: var(--acc-soft); color: var(--ink); }
+.wc-tool { background: var(--paper); border-color: var(--line); color: var(--ink2); }
+.wc-ask { background: var(--paper); border-color: var(--line); } .wc-ask-q { font-family: var(--serif); font-size: 15.5px; }
+.wc-opt { background: #fff; border-color: var(--line); }
+.wc-art { background: var(--paper); border-left-color: var(--line); }
+.wc-art-h { position: relative; z-index: 4; border-bottom-color: var(--line); }
+.wc-art-t { font: 800 16px var(--serif); letter-spacing: .02em; }
+.wc-art-h .wc-eyebrow.sm { font: 600 10.5px var(--en); letter-spacing: .22em; color: var(--brass); text-transform: uppercase; }
+.wc-art-b { overflow: hidden; }
 .wws-top { position: absolute; top: 14px; right: 20px; z-index: 3; }
 .wws-apps { position: relative; }
-.wws-apps-m { position: absolute; right: 0; top: calc(100% + 6px); background: #fff; border: 1px solid #e8e9f0; border-radius: 12px; padding: 6px; box-shadow: 0 8px 24px rgba(20,24,60,.12); display: grid; gap: 2px; min-width: 150px; z-index: 5; }
-.wws-apps-m button { border: 0; background: transparent; text-align: left; padding: 8px 10px; border-radius: 8px; font: inherit; font-size: 13.5px; color: #1a1a2e; cursor: pointer; } .wws-apps-m button:hover { background: #f0f1f6; }
+.wws-apps-m { position: absolute; right: 0; top: calc(100% + 6px); background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 6px; box-shadow: 0 10px 30px rgba(27,29,54,.14); display: grid; gap: 2px; min-width: 150px; z-index: 5; }
+.wws-apps-m button { border: 0; background: transparent; text-align: left; padding: 8px 10px; border-radius: 8px; font: inherit; font-size: 13.5px; font-weight: 700; color: var(--ink); cursor: pointer; } .wws-apps-m button:hover { background: var(--acc-soft); }
 @media (max-width: 1100px) { .wc, .wc.with-art { grid-template-columns: minmax(0, 1fr); height: auto; min-height: 100vh; } }
 `;

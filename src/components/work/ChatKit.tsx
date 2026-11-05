@@ -15,11 +15,31 @@ export type Item =
   | { k: 'error'; text: string };
 
 export const MODELS = MODEL_OPTIONS.filter(m => /^(claude-|gpt-|qwen)/.test(m.id));
-export const RUNNING: Record<string, string> = { find_company: '在企业库里搜', company_brief: '看这家企业的材料', suggest_roles: '找岗位', my_references: '看参考资料', read_reference: '读参考资料（约 1 分钟）', create_task: '出任务中（约 2 分钟：拼材料、锚定问题、写任务书、做材料包、定标准）', task_summary: '看这道题', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', revise_task: '按意见修订', update_task_settings: '改设置', publish_task: '发布', publish_verbatim: '原题直发', my_tasks: '看你出过的题', task_people: '看谁做了这道题', read_report: '读报告', compare_people: '并排比', task_insights: '看整道题的作答情况', set_task_status: '改上下架', open_panel: '在右边打开' };
+export const RUNNING: Record<string, string> = { find_company: '在企业库里搜', company_brief: '看这家企业的材料', suggest_roles: '找岗位', my_references: '看参考资料', read_reference: '读参考资料（约 1 分钟）', create_task: '出任务中（约 2 分钟：拼材料、锚定问题、写任务书、做材料包、定标准）', task_summary: '看这道题', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', revise_task: '按意见修订', update_task_settings: '改设置', publish_task: '发布', publish_verbatim: '原题直发', my_tasks: '看你出过的题', task_people: '看谁做了这道题', read_report: '读报告', compare_people: '并排比', task_insights: '看整道题的作答情况', set_task_status: '改上下架', open_panel: '在右边打开', kb_lookup: '查知识库', kb_save: '存进知识库' };
+
+export type Cmd = { t: string; p: string };
+/** 把一条指令放进输入框，选中第一个【空位】让人直接改 */
+export function fillComposer(setText: (t: string) => void, p: string) {
+  setText(p);
+  setTimeout(() => {
+    const ta = document.querySelector('.wc-composer textarea') as HTMLTextAreaElement | null; if (!ta) return;
+    ta.focus(); const i = p.indexOf('【'), j = p.indexOf('】', i);
+    if (i >= 0 && j > i) ta.setSelectionRange(i, j + 1); else ta.setSelectionRange(p.length, p.length);
+  }, 0);
+}
+/** 输入框下面一排常用指令 */
+export function CmdChips({ cmds, setText, small }: { cmds: Cmd[]; setText: (t: string) => void; small?: boolean }) {
+  return <div className={`wc-cmds${small ? ' sm' : ''}`}>{cmds.map(c => <button key={c.t} title={c.p} onClick={() => fillComposer(setText, c.p)}>{c.t}</button>)}</div>;
+}
+
+/** 输入框下四张快捷提问卡（标题 + 一句说明） */
+export function QuickCards({ items, setText }: { items: { t: string; d: string; p: string }[]; setText: (t: string) => void }) {
+  return <div className="wc-quick">{items.map(c => <button key={c.t} onClick={() => fillComposer(setText, c.p)}><b>{c.t}</b><span>{c.d}</span></button>)}</div>;
+}
 
 const OK_EXT = /\.(pdf|docx|txt|md|csv|xlsx|xls|png|jpe?g|webp|gif)$/i;
 
-export function Composer({ text, setText, busy, send, stop, model, setModel, placeholder, autoFocus }: { text: string; setText: (t: string) => void; busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; placeholder?: string; autoFocus?: boolean }) {
+export function Composer({ text, setText, busy, send, stop, model, setModel, placeholder, autoFocus, commands }: { text: string; setText: (t: string) => void; busy: boolean; send: (t: string) => void; stop: () => void; model: string; setModel: (m: string) => void; placeholder?: string; autoFocus?: boolean; commands?: Cmd[] }) {
   // 上传文件：以【文件】行附进消息；是素材还是参考资料由出题助理按语境判断（默认素材）
   // 2026-11-03：文件先显示成输入框上方的小卡片（不再把一长串【文件】行塞进输入框）；还在上传 / 看图时锁住发送——以前图没处理完就发出去，图就没带上（潜历反馈）
   const fileRef = useRef<HTMLInputElement>(null);
@@ -44,6 +64,9 @@ export function Composer({ text, setText, busy, send, stop, model, setModel, pla
       } catch (e: any) { setFiles(x => x.map(y => y.key === key ? { ...y, err: e.message || '没传上' } : y)); }
     }));
   };
+  // 打「/」弹出常用指令（工作台用；聊着出任务不传 commands 就没有）
+  const slash = commands && /^\/\S*$/.test(text) ? commands.filter(c => c.t.includes(text.slice(1)) || !text.slice(1)) : [];
+  const [hi, setHi] = useState(0);
   const ready = files.filter(f => f.line);
   const canSend = !up && (!!text.trim() || ready.length > 0);
   const go = () => { if (!canSend) return; send([text.trim() || '（附上文件）', ...ready.map(f => f.line!)].join('\n')); setFiles([]); };
@@ -53,10 +76,18 @@ export function Composer({ text, setText, busy, send, stop, model, setModel, pla
       onDragLeave={e => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setDrag(false); }}
       onDrop={e => { if (!e.dataTransfer?.files?.length) return; e.preventDefault(); setDrag(false); if (!busy) attach(e.dataTransfer.files); }}>
       {drag && <div className="wc-drop">松手就上传</div>}
+      {slash.length > 0 && <div className="wc-slash">{slash.map((c, i) => <button key={c.t} className={i === hi ? 'on' : ''} onMouseEnter={() => setHi(i)} onClick={() => fillComposer(setText, c.p)}><b>/{c.t}</b><span>{c.p}</span></button>)}</div>}
       {files.length > 0 && <div className="wc-files">{files.map(f => <span key={f.key} className={`wc-file${f.err ? ' err' : !f.line ? ' busy' : ''}`}>📎 {f.name}<em>{f.err ? f.err : !f.line ? '上传中，图片要先看一遍…' : '已就绪'}</em><button onClick={() => setFiles(x => x.filter(y => y.key !== f.key))} title="去掉">×</button></span>)}</div>}
       <textarea value={text} autoFocus={autoFocus} rows={2} placeholder={placeholder || '说一句最实际的要求，比如：我们缺一个能把销售数据理清楚的人'} onChange={e => setText(e.target.value)}
         onPaste={e => { const fs2 = Array.from(e.clipboardData?.files || []); if (fs2.length) { e.preventDefault(); attach(fs2.map((f, i) => f.name && f.name !== 'image.png' ? f : new File([f], `截图-${new Date().toTimeString().slice(0, 8).replace(/:/g, '')}${i ? '-' + i : ''}.png`, { type: f.type || 'image/png' }))); } }}
-        onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); go(); } }} />
+        onKeyDown={e => {
+          if (slash.length) {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); setHi(h => (h + (e.key === 'ArrowDown' ? 1 : slash.length - 1)) % slash.length); return; }
+            if ((e.key === 'Enter' || e.key === 'Tab') && !e.nativeEvent.isComposing) { e.preventDefault(); fillComposer(setText, slash[Math.min(hi, slash.length - 1)].p); setHi(0); return; }
+            if (e.key === 'Escape') { setText(''); return; }
+          }
+          if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); go(); }
+        }} />
       <div className="wc-bar">
         <select className="wc-model" value={model} onChange={e => setModel(e.target.value)}>{MODELS.map(m => <option key={m.id} value={m.id}>{m.label}</option>)}</select>
         <button className="wc-clip" title="上传文件：给候选人的素材，或让 AI 照着出的参考资料——传完说一句是哪种就行" disabled={busy} onClick={() => fileRef.current?.click()}>📎 文件</button>
@@ -152,5 +183,16 @@ export const CHAT_CSS = `
 .wc-art-t { font-weight: 800; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .wc-art-b { flex: 1; min-height: 0; } .wc-art-b iframe { width: 100%; height: 100%; border: 0; }
 .wc-mute { color: #777; font-size: 13px; }
+.wc-quick { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+.wc-quick button { text-align: left; background: rgba(255,255,255,.86); border: 1px solid #e8e9f0; border-radius: 14px; padding: 15px 18px; cursor: pointer; font: inherit; color: #1a1a2e; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.wc-quick b { display: block; font-size: 15px; margin-bottom: 5px; } .wc-quick span { display: block; font-size: 13px; color: #777; }
+.wc-quick button:hover { border-color: #6055f5; }
+@media (max-width: 640px) { .wc-quick { grid-template-columns: 1fr; } }
+.wc-cmds { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; } .wc-cmds.sm { margin: 0 0 8px; }
+.wc-cmds button { border: 1px solid #e0e0ee; background: #fff; border-radius: 999px; padding: 5px 12px; font: inherit; font-size: 13px; color: #3b405a; cursor: pointer; } .wc-cmds.sm button { padding: 3px 10px; font-size: 12.5px; }
+.wc-cmds button:hover { border-color: #6055f5; color: #2b2670; }
+.wc-slash { position: absolute; left: 10px; right: 10px; bottom: calc(100% + 6px); background: #fff; border: 1px solid #e8e9f0; border-radius: 12px; box-shadow: 0 8px 24px rgba(20,24,60,.12); padding: 6px; display: grid; gap: 2px; max-height: 340px; overflow-y: auto; z-index: 6; }
+.wc-slash button { display: flex; gap: 10px; align-items: baseline; text-align: left; border: 0; background: transparent; border-radius: 8px; padding: 7px 10px; font: inherit; cursor: pointer; color: #1a1a2e; }
+.wc-slash button.on { background: #f1efff; } .wc-slash b { font-size: 13.5px; white-space: nowrap; color: #2b2670; } .wc-slash span { font-size: 12.5px; color: #8c8fa6; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 @media (max-width: 1100px) { .wc, .wc.with-art { grid-template-columns: minmax(0, 1fr); } .wc-recent { display: none; } .wc-art { position: fixed; inset: 0; z-index: 30; } }
 `;

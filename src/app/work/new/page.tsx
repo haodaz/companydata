@@ -36,6 +36,8 @@ export default function NewPage() {
 function Inner() {
   const { message } = App.useApp();
   const router = useRouter();
+  const [embed, setEmbed] = useState(false);   // 嵌在工作台「管理真活 → 新建 → 手动填写」里：不套顶栏，出好后在框里打开任务空间
+  useEffect(() => { setEmbed(new URLSearchParams(window.location.search).get('embed') === '1'); }, []);
   const [f, setF] = useState({ company: '', role: '', env: '', focus: '', model: DEFAULT_MODEL, intro: '' });
   // 参考资料（选填，2026-10-23）：出题人自己过往用过的题 / 内部考题，只用于他自己出题（照它改背景换数字）。平台内部的参照在后台自动挑，这里不露
   // 出题方式（2026-10-24，王刚：一道题本来很干净，什么都不改直接发出去也得行）：平方出题 / 原题直发
@@ -75,7 +77,7 @@ function Inner() {
       fetch(`/api/admin/work/tasks/${j.id}/baseline`, { method: 'POST', keepalive: true }).catch(() => {});
       setPhase('done'); await new Promise(r => setTimeout(r, 1200));
       message.success(`任务出好了：${j.title}。AI 基线在后台跑，一分钟后在空间里看`, 6);
-      router.push(j.share_token && j.owner_key ? `/work/${j.share_token}/owner?k=${encodeURIComponent(j.owner_key)}` : '/work/mine');
+      router.push(j.share_token && j.owner_key ? `/work/${j.share_token}/owner?k=${encodeURIComponent(j.owner_key)}${embed ? '&embed=1' : ''}` : '/work/mine');
     } catch (e: any) { message.error(e.message); setBusy(''); }
   };
   const env = ENVS.find(e => e.value === f.env) || ENVS[0];
@@ -83,7 +85,7 @@ function Inner() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e' }}>
-      <WorkTopBar active="new" right={<NewModeSwitch mode="form" />} />
+      {!embed && <WorkTopBar active="new" right={<NewModeSwitch mode="form" />} />}
       <div style={{ maxWidth: 1080, margin: '0 auto', padding: '28px 28px 60px', display: 'grid', gridTemplateColumns: 'minmax(0, 1.5fr) minmax(280px, 1fr)', gap: 24, alignItems: 'start' }}>
         <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 18, padding: '26px 28px' }}>
           <h1 style={{ fontSize: 24, margin: '0 0 4px' }}>出一道真活</h1>
