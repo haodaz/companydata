@@ -16,8 +16,8 @@ type Art =
   | { kind: 'work_task'; token: string; owner_key: string; title: string; task_id: string; _n?: number }
   | { kind: 'work_report'; token: string; sid: string; title: string; name: string; task_id: string; _n?: number }
   | { kind: 'app'; url: string; title: string; _n?: number };
-// 新对话标题旁的一幅小插图：稿纸、钢笔、怀表——案头考核（通义万相生成、紫墨，正片叠底融进纸色）
-const DESK = '/work/ws/desk.jpg';
+// 新对话的底部装饰：铜版画运河小城（作坊、画室、码头——百业），通义万相生成、紫墨，正片叠底融进纸色（照学院秘书页）
+const SCENE = '/work/ws/h-town.jpg';
 const APPS = [{ url: '/work/ws/tasks', title: '管理真活' }, { url: '/work/ws/reports', title: '任务报告' }, { url: '/work/ws/kb', title: '知识库' }, { url: '/work/library', title: '任务库' }];
 const artKey = (a: Art) => (a.kind === 'work_report' ? a.sid : a.kind === 'app' ? a.url : a.task_id) + (a._n || '');
 
@@ -113,9 +113,9 @@ function WorkHome() {
       <style>{CHAT_CSS + CSS}</style>
       <section className="wc-chat">
         {!art && <div className="wws-top">{appMenu}</div>}
+        {!items.length && <div className="wc-scene" aria-hidden style={{ backgroundImage: `url(${SCENE})` }} />}
         {!items.length ? (
           <div className="wc-hero">
-            <img className="wc-desk" src={DESK} alt="" aria-hidden />
             <div className="wws-eyebrow">TRUE WORK · DESK</div>
             <h1>你需要做什么，让 AI 来办<span>Tell it what you need. It drafts, reads, compares — you decide.</span></h1>
             {composer(true)}
@@ -164,8 +164,8 @@ const CSS = `
 .wc { height: 100vh; grid-template-columns: minmax(0, 1fr); background: transparent; }
 .wc.with-art { grid-template-columns: minmax(0, 1fr) minmax(460px, 50%); }
 .wc-chat { position: relative; }
-.wc-desk { position: absolute; right: 0; top: -64px; width: 168px; mix-blend-mode: multiply; opacity: .9; pointer-events: none; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }
-@media (max-width: 900px) { .wc-desk { display: none; } }
+.wc-scene { position: absolute; inset: 0; background: center bottom / cover no-repeat; mix-blend-mode: multiply; opacity: .55; filter: saturate(.85) brightness(1.06); pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.25) 30%, #000 62%); mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.25) 30%, #000 62%); }
 .wc-hero { position: relative; z-index: 1; width: min(820px, 92%); }
 .wc-hero p { text-shadow: 0 0 12px var(--bg), 0 0 4px var(--bg); }
 .wc-quick button { background: rgba(255,254,251,.88); border-color: var(--line); color: var(--ink); } .wc-quick b { font: 800 15.5px var(--serif); letter-spacing: .03em; } .wc-quick span { color: var(--ink2); } .wc-quick button:hover { border-color: var(--acc); }

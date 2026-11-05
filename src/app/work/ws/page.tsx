@@ -4,8 +4,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { CHAT_CSS, Composer, QuickCards } from '@/components/work/ChatKit';
-import { askHref, CMDS, col, QUICK, STATUS, when } from './ask';
+import { CHAT_CSS, Composer } from '@/components/work/ChatKit';
+import { askHref, CMDS, col, STATUS, when } from './ask';
 import { Empty, Rule } from './ui';
 
 const hello = () => { const h = new Date().getHours(); return h < 6 ? '夜深了' : h < 11 ? '早上好' : h < 14 ? '中午好' : h < 18 ? '下午好' : '晚上好'; };
@@ -29,7 +29,6 @@ export default function HomePage() {
         <div className="wws-eyebrow">TRUE WORK, TRUE TALENT</div>
         <h1>{greet}。你需要做什么，让 AI 来办<span>Tell it what you need. It drafts, reads, compares — you decide.</span></h1>
         <Composer text={text} setText={setText} busy={false} send={go} stop={() => {}} model={model} setModel={setModel} autoFocus commands={CMDS} placeholder="说你要做什么，或者打 / 看常用指令" />
-        <QuickCards items={QUICK} setText={setText} />
       </section>
 
       <Rule zh="案头" en="At a glance" />
@@ -68,7 +67,6 @@ const CSS = `
 .h-hero h1 span { display: block; font: italic 400 15.5px var(--en); color: var(--ink2); margin-top: 8px; letter-spacing: .005em; }
 .h-hero .wc-composer { background: var(--paper); border-color: var(--line); box-shadow: 0 18px 40px -28px rgba(27,29,54,.35); }
 .h-hero .wc-composer:focus-within { border-color: var(--acc); }
-.h-hero .wc-quick button { background: var(--paper); border-color: var(--line); color: var(--ink); } .h-hero .wc-quick b { font: 800 15.5px var(--serif); letter-spacing: .03em; } .h-hero .wc-quick span { color: var(--ink2); } .h-hero .wc-quick button:hover { border-color: var(--acc); }
 .h-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 14px; margin-top: 14px; }
 .h-row { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line2); font-size: 13.5px; }
 .h-sub { color: var(--ink3); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
