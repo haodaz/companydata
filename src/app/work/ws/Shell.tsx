@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { ArrowLeftRight, BookOpen, ClipboardList, Database, House, Library, ShieldCheck, SquarePen, type LucideIcon } from 'lucide-react';
 
-const HOME = '/work/ws', CHAT = '/work/ws/chat';
+const HOME = '/work/ws', CHAT = '/work/ws/chat', LOGIN = '/work/ws/login';
 const NAV = [
   { ic: House as LucideIcon, href: HOME, t: '首页', on: (p: string) => p === HOME },
   { ic: ClipboardList as LucideIcon, href: `${HOME}/tasks`, t: '管理真活', on: (p: string) => p.startsWith(`${HOME}/tasks`) },
@@ -37,8 +37,8 @@ export default function Shell({ children }: { children: React.ReactNode }) {
     const on = (e: MouseEvent) => { const a = (e.target as HTMLElement).closest?.('a'); const href = a?.getAttribute('href') || ''; if (!href.startsWith(CHAT)) return; e.preventDefault(); window.parent.postMessage({ type: 'wws-ask', href }, location.origin); };
     document.addEventListener('click', on, true); return () => document.removeEventListener('click', on, true);
   }, [embed]);
-  const load = useCallback(() => fetch('/api/admin/work/chat', { cache: 'no-store' }).then(r => { if (r.status === 401) location.href = `/work/login?next=${encodeURIComponent(location.pathname)}`; return r.json(); }).then(j => j.ok && setThreads(j.data)).catch(() => {}), []);
-  useEffect(() => { if (embed) return; load(); fetch('/api/auth/me').then(r => r.json()).then(j => setMe(j.user || j)).catch(() => {}); }, [load, embed]);
+  const load = useCallback(() => fetch('/api/admin/work/chat', { cache: 'no-store' }).then(r => { if (r.status === 401 && location.pathname !== LOGIN) location.href = `${LOGIN}?next=${encodeURIComponent(location.pathname + location.search)}`; return r.json(); }).then(j => j.ok && setThreads(j.data)).catch(() => {}), []);
+  useEffect(() => { if (embed || path === LOGIN) return; load(); fetch('/api/auth/me').then(r => r.json()).then(j => setMe(j.user || j)).catch(() => {}); }, [load, embed, path === LOGIN]);
   useEffect(() => {
     const onList = () => load();
     const onCur = (e: Event) => setCur((e as CustomEvent).detail || null);
@@ -52,6 +52,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   };
   const who = me?.name || me?.email || '';
   if (embed) return <div className="wws embed"><style>{CSS}</style><main className="wws-main">{children}</main></div>;
+  if (path === LOGIN) return <div className="wws"><style>{CSS}</style>{children}</div>;   // 登录页自己一整屏，不套侧栏
   return (
     <div className="wws">
       <style>{CSS}</style>

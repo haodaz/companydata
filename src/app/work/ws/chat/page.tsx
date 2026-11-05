@@ -16,8 +16,8 @@ type Art =
   | { kind: 'work_task'; token: string; owner_key: string; title: string; task_id: string; _n?: number }
   | { kind: 'work_report'; token: string; sid: string; title: string; name: string; task_id: string; _n?: number }
   | { kind: 'app'; url: string; title: string; _n?: number };
-// 新对话的底部装饰：铜版画运河小城（作坊、画室、码头——百业），通义万相生成、紫墨，正片叠底融进纸色（照学院秘书页）
-const SCENE = '/work/ws/h-town.jpg';
+// 新对话的底部装饰：铜版画手工艺村（水车磨坊、陶窑、染坊、码头——百业），通义万相生成、紫墨，正片叠底融进纸色（照学院秘书页）
+const SCENE = '/work/ws/h-village.jpg';
 const APPS = [{ url: '/work/ws/tasks', title: '管理真活' }, { url: '/work/ws/reports', title: '任务报告' }, { url: '/work/ws/kb', title: '知识库' }, { url: '/work/ws/library', title: '任务库' }];
 const artKey = (a: Art) => (a.kind === 'work_report' ? a.sid : a.kind === 'app' ? a.url : a.task_id) + (a._n || '');
 
@@ -69,7 +69,7 @@ function WorkHome() {
     const focus = !a || a.kind === 'app' ? null : a.kind === 'work_report' ? { task_id: a.task_id, session_id: a.sid, title: a.title, name: a.name } : { task_id: a.task_id, title: a.title };
     try {
       const res = await fetch('/api/admin/work/home', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ thread_id: tidRef.current, text: t, model, focus }), signal: ac.signal });
-      if (res.status === 401) { location.href = `/work/login?next=${encodeURIComponent('/work/ws/chat')}`; return; }
+      if (res.status === 401) { location.href = `/work/ws/login?next=${encodeURIComponent('/work/ws/chat')}`; return; }
       if (!res.ok || !res.body) { const j = await res.json().catch(() => ({})); setItems(it => [...it, { k: 'error', text: j.error || `出错了（${res.status}）` }]); return; }
       const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = '';
       for (;;) { const { value, done } = await reader.read(); if (done) break; buf += dec.decode(value, { stream: true }); let nl; while ((nl = buf.indexOf('\n')) >= 0) { const line = buf.slice(0, nl); buf = buf.slice(nl + 1); if (line.trim()) onEvent(JSON.parse(line)); } }
@@ -163,8 +163,8 @@ const CSS = `
 .wc { height: 100vh; grid-template-columns: minmax(0, 1fr); background: transparent; }
 .wc.with-art { grid-template-columns: minmax(0, 1fr) minmax(460px, 50%); }
 .wc-chat { position: relative; }
-.wc-scene { position: absolute; inset: 0; background: center bottom / cover no-repeat; mix-blend-mode: multiply; opacity: .55; filter: saturate(.85) brightness(1.06); pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 46%, rgba(0,0,0,.6) 66%, #000 82%); mask-image: linear-gradient(to bottom, transparent 0%, transparent 46%, rgba(0,0,0,.6) 66%, #000 82%); }
+.wc-scene { position: absolute; inset: 0; background: center 85% / cover no-repeat; mix-blend-mode: multiply; opacity: .6; filter: saturate(.85) brightness(1.06); pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 38%, rgba(0,0,0,.7) 58%, #000 72%); mask-image: linear-gradient(to bottom, transparent 0%, transparent 38%, rgba(0,0,0,.7) 58%, #000 72%); }
 .wc-hero { position: relative; z-index: 1; width: min(820px, 92%); }
 .wc-hero p { text-shadow: 0 0 12px var(--bg), 0 0 4px var(--bg); }
 .wc-quick button { background: rgba(255,254,251,.88); border-color: var(--line); color: var(--ink); } .wc-quick b { font: 800 15.5px var(--serif); letter-spacing: .03em; } .wc-quick span { color: var(--ink2); } .wc-quick button:hover { border-color: var(--acc); }
