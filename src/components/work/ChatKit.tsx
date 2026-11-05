@@ -15,7 +15,7 @@ export type Item =
   | { k: 'error'; text: string };
 
 export const MODELS = MODEL_OPTIONS.filter(m => /^(claude-|gpt-|qwen)/.test(m.id));
-export const RUNNING: Record<string, string> = { find_company: '在企业库里搜', company_brief: '看这家企业的材料', suggest_roles: '找岗位', my_references: '看参考资料', read_reference: '读参考资料（约 1 分钟）', create_task: '出任务中（约 2 分钟：拼材料、锚定问题、写任务书、做材料包、定标准）', task_summary: '看这道题', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', revise_task: '按意见修订', update_task_settings: '改设置', publish_task: '发布', publish_verbatim: '原题直发', my_tasks: '看你出过的题', task_people: '看谁做了这道题', read_report: '读报告', compare_people: '并排比', task_insights: '看整道题的作答情况', set_task_status: '改上下架', open_panel: '在右边打开', kb_lookup: '查知识库', kb_save: '存进知识库' };
+export const RUNNING: Record<string, string> = { find_company: '在企业库里搜', company_brief: '看这家企业的材料', suggest_roles: '找岗位', my_references: '看参考资料', read_reference: '读参考资料（约 1 分钟）', create_task: '出任务中（约 2 分钟：拼材料、锚定问题、写任务书、做材料包、定标准）', task_summary: '看这道题', run_baseline: 'AI 先做一遍当基线（约 1 分钟）', revise_task: '按意见修订', update_task_settings: '改设置', publish_task: '发布', publish_verbatim: '原题直发', my_tasks: '看你出过的题', task_people: '看谁做了这道题', read_report: '读报告', compare_people: '并排比', task_insights: '看整道题的作答情况', set_task_status: '改上下架', open_panel: '在右边打开', search_library: '在任务库里找', kb_lookup: '查知识库', kb_save: '存进知识库' };
 
 export type Cmd = { t: string; p: string };
 /** 把一条指令放进输入框，选中第一个【空位】让人直接改 */

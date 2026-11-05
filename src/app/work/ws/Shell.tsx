@@ -12,7 +12,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { ArrowLeftRight, BookOpen, ClipboardList, Database, House, Library, SquarePen, type LucideIcon } from 'lucide-react';
+import { ArrowLeftRight, BookOpen, ClipboardList, Database, House, Library, ShieldCheck, SquarePen, type LucideIcon } from 'lucide-react';
 
 const HOME = '/work/ws', CHAT = '/work/ws/chat';
 const NAV = [
@@ -20,7 +20,7 @@ const NAV = [
   { ic: ClipboardList as LucideIcon, href: `${HOME}/tasks`, t: '管理真活', on: (p: string) => p.startsWith(`${HOME}/tasks`) },
   { ic: Database as LucideIcon, href: `${HOME}/reports`, t: '任务报告', on: (p: string) => p.startsWith(`${HOME}/reports`) },
   { ic: Library as LucideIcon, href: `${HOME}/kb`, t: '知识库', on: (p: string) => p.startsWith(`${HOME}/kb`) },
-  { ic: BookOpen as LucideIcon, href: '/work/library', t: '任务库', on: () => false },
+  { ic: BookOpen as LucideIcon, href: `${HOME}/library`, t: '任务库', on: (p: string) => p.startsWith(`${HOME}/library`) },
 ];
 
 export default function Shell({ children }: { children: React.ReactNode }) {
@@ -28,7 +28,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [threads, setThreads] = useState<{ id: string; title?: string }[]>([]);
   const [cur, setCur] = useState<string | null>(null);
-  const [me, setMe] = useState<{ email?: string; name?: string } | null>(null);
+  const [me, setMe] = useState<{ email?: string; name?: string; role?: string } | null>(null);
   const [embed, setEmbed] = useState(false);
   useEffect(() => { try { setEmbed(window.self !== window.top); } catch { setEmbed(true); } }, []);
   // 嵌在对话右边：点「问助理」不在小框里跳，交给外面的对话接着聊
@@ -60,6 +60,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         <div className="wws-scroll">
           <button className={`wws-new${path === CHAT && !cur ? ' on' : ''}`} onClick={() => open(null)}><Ic I={SquarePen} />新对话</button>
           <nav className="wws-nav">{NAV.map(x => <Link key={x.href} href={x.href} className={x.on(path) ? 'on' : ''}><Ic I={x.ic} />{x.t}</Link>)}</nav>
+          {me?.role === 'admin' && <nav className="wws-nav wws-admin"><Link href={`${HOME}/admin`} className={path.startsWith(`${HOME}/admin`) ? 'on' : ''}><Ic I={ShieldCheck} />全站管理</Link></nav>}
           <div className="wws-grp">RECENT<span>最近</span></div>
           <div className="wws-list">
             {threads.slice(0, 40).map(t => <button key={t.id} className={`wws-item${cur === t.id ? ' on' : ''}`} title={t.title || '对话'} onClick={() => open(t.id)}>{t.title || '对话'}</button>)}
@@ -99,6 +100,7 @@ const CSS = `
 .wws-nav a:hover { background: rgba(27,29,54,.04); color: var(--ink); }
 .wws-nav a.on { background: var(--acc-soft); color: var(--ink); font-weight: 800; box-shadow: inset 3px 0 0 var(--acc); }
 .wws-nav .ic, .wws-new .ic, .wws-classic .ic { width: 22px; display: grid; place-items: center; color: var(--acc); flex-shrink: 0; }
+.wws-admin { margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); }
 .wws-grp { font: 600 10.5px var(--en); letter-spacing: .26em; color: var(--ink3); padding: 18px 12px 6px; }
 .wws-grp span { font: 600 11px "PingFang SC", sans-serif; letter-spacing: .1em; margin-left: 8px; }
 .wws-list { display: grid; gap: 1px; }

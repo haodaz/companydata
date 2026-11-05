@@ -2,7 +2,7 @@
 
 /**
  * 真活工作台 · 知识库（2026-11-05）：出任务背后的知识，平台给的（PGC：企业库画像、任务库）+ 自己攒的（UGC：补的企业介绍、岗位、过往的题、素材）。
- * 一个功能分 tab：企业 / 岗位 / 任务样本 / 素材；admin 多「平台资产」（题目资产库、外部参照，对客户不讲，只给入口）。
+ * 一个功能分 tab：企业 / 岗位 / 任务样本 / 素材。平台的资产（题目资产库、外部参照、训练样本、任务库上架）在「全站管理」，只给 admin。
  * 每样都能人工改，也能「问助理」——助理出任务前会先查这里（kb_lookup），对话里讲清的企业 / 岗位会整理存进来（kb_save，人只校正）。
  */
 import React, { Suspense, useCallback, useEffect, useState } from 'react';
@@ -11,7 +11,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { askHref, STATUS, when } from '../ask';
 import { Empty, Head } from '../ui';
 
-type Tab = 'company' | 'role' | 'sample' | 'asset' | 'admin';
+type Tab = 'company' | 'role' | 'sample' | 'asset';
 const TABS: [Tab, string, string, string][] = [
   ['company', '企业', 'Companies', '出过题的企业和你补的介绍；企业库里的画像只读。'],
   ['role', '岗位', 'Roles', '要找什么样的人、看重什么；出任务时助理照这里来。'],
@@ -24,9 +24,7 @@ export default function Page() { return <Suspense><Kb /></Suspense>; }
 function Kb() {
   const sp = useSearchParams(); const router = useRouter();
   const tab = (sp.get('tab') as Tab) || 'company';
-  const [admin, setAdmin] = useState(false);
-  useEffect(() => { fetch('/api/auth/me').then(r => r.json()).then(j => setAdmin(j?.user?.role === 'admin')).catch(() => {}); }, []);
-  const tabs = admin ? [...TABS, ['admin', '平台资产', 'Platform', '题目资产库、外部参照、任务库上架（只给管理员）。'] as [Tab, string, string, string]] : TABS;
+  const tabs = TABS;
   return (
     <div className="wws-page">
       <Head eyebrow="KNOWLEDGE" zh="知识库" en="What your tasks are made of"
@@ -39,7 +37,6 @@ function Kb() {
       {tab === 'role' && <Entities kind="role" />}
       {tab === 'sample' && <Samples />}
       {tab === 'asset' && <Assets />}
-      {tab === 'admin' && admin && <AdminAssets />}
     </div>
   );
 }
@@ -144,7 +141,7 @@ function Samples() {
           </div>)}</div>}
       </section>
       <section>
-        <div className="wws-card-h"><h2 className="wws-h2">平台任务库<small>From the library · {lib?.length ?? '…'}</small></h2><a href="/work/library" target="_blank" rel="noreferrer" className="wws-back" style={{ marginLeft: 'auto' }}>完整任务库 ↗</a></div>
+        <div className="wws-card-h"><h2 className="wws-h2">平台任务库<small>From the library · {lib?.length ?? '…'}</small></h2><Link href="/work/ws/library" className="wws-back" style={{ marginLeft: 'auto' }}>完整任务库 →</Link></div>
         <p className="wws-muted" style={{ margin: '0 0 10px' }}>挑一道原题直出换成你们公司，或者只做参考。</p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 10 }}>
           {(lib || []).slice(0, 24).map(x => <div key={x.id} className="wws-card pad">
@@ -181,15 +178,6 @@ function Assets() {
       </table>
     </div>
   );
-}
-
-function AdminAssets() {
-  const L: [string, string, string, string][] = [
-    ['题目资产库', 'Question bank', '/admin/db-question', '所有出过的题按企业 / 行业 / 职能沉淀，出题时自动挑来参照（对客户不讲）。'],
-    ['外部参照', 'External simulations', '/admin/db-external-sim', 'Forage / Extern 的公开模拟和作品墙，看行业真活怎么出、学员交什么。'],
-    ['任务库上架', 'Curate the library', '/work/admin', '把好任务去头放进任务库（PGC）。'],
-  ];
-  return <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 12 }}>{L.map(([t, en, href, d]) => <a key={href} href={href} target="_blank" rel="noreferrer" className="wws-card lined pad" style={{ textDecoration: 'none' }}><div className="wws-eyebrow">{en}</div><div style={{ font: '800 17px var(--serif)', margin: '6px 0' }}>{t} ↗</div><div className="wws-muted" style={{ lineHeight: 1.75 }}>{d}</div></a>)}</div>;
 }
 
 const lnkBtn: React.CSSProperties = { border: 0, background: 'transparent', font: 'inherit', fontSize: 13, fontWeight: 700, cursor: 'pointer', padding: 0, color: 'var(--acc)' };

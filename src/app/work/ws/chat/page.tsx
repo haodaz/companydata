@@ -6,7 +6,7 @@
  * 右边开着题或报告时，「这道题」「他」就指它（focus 跟着消息发给助理）；开着的应用页里点「问助理」，就在这段对话里接着问（postMessage wws-ask）。
  * 别的页面「问助理」跳过来带 ?ask=（直接发出）&task= / &sid=&token=（先把面板打开）；首页输入框写的话放在 sessionStorage wws-pending 带过来。
  */
-import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Md } from '@/components/ws/Md';
 import { ReportView } from '@/components/work/ReportView';
 import { CHAT_CSS, CmdChips, Composer, fillComposer, fromHistory, QuickCards, RUNNING, type Item } from '@/components/work/ChatKit';
@@ -18,11 +18,11 @@ type Art =
   | { kind: 'app'; url: string; title: string; _n?: number };
 // 新对话的底部装饰：铜版画运河小城（作坊、画室、码头——百业），通义万相生成、紫墨，正片叠底融进纸色（照学院秘书页）
 const SCENE = '/work/ws/h-town.jpg';
-const APPS = [{ url: '/work/ws/tasks', title: '管理真活' }, { url: '/work/ws/reports', title: '任务报告' }, { url: '/work/ws/kb', title: '知识库' }, { url: '/work/library', title: '任务库' }];
+const APPS = [{ url: '/work/ws/tasks', title: '管理真活' }, { url: '/work/ws/reports', title: '任务报告' }, { url: '/work/ws/kb', title: '知识库' }, { url: '/work/ws/library', title: '任务库' }];
 const artKey = (a: Art) => (a.kind === 'work_report' ? a.sid : a.kind === 'app' ? a.url : a.task_id) + (a._n || '');
 
 
-export default function Page() { return <Suspense><WorkHome /></Suspense>; }
+export default function Page() { return <WorkHome />; }
 
 function WorkHome() {
   const [threadId, setThreadId] = useState<string | null>(null);
