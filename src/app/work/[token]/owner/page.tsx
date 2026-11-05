@@ -7,7 +7,7 @@ import { roleLabel } from '@/lib/work/role-label';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 
-import { App, Button, ConfigProvider, Input, Space, Tag } from 'antd';
+import { App, Button, ConfigProvider, Input, InputNumber, Space, Tag } from 'antd';
 import { WorkTaskDetail, ENV_META } from '@/components/work/WorkTaskDetail';
 import { GenericCompare } from '@/components/work/GenericCompare';
 
@@ -28,8 +28,8 @@ function Inner() {
   const OWNER_TOUR: TourStep[] = [
     { key: 'stats', title: '这是一道题的空间', text: '题名、企业、要找的人、建议时长，和四个数：多少人参与、多少人交了、平均分、AI 基线。这条链接带管理密钥，可以转给同事，别发给候选人。' },
     { key: 'share', title: '预览、发布、下架', text: '出好的题先是「待发布」。点「预览做题台」看候选人会看到什么；确认了点「发布」，参与链接才生效；之后随时下架。改过题记得「重跑 AI 基线」。' },
-    { key: 'revise', title: '哪里不对，说一句就改', text: '把意见写在这里，AI 只改提到的部分，其余原样保留。改完这里会留一条修订记录。' },
-    { key: 'detail', title: '题的全部', text: '问题与任务、推进步骤、材料包、评分标准、AI 基线、做题情况——分标签看。做题情况里点「看报告」，先看候选人交的原文，再看逐条评分。' },
+    { key: 'revise', title: '调整这道题', text: '左边直接改岗位名、用时、素材，马上生效；右边把意见写给 AI，它只改提到的部分，其余原样保留，改完留一条修订记录。' },
+    { key: 'detail', title: '题的全部', text: '问题与任务、推进步骤、材料包、评分标准、AI 基线、做题情况——分标签看。做题情况里点「看报告」：分「交了什么 / 怎么做的 / 评得怎样」三栏。' },
   ];
   const revise = async () => { if (!fb.trim()) return; setRevising(true); try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ feedback: fb }) })).json(); if (!j.ok) throw new Error(j.error); message.success(`改好了：${j.changelog}`, 8); setFb(''); load(); } catch (e: any) { message.error(e.message); } finally { setRevising(false); } };
   const load = useCallback(async () => {
@@ -76,20 +76,50 @@ function Inner() {
             <GenericCompare token={token} ownerKey={k} task={T} />
           </Space>
         </div>
-        {/* 对题提意见：AI 按意见修订，没提到的不动；改完基线作废 */}
-        <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', marginBottom: 16 }}>
-          <div data-tour="revise" style={{ fontWeight: 700, marginBottom: 6 }}>这道题哪里不对？说一句，按你的意见改</div>
-          <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-            <Input.TextArea value={fb} onChange={e => setFb(e.target.value)} placeholder="比如：缺口补位那条标准太宽，要求按月给出具体调拨量；材料 m3 的良率改成 78%；去掉邮件这个交付物" autoSize={{ minRows: 2, maxRows: 5 }} style={{ flex: 1, minWidth: 320 }} />
-            <Button type="primary" loading={revising} onClick={revise} disabled={!fb.trim()}>按意见修订（约 1 分钟）</Button>
+        {/* 调整这道题（11-05 重排）：以前改岗位名 / 用时藏在下面的表格里、加删素材在「材料包」标签、AI 修订又单独一块——
+            用户要改一样东西得先知道它在哪。现在一张卡：左边直接改（马上生效），右边让 AI 改题目内容 */}
+        <div data-tour="revise" style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', marginBottom: 16 }}>
+          <div style={{ fontWeight: 700, marginBottom: 10 }}>调整这道题</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 18 }}>
+            <QuickSettings T={T} token={token} k={k} onSaved={load} />
+            <div>
+              <div style={{ fontSize: 12.5, color: '#888', fontWeight: 600, marginBottom: 6 }}>让 AI 改题目内容 · 约 1 分钟</div>
+              <Input.TextArea value={fb} onChange={e => setFb(e.target.value)} placeholder="比如：缺口补位那条标准太宽，要求按月给出具体调拨量；材料 m3 的良率改成 78%；去掉邮件这个交付物" autoSize={{ minRows: 2, maxRows: 5 }} style={{ flex: 1, minWidth: 320 }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 8, flexWrap: 'wrap' }}>
+                <Button type="primary" loading={revising} onClick={revise} disabled={!fb.trim()}>按意见修订</Button>
+                <span style={{ fontSize: 12, color: '#888', flex: 1, minWidth: 200 }}>没提到的原样保留；改完要重跑 AI 基线。和在聊天里提意见是同一个 AI。{!T.baseline ? ' 现在没有基线。' : ''}</span>
+              </div>
+              {!!T.task?.revisions?.length && <div style={{ marginTop: 10, fontSize: 12.5, color: '#444', background: '#fafbff', border: '1px solid #e8e9f0', borderRadius: 10, padding: '8px 12px' }}><b>修订记录</b>{T.task.revisions.slice(-3).reverse().map((r: any, i: number) => <div key={i} style={{ marginTop: 4 }}><span style={{ color: '#999' }}>{String(r.at).slice(5, 16).replace('T', ' ')}</span> · 意见：{r.feedback} <span style={{ color: '#6055f5' }}>→ {r.changelog}</span></div>)}</div>}
+            </div>
           </div>
-          <div style={{ fontSize: 12, color: '#888', marginTop: 6 }}>没提到的部分原样保留；改完 AI 基线作废，记得重跑。和在出任务的聊天里提意见是同一个 AI、同样的改法。改用时、改岗位名、加删素材不用在这里说，在下面「题的全部」里直接改，马上生效。{T.task?.revisions?.length ? `已修订 ${T.task.revisions.length} 次。` : ''}{!T.baseline ? ' 现在没有基线。' : ''}</div>
-          {!!T.task?.revisions?.length && <div style={{ marginTop: 10, fontSize: 12.5, color: '#444', background: '#fafbff', border: '1px solid #e8e9f0', borderRadius: 10, padding: '8px 12px' }}><b>修订记录</b>{T.task.revisions.slice(-3).reverse().map((r: any, i: number) => <div key={i} style={{ marginTop: 4 }}><span style={{ color: '#999' }}>{String(r.at).slice(5, 16).replace('T', ' ')}</span> · 意见：{r.feedback} <span style={{ color: '#6055f5' }}>→ {r.changelog}</span></div>)}</div>}
         </div>
         <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '8px 18px 18px' }}>
-          <div data-tour="detail"><WorkTaskDetail task={T} sessions={d.sessions} shareLink={share} notes={T.notes} defaultTab={d.sessions.length ? 's' : 'p'} ownerKey={k} /></div>
+          <div data-tour="detail"><WorkTaskDetail task={T} sessions={d.sessions} shareLink={share} notes={T.notes} defaultTab={d.sessions.length ? 's' : 'p'} ownerKey={k} inlineEdit={false} /></div>
         </div>
       </div>
+    </div>
+  );
+}
+
+/** 直接改、马上生效：岗位名、建议用时；素材的加删在「材料包」里（点了就切过去） */
+function QuickSettings({ T, token, k, onSaved }: { T: any; token: string; k: string; onSaved: () => void }) {
+  const { message } = App.useApp();
+  const [role, setRole] = useState<string>(T.role || ''); const [mins, setMins] = useState<number>(Number(T.task?.time_minutes) || 60); const [busy, setBusy] = useState('');
+  useEffect(() => { setRole(T.role || ''); setMins(Number(T.task?.time_minutes) || 60); }, [T.role, T.task?.time_minutes]);
+  const save = async (body: any, what: string) => {
+    setBusy(what);
+    try { const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(k)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json(); if (!j.ok) throw new Error(j.error || '没改成'); message.success(`${what}改好了，任务书里的写法也一起换了`); onSaved(); }
+    catch (e: any) { message.error(e.message); } finally { setBusy(''); }
+  };
+  const mats = T.materials || []; const files = mats.filter((m: any) => m.kind === 'file').length;
+  const row: React.CSSProperties = { display: 'grid', gridTemplateColumns: '92px 1fr', gap: 10, alignItems: 'center', padding: '6px 0' };
+  const lab: React.CSSProperties = { fontSize: 13, color: '#666' };
+  return (
+    <div>
+      <div style={{ fontSize: 12.5, color: '#888', fontWeight: 600, marginBottom: 6 }}>直接改 · 马上生效</div>
+      <div style={row}><span style={lab} title="岗位名，或一句话写要找什么样的人">岗位</span><Space.Compact style={{ width: '100%' }}><Input value={role} onChange={e => setRole(e.target.value)} maxLength={120} onPressEnter={() => role.trim() && role !== T.role && save({ role }, '岗位名')} /><Button disabled={!role.trim() || role === T.role} loading={busy === '岗位名'} onClick={() => save({ role }, '岗位名')}>保存</Button></Space.Compact></div>
+      <div style={row}><span style={lab}>建议用时</span><Space.Compact><InputNumber min={20} max={240} step={10} value={mins} onChange={v => setMins(Number(v) || mins)} suffix="分钟" style={{ width: 130 }} /><Button disabled={mins === Number(T.task?.time_minutes)} loading={busy === '用时'} onClick={() => save({ time_minutes: mins }, '用时')}>保存</Button></Space.Compact></div>
+      <div style={row}><span style={lab}>素材</span><span style={{ fontSize: 13 }}>{mats.length} 份{files ? `（上传的文件 ${files} 个）` : ''} · <a onClick={() => { window.dispatchEvent(new CustomEvent('work-tab', { detail: 'm' })); document.querySelector('[data-tour="detail"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}>加删素材 →</a></span></div>
     </div>
   );
 }

@@ -10,11 +10,13 @@ import { Md } from '@/components/ws/Md';
 const { Text, Paragraph } = Typography;
 export const ENV_META: Record<string, { label: string; color: string }> = { doc: { label: '文档 / 对账台', color: 'purple' }, code: { label: '代码台', color: 'geekblue' }, sheet: { label: '表格 / 数据台', color: 'cyan' }, design: { label: '设计台', color: 'orange' }, plugin: { label: '真活插件 · 自己的工具', color: 'magenta' }, open: { label: '自己录制电脑操作', color: 'green' } };
 
-export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab, ownerKey }: { task: any; sessions: any[]; shareLink: string; notes?: string[]; defaultTab?: string; /** 有管理密钥才能补算 AI 使用分 */ ownerKey?: string }) {
+export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab, ownerKey, inlineEdit = true }: { /** 任务空间把岗位名 / 用时放到上面的「调整这道题」里，这里只显示（11-05） */ inlineEdit?: boolean; task: any; sessions: any[]; shareLink: string; notes?: string[]; defaultTab?: string; /** 有管理密钥才能补算 AI 使用分 */ ownerKey?: string }) {
   // 出题人是不是用一句话说的要找什么样的人（和 lib/work/generator.ts 的 isNeedText 同一判断；那边是服务端模块，这里不能直接引）
   const isNeed = String(T.role || '').trim().length > 14 || /[，,。、]|要一个|能看懂|能把|的人/.test(String(T.role || ''));
   const { message } = App.useApp();
   const [report, setReport] = useState<any>(null);
+  const [tab, setTab] = useState<string>(defaultTab || 'p');
+  useEffect(() => { const h = (e: Event) => setTab(String((e as CustomEvent).detail || 'p')); window.addEventListener('work-tab', h); return () => window.removeEventListener('work-tab', h); }, []);
   // 打开某人的报告时再取全过程（事件 + 问 AI 原文 + 稿子快照），列表里不带，免得一次拉太大
   const [proc, setProc] = useState<{ id: string; events: any[]; ai_chat: any[] } | null>(null);
   useEffect(() => {
@@ -73,6 +75,8 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
   };
   // 材料包：补传 / 删上传的文件（11-05 潜历：出好任务后还想加文件、换文件）
   const [mats, setMats] = useState<any[]>(T.materials || []); const [matBusy, setMatBusy] = useState(false);
+  // 上面「调整这道题」改了之后页面会重新拉数据：这里跟着同步（11-05）
+  useEffect(() => { setMats(T.materials || []); setRole(T.role || ''); setMinutes(Number(T.task?.time_minutes) || 60); setMinEdit(Number(T.task?.time_minutes) || 60); }, [T]); // eslint-disable-line react-hooks/exhaustive-deps
   const tokOf = () => (shareLink.match(/\/work\/([^/?#]+)/) || [])[1];
   const addMats = async (list: FileList | null) => {
     const token = tokOf(); if (!list?.length || !token || !ownerKey) return; setMatBusy(true);
@@ -106,19 +110,19 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
   };
   return (
     <>
-      <Tabs defaultActiveKey={defaultTab || 'p'} items={[
+      <Tabs activeKey={tab} onChange={setTab} items={[
         { key: 'p', label: '问题与任务', children: <div>
           <Descriptions column={1} size="small" bordered items={[
             { key: 'c', label: isNeed ? '企业 · 要找的人' : '企业 · 岗位', children: roleEdit != null
               ? <Space.Compact size="small" style={{ width: '100%', maxWidth: 520 }}><Input size="small" value={roleEdit} onChange={e => setRoleEdit(e.target.value)} onPressEnter={saveRole} maxLength={120} /><Button size="small" type="primary" onClick={saveRole}>保存</Button><Button size="small" onClick={() => setRoleEdit(null)}>取消</Button></Space.Compact>
-              : <Space wrap><span>{T.company_name} · {role}</span>{ownerKey && <a onClick={() => setRoleEdit(role)}>改岗位名</a>}</Space> },
+              : <Space wrap><span>{T.company_name} · {role}</span>{ownerKey && inlineEdit && <a onClick={() => setRoleEdit(role)}>改岗位名</a>}</Space> },
             { key: 'link', label: '参与链接', children: <Space><code>{shareLink}</code><Button size="small" onClick={() => { navigator.clipboard.writeText(shareLink); message.success('已复制'); }}>复制</Button></Space> },
             { key: 's', label: '业务问题', children: T.problem?.statement },
             { key: 'w', label: '为什么是现在', children: T.problem?.why_now },
             { key: 'e', label: '依据', children: <ul style={{ margin: 0, paddingLeft: 18 }}>{(T.problem?.evidence || []).map((x: any, i: number) => <li key={i}>{x.text} <Text type="secondary">— {x.source}</Text></li>)}</ul> },
             { key: 'd', label: '交付物', children: <ol style={{ margin: 0, paddingLeft: 18 }}>{(T.task?.deliverables || []).map((d: any) => <li key={d.id}>{d.title} <Text type="secondary">{d.format}</Text></li>)}</ol> },
             { key: 'r', label: '规则', children: <ul style={{ margin: 0, paddingLeft: 18 }}>{(T.task?.rules || []).map((r: string, i: number) => <li key={i}>{r}</li>)}</ul> },
-            { key: 'm', label: '时间与操作台', children: <Space wrap><span>建议 {minutes} 分钟 · 操作台 {ENV_META[T.task?.env?.type]?.label || '文档'}</span>{ownerKey && <Space.Compact size="small"><InputNumber size="small" min={20} max={240} step={10} value={minEdit} onChange={v => setMinEdit(Number(v) || minutes)} suffix="分钟" style={{ width: 110 }} /><Button size="small" disabled={minEdit === minutes} loading={minBusy} onClick={saveMinutes}>改用时</Button></Space.Compact>}</Space> },
+            { key: 'm', label: '时间与操作台', children: <Space wrap><span>建议 {minutes} 分钟 · 操作台 {ENV_META[T.task?.env?.type]?.label || '文档'}</span>{ownerKey && inlineEdit && <Space.Compact size="small"><InputNumber size="small" min={20} max={240} step={10} value={minEdit} onChange={v => setMinEdit(Number(v) || minutes)} suffix="分钟" style={{ width: 110 }} /><Button size="small" disabled={minEdit === minutes} loading={minBusy} onClick={saveMinutes}>改用时</Button></Space.Compact>}</Space> },
           ]} />
           <Paragraph style={{ marginTop: 12, whiteSpace: 'pre-wrap', background: '#fafbff', padding: 12, borderRadius: 10 }}>{T.task?.brief}</Paragraph>
           {T.task?.env?.type === 'code' && <Paragraph><b>自测用例</b>：{(T.task.env.tests || []).map((t: any) => t.name).join('、') || '无'}</Paragraph>}
