@@ -202,7 +202,25 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const [testOut, setTestOut] = useState<string>('');
   const [summary, setSummary] = useState(''); const [uploads, setUploads] = useState<{ name: string; size: number; url: string }[]>([]); const [recording, setRecording] = useState<{ url: string; duration: number; shots?: number } | null>(null);
   const lastLen = useRef(0); const lastSnap = useRef('');
+  // 工作台每份交付物都能传文件（11-05 潜历：「格式限制」——设计稿、PS / 本地 AI 出的图、Excel 原文件交不进来）
+  type PFile = { name: string; size: number; url: string; part: string };
+  const [pfiles, setPfiles] = useState<PFile[]>([]); const [pfBusy, setPfBusy] = useState(0); const [pfErr, setPfErr] = useState('');
+  useEffect(() => { if (mode === 'open' || !sid) return; fetch(`/api/work/${token}/sessions/${sid}`).then(r => r.json()).then(j => setPfiles(j.session?.files || [])).catch(() => {}); }, [token, sid, mode]);
 
+  const uploadPart = async (list: FileList | null, part: string) => {
+    if (!list?.length) return; setPfErr('');
+    for (const f of Array.from(list)) {
+      if (f.size > 200 * 1024 * 1024) { setPfErr(`${f.name} 太大（上限 200MB）`); continue; }
+      setPfBusy(n => n + 1);
+      const fd = new FormData(); fd.append('file', f); fd.append('kind', 'file'); fd.append('part', part); fd.append('t', String(now_s()));
+      try { const j = await (await fetch(`/api/work/${token}/sessions/${sid}/upload`, { method: 'POST', body: fd })).json(); if (!j.ok) throw new Error(j.error); setPfiles(x => [...x, { name: j.name, size: j.size, url: j.url, part }]); }
+      catch (e: any) { setPfErr(`${f.name} 没传上去：${e.message}`); }
+      setPfBusy(n => n - 1);
+    }
+  };
+  const isImg = (n: string) => /\.(png|jpe?g|webp|gif)$/i.test(n);
+  // 附件写进交付物：图片直接显示，其他是可下载的链接（交卷时平台再把文字 / 看图说明接在后面给评卷）
+  const attOf = (id: string, first: boolean) => { const xs = pfiles.filter(f => f.part === id || (first && !f.part)); return xs.length ? `\n\n### 附件（${xs.length} 个，候选人上传）\n${xs.map(f => isImg(f.name) ? `![${f.name}](${f.url})` : `- [${f.name}](${f.url})（${Math.max(1, Math.round(f.size / 1024))} KB）`).join('\n')}` : ''; };
   // 交付内容（文本，评卷读）。白板交卷时另存一张 PNG，shots[id] = 图的地址
   const build = useCallback((shots: Record<string, string>) => {
     if (mode === 'open') return summary;
@@ -214,9 +232,9 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
       if (p.module === 'canvas') return `${canvasToText(x.graph)}\n\n### 图的说明\n${x.notes}`;
       return x.doc;
     };
-    if (parts.length === 1) return body(parts[0], ps[parts[0].id] || blank());
-    return parts.map(p => `## ${p.id} ${p.title}（${p.format}）\n\n${body(p, ps[p.id] || blank())}`).join('\n\n');
-  }, [env, mode, summary, parts, ps]);
+    if (parts.length === 1) return body(parts[0], ps[parts[0].id] || blank()) + attOf(parts[0].id, true);
+    return parts.map((p, i) => `## ${p.id} ${p.title}（${p.format}）\n\n${body(p, ps[p.id] || blank())}${attOf(p.id, i === 0)}`).join('\n\n');
+  }, [env, mode, summary, parts, ps, pfiles]); // eslint-disable-line react-hooks/exhaustive-deps
   const deliverable = useMemo(() => build({}), [build]);
 
   // 时钟 + 改稿事件（每 20 秒把字数变化记一次）+ 空闲 + 同步
@@ -427,6 +445,12 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
             {mode !== 'open' && curPart.module === 'canvas' && <CanvasBench key={cur} leading={tabsEl} graph={st.graph} onChange={f => setPart(x => ({ graph: f(x.graph) }))} notes={st.notes} onNotes={setNotes} onPaste={onPaste} onEvent={(t2, extra) => ev(t2, extra)} hint={`${curPart.title}${curPart.format ? `（${curPart.format}）` : ''}`} />}
             {mode !== 'open' && curPart.module === 'board' && <BoardBench key={cur} leading={tabsEl} refs={task.materials.filter(m => m.kind === 'file' && m.url && /^image\//.test(m.mime || '')).map(m => ({ title: m.title, url: m.url! }))} caption={`${curPart.title}${curPart.format ? `（${curPart.format}）` : ''}`} value={st.board} onChange={v => setPart({ board: v })} notes={st.notes} onNotes={setNotes} onEvent={(t, d) => ev(t, d || {})} />}
             {mode !== 'open' && curPart.module === 'design' && <DesignBench key={cur} leading={tabsEl} params={env.params || []} values={st.params} onParam={(k, v) => setPart(x => ({ params: { ...x.params, [k]: v } }))} onParamDone={k => ev('set_param', { id: k })} sketch={st.sketch} setSketch={f => setPart(x => ({ sketch: f(x.sketch) }))} hint={env.sketch_hint} notes={st.notes} onNotes={setNotes} onPaste={onPaste} onSketch={label => ev('sketch', { label })} />}
+            {mode !== 'open' && <div data-tour="files" style={{ flex: 'none', marginTop: 8, padding: '7px 12px', border: `1px dashed ${line}`, borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', fontSize: 12.5, color: ink2 }}>
+              <span style={{ fontWeight: 600 }}>📎 「{curPart.title}」的附件</span>
+              {pfiles.filter(f => f.part === cur || (!f.part && cur === parts[0]?.id)).map(f => <a key={f.url} href={f.url} target="_blank" rel="noreferrer" style={{ padding: '2px 8px', borderRadius: 999, background: dark ? '#2a2d40' : '#f3f2ff', color: '#6055f5', textDecoration: 'none', maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={f.name}>{isImg(f.name) ? '🖼' : '📄'} {f.name}</a>)}
+              <label style={{ marginLeft: 'auto', padding: '3px 10px', borderRadius: 999, border: `1px solid ${line}`, cursor: 'pointer', whiteSpace: 'nowrap' }}>{pfBusy ? `上传中（${pfBusy}）…` : '＋ 上传文件'}<input type="file" multiple style={{ display: 'none' }} onChange={e => { uploadPart(e.target.files, cur); e.target.value = ''; }} /></label>
+              <span style={{ width: '100%', fontSize: 11.5, color: '#8a8fa8' }}>{pfErr ? <span style={{ color: '#c0392b' }}>{pfErr}</span> : '用别的软件做的也能交：设计稿、PS / AI 出的图、Excel、PDF、PPT、压缩包都行（单个 200MB 以内）。交卷时平台会读出文字、看图写说明一起评。'}</span>
+            </div>}
           </div>}
         </main>}
         {/* AI 助手：卡片（可收） */}

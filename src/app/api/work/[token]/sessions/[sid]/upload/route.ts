@@ -33,13 +33,16 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   if (!file) return NextResponse.json({ ok: false, error: '没有文件' }, { status: 400 });
   if (file.size > MAX) return NextResponse.json({ ok: false, error: '文件太大（上限 200MB）' }, { status: 413 });
   const safe = (file.name || 'file').replace(/[^\w.\-一-龥]+/g, '_').slice(0, 80);
-  const path = `work/${sid}/${Date.now()}-${kind === 'recording' ? 'recording.webm' : safe}`;
+  // 存储路径只用 ASCII（中文文件名会报 Invalid key，11-05 自测发现）；显示仍用原名 safe
+  const ext = (safe.match(/\.[A-Za-z0-9]{1,8}$/) || [''])[0].toLowerCase();
+  const path = `work/${sid}/${Date.now()}-${kind === 'recording' ? 'recording.webm' : Math.random().toString(36).slice(2, 8) + ext}`;
   const buf = Buffer.from(await file.arrayBuffer());
   const { error } = await db.storage.from(BUCKET).upload(path, buf, { contentType: file.type || (kind === 'recording' ? 'video/webm' : 'application/octet-stream'), upsert: true });
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
   const url = db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
   const tsec = Number(form.get('t')) || Math.round((Date.now() - new Date(s.started_at).getTime()) / 1000);
-  const ev = { t: tsec, type: kind, name: safe, size: file.size, url, ...(kind === 'recording' ? { duration: Number(form.get('duration')) || 0 } : {}) };
+  const part = String(form.get('part') || '').slice(0, 20);   // 工作台：这是哪份交付物的附件（11-05）
+  const ev = { t: tsec, type: kind, name: safe, size: file.size, url, ...(part ? { part } : {}), ...(kind === 'recording' ? { duration: Number(form.get('duration')) || 0 } : {}) };
   await db.from('work_sessions').update({ events: [...(s.events || []), ev].slice(-3000) }).eq('id', sid);
   return NextResponse.json({ ok: true, url, name: safe, size: file.size });
 }

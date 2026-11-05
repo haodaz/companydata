@@ -16,7 +16,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ toke
   const x = await load(token, sid);
   if (!x) return NextResponse.json({ ok: false, error: '没有这次作答' }, { status: 404 });
   const { s } = x;
-  return NextResponse.json({ ok: true, session: { id: s.id, participant: s.participant, started_at: s.started_at, submitted_at: s.submitted_at, deliverable: s.deliverable, report: s.report, score: s.score, events_n: (s.events || []).length, ...(req.nextUrl.searchParams.get('full') && s.submitted_at ? { events: s.events || [], ai_chat: s.ai_chat || [] } : {}) } });
+  return NextResponse.json({ ok: true, session: { id: s.id, participant: s.participant, started_at: s.started_at, submitted_at: s.submitted_at, deliverable: s.deliverable, report: s.report, score: s.score, events_n: (s.events || []).length, files: (s.events || []).filter((e: any) => e.type === 'file' && e.url).map((e: any) => ({ name: e.name, url: e.url, size: e.size || 0, part: e.part || '' })), ...(req.nextUrl.searchParams.get('full') && s.submitted_at ? { events: s.events || [], ai_chat: s.ai_chat || [] } : {}) } });
 }
 
 /** 过程同步（每 30 秒 / 每个动作攒一批）：{ events: [...], deliverable?: 草稿 }。交卷后不再收。POST 是给 sendBeacon 用的同义接口 */

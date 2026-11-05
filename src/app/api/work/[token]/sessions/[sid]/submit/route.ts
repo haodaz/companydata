@@ -4,6 +4,7 @@ import { supabaseAdmin as db } from '@/lib/supabase';
 import { buildReport, ensureAiPolicy } from '@/lib/work/grader';
 import { planSegments } from '@/lib/work/audit';
 import { describeFrames, framesFromRecording, framesFromShots, listShots, readTextFiles } from '@/lib/work/recording';
+import { describeImage } from '@/lib/work/vision';
 import { withCost } from '@/lib/token-logger';
 
 export const runtime = 'nodejs';
@@ -41,6 +42,23 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     // 真活插件：交付 = 交付说明 + 链接；到时间自动收卷时没写也照收（按未交付评）
     if (deliverable.trim().length < 20) { if (!body.auto) return NextResponse.json({ ok: false, error: '交付说明太短了：贴上交付物链接，写清结论和假设' }, { status: 400 }); deliverable = `（时间到，自动交卷；候选人没写完交付说明）\n${deliverable}`; }
   } else if (deliverable.trim().length < 50) return NextResponse.json({ ok: false, error: '交付物太短了，至少写点东西' }, { status: 400 });
+  // 工作台作答的附件（11-05）：文件抽文字、图片看图写说明，接在交付物后面给评卷（以原文件为准）
+  if (!open) {
+    const files = events.filter(e => e.type === 'file' && e.url);
+    if (files.length) {
+      const docs = files.filter(f => !/\.(png|jpe?g|webp|gif)$/i.test(f.name)), imgs = files.filter(f => /\.(png|jpe?g|webp|gif)$/i.test(f.name)).slice(0, 8);
+      const parts: string[] = [];
+      if (docs.length) parts.push(await readTextFiles(docs.map(f => ({ name: f.name, url: f.url, size: f.size || 0 }))));
+      for (const f of imgs) {
+        try {
+          const buf = Buffer.from(await (await fetch(f.url)).arrayBuffer());
+          const d = await describeImage(buf, /\.png$/i.test(f.name) ? 'image/png' : /\.webp$/i.test(f.name) ? 'image/webp' : /\.gif$/i.test(f.name) ? 'image/gif' : 'image/jpeg', f.name, '这是候选人做一道考核任务时交上来的一张图（作品 / 截图 / 图表 / 设计稿）。请用中文写 150–300 字：画的是什么、风格和构图、里面的文字和数字、能看出的完成度和明显的问题。只描述看到的，不要打分。');
+          parts.push(`### 图片 [${f.name}](${f.url})（看图说明，以原图为准）\n${d || '（没读出来）'}`);
+        } catch { parts.push(`### 图片 [${f.name}](${f.url})（没读出来）`); }
+      }
+      if (parts.length) deliverable = `${deliverable}\n\n## 附件内容（平台读出的文字 / 看图说明，以原文件为准）\n${parts.join('\n\n')}`.slice(0, 60000);
+    }
+  }
   // 插件模式的最后一问（选填）存在 participant 里，交卷时转成事件
   if (s.participant?.next_step?.trim() && !events.some(e => e.type === 'next_step')) events = [...events, { t: tsec, type: 'next_step', text: String(s.participant.next_step).trim().slice(0, 1000) }];
   events = [...events, { t: tsec, type: 'submit', chars: deliverable.length }];
