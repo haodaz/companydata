@@ -3,6 +3,7 @@
 /** 真活台 · 出题人管理页（凭 ?k=<owner_key>，不用登录）：看题、复制参与链接、发布 / 下架、重跑基线、看每个人的报告 */
 import { WorkTopBar } from '@/components/work/WorkTopBar';
 import { Tour, type TourStep } from '@/components/work/Tour';
+import { roleLabel } from '@/lib/work/role-label';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 
@@ -57,7 +58,7 @@ function Inner() {
         <div style={{ position: 'relative', maxWidth: 1080, margin: '0 auto', padding: '30px 20px 26px' }}>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 10 }}><Tag color={ENV_META[env]?.color} style={{ margin: 0 }}>{ENV_META[env]?.label}</Tag><Tag color={T.status === 'published' ? 'green' : 'default'} style={{ margin: 0 }}>{T.status === 'published' ? '已发布' : T.status === 'archived' ? '已下架' : '待发布'}</Tag></div>
           <h1 style={{ fontSize: 30, margin: '0 0 6px', lineHeight: 1.25 }}>{T.task?.title}</h1>
-          <div style={{ opacity: .85 }}>{T.company_name} · {T.role} · 建议 {T.task?.time_minutes} 分钟</div>
+          <div style={{ opacity: .85 }} title={T.role}>{T.company_name} · {roleLabel(T.role, T.task?.role)} · 建议 {T.task?.time_minutes} 分钟</div>
           <div data-tour="stats" style={{ display: 'flex', gap: 26, marginTop: 18, flexWrap: 'wrap' }}>
             {[[d.sessions.length, '参与'], [done.length, '交卷'], [avg ?? '–', '平均分'], [T.baseline?.result?.total ?? '–', 'AI 基线']].map(([n, l]) => <div key={String(l)}><div style={{ fontSize: 28, fontWeight: 800 }}>{n}</div><div style={{ fontSize: 12, opacity: .8 }}>{l}</div></div>)}
           </div>

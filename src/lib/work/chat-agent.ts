@@ -10,7 +10,7 @@ import type Anthropic from '@anthropic-ai/sdk';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import type { AgentKit } from '@/lib/ws/agent';
 import { withCost } from '@/lib/token-logger';
-import { attachmentsToMaterials, clampMinutes, withMinutes, companyJobs, gatherContext, generateTask, reviseTask, runBaseline, searchCompanies, suggestRoles, verbatimTask, WORK_MODEL, type Attachment, type WorkEnvType } from '@/lib/work/generator';
+import { attachmentsToMaterials, clampMinutes, withMinutes, withRole, companyJobs, gatherContext, generateTask, reviseTask, runBaseline, searchCompanies, suggestRoles, verbatimTask, WORK_MODEL, type Attachment, type WorkEnvType } from '@/lib/work/generator';
 import { autoPickSamples, getSample, listSamples, parseSample, saveSample } from '@/lib/work/samples';
 import { bankTask, pickBankRefs, refreshSignals, renderBankRefs } from '@/lib/work/question-bank';
 import { randomBytes } from 'node:crypto';
@@ -24,20 +24,29 @@ export const WORK_CHAT_TOOLS: Anthropic.Tool[] = [
   { name: 'suggest_roles', description: '按关键词找岗位：这家企业在招的 + 职业库里的。用户说得含糊时用它给选项；用户直接说「我要一个能……的人」就不用套职位名。', input_schema: { type: 'object', properties: { query: { type: 'string' }, company_id: { type: 'number' } }, required: ['query'] } },
   { name: 'my_references', description: '用户以前交过的参考资料（过往的题 / 内部考题）。', input_schema: { type: 'object', properties: {} } },
   { name: 'read_reference', description: '用户在对话里贴了一道过往的题 / 内部考题（200 字以上）：读成结构（几步、每步问什么、参考答案、要算的数）存成他自己的参考资料，出任务时照它改背景换数字。要 1 分钟。', input_schema: { type: 'object', properties: { title: { type: 'string' }, text: { type: 'string' } }, required: ['text'] } },
-  { name: 'create_task', description: '出任务：拼企业材料 → 锚定业务问题 → 任务书 → 材料包 → 带依赖的评分标准（约 2 分钟）。company_id 库里有就传；库里没有就把用户贴的介绍放 intro。role 写用户要找的人（原话也行）。focus 放用户说的「想考什么、给谁做、难度、时长」。reference_id 是他选的参考资料；没有就不传（平台会在后台自动参照）。env 不传就按岗位自动选。attachments：用户上传的、给候选人的素材（消息里【文件】行给的 url / name / mime / text），原样传进来，会挂进材料包给候选人；被当成参考资料的文件不要放这里。', input_schema: { type: 'object', properties: { company: { type: 'string' }, company_id: { type: 'number' }, intro: { type: 'string' }, role: { type: 'string' }, focus: { type: 'string' }, env: { type: 'string', enum: ['doc', 'code', 'sheet', 'design', 'open', 'plugin'] }, reference_id: { type: 'string' }, showcase_id: { type: 'string', description: '用户从任务库选的任务编号（消息里写着「编号 xxx」）' }, showcase_use: { type: 'string', enum: ['base', 'ref'], description: 'base 原题直出换成他的公司；ref 仅做参考' }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['company'] } },
+  { name: 'create_task', description: '出任务：拼企业材料 → 锚定业务问题 → 任务书 → 材料包 → 带依赖的评分标准（约 2 分钟）。company_id 库里有就传；库里没有就把用户贴的介绍放 intro。role 写用户要找的人（原话也行）。focus 放用户说的「想考什么、给谁做、难度、时长」；用户说了时长同时填 time_minutes（分钟），出好后会按它定。reference_id 是他选的参考资料；没有就不传（平台会在后台自动参照）。env 不传就按岗位自动选。attachments：用户上传的、给候选人的素材（消息里【文件】行给的 url / name / mime / text），原样传进来，会挂进材料包给候选人；被当成参考资料的文件不要放这里。', input_schema: { type: 'object', properties: { company: { type: 'string' }, company_id: { type: 'number' }, intro: { type: 'string' }, role: { type: 'string' }, focus: { type: 'string' }, time_minutes: { type: 'number', description: '用户说的作答时长（分钟），没说就不传' }, env: { type: 'string', enum: ['doc', 'code', 'sheet', 'design', 'open', 'plugin'] }, reference_id: { type: 'string' }, showcase_id: { type: 'string', description: '用户从任务库选的任务编号（消息里写着「编号 xxx」）' }, showcase_use: { type: 'string', enum: ['base', 'ref'], description: 'base 原题直出换成他的公司；ref 仅做参考' }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['company'] } },
   { name: 'publish_verbatim', description: '原题直发：用户手里已经有一道干净的题，要一字不改发给候选人。把原题文字（text，60 字以上）传进来，平台只整理交付物和评分点（只从题目自己的要求里推），生成链接。company / role 可不传。attachments 同 create_task。约 1 分钟。', input_schema: { type: 'object', properties: { text: { type: 'string' }, company: { type: 'string' }, role: { type: 'string' }, env: { type: 'string', enum: ['doc', 'code', 'sheet', 'design'] }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['text'] } },
   { name: 'publish_task', description: '发布：出任务的人确认题没问题后，把题从「待发布」改成「已发布」，参与链接才能给候选人用。没确认别调。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'task_summary', description: '看一道已出的题的要点：业务问题、任务书、推进步骤、材料清单、评分标准、基线分。回答用户「题是什么样」「哪条标准是什么意思」用它。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'run_baseline', description: 'AI 先做一遍当基线（约 1 分钟）。出完题接着调。', input_schema: { type: 'object', properties: { task_id: { type: 'string' } }, required: ['task_id'] } },
   { name: 'revise_task', description: '按用户的意见修订这道题（没提到的部分不动；修订后基线作废，要重跑）。用户说「材料太少」「难度降一点」「换个角度」都用它。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, feedback: { type: 'string' } }, required: ['task_id', 'feedback'] } },
-  { name: 'update_task_settings', description: '直接改题目设置，不经过模型改写、马上生效：time_minutes 改建议用时（20–240 分钟，计时器跟着变；题面里写的时长也一并替换）；attachments 把用户这回上传的图 / 文件补进材料包（候选人能看原图，消息里【文件】行的 url / name / mime / text 原样传）。用户说「时长改成 X」「把这张图附到题目里」「候选人看不到图」一律用它，不要用 revise_task。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, time_minutes: { type: 'number' }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['task_id'] } },
+  { name: 'update_task_settings', description: '直接改题目设置，不经过模型改写、马上生效：time_minutes 改建议用时（20–240 分钟，计时器跟着变；题面里写的时长也一并替换）；role 改岗位名 / 要找的人（页头显示的那个，题面里的旧名字一起换）；attachments 把用户这回上传的图 / 文件补进材料包（候选人能看原图，消息里【文件】行的 url / name / mime / text 原样传）。用户说「时长改成 X」「岗位名 / 职位改成 X」「把这张图附到题目里」「候选人看不到图」一律用它，不要用 revise_task。', input_schema: { type: 'object', properties: { task_id: { type: 'string' }, time_minutes: { type: 'number' }, role: { type: 'string', description: '新的岗位名或要找的人，照用户原话' }, attachments: { type: 'array', items: { type: 'object', properties: { url: { type: 'string' }, name: { type: 'string' }, mime: { type: 'string' }, text: { type: 'string' }, image: { type: 'boolean' } }, required: ['url', 'name'] } } }, required: ['task_id'] } },
   { name: 'ask_user', description: '需要用户决定时用：一句话的问题 + 2–4 个短选项（不带编号；也可以自己打字）。出任务前确认题意、选企业 / 岗位有歧义、要不要照参考资料出，用它。', input_schema: { type: 'object', properties: { question: { type: 'string' }, options: { type: 'array', items: { type: 'string' } } }, required: ['question'] } },
 ];
 
 const ENV_TYPES = ['doc', 'code', 'sheet', 'design', 'open', 'plugin'];
 
 /** 出一道题（填表出题的接口和聊着出题的工具共用这一段） */
-export async function createWorkTask(user: { email: string; role: string }, body: { company: string; company_id?: number | string | null; intro?: string; role: string; env?: string; focus?: string; model?: string; sample_id?: string; sample_mode?: 'reskin' | 'inspire'; attachments?: Attachment[]; verbatim?: string; showcase_id?: string; showcase_use?: 'base' | 'ref' }) {
+/** 用户话里的时长（「3 小时」「1.5小时」「90 分钟」「半小时」）→ 分钟；没有就 0 */
+export function minutesFromText(x: string) {
+  const CN: Record<string, string> = { 一: '1', 两: '2', 二: '2', 三: '3', 四: '4', 五: '5', 六: '6' };
+  x = x.replace(/([一两二三四五六])(?=\s*个?半?\s*小时)/g, d => CN[d]);
+  const h = x.match(/(\d+(?:\.\d+)?)\s*(?:个)?(?:半)?\s*(?:小时|h\b|hours?)/i), m = x.match(/(\d+)\s*(?:分钟|min)/i);
+  if (h) return Math.round((parseFloat(h[1]) + (/个?半\s*小时/.test(h[0]) ? 0.5 : 0)) * 60);
+  if (m) return Number(m[1]);
+  return /半小时/.test(x) ? 30 : 0;
+}
+export async function createWorkTask(user: { email: string; role: string }, body: { time_minutes?: number; company: string; company_id?: number | string | null; intro?: string; role: string; env?: string; focus?: string; model?: string; sample_id?: string; sample_mode?: 'reskin' | 'inspire'; attachments?: Attachment[]; verbatim?: string; showcase_id?: string; showcase_use?: 'base' | 'ref' }) {
   const company = String(body.company || '').trim(), role = String(body.role || '').trim();
   const atts: Attachment[] = (body.attachments || []).filter(a => a && a.url && a.name).slice(0, 10).map(a => ({ url: String(a.url), name: String(a.name).slice(0, 80), mime: a.mime, size: a.size, text: a.text ? String(a.text).slice(0, 20000) : '', image: !!a.image }));
   // 原题直发：不改写题面，只整理结构；企业 / 岗位可不填
@@ -81,6 +90,8 @@ export async function createWorkTask(user: { email: string; role: string }, body
   const env = body.env && ENV_TYPES.includes(body.env) ? (body.env as WorkEnvType) : (show && body.showcase_use !== 'ref' && show.env && ENV_TYPES.includes(show.env) ? (show.env as WorkEnvType) : undefined);
   const { task, model } = await withCost({ tool_name: 'work', task_name: 'Generate · 出题', stage: 'create', actor: user.email }, () => generateTask(ctx, roleUse, { base, attachments: atts, sample: sample?.skeleton || null, sampleMode, bankRefs: renderBankRefs(bankRefs, ctx.company?.id ?? null), model: body.model || WORK_MODEL, focus: body.focus ? String(body.focus).slice(0, 1500) : undefined, env, research: false }));
   if (atts.length) { task.materials = [...task.materials, ...attachmentsToMaterials(atts, task.materials.length + 1)]; (ctx as any).attachments = atts.map(a => ({ name: a.name, url: a.url })); }
+  const want = Number(body.time_minutes) || minutesFromText(String(body.focus || ''));
+  if (want) task.task = withMinutes(task.task, want).task;
   const share_token = randomBytes(8).toString('base64url'), owner_key = randomBytes(12).toString('base64url');
   const row = { share_token, owner_key, owner: { name: user.email, contact: user.email }, status: 'ready', company_id: ctx.company?.id ?? null, company_name: ctx.company?.name || company, role: roleUse, context: ctx, problem: task.problem, task: { ...task.task, env: task.env }, materials: task.materials, rubric: task.rubric, model, created_by: user.email };
   const { data, error } = await db.from('work_tasks').insert(row).select('id, share_token').single();
@@ -122,7 +133,7 @@ async function run(name: string, input: any, user: { email: string; role: string
       return { result: { reference_id: saved.id, title: k.title, type: k.problem_type, stages: k.stages.map(st => ({ id: st.id, type: st.type, question: st.question })), summary: k.summary }, label: `读完了：${k.title}，${k.stages.length} 步` };
     }
     case 'create_task': {
-      const r = await createWorkTask(user, { company: String(input.company || ''), company_id: input.company_id ? Number(input.company_id) : null, intro: input.intro ? String(input.intro) : undefined, role: String(input.role || ''), env: input.env, focus: input.focus ? String(input.focus) : undefined, sample_id: input.reference_id ? String(input.reference_id) : undefined, sample_mode: 'reskin', attachments: Array.isArray(input.attachments) ? input.attachments : [], showcase_id: input.showcase_id ? String(input.showcase_id) : undefined, showcase_use: input.showcase_use === 'ref' ? 'ref' : 'base' });
+      const r = await createWorkTask(user, { company: String(input.company || ''), company_id: input.company_id ? Number(input.company_id) : null, intro: input.intro ? String(input.intro) : undefined, role: String(input.role || ''), env: input.env, time_minutes: input.time_minutes ? Number(input.time_minutes) : undefined, focus: input.focus ? String(input.focus) : undefined, sample_id: input.reference_id ? String(input.reference_id) : undefined, sample_mode: 'reskin', attachments: Array.isArray(input.attachments) ? input.attachments : [], showcase_id: input.showcase_id ? String(input.showcase_id) : undefined, showcase_use: input.showcase_use === 'ref' ? 'ref' : 'base' });
       const t = await loadMine(user, r.id);
       return { result: { ...brief(t), share_link: `/work/${r.share_token}`, owner_link: `/work/${r.share_token}/owner?k=${r.owner_key}` }, ui: ui(t), label: `出好了（待发布）：${r.title}` };
     }
@@ -161,6 +172,10 @@ async function run(name: string, input: any, user: { email: string; role: string
         const r = withMinutes(t.task, input.time_minutes);
         patch.task = r.task; done.push(`建议用时 ${r.old} → ${r.mins} 分钟`);
       }
+      if (input.role) {
+        const r = withRole({ role: t.role, task: patch.task || t.task, problem: t.problem }, input.role);
+        patch.role = r.role; patch.task = r.task; patch.problem = r.problem; done.push(`岗位名「${r.old}」→「${r.role}」`);
+      }
       const atts: Attachment[] = (Array.isArray(input.attachments) ? input.attachments : []).filter((a: any) => a?.url && a?.name).slice(0, 10).map((a: any) => ({ url: String(a.url), name: String(a.name).slice(0, 80), mime: a.mime, text: a.text ? String(a.text).slice(0, 20000) : '', image: !!a.image || /^image\//.test(String(a.mime || '')) }));
       const fresh = atts.filter(a => !(t.materials || []).some((m: any) => m.url === a.url));
       if (fresh.length) {
@@ -168,7 +183,7 @@ async function run(name: string, input: any, user: { email: string; role: string
         patch.context = { ...(t.context || {}), attachments: [...(t.context?.attachments || []), ...fresh.map(a => ({ name: a.name, url: a.url }))] };
         done.push(`材料包加了 ${fresh.map(a => a.name).join('、')}`);
       }
-      if (!done.length) return { result: { error: '没有要改的：给 time_minutes 或 attachments' }, label: '没改' };
+      if (!done.length) return { result: { error: '没有要改的：给 time_minutes、role 或 attachments' }, label: '没改' };
       const { error } = await db.from('work_tasks').update({ ...patch, updated_at: new Date().toISOString() }).eq('id', t.id);
       if (error) throw new Error(error.message);
       refreshSignals(t.id);

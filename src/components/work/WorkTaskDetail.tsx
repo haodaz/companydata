@@ -2,7 +2,7 @@
 
 /** 真活台 · 一道题的详情（后台和出题人管理页共用）：问题与任务 / 材料包 / rubric / AI 基线 / 作答 */
 import React, { useEffect, useState } from 'react';
-import { Button, Descriptions, Drawer, InputNumber, Space, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
+import { Button, Descriptions, Drawer, Input, InputNumber, Space, Table, Tabs, Tag, Tooltip, Typography, App } from 'antd';
 import { WorkReport } from '@/components/work/WorkReport';
 import { WorkProcess } from '@/components/work/WorkProcess';
 import { Md } from '@/components/ws/Md';
@@ -59,6 +59,18 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
       setMinutes(j.time_minutes); setMinEdit(j.time_minutes); message.success(`建议用时改成 ${j.time_minutes} 分钟，任务书里写的时长也一起改了`);
     } catch (e: any) { message.error(e.message); } finally { setMinBusy(false); }
   };
+  // 改岗位名 / 要找的人（2026-11-05 潜历：对 AI 说改岗位名没反应）——直接改，题面里的旧名字一起换
+  const [role, setRole] = useState<string>(T.role || '');
+  const [roleEdit, setRoleEdit] = useState<string | null>(null);
+  const saveRole = async () => {
+    const token = (shareLink.match(/\/work\/([^/?#]+)/) || [])[1];
+    if (!token || !ownerKey || roleEdit == null) return;
+    try {
+      const j = await (await fetch(`/api/work/${token}/owner?k=${encodeURIComponent(ownerKey)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ role: roleEdit }) })).json();
+      if (!j.ok) throw new Error(j.error || '没改成');
+      setRole(j.role); setRoleEdit(null); message.success('岗位名改好了，题面里的旧名字也一起换了');
+    } catch (e: any) { message.error(e.message); }
+  };
   const exportCsv = () => {
     const items: any[] = T.rubric || [];
     const esc = (v: any) => `"${String(v ?? '').replace(/"/g, '""')}"`;
@@ -72,7 +84,9 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
       <Tabs defaultActiveKey={defaultTab || 'p'} items={[
         { key: 'p', label: '问题与任务', children: <div>
           <Descriptions column={1} size="small" bordered items={[
-            { key: 'c', label: isNeed ? '企业 · 要找的人' : '企业 · 岗位', children: `${T.company_name} · ${T.role}` },
+            { key: 'c', label: isNeed ? '企业 · 要找的人' : '企业 · 岗位', children: roleEdit != null
+              ? <Space.Compact size="small" style={{ width: '100%', maxWidth: 520 }}><Input size="small" value={roleEdit} onChange={e => setRoleEdit(e.target.value)} onPressEnter={saveRole} maxLength={120} /><Button size="small" type="primary" onClick={saveRole}>保存</Button><Button size="small" onClick={() => setRoleEdit(null)}>取消</Button></Space.Compact>
+              : <Space wrap><span>{T.company_name} · {role}</span>{ownerKey && <a onClick={() => setRoleEdit(role)}>改岗位名</a>}</Space> },
             { key: 'link', label: '参与链接', children: <Space><code>{shareLink}</code><Button size="small" onClick={() => { navigator.clipboard.writeText(shareLink); message.success('已复制'); }}>复制</Button></Space> },
             { key: 's', label: '业务问题', children: T.problem?.statement },
             { key: 'w', label: '为什么是现在', children: T.problem?.why_now },

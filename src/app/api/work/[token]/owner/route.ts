@@ -1,7 +1,7 @@
 import { refreshSignals } from '@/lib/work/question-bank';
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
-import { reviseTask, runBaseline, sourcesOf, withMinutes } from '@/lib/work/generator';
+import { reviseTask, runBaseline, sourcesOf, withMinutes, withRole } from '@/lib/work/generator';
 import { withCost, logTokenUsage } from '@/lib/token-logger';
 import { generateContent } from '@/lib/llm-client';
 import { reviewGeneric } from '@/lib/work/compare';
@@ -38,6 +38,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ to
     const r = withMinutes(t.task, body.time_minutes);
     await db.from('work_tasks').update({ task: r.task, updated_at: new Date().toISOString() }).eq('id', t.id);
     return NextResponse.json({ ok: true, time_minutes: r.mins });
+  }
+  // 改岗位名 / 要找的人（页头那个；题面里的旧名字一起换）
+  if (body.role != null) {
+    try { const r = withRole(t, body.role); await db.from('work_tasks').update({ role: r.role, task: r.task, problem: r.problem, updated_at: new Date().toISOString() }).eq('id', t.id); return NextResponse.json({ ok: true, role: r.role }); }
+    catch (e: any) { return NextResponse.json({ ok: false, error: e.message }, { status: 400 }); }
   }
   if (!['published', 'archived'].includes(body.status)) return NextResponse.json({ ok: false, error: '状态不对' }, { status: 400 });
   await db.from('work_tasks').update({ status: body.status, updated_at: new Date().toISOString() }).eq('id', t.id);

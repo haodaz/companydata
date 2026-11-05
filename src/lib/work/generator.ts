@@ -48,6 +48,14 @@ export function withMinutes(task: any, v: any) {
   return { old, mins, task: { ...task, time_minutes: mins, brief: swap(task?.brief), rules: (task?.rules || []).map(swap) } };
 }
 
+/** 改岗位名 / 要找的人：work_tasks.role 和 task.role 都换；题面、问题里出现的旧名字一起换（不经模型改写） */
+export function withRole(t: { role?: string; task?: any; problem?: any }, v: any) {
+  const role = String(v || '').trim().slice(0, 120); if (!role) throw new Error('岗位名不能为空');
+  const olds = [...new Set([t.role, t.task?.role].map(x => String(x || '').trim()).filter(x => x && x !== role))].sort((a, b) => b.length - a.length);
+  const swap = (x: any) => { let s = JSON.stringify(x ?? null); for (const o of olds) s = s.split(JSON.stringify(o).slice(1, -1)).join(JSON.stringify(role).slice(1, -1)); return JSON.parse(s); };
+  return { old: t.role || '', role, task: { ...swap(t.task), role }, problem: swap(t.problem) };
+}
+
 /** 带兜底链的 JSON 调用：Opus → Sonnet → 千问；记账 tool=work */
 export async function askJson(prompt: string, model: string, task_name: string, institution?: string, extra?: Record<string, any>): Promise<any> {
   const chain = [model, ...DOMESTIC_FALLBACK.filter(m => m !== model)];
