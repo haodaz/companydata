@@ -17,7 +17,8 @@ export default function OwnerPage() {
 
 function Inner() {
   const { token } = useParams<{ token: string }>();
-  const k = useSearchParams().get('k') || '';
+  const sp = useSearchParams(); const k = sp.get('k') || '';
+  const embed = sp.get('embed') === '1';   // 嵌在对话右边（聊着出任务 / 工作台）：外面已经有框，不再套顶栏
   const { message } = App.useApp();
   const [d, setD] = useState<{ task: any; sessions: any[] } | null>(null);
   const [err, setErr] = useState(''); const [busy, setBusy] = useState(false);
@@ -49,8 +50,8 @@ function Inner() {
   return (
     <div style={{ minHeight: '100vh', background: '#f6f7fb', color: '#1a1a2e' }}>
       {tour != null && <Tour step={tour} steps={OWNER_TOUR} doneLabel="知道了" onStep={setTour} onDone={() => { setTour(null); try { localStorage.setItem('work-owner-tour-done', '1'); } catch {} }} />}
-      <WorkTopBar active="mine" crumbs={[{ label: '我的真活', href: '/work/mine' }, { label: [T.company_name, T.task?.title || T.role].filter(Boolean).join(' · ') }]}
-        crumbRight={<><span>真活空间 · 这条链接带管理密钥，可转给同事</span><button onClick={() => setTour(0)} title="界面说明" style={{ width: 26, height: 24, border: '1px solid #e0e0ee', background: '#fff', borderRadius: 6, cursor: 'pointer', fontWeight: 700, fontSize: 13, color: '#666' }}>?</button></>} />
+      {!embed && <WorkTopBar active="mine" crumbs={[{ label: '我的真活', href: '/work/mine' }, { label: [T.company_name, T.task?.title || T.role].filter(Boolean).join(' · ') }]}
+        crumbRight={<><span>真活空间 · 这条链接带管理密钥，可转给同事</span><button onClick={() => setTour(0)} title="界面说明" style={{ width: 26, height: 24, border: '1px solid #e0e0ee', background: '#fff', borderRadius: 6, cursor: 'pointer', fontWeight: 700, fontSize: 13, color: '#666' }}>?</button></>} />}
       {/* 封面头部：操作台界面做底 */}
       <div style={{ position: 'relative', overflow: 'hidden', background: 'linear-gradient(135deg, #2b2463, #0f6c7a)', color: '#fff' }}>
         <img src={`/work/shot-${env}.png`} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', opacity: .35 }} onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />

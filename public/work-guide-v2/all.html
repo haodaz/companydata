@@ -1,0 +1,164 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>真活操作手册 · 合集</title><style>
+:root { --v: #6055f5; --ink: #1a1a2e; --ink2: #4a4f66; --ink3: #8a8fa8; --mark: #ff5a36; --line: #e8e9f0; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f6fb; color: var(--ink); font: 15px/1.75 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 36px 20px 56px; }
+.eb { font-size: 12px; letter-spacing: .14em; color: var(--v); font-weight: 700; }
+h1 { font-size: 34px; line-height: 1.25; margin: 8px 0 10px; }
+h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 10px; }
+.meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.meta span { font-size: 13px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; color: var(--ink2); }
+.lead { font-size: 16px; color: var(--ink2); background: #fff; border-left: 4px solid var(--v); border-radius: 0 12px 12px 0; padding: 12px 16px; margin: 0 0 26px; }
+.step { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 20px 20px 18px; margin-bottom: 22px; box-shadow: 0 10px 30px -22px rgba(40,44,110,.35); }
+.step h2 { display: flex; align-items: center; gap: 12px; font-size: 21px; margin: 0 0 6px; }
+.step h2 i { font-style: normal; flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--v); color: #fff; display: grid; place-items: center; font-size: 17px; }
+.step .d { color: var(--ink2); margin: 0 0 14px 46px; }
+.shot { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+.shot img { display: block; width: 100%; }
+.box { position: absolute; border: 3px solid var(--mark); border-radius: 8px; }
+.tag { position: absolute; left: -3px; transform: translateY(-100%); display: flex; align-items: center; gap: 6px; white-space: nowrap; background: var(--mark); color: #fff; font-size: 12.5px; font-weight: 700; padding: 3px 9px 3px 4px; border-radius: 8px 8px 8px 0; max-width: 520px; overflow: hidden; text-overflow: ellipsis; }
+.tag.below { transform: none; top: calc(100% + 4px); border-radius: 0 8px 8px 8px; }
+.tag.below.right { border-radius: 8px 0 8px 8px; }
+.tag.right { left: auto; right: -3px; border-radius: 8px 8px 0 8px; }
+.tag b, .notes b { flex: none; width: 19px; height: 19px; border-radius: 50%; background: #fff; color: var(--mark); display: grid; place-items: center; font-size: 12px; }
+.notes { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.notes li { display: flex; gap: 8px; align-items: flex-start; font-size: 14.5px; }
+.notes b { background: var(--mark); color: #fff; margin-top: 3px; }
+.ex { background: linear-gradient(135deg, #f3f2ff, #eefbfd); border: 1px solid #dcd8ff; border-radius: 16px; padding: 16px 20px; margin: 0 0 24px; }
+.ex h3 { margin: 0 0 8px; font-size: 17px; color: var(--v); }
+.ex ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.ex li { background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 15px; }
+.ex p { margin: 10px 0 0; color: var(--ink2); font-size: 14px; }
+@media print { body { background: #fff; font-size: 16px; } .notes li { font-size: 15.5px; } .step .d { font-size: 15.5px; } .step, .ex, .lead { break-inside: avoid; } .wrap { padding-top: 8px; } }
+.pb { break-before: page; }
+.divider { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; background: linear-gradient(135deg, #f3f2ff, #eefbfd); border-radius: 24px; }
+.divider .no { font-size: 120px; font-weight: 900; line-height: 1; background: linear-gradient(120deg, var(--v), #12b5cb); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.divider h2 { font-size: 46px; margin: 18px 0 12px; } .divider .m { color: var(--ink2); font-size: 17px; margin-bottom: 18px; } .divider p { font-size: 18px; color: var(--ink2); max-width: 720px; }
+.cover { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; }
+.cover h1 { font-size: 64px; } .cover .ver { margin-top: 28px; display: grid; gap: 8px; font-size: 17px; color: var(--ink2); } .cover .ver b { color: var(--ink); }
+.toc a { display: flex; gap: 18px; align-items: baseline; text-decoration: none; color: inherit; padding: 16px 0; border-bottom: 1px solid var(--line); } .toc i { font-style: normal; font-weight: 900; color: var(--v); font-size: 26px; width: 48px; } .toc b { font-size: 21px; } .toc span { color: var(--ink2); font-size: 14.5px; display: block; }
+.faq { display: grid; gap: 12px; } .qa { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; break-inside: avoid; } .qa b { font-size: 17px; } .qa p { margin: 6px 0 0; color: var(--ink2); }
+.foot { text-align: center; color: var(--ink3); font-size: 12.5px; margin-top: 28px; }
+@media (max-width: 640px) { h1 { font-size: 26px; } .step .d { margin-left: 0; } .tag { font-size: 11px; max-width: 70vw; } }
+</style></head><body><div class="wrap">
+<section class="cover"><div class="eb">百业AI｜真活 · 真活操作手册合集</div><h1>真活怎么用</h1>
+<p class="lead">五个模块：出任务的三种方式、候选人做题、看答卷比候选人。一份手册讲一件事，每步一张真实截图，框出来的地方就是要点。</p>
+<div class="ver"><div><b>编写日期</b>　2026-11-05</div><div><b>适用版本</b>　百业AI｜真活 1.2（2026-11-05 线上版本）</div><div><b>网页版</b>　www.aisimjob.com/work-guide-v2/（界面以后再更新时，以网页版为准）</div></div></section>
+<section class="pb"><div class="eb">目录</div><h1>5 个模块</h1><div class="toc"><a href="#m01"><i>01</i><div><b>聊着出一道真活</b><span>给出任务的人 · 约 5 分钟（出题本身 2 分钟）</span></div></a><a href="#m02"><i>02</i><div><b>填表出一道真活</b><span>给出任务的人 · 约 3 分钟（出题本身 2 分钟）</span></div></a><a href="#m03"><i>03</i><div><b>从任务库挑一道</b><span>给出任务的人 · 约 3 分钟</span></div></a><a href="#m04"><i>04</i><div><b>候选人怎么做题</b><span>给候选人（出任务的人也可以转发） · 按题目建议用时</span></div></a><a href="#m05"><i>05</i><div><b>看答卷、比候选人</b><span>给出任务的人 · 随时</span></div></a></div></section>
+<section class="pb divider" id="m01"><div class="eb">模块 01</div><div class="no">01</div><h2>聊着出一道真活</h2><div class="m">给出任务的人 · 约 5 分钟（出题本身 2 分钟）</div><p>不用一次说全，像跟同事交代一样，说一句最实际的要求就够了。哪家企业、考什么、做多久、要不要给候选人素材——缺的它一件件问；用时、给几年经验的人这类细节，它先按常理定好，最后一行复述给你，你只改不对的。</p></section>
+<section class="pb"><div class="eb">百业AI｜真活 · 操作手册 01</div>
+<h1>聊着出一道真活</h1>
+<div class="meta"><span>给出任务的人</span><span>约 5 分钟（出题本身 2 分钟）</span></div>
+<p class="lead">不用一次说全，像跟同事交代一样，说一句最实际的要求就够了。哪家企业、考什么、做多久、要不要给候选人素材——缺的它一件件问；用时、给几年经验的人这类细节，它先按常理定好，最后一行复述给你，你只改不对的。</p>
+<section class="ex"><h3>开头可以这样说</h3><ul><li>「我们缺一个能把销售数据理清楚、说出问题到底在哪的人。」</li><li>「要招一个能把 IP 形象延展成表情包、海报、短视频封面的设计师，想看他真实干活的样子。」</li><li>「下个月欧洲客户来审厂，想找个能把交付计划排明白的人，给 3 年以内经验的。」</li><li>「这是我们去年校招用过的一道题（贴进来或传文件），照这个思路换成今年的业务。」</li><li>「想给宁德时代出一道真活，还没想好考什么，你先问我。」</li></ul><p>不用说的：职位名、评分标准、材料清单、任务书怎么写——这些它会帮你出，出好你再改。</p></section>
+<section class="step"><h2><i>1</i>说一句最实际的要求</h2><p class="d">右上角点「聊着出任务」。不知道怎么开口，就点下面的例子，它会放进输入框，改成你自己的话再发。</p>
+      <div class="shot"><div style="aspect-ratio:89280/59400;overflow:hidden"><img src="img/flex-1.png" alt="" style="width:161.290%;max-width:none;margin-left:-41.935%;margin-top:-20.161%"></div><div class="box" style="left:7.90%;top:29.39%;width:85.16%;height:19.09%"><span class="tag"><b>1</b>一句大白话：缺什么样的人、最近卡在哪</span></div><div class="box" style="left:7.90%;top:60.30%;width:85.16%;height:35.45%"><span class="tag"><b>2</b>点一个例子，改成你的话再发</span></div></div>
+      <ul class="notes"><li><b>1</b><span>一句大白话：缺什么样的人、最近卡在哪</span></li><li><b>2</b><span>点一个例子，改成你的话再发</span></li></ul></section>
+<section class="step"><h2><i>2</i>它先记下，再一次只问一件</h2><p class="d">你说的它先复述一句，接着只问最缺的那一件，比如哪家公司。库里有这家就直接用企业资料；没有就请你说几句。</p>
+      <div class="shot"><div style="aspect-ratio:89280/27000;overflow:hidden"><img src="img/flex-2.png" alt="" style="width:161.290%;max-width:none;margin-left:-45.161%;margin-top:-6.048%"></div><div class="box" style="left:20.97%;top:13.33%;width:70.32%;height:27.33%"><span class="tag"><b>1</b>你的一句话</span></div><div class="box" style="left:3.23%;top:48.67%;width:88.71%;height:23.33%"><span class="tag"><b>2</b>它记下要找的人，接着问：哪家公司</span></div></div>
+      <ul class="notes"><li><b>1</b><span>你的一句话</span></li><li><b>2</b><span>它记下要找的人，接着问：哪家公司</span></li></ul></section>
+<section class="step"><h2><i>3</i>几句话介绍就行，没想到的它会追问</h2><p class="d">公司介绍不用写全，几句话够了。题目要用到的东西它会主动问，比如这道 IP 设计题，它会问要不要把 IP 设定图给候选人。</p>
+      <div class="shot"><div style="aspect-ratio:89280/30600;overflow:hidden"><img src="img/flex-3.png" alt="" style="width:161.290%;max-width:none;margin-left:-45.161%;margin-top:-28.226%"></div><div class="box" style="left:20.97%;top:8.82%;width:70.32%;height:19.41%"><span class="tag"><b>1</b>几句话介绍公司</span></div><div class="box" style="left:3.23%;top:33.53%;width:88.71%;height:59.41%"><span class="tag"><b>2</b>它追问：IP 设定图、活动文案要不要给候选人</span></div></div>
+      <ul class="notes"><li><b>1</b><span>几句话介绍公司</span></li><li><b>2</b><span>它追问：IP 设定图、活动文案要不要给候选人</span></li></ul></section>
+<section class="step"><h2><i>4</i>能点选就点一下</h2><p class="d">需要你拿主意的地方，它给两三个选项，点一下就行；也可以直接打字回答。</p>
+      <div class="shot"><div style="aspect-ratio:89280/34200;overflow:hidden"><img src="img/flex-4.png" alt="" style="width:161.290%;max-width:none;margin-left:-45.161%;margin-top:-60.484%"></div><div class="box" style="left:3.23%;top:35.26%;width:88.06%;height:47.37%"><span class="tag"><b>1</b>点一个选项，或者直接打字</span></div></div>
+      <ul class="notes"><li><b>1</b><span>点一个选项，或者直接打字</span></li></ul></section>
+<section class="step"><h2><i>5</i>最后一行复述全题，你只改不对的</h2><p class="d">企业｜要找的人｜考什么｜建议用时｜给几年经验的人｜素材。你没说的用时、经验段是它按常理定的，不对就点「改一下」说一句。</p>
+      <div class="shot"><div style="aspect-ratio:89280/36000;overflow:hidden"><img src="img/flex-5.png" alt="" style="width:161.290%;max-width:none;margin-left:-45.161%;margin-top:-60.484%"></div><div class="box" style="left:3.23%;top:29.50%;width:88.06%;height:69.00%"><span class="tag"><b>1</b>一行复述全题：点「就这样出」，或「改一下」</span></div></div>
+      <ul class="notes"><li><b>1</b><span>一行复述全题：点「就这样出」，或「改一下」</span></li></ul></section>
+<section class="step"><h2><i>6</i>有素材就传，等它变成「已就绪」再发</h2><p class="d">文件可以拖进输入框、直接粘贴截图，或点「📎 文件」；支持 PDF、Word（docx）、Excel、CSV、TXT、图片，单个 20MB 以内。图片要先让 AI 看一遍，十几秒。顺手说一句是「给候选人看的」还是「让你照着出题的参考」，不说默认给候选人。</p>
+      <div class="shot"><div style="aspect-ratio:109440/45000;overflow:hidden"><img src="img/chat-3a.png" alt="" style="width:131.579%;max-width:none;margin-left:-15.789%;margin-top:-13.158%"></div><div class="box" style="left:26.84%;top:47.20%;width:31.05%;height:8.00%"><span class="tag"><b>1</b>黄色 = 还在上传、AI 在看图；变成「已就绪」再发</span></div><div class="box" style="left:89.61%;top:66.40%;width:4.08%;height:8.80%"><span class="tag right"><b>2</b>没就绪时发送键是灰的</span></div></div>
+      <ul class="notes"><li><b>1</b><span>黄色 = 还在上传、AI 在看图；变成「已就绪」再发</span></li><li><b>2</b><span>没就绪时发送键是灰的</span></li></ul></section>
+<section class="step"><h2><i>7</i>在右边看题，确认了再发布</h2><p class="d">不满意直接说哪里不对，比如「材料再加一份竞品数据」「难度降一点」，它会改题；改完记得重跑 AI 基线。</p>
+      <div class="shot"><img src="img/chat-2.png" alt=""><div class="box" style="left:16.00%;top:73.40%;width:36.60%;height:5.60%"><span class="tag"><b>1</b>说「可以，发布吧」就发布了</span></div><div class="box" style="left:18.00%;top:83.40%;width:13.20%;height:4.20%"><span class="tag"><b>2</b>这条参与链接发给候选人</span></div><div class="box" style="left:56.40%;top:64.40%;width:41.20%;height:35.00%"><span class="tag"><b>3</b>右边是这道题的空间：任务书、材料、从库里取了什么</span></div></div>
+      <ul class="notes"><li><b>1</b><span>说「可以，发布吧」就发布了</span></li><li><b>2</b><span>这条参与链接发给候选人</span></li><li><b>3</b><span>右边是这道题的空间：任务书、材料、从库里取了什么</span></li></ul></section>
+<section class="step"><h2><i>8</i>出好以后改用时、岗位名、补文件：直接说</h2><p class="d">用时可设 20–240 分钟，任务书里写的时长一起改；岗位名一改，题面里的旧名字一起换；补的文件候选人能看原件。这几样马上生效，不用重跑 AI 基线。也可以在这道题的空间里「调整这道题」直接改。</p>
+      <div class="shot"><img src="img/chat-4.png" alt=""><div class="box" style="left:23.20%;top:11.00%;width:29.40%;height:11.40%"><span class="tag"><b>1</b>直接说：用时改成 180 分钟；把这张图附到题目里</span></div><div class="box" style="left:16.00%;top:23.80%;width:36.60%;height:4.40%"><span class="tag"><b>2</b>绿点 = 已生效，候选人那边马上看得到</span></div><div class="box" style="left:55.20%;top:36.20%;width:35.60%;height:3.40%"><span class="tag"><b>3</b>右边同步：建议 180 分钟</span></div></div>
+      <ul class="notes"><li><b>1</b><span>直接说：用时改成 180 分钟；把这张图附到题目里</span></li><li><b>2</b><span>绿点 = 已生效，候选人那边马上看得到</span></li><li><b>3</b><span>右边同步：建议 180 分钟</span></li></ul></section>
+</section>
+<section class="pb divider" id="m02"><div class="eb">模块 02</div><div class="no">02</div><h2>填表出一道真活</h2><div class="m">给出任务的人 · 约 3 分钟（出题本身 2 分钟）</div><p>习惯一次写完再交，就用「填表出任务」。只有企业和要找的人必填，其余都能空着；每一栏都用大白话写，不用套职位名和术语。拿不准怎么写，就换「聊着出任务」，让它问你。</p></section>
+<section class="pb"><div class="eb">百业AI｜真活 · 操作手册 02</div>
+<h1>填表出一道真活</h1>
+<div class="meta"><span>给出任务的人</span><span>约 3 分钟（出题本身 2 分钟）</span></div>
+<p class="lead">习惯一次写完再交，就用「填表出任务」。只有企业和要找的人必填，其余都能空着；每一栏都用大白话写，不用套职位名和术语。拿不准怎么写，就换「聊着出任务」，让它问你。</p>
+<section class="ex"><h3>每一栏可以这样写</h3><ul><li>「你在找什么样的人：「一个能把销售数据理清楚、说出问题到底在哪的人」」</li><li>「想考什么：「就考他拿到一堆乱数据，能不能一小时内说清哪里出了问题」」</li><li>「想考什么：「给 3 年以内经验的，三个小时，交一页纸给老板看」」</li><li>「素材：「上周的销售周报截图，让他照着真实数据做」」</li></ul><p>不用写的：职位名、评分标准、材料清单、任务书——这些平台会出，出好你再改。</p></section>
+<section class="step"><h2><i>1</i>第 1 步：企业、要找的人、想考什么</h2><p class="d">每栏一两句大白话就行。时长写在「想考什么」里，比如「一小时内」「三个小时」，出好以后也能在题目空间里改。</p>
+      <div class="shot"><div style="aspect-ratio:112320/75600;overflow:hidden"><img src="img/form-1.png" alt="" style="width:128.205%;max-width:none;margin-left:-15.385%;margin-top:-4.808%"></div><div class="box" style="left:5.64%;top:32.98%;width:48.46%;height:5.95%"><span class="tag"><b>1</b>选企业：从库里挑；库里没有就照写，再贴一段介绍</span></div><div class="box" style="left:5.64%;top:44.88%;width:48.46%;height:8.33%"><span class="tag"><b>2</b>直接说要什么样的人，不用套职位名</span></div><div class="box" style="left:5.64%;top:59.17%;width:48.46%;height:7.62%"><span class="tag"><b>3</b>想考什么、给几年经验的人、多长时间</span></div><div class="box" style="left:5.64%;top:72.86%;width:25.00%;height:4.52%"><span class="tag"><b>4</b>给候选人看的素材：表格、图纸、截图、PDF</span></div><div class="box" style="left:5.64%;top:89.52%;width:20.38%;height:4.76%"><span class="tag"><b>5</b>以前用过的题：只给 AI 参照，候选人看不到</span></div></div>
+      <ul class="notes"><li><b>1</b><span>选企业：从库里挑；库里没有就照写，再贴一段介绍</span></li><li><b>2</b><span>直接说要什么样的人，不用套职位名</span></li><li><b>3</b><span>想考什么、给几年经验的人、多长时间</span></li><li><b>4</b><span>给候选人看的素材：表格、图纸、截图、PDF</span></li><li><b>5</b><span>以前用过的题：只给 AI 参照，候选人看不到</span></li></ul></section>
+<section class="step"><h2><i>2</i>第 2 步：给答题人配 AI、选操作台</h2><p class="d">一般都用默认：千问 + 按岗位自动选操作台。点「出任务」，约 2–3 分钟。</p>
+      <div class="shot"><div style="aspect-ratio:112320/52200;overflow:hidden"><img src="img/form-2.png" alt="" style="width:128.205%;max-width:none;margin-left:-15.385%;margin-top:-4.808%"></div><div class="box" style="left:5.64%;top:52.76%;width:48.46%;height:9.66%"><span class="tag"><b>1</b>答题人用哪个 AI（默认千问）</span></div><div class="box" style="left:5.64%;top:70.00%;width:48.46%;height:9.66%"><span class="tag"><b>2</b>一般选「按岗位自动选」</span></div><div class="box" style="left:17.18%;top:82.07%;width:36.92%;height:10.69%"><span class="tag"><b>3</b>出好的题先是「待发布」</span></div></div>
+      <ul class="notes"><li><b>1</b><span>答题人用哪个 AI（默认千问）</span></li><li><b>2</b><span>一般选「按岗位自动选」</span></li><li><b>3</b><span>出好的题先是「待发布」</span></li></ul></section>
+<section class="step"><h2><i>3</i>在题目空间预览、发布、发链接</h2><p class="d">先「预览做题台」看候选人会看到什么；没问题点「发布」，参与链接才能用（发布后这里变成「复制参与链接」和「下架」）。</p>
+      <div class="shot"><div style="aspect-ratio:109440/27000;overflow:hidden"><img src="img/own-1.png" alt="" style="width:131.579%;max-width:none;margin-left:-15.789%;margin-top:-16.447%"></div><div class="box" style="left:48.16%;top:67.67%;width:9.61%;height:15.33%"><span class="tag"><b>1</b>先预览做题台</span></div><div class="box" style="left:57.89%;top:67.67%;width:10.53%;height:15.33%"><span class="tag"><b>2</b>发布后复制参与链接，发给候选人</span></div></div>
+      <ul class="notes"><li><b>1</b><span>先预览做题台</span></li><li><b>2</b><span>发布后复制参与链接，发给候选人</span></li></ul></section>
+<section class="step"><h2><i>4</i>改用时</h2><p class="d">在「调整这道题」左边的「建议用时」填分钟数（20–240），点「保存」。任务书里写的时长一起改，马上生效。</p>
+      <div class="shot"><div style="aspect-ratio:109440/28800;overflow:hidden"><img src="img/own-2.png" alt="" style="width:131.579%;max-width:none;margin-left:-15.789%;margin-top:-29.605%"></div><div class="box" style="left:3.82%;top:46.56%;width:45.79%;height:19.06%"><span class="tag"><b>1</b>建议用时：填好点保存</span></div></div>
+      <ul class="notes"><li><b>1</b><span>建议用时：填好点保存</span></li></ul></section>
+</section>
+<section class="pb divider" id="m03"><div class="eb">模块 03</div><div class="no">03</div><h2>从任务库挑一道</h2><div class="m">给出任务的人 · 约 3 分钟</div><p>不想从零开始：任务库里有各行业挑好的任务，可以原样换成你们公司，也可以只照它的思路出一道新的。挑好以后，用一两句话说说你们公司和要找的人就行。</p></section>
+<section class="pb"><div class="eb">百业AI｜真活 · 操作手册 03</div>
+<h1>从任务库挑一道</h1>
+<div class="meta"><span>给出任务的人</span><span>约 3 分钟</span></div>
+<p class="lead">不想从零开始：任务库里有各行业挑好的任务，可以原样换成你们公司，也可以只照它的思路出一道新的。挑好以后，用一两句话说说你们公司和要找的人就行。</p>
+<section class="ex"><h3>挑好以后可以这样说</h3><ul><li>「「就用这道，换成我们公司：我们是做储能的，四百人，欧洲工厂刚投产」」</li><li>「「照这道的思路出，但我们要找的是能对接海外客户的人，难度低一点」」</li><li>「「这道挺好，时间改成两小时，其他不动」」</li></ul><p>不用说的：题目怎么改写、材料怎么换——它会照原题的路数换成你们的情况。</p></section>
+<section class="step"><h2><i>1</i>按行业挑一道</h2><p class="d">顶部「任务库」。每张卡写着要找的人、要交什么、建议用时。</p>
+      <div class="shot"><div style="aspect-ratio:120960/52200;overflow:hidden"><img src="img/lib-1.png" alt="" style="width:119.048%;max-width:none;margin-left:-9.524%;margin-top:-5.952%"></div><div class="box" style="left:3.33%;top:19.66%;width:75.48%;height:9.31%"><span class="tag"><b>1</b>按行业筛</span></div><div class="box" style="left:3.33%;top:30.00%;width:30.48%;height:52.41%"><span class="tag"><b>2</b>一张卡 = 一道题：找什么人、交什么、多久</span></div><div class="box" style="left:26.67%;top:74.14%;width:7.86%;height:5.86%"><span class="tag"><b>3</b>点「看任务」看全题</span></div></div>
+      <ul class="notes"><li><b>1</b><span>按行业筛</span></li><li><b>2</b><span>一张卡 = 一道题：找什么人、交什么、多久</span></li><li><b>3</b><span>点「看任务」看全题</span></li></ul></section>
+<section class="step"><h2><i>2</i>选「原题直出」还是「仅做参考」</h2><p class="d">原题直出：背景、材料和数字换成你们公司的；仅做参考：照它的题型和推进方式，出一道新的。接下来只问你是哪家企业、要找什么样的人。</p>
+      <div class="shot"><div style="aspect-ratio:63360/61200;overflow:hidden"><img src="img/lib-2.png" alt="" style="width:227.273%;max-width:none;margin-left:-127.273%;margin-top:-42.614%"></div><div class="box" style="left:5.45%;top:74.71%;width:91.36%;height:11.76%"><span class="tag"><b>1</b>原题直出：换成你们公司</span></div><div class="box" style="left:5.45%;top:87.35%;width:91.36%;height:10.29%"><span class="tag"><b>2</b>仅做参考：照思路出新题</span></div></div>
+      <ul class="notes"><li><b>1</b><span>原题直出：换成你们公司</span></li><li><b>2</b><span>仅做参考：照思路出新题</span></li></ul></section>
+</section>
+<section class="pb divider" id="m04"><div class="eb">模块 04</div><div class="no">04</div><h2>候选人怎么做题</h2><div class="m">给候选人（出任务的人也可以转发） · 按题目建议用时</div><p>打开出任务的人发来的链接就能做，不用注册。材料、作答、AI 都在一个页面里，每一步自动记录，交卷后出报告。AI 随便用，像平时干活跟同事商量一样问它就行；评的是你怎么用，关键判断要自己做。</p></section>
+<section class="pb"><div class="eb">百业AI｜真活 · 操作手册 04</div>
+<h1>候选人怎么做题</h1>
+<div class="meta"><span>给候选人（出任务的人也可以转发）</span><span>按题目建议用时</span></div>
+<p class="lead">打开出任务的人发来的链接就能做，不用注册。材料、作答、AI 都在一个页面里，每一步自动记录，交卷后出报告。AI 随便用，像平时干活跟同事商量一样问它就行；评的是你怎么用，关键判断要自己做。</p>
+<section class="ex"><h3>可以这样问 AI</h3><ul><li>「「m1 和 m3 里的销量对不上，帮我看看差在哪」」</li><li>「「我打算先算缺口再排补位，这个顺序有没有漏掉什么」」</li><li>「「这是我的结论，你挑挑毛病：哪句证据不够」」</li><li>「「把这三段整理成一页纸的结构，数字我自己核」」</li></ul><p>少这样用：把整道题丢给 AI、原样照抄它的回答、不核对就用它给的数字——报告里会看得出来。</p></section>
+<section class="step"><h2><i>1</i>先读任务书和规则</h2><p class="d">任务书说清了要你做什么、交给谁；规则里写着可以随便用 AI，评的是你怎么用。</p>
+      <div class="shot"><div style="aspect-ratio:92160/73800;overflow:hidden"><img src="img/do-1.png" alt="" style="width:156.250%;max-width:none;margin-left:-28.125%;margin-top:-4.492%"></div><div class="box" style="left:7.19%;top:13.29%;width:85.94%;height:36.10%"><span class="tag"><b>1</b>任务书：要做什么、交给谁</span></div><div class="box" style="left:7.19%;top:65.37%;width:85.94%;height:28.29%"><span class="tag"><b>2</b>规则：可以用 AI；材料里没有的数据要标注假设</span></div></div>
+      <ul class="notes"><li><b>1</b><span>任务书：要做什么、交给谁</span></li><li><b>2</b><span>规则：可以用 AI；材料里没有的数据要标注假设</span></li></ul></section>
+<section class="step"><h2><i>2</i>选做法，留个名字开始</h2><p class="d">一般选「在本页的操作台做」。联系方式选填，填了报告会发给你。</p>
+      <div class="shot"><div style="aspect-ratio:92160/39600;overflow:hidden"><img src="img/do-1b.png" alt="" style="width:156.250%;max-width:none;margin-left:-28.125%;margin-top:-52.734%"></div><div class="box" style="left:8.75%;top:24.55%;width:83.75%;height:38.18%"><span class="tag"><b>1</b>选做法（推荐第一种）</span></div><div class="box" style="left:8.75%;top:76.82%;width:83.75%;height:14.09%"><span class="tag"><b>2</b>留名字，点「开始做」</span></div></div>
+      <ul class="notes"><li><b>1</b><span>选做法（推荐第一种）</span></li><li><b>2</b><span>留名字，点「开始做」</span></li></ul></section>
+<section class="step"><h2><i>3</i>左边推进和材料，中间作答，右边 AI</h2><p class="d">分步的题一步一步来，答完上一步才开下一步。每样交付物一个标签，都要做。计时到点不会强制停，但用时会记下来。写的内容自动保存，刷新页面不会丢。</p>
+      <div class="shot"><img src="img/do-2.png" alt=""><div class="box" style="left:0.20%;top:5.30%;width:19.40%;height:94.20%"><span class="tag below"><b>1</b>推进和材料包</span></div><div class="box" style="left:20.20%;top:42.60%;width:10.10%;height:4.00%"><span class="tag"><b>2</b>交付物标签：每样都要做</span></div><div class="box" style="left:75.30%;top:5.30%;width:24.50%;height:94.20%"><span class="tag below right"><b>3</b>AI 助手随便问</span></div><div class="box" style="left:85.30%;top:0.40%;width:14.00%;height:4.90%"><span class="tag below right"><b>4</b>计时 / 交卷</span></div><div class="box" style="left:0.70%;top:0.90%;width:6.30%;height:3.90%"><span class="tag below"><b>5</b>随时回看任务说明</span></div></div>
+      <ul class="notes"><li><b>1</b><span>推进和材料包</span></li><li><b>2</b><span>交付物标签：每样都要做</span></li><li><b>3</b><span>AI 助手随便问</span></li><li><b>4</b><span>计时 / 交卷</span></li><li><b>5</b><span>随时回看任务说明</span></li></ul></section>
+<section class="step"><h2><i>4</i>用别的软件做的，传到附件</h2><p class="d">设计稿、PS 或 AI 出的图、Excel、PDF、PPT、压缩包都行，单个 200MB 以内。点交付物标签行的「📎 附件」，传到这份交付物下面；交卷时会读出文字、看图写说明，一起评。</p>
+      <div class="shot"><div style="aspect-ratio:72000/41400;overflow:hidden"><img src="img/do-att.png" alt="" style="width:200.000%;max-width:none;margin-left:-36.000%;margin-top:-37.500%"></div><div class="box" style="left:15.20%;top:34.78%;width:45.60%;height:47.83%"><span class="tag"><b>1</b>这份交付物的附件</span></div><div class="box" style="left:17.00%;top:53.91%;width:13.60%;height:9.13%"><span class="tag"><b>2</b>点这里上传</span></div></div>
+      <ul class="notes"><li><b>1</b><span>这份交付物的附件</span></li><li><b>2</b><span>点这里上传</span></li></ul></section>
+<section class="step"><h2><i>5</i>随时回看任务说明</h2><p class="d">左上角「← 任务说明」：任务书、要交什么、规则都在，关掉就回去接着做，作答进度不受影响。想换一种作答方式（用自己的软件 / 网页工具），也在这里重新开始。</p>
+      <div class="shot"><div style="aspect-ratio:92160/75600;overflow:hidden"><img src="img/do-brief.png" alt="" style="width:156.250%;max-width:none;margin-left:-28.125%;margin-top:-0.000%"></div><div class="box" style="left:8.28%;top:4.76%;width:83.28%;height:89.64%"><span class="tag below"><b>1</b>任务书、要交什么、规则</span></div><div class="box" style="left:72.03%;top:85.71%;width:16.88%;height:5.71%"><span class="tag right"><b>2</b>想换作答方式</span></div></div>
+      <ul class="notes"><li><b>1</b><span>任务书、要交什么、规则</span></li><li><b>2</b><span>想换作答方式</span></li></ul></section>
+<section class="step"><h2><i>6</i>最后一问（选填）</h2><p class="d">「如果再给你一天，你会先改哪里、为什么？」有余力就写，不写不扣分；写清楚哪里还不够可靠，算进评价。分步推进的题，它是推进的最后一步，前面几步答完才解锁。</p>
+      <div class="shot"><div style="aspect-ratio:109440/63000;overflow:hidden"><img src="img/do-3.png" alt="" style="width:131.579%;max-width:none;margin-left:-0.000%;margin-top:-0.000%"></div><div class="box" style="left:0.92%;top:48.00%;width:22.89%;height:13.71%"><span class="tag"><b>1</b>最后一问，写了显示「已写」</span></div><div class="box" style="left:26.97%;top:17.71%;width:70.39%;height:30.57%"><span class="tag"><b>2</b>直接在这里写</span></div></div>
+      <ul class="notes"><li><b>1</b><span>最后一问，写了显示「已写」</span></li><li><b>2</b><span>直接在这里写</span></li></ul></section>
+<section class="step"><h2><i>7</i>交卷：点两次</h2><p class="d">点「交卷」后按钮变红，再点一次才交上；交了就不能改。约 1–2 分钟出报告。</p>
+      <div class="shot"><div style="aspect-ratio:72000/30600;overflow:hidden"><img src="img/do-4.png" alt="" style="width:200.000%;max-width:none;margin-left:-100.000%;margin-top:-0.000%"></div><div class="box" style="left:61.80%;top:1.18%;width:37.00%;height:14.41%"><span class="tag below"><b>1</b>再点一次确认交卷</span></div></div>
+      <ul class="notes"><li><b>1</b><span>再点一次确认交卷</span></li></ul></section>
+</section>
+<section class="pb divider" id="m05"><div class="eb">模块 05</div><div class="no">05</div><h2>看答卷、比候选人</h2><div class="m">给出任务的人 · 随时</div><p>候选人交卷后，在这道题的空间里看分数、看报告、把几个人并排比。题目要调整：岗位、用时、素材直接改；题目内容用一句话告诉 AI 哪里要改，不用自己动手改题。</p></section>
+<section class="pb"><div class="eb">百业AI｜真活 · 操作手册 05</div>
+<h1>看答卷、比候选人</h1>
+<div class="meta"><span>给出任务的人</span><span>随时</span></div>
+<p class="lead">候选人交卷后，在这道题的空间里看分数、看报告、把几个人并排比。题目要调整：岗位、用时、素材直接改；题目内容用一句话告诉 AI 哪里要改，不用自己动手改题。</p>
+<section class="ex"><h3>改题可以这样说</h3><ul><li>「「大家第 2 项都是 0 分，可能题意没说清，把要求写具体一点」」</li><li>「「材料太少了，再加一份竞品价格表」」</li><li>「「难度降一点，给应届生做」」</li></ul><p>改完题记得「重跑 AI 基线」，不然分数没法和基线比。改用时、岗位名、加删素材不用对 AI 说：在「调整这道题」左边直接改，马上生效，也不用重跑。</p></section>
+<section class="step"><h2><i>1</i>题目空间：先看总数</h2><p class="d">顶部四个数：多少人参与、多少人交卷、平均分、AI 基线（AI 自己做一遍的分）。这个空间的链接带管理密钥，可以转给同事，别发给候选人。</p>
+      <div class="shot"><img src="img/own-1.png" alt=""><div class="box" style="left:13.60%;top:26.50%;width:72.80%;height:8.10%"><span class="tag"><b>1</b>参与 / 交卷 / 平均分 / AI 基线</span></div><div class="box" style="left:13.60%;top:47.60%;width:72.80%;height:24.50%"><span class="tag"><b>2</b>调整这道题</span></div><div class="box" style="left:51.30%;top:75.30%;width:9.20%;height:3.20%"><span class="tag"><b>3</b>「做题情况与评分」看每个人</span></div></div>
+      <ul class="notes"><li><b>1</b><span>参与 / 交卷 / 平均分 / AI 基线</span></li><li><b>2</b><span>调整这道题</span></li><li><b>3</b><span>「做题情况与评分」看每个人</span></li></ul></section>
+<section class="step"><h2><i>2</i>调整这道题：左边直接改，右边让 AI 改</h2><p class="d">岗位、建议用时在左边改，点保存马上生效；素材点「加删素材」跳到材料包。题目内容（标准太宽、材料太少、难度）写在右边，AI 只改你提到的部分。</p>
+      <div class="shot"><div style="aspect-ratio:109440/28800;overflow:hidden"><img src="img/own-2.png" alt="" style="width:131.579%;max-width:none;margin-left:-15.789%;margin-top:-29.605%"></div><div class="box" style="left:3.82%;top:21.56%;width:45.66%;height:55.31%"><span class="tag"><b>1</b>直接改：岗位、用时、素材</span></div><div class="box" style="left:50.39%;top:21.56%;width:45.66%;height:55.31%"><span class="tag"><b>2</b>让 AI 改题目内容</span></div></div>
+      <ul class="notes"><li><b>1</b><span>直接改：岗位、用时、素材</span></li><li><b>2</b><span>让 AI 改题目内容</span></li></ul></section>
+<section class="step"><h2><i>3</i>每个人的分数和报告</h2><p class="d">按分数排好了。「报告链接」可以单独发给同事看。</p>
+      <div class="shot"><div style="aspect-ratio:109440/50400;overflow:hidden"><img src="img/rev-1.png" alt="" style="width:131.579%;max-width:none;margin-left:-15.789%;margin-top:-32.895%"></div><div class="box" style="left:65.26%;top:26.07%;width:7.11%;height:10.89%"><span class="tag right"><b>1</b>总分</span></div><div class="box" style="left:79.74%;top:28.21%;width:12.63%;height:6.61%"><span class="tag right"><b>2</b>看报告 · 报告链接</span></div></div>
+      <ul class="notes"><li><b>1</b><span>总分</span></li><li><b>2</b><span>看报告 · 报告链接</span></li></ul></section>
+<section class="step"><h2><i>4</i>报告分三栏</h2><p class="d">顶上是结果分、AI 使用分、用时。「交了什么」：交付物原文和交上来的文件；「怎么做的」：截图和答题历程，每个时间点做了什么、问了 AI 什么；「评得怎样」：逐条评分（每条有证据）、AI 使用能力、和 AI 基线比。</p>
+      <div class="shot"><div style="aspect-ratio:90720/90000;overflow:hidden"><img src="img/rev-2.png" alt="" style="width:158.730%;max-width:none;margin-left:-58.730%;margin-top:-0.000%"></div><div class="box" style="left:3.02%;top:8.30%;width:94.76%;height:8.10%"><span class="tag"><b>1</b>结果 / AI 使用 / 用时</span></div><div class="box" style="left:3.02%;top:17.10%;width:94.76%;height:5.20%"><span class="tag"><b>2</b>三栏：交了什么 · 怎么做的 · 评得怎样</span></div></div>
+      <ul class="notes"><li><b>1</b><span>结果 / AI 使用 / 用时</span></li><li><b>2</b><span>三栏：交了什么 · 怎么做的 · 评得怎样</span></li></ul></section>
+<section class="step"><h2><i>5</i>勾几个人，并排对比</h2><p class="d">勾 2–4 个人点「对比所选」；「导出候选名单」出一张表。</p>
+      <div class="shot"><div style="aspect-ratio:109440/50400;overflow:hidden"><img src="img/rev-4.png" alt="" style="width:131.579%;max-width:none;margin-left:-15.789%;margin-top:-32.895%"></div><div class="box" style="left:3.82%;top:26.07%;width:3.82%;height:10.89%"><span class="tag"><b>1</b>勾 2–4 个人</span></div><div class="box" style="left:62.11%;top:10.71%;width:10.00%;height:6.61%"><span class="tag right"><b>2</b>对比所选</span></div><div class="box" style="left:86.84%;top:10.71%;width:9.34%;height:6.61%"><span class="tag right"><b>3</b>导出候选名单</span></div></div>
+      <ul class="notes"><li><b>1</b><span>勾 2–4 个人</span></li><li><b>2</b><span>对比所选</span></li><li><b>3</b><span>导出候选名单</span></li></ul></section>
+<section class="step"><h2><i>6</i>逐条比，看谁哪里强</h2><p class="d">每条评分标准逐人对比，最高的标绿；下面是每个人做得好的和差的地方。</p>
+      <div class="shot"><div style="aspect-ratio:110880/86400;overflow:hidden"><img src="img/rev-5.png" alt="" style="width:129.870%;max-width:none;margin-left:-29.870%;margin-top:-3.247%"></div><div class="box" style="left:0.78%;top:1.77%;width:98.96%;height:97.71%"><span class="tag below"><b>1</b>逐条对比，最高的标绿；下面是每个人做得好的 / 差的</span></div></div>
+      <ul class="notes"><li><b>1</b><span>逐条对比，最高的标绿；下面是每个人做得好的 / 差的</span></li></ul></section>
+</section>
+<div class="foot">百业AI｜真活 · 编写于 2026-11-05 · 适用 百业AI｜真活 1.2（2026-11-05 线上版本）</div></div></body></html>

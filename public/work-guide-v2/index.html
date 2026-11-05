@@ -1,0 +1,49 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>真活操作手册</title><style>
+:root { --v: #6055f5; --ink: #1a1a2e; --ink2: #4a4f66; --ink3: #8a8fa8; --mark: #ff5a36; --line: #e8e9f0; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f6fb; color: var(--ink); font: 15px/1.75 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wrap { max-width: 1000px; margin: 0 auto; padding: 36px 20px 56px; }
+.eb { font-size: 12px; letter-spacing: .14em; color: var(--v); font-weight: 700; }
+h1 { font-size: 34px; line-height: 1.25; margin: 8px 0 10px; }
+h1 small { font-size: 18px; color: var(--ink3); font-weight: 600; margin-right: 10px; }
+.meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.meta span { font-size: 13px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; color: var(--ink2); }
+.lead { font-size: 16px; color: var(--ink2); background: #fff; border-left: 4px solid var(--v); border-radius: 0 12px 12px 0; padding: 12px 16px; margin: 0 0 26px; }
+.step { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 20px 20px 18px; margin-bottom: 22px; box-shadow: 0 10px 30px -22px rgba(40,44,110,.35); }
+.step h2 { display: flex; align-items: center; gap: 12px; font-size: 21px; margin: 0 0 6px; }
+.step h2 i { font-style: normal; flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--v); color: #fff; display: grid; place-items: center; font-size: 17px; }
+.step .d { color: var(--ink2); margin: 0 0 14px 46px; }
+.shot { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+.shot img { display: block; width: 100%; }
+.box { position: absolute; border: 3px solid var(--mark); border-radius: 8px; }
+.tag { position: absolute; left: -3px; transform: translateY(-100%); display: flex; align-items: center; gap: 6px; white-space: nowrap; background: var(--mark); color: #fff; font-size: 12.5px; font-weight: 700; padding: 3px 9px 3px 4px; border-radius: 8px 8px 8px 0; max-width: 520px; overflow: hidden; text-overflow: ellipsis; }
+.tag.below { transform: none; top: calc(100% + 4px); border-radius: 0 8px 8px 8px; }
+.tag.below.right { border-radius: 8px 0 8px 8px; }
+.tag.right { left: auto; right: -3px; border-radius: 8px 8px 0 8px; }
+.tag b, .notes b { flex: none; width: 19px; height: 19px; border-radius: 50%; background: #fff; color: var(--mark); display: grid; place-items: center; font-size: 12px; }
+.notes { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.notes li { display: flex; gap: 8px; align-items: flex-start; font-size: 14.5px; }
+.notes b { background: var(--mark); color: #fff; margin-top: 3px; }
+.ex { background: linear-gradient(135deg, #f3f2ff, #eefbfd); border: 1px solid #dcd8ff; border-radius: 16px; padding: 16px 20px; margin: 0 0 24px; }
+.ex h3 { margin: 0 0 8px; font-size: 17px; color: var(--v); }
+.ex ul { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 6px; }
+.ex li { background: #fff; border-radius: 10px; padding: 8px 12px; font-size: 15px; }
+.ex p { margin: 10px 0 0; color: var(--ink2); font-size: 14px; }
+@media print { body { background: #fff; font-size: 16px; } .notes li { font-size: 15.5px; } .step .d { font-size: 15.5px; } .step, .ex, .lead { break-inside: avoid; } .wrap { padding-top: 8px; } }
+.pb { break-before: page; }
+.divider { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; background: linear-gradient(135deg, #f3f2ff, #eefbfd); border-radius: 24px; }
+.divider .no { font-size: 120px; font-weight: 900; line-height: 1; background: linear-gradient(120deg, var(--v), #12b5cb); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.divider h2 { font-size: 46px; margin: 18px 0 12px; } .divider .m { color: var(--ink2); font-size: 17px; margin-bottom: 18px; } .divider p { font-size: 18px; color: var(--ink2); max-width: 720px; }
+.cover { min-height: 1180px; display: flex; flex-direction: column; justify-content: center; padding: 0 60px; }
+.cover h1 { font-size: 64px; } .cover .ver { margin-top: 28px; display: grid; gap: 8px; font-size: 17px; color: var(--ink2); } .cover .ver b { color: var(--ink); }
+.toc a { display: flex; gap: 18px; align-items: baseline; text-decoration: none; color: inherit; padding: 16px 0; border-bottom: 1px solid var(--line); } .toc i { font-style: normal; font-weight: 900; color: var(--v); font-size: 26px; width: 48px; } .toc b { font-size: 21px; } .toc span { color: var(--ink2); font-size: 14.5px; display: block; }
+.faq { display: grid; gap: 12px; } .qa { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; break-inside: avoid; } .qa b { font-size: 17px; } .qa p { margin: 6px 0 0; color: var(--ink2); }
+.foot { text-align: center; color: var(--ink3); font-size: 12.5px; margin-top: 28px; }
+@media (max-width: 640px) { h1 { font-size: 26px; } .step .d { margin-left: 0; } .tag { font-size: 11px; max-width: 70vw; } }
+
+.cards { display: grid; gap: 14px; } .card { display: flex; gap: 16px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; text-decoration: none; color: inherit; box-shadow: 0 10px 30px -22px rgba(40,44,110,.35); }
+.card i { font-style: normal; flex: none; width: 46px; height: 46px; border-radius: 12px; background: var(--v); color: #fff; display: grid; place-items: center; font-weight: 800; }
+.card b { display: block; font-size: 18px; } .card span { color: var(--ink2); font-size: 14px; }</style></head><body><div class="wrap">
+<div class="eb">百业AI｜真活 · 真活操作手册</div><h1>真活怎么用</h1><p class="lead">一份手册讲一件事，每步一张真实截图，框出来的地方就是要点的地方。</p>
+<div class="cards"><a class="card" href="chat.html"><i>01</i><div><b>聊着出一道真活</b><span>给出任务的人 · 约 5 分钟（出题本身 2 分钟）<br>不用一次说全，像跟同事交代一样，说一句最实际的要求就够了。哪家企业、考什么、做多久、要不要给候选人素材——缺的它一件件问；用时、给几年经验的人这类细节，它先按常理定好，最后一行复述给你，你只改不对的。</span></div></a><a class="card" href="form.html"><i>02</i><div><b>填表出一道真活</b><span>给出任务的人 · 约 3 分钟（出题本身 2 分钟）<br>习惯一次写完再交，就用「填表出任务」。只有企业和要找的人必填，其余都能空着；每一栏都用大白话写，不用套职位名和术语。拿不准怎么写，就换「聊着出任务」，让它问你。</span></div></a><a class="card" href="library.html"><i>03</i><div><b>从任务库挑一道</b><span>给出任务的人 · 约 3 分钟<br>不想从零开始：任务库里有各行业挑好的任务，可以原样换成你们公司，也可以只照它的思路出一道新的。挑好以后，用一两句话说说你们公司和要找的人就行。</span></div></a><a class="card" href="do.html"><i>04</i><div><b>候选人怎么做题</b><span>给候选人（出任务的人也可以转发） · 按题目建议用时<br>打开出任务的人发来的链接就能做，不用注册。材料、作答、AI 都在一个页面里，每一步自动记录，交卷后出报告。AI 随便用，像平时干活跟同事商量一样问它就行；评的是你怎么用，关键判断要自己做。</span></div></a><a class="card" href="review.html"><i>05</i><div><b>看答卷、比候选人</b><span>给出任务的人 · 随时<br>候选人交卷后，在这道题的空间里看分数、看报告、把几个人并排比。题目要调整：岗位、用时、素材直接改；题目内容用一句话告诉 AI 哪里要改，不用自己动手改题。</span></div></a></div>
+<p class="lead" style="margin-top:20px">编写于 2026-11-05 · 适用 百业AI｜真活 1.2（2026-11-05 线上版本） · <a href="all.html">看合集（可打印 / 存 PDF）</a></p><div class="foot">百业AI｜真活 · 编写于 2026-11-05 · 适用 百业AI｜真活 1.2（2026-11-05 线上版本）</div></div></body></html>

@@ -101,7 +101,7 @@ export async function createWorkTask(user: { email: string; role: string }, body
   return { id: data.id as string, share_token: data.share_token as string, owner_key, title: task.task.title, env: task.env.type, notes: ctx.notes, task, company_name: row.company_name };
 }
 
-async function loadMine(user: { email: string; role: string }, id: string) {
+export async function loadMine(user: { email: string; role: string }, id: string) {
   // 用户报的常是参与链接里的编号（share_token），不是内部 id：两个都认（2026-11-03）
   const key = String(id || '').trim().replace(/^.*\/work\/([^/?#]+).*$/, '$1');
   const isUuid = /^[0-9a-f-]{36}$/i.test(key);
@@ -110,7 +110,7 @@ async function loadMine(user: { email: string; role: string }, id: string) {
   if (user.role !== 'admin' && t.created_by !== user.email) throw new Error('只能改自己出的题');
   return t;
 }
-const ui = (t: any): Ui => ({ kind: 'work_task', token: t.share_token, owner_key: t.owner_key, title: t.task?.title || '', task_id: t.id });
+export const ui = (t: any): Ui => ({ kind: 'work_task', token: t.share_token, owner_key: t.owner_key, title: t.task?.title || '', task_id: t.id });
 const brief = (t: any) => ({ task_id: t.id, title: t.task?.title, company: t.company_name, role: t.role, /* 台子看每份交付物的 module（env.type 是旧字段，11-05 助理据它误判「配成了文档台」去白改一轮） */ deliverables: (t.task?.deliverables || []).map((d: any) => ({ id: d.id, title: d.title, module: d.module || 'doc' })), mode: t.task?.env?.type === 'open' || t.task?.env?.type === 'plugin' ? t.task.env.type : undefined, time_minutes: t.task?.time_minutes, problem: t.problem?.statement, why_now: t.problem?.why_now, brief: s(t.task?.brief, 1200), stages: (t.task?.stages || []).map((st: any) => ({ id: st.id, type: st.type, question: st.question })), materials: (t.materials || []).map((m: any) => ({ id: m.id, title: m.title, kind: m.kind, source: m.source })), rubric: (t.rubric || []).map((r: any) => ({ id: r.id, title: r.title, weight: r.weight, desc: s(r.desc, 200) })), baseline: t.baseline ? { model: t.baseline.model, total: t.baseline.result?.total } : null, notes: t.context?.notes || [] });
 
 async function run(name: string, input: any, user: { email: string; role: string }): Promise<{ result: any; ui?: Ui; label: string }> {

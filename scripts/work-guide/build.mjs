@@ -2,7 +2,7 @@
  * 操作手册生成（2026-11-03）：两套——真活（--set=work，默认）、百业模拟体验（--set=lab）。
  * guides.mjs 里的每份手册 → public/<web>/<slug>.html（上线后发链接）+ index / all（合集）；
  * --png 截成长图、--pdf 出单份 + 合集 PDF → docs/<目录>/。截图在 public/<web>/img/。--png / --pdf 要本地 3003 在跑。
- *   node scripts/work-guide/build.mjs [--set=lab] [--png] [--pdf]
+ *   node scripts/work-guide/build.mjs [--set=lab|work2] [--png] [--pdf]
  */
 import fs from 'node:fs';
 
@@ -10,6 +10,10 @@ import fs from 'node:fs';
 const SETS = {
   work: { guides: './guides.mjs', web: 'work-guide', docs: '真活操作手册', brand: '百业AI｜真活', name: '真活操作手册', h1: '真活怎么用',
     DATE: '2026-11-03', VERSION: '百业AI｜真活 1.1（2026-11-03 线上版本）', site: 'www.aisimjob.com/work-guide/',
+    intro: '五个模块：出任务的三种方式、候选人做题、看答卷比候选人。一份手册讲一件事，每步一张真实截图，框出来的地方就是要点。' },
+  // 1.2（11-05 界面重排后）：单独一套，旧的 work-guide 原样保留，看过效果再替换
+  work2: { guides: './guides-v2.mjs', web: 'work-guide-v2', docs: '真活操作手册-v2', brand: '百业AI｜真活', name: '真活操作手册', h1: '真活怎么用',
+    DATE: '2026-11-05', VERSION: '百业AI｜真活 1.2（2026-11-05 线上版本）', site: 'www.aisimjob.com/work-guide-v2/',
     intro: '五个模块：出任务的三种方式、候选人做题、看答卷比候选人。一份手册讲一件事，每步一张真实截图，框出来的地方就是要点。' },
   lab: { guides: '../lab-guide/guides.mjs', web: 'lab-guide', docs: '百业体验手册', brand: 'AI 百业', name: '百业体验手册', h1: 'AI 百业怎么玩',
     DATE: '2026-11-03', VERSION: 'AI 百业 · 数字技能空间（2026-11-03 线上版本）', site: 'www.aisimjob.com/lab-guide/', ext: 'jpg',
