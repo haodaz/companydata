@@ -23,7 +23,7 @@ export async function GET(req: Request) {
     if (id) {
       const { data: p, error } = await supabaseAdmin.from('research_products').select('*, supplier:companies(id, name, name_en, country, official_website)').eq('id', id).single();
       if (error) throw error;
-      const { data: docs } = await supabaseAdmin.from('research_product_docs').select('id, doc_type, title, url, file_type, size_bytes, lang, storage_path, pages, fetched_at').eq('product_id', id).not('if_delete', 'is', true).order('doc_type');
+      const { data: docs } = await supabaseAdmin.from('research_product_docs').select('id, external_id, doc_type, title, url, file_type, size_bytes, lang, storage_path, pages, fetched_at').eq('product_id', id).not('if_delete', 'is', true).order('doc_type');
       return NextResponse.json({ success: true, data: { ...p, images: ((p.images || []) as any[]).map(g => ({ ...g, src: imgUrl(g) })), docs: docs || [] } });
     }
     const type = u.get('type') || '', category = u.get('category') || '', supplier = u.get('supplier') || '', origin = u.get('origin') || '', method = u.get('method') || '';
