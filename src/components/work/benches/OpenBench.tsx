@@ -1,22 +1,31 @@
 'use client';
 
 /**
- * 开放模式：用自己的软件做（Excel / CAD / IDE…）。这里只做三件事：材料下载、浏览器录屏（getDisplayMedia，不装东西）、交付文件上传 + 交付说明。
- * 录屏和文件都传到服务器，过程由录屏抽帧看图得来。
+ * 开放模式：用自己的软件做（Excel / CAD / IDE / PS / 本地 AI…）。这里只做三件事：材料下载、整屏定时截图（getDisplayMedia，不装东西）、交付文件上传 + 交付说明。
+ * 2026-11-05 潜历反馈「两三个小时录屏太大传不上来」：以前录整段视频（5fps、600kbps，3 小时约 800MB，交卷时一次传，上限 200MB），
+ * 改成每 10 秒截一张整屏（缩到 1280 宽的 JPEG，画面没变就跳过），边做边传；计时放在 Worker 里，切去别的软件时后台标签页也不降频。
+ * 选「整个屏幕」，本地软件也记得到。过程由截图看图得来（交卷时均匀挑 30 张给会看图的模型）。
  */
 import React, { useEffect, useRef, useState } from 'react';
 
 type Material = { id: string; title: string; kind: string; content: string };
 type Up = { name: string; size: number; url: string };
+export type Rec = { url: string; duration: number; shots?: number };
+const EVERY = 10;   // 秒
+// 后台标签页里主线程的定时器会被降到一分钟一次，Worker 里的不会：用它打拍子
+const TICKER = `let iv; onmessage = e => { clearInterval(iv); if (e.data > 0) iv = setInterval(() => postMessage(1), e.data); };`;
 
 export function OpenBench({ token, sid, materials, deliverables, summary, onSummary, onEvent, uploads, onUploads, recording, onRecording, t0 }: {
   token: string; sid: string; materials: Material[]; deliverables: { id: string; title: string; format: string }[];
   summary: string; onSummary: (v: string) => void; onEvent: (type: string, extra?: Record<string, any>) => void;
-  uploads: Up[]; onUploads: (f: (u: Up[]) => Up[]) => void; recording: { url: string; duration: number } | null; onRecording: (r: { url: string; duration: number } | null) => void; t0: number;
+  uploads: Up[]; onUploads: (f: (u: Up[]) => Up[]) => void; recording: Rec | null; onRecording: (r: Rec | null) => void; t0: number;
 }) {
-  const [rec, setRec] = useState<'idle' | 'on' | 'uploading'>('idle');
-  const [secs, setSecs] = useState(0);
-  const mr = useRef<MediaRecorder | null>(null); const chunks = useRef<Blob[]>([]); const started = useRef(0);
+  const [rec, setRec] = useState<'idle' | 'on'>('idle');
+  const [secs, setSecs] = useState(0); const [shots, setShots] = useState(recording?.shots || 0); const [pending, setPending] = useState(0);
+  const started = useRef(0); const stream = useRef<MediaStream | null>(null); const worker = useRef<Worker | null>(null);
+  const video = useRef<HTMLVideoElement | null>(null); const last = useRef<string>(''); const nShots = useRef(recording?.shots || 0);
+  // 离开页面 / 交卷时停掉
+  useEffect(() => () => { worker.current?.terminate(); stream.current?.getTracks().forEach(t => t.stop()); }, []);
   const [err, setErr] = useState('');
   useEffect(() => { if (rec !== 'on') return; const iv = setInterval(() => setSecs(Math.round((Date.now() - started.current) / 1000)), 1000); return () => clearInterval(iv); }, [rec]);
 
@@ -26,24 +35,42 @@ export function OpenBench({ token, sid, materials, deliverables, summary, onSumm
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + body], { type: ext === 'csv' ? 'text/csv' : 'text/markdown' })); a.download = `${m.id}-${m.title}.${ext}`; a.click();
     onEvent('download', { id: m.id });
   };
+  /** 截一张：从屏幕流里取当前画面 → 缩到 1280 宽 → JPEG；和上一张几乎一样就跳过（省流量） */
+  const grab = async () => {
+    // Chrome 有 ImageCapture：直接从屏幕流取一帧（后台标签页里 video 元素可能不刷新画面）；没有就从 video 元素画
+    const track = stream.current?.getVideoTracks()[0]; let src: CanvasImageSource | null = null, sw = 0, sh = 0;
+    try { if (track && (window as any).ImageCapture) { const bm: ImageBitmap = await new (window as any).ImageCapture(track).grabFrame(); src = bm; sw = bm.width; sh = bm.height; } } catch { /* 退回 video */ }
+    if (!src) { const v = video.current; if (!v || !v.videoWidth) return; src = v; sw = v.videoWidth; sh = v.videoHeight; }
+    const w = Math.min(1280, sw), h = Math.round(sh * w / sw);
+    const c = document.createElement('canvas'); c.width = w; c.height = h; c.getContext('2d')!.drawImage(src, 0, 0, w, h);
+    const tiny = document.createElement('canvas'); tiny.width = 32; tiny.height = 18; tiny.getContext('2d')!.drawImage(c, 0, 0, 32, 18);
+    const px = tiny.getContext('2d')!.getImageData(0, 0, 32, 18).data; let sig = ''; for (let i = 0; i < px.length; i += 4) sig += String.fromCharCode(48 + ((px[i] + px[i + 1] + px[i + 2]) / 48 | 0));
+    if (sig === last.current) return; last.current = sig;
+    const blob: Blob | null = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.6)); if (!blob) return;
+    const t = Math.round((Date.now() - t0) / 1000);
+    const fd = new FormData(); fd.append('file', blob, `shot-${t}.jpg`); fd.append('kind', 'shot'); fd.append('t', String(t));
+    setPending(p => p + 1);
+    for (let k = 0; k < 3; k++) {
+      try { const j = await (await fetch(`/api/work/${token}/sessions/${sid}/upload`, { method: 'POST', body: fd })).json(); if (!j.ok) throw new Error(j.error);
+        nShots.current += 1; setShots(nShots.current); onRecording({ url: '', duration: Math.round((Date.now() - started.current) / 1000), shots: nShots.current }); break; }
+      catch (e: any) { if (k === 2) setErr('有一张截图没传上去：' + e.message); else await new Promise(r => setTimeout(r, 2000)); }
+    }
+    setPending(p => p - 1);
+  };
   const start = async () => {
     setErr('');
     try {
-      const stream = await (navigator.mediaDevices as any).getDisplayMedia({ video: { frameRate: 5 }, audio: false });
-      const r = new MediaRecorder(stream, { mimeType: MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm', videoBitsPerSecond: 600_000 });
-      chunks.current = []; r.ondataavailable = e => { if (e.data.size) chunks.current.push(e.data); };
-      r.onstop = async () => { stream.getTracks().forEach((t: MediaStreamTrack) => t.stop()); await finish(); };
-      stream.getVideoTracks()[0].addEventListener('ended', () => { if (r.state !== 'inactive') r.stop(); });
-      r.start(2000); mr.current = r; started.current = Date.now(); setRec('on'); onEvent('rec_start');
-    } catch (e: any) { setErr('没开始录屏：' + (e?.message || '浏览器不支持或被拒绝')); }
+      const st: MediaStream = await (navigator.mediaDevices as any).getDisplayMedia({ video: { frameRate: 1 }, audio: false });
+      const v = document.createElement('video'); v.muted = true; v.playsInline = true; v.srcObject = st; await v.play(); video.current = v;
+      stream.current = st; st.getVideoTracks()[0].addEventListener('ended', () => stop());
+      const wk = new Worker(URL.createObjectURL(new Blob([TICKER], { type: 'text/javascript' }))); wk.onmessage = () => { grab(); }; wk.postMessage(EVERY * 1000); worker.current = wk;
+      started.current = Date.now(); last.current = ''; setRec('on'); onEvent('rec_start'); setTimeout(grab, 1500);
+    } catch (e: any) { setErr('没开始截屏：' + (e?.message || '浏览器不支持或被拒绝')); }
   };
-  const stop = () => { if (mr.current && mr.current.state !== 'inactive') mr.current.stop(); };
-  const finish = async () => {
-    setRec('uploading');
-    const blob = new Blob(chunks.current, { type: 'video/webm' }); const duration = Math.round((Date.now() - started.current) / 1000);
-    const fd = new FormData(); fd.append('file', blob, 'recording.webm'); fd.append('kind', 'recording'); fd.append('duration', String(duration)); fd.append('t', String(Math.round((Date.now() - t0) / 1000)));
-    try { const j = await (await fetch(`/api/work/${token}/sessions/${sid}/upload`, { method: 'POST', body: fd })).json(); if (!j.ok) throw new Error(j.error); onRecording({ url: j.url, duration }); onEvent('rec_stop', { duration }); }
-    catch (e: any) { setErr('录屏上传失败：' + e.message); }
+  const stop = () => {
+    worker.current?.postMessage(0); worker.current?.terminate(); worker.current = null;
+    stream.current?.getTracks().forEach(t => t.stop()); stream.current = null; video.current = null;
+    if (rec === 'on' || started.current) onEvent('rec_stop', { duration: Math.round((Date.now() - started.current) / 1000) });
     setRec('idle');
   };
   const upload = async (files: FileList | null) => {
@@ -61,10 +88,10 @@ export function OpenBench({ token, sid, materials, deliverables, summary, onSumm
       <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
         <div style={{ width: 12, height: 12, borderRadius: '50%', background: rec === 'on' ? '#e5484d' : '#c9ccd6', boxShadow: rec === 'on' ? '0 0 0 6px rgba(229,72,77,.18)' : 'none' }} />
         <div style={{ flex: 1, minWidth: 240 }}>
-          <div style={{ fontWeight: 700 }}>{rec === 'on' ? `录屏中 ${fmt(secs)}` : recording ? `录屏已上传（${fmt(recording.duration)}）` : '第一步：开始录屏'}</div>
-          <div style={{ fontSize: 12.5, color: '#666' }}>{rec === 'on' ? '在你的软件里做题；做完回到这里点停止。' : recording ? '可以再录一段接着做；最后一段为准。' : '选「整个屏幕」。录屏只用于评价过程（你用了什么工具、怎么核验、怎么取舍），不存音频。'}</div>
+          <div style={{ fontWeight: 700 }}>{rec === 'on' ? `记录中 ${fmt(secs)} · 已存 ${shots} 张${pending ? `（${pending} 张在传）` : ''}` : shots ? `已存 ${shots} 张截图` : '第一步：开始记录屏幕'}</div>
+          <div style={{ fontSize: 12.5, color: '#666' }}>{rec === 'on' ? '去你的软件里做题，这个页面别关（可以切走）；做完回来交卷，交卷时自动停止。' : shots ? '可以接着记录，截图会续在后面。' : `选「整个屏幕」：本地软件（PS、Excel、本地 AI）也记得到。每 ${EVERY} 秒存一张截图、边做边传，几个小时也不怕传不上去；不录视频、不录声音，只用于评价过程（你用了什么工具、怎么核验、怎么取舍）。`}</div>
         </div>
-        {rec === 'on' ? <button onClick={stop} style={{ ...btn, background: '#e5484d' }}>■ 停止录屏</button> : <button onClick={start} disabled={rec === 'uploading'} style={btn}>{rec === 'uploading' ? '上传中…' : recording ? '再录一段' : '● 开始录屏'}</button>}
+        {rec === 'on' ? <button onClick={stop} style={{ ...btn, background: '#e5484d' }}>■ 暂停记录</button> : <button onClick={start} style={btn}>{shots ? '继续记录' : '● 开始记录'}</button>}
       </div>
       {/* 材料 */}
       <div style={{ background: '#fff', border: '1px solid #e8e9f0', borderRadius: 14, padding: '14px 18px' }}>

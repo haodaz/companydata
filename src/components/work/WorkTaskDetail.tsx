@@ -161,7 +161,7 @@ export function WorkTaskDetail({ task: T, sessions, shareLink, notes, defaultTab
             {/* 按 Markdown 渲染：表格、标题、白板 / 画布交卷截图都直接看得到 */}
             <div className="wk-deliv" style={{ padding: 12, fontSize: 13.5, lineHeight: 1.75, maxHeight: 460, overflow: 'auto' }}>{report.deliverable ? <Md text={report.deliverable} /> : <span style={{ color: '#999' }}>（没有交付物文本：开放模式 / 插件作答看上传文件与交付说明）</span>}</div>
           </div>
-          {proc && proc.id === report.id ? <div style={{ marginBottom: 14 }}><WorkProcess events={proc.events} aiChat={proc.ai_chat} materials={T.materials} deliverables={T.task?.deliverables} /></div> : <div style={{ color: '#999', fontSize: 13, marginBottom: 14 }}>读取答题历程…</div>}
+          {proc && proc.id === report.id ? <div style={{ marginBottom: 14 }}><WorkProcess events={proc.events} aiChat={proc.ai_chat} materials={T.materials} deliverables={T.task?.deliverables} shots={report.report?.recording?.gallery || []} /></div> : <div style={{ color: '#999', fontSize: 13, marginBottom: 14 }}>读取答题历程…</div>}
           <WorkReport report={report.report} participant={report.participant} />
         </>}
       </Drawer>

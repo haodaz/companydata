@@ -32,6 +32,25 @@ export async function framesFromRecording(url: string, everySec = 20, max = 30):
   return out;
 }
 
+/** 整屏定时截图（11-05）：列出 lab-media/work/<sid>/shots/ 下全部截图 → [{ t, url }]（按时间排） */
+export async function listShots(sid: string): Promise<{ t: number; url: string }[]> {
+  const { supabaseAdmin: db } = await import('@/lib/supabase');
+  const out: { t: number; url: string }[] = [];
+  for (let off = 0; off < 5000; off += 1000) {
+    const { data } = await db.storage.from('lab-media').list(`work/${sid}/shots`, { limit: 1000, offset: off, sortBy: { column: 'name', order: 'asc' } });
+    for (const f of data || []) { const t = parseInt(f.name, 10); if (Number.isFinite(t)) out.push({ t, url: db.storage.from('lab-media').getPublicUrl(`work/${sid}/shots/${f.name}`).data.publicUrl }); }
+    if (!data || data.length < 1000) break;
+  }
+  return out.sort((a, b) => a.t - b.t);
+}
+/** 从截图里均匀挑 max 张下载下来，给 describeFrames 看 */
+export async function framesFromShots(shots: { t: number; url: string }[], max = 30): Promise<{ t: number; jpeg: Buffer }[]> {
+  const pick = shots.length <= max ? shots : Array.from({ length: max }, (_, i) => shots[Math.round(i * (shots.length - 1) / (max - 1))]);
+  const out: { t: number; jpeg: Buffer }[] = [];
+  for (const s of pick) { try { out.push({ t: s.t, jpeg: Buffer.from(await (await fetch(s.url)).arrayBuffer()) }); } catch { /* 跳过 */ } }
+  return out;
+}
+
 /** 逐帧看图 → 事件流（每帧一条 screen 事件：软件 / 动作 / 看到的内容），另给一段总体描述 */
 export async function describeFrames(frames: { t: number; jpeg: Buffer }[], taskBrief: string, institution?: string): Promise<{ events: WorkEvent[]; summary: string }> {
   if (!frames.length) return { events: [], summary: '' };

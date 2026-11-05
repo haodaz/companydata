@@ -8,7 +8,8 @@ const MAX = 200 * 1024 * 1024;   // 录屏可能大
 const BUCKET = 'lab-media';
 
 /**
- * 开放模式上传（用自己的软件做）：multipart { file, kind: 'recording' | 'file', t }
+ * 开放模式上传（用自己的软件做）：multipart { file, kind: 'shot' | 'recording' | 'file', t }
+ * shot（11-05）：整屏定时截图，存 lab-media/work/<sid>/shots/<秒数>.jpg，不写事件（每 10 秒一张，和作答页的过程同步抢着写 events 会丢）；交卷时按目录列出来。
  * 存到 lab-media/work/<sid>/…，并记一条事件（recording / file）。不用登录（链接即身份）。
  */
 export async function POST(req: NextRequest, { params }: { params: Promise<{ token: string; sid: string }> }) {
@@ -20,7 +21,15 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   if (s.submitted_at) return NextResponse.json({ ok: false, error: '已经交卷了' }, { status: 409 });
   const form = await req.formData();
   const file = form.get('file') as File | null;
-  const kind = String(form.get('kind') || 'file') === 'recording' ? 'recording' : 'file';
+  const k0 = String(form.get('kind') || 'file');
+  if (k0 === 'shot') {
+    if (!file || file.size > 3 * 1024 * 1024) return NextResponse.json({ ok: false, error: '截图不对' }, { status: 400 });
+    const t = Math.max(0, Math.round(Number(form.get('t')) || (Date.now() - new Date(s.started_at).getTime()) / 1000));
+    const { error } = await db.storage.from(BUCKET).upload(`work/${sid}/shots/${String(t).padStart(6, '0')}.jpg`, Buffer.from(await file.arrayBuffer()), { contentType: 'image/jpeg', upsert: true });
+    if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ ok: true, t });
+  }
+  const kind = k0 === 'recording' ? 'recording' : 'file';
   if (!file) return NextResponse.json({ ok: false, error: '没有文件' }, { status: 400 });
   if (file.size > MAX) return NextResponse.json({ ok: false, error: '文件太大（上限 200MB）' }, { status: 413 });
   const safe = (file.name || 'file').replace(/[^\w.\-一-龥]+/g, '_').slice(0, 80);

@@ -200,7 +200,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const setPart = (patch: Partial<PartState> | ((x: PartState) => Partial<PartState>)) => setPs(all => { const x = all[cur] || blank(); return { ...all, [cur]: { ...x, ...(typeof patch === 'function' ? patch(x) : patch) } }; });
   const setDoc = (v: string) => setPart({ doc: v }); const setCode = (v: string) => setPart({ code: v }); const setCsv = (v: string) => setPart({ csv: v }); const setNotes = (v: string | ((n: string) => string)) => setPart(x => ({ notes: typeof v === 'function' ? v(x.notes) : v }));
   const [testOut, setTestOut] = useState<string>('');
-  const [summary, setSummary] = useState(''); const [uploads, setUploads] = useState<{ name: string; size: number; url: string }[]>([]); const [recording, setRecording] = useState<{ url: string; duration: number } | null>(null);
+  const [summary, setSummary] = useState(''); const [uploads, setUploads] = useState<{ name: string; size: number; url: string }[]>([]); const [recording, setRecording] = useState<{ url: string; duration: number; shots?: number } | null>(null);
   const lastLen = useRef(0); const lastSnap = useRef('');
 
   // 交付内容（文本，评卷读）。白板交卷时另存一张 PNG，shots[id] = 图的地址
@@ -332,7 +332,7 @@ function Workspace({ token, sid, task, env, mode, narrow, grading, error, onSubm
   const iconBtn = (on: boolean): React.CSSProperties => ({ width: 26, height: 24, border: 0, background: on ? (dark ? '#2b2a4a' : '#e9e7ff') : 'transparent', color: on ? '#4c43c9' : ink2, borderRadius: 6, cursor: 'pointer', display: 'grid', placeItems: 'center', padding: 0 });
   const miniBtn: React.CSSProperties = { border: `1px solid ${line}`, background: 'transparent', color: ink2, borderRadius: 6, padding: '2px 8px', cursor: 'pointer', font: 'inherit', fontSize: 12 };
   const submit = () => {
-    if (mode === 'open' && !recording) { setLocalErr('先录一段屏再交卷：点「开始录屏」，做完点停止'); setTimeout(() => setLocalErr(''), 5000); return; }
+    if (mode === 'open' && !recording) { setLocalErr('先记录屏幕再交卷：点「开始记录」，选「整个屏幕」'); setTimeout(() => setLocalErr(''), 5000); return; }
     if (!arm) { setArm(true); if (emptyParts.length) { setLocalErr(`${emptyParts.map(p => `${p.id} ${p.title}`).join('、')} 还没动笔。确定要交就再点一次交卷`); setTimeout(() => setLocalErr(''), 6000); } setTimeout(() => setArm(false), 6000); return; }
     setArm(false);
     if (nextStep.trim()) ev('next_step', { text: nextStep.trim().slice(0, 1000) });
@@ -507,7 +507,7 @@ function ReportOriginal({ token, sid, task }: { token: string; sid: string; task
         <summary style={{ padding: '8px 12px', background: '#fafbff', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>交付物原文</summary>
         <div className="wk-deliv" style={{ padding: 12, fontSize: 13.5, lineHeight: 1.75, maxHeight: 460, overflow: 'auto' }}>{s.deliverable ? <Md text={s.deliverable} /> : <span style={{ color: '#999' }}>（没有交付物文本）</span>}</div>
       </details>
-      {Array.isArray(s.events) && <WorkProcess events={s.events} aiChat={s.ai_chat || []} materials={(task as any).materials} deliverables={task.task.deliverables} />}
+      {Array.isArray(s.events) && <WorkProcess events={s.events} aiChat={s.ai_chat || []} materials={(task as any).materials} deliverables={task.task.deliverables} shots={s.report?.recording?.gallery || []} />}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { buildReport, ensureAiPolicy } from '@/lib/work/grader';
 import { planSegments } from '@/lib/work/audit';
-import { describeFrames, framesFromRecording, readTextFiles } from '@/lib/work/recording';
+import { describeFrames, framesFromRecording, framesFromShots, listShots, readTextFiles } from '@/lib/work/recording';
 import { withCost } from '@/lib/token-logger';
 
 export const runtime = 'nodejs';
@@ -23,18 +23,20 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   const tsec = Math.round((Date.now() - new Date(s.started_at).getTime()) / 1000);
   let events: any[] = [...(s.events || []), ...((Array.isArray(body.events) ? body.events : []).slice(0, 500))];
   // 开放模式：交付 = 交付说明 + 能读的文件；过程 = 录屏抽帧看图
-  let recording: { url: string; duration: number; summary: string; frames: number } | null = null;
+  let recording: { url: string; duration: number; summary: string; frames: number; shots?: number; gallery?: { t: number; url: string }[] } | null = null;
+  const thin = <T,>(a: T[], n: number) => (a.length <= n ? a : Array.from({ length: n }, (_, i) => a[Math.round(i * (a.length - 1) / (n - 1))]));
   if (open) {
     const files = events.filter(e => e.type === 'file' && e.url).map(e => ({ name: e.name, url: e.url, size: e.size || 0 }));
     const rec = [...events].reverse().find(e => e.type === 'recording' && e.url);
-    if (!rec) return NextResponse.json({ ok: false, error: '还没有录屏：开放模式要先录屏再交卷' }, { status: 400 });
+    const shots = await listShots(sid);   // 11-05 起：整屏定时截图（老作答是整段录屏）
+    if (!rec && !shots.length) return NextResponse.json({ ok: false, error: '还没有屏幕记录：开放模式要先点「开始记录」再交卷' }, { status: 400 });
     if (deliverable.trim().length < 30) return NextResponse.json({ ok: false, error: '交付说明太短了：把结论、关键数字、口径和假设写清楚' }, { status: 400 });
     deliverable = `## 交付说明\n${deliverable}\n\n## 交付文件\n${files.length ? await readTextFiles(files) : '（没有上传文件）'}`;
     try {
-      const frames = await withCost({ tool_name: 'work', task_name: 'Grade · 录屏看图', stage: 'use' }, async () => { const fr = await framesFromRecording(rec.url); const d = await describeFrames(fr, t.task?.brief || '', t.company_name); return { ...d, n: fr.length }; });
+      const frames = await withCost({ tool_name: 'work', task_name: 'Grade · 录屏看图', stage: 'use' }, async () => { const fr = shots.length ? await framesFromShots(shots) : await framesFromRecording(rec!.url); const d = await describeFrames(fr, t.task?.brief || '', t.company_name); return { ...d, n: fr.length }; });
       events = [...events, ...frames.events].sort((a, b) => a.t - b.t);
-      recording = { url: rec.url, duration: rec.duration || 0, summary: frames.summary, frames: frames.n };
-    } catch (e) { console.warn('[work] 录屏分析失败：', String((e as any)?.message).slice(0, 160)); recording = { url: rec.url, duration: rec.duration || 0, summary: '（录屏分析失败，过程只按上传 / 下载事件评）', frames: 0 }; }
+      recording = shots.length ? { url: '', duration: shots[shots.length - 1].t - shots[0].t, summary: frames.summary, frames: frames.n, shots: shots.length, gallery: thin(shots, 120) } : { url: rec!.url, duration: rec!.duration || 0, summary: frames.summary, frames: frames.n };
+    } catch (e) { console.warn('[work] 录屏分析失败：', String((e as any)?.message).slice(0, 160)); recording = shots.length ? { url: '', duration: shots[shots.length - 1].t - shots[0].t, summary: '（截图看图失败，过程只按上传 / 下载事件评）', frames: 0, shots: shots.length, gallery: thin(shots, 120) } : { url: rec!.url, duration: rec!.duration || 0, summary: '（录屏分析失败，过程只按上传 / 下载事件评）', frames: 0 }; }
   } else if (plugin) {
     // 真活插件：交付 = 交付说明 + 链接；到时间自动收卷时没写也照收（按未交付评）
     if (deliverable.trim().length < 20) { if (!body.auto) return NextResponse.json({ ok: false, error: '交付说明太短了：贴上交付物链接，写清结论和假设' }, { status: 400 }); deliverable = `（时间到，自动交卷；候选人没写完交付说明）\n${deliverable}`; }

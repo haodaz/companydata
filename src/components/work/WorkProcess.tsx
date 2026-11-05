@@ -18,7 +18,8 @@ type Row = { t: number; to?: number; kind: string; color: string; label: string;
 const C = { mat: '#12b5cb', ai: '#6055f5', write: '#16a34a', paste: '#f59e0b', file: '#0ea5e9', away: '#b0b4c6', draft: '#8b5cf6', end: '#1a1a2e', screen: '#64748b' };
 const FILTERS: [string, string][] = [['all', '全部'], ['ai', '问 AI'], ['mat', '材料与文件'], ['draft', '稿子快照']];
 
-export function WorkProcess({ events, aiChat, materials, deliverables }: { events: Ev[]; aiChat: Chat[]; materials?: { id: string; title: string }[]; deliverables?: { id: string; title: string }[] }) {
+export function WorkProcess({ events, aiChat, materials, deliverables, shots = [] }: { events: Ev[]; aiChat: Chat[]; materials?: { id: string; title: string }[]; deliverables?: { id: string; title: string }[]; /** 开放模式整屏截图（11-05，报告里 recording.gallery） */ shots?: { t: number; url: string }[] }) {
+  const near = (t: number) => { let best: { t: number; url: string } | null = null; for (const s of shots) if (Math.abs(s.t - t) <= 60 && (!best || Math.abs(s.t - t) < Math.abs(best.t - t))) best = s; return best; };
   const [filter, setFilter] = useState('all');
   const [open, setOpen] = useState<Record<number, boolean>>({});
   const matName = (id: string) => materials?.find(m => m.id === id)?.title || '';
@@ -52,9 +53,9 @@ export function WorkProcess({ events, aiChat, materials, deliverables }: { event
         case 'leave': out.push({ t: e.t, kind: 'away', color: C.away, label: '离开了作答页（切到别的窗口 / 标签）' }); break;
         case 'file': out.push({ t: e.t, kind: 'mat', color: C.file, label: `上传文件 ${e.name}（${kb(e.size || 0)}）`, link: { href: e.url, text: '下载' } }); break;
         case 'recording': out.push({ t: e.t, kind: 'mat', color: C.file, label: `上传录屏${e.duration ? `（${fmt(e.duration)}）` : ''}`, link: { href: e.url, text: '播放' } }); break;
-        case 'rec_start': out.push({ t: e.t, kind: 'other', color: C.screen, label: '开始录屏' }); break;
-        case 'rec_stop': out.push({ t: e.t, kind: 'other', color: C.screen, label: '停止录屏' }); break;
-        case 'screen': out.push({ t: e.t, kind: 'screen', color: C.screen, label: '录屏画面（AI 看图记的）', body: String(e.note || '') }); break;
+        case 'rec_start': out.push({ t: e.t, kind: 'other', color: C.screen, label: '开始记录屏幕' }); break;
+        case 'rec_stop': out.push({ t: e.t, kind: 'other', color: C.screen, label: '暂停记录屏幕' }); break;
+        case 'screen': { const n = near(e.t); out.push({ t: e.t, kind: 'screen', color: C.screen, label: '屏幕画面（AI 看图记的）', body: String(e.note || ''), ...(n ? { link: { href: n.url, text: '看截图' } } : {}) }); break; }
         case 'draft': out.push({ t: e.t, kind: 'draft', color: C.draft, label: `稿子快照 · ${e.chars || String(e.text || '').length} 字`, detail: String(e.text || '') }); break;
         case 'next_step': out.push({ t: e.t, kind: 'end', color: C.end, label: '最后一问：如果再给一天，先改哪里', body: String(e.text || '') }); break;
         case 'submit': out.push({ t: e.t, kind: 'end', color: C.end, label: `交卷（交付物 ${e.chars || 0} 字）` }); break;
@@ -79,6 +80,10 @@ export function WorkProcess({ events, aiChat, materials, deliverables }: { event
           <span style={{ color: '#8a8fa8', fontSize: 12 }}>{fmt(f.t)} · {kb(f.size || 0)}</span>
           <a href={f.url} target="_blank" rel="noreferrer" style={{ color: '#6055f5', fontWeight: 700 }}>{f.type === 'recording' ? '播放' : '下载'}</a>
         </div>)}</div>
+      </div>}
+      {shots.length > 0 && <div style={box}>
+        <div style={head}>屏幕截图（每 10 秒一张，画面没变的不存；这里列 {shots.length} 张，点开看大图）</div>
+        <div style={{ display: 'flex', gap: 6, overflowX: 'auto', padding: '8px 12px 10px' }}>{shots.map(s => <a key={s.t} href={s.url} target="_blank" rel="noreferrer" style={{ flex: '0 0 auto', textAlign: 'center', textDecoration: 'none' }}><img src={s.url} alt={fmt(s.t)} loading="lazy" style={{ width: 128, height: 80, objectFit: 'cover', borderRadius: 4, border: '1px solid #e8e9f0', display: 'block' }} /><span style={{ fontSize: 11, color: '#8a8fa8', fontFamily: 'ui-monospace, Menlo, monospace' }}>{fmt(s.t)}</span></a>)}</div>
       </div>}
       <div style={box}>
         <div style={{ ...head, display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
