@@ -84,7 +84,9 @@ export async function GET(req: Request) {
       const own = (x: any) => !!me && (me.role === 'admin' || (spaces || []).find(s => s.id === x.id)?.created_by === me.email);
       return NextResponse.json({ ok: true, data: data.filter(own), totals, role: me?.role || null });
     }
-    return NextResponse.json({ ok: true, data, totals });
+    // 体验馆 / 首页只列已上架的（迁移 065；没跑时 listing 读不到，按全部上架算）
+    const listing = await listingOf(data.map((x: any) => x.id));
+    return NextResponse.json({ ok: true, data: data.filter((x: any) => (listing[x.id] || 'listed') === 'listed'), totals });
   } catch (e: any) {
     return NextResponse.json({ ok: false, ...labError(e) }, { status: 500 });
   }
@@ -96,6 +98,19 @@ export async function GET(req: Request) {
  * 或 body { jdText, title, company }：粘贴一份不在岗位库里的全新 JD，正文直接进同一条流水线。
  * 或 body { profession }：职业探索——先把职业结构化成典型岗位 + 生涯地图，再走同一条流水线（面向高中生 / 大学生）。
  */
+/** 空间的上架状态（迁移 065）：{ id: 'draft' | 'listed' | 'unlisted' }；列还没加就返回空（都当已上架） */
+async function listingOf(ids: string[]): Promise<Record<string, string>> {
+  if (!ids.length) return {};
+  const { data, error } = await supabaseAdmin.from('skill_tasks').select('id, listing').in('id', ids);
+  if (error) return {};
+  return Object.fromEntries((data || []).map((x: any) => [x.id, x.listing]));
+}
+/** 从新建空间页生成的先是草稿：在百业工厂里点「上架」才进体验馆（迁移 065 没跑就照旧直接上架） */
+async function markDraft(id: string, body: any) {
+  if (!body?.draft) return;
+  await supabaseAdmin.from('skill_tasks').update({ listing: 'draft' }).eq('id', id).then(() => {}, () => {});
+}
+
 /** 构建完给前端的成果小结：刚才这两分钟，岗位 AI 到底做出了什么 */
 function summarize(built: any) {
   const sim = built.task?.sim || {};
@@ -168,6 +183,7 @@ async function build(req: Request, body: any, costJob: string) {
       }).select('id').single();
       if (insErr) throw insErr;
       await attachCostToSpace(costJob, created.id);
+      await markDraft(created.id, body);
       await assignNova(created.id).catch(e => console.warn('[Lab/spaces] 分编号失败', e?.message));
       // 角色表对账：生成的图登记进素材库、补齐角色表（迁移 019）；以后换图走角色表，不再改 JSON 里的网址
       await reconcileCast(created.id);
@@ -197,6 +213,7 @@ async function build(req: Request, body: any, costJob: string) {
       }).select('id').single();
       if (insErr) throw insErr;
       await attachCostToSpace(costJob, created.id);
+      await markDraft(created.id, body);
       await assignNova(created.id).catch(e => console.warn('[Lab/spaces] 分编号失败', e?.message));
       await reconcileCast(created.id);
       ensureOccupationLater(created.id);   // 自动建档、对上职业库（数据工厂），新职人一建好就能「和我聊」
@@ -233,6 +250,7 @@ async function build(req: Request, body: any, costJob: string) {
     }).select('id').single();
     if (insErr) throw insErr;
     await attachCostToSpace(costJob, created.id);
+    await markDraft(created.id, body);
     await assignNova(created.id).catch(e => console.warn('[Lab/spaces] 分编号失败', e?.message));
     // 角色表对账：生成的图登记进素材库、补齐角色表（迁移 019）；以后换图走角色表，不再改 JSON 里的网址
     await reconcileCast(created.id);

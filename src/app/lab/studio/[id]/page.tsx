@@ -10,6 +10,7 @@ import { SimRunner, SimStage } from '@/components/lab/SimRunner';
 import { ChatLauncher } from '@/components/kg/PersonaChat';
 import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue, type BasisRow } from '@/lib/lab-studio';
 import { SpecEditor, SPEC_CSS } from '@/components/lab/SpecEditor';
+import { col, FX_CSS, LISTING, Plays } from '@/components/lab/FactoryKit';
 import { hasSpec, type Anchor, type GenSpec } from '@/lib/lab-spec';
 import { CAST_KINDS, applyCastArt, castKind, stepsUsing, type CastKind, type CastMember, type LabAsset } from '@/lib/lab-cast';
 
@@ -49,9 +50,9 @@ export default function StudioPage() {
   const [genHint, setGenHint] = useState('');
   const [genArt, setGenArt] = useState(true);
   const [dayOpen, setDayOpen] = useState(false);
-  // 生成要求（11-06）：存 jd_snapshot.spec；排一天、写 / 重写章节、评分标准都按它来
-  const [specEdit, setSpecEdit] = useState<GenSpec | null>(null);
-  const [specSaving, setSpecSaving] = useState(false);
+  // 分 tab（11-06）：一天 / 角色与素材 / 生成要求 / 作答 / 分析；预览、上下架在右上角
+  const tab = (sp.get('tab') as StudioTab) || 'day';
+  const setTab = (t: StudioTab) => router.replace(`/lab/studio/${id}${t === 'day' ? (cur ? `?ch=${cur}` : '') : `?tab=${t}`}`);
   const [dayHint, setDayHint] = useState('');
   const [jobs, setJobs] = useState<any[]>([]);
   const runningJobs = jobs.filter(j => j.status === 'running');
@@ -200,40 +201,45 @@ export default function StudioPage() {
 
   return (
     <div>
+      <style>{FX_CSS}</style>
       {/* 和我聊：在工厂里先试聊，看数字职人答得像不像这一行的人 */}
       {data?.space && <ChatLauncher href={`/lab/${id}/chat`} name={data.space.profile?.name} avatar={data.space.profile?.avatar} />}
       {/* 页头 */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 16 }}>
         <button className="lab-btn ghost sm" onClick={() => router.push('/lab/spaces')}>← 百业工厂</button>
         <div style={{ minWidth: 0 }}>
-          <div className="lab-mono lab-cap">STUDIO · 工作室</div>
+          <div className="lab-mono lab-cap">SPACE · 百业工厂</div>
           <div style={{ fontSize: 19, fontWeight: 800 }}>{profile.name ? <>{profile.name} <span style={{ color: 'var(--v)' }}>· {profile.role}</span></> : space.title}</div>
         </div>
         <div style={{ flex: 1 }} />
-        <button className="lab-btn ghost sm" onClick={() => router.push('/lab/assets')}>素材库</button>
-        <button className="lab-btn ghost sm" onClick={() => router.push(`/lab/studio/review?space=${id}`)}>示范评审</button>
+        {/* 右上角：发布状态 + 预览 + 更多（11-06：预览和上下架是动作，不占 tab） */}
+        <ListingControl id={id} listing={space.listing} published={data.chapters.filter(c => c.status === 'published').length} onChange={l => setData(d => d && { ...d, space: { ...d.space, listing: l } })} />
+        <button className="lab-btn ghost sm" onClick={() => window.open(`/lab/${id}?m=test${saved?.status === 'published' ? `&ch=${saved.id}` : ''}`, '_blank')}>预览 ↗</button>
+        <MoreMenu id={id} />
+      </div>
+      <div className="fx-tabs" role="tablist" style={{ marginBottom: 14 }}>
+        {STUDIO_TABS.map(([k, t]) => <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? 'on' : ''} onClick={() => setTab(k)}>{t}{k === 'day' ? <i>{data.chapters.length}</i> : k === 'cast' ? <i>{data.cast.length}</i> : null}</button>)}
+      </div>
+
+      {tab === 'spec' && <SpecTab id={id} space={space} onSaved={spec => setData(d => d && { ...d, space: { ...d.space, jd_snapshot: { ...(d.space.jd_snapshot || {}), spec: spec || undefined } } })} />}
+      {tab === 'cast' && <div style={{ maxWidth: 760 }}>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 12 }}><span style={{ fontSize: 13, color: 'var(--ink2)' }}>这个空间里反复出场的人、地方、道具。同一天各章共用：同一张脸、同一个地方。</span><button className="lab-btn ghost sm" style={{ marginLeft: 'auto' }} onClick={() => router.push('/lab/assets')}>素材库 ↗</button></div>
+        <CastPanel cast={data.cast} chapters={liveChapters} current={null} onOpen={setCastEdit} />
+      </div>}
+      {tab === 'plays' && <>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: -4 }}><button className="lab-btn ghost sm" onClick={() => router.push(`/lab/studio/review?space=${id}`)}>示范评审 ↗</button></div>
+        <Plays space={id} />
+      </>}
+      {tab === 'stats' && <ChapterStats id={id} onOpen={cid => { setTab('day'); setCur(cid); }} />}
+      {tab === 'day' && <>
+      <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', marginBottom: 12 }}>
         <select className="lab-input" value={genModel} onChange={e => setGenModel(e.target.value)} title="生成用的模型" style={{ width: 'auto', padding: '6px 10px', fontSize: 12.5, borderRadius: 10 }}>
           {MODEL_OPTIONS.map(m => <option key={m.id} value={m.id}>{m.label}{m.badge ? ` ${m.badge}` : ''}</option>)}
         </select>
         <button className="lab-btn ghost sm" disabled={runningJobs.some(j => j.kind === 'build_day')} onClick={() => setDayOpen(true)}>{runningJobs.some(j => j.kind === 'build_day') ? '骨架排着呢…' : '✦ 排一天骨架'}</button>
-        <button className="lab-btn ghost sm" onClick={() => window.open(`/lab/${id}?m=test${saved?.status === 'published' ? `&ch=${saved.id}` : ''}`, '_blank')}>在体验端打开 ↗</button>
         <button className="lab-btn sm" onClick={addChapter}>＋ 加一章</button>
+        {!hasSpec(space.jd_snapshot?.spec) && <button className="fx-lnk" style={{ marginLeft: 'auto' }} onClick={() => setTab('spec')}>还没有生成要求，补一份 →</button>}
       </div>
-
-      <SpecBar spec={space.jd_snapshot?.spec} anchor={space.jd_snapshot?.anchor} onEdit={() => setSpecEdit({ ...(space.jd_snapshot?.spec || {}) })} />
-      <Modal open={!!specEdit} onCancel={() => setSpecEdit(null)} title="生成要求" width={760} okText={specSaving ? '保存中…' : '保存'} cancelText="取消" okButtonProps={{ disabled: specSaving }}
-        onOk={async () => {
-          if (!specEdit) return; setSpecSaving(true);
-          const j = await fetch(`/api/lab/studio/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ spec: specEdit }) }).then(r => r.json()).catch(() => ({ ok: false, error: '网络错误' }));
-          setSpecSaving(false);
-          if (!j.ok) { message.error(j.error); return; }
-          setData(d => d && { ...d, space: { ...d.space, jd_snapshot: { ...(d.space.jd_snapshot || {}), spec: j.spec || undefined } } });
-          setSpecEdit(null); message.success('要求已保存：之后排一天、重写章节都按新的来（已写好的不会自己变）');
-        }}>
-        <style>{SPEC_CSS}</style>
-        <p style={{ fontSize: 13, color: 'var(--ink3)', margin: '0 0 12px', lineHeight: 1.7 }}>改了只影响以后的生成：想让已有章节也照新要求来，保存后对那一章点「重写」，或重排一天骨架。锁定的章节不动。</p>
-        {specEdit && <SpecEditor spec={specEdit} setSpec={setSpecEdit as React.Dispatch<React.SetStateAction<GenSpec>>} />}
-      </Modal>
 
       <div className="studio-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(220px, 280px) minmax(0, 1fr)', gap: 16, alignItems: 'start' }}>
         <style>{`@media (max-width: 900px) { .studio-grid { grid-template-columns: minmax(0, 1fr) !important; } .studio-day { position: static !important; } }
@@ -282,7 +288,6 @@ export default function StudioPage() {
           )}
           <div style={{ marginTop: 12, fontSize: 11.5, color: 'var(--ink3)', lineHeight: 1.7 }}>按时段排序。早上做晨会 / 交接 / 准备，中段做核心操作，下午傍晚才是收尾、复盘——排反了会标红、不能发布。</div>
         </div>
-        <CastPanel cast={data.cast} chapters={liveChapters} current={draft} onOpen={setCastEdit} />
         </div>
 
         {/* 右：编辑当前这一章 */}
@@ -409,6 +414,7 @@ export default function StudioPage() {
           </div>
         )}
       </div>
+      </>}
 
       <Modal open={dayOpen} onCancel={() => setDayOpen(false)} title="排一天骨架" okText="开始排" cancelText="取消" onOk={startDay}>
         <div style={{ fontSize: 13, color: 'var(--ink2)', lineHeight: 1.8, marginBottom: 10 }}>
@@ -657,25 +663,104 @@ function CastEditor({ spaceId, member, onClose, onDone }: { spaceId: string; mem
   );
 }
 
-/** 工作室顶部一条：这个空间按什么要求生成的（受众 / 深度 / 难度 / 必须有 / 不要 / 参考资料）；老空间没有就提示补一份 */
-function SpecBar({ spec, anchor, onEdit }: { spec?: GenSpec; anchor?: Anchor; onEdit: () => void }) {
-  const [open, setOpen] = useState(false);
-  const rows: [string, string | undefined][] = [['给谁看', spec?.audience], ['要多深', spec?.depth], ['考核多难', spec?.difficulty], ['必须有', spec?.must], ['不要', spec?.avoid]];
+type StudioTab = 'day' | 'cast' | 'spec' | 'plays' | 'stats';
+const STUDIO_TABS: [StudioTab, string][] = [['day', '一天'], ['cast', '角色与素材'], ['spec', '生成要求'], ['plays', '作答'], ['stats', '分析']];
+
+/** 生成要求 tab：定位 + 受众 / 深度 / 难度 / 必须有 / 不要 / 参考资料，直接改、保存 */
+function SpecTab({ id, space, onSaved }: { id: string; space: any; onSaved: (spec: GenSpec | null) => void }) {
+  const { message } = App.useApp();
+  const anchor: Anchor | undefined = space.jd_snapshot?.anchor;
+  const [spec, setSpec] = useState<GenSpec>({ ...(space.jd_snapshot?.spec || {}) });
+  const [busy, setBusy] = useState(false);
+  const save = async () => {
+    setBusy(true);
+    const j = await fetch(`/api/lab/studio/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ spec }) }).then(r => r.json()).catch(() => ({ ok: false, error: '网络错误' }));
+    setBusy(false);
+    if (!j.ok) { message.error(j.error); return; }
+    onSaved(j.spec || null); message.success('要求已保存：之后排一天、写 / 重写章节都按新的来');
+  };
   return (
-    <div className="lab-glass" style={{ padding: '12px 16px', marginBottom: 16 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-        <span className="lab-mono lab-cap">生成要求</span>
-        {anchor && <span style={{ fontSize: 12.5, color: 'var(--ink3)' }}>定位：<b style={{ color: 'var(--ink)' }}>{anchor.label}</b>{anchor.from && anchor.from !== anchor.label ? `（原话「${anchor.from}」）` : ''}</span>}
-        {hasSpec(spec)
-          ? <span style={{ fontSize: 13, color: 'var(--ink2)', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{spec?.preset ? `${spec.preset} · ` : ''}{spec?.audience || spec?.depth || spec?.difficulty || ''}</span>
-          : <span style={{ fontSize: 13, color: 'var(--ink3)', flex: 1 }}>还没有。补一份（给谁看、要多深、考核多难），之后排一天、重写章节就按它来。</span>}
-        {hasSpec(spec) && <button className="lab-btn ghost sm" onClick={() => setOpen(o => !o)}>{open ? '收起' : '展开'}</button>}
-        <button className="lab-btn ghost sm" onClick={onEdit}>{hasSpec(spec) ? '改要求' : '＋ 补一份要求'}</button>
+    <div className="lab-glass" style={{ padding: '18px 20px', maxWidth: 860 }}>
+      <style>{SPEC_CSS}</style>
+      <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 14, lineHeight: 1.8 }}>
+        {anchor ? <>定位：<b>{anchor.label}</b>{anchor.from && anchor.from !== anchor.label ? `（原话「${anchor.from}」）` : ''}{anchor.company ? ` · ${anchor.company}` : ''}。</> : null}
+        这里的要求，排一天、写每一章、出评分标准时都会带上。改了只影响以后的生成：想让已有章节也照新的来，对那一章点「重写」或重排一天骨架；锁定的章节不动。
       </div>
-      {open && hasSpec(spec) && <div style={{ display: 'grid', gap: 6, marginTop: 10, fontSize: 13.5, lineHeight: 1.7 }}>
-        {rows.filter(r => r[1]).map(([k, v]) => <div key={k} style={{ display: 'grid', gridTemplateColumns: '72px minmax(0, 1fr)', gap: 8 }}><span style={{ color: 'var(--ink3)' }}>{k}</span><span>{v}</span></div>)}
-        {!!spec?.refs?.length && <div style={{ display: 'grid', gridTemplateColumns: '72px minmax(0, 1fr)', gap: 8 }}><span style={{ color: 'var(--ink3)' }}>参考资料</span><span>{spec.refs.map(r => `📎 ${r.name}`).join('　')}</span></div>}
-      </div>}
+      <SpecEditor spec={spec} setSpec={setSpec} />
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8 }}><button className="lab-btn sm" disabled={busy} onClick={save}>{busy ? '保存中…' : '保存要求'}</button></div>
     </div>
   );
+}
+
+/** 右上角：发布状态 + 上架 / 下架（迁移 065 没跑时只显示、不让点） */
+function ListingControl({ id, listing, published, onChange }: { id: string; listing?: string; published: number; onChange: (l: string) => void }) {
+  const { message } = App.useApp();
+  const cur = listing || (published ? 'listed' : 'draft');
+  const go = async (l: string) => {
+    const j = await (await fetch('/api/lab/factory', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, listing: l }) })).json().catch(() => ({ ok: false, error: '网络错误' }));
+    if (!j.ok) { message.error(j.error); return; }
+    onChange(l); message.success(l === 'listed' ? '已上架：体验百业里能看到了' : '已下架');
+  };
+  return <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+    <span className={`fx-tag ${LISTING[cur]?.[1]}`}>{LISTING[cur]?.[0]}</span>
+    {listing !== undefined && (cur === 'listed' ? <button className="lab-btn ghost sm" onClick={() => go('unlisted')}>下架</button> : <button className="lab-btn sm" onClick={() => go('listed')}>上架</button>)}
+  </span>;
+}
+
+/** 右上角「⋯」：邀请老师傅、删除空间 */
+function MoreMenu({ id }: { id: string }) {
+  const { message, modal } = App.useApp(); const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const invite = async () => {
+    setOpen(false);
+    const j = await (await fetch(`/api/lab/spaces/${id}/invite`, { method: 'POST' })).json().catch(() => ({ ok: false, error: '网络错误' }));
+    if (!j.ok) { message.error(j.error); return; }
+    await navigator.clipboard.writeText(j.url).catch(() => {});
+    modal.info({ title: '邀请老师傅的链接（已复制）', content: <div style={{ wordBreak: 'break-all', fontSize: 13 }}>{j.url}<div style={{ color: '#888', marginTop: 8 }}>{j.days} 天内有效。老师傅点开能直接给这个空间做示范、纠正做法，不用登录。</div></div> });
+  };
+  const del = () => { setOpen(false); modal.confirm({ title: '删除这个空间？', content: '章节、角色表一起删掉，作答记录保留但找不到空间了。不能恢复。', okText: '删除', okButtonProps: { danger: true }, cancelText: '取消', onOk: async () => {
+    const j = await (await fetch(`/api/lab/spaces/${id}`, { method: 'DELETE' })).json().catch(() => ({ ok: false, error: '网络错误' }));
+    if (!j.ok) { message.error(j.error); return; } message.success('已删除'); router.push('/lab/spaces');
+  } }); };
+  return <span style={{ position: 'relative' }}>
+    <button className="lab-btn ghost sm" aria-expanded={open} onClick={() => setOpen(o => !o)}>⋯</button>
+    {open && <div onMouseLeave={() => setOpen(false)} style={{ position: 'absolute', right: 0, top: 'calc(100% + 6px)', zIndex: 20, background: '#fff', border: '1px solid var(--line)', borderRadius: 12, padding: 6, minWidth: 190, boxShadow: '0 10px 30px rgba(23,26,46,.14)', display: 'grid' }}>
+      <button className="st-mi" onClick={invite}>邀请老师傅来示范</button>
+      <button className="st-mi" onClick={() => { setOpen(false); window.open(`/lab/${id}/chat`, '_blank'); }}>和数字职人聊聊 ↗</button>
+      <button className="st-mi" style={{ color: '#c4323a' }} onClick={del}>删除空间</button>
+      <style>{`.st-mi { border: 0; background: none; text-align: left; padding: 8px 10px; border-radius: 8px; font: inherit; font-size: 13.5px; cursor: pointer; color: var(--ink); } .st-mi:hover { background: rgba(106,92,255,.08); }`}</style>
+    </div>}
+  </span>;
+}
+
+/** 分析 tab：每一章多少人玩、平均分、及格率；点一章跳回「一天」编辑它 */
+function ChapterStats({ id, onOpen }: { id: string; onOpen: (cid: string) => void }) {
+  const [d, setD] = useState<{ chapters: any[]; unassigned: number } | null>(null);
+  useEffect(() => { fetch(`/api/lab/factory?view=chapters&space=${id}`, { cache: 'no-store' }).then(r => r.json()).then(j => setD(j.ok ? j : { chapters: [], unassigned: 0 })).catch(() => setD({ chapters: [], unassigned: 0 })); }, [id]);
+  if (!d) return <div className="fx-muted">读取中…</div>;
+  const rows = [...d.chapters].sort((a, b) => (a.slot || '').localeCompare(b.slot || '') || a.seq - b.seq);
+  const total = rows.reduce((a, c) => a + c.plays, 0) + d.unassigned;
+  const low = rows.filter(c => c.plays >= 3 && (c.avg ?? 100) < 60);
+  return <>
+    <div className="fx-stats">{([['章节', rows.length], ['已发布', rows.filter(c => c.status === 'published').length], ['真人作答', total], ['偏难的章', low.length]] as [string, any][]).map(([k, v]) => <div key={k} className="lab-glass fx-stat"><b>{v}</b><span>{k}</span></div>)}</div>
+    {low.length > 0 && <div className="fx-note">这几章平均分不到 60（至少 3 人做过）：{low.map(c => `「${c.title}」`).join('、')}。可能太难或题意不清，点进去看看，或者对照「生成要求」里的难度重写。</div>}
+    <div className="lab-glass fx-tablewrap">
+      <table className="fx-table">
+        <thead><tr><th>时段</th><th>章节</th><th>状态</th><th>步数</th><th>作答</th><th>平均分</th><th>及格率</th></tr></thead>
+        <tbody>
+          {!rows.length && <tr><td colSpan={7}><div className="fx-empty">还没有章节。</div></td></tr>}
+          {rows.map(c => <tr key={c.id} className="click" onClick={() => onOpen(c.id)}>
+            <td className="fx-muted" style={{ whiteSpace: 'nowrap' }}>{c.slot || '—'}</td>
+            <td><b>{c.title}</b>{c.bench && <span className="fx-sub"> · 有工位</span>}</td>
+            <td><span className={`fx-tag ${c.status === 'published' ? 'ok' : 'warn'}`}>{c.status === 'published' ? '已发布' : '草稿'}</span></td>
+            <td className="fx-num">{c.steps}</td>
+            <td className="fx-num">{c.plays || <span className="fx-muted">0</span>}</td>
+            <td><b style={{ color: col(c.avg) }}>{c.avg ?? '—'}</b></td>
+            <td className="fx-num">{c.pass == null ? '—' : `${c.pass}%`}</td>
+          </tr>)}
+        </tbody>
+      </table>
+    </div>
+    {d.unassigned > 0 && <div className="fx-muted" style={{ marginTop: 8 }}>另有 {d.unassigned} 次作答是老数据，没记在哪一章。</div>}
+  </>;
 }

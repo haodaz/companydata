@@ -1,601 +1,121 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { isBaiyeOnly } from '@/lib/roles';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { App, Modal, Popconfirm } from 'antd';
-import { SKILL_KIND, expertiseLevel } from '@/lib/skill-lab';
-import { useModel } from '@/lib/model-context';
+/**
+ * 百业工厂 · 管理台（2026-11-06 重做，照真活的管理端：生成 / 管理 / 回收 / 分析）。
+ * 以前这页是一面空间卡片墙，和「体验百业」差不多；工厂的主轴是管：哪些空间在做、上没上架、有没有人玩、玩得怎么样。
+ *   tab：空间（每个一行：状态、章节、作答、平均分、最近作答）｜ 作答（所有空间的作答记录）｜ 分析（总览 + 有人玩 / 没人玩 / 低分的）
+ *   右上角：＋ 新建空间（/lab/studio/new，两层：定位 + 生成要求）、素材库。点一行进这个空间（/lab/studio/[id]，里面再分 tab）。
+ * 普通用户只看自己生成的，管理员看全部。预览、上下架是每行右边的小动作，不是主轴。
+ */
+import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { App } from 'antd';
 import { useUser } from '@/lib/user-context';
-import { familyOf } from '@/lib/career-family';
-import { tagsOf, ALL_TAGS, FEATURE_TAGS } from '@/lib/career-tags';
+import { col, FX_CSS, LISTING, Plays, when } from '@/components/lab/FactoryKit';
 
-const BUILD_STEPS = ['读取岗位 JD', '逐条拆解岗位职责', '对齐能力项', '设计可检验的任务', '生成评分标准', '唤醒岗位 AI 核心'];
-/** 真实构建（任意 JD）的阶段：与服务端 progress 的 phase 文案一致 */
-const BUILD_PHASES = ['结构化职业 · 推断典型岗位', '读取岗位 JD', '拆解职责 · 设计任务与故事线', '推断技能集 · 设计虚拟工位 · 规划场景', '生成场景与立绘', '唤醒岗位 AI 核心', '完成'];
+type Space = { id: string; title: string; name: string | null; role: string; avatar: string | null; kind: string; company: string | null; anchor: any; preset: string | null; listing: 'draft' | 'listed' | 'unlisted'; chapters: { total: number; published: number }; plays: number; avg: number | null; last_play: string | null; created_by: string; created_at: string };
+const KIND: Record<string, string> = { career: '职业探索', discipline: '学科体验', research_post: '研究岗', pasted: '粘贴 JD', jd: '真实 JD' };
 
+export default function Page() { return <Suspense><App><Factory /></App></Suspense>; }
 
-export default function LabHome() {
-  const { message } = App.useApp();
-  const router = useRouter();
-
-  const [spaces, setSpaces] = useState<any[]>([]);
-  const [totals, setTotals] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [needMigration, setNeedMigration] = useState('');
-  /** 建空间的两个入口：'jd' 从岗位库的一份 JD 来，'career' 只给一个职业名 */
-  const [pick, setPick] = useState<null | 'jd' | 'career'>(null);
-  const [jds, setJds] = useState<any[]>([]);
-  const [jdsLoading, setJdsLoading] = useState(false);
-  const [building, setBuilding] = useState<any | null>(null);
-  /** 刚生成完的成果小结（只给 AI 现场生成那条路；预置示范是现成的，直接进空间） */
-  const [done, setDone] = useState<any | null>(null);
-  const [buildStep, setBuildStep] = useState(0);
-  // 任意 JD：岗位库搜索 + 真实构建进度
-  const { currentModel } = useModel();
-  // 海外这套 /lab 免登录（融资演示）：没登录的人只看和玩，生成 / 删除这些工厂操作不给按钮（接口那边也拦着）
-  const { user } = useUser();
-  const [jobQ, setJobQ] = useState('');
-  const [jobs, setJobs] = useState<any[]>([]);
-  const [jobsLoading, setJobsLoading] = useState(false);
-  const [buildInfo, setBuildInfo] = useState<{ phase: string; detail?: string; error?: string } | null>(null);
-  const [profession, setProfession] = useState('');
-  const [careerMode, setCareerMode] = useState<'career' | 'discipline'>('career');   // 职业 / 学科·研究领域（2026-10-20）
-  // 粘贴一份全新 JD（不在岗位库里）
-  const [paste, setPaste] = useState({ title: '', company: '', text: '' });
-  const [buildSince, setBuildSince] = useState(0);
-  const [now, setNow] = useState(0);
-  // 「我有个问题」：一句话分给最合适的 1–3 位数字职人
-  const [ask, setAsk] = useState('');
-  const [asking, setAsking] = useState(false);
-  const [picks, setPicks] = useState<any[] | null>(null);
-  const routeProblem = async () => {
-    const q = ask.trim();
-    if (q.length < 4) { message.warning('把问题说具体一点'); return; }
-    setAsking(true); setPicks(null);
-    try {
-      const j = await (await fetch('/api/lab/route-problem', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ problem: q, model: currentModel }) })).json();
-      if (!j.ok) throw new Error(j.error);
-      setPicks(j.picks || []);
-    } catch (e: any) { message.error(e.message); }
-    finally { setAsking(false); }
-  };
-  /** 交给他：问题走 sessionStorage，不放进网址——网址会留在浏览器历史和服务器日志里 */
-  const handTo = (id: string) => {
-    try { sessionStorage.setItem(`lab:problem:${id}`, ask.trim()); } catch { /* 存不了就让人进去再贴一次 */ }
-    router.push(`/lab/${id}?m=solve`);
-  };
-
-  // 列表筛选：搜一个词 + 选一个领域 + 勾若干标记（标记之间是「或」，人多了只想快速捞出一拨）
-  const [q, setQ] = useState('');
-  const [fam, setFam] = useState('');
-  /** 列表分两类：职业岗位体验 / 学科研究体验（研究岗空间、学科空间） */
-  const [track, setTrack] = useState<'career' | 'research'>('career');
-  const [marks, setMarks] = useState<string[]>([]);
-
-  const load = useCallback(async () => {
-    setLoading(true);
-    try {
-      const json = await (await fetch('/api/lab/spaces?mine=1')).json();   // 百业工厂只列自己生成的（管理员全部）；看所有空间去体验百业
-      if (json.ok) { setSpaces(json.data); setTotals(json.totals || null); setNeedMigration(''); }
-      else if (json.needMigration) setNeedMigration(json.error);
-      else message.error(json.error);
-    } finally { setLoading(false); }
-  }, [message]);
-
-  useEffect(() => { load(); }, [load]);
-
-  // 首页的「创造一个空间」直接带着意图跳进来，省掉一次点击
-  useEffect(() => {
-    const v = new URLSearchParams(window.location.search).get('new');
-    // 11-06 起新建空间统一走 /lab/studio/new（两层：定位 + 生成要求）；?new=jd 仍打开预置示范 JD
-    if (v === 'career') { router.replace('/lab/studio/new'); return; }
-    if (v === 'jd') { setPick('jd'); loadJds(); }
-    if (v) window.history.replaceState(null, '', '/lab/spaces');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // 构建动画：步骤文案轮播
-  useEffect(() => {
-    if (!building) return;
-    setBuildStep(0);
-    if (building.buildId) {
-      // 真实构建：轮询服务端进度
-      const iv = setInterval(async () => {
-        setNow(Date.now());
-        try { const j = await (await fetch(`/api/lab/spaces?build=${building.buildId}`)).json(); if (j.build) setBuildInfo(j.build); } catch { /* 下一拍再试 */ }
-      }, 1500);
-      return () => clearInterval(iv);
-    }
-    const iv = setInterval(() => setBuildStep(s => Math.min(s + 1, BUILD_STEPS.length - 1)), 1500);
-    return () => clearInterval(iv);
-  }, [building]);
-
-  const searchJobs = async (q: string) => {
-    setJobQ(q);
-    if (q.trim().length < 2) { setJobs([]); return; }
-    setJobsLoading(true);
-    try {
-      const json = await (await fetch(`/api/db/jobs?search=${encodeURIComponent(q.trim())}&pageSize=8`)).json();
-      const rows = (json.data || json.items || []) as any[];
-      setJobs(rows.filter(r => r.responsibilities || r.overview));
-    } catch { setJobs([]); }
-    finally { setJobsLoading(false); }
-  };
-
-  /** 任意 JD → 岗位 AI 自己生成 技能集草案 + 故事线 + 虚拟工位 + 美术（约 2–4 分钟）；或只给一个职业名 → 职业探索空间 */
-  /** 删掉一个空间（演示时反复构建用）；预置示范删掉后还能从 JD 弹窗重新构建 */
-  const removeSpace = async (id: string) => {
-    try {
-      const json = await (await fetch(`/api/lab/spaces/${id}`, { method: 'DELETE' })).json();
-      if (!json.ok) throw new Error(json.error || '删除失败');
-      message.success('空间已删除');
-      setSpaces(list => list.filter((x: any) => x.id !== id));
-      loadJds();
-    } catch (e: any) { message.error(e.message); }
-  };
-
-  const buildFromJob = async (job: any | null, prof?: string, pasted?: { title: string; company: string; text: string }) => {
-    const buildId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
-    setPick(null);
-    const startedAt = Date.now();
-    setBuildInfo({ phase: prof ? '结构化职业 · 推断典型岗位' : '读取岗位 JD' }); setBuildSince(startedAt); setNow(startedAt);
-    // 粘贴的 JD 也走「从 JD 建」的展示，公司 / 岗位名用填的（没填就叫新 JD）
-    if (pasted) job = { institute_or_company_name: pasted.company.trim() || '新 JD', name: pasted.title.trim() || '未命名岗位' };
-    setBuilding(prof ? { company: careerMode === 'discipline' ? '学科体验' : '职业探索', title: prof, buildId, career: true } : { company: job.institute_or_company_name, title: job.name, buildId });
-    try {
-      const payload = prof ? (careerMode === 'discipline' ? { discipline: prof, model: currentModel, buildId } : { profession: prof, model: currentModel, buildId })
-        : pasted ? { jdText: pasted.text.trim(), title: pasted.title.trim(), company: pasted.company.trim(), model: currentModel, buildId }
-        : { jobId: job.id, model: currentModel, buildId };
-      const json = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })).json();
-      if (!json.ok) throw new Error(json.error);
-      setBuilding(null);
-      setDone({ ...json, secs: Math.round((Date.now() - startedAt) / 1000), name: prof || job.name, company: prof ? '职业探索' : job.institute_or_company_name, career: !!prof });
-      load();
-    } catch (e: any) { message.error(e.message); setBuilding(null); }
-  };
-
-  const loadJds = async () => {
-    setJdsLoading(true);
-    try {
-      const json = await (await fetch('/api/lab/seed')).json();
-      if (json.ok) setJds(json.jds); else message.error(json.error);
-    } finally { setJdsLoading(false); }
-  };
-
-  /** 从一条 JD 构建空间：拆解过程至少演完一遍再进入 */
-  const build = async (jd: any) => {
-    if (jd.space_id) { router.push(`/lab/${jd.space_id}`); return; }
-    setPick(null);
-    setBuilding(jd);
-    try {
-      const [json] = await Promise.all([
-        fetch('/api/lab/seed', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug: jd.slug }) }).then(r => r.json()),
-        new Promise(r => setTimeout(r, BUILD_STEPS.length * 1500 + 600)),
-      ]);
-      if (!json.ok) throw new Error(json.error);
-      router.push(`/lab/${json.id}`);
-    } catch (e: any) { message.error(e.message); setBuilding(null); }
-  };
-
-  // hook 必须在下面「构建中 / 构建完成」两个提前 return 之前调用，否则一点生成整页就崩（Rendered fewer hooks）
-  // ── 给每个空间算出：可搜的正文、一级领域、标记 ──
-  const enriched = useMemo(() => spaces.map((s: any) => {
-    const jd = s.jd_snapshot || {};
-    const p = s.profile || {};
-    const prof = jd.career?.profession || '';
-    const text = [p.name, p.codename, p.role, p.tagline, (p.capabilities || []).join(' '), jd.company, jd.title, prof, jd.location, s.skill?.name, s.skill?.domain, s.skill?.expert_location]
-      .filter(Boolean).join(' ');
-    // 打标记只认「这人是干什么的」，不拿 tagline 和能力词那堆自由文本去撞——
-    // 不然西点师会因为一句「面糊是有记忆的材料」被打上「高精尖材料」
-    const tags = tagsOf([p.role, prof, jd.title, s.skill?.name, s.skill?.domain].filter(Boolean).join(' '));
-    tags.unshift(jd.kind === 'career' ? '职业探索' : jd.kind === 'discipline' ? '学科体验' : jd.kind === 'research_post' ? '研究岗' : jd.kind === 'pasted' ? '粘贴 JD' : '真实 JD');
-    if (s.features?.immersive) tags.unshift('沉浸场景');
-    if (s.features?.bench) tags.unshift('虚拟工位');
-    return { s, tags, text: text.toLowerCase(), family: familyOf(prof, s.skill?.domain, jd.title, jd.company), research: jd.kind === 'research_post' || jd.kind === 'discipline' };
-  }), [spaces]);
-  const trackCount = { career: enriched.filter(e => !e.research).length, research: enriched.filter(e => e.research).length };
-  const inTrack = useMemo(() => enriched.filter(e => (track === 'research') === e.research), [enriched, track]);
-
-  const famCount = useMemo(() => {
-    const m = new Map<string, number>();
-    for (const e of inTrack) m.set(e.family, (m.get(e.family) || 0) + 1);
-    return [...m.entries()].sort((a, b) => b[1] - a[1]);
-  }, [inTrack]);
-  const tagCount = useMemo(() => {
-    const m = new Map<string, number>();
-    for (const e of inTrack) for (const t of e.tags) m.set(t, (m.get(t) || 0) + 1);
-    return ALL_TAGS.filter(t => m.has(t)).map(t => [t, m.get(t)!] as [string, number]);
-  }, [inTrack]);
-
-  const shown = useMemo(() => {
-    const kw = q.trim().toLowerCase();
-    return inTrack.filter(e =>
-      (!fam || e.family === fam) &&
-      (!marks.length || marks.some(t => e.tags.includes(t))) &&
-      (!kw || e.text.includes(kw) || e.tags.some(t => t.toLowerCase().includes(kw)) || e.family.includes(kw)));
-  }, [inTrack, q, fam, marks]);
-  const filtering = !!(q.trim() || fam || marks.length);
-  const toggleMark = (t: string) => setMarks(l => l.includes(t) ? l.filter(x => x !== t) : [...l, t]);
-
-  // ── 构建中：全屏科技感加载 ──
-  // 现场生成的落点：刚才那两分钟，岗位 AI 到底做出了什么
-  if (done) {
-    const sum = done.summary || {};
-    const b = sum.bench;
-    const mm = `${String(Math.floor(done.secs / 60)).padStart(2, '0')}:${String(done.secs % 60).padStart(2, '0')}`;
-    const cards: { k: string; v: React.ReactNode; note: string }[] = [
-      { k: '一天的第一段', v: `${sum.steps || 0} 步`, note: `${sum.title ? `${sum.title}。` : ''}后面的时段在百业工厂里排骨架、一格一格往下写` },
-      { k: '技能卡草案', v: `${sum.rules || 0} 条规则`, note: `${sum.cardSteps || 0} 步做法 · 等第一位真人专家来校正` },
-      { k: '虚拟工位', v: b ? (b.track ? '轨迹工位' : '设备工位') : '本次没做出', note: b ? `${b.name}：${b.controls} 个控件 · ${b.goals} 个目标 · ${b.rules} 条规则` : (done.benchNote || '先以故事线为主') },
-      { k: '场景美术', v: `${(done.artCount || 0) + (done.artReused || 0)} 张`, note: done.artReused ? `新生成 ${done.artCount} 张 · 复用素材库 ${done.artReused} 张` : (done.artCount ? `${sum.scenes || 0} 个场景 · ${sum.npcs || 0} 位人物` : '文生图服务不可用') },
-    ];
-    return (
-      <div className="lab-in" style={{ minHeight: '70vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 22, textAlign: 'center' }}>
-        <div className="lab-orb" style={{ ['--s' as string]: '120px' }}><div className="ring" /><div className="ring r2" /><div className="core lab-mono" style={{ fontSize: 13 }}>✓</div><div className="sat" /></div>
-        <div>
-          <div className="lab-mono lab-cap">BUILT IN {mm}</div>
-          <div style={{ fontSize: 24, fontWeight: 800, marginTop: 6 }}>{done.company} · {done.name}</div>
-          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginTop: 6 }}>刚才这 {mm}，岗位 AI 从{done.career ? '一个职业名' : '这份 JD'}出发，自己做出了这些：</div>
-        </div>
-        <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', width: 'min(100%, 880px)' }}>
-          {cards.map(c => (
-            <div key={c.k} className="lab-glass" style={{ padding: 16, textAlign: 'left' }}>
-              <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>{c.k}</div>
-              <div style={{ fontSize: 20, fontWeight: 800, lineHeight: 1.3 }}>{c.v}</div>
-              <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 6, lineHeight: 1.6 }}>{c.note}</div>
-            </div>
-          ))}
-        </div>
-        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
-          <button className="lab-btn" onClick={() => router.push(`/lab/${done.id}`)}>进入空间 →</button>
-          <button className="lab-btn ghost" onClick={() => { setDone(null); setPick(done.career ? 'career' : 'jd'); if (!done.career) loadJds(); }}>再生成一个</button>
-          <button className="lab-btn ghost" onClick={() => setDone(null)}>回到列表</button>
-        </div>
-      </div>
-    );
-  }
-
-  if (building) {
-    return (
-      <div style={{ minHeight: '70vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 28 }}>
-        <div className="lab-orb busy" style={{ ['--s' as string]: '200px' }}><div className="ring" /><div className="ring r2" /><div className="core" /><div className="sat" /></div>
-        <div>
-          <div className="lab-mono lab-cap">BUILDING SKILL SPACE</div>
-          <div style={{ fontSize: 22, fontWeight: 800, marginTop: 6 }}>{building.company} · {building.title}</div>
-        </div>
-        {building.buildId ? (() => {
-          const cur = Math.max(0, BUILD_PHASES.indexOf(buildInfo?.phase || ''));
-          const secs = Math.max(0, Math.round((now - buildSince) / 1000));
-          return (
-            <div className="lab-glass lab-scan" style={{ padding: '18px 26px', minWidth: 360, textAlign: 'left' }}>
-              {BUILD_PHASES.slice(building.career ? 0 : 1, -1).map((s, i) => { i += building.career ? 0 : 1; return (
-                <div key={s} className="lab-mono" style={{ fontSize: 13, padding: '4px 0', color: i < cur ? '#12a150' : i === cur ? 'var(--v)' : 'var(--ink3)', fontWeight: i === cur ? 700 : 400 }}>
-                  {i < cur ? '✓' : i === cur ? '▸' : '·'} {s}{i === cur && <span className="lab-dots" />}
-                  {i === cur && buildInfo?.detail && <div style={{ fontSize: 11.5, color: 'var(--ink3)', fontWeight: 400, paddingLeft: 18 }}>{buildInfo.detail}</div>}
-                </div>
-              ); })}
-              <div className="lab-mono" style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 10, letterSpacing: '.08em' }}>{String(Math.floor(secs / 60)).padStart(2, '0')}:{String(secs % 60).padStart(2, '0')} · 岗位 AI 正在自己生成技能集、故事线、虚拟工位和场景，约 2–4 分钟</div>
-            </div>
-          );
-        })() : (
-        <div className="lab-glass lab-scan" style={{ padding: '18px 26px', minWidth: 320, textAlign: 'left' }}>
-          {BUILD_STEPS.map((s, i) => (
-            <div key={s} className="lab-mono" style={{ fontSize: 13, padding: '4px 0', color: i < buildStep ? '#12a150' : i === buildStep ? 'var(--v)' : 'var(--ink3)', fontWeight: i === buildStep ? 700 : 400 }}>
-              {i < buildStep ? '✓' : i === buildStep ? '▸' : '·'} {s}{i === buildStep && <span className="lab-dots" />}
-            </div>
-          ))}
-        </div>
-        )}
-      </div>
-    );
-  }
-
-
+function Factory() {
+  const router = useRouter(); const sp = useSearchParams();
+  const { user, loading: userLoading } = useUser() as any;
+  const tab = (sp.get('tab') as 'spaces' | 'plays' | 'stats') || 'spaces';
+  const [d, setD] = useState<{ spaces: Space[]; migrated: boolean; role: string } | null>(null); const [err, setErr] = useState('');
+  const load = useCallback(() => fetch('/api/lab/factory?view=spaces', { cache: 'no-store' }).then(r => r.json()).then(j => { if (j.ok) setD(j); else setErr(j.error); }).catch(() => setErr('没读到')), []);
+  useEffect(() => { if (user) load(); }, [user, load]);
+  // 老入口 ?new=career / ?new=jd 统一进新建空间页
+  useEffect(() => { if (sp.get('new')) router.replace('/lab/studio/new'); }, [sp, router]);
+  if (!userLoading && !user) return <div className="lab-glass" style={{ padding: 40, textAlign: 'center', color: 'var(--ink2)' }}>百业工厂要先登录。<a href={`/lab/login?next=${encodeURIComponent('/lab/spaces')}`} style={{ color: 'var(--v)', fontWeight: 700 }}>去登录</a></div>;
+  const setTab = (t: string) => router.replace(t === 'spaces' ? '/lab/spaces' : `/lab/spaces?tab=${t}`);
   return (
-    <>
-      {/* 这一页只干活：介绍的话都在首页，这里直接是人和入口。页头压一条深色，跟首页接上 */}
-      <style>{`
-        .sp-head { --hd-fg: #fff; --hd-fg2: rgba(255,255,255,.66); --hd-fg3: rgba(255,255,255,.52); --hd-glass: rgba(255,255,255,.1); --hd-line: rgba(255,255,255,.2);
-          --hd-grad: linear-gradient(118deg, #9f91ff, #4fe0f2); }
-        .lab[data-theme="light"] .sp-head { --hd-fg: var(--ink); --hd-fg2: var(--ink2); --hd-fg3: var(--ink3); --hd-glass: rgba(255,255,255,.85); --hd-line: rgba(106,92,255,.22);
-          --hd-grad: linear-gradient(118deg, var(--v), var(--c));
-          background: radial-gradient(900px 300px at 18% -40%, rgba(106,92,255,.2), transparent 70%), radial-gradient(700px 260px at 86% 140%, rgba(18,181,203,.16), transparent 70%), #eef0fb !important;
-          border-bottom-color: var(--line); }
-        .lab[data-theme="light"] .sp-head::after { background-image: linear-gradient(rgba(106,92,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(106,92,255,.08) 1px, transparent 1px); }
-        .lab[data-theme="light"] .sp-ask .row { background: #fff; border-color: rgba(106,92,255,.22); box-shadow: 0 8px 24px rgba(88,76,220,.08); }
-        .lab[data-theme="light"] .sp-ask input { color: var(--ink); }
-        .lab[data-theme="light"] .sp-ask input::placeholder { color: var(--ink3); }
-        .lab[data-theme="light"] .sp-ask .pick { background: rgba(255,255,255,.88); border-color: rgba(106,92,255,.18); }
-        .lab[data-theme="light"] .sp-ask .pick .go { color: var(--v); }
-        .sp-head { position: relative; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); width: 100vw; margin-top: -24px; margin-bottom: 22px;
-          background: radial-gradient(900px 300px at 18% -40%, rgba(106,92,255,.5), transparent 70%), radial-gradient(700px 260px at 86% 140%, rgba(18,181,203,.32), transparent 70%), #0a0c1a;
-          border-bottom: 1px solid rgba(255,255,255,.1); overflow: hidden; }
-        .sp-head::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5;
-          background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 44px 44px;
-          mask-image: radial-gradient(ellipse 70% 100% at 40% 0%, #000 10%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 70% 100% at 40% 0%, #000 10%, transparent 75%); }
-        .sp-head-in { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 34px 28px 22px; display: flex; align-items: flex-end; gap: 18px; flex-wrap: wrap; }
-        .sp-ask { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 28px 26px; }
-        .sp-ask .row { display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 14px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); }
-        .sp-ask input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: #fff; font-size: 14.5px; font-family: inherit; }
-        .sp-ask input::placeholder { color: rgba(255,255,255,.38); }
-        .sp-tabs { display: inline-flex; gap: 4px; padding: 4px; border-radius: 12px; background: rgba(106,92,255,.08); margin-bottom: 11px; max-width: 100%; }
-        .sp-tabs button { border: 0; background: transparent; padding: 7px 16px; border-radius: 9px; font-size: 14px; font-weight: 700; color: #4a5070; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
-        .sp-tabs button span { font-size: 12px; font-weight: 600; opacity: .55; font-family: ui-monospace, Menlo, monospace; }
-        .sp-tabs button.on { background: #fff; color: #5b4bff !important; box-shadow: 0 1px 4px rgba(23,26,46,.12); }
-        .lab[data-theme="dark"] .sp-tabs { background: rgba(255,255,255,.06); }
-        .lab[data-theme="dark"] .sp-tabs button.on { background: rgba(255,255,255,.14); color: #fff; }
-        .sp-ask .picks { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); margin-top: 12px; }
-        .sp-ask .pick { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 14px; cursor: pointer; background: rgba(9,11,24,.55); border: 1px solid rgba(255,255,255,.12); transition: border-color .2s, transform .2s; }
-        .sp-ask .pick:hover { border-color: rgba(159,145,255,.7); transform: translateY(-2px); }
-        .sp-ask .pick img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; object-position: 54% 10%; border: 2px solid rgba(255,255,255,.85); flex-shrink: 0; }
-        .sp-ask .pick .go { font-size: 12.5px; font-weight: 700; color: #9f91ff; white-space: nowrap; }
-        @media (max-width: 640px) { .sp-ask .row { flex-wrap: wrap; } .sp-ask .row > span { width: 100%; } }
-      `}</style>
-      <div className="sp-head sp-root">
-        <div className="sp-head-in">
-          <div style={{ flex: '1 1 340px', minWidth: 0 }}>
-            <div className="lab-mono lab-cap" style={{ color: 'var(--hd-fg3)' }}>AI 百业 · 百业工厂</div>
-            <h1 style={{ margin: '8px 0 6px', fontSize: 'clamp(23px, 3.2vw, 34px)', fontWeight: 900, letterSpacing: -.2, color: 'var(--hd-fg)' }}>
-              百业已入驻 <span style={{ background: 'var(--hd-grad)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{totals?.spaces ?? spaces.length}</span> 位数字职人
-            </h1>
-            {totals && (
-              <div style={{ fontSize: 13.5, color: 'var(--hd-fg2)', lineHeight: 1.8 }}>
-                {totals.experts > 0 && <>手艺来自{totals.expertPlaces?.length ? `${totals.expertPlaces.slice(0, 3).join('、')}${totals.expertPlaces.length > 3 ? '等地' : ''}` : ''}的 {totals.experts} 个人；</>}
-                {totals.served > 0 && <>已经被 {totals.places} 个地方的 {totals.served} 个人用过。</>}
-              </div>
-            )}
-          </div>
-          {user && <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <button className="lab-btn" disabled={!!needMigration} onClick={() => router.push('/lab/studio/new')}>＋ 新建空间</button>
-            <button className="lab-btn ghost" disabled={!!needMigration} style={{ color: 'var(--hd-fg)', background: 'var(--hd-glass)', boxShadow: '0 0 0 1px var(--hd-line)' }} onClick={() => { setPick('jd'); loadJds(); }}>预置示范 JD</button>
-            <button className="lab-btn ghost" style={{ color: 'var(--hd-fg)', background: 'var(--hd-glass)', boxShadow: '0 0 0 1px var(--hd-line)' }} onClick={() => router.push('/lab/assets')}>素材库 · 人物 / 场景 / 道具</button>
-          </div>}
-        </div>
-        {/* 平行解决别人的问题：不用先猜该进哪个空间 */}
-        <div className="sp-ask">
-          <div className="row">
-            <span className="lab-mono" style={{ color: 'var(--hd-fg3)', fontSize: 11, letterSpacing: '.12em', whiteSpace: 'nowrap' }}>我有个问题</span>
-            <input value={ask} onChange={e => setAsk(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !asking) routeProblem(); }}
-              placeholder="一句话说清楚，比如：狗一出门就暴冲拉绳 / 新产线焊缝老有气孔 / 婚礼当天新娘礼服开线了" />
-            <button className="lab-btn sm" disabled={asking || ask.trim().length < 4} onClick={routeProblem}>{asking ? '在找人…' : '找谁帮忙 →'}</button>
-          </div>
-          {picks && (
-            <div className="picks">
-              {picks.length === 0 && <div style={{ color: 'var(--hd-fg3)', fontSize: 13 }}>在岗的人里暂时没有对口的。可以换个说法，或者用上面的「新职业」造一位。</div>}
-              {picks.map(p => (
-                <div key={p.id} className="pick" onClick={() => handTo(p.id)}>
-                  {p.avatar && <Image src={p.avatar} alt="" width={46} height={46} sizes="46px" />}
-                  <div style={{ minWidth: 0, flex: 1 }}>
-                    <div className="lab-mono" style={{ fontSize: 10, letterSpacing: '.1em', color: '#9f91ff' }}>{p.name}{p.expert ? ' · 有真人专家校正' : ' · AI 草案'}</div>
-                    <div style={{ fontSize: 14.5, fontWeight: 800, color: 'var(--hd-fg)' }}>{p.role}<span style={{ fontWeight: 500, color: 'var(--hd-fg3)', fontSize: 12 }}> · {p.profession}</span></div>
-                    <div style={{ fontSize: 12.5, color: 'var(--hd-fg2)', marginTop: 2 }}>{p.why}</div>
-                  </div>
-                  <span className="go">交给他 →</span>
-                </div>
-              ))}
-            </div>
-          )}
+    <div className="fx">
+      <style>{FX_CSS}</style>
+      <div className="fx-head">
+        <div><div className="lab-mono lab-cap">FACTORY · 百业工厂</div><h1>百业工厂</h1><p>生成职业模拟空间、上架给人体验、看作答、看哪里要改。{d?.role === 'admin' ? '你是管理员，看到的是全部空间。' : '这里只有你自己生成的空间。'}</p></div>
+        <div className="fx-acts">
+          <button className="lab-btn ghost sm" onClick={() => router.push('/lab/assets')}>素材库</button>
+          <button className="lab-btn sm" onClick={() => router.push('/lab/studio/new')}>＋ 新建空间</button>
         </div>
       </div>
-
-      {needMigration && (
-        <div className="lab-glass" style={{ padding: '14px 18px', marginBottom: 20, borderColor: '#ffd591', background: 'rgba(255,247,230,.85)' }}>
-          <b>还差一步：</b>{needMigration}。执行后刷新本页即可（这份 SQL 同时包含「生产线任务历史」的表）。
-        </div>
-      )}
-
-
-      {/* 四十来号人之后，列表得能捞：搜一个词、挑一个领域、勾几个标记 */}
-      {spaces.length > 3 && (
-        <div className="lab-glass" style={{ padding: '14px 16px', marginBottom: 14 }}>
-          <div className="sp-tabs">
-            {([['career', '职业岗位体验'], ['research', '学科研究体验']] as const).map(([k, t]) => (
-              <button key={k} className={track === k ? 'on' : ''} onClick={() => { setTrack(k); setFam(''); setMarks([]); }}>{t}<span>{trackCount[k]}</span></button>
-            ))}
-          </div>
-          <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-            <input
-              className="lab-input" value={q} onChange={e => setQ(e.target.value)}
-              placeholder={track === 'research' ? '搜学科、研究方向、机构、技能——如：固态电池 / 结构生物学 / 研究院' : '搜人、职业、企业、城市、技能——如：焊 / 星巴克 / 上海 / 潜水'}
-              style={{ flex: '1 1 280px', minWidth: 0, padding: '9px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }}
-            />
-            <select
-              value={fam} onChange={e => setFam(e.target.value)}
-              style={{ padding: '9px 12px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 13.5, background: '#fff', color: fam ? 'var(--v)' : 'var(--ink2)', fontWeight: fam ? 700 : 400, outline: 'none', cursor: 'pointer' }}
-            >
-              <option value="">全部行业 · {inTrack.length}</option>
-              {famCount.map(([f, n]) => <option key={f} value={f}>{f} · {n}</option>)}
-            </select>
-            {filtering && <button className="lab-btn sm ghost" onClick={() => { setQ(''); setFam(''); setMarks([]); }}>清空</button>}
-          </div>
-          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 11 }}>
-            {tagCount.map(([t, n]) => {
-              const on = marks.includes(t);
-              const feat = FEATURE_TAGS.includes(t);
-              return (
-                <button
-                  key={t} onClick={() => toggleMark(t)}
-                  className={`lab-chip${on ? (feat ? ' c' : '') : ' g'}`}
-                  style={{ cursor: 'pointer', fontSize: 12.5, padding: '5px 11px', border: on ? '1px solid var(--v)' : undefined, background: on && !feat ? 'rgba(106,92,255,.14)' : undefined, color: on && !feat ? 'var(--v)' : undefined, fontWeight: on ? 700 : 400 }}
-                >
-                  {t}<span className="lab-mono" style={{ opacity: .55, marginLeft: 5 }}>{n}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>SPACES · {shown.length}{filtering ? ` / ${inTrack.length}` : ''}</div>
-      {loading ? (
-        <div className="lab-glass lab-scan" style={{ height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ink3)' }}><span className="lab-mono">LOADING<span className="lab-dots" /></span></div>
-      ) : spaces.length === 0 ? (
-        // 普通用户工厂里只列自己生成的：一个都没有时说清楚，并给出生成入口（别像是加载失败）
-        <div className="lab-glass" style={{ padding: '44px 28px', textAlign: 'center', color: 'var(--ink2)', lineHeight: 1.9 }}>
-          <div style={{ fontSize: 17, fontWeight: 800, color: 'var(--ink)', marginBottom: 6 }}>你还没有生成过职业模拟</div>
-          <div style={{ fontSize: 13.5, color: 'var(--ink3)' }}>百业工厂里只列你自己生成的空间。输入一个职业名，或从一份岗位 JD 开始，几分钟就能生成第一个。</div>
-          <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap', marginTop: 18 }}>
-            <button className="lab-btn" disabled={!!needMigration} onClick={() => router.push('/lab/studio/new')}>＋ 新建空间</button>
-          </div>
-          <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 16 }}>想先看看别人做的？所有空间都在 <a href="/lab/gallery" style={{ color: 'var(--v)', fontWeight: 700 }}>体验百业</a>。</div>
-        </div>
-      ) : (
-        <div style={{ display: 'grid', gap: 18, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 440px), 1fr))' }}>
-          {shown.map(({ s, tags: mk }, i) => {
-            const jd = s.jd_snapshot || {};
-            const kind = SKILL_KIND[s.skill?.kind];
-            const profile = s.profile || {};
-            const lv = expertiseLevel(s.skill);
-            return (
-              <div key={s.id} className="lab-glass hover lab-in" style={{ padding: 22, animationDelay: `${i * 90}ms`, minWidth: 0, position: 'relative' }} onClick={() => router.push(`/lab/${s.id}`)}>
-                {user && <div onClick={e => e.stopPropagation()} style={{ position: 'absolute', right: 12, top: 12, zIndex: 2, display: 'flex', gap: 6 }}>
-                  <button title="在工作室里编辑这一天的章节" onClick={() => router.push(`/lab/studio/${s.id}`)} style={{ height: 26, padding: '0 9px', borderRadius: 8, border: '1px solid var(--line)', background: 'rgba(255,255,255,.7)', color: 'var(--ink2)', cursor: 'pointer', fontSize: 12, fontWeight: 600 }}>编辑</button>
-                  <Popconfirm title="删除这个技能空间？" description={<>作答、账本和蒸馏出的技能会一起删除。<br />预置示范删掉后可以重新构建。</>} onConfirm={() => removeSpace(s.id)} okText="删除" okButtonProps={{ danger: true }} cancelText="取消">
-                    <button title="删除空间" style={{ width: 26, height: 26, borderRadius: 8, border: '1px solid var(--line)', background: 'rgba(255,255,255,.7)', color: 'var(--ink3)', cursor: 'pointer', fontSize: 14, lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
-                  </Popconfirm>
-                </div>}
-                <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-                  {/* 人就是人：不套转圈。这么小的圆里转着彩环，看起来就是闪屏 */}
-                  {profile.avatar ? (
-                    <div style={{ position: 'relative', width: 96, height: 96, flexShrink: 0 }}>
-                      <div style={{ position: 'absolute', inset: 2, borderRadius: '50%', background: 'radial-gradient(circle at 50% 36%, rgba(167,155,255,.4), rgba(18,181,203,.14) 62%, transparent 76%)' }} />
-                      <Image src={profile.avatar} alt="" width={96} height={96} sizes="96px" style={{ position: 'relative', width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', objectPosition: '54% 10%', border: '2px solid rgba(255,255,255,.95)', boxShadow: '0 6px 18px rgba(60,45,130,.18)', background: 'rgba(255,255,255,.6)' }} />
-                    </div>
-                  ) : (
-                    <div className="lab-orb" style={{ ['--s' as string]: '76px' }}>
-                      <div className="ring" /><div className="core lab-mono" style={{ fontSize: 10 }}>Lv{lv.level}</div><div className="sat" />
-                    </div>
-                  )}
-                  <div style={{ minWidth: 0, flex: 1 }}>
-                    <div className="lab-mono lab-cap">{profile.name || profile.codename || 'JD-CORE'}{profile.name && profile.codename ? ` · ${profile.codename}` : ''}</div>
-                    <div style={{ fontSize: 17, fontWeight: 800, lineHeight: 1.35 }}>{profile.name ? <>{profile.name} <span style={{ color: 'var(--v)' }}>· {profile.role}</span></> : <>{jd.company} · {jd.title}</>}</div>
-                    {profile.name && <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 1 }}>{jd.company} · {jd.title}</div>}
-                    <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 2 }}>{jd.kind === 'career' ? <span className="lab-chip c" style={{ marginRight: 6 }}>职业探索 · {jd.career?.profession}</span> : jd.job_req_id ? `职位 ID ${jd.job_req_id} · ` : ''}{jd.location}</div>
-                  </div>
-                </div>
-
-                {profile.tagline && <div style={{ margin: '14px 0 10px', fontSize: 15, fontWeight: 600, color: 'var(--ink2)' }}>「{profile.tagline}」</div>}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                  {(profile.capabilities || []).slice(0, 5).map((c: string) => <span key={c} className="lab-chip">{c}</span>)}
-                </div>
-
-                <div style={{ marginTop: 14, fontSize: 12.5, color: 'var(--ink3)', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                  {s.skill ? <><span className={`lab-chip ${s.skill.kind === 'hard' ? 'c' : 'p'}`}>{kind?.label}</span>{s.skill.source === 'jd-draft' ? <>AI 自学草案 · 等待第一位专家校正</> : <>已向 {s.skill.expert_name}（{s.skill.expert_location}）学习</>}</> : <span className="lab-chip g">只读过 JD，等待第一位专家</span>}
-                  {mk.filter(t => t !== '真实 JD' && t !== '职业探索').slice(0, 4).map(t => <span key={t} className="lab-chip g" style={{ marginLeft: 2 }}>{t}</span>)}
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', textAlign: 'center', marginTop: 16, paddingTop: 14, borderTop: '1px solid var(--line)' }}>
-                  {[['考验新人', s.stats.rookies], ['解决问题', s.stats.solved], ['服务人次', s.stats.served], ['跨越地点', s.stats.places]].map(([k, v]) => (
-                    <div key={k as string}><div className="lab-mono" style={{ fontSize: 22, fontWeight: 800, letterSpacing: 0 }}>{v}</div><div style={{ fontSize: 11, color: 'var(--ink3)' }}>{k}</div></div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-      {!loading && spaces.length > 0 && shown.length === 0 && (
-        <div className="lab-glass" style={{ padding: 40, textAlign: 'center', color: 'var(--ink3)', lineHeight: 2 }}>
-          没有符合条件的数字人。<button className="lab-btn sm ghost" style={{ marginLeft: 10 }} onClick={() => { setQ(''); setFam(''); setMarks([]); }}>清空筛选</button>
-        </div>
-      )}
-
-      <Modal title={null} open={!!pick} onCancel={() => setPick(null)} footer={null} width={860} styles={{ container: { padding: 0, background: '#f5f6ff', borderRadius: 24, overflow: 'hidden' } }}>
-        <div className="lab" style={{ minHeight: 0, padding: 'clamp(16px, 3vw, 28px)' }}>
-          <div className="lab-mono lab-cap">{pick === 'career' ? 'ANY CAREER' : 'PICK A JD'}</div>
-          <div style={{ fontSize: 22, fontWeight: 800, margin: '4px 0 4px' }}>{pick === 'career' ? '输入一个职业，把它变成空间' : '选一份 JD，构建它的技能空间'}</div>
-          <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: 14 }}>{pick === 'career' ? '不需要 JD。适合还没有具体岗位、只想先看看这一行在干什么的人。' : '从岗位库挑一条（抓取自企业官方招聘站），或者粘贴一份全新的 JD。'}</div>
-
-          {pick === 'jd' && <>
-          {/* 岗位库搜索是数据资产：百业用户看不到，只能粘贴自己的 JD */}
-          {!isBaiyeOnly(user?.role) && (
-          <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(106,92,255,.35)' }}>
-            <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>ANY JD · 岗位 AI 自己生成</div>
-            <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>在岗位库里任选一条 JD：岗位 AI 读完后自己生成 <b>技能集草案</b>、<b>检验故事线</b>、<b>虚拟操作空间</b> 和场景美术（约 2–4 分钟）。</div>
-            <input className="lab-input" value={jobQ} onChange={e => searchJobs(e.target.value)} placeholder="搜企业或岗位名，如：华为 软件 / 比亚迪 工艺 / 字节 运营" style={{ width: '100%', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
-            {jobsLoading && <div className="lab-mono" style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 8 }}>SEARCHING<span className="lab-dots" /></div>}
-            {!jobsLoading && jobQ.trim().length >= 2 && !jobs.length && <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 8 }}>没有找到带职责正文的岗位，换个词试试。</div>}
-            {jobs.length > 0 && (
-              <div style={{ display: 'grid', gap: 8, marginTop: 10, gridTemplateColumns: 'minmax(0, 1fr)' }}>
-                {jobs.map(j => (
-                  <div key={j.id} className="lab-glass hover" style={{ padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer' }} onClick={() => buildFromJob(j)}>
-                    <div style={{ minWidth: 0, flex: 1 }}>
-                      <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{j.institute_or_company_name}{j.location ? ` · ${j.location}` : ''}{j.program_name ? ` · ${j.program_name}` : ''}</div>
-                      <div style={{ fontSize: 15, fontWeight: 800 }}>{j.name}</div>
-                      <div style={{ fontSize: 12, color: 'var(--ink3)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{(j.responsibilities || j.overview || '').replace(/\s+/g, ' ').slice(0, 90)}</div>
-                    </div>
-                    <button className="lab-btn sm">构建空间 →</button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          )}
-          <div className="lab-glass" style={{ padding: 16, marginBottom: 18, borderColor: 'rgba(18,181,203,.4)' }}>
-            <div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>NEW JD · 粘贴一份全新的 JD</div>
-            <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>{isBaiyeOnly(user?.role) ? '' : '岗位库里没有？'}把招聘页上的职责和要求整段贴进来，走同一条流水线生成。</div>
-            <div style={{ display: 'flex', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
-              <input className="lab-input" value={paste.title} onChange={e => setPaste(p => ({ ...p, title: e.target.value }))} placeholder="岗位名，如：储能系统测试工程师" style={{ flex: '2 1 220px', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
-              <input className="lab-input" value={paste.company} onChange={e => setPaste(p => ({ ...p, company: e.target.value }))} placeholder="公司（可不填）" style={{ flex: '1 1 160px', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
-            </div>
-            <textarea value={paste.text} onChange={e => setPaste(p => ({ ...p, text: e.target.value }))} rows={6} placeholder={'岗位职责：\n1. …\n任职要求：\n1. …'} style={{ width: '100%', padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 13.5, lineHeight: 1.7, outline: 'none', background: '#fff', resize: 'vertical', fontFamily: 'inherit' }} />
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 8, gap: 10 }}>
-              <span style={{ fontSize: 12, color: 'var(--ink3)' }}>{paste.text.trim().length < 40 ? '正文至少 40 字' : `${paste.text.trim().length} 字`}</span>
-              <button className="lab-btn" disabled={paste.text.trim().length < 40 || !paste.title.trim()} onClick={() => buildFromJob(null, undefined, paste)}>用这份 JD 构建空间 →</button>
-            </div>
-          </div>
-          <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>DEMO JDS · 预置示范</div>
-          {jdsLoading && <div className="lab-glass lab-scan" style={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span className="lab-mono" style={{ color: 'var(--ink3)' }}>LOADING<span className="lab-dots" /></span></div>}
-          <div style={{ display: 'grid', gap: 14, gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))' }}>
-            {jds.map((jd, i) => (
-              <div key={jd.slug} className="lab-glass hover lab-in" style={{ padding: 20, animationDelay: `${i * 80}ms`, display: 'flex', flexDirection: 'column' }} onClick={() => build(jd)}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 14, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, fontSize: 18, background: 'linear-gradient(135deg, var(--v), var(--c))' }}>{jd.company.slice(0, 1)}</div>
-                  <div style={{ minWidth: 0 }}>
-                    <div style={{ fontSize: 13, color: 'var(--ink3)' }}>{jd.company} · {jd.company_en}</div>
-                    <div style={{ fontSize: 16, fontWeight: 800, lineHeight: 1.35 }}>{jd.title}</div>
-                  </div>
-                </div>
-                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', margin: '12px 0 10px' }}>
-                  <span className="lab-chip g">职位 ID {jd.job_req_id}</span><span className="lab-chip g">{jd.location}</span><span className="lab-chip g">{jd.program_name}</span>
-                </div>
-                <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.75, display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden', whiteSpace: 'pre-line', flex: 1 }}>{jd.responsibilities}</div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 14 }}>
-                  <a href={jd.url} target="_blank" rel="noreferrer" onClick={e => e.stopPropagation()} style={{ fontSize: 12.5, color: 'var(--v)' }}>官方 JD 原文 ↗</a>
-                  <button className={`lab-btn sm${jd.space_id ? ' ghost' : ''}`}>{jd.space_id ? '已构建 · 进入空间' : '构建空间 →'}</button>
-                </div>
-              </div>
-            ))}
-          </div>
-          </>}
-
-          {pick === 'career' && <>
-            <div className="lab-glass" style={{ padding: 18, marginBottom: 16, borderColor: 'rgba(18,181,203,.4)' }}>
-              <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
-                {([['career', '职业'], ['discipline', '学科 · 研究领域']] as const).map(([k, t]) => <button key={k} className={`lab-chip${careerMode === k ? '' : ' g'}`} style={{ cursor: 'pointer', fontSize: 13, padding: '5px 13px' }} onClick={() => { setCareerMode(k); setProfession(''); }}>{t}</button>)}
-              </div>
-              {careerMode === 'discipline' ? <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 12, lineHeight: 1.75 }}>
-                给一个学科或研究领域，AI 会先把它结构化成<b>典型研究岗 + 研究技能 + 从硕博到 PI 的成长路径</b>，再生成实验室里一天的故事线和虚拟工位：读文献、做实验或计算、处理有异常的数据、组会汇报。给想选专业、选方向的学生体验研究是怎么做的。
-              </div> : <div style={{ fontSize: 13.5, color: 'var(--ink2)', marginBottom: 12, lineHeight: 1.75 }}>
-                只给一个职业名，AI 会先把它结构化成<b>典型岗位 + 技能树 + 生涯地图</b>，再生成和 JD 路径同样的故事线与虚拟工位（约 2–4 分钟）。
-                难度比校招题降一档，术语随手解释——没入行的人也能把这个职业最有代表性的一天走完。
-              </div>}
-              <div style={{ display: 'flex', gap: 8 }}>
-                <input className="lab-input" autoFocus value={profession} onChange={e => setProfession(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && profession.trim()) buildFromJob(null, profession.trim()); }} placeholder={careerMode === 'discipline' ? '输入一个学科或研究领域，比如 材料科学与工程' : '输入一个职业，如：无人机飞手 / 临床营养师 / 游戏关卡策划'} style={{ flex: 1, padding: '10px 14px', borderRadius: 12, border: '1px solid var(--line)', fontSize: 14, outline: 'none', background: '#fff' }} />
-                <button className="lab-btn" disabled={!profession.trim()} onClick={() => buildFromJob(null, profession.trim())}>{careerMode === 'discipline' ? '生成学科空间 →' : '生成探索空间 →'}</button>
-              </div>
-            </div>
-            <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>换一个试试</div>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              {(careerMode === 'discipline' ? ['材料科学与工程', '计算生物学', '凝聚态物理', '神经科学', '有机化学', '机器学习', '环境科学', '临床医学研究'] : ['咖啡师', '蛋糕裱花师', '无人机飞手', '临床营养师', '游戏关卡策划', '汽车工艺工程师', '宠物医生', '民航机务维修', '景观设计师', '韣带康复治疗师']).map(t => (
-                <button key={t} className="lab-chip c" style={{ cursor: 'pointer', fontSize: 13, padding: '6px 13px' }} onClick={() => setProfession(t)}>{t}</button>
-              ))}
-            </div>
-          </>}
-        </div>
-      </Modal>
-    </>
+      {d && !d.migrated && <div className="fx-note">上架状态还没开通（迁移 065 待跑）：先按「有没有已发布的章节」显示状态，上架 / 下架按钮暂时不能用。</div>}
+      <div className="fx-tabs" role="tablist">{([['spaces', '空间'], ['plays', '作答'], ['stats', '分析']] as const).map(([k, t]) => <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? 'on' : ''} onClick={() => setTab(k)}>{t}{k === 'spaces' && d ? <i>{d.spaces.length}</i> : null}</button>)}</div>
+      {err && <div className="lab-glass fx-empty">{err}</div>}
+      {tab === 'spaces' && <Spaces d={d} reload={load} />}
+      {tab === 'plays' && <Plays />}
+      {tab === 'stats' && <Stats spaces={d?.spaces || null} />}
+    </div>
   );
 }
+
+function Spaces({ d, reload }: { d: { spaces: Space[]; migrated: boolean; role: string } | null; reload: () => void }) {
+  const router = useRouter(); const { message } = App.useApp();
+  const [kw, setKw] = useState(''); const [st, setSt] = useState('all');
+  const list = useMemo(() => (d?.spaces || []).filter(s => (st === 'all' || s.listing === st) && (!kw || [s.title, s.name, s.role, s.company, s.anchor?.label].some(v => String(v || '').includes(kw)))), [d, kw, st]);
+  const n = (k: string) => (d?.spaces || []).filter(s => k === 'all' || s.listing === k).length;
+  const setListing = async (s: Space, listing: string) => {
+    const j = await (await fetch('/api/lab/factory', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: s.id, listing }) })).json().catch(() => ({ ok: false, error: '网络错误' }));
+    if (!j.ok) { message.error(j.error); return; }
+    message.success(listing === 'listed' ? '已上架：体验百业里能看到了' : listing === 'unlisted' ? '已下架：体验百业里不再显示' : '已退回草稿'); reload();
+  };
+  return <>
+    <div className="fx-bar">
+      <input className="lab-input fx-in" value={kw} onChange={e => setKw(e.target.value)} placeholder="搜职业 / 岗位 / 名字" />
+      {[['all', '全部'], ['draft', '草稿'], ['listed', '已上架'], ['unlisted', '已下架']].map(([k, t]) => <button key={k} className={`fx-chip${st === k ? ' on' : ''}`} onClick={() => setSt(k)}>{t} {d ? n(k) : ''}</button>)}
+    </div>
+    <div className="lab-glass fx-tablewrap">
+      <table className="fx-table t-spaces">
+        <thead><tr><th>空间</th><th>状态</th><th>章节</th><th>作答</th><th>平均分</th><th>最近作答</th>{d?.role === 'admin' && <th>谁生成的</th>}<th /></tr></thead>
+        <tbody>
+          {!d && <tr><td colSpan={8} className="fx-muted">读取中…</td></tr>}
+          {d && !list.length && <tr><td colSpan={8}><div className="fx-empty">{d.spaces.length ? '没有符合的。' : '还没有空间。点右上「＋ 新建空间」，先定位做哪一个，再说给谁看、要多深。'}</div></td></tr>}
+          {list.map(s => <tr key={s.id} className="click" onClick={() => router.push(`/lab/studio/${s.id}`)}>
+            <td style={{ minWidth: 240 }}>
+              <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                {s.avatar ? <img src={s.avatar} alt="" className="fx-av" /> : <span className="fx-av ph">{(s.role || s.title).slice(0, 1)}</span>}
+                <div style={{ minWidth: 0 }}><b>{s.name ? `${s.name} · ${s.role}` : s.role || s.title}</b><div className="fx-sub">{[KIND[s.kind] || s.kind, s.company, s.preset].filter(Boolean).join(' · ')}</div></div>
+              </div>
+            </td>
+            <td><span className={`fx-tag ${LISTING[s.listing]?.[1]}`}>{LISTING[s.listing]?.[0]}</span></td>
+            <td className="fx-num">{s.chapters.published} / {s.chapters.total}</td>
+            <td className="fx-num">{s.plays || <span className="fx-muted">0</span>}</td>
+            <td><b style={{ color: col(s.avg) }}>{s.avg ?? '—'}</b></td>
+            <td className="fx-muted" style={{ whiteSpace: 'nowrap' }}>{when(s.last_play)}</td>
+            {d?.role === 'admin' && <td className="fx-muted" style={{ whiteSpace: 'nowrap' }}>{s.created_by || '—'}</td>}
+            <td style={{ whiteSpace: 'nowrap', textAlign: 'right' }} onClick={e => e.stopPropagation()}>
+              <a className="fx-lnk" href={`/lab/${s.id}?m=test`} target="_blank" rel="noreferrer">预览 ↗</a>
+              {d?.migrated && (s.listing === 'listed' ? <button className="fx-lnk" onClick={() => setListing(s, 'unlisted')}>下架</button> : <button className="fx-lnk" onClick={() => setListing(s, 'listed')}>上架</button>)}
+            </td>
+          </tr>)}
+        </tbody>
+      </table>
+    </div>
+  </>;
+}
+
+function Stats({ spaces }: { spaces: Space[] | null }) {
+  const router = useRouter();
+  if (!spaces) return <div className="fx-muted">读取中…</div>;
+  const listed = spaces.filter(s => s.listing === 'listed'), plays = spaces.reduce((a, s) => a + s.plays, 0);
+  const scored = spaces.filter(s => s.avg != null), avg = scored.length ? Math.round(scored.reduce((a, s) => a + (s.avg || 0) * s.plays, 0) / Math.max(1, scored.reduce((a, s) => a + s.plays, 0))) : null;
+  const hot = [...spaces].filter(s => s.plays).sort((a, b) => b.plays - a.plays).slice(0, 8);
+  const cold = listed.filter(s => !s.plays).slice(0, 8);
+  const low = scored.filter(s => (s.avg || 0) < 60 && s.plays >= 3).sort((a, b) => (a.avg || 0) - (b.avg || 0)).slice(0, 8);
+  const half = spaces.filter(s => s.chapters.total && s.chapters.published < s.chapters.total).slice(0, 8);
+  const Box = ({ t, sub, rows, show }: { t: string; sub: string; rows: Space[]; show: (s: Space) => React.ReactNode }) => (
+    <div className="lab-glass fx-box"><div className="fx-box-h"><b>{t}</b><span>{sub}</span></div>
+      {!rows.length ? <div className="fx-muted" style={{ padding: '6px 0' }}>没有。</div> : rows.map(s => <button key={s.id} className="fx-row" onClick={() => router.push(`/lab/studio/${s.id}`)}><span>{s.name ? `${s.name} · ${s.role}` : s.role || s.title}</span><em>{show(s)}</em></button>)}
+    </div>
+  );
+  return <>
+    <div className="fx-stats">{([['空间', spaces.length], ['已上架', listed.length], ['草稿', spaces.filter(s => s.listing === 'draft').length], ['真人作答', plays], ['平均分', avg ?? '—']] as [string, any][]).map(([k, v]) => <div key={k} className="lab-glass fx-stat"><b>{v}</b><span>{k}</span></div>)}</div>
+    <div className="fx-boxes">
+      <Box t="玩得最多" sub="真人作答次数" rows={hot} show={s => `${s.plays} 次 · 平均 ${s.avg ?? '—'}`} />
+      <Box t="分数偏低" sub="至少 3 次作答、平均不到 60：可能太难，或题意不清" rows={low} show={s => `平均 ${s.avg} · ${s.plays} 次`} />
+      <Box t="上架了还没人玩" sub="把预览链接发出去，或者换个更吸引人的开头" rows={cold} show={() => '0 次'} />
+      <Box t="一天还没做完" sub="有章节还是草稿" rows={half} show={s => `${s.chapters.published} / ${s.chapters.total} 章已发布`} />
+    </div>
+  </>;
+}
+

@@ -64,7 +64,7 @@ function NewSpace() {
     if (anchor.kind === 'pasted' && paste.text.trim().length < 40) { message.warning('JD 正文至少 40 字'); return; }
     const buildId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
     setBuilding({ buildId, phase: anchor.kind === 'job' || anchor.kind === 'pasted' ? '读取岗位 JD' : '结构化职业 · 推断典型岗位', since: Date.now() });
-    const body: any = { anchor, spec, model: currentModel, buildId };
+    const body: any = { anchor, spec, model: currentModel, buildId, draft: true };
     if (anchor.kind === 'pasted') Object.assign(body, { jdText: paste.text.trim(), title: paste.title.trim(), company: paste.company.trim() });
     const j = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json().catch(() => ({ ok: false, error: '网络错误' }));
     if (!j.ok) { setBuilding(null); message.error(j.error || '生成失败'); return; }

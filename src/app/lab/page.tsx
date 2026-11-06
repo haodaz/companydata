@@ -687,7 +687,7 @@ export default function LabLanding() {
                 从高精尖材料、航天发动机试车，到剧本杀 DM、整理收纳师、陪诊师。覆盖 {famN} 个一级领域——冷门的、新兴的、灵活就业的，一样配有自己的空间。
               </p>
             </div>
-            <button className="lab-btn ghost" onClick={() => router.push('/lab/spaces')}>看全部 {n} 位 →</button>
+            <button className="lab-btn ghost" onClick={() => router.push('/lab/gallery')}>看全部 {n} 位 →</button>
           </div>
           <div className="ai100-mosaic">
             {featured.map((s, i) => {
@@ -742,7 +742,7 @@ export default function LabLanding() {
             ))}
           </div>
         )}
-        <button className="lab-btn" style={{ height: 50, padding: '0 28px', fontSize: 15 }} onClick={() => router.push('/lab/spaces')}>去见见他们 →</button>
+        <button className="lab-btn" style={{ height: 50, padding: '0 28px', fontSize: 15 }} onClick={() => router.push('/lab/gallery')}>去见见他们 →</button>
       </section>
     </div>
   );

@@ -6,8 +6,9 @@ import { loadCast } from '@/lib/lab-cast-server';
 import { loadBasis } from '@/lib/lab-standards';
 
 export async function loadStudio(id: string) {
-  const { data: task, error } = await supabaseAdmin.from('skill_tasks')
-    .select('id, title, profile, jd_snapshot, bible, sim, skill:skills(id, name, expert_name, expert_trace, source)').eq('id', id).single();
+  const cols = 'id, title, profile, jd_snapshot, bible, sim, skill:skills(id, name, expert_name, expert_trace, source)';
+  let { data: task, error } = await supabaseAdmin.from('skill_tasks').select(`${cols}, listing`).eq('id', id).single();
+  if (error && /listing/.test(error.message)) ({ data: task, error } = await supabaseAdmin.from('skill_tasks').select(cols).eq('id', id).single() as any);   // 迁移 065 没跑
   if (error) throw error;
   const { data, error: e2 } = await supabaseAdmin.from('lab_chapters').select('*').eq('task_id', id).order('seq');
   if (e2) throw e2;
