@@ -4,6 +4,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { labError } from '@/lib/skill-lab-server';
 import { startJob } from '@/lib/lab-jobs';
 import { buildChapter } from '@/lib/agents/lab-chapters';
+import { reviewSpace } from '@/lib/lab-followup';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -32,7 +33,9 @@ export async function POST(req: NextRequest, { params }: Ctx) {
         await buildChapter(id, c.id, model, String(b.hint || '').slice(0, 500), { art: true }, () => {});
         done++;
       }
-      return `重写了 ${done} 章${todo.some((c: any) => c.status === 'published') ? '（原来已发布的变成草稿，看过再发布）' : ''}`;
+      await progress('重写完了，AI 再评一遍');
+      const rv = await reviewSpace(id).catch(() => null);
+      return `${rv ? `再评：最低 ${rv.worst} 分、${rv.todos.length} 条待改；` : ''}重写了 ${done} 章${todo.some((c: any) => c.status === 'published') ? '（原来已发布的变成草稿，看过再发布）' : ''}`;
     });
     return NextResponse.json({ ok: true, job, count: todo.length });
   } catch (e: any) {

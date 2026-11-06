@@ -10,6 +10,8 @@ import { attachCostToSpace, withCost } from '@/lib/token-logger';
 import { ensureOccupationLater } from '@/lib/kg/ensure-occupation';
 import { getSessionUser } from '@/lib/session';
 import { cleanAnchor, cleanSpec, hasSpec, renderSpec } from '@/lib/lab-spec';
+import { reviewSpace } from '@/lib/lab-followup';
+import { after } from 'next/server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -109,6 +111,8 @@ async function listingOf(ids: string[]): Promise<Record<string, string>> {
 async function markDraft(id: string, body: any) {
   if (!body?.draft) return;
   await supabaseAdmin.from('skill_tasks').update({ listing: 'draft' }).eq('id', id).then(() => {}, () => {});
+  // AI 全程跟进（C）：建好就在后台评一遍，问题进工厂的「评审」待办
+  try { after(() => reviewSpace(id).then(() => {}, e => console.warn('[lab/spaces] 自动评审', e?.message))); } catch { /* 不在请求上下文 */ }
 }
 
 /** 构建完给前端的成果小结：刚才这两分钟，岗位 AI 到底做出了什么 */

@@ -50,7 +50,10 @@ export default function StudioPage() {
   const [genHint, setGenHint] = useState('');
   const [genArt, setGenArt] = useState(true);
   const [dayOpen, setDayOpen] = useState(false);
-  const [revise, setRevise] = useState<{ target: 'step' | 'opening' | 'bench'; stepId?: string } | null>(null);   // 局部改（B）
+  const [revise, setRevise] = useState<{ target: 'step' | 'opening' | 'bench'; stepId?: string; text?: string } | null>(null);   // 局部改（B）
+  // 评审里点「按这条改」：先切到那一章，章节载入后再打开局部改（C）
+  const [pendingRevise, setPendingRevise] = useState<{ chapterId: string; target: 'step' | 'opening' | 'bench'; stepId?: string; text: string } | null>(null);
+  useEffect(() => { if (pendingRevise && draft?.id === pendingRevise.chapterId) { setRevise({ target: pendingRevise.target, stepId: pendingRevise.stepId, text: pendingRevise.text }); setPendingRevise(null); } }, [draft?.id, pendingRevise]);
   // 分 tab（11-06）：一天 / 角色与素材 / 生成要求 / 作答 / 分析；预览、上下架在右上角
   const tab = (sp.get('tab') as StudioTab) || 'day';
   const setTab = (t: StudioTab) => router.replace(`/lab/studio/${id}${t === 'day' ? (cur ? `?ch=${cur}` : '') : `?tab=${t}`}`);
@@ -227,6 +230,11 @@ export default function StudioPage() {
         <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 12 }}><span style={{ fontSize: 13, color: 'var(--ink2)' }}>这个空间里反复出场的人、地方、道具。同一天各章共用：同一张脸、同一个地方。</span><button className="lab-btn ghost sm" style={{ marginLeft: 'auto' }} onClick={() => router.push('/lab/assets')}>素材库 ↗</button></div>
         <CastPanel cast={data.cast} chapters={liveChapters} current={null} onOpen={setCastEdit} />
       </div>}
+      {tab === 'review' && <ReviewTab id={id} model={genModel} onFix={(t: any) => {
+        setTab('day'); setCur(t.chapter_id);
+        if (t.target === 'chapter') { setGenHint(t.fix); message.info('已把评审建议填进「AI · 按格生成」的要求里，点「重新生成」'); }
+        else setPendingRevise({ chapterId: t.chapter_id, target: t.target, stepId: t.step_id || undefined, text: t.fix });
+      }} onJob={() => loadJobs()} />}
       {tab === 'plays' && <>
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: -4 }}><button className="lab-btn ghost sm" onClick={() => router.push(`/lab/studio/review?space=${id}`)}>示范评审 ↗</button></div>
         <Plays space={id} />
@@ -279,7 +287,7 @@ export default function StudioPage() {
           </div>
           {dayIssues.length > 0 && <div style={{ marginTop: 10 }}>{dayIssues.map((x, i) => <IssueLine key={i} x={x} />)}</div>}
           {runningJobs.map(j => <div key={j.id} className="lab-scan" style={{ marginTop: 8, fontSize: 12, color: 'var(--v)', padding: '6px 8px', borderRadius: 8, background: 'rgba(106,92,255,.07)' }}>
-            {j.kind === 'build_day' ? '排骨架' : j.kind === 'rewrite_all' ? '整体重写' : `生成「${data.chapters.find(c => c.id === j.chapter_id)?.title || '一章'}」`} · {j.phase}{j.detail ? `：${j.detail}` : ''}<span className="lab-dots" />
+            {j.kind === 'build_day' ? '排骨架' : j.kind === 'rewrite_all' ? '整体重写' : j.kind === 'fix_review' ? '按评审改' : `生成「${data.chapters.find(c => c.id === j.chapter_id)?.title || '一章'}」`} · {j.phase}{j.detail ? `：${j.detail}` : ''}<span className="lab-dots" />
           </div>)}
           {(data.space.bible?.facts || []).length > 0 && (
             <details style={{ marginTop: 10, fontSize: 12, color: 'var(--ink2)' }}>
@@ -426,7 +434,7 @@ export default function StudioPage() {
         </div>
         <textarea className="lab-input" rows={3} style={field} value={dayHint} onChange={e => setDayHint(e.target.value)} placeholder="附几句要求（可空）：如「要有两台不同的手术、上午查房、下午多学科会诊」" />
       </Modal>
-      {revise && draft && <ReviseModal spaceId={id} chapter={draft} model={genModel} target={revise.target} stepId={revise.stepId} onClose={() => setRevise(null)}
+      {revise && draft && <ReviseModal spaceId={id} chapter={draft} model={genModel} target={revise.target} stepId={revise.stepId} initial={revise.text} onClose={() => setRevise(null)}
         onAdopt={(r: any) => {
           if (revise.target === 'opening') edit(d => { d.title = r.after.title; d.sim.intro = r.after.intro; });
           else if (revise.target === 'step') edit(d => { const k = d.sim.steps.findIndex((x: any) => x.id === revise.stepId); if (k >= 0) d.sim.steps[k] = r.after.step; (d as any).expert_trace = { ...((d as any).expert_trace || {}), [revise.stepId!]: r.after.expert }; });
@@ -701,8 +709,8 @@ function CastEditor({ spaceId, member, onClose, onDone }: { spaceId: string; mem
   );
 }
 
-type StudioTab = 'day' | 'cast' | 'spec' | 'plays' | 'stats';
-const STUDIO_TABS: [StudioTab, string][] = [['day', '一天'], ['cast', '角色与素材'], ['spec', '生成要求'], ['plays', '作答'], ['stats', '分析']];
+type StudioTab = 'day' | 'cast' | 'spec' | 'review' | 'plays' | 'stats';
+const STUDIO_TABS: [StudioTab, string][] = [['day', '一天'], ['cast', '角色与素材'], ['spec', '生成要求'], ['review', 'AI 评审'], ['plays', '作答'], ['stats', '分析']];
 
 /** 生成要求 tab：定位 + 受众 / 深度 / 难度 / 必须有 / 不要 / 参考资料，直接改、保存 */
 function SpecTab({ id, space, model, onRewrite, onSaved }: { id: string; space: any; model: string; onRewrite: () => void; onSaved: (spec: GenSpec | null) => void }) {
@@ -825,9 +833,9 @@ const mBtn = (primary: boolean, disabled = false): React.CSSProperties => ({ hei
  * 局部改（B，11-06）：点「✦ 改」→ 选几个常用说法或自己写一句 → AI 只改这一处 → 改前 / 改后对比 → 采纳才放进这一章（再点保存，走原来的留痕）。
  * 工位走「重新设计」：后台 1–3 分钟，轮询提案。
  */
-function ReviseModal({ spaceId, chapter, model, target, stepId, onClose, onAdopt }: { spaceId: string; chapter: StudioChapter; model: string; target: 'step' | 'opening' | 'bench'; stepId?: string; onClose: () => void; onAdopt: (r: any) => void }) {
+function ReviseModal({ spaceId, chapter, model, target, stepId, initial, onClose, onAdopt }: { spaceId: string; chapter: StudioChapter; model: string; target: 'step' | 'opening' | 'bench'; stepId?: string; initial?: string; onClose: () => void; onAdopt: (r: any) => void }) {
   const { message } = App.useApp();
-  const [chips, setChips] = useState<string[]>([]); const [text, setText] = useState('');
+  const [chips, setChips] = useState<string[]>([]); const [text, setText] = useState(initial || '');
   const [busy, setBusy] = useState(''); const [r, setR] = useState<any>(null);
   const step = stepId ? chapter.sim.steps.find((x: any) => x.id === stepId) : null;
   const instruction = [...chips, text.trim()].filter(Boolean).join('；');
@@ -903,4 +911,62 @@ function RevView({ target, v }: { target: 'step' | 'opening' | 'bench'; v: any }
     {s.type === 'slider' && <div style={{ color: 'var(--ink3)' }}>范围 {s.min ?? 0}–{s.maxValue ?? 100}{s.unit || ''}{ex != null ? `，示范 ${ex}` : ''}</div>}
     {s.type === 'text' && typeof ex === 'string' && ex && <div style={{ marginTop: 6, color: '#0d7a52' }}>示范：{ex}</div>}
   </div>;
+}
+
+/**
+ * AI 评审（C，11-06）：生成完 / 重写完会自动评一遍；这里看分数、问题待办（落到哪一章哪一步、怎么改），
+ * 一条一条「按这条改」（走局部改的对比采纳），或者勾几条「一键按评审改」（后台把这些章按建议重写成草稿，改完再评一遍）。
+ */
+function ReviewTab({ id, model, onFix, onJob }: { id: string; model: string; onFix: (t: any) => void; onJob: () => void }) {
+  const { message } = App.useApp();
+  const [rv, setRv] = useState<any>(undefined); const [busy, setBusy] = useState(''); const [pick, setPick] = useState<string[]>([]);
+  const load = useCallback(() => fetch(`/api/lab/studio/${id}/followup`, { cache: 'no-store' }).then(r => r.json()).then(j => { setRv(j.review || null); setPick((j.review?.todos || []).map((t: any) => t.id)); }).catch(() => setRv(null)), [id]);
+  useEffect(() => { load(); }, [load]);
+  const again = async () => {
+    setBusy('AI 在评（约半分钟）…');
+    const j = await fetch(`/api/lab/studio/${id}/followup`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'review' }) }).then(r => r.json()).catch(() => ({ ok: false, error: '网络错误' }));
+    setBusy(''); if (!j.ok) { message.error(j.error); return; }
+    setRv(j.review); setPick((j.review?.todos || []).map((t: any) => t.id));
+  };
+  const fixAll = async () => {
+    const todos = (rv?.todos || []).filter((t: any) => pick.includes(t.id));
+    if (!todos.length) return;
+    if (!window.confirm(`按勾选的 ${todos.length} 条建议重写相关章节？这些章会变成草稿（改动有留痕），改完 AI 再评一遍。锁定的章不动。`)) return;
+    const j = await fetch(`/api/lab/studio/${id}/followup`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'fix', todos, model }) }).then(r => r.json()).catch(() => ({ ok: false, error: '网络错误' }));
+    if (!j.ok) { message.error(j.error); return; }
+    message.info(j.job.already ? '已经在改了' : '开始按评审改，在「一天」里能看进度'); onJob();
+  };
+  if (rv === undefined) return <div className="fx-muted">读取中…</div>;
+  const TG: Record<string, string> = { step: '一步', bench: '工位', opening: '开场', chapter: '整章' };
+  return (
+    <div style={{ maxWidth: 1000 }}>
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', marginBottom: 12 }}>
+        <span style={{ fontSize: 13.5, color: 'var(--ink2)', flex: '1 1 360px' }}>{rv ? <>上次评审 {new Date(rv.at).toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}，看了 {rv.chapters} 章：{rv.summary}</> : '还没评过。生成完、整体重写完会自动评；也可以现在评一遍。'}</span>
+        {busy && <span className="lab-scan" style={{ fontSize: 12.5, color: 'var(--v)' }}>{busy}</span>}
+        <button className="lab-btn ghost sm" disabled={!!busy} onClick={again}>{rv ? '再评一次' : '现在评'}</button>
+      </div>
+      {rv && <>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>{rv.items.map((it: any) => <span key={it.rule} title={it.reason} className="lab-glass" style={{ padding: '8px 12px', fontSize: 13, display: 'inline-flex', gap: 8, alignItems: 'center' }}><b style={{ color: it.score >= 4 ? '#0d7a52' : it.score === 3 ? '#a26a00' : '#c4323a', fontSize: 16 }}>{it.score}</b>{it.label}</span>)}</div>
+        <div className="lab-glass fx-tablewrap">
+          <table className="fx-table">
+            <thead><tr><th style={{ width: 30 }} /><th>在哪</th><th>问题</th><th>怎么改</th><th /></tr></thead>
+            <tbody>
+              {!rv.todos.length && <tr><td colSpan={5}><div className="fx-empty">没有要改的。可以上架了。</div></td></tr>}
+              {rv.todos.map((t: any) => <tr key={t.id}>
+                <td><input type="checkbox" checked={pick.includes(t.id)} onChange={e => setPick(x => e.target.checked ? [...x, t.id] : x.filter(y => y !== t.id))} /></td>
+                <td style={{ whiteSpace: 'nowrap' }}><b>{t.chapter}</b><div className="fx-sub">{t.step_no ? `第 ${t.step_no} 步 · ` : ''}{TG[t.target]}{t.rule ? ` · ${t.rule}` : ''}</div></td>
+                <td style={{ minWidth: 200 }}>{t.problem}</td>
+                <td style={{ minWidth: 220, color: 'var(--ink2)' }}>{t.fix}</td>
+                <td style={{ whiteSpace: 'nowrap', textAlign: 'right' }}><button className="fx-lnk" onClick={() => onFix(t)}>按这条改 →</button></td>
+              </tr>)}
+            </tbody>
+          </table>
+        </div>
+        {rv.todos.length > 0 && <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, alignItems: 'center', marginTop: 12 }}>
+          <span className="fx-muted">一条一条改：点「按这条改」，看对比再采纳。省事：勾几条一起交给 AI。</span>
+          <button className="lab-btn sm" disabled={!pick.length} onClick={fixAll}>✦ 一键按评审改（{pick.length} 条）</button>
+        </div>}
+      </>}
+    </div>
+  );
 }

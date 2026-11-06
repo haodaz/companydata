@@ -2,7 +2,7 @@
 import { after } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 
-export type JobKind = 'build_day' | 'build_chapter' | 'rewrite_all';
+export type JobKind = 'build_day' | 'build_chapter' | 'rewrite_all' | 'fix_review';
 
 /** 建一条任务，真正的活放到响应之后跑（after），立刻把任务编号还给前端 */
 export async function startJob(taskId: string, chapterId: string | null, kind: JobKind, work: (progress: (phase: string, detail?: string) => Promise<void>) => Promise<string>) {
