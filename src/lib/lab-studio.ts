@@ -46,6 +46,9 @@ export function slotMinutes(slot?: string | null): number | null {
   if (m) return +m[1] * 60 + +m[2];
   const rough: [RegExp, number][] = [[/清晨|凌晨/, 6 * 60], [/早上|早晨|早班/, 8 * 60], [/上午/, 10 * 60], [/中午|午间/, 12 * 60], [/下午/, 15 * 60], [/傍晚/, 18 * 60], [/晚上|夜间|夜班/, 20 * 60]];
   for (const [re, v] of rough) if (re.test(s)) return v;
+  // 实训 / 考核形态按序号排（「模块1」「考核3」「第2周」）：当成一个个小时，保证 1 在 2 前面（11-06 实训空间「模块2」排到了「模块1」前面）
+  const n = s.match(/(?:模块|考核|环节|阶段|第)\s*(\d{1,2})/);
+  if (n) return +n[1] * 60;
   return null;
 }
 
