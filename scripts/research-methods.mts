@@ -84,7 +84,7 @@ if (arg('guides')) {
   let done = 0;
   await pool(todo, 3, async m => {
     try {
-      const { parsed: p } = await withCost({ tool_name: 'lab', task_name: '实验方法 · 操作指南', stage: 'build' } as any, () => askJson(`你在给研究生写一份实验方法的操作指南，会用在模拟实验台和带教里。方法：「${m.name}」（${m.name_en || ''}），${m.summary || ''}。用到：${(m.generic_instruments || []).join('、')}。
+      const { parsed: p }: any = await withCost({ tool_name: 'lab', task_name: '实验方法 · 操作指南', stage: 'build' } as any, () => askJson(`你在给研究生写一份实验方法的操作指南，会用在模拟实验台和带教里。方法：「${m.name}」（${m.name_en || ''}），${m.summary || ''}。用到：${(m.generic_instruments || []).join('、')}。
 写通用、经得起老师傅检查的实验常识，不编具体品牌、型号、文献和数字指标（需要数字时写常见范围并说「以仪器说明书 / 实验室 SOP 为准」）。全部中文，说人话。
 1. typical_experiments：3 个典型实验（name + goal 一句）。
 2. steps：标准流程 6–10 步（title 短，detail 一两句：要点和为什么）。
@@ -117,7 +117,7 @@ if (arg('classify')) {
   let done = 0, failed = 0; const t0 = Date.now();
   await pool(batches, 3, async b => {
     try {
-      const { parsed: p } = await withCost({ tool_name: 'lab', task_name: '实验方法 · 产品归类', stage: 'batch' } as any, () => askJson(`把下面的科研产品归到实验方法上，并补适用学科和应用场景。只根据产品名和描述判断，拿不准就少写，不要硬凑。
+      const { parsed: p }: any = await withCost({ tool_name: 'lab', task_name: '实验方法 · 产品归类', stage: 'batch' } as any, () => askJson(`把下面的科研产品归到实验方法上，并补适用学科和应用场景。只根据产品名和描述判断，拿不准就少写，不要硬凑。
 ## 方法清单（key=名称）
 ${menu}
 ## 产品
