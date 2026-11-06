@@ -222,6 +222,8 @@ function Shell({ children }: { children: React.ReactNode }) {
   // 也认 ?theme=light / ?theme=dark，方便把一体机的链接直接钉死成某一套。
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   // 首页第一屏顶栏透明（深浅色都一样），滚过第一屏才有导航底
+  const [embed, setEmbed] = useState(false);
+  useEffect(() => { try { setEmbed(window.self !== window.top); } catch { setEmbed(true); } }, []);
   const [clear, setClear] = useState(path === '/lab');
   useEffect(() => {
     if (path !== '/lab') { setClear(false); return; }
@@ -253,6 +255,8 @@ function Shell({ children }: { children: React.ReactNode }) {
       <style>{LAB_CSS}</style>
       <div className="lab-bg"><div className="lab-blob b1" /><div className="lab-blob b2" /><div className="lab-blob b3" /><div className="lab-grid" /></div>
 
+      {/* 嵌在百业工厂对话右边的面板里（iframe）：不要顶栏（11-06） */}
+      {!embed && <>
       <header className={`lab-head${clear ? ' clear' : ''}`} style={{ position: 'sticky', top: 0, zIndex: 20, display: 'flex', alignItems: 'center', gap: 14, background: 'rgba(245,246,255,.72)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(106,92,255,.12)' }}>
         <div onClick={() => { if (!guest) router.push('/lab'); }} style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', minWidth: 0, flexShrink: 0 }}>
           <div className="lab-orb" style={{ ['--s' as string]: '34px' }}><div className="ring" /><div className="core" /></div>
@@ -298,6 +302,7 @@ function Shell({ children }: { children: React.ReactNode }) {
         {/* 同公司另一个品牌：百业真活（放最右，和导航分开） */}
         <a href="/work/about" className="lab-brand-switch" title="百业AI｜真活 · True work, true talent">百业真活<span className="lab-brand-switch-arrow">↗</span></a>
       </header>
+      </>}
 
       <div className="lab-wrap">{children}</div>
     </div>

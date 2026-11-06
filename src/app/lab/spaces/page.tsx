@@ -36,6 +36,7 @@ function Factory() {
         <div><div className="lab-mono lab-cap">FACTORY · 百业工厂</div><h1>百业工厂</h1><p>生成职业模拟空间、上架给人体验、看作答、看哪里要改。{d?.role === 'admin' ? '你是管理员，看到的是全部空间。' : '这里只有你自己生成的空间。'}</p></div>
         <div className="fx-acts">
           <button className="lab-btn ghost sm" onClick={() => router.push('/lab/assets')}>素材库</button>
+          <button className="lab-btn ghost sm" onClick={() => router.push('/lab/studio/chat')}>✦ 跟助理说</button>
           <button className="lab-btn sm" onClick={() => router.push('/lab/studio/new')}>＋ 新建空间</button>
         </div>
       </div>

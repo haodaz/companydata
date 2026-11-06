@@ -126,3 +126,28 @@ export function benchSummary(step: any): string[] {
     `红线 / 提醒：${(b.rules || []).map((r: any) => `${r.severity === 'violation' ? '✖' : '⚠'}${r.label || r.msg || r.id}`).join('；') || '—'}`,
   ];
 }
+
+/**
+ * 对话里采纳一条提案（D）：直接写进这一章（工作室里是先放进草稿、人点保存；对话里没有编辑器，采纳 = 保存），改动照样进 lab_edits。
+ * p = { chapter_id, target: 'step' | 'opening' | 'bench', step_id?, after }
+ */
+export async function applyRevision(spaceId: string, p: { chapter_id: string; target: string; step_id?: string; after: any }, actor: string | null) {
+  const { data: ch, error } = await db.from('lab_chapters').select('*').eq('id', p.chapter_id).eq('task_id', spaceId).single();
+  if (error) throw error;
+  if (ch.locked) throw new Error('这一章锁定了，先在工作室里解锁');
+  const sim = JSON.parse(JSON.stringify(ch.sim || {})), trace = { ...(ch.expert_trace || {}) };
+  const patch: Record<string, any> = { updated_at: new Date().toISOString() };
+  if (p.target === 'opening') { patch.title = String(p.after?.title || ch.title).slice(0, 120); sim.intro = String(p.after?.intro ?? sim.intro); patch.sim = sim; }
+  else if (p.target === 'step') {
+    const k = (sim.steps || []).findIndex((x: any) => x.id === p.step_id);
+    if (k < 0) throw new Error('这一步找不到了');
+    sim.steps[k] = p.after.step; if (p.after.expert != null) trace[p.step_id!] = p.after.expert;
+    patch.sim = sim; patch.expert_trace = trace;
+  } else if (p.target === 'bench') {
+    patch.sim = p.after.sim; if (p.after.expert) trace[p.after.stepId] = p.after.expert; patch.expert_trace = trace;
+  } else throw new Error('target?');
+  const { error: e2 } = await db.from('lab_chapters').update(patch).eq('id', ch.id);
+  if (e2) throw e2;
+  const { recordEdit } = await import('@/lib/lab-edits');
+  await recordEdit({ task_id: spaceId, chapter_id: ch.id, source: 'agent', actor, before: ch, after: patch }).catch(() => {});
+}

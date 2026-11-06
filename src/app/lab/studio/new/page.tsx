@@ -90,6 +90,7 @@ function NewSpace() {
     <div className="ns-wrap"><style>{CSS + SPEC_CSS}</style>
       <button className="lab-btn ghost sm" onClick={() => router.push('/lab/spaces')}>← 百业工厂</button>
       <h1 className="ns-h1">新建一个空间</h1>
+      <div style={{ float: 'right', marginTop: -36 }}><button className="lab-btn ghost sm" onClick={() => router.push('/lab/studio/chat')}>不想填，跟助理说 ✦</button></div>
       <p className="ns-lead">两步：先定位做的是哪一个，再说清楚给谁看、要多深、考核多难。说清楚了，后面每一步（故事线、工位、美术、一天的每一章、评分）都按它来。</p>
 
       {/* ── 第一层：定位 ── */}

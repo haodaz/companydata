@@ -4,7 +4,7 @@ import { supabaseAdmin as db } from '@/lib/supabase';
 import { getSessionUser } from '@/lib/session';
 import { withCost } from '@/lib/token-logger';
 import { labError } from '@/lib/skill-lab-server';
-import { logRevision, rebuildChapterBench, reviseOpening, reviseStep } from '@/lib/lab-revise';
+import { applyRevision, logRevision, rebuildChapterBench, reviseOpening, reviseStep } from '@/lib/lab-revise';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -76,6 +76,11 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
   const denied = await denyUnlessLabOwner(req, id); if (denied) return denied;
   const b = await req.json().catch(() => ({}));
   if (!['adopted', 'discarded'].includes(b.status)) return NextResponse.json({ ok: false, error: 'status?' }, { status: 400 });
-  await db.from('lab_revisions').update({ status: b.status, decided_at: new Date().toISOString() }).eq('id', String(b.id || '')).eq('task_id', id);
+  // 对话里采纳：直接写进章节（apply = { chapter_id, target, step_id?, after }）
+  if (b.status === 'adopted' && b.apply) {
+    try { await applyRevision(id, b.apply, (await getSessionUser(req).catch(() => null))?.email || null); }
+    catch (e: any) { return NextResponse.json({ ok: false, error: e.message }, { status: 400 }); }
+  }
+  if (b.id) await db.from('lab_revisions').update({ status: b.status, decided_at: new Date().toISOString() }).eq('id', String(b.id || '')).eq('task_id', id);
   return NextResponse.json({ ok: true });
 }
