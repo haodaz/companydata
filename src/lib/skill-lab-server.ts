@@ -4,6 +4,7 @@ import { GENERIC_CHAPTER_RUBRIC, type SkillCard } from '@/lib/skill-lab';
 import type { Sim, SimTrace } from '@/lib/skill-sim';
 import { applyCastArt, castAvatar } from '@/lib/lab-cast';
 import { loadCast } from '@/lib/lab-cast-server';
+import { slotMinutes } from '@/lib/lab-studio';
 
 export const MIGRATION_HINT = '技能实验室的表还没建：请在 Supabase SQL Editor 执行 supabase/migrations/002_skill_lab.sql';
 
@@ -76,9 +77,9 @@ export async function recordInvocation(row: Record<string, unknown>) {
  * 时段写成「周一上午」这类非时刻的，按 seq。内容和时段配不配（早上别做全天复盘）由生成和校验管，见 docs/lab-studio.md。
  */
 export function sortByDay<T extends { slot?: string | null; seq: number }>(list: T[]): T[] {
-  const minutes = (s?: string | null) => { const m = String(s || '').match(/^(\d{1,2})[:：](\d{2})/); return m ? +m[1] * 60 + +m[2] : null; };
+  // 和工作室同一套口径：时刻、上午 / 下午，以及实训 / 考核的「模块1」「考核3」（11-06 体验页把建空间时自带的「考核4」排到了第一）
   return [...list].sort((a, b) => {
-    const x = minutes(a.slot), y = minutes(b.slot);
+    const x = slotMinutes(a.slot), y = slotMinutes(b.slot);
     // 两章都有时刻才按时间比；有一章没写（老空间迁来的第 1 章就没有）就按 seq，别把它挤到最后
     if (x != null && y != null && x !== y) return x - y;
     return a.seq - b.seq;
