@@ -957,7 +957,7 @@ function ReviewTab({ id, model, onFix, onJob }: { id: string; model: string; onF
       {rv && rv.pass != null && <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', marginBottom: 12, fontSize: 13.5 }}>
         {rv.pass ? <span className="lab-chip" style={{ color: '#0d7a52', background: 'rgba(13,122,82,.08)', borderColor: 'rgba(13,122,82,.2)' }}>达标 · 可以发布</span>
           : <span className="lab-chip" style={{ color: '#c4323a', background: 'rgba(196,50,58,.07)', borderColor: 'rgba(196,50,58,.2)' }}>还有 {rv.todos.filter((t: any) => t.severity !== 'nice').length} 条必须改</span>}
-        <span className="fx-muted">第 {rv.round || 1} 轮{rv.resolved ? ` · 上一轮 ${rv.resolved.done}/${rv.resolved.total} 条改到位` : ''} · 各项 ≥3 分、没有「必须改」就算达标；「可以更好」的不挡发布</span>
+        <span className="fx-muted">第 {rv.round || 1} 轮{rv.resolved ? ` · 上一轮 ${rv.resolved.done}/${rv.resolved.total} 条改到位` : ''} · 没有「必须改」就算达标，分数是参考；「可以更好」的不挡发布</span>
       </div>}
       {rv && <>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>{rv.items.map((it: any) => <span key={it.rule} title={it.reason} className="lab-glass" style={{ padding: '8px 12px', fontSize: 13, display: 'inline-flex', gap: 8, alignItems: 'center' }}><b style={{ color: it.score >= 4 ? '#0d7a52' : it.score === 3 ? '#a26a00' : '#c4323a', fontSize: 16 }}>{it.score}</b>{it.label}</span>)}</div>

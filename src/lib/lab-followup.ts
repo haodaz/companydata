@@ -4,7 +4,7 @@
  * 规则沿用 lab-review 的 REVIEW_RULES，加一条 A1「合受众」：对照空间的生成要求看难度、术语、职业粒度。
  * 评审结果存 lab_revisions（target='review'，迁移 066；没跑就只返回不存）。
  * 收敛（11-06 实测：一键改完再评还是 8 条，评审每次从零挑毛病、改法又是整章重写）：
- *   每条待办分 must（不改会误导 / 不合受众 / 做不了 / 前后矛盾）和 nice（可以更好）；各项 ≥3 分且没有 must = 达标，可以发布；
+ *   每条待办分 must（不改会误导 / 不合受众 / 做不了 / 前后矛盾）和 nice（可以更好）；没有 must = 达标，可以发布（分数是参考）；
  *   复评带上一轮的意见，先核对改到位没有，新问题只报 must；一键改只动问题所在的那一步 / 开场，整章的问题才整章重写。
  */
 import { supabaseAdmin as db } from '@/lib/supabase';
@@ -19,7 +19,7 @@ import { hasSpec, specTextOf } from '@/lib/lab-spec';
 
 export type Todo = { id: string; chapter_id: string | null; chapter: string; step_id: string | null; step_no: number | null; target: 'chapter' | 'step' | 'bench' | 'opening'; rule: string; problem: string; fix: string; severity?: 'must' | 'nice' };
 export type FullReview = { items: { rule: string; label: string; score: number; reason: string }[]; todos: Todo[]; summary: string; worst: number; at: string; chapters: number;
-  /** 达标：各项 ≥3 分且没有 must；round 第几轮（复评 +1）；resolved 上一轮的意见改到位了几条 */
+  /** 达标：没有 must；round 第几轮（复评 +1）；resolved 上一轮的意见改到位了几条 */
   pass?: boolean; round?: number; resolved?: { done: number; total: number } };
 export const isMust = (t: Todo) => t.severity !== 'nice';
 
@@ -65,6 +65,7 @@ ${rules.map(r => `- ${r.id} ${r.label}：${r.ask}`).join('\n')}
    chapter = 第几章（数字），step = 第几步（数字，整章的问题填 0），target = step（一步的题干 / 选项）/ bench（虚拟工位）/ opening（标题和开场）/ chapter（整章要重写）
    problem = 一句话说哪里不对；fix = 一句话说怎么改（要能直接当修改要求用，比如「难度降一档：选项里去掉需要读代码才能判断的那项」）。
    severity = must（不改会误导体验者 / 明显不合受众 / 做不下去 / 前后事实矛盾 / 示范答案错）或 nice（能更好，但现在也能用）。只有 must 挡发布，别把 nice 说成 must。
+   某项打了 1–2 分、而且确实挡发布，就要有对应的 must 待办；按这个空间的形态本来就不重要的规则（比如生涯体验里的「中途突发」），低分不算挡发布。
    已锁定的章节不要列。
 返回 JSON：{ "items": [ { "rule": "A1", "score": 1-5, "reason": "" } ], "todos": [ { "chapter": 1, "step": 2, "target": "step", "rule": "A1", "severity": "must",${prev ? ' "carry": 0,' : ''} "problem": "", "fix": "" } ],${prev ? ' "resolved": [1, 3],' : ''} "summary": "一句话总评" }`;
   const r = await generateContent(prompt, model, { jsonMode: true });
@@ -86,7 +87,8 @@ ${rules.map(r => `- ${r.id} ${r.label}：${r.ask}`).join('\n')}
   const asked = prev ? prev.todos.map((t, i) => i + 1).filter(n => !sent || sent.includes(prev.todos[n - 1].id)) : [];
   const resolved = prev ? { done: (Array.isArray(p.resolved) ? p.resolved : []).map(Number).filter((n: number) => asked.includes(n)).length, total: asked.length } : undefined;
   const review: FullReview = { items, todos, summary: String(p.summary || '').slice(0, 200), worst, at: new Date().toISOString(), chapters: chapters.length,
-    pass: worst >= 3 && !todos.some(isMust), round: prev ? (prev.round || 1) + 1 : 1, ...(resolved ? { resolved } : {}) };
+    // 达标只看有没有「必须改」，分数是参考（面包师生涯体验实测：评审说「没有挡发布的问题」，却因为「中途突发」2 分判不达标）
+    pass: !todos.some(isMust), round: prev ? (prev.round || 1) + 1 : 1, ...(resolved ? { resolved } : {}) };
   await db.from('lab_revisions').insert({ task_id: spaceId, target: 'review', instruction: '自动评审', after: review, status: 'proposed', note: review.summary }).then(() => {}, () => {});
   return review;
 }
