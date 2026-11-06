@@ -89,7 +89,7 @@ export default function Page() {
     } catch (e: any) { if (e?.name !== 'AbortError') setItems(it => [...it, { k: 'error', text: e.message }]); }
     finally { setBusy(false); setItems(it => it.map(x => (x.k === 'tool' && x.running ? { ...x, running: false, label: x.label || '中断了' } : x))); loadThreads(); window.dispatchEvent(new Event('lws-threads')); }
   };
-  const sendRef = useRef(send); sendRef.current = send;
+  const sendRef = useRef(send); sendRef.current = send; const busyRef = useRef(busy); busyRef.current = busy;
 
   const pendingAsk = [...items].reverse().find(x => x.k === 'ask' && !x.answered) as Extract<Item, { k: 'ask' }> | undefined;
   const composer = (hero: boolean) => <Composer text={text} setText={setText} busy={busy} send={send} stop={() => abortRef.current?.abort()} model={model} setModel={setModel} autoFocus={hero}
@@ -129,7 +129,7 @@ export default function Page() {
                 <div className="wc-tool"><span className={`wc-dot${x.running ? ' run' : x.error ? ' err' : ''}`} /><span className="wc-tool-t">{x.running ? `${RUNNING[x.name] || '处理中'}…` : x.error ? `${x.label || x.name}：${x.error}` : x.label || x.name}</span>{(x.ui as any)?.url && !x.running && <button className="wc-link" onClick={() => { setPanel({ ...(x.ui as any), _n: Date.now() }); setView('studio'); }}>打开 →</button>}</div>
                 {(x.ui as any)?.kind === 'lab_build' && <BuildCard ui={x.ui as any} live={!!(x as any).live} onDone={(id, title) => { show({ space_id: id, title, url: `/lab/studio/${id}`, _n: Date.now() }); if ((x as any).live) setTimeout(() => sendRef.current(`空间生成好了：space_id=${id}。`), 300); }} />}
                 {(x.ui as any)?.job_id && <JobCard ui={x.ui as any} live={!!(x as any).live} onDone={(msg) => { setPanel(p => p && { ...p, _n: Date.now() }); if ((x as any).live) setTimeout(() => sendRef.current(msg), 300); }} />}
-                {(x.ui as any)?.kind === 'lab_revision' && <RevisionCard ui={x.ui as any} onApplied={() => setPanel(p => p && { ...p, _n: Date.now() })} />}
+                {(x.ui as any)?.kind === 'lab_revision' && <RevisionCard ui={x.ui as any} onApplied={() => setPanel(p => p && { ...p, _n: Date.now() })} onDecided={st => { if ((x as any).live && !busyRef.current) setTimeout(() => sendRef.current(st === 'adopted' ? '采纳了这版。' : '这版不要。'), 200); }} />}
                 {(x.ui as any)?.kind === 'lab_invite' && <InviteCard ui={x.ui as any} />}
               </React.Fragment>;
               if (x.k === 'ask') return <div key={x.id} className="wc-ask"><div className="wc-ask-q">{x.question}</div><div className="wc-opts">{x.options.map((o, j) => <button key={o} className={`wc-opt${x.answered === o ? ' on' : ''}`} disabled={!!x.answered || busy} onClick={() => send(o)}><i>{j + 1}</i>{o}</button>)}</div></div>;
@@ -209,13 +209,13 @@ function JobCard({ ui, live, onDone }: { ui: { space_id: string; job_id: string;
 }
 
 /** 局部改提案：改前 / 改后，采纳才写进章节 */
-function RevisionCard({ ui, onApplied }: { ui: any; onApplied: () => void }) {
+function RevisionCard({ ui, onApplied, onDecided }: { ui: any; onApplied: () => void; onDecided?: (status: 'adopted' | 'discarded') => void }) {
   const [state, setState] = useState<'' | 'busy' | 'adopted' | 'discarded'>(''); const [err, setErr] = useState('');
   const decide = async (status: 'adopted' | 'discarded') => {
     setState('busy'); setErr('');
     const j = await fetch(`/api/lab/studio/${ui.space_id}/revise`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: ui.revision_id, status, ...(status === 'adopted' ? { apply: ui.apply } : {}) }) }).then(r => r.json()).catch(() => ({ ok: false, error: '网络错误' }));
     if (!j.ok) { setState(''); setErr(j.error); return; }
-    setState(status); if (status === 'adopted') onApplied();
+    setState(status); if (status === 'adopted') onApplied(); onDecided?.(status);
   };
   const view = (v: any) => ui.target === 'opening'
     ? <><b>{v?.title}</b><div className="lc-mute">{v?.intro}</div></>

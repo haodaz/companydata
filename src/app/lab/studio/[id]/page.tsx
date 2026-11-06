@@ -316,7 +316,7 @@ export default function StudioPage() {
                     <span className="lab-mono lab-cap">AI · 按格生成</span>
                     <span style={{ fontSize: 12, color: 'var(--ink3)' }}>按这一格的时段、标题、要交代的事写故事线和示范答案；人物 / 场景优先用角色表，新的先找素材库，找不到才画</span>
                   </div>
-                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{['难度降一档', '换个更常见的场景', '术语都加大白话解释', '少一步、短一点', '加一个动手的工位'].map(c => <button key={c} className={`fx-chip${genHint.includes(c) ? ' on' : ''}`} style={{ fontSize: 12 }} onClick={() => setGenHint(h => h.includes(c) ? h.replace(new RegExp(`；?${c}`), '').replace(/^；/, '') : [h, c].filter(Boolean).join('；'))}>{c}</button>)}</div>
+                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{['难度降一档', '换个更常见的场景', '术语都加大白话解释', '少一步、短一点'].map(c => <button key={c} className={`fx-chip${genHint.includes(c) ? ' on' : ''}`} style={{ fontSize: 12 }} onClick={() => setGenHint(h => h.includes(c) ? h.replace(new RegExp(`；?${c}`), '').replace(/^；/, '') : [h, c].filter(Boolean).join('；'))}>{c}</button>)}</div>
                   <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
                     <input className="lab-input" style={{ ...field, flex: '1 1 260px', width: 'auto' }} value={genHint} onChange={e => setGenHint(e.target.value)} placeholder="附一句要求（可空）：如「这台是急诊阑尾切除，中途发现穿孔」" />
                     <label style={{ fontSize: 12.5, color: 'var(--ink2)', display: 'flex', alignItems: 'center', gap: 4, cursor: 'pointer' }} title="用到但还没图的人物 / 场景现画（一章最多 4 张）"><input type="checkbox" checked={genArt} onChange={e => setGenArt(e.target.checked)} /> 缺图就画</label>
@@ -405,6 +405,8 @@ export default function StudioPage() {
                 <button key={t.k} className="lab-btn ghost sm" title={t.hint} onClick={() => setNewType(t.k)} style={{ boxShadow: newType === t.k ? '0 0 0 2px var(--v)' : undefined }}>{t.label}</button>
               ))}
               <button className="lab-btn sm" onClick={() => { const st = blankStep(newType, steps.length); edit(d => { d.sim = { ...d.sim, steps: [...(d.sim?.steps || []), st] }; }); setOpen(o => ({ ...o, [st.id]: true })); }}>＋ 加</button>
+              {/* 工位是数据定义的模拟设备，手填不出来：交给 AI 设计（模拟器里跑通才收），出提案对比再采纳。以前「重新生成」的「加一个动手的工位」只是一句提示，章节重写出不了工位 */}
+              {!steps.some((x: any) => x.type === 'bench') && <button className="lab-btn ghost sm" style={{ marginLeft: 'auto' }} title="AI 按这一章的故事设计一台动手的虚拟工位，在模拟器里跑通才收（1–3 分钟），出来先对比再采纳" onClick={() => setRevise({ target: 'bench' })}>✦ 加一台动手工位</button>}
             </div>
 
             {/* 底栏：保存 / 发布 / 试玩 */}
@@ -860,7 +862,8 @@ function ReviseModal({ spaceId, chapter, model, target, stepId, initial, onClose
     setBusy(''); message.warning('还没好，稍后在这一步再点一次「✦ 改」看看');
   };
   const decide = (status: 'adopted' | 'discarded') => { if (r?.revision_id) fetch(`/api/lab/studio/${spaceId}/revise`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: r.revision_id, status }) }).catch(() => {}); };
-  const title = target === 'opening' ? '改标题和开场' : target === 'bench' ? '重新设计这台工位' : '改这一步';
+  const fresh = target === 'bench' && !step;   // 这一章还没有工位：新设计一台
+  const title = target === 'opening' ? '改标题和开场' : fresh ? '给这一章加一台动手工位' : target === 'bench' ? '重新设计这台工位' : '改这一步';
   return (
     <Modal open onCancel={onClose} title={title} width={r ? 980 : 640} footer={r ? [
       <button key="x" style={mBtn(false)} onClick={() => { decide('discarded'); setR(null); }}>不要，重新说</button>,
@@ -870,7 +873,7 @@ function ReviseModal({ spaceId, chapter, model, target, stepId, initial, onClose
       <div style={LAB_VARS}>
       {!r && <>
         {step && <div style={{ fontSize: 13, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>当前：{step.prompt}</div>}
-        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>{REVISE_CHIPS[target].map(c => <button key={c} className={`fx-chip${chips.includes(c) ? ' on' : ''}`} onClick={() => setChips(x => x.includes(c) ? x.filter(y => y !== c) : [...x, c])}>{c}</button>)}</div>
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>{(fresh ? ['做这一章里最核心的那个动手操作', '简单好上手，大致合理就给分', '用这一行最常见的设备'] : REVISE_CHIPS[target]).map(c => <button key={c} className={`fx-chip${chips.includes(c) ? ' on' : ''}`} onClick={() => setChips(x => x.includes(c) ? x.filter(y => y !== c) : [...x, c])}>{c}</button>)}</div>
         <textarea className="lab-input" rows={3} value={text} onChange={e => setText(e.target.value)} placeholder={target === 'bench' ? '如：高中生用的，搅拌速度只要在大致范围就算对；别考秒级时机' : '如：选项里加一个新人常犯的错；场景换成学校机房'} style={{ ...field, width: '100%' }} />
         <div style={{ fontSize: 12, color: 'var(--ink3)', margin: '8px 0 12px' }}>会带上这个空间的「生成要求」。只改这一处，别的不动；改完先给你看对比。</div>
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, alignItems: 'center' }}>
@@ -921,21 +924,23 @@ function RevView({ target, v }: { target: 'step' | 'opening' | 'bench'; v: any }
  * AI 评审（C，11-06）：生成完 / 重写完会自动评一遍；这里看分数、问题待办（落到哪一章哪一步、怎么改），
  * 一条一条「按这条改」（走局部改的对比采纳），或者勾几条「一键按评审改」（后台把这些章按建议重写成草稿，改完再评一遍）。
  */
+// 默认勾「必须改」的、不含工位（工位要在模拟器里跑通，到「一天」里点 ✦ 改重新设计）
+const defPick = (rv: any) => (rv?.todos || []).filter((t: any) => t.severity !== 'nice' && t.target !== 'bench').map((t: any) => t.id);
 function ReviewTab({ id, model, onFix, onJob }: { id: string; model: string; onFix: (t: any) => void; onJob: () => void }) {
   const { message } = App.useApp();
   const [rv, setRv] = useState<any>(undefined); const [busy, setBusy] = useState(''); const [pick, setPick] = useState<string[]>([]);
-  const load = useCallback(() => fetch(`/api/lab/studio/${id}/followup`, { cache: 'no-store' }).then(r => r.json()).then(j => { setRv(j.review || null); setPick((j.review?.todos || []).map((t: any) => t.id)); }).catch(() => setRv(null)), [id]);
+  const load = useCallback(() => fetch(`/api/lab/studio/${id}/followup`, { cache: 'no-store' }).then(r => r.json()).then(j => { setRv(j.review || null); setPick(defPick(j.review)); }).catch(() => setRv(null)), [id]);
   useEffect(() => { load(); }, [load]);
   const again = async () => {
     setBusy('AI 在评（约半分钟）…');
     const j = await fetch(`/api/lab/studio/${id}/followup`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'review' }) }).then(r => r.json()).catch(() => ({ ok: false, error: '网络错误' }));
     setBusy(''); if (!j.ok) { message.error(j.error); return; }
-    setRv(j.review); setPick((j.review?.todos || []).map((t: any) => t.id));
+    setRv(j.review); setPick(defPick(j.review));
   };
   const fixAll = async () => {
     const todos = (rv?.todos || []).filter((t: any) => pick.includes(t.id));
     if (!todos.length) return;
-    if (!window.confirm(`按勾选的 ${todos.length} 条建议重写相关章节？这些章会变成草稿（改动有留痕），改完 AI 再评一遍。锁定的章不动。`)) return;
+    if (!window.confirm(`按勾选的 ${todos.length} 条改？问题在哪一步就只改那一步，整章的问题才重写整章；改过的章变草稿（改前版本有留痕），改完带着这轮意见复评。工位和锁定的章不动。`)) return;
     const j = await fetch(`/api/lab/studio/${id}/followup`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'fix', todos, model }) }).then(r => r.json()).catch(() => ({ ok: false, error: '网络错误' }));
     if (!j.ok) { message.error(j.error); return; }
     message.info(j.job.already ? '已经在改了' : '开始按评审改，在「一天」里能看进度'); onJob();
@@ -949,17 +954,22 @@ function ReviewTab({ id, model, onFix, onJob }: { id: string; model: string; onF
         {busy && <span className="lab-scan" style={{ fontSize: 12.5, color: 'var(--v)' }}>{busy}</span>}
         <button className="lab-btn ghost sm" disabled={!!busy} onClick={again}>{rv ? '再评一次' : '现在评'}</button>
       </div>
+      {rv && rv.pass != null && <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', marginBottom: 12, fontSize: 13.5 }}>
+        {rv.pass ? <span className="lab-chip" style={{ color: '#0d7a52', background: 'rgba(13,122,82,.08)', borderColor: 'rgba(13,122,82,.2)' }}>达标 · 可以发布</span>
+          : <span className="lab-chip" style={{ color: '#c4323a', background: 'rgba(196,50,58,.07)', borderColor: 'rgba(196,50,58,.2)' }}>还有 {rv.todos.filter((t: any) => t.severity !== 'nice').length} 条必须改</span>}
+        <span className="fx-muted">第 {rv.round || 1} 轮{rv.resolved ? ` · 上一轮 ${rv.resolved.done}/${rv.resolved.total} 条改到位` : ''} · 各项 ≥3 分、没有「必须改」就算达标；「可以更好」的不挡发布</span>
+      </div>}
       {rv && <>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>{rv.items.map((it: any) => <span key={it.rule} title={it.reason} className="lab-glass" style={{ padding: '8px 12px', fontSize: 13, display: 'inline-flex', gap: 8, alignItems: 'center' }}><b style={{ color: it.score >= 4 ? '#0d7a52' : it.score === 3 ? '#a26a00' : '#c4323a', fontSize: 16 }}>{it.score}</b>{it.label}</span>)}</div>
         <div className="lab-glass fx-tablewrap">
           <table className="fx-table">
             <thead><tr><th style={{ width: 30 }} /><th>在哪</th><th>问题</th><th>怎么改</th><th /></tr></thead>
             <tbody>
-              {!rv.todos.length && <tr><td colSpan={5}><div className="fx-empty">没有要改的。可以上架了。</div></td></tr>}
+              {!rv.todos.length && <tr><td colSpan={5}><div className="fx-empty">没有要改的，可以发布了。</div></td></tr>}
               {rv.todos.map((t: any) => <tr key={t.id}>
                 <td><input type="checkbox" checked={pick.includes(t.id)} onChange={e => setPick(x => e.target.checked ? [...x, t.id] : x.filter(y => y !== t.id))} /></td>
                 <td style={{ whiteSpace: 'nowrap' }}><b>{t.chapter}</b><div className="fx-sub">{t.step_no ? `第 ${t.step_no} 步 · ` : ''}{TG[t.target]}{t.rule ? ` · ${t.rule}` : ''}</div></td>
-                <td style={{ minWidth: 200 }}>{t.problem}</td>
+                <td style={{ minWidth: 200 }}><span style={{ fontSize: 11.5, fontWeight: 700, marginRight: 6, color: t.severity === 'nice' ? 'var(--ink3)' : '#c4323a' }}>{t.severity === 'nice' ? '可以更好' : '必须改'}</span>{t.problem}</td>
                 <td style={{ minWidth: 220, color: 'var(--ink2)' }}>{t.fix}</td>
                 <td style={{ whiteSpace: 'nowrap', textAlign: 'right' }}><button className="fx-lnk" onClick={() => onFix(t)}>按这条改 →</button></td>
               </tr>)}
@@ -967,7 +977,7 @@ function ReviewTab({ id, model, onFix, onJob }: { id: string; model: string; onF
           </table>
         </div>
         {rv.todos.length > 0 && <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, alignItems: 'center', marginTop: 12 }}>
-          <span className="fx-muted">一条一条改：点「按这条改」，看对比再采纳。省事：勾几条一起交给 AI。</span>
+          <span className="fx-muted">一条一条改：点「按这条改」，看对比再采纳。省事：勾几条一起交给 AI（默认勾了必须改的）。</span>
           <button className="lab-btn sm" disabled={!pick.length} onClick={fixAll}>✦ 一键按评审改（{pick.length} 条）</button>
         </div>}
       </>}

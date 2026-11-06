@@ -9,7 +9,7 @@
  */
 import { recordEdit } from '@/lib/lab-edits';
 import { generateContent, resolveModel } from '@/lib/llm-client';
-import { specTextOf } from '@/lib/lab-spec';
+import { FORMS, formOf, specTextOf } from '@/lib/lab-spec';
 import { logTokenUsage, withCost } from '@/lib/token-logger';
 import { buildLesson } from '@/lib/lab-lesson';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
@@ -47,6 +47,25 @@ export function spaceText(space: any): string {
     jd.responsibilities ? `岗位职责：${String(jd.responsibilities).slice(0, 800)}` : '',
     career.summary ? `职业概况：${String(career.summary).slice(0, 400)}` : '',
     specTextOf(jd),   // 用户的生成要求（受众 / 深度 / 难度 / 必须有 / 不要 / 参考资料），每一步都带
+  ].filter(Boolean).join('\n');
+}
+
+/**
+ * 生涯体验讲「怎么进这一行」用职业库里的事实（月薪、相关专业、证书、发展阶梯），别让模型凭空编（11-06）。
+ * 只给 career 形态；空间没挂职业库就空串。
+ */
+async function occupationFacts(space: any): Promise<string> {
+  const id = space?.jd_snapshot?.anchor?.occupation_id;
+  if (!id || formOf(space?.jd_snapshot) !== 'career') return '';
+  const { data: o } = await supabaseAdmin.from('occupations').select('name, recent_year_monthly_salary, relevant_certificates, relevant_fos_ids, position_requirement, career_map').eq('id', id).maybeSingle();
+  if (!o) return '';
+  const ladder = (o.career_map as any)?.ladder;
+  return ['【职业库里的事实（讲收入、专业、证书、发展时以这些为准；库里没有的按公开常识说范围，并注明「以实际为准」）】',
+    o.recent_year_monthly_salary ? `· 近一年平均月薪约 ${o.recent_year_monthly_salary} 元（全国口径，各地差别大）` : '',
+    o.relevant_fos_ids?.length ? `· 相关专业（学科代码，写给学生时换成中文专业名）：${o.relevant_fos_ids.join('、')}` : '',
+    o.relevant_certificates ? `· 相关证书：${o.relevant_certificates}` : '',
+    o.position_requirement ? `· 招聘常见要求：${String(o.position_requirement).slice(0, 240)}` : '',
+    Array.isArray(ladder) && ladder.length ? `· 发展阶梯：${ladder.map((x: any) => x?.title || x?.name || x).filter(Boolean).join(' → ').slice(0, 300)}` : '',
   ].filter(Boolean).join('\n');
 }
 
@@ -112,12 +131,15 @@ async function buildDayInner(spaceId: string, model: string, hint: string, progr
   const chapters = (all || []).filter((c: any) => !empty.includes(c)) as StudioChapter[];
   const cast = await loadCast(spaceId);
   const family = familyOf((space as any).jd_snapshot?.career?.profession, (space as any).jd_snapshot?.title);
+  const form = formOf((space as any).jd_snapshot);
+  const facts = await occupationFacts(space);
 
   await progress('排一天骨架', `已有 ${chapters.length} 章 · 角色表 ${cast.length} 项`);
   const p = await ask(`
 你在给一个「职业体验空间」排一天的骨架。体验者跟着时间把这个职业的一天走一遍，每一格是一章（一段 5–10 分钟的操作）。
 
 ${spaceText(space)}
+${facts}
 
 已经做好的章节（放进这一天里合适的时段，不要再为它们新建格子）：
 ${chapters.length ? chapters.map(chapterLine).join('\n') : '（还没有）'}
@@ -128,7 +150,8 @@ ${castText(cast)}
 ${DAY_RULES}
 ${hint ? `\n管理员的要求：${hint}\n` : ''}
 要求：
-- 整天 6–8 格（含已有章节）。新格子只给标题和要交代的事，不出题。
+${form ? `- 这个空间的形态是「${FORMS[form].label}」（${FORMS[form].essence}），体验者是${FORMS[form].who}。${FORMS[form].day}
+  （形态的排法优先于上面「一天」的时段规则；格数含已有章节。）新格子只给标题和要交代的事，不出题。` : '- 整天 6–8 格（含已有章节）。新格子只给标题和要交代的事，不出题。'}
 - 这一天会反复出场、但角色表里还没有的人物 / 地点 / 道具，放进 new_cast（各章生成时会优先用）。人物 2–6 个，地点 2–4 个，道具 2–5 个（道具一定要有）。
 ${CAST_RULES}
 - 要前后一致的事实 3–6 条（如「上午 9 点有一批团购顾客」「消毒液只剩半桶」）。
@@ -194,6 +217,8 @@ async function buildChapterInner(spaceId: string, chapterId: string, model: stri
   if (ch.locked) throw new Error('这一章锁定了：先解锁再重新生成');
   const cast = await loadCast(spaceId);
   const family = familyOf((space as any).jd_snapshot?.career?.profession, (space as any).jd_snapshot?.title);
+  const form = formOf((space as any).jd_snapshot);
+  const facts = await occupationFacts(space);
   const bible: DayBible = (space as any).bible || {};
   const day = (chs || []) as StudioChapter[];
   const t = slotMinutes(ch.slot);
@@ -208,9 +233,10 @@ async function buildChapterInner(spaceId: string, chapterId: string, model: stri
 
   await progress('写故事线', `${ch.slot || ''} ${ch.title}`);
   const prompt = (fix: string) => `
-你在给一个「职业体验空间」写其中一章。体验者扮演这个职业的新人，跟着时间把一天走下去；这一章是一段 5–10 分钟的真实工作操作。
+你在给一个「职业体验空间」写其中一章。${form ? `形态是「${FORMS[form].label}」：${FORMS[form].essence}。体验者是${FORMS[form].who}（用第二人称「你」，台词和题目都按这个身份写）；这一章是一段 5–10 分钟的体验。` : '体验者扮演这个职业的新人，跟着时间把一天走下去；这一章是一段 5–10 分钟的真实工作操作。'}
 
 ${spaceText(space)}
+${facts}
 
 角色表（编号 · 名字 · 类型；★ 表示这一天前面的章节已经出场过）：
 ${(['person', 'place', 'prop'] as CastKind[]).map(k => `${castKind(k).label}：${cast.filter(m => m.kind === k && !m.is_self).map(m => `${m.code} ${m.name}（${m.type_name || '—'}）${usedBefore(m) ? '★' : ''}`).join('；') || '（无）'}`).join('\n')}
@@ -238,7 +264,8 @@ ${CAST_RULES}
 2. 每步有 scene（who 说话的人编号、time、text 说了什么 / 发生了什么）推进剧情；place 写这一步在哪（场景编号）；props 写这一步用到的道具编号（没有就空）。
    scene.time 要落在本章时段附近（前后 1 小时内）。
 3. 要接住前面章节发生的事（提到具体的人和事），但不要重复它们的操作。
-4. 情境与数据虚构，不用真实企业的内部数据。全部用中文。
+4. 情境与数据虚构，不用真实企业的内部数据。全部用中文。${form ? `
+7. 「${FORMS[form].label}」的写法（和上面冲突时以这条为准）：${FORMS[form].chapter}评分：${FORMS[form].score}` : ''}
 6. rubric：这一章的评分标准 4 个维度，权重合计 100；每个维度写「看什么」，要能区分会做事的人和会写套话的人，贴着这一章的内容（不要泛泛的「专业能力」）。
 5. expert：这一行老师傅在每一步会怎么做（choose 填选项 id；multi 填 id 数组；classify 填 {条目 id: 标签 id}；allocate 填 {条目 id: 数值}，和等于 total；slider 填数字；text 写一段示范答案）。
 

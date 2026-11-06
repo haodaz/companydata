@@ -6,7 +6,7 @@
  */
 import React, { useState } from 'react';
 import { App } from 'antd';
-import { PRESETS, type GenSpec, type SpecRef } from '@/lib/lab-spec';
+import { FORMS, PRESETS, type GenSpec, type SpaceForm, type SpecRef } from '@/lib/lab-spec';
 
 export function SpecEditor({ spec, setSpec }: { spec: GenSpec; setSpec: React.Dispatch<React.SetStateAction<GenSpec>> }) {
   const { message } = App.useApp();
@@ -24,7 +24,9 @@ export function SpecEditor({ spec, setSpec }: { spec: GenSpec; setSpec: React.Di
   const addRefText = () => { if (refText.trim().length < 20) return; setSpec(s => ({ ...s, refs: [...(s.refs || []), { name: `粘贴的资料 ${(s.refs?.length || 0) + 1}`, text: refText.trim() }].slice(0, 6) })); setRefText(''); };
   return <>
         <div className="sp-glabel">先点一个最接近的，再改</div>
-        <div className="sp-presets">{PRESETS.map(p => <button key={p.key} className={spec.preset === p.label ? 'on' : ''} onClick={() => setSpec(s => ({ ...s, ...p.spec, preset: p.label }))}>{p.label}</button>)}</div>
+        <div className="sp-presets">{PRESETS.map(p => <button key={p.key} className={spec.preset === p.label ? 'on' : ''} onClick={() => setSpec(s => ({ ...s, form: undefined, ...p.spec, preset: p.label }))}>{p.label}</button>)}</div>
+        <div className="sp-glabel">形态<small>不只是难度：排一天怎么排、你是谁、题目怎么出、怎么评分都跟着变</small></div>
+        <div className="sp-presets sp-forms">{([['', '新人上班的一天'], ...(Object.keys(FORMS) as SpaceForm[]).map(k => [k, FORMS[k].label])] as [string, string][]).map(([k, l]) => <button key={k || 'day'} className={(spec.form || '') === k ? 'on' : ''} title={k ? FORMS[k as SpaceForm].essence : '体验者扮演入职的新人，跟着时间把一天走下去'} onClick={() => setSpec(s => ({ ...s, form: (k || undefined) as SpaceForm | undefined }))}>{l}</button>)}</div>
         <Field label="给谁看" hint="年龄 / 阶段、对这一行了解多少、看完要得到什么" value={spec.audience} onChange={v => setSpec(s => ({ ...s, audience: v }))} placeholder="如：高中生，还没选专业，想知道这一行每天在干什么、适不适合自己" />
         <Field label="要多深" hint="职业讲到哪一级、日常任务要普遍还是细分、术语怎么处理" value={spec.depth} onChange={v => setSpec(s => ({ ...s, depth: v }))} placeholder="如：讲到「程序员」这一级，最多分前端 / 后端；任务挑最普遍的；术语一出现就解释" />
         <Field label="考核多难" hint="操作要不要精准、评分看什么、红线留多少" value={spec.difficulty} onChange={v => setSpec(s => ({ ...s, difficulty: v }))} placeholder="如：看懂、方向对、说得出理由就算过；工位大致在合理范围就给分，不要求每一步精准" />
@@ -51,6 +53,7 @@ export const SPEC_CSS = `
 .sp-presets { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
 .sp-presets button { border: 1px solid var(--line); background: rgba(255,255,255,.7); border-radius: 999px; padding: 6px 14px; font: inherit; font-size: 13.5px; color: var(--ink2); cursor: pointer; }
 .sp-presets button.on { background: var(--v); border-color: var(--v); color: #fff; font-weight: 700; }
+.sp-forms button { border-radius: 8px; } .sp-forms button.on { background: rgba(91,79,224,.1); color: var(--v); border-color: var(--v); }
 .sp-in { width: 100%; padding: 10px 13px; border-radius: 12px; border: 1px solid var(--line); font-size: 14px; line-height: 1.65; box-sizing: border-box; }
 .sp-field { display: grid; gap: 5px; margin-bottom: 12px; }
 .sp-field > span { font-size: 14px; font-weight: 700; } .sp-field small { font-size: 12px; color: var(--ink3); font-weight: 500; margin-left: 8px; }

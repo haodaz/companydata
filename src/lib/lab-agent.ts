@@ -23,7 +23,7 @@ export const LAB_TOOLS: Anthropic.Tool[] = [
   { name: 'locate', description: '把用户说的职业 / 岗位 / 「公司 + 岗位」/ 学科定位到一个东西：返回职业库候选、岗位库里的真实 JD、AI 给的三种粒度（common 常见叫法 / role 具体岗位 / niche 细分方向）。拿到后用 ask_user 让用户选一个（给高中生一般选常见叫法）。', input_schema: { type: 'object', properties: { q: { type: 'string' }, mode: { type: 'string', enum: ['career', 'discipline'] } }, required: ['q'] } },
   { name: 'create_space', description: '生成一个新空间（约 2–4 分钟，前端会显示进度，做完会告诉你 space_id）。anchor 来自 locate 的结果；spec 是生成要求（都是自然语言）。调用前先用 ask_user 复述一遍「做什么 + 给谁看 + 多深 + 多难」让用户确认。', input_schema: { type: 'object', properties: {
     anchor: { type: 'object', properties: { kind: { type: 'string', enum: ['occupation', 'job', 'career', 'discipline'] }, label: { type: 'string' }, occupation_id: { type: 'number' }, job_id: { type: 'number' }, company: { type: 'string' }, from: { type: 'string', description: '用户最初的原话' } }, required: ['kind', 'label'] },
-    spec: { type: 'object', properties: { preset: { type: 'string' }, audience: { type: 'string' }, depth: { type: 'string' }, difficulty: { type: 'string' }, must: { type: 'string' }, avoid: { type: 'string' } } },
+    spec: { type: 'object', properties: { preset: { type: 'string' }, form: { type: 'string', enum: ['career', 'training', 'certify'], description: '形态：career 生涯体验（中学生 / 职业探索：看清这一行、看清自己）/ training 虚拟实训（专业学生练手艺）/ certify 资格考核（按国家职业技能标准考）；新人上岗、在职提升不填' }, audience: { type: 'string' }, depth: { type: 'string' }, difficulty: { type: 'string' }, must: { type: 'string' }, avoid: { type: 'string' } } },
   }, required: ['anchor', 'spec'] } },
   { name: 'my_spaces', description: '列出用户生成的空间（状态、章节、作答、平均分）。用户说「我那个……空间」先用它找 space_id。', input_schema: { type: 'object', properties: { q: { type: 'string' } } } },
   { name: 'space_detail', description: '看一个空间：生成要求、每一章（时段 / 标题 / 状态 / 锁定 / 步数 / 每步题干）、最近一次 AI 评审的待办、正在跑的任务。改之前先看。', input_schema: { type: 'object', properties: { space_id: { type: 'string' } }, required: ['space_id'] } },
@@ -121,7 +121,8 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
     case 'review': {
       const sp = await own(user, input.space_id);
       const r = await reviewSpace(sp.id);
-      return { label: `评审完：最低 ${r.worst} 分，${r.todos.length} 条待改`, ui: panel(sp.id, nameOf(sp), 'review'), result: { summary: r.summary, scores: r.items.map(i => `${i.label} ${i.score}`), todos: r.todos.map(t => ({ id: t.id, where: `${t.chapter}${t.step_no ? ` 第${t.step_no}步` : ''}`, problem: t.problem, fix: t.fix })) } };
+      const musts = r.todos.filter(t => t.severity !== 'nice').length;
+      return { label: r.pass ? `评审完：达标（最低 ${r.worst} 分）${r.todos.length ? `，${r.todos.length} 条可以更好` : ''}` : `评审完：最低 ${r.worst} 分，${musts} 条必须改${r.todos.length - musts ? `、${r.todos.length - musts} 条可以更好` : ''}`, ui: panel(sp.id, nameOf(sp), 'review'), result: { pass: !!r.pass, summary: r.summary, scores: r.items.map(i => `${i.label} ${i.score}`), todos: r.todos.map(t => ({ id: t.id, severity: t.severity || 'must', where: `${t.chapter}${t.step_no ? ` 第${t.step_no}步` : ''}`, target: t.target, problem: t.problem, fix: t.fix })) } };
     }
     case 'fix_by_review': {
       const sp = await own(user, input.space_id);
@@ -178,14 +179,15 @@ function systemPrompt(email: string) {
 出一个新空间：
 1. 用户第一句往往只说一句（「给高中生做一个程序员的生涯体验」）。从这句话里能推出来的先记下，缺的一次只问一件，别让他填表。
 2. locate 定位，用 ask_user 让他在粒度里选（问题一句话，选项写名字，如「程序员（常见叫法）」「后端开发工程师」「SRE 工程师」）。给高中生 / 生涯体验默认推荐常见叫法。
-3. 生成要求：给谁看、要多深、考核多难最重要；必须有 / 不要的问一句就行。没说的按受众先定默认（预设可参考：${PRESETS.map(p => `「${p.label}」`).join('')}），然后用 ask_user 复述一行确认：做什么｜给谁看｜多深｜多难｜必须有 / 不要，选项「就这样生成」「改一下」。
+3. 生成要求：先定形态 form——初中 / 高中生、职业探索 → career；专业学生练手艺 → training；考证、技能等级认定 → certify；新人上岗、在职提升不填。三种不只是难度不同，结构也不同（生涯体验是跟岗看清这一行和自己、收尾讲选科专业和入行的路；实训按模块练工序；考核按标准考理论和技能）。给谁看、要多深、考核多难最重要；必须有 / 不要的问一句就行。没说的按受众先定默认（预设可参考：${PRESETS.map(p => `「${p.label}」`).join('')}），然后用 ask_user 复述一行确认：做什么｜形态｜给谁看｜多深｜多难｜必须有 / 不要，选项「就这样生成」「改一下」。
 4. create_space。做完前端会发回一句话告诉你 space_id，接着建议：排一天骨架（build_day）→ 写各章（write_chapters）→ 评审（review）。一步一步来，每步做完说一句结果和下一步，问他要不要继续（ask_user）。
    build_day / write_chapters / fix_by_review 是后台任务：发起后说一句就停，别催别查；做完前端会自动发来「「…」做完了：…」，收到再接着下一步（写完章节就直接 review，不用再问）。
 改：
 - 用户说「第二章太难」「这一步换个场景」：先 space_detail 看清楚是哪一章哪一步，再 revise 出提案（对话里会显示改前改后，用户点采纳才写进去），别自己说「已改好」。
 - 整章不满意：write_chapters 传 chapter_ids 和 hint 重写。工位（虚拟操作台）的修改请用户到工作室点「✦ 改」。
 - 生成要求变了：set_spec，然后问要不要按新要求重写（write_chapters 传没锁定的章）。
-- review 出来的待办，问他「一条条改还是一键改」：一键用 fix_by_review。
+- review 出来的待办分「必须改」（must，挡发布）和「可以更好」（nice）。达标（pass）= 没有必须改的，就直接建议发布，「可以更好」的提一句让他决定。没达标就问「一条条改还是一键改」：一键用 fix_by_review（默认只传 must 的 todo_ids，他要连 nice 一起改再全传）。一条条改时每条用 revise 出提案；用户点了采纳 / 不要，前端会发来一句，收到就接着下一条。
+- 工位（target=bench）的问题一键改不了，请他到工作室点「✦ 改 → 重新设计」。
 上架：先确认章节都写好了（publish_chapters 发布章节），ask_user 确认后 set_listing listed。
 回答简短，用户看得到右边的空间；不要把工具返回的长内容原样念出来。`;
 }
