@@ -88,7 +88,7 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
     case 'build_day': {
       const sp = await own(user, input.space_id);
       const job = await startJob(sp.id, null, 'build_day', async progress => { const r = await buildDay(sp.id, MODEL(), s(input.hint, 500), progress); return `新增 ${r.added} 格 · 角色表新增 ${r.cast} 项`; });
-      return { label: job.already ? '骨架已经在排了' : '开始排一天骨架（约 1 分钟）', ui: panel(sp.id, nameOf(sp)), result: { job_id: job.id, already: job.already } };
+      return { label: job.already ? '骨架已经在排了' : '开始排一天骨架（约 1 分钟）', ui: { ...panel(sp.id, nameOf(sp)), job_id: job.id, job: '排一天骨架' }, result: { job_id: job.id, already: job.already } };
     }
     case 'write_chapters': {
       const sp = await own(user, input.space_id);
@@ -100,7 +100,7 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
         let n = 0; for (const c of todo) { await progress(`写章节 ${n + 1} / ${todo.length}`, c.title); await buildChapter(sp.id, c.id, MODEL(), s(input.hint, 500), { art: true }, () => {}); n++; }
         return `写了 ${n} 章`;
       });
-      return { label: `开始写 ${todo.length} 章（每章约 1 分钟）`, ui: panel(sp.id, nameOf(sp)), result: { job_id: job.id, chapters: todo.map((c: any) => c.title) } };
+      return { label: `开始写 ${todo.length} 章（每章约 1 分钟）`, ui: { ...panel(sp.id, nameOf(sp)), job_id: job.id, job: `写 ${todo.length} 章` }, result: { job_id: job.id, chapters: todo.map((c: any) => c.title) } };
     }
     case 'revise': {
       const sp = await own(user, input.space_id);
@@ -129,7 +129,7 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
       const ids: string[] = Array.isArray(input.todo_ids) ? input.todo_ids : [];
       const todos = ids.length ? rv.todos.filter(t => ids.includes(t.id)) : rv.todos;
       const job = await startJob(sp.id, null, 'fix_review', progress => fixByReview(sp.id, todos, MODEL(), progress));
-      return { label: `开始按评审改 ${todos.length} 条`, ui: panel(sp.id, nameOf(sp)), result: { job_id: job.id } };
+      return { label: `开始按评审改 ${todos.length} 条`, ui: { ...panel(sp.id, nameOf(sp)), job_id: job.id, job: `按评审改 ${todos.length} 条` }, result: { job_id: job.id } };
     }
     case 'set_spec': {
       const sp = await own(user, input.space_id);
@@ -180,6 +180,7 @@ function systemPrompt(email: string) {
 2. locate 定位，用 ask_user 让他在粒度里选（问题一句话，选项写名字，如「程序员（常见叫法）」「后端开发工程师」「SRE 工程师」）。给高中生 / 生涯体验默认推荐常见叫法。
 3. 生成要求：给谁看、要多深、考核多难最重要；必须有 / 不要的问一句就行。没说的按受众先定默认（预设可参考：${PRESETS.map(p => `「${p.label}」`).join('')}），然后用 ask_user 复述一行确认：做什么｜给谁看｜多深｜多难｜必须有 / 不要，选项「就这样生成」「改一下」。
 4. create_space。做完前端会发回一句话告诉你 space_id，接着建议：排一天骨架（build_day）→ 写各章（write_chapters）→ 评审（review）。一步一步来，每步做完说一句结果和下一步，问他要不要继续（ask_user）。
+   build_day / write_chapters / fix_by_review 是后台任务：发起后说一句就停，别催别查；做完前端会自动发来「「…」做完了：…」，收到再接着下一步（写完章节就直接 review，不用再问）。
 改：
 - 用户说「第二章太难」「这一步换个场景」：先 space_detail 看清楚是哪一章哪一步，再 revise 出提案（对话里会显示改前改后，用户点采纳才写进去），别自己说「已改好」。
 - 整章不满意：write_chapters 传 chapter_ids 和 hint 重写。工位（虚拟操作台）的修改请用户到工作室点「✦ 改」。

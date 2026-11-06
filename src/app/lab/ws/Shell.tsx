@@ -4,12 +4,13 @@
  * 「AI 百业｜模拟」workspace 外壳（E，2026-11-06，照真活工作台）：左边侧栏，内容区直接复用已有的页面（百业工厂、工作室、体验馆、素材库、对话）。
  * 侧栏：首页 / ＋新对话 / 百业工厂 / 模拟空间 / 使用记录 / 素材管理 / 用户管理（管理员、百业管理员）+ 最近对话 + 账号菜单（切换到经典版、退出登录）。
  * LabShell 在 /lab/ws 下不画顶栏、不套 lab-wrap；配色沿用 .lab 的变量。手机上侧栏收成左边抽屉。
- * 和对话页之间用 window 事件：lws-threads（刷新列表）/ lws-thread（当前对话 id）/ lws-open（打开某段或新对话）。
+ * 和对话页之间用 window 事件：lws-threads（刷新列表）/ lws-thread（当前对话 id）/ lws-open（打开某段或新对话）/ lws-auto-collapse（对话开了应用区、屏不够宽时临时收起侧栏）。
+ * 侧栏能收成一列图标（11-06：笔电屏小）；人点的收起 / 展开记在本机 lws-collapsed。
  */
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { BarChart3, Boxes, Factory, FolderOpen, House, Menu, SquarePen, Users, X, ChevronsUpDown, type LucideIcon } from 'lucide-react';
+import { BarChart3, Boxes, Factory, FolderOpen, House, Menu, PanelLeftClose, PanelLeftOpen, SquarePen, Users, X, ChevronsUpDown, type LucideIcon } from 'lucide-react';
 import { useUser } from '@/lib/user-context';
 import { canManageBaiye } from '@/lib/roles';
 
@@ -30,6 +31,12 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   const [cur, setCur] = useState<string | null>(null);
   const [menu, setMenu] = useState(false); const [drawer, setDrawer] = useState(false);
   useEffect(() => { setDrawer(false); setMenu(false); }, [path]);
+  const [pref, setPref] = useState(false); const [auto, setAuto] = useState(false);
+  useEffect(() => { try { setPref(localStorage.getItem('lws-collapsed') === '1'); } catch {} }, []);
+  useEffect(() => { const on = (e: Event) => setAuto(!!(e as CustomEvent).detail); window.addEventListener('lws-auto-collapse', on); return () => window.removeEventListener('lws-auto-collapse', on); }, []);
+  useEffect(() => { if (path !== CHAT) setAuto(false); }, [path]);
+  const mini = pref || auto;
+  const toggle = () => { const n = !mini; setAuto(false); setPref(n); try { localStorage.setItem('lws-collapsed', n ? '1' : '0'); } catch {} };
   const load = useCallback(() => fetch('/api/lab/chat', { cache: 'no-store' }).then(r => { if (r.status === 401) location.href = `/lab/login?next=${encodeURIComponent(location.pathname)}`; return r.json(); }).then(j => j.ok && setThreads(j.data || [])).catch(() => {}), []);
   useEffect(() => { load(); }, [load]);
   useEffect(() => {
@@ -50,12 +57,15 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         <button className="lws-ham" aria-label="新对话" onClick={() => open(null)}><SquarePen size={19} strokeWidth={1.8} /></button>
       </header>
       {drawer && <div className="lws-scrim" onClick={() => setDrawer(false)} />}
-      <aside className={`lws-side${drawer ? ' open' : ''}`}>
+      <aside className={`lws-side${drawer ? ' open' : ''}${mini ? ' mini' : ''}`}>
         <button className="lws-ham lws-close" aria-label="关闭菜单" onClick={() => setDrawer(false)}><X size={20} strokeWidth={1.8} /></button>
-        <Link href={HOME} className="lws-brand"><span className="mk">业</span><div><b>AI 百业｜模拟</b><small>SIMULATION · WORKSPACE</small></div></Link>
+        <div className="lws-top">
+          <Link href={HOME} className="lws-brand" title="AI 百业｜模拟"><span className="mk">业</span><div className="lws-txt"><b>AI 百业｜模拟</b><small>SIMULATION · WORKSPACE</small></div></Link>
+          <button className="lws-fold" onClick={toggle} title={mini ? '展开侧栏' : '收起侧栏'} aria-label={mini ? '展开侧栏' : '收起侧栏'}>{mini ? <PanelLeftOpen size={18} strokeWidth={1.7} /> : <PanelLeftClose size={18} strokeWidth={1.7} />}</button>
+        </div>
         <div className="lws-scroll">
-          <button className={`lws-new${path === CHAT && !cur ? ' on' : ''}`} onClick={() => open(null)}><SquarePen size={16} strokeWidth={1.8} />新对话</button>
-          <nav className="lws-nav">{NAV.filter(x => !x.admin || canManageBaiye(user?.role)).map(x => <Link key={x.href} href={x.href} className={x.on(path) ? 'on' : ''}><x.ic size={17} strokeWidth={1.7} />{x.t}</Link>)}</nav>
+          <button className={`lws-new${path === CHAT && !cur ? ' on' : ''}`} onClick={() => open(null)} title="新对话"><SquarePen size={16} strokeWidth={1.8} /><span className="lws-txt">新对话</span></button>
+          <nav className="lws-nav">{NAV.filter(x => !x.admin || canManageBaiye(user?.role)).map(x => <Link key={x.href} href={x.href} className={x.on(path) ? 'on' : ''} title={x.t}><x.ic size={17} strokeWidth={1.7} /><span className="lws-txt">{x.t}</span></Link>)}</nav>
           <div className="lws-grp">最近对话</div>
           <div className="lws-list">
             {threads.slice(0, 40).map(t => <button key={t.id} className={`lws-item${cur === t.id ? ' on' : ''}`} title={t.title || '对话'} onClick={() => open(t.id)}>{t.title || '对话'}</button>)}
@@ -69,7 +79,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             <hr />
             <button onClick={logout}>退出登录</button>
           </div>}
-          <button className="lws-acct" onClick={() => setMenu(m => !m)} aria-expanded={menu}><span className="av">{(who || '我').slice(0, 1).toUpperCase()}</span><span className="who"><b>{who || '…'}</b><small>生成 · 管理 · 看使用</small></span><ChevronsUpDown size={15} strokeWidth={1.7} style={{ marginLeft: 'auto', color: 'var(--ink3)' }} /></button>
+          <button className="lws-acct" onClick={() => setMenu(m => !m)} aria-expanded={menu} title={who}><span className="av">{(who || '我').slice(0, 1).toUpperCase()}</span><span className="who lws-txt"><b>{who || '…'}</b><small>生成 · 管理 · 看使用</small></span><ChevronsUpDown className="lws-txt" size={15} strokeWidth={1.7} style={{ marginLeft: 'auto', color: 'var(--ink3)' }} /></button>
         </div>
       </aside>
       <main className="lws-main">{children}</main>
@@ -80,7 +90,16 @@ export default function Shell({ children }: { children: React.ReactNode }) {
 const CSS = `
 .lws { display: flex; min-height: 100vh; position: relative; z-index: 1; }
 .lws-side { width: 244px; flex-shrink: 0; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; background: #fff; border-right: 1px solid var(--line); }
-.lws-brand { display: flex; align-items: center; gap: 11px; padding: 20px 16px 14px; text-decoration: none; color: var(--ink); }
+.lws-top { display: flex; align-items: center; padding: 20px 10px 14px 16px; gap: 6px; }
+.lws-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--ink); min-width: 0; flex: 1; }
+.lws-fold { width: 32px; height: 32px; border: 0; background: transparent; border-radius: 8px; display: grid; place-items: center; color: var(--ink3); cursor: pointer; flex-shrink: 0; }
+.lws-fold:hover { background: rgba(23,26,46,.06); color: var(--ink); }
+.lws-side { transition: width .18s ease; }
+.lws-side.mini { width: 60px; }
+.lws-side.mini .lws-txt, .lws-side.mini .lws-grp, .lws-side.mini .lws-list { display: none; }
+.lws-side.mini .lws-top { flex-direction: column; padding: 16px 0 10px; gap: 10px; } .lws-side.mini .lws-brand { flex: none; }
+.lws-side.mini .lws-scroll { padding: 6px 8px; } .lws-side.mini .lws-new, .lws-side.mini .lws-nav a { justify-content: center; padding: 9px 0; }
+.lws-side.mini .lws-acct { justify-content: center; padding: 6px 0; } .lws-side.mini .lws-acct-m { right: auto; width: 200px; }
 .lws-brand .mk, .lws-mbrand .mk { width: 36px; height: 36px; border-radius: 10px; background: var(--v); color: #fff; display: grid; place-items: center; font-weight: 900; font-size: 16px; flex-shrink: 0; }
 .lws-brand b { display: block; font-size: 15.5px; font-weight: 800; } .lws-brand small { display: block; font-size: 10px; letter-spacing: .18em; color: var(--ink3); margin-top: 2px; }
 .lws-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 6px 10px 12px; }
@@ -110,7 +129,10 @@ const CSS = `
   .lws-mtop { display: flex; align-items: center; gap: 6px; position: sticky; top: 0; z-index: 30; height: 52px; padding: 0 8px; background: rgba(255,255,255,.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
   .lws-ham { width: 40px; height: 40px; border: 0; background: transparent; border-radius: 10px; display: grid; place-items: center; color: var(--ink); cursor: pointer; flex-shrink: 0; }
   .lws-mbrand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); margin-right: auto; } .lws-mbrand .mk { width: 28px; height: 28px; border-radius: 9px; font-size: 13px; } .lws-mbrand b { font-size: 15px; }
-  .lws-side { position: fixed; left: 0; top: 0; bottom: 0; height: 100%; width: min(84vw, 300px); z-index: 50; transform: translateX(-104%); transition: transform .22s ease; background: #fff; box-shadow: 8px 0 30px rgba(23,26,46,.16); }
+  .lws-fold { display: none; }
+  .lws-side.mini .lws-txt { display: initial; } .lws-side.mini .lws-grp { display: block; } .lws-side.mini .lws-list { display: grid; }
+  .lws-side.mini .lws-top { flex-direction: row; padding: 20px 10px 14px 16px; } .lws-side.mini .lws-new, .lws-side.mini .lws-nav a, .lws-side.mini .lws-acct { justify-content: flex-start; padding: 9px 12px; }
+  .lws-side, .lws-side.mini { position: fixed; left: 0; top: 0; bottom: 0; height: 100%; width: min(84vw, 300px); z-index: 50; transform: translateX(-104%); transition: transform .22s ease; background: #fff; box-shadow: 8px 0 30px rgba(23,26,46,.16); }
   .lws-side.open { transform: none; } .lws-close { display: grid; position: absolute; right: 8px; top: 14px; }
   .lws-scrim { position: fixed; inset: 0; background: rgba(23,26,46,.3); z-index: 45; }
   .lws-main { padding: 16px 12px 40px; }
