@@ -12,7 +12,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLabNav } from '@/components/lab/FactoryKit';
 import { useRouter } from 'next/navigation';
 import { App } from 'antd';
-import { useModel } from '@/lib/model-context';
 import { type Anchor, type GenSpec } from '@/lib/lab-spec';
 import { SpecEditor, SPEC_CSS } from '@/components/lab/SpecEditor';
 
@@ -24,7 +23,7 @@ const TIER: Record<string, string> = { common: '常见叫法', role: '具体岗�
 export default function NewSpacePage() { return <App><NewSpace /></App>; }
 
 function NewSpace() {
-  const router = useRouter(); const { message } = App.useApp(); const { currentModel } = useModel(); const nav = useLabNav();
+  const router = useRouter(); const { message } = App.useApp(); const nav = useLabNav();
   // 第一层
   const [mode, setMode] = useState<'career' | 'discipline' | 'paste'>('career');
   const [q, setQ] = useState(''); const [finding, setFinding] = useState(false);
@@ -65,7 +64,7 @@ function NewSpace() {
     if (anchor.kind === 'pasted' && paste.text.trim().length < 40) { message.warning('JD 正文至少 40 字'); return; }
     const buildId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
     setBuilding({ buildId, phase: anchor.kind === 'job' || anchor.kind === 'pasted' ? '读取岗位 JD' : '结构化职业 · 推断典型岗位', since: Date.now() });
-    const body: any = { anchor, spec, model: currentModel, buildId, draft: true };
+    const body: any = { anchor, spec, model: process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna', buildId, draft: true };
     if (anchor.kind === 'pasted') Object.assign(body, { jdText: paste.text.trim(), title: paste.title.trim(), company: paste.company.trim() });
     const j = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json().catch(() => ({ ok: false, error: '网络错误' }));
     if (!j.ok) { setBuilding(null); message.error(j.error || '生成失败'); return; }

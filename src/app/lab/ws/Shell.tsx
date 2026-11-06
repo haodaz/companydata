@@ -79,9 +79,9 @@ export default function Shell({ children }: { children: React.ReactNode }) {
 
 const CSS = `
 .lws { display: flex; min-height: 100vh; position: relative; z-index: 1; }
-.lws-side { width: 244px; flex-shrink: 0; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; background: rgba(255,255,255,.78); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-right: 1px solid var(--line); }
+.lws-side { width: 244px; flex-shrink: 0; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; background: #fff; border-right: 1px solid var(--line); }
 .lws-brand { display: flex; align-items: center; gap: 11px; padding: 20px 16px 14px; text-decoration: none; color: var(--ink); }
-.lws-brand .mk, .lws-mbrand .mk { width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(135deg, var(--v), var(--c)); color: #fff; display: grid; place-items: center; font-weight: 900; font-size: 16px; flex-shrink: 0; }
+.lws-brand .mk, .lws-mbrand .mk { width: 36px; height: 36px; border-radius: 10px; background: var(--v); color: #fff; display: grid; place-items: center; font-weight: 900; font-size: 16px; flex-shrink: 0; }
 .lws-brand b { display: block; font-size: 15.5px; font-weight: 800; } .lws-brand small { display: block; font-size: 10px; letter-spacing: .18em; color: var(--ink3); margin-top: 2px; }
 .lws-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 6px 10px 12px; }
 .lws-new { display: flex; align-items: center; gap: 10px; width: 100%; padding: 9px 12px; margin-bottom: 8px; border: 1px solid var(--line); background: #fff; border-radius: 12px; font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); cursor: pointer; }

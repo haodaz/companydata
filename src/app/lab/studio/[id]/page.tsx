@@ -57,6 +57,8 @@ export default function StudioPage() {
   // 分 tab（11-06）：一天 / 角色与素材 / 生成要求 / 作答 / 分析；预览、上下架在右上角
   const tab = (sp.get('tab') as StudioTab) || 'day';
   const nav = useLabNav();
+  const [embed, setEmbed] = useState(false);
+  useEffect(() => { try { setEmbed(window.self !== window.top); } catch { setEmbed(true); } }, []);
   const setTab = (t: StudioTab) => router.replace(`${nav.space(id)}${t === 'day' ? (cur ? `?ch=${cur}` : '') : `?tab=${t}`}`);
   const [dayHint, setDayHint] = useState('');
   const [jobs, setJobs] = useState<any[]>([]);
@@ -208,10 +210,11 @@ export default function StudioPage() {
     <div>
       <style>{FX_CSS}</style>
       {/* 和我聊：在工厂里先试聊，看数字职人答得像不像这一行的人 */}
-      {data?.space && <ChatLauncher href={`/lab/${id}/chat`} name={data.space.profile?.name} avatar={data.space.profile?.avatar} />}
+      {/* 嵌在对话右边的面板里（iframe）就不放：挡章节，「⋯」里也有 */}
+      {data?.space && !embed && <ChatLauncher href={`/lab/${id}/chat`} name={data.space.profile?.name} avatar={data.space.profile?.avatar} />}
       {/* 页头 */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 16 }}>
-        <button className="lab-btn ghost sm" onClick={() => router.push(nav.factory)}>← 百业工厂</button>
+        {!embed && <button className="lab-btn ghost sm" onClick={() => router.push(nav.factory)}>← 百业工厂</button>}
         <div style={{ minWidth: 0 }}>
           <div className="lab-mono lab-cap">SPACE · 百业工厂</div>
           <div style={{ fontSize: 19, fontWeight: 800 }}>{profile.name ? <>{profile.name} <span style={{ color: 'var(--v)' }}>· {profile.role}</span></> : space.title}</div>
@@ -308,7 +311,7 @@ export default function StudioPage() {
             {(() => {
               const job = runningJobs.find(j => j.chapter_id === draft.id);
               return (
-                <div className="lab-glass" style={{ padding: '12px 16px', display: 'grid', gap: 8, background: 'linear-gradient(120deg, rgba(106,92,255,.08), rgba(18,181,203,.06))' }}>
+                <div className="lab-glass" style={{ padding: '12px 16px', display: 'grid', gap: 8, background: 'rgba(91,79,224,.04)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                     <span className="lab-mono lab-cap">AI · 按格生成</span>
                     <span style={{ fontSize: 12, color: 'var(--ink3)' }}>按这一格的时段、标题、要交代的事写故事线和示范答案；人物 / 场景优先用角色表，新的先找素材库，找不到才画</span>

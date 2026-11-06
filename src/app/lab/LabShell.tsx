@@ -16,6 +16,8 @@ const LAB_CSS = `
 .lab { --v: #6a5cff; --c: #12b5cb; --p: #ff5fa2; --ink: #171a2e; --ink2: #4a4f6a; --ink3: #8389a6; --line: rgba(106,92,255,.16);
   min-height: 100dvh; position: relative; color: var(--ink); background: #f5f6ff; overflow-x: clip;   /* clip 而不是 hidden：hidden 会让 .lab 变成滚动容器，「一天」页左侧时间轴的 sticky 就钉不住了 */
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+/* antd 弹窗 / 气泡挂在 body 下、不在 .lab 里：变量也给它们一份，lab-btn 之类才有颜色 */
+.ant-modal-root, .ant-popover, .ant-drawer, .ant-dropdown, .ant-message { --v: #6a5cff; --c: #12b5cb; --p: #ff5fa2; --ink: #171a2e; --ink2: #4a4f6a; --ink3: #8389a6; --line: rgba(106,92,255,.16); }
 .lab-mono { font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; }
 
 /* 背景：三团缓慢漂移的光斑 + 细网格 */
@@ -27,6 +29,22 @@ const LAB_CSS = `
 .lab-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
   background-size: 44px 44px; mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 80%); -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 80%); opacity: .55; }
 @keyframes lab-drift { to { transform: translate(60px, 40px) scale(1.12); } }
+
+/* 案头（11-06）：管理类页面（workspace、工厂、工作室、素材库）不要光斑和网格，像严肃的生成管理台，不像体验本身。
+   底色照一答工作台：近白 + 两角极淡的蓝紫；按钮 / tab / 卡片实色细边，不渐变不发光。体验端照旧 */
+.lab.desk { --v: #5b4fe0; --line: rgba(23,26,46,.09);
+  background: radial-gradient(520px 420px at 100% -6%, rgba(150,180,255,.13), transparent 64%), radial-gradient(480px 420px at 0% 104%, rgba(186,168,255,.09), transparent 62%), linear-gradient(180deg, #f9fafc 0%, #f6f7fa 100%); background-attachment: fixed; }
+.lab.desk .lab-bg { display: none; }
+.lab.desk .lab-glass { background: #fff; backdrop-filter: none; -webkit-backdrop-filter: none; border: 1px solid rgba(23,26,46,.08); border-radius: 14px; box-shadow: 0 1px 2px rgba(23,26,46,.04); }
+.lab.desk .lab-glass.hover:hover { transform: none; border-color: rgba(91,79,224,.3); box-shadow: 0 2px 10px rgba(23,26,46,.06); }
+.lab.desk .lab-btn, .ant-modal-root .lab-btn { background: #5b4fe0; box-shadow: none; border-radius: 10px; }
+.lab.desk .lab-btn:hover, .ant-modal-root .lab-btn:hover { background: #4b40cc; transform: none; box-shadow: none; }
+.lab.desk .lab-btn.ghost, .ant-modal-root .lab-btn.ghost { color: var(--ink2); background: #fff; box-shadow: 0 0 0 1px rgba(23,26,46,.13); }
+.lab.desk .lab-btn.ghost:hover, .ant-modal-root .lab-btn.ghost:hover { color: #5b4fe0; background: #fff; box-shadow: 0 0 0 1px rgba(91,79,224,.4); }
+.lab.desk .lab-tab { background: #fff; border-radius: 10px; box-shadow: 0 0 0 1px rgba(23,26,46,.1); }
+.lab.desk .lab-tab.on { color: #fff; background: #5b4fe0; box-shadow: none; }
+.lab.desk .lab-input { background: #fff; border-color: rgba(23,26,46,.13); border-radius: 10px; }
+.lab.desk .lab-chip { background: rgba(91,79,224,.07); border-color: rgba(91,79,224,.14); }
 
 /* 玻璃卡片 */
 .lab-glass { position: relative; background: rgba(255,255,255,.72); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
@@ -253,7 +271,7 @@ function Shell({ children }: { children: React.ReactNode }) {
   ];
   return (
     // 首页只有深色（深浅切换是给空间用的）
-    <div className="lab" data-theme={path === '/lab' ? 'dark' : theme}>
+    <div className={`lab${/^\/lab\/(ws|spaces|studio|assets|admin)(\/|$)/.test(path) ? ' desk' : ''}`} data-theme={path === '/lab' ? 'dark' : theme}>
       <style>{LAB_CSS}</style>
       <div className="lab-bg"><div className="lab-blob b1" /><div className="lab-blob b2" /><div className="lab-blob b3" /><div className="lab-grid" /></div>
 

@@ -62,7 +62,7 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
       const anchor = cleanAnchor(input.anchor); if (!anchor) throw new Error('anchor 不对：要有 kind 和 label');
       const spec = cleanSpec(input.spec || {});
       const buildId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
-      return { label: `开始生成「${anchor.label}」的空间（约 2–4 分钟）`, ui: { kind: 'lab_build', buildId, title: anchor.label, payload: { anchor, spec, draft: true, buildId } }, result: { started: true, note: '前端在构建，做完会把 space_id 发回给你；在那之前别再调 create_space。' } };
+      return { label: `开始生成「${anchor.label}」的空间（约 2–4 分钟）`, ui: { kind: 'lab_build', buildId, title: anchor.label, payload: { anchor, spec, draft: true, buildId, model: MODEL() } }, result: { started: true, note: '前端在构建，做完会把 space_id 发回给你；在那之前别再调 create_space。' } };
     }
     case 'my_spaces': {
       let q = db.from('skill_tasks').select('id, title, profile, jd_snapshot, created_at').order('created_at', { ascending: false }).limit(200);

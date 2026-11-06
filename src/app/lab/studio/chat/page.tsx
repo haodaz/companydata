@@ -10,7 +10,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Md } from '@/components/ws/Md';
 import { CHAT_CSS, Composer, fromHistory, RUNNING, type Item } from '@/components/work/ChatKit';
-import { useModel } from '@/lib/model-context';
 import { useLabNav } from '@/components/lab/FactoryKit';
 
 type Panel = { space_id: string; title: string; url: string; _n?: number };
@@ -23,11 +22,14 @@ const QUICK = [
 Object.assign(RUNNING, { locate: '定位', create_space: '准备生成', my_spaces: '找空间', space_detail: '看空间', build_day: '排一天骨架', write_chapters: '安排写章节', revise: '出修改提案', review: 'AI 评审', fix_by_review: '安排按评审改', set_spec: '改生成要求', publish_chapters: '发布章节', set_listing: '改上架状态', invite_master: '生成邀请', jobs: '看进度', open_panel: '打开' });
 
 export default function Page() {
-  const router = useRouter(); const { currentModel } = useModel(); const nav = useLabNav();
+  const router = useRouter(); const nav = useLabNav();
   const [threadId, setThreadId] = useState<string | null>(null);
   const [threads, setThreads] = useState<{ id: string; title: string }[]>([]);
   const [items, setItems] = useState<(Item & { live?: boolean })[]>([]);
-  const [busy, setBusy] = useState(false); const [text, setText] = useState(''); const [model, setModel] = useState(currentModel);
+  const [busy, setBusy] = useState(false); const [text, setText] = useState(''); const [model, setModelRaw] = useState('claude-opus-5-5');
+  // 百业对话自己记模型，默认 Claude；不跟数据工厂的全局选择（那边默认千问，千问不爱按规矩出选项卡）
+  useEffect(() => { try { const m = localStorage.getItem('lab-chat-model'); if (m) setModelRaw(m); } catch {} }, []);
+  const setModel = (m: string) => { setModelRaw(m); try { localStorage.setItem('lab-chat-model', m); } catch {} };
   const [panel, setPanel] = useState<Panel | null>(null);
   const abortRef = useRef<AbortController | null>(null); const endRef = useRef<HTMLDivElement>(null);
   const tidRef = useRef<string | null>(null); tidRef.current = threadId;
@@ -137,26 +139,30 @@ export default function Page() {
 /** 生成进度：只在这一轮新出现时发起构建（localStorage 记着发过的，刷新 / 翻历史都不重发），做完回调 */
 function BuildCard({ ui, live, onDone }: { ui: { buildId: string; title: string; payload: any }; live: boolean; onDone: (id: string, title: string) => void }) {
   const [st, setSt] = useState<{ phase?: string; detail?: string; done?: boolean; id?: string; error?: string } | null>(null);
-  const doneRef = useRef(false);
+  const doneRef = useRef(false); const onRef = useRef(true);
+  const fire = useCallback(() => {
+    setSt(null);
+    fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(ui.payload) }).then(r => r.json())
+      .then(j => { if (!onRef.current) return; if (j.ok) setSt({ done: true, id: j.id }); else setSt({ done: true, error: j.error }); }).catch(() => {});
+  }, [ui.payload]);
   useEffect(() => {
-    let on = true; const key = 'lab-chat-builds';
+    let on = true; onRef.current = true; const key = 'lab-chat-builds';
     let started: string[] = []; try { started = JSON.parse(localStorage.getItem(key) || '[]'); } catch {}
     if (live && !started.includes(ui.buildId)) {
       try { localStorage.setItem(key, JSON.stringify([...started, ui.buildId].slice(-50))); } catch {}
-      fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(ui.payload) }).then(r => r.json())
-        .then(j => { if (!on) return; if (j.ok) setSt({ done: true, id: j.id }); else setSt({ done: true, error: j.error }); }).catch(() => {});
+      fire();
     }
     const t = setInterval(async () => {
       const j = await fetch(`/api/lab/spaces?build=${ui.buildId}`).then(r => r.json()).catch(() => null);
       if (on && j?.build) setSt(s => (s?.done ? s : j.build));
     }, 2500);
-    return () => { on = false; clearInterval(t); };
-  }, [ui.buildId, ui.payload, live]);
+    return () => { on = false; onRef.current = false; clearInterval(t); };
+  }, [ui.buildId, live, fire]);
   useEffect(() => { if (st?.done && st.id && !doneRef.current) { doneRef.current = true; onDone(st.id, ui.title); } }, [st, ui.title, onDone]);
   return <div className="lc-card">
     <b>生成「{ui.title}」</b>
     {!st ? <span className="lc-mute">{live ? '开始…' : '这是之前发起的生成；结果去百业工厂里看'}</span>
-      : st.error ? <span style={{ color: '#c4323a' }}>没成：{st.error}</span>
+      : st.error ? <span style={{ color: '#c4323a' }}>没成：{st.error.slice(0, 160)}{live && <> <button className="wc-link" onClick={fire}>再试一次</button></>}</span>
       : st.done ? <span style={{ color: '#0d7a52' }}>生成好了{st.id ? <> · <a className="wc-link" href={`/lab/studio/${st.id}`} target="_blank" rel="noreferrer">打开 ↗</a></> : null}</span>
       : <span className="lab-scan" style={{ color: 'var(--v)' }}>{st.phase}{st.detail ? ` · ${st.detail}` : ''}（约 2–4 分钟）</span>}
   </div>;
@@ -204,9 +210,9 @@ const CSS = `
 .lc-p { display: flex; flex-direction: column; min-height: 0; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); background: rgba(255,255,255,.7); }
 .lc-p-h { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
 .lc-p iframe { flex: 1; width: 100%; border: 0; background: transparent; }
-.lc-card { display: grid; gap: 8px; margin: 4px 0 10px 40px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.85); font-size: 13.5px; line-height: 1.7; }
+.lc-card { display: grid; gap: 8px; margin: 4px auto 10px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.85); font-size: 13.5px; line-height: 1.7; }
 .lc-mute { color: var(--ink3); font-size: 13px; }
 .lc-diff { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; } .lc-diff > div { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; background: #fff; }
 .lc-diff ul { margin: 4px 0 0; padding-left: 18px; }
-@media (max-width: 1000px) { .lc, .lc.with-p { grid-template-columns: minmax(0, 1fr); height: auto; } .lc-p { height: 70vh; } .lc-diff { grid-template-columns: 1fr; } .lc-card { margin-left: 0; } }
+@media (max-width: 1000px) { .lc, .lc.with-p { grid-template-columns: minmax(0, 1fr); height: auto; } .lc-p { height: 70vh; } .lc-diff { grid-template-columns: 1fr; } }
 `;

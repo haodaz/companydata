@@ -163,7 +163,9 @@ async function build(req: Request, body: any, costJob: string) {
     const specText = renderSpec(spec, anchor);
     const withSpec = (h: string) => [h, specText].filter(Boolean).join('\n\n');
     const snapExtra = { ...(anchor ? { anchor } : {}), ...(hasSpec(spec) ? { spec } : {}) };
-    const { jobId, model, createdBy } = body; buildId = String(body.buildId || '');
+    const { jobId, createdBy } = body;
+    // 没传模型就用百业默认生成模型（和工作室一致）；以前兜底到 Gemini，Gemini 已停充
+    const model = String(body.model || process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna'); buildId = String(body.buildId || '');
     const discipline = String(body.discipline || '').trim().slice(0, 40);
     const profession = String(body.profession || '').trim().slice(0, 40) || discipline;
     const isDiscipline = !!discipline && !body.profession;
@@ -172,8 +174,8 @@ async function build(req: Request, body: any, costJob: string) {
       // ── 职业探索：职业名 → 典型岗位 + 生涯地图 → 同一条流水线 ──
       trackDemand(req, { source: 'lab_space', query: profession, profession });
       setBuild(buildId, { phase: isDiscipline ? '结构化学科 · 推断典型研究岗' : '结构化职业 · 推断典型岗位' });
-      const { jd, career } = await structureCareer(profession, model || undefined, isDiscipline ? 'discipline' : 'career');
-      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), { hint: withSpec(isDiscipline ? DISCIPLINE_HINT : CAREER_HINT) });
+      const { jd, career } = await structureCareer(profession, model, isDiscipline ? 'discipline' : 'career');
+      const built = await buildSpaceFromJd(jd, model, (phase, detail) => setBuild(buildId, { phase, detail }), { hint: withSpec(isDiscipline ? DISCIPLINE_HINT : CAREER_HINT) });
       const { data: skill, error: skErr } = await supabaseAdmin.from('skills').insert({
         slug: `career-${Date.now().toString(36)}`, ...built.skill, interview: [],
         expert_name: '岗位 AI 自学草案', expert_title: '从职业公开知识推断 · 等待第一位从业者校正', expert_location: '云端', expert_note: '尚未有真人专家', tz_offset: 0,
@@ -203,7 +205,7 @@ async function build(req: Request, body: any, costJob: string) {
       const jd = { company: String(body.company || '').trim().slice(0, 60), title: String(body.title || '').trim().slice(0, 60) || '未命名岗位', responsibilities: pasted, qualifications: '' };
       setBuild(buildId, { phase: '读取岗位 JD' });
       trackDemand(req, { source: 'lab_space', query: `${jd.company} ${jd.title}`.trim(), company_name: jd.company || null, profession: jd.title });
-      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), { hint: withSpec(body.researchPost ? RESEARCH_POST_HINT : '') });
+      const built = await buildSpaceFromJd(jd, model, (phase, detail) => setBuild(buildId, { phase, detail }), { hint: withSpec(body.researchPost ? RESEARCH_POST_HINT : '') });
       const { data: skill, error: skErr } = await supabaseAdmin.from('skills').insert({
         slug: `jd-paste-${Date.now().toString(36)}`, ...built.skill, interview: [],
         expert_name: '岗位 AI 自学草案', expert_title: '从 JD 与公开职业知识推断 · 等待第一位专家校正', expert_location: '云端', expert_note: '尚未有真人专家', tz_offset: 0,
@@ -234,7 +236,7 @@ async function build(req: Request, body: any, costJob: string) {
 
     const jd = { company: job.institute_or_company_name || '', title: job.name, responsibilities: job.responsibilities || '', qualifications: job.overview || '' };
     trackDemand(req, { source: 'lab_space', query: `${jd.company} ${jd.title}`.trim(), company_name: jd.company || null, profession: jd.title });
-    const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), specText ? { hint: specText } : {});
+    const built = await buildSpaceFromJd(jd, model, (phase, detail) => setBuild(buildId, { phase, detail }), specText ? { hint: specText } : {});
 
     // 技能集草案：AI 自己推断的，挂成这个空间的技能，等真人专家来校正（专家蒸馏时会覆盖）
     const slug = `jd-${job.id}-${Date.now().toString(36)}`;
