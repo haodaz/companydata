@@ -73,7 +73,7 @@ export interface SimRunnerProps {
 }
 
 /** 模拟操作台：一步一步操作，每一步确认后才推进；下钻 / 询问会浮现新的信息 */
-export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, backdrop, study, stepExam }: SimRunnerProps & { /** 分步考（2026-10-28）：考试模式下工位那一步一步一步来（只提示该动哪个控件），照常计分 */ stepExam?: Lesson; /** 跟我学：带教案（lib/lab-lesson.ts）——每步先讲看什么 / 为什么，自己选完再逐个选项讲对错，工位上一步一步带着做；不计时不评分 */ study?: Lesson; /** 3D beta：这一章发生在已重建的 3D 场景里，用它代替平面背景 */ backdrop?: Beta3DScene | null; /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace; /** 从第几步开始：演示和取图时直接跳到工位那步 */ startAt?: number }) {
+export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, backdrop, study, stepExam, career }: SimRunnerProps & { /** 生涯体验：不是考核，交卷的说法换成看反馈 */ career?: boolean; /** 分步考（2026-10-28）：考试模式下工位那一步一步一步来（只提示该动哪个控件），照常计分 */ stepExam?: Lesson; /** 跟我学：带教案（lib/lab-lesson.ts）——每步先讲看什么 / 为什么，自己选完再逐个选项讲对错，工位上一步一步带着做；不计时不评分 */ study?: Lesson; /** 3D beta：这一章发生在已重建的 3D 场景里，用它代替平面背景 */ backdrop?: Beta3DScene | null; /** 演示模式：每一步先填好专家的选择，工位自己走一遍；何时翻页由讲解的人决定 */ demo?: SimTrace; /** 从第几步开始：演示和取图时直接跳到工位那步 */ startAt?: number }) {
   const [idx, setIdx] = useState(Math.min(Math.max(0, startAt || 0), sim.steps.length - 1));
   const [head3d, setHead3d] = useState(false);
   // 评分要十几秒：按钮上走秒，让人知道没卡住
@@ -262,7 +262,7 @@ export function SimRunner({ sim, role, busy, onFinish, onCancel, demo, startAt, 
     <>
       {!(step.type === 'bench' && !value?.finished) && <div style={{ display: 'flex', gap: 10, marginTop: 22, alignItems: 'center', flexWrap: 'wrap' }}>
         <button className="lab-btn" disabled={!ready || busy} onClick={next}>
-          {busy ? <>{role === 'expert' ? 'AI 核心在看你的操作' : 'AI 核心评分中'} · {waited} 秒{waited < 40 ? '（一般 15–30 秒）' : '（比平时慢，再等等）'}<span className="lab-dots" /></> : needsReveal && !confirmed ? (study ? '看看老手怎么做' : '确认操作') : last ? (study ? '这一段学完了 →' : role === 'expert' ? '操作完毕，接受追问 →' : '操作完毕，请 AI 核心评分 →') : (study && confirmed ? '明白了，下一步 →' : '下一步 →')}
+          {busy ? <>{role === 'expert' ? 'AI 核心在看你的操作' : career ? '师傅在看你的操作' : 'AI 核心评分中'} · {waited} 秒{waited < 40 ? '（一般 15–30 秒）' : '（比平时慢，再等等）'}<span className="lab-dots" /></> : needsReveal && !confirmed ? (study ? '看看老手怎么做' : '确认操作') : last ? (study ? '这一段学完了 →' : role === 'expert' ? '操作完毕，接受追问 →' : career ? '写好了，看看师傅怎么说 →' : '操作完毕，请 AI 核心评分 →') : (study && confirmed ? '明白了，下一步 →' : '下一步 →')}
         </button>
         {study && confirmed && step.type !== 'bench' && !busy && <button className="lab-btn ghost" onClick={() => setConfirmed(false)}>再选一次</button>}
         {idx > 0 && !busy && <button className="lab-btn ghost" onClick={() => setIdx(i => i - 1)}>上一步</button>}

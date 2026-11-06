@@ -66,6 +66,8 @@ ${JSON.stringify(step)}
 - 按要求改，没让改的部分保持原样；id、type 不变（除非要求里明确说换题型）。
 - 选项沿用原来的 id；新加的选项用新 id（如 o9）；删掉的就不要再出现。
 - scene.who 沿用原来的人名，除非要求换人。
+- 选项的 detail 作答前就显示在选项下面：只写选项本身的补充，不写对错、不写解析（要求里说「解析移到反馈」，就把解析写进 expert 的示范答案，detail 留空）。
+- 题型只有 choose / multi / drill / classify / allocate / slider / text，没有排序：要求里要「排顺序」，改成 classify（标签写「先做 / 后做」）或在题干里只问其中最关键的一步，别写「按顺序排列」的题干。
 - 同时给出改后这一步的示范答案 expert（choose 填选项 id；multi / drill 填 id 数组；classify 填 {条目 id: 标签 id}；allocate 填 {条目 id: 数值}；slider 填数字；text 填一段老手会写的答案）。
 - note：一句话（≤40 字）说改了什么。
 只返回 JSON：{ "step": { ... }, "expert": ..., "note": "" }`, model, 'Lab · 局部改 · 一步');

@@ -7,7 +7,6 @@ import Image from 'next/image';
 import { useUser } from '@/lib/user-context';
 import { MODEL_OPTIONS } from '@/lib/model-context';
 import { SimRunner, SimStage } from '@/components/lab/SimRunner';
-import { ChatLauncher } from '@/components/kg/PersonaChat';
 import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue, type BasisRow } from '@/lib/lab-studio';
 import { SpecEditor, SPEC_CSS } from '@/components/lab/SpecEditor';
 import { col, FX_CSS, LISTING, Plays, useLabNav } from '@/components/lab/FactoryKit';
@@ -26,11 +25,14 @@ const field: React.CSSProperties = { padding: '8px 11px', fontSize: 13.5, border
 const lbl: React.CSSProperties = { fontSize: 12, color: 'var(--ink3)', marginBottom: 4, display: 'block' };
 const mini: React.CSSProperties = { width: 28, height: 28, borderRadius: 8, border: '1px solid var(--line)', background: 'rgba(255,255,255,.75)', color: 'var(--ink2)', cursor: 'pointer', fontSize: 13, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 };
 
+/** 确认框用 antd 的（浏览器原生 confirm 自动化测试点不了，11-06 国内版验收卡住过） */
+const confirmBy = (modal: any, content: string) => new Promise<boolean>(res => modal.confirm({ title: '确认一下', content, okText: '确定', cancelText: '取消', onOk: () => res(true), onCancel: () => res(false) }));
+
 export default function StudioPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const sp = useSearchParams();
-  const { message } = App.useApp();
+  const { message, modal } = App.useApp();
   const { user } = useUser();
 
   const [data, setData] = useState<{ space: any; chapters: StudioChapter[]; expertTrace: any; cast: CastMember[]; basis?: BasisRow[] } | null>(null);
@@ -127,7 +129,7 @@ export default function StudioPage() {
   };
   const startChapter = async () => {
     if (!draft) return;
-    if (dirty && !window.confirm('这一章有没保存的改动，生成会覆盖步骤。先丢掉改动继续？')) return;
+    if (dirty && !(await confirmBy(modal, '这一章有没保存的改动，生成会覆盖步骤。先丢掉改动继续？'))) return;
     const j = await fetch(`/api/lab/studio/${id}/chapters/${draft.id}/generate`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: genModel, hint: genHint, art: genArt }) }).then(r => r.json());
     if (!j.ok) { message.error(j.error); return; }
     setDirty(false);
@@ -144,10 +146,10 @@ export default function StudioPage() {
   const edit = (fn: (d: StudioChapter) => void) => { setDraft(d => { if (!d) return d; const n = clone(d); fn(n); return n; }); setDirty(true); };
   const editStep = (i: number, fn: (s: any) => void) => edit(d => fn(d.sim.steps[i]));
 
-  const pick = (cid: string) => {
+  const pick = async (cid: string) => {
     if (cid === cur) return;
     const go = () => { const c = data?.chapters.find(x => x.id === cid); setCur(cid); setDraft(c ? clone(c) : null); setDirty(false); setRaw({}); setOpen({}); };
-    if (dirty && !window.confirm('这一章还有没保存的改动，丢掉吗？')) return;
+    if (dirty && !(await confirmBy(modal, '这一章还有没保存的改动，丢掉吗？'))) return;
     go();
   };
 
@@ -179,7 +181,7 @@ export default function StudioPage() {
   };
 
   const addChapter = async () => {
-    if (dirty && !window.confirm('这一章还有没保存的改动，丢掉吗？')) return;
+    if (dirty && !(await confirmBy(modal, '这一章还有没保存的改动，丢掉吗？'))) return;
     const j = await fetch(`/api/lab/studio/${id}/chapters`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: '', kind: 'daily' }) }).then(r => r.json());
     if (!j.ok) { message.error(j.error); return; }
     apply(j, j.id);
@@ -209,9 +211,7 @@ export default function StudioPage() {
   return (
     <div>
       <style>{FX_CSS}</style>
-      {/* 和我聊：在工厂里先试聊，看数字职人答得像不像这一行的人 */}
-      {/* 嵌在对话右边的面板里（iframe）就不放：挡章节，「⋯」里也有 */}
-      {data?.space && !embed && <ChatLauncher href={`/lab/${id}/chat`} name={data.space.profile?.name} avatar={data.space.profile?.avatar} />}
+      {/* 和我聊（先试聊，看数字职人答得像不像这一行的人）只放在「⋯」里：右下角悬浮钮会压住章节底栏的「保存并发布」（11-06 国内版验收误点过） */}
       {/* 页头 */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 16 }}>
         {!embed && <button className="lab-btn ghost sm" onClick={() => router.push(nav.factory)}>← 百业工厂</button>}
@@ -720,13 +720,13 @@ const STUDIO_TABS: [StudioTab, string][] = [['day', '一天'], ['cast', '角色�
 
 /** 生成要求 tab：定位 + 受众 / 深度 / 难度 / 必须有 / 不要 / 参考资料，直接改、保存 */
 function SpecTab({ id, space, model, onRewrite, onSaved }: { id: string; space: any; model: string; onRewrite: () => void; onSaved: (spec: GenSpec | null) => void }) {
-  const { message } = App.useApp();
+  const { message, modal } = App.useApp();
   const anchor: Anchor | undefined = space.jd_snapshot?.anchor;
   const [spec, setSpec] = useState<GenSpec>({ ...(space.jd_snapshot?.spec || {}) });
   const [busy, setBusy] = useState(false);
   const [withPub, setWithPub] = useState(false); const [rewriting, setRewriting] = useState(false);
   const rewrite = async () => {
-    if (!window.confirm(`按现在保存的要求重写${withPub ? '所有没锁定的章节（已发布的会变草稿）' : '没锁定的草稿章'}？原来的内容会被覆盖（改动有留痕）。`)) return;
+    if (!(await confirmBy(modal, `按现在保存的要求重写${withPub ? '所有没锁定的章节（已发布的会变草稿）' : '没锁定的草稿章'}？原来的内容会被覆盖（改动有留痕）。`))) return;
     setRewriting(true);
     const j = await fetch(`/api/lab/studio/${id}/rewrite`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ include_published: withPub, model }) }).then(r => r.json()).catch(() => ({ ok: false, error: '网络错误' }));
     setRewriting(false);
@@ -927,7 +927,7 @@ function RevView({ target, v }: { target: 'step' | 'opening' | 'bench'; v: any }
 // 默认勾「必须改」的、不含工位（工位要在模拟器里跑通，到「一天」里点 ✦ 改重新设计）
 const defPick = (rv: any) => (rv?.todos || []).filter((t: any) => t.severity !== 'nice' && t.target !== 'bench').map((t: any) => t.id);
 function ReviewTab({ id, model, onFix, onJob }: { id: string; model: string; onFix: (t: any) => void; onJob: () => void }) {
-  const { message } = App.useApp();
+  const { message, modal } = App.useApp();
   const [rv, setRv] = useState<any>(undefined); const [busy, setBusy] = useState(''); const [pick, setPick] = useState<string[]>([]);
   const load = useCallback(() => fetch(`/api/lab/studio/${id}/followup`, { cache: 'no-store' }).then(r => r.json()).then(j => { setRv(j.review || null); setPick(defPick(j.review)); }).catch(() => setRv(null)), [id]);
   useEffect(() => { load(); }, [load]);
@@ -940,7 +940,7 @@ function ReviewTab({ id, model, onFix, onJob }: { id: string; model: string; onF
   const fixAll = async () => {
     const todos = (rv?.todos || []).filter((t: any) => pick.includes(t.id));
     if (!todos.length) return;
-    if (!window.confirm(`按勾选的 ${todos.length} 条改？问题在哪一步就只改那一步，整章的问题才重写整章；改过的章变草稿（改前版本有留痕），改完带着这轮意见复评。工位和锁定的章不动。`)) return;
+    if (!(await confirmBy(modal, `按勾选的 ${todos.length} 条改？问题在哪一步就只改那一步，整章的问题才重写整章；改过的章变草稿（改前版本有留痕），改完带着这轮意见复评。工位和锁定的章不动。`))) return;
     const j = await fetch(`/api/lab/studio/${id}/followup`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'fix', todos, model }) }).then(r => r.json()).catch(() => ({ ok: false, error: '网络错误' }));
     if (!j.ok) { message.error(j.error); return; }
     message.info(j.job.already ? '已经在改了' : '开始按评审改，在「一天」里能看进度'); onJob();

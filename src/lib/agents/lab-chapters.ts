@@ -172,6 +172,7 @@ ${CAST_RULES}
     const c = chapters.find(x => x.id === e?.id);
     if (c && ids.has(c.id) && !c.slot && str(e.slot, 40)) await supabaseAdmin.from('lab_chapters').update({ slot: str(e.slot, 40) }).eq('id', c.id);
   }
+  if (form === 'certify') { const daily = chapters.filter(c => c.kind !== 'assessment' && !c.locked).map(c => c.id); if (daily.length) await supabaseAdmin.from('lab_chapters').update({ kind: 'assessment' }).in('id', daily); }
   // 新角色先进角色表，好把简介里的编号（P01 / 临时的 N1）换成名字——简介是给体验者看的
   await progress('登记角色', '新的人 / 地方 / 道具先进角色表，同类型的从素材库复用');
   const before = cast.length;
@@ -179,7 +180,8 @@ ${CAST_RULES}
   for (const x of readNewCast(p.new_cast)) tmpDay.set(x.tmp, await addCast(spaceId, cast, x, family));
   const nameOf = (code: string) => (tmpDay.get(code) || cast.find(m => m.code === code))?.name;
   const slots = (Array.isArray(p.slots) ? p.slots : [])
-    .map((x: any) => ({ slot: str(x.slot, 40), title: decodeCastRefs(str(x.title, 60), nameOf), kind: KINDS.includes(x.kind) ? x.kind : 'daily', brief: decodeCastRefs(str(x.brief, 400), nameOf) }))
+    // 资质考核每一场都是考核（11-06 国内版：电工「考核3」标成了日常）
+    .map((x: any) => ({ slot: str(x.slot, 40), title: decodeCastRefs(str(x.title, 60), nameOf), kind: form === 'certify' ? 'assessment' : KINDS.includes(x.kind) ? x.kind : 'daily', brief: decodeCastRefs(str(x.brief, 400), nameOf) }))
     .filter((x: any) => x.slot && x.title)
     // 已有章节占了的时段不再新建（11-06 考核样例：建空间时自带的工位章排到「考核4」，又新建了一格「考核4」做同一件事）
     .filter((x: any) => !chapters.some(c => (c.slot || (Array.isArray(p.existing) ? p.existing.find((e: any) => e?.id === c.id)?.slot : '')) === x.slot))
@@ -265,6 +267,8 @@ ${CAST_RULES}
    - classify：options 是要贴标签的 3–5 个条目（每条一个具体的人 / 事 / 物），labels 是 2 个标签。条目一定放在 options 里，不能只给 labels
    - allocate：把一个总量（total + unit）分到 options 列出的 3–4 项上。options 一定要给
    - slider：0–100 的把握程度 / 比例
+   - options 里的 detail 是选项本身的补充（数量、规格、谁说的），作答前就显示在选项下面：不写对错、不写为什么对、不写解析（解析放进 expert 的示范答案）
+   - 没有排序题型：不要出「按顺序排列」的题，考先后就用 classify（标签写「先做 / 后做」）或拆成几步单选
 2. 每步有 scene（who 说话的人编号、time、text 说了什么 / 发生了什么）推进剧情；place 写这一步在哪（场景编号）；props 写这一步用到的道具编号（没有就空）。
    scene.time 要落在本章时段附近（前后 1 小时内）。
 3. 要接住前面章节发生的事（提到具体的人和事），但不要重复它们的操作。

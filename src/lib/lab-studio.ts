@@ -90,6 +90,8 @@ export function checkDay(chapters: StudioChapter[]): StudioIssue[] {
 
 /** [D5] 给人看的文字里残留的角色编号（「在S03与客户N1陈先生…」）。P/S/T 两位数、N 一位数是生成时的临时编号 */
 const CAST_CODE = /(?<![A-Za-z0-9])(?:[PST]\d{2}|N\d)(?![A-Za-z0-9])/;
+const ANSWER_LEAK = /^\s*[（(【]?\s*(正确|错误|对|错|✓|✗|✔|✘|√|×)\s*[）)】]?\s*[:：，,。]|^\s*(正确答案|标准答案|答案|解析)\s*[:：是为]/;
+const ORDER_STEM = /排序|排列.{0,6}顺序|按.{0,4}顺序(排|列|写)|先后顺序/;
 
 /** [B2] 手里拿的工具得对得上行业：奶缸只给拉花，咖啡杯层只给咖啡（月嫂抚触台曾借用拉花的 cup 层 + 默认奶缸） */
 export function benchToolIssues(spec: any): string[] {
@@ -128,6 +130,9 @@ export function checkChapter(c: StudioChapter, fallbackTrace?: SimTrace | null):
       const spec = sanitizeBenchSpec(s.bench);
       if (!spec) { add('error', `${n}是虚拟工位，但工位定义不完整（用 JSON 编辑补齐）`, sid); return; }
       for (const m of benchToolIssues(s.bench)) out.push({ level: 'warn', chapter: c.id, step: sid, rule: 'B2', msg: `${n}：${m}` });
+      // 表扬写成了规则：体验端会显示成「⚠ 提醒」（11-06 国内版：「正确识别危急值」）
+      const praise = spec.rules.filter(r => /^(正确|及时|准确|成功|做得|很好)(?!.*(但|未|没|却))/.test(r.label));
+      if (praise.length) add('warn', `${n}：工位规则「${praise[0].label}」是做对了的事，会显示成「⚠ 提醒」——改成目标（goals），规则只写做错的`, sid);
       // [B1] 示范脚本在模拟器里干跑：老手都过不了的工位，学生更过不了
       if (spec.expertScript?.length) {
         const last = Math.max(...spec.expertScript.map(a => a.t));
@@ -145,7 +150,11 @@ export function checkChapter(c: StudioChapter, fallbackTrace?: SimTrace | null):
       const oids = opts.map((o: any) => String(o?.id || ''));
       if (oids.some((x: string) => !x) || new Set(oids).size !== oids.length) add('error', `${n}选项编号有空的或重复的`, sid);
       if (opts.some((o: any) => !String(o?.label || '').trim())) add('error', `${n}有空选项`, sid);
+      // 选项副文字作答前就显示：写了对错 / 解析等于泄题（11-06 一键改把解析挪进了 detail）
+      if (opts.some((o: any) => ANSWER_LEAK.test(String(o?.detail || '')))) add('error', `${n}选项下面的小字写了对错或解析（作答前就能看见），解析放进示范答案或评分说明`, sid);
     }
+    // 没有排序题型：题干要人「排顺序」，学生只能点选，排不了
+    if (s.type !== 'text' && ORDER_STEM.test(String(s.prompt || ''))) add('warn', `${n}题干要人排顺序，但没有排序题型——改成分类（先 / 中 / 后）或拆成几步单选`, sid);
     if (s.type === 'classify' && !(Array.isArray(s.labels) && s.labels.length >= 2)) add('error', `${n}是分类题，至少要两个分类`, sid);
     if (s.type === 'multi' && s.max && s.max >= opts.length) add('warn', `${n}最多可选 ${s.max} 个，等于全选`, sid);
     // 场景里写的时刻和章节时段差太远（章节是 08:30，台词里却是 18:10）

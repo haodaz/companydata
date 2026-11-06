@@ -34,6 +34,7 @@ function NewSpace() {
   const [spec, setSpec] = useState<GenSpec>({});
   // 生成
   const [building, setBuilding] = useState<{ buildId: string; phase: string; detail?: string; since: number } | null>(null);
+  const lostRef = useRef(false);   // 生成请求断了（网关超时），只能靠轮询等结果
   const [, tick] = useState(0);
   const step2 = useRef<HTMLDivElement>(null);
 
@@ -55,6 +56,10 @@ function NewSpace() {
       tick(x => x + 1);
       const j = await (await fetch(`/api/lab/spaces?build=${building.buildId}`)).json().catch(() => null);
       if (j?.build?.phase) setBuilding(b => b && { ...b, phase: j.build.phase, detail: j.build.detail });
+      // 生成请求被网关掐断（504）之后，靠轮询接上：后台生成完了就直接进工作室
+      if (j?.build?.done && j.build.id && lostRef.current) { lostRef.current = false; message.success('空间生成好了，进工作室接着排一天'); router.push(nav.space(j.build.id)); }
+      if (j?.build?.error && lostRef.current) { lostRef.current = false; setBuilding(null); message.error(j.build.error); }
+      if (lostRef.current && Date.now() - building.since > 12 * 60_000) { lostRef.current = false; setBuilding(null); message.warning('等了很久还没生成完，稍后到百业工厂刷新看看'); }
     }, 2000);
     return () => clearInterval(t);
   }, [building?.buildId]);   // eslint-disable-line react-hooks/exhaustive-deps
@@ -66,7 +71,10 @@ function NewSpace() {
     setBuilding({ buildId, phase: anchor.kind === 'job' || anchor.kind === 'pasted' ? '读取岗位 JD' : '结构化职业 · 推断典型岗位', since: Date.now() });
     const body: any = { anchor, spec, model: process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna', buildId, draft: true };
     if (anchor.kind === 'pasted') Object.assign(body, { jdText: paste.text.trim(), title: paste.title.trim(), company: paste.company.trim() });
-    const j = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json().catch(() => ({ ok: false, error: '网络错误' }));
+    const res = await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).catch(() => null);
+    const j = res ? await res.json().catch(() => null) : null;
+    // 504 / 网络断了 / 回来的不是 JSON：后台多半还在生成，别退回表单（11-06 国内版：用户以为失败、重复点），接着按 buildId 轮询
+    if (!j) { lostRef.current = true; setBuilding(b => b && { ...b, phase: '还在生成（连接断了一下，生成好会自动进工作室）' }); return; }
     if (!j.ok) { setBuilding(null); message.error(j.error || '生成失败'); return; }
     message.success('空间生成好了，进工作室接着排一天');
     router.push(nav.space(j.id));

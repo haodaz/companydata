@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { band, certNo } from '@/lib/lab-cert';
+import { formOf } from '@/lib/lab-spec';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -54,7 +55,7 @@ async function build(v: string[]): Promise<{ history: any[]; spaces: any[] } | {
       });
       const jd = t.jd_snapshot || {};
       return {
-        id: t.id, name: t.profile?.name || '', role: t.profile?.role || jd.career?.profession || jd.title, avatar: t.profile?.avatar || '',
+        id: t.id, name: t.profile?.name || '', role: t.profile?.role || jd.career?.profession || jd.title, avatar: t.profile?.avatar || '', form: formOf(jd),
         chapters: list, done: list.filter(c => c.best).length, total: list.length,
         last: mine[0]?.submitted_at,
       };

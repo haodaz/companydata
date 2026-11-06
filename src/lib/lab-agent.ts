@@ -12,7 +12,7 @@ import { cleanAnchor, cleanSpec, hasSpec, LEVEL_ORDER, levelText, PRESETS } from
 import { startJob } from '@/lib/lab-jobs';
 import { buildChapter, buildDay } from '@/lib/agents/lab-chapters';
 import { reviseOpening, reviseStep, logRevision } from '@/lib/lab-revise';
-import { fixByReview, latestReview, reviewSpace } from '@/lib/lab-followup';
+import { fixByReview, latestReview, reviewBlocks, reviewSpace } from '@/lib/lab-followup';
 
 type User = { email: string; role: string };
 const MODEL = () => process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna';
@@ -21,7 +21,7 @@ const s = (v: any, n = 300) => (v == null ? '' : String(v)).slice(0, n);
 export const LAB_TOOLS: Anthropic.Tool[] = [
   { name: 'ask_user', description: '需要用户决定时用：一句话的问题 + 2–4 个短选项（不带编号；用户也可以自己打字）。选粒度、确认生成要求、要不要上架、要不要按评审改，用它。', input_schema: { type: 'object', properties: { question: { type: 'string' }, options: { type: 'array', items: { type: 'string' } } }, required: ['question', 'options'] } },
   { name: 'locate', description: '把用户说的职业 / 岗位 / 「公司 + 岗位」/ 学科定位到一个东西：返回职业库候选、岗位库里的真实 JD、AI 给的三种粒度（common 常见叫法 / role 具体岗位 / niche 细分方向）。拿到后用 ask_user 让用户选一个（给高中生一般选常见叫法）。', input_schema: { type: 'object', properties: { q: { type: 'string' }, mode: { type: 'string', enum: ['career', 'discipline'] } }, required: ['q'] } },
-  { name: 'create_space', description: '生成一个新空间（约 2–4 分钟，前端会显示进度，做完会告诉你 space_id）。anchor 来自 locate 的结果；spec 是生成要求（都是自然语言）。调用前先用 ask_user 复述一遍「做什么 + 给谁看 + 多深 + 多难」让用户确认。', input_schema: { type: 'object', properties: {
+  { name: 'create_space', description: '生成一个新空间（约 2–4 分钟，界面上会显示进度，做完会自动告诉你空间编号）。spec.form（级别）必须是用户点选或原话说出的，没说就先 ask_user 让他点。anchor 来自 locate 的结果；spec 是生成要求（都是自然语言）。调用前先用 ask_user 复述一遍「做什么 + 给谁看 + 多深 + 多难」让用户确认。', input_schema: { type: 'object', properties: {
     anchor: { type: 'object', properties: { kind: { type: 'string', enum: ['occupation', 'job', 'career', 'discipline'] }, label: { type: 'string' }, occupation_id: { type: 'number' }, job_id: { type: 'number' }, company: { type: 'string' }, from: { type: 'string', description: '用户最初的原话' } }, required: ['kind', 'label'] },
     spec: { type: 'object', properties: { preset: { type: 'string' }, form: { type: 'string', enum: ['career', 'training', 'assess', 'certify'], description: '级别：career 生涯体验（只发体验证书）/ training 模拟实践（专业学生练手艺）/ assess 职业虚拟考核（新人上岗的真实一天）/ certify 资质考核（对照国家职业技能标准，限时、有一票否决）' }, audience: { type: 'string' }, depth: { type: 'string' }, difficulty: { type: 'string' }, must: { type: 'string' }, avoid: { type: 'string' } } },
   }, required: ['anchor', 'spec'] } },
@@ -61,8 +61,10 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
     case 'create_space': {
       const anchor = cleanAnchor(input.anchor); if (!anchor) throw new Error('anchor 不对：要有 kind 和 label');
       const spec = cleanSpec(input.spec || {});
+      // 级别必须由人定（用户：难度让人选）；模型从「职业体验」自己推出来的不算，先让他点
+      if (!spec.form) throw new Error(`还没定级别：先用 ask_user 让用户在这四个里点一个：${LEVEL_ORDER.map(f => levelText(f)).join(' / ')}`);
       const buildId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
-      return { label: `开始生成「${anchor.label}」的空间（约 2–4 分钟）`, ui: { kind: 'lab_build', buildId, title: anchor.label, payload: { anchor, spec, draft: true, buildId, model: MODEL() } }, result: { started: true, note: '前端在构建，做完会把 space_id 发回给你；在那之前别再调 create_space。' } };
+      return { label: `开始生成「${anchor.label}」的空间（约 2–4 分钟）`, ui: { kind: 'lab_build', buildId, title: anchor.label, payload: { anchor, spec, draft: true, buildId, model: MODEL() } }, result: { started: true, note: '已经开始生成，做完会自动发来空间编号；在那之前别再发起生成，也别跟用户提编号。' } };
     }
     case 'my_spaces': {
       let q = db.from('skill_tasks').select('id, title, profile, jd_snapshot, created_at').order('created_at', { ascending: false }).limit(200);
@@ -141,11 +143,14 @@ async function run(name: string, input: any, user: User): Promise<{ result: any;
     }
     case 'publish_chapters': {
       const sp = await own(user, input.space_id);
-      const { data: chs } = await db.from('lab_chapters').select('id, title, status, sim').eq('task_id', sp.id);
+      const { data: chs } = await db.from('lab_chapters').select('id, title, status, sim, updated_at').eq('task_id', sp.id);
       const want: string[] = Array.isArray(input.chapter_ids) ? input.chapter_ids : [];
-      const todo = (chs || []).filter((c: any) => c.status !== 'published' && (c.sim?.steps || []).length && (!want.length || want.includes(c.id)));
+      const cand = (chs || []).filter((c: any) => c.status !== 'published' && (c.sim?.steps || []).length && (!want.length || want.includes(c.id)));
+      const blocked = await reviewBlocks(sp.id, cand);   // 评审「必须改」挡发布
+      const todo = cand.filter((c: any) => !blocked.has(c.id));
       if (todo.length) await db.from('lab_chapters').update({ status: 'published', updated_at: new Date().toISOString() }).in('id', todo.map((c: any) => c.id));
-      return { label: `发布了 ${todo.length} 章`, result: { published: todo.map((c: any) => c.title) } };
+      const held = cand.filter((c: any) => blocked.has(c.id)).map((c: any) => ({ title: c.title, must: blocked.get(c.id)!.map(t => t.problem) }));
+      return { label: `发布了 ${todo.length} 章${held.length ? `，${held.length} 章有必须改的没发` : ''}`, result: { published: todo.map((c: any) => c.title), ...(held.length ? { held, note: '这几章评审里还有必须改的，改完（或按评审改）再发布' } : {}) } };
     }
     case 'set_listing': {
       const sp = await own(user, input.space_id);
@@ -179,18 +184,21 @@ function systemPrompt(email: string) {
 出一个新空间：
 1. 用户第一句往往只说一句（「给高中生做一个程序员的生涯体验」）。从这句话里能推出来的先记下，缺的一次只问一件，别让他填表。
 2. locate 定位，用 ask_user 让他在粒度里选（问题一句话，选项写名字，如「程序员（常见叫法）」「后端开发工程师」「SRE 工程师」）。给高中生 / 生涯体验默认推荐常见叫法。
-3. 级别：用户第一句里已经说了（「生涯体验」「实训」「考证」）就直接定，没说就用 ask_user 让他点，选项照抄这四个（由浅到深，括号里是证书）：${LEVEL_ORDER.map(f => `「${levelText(f)}」`).join('')}，按受众把最合适的放第一个。别解释每一级内部怎么排。
+3. 级别：用户原话里明说了四个级别之一（「生涯体验」「模拟实践 / 实训」「职业虚拟考核 / 上岗考核」「资质考核 / 考证」）才直接定；「职业体验」「了解一下」「给高中生做一个」这类不算说了级别，**一定先 ask_user 让他点**（这是 locate 之后的第一个问题），选项照抄这四个（由浅到深，括号里是证书）：${LEVEL_ORDER.map(f => `「${levelText(f)}」`).join('')}，按受众把最合适的放第一个。别解释每一级内部怎么排。
    生成要求：给谁看、要多深、考核多难最重要；必须有 / 不要的问一句就行。没说的按受众和级别先定默认（预设可参考：${PRESETS.map(p => `「${p.label}」`).join('')}），然后用 ask_user 复述一行确认：做什么｜级别｜给谁看｜多深｜多难｜必须有 / 不要，选项「就这样生成」「改一下」。
-4. create_space。做完前端会发回一句话告诉你 space_id，接着建议：排一天骨架（build_day）→ 写各章（write_chapters）→ 评审（review）。一步一步来，每步做完说一句结果和下一步，问他要不要继续（ask_user）。
-   build_day / write_chapters / fix_by_review 是后台任务：发起后说一句就停，别催别查；做完前端会自动发来「「…」做完了：…」，收到再接着下一步（写完章节就直接 review，不用再问）。
+4. create_space。做完会自动发来一句话告诉你空间编号，接着建议：排一天骨架（build_day）→ 写各章（write_chapters）→ 评审（review）。一步一步来，每步做完说一句结果和下一步，问他要不要继续（ask_user）。
+   build_day / write_chapters / fix_by_review 是后台任务：发起后说一句就停，别催别查；做完会自动发来「「…」做完了：…」，收到再接着下一步（写完章节就直接 review，不用再问）。
 改：
 - 用户说「第二章太难」「这一步换个场景」：先 space_detail 看清楚是哪一章哪一步，再 revise 出提案（对话里会显示改前改后，用户点采纳才写进去），别自己说「已改好」。
 - 整章不满意：write_chapters 传 chapter_ids 和 hint 重写。工位（虚拟操作台）的修改请用户到工作室点「✦ 改」。
 - 生成要求变了：set_spec，然后问要不要按新要求重写（write_chapters 传没锁定的章）。
-- review 出来的待办分「必须改」（must，挡发布）和「可以更好」（nice）。达标（pass）= 没有必须改的，就直接建议发布，「可以更好」的提一句让他决定。没达标就问「一条条改还是一键改」：一键用 fix_by_review（默认只传 must 的 todo_ids，他要连 nice 一起改再全传）。一条条改时每条用 revise 出提案；用户点了采纳 / 不要，前端会发来一句，收到就接着下一条。
-- 工位（target=bench）的问题一键改不了，请他到工作室点「✦ 改 → 重新设计」。
+- review 出来的待办分「必须改」（must，挡发布）和「可以更好」（nice）。达标（pass）= 没有必须改的，就直接建议发布，「可以更好」的提一句让他决定。没达标就问「一条条改还是一键改」：一键用 fix_by_review（默认只传 must 的 todo_ids，他要连 nice 一起改再全传）。一条条改时每条用 revise 出提案；用户点了采纳 / 不要，会自动发来一句，收到就接着下一条。
+- 工位（target=bench）的问题一键改不了：直接告诉他「这条要到工作室这一章的工位上点 ✦ 改 → 重新设计」，不要说成改好了；一键改返回「没有能一键改的」时，照实说。
 上架：先确认章节都写好了（publish_chapters 发布章节），ask_user 确认后 set_listing listed。
-回答简短，用户看得到右边的空间；不要把工具返回的长内容原样念出来。`;
+回答简短，用户看得到右边的空间；不要把工具返回的长内容原样念出来。
+说话的禁忌（11-06 国内版验收说漏过「space_id=437f…」「等前端通知完成后」）：
+- 不说任何编号（空间 / 章节 / 待办的 id、uuid），只说空间名和「第几章」「考核3」这种人看得懂的叫法；编号只在调用工具时用。
+- 不说工具名、参数名、字段名（locate、create_space、build_day、spec、form、todo_ids 这类），不说「前端 / 后端 / 接口 / 轮询 / 后台任务」：用大白话说你在做什么（「我先排一天」「在写第 3 章」「写好了会自动告诉我」）。工具报错也换成一句人话。`;
 }
 
 export function labChatKit(user: User): AgentKit {

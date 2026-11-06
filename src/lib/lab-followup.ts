@@ -95,12 +95,27 @@ ${rules.map(r => `- ${r.id} ${r.label}：${r.ask}`).join('\n')}
   todos.sort((a, b) => Number(isMust(b)) - Number(isMust(a)));
   const worst = Math.min(...items.map(i => i.score));
   const asked = prev ? prev.todos.map((t, i) => i + 1).filter(n => !sent || sent.includes(prev.todos[n - 1].id)) : [];
-  const resolved = prev ? { done: (Array.isArray(p.resolved) ? p.resolved : []).map(Number).filter((n: number) => asked.includes(n)).length, total: asked.length } : undefined;
+  // 照旧列成待办（carry）的不算改到位：模型常把没改的也填进 resolved（11-06 国内版：改了 0 处却说「1/1 改到位」）
+  const carried = new Set(todos.length ? (Array.isArray(p.todos) ? p.todos : []).map((t: any) => Number(t?.carry) || 0).filter(Boolean) : []);
+  const resolved = prev ? { done: (Array.isArray(p.resolved) ? p.resolved : []).map(Number).filter((n: number, i: number, a: number[]) => asked.includes(n) && !carried.has(n) && a.indexOf(n) === i).length, total: asked.length } : undefined;
   const review: FullReview = { items, todos, summary: String(p.summary || '').slice(0, 200), worst, at: new Date().toISOString(), chapters: chapters.length,
     // 达标只看有没有「必须改」，分数是参考（面包师生涯体验实测：评审说「没有挡发布的问题」，却因为「中途突发」2 分判不达标）
     pass: !todos.some(isMust), round: prev ? (prev.round || 1) + 1 : 1, ...(resolved ? { resolved } : {}) };
   await db.from('lab_revisions').insert({ task_id: spaceId, target: 'review', instruction: '自动评审', after: review, status: 'proposed', note: review.summary }).then(() => {}, () => {});
   return review;
+}
+
+/** 「必须改」挡发布：最近一次评审里这一章还有 must、评审之后这一章又没改过，就不让发布。评审之后改过的放行（CHECK 照旧把关，评审等下一轮复评） */
+export async function reviewBlocks(spaceId: string, chapters: { id: string; updated_at?: string | null }[]): Promise<Map<string, Todo[]>> {
+  const out = new Map<string, Todo[]>();
+  const rv = await latestReview(spaceId).catch(() => null);
+  if (!rv?.at) return out;
+  for (const c of chapters) {
+    if (c.updated_at && new Date(c.updated_at).getTime() > new Date(rv.at).getTime()) continue;
+    const musts = (rv.todos || []).filter(t => isMust(t) && t.chapter_id === c.id);
+    if (musts.length) out.set(c.id, musts);
+  }
+  return out;
 }
 
 export async function latestReview(spaceId: string): Promise<FullReview | null> {
@@ -121,14 +136,14 @@ export async function fixByReview(spaceId: string, todos: Todo[], model: string,
   const open = new Map((chs || []).filter((c: any) => !c.locked).map((c: any) => [c.id, c]));
   const work = todos.filter(t => t.chapter_id && open.has(t.chapter_id));
   const whole = new Set(work.filter(t => t.target === 'chapter').map(t => t.chapter_id!));
-  const benches = work.filter(t => t.target === 'bench' && !whole.has(t.chapter_id!));
+  const benches = work.filter(t => t.target === 'bench');   // 整章重写也会原样保留工位，所以工位的条目都留给人
   const local = work.filter(t => (t.target === 'step' || t.target === 'opening') && !whole.has(t.chapter_id!));
-  const touched = new Set<string>(); let n = 0, failed = 0; const total = whole.size + local.length;
+  const touched = new Set<string>(); const done: string[] = []; let n = 0, failed = 0; const total = whole.size + local.length;
   for (const cid of whole) {
     const c: any = open.get(cid); const fixes = work.filter(t => t.chapter_id === cid);
     await progress(`按评审改 ${++n} / ${total}`, `重写整章 · ${c.title}`);
     const hint = `按评审意见修改（只改这些问题，其它保持）：${fixes.map(f => `${f.step_no ? `第 ${f.step_no} 步` : f.target === 'opening' ? '开场' : '整章'}：${f.fix}`).join('；')}`;
-    try { await buildChapter(spaceId, cid, model, hint.slice(0, 800), { art: true }, () => {}); touched.add(cid); } catch (e) { failed++; console.warn('[fix_review] 整章', c.title, (e as any)?.message); }
+    try { await buildChapter(spaceId, cid, model, hint.slice(0, 800), { art: true }, () => {}); touched.add(cid); done.push(...fixes.filter(f => f.target !== 'bench').map(f => f.id)); } catch (e) { failed++; console.warn('[fix_review] 整章', c.title, (e as any)?.message); }
   }
   for (const t of local) {
     await progress(`按评审改 ${++n} / ${total}`, `${t.chapter}${t.step_no ? ` 第 ${t.step_no} 步` : ' 开场'}`);
@@ -136,15 +151,18 @@ export async function fixByReview(spaceId: string, todos: Todo[], model: string,
       const r = t.target === 'opening' ? await reviseOpening(spaceId, t.chapter_id!, t.fix, model) : await reviseStep(spaceId, t.chapter_id!, t.step_id!, t.fix, model);
       await applyRevision(spaceId, { chapter_id: t.chapter_id!, target: t.target, step_id: t.step_id || undefined, after: r.after }, 'agent:fix_review');
       await logRevision({ task_id: spaceId, chapter_id: t.chapter_id, target: t.target === 'opening' ? 'opening' : `step:${t.step_id}`, instruction: t.fix, before: r.before, after: r.after, note: r.note, status: 'adopted', created_by: 'agent:fix_review' });
-      touched.add(t.chapter_id!);
+      touched.add(t.chapter_id!); done.push(t.id);
     } catch (e) { failed++; console.warn('[fix_review]', t.chapter, t.step_no, (e as any)?.message); }
   }
   const pub = [...touched].filter(id => (open.get(id) as any)?.status === 'published');
   if (pub.length) await db.from('lab_chapters').update({ status: 'draft' }).in('id', pub);
+  const benchText = benches.length ? `工位的 ${benches.length} 条一键改不了，要到工作室这一章的工位上点「✦ 改 → 重新设计」（${[...new Set(benches.map(b => b.chapter))].join('、')}）` : '';
+  // 一处都没改成（全是工位 / 锁定的章）：不复评，免得「改了 0 处」却报「改到位」
+  if (!done.length) return [`这次没有能一键改的：${benchText || '有问题的章都锁定了，先解锁再改'}${failed ? `；${failed} 处改的时候出错了，再试一次` : ''}`].join('；');
   await progress('改完再评一遍', '核对上一轮的意见改到位没有');
-  const again = await reviewSpace(spaceId, undefined, prev, todos.map(t => t.id)).catch(() => null);
+  const again = await reviewSpace(spaceId, undefined, prev, done).catch(() => null);
   const musts = again ? again.todos.filter(isMust).length : 0;
-  return [`改了 ${n - failed} 处（${whole.size ? `整章重写 ${whole.size} 章、` : ''}单步 / 开场 ${local.length} 处${failed ? `，${failed} 处没改成` : ''}；改过的章是草稿，看过再发布）`,
-    benches.length ? `工位的 ${benches.length} 条要在工作室点「✦ 改 → 重新设计」` : '',
-    again ? `复评：上一轮 ${again.resolved?.done ?? '?'}/${again.resolved?.total ?? todos.length} 条改到位，${again.pass ? '达标，可以发布' : `还有 ${musts} 条必须改`}${again.todos.length - musts ? `、${again.todos.length - musts} 条可以更好` : ''}` : ''].filter(Boolean).join('；');
+  return [`改了 ${done.length} 处（${whole.size ? `整章重写 ${whole.size} 章、` : ''}单步 / 开场 ${local.length} 处${failed ? `，${failed} 处没改成` : ''}；改过的章是草稿，看过再发布）`,
+    benchText,
+    again ? `复评：这次改的 ${again.resolved?.done ?? '?'}/${again.resolved?.total ?? done.length} 条改到位，${again.pass ? '达标，可以发布' : `还有 ${musts} 条必须改`}${again.todos.length - musts ? `、${again.todos.length - musts} 条可以更好` : ''}` : ''].filter(Boolean).join('；');
 }

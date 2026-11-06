@@ -232,8 +232,7 @@ export function tickBench(spec: BenchSpec, st: BenchState, dt: number) {
     next[v.id] = val;
   }
   st.vars = next;
-  // 按钮是瞬时的：这一拍用完就复位
-  for (const c of spec.controls) if (c.kind === 'button' && st.controls[c.id]) st.controls[c.id] = 0;
+  // 规则 / 目标也要看见这一拍按下的按钮（11-06 前先复位再判，「btn_x == 1」写的否决项永远不触发）
   const env2 = benchEnv(spec, st);
   for (const r of spec.rules) {
     const on = !!evalExpr(r.when, env2);
@@ -251,6 +250,8 @@ export function tickBench(spec: BenchSpec, st: BenchState, dt: number) {
     st.goalHold[g.id] += dt;
     if (st.goalHold[g.id] >= (g.hold || 0)) { st.goalDone[g.id] = st.t; st.events.push({ t: st.t, kind: 'goal', id: g.id, label: g.label, state: { ...st.vars } }); }
   }
+  // 按钮是瞬时的：这一拍用完就复位
+  for (const c of spec.controls) if (c.kind === 'button' && st.controls[c.id]) st.controls[c.id] = 0;
 }
 
 export function benchMetrics(spec: BenchSpec, st: BenchState): BenchMetrics {

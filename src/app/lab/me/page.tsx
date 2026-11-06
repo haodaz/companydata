@@ -131,7 +131,7 @@ export default function MePage() {
                         <button key={c.n} className={`me-part${passed(c.best.score) ? '' : ' fail'}`} onClick={() => router.push(`/lab/cert/day?s=${ids.join(',')}&at=${c.best.id}`)} title={`查看成绩单 ${c.best.no}`}>
                           <span className="lab-mono" style={{ fontSize: 11, color: 'var(--ink3)' }}>{c.slot || `第 ${c.n} 段`}<span style={{ float: 'right' }}>{fmt(c.best.date)}</span></span>
                           <b style={{ fontSize: 13.5, lineHeight: 1.4 }}>{c.title}</b>
-                          <span style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}><span className="lab-mono bd">{bandText(c.best.band)}</span><span style={{ fontSize: 11, color: passed(c.best.score) ? 'var(--ink3)' : '#c4323a', fontWeight: passed(c.best.score) ? 400 : 700 }}>{passed(c.best.score) ? (c.tries > 1 ? `走过 ${c.tries} 次 ✓` : '通过 ✓') : `未过 ${PASS_SCORE} · 重做`}</span></span>
+                          <span style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}><span className="lab-mono bd">{s.form === 'career' ? (passed(c.best.score) ? '✓' : '—') : bandText(c.best.band)}</span><span style={{ fontSize: 11, color: passed(c.best.score) ? 'var(--ink3)' : '#c4323a', fontWeight: passed(c.best.score) ? 400 : 700 }}>{passed(c.best.score) ? (c.tries > 1 ? `走过 ${c.tries} 次 ✓` : '通过 ✓') : `未过 ${PASS_SCORE} · 重做`}</span></span>
                         </button>
                       ) : (
                         <button key={c.n} className="me-part empty" onClick={() => router.push(`/lab/${s.id}?m=test${c.id ? `&ch=${c.id}` : ''}`)}>
@@ -143,7 +143,7 @@ export default function MePage() {
                     </div>
                     <div className="me-book">
                       {/* 证书夹：没拿到证书时是灰的，但也能打开看里面已经夹着的成绩 */}
-                      <MiniCover day role={s.role} title="" band={full ? band(Math.round(s.chapters.reduce((a: number, c: any) => a + (c.best?.score || 0), 0) / s.total)) : null}
+                      <MiniCover day career={s.form === 'career'} role={s.role} title="" band={full ? band(Math.round(s.chapters.reduce((a: number, c: any) => a + (c.best?.score || 0), 0) / s.total)) : null}
                         name={full ? (s.chapters.map((c: any) => c.best?.name).filter((n: string) => n && n !== '匿名新兵').pop() || me.name) : undefined}
                         locked={full ? undefined : `证书待解锁 · 已通过 ${okN}/${s.total}`} onClick={() => ids.length && router.push(`/lab/cert/day?s=${ids.join(',')}`)} />
                     </div>

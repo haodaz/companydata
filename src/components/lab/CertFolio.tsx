@@ -178,18 +178,21 @@ function PageCert({ d }: { d: FolioData }) {
               : <>于 {dateRange(d)} 在数字职人 {d.space.name} 的带领下，<br />{d.day ? <>走完了「{d.space.role}的一天」全部 {d.dims.length} 段</> : <>完成了「{d.space.role}的一天」{d.chapter && d.chapter.total > 1 ? `第 ${d.chapter.n} / ${d.chapter.total} 段` : ''}的全部操作</>}</>}
           </div>
           {!d.day && d.chapter && <div className="pg-accent" style={{ fontSize: '3.6cqi', fontWeight: 900, marginTop: '2cqi', letterSpacing: '.06em' }}>{d.chapter.slot ? `${d.chapter.slot} · ` : ''}{d.chapter.title}</div>}
-          <div style={{ fontSize: '2.2cqi', marginTop: '3cqi', color: '#4a5180' }}>{isAI(d) ? (d.day ? '按岗位标准逐门评定，毕业综合等级' : '按岗位标准评定，本门等级') : isCareer(d) ? (d.day ? '按每段的体验表现评定，全天综合等级' : '按这一段的体验表现评定') : d.day ? `按${d.space.research ? '研究岗' : '岗位'}标准逐段评定，全天综合等级` : `按${d.space.research ? '研究岗' : '岗位'}标准评定，综合等级`}</div>
-          <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '2cqi', marginTop: '1cqi' }}>
-            <span className="pg-mono" style={{ fontSize: '7.6cqi', fontWeight: 900, letterSpacing: 0 }}>{bandText(d.overall)}</span>
-            <span style={{ fontSize: '2.8cqi', fontWeight: 800 }}>{d.level || bandLevel(d.overall)}</span>
-          </div>
+          <div style={{ fontSize: '2.2cqi', marginTop: '3cqi', color: '#4a5180' }}>{isAI(d) ? (d.day ? '按岗位标准逐门评定，毕业综合等级' : '按岗位标准评定，本门等级') : isCareer(d) ? (d.day ? `全天 ${d.dims.length} 段体验都已走完` : '这一段体验已走完') : d.day ? `按${d.space.research ? '研究岗' : '岗位'}标准逐段评定，全天综合等级` : `按${d.space.research ? '研究岗' : '岗位'}标准评定，综合等级`}</div>
+          {/* 生涯体验不是考核：不出「可独当一面」这类胜任度等级 */}
+          {isCareer(d)
+            ? <div className="pg-serif" style={{ fontSize: '5cqi', fontWeight: 900, marginTop: '1cqi', color: '#b4532a', letterSpacing: '.2em' }}>已完成体验</div>
+            : <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: '2cqi', marginTop: '1cqi' }}>
+                <span className="pg-mono" style={{ fontSize: '7.6cqi', fontWeight: 900, letterSpacing: 0 }}>{bandText(d.overall)}</span>
+                <span style={{ fontSize: '2.8cqi', fontWeight: 800 }}>{d.level || bandLevel(d.overall)}</span>
+              </div>}
         </div>
         <div style={{ margin: '2.4cqi auto 0', display: 'grid', gap: '.6cqi', fontSize: '2.05cqi', color: '#2a3160' }}>
           {d.dims.map(x => (
             <div key={x.key} style={{ display: 'flex', alignItems: 'center', gap: '1.6cqi' }}>
               <span style={{ width: '.8cqi', height: '2.4cqi', background: '#5b2ca0' }} />
               <span className="pg-serif" style={{ fontWeight: 700 }}>{x.name}</span>
-              <span className="pg-mono" style={{ marginLeft: 'auto', paddingLeft: '4cqi' }}>{bandText(x.band)}</span>
+              <span className="pg-mono" style={{ marginLeft: 'auto', paddingLeft: '4cqi' }}>{isCareer(d) ? '✓' : bandText(x.band)}</span>
             </div>
           ))}
         </div>
@@ -359,7 +362,7 @@ function PageCharts({ d }: { d: FolioData }) {
         </div>
         <div style={{ width: '60%', margin: '0 auto' }}><Radar dims={d.dims} avg={ch.avg} expert={ch.expert} /></div>
 
-        <div className="pg-cap" style={{ marginTop: '1cqi' }}>逐项对比（等级 0–9）</div>
+        <div className="pg-cap" style={{ marginTop: '1cqi' }}>{isCareer(d) ? '逐项对比（越长越接近老师傅）' : '逐项对比（等级 0–9）'}</div>
         <div style={{ display: 'grid', gap: '1cqi', marginTop: '1cqi' }}>
           {d.dims.map(x => {
             const rows: [string, number | null][] = [['#6a5cff', x.score], ['#12b5cb', ch.expert?.[x.key] ?? null], ['#8a90aa', ch.avg[x.key] ?? null]];
@@ -380,7 +383,7 @@ function PageCharts({ d }: { d: FolioData }) {
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: '4cqi', marginTop: '2.6cqi', alignItems: 'end' }}>
-          {ch.dist.length === 0 ? <div style={{ fontSize: '1.9cqi', color: '#4a5180', lineHeight: 1.7 }}>雷达上每个角是一天里的一段；离外圈越近，这一段做得越像能独当一面的人。灰色虚线是同一段其他体验者的平均。</div> : <div>
+          {ch.dist.length === 0 ? <div style={{ fontSize: '1.9cqi', color: '#4a5180', lineHeight: 1.7 }}>雷达上每个角是一天里的一段；离外圈越近，这一段做得越像{isCareer(d) ? '老师傅' : '能独当一面的人'}。灰色虚线是同一段其他体验者的平均。</div> : <div>
             <div className="pg-cap">同段分数分布 · {d.peers} 人</div>
             <div style={{ display: 'flex', alignItems: 'flex-end', gap: '.6cqi', height: '11cqi', marginTop: '1.4cqi', borderBottom: '.12cqi solid #1d2450' }}>
               {bins.map((b, i) => <div key={i} title={`${i * 10}–${i * 10 + 9} 分：${b} 人`} style={{ flex: 1, height: `${Math.max(3, (b / maxBin) * 100)}%`, background: i === myBin ? '#6a5cff' : '#d8dbe8', borderRadius: '.5cqi .5cqi 0 0' }} />)}
@@ -393,7 +396,7 @@ function PageCharts({ d }: { d: FolioData }) {
           </div>
         </div>
         <div style={{ flex: 1 }} />
-        <div style={{ fontSize: '1.5cqi', color: '#8a90aa', lineHeight: 1.7 }}>等级 1–9 由得分按 0.5 一档换算：9 可独当一面 · 8 熟练 · 7 胜任 · 6 基本胜任 · 5 需要带教 · 4 以下 入门。{ISSUERS}</div>
+        <div style={{ fontSize: '1.5cqi', color: '#8a90aa', lineHeight: 1.7 }}>{isCareer(d) ? '这是一次生涯体验：图上是你和老师傅做法的对照，帮你看清这一行在意什么，不是能力评级。' : '等级 1–9 由得分按 0.5 一档换算：9 可独当一面 · 8 熟练 · 7 胜任 · 6 基本胜任 · 5 需要带教 · 4 以下 入门。'}{ISSUERS}</div>
       </div>
     </div>
   );
@@ -567,19 +570,23 @@ export const MINI_COVER_CSS = `
 .mcv.empty::before { display: none; }
 .mcv.day { background: radial-gradient(130% 100% at 30% 0%, #5a3f9e 0%, #2a1f5c 50%, #120d2e 100%); }
 .mcv.locked { filter: grayscale(.85) brightness(1.1); opacity: .78; }
+/* 生涯体验：和大证书一样的暖杏色，不像资格证 */
+.mcv.career { background: radial-gradient(130% 100% at 30% 0%, #fff6ec 0%, #fde1c8 55%, #f6c39d 100%); color: #7a3416; box-shadow: 0 14px 30px rgba(156,66,32,.22), inset 7px 0 10px -6px rgba(122,52,22,.35); }
+.mcv.career::before { border-color: rgba(180,83,42,.45); }
+.mcv.career .mcv-foil { background: linear-gradient(100deg, #9c4220, #d9733f 40%, #b4532a 70%, #e88c55); -webkit-background-clip: text; background-clip: text; }
 `;
 
-export function MiniCover({ role, title, slot, band, name, empty, day, locked, onClick }: { role: string; title: string; slot?: string; band?: number | null; name?: string; empty?: boolean; day?: boolean; locked?: string; onClick: () => void }) {
+export function MiniCover({ role, title, slot, band, name, empty, day, locked, career, onClick }: { role: string; title: string; slot?: string; band?: number | null; name?: string; empty?: boolean; day?: boolean; locked?: string; career?: boolean; onClick: () => void }) {
   return (
-    <button className={`mcv${empty ? ' empty' : ''}${day ? ' day' : ''}${locked ? ' locked' : ''}`} onClick={onClick} title={locked || (empty ? '还没走这一段' : `${role} · ${title}`)}>
+    <button className={`mcv${empty ? ' empty' : ''}${day ? ' day' : ''}${career ? ' career' : ''}${locked ? ' locked' : ''}`} onClick={onClick} title={locked || (empty ? '还没走这一段' : `${role} · ${title}`)}>
       <div style={{ position: 'absolute', inset: '11cqi 9cqi 10cqi', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {!empty && <span style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: '11cqi', opacity: .9 }} className="mcv-foil">R²</span>}
         <span className="pg-mono" style={{ fontSize: '5.2cqi', letterSpacing: '.16em', marginTop: empty ? 0 : '3cqi', opacity: .75 }}>{slot || (day ? 'A FULL DAY' : '')}</span>
         <span className={`pg-serif${empty ? '' : ' mcv-foil'}`} style={{ fontSize: '10cqi', fontWeight: 900, lineHeight: 1.3, marginTop: '3cqi' }}>{day ? `${role}的一天` : title}</span>
         <span style={{ flex: 1 }} />
         {empty ? <span style={{ fontSize: '7.5cqi', fontWeight: 700, color: 'var(--v)' }}>去完成 →</span> : <>
-          {locked ? <span style={{ fontSize: '10cqi' }}>🔒</span> : <span className="pg-mono mcv-foil" style={{ fontSize: '16cqi', fontWeight: 900, letterSpacing: 0, lineHeight: 1 }}>{band != null ? bandText(band) : ''}</span>}
-          <span style={{ fontSize: '5.6cqi', marginTop: '2cqi', opacity: .75 }}>{locked || (day ? (name ? `${name}的证书` : '职业体验证书') : name ? `${name}的成绩` : role)}</span>
+          {locked ? <span style={{ fontSize: '10cqi' }}>🔒</span> : career ? <span className="pg-serif mcv-foil" style={{ fontSize: '9cqi', fontWeight: 900, letterSpacing: '.12em' }}>{band != null ? '已完成体验' : ''}</span> : <span className="pg-mono mcv-foil" style={{ fontSize: '16cqi', fontWeight: 900, letterSpacing: 0, lineHeight: 1 }}>{band != null ? bandText(band) : ''}</span>}
+          <span style={{ fontSize: '5.6cqi', marginTop: '2cqi', opacity: .75 }}>{locked || (day ? (name ? `${name}的${career ? '生涯体验证书' : '证书'}` : career ? '生涯体验证书' : '职业体验证书') : name ? `${name}的成绩` : role)}</span>
         </>}
       </div>
     </button>

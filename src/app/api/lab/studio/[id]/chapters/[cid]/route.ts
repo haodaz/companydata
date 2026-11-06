@@ -6,6 +6,7 @@ import { loadStudio } from '@/lib/lab-studio-server';
 import { checkChapter, checkDay, type StudioChapter } from '@/lib/lab-studio';
 import { recordEdit } from '@/lib/lab-edits';
 import { getSessionUser } from '@/lib/session';
+import { reviewBlocks } from '@/lib/lab-followup';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -50,6 +51,10 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
       const day = (all || []).map((c: any) => (c.id === cid ? next : c)) as StudioChapter[];
       const errors = [...checkChapter(next), ...checkDay(day)].filter(x => x.level === 'error' && (!x.chapter || x.chapter === cid));
       if (errors.length) return NextResponse.json({ ok: false, issues: errors, error: `还有 ${errors.length} 个问题，不能发布：${errors[0].msg}` }, { status: 400 });
+      // 评审的「必须改」也挡发布（这次保存改了内容的放行，等复评）
+      const edited = 'sim' in body && JSON.stringify(body.sim) !== JSON.stringify(cur.sim);
+      const musts = cur.status !== 'published' && !edited ? (await reviewBlocks(id, [cur])).get(cid) : null;
+      if (musts?.length) return NextResponse.json({ ok: false, error: `AI 评审里这一章还有 ${musts.length} 条必须改，改完再发布：${musts[0].problem}` }, { status: 400 });
     }
 
     const { error } = await supabaseAdmin.from('lab_chapters').update(patch).eq('id', cid);

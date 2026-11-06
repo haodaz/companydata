@@ -25,7 +25,12 @@ const setBuild = (id: string, patch: Partial<{ phase: string; detail?: string; d
 export async function GET(req: Request) {
   try {
     const buildId = new URL(req.url).searchParams.get('build');
-    if (buildId) return NextResponse.json({ ok: true, build: builds.get(buildId) || null });
+    if (buildId) {
+      const mem = builds.get(buildId);
+      if (mem) return NextResponse.json({ ok: true, build: mem });
+      const { data: hit } = await supabaseAdmin.from('skill_tasks').select('id').eq('jd_snapshot->>build_id', buildId).limit(1);
+      return NextResponse.json({ ok: true, build: hit?.length ? { phase: '完成', done: true, id: hit[0].id } : null });
+    }
     const { data: spaces, error } = await supabaseAdmin
       .from('skill_tasks')
       .select('id, title, created_by, profile, jd_snapshot, jd_breakdown, time_limit_min, is_demo, created_at, job_id, sim, skill:skills(id, name, domain, kind, summary, expert_name, expert_location, expert_note, distilled_at, card, interview, source)')
@@ -162,7 +167,8 @@ async function build(req: Request, body: any, costJob: string) {
     }
     const specText = renderSpec(spec, anchor);
     const withSpec = (h: string) => [h, specText].filter(Boolean).join('\n\n');
-    const snapExtra = { ...(anchor ? { anchor } : {}), ...(hasSpec(spec) ? { spec } : {}) };
+    // build_id 记进快照：进度表在进程内，网关超时 / 轮询落到别的副本时，页面按它去库里找生成好的空间
+    const snapExtra = { ...(anchor ? { anchor } : {}), ...(hasSpec(spec) ? { spec } : {}), ...(body.buildId ? { build_id: String(body.buildId).slice(0, 40) } : {}) };
     const { jobId, createdBy } = body;
     // 没传模型就用百业默认生成模型（和工作室一致）；以前兜底到 Gemini，Gemini 已停充
     const model = String(body.model || process.env.NEXT_PUBLIC_LAB_GEN_MODEL || 'gpt-5.6-luna'); buildId = String(body.buildId || '');
