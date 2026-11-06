@@ -10,9 +10,23 @@
  */
 import fs from 'fs';
 import { supabaseAdmin as db } from '../src/lib/supabase';
-import { askJson } from '../src/lib/work/generator';
+import { generateContent } from '../src/lib/llm-client';
+import { parseJsonLoose } from '../src/lib/agents/search-llm';
 import { withCost } from '../src/lib/token-logger';
 import { upsertEntity, upsertLink } from '../src/lib/entity-store';
+
+// 自带一个「要 JSON、失败换国内模型」的小函数：不引真活的 generator（真活不推 GitLab，导出会编译不过）
+async function askJson(prompt: string, model: string, _task: string): Promise<{ parsed: any; model: string }> {
+  let last: any = null;
+  for (const m of [model, ...['qwen3.7-plus', 'qwen-plus', 'deepseek-v4-pro'].filter(x => x !== model)]) {
+    try {
+      const res = await generateContent(prompt, m, { jsonMode: true });
+      const p = parseJsonLoose(res.text); if (!p || typeof p !== 'object') throw new Error('返回不是 JSON 对象');
+      return { parsed: p, model: m };
+    } catch (e) { last = e; console.warn(`[methods] ${m} 失败，换下一个：${String((e as any)?.message).slice(0, 120)}`); }
+  }
+  throw last || new Error('生成失败');
+}
 
 const DIR = 'scripts/data';
 const MF = `${DIR}/research-methods.json`, PF = `${DIR}/research-product-methods.json`;
@@ -54,7 +68,7 @@ if (arg('taxonomy')) {
   const have: Method[] = readJson(MF, []);
   for (const F of FIELDS) {
     if (have.some(m => m.field === F.field)) { console.log(`跳过 ${F.field}（已有）`); continue; }
-    const { parsed: p, model } = await withCost({ tool_name: 'lab', task_name: '实验方法 · 定清单', stage: 'build' } as any, () => askJson(`你在给一个「科研实验方法」实体库定清单。这个库连接两头：一头是科研仪器 / 试剂产品库（下面是真实产品名，按类别抽样），一头是研究生 / 博士 / 博士后要学的实验手艺和学科。
+    const { parsed: p, model }: any = await withCost({ tool_name: 'lab', task_name: '实验方法 · 定清单', stage: 'build' } as any, () => askJson(`你在给一个「科研实验方法」实体库定清单。这个库连接两头：一头是科研仪器 / 试剂产品库（下面是真实产品名，按类别抽样），一头是研究生 / 博士 / 博士后要学的实验手艺和学科。
 现在只定「${F.field}」这一大类（参考范围：${F.hint}）。
 ## 产品库抽样（类型/类别（条数）：产品名）
 ${sample.slice(0, 14000)}
