@@ -9,6 +9,7 @@ import { execFileSync } from 'node:child_process';
 import ffmpegStatic from 'ffmpeg-static';
 import { logTokenUsage } from '@/lib/token-logger';
 import type { WorkEvent } from '@/lib/work/grader';
+import { labMediaUrl } from '@/lib/media-url';
 
 const FFMPEG = (ffmpegStatic as unknown as string) || path.join(process.cwd(), 'node_modules', 'ffmpeg-static', 'ffmpeg');
 const VISION_MODEL = process.env.WORK_VISION_MODEL || 'claude-sonnet-5-5';
@@ -38,7 +39,7 @@ export async function listShots(sid: string): Promise<{ t: number; url: string }
   const out: { t: number; url: string }[] = [];
   for (let off = 0; off < 5000; off += 1000) {
     const { data } = await db.storage.from('lab-media').list(`work/${sid}/shots`, { limit: 1000, offset: off, sortBy: { column: 'name', order: 'asc' } });
-    for (const f of data || []) { const t = parseInt(f.name, 10); if (Number.isFinite(t)) out.push({ t, url: db.storage.from('lab-media').getPublicUrl(`work/${sid}/shots/${f.name}`).data.publicUrl }); }
+    for (const f of data || []) { const t = parseInt(f.name, 10); if (Number.isFinite(t)) out.push({ t, url: labMediaUrl(db.storage.from('lab-media').getPublicUrl(`work/${sid}/shots/${f.name}`).data.publicUrl) }); }
     if (!data || data.length < 1000) break;
   }
   return out.sort((a, b) => a.t - b.t);

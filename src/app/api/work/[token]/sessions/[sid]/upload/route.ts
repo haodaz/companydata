@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
+import { labMediaUrl } from '@/lib/media-url';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -39,7 +40,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   const buf = Buffer.from(await file.arrayBuffer());
   const { error } = await db.storage.from(BUCKET).upload(path, buf, { contentType: file.type || (kind === 'recording' ? 'video/webm' : 'application/octet-stream'), upsert: true });
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
-  const url = db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+  const url = labMediaUrl(db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl);
   const tsec = Number(form.get('t')) || Math.round((Date.now() - new Date(s.started_at).getTime()) / 1000);
   const part = String(form.get('part') || '').slice(0, 20);   // 工作台：这是哪份交付物的附件（11-05）
   const ev = { t: tsec, type: kind, name: safe, size: file.size, url, ...(part ? { part } : {}), ...(kind === 'recording' ? { duration: Number(form.get('duration')) || 0 } : {}) };

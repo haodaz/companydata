@@ -5,6 +5,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { extractText } from '@/lib/work/samples';
+import { labMediaUrl } from '@/lib/media-url';
 
 const MAX = 20 * 1024 * 1024;
 const BUCKET = 'lab-media';
@@ -23,7 +24,7 @@ export async function handleAttach(req: NextRequest, whoRaw: string) {
   const mime = file.type && file.type !== 'application/octet-stream' ? file.type : ({ '.csv': 'text/csv', '.txt': 'text/plain', '.md': 'text/markdown', '.pdf': 'application/pdf', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.gif': 'image/gif', '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' } as Record<string, string>)[ext] || 'application/octet-stream';
   const { error } = await db.storage.from(BUCKET).upload(path, buf, { contentType: mime, upsert: true });
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
-  const url = db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+  const url = labMediaUrl(db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl);
   let text = '';
   if (/\.xlsx?$/i.test(safe) || /spreadsheetml|ms-excel/.test(mime)) {
     // Excel：每个 sheet 抽成 CSV 文字（候选人端按表格渲染；出题 / 评卷能读）

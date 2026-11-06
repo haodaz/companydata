@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import { orgByLabToken } from '@/lib/college-private';
 import { extractText } from '@/lib/work/samples';
+import { labMediaUrl } from '@/lib/media-url';
 export const runtime = 'nodejs'; export const maxDuration = 120;
 
 const MAX = 20 * 1024 * 1024, BUCKET = 'lab-media';
@@ -24,5 +25,5 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     if (/\.xlsx?$/.test(ext)) { const XLSX = await import('xlsx'); const wb = XLSX.read(buf, { type: 'buffer' }); text = wb.SheetNames.slice(0, 6).map(n => `## ${n}\n` + XLSX.utils.sheet_to_csv(wb.Sheets[n])).join('\n\n'); }
     else text = await extractText(buf, name);
   } catch (e) { console.warn('[lab-upload] 抽文字失败', String((e as any)?.message).slice(0, 100)); }
-  return NextResponse.json({ ok: true, url: db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl, name, text: text.slice(0, 60000) });
+  return NextResponse.json({ ok: true, url: labMediaUrl(db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl), name, text: text.slice(0, 60000) });
 }

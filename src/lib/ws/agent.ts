@@ -8,6 +8,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logTokenUsage } from '@/lib/token-logger';
 import { toolsFor, runTool, type ToolCtx, type ToolUi } from '@/lib/ws/tools';
+import { makeScrubber, scrubStream } from '@/lib/ws/scrub';
 
 export type Call = { id: string; name: string; input: any };
 export type Result = { id: string; name: string; content: string; is_error?: boolean; label?: string; ui?: ToolUi };
@@ -75,9 +76,14 @@ export async function runTurn(history: Msg[], model: string, ctx: ToolCtx, emit:
   const kit = kitIn || wsKit(ctx as any);
   const added: Msg[] = [];
   const all = () => [...history, ...added];
+  const clean = makeScrubber(kit.tools);   // 工具名、参数、编号不给用户看（千问压不住，11-06）
   for (let step = 0; step < 10; step++) {
     const p = provider(model);
-    const out = p === 'anthropic' ? await callAnthropic(all(), model, kit, emit) : p === 'openai' ? await callOpenAI(all(), model, kit, emit) : p === 'gemini' ? await callGemini(all(), model, kit, emit) : await callQwen(all(), model, kit, emit);
+    const st = scrubStream(clean, delta => emit({ t: 'text', delta }));
+    const say = (e: Ev) => (e.t === 'text' ? st.write(e.delta) : emit(e));
+    const out = p === 'anthropic' ? await callAnthropic(all(), model, kit, say) : p === 'openai' ? await callOpenAI(all(), model, kit, say) : p === 'gemini' ? await callGemini(all(), model, kit, say) : await callQwen(all(), model, kit, say);
+    st.flush();
+    out.text = clean(out.text);
     added.push({ role: 'assistant', text: out.text, calls: out.calls, provider: p, raw: out.raw, at: new Date().toISOString() });
     if (!out.calls.length) break;
     // 每走一步就落库：长工具（出题 2 分钟、基线 1 分钟）跑的时候关页面 / 服务重启，已经做完的不丢
