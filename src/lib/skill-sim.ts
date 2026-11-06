@@ -5,7 +5,7 @@
  *   - 专家的轨迹 → 被 AI 核心记录下来（模仿），并在关键决策点被追问「为什么」
  */
 
-import { benchMatch, benchTimeline, sanitizeBenchSpec, sanitizeBenchTrace, type BenchSpec, type BenchTrace } from '@/lib/bench';
+import { benchMatch, benchTimeline, sanitizeBenchSpec, sanitizeBenchTrace, vetoesOf, type BenchSpec, type BenchTrace } from '@/lib/bench';
 
 export type SimStepType = 'choose' | 'multi' | 'drill' | 'classify' | 'allocate' | 'slider' | 'text' | 'bench';
 
@@ -55,6 +55,11 @@ export function describeStep(step: SimStep, value: any): string {
     case 'bench': { const m = (value as BenchTrace)?.metrics; return m ? `用时 ${Math.round(m.duration)} 秒 · 目标 ${m.goals_done}/${m.goals_total} · 违规 ${m.violations} · 操作 ${m.actions} 次` : '（未操作）'; }
     default: return String(value);
   }
+}
+
+/** 整条轨迹碰了哪些工位否决项：有就本段不合格（资格考核的一票否决） */
+export function traceVetoes(sim: Sim, trace: SimTrace | null): string[] {
+  return trace ? sim.steps.flatMap(s => s.type === 'bench' ? vetoesOf(trace[s.id] as BenchTrace) : []) : [];
 }
 
 /** 整条轨迹 → 文字记录 */

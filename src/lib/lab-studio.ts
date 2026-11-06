@@ -197,7 +197,7 @@ export function checkBasis(chapters: StudioChapter[], basis: BasisRow[]): Studio
     const none: string[] = [], weak: string[] = [];
     for (const st of ((c.sim as any)?.steps || [])) {
       const b = st?.type === 'bench' ? st.bench : null; if (!b) continue;
-      const items = [...(b.rules || []).map((r: any) => ({ k: `rule:${r.id}`, label: r.label, v: r.severity === 'violation' })), ...(b.goals || []).map((g: any) => ({ k: `goal:${g.id}`, label: g.label, v: false }))];
+      const items = [...(b.rules || []).map((r: any) => ({ k: `rule:${r.id}`, label: r.label, v: r.severity !== 'warning' })), ...(b.goals || []).map((g: any) => ({ k: `goal:${g.id}`, label: g.label, v: false }))];
       for (const it of items) {
         const x = by.get(`${c.id}|${it.k}`);
         if (!x) { none.push(it.label); continue; }

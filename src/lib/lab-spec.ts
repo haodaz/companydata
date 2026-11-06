@@ -25,13 +25,18 @@ export type SpecRef = { name: string; text: string };
  * 形态（11-06，用户：试试真正适合高中生的体验，和大学生虚拟实训、行业资格考核有什么不同）——不只是难度高低，是目的不同，结构跟着变：
  *   career  生涯体验：看清这一行、看清自己。体验者是来跟岗的学生；误解 → 真相、跟着做、尝一口、见不同的人、收尾「我和这一行」（兴趣 / 能力 / 选科 / 专业 / 入行的路）；很多题没有标准答案，看理由。
  *   training 虚拟实训：练会一项手艺 / 一套流程。体验者是这个专业的学生；按实训模块（准备与安全 → 关键工序 → 质检 → 故障排除），对规程、参数、原理。
+ *   assess   职业虚拟考核：新人上岗的真实一天，按岗位要求考（像入职考核 / 校招工作样本），不对标国家证书。
  *   certify  资格考核：按国家职业技能标准对应等级考。体验者是考生；检录 → 理论 → 技能操作（限时、按评分细则、有否决项）→ 评定。
- * 不填 = 以前的「新人上班的一天」。
+ * 不填 = 以前的「新人上班的一天」（老空间）。
+ * 11-06 晚用户：难度订几个级，人工填表和聊着出都让人点选——就是这四档（按 LEVEL_ORDER 由浅到深），每档写清证书是什么（生涯体验只有体验证书）。
  */
-export type SpaceForm = 'career' | 'training' | 'certify';
-export const FORMS: Record<SpaceForm, { label: string; who: string; essence: string; day: string; chapter: string; bench: string; score: string }> = {
+export type SpaceForm = 'career' | 'training' | 'assess' | 'certify';
+export const LEVEL_ORDER: SpaceForm[] = ['career', 'training', 'assess', 'certify'];
+export const FORMS: Record<SpaceForm, { label: string; pick: string; cert: string; who: string; essence: string; day: string; chapter: string; bench: string; score: string }> = {
   career: {
     label: '生涯体验',
+    pick: '看看这一行每天干什么、自己适不适合；操作最简单，不计时',
+    cert: '只发体验证书，不是考核证书',
     who: '来这一行跟岗体验一天的学生（不是已经入职的员工）：有带他的师傅，他看、问、在师傅允许时上手一小段',
     essence: '让还没选专业的人看清这一行每天在干什么、需要什么样的人，再看清自己适不适合——不是培训，也不是考证',
     day: `排 5–6 格，大致这样走（时段照这一行真实的一天）：
@@ -50,7 +55,9 @@ export const FORMS: Record<SpaceForm, { label: string; who: string; essence: str
     score: '评分看理解了没有、理由说没说清、对自己有没有新认识；不看操作精度和速度，没有标准答案的题只要言之有理就给分。',
   },
   training: {
-    label: '虚拟实训',
+    label: '模拟实践',
+    pick: '按操作规程把一道工序、一套流程练会；参数要对，允许小偏差',
+    cert: '发模拟实践证书',
     who: '这个专业的学生，在实训室按实训任务书操作，有实训老师指导',
     essence: '让专业学生练会一项手艺或一套标准流程，替代贵、危险或难得一见的真实实训——对应专业课和实训大纲',
     day: `不按一天排，按实训模块排 4–6 格，时段写「模块1」「模块2」…：
@@ -62,8 +69,25 @@ export const FORMS: Record<SpaceForm, { label: string; who: string; essence: str
     bench: '工位做一道完整工序：参数要在规范范围内（允许小偏差），顺序要对，过程数据要能复盘；违反操作规程要扣分。',
     score: '评分看关键操作是否到位、参数是否在规范范围、能否说清原理和缺陷原因。',
   },
+  assess: {
+    label: '职业虚拟考核',
+    pick: '按岗位真实的一天考：新人最常做的活做没做对、规不规范',
+    cert: '发职业能力考核证书',
+    who: '刚入职或准备入职这个岗位的新人（求职者、实习生），独立接活，有带教 / 主管',
+    essence: '按这个岗位真实的一天考：看他能不能把新人第一年最常做、最容易出错的活做对、做规范——像入职考核或校招工作样本，不对标国家证书',
+    day: `按岗位真实的一天排 5–6 格，时段写 HH:MM：
+  ① 到岗接活：交代今天的任务和要求；
+  ②③④ 最常做、最容易出错的核心活 2–3 段（其中至少一格放动手的虚拟工位）；中间一段要和同事 / 客户 / 上下游沟通协作；
+  ⑤ 一次突发（加急、出错、投诉），要自己判断先做什么；
+  ⑥ 下班前交接与复盘（kind 用 assessment）。`,
+    chapter: '每章 4–6 步，题目贴着岗位真实工作：判断、操作、沟通都考；有标准答案的在示范答案里写清依据，判断题看理由；术语按岗位里的说法用，第一次出现可以简短解释一句。',
+    bench: '工位做岗位上的一道真实操作：关键参数和顺序要对，允许小偏差；违反操作规范扣分（violation），不用 veto。',
+    score: '按岗位要求评：结果对不对、过程规不规范、理由说不说得清；60 分合格。',
+  },
   certify: {
-    label: '资格考核',
+    label: '资质考核',
+    pick: '对照国家职业技能标准：限时、按评分细则打分、有一票否决',
+    cert: '发模拟考核成绩证明，不代替官方资格证书',
     who: '参加这一职业技能等级认定 / 资格考核的考生',
     essence: '按这一职业的国家职业技能标准（或行业资格）对应等级考核：理论知识 + 技能操作，按评分细则打分，有否决项',
     day: `按考核流程排 4–5 格，时段写「考核1」「考核2」…：
@@ -72,14 +96,16 @@ export const FORMS: Record<SpaceForm, { label: string; who: string; essence: str
   ③④ 技能操作 1–2 项：限时，按评分细则（其中至少一格放动手的虚拟工位）；
   ⑤ 结果评定与职业素养（kind 用 assessment）：按标准评操作结果（做东西的行业叫成品评定，服务 / 护理 / 维修类评操作结果和记录），安全、卫生、文明操作。`,
     chapter: '每章 4–8 步，题目像正式考题：表述规范、唯一正确答案、数值精确，不讲故事不用大白话；每题依据标准里的哪个知识点 / 技能要求，写进示范答案的说明里。',
-    bench: '工位按考核细则：参数容差按标准，限时，违反安全卫生或关键工艺的直接判不合格（否决项）。',
+    bench: '工位按考核细则：参数容差按标准，限时，违反安全卫生或关键工艺的直接判不合格——考核细则里写明一票否决的项，规则 severity 用 veto（碰了这一段直接不合格），其余扣分项用 violation。',
     score: '按评分细则逐项打分，60 分合格；否决项一票否决；理论与技能分开计。',
   },
 };
-export const isForm = (v: any): v is SpaceForm => v === 'career' || v === 'training' || v === 'certify';
+export const isForm = (v: any): v is SpaceForm => v === 'career' || v === 'training' || v === 'assess' || v === 'certify';
+/** 选级别时显示的一行：名字（证书说明） */
+export const levelText = (f: SpaceForm) => `${FORMS[f].label}（${FORMS[f].cert}）`;
 export type GenSpec = {
   preset?: string;               // 用了哪个预设（只做记录）
-  form?: SpaceForm;              // 形态：生涯体验 / 虚拟实训 / 资格考核（不填 = 新人上班的一天）
+  form?: SpaceForm;              // 级别：生涯体验 / 模拟实践 / 职业虚拟考核 / 资质考核（不填 = 老空间的新人上班的一天）
   audience?: string;             // 给谁看
   depth?: string;                // 要多深：职业讲到哪一级、日常任务要多有代表性
   difficulty?: string;           // 考核多难：操作精准度、评分严不严
@@ -112,13 +138,14 @@ export const PRESETS: { key: string; label: string; spec: Omit<GenSpec, 'preset'
   {
     key: 'newhire', label: '校招 / 新人上岗',
     spec: {
+      form: 'assess',
       audience: '刚入职或即将入职的新人，要尽快上手这个岗位。',
       depth: '按真实岗位的日常来，覆盖新人最常做、最容易出错的事。',
       difficulty: '接近岗位真实要求：关键操作要准，违规就扣分；评分看结果和过程是否规范。',
     },
   },
   {
-    key: 'training', label: '大学生虚拟实训',
+    key: 'training', label: '大学生模拟实践',
     spec: {
       form: 'training',
       audience: '这个方向的高职 / 本科在读学生，已经学过专业基础课，要在实训里把一项手艺或一套流程练会。',
@@ -138,6 +165,7 @@ export const PRESETS: { key: string; label: string; spec: Omit<GenSpec, 'preset'
   {
     key: 'pro', label: '在职提升',
     spec: {
+      form: 'assess',
       audience: '已经在这一行工作几年的人，想补短板或往上走一级。',
       depth: '挑这一行有难度、有取舍的场景，可以细分到专项。',
       difficulty: '高：操作要精准、要处理突发；评分严格。',

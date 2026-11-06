@@ -92,7 +92,7 @@ BenchSpec 的 JSON 结构（所有字段名必须完全一致）：
   "vars": [ { "id": "<变量 id>", "label": "<中文名>", "initial": <初值>, "rate": "<每模拟秒的变化率表达式，可省略>", "set": "<每拍直接赋值的表达式，可省略>", "min": <可省略>, "max": <可省略> } ],
   "controls": [ { "id": "<控件 id>", "label": "<中文名>", "kind": "knob" | "switch" | "button" | "path", "min": <knob>, "max": <knob>, "step": <knob>, "unit": "<knob>", "initial": <初值>, "hint": "<一句操作提示>", "hidden": <true 表示不上面板、由场景里的动作直接写入，只给轨迹工位的「偏离」用> } ],
   "gauges": [ { "id": "", "label": "", "unit": "", "expr": "<表达式>", "min": 0, "max": 100, "digits": 0, "warn": "<为真时仪表变红的表达式，可省略>" } ],
-  "rules": [ { "id": "", "label": "<违规 / 提醒的中文说明>", "when": "<表达式>", "severity": "violation" | "warning", "once": true } ],
+  "rules": [ { "id": "", "label": "<否决 / 违规 / 提醒的中文说明>", "when": "<表达式>", "severity": "veto" | "violation" | "warning", "once": true } ],
   "goals": [ { "id": "", "label": "<目标中文说明>", "when": "<表达式>", "hold": <需持续的秒数，可省略>, "after": "<必须在哪个目标之后才算，可省略>" } ],
   "expertScript": [ { "t": <模拟秒>, "control": "<控件 id>", "value": <数值> } ],
   "layers": [ { "id": "", "kind": "glow" | "lamp" | "door" | "stream" | "pulse" | "readout" | "haze" | "seam" | "pour" | "cup" | "coach", "x": 0-100, "y": 0-100, "w": 0-100, "h": 0-100, "level": "<0–1 表达式，glow/door/haze/cup 用>", "on": "<真假表达式，lamp/door/stream/pulse/seam/coach 用>", "text": "<readout 显示的表达式>", "unit": "", "label": "", "color": "#hex",
@@ -205,7 +205,7 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
       —— 注意这里一个仪表旋钮都没有，全是灶台前真正会做的动作。
 
       设计要求：
-      1. 3–6 个控件，3–5 个仪表，3–6 条规则（其中至少 2 条 violation 反映真实事故：顺序错、超限、停顿、忘关），4–6 个目标（含顺序性：after / hold）。
+      1. 3–6 个控件，3–5 个仪表，3–6 条规则（其中至少 2 条 violation 反映真实事故：顺序错、超限、停顿、忘关；veto 否决只给资格考核里明文规定「一票否决」的项，比如查对错误、违反无菌、带电操作——碰了这一段直接不合格，其他形态不要用），4–6 个目标（含顺序性：after / hold）。
       2. 必须给出 expertScript：一位老手的完整操作脚本，按时间顺序，它在模拟器里跑完必须达成全部目标且零违规。
       3. 数值要自洽：rate 的量级要让老手脚本在 maxSeconds 内完成；变量加 min/max 防止发散。
       4. 场景 layers 的布局分两种，按工位类型选一种：
@@ -240,7 +240,7 @@ export async function designBench(jd: JdInput, task: { title: string; brief: str
     const m = tr.metrics;
     const layers = Array.isArray(raw.layers) ? raw.layers : [];
     if (m.goals_done < m.goals_total || m.violations > 0) {
-      const violated = [...new Set(tr.events.filter(e => e.kind === 'rule' && e.severity === 'violation' && e.id).map(e => e.id!))];
+      const violated = [...new Set(tr.events.filter(e => e.kind === 'rule' && e.severity !== 'warning' && e.id).map(e => e.id!))];
       const score = m.goals_done * 10 - violated.length;
       if (!best || score > best.score) best = { spec, layers, p, violated, score };
       const unmet = spec.goals.filter(g => m.time_to_goal[g.id] === null);

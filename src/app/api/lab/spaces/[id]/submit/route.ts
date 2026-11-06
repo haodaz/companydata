@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { withCost } from '@/lib/token-logger';
 import { supabaseAdmin } from '@/lib/supabase';
 import { answerTask, gradeAnswer, operateSim } from '@/lib/agents/skill-lab';
-import { sanitizeTrace, traceMatch, traceToText, type Sim, type SimTrace } from '@/lib/skill-sim';
+import { sanitizeTrace, traceMatch, traceToText, traceVetoes, type Sim, type SimTrace } from '@/lib/skill-sim';
 import { chapterExpertTrace, chapterTask, labError, loadSpace, pickChapter, recordInvocation, skillRef } from '@/lib/skill-lab-server';
 import { INVITED } from '@/lib/lab-invite';
 import { labModel } from '@/lib/lab-guest';
@@ -45,7 +45,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     if (answer.length < 20) return NextResponse.json({ ok: false, error: '作答太短了，至少写几句' }, { status: 400 });
 
     // 按这一章自己的题面和评分标准评（第 1 章用空间的）
-    const { score, grading } = await withCost(cost, () => gradeAnswer(chapterTask(space, chapter), answer, skill, model));
+    let { score, grading } = await withCost(cost, () => gradeAnswer(chapterTask(space, chapter), answer, skill, model));
+    // 工位上碰了否决项：不管别处做得多好，这一段不合格（最高 59）
+    const vetoes = sim ? traceVetoes(sim, trace) : [];
+    if (vetoes.length && score >= 60) { score = 59; grading = { ...grading, summary: `触发否决项「${vetoes.join('」「')}」，按考核细则本段不合格。${grading.summary}` }; }
 
     const name = mode === 'ai' ? (withSkill ? 'AI + 专家技能' : 'AI 裸答') : String(body.name || '').trim() || (mode === 'expert' ? '专家' : '匿名新兵');
     const row: Record<string, any> = {

@@ -95,10 +95,10 @@ function DemoReview() {
               <div className="lab-mono lab-cap" style={{ marginBottom: 10 }}>逐条对照 · {b.bench || b.step} · 目标 {b.goalsDone}/{b.goalsTotal}</div>
               <div style={{ display: 'grid', gap: 2 }}>
                 {b.findings.filter((f: any) => f.kind === 'goal' || f.hit || f.basis === 'standard').map((f: any) => {
-                  const bad = f.kind === 'rule' && f.hit && f.severity === 'violation';
+                  const bad = f.kind === 'rule' && f.hit && f.severity !== 'warning';
                   return (
                     <div key={`${f.kind}${f.id}`} style={{ display: 'grid', gridTemplateColumns: '58px minmax(0, 1.2fr) 76px minmax(0, 1.6fr)', gap: 10, padding: '9px 4px', borderTop: '1px solid var(--line)', alignItems: 'baseline' }}>
-                      <span className="lab-mono" style={{ fontSize: 11, color: 'var(--ink3)' }}>{f.kind === 'goal' ? '目标' : f.severity === 'violation' ? '红线' : '提醒'}{f.t != null ? ` ${Math.floor(f.t / 60)}:${String(Math.round(f.t % 60)).padStart(2, '0')}` : ''}</span>
+                      <span className="lab-mono" style={{ fontSize: 11, color: 'var(--ink3)' }}>{f.kind === 'goal' ? '目标' : f.severity === 'veto' ? '否决' : f.severity === 'violation' ? '红线' : '提醒'}{f.t != null ? ` ${Math.floor(f.t / 60)}:${String(Math.round(f.t % 60)).padStart(2, '0')}` : ''}</span>
                       <div>
                         <div style={{ fontSize: 14, fontWeight: 700, color: bad ? '#d6336c' : 'var(--ink)' }}>{f.label}</div>
                         <div style={{ fontSize: 12.5, color: bad ? '#d6336c' : f.kind === 'goal' && !f.hit ? '#e08a1e' : 'var(--ink3)', marginTop: 2 }}>{f.verdict}</div>

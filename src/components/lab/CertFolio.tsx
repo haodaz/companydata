@@ -49,6 +49,13 @@ const CSS = `
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: foil 6s ease-in-out infinite alternate; }
 @keyframes foil { to { background-position: 100% 0; } }
 .cover-spine { position: absolute; left: 0; top: 0; bottom: 0; width: 4.5cqi; background: linear-gradient(90deg, rgba(0,0,0,.45), rgba(255,255,255,.05) 60%, rgba(0,0,0,.2)); }
+/* 生涯体验的封皮换成暖杏色（11-06 用户：深蓝烫金太像资格证）；其它级别不变 */
+.cover.career { background: radial-gradient(130% 100% at 30% 0%, #fff6ec 0%, #fde1c8 52%, #f6c39d 100%); color: #7a3416;
+  box-shadow: 0 40px 90px rgba(150,80,30,.28), inset 0 0 0 1px rgba(255,255,255,.5), inset 14px 0 18px -10px rgba(120,60,20,.25); }
+.cover.career::before { border-color: rgba(180,83,42,.45); } .cover.career::after { border-color: rgba(180,83,42,.28); }
+.cover.career .cover-grain { opacity: .18; }
+.cover.career .cover-spine { background: linear-gradient(90deg, rgba(120,60,20,.22), rgba(255,255,255,.3) 60%, rgba(120,60,20,.1)); }
+.cover.career .cover-foil { background-image: linear-gradient(100deg, #9c4220, #d9733f 30%, #b4532a 48%, #e88c55 62%, #a5492a 80%, #c8653a); }
 .folio-open { animation: folio-in .7s ease-out both; }
 @keyframes folio-in { from { opacity: 0; transform: scale(.97); } }
 @media print { .cover-stage { display: none !important; } }
@@ -162,7 +169,7 @@ function PageCert({ d }: { d: FolioData }) {
         <div className="pg-serif" style={{ textAlign: 'center', marginTop: '5.5cqi' }}>
           <div className="pg-mono" style={{ fontSize: '1.8cqi', letterSpacing: '.38em', color: '#6b7290' }}>{W(d).en}</div>
           <div style={{ fontSize: '6.4cqi', fontWeight: 900, letterSpacing: '.28em', marginTop: '1.6cqi', paddingLeft: '.28em' }}>{W(d).zh}</div>
-          {isCareer(d) && <CareerMark />}
+          <FormMark d={d} />
           <div style={{ fontSize: '2.6cqi', marginTop: '4.4cqi', color: '#4a5180' }}>兹证明</div>
           <div style={{ fontSize: '7cqi', fontWeight: 800, marginTop: '1cqi', display: 'inline-block', padding: '0 6cqi 1cqi', borderBottom: '.22cqi solid #1d2450' }}>{d.candidate.name || '匿名新兵'}</div>
           <div style={{ fontSize: '2.5cqi', lineHeight: 1.9, marginTop: '2.8cqi', color: '#2a3160' }}>
@@ -205,6 +212,12 @@ function PageCert({ d }: { d: FolioData }) {
             ? <>本证书凭编号可在百业学院查验 · 按岗位标准与真活评分，证明该数字职人修完课程、通过考核，不代表执业资格</>
             : isCareer(d)
             ? <>本证书凭编号可在 AI 百业查验 · 生涯体验版：记录持证人走过「{d.space.role}的一天」、了解了这一行，是体验证书，不是职业技能考核报告，不代表执业资格</>
+            : d.space.form === 'training'
+            ? <>本证书凭编号可在 AI 百业查验 · 模拟实践：按操作规程评分，证明持证人在虚拟实训中完成了这些工序，不代表执业资格</>
+            : d.space.form === 'assess'
+            ? <>本证书凭编号可在 AI 百业查验 · 职业虚拟考核：按岗位真实要求逐段评分，供求职与用人参考，不代表执业资格</>
+            : d.space.form === 'certify'
+            ? <>本证明凭编号可在 AI 百业查验 · 资质模拟考核：对照国家职业技能标准的评分细则，是模拟考核成绩，不代替官方职业资格 / 技能等级证书</>
             : <>本证书凭编号可在 AI 百业查验 · 由 AI 核心按{d.space.research ? '研究岗' : '岗位'}标准评分，仅用于{d.space.research ? '科研' : '职业'}体验，不代表{d.space.research ? '学位或任职' : '执业'}资格</>}
         </div>
       </div>
@@ -269,7 +282,7 @@ function PageRecord({ d }: { d: FolioData }) {
         </div>
         <div className="pg-serif" style={{ fontSize: '4.6cqi', fontWeight: 900, textAlign: 'center', margin: '4.4cqi 0 .6cqi', letterSpacing: '.12em' }}>{d.day ? '全天成绩记录' : '成绩记录'}</div>
         <div className="pg-mono" style={{ textAlign: 'center', fontSize: '1.7cqi', letterSpacing: '.36em', color: '#6b7290' }}>TRANSCRIPT OF RECORDS</div>
-        {isCareer(d) && <div style={{ textAlign: 'center' }}><CareerMark small /></div>}
+        {markOf(d) && <div style={{ textAlign: 'center' }}><FormMark d={d} small /></div>}
         <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '.8cqi 3cqi', fontSize: '2.1cqi', marginTop: '3.6cqi' }}>
           {[['姓名', d.candidate.name || '匿名新兵'], ['背景', [d.candidate.note, d.candidate.location].filter(Boolean).join(' · ') || '—'], ['职业', `${d.space.role}${d.space.company ? ` · ${d.space.company}` : ''}`],
             ...(isAI(d)
@@ -300,7 +313,7 @@ function PageRecord({ d }: { d: FolioData }) {
         <div style={{ flex: 1 }} />
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', fontSize: '1.6cqi', color: '#8a90aa' }}>
           <div style={{ display: 'grid', gap: '.4cqi' }}><span className="pg-script" style={{ fontSize: '3.6cqi', color: '#2c3a8c' }}>方略研究院</span><span>{W(d).eval} · {ISSUERS}</span></div>
-          <span>{isCareer(d) ? '生涯体验记录，不是职业技能考核报告 · 凭编号可在 AI 百业查验' : '本记录凭编号可在 AI 百业查验'}</span>
+          <span>{isCareer(d) ? '生涯体验记录，不是职业技能考核报告 · 凭编号可在 AI 百业查验' : d.space.form === 'certify' ? '资质模拟考核成绩，不代替官方资格证书 · 凭编号可在 AI 百业查验' : '本记录凭编号可在 AI 百业查验'}</span>
         </div>
       </div>
     </div>
@@ -340,7 +353,7 @@ function PageCharts({ d }: { d: FolioData }) {
     <div className="pg pg-paper">
       <div className="pg-in" style={{ inset: '7cqi 7.5cqi 6cqi' }}>
         <div className="pg-cap">Performance Report{isCareer(d) ? ' · Career Experience' : ''}</div>
-        <div className="pg-serif" style={{ fontSize: '4.4cqi', fontWeight: 900, marginTop: '.6cqi' }}>{d.day ? '一天的能力画像' : '能力画像'}{isCareer(d) && <CareerMark small inline />}</div>
+        <div className="pg-serif" style={{ fontSize: '4.4cqi', fontWeight: 900, marginTop: '.6cqi' }}>{d.day ? '一天的能力画像' : '能力画像'}<FormMark d={d} small inline /></div>
         <div style={{ display: 'flex', gap: '3cqi', marginTop: '1.4cqi', fontSize: '1.9cqi', color: '#4a5180' }}>
           {legend.map(([c, t]) => <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: '.8cqi' }}><i style={{ width: '2.4cqi', height: '.6cqi', background: c, display: 'inline-block' }} />{t}</span>)}
         </div>
@@ -388,25 +401,27 @@ function PageCharts({ d }: { d: FolioData }) {
 
 /** 封皮：深色硬壳、烫金字，点一下翻开 */
 function Cover({ d, opening, onOpen, progress }: { d: FolioData; opening: boolean; onOpen: () => void; progress?: { done: number; total: number } | null }) {
+  const career = isCareer(d);
+  const ink = career ? '#7a3416' : '#f3e3b8', g = career ? ['#d9733f', '#9c4220', '#e88c55'] : ['#f6e1a6', '#c39648', '#fff3cc'];
   return (
     <div className="cover-stage">
-      <div className={`cover${opening ? ' opening' : ''}`} onClick={onOpen} role="button" aria-label="打开证书">
+      <div className={`cover${career ? ' career' : ''}${opening ? ' opening' : ''}`} onClick={onOpen} role="button" aria-label="打开证书">
         <div className="cover-grain" />
         <div className="cover-spine" />
         <div style={{ position: 'absolute', inset: '11cqi 10cqi 10cqi 12cqi', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '3cqi', opacity: .92 }}>
-            <img src="/lab/brand/visionsquare.png" alt="平方创想" style={{ height: '6cqi', filter: 'brightness(0) invert(1) sepia(.5) saturate(1.6) hue-rotate(5deg)' }} />
-            <span style={{ width: '.2cqi', height: '6cqi', background: 'rgba(243,227,184,.4)' }} />
+            <img src="/lab/brand/visionsquare.png" alt="平方创想" style={{ height: '6cqi', filter: career ? 'none' : 'brightness(0) invert(1) sepia(.5) saturate(1.6) hue-rotate(5deg)' }} />
+            <span style={{ width: '.2cqi', height: '6cqi', background: career ? 'rgba(122,52,22,.3)' : 'rgba(243,227,184,.4)' }} />
             {/* 方略的 R² 是实心色块，反白后成了一块白方块：封皮上用烫金字排 */}
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '1.4cqi', color: '#f3e3b8' }}>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '1.4cqi', color: ink }}>
               <span style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: '5.2cqi', lineHeight: 1 }}>R²</span>
               <span style={{ display: 'grid', textAlign: 'left', lineHeight: 1.15 }}><b className="pg-serif" style={{ fontSize: '3.4cqi', letterSpacing: '.08em' }}>方略研究院</b><span style={{ fontSize: '1.2cqi', opacity: .8 }}>SquareStrategics Research Institute</span></span>
             </span>
           </div>
           <div style={{ flex: 1 }} />
-          <svg viewBox="0 0 200 200" style={{ width: '30cqi', height: '30cqi', filter: 'drop-shadow(0 .6cqi 1.2cqi rgba(0,0,0,.5))' }} aria-hidden>
+          <svg viewBox="0 0 200 200" style={{ width: '30cqi', height: '30cqi', filter: career ? 'none' : 'drop-shadow(0 .6cqi 1.2cqi rgba(0,0,0,.5))' }} aria-hidden>
             <defs>
-              <linearGradient id="cv-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#f6e1a6" /><stop offset="50%" stopColor="#c39648" /><stop offset="100%" stopColor="#fff3cc" /></linearGradient>
+              <linearGradient id="cv-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor={g[0]} /><stop offset="50%" stopColor={g[1]} /><stop offset="100%" stopColor={g[2]} /></linearGradient>
               <path id="cv-c" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" />
             </defs>
             <circle cx="100" cy="100" r="94" fill="none" stroke="url(#cv-g)" strokeWidth="3" />
@@ -417,9 +432,9 @@ function Cover({ d, opening, onOpen, progress }: { d: FolioData; opening: boolea
           </svg>
           <div className="pg-mono" style={{ fontSize: '2cqi', letterSpacing: '.4em', marginTop: '6cqi', opacity: .75 }}>{W(d).en}</div>
           <div className="pg-serif cover-foil" style={{ fontSize: '8.4cqi', fontWeight: 900, letterSpacing: '.3em', marginTop: '2cqi', paddingLeft: '.3em' }}>{W(d).zh}</div>
-          {isCareer(d) && <div style={{ marginTop: '2.4cqi', fontSize: '2.4cqi', letterSpacing: '.3em', padding: '.6cqi 2.4cqi', border: '.18cqi solid rgba(243,227,184,.7)', borderRadius: '.6cqi' }}>生涯体验版</div>}
-          <div style={{ width: '18cqi', height: '.25cqi', background: 'linear-gradient(90deg, transparent, #d2a95a, transparent)', margin: '4cqi 0' }} />
-          <div className="pg-serif" style={{ fontSize: '4.6cqi', fontWeight: 800, color: '#f3e3b8' }}>{d.candidate.name || '匿名新兵'}的{isAI(d) ? '毕业证书' : '证书'}</div>
+          {markOf(d) && <div style={{ marginTop: '2.4cqi', fontSize: '2.4cqi', letterSpacing: '.3em', padding: '.6cqi 2.4cqi', border: `.18cqi solid ${career ? 'rgba(180,83,42,.7)' : 'rgba(243,227,184,.7)'}`, borderRadius: '.6cqi' }}>{markOf(d)}</div>}
+          <div style={{ width: '18cqi', height: '.25cqi', background: `linear-gradient(90deg, transparent, ${career ? '#b4532a' : '#d2a95a'}, transparent)`, margin: '4cqi 0' }} />
+          <div className="pg-serif" style={{ fontSize: '4.6cqi', fontWeight: 800, color: ink }}>{d.candidate.name || '匿名新兵'}的{isAI(d) ? '毕业证书' : '证书'}</div>
           <div style={{ fontSize: '2.5cqi', marginTop: '1.6cqi', opacity: .75 }}>{isAI(d) ? `${d.space.role}${progress ? ` · 已通过 ${progress.done} / ${progress.total} 门` : d.day ? ` · 全部 ${d.dims.length} 门课程` : ''}` : <>{d.space.role}的一天{progress ? ` · 已通过 ${progress.done} / ${progress.total} 段` : d.day ? ` · 全天 ${d.dims.length} 段` : ''}</>}</div>
           {progress && <div style={{ fontSize: '2.1cqi', marginTop: '1.4cqi', opacity: .6, letterSpacing: '.12em' }}>证书待解锁 · 每段 60 分通过</div>}
           <div style={{ flex: 1.2 }} />
@@ -452,13 +467,23 @@ export function ScoreFolio({ d }: { d: FolioData }) {
 const isAI = (d: { candidate?: { type?: string } }) => d.candidate?.type === 'ai';
 /** 生涯体验（给高中生等看这一行的）：证书照发，但打「生涯体验版」，写明是体验证书、不是职业考核报告 */
 const isCareer = (d: { space: { form?: string }; candidate?: { type?: string } }) => !isAI(d) && d.space.form === 'career';
-function CareerMark({ small, inline }: { small?: boolean; inline?: boolean }) {
-  return <span style={{ display: 'inline-block', marginTop: inline ? 0 : small ? '1.2cqi' : '1.8cqi', marginLeft: inline ? '1.6cqi' : 0, verticalAlign: 'middle', fontSize: small ? '1.8cqi' : '2.2cqi', fontWeight: 800, letterSpacing: '.24em', padding: '.4cqi 1.8cqi', color: '#b4532a', border: '.18cqi solid #b4532a', borderRadius: '.6cqi', fontFamily: 'inherit' }}>生涯体验版</span>;
+/** 证书上的级别标记：生涯体验 = 「生涯体验版」，资质考核 = 「模拟考核」（不代替官方证书）；其它级别不打 */
+const markOf = (d: { space: { form?: string }; candidate?: { type?: string } }) => isAI(d) ? '' : d.space.form === 'career' ? '生涯体验版' : d.space.form === 'certify' ? '模拟考核' : '';
+function FormMark({ d, small, inline }: { d: { space: { form?: string }; candidate?: { type?: string } }; small?: boolean; inline?: boolean }) {
+  const m = markOf(d);
+  if (!m) return null;
+  return <span style={{ display: 'inline-block', marginTop: inline ? 0 : small ? '1.2cqi' : '1.8cqi', marginLeft: inline ? '1.6cqi' : 0, verticalAlign: 'middle', fontSize: small ? '1.8cqi' : '2.2cqi', fontWeight: 800, letterSpacing: '.24em', padding: '.4cqi 1.8cqi', color: '#b4532a', border: '.18cqi solid #b4532a', borderRadius: '.6cqi', fontFamily: 'inherit' }}>{m}</span>;
 }
 const W = (d: { space: { research?: boolean; form?: string }; candidate?: { type?: string } }) => isAI(d)
   ? { zh: '毕业证书', en: 'DIPLOMA · BAIYE AI COLLEGE', eval: '毕业考核评定' }
   : isCareer(d)
   ? { zh: '职业体验证书', en: 'CERTIFICATE OF CAREER EXPERIENCE', eval: '生涯体验评定' }
+  : d.space.form === 'training'
+  ? { zh: '模拟实践证书', en: 'CERTIFICATE OF SIMULATED PRACTICE', eval: '模拟实践评定' }
+  : d.space.form === 'assess'
+  ? { zh: '职业能力考核证书', en: 'CERTIFICATE OF PROFESSIONAL ASSESSMENT', eval: '职业能力评定' }
+  : d.space.form === 'certify'
+  ? { zh: '资质模拟考核成绩证明', en: 'CERTIFICATION MOCK EXAM RECORD', eval: '资质考核评定' }
   : d.space.research
   ? { zh: '科研体验证书', en: 'CERTIFICATE OF RESEARCH EXPERIENCE', eval: '科研能力评定' }
   : { zh: '职业体验证书', en: 'CERTIFICATE OF PROFESSIONAL EXPERIENCE', eval: '职业能力评定' };

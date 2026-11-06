@@ -58,7 +58,7 @@ export async function buildLesson(spaceId: string, chapterId: string | null, opt
     lines.push(`工位「${b.name}」：${str(b.brief, 200)}`);
     lines.push('控件：' + b.controls.filter(c => !c.hidden).map(c => `[${c.id}] ${c.label}${c.unit ? `（${c.unit}${c.min != null ? ` ${c.min}–${c.max}` : ''}）` : ''}${c.hint ? ` 提示：${str(c.hint, 60)}` : ''}`).join('；'));
     if (b.gauges?.length) lines.push('仪表：' + b.gauges.map(g => `${g.label}（${g.unit}）`).join('、'));
-    lines.push('规则：' + b.rules.map(r => `[rule:${r.id}] ${r.severity === 'violation' ? '违规' : '提醒'}「${r.label}」${basisOf.has(`rule:${r.id}`) ? ` ← 依据 ${basisOf.get(`rule:${r.id}`)}` : ''}`).join('；'));
+    lines.push('规则：' + b.rules.map(r => `[rule:${r.id}] ${r.severity === 'veto' ? '否决' : r.severity === 'violation' ? '违规' : '提醒'}「${r.label}」${basisOf.has(`rule:${r.id}`) ? ` ← 依据 ${basisOf.get(`rule:${r.id}`)}` : ''}`).join('；'));
     lines.push('目标：' + b.goals.map(g => `[goal:${g.id}] ${g.label}${basisOf.has(`goal:${g.id}`) ? ` ← 依据 ${basisOf.get(`goal:${g.id}`)}` : ''}`).join('；'));
     const script = [...(b.expertScript || [])].sort((a, c) => a.t - c.t);
     const part = script.slice(from, to);

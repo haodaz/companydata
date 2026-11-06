@@ -1742,7 +1742,7 @@ function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach,
         <div className="dayv-h">{profile.role || '这一行'}的一天</div>
         <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{chapters.length} 段 · 约 {minutes} 分钟</div>
         {/* 这里不放模式切换（2026-10-18 用户：容易点错，想自己操作却看 AI 操作）：模式在人物首页选 */}
-        <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.6 }}>{learn ? '请一位资深从业者把这一天走一遍，每段走完接受追问' : teach ? '跟着学：每一步讲为什么；工位上他先做一遍，你再比着做' : formOf(space?.jd_snapshot) === 'career' ? '你来体验：每段走完有反馈，走完一整天领生涯体验证书' : '你来走：每段有成绩单，走完一整天领证书'}</div>
+        <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.6 }}>{learn ? '请一位资深从业者把这一天走一遍，每段走完接受追问' : teach ? '跟着学：每一步讲为什么；工位上他先做一遍，你再比着做' : ({ career: '你来体验：每段走完有反馈，走完一整天领生涯体验证书（不是考核证书）', training: '你来练：每段有成绩单，全部合格领模拟实践证书', assess: '你来走：每段有成绩单，全部合格领职业能力考核证书', certify: '你来考：理论和技能分开计分，碰了否决项该场不合格；全部合格领模拟考核成绩证明' } as Record<string, string>)[formOf(space?.jd_snapshot) || ''] || '你来走：每段有成绩单，走完一整天领证书'}</div>
         <ol className="dayv-tl">
           {chapters.map((c, i) => {
             const on = c === chapter;

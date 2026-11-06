@@ -14,7 +14,9 @@ import { masterControls, masterExprs, sanitizeSurfaceConfig, type SurfaceConfig 
 export interface BenchControl { id: string; label: string; kind: 'knob' | 'switch' | 'button' | 'path'; min?: number; max?: number; step?: number; unit?: string; initial?: number; hint?: string; /** 隐藏控件：不上面板、也不记事件，由场景里的动作（手的位置、偏离轨迹的距离）直接写入 */ hidden?: boolean }
 export interface BenchGauge { id: string; label: string; unit: string; expr: string; min: number; max: number; digits?: number; warn?: string }
 export interface BenchVar { id: string; label?: string; initial: number; rate?: string; set?: string; min?: number; max?: number }
-export interface BenchRule { id: string; label: string; when: string; severity: 'violation' | 'warning'; once?: boolean }
+/** severity：veto 否决（考核细则里的一票否决项，碰了这一段直接不合格）· violation 违规（扣分）· warning 提醒 */
+export type BenchSeverity = 'veto' | 'violation' | 'warning';
+export interface BenchRule { id: string; label: string; when: string; severity: BenchSeverity; once?: boolean }
 export interface BenchGoal { id: string; label: string; when: string; hold?: number; after?: string }
 export interface BenchAction { t: number; control: string; value: number }
 /**
@@ -60,8 +62,8 @@ export interface BenchSpec {
   /** 专家脚本：灌入时用它在模拟器里跑出专家轨迹 */ expertScript?: BenchAction[];
 }
 
-export interface BenchEvent { t: number; kind: 'control' | 'rule' | 'goal' | 'snapshot' | 'note' | 'finish'; control?: string; value?: number; prev?: number; id?: string; label?: string; severity?: 'violation' | 'warning'; state?: Record<string, number>; image?: string; text?: string }
-export interface BenchMetrics { duration: number; actions: number; violations: number; warnings: number; goals_done: number; goals_total: number; reversals: number; max_idle: number; time_to_goal: Record<string, number | null>; order: string[] }
+export interface BenchEvent { t: number; kind: 'control' | 'rule' | 'goal' | 'snapshot' | 'note' | 'finish'; control?: string; value?: number; prev?: number; id?: string; label?: string; severity?: BenchSeverity; state?: Record<string, number>; image?: string; text?: string }
+export interface BenchMetrics { duration: number; actions: number; /** 含否决 */ violations: number; vetoes?: number; warnings: number; goals_done: number; goals_total: number; reversals: number; max_idle: number; time_to_goal: Record<string, number | null>; order: string[] }
 export interface BenchTrace { events: BenchEvent[]; final: Record<string, number>; duration: number; metrics: BenchMetrics; finished: boolean }
 
 // ────────────────────────────────────────────
@@ -257,7 +259,8 @@ export function benchMetrics(spec: BenchSpec, st: BenchState): BenchMetrics {
   for (const a of actions) { const k = a.control!; if (!seen.has(k)) { seen.add(k); order.push(k); } }
   return {
     duration: Math.round(st.t), actions: actions.length,
-    violations: st.events.filter(e => e.kind === 'rule' && e.severity === 'violation').length,
+    violations: st.events.filter(e => e.kind === 'rule' && (e.severity === 'violation' || e.severity === 'veto')).length,
+    vetoes: st.events.filter(e => e.kind === 'rule' && e.severity === 'veto').length,
     warnings: st.events.filter(e => e.kind === 'rule' && e.severity === 'warning').length,
     goals_done: spec.goals.filter(g => st.goalDone[g.id] !== null).length, goals_total: spec.goals.length,
     reversals: st.reversals, max_idle: Math.round(Math.max(st.maxIdle, st.t - st.lastActionT)),
@@ -309,13 +312,13 @@ export function benchTimeline(spec: BenchSpec, trace: BenchTrace): string {
   const snap = (state?: Record<string, number>) => state ? keyVars.map(g => { try { return `${g.label} ${evalExpr(g.expr, { t: 0, ...trace.final, ...state }).toFixed(g.digits ?? 0)}${g.unit}`; } catch { return ''; } }).filter(Boolean).join('，') : '';
   for (const e of trace.events) {
     if (e.kind === 'control') lines.push(`${fmtT(e.t)} ${controlText(spec, e)}（${snap(e.state)}）`);
-    else if (e.kind === 'rule') lines.push(`${fmtT(e.t)} ${e.severity === 'violation' ? '⛔ 违规' : '⚠ 提醒'}：${e.label}（${snap(e.state)}）`);
+    else if (e.kind === 'rule') lines.push(`${fmtT(e.t)} ${e.severity === 'veto' ? '🚫 否决' : e.severity === 'violation' ? '⛔ 违规' : '⚠ 提醒'}：${e.label}（${snap(e.state)}）`);
     else if (e.kind === 'goal') lines.push(`${fmtT(e.t)} ✅ 达成：${e.label}`);
     else if (e.kind === 'note') lines.push(`${fmtT(e.t)} 口述：${e.text}`);
     else if (e.kind === 'finish') lines.push(`${fmtT(e.t)} 结束操作`);
   }
   const m = trace.metrics;
-  lines.push('', `【过程指标】用时 ${fmtT(m.duration)}，操作 ${m.actions} 次，目标达成 ${m.goals_done}/${m.goals_total}，违规 ${m.violations}，提醒 ${m.warnings}，反复调整 ${m.reversals} 次，最长停顿 ${m.max_idle} 秒，操作顺序：${m.order.map(id => spec.controls.find(c => c.id === id)?.label || id).join(' → ')}`);
+  lines.push('', `【过程指标】用时 ${fmtT(m.duration)}，操作 ${m.actions} 次，目标达成 ${m.goals_done}/${m.goals_total}，违规 ${m.violations}${m.vetoes ? `（其中否决 ${m.vetoes}，按考核细则本段不合格）` : ''}，提醒 ${m.warnings}，反复调整 ${m.reversals} 次，最长停顿 ${m.max_idle} 秒，操作顺序：${m.order.map(id => spec.controls.find(c => c.id === id)?.label || id).join(' → ')}`);
   const missed = spec.goals.filter(g => m.time_to_goal[g.id] === null).map(g => g.label);
   if (missed.length) lines.push(`未达成：${missed.join('、')}`);
   return lines.join('\n');
@@ -335,12 +338,19 @@ export function benchMatch(spec: BenchSpec, mine: BenchTrace, expert: BenchTrace
   const goals = expert.metrics.goals_total ? mine.metrics.goals_done / expert.metrics.goals_total : 0;
   const viol = 1 / (1 + Math.max(0, mine.metrics.violations - expert.metrics.violations));
   const speed = expert.metrics.duration ? Math.max(0, 1 - Math.abs(mine.metrics.duration - expert.metrics.duration) / (2 * expert.metrics.duration)) : 1;
-  return Math.round((order * 50 + goals * 25 + viol * 15 + speed * 10));
+  const m = Math.round((order * 50 + goals * 25 + viol * 15 + speed * 10));
+  return vetoesOf(mine).length ? Math.min(m, 49) : m;
 }
 
 // ────────────────────────────────────────────
 // 清洗
 // ────────────────────────────────────────────
+const sev = (x: any): BenchSeverity => x === 'warning' || x === 'veto' ? x : 'violation';
+/** 这条轨迹碰了哪些否决项（去重） */
+export function vetoesOf(trace?: BenchTrace | null): string[] {
+  return [...new Set((trace?.events || []).filter(e => e.kind === 'rule' && e.severity === 'veto').map(e => e.label || e.id || '否决项'))];
+}
+
 export function sanitizeBenchSpec(raw: any): BenchSpec | null {
   if (!raw || !Array.isArray(raw.controls) || !Array.isArray(raw.vars) || !Array.isArray(raw.goals)) return null;
   const spec: BenchSpec = {
@@ -348,7 +358,7 @@ export function sanitizeBenchSpec(raw: any): BenchSpec | null {
     vars: raw.vars.filter((v: any) => v?.id).map((v: any) => ({ id: String(v.id), label: v.label ? String(v.label) : undefined, initial: Number(v.initial) || 0, rate: v.rate ? String(v.rate) : undefined, set: v.set ? String(v.set) : undefined, min: v.min !== undefined ? Number(v.min) : undefined, max: v.max !== undefined ? Number(v.max) : undefined })),
     controls: raw.controls.filter((c: any) => c?.id && c?.label).map((c: any) => ({ id: String(c.id), label: String(c.label), kind: ['knob', 'switch', 'button', 'path'].includes(c.kind) ? c.kind : 'switch', min: c.min !== undefined ? Number(c.min) : 0, max: c.max !== undefined ? Number(c.max) : 100, step: c.step !== undefined ? Number(c.step) : undefined, unit: c.unit ? String(c.unit) : '', initial: Number(c.initial) || 0, hint: c.hint ? String(c.hint) : undefined, hidden: !!c.hidden })),
     gauges: (Array.isArray(raw.gauges) ? raw.gauges : []).filter((g: any) => g?.id && g?.expr).map((g: any) => ({ id: String(g.id), label: String(g.label || g.id), unit: String(g.unit || ''), expr: String(g.expr), min: Number(g.min) || 0, max: Number(g.max) || 100, digits: g.digits !== undefined ? Number(g.digits) : undefined, warn: g.warn ? String(g.warn) : undefined })),
-    rules: (Array.isArray(raw.rules) ? raw.rules : []).filter((r: any) => r?.id && r?.when).map((r: any) => ({ id: String(r.id), label: String(r.label || r.id), when: String(r.when), severity: r.severity === 'warning' ? 'warning' : 'violation', once: !!r.once })),
+    rules: (Array.isArray(raw.rules) ? raw.rules : []).filter((r: any) => r?.id && r?.when).map((r: any) => ({ id: String(r.id), label: String(r.label || r.id), when: String(r.when), severity: sev(r.severity), once: !!r.once })),
     goals: raw.goals.filter((g: any) => g?.id && g?.when).map((g: any) => ({ id: String(g.id), label: String(g.label || g.id), when: String(g.when), hold: g.hold ? Number(g.hold) : undefined, after: g.after ? String(g.after) : undefined })),
     surfaceConfig: sanitizeSurfaceConfig(raw.surfaceConfig),
     expertScript: Array.isArray(raw.expertScript) ? raw.expertScript.filter((a: any) => a?.control).map((a: any) => ({ t: Number(a.t) || 0, control: String(a.control), value: Number(a.value) || 0 })) : undefined,
@@ -384,7 +394,7 @@ export function sanitizeBenchTrace(raw: any): BenchTrace | null {
     if (e.value !== undefined) out.value = Number(e.value);
     if (e.prev !== undefined) out.prev = Number(e.prev);
     if (e.id) out.id = String(e.id); if (e.label) out.label = String(e.label).slice(0, 200);
-    if (e.severity) out.severity = e.severity === 'warning' ? 'warning' : 'violation';
+    if (e.severity) out.severity = sev(e.severity);
     if (e.state && typeof e.state === 'object') out.state = Object.fromEntries(Object.entries(e.state).filter(([, v]) => typeof v === 'number') as [string, number][]);
     if (e.text) out.text = String(e.text).slice(0, 500);
     if (e.kind === 'snapshot' && typeof e.image === 'string' && e.image.startsWith('data:image/') && e.image.length <= MAX_IMAGE && snaps < MAX_SNAPSHOTS) { out.image = e.image; snaps++; }
@@ -394,6 +404,6 @@ export function sanitizeBenchTrace(raw: any): BenchTrace | null {
   return {
     events, final: Object.fromEntries(Object.entries(raw.final || {}).filter(([, v]) => typeof v === 'number') as [string, number][]),
     duration: Math.max(0, Number(raw.duration) || 0), finished: raw.finished !== false,
-    metrics: { duration: Number(m.duration) || 0, actions: Number(m.actions) || 0, violations: Number(m.violations) || 0, warnings: Number(m.warnings) || 0, goals_done: Number(m.goals_done) || 0, goals_total: Number(m.goals_total) || 0, reversals: Number(m.reversals) || 0, max_idle: Number(m.max_idle) || 0, time_to_goal: m.time_to_goal && typeof m.time_to_goal === 'object' ? m.time_to_goal : {}, order: Array.isArray(m.order) ? m.order.map(String) : [] },
+    metrics: { duration: Number(m.duration) || 0, actions: Number(m.actions) || 0, violations: Number(m.violations) || 0, vetoes: Number(m.vetoes) || 0, warnings: Number(m.warnings) || 0, goals_done: Number(m.goals_done) || 0, goals_total: Number(m.goals_total) || 0, reversals: Number(m.reversals) || 0, max_idle: Number(m.max_idle) || 0, time_to_goal: m.time_to_goal && typeof m.time_to_goal === 'object' ? m.time_to_goal : {}, order: Array.isArray(m.order) ? m.order.map(String) : [] },
   };
 }

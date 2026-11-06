@@ -37,7 +37,7 @@ export async function generateTask(jd: JdInput, skill: SkillRef | null, modelId 
     任职要求：${jd.qualifications || '（JD 未提供）'}
     ${skill ? `\n这道题要重点检验下面这项技能，评分标准应体现这位专家的判断规则：\n${skillCardToPrompt(skill.name, skill.card)}\n` : ''}
     ${hint ? `\n【特别说明】${hint}\n` : ''}
-    ${F ? `\n【形态：${F.label}——以下优先于本提示里所有「校招 / 工作样本 / 应届生」的口径】${F.essence}。体验者是${F.who}，scene、intro、prompt 都按这个身份和场合写（${form === 'certify' ? '考场、考评员、考题要求、限时；不要写成在岗位上上班' : form === 'training' ? '实训室、实训老师、实训任务书' : '跟岗、师傅带着、师傅会讲为什么'}）。${F.chapter}评分：${F.score}\n` : ''}
+    ${F ? `\n【形态：${F.label}——以下优先于本提示里所有「校招 / 工作样本 / 应届生」的口径】${F.essence}。体验者是${F.who}，scene、intro、prompt 都按这个身份和场合写（${form === 'certify' ? '考场、考评员、考题要求、限时；不要写成在岗位上上班' : form === 'training' ? '实训室、实训老师、实训任务书' : form === 'assess' ? '在岗位上独立接活，带教 / 主管交代任务、事后点评' : '跟岗、师傅带着、师傅会讲为什么'}）。${F.chapter}评分：${F.score}\n` : ''}
     第一步先「拆解 JD」：逐条读岗位职责，把每一条职责原句对应到一个能力项，并各想一个可以在 1 小时内检验这项能力的任务点子。然后选出最值得检验的 1 条（与给定技能最贴合的那条），把它做成完整任务。
 
     要求：

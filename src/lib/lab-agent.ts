@@ -8,7 +8,7 @@ import type Anthropic from '@anthropic-ai/sdk';
 import { supabaseAdmin as db } from '@/lib/supabase';
 import type { AgentKit } from '@/lib/ws/agent';
 import { locateAnchor } from '@/lib/lab-anchor';
-import { cleanAnchor, cleanSpec, hasSpec, PRESETS } from '@/lib/lab-spec';
+import { cleanAnchor, cleanSpec, hasSpec, LEVEL_ORDER, levelText, PRESETS } from '@/lib/lab-spec';
 import { startJob } from '@/lib/lab-jobs';
 import { buildChapter, buildDay } from '@/lib/agents/lab-chapters';
 import { reviseOpening, reviseStep, logRevision } from '@/lib/lab-revise';
@@ -23,7 +23,7 @@ export const LAB_TOOLS: Anthropic.Tool[] = [
   { name: 'locate', description: '把用户说的职业 / 岗位 / 「公司 + 岗位」/ 学科定位到一个东西：返回职业库候选、岗位库里的真实 JD、AI 给的三种粒度（common 常见叫法 / role 具体岗位 / niche 细分方向）。拿到后用 ask_user 让用户选一个（给高中生一般选常见叫法）。', input_schema: { type: 'object', properties: { q: { type: 'string' }, mode: { type: 'string', enum: ['career', 'discipline'] } }, required: ['q'] } },
   { name: 'create_space', description: '生成一个新空间（约 2–4 分钟，前端会显示进度，做完会告诉你 space_id）。anchor 来自 locate 的结果；spec 是生成要求（都是自然语言）。调用前先用 ask_user 复述一遍「做什么 + 给谁看 + 多深 + 多难」让用户确认。', input_schema: { type: 'object', properties: {
     anchor: { type: 'object', properties: { kind: { type: 'string', enum: ['occupation', 'job', 'career', 'discipline'] }, label: { type: 'string' }, occupation_id: { type: 'number' }, job_id: { type: 'number' }, company: { type: 'string' }, from: { type: 'string', description: '用户最初的原话' } }, required: ['kind', 'label'] },
-    spec: { type: 'object', properties: { preset: { type: 'string' }, form: { type: 'string', enum: ['career', 'training', 'certify'], description: '形态：career 生涯体验（中学生 / 职业探索：看清这一行、看清自己）/ training 虚拟实训（专业学生练手艺）/ certify 资格考核（按国家职业技能标准考）；新人上岗、在职提升不填' }, audience: { type: 'string' }, depth: { type: 'string' }, difficulty: { type: 'string' }, must: { type: 'string' }, avoid: { type: 'string' } } },
+    spec: { type: 'object', properties: { preset: { type: 'string' }, form: { type: 'string', enum: ['career', 'training', 'assess', 'certify'], description: '级别：career 生涯体验（只发体验证书）/ training 模拟实践（专业学生练手艺）/ assess 职业虚拟考核（新人上岗的真实一天）/ certify 资质考核（对照国家职业技能标准，限时、有一票否决）' }, audience: { type: 'string' }, depth: { type: 'string' }, difficulty: { type: 'string' }, must: { type: 'string' }, avoid: { type: 'string' } } },
   }, required: ['anchor', 'spec'] } },
   { name: 'my_spaces', description: '列出用户生成的空间（状态、章节、作答、平均分）。用户说「我那个……空间」先用它找 space_id。', input_schema: { type: 'object', properties: { q: { type: 'string' } } } },
   { name: 'space_detail', description: '看一个空间：生成要求、每一章（时段 / 标题 / 状态 / 锁定 / 步数 / 每步题干）、最近一次 AI 评审的待办、正在跑的任务。改之前先看。', input_schema: { type: 'object', properties: { space_id: { type: 'string' } }, required: ['space_id'] } },
@@ -179,7 +179,8 @@ function systemPrompt(email: string) {
 出一个新空间：
 1. 用户第一句往往只说一句（「给高中生做一个程序员的生涯体验」）。从这句话里能推出来的先记下，缺的一次只问一件，别让他填表。
 2. locate 定位，用 ask_user 让他在粒度里选（问题一句话，选项写名字，如「程序员（常见叫法）」「后端开发工程师」「SRE 工程师」）。给高中生 / 生涯体验默认推荐常见叫法。
-3. 生成要求：给谁看、要多深、考核多难最重要；形态 form 按受众自己定、不用拿来问人（初中 / 高中生、职业探索 → career；专业学生练手艺 → training；考证、技能等级认定 → certify；新人上岗、在职提升不填），也别跟人讲形态有几种；必须有 / 不要的问一句就行。没说的按受众先定默认（预设可参考：${PRESETS.map(p => `「${p.label}」`).join('')}），然后用 ask_user 复述一行确认：做什么｜给谁看｜多深｜多难｜必须有 / 不要，选项「就这样生成」「改一下」。
+3. 级别：用户第一句里已经说了（「生涯体验」「实训」「考证」）就直接定，没说就用 ask_user 让他点，选项照抄这四个（由浅到深，括号里是证书）：${LEVEL_ORDER.map(f => `「${levelText(f)}」`).join('')}，按受众把最合适的放第一个。别解释每一级内部怎么排。
+   生成要求：给谁看、要多深、考核多难最重要；必须有 / 不要的问一句就行。没说的按受众和级别先定默认（预设可参考：${PRESETS.map(p => `「${p.label}」`).join('')}），然后用 ask_user 复述一行确认：做什么｜级别｜给谁看｜多深｜多难｜必须有 / 不要，选项「就这样生成」「改一下」。
 4. create_space。做完前端会发回一句话告诉你 space_id，接着建议：排一天骨架（build_day）→ 写各章（write_chapters）→ 评审（review）。一步一步来，每步做完说一句结果和下一步，问他要不要继续（ask_user）。
    build_day / write_chapters / fix_by_review 是后台任务：发起后说一句就停，别催别查；做完前端会自动发来「「…」做完了：…」，收到再接着下一步（写完章节就直接 review，不用再问）。
 改：

@@ -905,7 +905,7 @@ function RevView({ target, v }: { target: 'step' | 'opening' | 'bench'; v: any }
       <b>{b.name}</b><div style={{ color: 'var(--ink2)' }}>{b.brief}</div>
       <div style={{ marginTop: 6 }}><span style={{ color: 'var(--ink3)' }}>控件：</span>{(b.controls || []).filter((c: any) => !c.hidden).map((c: any) => c.label).join('、') || '—'}</div>
       <div><span style={{ color: 'var(--ink3)' }}>目标：</span>{(b.goals || []).map((g: any) => g.label || g.id).join('；') || '—'}</div>
-      <div><span style={{ color: 'var(--ink3)' }}>红线 / 提醒：</span>{(b.rules || []).map((x: any) => `${x.severity === 'violation' ? '✖' : '⚠'} ${x.label || x.msg || x.id}`).join('；') || '—'}</div>
+      <div><span style={{ color: 'var(--ink3)' }}>红线 / 提醒：</span>{(b.rules || []).map((x: any) => `${x.severity === 'veto' ? '🚫否决·' : x.severity === 'violation' ? '✖' : '⚠'} ${x.label || x.msg || x.id}`).join('；') || '—'}</div>
     </div>;
   }
   const ex = v?.expert;

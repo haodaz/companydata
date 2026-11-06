@@ -1,12 +1,12 @@
 'use client';
 
 /**
- * 百业工厂 · 生成要求编辑（新建空间第二层、工作室「生成要求」共用）：预设 + 给谁看 / 要多深 / 考核多难 / 必须放进去 / 不要 + 参考资料（粘贴或传文件抽文字）。
+ * 百业工厂 · 生成要求编辑（新建空间第二层、工作室「生成要求」共用）：级别（生涯体验 → 资质考核四档，写明发什么证书）+ 这一级的常用对象 + 给谁看 / 要多深 / 考核多难 / 必须放进去 / 不要 + 参考资料（粘贴或传文件抽文字）。
  * 都是自然语言；存进空间 jd_snapshot.spec，后面每一步生成都读（src/lib/lab-spec.ts）。
  */
 import React, { useState } from 'react';
 import { App } from 'antd';
-import { PRESETS, type GenSpec, type SpecRef } from '@/lib/lab-spec';
+import { FORMS, LEVEL_ORDER, PRESETS, type GenSpec, type SpaceForm, type SpecRef } from '@/lib/lab-spec';
 
 export function SpecEditor({ spec, setSpec }: { spec: GenSpec; setSpec: React.Dispatch<React.SetStateAction<GenSpec>> }) {
   const { message } = App.useApp();
@@ -21,10 +21,22 @@ export function SpecEditor({ spec, setSpec }: { spec: GenSpec; setSpec: React.Di
     setSpec(s => ({ ...s, refs: [...(s.refs || []), { name: j.name, text: j.text }].slice(0, 6) }));
     if (j.truncated) message.info('资料比较长，只取了前 12000 字');
   };
+  // 点级别：还没动过「给谁看 / 多深 / 多难」（空着，或还是某个预设的原话）就顺手填上这一级的第一个预设，人再改
+  const pickLevel = (f: SpaceForm) => setSpec(s => {
+    const cur = PRESETS.find(x => x.label === s.preset);
+    const pristine = (!s.audience && !s.depth && !s.difficulty) || (!!cur && cur.spec.audience === s.audience && cur.spec.depth === s.depth && cur.spec.difficulty === s.difficulty);
+    const p = PRESETS.find(x => x.spec.form === f);
+    return pristine && p ? { ...s, ...p.spec, preset: p.label } : { ...s, form: f };
+  });
+  const presets = spec.form ? PRESETS.filter(p => p.spec.form === spec.form) : PRESETS;
   const addRefText = () => { if (refText.trim().length < 20) return; setSpec(s => ({ ...s, refs: [...(s.refs || []), { name: `粘贴的资料 ${(s.refs?.length || 0) + 1}`, text: refText.trim() }].slice(0, 6) })); setRefText(''); };
   return <>
-        <div className="sp-glabel">先点一个最接近的，再改</div>
-        <div className="sp-presets">{PRESETS.map(p => <button key={p.key} className={spec.preset === p.label ? 'on' : ''} onClick={() => setSpec(s => ({ ...s, form: undefined, ...p.spec, preset: p.label }))}>{p.label}</button>)}</div>
+        <div className="sp-glabel">级别<small>由浅到深，决定怎么排、操作多难、发什么证书</small></div>
+        <div className="sp-levels">{LEVEL_ORDER.map((f, i) => <button key={f} className={spec.form === f ? 'on' : ''} onClick={() => pickLevel(f)}>
+          <b><i>{i + 1}</i>{FORMS[f].label}</b><span>{FORMS[f].pick}</span><em>{FORMS[f].cert}</em>
+        </button>)}</div>
+        <div className="sp-glabel">{spec.form ? '这一级常给谁做' : '常用组合'}<small>点一个填好下面三项，再改</small></div>
+        <div className="sp-presets">{presets.map(p => <button key={p.key} className={spec.preset === p.label ? 'on' : ''} onClick={() => setSpec(s => ({ ...s, form: undefined, ...p.spec, preset: p.label }))}>{p.label}</button>)}</div>
         <Field label="给谁看" hint="年龄 / 阶段、对这一行了解多少、看完要得到什么" value={spec.audience} onChange={v => setSpec(s => ({ ...s, audience: v }))} placeholder="如：高中生，还没选专业，想知道这一行每天在干什么、适不适合自己" />
         <Field label="要多深" hint="职业讲到哪一级、日常任务要普遍还是细分、术语怎么处理" value={spec.depth} onChange={v => setSpec(s => ({ ...s, depth: v }))} placeholder="如：讲到「程序员」这一级，最多分前端 / 后端；任务挑最普遍的；术语一出现就解释" />
         <Field label="考核多难" hint="操作要不要精准、评分看什么、红线留多少" value={spec.difficulty} onChange={v => setSpec(s => ({ ...s, difficulty: v }))} placeholder="如：看懂、方向对、说得出理由就算过；工位大致在合理范围就给分，不要求每一步精准" />
@@ -48,6 +60,11 @@ function Field({ label, hint, value, onChange, placeholder }: { label: string; h
 
 export const SPEC_CSS = `
 .sp-glabel { font-size: 12.5px; color: var(--ink3); margin-bottom: 8px; font-weight: 600; } .sp-glabel small { font-weight: 500; margin-left: 8px; }
+.sp-levels { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin-bottom: 16px; }
+.sp-levels button { text-align: left; border: 1px solid var(--line); background: rgba(255,255,255,.7); border-radius: 12px; padding: 10px 12px; font: inherit; color: var(--ink2); cursor: pointer; display: grid; gap: 4px; align-content: start; }
+.sp-levels button b { font-size: 14.5px; color: var(--ink); display: flex; align-items: center; gap: 6px; } .sp-levels button b i { font-style: normal; font-size: 11px; width: 18px; height: 18px; border-radius: 50%; background: var(--line); color: var(--ink2); display: inline-grid; place-items: center; }
+.sp-levels button span { font-size: 12.5px; line-height: 1.5; } .sp-levels button em { font-style: normal; font-size: 12px; color: var(--ink3); }
+.sp-levels button.on { border-color: var(--v); box-shadow: 0 0 0 1px var(--v) inset; background: #fff; } .sp-levels button.on b i { background: var(--v); color: #fff; }
 .sp-presets { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
 .sp-presets button { border: 1px solid var(--line); background: rgba(255,255,255,.7); border-radius: 999px; padding: 6px 14px; font: inherit; font-size: 13.5px; color: var(--ink2); cursor: pointer; }
 .sp-presets button.on { background: var(--v); border-color: var(--v); color: #fff; font-weight: 700; }

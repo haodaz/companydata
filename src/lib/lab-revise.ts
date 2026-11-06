@@ -125,7 +125,7 @@ export function benchSummary(step: any): string[] {
     `设备：${b.name}`,
     `控件：${(b.controls || []).filter((c: any) => !c.hidden).map((c: any) => c.label).join('、') || '—'}`,
     `目标：${(b.goals || []).map((g: any) => g.label || g.text || g.id).join('；') || '—'}`,
-    `红线 / 提醒：${(b.rules || []).map((r: any) => `${r.severity === 'violation' ? '✖' : '⚠'}${r.label || r.msg || r.id}`).join('；') || '—'}`,
+    `红线 / 提醒：${(b.rules || []).map((r: any) => `${r.severity === 'veto' ? '🚫否决·' : r.severity === 'violation' ? '✖' : '⚠'}${r.label || r.msg || r.id}`).join('；') || '—'}`,
   ];
 }
 

@@ -53,7 +53,7 @@ export async function linkSpace(spaceId: string, opts: { model?: string; dryRun?
   // 给模型的依据清单：S<i>.P<j> = 第 i 条标准的第 j 条要点；E<k> = 老师傅技能卡第 k 条
   const stdList = stds.map((s, i) => `S${i} ${s.code || ''} ${s.title}\n${(s.key_points || []).map((p: any, j: number) => `  S${i}.P${j}${p.clause ? ` [${p.clause}]` : ''} (${p.kind}) ${p.point}`).join('\n')}`).join('\n');
   const expList = expertRules.map((r, k) => `E${k} ${r}`).join('\n');
-  const tgtList = targets.map((t, i) => `T${i} [${t.kind === 'rule' ? (t.severity === 'violation' ? '违规规则' : '提醒规则') : '目标'}] ${t.label}  （条件：${t.when.slice(0, 120)}）`).join('\n');
+  const tgtList = targets.map((t, i) => `T${i} [${t.kind === 'rule' ? (t.severity === 'veto' ? '否决规则' : t.severity === 'violation' ? '违规规则' : '提醒规则') : '目标'}] ${t.label}  （条件：${t.when.slice(0, 120)}）`).join('\n');
   const prompt = `你在给职业模拟工位的每一条规则 / 目标找「出处」。岗位：${role}。
 三种出处：standard = 下面某条标准要点直接规定了它（同一件事、同一方向的要求；数值窗口在标准限值之内或一致）；expert = 下面某条老师傅技能卡规则说的就是它；ai = 两边都没有，是 AI 设计工位时自己推断的。
 宁可判 ai，也不要牵强附会：标准只是同一行业、但管的不是这件事，就不算。

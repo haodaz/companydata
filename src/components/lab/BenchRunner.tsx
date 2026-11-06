@@ -321,7 +321,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
   const onScenePointerUp = () => { if (dragRef.current) pourEnd(); dragRef.current = null; };
 
   /** 你比着做的操作打分：标准 100 · 调整 70 · 代做 30 的平均，学生自己那一遍里每条违规扣 10 */
-  const gViolations = () => stRef.current.events.slice(gActStart.current).filter(e => e.kind === 'rule' && e.severity === 'violation').length;
+  const gViolations = () => stRef.current.events.slice(gActStart.current).filter(e => e.kind === 'rule' && e.severity !== 'warning').length;
   const gScore = () => { const w = { standard: 100, adjusted: 70, assisted: 30 }; const base = gOutcomes.length ? gOutcomes.reduce((a, o) => a + w[o.outcome], 0) / gOutcomes.length : 0; return Math.max(0, Math.min(100, Math.round(base - 10 * gViolations()))); };
   const finish = async () => {
     setRunning(false);
@@ -365,7 +365,7 @@ export function BenchRunner({ spec, role, onFinish, onCancel, hud, demo, backdro
     cutProg.current = pr;
   }
   const goalsDone = spec.goals.filter(g => st.goalDone[g.id] !== null).length;
-  const violations = st.events.filter(e => e.kind === 'rule' && e.severity === 'violation').length;
+  const violations = st.events.filter(e => e.kind === 'rule' && e.severity !== 'warning').length;
   const recent = [...st.events].filter(e => e.kind !== 'snapshot').slice(-8).reverse();
   const canFinish = guided ? gPhase === 'done' : st.t > 30;
   const pressed = (c: BenchSpec['controls'][number]) => c.kind === 'button' && st.events.some(e => e.kind === 'control' && e.control === c.id);
@@ -1014,8 +1014,8 @@ function Layer({ l, level, on, value, progress = 0, ghost, cutDepth, deposits, t
 function EventLine({ spec, e }: { spec: BenchSpec; e: BenchEvent }) {
   const c = spec.controls.find(x => x.id === e.control);
   const text = e.kind === 'control' ? (c ? (c.kind === 'switch' ? `${c.label} ${e.value ? '开' : '关'}` : c.kind === 'button' ? `按下「${c.label}」` : `${c.label} → ${e.value}${c.unit || ''}`) : e.control)
-    : e.kind === 'rule' ? `${e.severity === 'violation' ? '⛔' : '⚠'} ${e.label}` : e.kind === 'goal' ? `✅ ${e.label}` : e.kind === 'finish' ? '结束' : e.text;
-  const color = e.kind === 'rule' ? (e.severity === 'violation' ? '#ff5fa2' : '#ffb15f') : e.kind === 'goal' ? '#3ddc97' : '#c7cbe6';
+    : e.kind === 'rule' ? `${e.severity === 'veto' ? '🚫 否决：' : e.severity === 'violation' ? '⛔' : '⚠'} ${e.label}` : e.kind === 'goal' ? `✅ ${e.label}` : e.kind === 'finish' ? '结束' : e.text;
+  const color = e.kind === 'rule' ? (e.severity === 'veto' ? '#ff3b3b' : e.severity === 'violation' ? '#ff5fa2' : '#ffb15f') : e.kind === 'goal' ? '#3ddc97' : '#c7cbe6';
   return <div className="lab-mono" style={{ fontSize: 11.5, lineHeight: 1.7, color, letterSpacing: 0 }}><span style={{ color: '#6b7089' }}>{fmtT(e.t)}</span> {text}</div>;
 }
 

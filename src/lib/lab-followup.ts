@@ -15,7 +15,15 @@ import { REVIEW_RULES } from '@/lib/agents/lab-review';
 import { buildChapter } from '@/lib/agents/lab-chapters';
 import { applyRevision, logRevision, reviseOpening, reviseStep } from '@/lib/lab-revise';
 import { slotMinutes } from '@/lib/lab-studio';
-import { hasSpec, specTextOf } from '@/lib/lab-spec';
+import { FORMS, formOf, hasSpec, specTextOf } from '@/lib/lab-spec';
+
+/** 级别的完整规范（排法 / 每章写法 / 工位 / 评分），评审逐条对照：偏离级别（比如生涯体验里出了计时、考核版没有否决项）照样能挑出来 */
+function levelRules(jd: any): string {
+  const f = formOf(jd);
+  if (!f) return '';
+  const F = FORMS[f];
+  return `【级别「${F.label}」的规范（这个空间应当照它生成，逐条对照；明显偏离级别、会让体验者拿错证书或难度错位的算 must）】\n排法：${F.day}\n每章：${F.chapter}\n工位：${F.bench}\n评分：${F.score}\n证书：${F.cert}`;
+}
 
 export type Todo = { id: string; chapter_id: string | null; chapter: string; step_id: string | null; step_no: number | null; target: 'chapter' | 'step' | 'bench' | 'opening'; rule: string; problem: string; fix: string; severity?: 'must' | 'nice' };
 export type FullReview = { items: { rule: string; label: string; score: number; reason: string }[]; todos: Todo[]; summary: string; worst: number; at: string; chapters: number;
@@ -29,7 +37,7 @@ const A1 = { id: 'A1', label: '合受众', ask: '对照「用户的生成要求�
 const cut = (v: any, n: number) => { const t = String(v || ''); return t.length > n ? `${t.slice(0, n)}…` : t; };
 const chapterText = (c: any, n: number) => {
   const steps = (c.sim?.steps || []).map((s: any, i: number) => {
-    if (s.type === 'bench') { const b = s.bench || {}; return `  ${i + 1}.【虚拟工位】${b.name || ''}：${b.brief || ''}｜规则：${(b.rules || []).map((r: any) => `${r.severity === 'violation' ? '违规' : '提醒'}·${r.label}`).join('；')}｜目标：${(b.goals || []).map((g: any) => g.label).join('；')}`; }
+    if (s.type === 'bench') { const b = s.bench || {}; return `  ${i + 1}.【虚拟工位】${b.name || ''}：${b.brief || ''}｜规则：${(b.rules || []).map((r: any) => `${r.severity === 'veto' ? '否决' : r.severity === 'violation' ? '违规' : '提醒'}·${r.label}`).join('；')}｜目标：${(b.goals || []).map((g: any) => g.label).join('；')}`; }
     return `  ${i + 1}.【${s.type}】${s.scene?.who ? `${s.scene.who}：${cut(s.scene.text, 200)} ` : ''}${s.prompt || ''}${s.options?.length ? `（选项：${cut(s.options.map((o: any) => o.detail ? `${o.label}（${o.detail}）` : o.label).join(' / '), 400)}）` : ''}`;
   }).join('\n');
   return `第${n}章【${c.slot || '?'}】${c.title}（${c.kind}${c.locked ? '，已锁定' : ''}）${c.brief ? `\n  要交代：${c.brief}` : ''}\n  开场：${cut(c.sim?.intro, 240)}\n${steps}`;
@@ -48,6 +56,7 @@ export async function reviewSpace(spaceId: string, model = 'claude-sonnet-5-5', 
   const prompt = `你是「AI 百业」的内容评审。一个职业空间 = 一位数字职人的一整天，按时段分章，每章若干步，虚拟工位是真动手的操作台。
 职业：${jd.career?.profession || jd.title || space.title}${jd.company ? `（${jd.company}）` : ''}
 ${hasSpec(jd.spec) ? specTextOf(jd) : '（没写生成要求：按「职业探索——没入行的人也能上手」来看）'}
+${levelRules(jd)}
 
 ${chapters.map((c, i) => chapterText(c, i + 1)).join('\n\n')}
 
@@ -63,7 +72,7 @@ ${prev.todos.map((t, i) => `${i + 1}. [${t.severity === 'nice' ? 'nice' : 'must'
 ${rules.map(r => `- ${r.id} ${r.label}：${r.ask}`).join('\n')}
 2. 列出最值得改的问题（最多 8 条，按重要性排；没问题就少列），每条落到具体位置：
    chapter = 第几章（数字），step = 第几步（数字，整章的问题填 0），target = step（一步的题干 / 选项）/ bench（虚拟工位）/ opening（标题和开场）/ chapter（整章要重写）
-   工位按它现有的本事评：规则只有「违规」（扣分）和「提醒」两档，没有单独的「否决」档，也不会按时间随机出突发；事件靠状态变化触发。所以别要求「设成否决项」「改成突发事件」「实时显示得分」——要否决就写成违规并在章节文字里说明；这类问题最多算 nice。
+   工位按它现有的本事评：规则有「否决」（碰了本段直接不合格，只给资格考核）、「违规」（扣分）、「提醒」三档；不会随机出突发，突发只能写成到某个时刻或某个状态时变量变化（比如 t > 60 后滴速开始漂）；不能实时显示得分。别要求做不到的；这类问题最多算 nice。
    problem = 一句话说哪里不对；fix = 一句话说怎么改（要能直接当修改要求用，比如「难度降一档：选项里去掉需要读代码才能判断的那项」）。
    severity = must（不改会误导体验者 / 明显不合受众 / 做不下去 / 前后事实矛盾 / 示范答案错）或 nice（能更好，但现在也能用）。只有 must 挡发布，别把 nice 说成 must。
    某项打了 1–2 分、而且确实挡发布，就要有对应的 must 待办；按这个空间的形态本来就不重要的规则（比如生涯体验里的「中途突发」），低分不算挡发布。
