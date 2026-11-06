@@ -60,7 +60,7 @@ async function occupationFacts(space: any): Promise<string> {
   const { data: o } = await supabaseAdmin.from('occupations').select('name, recent_year_monthly_salary, relevant_certificates, relevant_fos_ids, position_requirement, career_map').eq('id', id).maybeSingle();
   if (!o) return '';
   const ladder = (o.career_map as any)?.ladder;
-  return ['【职业库里的事实（讲收入、专业、证书、发展时以这些为准；库里没有的按公开常识说范围，并注明「以实际为准」）】',
+  return ['【职业库里的事实（讲收入、专业、证书、发展时先用这些；但只取和这一行直接对口的——库里的专业 / 证书明显不对口就不写，换成常见的对口专业和这一行的职业技能等级证书，并注明「以各校招生章程 / 实际为准」；不要把不对口的条目原样念给学生）】',
     o.recent_year_monthly_salary ? `· 近一年平均月薪约 ${o.recent_year_monthly_salary} 元（全国口径，各地差别大）` : '',
     o.relevant_fos_ids?.length ? `· 相关专业（学科代码，写给学生时换成中文专业名）：${o.relevant_fos_ids.join('、')}` : '',
     o.relevant_certificates ? `· 相关证书：${o.relevant_certificates}` : '',

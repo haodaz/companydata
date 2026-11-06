@@ -6,6 +6,7 @@
  *   4. planArt        场景与人物：每个场景一张底图、每个 NPC 一张立绘的提示词
  *   5. 美术生成       通义万相出图（场景 jpg / 立绘绿幕抠图）
  */
+import type { SpaceForm } from '@/lib/lab-spec';
 import { generateContent } from '@/lib/llm-client';
 import { logTokenUsage, withCost } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
@@ -334,11 +335,11 @@ export interface BuiltSpace {
   /** 工位没做成 / 或被裁剪过的原因，给前端和日志看 */ benchNote: string;
 }
 
-export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, progress: Progress = () => {}, opts: { bench?: boolean; art?: boolean; hint?: string } = {}): Promise<BuiltSpace> {
+export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, progress: Progress = () => {}, opts: { bench?: boolean; art?: boolean; hint?: string; form?: SpaceForm } = {}): Promise<BuiltSpace> {
   const wantBench = opts.bench !== false, wantArt = opts.art !== false && artAvailable();
 
   progress('拆解职责 · 设计任务与故事线');
-  const task = await generateTask(jd, null, modelId, opts.hint || '');
+  const task = await generateTask(jd, null, modelId, opts.hint || '', opts.form);
   let sim = task.sim;
   if (!sim) throw new Error('大模型没有给出可用的故事线，请重试');
 

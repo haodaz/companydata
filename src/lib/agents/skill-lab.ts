@@ -6,6 +6,7 @@
  *   nextQuestion   技能蒸馏访谈：追问专家
  *   buildSkillCard 访谈记录 → 技能卡
  */
+import { FORMS, type SpaceForm } from '@/lib/lab-spec';
 import { generateContent } from '@/lib/llm-client';
 import { logTokenUsage } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
@@ -25,7 +26,9 @@ async function ask(prompt: string, modelId: string, taskName: string, json = tru
 export interface JdInput { company: string; title: string; responsibilities: string; qualifications: string }
 export interface SkillRef { name: string; card: SkillCard }
 
-export async function generateTask(jd: JdInput, skill: SkillRef | null, modelId = DEFAULT_MODEL, hint = '') {
+export async function generateTask(jd: JdInput, skill: SkillRef | null, modelId = DEFAULT_MODEL, hint = '', form?: SpaceForm) {
+  // 形态（11-06）：建空间时这一章也照形态写——以前形态只是「特别说明」里的一句，三种形态的第 1 章长得一模一样（都是校招工作样本 + 师傅带）
+  const F = form ? FORMS[form] : null;
   const text = await ask(`
     你是一位资深的校招面试官，擅长把岗位 JD 变成「工作样本测试」：让候选人做一件这个岗位入职第一个月真的会做的事。
 
@@ -34,6 +37,7 @@ export async function generateTask(jd: JdInput, skill: SkillRef | null, modelId 
     任职要求：${jd.qualifications || '（JD 未提供）'}
     ${skill ? `\n这道题要重点检验下面这项技能，评分标准应体现这位专家的判断规则：\n${skillCardToPrompt(skill.name, skill.card)}\n` : ''}
     ${hint ? `\n【特别说明】${hint}\n` : ''}
+    ${F ? `\n【形态：${F.label}——以下优先于本提示里所有「校招 / 工作样本 / 应届生」的口径】${F.essence}。体验者是${F.who}，scene、intro、prompt 都按这个身份和场合写（${form === 'certify' ? '考场、考评员、考题要求、限时；不要写成在岗位上上班' : form === 'training' ? '实训室、实训老师、实训任务书' : '跟岗、师傅带着、师傅会讲为什么'}）。${F.chapter}评分：${F.score}\n` : ''}
     第一步先「拆解 JD」：逐条读岗位职责，把每一条职责原句对应到一个能力项，并各想一个可以在 1 小时内检验这项能力的任务点子。然后选出最值得检验的 1 条（与给定技能最贴合的那条），把它做成完整任务。
 
     要求：
