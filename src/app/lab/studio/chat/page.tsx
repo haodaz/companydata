@@ -123,11 +123,11 @@ export default function Page() {
         ) : <>
           <div className="wc-thread">
             {items.map((x, i) => {
-              if (x.k === 'user') return <div key={i} className="wc-user"><div className="wc-bubble">{x.text}</div></div>;
+              if (x.k === 'user') return <div key={i} className="wc-user"><div className="wc-bubble">{shownUser(x.text)}</div></div>;
               if (x.k === 'text') return <div key={i} className="wc-ai"><span className="wc-ava">AI</span><div className="wc-ai-body"><Md text={x.text} /></div></div>;
               if (x.k === 'tool') return <React.Fragment key={x.id}>
                 <div className="wc-tool"><span className={`wc-dot${x.running ? ' run' : x.error ? ' err' : ''}`} /><span className="wc-tool-t">{x.running ? `${RUNNING[x.name] || '处理中'}…` : x.error ? `${x.label || x.name}：${x.error}` : x.label || x.name}</span>{(x.ui as any)?.url && !x.running && <button className="wc-link" onClick={() => { setPanel({ ...(x.ui as any), _n: Date.now() }); setView('studio'); }}>打开 →</button>}</div>
-                {(x.ui as any)?.kind === 'lab_build' && <BuildCard ui={x.ui as any} live={!!(x as any).live} onDone={(id, title) => { show({ space_id: id, title, url: `/lab/studio/${id}`, _n: Date.now() }); if ((x as any).live) setTimeout(() => sendRef.current(`空间生成好了：space_id=${id}。`), 300); }} />}
+                {(x.ui as any)?.kind === 'lab_build' && <BuildCard ui={x.ui as any} live={!!(x as any).live} onDone={(id, title) => { show({ space_id: id, title, url: `/lab/studio/${id}`, _n: Date.now() }); if ((x as any).live) setTimeout(() => sendRef.current(`空间「${title}」生成好了（space_id=${id}）。`), 300); }} />}
                 {(x.ui as any)?.job_id && <JobCard ui={x.ui as any} live={!!(x as any).live} onDone={(msg) => { setPanel(p => p && { ...p, _n: Date.now() }); if ((x as any).live) setTimeout(() => sendRef.current(msg), 300); }} />}
                 {(x.ui as any)?.kind === 'lab_revision' && <RevisionCard ui={x.ui as any} onApplied={() => setPanel(p => p && { ...p, _n: Date.now() })} onDecided={st => { if ((x as any).live && !busyRef.current) setTimeout(() => sendRef.current(st === 'adopted' ? '采纳了这版。' : '这版不要。'), 200); }} />}
                 {(x.ui as any)?.kind === 'lab_invite' && <InviteCard ui={x.ui as any} />}
@@ -187,6 +187,9 @@ function BuildCard({ ui, live, onDone }: { ui: { buildId: string; title: string;
 }
 
 /** 后台任务（排一天 / 写章节 / 按评审改）进度：这一轮发起的做完了就自动告诉助理，让它接着办；翻历史只显示结果 */
+/** 页面替用户发给助理的话里带着编号（助理接着办事要用），气泡里不给人看（11-06 国内版验收：「空间生成好了：space_id=…」） */
+const shownUser = (t: string) => t.replace(/[（(]?\s*space_id\s*[=:：]\s*[0-9a-f-]+\s*[)）]?/gi, '').replace(/：\s*。/g, '。');
+
 function JobCard({ ui, live, onDone }: { ui: { space_id: string; job_id: string; job: string }; live: boolean; onDone: (msg: string) => void }) {
   const [j, setJ] = useState<any>(null); const told = useRef(false); const cb = useRef(onDone); cb.current = onDone;
   useEffect(() => {
