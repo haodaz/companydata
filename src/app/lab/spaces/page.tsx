@@ -11,7 +11,7 @@ import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'reac
 import { useRouter, useSearchParams } from 'next/navigation';
 import { App } from 'antd';
 import { useUser } from '@/lib/user-context';
-import { col, FX_CSS, LISTING, Plays, when } from '@/components/lab/FactoryKit';
+import { col, FX_CSS, LISTING, Plays, useLabNav, when } from '@/components/lab/FactoryKit';
 
 type Space = { id: string; title: string; name: string | null; role: string; avatar: string | null; kind: string; company: string | null; anchor: any; preset: string | null; listing: 'draft' | 'listed' | 'unlisted'; chapters: { total: number; published: number }; plays: number; avg: number | null; last_play: string | null; created_by: string; created_at: string };
 const KIND: Record<string, string> = { career: '职业探索', discipline: '学科体验', research_post: '研究岗', pasted: '粘贴 JD', jd: '真实 JD' };
@@ -22,22 +22,23 @@ function Factory() {
   const router = useRouter(); const sp = useSearchParams();
   const { user, loading: userLoading } = useUser() as any;
   const tab = (sp.get('tab') as 'spaces' | 'plays' | 'stats') || 'spaces';
+  const nav = useLabNav();
   const [d, setD] = useState<{ spaces: Space[]; migrated: boolean; role: string } | null>(null); const [err, setErr] = useState('');
   const load = useCallback(() => fetch('/api/lab/factory?view=spaces', { cache: 'no-store' }).then(r => r.json()).then(j => { if (j.ok) setD(j); else setErr(j.error); }).catch(() => setErr('没读到')), []);
   useEffect(() => { if (user) load(); }, [user, load]);
   // 老入口 ?new=career / ?new=jd 统一进新建空间页
-  useEffect(() => { if (sp.get('new')) router.replace('/lab/studio/new'); }, [sp, router]);
+  useEffect(() => { if (sp.get('new')) router.replace(nav.newSpace); }, [sp, router, nav.newSpace]);
   if (!userLoading && !user) return <div className="lab-glass" style={{ padding: 40, textAlign: 'center', color: 'var(--ink2)' }}>百业工厂要先登录。<a href={`/lab/login?next=${encodeURIComponent('/lab/spaces')}`} style={{ color: 'var(--v)', fontWeight: 700 }}>去登录</a></div>;
-  const setTab = (t: string) => router.replace(t === 'spaces' ? '/lab/spaces' : `/lab/spaces?tab=${t}`);
+  const setTab = (t: string) => router.replace(t === 'spaces' ? nav.factory : `${nav.factory}?tab=${t}`);
   return (
     <div className="fx">
       <style>{FX_CSS}</style>
       <div className="fx-head">
         <div><div className="lab-mono lab-cap">FACTORY · 百业工厂</div><h1>百业工厂</h1><p>生成职业模拟空间、上架给人体验、看作答、看哪里要改。{d?.role === 'admin' ? '你是管理员，看到的是全部空间。' : '这里只有你自己生成的空间。'}</p></div>
         <div className="fx-acts">
-          <button className="lab-btn ghost sm" onClick={() => router.push('/lab/assets')}>素材库</button>
-          <button className="lab-btn ghost sm" onClick={() => router.push('/lab/studio/chat')}>✦ 跟助理说</button>
-          <button className="lab-btn sm" onClick={() => router.push('/lab/studio/new')}>＋ 新建空间</button>
+          <button className="lab-btn ghost sm" onClick={() => router.push(nav.assets)}>素材库</button>
+          <button className="lab-btn ghost sm" onClick={() => router.push(nav.chat)}>✦ 跟助理说</button>
+          <button className="lab-btn sm" onClick={() => router.push(nav.newSpace)}>＋ 新建空间</button>
         </div>
       </div>
       {d && !d.migrated && <div className="fx-note">上架状态还没开通（迁移 065 待跑）：先按「有没有已发布的章节」显示状态，上架 / 下架按钮暂时不能用。</div>}
@@ -51,7 +52,7 @@ function Factory() {
 }
 
 function Spaces({ d, reload }: { d: { spaces: Space[]; migrated: boolean; role: string } | null; reload: () => void }) {
-  const router = useRouter(); const { message } = App.useApp();
+  const router = useRouter(); const { message } = App.useApp(); const nav = useLabNav();
   const [kw, setKw] = useState(''); const [st, setSt] = useState('all');
   const list = useMemo(() => (d?.spaces || []).filter(s => (st === 'all' || s.listing === st) && (!kw || [s.title, s.name, s.role, s.company, s.anchor?.label].some(v => String(v || '').includes(kw)))), [d, kw, st]);
   const n = (k: string) => (d?.spaces || []).filter(s => k === 'all' || s.listing === k).length;
@@ -71,7 +72,7 @@ function Spaces({ d, reload }: { d: { spaces: Space[]; migrated: boolean; role: 
         <tbody>
           {!d && <tr><td colSpan={8} className="fx-muted">读取中…</td></tr>}
           {d && !list.length && <tr><td colSpan={8}><div className="fx-empty">{d.spaces.length ? '没有符合的。' : '还没有空间。点右上「＋ 新建空间」，先定位做哪一个，再说给谁看、要多深。'}</div></td></tr>}
-          {list.map(s => <tr key={s.id} className="click" onClick={() => router.push(`/lab/studio/${s.id}`)}>
+          {list.map(s => <tr key={s.id} className="click" onClick={() => router.push(nav.space(s.id))}>
             <td style={{ minWidth: 240 }}>
               <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                 {s.avatar ? <img src={s.avatar} alt="" className="fx-av" /> : <span className="fx-av ph">{(s.role || s.title).slice(0, 1)}</span>}
@@ -96,7 +97,7 @@ function Spaces({ d, reload }: { d: { spaces: Space[]; migrated: boolean; role: 
 }
 
 function Stats({ spaces }: { spaces: Space[] | null }) {
-  const router = useRouter();
+  const router = useRouter(); const nav = useLabNav();
   if (!spaces) return <div className="fx-muted">读取中…</div>;
   const listed = spaces.filter(s => s.listing === 'listed'), plays = spaces.reduce((a, s) => a + s.plays, 0);
   const scored = spaces.filter(s => s.avg != null), avg = scored.length ? Math.round(scored.reduce((a, s) => a + (s.avg || 0) * s.plays, 0) / Math.max(1, scored.reduce((a, s) => a + s.plays, 0))) : null;
@@ -106,7 +107,7 @@ function Stats({ spaces }: { spaces: Space[] | null }) {
   const half = spaces.filter(s => s.chapters.total && s.chapters.published < s.chapters.total).slice(0, 8);
   const Box = ({ t, sub, rows, show }: { t: string; sub: string; rows: Space[]; show: (s: Space) => React.ReactNode }) => (
     <div className="lab-glass fx-box"><div className="fx-box-h"><b>{t}</b><span>{sub}</span></div>
-      {!rows.length ? <div className="fx-muted" style={{ padding: '6px 0' }}>没有。</div> : rows.map(s => <button key={s.id} className="fx-row" onClick={() => router.push(`/lab/studio/${s.id}`)}><span>{s.name ? `${s.name} · ${s.role}` : s.role || s.title}</span><em>{show(s)}</em></button>)}
+      {!rows.length ? <div className="fx-muted" style={{ padding: '6px 0' }}>没有。</div> : rows.map(s => <button key={s.id} className="fx-row" onClick={() => router.push(nav.space(s.id))}><span>{s.name ? `${s.name} · ${s.role}` : s.role || s.title}</span><em>{show(s)}</em></button>)}
     </div>
   );
   return <>

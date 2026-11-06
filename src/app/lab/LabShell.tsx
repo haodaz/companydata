@@ -243,7 +243,9 @@ function Shell({ children }: { children: React.ReactNode }) {
   const NAV = [
     { k: '/lab', t: '首页', on: (p: string) => p === '/lab' },
     { k: '/lab/spaces', t: '百业工厂', on: (p: string) => p.startsWith('/lab/spaces') || p.startsWith('/lab/studio') || p.startsWith('/lab/assets') || p.startsWith('/lab/logic') || p.startsWith('/lab/admin') },
-    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || /^\/lab\/(?!spaces|studio|gallery|assets|logic|beta|admin|me|cert|no-access|ai-change)[^/]+$/.test(p) },
+    // AI 百业｜模拟 workspace（2026-11-06）：对话 + 侧栏（百业工厂 / 模拟空间 / 使用记录 / 素材 / 用户），登录后才有
+    { k: '/lab/ws', t: '工作台', on: (p: string) => p.startsWith('/lab/ws') },
+    { k: '/lab/gallery', t: '体验百业', on: (p: string) => p.startsWith('/lab/gallery') || /^\/lab\/(?!spaces|studio|gallery|assets|logic|beta|admin|me|cert|no-access|ai-change|ws)[^/]+$/.test(p) },
     // AI 与我的工作（2026-11-01）：输入职位 / JD / 简历，看 AI 会怎么改变这份工作，再去试一天、做一道真活
     { k: '/lab/ai-change', t: 'AI 与我的工作', on: (p: string) => p.startsWith('/lab/ai-change') },
     // 我的证书：游客也有（按浏览器本地的访客编号攒，里面有示范证书），登录后并上账号的
@@ -255,8 +257,8 @@ function Shell({ children }: { children: React.ReactNode }) {
       <style>{LAB_CSS}</style>
       <div className="lab-bg"><div className="lab-blob b1" /><div className="lab-blob b2" /><div className="lab-blob b3" /><div className="lab-grid" /></div>
 
-      {/* 嵌在百业工厂对话右边的面板里（iframe）：不要顶栏（11-06） */}
-      {!embed && <>
+      {/* 嵌在百业工厂对话右边的面板里（iframe）、或者在「AI 百业｜模拟」workspace（/lab/ws，有自己的侧栏）里：不要顶栏（11-06） */}
+      {!embed && !path.startsWith('/lab/ws') && <>
       <header className={`lab-head${clear ? ' clear' : ''}`} style={{ position: 'sticky', top: 0, zIndex: 20, display: 'flex', alignItems: 'center', gap: 14, background: 'rgba(245,246,255,.72)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(106,92,255,.12)' }}>
         <div onClick={() => { if (!guest) router.push('/lab'); }} style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', minWidth: 0, flexShrink: 0 }}>
           <div className="lab-orb" style={{ ['--s' as string]: '34px' }}><div className="ring" /><div className="core" /></div>
@@ -267,7 +269,7 @@ function Shell({ children }: { children: React.ReactNode }) {
         </div>
         {!guest && <nav className="lab-nav">
           {/* 游客（没登录）看不到百业工厂：那是造空间的地方，要登录；右上角给登录入口 */}
-          {NAV.filter(x => user || userLoading || x.k !== '/lab/spaces').map(x => {
+          {NAV.filter(x => user || userLoading || (x.k !== '/lab/spaces' && x.k !== '/lab/ws')).map(x => {
             const on = x.on(path);
             return (
               <button key={x.k} onClick={() => router.push(x.k)} className={`lab-nav-i${on ? ' on' : ''}`}>
@@ -304,7 +306,7 @@ function Shell({ children }: { children: React.ReactNode }) {
       </header>
       </>}
 
-      <div className="lab-wrap">{children}</div>
+      {path.startsWith('/lab/ws') ? children : <div className="lab-wrap">{children}</div>}
     </div>
   );
 }

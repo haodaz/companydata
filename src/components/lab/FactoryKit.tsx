@@ -2,8 +2,21 @@
 
 /** 百业工厂管理台共用的小件（工厂首页、单个空间的 tab 都用）：上架状态、作答记录表、样式 */
 import React, { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 type Play = { id: string; space_id: string; space: string; chapter: string | null; who: string; type: string; note?: string; score: number | null; ai_score: number | null; human_score: number | null; at: string };
+/** 工厂里各处的链接：在「AI 百业｜模拟」workspace（/lab/ws）里就留在 workspace，老入口照旧（E，11-06） */
+export function useLabNav() {
+  const ws = (usePathname() || '').startsWith('/lab/ws');
+  return {
+    ws,
+    factory: ws ? '/lab/ws/factory' : '/lab/spaces',
+    space: (id: string) => (ws ? `/lab/ws/space/${id}` : `/lab/studio/${id}`),
+    newSpace: ws ? '/lab/ws/new' : '/lab/studio/new',
+    chat: ws ? '/lab/ws/chat' : '/lab/studio/chat',
+    assets: ws ? '/lab/ws/assets' : '/lab/assets',
+  };
+}
 export const LISTING: Record<string, [string, string]> = { draft: ['草稿', 'warn'], listed: ['已上架', 'ok'], unlisted: ['已下架', 'mute'] };
 export const when = (s?: string | null) => (s ? new Date(s).toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—');
 export const col = (v: number | null) => (v == null ? 'var(--ink3)' : v >= 80 ? '#0d7a52' : v >= 60 ? '#2f6fd6' : '#c0392b');

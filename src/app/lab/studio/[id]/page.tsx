@@ -10,7 +10,7 @@ import { SimRunner, SimStage } from '@/components/lab/SimRunner';
 import { ChatLauncher } from '@/components/kg/PersonaChat';
 import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue, type BasisRow } from '@/lib/lab-studio';
 import { SpecEditor, SPEC_CSS } from '@/components/lab/SpecEditor';
-import { col, FX_CSS, LISTING, Plays } from '@/components/lab/FactoryKit';
+import { col, FX_CSS, LISTING, Plays, useLabNav } from '@/components/lab/FactoryKit';
 import { hasSpec, REVISE_CHIPS, type Anchor, type GenSpec } from '@/lib/lab-spec';
 import { CAST_KINDS, applyCastArt, castKind, stepsUsing, type CastKind, type CastMember, type LabAsset } from '@/lib/lab-cast';
 
@@ -56,7 +56,8 @@ export default function StudioPage() {
   useEffect(() => { if (pendingRevise && draft?.id === pendingRevise.chapterId) { setRevise({ target: pendingRevise.target, stepId: pendingRevise.stepId, text: pendingRevise.text }); setPendingRevise(null); } }, [draft?.id, pendingRevise]);
   // 分 tab（11-06）：一天 / 角色与素材 / 生成要求 / 作答 / 分析；预览、上下架在右上角
   const tab = (sp.get('tab') as StudioTab) || 'day';
-  const setTab = (t: StudioTab) => router.replace(`/lab/studio/${id}${t === 'day' ? (cur ? `?ch=${cur}` : '') : `?tab=${t}`}`);
+  const nav = useLabNav();
+  const setTab = (t: StudioTab) => router.replace(`${nav.space(id)}${t === 'day' ? (cur ? `?ch=${cur}` : '') : `?tab=${t}`}`);
   const [dayHint, setDayHint] = useState('');
   const [jobs, setJobs] = useState<any[]>([]);
   const runningJobs = jobs.filter(j => j.status === 'running');
@@ -210,7 +211,7 @@ export default function StudioPage() {
       {data?.space && <ChatLauncher href={`/lab/${id}/chat`} name={data.space.profile?.name} avatar={data.space.profile?.avatar} />}
       {/* 页头 */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 16 }}>
-        <button className="lab-btn ghost sm" onClick={() => router.push('/lab/spaces')}>← 百业工厂</button>
+        <button className="lab-btn ghost sm" onClick={() => router.push(nav.factory)}>← 百业工厂</button>
         <div style={{ minWidth: 0 }}>
           <div className="lab-mono lab-cap">SPACE · 百业工厂</div>
           <div style={{ fontSize: 19, fontWeight: 800 }}>{profile.name ? <>{profile.name} <span style={{ color: 'var(--v)' }}>· {profile.role}</span></> : space.title}</div>
@@ -227,7 +228,7 @@ export default function StudioPage() {
 
       {tab === 'spec' && <SpecTab id={id} space={space} model={genModel} onRewrite={() => { loadJobs(); setTab('day'); }} onSaved={spec => setData(d => d && { ...d, space: { ...d.space, jd_snapshot: { ...(d.space.jd_snapshot || {}), spec: spec || undefined } } })} />}
       {tab === 'cast' && <div style={{ maxWidth: 760 }}>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 12 }}><span style={{ fontSize: 13, color: 'var(--ink2)' }}>这个空间里反复出场的人、地方、道具。同一天各章共用：同一张脸、同一个地方。</span><button className="lab-btn ghost sm" style={{ marginLeft: 'auto' }} onClick={() => router.push('/lab/assets')}>素材库 ↗</button></div>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 12 }}><span style={{ fontSize: 13, color: 'var(--ink2)' }}>这个空间里反复出场的人、地方、道具。同一天各章共用：同一张脸、同一个地方。</span><button className="lab-btn ghost sm" style={{ marginLeft: 'auto' }} onClick={() => router.push(nav.assets)}>素材库 ↗</button></div>
         <CastPanel cast={data.cast} chapters={liveChapters} current={null} onOpen={setCastEdit} />
       </div>}
       {tab === 'review' && <ReviewTab id={id} model={genModel} onFix={(t: any) => {
@@ -781,7 +782,7 @@ function MoreMenu({ id }: { id: string }) {
   };
   const del = () => { setOpen(false); modal.confirm({ title: '删除这个空间？', content: '章节、角色表一起删掉，作答记录保留但找不到空间了。不能恢复。', okText: '删除', okButtonProps: { danger: true }, cancelText: '取消', onOk: async () => {
     const j = await (await fetch(`/api/lab/spaces/${id}`, { method: 'DELETE' })).json().catch(() => ({ ok: false, error: '网络错误' }));
-    if (!j.ok) { message.error(j.error); return; } message.success('已删除'); router.push('/lab/spaces');
+    if (!j.ok) { message.error(j.error); return; } message.success('已删除'); router.push(location.pathname.startsWith('/lab/ws') ? '/lab/ws/factory' : '/lab/spaces');
   } }); };
   return <span style={{ position: 'relative' }}>
     <button className="lab-btn ghost sm" aria-expanded={open} onClick={() => setOpen(o => !o)}>⋯</button>

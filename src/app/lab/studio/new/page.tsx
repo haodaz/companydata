@@ -9,6 +9,7 @@
  * 要求存在空间的 jd_snapshot.spec 里，以后排一天、写每一章、出评分都按它来；工作室里还能改。
  */
 import React, { useEffect, useRef, useState } from 'react';
+import { useLabNav } from '@/components/lab/FactoryKit';
 import { useRouter } from 'next/navigation';
 import { App } from 'antd';
 import { useModel } from '@/lib/model-context';
@@ -23,7 +24,7 @@ const TIER: Record<string, string> = { common: '常见叫法', role: '具体岗�
 export default function NewSpacePage() { return <App><NewSpace /></App>; }
 
 function NewSpace() {
-  const router = useRouter(); const { message } = App.useApp(); const { currentModel } = useModel();
+  const router = useRouter(); const { message } = App.useApp(); const { currentModel } = useModel(); const nav = useLabNav();
   // 第一层
   const [mode, setMode] = useState<'career' | 'discipline' | 'paste'>('career');
   const [q, setQ] = useState(''); const [finding, setFinding] = useState(false);
@@ -69,7 +70,7 @@ function NewSpace() {
     const j = await (await fetch('/api/lab/spaces', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })).json().catch(() => ({ ok: false, error: '网络错误' }));
     if (!j.ok) { setBuilding(null); message.error(j.error || '生成失败'); return; }
     message.success('空间生成好了，进工作室接着排一天');
-    router.push(`/lab/studio/${j.id}`);
+    router.push(nav.space(j.id));
   };
 
   if (building) {
@@ -88,9 +89,9 @@ function NewSpace() {
 
   return (
     <div className="ns-wrap"><style>{CSS + SPEC_CSS}</style>
-      <button className="lab-btn ghost sm" onClick={() => router.push('/lab/spaces')}>← 百业工厂</button>
+      <button className="lab-btn ghost sm" onClick={() => router.push(nav.factory)}>← 百业工厂</button>
       <h1 className="ns-h1">新建一个空间</h1>
-      <div style={{ float: 'right', marginTop: -36 }}><button className="lab-btn ghost sm" onClick={() => router.push('/lab/studio/chat')}>不想填，跟助理说 ✦</button></div>
+      <div style={{ float: 'right', marginTop: -36 }}><button className="lab-btn ghost sm" onClick={() => router.push(nav.chat)}>不想填，跟助理说 ✦</button></div>
       <p className="ns-lead">两步：先定位做的是哪一个，再说清楚给谁看、要多深、考核多难。说清楚了，后面每一步（故事线、工位、美术、一天的每一章、评分）都按它来。</p>
 
       {/* ── 第一层：定位 ── */}

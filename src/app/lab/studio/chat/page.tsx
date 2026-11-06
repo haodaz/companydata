@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { Md } from '@/components/ws/Md';
 import { CHAT_CSS, Composer, fromHistory, RUNNING, type Item } from '@/components/work/ChatKit';
 import { useModel } from '@/lib/model-context';
+import { useLabNav } from '@/components/lab/FactoryKit';
 
 type Panel = { space_id: string; title: string; url: string; _n?: number };
 const QUICK = [
@@ -22,7 +23,7 @@ const QUICK = [
 Object.assign(RUNNING, { locate: '定位', create_space: '准备生成', my_spaces: '找空间', space_detail: '看空间', build_day: '排一天骨架', write_chapters: '安排写章节', revise: '出修改提案', review: 'AI 评审', fix_by_review: '安排按评审改', set_spec: '改生成要求', publish_chapters: '发布章节', set_listing: '改上架状态', invite_master: '生成邀请', jobs: '看进度', open_panel: '打开' });
 
 export default function Page() {
-  const router = useRouter(); const { currentModel } = useModel();
+  const router = useRouter(); const { currentModel } = useModel(); const nav = useLabNav();
   const [threadId, setThreadId] = useState<string | null>(null);
   const [threads, setThreads] = useState<{ id: string; title: string }[]>([]);
   const [items, setItems] = useState<(Item & { live?: boolean })[]>([]);
@@ -33,6 +34,16 @@ export default function Page() {
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, [items]);
   const loadThreads = useCallback(() => fetch('/api/lab/chat').then(r => r.json()).then(j => j.ok && setThreads(j.data || [])).catch(() => {}), []);
   useEffect(() => { loadThreads(); }, [loadThreads]);
+  // 在 workspace（/lab/ws/chat）里：侧栏点对话带 ?thread=，首页输入框写的话放 sessionStorage lws-pending；侧栏的「新对话」发 lws-open 事件
+  useEffect(() => {
+    const q = new URLSearchParams(location.search);
+    if (q.get('thread')) { openThread(q.get('thread')!); return; }
+    let p: any = null; try { p = JSON.parse(sessionStorage.getItem('lws-pending') || 'null'); sessionStorage.removeItem('lws-pending'); } catch {}
+    if (p?.text) setTimeout(() => sendRef.current(p.text), 0);
+    const on = (e: Event) => { const id = (e as CustomEvent).detail; if (id) openThread(id); else newChat(); };
+    window.addEventListener('lws-open', on); return () => window.removeEventListener('lws-open', on);
+  }, []);   // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { window.dispatchEvent(new CustomEvent('lws-thread', { detail: threadId })); }, [threadId]);
 
   const openThread = async (id: string) => {
     abortRef.current?.abort(); setBusy(false); setThreadId(id); setItems([]); setPanel(null);
@@ -63,7 +74,7 @@ export default function Page() {
       const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = '';
       for (;;) { const { value, done } = await reader.read(); if (done) break; buf += dec.decode(value, { stream: true }); let nl; while ((nl = buf.indexOf('\n')) >= 0) { const line = buf.slice(0, nl); buf = buf.slice(nl + 1); if (line.trim()) onEvent(JSON.parse(line)); } }
     } catch (e: any) { if (e?.name !== 'AbortError') setItems(it => [...it, { k: 'error', text: e.message }]); }
-    finally { setBusy(false); setItems(it => it.map(x => (x.k === 'tool' && x.running ? { ...x, running: false, label: x.label || '中断了' } : x))); loadThreads(); }
+    finally { setBusy(false); setItems(it => it.map(x => (x.k === 'tool' && x.running ? { ...x, running: false, label: x.label || '中断了' } : x))); loadThreads(); window.dispatchEvent(new Event('lws-threads')); }
   };
   const sendRef = useRef(send); sendRef.current = send;
 
@@ -72,16 +83,16 @@ export default function Page() {
     placeholder={pendingAsk ? '选一个，或者直接打字回答…' : hero ? '说你要做什么：给谁做一个什么职业的体验、改哪个空间…' : '接着说…'} />;
 
   return (
-    <div className={`lc${panel ? ' with-p' : ''}`}>
+    <div className={`lc${panel ? ' with-p' : ''}${nav.ws ? ' in-ws' : ''}`}>
       <style>{CHAT_CSS + CSS}</style>
       <section className="lc-chat">
-        <div className="lc-top">
+        {!nav.ws && <div className="lc-top">
           <button className="lab-btn ghost sm" onClick={() => router.push('/lab/spaces')}>← 百业工厂</button>
           <select className="lab-input lc-sel" value={threadId || ''} onChange={e => (e.target.value ? openThread(e.target.value) : newChat())}>
             <option value="">新对话</option>{threads.map(t => <option key={t.id} value={t.id}>{t.title || '对话'}</option>)}
           </select>
           {threadId && <button className="lab-btn ghost sm" onClick={newChat}>＋ 新对话</button>}
-        </div>
+        </div>}
         {!items.length ? (
           <div className="lc-hero">
             <div className="lab-mono lab-cap">FACTORY · 聊着出空间</div>
@@ -182,6 +193,7 @@ function InviteCard({ ui }: { ui: { space_id: string; title: string } }) {
 
 const CSS = `
 .lc { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; height: calc(100dvh - 120px); min-height: 520px; }
+.lc.in-ws { height: calc(100dvh - 48px); }
 .lc.with-p { grid-template-columns: minmax(0, 1fr) minmax(460px, 52%); gap: 16px; }
 .lc-chat { display: flex; flex-direction: column; min-height: 0; }
 .lc-top { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
