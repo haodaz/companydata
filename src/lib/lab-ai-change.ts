@@ -20,7 +20,7 @@ const clean = (s: string) => s.replace(/[,()（）*%]/g, ' ').trim();
 
 export type OccHit = { id: number; name: string; category: string; intro: string };
 
-async function searchOcc(name: string, limit = 4): Promise<OccHit[]> {
+export async function searchOcc(name: string, limit = 4): Promise<OccHit[]> {
   const n = clean(name).slice(0, 20); if (n.length < 2) return [];
   const { data } = await db.from('occupations').select('id, name, career_category, career_mid_category, intro').eq('if_delete', false).or(`name.ilike.%${n}%,name_lang_cn.ilike.%${n}%`).limit(limit);
   return (data || []).map((o: any) => ({ id: o.id, name: o.name, category: catLabel(o), intro: S(o.intro, 90) }));

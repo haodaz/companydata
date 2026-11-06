@@ -8,6 +8,7 @@
  *   新建的先按规范类型名找素材库，找不到才画，画完立刻归库。
  */
 import { generateContent, resolveModel } from '@/lib/llm-client';
+import { specTextOf } from '@/lib/lab-spec';
 import { logTokenUsage, withCost } from '@/lib/token-logger';
 import { buildLesson } from '@/lib/lab-lesson';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
@@ -44,6 +45,7 @@ function spaceText(space: any): string {
     p.role ? `数字职人（主角的师傅 / 化身）：${p.name || ''} · ${p.role}${p.tagline ? `，口头禅「${p.tagline}」` : ''}` : '',
     jd.responsibilities ? `岗位职责：${String(jd.responsibilities).slice(0, 800)}` : '',
     career.summary ? `职业概况：${String(career.summary).slice(0, 400)}` : '',
+    specTextOf(jd),   // 用户的生成要求（受众 / 深度 / 难度 / 必须有 / 不要 / 参考资料），每一步都带
   ].filter(Boolean).join('\n');
 }
 

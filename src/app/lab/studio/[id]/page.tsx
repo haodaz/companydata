@@ -9,6 +9,8 @@ import { MODEL_OPTIONS } from '@/lib/model-context';
 import { SimRunner, SimStage } from '@/components/lab/SimRunner';
 import { ChatLauncher } from '@/components/kg/PersonaChat';
 import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue, type BasisRow } from '@/lib/lab-studio';
+import { SpecEditor, SPEC_CSS } from '@/components/lab/SpecEditor';
+import { hasSpec, type Anchor, type GenSpec } from '@/lib/lab-spec';
 import { CAST_KINDS, applyCastArt, castKind, stepsUsing, type CastKind, type CastMember, type LabAsset } from '@/lib/lab-cast';
 
 /**
@@ -47,6 +49,9 @@ export default function StudioPage() {
   const [genHint, setGenHint] = useState('');
   const [genArt, setGenArt] = useState(true);
   const [dayOpen, setDayOpen] = useState(false);
+  // 生成要求（11-06）：存 jd_snapshot.spec；排一天、写 / 重写章节、评分标准都按它来
+  const [specEdit, setSpecEdit] = useState<GenSpec | null>(null);
+  const [specSaving, setSpecSaving] = useState(false);
   const [dayHint, setDayHint] = useState('');
   const [jobs, setJobs] = useState<any[]>([]);
   const runningJobs = jobs.filter(j => j.status === 'running');
@@ -214,6 +219,21 @@ export default function StudioPage() {
         <button className="lab-btn ghost sm" onClick={() => window.open(`/lab/${id}?m=test${saved?.status === 'published' ? `&ch=${saved.id}` : ''}`, '_blank')}>在体验端打开 ↗</button>
         <button className="lab-btn sm" onClick={addChapter}>＋ 加一章</button>
       </div>
+
+      <SpecBar spec={space.jd_snapshot?.spec} anchor={space.jd_snapshot?.anchor} onEdit={() => setSpecEdit({ ...(space.jd_snapshot?.spec || {}) })} />
+      <Modal open={!!specEdit} onCancel={() => setSpecEdit(null)} title="生成要求" width={760} okText={specSaving ? '保存中…' : '保存'} cancelText="取消" okButtonProps={{ disabled: specSaving }}
+        onOk={async () => {
+          if (!specEdit) return; setSpecSaving(true);
+          const j = await fetch(`/api/lab/studio/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ spec: specEdit }) }).then(r => r.json()).catch(() => ({ ok: false, error: '网络错误' }));
+          setSpecSaving(false);
+          if (!j.ok) { message.error(j.error); return; }
+          setData(d => d && { ...d, space: { ...d.space, jd_snapshot: { ...(d.space.jd_snapshot || {}), spec: j.spec || undefined } } });
+          setSpecEdit(null); message.success('要求已保存：之后排一天、重写章节都按新的来（已写好的不会自己变）');
+        }}>
+        <style>{SPEC_CSS}</style>
+        <p style={{ fontSize: 13, color: 'var(--ink3)', margin: '0 0 12px', lineHeight: 1.7 }}>改了只影响以后的生成：想让已有章节也照新要求来，保存后对那一章点「重写」，或重排一天骨架。锁定的章节不动。</p>
+        {specEdit && <SpecEditor spec={specEdit} setSpec={setSpecEdit as React.Dispatch<React.SetStateAction<GenSpec>>} />}
+      </Modal>
 
       <div className="studio-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(220px, 280px) minmax(0, 1fr)', gap: 16, alignItems: 'start' }}>
         <style>{`@media (max-width: 900px) { .studio-grid { grid-template-columns: minmax(0, 1fr) !important; } .studio-day { position: static !important; } }
@@ -634,5 +654,28 @@ function CastEditor({ spaceId, member, onClose, onDone }: { spaceId: string; mem
         </div>
       </div>
     </Modal>
+  );
+}
+
+/** 工作室顶部一条：这个空间按什么要求生成的（受众 / 深度 / 难度 / 必须有 / 不要 / 参考资料）；老空间没有就提示补一份 */
+function SpecBar({ spec, anchor, onEdit }: { spec?: GenSpec; anchor?: Anchor; onEdit: () => void }) {
+  const [open, setOpen] = useState(false);
+  const rows: [string, string | undefined][] = [['给谁看', spec?.audience], ['要多深', spec?.depth], ['考核多难', spec?.difficulty], ['必须有', spec?.must], ['不要', spec?.avoid]];
+  return (
+    <div className="lab-glass" style={{ padding: '12px 16px', marginBottom: 16 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+        <span className="lab-mono lab-cap">生成要求</span>
+        {anchor && <span style={{ fontSize: 12.5, color: 'var(--ink3)' }}>定位：<b style={{ color: 'var(--ink)' }}>{anchor.label}</b>{anchor.from && anchor.from !== anchor.label ? `（原话「${anchor.from}」）` : ''}</span>}
+        {hasSpec(spec)
+          ? <span style={{ fontSize: 13, color: 'var(--ink2)', flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{spec?.preset ? `${spec.preset} · ` : ''}{spec?.audience || spec?.depth || spec?.difficulty || ''}</span>
+          : <span style={{ fontSize: 13, color: 'var(--ink3)', flex: 1 }}>还没有。补一份（给谁看、要多深、考核多难），之后排一天、重写章节就按它来。</span>}
+        {hasSpec(spec) && <button className="lab-btn ghost sm" onClick={() => setOpen(o => !o)}>{open ? '收起' : '展开'}</button>}
+        <button className="lab-btn ghost sm" onClick={onEdit}>{hasSpec(spec) ? '改要求' : '＋ 补一份要求'}</button>
+      </div>
+      {open && hasSpec(spec) && <div style={{ display: 'grid', gap: 6, marginTop: 10, fontSize: 13.5, lineHeight: 1.7 }}>
+        {rows.filter(r => r[1]).map(([k, v]) => <div key={k} style={{ display: 'grid', gridTemplateColumns: '72px minmax(0, 1fr)', gap: 8 }}><span style={{ color: 'var(--ink3)' }}>{k}</span><span>{v}</span></div>)}
+        {!!spec?.refs?.length && <div style={{ display: 'grid', gridTemplateColumns: '72px minmax(0, 1fr)', gap: 8 }}><span style={{ color: 'var(--ink3)' }}>参考资料</span><span>{spec.refs.map(r => `📎 ${r.name}`).join('　')}</span></div>}
+      </div>}
+    </div>
   );
 }

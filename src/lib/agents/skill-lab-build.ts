@@ -298,14 +298,14 @@ export interface ArtPlan { family: string; /** 空间核心那位数字人自己
 export const ART_SLOTS = ['办公室', '会议室', '车间', '实验室', '门店', '后厨', '工地', '仓库', '机房', '教室', '诊室', '户外现场', '驾驶舱', '其他'];
 export const NPC_SLOTS = ['带教师傅', '主管', '同事', '客户', '质检', '老师', '专家', '其他'];
 
-export async function planArt(jd: JdInput, sim: Sim, modelId = DEFAULT_MODEL): Promise<ArtPlan> {
+export async function planArt(jd: JdInput, sim: Sim, modelId = DEFAULT_MODEL, hint = ''): Promise<ArtPlan> {
   const cast = [...new Set(sim.steps.map(s => s.scene?.who).filter((w): w is string => !!w && w !== '你'))];
   const p = await ask(`
     为「${jd.company} · ${jd.title}」的模拟操作台规划美术：每个地点一张场景底图，每个人物一张立绘。
     故事线：
     ${sim.steps.map(s => `${s.id}：${s.scene ? `${s.scene.who}（${s.scene.time || ''}）${s.scene.text}` : s.prompt}`).join('\n')}
     人物：${cast.join('、') || '（无）'}
-
+${hint ? `\n    ${hint}\n    （场景、人物、装束都要贴合上面的受众和要求；要求里点名的场景 / 设备要画出来）\n` : ''}
     要求：
     - family：这个岗位属于哪一级领域，从这几个里选一个（原话返回）：${ART_FAMILIES.join(' / ')}
     - 场景 2–3 个（按地点合并步骤），每个给出中文文生图提示词：以「半写实插画风格，正面平视的固定机位，」开头，描述地点与陈设，结尾「明亮，没有人物，没有可辨认文字，没有logo，16:9」。steps 列出用这张底图的步骤 id（bench 步骤不要列）。
@@ -346,8 +346,8 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
   const benchDiag = { note: '' };
   const [draft, bench, art] = await Promise.all([
     draftSkill(jd, task, sim, modelId),
-    wantBench ? designBench(jd, task, sim, modelId, benchDiag).catch(e => { console.error('[build] bench', e); benchDiag.note = `设计工位时出错：${e?.message || e}`; return null; }) : Promise.resolve(null),
-    wantArt ? planArt(jd, sim, modelId).catch(e => { console.error('[build] art plan', e); return { family: '', self: '', scenes: [], npcs: [] } as ArtPlan; }) : Promise.resolve({ family: '', self: '', scenes: [], npcs: [] } as ArtPlan),
+    wantBench ? designBench(jd, task, sim, modelId, benchDiag, opts.hint || '').catch(e => { console.error('[build] bench', e); benchDiag.note = `设计工位时出错：${e?.message || e}`; return null; }) : Promise.resolve(null),
+    wantArt ? planArt(jd, sim, modelId, opts.hint || '').catch(e => { console.error('[build] art plan', e); return { family: '', self: '', scenes: [], npcs: [] } as ArtPlan; }) : Promise.resolve({ family: '', self: '', scenes: [], npcs: [] } as ArtPlan),
   ]);
 
   // 把虚拟工位插进故事线

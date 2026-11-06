@@ -9,6 +9,7 @@ import { trackDemand } from '@/lib/flywheel/signals';
 import { attachCostToSpace, withCost } from '@/lib/token-logger';
 import { ensureOccupationLater } from '@/lib/kg/ensure-occupation';
 import { getSessionUser } from '@/lib/session';
+import { cleanAnchor, cleanSpec, hasSpec, renderSpec } from '@/lib/lab-spec';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -132,6 +133,17 @@ export async function POST(req: Request) {
 async function build(req: Request, body: any, costJob: string) {
   let buildId = '';
   try {
+    // 两层出空间（11-06）：anchor = 定位到的职业 / 岗位 / 粘贴 JD / 学科；spec = 用户的生成要求，贯穿后面每一步。老的入参（profession / jobId / jdText）照旧能用
+    const anchor = cleanAnchor(body.anchor), spec = cleanSpec(body.spec || {});
+    if (anchor) {
+      if (anchor.kind === 'occupation' || anchor.kind === 'career') body.profession = anchor.label;
+      else if (anchor.kind === 'discipline') { body.discipline = anchor.label; delete body.profession; }
+      else if (anchor.kind === 'job') body.jobId = anchor.job_id;
+      else if (anchor.kind === 'pasted') { body.title = body.title || anchor.label; body.company = body.company || anchor.company || ''; }
+    }
+    const specText = renderSpec(spec, anchor);
+    const withSpec = (h: string) => [h, specText].filter(Boolean).join('\n\n');
+    const snapExtra = { ...(anchor ? { anchor } : {}), ...(hasSpec(spec) ? { spec } : {}) };
     const { jobId, model, createdBy } = body; buildId = String(body.buildId || '');
     const discipline = String(body.discipline || '').trim().slice(0, 40);
     const profession = String(body.profession || '').trim().slice(0, 40) || discipline;
@@ -142,7 +154,7 @@ async function build(req: Request, body: any, costJob: string) {
       trackDemand(req, { source: 'lab_space', query: profession, profession });
       setBuild(buildId, { phase: isDiscipline ? '结构化学科 · 推断典型研究岗' : '结构化职业 · 推断典型岗位' });
       const { jd, career } = await structureCareer(profession, model || undefined, isDiscipline ? 'discipline' : 'career');
-      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), { hint: isDiscipline ? DISCIPLINE_HINT : CAREER_HINT });
+      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), { hint: withSpec(isDiscipline ? DISCIPLINE_HINT : CAREER_HINT) });
       const { data: skill, error: skErr } = await supabaseAdmin.from('skills').insert({
         slug: `career-${Date.now().toString(36)}`, ...built.skill, interview: [],
         expert_name: '岗位 AI 自学草案', expert_title: '从职业公开知识推断 · 等待第一位从业者校正', expert_location: '云端', expert_note: '尚未有真人专家', tz_offset: 0,
@@ -151,7 +163,7 @@ async function build(req: Request, body: any, costJob: string) {
       if (skErr) throw skErr;
       const { data: created, error: insErr } = await supabaseAdmin.from('skill_tasks').insert({
         job_id: null, skill_id: skill.id,
-        jd_snapshot: { ...jd, kind: isDiscipline ? 'discipline' : 'career', career, fetched_at: new Date().toISOString().slice(0, 10) },
+        jd_snapshot: { ...jd, kind: isDiscipline ? 'discipline' : 'career', career, fetched_at: new Date().toISOString().slice(0, 10), ...snapExtra },
         ...built.task, created_by: createdBy || '', ...(body.orgId ? { org_id: String(body.orgId) } : {}), ...(body.projectId ? { project_id: String(body.projectId) } : {}),
       }).select('id').single();
       if (insErr) throw insErr;
@@ -171,7 +183,7 @@ async function build(req: Request, body: any, costJob: string) {
       const jd = { company: String(body.company || '').trim().slice(0, 60), title: String(body.title || '').trim().slice(0, 60) || '未命名岗位', responsibilities: pasted, qualifications: '' };
       setBuild(buildId, { phase: '读取岗位 JD' });
       trackDemand(req, { source: 'lab_space', query: `${jd.company} ${jd.title}`.trim(), company_name: jd.company || null, profession: jd.title });
-      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), body.researchPost ? { hint: RESEARCH_POST_HINT } : {});
+      const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), { hint: withSpec(body.researchPost ? RESEARCH_POST_HINT : '') });
       const { data: skill, error: skErr } = await supabaseAdmin.from('skills').insert({
         slug: `jd-paste-${Date.now().toString(36)}`, ...built.skill, interview: [],
         expert_name: '岗位 AI 自学草案', expert_title: '从 JD 与公开职业知识推断 · 等待第一位专家校正', expert_location: '云端', expert_note: '尚未有真人专家', tz_offset: 0,
@@ -180,7 +192,7 @@ async function build(req: Request, body: any, costJob: string) {
       if (skErr) throw skErr;
       const { data: created, error: insErr } = await supabaseAdmin.from('skill_tasks').insert({
         job_id: null, skill_id: skill.id,
-        jd_snapshot: { ...jd, kind: body.researchPost ? 'research_post' : 'pasted', fetched_at: new Date().toISOString().slice(0, 10) },
+        jd_snapshot: { ...jd, kind: body.researchPost ? 'research_post' : 'pasted', fetched_at: new Date().toISOString().slice(0, 10), ...snapExtra },
         ...built.task, created_by: createdBy || '', ...(body.orgId ? { org_id: String(body.orgId) } : {}), ...(body.projectId ? { project_id: String(body.projectId) } : {}),
       }).select('id').single();
       if (insErr) throw insErr;
@@ -201,7 +213,7 @@ async function build(req: Request, body: any, costJob: string) {
 
     const jd = { company: job.institute_or_company_name || '', title: job.name, responsibilities: job.responsibilities || '', qualifications: job.overview || '' };
     trackDemand(req, { source: 'lab_space', query: `${jd.company} ${jd.title}`.trim(), company_name: jd.company || null, profession: jd.title });
-    const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }));
+    const built = await buildSpaceFromJd(jd, model || undefined, (phase, detail) => setBuild(buildId, { phase, detail }), specText ? { hint: specText } : {});
 
     // 技能集草案：AI 自己推断的，挂成这个空间的技能，等真人专家来校正（专家蒸馏时会覆盖）
     const slug = `jd-${job.id}-${Date.now().toString(36)}`;
@@ -214,7 +226,7 @@ async function build(req: Request, body: any, costJob: string) {
 
     const { data: created, error: insErr } = await supabaseAdmin.from('skill_tasks').insert({
       job_id: job.id, skill_id: skill.id,
-      jd_snapshot: { ...jd, job_req_id: job.job_req_id, location: job.location, url: job.link || job.source_url },
+      jd_snapshot: { ...jd, job_req_id: job.job_req_id, location: job.location, url: job.link || job.source_url, ...snapExtra },
       ...built.task,
       created_by: createdBy || '',
       ...(body.orgId ? { org_id: String(body.orgId) } : {}), ...(body.projectId ? { project_id: String(body.projectId) } : {}),   // 企业工作台建的空间归这家企业（迁移 037）

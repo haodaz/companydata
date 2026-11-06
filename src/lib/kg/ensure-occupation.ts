@@ -18,6 +18,9 @@ export async function ensureOccupationForSpace(spaceOrId: any, opts: { deep?: bo
     ? (await supabaseAdmin.from('skill_tasks').select('id, title, jd_snapshot, profile').eq('id', spaceOrId).single()).data
     : spaceOrId;
   if (!space) return null;
+  // 新建空间时人已经在职业库里点选了（jd_snapshot.anchor.occupation_id，11-06）：直接用它，不再按名字猜
+  const picked = Number(space.jd_snapshot?.anchor?.occupation_id) || 0;
+  if (picked) { const { data } = await supabaseAdmin.from('occupations').select('*').eq('id', picked).eq('if_delete', false).maybeSingle(); if (data) return data; }
   const names = namesOf(space);
   for (const n of names) { const o = await findOccupation({ name: n }); if (o) return o; }
   if (!names.length) return null;

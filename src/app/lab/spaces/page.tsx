@@ -89,7 +89,9 @@ export default function LabHome() {
   // 首页的「创造一个空间」直接带着意图跳进来，省掉一次点击
   useEffect(() => {
     const v = new URLSearchParams(window.location.search).get('new');
-    if (v === 'jd') { setPick('jd'); loadJds(); } else if (v === 'career') setPick('career');
+    // 11-06 起新建空间统一走 /lab/studio/new（两层：定位 + 生成要求）；?new=jd 仍打开预置示范 JD
+    if (v === 'career') { router.replace('/lab/studio/new'); return; }
+    if (v === 'jd') { setPick('jd'); loadJds(); }
     if (v) window.history.replaceState(null, '', '/lab/spaces');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -346,8 +348,8 @@ export default function LabHome() {
             )}
           </div>
           {user && <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <button className="lab-btn" disabled={!!needMigration} onClick={() => { setPick('jd'); loadJds(); }}>＋ 新岗位 · 从一份 JD 建</button>
-            <button className="lab-btn ghost" disabled={!!needMigration} style={{ color: 'var(--hd-fg)', background: 'var(--hd-glass)', boxShadow: '0 0 0 1px var(--hd-line)' }} onClick={() => setPick('career')}>＋ 新职业 · 只给一个职业名</button>
+            <button className="lab-btn" disabled={!!needMigration} onClick={() => router.push('/lab/studio/new')}>＋ 新建空间</button>
+            <button className="lab-btn ghost" disabled={!!needMigration} style={{ color: 'var(--hd-fg)', background: 'var(--hd-glass)', boxShadow: '0 0 0 1px var(--hd-line)' }} onClick={() => { setPick('jd'); loadJds(); }}>预置示范 JD</button>
             <button className="lab-btn ghost" style={{ color: 'var(--hd-fg)', background: 'var(--hd-glass)', boxShadow: '0 0 0 1px var(--hd-line)' }} onClick={() => router.push('/lab/assets')}>素材库 · 人物 / 场景 / 道具</button>
           </div>}
         </div>
@@ -435,8 +437,7 @@ export default function LabHome() {
           <div style={{ fontSize: 17, fontWeight: 800, color: 'var(--ink)', marginBottom: 6 }}>你还没有生成过职业模拟</div>
           <div style={{ fontSize: 13.5, color: 'var(--ink3)' }}>百业工厂里只列你自己生成的空间。输入一个职业名，或从一份岗位 JD 开始，几分钟就能生成第一个。</div>
           <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap', marginTop: 18 }}>
-            <button className="lab-btn" disabled={!!needMigration} onClick={() => setPick('career')}>＋ 输入一个职业生成</button>
-            <button className="lab-btn ghost" disabled={!!needMigration} onClick={() => { setPick('jd'); loadJds(); }}>＋ 从一份 JD 生成</button>
+            <button className="lab-btn" disabled={!!needMigration} onClick={() => router.push('/lab/studio/new')}>＋ 新建空间</button>
           </div>
           <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginTop: 16 }}>想先看看别人做的？所有空间都在 <a href="/lab/gallery" style={{ color: 'var(--v)', fontWeight: 700 }}>体验百业</a>。</div>
         </div>
