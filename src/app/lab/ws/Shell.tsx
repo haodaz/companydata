@@ -59,9 +59,10 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       {drawer && <div className="lws-scrim" onClick={() => setDrawer(false)} />}
       <aside className={`lws-side${drawer ? ' open' : ''}${mini ? ' mini' : ''}`}>
         <button className="lws-ham lws-close" aria-label="关闭菜单" onClick={() => setDrawer(false)}><X size={20} strokeWidth={1.8} /></button>
+        {/* 收起 / 展开钮固定在最左上角（照 Claude 桌面端），收起时只剩一列图标 */}
         <div className="lws-top">
-          <Link href={HOME} className="lws-brand" title="AI 百业｜模拟"><span className="mk">业</span><div className="lws-txt"><b>AI 百业｜模拟</b><small>SIMULATION · WORKSPACE</small></div></Link>
           <button className="lws-fold" onClick={toggle} title={mini ? '展开侧栏' : '收起侧栏'} aria-label={mini ? '展开侧栏' : '收起侧栏'}>{mini ? <PanelLeftOpen size={18} strokeWidth={1.7} /> : <PanelLeftClose size={18} strokeWidth={1.7} />}</button>
+          <Link href={HOME} className="lws-brand" title="AI 百业｜模拟"><span className="mk">业</span><div className="lws-txt"><b>AI 百业｜模拟</b><small>SIMULATION · WORKSPACE</small></div></Link>
         </div>
         <div className="lws-scroll">
           <button className={`lws-new${path === CHAT && !cur ? ' on' : ''}`} onClick={() => open(null)} title="新对话"><SquarePen size={16} strokeWidth={1.8} /><span className="lws-txt">新对话</span></button>
@@ -90,14 +91,14 @@ export default function Shell({ children }: { children: React.ReactNode }) {
 const CSS = `
 .lws { display: flex; min-height: 100vh; position: relative; z-index: 1; }
 .lws-side { width: 244px; flex-shrink: 0; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; background: #fff; border-right: 1px solid var(--line); }
-.lws-top { display: flex; align-items: center; padding: 20px 10px 14px 16px; gap: 6px; }
+.lws-top { display: flex; align-items: center; padding: 14px 10px 12px 14px; gap: 8px; }
 .lws-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: var(--ink); min-width: 0; flex: 1; }
 .lws-fold { width: 32px; height: 32px; border: 0; background: transparent; border-radius: 8px; display: grid; place-items: center; color: var(--ink3); cursor: pointer; flex-shrink: 0; }
 .lws-fold:hover { background: rgba(23,26,46,.06); color: var(--ink); }
 .lws-side { transition: width .18s ease; }
 .lws-side.mini { width: 60px; }
 .lws-side.mini .lws-txt, .lws-side.mini .lws-grp, .lws-side.mini .lws-list { display: none; }
-.lws-side.mini .lws-top { flex-direction: column; padding: 16px 0 10px; gap: 10px; } .lws-side.mini .lws-brand { flex: none; }
+.lws-side.mini .lws-top { padding: 14px 0 12px; justify-content: center; } .lws-side.mini .lws-brand { display: none; }
 .lws-side.mini .lws-scroll { padding: 6px 8px; } .lws-side.mini .lws-new, .lws-side.mini .lws-nav a { justify-content: center; padding: 9px 0; }
 .lws-side.mini .lws-acct { justify-content: center; padding: 6px 0; } .lws-side.mini .lws-acct-m { right: auto; width: 200px; }
 .lws-brand .mk, .lws-mbrand .mk { width: 36px; height: 36px; border-radius: 10px; background: var(--v); color: #fff; display: grid; place-items: center; font-weight: 900; font-size: 16px; flex-shrink: 0; }
@@ -131,7 +132,7 @@ const CSS = `
   .lws-mbrand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); margin-right: auto; } .lws-mbrand .mk { width: 28px; height: 28px; border-radius: 9px; font-size: 13px; } .lws-mbrand b { font-size: 15px; }
   .lws-fold { display: none; }
   .lws-side.mini .lws-txt { display: initial; } .lws-side.mini .lws-grp { display: block; } .lws-side.mini .lws-list { display: grid; }
-  .lws-side.mini .lws-top { flex-direction: row; padding: 20px 10px 14px 16px; } .lws-side.mini .lws-new, .lws-side.mini .lws-nav a, .lws-side.mini .lws-acct { justify-content: flex-start; padding: 9px 12px; }
+  .lws-side.mini .lws-top { padding: 14px 10px 12px 14px; justify-content: flex-start; } .lws-side.mini .lws-brand { display: flex; } .lws-side.mini .lws-new, .lws-side.mini .lws-nav a, .lws-side.mini .lws-acct { justify-content: flex-start; padding: 9px 12px; }
   .lws-side, .lws-side.mini { position: fixed; left: 0; top: 0; bottom: 0; height: 100%; width: min(84vw, 300px); z-index: 50; transform: translateX(-104%); transition: transform .22s ease; background: #fff; box-shadow: 8px 0 30px rgba(23,26,46,.16); }
   .lws-side.open { transform: none; } .lws-close { display: grid; position: absolute; right: 8px; top: 14px; }
   .lws-scrim { position: fixed; inset: 0; background: rgba(23,26,46,.3); z-index: 45; }

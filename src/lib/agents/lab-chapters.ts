@@ -7,6 +7,7 @@
  *   人物 / 场景 / 道具优先用角色表里的（同一天同一张脸、同一个地方）；需要新的就新建（户外 / 办公室 / 同行 / 客户都很正常），
  *   新建的先按规范类型名找素材库，找不到才画，画完立刻归库。
  */
+import { recordEdit } from '@/lib/lab-edits';
 import { generateContent, resolveModel } from '@/lib/llm-client';
 import { specTextOf } from '@/lib/lab-spec';
 import { logTokenUsage, withCost } from '@/lib/token-logger';
@@ -200,6 +201,10 @@ async function buildChapterInner(spaceId: string, chapterId: string, model: stri
   const before = others.filter(c => (t != null && slotMinutes(c.slot) != null ? slotMinutes(c.slot)! < t : c.seq < ch.seq));
   const after = others.filter(c => !before.includes(c));
   const usedBefore = (m: CastMember) => before.some(c => stepsUsing(c.sim, m).length);
+  // 原章里的虚拟工位重写时原样保留（11-06 实测：按评审改 / 重新生成把工位丢了）；文字题重写，工位要改走「✦ 改 → 重新设计」
+  const oldSteps: any[] = (ch.sim as any)?.steps || [];
+  const benches = oldSteps.map((st, i) => ({ st, i })).filter(x => x.st?.type === 'bench');
+  const benchNote = benches.length ? `\n这一章有虚拟工位「${benches.map(b => b.st.bench?.name || b.st.prompt || '动手操作').join('」「')}」，会原样放回原来的位置（第 ${benches.map(b => b.i + 1).join('、')} 步左右）；你只写其它步骤，steps 里不要出 bench，也别把工位里的操作再出成文字题。` : '';
 
   await progress('写故事线', `${ch.slot || ''} ${ch.title}`);
   const prompt = (fix: string) => `
@@ -217,7 +222,7 @@ ${before.length ? before.map(chapterLine).join('\n') : '（这是一天的第一
 在这一章之后还会发生的（不要抢它们的内容）：
 ${after.length ? after.map(c => `- ${c.slot || ''} ${c.title}`).join('\n') : '（无）'}
 
-【要写的这一章】时段 ${ch.slot || '未定'} · 类型 ${ch.kind} · 标题「${ch.title}」
+【要写的这一章】时段 ${ch.slot || '未定'} · 类型 ${ch.kind} · 标题「${ch.title}」${benchNote}
 要交代的事：${ch.brief || '（按标题发挥）'}
 ${hint ? `管理员的要求：${hint}\n` : ''}
 ${DAY_RULES}
@@ -273,7 +278,11 @@ ${CAST_RULES}
   if (p.expert && typeof p.expert === 'object') for (const k of Object.keys(p.expert)) if (typeof p.expert[k] === 'string') p.expert[k] = decodeCastRefs(p.expert[k], nameOf);
   const sim = cleanSim(p.sim, ch, ref);
   if (sim.steps.length < 3) throw new Error('生成的步骤太少，换个说法再试一次');
-  const trace = sanitizeTrace(sim, p.expert || {});
+  if (benches.length && !sim.steps.some((st: any) => st.type === 'bench')) {
+    for (const b of benches) sim.steps.splice(Math.min(Math.round(b.i / oldSteps.length * sim.steps.length), sim.steps.length), 0, b.st);
+  }
+  const oldTrace: any = (ch as any).expert_trace || {};
+  const trace = sanitizeTrace(sim, { ...Object.fromEntries(benches.map(b => [b.st.id, oldTrace[b.st.id]])), ...(p.expert || {}) });
 
   // 用到但还没有图的人物 / 场景：现画，画完立刻归库（一章最多画 4 张，省钱）
   let drawn = 0;
@@ -296,6 +305,8 @@ ${CAST_RULES}
   const rubric = normalizeRubric(p.rubric);
   const { error: e3 } = await supabaseAdmin.from('lab_chapters').update({ sim: withArt, expert_trace: trace, ...(rubric ? { rubric } : {}), updated_at: new Date().toISOString() }).eq('id', chapterId);
   if (e3) throw e3;
+  // 留改前版本（11-06：后台重写以前不留痕，改坏了找不回）；空格子第一次写不算
+  if ((ch.sim as any)?.steps?.length) await recordEdit({ task_id: spaceId, chapter_id: chapterId, source: 'agent', before: { sim: ch.sim, expert_trace: (ch as any).expert_trace ?? null }, after: { sim: withArt, expert_trace: trace }, note: hint ? `重写：${hint.slice(0, 200)}` : '重写' }).catch(() => {});
   if (ch.seq === 1) await supabaseAdmin.from('skill_tasks').update({ sim: withArt }).eq('id', spaceId);
   // 教案（跟我学 / 我教你）在生成时就备好，不让用户进来等「备课」（2026-10-18 用户）；失败不影响章节本身
   await progress('备课', '每一步为什么这么做、工位上一下一下怎么做');

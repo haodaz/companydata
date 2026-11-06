@@ -104,7 +104,9 @@ ${spaceText(space)}
 export async function rebuildChapterBench(spaceId: string, chapterId: string, instruction: string, model: string, revisionId: string) {
   const { space, ch } = await loadCtx(spaceId, chapterId);
   const old = (ch.sim?.steps || []).find((s: any) => s.type === 'bench');
-  const hint = [`人的修改要求：${instruction}`, specTextOf(space.jd_snapshot)].filter(Boolean).join('\n');
+  // 在原工位上改（11-06 实测：只给要求不给原工位，模型会换个场景从头设计，「降难度」反而没降）
+  const base = old ? `原工位（在它上面改；要求里没说换设备 / 场景就别换）：\n${benchSummary(old).join('\n')}\n降难度 = 放宽目标的容差、少几个要同时盯的量、红线只留真会出事的；加难度反过来。` : '';
+  const hint = [`人的修改要求：${instruction}`, base, specTextOf(space.jd_snapshot)].filter(Boolean).join('\n');
   const r = await rebuildBench({ id: spaceId, jd_snapshot: space.jd_snapshot || {}, title: ch.title, brief: ch.brief || ch.sim?.intro || '', sim: ch.sim }, model, hint);
   if (!r) throw new Error('这次没设计出能跑通的工位，换个说法再试');
   const nb = r.sim.steps.find(s => s.type === 'bench')!;

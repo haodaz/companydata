@@ -5,7 +5,8 @@
  * 左边对话，右边是正在做的空间（工作室嵌进来，iframe 里 LabShell 不画顶栏）。
  * 对话里的卡片：lab_build 生成进度（只在这一轮新出现时发起构建，翻历史不重发；做完自动接一句 space_id 给助理）、
  * lab_revision 局部改提案（改前 / 改后，采纳才写进章节）、lab_invite 邀请老师傅的链接。
- * 对话区是主区域，应用区是它的子集（11-06）：显示哪个应用（工作室 / 体验预览）、并排还是对话占满，开关一律在对话区右上角，应用面板头上只有标题；
+ * 对话区是主区域，应用区是它的子集（11-06，照 Claude 桌面端）：对话区右上角只放各个应用区显不显示的开关（工作室 / 体验预览）；
+ * 应用区自己的标题栏上放新窗口、全屏（盖住对话）、关闭；
  * 以后同时开两种操作也往这组开关里加。开了应用区、屏不够宽就让 workspace 侧栏临时收起。
  */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -13,7 +14,7 @@ import { useRouter } from 'next/navigation';
 import { Md } from '@/components/ws/Md';
 import { CHAT_CSS, Composer, fromHistory, RUNNING, type Item } from '@/components/work/ChatKit';
 import { useLabNav } from '@/components/lab/FactoryKit';
-import { ExternalLink, PanelRight, Play } from 'lucide-react';
+import { ExternalLink, Maximize2, Minimize2, PanelRight, Play, X } from 'lucide-react';
 
 type Panel = { space_id: string; title: string; url: string; _n?: number };
 const QUICK = [
@@ -36,7 +37,8 @@ export default function Page() {
   const [panel, setPanel] = useState<Panel | null>(null);   // 当前在做的空间
   const [view, setView] = useState<'studio' | 'preview' | null>(null);   // 应用区显示什么；null = 对话占满
   const show = (p: Panel) => { setPanel(p); setView(v => v || 'studio'); };
-  const flip = (v: 'studio' | 'preview') => setView(cur => (cur === v ? null : v));
+  const flip = (v: 'studio' | 'preview') => { setFull(false); setView(cur => (cur === v ? null : v)); };
+  const [full, setFull] = useState(false);
   const appOpen = !!(panel && view);
   useEffect(() => { window.dispatchEvent(new CustomEvent('lws-auto-collapse', { detail: appOpen && window.innerWidth < 1680 })); }, [appOpen]);
   useEffect(() => () => { window.dispatchEvent(new CustomEvent('lws-auto-collapse', { detail: false })); }, []);
@@ -57,7 +59,7 @@ export default function Page() {
   useEffect(() => { window.dispatchEvent(new CustomEvent('lws-thread', { detail: threadId })); }, [threadId]);
 
   const openThread = async (id: string) => {
-    abortRef.current?.abort(); setBusy(false); setThreadId(id); setItems([]); setPanel(null); setView(null);
+    abortRef.current?.abort(); setBusy(false); setThreadId(id); setItems([]); setPanel(null); setView(null); setFull(false);
     const j = await (await fetch(`/api/lab/chat?id=${id}`)).json(); if (!j.ok) return;
     setItems(fromHistory(j.thread.messages || []));
     const last = [...(j.thread.messages || [])].reverse().flatMap((m: any) => (m.role === 'tool' ? [...m.results].reverse() : [])).find((r: any) => r.ui?.url);
@@ -69,7 +71,7 @@ export default function Page() {
     if (e.t === 'thread') { setThreadId(e.id); return; }
     if (e.t === 'text') setItems(it => { const last = it[it.length - 1]; return last?.k === 'text' ? [...it.slice(0, -1), { k: 'text', text: last.text + e.delta }] : [...it, { k: 'text', text: e.delta }]; });
     else if (e.t === 'tool_start') setItems(it => [...it, { k: 'tool', id: e.id, name: e.name, input: e.input, running: true }]);
-    else if (e.t === 'tool_end') { setItems(it => it.map(x => (x.k === 'tool' && x.id === e.id ? { ...x, running: false, label: e.label, ui: e.ui, error: e.error, live: true } : x))); if (e.ui?.url) show({ ...e.ui, _n: Date.now() }); }
+    else if (e.t === 'tool_end') { setItems(it => it.map(x => (x.k === 'tool' && x.id === e.id ? { ...x, running: false, label: e.label, ui: e.ui, error: e.error, live: true } : x))); if (e.ui?.url) show({ ...e.ui, _n: Date.now() }); else if (!e.error && ['publish_chapters', 'set_listing', 'set_spec'].includes(e.name)) setPanel(p => p && { ...p, _n: Date.now() }); }
     else if (e.t === 'ask') setItems(it => [...it, { k: 'ask', id: e.id, question: e.question, options: e.options }]);
     else if (e.t === 'error') setItems(it => [...it, { k: 'error', text: e.message }]);
   };
@@ -106,11 +108,8 @@ export default function Page() {
             {threadId && <button className="lab-btn ghost sm" onClick={newChat}>＋ 新对话</button>}
           </>}
           {panel && <div className="lc-tools">
-            <span className="lc-tools-t" title={panel.title}>{panel.title}</span>
-            <button className={view === 'studio' ? 'on' : ''} onClick={() => flip('studio')} title={view === 'studio' ? '收起工作室（对话占满）' : '在右边开工作室'}><PanelRight size={17} strokeWidth={1.7} /></button>
-            <button className={view === 'preview' ? 'on' : ''} onClick={() => flip('preview')} title={view === 'preview' ? '收起体验预览（对话占满）' : '在右边开体验预览（学生看到的样子）'}><Play size={16} strokeWidth={1.7} /></button>
-            <i />
-            <a href={view === 'preview' ? `/lab/${panel.space_id}?m=test` : panel.url} target="_blank" rel="noreferrer" title="新窗口打开"><ExternalLink size={16} strokeWidth={1.7} /></a>
+            <button className={view === 'studio' ? 'on' : ''} onClick={() => flip('studio')} title={view === 'studio' ? '收起工作室' : '显示工作室'}><PanelRight size={17} strokeWidth={1.7} /></button>
+            <button className={view === 'preview' ? 'on' : ''} onClick={() => flip('preview')} title={view === 'preview' ? '收起体验预览' : '显示体验预览（学生看到的样子）'}><Play size={16} strokeWidth={1.7} /></button>
           </div>}
         </div>}
         {!items.length ? (
@@ -142,8 +141,13 @@ export default function Page() {
           <div className="wc-dock">{composer(false)}</div>
         </>}
       </section>
-      {panel && view && <aside className="lc-p" key={view + panel.url + (panel._n || '')}>
-        <div className="lc-p-h"><span className="lab-mono lab-cap">{view === 'preview' ? '体验预览' : '工作室'}</span><b>{panel.title}</b></div>
+      {panel && view && <aside className={`lc-p${full ? ' full' : ''}`} key={view + panel.url + (panel._n || '')}>
+        <div className="lc-p-h"><span className="lab-mono lab-cap">{view === 'preview' ? '体验预览' : '工作室'}</span><b>{panel.title}</b>
+          <div className="lc-p-act">
+            <a href={view === 'preview' ? `/lab/${panel.space_id}?m=test` : panel.url} target="_blank" rel="noreferrer" title="新窗口打开"><ExternalLink size={15} strokeWidth={1.7} /></a>
+            <button onClick={() => setFull(f => !f)} title={full ? '退出全屏' : '全屏'}>{full ? <Minimize2 size={15} strokeWidth={1.7} /> : <Maximize2 size={15} strokeWidth={1.7} />}</button>
+            <button onClick={() => { setFull(false); setView(null); }} title="关闭"><X size={16} strokeWidth={1.7} /></button>
+          </div></div>
         <iframe src={view === 'preview' ? `/lab/${panel.space_id}?m=test` : panel.url} title={panel.title} />
       </aside>}
     </div>
@@ -215,7 +219,7 @@ function RevisionCard({ ui, onApplied }: { ui: any; onApplied: () => void }) {
   };
   const view = (v: any) => ui.target === 'opening'
     ? <><b>{v?.title}</b><div className="lc-mute">{v?.intro}</div></>
-    : <>{v?.step?.scene?.text && <div className="lc-mute">{v.step.scene.who}：{v.step.scene.text}</div>}<b>{v?.step?.prompt}</b>{v?.step?.options?.length ? <ul>{v.step.options.map((o: any) => <li key={o.id}>{o.label}</li>)}</ul> : null}</>;
+    : <>{v?.step?.scene?.text && <div className="lc-mute">{v.step.scene.who}：{v.step.scene.text}</div>}<b>{v?.step?.prompt}</b>{v?.step?.options?.length ? <ul>{v.step.options.map((o: any) => { const ex = v.expert === o.id || (Array.isArray(v.expert) && v.expert.includes(o.id)); return <li key={o.id} style={ex ? { color: '#0d7a52' } : undefined}>{o.label}{o.detail ? <span className="lc-mute">（{o.detail}）</span> : null}{ex ? ' ← 示范' : ''}</li>; })}</ul> : null}</>;
   return <div className="lc-card">
     <div><b>修改提案</b>{ui.note ? <span className="lc-mute"> · {ui.note}</span> : null}</div>
     <div className="lc-diff"><div><div className="lab-mono lab-cap">改前</div>{view(ui.before)}</div><div><div className="lab-mono lab-cap" style={{ color: '#0d7a52' }}>改后</div>{view(ui.after)}</div></div>
@@ -225,11 +229,11 @@ function RevisionCard({ ui, onApplied }: { ui: any; onApplied: () => void }) {
 }
 
 function InviteCard({ ui }: { ui: { space_id: string; title: string } }) {
-  const [r, setR] = useState<any>(null);
+  const [r, setR] = useState<any>(null); const [copied, setCopied] = useState(false);
   useEffect(() => { fetch(`/api/lab/spaces/${ui.space_id}/invite`, { method: 'POST' }).then(x => x.json()).then(setR).catch(() => setR({ ok: false, error: '网络错误' })); }, [ui.space_id]);
   return <div className="lc-card"><b>请老师傅来示范「{ui.title}」</b>
     {!r ? <span className="lc-mute">生成链接…</span> : !r.ok ? <span style={{ color: '#c4323a' }}>{r.error}</span>
-      : <><code style={{ wordBreak: 'break-all', fontSize: 12.5 }}>{r.url}</code><div style={{ display: 'flex', gap: 8, alignItems: 'center' }}><button className="lab-btn ghost sm" onClick={() => navigator.clipboard.writeText(r.url)}>复制</button><span className="lc-mute">{r.days} 天内有效，老师傅点开就能示范、纠正做法，不用登录</span></div></>}
+      : <><div style={{ display: 'flex', gap: 8, alignItems: 'center', minWidth: 0 }}><code style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 12.5, padding: '6px 10px', borderRadius: 8, background: 'rgba(23,26,46,.04)' }} title={r.url}>{r.url}</code><button className="lab-btn ghost sm" style={{ flexShrink: 0, whiteSpace: 'nowrap' }} onClick={() => { navigator.clipboard.writeText(r.url); setCopied(true); }}>{copied ? '已复制' : '复制链接'}</button></div><span className="lc-mute">{r.days} 天内有效，老师傅点开就能示范、纠正做法，不用登录</span></>}
   </div>;
 }
 
@@ -240,17 +244,19 @@ const CSS = `
 .lc-chat { display: flex; flex-direction: column; min-height: 0; }
 .lc-top { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; min-height: 34px; }
 .lc-tools { margin-left: auto; display: flex; align-items: center; gap: 2px; min-width: 0; }
-.lc-tools-t { font-size: 12.5px; color: var(--ink3); margin-right: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 240px; }
 .lc-tools button, .lc-tools a { width: 32px; height: 32px; border: 0; background: transparent; border-radius: 8px; display: grid; place-items: center; color: var(--ink2); cursor: pointer; flex-shrink: 0; }
 .lc-tools button:hover, .lc-tools a:hover { background: rgba(23,26,46,.06); color: var(--ink); }
 .lc-tools button.on { background: rgba(91,79,224,.12); color: var(--v); }
-.lc-tools i { width: 1px; height: 18px; background: var(--line); margin: 0 6px; }
+.lc-p-act { margin-left: auto; display: flex; gap: 2px; align-self: center; }
+.lc-p-act a, .lc-p-act button { width: 28px; height: 28px; border: 0; background: transparent; border-radius: 7px; display: grid; place-items: center; color: var(--ink2); cursor: pointer; }
+.lc-p-act a:hover, .lc-p-act button:hover { background: rgba(23,26,46,.06); color: var(--ink); }
+.lc.with-p:has(.lc-p.full) { grid-template-columns: minmax(0, 1fr); } .lc:has(.lc-p.full) .lc-chat { display: none; }
 .lc-sel { width: auto !important; max-width: 320px; padding: 6px 10px !important; font-size: 13px !important; border-radius: 10px !important; }
 .lc-hero { margin: auto; width: min(780px, 100%); padding-bottom: 6vh; }
 .lc-hero h1 { font-size: 30px; font-weight: 800; margin: 8px 0 6px; } .lc-hero p { color: var(--ink2); margin: 0 0 16px; line-height: 1.8; }
 .lc .wc-thread { flex: 1; min-height: 0; overflow-y: auto; }
 .lc-p { display: flex; flex-direction: column; min-height: 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
-.lc-p-h { display: flex; align-items: baseline; gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--line); } .lc-p-h b { font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lc-p-h { display: flex; align-items: baseline; gap: 10px; padding: 6px 8px 6px 14px; border-bottom: 1px solid var(--line); } .lc-p-h b { font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .lc-p iframe { flex: 1; width: 100%; border: 0; background: transparent; }
 .lc-card { display: grid; gap: 8px; margin: 4px auto 10px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.85); font-size: 13.5px; line-height: 1.7; }
 .lc-mute { color: var(--ink3); font-size: 13px; }
