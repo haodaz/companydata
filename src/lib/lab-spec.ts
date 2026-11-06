@@ -68,6 +68,13 @@ export const PRESETS: { key: string; label: string; spec: Omit<GenSpec, 'preset'
   },
 ];
 
+/** 局部改的常用说法（工作室里做成可点的小标签） */
+export const REVISE_CHIPS = {
+  step: ['难度降一档', '难度升一档', '换个更常见的场景', '术语加一句大白话解释', '说法更口语', '选项更有迷惑性', '缩短一点'],
+  opening: ['开场更有画面感', '说清楚这一章要干什么', '更口语', '缩短一点'],
+  bench: ['操作不用那么精准，大致合理就给分', '红线只留真会出事故的', '换一台这一行更常见的设备', '加一个中途突发'],
+} as const;
+
 /** 一份生成要求有没有填东西 */
 export const hasSpec = (s?: GenSpec | null) => !!s && !!(s.audience || s.depth || s.difficulty || s.must || s.avoid || s.refs?.length);
 

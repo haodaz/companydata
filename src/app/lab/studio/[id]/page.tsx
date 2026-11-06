@@ -11,7 +11,7 @@ import { ChatLauncher } from '@/components/kg/PersonaChat';
 import { CHAPTER_KINDS, STEP_TYPES, blankStep, checkAll, type StudioChapter, type StudioIssue, type BasisRow } from '@/lib/lab-studio';
 import { SpecEditor, SPEC_CSS } from '@/components/lab/SpecEditor';
 import { col, FX_CSS, LISTING, Plays } from '@/components/lab/FactoryKit';
-import { hasSpec, type Anchor, type GenSpec } from '@/lib/lab-spec';
+import { hasSpec, REVISE_CHIPS, type Anchor, type GenSpec } from '@/lib/lab-spec';
 import { CAST_KINDS, applyCastArt, castKind, stepsUsing, type CastKind, type CastMember, type LabAsset } from '@/lib/lab-cast';
 
 /**
@@ -50,6 +50,7 @@ export default function StudioPage() {
   const [genHint, setGenHint] = useState('');
   const [genArt, setGenArt] = useState(true);
   const [dayOpen, setDayOpen] = useState(false);
+  const [revise, setRevise] = useState<{ target: 'step' | 'opening' | 'bench'; stepId?: string } | null>(null);   // 局部改（B）
   // 分 tab（11-06）：一天 / 角色与素材 / 生成要求 / 作答 / 分析；预览、上下架在右上角
   const tab = (sp.get('tab') as StudioTab) || 'day';
   const setTab = (t: StudioTab) => router.replace(`/lab/studio/${id}${t === 'day' ? (cur ? `?ch=${cur}` : '') : `?tab=${t}`}`);
@@ -154,7 +155,7 @@ export default function StudioPage() {
     }
     setSaving(true);
     try {
-      const body = { title: draft.title, slot: draft.slot, kind: draft.kind, brief: draft.brief, sim, status: draft.status, locked: draft.locked, ...extra, base_updated_at: (data?.chapters.find(c => c.id === draft.id) as any)?.updated_at };
+      const body = { title: draft.title, slot: draft.slot, kind: draft.kind, brief: draft.brief, sim, expert_trace: (draft as any).expert_trace ?? null, status: draft.status, locked: draft.locked, ...extra, base_updated_at: (data?.chapters.find(c => c.id === draft.id) as any)?.updated_at };
       const j = await fetch(`/api/lab/studio/${id}/chapters/${draft.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).then(r => r.json());
       if (!j.ok) { message.error(j.error || '保存失败'); return; }
       apply(j, draft.id);
@@ -221,7 +222,7 @@ export default function StudioPage() {
         {STUDIO_TABS.map(([k, t]) => <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? 'on' : ''} onClick={() => setTab(k)}>{t}{k === 'day' ? <i>{data.chapters.length}</i> : k === 'cast' ? <i>{data.cast.length}</i> : null}</button>)}
       </div>
 
-      {tab === 'spec' && <SpecTab id={id} space={space} onSaved={spec => setData(d => d && { ...d, space: { ...d.space, jd_snapshot: { ...(d.space.jd_snapshot || {}), spec: spec || undefined } } })} />}
+      {tab === 'spec' && <SpecTab id={id} space={space} model={genModel} onRewrite={() => { loadJobs(); setTab('day'); }} onSaved={spec => setData(d => d && { ...d, space: { ...d.space, jd_snapshot: { ...(d.space.jd_snapshot || {}), spec: spec || undefined } } })} />}
       {tab === 'cast' && <div style={{ maxWidth: 760 }}>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 12 }}><span style={{ fontSize: 13, color: 'var(--ink2)' }}>这个空间里反复出场的人、地方、道具。同一天各章共用：同一张脸、同一个地方。</span><button className="lab-btn ghost sm" style={{ marginLeft: 'auto' }} onClick={() => router.push('/lab/assets')}>素材库 ↗</button></div>
         <CastPanel cast={data.cast} chapters={liveChapters} current={null} onOpen={setCastEdit} />
@@ -278,7 +279,7 @@ export default function StudioPage() {
           </div>
           {dayIssues.length > 0 && <div style={{ marginTop: 10 }}>{dayIssues.map((x, i) => <IssueLine key={i} x={x} />)}</div>}
           {runningJobs.map(j => <div key={j.id} className="lab-scan" style={{ marginTop: 8, fontSize: 12, color: 'var(--v)', padding: '6px 8px', borderRadius: 8, background: 'rgba(106,92,255,.07)' }}>
-            {j.kind === 'build_day' ? '排骨架' : `生成「${data.chapters.find(c => c.id === j.chapter_id)?.title || '一章'}」`} · {j.phase}{j.detail ? `：${j.detail}` : ''}<span className="lab-dots" />
+            {j.kind === 'build_day' ? '排骨架' : j.kind === 'rewrite_all' ? '整体重写' : `生成「${data.chapters.find(c => c.id === j.chapter_id)?.title || '一章'}」`} · {j.phase}{j.detail ? `：${j.detail}` : ''}<span className="lab-dots" />
           </div>)}
           {(data.space.bible?.facts || []).length > 0 && (
             <details style={{ marginTop: 10, fontSize: 12, color: 'var(--ink2)' }}>
@@ -303,6 +304,7 @@ export default function StudioPage() {
                     <span className="lab-mono lab-cap">AI · 按格生成</span>
                     <span style={{ fontSize: 12, color: 'var(--ink3)' }}>按这一格的时段、标题、要交代的事写故事线和示范答案；人物 / 场景优先用角色表，新的先找素材库，找不到才画</span>
                   </div>
+                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{['难度降一档', '换个更常见的场景', '术语都加大白话解释', '少一步、短一点', '加一个动手的工位'].map(c => <button key={c} className={`fx-chip${genHint.includes(c) ? ' on' : ''}`} style={{ fontSize: 12 }} onClick={() => setGenHint(h => h.includes(c) ? h.replace(new RegExp(`；?${c}`), '').replace(/^；/, '') : [h, c].filter(Boolean).join('；'))}>{c}</button>)}</div>
                   <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
                     <input className="lab-input" style={{ ...field, flex: '1 1 260px', width: 'auto' }} value={genHint} onChange={e => setGenHint(e.target.value)} placeholder="附一句要求（可空）：如「这台是急诊阑尾切除，中途发现穿孔」" />
                     <label style={{ fontSize: 12.5, color: 'var(--ink2)', display: 'flex', alignItems: 'center', gap: 4, cursor: 'pointer' }} title="用到但还没图的人物 / 场景现画（一章最多 4 张）"><input type="checkbox" checked={genArt} onChange={e => setGenArt(e.target.checked)} /> 缺图就画</label>
@@ -331,7 +333,7 @@ export default function StudioPage() {
               </div>
               <label style={{ display: 'block', marginTop: 12 }}><span style={lbl}>这一章要交代的事（给生成和编辑看；可以写「接住上午的客诉」这类前后衔接）</span>
                 <textarea className="lab-input" style={field} rows={2} value={draft.brief || ''} onChange={e => edit(d => { d.brief = e.target.value; })} /></label>
-              <label style={{ display: 'block', marginTop: 12 }}><span style={lbl}>开场（体验者进来先看到的情境）</span>
+              <label style={{ display: 'block', marginTop: 12 }}><span style={lbl}>开场（体验者进来先看到的情境）<button type="button" className="fx-lnk" style={{ fontSize: 12 }} onClick={e => { e.preventDefault(); setRevise({ target: 'opening' }); }}>✦ 改标题和开场</button></span>
                 <textarea className="lab-input" style={field} rows={4} value={draft.sim?.intro || ''} onChange={e => edit(d => { d.sim = { ...d.sim, intro: e.target.value }; })} /></label>
             </div>
 
@@ -357,6 +359,7 @@ export default function StudioPage() {
                     <span style={{ fontSize: 14, fontWeight: 600, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, color: s.prompt ? 'var(--ink)' : 'var(--ink3)' }}>{s.prompt || '（还没写题干）'}</span>
                     {si.length > 0 && <span style={{ fontSize: 11.5, color: si.some(x => x.level === 'error') ? '#e5484d' : '#d08a00', flexShrink: 0 }}>● {si.length}</span>}
                     <span onClick={e => e.stopPropagation()} style={{ display: 'flex', gap: 4 }}>
+                      <button className="lab-btn ghost sm" style={{ height: 28, padding: '0 10px', fontSize: 12.5 }} title={s.type === 'bench' ? '说一句要求，重新设计这台工位' : '说一句怎么改，AI 只改这一步'} onClick={() => setRevise({ target: s.type === 'bench' ? 'bench' : 'step', stepId: s.id })}>✦ 改</button>
                       <button style={mini} title="上移" disabled={i === 0} onClick={() => edit(d => { const a = d.sim.steps; [a[i - 1], a[i]] = [a[i], a[i - 1]]; })}>↑</button>
                       <button style={mini} title="下移" disabled={i === steps.length - 1} onClick={() => edit(d => { const a = d.sim.steps; [a[i + 1], a[i]] = [a[i], a[i + 1]]; })}>↓</button>
                       <Popconfirm title="删除这一步？" onConfirm={() => edit(d => { d.sim.steps.splice(i, 1); })} okText="删除" okButtonProps={{ danger: true }} cancelText="取消">
@@ -423,6 +426,13 @@ export default function StudioPage() {
         </div>
         <textarea className="lab-input" rows={3} style={field} value={dayHint} onChange={e => setDayHint(e.target.value)} placeholder="附几句要求（可空）：如「要有两台不同的手术、上午查房、下午多学科会诊」" />
       </Modal>
+      {revise && draft && <ReviseModal spaceId={id} chapter={draft} model={genModel} target={revise.target} stepId={revise.stepId} onClose={() => setRevise(null)}
+        onAdopt={(r: any) => {
+          if (revise.target === 'opening') edit(d => { d.title = r.after.title; d.sim.intro = r.after.intro; });
+          else if (revise.target === 'step') edit(d => { const k = d.sim.steps.findIndex((x: any) => x.id === revise.stepId); if (k >= 0) d.sim.steps[k] = r.after.step; (d as any).expert_trace = { ...((d as any).expert_trace || {}), [revise.stepId!]: r.after.expert }; });
+          else edit(d => { d.sim = r.after.sim; if (r.after.expert) (d as any).expert_trace = { ...((d as any).expert_trace || {}), [r.after.stepId]: r.after.expert }; });
+          setRevise(null); message.success('已放进这一章：看一眼没问题就点「保存」');
+        }} />}
       {castEdit && <CastEditor spaceId={id} member={castEdit} onClose={() => setCastEdit(null)} onDone={() => { setCastEdit(null); refresh(); }} />}
       {preview && draft && (
         <SimStage title={`试玩 · ${draft.title}`} role="rookie" immersive={!!applyCastArt(draft.sim, data.cast).art} onExit={() => setPreview(false)}>
@@ -618,6 +628,28 @@ function CastEditor({ spaceId, member, onClose, onDone }: { spaceId: string; mem
       message.success(`画好了，已归库 ${j.asset.code}`); onDone();
     } catch (e: any) { message.error(e.message); } finally { setDrawing(false); }
   };
+  // 说一句怎么改（11-06）：AI 按这句话 + 生成要求改描述，再照新描述画
+  const [fix, setFix] = useState('');
+  const redrawWith = async () => {
+    if (fix.trim().length < 2) return;
+    setDrawing(true);
+    try {
+      const j = await fetch(`/api/lab/studio/${spaceId}/cast/${m.id}/draw`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ instruction: fix }) }).then(r => r.json());
+      if (!j.ok) throw new Error(j.error);
+      if (j.look) setF(x => ({ ...x, look: j.look }));
+      setFix(''); message.success(`改好了：${j.note || '按新描述重画'}，已归库 ${j.asset.code}`); onDone();
+    } catch (e: any) { message.error(e.message); } finally { setDrawing(false); }
+  };
+  const [uploading, setUploading] = useState(false);
+  const uploadOwn = async (fl: File) => {
+    setUploading(true);
+    try {
+      const b64 = await new Promise<string>(res => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1] || ''); r.readAsDataURL(fl); });
+      const j = await fetch(`/api/lab/studio/${spaceId}/cast/${m.id}/upload`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ filename: fl.name, file: b64 }) }).then(r => r.json());
+      if (!j.ok) throw new Error(j.error);
+      message.success('换上了你的图，已归库'); onDone();
+    } catch (e: any) { message.error(e.message); } finally { setUploading(false); }
+  };
   const remove = async () => {
     const j = await fetch(`/api/lab/studio/${spaceId}/cast/${m.id}`, { method: 'DELETE' }).then(r => r.json());
     if (!j.ok) { message.error(j.error); return; }
@@ -651,8 +683,14 @@ function CastEditor({ spaceId, member, onClose, onDone }: { spaceId: string; mem
             })}
           </div>
         </div>
+        {!isNew && !m.is_self && k.k !== 'prop' && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
+          {(k.k === 'person' ? ['更年轻一点', '穿得更像一线工作的样子', '换成女性', '表情更亲切'] : ['更明亮', '换成更常见的场所', '更像学校 / 实训室', '少一点设备']).map(c => <button key={c} className="fx-chip" style={{ fontSize: 12 }} onClick={() => setFix(x => [x, c].filter(Boolean).join('；'))}>{c}</button>)}
+          <input className="lab-input" style={{ ...field, flex: '1 1 220px', width: 'auto' }} value={fix} onChange={e => setFix(e.target.value)} placeholder="说一句怎么改这张图，AI 改描述再重画" />
+          <button className="lab-btn ghost sm" disabled={drawing || fix.trim().length < 2} onClick={redrawWith}>{drawing ? '画图中…' : '✦ 按这句重画'}</button>
+        </div>}
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           {!isNew && !m.is_self && k.k !== 'prop' && <button className="lab-btn ghost sm" disabled={drawing} onClick={drawNow} title="按外形 / 陈设描述现画一张，画完立刻归库（约半分钟）">{drawing ? '画图中…' : '✎ 按描述画一张'}</button>}
+          {!isNew && !m.is_self && <label className="lab-btn ghost sm" style={{ cursor: 'pointer' }} title={k.k === 'person' ? '人物建议用透明底 PNG' : '换成你自己的图'}>{uploading ? '上传中…' : '传自己的图'}<input type="file" accept="image/png,image/jpeg,image/webp" style={{ display: 'none' }} disabled={uploading} onChange={e => { const fl = e.target.files?.[0]; if (fl) uploadOwn(fl); e.target.value = ''; }} /></label>}
           {!isNew && !m.is_self && <Popconfirm title="从角色表删除？" description="还有章节在用就删不掉；素材留在库里。" onConfirm={remove} okText="删除" okButtonProps={{ danger: true }} cancelText="取消"><button className="lab-btn ghost sm" style={{ color: '#e5484d' }}>删除</button></Popconfirm>}
           <span style={{ flex: 1 }} />
           <button className="lab-btn ghost sm" onClick={onClose}>取消</button>
@@ -667,11 +705,20 @@ type StudioTab = 'day' | 'cast' | 'spec' | 'plays' | 'stats';
 const STUDIO_TABS: [StudioTab, string][] = [['day', '一天'], ['cast', '角色与素材'], ['spec', '生成要求'], ['plays', '作答'], ['stats', '分析']];
 
 /** 生成要求 tab：定位 + 受众 / 深度 / 难度 / 必须有 / 不要 / 参考资料，直接改、保存 */
-function SpecTab({ id, space, onSaved }: { id: string; space: any; onSaved: (spec: GenSpec | null) => void }) {
+function SpecTab({ id, space, model, onRewrite, onSaved }: { id: string; space: any; model: string; onRewrite: () => void; onSaved: (spec: GenSpec | null) => void }) {
   const { message } = App.useApp();
   const anchor: Anchor | undefined = space.jd_snapshot?.anchor;
   const [spec, setSpec] = useState<GenSpec>({ ...(space.jd_snapshot?.spec || {}) });
   const [busy, setBusy] = useState(false);
+  const [withPub, setWithPub] = useState(false); const [rewriting, setRewriting] = useState(false);
+  const rewrite = async () => {
+    if (!window.confirm(`按现在保存的要求重写${withPub ? '所有没锁定的章节（已发布的会变草稿）' : '没锁定的草稿章'}？原来的内容会被覆盖（改动有留痕）。`)) return;
+    setRewriting(true);
+    const j = await fetch(`/api/lab/studio/${id}/rewrite`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ include_published: withPub, model }) }).then(r => r.json()).catch(() => ({ ok: false, error: '网络错误' }));
+    setRewriting(false);
+    if (!j.ok) { message.error(j.error); return; }
+    message.info(j.job.already ? '已经在重写了' : `开始重写 ${j.count} 章，在「一天」里能看进度`); onRewrite();
+  };
   const save = async () => {
     setBusy(true);
     const j = await fetch(`/api/lab/studio/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ spec }) }).then(r => r.json()).catch(() => ({ ok: false, error: '网络错误' }));
@@ -688,6 +735,12 @@ function SpecTab({ id, space, onSaved }: { id: string; space: any; onSaved: (spe
       </div>
       <SpecEditor spec={spec} setSpec={setSpec} />
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8 }}><button className="lab-btn sm" disabled={busy} onClick={save}>{busy ? '保存中…' : '保存要求'}</button></div>
+      <div style={{ marginTop: 16, paddingTop: 14, borderTop: '1px solid var(--line)', display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+        <b style={{ fontSize: 14 }}>按新要求整体重调</b>
+        <span style={{ fontSize: 12.5, color: 'var(--ink3)', flex: '1 1 300px' }}>先保存要求，再把没锁定的章节按新要求一章一章重写（每章约 1 分钟）。满意的章节先去「一天」里锁定。</span>
+        <label style={{ fontSize: 13, display: 'flex', gap: 4, alignItems: 'center' }}><input type="checkbox" checked={withPub} onChange={e => setWithPub(e.target.checked)} />连已发布的一起（重写后变草稿）</label>
+        <button className="lab-btn ghost sm" disabled={rewriting} onClick={rewrite}>{rewriting ? '开始中…' : '✦ 按新要求重写'}</button>
+      </div>
     </div>
   );
 }
@@ -763,4 +816,91 @@ function ChapterStats({ id, onOpen }: { id: string; onOpen: (cid: string) => voi
     </div>
     {d.unassigned > 0 && <div className="fx-muted" style={{ marginTop: 8 }}>另有 {d.unassigned} 次作答是老数据，没记在哪一章。</div>}
   </>;
+}
+
+const LAB_VARS = { '--v': '#6a5cff', '--ink': '#171a2e', '--ink2': '#4a4f6a', '--ink3': '#8389a6', '--line': 'rgba(106,92,255,.16)' } as React.CSSProperties;
+const mBtn = (primary: boolean, disabled = false): React.CSSProperties => ({ height: 34, padding: '0 16px', borderRadius: 10, border: primary ? 0 : '1px solid rgba(106,92,255,.25)', background: primary ? '#6a5cff' : '#fff', color: primary ? '#fff' : '#4a4f6a', fontWeight: 700, fontSize: 13.5, cursor: disabled ? 'default' : 'pointer', opacity: disabled ? .5 : 1 });
+
+/**
+ * 局部改（B，11-06）：点「✦ 改」→ 选几个常用说法或自己写一句 → AI 只改这一处 → 改前 / 改后对比 → 采纳才放进这一章（再点保存，走原来的留痕）。
+ * 工位走「重新设计」：后台 1–3 分钟，轮询提案。
+ */
+function ReviseModal({ spaceId, chapter, model, target, stepId, onClose, onAdopt }: { spaceId: string; chapter: StudioChapter; model: string; target: 'step' | 'opening' | 'bench'; stepId?: string; onClose: () => void; onAdopt: (r: any) => void }) {
+  const { message } = App.useApp();
+  const [chips, setChips] = useState<string[]>([]); const [text, setText] = useState('');
+  const [busy, setBusy] = useState(''); const [r, setR] = useState<any>(null);
+  const step = stepId ? chapter.sim.steps.find((x: any) => x.id === stepId) : null;
+  const instruction = [...chips, text.trim()].filter(Boolean).join('；');
+  const go = async () => {
+    setBusy(target === 'bench' ? '重新设计工位（在模拟器里跑通才收，约 1–3 分钟）…' : 'AI 在改…'); setR(null);
+    const live = target === 'opening' ? { title: chapter.title, intro: chapter.sim.intro } : { sim: chapter.sim, expert: (chapter as any).expert_trace || {} };
+    const j = await fetch(`/api/lab/studio/${spaceId}/revise`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chapter_id: chapter.id, target, step_id: stepId, instruction, model, live }) }).then(x => x.json()).catch(() => ({ ok: false, error: '网络错误' }));
+    if (!j.ok) { setBusy(''); message.error(j.error); return; }
+    if (!j.running) { setBusy(''); setR(j); return; }
+    // 工位：轮询提案
+    for (let k = 0; k < 90; k++) {
+      await new Promise(res => setTimeout(res, 4000));
+      const p = await fetch(`/api/lab/studio/${spaceId}/revise?revision=${j.revision_id}`).then(x => x.json()).catch(() => null);
+      const rv = p?.revision;
+      if (rv?.status === 'failed') { setBusy(''); message.error(rv.error || '没设计出来'); return; }
+      if (rv?.status === 'proposed') { setBusy(''); setR({ revision_id: rv.id, before: rv.before, after: rv.after, note: rv.note }); return; }
+    }
+    setBusy(''); message.warning('还没好，稍后在这一步再点一次「✦ 改」看看');
+  };
+  const decide = (status: 'adopted' | 'discarded') => { if (r?.revision_id) fetch(`/api/lab/studio/${spaceId}/revise`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: r.revision_id, status }) }).catch(() => {}); };
+  const title = target === 'opening' ? '改标题和开场' : target === 'bench' ? '重新设计这台工位' : '改这一步';
+  return (
+    <Modal open onCancel={onClose} title={title} width={r ? 980 : 640} footer={r ? [
+      <button key="x" style={mBtn(false)} onClick={() => { decide('discarded'); setR(null); }}>不要，重新说</button>,
+      <button key="ok" style={{ ...mBtn(true), marginLeft: 8 }} onClick={() => { decide('adopted'); onAdopt(r); }}>采纳</button>,
+    ] : null}>
+      {/* 弹窗挂在 body 上，拿不到 .lab 的配色变量，这里补上 */}
+      <div style={LAB_VARS}>
+      {!r && <>
+        {step && <div style={{ fontSize: 13, color: 'var(--ink2)', marginBottom: 10, lineHeight: 1.7 }}>当前：{step.prompt}</div>}
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>{REVISE_CHIPS[target].map(c => <button key={c} className={`fx-chip${chips.includes(c) ? ' on' : ''}`} onClick={() => setChips(x => x.includes(c) ? x.filter(y => y !== c) : [...x, c])}>{c}</button>)}</div>
+        <textarea className="lab-input" rows={3} value={text} onChange={e => setText(e.target.value)} placeholder={target === 'bench' ? '如：高中生用的，搅拌速度只要在大致范围就算对；别考秒级时机' : '如：选项里加一个新人常犯的错；场景换成学校机房'} style={{ ...field, width: '100%' }} />
+        <div style={{ fontSize: 12, color: 'var(--ink3)', margin: '8px 0 12px' }}>会带上这个空间的「生成要求」。只改这一处，别的不动；改完先给你看对比。</div>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, alignItems: 'center' }}>
+          {busy && <span className="lab-scan" style={{ fontSize: 12.5, color: 'var(--v)' }}>{busy}</span>}
+          <button style={mBtn(true, !!busy || instruction.length < 2)} disabled={!!busy || instruction.length < 2} onClick={go}>让 AI 改</button>
+        </div>
+      </>}
+      {r && <>
+        {r.note && <div style={{ fontSize: 13.5, marginBottom: 10 }}>✦ {r.note}</div>}
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 12 }} className="studio-row">
+          <div><div className="lab-mono lab-cap" style={{ marginBottom: 6 }}>改前</div><RevView target={target} v={r.before} /></div>
+          <div><div className="lab-mono lab-cap" style={{ marginBottom: 6, color: '#0d7a52' }}>改后</div><RevView target={target} v={r.after} /></div>
+        </div>
+      </>}
+      </div>
+    </Modal>
+  );
+}
+
+/** 对比里的一边：一步 / 开场 / 工位，写成人看得懂的样子 */
+function RevView({ target, v }: { target: 'step' | 'opening' | 'bench'; v: any }) {
+  const box: React.CSSProperties = { border: '1px solid var(--line)', borderRadius: 12, padding: '12px 14px', fontSize: 13.5, lineHeight: 1.75, background: 'rgba(255,255,255,.7)', minHeight: 120 };
+  if (target === 'opening') return <div style={box}><b>{v?.title}</b><div style={{ marginTop: 6, color: 'var(--ink2)' }}>{v?.intro}</div></div>;
+  const s = target === 'bench' ? (v?.sim?.steps || []).find((x: any) => x.type === 'bench') || v?.step : v?.step;
+  if (!s) return <div style={box}>（没有）</div>;
+  if (s.type === 'bench') {
+    const b = s.bench || {};
+    return <div style={box}>
+      <b>{b.name}</b><div style={{ color: 'var(--ink2)' }}>{b.brief}</div>
+      <div style={{ marginTop: 6 }}><span style={{ color: 'var(--ink3)' }}>控件：</span>{(b.controls || []).filter((c: any) => !c.hidden).map((c: any) => c.label).join('、') || '—'}</div>
+      <div><span style={{ color: 'var(--ink3)' }}>目标：</span>{(b.goals || []).map((g: any) => g.label || g.id).join('；') || '—'}</div>
+      <div><span style={{ color: 'var(--ink3)' }}>红线 / 提醒：</span>{(b.rules || []).map((x: any) => `${x.severity === 'violation' ? '✖' : '⚠'} ${x.label || x.msg || x.id}`).join('；') || '—'}</div>
+    </div>;
+  }
+  const ex = v?.expert;
+  const isEx = (id: string) => ex === id || (Array.isArray(ex) && ex.includes(id));
+  return <div style={box}>
+    {s.scene?.text && <div style={{ color: 'var(--ink2)', marginBottom: 6 }}><b>{s.scene.who}</b>{s.scene.time ? `（${s.scene.time}）` : ''}：{s.scene.text}</div>}
+    <div style={{ fontWeight: 700 }}>{s.prompt}</div>
+    {s.options?.length > 0 && <ul style={{ margin: '6px 0 0', paddingLeft: 18 }}>{s.options.map((o: any) => <li key={o.id} style={{ color: isEx(o.id) ? '#0d7a52' : undefined }}>{o.label}{isEx(o.id) ? '　← 示范' : ''}{o.detail ? <span style={{ color: 'var(--ink3)' }}>（{o.detail}）</span> : null}</li>)}</ul>}
+    {s.labels?.length > 0 && <div style={{ marginTop: 4, color: 'var(--ink3)' }}>分类：{s.labels.map((l: any) => l.label).join(' / ')}</div>}
+    {s.type === 'slider' && <div style={{ color: 'var(--ink3)' }}>范围 {s.min ?? 0}–{s.maxValue ?? 100}{s.unit || ''}{ex != null ? `，示范 ${ex}` : ''}</div>}
+    {s.type === 'text' && typeof ex === 'string' && ex && <div style={{ marginTop: 6, color: '#0d7a52' }}>示范：{ex}</div>}
+  </div>;
 }

@@ -37,7 +37,7 @@ const CAST_RULES = `人物 / 场景 / 道具的规则：
 - 一个人一行：两个人（患者和家属、护士长和夜班医生、两个科室的医生）一定分开写，各有各的名字和外形，不要合成一行。
 - 人名要像真人（老周、小林、王姐、陈先生），不要写成一句话（「老周通过对讲机提醒你」是错的，who 只写「老周」，对讲机写进台词）。`;
 
-function spaceText(space: any): string {
+export function spaceText(space: any): string {
   const jd = space.jd_snapshot || {}, p = space.profile || {};
   const career = jd.career || {};
   return [
