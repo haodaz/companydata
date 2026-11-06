@@ -141,7 +141,7 @@ async function buildDayInner(spaceId: string, model: string, hint: string, progr
 ${spaceText(space)}
 ${facts}
 
-已经做好的章节（放进这一天里合适的时段，不要再为它们新建格子）：
+已经做好的章节（放进这一天里合适的时段，不要再为它们新建格子；它们占掉的那一格，新格子不要再用同一个时段，也不要把同一件事再做一遍）：
 ${chapters.length ? chapters.map(chapterLine).join('\n') : '（还没有）'}
 
 角色表（这个空间已有的人 / 地方 / 道具）：
@@ -180,7 +180,10 @@ ${CAST_RULES}
   const nameOf = (code: string) => (tmpDay.get(code) || cast.find(m => m.code === code))?.name;
   const slots = (Array.isArray(p.slots) ? p.slots : [])
     .map((x: any) => ({ slot: str(x.slot, 40), title: decodeCastRefs(str(x.title, 60), nameOf), kind: KINDS.includes(x.kind) ? x.kind : 'daily', brief: decodeCastRefs(str(x.brief, 400), nameOf) }))
-    .filter((x: any) => x.slot && x.title).slice(0, 9);
+    .filter((x: any) => x.slot && x.title)
+    // 已有章节占了的时段不再新建（11-06 考核样例：建空间时自带的工位章排到「考核4」，又新建了一格「考核4」做同一件事）
+    .filter((x: any) => !chapters.some(c => (c.slot || (Array.isArray(p.existing) ? p.existing.find((e: any) => e?.id === c.id)?.slot : '')) === x.slot))
+    .slice(0, 9);
   let seq = Math.max(0, ...chapters.map(c => c.seq));
   if (slots.length) {
     const { error: e2 } = await supabaseAdmin.from('lab_chapters').insert(slots.map((x: any) => ({

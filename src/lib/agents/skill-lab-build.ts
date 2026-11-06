@@ -6,7 +6,7 @@
  *   4. planArt        场景与人物：每个场景一张底图、每个 NPC 一张立绘的提示词
  *   5. 美术生成       通义万相出图（场景 jpg / 立绘绿幕抠图）
  */
-import type { SpaceForm } from '@/lib/lab-spec';
+import { FORMS, type SpaceForm } from '@/lib/lab-spec';
 import { generateContent } from '@/lib/llm-client';
 import { logTokenUsage, withCost } from '@/lib/token-logger';
 import { parseJsonLoose } from '@/lib/agents/search-llm';
@@ -344,10 +344,12 @@ export async function buildSpaceFromJd(jd: JdInput, modelId = DEFAULT_MODEL, pro
   if (!sim) throw new Error('大模型没有给出可用的故事线，请重试');
 
   progress('推断技能集 · 设计虚拟工位 · 规划场景', '三路并行');
+  // 工位的松紧按形态来，单独点出来（埋在整段要求里，11-06 生涯样例照样写出了「45 秒没呼叫就违规」）；数字和故事线里的对齐
+  const benchHint = [opts.form ? `${FORMS[opts.form].label}的工位：${FORMS[opts.form].bench}工位里的参数、数量、时间必须和上面故事线里写的一致。` : '', opts.hint || ''].filter(Boolean).join('\n');
   const benchDiag = { note: '' };
   const [draft, bench, art] = await Promise.all([
     draftSkill(jd, task, sim, modelId),
-    wantBench ? designBench(jd, task, sim, modelId, benchDiag, opts.hint || '').catch(e => { console.error('[build] bench', e); benchDiag.note = `设计工位时出错：${e?.message || e}`; return null; }) : Promise.resolve(null),
+    wantBench ? designBench(jd, task, sim, modelId, benchDiag, benchHint).catch(e => { console.error('[build] bench', e); benchDiag.note = `设计工位时出错：${e?.message || e}`; return null; }) : Promise.resolve(null),
     wantArt ? planArt(jd, sim, modelId, opts.hint || '').catch(e => { console.error('[build] art plan', e); return { family: '', self: '', scenes: [], npcs: [] } as ArtPlan; }) : Promise.resolve({ family: '', self: '', scenes: [], npcs: [] } as ArtPlan),
   ]);
 
