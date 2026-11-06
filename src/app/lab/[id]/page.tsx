@@ -10,6 +10,7 @@ import { App, Drawer, Input, Modal, Popconfirm } from 'antd';
 import { useModel } from '@/lib/model-context';
 import { useUser } from '@/lib/user-context';
 import { visitorIds } from '@/lib/lab-cert';
+import { formOf } from '@/lib/lab-spec';
 import { SimRunner, SimStage, TraceCompare, enterFullscreen } from '@/components/lab/SimRunner';
 import { ChatLauncher } from '@/components/kg/PersonaChat';
 import { useNicknames } from '@/components/kg/useNicknames';
@@ -1590,6 +1591,7 @@ function ChapterIntro({ chapter, chapters, space, sim, demo, study, onStart, pro
         {n > 1 ? `第 ${idx + 1} / ${n} 段` : '这一幕'}{chapter?.slot ? ` · ${chapter.slot}` : ''} · {k.label}
       </div>
       <h2 style={{ margin: '6px 0 10px', fontSize: 'clamp(20px, 2.4vw, 26px)', fontWeight: 800, lineHeight: 1.35 }}>{chapter?.title || sim.title}</h2>
+      {idx <= 0 && !demo && <CareerPurpose space={space} compact />}
       {brief && <div style={{ fontSize: 14.5, color: 'var(--ink2)', lineHeight: 1.8, marginBottom: 10 }}>{brief}</div>}
       {sim.intro && sim.intro !== brief && <div className="lab-game-recap" style={{ cursor: 'default' }}>{sim.intro}</div>}
       {(people.length > 0 || looseWho.length > 0) && (
@@ -1685,6 +1687,26 @@ const DAYV_CSS = `
 }
 `;
 
+/** 生涯体验（生成要求里形态 = career）：第一段开始前先说清这次来干什么——看这一行、看自己，不是考核 */
+function CareerPurpose({ space, compact }: { space: any; compact?: boolean }) {
+  if (formOf(space?.jd_snapshot) !== 'career') return null;
+  const role = space?.profile?.role || '这一行';
+  const who = space?.profile?.name || '带你的师傅';
+  return (
+    <div style={{ margin: compact ? '0 0 12px' : '18px 0 0', padding: compact ? '12px 14px' : '16px 18px', borderRadius: 12, background: 'rgba(180,83,42,.06)', border: '1px solid rgba(180,83,42,.22)' }}>
+      <div className="lab-mono lab-cap" style={{ marginBottom: 8, color: '#b4532a' }}>这是一次生涯体验</div>
+      <div style={{ fontSize: compact ? 14 : 15, lineHeight: 1.85, color: 'var(--ink)' }}>
+        今天你跟着 {who} 过一遍「{role}的一天」：看看这一行每天在忙什么、需要什么样的人，也看看自己喜不喜欢、适不适合。
+      </div>
+      <ul style={{ margin: '8px 0 0', paddingLeft: 20, fontSize: compact ? 13 : 14, lineHeight: 1.8, color: 'var(--ink2)' }}>
+        <li>不是考试，也不是职业考核：动手的地方都做了简化，大致做对就行，做错了师傅会告诉你为什么。</li>
+        <li>每段最后会问问你的想法，没有标准答案，说清理由就好。</li>
+        <li>走完一天领一张「生涯体验版」证书，记录你体验过这一行。</li>
+      </ul>
+    </div>
+  );
+}
+
 /**
  * 多段空间的「一天」页：左边一整列是时间轴（顶上是回到这位职人主页的入口），右边整块是当前这一段：
  * 场景大图、这一段要交代的事、会遇到谁、在哪、这一段考什么，进入操作台 / 看他走一遍。
@@ -1720,7 +1742,7 @@ function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach,
         <div className="dayv-h">{profile.role || '这一行'}的一天</div>
         <div style={{ fontSize: 12.5, color: 'var(--ink3)' }}>{chapters.length} 段 · 约 {minutes} 分钟</div>
         {/* 这里不放模式切换（2026-10-18 用户：容易点错，想自己操作却看 AI 操作）：模式在人物首页选 */}
-        <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.6 }}>{learn ? '请一位资深从业者把这一天走一遍，每段走完接受追问' : teach ? '跟着学：每一步讲为什么；工位上他先做一遍，你再比着做' : '你来走：每段有成绩单，走完一整天领证书'}</div>
+        <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 8, lineHeight: 1.6 }}>{learn ? '请一位资深从业者把这一天走一遍，每段走完接受追问' : teach ? '跟着学：每一步讲为什么；工位上他先做一遍，你再比着做' : formOf(space?.jd_snapshot) === 'career' ? '你来体验：每段走完有反馈，走完一整天领生涯体验证书' : '你来走：每段有成绩单，走完一整天领证书'}</div>
         <ol className="dayv-tl">
           {chapters.map((c, i) => {
             const on = c === chapter;
@@ -1761,6 +1783,7 @@ function DayView({ mode, modes, space, chapters, chapter, sim, rubric, canTeach,
           <span style={{ fontSize: 13, color: 'var(--ink3)' }}>{steps.length} 步{steps.some(st => st.type === 'bench') ? ' · 含虚拟工位' : ''} · 约 {Math.max(5, steps.length * 2)} 分钟</span>
         </div>
 
+        {idx === 0 && !learn && <CareerPurpose space={space} />}
         {top}
         {brief && <div className="dayv-sec"><div className="lab-mono lab-cap" style={{ marginBottom: 8 }}>这一段</div><div style={{ fontSize: 16, lineHeight: 1.9, color: 'var(--ink)' }}>{brief}</div>
           {sim?.intro && sim.intro !== brief && <div style={{ marginTop: 12, fontSize: 14.5, lineHeight: 1.85, color: 'var(--ink2)', paddingLeft: 14, borderLeft: '3px solid var(--c)' }}>{sim.intro}</div>}
