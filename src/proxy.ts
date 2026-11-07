@@ -55,6 +55,12 @@ export async function proxy(req: NextRequest) {
   if (pathname === '/' && /(^|\.)aisimjob\.com$/.test(host)) return NextResponse.rewrite(new URL('/lab', req.url));
   // AI 大学的独立域名 baiyecollege.com：根路径直接显示 /college（里面的链接本来就是 /college/…）
   if (pathname === '/' && /(^|\.)baiyecollege\.com$/.test(host)) return NextResponse.rewrite(new URL('/college', req.url));
+  // 「入一行，过一生」的独立域名 1job1life.com：只露游戏——根路径显示 /game，这里拦得到的其他页面和接口一律不给（回游戏首页 / 404）
+  if (/(^|\.)1job1life\.com$/.test(host)) {
+    if (pathname === '/') return NextResponse.rewrite(new URL('/game', req.url));
+    if (pathname.startsWith('/api/')) { if (!(pathname.startsWith('/api/game/') && req.method === 'GET')) return NextResponse.json({ ok: false, error: 'not found' }, { status: 404 }); }
+    else if (pathname !== '/favicon.ico') return NextResponse.redirect(new URL('/', req.url));
+  }
   // 浏览器 / 分享卡片会直接要 /favicon.ico：大学域名给校徽
   if (pathname === '/favicon.ico' && /(^|\.)baiyecollege\.com$/.test(host)) return NextResponse.rewrite(new URL('/college/favicon.ico', req.url));
 
@@ -73,6 +79,8 @@ export async function proxy(req: NextRequest) {
     // 真活台公开：参与链接 / 自助出题 / 出题人管理链接都靠 token 与 owner_key 自己核对，不走登录（/api/admin/work 仍要登录）
     // 例外：/api/work/companies 是企业库搜索（出题时挑企业用），属于数据资产，要登录
     if (pathname.startsWith('/api/work/') && !pathname.startsWith('/api/work/companies')) return NextResponse.next();
+    // 「入一行，过一生」小游戏：抽卡、取卡，不用登录（卡池只在服务端）
+    if (pathname.startsWith('/api/game/') && req.method === 'GET') return NextResponse.next();
     // 飞轮信号接入：以后的 ToC 带 FLYWHEEL_INGEST_KEY，没有登录态；放进去由路由自己验密钥
     if (pathname === '/api/flywheel/signal' && req.method === 'POST' && req.headers.get('x-flywheel-key')) return NextResponse.next();
     // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉

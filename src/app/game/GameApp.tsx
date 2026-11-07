@@ -1,0 +1,463 @@
+'use client';
+/**
+ * 「入一行，过一生」（/game）：首页 → 入职登记卡 → 这一天 → 一年一年过（遇到抉择停下）→ 生涯回顾。
+ * 手机优先；存档在本机（localStorage），关掉再开能接着过；过完的放进「我过过的几生」。
+ */
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { GameCard, PeerCard, Stat } from '@/lib/game/types';
+import { STATS } from '@/lib/game/types';
+import { YEAR0, autoChoose, choose, newLife, pendingChoice, simulatePeer, step, type Life } from '@/lib/game/engine';
+
+type Peer = ReturnType<typeof simulatePeer>;
+type Save = { card: GameCard; life: Life; peers: PeerCard[] };
+type Archive = { at: string; name: string; role: string; headline: string; title: string; years: number; peak: number; how: string; endText: string };
+const SAVE = 'game:life', ARCHIVE = 'game:archive';
+const SPEEDS = [{ k: 1, ms: 3000, t: '1×' }, { k: 2, ms: 1500, t: '2×' }, { k: 4, ms: 700, t: '4×' }];
+const read = <T,>(k: string): T | null => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch { return null; } };
+const write = (k: string, v: any) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* 无痕模式记不住，照样能玩 */ } };
+const wan = (n: number) => (n >= 10000 ? `${(n / 10000).toFixed(1)} 万` : `${n.toLocaleString()} 元`);
+const fx = (e?: Record<string, number | undefined>) => (e ? STATS.filter(s => e[s.k]).map(s => `${s.label} ${(e[s.k] as number) > 0 ? '+' : ''}${e[s.k]}`).concat(e.savings ? [`积蓄 ${e.savings > 0 ? '+' : ''}${e.savings} 万`] : []) : []);
+
+export default function GameApp() {
+  const [phase, setPhase] = useState<'home' | 'card' | 'day' | 'play' | 'report'>('home');
+  const [save, setSave] = useState<Save | null>(null);
+  const [resume, setResume] = useState<Save | null>(null);
+  const [archive, setArchive] = useState<Archive[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState('');
+  const [, force] = useState(0);
+  const rerender = () => force(n => n + 1);
+
+  useEffect(() => {
+    const s = read<Save>(SAVE);
+    if (s?.life && !s.life.done && s.card) setResume(s);
+    setArchive(read<Archive[]>(ARCHIVE) || []);
+  }, []);
+
+  const enter = async () => {
+    setBusy(true); setErr('');
+    const j = await fetch(`/api/game/draw${save?.card ? `?not=${save.card.id}` : ''}`).then(r => r.json()).catch(() => null);
+    setBusy(false);
+    if (!j?.ok) { setErr('没抽成，网络好像断了，再试一次'); return; }
+    const s: Save = { card: j.card, life: newLife(j.card, j.seed), peers: j.peers };
+    setSave(s); write(SAVE, s); setPhase('card'); scrollTo(0, 0);
+  };
+  const go = (p: typeof phase) => { setPhase(p); scrollTo(0, 0); };
+
+  return (
+    <div className="g-root">
+      <style>{CSS}</style>
+      {phase === 'home' && <Home busy={busy} err={err} onEnter={enter} resume={resume} onResume={() => { setSave(resume); go('play'); }} archive={archive} />}
+      {phase === 'card' && save && <CardView s={save} onDay={() => go('day')} onStart={() => go('play')} onRedraw={enter} busy={busy} />}
+      {phase === 'day' && save && <DayView card={save.card} onStart={() => go('play')} onBack={() => go(save.life.done ? 'report' : 'card')} back={save.life.done ? '回到回顾' : '回到登记卡'} />}
+      {phase === 'play' && save && <Play s={save} onChange={() => { write(SAVE, save); rerender(); }} onDone={() => {
+        const l = save.life, card = save.card;
+        const a: Archive = { at: new Date().toISOString(), name: l.name, role: card.role, headline: card.headline, title: card.ladder[l.stage]?.title || '', years: l.y, peak: Math.max(...l.rows.map(r => r.salary)), how: l.done || '', endText: l.endText };
+        const next = [a, ...archive].slice(0, 30); setArchive(next); write(ARCHIVE, next); write(SAVE, save); setResume(null); go('report');
+      }} />}
+      {phase === 'report' && save && <Report s={save} onAgain={enter} onDay={() => go('day')} busy={busy} />}
+    </div>
+  );
+}
+
+// ───────────────────────── 首页 ─────────────────────────
+function Home({ busy, err, onEnter, resume, onResume, archive }: { busy: boolean; err: string; onEnter: () => void; resume: Save | null; onResume: () => void; archive: Archive[] }) {
+  return (
+    <main className="g-wrap g-home">
+      <div className="g-eyebrow">一个职业生涯模拟</div>
+      <h1 className="g-title">入一行，<br />过一生</h1>
+      <p className="g-lead">抽一张入职登记卡。城市、单位、资历，都不由你选——就像真的入行一样。<br />从这一天起，一年一年，把这段职业生涯过到退休。</p>
+      <div className="g-actions">
+        <button className="g-btn primary big" disabled={busy} onClick={onEnter}>{busy ? '正在分配…' : '入行'}</button>
+        {resume && <button className="g-btn big" onClick={onResume}>接着过 · {resume.life.name}，{resume.life.age} 岁</button>}
+      </div>
+      {err && <div className="g-err">{err}</div>}
+      <ul className="g-how">
+        <li><b>一年大约三秒</b>，遇到重大抉择会停下来等你。一局三四分钟。</li>
+        <li><b>每张卡都是一个具体的人</b>：北京三甲的副主任医师和县医院第一年的住院医师，是两种完全不同的一生。</li>
+        <li><b>数字是真的</b>：晋升阶梯、年限薪资、哪些活 AI 拿得走，来自职业库；每件事后面写着依据。</li>
+      </ul>
+      {archive.length > 0 && <section className="g-arch">
+        <div className="g-cap">你过过的 {archive.length} 生</div>
+        {archive.slice(0, 6).map((a, i) => <div key={i} className="g-arch-row"><b>{a.name}</b><span>{a.headline}</span><span className="g-mute">{a.years} 年 · 最高做到{a.title} · {a.how === 'burnout' ? '离开一线' : a.how === 'end' ? '转身离开' : '退休'}</span></div>)}
+      </section>}
+      <footer className="g-foot">平方创想 · 方略研究院 · 不用登录，存档只在这台设备上</footer>
+    </main>
+  );
+}
+
+// ───────────────────────── 入职登记卡 ─────────────────────────
+function CardView({ s, onDay, onStart, onRedraw, busy }: { s: Save; onDay: () => void; onStart: () => void; onRedraw: () => void; busy: boolean }) {
+  const { card, life } = s;
+  const no = `${card.occupation.key.slice(0, 3).toUpperCase()}-${YEAR0}-${String(life.seed).slice(-6)}`;
+  return (
+    <main className="g-wrap">
+      <article className="g-reg">
+        <header className="g-reg-h"><span>入职登记表</span><span className="g-mono">No. {no}</span></header>
+        <div className="g-reg-b">
+          <div className="g-stamp">欢迎入职</div>
+          <div className="g-cap">姓名</div>
+          <div className="g-name">{life.name}</div>
+          <div className="g-headline">{card.headline}</div>
+          <dl className="g-grid">
+            <div><dt>职业</dt><dd>{card.occupation.name}</dd></div>
+            <div><dt>岗位</dt><dd>{card.role}</dd></div>
+            <div><dt>单位</dt><dd>{card.unit}</dd></div>
+            <div><dt>城市</dt><dd>{card.city}<small>{card.city_tier}</small></dd></div>
+            <div><dt>年龄</dt><dd>{life.age} 岁</dd></div>
+            <div><dt>入行</dt><dd>第 {card.start.years_in_field || 1} 年</dd></div>
+            <div><dt>学历</dt><dd>{card.education}</dd></div>
+            <div><dt>月薪</dt><dd>{wan(life.salary)}<small>估算</small></dd></div>
+            <div className="wide"><dt>现在的水平</dt><dd>{card.start.level}</dd></div>
+            <div className="wide"><dt>晋升阶梯</dt><dd className="g-ladder">{card.ladder.map((l, i) => <span key={i} className={i === life.stage ? 'on' : i < life.stage ? 'past' : ''}>{l.title}</span>)}</dd></div>
+          </dl>
+        </div>
+      </article>
+      <p className="g-intro">{card.intro}</p>
+      <section className="g-facts">
+        <div className="g-cap">这一行的真实数据</div>
+        {card.facts.map((f, i) => <div key={i} className="g-fact"><span>{f.label}</span><b>{f.value}</b><i className="g-src">{f.source}</i></div>)}
+        <div className="g-note">月薪按「{card.salary_note}」</div>
+      </section>
+      <div className="g-actions sticky">
+        <button className="g-btn" onClick={onDay}>先看看这一天</button>
+        <button className="g-btn primary" onClick={onStart}>从今天起</button>
+      </div>
+      <button className="g-link" disabled={busy} onClick={onRedraw}>不想过这一生？换一张</button>
+    </main>
+  );
+}
+
+// ───────────────────────── 这一天 ─────────────────────────
+function DayView({ card, onStart, onBack, back }: { card: GameCard; onStart: () => void; onBack: () => void; back: string }) {
+  return (
+    <main className="g-wrap">
+      <div className="g-eyebrow">这样的一天</div>
+      <h2 className="g-h2">{card.headline}</h2>
+      <ol className="g-day">{card.day.map((d, i) => <li key={i}><time>{d.time}</time><p>{d.text}</p></li>)}</ol>
+      <div className="g-actions sticky">
+        <button className="g-btn" onClick={onBack}>{back}</button>
+        {back === '回到登记卡' && <button className="g-btn primary" onClick={onStart}>从今天起</button>}
+      </div>
+    </main>
+  );
+}
+
+// ───────────────────────── 一年一年过 ─────────────────────────
+function Play({ s, onChange, onDone }: { s: Save; onChange: () => void; onDone: () => void }) {
+  const { card, life } = s;
+  const [speed, setSpeed] = useState(1);
+  const [paused, setPaused] = useState(false);
+  const [auto, setAuto] = useState(false);
+  const peers = useMemo(() => s.peers.map((p, i) => simulatePeer(p, life.seed + i * 101 + 7)), [s.peers, life.seed]);
+  const choice = pendingChoice(card, life);
+  const tick = useRef<() => void>(() => {});
+  tick.current = () => {
+    if (life.done) return;
+    if (life.pending) { if (auto) { autoChoose(card, life); onChange(); } return; }
+    step(card, life); onChange();
+  };
+  useEffect(() => {
+    if (paused || life.done || (life.pending && !auto)) return;
+    const ms = SPEEDS.find(x => x.k === speed)!.ms;
+    const t = setInterval(() => tick.current(), life.pending ? 900 : ms);
+    return () => clearInterval(t);
+  }, [paused, speed, auto, life.done, life.pending]);
+  useEffect(() => { if (life.done) { const t = setTimeout(onDone, 2600); return () => clearTimeout(t); } }, [life.done]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const pick = (i: number) => { choose(card, life, i); onChange(); };
+  const title = card.ladder[life.stage]?.title || card.role;
+  const log = [...life.log].reverse();
+  return (
+    <main className="g-play">
+      <div className="g-bar">
+        <div className="g-bar-l"><b>{life.age} 岁</b><span>{YEAR0 + life.y} 年 · {life.name}</span></div>
+        <div className="g-bar-r">
+          <button className={`g-chip${paused ? ' on' : ''}`} onClick={() => setPaused(p => !p)}>{paused ? '▶ 继续' : '❚❚ 暂停'}</button>
+          {SPEEDS.map(x => <button key={x.k} className={`g-chip${speed === x.k && !paused ? ' on' : ''}`} onClick={() => { setSpeed(x.k); setPaused(false); }}>{x.t}</button>)}
+          <button className={`g-chip${auto ? ' on' : ''}`} onClick={() => setAuto(a => !a)} title="抉择交给程序随机选">自动抉择</button>
+        </div>
+        <div className="g-prog"><i style={{ width: `${Math.min(100, ((life.age - card.start.age) / Math.max(1, card.retire_age - card.start.age)) * 100)}%` }} /></div>
+      </div>
+      <div className="g-cols">
+          <section className="g-panel g-status">
+            <div className="g-cap">{card.unit} · {card.city}</div>
+            <div className="g-now">{title}</div>
+            <div className="g-ladder sm">{card.ladder.map((l, i) => <span key={i} className={i === life.stage ? 'on' : i < life.stage ? 'past' : ''}>{l.title}</span>)}</div>
+            <div className="g-money"><div><span>月薪</span><b>{wan(life.salary)}</b></div><div><span>积蓄</span><b>{life.savings.toFixed(1)} 万</b></div></div>
+            <div className="g-stats">{STATS.map(x => <Bar key={x.k} label={x.label} hint={x.hint} v={life.stats[x.k as Stat]} warn={x.k === 'health' && life.stats.health < 25} />)}</div>
+          </section>
+          <section className="g-panel g-peers">
+            <div className="g-cap">同一年入行的人</div>
+            {peers.map((p, i) => { const r = p.rows[Math.min(life.y, p.rows.length - 1)]; const gone = life.y >= p.rows.length - 1 && p.done; return (
+              <div key={i} className="g-peer"><b>{p.name}</b><span>{p.headline}</span><em>{gone ? (p.done === 'burnout' ? '已离开一线' : '已退休') : `${p.ladder[r.stage]} · ${wan(r.salary)}`}</em></div>
+            ); })}
+          </section>
+        <section className="g-log">
+          {log.map((e, i) => (
+            <div key={life.log.length - i} className={`g-ev ${e.kind} ${e.mood || ''}${i === 0 ? ' fresh' : ''}`}>
+              <div className="g-ev-h"><span>{e.age} 岁</span>{e.source && <i className="g-src">{e.source}</i>}</div>
+              <p>{e.text}</p>
+              {fx(e.effect as any).length > 0 && <div className="g-fx">{fx(e.effect as any).map(t => <span key={t} className={t.includes('+') ? 'up' : 'down'}>{t}</span>)}</div>}
+            </div>
+          ))}
+        </section>
+      </div>
+      {choice && !auto && <div className="g-sheet-bg"><div className="g-sheet">
+        <div className="g-cap">重大抉择 · {life.age} 岁{choice.source ? <i className="g-src">{choice.source}</i> : null}</div>
+        <h3>{choice.title}</h3>
+        <p>{choice.situation}</p>
+        <div className="g-opts">{choice.options.map((o, i) => <button key={i} className="g-opt" onClick={() => pick(i)}>{o.label}</button>)}</div>
+        <button className="g-link" onClick={() => { autoChoose(card, life); onChange(); }}>让命运替我选</button>
+      </div></div>}
+      {life.done && <div className="g-sheet-bg"><div className="g-sheet end"><div className="g-cap">{life.done === 'burnout' ? '离开一线' : life.done === 'end' ? '转身' : '退休'} · {life.age} 岁</div><p className="g-endtext">{life.endText}</p><button className="g-btn primary" onClick={onDone}>看这一生的回顾</button></div></div>}
+    </main>
+  );
+}
+
+function Bar({ label, hint, v, warn }: { label: string; hint: string; v: number; warn?: boolean }) {
+  return <div className="g-stat" title={hint}><span>{label}</span><div className="g-track"><i className={warn ? 'warn' : ''} style={{ width: `${v}%` }} /></div><b>{Math.round(v)}</b></div>;
+}
+
+// ───────────────────────── 生涯回顾 ─────────────────────────
+function Report({ s, onAgain, onDay, busy }: { s: Save; onAgain: () => void; onDay: () => void; busy: boolean }) {
+  const { card, life } = s;
+  const peers = useMemo(() => s.peers.map((p, i) => simulatePeer(p, life.seed + i * 101 + 7)), [s.peers, life.seed]);
+  const peak = Math.max(...life.rows.map(r => r.salary));
+  const peakRow = life.rows.find(r => r.salary === peak)!;
+  const highs = life.log.filter(e => e.kind === 'event' && e.mood === 'good').slice(0, 4);
+  const lows = life.log.filter(e => e.kind === 'event' && e.mood === 'bad').slice(0, 4);
+  const ai = life.log.filter(e => e.kind === 'ai');
+  const human = card.ai.tasks.filter(t => t.kind === 'human');
+  const how = life.done === 'burnout' ? '身心撑不住，离开了一线' : life.done === 'end' ? '在这里转身，去了别处' : '退休';
+  return (
+    <main className="g-wrap g-report">
+      <div className="g-eyebrow">职业档案 · {YEAR0} – {YEAR0 + life.y}</div>
+      <h2 className="g-h2">{life.name}的这一生</h2>
+      <p className="g-sub">{card.headline}。{life.age - life.y} 岁从这里开始，{life.age} 岁{how}。</p>
+      <blockquote className="g-quote">{life.endText}</blockquote>
+      <div className="g-nums">
+        <div><b>{life.y}</b><span>年</span></div>
+        <div><b>{card.ladder[life.stage]?.title}</b><span>最后做到</span></div>
+        <div><b>{wan(peak)}</b><span>最高月薪 · {peakRow.age} 岁</span></div>
+        <div><b>{Math.round(life.earned)} 万</b><span>一生挣了（估算）</span></div>
+      </div>
+
+      <section className="g-sec"><div className="g-cap">走过的台阶</div>
+        <ol className="g-steps">
+          <li><time>{life.age - life.y} 岁</time>入行时是{card.ladder[card.start.stage]?.title}</li>
+          {life.promos.map((p, i) => <li key={i}><time>{p.age} 岁</time>成了{p.title}</li>)}
+          {life.stage < card.ladder.length - 1 && <li className="g-mute"><time>—</time>没走到的：{card.ladder.slice(life.stage + 1).map(l => l.title).join('、')}</li>}
+        </ol>
+        <div className="g-note">晋升阶梯和每一级的年限、薪资来自职业库的职业地图。</div>
+      </section>
+
+      <section className="g-sec"><div className="g-cap">月薪这些年 · 和同一年入行的人</div>
+        <Curve life={life} peers={peers} />
+      </section>
+
+      {life.picks.length > 0 && <section className="g-sec"><div className="g-cap">你做的选择</div>
+        {life.picks.map((p, i) => <div key={i} className="g-pick"><time>{p.age} 岁</time><div><b>{p.title}</b><span>选了「{p.label}」</span><p>{p.result}</p></div></div>)}
+      </section>}
+
+      {(highs.length > 0 || lows.length > 0) && <section className="g-sec two">
+        <div><div className="g-cap">记得的好事</div>{highs.map((e, i) => <p key={i} className="g-mem good"><time>{e.age} 岁</time>{e.text}</p>)}</div>
+        <div><div className="g-cap">难熬的时候</div>{lows.map((e, i) => <p key={i} className="g-mem bad"><time>{e.age} 岁</time>{e.text}</p>)}</div>
+      </section>}
+
+      <section className="g-sec"><div className="g-cap">AI 和这一行</div>
+        {ai.length ? ai.map((e, i) => <p key={i} className="g-mem"><time>{e.age} 岁</time>{e.text}</p>) : <p className="g-mute">这些年里，AI 还没碰到你手上的活。</p>}
+        {human.length > 0 && <><div className="g-cap" style={{ marginTop: 14 }}>到你离开，AI 也没拿走的</div><ul className="g-human">{human.map((t, i) => <li key={i}><b>{t.name}</b>{t.how}</li>)}</ul></>}
+        <div className="g-note">依据：职业库 · AI 替代性（这个职业的典型任务逐项判断）。</div>
+      </section>
+
+      <section className="g-sec"><div className="g-cap">同一年入行的人后来</div>
+        {peers.map((p, i) => { const last = p.rows[p.rows.length - 1]; const pk = Math.max(...p.rows.map(r => r.salary)); return (
+          <div key={i} className="g-peer wide"><b>{p.name}</b><span>{p.headline}</span><em>做到{p.ladder[last.stage]} · 最高月薪 {wan(pk)} · {p.done === 'burnout' ? `${last.age} 岁离开一线` : `${last.age} 岁退休`}</em></div>
+        ); })}
+      </section>
+
+      <div className="g-actions sticky">
+        <button className="g-btn" onClick={onDay}>再看一眼那一天</button>
+        <button className="g-btn primary" disabled={busy} onClick={onAgain}>{busy ? '正在分配…' : '再入一行'}</button>
+      </div>
+      <footer className="g-foot">数字是按职业库推演的估算，不是对任何真实的人的预测。</footer>
+    </main>
+  );
+}
+
+function Curve({ life, peers }: { life: Life; peers: Peer[] }) {
+  const W = 640, H = 200, P = 28;
+  const all = [life.rows, ...peers.map(p => p.rows)];
+  const maxY = Math.max(...all.flat().map(r => r.salary), 1);
+  const maxX = Math.max(...all.map(r => r.length - 1), 1);
+  const path = (rows: Life['rows']) => rows.map((r, i) => `${i ? 'L' : 'M'}${(P + (r.y / maxX) * (W - P * 2)).toFixed(1)},${(H - P - (r.salary / maxY) * (H - P * 2)).toFixed(1)}`).join(' ');
+  return (
+    <div className="g-curve">
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="月薪曲线">
+        <line x1={P} y1={H - P} x2={W - P} y2={H - P} className="ax" />
+        {peers.map((p, i) => <path key={i} d={path(p.rows)} className={`peer p${i}`} />)}
+        <path d={path(life.rows)} className="me" />
+        <text x={P} y={H - 8} className="lb">入行</text><text x={W - P} y={H - 8} className="lb" textAnchor="end">第 {maxX} 年</text>
+        <text x={P} y={P - 10} className="lb">{wan(maxY)}</text>
+      </svg>
+      <div className="g-legend"><span className="me">{life.name}（你）</span>{peers.map((p, i) => <span key={i} className={`p${i}`}>{p.name} · {p.unit_type}</span>)}</div>
+    </div>
+  );
+}
+
+const CSS = `
+.g-root { --bg: #f4f1ea; --paper: #fffdf8; --ink: #1d2129; --ink2: #4e5560; --ink3: #8a8f98; --line: #e2dccf; --blue: #1f3d6b; --acc: #2c5f9e; --acc2: #e9f0f8; --stamp: #2c5f9e; --good: #2f7d4f; --bad: #b5452f;
+  min-height: 100vh; background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+.g-root * { box-sizing: border-box; }
+.g-root button { font-family: inherit; }
+.g-wrap { max-width: 680px; margin: 0 auto; padding: 28px 16px 120px; }
+.g-eyebrow { font-size: 12px; letter-spacing: .24em; color: var(--ink3); }
+.g-title { font-family: var(--font-serif-sc), "Songti SC", serif; font-size: clamp(44px, 13vw, 76px); line-height: 1.12; font-weight: 900; margin: 14px 0 18px; letter-spacing: .02em; }
+.g-h2 { font-family: var(--font-serif-sc), "Songti SC", serif; font-size: clamp(24px, 6vw, 32px); line-height: 1.35; margin: 8px 0 14px; }
+.g-lead { font-size: 16.5px; color: var(--ink2); margin: 0 0 26px; }
+.g-sub { color: var(--ink2); margin: 0 0 14px; }
+.g-cap { font-size: 12px; letter-spacing: .12em; color: var(--ink3); margin-bottom: 8px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.g-mute { color: var(--ink3); }
+.g-note { font-size: 12.5px; color: var(--ink3); margin-top: 8px; }
+.g-err { color: var(--bad); margin-top: 10px; }
+.g-mono { font-family: ui-monospace, Menlo, monospace; letter-spacing: .04em; }
+.g-actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0 8px; }
+.g-actions.sticky { position: sticky; bottom: 0; padding: 12px 0 calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--bg) 30%); z-index: 5; }
+.g-actions.sticky .g-btn { flex: 1; }
+.g-btn { border: 1px solid var(--line); background: var(--paper); color: var(--ink); padding: 12px 20px; border-radius: 12px; font-size: 15.5px; font-weight: 700; cursor: pointer; min-height: 48px; }
+.g-btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+.g-btn.big { font-size: 18px; padding: 14px 34px; }
+.g-btn:disabled { opacity: .55; cursor: default; }
+.g-link { display: block; margin: 6px auto 0; background: none; border: 0; color: var(--ink3); text-decoration: underline; cursor: pointer; font-size: 14px; padding: 10px; }
+.g-how { list-style: none; padding: 0; margin: 34px 0 0; display: grid; gap: 12px; }
+.g-how li { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; color: var(--ink2); }
+.g-how b { color: var(--ink); }
+.g-arch { margin-top: 34px; }
+.g-arch-row { display: grid; gap: 2px; padding: 12px 0; border-top: 1px solid var(--line); }
+.g-arch-row span { font-size: 14px; }
+.g-foot { margin-top: 40px; font-size: 12px; color: var(--ink3); text-align: center; }
+
+/* 入职登记表 */
+.g-reg { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 14px 40px rgba(60,50,30,.08); overflow: hidden; }
+.g-reg-h { display: flex; justify-content: space-between; padding: 10px 16px; background: linear-gradient(90deg, var(--blue), var(--acc)); color: #f2f6fb; font-size: 13px; letter-spacing: .14em; }
+.g-reg-b { padding: 20px 18px 18px; position: relative; }
+.g-stamp { position: absolute; right: 16px; top: 18px; border: 2px solid var(--stamp); color: var(--stamp); border-radius: 10px; padding: 6px 10px; font-size: 14px; font-weight: 800; letter-spacing: .14em; transform: rotate(-6deg); opacity: .9; background: rgba(233,240,248,.6); font-family: var(--font-serif-sc), serif; }
+.g-name { font-family: var(--font-serif-sc), "Songti SC", serif; font-size: 34px; font-weight: 900; line-height: 1.2; }
+.g-headline { color: var(--ink2); margin: 6px 90px 16px 0; }
+.g-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; margin: 0; border-top: 1px dashed var(--line); padding-top: 14px; }
+.g-grid div.wide { grid-column: 1 / -1; }
+.g-grid dt { font-size: 12px; color: var(--ink3); }
+.g-grid dd { margin: 0; font-weight: 600; }
+.g-grid dd small { font-weight: 400; color: var(--ink3); margin-left: 6px; font-size: 12px; }
+.g-ladder { display: flex; flex-wrap: wrap; gap: 6px; font-weight: 500 !important; }
+.g-ladder span { font-size: 12.5px; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink3); }
+.g-ladder span.past { color: var(--ink2); background: #f1ede4; }
+.g-ladder span.on { background: var(--acc); border-color: var(--acc); color: #fff; }
+.g-ladder.sm { margin: 6px 0 12px; }
+.g-intro { font-size: 16.5px; margin: 22px 0; }
+.g-facts { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.g-fact { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 8px 0; border-top: 1px solid #efeadf; }
+.g-fact:first-of-type { border-top: 0; }
+.g-fact span { color: var(--ink2); font-size: 14px; }
+.g-fact b { grid-column: 1; font-weight: 600; }
+.g-fact .g-src { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+.g-src { font-style: normal; font-size: 11.5px; color: var(--acc); background: var(--acc2); padding: 1px 8px; border-radius: 999px; white-space: nowrap; letter-spacing: 0; }
+
+/* 这一天 */
+.g-day { list-style: none; padding: 0; margin: 18px 0; border-left: 2px solid var(--line); }
+.g-day li { position: relative; padding: 0 0 18px 20px; }
+.g-day li::before { content: ''; position: absolute; left: -6px; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--paper); border: 2px solid var(--acc); }
+.g-day time { font-family: ui-monospace, Menlo, monospace; font-size: 13px; color: var(--acc); font-weight: 700; }
+.g-day p { margin: 2px 0 0; }
+
+/* 过一生 */
+.g-play { max-width: 1080px; margin: 0 auto; padding: 0 0 40px; }
+.g-bar { position: sticky; top: 0; z-index: 10; background: rgba(244,241,234,.94); backdrop-filter: blur(8px); padding: 10px 16px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; border-bottom: 1px solid var(--line); }
+.g-bar-l { display: flex; align-items: baseline; gap: 10px; flex: 1 1 200px; min-width: 0; }
+.g-bar-l b { font-family: var(--font-serif-sc), serif; font-size: 26px; white-space: nowrap; }
+@media (max-width: 560px) { .g-bar-l { flex-basis: 100%; } .g-bar-r { width: 100%; } .g-bar-r .g-chip { flex: 1; padding: 6px 4px; } .g-status .g-ladder.sm { display: none; } .g-now { font-size: 19px; } .g-money { margin-top: 6px; } }
+.g-bar-l span { color: var(--ink2); font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.g-bar-r { display: flex; gap: 6px; flex-wrap: wrap; }
+.g-chip { border: 1px solid var(--line); background: var(--paper); border-radius: 999px; padding: 6px 12px; font-size: 13px; cursor: pointer; min-height: 34px; color: var(--ink2); }
+.g-chip.on { background: var(--blue); color: #fff; border-color: var(--blue); }
+.g-prog { flex-basis: 100%; height: 3px; background: var(--line); margin: 8px -16px 0; }
+.g-prog i { display: block; height: 100%; background: var(--acc); transition: width .6s; }
+.g-cols { display: grid; gap: 12px; padding: 12px 16px; grid-template-areas: "status" "log" "peers"; }
+.g-status { grid-area: status; margin: 0; } .g-peers { grid-area: peers; margin: 0; } .g-log { grid-area: log; }
+.g-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+@media (min-width: 900px) { .g-cols { grid-template-columns: 320px 1fr; grid-template-areas: "status log" "peers log"; align-items: start; } .g-stats { grid-template-columns: 1fr; } }
+.g-panel { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-bottom: 14px; }
+.g-now { font-family: var(--font-serif-sc), serif; font-size: 22px; font-weight: 900; }
+.g-money { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.g-money div { background: #f6f2e8; border-radius: 10px; padding: 8px 10px; }
+.g-money span { display: block; font-size: 12px; color: var(--ink3); }
+.g-money b { font-size: 17px; }
+.g-stat { display: grid; grid-template-columns: 38px 1fr 28px; align-items: center; gap: 8px; font-size: 13.5px; margin: 6px 0; }
+.g-track { height: 8px; background: #eee8dc; border-radius: 99px; overflow: hidden; }
+.g-track i { display: block; height: 100%; background: var(--acc); border-radius: 99px; transition: width .6s; }
+.g-track i.warn { background: var(--bad); }
+.g-stat b { text-align: right; font-weight: 600; color: var(--ink2); }
+.g-peer { display: grid; padding: 8px 0; border-top: 1px solid #efeadf; font-size: 13.5px; }
+.g-peer:first-of-type { border-top: 0; }
+.g-peer span { color: var(--ink2); }
+.g-peer em { font-style: normal; color: var(--acc); }
+.g-peer.wide { font-size: 14.5px; }
+.g-log { display: grid; gap: 10px; align-content: start; }
+.g-ev { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; border-left: 4px solid var(--line); }
+.g-ev.fresh { animation: g-in .5s ease-out; }
+.g-ev.good { border-left-color: var(--good); }
+.g-ev.bad { border-left-color: var(--bad); }
+.g-ev.promo { border-left-color: var(--acc); background: #f3f7fa; }
+.g-ev.choice { border-left-color: var(--blue); }
+.g-ev.ai { border-left-color: #7a6bb0; }
+.g-ev.start, .g-ev.end { border-left-color: var(--stamp); }
+.g-ev-h { display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: var(--ink3); }
+.g-ev p { margin: 4px 0 0; }
+.g-fx { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.g-fx span { font-size: 12px; padding: 0 8px; border-radius: 999px; }
+.g-fx .up { color: var(--good); background: #e9f4ec; }
+.g-fx .down { color: var(--bad); background: #f8ebe6; }
+@keyframes g-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.g-sheet-bg { position: fixed; inset: 0; background: rgba(31,61,107,.22); z-index: 30; display: flex; align-items: flex-end; justify-content: center; }
+.g-sheet { width: min(640px, 100%); max-height: 88vh; overflow: auto; background: var(--paper); border-radius: 20px 20px 0 0; padding: 20px 18px calc(18px + env(safe-area-inset-bottom)); animation: g-up .35s ease-out; }
+@media (min-width: 700px) { .g-sheet-bg { align-items: center; } .g-sheet { border-radius: 20px; } }
+@keyframes g-up { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+.g-sheet h3 { font-family: var(--font-serif-sc), serif; font-size: 23px; margin: 4px 0 8px; }
+.g-sheet p { color: var(--ink2); margin: 0 0 14px; }
+.g-opts { display: grid; gap: 10px; }
+.g-opt { text-align: left; border: 1px solid var(--line); background: #fbf8f1; border-radius: 12px; padding: 13px 14px; font-size: 15.5px; cursor: pointer; min-height: 50px; color: var(--ink); }
+.g-opt:hover { border-color: var(--acc); background: #fff; }
+.g-endtext { font-size: 16.5px; color: var(--ink) !important; }
+
+/* 回顾 */
+.g-quote { margin: 0 0 22px; padding: 14px 16px; border-left: 3px solid var(--stamp); background: var(--paper); border-radius: 0 12px 12px 0; color: var(--ink2); }
+.g-nums { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.g-nums div { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+.g-nums b { display: block; font-family: var(--font-serif-sc), serif; font-size: 22px; line-height: 1.3; }
+.g-nums span { font-size: 12.5px; color: var(--ink3); }
+.g-sec { margin-top: 26px; }
+.g-sec.two { display: grid; gap: 18px; }
+@media (min-width: 640px) { .g-sec.two { grid-template-columns: 1fr 1fr; } }
+.g-steps { list-style: none; margin: 0; padding: 0; }
+.g-steps li { display: grid; grid-template-columns: 56px 1fr; padding: 7px 0; border-top: 1px solid #ebe5d8; }
+.g-steps time, .g-pick time, .g-mem time { color: var(--acc); font-weight: 700; font-size: 13.5px; }
+.g-pick { display: grid; grid-template-columns: 56px 1fr; padding: 10px 0; border-top: 1px solid #ebe5d8; }
+.g-pick b { display: block; }
+.g-pick span { color: var(--acc); font-size: 14px; }
+.g-pick p { margin: 4px 0 0; color: var(--ink2); font-size: 14.5px; }
+.g-mem { margin: 0; padding: 8px 0; border-top: 1px solid #ebe5d8; font-size: 14.5px; display: grid; grid-template-columns: 56px 1fr; }
+.g-mem.good time { color: var(--good); } .g-mem.bad time { color: var(--bad); }
+.g-human { margin: 0; padding-left: 18px; font-size: 14px; color: var(--ink2); }
+.g-human li { margin: 6px 0; } .g-human b { display: block; color: var(--ink); }
+.g-curve { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 10px 10px 12px; }
+.g-curve svg { width: 100%; height: auto; display: block; }
+.g-curve .ax { stroke: var(--line); }
+.g-curve path { fill: none; stroke-width: 2; stroke-linejoin: round; }
+.g-curve path.me { stroke: var(--blue); stroke-width: 3.2; }
+.g-curve path.p0 { stroke: #c9a46a; } .g-curve path.p1 { stroke: #8fb3c9; } .g-curve path.p2 { stroke: #b9a3cf; }
+.g-curve .lb { font-size: 12px; fill: var(--ink3); }
+.g-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; color: var(--ink2); padding: 4px 6px 0; }
+.g-legend span::before { content: ''; display: inline-block; width: 14px; height: 3px; margin-right: 5px; vertical-align: middle; background: #c9a46a; }
+.g-legend .me::before { background: var(--blue); height: 4px; } .g-legend .p1::before { background: #8fb3c9; } .g-legend .p2::before { background: #b9a3cf; }
+`;
