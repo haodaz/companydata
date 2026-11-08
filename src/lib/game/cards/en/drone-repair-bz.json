@@ -1,0 +1,146 @@
+{
+ "id": "drone-repair-bz",
+ "occupation": "Drone Assembly and Repair Technician",
+ "role": "Crop-Spraying Drone Repair Technician",
+ "headline": "In the repair shed of a crop-spraying service in Binzhou: eight drones fixed a day in spraying season, and in winter, machines stripped down to the frame",
+ "unit": "A crop-spraying drone service company in Binzhou, Shandong (repair station)",
+ "unit_type": "Agricultural services company",
+ "city": "Binzhou",
+ "city_tier": "Tier-3 city",
+ "education": "Vocational college (drone applications)",
+ "level": "You built racing drones at school and are only starting to recognize farm drone pumps and nozzles",
+ "intro": "The repair shed sits at the edge of the company's drying yard, and the hose at the door runs pale green. The station chief rolls an eight-rotor drone just back from the wheat fields up to you and says flush the tank and lines first, then we'll talk about repairs. The grain-filling spray is close, seventy thousand mu of farmland is booked (a mu is about a sixth of an acre), and the stacks of propellers in the shed are taller than you.",
+ "salary_note": "Estimate: base pay at Binzhou farm service firms is low. Per-sortie and emergency repair pay means most of the year's earnings land between May and September.",
+ "facts": [
+  { "label": "Drone Repair Technician (Grade 5) (current level)", "value": "0–2 years, ¥4,000–6,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Drone Repair Technician (Grade 4) (2–6 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Assembling frames, motors, ESCs and propellers", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Connecting and checking flight controllers, sensors and wiring", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Before dawn the pilots come for their machines. You load last night's two repairs on the pickup, run the power-on checks, and listen for the one motor that doesn't belong.",
+  "The first return of the day has no flow from the pump. You open the lines and the strainer holds a wad of undissolved powder. The pilot says a farmer in the village mixed his own.",
+  "A crashed drone is lifted onto the bench. You export the flight log first, then look at which way the props broke. The pilot says the signal dropped. The log says a motor stopped first.",
+  "Lunch from a box, squatting in the shed doorway. Your hands still smell of chemicals after three rounds of soap. The chief takes a call: the jujube orchards in Zhanhua want four more drones. Squeeze a little harder.",
+  "Replacing an ESC. The board has a green crust where spray crept in through a wire gap. You scrub it with alcohol and a toothbrush, photograph it for the manufacturer, and wait to hear whether it's under warranty.",
+  "A field repair call. The dirt road rattles your toolbox. The cooperative's director stands at the edge of the field; every hour the drone sits idle is a hundred mu unsprayed.",
+  "Compass calibration means picking the drone up and turning in circles. Then the IMU, then a test flight on the tether post. Moths crash into the lights on the arms.",
+  "Batteries on the rack, cycle counts in the log. The swollen ones go into the sandbox, two fewer today. Back in the dorm, your ears are still humming."
+ ],
+ "ladder": [
+  { "title": "Drone Repair Technician (Grade 5)", "stage": "Apprentice", "focus": "Washing tanks, changing props and nozzles, turning screws, learning to read flight logs. In spraying season the main job is getting machines clean and handing over the right part." },
+  { "title": "Drone Repair Technician (Grade 4)", "stage": "On your own", "focus": "Disassembling ESCs, replacing motors, calibrating the IMU and compass, locating faults from logs, going out to fields alone." },
+  { "title": "Senior Drone Repair Technician (Grade 3)", "stage": "Hard faults", "focus": "Repeat crashes and board-level corrosion, arguing liability with manufacturer support, leading the repair team, training pilots." },
+  { "title": "Station Chief (Grade 2 Technician)", "stage": "Running the station", "focus": "Parts, people, spraying-season rosters and fleet retirement. Negotiating with cooperatives and manufacturers, and signing off on whether each machine flies." }
+ ],
+ "ai_tasks": [
+  { "name": "Assembling frames, motors, ESCs and propellers", "how": "Mounting frames, motors, ESCs and props takes hands: turning screws, routing wire, balancing weight. At most, AI can prompt assembly steps." },
+  { "name": "Connecting and checking flight controllers, sensors and wiring", "how": "AI can compare photos with wiring diagrams and flag wrong connections. Whether a plug is seated, a wire is worn, or something will interfere must be checked by hand." },
+  { "name": "Tuning flight parameters and calibrating sensors", "how": "AI can recommend parameter ranges and find anomalies in logs. Choosing among them and controlling the setting during calibration is up to a person." },
+  { "name": "Testing the power system and radio link", "how": "Software can read motor speed, current and signal strength and mark anomalies. How to run the bench test and what the numbers mean is a person's judgment and responsibility." },
+  { "name": "Test flying and recording performance", "how": "AI can extract logs and write performance reports. A person has to fly on site, read the airframe and the weather, and decide whether to launch." },
+  { "name": "Locating the cause of flight faults", "how": "AI can analyze logs and rank likely causes. Finding the actual fault takes listening, looking for marks, and swapping parts, especially for mechanical or contact problems logs can't show." },
+  { "name": "Replacing damaged propellers and motors", "how": "This is handwork, with on-site judgment about damage and part fit. At most, AI looks up model numbers and stock." },
+  { "name": "Servicing airframes and batteries and checking safety", "how": "AI can track flight counts and battery data and warn of aging. Cleaning, looking for cracks and loose screws, and ruling whether a machine stays in service need a person." }
+ ],
+ "events": {
+  "e_wash": "In your first month of spraying season you wash more than four hundred tanks and learn to guess the last crop's chemical from the color of the water. The skin on the back of your hands peels until you switch to nitrile gloves.",
+  "e_wrongpart": "You mount one pair of clockwise and counterclockwise props the wrong way round. On the test post the chief slams the emergency stop. The drone is fine. You spend the afternoon by the shed door learning them apart.",
+  "e_log": "A drone keeps losing height. In the log you find the current to the third motor twitching every few seconds, and inside it, dirt in the bearing. The chief forwards that stretch of curve to the pilots' group.",
+  "e_may": "The two weeks when wheat heads out, all the spraying falls in the same week. You fix eight drones a day, test them on the post after midnight, eat standing up, and the account jumps by a month's pay.",
+  "e_winter": "No spraying in winter, so drones come apart one by one to the bare frame. New bearings, rewired harnesses. Pay falls to base. The coal stove in the shed heats one side of your face and leaves the other cold.",
+  "e_damage": "Herbicide drift burns a neighboring cotton field and the farmer comes in with the leaves. The flight record shows the route was right but the wind a little over. The company pays. The preflight sheet gains a new line for wind speed, and you have to sign it.",
+  "e_battery": "A battery at the end of its life swells on the charging rack. You carry it to the sandbox in gloves and test the internal resistance of the whole batch. The chief thinks new batteries are expensive. You put the readings on his desk.",
+  "e_warranty": "Manufacturer support insists the burned ESC is chemical corrosion and not under warranty. You send photos of waterproofing glue that was never applied properly. Two weeks of arguing gets you three boards and an admission of nothing.",
+  "e_jujube": "The Zhanhua jujube growers agree to try aerial spraying for the first time. You spend a day adjusting nozzles and height until the undersides of the leaves come up wet. The owner's wife gives you a bag of last year's dried jujubes.",
+  "e_ear": "A hearing test shows a hole in the high frequencies. You can tell which of eight motors is off, and you can no longer catch what your spouse says from the kitchen.",
+  "e_ai_log": "The manufacturer's cloud platform starts reading logs and telling pilots 'suspected motor fault.' They arrive with their phones held out. You open the motors. Half really are faulty. The other half have cotton wound around the prop.",
+  "e_autonomy": "New models plan their own routes and avoid obstacles. Young villagers train in the morning and fly in the afternoon. The ways machines break multiply, and the shed gets busier than ever.",
+  "e_vendor_lock": "The manufacturer locks its new firmware. Third-party repair can no longer reach the calibration page, and replacing a board needs online authorization. A few of the old hands curse at a login box all morning.",
+  "e_eol": "The company's first batch of sixteen-liter machines goes out of production and parts dry up. You cannibalize three dead drones to make two that fly, and they last another season.",
+  "e_subsidy": "The farm machinery subsidy list changes, and every cooperative rushes to buy the models that qualify. Repair jobs on old machines fall by a tenth, and the company ends up taking in a batch of old drones as trade-ins.",
+  "e_pickup": "From May to September you have no weekends. Your kid's kindergarten sports day falls in early June and your spouse goes alone. In the teacher's photo, one small chair in the second row is empty.",
+  "e_saline": "Salt-tolerant soybeans come to the saline fields at the Yellow River mouth, and the company wins aerial seeding and spraying on tens of thousands of mu. The sea wind is strong. You rework your wind margin for test flights.",
+  "e_back": "A full drone weighs more than thirty-five kilos. After a decade of lifting them onto the bench, your back delivers its verdict during this year's grain-filling spray. You add an electric lift in the shed, and everyone says it should have been done years ago.",
+  "e_callin": "The county machinery station runs pilot training and asks you to teach a session on troubleshooting. You walk up with a burned ESC and say this thing warns you three times before it fails."
+ },
+ "choices": {
+  "c_license": { "title": "Get a pilot's license?", "situation": "The chief says a repair tech who can fly is best, and the company will pay half. But spraying season is coming and the course in Dongying is three full weeks. The shed would be a person short. He doesn't say anything about it. His face does.", "options": [
+   { "label": "Get the license", "result": "You come back with steadier test flights and can tell at the field whether the problem is the pilot or the machine. The chief's expression takes longer to recover." },
+   { "label": "Learn the shed first", "result": "That season you learn to change nozzles with your eyes closed. While others are at the course, you get to know every harness on the eight-rotors and six-rotors." } ] },
+  "c_grade4": { "title": "Test for Drone Repair Technician (Grade 4)", "situation": "Skills certification now includes drone repair. The practical is finding a planted fault within a time limit. Grade 4 gets you approval for solo field calls and the emergency repair bonus.", "options": [
+   { "label": "Sign up for Grade 4", "result": "You practice on logs at night. In the exam the fault is a cold solder joint on a plug, and you find it in twelve minutes." },
+   { "label": "Paper or no paper, hands decide", "result": "You keep repairing machines, but field calls still go with someone else, and the bonus with them." } ] },
+  "c_flyer": { "title": "Go home and fly your own", "situation": "Your uncle leases a few hundred mu in Wudi. He says the subsidy will come through and wants you to buy two drones and work with the village. A season's earnings would match most of a year at the company. The machines and batteries take a loan, and a rainy year would leave it all in your hands.", "options": [
+   { "label": "Take the loan, go home", "result": "You hear your own name on the village loudspeaker.", "end": "You left the repair shed for Wudi, bought two drones and took your own jobs. In good years there was a good harvest. On rainy days you fixed machines in the yard." },
+   { "label": "Stay with the company", "result": "You find other pilots for your uncle's jobs and keep taking your wages, with some bonus in season." } ] },
+  "c_platform": { "title": "Learn the cloud diagnostics", "situation": "The manufacturer wants a regional data clerk to send back fault data from each station and learn how to label and correct the AI's diagnoses. It pays ¥1,000 more and takes half of your winter overhaul time.", "options": [
+   { "label": "Take it", "result": "You match thousands of log entries to real faults. The platform's 'suspected' gets a bit more accurate, and you begin to understand how it guesses." },
+   { "label": "No, fix machines properly in winter", "result": "You strip old drones to the frame and your hands get surer. What the platform's back end looks like, you never see." } ] },
+  "c_grade3": { "title": "Test for Senior Drone Repair Technician (Grade 3)", "situation": "Grade 3 requires a written analysis of a hard fault and board-level repair. The company wants the ESC return rate brought down. If you succeed it goes straight into your report. If not, a season of return costs goes on the repair team.", "options": [
+   { "label": "Take on the return rate", "result": "You reapply waterproofing at every ESC wire gap and set a cleaning schedule. Returns drop forty percent next season. The report runs to eleven pages and the Grade 3 certificate arrives." },
+   { "label": "Skip it, fix what's in front of you", "result": "You keep repairing. The company brings in the manufacturer for the return rate, and you overhear some of it." } ] },
+  "c_preflight": { "title": "Does this one fly", "situation": "The last day before rain. One battery's internal resistance is high, just barely within limits. The pilot says this is the last field on the job, and the cooperative's director is waiting right there. The checklist needs your signature.", "options": [
+   { "label": "Swap the battery, lose half a day", "result": "Sixty mu go unsprayed before the rain, the pilot loses commission, and the cooperative has more to say at payment." },
+   { "label": "Sign the release", "result": "The drone finishes and nothing happens. When that battery comes off the post, you put it by itself on the bottom shelf." } ] },
+  "c_oem": { "title": "Teach for the manufacturer", "situation": "The manufacturer's after-sales training department in Shenzhen wants you because you've repaired so many models. Better pay, travel all over the country, teaching others to repair from a podium. The smell of the shed would be behind you.", "options": [
+   { "label": "Go to the manufacturer", "result": "You pack your toolbox and find they have most of the tools already. You take only the Allen key that has worn in to your hand.", "end": "You joined the manufacturer's after-sales training team and spent each year following new models through field classrooms across the provinces, explaining the calibration page third parties can't open." },
+   { "label": "Stay in Binzhou", "result": "You keep fixing machines in the shed by the Yellow River. Documentation for new models reaches you when the training class hands it out." } ] },
+  "c_stationmaster": { "title": "Take over as Station Chief", "situation": "The old chief is going home to help raise a nephew, and the company wants you as Station Chief. You'd run three subcontracted repair points, the parts store and the season's rosters, and your hands would mostly stop working. Otherwise, you remain the best pair of hands on the repair team.", "options": [
+   { "label": "Become Station Chief", "result": "You learn to read parts turnover and the lifetime cost of a drone. On the list for retiring a batch of old machines, for the first time, your own name goes down." },
+   { "label": "Keep repairing", "result": "The new chief is hired from outside and talks about turnover at meetings. The hard faults still get carried to your bench." } ] }
+ },
+ "endings": {
+  "retire": "You work some thirty spraying seasons. The shed becomes a building, and the hose at the door now feeds a wastewater tank. The month you retire is the grain-filling spray, so nobody has time for a farewell dinner. You carry your toolbox across the drying yard and hear a drone take off with its sixth motor sounding slightly wrong. You note the number and send it to whoever's on duty.",
+  "burnout": "After several hard seasons your back goes, and the high-frequency half of the world goes quiet. The company moves you to the parts warehouse: fill orders, no lifting, no fields. In May the shed lights burn past midnight, and in the warehouse you bundle props by direction, ten pairs to a bundle."
+ },
+ "stages": [
+  "The motion you make most is washing: flushing tanks, pulling strainers, scrubbing nozzles with a toothbrush. In between you hand your mentor Allen keys and hot glue and learn motor wire order and clockwise from counterclockwise. Pilots report faults to your mentor. You lift the machine off the pickup and wash it until cracks show.",
+  "You start writing your own tickets. Machine on the bench, log first, then the marks on broken props and motors. You change ESCs and IMUs, calibrate compasses, test on the post. When a pilot argues about whose fault it is, you point to a curve in the log. For a field call, the pickup and toolbox are yours, and you go alone.",
+  "Whatever the station can't fix gets carried to you: repeat crashes, boards too corroded to read, machines the manufacturer says are fine. You probe with a soldering iron and multimeter, assign jobs to the team, teach pilots, and screenshot back and forth with manufacturer support over one ESC. When someone asks why you called it that way, you have to be able to say.",
+  "Your desk moves into the office next door. Before the season you match people and drones and set parts stock; after it you work out which machines are still worth repairing. You negotiate per-mu rates with cooperatives and return terms with manufacturers. The preflight rules carry your name, and if something goes wrong, the first call comes to you."
+ ],
+ "work": [
+  "You open a blocked nozzle and find a caked layer of foliar fertilizer. Your mentor says next time you see this chemical, have the pilot flush with water once more. You write it on a sticker on the tank.",
+  "You turn a motor by hand and feel nothing wrong. Your mentor tells you to close your eyes and try again. The second time, there is a slight catch at one spot. Sand in the bearing.",
+  "A rainy day with no jobs. You test thirty pairs of props on the balancer and put a sliver of tape on the light side. The chief comes through once and shuts the window.",
+  "A drone drifts at the end of every run and the pilot blames RTK. You move the base station; it still drifts. Finally you find a little play in the arm's folding joint.",
+  "A rush repair in the Zhanhua orchards: forty kilometers of dirt road to change a pump in the shade of a tree. Someone from the cooperative brings a ladle of well water, and you use it to wash your hands first.",
+  "A pilot crashes and blames the signal. You open the log and show him: the altitude curve and his stick input are a fraction of a second apart. He says nothing more and pays the repair bill.",
+  "An ESC's MOSFET has burned out and that model is discontinued. You pull one from a dead drone and solder it back under a microscope. Sixty test cycles later, no temperature anomalies.",
+  "Teaching new pilots, you set out five broken nozzles and ask how each one died. A young woman says the third came from pouring the wrong chemical. You ask her to teach the next class.",
+  "The manufacturer says this batch of motors is fine. You send a chart of bearing marks from twenty-seven returns. Ten days later they send an engineer, who stays two nights.",
+  "You rewrite the spraying-season roster five times, matching four subcontracted points and twenty-two drones to plots. You are still one pilot short, so you call the county training course.",
+  "Year-end books: repair costs on the machines over three years old now exceed half of residual value. You push the disposal form across to the boss. He asks whether you can at least reuse the batteries.",
+  "A cooperative director comes to talk next year's rate and wants fifty fen off. You bring out this year's returns and pilot commissions and tell him that at that rate all you can send is old machines. Does he want old machines?"
+ ],
+ "past": [
+  "Your family grows wheat and corn in Huimin. You don't get into the county's top high school. Your father says vocational school is fine, just don't come back to farm. Farming doesn't pay much these days.",
+  "A spraying drone comes to your village for the first time and a crowd gathers. The pilot isn't much older than you. In twenty minutes he finishes a field that takes your father a day with a backpack sprayer.",
+  "You enroll in a vocational drone applications program. The school doesn't have many machines, so you and two classmates pool money and build a racing drone in the dorm. It crashes six times and gets fixed six times.",
+  "An internship at an aerial photography company in Jinan, wiping lenses and shooting real-estate developments. You realize you don't much care what's being filmed. You want to know why that motor is running warm.",
+  "A Binzhou farm services company comes to campus to recruit. The man's hands smell of chemicals. He says the season is hard, but you'll learn something real. It's close to home. You pack your bags."
+ ],
+ "late": {
+  "pension_note": "Estimate: farm service firms pay social insurance on base pay, not seasonal bonuses, so the pension comes to a little over forty percent of final monthly income.",
+  "scenes": [
+   "Your first grain-filling spray without work, you repair the water pipes, the e-bike and the hinges on the gate. In the afternoon you drive out to the edge of the wheat, spraying nothing, and watch other people spray.",
+   "When pilots from the next village have trouble, they haul machines to your yard, and you take a pack of cigarettes for it. New models won't open for you. All you can help with now are harnesses, props and listening.",
+   "Spraying now means drones that fly themselves and go back on their own to swap batteries. The company has merged its repair stations, three counties to one, and it hires people who can read a dashboard. The badge with your old number doesn't open today's door.",
+   "In the warehouse you lose the big spraying-season chunk of your pay, over ¥30,000 a year when you work it out. Your kid's tutoring came out of that, and now you'll need to find it somewhere else.",
+   "Three years in a back brace, and the shelves get another level added on top. You ask to move to low-shelf goods. The warehouse manager says you're fine in every way, except for how many things you have opinions about.",
+   "You buy hearing aids, over ¥5,000, your own money. Wearing them, you find out for the first time how loud the fridge is. You go over and listen to the compressor and say this one's about to go.",
+   "Once you stop fixing machines in the shed, you find that May still keeps you from sleeping well. You always feel there's a drone out in the yard waiting for the test post.",
+   "You did the math once. In the years since you left, the per-mu rate has fallen from seven yuan to four. The jobs you fought for back then wouldn't cover the depreciation on a box of batteries now.",
+   "At an agricultural drone show, a pilot from the old days is now a dealer and takes you to dinner. Everyone at the table is talking about the next generation of machines. You alone are asking how long this generation's motors are warrantied.",
+   "A kid in the park is flying a toy drone that wobbles badly. You say the back left prop isn't balanced. His father, half convinced, takes it off and puts on a sliver of tape, and it flies steady.",
+   "Buying fruit, you turn over the leaves first: chemical spots, drift burn, even coverage. The woman selling jujubes gets tired of the questions and asks whether you're buying or conducting an acceptance inspection."
+  ],
+  "closing": {
+   "retire": "A familiar hum rises from the wheat one afternoon. You don't look up, and you finish this half-turn with the Allen key. The sound moves away. All eight are right.",
+   "burnout": "The warehouse lets out early, and you walk a stretch along the Yellow River levee. Light wind this year, good for spraying. You think about that, and keep walking.",
+   "end": "The dirt road by the field has been paved, and when you drive it the toolbox no longer rattles. A drone passes overhead. Its shadow crosses the windshield and is soon on the next plot."
+  }
+ }
+}

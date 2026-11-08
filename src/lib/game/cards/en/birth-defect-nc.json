@@ -1,0 +1,159 @@
+{
+ "id": "birth-defect-nc",
+ "occupation": "Birth Defect Prevention Counselor",
+ "role": "Birth Defect Prevention Counselor, Maternal and Child Health Hospital",
+ "headline": "Back in Nanchong with a public health master's, staring all day at screening reports and family trees, turning \"probability\" into words a couple from northern Sichuan can hold, and never choosing for them",
+ "unit": "Genetic Counseling Clinic, a municipal maternal and child health hospital in Nanchong",
+ "unit_type": "Municipal maternal and child health hospital",
+ "city": "Nanchong, Sichuan",
+ "city_tier": "Third-tier city",
+ "education": "Master's (Public Health)",
+ "level": "You know the screening workflow and report format by heart. You have not yet said the words \"elevated risk\" to a couple on your own.",
+ "intro": "The clinic is on the third floor of the hospital, next door to obstetrics. One desk, two chairs for couples, and one more for the mother-in-law who often comes along. The physician training you hands you a screening form and points to the gestational age box: look at this first. If this is wrong, everything after it is wrong. Next Monday you sit down on this side of the desk.",
+ "salary_note": "Estimate: a northern Sichuan municipal hospital, public-institution pay with a small bonus. Counseling itself barely earns fees; program funding covers part of it.",
+ "facts": [
+  { "label": "Counseling Assistant (current level)", "value": "0-3 years, ¥4,000–6,000 a month (national estimate)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Prenatal Screening Counselor (3-7 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Providing genetic counseling and guidance", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Birth defect prevention education", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the database is mostly campus and internship roles)", "source": "Job listings" }
+ ],
+ "day": [
+  "You ride your e-bike along the Jialing riverside road before the fog lifts. First thing at the clinic you switch on the computer and finish entering yesterday's screening forms.",
+  "The first couple took the early bus from Yingshan, the husband on leave from a construction site. You ask how many weeks along she is today, then check the date against the form again.",
+  "She holds up the report and asks if this number is good or bad. On a sheet of white paper you draw a thousand small dots, circle a few and say: this is what we're talking about.",
+  "The mother-in-law stops you in the doorway and asks if her daughter-in-law ate something wrong. You tell her this has nothing to do with food. You say it twice, the second time more slowly.",
+  "Twice-cooked pork in the canteen while colleagues complain that ultrasound is booked solid again. As you eat you check your phone for whose screening window closes this week.",
+  "Follow-up calls. A pregnant woman in Xichong has her phone off. You note it and will try another hour tomorrow. If that fails, you'll ask the local health worker to go to her door.",
+  "A county health worker sends this month's folic acid distribution sheet. One township's numbers are identical to last month's. You phone to ask if they were copied.",
+  "You finish today's counseling notes. Every sentence has to bear being reread in three years, so here you write \"informed\" and \"couple states understanding.\""
+ ],
+ "ladder": [
+  { "title": "Counseling Assistant", "stage": "Trainee", "focus": "Take histories, enter screening data, make follow-up calls, and learn from genetic counselors how to talk." },
+  { "title": "Prenatal Screening Counselor", "stage": "Own clinic", "focus": "Interpret screening reports and make referrals independently. You rise by missing no one within the window and being understood." },
+  { "title": "Genetic Counselor", "stage": "Mainstay", "focus": "Draw family trees, do preconception risk assessment, follow high-risk families over the long term, and mentor county health workers." },
+  { "title": "Supervising Counselor", "stage": "Quality control", "focus": "Oversee citywide screening data and quality, review interpretations, set referral paths, and liaise with the provincial prenatal center." },
+  { "title": "Clinic Director", "stage": "Department head", "focus": "Staff, program funding, and collaboration with counties and superiors all rest at this level." }
+ ],
+ "ai_tasks": [
+  { "name": "Birth defect prevention education", "how": "AI generates plain articles, short video scripts and Q&A for different audiences and answers questions automatically. People spot-check for accuracy and give talks face to face." },
+  { "name": "Collecting health and family histories", "how": "AI gathers information through questionnaires or chat, draws the family tree and flags anomalies. A person probes further in the interview, notices what people won't or can't say, and confirms it." },
+  { "name": "Preconception risk assessment and grading", "how": "AI estimates a risk grade from history, age, medication and family history and lists what to watch. A person reviews the grade against the couple's real situation and owns the conclusion." },
+  { "name": "Guiding prenatal screening and diagnosis", "how": "AI generates reminders by gestational week and explains how tests differ. A person advises on next steps and helps people understand what the tests can and cannot say." },
+  { "name": "Interpreting screening and test reports", "how": "AI translates report values into plain language and flags what is abnormal. A person weighs the clinical picture and explains it in a way people can hear and bear." },
+  { "name": "Providing genetic counseling and guidance", "how": "AI can provide information and compare options. But facing high risk or hard news, it takes a person to empathize, explain uncertainty, keep a family company through difficult choices, and carry the professional and ethical responsibility." },
+  { "name": "Folic acid and pregnancy health guidance", "how": "AI generates personalized reminders and diet and routine advice, and handles check-ins and questions. People only spot-check special cases such as chronic illness or medication." },
+  { "name": "Following high-risk families and keeping records", "how": "AI generates follow-up plans, reminders, call summaries and files. A person personally contacts high-risk families, judges how they are doing, and decides whether to refer or escalate." }
+ ],
+ "events": {
+  "e_window": "A pregnant woman is three days from missing her screening window and is working in Guangdong. Four phone calls, and you help her find a hospital there that can do it, then send the form over.",
+  "e_first_talk": "The first time you say \"elevated risk\" alone. Afterward your palms are wet. The husband's first question is about money. You don't blame him; that's fear too.",
+  "e_wrong_week": "A form has the gestational age two weeks short and the calculated risk is completely wrong. You recalculate, phone, and apologize to the couple, who spent a weekend frightened for nothing.",
+  "e_mother_law": "An older relative arrives asking whose family it comes from. You push the family tree aside and tell her today isn't about whose fault anything is, only what to do next. She isn't satisfied, but her daughter-in-law's shoulders drop a little.",
+  "e_folate": "Preconception outreach at a township in Yilong, handing out folic acid. The village women's director has rounded everyone up. Someone asks if the husband can take this medicine too, and the whole room laughs.",
+  "e_voice": "Thirty times a day you explain \"false positive.\" Your vocal cords grow nodules. A colleague in ENT says your job is like a primary school teacher's: not talking is impossible, so drink more water.",
+  "e_sales": "A testing company rep drops by with a desk calendar and hints that every order comes with a token of appreciation. You keep the calendar, ask him to take the rest back, and write a page about it for the hospital office.",
+  "e_followup": "Year-end follow-up stats, and you're four households short. One family in Langzhong has moved. You ask the village doctor, the township clinic, her mother's family, and the call finally connects. All is well, she says.",
+  "e_thanks": "A couple comes back after a long time just to tell you they didn't understand what you said that day, and went home and looked at your little dots again and again. You pass this on to the new colleague you're training.",
+  "e_ai_report": "A report-reading mini-app goes live, turning values into plain words. People arrive having already read it on their phones. First you have to explain away the red exclamation mark on the screen.",
+  "e_ai_pedigree": "An AI questionnaire now generates family trees, fast and tidy. But one husband ticks \"none\" in front of his wife, and only tells you on the stairs outside that there's something on his uncle's side. You go back and amend the tree.",
+  "e_ai_science": "AI can now produce twenty outreach videos overnight, and your job becomes spot-checking them. Number thirteen gets a concept backward, and has the most likes.",
+  "e_exam_due": "Your maternal and child health certificate is up for review: credits again, and a theory exam. At the other end of the table from your child's homework, you read the new screening guidelines three times.",
+  "e_spec_change": "The screening pathway changes; a new test joins the free program at half the price. The entire outreach handbook needs reprinting and county health workers need retraining. You drive the full circuit.",
+  "e_transfer": "Referrals to the provincial prenatal center have a two-week wait. A couple has never been to Chengdu. You write down the high-speed train times, the registration window and which floor, and they put the paper in a pocket.",
+  "e_hard_day": "This consultation is a hard one and you stay with them past closing time. On the way home you realize you haven't had any water. You sit in the car for ten minutes before going upstairs.",
+  "e_budget": "Next year's program funding arrives half a year late. Follow-up phone bills and the fuel for township trips go into a ledger, to be settled when the money comes.",
+  "e_family_dinner": "At the New Year's Eve dinner, relatives are discussing whose cousin is what. Your head has already drawn the squares and circles. You quickly reach for some liangfen.",
+  "e_colleague": "A younger colleague you've trained takes a difficult consultation alone and comes out red-eyed. You don't ask what was said. You just move the afternoon's two appointments to your own name.",
+  "e_birthrate": "Each year fewer women register for prenatal care, and clinic volume is down by a third. At a hospital meeting they talk of combining two adjacent consulting rooms."
+ },
+ "choices": {
+  "c_training": { "title": "Train in the provincial capital to qualify as a Prenatal Screening Counselor", "situation": "A three-month provincial course, one place. Going qualifies you to run an independent clinic. But your spouse is away at a construction site, your father has just had spinal surgery, and your mother can't lift him alone.", "options": [
+   { "label": "Go, ask a cousin to help for three months", "result": "Three months in Chengdu, watching your father walk over video every night. When you get back he can go downstairs for cigarettes himself, and you can't decide whether to be glad or cross." },
+   { "label": "Wait for the next round", "result": "The next round won't be until the year after next. Meanwhile you stay at the clinic, and people get used to you checking the form first." }
+  ] },
+  "c_style": { "title": "Do you stay this afternoon", "situation": "The rule of counseling is to explain clearly and never choose for anyone. A couple has heard everything and won't leave. They ask: what would you do? Five more appointments are waiting and someone is peering around the door.", "options": [
+   { "label": "Push the others back and stay a while", "result": "You don't answer the question. You only sort through what they themselves have just said. The others wait forty minutes and one files a complaint." },
+   { "label": "Ask them to come back tomorrow", "result": "You keep tomorrow's first slot for them. They come back the next day with a notebook full of writing, and their questions are clearer." }
+  ] },
+  "c_county": { "title": "A year embedded in Nanbu County", "situation": "The city's screening gap is in a few counties. The hospital wants someone to spend a year building a follow-up network. You'd live in the county clinic's dormitory and get home on weekends, and it counts toward promotion.", "options": [
+   { "label": "Go", "result": "By the end of the year you know all forty townships' health workers, and which township's reports need one more question." },
+   { "label": "Stay at the clinic", "result": "The place goes to someone else. You spend the year rebuilding the clinic's counseling notes template." }
+  ] },
+  "c_genetic": { "title": "Train for the Genetic Counselor certificate", "situation": "National genetic counseling training: full-time study, assessments, case submissions. Afterward you can handle complex family histories. It also means all the hard ones will come to you.", "options": [
+   { "label": "Do it", "result": "Two summers and you have the certificate. Your form gains a line of text, and the queue at your door gains a stretch." },
+   { "label": "No, do the current work well", "result": "You say more cases won't change that the decisions aren't yours. You keep to screening and follow-up." }
+  ] },
+  "c_company": { "title": "A genetic testing company offers you medical advisor", "situation": "A Chengdu testing company offers two and a half times your pay, traveling the province to brief hospital doctors. Everything you'd say would be true. It would just always arrive at this company's product.", "options": [
+   { "label": "Go", "result": "You verify the follow-up list household by household before handing it over. The canteen happens to have twice-cooked pork the day you leave.", "end": "You become a medical advisor for the testing company, sleeping in every budget hotel in the province, making very good slides. Lecturing doctors, you still glance first at whether the gestational age boxes on their forms are right." },
+   { "label": "Don't go", "result": "You say you'd rather talk to people without selling anything. They say that's a luxury too. You think they're right." }
+  ] },
+  "c_ai": { "title": "AI follow-up needs someone to lead it", "situation": "The hospital is bringing in AI follow-up with automatic calls and automatic grading. It needs someone who knows the clinic to set the rules: when a real person must take over, and which sentences it mustn't say.", "options": [
+   { "label": "Take on setting the rules", "result": "The first rule you add: if the other person is silent for more than five seconds, transfer to a human." },
+   { "label": "Keep making the calls yourself", "result": "You keep the hardest-to-reach households and still ring them yourself. When the system can't get through, the list comes to you." }
+  ] },
+  "c_manager": { "title": "Compete for Supervising Counselor", "situation": "Citywide screening data and quality control come to this level. You'd go to counties to check reports and make doctors at other hospitals fill out forms correctly, and your clinic time would be cut in half.", "options": [
+   { "label": "Compete", "result": "At your first quality meeting you post the citywide error rates. Two department heads look displeased. By the second quarter the number is down by half." },
+   { "label": "Keep seeing people in clinic", "result": "You say this side of the desk suits you. You know better than anyone which hours couples come together." }
+  ] },
+  "c_merge": { "title": "The clinic is merging into obstetrics", "situation": "Fewer women are registering, so the hospital is folding genetic counseling into obstetrics, with each counselor covering three roles. Meanwhile the municipal maternal and child health program is short of staff and asks if you'd come over.", "options": [
+   { "label": "Stay and cover it all", "result": "Between triage and counseling, in the gaps of the obstetricians' schedule, you find a way to give each couple half an hour." },
+   { "label": "Go into program management", "result": "You take the clinic's key ring apart and label each key.", "end": "You go to the city to manage maternal and child health programs, your desk covered in forms and approvals, a few township trips a year. From a dozen pages away you can see who has the gestational age wrong." },
+   { "label": "Switch to premarital and preconception care", "result": "You move to the room next door. Nobody who comes in has started worrying yet, and their faces are much lighter." }
+  ] }
+ },
+ "endings": {
+  "retire": "Two months before retiring, you phone each of your twenty-three follow-up households to explain who will make this call from now on, and whether that person speaks slowly. When your final volume of counseling notes is archived the hospital system flags an index problem. You spend an afternoon fixing it and only then go home.",
+  "burnout": "Your vocal cords and eyes act up together, and worse, the word \"probability\" begins to tire you on sight. You ask to stop seeing patients and the director agrees. In your first week at home someone asks what you want for dinner. You say anything is fine, and this time you don't have to explain."
+ },
+ "stages": [
+  "You sit beside the genetic counselor taking histories, entering screening data, and checking gestational age and last menstrual period line by line. In the afternoons you work through a follow-up list, often reaching a husband away at work or an elderly relative who can't hear. The first thing you learn: don't say \"it's fine,\" don't say \"there's a problem,\" say what we'll do next.",
+  "This side of the desk is now yours alone. Seven or eight couples a morning, and with report forms, blank paper and a pen you explain that screening is not diagnosis. You write referrals when needed and coordinate with ultrasound and the lab; the screening window is everyone's shared alarm clock. After it's explained clearly, what to choose is up to them.",
+  "You begin drawing family trees: squares, circles, lines, three generations, sometimes asking what's very hard to ask. Most of your cases are long-term follow-ups that run for years. County health workers send you forms they aren't sure about, and your judgment has to come back as words they can act on.",
+  "Screening data from a dozen hospitals citywide comes to you. You check missed-screening rates and report quality, issue quality bulletins, and have to say things in a way other department heads can hear. You keep the referral channel to the provincial center open. Fewer clinic hours now, more meetings and county trips.",
+  "Clinic staffing, program funds and agreements with the provincial center are yours to negotiate. When the health authorities ask for numbers, you must supply them and explain what's behind them. You've kept Wednesday mornings in clinic. The people who come don't know you run the place, and you like it that way."
+ ],
+ "work": [
+  "A handwritten screening form has a last menstrual period that could be a 7 or a 1. You go to obstetrics, find the nurse who registered her, check the file. It's a 1.",
+  "The physician training you has you enter this month's follow-ups, four hundred twenty households. Three have the same phone number. It's the village doctor's.",
+  "A woman collecting her report can't read. You read it to her, put a tick on the normal line, and say to take this home for her mother.",
+  "After you explain the difference between screening and diagnosis to an older expectant mother and her husband, he asks if you can write it down. You write four lines. He folds them into his cigarette pack.",
+  "Ultrasound closes unexpectedly for half a day. You move the morning's seven appointments, one at a time, to slots still within their windows. The tightest goes first thing in the afternoon.",
+  "A new version of the report has one more index. You write it out in plain speech three times in your own notes and read it aloud to the nurse next door. Only when she gets it do you take it to clinic.",
+  "You draw a three-generation family tree. An old father remembers only his brothers' childhood nicknames. You ask him to phone a cousin in the home village, and the tree gains five squares in an afternoon.",
+  "A county health worker sends a form she isn't sure about. You leave a voice note, then write one line for her: in a situation like this, say this to the family.",
+  "Before a new colleague's first family history interview you tell her: ask the husband's questions while he's there, and ask the wife's when she's alone.",
+  "A quality spot check finds that every screening form at one county hospital is in the same handwriting. You drive over and find one head nurse filling them all in by herself. You get her one more person.",
+  "You work with the province to cut the referral wait for northern Sichuan from two weeks to nine days. The agreement is a single page, revised eleven times.",
+  "Next year's program budget has been cut by a fifth. You put township trips and follow-up phone bills on one sheet and take it to the hospital director. The phone bills survive. You make one fewer round of township visits.",
+  "The AI follow-up contract is up for renewal. You have IT pull the rate of handoffs to human staff, and your first question to the vendor is why that number fell last year."
+ ],
+ "past": [
+  "You grew up in Peng'an and boarded at high school. A poster promoting premarital health checks was up on the bulletin board at the school gate. The whole class laughed. You read a few more lines.",
+  "You applied for preventive medicine. Your parents assumed that meant becoming a doctor and later found out it didn't quite, but they let it go. The university was in Chengdu; that was respectable enough.",
+  "A final-year placement at the county disease control center had you out on home visits. A woman asked if you could read her report. You couldn't, and began paying attention to maternal and child health after that.",
+  "Your graduate project looked at folic acid use in rural northern Sichuan. You covered more than a hundred households in Nanbu and Yilong and wore through the soles of a pair of shoes.",
+  "A classmate went to a health check company in Chengdu for better pay. The hospital in Nanchong was hiring a counselor. Your advisor said this work would be needed; you missed home too, and came back."
+ ],
+ "late": {
+  "pension_note": "Estimate: public institution with a fairly complete contribution base; the pension is about 60 percent of final monthly pay.",
+  "scenes": [
+   "The neighborhood committee asks you to give a talk on preconception care. Everyone who comes is a mother-in-law in her fifties. After half an hour you change the topic to how to talk to your daughter-in-law.",
+   "A neighbor has been told an auspicious date by a fortune teller and asks if you believe it. You draw dots on paper and explain how many in a thousand. She says you really are no fun.",
+   "You no longer really follow today's screening pathways. Young people throw out technologies by their three-letter names. You listen to the end and ask one thing: did you check the gestational age?",
+   "Your voice slowly recovers, and yet you don't much want to use it. At the market you point, gesture and leave.",
+   "You take up ink painting at a seniors' college by the Jialing. The teacher says your circles are remarkably even. You smile and don't tell him why.",
+   "You rarely use the word \"risk\" now. Once your daughter-in-law brings up a prenatal checkup. You swallow what you were going to say and ask only if she's eaten.",
+   "At the new place you walk colleagues through data and someone says you talk too slowly. You say it's habit. People have to be able to hear it.",
+   "Now and then you open the old follow-up group chat, where the health workers are still posting report forms and gestational ages. You've changed your display name to \"transferred\" but still haven't left.",
+   "You hear the clinic desk has been replaced. Three chairs have become two and a screen. You think about it and decide the third chair should have stayed.",
+   "You can't stand it when anyone says \"it should be fine.\" You always want to add: with what probability? Eventually you stop saying it aloud, and add it only to yourself.",
+   "The paper says the screening rate has risen a few more points. You look at the denominator, household by household, and know how many of those phone calls took many tries to connect."
+  ],
+  "closing": {
+   "retire": "The fog on the river is late to lift. You've finished the day's shopping and write yourself a small note: only two things to do this afternoon.",
+   "burnout": "The window at the seniors' college is open. You smooth the paper flat, draw a circle on it, and put nothing else inside.",
+   "end": "Another form arrives at the new job. You look first for the gestational age box. There isn't one on this form at all, and you laugh a little."
+  }
+ }
+}

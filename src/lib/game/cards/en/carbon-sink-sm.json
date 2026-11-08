@@ -1,0 +1,160 @@
+{
+ "id": "carbon-sink-sm",
+ "occupation": "Carbon Sink Measurement Assessor",
+ "role": "Forestry Carbon Sink Assessor",
+ "headline": "Back home in Sanming, Fujian, with a forestry master's: half the time pushing through Chinese fir with a diameter tape, half the time at a computer turning trees into tons and explaining every ton to the auditors",
+ "unit": "A forestry survey and planning institute in Sanming",
+ "unit_type": "Public forestry survey and planning institute",
+ "city": "Sanming, Fujian",
+ "city_tier": "Third-tier city",
+ "education": "Master's (Forest Management)",
+ "level": "You can recite the biomass equations and the software runs fine. How to pull a square plot on a forty-five degree slope among Chinese firs, you still have to learn.",
+ "intro": "The institute is in a 1970s office block in Sanyuan district, its corridor stacked with height poles and bundles of red-painted plot stakes. The director walks you to a wall with the whole city's forest compartment map, thousands of polygons, large and small. Every ton you calculate, he says, somebody has gone up the mountain to see. Your first project is in Jiangle. The car leaves at six-thirty tomorrow. Bring your own rain boots.",
+ "salary_note": "Estimate: a public institution in Sanming, base pay plus field allowance, with some bonus for extra projects. About average for the area.",
+ "facts": [
+  { "label": "Assistant Engineer (current level)", "value": "0-4 years, ¥4,200–6,500 a month (national estimate)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Engineer (4-10 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Field surveys of forest, grassland and wetland carbon sinks", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Calculating carbon sinks by standard methods", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the database is mostly campus and internship roles)", "source": "Job listings" }
+ ],
+ "day": [
+  "The off-road vehicle leaves Sanyuan with diameter tapes, hypsometer, RTK receiver and two cases of water in the back. A stop in Shaxian for peanut-sauce noodles and wontons, one order each.",
+  "The vehicle reaches the end of the forest road, and there are forty more minutes of climbing. Lao Huang the forest ranger cuts a path with his machete. You follow with the RTK on your back, your boots already full of water.",
+  "Laying out the plot: twenty-five meters by twenty-five. First the center point, then stakes at four corners, with a slope correction. You lie down to read the compass.",
+  "Tree by tree you measure diameter at 1.3 meters, on the uphill side, calling readings out to a colleague who enters them on a tablet. The number goes on each trunk in red paint.",
+  "Steamed buns in the forest. Two land leeches crawl up your pant leg. Lao Huang burns them off with a cigarette and says this is nothing, summer has more.",
+  "You dig a soil profile, sample it layer by layer, and fill numbered bags. The soil on your hands won't wash off anytime soon.",
+  "A county guesthouse. You import today's data and find one Chinese fir in plot seventeen is two centimeters thinner than last year. Either it was measured wrong, or something else is going on.",
+  "You run the biomass equations, turning a tree into tons and multiplying by a factor. In the spreadsheet you mark in yellow the trees to recheck tomorrow."
+ ],
+ "ladder": [
+  { "title": "Assistant Engineer", "stage": "Up the mountain", "focus": "Set up plots, measure diameters, enter data, follow the project team's calculations. You rise on clean data and no missed trees." },
+  { "title": "Engineer", "stage": "Own project", "focus": "Own a project's measurement and monitoring report, choose the methodology, and deal with auditors and villages." },
+  { "title": "Senior Engineer", "stage": "Sign-off", "focus": "Review reports and sign them, lead project teams, and draw up carbon asset plans for counties and companies." },
+  { "title": "Professor-level Senior Engineer", "stage": "Technical head", "focus": "The institute's technical head, involved in local methods and standards and dealing with the province and the industry." }
+ ],
+ "ai_tasks": [
+  { "name": "Field surveys of forest, grassland and wetland carbon sinks", "how": "Field surveys need people on site, over hills and through water, judging how a plot really is. AI can only help before the trip with remote imagery of terrain and routes." },
+  { "name": "Setting up plots and sampling vegetation and soil", "how": "Laying out plots, measuring trees and digging samples is manual work that adapts to surprises on site. AI can generate plot designs and record sheets, but people do the work." },
+  { "name": "Calculating carbon sinks by standard methods", "how": "AI can batch calculations by standard formulas and run models. A person has to choose the right method and parameters, check anomalies and answer for the result." },
+  { "name": "Monitoring change and compiling dynamic data", "how": "AI can process imagery and monitoring data into change tables and charts. A person judges whether a change is real or an error, and explains why." },
+  { "name": "Assessing a project's emission reduction benefits", "how": "AI can estimate benefits from results and compare scenarios. A person weighs the project and its context and decides how to state the conclusion." },
+  { "name": "Compiling methodology and accounting documents", "how": "AI drafts accounting documents from a methodology template and applies formats and formulas. A person confirms the conditions apply, adds project specifics and checks accuracy." },
+  { "name": "Issuing carbon sink assessment reports", "how": "AI can draft the report, make charts and check formats. A person reviews whether data and conclusions agree and signs, since the report underpins trading and verification." },
+  { "name": "Verification support and professional consulting", "how": "Answering questions on site, dealing with verifiers and trading parties, advising clients: this rests on trust and responsibility. AI can only prepare materials and answer common questions." }
+ ],
+ "events": {
+  "e_first_plot": "You lay out your first plot alone, with closure error inside the standard. Lao Huang says you didn't fall down today, which is progress. You treat the blisters on your hands as medals.",
+  "e_leech": "In the plum rain season there are more land leeches than trees. Taking off your boots at the bottom of the mountain you find four cuts on your calf that won't stop bleeding. You learn to tie your pant legs before going up.",
+  "e_bamboo": "Moso bamboo's on-years and off-years throw your data out. Last year's plot has thirty new culms this year. You spend an extra month and calculate an on-year and off-year coefficient by itself.",
+  "e_boundary": "Two villages bring a dispute over a mountain's boundaries to your project meeting, and the forest title map differs from the ground by twenty meters. You spread out the topographic map, stand between them, and first hear out every uncle on both sides.",
+  "e_verify": "A third-party verifier comes up for spot checks and randomly picks your hardest plot. Halfway up he can barely breathe. His remeasured diameter differs from yours by 0.2 centimeters. He ticks the sheet.",
+  "e_method_pause": "Registration of the methodology your project uses is suspended, and two years of work stalls halfway. A meeting decides to keep field monitoring going until the rules come out. Nobody knows how long that will be.",
+  "e_method_back": "A new afforestation carbon methodology is published. Additionality has to be argued again and the baseline year has moved. You tear up the report from two years ago. The new table has eleven more columns.",
+  "e_carbon_ticket": "The first carbon ticket dividend reaches the village, a few hundred yuan per household. An old man holds the money and asks: I didn't cut these trees, so how did they get sold? You explain for half an hour. At the end he asks, will we sell again next year?",
+  "e_typhoon": "After a typhoon more than thirty Chinese firs in a plot are down. The monitoring report has to state the loss as it is, and the client hopes you'll write it lightly. You write it exactly as it is, write it twice, and send it.",
+  "e_knee": "Going downhill does more damage than going up. You start packing knee braces, later two trekking poles too. When the X-ray comes back the doctor asks if you were an athlete.",
+  "e_tick": "After coming down you find a tick in your armpit, take ages tweezing it, and have a low fever for three days. This year's physical gets an extra line of special notes.",
+  "e_ai_remote": "A drone lidar flight covers the entire canopy. AI's automatic stock calculation differs from your plots by four percent. The director asks: will any of you still go up the mountain?",
+  "e_ai_report": "AI drafts a monitoring report in half an hour, cleanly formatted. Chapter six applies masson pine parameters to Chinese fir carbon density. You change it back and lock that field in the template.",
+  "e_ai_verify": "The verification firm begins screening anomalous trees by algorithm and flags forty at a go. With photos and numbers you explain them one at a time. A few were wrong. Most were bored by insects.",
+  "e_buyer": "A company representative from out of province comes to buy carbon sinks for offsetting and asks to see the trees. You drive them up. He takes a picture beside a sample tree and asks how much this one is worth. You say it has to be divided by quite a lot.",
+  "e_price": "The carbon price falls thirty percent in a year and the project's revenue forecast has to be rewritten. More and more villagers ask. A township cadre calls. You explain this is the market. He says but you're the one who calculated it.",
+  "e_ranger": "Lao Huang can't do it anymore and his son won't take over. You draw him a route map of this forest. He says this paper is better than his brain, except it can't find the way the way he can.",
+  "e_fertile": "A field season runs seventy days straight. When you get home your child has learned to tie shoelaces. Grandpa taught it. Your spouse says nothing, and carries your rain boots outside to dry.",
+  "e_paper": "Eight years of plot data on Chinese fir carbon density in northern Fujian becomes a paper, accepted by a forestry journal. For the first time, colleagues from another province write asking for your parameters.",
+  "e_merge": "The institute is restructured, its survey and carbon work merged into a city-owned company. Half stay, half are moved on. Your ID card is swapped for a badge. The words \"permanent state post\" become \"benefits retained.\""
+ },
+ "choices": {
+  "c_field": { "title": "Do you change this data", "situation": "One plot's result is clearly low. The team lead says this kind of plot was probably mismeasured; just adjust it with the neighboring plot's value, and it won't come up in spot checks anyway. Rechecking means another climb, right at the project deadline.", "options": [
+   { "label": "Go up again", "result": "You go up alone with Lao Huang and find one corner of the plot sits on a burn scar from two years back. The data really is low." },
+   { "label": "Do as the lead says, annotate and adjust", "result": "The project is delivered on time. You write one line in the remarks, and nobody ever asks." }
+  ] },
+  "c_engineer": { "title": "Apply for Engineer", "situation": "It takes an independently run project, a performance review and a paper. This year's field season is fully booked, and the institute says you can only put title or project first.", "options": [
+   { "label": "Apply, use the nights", "result": "You finish that paper on a guesthouse bed. The reviewer has one question: plot area." },
+   { "label": "Finish this season's project first", "result": "You run eight more plots this season and put the title off to next year." }
+  ] },
+  "c_company": { "title": "A Shanghai carbon asset firm comes recruiting", "situation": "Triple the pay, living in Shanghai, no more mountains, doing carbon portfolios and pre-trade due diligence for companies. You're halfway through a forestry project and the village is waiting for its dividend.", "options": [
+   { "label": "Go to Shanghai", "result": "You write up the plot ledgers one by one for a colleague and leave your rain boots at the institute.", "end": "You become a carbon asset analyst in Shanghai, reading dozens of projects' numbers and quotes. On your screen a \"ton\" has become a curve. Sometimes you wonder if the third point on it is the stretch where Lao Huang cut the path." },
+   { "label": "Stay in Sanming", "result": "You say those few plots of yours need remeasuring. They say trees don't run away. You think, that's true enough." },
+   { "label": "Take an outside report on the side", "result": "You file the paperwork as required and take a weekend job. You earn a little and start to learn how the outside prices things." }
+  ] },
+  "c_ai": { "title": "Take on integrated sky-and-ground monitoring", "situation": "A provincial pilot wants drones, lidar and AI to replace some ground plots. Someone has to reconcile the remote results with your ten years of ground data, which amounts to writing the replacement plan for your own job.", "options": [
+   { "label": "Take the pilot", "result": "You design a calibration scheme with one ground plot for four square kilometers of lidar. There's less ground work, and each plot that remains matters more." },
+   { "label": "Keep doing ground plots well", "result": "You say lidar can't see the soil under the trees. That's true, and fewer people say it every year." }
+  ] },
+  "c_senior": { "title": "Apply for Senior Engineer", "situation": "Once you get it, your signature goes on reports, with the responsibility for every ton. The institute has only one slot this year, and the colleague in the next group, seventeen years in, is waiting too.", "options": [
+   { "label": "Apply", "result": "It's you. Your colleague takes a week off, comes back and still hands you this season's plot sheets." },
+   { "label": "Let him have it, wait a year", "result": "You say next year. The first thing he does after getting it is take over one of your mess projects." }
+  ] },
+  "c_number": { "title": "The client wants a higher number", "situation": "A county project's output decides how much the villages get this year. The client hopes you'll choose the more favorable baseline. Both choices can be defended by the methodology. The difference is tens of thousands of tons.", "options": [
+   { "label": "Pick the conservative one", "result": "Output falls and the county people say you're rigid. Three years later, verification doesn't change a word." },
+   { "label": "Pick the favorable one, document it fully", "result": "You write fourteen pages of justification. The villages get more money, the verifier asks two hard questions, you answer both, and afterward you feel tired." }
+  ] },
+  "c_gov": { "title": "Move to the forestry bureau for carbon management", "situation": "The bureau has a new section and needs someone with technical knowledge. You'd no longer sign reports or climb. But your fixed plots' next remeasurement is in two years, and fifteen years of continuous data needs someone to take it.", "options": [
+   { "label": "Go to the bureau", "result": "You make the plot numbers, routes and remeasure sheets into a complete file, and the handover takes three afternoons.", "end": "You join the forestry bureau, looking at citywide tables and documents. On spring trips to the country you stop by the road, see a stand of Chinese fir and begin estimating diameters. The driver is used to waiting for you." },
+   { "label": "Stay and finish that round", "result": "Two years later you lead that remeasurement. Your knees are worse than last round; the data is better." }
+  ] },
+  "c_top": { "title": "Apply for Professor-level Senior Engineer and work on a local standard", "situation": "The province is compiling a local standard for moso bamboo carbon sinks and wants you for part two. Applying requires results and leadership. You figure these next few years you'll go up the mountain far less.", "options": [
+   { "label": "Apply and write the standard", "result": "The on-year and off-year coefficient goes into the appendix, Appendix B, your name third among the drafters." },
+   { "label": "Don't apply, take the young ones up the mountain", "result": "You begin seriously teaching them how to use trekking poles going down. They find this more useful than the standard." }
+  ] },
+  "c_retreat": { "title": "Go back to the county and help a cooperative", "situation": "A forestry cooperative in Jiangle wants you as an advisor, connecting its bamboo and understory crops and working out the accounts. The pay isn't much. It's close to the forest and you'd never write another report.", "options": [
+   { "label": "Go to the cooperative", "result": "You take early retirement and bring every compartment map off your shelf with you.", "end": "You rent a room at the Jiangle cooperative and work out the bamboo and sarcandra accounts for farmers. Nobody asks you what a ton is worth anymore. They ask about this year's price for bamboo shoots." },
+   { "label": "Stay until retirement", "result": "You say there are two more rounds of remeasurement and you can't get away. The cooperative's head says he'll wait." },
+   { "label": "Go help on weekends", "result": "You drive over on weekends and use the institute's spreadsheets for the accounts. They've learned to read them." }
+  ] }
+ },
+ "endings": {
+  "retire": "Your fixed plots are three years from their next remeasurement, and you won't see it. In your final field season before retiring you repaint the red on the stakes and print out this forest's diameter curves. Compared with when you came, each tree is on average eleven centimeters thicker. You work it out: these thirty-odd years you have walked about forty thousand kilometers of forest road.",
+  "burnout": "First your knees go, then your back, and the doctor won't let you climb any more. You ask for a transfer to desk work, and the forest becomes a table, with no more leeches in the data. Later you retire early, lean your trekking poles behind the door, and do not touch them again."
+ },
+ "stages": [
+  "Your main work is setting up plots, measuring trees and digging soil. You carry the RTK and diameter tape up behind a ranger, go back to a county guesthouse to enter data, and check every sample tree in Excel. You report to the project lead, and the words you fear most are: go recheck that. This level runs on clean data and not one tree missed.",
+  "A project's measurement and monitoring report is yours: choosing the methodology, setting the baseline, running the biomass model, writing the monitoring plan. You go to village forest-owner meetings and explain \"additionality\" in words they can use. The days a verifier is here you stay beside them, and every tree they ask about needs a number and a photo.",
+  "Your signature is on the last page of each report, the institute's seal behind it. You review younger staff's calculations, flipping first to the methodology's applicability conditions. You work out carbon tickets for counties and talk project development with companies. You go up less, but problem plots are still yours to see. You can't believe all a table says about a mountain.",
+  "You are the institute's technical head, working on provincial standards and methodology reviews, on the road quite a bit. Before rules change you judge what the institute should bet on, and in meetings you say \"this number can't be given yet.\" Your field season has shrunk to a few fixed plots each year, which you've insisted on keeping."
+ ],
+ "work": [
+  "You wrap a diameter tape around a Chinese fir and read 23.4. Again, 23.6. You check the position, move the tape up a little and measure once more.",
+  "The team lead has you check thirty plots' electronic sheets against the paper ones. The twenty-second doesn't match: a 3 and an 8 blurred by rain.",
+  "Digging a soil profile you reach stones in the third layer. Lao Huang the ranger hands you a steel rod and says on this mountain, the soil is only so deep, keep your layers straight.",
+  "On a village committee bench you explain carbon tickets to forest owners. Someone asks how they differ from forest tickets. You lay the two sheets out and let the village accountant work it out first.",
+  "A verifier asks about the equation coefficients for this stand of masson pine. You put the paper's source and local correction results on one page, and he photographs it.",
+  "The baseline year can be chosen two ways. You make a comparison table and circle one word in red in part four of the methodology's applicability conditions.",
+  "Reviewing a report, you find carbon density on page 37 far higher than its neighbors. You call in the young person who made the table: tons had been converted to kilograms.",
+  "A county leader wants to know how many tons will sell this year. You give a range over the phone. He wants a number. You say one number won't do.",
+  "A company wants to buy a whole county's carbon tickets. You take their lawyer through forest titles and boundary maps and pull out three disputed sub-compartments.",
+  "The draft local standard has an on-year and off-year coefficient. You pull fifteen years of plot data and show on one page why a provincial average won't work.",
+  "A new methodology is out for comment. You and colleagues hold three nights of online meetings and change the frequency for measuring understory shrubs from every year to every five."
+ ],
+ "past": [
+  "You grew up in Taining, Sanming. Your family had a few mu of allotted Chinese fir mountain. This is your tuition, your father said, you just have to wait twenty years.",
+  "You put forestry at an agriculture and forestry university as your first choice. Your father wasn't pleased. Your own family's mountain isn't sorted, he said, and you go off to school for that.",
+  "Your third-year fieldwork was at the foot of Wuyi Mountain, your first plot. You thought measuring trees would be simple. Three days later your calves were swollen.",
+  "In graduate school you worked on carbon measurement with your advisor. The first time you converted a tree into tons, the number was much smaller than you expected.",
+  "After your master's, some classmates went to companies doing environmental impact assessment. Sanming was hiring carbon technicians. Thinking of your family's mountain close by, you came back."
+ ],
+ "late": {
+  "pension_note": "Estimate: public institution or restructured with benefits retained; the pension is about 60 percent of final monthly pay.",
+  "scenes": [
+   "The institute's remeasurement is short of people and a young colleague asks if you'd like to come and guide them. You say no, your knees wouldn't allow it either, though you can still recite the RTK coordinates of two plots.",
+   "Your family's few mu of Chinese fir have reached harvest age. You walk around and measure, calculate stock and carbon, and decide not to cut. Another ten years. The money isn't waiting on this.",
+   "Lidar barely needs ground plots these days. Eating noodles in Shaxian you overhear two young people at the next table discussing carbon prices, and your chopsticks pause.",
+   "The doctor says to climb less. You begin walking flat roads, and passing street trees you still estimate their diameter. Now there's no closure error at all.",
+   "You grow a few things in a little vegetable plot by the Shaxi River, and measure them through the seasons. You note a pumpkin vine's length on a piece of paper and find it funny yourself.",
+   "You no longer read any news about carbon sinks. Someone says the field is hot again. You say is that so, and ask whether bamboo shoots are expensive this year.",
+   "After changing jobs you still aren't used to shoes with no mud. Going out in the morning you look reflexively at the sky to judge whether you can go up the mountain, then remember you don't need to.",
+   "Your old project has reached its second crediting round. A newcomer writes asking about the plot numbering rules of those years. You send three hundred words and charge nothing.",
+   "You take your family to a park and a child asks how old this tree is. You walk around it and give a year. The sign later says you were three off, and you are a bit indignant.",
+   "When a documentary shows forests on TV you always remark: that's a plantation, the spacing's too even. Your family no longer responds to this.",
+   "Typhoon season. Your phone pushes the storm track. You work out which way the Jiangle plots face into the wind, then put the phone down. That's someone else's now."
+  ],
+  "closing": {
+   "retire": "The rain has come to the mountain and you listen at home. That stand of fir has grown one more ring. Nobody needs to measure it for it to count.",
+   "burnout": "The trekking poles lean behind the door, their shadows slowly moving away through the afternoon. You change the tea leaves.",
+   "end": "You enter a number into a new sheet, in tons. You leave one extra decimal place, out of habit, and delete it."
+  }
+ }
+}

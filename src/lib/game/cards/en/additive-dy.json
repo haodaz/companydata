@@ -1,0 +1,157 @@
+{
+ "id": "additive-dy",
+ "occupation": "Additive Manufacturing Engineer",
+ "role": "Additive Manufacturing Engineer at a Heavy Equipment Plant",
+ "headline": "At an old plant in Deyang that makes hydropower and heavy forgings, you use arcs and lasers to rebuild or grow sections of steel parts weighing tens of tons. A hydropower station shuts down for only forty-five days in the dry season, and if a part fails, your name and the schedule are read out together at the dispatch meeting",
+ "unit": "The additive manufacturing center of a heavy equipment plant in Deyang, Sichuan (built out of the former welding research section)",
+ "unit_type": "Heavy equipment manufacturer",
+ "city": "Deyang, Sichuan",
+ "city_tier": "Prefecture-level city",
+ "education": "Master's degree (Materials Processing Engineering)",
+ "level": "You can feel out the process windows for arc additive and laser cladding, and you know the slicing software well. How to talk to the old welders and the customer's resident inspector when the ultrasonic report turns red, you are only beginning to learn.",
+ "intro": "A hydropower station's runner has been cut into sections and hauled back to Deyang on flatbed trucks, its blade edges gouged into grooves by silt. It has to be back in its pit thousands of kilometers away within forty-five days. The plant's old way is overlay welding and hand grinding. This time the dispatch meeting has written your name on it: additive repair, plan due Friday.",
+ "salary_note": "Estimate: basic pay for technical jobs at Deyang's old state enterprises is modest, with project bonuses and a housing fund on top. At the same seniority it runs about 20 percent below private printing service companies in Chengdu.",
+ "facts": [
+  { "label": "Additive Manufacturing Engineer (current level)", "value": "2–6 years, ¥7,500–12,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Additive Manufacturing Engineer (6–12 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Taking apart, tuning and modifying the printing equipment", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Process parameter trials", "source": "AI exposure" },
+  { "label": "Open positions", "value": "28 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The shuttle bus runs along the Jinghu River into the plant, the plane trees on either side of the road nearly as tall as the sheds. You carry your breakfast into this thirty-meter-high old workshop, with the overhead crane inching along above you.",
+  "The print chamber ran all night. You pull up the melt pool camera's playback: at layer 320, a few frames flare bright, and you copy down the coordinates.",
+  "You run the ultrasonic probe over the workpiece, couplant all over your hand. The inspector beside you reads off numbers, and the two of you circle two points on the same drawing. His circles are rounder than yours.",
+  "You go to the grinding team to ask for people. The team leader, smoking, says the stuff you print is hard as hell and the grinding wheels are going on your department's bill.",
+  "A little restaurant outside the gate, where the twice-cooked pork costs three yuan more than in the canteen. A colleague from the process office asks whether that procedure qualification of yours can produce a report this month.",
+  "Argon pressure has dropped one mark. You crawl into the chamber and go along the gas line joint by joint, smearing soapy water and pressing your ear close.",
+  "The customer's resident inspector asks over the phone about the blades' progress. You read off the figures. Just send me the ultrasonic report, the voice says, no need for the rest."
+ ],
+ "ladder": [
+  { "title": "Assistant Additive Manufacturing Engineer", "stage": "Tending the machines", "focus": "Watch the machines, process models, record parameters, learn equipment and materials." },
+  { "title": "Additive Manufacturing Engineer", "stage": "Your own processes", "focus": "Own the process plan and trials for individual parts, write process cards, deal with defects and ultrasonic rework." },
+  { "title": "Senior Additive Manufacturing Engineer", "stage": "Qualification", "focus": "Lead procedure qualifications, face customers' inspectors and third parties, get new parts into production." },
+  { "title": "Chief Engineer, Additive Manufacturing Center", "stage": "Gatekeeping", "focus": "Set the center's technical direction and process standards, sign release of critical parts." },
+  { "title": "Director, Additive Manufacturing Center", "stage": "Running the business", "focus": "Manage equipment investment, outside orders and people; decide what this business becomes." }
+ ],
+ "ai_tasks": [
+  { "name": "Taking apart, tuning and modifying the printing equipment", "how": "AI can read logs and flag maintenance. Where the shielding gas line leaks and why the wire feeder judders take someone lying next to the machine, listening and feeling." },
+  { "name": "Process parameter trials", "how": "AI can recommend parameters from past data and narrow the trials. Verifying them on the machine, and whether this batch of wire is any good, is a human call." },
+  { "name": "Model repair, slicing and path planning", "how": "Orientation, slicing, paths and supports can mostly be done by software. People only spot-check critical parts." },
+  { "name": "Defect analysis and repair plans", "how": "Melt pool cameras and models can mark likely porosity. Why it happened, how to gouge it out and whether the repaired part still passes are for a person to decide." },
+  { "name": "Structural optimization and lightweighting", "how": "AI can produce dozens of candidates. Whether they can be printed, and whether the machining tool can reach them afterward, takes someone who knows the shop floor to choose." },
+  { "name": "Persuading customers and old workers on site", "how": "Why an inspector will sign the report, and why an old welder will let you touch his part, comes down to talking face to face and time." }
+ ],
+ "events": {
+  "e_window": "When the dry season arrives, hydropower overhaul orders crowd together, since the only window is November to April. Your calendar runs backward: the date the unit goes back together, counted back to this hour today.",
+  "e_ut_red": "A part that had printed for sixteen days showed a string of lack-of-fusion in the middle section on ultrasound. Gouging it out and reprinting would take six days. You stood by the workpiece and rearranged the schedule, and the grinding team slowly began changing their wheels.",
+  "e_pqr": "The arc additive procedure qualification report you wrote passed, a thick volume, with tensile, impact and bend samples all up to standard. The next day the director said the next material grade would have to be done too.",
+  "e_powder": "This new batch of wire had nothing wrong with its composition, but it printed with twice the porosity. You pressed the supplier for three weeks and found they had switched to a different drawing lubricant.",
+  "e_old_welder": "The old welding team leader looked at your process card, flipped the part over and pointed to a spot. Not enough preheat here, he said, believe it or not, it'll crack when you're done. You didn't believe it. It cracked. That afternoon you brought him a carton of cigarettes in thanks.",
+  "e_turbine_back": "The runner you repaired ran a full flood season at the station. When the customer measured the blades on the follow-up visit, wear was a third less than with the old method. That figure later appeared in every bid document, and none of them had your name.",
+  "e_nose": "Metal dust and fumes got into your nose, and your rhinitis lasted three autumns running. Your health check noted lung nodules to be followed up, and you began dutifully wearing that terribly stuffy powered respirator.",
+  "e_eye": "After years of watching the melt pool, your eyes are dry and sore. Your filter lens is a shade darker than anyone else's, and when you step out of the shop everything looks green. Your workmates say you have seen through it all. You say you have just seen too much of it.",
+  "e_laser_end": "The laser that has run for ten years has reached end of life, its power drifting more each day. The maker says that model is discontinued. You took the spare parts list to the plant director; a replacement would cost three times what the original did.",
+  "e_spec_change": "The industry standard for additive parts got a new edition, changing sample locations and inspection ratios. All your past qualifications had to be made up. You led people through cutting more than two hundred test bars in the shop and cut away half the year's budget.",
+  "e_cold": "The old workshop is bitterly cold in winter, but a part preheated to two hundred-odd degrees is warm on the side you stand close to. At lunchtime your workmates all bring stools over to warm their hands. The team leader calls it the additive center's only perk.",
+  "e_family": "Your partner works in Chengdu, just over twenty minutes by high-speed train, but during overhaul season you went five weeks without going home. On video, your partner said: that big thing behind you is bigger than our apartment.",
+  "e_ai_camera": "The melt pool monitoring was connected to a model that flags likely lack-of-fusion during the print. In the first month it flagged over three hundred times, and seven were real. Every morning you start with the three hundred that aren't those seven.",
+  "e_ai_path": "The new slicing software plans paths and cooling pauses automatically. An assistant engineer did in one afternoon what used to take you a week. You looked over his paths, added two pauses at the corners, and didn't say why.",
+  "e_foundry": "Foundry orders have fallen off in recent years. The veterans walk past the additive center and detour around the print chambers. The union chair comes to ask if you could teach a course for workers changing jobs.",
+  "e_outsource": "A printing service company from the south sent in a quote, forty percent cheaper on small parts. The group moved half the powder bed orders to them, and those two machines started wearing dust covers.",
+  "e_visit": "You went on a follow-up visit to a hydropower station in the southwestern mountains. The pit was too deep to see the bottom. When the runner was lifted out you recognized the blade you had repaired; the new material was a little brighter than what surrounded it.",
+  "e_noise": "Decades of grinding noise in the shop, and your hearing test shows the high frequencies falling away. In meetings you've started sitting close to the speaker, and people take it for enthusiasm."
+ },
+ "choices": {
+  "c_arc_or_laser": { "title": "Arc or laser", "situation": "The center is naming leaders for two directions. Arc additive is heavy and cheap, with plenty of demand in the plant, and means your days beside big parts. Laser powder bed is fine work, good for papers, expensive to equip, and has few orders. The director asks which you want.", "options": [
+   { "label": "Arc, follow the big parts", "result": "You spend more time in the shop than the office. The workers started calling you little engineer, and later dropped the little." },
+   { "label": "Laser, the fine work", "result": "You work with powders and inert atmospheres, and everything you produce fits in your palm. You filed two patents, and people at the plant are not quite sure what you do." }
+  ] },
+  "c_repair": { "title": "Repair this indication or not", "situation": "Nine days before reassembly, ultrasound finds an indication at the blade root exactly one millimeter over the limit. By the standard it should be gouged out and repaired, and nine days is not enough. The customer's inspector asks you: can this be accepted under concession?", "options": [
+   { "label": "Gouge it and redo it", "result": "You ran three shifts and finished on the eighth night. When ultrasound passed, the grinding team was too tired even to grumble, and the customer deducted less in penalties." },
+   { "label": "Accept under concession, in writing", "result": "You wrote two pages of technical justification, the customer's chief engineer signed, and the unit went back on schedule. Every year after that, before flood season, you asked for that unit's operating data." }
+  ] },
+  "c_chengdu": { "title": "An offer from a Chengdu print shop", "situation": "A private printing service in Chengdu offers you one and a half times your pay to make small parts for molds and medical devices. Young people, new machines, plenty of orders. People at the plant say if you go, nobody at this center will understand welding qualifications. Your partner is in Chengdu too.", "options": [
+   { "label": "Go to Chengdu", "result": "You said goodbye to the thirty-meter workshop. The new company's machines are each cleaner than the last, and the boss asks about progress in the group chat at midnight." },
+   { "label": "Stay in Deyang", "result": "You went on warming your hands in the old workshop, but you told the director about the Chengdu pay slip, and something changed a little in your year-end review." }
+  ] },
+  "c_senior": { "title": "Applying for Senior Additive Manufacturing Engineer", "situation": "The plant has only two Senior Additive Manufacturing Engineer places this year, and it wants papers, projects and a defense. You write up the runner repair and find that everyone could sign that page; your own contribution alone is hard to state.", "options": [
+   { "label": "Write it up and defend it", "result": "The old welding expert on the panel asked how you control interpass temperature in arc additive. You told the story of one cracked part, for twelve minutes, two over the limit." },
+   { "label": "Maybe next year", "result": "You put the materials in a folder. This year's places went to the design institute, and you worked two more overhaul seasons." }
+  ] },
+  "c_rewelder": { "title": "The old foundry workers need new jobs", "situation": "The foundry is shrinking, and twenty-odd workers in their forties want to transfer to the additive center. They can't use computers and don't understand slicing, but they understand molten iron and cracks. The plant asks how many you'll take. Take too many and your output targets will fall.", "options": [
+   { "label": "Take eight, teach them yourself", "result": "You ran evening classes starting from how to use a mouse. Six months later someone had remembered the first parameter, and someone else could touch a part and tell you this layer's temperature was off." },
+   { "label": "Take just two", "result": "You chose the two youngest. The rest were sent to gate duty and logistics. When you run into them in the canteen they still nod." }
+  ] },
+  "c_ai_data": { "title": "Connecting the build data to a model", "situation": "The plant has won a smart manufacturing grant requiring all print-process data to be structured. The job means rewiring machine data ports, redefining hundreds of fields, and fighting with IT over and over, and at year-end it counts as a single line in a report.", "options": [
+   { "label": "Take on the project", "result": "The fields went through seven versions. Every layer of every part can now be looked up, and once it let you find a problem from three years ago." },
+   { "label": "Let IT handle it", "result": "IT launched the system as it understood it, and there's a lot of data to look at. When you need to trace a problem, you still go back to the handwritten process records." }
+  ] },
+  "c_hospital": { "title": "A classmate wants you for medical implants", "situation": "A classmate from graduate school makes titanium orthopedic implants in Chengdu and needs a partner who understands additive processes. It takes three hundred thousand yuan and at least three years for product registration, and in those three years you might not see a single yuan.", "options": [
+   { "label": "Quit and join", "result": "You withdrew three hundred thousand in savings and handed over your process cards one by one.", "end": "You went from runners of tens of tons to hip cups of tens of grams, the workshop gave way to a clean room, and every day from then on you faced registration files and hospital tenders." },
+   { "label": "Don't go, but help on the process", "result": "You looked at parameters for him on two weekends, and he treated you to skewers twice. Three years later his registration certificate was still in the queue." },
+   { "label": "Invest fifty thousand, stay put", "result": "Those fifty thousand yuan are very likely gone, but every year you get a rather funny shareholder letter." }
+  ] },
+  "c_chief": { "title": "The post of Chief Engineer, Additive Manufacturing Center", "situation": "The center's chief engineer is retiring. This post signs every release form for critical parts, and if a customer ever comes back to assign blame, one search turns up your name. Competing for it means presenting a three-year standards roadmap and being ready to hardly ever set foot in a chamber again.", "options": [
+   { "label": "Compete for it", "result": "You spoke for thirty minutes. The last slide had one sentence: better one round slower than one bad part released. The plant director told you to put that in the standard as well." },
+   { "label": "Stay on the front line doing process", "result": "The new chief engineer joined the plant two years after you did. He brings things to you to look at before signing, and you always take longer over them than he does." }
+  ] },
+  "c_merge": { "title": "The additive center folds back into the welding institute", "situation": "The group is consolidating, and the additive center is to be merged back into the welding research institute: sign down, half the people kept. You could stay on as a deputy at the merged institute, or take early retirement with compensation and go consult for small factories around here.", "options": [
+   { "label": "Stay at the welding institute", "result": "Full circle, back to the building you started in. You changed the print chamber's sign to 'Additive Section', and the process card format changed with it." },
+   { "label": "Early retirement, go consult", "result": "You indexed all those years of qualification reports and sent them to the welding institute's archive.", "end": "You took the early-retirement package and began advising a few small factories in Shifang and Mianzhu on overlay welding, charging by the day. The parts were smaller, the schedules shorter, and nobody read out your name at a dispatch meeting anymore." }
+  ] }
+ },
+ "endings": {
+  "retire": "The week you did your paperwork, the shop's arc equipment had just moved to its third generation. A new engineer watches the melt pool on a handheld; the overhead crane is the same crane. Come November your phone still rang, a hydropower station asking about blades, and you told them who to call now.",
+  "burnout": "Three years of follow-ups on the lung nodules, then your back too. You asked to be moved off the shop floor and went to the archive to look after process documents, entering decades-old process cards one at a time. There is no dust here, and no noise. The respirator you wore for decades sits on top of a cabinet, slowly gathering a little dust of its own."
+ },
+ "stages": [
+  "Individual part processes are yours: look at the drawing and judge what can be printed and where to leave machining allowance, then set paths, interpass temperatures and wire, write the process card, and see the first build through. When ultrasound comes up red, you go to the shop with the inspector and the grinding team and gouge it clean. And each month you go to the dispatch meeting and explain progress to the production people.",
+  "Before a new part can go into production, you have to get the standard and the customer to agree: write the qualification plan, take samples, send them for mechanical testing, answer the inspector item by item. The print chamber is mostly watched by engineers below you, and in your hands are thick technical agreements and the technical chapters of bids. You go to stations to measure parts, and you argue with the design institute about whether a structure should change.",
+  "The whole center's process standards are yours to revise and critical parts' release forms are yours to sign, and twenty years from now your signature can still be traced. Your time goes mostly to reviews and customer calls. When you visit the shop now and then, everyone stops to wait for you to say something. You've started thinking about whether the next material is worth a year of qualification.",
+  "What this business earns and loses in a year, the group asks you. You negotiate framework contracts with hydropower stations' procurement departments, work out depreciation with finance, and explain to the plant why this eight-figure machine ran only 40 percent of the time this year. People must be hired, old machines scrapped, outside orders taken. Your hard hat sits on top of the office cabinet."
+ ],
+ "work": [
+  "A journal on a main shaft needs laser cladding repair, and you explain preheat temperature to the process technician. He asks if fifty degrees less would save time. You have him feel the test piece that cracked last time.",
+  "The wire feeder judders and the layer lines come out uneven. You take off the guide tube and find fine copper powder built up inside. Once it's clean, the same parameters lay down a suddenly flat bead.",
+  "You finish measuring the test bars with calipers and enter the tensile data in the qualification form. One comes out low. You ask at the testing room: the specimen picked up a tool mark during machining.",
+  "The customer's inspector wants the temperature records for layers seven to twelve. You pull up the data and compare it to the process card. He puts a question mark in red on one entry, and you explain for twenty minutes.",
+  "The design institute's new structure has a corner too sharp to print. You section the model to show the designer where heat builds up, and he gives you a three-millimeter fillet.",
+  "A third-party inspector comes to witness tensile tests. You have the gauge and calibration certificates laid out ahead of time, and go through each bar, reading and signing.",
+  "A release form reaches your desk with one zone missing from the ultrasonic report. You send it back. That afternoon the inspector does the missing zone himself, without a word of complaint.",
+  "Two engineers arguing over whether a new wire can be a direct replacement bring it to you. You have each write one page, and decide to try it on non-pressure parts for a year.",
+  "A consultation draft of the new standard arrives at the plant. You annotate it clause by clause and mail it back to the drafting group, with the data from the shop's two hundred test bars attached.",
+  "A hydropower station's procurement office wants to cut the unit price by 20 percent. You spread the follow-up wear data on the table and convert it to days of avoided downtime. The price comes down by only 6 percent.",
+  "Finance wants to scrap an early laser unit. You and the old equipment keeper work on it all afternoon, salvaging the usable optics as spares, before the books will go through.",
+  "The export department has an inquiry from a Southeast Asian hydropower station, needing CE marking and English process documents. You hire a translator, bring in the welding institute's old expert to back you up, and win the order."
+ ],
+ "past": [
+  "Your family is from Zhongjiang County. Your father was a welder at a plant in Deyang who came home a few times a year, smelling of rust and sweat. You came to associate that smell with having money.",
+  "You got into a materials forming program at an engineering university in Chengdu. Hearing it included welding, your father said you don't need college for that, I'll teach you. You said it's not the same welding.",
+  "Your undergraduate thesis was the first time you saw a metal printer. Your advisor said this thing would change everything. In your three months of experiments it broke down twice.",
+  "In graduate school you researched residual stress in arc additive, with dozens of samples piled in the corner of the lab like iron loaves nobody would eat. You began to be able to smell which ones had overheated.",
+  "Your classmates went to Shenzhen and Shanghai. This old plant in Deyang was setting up an additive center, and the recruiting officer said: the parts we make won't fit anywhere else. On the phone your father was quiet a moment, then said: so you've come here too."
+ ],
+ "late": {
+  "pension_note": "Estimate: enterprise annuity plus basic pension from an old state enterprise, full seniority; the pension comes to about 55 percent of final pay, enough for daily life in Deyang.",
+  "scenes": [
+   "At the hardware market you buy a wok, turning it over to look at the weld on the bottom and tapping where the handle joins. The owner asks if you've come to make trouble. You buy his most expensive one.",
+   "A farm machinery repair shop in Shifang asks you over to see whether a broken drive shaft is worth overlay welding. You mark the repair area in marker, take no money, and get a meal of cured pork.",
+   "They say print chambers now have almost nobody in them, lights off at night, a single machine reaching out to overhauls hundreds of kilometers away. Your rhinitis still reports for duty every autumn.",
+   "The new stainless steel handrail in your apartment complex has porosity along every weld. You told the management office twice. The third time you say nothing, and just walk down the other side.",
+   "In your first year away from the shop you kept smelling metal, and only later learned your nose had written it down by itself. The follow-up scans change very little from year to year.",
+   "You took up tai chi by the Jinghu River. Other people's movements aim for roundness; yours aim for symmetry. The teacher says there's something about you that seems to be waiting for something.",
+   "A graduate student from out of town comes to the archive to trace the origin of an old process card. You take him to the third row, and tell him while you're at it about the copying error in this table.",
+   "Your work now has nothing to do with cranes. A part in your hand has no weight, and you keep worrying instead that it will slide off the table.",
+   "Old friends in Deyang occasionally send news from the plant, sometimes a new machine, sometimes a relocation. You tap a like and go back to the job in your hands.",
+   "The money turned out a little more than you imagined, and a little less. You still distrust any report that doesn't say where the sample was taken, whatever it is about.",
+   "You are always looking at how the window grilles on other people's houses are welded. When it's too much to bear, you write a rework order in your head and give it to no one.",
+   "When the flood season news says some station has opened its gates, it isn't the water you watch but the number of units at the bottom of the screen. You work out which ones are due for overhaul this year and change the channel."
+  ],
+  "closing": {
+   "retire": "Water still pours into the pit and the runner still turns. Those spots that were a little brighter have long been worn the same as everything around them.",
+   "burnout": "The autumn wind has dried out your nose again. You put on an ordinary mask and go out to buy vegetables.",
+   "end": "Now and then you drive past the Deyang exit, and from the highway you can see the rooflines of the high workshops. The car doesn't stop."
+  }
+ }
+}

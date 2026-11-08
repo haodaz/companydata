@@ -1,0 +1,170 @@
+{
+ "id": "psych-sn",
+ "occupation": "Psychologist",
+ "role": "Lecturer in Psychology",
+ "headline": "Back from a doctorate to a teachers' college in central Sichuan: fourteen class hours a week, questionnaires on the country bus, and a grant deadline every March",
+ "unit": "A teachers' college in Suining, Sichuan (psychology department, School of Teacher Education)",
+ "unit_type": "Regional teachers' college",
+ "city": "Suining",
+ "city_tier": "Tier-4 city",
+ "education": "PhD (developmental and educational psychology)",
+ "level": "Your dissertation was on children's executive function. You can run structural equation models and have never held a grant of your own",
+ "intro": "When you push open the faculty room door, it smells of old printer paper. The department chair says you'll teach three courses this term and join the accreditation materials group, and that research happens at night. Under the glass on your desk there's a call for internal grant applications due in three weeks, still addressed to the last person at this desk.",
+ "salary_note": "Estimate: pay at regional colleges in Suining is below the national level for the same title. Teaching-hour pay and research awards make up about a third of take-home, and the gap narrows some with rank.",
+ "facts": [
+  {
+   "label": "Lecturer (current level)",
+   "value": "0–5 years, ¥4,800–6,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Associate Professor (5–12 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥13,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Interviewing and observing in schools and homes",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Designing questionnaires and experimental tasks",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "2 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "The shuttle to the south campus, packed. On the way you read last night's lab reports on your phone. Three people have written the p values backwards.",
+  "General Psychology, a lecture hall of 120. The back rows are filling out student-teaching forms. When you get to the forgetting curve, they look up for a moment.",
+  "The accreditation group meets. Reviewers come next month and the matrix linking graduation requirements to course goals is still missing three courses.",
+  "Sixty questionnaires on the bus to a village school in Pengxi. The mountain road turns the students in front pale. The vice principal hands you a bottle of water at the gate.",
+  "A third-grade classroom. You read the items aloud in words they can follow. A small boy asks how many times is 'sometimes,' exactly. You circle that item in your notebook.",
+  "Dinner at the canteen. You ask a student affairs teacher about sharing the freshman mental health survey data, and she says it has to go through ethics and confidentiality review.",
+  "In your office entering data. SPSS is open and some children's 5s look like 3s, so you check against the originals, one sheet at a time. The corridor lights have dimmed.",
+  "Editing the grant proposal. The fourth draft of the rationale. In the significance section, you delete a sentence that sounded like begging."
+ ],
+ "ladder": [
+  { "title": "Lecturer", "stage": "Finding your footing", "focus": "Teaching core courses, supervising student teachers, applying for internal and provincial grants, publishing first papers, building a case for associate rank." },
+  { "title": "Associate Professor", "stage": "Leading a team", "focus": "Running provincial and ministry grants, supervising master's or undergraduate research groups, building programs and accreditation files, moving up on strong papers and teaching awards." },
+  { "title": "Professor", "stage": "Heading a research line", "focus": "Responsible for a research direction and data platform, national grants, peer review, and advising local departments." },
+  { "title": "Discipline Leader", "stage": "Running the discipline", "focus": "Discipline planning and degree program development, putting people and funding together, deciding where the department goes in the next ten years." }
+ ],
+ "ai_tasks": [
+  { "name": "Interviewing and observing in schools and homes", "how": "AI can transcribe and draft outlines. When a child is ready to talk and what a teacher can't say aloud, you learn by sitting at the back of the classroom." },
+  { "name": "Designing questionnaires and experimental tasks", "how": "AI can generate items and check wording and reverse-scored questions. Whether a third grader understands a sentence has to be tried in class." },
+  { "name": "Cleaning survey data and running routine statistics", "how": "Missing values, reliability and routine models take AI a few minutes. People just check whether the results make sense." },
+  { "name": "Writing literature reviews and grant proposals", "how": "AI can summarize literature and draft frameworks, and it also invents citations. Every one needs checking, and the choice of question is a person's." },
+  { "name": "Checking data authenticity and research ethics", "how": "AI can flag likely bot responses. Which forms stay, which batch gets thrown out, and who answers for it is up to the researcher." }
+ ],
+ "events": {
+  "e_review": "Seven months after submission, the second reviewer writes one sentence: sample from a single region, limited representativeness. You look at that sentence and think about the buses of Suining.",
+  "e_province": "A provincial social science grant comes through, ¥40,000. Filing your first reimbursement, you learn that pencils and notebooks for child participants need invoices listing quantity and unit price.",
+  "e_march": "In the March before the grant deadline, you don't leave the office before midnight for two weeks. The submission system spins for three minutes. Five months later, the list doesn't include you.",
+  "e_accredit": "Teacher-education accreditation reviewers arrive to go through four years of exams and practicum logs. You've filed each course's exams by year. A reviewer pulls one out, points to a question, and asks which graduation requirement it tests.",
+  "e_cohort_kid": "The class you're following has moved on to middle school and you go around several schools to find them. Eleven names are gone from the roster. The homeroom teacher says some have gone with their parents to Chengdu or Zhejiang.",
+  "e_township_head": "The head of a village school is transferred, and the new one says questionnaires take away class time, so no testing this year. You trade the homeroom teacher training the school wants, two afternoons of it, and the questionnaires come back.",
+  "e_ai_bot": "An online parent survey comes back suspiciously tidy. Dozens are model-written, consistent even on the reverse-scored items. You scrap the batch and design three trap questions.",
+  "e_ai_stat": "A student comes to you with models run by AI. Beautiful results, beautiful explanation, and mediation and moderation are swapped. You have him draw the diagram by hand.",
+  "e_ai_review": "A journal's first pass now runs on AI, and your paper gets flagged for 'abnormal textual similarity' because of a scale's standard description. You write an email to explain and attach the original scale with citation.",
+  "e_author": "A master's student's paper is ready to submit, and the vice dean on the advising committee proposes to be listed as corresponding author. You lay the author-order table on the desk. The student sits across from you, head down.",
+  "e_neck": "The X-ray of your neck shows its natural curve has gone. The doctor asks how many hours a day you spend at a screen. You're about to tell the truth, and then you remember the two proposals due this week.",
+  "e_voice": "Fourteen class hours a week and you've got vocal nodules. The doctor orders a week of silence, and you write on the board instead. Your students find these classes unusually peaceful.",
+  "e_merge": "The college restructures its majors and the psychology department is folded into the School of Education. The sign changes, the office doesn't, and from then on every meeting begins with explaining that psychology isn't education.",
+  "e_data10": "Your longitudinal data reaches ten years and the first children are now in college. Going through a decade of coding sheets, you find one year's data entry clerk swapped the 1s and 2s for gender. You and your students fix it over a summer.",
+  "e_alumni": "A teacher-education student you once taught is now the county's school psychology coordinator. She sends you a revised class survey and says you were right about that item; the kids really didn't understand.",
+  "e_parent": "A teacher hands out a mental health checklist at the parents' meeting. You look to see whether the reverse-scored items are marked, then write three lines of suggestions in the corner for the teacher. At home your kid says, please don't do that.",
+  "e_journal": "Your paper finally appears in a good journal. The college awards you ¥12,000 and the department posts a red banner at the door. In your office, you keep considering the font size on the red banner.",
+  "e_fieldwork_rain": "A landslide closes the country road and the bus detours for three hours. You keep sixty questionnaires safe in your bag. By the time you arrive the children have gone home, and the old gatekeeper stores the forms for you in his room."
+ },
+ "choices": {
+  "c_cohort": { "title": "Long-term study or quick results", "situation": "You want to follow one grade of village school children for more than ten years. The department chair says it's a good idea, but associate rank looks at papers within five years, and the first longitudinal paper would take three.", "options": [
+   { "label": "Start the long study", "result": "You go around five schools and give every child a code. The first paper comes two years late. Those codes slowly grow into a table nobody else can reproduce." },
+   { "label": "Cross-sectional first, publish", "result": "Three papers in two years, and your qualifications pile up fast. The long-term study plan sits on your computer in a folder named 'Later.'" } ] },
+  "c_serve": { "title": "The district's contract project", "situation": "The district wants an evaluation of its pilot school counseling program. ¥200,000, and what they want is a report, not a paper, in six months. That money would pay your students' stipends for two years.", "options": [
+   { "label": "Take it, fund the team", "result": "You visit thirty-some schools and rewrite the report five times, with the conclusion on the last page. Your students get paid on time, and your own paper slips another year." },
+   { "label": "No, protect the research", "result": "You keep your time for the data. A colleague in the next department takes the project and buys a new eye tracker." } ] },
+  "c_ai_tool": { "title": "Learn AI coding and analysis", "situation": "Giving interview transcription and coding to a model turns a summer's work into three days. But the codebook has to be redone, agreement with human coders has to be tested by you, and the college offers no training.", "options": [
+   { "label": "Learn it, build the workflow", "result": "You spend a semester comparing human and machine codes and write it up as a methods post. More people share it than read your papers." },
+   { "label": "Keep coding by hand", "result": "You and your students go on listening line by line. It's slow, but you hear where a child pauses and know where to ask one more thing." } ] },
+  "c_associate": { "title": "Apply for Associate Professor", "situation": "You're one core-journal paper short for Associate Professor, and a new rule requires overseas study or local service. You could take a one-year post in the county, or send your paper to a couple more journals.", "options": [
+   { "label": "A year at the county education bureau", "result": "You get around every school in the county that year, and those principals' names end up on your data collection sheets. The associate professor form fills out." },
+   { "label": "Stay and push the paper", "result": "You try a few more journals and one accepts, scheduled for next year. This year's review list will have to wait for another round." } ] },
+  "c_edtech": { "title": "A testing company in Chengdu", "situation": "A Chengdu educational testing company wants you as research director, developing products for schools. It's more than double your pay. They want norms and selling points, no papers. They're very interested in your longitudinal data.", "options": [
+   { "label": "Join the company", "result": "You put a pothos on your desk. At your first meeting, someone asks how to 'package' your scale.", "end": "You left the college for an educational testing company in Chengdu. Your items were answered by children in hundreds of schools, and the answers no longer came back to your desk." },
+   { "label": "Stay at the college", "result": "You decline, and take another look at the data use agreement. Your pay slip shows the same number." } ] },
+  "c_transfer": { "title": "Move to a university in Chengdu", "situation": "A Chengdu university has an opening at associate rank. Pay is much better and the research platform is strong. But the Suining schools and the homeroom teachers you've worked with for ten years can't come along, and your kid has just started middle school.", "options": [
+   { "label": "Go to Chengdu", "result": "Your lab doubles and your meetings double. You go back to the Suining schools once a semester, and the teachers start calling you 'the teacher from Chengdu.'" },
+   { "label": "Stay in Suining", "result": "You keep riding that bus. The department is small, everything falls to you, and there's a kind of good fortune in not having to compete for it." } ] },
+  "c_school": { "title": "School counselor at a middle school", "situation": "A leading middle school in Suining is hiring a full-time school counselor. The job is stable, with no grants or papers. The work is looking after over a thousand kids, and you'd no longer have to justify your sample size.", "options": [
+   { "label": "Go to the school", "result": "When you move out you pack your project files into three boxes, and students carry them downstairs.", "end": "You left the college to become a full-time counselor at a middle school. Your door stayed open, and you never filled out a grant application again." },
+   { "label": "Stay in the department", "result": "You forward the job posting to a recent graduate, and she goes the following year." } ] },
+  "c_professor": { "title": "Apply for Professor", "situation": "Professor requires a national-level grant. You've been writing your application for three years and this is the fourth. The department says the other route is a monograph plus a provincial teaching award, with fewer slots, though the judges know you.", "options": [
+   { "label": "One more try for the national grant", "result": "In the fourth year, your longitudinal data finally gets a reviewer to write 'sustained investment, clear value.' You fill out the Professor form this time without a qualm." },
+   { "label": "The teaching award route", "result": "You turn ten years of courses into a textbook and the college's teaching award gets your name. Your research direction slowly thins out." } ] },
+  "c_leader": { "title": "Become Discipline Leader", "situation": "The dean wants you as Discipline Leader to apply for a master's program. Accept and it's meetings, head counts and application forms. Decline, and you can follow those kids until they turn thirty.", "options": [
+   { "label": "Become Discipline Leader", "result": "You write each teacher's direction on the whiteboard. The master's program is approved on the third try. That year you hardly set foot in a village school." },
+   { "label": "No, keep following the data", "result": "In the twentieth year you run another round of follow-up. Some of those kids are teachers themselves now." } ] }
+ },
+ "endings": {
+  "retire": "In your final term you teach only one course. The longitudinal database has been de-identified under new ethics rules and stored on the college server, nineteen cohorts of codes. The day of your paperwork, you carry out of the office only a scale manual and a cup. The shuttle still leaves at seven-twenty. This time you don't have to catch it.",
+  "burnout": "After several years of applications and rejections, one day before the opening ceremony you find you can't read another word. Counseling is what you teach, and in the counseling room you discover how hard it is to talk about yourself. You apply for a transfer to the academic affairs office, doing schedules and grades. You won't be riding the country bus anymore."
+ },
+ "stages": [
+  "Three core courses cut your time into scraps: preparing, marking reports, taking student teachers to observe. Research happens at night and on weekends, and every questionnaire, from printing to data entry, is you and two undergraduates. You answer to the accreditation group, the chair and the vice president, and at meetings you sit nearest the door.",
+  "You've started a small team, with group meetings on Thursday evenings. You watch the reimbursements on provincial and ministry grants yourself, and students' papers go through your hands from topic to revision. You begin reviewing program materials for the college, and people start asking if they can use your data.",
+  "You have a research direction and a data platform. Half your time goes to grant review, journal review and the academic committee, the other half to talks with county education offices. Students can run the schools for you now. You look at coding rules and the seventh version of the questionnaire and decide which items can never be changed.",
+  "You now look after the next ten years of a dozen people's livelihoods. Degree program files, faculty plans, asking the dean for positions. In Excel you line up who retires when and who should go abroad. You still teach one undergraduate course, because you don't want to go too long without hearing students ask questions."
+ ],
+ "work": [
+  "You're teaching scale reliability to student teachers and one asks whether a low score means something's wrong with the child. You write the difference between assessment and diagnosis on the board, erase it, and write it again.",
+  "One column of your internal grant budget is wrong and finance sends it back three times. You go to the window with the receipts, and the accountant holds a ruler to the page and shows you where the decimal goes.",
+  "You run a latent growth model in Mplus for the first time and it won't converge. A student combs through forums and finds an extra space in one data line. You both laugh.",
+  "At group meeting a graduate student reports, and you ask which school the survey went to, first period or sixth. He freezes. After that his record sheet has one more column.",
+  "The ethics committee returns your plan and asks for a consent note young children can read. You spend an afternoon rewriting it against the third-grade word list.",
+  "A county homeroom teacher collects parent surveys for you. You bring each class a set of picture books as thanks. One teacher puts them on the lowest shelf in the classroom.",
+  "Reviewing for a journal, you find the data too clean. You send the descriptive table back and request the raw data. Three weeks later the author withdraws.",
+  "The county education bureau asks whether this school adjustment report can be used to rank principals. You turn to the methods page and tell them the sample can't be split that way. This use won't work.",
+  "In a grant review room, you finish presenting a proposal and a professor from the next panel says he can't follow the statistics. You take a sheet of paper and draw the model as three arrows.",
+  "The degree program application wants five years of advisors' papers. You put twelve colleagues' output into one table and find two research lines held up by one person each.",
+  "A new PhD asks if she can teach one course fewer to do research. You look at the schedule, trade away one of your own, and give her back Tuesdays.",
+  "The college is debating a merger of two programs. You walk into the meeting with ten years of graduate placement figures. The first row is how many became village school teachers."
+ ],
+ "past": [
+  "You're from Shehong. Your middle school homeroom teacher has everyone write a letter to themselves in ten years. You write that you'd like to know why people say something other than what they think.",
+  "Choosing a college, your father says teachers' colleges are stable. You choose psychology at a provincial teachers' university. It's the same school he meant, though not quite the same thing.",
+  "As a senior you follow a professor to primary schools in the mountains of southern Sichuan to run tests. It's the first time you learn that sitting across from a child is much harder than sitting at a computer.",
+  "After your master's you stay on in Chongqing for a doctorate on children's executive function. The stipend is a little over ¥1,000 a month. In the lab you play building blocks with kids and record their reaction times.",
+  "In the last year of your PhD you send out a dozen-plus applications. The Chengdu universities want overseas experience. The dean in Suining calls you himself: we need people, there's a housing subsidy, think it over."
+ ],
+ "late": {
+  "pension_note": "Estimate: with public-institution pension and occupational annuity, the college pays about seventy percent of pre-retirement monthly pay, excluding teaching-hour pay and research awards.",
+  "scenes": [
+   "The database administrator emails to ask you to confirm the field descriptions for round nineteen. You write back five pages and only after sending notice that it's six on a Sunday morning.",
+   "The community seniors' college asks you to talk about memory, and a room fills with people afraid of forgetting. You skip the forgetting curve and have everyone tell each other what they had for breakfast. All correct.",
+   "Your neck surgery is scheduled for early spring. Before it, the doctor hands you an assessment form. Below item nine, in light pencil, you write: double negative, suggest revising.",
+   "The schedule on the academic affairs computer barely changes in a semester. With teaching pay and research awards gone you make about thirty percent less, and you cancel all your grant system accounts.",
+   "You're still seeing a counselor, every two weeks, ¥400 a session. Once she uses a scale you lectured on twenty years ago. You don't tell her you were the one who translated it.",
+   "Now and then you review a survey for a new teacher in the education school, unpaid and unsigned. It isn't tiring, and it makes those years of reading feel like they weren't wasted.",
+   "After the change, for the first time you don't have to open any document on a Sunday night. In March the grant system's text messages still arrive on your phone. You read them and keep them, undeleted.",
+   "Someone has put your old scale into a product with one-click scoring. You've warned them it shouldn't be used like that, and they say clients don't look at that. You accept the consulting fee, not altogether comfortably.",
+   "One of the kids from your long study comes to your workplace as an intern. She doesn't know that code is her, and you don't tell her. You just take a little longer than usual marking her reports.",
+   "Someone shares a 'What personality type are you' quiz. You click through and glance at the items, quietly work out the length and the reverse-scoring, and find, to your surprise, that it has none.",
+   "When someone says studies show, you have to ask how big the sample was and who paid. Your family has stopped discussing it with you. A man in the park says walnuts are good for the brain. You hear him out and ask only how many years he's been eating them."
+  ],
+  "closing": {
+   "retire": "At dusk the Fu River lies flat. You go over the sample size and bias of today's reading in your head, and find it acceptable. Walking home you pass a primary school letting out. The children's backpacks are bigger than they were ten years ago.",
+   "burnout": "You submit a schedule to the system and shut down the computer. Someone is blowing a whistle out on the sports field. You gather your cup and leave on time.",
+   "end": "Early afternoon in the office, a child knocks at the door. You save the document in front of you, say come in, and move your chair a little, leaving just enough room for someone to sit down."
+  }
+ }
+}

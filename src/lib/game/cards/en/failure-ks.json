@@ -1,0 +1,164 @@
+{
+ "id": "failure-ks",
+ "occupation": "Failure Analysis Engineer",
+ "role": "Failure Analysis Engineer at an Electronics Contract Manufacturer",
+ "headline": "At a contract manufacturer in Kunshan that builds laptop and server motherboards, you have just gone from grinding cross-sections to signing your own failure reports: why each returned board died now goes out under your name",
+ "unit": "The failure analysis lab of an electronics contract manufacturer in Kunshan, Jiangsu (laptop and server motherboards, customers in North America)",
+ "unit_type": "Electronics contract manufacturer (EMS), failure analysis lab",
+ "city": "Kunshan, Jiangsu",
+ "city_tier": "County-level city (administered by Suzhou)",
+ "education": "Bachelor's degree (Materials Science and Engineering)",
+ "level": "You have had your hands on cross-sectioning, grinding and X-ray, you can run the SEM alone, and you can find the IPC and JEDEC clauses. When a customer's quality engineer asks three whys in a row on the phone, you still get stuck on the second.",
+ "intro": "The board the customer sent back is in a pink antistatic bag with a red tag on the mouth of it, and under the batch number someone has written URGENT by hand. You spent two years grinding cross-sections in this Kunshan lab, and as of this month you no longer prepare samples for other people. This board wouldn't boot in a server room in Houston. The reason why will carry your signature.",
+ "salary_note": "Estimate: lab engineers at Taiwanese- and Hong Kong-owned contract manufacturers in Kunshan start a little below the foreign firms in Suzhou Industrial Park. Peak-season overtime makes some of that back, and the year-end bonus depends on orders.",
+ "facts": [
+  { "label": "Failure Analysis Engineer (current level)", "value": "2–5 years, ¥9,350–13,750 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Failure Analysis Engineer (5–9 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Preparing samples, cross-sectioning and locating the failure on the tool", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Listing the possible root causes of a failure", "source": "AI exposure" },
+  { "label": "Open positions", "value": "30 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The shuttle bus stops at the factory gate. Before the turnstile you step on the static tester: wrist and both shoe soles each flash green. Red means going back for new shoe covers.",
+  "The daily quality meeting. Three boards came back from North America overnight. The customer's resident quality engineer projects the ranking on the wall, and your average case-closure time is marked yellow.",
+  "The red-tag board goes under the X-ray. The balls of one BGA all look round on screen. You tilt it forty degrees, and the shadows of two in the lower right aren't quite right.",
+  "Cut, pot in resin, wait for it to cure, then work from coarse paper down to polishing slurry. Grind thirty seconds, check under the metallurgical scope. Go a little further and that layer with the crack is gone.",
+  "Second floor of the canteen. The managers from Taiwan take the table by the window. Someone from process engineering comes over with a tray and asks if this morning's board is going to be blamed on reflow again.",
+  "You are down for the SEM at two. During the quarter-hour of pumping down you edit a report. The EDS spectrum comes up, and the solder interface has phosphorus that shouldn't be there.",
+  "Writing D4. A process engineer stands behind your chair reading every word. When he gets to the words 'reflow profile', he says you might want to think about that sentence.",
+  "Houston has started work. On the conference call they ask: why only this batch? You unmute and turn to another page of images."
+ ],
+ "ladder": [
+  { "title": "Assistant Failure Analysis Engineer", "stage": "Sample prep", "focus": "Cross-section, grind, pot and photograph samples for the engineers; learn the standards and the tools." },
+  { "title": "Failure Analysis Engineer", "stage": "Closing your own cases", "focus": "Handle customer complaints and trial-run failures alone, locate the failure, write 8D and FA reports and see them closed." },
+  { "title": "Senior Failure Analysis Engineer", "stage": "The hard ones", "focus": "Take the difficult cases that cross process stations, defend them to customers, train juniors, build the failure mode library." },
+  { "title": "Failure Analysis Lab Supervisor", "stage": "Running the lab", "focus": "Schedule tool time, manage equipment and budget, pass lab accreditation, decide which samples go outside." },
+  { "title": "Quality Engineering Manager", "stage": "Department", "focus": "Answer for the customer's quarterly quality score, coordinate process, R&D and suppliers, manage the lab and outside work." }
+ ],
+ "ai_tasks": [
+  { "name": "Preparing samples, cross-sectioning and locating the failure on the tool", "how": "Often there is only one sample, and one wrong cut and it is gone. AI can help read the images; where to cut and where to stop is for a person to decide and do." },
+  { "name": "Listing the possible root causes of a failure", "how": "AI can search past cases and propose hypotheses. Which is worth spending tool time on takes a person's judgment, and a person signs the conclusion." },
+  { "name": "Drafting 8D and FA reports", "how": "AI can arrange images and data and write a first draft. People check the conclusions and chase the departments until the fixes are done." },
+  { "name": "First-pass defect calls on SEM and X-ray images", "how": "Models can sort voids, cracks and head-in-pillow joints automatically. People spot-check and deal with what it isn't sure of." },
+  { "name": "Organizing the failure mode library", "how": "AI can split old reports into entries. The classification rules and whether each entry is right need someone who has done the work." },
+  { "name": "Explaining responsibility face to face to customers and the line", "how": "Who pays for this batch, and how far to go in saying so, comes down to trust and tact. AI can take the minutes at most." }
+ ],
+ "events": {
+  "e_first_8d": "The first 8D you wrote alone came back from the customer with one comment: your root cause is a symptom. You looked at that line of English and rewrote the five whys.",
+  "e_dye": "You ran a dye-and-pry test: soaked the board in red, baked it dry, and popped the BGA off joint by joint. Of the four hundred-odd joints, three near the corner had fracture surfaces entirely red. Head-in-pillow, caught at last.",
+  "e_ntf": "Of the thirty boards the customer returned, every one tested fine in your lab. Hot, cold, vibration, all of it, still fine. The report could only say NTF, no trouble found. The customer replied with a question mark, the production line with a smiley.",
+  "e_peak": "September, the new model ramp. Trial-run failures arrived by the crate and the tool schedule ran until three in the morning. That month your overtime pay was more than your base salary, and you slept eleven nights on the folding bed in the break room.",
+  "e_sem_down": "The SEM detector failed and the vendor's engineer couldn't come until next week. Four urgent samples went out to a third-party lab in Suzhou at several hundred yuan an image. Your supervisor pressed down hard with the pen when signing the bill.",
+  "e_esd": "After the weather turned cold, one model of network chip kept getting zapped. From the shape of the damage you traced it back, station by station, to a ground wire on the assembly line whose screw had loosened by half a turn. The line leader brought the screw to the lab to show you. So small, he said.",
+  "e_fib_miss": "The focused ion beam cut two microns off target. That part was the only failed unit in the whole factory, and the cut left nothing behind. You wrote in the report: sample destroyed during analysis. Then you called the customer yourself.",
+  "e_neck": "Years of bending to the microscope eyepiece, and the X-ray of your neck showed the natural curve was gone. You raised your chair and put two IPC standards under the metallurgical scope.",
+  "e_fingers": "Soaked for years in polishing slurry and acetone, your fingertips split open one by one every winter, and your phone stopped recognizing your fingerprint. You switched to a passcode.",
+  "e_vendor": "The capacitor maker's quality rep flew in from Japan and insisted on cross-sectioning that batch with you. The two of you took turns at the scope all afternoon. In the end he nodded and bowed, and the compensation letter arrived the next week.",
+  "e_crab": "Before Mid-Autumn, a supplier's quality engineer pressed on you a voucher for Yangcheng Lake hairy crabs, just a small token. The report on that supplier's connectors was on your desk. You put the voucher in an envelope and sent it to the audit mailbox.",
+  "e_commute": "Your partner works in Shanghai, and the time you have together in a week is one dinner at a place by the Huaqiao metro exit. Twice your conference call ran past closing, and your partner took the food home in a box.",
+  "e_kinder": "Kindergarten lets out at four thirty. You were waiting on a vacuum, your partner was on a high-speed train. The director saved your number in her phone under the note: lab, late.",
+  "e_audit": "The lab accreditation surveillance audit came. The auditor looked at nothing else first, only the calibration stickers on the equipment, then pulled three reports and asked who measured this number, on what day, on which instrument. You answered everything. Your legs went weak only in the afternoon.",
+  "e_dose": "Every quarter the safety office collects your personal radiation badge and issues a new one. The results get posted by the lab door, a row of figures all close to zero. Everyone still goes to check their own line.",
+  "e_qbr": "At the quarterly business review, the customer changed your average FA cycle from yellow to green and gave you three percent more share. The plant manager led the applause in the conference room. Nobody mentioned the lab's all-nighters.",
+  "e_ai_draft": "The company brought in a report assistant: drag in the images and data and eight D's grow out on their own. Your job went from writing reports to picking through them. It writes too smoothly. The wrong parts are smooth too.",
+  "e_ai_image": "The image model called a grinding scratch on an SEM image a crack, with ninety-seven percent confidence. You put the image in the training deck and wrote beneath it: only the person who ground the sample knows where this mark came from.",
+  "e_line_move": "A major customer moved two motherboard lines to Vietnam. The lab's sample count fell by a third, the desk next to yours emptied out, and unopened cross-section supplies piled up by the shredder.",
+  "e_furlough": "Orders dropped hard in the slow season and the whole plant took turns on leave, paid base wages only for the month. You used the time to re-file ten years of cross-section images. Your supervisor said someone should have done that long ago."
+ },
+ "choices": {
+  "c_17025": { "title": "Internal auditor or the FIB", "situation": "Your supervisor has two places. One is an ISO/IEC 17025 internal auditor course in Shanghai, useful for the lab's accreditation. The other is learning the focused ion beam from the vendor, which would make you one of three people in the plant who can run it. They fall in the same month.", "options": [
+   { "label": "Take the auditor course", "result": "You listened to clauses for five days in Shanghai and came back and rewrote the lab's record forms. Colleagues started asking you: can we write it like this?" },
+   { "label": "Learn the FIB", "result": "The ion beam shaves away layer after layer on the screen. You ruined twenty practice samples. On the twenty-first, the cut stopped where you told it to." }
+  ] },
+  "c_rootcause": { "title": "Whose root cause", "situation": "The cross-section is very clear: the cracked joints are tied to the reflow profile. The process manager finds you and says the incoming parts' coplanarity wasn't great either, so couldn't it be written up as multiple factors? Write 'process' and that line loses its bonus this quarter. Write 'multiple factors' and the customer may send back another batch.", "options": [
+   { "label": "Name the reflow profile", "result": "The day after the report went out, the process people stopped sitting at your table. Three months later that line's return rate came down, and nobody told you." },
+   { "label": "Write multiple factors, push the fix privately", "result": "You wrote multiple factors and sent the oven data separately to the process supervisor. The profile was quietly adjusted. The customer's quality engineer looked up from the report and asked: so who was it?" }
+  ] },
+  "c_hold": { "title": "Friday night: release or hold", "situation": "Eight on a Friday night, and this batch's flight leaves Saturday morning. One joint in the sample cross-sections shows a very short crack at the edge, a gray area in the standard. Quality assurance is waiting for one sentence from you, and the production planner is downstairs on a third cigarette.", "options": [
+   { "label": "Hold it, pull fifty more", "result": "You worked until noon on Sunday and all fifty passed. The delayed air freight cost over a hundred thousand yuan, and your name came up four times in Monday's meeting." },
+   { "label": "Pass it, attach a risk note", "result": "The goods flew. You saved the crack image and your reasoning in a folder of their own. For the next half year, whenever a letter came from North America, you looked at the batch number first." }
+  ] },
+  "c_fab": { "title": "A wafer fab in Wuxi comes calling", "situation": "The FA group at a wafer fab in Wuxi offers you forty percent more. It's still this line of work, but you would have to relearn it from board level down to device level, at nanometer scale, on rotating shifts. Your partner has only just settled in Kunshan, and your child's school registration is here.", "options": [
+   { "label": "Go to Wuxi and start over", "result": "You became the oldest new hire in the group and came home to Kunshan on weekends. The world under the TEM is a thousand times smaller than the one you knew, and you started asking stupid questions again." },
+   { "label": "Stay in Kunshan", "result": "You wrote back and declined. On Monday morning you went through the same static gate to the same few lines' boards, only now you know with your eyes shut which corner to look at first." }
+  ] },
+  "c_vendor_sales": { "title": "Applications engineer for the microscope maker", "situation": "The vendor's engineer who comes to fix the SEM says his company needs an applications engineer for East China: no customer complaints to carry, travel to demonstrate the equipment, thirty percent more pay, and never again a sample of your own. Meanwhile the lab has just asked whether you would take on two more people.", "options": [
+   { "label": "Go sell equipment", "result": "You handed in your notice and wrote your twelve open cases into a handover list.", "end": "You took off the wrist strap and put on the microscope maker's blazer. From then on you tuned images for other people's labs, and however urgent their complaints were, you could leave at five." },
+   { "label": "Take the two people", "result": "You checked every cross-section the two juniors made. By the end of the year your tool time had halved and your report-reading time had doubled." },
+   { "label": "Stay as you are, hard cases only", "result": "You told your supervisor you wanted to stay on the tools. The hard cases all came to you, and your place on the org chart stayed where it was." }
+  ] },
+  "c_vietnam": { "title": "Posted to Vietnam to build a lab", "situation": "The new plant in Bac Ninh, Vietnam needs a small lab, and the company wants to send you for two years, with a monthly posting allowance and first call at a promotion when you come back. You would start by finding an electrician to do the grounding. At home, your partner says: think it through yourself.", "options": [
+   { "label": "Two years in Bac Ninh", "result": "You landed with two boxes of supplies. In the first month you taught local technicians to grind cross-sections, with hand gestures, translation apps and one ruined sample after another." },
+   { "label": "Don't go", "result": "A colleague from the next group went. His feed filled up with pho and electrical cabinets, and your samples got fewer every year." },
+   { "label": "Go back to Nanjing, to a university lab", "result": "You added up the Bac Ninh allowance, then all the years of shuttle buses, and wrote your resignation.", "end": "You got a position at your alma mater's analysis and testing center, looking after an old electron microscope and teaching students how to load a sample. No customers, no red tags, and during the holidays the campus had only you and the sound of the vacuum pump." }
+  ] },
+  "c_ai_lib": { "title": "Cleaning fifteen years of reports", "situation": "Head office wants a failure case knowledge base, and the lab needs to give up one person to clean fifteen years of FA reports. No customer will ever see this work. Done well, the result is a smarter model; done badly, nobody will know.", "options": [
+   { "label": "Take it on", "result": "You read thousands of reports and found that in half of them the root cause was a symptom, some of those written by you. The day the classification rules were settled, you wrote that sentence into the preface." },
+   { "label": "Decline, samples come first", "result": "An outsourcing firm took the job and filled in every field neatly. After the model launched, you often had to explain why it said what it said." }
+  ] },
+  "c_lead": { "title": "Competing for Failure Analysis Lab Supervisor", "situation": "The old supervisor has moved to R&D. The Failure Analysis Lab Supervisor post requires an interview, a three-year plan, and a clear account of every tool's hours and depreciation. You can describe every failure mode. You can't say how many years an SEM takes to pay for itself.", "options": [
+   { "label": "Compete for it", "result": "You spent two weekends getting depreciation schedules from finance and allocating tool time by department. The first question the plant manager asked at the interview was about that table." },
+   { "label": "Stay out of it, keep looking at samples", "result": "The new supervisor was brought in from another factory, and in his first week came to ask which tools not to touch. You told him." }
+  ] },
+  "c_outsource": { "title": "Should the lab stay in-house", "situation": "The new general manager has done the math: with fewer samples, the depreciation on these tools costs more than outsourcing everything to a third party. The plan needs your position. To keep the lab, it would have to take outside orders and you would have to go find customers. Or you could take what you know about these machines and go straight to a third party.", "options": [
+   { "label": "Take outside orders", "result": "You started going with sales to visit small factories nearby, explaining what one board can reveal. A price list for outside customers went up on the lab door for the first time." },
+   { "label": "Join a third-party lab", "result": "The plant's tools got 'for disposal' tags, and you wrote up each one's service history.", "end": "You went to a third-party testing company in Suzhou, billed by the job, looking at everyone's boards. You no longer had to vouch for anybody's process, and no line was yours anymore." },
+   { "label": "Go with the company's plan", "result": "The lab shrank to two people and one X-ray, and the rest went outside. Your job changed from looking at samples to looking at outside reports and turning them into action items." }
+  ] }
+ },
+ "endings": {
+  "retire": "The week you did your retirement paperwork, the safety office took back one extra radiation badge, and next quarter's roster no longer has your line. Your name was deleted from the SEM schedule, and next Monday filled up with other people's samples. You went through the static gate once more: green. The motherboard lines keep changing customers, and someone is still writing symptoms in the D4 box.",
+  "burnout": "That year your neck pressed on a nerve, your fingers went numb, and you couldn't hold tweezers steady. The company moved you to document control, in charge of numbering and filing reports. From the first page of a report you can tell if the writer was in a hurry. At lunch you started learning not to look down."
+ },
+ "stages": [
+  "Taking the job, planning the approach, running the tool and writing the report are all yours. Every day you look at the electrical test and the customer's description, decide on X-ray, cross-section or decapsulation, then go and fight for SEM time. Process, new product introduction and supplier quality all wait on your conclusion, and all hope it doesn't land on them. The name at the bottom of the 8D form has changed from your supervisor's to yours.",
+  "Ordinary complaints no longer reach you. What you get are the ones three departments have already pushed around twice. You go to the line to look at the ovens, to the warehouse to check when moisture-sensitive parts were opened, then get on the customer's call to defend it. New hires' cross-sections pass under your eyes and the failure mode library's entries are yours to decide. You have gone from finding the problem to getting others to believe it is the problem.",
+  "You start reading tool schedules, calibration plans and budgets; the FIB service contract costs a car a year. Which samples go outside and which cases go on the tool first are your calls, and the planners and customers phone you first. During the surveillance audit it's you standing next to the auditor. Your own tool time comes to a few afternoons a month.",
+  "The lab, incoming inspection and customer quality all report to you, and when the quarterly score drops, the plant manager comes to you first. Every week you meet with process, R&D and purchasing and use the same set of numbers to say different things to different people. When customers come to audit, you walk the whole route with them. Whether a batch ships now comes down to you replying 'agreed' in an email. The micrographs in your office are ones you ground a long time ago."
+ ],
+ "work": [
+  "The young guy from new product introduction brings a trial-run board that reboots at power-on. You sweep it with the thermal camera and one MLCC next to the power module lights up as a white dot. Cross-section it: cracked inside.",
+  "A line inspector brings a reel of parts he suspects got damp. You pull the opening record: sixty hours past the limit. You circle it in red on the material card.",
+  "The customer wants a preliminary report within 72 hours. Under D3 you write the containment action: all four thousand units in stock quarantined. Then you go to the warehouse and put on the yellow hold labels.",
+  "The connector maker says you plug them too many times; your line says the plating is too thin. You measure thirty points with XRF and send the thickness distribution to both sides at once.",
+  "A junior you are training blamed a crack on cross-sectioning stress. You have him do a slow-cut control, and when it is done he changes the conclusion himself.",
+  "On the conference call the customer's technical director wants the raw EDS spectra. You share your screen and go from the first image to the nineteenth. The questions keep getting shorter.",
+  "The FIB's ion source has reached end of life, and a replacement needs head-office approval. You list what the machine saved in complaint costs over the past year and attach it to the request.",
+  "The third-party lab in Suzhou has raised prices twenty percent this quarter. You take two other quotes to the negotiation and come back with twelve percent off plus priority on rush jobs.",
+  "The auditor finds a calibration sticker on one metallurgical scope two days out of date. You take it out of service on the spot, hang a red tag on it and sign the nonconformity report yourself.",
+  "The night before the quarterly review you slice return rates three ways, by customer, model and supplier, and decide to present only two of the charts. The third you keep for when they ask.",
+  "A supplier claim reaches its third round and their general manager comes in person. You give up five points on the compensation in exchange for a resident engineer stationed in Kunshan.",
+  "Two engineers hand in notice on the same day, both for third-party labs. You keep one by writing his name onto the customer's approved sign-off list. You wish the other one well."
+ ],
+ "past": [
+  "The old TV at home lost its picture. You took off the back and went through it with a multimeter until you reached a charred resistor. It never did get fixed, but you knew where it had broken.",
+  "When it came to filling in university choices, your father had heard materials science found jobs easily. All you knew about materials was the unit cell from chemistry class. You went to an engineering school in Nanjing.",
+  "In a junior-year electron microscopy lab, the teacher had you load a sample. At twenty thousand times, a flat piece of fractured metal became a canyon, and for the first time you thought this major might be interesting.",
+  "You applied to a dozen-odd places in the autumn hiring round. Wafer fabs wanted master's degrees. The one that gave a bachelor's graduate an offer was this contract manufacturer's lab in Kunshan: modest probation pay, dorm and shuttle included.",
+  "Your first year was grinding. Pot, coarse, fine, polish, thirty samples a day, until your fingertips lost their prints. The engineer training you looked at the images, not at you.",
+  "For the first time one of your cross-section images went straight into a report to a customer. Nobody told you. You found it yourself on the third page of the appendix."
+ ],
+ "late": {
+  "pension_note": "Estimate: over thirty years of contributions in Kunshan under the enterprise employee basic pension. Contract manufacturers keep contribution bases low for a long time, so the pension comes to about 40 percent of final pay.",
+  "scenes": [
+   "A neighbor's rice cooker won't switch off and he carries it over for you to see. You go over the board with a lighted magnifier, point to a swollen capacitor and tell him the whole batch will go this way.",
+   "A phone repair chain in Suzhou asks you to teach half a day a month on telling a cold joint from a dead chip. Everyone in the class has steadier hands than you. You make them cut a board open once and look.",
+   "The old plant's SMT building has been rented out to a company that makes battery cabinets. The sign has changed, and the static tester from the gate sits in a corner as scrap. Passing by, you work out that it served eleven years past its depreciation.",
+   "The eye clinic says your macula is starting to degenerate. Your first question is whether the location and timing follow any pattern. The doctor says that isn't how it works. You arrange the test slips by date.",
+   "Six months of traction and the numbness retreats to your little finger. You notice for the first time how many people are on the Kunshan streets at seven fifty in the morning, hurrying for shuttle buses.",
+   "You help keep the books at a relative's appliance repair shop. You don't touch anything people bring in. You only write down in the ledger: when did it start going wrong? The repairman says that's a good question.",
+   "You learned to swim, and you swim on your back so your neck doesn't have to lift. You don't ask what this line of work is like now, and you couldn't if you wanted to. You left those group chats long ago.",
+   "The new job has no red tags and no countdowns. In the first few months, whenever the phone rang, you felt in your pocket for the wrist strap. There was no wrist strap in your pocket.",
+   "The root causes you used to fight over now turn up in other people's reports, and you can tell at a glance which sentence was written for the customer. You don't change it. You just take the fee.",
+   "You earn more than you did at the plant, and you have never again been happy about a three-micron crack. Whoever you tell this to thinks it's good news.",
+   "When you shop online you read only the bad reviews, and only those that say how long it lasted. Three months and three years are different things. You read them aloud to your phone, and your family has stopped responding.",
+   "The SEM images from when you started are all on one external hard drive, and the drive itself failed first. You took it apart. The track the head had scratched was very clean. A textbook failure."
+  ],
+  "closing": {
+   "retire": "Some of the contract manufacturers have left Kunshan and others have come. Things always break, and there is always one batch that breaks sooner than the rest. These days you use that knowledge only to choose kettles.",
+   "burnout": "The days when your fingers don't go numb are getting more common. You pick up your cup, see a fine crack in the bottom, set it back on the table, and go on drinking water.",
+   "end": "The metro passes Huaqiao, and row after row of factories slide past in the window. You don't count how many floors still have their lights on."
+  }
+ }
+}

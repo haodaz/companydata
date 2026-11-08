@@ -1,0 +1,150 @@
+{
+ "id": "brand-fz",
+ "occupation": "Brand Manager",
+ "role": "Brand Manager, Food Company",
+ "headline": "After three years as a brand specialist at a forty-year-old Fuzhou maker of fish balls and frozen foods, newly promoted and charged with selling an old name to young people, somewhere between the boss, the distributors and the livestream",
+ "unit": "A long-established food company in Fuzhou",
+ "unit_type": "Private food company",
+ "city": "Fuzhou, Fujian",
+ "city_tier": "Second-tier city",
+ "education": "Bachelor's (Advertising)",
+ "level": "Your packaging copy doesn't need a second pass and you could run the distributors' conference with your eyes closed. Deciding where the brand's money should actually go is new.",
+ "intro": "In the meeting room hangs a photograph from forty years ago, when the whole factory was a dozen people beating fish balls by hand. Now you have the gift boxes and the frozen line for this brand, and the year's promotion budget on one sheet, smaller than you had imagined. This year, says the boss, young people must learn who we are. The distributors say: pay the display fees first.",
+ "salary_note": "Estimate: brand jobs at private food companies in Fuzhou pay below the national average, and the year-end bonus depends on sales targets.",
+ "facts": [
+  { "label": "Brand Manager (current level)", "value": "3–8 years, ¥14,025–20,625 a month (national average, estimated from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Brand Manager (8–14 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥32,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Keeping up relationships with distributors and partners", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing product copy, posters and sales scripts", "source": "AI exposure" },
+  { "label": "Open positions", "value": "91 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You get to the office and look at last night's e-commerce numbers, then go to quality control for today's test sheet. The proofs for the new packaging came back yesterday and the red is slightly off.",
+  "You check color cards with the printer's salesman. That's what the press does, he says. You lay the old packaging beside it and he stops talking and says he'll go back and adjust.",
+  "Legal has sent back your product page copy. 'Freshest' can't be written, 'number one' can't be written, 'healing' can't be written either. You change it to 'that first bite straight from the pot', and he says that's fine.",
+  "You go to see your floor display at a supermarket chain. The stock clerk has put your product on the second shelf of the freezer, with a competitor's at eye level. You crouch down and move a few packs to the front. The clerk watches you.",
+  "The livestream team sends this week's script, in which the host calls the fish balls 'hand-beaten fresh'. You phone them: this line has to go, they're made by machine, and the quality is good.",
+  "The boss calls you into his office and pushes a poster across the tea table, a child eating fish balls. This is what advertising is, he says. It's twenty years old. You politely take it away.",
+  "On a video call with the outside design firm, a young designer wants to simplify the old logo. You picture the boss's face when he sees it and say, let's set that aside for now.",
+  "You taste new flavors at home, for the nineteenth time this month. By now you don't need to bite. One touch of the tongue tells you there's too much starch."
+ ],
+ "ladder": [
+  { "title": "Brand Specialist", "stage": "Entry", "focus": "Write copy, chase materials, follow events, and learn to deal with printers and distributors." },
+  { "title": "Brand Manager", "stage": "Owns a category", "focus": "Responsible for one category's brand plan, packaging and promotion budget, with sales doing the talking." },
+  { "title": "Senior Brand Manager", "stage": "Owns the brand", "focus": "Responsible for a brand's positioning and annual plan, leading a small team and coordinating R&D, channels and outside firms." },
+  { "title": "Brand Director", "stage": "Sets the tone", "focus": "Manages several brands' budgets and tone, and talks money with the boss, big distributors and media platforms." },
+  { "title": "VP of Marketing", "stage": "Answers for it", "focus": "Oversees brand, marketing and e-commerce and answers for the company's reputation and growth. When a public complaint breaks, you get the first call." }
+ ],
+ "ai_tasks": [
+  { "name": "Keeping up relationships with distributors and partners", "how": "AI can only tidy records and write emails. Whether a distributor will take two more truckloads this year depends on trust between people." },
+  { "name": "Explaining the product at trade shows and in stores", "how": "The one who gets up on stage or crouches in front of the freezer talking to people is still a person." },
+  { "name": "Writing product copy, posters and sales scripts", "how": "AI can generate them directly, dozens of versions at a time. People only check the facts and the wording." },
+  { "name": "Planning promotions and scheduling campaigns", "how": "AI can provide ideas and schedules. Which of them suit the brand's character, and who improvises when something goes wrong on site, people decide." },
+  { "name": "Market and competitor analysis", "how": "AI can pull the data and write the report. Whether the news is true and what it means for this brand, a person judges." }
+ ],
+ "events": {
+  "e_giftbox": "Work on the Mid-Autumn gift boxes starts in May. Proofs, pricing, sign-off, online by August. You eat dozens of mooncakes this summer, gain five jin, about five and a half pounds, and the red on the box finally comes out right.",
+  "e_print_error": "A hundred thousand outer cartons have been printed with a misplaced decimal point in the nutrition table. You scrap the whole batch and write your self-criticism until midnight. The boss doesn't scold you. He only asks what that much cardboard costs.",
+  "e_dealer_meet": "The distributors' conference is held at a hotel, four hundred people. You stand on stage talking about brand upgrading while a distributor of thirty years sits with his head down working out this year's rebate. Afterward he says to you: nice talk, young man, make sure there's enough stock.",
+  "e_live": "You work with a local food streamer and one session sells thirty thousand packs. Returns are high too, a batch having thawed on its way to another province. You learn to include the returns column before you tell the boss whether it worked.",
+  "e_new_year_goods": "Forty days before the New Year goods festival, the whole company has only one job. For three weeks before Spring Festival you don't eat a single dinner at home. On New Year's Eve itself you see at a supermarket freezer that your gift box is displayed quite well.",
+  "e_complaint": "A short video claims a foreign object was found in your product, and it is shared two thousand times overnight. Quality pulls retained samples from the same batch, and you take the test report to the customer's door. You let her finish first, then talk about everything else.",
+  "e_ai_copy": "AI can produce fifty lines of social media copy a minute, all a little alike. You pick three, then switch back to the rustic old slogan. Clicks are higher, and you can't say why.",
+  "e_taste_tired": "These days the smell of fish balls tightens your stomach. Your family buys another brand and you take one bite and say this one uses a lot of flavor enhancer, and everyone stops talking.",
+  "e_shelf_habit": "On holiday in another city you crouch for twenty minutes in front of a strange supermarket's freezer, counting each brand's facings. Your spouse waits at the door having bought two milk teas, and has finished one.",
+  "e_old_shop": "You go with the boss to see a customer in her seventies, whose small shop near Three Lanes and Seven Alleys, Fuzhou's old quarter, has sold your fish balls for more than thirty years. She doesn't accept the new packaging. She has taped a picture of the old one to her freezer.",
+  "e_budget_cut": "This year's promotion budget has been cut by 30%, because raw materials are up. You rework all the events, and in the end cut the pop-up shop you most wanted to do.",
+  "e_law": "Market regulators arrive saying a complaint has been filed about a word on your product page. The fine isn't large. You review every page again and find a sentence written by an intern three years ago that has been up all this time.",
+  "e_ai_kv": "The design firm's quote has dropped by half, because their posters are made by AI now too. In the last draft, the child's hand holding a skewer of fish balls has an extra finger. You send it back, and they apologize over and over.",
+  "e_kid_snack": "The kindergarten asks parents to send snacks, and your child quietly swaps your company's fish balls for someone else's. You ask why. Yours don't look nice, your child says. You put this in the next day's meeting materials.",
+  "e_typhoon": "A typhoon scrambles logistics for a week and orders before Mid-Autumn can't go out. You answer distributors one by one in the group chat while the boss moves stock in the workshop. After it passes you are hoarse for three days.",
+  "e_neck_fat": "Health check report: blood lipids, uric acid, cervical spine, all worth watching. After this many years of tastings and business dinners, the books on your body look worse than the company's.",
+  "e_ai_sell": "The livestream has moved to a digital host, on air twenty hours a day. Sales haven't fallen much. It's only that nobody in the comments asks 'have you eaten today?' anymore.",
+  "e_old_brand": "The brand is named one of the province's time-honored names. You go to collect the plaque, and on stage the boss cries. On the way back he sets the plaque in the passenger seat and buckles it in.",
+  "e_group_buy": "A large food group acquires the company and your brand joins its portfolio. Their brand manual is two hundred pages. The first rule: the logo may use only the specified red. You hand over your color card, and find your red really is different.",
+  "e_taste_lost": "Your sense of taste isn't what it was, and at tastings you've started relying on the younger people's scores. You don't mention it. You just change the last column of the tasting form to: is it good?"
+ },
+ "choices": {
+  "c_logo": { "title": "Change the old logo?", "situation": "The design firm wants to make a logo used for forty years a bit younger. The boss won't say either way, the veteran distributors are firmly against, and the e-commerce team says if it doesn't change no one will click.", "options": [
+   { "label": "Change the type, not the image", "result": "You keep the old image and make the characters slightly thinner. The veteran distributors don't notice and neither do young people." },
+   { "label": "Change it all", "result": "After the new logo goes up, longtime customers phone to ask if the factory has changed hands. Online clicks rise a little. You spend a year explaining in the middle." } ] },
+  "c_money": { "title": "Where to spend it", "situation": "The year's promotion budget is ¥2 million and the boss wants you to decide. On one side, supermarket display and slotting fees, with distributors pushing daily. On the other, short video content, slow to pay off, but it's where young people are.", "options": [
+   { "label": "Displays first", "result": "The product holds its place in the freezer and this year's sales look good. Young people still don't know who you are." },
+   { "label": "Put half into content", "result": "You and two others shoot a series of short films about the fish ball makers, and the third one takes off. The distributors spend a month phoning to curse you." } ] },
+  "c_senior": { "title": "Compete for Senior Brand Manager", "situation": "The boss wants one person running the whole brand, and you are in the running alongside a channel supervisor of fifteen years. You must hand in an annual plan, and you must dare to write actual numbers.", "options": [
+   { "label": "Write actual numbers", "result": "You write the growth target and also what you will cut if you miss it. The boss folds down a corner of page two." },
+   { "label": "Don't compete this time", "result": "You say you'll get the frozen line right first. The supervisor gets promoted, and in meetings often calls on you by name." } ] },
+  "c_shanghai": { "title": "The agency in Shanghai", "situation": "A Shanghai advertising agency you've worked with wants you as an account director, at 40% more pay, with big-name clients. Your home in Fuzhou has just settled, and the boss has been good to you.", "options": [
+   { "label": "Go to Shanghai", "result": "You start writing proposals for five different brands a week and eating rice balls at Lujiazui subway entrances. It's another kind of tired, and you do learn a lot." },
+   { "label": "Stay in Fuzhou", "result": "You go on crouching in front of freezers, and when a distributor's child gets into college they send you a red envelope." } ] },
+  "c_ai": { "title": "Cut the content team?", "situation": "AI can do copy and posters, and the boss asks if the four people on the content team are still needed. You've done the math: two would be enough. You have trained all four.", "options": [
+   { "label": "Transform, retrain those who stay", "result": "You keep three, and one moves over to e-commerce operations. The three learn to write prompts, and what comes out begins to taste a little like the brand." },
+   { "label": "Keep the team, fund it yourself", "result": "You squeeze the salaries out of other budgets. The next year, when budgets are cut again, there's nothing left to squeeze." } ] },
+  "c_own": { "title": "A small brand of your own", "situation": "A friend wants to make a snack brand using Fuzhou tangerines and wants you in, to run the brand, putting in ¥100,000. You would like to know what it's like not to report to any boss.", "options": [
+   { "label": "Quit and do it", "result": "You do everything from packaging design to manning the trade show booth, and in the first year sell through the first batch.", "end": "The tangerine snacks never got big and are sold in a few boutique grocers and airport shops. The packaging you designed won a small prize. You put it in the most prominent spot on the shelf, and crouch to take a look at the facing." },
+   { "label": "Don't go", "result": "You give your friend some advice and don't invest. The next year their packaging uses a line you suggested." } ] },
+  "c_director": { "title": "Compete for Brand Director", "situation": "The company will manage three brands together. The job speaks between the boss and the big distributors, requires knowing finance, and hardly touches copy or design.", "options": [
+   { "label": "Compete", "result": "You talk about how to keep three brands from fighting each other. The boss asks two questions about money, and you answer both." },
+   { "label": "Stay with the brand", "result": "You say you'd still like to change the packaging. Every word on every package at this company still goes past your eyes before it's released." } ] },
+  "c_merger": { "title": "The brand will fold into the group", "situation": "After the acquisition, the group plans to retire the old brand and relabel every line under its own mark. You could stay and do the integration, fight to keep the old name alive as a sub-brand, or leave.", "options": [
+   { "label": "Fight to keep this brand", "result": "You write a report of a dozen pages working out what the old customers are worth. The group leaves it a narrow place, sold only in Fujian." },
+   { "label": "Stay and do the integration", "result": "You and your team replace forty years of materials one set after another, and the last batch of old packaging goes into a corner of the warehouse." },
+   { "label": "Leave, don't watch this", "result": "You hand in your resignation and take the office's old color cards home.", "end": "You leave that company and for a while don't go into supermarkets, ordering everything on your phone. Later you teach packaging design for two years at a vocational school, and in the first class have students tell three kinds of red apart by eye." } ] },
+  "c_vp": { "title": "Become VP of Marketing?", "situation": "Your old boss has retired, and the group asks if you will take over as VP of Marketing. When a public complaint breaks you get the first call. The upside is that what you say goes. You're already in your fifties.", "options": [
+   { "label": "Take it", "result": "In the first month you take three midnight phone calls and answer two emails from the chairman. You know these things better than anyone." },
+   { "label": "Decline", "result": "Let the young people take those calls, you say. You stay on at tastings, in charge of saying 'not fresh enough'." } ] }
+ },
+ "endings": {
+  "retire": "When you retire, the company makes a poster from the old packaging and gives it to you. At home you notice the red is printed a little off. You phone the design department and then hang up. The poster ends up on the kitchen wall, where the steam ages it day by day, and the color gets closer and closer to right.",
+  "burnout": "With blood lipids, your neck and insomnia coming one after another, you ask to be moved off brand work and later retire early. You leave all the livestream groups on your phone. After that you go to the supermarket only for vegetables, and walk a little faster past the freezers."
+ },
+ "stages": [
+  "A category's money and work are yours now. You write the annual promotion plan, set the direction for packaging proofs, work out each event's return in Excel, and go back and forth with printers, design firms and e-commerce operators. One level down you got the materials made. Here you must say why this money is being spent here.",
+  "The whole brand's positioning is in your hands. You set the year's communication rhythm from the New Year goods festival through Mid-Autumn, lead three or four people, fight R&D over new flavors and channels over launch dates. You must be able to hear within ten minutes whether an outside firm's pitch truly understands or is running a template.",
+  "Several brands' budget sheets sit on your desk every month. You negotiate the media mix with the boss, the sharing of display fees with major distributors, and annual frameworks with platforms. You only glance at copy and packaging at the end. The tiring part is keeping three brands from fighting in front of the same freezer.",
+  "Brand, marketing and e-commerce all report to you and the company's reputation is under your name. A midnight call about a public complaint you answer first, and the next day you explain to the board how sales relate to brand investment. You see senior platform people and provincial trade associations, and you haven't checked a color card by hand in a long time."
+ ],
+ "work": [
+  "When the new packaging proofs come back, you look at them with a Pantone card under fluorescent light and daylight, and have the printer's salesman take two points off the magenta in the red.",
+  "A supermarket chain's buyer wants a barcode fee. You bring last year's sell-through sheet and go through it item by item, and save the places of eight products.",
+  "With the quality control engineer you check the words 'no additives' on the product page. At line six of the ingredients list, you delete them on the spot.",
+  "R&D brings in a cheese-filled new product. You add a column to the internal blind test sheet, 'would a mom buy it', and the result pushes the launch back three months.",
+  "An agency's pitch spends forty minutes on the brand story. You ask: on a freezer door, how many characters of this can you read? The room goes quiet for a moment.",
+  "An old Fuzhou teahouse comes to discuss a co-branding deal, and the proprietress insists the fish balls must go with her soup. You add a clause to the contract: tastings count only when she nods.",
+  "A provincial distributor demands that the company pay all display fees. You work out his turnover, propose rebates by volume, and the two of you drink at the tea table until the third infusion tastes of nothing.",
+  "A platform's annual framework contract arrives with handsome discounts. You circle clause nine on settlement and have legal ask one more question.",
+  "A brand survey costs ¥300,000 and concludes that consumers still remember the old slogan. You move this page to the front of the board materials.",
+  "At one in the morning the monitoring system flags a complaint. You first get quality to lock down the batch, then have customer service find the person tonight. In the statement you change only one word: from 'regret' to 'sorry'.",
+  "The group's auditors come to check brand expenses. You sit two days with each event's contract and wrap-up report. One invoice is five years old, and you still find it.",
+  "A trade association asks you to talk about making an old brand young. On your first slide you put up that forty-year-old picture of people beating fish balls by hand, and write beneath it: they didn't know how either."
+ ],
+ "past": [
+  "You go to middle school in Minhou. At the fish ball stall by your door the owner squeezes a handful, scrapes with a spoon, and one drops into the pot. You could watch all afternoon.",
+  "You pick advertising thinking it will mean making films. At university you discover your first course is market research, stopping people on the street with questionnaires.",
+  "In your senior year you intern at a local ad agency writing slogans for apartment buildings. When you reach number three hundred, a senior colleague says this one works, and it's number two.",
+  "The company is hiring a brand specialist. In the interview the boss has you eat a fish ball and say what it tastes like. You say it tastes like childhood. The boss laughs and the next week you start.",
+  "You spend three years on materials, floor displays and distributors' conferences, learning to drink tea with printers' salesmen, and to say to the boss, this might need a small change."
+ ],
+ "late": {
+  "pension_note": "Estimate: private companies in Fuzhou pay social insurance on a mid-level base, so the pension comes to a bit over 40% of final pay.",
+  "scenes": [
+   "At the supermarket you crouch to help an old woman find something and tidy the next row of facings as you go. A stock clerk comes over and asks if you're the new supervisor.",
+   "The neighborhood needs a poster for an event and you say there are too many words. The next day they hand the whole job over to you, and you delete half the words.",
+   "Uric acid still high, the doctor says less seafood. You no longer touch fish balls. When they arrive at a wedding banquet, you just look over their color.",
+   "You leave your work chat groups one by one. At the eightieth you stop, rest a while, and go on leaving.",
+   "You start learning watercolor. Your teacher says red needs a little something mixed in to look good. I know, you say, I've been mixing it for thirty years.",
+   "No one remembers the slogans you wrote now. One day your child asks if the old-brand fish balls are still sold. They are, you say. They only changed the red.",
+   "A former colleague sends you a photo of the new packaging. You zoom in on the letter spacing and send back a thumbs-up.",
+   "These days you ignore all advertising and buy only things in ugly packaging, on the grounds that those people spent the money on what's inside. Your spouse says that too is an occupational disease.",
+   "You don't much care about this trade anymore. The billboards change quickly on the street, and now when you read them they're only words.",
+   "An old neighbor opens a small shop and asks you to think of a name. After three days of thought you tell him: just use your own name.",
+   "The hosts in the ads are all fake now. You can tell and don't say much about it. In the afternoon you go down to the river, and the Min runs a color that can't be mixed."
+  ],
+  "closing": {
+   "retire": "The water in the pot comes to a boil. You drop some in the old way, and one by one they float up. You don't check what brand they are.",
+   "burnout": "The afternoon light falls on the paper and the red is still a little short. You put the brush down and wait for it to dry.",
+   "end": "People come and go at the shelves. You take what you came for, join the end of the line, your phone in your pocket."
+  }
+ }
+}

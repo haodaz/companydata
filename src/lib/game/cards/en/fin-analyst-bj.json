@@ -1,0 +1,155 @@
+{
+ "id": "fin-analyst-bj",
+ "occupation": "Financial Analyst",
+ "role": "Credit Analyst, Fixed Income, Securities Firm",
+ "headline": "A finance master's graduate who joined the fixed income department of a securities firm on Beijing's Financial Street, buried in financial reports each April and August, judging daily whether companies that borrowed money can pay it back",
+ "unit": "The fixed income department of a Beijing securities firm",
+ "unit_type": "Securities firm",
+ "city": "Beijing",
+ "city_tier": "First-tier city",
+ "education": "Master's (Finance)",
+ "level": "You can tie the three financial statements together and have passed CFA Level I. What is hiding behind a line in the notes marked 'other receivables', you can't see yet.",
+ "intro": "Your desk is on the sixteenth floor of a building on Financial Street, and when you look up you see someone else's glass curtain wall. Your job is to read the accounts of companies that have borrowed money and judge whether they can pay it back. The end of April is near, hundreds of annual reports will land at once, and your team lead has sent a sheet with forty-two companies next to your name.",
+ "salary_note": "Estimate: at a Beijing securities firm's fixed income department, base pay and year-end bonus averaged over the year run above the national average. In bad years the bonus can differ by a lot.",
+ "facts": [
+  { "label": "Credit Research Assistant (current level)", "value": "0–3 years, ¥9,000–15,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Credit Analyst (3–6 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Going to a company to see for yourself and talking with its CFO", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Reading bond prospectuses and financial reports and extracting the data", "source": "AI exposure" },
+  { "label": "Open positions", "value": "314 related listings nationwide, 74 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Line 2 is so packed you are pressed against someone's backpack. Five news alerts come in on your phone, one of them saying a borrower 'proposes to convene a bondholders' meeting'. Screenshot it first.",
+  "At your desk you open three screens: the financial report PDF, the market data terminal, and an Excel working file that has passed through who knows how many hands.",
+  "Morning meeting, fifteen minutes. The traders say which sector was quiet yesterday. The team lead asks one question: does anything need to come off the approved list today?",
+  "On page 137 of the notes you find a large 'other receivable' owed by another company belonging to the controlling shareholder. You highlight it in yellow and your heart beats a little faster.",
+  "A phone interview with the issuer's finance department. The woman has a lovely voice and answers everything and also, somehow, nothing. You write down her exact words.",
+  "Compliance asks whether last week's external contact has been documented. You pull the call records and notes from the system and upload them one by one.",
+  "You eat rice and stir-fry downstairs and come back to reconcile. The cash flow statement and the balance sheet differ by ¥8 million. You find it at ten o'clock: the company got the unit wrong on one page.",
+  "Your team lead has returned your first draft, with more comments than text. The first one reads: you say it can pay. Where will the money come from? Write it down."
+ ],
+ "ladder": [
+  { "title": "Credit Research Assistant", "stage": "Entry", "focus": "Organize prospectus and report data, build model working files, go along on company visits, and get licensed." },
+  { "title": "Credit Analyst", "stage": "Covers a sector", "focus": "Covers one sector's bond issuers alone, writes internal rating reports and defends them before the credit committee." },
+  { "title": "Senior Credit Analyst", "stage": "Reviews", "focus": "Reviews others' reports, sets the sector's scoring standards, and goes on site in person for the hard names." },
+  { "title": "Head of Credit Research", "stage": "Leads a team", "focus": "Leads the credit research team, manages the approval standards and the model, and speaks for research between the investment committee and risk." },
+  { "title": "Deputy General Manager, Fixed Income", "stage": "Answers for it", "focus": "Oversees research and risk, answers for the department's credit exposure and compliance, and meets regulators and clients." }
+ ],
+ "ai_tasks": [
+  { "name": "Going to a company to see for yourself and talking with its CFO", "how": "AI reads the documents quickly. Whether the workshop is running, and where the CFO pauses before answering, a person has to go and see." },
+  { "name": "Reading bond prospectuses and financial reports and extracting the data", "how": "AI pulls and reconciles the data from hundreds of pages in minutes. Which sentence in the notes deserves a follow-up question, a person still decides." },
+  { "name": "Writing tracking reports and daily news digests", "how": "AI can now draft periodic tracking reports and daily digests outright. People only spot-check facts and wording." },
+  { "name": "Running stress tests and cash flow models", "how": "AI runs the scenarios and sensitivities in minutes. What to assume and whether to believe the result, a person decides and answers for." },
+  { "name": "Assigning internal scores to bond issuers", "how": "The model can produce a first score. Whether to adjust it and by how much, someone has to explain in the credit committee." }
+ ],
+ "events": {
+  "e_sac": "You pass your securities license exam and the investment adviser exam, and your name in the company system gains a string of numbers. You copy it down for your mother. She asks if this means you can trade stocks now. Quite the opposite, you say.",
+  "e_april": "11:50 p.m. on April 30, and the last batch of annual reports goes up. Every light on the floor is on. You finish sixty pages of notes and realize you haven't had a hot breakfast in two weeks.",
+  "e_template": "You reuse last year's paragraph on the sector and your team lead circles it: the capacity figures here are from the year before last. You redo it, and from then on never copy a single sentence from last year's file.",
+  "e_factory": "You go with your team lead to visit an issuer. Most of the parking lot is empty and the canteen has cut back its dishes. He doesn't start with the finance team. He starts by asking the woman selling jianbing crepes at the gate how business has been lately.",
+  "e_neck": "The neck X-rays come back and the doctor asks if you are always looking down. At a screen, you tell him. In the company's health check reports, half your team has the same line.",
+  "e_bonus_good": "A good year. The bonus figure arrives on your phone and on the subway you open it again to work out the tax. No one in the department brings it up face to face. Everyone is walking a little faster than usual.",
+  "e_bonus_bad": "This year's bonus is less than half of last year's. The mortgage is the same as ever. In the lunch group, people start comparing which boxed meals are cheapest.",
+  "e_default": "A company you gave a middling internal score fails to pay its interest on time. The trading desk calls. You pull three years of working files. That other receivable, you highlighted in yellow back then, but you didn't insist on writing it into the conclusion.",
+  "e_ai_pdf": "The company launches a financial report extraction tool and data for all forty-two companies is ready overnight. No one pulls all-nighters reconciling this April. They pull all-nighters checking whether it got anything wrong.",
+  "e_caught": "An intern asks how you could tell at a glance that the company was off. Receivables are growing faster than revenue, you say, inventory is turning more slowly, there's plenty of cash on the books and yet it pays dear interest. As you say this you realize you now do the same at dinner.",
+  "e_relative": "A relative with a company wants you to look at a loan. You ask three questions about his accounts and his face changes. At the New Year's dinner table he doesn't sit with you again.",
+  "e_compliance": "Compliance runs a cross-check and finds a call with an issuer a year ago with no notes filed. You write an explanation, your supervisor signs it, and this quarter's review drops you a notch.",
+  "e_ai_report": "The tracking reports AI writes read more smoothly than the assistants', except that it describes a debt that has been extended as repaid on schedule. You send it back in the system and write in the comments field: the word 'extended' weighs more than the three thousand words before it.",
+  "e_stomach": "After the gastroscopy the doctor tells you to stop eating so late. You study your phone calendar, cut your monthly business dinners from eight to five, and the next week add two back.",
+  "e_team_cut": "The firm pulls back from its high-yield business and three of the four people on the neighboring team are gone within a week. The one who stays takes over all their names, and the files on his desk pile up half a meter high.",
+  "e_school_fee": "Your child's middle-school entry collides with the late-August half-year report season. You have muted the tutoring group and miss a payment deadline. Your spouse sends you a screenshot, with no words at all.",
+  "e_pitch": "An institution asks you to give an internal training session on credit analysis. Your first slide is a photo of an empty parking lot at a factory gate. People laugh, then they pick up their pens.",
+  "e_rules_change": "The internal rating model gets a new version, and half of the scoring standards you have built up over ten years must be recalibrated. You lead the rescoring of several hundred names, and for those with the largest gaps between old and new you write explanations one by one.",
+  "e_eyes": "You can no longer read the nine-point type in the notes. The company issues a large monitor and you zoom the PDFs to 150%. Younger colleagues walking past think you must be studying something particularly important.",
+  "e_merge": "The firm is folded into another securities firm. Two fixed income departments must become one, and two sets of approval standards must too. You argue for half a year in the merger group. In the end they go with the other side's framework, plus seven clauses you wrote.",
+  "e_ai_panel": "The first drafts for the credit committee all come from the model, and the discussions go faster and faster. You are often the only one asking if anyone has been on site. The younger people have started counting how many more times you'll ask."
+ },
+ "choices": {
+  "c_cfa": { "title": "Keep going with the CFA?", "situation": "The registration fee for Level II is more than ¥10,000, the firm doesn't reimburse it, and the study period runs right into annual report season. Your team lead doesn't have this credential, but it counts in hiring.", "options": [
+   { "label": "Grit your teeth and keep going", "result": "You spend half a year memorizing derivatives formulas on the subway. By the time you pass, you've nearly forgotten why you started." },
+   { "label": "Learn to read the notes first", "result": "You keep the money for rent. Come next April, you can find the three strangest things in a financial report in twenty minutes." } ] },
+  "c_analyst": { "title": "Ask to cover a sector, go for Credit Analyst", "situation": "A sector on the team has come open, but its names are all hard ones. Take it and you defend your own scores before the credit committee, and wrong scores are yours. Leave it and you go on building files under your team lead's name.", "options": [
+   { "label": "Take it", "result": "At your first credit committee your palms are wet and the head of risk stumps you twice. But you make the cash flow page clear." },
+   { "label": "One more year under him", "result": "You build files for another year and can guess nearly all your team lead's calls in advance. Guessing them and saying them are two different things." } ] },
+  "c_call": { "title": "A call from the issuer", "situation": "You are about to lower a company's internal score. Its board secretary has somehow heard and invites you to dinner: next month a big payment will come in, please wait. Your team lead says: it's your call, you write it.", "options": [
+   { "label": "Follow the file, lower it", "result": "You lower it, with two pages of reasons. The company never returns your calls again. Some people at the firm call you principled, others say you moved too soon." },
+   { "label": "Wait one more quarter", "result": "You look for another quarter. Some of the payment really does arrive, and the rest is still on its way. You can't say whether that makes you right or wrong." } ] },
+  "c_buyside": { "title": "A fund company comes calling", "situation": "A mutual fund company's fixed income team wants you, at 40% more pay and quarterly performance rankings. In your current work it can take three years to know if you were right. Over there, you know in three months.", "options": [
+   { "label": "Go to the fund company", "result": "You sit in another building now and check your ranking once a week. You sleep less and talk faster." },
+   { "label": "Stay", "result": "You stay and keep going out to see companies. At every class reunion you're the one who speaks most slowly." } ] },
+  "c_kid_pickup": { "title": "Too far from home", "situation": "Your child starts primary school and gets out at 4:30. Your spouse works in Wangjing, you on Financial Street, and in April and August you can't get home at all. Your in-laws offer to come help in Beijing, five people in a two-room flat.", "options": [
+   { "label": "Bring the in-laws", "result": "In the evenings you stand on the stairs for five minutes before opening the door. Someone checks the homework now. No one asks you about the household anymore." },
+   { "label": "Ask for a post without report season", "result": "You move to post-issuance monitoring, your time loosens a little, and the team thinks you've taken a step back." } ] },
+  "c_ai_rate": { "title": "Hand the scoring to the model?", "situation": "The firm wants the model to produce first-pass scores for every issuer, with analysts only reviewing. Your scoring experience is the best training data there is, so they want you to label and calibrate it. If it works, the assistants below you will be cut by half.", "options": [
+   { "label": "Lead it yourself", "result": "You label two thousand files and find your ten years of judgment can be written as forty-odd rules, with a few you can't explain. The ones you can't explain, you leave with people." },
+   { "label": "Leave it, keep visiting companies", "result": "A machine can't see the parking lot, you say. A year later the first-pass scoring goes live anyway, on someone else's labels." } ] },
+  "c_exit": { "title": "A deputy CFO job at a listed company", "situation": "A company you've visited wants you as deputy CFO, for no less than you earn now. No more writing reports; you'd answer other people's questions on its behalf. A university has also asked if you'd go back and teach.", "options": [
+   { "label": "Go to the company", "result": "You hand over your names and attend one more credit committee.", "end": "You sit on the other side of the table now, and learn for the first time just how annoying an analyst's phone call can be. Every April you read the notes one extra time, looking for what your younger self would have pounced on." },
+   { "label": "Go teach at a university", "result": "You resign and move from the sixteenth floor's glass curtain wall to a teaching building covered in creeper.", "end": "You teach financial statement analysis and your first assignment sends students to count heads in the canteen. Your pay drops by half and you never have to get through April again. Once in a while a good question turns up in a student's paper, and you circle it in red." },
+   { "label": "Go nowhere", "result": "You thank them and go back to reading your notes." } ] },
+  "c_head": { "title": "Compete for Head of Credit Research", "situation": "The head has moved to risk. The competition requires a two-year research plan and facing the complaints of the portfolio managers: research is too conservative, nothing good gets approved. Risk, meanwhile, thinks you are all too loose.", "options": [
+   { "label": "Compete", "result": "The first page of your talk lists the seven companies you got wrong over the years. Neither the portfolio managers nor risk have much to pick at this time." },
+   { "label": "Stay a senior analyst", "result": "You would rather look at companies than manage people, you say. The new head is four years your junior and in meetings always asks first what you think." } ] },
+  "c_vp": { "title": "Go after Deputy General Manager, Fixed Income?", "situation": "The department will name a deputy to oversee research and risk. The job signs regulatory replies and answers for every judgment the department makes. A bit more money, and a bit more phone time at night.", "options": [
+   { "label": "Go for it", "result": "You visit the heads of several departments one by one to say what you plan to do. By the fifth you can say it very briefly." },
+   { "label": "This is far enough", "result": "At your age, you say, you would still like to read the notes yourself. Each April from then on, you still pick out the five hardest companies for yourself." } ] }
+ },
+ "endings": {
+  "retire": "In your retirement month the department moves your names to other people one by one, and in the system the list next to you goes from dozens to none. You finish the paperwork and stop on the way at the fast-food place on Financial Street for rice and stir-fry. At the next table two young people are arguing about an 'other receivable'. You listen for a couple of sentences. They're arguing about the right thing.",
+  "burnout": "Stomach and sleep go wrong together. You ask to leave the front line and later resign. Before you go, you sort your working files, write an index and leave them on the shared drive. In the Aprils that follow, while others read the notes, you wait at home for the breakfast shop downstairs to open."
+ },
+ "stages": [
+  "Your days are prospectuses, financial reports and Excel working files, pulling data from the terminal and tying it out by hand, carrying your team lead's laptop bag when he travels. Each file goes in twice: once into the system for the record, once to wait for his comments. You don't draw conclusions, but when a conclusion is wrong, they check your file first.",
+  "You have a sector of your own now, more than forty issuers whose internal scores carry your name. You schedule phone interviews with finance departments, go on site yourself, and answer the head of risk at the credit committee. One level down the question was whether the numbers were right. Here the question is whether you dare to write this sentence.",
+  "New people's reports come to you first, and you are no longer reading numbers but asking whether the conclusion stands. You set the sector's scoring standards and go back and forth with the trading desk and portfolio managers on the same names. You still visit the hard companies yourself, but now you bring someone, and let them ask while you listen.",
+  "You lead a team and manage the approval standards and the internal rating model. At the weekly investment committee the portfolio managers call research conservative and risk calls it loose, and you sit between them holding an exposure sheet. You write fewer reports and have more conversations, and work with compliance so that each judgment leaves a trail that can be explained.",
+  "You oversee research and risk, and the department's credit exposure sheet comes to your phone every morning. You meet regulators and major clients and sign the replies to regulatory inquiries. You haven't written a full report in years, but when a younger colleague hands up a conclusion, you still turn to those few pages of the notes."
+ ],
+ "work": [
+  "Your team lead has you list a company's restricted assets over the past five years. You spend the day going back and forth between the notes and the guarantee announcements. In the table you hand in, he corrects one unit.",
+  "On a visit to a company's warehouse you make a note on your phone of the rows of shelves gathering dust. Back at the office you write it in the file. Your team lead changes 'dust' to 'turnover in doubt'.",
+  "The depository's data doesn't match the announcement. You phone the data vendor three times, and they finally admit the entry was wrong. You note the source and date on your file.",
+  "At the credit committee the head of risk asks: what covers this company's short-term debt? You turn to the cash flow forecast and say, a credit line that hasn't yet been approved. He says, then it isn't covered.",
+  "A portfolio manager phones and wants a company's score raised half a notch so it can be approved. You send him page three of the report and add: if this page can be changed, I'll change it.",
+  "On an out-of-town visit the issuer arranges a welcome banquet and a tour route. After dinner you take a taxi around to the back gate of the plant and count trucks going in and out for ten minutes.",
+  "An analyst you are training has confused a parent company's statements with the consolidated ones, and the conclusion is a notch off. You don't tell him he's wrong. You have him recalculate the parent's cash flow.",
+  "You recalibrate the whole sector's scoring sheet and find two analysts differ by three points on the same item. You call a short meeting and write the standard for 'financing channels' on one page.",
+  "A friend on the trading desk asks why a certain type of issuer has gone cold lately, and you pull him a chart from the financing data. He uses it at the next morning meeting, with your name on it.",
+  "At the investment committee a portfolio manager says research has blocked all the good deals. You list what happened afterward to names that were rejected over the past three years. Some of the rows make you uncomfortable too.",
+  "Evaluating outside data vendors, you hear all three claim early warning. You backtest them on the twenty companies that got into trouble last year and find the most expensive one gave the shortest notice.",
+  "Compliance requires reports to state what AI tools were used. You and legal go through four versions of the record-keeping template, and the last is finally short enough that analysts are willing to fill it in.",
+  "The regulator writes asking about the department's concentration. You and risk go through it item by item into the night, and on the sixth draft of the reply you sign the last page.",
+  "The department's annual exposure limit goes to the firm's risk committee. You turn the losses under three scenarios into one chart. The first question the committee asks happens to be on page two.",
+  "An old client comes to talk about working together and halfway through a meal asks about the sector's outlook. You keep it very rounded, and back at the office you have compliance log today's conversation."
+ ],
+ "past": [
+  "You go to high school in Baoding. Your father is an accountant at a state-owned company, and in the evenings the house is full of the sound of an abacus and a calculator.",
+  "You apply to a university of finance and economics because you've heard graduates can get into Financial Street. What Financial Street looks like, you have only seen on television.",
+  "In your third year you intern at a small trust company, photocopying contracts all day. For the first time you learn how many circles one sum of money can travel.",
+  "You sign up for CFA Level I and memorize the ethics standards in the library while preparing for graduate school entrance exams, tired at both ends.",
+  "Your master's thesis models bond defaults. The model is beautiful. Your adviser asks: have you ever been to an actual factory? You say no.",
+  "In the fall you apply to research institutes and fixed income departments. The research institute's written test asks for a roadshow script. The fixed income test gives you a real financial report and two hours to find what's wrong. The second one sounds interesting."
+ ],
+ "late": {
+  "pension_note": "Estimate: social insurance is paid at the capped base, so compared with total pay at a securities firm, the pension replaces little of your income. Mostly you live on what you saved when you were young.",
+  "scenes": [
+   "In your first year of retirement you write April 30 in your calendar, then find there's nothing to do, and go up Fragrant Hills instead.",
+   "The residents' committee asks you to look over the property manager's accounts. After page two you ask: what is this other receivable? The committee chair starts walking a little faster whenever he passes your door.",
+   "You still watch how busy other people's restaurants are when you eat out, counting table turns and scoring the owner in your head. You tell your spouse this place won't make it past next year. Your spouse says, eat your food.",
+   "Your stomach stops hurting and you can sleep until six. You switch off all the announcement alerts on your phone, and for the first week your hands feel empty.",
+   "You teach seniors in your community to spot scams, and you keep it plain: if someone promises you that much interest, have him write down where the money comes from.",
+   "Your old teammates reach this age one after another. The group chat has stopped talking about companies and started comparing which hospital's gastroscopy doesn't hurt.",
+   "You start going through the household accounts and find you've been double-insured for years. For the first time you look at your family as an issuer.",
+   "Someone in your class group asks if a certain wealth product is reliable. You type out a long reply, think it over and delete it, and send one line: first see where its money goes.",
+   "You haven't read a financial report in a long time. What has become of the trade you know only from the occasional news item, and you don't much care.",
+   "At the new supermarket downstairs you keep eyeing a dusty row of shelves. At the checkout you ask the cashier in a low voice: business going all right here?",
+   "After cataract surgery the doctor says you can read fine print again. At home you read a medicine leaflet to its last page, and have some thoughts about the drugmaker's registered address."
+  ],
+  "closing": {
+   "retire": "The lights on Financial Street are still on, a new crew reading the notes. At home you drink a pot of tea until it goes weak, and go to bed early.",
+   "burnout": "The breakfast shop has opened and steam pushes out under the shutter. You are third in line and there is nothing to calculate.",
+   "end": "In the evening you turn the calendar to the next page. There is nothing written on it. You put the pen back in the cup."
+  }
+ }
+}

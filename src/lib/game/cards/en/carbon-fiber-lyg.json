@@ -1,0 +1,151 @@
+{
+ "id": "carbon-fiber-lyg",
+ "occupation": "Carbon Fiber Molding Worker",
+ "role": "Apprentice Carbon Fiber Molder",
+ "headline": "Fresh out of trade school at a carbon fiber plant in Lianyungang: drawing prepreg from the freezer, laying it up ply by ply, lying on your stomach to hear a vacuum bag leak",
+ "unit": "A carbon fiber products plant in the Lianyungang development zone (medical table tops, bicycle frames, wind turbine spar plates)",
+ "unit_type": "Private composites manufacturer",
+ "city": "Lianyungang",
+ "city_tier": "Tier-3 city",
+ "education": "Trade school (polymer processing)",
+ "level": "You did hand lay-up in fiberglass as an intern; this is your first time touching prepreg",
+ "intro": "Before the workshop comes the air shower, and the hood of your coverall has to swallow every hair. The section head sets down a roll of prepreg fresh from the freezer, points at the time on the release slip, and says this material's life started counting at that minute. Your first piece is the bottom ply of a medical table top. Cut it, peel the film, lay it along the angle, and don't leave a single bubble.",
+ "salary_note": "Estimate: manufacturing pay in Lianyungang runs about 85% of the national figure for this trade, with piece rates and night shift pay making up about a third of take-home.",
+ "facts": [
+  { "label": "Apprentice Molder (Grade 5) (current level)", "value": "0–2 years, ¥4,300–6,200 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Molder (Grade 4) (2–6 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Cleaning molds and applying release agent", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Cutting carbon prepreg or fabric to the drawing", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The line for the air shower. The section head stands at the door and pinches every glove for holes. Sweat on the material cures into a white patch.",
+  "The freezer. Prepreg sits at minus eighteen and has to warm up inside its sealed bag before you open it. Open it early and condensation forms on the material, and that roll goes on your account.",
+  "The layup table. A laser traces the outline onto the mold. You follow the ply table, zero, forty-five, ninety, push the air out with a squeegee, and switch to a fingertip at the corners.",
+  "The canteen. A new patch of rash on the back of your hand. The woman at the next table slides a tube of ointment over and says she has had hers three years and they get along fine now.",
+  "The vacuum bag: release film, breather, bag film, a ring of sealant tape. If the needle drops faster than the spec allows, you lie down and listen along the tape, inch by inch, for the leak.",
+  "The autoclave lead comes to hurry you: tonight's load is only waiting on your piece. A cycle runs seven or eight hours. Miss it and tomorrow's schedule gets a red square.",
+  "The inspector brings an ultrasound scan. The piece demolded this morning has a delamination in the middle, and the sheet carries your mentor's employee number. He calls you over to look at it together.",
+  "Clean the mold, coat it with release agent, go home. In your rented room you run clear tape along your cuffs. You can't see the carbon fibers, and they will prick you all night."
+ ],
+ "ladder": [
+  { "title": "Apprentice Molder (Grade 5)", "stage": "Apprentice", "focus": "Cutting plies, peeling film, laying base layers, cleaning molds, learning to see wrinkles and bubbles. Until Grade 4, your work is signed under someone else's name." },
+  { "title": "Molder (Grade 4)", "stage": "On your own", "focus": "Taking your own work orders, laying up complete parts, bagging, hunting leaks. Your employee number goes on the batch record, and first-pass yield moves you up." },
+  { "title": "Senior Molder (Grade 3)", "stage": "Hard parts", "focus": "Parts with cutouts, sharp corners, awkward curves. Judging whether a defect can be repaired and how. Training apprentices. Advancement comes through a record of difficult parts and skills assessment." },
+  { "title": "Molding Technician (Grade 2)", "stage": "Setting the process", "focus": "Writing work instructions, fixing layups and repair methods with process engineers and clients, answering for a section's yield, and finding a way for hands to do what the machines can't." }
+ ],
+ "ai_tasks": [
+  { "name": "Cutting carbon prepreg or fabric to the drawing", "how": "Nesting software can lay out the cuts and drive the cutter, wasting less. People load the material, check prepreg batches and shelf life, and deal with offcuts and exceptions." },
+  { "name": "Cleaning molds and applying release agent", "how": "This takes handwork and a feel for the mold surface; robots still struggle with complex shapes. At most, AI logs release agent cycles and reminds you when maintenance is due." },
+  { "name": "Laying up plies and holding the angles", "how": "Laser projection and vision systems can show where each ply goes and check for errors. Complex curves, corners, conformity and air removal still depend on hands and experience." },
+  { "name": "Building vacuum bags and checking the seal", "how": "Bagging, placing breather and sealant tape, and finding leaks are mostly feel and experience. AI can log vacuum curves and alarm on anomalies, but a person has to fix the leak." },
+  { "name": "Running the autoclave or oven cure", "how": "Equipment runs the set curve automatically, and AI can watch temperature and pressure for deviation. People load the vessel, choose the cycle, and decide whether to abort or rescue a run." },
+  { "name": "Adjusting temperature, pressure and time", "how": "AI can recommend parameters from past data and sensor feedback and predict cure results. People sign off on parameters for new products and materials and answer for the changes." },
+  { "name": "Trimming, sanding and machining after demolding", "how": "CNC cutters and robotic sanders handle regular parts. Complex shapes, small batches, and judgment about trim allowance still need a person, with dust protection." },
+  { "name": "Inspecting dimensions, surfaces and internal defects, and repairing them", "how": "AI vision and ultrasound or X-ray analysis can flag deviations, surface flaws and delamination. People judge whether a defect is acceptable, choose the repair, do it, and answer for release." }
+ ],
+ "events": {
+  "e_fiber": "Carbon fibers work into the skin between your fingers. You can't see them; only the hot water in the shower tells you where they are. The women on the line teach you to use tape, and it comes away glittering.",
+  "e_outtime": "A roll's out-time was logged wrong and by the time anyone noticed it had expired. The process engineer struck it from the routing sheet. The whole roll was scrapped, and the team's bonus for the month went with it.",
+  "e_firstpass": "A table top you laid up passes ultrasound the first time. The inspector pins the scan on the team's whiteboard. It is perfectly clean, as if the part had no insides.",
+  "e_rash": "A new resin system comes in and your forearms break out in patches. The plant doctor says wear two pairs of gloves, but through two pairs you can't feel a wrinkle. You settle on one and a half, with the fingertips cut open.",
+  "e_bike_season": "Just before spring comes bicycle frame season. Overseas orders pile in, there aren't enough inner bladders, and two shifts become three. You work eleven nights straight and the piece-rate sheet looks almost made up.",
+  "e_wind": "The year of the wind power rush, spar plates are booked through December. The autoclaves don't stop and neither do the people. The year-end bonus comes to an extra month's pay. The next year, orders fall by half.",
+  "e_audit": "A medical client audits the plant. The auditor picks one table top's batch record and traces it all the way back to the roll's freezer log. Your handwritten time differs from the system by four minutes, and it goes down as a minor nonconformity.",
+  "e_qe": "The client's on-site quality engineer argues with you over a surface pinhole until the process engineer has to come. By the standard it can ship; by his boss's eyes it cannot. It gets reworked, on your plant's hours.",
+  "e_agency": "The plant brings in a batch of agency workers. They lay up the same material for twenty percent less than you. Training them, you are never sure how much to explain about the piece rate.",
+  "e_pump": "An autoclave's vacuum pump dies in the night, and all nine parts in the load have to be judged. You and the process engineer read the curve by the vessel until the small hours and save seven. The other two get cut open for the report.",
+  "e_vision": "Vision checking comes to the layup tables. A camera takes a picture after every ply, and two degrees off turns the screen red. You lay up faster now, and you keep feeling that someone silent is standing behind you.",
+  "e_nesting": "Nesting software takes over the cutting table and offcuts drop by a tenth. The man who ran that table for ten years gets moved to sanding. A month later he goes home to Guanyun.",
+  "e_ai_ut": "AI starts making the first pass on ultrasound scans. A single screen flags a dozen defects, half of them machining marks from the mold. The inspector calls you over, and you can point to the real ones.",
+  "e_lung": "An occupational health exam after your rotation at sanding. There is a new line on the lung function report: re-examination recommended. The re-exam is fine. You buy the expensive masks anyway.",
+  "e_rod": "A fishing friend brings a broken sea rod. You look at the break and say a hoop layer was left out when it was rolled. He doesn't believe you, so you saw off a section and show him. On the spot he asks you to help pick his next one.",
+  "e_pickup": "Your spouse does paperwork at the port and works shifts too. Kindergarten lets out at four-thirty. You tape both rosters to the fridge and edit them against each other. One week they just wouldn't line up, and your kid ate dinner in the gatehouse for three days.",
+  "e_knee": "Big parts mean lying on top of the mold, and your knees and back wear down there. After a decade of pressing corners, the first joint of your right index finger is thicker than the left. Your ring has moved to the other hand.",
+  "e_line": "The bicycle frame line you worked for seven years gets moved by the client to Southeast Asia. The molds are crated and shipped, the section is scattered across other lines, and you start over learning the tolerances of automotive parts.",
+  "e_afp": "Automated fiber placement arrives. Regular panels go to the machine; corners, cutouts and reinforcing patches stay with you. A third of the layup tables are removed, and the glue marks stay on the floor.",
+  "e_contest": "The city workers' skills competition: lay up a small part with two tight corners. You finish four minutes ahead of second place. The prize is small, but the score counts toward your skills assessment."
+ },
+ "choices": {
+  "c_station": { "title": "Layup table or autoclave", "situation": "The section head asks which way you want to go. The layup table pays by the piece, and the skin trouble stays with you. The autoclave crew is short of people and pays by the shift. You'd learn cure curves and equipment, and spend years on nights.", "options": [
+   { "label": "Stay at the layup table", "result": "Your hands get faster and your pay slip looks better. The rash on your arms never quite goes away again." },
+   { "label": "Join the autoclave crew", "result": "You learn to read heating curves and spend midnights with a screen of numbers. Your layup touch slowly fades, but when a part fails you can say why better than anyone." } ] },
+  "c_grade4": { "title": "Test for Molder (Grade 4)", "situation": "The plant and the trade school are running a skills assessment. The practical is a flat panel with a cutout; the written exam covers resin and cure. Pass, and you get a couple hundred more a month and your own number on the batch records.", "options": [
+   { "label": "Practice after night shift", "result": "You spend two months reinforcing cutouts on scrap molds. In the exam your hands don't shake." },
+   { "label": "Orders are tight, next year", "result": "Your piece rate is full this month. People who started with you begin to appear on batch records." } ] },
+  "c_template": { "title": "Learn laser projection calibration", "situation": "The equipment department wants someone from the layup crew to learn projector calibration and vision templates. No extra pay, after-hours sessions with the supplier's engineer, and no promise you'll get it.", "options": [
+   { "label": "Learn it", "result": "You start editing templates in software, and the ply table turns into a list of coordinates in your head. When new equipment comes, the plant calls you first." },
+   { "label": "No, enough on your hands", "result": "You put your effort into hard parts. When a template fails, you wait for someone from equipment." } ] },
+  "c_changzhou": { "title": "An auto parts plant in Changzhou", "situation": "A former coworker runs a team at a Changzhou plant making carbon parts for electric cars. The offer is thirty percent higher, with a shared dorm room. But your kid has just started primary school, and your spouse's job is at the port.", "options": [
+   { "label": "Go, home every two weeks", "result": "More money, more train tickets. On the parent-teacher form, the number listed for you goes unanswered." },
+   { "label": "Stay in Lianyungang", "result": "You keep riding your e-bike to work. Summer sea wind thins the heat of the workshop a little, and your pay slip creeps up slowly." } ] },
+  "c_grade3": { "title": "Test for Senior Molder (Grade 3)", "situation": "Medical table tops are adding an odd-shaped part with cutouts. The section head says whoever can make it goes up for Senior first. Each scrapped piece costs a month of your wages in material.", "options": [
+   { "label": "Take the part", "result": "After two scrapped pieces, you add a ring of reinforcement around the cutout, and the third passes ultrasound. By the time the certificate comes, your fingers have calluses." },
+   { "label": "Keep routine parts solid", "result": "Your first-pass rate stays near the top of the section. That chance later goes to someone on the next team." } ] },
+  "c_blade": { "title": "Repairing wind turbine blades", "situation": "A wind farm maintenance company comes recruiting: hanging on blades dozens of meters up, fixing leading edges and cracks. It is your own craft, it pays half again as much, and you'd be away half the year.", "options": [
+   { "label": "Go fix blades", "result": "You get your work-at-height certificate and trade the coverall for a harness.", "end": "You left the workshop to repair wind turbine blades, spending most of the year hanging in the wind on coasts and mountaintops." },
+   { "label": "Stay in the workshop", "result": "You drop the recruiter's card in your tool bag. On windy days, at the workshop door, you think about how high that is." } ] },
+  "c_release": { "title": "Does this go on the sheet", "situation": "End of the month, a table top's surface defect sits right at the edge of acceptable. The section head says don't write it up: it would go to review and the whole section's bonus would be gone. It doesn't affect strength. But the batch record has your number on it.", "options": [
+   { "label": "Write it up, send it to review", "result": "Review releases the piece and it ships three days late. For months afterward, nobody at the team table sits next to you unprompted." },
+   { "label": "Leave it off, sand it clean", "result": "It ships on time and everyone keeps their bonus. You remember that number very clearly. At every audit since, you think about it a little longer." } ] },
+  "c_shop": { "title": "A carbon fiber repair shop", "situation": "A friend from the cycling crowd wants to open a shop with you, fixing frames, fishing rods and drone arms. He pays the rent; you bring the hands. In the slow season there may not be ten jobs a month.", "options": [
+   { "label": "Quit and open the shop", "result": "You buy a small oven and a vacuum pump. Your friend writes the sign.", "end": "You quit the plant and opened a carbon fiber repair shop on the edge of the development zone, where things other people broke got a second explanation." },
+   { "label": "Keep the job, fix things on weekends", "result": "You repair a few frames in the garage under your building and charge for materials. Your social insurance stays with the plant." } ] },
+  "c_technician": { "title": "Apply for Molding Technician (Grade 2)", "situation": "Technician status needs a written technical summary, apprentices you've trained, and process problems you've solved. Nobody matches your hands, but writing fills you with dread. The workshop director says a young woman in the materials department can help you edit.", "options": [
+   { "label": "Force yourself to write it", "result": "You write the corner reinforcement method as a work instruction, with photos taken after hours. A judge asks about a formula you can't answer, so you bring out the cross-section of the part and talk about that." },
+   { "label": "Skip it, keep the hard parts", "result": "You go on making the hardest parts in the plant. Your allowance is a bit under a technician's, and meetings don't include you." } ] }
+ },
+ "endings": {
+  "retire": "A year before you retire, most of the layup tables are gone. What remains are small parts the machines can't do. HR asks whether you want a copy of your occupational health file, and you do, a thick stack with a lung function page for every year. On the way home you pass a bike shop with a carbon-patterned e-scooter in the window. Through the glass you can tell it's a wrap.",
+  "burnout": "The rash climbs from your arms to your neck. Dermatology writes contact dermatitis, and occupational health takes you off layup. You go to the freezer to log rolls in and out, and every time is accurate to the minute. The piece-rate part of your pay is gone. The skin on your hands, slowly, grows back."
+ },
+ "stages": [
+  "Your work is the basics of the layup table: check part and batch numbers, cut plies from the table, peel the backing, lay them up, push out air with a squeegee. Your mentor checks three things: angle, wrinkles, foreign matter. The batch record carries his number, so when you ruin something, he has to explain it to the process engineer.",
+  "Work orders now come to you. A part is yours from mold cleaning to bagging: you find your own vacuum leak and trim your own flash. You fight the autoclave crew for slots and go over ultrasound scans with the inspector. The batch record finally has your number, and a delamination traces back to you.",
+  "Parts with cutouts, sharp corners and awkward shapes all land on your table. When a defect appears, others can only report it. You say whether it can be repaired, how many plies to remove, and how to step the patch back in. Process engineers ask whether a layup is even possible before they change the table, and a quiet apprentice follows you around.",
+  "Less work on your hands, more work instructions on your desk. In new-product trials you sit with process engineers and clients setting layup and repair standards, and you answer for numbers in the weekly yield report. You keep a list of every spot automated placement can't reach, and for each line you have to work out how a person will fill it."
+ ],
+ "work": [
+  "Your third ply bubbles slightly at a corner and you don't notice. Your mentor flicks it with a fingernail. The sound is wrong. He has you peel it and start again, and that ply goes in the scrap bin.",
+  "Halfway through cleaning a mold you use a steel scraper and leave a fine scratch. The section head doesn't yell. He brings a plastic scraper and has you run your hands over the entire mold.",
+  "Your first vacuum bag: a joint in the sealant tape isn't pressed tight and the needle keeps sinking. You listen on the table for twenty minutes. In the end you find it with a cup of soapy water.",
+  "The inner bladder fitting on a frame mold keeps leaking. You change the seal three times, then find the threads are worn. You write one line on the routing sheet, and the next day equipment replaces the fitting.",
+  "A man from the next team borrows your vacuum gauge; he can't find why his part is losing pressure. You run a hand along his sealant tape and feel a pinhole in the fold of the bag film.",
+  "A spar plate sticks to its mold during demolding and the team lead wants wedges. You look at the mold surface and say heat it first, then pry. It costs an hour and saves the mold.",
+  "A cutout on a medical table top has delaminated at the edge. You remove four plies, step them back in layer by layer, and bag the patch for a local cure. The inspector scans it three times and can't find the joint.",
+  "A new process engineer reorders the plies for better strength. You try it on a scrap and tell him this order won't lie flat in the corner. He comes and stands at the table while you lay up one ply.",
+  "An apprentice wrinkles the same spot twice. You don't scold. You lower the angle of his squeegee and have him close his eyes and feel the mold, so he knows that curve first.",
+  "A client wants a table top eight percent lighter and sends the drawing. You and the process engineer take the ply table apart, and you point out that saving those two plies means adding them back around the cutout.",
+  "Automated placement is on trial and its corners won't overlap cleanly. You mark every error on the model in red and draw up a list of manual patches, twenty-three items.",
+  "At Friday's yield meeting the director points at a rising scrap rate and asks why. You produce the warm-up records for three rolls. One team opened the bags half an hour early, and the matter is settled in the room."
+ ],
+ "past": [
+  "After the high school entrance exam, your father, who farms seaweed on the Ganyu coast, says a trade is better than high school. The recruiter says polymer students always find a factory. You sign up at a Lianyungang trade school.",
+  "In fiberglass lab the resin fumes send half the class into the hallway gasping. You have steady hands, so the teacher has you show everyone how to roll out the bubbles.",
+  "An internship at a yacht parts factory in Changzhou, hand-laying fiberglass. A month later your fingers are cracked and you've earned ¥2,800. It's the first time you learn that a boat's hull is put together one layer at a time.",
+  "A classmate says the carbon fiber plant in the development zone has climate-controlled workshops and materials from a freezer, cleaner than fiberglass, and pays a few hundred more. You send your résumé with a photo of something you made by hand.",
+  "The section head at your interview ignores your transcript. He has you lay a sheet of fabric on a scrap mold and watches how your fingers take the corner. When you finish he says come get your coverall on Monday."
+ ],
+ "late": {
+  "pension_note": "Estimate: after thirty-some years of contributions, a factory worker's pension is about half of final monthly pay. Piece rates and night pay mostly don't count.",
+  "scenes": [
+   "The hardest part of retiring is the exit health exam, with a line for the lung CT at the designated hospital. The conclusion says no significant abnormality. You put that sheet away more carefully than your retirement certificate.",
+   "Anglers from the Xugou wharf bring broken rods to the bottom of your building. Thirty yuan each. You reinforce them with leftover material and sand them flat. You won't do carbon-pattern wrap jobs. That, you say, isn't repair.",
+   "The trade school has renamed this major Intelligent Composites, and the brochure photo is of a machine. A former coworker shares a job ad in the group chat that requires programming. You mute the group.",
+   "In summer the skin on your hands still itches. Outside your compound you watch a man fix an e-bike and say a crack like that can't be welded. He says it's aluminum. You lean in and take a closer look. It is aluminum.",
+   "Your first summer at the freezer, going in and out in a padded coat, the rash fades and the new skin is thin. With piece rates gone you take home almost ¥2,000 less a month, and you drop the e-bike insurance to the cheapest tier.",
+   "Occupational disease certification means the city's prevention hospital, diagnosis, assessment, union stamps, the better part of a year. The compensation is small. HR is polite and says this isn't easy on anyone.",
+   "You leave the plant and stock shelves at a supermarket. Epoxy is off-limits, so at home your spouse does the AB glue when a pipe needs fixing. When she mixes it you stand outside the door and tell her the ratio is off.",
+   "Once you leave the workshop, your work changes from making new things to fixing broken ones. People set something in front of you and you look at the fracture first. Fractures are more honest than people.",
+   "The work follows weather and seasons: light wind, clear skies, more cyclists, more calls. In winter money only goes out, and you calculate the social insurance you pay for yourself several times over.",
+   "The prepreg you used at the plant has been discontinued, and the rules for warming the new system are all different. Your old section head messages you that even he has to watch the training videos now.",
+   "A relative shows off a carbon fiber racket. You turn it to the light and say the fabric at the handle is pieced. His face falls, so you leave it there, and all through the game you keep looking at that seam.",
+   "Retired wind turbine blades are being dismantled in batches, and the paper says they'll be recycled. You remember the spar plates from the rush year. They spun on the mountains for twenty-some years, and now they are cut into sections and loaded on trucks."
+  ],
+  "closing": {
+   "retire": "At dusk on the wharf you wrap the last few turns of thread on a sea rod, coat it with varnish, and set it in the breeze to dry. A fisherman asks how long. You work out the temperature and say seven tomorrow morning.",
+   "burnout": "You still wear long sleeves in hot weather. The supermarket cooler doors open and close, and you line up a case of yogurt by date, soonest to expire at the front.",
+   "end": "After closing you change the oil in the vacuum pump and wipe down the bench. By the door there's one more thing broken in two, with a note taped to it that says tomorrow."
+  }
+ }
+}

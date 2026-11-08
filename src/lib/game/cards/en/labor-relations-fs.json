@@ -1,0 +1,153 @@
+{
+ "id": "labor-relations-fs",
+ "occupation": "Labor Relations Specialist",
+ "role": "Factory Labor Relations Specialist",
+ "headline": "A human resources graduate at a 1,200-person appliance parts factory in Shunde, sitting between the workers and the boss every day and working out wages, hours, and the sums that leave nobody satisfied",
+ "unit": "An appliance parts factory in Shunde",
+ "unit_type": "Private manufacturer",
+ "city": "Foshan, Guangdong",
+ "city_tier": "Second-tier city",
+ "education": "Associate degree (Human Resources Management)",
+ "level": "You can recite the clauses of a labor contract and have clicked through the social insurance system in a practical class. A woman older than your mother pointing at her pay slip and asking where the thirty yuan went: that hasn't happened to you yet.",
+ "intro": "The HR service window opens between the workshop and the canteen, and it is busiest at lunch and at the end of a shift. On your desk are a computer that exports attendance records, an ink pad and a box of throat lozenges. Today is the fifteenth, payday. Four people are already standing at the window, and the first, a woman in her fifties, is holding a pay slip.",
+ "salary_note": "Estimate: HR jobs in Foshan manufacturing pay slightly below the national average for office work. The year-end bonus depends on how the factory did.",
+ "facts": [
+  { "label": "Labor Relations Specialist (current level)", "value": "0–2 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Labor Relations Specialist (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "The everyday dealings with government offices and mediation windows", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Taking in and coordinating ordinary labor disputes", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You ride your electric scooter into the factory, with long lines at the gate for both breakfast and the time clock. In the attendance system you pull yesterday's anomalies: one hundred and thirty.",
+  "You go over last night's overtime sheet with the line leader. She has written three hours, the time clock says two hours and fifty minutes, and you are both right.",
+  "The workshop director comes by. This month he wants to keep a few experienced hands, and could the one on probation go to another line? You write it on your sheet, without yes or no.",
+  "The window opens. The woman says her pay is thirty yuan short. You pull up her piecework detail, go through it line by line with her, and find the system really did miss a batch. You write the correction slip. She says, you educated people are so clever, in a tone that isn't quite a compliment.",
+  "You go to the township social insurance window to file back payments for three people. You take a number and wait forty minutes. The woman at the counter sees you and asks: how's your boss doing lately?",
+  "The boss calls you upstairs. Order margins have been squeezed by another two points, and could next month run one less night shift on a line? These people came for the night-shift money, you say.",
+  "A married couple who both work here want to be put on the same shift, because their child is coming from their hometown for the summer. You look through the roster and put it on a sticky note.",
+  "Your throat is dry on the way home, and you unwrap a lozenge. You listened to a dozen people talk today, and you thought every one of them had a point."
+ ],
+ "ladder": [
+  { "title": "Labor Relations Specialist", "stage": "Entry", "focus": "Handle hiring, departures and social insurance, check attendance and piecework pay, and take the first round of workers' questions." },
+  { "title": "Senior Labor Relations Specialist", "stage": "Can mediate", "focus": "Handle ordinary disputes alone, go to the township mediation window, and be able to hear both sides to the end." },
+  { "title": "Labor Relations Supervisor", "stage": "Writes the plan", "focus": "Manages the factory's hours, pay rules and employment risk. A plan must be workable in the workshop and approvable by the boss." },
+  { "title": "HR and Administration Manager", "stage": "Runs it all", "focus": "Manages HR, administration, the dormitories and the canteen, deals with government offices, and stands in front when something big happens." },
+  { "title": "HR Director", "stage": "At the decision table", "focus": "Takes part in decisions on capacity and staffing. Moving the plant or cutting a line, the plan starts with you." }
+ ],
+ "ai_tasks": [
+  { "name": "The everyday dealings with government offices and mediation windows", "how": "AI can write the letters. Whether the mediator will hear you out a little longer depends on years of people coming and going." },
+  { "name": "Taking in and coordinating ordinary labor disputes", "how": "AI can sort the facts and draft mediation papers. Sitting in the middle of the table, listening to people finish, judging how far to go, takes a person." },
+  { "name": "Handling hiring, departure and social insurance paperwork", "how": "Lists of documents, forms, deadline reminders, the system and AI do all of it. People only spot-check and handle odd cases." },
+  { "name": "Drafting rules on pay and working hours", "how": "AI can provide a first draft and compare common practice. Whether the plant can work with it and the boss will approve it, a person has to see through." },
+  { "name": "Calculating piecework pay and attendance anomalies", "how": "AI can catch hours that don't match. Why that worker didn't clock in that day, someone must go ask the line leader." }
+ ],
+ "events": {
+  "e_first_settle": "You do your first final-pay settlement alone. A young man says he's owed two days of overtime. You go through the attendance and the overtime sheets and he really is. The director says don't let it happen again. The young man says you're all right after all. You turn those two sentences over the whole way home.",
+  "e_july": "In July the social insurance base is adjusted and individual deductions go up by tens of yuan. The workers don't like their take-home falling and the boss doesn't like costs rising, and both ask if you can do something. You post the calculation at the window, and someone tears a corner off it.",
+  "e_couple": "That couple got onto the same shift, and their child stayed for a month that summer. On the day they leave, the wife presses two salted duck eggs into your hands. You stand there holding them and the director sees, and you both laugh.",
+  "e_dorm": "The dormitories are getting air conditioning, and who pays the electricity? The workers say they shouldn't, the logistics team says the factory can't cover it. You go around three buildings asking people one by one and end up with a figure everyone thinks is a little unfair to them.",
+  "e_lull": "The slow season arrives and a notice goes up in the workshop: four days on, three off. The workers' pay slips shrink by half, and the boss's books are in the red too. You put the two sheets side by side and don't know whom to explain to first.",
+  "e_peak": "Rushing orders in peak season, the workers want more overtime to earn more, the line leaders want to schedule it, and you have to hold to the limit on hours. On one side people wanting to earn, on the other a sheet that has to be kept. Both come to you to argue, in opposite directions.",
+  "e_south_damp": "The damp spring the south calls huinantian: the workshop floor sweats and the time clock keeps failing, so workers can't clock in and they all flock to your window. You sign people in by hand on paper for three days, until your hand aches.",
+  "e_mediator": "For the first time you sit at the mediation table at the township labor office. On one side a worker and a fellow townsman he has brought along, on the other the company, and the mediator pours everyone water without hurrying. The first thing you learn: wait until both sides have let off their steam.",
+  "e_injury": "A worker is injured at the factory and you go with his family to get the work injury recognized, five trips back and forth between the hospital, the social insurance office and the plant. The family feels you are dragging your feet, the boss feels you are running around too much, and you just fill out the next form.",
+  "e_ai_procedure": "Hiring, departures and social insurance move to a mini-app, and workers finish in a few taps on their phones. The line at the window is half as long. You get yelled at less, and you get to know far fewer people.",
+  "e_throat": "Chronic pharyngitis has become an old companion. The doctor asks if you are a teacher. About the same, you say, I explain things all day. Your lozenges go from two a day to half a box.",
+  "e_order_cut": "The biggest customer cuts its orders by 30%. Upstairs the boss is doing the math and, smoking, says, this month's wages get paid even if I have to take out a loan. Downstairs the workers ask why the night shift has been canceled. You believe both of them.",
+  "e_new_gen": "A new young hire writes 'I quit' on WeChat and the next day is gone, leaving his final pay to settle and not answering calls. The older workers don't understand it and neither do you, but you add a column for them on the sheet.",
+  "e_old_sister": "A woman who has worked here for twenty years is nearing retirement age and is a little short on years of contributions. She is counting a lifetime, the factory is counting the cost of these few years. You spread the materials on the table and work out for her the difference each option makes.",
+  "e_ai_mediate": "The mediation plan AI writes is well organized and lists seven facts. A worker glances at it and says, it doesn't say why I took leave that day. You rewrite the third item in human language.",
+  "e_boss_son": "The boss's son comes back to take over. The first thing he does is put in a system, the second is ask why so many people are at the window. The old boss knew the workers' nicknames, the son knows output per head. Each way of doing it has its own books.",
+  "e_eye_habit": "Relatives are quarreling, and your first questions are: what day was this? Is there a WeChat record? The whole table goes quiet. Your spouse kicks you under it.",
+  "e_dinner": "A line leader you once fought with is going back to her hometown and invites you to a roadside barbecue. Back then I hated you to death, she says. I know, you say. You share one bottle of beer and each go home.",
+  "e_sleep": "You have started having trouble sleeping. When you close your eyes you see other people's pay slips. Once you dream you are waiting in line at the window, and when you reach the front, the person sitting inside is you.",
+  "e_no_window": "The factory's labor relations window has closed and questions now go to an online bot. Only the ones it can't solve get passed to a person. The ones that reach you are the hardest few to talk about."
+ },
+ "choices": {
+  "c_cert": { "title": "Take the HR manager exam, go for Senior Labor Relations Specialist", "situation": "Your supervisor wants you to go to the township for mediations and says you'll need a certificate to carry any weight. You buy your own books and the classes are on weekends, and in peak season you work weekends too.", "options": [
+   { "label": "Sign up", "result": "You study the chapter on labor relations in the canteen, and workers glance at your book in passing. You pass, and your supervisor says come with me to the township next week." },
+   { "label": "Get good at the window first", "result": "You stay at the window so long you can call half of the 1,200 people by name. There's no certificate for this, but a lot of things become easier because of it." } ] },
+  "c_piece": { "title": "New machines and piece rates", "situation": "The factory has bought new punch presses and one person's output is up 30%. The boss wants to cut the piece rate by 20%. The workers' sum is 'I'm doing more', the boss's is 'I bought the machine and the loan is still running'. The plan is yours to write.", "options": [
+   { "label": "Write in a three-month transition rate", "result": "The boss frowns and approves it. Three months later the rate comes all the way down. The workers are still unhappy, though it doesn't reach the factory gate." },
+   { "label": "Use the boss's number, explain the math", "result": "You hold small meetings on each line and go through the loan, the output and the rate. Some people take it in, some hand in notice the following week." } ] },
+  "c_case": { "title": "Thirty thousand or fifteen", "situation": "A worker who has left wants ¥30,000, and the company will give only ¥15,000. He has his reasons for the figure and his family really is struggling; the boss has his math too, and if the gap opens others will come through it. The mediator asks whether you can still move.", "options": [
+   { "label": "Go back and persuade the boss", "result": "You talk the boss up to ¥20,000. The worker signs and doesn't look at you on his way out. The boss says your elbow bends the wrong way." },
+   { "label": "Stand firm, go to the next step", "result": "The case goes to the next step and drags on eight months. When the result comes, both sides say they were right, and both have spent a lot of time." } ] },
+  "c_head": { "title": "Compete for Labor Relations Supervisor", "situation": "The supervisor is leaving. The job sets the factory's hours and pay rules. You have to listen to the workers and do the boss's math, and neither side will like you for it.", "options": [
+   { "label": "Compete", "result": "You sort the past few years' disputes by cause in one sheet and hand it to the boss. This sheet is unpleasant to look at, he says, so you run it." },
+   { "label": "Stay a specialist", "result": "The window is steadier, you say. When the new supervisor comes, there's always something to ask you first." } ] },
+  "c_ai_rules": { "title": "Leave the scheduling to the system?", "situation": "The boss's son wants a system to schedule shifts and calculate output per head. It doesn't know that someone's child has a follow-up on Wednesday, but it can save the factory the cost of one line a year, money he really does need.", "options": [
+   { "label": "Lead it, leave a manual override", "result": "You learn to configure the rules and build the manual adjustments into a button. The system goes live, and the button gets pressed dozens of times a week." },
+   { "label": "Leave it, keep scheduling by hand", "result": "You say you've got it under control. A year later the system goes live anyway, and you are the last person on the roster to learn to click confirm." } ] },
+  "c_mgr": { "title": "Compete for HR and Administration Manager", "situation": "HR, administration, the dormitories and the canteen are to be merged under one person. More power, and a dorm water outage at midnight is yours too. You could really change a few things you want to change.", "options": [
+   { "label": "Compete", "result": "You talk about the canteen's books, the dorm's books and the three things you want to change. The boss listens and asks only how much the second will cost." },
+   { "label": "Stay with labor relations", "result": "Labor relations is plenty for one person, you say. Your lozenges remain at half a box a day." } ] },
+  "c_outside": { "title": "Opportunities outside", "situation": "A labor law firm wants you as an assistant on its corporate advisory work, because you know the shop floor. An HR services company in the township wants you to help small factories get their employment practices in order. At the factory, you also have a few good years left.", "options": [
+   { "label": "Join the HR services company", "result": "You do the paperwork and leave the window's ink pad on the desk.", "end": "You begin going around Shunde's factories, big and small, helping bosses and workers straighten out contracts and hours. You see more people now, and the arguments are lighter. These days you're the one standing outside someone else's window." },
+   { "label": "Stay", "result": "You stay. People at the factory ask why, and you say you know the people here." } ] },
+  "c_move": { "title": "The factory is moving to Qingyuan", "situation": "Land in Shunde has gotten expensive and order margins are thin, so the boss decides to move production to Qingyuan. Some will follow, some will want compensation, and some have lived here for twenty years. The plan starts with you, and your own job is on the list.", "options": [
+   { "label": "Follow the factory to Qingyuan", "result": "You rent a room in Qingyuan and take the bus back to Shunde on weekends. Half of the first group of workers to follow leave again the next year." },
+   { "label": "Stay in Shunde, settle this group, then go", "result": "It takes eight months to finish the settlements one by one. When the last group has gone the workshop is empty, and you turn off the light at the window.", "end": "When the move is done you do not follow it. Of the thousands of pay slips you worked out over those years, some people remember what you did for them, and some have never forgotten that thirty yuan. Both ways of remembering, you feel, are right." },
+   { "label": "Go to headquarters to do planning", "result": "You move to the headquarters office and start analyzing output per head, sheet by sheet. It has been a long time since anyone came to the window looking for you." } ] },
+  "c_hrd": { "title": "Become HR Director?", "situation": "The boss wants you at the decision table as HR Director. The factory plans to cut two lines next, and the plan will have your name on it. The workers know you, and you know them.", "options": [
+   { "label": "Take it, try it out", "result": "You revise the cut plan eleven times. Each version someone finds unfair, and in each version someone still has to eat." },
+   { "label": "Decline, stay until retirement", "result": "This position is enough for you, you say. The new director comes from outside and brings very nice slides to meetings." } ] }
+ },
+ "endings": {
+  "retire": "When you retire, the window has become an entry point on a phone. In the social insurance system your name looks like everyone else's, line after line, checked and correct. You work out your own pension and get it right. Your throat is a little dry as you leave, half a box of lozenges still left, and you put them back in your pocket.",
+  "burnout": "With your throat and your sleep both failing, you ask to be moved to logistics, and later take early leave. You don't go near the factory gate again. The shift bell can still be heard from two streets away. You listen, you count, it must be time for the second shift to change."
+ },
+ "stages": [
+  "On your desk are the attendance system, the social insurance website and a stack of overtime sheets. In the morning you check the line leaders' sheets, in the afternoon you keep the window and explain pay slips, ink pad and calculator never far from your hand. The HR supervisor wants you to learn one thing first: don't say no on the spot, don't say yes on the spot, check the detail.",
+  "Ordinary disputes now come straight to you. You arrange talks with workers, write statements of the facts, and sit at the township mediation table with attendance records and piecework sheets. One level down you got the number right. Here you hear both sides out, and then think about how to say the number aloud.",
+  "The factory's hours plan and pay rules are in your hands. You schedule the slow and busy seasons with the workshop directors, work out labor cost with finance, and tell the boss what he doesn't like to hear. The window has gone to the two specialists under you, and what they can't solve still knocks on your door.",
+  "HR, administration, the dormitories and the canteen all fall to you now. You hold weekly coordination meetings and deal with fire inspectors, social insurance and the township government, and when a dorm leaks at midnight it's your phone that rings. What you think about is no longer one sum but next half year's staffing and the food and beds of a thousand people.",
+  "You sit at the decision table with capacity and staffing in your hands. Open a new line or not, cut people or not, move the plant or not, the plan comes from you. You rarely go to the workshop now, yet behind each plan is a row of people whose names you can say."
+ ],
+ "work": [
+  "A new line leader turns in a handwritten overtime sheet and the writing has smudged. You recopy twelve people's hours against the clock records and have her sign for each.",
+  "You help a man in his forties look up his social insurance record on his phone. He puts on his reading glasses, studies it, and points at the screen: why is this year blank? You go through the files.",
+  "At the end of the month you go through the work-clothes deposits. A dozen people on the list have already left the factory. You call each one, and one who picks up says he's now in Vietnam.",
+  "Two workers come to the window fighting over a piece count. You pull the station count sheet from the line, find it was miscounted at handover, and have both of them look together.",
+  "The mediator has you write the facts on one page. You write three. She crosses out two, keeping the times, the amounts and what each side is asking for.",
+  "A worker representative comes to discuss the canteen price rise. You print out food prices and the cost per meal, and the two of you go down the table cell by cell. In the end it goes up five mao.",
+  "You and the production department schedule next year's busy and slow seasons, going through three drafts with an averaged-hours plan. The workshop director says the line leaders will riot over this. You do a fourth.",
+  "The boss wants to abolish the perfect attendance bonus to save money. You pull three years of leave data and tell him about how much absences will rise. He works it out in silence, and keeps it.",
+  "A wage restructuring plan must go through the workers' congress. A week ahead you find each representative in turn, write down the concerns in your notebook, and answer them one by one at the meeting.",
+  "The day before the fire inspection you and logistics walk the corridors of all three dormitories and clear out the cartons stacked at the stairs. The inspector signs and leaves.",
+  "The township holds a meeting on employment and asks you to talk about hiring locally. You bring a chart of the past three years' turnover, and as you speak the HR people from neighboring factories take out their phones to photograph it.",
+  "The canteen contractor's contract is up and three firms bid. You take worker representatives along to taste. A woman finishes eating and says: the second one's soup is on the salty side, but there's more meat.",
+  "The boss wants to cut a line. You list the 140 people affected by age, seniority and family circumstances, cost out each option, and put it on his desk.",
+  "Officials from Qingyuan come to discuss investment terms, and you handle the staffing section. Holding local wage figures and a list of technical schools, you ask them item by item how many people they can recruit.",
+  "A big customer comes to audit the factory and wants to see the employment compliance ledgers. You spend the whole day in the archive room with the auditor, and for each item he asks about, there's paper to show him."
+ ],
+ "past": [
+  "You go to middle school in a town near Zhanjiang. Your parents work at a factory in Shunde, and on school holidays you stay in their dormitory, bunk beds divided by curtains.",
+  "One year your mother is shorted on her pay and is afraid to ask. You take her pay slip to the HR window yourself. The woman there says: children shouldn't get involved.",
+  "You attend a vocational college in Foshan and choose human resources, because you've heard it means sitting in an office.",
+  "The college offers a class on labor law. The teacher goes over cases, and you sit thinking of your mother's pay slip, taking notes as you think.",
+  "For your placement you go to a factory's HR department. In the first month you help process eighty departures, and you start to remember those people's names."
+ ],
+ "late": {
+  "pension_note": "Estimate: Foshan manufacturers pay social insurance on actual wages, so the pension comes to a bit under half of final pay.",
+  "scenes": [
+   "A neighbor comes to ask why his pension is lower than someone else's. You have him print out his contribution record and go through it line by line. When you finish, he sighs, and he thanks you too.",
+   "The community mediation committee asks for help with a leak between two floors. You pour water for both sides first and wait until they've let off steam, and the glasses haven't cooled.",
+   "Your throat is much better, you just speak softly. At the market when the stall owners quarrel, you walk around them, truly walk around them.",
+   "You go down your contacts through the line leaders and directors one at a time, and don't delete them. After half a year on medication, you can finally sleep until five.",
+   "You help stock shelves at a small grocery near home, four hours a day, paid the same day. The owner wants to count half an hour less. You smile and tell him the time.",
+   "You don't want to explain anything to anyone anymore. Your child asks if the insurance is worth buying. You say: read the contract yourself.",
+   "Former coworkers post in the group that the boss has handled so-and-so badly again. You read it and don't reply. A little later someone else posts about the boss's troubles, and you don't reply to that either.",
+   "You hear the old factory buildings have become a creative park, and take your family for coffee. You walk over to where the window used to be. It now sells ice cream.",
+   "A young person asks you what this line of work is like. You say you get cursed by both sides, and both sides have a point, and that's the most tiring part.",
+   "The news says another factory somewhere has moved away. As you watch, your mind starts working out a compensation sum on its own, and halfway through, you turn the television off.",
+   "An item on your hospital bill doesn't match. You take it to the counter and ask patiently: see this line, what date was this?"
+  ],
+  "closing": {
+   "retire": "By the river in Shunde the evening wind is still warm. You walk back with a bag of double-skin milk custard just bought, with no one to explain anything to.",
+   "burnout": "The room is quiet and the tin of lozenges is on the table. You don't need to say one word today, and that's fine.",
+   "end": "Pay slips went digital long ago. You put your phone down and go to the kitchen to see if the soup is boiling."
+  }
+ }
+}

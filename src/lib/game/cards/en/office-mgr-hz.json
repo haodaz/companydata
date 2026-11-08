@@ -1,0 +1,163 @@
+{
+ "id": "office-mgr-hz",
+ "occupation": "Office Manager",
+ "role": "Office Manager",
+ "headline": "Keeper of the company seals, the car pool, the canteen and the factory audits at a Nanxun flooring maker, for a boss who never says anything twice",
+ "unit": "A wood flooring manufacturer in Nanxun, Huzhou, Zhejiang (600-plus employees, family-controlled)",
+ "unit_type": "Family-owned private manufacturer",
+ "city": "Huzhou",
+ "city_tier": "Tier-3 city",
+ "education": "Bachelor's degree (administrative management)",
+ "level": "Six years at this company, with four people under you in the general manager's office and the company seal in the safe by your hand",
+ "intro": "Ten to eight. The safe key is in your bag and the boss's car is already through the gate. A European client is auditing the factory today. The timber sourcing ledger has to be laid out in the meeting room, and the canteen needs four extra dishes with no MSG at lunch. The office phone rings. It's the boss's wife, asking if the afternoon car can swing through Nanxun Old Town first.",
+ "salary_note": "Estimate: management pay at private manufacturers in Huzhou runs slightly below the national level, and the year-end bonus depends on the boss's mood and the year's orders.",
+ "facts": [
+  {
+   "label": "Office Manager (current level)",
+   "value": "3–8 years, ¥7,735–11,375 a month (national average, derived from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Director of Administration (8–15 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥10,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Mediating the hard things between staff and the boss",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Drafting policies, notices and company culture material",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "155 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Ten minutes ahead of the boss. Open the windows, check whether the flowers got watered, lay last night's approved seal requests on top of the safe in order of urgency.",
+  "Morning huddle. Sales needs a car, production wants money for forklift repairs, and the safety officer says finished goods are blocking the fire exit again. You write it all down and start with whoever isn't shouting.",
+  "Stamping. The contract and approval form get checked three times. The company seal, contract seal and legal representative's seal are kept apart, and the register records the date, purpose and who brought it.",
+  "Lunch with the client in the canteen. You take the seat nearest the door so you can get up. The foreign auditor asks if this table is made of your own flooring.",
+  "Walking the site with the auditor: the timber warehouse ledger, the safety data sheets for the glue, the extinguishers in the workers' dorm. He taps an extinguisher's pressure gauge and writes one more line.",
+  "The canteen contractor delivers his quarterly bill and mentions in passing that he and the finance director come from the same village. You smile and ask him to leave the paperwork.",
+  "The boss calls you in. He wants to change the venue for the annual party this year, and don't tell his wife it was his idea. You nod, and on the way out you think of three ways to put it.",
+  "The phone's still going. Security says there's a fight in the night-shift dorm. You ask who's hurt and who's been drinking, and say nobody handles this until nine tomorrow."
+ ],
+ "ladder": [
+  { "title": "Office Supervisor", "stage": "From errands to duties", "focus": "Handling documents, cars, reception and procurement of supplies, arranging meetings, learning what to ask the boss and what not to." },
+  { "title": "Office Manager", "stage": "General manager's office", "focus": "Running seals, policy, reception, logistics and outside filings, leading a few clerks, passing messages and blocking trouble between the boss and departments." },
+  { "title": "Director of Administration", "stage": "The admin line", "focus": "Administration, logistics, safety and company culture across the board. Setting budgets and outsourcing, and representing the company to the industrial park, trade groups and auditors." },
+  { "title": "Assistant to the General Manager", "stage": "At the boss's side", "focus": "Coordinating major company matters, handling communication between shareholders and the family, joining investment and personnel decisions. When things go right, there's no name on them." }
+ ],
+ "ai_tasks": [
+  { "name": "Mediating the hard things between staff and the boss", "how": "AI can summarize complaints and draft talking points. Getting people to open up, and giving the boss a way to climb down, can only happen face to face." },
+  { "name": "Drafting policies, notices and company culture material", "how": "AI can write ten versions in a minute. Which phrases the boss dislikes and which clause will set the workers cursing, a person has to fix." },
+  { "name": "Organizing meeting minutes and action items", "how": "Transcribing, listing action items and assigning them are nearly all AI now. People only check who promised what." },
+  { "name": "Seal approvals and archiving", "how": "Office systems can route approvals and compare contract versions. Whether to stamp, with which seal, and when, is still up to a person." },
+  { "name": "Arranging reception and travel", "how": "Systems can book tickets and suggest hotels. They don't know what the client won't eat or who can't sit at the same table as the boss." }
+ ],
+ "events": {
+  "e_seal": "A sales rep brings a contract that hasn't finished its approval route and says the client is waiting downstairs. You put the seal back in the safe and send him to get the GM's signature. He curses half a floor's worth down the hallway.",
+  "e_fsc": "The timber certification audit comes around again. The auditor wants sourcing papers for a batch of oak from three years ago. You and the warehouse clerk dig until nine at night and find them under a pile of yellowing delivery slips.",
+  "e_hightech": "Materials for the High-Tech Enterprise renewal are due by September. You revise the R&D ledger and patent certificates seven times. The agency charged ¥40,000. It's you who stays up all night getting the numbering right.",
+  "e_typhoon": "The night before the typhoon comes ashore, you and the facilities team recheck every warehouse door and window and post a flood watch roster into the small hours. The next day the water comes into the parking lot. Not one piece of finished stock gets wet.",
+  "e_safetymonth": "June is Safety Production Month. The park wants ledgers, photos and drills, so you run a fire drill for the whole plant. The workers stand in the sun looking less happy than the extinguishers they're holding.",
+  "e_year_end": "The New Year gift list changes four times. The boss wants a box of Huzhou lamb for everyone; the union wants supermarket cards. The day after it's handed out, your phone fills with 'mine was short.'",
+  "e_bosswife": "The boss's wife asks you to handle a private matter and not tell her husband. The next week, the boss asks you to handle a private matter and not tell his wife. It's the same person.",
+  "e_ai_memo": "AI meeting minutes land with action items for every department by three in the afternoon. You notice the young woman you assigned to take notes hasn't written a thing in her notebook for two weeks.",
+  "e_ai_policy": "AI drafts the new attendance rules, with beautiful wording and one clause that says 'strictly forbidden.' The union chair tells you those two words will set the workers off for three days. You change them to 'should give advance notice.'",
+  "e_ai_bot": "A staff Q&A chatbot goes live for social insurance, leave and meal cards. Someone asks how many days off they get when an elderly relative has died. It gives the policy word for word. You see the log and call that person yourself.",
+  "e_merger_office": "The group is building a shared services center, and cars, travel and purchasing are moving under it. You lose two clerks, and audit files pile up on their empty desks.",
+  "e_neck": "Your left neck and shoulder are always tight from a decade of cradling a phone. The therapist presses once and asks if you work in admin. You ask if it's that obvious. She says everyone with this spot says that.",
+  "e_phone": "Two days at Qiandao Lake with the family. Your phone rings forty-seven times. One is about where the key to the toilet paper cabinet is. Your spouse puts your phone in the trunk.",
+  "e_mediate": "A veteran worker's pay has been miscalculated for three months and he comes to you seething. You sort out the numbers first, then walk him to finance. He leaves holding a back-pay slip and a pack of your cigarettes.",
+  "e_son": "The boss's son comes back from studying abroad and on day one wants the canteen to go buffet. You put three years of cost tables in front of him and eat in the canteen with him for five days. He drops the idea himself.",
+  "e_slump": "Flooring exports drop thirty percent and the boss orders admin costs cut by a fifth. You cut your own outside training first and shrink the annual party to one dinner. Nobody comes off the roster.",
+  "e_kid_sick": "Your kid runs a fever in the night, and a government delegation is due first thing in the morning. Your spouse goes to the hospital. You arrange seating from the visitor list and keep checking your phone for the temperature.",
+  "e_eye": "Visiting other companies, you notice first whether the flowers at reception have fresh water and which way the meeting room cup handles face. You mention it back at the office, and your staff quietly turn all the cups around."
+ },
+ "choices": {
+  "c_canteen": { "title": "Rebidding the canteen", "situation": "The canteen contract is up. The current contractor is from the finance director's village, cheap and bad. Another bid is ten percent higher, with better worker ratings. You wrote the bidding plan.", "options": [
+   { "label": "Switch by ratings", "result": "Workers say the food tastes better. The finance director's office finds new reasons to send back your expense claims from then on." },
+   { "label": "Keep them, add scoring", "result": "You add a page of deductions to the contract. The food gets a little better, and the monthly complaint letters still number two." } ] },
+  "c_exam": { "title": "A part-time MBA", "situation": "The boss says management needs to learn more. The company pays half the tuition, but it means a weekend in Hangzhou every two weeks. Half your weekends already go to answering work messages.", "options": [
+   { "label": "Enroll", "result": "You learn a few frameworks. The most useful thing turns out to be knowing a dozen other factories' admin managers." },
+   { "label": "No, straighten out the plant", "result": "You use those two years to rewrite the rules, and everything from the factory floor to the dorms runs more clearly." } ] },
+  "c_oa": { "title": "Lead the AI office system", "situation": "The boss has heard others are using AI in the office and tells you to choose one and launch it. That means re-routing seals, leave and reception, and much of the old guard's power lives on paper.", "options": [
+   { "label": "Lead it, rewrite the routes", "result": "You hold thirty-some training sessions and offend a few veteran section chiefs. Six months later, seal approval drops from two days to two hours." },
+   { "label": "Hand it to IT, just give requirements", "result": "The system launches and a number of routes don't match reality. Your staff keep patching with paper forms." } ] },
+  "c_director": { "title": "Compete for Director of Administration", "situation": "The company is creating a Director of Administration, to manage safety and outsourcing and deal with the industrial park. The annual review goes from 'the boss is satisfied' to several forms. Your biggest rival is the deputy head of the safety department.", "options": [
+   { "label": "Compete for it", "result": "You fit three years of costs and audit pass rates onto one page. The boss reads it and says only, 'Let's go with that.'" },
+   { "label": "Don't compete", "result": "The new director is hired from outside and doesn't know the roads in Nanxun. For the first month you're still the one taking him around." } ] },
+  "c_association": { "title": "Secretary-general of the trade association", "situation": "The local wood flooring trade association needs a full-time secretary-general, and its chairman is an old friend of the boss. The work is light and the pay is thirty percent lower, but it's nine to five, and at night your phone might go quiet.", "options": [
+   { "label": "Go to the association", "result": "On the first day you finish handing off the keys and the safe combination, and find you have nothing to take with you.", "end": "You became secretary-general of the trade association, holding a few meetings a year and sending a few notices. The factory owners still call you Director of the Office." },
+   { "label": "Stay at the plant", "result": "When the boss hears of it, the year-end bonus grows by a month. Neither of you ever mentions it." } ] },
+  "c_heir": { "title": "The son or the father", "situation": "The son wants half the outsourced support staff cut. The boss refuses. They aren't speaking, and both send you to carry messages. Each has given you a version you can't tell the other.", "options": [
+   { "label": "Back the son, write a plan", "result": "The plan is beautiful and the son starts taking you to meetings. For two months the boss doesn't call you into his office." },
+   { "label": "Carry messages, take no side", "result": "You deliver both sides' words exactly, not one extra. Nobody thanks you, and nobody can do anything about you." } ] },
+  "c_service": { "title": "Start a business services firm", "situation": "All those years of high-tech applications, factory audits and social insurance compliance have every owner you know asking for help. A friend says open a firm, a few tens of thousands per factory per year, and two or three people can do it.", "options": [
+   { "label": "Quit and start it", "result": "You give up the office you've worked in for more than ten years and rent a small second-floor room in Nanxun.", "end": "You quit and opened a small firm doing factory audits and filings for little manufacturers, worrying about other people's seals every day." },
+   { "label": "Stay at the plant", "result": "Now and then you look over a friend's factory paperwork and get a meal for it." } ] },
+  "c_assistant": { "title": "Become Assistant to the General Manager", "situation": "The boss wants you as Assistant to the General Manager. Family share arrangements and the division of duties between son and daughter would go through your hands. Pay goes up a grade, you'll have to speak more carefully, and nobody will dare tell you the truth anymore.", "options": [
+   { "label": "Take the post", "result": "You begin sitting on the boss's left at dinners. You've assigned that seat many times. Now that it's yours, you learn that the tea is hot." },
+   { "label": "Stay on the admin line", "result": "You stay in your familiar office, minding the flowers, the cars and the seals. More days now end on time." } ] }
+ },
+ "endings": {
+  "retire": "When your retirement papers are done, the safe's combination has been changed and the seal register has moved on to a new volume. At the annual party the boss raises a glass and says you watched this company grow up. His wife nods beside him, the two of them still not sitting together. You carry a box of sample flooring home and set a piece by the door as a mat. You never use it.",
+  "burnout": "Years of calls and banquets, and your heart begins to quarrel with you. You tell the boss you're resigning. He says wait a bit. You wait six months, list every seal, car and contract item by item, and sign. From then on, every morning, your phone is so quiet it seems suspicious."
+ },
+ "stages": [
+  "You run the general manager's office with four people: seal register, policy revisions, cars and reception, and whatever demands arrive from the park and auditors. When a word comes down from the boss, you turn it into something departments can hear. When anger comes up from the shop floor, you turn it into something the boss can hear. The safe key stays in your bag, and after five the bag stays in your hand.",
+  "You now run a whole line: admin, logistics, safety, outsourcing and culture events, all in your budget. You have standing contacts at the park committee, fire department and audit firms, and nobody knows the rhythm of the year's inspections better. The general office runs through your staff. Your job is to make sure their mistakes don't turn into big ones.",
+  "You spend more time beside the boss than in your office. Shareholder meeting agendas, things the boss needs to say to his children, which senior employee should be retired with dignity, all of it comes past you first. You don't have many forms to fill or many sentences you can write down, and when things get done, your name won't be on the paper."
+ ],
+ "work": [
+  "A sales contract needs the contract seal. You compare the system version to the paper one, and the payment ratio on page three is off by five percent. The young man who brought it goes red.",
+  "You schedule the visiting auditor: timber warehouse in the cool of the morning, dorm after lunch. On the lunch menu, you cross out one dish that could trigger an allergy.",
+  "A new clerk prints the boss's speech with the pages out of order. You don't say anything in front of her. You stick a note on her monitor: before it goes out, read it once more from the back.",
+  "Safety wants a new batch of fire equipment. You compare three quotes and expiry dates, check last year's inventory, and find half of the last purchase still unopened in the warehouse.",
+  "The park announces next week's check of the hazardous materials ledger. You pull the glue and paint in-and-out records early, and two supervisors reconcile them in your office until seven.",
+  "The cleaning contractor wants a twelve percent increase. You pull up the price adjustment clause, work out hours per floor, settle at five percent, and add weekend patrols along the way.",
+  "The boss wants his daughter on the board and worries how his son will take it. You see a lawyer, split shares and titles onto two sheets, and bring one to the boss's wife first.",
+  "A factory director of twenty-some years is to be reassigned and the boss sends you to tell him. You bring a copy of his old work permit and start with the first container ever exported, ending at his terms for stepping back.",
+  "The company wants a plant in Vietnam. You take two people for a week of site visits. What you write when you get back isn't a report, it's a list: things over there we do not currently know how to do."
+ ],
+ "past": [
+  "Your family's in a Nanxun township, and your parents sort boards at a flooring factory. You test into a high school in Huzhou. Your father says stay out of the workshop. Office people don't wear uniforms.",
+  "You study administrative management at a provincial university. The lectures are about public organizations. What you learn in the student union is how to get three department heads seated at one table.",
+  "After graduation you become an administrative clerk at a Hangzhou hotel: reception, tickets, notices. Six months later your mother's health slips and you want to go back to Huzhou.",
+  "You go home to Nanxun, and into the general manager's office at this flooring company, assisting the director. On the first day the director says anything said in this company should go through your head once before it goes out this door.",
+  "Before the director retires you take over as supervisor and start on the seal register and car pool. That year you turn away a client for the boss for the first time, and learn that turning people away also has to be done comfortably."
+ ],
+ "late": {
+  "pension_note": "Estimate: thirty years of contributions on actual pay bring a pension of about half of final monthly pay, excluding year-end bonus.",
+  "scenes": [
+   "Your first weekday morning at the Nanxun market, you find the boss's wife's driver there too. He says the new office manager isn't very good at seating. You say that comes with time.",
+   "The homeowners' committee hears you once ran a factory office and asks you to look over the property management contract. You circle six places in red. After the meeting, some thank you, and some don't say hello for two months.",
+   "The plant gets bought by a big group. The general office is abolished, and admin moves to the shared center in Hangzhou. The safe is said to still be there, holding spare fire-door keys.",
+   "The cardiologist wants you off alcohol, which is harder to explain than resigning. You tell friends you're on medication. Everyone says people on medication can have a little.",
+   "Out of work, you have to continue your own social insurance. In the line at the center, the young woman in front of you fills it out wrong three times, and you hold yourself back from helping. At home you find your palms are wet.",
+   "You switch to a basic phone. The one that gets WeChat stays on the shoe cabinet by the door. When friends call, you wait for the fourth ring before answering, a rule you've set for yourself.",
+   "After you leave the general office, the first thing you do is change every contact labeled Director back to a name. Halfway through, someone sends a message asking about the toilet key.",
+   "Your new work can't get away from 'don't tell so-and-so' either. You find other people's factories have about the same troubles as your old one. Only the grade of tea differs.",
+   "Some of the owners you knew have retired one after another. Younger bosses use AI for compliance and don't ask anyone when they have questions. Your contacts list is as long as ever, and the part you can actually call has gotten shorter.",
+   "A relative's banquet needs a seating plan. You draw four tables on a sheet of paper and ask three questions. The uncle and the brother-in-law end up apart, and nobody in the room notices.",
+   "Your left shoulder still sits lower than the right, though you haven't cradled a phone in years. You've been through several therapists. Now you do Baduanjin qigong in the park, in the second row, where it's easier to see whether the people in front have it right."
+  ],
+  "closing": {
+   "retire": "Walking by the Nanxun canal in the afternoon, you see a piece of sample flooring stuck in a crack in the steps, tossed there by someone. You crouch and feel the grain. Oak, three-layer, a line your factory stopped making.",
+   "burnout": "Late in the afternoon your phone sounds once. A delivery. You wait a little, make sure it won't ring again, and go back to watering the flowers on the windowsill.",
+   "end": "On Friday afternoon someone calls to ask about the order of stamps on a filing, and you say legal representative's seal first, then the company's. You hang up and pull the door to. Outside, the osmanthus has bloomed early."
+  }
+ }
+}

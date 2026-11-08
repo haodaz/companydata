@@ -1,0 +1,160 @@
+{
+ "id": "child-therapy-gy",
+ "occupation": "Child Psychotherapist",
+ "role": "Therapist, Child Psychology Clinic",
+ "headline": "Master's in applied psychology, now at a hospital child psychology clinic in Guiyang: the same hour, the same room every week, fifty minutes on the floor with a child",
+ "unit": "Child Psychology Clinic, a top-tier (Grade 3A) hospital in Guiyang",
+ "unit_type": "Top-tier hospital psychology clinic",
+ "city": "Guiyang, Guizhou",
+ "city_tier": "Second-tier city",
+ "education": "Master's (Applied Psychology)",
+ "level": "You passed the theory and the rating scales and shadowed cases for two years as an intern. What to do for fifty minutes while a child keeps their back to you, you are still learning.",
+ "intro": "The clinic is on the second floor of a small building behind the inpatient ward. The room at the end of the corridor has floor mats, a sand tray against the wall, and a row of shelves full of tiny people, cars and houses. The director walks you through it and tells you one thing: everything in this room goes back in the same place, every time. Your first child is booked for three o'clock on Tuesday. After that, every week, three o'clock on Tuesday.",
+ "salary_note": "Estimate: technician-track pay at a public hospital in Guiyang, with a bonus tied to clinic volume. Psychotherapy is charged out of pocket and is not cheap, but most of it doesn't reach the therapist.",
+ "facts": [
+  { "label": "Psychotherapy Technician (current level)", "value": "0-3 years, ¥5,000–7,500 a month (national estimate)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Psychotherapist (3-8 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Being in the room for play therapy with a child", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Turning session recordings into chart notes", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the database is mostly campus and internship roles)", "source": "Job listings" }
+ ],
+ "day": [
+  "Guiyang is drizzling again. You hang your raincoat in the corridor and don't take it into the therapy room: children remember where everything is, and one extra thing counts as a change.",
+  "You rake the sand flat and shelve yesterday's figures by type. Whatever world the last child built gets photographed, then taken apart. The next child must not see it.",
+  "First session. An eight-year-old boy has played with the same ambulance for six weeks. You sit cross-legged on the mat, ask nothing, and say only: the ambulance has come back again.",
+  "A parent stops you in the corridor and asks what he told you. You say you don't repeat what children say, but you can suggest one thing to try at home this week.",
+  "Changwang noodles across from the hospital, eaten fast. The two o'clock child always arrives half an hour early because his mother fears traffic, and he must not see you chewing.",
+  "A primary school counselor calls to ask when the boy who won't enter his classroom can go back. You ask her to send this month's attendance first.",
+  "Notes. The hospital chart is written one way, for the doctors; your own process notes another way. The two must never bleed into each other.",
+  "A whole day of listening. Your voice is barely used, your head feels waterlogged. As the bus crosses Huaxi Avenue you silence your phone, a rule you made with yourself."
+ ],
+ "ladder": [
+  { "title": "Psychotherapy Technician", "stage": "Trainee", "focus": "Administer scales and sit in on intakes with a senior therapist, take the lightest cases, bring every one to supervision." },
+  { "title": "Psychotherapist", "stage": "Own caseload", "focus": "Run a full week of cases alone, deal with parents and schools. You rise on endings that are complete and few dropouts." },
+  { "title": "Senior Psychotherapist", "stage": "Mainstay", "focus": "Take the hard cases, mentor interns, run peer supervision, and own the department's treatment process and note standards." },
+  { "title": "Associate Chief Psychotherapist", "stage": "Team lead", "focus": "Lead a therapy team, set rotas and referral rules, and train schools and county hospitals." },
+  { "title": "Chief Psychotherapist", "stage": "Field leader", "focus": "Build the specialty across the province through training places and research, keeping only a handful of cases." }
+ ],
+ "ai_tasks": [
+  { "name": "Being in the room for play therapy with a child", "how": "Trust is built one week at a time. AI can prepare materials and worksheets at most. Those fifty minutes need a person present." },
+  { "name": "Turning session recordings into chart notes", "how": "AI transcribes recordings and drafts the notes. What a child's gesture meant is for the therapist to check, rewrite and sign." },
+  { "name": "Answering parents' common questions", "how": "AI can answer the usual questions and push out explainers. Where this family is stuck and what to move first takes someone who has met them." }
+ ],
+ "events": {
+  "e_september": "Second week of the school term, and appointments are suddenly booked five weeks out. The children who won't go through the school gate all arrive in the same few days. There aren't enough chairs; parents wait standing.",
+  "e_first_close": "You finish a case properly for the first time. Eight weeks of agreed goodbye, and the child takes apart the bridge in the sand tray and puts it back on the second shelf. Telling this in supervision, your voice drops.",
+  "e_dropout": "A child who came for four months simply stops. On the phone the parent says he's much better, no need to spend this money. There is no goodbye. In the closing reason you can only enter: dropped out.",
+  "e_selfpay": "Psychotherapy is self-pay. A mother takes the high-speed train from Bijie every week, and a session costs her three days' wages. She asks if it could be every two weeks, and you go through the calendar together.",
+  "e_supervision": "Monthly online supervision, paid out of your own pocket. Your supervisor listens to a recording and says you're being angry at the parents on this child's behalf. You go home and read the transcript again.",
+  "e_wechat": "A parent has somehow got your personal WeChat and sends nine long voice messages in the night. Next day you reply only: let's talk at the next appointment, and direct her back to the booking channel. It doesn't feel good.",
+  "e_school_meeting": "School coordination meeting: homeroom teacher, year head, parents around one table. You speak only about what arrangements the child needs, never the diagnosis. The teacher says that's easy for you to say, I have forty-eight in my class. That's true too.",
+  "e_knee": "A decade cross-legged on floor mats and your knees and back come to collect. A colleague in rehab gives you a thick cushion and says nobody recognizes your line of work's injuries.",
+  "e_ai_note": "Speech-to-text arrives, chart drafts write themselves, an hour a day saved. But it records a child's game of tag as \"aggressive behavior.\" You change it back, sentence by sentence.",
+  "e_ai_app": "A parent holds up a phone: my kid talks to this chatbot every night, more than to me. Should I take it away? You start keeping five minutes of every parent meeting for this question.",
+  "e_ai_triage": "The booking system now uses AI scale triage and the queue runs smoother. One particularly quiet child gets pushed far down the list. It is the triage nurse who feels something is off and moves him up.",
+  "e_fatigue": "Eight sessions a day for two weeks. On Friday afternoon a child is telling you about school and you realize you missed the last half minute entirely. You make it item one on your supervision list.",
+  "e_school_back": "The boy who hadn't gone through the school gate in six months walks in on his own in the third week of term. The parent doesn't send thanks. The parent sends a photo: a schoolbag on a classroom chair.",
+  "e_complaint": "A father files a complaint: three thousand yuan and my son's the same, this therapist just plays. At the department meeting you bring out the treatment goals and twelve weeks of progress, and go through them line by line.",
+  "e_lecture": "The district runs a training day for homeroom teachers and you speak for two hours. Some people mark homework in the back. Afterward a few stop you and, voices low, ask about their own families.",
+  "e_county": "Summer teaching visit to a county, four hours of mountain road. Most children there live with grandparents while the parents work in Zhejiang. In the county hospital's meeting room you teach the old folks one thing: turn off the TV when the child is talking.",
+  "e_own_kid": "Your own child lies down howling in the supermarket. You try everything you've ever learned, one by one. Nothing works. Your spouse leans on the cart and grins: go on, expert.",
+  "e_colleague_leave": "A teammate quits to open a private practice at double the fee. Her twenty-odd children have to be reassigned. You take on seven more, and each one starts over from the first session.",
+  "e_new_building": "The clinic moves to the new building. The soundproofing is better; the sand tray shelves take three trips. The children were told a month ago, but one walks in and asks at once: where's the little dog? You go to the third shelf together and find it.",
+  "e_intern": "An intern gets ignored by a child for a whole session and comes out red-eyed. You tell her: you stayed in the room and didn't leave, and that counts.",
+  "e_letter": "A child you finished with long ago is in university now, and sends word through a clinic nurse: she dares to phone in a takeout order by herself these days. You keep it in your head and enter it into no system."
+ },
+ "choices": {
+  "c_tech": { "title": "Sit the Psychotherapist exam", "situation": "The health-professions exam is in spring, and what you must memorize is a long way from what happens in that room each day. You have three children just getting started this spring, and they can't be interrupted.", "options": [
+   { "label": "Sit it", "result": "Three months of cramming on the bus. Afterward you notice those three children's Tuesdays and Thursdays never moved." },
+   { "label": "Next year. Steady the cases first", "result": "No exam this year. Two children's cases close very cleanly." }
+  ] },
+  "c_training": { "title": "Pay for three years of play therapy training", "situation": "A continuous program run out of town: three years, over forty thousand yuan, a flight every quarter on leave. The department won't reimburse it and your pay won't rise. But the children on your list are getting younger, with fewer and fewer words.", "options": [
+   { "label": "Enroll", "result": "Twelve flights. In the third year you start to see what a child is testing when they stand two figures back to back." },
+   { "label": "No. Spend the money on living", "result": "You go on with monthly supervision and the department's case meetings. Slower, and the days are looser." }
+  ] },
+  "c_letter": { "title": "A parent wants a letter for the school", "situation": "The parent hopes you'll word it heavily, so the child can do less homework and skip PE. You know this would let him breathe right now. You also know this piece of paper will follow him until graduation.", "options": [
+   { "label": "Write it as it is, only the arrangements needed", "result": "The parent isn't pleased and asks a second time in different words. You read the same few lines aloud again." },
+   { "label": "Loosen the wording a little", "result": "The child does have an easier term. The year head phones next time, much more polite, and with something probing in it." }
+  ] },
+  "c_studio": { "title": "A private practice comes recruiting", "situation": "A private child psychology center in Guanshanhu is offering twice the session fee, none of the hospital's stack of forms, and no psychiatrist next door.", "options": [
+   { "label": "Go", "result": "It takes four months to close out and refer your children one at a time. Not one is left hanging.", "end": "You move to the practice in Guanshanhu. The rooms are nicer and the invoices nicer still. At the end of each month you begin to know which families can't renew for next quarter." },
+   { "label": "Stay at the clinic", "result": "You say there are doctors here, records, referrals; if something happens to a child someone can catch it. They say to call when you come around." },
+   { "label": "Moonlight a few sessions on weekends", "result": "A bit more money and one fewer Saturday alone. The hospital hears of it and reminds you to file the paperwork." }
+  ] },
+  "c_supervisor": { "title": "Apply for Senior Psychotherapist", "situation": "It takes a paper, teaching records and case statistics. Spend your best therapy hours writing and four fewer children get seen each week. The parents on the waiting list can see that.", "options": [
+   { "label": "Apply, cut four sessions a week", "result": "You write a review of school-refusal cases in the start-of-term rush. The waiting list grows by two weeks. The head nurse says nothing and simply leaves the list on your desk." },
+   { "label": "Don't compete, keep the slots full", "result": "You close nineteen cases this year. Your application form doesn't gain a single line." }
+  ] },
+  "c_ai": { "title": "The hospital wants an AI companion app", "situation": "The hospital is partnering with a company on an AI Q&A for waiting families, and needs a clinician to review content and draw the red lines on what it must never say. It will take your evenings, and your name may not be on it.", "options": [
+   { "label": "Take it on", "result": "You write thirty pages of rules for when it must hand off to a human, more careful than any paper you've done." },
+   { "label": "Leave it. Just the room", "result": "It launches. Parents come and tell you what works and what doesn't." }
+  ] },
+  "c_school": { "title": "Move to the education institute as a school psychology researcher", "situation": "The city wants someone with clinical experience to visit schools and run professional development for all its school counselors. Summers off, and no more days on a floor mat. But from now on you will see teachers, not children.", "options": [
+   { "label": "Go", "result": "During the handover you write each child's therapeutic rhythm into the referral summaries.", "end": "You become a researcher, visiting forty schools a term, observing counselors, marking up their activity plans. In the second week of each September, your phone is suspiciously quiet." },
+   { "label": "Stay and keep seeing children", "result": "You decline, saying you'd like a few more years on the floor. Your knees don't agree, and you don't ask them." }
+  ] },
+  "c_assoc": { "title": "Apply for Associate Chief Psychotherapist and lead a team", "situation": "Leading a team means deciding who takes which child, who needs to stop for a while, which cases go to psychiatry. Your time in the therapy room gets cut in half, and half the department's exhaustion will pass through you.", "options": [
+   { "label": "Apply and lead", "result": "Your first act is capping everyone at six sessions a day, which starts by offending the parents on the waiting list." },
+   { "label": "No team. Keep seeing children", "result": "You say you see children, that's what you are. The team lead post goes to a colleague six years younger, and she often comes by to talk." }
+  ] },
+  "c_merge": { "title": "The clinic is being folded into psychiatry", "situation": "A reorganization puts the therapy team under psychiatry, its schedule under the doctors' group, and a fifty-minute session may become thirty. Some people say this is your chance to move.", "options": [
+   { "label": "Stay and fight for those twenty minutes", "result": "Six meetings, and you save forty-five minutes. You count that as a win." },
+   { "label": "Accept the new schedule and work with it", "result": "Thirty minutes has its own way of being done. It takes you a year to admit it." },
+   { "label": "Leave, open a family consultation room at a community clinic", "result": "You apply for a transfer to the community clinic. The paperwork takes half a year.", "end": "The community clinic gives you a small north-facing room. Most who come are grandparents with children and parents after work, half an hour each, barely any fee. And you finally never have to write a paper again." }
+  ] }
+ },
+ "endings": {
+  "retire": "Even your retirement follows the rules of ending a case: six months' notice to the nine children still with you, counted down week by week. One child asks who will listen to him afterward. You write the next therapist's name on his schedule and let him tape it up himself. Clearing the room, you rake the sand flat. This time you take no photograph.",
+  "burnout": "You begin to lose the thread by the third session of the morning, and your supervisor suggests you stop for a while. You transfer the children out, by the rules, one by one, over four months. Not one is left hanging. The afternoon the paperwork is done, you want to do nothing but sleep."
+ },
+ "stages": [
+  "At intakes you run the scales and take the developmental history while a senior therapist talks with parents, and you learn how to ask a question without frightening anyone. You have four or five cases, every session recorded and taken apart in supervision. The skill at this level is learning how to simply stay, without rushing to do anything.",
+  "Twenty-odd sessions a week in a spreadsheet, each child's hour nailed down. You set treatment goals yourself, meet parents monthly, translate what you observe into things they can do at home, and deal with school counselors. Someone used to absorb parents' anger for you. Now the phone rings at your desk.",
+  "The hard cases come to you, and you begin listening to others' recordings: interns and young therapists lay transcripts on your table and you help them see what they missed. The note templates and the risk-assessment referral process are yours to revise. You and the psychiatrist discuss the same child through one door and leave each other room.",
+  "You write the team's rota, decide who takes which child and who should take fewer this month. Each term you lecture at schools and county hospitals and negotiate headcount and fee items with the medical office. Your own caseload drops under ten. The person answering parents about the waiting list is now you.",
+  "Your desk holds the province's training places, research grants, and teaching agreements with county hospitals. You attend more meetings than sessions. When the health authorities ask about standards, you think three times before each sentence. You still keep three or four children at fixed hours. You kept those for yourself, and nobody can talk you out of it."
+ ],
+ "work": [
+  "You run a Conners rating interview with a seven-year-old's mother. She asks three times about \"often\" versus \"always,\" so you explain the difference using dinnertime.",
+  "Your first solo case. The girl keeps her back to you for the full fifty minutes arranging sand figures. You write down only the order she placed them in. Your supervisor says: that's right.",
+  "Your teacher has you transcribe a session recording, three hours of work. She circles line seventeen. That's where you interrupted the child.",
+  "A ninth-grade boy refusing school comes six times before speaking, and what he talks about is his ranked game. You ask his tier and, for the first time, get a schedule he's willing to look at.",
+  "You write the homeroom teacher half a page with three suggestions: he may arrive late for morning reading, sit near the door, and not stand when his name is called. The teacher replies: okay.",
+  "A child with separated parents gets brought by a different adult each week. You meet each side once and add a line to the treatment agreement: if the person bringing him changes, tell him in advance.",
+  "An intern lays a transcript on your desk. In pencil you mark three sentences she finished for the child. She says she thought that was empathy. You say listen to it again next week.",
+  "A psychiatry colleague wants to adjust a child's medication and asks about six weeks of changes in the room. You turn your notes on play themes into a one-page table, and the two of you check it until the end of the day.",
+  "A new nurse books two children into adjacent slots. You take the schedule back and rearrange it: they're in the same class and must not meet in the corridor.",
+  "On the team rota you cross off Friday afternoon for a therapist who has taken three hard cases in a row. She asks why. You tell her she doesn't need to thank you this month.",
+  "A county hospital's pediatric head wants to start a psychology clinic. You go see the room and advise changing the door to one without glass first. Scales and staffing can come after.",
+  "A draft provincial standard arrives. Item twelve says a session must be no less than thirty minutes. In your comments you write forty-five and attach eight years of dropout data.",
+  "You teach the first class for visiting county doctors with no slides at all. You have them sit on a floor mat for a full fifty minutes doing nothing."
+ ],
+ "past": [
+  "You grew up in Zunyi. A middle school classmate missed a whole term, and the teacher said only that she had family matters. You always remembered how long her seat stayed empty.",
+  "Filling in college choices, your parents wanted nursing. At a normal university you picked psychology over nursing, reasoning it sounded like no night shifts.",
+  "In your third year you volunteered at a special education school. A child held on to your sleeve and walked with you all afternoon. You decided on grad school, and on children.",
+  "Your first-year placement was at a hospital clinic, where you disinfected toys and sieved sand. Your teacher said this too is part of therapy. You didn't believe her then.",
+  "You wrote your master's thesis on school-age children's sleep. Classmates went to corporate user research at double the pay. You applied to this hospital in Guiyang because it was near home, and because the clinic room had floor mats."
+ ],
+ "late": {
+  "pension_note": "Estimate: public hospital staff with a fairly complete contribution base; the pension is about 60 percent of final monthly pay.",
+  "scenes": [
+   "The hospital rehires you for a year to do supervision only. On Thursday afternoons you listen to young therapists talk through where they're stuck. You no longer go into the sand tray room. The mats are too low and you can't get up.",
+   "In the supermarket you hear a mother talking to her child and have already written up an assessment. Then you remind yourself she has no appointment with you, and push the cart on.",
+   "The clinic has more than ten therapists now, AI handles triage and notes, and the young ones can leave at five. You think that's good. You also feel something is a little too fast, and can't say what.",
+   "For half a year you don't want to hear anyone talk. When family members bring up their troubles you say I'm off the clock, and startle yourself saying it.",
+   "You help a friend run a small plant nursery in Qingzhen, watering, repotting, keeping the log. A seedling doesn't need you to understand it. You find that very restful.",
+   "The province invites you to speak on therapist burnout. You go once and spend forty minutes on rotas. Someone asks if you regret it. You say it depends which year.",
+   "Someone at the new place says two o'clock and arrives at ten past. You stand at the door, ill at ease: after all those years, ten minutes late goes in the record.",
+   "You still pay that supervisor an annual fee, two video calls a year. You have no cases left to discuss, so the two of you talk about what you've been reading. It's your own money. Nobody asks you to.",
+   "Every September your phone calendar still pops up: clinic about to explode. You don't delete it, and don't know why you keep it.",
+   "In family arguments you always wait three seconds before answering. Your spouse says this is scarier than the fight. You think it over, and wait another three seconds.",
+   "At the sand pit in Qianling Park a child is building a road. You judge the next block will go in crooked. It does. The child straightens it himself, and you are very glad nobody asked your opinion."
+  ],
+  "closing": {
+   "retire": "Thursday supervision is over. You set the chairs back one by one in their places. It's still raining outside. You brought an umbrella.",
+   "burnout": "Rain falls thick on the nursery's awning. You enter today's repotting count in the log, close it, and there is nothing else to write.",
+   "end": "In the second week of September you see children with schoolbags going in through a school gate, one, and another, none of them walking particularly slowly."
+  }
+ }
+}

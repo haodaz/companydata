@@ -1,0 +1,181 @@
+{
+ "id": "geo-survey-grm",
+ "occupation": "Geological Exploration Technician",
+ "role": "Geological Technician with a Survey Team",
+ "headline": "With a degree in resource exploration you've been assigned to a geological team in Golmud. You go up the mountains in May and come down in October, numbering drill core beside a rig at over four thousand meters, and in winter back at base you turn a summer's figures into a report",
+ "unit": "A geological survey team in Golmud, Qinghai (reconnaissance and detailed surveys for metal ores in the East Kunlun range and salt-lake minerals in the Qaidam Basin)",
+ "unit_type": "Geological survey organization",
+ "city": "Golmud, Qinghai",
+ "city_tier": "County-level city (Haixi Prefecture)",
+ "education": "Bachelor's degree (Resource Exploration Engineering)",
+ "level": "You did well in mineralogy and petrology and you can use a compass. Standing at an actual outcrop you can't tell the rock types apart, and on the plateau you stop to catch your breath for half a minute every ten steps.",
+ "intro": "The streets of Golmud are wide, and the wind drives sand along close to the ground. In the yard of the team's headquarters sit a few modified off-road vehicles, and core boxes are stacked from the storehouse all the way to the eaves. In your first year here you'll ride up the Kunlun at the end of May, and at a rig at 4,200 meters there's a blank logging form waiting for you.",
+ "salary_note": "Estimate: basic pay at Qinghai's survey organizations is modest, and field and high-altitude allowances make up a good part of it. Nearly half of each year is spent in the field, and in years when projects are slow to settle, the bonus can drag into the following year.",
+ "facts": [
+  {
+   "label": "Geological Technician (current level)",
+   "value": "0–3 years, ¥5,270–7,750 a month (national average, derived from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Geological Engineer (3–8 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥10,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Reading outcrops in the field, siting drill holes and taking samples",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Survey plans and searching old records",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "7 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "A layer of frost has formed on top of the tent. The steamed buns in the pressure cooker were made last night. You sip hot water and wait for the tightness in your chest to ease.",
+  "You take your rock hammer, compass, hand lens and route map, and the driver, Old He, drives you to the mouth of the gully. Beyond here the vehicle can't go.",
+  "You climb to an outcrop, knock off a fresh face, look through the lens, lick it, and write down the lithology and attitude. Three steps, one breath.",
+  "Lunch is compressed biscuits and an apple, eaten sitting on a rock. The sun scorches your face and the side in shadow stays cold.",
+  "Down the slope to the rig. The core comes out of the drill rods meter by meter, and you lay it in the core box run by run, writing the depth and lithology. The numbers on the sample bags can't be wrong.",
+  "The big tent only has power during the generator's half hour. You copy your field book's pencil marks into a spreadsheet, fingers too cold to hit the right keys.",
+  "Three minutes each on the satellite phone. All you say is: it's fine up here. Outside, there are almost frighteningly many stars."
+ ],
+ "ladder": [
+  { "title": "Geological Technician", "stage": "Core logging", "focus": "Go up with the project, log drill core, take samples and record geology along traverses, learn the standards." },
+  { "title": "Geological Engineer", "stage": "Your own traverses", "focus": "Take charge of map sheets or drill holes on your own, map geology, site holes, write chapters of reports." },
+  { "title": "Senior Geological Engineer", "stage": "Project lead", "focus": "Lead projects, handle budgets and clients, edit exploration reports, defend at reserves reviews." },
+  { "title": "Chief Engineer of the Survey Team", "stage": "Final say", "focus": "Hold the technical line across all team projects, set exploration plans, sign reports, deal with mineral rights and credentials." }
+ ],
+ "ai_tasks": [
+  { "name": "Reading outcrops in the field, siting drill holes and taking samples", "how": "AI can screen remote sensing anomalies and lay out routes. Standing on a slope and judging what this layer is, where to drill and whether the truck can get in today takes a person." },
+  { "name": "Survey plans and searching old records", "how": "AI can go through old reports and draft a plan. Whether it's right can only be known on site." },
+  { "name": "Compiling maps and drafting reports", "how": "AI can turn data into maps and write chapter drafts. A person has to check them against the physical samples, and sign." },
+  { "name": "The repetitive work of GIS mapping and 3D modeling", "how": "Cartographic finishing, modeling and batch output can mostly be left to software, with people spot-checking for sense." },
+  { "name": "Resource estimation", "how": "Models can run many scenarios. How to set the cutoff grade and whether the conclusion stands up has to be defended by a person." }
+ ],
+ "events": {
+  "e_altitude": "In your first week you had altitude sickness, your head hurting too much to bend over, and threw up your whole breakfast. The project leader pushed you down in the tent on oxygen for half a day, and the next day started you on the easiest traverse.",
+  "e_core": "The project leader went back over a stretch of core you had logged and changed your 'gray sandstone' to 'altered fine-grained diorite'. You looked at the two specimens until sunset and, for the first time, could see that small difference.",
+  "e_stuck": "The vehicle sank into thawing permafrost, and the more the wheels spun the deeper they went. You dug for four hours, wedged in tent poles and woven sacks, and got out before dark. Old He talked the whole time he dug. He had been stuck in places like this eleven times.",
+  "e_mineral": "When the trench was opened, a mineralized band shone copper green in the sun. Assays came back with twice the grade you'd expected. That night Old He stewed a pot of mutton, and your tent leaked wind very cheerfully.",
+  "e_dry_hole": "None of the four holes drilled according to plan found decent ore. The client's phone calls went from weekly to daily. In your report you wrote the line 'no economic orebody found', deleted it, and wrote it in again.",
+  "e_winter_report": "The team came down in October and the base's heating made you drowsy as soon as it came on. The whole winter went to sorting data, drawing maps and writing reports. You sat at a desk for three months and came out twenty jin heavier than on the mountain.",
+  "e_right_expire": "This exploration license expires at year's end and the renewal is one piece of work short. You rushed to drill one more hole before the mountains closed, then drove the file all the way to Xining. The person at the window asked three times what the scale of this map was.",
+  "e_payment": "The client held up the project's last payment for a year, and everyone's year-end bonus was waiting on it. The team leader took the report and sat for three days at the mining company boss's office. He came back with a bank acceptance bill due in six months.",
+  "e_hemoglobin": "At the staff health check your hemoglobin was high and your heart a little enlarged. Go to lower altitude more often, the doctor said. You laughed and put the form inside next field season's plan.",
+  "e_knees": "Year after year of long walks in cold places, and your two knees and finger joints have started to change shape. You can't bend down to take samples from the ground anymore. When the young people crouch, you point with your rock hammer.",
+  "e_far": "When you went up the mountain in May you had someone. Back in Golmud in October, the voice on the phone said: the time we talk in a year doesn't add up to the price of one table's dinner. At the shop by the base gate you bought a bottle of liquor, then put it back.",
+  "e_lowland": "On leave in the lowlands, you got off the plane limp as water, oxygen-drunk and sleepy for three days. Your family says all you do when you come home is sleep. You say it's an after-effect of good air.",
+  "e_salt_lake": "You were transferred to the salt-lake project: a white crust to the horizon that sounded like breaking glass under the truck. Sampling the brine, your waterproof boots got cut into strips by salt grains.",
+  "e_ai_remote": "A remote sensing interpretation system circled every alteration anomaly, more than you had walked in a whole summer. The young people say no one will need to go up the mountain anymore. You ask: within this circle, do you know which part is the shadow of the mountain?",
+  "e_drone": "Airborne magnetic surveys by drone replaced some foot traverses. A peak that used to take three days to climb was swept in half a day. You walk much less now, and no longer remember what those gullies looked like.",
+  "e_ai_report": "The report assistant wrote a flawless geological overview with every stratigraphic name correct. Turning to chapter four, the review expert asked why this gully was described exactly like the one in the next project over.",
+  "e_team_end": "The project was finished and its report submitted, and the field unit was disbanded the same year. People who had spent five years together on the mountain went off to four places. You all had a meal at the mutton restaurant by the base gate, and the next day the vehicles were gone.",
+  "e_reform": "Geological organizations began converting into enterprises, and permanent state posts had to be recalculated. The corridor was papered with documents. You found your own line, same as everyone else's, and read it twice."
+ },
+ "choices": {
+  "c_field": { "title": "Back up the mountain, or stay at base", "situation": "Before the second season the project leader asks if you'd like to stay at base this year and work on data; he remembers your altitude sickness. Going up pays over a hundred yuan a day more in allowances, but your heart still beats faster than other people's.", "options": [
+   { "label": "Go up", "result": "You took plenty of medicine and went back up. By August your breathing on the slopes had about the same rhythm as Old He's driving." },
+   { "label": "Stay at base for a year", "result": "You entered more than ten years of the team's drill hole data in the database and found two maps that contradicted each other. The project leader looked them over and didn't make fun of you." }
+  ] },
+  "c_cert": { "title": "Second-class constructor license or a part-time master's", "situation": "Those on the team with a second-class constructor license can earn extra on outside engineering surveys. Others suggest you do a part-time master's, which looks good for your professional title. There are only three months each winter, and you can pick only one.", "options": [
+   { "label": "Get the license", "result": "You did practice exams in your room at base all winter. With the license in hand, small outside jobs could carry your name, and there was a little more money." },
+   { "label": "Do the part-time master's", "result": "You started a thesis on a metallogenic belt in the East Kunlun, and your advisor's comments often had to wait until you came down the mountain." }
+  ] },
+  "c_sample": { "title": "The client wants better numbers", "situation": "The boss of the mining company wants to see better grades before his financing round. He hints you might sample those spots again. You know about sample representativeness: pick the rich parts and the grade looks good, and a whole report's conclusions go crooked.", "options": [
+   { "label": "Stick to the standard", "result": "You put the sample spacing and method on the first page of the report, and the grade came out lower than the boss wanted. The final payment was seven months late. The team leader did not blame you." },
+   { "label": "Add a few samples, label them honestly", "result": "You took denser samples in the well-mineralized section and said so in the report. The boss took it to his financing round, and the investors' expert understood the label." }
+  ] },
+  "c_senior": { "title": "Project lead, and Senior Geological Engineer", "situation": "The team has a new detailed survey that needs a project lead, and done well, it would be the case for applying for Senior Geological Engineer. It means managing the money, the drilling crews and the client, and two more months in the field each season.", "options": [
+   { "label": "Take the project", "result": "For the first time you wrote a drilling price per meter on a budget, had a fight with the rig foreman, and in the end treated him to a meal." },
+   { "label": "Keep doing the technical work", "result": "Your project lead is two years older than you. When something's hard he asks you first, and it's still his name on the cover." }
+  ] },
+  "c_mining_co": { "title": "A mining company makes an offer", "situation": "A mining company you have dealt with asks you to be its resident mine geologist at double the pay, living on site with one week home a month. You think of those payments held up a year, and you think how here on the team you are just one of many.", "options": [
+   { "label": "Go to the mine", "result": "You wrote your transfer request, and the unit head asked you to finish this season.", "end": "You put on the mine's work clothes, and from then on you dealt with stopes, blasting and daily output. The lines on the map were no longer hypotheses. The next day someone would drill and blast by them." },
+   { "label": "Don't go", "result": "You wrote back to them. When the team came down in October, the wind at the base gate was as strong as last year." },
+   { "label": "Use it to negotiate field allowance with the team leader", "result": "The team leader looked at the offer, added one grade to your field allowance, and had you follow one more hole this year." }
+  ] },
+  "c_ai_tool": { "title": "Learning 3D modeling and remote sensing", "situation": "The team wants people who can use 3D modeling and machine learning to find ore, which means half a year's full-time study in Wuhan. You'd miss this field season. Others would walk your unit's traverses, and those mountains would have nothing to do with you.", "options": [
+   { "label": "Go and learn", "result": "Back at work you began screening targets with the model. The first target drilled showed no ore. The second did." },
+   { "label": "Go up the mountain again this summer", "result": "You walked those gullies again. Your traverse notes come slower than the model, but young people find their way by them more easily than by the map." }
+  ] },
+  "c_home": { "title": "Where to make a home", "situation": "Children raised on the plateau need their heart and lungs checked each year, and your partner wants to move to Xining or the lowlands. If your family moves, you'll see them less than two months a year. If they don't, all of you stay in Golmud's wind and sand.", "options": [
+   { "label": "Family to Xining, you stay on the team", "result": "You started shuttling along the Qinghai-Tibet line. When the train goes through Guanjiao, the signal drops for a few minutes, and that was always when you were replying to a message from home." },
+   { "label": "Transfer to a survey institute in the lowlands", "result": "You packed a roomful of specimens, and a few couldn't come.", "end": "You moved to a survey institute in the lowlands, doing engineering boreholes and foundation reports. The elevation is only two hundred meters and your heart has slowed down. Outside your office window is another office building." },
+   { "label": "Stay in Golmud", "result": "Your family stayed. Now and then there's a small red mark on your child's health form, and you have all learned not to be too nervous." }
+  ] },
+  "c_chief": { "title": "The post of Chief Engineer of the Survey Team", "situation": "The old chief engineer is retiring. The Chief Engineer of the Survey Team signs every report the team produces, has to deal with credential inspections, and has to get along between client and team leader. The team leader asks if you're still willing to go up the mountain. You'd go up less.", "options": [
+   { "label": "Compete for it", "result": "You began reading other people's reports indoors, going up the mountain just twice a year. On their maps you write: I walked this gully, and it isn't like this." },
+   { "label": "A few more years on projects", "result": "You told the team leader you'd run projects a few more years. The new chief engineer used to work under you, and he still stands when he asks you something." }
+  ] },
+  "c_close": { "title": "After the field unit is abolished", "situation": "The license for this area expired and was not renewed, and the field unit is being abolished, with staff to be reassigned. You could go to the team's engineering survey company and do foundation reports, or take medical leave from your post; your body has held up at this altitude for a long time.", "options": [
+   { "label": "Go to the engineering survey company", "result": "You went from looking for ore to looking at foundations, a different kind of borehole, smaller drawings and more anxious clients. There's still a field season, only you no longer need a pressure cooker." },
+   { "label": "Take leave from your post", "result": "You finished writing up the field unit's work summary.", "end": "You did the paperwork and moved somewhere lower. You took one rock hammer with you and hung it in a room with no rocks in it." }
+  ] }
+ },
+ "endings": {
+  "retire": "When you did your paperwork, new people on the team were counting core boxes in the storehouse, and some of those boxes are older than they are. Your high-altitude allowance ends this month; the figure is written out clearly on the slip. You waited in the yard for the car. The wind drove sand along close to the ground, and when the car came, you brushed off your trouser legs.",
+  "burnout": "That year your heart's figures were worse than any before, and the doctor forbade you from going above three thousand meters. You stayed at base running the sample store, labeling box after box of core. In summer, the yard suddenly goes empty."
+ },
+ "stages": [
+  "You go up the mountain with the project and log core run by run, taking samples, writing labels and boxing them according to the standard. On traverses you carry the sample bag behind the engineer, noting point numbers and measuring attitudes. Back down, you sort field records into spreadsheets, and you finish off the corners of the maps. The rig foreman thinks you're slow, and so do you.",
+  "A traverse or drill hole is now your responsibility: pick the point, read the outcrop, judge whether the hole should go deeper, and bring up core with the drilling crew. In winter you write one or two chapters of the report, going back to the core boxes. When the client's site representative asks about progress, you can explain it a little better now. Before setting out you've begun working out for yourself whether there is enough fuel and water.",
+  "The project's money, people, vehicles and schedule are all yours. You draw up the budget, sign contracts for drilling, assays and vehicles, and negotiate the workload with the client. You edit the report and go through dozens of maps one by one; at the reserves review, you answer the experts' questions. You go up the mountain less, and every trip means working out a whole year's decisions.",
+  "Every report the team produces needs your signature on the cover. Each year you decide the team's exploration plans, which target deserves the first hole, and you check new people's logging and sampling. Credential inspections, license renewals, the client's lawsuits all land on you too. Your greatest power is saying 'we won't drill here', and it is also the hardest thing to say."
+ ],
+ "work": [
+  "A broken stretch of core comes out almost as rubble and the rig foreman says leave it. You lay the pieces back in order in the box, separate them with slips of wood, and write the recovery rate on the run sheet.",
+  "The project leader has you measure a set of joints at the mouth of the gully. You read twenty compass values, and the next day you notice you never corrected for magnetic declination, and recalculate every one.",
+  "The assay lab returns a bag because the number is illegible. You go back through your field book and match it by sampling location. From then on you write everything twice in pencil.",
+  "At three hundred meters the core shows an altered zone. You ask for permission and decide to drill fifty more meters. The rig foreman works out the wages and nods.",
+  "You report progress at the client's site office, and their general manager asks if you have found ore. You open the column log, point to that section, and say that for now you can only say mineralization.",
+  "In winter you're drawing a 1:10,000 geological map, and a fault on it just won't connect. You go back over the traverse records and find you copied two point numbers in reverse.",
+  "The drilling contractor asks for eighty yuan more per meter. With last year's settlement sheet and the access road conditions you talk to their boss all afternoon at base. In the end it's up thirty.",
+  "At the reserves review an expert challenges how you set the cutoff grade. You call up assays from five holes and put the orebodies drawn both ways on the screen together.",
+  "The generator on the plateau breaks down and parts will take two days to come up from Golmud. You postpone the next hole and take the whole group down the gully to make up a traverse. Nobody sits idle.",
+  "A technical lead submits a detailed survey report with data you can't fault. You turn to the sampling plan, point at one spot, and ask: how did the truck get to that trench?",
+  "The credential inspectors arrive to check licensed staff and instrument calibration. You have the total stations' calibration certificates laid out by year, and two that have expired are taken out of service that day.",
+  "Whether to spend more before a license expires: you look at three years of work and the boss's cash flow side by side and advise the client to walk away this time. The client says nothing for a long while."
+ ],
+ "past": [
+  "Your geography teacher took the class up the hill behind the school to look at rock layers, and you brought home a stone with a seashell's print on it. Your mother used it to weigh down the pickles.",
+  "When you filled out university choices your score was enough for the provincial university of geology. A relative said it was a major for those always out in the wilds. Your father said the wilds are the country's, go ahead and study it.",
+  "On your sophomore field camp in the Qinling, the teacher had everyone carry twenty jin of rock down the mountain. Your legs shook for three days, and one evening over specimens you finally told plagioclase from quartz.",
+  "Classmates started studying for graduate exams or the civil service. You applied to the survey team recruiting on campus, where the recruiter said what we need most are those who'll actually go.",
+  "Before graduating you looked up Golmud from the job posting. On the map there was only blank space around that dot. You mailed back the contract, and bought a good pair of sunglasses while you were at it."
+ ],
+ "late": {
+  "pension_note": "Estimate: survey organizations converting to enterprises pay older employees under transitional rules, with high-altitude seniority and regional allowances. The pension comes to about 60 percent of final pay.",
+  "scenes": [
+   "You moved to a lowland city. In the first month you kept getting drowsy, and walked fast with no destination. A neighbor asked what you did when you were young. You say you walked.",
+   "They've built a rockery in the complex garden. Passing by you stop and tell the guard these stones are laid with their bedding the wrong way up; they ought to be lying flat. Would you like to rearrange them, the guard says.",
+   "You look over the countertops, outer walls and park benches at home. These years didn't leave you much money, but when it comes to buying stone you have never been cheated.",
+   "You have cataracts, from decades of plateau sunlight. After the surgery you see the back of your hand clearly for the first time, the sun spots packed closer than contour lines on a map.",
+   "On summers you don't go up, you wake earlier. The temperature in the sample store hardly changes from season to season. Every day you check the numbers on new core boxes, while the wind blows hard in the yard.",
+   "You started taking anticoagulants on schedule and reporting a number to the hospital every month. You keep them in a table, time on the horizontal axis, milligrams on the vertical. The doctor looks and says: are you planning to publish?",
+   "To you now the word geology is mostly the voiceover in documentaries on television. You fall asleep partway through and go on watching the next day.",
+   "In the first year, when the end of May came, you found yourself looking for sunscreen without knowing why, and only then remembered you weren't going up the mountain.",
+   "There's one thing you do better than your new colleagues: half an hour before the rain, you know to move the car to higher ground.",
+   "You hear that road has been paved with asphalt and people drive at eighty in the places where trucks used to sink. You haven't gone back. Some of those gullies you can draw with your eyes shut. There is no need to go back.",
+   "On family trips, others photograph sunsets and you photograph the sections of road cuttings. The album is full of dusty gray rocks, with very accurate dates.",
+   "The wooden handle on your rock hammer was replaced once; the head is the original. These days it cracks walnuts, one tap each."
+  ],
+  "closing": {
+   "retire": "When the wind is light, you close your eyes in the sun and can recall the colors of those mountains, band after band, from gray to rust red. There's no need to record them.",
+   "burnout": "Another batch of vehicles has left the yard. You finish labeling this box and put the pen back behind your ear.",
+   "end": "The sky stays light late in the evening, and layer upon layer of cloud is pressed along the horizon. You can see what kind of bedding that is. Then you go in and cook."
+  }
+ }
+}

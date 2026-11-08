@@ -1,0 +1,147 @@
+{
+ "id": "expo-build-yw",
+ "occupation": "Exhibition Builder",
+ "role": "Custom Booth Site Technician",
+ "headline": "A site technician with a booth-building company in Yiwu: two days and two nights to get into the hall, daylight spent on drawings, midnights spent minding the carpenters",
+ "unit": "A trade-show building company in Yiwu (custom booths, shopping mall displays)",
+ "unit_type": "Private exhibition contractor",
+ "city": "Yiwu",
+ "city_tier": "County-level city",
+ "education": "Vocational college (architectural decoration)",
+ "level": "You can read a plan and an elevation; your layout marking is still slow",
+ "intro": "Move-in at the Yiwu expo center starts at eight tomorrow morning, and your entry pass hasn't been laminated. The supervisor tosses you a roll of drawings and points to a row of thirty-six-square-meter custom booths. Two days and two nights, he says; the exhibitors arrive at noon the day after tomorrow to set out their goods, and by then there can't be a single wood shaving on the floor. Outside, the trucks are backed up to the intersection, and the carpenters are smoking in the truck beds.",
+ "salary_note": "Estimate: Yiwu booth builders get overnight pay and project commissions in peak season, so yearly take-home runs a little above the national figure for the trade. In the off-season it's base pay only.",
+ "facts": [
+  { "label": "Site Technician (current level)", "value": "0–3 years, ¥5,270–7,750 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Site Supervisor (3–6 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥13,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Marking out the site and building truss and aluminum structures", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Sequencing each trade's arrival on site", "source": "AI exposure" },
+  { "label": "Open positions", "value": "5 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Lining up outside the hall to scan your pass, deposit receipt stuffed in your pocket. Each contractor's truck gets an assigned time slot in the service lane. Miss it and you wait until afternoon.",
+  "Marking out. Tape measure, chalk line, laser, working outward from the hall column. Thirty-six square meters on the drawing is off by five centimeters on the floor. You call to ask which side gives.",
+  "The carpenters have their nail guns going and you check dimensions from the platform. The show organizer's inspector measures the height and says this feature is ten centimeters over the limit. Change it or refile the drawing.",
+  "Fetching LED modules from the truck, but the service lane is jammed. You carry two cases around through the fire corridor. A guard stops you. You offer a cigarette, then your pass.",
+  "Halfway through a boxed dinner the exhibitor video-calls. The boss has seen the render and wants a dark back wall. Three hundred-odd square meters of printed fabric are already done.",
+  "Half the hall lights are off; only the build area is lit. Electricians pull cable, painters skim putty, and everywhere it's saws and paint. You run between booths with one bar left on your phone.",
+  "Laying carpet. One person on their knees pushing, one behind trimming, seams lined up with the light rig. Your knees are awake before your brain.",
+  "The exhibitor comes to place his goods. The boss runs a hand across the counter and says this white is yellower than the picture. You look at him, look at his goods, and nod. Right. We'll fix it."
+ ],
+ "ladder": [
+  { "title": "Site Technician", "stage": "On site", "focus": "Marking out, watching carpenters and electricians, running for materials, touching up paint, handling passes and deposits. Advancement comes from accurate lines and not dropping anything." },
+  { "title": "Site Supervisor", "stage": "One booth", "focus": "Running a custom booth from move-in to tear-down, sequencing trades, dealing with the show organizer and exhibitors face to face, holding work-at-height and electrical certificates." },
+  { "title": "Build Project Manager", "stage": "One show", "focus": "Managing many booths at a show: filing drawings, pricing, controlling cost and material loss, answering to organizers and the venue, and being the first one called when something goes wrong." },
+  { "title": "Director of Engineering", "stage": "Company's site work", "focus": "Crews, suppliers and projects across cities, setting safety rules and settlement floors, negotiating annual framework deals with major clients." }
+ ],
+ "ai_tasks": [
+  { "name": "Marking out the site and building truss and aluminum structures", "how": "Floor levels, columns and rigging points never quite match the drawing. Layout and construction are done by people measuring and deciding on site; AI's dimension lists are just a reference." },
+  { "name": "Sequencing each trade's arrival on site", "how": "AI can schedule electricians, carpenters, painters and AV crews and catch drawing conflicts. On an all-night site, who goes first and who waits is a person's call." },
+  { "name": "Safety patrols for height and electrical work", "how": "AI can spot missing harnesses and messy cables in photos and generate checklists. The patrol and the signature have to belong to a person." },
+  { "name": "Estimating materials and cost", "how": "AI can calculate board and aluminum use, compare quotes and warn of overruns. Negotiating, chasing suppliers and deciding where to save are for a person." },
+  { "name": "Reworking plans after changes", "how": "AI can turn out alternatives quickly from drawing changes and venue limits. How to change it on site and who bears the consequences gets decided face to face with the exhibitor." },
+  { "name": "Final acceptance with exhibitors and organizers", "how": "AI can organize checklists and punch lists. Confirming on the spot, settling disputes, and getting an exhibitor to nod at midnight are all up to people." }
+ ],
+ "events": {
+  "e_line": "You mark one line wrong and the platform sticks eight centimeters into the aisle. The neighboring contractor calls the organizer to measure it. The carpenters rip it out and nail it again, a night's work gone, and the supervisor puts it on your tab.",
+  "e_deposit": "The floor isn't clean at tear-down and the organizer keeps ¥2,000 of the deposit. The boss tells you to sort it out with the carpenters. They say their job was already settled.",
+  "e_overnight": "The autumn expo runs straight into the big fair in Guangzhou. In one month you get six full nights of sleep, and your overnight pay is more than your base.",
+  "e_offseason": "July has no shows and the company pays base only. You take a mall's Children's Day display and a factory showroom renovation, and turn the old light boxes in the warehouse around to use the back sides.",
+  "e_tearing": "The show closes at four and tear-down starts at five. The wall you stood up over three nights goes down under a saw in a dozen minutes. Putty dust off the wood makes everyone's eyes run.",
+  "e_christmas": "A Yiwu Christmas ornament dealer exhibits and wants the booth built as a snow house. A foreign buyer circles it three times and takes a photo at the door. The dealer signs two more containers and slips the crew a carton of cigarettes.",
+  "e_arrears": "A jewelry factory's final payment is six months late; the boss says the goods didn't sell. The company sends you to collect. You sit in their sample room drinking three pots of tea and come away with half.",
+  "e_ticket": "Your work-at-height certificate is due for renewal and you only remember the day before it lapses. You take a cab from the hall to the test center with white glue still on your shoes.",
+  "e_ai_render": "The design team starts generating renders with AI, twenty versions a night, and exhibitors can't choose. One of them shows a cantilever with no column beneath it. In the group chat you ask whether it's planning to float.",
+  "e_ai_schedule": "The company adopts scheduling software, and arrival times go down to the half-hour. On the first morning the electricians' truck gets stuck on the highway, the chart goes red, and the crew chief holds up his phone and asks who he's listening to now.",
+  "e_ai_photo": "Floor cameras start automatically flagging missing helmets and ladders set too high. Your phone buzzes with each one. The lead carpenter gets tired of it and moves the work on the side facing the camera to daytime.",
+  "e_ban_wood": "New venue rule: all-timber custom booths are out, and it's reusable aluminum systems from here on. The carpenters who stayed with the company for ten years build three last booths that autumn and go home to Anhui.",
+  "e_knee": "After a decade on carpet, your knees start to creak on stairs. The doctor says softened kneecap, stop kneeling. You put a pair of masons' kneepads in your toolbox and kneel again next show.",
+  "e_stomach": "Boxed lunches, strong tea, and instant noodles before dawn. One tear-down night your stomach folds you double at the edge of the service lane. The endoscopy report says superficial gastritis, and you tuck it in with the construction drawings.",
+  "e_foreign": "The company lands a show in Dubai. You fly out with three people and two containers. The local workers don't speak your language, so you draw on the floor, and three days later the booth is up. You come back a shade darker.",
+  "e_kid": "On the kindergarten's parent contact list, the father's number only answers after midnight. In spring and autumn your spouse does drop-off in the morning and pick-up at night. Your family's calendar runs on the show schedule.",
+  "e_awardbooth": "The organizer gives out Best Booth and yours gets a certificate. The boss is pleased and takes the whole crew for a street-side dinner. The following year that exhibitor switches to a cheaper builder.",
+  "e_mall_eye": "On a family trip to a new mall, you stand before the atrium display, look up at the rigging, look down at the platform edging. Your spouse asks if you like it. You say this will take four hours to tear down."
+ },
+ "choices": {
+  "c_cert": { "title": "Get certified", "situation": "Sites need people with work-at-height and low-voltage electrician certificates, and the company will reimburse half. Electrician training takes two full weeks, but those two weeks are the middle of autumn show season. The supervisor says after New Year would be better.", "options": [
+   { "label": "Go these two weeks", "result": "You get certified and come back to find half your work reassigned, and your commission with it. At the next show, the organizer's inspector asks for you by name." },
+   { "label": "After New Year", "result": "You earn all of the autumn's overnight pay. By New Year, the training center is booked until March." } ] },
+  "c_supervisor": { "title": "Take over as Site Supervisor", "situation": "The supervisor has left, and the boss asks if you dare take over as Site Supervisor, starting with a fifty-four-square-meter booth. Take it and workers and exhibitors will all aim their anger at you. Don't, and next time someone from outside gets the seat.", "options": [
+   { "label": "Become Site Supervisor", "result": "Your first booth runs over the height limit, and you file a revised drawing overnight. That lost night is what gets the head carpenter to start calling you boss." },
+   { "label": "Another year as is", "result": "The new supervisor is a year younger than you. You keep marking lines and running materials, and you get off work before he does." } ] },
+  "c_system": { "title": "Aluminum systems and digital drawings", "situation": "The boss wants to try reusable aluminum systems and needs someone to learn the design software and AI drafting to build a modular library. It's less glamorous than running a site, and six months won't show results.", "options": [
+   { "label": "Learn it, build the library", "result": "You turn common sizes into modules and booths start to feel like building blocks. You also begin to know where AI drawings can't be built." },
+   { "label": "Leave it, keep doing timber", "result": "You remain one of the fastest timber builders. Meanwhile, on quotes, the unit price next to 'system build' looks better every year." } ] },
+  "c_advance": { "title": "Front the money?", "situation": "An old client asks the company to front the cost of building for a big show and promises to settle after. Show money is never certain. The boss asks your opinion. You have four crews waiting to be paid.", "options": [
+   { "label": "Front it, keep the client", "result": "The booth looks great. The final payment slips to next year, and crew wages come out of your commission first. Next year this client gives you three shows." },
+   { "label": "No, lose the job if needed", "result": "The client finds another builder. Your crews have fewer jobs this autumn, but their pay arrives monthly." } ] },
+  "c_own": { "title": "Start your own outfit", "situation": "The head carpenter says if you bring clients and he brings people, three people can run a booth-building company in Yiwu. Rent is cheap and warehouse space can be borrowed. What it takes is the nerve to keep paying people through an empty July.", "options": [
+   { "label": "Start the company", "result": "You take a photo in front of the business registration office, send it to your parents, and go buy a hundred boxes of screws at the wholesale market.", "end": "You left the company and opened a three-person booth-building outfit in Yiwu, marking your own lines, doing your own quotes, chasing your own final payments." },
+   { "label": "Keep working for others", "result": "The head carpenter opens his own. A year later he takes you to dinner, and his phone rings five times, every time about money." } ] },
+  "c_pm": { "title": "Promotion to Build Project Manager", "situation": "The company wants twenty-some booths at a big show and needs a Build Project Manager to coordinate them. Filing, settlement and safety responsibility are all yours to sign. If this show goes badly, your name goes on the organizer's blacklist.", "options": [
+   { "label": "Take on the show", "result": "You use seventeen spreadsheets to lay out twenty-three booths, and the last carpet seam is pressed at seven in the morning before opening. Settlement takes two weeks. The boss changes your title." },
+   { "label": "Only the booths you know", "result": "Your booths are all solid. On the bigger picture, someone in front of you takes the blame." } ] },
+  "c_rigging": { "title": "Change the rigging?", "situation": "The night before opening, the exhibitor wants the LED screen hung half a meter farther out. The rigging points are nearly at capacity, the structural engineer has gone home, and it's too late to refile. This is your biggest client this year.", "options": [
+   { "label": "Refuse, to his face", "result": "The exhibitor wears a cold face for all of opening day and finds three flaws at settlement. You put it in the project review, in very few words." },
+   { "label": "Add guy lines, take it on yourself", "result": "You and the crew spend the night adding a set of guy lines and the exhibitor is happy. For all three nights of the show, back at the hotel, you check in with the person on duty once more." } ] },
+  "c_mall": { "title": "Move to mall displays", "situation": "A commercial real estate firm in Hangzhou is hiring a display engineering lead. Nine to six, four themes a year, no all-nighters. Less than peak-season project pay, more than the yearly average, and probably kinder to your stomach.", "options": [
+   { "label": "Go to Hangzhou", "result": "On your first weekend you wake up at ten and assume your alarm is broken.", "end": "You left the halls for mall displays in Hangzhou. Christmas trees and New Year lanterns went up on the dates in the contract, and the midnight saws became someone else's." },
+   { "label": "Stay in the halls", "result": "You swipe the listing away. The next week, the diesel smell of the service lane wakes you right up again." } ] },
+  "c_director": { "title": "Compete for Director of Engineering", "situation": "The boss wants to hand off the whole site operation and asks you to compete for Director of Engineering. Supplier accounts and safety would be yours, and so would the annual framework contracts. You'd basically stop being on site.", "options": [
+   { "label": "Compete for it", "result": "Your phone moves from the floor to the meeting room. You spend your days on quotes and material loss, and when you visit the hall, it's a walk around." },
+   { "label": "Stay on site", "result": "The people at the hall go on calling you master. That name is worth more than the title, and your knees will have to fend for themselves." } ] }
+ },
+ "endings": {
+  "retire": "The year you leave, the Yiwu halls have moved to aluminum systems and all-night sites are down by half. The deposit on your last project comes back to the account, a small number. In retirement you still wake early in spring and autumn. Passing the service lane and seeing trucks lined up, you do the math. Thirty hours to go.",
+  "burnout": "Your stomach and knees come for you in the same year, and the arrows on the checkup report would fill a row. You hand your pass to the office and lie at home for three weeks, starting to hear nail guns inside your head. The company gives you a modest payout. Later you mind a building-materials shop, and every afternoon at six you close on time."
+ },
+ "stages": [
+  "Your job is to make the drawings real on the floor: mark out, check dimensions, run materials, and carry messages between the carpenters and electricians. One sentence from the supervisor on the phone has to be translated for three trades. Passes, deposit slips and power box applications live in your waist bag, and at tear-down you're the last one sweeping.",
+  "A booth is yours from move-in to tear-down. You set the order of the trades, platforms before rigging or not, how electricians and painters get staggered, and why this wall is this tall when the inspector asks. The exhibitor's boss calls at midnight, and now he calls you. The waist bag has become a folder holding a safety responsibility agreement.",
+  "You now have twenty-some booths at a single show. File, quote, sign, control material; walk the hall by day, revise budgets at the hotel by night. You deal with the organizer, the fire inspectors and show management, and remember each one's temper. Site supervisors call you with questions. You are the one on the other end of the phone now.",
+  "You run the company's site operation: which crew chiefs to trust, which materials supplier pays out slow, which city's organizer needs warning ahead of time. Annual framework contracts sit on your desk, and you edited the last version of the safety code. When you go to the floor it isn't to work. It's to see whether the new project manager can hold up."
+ ],
+ "work": [
+  "Your first time with a chalk line, it snaps an inch off. The head carpenter scuffs it away with his foot and has you measure again from the column, telling you as you go that the column isn't straight either.",
+  "Two in the morning, you're out of self-tapping screws. You ride a shared bike three kilometers beyond the hall to a hardware store, knock at the shutter, and the owner comes down in slippers and charges you five yuan extra.",
+  "At tear-down you label every light box. The supervisor says don't bother, they're disposable. You keep three anyway, and July's mall display puts them to use.",
+  "Electricians and carpenters argue over who goes first with the cable trough. You have the carpenters leave a gap in the platform and the electricians run first. Each side saves half an hour, and neither thanks you.",
+  "The inspector says this booth's fire aisle is ten centimeters too narrow. You measure it with him once more and move a meeting table inward. He ticks his sheet.",
+  "An exhibitor suddenly wants a tasting counter. You borrow two counter tops from a neighbor's dismantled booth, split a line off your own power box, and have it wiped clean half an hour before opening.",
+  "You chart the power capacity for twenty-three booths and find two that overload the box together. You file the extra application at the organizer's office three days ahead, and when it's stamped others are still in line.",
+  "At settlement the client's buyer goes through the extras with what might as well be a magnifying glass. You order the change photos by time and go through them one by one. He pays six thousand less, and you gain a regular.",
+  "A new site supervisor panics on his first job and calls to say the lights won't work. You don't go. You ask four questions by phone and he finds the loose connector himself.",
+  "You read the supplier payment schedule and swap the one taking three months for another. Aluminum prices rise next year, your contract price doesn't, and at the annual dinner the boss drinks to you.",
+  "You redraft the new height-work code five times, spelling out ladders and lifts separately. The head carpenter says it's too long, so you cut the first page down to three lines.",
+  "A big client in Guangzhou wants a three-year framework and asks to see safety records first. You bring seven years of patrol sheets. By the tenth page, they start talking about price."
+ ],
+ "past": [
+  "Your family's in Dongyang, and your father makes carved furniture. In his workshop you learn to sand, and you learn you don't want to sand for life. You go on to high school, with worse grades than he hoped for.",
+  "You choose a vocational program in architectural decoration, thinking at least you'll be drawing in an office. In your first drafting class, the teacher has you measure your dorm and draw it.",
+  "You spend the summer helping a cousin who does carpentry in Yiwu's exhibition halls. The first time you walk into a hall before opening, the whole space is sawdust and light. It looks like a present being unwrapped.",
+  "An internship at a Hangzhou design firm doing renders. The boss says nothing you draw can be built. You go back to Yiwu to follow your cousin's crew and start using your school CAD for layout.",
+  "At graduation a booth company boss asks if you can stand all-nighters, and you say you've already done them. He tosses you a reflective vest and sends you to the hall to find a crew chief named Hao."
+ ],
+ "late": {
+  "pension_note": "Estimate: booth companies mostly pay social insurance on a low base, without overnight pay or commission, so the pension is about forty percent of final monthly income.",
+  "scenes": [
+   "You fix curtain rods, table legs and door stops for every household in the compound, and the management office says you could run a repair stall. You go and measure the stage in the activity room, and say that seam will give out sooner or later.",
+   "Yiwu hosts a bigger show than ever, half its booths prefabricated modules that just snap together. You buy a ticket and walk through. No sawdust, nobody on their knees.",
+   "Your stomach now takes only warm food. You lay out the doctor's pills like a show schedule, Monday through Sunday, each small compartment an arrival time.",
+   "The owner of the materials shop asks if this kind of board is any good. You tell him it won't hold a screw, fine for a booth, not for a living room. The next day he moves it to the back row.",
+   "Your sleep never recovers. Every autumn you wake at three. You've tried melatonin, tried running, and then you buy a hiking map of the hills around Yiwu to use up the small hours.",
+   "Low contributions mean a retirement income of little over ¥2,000 a month. You start building platforms and cabinets for two households in the compound, charging for labor and counting more carefully than you used to.",
+   "After the change, you eat dinner before ten for the first time and get sleepy before you finish. Someone asks if the old job was hard. You say what's hard is a July with no work.",
+   "Your new work also runs by the date on the contract. At month's end you still go to the extras column on the settlement sheet first. All the money you've been shorted over the years is in that column.",
+   "New hall rules have shut timber out for good. A crew chief from your all-night days says he's back in Anhui restoring ancestral halls. His hands are still of use, only he doesn't dare drive a joint with a nail gun.",
+   "At a wedding the arch sways in the wind. Everyone's watching the bride, and you're wondering if the counterweights are enough. When the guests leave you stand backstage to see how they take it down.",
+   "Everything looks temporary now. Malls, stages, even a new public square: you want to know what hour it went up and what hour it comes down. Your spouse says you'd work out the shelf life of the New Year couplets."
+  ],
+  "closing": {
+   "retire": "At dusk you cycle around the expo center. The service lane is empty and the new paving at the gate lines up very straight. You get off and measure with your foot, one tile, two, three, then ride home.",
+   "burnout": "A young man comes in for a box of self-tapping screws, his hands smelling of putty. You give him an extra half box and ask what time he moves in tomorrow. Eight, he says. You nod and pull the shutter halfway down.",
+   "end": "You park at the company door. In the trunk there's still a tape you once used for marking out. The rain isn't heavy. Weather like this, the paint in the hall dries slow tonight."
+  }
+ }
+}

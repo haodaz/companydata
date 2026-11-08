@@ -1,0 +1,182 @@
+{
+ "id": "cloud-zw",
+ "occupation": "Cloud Computing Engineer",
+ "role": "Cloud Base Operations Engineer",
+ "headline": "A network engineering graduate who took a job at a cloud base on the edge of the Tengger Desert in Zhongwei, Ningxia, watching over tens of thousands of servers for clients a thousand miles east and scheduling their changes in the small hours",
+ "unit": "A cloud computing base in Zhongwei",
+ "unit_type": "Cloud data center",
+ "city": "Zhongwei, Ningxia",
+ "city_tier": "Third-tier city",
+ "education": "Bachelor's (Network Engineering)",
+ "level": "You can type Linux commands in your sleep and have built virtualization and containers in a lab. A production system where one command moves thousands of virtual machines, you have not touched yet.",
+ "intro": "Outside the base are sand dunes and the checkered straw grids that hold them down. Inside, the wind of tens of thousands of servers. The clients are in Beijing and Shanghai; the machines are here, because the air is cool and the power is cheap. There is a change window at two tonight, and the engineer training you says this time you will be at the keyboard.",
+ "salary_note": "Estimate: pay at the Zhongwei base runs more than 20% below the national average, with extra for night shifts and changes. Rent is a fraction of what it costs in the east.",
+ "facts": [
+  {
+   "label": "Assistant Cloud Operations Engineer (current level)",
+   "value": "0–2 years, ¥6,300–8,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Cloud Platform Engineer (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥28,600 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Negotiating migration plans with government and enterprise clients, and answering for delivery on site",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Alert analysis and routine inspection",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "173 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "The company bus heads from town to the industrial park, solar panels and straw grids on both sides of the road. On the way you read through the night shift's handover group: two disk alerts, one dealt with, one waiting for you.",
+  "The handover meeting is held standing up and lasts ten minutes. The shift lead reads out today's tickets. The power team says there is a sandstorm warning this afternoon and the fresh-air dampers may have to close.",
+  "You pass through two doors into the cold aisle and the air tightens the skin on your arms. Turn around into the hot aisle and it is like opening an oven. The ticket says Zone C, row 14, cabinet 8, 22U. You count twice before you pull the drive with the red light.",
+  "A client in Shanghai asks in the group chat why one of their virtual machines hiccuped last night. You send the monitoring graph to the engineer training you. Don't answer yet, he says. Work out why first.",
+  "You write tonight's change plan. Eleven steps to do it, nineteen steps to undo it. He has you add one more: who to call if the rollback fails.",
+  "The horizon goes yellow. The power team shuts the fresh air and switches to mechanical cooling, and the energy curve on the wall screen climbs. Everyone in the duty room looks up, then back down.",
+  "You eat downstairs from the dorm and lie down for three hours with an alarm set for one. You don't sleep well. The inside of your nose is dry.",
+  "The window opens. He reads a step and you type it, and after each one you wait for him to say next. Four thousand virtual machines move across in batches under your hands. Everyone in Shanghai is asleep, which is the whole point."
+ ],
+ "ladder": [
+  { "title": "Assistant Cloud Operations Engineer", "stage": "Entry", "focus": "Shadow the on-call, swap parts, type commands from the plan. First learn not to make mistakes, then learn to write a rollback." },
+  { "title": "Cloud Platform Engineer", "stage": "On call alone", "focus": "Run change windows and incidents on your own, write automation, and explain a hiccup to a client so it stays explained." },
+  { "title": "Senior Cloud Platform Engineer", "stage": "Owns a resource pool", "focus": "Responsible for one resource pool's capacity, stability and security compliance. Leads two or three people and starts designing migrations for clients." },
+  { "title": "Cloud Architect", "stage": "Sets the plan", "focus": "Decides architecture for government and enterprise clients and for the base's expansion. Your name is on the plan, and if it goes wrong you must be able to say why it was chosen." },
+  { "title": "Head of Technology, Cloud Base", "stage": "Answers for it", "focus": "Runs the base's technical team, its contractors and the coordination with power, and answers for availability across the base and the penalty clauses in the contracts." }
+ ],
+ "ai_tasks": [
+  { "name": "Negotiating migration plans with government and enterprise clients, and answering for delivery on site", "how": "AI can write the plan and list what has to move. Settling the budget with the client, coordinating several parties, and standing up when cutover night goes wrong still takes a person." },
+  { "name": "Alert analysis and routine inspection", "how": "AI folds hundreds of alerts into a few and runs the routine checks by itself. Where the thresholds sit and how a major incident is handled are still up to whoever is on call." },
+  { "name": "Writing automation scripts and infrastructure-as-code", "how": "Pipelines and Terraform are mostly written by AI, and it can pin common root causes from the logs. People spot-check changes and guard the high-risk operations in production." },
+  { "name": "Security compliance and vulnerability management", "how": "AI scans for holes, checks gaps against the compliance clauses and drafts policies. Which risks are acceptable, and who signs for them, a person decides." },
+  { "name": "Cloud resource planning and capacity forecasts", "how": "AI can work out expansion from historical load. Whether the client is actually launching that system next year, someone has to go and ask." }
+ ],
+ "events": {
+  "e_sand": "When the spring sand comes it stays for three or four days, the fresh air shut off entirely, and this month's power curve bends upward. Only now do you understand that the line in the brochure about natural coolness depends on the weather.",
+  "e_nose": "Between Zhongwei's dryness and the wind in the server halls, your nose bleeds every morning for two weeks. The power engineer next door tosses you a bottle of saline spray and says everyone who comes here goes through this.",
+  "e_rollback": "Your first rollback inside a window. Step seven fails its check, and the engineer training you says don't think, back out. Forty minutes and it is clean, the client none the wiser. In the morning you still get told your plan was too optimistic.",
+  "e_wrong_u": "The ticket says 22U. You have counted to 21U and your hand is already on the latch. The big guy from the maintenance contractor stops your hand and points at the light: this one is green. Your back is soaked, and from then on you count with your finger.",
+  "e_melon": "In July a truck of selenium sand melons parks by the gate, grown in stony fields and so sweet they are almost grainy. The security guard can tell a good one by the slap. You try your ear for failing fans and pick an unripe one.",
+  "e_oncall": "The duty phone rings at 3:40 a.m.: a storage node has dropped. You sit up, connect to the VPN and watch the data rebalance. By the time the progress bar is steady, the company bus is honking downstairs.",
+  "e_freeze": "Before the eastern clients' big sales, the network is frozen for the first two weeks of November. Nothing may be changed. The halls are rarely this quiet and the duty room can't sit still, running the inspection sheet again and again.",
+  "e_audit": "The security assessors come for three days and ask, clause by clause, for screenshots of log retention. One access policy was set three years ago by someone long gone, and no one can say why. You spend two nights untangling it.",
+  "e_pay_gap": "People at your level at headquarters make 40% more than you, and pay five times the rent. You spend a while in your notes working out who has the better deal, then add a final line: they don't eat sand.",
+  "e_ai_alert": "After alert aggregation goes live, a night's text messages drop from three hundred to nine. You sleep through for once. The next day you stand in front of the shift roster wondering how many people the duty room will need next year.",
+  "e_ear": "One new line on your physical: high-frequency hearing loss. You stopped noticing the wind in the halls long ago, which is exactly the problem. You start wearing earplugs in Zone C, and then you can't hear a failing fan.",
+  "e_eol": "The first batch of servers racked when the base opened reaches the end of its depreciation and comes down, row by row. Each drive is degaussed, logged and photographed, one form to a cabinet. The disks you once swapped pass through your hands again.",
+  "e_family_far": "Your spouse teaches in Yinchuan and you go back once a month on your days off. Parent-teacher meetings collide with change windows three times. The fourth time you trade shifts a month ahead, and the teacher moves the date.",
+  "e_client_leave": "A big eastern client's contract ends and it moves back into its own data center. Two hundred cabinets go dark row by row. With the load gone, the efficiency numbers look worse, and this quarter's report is hard to write.",
+  "e_ai_iac": "A new colleague has AI write some Terraform. It is beautifully structured, and one line crosses the production and staging security groups. You circle it in review. He says all the checks passed. You say it wrote the checks too.",
+  "e_heat": "Several days of 40 degrees in July. The air cooling can't hold and the chillers all run. You and the power team move load cell by cell across the heat map, herding virtual machines out of the hottest rows, and you barely see the dorm for three days.",
+  "e_green": "Clients have started asking about the share of green power. You get pulled in to reconcile with a renewables company, generation curves on one side and compute load on the other, and for the first time you draw solar panels and servers on the same chart.",
+  "e_vendor": "The maintenance contractor changes hands and fewer than half the crew stay on. The big guy who once stopped your hand comes to sign out. The wind's too strong here, he says, he's going home to Zhongning to grow goji. If you want some, he will send two boxes in the fall.",
+  "e_neck": "The back you hurt lifting servers when you were young and the neck you hurt staring at screens later on arrive together. Now you steady yourself on the desk before you stand, and the wind in the cold aisle sets your shoulders aching.",
+  "e_liquid": "A new batch of compute cabinets goes in with liquid cooling. The whole business of hot and cold aisles no longer applies, and the manuals all have to be rewritten. You are the oldest person there, and the first to crouch down and learn how to seat a quick-connect without a leak.",
+  "e_university": "A university in Yinchuan asks you to give a lecture. Your first slide is not an architecture diagram but a table of damper states during a sandstorm. A student asks: then why did you build it here?",
+  "e_no_night": "The base has done away with the night shift, leaving one remote operator and two inspection robots. The big screen in the duty room is still on, alert count zero, every chair pushed in under the desks."
+ },
+ "choices": {
+  "c_night": { "title": "Take more night shifts?", "situation": "Night shift pays ¥1,800 more a month, and the shift lead asks if anyone will take it long-term. But on nights you miss the daytime training and the chance to shadow changes.", "options": [
+   { "label": "Take nights, save the money", "result": "You become the person who knows the rhythm of the early-hours alerts best, and your bank balance looks a bit better. Your color doesn't. They start calling you the Night Owl." },
+   { "label": "Stay on days and learn", "result": "You spend half a year on capacity planning and learn to read the load three months out. The money stays the same." } ] },
+  "c_cert": { "title": "Sit the mid-level software exam, go for Cloud Platform Engineer", "situation": "Grading at the base looks at certificates. The national mid-level software exam runs twice a year and your study time is whatever is left between shifts. Whoever has the certificate, the shift lead says, gets to lead a window first.", "options": [
+   { "label": "Sign up, study after night shifts", "result": "You nearly fall asleep in the exam hall and pass anyway. Your name goes down as lead on the next window." },
+   { "label": "Get good at the job first", "result": "The certificate can wait, you say, and you rewrite three old scripts. They really are better. They just don't show up on the grading sheet." } ] },
+  "c_hq": { "title": "Headquarters wants someone", "situation": "The SRE team at headquarters in Hangzhou wants someone from the base who knows the low-level systems. The pay is over 30% higher and so is everything else. The base is short-handed, but your manager doesn't try to stop you, he only asks what your girlfriend thinks. The same month, a middle school back home in Guyuan is hiring an IT teacher.", "options": [
+   { "label": "Go to Hangzhou", "result": "You are close to the clients now, in a room of clever people younger than you. The work gets more abstract, and now and then you miss the feel of pulling a drive." },
+   { "label": "Stay in Zhongwei", "result": "You stay and become one of the longest-serving people at the base. The rent doesn't go up, and the sand doesn't let up." },
+   { "label": "Go home to Guyuan and teach", "result": "You pass the exam for a permanent teaching post, and carry your bedding out of the base dorm.", "end": "You go back to Guyuan to teach middle school IT, thirty computers in the lab and the cables tidier than anyone's. Over the holidays a student asks: teacher, where is the cloud, actually? In Zhongwei, you say. It's very windy." } ] },
+  "c_k8s": { "title": "Containers are coming for virtualization", "situation": "New clients all want containers and the old virtualization platform is on its way out. You know the old platform better than anyone. To cross over, you start again as a beginner, stepping in the same holes as the new graduates.", "options": [
+   { "label": "Cross over, start as a beginner", "result": "In your early thirties you start asking fresh graduates questions. Your skin gets thicker, your hands catch up." },
+   { "label": "Stay with the old platform", "result": "The old platform will need looking after for many years and you're the only one who dares touch it. You are very secure, and the keywords on job sites have less and less to do with you." } ] },
+  "c_family": { "title": "The kid is starting school", "situation": "Your spouse can't leave Yinchuan and your child is starting primary school. Coming back once a month won't do anymore. An IT center at a workplace in Yinchuan is hiring, nine to five, a third less pay, and no more change windows.", "options": [
+   { "label": "Go to the IT center in Yinchuan", "result": "You hand in your resignation and give the duty phone back to the shift lead.", "end": "You go to the IT center in Yinchuan, looking after a few dozen servers and every printer in the building. You are off at 5:30 and you pick up your child from school. A long while later, you still wake once at two in the morning." },
+   { "label": "Ask for remote duty, travel more", "result": "You and your manager agree on three days a week of remote duty from Yinchuan. You spend more time on the road, and your child at least knows who you are." },
+   { "label": "Hold on until the next promotion", "result": "A few more years, you say. Your spouse doesn't argue. She just sends you the winter and summer holiday schedules well in advance." } ] },
+  "c_agent": { "title": "Automation is coming for the contractors", "situation": "The company wants you to build automatic ticket dispatch and inspection. If it works, the outsourced maintenance crew loses about ten people, most of them local, men you have carried machines with. If you don't, the other bases are doing it anyway, and your cost figures will look bad.", "options": [
+   { "label": "Do it, set the rules yourself", "result": "You build it to be solid and insist that swapping parts and going into the halls stay with people. The crew still loses six." },
+   { "label": "Stall, finish other things first", "result": "You stall for a year, and headquarters pushes down a system of its own, harsher than anything you had in mind. This time no one is consulted." } ] },
+  "c_arch": { "title": "Compete for Cloud Architect", "situation": "The base needs a cloud architect for migrations for government and enterprise clients, with frequent trips east and to the provincial capital and your name on the plans. In the competition you have to describe the worst decision you ever made, with people from headquarters in the room.", "options": [
+   { "label": "Stand up and tell it", "result": "You tell them about the migration the sandstorm scrambled and why you misjudged it at the time. The people from headquarters take notes." },
+   { "label": "Pass, stay with the resource pool", "result": "Anyone can write a plan, you say; someone needs to understand the machines. You remain the first person the base thinks of in the middle of the night." } ] },
+  "c_merge": { "title": "The old pool is shutting down, roles are merging", "situation": "The contract on the resource pool you've run for years is up and it will be decommissioned. Operations at several bases will merge into one regional center. Those who stay must move to another city or go into pre-sales. A small firm in Yinchuan wants someone who knows the trade to help local businesses move to the cloud.", "options": [
+   { "label": "Stay and see the pool down", "result": "You and the last four people finish the data migration and empty the cabinets. After the merger, you carry on under a different sign." },
+   { "label": "Move to pre-sales, learn to talk money", "result": "You start traveling and learn to talk about security compliance over dinner. You are too honest about it, which clients seem to like." },
+   { "label": "Join the small firm in Yinchuan", "result": "You tidy up your documentation and resign.", "end": "You join that small firm in Yinchuan and help goji factories, logistics parks and a few hospitals move their systems. The jobs aren't big and neither is the money, and you can answer anything the boss asks. You never have to write 'who to call if the rollback fails' again. Sometimes you would like to." } ] },
+  "c_head": { "title": "Compete for Head of Technology", "situation": "The current head is being transferred. The job runs the team, the contractors and the coordination with power, and every penalty clause in the contracts lands on you. There isn't much technical work left in it, and two hundred meetings a year.", "options": [
+   { "label": "Give it a try", "result": "You spend three months preparing, rereading every incident review the base has written over the years." },
+   { "label": "Stick with architecture", "result": "At your age, you say, you would still like to read the logs yourself. Your desk is in the corner, and people still come to find you." } ] }
+ },
+ "endings": {
+  "retire": "Your retirement paperwork takes a morning, most of it clicking confirm in a system. Outside the gate the wind comes from the dunes, and out of habit you think about how far the dampers should be open today. There are ten times as many machines here as when you came. The ones you looked after were decommissioned long ago.",
+  "burnout": "After months of broken sleep, with your heart rate drifting high at night, you give back the duty phone and step away. There are no changes the day you leave and no alerts, and the bus runs on time as usual. For the first time you notice that the straw grids along this road have grown into shrubs."
+ },
+ "stages": [
+  "Your days are parts swaps, inspections and typing commands from the plan beside someone else, with the ticketing system and Zabbix open all day. The engineer training you wants two things first: count the U positions, and write a proper rollback. Be polite to the maintenance crew. They know which cabinet door sticks.",
+  "You are the lead on the change window now. By day you write change plans and turn repetitive jobs into Ansible playbooks; at night you run them through the bastion host. The first reply in the client group is yours too, and it must be accurate and must not contain the word maybe. One level down you cared whether the operation was right. Here you care whether it should happen at all.",
+  "You have a resource pool now: the capacity sheet for several thousand machines, the compliance ledger, three colleagues to bring along. Each week you go over load with the power team and next quarter's expansion with the client's tech lead, letting Prometheus graphs do the talking. You type less in a day and read other people's plans more.",
+  "You begin traveling east and to the provincial capital, telling government and enterprise clients how to move dozens of old systems. The architecture diagrams, cutover plans and budget sheets are yours to set, and when someone picks at them in review you have to have an answer. Back at the base, younger engineers send you the changes they are unsure about.",
+  "Your calendar is full of meetings with the power company, headquarters and clients. Each decimal place in the SLA is money. Penalty notices need your signature, contractor renewals are your call, and you chair the incident reviews. You haven't pulled a drive in years, and before entering the halls you check that your access still works."
+ ],
+ "work": [
+  "The big guy from the maintenance crew shows you how to dress fiber: the bend must be no tighter than your fist. You swap a patch cable as the ticket says and the error count on the core switch stops rising.",
+  "You write your first inspection script alone and export the disk life of two hundred machines to a sheet. The shift lead picks out one badly formatted row, has you export it again, then prints it and tapes it up in the duty room.",
+  "A client from Beijing visits the base and insists on seeing where their machines are. You lead him to a cabinet exactly like all the others. He takes a picture.",
+  "A DBA at the Shanghai client is pressing in the group chat at midnight. You overlay storage latency on the timeline of one of their slow SQL queries and send it. Ten minutes of silence, and then: received.",
+  "You turn a thirty-page replacement manual into an Ansible playbook. The first time the night shift uses it they save two trips to the hall. The second time, they find a condition you missed.",
+  "An engineer from the power team asks if the afternoon batch jobs can move to the small hours, when the rate and the cooling both favor it. You add one line to the scheduling policy and the next month's bill is a good deal smaller.",
+  "The security assessor points at an access log and asks how long it is retained. You pull up the storage policy and the audit sheet and go through them line by line. He ticks the form, then asks about another one.",
+  "A colleague you are training writes an expansion plan with the capacity right and the power forgotten. You write on the review sheet: how much distribution capacity is left on this row of cabinets? Go ask the power team first.",
+  "At the quarterly disaster recovery drill you trigger the switchover in the backup environment in Yinchuan. The timer reaches eleven minutes and the service is back. The client's supervisor writes the time on the record sheet.",
+  "A provincial office has a twenty-year-old system whose developers are long gone. You and your team capture traffic for two weeks before you work out which machine it has been quietly talking to at night.",
+  "In the cutover review, the client's director asks if it can be done with zero downtime. You write the prices of three plans on the whiteboard. He looks at them and says, two hours, then, early Sunday morning.",
+  "You draw the architecture for the base's second phase, zoning air-cooled and liquid-cooled cabinets on the plan. The design institute says the pipework won't look tidy. You say tidy pipes don't save electricity.",
+  "The SLA falls short by 0.01 and the client's finance team sends a penalty letter. You and legal go over the incident report for an afternoon and produce the version their engineers can't fault either.",
+  "The contractor is up for retender, three bids on the table. The cheapest has no overnight presence on site. You mark it down, and when procurement asks why, you send them last year's duty logs.",
+  "The power company comes to discuss next year's direct-supply ratio, and you and finance work on it until nine at night. Once that number is set, three pages of next year's expansion plan change with it."
+ ],
+ "past": [
+  "You go to high school in Guyuan. The family's first computer is your cousin's castoff. You take it apart and put it back together and have two screws left over.",
+  "When it is time to pick a major, you hear network engineering gets you a job, so you choose it and go to Xi'an.",
+  "In your second year you build a virtualization cluster in the lab and one power cut wipes it out. From then on you feel a certain tenderness toward the letters UPS.",
+  "Over the summer you intern at a small firm in Xi'an racking cabinets and tidying cables. The boss pays you ¥2,000 and says your cables are neater than his.",
+  "You apply to the big eastern tech companies in the fall and fail the second interview. At a campus talk, a cloud base offers room and board and a night-shift allowance. It is in Ningxia, not far from home."
+ ],
+ "late": {
+  "pension_note": "Estimate: the base pays social insurance on actual wages, but regional pay is low, so the pension comes to about half of final pay.",
+  "scenes": [
+   "The water goes out in your housing complex. In the residents' group chat you ask where the backup pump is and how many minutes the switchover takes. The property manager adds you to a smaller group called Maintenance Fund Oversight.",
+   "A relative's melon field gets a drip irrigation controller run from a phone. You wire in a manual valve as well. On the day the network goes down, you tell him, you'll see.",
+   "Your hearing gets worse each year and you ask your children to say things twice. At Shapotou by the Yellow River people say how quiet it is. What you hear is a fan that has never stopped.",
+   "You turn off every ringtone on your phone and leave only vibrate. Half a year passes before you dare turn them on again. The first call is someone selling broadband, and you talk to him for ten minutes.",
+   "In Yinchuan you help someone keep an eye on the temperature and humidity in a goji drying room, twice a day, far lighter than the old work. The owner doesn't read graphs and only asks if it will dry today.",
+   "They have changed your heart medication and you keep taking it. You go to bed at ten now and no longer have to know what the world looks like at two.",
+   "You find you've set up dual-line redundancy on the home router, one broadband and one phone hotspot. There are three people in this household.",
+   "A former colleague forwards a job post: the base wants young people who know liquid cooling. You read the requirements through. Half the words appeared after you left.",
+   "You haven't thought about server halls in some years. Your child asks what you actually used to do. You say you sat up at night for other people's websites.",
+   "The news says another batch of compute bases is going up in the west, with a photo of dunes and a row of white buildings. You recognize the style of the sand doors and forward it to your spouse.",
+   "The hospital's appointment system goes down for half an hour and the line at the window grows long. You are the only one in it muttering, who wrote this rollback."
+  ],
+  "closing": {
+   "retire": "In the evening the wind comes over from the Tengger and draws a thin line of sand across your doorstep. You sweep it away. It will be back tomorrow.",
+   "burnout": "The router in the room blinks green, again, again. You straighten its power cord and go to bed.",
+   "end": "The afternoon sun lies across the table and your phone hasn't rung. You make tea and let the water slowly cool."
+  }
+ }
+}

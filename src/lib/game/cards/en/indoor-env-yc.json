@@ -1,0 +1,179 @@
+{
+ "id": "indoor-env-yc",
+ "occupation": "Indoor Environment Treatment Specialist",
+ "role": "Indoor Environment Treatment Specialist",
+ "headline": "Moved from a renovation crew to a small indoor air treatment company in Yancheng, carrying a sampling pump and spray gun door to door, sweating every July and August in new apartments and kindergartens",
+ "unit": "An indoor environment treatment company in Yancheng",
+ "unit_type": "Small local environmental services company",
+ "city": "Yancheng, Jiangsu",
+ "city_tier": "Third-tier city",
+ "education": "Associate degree (Architectural Decoration)",
+ "level": "Two years of painting walls taught you about boards and glue. You have not yet touched the flow calibration on a sampling pump.",
+ "intro": "The shop is at the end of a building-materials street in Tinghu district, with a tile seller next door and a curtain seller after that. The boss hands you a blue uniform with the company name on it and a spray gun, and tells you shoe covers first at any door, then the mask, and don't open by frightening people. Your first job is a young couple in the Chengnan new district who got their keys three months ago. Two o'clock this afternoon. They've already had the windows shut for twelve hours, waiting for you.",
+ "salary_note": "Estimate: a small Yancheng company pays base plus commission per job, good in summer, idle in winter, with social insurance at the low tier.",
+ "facts": [
+  {
+   "label": "Treatment Technician (current level)",
+   "value": "0-3 years, ¥3,100–4,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Testing and Treatment Specialist (3-7 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "On-site inspection and finding the pollution source",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Analyzing test data to identify pollution sources",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the database is mostly campus and internship roles)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Mixing chemicals at the shop for today's three jobs. The boss measures oxidizer in a beaker and tells you a wrong ratio blisters the cabinet finish, and that gets paid for.",
+  "The electric three-wheeler reaches the complex. First you step inside and smell: what the nose picks up and what the instrument reads aren't always the same, but a sniff gives you a sense of it.",
+  "You open the wardrobe, pull out the shelves and look at the edge banding. As you shine a flashlight into a cut board edge, the owner behind you asks: is it very serious?",
+  "Protective suit on, respirator on, spraying the inside of the cabinets and the backs of the drawers, one side at a time. In summer your clothes are soaked and stuck to your back.",
+  "Two caolu flatbreads in the vehicle. On the phone the boss curses a renovation company's project manager: the commission agreed yesterday just shrank by another ten percent.",
+  "Points set, sampling pump on, forty-five minutes of drawing air. No one can come in. You sit in the stairwell and keep your eye on the door gap.",
+  "Second job is three kindergarten classrooms. The director holds a form and needs a passing report with a CMA seal before school starts at the end of August, not one day late.",
+  "Back at the shop to wash the spray gun and mask. A layer of skin is coming off your hands and your fingertips are white. The boss tosses you a tube of hand cream and calls it company benefits."
+ ],
+ "ladder": [
+  { "title": "Treatment Technician", "stage": "On the job", "focus": "Carry the gear, mix chemicals, spray, wipe, seal, and do the inside of every cabinet. You rise on no mistakes and no complaints." },
+  { "title": "Testing and Treatment Specialist", "stage": "Tests and judges", "focus": "Inspect sites, set sampling points, read reports, write treatment plans, and explain to owners why a reading is over." },
+  { "title": "Project Supervisor", "stage": "Crews and contracts", "focus": "Lead two or three crews, win kindergarten, school and office jobs, deal with renovation firms, complaints and retests." },
+  { "title": "Shop Partner", "stage": "The books", "focus": "Buy in or open up; manage certifications, partner labs, the accounts and the people. Whether business is good is decided here." }
+ ],
+ "ai_tasks": [
+  { "name": "On-site inspection and finding the pollution source", "how": "You have to go in person, see the layout, smell, ask residents and find hidden sources. AI can at most organize checklists and records." },
+  { "name": "Sampling for formaldehyde, benzene and other pollutants", "how": "Instrument placement, sampling time and the state of doors and windows must be controlled on site. AI can only remind you of the standards and help record readings." },
+  { "name": "Analyzing test data to identify pollution sources", "how": "AI can compare limits, sort data and rank likely sources. A person combines this with the site and judges the real source, and answers for the conclusion." },
+  { "name": "Writing targeted treatment plans", "how": "AI can draft plans, chemical combinations and steps from results and floor plans. A person revises it for budget, residents (pregnant women, the elderly, children) and site conditions." },
+  { "name": "Applying chemicals and running treatment work", "how": "Spraying, wiping, sealing and the details of the job are handwork and improvisation. AI can only help look up chemical instructions and safety notes." },
+  { "name": "Running air purification equipment", "how": "Moving, placing, starting and checking equipment needs a person on site. AI can at most suggest run times and send reminders." },
+  { "name": "Retesting and assessing results", "how": "Retest sampling needs a person on site. AI compares before and after, calculates reductions and flags what failed; a person decides if a second round is needed." },
+  { "name": "Issuing reports and explaining upkeep to clients", "how": "AI can generate draft reports and plain upkeep advice. A person reviews, signs, explains in person, answers questions and builds trust." }
+ ],
+ "events": {
+  "e_summer": "July in Yancheng, thirty-seven degrees, and formaldehyde readings in new apartments climb along with it. Four jobs a day. In a stairwell you take off the respirator and there are two red strap marks on your face that take an hour to fade.",
+  "e_first_pass": "A home you treated on your own passes its retest for the first time. The owner posts on WeChat Moments, with your back in the blue uniform in the shot. You screenshot it and send it to your mother at home.",
+  "e_paint_damage": "You mix slightly too strong and a small blister rises on a cabinet door. The owner wants three thousand yuan. The boss pulls you aside, pays half, and takes the other half from your wages.",
+  "e_tricks": "A competitor offers whole-home treatment for ninety-nine yuan: spray some water and leave, then return with a small device and declare it passed. You explain your price and the customer says, aren't you all about the same?",
+  "e_pregnant": "Before moving in, a young couple asks if she can really live here at seven months. You look at the data and say it's slightly over. Ventilate another month and you won't charge for the retest.",
+  "e_kindergarten": "In summer every kindergarten in town books you. In the last ten days of August you and two crews do five a day. The day before term begins you put the final CMA report in a director's hand.",
+  "e_hand": "The dermatitis on your hands comes and goes. The dermatologist prescribes an ointment and says to avoid chemicals. You nod and next day wear two layers of gloves to mix.",
+  "e_nose": "You notice you're less sensitive to new furniture smell. You used to guess a number by nose. Now you can hardly smell it, and in this job that's like going blind.",
+  "e_standard": "A new standard tightens the limit: formaldehyde goes from 0.1 to 0.08, and homes that used to pass no longer do. Owners come in holding their phones, and a company meeting replaces every report template.",
+  "e_contractor": "A renovation firm's project manager says give him twenty percent on every job and he'll recommend you at handover. You run the numbers. Without it there are no jobs. With it you'll have to skimp on chemicals.",
+  "e_winter": "Winter has one-third of summer's jobs and the boss gives everyone half a month off. You help the curtain seller hang curtains at two hundred a day, and your hands can rest.",
+  "e_ai_data": "The company adopts an AI system: photograph the data and out comes a draft report and treatment advice. The first report treats a kindergarten classroom as a shop and uses the commercial standard. You change it back.",
+  "e_ai_customer": "A homeowner spends ages with an AI on her phone and says this number isn't really a problem. You tell her it doesn't know what board your cabinets are made of or which room the baby sleeps in.",
+  "e_ai_sensor": "Cheap smart sensors spread, a dozen or so yuan each, and owners send screenshots saying their homes spiked in the night. You explain sensor error at length and end by suggesting they open a window.",
+  "e_low_formaldehyde": "More and more homes are pre-finished with no-added-formaldehyde boards, and second-hand renovations become your main work. In your books, last year's new-home jobs are down by a third.",
+  "e_thanks": "A homeowner from years back has a child in primary school now and has refitted the study. She finds you again and says you were the only one who did the back of the cabinets. You give her twenty percent off.",
+  "e_fake_report": "A partner lab is investigated for issuing false reports, and your company has used its seal. The boss has you phone every household. More than forty free retests, and a payout.",
+  "e_crane": "On a weekend you take your child to the Yellow Sea wetlands to see red-crowned cranes. The wind is strong and there's no smell to speak of. Standing on the tidal flat you take a mask out of your pocket and put it back. No use for it here.",
+  "e_apprentice": "A new helper says he's dizzy the first time he goes into a new apartment. You send him out for air and tell him how often to replace respirator filters, showing him last month's filter account as well.",
+  "e_car": "You switch to a used van and refit the back seats into racks for equipment and chemical drums. Yancheng's roads are flat and the van runs for three years. It always has a smell you can't name."
+ },
+ "choices": {
+  "c_exam": { "title": "Learn testing to become a Testing and Treatment Specialist", "situation": "The boss says the shop needs someone who can set sampling points and read reports. It means a week of training in Nanjing at your own cost of three thousand yuan, and five hundred more a month afterward. That week is high season; what you don't earn counts too.", "options": [
+   { "label": "Go learn", "result": "In Nanjing you use a spectrophotometer for the first time, watching the solution turn blue, and think this is more interesting than spraying." },
+   { "label": "A few more jobs this season", "result": "You make over eight thousand this season. Back at the shop, the new kid has already learned to calibrate the pump." }
+  ] },
+  "c_truth": { "title": "Do you tell the owner this reading", "situation": "At retest the child's bedroom is still slightly over. Two weeks of ventilation would probably clear it. The owner has already booked this weekend's move, and the boss hints that the report comes out next week anyway, so let them be happy for now.", "options": [
+   { "label": "Tell the truth and suggest delaying", "result": "The owner, grim-faced, puts off the move. Tested again in week three it passes. He doesn't say thanks, but he refers a friend." },
+   { "label": "Do as the boss says, tell him next week", "result": "You tell them to keep the windows open. The child is fine in the end, and it stays on your mind." }
+  ] },
+  "c_rebate": { "title": "The renovation firm wants twenty percent", "situation": "Yancheng's largest renovation firm says it will name you on all handovers for a twenty percent kickback. Volume would double, but chemicals and labor would have to come down. That's how this business's cheap prices are made.", "options": [
+   { "label": "Agree and build volume", "result": "The shop is frantic all year. You start saving a little chemical on each job and stop wanting to hear from owners on the phone." },
+   { "label": "Refuse, rely on word of mouth", "result": "Jobs halve and the boss has a fight with you. Later he changes the flyer to read \"We do the backs of the cabinets.\"" }
+  ] },
+  "c_nj": { "title": "A third-party lab in Nanjing is hiring samplers", "situation": "A CMA-certified lab, full social insurance, only sampling and delivering, no chemicals and no talking to customers, a bit more pay. You have just got to know all of Yancheng's property managers.", "options": [
+   { "label": "Go", "result": "You copy out the client list for the boss, and when you leave the spray gun has been cleaned spotless.", "end": "You go to the lab in Nanjing and do standard sampling and delivery. Four sites a day, each to the standard. You come home with no smell on you, and your nose is slowly coming back." },
+   { "label": "Stay in Yancheng", "result": "You say you know the work here, and there are a few households you haven't followed up with." },
+   { "label": "Help out on weekends", "result": "Two more days a week. You learn some standards and tire more quickly." }
+  ] },
+  "c_ai": { "title": "Go online with booking and AI reports", "situation": "A platform comes to talk: bookings, reports and follow-ups all in its system, with twenty percent off the top, but steady jobs. Your client data would go to them, along with everything you've kept in your head about complexes and boards.", "options": [
+   { "label": "Join, write the experience into the system", "result": "You spend three months entering every Yancheng complex's handover year and common boards. The system now knows more than a new hire." },
+   { "label": "No, keep taking referrals yourself", "result": "You keep a big paper ledger. Customers say your handwriting is easier to read than the system." }
+  ] },
+  "c_manager": { "title": "Move up to Project Supervisor with crews", "situation": "The boss wants you to lead two crews on school and office jobs. Complaints and retests will come to you first, and you'll also keep a ledger of chemical stock in and out.", "options": [
+   { "label": "Move up", "result": "For the first time you stop a crew on site, because they'd done half the cabinet interior and wanted to leave." },
+   { "label": "Keep going door to door", "result": "You say managing people is more talking, and work is simpler. The boss says you've got no ambition and raises your commission." }
+  ] },
+  "c_shop": { "title": "Buy in as a Shop Partner", "situation": "The boss wants to sell half his stake and have you put in ¥250,000 as a shop partner. New-home work in this trade is shrinking and he is frank about it: think carefully, this isn't necessarily a good deal.", "options": [
+   { "label": "Buy in", "result": "The day you transfer the money, the boss shows you the ledger's first page: its first line is a customer on credit." },
+   { "label": "No, keep earning commission", "result": "You say a wage is easier. The shop goes through three more shareholders, and you're still there." }
+  ] },
+  "c_fresh": { "title": "Switch to fresh-air system installation", "situation": "Fresh-air systems are a growing business. A distributor wants you to run installation and after-sales, with no more chemicals, and your hands could heal. All you'd carry over is knowing how houses leak air.", "options": [
+   { "label": "Switch", "result": "You hang the spray gun back on the wall and give the respirator to the curtain seller next door, saying it'll do for spraying pesticide.", "end": "You become an installation foreman for fresh-air systems, crawling through ceilings. Your hands heal. You still sniff when you enter a home, and only then look for the vent." },
+   { "label": "Stay in treatment", "result": "You say somebody always needs this work done. The next day you take a second-hand apartment job, removing odors." }
+  ] },
+  "c_old": { "title": "Take the old neighborhood renovation work or not", "situation": "The subdistrict office is tendering indoor environment work in old neighborhoods, free for the elderly. Margins are thin, stairwells narrow and it's up to the sixth floor on foot, but everyone on the street knows you.", "options": [
+   { "label": "Take it", "result": "You carry your equipment up more than sixty old buildings. One old woman insists on pressing a bag of lotus root starch on you." },
+   { "label": "No, it doesn't pay", "result": "You do the math and pass. It goes to a company from out of town, and later you hear their work was sloppy." }
+  ] }
+ },
+ "endings": {
+  "retire": "You close the shop's chemical stock ledger and arrange for a recycling company to take away the last half-drum of oxidizer, as the rules require. Your final job is removing a smell from an old apartment, and you do the inside of the cabinets too. On the way home the van window is open. The wind carries only the smell of water from the Chuanchang River, and you breathe it the whole way.",
+  "burnout": "The dermatitis and your throat won't clear up, and the hospital says no more contact with these chemicals. You hang your respirator in the shop and tell the boss you won't be coming in this summer. That July, for the first time, you spend an entire high season in an air-conditioned room."
+ },
+ "stages": [
+  "Your job is carrying equipment upstairs, mixing chemicals, spraying, wiping, pulling out cabinets one shelf at a time. In protective suit and respirator, one round leaves your clothes wet enough to wring. The boss says the cheapest thing in this trade is cutting corners, and so is the most expensive. You tell owners only two things: stay out for two days, and don't shut the cabinets tight.",
+  "You start using a sampling pump and spectrophotometer, calibrating flow, setting points, keeping doors and windows closed for the required time. You look at boards and furniture, and with report in hand, tell owners why it's over, and whether it's the cabinet or the floor. With renovators and furniture shops you stay polite, but the numbers don't give.",
+  "You lead two crews on kindergarten and office jobs with one schedule and a ledger of chemical stock. You see each site before work starts, and complaints and retests come to you first. You have to make the timeline clear to directors, property managers and owners, and keep your word, since the first day of school won't wait for you.",
+  "The shop's books are yours: certifications, lab partnerships, chemical costs, crew wages. Over dinners with renovation company bosses you weigh kickbacks against reputation, and read new standards and new boards to see what this business will live on next year. You still go yourself to the hardest sites. Where others can't smell it, you go and smell."
+ ],
+ "work": [
+  "You pull out the shelves from a wardrobe in a new apartment, number them and stand them against the wall. The back of the third has no edge band so you spray it again. The owner's spouse asks through the door what that smell is.",
+  "The boss has you strip and clean the spray gun's nozzle. You can't get it back together. He takes an O-ring from your hand and says the gun can't work a single day without this.",
+  "A note on the door says there's a baby at home. You take off your shoes, put on the covers, set the chemical drum on a sheet of plastic, and only then go in.",
+  "You set up the sampling stand in the center of a child's room at breathing height and tape the door gap. The owner says he's just opened the windows. You check your watch and say twelve more hours.",
+  "The report shows benzene compounds over the limit and the owner assumed formaldehyde. You take him to the child's room to smell the paint, and set the floor certificate and paint batch number on the table.",
+  "The furniture shop owner says this cabinet is E0 grade. You shine a flashlight on the cut edge and point to the banding. He says nothing more and hands you a cigarette.",
+  "A kindergarten's report is due by August 28. You split fifteen classrooms between two crews and tape the schedule to the van door. The director comes every day to tick it off.",
+  "An office building's property manager only allows night work. You and the crew begin at nine and finish at three, and at the end you check each floor's air-conditioning return vents yourself.",
+  "A crew member, Xiao Meng, has put oxidizer and activated carbon in one cabinet. You open the chemical ledger, have him redo the zones, and watch while he labels them.",
+  "You negotiate next year's unit price with a CMA lab, cutting report time from seven days to five. They want twenty yuan more. You agree.",
+  "A distributor of new boards comes to pitch. You take a sample back to the shop, leave it in a climate chamber for two weeks, and only then decide whether it goes in your plans."
+ ],
+ "past": [
+  "You grew up in Dafeng, Yancheng. Your father was a carpenter and the house was full of wood shavings and glue fumes. You thought that smell was normal. Only later did you learn it wasn't.",
+  "You went to a local vocational college for architectural decoration. Teachers talked about fire safety and environmental protection and you half understood. All you remembered was that boards come in many grades.",
+  "An internship on your uncle's renovation crew: painting walls, laying tile, shut up in a new apartment all day in summer, your throat parched by evening.",
+  "After graduating you stayed with the crew. One owner, after moving in, came storming to the site saying the child kept coughing. Your uncle paid up, and for the first time you heard the weight of the word \"formaldehyde.\"",
+  "A treatment company on the building-materials street was hiring. The boss said this job pays better than painting and is harder. You tried it for a day, did the backs of one household's cabinets properly, and he kept you on."
+ ],
+ "late": {
+  "pension_note": "Estimate: small company or self-employed, social insurance mostly at the low tier; the pension is about 40 percent of final monthly income.",
+  "scenes": [
+   "Your son's new home is finished and he invites you to see it. First you sniff, then open a cabinet door, run your hand along the edge banding, say nothing, and open all the windows.",
+   "You can smell the furniture section from anywhere in the supermarket. It isn't that your nose has gotten keener. You just know where it should be.",
+   "New apartments now all use no-added-formaldehyde boards. The shop long ago moved into fresh-air and dehumidifying. The boss's child brings an old ledger to check the figures. You say the accounts are settled.",
+   "The skin on your hands slowly grows back, a slightly different color. You learn to cook without gloves, and pause each time you touch dish soap.",
+   "You help a relative look after a fish pond, using test strips and keeping a log. Unlike formaldehyde, the fish at least don't file complaints.",
+   "You don't want to smell anything new again. Your daughter-in-law buys a new sofa. You leave it three days in the sun before you'll sit on it.",
+   "You still feel the cut edge of any cabinet the moment you walk in. The host asks what you're doing. You say it's a nice cabinet.",
+   "A former client asks in WeChat Moments who can treat formaldehyde and someone suggests you. You leave a comment: I've stopped, try this company, and avoid the ninety-nine yuan ones.",
+   "You hear there are treatment machines now that move like robot vacuums, and you put them in a room and they roam around. You imagine one trying to reach behind a cabinet, and laugh.",
+   "Visiting other people's homes, you always want to know how long their doors and windows have been shut. You've learned not to ask.",
+   "No one can work out how much you've breathed in over a lifetime. The lung section on this physical says normal, and you read it twice."
+  ],
+  "closing": {
+   "retire": "An evening wind comes in over the Chuanchang River and you leave all the windows open, and measure nothing.",
+   "burnout": "This July has passed. There's only the smell of food in the house, and you can smell it very clearly.",
+   "end": "You push open the door of the new place and take a deep breath before switching on the light."
+  }
+ }
+}

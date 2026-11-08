@@ -1,0 +1,171 @@
+{
+ "id": "art-director-km",
+ "occupation": "Art Director",
+ "role": "Art Director, Advertising and Film Company",
+ "headline": "Art school graduate turned art director at a Kunming ad and film company, working on tea, flowers, coffee and tourism, living off the highland light and at the mercy of the rainy season and client revisions",
+ "unit": "An advertising and film company in Kunming",
+ "unit_type": "Advertising and film production company",
+ "city": "Kunming, Yunnan",
+ "city_tier": "Second-tier city",
+ "education": "Bachelor's (Visual Communication)",
+ "level": "You can draw storyboards and run a set. For the first time you have two designers under you and your own name on the last page of the pitch.",
+ "intro": "The company is in a converted factory compound in the north of the city, with a jacaranda at the gate that draws people from other offices to take pictures when it flowers in May. The creative director drops a new-product brief from a tea company on your desk. The boss likes grand, he says. Pitch next Wednesday, three agencies. You spread your Pantone swatches out and realize, for the first time, that the hardest word in this brief is \"grand.\"",
+ "salary_note": "Estimate: Kunming agencies pay well below first-tier cities and rely on year-end project bonuses. Clients settle slowly.",
+ "facts": [
+  {
+   "label": "Art Director (current level)",
+   "value": "3-8 years, ¥6,200–8,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Art Director (8-14 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Mentoring designers and training their eye",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Mood boards and style references",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "1 related listing nationwide, 0 in this city (the database is mostly campus and internship roles)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Small-pot rice noodles by Green Lake. The copywriter whose line didn't survive yesterday's pitch sits across from you, pushes the chili over and says it needs another round.",
+  "You open the layout a designer handed in last night. You nudge the headline up two millimeters and pull the green of the tea hills toward gray. He watches, not entirely convinced.",
+  "Concept session with the copywriter and creative director. Seven words on the whiteboard, six erased, and the one left is \"sunned.\"",
+  "The client's marketing department sends nineteen notes. Number eleven is \"make the logo bigger.\" Number twelve is \"make it all more premium.\"",
+  "Location scout. The cameraman holds up a color meter. Kunming's afternoon light is too hard, so you decide to wait until four-thirty when the clouds come over.",
+  "The printer calls to say the package proof is running red. You bike over to check it on press, and under the standard light you and the press operator ease the magenta down.",
+  "AI runs twenty flower scenes for the mood board. You pick three and retouch the petals on one by hand.",
+  "Pitch tomorrow, and slide eighteen of the Keynote still needs an image. Both your wrists wear pain patches. The mouse moves slowly across the desk."
+ ],
+ "ladder": [
+  { "title": "Assistant Art Director", "stage": "Execution", "focus": "Lay out pages, cut out images, draw storyboards, watch materials, and carry out someone else's visuals properly." },
+  { "title": "Art Director", "stage": "Setting the look", "focus": "Develop concepts with a copywriter, set a project's visuals, lead the making, and go out to pitch and run the set." },
+  { "title": "Senior Art Director", "stage": "Team lead", "focus": "Lead a small team and major clients, run several films at once, and train designers' eyes." },
+  { "title": "Associate Creative Director", "stage": "Managing creative", "focus": "Manage the department's pitches and creative quality, and choose what to take and what to refuse." },
+  { "title": "Creative Director", "stage": "The buck", "focus": "The company's creative reputation and major client relationships rest at this level, and so does the blame." }
+ ],
+ "ai_tasks": [
+  { "name": "Mentoring designers and training their eye", "how": "Seeing each person's strengths and telling them face to face why this type is wrong. AI can write exercises but not that sentence." },
+  { "name": "Mood boards and style references", "how": "AI produces a screen of references and palettes in minutes. Which one, and why this one, is for a person to decide." },
+  { "name": "Batch layouts and asset adaptation", "how": "AI adapts the key visual to every size. The brand's sense of proportion and the final look still need a person's eye." },
+  { "name": "Pitching to clients", "how": "AI helps build the deck and the renderings. Standing in the meeting room answering the boss's \"it just doesn't feel grand\" needs a person." }
+ ],
+ "events": {
+  "e_first_win": "You lead a pitch and win it for the first time. The boss has just one question: can that green be printed? You say yes, then go back and proof three versions.",
+  "e_rain_season": "The rainy season arrives and the tea-hill shoot slips eleven days, with cloud pressing on the ridge. The client wants it live. In the end you change the film's mood from \"sunned\" to \"mist,\" and it is unexpectedly good.",
+  "e_revise": "A key visual reaches its twenty-third revision. The client says the first one was best. You open the folder and find the first one. It is named FINAL.",
+  "e_payment": "A tourism company's final payment is fourteen months late and the company's year-end bonus shrinks by half. You take this project out of your portfolio, and put it back.",
+  "e_light": "The black-headed gulls have come to Green Lake. You and the cameraman crouch at the shore at seven in the morning waiting for a slant of light. The film uses four seconds of it. You got up early six times for those four seconds.",
+  "e_flower": "The Chenggong flower market shoot starts at three in the morning. Wholesalers shout prices as they make way for you. Those few boxes of roses before sunrise are the color you're happiest with all year.",
+  "e_wrist": "Your tendonitis gets worse and your mouse rest gets two layers of towel. The rehab doctor asks how long you've held this posture. You think about it and say since college.",
+  "e_eyes": "You can no longer read 6-point type. Wearing reading glasses to check color, you feel the glasses themselves run a bit yellow. You ask the printer to mail samples so you can check them in daylight.",
+  "e_copy_partner": "The copywriter you paired with for six years quits to run a guesthouse in Dali. The new one's first draft arrives, and not one of your images connects to it.",
+  "e_ai_moodboard": "AI produces eighty mood board assets overnight and your assistant hasn't drawn a storyboard in three days. She asks what she can still learn this month. You don't have an immediate answer.",
+  "e_ai_tea": "An AI-generated tea mountain goes to the client. The tea boss spots it at a glance: these leaves are from terrace bushes, not old trees. You pull the image and go up the mountain the next day.",
+  "e_ai_client": "The client's marketing team starts making its own AI posters and asks you if this one's all right. Your asset adaptation work falls by forty percent in a year, and the company starts asking whether to keep the layout group.",
+  "e_pitch_lose": "You lose a pitch to an out-of-province agency whose treatment was shot on the tea hill you scouted two years ago. You watch their film five times, and on the fifth you start admitting their light is better.",
+  "e_award": "A small film about flower farmers wins an industry award, handed out in Shanghai. You keep the trophy at reception. The client comes in to look at it twice and asks again whether it could be bigger.",
+  "e_printer": "A printing shop you've worked with for ten years is closing, and the owner leaves you a whole cabinet of proofs to look through. You pick four specialty paper samples still usable, and settle a small unpaid bill he'd long forgotten.",
+  "e_client_inhouse": "A coffee brand you've served for seven years sets up its own content team and doesn't renew. At the handover, its brand manager writes the color numbers you set into their own manual.",
+  "e_family": "Your child's kindergarten graduation album needs a designer, and the teacher has heard what you do. You revise it for a week, color correcting every parent's photo. Some parents complain it's too plain.",
+  "e_junior_grow": "A designer you trained goes to a pitch. The layout has your usual white space, and also something you never thought of. The judges ask whose call this was. You point to her.",
+  "e_cost": "A film is over budget, and either art props or lighting has to go. You pull up the budget sheet and cut the transplanted cherry tree, using a shadow on a wall instead."
+ },
+ "choices": {
+  "c_style": { "title": "The client wants grand, you want white space", "situation": "The boss's wife looks at the proposal and says there's too much empty space: put in the tea hills, the awards, a photo of the boss. This project is forty percent of the company's revenue this quarter.", "options": [
+   { "label": "Change it, take the money", "result": "It goes live, the boss is very happy, and he refers three friends from his business association. It doesn't go in your portfolio." },
+   { "label": "Pitch again and argue for the white space", "result": "A week of comparisons and forty minutes in the boss's tearoom. Half the white space survives, and his wife grudgingly nods." }
+  ] },
+  "c_shanghai": { "title": "A global agency in Shanghai makes an offer", "situation": "Double the pay, big-name clients, one category only. No more Kunming tea hills or jacarandas, and Shanghai rent would eat half your salary.", "options": [
+   { "label": "Go to Shanghai", "result": "You change the last page of your portfolio to English.", "end": "You go to a foreign-owned agency in Shanghai, doing online assets for a beverage brand. The lighting here is excellent and the clouds aren't much use. You begin to miss four-thirty in the afternoon in Kunming." },
+   { "label": "Stay in Kunming", "result": "You say you've got the measure of this light. They ask whether Yunnan's light will ever give you a raise." },
+   { "label": "Take a Shanghai outsourcing job", "result": "Half a year working remotely teaches you a new way of pitching, and you start to have doubts about local pitches." }
+  ] },
+  "c_senior": { "title": "Move up to Senior Art Director with a small team", "situation": "The creative director wants you to lead four designers. From now on your time goes to other people's layouts. You put down your own mouse and can't touch it even when your hand itches.", "options": [
+   { "label": "Lead", "result": "For the first time you tell a designer to his face that his kerning is off. It takes a full ten minutes. He fixes it the next week." },
+   { "label": "Keep making the work yourself", "result": "You say two more years; you haven't drawn enough yet. The director nods and brings someone over from another team." }
+  ] },
+  "c_ai": { "title": "Does AI come into your process", "situation": "AI can replace seventy percent of an assistant's assets and adaptations. Do this and the company may hire two fewer juniors, and those tasks were how you learned.", "options": [
+   { "label": "Use it fully, write the rules", "result": "You write an in-house image standard. Rule one: every tea hill and every person must start from a real photo." },
+   { "label": "Only for pitch mockups", "result": "Juniors still begin by cutting out images. You're a bit slower, and your quotes can't hold firm." }
+  ] },
+  "c_brand": { "title": "The tea boss asks you to be brand director", "situation": "The tea company you've worked with for seven years wants to hire you away: this one brand only, some equity, no pitching. From now on you may only use one green.", "options": [
+   { "label": "Go", "result": "You show your portfolio to the creative director. He leafs to the end and says these years have been hard.", "end": "You become the tea company's brand director, with offices in Pu'er and Kunming. When each spring tea comes out, you change only one thing: the green on the package, a little more restrained than last year." },
+   { "label": "Don't go", "result": "The boss says what a shame. You keep doing next year's packaging for him, and the invoices still get paid." }
+  ] },
+  "c_budget": { "title": "Spend this money or not", "situation": "The film's art budget only covers one thing: building a real set, or giving the money to color and post. The client's decision maker only looks at the final film and never asks how it was made.", "options": [
+   { "label": "Build the set", "result": "The light and shadow are really different. Your art team works four straight days and comes back sunburned." },
+   { "label": "Put it in post", "result": "The colorist rescues a lot. The film is clean, with a little less of the damp in it." }
+  ] },
+  "c_assoc": { "title": "Compete for Associate Creative Director", "situation": "Under the creative director someone has to run the department's pitches. Take it and you'll choose which clients to accept, and go tell an old colleague this version isn't good enough.", "options": [
+   { "label": "Compete", "result": "You turn down the first job. The boss looks unhappy. Three months later that client does indeed get into trouble." },
+   { "label": "Keep leading a team and making films", "result": "You say you want to stay on set. That post changes hands twice afterward. Your team is still there." }
+  ] },
+  "c_end": { "title": "The company can't win big accounts anymore", "situation": "The layout group is already gone and pitching costs keep rising. The boss says the company could shrink to three or four people making small tourism films. An art academy is also hiring a visual communication instructor.", "options": [
+   { "label": "Stay, make small films", "result": "The company moves to a small courtyard near Jinma Arch, making three or four films a year. You begin touching the mouse yourself again." },
+   { "label": "Go teach", "result": "On the day you resign, you take your swatches and color-matching lamp with you.", "end": "You become an art academy instructor, eight classes a week, teaching second-years why \"grand\" is not an actionable word. Each May you take students to see the jacarandas, and tell them not to take pictures yet." },
+   { "label": "Hold on one more year", "result": "You take on a prefecture tourism video, edited in forty-eight hours. The final payment is still on its way." }
+  ] }
+ },
+ "endings": {
+  "retire": "You archive the layout files for your final project, the naming far tidier than ten years ago. The young staff make you a poster, every letter a size smaller than you'd normally use. You check the kerning all the way through and say it's good. From now on, the client's word \"grand\" has nothing to do with you.",
+  "burnout": "Your wrists and eyes are both protesting. After one pitch you take long leave, and when it ends you hand in your resignation. You delete the color profiles from your work computer and switch your phone back to its default display. The colors look a bit off. You tell yourself to let it go."
+ },
+ "stages": [
+  "You and a copywriter develop the concept, draw it as storyboards and mood boards, and settle the film's palette, type and props. In the afternoon you go through layouts with designers, and in the evening you're on set or at the printer. You pitch standing up, and you have to translate every \"it doesn't feel right\" from the client into something that can be changed.",
+  "You lead a team of four or five, with other people's work spread on your desk, circling kerning and crops in red. Big clients' brand manuals carry rules you set. You meet with the DP and production designer early and put the money where it counts most on screen. Other people's mistakes now count as yours.",
+  "The department's pitches are yours to choose: this one yes, that one no. You check the logic of each proposal, carry messages between boss and designers, and block half the client's displeasure. You cut the annual showreel, and year-end bonuses pass through your hands. Everything you personally draw in a year fits in one folder.",
+  "The company's creative reputation is on you. You meet major clients' bosses, the media and juries, and decide what piece of work this year proves the company is still alive. You still read juniors' portfolios, starting with the kerning. You also need to know if there's enough to pay everyone through Spring Festival."
+ ],
+ "work": [
+  "A flower-cake package is going on specialty paper. You take four samples to the window and look at them in natural light all afternoon. You pick the least conspicuous one. The print technician says that's the expensive one.",
+  "The copywriter writes \"a mouthful of Yunnan.\" You add a photo of a steaming stove to the mood board, and the creative director tears down the other six.",
+  "Shooting a coffee estate, the gaffer sets two reflectors. You have him take one down. Pu'er's afternoon is enough on its own. What you want is the shadow of the trees.",
+  "A new designer has shifted the brand green by two color numbers. You put the Pantone swatches in front of him and have him find which one himself. It takes him fifteen minutes.",
+  "A coffee brand's annual report is due in three days. You split the layout into three templates for your team, and crop the double-page spreads yourself.",
+  "The production designer wants to rent a room of antique furniture and there's no budget. On the storyboard you change the shot to a close-up of a chair, saving seven thousand yuan.",
+  "After three meetings with an airline's marketing department, you get the pitch fee high enough to cover the proofs, and add a line to the contract: unused proposals remain our copyright.",
+  "Before year-end bonuses, you lay every designer's work for the year out on the meeting room's long table, walk it with the director, and settle three people's numbers.",
+  "The boss of a big tourism group wants to set an annual theme. You bring two pages: one is what he wants, one is what you want to do. He keeps the second.",
+  "You debate all night whether to take a large group's annual promotional film. You say yes, on condition the end credits name the camera and art teams. They agree."
+ ],
+ "past": [
+  "You grew up in Qujing, where your father was a platemaker at a printing plant. The house was full of discarded color bars, and as a child you used them as bookmarks.",
+  "You came to Kunming for six months of drawing prep, scraped by on academics, and got into a provincial art college for visual communication.",
+  "In your third year you interned at a local design studio. For the first week you drew nothing and only hunted typos in proofs. The boss said you had a sharp eye and kept you until graduation.",
+  "Joining this company, your first job was adapting a tourism poster into twelve sizes. By the ninth you were starting to understand what a \"key visual\" was.",
+  "After three years as an assistant, the creative director took you on a scout. For the first time you suggested waiting for the clouds before rolling. The cameraman glanced at you and nodded."
+ ],
+ "late": {
+  "pension_note": "Estimate: agencies contribute on a low base and bonuses don't count; the pension is about 40 percent of final monthly pay.",
+  "scenes": [
+   "The neighborhood needs a notice printed for the Double Ninth Festival. You help lay it out, take the type size down a little and open up the line spacing. The woman at the committee says: won't the words be smaller like that?",
+   "The complex has a new sign and the kerning pains you. You write in a suggestion and management replies that the sign has been paid for. From then on you use the other gate.",
+   "The gulls still come to Green Lake once a year. You don't photograph anything now. You sit on a bench and watch the light travel to the far shore. It takes about forty minutes.",
+   "Your wrists slowly heal. In restaurants you look first at the menu's typeface and then at the dishes. You order the same few things.",
+   "A friend's guesthouse asks you for a new door sign. You carve one in wood with no computer. You get a blister and consider it better than tendonitis.",
+   "You've stopped calibrating your monitor. Later you don't want to tell anyone about this either, as though you've quit something.",
+   "The new job doesn't involve revising until midnight, and life is orderly, but it doesn't feel right until about the ninth draft. There's nowhere to mention this affliction.",
+   "A company has made packaging very like yours with AI, and a friend asks if you want to sue. You zoom in on the kerning and reply: no need, they haven't learned it properly.",
+   "Yunnan tourism films are wall-to-wall generated sea of clouds now. You open one, watch two seconds, drag to the end, and see if it names anyone in the credits.",
+   "The restaurant lighting is too yellow and you ask a waiter to change your table. You can't say the reason aloud: at this color temperature, every dish looks stale.",
+   "Things begin to look yellow. The doctor says cataracts. The first day after surgery you look at the curtains and find their white is a bit bluer than you remembered."
+  ],
+  "closing": {
+   "retire": "At four-thirty in the afternoon the clouds come over and the light softens. You let it finish with the wall across the way before going to boil water.",
+   "burnout": "That wooden door sign slowly changes color in the rain. You feel no need to correct it.",
+   "end": "In May the jacarandas cover the ground again. You walk through and a few petals stick to your sole, a color more unreasonable than any in a swatch book."
+  }
+ }
+}

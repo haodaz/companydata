@@ -1,0 +1,153 @@
+{
+ "id": "canteen-chain-nn",
+ "occupation": "Restaurant Manager",
+ "role": "Trainee Store Manager, Rice Noodle Chain",
+ "headline": "A tourism management graduate at a Nanning chain of laoyou rice noodle shops, learning to run a store from the bottom up: taking in fresh noodles before dawn, watching the stockpots, counting how much pickled bamboo went missing",
+ "unit": "A rice noodle chain in Nanning",
+ "unit_type": "Chain restaurant company",
+ "city": "Nanning, Guangxi",
+ "city_tier": "Second-tier city",
+ "education": "Associate degree (Tourism Management)",
+ "level": "You've done two weeks each in the front and the back, and you can work the register. Keeping the broth from running out through three hundred orders of a morning, you haven't really survived yet.",
+ "intro": "The shop is on a side street off Chaoyang Road, a narrow storefront where people are already sitting and waiting at 6:30 in the morning. Your title is trainee store manager, meaning you have to know how to do everything and none of it is yours yet. Tomorrow at five, says the manager, when the fresh noodle tricycle arrives, you take it in.",
+ "salary_note": "Estimate: chain restaurants in Nanning pay slightly below the national average. A store manager's pay includes a share of store results, which is less in the slow season.",
+ "facts": [
+  { "label": "Trainee Store Manager (current level)", "value": "0–2 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Store Manager (2–5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Directing the floor and kitchen in person and leading the team", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Compiling inventory and spotting abnormal waste", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "It's still dark, and the rice noodle factory's tricycle is parked at the back door. You push your hand into the crate and squeeze. Today's noodles are a little soft, and you note it on the delivery slip.",
+  "You prep the base for laoyou noodles: pickled bamboo, garlic, fermented black beans and chilies, chopped and divided into basins. The smell of pickled bamboo gets into your hair early and is still there in the afternoon.",
+  "The morning rush arrives. Office workers eat standing at the door. You hold the pass, calling orders one by one, the noodle cook's wok rattling like rain.",
+  "When the peak has passed the floor is all broth. You get people mopping, then take a rag to the gap under the counter, the one the area supervisor always runs a finger along.",
+  "Delivery orders start jumping and the platform's late warnings flash. Riders press you at the door, dine-in customers press you too, and you smile apologetically at both.",
+  "The manager has you count the pickled bamboo and pig offal. The books are three jin short, about three and a half pounds, and the two of you try to remember: too much used yesterday, or did someone take some home?",
+  "Before the evening rush you work out next week's roster. One of the older women says she has to take her husband to a follow-up on Wednesday. You move her name over a square and work out someone else's hours for the week.",
+  "Closing: off with the flame, check the gas valve. You take off your shoes and sit on a low stool with your soles humming. The smell in your socks is no longer your own."
+ ],
+ "ladder": [
+  { "title": "Trainee Store Manager", "stage": "Entry", "focus": "Rotate through every position, open the morning shift, take deliveries, count stock, and learn not to panic at the peak." },
+  { "title": "Store Manager", "stage": "Runs one store", "focus": "Responsible for one store's people, goods, accounts and hygiene, watching waste and productivity monthly, with the store's profit or loss on your head." },
+  { "title": "Area Supervisor", "stage": "Runs several", "focus": "Oversees standards and managers at six or seven stores, inspects every day, writes problems on the sheet, and goes to run new openings." },
+  { "title": "Regional Manager", "stage": "Runs a region", "focus": "Manages a region's revenue and site selection, negotiates leases, and coordinates the central kitchen and franchisees." },
+  { "title": "Operations Director", "stage": "Runs it all", "focus": "Runs store operations, standards and pace of expansion for the whole brand, answering to the owner and investors." }
+ ],
+ "ai_tasks": [
+  { "name": "Directing the floor and kitchen in person and leading the team", "how": "AI can only provide a plan. When three hundred morning orders flood in, the one standing at the pass shouting for people is still a person." },
+  { "name": "Compiling inventory and spotting abnormal waste", "how": "AI can work out which store used three extra jin of pickled bamboo. Why it did, someone has to go look in the kitchen." },
+  { "name": "Scheduling staff from footfall forecasts", "how": "AI produces a roster. Who has something going on at home this week, and who can't be put with whom, the manager fixes." },
+  { "name": "Writing rules and operating standards", "how": "AI can mostly write these. People only spot-check whether they suit this store." },
+  { "name": "Designing delivery promotions and pricing", "how": "AI can calculate discounts and average check. Whether old customers will accept this price, a person judges." }
+ ],
+ "events": {
+  "e_soup_break": "In a weekend morning rush the bone broth runs out for ten minutes. The line reaches the corner and customers begin to leave. The manager doesn't yell. He has you work out the next day how many pots three hundred orders need and when to light the fire, and from then on that sheet is yours.",
+  "e_burn": "Carrying broth, you slip and scald your arm. One of the older women in the kitchen dabs on toothpaste, and the manager scolds her and drags you off for real ointment. You roll your sleeves higher. It's quicker that way.",
+  "e_regular": "An old man has come every day at seven for three years, extra pickled bamboo, no cilantro. One day he doesn't come, and you glance at the door a few more times than usual. The next day he's back. He went to see his wife at the hospital.",
+  "e_inspect": "Market regulators come for a surprise inspection, open the refrigerator to read the labels and take two retained samples. Your hands are taking notes while your mind wonders if last night's sanitizing log was filled in.",
+  "e_damp": "The damp spring the south calls huinantian. The shop floor is all water and the paint comes off the walls. A customer slips coming in, you and the others keep mopping and can't keep up, and every hour you lay down more flattened cardboard.",
+  "e_rain": "Heavy rain, the intersection ankle-deep. Delivery has stopped and just two tables are seated. You look at the ingredients prepped this morning in the cold cabinet and work out how much will be thrown away tonight.",
+  "e_platform": "The delivery platform's commission has gone up again and a line has vanished from the store's margin sheet. You try changing the discounts and orders drop; you change them back and lose money. You and the owner of the malatang place next door smoke at the back door, and he's in the same fix.",
+  "e_staff_quit": "In the busiest stretch before Spring Festival, two dishwashers and a noodle cook quit at the same time to go home. You put on gloves yourself and go into the dish room. On the twenty-eighth of the last lunar month you wash until the small hours.",
+  "e_ai_order": "The company brings in AI rostering and ordering, and it knows how many jin of pickled bamboo to order better than you do. Now you read the anomalies it flags, and the ledger you have kept for years sits to one side.",
+  "e_foot": "Getting out of bed in the morning, your heel hurts the moment it touches the floor. Plantar fasciitis. The physical therapist tells you to stand less. All right, you say, and at five the next morning you are standing at the back door.",
+  "e_good_month": "This month your store ranks second in the company on revenue, and your bonus is over ¥2,000 higher. You take everyone out for barbecue. The noodle cook has two extra drinks and tells you this year's pay figure three times.",
+  "e_rent": "The landlord wants to raise the rent by 30%. You work out how many more portions must sell each day to break even, then go stand at the door counting heads. The shop eventually moves, the new place across the way, and only half the regulars follow.",
+  "e_family_time": "Your child starts kindergarten, drop-off at 7:30 and pickup at 4:30, and your morning rush falls right in the middle. Your spouse changes shifts, and two mornings a week your child has breakfast in the shop.",
+  "e_eye": "When you take friends to eat elsewhere, the moment you sit down you check the tile grout for grease, whether the bin at the back door has its lid on, and how many tables they turn an hour. Are you going to eat? your friend says.",
+  "e_new_store": "You go to run the first week at a new store, from 4:30 in the morning until ten at night. On opening day the line reaches the corner. By the third week it's half empty, and now it has really started.",
+  "e_ai_robot": "The central kitchen's seasoning packs and machine-stirred laoyou noodles go on trial. The flavor is steady and the same in every shop. Old customers say, it's good, it's just that it doesn't taste like anyone cooked it. The noodle cook moves to the front of the house.",
+  "e_franchise": "A franchisee wants to switch to cheaper pickled bamboo, saying he's put in everything he has. You go and sit in his shop, where his whole family is working. This is hard to answer. You read him the standard from the contract once more.",
+  "e_smell": "At the company's annual meeting you sit in a hotel banquet hall and can still smell pickled bamboo in your hair. You rarely go down to the stores these days, and the smell has never washed out.",
+  "e_knee": "Your knees and your back come due together. You've climbed enough stairs on store inspections these years, and the orthopedist says to stop visiting every store. You cross two off the list, and the next week you go anyway.",
+  "e_close_old": "The lease on your first store is up and the company decides not to renew. On the night it closes you go to the kitchen and open the refrigerator. It has been cleaned out, with only the smell of pickled bamboo left.",
+  "e_self_order": "All the stores have switched to scan-to-order and pickup lockers, and front-of-house staff have been cut by half. On your rounds no one calls out 'two with extra noodles' anymore, only a machine going ding."
+ },
+ "choices": {
+  "c_cook": { "title": "Learn to cook the noodles?", "situation": "The company asks trainee managers only to know how to manage, not to cook. But the noodle cook says if you want to learn he'll teach you. The price is coming in an hour earlier every day and scalds on your forearms.", "options": [
+   { "label": "Learn", "result": "You ruin dozens of portions and learn when to add the pickled bamboo so its flavor hits hardest. From then on, if anyone says it can't be done, you can step up and show them." },
+   { "label": "Focus on management", "result": "You get the roster, the stock count and the margin sheet perfectly clear. The noodle cook still says you don't understand, and he's right too." } ] },
+  "c_shop": { "title": "Take a losing shop, become Store Manager", "situation": "One of the company's shops has lost money for half a year, on a low-traffic basement level of a mall, and no one wants it. Take it and you become a manager, but you can forget about any performance bonus.", "options": [
+   { "label": "Take it", "result": "You turn the morning shift into a staff meal for mall workers and cut the losses in half. You could recite this store's books with your eyes shut." },
+   { "label": "Wait for a good shop", "result": "A good shop comes along, in the position of assistant manager." } ] },
+  "c_cost": { "title": "Fewer bones?", "situation": "Bones have gone up in price. The area supervisor hints you could cut the stock bones by 20%, the seasoning packet will make up for it. Your margin will look good. Whether the old customers can taste it, you can't say.", "options": [
+   { "label": "Cut 10%, see what happens", "result": "This month's margin looks a little better. The old man sits down, takes a sip, glances up at you, and goes on eating." },
+   { "label": "Don't cut, save elsewhere", "result": "You rework the roster and save half a person's labor. This month you hear from the area supervisor that your productivity still isn't good enough." } ] },
+  "c_supervisor": { "title": "Compete for Area Supervisor", "situation": "The company is opening new stores and promoting several area supervisors. You would go from running one store to visiting six or seven every day, finding fault with others, and those managers used to be your friends.", "options": [
+   { "label": "Compete", "result": "You talk about the losing shop's books. The director asks if you're willing to find fault with friends. I'll tell them I'm coming first, you say." },
+   { "label": "Stay in the store", "result": "You like the sound of the tricycle at the back door in the morning, you say. Your store does well at every year's review. Well, and no better than well." } ] },
+  "c_own": { "title": "Open your own", "situation": "Regulars and the rice noodle factory's owner, whom you know well, all say you should open your own. A storefront in Xixiangtang is up for transfer at ¥300,000, all you have saved in these years and a bit you'd have to borrow.", "options": [
+   { "label": "Quit and open a shop", "result": "You sign the transfer agreement, and at five the next morning you are taking in the noodles at the back door yourself.", "end": "Your shop opens near the university district, eight tables, laoyou noodles cooked to order. You don't make much, and it's just as tiring, except that whatever you lose or earn is yours. For the sign over the door you choose the cheapest typeface, because it's easy to read." },
+   { "label": "Stay with the company", "result": "You keep the money for your child's tuition. When the noodle factory's owner sees you later, he still says what a shame." } ] },
+  "c_central": { "title": "Seasoning packs or cooked to order", "situation": "The company wants to have the laoyou base delivered from a central kitchen. New stores can open faster and steadier, but the old cooks' skills will go unused. The boss asks you: will this work?", "options": [
+   { "label": "Help push it, get the recipe right", "result": "You take two veteran noodle cooks to the central kitchen and try the proportion of pickled bamboo forty times. The standard comes out, and stores open twice as fast." },
+   { "label": "Keep a few cook-to-order shops", "result": "You win three shops the right to keep cooking to order, accounted for separately. None makes much, but there are always people going out of their way." } ] },
+  "c_region": { "title": "Compete for Regional Manager", "situation": "The company plans to open in Liuzhou and Guilin. A regional manager negotiates leases, picks sites and manages franchisees, spending half the time on the road, and your child is in middle school.", "options": [
+   { "label": "Compete", "result": "You talk about ten lessons in site selection, seven of them your own. The boss says, next week go to Liuzhou to look at storefronts." },
+   { "label": "Stay in Nanning", "result": "You tell the boss you don't want to travel before your child's high school entrance exam. In the evenings, there's laoyou noodles you've made yourself on your family's table." } ] },
+  "c_sold": { "title": "The brand is being sold", "situation": "An out-of-town restaurant group wants to acquire the company, keeping the name and optimizing the staff. The boss talks to you: you can stay and handle the integration, or take a payout and go.", "options": [
+   { "label": "Stay", "result": "The new owners want reports and uniformity. Each month you delete the old rules one by one, and quietly keep a few." },
+   { "label": "Take the payout and go", "result": "You take the payout, buy a meal for those few veteran managers, and don't set an alarm the next day.", "end": "You leave the company where you spent more than twenty years. The next year you begin teaching a restaurant management class at a vocational school. When you reach the section on waste, students ask how to learn this. First, you say, take in noodles at the back door for a month." } ] },
+  "c_vp": { "title": "Take Operations Director?", "situation": "The Operations Director's position is open, with the standards and expansion of the whole brand's several hundred stores under it. You are fifty, your knees aren't good, and headquarters is in another city.", "options": [
+   { "label": "Take it", "result": "You start commuting by high-speed rail. The sheets you read grow larger and larger, and you can smell less and less." },
+   { "label": "Decline, stay in Nanning", "result": "At this age you would rather keep to this one area, you say. Each week you still go to the oldest shop and sit by the door over breakfast." } ] }
+ },
+ "endings": {
+  "retire": "Inspecting that old shop before you retire, you reach down and run a finger along the gap under the counter. It's clean. The new manager is younger than your son and calls you teacher. Don't, you say, call me the customer. The tricycles no longer come to these back doors, and the fresh noodles arrive by cold-chain truck. You sniff the air. That smell, at least, hasn't changed.",
+  "burnout": "Your feet and knees can no longer stand it. You ask to leave the stores and later retire early. In the morning you still wake at five, lying there listening to the tricycles downstairs. It takes years before you can sleep until six."
+ },
+ "stages": [
+  "You touch everything: taking deliveries, cutting ingredients, holding the pass, adjusting orders on the register. The daily count sheet and temperature log are yours to fill, and when the manager finds a mistake you fill it in again. What this level has to teach you is how not to panic in those two peak hours, and where every jin of pickled bamboo went.",
+  "A store's people, goods and books are yours. Each day you read the POS report and the waste sheet, schedule a dozen people, negotiate unit prices with the noodle factory, and deal with delivery platforms and market regulators. One level down you did things right. Here you have to make others do things right, and when it loses money, you explain.",
+  "You have six or seven stores and go from one to the next every day by scooter or subway. Holding the inspection sheet, you run a finger along the gap, taste the broth, look at people's fingernails. You talk to store managers about productivity and waste. They used to be your friends, and now when they see you coming, they put away their phones.",
+  "You have a region's books. By day you negotiate leases and revenue share with landlords and mall leasing teams; at night you work out new stores' payback periods, letting a spreadsheet and the headcount outside the storefront do the talking. Franchisees phone a dozen times a day. What they hold is their life savings, and what you hold is a contract.",
+  "You run the whole brand's operations and expansion, reading weekly reports and cash flow for several hundred stores. You talk store-opening pace with the owner and investors and the year's noodles and pickled bamboo with the supply chain. You see the stores through data now, and only once a month do you get to eat something truly cooked to order."
+ ],
+ "work": [
+  "A newly arrived tub of pig offal smells a little off. You sniff it and press it as the manager taught you, write 'rejected' on the receiving slip, and the driver curses and carries the crate back.",
+  "The evening rush gets an order wrong, making a no-chili bowl extra hot. You take it back, remake it, add a braised egg, and write it in the handover log.",
+  "The woman who washes dishes shows you how to read the sanitizing cabinet's temperature gauge: don't open the door until the needle's where it should be. The next day you add this step to the opening checklist.",
+  "The noodle cook and the young woman at the front get into a fight over a lost order ticket at the pass. You buy a clip and hang the tickets in order, and they both go quiet.",
+  "On the POS you see lunchtime extra-noodle orders dropping. You listen at the door for two days and discover the new server doesn't ask. You train her for five minutes and the next week it's back.",
+  "The rice noodle factory raises its price by two mao. You take last month's return records to the owner's wife and the two of you talk beside the crates all morning. It goes up only one mao.",
+  "At the Langdong store the floor is clean, but in the kitchen refrigerator three basins of pickled bamboo have no dates on them. Just cut, the manager says. You hand him the label paper.",
+  "You run a new store's opening and post an opening checklist at every station. On the third day a young man has rewritten it to flow better. You take a photo and send it to the other stores.",
+  "One store's margin has been below standard two months running. You watch from behind the register for a morning and discover the staff meal is using the dining room's ingredients. You and the manager set a new figure.",
+  "A storefront in Liuzhou, the landlord's price excellent. You stand at the intersection for three mornings counting which way the commuters walk, go back, and don't sign.",
+  "A franchisee's books haven't matched for three months. You go with finance to his shop and check the purchase slips one by one at a small table. His wife brings out three cups of water.",
+  "A mall leasing manager wants a higher revenue share. You bring out the morning footfall chart this shop has drawn and say we're the only ones open at this hour. He comes down half a point.",
+  "Investors ask why twenty fewer stores are opening this year. You lay the new stores' payback table beside the old stores' same-store growth and speak for ten minutes. Their first question is about pickled bamboo.",
+  "The new batch of central-kitchen seasoning tastes off. You spot the trend in negative reviews across several hundred stores, have supply chain halt deliveries that day, and phone the plant manager yourself.",
+  "You revise the brand's serving standard and delete a rule that has stood for ten years: pickup lockers no longer need that step. When you finish, you adjust the punctuation."
+ ],
+ "past": [
+  "You go to middle school in Wuming. On the way home there's a laoyou noodle shop. Each time you pass you smell the pickled bamboo frying, and it clings to your school bag.",
+  "The summer after high school you work in a rice noodle shop in Nanning at ¥2,000 a month. The owner tells you not to tell anyone how much you're paid.",
+  "You study tourism management, picturing yourself in a suit at a hotel. Your first internship is in a four-star hotel's food and beverage department, carrying plates for three months.",
+  "An older colleague at the hotel says: if you want to learn how to run restaurants, go to a chain, everything there is written on sheets. You start looking at job postings.",
+  "At graduation you have two offers, a hotel and the noodle chain, which says you can be a manager in two years. All that schooling to sell noodles? your father says. Let me go have a look first, you say."
+ ],
+ "late": {
+  "pension_note": "Estimate: Nanning restaurant chains pay social insurance on a low-to-mid base, so the pension comes to a bit over 40% of final pay.",
+  "scenes": [
+   "In your first month of retirement you still wake at five, get up and stand at the door to watch the street sweepers go by, then go back and lie down.",
+   "The community canteen asks you to take a look at how the old people are served. You change the order of serving, the line is half as long, and the women save you a piece of braised pork.",
+   "Your feet are better, your knees aren't. When you go for noodles you first look at where the stockpot sits. The owner asks what you'll have, and you say: your pot's too close to the door.",
+   "You haven't been in a noodle shop for a year. The smell of pickled bamboo has finally left your hair. One day it suddenly occurs to you, and feels a bit strange.",
+   "Downstairs you help a relative mind a fruit stall. In one morning you work out the rotting rate and tell him to stock less of this variety. Take a rest, he says.",
+   "You still have orthopedic insoles in your shoes and it hurts more on rainy days. This is what the trade left. You don't argue with it anymore, you just keep walking.",
+   "In these new days you still do sums all day, only now they're the family's grocery bills, down to the price per jin.",
+   "You hear your old company has opened many more stores, changed its name and its decor. You pass one and don't go in, only look at its back door.",
+   "You've stopped eating much laoyou noodles, having had enough in your youth. Your son asks what you want for dinner. Something light today, you say.",
+   "A dishwasher you once trained now has three shops of his own. At New Year he sends a message saying only now does he know what you were counting back then.",
+   "The noodles are cooked by machine now and the flavor is exact. You take a bite, give it eight out of ten, and tell someone: those eight are real, and the other two aren't coming back."
+  ],
+  "closing": {
+   "retire": "The sounds of the morning market come up from downstairs, someone calling for two with extra noodles. You listen and turn over.",
+   "burnout": "The rain has stopped and there's water on the ground. You change into soft-soled shoes and walk slowly to the intersection, and slowly back.",
+   "end": "The flame on the stove is off and the kitchen still smells a bit of pickled bamboo. You open the window and let it go by itself."
+  }
+ }
+}

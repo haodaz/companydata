@@ -1,0 +1,158 @@
+{
+ "id": "rail-eng-lz",
+ "occupation": "Railway Engineer",
+ "role": "Track and Bridge Engineer at a Railway Maintenance Section",
+ "headline": "In the technical office of a railway maintenance section in Lanzhou you look after track and bridges. Your year is set by spring inspection, autumn inspection, flood season and midnight maintenance windows, and every red dot the track geometry car brings back means someone has to walk out to that rail",
+ "unit": "The technical office of a railway maintenance section in Lanzhou (responsible for the main lines, bridges and tunnels on both banks of the Yellow River)",
+ "unit_type": "Railway bureau maintenance section",
+ "city": "Lanzhou, Gansu",
+ "city_tier": "Provincial capital",
+ "education": "Bachelor's degree (Railway Engineering)",
+ "level": "You can read a track gauge, a stringline and a geometry car's waveforms, and you did two years in a track work crew. Maintenance window plans and bridge inspection reports are starting to be yours to write, and you're still a little nervous around shop heads and foremen.",
+ "intro": "Last night the track geometry car finished its run, and this morning's chart has three spots marked red. After two years in a work crew you were moved to the section's technical office this year, and in your hands is the plan for the next maintenance window. March in Lanzhou is windy and full of sand, the rails beside the Yellow River are still cold to the touch, and the spring inspection notice is up in the corridor.",
+ "salary_note": "Estimate: pay in a railway maintenance section is post wage plus bonus. Lanzhou runs a bit below eastern railway bureaus, with allowances for nights and track work. The income is steady and grows slowly.",
+ "facts": [
+  { "label": "Track and Bridge Engineer (current level)", "value": "2–7 years, ¥6,120–9,000 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Section Senior Engineer (7–13 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥12,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Going out on the track and bridges to confirm defects", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Analyzing geometry car and flaw detection data", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The section offices are in an old building beside the tracks, and the stairwell smells of radiators. First you open last night's geometry waveforms. Wherever the blue line jumps is where you are going today.",
+  "The shift meeting. The shop heads report speed restrictions, and the office chief asks if that stretch of subgrade has got wet this year. Everybody in Lanzhou knows loess stops being the same soil once it is wet.",
+  "You ride a rail car out to the site and squat between the rails with the foreman, measuring cross level and gauge notch by notch with the track gauge. He just reads the numbers without speaking, and taps a fastener to hear the sound.",
+  "Lunch at the crew's base is potatoes stewed in a big iron pot and beef noodle broth. At the table the foreman asks if you can get a maintenance window this month. His people are waiting on the roster.",
+  "Back at the section you write up the bridge inspection record. You spend a long while comparing the rules and your own photos to decide what grade to give the corrosion on one bearing.",
+  "You phone the dispatcher at the operations section and ask for ninety minutes next Tuesday afternoon. There's a lot of freight that day, the dispatcher says, seventy at most. Seventy won't do it, you say.",
+  "You put on the protective suit and its reflective strips shine in the flashlight beam. Over the radio the station liaison reads the dispatch order. The moment the window is granted, dozens of people step onto the track together."
+ ],
+ "ladder": [
+  { "title": "Assistant Engineer", "stage": "Learning on the track", "focus": "Follow work crews and bridge shops, learn inspection, measurement and protection." },
+  { "title": "Track and Bridge Engineer", "stage": "Writing plans", "focus": "Analyze geometry and flaw detection data, write maintenance window plans and repair schemes, inspect bridges, write assessment reports." },
+  { "title": "Section Senior Engineer", "stage": "Gatekeeping", "focus": "Own the section's track or bridge discipline, review major repair plans, deal with difficult defects, work with the bureau's maintenance department." },
+  { "title": "Section Technical Office Chief", "stage": "Running the office", "focus": "Manage the office's people and the section's technical standards, organize spring and autumn inspections, negotiate work windows with operations and power." },
+  { "title": "Section Deputy Chief Engineer", "stage": "Final sign-off", "focus": "Sign for the condition of all equipment in the section; review line upgrades and construction coordination." }
+ ],
+ "ai_tasks": [
+  { "name": "Going out on the track and bridges to confirm defects", "how": "AI can mark suspect waveforms. Going out, getting down to look, measuring with a gauge and deciding whether to restrict speed tonight takes a person." },
+  { "name": "Analyzing geometry car and flaw detection data", "how": "Models can pick anomalies from kilometers of waveforms and compare against history. Which ones are the sensor's fault takes someone who has worked a crew." },
+  { "name": "Annual maintenance plans and reports", "how": "Ranking by equipment ledger and test results and generating reports is mostly automatic. People adjust the priorities." },
+  { "name": "Writing maintenance window plans", "how": "AI can apply the rules and sequence the steps. Which stretches a machine can't reach and which foreman is reliable are for a person to decide." },
+  { "name": "Negotiating work windows with operations and power", "how": "A window of a few dozen minutes takes several units all giving way, and that runs on years of favors and credibility." }
+ ],
+ "events": {
+  "e_first_point": "After reading your first maintenance window plan, the foreman asked: this stretch can't take a machine, have you thought about how the tools get carried in? You took it back, rewrote it, and went out to count again which crossings you could get off at.",
+  "e_spring_check": "During the month of spring inspection you and the office chief walked every line, switch, bridge and tunnel in the section, and wore out a pair of work boots. The forms you brought back stacked half a person high. The whole next year's major repair plan was in them.",
+  "e_flood": "July rains. The rain gauge alarm went off, the flood plan started, and you went up to a watch post on the edge of a loess cutting for more than ten nights. When it cleared, you dug a few cubic meters of soil out of the ditch and nothing else had happened at all, which is the best possible outcome.",
+  "e_winter": "January dropped to minus twenty, the rails shrank hard, and anti-fracture patrols went on past midnight. You walked four kilometers in the wind, and back at the crew's base you couldn't get your gloves off. The foreman slowly thawed them with hot water.",
+  "e_good_waves": "The stretch you were watching went half a year without a red mark. The bureau's inspection ranked every section by geometry data and yours moved up four places. At year's end everyone got a few hundred yuan more.",
+  "e_culvert": "An old culvert was half blocked by villagers' cornstalks. You took two bags of apples to see the village party secretary and talked for half an afternoon. The next week they moved it, and asked you to stay for a meal.",
+  "e_knee": "Twenty years of walking on ballast, and the meniscus in your knee is nearly gone. The doctor looks at the film and asks if you played basketball. Close, you say. Twenty years, on a rather long court.",
+  "e_sleep": "The windows are often after midnight, two or three times a week. Your sleep has been cut into pieces. Even on weekends you wake at two and hear a freight train crossing the bridge far off.",
+  "e_bridge": "Annual inspection of the old bridge over the Yellow River. Clipped to a safety line, you walked into the lower chord inspection walkway while the river wind swelled your trouser legs. Your flashlight found a patch of rust on a rivet head. You noted it for observation next year.",
+  "e_contractor": "A local road project needed to run a pipeline under the railway. The contractor brought the plan to the section, and the safety agreement went through six revisions. He said it was harder than getting married. You said trains run at night, and you can't lose a single window.",
+  "e_family_house": "In the railway family compound, the first thing grown-ups say to each other is whether there's a window tonight. When your partner first came to dinner, your mother's first question was about night shifts.",
+  "e_parent_meet": "The parents' meeting fell during autumn inspection, and once again you apologized in the group chat. The teacher replied: understood, you railway people. You have heard that sentence too many times over the years.",
+  "e_ai_waves": "The bureau launched a smart analysis platform that grades geometry waveforms automatically and issues work orders every day. The foreman smiled at his first order. That stretch is an old habit of the sensor's going over the switch, he said. You'll have to tell it.",
+  "e_drone": "Drones started inspecting bridges in place of people, shooting three bridges a day in high definition. You climb fewer ladders, and have thousands more images to look at. The model missed one crack. You enlarged it and drew a circle on the image.",
+  "e_merge": "The maintenance section is to merge with signals and power into one integrated maintenance section. Their forms, passwords and mealtimes don't match, and dozens of people changed posts. You moved offices, and the section's name on the new door doesn't quite roll off the tongue yet.",
+  "e_line_stop": "A new line opened and a stretch of the old line was formally taken out of service, its rails to be removed. You led the inventory before closure, stamped those ledgers, and handed them over to the asset department.",
+  "e_young": "A new university graduate on his first bridge had shaking legs. You had him put his hand on the rail and told him: don't look at the water, look at the rivet in front of you. Six months later his inspection record caught a defect you hadn't seen.",
+  "e_new_gen_retire": "The track workers who started in the eighties are reaching retirement one after another. The outsourced workers hired in their place clock in on their phones and scan a QR code before stepping on the line. The new foreman is more than twenty years younger than you."
+ },
+ "choices": {
+  "c_cert": { "title": "Study for the builder's license, or focus on the track", "situation": "Colleagues in the section are quietly studying for the railway first-class constructor's license, which brings side income and a way out. Your maintenance windows this year are packed, and you can't get through many pages. The office chief says you'd do better to master the track rulebook first.", "options": [
+   { "label": "Study at night for the license", "result": "You did practice exams in the gaps between windows for two years. You got the license, and lost some weight." },
+   { "label": "Master the rulebook first", "result": "You wore out the spines on the technical and maintenance rules. When a foreman asks you something, you can name the article and clause." }
+  ] },
+  "c_point": { "title": "The plan is twenty minutes short", "situation": "The dispatcher will only give a seventy-minute window, and your rail replacement plan needs ninety. The shop head says report it as seventy and we will rush. By the rules, a plan without enough time should cut the workload. But if this rail isn't finished this year, spring inspection will single it out.", "options": [
+   { "label": "Cut the workload, do it in two windows", "result": "You split it into two windows and took another night. The shop head found it a nuisance and the workers went out one more time. But every window closed on time." },
+   { "label": "Fight the dispatcher for more time", "result": "You made four phone calls, used up half the favors operations owed you, and got eighty-five minutes. Fine, says the foreman, but next time it's your turn to pay back." }
+  ] },
+  "c_senior": { "title": "Applying for Section Senior Engineer", "situation": "Applying for Section Senior Engineer takes papers, achievements and a bureau review. Your achievement is these years of track, dozens of kilometers of it, with no problems. Written into a form, 'no problems' comes to two lines.", "options": [
+   { "label": "Write it up and apply", "result": "You wrote ten years of settlement observations in the loess cutting into a paper, and for the first time someone outside Lanzhou wrote to ask you for data." },
+   { "label": "Not this year", "result": "You left the slot to a senior colleague nearing the age limit. The next year he treated you to hand-pulled mutton, and never mentioned it again." }
+  ] },
+  "c_design": { "title": "The design institute is hiring", "situation": "A railway design institute in Lanzhou needs someone in track engineering. No night shifts, thirty percent more pay, drawings for new lines. After these years in maintenance, you know the line on the drawing and the line on the ballast are not the same thing.", "options": [
+   { "label": "Go to the design institute", "result": "You handed over your window plans properly.", "end": "You moved into the institute's office and spent your days facing new-line CAD. The first time you went back to survey on site, you squatted beside the subgrade, and a young colleague asked what you were looking at." },
+   { "label": "Stay at the section", "result": "You phoned the institute back. That night during the window you stood at the bridgehead and watched the workers' headlamps inch forward one by one." },
+   { "label": "Ask for a year's attachment at the bureau", "result": "You spent a year attached to the bureau's maintenance department, went to a great many meetings, met many of the people at the other end of the phone, and came back able to get things done much faster." }
+  ] },
+  "c_slow": { "title": "To restrict speed or not", "situation": "Rechecking after rain, the data on a cutting's slope has moved a little from last week, though still inside the limits. Ask for a speed restriction and the entire timetable has to change, which will set off the dispatch desk. Don't ask, and the data is, after all, still within limits.", "options": [
+   { "label": "Ask for a restriction and watch", "result": "The timetable was adjusted for three days. The data did not move again. Someone from dispatch asked on the phone if you weren't being a bit nervous. Maybe so, you said." },
+   { "label": "Monitor closely, no restriction", "result": "You took a measurement party out every six hours for a week and the data held. You slept thirty hours that week altogether." }
+  ] },
+  "c_ai_ledger": { "title": "Moving the old line's ledgers into the system", "situation": "The bureau wants digital equipment records. Half of the old line's decades of ledgers are on paper and the other half are in the heads of foremen about to retire. Taking this on means visiting every crew along the line, with no bonus, and it doesn't count as achievement.", "options": [
+   { "label": "Take it on", "result": "You walked the line for a year with the old foremen, recorder in hand, getting every old complaint on tape. On launch day, several hundred notes in the system had been typed by you." },
+   { "label": "Hand it to an outsourced data entry firm", "result": "The firm entered every word on paper perfectly. When the old foremen retired, nobody could say what each stretch's temperament was anymore." }
+  ] },
+  "c_chief": { "title": "Competing for Section Technical Office Chief", "situation": "The old chief has been transferred. The Section Technical Office Chief coordinates the whole section's spring and autumn inspections and all maintenance windows, deals daily with operations and power, and receives whichever inspection team comes down. You ask yourself if you're willing to never step on the track again.", "options": [
+   { "label": "Compete for it", "result": "In your report you spoke of three things, and all of them were other people's credit. The section chief remembered that. Six months later your office phone began ringing ahead of your mobile." },
+   { "label": "Keep working the field", "result": "You told the section chief you wanted a few more years on the track. The chief's job went to someone else. You still walk dozens of kilometers a month, and your knees know it best." }
+  ] },
+  "c_metro": { "title": "Track supervisor at the metro company", "situation": "Lanzhou's metro is hiring experienced track supervisors. The maintenance is underground and the pay somewhat higher, and it's night work too, but you end the shift at your own home. This time, your partner says, you really ought to think about it.", "options": [
+   { "label": "Go to the metro", "result": "You went to the bureau to complete the transfer.", "end": "You traded loess cuttings for tunnels, with no wind and sand overhead, only the sound of ventilation fans. When you came out at the end of the night, breakfast stalls were just opening on the street." },
+   { "label": "Don't go", "result": "You added up your seniority and the compound housing, and stayed in this windy place." },
+   { "label": "Have a friend ask around, wait a bit", "result": "Your friend says they have to wait for another batch of posts. While you were waiting, the next autumn inspection came." }
+  ] },
+  "c_retreat": { "title": "Early retirement, or stay to the end", "situation": "The section has an internal early-retirement plan: those at the age limit can go home on 70 percent. Your knees can't manage long walks and your child lives elsewhere. But you have walked this line for so many years, and you have two major repair jobs to finish.", "options": [
+   { "label": "Take early retirement", "result": "You put the files for your two major repairs in order.", "end": "You finished the early-retirement paperwork and no longer had to look at window plans. When you hear a freight train crossing the bridge in the middle of the night, you turn over and work out which train it is." },
+   { "label": "Work until retirement", "result": "You asked the section chief for work off the track, reviewing plans. When you go on site you walk only a few steps at the bridgehead." }
+  ] }
+ },
+ "endings": {
+  "retire": "In the autumn inspection before you reached the age limit, you didn't go out on the bridges. You sat in the section office editing younger people's reports. There were six retirement forms, a good deal fewer than for one window plan. That evening you heard a freight train crossing the Yellow River in the distance, the wheels hitting the joints in an even beat. That stretch needs no worrying about this month.",
+  "burnout": "After knee surgery the section moved you to the archive to look after decades of track histories. Night shifts are over, but you still wake in the small hours, and at two in the morning you look at the sky and guess how long tonight's window will run."
+ },
+ "stages": [
+  "Every day you read waveforms and flaw detection sheets, rank defects into maintenance plans, and ask dispatch for a window. Each week you go out to a crew and squat between the rails to measure with the foreman; each month you walk a bridge and write rust and cracks into the inspection record. Time and tools in the plan are yours to work out, and if you get it wrong, dozens of people stand around at midnight with nothing to do.",
+  "The whole section's track or bridge discipline is yours now. You review plans from below and on site you see only the old problems that keep coming back: collapsing loess subgrade, swaying curves, the bearings of old bridges. Major repair plans go through you with design and construction units, and when bureau experts visit you answer them. You go to the crews less often, and when you do, people are waiting for your decision.",
+  "A dozen or so people in the office are yours to schedule, and you organize spring and autumn inspections, flood plans and bureau inspections. Every week you scramble with operations and power for work windows, everyone needing something from everyone, and the talk is very polite. In flood season your phone can't go on silent, and the cabinets in your office are full of each year's assessment forms.",
+  "The signature on the condition of all the section's equipment is yours. Line upgrades, construction over the track, new connections: each needs your written opinion on the plan, and every word can be traced later. At section meetings you speak up for the technical side, and sometimes shield the section chief from the bureau's inspections. You go only to the sites that matter, and when you do, everyone chooses their words carefully."
+ ],
+ "work": [
+  "A twist fault keeps coming up red on the waveform. You and the foreman measure it with a stringline three times and find that the subgrade beneath has absorbed water. The repair changes from tamping to replacing the fill.",
+  "The bearing displacement record doesn't match last year's. You climb the pier to measure again, and it turns out whoever wrote last year's record swapped upstream and downstream.",
+  "The flaw detection worker reports a transverse defect. You get to the site at midnight, paint a number on the rail in white, and put this rail on the replacement list for the next window.",
+  "A section of curve keeps swaying, and years of repairs have not fixed it. You pull ten years of superelevation and gauge records and find each repair only treated the symptom. The plan becomes realigning the whole section.",
+  "The major repair contractor wants to reduce the subgrade fill by ten centimeters. You and the supervisor go to the site, dig a test pit, and stand at the edge and measure it for them.",
+  "A bureau expert asks why the drainage design on the loess subgrade was changed this way. You lay out three years of settlement curves and talk for half an hour. The expert writes 'agreed' on the review form.",
+  "The power section is fighting you for the same afternoon window. You phone their chief, promise to give up next month's window, and fold their catenary maintenance into this window of yours.",
+  "When the autumn inspection summary comes in, one shop's figures are too good. You go and measure two of the spots yourself, and come back to have a cup of tea with the shop head.",
+  "At the pre-flood meeting you rearrange the watch posts according to the last three years' rainfall map, dropping two that haven't seen trouble for years and adding three new ones.",
+  "A local elevated highway must cross the railway and the construction plan reaches you. You write eight comments, the third requiring all lifting to be done inside a window. The local project manager makes three special trips to the section.",
+  "At the section meeting on this year's repair order, the question is whether a stretch should move up. You put maintenance cost and slow-order losses on one table and let the section chief see for himself.",
+  "On a bureau inspection the team leader asks why a bridge assessment was late. You produce the dispatch order record and show him what day the window was cancelled."
+ ],
+ "past": [
+  "Your family is in Longxi County, and trains ran along the foot of the hills north of your village. After school you counted freight cars. The longest had fifty-seven.",
+  "When you filled out your university choices, your father said the railway was an iron rice bowl. You applied for railway engineering at a transport university in Lanzhou, and learned how to set a line down on the ground.",
+  "On a junior-year internship at a crew along the line, the foreman gave you a track gauge and had you walk ten kilometers with him. By night you had four blisters on your feet and knew what the spacing of a sleeper was.",
+  "At graduation, some classmates went to construction companies and some to the south. You signed with the maintenance section, because here at least they wouldn't fail to pay your wages.",
+  "Your first year was on a track crew. The first time you went out at midnight, the rail in your flashlight beam was alarmingly bright. Don't stand on the railhead, the foreman said, that's your dinner under your feet."
+ ],
+ "late": {
+  "pension_note": "Estimate: basic pension for railway enterprise employees, with long service and a fairly stable contribution base; about 60 percent of final pay, enough in Lanzhou.",
+  "scenes": [
+   "Riding high-speed rail to see relatives, you rest your hand on the tray table, feel every tiny sway, and note the rough kilometer post in your head. The person next to you thinks you're playing piano.",
+   "There's a slanting crack on the wall of the underground garage in your complex, and everyone says it's nothing. You mark the date at both ends in chalk and go measure it every month, to the great annoyance of the management office.",
+   "Now most of the track is inspected by automatic vehicles, and several crews have been disbanded. You still divide your pills each year into a winter box and a summer box. Your knee always tells you the night before the weather turns.",
+   "You started giving flood awareness talks to old people in the community, and talk your way round to loess. One listener says: what does this have to do with buying vegetables? You think it over. Nothing, you say.",
+   "The first winter after your surgery you learned to go down stairs. One step at a time, like counting sleepers. At the seventeenth it was level.",
+   "The archive is being digitized, and a few outsourced scanners have come. The old track history volumes have gone brittle. You teach them how to turn pages without losing them, and they teach you how to pay for parking on your phone.",
+   "You no longer care how the timetable changes. All you know is that beef noodles in Lanzhou have gone up another yuan, and that on good days your knee can get you to the river.",
+   "In your new line of work there are more and more nights a year when you sleep straight through. In the first year it felt a little strange; you would wake in the small hours and the room would be too quiet.",
+   "Sometimes, waiting for a train at a level crossing, you can tell from the sound of the wheels if the rail gaps on this stretch are wide enough. This serves no purpose now.",
+   "The old section people still get together for meals, the talk going from track to knees and from knees to medicine. Your colleagues now don't understand any of that, but you go to that dinner every year.",
+   "In a hotel you always look first for signs of water seepage at the corners of the wall and along the window sill, especially in summer. Your family no longer discusses with you where to stay.",
+   "You still walk at the spacing of sleepers without thinking, not quite seventy centimeters a step. In the park an old lady tells you, a walk like that, you must have been in the army."
+  ],
+  "closing": {
+   "retire": "In the small hours the sound comes over from the Yellow River, car by car, beat by beat. This is someone else's night on duty. Tonight's window belongs to whoever it belongs to.",
+   "burnout": "Near dawn your knee doesn't hurt. It's the good day of this week. You turn over and let it rest a little longer.",
+   "end": "The streetlights come on along South Mountain, string by string, and the railway is on the other side of the Yellow River. About now, someone is asking for a window."
+  }
+ }
+}

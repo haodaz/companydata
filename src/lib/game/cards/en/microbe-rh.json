@@ -1,0 +1,142 @@
+{
+ "id": "microbe-rh",
+ "occupation": "Microbiologist",
+ "role": "Distillery Institute Microbiology Researcher",
+ "headline": "At a Renhuai liquor maker's research institute, others smell the liquor and you smell the Petri dish, taking samples from the qu rooms and banking strain after strain at minus eighty",
+ "unit": "A mid-sized sauce-aroma baijiu distillery's research institute in Renhuai, Guizhou (microbiology lab)",
+ "unit_type": "Distillery research institute",
+ "city": "Renhuai",
+ "city_tier": "County-level city",
+ "education": "Master's degree (fermentation engineering)",
+ "level": "Your thesis was on yeast metabolism. You've only ever met daqu, the fermentation starter, in papers",
+ "intro": "The institute sits halfway up the hill behind the distillery, one flagstone path from the qu rooms, where the fermentation starter grows, and your lab coat comes out of the wash smelling sour-sweet anyway. The section chief hands you sterile forceps and a pack of sample bags. Everyone else here talks about liquor with their mouths, he says; here we use plates. This afternoon you'll go to Qu Room Two and bring back layered samples from the blocks on their second turning, and don't let the sun get at them on the way.",
+ "salary_note": "Estimate: Renhuai distillery pay is high for a Guizhou county city and about in line with the national figure. Good years bring big bonuses; in a downturn, the institute's bonuses go first.",
+ "facts": [
+  { "label": "Assistant Engineer (current level)", "value": "0–3 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Engineer (3–8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Taking samples in qu rooms and fermentation pits", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Isolating, culturing and reading colonies", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "First stop, the incubator. Last night's plates have grown a patch of white fuzz, and you can't tell yet if that's what you wanted or something that drifted in.",
+  "Tests on Chishui River water and workshop water, coliforms and total plate count. The report's due at quality by ten.",
+  "Long sleeves into the qu room, around sixty degrees, blocks stacked to the roof. Standing on straw, you take upper, middle and lower layers with a sterile corer. Your glasses go white at once.",
+  "In the canteen a workshop team leader asks what those bugs of yours are actually good for. You say they're microbes. He says same thing.",
+  "At the clean bench, diluting and spreading, labeling plate after plate. Sweat runs down your wrists inside your gloves and your hands can't shake at all.",
+  "Picking a single colony and streaking it out, third generation of this strain. Under the microscope it looks a little round. You add a small question mark after its number.",
+  "You put today's sequence data on the server and AI returns species annotations. You've never seen the fifth name. After a long search, it turns out the database is guessing.",
+  "Back at the dorm, the qu smell will still be on you tomorrow. You wash your hair twice and read tomorrow's media recipe once more."
+ ],
+ "ladder": [
+  { "title": "Assistant Engineer", "stage": "Tests and samples", "focus": "Microbiological testing of raw materials and semi-finished goods, sampling in qu rooms, pits and workshops, culturing, counting, recording, learning to read a plate." },
+  { "title": "Engineer", "stage": "Own projects", "focus": "Isolating and identifying functional microbes, tracing contamination, writing your own experiment plans, carrying messages between workshop and institute. Titles come through projects and patents." },
+  { "title": "Senior Engineer", "stage": "Leading a direction", "focus": "Responsible for a strain or process direction, running the strain bank, collaborating with universities, persuading the workshop to use lab results in the next grain cycle." },
+  { "title": "Deputy Director of the Institute (Professor-level Engineer)", "stage": "Running the institute", "focus": "People, budget and project direction at the institute, explaining to the company why some things take ten years, representing the company on industry standards." }
+ ],
+ "ai_tasks": [
+  { "name": "Taking samples in qu rooms and fermentation pits", "how": "In the heat and humidity of a qu room, which block, which layer, and how the sample gets back to the lab take a person on site. AI schedules at most." },
+  { "name": "Isolating, culturing and reading colonies", "how": "AI can read plates, count and identify colonies. Whether the odd-looking few are something new, someone has to pick them out and continue." },
+  { "name": "Organizing test data and writing reports", "how": "Data summaries, trend charts, exceedance warnings and draft reports are all things AI can do. People spot-check the key numbers." },
+  { "name": "Analyzing sequencing data and community change", "how": "AI can annotate species and find patterns. Which round a change corresponds to, and what which crew did, takes a person with the process records." },
+  { "name": "Tracing contamination and off-odors", "how": "AI can compare batches, staff and equipment and list suspects. The actual cause requires verification on site, and the fix has to be someone's responsibility." }
+ ],
+ "events": {
+  "e_contam": "A whole batch of your plates grows mold. Three days of checking finds the clean bench filter was overdue and nobody changed it. The section chief has you tape the change log to the door, and from then on it's yours.",
+  "e_first_strain": "From the third-round fermented grains you isolate a heat-tolerant Bacillus and number it R-117. It turns out to be a known species, but its aroma output is higher than expected. The section chief puts it in the strain bank.",
+  "e_chongyang": "Around the Double Ninth Festival the grain goes in, and this cycle draws liquor seven times from beginning to end. The institute takes turns sampling in the workshop. You squat for two weeks by the piles of fermented grain, sorghum husks under your nails.",
+  "e_duanwu": "Around Dragon Boat Festival the qu-making begins, and every room's temperature is one curve a day. You read each one morning and evening. The workers who turn the blocks say you're more punctual than they are, you just can't turn blocks.",
+  "e_allergy": "All that qu dust, and your nose stops clearing. The doctor says fungal allergy. You start wearing a dust mask into the qu room, and the inside comes out yellow.",
+  "e_foreman": "The workshop director hears you plan to bury probes in a fermentation pit and asks if his pit's not old enough for you. You go three times with data. On the third, he tells you to try it in the oldest one.",
+  "e_offsmell": "A batch of base liquor has an indefinable moldy note. The workshop says water, quality says grain. You sample at more than a hundred points and finally trace it to a replaced length of pipe with a biofilm as thick as a fingernail.",
+  "e_dryseason": "In the dry season the Chishui River runs low and intake water differs from the wet season. You add a set of monitoring and work it alone for two months. You put the data in, and at the meeting nobody asks.",
+  "e_freezer": "Maintenance cuts power at the plant for four hours, and the ultra-low freezer's alarm text gets you out of bed. You drive up the hill and stand guard with dry ice until the power returns. More than four hundred tubes, none lost.",
+  "e_boom": "Sauce-aroma liquor is hot. Out-of-town bosses buy base liquor in town and the distillery expands. Bonuses double, the institute hires two more people, and in a meeting the boss even mentions microbes.",
+  "e_bust": "The market falls and base liquor prices halve. Production gets cut. The institute's outside sequencing budget is halved first, a few projects stop, and you freeze the samples and write 'to be continued.'",
+  "e_ai_colony": "The testing lab gets a colony-reading camera and plates go much faster. Quality transfers one of its two technicians. The one who remains looks only at what the machine marks in red.",
+  "e_ai_annotation": "An AI metagenomic annotation yields a name that sounds new. You doubt it for a week and check each read back. It has mistaken a contaminated database sequence for a new species.",
+  "e_ai_predict": "The company wants a model to predict this cycle's liquor yield, and you provide eight years of data. It does well the first year. The second year, the grain changes, and everything starts over.",
+  "e_school_gate": "Schooling in Renhuai becomes a problem; to get into a good school you have to rent nearby. Your spouse moves to Zunyi with your kid. Every Friday you drive down the mountain, the qu smell going out the window along the way.",
+  "e_patent": "Your strain gets a patent application and the company pays you ¥2,000. Six months later a similar method appears in a paper from another distillery. Legal tells you not to answer the email.",
+  "e_kimchi": "White bloom forms on your mother's pickle crock and she wants to throw it out. You look at a bit under the microscope and tell her it's film yeast, just skim it off. She says you read all those books to look at this.",
+  "e_eyes": "Twenty years at a microscope and your eyes are dry, the right eye worsening faster. You change to a scope with a screen. Your students laugh that you've finally caught up with the times."
+ },
+ "choices": {
+  "c_shift": { "title": "Lab or workshop", "situation": "The section chief asks if you'd go into the distilling workshop for a full cycle: nine months from first grain to last draw, at full pay, but your lab project would go to someone else. Whether anything you learned there would apply, you don't know.", "options": [
+   { "label": "A full cycle in the workshop", "result": "After nine months your skin is darker, and you know how the old hands can tell things with one touch as the grain cools. Half your lab project has someone else's name on it." },
+   { "label": "Stay in the lab", "result": "You isolate another dozen strains and your methods grow surer. The workshop people still call you 'that one from the lab.'" } ] },
+  "c_engineer": { "title": "Apply for Engineer", "situation": "Promotion to Engineer needs a result you can put in the file. You'd like to write up your contamination tracing as a paper. The section chief says a patent is faster and the company counts it more. But your results are still one validation short.", "options": [
+   { "label": "One more round, make it solid", "result": "The validation overturns half the data. You rewrite the paper a year late, and at review nobody can pick a hole in it." },
+   { "label": "File a patent, catch this round", "result": "The patent goes in and the file is complete. You know you aren't entirely sure of the third conclusion." } ] },
+  "c_probiotic": { "title": "A probiotics company", "situation": "A probiotics company in Chengdu wants you for strain development at forty percent more pay, on condition that you bring your strain screening methods along. Your strains can't leave, of course. Your hands can.", "options": [
+   { "label": "Go to Chengdu", "result": "You trade the liquor smell for the milk-powder smell of a new plant. The old one takes three months to wash off.", "end": "You left the distillery for a probiotics company in Chengdu. Strain numbers appeared on product after product, and your name was not on any." },
+   { "label": "Stay in Renhuai", "result": "You stay. The strain you've just isolated is on its fifth generation, and you'd like to see its tenth." } ] },
+  "c_ai_learn": { "title": "Learn bioinformatics and modeling", "situation": "The institute is starting to pile up sequencing data and needs someone who can write scripts. You're a wet-lab person. This means starting from Linux, losing time at the plates, and no one on the line knowing what you're doing.", "options": [
+   { "label": "Learn it, start at the command line", "result": "In a year you build the analysis pipeline. The first night you produce community charts for seven pits, you're alone in the office, and you save three copies." },
+   { "label": "Outsource to the sequencing firm", "result": "Results arrive on time and the charts look good. How they were computed, you can only take on faith." } ] },
+  "c_senior": { "title": "Apply for Senior Engineer", "situation": "Senior Engineer requires leading a provincial or ministry project. You're applying jointly with a university in Guiyang. The professor says the university comes first on credit, and a company executive wants to be listed first. You're in the middle.", "options": [
+   { "label": "Get the project, move your name back", "result": "The project goes through, and you are the fifth author. Your team does the work, and it counts for the review." },
+   { "label": "Insist on clear credit", "result": "Talks with the professor fall apart and the project is lost. What you've got in these years is all your own." } ] },
+  "c_budget": { "title": "Whose project survives the cuts", "situation": "A bad market, and a third of the institute's projects have to go. One is seven years of functional microbes from pit mud, with no money in sight. The other cuts the company's energy use and shows a return within a year.", "options": [
+   { "label": "Keep the pit mud", "result": "People on the energy project are moved, and one nods at you in the canteen. You work the pit mud two more years and can't say whether it will come to anything." },
+   { "label": "Keep the energy project", "result": "The report has numbers and the boss is happy. The pit mud samples stay in the freezer with their numbers uncrossed." } ] },
+  "c_inspect": { "title": "Set up a third-party lab", "situation": "A third-party testing firm in Zunyi wants you to build its microbiology lab, serving distilleries and food plants all around. Income could double, but you'd go from research to taking orders: receiving samples, issuing reports, chasing payments.", "options": [
+   { "label": "Go set up the lab", "result": "For the first time, you go to finance about payment terms on reagents.", "end": "You left the institute to open a third-party microbiology lab in Zunyi, taking samples from distilleries and food plants, one report and one fee at a time." },
+   { "label": "Stay at the institute", "result": "You put the contract back in its envelope. Somebody still has to subculture those four hundred tubes every year." } ] },
+  "c_viceDirector": { "title": "Compete for Deputy Director of the Institute", "situation": "The old director is retiring and wants you to compete for Deputy Director. You'd need the professor-level title and to present budgets to the board. And those microbes of yours would reach you only through other people's reports.", "options": [
+   { "label": "Compete for Deputy Director", "result": "You learn to explain a strain in one slide. The directors like hearing about flavor and price. By your third slide they're asking about something else." },
+   { "label": "Keep doing research", "result": "You stay with your microbes. Students begin reading plates for you, and the new deputy director now and then asks if this one can count as an achievement." } ] }
+ },
+ "endings": {
+  "retire": "The strain bank has grown from two freezers to six, numbering over four thousand. The year you retire, the company folds the institute into the group technology center. The sign changes; the road to the qu rooms is still flagstone. You check off every strain on the transfer list. When you get to R-117, its subculture record runs to more than ten pages. When the paperwork's done, you wash your lab coat, fold it, and put it on the cabinet.",
+  "burnout": "Your rhinitis turns to asthma. You can't go into the qu rooms, and even the lab ventilation sets you coughing. The company moves you to technical documentation, tidying process rules and standards, with no media and no incubators. You buy an air purifier and listen to it run every night."
+ },
+ "stages": [
+  "Your day is a chain of samples: water, grain, qu blocks, fermented grains, from sampling to dilution, spreading, incubation, reading and recording. Quality's report can't be late, and the section chief's data can't be wrong. You can't yet say what you study. You only know which incubator is running half a degree off.",
+  "You start your own projects: isolating functional microbes, tracing contamination, writing experiment plans. The workshop director sometimes calls you directly to ask if this pit mud is off. You go back and forth between 16S sequencing results and workshop records, learning to give your conclusions in words that don't need translating.",
+  "The strain bank is yours, and the subculture dates and survival rates of four hundred tubes sit in your table. You negotiate with universities, set topics for younger colleagues, and persuade the workshop to actually use the new qu next cycle. There are more meetings now. You still open the incubator door yourself every morning.",
+  "You manage the institute's people, budget and three-year project road map, and go to company meetings to explain why this takes ten years. You attend industry standards meetings, and when the boss asks whether this can go in the advertising, you need to know how far you can say. Other people read the plates. You still walk the road to the qu rooms now and then."
+ ],
+ "work": [
+  "You miscalculate the dilution for the first round of fermented grains and the plates grow too thick to count. The section chief pushes the calculator over and has you redo it.",
+  "Swabbing in the workshop, you go from the rim of the fermentation pit all the way to an operator's gloves. He asks if there are microbes on his hands. You say everyone has them.",
+  "Your first spreading at the clean bench, your glove brushes the surface and your heart jumps. The next day a thin line grows across that plate, exactly your finger.",
+  "A batch of qu blocks turns black and the team leader blames heaven. You sample all three layers and tell him the blocks were turned half a day late. Frowning, he moves up the turning time.",
+  "You lay out 16S data from seven pits together and find the oldest and newest differ by only a few genera. The director looks at the chart and tells you to do three more pits.",
+  "An intern writes twenty cryotube numbers backwards and they all have to be redone. You don't scold him. You teach him to label first and add culture after, and tape that to the freezer door.",
+  "A new batch of qu is to try your selected strains, and the workshop gives you one small pit. You watch it through seven rounds and turn liquor yield and flavor into a table. The director nods, and next year agrees to three.",
+  "A younger colleague wants to do synthetic communities. You ask if they're still stable at generation seven, and he can't answer. You have him finish the subculturing before you talk ratios.",
+  "At the strain bank inventory, seven tubes won't revive, all preserved in the same year. You follow the subculture record and find that in one month that year, the glycerol batch was changed.",
+  "At the board you present three years of budget on one page, and someone asks if you could do less basic work. You say yes, and point to the money saved last year on basic data.",
+  "At an industry standards meeting, several distilleries argue about the limit for one indicator. You put up your own sample results, and people from two of them start making phone calls right there.",
+  "The boss wants a strain in an ad called 'Thousand-Year Microbe.' You read the copy and tell marketing that you isolated it on this very hill twenty years ago. This part can be said. That part can't."
+ ],
+ "past": [
+  "You're from Xishui. Your father runs a breakfast shop in town, and the sour smell of rice cakes always drifts out from the back room. Your middle school chemistry teacher asks why dough rises, and you go home and watch a basin for three days.",
+  "You choose bioengineering at an engineering university out of province. Your father asks what that is, and you say a high-end version of making buns. He says then there's a future in it.",
+  "In a fermentation lab your junior year, your first plate grows a patch of contaminants. The teacher says even a patch of contaminants has a story. You start hanging around the microbiology lab.",
+  "You stay on at your university for a master's in fermentation engineering, working on yeast metabolic regulation. Two and a half years shaking thousands of flasks, and your biggest finding is that you can last.",
+  "Before graduation a Renhuai distillery comes recruiting. The institute's section chief says at the job fair that their pits still hold many things that have no name. You think about the rice cakes at home and hand in your résumé."
+ ],
+ "late": {
+  "pension_note": "Estimate: company R&D staff with enterprise annuity plus social insurance receive about half of final monthly pay, with good-year bonuses not counted in the base.",
+  "scenes": [
+   "You go back to Xishui, clear out the back room of your father's breakfast shop, and buy a secondhand little incubator to pick starter cultures for the town's rice cakes and fermented tofu. No project number, but the jars still get a date and a generation.",
+   "The institute's new director uses models to screen strains, more in a month than you did in ten years. He sends a chart and asks if you tested these few back then. You look it up. You didn't.",
+   "Sauce-aroma liquor has been through several more cycles. Now and then you find your distillery's bottles on discount at the supermarket, in a new shape. You turn one around to see which round the batch number came from.",
+   "Technical documentation has no surprises and no results. You've lost forty percent of your performance pay, and you work out that the rent for your spouse and kid in Zunyi will have to come out of savings.",
+   "You use an inhaler every day and keep a small notebook on how much. It's the same habit as logging media. Your thinking is that with enough data, something will show.",
+   "You've looked at moldy rice and peanuts a few times for the old folks in the next compound and told them what to throw out. No culture media needed. They've taken to calling you 'the mold person.'",
+   "In the new place, for the first time, you don't walk that flagstone road. The other labs are tidy, the incubator doors are electronic, and you keep wanting to see whose handwriting is on the back of the plates.",
+   "The pay at the new place is high, and the boss wants results he can sell. Sometimes you think of those few strains you didn't finish, in a freezer somewhere, waiting for someone to subculture them.",
+   "Back in Renhuai for an industry meeting, the old director says the strain bank has doubled again. You ask if R-117 is still alive. He says it's doing better than either of us.",
+   "You smell a bun before buying it, check the shelf life and preservatives on bread, and want to streak a bit of any restaurant's sauce crock. Your family says you don't eat, you inspect.",
+   "In the rainy season a small patch of mold grows in the corner of the room. You don't wipe it right away. You watch it for three days, pick a little onto a slide with a toothpick, confirm it's Aspergillus, and only then buy a remover."
+  ],
+  "closing": {
+   "retire": "Morning rice cakes come out of the steamer. You break off a small piece and smell it. Just sour enough, half an hour more than yesterday. You write today's temperature on the calendar behind the door.",
+   "burnout": "The purifier's filter is due again, and comes out gray and yellow. You hold it up to the light, put it in a bag, fit the new one, and close the cover.",
+   "end": "Before leaving you check the incubator's temperature, thirty-seven. The corridor lights go out, and the little light in the box stays on. What's inside doesn't know day from night."
+  }
+ }
+}

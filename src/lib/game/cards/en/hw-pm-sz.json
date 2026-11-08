@@ -1,0 +1,179 @@
+{
+ "id": "hw-pm-sz",
+ "occupation": "Hardware Product Manager",
+ "role": "Smart Hardware Product Assistant",
+ "headline": "An electronics graduate who joined a Shenzhen company making smart door locks and small appliances, spending half the time writing PRDs in Nanshan and the other half up all night on a pilot line in Dongguan waiting for the yield numbers",
+ "unit": "A smart hardware company in Nanshan, Shenzhen",
+ "unit_type": "Smart hardware company",
+ "city": "Shenzhen, Guangdong",
+ "city_tier": "First-tier city",
+ "education": "Bachelor's (Electronic Information Engineering)",
+ "level": "You can read a schematic and know Wi-Fi from BLE. How much a set of molds costs, and how many weeks a mold change takes, you don't know yet.",
+ "intro": "The company is on the seventh floor of an industrial building in Nanshan, with a camera maker downstairs and a Bluetooth earbud maker upstairs, and someone in the elevator is always holding a prototype. Your first job is to take apart three rival smart locks and look up the price of each component. Design validation is next week, and you're going along to Dongguan.",
+ "salary_note": "Estimate: Shenzhen hardware companies pay above the national average. The bonus at mass production depends on the project, and in years when the product doesn't sell there isn't much of one.",
+ "facts": [
+  {
+   "label": "Product Assistant (current level)",
+   "value": "0–2 years, ¥10,200–15,000 a month (national average, estimated from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Hardware Product Manager (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥56,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Pushing prototype validation and pilot runs on the factory floor",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Compiling competitor data and user reviews and drafting the MRD",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "19 related listings nationwide, 9 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "First thing at the office you go to the prototype cabinet, take out the door lock whose structure was changed yesterday, put in batteries and try it fifty times, noting which attempt jams.",
+  "Project weekly. Structural says the snap fit needs to be 0.2 thicker, industrial design says that will look bad, hardware says the board is already up against the edge. Everyone looks at you. You don't actually know either.",
+  "You eat Longjiang pork knuckle rice downstairs and a supplier messages: the fingerprint module has gone up by ¥0.80. You work it out. At a hundred thousand units a year that's ¥80,000.",
+  "You tear down a competitor's product. You blow open the case with a hot air gun, copy each chip's markings, and enter estimates in a sheet. A small white blister rises on your fingertip.",
+  "You spend the afternoon on tickets in the after-sales group. One says 'goes off by itself in the middle of the night', another 'old people can't use it'. You mark the second one in red.",
+  "The boss walks by, picks up a prototype, weighs it in his hand, and says, too light, feels cheap. This sentence isn't in any document, and tomorrow it will be the work of a dozen people.",
+  "You ride the company car to Dongguan. From the highway you message the production planner to confirm your parts are scheduled on the line tomorrow morning.",
+  "On the pilot line, the hundredth unit comes off. You stand behind the engineers and watch the red bin of rejects slowly fill. The soles of your feet burn."
+ ],
+ "ladder": [
+  { "title": "Product Assistant", "stage": "Entry", "focus": "Tear down competitors, organize the BOM, follow pilot runs, take meeting notes, and learn hardware's rhythm and its price." },
+  { "title": "Hardware Product Manager", "stage": "Owns a product", "focus": "Owns one product from definition to mass production, writes the PRD, watches cost and milestones, and coordinates structure, hardware, firmware and factory." },
+  { "title": "Senior Hardware Product Manager", "stage": "Owns a product line", "focus": "Responsible for a product line's plan and P&L, deciding what the next generation does and does not do, and leading several product managers." },
+  { "title": "Director of Hardware Products", "stage": "Sets the roadmap", "focus": "Sets the roadmap for several lines, settles budgets with supply chain, channels and the boss, and answers for inventory and margin." },
+  { "title": "VP of Product", "stage": "Decides", "focus": "The company's product strategy is yours to decide: cutting lines, merging lines, investing in new categories, and explaining why to the board." }
+ ],
+ "ai_tasks": [
+  { "name": "Pushing prototype validation and pilot runs on the factory floor", "how": "AI can schedule and write the minutes. When the line is stuck, someone has to be standing there coordinating every department, handling surprises and taking responsibility." },
+  { "name": "Negotiating price and delivery with suppliers", "how": "AI can compare quotes and work out costs. Haggling, fighting for parts and owing favors take a person." },
+  { "name": "Compiling competitor data and user reviews and drafting the MRD", "how": "AI can summarize tens of thousands of reviews and list competitor specs. Which needs are real, someone has to go to a user's home and see." },
+  { "name": "Writing PRDs and spec sheets", "how": "AI can turn requirements into a first draft and catch omissions. How the specs are set and who answers for the tradeoffs is still the product manager." },
+  { "name": "Drafting brochures, white papers and training materials", "how": "AI can generate these directly. People only check that the selling points are true." }
+ ],
+ "events": {
+  "e_mold": "The first test shots come out and the parting line on the housing is half a millimeter off. The mold shop owner holds the part for a long time and says it can be reworked, nine days. Mass production is in twelve. For the first time you have feelings about the number nine.",
+  "e_huaqiang": "You are missing a discontinued power chip and get sent to Huaqiangbei, Shenzhen's electronics market. After an afternoon among the stalls, a woman pulls a reel from under her counter, names a price and adds, handsome, this one has no invoice.",
+  "e_dvt_night": "Design validation runs three straight nights. You sleep for forty minutes face-down on the long table in the factory meeting room, and wake with the grid of a printed BOM on your cheek.",
+  "e_user_home": "You go with after-sales to an old woman's home to look at her door lock. She has enrolled her fingerprint five times, always the right index finger, a finger worn smooth by years of work. Back at the office you recalculate your line on fingerprint recognition rates.",
+  "e_new_year": "The final week before Spring Festival, the factory's workers begin to leave and only half the line is running. You're still eight thousand units short. The plant manager hands you a cigarette and says, let's talk after the holiday. You don't smoke, and you take it anyway.",
+  "e_cert": "The European certification lab sends the report back: radio emissions are a little over. The hardware engineer adds two shielding pieces. You work it out: ¥1.20 more a unit and shipping eleven days late.",
+  "e_rent": "The landlord raises the rent by ¥300. You move closer to the end of the subway line, adding forty minutes to your commute, which is just right for reading after-sales tickets.",
+  "e_hit": "The one you defined is a hit. On the night of the big sale the sales sheet keeps jumping and the boss sends red envelopes to the group chat. The next day the factory calls to say there won't be enough parts.",
+  "e_flop": "A product that doesn't sell: eight thousand units sit in the warehouse for half a year. Finance sends the slow-moving materials list and the first line is the small screen you insisted on adding.",
+  "e_ai_mrd": "AI sorts eighty thousand reviews into twelve kinds of complaint in twenty minutes, which used to take an intern a month. You read the report and go visit a user's home again. The most important complaint isn't among the twelve.",
+  "e_memory_up": "Memory chips go up 30% in half a year and the entire BOM has to be redone. You go through it part by part with purchasing, and cut your favorite sensor.",
+  "e_eye_habit": "At a friend's wedding you turn the little speaker favor upside down, look at the label and count the screws, feel the parting line, and estimate the cost. Your friend asks what you think. You say the sound is very nice.",
+  "e_back": "A herniated disc, earned standing on the production line. The physiotherapist presses on the third vertebra and asks if you often stand on concrete. Yes, you say, and I have to look energetic about it.",
+  "e_eol": "The original manufacturer sends a discontinuation notice for the main chip in your products. Within a year every model must switch parts, and a product you forgot about three years ago is on the table again.",
+  "e_cloud_off": "The company decides to shut down the cloud service for an older generation of products. Customer service forwards a message from a user: 'When I bought this you said it was smart.' You write the shutdown notice and revise it eleven times, each version more courteous than the last.",
+  "e_factory_boss": "The owner of the contract factory you've worked with for ten years phones. He's thinking of moving the plant to Vietnam and asks if your orders will follow. Halfway through he starts talking about how his son won't take over.",
+  "e_ai_prd": "The new product manager's AI-written PRD is alarmingly tidy. Every spec is right, and together they describe a machine that can't fit in that housing. You point him to the structure page, and he goes to a factory for the first time.",
+  "e_kid_school": "Your child is a few points short for a school place. You spend a whole night in Shenzhen working out residence registration and school district math. The factory group chat keeps pinging. You turn your phone face down, then turn it back over.",
+  "e_stop_line": "The boss cuts the product line you built, with the reasons on a single PowerPoint slide: margin, inventory, direction. The team is broken up, and several people who followed you for over a decade either change jobs or leave.",
+  "e_young_design": "A young team makes a product you would never have approved: expensive, few features, one big button. It sells very well. You buy one for your desk, press it once a day, and can't figure it out.",
+  "e_ai_factory": "The factory's visual inspection has all gone to AI, and no one watches the reject bin on the line anymore. In Dongguan you stand beside the assembly line unsure where to look. The plant manager says, please sit, please have tea."
+ },
+ "choices": {
+  "c_factory_or_desk": { "title": "Factory or market?", "situation": "Two projects need someone at once. One will station you in Dongguan following pilot runs, the other keeps you in Nanshan doing user research. Your manager says you can pick, and that you can always come back later, except that you can't.", "options": [
+   { "label": "Go to the factory", "result": "You learn to read process capability, to spot who on the line can actually decide things, and to drink the satay tea at the factory gate." },
+   { "label": "Do user research", "result": "You go into thirty homes and learn what it means when what people say differs from what they do. The factory stays something of a mystery." } ] },
+  "c_pm": { "title": "Take a product, go for Hardware Product Manager", "situation": "No one wants a low-end door lock with a brutal cost target, and the boss is giving it just four months. Take it and you own a whole product; if it fails, that's all on you too.", "options": [
+   { "label": "Take it", "result": "You and purchasing cut ¥11 from the BOM. The four months run nine days over, and the product finally ships." },
+   { "label": "Wait for a good project", "result": "A good project comes along. It goes to someone else." } ] },
+  "c_cost": { "title": "What to cut", "situation": "Mass production is six weeks away and the boss wants another ¥6 off the unit. You have two things you can touch: a cheaper motor with a shorter life, or a lower waterproof rating, which will almost certainly mean more after-sales.", "options": [
+   { "label": "Downgrade the motor", "result": "The following year, after-sales tickets rise two points. You write about the motor in your weekly report three times." },
+   { "label": "Push back, say no", "result": "You take the after-sales data and have a fight with the boss. The cost stays, and your project drops to second priority." } ] },
+  "c_gadget": { "title": "Go to a big company", "situation": "A phone maker's hardware division wants you at 30% more pay, on products that ship in the tens of millions a year. Over there you'd define one part of one camera module.", "options": [
+   { "label": "Go to the big company", "result": "You learn what process means, and how to copy thirty people on one email. Tens of millions of people use your one small part." },
+   { "label": "Stay", "result": "You stay at the small company and run an entire product alone. You must know a bit of everything, and that's about what you know." } ] },
+  "c_ai_feature": { "title": "Add a large language model?", "situation": "The boss wants AI voice on the door lock, because the competitors have it. You've done the math: the main chip must be upgraded, the cloud costs over ¥2 per unit a year, and users will probably try it twice. But skip it and the channels will say there's nothing to sell.", "options": [
+   { "label": "Do it, ship the smallest version", "result": "You spend three months learning model calls and on-device options. The feature ships and, as expected, doesn't get much use. Your résumé does get a new section." },
+   { "label": "Skip it, perfect the fingerprint", "result": "You raise the recognition rate by a few points, and worn old fingers can open the door. The channels complain there's no selling point, and next year's orders are noticeably down." } ] },
+  "c_home": { "title": "Go home?", "situation": "Hardware people in their thirties start doing the math. An electronics factory in your hometown of Ganzhou wants you to run product and engineering at 30% less pay, with no more trips to Dongguan, and your parents are there.", "options": [
+   { "label": "Go back to Ganzhou", "result": "You talk it over with your spouse for two months, clear out your desk in Shenzhen, and go back.", "end": "Back at the electronics factory in Ganzhou, the products are not famous, but you know every part. When your father goes for a checkup you drive him, and while you wait you turn the hospital's ticket machine over to look at the back." },
+   { "label": "Stay in Shenzhen", "result": "You buy your parents a few round-trip high-speed rail tickets and renew yourself in the industrial building for another year." } ] },
+  "c_senior": { "title": "Compete for Director of Hardware Products", "situation": "The director has moved on and the lines need someone to pull them together. The job answers for inventory and margin, with the slow-moving materials number hanging over you each month, and you rarely touch the product itself anymore.", "options": [
+   { "label": "Compete", "result": "You talk about the product that didn't sell, and the account of its slow-moving stock. The boss hears you out and asks: and the next generation?" },
+   { "label": "Keep running one line", "result": "You say you would still like to work in the details. Next year's roadmap: someone else draws it, you correct it." } ] },
+  "c_startup": { "title": "Start something with a friend", "situation": "A structural engineer you've worked with for years wants you in on a pet feeder. He has a channel and needs ¥200,000 from you. At the company you've just been granted shares, which vest in three years.", "options": [
+   { "label": "Quit and do it", "result": "You rent a hundred square meters in Bao'an and pick your own parts at Huaqiangbei. Of the first batch of three thousand, you sell eleven hundred.", "end": "The pet feeder becomes a small business, not lucrative, enough for payroll. You stay in that industrial building in Bao'an until your hair goes white, the companies next door turning over several times, and you still there." },
+   { "label": "Wait for the shares", "result": "You don't go. Your friend moves on to several other things and now and then calls you for a meal. Neither of you mentions the ¥200,000." },
+   { "label": "Put in some money, keep the job", "result": "You put in ¥50,000 and look over his BOM after work. Neither side suffers, and neither side gets your best." } ] },
+  "c_vp": { "title": "Go after VP of Product?", "situation": "The company will name a VP of Product, to decide which lines to cut and what new categories to fund, and to explain it to the board. At your age, every line up for cutting has people you know.", "options": [
+   { "label": "Go after it", "result": "You spend several months going through every product line's accounts, and find the one most deserving of the axe is the one you were proudest of." },
+   { "label": "Lead a new category", "result": "You ask to lead a small new product no one thinks much of, and you're back to holding a hot air gun." } ] }
+ },
+ "endings": {
+  "retire": "At your retirement the company gives you a door lock, its newest model, as a keepsake. At home you turn it over, read the label, feel the parting line, and install it on your own door. A week later you notice that it occasionally goes off by itself at night. You write this down, then remember there's no one to send it to.",
+  "burnout": "Your back and your sleep both refuse to go on. You ask for a transfer, and later resign. People at the factory call several times about parts, and you explain everything carefully. You no longer drive the Dongguan highway. The burning in the soles of your feet takes half a year to stop."
+ },
+ "stages": [
+  "You spend your days carrying prototypes around, tearing down competitors, filling in the BOM and writing up project meetings, armed with a hot air gun, calipers and an ever-longer Excel sheet. When the structural and firmware engineers argue, you write down what each one said. This level has one thing to teach you first: every change in hardware costs money and takes time.",
+  "A product is yours. You write the PRD and run the reviews at each validation stage, EVT, DVT and PVT, looking for a way through between the BOM cost and the boss's ideas. Industrial design, structure, hardware and firmware all wait for your call, and the factory's production planner only takes schedules from you. One level down you wrote down what was said. Here what you say has to hold.",
+  "You hold a product line's roadmap and P&L. You decide what the next generation adds and what it leaves out, negotiate orders with regional channel managers, and read your two or three product managers' spec sheets. You still go to the factory, but now you go to be seen going. What really needs watching is inventory turnover.",
+  "You run the budgets for several lines, reading the slow-moving materials list and margin sheet each month and meeting supply chain, channels and the boss each week. Stocking up is a gamble and so is not stocking up. You no longer write PRDs, but you write one line on other people's: do this or don't.",
+  "What the company makes and doesn't make, you are the one who says it to the board. You look at three-year category maps and cash flow, and you meet the bosses of major channels and investors. Cutting a line means a list of names; a new product means tens of millions in molds and materials, and many decisions no one can help you with."
+ ],
+ "work": [
+  "You take apart three competing door locks and find the cheapest one uses the same motor as the most expensive. You mark it yellow on the comparison sheet, and your manager asks one extra question: then where does the money go?",
+  "One dimension in the pilot run's first article report is off, and you drive to Dongguan to see the inspector. He puts the calipers on it and says, it's your drawing that's wrong.",
+  "After-sales sends back twenty broken units. You open them one by one on the desk and find seventeen have the same bulging capacitor. The quality engineer takes your sheet.",
+  "The industrial designer insists on a hidden button. You have the women in customer service try a 3D-printed sample. Five of the eight can't find it. The designer changes the plan.",
+  "Factory yield is stuck at 91%. You and the process engineer watch the line for two nights and discover that the press force at one station has drifted. The day after it's fixed, yield is 96%.",
+  "Purchasing sends the quote for a new battery, ¥1.20 cheaper than the last. You read the spec sheet, see the low-temperature discharge has fallen off, and reply: what about the orders for the Northeast?",
+  "A regional channel manager says he needs twenty thousand units next quarter. You look at what he actually took last year and stock thirteen thousand. He curses you on the phone for half an hour, and you don't add to the order.",
+  "At next-generation planning you rank the reasons for user returns. The top one isn't a feature, it's installation. You move a chunk of budget from the chip to the manual and to training installers.",
+  "A product manager you are training sets his first spec, and writes down the highest number in the industry. You have him work out which scenario would ever make a user hit that number. He comes back and changes one line.",
+  "The warehouse holds ¥8 million of stranded parts and finance wants a plan. You and purchasing go through them part by part, moving what you can to the next generation, and sign scrap orders for the rest.",
+  "A big channel demands an exclusive model and wants payment terms stretched to 120 days. You work out the cash flow, talk to the boss for half an hour, and agree to 60.",
+  "You merge two lines and two teams' spec templates must become one. Three meetings later, everyone is arguing over templates, and you know what they're really arguing over is who stays.",
+  "The board asks why you want to fund this new category. You put up a single chart: the old products' margins, a line that goes down year after year.",
+  "You fly to see the boss of an overseas channel. He works out your margin on a calculator faster than your finance team could. You settle next year's volume on a paper napkin.",
+  "A research and development center is to be closed, and HR puts the list on your desk. Three names are people you personally hired. After each one you write a role they could move to."
+ ],
+ "past": [
+  "You go to high school in Ganzhou. Near your home there's a radio repair stall, and there you learn to use a soldering iron, burning several holes in your school uniform.",
+  "You choose electronic information engineering, thinking that after graduation Shenzhen can't go wrong. People from the village who go to Shenzhen come home for New Year in nice clothes.",
+  "In your second year, building a robot for a competition, you burn out three motors, and it occurs to you for the first time that things break in more places than the book says.",
+  "For a summer internship at an electronics factory in Dongguan you watch the surface-mount machines place components one at a time. You get so absorbed that the workers wonder if there's something wrong with you.",
+  "At graduation you have two offers, hardware testing and product assistant. The second pays ¥500 less, but the manager says you get to decide what gets made. You fall for it."
+ ],
+ "late": {
+  "pension_note": "Estimate: Shenzhen social insurance is paid below the capped base, so the pension comes to about 40% of final pay.",
+  "scenes": [
+   "At the supermarket you go to buy an electric kettle and turn over all five models on the shelf. When a salesperson comes over, you tell him the third one's base will let water in.",
+   "The neighborhood's seniors are forever having trouble with their smart devices. Every Tuesday afternoon you set up a table in the activity room and help, only the simple repairs, and show people how to turn up the volume.",
+   "Your back still won't let you sit for long. These days you buy only things without an app. You have an electric fan with a single dial at home, and you're very fond of it.",
+   "The doctor prescribes three months of medication. You replace all the smart devices with switches, and your child comes home asking why the lights no longer respond to voice.",
+   "You go to help out at a friend's shop repairing appliances, two or three jobs a day and no meetings. When you finish one you tick it off on the slip, and that is the end of that.",
+   "The cloud service for the door lock you made was shut off long ago, and the one on your own door is now just an ordinary lock. You still change its batteries once a year.",
+   "Settled in a new place, you find your hands won't stay idle and you want to take everything apart. Your spouse has put away the rice cooker's manual.",
+   "Former colleagues post new products on social media. You check the specs and notice the seams are getting better and better. Beyond that you have nothing to add.",
+   "On a secondhand site you see the first product you ever defined, for sale at ¥20, the listing reading 'works, app is gone'. You don't buy it and don't feel much about it.",
+   "Your child asks what your best product was. You think about it and say a door lock that didn't sell very well, that old fingers could open.",
+   "The hospital fits you with a monitoring band. You turn it over and run a fingernail around the edge. You nod and put it on."
+  ],
+  "closing": {
+   "retire": "The door lock gives a soft sound, 60% battery. You hear it from the living room and know someone in the family is home.",
+   "burnout": "You turn the dial to two and the fan slowly starts. The afternoon is long and there are no milestones.",
+   "end": "You put the newly mended thing back on the shelf, brush the dust from your hands and turn off the light."
+  }
+ }
+}

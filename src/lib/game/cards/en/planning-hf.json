@@ -1,0 +1,182 @@
+{
+ "id": "planning-hf",
+ "occupation": "Autonomous Driving Planning and Control Engineer",
+ "role": "Planning and Control Algorithm Engineer (Autonomous Driving)",
+ "headline": "With a master's in control you've joined a Hefei company that builds driver-assistance systems for carmakers. All day you tune the cost function for a lane change, with the automaker's start-of-production date taped to your desk, and the replay of one hard braking event can keep the whole team in a meeting until midnight",
+ "unit": "An autonomous driving company in Hefei (volume-production driver-assistance systems for local and out-of-province carmakers)",
+ "unit_type": "Autonomous driving solutions company",
+ "city": "Hefei, Anhui",
+ "city_tier": "Provincial capital",
+ "education": "Master's degree (Control Science and Engineering)",
+ "level": "You can derive MPC and iLQR by hand and you've tuned little cars in competitions. In an actual two-ton vehicle with the client sitting in the back, you can't yet say how much acceleration counts as comfortable.",
+ "intro": "Taped by your desk is the automaker's milestone sheet, the line for start of production circled in red pen. After three years studying control, your first assignment at this Hefei company is merging from an on-ramp: within 180 meters, the car has to work out whether the truck ahead is really going to let it in. Your code will first be tried out in a car with you on board. Only then does someone write it into the next version.",
+ "salary_note": "Estimate: pay-by-experience figures lean toward top companies in Beijing and Shanghai. The same job in Hefei pays more than 10 percent less, with rent subsidies and cheaper housing to compensate. What the options are worth depends on the next funding round.",
+ "facts": [
+  {
+   "label": "Planning and Control Algorithm Engineer (current level)",
+   "value": "0–3 years, ¥15,300–22,500 a month (national average, derived from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Planning and Control Algorithm Engineer (3–6 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥31,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "On-vehicle joint debugging across modules, and working out who's responsible",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Designing cost functions and driving styles",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "50 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "You go down for coffee and open last night's replay results. Sixty-three of ten thousand scenarios failed, and you look first at those flagged for poor comfort.",
+  "Stand-up. Perception says the jitter in this bounding box isn't their problem, prediction says it's perception's problem, and everyone looks at planning and control. Control is the last module; every problem ends here as a brake.",
+  "The company is in a building in the high-tech zone. Food deliveries pile up at the turnstiles, and everyone takes them back to their desks to eat while looking at curves.",
+  "You get into the test vehicle and sit in back with your laptop on a data cable. The safety driver's hands hover on either side of the wheel. At the ramp entrance, the car lightly taps the brake.",
+  "You replay that tap. There is a spike on the jerk curve. You change the cost function's weights a little, so it begins slowing down 0.3 seconds sooner.",
+  "An engineer stationed at the automaker sends a video: could it drive more like a person here? Which person, you ask. Like our boss, he says.",
+  "You take a cab home. When the driver changes lanes, your right foot presses down on the floor mat."
+ ],
+ "ladder": [
+  { "title": "Planning and Control Algorithm Engineer", "stage": "Tuning scenarios", "focus": "Own decisions or trajectories for one scenario type, tune parameters, run replays, follow road tests." },
+  { "title": "Senior Planning and Control Algorithm Engineer", "stage": "Owning a module", "focus": "Own the whole planning or control module, debug with perception and prediction, answer for the production release's numbers." },
+  { "title": "Planning and Control Technical Expert", "stage": "Architecture", "focus": "Set technical direction, evaluation systems and functional safety arguments; defend them before automakers." },
+  { "title": "Director of Planning and Control Algorithms", "stage": "Leading the team", "focus": "Lead a team of dozens, decide where resources go, which projects to take, and which rule-based code to throw out." }
+ ],
+ "ai_tasks": [
+  { "name": "On-vehicle joint debugging across modules, and working out who's responsible", "how": "AI can help read logs. Whether that jolt was perception, prediction or you takes several teams on site to work out." },
+  { "name": "Designing cost functions and driving styles", "how": "AI can make suggestions and list edge cases. How much this car should yield and how bold it should be is for people to decide." },
+  { "name": "Writing basic planning code", "how": "Basic implementations of A* and MPC, interfaces and unit tests are largely within AI's reach; people revise and review." },
+  { "name": "Tuning the controller", "how": "AI can give starting parameters. Actuator delay and comfort take someone sitting in the car, trying it again and again." },
+  { "name": "Simulation replay and sorting road test data", "how": "Scripts, clustering and reports are largely automatic; people look at the category it can't separate." },
+  { "name": "Arguing and signing off functional safety", "how": "Each link in the ISO 26262 evidence chain, and why it is enough, needs a person to answer for it to the automaker and sign." }
+ ],
+ "events": {
+  "e_first_cut": "Your first version was merged into main, and the next day regression dropped more than two hundred scenarios. Your team leader told you not to roll back but to find out why they failed. That week you read ten times as much code as you had written.",
+  "e_motion_sick": "After three straight weeks of road tests watching a screen in the back seat, you were badly carsick and squatted at the roadside to throw up. The safety driver passed you a bottle of water. All you control people get this, he said. You are the first to know if the car sways.",
+  "e_unprotected": "You spent two months on an unprotected left turn at a five-way junction in Hefei. One day the car waited out a wave of e-bikes all by itself and turned steadily through. Over the radio the safety driver said: huh.",
+  "e_sop": "With six weeks left before start of production, the whole team went into closed development. The automaker sent two people to sit next to you, and every afternoon at four they asked for the number. You came to see every date of the week only as a day of the week.",
+  "e_ota": "The night the new version went out over the air, the whole company watched the big screen. On the car owners' forum someone posted that with this version the lane changes felt like a different driver. Half of the hundreds of replies cursed and half praised. You read them one by one until two.",
+  "e_customer_switch": "The automaker you'd worked with for two years changed suppliers for its next model, in a meeting that lasted twenty minutes. The project group was dissolved, sixty people reassigned, and the scenario strategies you had written now live only in cars already sold.",
+  "e_funding": "The next funding round kept failing to arrive, and the company announced salaries would be paid two weeks late. HR started talking about the value of options, and colleagues in the next group started posting their résumés.",
+  "e_e2e": "The results from the end-to-end model were in, and the company decided its next generation wouldn't follow the rule-based route. The state machines you'd written for four years were labeled legacy code, and people in the group began moving over to data and training.",
+  "e_ai_code": "The controller framework AI wrote compiled the first time and every unit test went green. You took it round in a car, and steering began to shake at low speed. You looked at it next to the actuator delay model and changed three letters.",
+  "e_scene_gen": "A scenario generation tool built hundreds of thousands of intersections overnight, some with eight roads and a cow. You held a meeting specifically to discuss whether this cow should count.",
+  "e_safety_review": "An outside functional safety auditor came to go through the safety case, more than a hundred pages, each item traced to requirements and test cases. How did you get this threshold, he asked. From vehicle calibration, you said. He said show me the calibration record.",
+  "e_neck": "Your lower back and neck rose up together, from sitting and from the bumps of road tests. The physical therapist pressed on the tendon in your neck and asked what you did for a living. I stop cars from swaying, you said.",
+  "e_sleep": "At two in the morning your phone rang with logs from the road test group. You read them for half an hour in the dark, remembering tomorrow's stand-up. There were dozens of such nights that year.",
+  "e_driver_school": "You drove home to your hometown with your father in the passenger seat. You drive more and more like an instructor now, he said, not one wasted touch of the brake. You sent that sentence to the team's group chat.",
+  "e_rent": "Hefei's house prices aren't as far out of line with salaries as Shanghai's, and you made a down payment in Binhu. Mortgage and options sit in one spreadsheet. One is certain, and nothing can be said about the other.",
+  "e_age": "A new graduate hire ran through a problem from ten years back in one evening. On HR's chart the company's age structure is a triangle leaning all the way to the left, and you are in the small cluster on the right.",
+  "e_regulation": "A new edition of the access standards for intelligent driving came out, with chapters on liability, data recording and recalls. The compliance department went from three people to twenty overnight, and they all come to ask you what on earth this means.",
+  "e_robotaxi": "Driverless taxis have started running in this part of the city. You hailed one and sat in the back watching it go through an intersection. It slowed very gently, and who knows which young person had tuned it."
+ },
+ "choices": {
+  "c_decision": { "title": "Decision-making or control", "situation": "The group is splitting into directions. The decision team writes piles of rules, argues with product, and has many people who know the work. The control team works close to the vehicle, deriving formulas, slower to produce, but worth more the older you get. Your team leader asks which you want.", "options": [
+   { "label": "Go to decision-making", "result": "You can see the results of your strategies on the car quickly. And whenever product says it isn't smart enough, that means you." },
+   { "label": "Go to control", "result": "You started sitting in the car watching burrs on the steering angle, changing the core formulas only every few months. A senior colleague patted your shoulder and offered no comment." }
+  ] },
+  "c_tune": { "title": "A bit more aggressive", "situation": "After a test drive, the automaker's boss says your car is too timid, always getting cut off by cars behind when changing lanes. You know that making the game parameters a little bolder would immediately feel better, but the risk distribution of takeovers would shift too. The next review is only two weeks away.", "options": [
+   { "label": "Adjust a little, run full regression", "result": "You adjusted parameters in just three conditions and ran regression to a hundred thousand scenarios, three days past the review. On his second test drive the boss nodded and said nothing more." },
+   { "label": "Push back with data", "result": "You made one slide explaining the cost of timid and not timid. The boss said the young man has ideas, and three days later the requirement came back." }
+  ] },
+  "c_senior": { "title": "Promotion to Senior Planning and Control Algorithm Engineer", "situation": "The promotion defense slides must spell out your impact. Your impact is having brought down the lane-change takeover rate somewhat, though some would credit a share of that to the prediction group. There are just two places for Senior Planning and Control Algorithm Engineer this year.", "options": [
+   { "label": "Write it out and defend it", "result": "You broke the improvement down into item-by-item ablation experiments and worked each one out for the judges. One asked: and the gain from perception? You worked that out too." },
+   { "label": "Not this year", "result": "You held your materials for next year and spent this one rewriting the controller. Several colleagues started asking you how to tune." }
+  ] },
+  "c_e2e_turn": { "title": "Move over to end-to-end?", "situation": "The company is betting on end-to-end, and the rules team is being reduced. Move over and you learn training and data from scratch, becoming the oldest new hire in the group. Stay and you're in charge of that layer of safety fallback rules, which sounds important, with fewer and fewer people.", "options": [
+   { "label": "Move over and learn models", "result": "For the first half year your loss curves looked worse than your sleep. Later you found that people who understand cars take far fewer wrong turns tuning models than those who don't." },
+   { "label": "Stay on safety fallback", "result": "You became the model's boundary guard. Each time the model got it wrong, your rules caught it, and nobody knew." }
+  ] },
+  "c_big": { "title": "A big company in Shanghai makes an offer", "situation": "A top driver-assistance company in Shanghai offers you 50 percent more and wants an answer in two weeks. In Hefei, you've only just come to have a team where you know everyone's name, and your mortgage is in Binhu.", "options": [
+   { "label": "Go to Shanghai", "result": "You moved to an enormous campus where every badge carries a string of numbers. The day your pay arrived you also found out what you'd be doing on weekends." },
+   { "label": "Stay in Hefei", "result": "You politely declined and went for a walk by Chaohu Lake after work. The money you gave up comes to about an hour a day of being here." }
+  ] },
+  "c_oem": { "title": "Going to the carmaker's side", "situation": "The automaker you work with wants to hire you away into its intelligent driving department: stable, good benefits, only you would no longer write core code; you'd mainly manage suppliers. A friend says that at thirty-five, this is a good step.", "options": [
+   { "label": "Go to the carmaker", "result": "You had a meal with the team and gave up your repository permissions.", "end": "You sat down on the other side of the table and began sending requirements to former colleagues, ending every one with thanks for your hard work. Your coding ability started going downhill, and your insurance and vacation days kept getting better." },
+   { "label": "Don't go, keep coding", "result": "You told them maybe in another year or two. Back then you still believed an opportunity like this came along every year." },
+   { "label": "Go on-site for a year and see", "result": "You were stationed at the automaker for a year and came to understand their troubles: their bosses are more anxious than yours." }
+  ] },
+  "c_director": { "title": "Competing for Director of Planning and Control Algorithms", "situation": "The director has left to start a company, and the Director of Planning and Control Algorithms post is open. Taking it means managing forty people, explaining to the CEO what algorithm you'll be using in three years, and above all deciding who stays and who goes.", "options": [
+   { "label": "Compete for it", "result": "For the first time you said at a meeting: we won't do this part anymore. When you got back to your desk, someone you'd led for six years was waiting for an explanation." },
+   { "label": "A technical expert is enough", "result": "You stayed on the technical track, reading code a few times a week and turning down a few overbooked meetings." }
+  ] },
+  "c_collapse": { "title": "The company can't hold on", "situation": "The company's cash will last only six months. The founder writes in an all-staff letter: we are seeking a merger. You can go along to the new company with your title and shares to be renegotiated, or take the severance and find another way for yourself.", "options": [
+   { "label": "Go along with the merger", "result": "The new company's boss didn't really know you. You took three months to prove that layer of fallback rules still had its uses, and accepted slightly lower pay." },
+   { "label": "Take severance and change careers", "result": "You helped everyone archive the final version of the code.", "end": "You used the severance to join a small Hefei company automating forklifts, on a campus where the fastest vehicle does twelve kilometers an hour and there are just three hundred scenarios a day. Your hair has begun to have time to grow back." }
+  ] },
+  "c_gov": { "title": "An invitation from a third-party testing body", "situation": "A national testing institution is hiring people who understand intelligent driving, to write test procedures and certification assessments. Less money, no overtime. At the company your age is becoming ever more conspicuous in the group, and the next list for optimization may not leave you off.", "options": [
+   { "label": "Go do certification", "result": "You wrote complete technical documentation for all your modules.", "end": "You moved to the testing center's proving ground to score other companies' cars. On page 47 of the first report you read, a familiar threshold turned up, and you recognized it." },
+   { "label": "A few more years here", "result": "You took on work for the internal technical committee, reviewing other people's designs every day and discussing with young people why they find your code old-fashioned." },
+   { "label": "Ask to move to safety compliance", "result": "You moved to compliance. Nobody here pushes for releases. All that happens is that someone asks every day whether this data can be kept this way." }
+  ] }
+ },
+ "endings": {
+  "retire": "You worked on to an age others said couldn't be done, and your title has changed a few times over. On the day you retired your account was taken back, and that layer of safety fallback rules is still standing by in hundreds of thousands of cars. On the way home the car slowed lightly at an intersection, and your right foot didn't move.",
+  "burnout": "After that start of production you began having palpitations, waking at night to listen to your heart. You told the company you couldn't do closed development again, and very politely they gave you the option of changing posts. You moved back into a life without road test phone calls."
+ },
+ "stages": [
+  "You are responsible for one kind of scenario, ramp merging: reading replay logs, tuning cost function weights, changing state machine transitions, and then going out in the car to verify. Colleagues in perception and prediction are your daily upstream, and the safety driver is the only one who can tell you 'that last bit wasn't comfortable'. Your code has to pass your team leader's review before it can be merged.",
+  "You answer for the whole planning module's performance in this release, with takeover rate and comfort figures under your name. Every week you go over interfaces with perception and prediction, read logs to apportion responsibility, and sit in the car until midnight during joint debugging. You review the code of two juniors, and you have started answering the automaker's on-site issues in person.",
+  "You are setting direction: what architecture the next release will use, how to set evaluation metrics, how to write the safety case. You go to the automaker to present plans and answer item by item in functional safety reviews. You write only the most critical code, and spend more of your time reading others' designs and saying in one sentence where trouble will come later.",
+  "Forty headcount, the GPU budget, which car model to take on: it's all for you to decide. Every week you report to the CEO, promise milestones to automakers, and explain to the team why this route is finished. Writing code has become a weekend pastime. Who to let go and who to keep has become a Wednesday afternoon's work."
+ ],
+ "work": [
+  "The road test group reports the car tapping its brakes at the ramp mouth. You drag the log into the visualization tool and go frame by frame, and find that a truck far away was predicted to be merging.",
+  "Your team leader, reviewing your code, circles a pointer you didn't null-check. You fix it and add a regression case while you're at it, numbered with that day's date.",
+  "You sit in the passenger seat and have the safety driver drive however he finds comfortable, then capture the trajectory as a reference for the cost function.",
+  "Prediction and planning debug together for two days, with a crossing e-bike repeatedly misjudged. You and your prediction colleague draw a timing diagram and find a one-frame delay.",
+  "A week before the release freeze, a junior's change drops the comfort metric by two points. You make him explain why, and only then decide whether to roll back or fix it.",
+  "The on-site engineer sends you a video of an owner's complaint. You match the VIN and timestamp, pull the log, and write up an explanation for the automaker.",
+  "One assumption in the safety case reads 'actuator response no more than 100 milliseconds'. You look up the measurements, and at extreme cold it's 130. You change the case and the strategy.",
+  "The automaker's technical director asks why you don't use a certain other company's approach. On the whiteboard you write the data and compute needs of both routes side by side and let him compare.",
+  "Everyone has polished the takeover rate in the evaluation metrics to a nice shine. You add a table broken down by intersection type, and two rows suddenly stop looking so nice.",
+  "The automaker wants start of production three months earlier. You pull up the staffing table, tell them which two items must be cut, and get them to agree to move parking to the first over-the-air update.",
+  "Two team leads both want the last two GPU servers. You go through both experiment plans, give them to one side and have the other run at night.",
+  "In the performance calibration meeting, an engineer who joined very early has ended up ranked last. You argue for him for twenty minutes, and in the end it falls to you to talk to him."
+ ],
+ "past": [
+  "Your county town had only one traffic light at the crossroads. Your father drove a truck and often told you which roads had drivers who wouldn't give way. You thought back then that driving meant fighting with strangers.",
+  "You studied automation at a university in Hefei. In the first term of your first year, one of the formulas in your first class reminded you of how you balance a bicycle with your feet.",
+  "You entered a smart car competition with a half-meter car on a track and spent half a year tuning PID. The night before the contest, the light changed, and the car shot off the course.",
+  "You were admitted without exam to a control science master's, on vehicle trajectory tracking. Your advisor said this was the hottest direction now, and in five years might not be. Five years seemed very far away.",
+  "In the autumn hiring round you got a few offers, one in Shanghai and one in Hefei. The Hefei company paid a little less, but the interviewer took you for a ride in a real car, and all the way, laptop in your hands, you watched the speed curve."
+ ],
+ "late": {
+  "pension_note": "Estimate: with high pay and capped contribution bases, the pension is a small share of final pay, under about 40 percent. Savings and owning a home keep life going.",
+  "scenes": [
+   "You signed on at a driving school and began teaching old people how to use self-driving cars. The first thing you tell them: when it brakes hard, don't curse it.",
+   "Riding in your child's car, you sit in the back with your eyes closed, feeling each shift and slowdown through your neck. Your child asks if you're asleep. The controller on this road is tuned pretty well, you say.",
+   "The code you wrote has long since stopped running, and there are no rules in the models anymore. A student once asked you what MPC was. You explained for half an hour and enjoyed yourself.",
+   "Your spine has reached the point where every outing has to be planned by distance. These days the most comfortable ride is a car with no driver. It goes slowly, and never asks if you're tired today.",
+   "Once you no longer had to take road test calls, you switched off most of your phone's notifications. For the first few months you kept wanting to open the logs, then remembered they weren't in your hands.",
+   "You've stopped driving much and taken to a bicycle. The paths by Chaohu Lake have no lane lines, and you don't have to judge who yields to whom.",
+   "Old colleagues were discussing the new generation's architecture in the group chat, and you left the group. You only catch a little of how this business went from the news, and sometimes after reading it you don't feel it has anything to do with you.",
+   "The new place doesn't need you to work out game theory. In the first month, you still found yourself thinking in meetings: is this person about to cut in next second?",
+   "Your old colleagues have gone overseas, or opened milk tea shops. The group chat is still there, and every time a new car comes out, everyone as usual makes fun of each other's following distance.",
+   "The ramp merge logic you wrote at the start has long been unknown to any car owner. That's normal. The best end for a piece of code is that no one thinks of it again.",
+   "When others drive, your right foot in the passenger seat still quietly presses down. Your family bought you a foot pad, saying it would feel better underfoot.",
+   "Walking down the street you predict which way the person coming toward you will step. You are right nine times out of ten. The tenth time the two of you sway left and right in the middle of the road."
+  ],
+  "closing": {
+   "retire": "The traffic moves over the elevated road, each car just the right distance from the next. No one brakes hard. Tonight the road is smooth.",
+   "burnout": "The wind off Chaohu Lake is strong. You stop the bicycle and put one foot down. There's no intersection ahead. You wait a little, then ride on.",
+   "end": "Forty seconds left on the red light. You watch the brake lights ahead with your hands resting on your legs, and your foot doesn't move."
+  }
+ }
+}

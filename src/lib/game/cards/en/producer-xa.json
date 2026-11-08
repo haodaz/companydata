@@ -1,0 +1,174 @@
+{
+ "id": "producer-xa",
+ "occupation": "Producer",
+ "role": "Web Series Producer",
+ "headline": "Back in Xi'an after years on Beijing film crews, a web series producer at a thirteen-person company, with every drama from financing and script to wrap and final payment riding on one phone",
+ "unit": "A small film and television company in Xi'an",
+ "unit_type": "Small film and TV production company",
+ "city": "Xi'an, Shaanxi",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's (Radio and Television Directing)",
+ "level": "Four years as a line producer, and for the first time your name goes on the budget of a twenty-four-episode web series",
+ "intro": "The office is on the eleventh floor of a building in Qujiang: thirteen desks, and call sheets for three shows taped to a wall, only one of which ever shot. The boss slides a budget across the table. Twenty-four episodes, ¥6,800,000 total, platform revenue share, only half of it guaranteed. Principal photography is set for September. That is one hundred and twelve days from now.",
+ "salary_note": "Estimate: small Xi'an companies pay a modest base and most of your income comes from project shares. If the final payment doesn't arrive, the year was for nothing.",
+ "facts": [
+  {
+   "label": "Producer (current level)",
+   "value": "4-9 years, ¥13,500–17,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Producer (9-15 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥22,000 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Assembling the creative team and negotiating fees",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Breaking down scripts, drafting schedules and budgets",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "11 related listings nationwide, 0 in this city (the database is mostly campus and internship roles)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "In a hotel corridor you take a call from your production manager: the village head who agreed to two thousand yesterday now wants three.",
+  "First setup is an old courtyard in Zhouzhi. The sun comes up forty minutes ahead of the call sheet. The DP looks at the sky. You look at your watch.",
+  "The second female lead's agent messages that the contract says twelve hours a day. You screenshot yesterday's slate log and keep your tone very soft.",
+  "Boxed lunches arrive, twenty yuan each, with today's roujiamo as a treat. The extras wrangler wants to know if you still need the thirty extras this afternoon, cash on the day.",
+  "The platform's project manager calls: a scene in episode seven might have trouble in review, and she suggests changing the location. You work it out. A new location costs forty thousand more.",
+  "Before dark you race to scene sixty-two. The director wants one more take. You go and crouch beside him and say one more take and there's no money for tomorrow's vans.",
+  "Wrap. The unit manager reports today's costs. You mark the overage in red and, in the spreadsheet, shift around the scenes you can cut tomorrow.",
+  "An investor sends a voice message asking to see a rough cut this month. You lie in bed listening to the end and your stomach begins its quiet ache."
+ ],
+ "ladder": [
+  { "title": "Assistant Producer", "stage": "Support", "focus": "Stay with the crew, do budget sheets, watch contracts and call sheets, run errands for the producer." },
+  { "title": "Producer", "stage": "Running the show", "focus": "The money, people, script and platform of a whole project are yours. You rise by delivering, on time and on budget, one after another." },
+  { "title": "Senior Producer", "stage": "Steady output", "focus": "Run two or three projects at once with your own directors and writers, and win commissions from platforms." },
+  { "title": "Executive Producer", "stage": "The slate", "focus": "Manage the company's annual slate, financing and risk. Your name comes first in the credits and you are first to be asked when the final payment doesn't come." },
+  { "title": "Company Partner", "stage": "Shareholder", "focus": "The company's money and fate, and whether it stays in this business, are decided at this level." }
+ ],
+ "ai_tasks": [
+  { "name": "Assembling the creative team and negotiating fees", "how": "Who to pick, how much to pay, whether a director and writer can get along: all of this rests on relationships and judgment. AI at most sorts candidates and drafts contracts." },
+  { "name": "Breaking down scripts, drafting schedules and budgets", "how": "AI can break a script into scenes and draft a schedule and rough budget. Actors' availability, locations and weather are for a person to finalize and answer for." },
+  { "name": "Compiling daily progress and costs", "how": "AI compiles the dailies, compares against budget and warns of overruns. When the set falls apart, which scene to cut and which to save is for a person to call." }
+ ],
+ "events": {
+  "e_open": "Your first production starts shooting. The offering table holds a pig's head, a roast duck and a camera. As the red cloth comes off your palms are wet. You're thinking about week three's cash flow.",
+  "e_tail": "The platform's final payment is seven months late. The post house owner has publicly cursed without naming you three times on WeChat Moments. You send him ten thousand and call it interest.",
+  "e_rain": "Five straight days of rain in the Qinling Mountains. A crew of over a hundred sits in a hotel eating, burning more than ¥100,000 a day. You move interiors up, and the art department builds sets all night.",
+  "e_platform_rule": "The platform changes its revenue-share rules with a small tweak to how valid views are counted, and your show's forecast drops by a fifth. Clause fourteen of the contract says the platform's latest rules apply.",
+  "e_hit": "A small show nobody believed in reaches the platform's revenue chart on day three. The boss drops a big red envelope in the group chat. You stare at the back-end curve and get your first full night's sleep in years.",
+  "e_location": "You negotiate an old village in Guanzhong for a shoot. The Party secretary walks you around three times. What he wants in the end isn't money. It's the crew repairing the village school's toilets. You think this is a better deal than the platform.",
+  "e_budget_blow": "The male lead's schedule slips six days at full daily rate, an overrun of ¥370,000. You cross off half your own share before daring to tell the boss.",
+  "e_stomach": "The gastroscopy report comes back. Late nights, boxed lunches, business dinners: the standard equipment of your trade is all written on it. You switch from baijiu to tea and at the next dinner someone says you aren't showing respect.",
+  "e_wrap_scatter": "At the wrap party everyone cries and says they'll follow you to the next one. The group dissolves the next week. Two months later you can reach about half of them. That's the permanent staffing of this business.",
+  "e_vertical": "Vertical micro-dramas take off out of nowhere, eighty episodes in seven days, with ad spend higher than shooting. The boss asks if you should take a few, just to cover the rent.",
+  "e_ai_breakdown": "AI breaks down a script and drafts a schedule in ten minutes. A scheduler's week of work is now half a day. The company's scheduler looks at the screen and asks where her work is next month.",
+  "e_ai_gen": "A big snow scene that once meant going to Mount Taibai is generated by AI in post, saving ¥400,000. When the platform asks about the footage's source you spend the night assembling a pile of license statements.",
+  "e_ai_actor": "An investor suggests AI face-swapping to save a supporting actor's fee. Word reaches you through the actor's agency. You sit on it for a week and in the end hire the real person.",
+  "e_debt": "An investor's second tranche doesn't arrive and you're twenty days into shooting. You put boxed lunches and van hire on your own credit card, ¥110,000 of it, repaid three months later.",
+  "e_crew_thank": "A lighting technician's son gets into university and he sends you a red envelope. All these years on your crews, he says, your wages have never once been late. In this business, nothing is worth more.",
+  "e_family": "Parents' evening at your child's school, and you're on location. Your spouse sends a photo of a blackboard that says \"What my mom and dad do.\" Your child wrote: away on business.",
+  "e_festival": "Your low-budget realist short is selected for a section of a film festival. The whole company squeezes into one van to see it. The screening is half full. You still take a picture of the ticket stub.",
+  "e_censor": "A week before launch, review notes arrive: three lines need to change. The actors are already on other shoots. You drag voice actors into the studio overnight and the editor syncs mouths for six hours.",
+  "e_rent": "The company only shot one show this year. You give up half of the Qujiang office and three desks move to the second floor above a soundstage in Baqiao. The boss says this is closer to set anyway."
+ },
+ "choices": {
+  "c_script": { "title": "Do you back this script", "situation": "A writer brings a script about her Guanzhong hometown and you read it through the night and love it. But it won't rank well in the platform's grading, and the investor would rather have a sweet romance.", "options": [
+   { "label": "Back the romance, keep the company alive", "result": "The romance launches. Revenue share is neither good nor bad. The Guanzhong script stays in your inbox." },
+   { "label": "Push the Guanzhong script", "result": "You run through nine investors and raise forty percent. It's shot on very little money. It doesn't lose. It doesn't really earn either." }
+  ] },
+  "c_vertical": { "title": "Move into vertical micro-dramas", "situation": "The boss wants to make short vertical drama the core business: ¥700,000 a show, seven days to shoot, recouped through ad spend. Your crew may not want it, and the long-range platform projects will have to wait.", "options": [
+   { "label": "Move over", "result": "You learn the three-second hook and the ad-spend spreadsheet. The first one breaks even, the second loses, the third breaks even." },
+   { "label": "Keep making longer shows", "result": "The company takes vertical work and you take the long shows. Neither side is happy. At year's end both are still alive." }
+  ] },
+  "c_senior": { "title": "Move up to Senior Producer, two projects at once", "situation": "The boss wants you carrying two shows, with two more characters on your business card and another tier of commission. The danger of two shows isn't the sum of them. It's when they collide.", "options": [
+   { "label": "Carry it", "result": "Two call sheets start in the same week. You spend a month sleeping in the cars between them." },
+   { "label": "One at a time, done right", "result": "You tell the boss that if you drop dead on the road both shows are finished. He laughs and drops it." }
+  ] },
+  "c_bj": { "title": "A big Beijing company calls you back", "situation": "A leading company offers you a role in its production department at double the pay. You'd handle only the middle stretch: no finding money, no drinking with village secretaries. This small Xi'an company probably wouldn't last a year without you.", "options": [
+   { "label": "Go back to Beijing", "result": "You and the boss smoke half a pack in the office and go through every contract for the handover.", "end": "You return to Beijing as an executive production director at a big company, with a very solid business card, nine to nine. Your name rolls far down the credits. You also begin to eat on time." },
+   { "label": "Stay in Xi'an", "result": "You say you know the locations and the people here, and the accounts aren't all settled yet. That night the boss treats you to paomo." }
+  ] },
+  "c_ai": { "title": "Should half this show be AI", "situation": "AI-generated scenes can now fool the average viewer and would save thirty percent of the budget. Your long-time camera and art colleagues are watching you. You are deciding this show's workflow, which also decides who has work next month.", "options": [
+   { "label": "Build a hybrid workflow", "result": "With the post house you draw up a table of what's shot and what's generated. Two old colleagues stop answering your calls." },
+   { "label": "Use it only for scheduling, shoot for real", "result": "Costs are higher and you claw a little back through old relationships. It looks old-fashioned. The platform people say it's nice but not cheap." }
+  ] },
+  "c_gamble": { "title": "Put in your own money", "situation": "An investor pulls thirty percent at the last moment, leaving a gap of ¥1,200,000. Your partner says if you invest personally, they'll stay. You've waited five years for this show, and your savings just about cover it.", "options": [
+   { "label": "Invest", "result": "The show goes up and the money stays on its way. You begin to see why old producers all love to talk about luck." },
+   { "label": "Don't, let it die", "result": "The project is shelved. The creative team's group chat goes silent for three days and the director later shoots someone else's film. Your money is still there." }
+  ] },
+  "c_exec": { "title": "Compete for Executive Producer", "situation": "The boss's health is failing and he wants to hand over the slate and financing. Take it and your name comes first in the credits, and every bad debt the company has will pass through you too.", "options": [
+   { "label": "Take it", "result": "The first time you sign at the bank you learn the company's accounts are thinner than you thought." },
+   { "label": "No, keep making shows", "result": "You say you'd rather be on set. The post goes to a person sent by the investors." }
+  ] },
+  "c_teach": { "title": "An art academy asks you to teach producing", "situation": "A Xi'an art academy is starting a producing program and wants someone who has done the job. Winter and summer breaks, and pay that is a fraction of one show's share. Neither your stomach nor your final payments are doing well this year.", "options": [
+   { "label": "Go teach", "result": "You turn years of over-budget spreadsheets into lectures and leave the first class stunned.", "end": "You become a practice instructor, teaching second-year students to write a budget that doesn't lie to themselves. At the start of each term you are the most punctual person in the building, since this time you wrote the call sheet yourself." },
+   { "label": "A few more shows", "result": "You say you'll see after this one. You go on saying that for six years." }
+  ] }
+ },
+ "endings": {
+  "retire": "Your closing work is a twelve-episode show. The day the final payment clears you send out the last amount owed and dissolve each project's group chat one by one. Before one of them goes, someone posts the photo of the pig's head from the opening ceremony and everyone laughs a while. This time, there's no call sheet for the next show.",
+  "burnout": "Your stomach and your sleep stop together, and after this show wraps you don't take another. You mute every group on your phone and practice eating three meals a day at home. An investor calls about a great script. You say send it to my email. The unread count there is at four digits."
+ },
+ "stages": [
+  "From green light to final payment, a show is yours: budgets in Excel, revenue-share talks with investors and platforms, hiring the director, signing leads, going over call sheets with your production manager. Each day you take a side between the director's \"one more take\" and the number on your sheet. Your phone is the company's cash flow, and it gets answered in the middle of the night.",
+  "Two or three projects run at once: one in script, one shooting, one in post waiting for review. You have a few directors and writers you trust, and platform managers now ask what's new. You're not on set every day, but every crew's first call in a crisis is still to you, and you decide which one to save first.",
+  "You manage the slate: how many shows a year, where the money comes from, which is worth losing money on. There are more days of meetings with banks, investors and platform executives than days on set. Your name is first in the credits, and you're first to be asked when the final payment doesn't come. Young producers bring you budgets. You look first at the contingency on page three.",
+  "You and the shareholders decide whether this company stays in the business: sell the IP, merge, or gamble on one more. Your job is seeing people, drinking tea, signing, and after each platform rule change calculating how many more months the company can last. A dozen people's payroll, you could recite the total with your eyes shut."
+ ],
+ "work": [
+  "You negotiate with the female lead's agent for two hours over three days of her schedule. It ends with a credit on the closing song. They nod, and the contract addendum is two lines.",
+  "Old Meng from transport says the mountain road is out. You and he find a farm track on the map and split the equipment truck into two runs. The call is only ninety minutes late.",
+  "The platform's greenlight meeting runs forty minutes. You've compressed the twenty-four-episode outline to twelve pages. The manager says nice story, though the female lead is a bit old.",
+  "You read two daily reports at once. One is forty thousand over, the other a day behind. You phone B unit's production manager and send a Steadicam across.",
+  "The post house raises its price without warning. You pull the last show's settlement and, in a Baqiao teahouse, negotiate the per-minute color rate back down with the owner.",
+  "You redraft a young romance writer's contract three times, making credit and share clearer than the market norm. She says it's the first time she has understood what she sold.",
+  "You and a bank's account manager go through a completion bond's terms for an afternoon. He asks how many shows have paid back. You print the receivables schedule and hand it to him.",
+  "A young producer has squeezed the contingency to three percent. You circle page three and have him change it to eight. He says if it changes the show won't start.",
+  "You and a platform vice president eat beef noodles at the airport and settle the framework for next year's two commissions in a couple of sentences. The contracts take five months more.",
+  "A listed company wants to buy your film library. You and a lawyer go through fifteen years of rights chains title by title. Three of the music licenses have already expired.",
+  "No new shows this year. You keep a few veterans on to work the library's secondary distribution. The account will last until next September."
+ ],
+ "past": [
+  "You grew up in Baoji, where your father once ran film projection at the factory. In high school you skipped evening study to see movies, and enjoyed telling classmates what they cost even more than watching them.",
+  "Art exams plus academics got you into a media college to study radio and TV directing. You found you couldn't write as well as your classmates, or shoot as well, but you alone were willing to go and borrow equipment from the school.",
+  "After graduating you went to Beijing, floating between shoots as a continuity clerk and later a unit manager, twenty-eight days a month in a three-person room. You learned to finish a boxed lunch in five minutes.",
+  "Made line producer. For the first time, extras owed money blocked you at a hotel door. You paid them from your own salary that month. Since then you've known that every number on a budget is a person.",
+  "Beijing rent and your father's health closed in together. An old classmate in Xi'an pulled you back and said the film bases there needed someone who knew the rules."
+ ],
+ "late": {
+  "pension_note": "Estimate: small companies contribute on a low base and project shares don't count; the pension is only 30 to 40 percent of final monthly income.",
+  "scenes": [
+   "You see a new film, and when the lights come up after the end credits, you finally stand: how many production companies, who did the completion bond. It isn't over until you've read it all.",
+   "An old street is closed for a shoot. Outside the cordon you count the vehicles and tell the person beside you: this crew hasn't got much money, the parking is too far away.",
+   "One company still owes you a final payment, more than ten years on now. You file the paper in the safe. The note says let it expire by itself.",
+   "Your stomach improves and you start to cook. You discover for the first time that a day can have three hot meals, with no one to call wrap.",
+   "You spend a while back in Baoji helping a relative's small factory with its accounts. Someone asks what you did before. You say I owed people money and people owed me.",
+   "Your unread messages are finally cleared, and you message the writer of the Guanzhong script to ask if she still has it. She replies: sold it long ago.",
+   "In the new life you still draw up a spreadsheet of each month's spending and keep eight percent in contingency. Your family says you don't need this to live. You say you do.",
+   "A small company asks you to take a look at a budget. Ten minutes in you say this show can't start, the money runs out in week three. Later, it does.",
+   "AI can generate a whole show now. You watch one online. The transitions are very smooth. Nothing in it looks as if it has ever been rained on.",
+   "At a friend's banquet you quietly work it out: how much a table, when to start, and that the kitchen and the stage are on opposing lines of traffic.",
+   "That Guanzhong script was eventually shot by someone else, changed quite a bit. You buy a ticket. It's not bad. You can't say whether that means you lost."
+  ],
+  "closing": {
+   "retire": "Today's call sheet has just two items: buy groceries, pick up the kid from school. You run through it in your head. There's time to spare.",
+   "burnout": "Xi'an gets its first snow. You do not think about how much this snow would save in effects. A little later you notice you did.",
+   "end": "The new year begins. You fill in the contingency line on your sheet and close the laptop. Life runs on budget, no overruns."
+  }
+ }
+}

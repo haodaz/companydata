@@ -1,0 +1,183 @@
+{
+ "id": "it-pm-cd",
+ "occupation": "IT Project Manager",
+ "role": "IT Project Manager at a Software Outsourcing Company",
+ "headline": "After a few years of Java you've become a project manager at a software outsourcing company in Chengdu, leading a dozen-odd people building systems for banks and state enterprises. Your months are decided by acceptance milestones, final payments, and a client saying 'this one's really simple'",
+ "unit": "A software outsourcing company in Tianfu Software Park, Chengdu (custom development for finance, government and enterprise clients, billed by the person-day)",
+ "unit_type": "Software outsourcing company",
+ "city": "Chengdu, Sichuan",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree (Software Engineering)",
+ "level": "You came up writing code and you know how to estimate work. How to read the acceptance clauses in a contract, and the face of a client's division chief, you have only begun to learn.",
+ "intro": "You wrote Java for three years, and last month your boss said you had a good temper and put you in charge of a project. The contract says payment in three installments, with the last due six months after initial acceptance. This Friday you are presenting the schedule in a conference room at a city commercial bank, and the division chief across the table says: this requirement is really simple. You open ZenTao and find your predecessor has left you two hundred and thirty open items.",
+ "salary_note": "Estimate: project managers at Chengdu outsourcing companies earn about 20 percent less than in first-tier cities. Project bonuses are tied to collections, and in years when clients pay late, so does the bonus.",
+ "facts": [
+  {
+   "label": "Project Manager (current level)",
+   "value": "2–6 years, ¥11,900–17,500 a month (national average, derived from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Project Manager (6–10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥20,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Coordinating all sides, handling the disputes, answering for the launch",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Breaking down requirements and writing proposals",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "270 related listings nationwide, 10 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Metro Line 1 to Tianfu 5th Street. In the car you open last night's defect list, pick out the serious ones and post them to the group.",
+  "Stand-up. Three developers stationed at the client report on yesterday, all of them saying integration can't reach the other side's interface. The person responsible for the other side's interface is on leave today.",
+  "To the client. In the technology department's conference room, someone from the business side says this button should move left. You write it on paper and assign it a change order number.",
+  "Lunch with the client's project contact, skewers counted one by one at the end to work out the bill. You talk about his child's school, and mention in passing the acceptance materials.",
+  "Finance sends this month's collections sheet. One of yours is still two hundred thousand short. You send the client's payment process a fourth polite reminder.",
+  "A developer has given notice, and he has a core module. You take him downstairs to the gaiwan tea stall and first ask if it's about money.",
+  "Still editing the weekly report, changing 'seriously delayed' to 'some schedule risk exists'. You read it through and change it back a little."
+ ],
+ "ladder": [
+  { "title": "Project Assistant", "stage": "Legwork", "focus": "Write meeting minutes, track progress, organize delivery documents, learn the process and the contracts." },
+  { "title": "Project Manager", "stage": "Running a project", "focus": "Own a single project's scope, schedule, acceptance and collections; manage the on-site team and the client." },
+  { "title": "Senior Project Manager", "stage": "Big projects", "focus": "Take on projects worth millions or tens of millions, write bid proposals, handle major changes and client relations." },
+  { "title": "Project Director", "stage": "Managing a portfolio", "focus": "Manage multiple project managers, watch margin and staff utilization, decide which orders to take." },
+  { "title": "Vice General Manager of Delivery", "stage": "Running the business", "focus": "Answer for the company's whole year of delivery, collections and headcount." }
+ ],
+ "ai_tasks": [
+  { "name": "Coordinating all sides, handling the disputes, answering for the launch", "how": "AI can schedule, take minutes and flag risks. Getting the division chief to relent, getting developers to stay late, and stepping out front when something goes wrong takes a person." },
+  { "name": "Breaking down requirements and writing proposals", "how": "AI can produce competitor comparisons and prototype drafts. What the client really wants and what has to be cut are for a person to judge." },
+  { "name": "Scheduling and weekly reports", "how": "Task breakdown, Gantt charts, weekly reports and minutes can mostly be auto-generated, with a person fixing the wording." },
+  { "name": "Estimating effort and pricing", "how": "AI can estimate person-days from past projects. Which client loves to change requirements takes someone who's done the work to add a multiplier." },
+  { "name": "Tracking testing and delivery documents", "how": "AI can sort defects and generate acceptance materials. Which problems must be fixed before launch is for a person to decide." }
+ ],
+ "events": {
+  "e_first_change": "The client added a feature verbally and you said no problem. When you added up person-days at month's end, that no problem had eaten three weeks of two developers' time. A veteran PM at the company said you got off cheap on tuition. From then on, every sentence went into a change order.",
+  "e_acceptance": "At the initial acceptance meeting, seven of the client's departments spoke in turn, and three raised issues that weren't in the contract at all. You wrote them down one by one, finally agreed to include them in phase two, and the acceptance form was stamped at nine that evening.",
+  "e_year_end": "December. The client has to use up this year's budget, so every project has become must-launch-by-year-end. In one month you ran to four clients and spent your birthday at a server room door.",
+  "e_pay_delay": "The project went live long ago, and the final payment is still moving through the client's finance process. The company goes on paying its on-site staff. In the middle of the night your boss sends you a cash flow sheet with your project marked in red.",
+  "e_turnover": "A core developer was poached by an internet company, costing half a month's pay in compensation. The interface documentation he left was three pages long, and the new hire spent two weeks reading code. When the client asked why the change of staff, you called it an optimization.",
+  "e_midnight": "Cutting over to production at two in the morning. You sat outside the client's server room with a case of bottled water at your feet, checking off one tick after another. At five, business verification passed and the sky had gone pale at the edge.",
+  "e_pmp": "You passed the PMP, and three letters joined your name in the bid documents. The sales guy says it's worth two more points in bid scoring. In actual work you have never used a single one of those process groups.",
+  "e_stomach": "The endoscopy report says chronic atrophic gastritis. The doctor asks about your diet, and you think of all those years of project drinking, the kind where you go back afterward and revise proposals.",
+  "e_ear": "Your right ear has started to buzz from too many phone calls. You've gone through several headsets, and in meetings you've taken to turning your face to one side. The client thinks you are thinking hard.",
+  "e_mahjong": "Friends dragged you to mahjong on the weekend, and all you could think about was next week's acceptance. How are you calculating remaining effort even at the mahjong table, a friend said, and got that exactly right. You lost eighty yuan.",
+  "e_good_project": "This project, unbelievably, ran with no delay at all. At acceptance the division chief said your team was not bad, and we'll continue in the next phase. You took note of that spring. Such things do not come often.",
+  "e_client_system": "After six years of your team's maintaining the system, the client's new leadership decided to go onto another vendor's platform. The eight on-site staff had two weeks to leave, and the maintenance contract ended at year's end. You boxed up the old printed requirements.",
+  "e_ai_gen": "The company equipped everyone with AI coding tools and developers' commits doubled. You open the defect list and find defects have doubled as well. The completion rate in the weekly report looks very nice.",
+  "e_ai_price": "Before the tender, the client's buyer said: everyone writes code with AI now, why haven't your person-day rates gone down? You spent half an hour explaining that someone has to answer for the result. They cut the rate by 20 percent.",
+  "e_ai_doc": "Weekly reports and acceptance documents are all drafted by AI now. That saves you one evening a week, and you used that evening to visit the client's business department and listen to them complain for two hours.",
+  "e_kid_pickup": "The after-school program closes at six, and your and your partner's meetings run to seven. The teacher set up a sheet just for logging parents who come late, and your family's name appears most.",
+  "e_company_shrink": "The outsourcing market went down, the company shrank from five hundred people to two hundred, and half your floor cleared out. The cleaning lady asks you if anyone still wants those desks next door.",
+  "e_tender": "Twelve hours before the bid deadline, the page numbers in volume three turned out to be wrong. You and the commercial lead knelt on a print shop floor to rebind it, sealing the bid with twenty minutes left. Three months later you won."
+ },
+ "choices": {
+  "c_cert": { "title": "Taking the Systems Integration Project Manager exam", "situation": "The state software exam for Systems Integration Project Manager adds points to bids, and the company reimburses the fee. But projects are tight this quarter, and you'd have to spend twenty-odd evenings memorizing ten knowledge areas.", "options": [
+   { "label": "Take it", "result": "You memorized earned value formulas on the metro for three months and got the certificate. The company put a copy on page forty of the bid." },
+   { "label": "Finish the project first", "result": "The certificate can wait till next year. This quarter your project launched on time, and the final payment came a month earlier than expected." }
+  ] },
+  "c_change": { "title": "To add this requirement or not", "situation": "The division chief says the leaders want to see this report next week, just add it, you've done so much already. By the contract it should go through a change order and cost more, but he's holding the acceptance stamp. Your developers have been working overtime for three weeks straight, and you have no one left.", "options": [
+   { "label": "Write the change order", "result": "You steeled yourself and handed it over. The division chief's face fell on the spot, and two months later the order was signed for half the amount." },
+   { "label": "Do it first, as a favor", "result": "You all stayed late and got it done, and the division chief posted a thumbs-up in the group. That favor was repaid by half at acceptance time." }
+  ] },
+  "c_dev_or_pm": { "title": "Go back to writing code?", "situation": "After a year of running projects you find you are no longer someone who can write code, and not yet someone who can manage things. Your former tech lead says come back anytime, the pay wouldn't be much different.", "options": [
+   { "label": "Keep running projects", "result": "You took the IDE out of your startup programs. For the first few months, whenever you saw ugly code, you had to breathe deeply." },
+   { "label": "Keep coding and run projects", "result": "You wrote code at night and ran to the client during the day, doing neither fully well. But developers began to want you included when they discussed solutions." }
+  ] },
+  "c_senior": { "title": "Competing for Senior Project Manager", "situation": "The company is promoting a group of Senior Project Managers to lead government projects worth tens of millions, with travel to present bids, and there are only three places. Your collection rate is good, but you have barely touched large bids.", "options": [
+   { "label": "Compete for it", "result": "You told the story of rescuing a loss-making project, your own mistakes included. An old executive on the panel chuckled and made a tick beside your name." },
+   { "label": "Two more years of seasoning", "result": "You kept leading small projects and won a renewal from an old client. A newly promoted Senior PM came to ask how to have dinner with that division chief." }
+  ] },
+  "c_party_a": { "title": "Jumping to the client side", "situation": "That city commercial bank's technology department is hiring for project management: nine to six, a small pay cut at first, good benefits, and from then on you're the one telling others to write change orders. Your outsourcing colleagues call this reaching shore.", "options": [
+   { "label": "Go to the client side", "result": "You handed over your active projects one by one.", "end": "You got the bank's employee badge. At your first project meeting, the outsourcing company's PM said we'll evaluate this requirement, and you heard the tone of your own younger voice." },
+   { "label": "Don't go", "result": "You thanked them and went on counting person-days on the vendor side. The division chief later said, if you'd come over, perhaps we wouldn't have so many requirements." },
+   { "label": "Try a foreign firm's PMO", "result": "You sat through one round in which they discussed process in English throughout. You realized your main skill is having dinner with division chiefs, and that it doesn't convert easily elsewhere." }
+  ] },
+  "c_margin": { "title": "Take this order or not", "situation": "A government project with a very tight budget and almost no profit, but one that would make a fine case study in future bids. Company staff utilization has just dropped to 70 percent. Refuse, and you'll have to lay off three people this quarter.", "options": [
+   { "label": "Take it", "result": "It was hard going, and the project margin ended up negative. The three people stayed, and the case went into the bids." },
+   { "label": "Refuse and lay off", "result": "You negotiated the three departures yourself. One said I understand, one's eyes went red, and one asked straight out how much the severance was. You were most grateful to the third." },
+   { "label": "Go out and take small jobs yourself", "result": "You wrote out the risk list for your active projects and handed in your resignation the next day.", "end": "With two developers you rented a small office in Yulin and started building systems for small local companies. No more division chiefs. Your clients were hotpot restaurant owners who paid by WeChat and changed requirements by WeChat too." }
+  ] },
+  "c_director": { "title": "Competing for Project Director", "situation": "A Project Director manages seven project managers, watches the whole department's margin and collections, and has to decide which long-serving employees' rates have become too high to win projects. When the last director left, a roomful of accounts receivable stayed behind.", "options": [
+   { "label": "Compete for it", "result": "You made the aging report on receivables the first page of your defense. The boss asked how you planned to collect. One client at a time, you said, over tea." },
+   { "label": "Stay on the projects", "result": "You went on standing in client conference rooms. It's tiring there, but at least everything is something you can see." }
+  ] },
+  "c_ai_price": { "title": "A pilot for pay-by-results", "situation": "The boss wants to try billing for delivered results, not person-days. If it works, the fewer people you lead, the more you earn; if it doesn't, the loss goes on your department. Developers worry how many people will be left.", "options": [
+   { "label": "Take the pilot", "result": "You reorganized the process around AI tools, and four people did what twelve used to. The project made money, and where those eight people went, you know better than anyone." },
+   { "label": "Stay with person-days", "result": "You persuaded the boss to wait and see. Six months later a competitor came in with pay-by-results and took one of your old clients." }
+  ] },
+  "c_exit": { "title": "The fifty-year-old project manager", "situation": "The company is optimizing again, and the gap between your pay and that of the young people stands out on finance's spreadsheet. The boss tells you: you can take severance and go, or move to the after-sales maintenance line. A friend has a guesthouse in Dujiangyan and needs someone to run it.", "options": [
+   { "label": "Run the guesthouse in Dujiangyan", "result": "You took the severance and finished your final handover sheet.", "end": "You moved to the foot of Mount Qingcheng, and your daily work became checking bed linen, fixing water heaters and replying to bad reviews. You still give each problem a number, which the owner finds very amusing." },
+   { "label": "Move to the maintenance line", "result": "You looked after a pile of old systems' maintenance contracts, no more bids and nobody in a hurry for you. The pay was a bit less, and you began eating on time." },
+   { "label": "Tough it out, keep running projects", "result": "You know better than anyone at the company how long each client's process takes. That skill bought you a few more years." }
+  ] }
+ },
+ "endings": {
+  "retire": "You transferred out the last two maintenance contracts you had in hand. The final-payment sheet still shows one item of a hundred and seventy thousand from eight years ago. You entered the name of the client's current contact in the notes and sent it to finance. On your retirement day you wrote the weekly report yourself, one sentence: no risk items.",
+  "burnout": "That year your stomach went bad, and on top of that one project failed to launch for three months running. Your hair came out in handfuls. You told the boss, I'll quit once I've delivered this project, and that's just what happened. The next spring you started sleeping until eight, and it felt strange."
+ },
+ "stages": [
+  "A project's scope, people and money are all on your shoulders: scheduling tasks in ZenTao, calling requirement meetings with the client, turning spoken words into change orders, and every week writing one report for the client and one not entirely the same for the company. You have a dozen or so people, some on site and some at the office. If the acceptance form doesn't get stamped, this month's collection is your problem.",
+  "You are in charge of multi-phase projects worth tens of millions, with several team leads under you. When presenting bids you stand before the judges and answer; you go over contract penalty clauses with legal word by word. When the client's leadership changes, you have to go meet the entire reporting line again. You no longer chase every defect, only the ones that can sink the project.",
+  "Seven project managers' weekly reports roll up to you, and you read margin, staff utilization and the receivables aging report. You decide which project gets more people and which should cut its losses in time. The places you go now aren't server rooms but client executives' offices and the boss's cash flow meetings.",
+  "The company's whole year of delivery and collections is written in your performance review. You decide which industries to enter this year, whether to shrink the on-site team in a given city, and how the layoff list is ranked. At New Year you personally visit major clients' top executives. An assistant runs your calendar. It's been a long time since you saw ZenTao."
+ ],
+ "work": [
+  "Testing reports over a hundred defects, and developers say half come from unclear requirements. You bring both sides into a conference room to claim them one by one. At the end seven remain that nobody will claim.",
+  "The client contact has changed and the new person rejects all the requirements. You bring along the requirement confirmation sheets signed by the last one, lay them on the table, and say little.",
+  "You move one on-site developer to a desk by the client's tea room. Add-on requests fall by half, because he stops people there first and talks it through.",
+  "Forty minutes presenting a bid, and the judges ask about your contingency plan. You pull up the rollback steps and timing from the last cutover, and one judge pauses over the score sheet.",
+  "Contract clause fourteen says late delivery is penalized at 0.05 percent a day. You and legal spend an afternoon changing it to a total cap of 5 percent, and the client's legal team accepts by email.",
+  "There's a three-month gap between two phases of a project. You talk the client into a small maintenance contract and keep ten core developers on the project. The team doesn't scatter.",
+  "One project's margin is only 4 percent. You pull up the person-day sheet and find three on-site people spend half their time on odd jobs for the client's departments. You write a very well-worded letter.",
+  "Nine receivables are more than two years old. You sort them by each client's budget cycle and go for the first in September, when they're preparing next year's budget.",
+  "Two project managers both want the same architect. You treat the architect to a bowl of pig-trotter soup, let him choose, then find the other manager an outside consultant.",
+  "The boss wants a framework deal with a big client, on twelve-month payment terms. You put the cash flow projection on the table and point out that in month seven the company won't be able to meet payroll. The deal is cut to half the size.",
+  "The Xi'an branch has lost money for six quarters in a row. You fly out for a week and leave four people and a maintenance contract there. The rest you talk to yourself.",
+  "At the annual party you give the project award to a testing team nobody can name. The next day the team's leader messages you to ask if it was a mistake."
+ ],
+ "past": [
+  "In your small town in Leshan, an internet cafe owner taught you to reinstall operating systems, twenty yuan a time. You fixed computers for half the street, and broke one too.",
+  "You majored in software engineering at a university in Chengdu. What you did best in four years was making the people who didn't do anything on group projects feel they had done something.",
+  "After graduating you joined an outsourcing company writing Java and were sent to a state enterprise's server room. The client's badges were a different color from yours, and the canteen line was a different one too.",
+  "You'd worked later than the project manager for two years straight, and found he was the only one who knew why the project was being done at all. You started listening in on his phone calls.",
+  "During one botched launch the developers all went quiet, and it was you who explained to the client from start to finish what happened. The next week your boss asked if you wanted to try leading a small group."
+ ],
+ "late": {
+  "pension_note": "Estimate: outsourcing companies long pay social insurance on lower bases, so the pension is about 40 percent of final pay, needing savings and a little rent to top it up.",
+  "scenes": [
+   "When your kitchen is renovated, you draw a Gantt chart for the foreman, plumbing and wiring first, tile after, each milestone showing its payment percentage. The foreman looks at it and says, sir, would you like to join our company?",
+   "You sit on your complex's homeowners' committee, and replacing the elevators takes a year and a half. You write seventeen versions of the minutes, more versions than any project ever had.",
+   "Outsourcing companies now all talk about agents, and project managers have virtual versions too. Seeing the ad, you imagine a virtual project manager being summoned to drink by a division chief.",
+   "Your stomach's no good, and at gatherings of old friends you don't touch a drop. At the mahjong table others count tiles. You count about how late this game will run and when to start taking your medicine.",
+   "In the first month you woke each morning and looked at your phone first. There were no defect lists on it and no clients. You lay there waiting for the anxiety to pass, which took about twenty minutes.",
+   "You started drinking gaiwan tea in People's Park, one cup lasting the afternoon. At the next table people talk about a project and you can tell which is client and which vendor. You change tables.",
+   "Your stomach slowly got better, and you don't care to know how this line of work is doing. The company group chat long since went silent. You left, and nobody noticed.",
+   "Nobody in your new place talks about person-days. All through the first year you still kept converting everything into so many people for so many days, then shaking your head and forgetting the number.",
+   "One day you got a message from your old project team saying that system had finally been shut down. Below it was a row of thumbs-ups, and you added one.",
+   "In your work now few people press you and few thank you. You've thought about this; the two come out about even. Later you stopped thinking about it.",
+   "A friend getting married asks you to look over the program. One glance and you ask: where is the rain plan, who liaises with the emcee and the sound system, who collects the red envelopes? The bride comes specially to thank you afterward.",
+   "Whenever anyone tells you 'this one's really simple', you smile a little. That smile will last you all your life."
+  ],
+  "closing": {
+   "retire": "A Chengdu afternoon: the sun comes out for a moment and goes back in. You don't open a single to-do.",
+   "burnout": "The tea in the gaiwan is on its third pour of water, and has gone pale. You set the lid straight. There's nothing else today.",
+   "end": "The metro passes Tianfu 5th Street and you don't get off. That stop has nothing to do with you now."
+  }
+ }
+}

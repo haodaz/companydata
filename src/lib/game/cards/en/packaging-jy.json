@@ -1,0 +1,182 @@
+{
+ "id": "packaging-jy",
+ "occupation": "Semiconductor Package Design Engineer",
+ "role": "Package Design Engineer at an Assembly and Test Plant",
+ "headline": "With a master's in electronic packaging you've joined an assembly and test plant in Jiangyin, wrestling with the stack-up of a twelve-layer substrate in the design department. One prototype run costs over a hundred thousand yuan and takes six weeks; get one trace wrong and you miss the customer's next window",
+ "unit": "The package design department of a chip assembly and test plant in Jiangyin, Jiangsu",
+ "unit_type": "Semiconductor assembly and test plant (OSAT)",
+ "city": "Jiangyin, Jiangsu",
+ "city_tier": "County-level city (administered by Wuxi)",
+ "education": "Master's degree (Electronic Packaging Technology)",
+ "level": "You used Allegro and HFSS at school and you can explain warpage clearly. Faced with a real substrate headed for volume production, you still have to ask how to lay out power and ground and how fine the substrate maker can actually go.",
+ "intro": "The substrate maker's capability sheet is taped next to your monitor, and your predecessor has run a highlighter over the line-width column three times. After three years studying electronic packaging you've come to the design department of this plant on the Yangtze, and in front of you is layer seven of a twelve-layer substrate. This version has to go to the substrate maker next Wednesday. The next prototype window is six weeks after that.",
+ "salary_note": "Estimate: design jobs at Jiangyin's assembly and test plants pay 20 to 30 percent below Shanghai's chip design companies, though a master's starting salary is high for the area. The year-end bonus tracks plant utilization and can fall by half in a downturn.",
+ "facts": [
+  {
+   "label": "Assistant Package Design Engineer (current level)",
+   "value": "0–2 years, ¥12,750–18,750 a month (national average, derived from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Package Design Engineer (2–6 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 5–10 years",
+   "value": "¥19,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Negotiating bump layout with the chip team",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Choosing the package architecture",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "8 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "You ride your e-bike to the plant from a rented room off Chengjiang Road. The fog hasn't lifted from the river, and the coal barges' horns follow you all the way to the gate.",
+  "You open Allegro. Last night's design rule check reported more than three hundred errors. The engineer training you skims them and says seven of the three hundred are real, find them yourself.",
+  "On a video call the customer's packaging lead asks if the bump count could go up by another forty. Your team leader says we'll evaluate that, mutes the microphone and sighs.",
+  "The canteen has river fish today, though in truth it came from elsewhere along the Yangtze. A colleague from process integration says the last batch was over the warpage limit again, and you in design ought to take note.",
+  "The thermal simulation fails halfway with a meshing error. You paste in the chip's power map again and find the hot spot is three millimeters away from where the datasheet puts it.",
+  "You go to the floor to watch the trial run. Through the glass, the die bonder flips chips over and presses them onto substrates. Two months of your drawing comes out the size of a fingernail.",
+  "An engineer at the substrate maker replies by email: we can't do this trace spacing on layer five, suggest relaxing it. You reroute the section, and it winds around like a residential parking lot."
+ ],
+ "ladder": [
+  { "title": "Assistant Package Design Engineer", "stage": "Drawing", "focus": "Draw substrates to the rules, run design rule checks, output Gerbers, assist on simulation, learn what the substrate maker and the line can really do." },
+  { "title": "Package Design Engineer", "stage": "Your own designs", "focus": "Own one product's stack-up, routing, and SI/PI and thermal simulation; deal with the customer and substrate maker; follow it into new product introduction." },
+  { "title": "Senior Package Design Engineer", "stage": "New platforms", "focus": "Lead design reviews for new platforms such as flip-chip and 2.5D, set the design rules, work out bump layouts with chip teams." },
+  { "title": "Package Design Department Manager", "stage": "Department", "focus": "Rank customer projects, manage the team and the EDA budget, decide which technology to bet on." }
+ ],
+ "ai_tasks": [
+  { "name": "Negotiating bump layout with the chip team", "how": "Where one bump goes is the result of two teams each giving way. AI can suggest local fixes; someone has to make the call and carry the blame." },
+  { "name": "Choosing the package architecture", "how": "AI can compare cost, thermal and bandwidth by spec and lay it out in a table. Which route to take and what risk to accept is a human decision, made with the customer and the line in mind." },
+  { "name": "Substrate stack-up and routing", "how": "AI can propose stack-ups and auto-route. Someone has to check the material tradeoffs and how power and ground are laid out." },
+  { "name": "Design rule checks and Gerber output", "how": "DRC, Gerber, ODB++ and the BOM can basically be generated automatically, with obvious errors caught first." },
+  { "name": "SI/PI, thermal and warpage simulation", "how": "AI can sweep parameters in bulk and build surrogate models. A person has to judge whether boundary conditions and material inputs make sense, and sign." },
+  { "name": "Tracing package failures back to the design", "how": "AI can summarize test data and suggest possible causes. Physical analysis and confirming the root cause still rest with people and the lab." }
+ ],
+ "events": {
+  "e_short": "The first version of your substrate came back from prototyping with a power trace shorted to ground. Over a hundred thousand yuan, six weeks of waiting. Your team leader put the electrical test report on your desk and asked only one thing: who clicked the DRC waiver?",
+  "e_warpage": "After reflow, a large flip-chip part curled like a potato chip. You and the materials engineer went through three underfills and brought warpage down from 140 microns to 80. The line finally stopped dropping units.",
+  "e_window": "The customer's tape-out slipped three weeks, but the substrate prototype window waits for no one. Facing two possible pinouts, you ran both substrates at once and cancelled every weekend.",
+  "e_correlation": "Simulation said warpage of 90; the measurement said 120. You spent a month finding that the substrate maker's batch of laminate had a glass transition temperature eight degrees below spec. From then on you trusted only material figures you had measured yourself.",
+  "e_vendor_line": "You went to the substrate maker in Kunshan to see the etching line. Under a magnifier, the shop floor manager showed you the edge of a trace and why the line width on the capability sheet yields under eighty percent. On the ride back you changed two design rules.",
+  "e_downcycle": "The memory market turned cold, utilization dropped to sixty percent, and half the machines on the floor went under dust covers. Year-end bonuses across the plant were halved. Design had more projects than ever: every customer wanted to do new packages during the lull.",
+  "e_boom": "Orders for AI chips poured in, substrates ran short, and customers' buyers came with cash to line up for capacity. This year's bonus was a number you wouldn't have dared imagine. The price was being back at your desk on the fourth day of Spring Festival.",
+  "e_wrist": "Tendinitis flared in your right wrist, and every drag of a trace hurt. You switched the mouse to your left hand and routed that way for two months, and your traces took on a certain timidity.",
+  "e_eyes": "Twelve layers stacked together, each its own color, and after a while red and orange blur together. You mentioned it at your health check. The eye doctor suggested changing the color scheme, and you actually did, and your colleagues all say it's ugly.",
+  "e_hbridge": "The customer's next generation wants four small chips side by side on a silicon interposer. The plant had never done it. After more than ten reviews the first batch of samples came back with one of the four misaligned. Then the second batch lined up.",
+  "e_customer_leaves": "A customer you had served for three generations moved to another assembly house, citing price. The design files for your product were archived. Three years of iteration came to a four-gigabyte zip.",
+  "e_commute": "Your partner works at a chip design company in Shanghai, and you go back and forth on weekends. On that stretch of highway after the Jiangyin Bridge, half of what you have to talk about is your partner's company complaining about assembly houses like yours.",
+  "e_school": "The teacher in the parents' group wants the pickup arrangements. Your partner is away on business, and you are three days from your customer's freeze. You bring your child to the visitor room at the plant, where the child spends the afternoon drawing houses on scrap printer paper.",
+  "e_ai_route": "The company bought an AI routing plug-in, and it finishes a substrate overnight, so tidy it's embarrassing. The next day you go through it layer by layer. It took the most critical power loop on a long detour. Everywhere else you can't fault it.",
+  "e_ai_surrogate": "The warpage surrogate model went live. A simulation that took a night now takes ten seconds and people compare hundreds of designs a day. Last week it gave a perfect answer using a material property that doesn't exist on this earth.",
+  "e_junior": "A graduate student intern asked why this trace takes a detour. You thought about it: that rule came from a short circuit eight years ago, and the file on that incident can no longer be found.",
+  "e_hq_rule": "A new JEDEC standard changed the test conditions, and reliability data for your three old platforms had to be redone. Three months a platform, the test chambers booked solid, and a few long-standing customers asking why they should pay.",
+  "e_fish": "Before Qingming, colleagues treated you to river fish. Everyone sat over the platter calculating what the meal cost, and ended up calculating the price per square millimeter. The waiter came over to ask if there was a problem with the bill."
+ },
+ "choices": {
+  "c_tool": { "title": "Routing or simulation", "situation": "The department is dividing up the work. Stay in routing and you'll have plenty to do and output fast, and the prototype windows can't do without you. Move to simulation and you'll stare at models with little to show for two years. Your team leader asks if you have decided.", "options": [
+   { "label": "Stay in routing", "result": "You can now look at a substrate and say which stretches will give the maker trouble. Colleagues in simulation ask how you know. You say you've been yelled at." },
+   { "label": "Move to simulation", "result": "For the first half year your output was dozens of curves that didn't match measurements. One day they matched, and you saved that set of material parameters in three places." }
+  ] },
+  "c_bump": { "title": "Forty more bumps", "situation": "The customer wants forty more bumps. You've done the numbers: the substrate would need two more layers, yield and cost would look awful, and you would miss the window. Refuse, and the customer's buyer has already hinted another company can do it. Sales is waiting for you to write one sentence: technically feasible.", "options": [
+   { "label": "Write feasible, add a risk note", "result": "Nobody read the risk note. You took the order, and for the next four months you spent half your time explaining why that note had been written so early." },
+   { "label": "Write not feasible, offer an alternative", "result": "You proposed twenty fewer bumps with power reallocated. Sales looked sour for a week. The customer, to everyone's surprise, accepted." }
+  ] },
+  "c_shanghai": { "title": "A design company in Shanghai", "situation": "The packaging group at your partner's company needs someone, at forty percent more than you make, sitting with the chip designers every day. But over there you only draw proposals, and you'd never see a line again; the trial runs happen in someone else's plant. What you've learned in this riverside factory would slowly turn into things you say on the phone.", "options": [
+   { "label": "Go to Shanghai", "result": "You changed badges and also changed into a dress shirt. Colleagues asked if assembly houses are really that bad, and you said: that's my old employer." },
+   { "label": "Stay at the plant", "result": "You went on watching the die bonder through the glass. The next time you won over the customer's packaging lead, it was by telling him what day that machine was due for maintenance." }
+  ] },
+  "c_substrate_sales": { "title": "The substrate maker wants you for technical sales", "situation": "A vice president at the substrate maker you've worked with for years takes you to dinner and offers you East China technical sales at double the pay, no more drawing. He says you understand the business better than his salespeople. The price is that you'd start entertaining customers and remembering what grade every engineer's child is in.", "options": [
+   { "label": "Go into sales", "result": "You divided your projects among colleagues and left the capability sheet on the desk.", "end": "You moved to the back seat of a company sedan. From then on it was you telling others 'technically feasible', and what you tracked each quarter was no longer warpage but receivables." },
+   { "label": "Turn it down", "result": "You thanked the VP and picked up the check. In the next prototype round, their engineer answered your emails slightly faster than usual." },
+   { "label": "Ask about field applications", "result": "Their applications job would mean being based with a customer in Taiwan. Forget it. The dinner did tell you exactly what you were worth." }
+  ] },
+  "c_2_5d": { "title": "Bet on the new platform or guard the old products", "situation": "The plant is forming a 2.5D pilot group: maybe no volume orders for three years, bonuses at the bare minimum. On the old product line you carry four products in mass production by yourself, and your year-end adds up neatly. People on both sides are waiting for the Senior Package Design Engineer slot.", "options": [
+   { "label": "Join the pilot group", "result": "You started learning silicon interposers, and at every review someone asked when volume production was coming. Twice in those three years the group nearly dissolved." },
+   { "label": "Guard the production line", "result": "You squeezed another two points of yield from your four products and took the bonus. Colleagues from the pilot group went by your desk, and more and more of what they said was words you didn't know." }
+  ] },
+  "c_ai_rules": { "title": "Turning rules of thumb into data", "situation": "The department wants all these years of stack-ups, prototypes and measured warpage turned into a dataset a model can use, and needs someone who knows design to lead it. Veterans don't want to hand over their private tables. They call them their rice bowls.", "options": [
+   { "label": "Lead it", "result": "You went from desk to desk and traded your own tables for theirs. Six months later the warpage prediction error had halved, and two old colleagues hadn't spoken to you in six months." },
+   { "label": "Don't take the lead", "result": "It went to IT, and half of what was collected was blank. You kept using your own spreadsheet, safe and alone on your computer." }
+  ] },
+  "c_manager": { "title": "Competing for Package Design Department Manager", "situation": "The manager is leaving for a joint venture in Singapore. The Package Design Department Manager runs thirty people and over ten million yuan a year in EDA fees. Your design reviews have always been the toughest, but you have never written anyone's performance review.", "options": [
+   { "label": "Compete for it", "result": "You rewrote your three-year roadmap nine times. At the defense the plant manager asked: if 2.5D turns out to be the wrong bet, what happens to these thirty people? You told him the truth." },
+   { "label": "Stick to the technical track", "result": "You filled in the technical track form and stayed the toughest person at every review. The new manager is four years younger than you and asks you before every decision." }
+  ] },
+  "c_teach": { "title": "A vocational college in Wuxi wants you to teach", "situation": "A vocational college in Wuxi has started a chip packaging program and needs teachers with line experience: a permanent state post, winter and summer holidays, half the pay. This year you have revised warpage three times, and your back has hurt three times.", "options": [
+   { "label": "Go teach", "result": "You wrote your last review comments and told your team leader you were leaving.", "end": "You draw a cross-section of a twelve-layer substrate on the blackboard, and students look up; a few are actually listening. The bell rings, and you discover for the first time that the sun is still high at five in the afternoon." },
+   { "label": "Stay", "result": "You mailed the department head a set of substrate design notes you had written, as a kind of answer. Monday's review started on schedule." }
+  ] },
+  "c_tail": { "title": "The old platform shuts down", "situation": "The wire-bond platform you worked on when you were young is ending. The last customer stops ordering in three months, leaving twenty process documents and two lines to deal with. The company wants you to move to the quality system; or you could leave early, since you are not short of money these days.", "options": [
+   { "label": "Move to the quality system", "result": "You began reading auditors' checklists and mapping the design rules, one by one, to system documents. It is duller than drawing substrates and quieter than chasing windows." },
+   { "label": "Leave early", "result": "You went through the shutdown list for both lines one last time.", "end": "You did the paperwork and came home to your riverside apartment with tendinitis and fairly respectable savings. Every year after that, when the next generation of packaging was launched, you didn't have to watch." },
+   { "label": "Stay with the old product to the end", "result": "A few industrial and automotive customers still want long-term supply. You persuaded the company to keep half a line, and became that half line's technical lead." }
+  ] }
+ },
+ "endings": {
+  "retire": "When you reached the age, your account in the company's design library was switched to read-only. One product is still in production, and the stretch of detour on its layer seven is one you drew at twenty-five. Nobody has touched it, and nobody knows why it detours. There are fewer coal barges on the Yangtze now, and more container ships.",
+  "burnout": "That year your wrist needed surgery, and then came a round of layoffs, and you never went back to the screen. The company gave you the title of consultant and six months' pay. You moved the computer desk out of the house and put a very slow-growing plant in that corner."
+ },
+ "stages": [
+  "Your job is to finish drawing according to the rules: copper pours layer by layer, DRC runs, sorting hundreds of errors, outputting Gerber and ODB++ files for the substrate maker. The engineer training you marks up your drawings in red without explaining. You also go to the floor to learn die attach, underfill and reflow, and what hands a drawing passes through in real life.",
+  "One product from spec to prototype is now yours: set the stack-up, lay out power and ground, run SI/PI and thermal simulations, turn the results into review slides. The customer's packaging lead makes demands on video calls, the substrate maker's engineers say by email they can't do it, and you are in the middle on your fifth revision. When trial production reports come in, you are the first one asked.",
+  "You present the design reviews for new platforms and you find the faults in other people's designs. You work out bump layouts with chip teams, one bump at a time, and the design rule file is yours to change and sign. When the substrate maker has a new material, you decide whether to dare to be first. Most drawings in your hands are now by someone else.",
+  "Each week you rank customer projects, and whoever's prototype goes first and whoever waits for the next round all come to see you. You negotiate EDA license bills with the vendors and write thirty people's reviews. Which technology to bet on is something you say at the management meeting, and only three years later will anyone know if it was right."
+ ],
+ "work": [
+  "DRC reports a trace spacing error and your team leader tells you not to waive it. You route that section to layer six and add two vias. The error goes away. The next day the vias are flagged by someone else's rule.",
+  "The substrate maker sends back a Gerber package saying the drill file doesn't match the stack-up. You check it against the engineering query sheet three times and find you chose the wrong unit on export.",
+  "You follow a reliability engineer into the lab and load a tray of samples into the HAST chamber. You sign the traveler. Ninety-six hours later you see, for the first time, a product you helped make die in testing.",
+  "PI simulation shows voltage drop fifteen millivolts over budget in the center of the chip. With the chip team's power engineer, you study the heat map, open two more copper areas on the power layer and get it just back under the limit.",
+  "Two units in the first new-product batch come out of reflow with bridged solder balls. You take the X-ray images to process integration and together shrink the stencil openings by five microns. The next batch is clean.",
+  "The customer's packaging lead sends a new pinout at midnight, seventeen signals changed. In the morning you check it against the spreadsheet, flag three that will force a reroute, and write your reply.",
+  "At the review a young colleague reports that the warpage margin is sufficient. You ask which batch of laminate the data came from. He goes to check, and presents again the following week.",
+  "You are negotiating bumps with a design company's chip architect, who wants all the high-speed interfaces along one edge. You talk through a heat map for two hours, and each side gives up three rows.",
+  "You take the design rule manual from V3 to V4, adding a chapter on corner copper for large substrates. The signature page has just two names, yours and the process director's.",
+  "Two customers both want next month's prototype window. You compare their payment records, phone the substrate maker, pay extra for a second window, and take the margin loss from your own department's budget.",
+  "The EDA vendor wants twenty percent more at renewal. With actual usage figures in hand, you cut two rarely used modules and have three people share one license in shifts.",
+  "At a performance talk, an engineer who has routed for seven years asks if he is still of any use. You spread out the substrate he is working on and tell him about the new work you plan to hand him."
+ ],
+ "past": [
+  "The physics teacher at the county high school used a stripped-down old phone board to explain series and parallel circuits. You stared at the little black squares and asked what was inside. That, the teacher said, we can't cover.",
+  "You chose a major that sounded connected to chips and were admitted to electronic packaging technology. Your father asked what packaging was. You said it means wrapping up the chip. He said, so, boxing things up?",
+  "In your third year you joined a lab and looked at solder balls under a microscope while a girl in your group drew reflow curves on the blackboard. That was the first time you heard the word warpage, and you thought it sounded very domestic.",
+  "In graduate school you did reliability work with your advisor, loading hundreds of samples into a temperature-cycling chamber and testing them every two hundred cycles. Over winter break you guarded the chamber alone and lived on instant noodles for more than ten days.",
+  "Interning at a design company in Shanghai, you found that everyone spoke of assembly plants as something that needed to be supervised. In the autumn hiring round you got two offers. In Jiangyin you could see a real line. You chose that."
+ ],
+ "late": {
+  "pension_note": "Estimate: thirty-five years of enterprise employee pension contributions, calculated at Wuxi rates. The pension comes to about 45 percent of final pay; higher late-career salaries lower the replacement rate.",
+  "scenes": [
+   "You go to see the renovation of the new apartment. The tile setter is at work, and you squat down, tap around, and tell him these few by the wall will lift sooner or later, because the cement shrinks differently there. So you know about this too, he says.",
+   "An industry association in Wuxi invites you to assess projects, two thousand yuan a time. The submissions are all very well written. You ask only one thing: what was the measured warpage, and from which batch?",
+   "Chips now are as big as a cookie, and half the words that packaging people use you'd have to go look up. You have no plans to look them up, and you turn down half the association's invitations.",
+   "The tendinitis has stayed after all, and your right hand can't hold anything heavy. You are learning to write with your left, copying out a few lines each day, and your handwriting has slowly grown from second grade to fifth.",
+   "The spring after surgery you practiced with your wrist, one motion at a time, following the therapist's diagrams. For the first time you noticed how many rapeseed flowers there are along the river in Jiangyin.",
+   "The insurance claim form asks about your work before the surgery. Under hours of mouse use per day you write eleven. The clerk at the window looks up and checks that with you.",
+   "You started teaching old people at the community center to use their phones, with a patience that surprises the social worker. Someone asks how you can remember so many buttons. One layer at a time, you say.",
+   "With no prototype windows, the calendar suddenly went blank. All through the first year you kept feeling something had to be sent out on Wednesday.",
+   "Nobody in your new line of work asks about warpage. Sometimes a colleague says 'this plan should work, right?' and you add silently: from which batch?",
+   "Packaging has become a word often heard on the news, and relatives have suddenly all heard of the industry. They ask why you didn't stick with it. You say it wasn't called that at the time.",
+   "When you make pancakes and see the edge curling up, it comes out before you can stop it: the two sides are shrinking differently. Eat, your family says.",
+   "You have looked at metro maps for decades, always feeling that the interchange stations are on the wrong layer. You've told only one old colleague, who took out a pen on the spot and drew a revised version."
+  ],
+  "closing": {
+   "retire": "The wind on the river is stronger than the air conditioning at the plant. Somewhere, current is still moving along the paths you drew, many times a second, with no need for you to know.",
+   "burnout": "The plant has grown its third new leaf, two months later than you estimated. You revise the figure a little and go on waiting.",
+   "end": "At dusk there isn't much traffic on the bridge. You cross it, and you no longer work out how short this route could be routed."
+  }
+ }
+}
