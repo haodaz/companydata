@@ -55,19 +55,7 @@ export async function proxy(req: NextRequest) {
   if (pathname === '/' && /(^|\.)aisimjob\.com$/.test(host)) return NextResponse.rewrite(new URL('/lab', req.url));
   // AI 大学的独立域名 baiyecollege.com：根路径直接显示 /college（里面的链接本来就是 /college/…）
   if (pathname === '/' && /(^|\.)baiyecollege\.com$/.test(host)) return NextResponse.rewrite(new URL('/college', req.url));
-  // 「入一行，过一生」的独立域名 1job1life.com：只露游戏。根路径显示 /game；/game 和它的接口、图片放行；
-  // 其余任何地址（/work、/lab、/college、/admin……）一律回游戏首页，接口 404——别从这个域名摸到真活、百业、学院（用户 11-07）
-  if (/(^|\.)1job1life\.com$/.test(host)) {
-    if (pathname === '/') return NextResponse.rewrite(new URL('/game', req.url));
-    if (pathname === '/en') return NextResponse.rewrite(new URL('/game/en', req.url));   // 英文版 One Job, One Life
-    if (/^\/s\/[\w-]+$/.test(pathname)) return NextResponse.rewrite(new URL('/game' + pathname, req.url));   // 分享出去的「某某的一生」
-    if (pathname === '/game' || pathname.startsWith('/game/') || pathname === '/favicon.ico') return NextResponse.next();
-    if (pathname.startsWith('/_vercel/')) return NextResponse.next();   // Vercel 访问统计的脚本和上报
-    if (pathname.startsWith('/api/game/') && req.method === 'GET') return NextResponse.next();
-    if (pathname.startsWith('/api/')) return NextResponse.json({ ok: false, error: 'not found' }, { status: 404 });
-    return NextResponse.redirect(new URL('/', req.url));
-  }
-  // 别的域名：只管原来那些路径（matcher 为了拦住 1job1life.com 的所有地址放宽成了全部页面，这里收回来，其余照旧直接放行）
+  // 只管下面 PROXIED 列出的路径（matcher 是全部页面，这里收回来，其余照旧直接放行）
   if (!PROXIED.some(re => re.test(pathname))) return NextResponse.next();
   // 浏览器 / 分享卡片会直接要 /favicon.ico：大学域名给校徽
   if (pathname === '/favicon.ico' && /(^|\.)baiyecollege\.com$/.test(host)) return NextResponse.rewrite(new URL('/college/favicon.ico', req.url));
@@ -87,8 +75,6 @@ export async function proxy(req: NextRequest) {
     // 真活台公开：参与链接 / 自助出题 / 出题人管理链接都靠 token 与 owner_key 自己核对，不走登录（/api/admin/work 仍要登录）
     // 例外：/api/work/companies 是企业库搜索（出题时挑企业用），属于数据资产，要登录
     if (pathname.startsWith('/api/work/') && !pathname.startsWith('/api/work/companies')) return NextResponse.next();
-    // 「入一行，过一生」小游戏：抽卡、取卡，不用登录（卡池只在服务端）
-    if (pathname.startsWith('/api/game/') && req.method === 'GET') return NextResponse.next();
     // 飞轮信号接入：以后的 ToC 带 FLYWHEEL_INGEST_KEY，没有登录态；放进去由路由自己验密钥
     if (pathname === '/api/flywheel/signal' && req.method === 'POST' && req.headers.get('x-flywheel-key')) return NextResponse.next();
     // 「受邀」标记只能由这里打：客户端自己带来的一律先剥掉
@@ -210,6 +196,6 @@ export async function proxy(req: NextRequest) {
 const PROXIED = [/^\/admin(\/|$)/, /^\/office(\/|$)/, /^\/lab(\/|$)/, /^\/college\/admin(\/|$)/, /^\/college\/s\//, /^\/work\/mine$/, /^\/work\/new(\/|$)/, /^\/work\/admin$/, /^\/workspace$/, /^\/research$/, /^\/api\//, /^\/$/, /^\/favicon\.ico$/];
 
 export const config = {
-  // 全部页面都过 proxy（1job1life.com 要拦住所有二级地址）；Next 自己的静态资源不过
+  // 全部页面都过 proxy，由 PROXIED 决定走不走规则；Next 自己的静态资源不过
   matcher: ['/((?!_next/static|_next/image|_next/webpack-hmr).*)'],
 };
