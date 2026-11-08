@@ -1,0 +1,204 @@
+{
+ "id": "jianbing-tj",
+ "occupation": "Street Food Vendor",
+ "role": "Helper at a jianbing guozi breakfast cart",
+ "headline": "Twenty years old, up from a village outside Cangzhou in Hebei, working the jianbing guozi cart your uncle runs outside a metro station in Tianjin's Hexi district, mixing the mung-bean batter at half past four in the morning",
+ "unit": "The jianbing guozi breakfast cart your uncle has run for over ten years beside Exit B of a metro station in Hexi, Tianjin",
+ "unit_type": "Street breakfast stall (self-employed)",
+ "city": "Tianjin",
+ "city_tier": "New Tier 1",
+ "education": "Middle school (half a year at a county vocational school)",
+ "level": "You can mix the batter, fry the guobir and keep an eye on the payment codes. When your uncle steps aside for half a minute at the morning rush, two of every ten crepes you spread come out torn.",
+ "intro": "You are twenty, out of a village in Cangzhou, sleeping in the one-room bungalow your uncle rents on the edge of the city. For over ten years he has made jianbing guozi outside a metro station in Hexi: Tianjin's breakfast crepe, mung-bean batter spread thin on a griddle, an egg cracked over it, folded around fried dough. The griddle on his cart is older than you. From today on you get up at half past four to mix the batter, and learn to turn one ladle of it into a perfect circle.",
+ "salary_note": "Estimate: Tianjin is where jianbing guozi comes from. More people eat it here, it sells for about a yuan more than elsewhere, and a spot at a metro exit near office towers is a good one. But a stall only sells for three or four hours each morning, and wind or rain cuts into that, so it comes out a little above the national figure. At the helper level, the pay is what your uncle gives you, with room and board.",
+ "facts": [
+  { "label": "Helper (Jianbing Apprentice) (current level)", "value": "0-2 years, ¥3,000–4,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Stall Owner (Your Own Cart) (2-5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Spreading crepes on the griddle and judging the heat", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Taking payment and orders", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The alarm goes off twice before you crawl out of bed. It is still dark outside the bungalow, and your uncle is already in the yard scrubbing buckets under the tap.",
+  "You stir a little millet flour into the mung-bean flour, add water, and stir in one direction until a lifted ladle pulls it into a single thread that neither breaks nor sags. Your uncle dips a finger in and says: half a mouthful thinner.",
+  "The big wok in the yard is hot. You lay the rolled-thin sheets of dough into the oil one by one; they puff up, turn gold, and come out to stand on edge in the basket and drain. This is guobir, the crisp fried sheet, and not one may be crushed.",
+  "You push the tricycle cart to the metro exit, put up the awning, plug in, oil the griddle. Your uncle hangs up two payment QR codes, and a small tin cash box on the handlebar for the old folks who don't scan.",
+  "The first wave is bus drivers off the night shift and street sweepers. You crack eggs, scatter scallions, brush on sweet bean sauce and fermented bean curd, fold each crepe into a bag, and call out, in Tianjin dialect: next, what'll it be?",
+  "The morning rush. People pour up out of the metro five a minute, and the payment speaker announces one amount after another. Your uncle steps aside half a pace; you spread one, it tears at the edge, and he takes it from you and bites into it himself.",
+  "The crowd thins and you pack up. With the scraper you work every burnt crumb off the griddle, while your uncle squats on the curb tallying on his phone how many he sold.",
+  "After a nap you ride the e-bike to the wholesale market for two flats of eggs and a bundle of scallions, then come back and knead tomorrow's dough for the guobir. By nine at night the yard is dark."
+ ],
+ "ladder": [
+  { "title": "Helper (Jianbing Apprentice)", "stage": "Entry", "focus": "On a relative's or master's cart, mix batter, fry guobir, crack eggs and take money; train the wrist that spreads the crepe, and learn the regulars and the spot." },
+  { "title": "Stall Owner (Your Own Cart)", "stage": "Own cart", "focus": "Buy a cart, get a health certificate and a stall registration, set up at a morning-market spot or a metro exit, and hold your ground with fast hands, steady flavor and regulars." },
+  { "title": "Breakfast Shop Owner", "stage": "Storefront", "focus": "Rent a storefront of a dozen square meters, get a business license and a food business permit, add soy milk and tofu pudding, and hire one or two people." },
+  { "title": "Snack Shop Owner (With Apprentices)", "stage": "Apprentices", "focus": "With the shop steady, go onto the delivery platforms, train apprentices, handle supply and the books, and make one shop into the old place the neighborhood trusts." },
+  { "title": "Multi-Shop Owner / Franchisor", "stage": "Several shops", "focus": "Open two or three shops or license franchises, manage the shop managers, the recipe and central prep, and rarely stand at a griddle yourself." }
+ ],
+ "ai_tasks": [
+  { "name": "Spreading crepes on the griddle and judging the heat", "how": "How thin to spread the batter, how hot the griddle is, when to crack the egg and when to flip: it is all in the wrist, several hundred a morning, and every one needs a person watching. A thermostatic griddle can hold the temperature steady; the spreading is still done by hand." },
+  { "name": "Taking payment and orders", "how": "QR payment has long been announced by a speaker box. A mini-program lets people order ahead on the metro and get a queue number automatically, so you only spread and call numbers. An old man with cash, a code that fails, a regular who says \"the usual\": those still need a person." },
+  { "name": "Working out how much to prep for tomorrow", "how": "A business assistant app can work out from the weather, the day of the week and last week's orders how many buckets of batter to mix and how many flats of eggs to buy. Snow, hoarding around the metro exit, or the school down the road on holiday, you still have to adjust for yourself." },
+  { "name": "Running the shop page on delivery platforms", "how": "Menu photos, discount promotions, replies to bad reviews: the platform's built-in AI tools generate them in one tap. A person only needs to glance over them so that \"two eggs\" doesn't turn into \"double the protein.\"" },
+  { "name": "Mixing the batter", "how": "A metered batter mixer can add water to the ratio, stir it smooth and keep it warm. But every batch of mung-bean flour is a little drier or wetter, and in the end you still lift a ladle to see whether it clings." },
+  { "name": "Greeting regulars and remembering their orders", "how": "Who wants two eggs, who wants no scallions, who is late today: that comes from seeing them every day. It is the root of a stall. A system can store it, but it can't know the people." }
+ ],
+ "events": {
+  "e_first_rush": "The day your uncle ran a fever, you worked the whole morning rush alone. The line reached the metro steps. Not one crepe tore, and when you packed up your wrist shook so hard you couldn't hold the scraper.",
+  "e_thin_batter": "A new batch of mung-bean flour came in and you added water by the old ratio. The batter ran so thin it wouldn't hold on the griddle, and every crepe came out full of holes. Your uncle said nothing, poured out the bucket and mixed it again.",
+  "e_regular_uncle": "An old man arrives at five past seven every day: \"One egg, guobir, extra scallions, no chili.\" It hasn't changed in ten years. One winter he didn't come for three days, and it weighed on you the whole time. On the fourth day he came, and said he had been staying at his daughter's.",
+  "e_fake_qr": "One morning the payment speaker went quiet. You looked down and saw someone had stuck a stranger's code over yours. That morning's money was gone for good, and after that the first thing you did every day was run a finger around the edge of the code sign.",
+  "e_rain": "A July downpour, from five until nine. You stood guard over the griddle under the awning and sold twenty-some crepes all morning, while rainwater ran off the corner of the awning into the basket of guobir.",
+  "e_cold": "The coldest stretch of winter, ten below at dawn, a rim of ice on the batter in the bucket. The only warm place on the whole street was in front of the griddle, and still the backs of your hands cracked; you rubbed clam-shell salve into them all winter.",
+  "e_new_year": "Home in the village for Spring Festival, your relatives call you \"the one who sells jianbing in Tianjin.\" You spread a round for a whole room on your mother's stove. Your little nephew said it beat the ones in the county town; you said that was the flour.",
+  "e_office_queue": "A new office tower went up across from the metro exit. In the hour before nine the line is all young people with lanyards, heads bent over their phones, and the payment speaker went off more than three hundred times in one morning.",
+  "e_inspect": "Market regulators came by early to check: health certificate, stall registration card, where the oil came from and whether there was a receipt. You pulled a plastic document sleeve out from under the cart. Everything was there; they nodded and left.",
+  "e_gas_to_electric": "Mobile stalls on the street were no longer allowed bottled gas, so you swallowed the cost and switched to an electric griddle with a set of batteries. For the first week you couldn't find the heat; then you learned its temper, and it turned out steadier than gas.",
+  "e_short_video": "Someone filmed your hands making a crepe and posted it as a short video, the bamboo spreader turning out one perfect circle after another, set to a clapper-talk rhythm. For a week the line stretched across the street, and then, slowly, it went back to normal.",
+  "e_marry": "The girl at the soy milk stall next to yours is from Hebei too, and in winter she always gave you an extra half-ladle of hot soy milk. The two of you held two wedding banquets, one in each village, and on your first morning back in Tianjin the two carts went out side by side as before.",
+  "e_baby": "The month the baby was born, your wife was home for her postpartum month and you ran a two-person stall alone, then went to the hospital and the market after packing up. You didn't sleep past nine that whole month.",
+  "e_school": "Your child was about to start primary school in Tianjin. You gathered the residence permit, the social insurance records and the lease one by one, queued twice at the subdistrict office window, and in the end got the admission notice.",
+  "e_price_up": "Mung-bean flour and eggs went up together, and you raised the number on the price board by a yuan. A regular grumbled a little. He came back the next day, only now he ordered one egg instead of two.",
+  "e_competitor": "A chain jianbing shop opened at the other end of the metro exit: a bright sign, a yuan cheaper, seats inside. Your line got shorter. Two months later, half of them came back.",
+  "e_metro_works": "The station rebuilt its exits, and Exit B was fenced off for most of a year while the foot traffic went around the other side. Your takings dropped by a third for half a year, and you kept buying the same eggs every day; some days you took them home and ate them yourself.",
+  "e_rent_up": "The shop lease came up and the landlord said the whole street had gone up, then asked for thirty percent more. You did the sums all night, signed the next day, and put fifty fen on the soy milk.",
+  "e_old_master": "Your uncle's back gave out, and he packed up and went home to the village. Before he left he handed you the bamboo spreader he had used for twenty years, the wood polished bright by his grip, and said: you can change everything else, not this.",
+  "e_ai_preorder": "You signed up for an ordering mini-program. The office crowd orders on the metro and, when they arrive, scan a pickup number and go. At the morning rush you no longer call \"what'll it be?\"; you just watch the orders on the screen and spread them one by one, with half the talking gone.",
+  "e_ai_forecast": "Every night the payment platform's business assistant sends a line: cooling tomorrow, Friday orders running high, prep thirty percent more batter. It has been right a few times. The day the primary school nearby started summer vacation, it missed it, and you were left with half a bucket.",
+  "e_back": "After more than ten years of rising before dawn and bending over the griddle, one winter morning your back suddenly wouldn't straighten. You rested five days, and when you went back out you set the griddle on two bricks to raise it.",
+  "e_no_sleep_in": "You haven't slept in for years. Back in the village for Spring Festival, the first day you slept until eight and woke in a panic, as though you'd missed something.",
+  "e_apprentice": "Your apprentice is a young man from the village next to yours back home. After three months of practice he finally spread a crepe so thin and even you could see the griddle's grain through it against the light. He took a photo on his phone; you told him to eat it first."
+ },
+ "choices": {
+  "c_own_cart": {
+   "title": "Borrow money, buy a cart, set up on your own",
+   "situation": "Your uncle says your wrist is ready, and there is an exit two stops down the line that nobody works yet, and he asks whether you dare set up there on your own. A converted jianbing cart, an electric griddle and batteries, plus the health certificate and stall registration, come to over ¥30,000. You have ¥12,000.",
+   "options": [
+    { "label": "Borrow it and go out on your own", "result": "You scraped the money together from your uncle and your father. The first month you sold seventy crepes a morning; by the third month it was over two hundred." },
+    { "label": "Work for your uncle one more year", "result": "You said you'd save a little more. Your uncle nodded, gave you the spot in front of the griddle at the morning rush, and went to take the money himself." }
+   ]
+  },
+  "c_zone": {
+   "title": "Move into the subdistrict's designated breakfast zone",
+   "situation": "The subdistrict has marked out a breakfast vending zone on an empty lot fifty meters from the metro exit: register, use the standard cart and awning, pay a small monthly fee, open six to half past nine. The spot is a little off from where you are now, but you would no longer spread crepes with one eye on the intersection.",
+   "options": [
+    { "label": "Do the paperwork and move in", "result": "You were issued a numbered sign to hang on the cart. You sold a little less the first two months; the regulars found their way over, and on rainy days there is a shared awning." },
+    { "label": "Stay at your old spot", "result": "The old spot gets more people, but you have to come early and leave early, packing up before half past eight, and when you push the cart away the batter bucket sloshes." }
+   ]
+  },
+  "c_recipe": {
+   "title": "Lettuce and ham sausage, or not",
+   "situation": "More and more visitors come to Tianjin from elsewhere, and when they reach the front of the line they ask: do you have the crispy cracker? Can you add lettuce and ham sausage? The rule of your uncle's generation is youtiao or guobir and nothing else; add anything more and it's no longer Tianjin jianbing guozi. And yet young people with cameras love the loaded ones.",
+   "options": [
+    { "label": "Keep the old rule", "result": "You hung a small sign on the cart: youtiao or guobir only. Some people turned and walked away; some came just for the sign." },
+    { "label": "Add whatever they want", "result": "The price list runs to two rows now, each crepe costs more, and business picked up. The old man who comes every day took one look and said what you're selling is \"crepe with everything.\"" }
+   ]
+  },
+  "c_go_home": {
+   "title": "Back to Cangzhou, or stay in Tianjin",
+   "situation": "Your mother calls: the village has found you a match, a girl who works in the county town. Your cousin is a shift leader at a factory in the county development zone and says he can get you in, with full social insurance and no getting up before dawn. You glance at the batter buckets you just scrubbed in the yard.",
+   "options": [
+    { "label": "Go home and join the factory", "result": "You passed the cart on to a fellow villager just arrived in Tianjin. On the morning you left, you spread one last crepe and stood at the metro exit eating it yourself.", "end": "You went back to Cangzhou and into the factory in the county development zone. You start at half past seven now and never get up at half past four again. Only sometimes, passing a breakfast stall in the county town, you stop to watch the vendor's wrist." },
+    { "label": "Stay in Tianjin and keep at it", "result": "You told your mother a few more years; Tianjin mornings can't do without people. After you hung up, you went to the wholesale market and bought an extra flat of eggs." }
+   ]
+  },
+  "c_shop": {
+   "title": "Take over the breakfast shop by the metro exit",
+   "situation": "A breakfast shop next to the metro exit is up for transfer: a dozen square meters, room for two griddles and a soy milk pot, a ¥120,000 transfer fee and ¥7,000 a month in rent. Take it and you become a breakfast shop owner, done with pushing a cart and watching the sky. But you'd have to borrow most of it, and every month you'd open your eyes already owing rent.",
+   "options": [
+    { "label": "Borrow and take it over", "result": "You hung the business license and food business permit on the wall and hired an auntie to make soy milk. When you closed the books on the first month, there was just enough for her wages and the rent." },
+    { "label": "Keep the cart two more years", "result": "You said you'd save a bit more. A spicy hot-pot stall took the shop, and your cart still stands at its old spot in front of the door." }
+   ]
+  },
+  "c_delivery": {
+   "title": "Go onto the delivery platforms or not",
+   "situation": "A delivery platform's sales rep has come three times. He says the office towers nearby order a lot in the mornings, and on the platform you could sell fifty or sixty more a day. But the platform takes a cut, your hands are already full at the morning rush, and the extra orders need someone to pack them and someone to watch the phone.",
+   "options": [
+    { "label": "Join, and hire someone to pack", "result": "In the hour from half past seven, the new-order chime and the payment speaker go off together. You earn more, and you have started answering bad reviews every night." },
+    { "label": "Stay off, serve only the line at your door", "result": "You said a morning holds only so many crepes, and what you can't make you don't make. The line is the same line, and you can still look up and say a word to the regulars." }
+   ]
+  },
+  "c_machine": {
+   "title": "Buy a \"smart crepe machine\" or not",
+   "situation": "At a trade fair an equipment dealer demonstrates a \"smart crepe machine\" for you: metered batter, a griddle held at constant heat, scanned orders queued straight into the machine, so a new hand can press a button and get a crepe. One person doing the work of two, he says. A little over ¥40,000, in installments.",
+   "options": [
+    { "label": "Buy one for the second window", "result": "Delivery and pre-orders go to the machine; the line at the door is still yours, by hand. Your apprentice learned to tune its settings. The crepes are round, a little too round." },
+    { "label": "Don't buy; handmade is the name", "result": "You wrote four characters by the door: made fresh, sold fresh. Some say you're stubborn; some go out of their way to watch you turn the spreader." }
+   ]
+  },
+  "c_franchise": {
+   "title": "Open a second shop, or franchise",
+   "situation": "Your shop has a name for a few streets around. A breakfast chain comes to you wanting to license your recipe and your name for its franchise outlets, with a cut for you per shop. You've also thought about opening a second shop at another metro exit yourself, down the road toward becoming a multi-shop owner. Either way means stepping away from the griddle.",
+   "options": [
+    { "label": "Open a second shop yourself", "result": "You sent your apprentice to the new shop and ran between the two, tasting the batter at both griddles before dawn every day." },
+    { "label": "License the recipe to the chain", "result": "The contract was signed, and an extra share comes in every month. Later you saw your own name in a mall in another city. You didn't go in to taste the crepe." },
+    { "label": "Keep just this one", "result": "You said one shop is enough; any more and they wouldn't be yours. That summer, for the first time, you closed for a week and took the family to the seaside at Beidaihe." }
+   ]
+  },
+  "c_hand_over": {
+   "title": "Hand over the griddle",
+   "situation": "You are past fifty, your back won't straighten once winter comes, and the four a.m. alarm is getting harder to climb over. Your child has a family in Tianjin now and says it's time you rested and came to help with the grandchild. The stall and its regulars need someone to carry on.",
+   "options": [
+    { "label": "Hand it over and go mind the grandchild", "result": "On your last morning you scraped the griddle to a shine, wrote down the regulars' orders on a sheet of paper and tucked it under the payment code.", "end": "You handed the stall to your apprentice, and from then on you never got up at half past four. Mornings, walking your grandson to kindergarten, you pass the metro exit, join the line, and buy a jianbing guozi: one egg, guobir." },
+    { "label": "Keep going a few more years", "result": "You cut your hours to seven to nine and raised the griddle by one more brick. The regulars say: while you're here, this exit is still here." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On the last morning you got up at half past four as always to mix the batter, and stood a long time with the ladle raised, watching whether it would cling. When you packed up you scraped the griddle clean and covered it with an old towel, and did not take it away. People kept pouring out of the metro, and someone in the line called: the usual.",
+  "burnout": "That winter your back and your knees gave out together, and you couldn't stand at the griddle through a single morning rush. You sold the stall to a fellow villager and took a job as a gatekeeper at a housing compound, where you can sit. At six in the morning you still wake, and catch a faint smell of mung-bean batter on the wind."
+ },
+ "stages": [
+  "On your uncle's cart you do everything except the griddle, which isn't yours yet. You have to remember every regular's order: who takes two eggs, who wants no scallions, whose crepe stays on a little longer. You ride to the wholesale market to compare egg prices, and note in a little notebook how many guobir are left over. Your uncle says little. When you tear one he doesn't scold; he just hands you the batter to mix again the next day.",
+  "Now it's you alone facing the whole line. A tricycle converted into a jianbing cart, an electric griddle, two sets of batteries, a bucket of batter, and tucked under the cart, your health certificate and stall registration card. The steamed-bun seller and the soy milk seller beside you are the same early risers, and whoever runs short of change or plastic bags, the others hand some over. From handing over bags to spreading, taking the money and doing the sums yourself: profit and loss are all yours.",
+  "You have a storefront of a dozen square meters: two griddles, a soy milk pot, a pot of tofu pudding. The business license and food business permit hang on the wall; the drawer holds rent receipts, electricity bills and supplier invoices. You've hired an auntie for the soy milk and a helper, and at month's end you pay wages. You still stand at the griddle, but people have started calling you boss.",
+  "Your hands spend longer and longer away from the griddle. Mornings you stand behind your apprentice watching him turn the spreader; in the day you answer reviews and adjust set meals in the delivery dashboard, negotiate a fixed supply of mung-bean flour with the mill, and get ready for inspections of the kitchen camera feed that lets customers watch you cook. From spreading crepes yourself to teaching others and covering for them, you talk more than you spread.",
+  "You have three shops now. At three in the morning a small central kitchen mixes all the batter and fries all the guobir, then sends it out to each shop in insulated boxes. You have written the batter ratio on cards and pinned one to the wall of every shop. Every Monday you meet the shop managers to go over each shop's orders and bad reviews, sign franchise contracts, and get licenses for new shops. Now and then you go back to the old shop and spread a few at the griddle, for yourself."
+ ],
+ "work": [
+  "An egg seller at the wholesale market slipped you a flat with several cracked ones. You turned them over one by one right there and swapped out five. When your uncle heard, he put an extra piece of meat in your bowl at dinner.",
+  "A young man rushing for the metro scanned and ran while his crepe was still on the griddle. You chased him to the turnstiles and pushed the bag into his hand. He shouted thanks over his shoulder, and came back the next day.",
+  "For the first time you fried a whole basket of guobir yourself without crushing a single one. Your uncle held one up to the streetlight and said: remember that oil temperature.",
+  "A visitor from out of town held up his phone and asked if you could go slowly so he could film. You spread one crepe at half your usual speed, the bamboo spreader making a full three and a half turns.",
+  "At seven forty the battery died and the griddle cooled little by little. You borrowed an outlet from the woman at the soy milk stall next door, and not one person left the line.",
+  "The morning it snowed, you came an hour early, shoveled a clear patch in front of your spot, and only then put up the awning. You sold more that day than usual.",
+  "The soy milk auntie said the bucket for soaking beans needed replacing. You added a line to the supply order, and while you were at it added ¥200 to her pay that month.",
+  "The head of a kindergarten nearby asked whether you could do forty small ones every morning, no chili, no scallions. You tried it for three days and made the crepe one ring smaller.",
+  "The landlord came to collect rent and ordered one with two eggs while he was there. You made it for him, didn't knock a fen off the rent, and put an extra spoonful of scallions in it.",
+  "A bad review said the guobir wasn't crisp. You pulled up that day's order: the delivery had steamed too long on the way. You switched to a vented paper bag and replied under the review: fixed.",
+  "You had the new apprentice mix batter for a week without touching the griddle. He didn't like it. The first crepe he spread on the eighth day came out better than he expected.",
+  "The mill switched to a different batch of mung beans and the flour came out yellowish. You spent twenty minutes on the phone with the sales rep, and in the end they took the whole truckload back.",
+  "The manager of the new shop said people kept complaining the crepes were small. You drove over and stood there a whole morning, and found his batter ladle was one size smaller than the old shop's.",
+  "A franchisee came with a contract, asking to switch to cheaper flour. You slid the batter ratio card across to him and said these few lines don't change; everything else is negotiable.",
+  "At the meeting with the shop managers you didn't talk about order numbers; you talked about regulars. When someone's order changes, write it in the notebook, not only in the system."
+ ],
+ "past": [
+  "You were in your last year of middle school in a village in Cangzhou. That year school closed and classes moved onto your phone, and the signal was so bad you climbed onto the roof to listen. When the high school entrance exam results came out, you were forty-odd points short of the line for academic high school.",
+  "You spent half a year studying auto repair at the county vocational school, the tuition paid with a season's cotton your father sold. You couldn't sit still in a classroom, and the next spring you didn't go back.",
+  "You worked as a runner in a restaurant in the county town and learned to toss a wok from the head cook. ¥2,800 a month with meals, sleeping on the restaurant's second floor.",
+  "A classmate got you onto an assembly line at an electronics factory in Langfang. Two shifts, twelve hours on your feet. After a year you had saved ¥20,000, and picked up a headache that comes on at the smell of glue.",
+  "Your uncle came home for Spring Festival and said that in Tianjin he sells over three hundred jianbing guozi a morning, and needs someone he can count on: room and board, ¥3,500 a month. Your mother said he's family. You thought it over for two nights and said yes."
+ ],
+ "late": {
+  "pension_note": "Estimate: as a self-employed stall owner you pay into Tianjin's social insurance as a flexible worker, mostly at the lowest bracket, with a few gaps in the early years. Your pension comes to about thirty percent of your final monthly income; your home and savings depend on what you put away over the years.",
+  "scenes": [
+   "In the first month of retirement you still wake at half past four. You lie listening to the sounds outside until someone pushes a tricycle past downstairs, and then fall asleep again.",
+   "The neighborhood opened a canteen for the elderly and asked you to come and make jianbing guozi on the traditional seasonal holidays. You bring your own bamboo spreader, and the old folks line up, just like at the metro exit back then.",
+   "Your grandson has homework: interview a family member about their job. He asks what you did your whole life, and you say breakfast. He writes: my grandpa made sure people in Tianjin had breakfast.",
+   "For the first months away from the griddle you sit in the gatehouse of the compound, watching residents head out one by one with breakfast in hand. Someone's jianbing guozi is folded around the crispy cracker, and you bite your tongue.",
+   "Your back gets a little better. On weekends you make crepes at home for the family on an electric pan; they don't come out round, and the kids say they're just as good.",
+   "Queuing for medicine at the hospital, the middle-aged man in front of you turns and recognizes you: aren't you the jianbing at Exit B? He says for ten years of work, it was yours he ate.",
+   "On the first morning without a stall you still wake that early, and lie in bed not knowing what to do with your hands. Later you get up and cook yourself a bowl of noodles.",
+   "Life has a rhythm now, and weekends too. But every time you pass a breakfast stall you glance at whether the batter is thick enough and the griddle hot enough.",
+   "You take the family to Tianjin and make a special detour to that metro exit. There is still a jianbing cart there, and the one spreading crepes is a young stranger. You join the line and ask for one egg.",
+   "There are fewer and fewer breakfast carts at metro exits. Most people in the office towers order on their phones, made by machine and brought by a courier. The few still spreading crepes by hand at the door have become the places people line up for and photograph.",
+   "Home in Cangzhou for Spring Festival, you find a little supermarket at the edge of the village, its freezer stocked with frozen \"Tianjin jianbing guozi.\" You buy a bag, heat one at home, take a bite, and say nothing.",
+   "Your wrist isn't as steady as it was; the spreader pauses partway round. At Spring Festival, with the family gathered by the stove, you still spread one for everyone, and the youngest wants two eggs."
+  ],
+  "closing": {
+   "retire": "One winter morning many years later, you pass that metro exit before dawn. Steam rises from under the awning of a jianbing cart. You don't go over; you stand on this side of the street and watch one ladle of batter turn into a circle on the griddle.",
+   "burnout": "Many years later, you come across the bamboo spreader in a cupboard, the shine still on the wood. You give it one turn in your hand, wrap it back in its cloth, and put it where it was.",
+   "end": "Many years later, on an unfamiliar street in another city, you catch the smell of mung-bean batter. You follow it to a young man with a Hebei accent spreading crepes. You order one, stand under his awning, and eat it slowly to the end."
+  }
+ }
+}

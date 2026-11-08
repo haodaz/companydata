@@ -66,7 +66,8 @@ async function build(id: string) {
     { label: '在招岗位', value: `全国关联 JD ${jd} 条${jdc != null ? `，本城 ${jdc} 条` : ''}（岗位库以校招、实习为主）`, source: '岗位库' },
   ];
   const card: GameCard = {
-    id, occupation: { key: o.key, name: o.name }, role: d.role, headline: d.headline, unit: d.unit, unit_type: d.unit_type, city: d.city, city_tier: d.city_tier, education: d.education, ...(d.gender === 'f' || d.gender === 'm' ? { gender: d.gender } : {}),
+    // 职业库里没有这个职业（如街头小摊贩）时借最近的 key，occ_name 写真名
+    id, occupation: { key: o.key, name: d.occ_name || o.name }, role: d.role, headline: d.headline, unit: d.unit, unit_type: d.unit_type, city: d.city, city_tier: d.city_tier, education: d.education, ...(d.gender === 'f' || d.gender === 'm' ? { gender: d.gender } : {}),
     start: { age: +d.start.age, years_in_field: +d.start.years_in_field || 0, stage: st, level: d.start.level }, intro: d.intro, facts, day: d.day, ladder, ...(own ? { ladder_src: '行业常见' } : {}),
     salary_factor: +d.salary_factor || 1, salary_note: d.salary_note || '', growth: +d.growth || 1, load: Math.max(0, Math.min(1, +d.load || 0.5)), retire_age: +d.retire_age || 60,
     ai: { from_year: 3, tasks: (ai.tasks || []).map((t: any) => ({ name: t.name, kind: t.kind, how: t.how })), new_tasks: ai.new_tasks || [] },

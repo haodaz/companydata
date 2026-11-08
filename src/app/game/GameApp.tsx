@@ -9,6 +9,7 @@ import { STATS } from '@/lib/game/types';
 import { YEAR0, autoChoose, choose, epilogue, newLife, pendingChoice, pinyinName, randomName, simulatePeer, step, type Life } from '@/lib/game/engine';
 import type { Lang } from '@/lib/game/i18n';
 import { encodeShare } from '@/lib/game/share';
+import { drawPoster, type PosterData } from './poster';
 
 /** 这一页的语言（/game 中文、/game/en 英文 One Job, One Life）：GameApp 渲染时设定；整页一种语言，切换走整页跳转 */
 let LANG: Lang = 'zh';
@@ -463,17 +464,57 @@ function Report({ s, onAgain, onDay, busy }: { s: Save; onAgain: () => void; onD
 
 /** 分享这一生：链接卡片上显示「某某的一生：城市 · 身份」和起止，打开是首页加这一生的摘要 */
 function ShareBtn({ s }: { s: Save }) {
+  const [open, setOpen] = useState(false);
+  const [img, setImg] = useState('');
   const [msg, setMsg] = useState('');
-  const share = async () => {
-    const { card, life } = s;
-    const code = encodeShare({ c: card.id, n: hanzi(s), a: life.age - life.y, b: life.age, s: life.stage, d: life.done || 'retire', l: LANG });
-    const url = `${location.origin}${/1job1life/.test(location.host) ? '' : '/game'}/s/${code}`;
-    const title = `${pinyinName(hanzi(s))} (${hanzi(s)})'s working life · One Job, One Life`;   // 分享一律英文（用户 11-07）
-    try { if (navigator.share) { await navigator.share({ title, url }); return; } } catch { /* 取消分享或不支持就复制链接 */ }
-    try { await navigator.clipboard.writeText(`${title} ${url}`); setMsg(tr('链接已复制', 'Link copied')); } catch { prompt(tr('复制这个链接', 'Copy this link'), url); }
-    setTimeout(() => setMsg(''), 2200);
+  const { card, life } = s;
+  const code = encodeShare({ c: card.id, n: hanzi(s), a: life.age - life.y, b: life.age, s: life.stage, d: life.done || 'retire', l: LANG });
+  const url = typeof location === 'undefined' ? '' : `${location.origin}${/1job1life/.test(location.host) ? '' : '/game'}/s/${code}`;
+  const make = async () => {
+    setOpen(true); if (img) return;
+    const a = life.age - life.y, peak = Math.max(...life.rows.map(r => r.salary));
+    const strip = (t: string) => t.replace(/[（(][^）)]*[）)]/g, '').trim();
+    const job = LANG === 'en' ? (strip(card.role).length <= 30 ? strip(card.role) : card.occupation.name) : (strip(card.role).length <= 10 ? strip(card.role) : card.occupation.name);
+    const how = life.done === 'burnout' ? tr('离开一线', 'left the front line') : life.done === 'end' ? tr('转身去了别处', 'walked away') : tr('退休', 'retired');
+    const bad = life.log.filter(e => e.kind === 'event' && e.mood === 'bad').map(e => ({ e, k: Object.entries(e.effect || {}).reduce((t, [key, v]) => t + (key !== 'savings' && (v as number) < 0 ? (v as number) : 0), 0) })).sort((x, y) => x.k - y.k)[0]?.e;
+    const enMoney = (n: number) => ({ value: `RMB ${Math.round(n).toLocaleString('en-US')}`, small: usd(n) });
+    const data = {
+      lang: LANG,
+      headline: tr(`我在游戏里当了 ${life.y} 年${strip(card.city)}${job}`, `I spent ${life.y} years as ${/^[aeiou]/i.test(job) ? 'an' : 'a'} ${job} in ${strip(card.city)}`),
+      sub: tr(`${life.name} · ${a}–${life.age} 岁 · ${how}`, `${fullName(s)} · age ${a}–${life.age} · ${how}`),
+      stats: [
+        { label: tr('最后做到', 'Rose to'), value: card.ladder[life.stage]?.title || card.role },
+        LANG === 'en' ? { label: 'Peak monthly pay', ...enMoney(peak) } : { label: '最高月薪', value: wan(peak) },
+        LANG === 'en' ? { label: 'Lifetime earnings', ...enMoney(life.earned * 10000) } : { label: '一生挣了（估算）', value: `${Math.round(life.earned)} 万` },
+      ],
+      hard: bad ? { label: tr(`最难熬的一年 · ${bad.age} 岁`, `The hardest year · age ${bad.age}`), text: bad.text } : undefined,
+      ending: life.endText,
+      url,
+      site: tr('入一行，过一生', 'One Job, One Life'),
+      cta: tr('扫码看这一生 · 抽一张卡，过你自己的', 'Scan to see this life · draw your own card'),
+    } satisfies PosterData;
+    try { setImg(await drawPoster(data)); } catch { setMsg(tr('图没生成出来，复制链接也行', 'Could not draw the image — copy the link instead')); }
   };
-  return <button className="g-btn" onClick={share}>{msg || tr('分享这一生', 'Share')}</button>;
+  const copy = async () => { try { await navigator.clipboard.writeText(url); setMsg(tr('链接已复制', 'Link copied')); } catch { prompt(tr('复制这个链接', 'Copy this link'), url); } };
+  const shareImg = async () => {
+    try {
+      const f = new File([await (await fetch(img)).blob()], '1job1life.png', { type: 'image/png' });
+      if (navigator.canShare?.({ files: [f] })) { await navigator.share({ files: [f], title: tr('入一行，过一生', 'One Job, One Life'), text: url }); return; }
+    } catch { /* 取消或不支持就走下载 */ }
+    const a = document.createElement('a'); a.href = img; a.download = `1job1life-${pinyinName(hanzi(s)).replace(/\s+/g, '-')}.png`; a.click();
+  };
+  return <>
+    <button className="g-btn" onClick={make}>{tr('分享这一生', 'Share')}</button>
+    {open && <div className="g-sheet-bg" onClick={() => setOpen(false)}><div className="g-sheet g-poster" onClick={e => e.stopPropagation()}>
+      {img ? <img src={img} alt={tr('分享图', 'Share image')} /> : <div className="g-poster-wait">{msg || tr('正在画这一生…', 'Drawing this life…')}</div>}
+      {img && <p className="g-note">{tr('手机上长按图片保存，发朋友圈 / 小红书 / X 都行；扫图上的码能看到这一生。', 'On a phone, press and hold the image to save it. The QR code opens this life.')}</p>}
+      <div className="g-actions">
+        <button className="g-btn" onClick={copy}>{msg && img ? msg : tr('复制链接', 'Copy link')}</button>
+        <button className="g-btn primary" disabled={!img} onClick={shareImg}>{tr('保存 / 分享图片', 'Save / share image')}</button>
+      </div>
+      <button className="g-link" onClick={() => setOpen(false)}>{tr('关闭', 'Close')}</button>
+    </div></div>}
+  </>;
 }
 
 function Curve({ life, peers }: { life: Life; peers: Peer[] }) {
@@ -643,6 +684,8 @@ const CSS = `
 .g-shared b { font-size: 16px; } .g-shared span { font-size: 14px; color: var(--ink2); } .g-shared em { font-style: normal; font-size: 13px; color: var(--acc); }
 .g-dayagain { display: block; margin: -6px 0 14px; }
 .g-hz { display: block; font-size: .5em; font-weight: 500; color: var(--ink3); letter-spacing: .1em; margin-top: 4px; }
+.g-poster { max-height: 92vh; overflow-y: auto; } .g-poster img { display: block; width: 100%; max-width: 420px; margin: 0 auto 10px; border-radius: 10px; box-shadow: 0 6px 24px rgba(31,61,107,.18); }
+.g-poster-wait { height: 360px; display: grid; place-items: center; color: var(--ink3); }
 .g-usd { display: block; font-size: .62em; font-weight: 500; color: var(--ink3); margin-top: 2px; }
 .g-stat b { text-align: right; font-weight: 600; color: var(--ink2); }
 .g-peer { display: grid; padding: 8px 0; border-top: 1px solid #efeadf; font-size: 13.5px; }
