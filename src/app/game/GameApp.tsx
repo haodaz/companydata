@@ -76,9 +76,9 @@ function Home({ busy, err, onEnter, resume, onResume, archive }: { busy: boolean
           <span className="g-back b3"><Badge /></span><span className="g-back b2"><Badge /></span>
           <span className="g-back b1"><Badge busy={busy} top /></span>
         </button>
-        <div className="g-actions center">
+        <div className="g-actions center g-home-cta">
           <button className="g-btn primary big" disabled={busy} onClick={onEnter}>{busy ? '正在分配…' : resume ? '重开一行' : '入行'}</button>
-          {resume && <button className="g-btn big" onClick={onResume}>接着过 · {resume.life.name}，{resume.life.age} 岁</button>}
+          {resume && <button className="g-btn big" onClick={onResume}>接着过 · {resume.life.name}</button>}
         </div>
         {err && <div className="g-err">{err}</div>}
       </section>
@@ -444,6 +444,7 @@ const CSS = `
 .g-hero { text-align: center; padding-top: 18px; }
 .g-hero .g-lead { max-width: 520px; margin: 0 auto 8px; }
 .g-actions.center { justify-content: center; }
+@media (max-width: 640px) { .g-home-cta { position: fixed; left: 0; right: 0; bottom: 0; margin: 0; padding: 14px 16px calc(14px + env(safe-area-inset-bottom)); background: linear-gradient(rgba(244,241,234,0), var(--bg) 32%); z-index: 20; flex-wrap: nowrap; } .g-home-cta .g-btn { flex: 1; font-size: 16px; padding: 12px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .g-home { padding-bottom: 150px; } }
 .g-deck { position: relative; display: block; width: min(300px, 82vw); aspect-ratio: 320 / 200; margin: 64px auto 30px; border: 0; background: none; padding: 0; cursor: pointer; }
 .g-deck:disabled { cursor: default; }
 .g-strap { position: absolute; left: 50%; top: -58px; width: 84px; transform: translateX(-50%); z-index: 4; pointer-events: none; animation: g-float 3.6s ease-in-out infinite; }
