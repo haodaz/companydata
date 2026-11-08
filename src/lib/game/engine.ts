@@ -5,14 +5,14 @@
  */
 import type { Effect, GameCard, GameChoice, PeerCard, Stat } from './types';
 
-export interface LogItem { y: number; age: number; text: string; kind: 'start' | 'event' | 'promo' | 'choice' | 'ai' | 'end'; mood?: 'good' | 'bad' | 'plain'; source?: string; effect?: Effect }
+export interface LogItem { y: number; age: number; text: string; kind: 'start' | 'stage' | 'work' | 'event' | 'promo' | 'choice' | 'ai' | 'end'; mood?: 'good' | 'bad' | 'plain'; source?: string; effect?: Effect }
 export interface YearRow { y: number; age: number; stage: number; salary: number; skill: number; rep: number; health: number; joy: number }
 export interface Life {
   cardId: string; name: string; seed: number; rng: number; lang?: 'zh' | 'en';
   y: number; age: number; stage: number; inStage: number;
   stats: Record<Stat, number>;
   salary: number; salaryMul: number; growthMul: number; promoteBonus: number; savings: number; earned: number;
-  usedEvents: string[]; usedChoices: string[]; aiDone: number;
+  usedEvents: string[]; usedChoices: string[]; aiDone: number; usedWork?: number[];
   pending: string | null;
   log: LogItem[]; rows: YearRow[];
   picks: { y: number; age: number; title: string; label: string; result: string }[];
@@ -62,6 +62,8 @@ export function newLife(card: GameCard, seed: number, lang: 'zh' | 'en' = 'zh'):
   };
   l.salary = monthly(card, l.stage, l.inStage, 1, 1);
   l.log.push({ y: 0, age: l.age, kind: 'start', text: card.intro });
+  const st0 = card.stages?.find(x => x.stage === l.stage);
+  if (st0) l.log.push({ y: 0, age: l.age, kind: 'stage', source: '职业地图', text: st0.text });
   l.rows.push(row(l));
   return l;
 }
@@ -106,7 +108,8 @@ export function step(card: GameCard, l: Life): Life {
       const s = card.ladder[l.stage];
       apply(l, { rep: 5, joy: 4 });
       l.promos.push({ y: l.y, age: l.age, title: s.title });
-      l.log.push({ y: l.y, age: l.age, kind: 'promo', mood: 'good', source: '职业地图', text: l.lang === 'en' ? `You became ${s.title}. ${s.focus}` : `你成了${s.title}。${s.focus}` });
+      const day = card.stages?.find(x => x.stage === l.stage)?.text || s.focus;   // 有「这一级的日常」就用它（真活、人、工具），没有退回职业库的一句话
+      l.log.push({ y: l.y, age: l.age, kind: 'promo', mood: 'good', source: '职业地图', text: l.lang === 'en' ? `You became ${s.title}. ${day}` : `你成了${s.title}。${day}` });
     }
   }
 
@@ -123,6 +126,13 @@ export function step(card: GameCard, l: Life): Life {
   }
   const c = card.choices.find(x => !l.usedChoices.includes(x.id) && inWindow(l, x));
   if (c && (l.y >= c.to || rand(l) < 0.45)) l.pending = c.id;
+
+  // 4b. 真活片段：在这一级的年份里，三年里大约冒一件（这一级的活干完了就不再出）
+  if (card.work?.length && rand(l) < 0.35) {
+    const used = (l.usedWork ||= []);
+    const i = card.work.findIndex((w, k) => w.stage === l.stage && !used.includes(k));
+    if (i >= 0) { used.push(i); l.log.push({ y: l.y, age: l.age, kind: 'work', mood: 'plain', source: '职业地图', text: card.work[i].text }); }
+  }
 
   // 5. 随机事件：一年最多两件
   let n = 0;

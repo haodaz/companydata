@@ -67,7 +67,7 @@ async function build(id: string) {
     ai: { from_year: 3, tasks: (ai.tasks || []).map((t: any) => ({ name: t.name, kind: t.kind, how: t.how })), new_tasks: ai.new_tasks || [] },
     events: d.events.map((e: any, i: number) => ({ ...e, id: String(e.id || `e${i + 1}`), from: +e.from || 0, to: +e.to || 40, chance: Math.max(0.02, Math.min(0.8, +e.chance || 0.2)) })),
     choices: d.choices.map((c: any, i: number) => ({ ...c, id: String(c.id || `c${i + 1}`), from: +c.from || 0, to: +c.to || 40 })),
-    endings: d.endings, past: d.past, late: d.late, meta: { model: d.author || 'claude-code', at: new Date().toISOString(), brief: d.brief || '' },
+    endings: d.endings, past: d.past, late: d.late, ...(d.stages ? { stages: d.stages } : {}), ...(d.work ? { work: d.work } : {}), meta: { model: d.author || 'claude-code', at: new Date().toISOString(), brief: d.brief || '' },
   };
   // 校验
   check(id, ladder.length >= 3, '职业库没有晋升阶梯');
@@ -78,6 +78,7 @@ async function build(id: string) {
   check(id, (card.late?.scenes?.length || 0) >= 9 && ['retire', 'burnout', 'end', 'any'].every(w => card.late!.scenes.some(s => s.when === w)) && card.late?.closing?.retire && card.late?.closing?.burnout && card.late?.closing?.end, 'late 不全（每种离开方式都要有）');
   check(id, card.endings?.retire && card.endings?.burnout, 'endings 不全');
   check(id, card.past?.every(p => p.age < card.start.age), 'past 的年龄要早于开局');
+  if (card.stages || card.work) for (let k = st; k < ladder.length; k++) { check(id, card.stages?.some(x => x.stage === k), `stages 缺第 ${k} 级（${ladder[k].title}）的日常`); check(id, (card.work || []).filter(x => x.stage === k).length >= 2, `work 第 ${k} 级（${ladder[k].title}）少于 2 个真活片段`); }
   for (const e of card.events) check(id, e.text && e.effect && ['good', 'bad', 'plain'].includes(e.mood), `事件 ${e.id} 字段不全`);
   fs.writeFileSync(path.join(OUT, `${id}.json`), JSON.stringify(card, null, 1));
   return card;

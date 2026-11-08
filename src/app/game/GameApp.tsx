@@ -97,14 +97,14 @@ function Home({ busy, err, onEnter, resume, onResume, archive }: { busy: boolean
         <img className="g-art g-art-hero" src="/game/art/hero.jpg" alt="" />
         <div className="g-eyebrow">{tr('1JOB1LIFE · 职业生涯模拟', '1JOB1LIFE · A CAREER SIMULATOR')}</div>
         <h1 className="g-title">{tr('入一行，过一生', 'One Job, One Life')}</h1>
-        <p className="g-lead">{tr('抽一张入职登记卡。城市、单位、资历都不由你选，就像真的入行一样。从这一天起，一年一年，把这段职业生涯过到退休。', 'Draw an employment card and live one working life in China — a county-hospital surgeon, a Shanghai ICU nurse, a welder in a shipyard. You don\'t choose the city, the employer or where you start, just like real life. From today on, year by year, all the way to retirement.')}</p>
+        <p className="g-lead">{tr('抽一张入职登记卡。城市、单位、资历都不由你选，就像真的入行一样。从这一天起，一年一年，把这段职业生涯过到退休。', 'Draw a random job card and live one working life in China, all the way to retirement.')}</p>
         <button className="g-deck" disabled={busy} onClick={onEnter} aria-label={tr('抽一张入职登记卡', 'Draw an employment card')}>
           <svg className="g-strap" viewBox="0 0 120 70" aria-hidden><path d="M20 0 L52 62 M100 0 L68 62" stroke="#1f3d6b" strokeWidth="10" /><path d="M20 0 L52 62 M100 0 L68 62" stroke="#f6f1e3" strokeWidth="1" strokeDasharray="3 4" /><rect x="48" y="56" width="24" height="12" rx="3" fill="#c9cfd8" stroke="#1f3d6b" /></svg>
           <span className="g-back b3"><Badge /></span><span className="g-back b2"><Badge /></span>
           <span className="g-back b1"><Badge busy={busy} top /></span>
         </button>
         <div className="g-actions center g-home-cta">
-          <button className="g-btn primary big" disabled={busy} onClick={onEnter}>{busy ? tr('正在分配…', 'Assigning…') : resume ? tr('重开一行', 'Start a new life') : tr('入行', 'Start working')}</button>
+          <button className="g-btn primary big" disabled={busy} onClick={onEnter}>{busy ? tr('正在分配…', 'Assigning…') : resume ? tr('重开一行', 'New life') : tr('入行', 'Start')}</button>
           {resume && <button className="g-btn big" onClick={onResume}>{tr('接着过', 'Continue')} · {resume.life.name}</button>}
         </div>
         {err && <div className="g-err">{err}</div>}
@@ -199,7 +199,7 @@ function PastView({ card, name, onDone }: { card: GameCard; name: string; onDone
       <h2 className="g-h2">{tr('你是怎么走到今天的', 'How you got here')}</h2>
       <ol className="g-day g-path">{past.slice(0, n).map((p, i) => <li key={i} className="g-in"><time>{ageT(p.age)}</time><p>{p.text}</p></li>)}</ol>
       <div className="g-actions sticky">
-        {done ? <button className="g-btn primary" onClick={onDone}>{tr('看看现在的你', 'Meet yourself today')}</button> : <button className="g-btn" onClick={e => { e.stopPropagation(); onDone(); }}>{tr('跳过', 'Skip')}</button>}
+        {done ? <button className="g-btn primary" onClick={onDone}>{tr('看看现在的你', 'Your card')}</button> : <button className="g-btn" onClick={e => { e.stopPropagation(); onDone(); }}>{tr('跳过', 'Skip')}</button>}
       </div>
     </main>
   );
@@ -223,7 +223,7 @@ function LateView({ s, onDone }: { s: Save; onDone: () => void }) {
       <ol className="g-day g-path">{scenes.slice(0, n).map((x, i) => <li key={i} className={`g-in ${x.mood}`}><time>{ageT(x.age)}</time><p>{x.text}</p></li>)}</ol>
       {done && <blockquote className="g-quote g-in">{ep.closing}</blockquote>}
       <div className="g-actions sticky">
-        {done ? <button className="g-btn primary" onClick={onDone}>{tr('看这一生的回顾', 'Look back on this life')}</button> : <button className="g-btn" onClick={e => { e.stopPropagation(); setN(scenes.length + 1); }}>{tr('都看完', 'Show all')}</button>}
+        {done ? <button className="g-btn primary" onClick={onDone}>{tr('看这一生的回顾', 'Review')}</button> : <button className="g-btn" onClick={e => { e.stopPropagation(); setN(scenes.length + 1); }}>{tr('都看完', 'Show all')}</button>}
       </div>
     </main>
   );
@@ -263,8 +263,8 @@ function CardView({ s, onDay, onStart, onRedraw, busy }: { s: Save; onDay: () =>
         <div className="g-note">{tr(`月薪按「${card.salary_note}」`, `Pay: ${card.salary_note}`)}</div>
       </section>
       <div className="g-actions sticky">
-        <button className="g-btn" onClick={onDay}>{tr('先看看这一天', 'See a day first')}</button>
-        <button className="g-btn primary" onClick={onStart}>{tr('开启职业人生', 'Begin this career')}</button>
+        <button className="g-btn" onClick={onDay}>{tr('先看看这一天', 'A day first')}</button>
+        <button className="g-btn primary" onClick={onStart}>{tr('开启职业人生', 'Begin')}</button>
       </div>
       <button className="g-link" disabled={busy} onClick={onRedraw}>{tr('不想过这一生？换一张', 'Not this life? Draw another card')}</button>
     </main>
@@ -279,8 +279,8 @@ function DayView({ card, onStart, onBack, back }: { card: GameCard; onStart: () 
       <h2 className="g-h2">{card.headline}</h2>
       <ol className="g-day">{card.day.map((d, i) => <li key={i}><time>{d.time}</time><p>{d.text}</p></li>)}</ol>
       <div className="g-actions sticky">
-        <button className="g-btn" onClick={onBack}>{back === 'card' ? tr('回到登记卡', 'Back to the card') : tr('回到回顾', 'Back to the review')}</button>
-        {back === 'card' && <button className="g-btn primary" onClick={onStart}>{tr('开启职业人生', 'Begin this career')}</button>}
+        <button className="g-btn" onClick={onBack}>{back === 'card' ? tr('回到登记卡', 'Back') : tr('回到回顾', 'Back')}</button>
+        {back === 'card' && <button className="g-btn primary" onClick={onStart}>{tr('开启职业人生', 'Begin')}</button>}
       </div>
     </main>
   );
@@ -353,7 +353,7 @@ function Play({ s, onChange, onDone }: { s: Save; onChange: () => void; onDone: 
         <div className="g-opts">{choice.options.map((o, i) => <button key={i} className="g-opt" onClick={() => pick(i)}>{o.label}</button>)}</div>
         <button className="g-link" onClick={() => { autoChoose(card, life); onChange(); }}>{tr('让命运替我选', 'Let fate decide')}</button>
       </div></div>}
-      {life.done && <div className="g-sheet-bg"><div className="g-sheet end"><div className="g-cap">{life.done === 'burnout' ? tr('离开一线', 'Leaving the front line') : life.done === 'end' ? tr('转身', 'A new path') : tr('退休', 'Retirement')} · {ageT(life.age)}</div><p className="g-endtext">{life.endText}</p><button className="g-btn primary" onClick={onDone}>{tr('看这一生的回顾', 'Look back on this life')}</button></div></div>}
+      {life.done && <div className="g-sheet-bg"><div className="g-sheet end"><div className="g-cap">{life.done === 'burnout' ? tr('离开一线', 'Leaving the front line') : life.done === 'end' ? tr('转身', 'A new path') : tr('退休', 'Retirement')} · {ageT(life.age)}</div><p className="g-endtext">{life.endText}</p><button className="g-btn primary" onClick={onDone}>{tr('看这一生的回顾', 'Review')}</button></div></div>}
     </main>
   );
 }
@@ -432,8 +432,8 @@ function Report({ s, onAgain, onDay, busy }: { s: Save; onAgain: () => void; onD
       </section>
 
       <div className="g-actions sticky">
-        <button className="g-btn" onClick={onDay}>{tr('再看一眼那一天', 'See that day again')}</button>
-        <button className="g-btn primary" disabled={busy} onClick={onAgain}>{busy ? tr('正在分配…', 'Assigning…') : tr('再入一行', 'Live another life')}</button>
+        <button className="g-btn" onClick={onDay}>{tr('再看一眼那一天', 'That day')}</button>
+        <button className="g-btn primary" disabled={busy} onClick={onAgain}>{busy ? tr('正在分配…', 'Assigning…') : tr('再入一行', 'New life')}</button>
       </div>
       <footer className="g-foot">{tr('数字是按职业库推演的估算，不是对任何真实的人的预测。', 'All numbers are estimates simulated from the occupation data — not a prediction about any real person.')}<Tip /></footer>
     </main>
@@ -602,6 +602,8 @@ const CSS = `
 .g-ev.choice { border-left-color: var(--blue); }
 .g-ev.ai { border-left-color: #7a6bb0; }
 .g-ev.start, .g-ev.end { border-left-color: var(--stamp); }
+.g-ev.stage { border-left-color: var(--acc); background: #f6f9fc; }
+.g-ev.work { border-left-color: #b9c6d6; }
 .g-ev-h { display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: var(--ink3); }
 .g-ev p { margin: 4px 0 0; }
 .g-fx { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }

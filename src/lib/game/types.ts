@@ -87,6 +87,10 @@ export interface GameCard {
   events: GameEvent[];
   choices: GameChoice[];
   endings: { retire: string; burnout: string };
+  /** 每一级的日常（用户 11-07：加专业性）：这一级每天最常干的真活、打交道的人（同事 / 上下游 / 领导 / 客户）、手里的工具设备，写成一段叙述；开局和升到这一级时出现 */
+  stages?: { stage: number; text: string }[];
+  /** 真活片段：在某一级的那些年里随机冒出来的一件具体的活（一个人、一样工具），每级 3 个左右 */
+  work?: { stage: number; text: string }[];
   /** 来路：从十五岁左右到开局，是怎么走到这里的（6–8 步，开局前快速闪过） */
   past?: { age: number; text: string }[];
   /** 晚年：离开这一行之后（退休 / 离开一线 / 转身）的几幕，按离开的方式挑；退休金按最后的月薪 × 比例估算 */
