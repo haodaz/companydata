@@ -1,0 +1,166 @@
+{
+ "id": "modeler-suzhou",
+ "occupation": "Industrial Product Digital Modeler",
+ "role": "3D Modeler at an Industrial Design Firm",
+ "headline": "Fresh out of a vocational diploma in mold design and hired by an industrial design firm in Suzhou Industrial Park: a 3D modeler who takes the designers' Rhino surfaces every day and, in Creo, adds draft, shells them out and grows screw bosses, until they become parts a mold can make",
+ "unit": "An industrial design firm in Suzhou Industrial Park that does exterior and mechanical design for robot vacuum, small appliance and medical device brands",
+ "unit_type": "Private industrial design firm (forty to fifty staff)",
+ "city": "Suzhou",
+ "city_tier": "New first-tier city",
+ "education": "Vocational college diploma in mold design and manufacturing",
+ "level": "Your hands are fast in UG and Creo from school, and at the mold shop during your internship you saw parting surfaces and slides. But exterior surfaces break apart the moment you import them, you still look up tolerance callouts in the national standard, and an assembly of a hundred-odd parts freezes your computer for half a minute.",
+ "intro": "You went to a vocational college in Suzhou to study mold design and manufacturing, and on your internship at a mold shop in Kunshan you hauled EDM electrodes. When you graduated, this design firm in the Industrial Park was hiring modelers. At the interview they had you draw a battery cover with snap fits on the spot, and you finished with ten minutes to spare. As of today you sit beside Shen, the head of mechanical design, turning the beautiful things other people draw into things a mold shop can actually make.",
+ "salary_note": "Estimate: design firms in Suzhou Industrial Park start diploma-level modelers at about ten percent above the national average, with project commissions in busy years. In years when clients cut budgets and projects slip, the commissions disappear.",
+ "facts": [
+  {"label": "3D Modeler / Assistant Mechanical Design Engineer (current level)", "value": "0-2 years, ¥6,000–7,000 a month (national average, estimated from pay by experience)", "source": "Pay by experience"},
+  {"label": "Next level up", "value": "Mechanical Design Engineer, 3D modeling track (1-3 years)", "source": "Career map"},
+  {"label": "Pay after 10+ years", "value": "¥19,200 a month (national average)", "source": "Pay by experience"},
+  {"label": "What AI can't take", "value": "Measuring prototypes and checking how they assemble", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Building a 3D model of a part from a sketch and parameters and producing its engineering drawing", "source": "AI exposure"},
+  {"label": "Open positions", "value": "19 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "You take the metro from your rented room in Weiting to the Industrial Park. The company is in a creative park made from old factory buildings, and the osmanthus by the gate has just bloomed. You buy a preserved-mustard-greens pancake and eat it as you walk.",
+  "The exterior designer sends over the Rhino surfaces for a robot vacuum's top cover. You import them into Creo and find three broken faces at the corners. You patch them one by one, check with zebra stripes until it's smooth, and only then start shelling.",
+  "You add one and a half degrees of draft, a two-millimeter wall and six screw bosses to the top cover. Shen leans over, takes a look and says this snap fit faces the wrong way; the mold would need an extra slide, and the client won't pay for that.",
+  "At lunch you have a bowl of braised-pork noodles in the lane, the broth clear. Colleagues are talking about the coffee machine project next door; the client has moved the buttons again.",
+  "The prototype shop delivers the CNC prototype of the last battery compartment. You go round it with calipers, and when you put the battery in, a snap fit cracks off. You take a photo and enlarge the fillet at its root in the model.",
+  "The client's product manager video-calls: the charging port has to move three millimeters to the left. You drag it on screen, and the circuit board, the housing and the seal behind it all light up red with interference.",
+  "You produce 2D drawings for the mold shop, dimensioning, tolerancing and adding geometric tolerances, checking each line against the national standard. Before signing the approval box, Shen has you change two datums.",
+  "There's a client presentation tomorrow, so you leave KeyShot rendering all night. On screen the robot sits on a wooden floor, lit better than it ever will be in real life."
+ ],
+ "ladder": [
+  {"title": "3D Modeler / Assistant Mechanical Design Engineer", "stage": "Entry", "focus": "Build part models in 3D software, produce 2D engineering drawings and organize technical documents. You move up by mastering the software and drafting standards."},
+  {"title": "Mechanical Design Engineer (3D modeling track)", "stage": "Junior", "focus": "Take part in component design, structural optimization, assembly checks and prototype validation, and manage drawing revisions in the PDM system."},
+  {"title": "Mechanical / Product Design Engineer", "stage": "Mid-level", "focus": "Own the design of a whole product or a module on your own, run simulation checks and parametric design, and work with manufacturing and suppliers."},
+  {"title": "Senior Design Engineer / Design Lead", "stage": "Senior", "focus": "Lead a team developing new products, set modeling and data-management standards, and connect with digital twin and simulation platforms."},
+  {"title": "Director of Digital Design / Chief Engineer", "stage": "Principal", "focus": "Lead the company's digital R&D system and its high-end equipment product platform."}
+ ],
+ "ai_tasks": [
+  {"name": "Building a 3D model of a part from a sketch and parameters and producing its engineering drawing", "how": "AI can read the sketch and parameters, generate a first parametric model, dimension it automatically and output the drawing. A person only needs to spot-check dimensions, tolerances and drafting standards, then submit it for approval."},
+  {"name": "Running an assembly check on a whole product and clearing the interferences", "how": "Software and AI can scan for interference automatically, simulate motion envelopes and suggest an assembly sequence. A person has to judge which interferences are acceptable, how to rearrange the layout, and coordinate changes across the subsystems."},
+  {"name": "Revising an unmachinable drawing on feedback from the shop", "how": "AI can flag problems against machining rules, such as internal corners too small or tolerances too tight, and suggest fixes. A person has to talk to the process engineer about what the shop can really do, weigh performance against cost, decide on the change, take it through the change process and answer for the result."},
+  {"name": "Measuring prototypes and checking how they assemble", "how": "Physical measurement, trial assembly, the feel in the hand and spotting problems on the spot all happen with a person next to the prototype. AI can only help organize measurement data, compare deviations from the model and generate records; finding the root cause still takes a person."},
+  {"name": "Running finite element checks on key load-bearing parts and optimizing for weight", "how": "AI can help build the analysis model, run rounds of parameter optimization and generate lighter candidate designs. A person has to set the loads and boundary conditions, judge whether the results can be trusted, and answer for safety and the final design."},
+  {"name": "Converting a product family to top-down parametric design", "how": "AI can help generate the parameter tables, check parameter relations and broken links, and batch-generate variants for each size. A person has to plan the skeleton model and the design logic of the whole family, and decide which parameters should be linked and which should stand alone."}
+ ],
+ "events": {
+  "e_t1": "A housing part you modeled comes back from its T1 mold trial with a ring of sink marks on the cosmetic face, right over a screw boss. The mold shop says your boss walls are too thick, and the tool change costs the client twenty thousand yuan. Shen goes to the meeting with you, says nothing on the way back, and sends you a wall-thickness guideline.",
+  "e_fit": "The dust bin you're responsible for fits on the very first prototype, and it closes with a crisp click. Shen opens and shuts it five or six times in his hand and says the client is going to like that sound.",
+  "e_changes": "On a coffee machine project, the client changes the exterior four times before tooling. You rebuild the same water tank four times, and the final version is almost identical to the first.",
+  "e_ai_model": "The company buys an AI plug-in that turns sketches into models. A bracket or an end cap now gets a parametric model and a first drawing in minutes. What used to be a day's work for you becomes spot-checking dimensions and tolerances, fixing a few callouts and submitting for approval.",
+  "e_ai_tol": "On a drawing the AI generated, a bearing seat has been given a general tolerance. You catch it before approval. If it had gone to the mold shop, thousands of units would have wobbled. You add this to the company's checklist.",
+  "e_kb": "The boss has you turn your years of modeling rules, snap-fit methods and draft and wall-thickness pitfalls into a knowledge base for the company's AI. You dig out tool-change records from dozens of projects and write more than a hundred entries, each one backed by a part that cost someone dearly.",
+  "e_award": "A portable infusion pump your team worked on wins an international industrial design award. The winners' list names the company and the exterior designer. You modeled the twenty-odd parts inside the housing, and at the celebration dinner Shen raises a glass to you.",
+  "e_store": "In a mall you see the robot vacuum you did the mechanical design for, center stage on the display. You crouch and press the dust bin button, it clicks, and the salesperson asks if you'd like to try it.",
+  "e_complaint": "Six months after a small appliance goes on sale, after-sales reports a batch of broken hinges. The client brings the broken parts to a meeting, and you dig out the old simulation report and prototype test records. It turns out a cheaper material was swapped in at mass production.",
+  "e_moldshop": "You spend a week at a mold shop in Dongguan watching mold trials for a medical device housing. The toolmaker pins your drawing to the wall and, while working on the tool, tells you which rib is hardest for the plastic to fill.",
+  "e_rush": "A client needs to make a product launch, and the prototype has to be ready in three weeks. Your team stays up a dozen nights in a row, the prototype shop's technicians right there with you, and the last unit travels by high-speed train to the venue in Shanghai.",
+  "e_wrist": "Your right wrist keeps going numb from gripping the mouse. The doctor says it's tenosynovitis and tells you to ease off and rest. You switch to a vertical mouse and learn to work the shortcuts with your left hand.",
+  "e_cert": "You pass the SolidWorks professional certification, a three-hour exam at the computer, the hardest part an assembly with external references. Few people will ever look at the certificate, but you know which features you had been using wrong all along.",
+  "e_printer": "The company buys a resin 3D printer. You send a model in before leaving at night, and in the morning there's a sample you can assemble. For the first time you notice you're bolder about changing a fillet than you used to be.",
+  "e_lost_client": "The company's biggest client builds its own design department, and projects drop by thirty percent overnight. The boss lays off five people. You stay, but there are no commissions that year, and you move to a rented place one stop farther out.",
+  "e_copy": "A year after you designed the mechanics of an electric toothbrush for a client, you see the exact same snap fit online on another brand. Shen says that's how this trade is: good ideas always spread. It still bothers you for days.",
+  "e_wedding": "You get married, to someone who works in quality at a medical device plant in the Park. The little drawing on the invitations is one you made in Rhino; the guests all assume it was bought.",
+  "e_house": "You buy a small apartment in Wuzhong, and the down payment empties both families' savings. During the renovation you draw the cabinets in 3D yourself, and the carpenter says your drawings are more detailed than a designer's.",
+  "e_child": "Your child is born. You model a bottle rack and print it on the company printer, and it becomes the most useful thing in the house.",
+  "e_intern": "Two interns arrive from a vocational college. You have them take apart ten old appliances first, photographing and noting every snap fit, screw boss and rib, before they're allowed to sit at a computer.",
+  "e_eyes": "Your eyes start to go, and you have to zoom drawings to a hundred and fifty percent to see the small chamfers. You get a pair of computer glasses. The young ones laugh; you tell them they'll understand at your age.",
+  "e_generative": "Generative design tools can now grow a bracket forty percent lighter all by themselves, shaped like tree roots. You look at it a while and ask the young engineer: can a mold make this? He pauses, and goes back to change it."
+ },
+ "choices": {
+  "c_moldshop": {"title": "Three months at a mold shop", "situation": "Shen says anyone who does mechanical design ought to spend time at a mold shop, watching how what they draw gets made. A partner mold shop in Kunshan is willing to take you for three months, but there's no project commission during that time, and the dorm is an eight-bed factory room.", "options": [
+   {"label": "Go to the mold shop", "result": "In three months you learn to read mold-flow analysis, and which ribs trap air and which snap fits stress-whiten. Back at the company, before you model anything you take the mold apart in your head first."},
+   {"label": "Stay and take on projects", "result": "In three months you model parts for seven projects and earn a decent commission. But every time a drawing goes out, you still have to ask Shen about each item on the mold shop's issue list."}
+  ]},
+  "c_mech": {"title": "Own the battery compartment and go for Mechanical Design Engineer (3D modeling track)", "situation": "On a robot vacuum project, Shen wants you to own the whole battery compartment yourself: concept, mechanics, assembly checks and prototype tests, with the drawing revisions in the PDM yours to manage. Do it and you move up to Mechanical Design Engineer (3D modeling track). It also means that when something goes wrong, you're the first one asked.", "options": [
+   {"label": "Take it and carry it yourself", "result": "You go through three concepts and twenty drop tests, and the final compartment falls from a meter twenty without the lid popping. In the PDM you change the revision to A, and for the first time the approval box has your name."},
+   {"label": "Keep working under Shen", "result": "Shen still draws the concepts and you model and draft. The work is steady and you learn plenty, but at the year-end grading you're still listed as a modeler."}
+  ]},
+  "c_ai": {"title": "Learn AI modeling, or train on surfaces", "situation": "People at the company have started generating models straight from sketches with AI, and the boss says simple parts will all be done this way. You could spend the time mastering AI modeling and the parametric workflow, or train on the hard thing nobody wants to touch: Class-A surfacing, where every highlight on a cosmetic face has to flow.", "options": [
+   {"label": "Master AI modeling", "result": "You turn the company's twenty most common parts into parametric templates. AI drafts, you fix the key dimensions, and an end cap goes from a day to an hour. When people ask how you write the prompts, you say: write the standards clearly first."},
+   {"label": "Train on Class-A surfaces", "result": "You practice on a hair dryer housing for six months until the zebra stripes finally run in smooth unbroken lines. From then on the exterior designers bring their surfaces only to you, and the work you take on is work nobody else can."}
+  ]},
+  "c_struct": {"title": "Go for Mechanical / Product Design Engineer and take the whole product", "situation": "A medical device client has a new product, and the boss wants you to own its entire mechanical design: simulation checks, parametric design, working with manufacturing and a dozen suppliers. Do it and you become a Mechanical / Product Design Engineer. Medical devices have to pass registration testing; you can't casually change the material of even one part.", "options": [
+   {"label": "Take the whole product", "result": "You follow the project for a year, through five suppliers and two rounds of registration testing. On the day production starts you stand at the end of the line watching the first unit boxed, with a label you all decided on together."},
+   {"label": "Take just one module", "result": "The whole product goes to a colleague who came over from a big company, and you handle the pump body, cleanly. At the year-end grading your name comes after his."}
+  ]},
+  "c_sim": {"title": "Move into simulation engineering", "situation": "Running finite element checks on your parts has caught your interest, and an auto-parts company in the Park is hiring simulation engineers: Ansys only, no more exterior work, no more fixing snap fits, twenty percent more pay. But it's a different road: from now on what you look at is meshes and stress plots, not something you can hold in your hand.", "options": [
+   {"label": "Go into simulation", "result": "You copy the hundreds of project folders on your computer as a keepsake, and hand in your access card.", "end": "You spend many years in simulation, looking at countless red-and-green stress plots. The old robot vacuum at home still clicks when you open its dust bin, and every time you hear it, you pause."},
+   {"label": "Stay in modeling and mechanics", "result": "You turn them down and keep learning simulation on your own, using it on your own parts. Shen says the drawings you send out now come back from the mold shop with half as many questions."}
+  ]},
+  "c_shenzhen": {"title": "A Shenzhen hardware company comes headhunting", "situation": "A consumer robotics hardware company in Shenzhen wants you as a mechanical engineer, thirty-five percent more pay plus options, with one product launch after another. But your home is in Suzhou, your partner works in the Park, and Shenzhen's pace is notorious.", "options": [
+   {"label": "Go to Shenzhen", "result": "In one year in Shenzhen you do three products and every one goes on sale. On weekends you wander Huaqiangbei alone and see your product on the counters, with several knockoffs next to it."},
+   {"label": "Stay in Suzhou", "result": "You don't go. On weekends you walk around Jinji Lake with your partner, and on Monday you're back beside Shen. Suzhou projects move a little slower, and you get to polish every part until you're satisfied."}
+  ]},
+  "c_lead": {"title": "Become Senior Design Engineer / Design Lead and run a team", "situation": "Shen is retiring, and the boss wants you to take his place as Senior Design Engineer / Design Lead: leading a mechanical team of six or seven, setting the standards for modeling and data management, and working with clients' simulation and digital twin platforms. You'd model much less and sign many more drawings.", "options": [
+   {"label": "Take Shen's place", "result": "The first thing you do is revise Shen's wall-thickness guideline, adding numbers for the new materials of recent years. The young engineers on the team say you're stricter about signing than Shen ever was."},
+   {"label": "Keep modeling yourself", "result": "You recommend another colleague and stay at your computer, taking the hardest surfaces and the hardest mechanics. Your desk holds a dozen prototypes, each older than the last."}
+  ]},
+  "c_director": {"title": "Go for Director of Digital Design / Chief Engineer", "situation": "The company wants to build its own digital R&D system: AI drafts first, simulation runs automatically, models go straight into clients' digital twin platforms. The boss wants a Director of Digital Design / Chief Engineer to define it, which means meetings with clients' R&D directors, software vendors and investors.", "options": [
+   {"label": "Go for director", "result": "The first slide you show at the review is every step of a part's journey from sketch to mass production, and which steps AI does and which a person signs. The boss doesn't interrupt, and at the end says: we'll do it this way."},
+   {"label": "Stay as design lead", "result": "You say you'd like to stay close to the drawings. The director comes from outside, and you and your team turn what he defines into reality, one drawing at a time."}
+  ]},
+  "c_own": {"title": "Open a mechanical design studio of your own", "situation": "Several small brand owners you've met over the years say that if you went out on your own, they'd give you all their mechanical design work. You could rent a small office in the Park, take two apprentices and specialize in mechanics and prototypes for small appliances. No base pay; each project feeds the next.", "options": [
+   {"label": "Go out on your own", "result": "On your last day you pack the dozen prototypes on your desk into one cardboard box, leaving none behind.", "end": "Your studio is on the third floor of an old building in the Park, its windowsills lined with prototypes. Over many years you do the mechanics for dozens of small brands, and in any mall there's always something you can press once and know who made it."},
+   {"label": "Stay at the company", "result": "You introduce those owners to the company and stay. When they see you afterward they joke that you're the most expensive modeler the company has."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last day you hand your approval rights to your apprentice and look in the PDM at all the drawings you've signed over the years, more than you thought. You slip the oldest prototype on your desk into your bag: a robot vacuum's dust bin. As you leave the creative park the osmanthus is blooming again. You press the bin, and it clicks.",
+  "burnout": "That year your wrist and your neck give out together, and the doctor says no more ten-hour days gripping a mouse. You resign and rest at home for a year, walking by the river every morning. The computer is rarely on. Now and then you take the calipers from the drawer and measure things around the house."
+ },
+ "stages": [
+  "Every day you take the exterior designer's Rhino surfaces and, in Creo and SolidWorks, patch broken faces, shell them, add draft and grow screw bosses and snap fits, then produce 2D drawings for the prototype shop and the mold shop. Shen draws the concept and you model; he signs the approval box. When prototypes come back you measure them with calipers first, and for every item on an issue list you have to find out why.",
+  "You start owning anything from a component to a subsystem: setting the concept, optimizing the structure, running interference checks and prototype tests, with the drawing revisions in the PDM yours to manage. When the exterior designer argues with you over a millimeter of clearance, or the mold shop calls to ask whether the parting surface can move, you have to make the call yourself and then explain it to Shen.",
+  "Whole products are handed to you: from the stack-up concept, simulation checks and parametric design to reviews with process engineers, suppliers and the client's R&D. You spend less of the day looking at your own models and more at other people's, and at the mechanical review before tooling, the last signature on the form is yours.",
+  "You lead a mechanical team of six or seven, scheduling everyone's projects, reviewing every drawing that goes out, and setting the company's modeling and data-management standards. Clients' R&D directors, mold shop owners and the people on the simulation and twin platforms all come straight to you. You model less now, and sign and sit in meetings more.",
+  "You decide how the company's entire digital R&D runs: at which step AI drafts, how simulation runs automatically, how models flow into clients' twin platforms, who signs for which step. You meet the boss, clients' R&D directors and software vendors, and review each team's technical direction. When you go look at a prototype, it's to see the one most critical part."
+ ],
+ "work": [
+  "Zhou at the prototype shop calls to say the rib on your button is too thin and snaps the moment the CNC touches it. You thicken it by three tenths of a millimeter and fix the two beside it while you're there, and the second version passes first time.",
+  "Shen has you take apart an old vacuum cleaner and rebuild it in the computer part by part. The teardown takes an afternoon and the modeling a week, and in the end only one screw in the assembly is in the wrong place.",
+  "Tang, an exterior designer, complains that your draft has made the side lines look fat. The two of you compare on screen for ages, and in the end you move the parting line down two millimeters and hide the draft in the shadow.",
+  "Running an interference check on a water tank, the software flags more than thirty spots. You go through them one by one: twenty-odd are seals that are supposed to be compressed, four are real, and you change two parts.",
+  "Gu, a tester, brings you a housing broken in a drop test, every crack at the root of the same screw boss. You add a ring of gussets at its base and have him drop it ten more times. It doesn't crack again.",
+  "A client wants three configurations on the same body. In the PDM you number the three versions and manage shared and specific parts separately, and on release day the mold shop gets the right files first time.",
+  "On an infusion pump housing you run drop and modal checks in Ansys and find the motor mount resonates at one frequency. You work it out with the electronics engineer, move the mount five millimeters and add a damping pad.",
+  "At the mechanical review before tooling, the mold shop's project manager reads out his issue list item by item and you answer item by item. At number eleven you say this can't change; the client will have to sign off on that line on the exterior.",
+  "A supplier's motor arrives a millimeter bigger than the drawing. Instead of making them change it, you leave half a millimeter of margin in the housing, and write it into the next version of the design standard.",
+  "Drawings from a young engineer on your team have been sent back by the mold shop three times. You don't fix them for him. You sit with him in the mold shop's meeting room while they explain, and back at the office he fixes them himself.",
+  "You organize ten years of the team's tool-change records into one table, sorted by snap fits, screw bosses, ribs and wall thickness, and find that sixty percent of changes come from one kind of snap fit. You rewrite that standard.",
+  "A client's simulation platform needs models it can use directly. You set rules for lightweighting and naming so every part can be found once it's in their system.",
+  "Chairing the review of the new R&D system, you hear a software vendor propose letting AI drawings skip human approval. You write one line on the proposal: drawings go out to have molds cut; whoever pays for the mold signs.",
+  "A big client's R&D director comes to discuss a three-year partnership. You don't show him renderings; you show him your first-time-right tooling rate over three years, and he changes the contract from one year to three.",
+  "In the annual plan you stop an automatic drawing software project two years in the making, with the reason on the first page: the mold shops can't read what it produces."
+ ],
+ "past": [
+  "You go to middle school in Suqian. When the electric fan at home breaks, you take it apart with a screwdriver into a tableful of pieces. When you put it back together there are two screws left over, but it spins.",
+  "You don't do well on the gaokao (college entrance exam). Leafing through vocational college listings you see mold design and manufacturing, think of the fan, and put down a vocational college in Suzhou.",
+  "In your first year you learn UG in the computer lab, practicing three parts in the time others do one. The teacher says you have a feel for drawing and sends you to a provincial skills competition, where you take third prize.",
+  "In the summer of your second year you intern at a mold shop in Kunshan, hauling electrodes and handing tools to the fitters, and for the first time you watch an injection molding machine spit out a housing, still steaming.",
+  "Before graduation you apply to a dozen companies, mostly drafting jobs at mold shops. This design firm in the Park has you draw a battery cover with snap fits on the spot at the interview. You finish with ten minutes left and sign that day."
+ ],
+ "late": {
+  "pension_note": "Estimate: private design firms in Suzhou mostly pay pension contributions on a middling share of actual wages, with no company annuity, so the basic pension comes to a little under half your last monthly pay.",
+  "scenes": [
+   "In your first week of retirement you still reach for the mouse at eight in the morning. Your hand finds the teacup on the desk. You take a sip and open the curtains.",
+   "Your former apprentice brings you back as an adviser two days a month, only for the mechanical reviews before tooling. On one drawing you circle a snap fit and write beside it: this will stress-whiten.",
+   "The old folks in the compound bring you their broken radios and little fans. You set up a small table on the balcony with your screwdrivers in a row, and nothing you fix ever ends up with a screw left over.",
+   "Your grandchild holds up a little printed toy and asks how it was made. You turn it around once and point to a fine line on it: this is where the two halves of the mold closed.",
+   "In the first months after you stop, you walk by the river every morning, taking your wrist brace off and putting it back on, over and over.",
+   "Your wrist gets better and you start learning woodwork with a plane and chisels. The first thing you make is a small stool, and you give its four legs a one-degree slope, like draft.",
+   "On the day you file your retirement papers you pass the old creative park, and the osmanthus tree by the gate is still there. You stand under it a while, breathe it in, and go.",
+   "In the first year on a different road, whenever you pick up anything plastic, your fingers go looking first for its parting line and ejector pin marks.",
+   "In a mall you see a new robot vacuum, turn it over to look at the base, and recognize Shen's way of doing snap fits. You wonder which apprentice of his made it.",
+   "An intern you trained has become a design lead. She sends you a photo: the first page of the company's wall-thickness guideline still carries the line you added all those years ago.",
+   "Suzhou opens another metro line. Riding it, you look at the handrails and seats and take their molds apart in your head, wondering which pieces came out of a single shot.",
+   "Sorting an old hard drive, you find the battery cover from your first interview. The model tree is only a dozen steps long, and there's no fillet at the root of the snap fit. You look at it a while, add one, and save."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you sit by Jinji Lake turning the old dust bin in your hands: open, shut, click. The towers across the lake light up one by one, and you think of the parts being drawn inside them, none of which you can see, none of which will be missing.",
+   "burnout": "Many years later, you are planing a board on the balcony, the shavings curling to the floor. You stop and run your palm over the surface. Smooth, like zebra stripes running into one line.",
+   "end": "Many years later, in a drawer, you find the calipers you used for so many years, the vernier marks worn a little faint. You measure the teacup on the table, seventy-three point two, and put them back where they were."
+  }
+ }
+}

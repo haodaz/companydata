@@ -1,0 +1,162 @@
+{
+ "id": "sports-data-gz",
+ "occupation": "Sports Data Analyst",
+ "role": "Sports Data Analyst at a Professional Football Club",
+ "headline": "Raised in Meizhou, knee wrecked playing high-school football, then a degree in human movement science and self-taught Python: a sports data analyst at a professional football club's training ground in Guangzhou, collecting GPS vests, writing load reports and picking three video clips for the coach in the ten minutes of halftime",
+ "unit": "The performance analysis department of a professional football club's first team in Guangzhou (training ground in Baiyun district)",
+ "unit_type": "Professional football club",
+ "city": "Guangzhou",
+ "city_tier": "First-tier city",
+ "education": "Bachelor's degree in human movement science",
+ "level": "You can get the GPS vest data from download to daily report in under an hour, you're fast with the video tagging software, and you write your own Python scripts. But the head coach only listens to three numbers and you haven't yet learned which three to pick, and your injury risk model is still a sketch in your notebook.",
+ "intro": "You grew up in Meizhou and played football for ten years, until in your second year of high school your knee ligament snapped and the coach said you'd never be a professional. You went to Guangzhou to study human movement science, taught yourself Python, joined this club as a data intern in your final year and were taken on full-time last year. As of today, how far each of the twenty-eight first-team players ran, how tired they are and whether they can play tomorrow all passes through your computer first.",
+ "salary_note": "Estimate: professional clubs in Guangzhou pay performance analysts a little over ten percent above the national average, with win bonuses. But a club's money follows its parent company and its results, and years of late or cut wages are not rare.",
+ "facts": [
+  {"label": "Sports Data Analyst / Performance Analyst (current level)", "value": "2-5 years, ¥8,000–14,000 a month (national average, estimated)", "source": "Industry norm"},
+  {"label": "Next level up", "value": "Senior Performance Analyst / Data Scientist (5-8 years)", "source": "Industry norm"},
+  {"label": "What AI can't take", "value": "Assessing an injured player's return to match play", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Producing the squad's load report after training", "source": "AI exposure"},
+  {"label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "It's the damp spring season, and the dressing-room walls at the training ground are beaded with water. You take thirty GPS vests out of the charging cabinet one by one, check the batteries and hang them up by number.",
+  "The players arrive and fill in the morning questionnaire on a tablet: hours slept, what's sore, mood out of ten. You spot at once that number 23 has written tight hamstrings, circle him on the list and take it to the team doctor.",
+  "Training starts and you stand on the touchline holding a tablet with the live data. The fitness coach turns and asks whether the winger has done enough high-speed running today. You give him a number, and he blows the whistle for two more sprint sets.",
+  "Training over, the vests come back and you download them. Matching the data against the questionnaires, you see the winger's acute-to-chronic workload ratio has shot up to one point six, and you mark him red on the daily report.",
+  "In the training-ground canteen a foreign player sits down beside you with a plate of poached chicken and asks in English how many kilometers he ran yesterday. You tell him. He says it's less than in Europe; you say that's because it's so humid here.",
+  "Frame by frame in the video tagging software, you go through the next opponent's last match, marking every high press, and cut more than twenty clips.",
+  "You meet the head coach, the interpreter sitting between you. You've brought a dozen-page report; he flips through two pages and says: I want three clips. Tell me when that left back of theirs is going to push up.",
+  "Back at your rented flat in Baiyun, you write a script that produces the load report automatically. The fan chat on your phone is still arguing about last night's defeat, someone blaming a late substitution. You glance at that substitute's running data and say nothing."
+ ],
+ "ladder": [
+  {"title": "Assistant Analyst / Data Intern", "stage": "Entry", "focus": "Collect GPS and video data, clean and enter it, produce basic reports. You move up by mastering the tracking systems and programming."},
+  {"title": "Sports Data Analyst / Performance Analyst", "stage": "Junior", "focus": "Own a team's training-load monitoring, match analysis and pre- and post-match reports on your own."},
+  {"title": "Senior Performance Analyst / Data Scientist", "stage": "Mid-level", "focus": "Build load and injury-risk models and tactical models, set up data pipelines, and support recruitment and medical decisions."},
+  {"title": "Head of Performance Analysis / Analysis Manager", "stage": "Senior", "focus": "Manage the analysis team and work with the coaching staff, the medical team and the sporting director."},
+  {"title": "Director of High Performance / Director of Analysis", "stage": "Principal", "focus": "Oversee the performance, sports science and data systems as a whole."}
+ ],
+ "ai_tasks": [
+  {"name": "Producing the squad's load report after training", "how": "AI can import the GPS and questionnaire data automatically, calculate load, flag anomalies and draft the daily report. A person only needs to spot-check that nothing is misaligned and give final sign-off on restrictions for the flagged players."},
+  {"name": "Tagging a match live and briefing the coach at halftime", "how": "AI can help identify and tag some events, summarize trends and cut clips automatically. A person at the ground has to judge what's worth saying at halftime and get it across briefly, in words the coach understands."},
+  {"name": "Writing a report to prepare for an opponent", "how": "AI can batch-process the opponent's event and video data, sum up their tactical patterns and draft the report. A person has to pick out what matters given your own team's strengths, judge which findings are truly usable, and explain them clearly to the coach."},
+  {"name": "Assessing an injured player's return to match play", "how": "AI can organize force-velocity curves and load trends and flag deviations. But advice on playing involves injury risk and responsibility, and has to be worked out face to face by people, with the medical team, the coach and the player, who share the responsibility."},
+  {"name": "Building an automated data pipeline from tracking devices to dashboards", "how": "AI can help write the data intake and cleaning scripts and rough out the dashboards. A person has to define the data conventions, connect all the devices and medical data, test it, maintain it over time, and track down errors when they happen."},
+  {"name": "Setting the team's rules on player data use and privacy", "how": "AI can draft the policy text and clause templates. But drawing the lines on use, explaining them to the players and getting their genuine informed consent takes trust and accountability, and only a person can do it."}
+ ],
+ "events": {
+  "e_ignored": "Three days running you mark a starter red on the daily report, and the head coach still plays him the full ninety. In the seventieth minute he goes down on the turf clutching his hamstring. After the match nobody mentions your report. You make a note of it in your own notebook.",
+  "e_rested": "You and the team doctor talk the head coach into resting a striker for one match. He agonizes over it all night and agrees. The next round the striker comes back and scores with his first shot. Passing your desk, the head coach pats you on the shoulder.",
+  "e_arrears": "The parent company runs into trouble and the club goes three months without paying wages. The players talk about it in the dressing room. You keep collecting vests and writing reports, and put the rent on your credit card.",
+  "e_relegation": "You lose the final round and the team is relegated. The next day half the training ground is packing up. The analysis department is cut from three people to two. You stay, but the budget is halved and the new force plates go back.",
+  "e_new_coach": "A new head coach arrives, and at his first meeting he says he doesn't look at data; he looks at players' eyes. You cut your report from ten pages to one, then to one chart. By the third month he's asking you for that chart himself.",
+  "e_ai_report": "A new analysis platform imports GPS and questionnaires automatically, calculates load, flags anomalies and drafts the daily report. What used to take you an hour now takes ten minutes of checking, and you spend all the time you've saved on the touchline.",
+  "e_ai_tag": "AI can now tag seventy or eighty percent of the events in match video automatically: passes, tackles, shots, presses. You check it match by match. It keeps logging the opposing keeper's throws as long balls, and you write that into the correction rules.",
+  "e_halftime": "In the fifteen-minute halftime break you cut three clips of the opponent's right flank at your analysis seat in the stand and run downstairs to hand them to the assistant coach. In the second half the head coach makes a change, and in the sixty-eighth minute you score down exactly that side.",
+  "e_derby": "You win the Guangdong derby. After the match the staff eat a late supper in the training-ground canteen, the head coach opens a few bottles of beer and you get two glasses poured down you. The next morning at seven you're still out collecting vests.",
+  "e_humid": "In the weeks of spring damp, several GPS vests record in fits and starts, and one player logs only half a session. You open them up and find moisture in the connectors, and tuck a sachet of desiccant into every charging port.",
+  "e_privacy": "A screenshot of one player's body-fat data gets posted in an outside chat group, and he storms into the analysis room demanding to know who did it. You don't pass the blame. You stay up all night writing team rules on data use, who can see what and where it can be sent, and the next day you have every player sign them.",
+  "e_bilingual": "Several foreign players can't read the Chinese reports, so you build a dashboard that switches between Chinese and English, and everyone can see their own numbers on their phone. The Brazilian midfielder comes by before every session to ask: am I green today?",
+  "e_wintercamp": "Winter training is six weeks at a high-altitude base in Kunming. Every morning at half past six you stand on the touchline in freezing air measuring the players' blood oxygen and heart-rate variability, your hands too cold to work the tablet, so you jab it with your knuckles through your gloves.",
+  "e_typhoon": "A typhoon hits and the match is postponed at short notice. The team is stuck two days in the away hotel. You finish cutting the next opponent's video, then write each player a personal season summary.",
+  "e_conference": "At a sports science conference you talk about how you adjust training load in hot, humid weather. A fitness coach from a provincial team chases you down with questions for half an hour afterward, and becomes the person you turn to most for advice.",
+  "e_youth_star": "A sixteen-year-old you once tested in the academy now wears the first team's captain's armband. He still remembers what you said the first time you showed him his sprint data: you're not slow, you just start half a step late.",
+  "e_nights": "In the two most crowded months of the season, two matches a week, you get to bed at one or two every night and are back collecting vests at seven. One day you fall asleep in front of the screen in the analysis room, and when you wake the video is still playing.",
+  "e_wedding": "You get married, the date chosen for the off-season. A few players come to the wedding and insist on racing the bride, and you get out your phone and actually time them over ten meters.",
+  "e_house": "You can't afford Guangzhou, so you buy a flat in Nanhai, Foshan, an hour and a half by metro to the training ground. The night you sign, you watch the next opponent's video again on the metro.",
+  "e_child": "Your child is born on an away match day. The photo reaches you on the team bus, everyone crowds round to look, and the head coach says if you win the next one, that's the baby's present.",
+  "e_model_doubt": "In one season your injury risk model raises a high-risk alarm dozens of times, and only a few players actually get hurt. The team doctor says your model is the boy who cried wolf. You recalibrate the thresholds and add sleep and travel data.",
+  "e_back": "Years of standing on touchlines and sitting at computers, and your back starts to hurt. You hand the touchline work to the young analysts and watch from your seat in the stand."
+ },
+ "choices": {
+  "c_pipeline": {"title": "Build a data pipeline, or spend more time on the touchline", "situation": "Half of the department's data is copied and stitched together by hand: GPS, questionnaires, video and the doctor's injury list all live in different places. You could spend months of evenings building an automated pipeline in Python and SQL, or spend that time on the touchline, talking more with the coaches and players so they come to trust your numbers.", "options": [
+   {"label": "Build the pipeline", "result": "It takes four months, but it runs end to end from the vests to the dashboards. At half past eight every morning the previous day's load charts pop up on the coaching staff's phones, and for the first time you have time to watch how the players actually play."},
+   {"label": "Spend more time on the touchline", "result": "Every session you stand beside the fitness coach, follow the doctor into the physio room and listen to the players tell you what's sore. Six months later, the head coach opens meetings by asking: what does the data say?"}
+  ]},
+  "c_model": {"title": "Build an injury risk model and go for Senior Performance Analyst / Data Scientist", "situation": "Eleven players were injured last season, and the sporting director asks whether the analysis department could see it coming. If you can put load, sleep, travel and injury history into one model and give each player a risk of playing, you'll be the department's first Senior Performance Analyst / Data Scientist. But if the model gets it wrong once, the coaching staff won't trust you again.", "options": [
+   {"label": "Build the model", "result": "You go through five seasons of data, and in testing the first version flags sixty percent of injuries a week ahead. The first time you use it in a coaching meeting you say only one thing: this is a warning, not a verdict."},
+   {"label": "Not yet; make the daily reports solid", "result": "You say there isn't enough data yet and there's no hurry to draw conclusions. The model is later built by an outside consultant the club hires, and you supply their data without a single error."}
+  ]},
+  "c_vendor": {"title": "A Shanghai sports data company makes a big offer", "situation": "A sports tech company in Shanghai that supplies data to the league and the clubs wants you to work on metrics and quality control: thirty percent more pay, never late, weekends off. But it's in an office with data from hundreds of matches, not on the touchline, not in the dressing room, and no late supper on the night of a win.", "options": [
+   {"label": "Go to Shanghai", "result": "In a year in Shanghai you go through the event data of more than five hundred matches and define dozens of metric conventions. On weekends you watch games in Hongkou from the stands, and you can see at a glance which defender is out of position."},
+   {"label": "Stay in Guangzhou", "result": "You turn it down. That weekend you win at home, and watching the players salute the fans from the touchline, the two months of late wages don't seem like much."}
+  ]},
+  "c_fitness": {"title": "Become a fitness coach", "situation": "The fitness coach is going back to Europe and recommends you for his job: you understand load and you understand the players; you'd only need to study training theory and pass an international strength and conditioning certification. But then you'd no longer be the one writing reports. You'd be the one standing on the pitch every day, blowing the whistle and shouting at the players.", "options": [
+   {"label": "Become a fitness coach", "result": "You pass the certification, and the first time you stand in the middle of the pitch and blow the whistle, twenty-eight people look at you at once. Your voice is gone within the first week.", "end": "You go on to be a fitness coach for many years, with the first team and with the academy's kids. There's always a tablet in your pocket, but what you watch most is the moment a player's foot lands in a sprint."},
+   {"label": "Stay in analysis", "result": "You recommend someone from a provincial team. On his first day the new fitness coach comes to you for data, and the two of you become the pair who eat together most often at the training ground."}
+  ]},
+  "c_youthnt": {"title": "On loan to the national youth team", "situation": "The national youth team is heading to a continental qualifying tournament and needs a performance analyst, and they've asked to borrow you for six months by name. It's where a lot of people want to be, but it falls in the club's crucial six months of fighting relegation. The head coach says he won't stand in your way, but his face says otherwise.", "options": [
+   {"label": "Go with the youth team", "result": "You travel with the youth team to three countries and cut opponent video in hotel rooms every night. Two of those kids later make the first team, and both still call you teacher."},
+   {"label": "Stay for the relegation fight", "result": "You stay. On the final day you avoid relegation, and as the crowd leaves the head coach is waiting for you in the tunnel. He says thank you, in Chinese."}
+  ]},
+  "c_basketball": {"title": "A basketball club in Dongguan wants you", "situation": "A basketball club in Dongguan is hiring a head of performance analysis: ten percent more pay, wages never late, and a shorter season than football. But you don't know basketball well and would be learning everything from scratch: player load, shooting hot zones, what happens in every twenty-four-second possession.", "options": [
+   {"label": "Go to basketball", "result": "For the first month you practically live in the practice gym, watching which way players' knees bend when they land. Six months later, your shooting hot-zone chart is taped to the dressing-room door."},
+   {"label": "Stay in football", "result": "You say you can't leave the smell of grass. That season, for the first time, the head coach writes your model into his pre-match instructions."}
+  ]},
+  "c_head": {"title": "Apply for Head of Performance Analysis / Analysis Manager", "situation": "The club is expanding the analysis department to five people and creating a Head of Performance Analysis / Analysis Manager to work with the coaches, the medical team and the sporting director, and to run the data side of recruitment. If you get it, you'll rarely cut video yourself; it'll be more meetings, rosters, and standing up for your people in front of the coaching staff.", "options": [
+   {"label": "Apply", "result": "At the interview you don't talk about your model. You talk about the starter you marked red three days running who still played the full ninety, and what process you changed afterward. The sporting director listens and doesn't ask a second question."},
+   {"label": "Stay in frontline analysis", "result": "You recommend a colleague and keep doing the hardest opponent analysis yourself. The young analysts all like sitting beside you, watching you scrub through video frame by frame."}
+  ]},
+  "c_product": {"title": "A Shenzhen wearables company wants you for product", "situation": "A sports wearables company in Shenzhen is building products for professional teams and wants you as a sports tech product manager: setting the metrics, leading development, selling to clubs. Double the pay, regular hours, and no more living by a team's fixture list.", "options": [
+   {"label": "Go to Shenzhen for product", "result": "You take with you the test vest numbered zero, the one you used to calibrate the equipment in your first year.", "end": "You spend many years in Shenzhen in sports tech, and your company's vests end up on players at a great many teams. Every time you see a player on TV lift his shirt and show that patch on his back, you know where the numbers inside it come from."},
+   {"label": "Stay at the club", "result": "You turn it down. That afternoon at training you stand on the touchline as usual, and when the fitness coach turns to ask if it's enough, you say: two more sets."}
+  ]},
+  "c_director": {"title": "Go for Director of High Performance / Director of Analysis", "situation": "The club's new owner wants a performance system running from the academy to the first team, and a Director of High Performance / Director of Analysis over fitness, rehab, nutrition, research and data. It means daily meetings with the owner, the head coach and the sporting director, and putting your name behind every injury call and every recruitment judgment.", "options": [
+   {"label": "Go for it", "result": "At the review you bring out more than a dozen seasons of injury curves and a chart of player development from age twelve to thirty. The owner asks how much it will cost. You give him a number, then a plan for half that."},
+   {"label": "Don't apply; run the analysis department well", "result": "You say you'd rather stay close to the ball. The club hires a director from outside, and for his first month he's in the analysis room every day, listening to you tell him how this team got where it is."}
+  ]}
+ },
+ "endings": {
+  "retire": "On your last day you stand on the touchline for one more session, a young analyst beside you holding the tablet, and when the fitness coach turns round it's him he asks. When training ends you watch the players strip off their vests one by one and toss them into the basket, and you don't go to collect them. As you leave the training ground, a thin mist is rising over Baiyun Mountain.",
+  "burnout": "At that year's health check the doctor looks at your ECG and sleep records and tells you to stop living by the fixture list. You leave the club and rest at home most of a year, jogging along the Pearl River every evening with no watch on your wrist. When football is on TV at weekends, you find yourself counting how many times a winger sprints."
+ },
+ "stages": [
+  "You own the first team's training-load monitoring and the pre- and post-match reports on your own: collecting questionnaires and handing out vests in the morning, calling numbers from the touchline during training, downloading GPS and writing the daily report afterward, cutting opponent video in the tagging software in the afternoon. The people you deal with most are the fitness coach, the team doctor and the head coach's interpreter. The coaching staff read what you write, but who plays and who rests isn't your call.",
+  "You start building models and pipelines: injury risk, readiness to play, opponents' tactical habits, all running end to end from vests, force plates and video to dashboards. You decide with the team doctor when an injured player is ready for matches again, and build data profiles of candidates for the recruitment department. In coaching meetings, someone asks: what does the model say?",
+  "You lead an analysis department of five, deciding who covers which line, who cuts which opponent, who looks after which academy team. Every day you meet the head coach, the medical team and the sporting director, sign recruitment assessments, and smooth things over for your people in front of the coaching staff. You cut less video yourself, but which three clips the head coach sees is still your choice.",
+  "You oversee the club's performance system from the academy to the first team: fitness, rehab, nutrition, research and data all report to you. You negotiate budgets with the owner, philosophy with the head coach and partnerships with the league and universities, and the last page of the medical and data assessment for every major signing carries your name. When you go to the touchline, it's to watch someone just back from injury."
+ ],
+ "work": [
+  "The team doctor brings you a player's force-plate jump data: his left and right legs differ by twelve percent. You dig out his load for the past three weeks, trace it to the two extra sets last week, and halve his sprint volume on the daily report.",
+  "The assistant coach wants an analysis of the opponent's set pieces. You tag every corner from their last eight matches and find their man for the second ball always stands in the same spot, and cut him six clips.",
+  "A kid just up from the academy asks why he still can't get on the pitch when he runs the most every day. You pull up his data and show him: all his sprints come after the last ten minutes of matches.",
+  "A center back out five months with a knee injury is coming back. You overlay his force-velocity curves from before and after the injury and spend an afternoon with the doctor and the physio, and you settle on thirty minutes first.",
+  "Recruitment has its eye on a foreign striker. You pull three seasons of his event data and find seventy percent of his goals came when the opponent was down to ten men. On the assessment you write: need to see him eleven against eleven.",
+  "You bring the vests, questionnaires, force plates and the doctor's injury list into one database, and for the first time you can see on a single chart the three weeks in which a player went from tired to injured.",
+  "A new analyst hands the head coach a thirty-page report, and the head coach doesn't read it. You don't scold him. You take him to a pre-match meeting and have him write down every question the head coach asks.",
+  "At a recruitment review the sporting director wants to sign a thirty-one-year-old veteran. You put his high-speed running curve for the last two seasons on the screen, dropping steeply, and sign the assessment: not recommended.",
+  "You set the department's rule: the first page of every report may hold only three things; everything else goes in the appendix. Six months later the head coach says your reports are now the first thing he reads each week.",
+  "The owner wants to cut the academy's research budget. You list every first-team player who came up through the academy in ten years, each with his test data at fourteen beside his name. The budget stays.",
+  "A sports university comes to discuss using the club's data for research. You agree on condition that every player signs informed consent, all names are removed, and any player can withdraw at any time.",
+  "The medical report for a major signing lands on your desk, showing an old knee injury. You and the team doctor study the scans all evening, and you write on the report: can sign; two sessions a week of targeted rehab in the first year."
+ ],
+ "past": [
+  "You go to middle school in Meizhou, where every kid plays football. You're the school team's winger, quick on your feet, playing every day after school until dark and coming home with a handful of sand in each boot.",
+  "In a match in your second year of high school your knee twists as you land, and your anterior cruciate ligament snaps. After the surgery the coach comes to see you and says you'll still be able to play, just not as a professional.",
+  "Your gaokao (college entrance exam) gets you into a sports institute in Guangzhou to study human movement science. You want to know what really happened inside your knee in that moment of landing.",
+  "In your second year you teach yourself Python and use a few GPS vests borrowed from the institute to track the school team, posting a chart to the team chat after every match. The coach starts picking his starting eleven from that chart.",
+  "In your final year you apply to seven clubs, and only this one replies: data intern, three thousand yuan a month, a bed but no meals. You go, and on your first day the job is charging thirty vests.",
+  "In your internship year you practically live at the training ground, and you write a little script that produces the daily report automatically. The fitness coach uses it for a month, then goes to the sporting director and says: keep this kid."
+ ],
+ "late": {
+  "pension_note": "Estimate: professional clubs pay staff pension contributions on their contract wages, but in some years on a low base, and contributions lapsed during the months wages went unpaid. The basic pension comes to a little over forty percent of your last monthly pay.",
+  "scenes": [
+   "In your first week of retirement you still wake at seven and get up to go collect vests. Only at the door do you remember the vests haven't been yours for a long time.",
+   "The club invites you back to teach the academy kids. You don't use slides. You have each of them put on a vest and run a lap, then sit down and look at their own numbers.",
+   "Every week you go watch the neighbors play on the pitch below your building. One older man asks every time how far he ran today. You glance and give him a number, and he has no way of knowing if it's right.",
+   "Your grandchild plays football at school. You go to watch, and standing on the touchline you find yourself counting his sprints, and only when you've finished does it strike you as funny.",
+   "In the first months after leaving the club you sleep until you wake on your own, and the first thing you do on waking is still check your phone for messages from the coaching staff. There are none, and you lay the phone face down on the nightstand.",
+   "You start jogging again, from the Pearl River bank to Haixinsha, and when you finish you don't look at a watch. Your legs simply feel like your own.",
+   "The club holds a reunion for former staff, and by the pitch you meet that sixteen-year-old from long ago. He's retired and coaching now, and he crouches down to show you the data on his tablet.",
+   "In the first year on a different road, every weekend evening you switch on that team's match right on time with a notebook beside you, and only partway through taking notes do you remember that nobody wants your report anymore.",
+   "On an errand in Baiyun you pass the training ground, and the sign at the gate bears a different club's name. Through the wire fence you see a young person on the touchline holding a tablet, standing exactly where you used to stand.",
+   "An analyst you trained has become director of analysis. He sends you a photo: the rule you wrote is still on the analysis room wall. The first page of every report may hold only three things.",
+   "Back home in Meizhou a new youth football ground has been built. You go to look: a row of charging cabinets stands by the pitch and kids in vests run back and forth. It's not like it was in your day.",
+   "On an old hard drive you find the first data chart you made for the school team in your second year, ugly colors, one number miscalculated. You look at it for a long time, remembering the afternoon the coach first picked his team from it."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you sit in the stands of a stadium. There's no match; the grass has just been watered and the floodlights come on row by row. Looking at the empty pitch, your mind still draws the running lines by itself.",
+   "burnout": "Many years later, you jog slowly along the Pearl River with no vest and no watch. Halfway you stop to watch the boats on the river as your heartbeat slows. You don't know what it is, and you don't want to.",
+   "end": "Many years later, in a cupboard, you find the old vest numbered zero, the fabric yellowed, the little pocket on the back still there. You fold it neatly and put it back where it was."
+  }
+ }
+}

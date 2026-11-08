@@ -1,0 +1,201 @@
+{
+ "id": "hotel-lobby-xm",
+ "occupation": "Guesthouse Host",
+ "role": "Host at a Guesthouse in an Old Villa on Gulangyu",
+ "headline": "Three years on the front desk of a luxury hotel on Xiamen Island, then you quit, moved to Gulangyu, and now live in the attic of a guesthouse in an old villa, hauling a handcart to the ferry pier every day to meet guests and see them off",
+ "unit": "A boutique guesthouse in a converted old villa on Gulangyu Island, Xiamen",
+ "unit_type": "Island boutique guesthouse",
+ "city": "Xiamen (Gulangyu Island)",
+ "city_tier": "New first-tier city",
+ "education": "Associate degree (hotel management)",
+ "level": "Just promoted from assistant host. You can take a booking all the way from meeting the ferry through check-in, planning routes and handling complaints on your own, and you know the property management system and the travel-platform back ends well. Quotes for whole-house bookings and team retreats still go to the manager.",
+ "intro": "You stood three years at the front desk of a luxury hotel on Xiamen Island. Last year you quit, took the ferry over to Gulangyu, and became a host at a guesthouse in an old converted villa, living in its attic. There are no cars on the island, so guests' suitcases are yours to haul uphill; when a typhoon comes and the ferries stop, everyone in the building is in your care. From today, every group that walks up from the pier, you have to see safely back down to it.",
+ "salary_note": "Estimate: hosts at Gulangyu guesthouses earn a base wage plus commission on good reviews and activities, with housing and two meals on the island included, so cash in hand is close to the national average. In peak seasons (summer holidays, National Day, Lunar New Year) commission is good; in typhoon season and the off-season it drops noticeably.",
+ "facts": [
+  { "label": "Guesthouse Host (current level)", "value": "1-2 years, ¥4,500–7,500 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Host (2-3 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥11,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Meeting guests' car in a sudden downpour and serving them ginger tea on arrival", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Quarterly analysis of linen losses and resetting purchase thresholds", "source": "AI exposure" },
+  { "label": "Open positions", "value": "16 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You come down from the staff room in the attic, first go out to the terrace to straighten the bougainvillea the wind knocked crooked overnight, then check today's room status in the property management system: six checking out, five checking in.",
+  "Breakfast. The cook has fried oyster omelets and made peanut soup, and you set a handwritten \"Today on the Island\" card on every table, warning that Sunlight Rock will be crowded today: go early.",
+  "Checkout rush. No vehicles are allowed on the island, so you haul guests' luggage downhill to the pier on a handcart, twenty minutes a trip, four round trips.",
+  "Room checks with the housekeeper: running a finger over the nightstands for dust, checking the shower drains for hair. It's the damp spring weather, and the sheets feel clammy to the touch, so you switch on every dehumidifier.",
+  "New guests off the ferry. You wait at the pier holding a little wooden sign with their name on it. Three generations of a family with a stroller, and you take the heaviest suitcase first.",
+  "You walk the new guests through the island: how to dodge the crowds in the morning, which rocks to watch the sunset from, which shacha noodle shop the islanders themselves eat at. On the guesthouse's Xiaohongshu account you post today's photo of the terrace.",
+  "A guest complains that someone downstairs is playing the piano too loudly. You go down and knock, and say politely that the island keeps quiet after nine at night, and give each side a box of mung bean cakes.",
+  "The last ferry left long ago and the island is very still. At the front desk you close out today's accounts, message each of tomorrow's guests their pickup time one by one, and turn off the lobby lights."
+ ],
+ "ladder": [
+  { "title": "Assistant Host", "stage": "Entry", "focus": "Rotate through greeting and seeing off guests, double-checking room cleaning, helping with check-in and checkout and carrying luggage; move up through reliable, error-free basic service." },
+  { "title": "Guesthouse Host", "stage": "Independent", "focus": "Handle guests on your own from start to finish: pre-arrival communication, leading local activities, posting casual social-media content, and defusing complaints on the spot; move up through a steady record of five-star platform reviews and activity bookings." },
+  { "title": "Senior Host", "stage": "Core staff", "focus": "Train new hosts, manage purchasing and costing of daily supplies, design high-value whole-house and small team-retreat packages, and help the manager optimize pricing; move up through broad operational skill and repeat guests." },
+  { "title": "Guesthouse Manager", "stage": "Running a property", "focus": "Own the property's profit and loss, staff evaluations, emergency and safety incidents, relations with local government and businesses, and compliance checks; move up by hitting occupancy, RevPAR and net profit targets." },
+  { "title": "Regional Operations Manager", "stage": "Regional", "focus": "Roll out standard procedures across several properties or a guesthouse cluster, prepare new openings (furnishing and building teams), run central revenue management, and bring in outside brand partnerships." }
+ ],
+ "ai_tasks": [
+  { "name": "Meeting guests' car in a sudden downpour and serving them ginger tea on arrival", "how": "AI can warn ahead of time about rain and guests' arrival times and list the supplies needed. Meeting the car, brewing ginger and jujube tea, checking how the guests are doing and calming the whole family all have to be done in person, and a person carries the health and safety risk." },
+  { "name": "Scheduling pickups and giving guests a warm welcome on a stormy arrival day", "how": "AI can help check room types for safety hazards, flag food that clashes with dietary restrictions, and draft a few indoor alternatives. Coordinating the cars within eight minutes, hand-brewing hot tea, and reassuring three generations of a family face to face can only be done by a person." },
+  { "name": "Quarterly analysis of linen losses and resetting purchase thresholds", "how": "AI reads the RFID tracking data and the supply reports in the property management system, sorts losses into wear, damage and suspected theft, and calculates recommended stock levels for each item. A person only spot-checks the odd conclusions and looks further into suspected theft before deciding." },
+  { "name": "Forcing a morning sync of room status across all channels, with an overbooking cutoff", "how": "The system compares and syncs room status across every channel automatically, and cuts off sales and raises an alarm when overbooking looks likely. A person only deals with alarms and spot-checks the sync logs regularly." },
+  { "name": "A full midday RFID rescan of room linen and pulling out anomalies", "how": "Rescanning and identifying overdue or missing linen can be automated, producing a list of exceptions. Judging whether something is actually soiled, and pulling and setting aside the bad pieces, takes a person on site." },
+  { "name": "Spraying glow-paint safety markers on mountain trails and checking defibrillator points before rainy-season hikes", "how": "AI can take in the warnings, generate a list of spots to mark, and send reminders to inspect the defibrillators. Going up the mountain in a downpour to spray the markers, and checking each defibrillator's battery and condition by hand, can only be done by a person." },
+  { "name": "A three-step compliance review and reputation dry run before publishing a viral Xiaohongshu post", "how": "AI can screen content for compliance first, flag risks against the regulations, and simulate how the public might react once it's posted. Whether to publish, and the trade-offs around legal limits and reputational risk, a person decides and answers for." },
+  { "name": "Taking manual control of the smart room-control system in the public areas after an overnight power cut, and reassuring guests", "how": "AI can help diagnose the system's state remotely and prompt the takeover steps. Getting to the control panel within three minutes, taking over the lights, air conditioning and door locks by hand, and reassuring guests in person must be done by someone on site." }
+ ],
+ "events": {
+  "e_typhoon": "A typhoon arrives, the ferries are suspended for two days, and nine guests are stranded on the island. You haul out all the instant noodles and bottled water from the storeroom, and the night the power goes, you light candles in the lobby and play cards with everyone until late.",
+  "e_five_star": "A guest writes an eight-hundred-character review on a booking platform, mentions your name three times, and attaches a photo of you holding the wooden sign at the pier. The manager posts a screenshot in the staff group chat.",
+  "e_one_star": "A guest complains the room is small, the slope too steep and the building has no lift, and gives one star. The manager has you write the reply. You redraft it five times, and the final version only describes what the island's old houses are like.",
+  "e_mold": "In the damp spring weather, a guest's leather bag left in the wardrobe grows spots of mold. You apologize and pay for it in full, and from then on every wardrobe gets a box of desiccant.",
+  "e_overbook": "Two platforms sell the last room at the same moment. You find one of the guests a bigger room at the guesthouse next door, pay the difference yourself, and haul her suitcase over in person.",
+  "e_ai_sync": "The room-status system can now sync every channel automatically and locks rooms at the first sign of overbooking. You no longer have to check each platform one by one in the morning, and you spend the extra half hour writing the breakfast cards.",
+  "e_ai_linen": "RFID tags are sewn into all the linen, and the system works out which batch of towels needs replacing and which room is always one bath towel short. You check the list and find three of them drying on the balcony railing of one room.",
+  "e_islander": "An islander in his nineties lives in the old villa next door and sits by his gate every day. You greet him every time you pass, and he tells you who lived in this house decades ago and who planted the tree by its gate.",
+  "e_slow": "The island caps visitor numbers and tour groups thin out, and that year off-season occupancy falls to thirty percent. The manager cuts the rota; you work four days a week and spend the other three walking the island.",
+  "e_proposal": "A guest wants to propose on the terrace. You spend an evening secretly stringing up lights and flowers with him, then hide at the top of the stairs to watch. She covers her mouth and cries, and your eyes go red too.",
+  "e_night_call": "In the middle of the night an elderly guest says his chest feels tight. You call for an ambulance and half-run with his family all the way to the pier to put him on the emergency boat. The next day the family calls to say he's all right.",
+  "e_love": "The barista at the café by the pier keeps an iced Americano for you every morning. Once, when a typhoon stopped the ferries and neither of you could get back to the mainland side, you spent an afternoon walking the empty streets together.",
+  "e_wedding": "You hold the banquet back in your hometown, then treat your colleagues to a meal on the island. The manager lends you the guesthouse terrace for photos, and the sunset that day is the best of the year.",
+  "e_baby": "Your child is born. You move out of the attic and rent a place off the island, taking the first ferry over every morning and the last one back every night.",
+  "e_house": "You buy a small two-bedroom flat in Jimei, the down payment pooled from both families. The balcony faces the sea, and in the distance you can see a corner of Gulangyu.",
+  "e_viral": "A post you made, \"The terrace after the typhoon,\" goes viral on Xiaohongshu, and within a week every weekend for the next two months is booked. The manager gives you a red envelope.",
+  "e_window": "A guest's child breaks a pane of the old stained-glass window in the stairwell, a kind of glass nobody makes anymore. You go to talk to the parents about compensation, and by the end, you're all crouched together picking up the pieces.",
+  "e_blackout": "In the small hours the power suddenly goes, and the smart locks and air conditioning all stop. You run to the switch room, switch over to backup by hand, and knock on every door with a flashlight, busy until dawn.",
+  "e_knees": "After all these years of hauling suitcases up and down slopes, your knees give out first. You have to go downhill sideways, and you fit the guesthouse handcart with a pair of big wheels.",
+  "e_parent": "A call from home: your mother is in hospital. It's the National Day holiday and the guesthouse can't spare anyone, so you wait until the last day of the holiday to get on a bus home.",
+  "e_apprentice": "A host you trained is poached by a big brand to be a manager. Before she leaves she takes a photo of you at the pier, and says from now on her new hires will learn the wooden sign in their first lesson too.",
+  "e_young": "Many of this year's new hosts are office workers who quit to come to the island for \"a different way of living.\" Once peak season is over half of them are gone, saying they never imagined hauling so many suitcases every day."
+ },
+ "choices": {
+  "c_cert": {
+   "title": "Get the guesthouse host certificate, aiming for Senior Host",
+   "situation": "The manager says that to be a Senior Host you need to train new staff, keep the supplies accounts and land whole-house bookings yourself, and the Level 3 guesthouse host certificate would help. The training is off the island, four weekends in a month, right in the busiest stretch of peak-season pickups.",
+   "options": [
+    { "label": "Sign up and take the weekend classes", "result": "You learned to keep a stock ledger, and for the first time worked out exactly what a night's linen and toiletries cost per room. On exam day you took the earliest ferry over and the last one back." },
+    { "label": "Not now, hold the fort through peak season", "result": "That summer you had the most good reviews in the guesthouse, and the most commission. When the new hosts needed someone to train them, the manager went to someone else first." }
+   ]
+  },
+  "c_hotel": {
+   "title": "Go back to the luxury hotel on Xiamen Island as front office supervisor",
+   "situation": "The front office manager at your old luxury hotel calls to say they need a front office supervisor and asks if you'll come back. Full social insurance and housing fund, a proper promotion track; but it'd be the same scripts every day, and eight or nine night shifts a month.",
+   "options": [
+    { "label": "Go back to the hotel", "result": "You put the uniform back on and ran a dozen front desk staff. Your pay slip looked better than on the island, but you could no longer remember every guest's name." },
+    { "label": "Stay on the island", "result": "You thanked the manager and said you couldn't leave the island. That evening, after meeting the last group at the pier, you sat on the steps for a while looking at the lights across the water." }
+   ]
+  },
+  "c_newstore": {
+   "title": "Follow the brand into the mountains to open a new property",
+   "situation": "The guesthouse owner has acquired an old courtyard among the tea hills of Wuyishan and needs someone to open it, and asks if you'll go as opening host for a year and see. The pay is a little higher; the tea season is busy, and in the off-season the whole mountain is empty.",
+   "options": [
+    { "label": "Go to the mountains", "result": "You lived a year in the tea hills and learned to take guests to watch the picking and brew tea over a charcoal stove. The first guests on opening day were regulars you'd met off the ferry on Gulangyu." },
+    { "label": "No, stay with the island", "result": "A new colleague went instead. Now and then she sends photos: rows of tea in the mist, an empty courtyard, with a line saying she misses shacha noodles." }
+   ]
+  },
+  "c_pricing": {
+   "title": "Learn AI dynamic pricing or not",
+   "situation": "The owner has brought in a revenue management system. AI suggests a price for every room every day based on the weather, the ferry schedule and nearby prices, and someone has to watch it, check it and adjust it. Learn it and the manager will ask you before setting prices, but the work has to be done each night after the accounts are closed.",
+   "options": [
+    { "label": "Learn it, watch prices at night", "result": "You learned to read room-nights and turnover, and knew which rooms to discount first when a typhoon warning went up. Once the system cut the Mid-Autumn price, and you were the one who stopped it." },
+    { "label": "No, look after the guests", "result": "You still meet the ferry every day, and guests remember your wooden sign. You stay out of pricing, and when you see the manager has changed prices again at the end of the month, you don't really understand why." }
+   ]
+  },
+  "c_manager": {
+   "title": "Apply for Guesthouse Manager",
+   "situation": "The manager is moving to run a new project, and the owner wants to promote a Senior Host to Guesthouse Manager, responsible for a full year of this building's profit and loss. Applicants submit a business plan; occupancy, RevPAR and net profit all go into the targets, and if typhoon season loses money, that's yours too.",
+   "options": [
+    { "label": "Apply", "result": "You stayed up two nights writing the plan; the first page was the off-season playbook: whole-house bookings, family study trips, tours of islanders' old houses. When the owner finished reading he asked: will you sign your name to it?" },
+    { "label": "Don't apply, stay a host", "result": "The new manager came from outside, and in the first week called you in to ask who to go to first about things on the island." }
+   ]
+  },
+  "c_study": {
+   "title": "Become a study-tour guide",
+   "situation": "A study-tour company in Xiamen approaches you: the way you talk about the island's old houses and pianos is what children love most, and they'd like you to become a study-tour guide, leading camps for primary and middle school students. Weekdays preparing lessons at school, weekends taking groups to the island.",
+   "options": [
+    { "label": "Do study tours", "result": "You earned the study-tour guide certificate and redrew the island's routes as a map for children.", "end": "You stand at the pier holding a little flag, forty children in yellow caps behind you. You point to the old villa on the slope and say: guess what the people who lived here a hundred years ago did first thing every morning." },
+    { "label": "Stay at the guesthouse", "result": "You said you'd do a few more years. That weekend at the pier you saw a line of children in yellow caps go by, and stood watching a little longer." }
+   ]
+  },
+  "c_partner": {
+   "title": "Buy in with your skills as partner in a small guesthouse",
+   "situation": "A regular guest has acquired a stone house in an old seaside village in southern Fujian and wants you to come in as a partner with your skills: you bring the management, he brings the money, profits shared yearly. It will lose money for two or three years before breaking even, and you'd have to build a team from nothing.",
+   "options": [
+    { "label": "Buy in, go to the village", "result": "You resigned as manager and moved to the old village by the sea.", "end": "Your stone house has only seven rooms, and on half the days of the year it's you who goes to meet guests under the big banyan at the village entrance. In the evenings you take in the sun-dried sheets in the courtyard while the sea wind comes through the gaps in the stone wall." },
+    { "label": "Stay on the island", "result": "You turned it down and introduced the village to a colleague who wanted to strike out. Later you stayed a night there; the bougainvillea in the courtyard had grown from a cutting off your terrace." }
+   ]
+  },
+  "c_regional": {
+   "title": "Apply for Regional Operations Manager",
+   "situation": "The brand now has five or six properties in Xiamen and needs a Regional Operations Manager to own the standard procedures, central revenue management and new openings. You're one of the candidates; the other was poached from a hotel chain and has opened over a dozen properties.",
+   "options": [
+    { "label": "Apply and write a proposal", "result": "You turned years of typhoon-season emergency records into a set of procedures and put them on the last page of the proposal. At the panel the owner turned to that page and paused for a long time." },
+    { "label": "Let the outsider have it", "result": "You go on running your old villa. The new manager's first act is to come and stay on the island for three nights, following you to the pier every morning." }
+   ]
+  },
+  "c_consult": {
+   "title": "Stop running the property and become an opening consultant",
+   "situation": "You're past fifty, and your knees creak going downhill. The owner says you could move to opening consultancy for new projects: assessing sites, reworking circulation, choosing bedding, no night duty and no suitcases. The commission would be gone.",
+   "options": [
+    { "label": "Do openings", "result": "You began looking at houses in old villages and on islands, and with any building you look first at its stairs and its windows. Owners say you have a sharp eye." },
+    { "label": "Keep running the property", "result": "You still hold the wooden sign at the pier. New guests see your gray hair and rush to haul their own suitcases." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you went to the pier to meet the last group: a family of three, the child wearing a little backpack. You saw them to their room, then at the front desk wiped the little wooden name sign clean and put it in a drawer. When the last ferry left you stood on deck and watched the lights of Gulangyu dim, one by one.",
+  "burnout": "After that typhoon season your knees were too swollen to go downhill. The doctor told you to rest, and the owner moved you to the office on the mainland side to handle room allocation and accounts. Every day you sit by the window watching room status in the system, and now and then an old guest calls and asks for you by name to meet them at the pier."
+ },
+ "stages": [
+  "You handle a group of guests on your own from start to finish now: before arrival you find out on WeChat which ferry they're on, whether they're bringing elderly parents or children, what they can't eat; you meet them at the pier and talk about the island on the way up; once they're settled you plan routes, book meals, handle complaints, and at checkout see them back down the hill. In your hands are the property management system, a handcart, and a phone for taking photos. Good reviews on the booking platforms and activity sign-ups are the two numbers the manager looks at you by at the end of the month.",
+  "You start training new hosts, teaching them how to spot guests at the pier and how to answer bad reviews. Once a week you check the linen and supplies accounts and reconcile with the laundry on the mainland side and the boatman who delivers; whole-house bookings and small team retreats are yours to plan and quote, and before setting prices the manager asks you: can we still go up this weekend?",
+  "This old villa's profit and loss are yours now. Every morning you look first at occupancy and RevPAR, and at the end of the month you go through the P&L with the owner, where it's losing and where it can save; the hosts' and housekeepers' rotas, reviews and pay slips all need your signature. Fire inspections, neighborhood committee visits, boarding up the windows before a typhoon: you have to be there for all of it.",
+  "You run five or six properties on the island and on the mainland side, visiting three or four a week. You set the procedures for welcoming guests and checking rooms, keep an eye on the central revenue system's pricing, and negotiate renovations, choose bedding and recruit teams with the owners of new projects. You spend more time in meetings than in the properties, and when managers have a problem, they call you first."
+ ],
+ "work": [
+  "A guest on the ferry sent her photo to the wrong person. You search the crowd at the pier for ages and finally recognize her by the straw hat in her profile picture, take her suitcase, and head uphill.",
+  "A guest's message says their child has a gluten allergy. A day ahead you go and ask the island's breakfast shop what flour they use, and arrange with the cook to make a separate portion that morning.",
+  "At checkout a little girl can't bear to leave the cat on the terrace. You take a photo of the cat, print it, and slip it into her postcard.",
+  "A new host's reply to a bad review is too sharp. You rewrite her draft as three sentences: an apology, an explanation, what we'll do next time, and have her post it herself.",
+  "The sheets back from the mainland laundry are six short. You and the boatman count bundle by bundle against the delivery note, and finally find them in a corner of the hold.",
+  "A company wants to book the whole house for a three-day retreat. You lay out the terrace, the dining room and two island routes on one sheet, quote ten percent above what the manager expected, and they sign.",
+  "On the month-end P&L, electricity is thirty percent higher than last year. You check room by room and find two rooms whose dehumidifiers have been set to run nonstop.",
+  "The night before the fire inspection, you take two hosts round to read the pressure gauge on every floor's fire extinguisher, and replace one that's expired.",
+  "A housekeeper of three years is going home to her village. You add an extra month's wages for her and sign the pay slip with your own name.",
+  "The owner of a new property wants to replace the old villa's wooden staircase with glass. You take him to see another house that was ruined by renovation, and he goes back and changes the plan.",
+  "In the central revenue system you set National Day prices for five properties: twenty percent up on the island, only ten for the one on the mainland side, because it's far from the pier and guests have to plan around the ferries.",
+  "You teach every host in the region the typhoon emergency procedures, from stockpiling water and the suspension notices all the way to how to keep stranded guests company through the night."
+ ],
+ "past": [
+  "You were at high school in a county town near Zhangzhou when you first took the ferry to Gulangyu with classmates. By the pier you watched people dragging suitcases uphill and thought how lovely it would be to live on the island.",
+  "Your gaokao (college entrance exam) score was only enough for a junior college. You chose hotel management at a college in Xiamen, thinking you could always find work in Xiamen.",
+  "You interned at the front office of a luxury hotel on Xiamen Island, where you learned to check guests in on the hotel's management system, to stand ten hours without leaning on the wall, and to call every regular by name.",
+  "After graduating you stayed on at the hotel as a front desk agent and made shift leader a year later. Lots of night shifts, the scripts word-perfect, and sometimes you felt like a standardized machine.",
+  "You came across a post: an old-villa guesthouse on Gulangyu hiring hosts, housing on the island included. You quit, took the ferry over with one suitcase, and became an assistant host.",
+  "You spent a year learning from the senior host: how to check a room, how to answer a bad review, what to do first when a typhoon comes. At the end of the year you were made a full host."
+ ],
+ "late": {
+  "pension_note": "Estimate: the guesthouse pays into Xiamen's basic pension for enterprise employees, with contributions based on base pay and not much on commission. After retirement you get about forty percent of your final monthly pay.",
+  "scenes": [
+   "In your first month of retirement you still wake at seven, and the first thing you check on your phone is the weather and the ferry times. You take a ferry to the island and don't go into the guesthouse; you sit on the pier steps all morning.",
+   "A manager you once trained invites you to stay three nights at her new property. You can't help running a finger over the nightstand for dust, and she laughs beside you.",
+   "Your pension arrives on time each month, enough for the two of you. In your compound in Jimei you plan neighbors' trips for them, in more detail than any travel agency.",
+   "The old islander next door stopped sitting by his gate long ago. Passing by, you see the tree by the gate is still there, taller again than it was.",
+   "In the office on the mainland side you allocate rooms and reconcile accounts, and leave on time every day. Your knees aren't swollen anymore, but at half past two each afternoon you still glance out of the window, as if waiting for a ferry.",
+   "A young host calls to ask what to do: a typhoon is coming and a guest insists on leaving. You say, first show him a screenshot of the suspension notice, then make him a cup of hot tea.",
+   "At retirement age you do the paperwork. Once, in a supermarket on the mainland side, you run into an old guest who still remembers your wooden sign and insists on a photo with you.",
+   "For the first year after leaving the guesthouse, you still check the typhoon tracks in the forecast, and only when you're done remember that boarding up the windows isn't your job anymore.",
+   "Now and then you go back to Gulangyu, and the cook is still at that guesthouse; when she sees you she brings out a bowl of peanut soup from the kitchen.",
+   "A host you trained becomes a regional manager, and when she speaks about hospitality at an industry event, the first thing she says is: when you meet someone at the pier, hold up a wooden sign with their name on it.",
+   "Later, room status, pricing and linen were all handed to systems. But every group walking up from the pier still needs someone to take their suitcases and walk them up that slope.",
+   "Your granddaughter asks what you used to do. You say: on an island with no cars, you hauled people's suitcases and told them stories. She doesn't believe you; there's no such place as somewhere with no cars, she says."
+  ],
+  "closing": {
+   "retire": "One evening many years later, you sit on your balcony in Jimei and watch Gulangyu light up across the water. The last ferry pulls away from the island, and you follow its lights slowly across the sea until you can't see them anymore.",
+   "burnout": "Many years later, on your balcony at home, you take in the sun-dried sheets and fold them one by one, the four corners lined up, exactly the way you used to teach new hosts in the attic.",
+   "end": "Many years later, in a drawer, you come across the little wooden sign that carried more than a thousand names, the writing layered over itself until none of it can be read. You run a finger over it, then put it back."
+  }
+ }
+}

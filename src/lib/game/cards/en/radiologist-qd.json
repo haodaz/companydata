@@ -1,0 +1,156 @@
+{
+ "id": "radiologist-qd",
+ "occupation": "Radiologist",
+ "role": "Radiologist at a Grade 3A Hospital",
+ "headline": "A Qingdao radiology resident at a top-tier hospital, five years of medical imaging plus three of residency behind them, who sits alone at night in front of two portrait monitors reading emergency CTs",
+ "unit": "The radiology department of a top-tier (Grade 3A) general hospital in Qingdao",
+ "unit_type": "Top-tier (Grade 3A) general hospital",
+ "city": "Qingdao",
+ "city_tier": "Emerging first-tier city",
+ "education": "Bachelor's degree (Medical Imaging, five-year program) + three years of residency training",
+ "level": "You can write preliminary reports on common emergency CTs on your own and you recognize critical findings reliably; difficult neuro and chest studies still need a senior's call, and your reports must be reviewed before release.",
+ "intro": "You did three years of residency in this hospital's radiology department, and on the day you finished the head said the department was short of people: stay. The reading room is one floor below ground in the outpatient building, windowless, rows of portrait monitors glowing gray-white, and the CT scanner next door turns all night. From today your name is on the night rota, emergency studies land on your screens one after another, and critical findings must be phoned out within ten minutes.",
+ "salary_note": "Estimate: radiology at a Qingdao Grade 3A hospital means high scan volume and many nights, so pay is set at 1.1 times the national average; base pay is low at the resident stage, and bonuses are counted by reports and night shifts.",
+ "facts": [
+  { "label": "Resident Physician (current level)", "value": "0-4 years, ¥7,000–12,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Attending Physician (4-9 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Performing interventional radiology procedures", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Reading images and comparing them with prior studies", "source": "AI exposure" },
+  { "label": "Open positions", "value": "4 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You take over the night shift. The day colleague hands you three unfinished reports and says emergency has had a lot of car crashes tonight. You make tea and turn up the brightness on your two portrait monitors.",
+  "A seventy-year-old has suddenly lost his speech: non-contrast head CT. You go through the basal ganglia slices, no bleed, and phone neurology: you can assess him for thrombolysis.",
+  "A triple-rule-out CTA for chest pain. You scroll the aorta slice by slice looking for a torn intimal flap. No dissection, but a narrowed coronary branch; you put it in the report and mark it urgent.",
+  "Trauma patients one after another. On the 3D reconstruction you count ribs down to the twelfth and write out exactly where each fracture is.",
+  "A young man with abdominal pain, his appendix on CT swollen to the size of a little finger. Before you've finished signing, emergency surgery is waiting on the phone.",
+  "The sleepiest hour. You go upstairs to the window at the end of a corridor; out on the sea there are ships' lights. Then back to a follow-up scan for an old man with a lung nodule.",
+  "A small bright patch on a head CT that you're not sure of. You zoom, change the window, pull up his scan from three years ago to compare, and in the end phone and wake your senior anyway.",
+  "At the handover reading conference the head pulls three of your reports from last night and changes one word in one of them: 'consider' becomes 'cannot exclude'."
+ ],
+ "ladder": [
+  { "title": "Resident Physician", "stage": "Entry", "focus": "Writes preliminary reports, covers emergency nights, supervises contrast scans; the intermediate exam and enough years lead to attending" },
+  { "title": "Attending Physician", "stage": "Core staff", "focus": "Reviews and releases reports, picks a subspecialty, takes clinical consults" },
+  { "title": "Associate Chief Physician", "stage": "Subspecialty lead", "focus": "Leads a subspecialty group, chairs reading conferences and multidisciplinary meetings, runs research; needs papers and a stint supporting a grassroots hospital" },
+  { "title": "Chief Physician", "stage": "Final say", "focus": "Has the last word on the hospital's difficult imaging consults, runs report quality control and decides on new technology" },
+  { "title": "Head of Radiology", "stage": "Running the department", "focus": "Runs every doctor and technologist and over a dozen major scanners: rotas, purchasing, waiting times and bringing in AI are all yours; one per hospital" }
+ ],
+ "ai_tasks": [
+  { "name": "Reading images and comparing them with prior studies", "how": "AI can screen first, mark suspicious lesions and pull up earlier scans for comparison automatically; the doctor has to recheck slice by slice and judge which findings matter clinically and which are false positives or missed marks." },
+  { "name": "Writing imaging reports", "how": "AI can draft a report from the findings and templates and fill in measurements automatically; the doctor only spot-checks and edits, focusing on whether the conclusion and recommendations hold up." },
+  { "name": "Reviewing and releasing reports", "how": "AI can check formatting, left-right errors and missing items and flag risks first; the doctor reviews and signs each report, and the signature carries legal and medical responsibility." },
+  { "name": "Reviewing the history and related records", "how": "AI can gather history, labs and prior studies from the record system into a summary; the doctor only checks key details in difficult cases, asking the patient or the clinician directly when needed." },
+  { "name": "Recommending or confirming the right imaging study", "how": "AI can suggest a study from the clinical indication and guidelines and flag repeat scans and radiation risk; the doctor makes the final call based on the patient's situation, such as allergies, kidney function or whether they can cooperate." },
+  { "name": "Performing interventional radiology procedures", "how": "Interventional work takes hands on site, for puncture, guidewires, catheters and reacting during the procedure; AI can at most help with navigation and image fusion, and the procedure and its risks are entirely the doctor's." },
+  { "name": "Managing complications after intervention and assessing results", "how": "AI can help compare follow-up images and track indicators, but judging complications on the spot, handling emergencies and talking with patients and families rest on the doctor." },
+  { "name": "Consulting and discussing cases with clinical departments", "how": "AI can organize the case, prepare consult materials and image comparisons; the real discussion, weighing treatment options, persuading and reconciling departments' views, has to be done face to face by the doctor." }
+ ],
+ "events": {
+  "e_sah": "A night-shift head CT for 'headache, cause unknown'. In the suprasellar cistern you see a faint brightness that shouldn't be there and phone emergency: consider subarachnoid hemorrhage. The patient has an angiogram that same night.",
+  "e_miss": "You miss a small nodule, and six months later the patient has it found at another hospital. At the department's quality meeting you look at that scan many times over.",
+  "e_nights": "Ten nights a month, over a hundred emergency studies a night. Walking home after a night shift your eyes ache so much you can't read the bus stop signs.",
+  "e_eyes": "Years of staring at screens, and your eyes are dry and your neck stiff. You get a pair of blue-light glasses and raise your monitors ten centimeters.",
+  "e_ai_nodule": "The department brings in AI lung nodule screening, and before you open a scan the nodules are already boxed. It finds them faster than you, and it also boxes the cut ends of blood vessels as nodules, which you cancel one by one.",
+  "e_ai_draft": "AI can now draft reports automatically, and your work becomes checking and editing. One day you realize it's been a long time since you wrote a report from scratch, and it feels a little strange.",
+  "e_ai_triage": "AI reads emergency head CTs first and moves suspected bleeds to the top of the list. Once it lifts a patient from twentieth place to first; you open the scan, and it is a bleed.",
+  "e_patient": "A patient finds her way to the reading room with her report and asks what the words 'space-occupying lesion' mean. You don't have to see patients, but you ask her to sit down and explain slowly for ten minutes.",
+  "e_vague": "A surgeon says on the phone that your report is too equivocal to use. You look at the scan again and commit to a conclusion. The next day he calls to say thanks.",
+  "e_queue": "Outpatient MRI bookings are three weeks out, and patients argue with the nurse at the registration window. The department adds evening scanning, and you get two more shifts.",
+  "e_love": "You meet the engineer installing the department's new CT scanner in the machine room. Your first date is to look at the sea at Badaguan, and you're late because a car crash came in.",
+  "e_marry": "You get married. At the banquet there's fresh unfiltered local beer, colleagues take turns toasting you, and you make a note of who's on call tonight.",
+  "e_house": "You buy a flat in the West Coast New Area and drive through the undersea tunnel to work every day. The down payment empties both families' savings.",
+  "e_child": "Your child is born. You've seen inside tens of thousands of people's bodies, but the first time you hold someone this light you don't know what to do with your hands.",
+  "e_paper": "Promotion requires papers. After work you pull up case scans one by one in the reading room, measuring, taking screenshots, filling in tables, until midnight.",
+  "e_mentor": "An old department head close to retirement puts up an old scan every lunchtime for the young ones to guess. You get five right in a row, and he copies you the teaching file he's built up over thirty years.",
+  "e_sea": "After a night shift you have a bowl of seafood noodles by the sea and sit for a while near Shilaoren beach, watching the tide go out little by little.",
+  "e_contrast": "A patient has a severe allergic reaction after contrast injection. You and the nurse treat it together and he comes through. That night you keep wondering whether you asked about allergies carefully enough.",
+  "e_mass": "A multi-vehicle crash on the bay road sends more than a dozen injured into CT at once. You and the technologists scan them one after another and report them one after another, and by dawn there are twenty-three names in the handover book.",
+  "e_mdt": "At the tumor board you put a patient's MRIs before and after treatment side by side and say this round is a partial response. The oncology head nods and continues the current plan.",
+  "e_father": "Your father back in Weifang has a lung nodule found at a checkup, and the scan is sent to your phone. You look at it all evening, and the next day call to tell him: it's nothing to worry about, recheck next year."
+ },
+ "choices": {
+  "c_zhuzhi": { "title": "Take the Attending Physician exam (intermediate title in radiology)", "situation": "You have the years for the intermediate radiology exam, and only after passing can you be appointed attending and release reports. Nights are packed, so studying gets squeezed in before your daytime sleep.", "options": [
+   { "label": "Study before sleeping off nights", "result": "You drill past years' image-reading questions over and over. One scan on the exam is identical to one you saw on an emergency night." },
+   { "label": "Sit it next year", "result": "You read over ten thousand more studies this year, and when you sit the exam the next year, the computer-based section feels like a quiet night shift." } ] },
+  "c_sub": { "title": "Choose a subspecialty: chest, neuro, or abdomen", "situation": "The department is splitting into subspecialty groups and the head wants your choice. Chest has the most studies, endless lung nodules; neuro has the hardest, and emergency head CTs can't wait a minute; abdomen is closest to surgery, with someone calling every day to ask whether they can operate.", "options": [
+   { "label": "Chest", "result": "You read forty thousand chest CTs in a year, and eventually you can name the segments of the right lower lobe with your eyes shut." },
+   { "label": "Neuro", "result": "You start learning dozens of MRI sequences, and for the first month they all look the same. Six months later, the emergency stroke scans are all sent to you." },
+   { "label": "Abdomen", "result": "You get to know the general surgeons, and before they operate they come down to the reading room to go through the scan with you." } ] },
+  "c_ir": { "title": "Move to interventional radiology", "situation": "The interventional group is short of people: angiography, embolization, biopsies, standing in a lead apron in the DSA suite. Hands-on work, somewhat better pay, and you're on call through the night.", "options": [
+   { "label": "Join interventional", "result": "You stand in a lead apron weighing several kilos for a year and learn to feed a guidewire while watching the angiogram on screen. Your back aches; your hands grow steady." },
+   { "label": "Stay in diagnostic", "result": "You say you still want to read images. The head nods and puts you on next month's consults." } ] },
+  "c_remote": { "title": "Join a teleradiology company", "situation": "A teleradiology company offers half again your pay: reading scans uploaded from county hospitals all over the country from home, paid per study, no hospital, no night rota.", "options": [
+   { "label": "Go to the teleradiology company", "result": "You hand in your resignation. The head doesn't try to keep you, only says: write your reports clearly; the doctor at the other end depends on those few lines.", "end": "You went to the teleradiology company and read hundreds of studies a day in your study at home, sent from county hospitals everywhere. You often wondered whether the technologist taking those scans at the other end was staying up all night the way you used to." },
+   { "label": "Stay at the hospital", "result": "You turn it down. That night emergency brings in an aortic dissection, and you read the location of the tear to cardiac surgery over the phone word by word." } ] },
+  "c_ai": { "title": "Lead the clinical validation of the department's AI reading system", "situation": "The hospital is bringing in an AI diagnostic aid and needs a doctor to lead its clinical validation: label the ground truth, tally misses and false alarms, write the assessment. All of it after hours.", "options": [
+   { "label": "Take it on", "result": "With two residents you label three thousand chest CTs and write an assessment: it finds nodules faster than people, but four kinds of situation keep producing false alarms. Those four later go into the department's usage rules." },
+   { "label": "Pass, stick to reading", "result": "Another group does the validation. Once the system goes live you use it as given, canceling the boxes it gets wrong and finding yourself what it doesn't box." } ] },
+  "c_fuzhuren": { "title": "Going for Associate Chief Physician: six months in Pingdu first", "situation": "Associate Chief Physician requires papers, a research grant and grassroots experience. The hospital is sending you to support the radiology department of a city hospital in Pingdu for six months.", "options": [
+   { "label": "Go to Pingdu", "result": "You help them set up remote consults and teach two young doctors to read emergency head CTs. The year you come back, you apply for the associate senior title." },
+   { "label": "Apply in a couple of years", "result": "You give up the place, and that summer you and your child collect a whole bucket of shells on the beach." } ] },
+  "c_vendor": { "title": "Become a clinical specialist at an imaging equipment company", "situation": "A medical equipment company wants you as a clinical applications specialist for its CT scanners: teaching hospitals everywhere how to use new machines and set the parameters. Double the pay, traveling all year.", "options": [
+   { "label": "Go to the equipment company", "result": "You clear your reading room desk and take a copy of the old head's teaching file with you.", "end": "You went to the equipment company and flew across half of China, teaching technologists in hospital after hospital how to set the parameters. Once, at a county hospital in the northwest, watching them produce their first coronary images on the new CT, you were happier than they were." },
+   { "label": "Stay at the hospital", "result": "You say you still prefer reading the scans yourself and put the business card in a drawer." } ] },
+  "c_director": { "title": "Run for Head of Radiology", "situation": "The old head is retiring and the hospital is selecting a new head of radiology. You'd run scheduling, purchasing and booking waits for dozens of doctors and technologists and over a dozen major scanners, with less and less time to read yourself.", "options": [
+   { "label": "Run for it", "result": "At the selection meeting you talk about bringing emergency CT reports down to twenty minutes and ending three-week MRI waits." },
+   { "label": "Don't run, stay at your screens", "result": "You still read the hardest few studies every day, and more and more clinicians call asking for you by name." } ] }
+ },
+ "endings": {
+  "retire": "On your last day shift you finish the last report and click release, and 'Released' appears on the screen. You set the brightness of your two portrait monitors back to default and put your blue-light glasses in your pocket. Leaving the reading room and coming up to the ground floor, through the window at the end of the corridor the sea is a grayish blue.",
+  "burnout": "The year your eyes and your neck both gave out, you stopped working nights and moved to the health check center to read chest X-rays and screening CTs on regular hours. Most of the scans are normal, but you still scroll every one to the last slice."
+ },
+ "stages": [
+  "Your days are spent in the reading room: two portrait monitors, the PACS on the left with CT and MRI slices, the RIS report templates on the right, a stack of emergency requisitions by the keyboard. You write preliminary reports and your senior reviews and releases them; on nights you guard the emergency scans alone and phone critical findings to the clinicians within ten minutes. On days you take turns supervising contrast scans in CT, asking about allergies once more before the injection.",
+  "You've started reviewing and releasing other people's reports, residents' and visiting doctors' drafts lined up on your screen for you to correct and sign. You've chosen a subspecialty and read the hard cases in it. When clinicians come for a consult and point at a scan asking whether it is or isn't, you have a few minutes to give them an answer.",
+  "You lead a subspecialty group, with difficult consults, multidisciplinary meetings, grants and papers all on your shoulders. You chair the weekly reading conference and explain a scan until everyone sees why. When a surgical head can't make sense of a pre-op scan, he calls your mobile directly.",
+  "More of your work is consults and final checks: you settle the hospital's difficult imaging consults, audit the department's reports, and decide whether new equipment and sequences come in. You still read, but only the ones nobody else can call; at the residency exit exams you're an examiner.",
+  "You run dozens of doctors and technologists and over a dozen CT and MRI scanners: rotas, equipment purchases, booking waits, bringing in and validating AI systems, all landing on your desk. You argue with the hospital for new machines and posts, and at quality meetings you walk through young doctors' mistakes for them, item by item."
+ ],
+ "work": [
+  "A head CT at night that looks normal to you, and you're about to sign. You flip through the bone window one last time and see a thin fracture line in the temporal bone.",
+  "In the contrast CT room, an old man says he's itchy after the injection and a red rash spreads up his neck. You stop the scan at once and call the nurse to give him antiallergy medication.",
+  "In your first residency year your reports came back from your senior covered in red. Today he changes only one punctuation mark in your chest CT report.",
+  "A visiting doctor's report says 'no abnormality in either lung'. You find a six-millimeter ground-glass nodule in the right lower lobe, send the report back, and have him look again himself.",
+  "An emergency doctor calls to ask whether an abdominal CT really is a bowel obstruction. You look for three minutes and say yes, and say which segment it's in.",
+  "You put a nodule patient's seven CTs from five years side by side, measure the diameter on each, and write in the report: larger than before, recommend thoracic surgery referral.",
+  "At a multidisciplinary meeting, thoracic surgery wants to remove a nodule. You show the thin-slice reconstruction and the enhancement curve, say it looks more inflammatory, and suggest a recheck in three months. Three months later it has shrunk.",
+  "At reading conference you put up a scan you yourself missed three years ago and have everyone look for it. The first to find it is a newly arrived resident.",
+  "You write a grant application to study which AI-flagged nodules it keeps getting wrong. The night before it's due, you check the sample table once more.",
+  "A patient transferred from another city has had his scans read at three hospitals, each with a different conclusion. You go through every sequence and write one diagnosis and one sentence of reasoning on the consult form.",
+  "Auditing a month of reports, you find 'follow-up recommended' written far too often, and at the quality meeting require every one to say exactly how long until, and with what study.",
+  "The hospital wants a new fast MRI sequence that the vendor says halves scan time. You have the technologists scan twenty volunteers with it first before deciding.",
+  "You cut the average time to an emergency CT report from forty minutes to twenty: one more person on nights, and AI ranks the emergency scans by priority first.",
+  "An AI company wants to deploy a new reading system in the department. You have them blind-test it on five thousand of the department's scans from the past year before you talk contracts.",
+  "A young doctor misses reporting a critical finding and the clinicians complain. At the quality meeting you don't name him; you put up the scan and explain why critical findings must be phoned out within ten minutes."
+ ],
+ "past": [
+  "You're in middle school in Weifang. Your grandfather coughs all winter, the township clinic takes a chest X-ray, and the doctor holds the black-and-white film up to the window for a long time.",
+  "Your gaokao (college entrance exam) score is enough for medical school. You're not sure you dare hold a scalpel, and when you see 'Medical Imaging' on the application form you figure that's the one where you read scans, and pick it.",
+  "In sectional anatomy class the body is cut into layer after layer of images to learn, and you fill the margin of every layer with names.",
+  "Your internship rotation reaches radiology, and your teacher has you find an appendicitis on the PACS. It takes you twenty minutes; he points to it in ten seconds.",
+  "After graduating you get into this Grade 3A hospital's residency program and spend three years rotating through radiology, alone at night in front of two screens.",
+  "You pass the residency exit assessment and register your medical license. The head says: stay."
+ ],
+ "late": {
+  "pension_note": "Estimate: public hospitals pay under the public institution pension plus an occupational annuity, roughly a little over half your final monthly pay.",
+  "scenes": [
+   "After retiring you still wake at seven-thirty every morning and turn on the computer to read, before remembering your account has been closed. You take a walk by the sea.",
+   "An old neighbor comes to you with her checkup report and asks whether a 'nodule' means cancer. You put on your reading glasses and explain it to her word by word.",
+   "You sign up for a photography class at the senior citizens' college and photograph only the sea, the rocks and the fog. The teacher says your pictures separate their layers unusually clearly.",
+   "You go to the hospital for a CT and lie in the machine listening to it turn. Afterwards you don't rush to read the report; you know a young doctor will go carefully through every slice.",
+   "In your first few months at the health check center you read two hundred chest X-rays a day, most of them normal. You still read slowly, and when colleagues laugh at you, you say it's habit.",
+   "Your eyes are better, and every evening you walk the boardwalk along the sea and watch the lighthouse come on.",
+   "A resident you once trained calls about a rare case and wants your opinion. You have him send the scans and spend the evening on them.",
+   "Your first month away from the hospital, you still wake once at two in the morning, as if an emergency scan were waiting for you.",
+   "A new colleague asks what you did at the hospital, and you say you read scans. Oh, so you looked at pictures, they say. You smile and say, more or less.",
+   "The news says AI image reading has grown more accurate again. You think of the reading room years ago, and all the wrongly drawn boxes you canceled one by one.",
+   "In winter it snows, and you go to the foot of Laoshan to see it. The snow settles on the pines layer by layer, and you think of CT slices.",
+   "Your grandchild pulls an old film from your bookshelf and holds it up to the light, asking what it is. You say it's the inside of a person. Your grandchild says: it's beautiful."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you sit on the balcony watching the sea. There's fog in the distance, pushing toward the shore layer by layer. You watch for a long time, and feel that everything is clear.",
+   "burnout": "Many years later the teaching film the old head left you is still on your bookshelf. Now and then you take it out and hold it up to the window, and you can still name every part of it.",
+   "end": "Many years later you still have those blue-light glasses, a few fine scratches on the lenses. You put them on to read the paper for a while, then return them to their case."
+  }
+ }
+}

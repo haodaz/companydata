@@ -1,0 +1,195 @@
+{
+ "id": "storage-pm-nd",
+ "occupation": "Energy Storage Product Manager",
+ "role": "Product Manager (Junior), Residential Solar-plus-Storage",
+ "headline": "A master's graduate in electrical engineering who spent two years as a solutions engineer in the energy storage division of a battery maker in Ningde, and has just been handed a line of all-in-one home solar-and-storage units sold to Europe",
+ "unit": "The energy storage division of a battery manufacturer in Ningde, Fujian",
+ "unit_type": "EV and energy storage battery manufacturer",
+ "city": "Ningde",
+ "city_tier": "Third-tier city (new-energy industry hub)",
+ "education": "Master's degree (electrical engineering)",
+ "level": "You can write and chase your own PRDs, spec sheets and certification submissions, and you can recite the IEC and UL clauses. But you have never carried a volume shipment on your own, and when an overseas customer loses his temper your palms still sweat.",
+ "intro": "You have worked two years in the energy storage division of this Ningde battery maker, moving from a solutions engineer who translated certification files and built competitor tables to a product manager. The division head has handed you a line of all-in-one home solar-and-storage units sold to Europe: they sit in German garages and attics, storing the rooftop sun by day and running the household at night. From today, from drawing to shipping container to someone's home, whenever this machine goes wrong at any step, everyone looks to you first.",
+ "salary_note": "Estimate: the leading battery makers in Ningde pay product roles well, but wages in the city itself trail the first-tier cities, so a product manager with a master's takes home roughly the national average, a little below. The year-end bonus is tied to the division's shipments and can add several months' pay in good years for the industry.",
+ "facts": [
+  { "label": "Energy Storage Product Manager (Junior) (current level)", "value": "2-4 years, ¥15,000–25,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Energy Storage Product Manager (Intermediate) (4-6 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥35,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Coordinating R&D, supply chain, certification and sales to push a product through certification and onto the market", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Researching overseas policy, standards and competitors, and setting the go-to-market plan and product roadmap", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "On the shuttle bus from the staff apartments to the industrial park, you read the email your German distributor sent overnight: three of the units installed last week have thrown over-temperature alarms in attics.",
+  "Morning stand-up. R&D, testing and supply chain take turns on progress. In Jira you bump \"over-temperature alarm\" to top priority, and your colleague in testing says the thermal simulation can't run until next week.",
+  "Writing the PRD. The next-generation home unit needs an off-grid mode, and in Confluence you write out the scenarios one by one: a German winter night, a blackout in Australia after a bushfire, rolling load-shedding in South Africa.",
+  "The canteen: a bowl of fish-ball soup and fried rice noodles. At the next table the cell engineers are talking about how sodium-ion batteries perform in the cold. You carry your bowl over, ask three questions and note them down on your phone.",
+  "Certification meeting. The thermal-runaway test unit for UL 9540A has to ship to a lab in the US, and supply chain says the new enclosure mold isn't ready. You make the call: send it in the old enclosure, with a separate change notice.",
+  "Working through the BOM cost with sales and finance: cell prices have dropped again, and the European distributor wants another ten percent off. In Excel you drag the margin table back and forth, over and over.",
+  "A video call with the German distributor; it's afternoon there. Their engineer sends photos of the attic one by one, and you see a stack of cardboard boxes piled next to the inverter, blocking the air vent.",
+  "Back at the apartment, you message your colleague in testing: tomorrow let's go to the lab, put a test unit in the 45-degree climate chamber, stack boxes against it, and reproduce it."
+ ],
+ "ladder": [
+  { "title": "Energy Storage Product Assistant / Energy Storage Solutions Engineer", "stage": "Entry", "focus": "Support translation of overseas product materials, competitor spec comparisons and certification paperwork, and build a working grasp of power systems, batteries and markets. The key to moving up: independently produce a market-access analysis for an overseas target market that gets adopted." },
+  { "title": "Energy Storage Product Manager (Junior)", "stage": "Growth", "focus": "Own one product line (such as an all-in-one home solar-and-storage unit) through its full life cycle: write the MRD and PRD, lead certification testing, and support the first deliveries. The key to moving up: the product ships in volume overseas (over USD 5M a year in revenue) with a customer NPS of 70 or higher." },
+  { "title": "Energy Storage Product Manager (Intermediate)", "stage": "Core", "focus": "Coordinate a portfolio across home, commercial and utility-scale storage, set a three-year technology roadmap, and lead platform development such as a shared BMS hardware platform. The key to moving up: bring a key piece of advance research to production (such as 20 percent better low-temperature performance in a sodium-ion system) and turn it into a patent." },
+  { "title": "Senior Energy Storage Product Manager / Product Director (designate)", "stage": "Expert", "focus": "Define company-level product strategy, manage a product team of ten or more, and engage in board-level technology roadmap decisions. The key to moving up: lead a product line to more than 60 percent of revenue from global markets, or incubate a new line with over ¥100 million in annual revenue." }
+ ],
+ "ai_tasks": [
+  { "name": "Researching overseas policy, standards and competitors, and setting the go-to-market plan and product roadmap", "how": "AI can quickly compile each country's policies, standards documents and public competitor information, and draft the go-to-market plan and roadmap. A person has to verify the policy details, judge which changes really affect the business, and decide which markets to focus on and what to give up." },
+  { "name": "Defining storage products and writing the MRD, PRD and technical specifications", "how": "AI can draft the MRD, PRD and spec-sheet framework from templates, and build the spreadsheets and sensitivity tests for the financial model. A person has to define the selling points, the key metrics for each use case, the technical trade-offs and the system integration, and answer for the final documents." },
+  { "name": "Coordinating R&D, supply chain, certification and sales to push a product through certification and onto the market", "how": "AI can help write up meeting notes, track action items and build schedules. But coordinating across departments takes a person to negotiate resources, hold deadlines and settle disagreements, and certification also means dealing with the certifying bodies and owning the outcome." },
+  { "name": "Pre-sales technical proposals and EMS control strategies for key overseas projects", "how": "AI can generate draft pre-sales proposals, list VPP and EMS features, and organize the documentation for control strategies. A person has to set the plan against the site, the grid rules and what the customer actually wants, check that the strategy is safe and workable, and make the calls on local adaptation." },
+  { "name": "Tracking post-launch sales, margins and customer feedback", "how": "AI can pull sales, margin and customer feedback data directly, summarize it, find causes, flag anomalies, draft reports and categorize feedback text. A person only spot-checks the conclusions and decides whether to change the product because of them." },
+  { "name": "Maintaining the overseas product knowledge base and running internal training", "how": "AI can turn product materials, cases and Q&A into a knowledge base, training materials and an internal question-answering assistant. A person only checks the technical accuracy and teaches and takes questions in the key sessions." }
+ ],
+ "events": {
+  "e_attic": "The over-temperature mystery is solved: nothing wrong with the machine, just things stacked in the attic blocking the airflow. You write a one-page illustrated installation guide, have it translated into German, Dutch and Italian, and put a copy in every box.",
+  "e_munich": "You spend four days on the stand at the solar and storage trade fair in Munich, answering hundreds of questions. Your voice goes hoarse and your soles wear a layer thinner. You come back with your bag stuffed with other companies' product brochures.",
+  "e_first_box": "The first volume order for your line is loaded into containers at Ningde's port, bound for Rotterdam. You go down to the docks alone and take a photo of a container being lifted onto the ship, and make it your desktop background.",
+  "e_ul_fail": "The first UL 9540A test fails: thermal runaway in one cell spreads to the cell beside it. The insulation design goes back to scratch and certification slips three months. In your weekly report you write out the reason, one word at a time.",
+  "e_price_war": "Storage prices fall thirty percent in a year, and competitors quote below your cost. Your line's margin is cut in half, and two features are struck off the roadmap.",
+  "e_ai_research": "In one morning AI compiles a dozen countries' subsidies, grid-connection standards and competitor specs into a table, work that used to take you a week. You spend the time saved calling distributors.",
+  "e_ai_wrong": "The AI research report says a country's home-storage subsidy is still running, but it ended last month. You almost write it into the roadmap, and from then on you go back to the original text for every policy.",
+  "e_ai_kb": "The company feeds its product materials into an internal Q&A assistant, and overseas service engineers ask it first. Sign-ups for the monthly training session you used to run drop by half.",
+  "e_crunch": "To hit a certification milestone you leave at eleven every night for three weeks straight. As the streetlights in the park go off one by one, you're still revising the seventh version of the spec sheet.",
+  "e_xiapu": "On a rare free weekend you drive with colleagues to Xiapu to watch the sunrise over the mudflats. Bamboo poles and fishing nets stand in lines across the water. You crouch at the edge of the mud and don't take a single photo.",
+  "e_user_home": "You visit a customer's home in Germany to see an installation. An elderly woman makes you a cup of tea and says that on the night of the winter blackout, hers was the only house on the street with the lights on.",
+  "e_fire_news": "A storage plant built by another company catches fire overseas, and the news is everywhere. For a week every customer asks about your fire protection and thermal-runaway design, and you give the same presentation twenty times.",
+  "e_sodium": "The company decides to go into sodium-ion storage and pulls you into the advance-research group. Twice a week you meet the people from the cell research institute, and for the first time you understand the names of all those cathode materials.",
+  "e_patent": "The low-temperature self-heating design you led wins an invention patent. When the certificate arrives at the department, the division head puts it on your desk, says nothing much, and pats you on the shoulder.",
+  "e_layoff": "The industry slides into a downturn, the division cuts ten percent of its staff, and two people leave your team. On their last day you take everyone out for seafood, and when it breaks up, nobody says anything.",
+  "e_jetlag": "Three trips in one month: Rotterdam, Sydney, Dubai. The jet lag never settles, and at three in the morning, awake in a hotel room, you go through the requirements tables for all three markets.",
+  "e_love": "Someone in the certification department always ends up working late with you whenever a test submission has a mistake. Once, finishing after midnight, the two of you shared a plate of stir-fried clams at the food stall outside the park gate, and after that you often ate together.",
+  "e_wedding": "You hold the wedding in Fuzhou and invite half the division. During the toasts the division head says: from now on, don't do your arguing in meetings.",
+  "e_baby": "The day your child is born you are on a project site in Dubai, and on video you see a tiny crumpled face. You fly back two days early and run half the length of the airport.",
+  "e_house": "You buy a three-bedroom flat in the new Dongqiao district, the down payment from your own savings plus the company's talent subsidy. From the balcony you can see the lit-up factory buildings in the industrial park.",
+  "e_neck": "Years of staring at screens and late-night calls across time zones, and your neck starts to crack. You switch to a standing desk and take your meetings on your feet.",
+  "e_parent": "A call from home: tests at the county hospital have found a heart problem, and your father needs a stent. You take a week off to go back, sitting with him by day and taking European calls in the corridor at night.",
+  "e_juniors": "Your team hires five new graduates this year. Their PRDs are fast and neat, practiced alongside AI; but when you ask what the fuse box in a customer's home looks like, not one of them has ever seen one."
+ },
+ "choices": {
+  "c_onsite": {
+   "title": "Move to Europe for six months and turn the first order into volume shipments",
+   "situation": "The division head says that to make Energy Storage Product Manager (Intermediate), your line first has to ship in volume overseas with customer satisfaction over the bar. The European distributor wants someone on site for six months to follow installations, after-sales and the second order. If you go, the platform project back home won't be yours.",
+   "options": [
+    { "label": "Move to Europe", "result": "You rented a small flat near the Rotterdam warehouse and in six months visited more than forty customers' homes. When you came back, the second order was three times the first." },
+    { "label": "Stay in Ningde on the platform", "result": "You spent six months with R&D on the shared BMS platform and learned to read every chip on the circuit board. A colleague went to Europe instead, and the orders were so-so." }
+   ]
+  },
+  "c_shenzhen": {
+   "title": "Jump to a storage system maker in Shenzhen",
+   "situation": "A Shenzhen company that builds complete storage systems comes to poach you, offering thirty percent more, more product lines, a faster pace, and frequent weekend meetings. Going means leaving battery cells behind, and leaving Ningde's whole supply chain.",
+   "options": [
+    { "label": "Go to Shenzhen", "result": "In a year in Shenzhen you defined three products and learned how to bargain with inverter and EMS suppliers. Your rented room was tiny, and you often spent weekends working at the office." },
+    { "label": "Stay in Ningde", "result": "You turned it down and stayed at the source of the supply chain. On Friday evenings you still take the bullet train to Fuzhou, and come back on Sunday night." }
+   ]
+  },
+  "c_ai_flow": {
+   "title": "Lead the team's AI workflow or not",
+   "situation": "The division wants to pilot using AI to write research, draft PRDs and organize the knowledge base, and needs a product manager to lead the process design and set the review rules. Doing it means looking after your own line less for a while; if it goes well nobody will remember, and if it goes badly the whole team will know.",
+   "options": [
+    { "label": "Lead it", "result": "You set one rule: every market judgment the AI writes must be followed by a link to the source and a person's name. Three months later the team's weekly reports were being written in half the time." },
+    { "label": "No, stay with your product line", "result": "You stayed on your machine, and the second generation's off-grid mode launched on time. Another team built the workflow, and you used it as instructed." }
+   ]
+  },
+  "c_platform": {
+   "title": "Take on sodium-ion cold-weather research, aiming for Energy Storage Product Manager (Intermediate)",
+   "situation": "There's to be a round of advance research on the low-temperature performance of sodium-ion storage, with a target of keeping twenty percent more capacity at minus twenty degrees. Succeed and there'd be a patent, the strongest case for making intermediate. But two years of research brings no orders, and the year-end bonus follows shipments. You have to weigh it.",
+   "options": [
+    { "label": "Take on the research", "result": "You spent many nights in front of the minus-twenty-degree cold chamber and argued three times with the people from the cell research institute. In the second winter, the prototype ran outdoors in Harbin for a whole season." },
+    { "label": "Run a line that ships", "result": "You took over the commercial storage cabinet. That year shipments doubled and you got the biggest bonus. The research group took an award at the annual party, and you applauded from the floor." }
+   ]
+  },
+  "c_consultant": {
+   "title": "Go to a consultancy as a new-energy go-global adviser",
+   "situation": "A consultancy's energy practice approaches you: they're short of people who know product and have worked overseas, and want you as a strategy adviser helping companies take new energy abroad, with market entry and compliance. The pay is high, the travel is constant, and you'd never have to look after an actual machine again.",
+   "options": [
+    { "label": "Become an adviser", "result": "You handed over the product line, putting every document for that home unit into one folder for whoever took it on.", "end": "In a Shanghai meeting room you explain European storage certification to a carmaker, a flowchart you drew up on the screen. Afterwards someone asks if you ever did product. You say yes: a machine that lived in an attic." },
+    { "label": "Stay in product", "result": "You turned it down. That night you opened the machine's fault data and went through it again until midnight." }
+   ]
+  },
+  "c_startup": {
+   "title": "Leave to start an island microgrid company",
+   "situation": "An R&D colleague you went through certification hell with is leaving to start a company building off-grid microgrids for islands: solar plus storage plus diesel, sold to small islands in Southeast Asia and the Pacific. He asks you to be a co-founder running product and marketing, with options and half your salary for now.",
+   "options": [
+    { "label": "Go with him", "result": "You rented half a floor of an office building in Fuzhou, and your first unit went onto an island of eight hundred people.", "end": "You stand on a small island's jetty, a row of solar panels and two container-sized storage cabinets behind you. That night the island's primary school has its lights on after dark for the first time, and the head teacher pulls you in for a photo." },
+    { "label": "Stay at the big company", "result": "You put a little money in and said you'd keep an eye out for him from the inside. Later he sent a photo: a small island at night, with its lights on." }
+   ]
+  },
+  "c_fuzhou": {
+   "title": "Go back to Fuzhou to run product at a small storage company",
+   "situation": "Your child is about to start primary school, and the grandparents are all in Fuzhou. A small commercial storage integrator wants you as head of product: twenty percent less pay, a team of three, but home for dinner every night.",
+   "options": [
+    { "label": "Go back to Fuzhou", "result": "Now you could pick your child up from school. The small company was short of everything, and you wrote the specs, ran certification and went with sales to see customers, all on your own." },
+    { "label": "Stay in Ningde", "result": "You turned it down and kept commuting by bullet train at weekends. On the phone your child asked when you'd finish that machine of yours." }
+   ]
+  },
+  "c_director": {
+   "title": "Apply for Senior Energy Storage Product Manager / Product Director",
+   "situation": "The division is setting its next five-year product strategy and needs a Senior Energy Storage Product Manager / Product Director to manage a dozen people and deal with the board's technology roadmap meetings. You're one of the candidates; the other is a returnee poached from a big European company, with a shinier résumé than yours.",
+   "options": [
+    { "label": "Apply and write the strategy", "result": "You spent a week writing the proposal; the first page was photos from the forty-odd customers' homes you'd visited over the years. At the panel someone asked what qualified you. Because I've been there, you said." },
+    { "label": "Let the returnee have it", "result": "You go on running your product line. The new director's first request is for you to take him round customers' homes in Europe." }
+   ]
+  },
+  "c_standard": {
+   "title": "Step back to standards work at the industry association",
+   "situation": "You're past fifty, and late-night calls across time zones give you a headache. The industry association invites you onto a standards working group drafting voluntary safety standards for energy storage. No more shipment targets, somewhat less income.",
+   "options": [
+    { "label": "Do standards work", "result": "In meeting rooms you go through the clauses one by one with people from the grid, the fire service and manufacturers, arguing an afternoon over a single word. It's slow work, you think, but solid." },
+    { "label": "Stay on the front line", "result": "You're still flying. In meetings the young product managers call you teacher, and ask how you tracked down that attic over-temperature problem back then." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you handed over the folders on your computer one by one. The oldest was called \"Attic over-temperature,\" and it still held the photo of that stack of cardboard boxes. You didn't take the shuttle bus home; you walked out along the park road, the factory lights on row after row, and out on the sea a ship waiting to be loaded with containers.",
+  "burnout": "That winter, in the middle of a predawn call across the ocean, everything went dark and you slumped onto the desk. The doctor told you to rest six months, and the division moved you to the knowledge base and internal training. You leave on time every day, and now and then, in the back end of the Q&A assistant, you see someone asking about the installation guide you once wrote."
+ },
+ "stages": [
+  "A home solar-and-storage product line is yours now. You write the MRD and PRD, rank requirements in Jira, and chase certification testing and the first deliveries; every week you meet R&D, testing, supply chain and certification, and wherever someone is stuck, you push. In your hands are the spec sheet in Confluence, a BOM cost table and emails from overseas distributors. The difference from before: now when something goes wrong, everyone looks to you first.",
+  "What you manage now isn't one machine but how three lines fit together: home, commercial and utility-scale. You write the three-year technology roadmap, push R&D toward a shared BMS hardware platform, and fight the cell division over the specs of the next generation of cells. You have two or three junior product managers under you; you review their PRDs and argue prices with sales on their behalf.",
+  "You run a product team of a dozen people, and on your desk are the company-level product strategy and next year's overseas revenue target. Two or three times a month you fly between Ningde, Europe and the Middle East to see major customers, grid operators and certifiers; at the board's technology roadmap meeting, you have ten minutes to make clear which road to bet the next generation on."
+ ],
+ "work": [
+  "The certification engineer says the model number on the IEC 62619 report is off by one digit. You spend an afternoon checking it against the test submission and write the lab a three-paragraph correction.",
+  "You paste forty pieces of customer feedback from the German distributor into a spreadsheet and sort them into three bins: can't install it, can't understand it, awkward to use. The biggest bin is pairing the app.",
+  "Before the first delivery you fly to the Rotterdam warehouse and open two units with a local installer, and find the German manual is missing the page on grounding.",
+  "At the roadmap review you consolidate the battery packs across three product lines into two sizes. The R&D people do the sums on the spot and say that saves six sets of molds.",
+  "A junior product manager you mentor writes his first PRD, and ten of its twenty pages were drafted by AI. You call him in and ask him what floor the user in the first scenario lives on.",
+  "A utility-scale project in the Middle East has to run in fifty-degree desert heat. You and the thermal engineer keep watch at the climate chamber for two nights and settle the flow rate for the liquid cooling.",
+  "At the board's technology roadmap meeting you show only three charts: the cell cost curve, certification lead times in three markets, and competitors' shipment volumes. You speak for nine minutes.",
+  "Europe's biggest distributor wants exclusive rights. You fly out with legal and negotiate for two days, and in the end give them two countries and nothing more.",
+  "You set a rule for the team: everyone visits at least two customer sites a year. The first to sign up is the young man who wrote his PRD with AI."
+ ],
+ "past": [
+  "You were at high school in a coastal county in Fujian, best at physics. One year a typhoon passed through and the whole county lost power for three days. Your family did homework by candlelight, and staring at the candle you thought: if only electricity could be stored.",
+  "After the gaokao (college entrance exam) you got into electrical engineering and automation at a university of electric power. Your family said you'd join the grid one day, a safe job.",
+  "In your third year you interned at the provincial grid's dispatch center and watched the big screens for a month. For the first time you learned that by day there was so much solar it had to be curtailed, and by night there wasn't enough.",
+  "You went straight on to a master's in energy storage, and your supervisor's project was thermal runaway in lithium batteries. In two years you burned dozens of cells in the blast chamber, logging the temperature at which each began to smoke.",
+  "After your master's you didn't join the grid. You went through campus recruitment into this Ningde battery maker's storage division and started as a solutions engineer: translating certification files, building competitor tables, going with sales to see customers.",
+  "A market-access analysis you wrote on utility-scale storage in the Middle East was adopted by the division, and the division head named you in a meeting. At the end of the year you moved over to product management."
+ ],
+ "late": {
+  "pension_note": "Estimate: the big battery maker pays the full contribution into Ningde's basic pension for enterprise employees, plus an enterprise annuity, so after retirement you get about half your final monthly pay.",
+  "scenes": [
+   "In your first month of retirement you still wake in the middle of the night and reach for your phone to check emails from Europe. No new mail. You lie back down and listen to the rain outside.",
+   "A university asks you to teach a product course to graduate students in energy storage. Your first lesson isn't about specifications; it's about an attic, some cardboard boxes, and an air vent.",
+   "Your pension and annuity give the two of you a comfortable life. You go back to Germany once and find that household again. The old woman is gone, but the machine in the garage is still running.",
+   "Your balcony has a small solar-and-storage setup you designed yourself. The night of a blackout, yours is the only flat in the building with the lights on, and the neighbors come round to charge their phones.",
+   "In the knowledge base team you revise documents and review answers, and leave on time every day. With no more night calls, for the first time you're asleep by nine in the evening.",
+   "A young product manager brings you a market report written by AI and says it reads smoothly but doesn't feel solid. You tell him to go back to the original sources, and come back when he has.",
+   "At retirement age you do the paperwork. In your compound you look over a neighbor's quote for rooftop solar and point out an item that's been padded; the neighbor insists you take a box of Fuding white tea.",
+   "For the first year after leaving the battery maker you still check storage prices first in the news, and only afterwards remember the margin tables aren't yours to work out anymore.",
+   "Now and then you go back to Ningde on some errand, and the park has a few more factory buildings. The fish-ball soup in the canteen tastes the same, and the woman at the counter still remembers you like extra spring onion.",
+   "A product manager you trained becomes a director, and when she speaks at an industry conference, her first slide is an attic with cardboard boxes stacked beside a machine.",
+   "Later, research, PRDs and knowledge bases were all handed to AI, and a spec sheet could be drafted in an afternoon. But whose house the machine is in, where it's sitting, and what's piled up beside it, someone still has to go and see.",
+   "Your grandson asks what you used to make. You say a kind of big battery: by day you put the sun into it, and at night you let it out again. He thinks about it and says: so you made the moon."
+  ],
+  "closing": {
+   "retire": "One evening many years later, you sit by the sea at Sandu'ao and watch containers being lifted onto ships at the docks across the water. As it gets dark the lights on shore come on one by one, and you think that some of that electricity is sunlight stored during the day.",
+   "burnout": "Many years later, on your balcony, you look at the little storage unit you installed yourself; the screen says it stored eight kilowatt-hours today. You switch off the lights and sit in the dark, listening to its fan turning softly.",
+   "end": "Many years later, on an old computer, you come across the photo of the container being lifted onto the ship, its resolution very low now. You look at it a while, and set it as your desktop again."
+  }
+ }
+}

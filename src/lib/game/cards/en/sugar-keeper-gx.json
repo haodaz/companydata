@@ -1,0 +1,198 @@
+{
+  "id": "sugar-keeper-gx",
+  "occupation": "Raw Sugar Storage Keeper",
+  "role": "Raw sugar storekeeper at a sugar mill",
+  "headline": "A Zhuang storekeeper who drove a loader at the sugar mill for two years and has just been handed the keys and ledgers for two raw sugar warehouses, climbing the sugar piles every day of the rainy season to check their temperature and smell",
+  "unit": "The raw sugar warehouses of a mill belonging to a sugar group in Chongzuo, Guangxi (in the crushing season it presses its own cane; out of season it re-melts imported raw sugar for refining)",
+  "unit_type": "Sugar mill raw sugar warehouse",
+  "city": "Chongzuo, Guangxi",
+  "city_tier": "Prefecture-level city",
+  "education": "Secondary vocational school (Agricultural Product Processing and Quality Testing)",
+  "level": "You can run the loader and the conveyor line in your sleep and have logged goods in and out for two years. You have only just learned to read the trend in a pile's temperature and humidity, have only sampled alongside the lab technician a few times, and still can't make the ledger, the bin cards and the stock agree without a struggle",
+  "intro": "On the day the old storekeeper retires, he puts two bunches of keys, a pile-location map and a sampling spear with tape wound round its handle into your hands. Warehouse three holds more than ten thousand tonnes of Brazilian raw sugar, and the air is sweet, with a hint of burnt caramel. He says: sugar fears damp, heat and mixing; walk over it every day and use your nose. As of today, if the ledger, the cards and the stock in these two warehouses don't agree, it's on you.",
+  "salary_note": "Estimate: a storekeeper at a Chongzuo sugar mill takes home a little over ¥4,000, with overtime in the crushing season. The database has no national pay-by-experience figures for this trade, so the ladder pay is estimated from going rates for sugar mill warehouse jobs, and Chongzuo runs a little over 10% below that estimate.",
+  "facts": [
+    { "label": "Raw Sugar Storekeeper (current level)", "value": "1-3 years, ¥3,800–5,500 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Warehouse Shift Leader / Quality Storage Supervisor (3-6 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Taking in-store samples alongside third-party inspectors", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Supervising a shipload of raw sugar from unloading into storage", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Rainy season: close and sticky before it's even fully light. You ride your motorbike out of the village; the sugarcane on either side of the road stands taller than a man, its leaves wet with dew.",
+    "First thing in the warehouse is the temperature and humidity screen on the wall, then up onto the sugar pile to push your hand into the surface layer and feel the heat. The northeast corner of warehouse three is a little damp, and you mark it on the pile card.",
+    "The bulk raw sugar trucks from Fangchenggang port arrive, twelve of them. In the weighbridge office you check each weigh ticket, ship name and batch, let them into the warehouse one by one, and watch the loader push the sugar into its pile, never letting it mix with the last ship's.",
+    "The lab technician comes for samples. With the sampling spear you take nine points across the new pile in a quincunx pattern, pour the samples into bags and seal them, and write the time and pile location in the sampling record.",
+    "Lunch in the canteen is fresh-pressed rice noodles. A few old hands who only come back for the cane harvest are talking about this year's cane price: up another twenty yuan a tonne, still not enough to pay the cane cutters.",
+    "The afternoon is the hottest. You switch on every roof extractor fan, then check the rat guards and glue boards. The warehouse's two cats lie in the shade of the sugar sacks, not moving.",
+    "The refinery wants five hundred tonnes for re-melting. You write the issue slip, order the piles first in, first out, deduct each entry in the WMS warehouse system on your tablet, and copy it again into the paper ledger.",
+    "Back in the village your mother is shelling peanuts under the eaves and asks when you'll weed the cane field. You say Sunday, and you'll look at the cane harvester the neighbours just bought while you're at it."
+  ],
+  "ladder": [
+    { "title": "Sugar Warehouse Hand / Loading Operator", "stage": "Entry", "focus": "Run the loader and conveyor line, log goods in and out, and keep the warehouse clean." },
+    { "title": "Raw Sugar Storekeeper", "stage": "Junior", "focus": "Keep a dedicated warehouse as its named keeper: control temperature and humidity, take samples for testing, rotate the piles, and keep the books matching the stock." },
+    { "title": "Warehouse Shift Leader / Quality Storage Supervisor", "stage": "Mid-level", "focus": "Work with third-party inspectors and regulatory checks, and analyse stock losses." },
+    { "title": "Warehouse Manager / Reserve Depot Director", "stage": "Senior", "focus": "Run the whole depot: rotation plans, safety and insurance, and liaison with the agency that operates the state reserve." },
+    { "title": "Sugar Storage and Logistics Manager", "stage": "Head", "focus": "Run several depots and coordinate logistics." }
+  ],
+  "ai_tasks": [
+    { "name": "Supervising a shipload of raw sugar from unloading into storage", "how": "AI can link up with the weighbridge data, compile the intake records automatically, and check the bill of lading against what actually arrived. A person has to be on site watching the unloading, conveying and piling, deal there and then with spills, mixed piles or sugar going into the wrong warehouse, and sign for the records." },
+    { "name": "Patrolling the warehouse daily, logging temperature and humidity and adjusting ventilation", "how": "Sensors plus AI can collect temperature and humidity automatically, plot trends, raise alarms when limits are crossed and even suggest turning on ventilation. A person has to look at the piles in person, smell them, check for insects, rats and hygiene, and then decide how to set the ventilation." },
+    { "name": "Taking in-store samples alongside third-party inspectors", "how": "AI can help schedule the sampling and produce the sampling record forms. But taking samples by hand from different places in the pile by the procedure, making sure they are representative, and working with the third party on site rest mainly on people." },
+    { "name": "Doing the month-end stocktake and making the books match the stock", "how": "AI can compare the dedicated ledger with the WMS data automatically, find the discrepancies and list possible causes. A person has to recount the physical stock on site, find the real reason behind each discrepancy, and answer for books and stock agreeing." },
+    { "name": "Carrying out the annual rotation out of storage", "how": "AI can draw up the outbound plan by first in, first out and the 15-20% rotation ratio, order the sequence and follow up the paperwork. A person has to issue the sugar on site pile by pile, assist with outbound inspection, and handle last-minute changes." },
+    { "name": "Finding a sugar pile caking and heating up, and organizing the response", "how": "AI can warn early from abnormal temperatures and prompt the steps to take. But turning the pile, ventilating and sampling all need a person on site to judge how far and how badly the caking and heating has spread, and to take responsibility for the response." }
+  ],
+  "events": {
+    "e_first_count": "At your first month-end stocktake after taking over, the books and the stock are eleven tonnes apart. You go through the weigh tickets for three days and finally find one truck's gross weight entered twice. The day you correct it, you write one line in small print on the ledger cover: check every truck twice.",
+    "e_hot_pile": "The damp spring weather brings half a month of rain, and the middle of one pile starts to heat and cake. With two loaders you turn the pile for three days, spreading it out to ventilate and sending samples for testing; the moisture comes in right on the limit.",
+    "e_crushing_season": "Crushing starts in November. The cane trucks queue three kilometres from the mill gate, and the whole county town smells of sugar all winter. Through the season you run between two jobs, guarding the raw sugar warehouse by day and helping stack white sugar in the finished-goods store by night.",
+    "e_mixed_batch": "On the night shift a loader driver pushed two shiploads of raw sugar of different grades together, and the next day the colour values don't match. You draw a line across the pile with lime and lead the crew in digging out the mixed section separately. It takes all day.",
+    "e_typhoon": "A typhoon passes and peels a sheet of steel cladding off the warehouse roof, and rain pours in. In the middle of the night you climb up in the rain and pin a tarpaulin down with sandbags; when you come down you are soaked through, and the metal has cut your hand.",
+    "e_inspection_pass": "A third-party inspection agency comes to sample the stored sugar, and you go with them by the procedure to thirty points. The report comes back: moisture, colour and impurities all within spec. The manager photocopies it and pins it on the warehouse door.",
+    "e_sanyuesan": "For the Zhuang festival on the third day of the third lunar month there's a holiday, and the village sets out a long-table feast, several steamers of five-colour sticky rice. You drink two bowls of rice wine, and when the antiphonal singing starts your cousin pushes you up; you get through half a song before forgetting the words.",
+    "e_love": "At the mill lab you meet someone who tests colour values, and each time they come for samples you chat a little longer. Once, in a downpour, the two of you wait in the warehouse doorway for the rain to stop, for an hour.",
+    "e_wedding": "The wedding is in the village, with a flowing banquet for three days. A busload of colleagues comes from the mill bringing a pair of big red sugar boxes, filled with the best batch of white sugar from the finished-goods store.",
+    "e_sensor": "Dozens of wireless temperature and humidity probes go into the warehouse. The data goes straight into the system, your phone rings when anything crosses its limit, and it can draw a temperature curve for every pile. You still climb up and walk the piles every day, and once your hand finds a hot spot before any probe reports it.",
+    "e_child": "Your child is born. At the one-month celebration your father insists on putting a touch of sugar on the baby's lips; it's the custom of sugar mill families, he says. Your mother says there's no such custom, he made it up.",
+    "e_dust_drill": "The mill runs a dust explosion and fire drill, and you drill the warehouse crew all afternoon. From shutting down the conveyor to evacuating takes four minutes. The safety officer says too slow, and you practise until it's two and a half.",
+    "e_sugar_price": "World sugar prices crash, imported raw sugar is cheap, and the group orders several shiploads at once. The warehouses can't hold it all, so outside space is rented. You alone keep three warehouses, riding your motorbike between three sites every day.",
+    "e_cane_field": "Your father's back has given out, and this year the family's twenty mu of cane, about three acres, is harvested by machine. The harvester cuts in one day what used to take ten people a week. Your father stands at the edge of the field a long time and says what a waste of the cane tops.",
+    "e_rats": "The rainy season brings rats, and a bag of samples in a warehouse corner is gnawed open. In the week before a regulatory inspection you follow the pest-control crew raising the rat guards board by board, and spread a line of lime across every doorway.",
+    "e_apprentice": "A young storekeeper you are training spots a heating pile on his own for the first time and phones you before any probe alarm. When you get there he has the ventilation on already, and the sampling spear in his hand.",
+    "e_ai_ledger": "The system can now match weigh tickets, the WMS and the dedicated ledger automatically, and push a list of discrepancies every morning. Your work changes from balancing the books to chasing discrepancies: which entry the system got wrong, and which shortfall is real.",
+    "e_reserve_audit": "The regulatory inspection team for the reserve sugar arrives for three days of checking the dedicated warehouse, dedicated keeper and dedicated ledger, every pile against its card. On the last day the team leader says the books are clean: not a word needs changing.",
+    "e_knee": "After more than ten years of climbing sugar piles every day your knees start to hurt, and going down is harder than going up. You build a wooden walkway beside every pile, and the young ones laugh that you've built a plank road.",
+    "e_mother": "Your mother is admitted to the county hospital and you take a week off to stay with her. Every day the young ones at the warehouse send you a screenshot of the temperature and humidity, followed by one line: all normal.",
+    "e_robot_loader": "The warehouse gets driverless loaders that push sugar to its pile location by themselves, even at night. From the control room you watch them work scoop by scoop, and once, when one nearly pushes two batches together, you hit pause.",
+    "e_old_keeper": "The old storekeeper who handed you the keys is past eighty now, and you visit him with a kilo of brown sugar. He asks whether the northeast corner of warehouse three is still damp. You say it still is, and he laughs."
+  },
+  "choices": {
+    "c_certs": {
+      "title": "The intermediate warehouse certificate and food safety manager",
+      "situation": "The manager says that to move up to Warehouse Shift Leader / Quality Storage Supervisor, you need both the intermediate-level warehouse keeper certificate and the food safety manager certificate. The course is in Nanning over four weekends. The exams aren't hard, but you'd have to find people to cover your shifts and pay your own fares.",
+      "options": [
+        { "label": "Go to Nanning and sit them", "result": "You spend four weekends in the classroom in Nanning, and on the bus home you recite the storage conditions from the handouts the whole way. You pass both, laminate the certificates, and hang them in the warehouse duty room." },
+        { "label": "Skip it and run the warehouse well first", "result": "You spend those four weekends redrawing the pile map, colour-coding every pile's batch, grade and intake date. The manager comes to look and says it's clearer than a printed one." }
+      ]
+    },
+    "c_hot_choice": {
+      "title": "Turn the pile, or watch it first",
+      "situation": "For three days the probes in pile seven have shown the temperature climbing, though not yet to the alarm line. Turning the pile means stopping issues for two days while the refinery waits for sugar, and the workshop director phones to ask whether it can hold out a little longer. If you don't, and it has already caked inside, the loss is hundreds of tonnes.",
+      "options": [
+        { "label": "Stop issues and turn it now", "result": "Over the workshop director's calls you open up the pile, and inside there really is a layer just starting to cake. The workshop goes two days short and the director criticizes you at the scheduling meeting; on the month-end loss report, that pile reads zero." },
+        { "label": "Step up ventilation and watch it", "result": "You turn on every fan around pile seven and climb up to take its temperature every four hours. On the fifth day it comes down; the workshop never runs short, but that week you don't get one full night's sleep." }
+      ]
+    },
+    "c_dongguan": {
+      "title": "Going to Dongguan with your cousin",
+      "situation": "Your cousin is a line leader at an electronics factory in Dongguan and says they're short of people: more than double your current pay, board and lodging included. You went for six months at eighteen; this time he says he can make you a team leader. Half the village's young people are in Guangdong and only come home at New Year. But if you go, no one will look after the twenty mu of cane or your parents.",
+      "options": [
+        { "label": "Go to Dongguan", "result": "You stand on the production line for a year and save more than in three years at the mill. Home at New Year, your mother says you've got thin; you say the factory food is bad, no fresh-pressed rice noodles. The following year you go back to the mill." },
+        { "label": "Stay at the mill", "result": "You say you still like the sweet smell of the warehouse. On the phone your cousin laughs that you've no ambition; when he comes home at New Year, he brings you a new hard hat." }
+      ]
+    },
+    "c_sensor_admin": {
+      "title": "Who looks after the probes and the system",
+      "situation": "The group has installed temperature and humidity probes and an early-warning system in every warehouse, and each depot must name someone to run it: replacing broken probes, setting the alarm thresholds, checking every alarm the system sends. The IT department says you're young and good with a tablet, and asks whether you'll do it.",
+      "options": [
+        { "label": "Take it on", "result": "You draw every probe's location into the pile map and set two sets of alarm lines, one for the rainy season and one for the dry. In six months the system raises more than forty alarms; you confirm nine as real and miss none." },
+        { "label": "Let the IT department run it", "result": "The system goes to IT, the alarms go to them, and they phone you. Once, in the middle of the night, an alarm passes through three people before it reaches you." }
+      ]
+    },
+    "c_shift_leader": {
+      "title": "Competing for Warehouse Shift Leader",
+      "situation": "The raw sugar depot's shift leader has moved to the finished-goods store, and the manager asks several storekeepers to compete for Warehouse Shift Leader / Quality Storage Supervisor: leading eight loaders and keepers, making the rota, analysing losses, and accompanying third-party and regulatory inspections. You are the youngest.",
+      "options": [
+        { "label": "Put yourself forward", "result": "At the selection meeting you describe how you tracked down that eleven-tonne discrepancy. When it comes to the vote, several old loaders raise their hands and say the young one is careful." },
+        { "label": "Leave it to the veteran", "result": "You recommend Old Li, who has worked here twenty years. Once he's shift leader, whenever there's a reconciliation to do, he calls you over first." }
+      ]
+    },
+    "c_reserve": {
+      "title": "Taking on the reserve sugar depot",
+      "situation": "The group has qualified to store part of the national sugar reserve, which means a dedicated warehouse, keeper and ledger, annual rotation and inspections at any time. The manager wants you in charge of the reserve depot: a little more money and a road toward Reserve Depot Director, but the smallest slip would no longer be just the mill's business.",
+      "options": [
+        { "label": "Take on the reserve depot", "result": "You set the depot's rules: the door opens only with two keyholders present, every pile has its card, there's a self-check every month. In the first year the regulators visit three times and find nothing to fault." },
+        { "label": "Stay with the raw sugar depot", "result": "You say you know raw sugar better. The reserve depot goes to someone transferred from Nanning, who often comes to ask you how to run the ventilation in the rainy season." }
+      ]
+    },
+    "c_cane_home": {
+      "title": "What to do with the family's cane field",
+      "situation": "Your parents can't farm any more. The family's twenty mu of cane: either you run it yourself at weekends, or you lease it to the village cooperative for a yearly rent. The cooperative says they're bringing in harvesters and planting in one continuous block.",
+      "options": [
+        { "label": "Run it yourself", "result": "Every weekend you spray and fertilize, and in the crushing season you hire cutters, load the truck and drive it to the mill gate to queue yourself. The day the cane money arrives, you give each of your parents a red envelope." },
+        { "label": "Lease it to the cooperative", "result": "The land is leased and joined into one big block. On the day the harvester rolls in, your father carries a stool to the edge of the field to watch. Your weekends free up, and you take your child to see the Detian Waterfall." }
+      ]
+    },
+    "c_port": {
+      "title": "A logistics firm in Fangchenggang wants you",
+      "situation": "A bulk logistics company in Fangchenggang is hiring a dispatcher to manage raw sugar and grain from unloading into storage and out onto trucks, and likes that you know raw sugar intake, issue and weigh tickets. Over thirty percent more pay and life in a seaside city, but you would leave the mill.",
+      "options": [
+        { "label": "Go to Fangchenggang", "result": "For the first time you stand on the quay watching a bulk carrier from Brazil unload sugar, grab after grab, working out in your head how many trucks this ship will fill and which warehouses it will go to.", "end": "You became a dispatcher at a logistics company in Fangchenggang, moving shipload after shipload of raw sugar and grain from the hold into storage. Whenever you see a truck bound for Chongzuo, you look twice at the warehouse number on its weigh ticket." },
+        { "label": "Stay at the mill", "result": "You say home is here. After the call you climb back onto the sugar pile and push your hand into the sugar: cool." }
+      ]
+    },
+    "c_grain": {
+      "title": "Sitting the exam for the grain depot",
+      "situation": "The county's state grain reserve depot is hiring grain and oil keepers, with permanent state posts, and its rules for keeping reserves are much like those for sugar. The pay isn't much better than now, but it's steady: no more crushing seasons, no more worrying about sugar prices.",
+      "options": [
+        { "label": "Sit the grain depot exam", "result": "You come second and join the grain depot. On your first day in the granary you push your hand into the rice to feel its temperature without thinking, and the old keeper training you stops and asks: you've done this before?", "end": "You became a grain and oil keeper at the state grain reserve, watching over tens of thousands of tonnes of reserve grain. When the crushing season starts in winter and the wind blows over from the sugar mill, you can still smell the sweetness." },
+        { "label": "Stay at the sugar depot", "result": "You don't sit it. Sugar is fussier than grain, you say; if you left, no one would know how to ventilate the northeast corner of warehouse three." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you hand the keys, the pile map and the sampling spear with its taped handle to the young storekeeper, just as the old keeper once handed them to you. You climb the pile in warehouse three for one more walk and push your hand into the sugar: cool, not damp. Out of the warehouse door the cane has grown tall again; the crushing season is about to begin.",
+    "burnout": "That rainy season you spend a month climbing piles and turning them in the middle of the night, and your knees swell until you can't get downstairs. The doctor says no more climbing. You transfer to the mill gatehouse, logging vehicles in and out. Every day raw sugar trucks come in, and you glance at the weigh ticket and work out in your head which warehouse each should go to."
+  },
+  "stages": [
+    "Two warehouses are yours alone now: every day you read the temperature and humidity screen, climb the piles to feel the heat and smell them, check weigh tickets, batches and ship names in the weighbridge office as trucks unload, and watch the loader keep the piles from mixing. When the lab technician comes you take the samples with her; when sugar goes out you order the piles first in, first out and enter each line in the WMS and the paper ledger. When the ledger, cards and stock don't match, the manager looks for you now, not the old keeper who trained you.",
+    "You lead a shift: the rota, safety and cleanliness for eight loaders and keepers are yours, with a five-minute briefing at the warehouse door every morning. At month end you analyse losses, how much each pile has lost and why; when third-party inspectors and regulators come, you go through the piles with them one by one and answer every question. You climb the piles less, and spend more time over reports.",
+    "The whole depot is yours: the rotation plans, safety and insurance for several warehouses are yours to set, and you agree the reserve sugar's rotation ratio item by item with the operating agency. You schedule each month's issues with the refinery, each ship's intake with purchasing, and rainy-season claims with the insurer. You sign a dozen slips a day, but every week you still go and stand a while in the northeast corner of warehouse three.",
+    "You run the group's sugar depots across southwest Guangxi and their shipments: when the ships reach Fangchenggang, how many trucks go to which mill, which warehouse to empty first, all on your dispatch sheet. You meet the port, the railway, the trucking fleets and the mill directors, and report stock and losses to group headquarters. You have left a sampling spear at every depot, and when you inspect, you take a few points yourself."
+  ],
+  "work": [
+    "One raw sugar truck's weigh ticket shows a gross weight a tonne and a half above the truck before, though it's the same model. You send the driver back over the weighbridge; the missing tonne and a half was a scale that hadn't been zeroed.",
+    "You take nine sampling points across a new pile in a quincunx; the lab technician says only five are needed today. You say the procedure says nine. She looks, and takes the other four bags too.",
+    "For the refinery's five hundred tonnes you order the issue first in, first out, and the oldest pile is at the very back. You have the loader shift the two piles in front first, which costs an extra hour.",
+    "In the month-end loss analysis warehouse seven is down 0.3 percent. You lay out the daily temperature, humidity and issue records side by side and find the losses all fell on rainy days when the main doors were open for unloading.",
+    "A third-party inspector wants a sample from the very bottom of a pile. With two loaders you dig an opening with the machine, shield them as they go down, and seal it again once they have their sample.",
+    "You draw up the shift's rainy-season duty rota, with someone on the piles every four hours through the night. One old loader says his back is bad, and you move him to day shifts on the weighbridge.",
+    "When the reserve sugar is due for rotation you spend three days on the plan with the operating agency, and settle on rotating eighteen percent, the earliest piles first, with an inspection report for every pile issued.",
+    "Before the rainy season you renegotiate the insurance and the insurer wants to raise the premium. You produce years of temperature and humidity records and the zero-loss reports, and the premium stays where it was.",
+    "The new driverless loaders need connecting to the warehouse system, and the manufacturer's engineer asks how the pile locations are coded. You bring out the old keeper's hand-drawn pile map and say: follow this.",
+    "Fangchenggang says three shiploads of raw sugar will reach port in the same week. On your dispatch sheet you work out the empty space in three depots, call in two extra trucking fleets, and have the farthest depot clear ten thousand tonnes first.",
+    "At the group's annual meeting someone proposes merging several small depots into one big one. You show everyone the freight costs and losses at each depot over the years; in the end two are merged and one is kept.",
+    "Inspecting a depot the group has just taken over, you don't look at the reports first. You climb the pile, walk it and take three points. Coming down you tell the keeper there: southeast corner, ventilation on tomorrow."
+  ],
+  "past": [
+    "Every crushing season you went straight from school to help cut the family's cane, the leaves scoring red lines down your arms. Your father loaded the cane onto the tractor and hauled it to the mill gate to queue all night.",
+    "Your middle school exam results were ordinary, so you chose the county's secondary vocational school and studied agricultural product processing and quality testing. Your mother said it would get you into the sugar mill, the biggest factory in the county.",
+    "The year you graduated you went with your cousin to Dongguan and spent six months inserting components at an electronics factory. The line never stopped; you counted the days from your top bunk in the dorm, missing the village's fresh-pressed rice noodles.",
+    "Before the crushing season the mill took on temporary workers, and you came home to sign up, starting as a loader carrying hundreds of sacks of white sugar a day, your shoulders aching too much at night to sleep.",
+    "You got your loader operator's licence and became permanent staff, driving the loader in the raw sugar warehouse. When the old keeper climbed the piles each day you watched from below, and sometimes he had you come up and feel it.",
+    "When the old keeper was close to retiring he recommended you to the manager. He taught you to read the temperature and humidity curves, to understand the pile cards and to use the sampling spear, and said you had steady hands and a good nose."
+  ],
+  "late": {
+    "pension_note": "Estimate: sugar group staff pay into the urban employees' pension; nothing was paid in your temporary years, then contributions ran unbroken from becoming permanent until retirement, so on Chongzuo's contribution base you will draw roughly 50% of final monthly pay.",
+    "scenes": [
+      "In your first rainy season of retirement you still look at the sky every morning and wonder whether the northeast corner of warehouse three is damp today.",
+      "You keep the accounts for the village cooperative's cane payments, entry by entry, just as you once checked weigh tickets. The young people at the cooperative say your books are more accurate than the phone app.",
+      "On the third of the third lunar month you take your grandchildren to the song fair and buy each a brown sugar rice cake. You tell them this sugar was boiled out of sugarcane; they don't believe you.",
+      "In your first year at the gatehouse the swelling in your knees slowly goes down. Every raw sugar truck that passes, you step out to check its tarpaulin is tied down tight.",
+      "When the young storekeeper can't decide about a heating pile, he still runs to the gatehouse to find you. You don't climb up; you just have him push his hand in and tell you what it feels like.",
+      "You plant a few canes in your own yard, not for sale, and at New Year cut them for the children to chew. Your father sits under the eaves watching and says these have grown well.",
+      "For the first few months in the new place, whenever you catch a hint of sweetness you stop and look for where it's coming from.",
+      "Home in Chongzuo for New Year, you pass the sugar mill. The queue of cane trucks at the gate is as long as ever, only now it's big trucks that follow the harvesters.",
+      "A young storekeeper you trained becomes depot director and phones to invite you back to see the new warehouse. You stand at its door; the air is still sweet, with a hint of burnt caramel.",
+      "Taking temperatures, raising alarms, balancing the books, pushing sugar: machines and systems do all of that now. When people talk about a storekeeper, they mean the person who climbs the pile and judges by hand and nose.",
+      "The village's cane fields have all been joined into one, and the harvester brings in a season's crop in no time. Standing at the field's edge you think of your arms scored by cane leaves as a child, and run a hand over them; the marks are long gone.",
+      "Your nose isn't as sharp as it was. But when the crushing season starts and the wind blows over from the mill, you are still the first to say: they've started crushing."
+    ],
+    "closing": {
+      "retire": "Many years later, on a winter evening, the wind blows over from the sugar mill and the whole county town smells of sugar again. You sit under the eaves, close your eyes and breathe it in for a while, and say: they've boiled it well this year.",
+      "burnout": "Many years later you walk slowly along the edge of the cane fields, the leaves rustling in the wind. You snap off a cane top and chew it. It's still sweet.",
+      "end": "Many years later, sorting old things, you find the sampling spear with the tape round its handle, the tape gone yellow. You grip it, and your palm seems to hold a little of the sugar's coolness still."
+    }
+  }
+}

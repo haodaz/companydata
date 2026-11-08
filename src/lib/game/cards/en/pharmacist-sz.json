@@ -1,0 +1,149 @@
+{
+ "id": "pharmacist-sz",
+ "occupation": "Pharmacist",
+ "role": "Licensed Pharmacist at a Pharmacy Chain",
+ "headline": "A pharmacy graduate who stood behind the counter for three years, has just passed the licensed pharmacist exam, and now signs off prescriptions at a chain drugstore covered by public health insurance in Suzhou's old town",
+ "unit": "A regional pharmacy chain's branch in Suzhou's old Gusu district",
+ "unit_type": "Chain drugstore (designated for public health insurance)",
+ "city": "Suzhou",
+ "city_tier": "Emerging first-tier city",
+ "education": "Bachelor's degree (Pharmacy)",
+ "level": "All four exam papers passed and your license just registered to this store. You can handle prescription review and medication questions on your own, but you've never touched the rota, insurance reconciliation or sales targets.",
+ "intro": "You stood behind this chain's counter for three years, and the moment you passed all four papers your licensed pharmacist registration went to the very store where you stand. It sits at the mouth of a lane in Suzhou's old Gusu district, a pan-fried bun shop next door and a community hospital across the street, and most customers are neighbors coming in with prescriptions for their blood pressure pills. From today, prescription drugs leave this store on your signature, and the manager says: every one you sign has your name on it.",
+ "salary_note": "Estimate: Suzhou's cost of living and chain drugstores' allowances for licensed pharmacists are both above the national average, so pay is set at 1.15 times; part of the income is store sales commission, and from store manager up it depends on performance.",
+ "facts": [
+  { "label": "Licensed Pharmacist (In-Store) (current level)", "value": "3-6 years, ¥6,000–9,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Store Manager (6-10 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Telling customers face to face to see a doctor, and refusing improper requests for drugs", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Compiling drug information, writing medication reminders and member messages", "source": "AI exposure" },
+  { "label": "Open positions", "value": "6 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You roll up the shutter and check the fridge's temperature logger first: five degrees in the insulin shelf, normal. You sign the temperature and humidity log.",
+  "The first wave is the old neighbors. A grandmother brings a community hospital prescription for her blood pressure pills, and while you swipe her insurance card you ask how many she has left from last month.",
+  "A young man wants cephalosporin antibiotics for a sore throat, with no prescription. You have him open his mouth, suggest lozenges and lots of water, and tell him to see a doctor if it's not better in three days. He mutters and leaves.",
+  "Delivery-app orders come in one after another. The staff pick them while you review e-prescriptions on the computer, and you stop one that prescribes two cold medicines both containing acetaminophen.",
+  "Lunch is braised pork noodles at the corner of the lane. The regional group chat announces next week's surprise drug inspection: all GSP records must be filled in today.",
+  "An old man says the new blood pressure pill keeps giving him a dry cough. You look at the box, an ACE inhibitor, and tell him to ask his doctor about switching.",
+  "The manager has you check for drugs near their expiry date, and three boxes of vitamins go into the discount basket by the till. The month's sales target is still short.",
+  "At the evening handover you sign out in the licensed pharmacist attendance book, photograph the two prescriptions you stopped today for the file, and ride your e-bike home."
+ ],
+ "ladder": [
+  { "title": "Staff Pharmacist", "stage": "Trainee", "focus": "Works the counter, receives and inspects deliveries, keeps GSP records, studies for the licensed pharmacist exam on the side" },
+  { "title": "Licensed Pharmacist (In-Store)", "stage": "Signing off", "focus": "The only person in the store who can review and release prescriptions; handles medication advice and chronic-disease members, and the ones with good numbers and a good name move toward store manager" },
+  { "title": "Store Manager", "stage": "Running a store", "focus": "Runs seven or eight people's rota, sales, insurance reconciliation and GSP compliance, and still reviews prescriptions" },
+  { "title": "Area Manager", "stage": "Running an area", "focus": "Runs operations and compliance for about a dozen stores, constantly visiting stores, in meetings, watching targets" },
+  { "title": "Regional Operations Director", "stage": "Running a city", "focus": "Runs over a hundred stores in a city, deals with the insurance bureau, drug regulators, suppliers and hospitals, sets budgets and opens stores" }
+ ],
+ "ai_tasks": [
+  { "name": "Compiling drug information, writing medication reminders and member messages", "how": "AI can generate medication reminders, refill reminders for chronic patients and health tips from prescriptions and member records; a person spot-checks the doses and wording for accuracy and compliance." },
+  { "name": "Reviewing prescriptions", "how": "Review software and AI can check doses, interactions and duplicate drugs first and flag suspicious prescriptions in red; for the uncertain ones the pharmacist calls the prescribing doctor, and it's the pharmacist who signs to release." },
+  { "name": "Answering customers' medication questions", "how": "AI can answer the common questions first; an elderly person on seven or eight drugs at once, pregnancy and breastfeeding, symptoms that sound like a hospital visit, all need a pharmacist to ask and advise in person." },
+  { "name": "Managing expiry dates, temperature, humidity and stock", "how": "Systems can count stock, warn about near-expiry drugs and cold-chain temperatures, and generate reorder lists; inspecting deliveries, splitting packs, shelving and handling problems take human hands." },
+  { "name": "Telling customers face to face to see a doctor, and refusing improper requests for drugs", "how": "Someone wanting prescription drugs without a prescription, wanting a large quantity of a certain drug, or with symptoms that seem wrong needs a pharmacist to say no to their face and send them to a hospital; AI can't carry that responsibility." },
+  { "name": "Training staff and running the store", "how": "Rotas, teaching new hires, handling complaints, accompanying inspections all come down to the judgment between people." }
+ ],
+ "events": {
+  "e_catch": "A prescription has an extra zero on the warfarin dose. You call, and the doctor goes quiet for a long moment on the other end before saying thank you.",
+  "e_members": "You set up a group chat for the store's thirty-odd diabetic members and remind them weekly to check their blood sugar. An old man brings his log to show you: under seven all month.",
+  "e_fridge": "A power cut at night, and the fridge climbs to twelve degrees. First thing next morning the whole shelf of insulin is written off as the rules require, and you spend the afternoon writing up the incident.",
+  "e_inspect": "A surprise drug inspection checks the temperature records, whether the licensed pharmacist is on duty, and that prescription drugs are sold only with prescriptions. You go through it page by page with the inspector; the records are all there, and you still break into a sweat.",
+  "e_quota": "Head office sets a sales target for supplements. A woman holding three boxes of fish oil asks whether she should take them, and you tell her to take her blood pressure pills properly first. This month your store drops further down the rankings.",
+  "e_vbp": "After national volume-based procurement, the prices of several common blood pressure and cholesterol drugs fall sharply, store margins follow, and head office starts cutting staff at the stores.",
+  "e_online": "Buying medicine online gets easier and easier, and young people rarely come in. Those who do mostly hold up their phones and ask whether the one online is the same as yours.",
+  "e_ai_rx": "Head office brings in AI prescription review. E-prescriptions go through the machine first and the problematic ones are flagged red and sent to you. You read a few hundred fewer clean prescriptions a day and save your time for the dozen in red.",
+  "e_ai_chat": "The store's mini-app gets an AI medication assistant that answers customers' questions overnight. Every morning you go through the log, pick out the few answers it fudged, and phone those customers back yourself.",
+  "e_granny": "An old woman who lives alone comes in every Wednesday to have her blood pressure taken, and one week she doesn't come. You call her member number; she says she fell at home and is lying down, and you get hold of her daughter right away.",
+  "e_onestar": "A customer angry that you wouldn't sell him a prescription drug leaves a one-star review saying your service is rude. The regional manager has you write an explanation.",
+  "e_flu": "Flu season, and fever medicine and antigen tests sell out as soon as they arrive. You stand twelve hours a day, your voice gone, still telling everyone not to take ibuprofen and acetaminophen together.",
+  "e_love": "You meet a teller from the bank branch next door over noodles at the corner of the lane. The first time they ask you out, it's to ask how much vitamin D they should really take.",
+  "e_marry": "You get married. At the banquet relatives line up to ask what they should keep in their medicine cabinets.",
+  "e_house": "You buy a small two-bedroom east of the Industrial Park, the down payment pooled by both families. You've worked it out: the mortgage is about half your pay.",
+  "e_child": "Your child is born. The first medicine kit you put together at home holds only fever medicine, a thermometer and saline.",
+  "e_legs": "Ten hours on your feet at a stretch, and the veins in your calves start to bulge one by one. You buy medical compression stockings and prop your legs on the back of the sofa after work.",
+  "e_merge": "Your chain is bought by a bigger listed chain. The storefront changes color, every system is replaced, and you spend a month relearning how to ring up a sale.",
+  "e_cert": "A nationwide crackdown on pharmacists who rent out their licenses to stores they never work in leaves some stores suddenly without one. Yours has always been registered to the store you stand in; the inspector glances at it and nods.",
+  "e_mentee": "The new pharmacist you're training stops a problem prescription on her own for the first time, and when she runs to tell you, her face is bright red.",
+  "e_father": "Your father back home in Yancheng is diagnosed with diabetes. You mail his medicine home every month, and on weekends you phone and ask, pill by pill, whether he's taken them."
+ },
+ "choices": {
+  "c_manager": { "title": "Apply for Store Manager", "situation": "The store manager is moving to a new store, and the regional manager asks whether you'll apply. A manager runs eight people's rota, sales targets, insurance and GSP, and the professional work has to be squeezed in.", "options": [
+   { "label": "Apply", "result": "At the selection meeting you talk about how to keep chronic-disease members. The regional manager asks: and sales? You say if you keep the people, the sales are in there." },
+   { "label": "Two more years as pharmacist", "result": "You work through the drug handbook again, and more and more regulars ask for you by name." } ] },
+  "c_hospital": { "title": "Sit the exam for a district hospital's pharmacy", "situation": "A district hospital in Suzhou is hiring contract pharmacists, with a written test and interview. Slightly less pay, but you can earn hospital pharmacy titles and later work on the wards as a clinical pharmacist.", "options": [
+   { "label": "Sit the exam", "result": "Second in the written test, first in the interview. On your handover day the grandmothers send a bag of green rice dumplings for you through the staff.", "end": "You joined the district hospital's pharmacy, starting at the outpatient dispensing window, and later moved onto the wards as a clinical pharmacist, rounding with the doctors. Now and then you still think of the old neighbors at the mouth of that lane." },
+   { "label": "Stay at the store", "result": "You don't apply. That month you give a medication talk for the elderly in your member group, and twenty-odd people come." } ] },
+  "c_dtp": { "title": "Move to the specialty pharmacy across from the hospital", "situation": "The company has opened a direct-to-patient specialty pharmacy opposite a big hospital, selling targeted cancer drugs and rare disease medicines, and needs experienced licensed pharmacists: every patient needs a file, follow-up calls, cold-chain delivery.", "options": [
+   { "label": "Go to the specialty pharmacy", "result": "You learn the use and side effects of dozens of targeted drugs. Some patients keep coming for years, and you remember each one's checkup dates." },
+   { "label": "Stay at the neighborhood store", "result": "You stay at the mouth of the lane. The neighbors still come in on Wednesdays for their blood pressure, and the bun shop owner saves you a portion every day." } ] },
+  "c_upsell": { "title": "Head office wants add-on sales", "situation": "Under the new scheme, every prescription should come with an add-on recommendation, and the store's bonus depends on it. You know some of those recommendations are things customers don't need.", "options": [
+   { "label": "Follow the scheme", "result": "Your store's add-on rate makes the area's top three and the bonus goes up. One regular, after buying his third box of coenzyme Q10, never comes back." },
+   { "label": "Only recommend what's really needed", "result": "Your add-on rate is near the bottom of the area, but more and more regulars come to you with their questions." } ] },
+  "c_ai": { "title": "Become the area's AI prescription review pharmacist", "situation": "Head office wants one licensed pharmacist per area to centrally review the prescriptions AI flags in red, one person facing the screens of forty stores. You'd sit to work, no more standing at the counter, but you'd never see a customer's face again.", "options": [
+   { "label": "Go to the review center", "result": "You review six hundred flagged prescriptions a day and compile the rules the machine keeps misfiring on for the tech team. You can stop wearing the compression stockings." },
+   { "label": "Stay at the counter", "result": "You still stand behind the counter, talking to people all day. The prescriptions the machine flags, you still read one by one." } ] },
+  "c_area": { "title": "Apply for Area Manager", "situation": "The area manager post is open: a dozen stores, driving between them every day, meetings, watching performance and compliance. You'd have to hand over your own store.", "options": [
+   { "label": "Apply", "result": "At the selection meeting you take the panel through three years of your store's numbers, page by page. Afterwards you sit in the car a long time before starting it." },
+   { "label": "Keep your own store", "result": "You say you'd like a few more years at the mouth of the lane. The regional manager nods and sends two new pharmacists to your store for you to train." } ] },
+  "c_own": { "title": "Go into partnership on a neighborhood pharmacy", "situation": "A regular customer's son wants to open a pharmacy with you in a new housing estate: you bring the license and the know-how, he brings the money. The insurance designation means waiting in line, and the first two years may not make money.", "options": [
+   { "label": "Open the store together", "result": "You resign, sign the lease, and put a free blood pressure machine by the door.", "end": "You opened a neighborhood pharmacy with a partner. You lost money the first two years; then the estate filled up, you knew half the residents, and when someone's child ran a fever they'd knock on your shutter even in the middle of the night." },
+   { "label": "Don't open it", "result": "You treat him to dinner and say the timing isn't right. Later he opens it on his own and hires another pharmacist." } ] },
+  "c_trainer": { "title": "Become a trainer at head office", "situation": "Head office's training department needs someone to teach new pharmacists: nine to five, frequent trips to stores around the region. Similar pay, no more standing at the counter.", "options": [
+   { "label": "Join the training department", "result": "You start teaching newly hired pharmacists, and everything you teach comes from the prescriptions you stopped at the counter." },
+   { "label": "Stay on the front line", "result": "You recommend another pharmacist from your store and stay behind the counter yourself." } ] }
+ },
+ "endings": {
+  "retire": "On your last shift the grandmothers line up for their blood pressure, and someone brings a box of wontons she wrapped herself. You hand your licensed pharmacist badge to the young one taking over and remind him to check the fridge temperature morning and evening. You wheel your e-bike out the door, and the shutter comes down slowly behind you.",
+  "burnout": "The year your legs and back gave out, you came off the store floor to do quality management at head office, sitting at a desk reading inspection records and recall notices. Passing the store on weekends, you glance through the glass at whoever is behind the counter. The new pharmacist is bending to talk to an old man, speaking slowly."
+ },
+ "stages": [
+  "You're the only one in the store who can sign off prescriptions: every prescription drug that leaves the shelf, you look at, ask a question about, and pass or reject in the review system. Most people at the counter are elderly with chronic illnesses and people asking whether this can be taken with that, and at your elbow are the insurance card reader, package inserts and a well-thumbed drug handbook. Whenever the staff aren't sure, they call you.",
+  "You're store manager now, and eight staff's rota, the daily sales report, insurance reconciliation and GSP records are yours. In the mornings you check yesterday's numbers in the ERP, and in the evenings you plan tomorrow's staffing against head office's scorecard. Complaints come to you first, and you're the one who accompanies the drug and insurance inspections. You still review prescriptions, often with a phone at your ear.",
+  "You run a dozen stores and drive to five or six a week: checking displays and expiry dates, auditing prescription review records, talking targets with managers. Every Monday at the head office business meeting you fight for staff for the stores and push back on head office's targets. Whenever a store has an insurance or quality problem, the first call is to you.",
+  "You run operations and compliance for over a hundred stores in Suzhou, dealing with the insurance bureau, drug regulators, suppliers and hospitals, signing off new store sites and reviewing next year's budget. You rarely stand at a counter anymore, but whenever you visit a store, the first thing you do is walk to the prescription shelf and see whether the licensed pharmacist is on duty."
+ ],
+ "work": [
+  "A pregnant woman brings a dermatology prescription for an ointment. Reading the insert, you find an ingredient to be used with caution in pregnancy, call the prescribing doctor, and get it switched.",
+  "A man wants ten boxes of an ephedrine-containing cold medicine at once, saying they're for his workmates on a building site. By the rules you sell him two and record his ID number in the log.",
+  "A grandmother can't tell her morning pills from her evening ones. You take out a seven-day pill organizer, sort her week's pills compartment by compartment, and mark them morning and evening with a marker.",
+  "At month end you're thirty thousand yuan short on sales, and the regional manager calls out your store in the group chat. Instead of making the staff push supplements, you phone every chronic-disease member due for a refill.",
+  "A new staff member shelves two drugs with very similar names in each other's places. At the morning meeting you don't name anyone; you set the two boxes side by side on the table and have everyone say how they differ.",
+  "The insurance bureau comes to audit card transactions, and you match three months of stock movements against prescriptions one by one. At the end the inspector says your store's books are clean.",
+  "One store's fridge has broken down twice and the manager never reported it. You go over, find three blank days in the temperature log, and have head office replace the fridge that same day.",
+  "At the quarterly business meeting head office wants to close two old-town stores. You lay out their chronic-disease member counts and insurance prescription volumes and save one of them.",
+  "A store manager calls to say a customer shoved her. You drive forty minutes to get there, go with her to report it to the police first, then find someone to cover the rest of her shift.",
+  "At an insurance bureau forum for designated pharmacies, you bring a set of figures: how reliably chronic patients refill their medicines on time at the stores, far higher than many assume.",
+  "At the new year's budget meeting you move half the store renovation money to give every store a blood pressure monitor and a place where customers can sit down and talk.",
+  "A store is caught with no licensed pharmacist on duty. At the on-site meeting you don't start with penalties; you first ask why only one pharmacist was scheduled that day."
+ ],
+ "past": [
+  "You're in middle school in the countryside outside Yancheng. Your grandfather takes a big handful of pills every day, and you shake them out of the bottles for him; if you miscount, he'd never know.",
+  "Your gaokao (college entrance exam) results are average, and you apply for pharmacy at a pharmaceutical university in Nanjing. Your family says drug makers, hospitals or drugstores, one of them will always be hiring.",
+  "A pharmacology lecture covers the risks of multiple medications in the elderly. You think of your grandfather's handful of pills and spend the afternoon in the library afterwards.",
+  "You don't land an R&D job at a drug company after graduation, so you sign with this Suzhou chain and start as a staff pharmacist, three years on your feet behind the counter.",
+  "You study for the licensed pharmacist exam while working the counter, and it takes two tries to pass the second pharmaceutical knowledge paper.",
+  "With all four papers passed, you register as a licensed pharmacist at the store where you stand. The manager says: from now on, you sign the prescriptions."
+ ],
+ "late": {
+  "pension_note": "Estimate: drugstore chains pay under the basic enterprise employee pension; with a middling contribution base and many years in, it comes to a little over forty percent of your final monthly pay.",
+  "scenes": [
+   "In your first month of retirement you still reach for the temperature and humidity alerts on your phone every morning, and it takes a few times before you remember that account has been handed over.",
+   "An old neighbor runs into you at the market, still calls you pharmacist, and asks whether her new pill can be taken with the old one. You stand by the vegetable stall and explain for ten minutes.",
+   "You volunteer in the community, helping old people sort their medicine cabinets once a month, picking out the expired drugs and taking them, bag by bag, to be recycled.",
+   "Buying medicine for yourself, the young man behind the counter asks you three careful questions before he hands it over. You give him a nod in your head.",
+   "For your first few months reading inspection records at head office, you still work standing up out of habit. Only when a colleague brings you a chair do you sit down.",
+   "Your legs are better, and every evening you walk a loop by Jinji Lake. Passing a drugstore, you always glance at the sign saying whether the licensed pharmacist is on duty.",
+   "A former regular recognizes you on the street and says the diabetes member group is still going, run now by a young pharmacist.",
+   "Your first month away from the store, whenever you hear someone say they've upped their dose on their own, you still can't help asking another question.",
+   "Somewhere new, someone asks what you used to do. You say you checked prescriptions at a drugstore. Oh, so you sold medicine, they say. You smile and say, more or less.",
+   "A new pharmacist you once trained has become a store manager and posts about the store's new chronic-disease corner. You leave a comment: check the fridge morning and evening.",
+   "The news says drugstores should do more for chronic disease management, that pharmacists should come out from behind the counter. You think: I said that years ago.",
+   "Your grandchild has a cold, and the family wants to give two cold medicines. You turn both boxes over, read the ingredients, and take one away."
+  ],
+  "closing": {
+   "retire": "Many years later, the seven-day pill organizer is still in a drawer at home, now holding your own medicine, one compartment for morning, one for evening. You take them by the compartments every day and have never missed one.",
+   "burnout": "Many years later you pass that lane, and the store's sign has changed color again. The light is on behind the counter, and someone is bending to talk to an old man.",
+   "end": "Many years later you still have your licensed pharmacist registration certificate, its laminated edges gone yellow. You look at it for a while, then put it away with the old photographs."
+  }
+ }
+}

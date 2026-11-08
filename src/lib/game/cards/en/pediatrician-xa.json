@@ -1,0 +1,154 @@
+{
+ "id": "pediatrician-xa",
+ "occupation": "Pediatrician",
+ "role": "Pediatrician at a Children's Hospital",
+ "headline": "A Xi'an children's hospital resident, a pediatrics degree and three years of residency behind them, who sees eighty patients a day in the winter respiratory peak and covers the pediatric emergency room alone at night",
+ "unit": "The pediatric internal medicine department of a top-tier (Grade 3A) children's hospital in Xi'an",
+ "unit_type": "Top-tier (Grade 3A) children's hospital",
+ "city": "Xi'an",
+ "city_tier": "Emerging first-tier city",
+ "education": "Bachelor's degree (Pediatrics, five-year program) + three years of residency training",
+ "level": "You can handle the common fevers, coughs and diarrhea on your own and work out weight-based doses fast and accurately; critically ill children and difficult pneumonias still need your senior's call.",
+ "intro": "You rotated through every department of this children's hospital for three years, and on the day you finished residency the department head said winter is coming, stay. The waiting hall on the ground floor of the outpatient building seats several hundred, the heating is turned up high, and the numbers on the calling screen tick over from morning to night. From today your consulting room is on the outpatient rota, and half the nights in the pediatric emergency room are yours to cover alone.",
+ "salary_note": "Estimate: Xi'an incomes are middling and pediatric service fees are low despite huge patient volumes, so pay is set at the national average; overtime and night-shift pay in the winter peak make up a good part of the income.",
+ "facts": [
+  { "label": "Resident Physician (current level)", "value": "0-4 years, ¥6,500–11,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Attending Physician (4-9 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Surgery and physical therapy", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Taking histories, examining patients, writing records", "source": "AI exposure" },
+  { "label": "Open positions", "value": "5 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You cross the waiting hall to your room. It's already full, and the heat and the sound of crying children hit you together. Today you have eighty appointments.",
+  "First up, a three-year-old boy with two days of fever. You warm the stethoscope in your palm before putting it to his chest, and he cries anyway. In the gaps between sobs you hear fine crackles at the base of his right lung.",
+  "A grandmother holding her granddaughter says the child won't eat and must have an IV drip. You spend ten minutes explaining why she doesn't need one, and the grandmother says: then give her some anti-inflammatories.",
+  "The numbers on the calling screen crawl. A father bursts in saying he's waited three hours. You don't look up until you've finished checking the throat of the child in front of you.",
+  "Lunch is a roujiamo a nurse picked up for you, eaten in five minutes in your room. The afternoon numbers are already being called.",
+  "A baby is breathing fast, nostrils flaring with every breath. You glance at the oxygen reading and instead of sending him to queue for an X-ray have the nurse wheel him straight to resus.",
+  "A nebulizer for a child who keeps wheezing. You crouch down to show him how to wear the mask, and tell him it's like an astronaut's helmet.",
+  "Six appointments left. The last child is asleep when he comes in. You listen gently to his heart and lungs and tell his mother: take him home, plenty of fluids, come back tomorrow if the fever hasn't gone."
+ ],
+ "ladder": [
+  { "title": "Resident Physician", "stage": "Entry", "focus": "Rotates through clinic, wards and emergency, doses by weight and explains illnesses to parents; the intermediate exam and enough years lead to attending" },
+  { "title": "Attending Physician", "stage": "Core staff", "focus": "Can run a ward and be second on call at night, supervises residents, picks a specialty, and parents start booking you by name" },
+  { "title": "Associate Chief Physician", "stage": "Specialty group mainstay", "focus": "Takes the difficult cases and specialist procedures, supervises graduate students and leads research; needs papers and a stint supporting a grassroots hospital" },
+  { "title": "Chief Physician", "stage": "Final say", "focus": "Runs the expert clinic, chairs difficult case conferences, examines residents and helps revise clinical guidelines" },
+  { "title": "Head of Pediatric Internal Medicine", "stage": "Running the department", "focus": "Runs hundreds of beds and dozens of doctors; expanding clinics, juggling beds, cost control and disputes in the winter peak are all yours" }
+ ],
+ "ai_tasks": [
+  { "name": "Taking histories, examining patients, writing records", "how": "AI can record the consultation, organize the notes and draft a structured record; but children can't say and parents can't always explain, so the doctor still has to observe the child's alertness and crying and do the physical exam, then check and sign the record." },
+  { "name": "Ordering labs, imaging and other diagnostic tests", "how": "AI can suggest tests and imaging from the illness and flag omissions; which tests are worth doing, and whether to put a child through radiation or a blood draw, is for the doctor to decide with the child's age and the parents' worries in mind, and see through." },
+  { "name": "Analyzing lab results and test findings to make a diagnosis", "how": "AI can read lab reports quickly, pre-screen images and list possible diagnoses; the doctor weighs them against the child's presentation and developmental stage and is responsible for the final diagnosis, especially in rare diseases and atypical cases." },
+  { "name": "Prescribing and giving medication", "how": "AI can calculate doses by weight and age, check interactions and allergies and draft a prescription; the doctor confirms and issues it, because dosing mistakes in children are serious and need a human check." },
+  { "name": "Surgery and physical therapy", "how": "Operations and physical therapy depend on the doctor's hands and quick reactions, and on soothing children and calming parents; AI can at most help with pre-op planning, imaging navigation or rehab references." },
+  { "name": "Watching for changes after surgery and responding", "how": "AI can keep watch on monitor data, spot worrying trends and raise alerts; doctors and nurses at the bedside have to read the whole child, judge what a change means, act at once and explain it to the parents." }
+ ],
+ "events": {
+  "e_winter": "The winter respiratory peak, the hospital's clinics passing ten thousand visits a day. You see a hundred and twenty patients in one day, lose your voice, and at home that night don't want to say a word.",
+  "e_save": "A baby in respiratory failure comes in on your night shift, and you and your senior intubate him and put him on the ventilator. By the next morning his oxygen is back to ninety-eight.",
+  "e_angry": "A parent who has waited four hours storms into your room and pounds the desk, saying the hospital only cares about money. You wait until he's done, then go back to checking the throat of the child in front of you.",
+  "e_banner": "When a premature baby goes home, the parents bring the department a silk banner. The nurses point at the words on it and tease you that you're blushing.",
+  "e_drip": "You refuse to put a child with an ordinary cold on an IV, and the parents go straight to a clinic for one. A week later they're back and say next time they'll listen to you.",
+  "e_candy": "A little boy who cried from the moment he came in until he left digs a sweet out of his pocket on the way out and presses it into your hand: for the doctor.",
+  "e_ai_pre": "The hospital brings in AI pre-consultation: parents answer a string of questions on their phones, and the draft record is written before they reach your room. You spend the time saved listening to lungs a little longer.",
+  "e_ai_dose": "The prescribing system now has AI checking doses by weight. Once you slip a decimal point, a red box pops up at once, and in a cold sweat you correct it.",
+  "e_love": "You meet a university lecturer who came to give a talk in the department. On your first date, cycling on the city wall, you take three calls from parents before you've done one lap.",
+  "e_marry": "You get married. There's a course of yangrou paomo at the banquet; your colleagues tear their bread fastest and rush back to work as soon as they've eaten.",
+  "e_house": "You buy a flat in Chang'an district and spend an hour on the metro to work. The down payment is pooled by both sets of parents.",
+  "e_child": "Your child is born. You've treated thousands upon thousands of children, but the first time your own runs a fever, you panic in the middle of the night all the same.",
+  "e_paper": "Promotion requires papers. Coming off a night shift you sit in the office organizing mycoplasma pneumonia cases, filling in tables until noon.",
+  "e_mentor": "An old department head close to retirement watches you listen to a chest and says you're too hurried. After that she takes you through one clinic a week, teaching you to hear clearly in the few seconds when a child isn't crying.",
+  "e_shortage": "Two more doctors leave the department, one for a private children's clinic, one for a drug company. Those left have to work ten nights a month.",
+  "e_dispute": "A child's illness flares again after discharge, the parents blame the hospital for the delay, and it goes to the medical affairs office. You go through the records line by line to explain; the parents accept it in the end, and you still don't sleep for a week.",
+  "e_back": "Years of bending to listen to chests and look down throats, and your back and neck give out. You swap your consulting room chair for one that adjusts in height.",
+  "e_rare": "A child who keeps having seizures: you notice something off in a very ordinary blood chemistry panel, send off a genetic test, and confirm a rare metabolic disorder. Once he's switched to a special formula, he never has another seizure.",
+  "e_mother": "Your mother back in Baoji is in hospital for surgery. You come off a night shift, take the high-speed train to sit with her for a day, and hurry back early the next morning for clinic.",
+  "e_mdt": "A child with congenital heart disease has caught severe pneumonia, and cardiac surgery, the PICU and your respiratory group sit down to decide whether to operate first. You say get the pneumonia under control first; after an hour's discussion, everyone agrees.",
+  "e_pay": "Pediatric service fees go up, and the hospital raises pediatrics' bonus coefficient too. Your bonus is finally no longer the lowest in the hospital."
+ },
+ "choices": {
+  "c_zhuzhi": { "title": "Take the Attending Physician exam (intermediate title in pediatrics)", "situation": "You have the years for the intermediate pediatrics exam, and only after passing can you be appointed attending. Winter clinic means eighty patients a day, so studying has to be squeezed into summer.", "options": [
+   { "label": "Start studying in summer", "result": "You work through the pediatrics textbook cover to cover. One case question on the exam is a child with a febrile seizure exactly like one you saw in emergency." },
+   { "label": "Sit it next year", "result": "You see over ten thousand more children this year, and when you sit the exam the next year the questions read like your own clinic notes." } ] },
+  "c_sub": { "title": "Choose a specialty: respiratory, neonatal, or pediatric intensive care", "situation": "The department wants you to pick a specialty. Respiratory has the most patients and the busiest winters; the neonatal unit has the smallest, feeds counted milliliter by milliliter; the PICU has the sickest, and nights there often mean no sleep at all.", "options": [
+   { "label": "Respiratory", "result": "You start learning bronchoscopy, and learn to tell at a glance which child's wheeze is asthma and which is something inhaled." },
+   { "label": "Neonatal", "result": "Beside the incubators you learn two-finger chest compressions and learn to read a premature baby's skin color." },
+   { "label": "Pediatric intensive care", "result": "In the PICU you learn to set ventilators and read blood gases, and learn, in the family waiting area, to say to parents the things that are hardest to say." } ] },
+  "c_private": { "title": "A private children's clinic tries to hire you", "situation": "An upscale private children's clinic offers twice your pay: twenty-odd children a day, fifteen minutes each, no night shifts.", "options": [
+   { "label": "Go to the private clinic", "result": "You hand in your resignation. The old department head doesn't try to keep you, only says: warm the stethoscope first.", "end": "You went to the private children's clinic, twenty-odd children a day, each one seen without hurry. Sometimes you think of the calling screen in the winter clinic whose numbers wouldn't move, and the parents who kept on waiting." },
+   { "label": "Stay at the children's hospital", "result": "You turn it down. That winter you see more than ten thousand children and lose your voice twice." } ] },
+  "c_ai": { "title": "Help write the rules for pediatric AI pre-consultation", "situation": "The hospital is upgrading its AI pre-consultation system and needs a doctor to vet the rules: which symptoms go straight to emergency, which can be watched at home first. One more job, and if something goes wrong your name is on it too.", "options": [
+   { "label": "Take it on", "result": "You make 'any fever in a baby under three months must be seen at once' the first rule, then add, one by one, a dozen ways parents most often describe things wrong." },
+   { "label": "Pass, stick to seeing patients", "result": "IT and another group set the rules. Once the system goes live you use it as given and report back wherever it asks the wrong questions." } ] },
+  "c_fuzhuren": { "title": "Going for Associate Chief Physician: six months in Shangluo first", "situation": "Associate Chief Physician requires papers, a research grant and grassroots experience. The hospital is sending you to support the pediatrics department of a county hospital in Shangluo for six months.", "options": [
+   { "label": "Go to Shangluo", "result": "You help the county hospital set up a pediatric nebulizer room and teach two young doctors to read children's chest X-rays. The year you come back, you apply for the associate senior title." },
+   { "label": "Apply in a couple of years", "result": "You give up the place, and that summer take your child into the Qinling mountains for the first time." } ] },
+  "c_pharma": { "title": "Become a pediatric medical adviser at a drug company", "situation": "A drug company's medical affairs department wants you as a medical adviser on children's medicines: reviewing package inserts, running clinical studies, lecturing doctors. No night shifts, double the pay.", "options": [
+   { "label": "Go to the drug company", "result": "You leave your dosing card in the drawer of your consulting room.", "end": "You went to the drug company's medical affairs department and reviewed the inserts of children's medicines dose by dose. You often say that one more clearly written line on an insert means one less panicked parent at night." },
+   { "label": "Stay at the children's hospital", "result": "You say you'd still rather see children, and put their business card in a drawer." } ] },
+  "c_baoji": { "title": "Go back to the city hospital in Baoji", "situation": "The city hospital in your hometown of Baoji wants to recruit you as deputy head of pediatrics, with a settling-in bonus. Less pay, close to your parents, and the grandparents could help with your child.", "options": [
+   { "label": "Go back to Baoji", "result": "You bring the children's hospital's way of doing things home with you. The next year the city hospital opens an evening pediatric clinic, and parents no longer have to rush to Xi'an overnight." },
+   { "label": "Stay in Xi'an", "result": "You thank them. On weekends you take the high-speed train back to see your parents; it's only an hour." } ] },
+  "c_director": { "title": "Run for Head of Pediatric Internal Medicine", "situation": "The old head is retiring, and the hospital is selecting a new head of pediatric internal medicine. You'd run hundreds of beds and dozens of doctors, with the winter peak's extra clinics, bed juggling, cost control and disputes all yours, and less and less time to see patients yourself.", "options": [
+   { "label": "Run for it", "result": "At the selection meeting you talk about scheduling for the winter peak a month ahead and making the evening clinics a rota the young doctors can actually manage." },
+   { "label": "Don't run, keep your clinic", "result": "You still run four half-day clinics a week, and your expert appointments are gone as soon as they open." } ] }
+ },
+ "endings": {
+  "retire": "Your last clinic is one spring morning, the waiting hall half empty. When the last child has been seen, his mother says thank you, doctor, and the boy waves to you. You hang your stethoscope back on its hook on the wall and leave the dosing card you used for so many years in the drawer, for whoever comes next.",
+  "burnout": "The year your back and your voice both gave out, you stepped back from clinic to the hospital's child health department, examining small children and assessing their development on regular hours. The winter peak still comes, and when you hear the crying from the clinics at the far end of the corridor, you stop and stand for a while."
+ },
+ "stages": [
+  "You rotate between clinic, wards and emergency. In clinic, seventy or eighty patients a day: listening to chests, looking at throats, ordering tests, calculating doses by weight. On the ward, eight beds, morning rounds with your senior, notes, orders, explaining the illness to parents. On night shifts you cover emergency alone: when a child with a febrile seizure or labored breathing is wheeled in, you treat first and phone your senior after.",
+  "You can run a ward on your own now, residents and visiting doctors rounding with you, and the critically ill children are yours to see first and decide on. In clinic you run both general and specialty appointments, and parents start booking you by name. At night you're second on call, and when first call isn't sure, you run downstairs from the on-call room.",
+  "You're a mainstay of your specialty group, given the stubborn pneumonias, the recurrent wheezing and the difficult bronchoscopies. You chair case conferences, supervise graduate students and write grants, and in the winter peak you help with the department's rota and beds. When pediatricians at grassroots hospitals call for advice, you speak slowly and in detail.",
+  "You run an expert clinic two half-days a week, with patients from all over southern and northern Shaanxi. You chair the department's difficult case conferences, examine residents at their exit assessments, and the province asks for your comments when it revises pediatric guidelines. You still see patients, the ones nobody else can figure out.",
+  "You run hundreds of beds and dozens of doctors: expanding clinics in the winter peak, allocating beds, insurance cost control, disputes, all landing on your desk. You argue with the hospital for staff, beds and evening clinic allowances, and at morning meetings you explain things on behalf of young doctors who've drawn complaints."
+ ],
+ "work": [
+  "A child having a febrile seizure is carried into emergency, the parents too frightened to speak. You turn the child on their side, loosen the collar, watch the clock to the third minute, and the seizure stops.",
+  "You work out the fever medicine dose for a twelve-kilo child by weight, do it twice, have the nurse check it once more, and only then write the order.",
+  "A mother asks whether her coughing child can take adult cough medicine. You take out the pediatric drug handbook and turn to the page to show her.",
+  "A child with mycoplasma pneumonia is still feverish after five days of treatment. You study the chest X-ray again, change the plan, and explain to the parents exactly why.",
+  "A resident wants to put a child with diarrhea on an IV. You have him look at the child's eyes and urine output first: mild dehydration, oral rehydration is enough.",
+  "Second on call at night, first call phones to say a baby turned blue while feeding. You run downstairs, pick the baby up, listen, and have them do an echocardiogram at once.",
+  "A child with pneumonia after pneumonia, and three hospitals couldn't find the cause. You arrange a bronchoscopy and see in the right bronchus a peanut inhaled half a year ago.",
+  "Your graduate student has compiled five years of winter clinic data, and you have her present to the department which weeks most need extra doctors. Afterwards the hospital approves overtime pay.",
+  "A county hospital pediatrician calls about a child wheezing badly whom he's afraid to transfer. Over the phone you take him step by step through the drugs and the numbers to watch; at three in the morning he calls back to say the child is stable.",
+  "A child comes to your expert clinic after seven hours on the road from northern Shaanxi, with a thick stack of scans. You go through them one by one and say no more scans are needed; the diagnosis is clear.",
+  "You revise the department's follow-up plan for childhood asthma, spelling out the visit intervals more clearly and adding a step-by-step nebulizer diagram for parents.",
+  "In a simulated case at the exit assessment, a resident is the first to think of asking whether the child has been in contact with anyone with tuberculosis. You give full marks.",
+  "Before the winter peak you meet with the medical affairs office and expand evening clinics from two rooms to six, on condition that everyone in the department takes one more evening shift a week.",
+  "A parent posts a video online saying a doctor was rude. You pull the day's surveillance footage and the records, explain the situation for the young doctor at the meeting, and call the parent yourself.",
+  "The hospital wants to bring in a pediatric AI pre-consultation system. You have three clinic doctors use it for a month and note down every question it gets wrong before deciding."
+ ],
+ "past": [
+  "You're in middle school in Baoji. When your little cousin once had a fever so high she went into a seizure, you watched your aunt run with her to the township clinic and chased after them.",
+  "Your gaokao (college entrance exam) score is enough for medical school, and you choose pediatrics at a medical college in Xi'an. Classmates say pediatrics is exhausting and badly paid; you say you know.",
+  "On your first pediatrics placement, as you listen to a child's chest he grabs the tubing of your stethoscope and won't let go.",
+  "Your internship is at the children's hospital. In winter you see over a hundred patients a day alongside your teacher, your legs are swollen by the time you're back at the dorm, and you never think of switching.",
+  "After graduating you join this children's hospital's residency program, rotating through respiratory, gastroenterology, neonatal and emergency over three years.",
+  "You pass the residency exit assessment, your medical license is registered in pediatrics, and the department keeps you on."
+ ],
+ "late": {
+  "pension_note": "Estimate: public hospitals pay under the public institution pension plus an occupational annuity, roughly a little over half your final monthly pay.",
+  "scenes": [
+   "Your first winter of retirement, the news says the children's hospital clinics are packed again. You message an old colleague still in the department: drink plenty of water, don't stay up too late.",
+   "The young mothers in your compound know you're a pediatrician, and whenever a child has a fever they knock on your door. Every time you say go to the hospital, and every time you feel the child's forehead first.",
+   "You teach classes for new parents in the community: how to care for a fever, when they absolutely must go to the hospital. Afterwards the whole room crowds around you with questions.",
+   "You take your grandchild to the hospital and sit in the waiting hall for your number, and you see a young doctor warm a stethoscope in her palm. You smile.",
+   "In the child health department you measure and weigh dozens of children a day and check their development. Most of them are healthy, and something in you relaxes.",
+   "Your back is a little better, and every morning you walk along the foot of the city wall. When you see grandparents with small children, you can't help asking how old the child is.",
+   "A child you saved on a night shift long ago, now a university student, recognizes you in the street. You don't recognize him; he says his mother still keeps the discharge summary you wrote.",
+   "Your first month away from the hospital, whenever you hear someone else's child cough you still stop without thinking and listen to what kind of cough it is.",
+   "A new colleague who knows you used to be a pediatrician brings their child for you to look at. It's nothing, plenty of fluids, you say, then laugh: I've been saying that half my life.",
+   "A resident you once trained has become head of pediatrics and posts a notice of extra evening clinics for the winter. You like it and comment: look after yourself.",
+   "The first snow falls in Xi'an. You think of the children in the clinic hall bundled up to the eyes, clutching their registration slips.",
+   "Your granddaughter listens to your chest with a toy stethoscope for a long time, then says very seriously: your heart is talking."
+  ],
+  "closing": {
+   "retire": "Many years later, one winter, snow falls outside and the heating is warm indoors. You hear a child crying downstairs, two cries and then silence; someone must have picked them up. You go back to your book.",
+   "burnout": "Many years later you still have the stethoscope you used for so long, its tubing gone a little stiff. Now and then you take it out and listen to your own chest. The heartbeat is steady.",
+   "end": "Many years later you find an old dosing card in a drawer, covered in your own small handwriting: so much per kilo, so much per dose. You look at it for a while, then put it back where it was."
+  }
+ }
+}

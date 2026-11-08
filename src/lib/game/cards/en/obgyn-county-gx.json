@@ -1,0 +1,159 @@
+{
+ "id": "obgyn-county-gx",
+ "occupation": "Obstetrician-Gynecologist",
+ "role": "OB-GYN at a County Maternal and Child Health Hospital",
+ "headline": "A Guangxi county OB-GYN resident, trained on a rural-commitment scholarship and three years of residency in the city, now back in their home county covering night shifts in the maternity ward of the county maternal and child health hospital, with six years of service owed",
+ "unit": "The maternal and child health hospital of a county under Yulin, Guangxi",
+ "unit_type": "County maternal and child health hospital",
+ "city": "A county under Yulin, Guangxi",
+ "city_tier": "County town",
+ "education": "Bachelor's degree (Clinical Medicine, rural-commitment program) + three years of residency training",
+ "level": "You can manage and deliver a normal labor on your own and first-assist at C-sections; for postpartum hemorrhage and critically ill mothers you still call your senior and phone the city.",
+ "intro": "You're one of the county's commitment-program medical students: five years of medicine and three years of residency in the city, and on the day you reported back to the county maternal and child health hospital, the old head of obstetrics handed you a well-worn notebook of labor charts. The hospital stands at the end of the county town's old street, three stories, the delivery room on the second floor, its light almost never off. From today your name is on the night rota, and you still owe six years of service.",
+ "salary_note": "Estimate: pay and bonuses at a county maternal and child health hospital in Guangxi are both low, so pay is set at 0.55 times the national average; commitment-program doctors get a small rural allowance, and night shifts are paid per shift, not much.",
+ "facts": [
+  { "label": "Resident Physician (current level)", "value": "0-5 years, ¥6,000–10,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Attending Physician (5-10 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Attending and delivering women in labor", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Diagnosing gynecological conditions and providing some surgical treatment", "source": "AI exposure" },
+  { "label": "Open positions", "value": "7 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You walk from your dorm in the county town to the hospital, buying a roll of rice noodle sheets on the way. The midwife on duty says three babies were born last night, one at four in the morning.",
+  "Rounds after handover: six beds on the postnatal ward. Bed by bed you check uterine tone and bleeding and ask whether the milk has come in. One new mother's mother-in-law says the baby cries terribly, so first you show her how to hold him.",
+  "Antenatal clinic. A thirty-nine-year-old pregnant with her third child has a blood pressure of a hundred and fifty. You mark her antenatal booklet orange and tell her she must come back in a week.",
+  "The cervical and breast cancer screening bus brings in twenty-odd women from the townships, and you and a colleague examine them one after another in the gynecology room, speaking Cantonese; you understand about half their Hakka.",
+  "Lunch in the canteen. You've just sat down when the delivery room calls: a woman is fully dilated. You push your lunch box aside.",
+  "A woman's fetal monitor keeps showing decelerations. You video-call her husband at his factory in Dongguan and tell him she needs a C-section now. Once he's agreed and the form is signed, you wheel her into theater.",
+  "A woman comes for her cervical screening result, and you go through the report with her. She doesn't follow Mandarin well, so a nurse puts it into Hakka for you.",
+  "You're on nights. The delivery room light stays on. You've barely dozed off in the on-call room when the midwife knocks: bed seven, the baby's coming."
+ ],
+ "ladder": [
+  { "title": "Resident Physician", "stage": "Entry", "focus": "Manages labors, delivers babies, first-assists at C-sections, runs antenatal care and cancer screening, alone on night shifts; the intermediate exam leads to attending" },
+  { "title": "Attending Physician", "stage": "Core staff", "focus": "Can perform C-sections and manage postpartum hemorrhage, keeps the list of high-risk mothers, trains commitment-program doctors and township doctors on placement" },
+  { "title": "Associate Chief Physician", "stage": "The county's mainstay", "focus": "Critically ill mothers sent up from the townships come to you first, you decide whether they go on to the city, and you teach the township doctors" },
+  { "title": "Chief Physician", "stage": "Running the clinical side", "focus": "Runs obstetric quality and the cancer screening program for the whole county, and does the hardest operations yourself" },
+  { "title": "Head of Obstetrics and Gynecology / Deputy Director for Medical Affairs", "stage": "Running the hospital", "focus": "Runs all the hospital's doctors, midwives and beds, asks the county health bureau for money and signs referral agreements with the city hospital" }
+ ],
+ "ai_tasks": [
+  { "name": "Diagnosing gynecological conditions and providing some surgical treatment", "how": "AI can help read images, organize histories and suggest likely diagnoses; confirming the diagnosis and operating are done by the doctor, who takes responsibility." },
+  { "name": "Attending and delivering women in labor", "how": "Delivering a baby takes judgment on the spot and skilled hands, and emergencies in labor must be handled there and then; AI can at most flag abnormalities on the fetal monitor from the side. The delivery itself is done by a person." },
+  { "name": "Treating complications and abnormalities in pregnancy and after birth", "how": "AI can flag the risk of pregnancy complications from antenatal data and symptoms and send follow-up reminders; the doctor decides how to treat and how to talk about it, taking the whole woman into account." },
+  { "name": "Contraception and termination of pregnancy with drugs or devices", "how": "These involve procedural risk, law and ethics, and the woman's feelings and her family's views; the doctor must decide and perform them personally." },
+  { "name": "Prescribing and treating reproductive conditions with drugs and medical devices", "how": "AI can check contraindications, doses and interactions and draft a prescription for reference; the doctor settles the plan with pregnancy, breastfeeding and other circumstances in mind, and signs." },
+  { "name": "Ordering or performing labs, imaging, interventions, punctures and other diagnostic procedures", "how": "AI can suggest routine tests from the condition and help generate request forms; invasive procedures such as punctures and interventions are performed by the doctor's own hands." },
+  { "name": "Analyzing lab and test results to make a diagnosis", "how": "AI can quickly compile lab and imaging reports, flag abnormal values and offer a first reading; the doctor spot-checks the key conclusions and still judges difficult and borderline cases personally." },
+  { "name": "Deciding between conservative and surgical treatment", "how": "AI can compare indications and evidence for different treatment paths and list the pros and cons; whether to go conservative or operate is the doctor's call, weighing the patient's wishes, her plans for children and her family situation." },
+  { "name": "Planning operations, ordering surgical preparation, operating", "how": "AI can help with 3D image reconstruction, pre-op checklists and draft surgical plans; the doctor sets the final plan, leads the team and operates personally." },
+  { "name": "Diagnosing genetic conditions", "how": "AI can help analyze genetic tests and prenatal screening data and compare them with known variants; the doctor explains what the results mean and how uncertain they are, and discusses next steps with the family." },
+  { "name": "Treating infertility with assisted reproduction", "how": "AI can help assess embryo quality, predict success rates and schedule cycle medications; egg retrieval, transfer and other procedures, individual decisions and emotional support are the responsibility of the doctor and the team." },
+  { "name": "Watching patients after surgery and responding", "how": "AI can track vital signs and lab trends continuously and flag early signs of bleeding or infection; the doctor examines at the bedside, judges and acts in time." }
+ ],
+ "events": {
+  "e_first": "Your first delivery on your own. The moment the baby cries, the mother-in-law outside the door calls out, boy or girl? You don't answer that; the first thing you say is: the baby is fine.",
+  "e_nights": "Twelve night shifts a month. The county hospital's maternity ward has only four doctors, and after a night shift you go straight on to clinic.",
+  "e_transfer": "A high-risk mother has to be transferred to the city, and the ambulance takes over an hour on the mountain road. You ride along the whole way, one hand holding the fetal monitor probe. Only after you've handed over the notes do you realize you haven't had a sip of water.",
+  "e_eggs": "A month after a baby you delivered is born, the family walks twenty li to the hospital with a basket of farm eggs, insisting on putting them into the doctor's hands.",
+  "e_alone": "A pregnant woman's husband works in Guangdong, and she comes to every antenatal visit alone. You write your mobile number in her booklet and tell her to call any time.",
+  "e_screen": "Cancer screening finds early cervical changes in a woman, and you arrange for her to be seen at the city hospital. A year later she comes back for her check, says everything's fine, and brings you a bag of Shatian pomelos.",
+  "e_ai_ctg": "The hospital brings in AI fetal monitor analysis that raises an alarm on abnormal traces. Once it gives false alarms all night; once it spots a deceleration five minutes before you do.",
+  "e_ai_risk": "The region's maternal care system is connected to AI: enter antenatal data and the high-risk colors are marked automatically, with reminders of who's due for a recheck. You no longer have to leaf through your notebook for the weekly phone list.",
+  "e_love": "You meet a teacher from the county middle school at the night market. They say you smell of disinfectant; you say it's your perfume.",
+  "e_marry": "You get married. The banquet is thirty tables, several of them families of children you delivered, who come up to toast you carrying the children.",
+  "e_house": "You buy a flat in the county town at three thousand-odd yuan a square meter, the down payment from your own savings plus your parents' help. It's a ten-minute walk to the hospital, so when you're called back at night you're there fast.",
+  "e_child": "Your child is born, in the very delivery room where you work, delivered by the midwife you've shared shifts with longest.",
+  "e_paper": "Promotion requires papers. The county has no research facilities, so you turn five years of postpartum hemorrhage cases into a retrospective analysis; it takes three submissions to get published.",
+  "e_mentor": "An obstetrics head from the city hospital comes down to see patients once a month, and you round with her. She teaches you to feel the baby's position through the belly with your hands; you practice all afternoon.",
+  "e_shortage": "The commitment-program doctors who came back with you leave for the city as soon as their service is up, and the department is one person shorter again. You look at the rota: twelve nights again next month.",
+  "e_dispute": "A baby is born with some problems, and the family insists the delivery went wrong, blocking you in the corridor. The medical affairs office pulls the monitor records and explains them point by point; the family finally leaves, and you sit in the on-call room for a long time.",
+  "e_back": "Years standing by delivery beds and at the operating table, and your back and knees give out. You keep a back brace in the on-call room and put it on for night shifts.",
+  "e_fewer": "Fewer babies are born in the county every year, and half the maternity beds stand empty. The hospital starts shifting its effort to gynecology, child health and menopause clinics.",
+  "e_typhoon": "The power goes out in a typhoon and the delivery room runs on a generator. You listen to the fetal heart by flashlight and deliver the only baby born that night.",
+  "e_father": "After your father's stroke in the village he can't get about well. Every weekend you ride your e-bike back to see him, and on Monday morning hurry back for handover.",
+  "e_mdt": "Whether a pregnant woman with heart disease should deliver in the county: you, an internist and the city hospital's head of obstetrics hold a video meeting. In the end she's to be transferred to the city two weeks early, and you ride with her yourself."
+ },
+ "choices": {
+  "c_zhuzhi": { "title": "Take the Attending Physician exam (intermediate title in obstetrics and gynecology)", "situation": "You have the years for the intermediate OB-GYN exam, and only after passing can you be appointed attending. Twelve nights a month, so studying has to be squeezed into the on-call room.", "options": [
+   { "label": "Study in the on-call room", "result": "You go through your textbooks three times at the little desk in the on-call room, putting them down whenever the delivery room knocks and picking them up again after. One exam question on postpartum hemorrhage you could answer with your eyes shut." },
+   { "label": "Sit it next year", "result": "You deliver two hundred more babies this year, and when you sit the exam the next year the questions read like your own labor charts." } ] },
+  "c_nanning": { "title": "A year of advanced training in Nanning", "situation": "The hospital has one place for a year of obstetrics training at a big hospital in Nanning. If you go, the department is one short and the others take more nights.", "options": [
+   { "label": "Go to Nanning", "result": "You spend a year in Nanning watching critically ill mothers being saved, and come back with a notebook and a postpartum hemorrhage drill, which you run the department through three times in the first month." },
+   { "label": "Stay in the department", "result": "The place goes to a gynecology colleague. You cover another year of nights, and the department says you're a good sort." } ] },
+  "c_us": { "title": "Learn obstetric ultrasound", "situation": "The county's ultrasound department has only two doctors, and antenatal scans are often booked out. The hospital asks whether you'll train in obstetric ultrasound and get certified, so you can check fetal anatomy yourself.", "options": [
+   { "label": "Go and train", "result": "You train for three months in the city, and when you're back, pregnant women no longer wait three days for a scan; you can do it yourself in your consulting room." },
+   { "label": "Don't train", "result": "You say the delivery room can't spare you. Ultrasound later hires another doctor, and the queue gets a little shorter." } ] },
+  "c_service": { "title": "Your service commitment is nearly up: go or stay", "situation": "Your six years of service are almost up. A Grade 3A hospital in the city is hiring obstetricians, and with your residency certificate you could try; the hospital director says if you stay, next year you'll be deputy head of obstetrics.", "options": [
+   { "label": "Go to the city", "result": "You sit their exam and come first in the written test. On the day you leave, the midwife you've shared shifts with longest presses a bag of homemade rice cakes into your hands.", "end": "You joined the obstetrics department of the city's Grade 3A hospital and started again as a resident. You often saw names in the records referred up from the county, and every time you looked twice." },
+   { "label": "Stay in the county", "result": "You tell the director you'll stay. The next year, your name goes on the line for deputy head of obstetrics." } ] },
+  "c_ai": { "title": "Become the county's liaison for the maternal care platform", "situation": "The region is rolling out an AI platform for managing high-risk pregnancies, and the county needs one doctor as liaison: checking data, training township doctors, writing a monthly report. One more job, no more money.", "options": [
+   { "label": "Take it on", "result": "You go township by township training staff and find the mistyped blood pressures one by one. Six months later, the county's high-risk list matches reality for the first time." },
+   { "label": "Pass", "result": "A colleague from the health care section becomes liaison. You make your calls by the platform's colors, and when something's wrong you fix it yourself." } ] },
+  "c_dongguan": { "title": "Go to a private maternity hospital in Dongguan", "situation": "A private maternity hospital in Dongguan offers three times your pay, and many of the women giving birth there are migrant workers from Guangxi. Your family says go, it's good money.", "options": [
+   { "label": "Go to Dongguan", "result": "You give the labor chart notebook back to the old head and say the second half is for the next person.", "end": "You went to the private maternity hospital in Dongguan, where you often heard your home dialect in the delivery room. To every mother from Guangxi you said a little more, telling her where to go for her postnatal checkup once she was back home." },
+   { "label": "Stay in the county", "result": "You turn it down. That month you deliver another baby on a typhoon night." } ] },
+  "c_fuzhuren": { "title": "Apply for Associate Chief Physician", "situation": "For county doctors seeking the associate senior title, the paper requirements are a little looser, but you need enough operations and years at the grassroots. You have both; you still need to write a defense dossier, which will take several days off.", "options": [
+   { "label": "Write it and go to the defense", "result": "You go through ten years of operation records one by one. At the defense the panel asks how critically ill mothers are transferred from the county, and you talk for ten minutes." },
+   { "label": "Wait another year", "result": "You give your days off to your child and take them to the seaside at Beihai." } ] },
+  "c_director": { "title": "Become Head of OB-GYN and Deputy Director for Medical Affairs", "situation": "The old director is retiring, and the county health bureau asks whether you'll take on head of OB-GYN and deputy director for medical affairs. You'd run the hospital's clinical work, ask the bureau for money and sign agreements with the city, with less and less time at the operating table.", "options": [
+   { "label": "Take it on", "result": "The first thing you do in the job is rewrite the referral procedure from the county to the city and post it on the wall of every township health center." },
+   { "label": "Decline, stay in the delivery room", "result": "You say you still want to operate. The hospital appoints someone else as deputy director, and the hardest few cases are still scheduled for you." } ] }
+ },
+ "endings": {
+  "retire": "Your last shift is a day shift, and a woman is giving birth in the delivery room. You don't go in; you stand outside listening, hear the baby cry, and the midwife inside says: good. You hand in the key to the on-call room and walk slowly home along the old street, stopping at the breakfast stall for a roll of rice noodle sheets.",
+  "burnout": "The year your back and knees gave out, you stepped back from the delivery room to the hospital's women's health section, doing cancer screening and postnatal home visits on regular hours. No one knocks at night anymore, but you still keep your phone by your pillow."
+ },
+ "stages": [
+  "You move between delivery room, wards and clinic. In the delivery room you follow labors, listen to fetal hearts and work alongside the midwives at deliveries, first-assisting at C-sections; on the wards you round, write notes and orders; in clinic you do antenatal care and cancer screening. Once a month you go down to the township health centers to check the list of high-risk mothers. On nights you're alone; when unsure, you phone your senior first, then the city.",
+  "You can perform C-sections yourself now, and the harder labors and postpartum hemorrhages are yours to call. You keep the county's five-color list of high-risk mothers, and you remember the due date of every orange and red one. You train newly returned commitment-program doctors and township doctors on placement, the way someone once trained you.",
+  "You're the mainstay of obstetrics in the county. Critically ill mothers sent up from the township health centers come to you first, and you decide whether they go on to the city. You chair the county's reviews of critically ill mothers and teach the township doctors. You sit in clinic only two days a week; the rest is the delivery room, the operating theater and the phone.",
+  "You run the hospital's obstetric work: obstetric quality, the cancer screening program, building a neonatal unit, and you report whenever the city or the region inspects. You still operate, the hardest cases; when there's a major hemorrhage at night, the call still comes to your phone.",
+  "You run the hospital's doctors, midwives and beds, and serve as deputy director for medical affairs: rotas, equipment, recruiting, asking the health bureau for money, signing referral agreements with the city hospital. You rarely work nights now, but before you leave every day you still go to look at the light in the second-floor delivery room."
+ ],
+ "work": [
+  "The first labor you manage on your own, you draw more than a dozen labor charts in one night. The baby arrives before dawn, and the midwife says: you chart more often than I do.",
+  "A new mother's blood pressure suddenly climbs after birth. You give her medication and measure again and again, and only on the fifth reading does it come down. You write the time of every reading in the notes.",
+  "A township doctor sends you a pregnant woman's ultrasound report, and you see it's twins. You phone to tell them she must be sent up to register with you.",
+  "A postpartum hemorrhage in the middle of the night. You and the midwife massage the uterus, give the drugs, open two IV lines, and the bleeding stops. When you step away from the table, it's already light.",
+  "A woman flagged red on your list doesn't answer her phone, so you call her village doctor. He rides his motorbike to her house and calls back half an hour later to say she's fine.",
+  "A township doctor on placement is first-assisting you at a C-section for the first time, and his hands won't stop shaking. You say: don't rush, watch my hands.",
+  "A woman sent up from a township has a placental abruption. You judge there's no time to send her to the city and do the C-section in the county within twenty minutes. Mother and baby both come through.",
+  "You teach the county's township doctors how to take blood pressure, look for swelling and ask about headaches at antenatal checks, and at the end write your mobile number on the blackboard.",
+  "At a review of critically ill mothers, you draw a case's timeline from admission to transfer on the whiteboard and point out that two hours were lost waiting at the township health center.",
+  "When the region inspects the cancer screening program, you lay out three years of the county's screening data and follow-up records. The inspection team goes through them all afternoon and calls the work solid.",
+  "The county wants a neonatal unit, so you make three trips to the city and bring a neonatologist to see patients in the county one day a week.",
+  "For a high-risk mother with placenta previa, you book the blood and the people at the city hospital a week ahead, and on the day of the operation everything goes to plan.",
+  "After six months of persuading the health bureau, you get the hospital a central fetal monitoring station, so every delivery room's trace can be watched from the nurses' station.",
+  "A new commitment-program doctor says he wants to go to the city when his service is up. You don't try to keep him; you write him a reference letter describing the first C-section he performed.",
+  "You sign a green-channel agreement with the city hospital for critically ill mothers, cutting the transfer time from the county from an hour and a half to fifty minutes."
+ ],
+ "past": [
+  "You're in middle school in the county countryside. When your mother has your younger brother she gives birth at home, delivered by an old woman from the village, and you listen outside the door all night.",
+  "In the year of your gaokao (college entrance exam), the county is recruiting for the rural-commitment medical scholarship: free tuition, six years of service back in the county after graduating. Your father works it out and says it's a safe road.",
+  "You study clinical medicine in Nanning. In an obstetrics lecture on labor, the teacher draws a curve, and you copy it into your notebook three times.",
+  "Your internship rotation reaches obstetrics, and your teacher has you listen to a fetal heart in the delivery room for the first time. You count for a full minute: a hundred and forty-two.",
+  "After graduating you report back to the county and are first sent to a city hospital for three years of residency, rotating through obstetrics, gynecology and emergency.",
+  "You pass the residency exit assessment, your medical license is registered in obstetrics and gynecology, and you come back to the county maternal and child health hospital."
+ ],
+ "late": {
+  "pension_note": "Estimate: the county maternal and child health hospital is a public institution, paying under the public institution pension plus an occupational annuity, roughly a little over half your final monthly pay; not much money, but a county town doesn't cost much either.",
+  "scenes": [
+   "After retiring you go to the county's morning market every day, and people often bring a child over and say: say hello, this is the doctor who delivered you.",
+   "At the village activity center you talk to the women about menopause. Afterwards a few old women take your hands and quietly ask questions they've been too shy to ask for years.",
+   "The hospital moves into a new building, and you go back to see it. The new delivery rooms have central monitoring, and a big screen on the wall tracks every pregnancy in the county. You stand there a long time.",
+   "The first baby you delivered has become a mother herself, giving birth at the county hospital, delivered by a doctor you trained. She sends you a photo, and you look at it many times.",
+   "In the women's health section you do screenings and postnatal visits every day and go home on time. No one knocks at night now, but for the first few months you still don't sleep soundly.",
+   "Your back is better, and you ride the screening bus out to the townships, village by village. The sugarcane fields by the road look just as they did when you were a child.",
+   "A young doctor at a township health center calls about a pregnant woman. You say: take her blood pressure first, then ask whether she has a headache.",
+   "Your first year away from the county, you still keep your phone on twenty-four hours a day, and when you wake at night you check first for missed calls.",
+   "Somewhere new you meet a woman who left the county for work, and she says her child was born at the county maternal and child health hospital. You ask what year, do the sum: you were there.",
+   "An old colleague at the county hospital messages that the time to get critically ill mothers to the city has been cut again. You reply: good.",
+   "At the county night market you buy a bowl of Yulin raw-marinated rice noodles, and the stall owner's daughter recognizes you: her mother always said you were the one who delivered her.",
+   "Your grandchild asks what you used to do. You say you were the first person to say hello to people. To who? To the ones just arriving in the world, you say."
+  ],
+  "closing": {
+   "retire": "Many years later, walking by the river in the county town early one morning, you hear an ambulance near the hospital, and then it fades. You think: the light in that second-floor delivery room has probably been on all night again.",
+   "burnout": "Many years later you still have the labor chart notebook the old head gave you, the second half drawn by you. Now and then you open it and watch those curves climb, one after another.",
+   "end": "Many years later you still dream of the on-call room at the county hospital, the midwife knocking: the baby's coming. In the dream you sit up and put on your shoes, and then you wake."
+  }
+ }
+}

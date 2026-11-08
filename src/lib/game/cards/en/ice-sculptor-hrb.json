@@ -1,0 +1,200 @@
+{
+  "id": "ice-sculptor-hrb",
+  "occupation": "Ice and Snow Sculptor",
+  "role": "Ice and snow sculptor",
+  "headline": "A Harbin ice and snow sculptor who carried ice blocks by the river for a master for three winters and can only now finish a two-metre carving alone, racing deadlines at minus thirty in the winter parks and taking an ice chisel south to hotels in summer",
+  "unit": "Taking jobs with an ice-carving crew (in winter, the ice theme park on the north bank of the river in Harbin and the snow sculpture park on Sun Island; in summer, ice carvings for hotels and weddings down south)",
+  "unit_type": "Ice-carving crew (seasonal work)",
+  "city": "Harbin",
+  "city_tier": "Provincial capital",
+  "education": "Higher vocational college (Environmental Art Design)",
+  "level": "You handle the chainsaw, ice chisel and angle grinder with ease, and two of you can turn out a standard two-metre carving in a day. You can't yet bring a human face to life in ice, and on the big ice buildings you've only ever passed blocks up from below",
+  "intro": "Early December, and the Songhua River is frozen through. On the ice, the cutters saw out blocks more than a metre long and a crane lifts them ashore one by one. Your master slaps a drawing against your chest: this year this one is yours. Two metres high, a deer looking back over its shoulder, due in three days. He hands you the flat chisel he has used for over ten years, its handle wound round and round with black tape. As of today, every cut in that block is yours.",
+  "salary_note": "Estimate: in the Harbin ice season carvers are paid by the day, ¥800-1,000 for a skilled hand, for about three months; summer odd jobs pay unevenly. The database has no pay figures for this trade, so the ladder pay is estimated by converting reported day rates into a year-round monthly average, and Harbin itself is the trade's home ground.",
+  "facts": [
+    { "label": "Ice and Snow Sculptor (current level)", "value": "2-5 years, ¥5,500–9,000 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Ice and Snow Carver (master technician) (5-10 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Dealing with ice that suddenly cracks mid-carving", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Carving a figurative piece", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Minus twenty-eight. You leave your rented single-storey house in Daowai in two pairs of padded trousers and an army greatcoat, two pairs of gloves on. At the breakfast stall the soy milk starts to skin over the moment it's poured.",
+    "At the park gate the crane has already stacked today's blocks: four slabs glued into one big cube with splashed water, frozen overnight, seamless. With a stick of charcoal you mark out the deer's outline on the ice.",
+    "Roughing out. You cut down layer by layer with the chainsaw, ice chips spattering your goggles and freezing into a white frost. Your partner steadies the block from the other side and shouts at you to slow down: there's an air bubble underneath.",
+    "Lunch is iron-pot stew in the work shed, everyone round the stove, padded gloves drying by the fire. Someone says more tourists than ever are coming up from the south this year, and the park will open a week early.",
+    "Fine carving. You switch to the flat chisel and gouges and shave away at the deer's neck, wrist steady; too much force and it chips. Your master comes over, looks, and says the turn of the head is too stiff, let it fall back a little.",
+    "It gets dark early; by four you need the lights. You crouch at the deer's feet and gently heat the tool marks shiny with a heat gun, and the ice begins to let the light through, like glass.",
+    "Night shift. The park is full of chainsaws and the beeping of reversing cranes, strings of work lights hanging from the scaffolding of the ice castle. Your fingers go numb, and you go into the shed to warm them at the stove for five minutes.",
+    "Back at the house after knocking off, you take off your greatcoat; its front is crusted with ice that melts into a puddle. You phone your mother back home and tell her there's a lot of work this year, you might not make it home for New Year."
+  ],
+  "ladder": [
+    { "title": "Ice-carving Apprentice / Ice-carving Hand", "stage": "Entry", "focus": "Carry, cut and rough out under a veteran; reports put an ordinary hand's day rate at around ¥500-800." },
+    { "title": "Ice and Snow Sculptor", "stage": "Junior", "focus": "Complete standard ice and snow sculptures on your own." },
+    { "title": "Ice and Snow Carver (master technician)", "stage": "Mid-level", "focus": "Fine carving and responsibility for a section of a large project; reports put a skilled carver's day rate at around ¥1,000-1,500." },
+    { "title": "Lead Ice and Snow Artist", "stage": "Senior", "focus": "Design schemes, win competitions and lead a team; reports put an award-winning artist's day rate at around ¥2,000." },
+    { "title": "Ice and Snow Art Leader / Master Teacher", "stage": "Elder", "focus": "Industry associations, university teaching and passing the craft on." }
+  ],
+  "ai_tasks": [
+    { "name": "Dealing with ice that suddenly cracks mid-carving", "how": "AI can't help here. The crack happens under the blade, and a person must decide on the spot, by feel and experience, whether to glue it, swap the block or change the design; at most AI can help record the cause afterwards." },
+    { "name": "Taking a university intern through an ice season", "how": "Bringing someone on means demonstrating on site, correcting technique, watching their safety and living alongside them for a whole winter. AI can only help gather learning materials or draw up an internship plan; a person does the teaching." },
+    { "name": "Two people finishing a standard two-metre ice carving in a day", "how": "Rushing out pieces in bulk depends on two people working together, fast hands and the rhythm of the site, and AI can't carve. At most it can help plan the steps and track daily progress; people do the work." },
+    { "name": "Carving a figurative piece", "how": "AI can produce sketches of the figure and views from several angles, and help compare ideas for the scene. A person turns the flat image into three dimensions, gets the proportions and expression right in the ice, and does the final carving." },
+    { "name": "Finishing the facade of an ice building at height", "how": "Working at height means being on scaffolding or a lift, facing a real frozen wall, relying on a person's feel, balance and judgment of safety. AI can only help look at the ornament designs in the drawings." },
+    { "name": "Protection and rotation for night work in extreme cold", "how": "AI can help draw up rotations by temperature and hours worked, and remind people when to rest and warm up. A person has to watch how teammates are actually doing and decide on site who should come down and what to change." },
+    { "name": "Entering an international ice sculpture competition", "how": "AI can help produce concepts and renderings, and work through the division of labour and the three-day timetable. People set the theme and style, carve on site, adjust whenever the ice causes trouble, and the final piece comes down to their hands." },
+    { "name": "Producing an ice sculpture scheme for a park", "how": "AI can quickly generate several ice sculpture themes, park layout renderings and copy. A person has to understand the site, the client's requirements, winter building conditions and cost, make the call, present the scheme and answer for the result." }
+  ],
+  "events": {
+    "e_first_deer": "You hand over the deer looking back on time. On opening night, when the lights come on, its neck glows blue, and a small child stands in front of it and won't leave. You stand at the back of the crowd for a long time.",
+    "e_crack": "On the very last cut of the fine carving, a hidden flaw in the ice suddenly splits and half an antler breaks off. You crouch there stunned for a minute, then go and fetch a new block, glue it on with water, and carve the antler again from scratch.",
+    "e_frostbite": "After three night shifts in a row, two fingers on your right hand are frostbitten, red and swollen, too sore to grip the chainsaw. Your master has you rest for two days, and you sharpen other people's tools in the shed.",
+    "e_warm_winter": "It's a warm winter, the river freezes late and ice cutting is a dozen days behind. The park's opening date doesn't move, so you work from dawn to midnight, while the finished carvings start to drip in the noonday sun.",
+    "e_tourist_boom": "Tourists from the south suddenly pour into Harbin, and the queue at the park gate runs for kilometres. A penguin you carved is filmed for a short video that millions watch, and your master says this year your day rate can go up a bit.",
+    "e_hotel_summer": "In summer you carve ice for a Shanghai hotel's buffet. Carved in the cold store and wheeled out, it starts to drip within half an hour. Guests crowd round taking photos, and a foreigner asks whether it's made of glass.",
+    "e_melt": "Late March: the teardown. Bulldozers roll into the park and your carvings are pushed over one by one, smashed and piled by the river to melt. You don't go to watch. Your master does, and comes back to say that this year, when the deer went over, its neck was still whole.",
+    "e_snow_collapse": "On Sun Island, a big snow sculpture's block wasn't packed hard enough, and halfway through the carving a large section of one side falls away. Nobody is hurt; you pack the snow again and deliver four days late, and the crew leader is fined by the park.",
+    "e_love": "At the park you meet someone who does the lighting. Every night when you finish carving, they come and bury light strips in the ice. One evening after work the two of you stand at the bottom of the ice slide, and neither leaves first.",
+    "e_wedding": "The wedding is in summer, and you carve a pair of swans yourself to stand at the hotel entrance. It's thirty degrees that day, and by the time all the guests arrive the swans' necks are a size thinner; everyone says that's them melting into one.",
+    "e_cnc": "A CNC ice-carving machine arrives at the park, milling cut by cut from a computer model, a dozen small pieces a day. The boss says from now on the standard small carvings go to the machine, and you lot do what it can't.",
+    "e_ai_render": "A client sends an AI-generated rendering of an ice carving: a translucent phoenix with wings as thin as paper. You reply: ice can't be that thin, it'll break at a touch. Then you redraw it at a thickness the ice can bear.",
+    "e_child": "Your child is born in winter. You are racing a deadline at the park when the message comes at two in the morning, and ask the crew leader for three days off. The first thing you bring your child is a fist-sized ice bear you carved, kept in the freezer.",
+    "e_knees": "After more than ten winters kneeling and crouching on ice, your knees ache whenever the weather turns, and the doctor says the cold has got into the joints. You bind a layer of felted wool over your knee pads.",
+    "e_scaffold": "For the first time you finish a facade thirty metres up the ice castle's scaffolding, the frame swaying in the wind, a safety line clipped to your waist. One hand on the ice wall, the chisel in the other, you finish one window tracery, and your legs are a little weak coming down.",
+    "e_south_park": "An indoor snow park in Guangzhou asks you to spend two summer months maintaining its ice carvings. Inside it's minus five, outside thirty-five, and going in and out every day you have a cold all summer.",
+    "e_apprentice": "An apprentice you're training finishes a penguin on his own for the first time without chipping a single piece. He posts a photo on WeChat captioned: Shifu says it's all right. You give it a like.",
+    "e_award": "Your crew's piece wins a prize at an international ice sculpture competition: a group of fishing boats and birds on the ice, carved in three days and nights. At the ceremony a foreign judge asks how you make the ice look as if it's moving. You say: let the light travel through it from inside.",
+    "e_father": "Your father is in hospital in Suihua just as the park is racing to finish. Every day after work you ride two hours to get there, doze in the ward, and ride back before dawn.",
+    "e_university": "A local university invites you to teach ice carving to its sculpture students. You carry a block of ice into the classroom and carve a flower on the spot, leaving the lectern swimming in water. By the time the students applaud, the flower has begun to melt.",
+    "e_slow_hands": "Your hands aren't as quick as they were, and you leave the roughing out to the young ones and do only the last few cuts. But every year on the last night before opening, the crew leader still comes to find you with a torch and says: this bit still needs you.",
+    "e_old_master": "The master who trained you has stopped working, but every year when the park opens he still walks round it once, stands in front of your piece, runs his hand over the tool marks, and leaves without a word."
+  },
+  "choices": {
+    "c_cert": {
+      "title": "Sitting the vocational skills certificate for carvers",
+      "situation": "This year the park starts requiring certificates to work: the vocational skills certificate for craft carvers, ice and snow specialism, over a month of training and exams, right when your autumn odd jobs at the sculpture factory are busiest. A certificate is worth an extra hundred yuan a day, and moving up to Ice and Snow Carver depends on it too.",
+      "options": [
+        { "label": "Sit it", "result": "On the course you learn about ice crystals and stress properly for the first time: ice has a grain too, and cutting with it is different from cutting against it. On exam day you carve a crane; the examiner says the legs are too thick, but passes you." },
+        { "label": "Skip it; can't lose the factory work", "result": "You work through the autumn at the sculpture factory and put money aside. When winter work starts, the crew leader registers you alongside someone with a certificate, your name written under theirs." }
+      ]
+    },
+    "c_night_push": {
+      "title": "Do you keep going at minus thirty",
+      "situation": "Four days before opening, a group of carvings still isn't finished. The foreman says it will be minus thirty-two tonight, and anyone willing to work through the night gets double day rate. Your fingers haven't fully healed from the last frostbite, and your partner has already said yes.",
+      "options": [
+        { "label": "Work, taking turns at the stove", "result": "You and your partner swap every hour, ten minutes warming in the shed, then back out. By dawn the group is finished, and your gloves have frozen to your hands; it takes half a day of soaking in hot water to get them off." },
+        { "label": "Don't; go home and sleep", "result": "You tell the foreman your hands can't take it. When you come back in the morning the group is half done, and you finish the other half by daylight. The foreman says nothing, but that year your share of the bonus is missing." }
+      ]
+    },
+    "c_summer": {
+      "title": "What to do in summer",
+      "situation": "The ice season lasts only three months or so, and the rest of the year you need work. One road is touring hotels and weddings in the south for ice carving jobs, fast money but scattered; the other is going to a sculpture factory to learn fibreglass and stone carving, less money, but it would make your modelling solid.",
+      "options": [
+        { "label": "Tour the south for ice jobs", "result": "You spend the summer carving swans and dragons in hotel cold stores in Shanghai and Hangzhou, and your hands get faster and faster. But it's always the same few subjects, and you start to feel your hands moving ahead of your mind." },
+        { "label": "Learn modelling at the sculpture factory", "result": "At the factory you learn clay modelling from an old master, starting from human anatomy, and model dozens of heads in a summer. Back on the ice that winter, for the first time, your figures have eyes that look at something." }
+      ]
+    },
+    "c_ai_design": {
+      "title": "Learning to draft schemes with AI",
+      "situation": "Park jobs now start with renderings, three to five versions at a time. The young ones on the crew can produce ten in a night with AI, and you only know hand sketches. The crew leader says if you want to move up to lead artist, you have to be able to talk clients through pictures.",
+      "options": [
+        { "label": "Learn from the young ones", "result": "You learn to have AI make renderings and then mark them up by hand: where to thicken, where the ice won't hold, where the light will run. Clients say your pictures look like they can really be carved." },
+        { "label": "Keep drawing by hand", "result": "You go on sketching on brown paper, one sheet at a time. Some clients find them not flashy enough and go to another crew; the ones who stay say what you draw is exactly what gets carved." }
+      ]
+    },
+    "c_competition": {
+      "title": "Entering a team in an international ice sculpture competition",
+      "situation": "An international ice sculpture competition is looking for a Chinese team: three people, three days, twelve blocks, subject of your choosing. No wages while it runs, and it costs a week of park work; but a prize would turn you from an Ice and Snow Carver into someone with a name.",
+      "options": [
+        { "label": "Enter", "result": "In three days you sleep less than ten hours and carve a group of winter fishing boats. You don't win; the judges say the idea is good but the handwork falls a little short. After you get back, two parks ask about your dates for next year." },
+        { "label": "Don't go; take the park work", "result": "You spend the winter carving window tracery for the park's castle without losing a day's pay. You watch a bit of the competition livestream on your phone in the shed, and think the prize-winning eagle's wings are at the wrong angle." }
+      ]
+    },
+    "c_studio": {
+      "title": "Building your own crew",
+      "situation": "You have a few regular clients now: two hotels, a wedding company, an indoor snow park in the south. You could gather five or six people and register a studio to take work; but the big winter park jobs mean bidding, advancing money and insuring the workers, and if something goes wrong, it's on you.",
+      "options": [
+        { "label": "Build your own crew", "result": "You register an ice-carving studio, hire five people, and in your first winter win all the ice carving for a district's ice festival. The client holds back payment for three months, and you advance the workers' wages yourself." },
+        { "label": "Stay with the old crew leader", "result": "You stay as lead carver on the old crew leader's team, with no bids or invoices to worry about. Every year on the night before opening he treats everyone to barbecue, and always orders you two extra skewers." }
+      ]
+    },
+    "c_south_job": {
+      "title": "A permanent post at a southern snow park",
+      "situation": "The indoor snow park in Guangzhou wants you as its ice carving supervisor: work all year round, full social insurance, a dozen people under you updating and maintaining the park's carvings. No more winter nights, no more hunting for summer work; but every year you'd only ever carve ice indoors at minus five.",
+      "options": [
+        { "label": "Go to Guangzhou", "result": "You carve a whole ice wall inside the park, held at a constant minus five; the ice never melts. That first winter, you watch a video of the Harbin park opening on your phone over and over.", "end": "You went to the indoor snow park in Guangzhou as its ice carving supervisor, carving ice all year round in a hall held at minus five. Every December you take a week off to go back to Harbin and watch the ice cutters on the river." },
+        { "label": "Stay in Harbin", "result": "You say you still need a real winter. That year the ice lanterns you carved glow through every night of the first lunar month at minus thirty." }
+      ]
+    },
+    "c_master": {
+      "title": "Becoming the park's Lead Ice and Snow Artist",
+      "situation": "The park is replacing its lead artist, responsible for the scheme for hundreds of carvings across the park and the division of work among dozens of people, plus meetings with lighting, structural and safety staff. A lead artist needs more than skilled hands: you have to stand in front of the drawings and explain, and if you can't, you're replaced.",
+      "options": [
+        { "label": "Take the lead", "result": "You spend a summer drawing the scheme, and the winter directing dozens of people across a park at minus thirty. On opening night the park's general manager stands beside you and says this year the light and the ice are one." },
+        { "label": "Keep carving the hardest pieces", "result": "You recommend a young designer as lead artist and take only the hardest few centrepieces yourself. Each bears your name, cut into a corner of its ice base." }
+      ]
+    },
+    "c_teacher": {
+      "title": "Teaching ice carving at a university",
+      "situation": "A local university has started an ice and snow sculpture track and wants you to teach the practical classes on a long-term contract, outside the permanent staff: on the ice with students in winter, in the classroom in summer. Less money than taking your own jobs, but steady all year.",
+      "options": [
+        { "label": "Become a teacher", "result": "In your first class you don't let the students touch a blade. You have them spend the afternoon touching the ice, and say: get to know it first, then cut it.", "end": "You became an ice carving teacher at the university, taking a crowd of students onto the ice every winter. In parks all over, you can tell at a glance which of your students made which piece, from the way they cut." },
+        { "label": "Stay on the ice", "result": "You say a few more years of carving. The university says the door is always open; come whenever you like." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "In your last winter you carve your last piece in the park: a deer looking back, just like the one from your first year. On opening night you stand in front of it as the lights come up and its neck glows blue. At the end of March, when the ice is torn down, you go, and watch the bulldozer push it over; as it falls, its neck is still whole. You hand the flat chisel wound in black tape to your apprentice.",
+    "burnout": "That winter your knees hurt too much to crouch and your fingers go numb every night, and the doctor says if you keep enduring minus thirty your joints will be ruined. You don't go back on the ice. You open a small carving studio near home and carve wood and stone, no greatcoat needed. When you pass the river in winter, you still stop to watch the ice cutters for a while."
+  },
+  "stages": [
+    "You can carry a carving on your own now: with the drawing in hand you mark out the block in charcoal, rough it out with the chainsaw, refine it layer by layer with flat chisel, gouges and angle grinder, and finally heat the tool marks shiny with a heat gun. Two of you finish a standard two-metre carving a day, splitting the work, one steadying the ice, the other cutting. When the foreman inspects, the faults he finds are on the side you carved, not your master's.",
+    "You are responsible for a section of the park: a dozen carvings, an ice wall, the facade of an ice castle, with four or five people to schedule and progress to agree with the crane, lighting and structural teams. You make the hardest cuts yourself, a figure's eyes, an animal's fur, a castle's window tracery. You start climbing the scaffolding to work on ice thirty metres up, and when the wind gets up you call everyone down.",
+    "You design the schemes now: in summer you draw the whole park's layout on the computer and on brown paper, explaining theme, budget and where the light runs to the client; in winter you stand in the park directing dozens of people, which group starts first, which block needs swapping. You enter competitions and take teams abroad, and your name starts appearing on the plaque beside the work.",
+    "You are one of the trade's leaders: the industry association invites you to its meetings, universities invite you to teach, new parks invite you to review their schemes. You revise young lead artists' plans, teach apprentices the grain and temper of ice, and judge competitions. Every winter you still go to the park, choose a block, and carve a piece yourself, not for any client."
+  ],
+  "work": [
+    "The drawing shows an eagle with wings spread. Marking out the block, you see the wings reach too far for the ice to bear. You talk it over with the foreman, draw the wings in twenty centimetres, and add an ice column beneath as a feather.",
+    "Your partner's side has an air bubble, right in the deer's eye. You open it with the heat gun, fill it with a little water, wait for it to freeze, then carve the eye again, cut by cut.",
+    "In the snow park you carve a bear from a three-metre block of packed snow with a shovel and scraper. Snow is softer than ice and one push takes off a big chunk; you learn to scrape lightly first, then look at the form.",
+    "The ice castle facade in your section has more than two hundred window traceries. You cut the pattern into a wooden template and, with four people, trace and carve them one by one, finishing in ten days.",
+    "The lighting team wants to bury light strips inside your carving, so you agree the positions with them before you start and leave a channel in the block. When the park opens, light walks out of the deer's body with not a wire showing.",
+    "A force seven wind gets up in the night. You have everyone off the scaffolding and lash the blocks that haven't set firm with rope. The next day's check finds only one window tracery with a corner blown off.",
+    "The client wants an Ice and Snow Silk Road theme. You draw three schemes: the first is called too plain, the second too busy, and in the third you put only a camel caravan and an ice moon. The client signs.",
+    "The twelve competition blocks arrive. With your two teammates you walk round them once first and pick out the two with hidden flaws, putting them where they bear no load, and save the hardest block for the bird's wings.",
+    "The park's budget is cut by thirty percent. You swap several big ice pieces in the scheme for snow sculptures, snow being cheaper than ice, and keep the savings for the biggest centrepiece at the entrance.",
+    "A new park asks you to review its scheme. A young lead artist has designed a twenty-metre ice tower, beautifully rendered. You ask him which way the wind blows on that site; he can't answer, and goes back to turn the tower.",
+    "The university asks you to take an intern through an ice season. In the first week you have them do only one thing: carry ice, stack ice, glue ice. Only in the second week do they pick up a flat chisel.",
+    "Judging a competition, you see a piece whose figure is wonderfully alive but whose base is carved too thin; it may collapse tomorrow. You give it a high mark, and add one line to your comments: thicken the base by five centimetres."
+  ],
+  "past": [
+    "You grew up in a village near Suihua, where winters fell below minus thirty and the water vat in the yard froze into a single block. You carved a fish into it with your father's chisel and got a scolding for ruining the chisel.",
+    "The year you finished middle school, your uncle took you to Harbin's ice lantern festival. You stood under an ice castle with your head tipped back for a long time, and on the way home your toes went numb with cold.",
+    "Your gaokao (college entrance exam) score was only enough for a higher vocational college, and you chose environmental art design at a school in Harbin. The classes were renderings and modelling; what you loved most was the elective in clay.",
+    "In the winter of your third year, the school sent students to intern at the ice parks. You were put to carrying and cutting blocks, wore through seven pairs of gloves in one winter, and for the first time were paid by the day.",
+    "After graduating you spent a year drawing renderings for a decoration company, sitting in an office watching the snow fall outside. At year end you quit and went to the park to find the master who had trained you as an intern.",
+    "The master took you on: the parks in winter, hotel ice carvings in the south in summer. For the first two years you only cut and roughed out; in the third he began letting you carve whole animal heads."
+  ],
+  "late": {
+    "pension_note": "Estimate: as a seasonal craftsman you mostly paid into Harbin's urban employees' pension at the lowest band as a flexible worker, a little more in the studio years, with gaps in between, so in retirement you will draw roughly 30% of your final monthly income.",
+    "scenes": [
+      "In your first winter of retirement the river freezes through. Early one morning you go down to watch the ice cutting and stand beside the crane, looking at each block as it comes up and picking out which is clearest.",
+      "The neighbourhood holds an ice lantern festival and asks you to teach the children to carve small ice lanterns. You bring a bucket of frozen ice lumps and show them how to hollow out a nest for a candle. After dark, a whole row of little lanterns lights up.",
+      "You take your grandchildren to the park and stop in front of a carving, telling them this deer was carved by your apprentice's apprentice. The children ask: will it still be here next year?",
+      "In your first year off the ice you carve wood in the studio, shavings piling on the floor, not melting. Sometimes you reach for the heat gun to warm them without thinking, then laugh at yourself.",
+      "Your knees are a little better and you can go out walking in winter. Passing the park, you stand outside the railings watching the young ones climb the scaffolding for a while, and don't go in.",
+      "An apprentice of yours wins a big prize and says in an interview that the person he owes most is you. You see it on television and turn the volume up a little.",
+      "In your first winter in the new place, winter never feels cold enough. Waking in the night, you touch your fingers to see whether the hard skin from the frostbite is still there.",
+      "The old crew leader phones: the park is short a lead carver this year, could you come back for a month? You take leave and go back to the park at minus thirty, and the moment you pick up the flat chisel, you know where to make the first cut.",
+      "In a short video you see a young man carving a whale from ice by the sea in the south, the ice melting fast in the sun. When it ends, you leave him one comment: thicker at the bottom.",
+      "CNC machines mill all the standard ice carvings now, and the renderings come from AI. When people talk about an ice-carving master, they mean the person who can see whether a block of ice has a hidden flaw.",
+      "Half the old house near Suihua has fallen down, but the water vat in the yard is still there, freezing into a single block every winter as always. You crouch and touch it. There's no fish on it now.",
+      "Your hands shake and can't hold a chisel steady any more. In winter your grandchildren build a snowman in the yard while you stand beside them, showing them how to turn its head back a little, as if it were looking over its shoulder."
+    ],
+    "closing": {
+      "retire": "Many years later, one winter night, you stand at the window as snow falls outside. Far off, the park on the north bank lights up, a stretch of blue, a stretch of white. You watch for a long time, until the lights go out one by one.",
+      "burnout": "Many years later you walk slowly along the river, where someone is chiselling a hole in the ice to fish. You stop and watch him chip away, blow by blow, the ice chips scattering bright across the snow.",
+      "end": "Many years later, sorting old things, you find the flat chisel wound in black tape, the tape gone brittle and crumbling at a touch. You weigh it in your hand. It weighs just the same."
+    }
+  }
+}

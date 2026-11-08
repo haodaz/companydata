@@ -1,0 +1,199 @@
+{
+  "id": "ai-eng-bj",
+  "occupation": "AI Engineer",
+  "role": "Algorithm engineer at a large-model company (new graduate)",
+  "headline": "A new-graduate algorithm engineer from a small city in Hunan, fresh out of a computer science master's, watching the cluster run data and evaluations for the post-training team of a large-model startup in Beijing's Haidian district",
+  "unit": "A large-model startup near Wudaokou in Beijing's Haidian district (about three hundred people, renting several thousand GPUs)",
+  "unit_type": "Large-model AI startup",
+  "city": "Beijing",
+  "city_tier": "Tier 1",
+  "education": "Master's degree (Computer Science and Technology)",
+  "level": "You know PyTorch and distributed training, and ran fine-tuning on a hundred-GPU cluster as an intern. You have never led a thousand-GPU training job on your own, and you have one paper, as second author",
+  "intro": "On your first day you get a laptop, a cluster account and a newcomer's checklist full of acronyms. Your team lead adds you to a group chat called Post-training / Data, with three hundred-odd unread messages; the latest, from four in the morning, reads: node seven has lost another GPU. As of today, your name appears in the training job submission logs.",
+  "salary_note": "Estimate: leading Beijing large-model companies pay new computer science master's graduates in algorithm roles ¥30,000-40,000 a month, plus stock options, around twice the national figure for AI engineers. The industry rises and falls fast, and what the options are worth depends on the next funding round.",
+  "facts": [
+    { "label": "AI Assistant Engineer (current level)", "value": "0-2 years, ¥8,000–15,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "AI Engineer (2-4 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥137,153 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Deciding whether a model ships, and making the call on safety and quality", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Cleaning and deduplicating training data, writing data-processing scripts", "source": "AI exposure" },
+    { "label": "Open positions", "value": "2239 related job listings nationwide, 624 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You leave your shared flat in Qinghe and squeeze onto Line 13. Half the carriage is reading papers on their phones, and so are you: one posted online last night, about exactly what your team is working on.",
+    "At your desk, the dashboards first. The fine-tuning job you submitted overnight is at step three thousand; the loss curve jumped at step two thousand eight hundred and came back down. You take a screenshot to ask about at stand-up.",
+    "Team stand-up, twelve people round one screen. Your lead hears you out on the spike and says check that batch of data first. Back at your desk you fish that batch out of several million samples.",
+    "In the canteen downstairs a table is talking about the new model another company released yesterday. Someone has already run it on your internal evaluation set: two points higher than yours. Nobody speaks; everyone eats with their heads down.",
+    "In Jupyter you go through that batch row by row and find several thousand samples generated from the same template, every answer opening with Of course! You write a filter rule, then pull two hundred to check by eye.",
+    "The evaluation finishes. You put the old and new models' scores on maths, code and long documents into a table in the team's Feishu doc, with twenty wrong answers attached below, each marked at the step where it went wrong.",
+    "Most people are still here. You attach the re-cleaned data to a training job; it sits seventeenth in the queue, expected to start at two in the morning. You set an alarm for half past two.",
+    "Back at the flat your flatmate is gaming. In bed you watch the cluster dashboard on your phone; your job is still queued. Your mother sends a voice message asking whether it's cold in Beijing."
+  ],
+  "ladder": [
+    { "title": "AI Assistant Engineer", "stage": "Assistant / junior", "focus": "Under a mentor, do modular tasks such as model training, data labelling and wrapping APIs; prove your engineering by getting certified on a domestic framework and shipping at least one working demo." },
+    { "title": "AI Engineer", "stage": "Mid-level", "focus": "Deliver a single AI feature on your own (an OCR module, a speech quality-check system), master a domestic framework and edge deployment, and write technical proposals that support pre-sales." },
+    { "title": "Senior AI Engineer", "stage": "Senior", "focus": "Lead the integration of AI systems across modules (such as an AI-plus-IoT inspection platform), get through algorithm registration and cybersecurity compliance assessment, and break down complex problems across several teams." },
+    { "title": "AI Technical Expert", "stage": "Principal", "focus": "Define the company's AI technology roadmap, crack problems shared across the industry (such as industrial defect detection from very few samples), produce patents and standards, and take on national research projects." }
+  ],
+  "ai_tasks": [
+    { "name": "Cleaning and deduplicating training data, writing data-processing scripts", "how": "Rule-based filtering, deduplication, format conversion and quality scoring are now mostly done by AI-written scripts and AI scorers. A person only needs to sample the quality and set the filtering criteria." },
+    { "name": "Writing training and evaluation code, debugging training errors", "how": "Coding assistants can write most training scripts, change configs and read logs to locate common errors. Hangs in distributed training, precision that won't match, memory that mysteriously grows still need a person to dig down layer by layer and answer for the fix." },
+    { "name": "Designing data mixtures and training experiments", "how": "AI can sweep hyperparameters, run ablations and compile comparison tables automatically. Which experiment to run first, which conclusion to trust and where to go next take a person reading the curves and the samples." },
+    { "name": "Building and maintaining evaluation sets, analysing a model's weak spots", "how": "AI can generate test questions in bulk, score them automatically and cluster the failures. Whether a test measures real ability, whether questions have leaked, whether a higher score really means a better model, a person decides by reading the samples one by one." },
+    { "name": "Deciding whether a model ships, and making the call on safety and quality", "how": "Before launch someone has to weigh quality, cost, safety risk and compliance, and answer for the consequences if something goes wrong. AI can write the reports and run red-team tests; only a person can make the call." },
+    { "name": "Fitting the model into a client's business", "how": "AI can draft proposals, generate demos and answer routine technical questions. Understanding what the client really wants, tuning the results inside their own data and systems, and building trust rest mainly on people." }
+  ],
+  "events": {
+    "e_first_bug": "Your data-processing script scrambled the turn order in some of the multi-turn conversations, and nobody noticed until the model had trained on it for three days. Your lead doesn't shout; he just has you give ten minutes at the weekly meeting on how the bug was found.",
+    "e_spike_found": "You chase that spike in the loss curve for a week and finally trace it to a batch of web pages with broken encoding. Once it's fixed, several evaluations go up a little, and your lead tags you in the group chat.",
+    "e_release_night": "The night before the company's new model launches, the whole team stays in the meeting room until dawn. The last round of safety evaluation falls just short, and you retrain with an emergency batch of refusal data. The example the boss shows at the launch event is one you picked.",
+    "e_gpu_broken": "Five days into a thousand-GPU job, one card fails and the whole job dies. A phone call wakes you at three in the morning; you resume from the latest checkpoint, then spend two hours chasing the data-centre chat to get the card replaced.",
+    "e_rival_release": "A competitor suddenly open-sources a model a good deal stronger than yours. At the all-hands the next day the boss spends forty minutes on stage explaining that our approach is not wrong. That month three people leave the team.",
+    "e_paper": "You and a colleague write up a finding about data mixtures and it is accepted at a top conference. The conference is abroad, and for the first time you explain your own work to strangers in front of a poster, for three hours, until your voice gives out.",
+    "e_neck": "Months of ten-plus hours a day at a screen leave your neck too stiff to turn, and your health check gains a line: mild fatty liver. You buy a standing desk and watch the curves on your feet.",
+    "e_agent_code": "The coding assistants keep getting better, and you almost never write training scripts or evaluation pipelines from scratch any more. You now spend more time reading code someone else wrote and reading samples than writing code.",
+    "e_love": "At a tech meetup you meet someone who designs chips. Your first date is at a little restaurant in Wudaokou, and the two of you talk about memory bandwidth for two hours.",
+    "e_options": "The company closes a new funding round at double the valuation, and on paper your stock options turn into a very large number. You phone your mother and don't mention the number; you just say the company is doing well.",
+    "e_house_loan": "You buy a small two-bedroom flat out by Beijing's Sixth Ring Road. The down payment empties both families' savings, and the mortgage takes half your salary. On the day you sign, you finish reading a set of evaluation results on your phone on the sales office sofa.",
+    "e_wedding": "The wedding is back in Hengyang. Your lead sends a video message saying you can skip next week's launch. After the banquet you still open your laptop to check whether the evaluation has finished.",
+    "e_child": "Your child is born. You take two weeks off and, for the first time, go more than ten days without looking at the cluster dashboard. When you get back, a colleague has finished your experiment, and the conclusion is the exact opposite of what you expected.",
+    "e_eval_leak": "You discover that the model's high score on a public leaderboard comes from the test questions having slipped into the training data. You assemble the evidence in a document and send it to the team, and the company withdraws its press release.",
+    "e_reorg": "A reorganization merges your team with another, and in his first week the new head cuts the direction you spent six months on. You archive your experiment notes in a folder named Might Be Useful Someday.",
+    "e_insomnia": "That year you often wake at four in the morning, and the first thing you do is reach for your phone to see whether the training job has died. Your mother comes to stay in Beijing for a month and knocks on your door at eleven every night to make you shut the laptop.",
+    "e_agent_team": "The team starts letting a swarm of experiment-running agents work through the night: they change their own configs, run their own ablations and hand in a comparison table by morning. Your job becomes reading their reports over breakfast and picking out the conclusion that looks good but won't stand up.",
+    "e_mentor": "An intern you are mentoring finds a data problem on her own for the first time. She posts a long analysis in the group chat, ending with: can I go to bed now?",
+    "e_age_35": "The year you turn thirty-five, you notice plenty of job ads specifying under 35. The new graduates on your team have more papers than you had at their age, and fewer options.",
+    "e_parents": "Your father is admitted to hospital in Hengyang and you take the overnight high-speed train back, joining meetings on the company intranet from your laptop in the ward corridor. A nurse asks what you do. After a long pause you say: I teach computers to talk.",
+    "e_hospital_model": "A model your team built is now in dozens of grassroots hospitals, drafting medical records for doctors. On a follow-up visit to a county hospital a doctor tells you he used to write records until nine every night; now he's home for dinner at seven.",
+    "e_old_code": "In the company codebase you come across a data-filtering script from more than ten years ago. The author is you, and the comment reads: this will do for now, fix later. It has been running ever since.",
+    "e_slow_down": "You can't read new papers as fast as the young ones any more; each one takes two passes. But whenever the team argues over whether an experimental result holds up, in the end everyone turns to look at you."
+  },
+  "choices": {
+    "c_track": {
+      "title": "Pre-training team, or stay in post-training",
+      "situation": "The pre-training team is short of people and asks whether you'd move over: big jobs on thousands of GPUs, as close to the foundations of the model as it gets, but each experiment takes weeks and a mistake costs millions in electricity. Post-training iterates fast, you see results every week, and you're closer to users.",
+      "options": [
+        { "label": "Go to pre-training", "result": "You learn to read throughput curves across thousands of GPUs, and the first time you submit a thousand-GPU job your palms are soaked. In three months you finish only two experiments, but write a twenty-page report on each." },
+        { "label": "Stay in post-training", "result": "You can run a dozen small experiments a week, working over data, evaluations and samples line by line. When users report a problem, you can see by next week whether the model has changed." }
+      ]
+    },
+    "c_paper_or_ship": {
+      "title": "The paper or the launch",
+      "situation": "One of your findings is good enough for a paper, with three weeks until the deadline. But the product team is pressing for the model you've been tuning, saying the client is waiting. Your lead says do both; you know you can only do one.",
+      "options": [
+        { "label": "Deliver the model first", "result": "The model launches on time and the client's feedback form gains a few good reviews. You finish the paper the night before the deadline; it's rejected, the reviewers saying the experiments aren't thorough enough." },
+        { "label": "Write the paper first", "result": "The paper is accepted, your name first on the list for the first time. The product launches two weeks late, and someone in the group chat makes a sarcastic remark about researchers." }
+      ]
+    },
+    "c_bigco": {
+      "title": "A tech giant comes calling",
+      "situation": "A big internet company's large-model division offers you a job one level up: forty percent more cash, more GPUs, a steadier job. But your unvested options would be forfeited, and at the big company you'd be one of several thousand algorithm engineers.",
+      "options": [
+        { "label": "Go to the big company", "result": "Your desk moves from Wudaokou to Xi'erqi. There are more GPUs than you can use and more approval steps than you can get through. Your year-end review is an A, and for the first time you buy your parents a big television." },
+        { "label": "Stay at the startup", "result": "You turn it down and are at your desk by nine-fifty the next day watching the dashboards. Your lead hears about it, says nothing, and hands you a new direction." }
+      ]
+    },
+    "c_agents": {
+      "title": "Letting agents run your experiments",
+      "situation": "The company has built a set of agents that run experiments by themselves: give them a question and a budget, and they write the code, change the configs, run the ablations and write the report. With them one person can do what a small team used to. But you have to check their conclusions one by one, and you get fewer and fewer chances to do the work with your own hands.",
+      "options": [
+        { "label": "Work with a swarm of agents", "result": "You set their questions, budgets and acceptance criteria, read their reports each morning, and kill half their conclusions every week. That quarter your team delivers three times as many experiments as any other." },
+        { "label": "Do the key experiments yourself", "result": "You keep writing the few most important experiments yourself. It's slow, but you know where every curve came from. Once, your own hands-on replication overturns a conclusion an agent reported." }
+      ]
+    },
+    "c_expert": {
+      "title": "Competing for AI Technical Expert",
+      "situation": "The company is appointing a group of AI Technical Experts, and you need something that sets direction: a technology roadmap, a few patents, or a national research project you led to the finish. You have an industry deployment project; done well it would be your signature work, done badly it's two wasted years.",
+      "options": [
+        { "label": "Take on the project", "result": "You and eight people spend most of a year in the client's server room, getting through data anonymization, algorithm registration and cybersecurity assessment one by one. On acceptance day you put everyone on the team's name on the last slide." },
+        { "label": "Keep the team steady first", "result": "You give the project to another team and rebuild the evaluation system with your own people. You aren't selected in the review, but nobody on your team leaves." }
+      ]
+    },
+    "c_layoff": {
+      "title": "The company cuts back",
+      "situation": "The industry cools, the company has money for eighteen months of burn, and half the research directions must go. Your head sits you down: either move to government and enterprise projects, travelling constantly, writing proposals and keeping clients company, or take the severance and leave.",
+      "options": [
+        { "label": "Move to government and enterprise projects", "result": "You start riding high-speed trains to provincial capitals, explaining to division chiefs in meeting rooms what large models can and can't do. You find the sentence you say most is: that, it can't do yet." },
+        { "label": "Take the severance and go elsewhere", "result": "You take the severance and three weeks later join a company building large models for robots. On your first day you watch a robot arm in the lab fold a towel; it takes twenty minutes." }
+      ]
+    },
+    "c_changsha": {
+      "title": "Moving back to Changsha",
+      "situation": "A construction machinery maker in Changsha is building an AI department and wants you to head it: sixty percent of your Beijing pay, a fifth of Beijing's house prices, an hour by high-speed rail from Hengyang. Getting your child into school in Beijing means a long wait, and your parents are getting old.",
+      "options": [
+        { "label": "Go back to Changsha", "result": "Outside the window of your new desk is a row of excavators. Your first project has the model read the repair manuals and help after-sales mechanics diagnose faults. At first the mechanics don't trust it; later they ask it things in the group chat every day." },
+        { "label": "Stay in Beijing", "result": "You bring your parents to Beijing for six months; they never settle and go home. You set a reminder on your phone: video call every Sunday night." }
+      ]
+    },
+    "c_pm": {
+      "title": "Becoming an AI product manager",
+      "situation": "The head of product says they need someone who truly understands models, and knows where they go wrong, to shape the products. Moving over means no more watching the cluster: you'd meet users, write requirements and argue with sales every day, and you'd slowly fall behind on the technical side.",
+      "options": [
+        { "label": "Move to product", "result": "Your first requirements document has a whole page called Where It Will Go Wrong. For the first time, the engineers don't argue with product.", "end": "You became an AI product manager, dealing every day with users, sales and engineers. You kept one habit: before every release, you pick a hundred samples and read them yourself from start to finish." },
+        { "label": "Stay in algorithms", "result": "You say you still prefer reading curves. The product people laugh and say they'll keep coming to you with questions, then." }
+      ]
+    },
+    "c_startup": {
+      "title": "Starting your own company",
+      "situation": "An old classmate who works in medicine wants to start a company with you: he knows hospitals, you know models, an investor is ready with the first money, and you'd be CTO. The options, the mortgage and your child's school fees are all on the table.",
+      "options": [
+        { "label": "Go and be CTO", "result": "You rent four desks in an incubator. In the first month you write the code, label the data and demo at hospitals yourself. The day you sign your first hospital, you celebrate with barbecue downstairs.", "end": "You and your old classmate built a medical AI company, and as CTO you watched the office grow from four desks to half a floor. On your desk you still keep a skewer from the barbecue the day you signed the first hospital." },
+        { "label": "Stay put", "result": "You say wait a while. He finds someone else, the company does well, and every time you meet he buys you dinner and says he wishes you'd come." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you pack the things on your desk into a cardboard box: a thermos you've used for over a decade, a hardback notebook full of experiment notes, the badge from your first launch event. Before you go you glance at the dashboard; the overnight jobs are still running, the curves flat. You don't submit a new one, and close the laptop. At the Wudaokou crossing downstairs, the lights are as long as ever.",
+    "burnout": "That winter, watching curves at your desk, everything goes black, and a colleague helps you to hospital. The doctor tells you to stop. You resign and go back to Hengyang for a while, fishing by the river with your father every day, your phone left in the car. One day you realize you haven't thought about the cluster dashboard in three weeks."
+  },
+  "stages": [
+    "Your days are spent in data and curves: scripts to clean, deduplicate and sample, then reading samples one by one in Jupyter and pasting the problems you find into a Feishu doc. You submit training jobs, watch the loss curves, run evaluations and make comparison tables, and when your lead says check this batch, you check it to the bottom. At the weekly meeting you speak for ten minutes, and answer each question as it comes.",
+    "One capability is yours now, maths, code or long documents, from the data mixture to the evaluation set. You write the technical proposals and plan the experiments, and every week at the team meeting you report how much your area improved and why. When product or a client has a problem, they come to you first. You start mentoring an intern, teaching him to read the samples, not just the scores.",
+    "You lead a small team responsible for a whole pipeline: data, training, evaluation, pre-launch safety testing. You meet the pre-training, inference and product teams to agree schedules, go through algorithm registration filings with legal, and work through requirements with clients in meeting rooms. You write less code and review more; the thing you do most is ask, under an experimental conclusion: where are the samples?",
+    "You set direction: which technical route to bet on next year, how to divide several thousand GPUs, which projects to cut. You present the roadmap to the boss and investors at strategy meetings, give talks at industry conferences, lead the writing of patents and standards, and defend national research projects with your team leads. When young people bring you results, you look them over and ask first: do you believe it yourself?"
+  ],
+  "work": [
+    "Your lead asks you to find out why the model keeps ending answers with I hope this helps. You search the data: the phrase appears over four hundred thousand times. You write a rule that removes most of them from the training data.",
+    "A thousand-GPU job dies in the small hours with an NCCL timeout in the log. You work through the on-call runbook step by step, find a machine whose network card has dropped out, and by the time you've resumed from the checkpoint it's nearly light.",
+    "Running maths evaluations on a new model for the first time, you spot-check and find the auto-grader marking 1/2 and 0.5 as different answers. You fix the grading script, and the model's score rises three points out of nowhere.",
+    "Once the code capability is yours, you replace every question in the evaluation set that can be found online. On the new evaluation the model drops eight points, and at the weekly meeting you say: this is its real level.",
+    "A client complains that the model keeps mixing up Party A and Party B in contracts. From the fifty contracts they sent you build a small evaluation set and tune a new version of the data; the next week the client says it's much better.",
+    "An intern hands in an experiment report concluding the new method gains two points. You have him rerun it with three different random seeds; in two of the three, it gains nothing. The next day he runs it five more times.",
+    "In pre-launch safety testing, the red team finds a way of asking that gets the model to say things it shouldn't. Four days before launch, you make the call to delay a week and write the email to the boss yourself.",
+    "Legal needs an algorithm registration filing that sets out the model's training data sources, safety measures and human intervention mechanisms. You and two others write more than sixty pages and revise four times before it goes in.",
+    "At quarterly planning you and the inference team argue for an hour over whether a model should be twice as big. In the end you agree to run the experiment on a small model first and let the numbers speak in two weeks.",
+    "Several team leads each want half of next year's GPUs. You lay out every direction's output from the past year on the table and cut one that you yourself started years ago.",
+    "Defending a national research project, a panel expert asks whether your method works for industrial inspection with very few samples. You bring up data measured at a real factory and talk for ten minutes; the expert nods.",
+    "A young researcher brings you a beautiful result: the new method beats the baseline across the board. You spend half an hour reading samples and ask when the test set was built. He freezes, and spends the evening checking."
+  ],
+  "past": [
+    "You went to a county high school near Hengyang, and the family's first computer was a hand-me-down from your cousin. On it you wrote your first line of code, which printed your own name on the screen.",
+    "In your final year of high school you watched a livestream of a human-versus-machine Go match online, and couldn't sleep that night. You put Computer Science first on your application form.",
+    "You got into the computer science department of a science and engineering university in Beijing through the gaokao (college entrance exam). The first time you came to Beijing your father rode the overnight train with you, saw you to the foot of your dorm, and went straight home: the tickets were expensive, he said, no point staying.",
+    "In your third year you joined a professor's natural language processing project, where the lab's four GPUs had a queue. You went to the machine room at two in the morning to grab one and the security guard took you for a thief.",
+    "You stayed at your university for a master's in artificial intelligence, exempt from the entrance exam. That year large models suddenly took off, and your supervisor switched the whole group's direction; everyone started learning from scratch.",
+    "In the second and third years of your master's you interned for six months each at two large-model companies. At graduation a tech giant and a startup both made offers. You chose the startup because the team lead who interviewed you said: here, you'll be touching the real thing within three months."
+  ],
+  "late": {
+    "pension_note": "Estimate: Beijing's urban employees' pension has a cap on the contribution base, algorithm engineers earn far above it, and there were gaps for startups and job changes, so in retirement you will draw a little over 30% of final monthly pay; most of it rests on savings and options from your younger years.",
+    "scenes": [
+      "In your first month of retirement you still open the cluster dashboard app every morning, long after you lost the login, then remember, and delete it.",
+      "Your old university asks you back to teach a course for graduate students. Your first lecture isn't about models; it's about how to read data one row at a time.",
+      "You and your spouse spend six months back in Hengyang, fishing by the river. Your mother's phone has an AI assistant that reminds her to take her pills every day, and its manner of speaking is a little like a version your team tuned years ago.",
+      "For the first few months after stopping you sleep ten hours a day and wake not knowing what to do. You start learning to cook; the first dish is your mother's chilli-fried pork, and it's too salty.",
+      "You find part-time work at a university, helping professors review students' experimental designs. No launches to chase, no night watches, and you find you enjoy the work again.",
+      "An intern from your old team now heads a big company, and at a launch event mentions the first person who mentored me when I started. You hear it on the livestream and say nothing.",
+      "For the first few months in the new role, you still wake at four in the morning and reach for your phone, then remember that job hasn't been yours for a long time.",
+      "Your old lead invites you back to speak at a team meeting about what you do now. Afterwards the young ones crowd round with questions, the same questions you once asked.",
+      "At an industry forum you run into an old colleague from your first company, long since acquired. He kept one of the nameplates from its door at home.",
+      "Writing code, running experiments, producing reports: agents do all of that now. When people talk about algorithm engineers, they mean the person who decides which experiment to run and which conclusion to believe.",
+      "At home you find the hardback notebook full of experiment notes. On the last few pages is a dinosaur your child drew when small, and beside it, in wobbly writing: Mum and Dad's computer.",
+      "Your grandchild chats with the family's AI assistant and asks who made it. It answers very properly. Listening beside them, you think of all those training jobs queued at two in the morning."
+    ],
+    "closing": {
+      "retire": "Many years later, one evening, you sit on the balcony, and the assistant on your phone asks whether you'd like a reminder to go to the park tomorrow. You say yes, then ask it a maths question, and it gets it right. You nod, as if watching a smooth curve.",
+      "burnout": "Many years later you sit by the river in Hengyang, your rod wedged between stones, the float perfectly still. Further along a child asks an AI on a phone what this river is called. You listen to the answer and don't correct its small mistake.",
+      "end": "Many years later, sorting old things, you find the newcomer's checklist from your first day, a dozen acronyms. You read them out one by one, and still remember every one."
+    }
+  }
+}

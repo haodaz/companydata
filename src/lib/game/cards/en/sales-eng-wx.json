@@ -1,0 +1,193 @@
+{
+ "id": "sales-eng-wx",
+ "occupation": "Sales Engineer",
+ "role": "Sales Engineer, Energy Storage Inverters",
+ "headline": "Four years after campus recruitment brought an electrical engineering graduate into a Wuxi maker of energy storage inverters, a sales engineer riding the bullet train every day between factories and design institutes across Jiangsu and Anhui, with ¥15 million in contracts to sign this year",
+ "unit": "Sales department of a power conversion system (PCS) manufacturer in Wuxi, Jiangsu",
+ "unit_type": "Power electronics manufacturer",
+ "city": "Wuxi",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree (electrical engineering and automation)",
+ "level": "You can explain PCS topologies, grid-connection standards and Modbus register maps clearly, and write technical proposals and bid documents for commercial and industrial storage on your own. You have never carried a big power-group tender alone, and at banquets you still end up drunk under the table.",
+ "intro": "Four years ago campus recruitment brought you into this energy storage inverter factory. You rotated through the production line and the test benches, spent two years following your mentor to customers, and last year took over Jiangsu and Anhui yourself. What you sell is the cabinet that turns the direct current in batteries into the alternating current of the grid, and the people who buy it are factories' energy departments, design institutes, general contractors and the grid. From today, ¥15 million in contracts has to be won by you, one project at a time.",
+ "salary_note": "Estimate: sales engineers at Wuxi power electronics makers have a modest base wage and earn commission at year end on contract value and payments collected. In years when deals go well, take-home pay runs ten to twenty percent above the national average; in years of price wars, commission rates are cut and pay falls back near the national figure.",
+ "facts": [
+  { "label": "Sales Engineer (current level)", "value": "2-4 years, ¥12,000–18,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Sales Engineer (4-6 years)", "source": "Career map" },
+  { "label": "Pay after 10+ years", "value": "¥18,600 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "On-site retesting of a PCS's anti-islanding protection", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "First-pass screening of PCS technical requirements for a customer's storage project", "source": "AI exposure" },
+  { "label": "Open positions", "value": "12 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Wuxi East Station, the first bullet train to Hefei. In your seat you revise a technical proposal: commercial storage for an auto-parts plant, two megawatts, four megawatt-hours, one page on peak-valley price spreads, one on payback years.",
+  "The auto-parts plant's energy department. The section chief and the electricians' foreman sit in a row while you go through the PCS's efficiency and its switchover between grid and off-grid. The foreman asks only one thing: if it trips in the middle of the night, who comes?",
+  "A call from the design institute: the technical specification calls for IEC 61850 support. Can you do it? You say yes, hang up, and immediately message R&D to ask.",
+  "A bowl of beef noodles outside the factory gate while you log the visit in the CRM: decision-maker, budget, competitors, and in the last field: \"the electricians' foreman is key.\"",
+  "At the general contractor's project office, going through the annexes to the technical agreement clause by clause: how many years of warranty, how efficiency will be assessed, whose problem it is when the communications integration goes wrong.",
+  "On the train back to Wuxi, the sales director calls: the quarter is still three million short. That project in Yancheng: can you come down another two points on the bid?",
+  "Back at the office, building the bid documents with pre-sales and R&D. The technical deviation table gets revised three times, then stamped, bound and sealed, the printer hot to the touch.",
+  "Home at last, and the EMS supplier has sent over its register map. You read it in bed and, on page three, find two register addresses that collide."
+ ],
+ "ladder": [
+  { "title": "Sales Engineer (Assistant)", "stage": "Assistant / junior", "focus": "Under a mentor, make customer visits, prepare technical materials and configure basic solutions; the core is building product knowledge and the basics of talking to customers. Moving up depends on independently completing technical responses for five or more small and mid-sized projects with no major technical errors." },
+  { "title": "Sales Engineer", "stage": "Intermediate", "focus": "Own customers in a region through the full cycle, lead technical proposals and bid support, and handle common system integration problems. Moving up requires hitting the annual sales target (usually over ¥15 million in contracts) with customer satisfaction of 90 percent or more." },
+  { "title": "Senior Sales Engineer", "stage": "Senior", "focus": "Own key industry accounts (such as the big state power generation groups or provincial grids) or strategic projects (50 MWh and up); lead cross-department technical problem-solving; begin mentoring new hires. Moving up requires at least two flagship projects successfully connected to the grid." },
+  { "title": "Principal Sales Engineer / Solutions Director (at some companies)", "stage": "Principal", "focus": "Define the industry solutions roadmap, feed into product planning, lead major standards collaborations (such as an industry energy storage standards working group), and become the technical counterpart for customers' chief engineers and CTOs. Moving up requires industry influence, such as speaking at major storage forums or publishing technical white papers." }
+ ],
+ "ai_tasks": [
+  { "name": "First-pass screening of PCS technical requirements for a customer's storage project", "how": "AI can read the drawings and load data a customer sends, extract the key parameters, and give a first-pass selection and feasibility judgment against the product specs. A person checks whether the data can be trusted, works out what the customer really needs, and makes the call on whether it can be done." },
+  { "name": "Leading the communications integration plan between the PCS, BMS and EMS", "how": "AI can organize the Modbus TCP and IEC 61850 MMS register maps, draft the interface list and integration plan, and find inconsistencies across each party's documents. A person has to coordinate with the third-party EMS supplier, define where responsibility lies, and settle the risk clauses before the contract." },
+  { "name": "On-site retesting of a PCS's anti-islanding protection", "how": "AI can only help compile the standard's requirements, analyze the fault recordings and draft the report template. Bringing equipment on site to reproduce the problem, running the test, facing a skeptical customer, and signing an authoritative report must be done by a person who answers for it." },
+  { "name": "Updating the regional briefing on mandatory storage policies", "how": "AI can search and compile each province's policies on storage requirements every month, producing a briefing and a comparison of changes. A person only spot-checks the original text for key provinces, especially the ratios and durations that affect pricing, and sends it once confirmed." },
+  { "name": "Leading the response to a customer complaint about excessive harmonics from a grid-connected PCS", "how": "AI can help analyze monitoring data, compare it against harmonic standards and list likely root causes. But going on site to investigate, negotiating with the customer over the final payment and the risk of a lawsuit, and leading the team to close it out within 48 hours and owning the result rest mainly on a person." }
+ ],
+ "events": {
+  "e_first_win": "The first project you followed from start to finish wins its tender, a ¥20 million contract. The day the award is published you look at the screenshot several times on the train, and send your mentor a red envelope.",
+  "e_lost_bid": "A tender you chased for eight months is lost, your price just three-tenths of a percent above the winner's. At the post-mortem you take the rival's bid apart line by line, and afterwards stand alone in the stairwell for a long time.",
+  "e_harmonic": "After grid connection, one project's harmonics are over the limit, and the owner sends a letter threatening to withhold the final payment. You take after-sales and R&D there overnight, and over forty-eight hours in the switch room you load filter parameters and measure waveforms until it passes.",
+  "e_islanding": "The grid company has doubts about your anti-islanding protection and demands an on-site retest. You stand over the fault recorder for a whole day of testing and sign your own name on the report.",
+  "e_payment": "Six months after acceptance, the final payment still hasn't come. You visit the owner's finance department four times in a month, and on the fourth the accountant says the boss has signed; it'll go through next week.",
+  "e_dinner": "At the dinner before the contract signing, the owner's people keep the toasts coming, and by the end you can't remember how you got back to the hotel. You get through the next morning's technical briefing holding onto the table.",
+  "e_ai_select": "The company brings in an AI selection tool: drop in the drawings and load curves a customer sends, and in an hour there's a first-pass proposal. You can answer customers from the train without waiting for a slot from pre-sales.",
+  "e_ai_wrong": "The PCS the AI picked for a project in Qinghai doesn't account for altitude derating; at three thousand meters, power has to be discounted. You catch it, revise the proposal, and add it to the system's mandatory checks.",
+  "e_ai_brief": "Every month AI compiles each province's storage requirements into a briefing on its own. You only spot-check the originals for a few key provinces, and the storage ratios and durations in your quotes are never wrong again.",
+  "e_bonus": "The year-end commission comes in, twice your annual salary. You buy your parents a new air conditioner and put the rest in a fixed deposit.",
+  "e_price_war": "A price war breaks out and PCS prices fall thirty percent in a year; the company halves its commission rates. You have as many deals as ever, but the year-end figure is noticeably smaller.",
+  "e_desert": "A big storage project in the northwest is about to connect, and you spend a month on site in the Gobi. Sand blows in through the container seams, and every morning you start by brushing out the cabinets' filters.",
+  "e_night_fault": "At two in the morning a factory's storage system faults and shuts down, and the owner calls you. You get after-sales and drive through the night, have it running again before dawn, and eat the first steamer of buns outside the factory gate.",
+  "e_love": "Every contract of yours passes through someone in the company's commercial department. Once she penciled a note on one of them: \"you'll lose out on this clause.\" Later the two of you start cycling by Lihu Lake on weekends.",
+  "e_wedding": "You hold the wedding back home in Yancheng, then host a table for colleagues in Wuxi. Your mentor gets drunk and tells the bride that the first time this kid went out to a customer, he was left waiting three hours.",
+  "e_baby": "The day your child is born you're at a bid clarification meeting in Nanjing, and you rush to the hospital the moment it ends. By the time you arrive, the baby is asleep.",
+  "e_house": "You buy a three-bedroom flat in Xinwu District, the down payment from these years of commission plus help from both sets of parents. The mortgage isn't small, and you get even less choosy about projects.",
+  "e_stomach": "Years of irregular meals and endless banquets, and your stomach goes first; the gastroscopy report says \"chronic gastritis.\" From then on your bag holds a box of stomach pills and a pack of soda crackers.",
+  "e_parent": "A call from home: your father wrenched his back unloading stock at his hardware shop and has been laid up for a month. You take three days off to go back and sort out the shop's books for him.",
+  "e_mentee": "A new hire you're mentoring wins his first tender alone, a small commercial storage deal. He brings the award notice to show you and says he won this one by wearing down the electricians' foreman.",
+  "e_forum": "At the industry's big storage conference you speak for twenty minutes on grid-forming PCS to a packed room. Afterwards people from three power generation groups come up to ask for your card.",
+  "e_young": "The company hires twenty sales engineers this year, half of them with master's degrees in electrical engineering. Their proposals look beautiful, but the first time they meet an owner, they can't look him in the eye."
+ },
+ "choices": {
+  "c_target": {
+   "title": "Go after a power group's big project, aiming for Senior Sales Engineer",
+   "situation": "The director says that to make Senior Sales Engineer you need ¥15 million in contracts in a year and customer satisfaction over ninety percent. There's a storage project at a power generation group within reach, a year and a half long with a decision chain you can't see the end of; or you could take several small commercial deals and make up the number steadily.",
+   "options": [
+    { "label": "Go after the power group", "result": "For a year and a half you ran between the group's design institute, its subsidiaries and the plant, and met more division heads than in your previous four years combined. The day the contract was signed you ate a bowl of noodles outside the plant gate, and found yourself smiling as you ate." },
+    { "label": "Take the small commercial deals", "result": "You signed eleven factories in a year, made your number and got your commission. The director praised you for being steady at the annual party, but everyone above you on the promotion list had one big project." }
+   ]
+  },
+  "c_northwest": {
+   "title": "Transfer to the northwest region",
+   "situation": "The company has more and more big storage projects in Xinjiang and Qinghai, and the northwest region is short of people. Going there means a commission multiplier thirty percent higher and ever-bigger projects. But you'd spend two hundred days a year in the Gobi and in county-town hotels, unable to see to anything at home.",
+   "options": [
+    { "label": "Go northwest", "result": "You rented a flat in Urumqi and visited more than thirty project sites in a year. In your second year you learned to read sandstorm forecasts, and to warm up the car first on mornings at thirty below." },
+    { "label": "Stay in Jiangsu", "result": "You stayed, still riding the bullet train between factories and design institutes in the Yangtze River Delta. Colleagues who went northwest send photos: rows of containers on the Gobi, stretching to the horizon." }
+   ]
+  },
+  "c_lowball": {
+   "title": "Bid at cost to win a flagship project",
+   "situation": "The province's first grid-side demonstration project is going to tender, and the director says this flagship must be won and tells you to bid at cost. Win it and you can use it to convince a hundred customers; but payment will drag for two years, commission will be almost nothing, and rivals will surely cut their prices too.",
+   "options": [
+    { "label": "Bid at cost", "result": "You won. Photos of the project later appeared in every company brochure, and that year your commission was the lowest since you joined." },
+    { "label": "Hold the price", "result": "You bid a normal price and lost. The winner started wrangling with the owner the very next year, and you watched it unfold in the industry group chat without a word." }
+   ]
+  },
+  "c_ai_kb": {
+   "title": "Help build the technical library and case base or not",
+   "situation": "The company needs to feed its AI selection tool, and is picking people from sales to write up years of project cases and the pitfalls they've hit, and to review the AI's selections and integration plans. It means two days a week in the office, and two fewer days of chasing deals.",
+   "options": [
+    { "label": "Sign up and write the cases", "result": "You wrote up four years of projects one by one as cases; the longest was the harmonics complaint. Six months later, before writing any proposal, the new hires searched the library for your name first." },
+    { "label": "No, keep running", "result": "You're still on the road five days a week, and the electricians' foremen all know your face. But when the company meets to set the selection rules, it's the case-writers who get invited." }
+   ]
+  },
+  "c_design": {
+   "title": "Join a design institute as an energy storage integration expert",
+   "situation": "A power design institute you deal with often is short of people who understand the equipment, and asks you to review storage system designs and act as technical gatekeeper. You'd cross to the client side with no contract quota, somewhat lower pay, and half the travel.",
+   "options": [
+    { "label": "Go to the design institute", "result": "You handed over your customers, and left the notebook full of electricians' foremen's phone numbers to whoever took them on.", "end": "You sit in the design institute's review meeting with another company's sales engineer's technical proposal spread before you. Seeing he has left out altitude derating, you write a line in red in the margin, and think of yourself many years ago." },
+    { "label": "Stay with the manufacturer", "result": "You thanked the design institute and said you wanted a few more years in the field. On the train that night you watched the factories go by outside the window, and didn't open your laptop." }
+   ]
+  },
+  "c_product": {
+   "title": "Move over to product management",
+   "situation": "The product department is defining the next generation of PCS and needs someone who knows the customers, and asks whether you'd move over as a product manager. No more quotas, no more banquets, but every customer relationship you've built over the years would be handed over.",
+   "options": [
+    { "label": "Go into product", "result": "You handed over your customer list one by one; the last to go was the auto-parts plant.", "end": "In the product review you write \"if it trips in the middle of the night, who comes?\" on the first page of the requirements document. The next generation of PCS gains a remote reset button." },
+    { "label": "Stay in sales", "result": "You said you couldn't bear to leave those customers. That year your contract value was first in the department." }
+   ]
+  },
+  "c_manager": {
+   "title": "Become a sales manager with a team, or take the technical track",
+   "situation": "East China needs a sales manager to own eight people's numbers, assign territories and approve quotes; the technical center wants you on the path to Principal Sales Engineer / Solutions Director, as the technical counterpart for major customers. Two roads, and the company will give you only one slot.",
+   "options": [
+    { "label": "Become sales manager", "result": "You began holding a meeting every Monday, reviewing the pipeline at month end, and putting out fires with owners for your people. You wrote fewer and fewer proposals yourself, and signed more and more." },
+    { "label": "Take the technical track", "result": "You turned down the manager's job and took on the two hardest power group customers, spending whole afternoons talking with their chief engineers." }
+   ]
+  },
+  "c_director": {
+   "title": "Go for Principal Sales Engineer / Solutions Director",
+   "situation": "The company is creating a solutions director to set the industry solutions roadmap, deal with customers' chief engineers and CTOs, and be a voice in the industry: speaking at forums, writing white papers. Candidates must submit two flagship projects successfully connected to the grid and a white paper, and you'd have to squeeze several months of evenings out of a schedule already full of projects.",
+   "options": [
+    { "label": "Apply and write the white paper", "result": "You turned years of project data from the northwest and Jiangsu into a thirty-page white paper on grid-forming storage, through eleven drafts. At the panel the judges turned to the appendix and asked questions for half an hour." },
+    { "label": "Don't apply, run your projects well", "result": "The slot went to someone else. You kept running between sites and bid meetings, and when the white paper came out, it cited three of your projects." }
+   ]
+  },
+  "c_bid_center": {
+   "title": "Stop running sites and train new hires at the bid center",
+   "situation": "You're past fifty, you've been through several kinds of stomach pills, and four hours on a train is too much for your back. The company says it could move you to the bid center to review technical bids and help new hires with proposals, with no contract quota and no commission.",
+   "options": [
+    { "label": "Go to the bid center", "result": "You spent a year reviewing technical deviation tables at the bid center's big table. The new hires say no bid you've circled in red has ever been thrown out." },
+    { "label": "Stay on the front line", "result": "You still catch the early train. The electricians' foremen on the owners' side have all been replaced by young men, and seeing your gray hair, they rush to pour you water." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you handed your customers in the CRM over to the young ones one by one. The oldest visit log was written more than twenty years ago, and its last field still read \"the electricians' foreman is key.\" You didn't rush for a train after work; you walked once round the factory site, where inverters on the test benches were running their burn-in, fans whirring.",
+  "burnout": "That winter, in the middle of a bid clarification meeting, your stomach doubled you over and someone helped you out of the room. The doctor told you to rest, and the company moved you to customer records and the contract ledger. You leave on time every day, and now and then, seeing an old customer's name in the system, you click through to see whether their plant is still running."
+ },
+ "stages": [
+  "A region's customers are yours now: design institutes, general contractors, owners' energy departments, visited one by one and logged line by line in the CRM. You write technical proposals and the technical deviation tables in bid documents, and negotiate the warranty and efficiency terms in technical agreements; once a contract is signed, you follow it through shipping, commissioning and acceptance, and chase the payments. In your hands are the PCS spec sheet, a price list and a phone that never stops ringing.",
+  "Your projects now are the big ones for power generation groups and the grid, each one hundreds of megawatt-hours. You lead R&D, after-sales and commercial together through the technical problems, and answer the expert panel's questions for the company at bid clarification meetings; you have two new hires under you and teach them to spot the traps in tender documents. On grid acceptance day, you have to be on site.",
+  "Customers' chief engineers and CTOs come to you now, and what they want to talk about isn't one inverter but how the next generation of plants should be built. You write industry solutions and white papers, give the product department requirements for the next-generation PCS, and go through standards clause by clause in an industry working group; on big deals, the price floor and the technical commitments are signed off by you."
+ ],
+ "work": [
+  "Page seventy-three of the tender documents says \"must support IEC 61850.\" You circle it in red and take it to R&D; they say they can do it but it'll add two weeks, so you change the delivery date.",
+  "The owner's electricians' foreman doesn't believe in your grid-to-off-grid switchover. In the factory's switch room you throw the breaker to demonstrate, and during the switch the lights in the room don't even flicker.",
+  "You spend an afternoon at the EMS supplier going through the register map and find three address conflicts. Each side changes half, and you both sign the meeting minutes.",
+  "At the bid clarification meeting an expert asks how long your PCS rides through a grid voltage dip. Without looking at your notes, you open the type-test report to page twelve and pass it across.",
+  "A new hire you're mentoring writes his first proposal and gets the battery clusters' discharge rate wrong. You comment on his document: go to the site and look at the clusters' nameplates.",
+  "The night before a three-hundred-megawatt-hour project connects to the grid, you stand beside the containers in the Gobi until the small hours, waiting for that one call from the dispatcher.",
+  "A power group's chief engineer invites you to speak on grid-forming storage. You bring only two sheets of paper; afterwards he keeps you for lunch, and everything he asks is about the next generation.",
+  "You write the product department a requirement: projects in the northwest have to withstand sandstorms and thirty below. The product manager reads it and says: that's three years' work.",
+  "At the industry standards working group you and people from two other companies argue all afternoon over the anti-islanding detection time, and the number finally agreed is half a second longer than you proposed."
+ ],
+ "past": [
+  "You went to high school in a county town in Yancheng, in northern Jiangsu. Your father ran a hardware shop in town, and you grew up helping sell wire and switches, knowing which wire was thick enough and which switch wouldn't last.",
+  "After the gaokao (college entrance exam) you got into electrical engineering and automation at a university in Nanjing. Your father said electricity was a good thing to study, electricians are needed everywhere, and you didn't explain that it wasn't the same thing.",
+  "In your third year you interned at a power design institute, drawing single-line diagrams for three months. The engineer supervising you said: if you ever go to a manufacturer, you'll know what kind of sales engineer we can't stand.",
+  "After graduating, campus recruitment brought you into this Wuxi energy storage inverter factory. You rotated for three months through the production line and test benches, tightening screws and running burn-ins, before being assigned to sales as a Sales Engineer (Assistant).",
+  "You completed the technical response for your fifth project on your own without a single mistake. At the weekly meeting your mentor said: this kid can go out on his own now.",
+  "The first time you went alone to a customer in Shandong, you were left waiting outside the owner's office for three hours. Early the next morning you went back, with a revised proposal."
+ ],
+ "late": {
+  "pension_note": "Estimate: the factory pays into Wuxi's basic pension for enterprise employees on the base wage, not on commission, so after retirement you get a little over forty percent of your final monthly pay.",
+  "scenes": [
+   "In your first month of retirement you still wake at six and reach for your phone to check train tickets. There's nowhere to go, so you head downstairs for a bowl of little wontons.",
+   "A former customer asks you to be an adviser, two visits a month, helping them check equipment selection for new projects. What you read most carefully is still the clause on who does the integration.",
+   "The pension is enough for the two of you, and the mortgage is long paid off. Once you helped the building management track down a problem in the lift's power supply, and now the property manager brings mooncakes every festival.",
+   "You drive back to the northwest once to see that plant in the Gobi. The containers' shells have been scoured pale by the sand, and inside, the fans are still turning.",
+   "You check figures in the contract ledger team and leave on time every day. Your stomach doesn't hurt anymore, but at four each afternoon you still glance at your phone, as if waiting for a call from the director.",
+   "A young salesman asks you what to do: an old owner's final payment just won't come. You say you'll go, and you'll bring the photos from that year's grid acceptance.",
+   "At retirement age you do the paperwork. You go back to Yancheng for a while and tidy up your father's hardware shop, setting out on the counter a row of switches you can tell good from bad.",
+   "For the first year after leaving sales, on the train you still pull out your laptop out of habit, and only once it's open remember there's no proposal to revise.",
+   "Now and then you run into old customers at industry events, and some still call you \"the young sales guy,\" though half your hair has gone white.",
+   "A new hire you once mentored becomes the sales manager for East China, and at his weekly meeting tells his people: when you meet the electricians' foreman, first ask him who comes when it trips in the middle of the night.",
+   "Later, equipment selection, register maps and policy briefings were all handed to AI, and a proposal could be produced in an afternoon. But before anyone signs, someone still has to go to the switch room and throw the breaker once.",
+   "Your grandson asks what you used to do. You say you sold a kind of cabinet that turns the electricity in batteries into the electricity in the wall socket. He asks: so is the electricity in our socket the kind you sold? You say: maybe."
+  ],
+  "closing": {
+   "retire": "One evening many years later, you sit on a bench by Lihu Lake while the buildings on the far shore light up one by one. You think that on some nights, the electricity in those lights flowed out of cabinets you sold.",
+   "burnout": "Many years later, at home, you fix your grandson's little desk lamp, which had a broken wire. You press the switch and it lights up. See, you say, wire it right and it lights.",
+   "end": "Many years later, in a drawer, you come across a stack of old business cards. The one on top says \"Sales Engineer,\" and the phone number has long been disconnected. You look at it a while, then put it back."
+  }
+ }
+}

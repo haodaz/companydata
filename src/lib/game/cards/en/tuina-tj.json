@@ -1,0 +1,199 @@
+{
+ "id": "tuina-tj",
+ "occupation": "Tuina (Chinese Medical Massage) Therapist",
+ "role": "Tuina Therapist at a Neighborhood Branch of a TCM Clinic Chain",
+ "headline": "A graduate in acupuncture and tuina who couldn't get into a public TCM hospital, now working nine sets of necks, shoulders, backs and knees a day at a chain TCM clinic on the ground floor of an old housing estate in Tianjin's Hexi District",
+ "unit": "A neighborhood branch of a chain of traditional Chinese medicine clinics in Hexi District, Tianjin",
+ "unit_type": "Chain TCM clinic",
+ "city": "Tianjin",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's degree (acupuncture and tuina)",
+ "level": "You have just passed the clinic's internal technique grading. You can run a full course of rolling, kneading, pressing and grasping, cupping and moxibustion on your own. Spinal manipulations on the neck and lower back you still do only with an old hand watching, and you haven't yet sat the licensing exam for TCM physicians.",
+ "intro": "You have worked a year at this neighborhood TCM clinic, going from the rice bags in the back room to a treatment bed of your own. The clinic sits in the ground-floor shops of an old housing estate in Hexi District, and the people who come in include a retired accountant, night-shift taxi drivers, and young office workers with shoulders as stiff as planks. From today, you have to keep these people coming back with your two hands, and learn when to stop.",
+ "salary_note": "Estimate: tuina therapists at Tianjin clinic chains earn a base wage plus commission per treatment, and a little commission on prepaid cards. Wages in the city are close to the national average; a therapist with many regulars can earn noticeably more, while newcomers sit at the low end for their first year.",
+ "facts": [
+  { "label": "Tuina Therapist (current level)", "value": "1-3 years, ¥5,000–8,000 a month (national average)", "source": "Career map" },
+  { "label": "Next level up", "value": "Senior Tuina Therapist (3-5 years)", "source": "Career map" },
+  { "label": "Pay in the first year", "value": "¥8,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Receiving an agitated patient showing high-risk signs and treating them with gentle work along the meridians", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "The traditional four-part examination and musculoskeletal screening before a new client's first treatment", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Before opening you stand ten minutes in a horse stance in the back room and rub your hands warm on the rice bag, then go through today's bookings in the clinic system: nine, two of them new.",
+  "First is a retired accountant, an old neck problem, every Tuesday. Lying face down, she tells you about the crosstalk comedy she heard last night at the little theater, and laughs at the punchlines before she gets to them.",
+  "A new client's first visit. You take his history, look at his tongue, press for tender points inch by inch, and fill in the health record in the system. He says it's his lower back; what you find is a hard band deep in his buttock.",
+  "Boxed lunch in the back room, plus the half jianbing you didn't finish at breakfast. The manager posts the sales sheet in the group chat; your prepaid-card column says zero.",
+  "A taxi driver comes in holding his back the moment he's out of the cab. You loosen the muscles along both sides of his spine with rolling first, then the old hand comes over to watch you do the side-lying twist. A crack, and he says, in broad Tianjin: there, that's the spot.",
+  "In the moxibustion room you do governor-vessel moxa for a young woman who always feels cold. The room is thick with mugwort smoke and the extractor fan roars. Every few minutes you lift the cover to check her skin; when it reddens, you move up.",
+  "The after-work crowd all come from the office towers, and every neck and shoulder is full of knotted bands. By the eighth, the base of your right thumb starts to ache, and you switch to the heel of your hand.",
+  "After closing you write each person's treatment and response into their record, soak your hands in a basin of hot water until the knuckles loosen, then cycle back to your rented room."
+ ],
+ "ladder": [
+  { "title": "Assistant Tuina Therapist", "stage": "Trainee / apprentice", "focus": "Build basic technique on sandbags and in practice, learn the meridians, acupoints and disinfection routines, help senior therapists prepare for scraping and cupping, and pass the in-house technique grading." },
+  { "title": "Tuina Therapist", "stage": "Junior", "focus": "See clients on your own for everyday neck, shoulder, back and leg pain with tuina and other traditional external therapies, keep health records, and build a client base on steady hands and client satisfaction." },
+  { "title": "Senior Tuina Therapist", "stage": "Intermediate / senior", "focus": "Take on complex acute and chronic soft-tissue injuries and joint misalignments, combine active and passive approaches, and grow through results that bring clients back and bring referrals." },
+  { "title": "Chief Tuina Specialist", "stage": "Senior / expert", "focus": "Handle stubborn, difficult musculoskeletal cases, oversee the quality of technique across the clinic or department, develop signature treatments, train new staff, and build a personal reputation." },
+  { "title": "Tuina Technical Director", "stage": "Lead / management", "focus": "Build the technical system and roll out standard procedures across clinics, manage the pipeline of therapists, and take part in business and expansion decisions for the clinic or chain." }
+ ],
+ "ai_tasks": [
+  { "name": "Receiving an agitated patient showing high-risk signs and treating them with gentle work along the meridians", "how": "AI can't help with judgment in the room: spotting danger signs like heavy sweating and agitation, holding firm against what the patient demands, calming them, and doing forty minutes of hands-on work all fall to a person. At most AI helps tidy up the record afterward." },
+  { "name": "Screening for contraindications and doing gentle meridian work on the neck and shoulders", "how": "Ruling out contraindications, talking it through face to face, and staying within safe limits with gentle technique all rest on a person's judgment and the measure in their hands, and the responsibility is theirs. AI can only supply a list of contraindications to check against." },
+  { "name": "The traditional four-part examination and musculoskeletal screening before a new client's first treatment", "how": "AI can help record the intake answers, analyze posture from photos, and draft an assessment report from a template. Looking, listening, palpating, and the final call on whether tuina is suitable are made by a person." },
+  { "name": "Staged manipulation for a stubborn lumbar disc herniation", "how": "Manipulating in stages, watching closely for nerve-root reactions, and adjusting pressure as you go take feel and responsibility the whole way through. AI can only help read the MRI report, log the reactions at each stage and remind you when to reassess." },
+  { "name": "Posture screening and preventive tuina for primary and middle school teachers", "how": "AI can screen posture quickly from photos or video and batch-produce personalized health advice and leaflets. The gentle hands-on work, the explanations and the questions on site are handled by a person." },
+  { "name": "Responding when a patient suddenly faints during treatment", "how": "When someone faints you have to stop at once, lay them flat, assess them and call for help, and a person must do it. AI can be used in routine first-aid training and drills." },
+  { "name": "Training a new therapist through the assessment for frozen-shoulder technique", "how": "AI can produce the scoring sheet, analyze trainees' videos and flag errors in their movements. The mentor still has to demonstrate, correct the force and feel with their own hands, and make the final judgment." }
+ ],
+ "events": {
+  "e_regular": "The retired accountant who comes every Tuesday buys a year's card, asks for you by name only, and brings along her husband and the old ladies from upstairs. The front desk starts booking new clients under your name.",
+  "e_thumb": "The base of your right thumb swells and hurts whenever you press. The orthopedist says tenosynovitis. You get a steroid injection, and for a week you can only work with the heel of your hand and your elbow; your commission drops.",
+  "e_faint": "A young woman who came in on an empty stomach goes pale halfway through and breaks into a cold sweat. You stop at once, lay her flat with her legs raised and give her warm sugar water, and slowly she comes round.",
+  "e_refuse": "A woman in her seventies insists you \"give my back a good crack.\" You look at her bone density report and do only gentle work. She finds it unsatisfying and gives you two stars on the review app.",
+  "e_card": "At the end of the month the manager talks to everyone one by one and says your hands are good and your card sales are poor. After holding out for a long while, you pitch a ¥3,000 prepaid card to a regular. She buys it, and you don't sleep well that night.",
+  "e_ai_posture": "The clinic brings in a photo-based posture assessment system. A new client stands in front of the grid board for two photos, and out comes a report on uneven shoulders and pelvic tilt. Your first consultations are ten minutes shorter, and you spend them working a little longer.",
+  "e_ai_wrong": "The system says a new client has \"loss of the cervical curve\" and recommends the neck package. You feel it and find the problem lies between his thoracic spine and shoulder blade. You correct the report and write why in the notes.",
+  "e_teachers": "The clinic partners with a nearby primary school to screen teachers' posture. You see forty people in an afternoon, half of them with necks worn down by bending over marking. Several of the teachers become regulars.",
+  "e_master": "The clinic brings in a retired orthopedic TCM doctor two days a week. You stay after your shift to watch him do the side-lying lumbar twist: his hands aren't heavy; the force rises from the soles of his feet.",
+  "e_contest": "The city holds a tuina skills contest and you enter, taking second in the technique-standards round. The clinic frames the certificate and hangs it behind the front desk.",
+  "e_love": "A clerk at the pharmacy next door often brings over moxa sticks and herbal plasters. One rainy day you've come without an umbrella and she lends you the shop's old one. Later the two of you start cycling along the Haihe River on weekends.",
+  "e_wedding": "You hold the wedding in Tianjin, the banquet booked at an old-name restaurant. Most of your savings go, and you agree to keep the rest for a down payment.",
+  "e_baby": "Your child is born. You learn to massage a newborn's belly, clockwise, thirty times, and when she fusses at night you rub your hands warm and circle slowly.",
+  "e_house": "You buy a two-bedroom flat in Xiqing District, the down payment pooled from both families, and the mortgage takes half your pay each month. You start taking more evening bookings.",
+  "e_close": "The chain expanded too fast, and head office closes three clinics that were losing money; wages come two weeks late. Yours survives, but colleagues in the next district lose their places overnight.",
+  "e_video": "Head office wants every therapist to shoot short videos and build a \"personal brand.\" You tell your phone three times how people who sit all day can loosen their lower backs, and the one you finally post gets twenty thousand views.",
+  "e_old_client": "The retired accountant moves into a care home and can't come to the clinic anymore. You visit her once on a weekend and work her shoulders a little, and she holds your hand and talks about the old days all afternoon.",
+  "e_moxa": "In the dog-days month of summer patches and summer moxa, the queue runs from morning to night and the smoke in the moxa room won't clear. Your voice is hoarse for two weeks, and after work your clothes smell of mugwort.",
+  "e_back": "Ten hours a day bent over the bed, and it's your own back that goes first. You start standing in a horse stance every morning and practicing Yijinjing, the same routine you prescribe your clients.",
+  "e_parent": "Your father falls back home and breaks his hip, and has surgery. You take a week off and go back, working his legs every day. The care worker says your technique is more professional than theirs.",
+  "e_apprentice": "A therapist you trained comes first in the whole chain's grading. She messages you to say that during the neck manipulation test, all she could hear was you saying: elbow down.",
+  "e_young": "Many of this year's new hires have come straight from three-month training courses, with no strength in their hands and gaps in their acupoints. You set out another row of rice bags in the back room."
+ },
+ "choices": {
+  "c_license": {
+   "title": "Sit the licensing exam for TCM physicians",
+   "situation": "You've completed a year of practice in a medical institution, so you can sit the exam for a licensed TCM physician. With it you can do manipulations on your own and write diagnoses, and you'd stand on firmer ground going for Senior Tuina Therapist. But the books to memorize would stack half your height, and after nine clients a day you can barely lift your arms at night.",
+   "options": [
+    { "label": "Sign up and study after work", "result": "In your rented room you memorized from a meridian chart for most of a year. At the practical you did a neck-and-shoulder routine for the examiners, and your hands were steady. The day the results came out you called home." },
+    { "label": "Not yet, take more clients", "result": "That year your treatment commission was second in the clinic, and your regulars kept piling up. Only, whenever you did a manipulation, you still had to call the old hand over to sign." }
+   ]
+  },
+  "c_card": {
+   "title": "Sell cards, or just do the work",
+   "situation": "The manager says the clinic lives on prepaid cards: therapists get commission on what they sell, and those who sell little get pushed down the rota. Your regulars trust you; one word and they'd buy. But some are retirees on small pensions, and a card is two months of their money.",
+   "options": [
+    { "label": "Pitch the cards by the script", "result": "That quarter your sales jumped into the clinic's top three and the manager praised you at the meeting. One regular, after buying a card, started coming less often." },
+    { "label": "Just do the work, don't sell", "result": "Your prepaid-card column never looked good, and the prime weekend slots went to others. But the people your regulars referred all asked for you by name." }
+   ]
+  },
+  "c_hospital": {
+   "title": "Take a contract post in a district TCM hospital's tuina department",
+   "situation": "A district TCM hospital is hiring contract tuina technicians. You'd see real patients with disc herniations, facial palsy and infant torticollis and follow the department head on ward rounds, learning things a clinic chain can't teach. But there's no permanent state post, the pay is twenty percent less than now, and there's no commission.",
+   "options": [
+    { "label": "Go to the hospital", "result": "You spent a year in the department following the head on his patients, and the first time you did facial tuina for someone with palsy, your hands were as light as touching the surface of water. You never told your family the figure on your pay slip." },
+    { "label": "Stay at the clinic", "result": "You stayed, and your regulars still came on Tuesdays and Thursdays. When a patient left you unsure, you called a classmate at the hospital." }
+   ]
+  },
+  "c_ai_screen": {
+   "title": "Take on AI posture screening or not",
+   "situation": "Head office has signed posture-screening contracts with several schools and companies. AI produces reports from photos, and therapists have to go on site to review them, explain them, do gentle hands-on work, and check the system's conclusions. Each visit takes a whole day, and that day's bookings at the clinic go to someone else.",
+   "options": [
+    { "label": "Take it on, review on site", "result": "In a year you went to more than twenty workplaces and read over a thousand reports, and could name with your eyes shut which postures the system most often got wrong. Head office started having you teach new staff how to review them." },
+    { "label": "No, keep your bed", "result": "You still treated people one by one at the clinic, your hands getting finer every day. But when head office met to discuss the screening project, you had nothing to add." }
+   ]
+  },
+  "c_chief": {
+   "title": "Apply for Chief Tuina Specialist",
+   "situation": "The clinic's Chief Tuina Specialist has moved to a new branch, and head office wants to pick a successor from the senior therapists to oversee technique, train new staff and develop new treatments. Applicants have to submit a case review and a training plan, and do a live technique assessment in front of head office.",
+   "options": [
+    { "label": "Apply", "result": "You turned twenty difficult cases from three years into a bound review. At the live assessment you drew the side-lying lumbar twist, and when you finished, the examiner nodded." },
+    { "label": "Don't apply, just do good work", "result": "You kept your own bed fully booked and left at nine. The new chief joined a year after you, and often calls on you in case reviews." }
+   ]
+  },
+  "c_kids": {
+   "title": "Switch to pediatric tuina",
+   "situation": "A pediatric tuina center has opened above a mother-and-baby shop and wants you as technical lead. The work is children's indigestion, coughs and restless sleep, with light technique and short sessions, no more bending over a bed for an hour, at about the same pay.",
+   "options": [
+    { "label": "Go into pediatric tuina", "result": "You trained in pediatric tuina, and learned to find the Heavenly River and the Palm Gate on one small hand.", "end": "You sit beside a little bed laid with soft mats, one hand cradling a child's hand, the other stroking up the inside of his forearm, soothing him and counting: three hundred. His mother films it on her phone and says she'll learn it at home." },
+    { "label": "Stay with adult tuina", "result": "You turned it down, saying you were used to work that needs some strength under your hands. That night you stuck a herbal plaster on your own back." }
+   ]
+  },
+  "c_studio": {
+   "title": "Open your own tuina studio",
+   "situation": "Regulars who've followed you for years say if you opened your own studio, they'd all come along. You do the sums: renting a ground-floor shop in an estate, two beds, registering as a clinic, would take most of your savings. If it works it beats working for someone else; if not, you'd have to come back and ask for your job.",
+   "options": [
+    { "label": "Open it", "result": "You kept the sign over the door small and the inside spotless. On opening day your regulars sent two pots of clivia.", "end": "Your studio has only two beds: one you work yourself, one for the apprentice you trained. Every day when the last client leaves, you fold the towels one by one and pull down the shutter." },
+    { "label": "Stay with the chain", "result": "You treated your regulars to a dumpling dinner and said you'd wait a while. All the way home you thought about rent, and never quite worked it out." }
+   ]
+  },
+  "c_director": {
+   "title": "Apply for Tuina Technical Director",
+   "situation": "The chain is expanding across Beijing, Tianjin and Hebei and needs a Tuina Technical Director to set technique standards, the training syllabus and grading for every clinic. You're one of the candidates; the other is a therapist poached from a big hospital's rehabilitation department, with a better-looking résumé than yours.",
+   "options": [
+    { "label": "Apply and write a proposal", "result": "You stayed up three nights on the proposal; the first page explained why forty minutes can't be cut. At the panel you didn't read from your notes, and everything you said was about the clinics." },
+    { "label": "Let the outsider have it", "result": "You go on running your clinic. In the new director's first month he comes to sit in on your case review, taking notes in the back row." }
+   ]
+  },
+  "c_teach": {
+   "title": "Step away from the bed and teach at a vocational school",
+   "situation": "You're past fifty, and the old injury in your thumb stiffens every winter. A vocational school's TCM rehabilitation program asks you to teach practical tuina. There are winter and summer holidays, no ten clients a day, and somewhat less money.",
+   "options": [
+    { "label": "Go and teach", "result": "You set out a row of rice bags in the practice room, and in the first class had the students practice rolling until the backs of their hands turned red. Rolling should go like a wheel, you said. It mustn't jump." },
+    { "label": "Stay at the bedside", "result": "You still work through a full book every day. Your regulars' children have grown up, and some come to you for their shoulders too, saying their parents told them about you." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you booked only three regulars, and gave each of them ten extra minutes. After closing you put a fresh sheet on your treatment bed and laid folded towels at its head. When you stepped out it wasn't fully dark yet; down by the Haihe River people were dancing, and you walked over and stood for a while.",
+  "burnout": "That day, on the seventh client, your thumb suddenly had no strength in it, and your hand hovered over the client's back without coming down. The doctor told you to rest six months, and the clinic moved you to the front desk to handle bookings and records. Every day you sit by the door, listening to the dull, steady thud of rolling from the back room."
+ },
+ "stages": [
+  "You have your own bed and your own booking sheet. Eight or nine people a day: take the history, palpate, set a plan, forty full minutes of rolling, kneading, pressing and grasping, then cupping or a round of moxa; afterwards you write the health record in the clinic system and tell them how to practice the Eight Brocades at home. Most of your dealings are with regulars and the front desk: the regulars know your hands, and the front desk books new clients for you on the strength of your reputation.",
+  "The clients sent your way are mostly the ones others couldn't shift: acute disc herniations, a stiff neck that hasn't turned in three days, frozen shoulders. You look at the scans, set a staged plan, do the manipulations yourself and hand the loosening work to younger therapists. More and more referrals come in, some asking only for you, and you've started telling the manager: not this one; hospital first.",
+  "You're responsible for the technique of everyone in the clinic. Twice a week you spot-check, watching the angle and force of the young therapists' neck manipulations and scoring them on the assessment sheet; the difficult cases come to you, and you walk everyone through them in case reviews. You also work on new treatments and write them up as procedures for head office, and your photo starts appearing on the poster outside the door.",
+  "You go round four or five clinics a week and rarely treat anyone yourself. You set technique standards and the training syllabus for the whole chain, run the quarterly grading, and argue in head-office meetings for treatments, staff and training budgets. Before a new clinic opens, how its therapists are hired, how they're tested and which techniques they learn first are your call."
+ ],
+ "work": [
+  "A woman says her neck hurt more after last time. You palpate again and know you worked it too hard; this time you use only light one-finger pushing, and she says it feels much better.",
+  "The front desk books a client five months pregnant with you. You read her record, tell her you won't work her lower back and sacrum, do only her neck, shoulders and calves, and write the reason clearly in the record.",
+  "A programmer is snoring less than five minutes after lying down. You don't wake him; you lighten the rest of the routine, and only after the full forty minutes do you pat his shoulder.",
+  "A delivery rider with an acute disc herniation comes in propped up by a coworker. You look at the MRI on his phone, do only light work and a hot compress, tell him to come back in three days, and forbid him to ride until then.",
+  "An old craftsman with a frozen shoulder, on his sixth session, finally gets his arm up past his ear. He holds it there and looks at himself in the mirror for a long time.",
+  "You take a new therapist through a stiff neck, guiding his hand to the taut band of muscle down the side of the neck. On the third try he finds it and says: so that's where it is.",
+  "On a spot check, a young therapist raises his elbow too high during a fixed-point neck rotation. You dock points on the assessment sheet, then after class practice with him for half an hour.",
+  "You bring a tennis elbow that hasn't improved in three months to the case review, going from the first record to which session you changed the plan, and why.",
+  "Head office wants a \"teachers' neck and shoulder package,\" and you write a one-page procedure: screen first, then hands-on work, with the Eight Brocades. The contraindications go at the top, in bold.",
+  "At the quarterly grading you watch thirty therapists' blindfolded-technique videos, move five of them down a level, and explain each one at the meeting.",
+  "The new clinic will be in Binhai New Area. You go with the general manager to see the premises and say there must be room to turn between two beds, or the technique can't be done properly.",
+  "Head office operations wants to cut the first trial session to twenty-five minutes. You say forty is the floor. After an afternoon of arguing, it's set at thirty-five."
+ ],
+ "past": [
+  "Your grandfather had an old back problem and often went to a blind masseur at the mouth of the hutong. After school you'd watch from the side: once those hands had traveled your grandfather's back, he could walk home upright.",
+  "Filling in your choices after the gaokao (college entrance exam), you put down acupuncture and tuina at a university of TCM in your own city. Your family said medicine was a safe bet; what you were thinking of was the pair of hands at the hutong's mouth.",
+  "In tuina practicals you practiced rolling on rice bags until the backs of your hands blistered. The teacher said rolling should move forward like a wheel, and it took you a whole term to stop it \"jumping.\"",
+  "You spent a year interning in a TCM hospital's tuina department, following your supervising teacher in clinic. The first time you did a side-lying lumbar twist on a real patient, the teacher's hand was on yours and your palms were soaked with sweat.",
+  "When you graduated, the hospital's tuina department was only hiring master's graduates. You applied to a few clinic chains and became an assistant therapist at this neighborhood branch in Hexi District, passing the internal grading three months later."
+ ],
+ "late": {
+  "pension_note": "Estimate: the clinic chain pays into Tianjin's basic pension for enterprise employees, with contributions based on base pay and not fully on commission. After retirement you get a little over forty percent of your final monthly pay.",
+  "scenes": [
+   "In your first month of retirement you still wake at eight, and the first thing you do is rub your hands. You stand in a horse stance in the estate garden, and a few old men and women gather round to ask what kind of kung fu that is.",
+   "An apprentice you trained has opened a clinic and asks you to sit in two half-days a week. You don't treat anyone; you watch the young therapists' technique and help decide on the difficult cases.",
+   "Your pension arrives on time each month, enough for the two of you. Every morning in the park you lead a group of old people through the Eight Brocades, calling the counts louder than you did when you were young.",
+   "Your thumb joints have grown a little crooked, left over from the years of ten clients a day. When your wife's shoulder hurts, you still rub your hands warm and work it for her.",
+   "You handle bookings and records at the front desk and leave on time every day. Your thumb doesn't hurt anymore, but your hand always feels like something is missing from it.",
+   "A young therapist brings you an AI posture report and says it doesn't match what he felt. You glance at it and say: trust your hands.",
+   "At retirement age you do the paperwork. When the neighbor's child gets a stiff neck, his parents bring him round to knock on your door, and within a few minutes he can turn his head again.",
+   "For the first year after leaving adult tuina, whenever you pass the clinic under the old estate you still look up. The poster by the door has someone else's photo now.",
+   "A former regular runs into you at the market and insists you feel her neck, saying the youngsters at the clinic are too heavy-handed now. You laugh and show her two points to press.",
+   "A therapist you trained becomes technical director. In a meeting he talks about his first teacher, and what he quotes is your line: feel first, then work, and stop if it's wrong.",
+   "Later, a photo was enough for a posture report, and bookings, records and follow-ups were all handed to the system. But whoever lies down on the bed still needs a pair of hands to feel their way along, inch by inch.",
+   "Your grandson, worn out from running around, flops onto the sofa, and you rub your hands warm and work his back. He asks what you used to do. You say: I fixed people's bad backs."
+  ],
+  "closing": {
+   "retire": "One morning many years later, in the park by the Haihe River, you finish a round of the Eight Brocades, press your palms together and rub them warm, and lay them against the small of your own back. There's mist on the river, and the bridge in the distance slowly comes into view.",
+   "burnout": "Many years later, on your balcony, you run yourself a basin of hot water and put both hands in. The steam rises, and you work your fingers one joint at a time, listening to someone downstairs calling a child home for dinner.",
+   "end": "Many years later, in a cupboard, you come across the rice bag you practiced rolling on at university, its cloth worn shiny. You set it on your lap, and the back of your hand turns and rolls, still in the old rhythm."
+  }
+ }
+}

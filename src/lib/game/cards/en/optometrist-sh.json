@@ -1,0 +1,154 @@
+{
+ "id": "optometrist-sh",
+ "occupation": "Optometrist",
+ "role": "Optometrist at a Vision Center",
+ "headline": "A young optometrist from Anhui, fresh from a vocational diploma in optometry in Wenzhou with a level-four certificate just earned, swapping trial lenses for the senior optometrist at a chain vision center in a Shanghai shopping mall",
+ "unit": "A chain eyewear company's vision center inside a Shanghai shopping mall",
+ "unit_type": "Chain vision center (optical store)",
+ "city": "Shanghai",
+ "city_tier": "First-tier city",
+ "education": "Vocational college diploma (Optometry Technology)",
+ "level": "You've got auto-refraction, visual acuity and pupillary distance down, and you're quick with trial lenses; the senior optometrist still watches over your subjective refractions and signs the prescriptions.",
+ "intro": "You studied optometry for three years in Wenzhou, and after graduating you came to Shanghai and joined this chain vision center. It's on the second floor of a shopping mall, three phoropters in a row, the edging machine in the workshop next door humming all day. From today you work alongside the senior optometrist who's been here more than twenty years: he refracts, you swap the lenses. He says: get your hands steady first, then train your ears.",
+ "salary_note": "Estimate: base pay and commission at a Shanghai chain vision center are both above the national average, so pay is set at 1.3 times; part of the income is commission on lenses and frames, and from store manager up it depends on the store's results.",
+ "facts": [
+  { "label": "Optician-Optometrist, Level 4 (current level)", "value": "0-2 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Optician-Optometrist, Level 3 (2-5 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "Fitting and adjusting glasses on the wearer", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Checking visual acuity and the general appearance of the eye", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The mall opens at ten. You're in at nine-thirty, switch on the phoropter, and calibrate the lensmeter with a reference lens.",
+  "First up, an eighth-grader whose mother says he can't see the board. After the auto-refractor you have him read the chart line by line through the phoropter, and on the red-green test he says: the green's clearer.",
+  "An old Shanghai gentleman wants reading glasses and balks at the price of progressives. You hand him a trial pair to look at his phone and then into the distance, and he says: all right, let's try.",
+  "Lunch is pan-fried buns in the mall's basement, fifteen minutes. When you get back, the workshop technician says this morning's lenses are edged, and you check them on the lensmeter.",
+  "Weekend afternoon, parents in crowds. A girl who's worn myopia-control lenses for a year comes back with twenty-five degrees more myopia, and her mother is anxious. You pull up the year's data and go through it with her point by point.",
+  "A woman comes to collect her new glasses. With adjusting pliers you bend the nose pads and temples bit by bit, having her look down, up, turn her head, until she says: it doesn't press anymore.",
+  "The store manager posts the month's sales ranking in the group chat: you're third for myopia-control lenses. You glance at it, put your phone face down, and check the next child's vision.",
+  "The mall closes. You enter the day's prescriptions into the system, switch off the phoropter's light, and take the metro back to your rented room in Pudong, the carriage full of people just off work."
+ ],
+ "ladder": [
+  { "title": "Optician-Optometrist, Level 4", "stage": "New", "focus": "Does auto-refraction, acuity checks and lens verification alongside the senior optometrist, not yet signing prescriptions; level three lets you run a refraction station alone" },
+  { "title": "Optician-Optometrist, Level 3", "stage": "Refracting alone", "focus": "Does subjective refractions and signs prescriptions independently, handles children and parents, starts training new staff" },
+  { "title": "Optometric Technician, Level 2", "stage": "Senior optometrist", "focus": "Every difficult case is yours: high astigmatism, progressives, eye strain; does binocular vision assessment and vision therapy, and checks the young staff's prescriptions" },
+  { "title": "Vision Center Manager", "stage": "Running a store", "focus": "Runs a vision center's people, results, equipment and referrals, and still refracts" },
+  { "title": "Regional Director of Optometry", "stage": "Running a region", "focus": "Oversees refraction quality across a dozen stores in a city: sets procedures, trains and assesses optometrists, negotiates with partner hospitals" }
+ ],
+ "ai_tasks": [
+  { "name": "Checking visual acuity and the general appearance of the eye", "how": "AI can help read acuity chart results and analyze photos of the front of the eye to flag abnormalities; a person observes on the spot, talks with the client, and judges whether to refer them." },
+  { "name": "Measuring refraction with refractors, retinoscopes, trial frames and lenses, and writing a sound prescription", "how": "Auto-refractors and AI can give a starting refraction and suggest a draft prescription; a person does the subjective refraction with retinoscope and trial lenses, adjusts by what the client actually feels, and takes responsibility for the prescription." },
+  { "name": "Checking and verifying lens power by neutralization and with a lensmeter", "how": "Lensmeters and automated equipment can read and record lens power directly, and AI can match it against the order; a person only spot-checks and handles faulty lenses." },
+  { "name": "Calculating sphero-cylinder combinations, optical center decentration and prisms", "how": "These are deterministic formulas that software and AI can compute directly; a person only needs to understand the results and check extreme values." },
+  { "name": "Choosing the right dispensing plan for the client", "how": "AI can recommend lenses, frames and processing from the prescription, frame measurements and how the client uses their eyes; a person makes the final choice and explains it, weighing habits, budget, face shape and how well they'll adapt." },
+  { "name": "Fitting and adjusting glasses on the wearer", "how": "AI can help measure pupillary distance and facial dimensions, but adjusting nose pads, temples and frame curve takes skilled hands and fine-tuning on the spot by how they feel." },
+  { "name": "Maintaining, servicing and calibrating instruments", "how": "Devices can run self-tests and remind about calibration, and AI can predict faults; a person cleans, calibrates and replaces parts by hand, and judges whether the data can be trusted." }
+ ],
+ "events": {
+  "e_lights": "A little boy who couldn't see the board puts on his new glasses, looks up at the lights in the mall ceiling on the way out, and says: so the lights are separate dots.",
+  "e_quota": "The store sets a sales target for premium lenses. You give a child whose prescription is very stable ordinary lenses, and that month you drop to the bottom of the ranking.",
+  "e_online": "Glasses online keep getting cheaper, and plenty of people come in for an eye test and walk out with the prescription. The manager puts a notice by the door: eye tests now charged.",
+  "e_ai_refraction": "The store gets smart refraction equipment: a child sits and looks into it for two minutes and a starting prescription comes out. You still put every one through the phoropter again, and sometimes it's off by fifty degrees.",
+  "e_ai_recommend": "The system can now recommend lenses and frames automatically from prescription, face shape and eye-use habits, and clients order with a few taps on a tablet. More of your time goes into adjusting frames and explaining.",
+  "e_ads": "The city starts checking vision centers' myopia-control advertising, and claims like 'cure myopia' all have to come down, including the sign at your door. You're quietly relieved.",
+  "e_dizzy": "A client says her new glasses make her dizzy and posts online that your store's eye tests are inaccurate. You have her come back and retest; the prescription was right, an adjustment of the frame fixes it, and the post never comes down.",
+  "e_eyes": "Dozens of people at the phoropter a day, and your own eyes start to feel dry; two minutes on your phone after work and they're tired. You make yourself a pair of anti-fatigue lenses.",
+  "e_stand": "Ten hours a day on your feet, and your back and neck start to complain. You put a height-adjustable chair beside your refraction station.",
+  "e_vt": "Head office sends you on two weeks of vision therapy training. You come back with a training certificate and a new kind of client you can take on.",
+  "e_love": "You meet a barista from the café next door in the mall's staff corridor. The first time they ask you out, it's to ask whether they should get glasses.",
+  "e_marry": "You get married. Your colleagues chip in for a matching pair of sunglasses for the two of you, and you pick the lenses yourself.",
+  "e_house": "You buy a small flat in Jiading. The down payment empties both families' savings, and the commute is an hour and a half each way.",
+  "e_child": "Your child is born. The first time you check your own child's eyes, you use a small glowing toy and watch the eyes follow it.",
+  "e_mentor": "Teaching you binocular balance, the senior optometrist says: you ask which is clearer, but what clients often answer is which is more comfortable. You need to hear the difference.",
+  "e_grownup": "A boy you've refracted since primary school gets into university and comes in for his last pair of glasses before he leaves. His prescription has barely changed in years, and his mother says it's thanks to you telling them to get him outdoors.",
+  "e_mall": "The mall is renovated and your store is moved to the far corner of the third floor. Foot traffic halves, and the manager posts figures in the group chat every day.",
+  "e_rent": "Your landlord raises the rent, and you move further out, four more metro stops every day.",
+  "e_refer": "A woman comes in for reading glasses. Under the slit lamp her anterior chamber looks very shallow, and her eye pressure is on the high side, so instead of making her glasses you send her to an ophthalmologist first. A week later she calls to say it was lucky she went early.",
+  "e_mentee": "A new optometrist you're training refracts a child with unequal eyes on his own for the first time, and his prescription matches your check exactly.",
+  "e_village": "Your mother back home in Lu'an is getting more farsighted with age. Every year you go back to make her a new pair of reading glasses, and check the eyesight of the village's old people one by one while you're there."
+ },
+ "choices": {
+  "c_level3": { "title": "Take the Optician-Optometrist Level 3 exam (senior worker)", "situation": "The manager says only with level three can you run a refraction station alone and sign prescriptions. Besides the theory there's a practical: refracting a real person on the phoropter in front of the examiner.", "options": [
+   { "label": "Sign up and practice after work", "result": "Every night after closing you rope in a colleague to practice lens swaps and binocular balance. On the day of the practical the examiner gives you someone with a lot of astigmatism; when you finish, he nods." },
+   { "label": "Sit it next year", "result": "You see another thousand-odd people alongside the senior optometrist this year, and when you take the exam the next year the practical is easier than an ordinary weekend afternoon." } ] },
+  "c_hospital": { "title": "Become a technician at an eye hospital's optometry clinic", "situation": "An eye hospital's optometry clinic is hiring technicians to run tests for the doctors: refraction, corneal topography, axial length. No selling lenses, and hardly any commission.", "options": [
+   { "label": "Go to the eye hospital", "result": "You measure axial length and corneal topography for dozens of children a day, learn how the doctors read those numbers, and understand for the first time why cycloplegic refraction matters." },
+   { "label": "Stay at the store", "result": "You stay. Your commission that month is noticeably higher, and the manager treats you to a Shanghainese dinner." } ] },
+  "c_degree": { "title": "Study part-time for a bachelor's in optometry", "situation": "You only have a diploma. A university offers a part-time diploma-to-degree program in optometry: two and a half years of weekend classes, over twenty thousand yuan in fees. With it, getting into a hospital or moving up would both be easier.", "options": [
+   { "label": "Enroll", "result": "Two and a half years of weekends in a classroom, and in binocular vision and contact lenses you listen harder than anyone." },
+   { "label": "Don't enroll", "result": "You keep your weekends for yourself and go cycling on Chongming Island." } ] },
+  "c_push": { "title": "Sell to the target, or fit what's needed", "situation": "Under head office's new scorecard, every child client must be offered myopia-control lenses or a pricier package. Some children's prescriptions are very stable and don't need it.", "options": [
+   { "label": "Sell to the target", "result": "Your premium lens sales make the area's top three and your bonus goes up. One mother later asked a question at another store and never came back." },
+   { "label": "Fit what's needed", "result": "Your ranking slips to the middle, but more and more parents coming back for checkups ask for you by name." } ] },
+  "c_ai": { "title": "Lead the smart refraction pilot", "situation": "The company is piloting AI refraction and remote review in a few stores and needs an optometrist to lead: reconcile data with the engineers, write the operating procedure, train colleagues. One more job, no more money.", "options": [
+   { "label": "Take it on", "result": "Three months of reconciling data with the engineers, and you write 'manual recheck required for all under twelve' into the procedure. Later every store in the company follows that rule." },
+   { "label": "Pass", "result": "Another store leads the pilot. When the new equipment reaches yours, you use it as given and still put every child through the phoropter again." } ] },
+  "c_hometown": { "title": "Open an optical shop back home in Lu'an", "situation": "Your home county town has only two optical shops, and nobody refracting in either has a certificate. You've saved a little and want to go back and open your own: cheap rent, close to your parents.", "options": [
+   { "label": "Go home and open the shop", "result": "You resign, buy a secondhand phoropter, and ship it home.", "end": "You went back to your home county and opened an optical shop with your certificate hanging by the door. Every summer holiday the county's children line up, and you still refract each one with trial lenses down to the last line." },
+   { "label": "Stay in Shanghai", "result": "You set the idea aside for now and mail your mother a new pair of reading glasses." } ] },
+  "c_manager": { "title": "Apply for Vision Center Manager", "situation": "The manager has moved to head office, and the area manager asks whether you'll apply. As manager you'd handle seven or eight people's rota, the results, the equipment and complaints, and your time at the refraction station would be cut in half.", "options": [
+   { "label": "Apply", "result": "At the selection meeting you talk about keeping the regulars who come back for checkups. The area manager asks: and the numbers? You say if you keep the people, the numbers are in there." },
+   { "label": "Stay senior optometrist", "result": "You say you'd like a few more years of refracting. A new manager arrives, and the difficult cases still come to you." } ] },
+  "c_brand": { "title": "Become a professional trainer for a lens maker", "situation": "The Shanghai office of an international lens brand is hiring professional trainers to teach lens design and fitting at optical shops across the country: half again the pay, traveling all year.", "options": [
+   { "label": "Go to the lens maker", "result": "You put the adjusting pliers you've used for years into your bag, saying they'll come in handy for teaching.", "end": "You went to the lens maker as a trainer and flew to optical shops all over the country. Every class, you'd first ask the room: when you swap the lenses, do you ask clients which is more comfortable?" },
+   { "label": "Stay at the store", "result": "You say you still prefer refracting face to face, and put their business card in a drawer." } ] }
+ },
+ "endings": {
+  "retire": "On your last day at work you refract an eight-year-old, your last prescription. The child puts on the trial frame and looks up at the lights in the mall ceiling. You wipe the adjusting pliers clean and put them in the drawer, switch off the phoropter's light, and ride the escalator down; the mall is still full of people.",
+  "burnout": "The year your eyes and back gave out together, you came off the store floor to the company's customer service center, answering clients' questions by phone on regular hours. Often, as you listen, you find you've sketched a prescription on the paper by your hand."
+ },
+ "stages": [
+  "You work alongside the senior optometrist: auto-refraction, acuity, pupillary distance; he does the subjective refraction while you watch, and he signs. When it's busy you greet clients, help them try frames, take orders to the workshop, and check the finished glasses on the lensmeter when they come out. In quieter afternoons you practice swapping trial lenses until you can do it with your eyes shut.",
+  "You can run a phoropter on your own now: subjective refraction, the red-green test, binocular balance, a prescription done and signed by you from start to finish. Most clients are children and their parents, and you have to explain why myopia progresses, how much myopia-control lenses can do, and how much they can't. New staff start following you around.",
+  "You're the store's senior optometrist, and every difficult case comes to you: high astigmatism, unequal eyes, old people who can't get used to progressives, programmers with eye strain. You do binocular vision assessments, design vision therapy plans, and coordinate with the partner ophthalmologist on children being fitted for orthokeratology lenses. The young staff's prescriptions are yours to spot-check and review.",
+  "You run a vision center: the rota for seven or eight optometrists and workshop technicians, the monthly results, equipment calibration, complaints, and referrals to the partner eye clinic. You still refract, but more of your time goes to reports and head office meetings, and to telling new staff why you don't push one more pair of lenses for the numbers.",
+  "You oversee refraction quality across a dozen stores in Shanghai: setting the refraction procedures, training and assessing optometrists, reviewing children's myopia management plans, choosing new equipment and negotiating with partner hospitals. Each month you pick a few stores and spend an afternoon at a refraction station, watching how the young ones talk to parents."
+ ],
+ "work": [
+  "The senior optometrist has you auto-refract a child and you get a hundred and fifty degrees of astigmatism. He has the child blink and measure again: only fifty. The tear film wasn't even, he says; the numbers lie.",
+  "The first time you check a freshly edged pair on the lensmeter, you find the axis five degrees off and send it back to the workshop. The technician takes one look and says you've got sharp eyes.",
+  "A woman brings in glasses she bought online, saying they make her dizzy. You measure with the pupillometer: the lenses' optical centers are four millimeters off her pupils.",
+  "A ten-year-old girl at her first eye test is so nervous she keeps squinting. You have her look at a picture of a little house in the distance to relax first, then go line by line; the final prescription is seventy-five degrees less than the auto-refractor said.",
+  "A parent insists her child's glasses be made as sharp as possible. You test the child's accommodation and spend twenty minutes explaining why that's a bad idea. She says she'll go home and think about it.",
+  "A new optometrist you're training writes the astigmatism axis backwards on a prescription. You catch it before the client collects, have the workshop redo it, and phone the client yourself to say it'll be a day late.",
+  "A young programmer says his eyes ache after an hour at the screen, though his prescription hasn't changed. You run a full binocular vision workup, find convergence insufficiency, and prescribe six weeks of vision therapy.",
+  "A seventy-year-old man still can't get used to his progressives after three months. You change the frame's pantoscopic tilt by five degrees and show him to tip his chin up a little when he reads his phone. The next day he calls to say it's fine.",
+  "The partner eye clinic refers a highly myopic child for orthokeratology lenses. You run the corneal topography again and again and send the parameters to the doctor, who signs the fitting form.",
+  "At month end you're twenty thousand short, and head office wants the stores to push premium lenses. At the morning meeting you say: first call every regular who's due for a checkup; change what needs changing, and don't push what doesn't.",
+  "One phoropter's chart has uneven brightness. Instead of waiting for the manufacturer, you take it out of service and move the booked clients to the other two.",
+  "A parent complains that her child's myopia is still increasing in control lenses. You pull up a year's data, sit with her for an hour, and recommend she take the child to an ophthalmologist for a cycloplegic exam.",
+  "You rewrite the children's refraction procedure for every store in the region: for anyone under twelve at their first eye test, a cycloplegic exam at an eye clinic must be recommended first. It goes into every store's operating manual.",
+  "You run the region's optometrist skills assessment around a simulated case of a child with unequal eyes. Afterwards you find half of them never checked binocular vision, and the next month you add a course.",
+  "An AI company wants automatic refraction systems in the stores. You have them test a thousand people side by side with human refraction in three stores first, then lay out exactly where the results differ."
+ ],
+ "past": [
+  "You're in middle school in the countryside outside Lu'an, sitting in the back row, unable to see the board and too shy to say so, until your homeroom teacher notices you've been copying your deskmate's notes.",
+  "You get your first pair of glasses at the optical shop in town. Walking out the door with them on, for the first time you can see the leaves on the trees on the hill opposite.",
+  "Your gaokao (college entrance exam) results are average. You've heard optometry in Wenzhou is famous, so you go to a vocational college there to study optometry technology.",
+  "In practical class you refract your classmates on the phoropter and fumble the trial lenses. The teacher says: easy, the lenses are more afraid of falling than you are.",
+  "You earn your level-four optician-optometrist certificate and intern for six months at an optical shop in Hangzhou before graduating.",
+  "After graduating you come to Shanghai and join this chain vision center, starting on the front desk and the auto-refractor."
+ ],
+ "late": {
+  "pension_note": "Estimate: chain eyewear companies pay under the basic enterprise employee pension; Shanghai's contribution base is a bit higher, so it comes to a little over forty percent of your final monthly pay.",
+  "scenes": [
+   "Your first month of retirement, passing an optical shop in a mall, you see a young optometrist swapping trial lenses through the glass, and you stand outside and watch the whole refraction.",
+   "The old people in your compound know you can test eyes and line up to ask what strength reading glasses they need. You bring out an old set of trial lenses and try them one by one at the stone table downstairs.",
+   "You spend a summer back home in Lu'an checking the eyesight of the village's old people one by one. You find two cataracts and get their children to take them to the county hospital.",
+   "Your own farsightedness deepens, and you go to a shop for glasses. The young optometrist asks which is clearer, and you say: I'm telling you which is more comfortable.",
+   "Your first few months at the customer service center, whenever a client says their glasses make them dizzy, you can't help asking over the phone whether the frame is bent.",
+   "Your eyes and back are better, and every evening you walk along the riverside and watch the lights come on across the river, separate dots, perfectly clear.",
+   "A boy you once refracted recognizes you in the street and says he's an optometrist too now. You ask whether he's quick with trial lenses; he says quicker than you were.",
+   "Your first month away from the store, you still calibrate the instruments first thing every morning, even when the instrument is brand new.",
+   "Somewhere new, someone asks what you used to do. You say you made people's glasses. Oh, so you sold glasses, they say. You smile and say, more or less.",
+   "A new optometrist you once trained has become a store manager and posts a photo of the store's children's vision record wall, a whole wall of smiling children. You give it a like.",
+   "The news says children's myopia rates have fallen a little and they're spending more time outdoors. You think of all the children who came back to your store year after year for their checkups.",
+   "Your grandchild walks around the house in your old frames and says: I can see so clearly. You say: those are plain glass."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you're reading on the balcony in your reading glasses. When you look up you see the lights on a distant rooftop, separate dots. You think of that little boy, and smile.",
+   "burnout": "Many years later you still have the adjusting pliers you used for so long, their jaws worn shiny. When your grandchild's glasses get bent, you take them out, give the temple two tweaks, and it's straight.",
+   "end": "Many years later you still have that old level-four certificate, the photo of you wearing your first pair of glasses, black frames. You look at it for a while, then put it back in the drawer."
+  }
+ }
+}

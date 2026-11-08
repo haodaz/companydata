@@ -1,0 +1,198 @@
+{
+  "id": "organizer-sh",
+  "occupation": "Professional Organizer",
+  "role": "Home organizer taking house calls",
+  "headline": "A home organizer who folded clothes in a Shanghai mall for seven years, retrained when the shop closed, spent a year crouched in wardrobes with a team, and has just started taking bookings of your own on Xiaohongshu",
+  "unit": "Self-employed, teaming up with a Shanghai organizing studio when it gets busy",
+  "unit_type": "Self-employed house-call service (affiliated with a studio)",
+  "city": "Shanghai",
+  "city_tier": "Tier 1",
+  "education": "Associate degree, three-year vocational college (Fashion Design)",
+  "level": "You fold fast and neat, and can do a wardrobe or a kitchen on your own. You have never drawn up a whole-home plan, never led more than two assistants at once, and your biggest job so far was ¥6,000",
+  "intro": "Your first job came through your own account on Xiaohongshu, the lifestyle app: an old work-unit flat in Xuhui, sixty square metres, a family of three. The client sent nine photos in a private message; the last showed the balcony door blocked by clothes. You packed a tape measure, a laser measure, a label maker and a bag of velvet hangers, and took the metro. As of today, the bookings are yours, and so are the complaints.",
+  "salary_note": "Estimate: Shanghai organizers charge per person per hour or per square metre. Working independently, a busy month can bring in over ¥10,000, a slow one half that; about 30% above the national figure, and it all depends on reputation and repeat clients.",
+  "facts": [
+    { "label": "Professional Organizer (current level)", "value": "1-3 years, ¥8,000–15,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Space Planner (3-5 years)", "source": "Career map" },
+    { "label": "Monthly pay, 3-5 years in the field", "value": "¥16,000 (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Putting a main-bedroom wardrobe back to standard and folding everything upright", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Finishing and handing over a main-bedroom wardrobe in fine detail", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You leave your rented room in Baoshan pulling a folding trolley: two boxes of hangers, a stack of storage boxes, knee pads. On the metro you zoom in once more on today's floor plan.",
+    "Shoe covers on at the door, then photos. The client is a mother who works in Lujiazui. Standing at the bedroom door she says: do whatever you like, I just never want to see this wardrobe again.",
+    "Emptying. Everything comes out of the main wardrobe and is spread across the bed and floor, three hundred and forty-odd items. You and your assistant sort them into tops, bottoms, coats and skirts, in piles higher than the bed.",
+    "The hardest part is choosing. The client holds up a coat with the tags still on and says it was half price. You don't tell her to throw it out. You only ask: do you want to wear it out this season?",
+    "A rice ball from the convenience store downstairs. On your phone you count hangers: the plastic ones, the wire ones, the dry cleaner's freebies all go, replaced by matching velvet ones. A hundred and sixty.",
+    "Putting back. Long things hang on the left, short on the right, light to dark; T-shirts are folded upright in drawers so every one shows. You kneel on the floor arranging drawers, your knees in their pads.",
+    "Handover. You open the wardrobe and show the client how to hang, how to fold, how to rotate the seasons. She stands for a moment, takes a photo and sends it to her mother: is this my house?",
+    "Home again, you touch up the before-and-after photos, hiding the door number and the family portrait, and post them on Xiaohongshu. The first comment: can I book you in Shanghai? Jiading."
+  ],
+  "ladder": [
+    { "title": "Organizing Assistant", "stage": "Newcomer", "focus": "Work as part of a team, mostly emptying spaces, sorting to standard, basic folding and putting back, and cleaning up on site. You move up to working independently on speed, stamina and meeting the standards." },
+    { "title": "Professional Organizer", "stage": "Working independently", "focus": "Take on single spaces such as wardrobes, kitchens or children's rooms on your own; assess and measure on site, guide clients through letting things go, and produce a plan for how the space is used. You move up on higher job values and zero complaints." },
+    { "title": "Space Planner", "stage": "Team lead", "focus": "Design whole-home organizing plans for large flats, duplexes and villas, coordinate several organizers on site, and keep control of the delivery schedule and custom cabinet changes. You move up on project margins and referral rates." },
+    { "title": "Organizing Supervisor", "stage": "Senior", "focus": "Oversee service quality across a region, assess new staff, revise the standard operating procedures, and look after the key high-value channels and the social-media pipeline that brings in clients. You hold the role on team revenue share and the training you provide." }
+  ],
+  "ai_tasks": [
+    { "name": "Finishing and handing over a main-bedroom wardrobe in fine detail", "how": "AI can draft a zone layout from the wardrobe dimensions and a list of clothes, apply folding steps and draft the handover notes. A person has to visit and measure, fold everything by hand, decide how to care for cashmere and other valuable pieces, and adapt the plan to the client's habits." },
+    { "name": "Putting a main-bedroom wardrobe back to standard and folding everything upright", "how": "AI can only offer zoning ideas and folding tutorials for reference. Choosing what to hang and what to fold, the pocket fold for cashmere and putting each item back depend on a person working with their hands on site, adjusting all the time to how the client actually lives." },
+    { "name": "First-round assessment for a three-generation family rehoused after old-town redevelopment", "how": "AI can work from the floor plan, family details and photos to list the space bottlenecks and common urgent storage fixes. A person has to be on site within two hours, see how things really are, work out the real friction between three generations, and talk the trade-offs through with the grandparents and parents." },
+    { "name": "Delivering a storage system for a cross-border e-commerce livestreamer's home studio", "how": "AI can help grade 27 kinds of equipment, list them and sketch the routes for grabbing them. A person has to test on site whether everything really can be reached in 15 seconds, handle the shock-proofing details, and keep adjusting through the streamer's actual broadcasts." },
+    { "name": "Leading the final sign-off on an office storage project for a small company", "how": "AI can compile the acceptance checklist, compare before and after photos, and draft the service confirmation form. A person has to bring department representatives together for the on-site check, hear their comments, settle disagreements, and sign the confirmation and answer for it." },
+    { "name": "Handling a sudden relapse into mess in a newly delivered home's storage system", "how": "AI can help organize the client's feedback and the follow-up questions. Getting there within four hours, watching how the family really uses the space, finding the true cause and stepping in on the spot rests mainly on a person, who also has to calm the client." },
+    { "name": "Running baby-supplies storage training for a high-end postpartum care centre", "how": "AI can draft the procedures, training slides, quiz questions and diagrams. A person has to teach in the room, take the nursing team through hands-on drills, correct the no-touch movements, and keep to the hygiene rules for highly sensitive items." },
+    { "name": "Starting a digital storage dashboard project for a company", "how": "AI can help sort out the data fields, build a dashboard template, and produce stock analysis and anomaly alerts. A person has to connect the on-site data sources such as RFID tags and shelving points, check the real situation on the warehouse and production floor, and agree with the client how the dashboard will be used." }
+  ],
+  "events": {
+    "e_first_repeat": "Three months later the mother from your first job books you again, this time for the kids' room, and recommends you to two colleagues. In your notebook you start a separate page for repeat clients.",
+    "e_knees": "Eighteen jobs in one month. Kneeling to arrange drawers, you stand up and your knee clicks; going downstairs you have to hold the rail. The physiotherapist says it's synovitis and tells you to kneel less.",
+    "e_missing_ring": "The day after a handover, a client phones to say she can't find a ring, her voice cold. You go back through the photos you took throughout, one by one, and finally find it for her in the inner pocket of a down jacket.",
+    "e_hoarder_cry": "An auntie who lives alone has been keeping plastic bags and empty bottles for over ten years. On the third day of clearing she sits on the freshly cleared sofa and cries: she hasn't sat down in her own home for a long time.",
+    "e_off_season": "For a month before Spring Festival your diary is full; after the New Year, not one booking. In your rented room you wipe every storage box clean and work out this month's rent.",
+    "e_bad_review": "A client leaves one star on a review site: the storage boxes were a sales pitch. You send the platform's customer service the purchase list and a screenshot of her signed approval. Three days later the review is still there.",
+    "e_grandma_drawer": "In a three-generation household, the grandmother won't let anyone touch her chest of drawers. You leave it alone, and only stick a big-print label on the top drawer: Medicine. A week later the granddaughter messages: Grandma has started making labels herself.",
+    "e_viral": "Your video of an old work-unit flat's wardrobe makeover takes off on Xiaohongshu: ten thousand new followers in three days and two hundred-odd messages asking for dates. Your booking sheet grows from one page to three.",
+    "e_ai_render": "More and more clients photograph their wardrobe, have an AI produce an after picture, send it to you and ask if you can make it look like that. In the picture, the wardrobe is ten centimetres deeper than the real one.",
+    "e_love": "On a house move you meet a crew leader from the removals company, and together you get a piano into the lift. After that, whenever he lands a big job he asks whether you want to come along.",
+    "e_wedding": "The wedding banquet is back home in Lu'an. The new home is a two-bedroom flat in the county town; you organize it in an afternoon, and the relatives who come to look say it's like a show flat.",
+    "e_widower": "An old man asks you to sort the wardrobe his late wife left. He sits on the edge of the bed and watches you fold, piece by piece, telling you the year each was bought. In the end he keeps one scarf, and you help him donate the rest.",
+    "e_moving_peak": "June graduation season, then July moving season: in one week you take nine pack-and-move jobs, the latest finishing at one in the morning. In the taxi home the driver asks if you work for a removals firm.",
+    "e_child": "Your child is born. In the month of postpartum rest at home, looking at the mountain of baby things, you finally understand why your mother clients sigh down the phone.",
+    "e_ai_quote": "You start using a mini-app: the client uploads photos and a floor plan, and it estimates the volume of belongings, the hours and a draft quote. Quotes are faster now, but it always leaves out the overhead cupboards in old work-unit flats.",
+    "e_copycat": "Organizing becomes a fashionable side hustle, and overnight hundreds of local organizers appear on the platforms, quoting half your price. A client forwards someone else's quote and asks whether you can go a little cheaper.",
+    "e_villa": "You land a whole-home job at a villa in Qingpu, its dressing room bigger than your entire rented flat. Nine days, six people. On payday you treat everyone to a dinner of local Shanghai cooking.",
+    "e_mother_ill": "Your mother is in hospital in Lu'an and you go back to stay with her for two weeks. Her bedside cabinet is a jumble, and you can't help dividing it into zones; the head nurse looks twice as she passes.",
+    "e_apprentice": "An assistant you trained hands over her first wardrobe on her own, and the client sends her a red-envelope tip. She forwards you the screenshot: Shifu, my pocket folds didn't come undone.",
+    "e_back": "Years of carrying boxes and reaching up on tiptoe for overhead cupboards have worn out your back too. You give all the high work to the young ones and direct from the floor, holding a long hook you made yourself.",
+    "e_old_client": "The child from your very first job ten years ago gets into university, and the mother books you again, this time to pack the kid's things for Beijing. You recognize that wardrobe at a glance.",
+    "e_robot_fold": "A machine in the mall can fold clothes automatically, and a crowd gathers round the stand. You watch for a while. It folds very neatly; it just doesn't know whether a garment should be hung or folded, or whether its owner still wears it.",
+    "e_aging_home": "More and more of your clients are old people: their children live in other cities, and they are moving from a fifth-floor walk-up into a small flat with a lift. You go through their things with them piece by piece, and what they keep in the end is always the photos and an old radio."
+  },
+  "choices": {
+    "c_platform": {
+      "title": "Do you join the review platform",
+      "situation": "A salesperson from a local services platform comes to see you: once you're listed, they'll send you jobs every day, but they take twenty percent and you have to quote from their price list. Right now all your work comes from Xiaohongshu messages and word of mouth from past clients, and some weeks there are only two jobs.",
+      "options": [
+        { "label": "Join the platform", "result": "There are more jobs, mostly little two- or three-hour ones: a shoe cabinet, a fridge. You cross three districts a day, and bad reviews come as fast as good ones." },
+        { "label": "Stick to your own clients", "result": "You keep posting cases on Xiaohongshu and answering messages one by one. Two months are hard going; in the third, a whole-home job arrives, referred by an old client." }
+      ]
+    },
+    "c_hoarder": {
+      "title": "The old couple won't let anything go",
+      "situation": "A daughter is paying you to clear out her parents' flat, and says throw the lot away if you like. But her father sits by the door clutching bags of old newspapers and empty tins, and flares up at anyone who touches them. The daughter signed the contract, and she is the one paying.",
+      "options": [
+        { "label": "Clear it the daughter's way", "result": "You clear two truckloads and the flat is full of light. The old man doesn't say a word all day; the daughter is pleased when she pays. Two months later she messages that it's all piling up again." },
+        { "label": "Talk it through slowly with the old man first", "result": "You spend most of the day going through the bags with him, and in the end clear only thirty percent; everything that stays is zoned and labelled. The daughter says it's too slow and holds back the final payment. The second time the old man sees you, he pours you a cup of tea." }
+      ]
+    },
+    "c_video": {
+      "title": "Do you film immersive organizing",
+      "situation": "A friend who runs social accounts says the hottest thing now is immersive organizing, filmed start to finish, and the messier the better: one video could bring in half a year of work. But it's the client's home. Their clothes, their pill boxes, their children's certificates will all be on camera.",
+      "options": [
+        { "label": "Film, but with every client's signature", "result": "You write a filming consent form and give clients who agree twenty percent off. Half refuse. The videos of those who sign triple your followers, and people from other cities start asking whether you'd fly out." },
+        { "label": "Don't film; post only before and after", "result": "You go on posting only before-and-after photos with details blurred. Followers come slowly, but some clients say they picked you precisely because you never film people's homes." }
+      ]
+    },
+    "c_advanced": {
+      "title": "The advanced organizer exam, toward Space Planner",
+      "situation": "For whole-home jobs in big flats and villas, clients want a Space Planner: someone who can draw elevations, change cabinetry and lead a crew on site. The advanced organizer assessment needs five whole-home portfolio projects and a closed-book exam plus a practical; the course costs ¥12,000.",
+      "options": [
+        { "label": "Sign up and learn the design software", "result": "Every night after work you draw cabinet elevations on the computer until your wrist aches from the mouse. Your fifth project is a 180-square-metre duplex; the examiner looks at it for a long time and asks how you came up with that corner cabinet." },
+        { "label": "Skip it and keep taking jobs", "result": "That year you do over a hundred and ten jobs, not one of them a whole home. You notice you no longer need to look at your hands when you fold." }
+      ]
+    },
+    "c_ai_plan": {
+      "title": "Letting AI draft the plan",
+      "situation": "A planning tool can take photos and measurements and produce a zone layout and shopping list in ten minutes. With it you could quote three more homes a day. But you once saw it put an old woman's everyday medicine box on the highest shelf.",
+      "options": [
+        { "label": "Learn it and correct it yourself", "result": "You let it do the first draft and correct it on the visit: who uses it, how high, how often. You turn your most frequent corrections into a checklist, and later everyone at the studio uses it." },
+        { "label": "Keep drawing by hand", "result": "You still measure every home in person and draw every plan by hand. Your quotes are slower and you lose a few jobs to others; of the ones you take, not one needs redoing." }
+      ]
+    },
+    "c_studio": {
+      "title": "Opening your own studio",
+      "situation": "Your diary is booked two months out. The owner of the studio you work with wants you as a partner, or you could register a studio of your own and hire three or four people. On your own, clients, scheduling, injury insurance and payroll are all yours to carry.",
+      "options": [
+        { "label": "Open your own", "result": "You register a business licence, rent a small storeroom for supplies, and hire three assistants, all mothers who had been at home with their children. In the first month you do the accounts until midnight; after wages, there's just the rent left." },
+        { "label": "Become a partner", "result": "You take thirty percent; you run the site work and training, the owner runs marketing and finance. The monthly dividend is neither big nor small, and you no longer do accounts at midnight." },
+        { "label": "Stay a one-person business", "result": "You change your diary to whole-home jobs only and double your rate. You do fewer jobs a year, and your knees feel a little better." }
+      ]
+    },
+    "c_hometown": {
+      "title": "Moving back to Hefei",
+      "situation": "Your child is about to start primary school, and you don't qualify for a Shanghai school place. Hefei has plenty of new housing developments these days, and people there are starting to hire organizers, at half the Shanghai price. Your mother says come back, she can help with the child.",
+      "options": [
+        { "label": "Start over in Hefei", "result": "You post an introduction in the residents' group chats of new estates in Hefei and get three jobs in the first month. Six months later a developer asks you to stage the storage in its show flats." },
+        { "label": "Stay in Shanghai", "result": "Your child goes back to school in Lu'an and you visit once a month. In clients' children's rooms, you always look a moment longer to see whether the desk is the right height." }
+      ]
+    },
+    "c_custom": {
+      "title": "A custom furniture brand tries to hire you",
+      "situation": "A whole-home custom furniture brand wants you as a storage designer, planning the compartments inside clients' cabinets at the design stage. An office job with social insurance, no more kneeling to fold. But you'd never again see a client's face the moment they open the wardrobe.",
+      "options": [
+        { "label": "Go into custom design", "result": "Your first wardrobe design swaps all the shelves for drawers and hanging rails. The design director says it uses too much hardware, and in the end uses it anyway.", "end": "You became a storage designer for a custom furniture brand, drawing hundreds of wardrobes a year. Sometimes when someone moves into a new home in your estate, you go and see whether the compartments in their wardrobe are the ones you drew." },
+        { "label": "Stay in house calls", "result": "You turn it down: you still like walking through people's front doors. The brand adds you on WeChat and later often invites you to teach their designers." }
+      ]
+    },
+    "c_butler": {
+      "title": "Becoming one family's household manager",
+      "situation": "A foreign family in Gubei, the expat district, who have booked you for years are settling in Shanghai for good and want you as their full-time household manager: the dressing room, the seasonal changeovers, an inventory of everything in the house, and their two other homes as well. Good pay, but you'd work for this one family only.",
+      "options": [
+        { "label": "Become their household manager", "result": "You build the family an inventory: three homes, more than four thousand items, each with a location number. The lady of the house says it's the first time she has known how many pairs of shoes she owns.", "end": "You became the full-time household manager for a family in Gubei, responsible for every object in three homes. On days off you still take the occasional job for an old client, just to see someone open their wardrobe one more time." },
+        { "label": "Decline", "result": "You recommend a careful young woman from the studio instead, and stay on to lead your team." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "Your last job is an old client: you sorted her wardrobe for the first time more than ten years ago, and now she is moving in with her daughter. You fold the last sweater into the box marked Winter and tape it shut. She says you haven't changed a bit in all these years; you laugh, and your knee clicks. On the metro home you rest the tape measure you've used for over a decade on your lap and never quite put it away.",
+    "burnout": "That summer you run removals jobs for a month straight, and one day, kneeling on a client's floor, you simply can't get up. After that you rarely make house calls; you hand the studio's bookings to your apprentices and only look at photos online and send advice. The wardrobes at home stay just as you left them, not one thing out of place."
+  },
+  "stages": [
+    "You take your own bookings now: first a visit to measure, take photos and ask about the family's routines, then back home to draw a zone plan and supplies list, quote, re-quote and book a date. On the day you bring one or two assistants to empty, choose and put back, and the hardest part is staying with the client through every decision. Unlike in the team, when a client complains in a review now, it's your name.",
+    "Your jobs are whole homes now: large flats, duplexes, villas. Before going in you draw elevations in the design software and agree shelf and drawer sizes with the custom cabinet maker's designer. On site you lead four or five people, assigning zones at a morning briefing and going over photos together in the evening. You no longer fold every piece yourself; you walk the rooms and point out which compartment is wrong.",
+    "You run quality for the whole studio: you set new staff's assessments, thirty garments folded in twenty minutes, labels in a dead-straight line; you revise the procedures, and yours is the final signature on every handover sheet. You negotiate plans with high-end clients and partnerships with property managers and furniture brands, teach a day at a training school now and then, and make fewer and fewer house calls yourself."
+  ],
+  "work": [
+    "Measuring up, you find the rail in a client's old wardrobe is only three centimetres below the top panel, too close to hang a hanger. You write one line in the plan: lower the rail five centimetres, ask the building's handyman.",
+    "A programmer client owns more than forty identical grey T-shirts. You don't make him throw any out; you just fold them upright in a row and stick a label on the front of the drawer: Grey.",
+    "Sorting a kitchen, you photograph each of the client's seasoning bottles and line them up to the right of the hob in the order she cooks. The next day she sends a photo: frying eggs this morning, I didn't once turn round to look for the salt.",
+    "For a 200-square-metre duplex you draw eleven elevations in the design software, turning the dressing room's shelves into pull-out baskets and rails. The cabinet maker's designer phones to ask whether you took the measurements yourself.",
+    "For a nine-day villa job you draw a Gantt chart on the whiteboard: six people across three floors. On the afternoon of day five you see the second floor is half a day behind and move two people up from the ground floor.",
+    "A family is moving to Singapore. You number a hundred and forty boxes and make a digital list of what's in each and which room it goes to in the new home, all at a glance.",
+    "For a new hire's assessment you give her twenty minutes to fold thirty garments. At the twentieth her hands start shaking; you stop the stopwatch and say: today doesn't count, come back next week.",
+    "You revise the studio's handover sheet for the fourth time, adding a line for confirming where valuables are, to be signed by both client and organizer. That year nobody phones about a missing ring.",
+    "A postpartum care centre asks you to train its nursing team in storing baby supplies. You bring a box of bottles, nappies and tiny clothes and have twelve nurses zone them on the spot; the final test is finding the thermometer with their eyes shut."
+  ],
+  "past": [
+    "You went to middle school in Lu'an, grades middling. Your family ran a small clothes stall, and at weekends you helped fold; your mother said yours were neater than hers.",
+    "Your gaokao (college entrance exam) score was only enough for a vocational college, and you chose Fashion Design at a school in Hefei. In class you drew fashion illustrations; after class you took up your roommates' trouser hems in the dorm.",
+    "After graduating you followed a classmate to Shanghai and became a sales assistant at a clothes shop in a mall. Every night after closing you refolded everything customers had pulled apart, and the manager said your wall sold best.",
+    "You became shop manager, responsible for six people, a wall and two stockrooms. The busiest time was around Singles' Day; you reorganized the stockrooms by colour code and size, and stocktaking took half the time.",
+    "Footfall in the mall fell year after year, and the shop held on until its seventh year, then closed. You lay at home for a month, came across a video of a professional organizer, and watched all night.",
+    "You paid ¥4,000 for an organizing course, passed the vocational skills certificate from the labour bureau, and then worked as an assistant at a studio, crouching in more than a hundred wardrobes in a year."
+  ],
+  "late": {
+    "pension_note": "Estimate: as a freelancer you pay into Shanghai's urban employees' pension as a flexible worker, mostly at the lowest band, a little higher while you ran a studio, with gaps when you were new and when you went home; in retirement you will draw a little over 30% of your final monthly income.",
+    "scenes": [
+      "Once you stop taking jobs, you organize your own home from end to end; it takes a whole week. At the end you label every drawer, and then peel the labels off one by one.",
+      "The neighbourhood committee asks you to talk to the elderly about lightening their homes. Everyone comes with questions: where to keep the bankbook, how to sort the pills, whether to throw out a grandson's old toys.",
+      "You help an apprentice of yours organize the storeroom of her second studio, supplies lined up by size in three rows. She says: Shifu, you're still as fast as ever.",
+      "After physiotherapy on your knees you rest at home for a few months, looking each day at photos clients send online and replying with a hand-drawn zone plan.",
+      "You start a little second-hand clothes swap corner in the neighbourhood. Every Saturday morning you sit there folding donated clothes and stacking them on the shelves by size.",
+      "A former client recognizes you at the market and says her wardrobe hasn't been messy in ten years. You say that's her own doing; she doesn't believe you.",
+      "For the first few months in your new role, visiting friends, you still glance at their shoe cabinet without meaning to.",
+      "Your old studio asks you back to give the new hires a lesson, and the first thing you tell them is: shoe covers on at the door, then photos, and don't rush to touch anything.",
+      "In a homeware shop you see a storage box whose size is exactly the number you once measured for the overhead cupboards in old work-unit flats, and you stand looking at it for a long while.",
+      "Plans, quotes, handover notes: software does all of that now. When people book an organizer, they are booking the person who will stay with them through every decision.",
+      "Your mother moves in with you. She brings very little. You leave her camphor-wood chest alone, and she sets out what's inside it herself, one thing at a time.",
+      "Your finger joints thicken, and your folding slows down. Your granddaughter copies you folding her little socks, and after every pair she wants you to check."
+    ],
+    "closing": {
+      "retire": "Many years later, one afternoon, you sit on the balcony bringing in the dry washing and folding it piece by piece. At the last one you pause and look at the stack, every edge in line.",
+      "burnout": "Many years later you sit on a bench in your estate watching a removals van pull up below, the movers carrying boxes upstairs one after another. You count the boxes, and in your head you sort out which room each one goes to.",
+      "end": "Many years later, sorting a drawer, you find your first tape measure, a fleck of paint on the blade. You pull it out and let it go back, click, and put it where it was."
+    }
+  }
+}

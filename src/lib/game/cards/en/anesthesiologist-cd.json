@@ -1,0 +1,160 @@
+{
+ "id": "anesthesiologist-cd",
+ "occupation": "Anesthesiologist",
+ "role": "Anesthesiology Resident at a Grade 3A Hospital",
+ "headline": "A Chengdu anesthesiology resident at a top-tier hospital who has just finished a combined master's and residency, runs an operating room alone, and takes two emergency night calls a week",
+ "unit": "The anesthesia and surgery center of a top-tier (Grade 3A) general hospital in Chengdu",
+ "unit_type": "Top-tier (Grade 3A) general hospital",
+ "city": "Chengdu",
+ "city_tier": "Emerging first-tier city",
+ "education": "Clinical master's degree (Anesthesiology, combined with residency training)",
+ "level": "You can do routine general and neuraxial anesthesia on your own and your video laryngoscope intubations are steady, but for difficult airways and cardiac or major vascular cases you still need a senior standing behind you.",
+ "intro": "You rotated through this hospital's operating rooms for three years, and on the day of your residency exit exam the department head clapped you on the shoulder in the corridor and said: stay. The anesthesia and surgery center is on the fourth floor of the inpatient building, twenty-six operating rooms whose lights come on one by one from half past seven. From today one room on the schedule has only your name on it, and your phone can never be on silent.",
+ "salary_note": "Estimate: anesthesiology at a Chengdu Grade 3A hospital means high surgical volume, many nights and one of the higher bonus coefficients in the hospital, so pay is set at 1.2 times the national average; base pay is low at the resident stage, and income comes mostly from bonuses and call pay.",
+ "facts": [
+  { "label": "Resident Physician (current level)", "value": "0-4 years, ¥7,000–12,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Attending Physician (4-9 years)", "source": "Industry norm" },
+  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Intubation and managing difficult airways", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing pre-op assessments and anesthesia records", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You get to the OR early, change into scrubs, and draw up drugs in the prep room: propofol, sufentanil, rocuronium, a label on every syringe.",
+  "Morning handover. The department head reviews yesterday's case of delayed emergence, and you stand in the back row typing the key points into your phone.",
+  "First case is a laparoscopic gallbladder, the patient a nervous woman in her forties. As you push the drugs you tell her: deep breaths, you'll just have a sleep. She's out by the count of three.",
+  "Second case is a man of a hundred kilos with a short, thick neck. Your senior stands behind you; you see the cords on the video laryngoscope and the tube goes in first time.",
+  "Lunch is a boxed meal in the break room. Halfway through your mao cai, Room 3 calls for help: the patient's pressure has dropped. You put down your chopsticks and run.",
+  "Pre-op rounds on the wards. An eighty-year-old man has atrial fibrillation and is on anticoagulants. You go through his medications one by one and write on the form: recommend surgery five days after stopping.",
+  "After the last case you take the patient to recovery and wait until he opens his eyes and can hold his head up for five seconds before you sign the handover sheet.",
+  "You're on call tonight. Emergency wants to open an acute abdomen. You listen to the details on the phone already running for the elevator."
+ ],
+ "ladder": [
+  { "title": "Resident Physician", "stage": "Entry", "focus": "Runs routine anesthesia in one OR alone and takes emergency night calls; needs the intermediate exam and the years to be appointed attending" },
+  { "title": "Attending Physician", "stage": "Core staff", "focus": "Can cover two ORs and be second on call, supervises residents; picks a subspecialty and starts writing papers" },
+  { "title": "Associate Chief Physician", "stage": "Subspecialty lead", "focus": "The mainstay of a subspecialty such as cardiac, obstetric or pediatric anesthesia, taking the hardest cases; needs papers, grants and a stint at a grassroots hospital" },
+  { "title": "Chief Physician", "stage": "Final say", "focus": "Signs off on anesthesia plans for the hospital's highest-risk surgeries, supervises graduate students, examines residents" },
+  { "title": "Head of Anesthesiology", "stage": "Running the department", "focus": "Runs scheduling and safety for every anesthesiologist and dozens of ORs, fights the hospital and surgeons for people and resources; only one in the hospital" }
+ ],
+ "ai_tasks": [
+  { "name": "Writing pre-op assessments and anesthesia records", "how": "AI can pull labs, ECGs and history from the chart into a draft pre-op assessment and fill the anesthesia record automatically from monitor data during surgery; the doctor checks it, adds what they asked and saw, and signs." },
+  { "name": "Pre-op evaluation and choosing the anesthetic plan", "how": "AI can flag risk from the ASA class and airway scores and suggest a technique; whether to do an awake intubation or cross-match blood is the anesthesiologist's call after seeing the patient." },
+  { "name": "Intraoperative monitoring and titrating drugs", "how": "Closed-loop infusion and early-warning systems can warn of hypotension or changes in anesthetic depth and suggest dose changes; when to add a drug or ask the surgeons to pause takes a person watching the table." },
+  { "name": "Post-op pain control and running recovery", "how": "Pain pump data and pain scores can be gathered automatically, flagging inadequate analgesia or respiratory depression; when to extubate and whether to send someone to the ICU still needs a doctor at the bedside." },
+  { "name": "Intubation and managing difficult airways", "how": "Intubating, placing a laryngeal mask, securing an airway in an emergency all come down to hands and judgment in a few seconds; AI can only offer hints on a screen." },
+  { "name": "Neuraxial anesthesia and nerve blocks", "how": "Ultrasound helps you see, but the feel and angle of the needle are the doctor's own, and if something goes wrong they deal with it on the spot and take responsibility." },
+  { "name": "Talking with surgeons and families", "how": "Whether an operation can go ahead, how big the risk is, whether to stop mid-case: the anesthesiologist has to say it, and argue it, face to face." }
+ ],
+ "events": {
+  "e_first_solo": "A general anesthetic on an elderly patient, and your senior stands beside you for two hours without once reaching in. Out in the corridor you stand for a while before you notice your back is soaked.",
+  "e_airway": "A patient with a mass in his neck, and the laryngoscope shows nothing. You don't force it. You call your senior, bring in the fiberoptic scope, and twenty minutes later the tube is in. The surgeons waiting below haven't said a word.",
+  "e_nights": "Nine nights in a month, emergency cases back to back. You doze off standing by the anesthesia machine and jolt awake at a monitor alarm.",
+  "e_surgeon": "A surgeon mutters at the table that your induction is slow. You don't answer back; you get the pressure stable and then say: you can start.",
+  "e_thanks": "A girl who was shaking with fear before surgery makes a special trip to the OR doors before she's discharged, asking which one was the doctor who put her to sleep.",
+  "e_love": "At a mixer you meet someone who writes code in the high-tech zone. They ask whether anesthesia is just one injection and done, and you talk about it all evening.",
+  "e_marry": "You get married. Colleagues from the department take turns toasting you and check their phones after every toast; two of them head back to the hospital before the dishes arrive.",
+  "e_house": "You buy a flat in the south of the city, your parents paying half the down payment. You work it out: your call pay covers exactly half the monthly mortgage.",
+  "e_child": "Your child is born on a day you're on call, and when the phone rings you're holding a patient's jaw. A colleague says go, I'll watch this one.",
+  "e_ai_record": "The anesthesia information system is upgraded. Monitor data flows into the record automatically, and AI even warns that hypotension has lasted over five minutes. At last you don't have to copy numbers down while pushing drugs.",
+  "e_ai_loop": "The department trials closed-loop target-controlled infusion, the machine adjusting propofol by itself from the bispectral index. Once it lags behind, and you still reach over and press pause.",
+  "e_reaction": "A patient has a rare, severe allergic reaction after induction, and you bring him back. At the department review you walk through the whole thing; the head says it was handled correctly, but you don't sleep well for days.",
+  "e_neck": "Years of standing, bending to intubate and running to the OR at night, and your neck and back both start to go. You buy a cervical collar and keep it in a drawer in the on-call room.",
+  "e_labor": "The hospital pushes labor epidurals, and you're put on call in the delivery ward. One mother, once her epidural is in, tells you: now I can call my mom.",
+  "e_shortage": "Two people leave the department, one for a private hospital, one for a cosmetic clinic. Those left are stretched thinner, and sedated endoscopies are booked until eight at night.",
+  "e_paper": "Promotion requires papers. After work you sit in the on-call room organizing post-op delirium data, opening and closing the statistics software again and again.",
+  "e_mentor": "An old department head close to retirement watches you intubate and says your wrist is too tight. After that he picks one case a week to teach you, from positioning the patient to what to say to them first.",
+  "e_parents": "Your father back in Yibin needs surgery and wants you there to watch the anesthesia. You call your counterparts at the local hospital three times, and in the end take leave and go anyway, waiting outside the OR.",
+  "e_mass": "A crash in the mountains sends the injured into the city in waves, and eight ORs open at once. You run between rooms and sign eleven anesthesia records in one night.",
+  "e_mdt": "A ninety-year-old needs hip surgery, and orthopedics, cardiology and anesthesiology sit down together. You spend half an hour on the risks. The family decides to go ahead, and you sign.",
+  "e_hotpot": "The department goes out for hotpot, and halfway through, half the people get called away. Those left order a second pot of broth and say they'll wait for them.",
+  "e_pay": "The hospital raises anesthesiology's bonus coefficient, and the reason is put bluntly: surgical volume is up thirty percent and not one anesthesiologist has been added."
+ },
+ "choices": {
+  "c_zhuzhi": { "title": "Take the Attending Physician exam (intermediate title in anesthesiology)", "situation": "You have the years to sit the intermediate anesthesiology exam, and only after passing can you be appointed attending. The OR schedule is full, so studying waits until after night calls.", "options": [
+   { "label": "Study after every night call", "result": "You read your textbooks ragged in the on-call room. The clinical practice section tests exactly the difficult airway you had last month." },
+   { "label": "Build your hands first, sit it next year", "result": "You do three hundred more anesthetics this year, and when you sit the exam the next year the questions read like reviews of your own cases." } ] },
+  "c_sub": { "title": "Choose a subspecialty: cardiac, pediatric, or general", "situation": "The department is splitting into subspecialty groups and the head wants your choice. Cardiac means big, long cases and deep learning; pediatric patients are small and doses are worked out per kilo past the decimal point; or you can stay general and go wherever you're short.", "options": [
+   { "label": "Cardiac anesthesia", "result": "You start learning transesophageal echo, and for the first month everything looks like snow. Six months later, in the minutes before coming off bypass, you know where to look." },
+   { "label": "Pediatric anesthesia", "result": "You carry a weight-based dosing card in your pocket now, and you learn to use a glowing toy to get a three-year-old to breathe through the mask on their own." },
+   { "label": "Stay general", "result": "You go wherever there's a gap: orthopedics, gynecology, emergencies. After a year yours is the most useful name on the schedule." } ] },
+  "c_beijing": { "title": "A year of advanced training in Beijing", "situation": "The department has one place for a year of training at one of the country's top hospitals in Beijing. Your child has just started kindergarten, and everything at home would fall to your partner.", "options": [
+   { "label": "Go to Beijing", "result": "You spend a year watching the hardest cases in Beijing and come back with a notebook filled cover to cover and the department's first set of ultrasound-guided teaching slides." },
+   { "label": "Not this time", "result": "The place goes to someone in your group. On the weekend you take your child to the panda base, and they fall asleep in the car." } ] },
+  "c_private": { "title": "A private hospital's day surgery center tries to hire you", "situation": "A private hospital's day surgery center offers twice the money: daytime sedated endoscopies and minor surgery only, no night calls.", "options": [
+   { "label": "Go to the day surgery center", "result": "You hand in your resignation. The department head doesn't try to keep you, only says: don't let your hands go rusty.", "end": "You went to the private hospital's day surgery center, thirty sedated endoscopies a day, home for dinner in the evenings. Years later you still remember the hard plank bed in the Grade 3A hospital's on-call room." },
+   { "label": "Stay", "result": "You turn it down. That night emergency brings in an aortic dissection, and you're at the table until dawn." } ] },
+  "c_ai": { "title": "Lead the department's smart anesthesia project", "situation": "The hospital is working with a company on models for anesthetic depth and intraoperative hypotension warnings, and needs a clinician to lead: label the data, set the thresholds, write the papers. All of it on your own time.", "options": [
+   { "label": "Take it on", "result": "You label twenty thousand intraoperative records and split the warning thresholds into three age bands. Once the model goes live, the department's minutes of hypotension drop noticeably, and you get your paper." },
+   { "label": "Pass, stick to the table", "result": "Another group leads it. When the system goes live you use it as given and speak up at morning meetings when something seems wrong." } ] },
+  "c_fuzhuren": { "title": "Going for Associate Chief Physician: six months at a county hospital first", "situation": "Associate Chief Physician requires papers, a research grant and grassroots experience. The hospital offers a six-month placement supporting a county hospital in Aba.", "options": [
+   { "label": "Go to the county hospital", "result": "You help the county hospital set up its first post-anesthesia recovery room and teach two young doctors to do ultrasound-guided nerve blocks. That year you apply for the associate senior title." },
+   { "label": "Wait a couple of years", "result": "You give up the place and spend a whole summer holiday at home with your child." } ] },
+  "c_pain": { "title": "Move to the pain clinic", "situation": "The hospital has started a pain medicine department and is transferring people from anesthesiology. Mostly outpatients, regular hours, nerve blocks and radiofrequency treatments, no more emergency night calls.", "options": [
+   { "label": "Go to pain medicine", "result": "You hand in the key to the on-call room.", "end": "You moved to pain medicine, treating neck and back pain and nerve pain, patients coming back one after another to say your injection lasted six months. Now and then the OR calls about a difficult airway and asks you to come and take a look." },
+   { "label": "Stay in anesthesiology", "result": "You say you still love the OR, and take another night call." } ] },
+  "c_hometown": { "title": "Go back to the city hospital in Yibin", "situation": "The city hospital in your hometown of Yibin wants to recruit you as deputy head of anesthesiology, with a settling-in bonus. Less pay than Chengdu, close to your parents.", "options": [
+   { "label": "Go back to Yibin", "result": "You bring what you learned in Chengdu home with you. The next year the hospital starts labor epidurals, and the line of people asking about them stretches into the corridor." },
+   { "label": "Stay in Chengdu", "result": "You thank them. On weekends you drive back to see your parents, two and a half hours each way." } ] },
+  "c_director": { "title": "Run for Head of Anesthesiology", "situation": "The old head is retiring and the hospital is holding a selection. As head you'd run scheduling, OR efficiency, bonuses and disputes for forty-odd doctors, with less and less time at the table yourself.", "options": [
+   { "label": "Run for it", "result": "At the selection meeting you talk about how to bring the first case forward half an hour and how to make sure people coming off nights actually get to rest the next day." },
+   { "label": "Don't run, keep doing your own cases", "result": "You still take the hardest few cases every week, and when a young doctor runs into trouble intubating, it's still your name they call." } ] }
+ },
+ "endings": {
+  "retire": "Your last case is an ordinary appendix. A young doctor does the induction and you stand behind without reaching in. When the patient wakes you watch him open his eyes, lift his head and say his own name, and you sign the last line of the handover sheet. You put your badge in a drawer, and as you walk out of the OR the corridor lights are as white as ever.",
+  "burnout": "The year your neck and your sleep both gave out, you stepped back from the OR to do pre-op assessments in the anesthesia clinic on regular hours. You still ask every patient the same things: any dentures, what medicines, what time was your last meal. Only now you don't have to run for the elevator in the middle of the night."
+ },
+ "stages": [
+  "Your days are spent in the OR: drawing up and labeling drugs before each case, inducing, intubating, connecting the anesthesia machine, titrating as you watch the monitor, writing a number on the anesthesia record every five minutes. Your senior circulates between rooms and you call for him when you're unsure. In the afternoons you do pre-op rounds, and on your call nights emergency cases ring your phone directly.",
+  "You can cover two ORs alone now, with residents and visiting doctors intubating and pushing drugs while you stand behind them. You start speaking at pre-op conferences, and the plans for difficult airways and elderly patients are yours to make and sign. On nights you're second call, and when the first-call resident is unsure, the first phone call is to you.",
+  "You're the mainstay of the rooms where the big cases happen, and bypass and massive-bleeding cases are scheduled for you. You lead your subspecialty group's quality control, write case reviews and supervise graduate students; at multidisciplinary meetings you speak for anesthesiology on whether and how a case can be done. When a surgical head has a hard case, he comes to ask you first.",
+  "More of your time is spent in conference rooms and at the OR doors: you chair the weekly difficult-case conference, give final approval to anesthesia plans for the hospital's highest-risk surgeries, and examine residents for the training program. You still go to the table, but only for the hardest cases; when a young doctor gets into trouble intubating, it's your name they call.",
+  "You run scheduling and safety for forty-odd doctors and over twenty ORs: start-time efficiency, bonus allocation, equipment purchasing, disputes, all landing on your desk one after another. You argue with the hospital director and surgical heads over people and OR time, and at morning meetings you shield the young ones from the surgeons' tempers."
+ ],
+ "work": [
+  "Halfway through a laparoscopy the airway pressure suddenly climbs. You listen to both lungs and find the tube has slid deeper as the patient was repositioned. You pull it back two centimeters and the pressure falls.",
+  "On pre-op rounds a woman says she hasn't had breakfast. You ask once more, and she says she only had a cup of soy milk. You move her surgery back two slots.",
+  "An emergency C-section in the middle of the night. You find the gap between the lumbar vertebrae by feel, the spinal needle goes in, and the fluid comes back clear. The obstetrician asks: ready? You say: ready.",
+  "A resident misses an intubation twice and the oxygen starts to fall. You take over, mask the patient to bring the saturation back up, switch to the video laryngoscope, and get it first time.",
+  "A ninety-year-old man has hip surgery under an ultrasound-guided nerve block. He stays awake on the table the whole time, telling you about building railways in Chengdu when he was young.",
+  "Second on call at night, a resident phones to say a patient in recovery won't wake up. You check the pupils and the neuromuscular monitor and tell him to wait fifteen minutes. Fifteen minutes later the patient opens his eyes.",
+  "Before coming off bypass in a valve case, you see a cluster of air bubbles still in the left ventricle on the transesophageal echo, have the surgeons de-air once more, and only then nod: you can come off.",
+  "Your graduate student has spent a year organizing post-op delirium data. You have her present it to the whole department and sit in the back row yourself.",
+  "At a multidisciplinary meeting, thoracic surgery wants to do a lobectomy on a patient with very poor lung function. You put the blood gas and cardiopulmonary exercise test results on the table and set a condition: three weeks of breathing training first.",
+  "You post a one-page difficult airway algorithm on the back of every OR door and require every doctor to drill it on the manikin once a month.",
+  "At a residency exit exam, a trainee handling malignant hyperthermia on the simulator is the first to think of cooling and dantrolene. You give full marks.",
+  "A patient is transferred from another city whose previous hospital said the anesthetic risk was too high. You go through every test and write on the consult form: it can be done. I'll do it.",
+  "You spend an afternoon in a meeting with the OR head nurse and several surgical heads and move the first case from eight-thirty to eight, on condition that anesthesiology adds an early shift.",
+  "A young doctor is involved in an adverse event, and some want him disciplined. You first go through the monitor data and the anesthesia record minute by minute, then speak for him for half an hour at the meeting.",
+  "The hospital is buying a batch of new anesthesia machines and the vendor's proposal is on your desk. You have the three attendings who use them most try them for a week before you sign."
+ ],
+ "past": [
+  "You're in middle school in Yibin. When your father has his appendix out, you hear a doctor outside the OR ask whether the anesthetic has worn off yet. It's the first time you've heard of anesthesiology.",
+  "You do well on the gaokao (college entrance exam) and apply for the five-year clinical medicine program at a medical school in the province. Your family says being a doctor is an iron rice bowl.",
+  "Physiology class covers the respiratory center and carbon dioxide, and you fill your textbook with curves. It's far more interesting than memorizing anatomy.",
+  "Your internship rotation reaches anesthesiology, and your teacher has you hold the mask to ventilate a patient. It's the first time you feel someone's breathing is in your hands.",
+  "After your bachelor's you get into a professional master's in anesthesiology, study and residency combined, three years rotating through the operating rooms of this Chengdu hospital.",
+  "You pass the medical licensing exam and the residency exit assessment, receive your master's degree, and stay on in this hospital's anesthesiology department."
+ ],
+ "late": {
+  "pension_note": "Estimate: public hospitals pay under the public institution pension plus an occupational annuity, roughly a little over half your final monthly pay; since bonuses were the bulk of your income, the drop after retirement is bigger than the base pay suggests.",
+  "scenes": [
+   "Your first month of retirement you wake at six-thirty every morning and reach for your phone. No messages. You get up, make tea, and sit on the balcony watching people downstairs head to work.",
+   "You and your spouse drive into western Sichuan, and on the plateau two quick steps leave you short of breath. You count your breaths, then your pulse, and laugh: let's walk slower.",
+   "An old classmate's father needs surgery, and he asks you about the anesthetic. You talk on the phone for an hour, from what time to stop eating before surgery to how his throat will be sore when he wakes.",
+   "At a checkup, lying on the endoscopy table, a young anesthesiologist tells you: deep breaths, you'll just have a sleep. You close your eyes and think how many tens of thousands of times you've said that.",
+   "In the anesthesia clinic you see twenty-odd pre-op patients a morning. You ask a lot of questions and some find you fussy; you tell them it's all for a few minutes on the table.",
+   "Your neck is better, and you start practicing baduanjin exercises in the compound. When you hear an ambulance you still glance at your watch without meaning to.",
+   "Young doctors from the department still call to ask what to do with a difficult airway. You say: oxygen first, don't panic, the rest comes after.",
+   "For the first few months away from the OR, every whiff of disinfectant brings back the sound of the anesthesia machine. Then you get used to it; in the new place, no phone rings at night.",
+   "A former patient recognizes you somewhere new and says that the night before his surgery he couldn't sleep, and you sat by his bed and talked with him for half an hour.",
+   "A resident you once trained has become a head of anesthesiology and posts about the department's new labor analgesia center. You give it a like.",
+   "The news says anesthesiologists are still in short supply and training must be stepped up. You put down your phone and think of that old on-call room where a dozen people took turns sleeping.",
+   "Your grandchild asks what anesthesia is. You say it's helping someone have a good sleep and then waking them up properly. Your grandchild says, so it's like putting someone to bed. Pretty much, you say."
+  ],
+  "closing": {
+   "retire": "Many years later, one afternoon, you doze off in a rattan chair. When you wake you first look at the sky outside, then count your own breaths. Everything is fine, and you close your eyes again.",
+   "burnout": "Many years later you find an old laryngoscope blade in a drawer, the same model you used for your first solo intubation. You hold it for a while, then put it back.",
+   "end": "Many years later you still remember the question from the OR: is the patient awake? Wherever you work now, a thing isn't done until the other person nods."
+  }
+ }
+}

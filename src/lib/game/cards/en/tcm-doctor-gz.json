@@ -1,0 +1,155 @@
+{
+ "id": "tcm-doctor-gz",
+ "occupation": "Traditional Chinese Medicine Physician",
+ "role": "TCM Internal Medicine Physician at a TCM Hospital",
+ "headline": "A Guangzhou TCM internal medicine resident who has just finished a combined master's and residency: adjusting insulin on the wards, taking pulses and writing herbal prescriptions in clinic, and spending two afternoons a week copying prescriptions at a master physician's side",
+ "unit": "The TCM internal medicine department of a top-tier (Grade 3A) hospital of traditional Chinese medicine in Guangzhou",
+ "unit_type": "Top-tier (Grade 3A) TCM hospital",
+ "city": "Guangzhou",
+ "city_tier": "First-tier city",
+ "education": "Master's degree in Chinese medicine (TCM internal medicine, combined with residency training)",
+ "level": "On the wards you can manage six beds alone and write both Western and Chinese medicine orders; in clinic your attending often has to feel the pulse again after you, and your prescriptions are signed only after the attending has revised them.",
+ "intro": "You rotated through this TCM hospital's wards and clinics for three years, and the day you finished residency the department head said there was a place for you. The hospital is in the old city; the decoction room on the ground floor of the outpatient building smells of herbs all day, and the corridors are full of people who've come about their damp. From today six beds on the ward carry your name, and every Tuesday afternoon you sit beside the department's revered senior physician to copy out his prescriptions.",
+ "salary_note": "Estimate: bonuses at a Guangzhou Grade 3A TCM hospital are high for the TCM system, so pay is set at 1.25 times the national average; it's a notch below doctors of the same rank at Western-medicine hospitals in the city, and the gap narrows once you have a well-known specialty clinic and premium appointments.",
+ "facts": [
+  { "label": "TCM Resident Physician (current level)", "value": "0-4 years, ¥6,000–10,000 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "TCM Attending Physician (4-9 years)", "source": "Industry norm" },
+  { "label": "What AI can't take", "value": "The four examinations: looking, listening and smelling, asking, feeling the pulse", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing outpatient and inpatient records", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "After handover you round with your attending. An old man with COPD has been wheezing all night; the attending takes his pulse, looks at his tongue, and says add a measure of descurainia seed. You note it on your tablet.",
+  "Clinic. A young office worker says he has too much damp, his tongue coated thick and white. You ask about his habits: late nights, iced milk tea. You prescribe seven doses and tell him to cut down on cold drinks.",
+  "A grandmother brings her grandson to be built up and asks whether he can drink herbal cooling tea every day. You say the boy's digestion is weak; twice a week at most.",
+  "Lunch is the canteen's slow-boiled soup, today chicken with five-finger fig root. Outside it's the spring 'return south' damp, and the corridor tiles are slick and shining.",
+  "Back on the ward writing notes. A diabetic man's blood sugar won't come down; you adjust his insulin, then, as your attending wants, add a formula to strengthen his spleen.",
+  "Time with the master. The old physician takes a pulse and has you feel it too: this pulse, isn't it like pressing on a scallion stalk? You feel it a long time, then nod.",
+  "Before leaving you go to the decoction room to ask when an inpatient's herbs will be sent up. The man running the pots says: third batch, nearly done.",
+  "Back in your rented room you leaf through the Treatise on Cold Damage. Tomorrow you present a case to the department, on Minor Bupleurum Decoction."
+ ],
+ "ladder": [
+  { "title": "TCM Resident Physician", "stage": "Entry", "focus": "Manages beds on the ward and copies prescriptions for the attending in clinic, needing both Western and Chinese medicine; the intermediate exam and enough years lead to attending" },
+  { "title": "TCM Attending Physician", "stage": "Core staff", "focus": "Runs a general clinic, writes and signs prescriptions, is attending on the ward and second on call at night; patients start coming back" },
+  { "title": "Associate Chief TCM Physician", "stage": "Specialty clinic lead", "focus": "Runs a specialty clinic, supervises graduate students and leads research; needs papers and a stint supporting a grassroots hospital" },
+  { "title": "Chief TCM Physician", "stage": "Final say", "focus": "Runs premium clinics, reviews the department's standard formulas and in-house preparations, takes on apprentices of their own" },
+  { "title": "Head of TCM Internal Medicine", "stage": "Running the department", "focus": "Runs the department's beds, doctors, bonuses and insurance budget, fights the hospital for wards; one per hospital" }
+ ],
+ "ai_tasks": [
+  { "name": "Writing outpatient and inpatient records", "how": "Voice capture and AI can turn a consultation into the chief complaint, history and four-examination record and format the chart automatically; the doctor checks the tongue and pulse descriptions and the pattern diagnosis, and signs." },
+  { "name": "Pattern diagnosis and prescribing", "how": "AI can suggest a pattern and a formula from symptoms, tongue photos and centuries of case records, and flag incompatible herbs and excessive doses; how to modify the formula and whether this patient can take it is the doctor's own decision." },
+  { "name": "Reading lab and imaging reports", "how": "AI can flag abnormal values and suggest a Western diagnosis; doctors at a TCM hospital must understand these just the same, and decide how to combine Chinese and Western treatment and whether to refer." },
+  { "name": "Writing seasonal health tips and following up patients", "how": "AI can write articles on staying well through the solar terms and send follow-up reminders; whether the advice is right and whether it suits this patient is for the doctor to check." },
+  { "name": "The four examinations: looking, listening and smelling, asking, feeling the pulse", "how": "The feel of a pulse under the fingers, the color of a tongue, the breath in a patient's voice: the doctor has to sit across from the patient and do it with their own hands. Photos and sensors can't replace it." },
+  { "name": "Acupuncture, summer herbal plasters and other hands-on work", "how": "The depth and angle of a needle and the feel of the qi arriving take the doctor's own hands." },
+  { "name": "Getting patients to actually take their herbs", "how": "The decoctions are bitter and the courses long; whether patients trust it and stick with it depends on the doctor explaining it to their face." }
+ ],
+ "events": {
+  "e_pulse": "For the first time you feel on a patient's wrist the slippery pulse your teacher described. You look up at him, and he nods.",
+  "e_insomnia": "A woman who hasn't slept properly in three years takes your herbs for five weeks, and at her follow-up says she slept four nights this week. She buys you a box of Cantonese 'chicken' biscuits downstairs at the clinic.",
+  "e_doubt": "A patient comes in with an article from the internet to argue that Chinese medicine is all a fraud. You talk for twenty minutes, and he still wants only Western drugs.",
+  "e_tianjiu": "The dog-days herbal plaster season, and the line at the hospital gate stretches into the road. In one morning you apply plasters to the backs of more than two hundred people, and your clothes are soaked.",
+  "e_huinan": "The return-south damp: the clinic walls are sweating and the registration slips have gone limp. Patient after patient says their body feels heavy, and so does yours.",
+  "e_night": "A ward night shift with three emergency admissions. You treat each one the Western way, and only at dawn remember you haven't prescribed their herbs.",
+  "e_master": "The old physician lends you decades of his handwritten case records to copy and says: come and ask me once you've finished. You copy all summer and only dare to ask after the third volume.",
+  "e_ai_rx": "The hospital brings in a smart pattern-diagnosis system. You enter the symptoms and a tongue photo, and it suggests three formulas. Once it suggests too much aconite, and you cross it out.",
+  "e_ai_note": "Clinic gets voice charting. As you talk with patients, the four-examination record writes itself on the screen, and you spend the time saved asking a couple more questions about how they eat and sleep.",
+  "e_kid": "A child with a cough that keeps coming back has been on Western drugs for a month without improvement. You prescribe three doses of a small formula and teach his mother pediatric massage; a week later he's stopped coughing.",
+  "e_complaint": "A patient gets diarrhea after taking your herbs and complains to the medical affairs office that you prescribed the wrong thing. You explain the prescription herb by herb, and later learn he'd added a handful of senna to it himself.",
+  "e_love": "At a community free clinic you meet a middle school teacher who has come to volunteer. They hold out a wrist for you to take their pulse; you take a long time, then say: you haven't been sleeping well.",
+  "e_marry": "You get married. The banquet is at an old Cantonese restaurant, and you picked out the herbs for the first soup yourself at Qingping Market.",
+  "e_house": "You buy a flat in Panyu and spend an hour on the metro each way. The down payment empties both families' savings.",
+  "e_child": "Your child is born. Your grandmother back in Zhanjiang mails a bundle of mugwort leaves for the baby's bath.",
+  "e_paper": "Promotion requires papers. You go through three years of insomnia cases from your clinic one by one and leave the statistics software running all night.",
+  "e_pay_gap": "A classmate at a Western-medicine hospital gets twice your year-end bonus. You do the sums: registration fees and the little earned on herbs really can't match one of his operations.",
+  "e_neck": "Sitting through sixty or seventy patients a day, your neck and back give out. You prescribe yourself a few doses and have a colleague give you a week of acupuncture.",
+  "e_abroad": "The hospital sends you to a partner TCM center in Southeast Asia for three months. The ethnic Chinese patients there all speak Cantonese, and after you take their pulse they want to chat about home.",
+  "e_herbs": "The price of several common herbs multiplies within a year, and patients balk at the bill. You end up swapping the expensive herbs in your formulas for cheaper ones with similar effects.",
+  "e_mentee": "A formula your graduate student wrote on her own works, the patient says at follow-up. She runs over with the chart to show you, and you have her explain for herself why it worked.",
+  "e_master_leaves": "The old physician who taught you retires to his hometown. Before leaving he gives you his notebook on pulse-taking; on the flyleaf he has written: clear in the heart."
+ },
+ "choices": {
+  "c_shicheng": { "title": "Become the master physician's apprentice", "situation": "The department's revered senior physician is choosing one apprentice: three years at his side, two half-days a week copying prescriptions and writing study notes, with an assessment at the end. It all comes out of your time off.", "options": [
+   { "label": "Ask to be his apprentice", "result": "You hand in an essay on what you've learned. He reads it and says only: your handwriting is sloppy. The following week he has you sit at his right hand." },
+   { "label": "Focus on the ward for now", "result": "The place goes to a senior classmate. On the ward you make your Western medicine more solid." } ] },
+  "c_zhuzhi": { "title": "Take the TCM Attending Physician exam (intermediate title in TCM internal medicine)", "situation": "You have the years for the intermediate exam in TCM internal medicine, and only after passing can you be appointed attending. Wards and clinic are fully booked, so studying waits for the evenings.", "options": [
+   { "label": "Study every evening", "result": "You work through the Chinese and the Western books together. One pattern-diagnosis question on the exam is exactly a case you saw in clinic last week." },
+   { "label": "Sit it next year", "result": "This year you see over a thousand more patients, and when you sit the exam next year the questions read like your own charts." } ] },
+  "c_integrated": { "title": "Join the integrated medicine ward, or stay in clinic", "situation": "The department is building an integrated Chinese-Western heart failure ward and needs doctors who can read an echocardiogram and adjust diuretics; or you can stay in clinic and specialize in herbal treatment.", "options": [
+   { "label": "Go to the integrated ward", "result": "You learn to read echo reports and adjust diuretics, then use herbs to bring back patients' appetite and sleep. An old man going home says this stay was much easier on him." },
+   { "label": "Stay in clinic", "result": "More and more patients come back to your clinic; some ride the metro in from Foshan and Dongguan just to see you." } ] },
+  "c_guan": { "title": "Practice at a private TCM clinic", "situation": "A chain of TCM clinics offers twice the consultation fee, commission per visit, pleasant surroundings, no night shifts. But the promotion path and the ward you've built at a public hospital would end.", "options": [
+   { "label": "Go to the private clinic", "result": "You hand in your resignation. The old physician doesn't try to keep you; he says only: take the pulse for a full minute.", "end": "You left the hospital to practice at a private TCM clinic, your patients mostly office workers. You still take every patient's pulse for a full minute, and say it's what your teacher taught you." },
+   { "label": "Stay at the hospital", "result": "You turn it down. That night on call you admit two old men whose heart failure has worsened." } ] },
+  "c_ai": { "title": "Join the AI project preserving master physicians' experience", "situation": "The hospital is working with a tech company to turn the master physicians' case records into a pattern-diagnosis model, and needs a young doctor to organize the records and label the patterns. It's a huge amount of work, and whether it counts as research is unclear.", "options": [
+   { "label": "Take it on", "result": "You label three thousand case records and break the old physician's spoken 'this person is deficient' into a dozen criteria that can be written down. After the model goes live, residents check their prescriptions against it first." },
+   { "label": "Pass, stick to seeing patients", "result": "Another group takes it on. When the system goes live you use it as given, and change the formula yourself when it doesn't fit the pattern." } ] },
+  "c_fuzhuren": { "title": "Going for Associate Chief TCM Physician: six months in northern Guangdong first", "situation": "Associate Chief TCM Physician requires papers, a research grant and grassroots experience. The hospital is sending you to support a county TCM hospital in northern Guangdong for six months.", "options": [
+   { "label": "Go north", "result": "You help the county hospital open an insomnia specialty clinic and teach two young doctors to photograph tongues properly. The year you return, you apply for the associate senior title." },
+   { "label": "Apply in a couple of years", "result": "You give up the place, spend a whole summer holiday with your child, and take him to Zhanjiang to see his great-grandmother." } ] },
+  "c_hk": { "title": "Become a registered Chinese medicine practitioner in Hong Kong", "situation": "A Hong Kong TCM clinic is hiring experienced mainland doctors, who must first pass Hong Kong's licensing exam for registered Chinese medicine practitioners. Much higher income, but starting over from scratch.", "options": [
+   { "label": "Sit the Hong Kong exam", "result": "You sign up, and after work you start preparing for Hong Kong's licensing exam.", "end": "You passed Hong Kong's licensing exam and practiced at a neighborhood clinic there. Once a month you came back to Guangzhou, sat for a while in a dessert shop in the old city, and ordered a bowl of red bean soup with tangerine peel." },
+   { "label": "Stay in Guangzhou", "result": "You forward the job ad to a classmate and keep running your Tuesday clinic." } ] },
+  "c_director": { "title": "Run for Head of TCM Internal Medicine", "situation": "The old head is retiring, and the hospital is selecting a new head of TCM internal medicine. You'd run scheduling, bonuses and insurance for over seventy beds and twenty-odd doctors, with less and less time in clinic yourself.", "options": [
+   { "label": "Run for it", "result": "At the selection meeting you talk about making Chinese medicine really count on the wards, rather than a line on the discharge summary saying 'with adjunct herbal treatment'." },
+   { "label": "Don't run, keep your clinic", "result": "You still run four half-day clinics a week, and they still fill within five minutes." } ] }
+ },
+ "endings": {
+  "retire": "Your last clinic is fully booked, several of them patients who've followed you for over a decade. When the last one leaves you put the pulse pillow in a drawer and lay the prescription pad on top. Walking out of the outpatient building, the smell from the decoction room is still there; the damp season has just ended, and the sky has cleared.",
+  "burnout": "The year your neck and your sleep both gave out, you stepped back from clinic to the hospital's preventive health center, on regular hours, assessing body constitutions and teaching wellness classes. You still take the pulse of everyone who comes, only no longer sixty or seventy a day."
+ },
+ "stages": [
+  "You split your time between ward and clinic. On the ward you manage six beds, writing notes and orders and adjusting blood sugar and blood pressure, with every bit of the Western work, then prescribe herbs according to your senior's pattern diagnosis. In clinic you copy for your attending: pulse, tongue, questions about bowels and urine, the prescription entered by you into the HIS and signed after the attending revises it. Two half-days a week you sit beside the old master.",
+  "You run your own general clinic now, fifty or sixty patients a day, from insomnia and stomach trouble to irregular periods, every formula modified and signed by you. On the ward you're the attending, rounding with residents, second on call at night. Patients start coming back, and those who can't get an appointment wait at your door until you've seen the last one.",
+  "You have your own insomnia specialty clinic, and its appointments are gone five minutes after they open. You supervise graduate students, write grant applications and chair the department's case conferences, where you settle the combined Chinese-Western treatment plans. The provincial TCM association invites you to lecture, and everything you teach comes from cases in your own clinic.",
+  "You're a Chief TCM Physician, running a premium clinic two half-days a week with patients from all over the Pearl River Delta. You review the department's standard formulas, check the hospital's in-house preparations, and take on apprentices of your own. There are more and more meetings, but in every clinic you still take each patient's pulse for a full minute.",
+  "You run TCM internal medicine's seventy-odd beds and twenty-odd doctors: rotas, bonuses, bed turnover, insurance cost control, accreditation reviews, all landing on your desk. You fight the hospital for new wards and equipment, and at morning meetings you pick out one young doctor's prescription to explain in front of everyone what's good about it and what isn't."
+ ],
+ "work": [
+  "Your attending has you take a feverish patient's pulse, and you say it's rapid. He asks how many beats per breath; you count a long time and say seven. He laughs: you were counting your own heartbeat.",
+  "Entering a prescription in the HIS, the system warns that two herbs fall under the classical eighteen incompatibilities. You take it to your attending, who looks, swaps one of them out, and says you were right to ask.",
+  "A patient with chest pain is admitted on your night shift. You don't think about herbs; you run an ECG and cardiac enzymes, and once it's confirmed you arrange a transfer straight to a Western hospital's chest pain center.",
+  "A mother six months after giving birth keeps sweating and having palpitations. You take her pulse and look at her tongue, prescribe seven doses of a formula to boost qi and firm the exterior, and tell her to stop drinking things iced.",
+  "A resident's photos of a tongue coating come out bluish. You have him retake them by the window in daylight: with tongues it's the color that matters, and lamplight lies.",
+  "An old patient who's been with you since your very first clinic comes back with a sheet of paper listing how many hours she slept each night for the past two weeks.",
+  "In your specialty clinic, a middle school teacher with anxiety and insomnia gets a formula from you, plus ten minutes of baduanjin before bed. Four weeks later she has halved her sleeping pills.",
+  "At a department conference on a patient with cirrhosis and ascites, you argue for stabilizing him first with Western diuretics and then strengthening the spleen with herbs. The minutes run to two pages.",
+  "You turn five years of insomnia cases from your clinic into a grant application, and the night before it's due you redo the pattern distribution chart for the fourth time in your office.",
+  "Reviewing the recipe for an in-house preparation, you cut one herb that's dosed too high by three grams and write on the approval form: the south is damp and hot; keep doses light.",
+  "An old patient comes from Shenzhen once a month with her own blood pressure log. After reading it, you change just one herb in her formula.",
+  "At your apprentice's final assessment, the examiner asks the question you were once asked: what is this pulse like? Your apprentice says: like pressing on a scallion stalk.",
+  "At a hospital management meeting you win the department an integrated heart failure ward, on condition that you bring down readmissions within two years.",
+  "Before the insurance bureau's audit of herbal prescriptions, you pull a hundred of the department's prescriptions from the past six months and go through the doses and days one by one.",
+  "A young doctor's prescription draws a complaint. Instead of criticizing him, you bring the prescription to the morning meeting, go through it herb by herb, and then have him say where it could be changed."
+ ],
+ "past": [
+  "You're in middle school in Zhanjiang. Every change of season your grandmother boils a pot of herbal soup to drive out the damp. You complain it's bitter and ask what's in it, and she can name every one.",
+  "The night you fill in your applications, you waver a long time between clinical medicine and Chinese medicine, and finally choose the five-year Chinese medicine program at a TCM university in Guangzhou.",
+  "You spend a whole summer memorizing the clauses of the Treatise on Cold Damage. At the start-of-term exam the teacher picks one for you to recite; you finish it and keep going through the next two.",
+  "On your internship rotations at a TCM hospital you watch an old doctor take a pulse for the first time: three fingers on the wrist, eyes closed, saying nothing for a long while.",
+  "After your bachelor's you get into a professional master's in TCM internal medicine, study and residency combined, three years rotating through this hospital's wards and clinics.",
+  "You pass the medical licensing exam and the residency exit assessment, receive your master's degree, and stay on in this TCM hospital's internal medicine department."
+ ],
+ "late": {
+  "pension_note": "Estimate: public TCM hospitals pay under the public institution pension plus an occupational annuity, roughly a little over half your final monthly pay.",
+  "scenes": [
+   "After retiring you still get up at six every morning, boil water for a cup of aged tangerine peel tea, and read a few pages of case records.",
+   "The neighbors in your compound know you're a TCM doctor and line up to have their pulses taken. Every time you say: I'm retired, go register at the hospital. And every time you hold out your hand anyway.",
+   "You teach baduanjin at the senior citizens' college, and every class begins with the same line: move slowly, let the breath follow.",
+   "When you go to the hospital as a patient, you book with a student you once trained. After taking your pulse he says: teacher, you haven't been sleeping well. You laugh.",
+   "At the preventive health center you assess the constitution of everyone who comes and teach how to nourish the liver in spring and clear damp in summer. When you get off, it's still light out.",
+   "Your neck is much better. Every morning you walk a loop of Yuexiu Park, watching the old folks do tai chi, sometimes moving along with them.",
+   "A former patient recognizes you at a teahouse and insists on buying you a basket of shrimp dumplings, saying she still remembers what those herbs tasted like.",
+   "Your first month away from the hospital, you still can't break the habit of checking your own tongue in the mirror first thing every morning.",
+   "Somewhere new, someone asks what to do about too much damp. Cut out cold drinks and go to bed earlier, you say, then laugh: I've been saying that half my life.",
+   "The old physician's case records are published, and you have someone buy you a copy. In the acknowledgments you find your own name from your years copying his prescriptions.",
+   "The return-south damp is back, the walls sweating. You boil a pot of damp-clearing soup, five-finger fig root, poria, smilax, just like your grandmother's.",
+   "Your granddaughter copies you, laying three fingers on your wrist, and after a while says very seriously: I can feel it. It's beating."
+  ],
+  "closing": {
+   "retire": "Many years later, one afternoon just after the damp season, sunlight comes onto the balcony. You take your own pulse: calm, rooted. You nod and draw your hand back into your sleeve.",
+   "burnout": "Many years later the Treatise on Cold Damage on your shelf has gone soft with use, a few old prescription slips from your copying days tucked between the pages. Now and then you pull one out and look at your handwriting from back then.",
+   "end": "Many years later you're making soup in the kitchen. You drop a piece of tangerine peel into the pot, think a moment, and add another. You remember your teacher saying that medicine is like food: it always depends on the person."
+  }
+ }
+}

@@ -1,0 +1,156 @@
+{
+ "id": "er-nurse-zz",
+ "occupation": "Emergency Room Nurse",
+ "role": "ER Nurse at a Provincial Hospital",
+ "headline": "A nursing graduate who has just finished a year of rotations and been assigned to the resuscitation bay of a provincial hospital's emergency department in Zhengzhou, working three rotating shifts",
+ "unit": "The emergency department of a provincial top-tier (Grade 3A) hospital in Zhengzhou",
+ "unit_type": "Provincial top-tier (Grade 3A) hospital",
+ "city": "Zhengzhou",
+ "city_tier": "Emerging first-tier city",
+ "education": "Bachelor's degree (Nursing)",
+ "level": "Your license is registered. You hit an IV line on the first try about seven times in ten, and you can keep up with compressions and pushes in the resuscitation bay, but no one lets you sit at the triage desk alone yet.",
+ "intro": "You spent a year rotating through this hospital's wards, and on the day of assignments you wrote Emergency as your first choice. The emergency hall is lit twenty-four hours a day, ambulances pull up one after another, and the door to the resuscitation bay is rarely fully shut. From today your name is on the ER's three-shift rota, and the first thing your preceptor tells you is: learn the crash cart first.",
+ "salary_note": "Estimate: a provincial Grade 3A ER in Zhengzhou means many night shifts and bonuses tied to workload, so pay is set at 1.15 times the national average; contract nurses earn a notch less in base pay than those with a permanent state post.",
+ "facts": [
+  { "label": "Nurse (current level)", "value": "0-1 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Industry norm" },
+  { "label": "Next level up", "value": "Senior Nurse (1-5 years)", "source": "Industry norm" },
+  { "label": "Pay after 10+ years", "value": "¥17,002 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Working a resuscitation: compressions, lines, pushing drugs", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Writing nursing notes and handover records", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Handover. The night shift's eyes are red as they go bed by bed: three in resus, fourteen in observation, one heart attack just wheeled off to the cath lab.",
+  "You count the crash cart with your preceptor, epinephrine and amiodarone vial by vial, run the defibrillator's self-test, and sign the log.",
+  "An ambulance brings in an old man with chest pain. You push him straight into resus, hook up the monitor, draw blood, start a line, and have the ECG in front of a doctor within ten minutes.",
+  "In observation, a drunk young man is shouting that he'll pull out his IV and leave. You and the security guard talk him back onto the bed, and you put the line in again.",
+  "Lunch is eaten standing up in the little room behind the nurses' station. A message on your phone: what time are you off today? You reply: no idea.",
+  "The triage nurse has you sit beside her and watch. A woman says she's just a little dizzy; you're sent to take her blood pressure, and your face changes when you read it.",
+  "You take a patient in respiratory failure to CT, then up to the ICU. In the elevator one hand squeezes the bag valve mask and one eye stays on the transport monitor.",
+  "After handover you sit in the locker room for five minutes before changing shoes. You finish your charting past seven, and on the way back to your rented room the lights of Zhengdong New District are all on."
+ ],
+ "ladder": [
+  { "title": "Nurse", "stage": "New", "focus": "Registered, rotated, assigned; you work alongside a preceptor, and passing the Senior Nurse exam is the way up" },
+  { "title": "Senior Nurse", "stage": "Core staff", "focus": "Can run a resus or triage shift alone; goes for the emergency specialist nurse certificate and builds up nights and resuscitations" },
+  { "title": "Nurse-in-Charge", "stage": "Team lead", "focus": "Intermediate title; leads a shift team and trains new nurses, and scheduling and quality control start landing on you" },
+  { "title": "Associate Chief Nurse / ER Head Nurse", "stage": "Running the unit", "focus": "The associate senior title needs papers and research grants, usually alongside a bid for head nurse; you manage people, supplies and disputes" },
+  { "title": "Chief Nurse", "stage": "Discipline lead", "focus": "Full senior title; leads emergency nursing as a discipline, trains specialist nurses and revises standards; only a handful in the whole hospital" }
+ ],
+ "ai_tasks": [
+  { "name": "Writing nursing notes and handover records", "how": "Voice capture and AI can turn a resuscitation's events, drug times and vital signs into nursing notes and a handover sheet; a person checks the times and doses, adds what they saw at the bedside, and signs." },
+  { "name": "Triage: judging how sick someone is", "how": "Triage software and AI can suggest an acuity level from vital signs and the chief complaint; a grey face, the way someone breathes, something off in a single sentence, still need a triage nurse to look once and decide who goes first." },
+  { "name": "Watching monitors, catching deterioration", "how": "Monitors and early-warning models can flag trends in blood pressure and oxygen saturation ahead of time; whether an alarm is real and whether to call a doctor now is for the nurse at the bedside to judge." },
+  { "name": "Checking the crash cart, defibrillator and emergency drugs", "how": "Smart drug cabinets and barcode systems can reconcile stock, warn about expiry dates and run self-tests; every shift someone still has to open the cart by hand, test the defibrillator and sign it over." },
+  { "name": "Working a resuscitation: compressions, lines, pushing drugs", "how": "CPR, difficult IV access, repeating an order back before pushing it: all of it is hands at the bedside and people watching each other. AI can't lend a hand." },
+  { "name": "Calming patients and families", "how": "The family outside the resus door needs a person to go and talk to them and wait with them; how much to say and when is not something AI can do." }
+ ],
+ "events": {
+  "e_first_cpr": "The first time you kneel on a bed doing compressions, you go for twenty minutes until your arms shake. The line on the monitor starts jumping again. The doctor pats your shoulder and says nothing.",
+  "e_night": "A month of straight nights and you can't sleep in the daytime, and your stomach starts to hurt. The head nurse puts you back on days for a week.",
+  "e_violence": "A relative angry about the wait slams the triage desk, shouts, and shoves you. Security comes, then the police. When you get off that day your hands are still shaking.",
+  "e_banner": "An old man you wheeled into the cath lab sends his granddaughter with a silk banner after he's discharged. It hangs on the nurses' station wall with one character of your name wrong.",
+  "e_vein": "A girl who keeps coming back to the ER has veins no one can find; someone else has tried three times. You get it in one, and from then on she asks for you by name.",
+  "e_flu": "Peak flu season in winter: eight hundred patients in a day, the corridors full of extra beds. Two weeks without a day off, and your voice goes.",
+  "e_mass": "A pile-up on the expressway sends in more than a dozen injured at once. The department activates its emergency plan and you run triage for one zone: tag, register, send on. Nothing gets mixed up.",
+  "e_love": "You meet an orthopedics resident in the elevator who comes down for ER consults. On your first date, over braised noodles, you're an hour and a half late because a resuscitation came in.",
+  "e_marry": "You get married. Everyone from the department who can make it comes, and halfway through the banquet several phones ring at once.",
+  "e_house": "You buy a flat in the north of Zhengzhou; the down payment empties both families' savings. With the mortgage on your back, you start asking for more night shifts.",
+  "e_child": "Your child is born. As soon as the leave is over you're back in the ER, and on night-shift evenings the grandparents take the baby.",
+  "e_ai_triage": "Triage gets an AI pre-screening system: patients type their complaint into a tablet and the system assigns a level. Once it puts an old man with slurred speech at level four. You take one look and change it to level one.",
+  "e_ai_record": "Resuscitations now get voice charting. You call out \"one milligram of epinephrine IV push\" and a new, time-stamped line appears on the screen. No more finishing your notes past seven.",
+  "e_mistake": "At handover a drip rate isn't checked properly, and the next shift catches it. The patient is fine. You file an adverse event report and walk the department meeting through it yourself.",
+  "e_back": "Transfers, pushing beds, kneeling for compressions: your back finally gives out. You start wearing a brace to work, and you call someone over before every lift.",
+  "e_lost": "More than an hour of resuscitation, and you still can't hold on to him. You stand at the door behind the doctor and listen to him talk to the family. You don't sleep that night.",
+  "e_peers_left": "Of the three who started the same year as you, two have left: one to a community health center, one to a cosmetic medicine clinic. You like their posts in the group chat.",
+  "e_teach": "The resident nurse you're training handles her first resuscitation on her own, and afterwards tells you: my hands were shaking the whole time. You say: so were mine, back then.",
+  "e_dispute": "A dispute goes all the way to the medical affairs office, and you go with the staff to three meetings. The nursing records come out line by line, and every timestamp matches.",
+  "e_parents": "Your mother back home is hospitalized. You come off a night shift, take the high-speed train to Zhoukou to sit by her bed, and ride back the next day for work.",
+  "e_pay": "The hospital revises its bonus scheme. Night-shift pay and resuscitation credits go up, and the ER's bonuses are finally no longer the lowest in the hospital."
+ },
+ "choices": {
+  "c_hushi": { "title": "Take the Senior Nurse exam (junior title)", "situation": "After a year of registration you can sit the Senior Nurse exam, and everyone who started with you is drilling questions. The resus rota is full, so studying has to fit in after night shifts.", "options": [
+   { "label": "Study after every night shift", "result": "You go through the question bank three times. One triage question on the exam is exactly what you met at the desk last week." },
+   { "label": "Get the hands-on work solid first", "result": "This year you make your procedures smooth in resus. You take the exam the next year and pass without much trouble." } ] },
+  "c_specialist": { "title": "Train as an emergency specialist nurse in the provincial program", "situation": "The province's emergency and critical care specialist nurse course takes you off the floor for three months, and the department has one place. If you go, others cover your nights; if not, the place goes to someone junior to you.", "options": [
+   { "label": "Push for the place", "result": "At the training base you learn ECMO support and trauma nursing. When you come back, you're the one who knows the resus equipment best." },
+   { "label": "Let a colleague go", "result": "Your colleague goes and buys you dinner when she's back. You stand three more months of shifts in resus." } ] },
+  "c_icu": { "title": "Transfer to the ICU, or stay in the ER", "situation": "The hospital has opened a new general ICU, short of experienced nurses, and the nursing department named you. The ICU is steadier and goes deeper, but you love the feeling of the ER door opening without knowing what comes through it.", "options": [
+   { "label": "Go to the ICU", "result": "In the ICU you learn to read ventilator waveforms. Six months later an old ER colleague calls to ask you how to set a parameter." },
+   { "label": "Stay in the ER", "result": "You tell the nursing department you want to stay. The head nurse says little and puts you on triage next month." } ] },
+  "c_zhuguan": { "title": "Take the Nurse-in-Charge exam (intermediate title)", "situation": "You have the years to sit for Nurse-in-Charge, and only with it can you lead a shift team. The child is small; your evenings go either to the question bank or to the child.", "options": [
+   { "label": "Sign up, leave the child with the grandparents", "result": "You study at the little desk in the on-call room. The day you pass, the head nurse says you'll lead the resus team from next month." },
+   { "label": "Family first this year", "result": "You spend one more year with your child. The next year you listen to online lectures while rocking them to sleep, and pass as well." } ] },
+  "c_private": { "title": "A private hospital's cosmetic clinic tries to hire you", "situation": "A private hospital's cosmetic medicine center offers half again your pay, nine to five, no nights. The person recruiting you is someone who started with you and left.", "options": [
+   { "label": "Go to the cosmetic clinic", "result": "You hand in your resignation. Signing it, the head nurse says: come back whenever you want.", "end": "You left the ER for the cosmetic clinic and eventually became its nursing supervisor. Years later, hearing a siren in the street, you still glance to see which hospital it's heading for." },
+   { "label": "Stay in the ER", "result": "You tell her you'll think about it, and never get back to her. That month on nights you take in four chest pains in resus." } ] },
+  "c_ai_system": { "title": "Become the ER's liaison for the new smart system", "situation": "The department is bringing in an early-warning and nursing documentation system, and the nursing department needs one ER liaison: meet the engineers, rework the triage rules, train the whole unit. One more job, no more money.", "options": [
+   { "label": "Take it on", "result": "Six months of grinding it out with the engineers, and \"slurred speech in the elderly means upgrade\" goes into the rules. When other hospitals come to visit, they ask for you." },
+   { "label": "Pass, stay clinical", "result": "IT leads the rollout. You use what works, and raise what doesn't at handover meetings." } ] },
+  "c_head": { "title": "Run for ER Head Nurse", "situation": "The old head nurse is retiring. Candidates need the Associate Chief Nurse title or an application in progress, plus papers, a research project and a campaign speech. As head nurse, you'd rarely stand at a bedside again.", "options": [
+   { "label": "Run for it", "result": "At the selection meeting you talk about how to staff ER nights. The night before the vote you rewrite your speech once more." },
+   { "label": "Stay on the floor training new nurses", "result": "You become the most senior team lead in the department, and the hardest IV in resus still comes to you." } ] },
+  "c_hometown": { "title": "Go home to build the county hospital's chest pain center", "situation": "The county hospital back home is building a chest pain center, and its director has sent word asking you to come back as ER head nurse. Less pay, close to your parents, cheap housing.", "options": [
+   { "label": "Go back to the county", "result": "You bring the provincial triage workflow home with you. In the first year, the time from the door to the cath lab for chest pain patients in the county is cut in half." },
+   { "label": "Wait a few more years", "result": "You thank the director on the phone. On the other end your mother says: then call more on weekends." } ] },
+  "c_college": { "title": "Teach nursing at a medical college", "situation": "A local medical college wants nursing teachers with clinical experience. Winter and summer holidays, no shifts. Your back isn't what it was.", "options": [
+   { "label": "Go teach", "result": "You hand in the key to your locker in resus.", "end": "You went to the medical college to teach emergency nursing. Every year you drill students on compressions with the manikins, and your voice calling the count is still the one from the resus bay." },
+   { "label": "Stay in the ER", "result": "You buy yourself a better pair of shoes and work another night." } ] }
+ },
+ "endings": {
+  "retire": "Your last shift is a day shift. At handover a chest pain comes into resus, and you stand at the door watching the young ones hook up the monitor, draw blood, run the ECG, not missing a thing. You give your keys to the new team lead, change your shoes, and walk out through the front doors of the emergency hall.",
+  "burnout": "The year your back and your sleep gave out together, you moved to the health check center: regular hours, no more nights. For the first few months you stood up every time a phone rang. Slowly you got used to it, only your steps still slow down whenever you pass the ER entrance."
+ },
+ "stages": [
+  "You work at your preceptor's side and do whatever she does: hooking up monitors in resus, starting lines, sending bloods, repeating each order before you push it. You check the crash cart every shift; you write the nursing notes and she corrects them. At triage you can only sit beside her and watch how three questions tell her whether someone goes in now or later.",
+  "You can run a resus shift on your own: three resus beds, and the monitors, ventilators and defibrillator are yours to connect and set. On triage you sit at the computer and grade everyone who comes through the door, deciding hundreds of times a day who goes first. New resident nurses start following you, asking the questions you asked a year ago.",
+  "You're a shift team lead now, with a shift's nurses to deploy: who's in resus, who's on observation, who does transfers. You chair handover and read and write up the adverse events first. You're still at the bedside, but your eyes no longer stay on one bed; you watch the whole hall for where it's getting chaotic and where hands are short.",
+  "You're the ER head nurse, and your days are chopped up by the rota, supply requisitions, quality inspections and meetings. Family complaints reach you first, and so do notices from the nursing department. You rarely put in a line yourself anymore, but whenever mass casualties come through the door, you're still the first one standing at triage.",
+  "You run emergency nursing as a whole discipline: the provincial specialist nurse course, revising the triage standard, research, promotion reviews, inspections at other hospitals; you're in meetings more than in the department. Still, every week you pick one night shift and stand in resus for a couple of hours, watching how the young ones work."
+ ],
+ "work": [
+  "Your preceptor has you put an IV into a patient in shock, and you miss twice. She takes over and gets it in one: you went for the vein you can see; go for the one you can feel.",
+  "Your first crash cart count comes up one atropine short. You search every drawer and finally find it rolled under the defibrillator. From then on you always count from the bottom shelf up.",
+  "An old man in observation says his chest feels tight. You run an ECG and take it to the doctor, who looks and says: good call, get him into resus now.",
+  "A middle-aged man comes to triage saying he has a toothache. He keeps breaking into a cold sweat, so instead of sending him to dental you run an ECG. It's an inferior wall MI.",
+  "At midnight you're taking a ventilated patient to CT when the elevator sticks at the third floor. You keep bagging while a colleague phones engineering; ten minutes later the elevator moves.",
+  "A new resident nurse mishears an order during a resuscitation. You have her put the drug down and repeat the order out loud yourself. The doctor nods.",
+  "Next month's rota: someone has an exam, someone's child is sick, someone is pregnant and can't do nights. You redo the schedule seven times and in the end add two more nights for yourself.",
+  "At a resuscitation debrief you project the monitor's exported timeline on the wall and point out that door-to-first-shock took four minutes, one minute too many.",
+  "You run your team through a mass casualty drill, triaging with red, yellow, green and black tags. Afterwards you have everyone name one place where they got stuck.",
+  "Engineering says the new defibrillator will have to wait for next year's budget. You write a report with the fault logs of the three old machines attached; a month later it's approved.",
+  "A young nurse who's been shouted at by a family is crying in the storeroom. You don't try to comfort her. You help her finish counting the box of supplies, then go out with her to talk to the family.",
+  "At a nursing department meeting on night-shift pay, you bring a table: last year every ER nurse worked twice the hospital's average number of nights.",
+  "At the specialist nurse course's final assessment, a trainee from a county hospital is the first to think of checking blood sugar in the simulated resuscitation. You give her full marks.",
+  "You lead the revision of the province's emergency triage standard, and under the item on atypical symptoms in the elderly you add three situations you saw at the triage desk years ago.",
+  "A city hospital asks you to advise on building its chest pain center. Instead of reading their report first, you spend a night sitting at their triage desk."
+ ],
+ "past": [
+  "You're in middle school in the countryside outside Zhoukou. When your grandmother is in hospital, you watch a nurse change her dressing, quick and gentle, and you remember that white uniform.",
+  "Your gaokao (college entrance exam) score is neither high nor low. Your mother says nursing means a job, so you apply for the nursing degree at a medical university in the province.",
+  "The first time you practice CPR on a manikin, you press too lightly. The teacher has you straighten your arms: use your upper body, push down five centimeters.",
+  "In your final year you intern for ten months at a hospital in the provincial capital. In your ER month you run alongside a gurney the whole way, and afterwards every other ward seems too quiet.",
+  "You pass the national nurse licensing exam and sign with this provincial hospital on a contract, spending the first year rotating through departments."
+ ],
+ "late": {
+  "pension_note": "Estimate: those with a permanent state post are paid under the public institution pension plus an occupational annuity, contract staff under the enterprise employee pension; roughly a little over half your final monthly pay.",
+  "scenes": [
+   "Your first week of retirement you wake at seven-thirty every morning and just lie there, as if waiting for someone to hand over. Then you get up, go to the market, and buy a bunch of chives.",
+   "An old man collapses downstairs in your compound. You're the first one there, checking his breathing and pulse, telling someone to call an ambulance. When the stretcher arrives, you call out the time without thinking.",
+   "You teach CPR to the elderly in the community activity room, the manikin laid on the ping-pong table. One old man presses too lightly, and you have him straighten his arms.",
+   "When you go to the hospital as a patient, the emergency hall has a new triage desk. The young nurse there asks her questions carefully, and you give her full marks in your head.",
+   "In your first month at the health check center you draw two hundred tubes of blood a day, one stick each, never a miss. When you get off it's still light out, and you're not quite sure what to do with yourself.",
+   "Your back is much better, and you start walking by Ruyi Lake every evening. Once you hear an ambulance and stop to watch it drive away.",
+   "At a reunion with old colleagues, everyone remembers the old mass casualty night differently. You say all you remember is that you ran out of tags.",
+   "Your first month out of the ER, you're not used to people telling you there's no rush. You still repeat everything back before you act.",
+   "Somewhere new, you run into a man who once spent a night in your resus bay. He recognizes you; you don't recognize him. He says you kept calling his name that night.",
+   "A resident nurse you once trained has become an ER head nurse and posts a photo of a new resus bay. You like it and comment: check the crash cart every shift.",
+   "Flu season, and the news again shows packed emergency rooms, corridors full of beds. You message an old colleague still in the department: drink plenty of water.",
+   "Your grandchild asks what you used to do. You say you were the one at the door, taking people in. Taking who in? Whoever came, you say."
+  ],
+  "closing": {
+   "retire": "Many years later, on a winter night, you hear an ambulance at home, coming closer and then fading away. You look at the clock, work out how many minutes it has left to the ER doors, and go back to the TV.",
+   "burnout": "Many years later you still keep that worn-out pair of nursing shoes, one patch of the sole rubbed flat. Your family has tried to throw them out several times; each time you say, keep them a little longer.",
+   "end": "Many years later, in a drawer, you find your old nursing license. The person in the photo has very short hair and very bright eyes. You look at it for a while, then put it back where it was."
+  }
+ }
+}

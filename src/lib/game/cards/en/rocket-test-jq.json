@@ -1,0 +1,206 @@
+{
+  "id": "rocket-test-jq",
+  "occupation": "Rocket Engine Test Engineer",
+  "role": "Assistant test engineer at a private rocket company's Gobi test stand",
+  "headline": "A propulsion master's graduate who passed on a state research institute to follow a private rocket company into prefab dorms on the Gobi outside Jiuquan, spending each day fixing sensors to methane-oxygen engines",
+  "unit": "A private rocket company headquartered in Beijing, with its engine test stand on the Gobi a little over an hour's drive north of Jiuquan city",
+  "unit_type": "Private commercial spaceflight company, test base",
+  "city": "Jiuquan, Gansu (the base is out on the Gobi)",
+  "city_tier": "Prefecture-level city",
+  "education": "Master's degree (Aerospace Propulsion Engineering)",
+  "level": "You have studied rocket propulsion and LabVIEW, and fired small thrusters in a university lab. You have only seen a full-engine hot-fire test on video, and you can't yet read every line of the test stand's P&ID",
+  "intro": "The commuter bus heads north out of Jiuquan; the asphalt gives out to gravel, and an hour and more later a grey steel tower rises out of the Gobi beside a row of white prefab huts. The engineer assigned to train you hands you a hard hat and a checklist and says: start by putting your hand on every pipe on this stand, and learn where each one comes from and where it goes. As of today your badge reads: Test Team.",
+  "salary_note": "Estimate: private rocket companies pay well for propulsion master's graduates, and with the allowance for living on site in the Gobi, starting take-home pay is 20-30% above the national figure. The company lives on investment rounds, so raises and bonuses follow the progress of each rocket and each round of funding.",
+  "facts": [
+    { "label": "Assistant Test Engineer (current level)", "value": "0-2 years, ¥9,000–16,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Rocket Engine Test Engineer (2-5 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥27,500 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Running the hot-fire sequence and handling shutdowns", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Checking the test stand's instrumentation status and clearing the engine for ignition", "source": "AI exposure" },
+    { "label": "Open positions", "value": "8 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "The wind outside the prefab bangs the door against its frame. You drink a bowl of millet porridge in the canteen; through the window the peaks of the Qilian Mountains are still white, and the light is only just full.",
+    "The pre-shift meeting is in the control room. The stand chief reads out the day: leak checks on stand two before the cold-flow test, pressure sensors at seventeen measurement points to be re-fixed, all done by two o'clock.",
+    "You crouch under the thrust chamber bonding strain gauges. With gloves on you can't work the adhesive; with them off your fingers go stiff with cold. Your trainer glances over and says: not so much glue, too much and the signal drifts.",
+    "Line pressure hold. Nitrogen up to the set pressure, you go joint by joint with a spray bottle of leak-detection fluid, watching for bubbles. At the thirty-somethingth joint, a string of tiny bubbles rises.",
+    "Lunch is mutton noodle soup and flatbread. The table talks about another company's launch last week; someone scrolling on a phone says they got the second stage to orbit this time.",
+    "In the control room you check channels. Out on the stand people press the sensors one at a time while you watch each curve jump on the LabVIEW screen and tick it off on the sheet. By the time all hundred and twenty channels are done, it's evening.",
+    "The liquid oxygen tanker arrives two hours late, and tomorrow's cold-flow test moves to the afternoon. In the dorm you log today's joint numbers and leak points in your work diary.",
+    "Before lights out you stand outside for a while. There are no lights on the Gobi; the Milky Way runs slantwise over the prefab roofs. You send your parents in Xi'an a photo. There's one bar of signal, and it spins a long time before it goes."
+  ],
+  "ladder": [
+    { "title": "Assistant Test Engineer", "stage": "Entry", "focus": "Learn the test stand's systems and operating rules; fix sensors on site, lay cable, leak-check lines and help wherever needed. You move up by carrying out site procedures to standard, fluently." },
+    { "title": "Rocket Engine Test Engineer", "stage": "Core engineer", "focus": "Write test plans and procedures on your own, run the console for cold-flow and hot-fire tests, turn round routine test data and locate basic faults quickly. You move up by leading a single test campaign on your own." },
+    { "title": "Senior Test Engineer", "stage": "Senior core", "focus": "Lead a test subsystem or serve as lead console operator, oversee commissioning of the propellant loading system and the thrust frame, and lead the root-cause closure and process fixes for anomalous test data. You move up by breaking through hard technical bottlenecks." },
+    { "title": "Principal Test Engineer", "stage": "Lead expert", "focus": "Serve as test director for full-engine firings or deputy technical head of the stand, lead the first full-system, full-duration hot-fire of a new engine, and own the stand's upgrade plans. You move up on the success rate of major engine tests and on the team you develop." },
+    { "title": "Director of Propulsion Testing", "stage": "Chief", "focus": "Oversee the build-out of a large ground test base and the ground verification of the whole engine family (kerosene-oxygen, methane-oxygen, hydrogen-oxygen), and hold the line between the vehicle programme's targets and safety." }
+  ],
+  "ai_tasks": [
+    { "name": "Checking the test stand's instrumentation status and clearing the engine for ignition", "how": "AI can automatically check whether valve states, channel signals and chilldown and pressurization readings are inside the clearance limits, and flag anything missed. The final go decision, and the responsibility if it goes wrong, can only be a person's." },
+    { "name": "Running the hot-fire sequence and handling shutdowns", "how": "Running a hot-fire sequence and responding to an emergency happens in real time, with grave consequences and no second try; it rests mainly on a person at the console judging and acting. AI is suited only to monitoring the envelope and raising alarms." },
+    { "name": "Reviewing test data and driving quality root-cause closure", "how": "After the data is offloaded, AI can align timestamps, archive, extract features, do a first screen for anomalies and draft the analysis report. Closure means finding the root cause and coordinating several processes and departments; a person decides the conclusion and signs it." },
+    { "name": "Running the first cold-flow fill and line chilldown on a newly developed engine", "how": "AI can generate checklists from historical data and the test plan, and help spot signs of micro-leaks or abnormal contraction in the temperature and pressure curves. A first fill is hands-on work with a new product, and a person must be there to judge and respond." },
+    { "name": "Detecting and handling high-frequency pressure oscillations in the combustion chamber in real time", "how": "AI is well suited to live spectrum monitoring, spike detection and early warning, and within milliseconds it is faster than a person. The boundaries of the suppression strategy, the trigger thresholds and whether to allow automatic action must be set in advance by a person who answers for them." },
+    { "name": "Writing the test programme for a full-engine firing", "how": "AI can draft the programme clause by clause against the standards, check for missing scenarios and compare it with programmes for earlier engines. The trade-offs in the test plan, the risk judgments and getting it through review need an experienced engineer to set the direction and take responsibility." },
+    { "name": "Dynamic calibration of the thrust frame and loading the offset-compensation parameters", "how": "AI can help fit the calibration data, calculate the offset-compensation parameters and check whether the errors meet the specification. Installation, loading and confirming the results on site still need a person's hands and sign-off." },
+    { "name": "Testing the ignition timing of several engines firing in parallel", "how": "There is no mature data to lean on for parallel multi-engine ignition. A person has to design the plan, coordinate two test positions on site and answer for the results; AI can only help with simulation and after-the-fact data analysis." }
+  ],
+  "events": {
+    "e_first_hot": "Your first full-engine hot-fire from the control room. The countdown reaches zero, and through several hundred metres and a wall, what you notice first is the floor shaking under you; only then the sound. After shutdown the thrust curve on the screen is as flat as a ruled line, and somebody in the room claps once.",
+    "e_sandstorm": "When a spring sandstorm blows in, the sky goes dark at three in the afternoon. Every connection on the stand has to be wrapped, and the next day you spend from morning to night stripping off plastic sheeting, your nostrils full of sand.",
+    "e_leak_found": "In the last round of leak checks before a cold-flow test, you find a string of very fine bubbles under a flange that two others had checked and missed. Your trainer changes the gasket and taps your hard hat without a word.",
+    "e_sensor_wrong": "Data comes off a hot-fire test with one pressure channel flat from start to finish. In the end it traces back to a point you instrumented: the wrong plug. You write a page of explanation and read it aloud at the pre-shift meeting.",
+    "e_summer_heat": "At noon in July the steel plate on the stand is too hot to touch; the ground surface measures over fifty degrees. You move the work to five in the morning and dusk, and spend midday in the prefabs going over data.",
+    "e_salary_late": "The company's latest funding round doesn't arrive on time and pay is twenty days late. The canteen stays open, and the stand chief posts in the group chat that the test schedule hasn't changed. Two colleagues hand in their notice.",
+    "e_orbit": "The company's rocket reaches orbit for the first time. You watch the livestream in the control room, and at second-stage cutoff the stand chief, the quietest man you know, turns away and doesn't look back for a long while. Every engine on that rocket was fired on your stand.",
+    "e_launch_fail": "A launch fails, and the cause points to one of the engine's valves. For the next three months you re-test that batch of valves on the stand one by one, more than a hundred open-and-close cycles, and the closure report goes through seven drafts.",
+    "e_abort": "A hundred-odd seconds into a long-duration firing, a chamber pressure channel crosses its redline and the sequencer shuts the engine down. For two weeks you strip the engine and go over the curves, and finally find a machining burr in one injector orifice.",
+    "e_long_distance": "The person you started seeing while you were studying in Xi'an works there now. You meet once a month, and every off week back in town you spend half of it on the high-speed train. Once, meeting on the platform, they say you've got another shade darker.",
+    "e_wedding": "The wedding is in Xi'an, and six people from the test team come and fill a table. In their speech the best man and maid of honour say the two of you have known each other seven years, and the days you've actually spent together add up to less than two.",
+    "e_child": "The day your child is born you're on the stand running a cold-flow test, and only when you come off do you see twenty-odd missed calls. You rush to Jiuquan overnight for the train, and reach Xi'an just as it's getting light.",
+    "e_hearing": "At the company health check, your high-frequency hearing has dropped a notch, and the doctor asks whether you work around a lot of noise. From then on you wear two layers of earplugs on the stand.",
+    "e_ai_interpret": "The company brings in automatic interpretation of test data. As soon as the data comes off, the anomalies and comparison curves are already marked, and a first draft of a report that used to cost two all-nighters is ready the next morning. You start to have time for the little steps in the curves the system didn't mark.",
+    "e_ai_false_alarm": "The new live monitoring raises an oscillation warning during a hot-fire. The lead operator waits half a second, per procedure, and doesn't shut down; afterwards it turns out a sensor mount had worked loose. For that half second, nobody in the control room breathed.",
+    "e_second_stand": "The base builds a second test position, three times the thrust of the first. On groundbreaking day the wind is so strong it snaps two of the flagpoles, and the boss speaks on the Gobi for ten minutes, of which everyone catches about half.",
+    "e_new_grads": "Nine graduates join this year. You walk them round the stand and on day one have them put a hand on every pipe. Halfway through, one of them says: Shifu, I don't think this one is on the drawing. He's right.",
+    "e_back": "Years of crouching under the thrust chamber to wire and bond sensors have given you a herniated disc. Now even lifting a bucket of leak-detection fluid means holding the railing first.",
+    "e_ipo": "The company finally goes public. On the first day of trading your small handful of stock options turns into a number you had never imagined, and you buy your parents in Xi'an a flat in a building with a lift.",
+    "e_parent": "Your father has surgery in a Xi'an hospital just as the new engine is due for its first long-duration firing. You take five days' leave; the day you get back is ignition day, and you watch the whole run from the back row of the control room.",
+    "e_reuse": "An engine recovered from a sea landing is shipped back to the base, salt crust still on its walls. You mount it on the thrust frame for a re-test, and its curves almost exactly overlay those from its very first firing.",
+    "e_auto_close": "More and more of the operations on the stand are handed to software: loading, chilldown, purging, all run through at the press of a key. The control room goes from twelve people to five, and those who remain watch for when the program ought to stop.",
+    "e_gobi_tree": "The year you arrived you planted a Russian olive tree by the prefab door and watered it with the canteen's vegetable-rinsing water. More than ten years on it stands taller than the prefab, and newcomers assume it always grew there."
+  },
+  "choices": {
+    "c_institute": {
+      "title": "The research institute's offer is still open",
+      "situation": "At graduation a state-run engine research institute in Xi'an also offered you a job, and HR says they can hold the place until the end of the year: a permanent state post, housing in the staff compound, close to your parents. The starting pay is thirty percent lower, and a newcomer waits years before touching the console.",
+      "options": [
+        { "label": "Go back to Xi'an and join the institute", "result": "You spend most of a year in the institute's archive, reading dozens of test reports from old engines; your first time on a stand is the autumn of your second year. You can go home for dinner at weekends now." },
+        { "label": "Stay on the Gobi", "result": "You email HR to say thank you. That weekend you don't go back to town; you stay at the stand to watch the senior engineers tune the thrust frame." }
+      ]
+    },
+    "c_redline": {
+      "title": "Do you tighten the redline",
+      "situation": "Next week's hot-fire is a key milestone before a funding round, and the boss wants a clean long-duration run. In the cold-flow data you see a slight jitter on one pressure channel; under the current redline criteria it won't trigger a shutdown. You could propose tightening the criteria, but then the test may well stop halfway.",
+      "options": [
+        { "label": "Write it up and recommend tightening", "result": "You paste the curves into a report. The stand chief calls a meeting that night and the criteria are tightened. The test stops at ninety seconds, and the valve turns out to have a real problem. The boss says nothing in the group chat; the next week, the canteen serves you all extra chicken legs." },
+        { "label": "Mention it at the meeting, keep the plan", "result": "You raise it at the pre-shift meeting and the stand chief says noted. The test runs its full duration; only when the valve comes out is there a fresh scratch on its sealing face." }
+      ]
+    },
+    "c_title": {
+      "title": "Applying for the Engineer title",
+      "situation": "A private company doesn't care about professional titles, but whether you later go to an institute, a launch site, or up to Senior Test Engineer, the review forms ask for the intermediate engineering title. You have to apply through the public review yourself: write a paper, assemble the file, and defend it in the busiest month of testing.",
+      "options": [
+        { "label": "Write the file through the nights", "result": "You spend a month writing the paper in your prefab, on offset compensation for thrust frames. On defence day you travel from the Gobi to Lanzhou, and the panel's questions are about exactly what you were adjusting on the stand last month." },
+        { "label": "Skip it; let the stand speak", "result": "You give all your time to testing. In the year-end technical rankings, you come first." }
+      ]
+    },
+    "c_auto_boundary": {
+      "title": "Who writes the limits for automatic shutdown",
+      "situation": "The company is bringing in live oscillation detection and automatic emergency shutdown; software is hundreds of milliseconds faster than a person. But someone has to write into the criteria, line by line, which cases the program may shut down on its own and which must wait for the test director's command, and whoever signs answers for every false stop and every missed one.",
+      "options": [
+        { "label": "Take it on and write them yourself", "result": "You go back through the curves of every abnormal shutdown and near-shutdown in recent years and write more than forty criteria; it takes three rounds of review to pass. When the first automatic shutdown happens, the post-test review shows it was right." },
+        { "label": "Leave it to the software team; you run the stand", "result": "The software team writes the criteria. You review them once and make six comments, three of which are taken. Most of your time is still on the stand." }
+      ]
+    },
+    "c_beijing": {
+      "title": "Transferring back to Beijing headquarters",
+      "situation": "The engine design department at headquarters needs someone who knows testing and asks whether you'd come back to Beijing. No more living on the Gobi, and your child could be with you. But you'd come down off the stand and sit in an office tower, drawing and calculating thermodynamic cycles.",
+      "options": [
+        { "label": "Go back to Beijing and design", "result": "You bring years of data from the stand into the design department, and your very first proposal changes the layout of an injector. Only, every time you hear the base is firing, you want to take leave.", "end": "You became an engine design engineer at headquarters, drawing and calculating cycles in a Beijing office tower. Whenever an engine you designed goes on the stand, you're there at the other end of the video call, watching for the first thrust curve." },
+        { "label": "Stay at the base", "result": "You say a few more years. Before leaving, the people from headquarters take a photo in front of the stand and say there are more stars out here than in Beijing." }
+      ]
+    },
+    "c_settle": {
+      "title": "Making a home in Jiuquan",
+      "situation": "Your child is about to start kindergarten, and the family is split between Xi'an and the Gobi. Flats in Jiuquan city cost four or five thousand yuan a square metre, and the company gives on-site staff a settling-in allowance. But it means your family moving to this city on the edge of the Gobi too.",
+      "options": [
+        { "label": "Buy a flat in Jiuquan and bring them over", "result": "You buy a three-bedroom flat in town with a balcony facing the Qilian Mountains. At first your family complain about the wind; by the second year they're learning to make the local dry-fried hotpot. In your off weeks you finally get to collect your child from school every day." },
+        { "label": "Keep living in two places", "result": "You still take the train to Xi'an once a month. Each time, on the platform, your child needs a moment to recognize you." }
+      ]
+    },
+    "c_rival": {
+      "title": "Another rocket company tries to poach you",
+      "situation": "A rocket company that has just closed a big funding round is building a new test stand in northern Shaanxi and wants you as a Senior Test Engineer: forty percent more pay, your own subsystem, building a stand from scratch. But the engine you've been testing here is about to fly.",
+      "options": [
+        { "label": "Go and build a stand from scratch", "result": "On a loess plateau you start from the site plan: lines, thrust frame, control room. Two years later comes the first ignition, and that day you stand alone by the stand for a long time." },
+        { "label": "Stay and watch it fly", "result": "You turn them down. The engine goes onto a rocket, and on launch day you watch the livestream in the control room; the checklist they used is the one you wrote." }
+      ]
+    },
+    "c_commander": {
+      "title": "Serving as test director for a full-engine firing",
+      "situation": "The new engine's first full-system, full-duration hot-fire is coming, and the company will pick one of its Principal Test Engineers as test director. You call the commands, you decide whether to stop. If it works, it's everyone's; if something goes wrong, yours is the signature.",
+      "options": [
+        { "label": "Take the commands", "result": "In the control room you call the last shutdown, turn to the screen and watch the thrust curve trail a long tail back down to zero. That night you sit by the stand alone until midnight." },
+        { "label": "Recommend someone younger", "result": "You give the seat to an engineer you trained and sit behind him as his deputy. When he calls ignition his voice wavers once, then steadies." }
+      ]
+    },
+    "c_hydrogen": {
+      "title": "A liquid hydrogen company comes calling",
+      "situation": "A company that makes liquid hydrogen storage and transport equipment is building a demonstration line and wants someone who knows cryogenic high-pressure lines and has done a thousand loadings to be its technical lead. Better pay, an office in town, no more living on the Gobi.",
+      "options": [
+        { "label": "Go into liquid hydrogen", "result": "Outside your new office window is a field of storage tanks. In your first week you circle three places on their valve-box drawings where you once learned a lesson the hard way on the stand.", "end": "You became technical lead at a liquid hydrogen storage and transport company, responsible for dozens of kilometres of cryogenic lines. Now and then someone in the work chat forwards a video of a rocket launch, and you turn the sound all the way up." },
+        { "label": "Stay on the stand", "result": "You say you still like the sound of ignition. After the call, someone in the control room shouts for you to come and check channels." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "For your last test you don't sit in the director's seat; you stand in the back row of the control room. The countdown reaches zero, and as always the floor shakes first, then comes the sound. After shutdown the young ones clap once, as always. You hang your hard hat back on its nail in the prefab; the Russian olive by the door has fruit on it now. The bus is far down the road before you look back, and you can still see the grey steel tower.",
+    "burnout": "That winter you stand three overnight shifts in a row on the stand, and coming down your legs give way; you sit down on the steel plate holding the railing. Your check-up comes back with a column of arrows. You ask for a technical support post in town and spend your days reviewing other people's test programmes. On days you hear the base is firing, you open the window a crack, though from a hundred-odd kilometres away you can hear nothing."
+  },
+  "stages": [
+    "Your day is on the stand: crouched under the thrust chamber bonding strain gauges and thermocouples, laying cable run by run along the P&ID, then, once the lines are holding nitrogen, going joint by joint with a spray of leak-detection fluid. On test days you sit in a corner of the control room watching the dozen channels assigned to you. You write down whatever your trainer says, and initial every line of the checklist.",
+    "The test procedures for an engine are yours to write now: where the measurement points go, how the sequence runs, which curve crossing which line means shutdown. On cold-flow day you sit at the console and call each checklist item; afterwards you work through the data overnight, thrust, specific impulse, chamber pressure, and hand the preliminary conclusions to the stand chief in the morning. You've started arguing with the engine designers on video calls.",
+    "You run a subsystem: propellant loading and the thrust frame are your call, and during hot-fires you are lead console operator, your finger resting beside the emergency shutdown button. When something goes wrong you lead the closure report, taking the fault tree apart layer by layer, pulling in design, process and suppliers for meeting after meeting, until every branch has an answer.",
+    "In the control room you sit in the middle seat: you set the test programme for full-engine firings of new models, you chair the pre-test review, and when every system has reported ready, you call the commands. Most days you're in meetings and revising plans: whether to upgrade the stand, the layout of the second position, which new engineers are ready for the console. In the end, all of it needs your signature.",
+    "You run the whole base: several test positions, more than a hundred people, the schedule and budget for hundreds of firings a year. You negotiate targets with the vehicle programme's chief designer at headquarters, money with the boss, and the safety line with the safety department, flying to Beijing a dozen times a year. You still walk the stand once a week, putting a hand on the newly changed pipes and glancing at the sensors the young ones have fixed."
+  ],
+  "work": [
+    "Your trainer has you fix twelve thermocouples to the thrust chamber; you finish and send him a photo. He replies: number seven is too close to the weld, move it two centimetres. You crawl back under the thrust chamber.",
+    "Checking channels before a cold-flow test, you notice that pressure sensor twenty-three has a different range from the one on the sheet. You dig its calibration certificate out of the store, confirm the sheet was copied wrong, correct it and sign.",
+    "Offloading data after a hot-fire, you write a little Python script that aligns the timestamps on two hundred-odd channels and plots them automatically. The stand chief glances at it and says: send that to the group next time.",
+    "You write your first cold-flow procedure on your own, forty-two pages. At the review, someone from quality asks what happens if the tanker supply cuts out halfway through chilldown. You turn to page thirty-one; you wrote that section.",
+    "After a hot-fire you notice a step of a dozen milliseconds in the chamber pressure curve. You blow it up, print it, and go over it for an hour on a video call with the design department, who say they'll check the injector.",
+    "On cold-flow day you're at the console, calling from the checklist: main valve chilldown complete, temperature nominal. Your voice is steadier than you expected.",
+    "The thrust frame gets new load cells, and with two apprentices you load them step by step with reference weights. The fitted error is within two parts in a thousand, and you sign the calibration record.",
+    "After an abnormal shutdown you lead the fault tree, working down three lines: valves, lines, software. On day eleven, the supplier admits on a video call that the material in that batch of seals had been changed.",
+    "A hundred and forty seconds into a hot-fire, your finger rests beside the emergency shutdown button, your eyes moving between three curves. Only when the shutdown command sounds do you realize you haven't blinked.",
+    "You revise the new engine's full-firing programme six times, and the last draft splits the three-hundred-second run into three: first a hundred seconds, then two hundred. The chief designer looks at it for a long time in the review, then signs.",
+    "On a morning at minus twenty, one system reports an abnormal temperature on the loading line. You have everyone stop work, go up on the stand yourself for twenty minutes, and decide to hold for three hours while the sun warms the pipe gallery.",
+    "A young engineer wants to go on the console. You tell him to read every abnormal-shutdown report from the past five years first, then come and explain to you why each one stopped. It takes him two afternoons.",
+    "Next year's test schedule is spread across the meeting table: three engines competing for two test positions. You argue all afternoon with the programme chief designer at headquarters and end up moving one engine's cold-flow tests to winter.",
+    "The safety department comes for its annual inspection and asks whether the distance between the new stand and the liquid oxygen store is enough. You take from the cabinet the safety-distance calculation you signed years ago and turn its pages for him one by one.",
+    "You give new staff their first lesson at the base, and it isn't about rockets; it's about the measurement point you missed more than ten years ago. Afterwards you send them out to the stand to put a hand on every pipe."
+  ],
+  "past": [
+    "You went to an ordinary high school in Xi'an, not far from the staff compound of an old aerospace factory. At weekends you tagged along with the compound kids to the exhibition at the factory gate, where a cutaway engine model sat in a glass case.",
+    "You did well in the gaokao (college entrance exam) and put Aerospace Propulsion Engineering first on your form. Your father, a taxi driver, asked where that would take you. You said the Gobi. He thought you were joking.",
+    "Your third-year industry placement was at a research institute's test stand, where for the first time you heard an ignition through the control room wall. You came back and wrote a fifty-page placement report; your supervisor said it was too long.",
+    "For your master's you chose a group working on methane-oxygen combustion. You fired the lab's small thruster more than three hundred times and burned out two injectors, and your supervisor mourned them for a week.",
+    "In graduation season, the research institute and a private rocket company both made you offers. On the video interview, the private company's interviewer said: we do more firings in a year than some places do in ten. You thought about it for three days.",
+    "You signed with the private company. Before you left, your mother stuffed a big bag of dried noodles and a jar of hot-oil chilli into your suitcase, sure you wouldn't eat well on the Gobi."
+  ],
+  "late": {
+    "pension_note": "Estimate: private-sector staff pay into the urban employees' pension, and the company contributes on a fairly high base, but most of a private rocket company's pay comes as bonuses and options, so in retirement you will draw a little over 40% of final monthly pay.",
+    "scenes": [
+      "After you retire you move back to Xi'an, and the first thing you do each morning is check the forecast to see whether the wind is blowing on the Gobi today.",
+      "Your old university asks you back to teach a term of the testing course to graduate students. Your first lecture is on how to find a string of very fine bubbles under a flange.",
+      "You take your grandchildren on a trip to Jiuquan and make a detour to the turn-off for the gravel road. You can't get onto the stand any more, but from far off you can see the new tower, twice as tall as in your day.",
+      "In your first year at a desk in town, your hands keep looking for something to tighten. You grow a row of flowers on the balcony and water them from empty leak-detection bottles.",
+      "Your back and your ears have recovered a little. Old colleagues from the base come to town for a meeting, and over dry-fried hotpot you talk until midnight; nobody mentions testing.",
+      "You watch a launch livestream online, and someone in the scrolling comments asks where the engines were tested. You type a line, then delete it.",
+      "In your first month in the new job you still wake on Gobi time, five-thirty, dark outside, no wind at the window, and for a moment you don't know where you are.",
+      "An engineer you trained becomes the base's test director and sends you a video of a new engine firing, followed by one line: Shifu, I put my hand on every pipe.",
+      "You give a talk at an industry conference, and afterwards a young man comes up with a question, his badge bearing the name of your old company. He says the Russian olive by the base gate is still there.",
+      "Loading, chilldown, data interpretation, writing reports: software does all of that now. Only a few people are left in the control room, and when people talk about test engineers, they mean the person who decides whether to press stop.",
+      "One summer night you look at the stars from a city rooftop and can see only seven or eight. You tell the child beside you that on the Gobi, the Milky Way runs slantwise right over the roof.",
+      "Your hearing gets worse and the television has to be loud. Once there's a launch on, and you leave it muted; from the colour of the flame alone, you know what it's burning."
+    ],
+    "closing": {
+      "retire": "Many years later, early one morning, the wind gets up and bangs the balcony door against its frame. You wake and reach for the hard hat by the bed without thinking; what your hand finds is a pair of reading glasses. You put them on and look at the sky for a while.",
+      "burnout": "Many years later you are walking slowly round your housing estate when a plane passes overhead, drawing a white line. You stop and watch until the line has spread apart.",
+      "end": "Many years later, sorting your bookshelf, you find a yellowed checklist with your initials in the corner of every page. Pressed in the last page is a Russian olive stone. You put it back and close the book."
+    }
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "id": "auto-eng-cc",
+  "occupation": "Automotive Engineer",
+  "role": "Assistant engineer in chassis tuning at a carmaker's R&D institute",
+  "headline": "A vehicle engineering master's graduate who joined the Changchun carmaker your parents worked at all their lives, and now strips shock absorbers and rides the cobblestone track with the veterans of its R&D institute's chassis department",
+  "unit": "The R&D institute of a long-established state-owned carmaker in Changchun, chassis development department (the proving ground is outside the city)",
+  "unit_type": "R&D institute of a state-owned carmaker",
+  "city": "Changchun",
+  "city_tier": "Provincial capital",
+  "education": "Master's degree (Vehicle Engineering)",
+  "level": "You have studied suspension dynamics and CATIA, and your thesis modelled shock absorbers. In a real car, the most your subjective evaluation can say is a bit bumpy, and you have never run the kinematics and compliance rig yourself",
+  "intro": "On the day you report for work, the head of department takes you to the chassis test lab. A prototype wrapped in black-and-white camouflage film sits on a lift with all four wheels off, and a grey-haired veteran is stripping a shock absorber, its valve shims laid out one by one on an old newspaper spread on the floor. He looks up at you and says: first learn to listen to a car, then learn to change it. As of today, your name is on this car's test order.",
+  "salary_note": "Estimate: Changchun's state-owned carmakers start vehicle engineering master's graduates at ¥7,000-8,000 take-home in their R&D institutes; with the housing fund and test allowances that is a little over 10% above the national figure. Raises at a state firm are slow and follow professional titles and seniority, with travel allowances for the winter and summer test campaigns.",
+  "facts": [
+    { "label": "Assistant Engineer / Designer (current level)", "value": "0-2 years, ¥6,375–9,375 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
+    { "label": "Next level up", "value": "Engineer (vehicle design / testing / process) (2-5 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥21,500 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Running a full-vehicle frontal crash test for regulatory approval", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Planning and running a round of rig durability tests", "source": "AI exposure" },
+    { "label": "Open positions", "value": "196 related job listings nationwide, 3 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Minus twenty-something. You leave the factory's staff housing compound as the boiler house downstairs breathes white steam. On the commuter bus half the passengers wear the same work jacket; some sleep, some read yesterday's road test data on their phones.",
+    "The morning meeting is at the whiteboard in the test lab. The supervisor reads out the day: new valve shims for the rear dampers on prototype two, subjective evaluation at the proving ground this afternoon, kinematics and compliance rig data due tomorrow.",
+    "You crouch under the prototype and help the veteran strip a rear damper. He takes out the shims one by one and lays them in order on the newspaper, and has you write it down: swap the third for a thinner one, bring the rebound damping down a little.",
+    "The institute canteen: sweet-and-sour fried pork and pickled cabbage stewed with glass noodles. The table talks about a new car from an upstart EV maker in Shanghai, and someone says half their chassis tuning team used to work here.",
+    "Proving ground. You sit in the passenger seat while the test driver takes the prototype over the cobblestones, the washboard and the speed bumps, your evaluation sheet in hand, scoring one to ten. He asks how it feels. You say the back is a bit shaky. He says: what kind of shaky?",
+    "Back in the lab you load the data from the car's accelerometers into the computer and compare it with the last set of shims. You can see it in the curves: the peak around three hertz has come down a little.",
+    "You phone the damper supplier's engineer and ask for two sets of new valve-stack samples by tomorrow. He says it has to go through the process, next week at the earliest. You phone your supervisor.",
+    "Back at the compound your father is watching television and asks which car you worked on today. You say you can't tell him. He laughs: back when he was on the final assembly line, he couldn't tell either."
+  ],
+  "ladder": [
+    { "title": "Assistant Engineer / Designer", "stage": "Entry", "focus": "Model parts, make drawings and prepare tests as assigned by engineers; learn the process." },
+    { "title": "Engineer (vehicle design / testing / process)", "stage": "Junior", "focus": "Own the design, testing and improvement of a part or assembly on your own." },
+    { "title": "Senior Engineer / System Lead", "stage": "Mid-level", "focus": "Own a system's design concept, regulatory compliance and technical liaison with suppliers." },
+    { "title": "Principal Engineer / Architecture Engineer / R&D Manager", "stage": "Senior", "focus": "Benchmark whole-vehicle platforms and set the architecture, control the development plan, and guide junior engineers." },
+    { "title": "Chief Engineer / Professor-level Senior Engineer", "stage": "Chief", "focus": "Decide the technology roadmap and platform strategy." }
+  ],
+  "ai_tasks": [
+    { "name": "Planning and running a round of rig durability tests", "how": "AI can help draft the test programme, set up load cases from the load spectrum, analyse the test data and estimate service life. Building the rig, placing the sensors, judging anomalies during the test and finding the cause of failed parts need a person on site." },
+    { "name": "Designing an assembly in 3D and getting it through review", "how": "AI can help generate concept sketches, run topology optimization, check design rules and handle the repetitive drawing work. The packaging trade-offs, the fit with neighbouring systems, defending it at review and taking final responsibility rest on a person." },
+    { "name": "Running a full-vehicle frontal crash test for regulatory approval", "how": "AI can help sort the regulatory clauses, predict simulation results and process test data. But a frontal crash test means setting up the dummies, the car and the measurement systems on site at the proving ground, and answering for the results and the certification filing, which rests mainly on people." },
+    { "name": "Solving an assembly problem on a prototype and closing it out", "how": "AI can suggest likely causes from the problem description, the CAD data and past cases, and keep the corrective-action record. Going to the assembly line to look at the real part, measure the gaps and agree a fix with process engineers and suppliers is done by people." },
+    { "name": "Verifying the safety of an electric vehicle's high-voltage system", "how": "AI can produce checklists against the national standards for EV safety and traction batteries, organize the test data and draft the report. The hands-on high-voltage and battery testing, judging the safety risks and signing the conclusion must be a person's responsibility." },
+    { "name": "Building a benchmarking proposal for a platform's architecture", "how": "AI can gather competitors' published specifications, build the benchmarking tables, compare dimensions and do a first analysis. Choosing the architectural direction and defining the key dimensions has to weigh company strategy and cost, and a person makes the call." },
+    { "name": "Running the weekly project meeting and closing out issues", "how": "AI can compile progress automatically, produce the minutes, track the status of issues and flag overdue items. A person only spot-checks, and steps in on the key issues that need coordination across departments." },
+    { "name": "Taking a new engineer through their first part design", "how": "AI can answer questions as a tool, provide design examples and check first drafts. But bringing someone on means a mentor beside them sharing experience, correcting course, building trust and judging how they are growing, which rests mainly on people." }
+  ],
+  "events": {
+    "e_first_feel": "After six months of proving-ground runs, one day going over a speed bump you blurt out: the rear rebounds too fast, like it's been kicked. The test driver glances at you and says: this time you've got it.",
+    "e_winter_test": "For the winter test campaign you spend two months on a frozen lake on the border with Russia, at minus thirty-something, calibrating the stability control system on the ice day after day as the cars slide their tails round lap after lap. When you get back, the skin on your face peels from frostbite.",
+    "e_summer_test": "For the summer hot-weather and high-altitude campaign you drive from the Flaming Mountains of Turpan all the way to the Qinghai plateau. The car's air conditioning has to hold out at fifty degrees, and on the plateau two steps leave you breathless.",
+    "e_data_wrong": "In one kinematics and compliance rig test you set the vehicle's coordinate system the wrong way round and the whole data set is void; it's another week before the rig is free again. Your supervisor says little, and has you copy out the operating procedure by hand.",
+    "e_sop": "The first car you helped tune goes into series production. At the end of the final assembly line, as the first car drives off, your father is in the crowd; he's retired, and came back specially to watch.",
+    "e_media_review": "A car magazine's review calls your new car's chassis solid but dull. The head of department plays the clip three times at the meeting and finally says: dull is our problem.",
+    "e_love": "At the base for the winter campaign you meet an engineer who works on battery thermal management, and the two of you share a meal of frozen-solid dumplings in a prefab beside the lake.",
+    "e_wedding": "The wedding is in Changchun, twenty tables, half of them colleagues from the carmaker. The MC asks you to tell how you met; you say it was at minus thirty, and the old hands in the audience laugh.",
+    "e_back": "Years of being shaken over the proving ground's rough roads, and of crawling under cars, have damaged your lower spine. The doctor at your health check asks whether you drive a taxi. You say: something like that.",
+    "e_new_force": "The upstart EV makers launch three cars a year; yours take three or four years each. The institute holds rally after rally on agile development, and the prototype test cycle is cut from eighteen months to eleven.",
+    "e_child": "Your child is born in winter. You're out on the frozen lake testing at the time, take a week's leave and rush back, and when you land, Changchun is under heavy snow too.",
+    "e_sim_tuning": "The institute brings in a virtual tuning platform: AI screens the damper valve-stack options in simulation first, and you only build the best three for real and put them on the car. A round of shim changes goes from a month to a week.",
+    "e_sim_miss": "A bushing design that looks perfect in simulation produces a droning resonance on the washboard once it's on the car; the model hadn't accounted for it. You and the veteran spend two days at the proving ground and end up adding a counterweight to a bracket.",
+    "e_recall_scare": "Several complaints come in of cracked rear control arms on a model already on sale, and the whole chassis department searches through the night. You spend three days in the lab doing fracture analysis on the failed parts, and trace it to a supplier's batch with faulty heat treatment.",
+    "e_mentor_retire": "The veteran who brought you into the trade retires. On his last day he folds up the old newspaper he laid his shims on and gives it to you, a column of figures still on it in his ballpoint.",
+    "e_ev_chassis": "The company turns to electric vehicles, and the chassis has to be learned all over again: the battery pack sits under the floor, the car is hundreds of kilos heavier, and every spring and anti-roll bar must be re-matched. At the meeting you say it's like learning to drive from scratch.",
+    "e_apprentice": "A new engineer you're training says, out at the proving ground, that's a second-order resonance, and is startled at himself. You don't praise him; you send him back to confirm it in the data, and the next day he comes with the curves.",
+    "e_parents": "Your mother is in the factory hospital, and every day after work you sit by her bed. The old woman in the next bed worked in your mother's workshop years ago, and the two of them spend an afternoon talking about the assembly line of their day.",
+    "e_owner_letter": "An owner writes to the company to say he has driven your car two hundred thousand kilometres over the northeast's worst roads without replacing a single chassis part. The head of department pins the letter on the test lab wall.",
+    "e_drive_by_wire": "Steer-by-wire and brake-by-wire chassis arrive: steering and braking no longer have a mechanical link, and the feel is set entirely in software. Sitting in the prototype changing parameters, you feel like you're tuning a computer's personality.",
+    "e_hearing_road": "Your ears aren't what they were; some high-pitched noises the young ones can hear, you have to press your ear to the body to catch. But when they hear one, they can't say where it comes from, and in the end it's still you who points to the spot.",
+    "e_old_car": "At the roadside you see a car you tuned years ago, its paint faded, still running. You follow it for two streets to watch it go over speed bumps; its rebound is as crisp as ever."
+  },
+  "choices": {
+    "c_feel_or_data": {
+      "title": "Learning feel from the veterans, or going deep into simulation",
+      "situation": "The department offers two paths: go out to the proving ground every day with the veterans, learning subjective evaluation and hands-on tuning, which takes ten years to make a good pair of ears; or join the simulation group, working the chassis out with models and data, faster promotion, where all the young ones crowd in.",
+      "options": [
+        { "label": "Go to the proving ground with the veterans", "result": "You cover more than ten thousand kilometres on the proving ground in a year, aching all over. At the year-end evaluation meeting, for the first time your score is only half a point off the veteran's." },
+        { "label": "Join the simulation group", "result": "You learn to build full-vehicle multibody models on the computer and can run twenty options in an afternoon. Only, every time you verify in the car, one sentence from the test driver can overturn a week of your calculations." }
+      ]
+    },
+    "c_vendor_sign": {
+      "title": "Do you sign off this batch of dampers",
+      "situation": "Two months before series production, a batch of dampers from the supplier has half its damping curves at the edge of tolerance and a few points slightly over. Redoing them means a six-week delay. The project manager says sign now, fix it after launch. The signature has to be yours.",
+      "options": [
+        { "label": "Refuse and have them redone", "result": "Production slips five weeks and the project manager names you in a meeting. Six months later another model draws complaints over something similar, and the head of department claps you on the shoulder in the corridor." },
+        { "label": "Sign with conditions", "result": "On the sign-off page you add a line: switch to the new valve stack within three months of launch, test report attached. The car launches on time, and for those three months you phone the supplier every week to chase it." }
+      ]
+    },
+    "c_senior_title": {
+      "title": "Applying for the Senior Engineer title",
+      "situation": "At a state firm, becoming a Senior Engineer / System Lead depends on your professional title as well as your projects. The Senior Engineer review wants papers, patents and projects you have led, and the defence falls right in the new car's winter test campaign.",
+      "options": [
+        { "label": "Write the paper beside the frozen lake", "result": "You calibrate on the ice by day and write in the prefab at night, on calibration methods for stability control on snow and ice. On defence day you fly back from the border, and the panel asks about exactly the set of parameters you tuned last week." },
+        { "label": "Not this year; get the car right first", "result": "You give the whole year to the winter campaign. When the car goes on sale, its snow-and-ice handling is rated best in its class. Your title comes two years late." }
+      ]
+    },
+    "c_shanghai": {
+      "title": "An upstart EV maker in Shanghai comes calling",
+      "situation": "The chassis chief at an upstart EV maker in Shanghai invites you over at one and a half times your pay. They launch three cars a year, he says, and lack people who can sit in a car on the proving ground and say what's wrong. But the pace there is fast, and so are the layoffs, and your parents and home are in Changchun.",
+      "options": [
+        { "label": "Go to Shanghai", "result": "At the Shanghai proving ground you tune two cars in a year, more than in five years in Changchun. At weekends you eat frozen dumplings alone in your rented flat and miss sweet-and-sour fried pork." },
+        { "label": "Stay in Changchun", "result": "You turn it down. The car you calibrated on the frozen lake that winter later becomes the institute's best seller." }
+      ]
+    },
+    "c_ev_switch": {
+      "title": "Moving to by-wire chassis",
+      "situation": "The institute has set up a new intelligent chassis department for steer-by-wire and brake-by-wire, where feel is defined in software: you'd need to write calibrations, understand control, and work with the AI algorithm team. Going means starting over; in traditional chassis, you are already one of the department's mainstays.",
+      "options": [
+        { "label": "Join the intelligent chassis department", "result": "For the first time you pull the steering-feel curve into the shape you want on a computer, get in the car, and the self-centring force on the wheel is just right. A young algorithm engineer asks you: this good, can it be written as a formula?" },
+        { "label": "Stay with traditional chassis", "result": "You stick with springs, dampers and bushings, tuning one car after another. When the new department can't decide on a feel, they still ask you to come for a drive." }
+      ]
+    },
+    "c_winter_family": {
+      "title": "Do you keep going to the winter tests",
+      "situation": "Your child is small, and every winter you spend two or three months at the frozen lake on the border. The head of department says you could ask to stay behind and analyse data in Changchun while younger engineers go. But the winter campaign is where chassis people grow most, and it's a hard requirement for becoming principal engineer.",
+      "options": [
+        { "label": "Keep going", "result": "Every night you video call your child from the prefab, and the child's first word is ice. The parameters you calibrated that winter are written into the company standard." },
+        { "label": "Stay in Changchun", "result": "You analyse the data the young ones send back from the lab and can collect your child from school in the evenings. Only, watching the cars slide their tails across the ice on video, your palms itch." }
+      ]
+    },
+    "c_architect": {
+      "title": "Competing for Principal Engineer",
+      "situation": "The new platform needs a Principal Engineer / Architecture Engineer for the chassis, responsible for benchmarking and the architecture of the whole-vehicle platform and for the development plans of dozens of people. You must present a platform proposal, and your old head of department sits on the panel.",
+      "options": [
+        { "label": "Put yourself forward", "result": "You speak for forty minutes, and your last slide is the owner's letter. The panel asks what worries you most. You say: that in our hurry, we'll forget the roads of the northeast." },
+        { "label": "Leave it to the young", "result": "You recommend an engineer you trained and stay out on the proving ground. In his first week in the post, he comes out to the proving ground and sits with you all afternoon." }
+      ]
+    },
+    "c_supplier_job": {
+      "title": "Going to a parts supplier",
+      "situation": "A joint-venture damper maker wants you as its technical director, with better pay: its products are sold to several carmakers, and it lacks someone who understands the whole vehicle. But there, you'd go from the one who finds fault with others to the one others find fault with.",
+      "options": [
+        { "label": "Become technical director", "result": "Your first move is to set up a subjective evaluation team at the plant just like a carmaker's, and every new valve stack has to go on a car for a drive.", "end": "You became technical director at a damper maker whose products ride on several brands' cars. When you see a car cross a speed bump at the roadside, you still count its rebounds without meaning to." },
+        { "label": "Stay at the carmaker", "result": "You say you'd rather tune whole cars. Their boss laughs: then go easy on our samples from now on." }
+      ]
+    },
+    "c_quality": {
+      "title": "Moving to quality",
+      "situation": "The company's quality department needs someone who knows both design and testing to analyse complaints and drive improvements on cars already on sale: no more getting shaken on the proving ground, nine to five. The head of department says a back your age has earned a rest.",
+      "options": [
+        { "label": "Go to the quality department", "result": "You turn your years of notes on noises and faults from the proving ground into a handbook, and the quality department calls it the stethoscope book.", "end": "You moved to the quality department, handling complaints and improvements on cars already on sale. Whenever an owner reports a chassis noise, you still go out and take a ride yourself." },
+        { "label": "Stay in chassis", "result": "You say your back can still take it. The next day you climb into the prototype's passenger seat as usual and fasten your seatbelt." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last visit to the proving ground you sit in the driver's seat and do a lap of the cobblestones yourself. The body rises and falls over the stones, and you listen to the rear suspension without scoring it. When you get out a young engineer hands you the evaluation sheet; in the last column you write an eight, then change it to a nine. On the bus back to the compound, outside the window are the factory buildings your father's generation built, their chimneys long since cold.",
+    "burnout": "That winter, calibrating on the frozen lake, your back hurts so badly you can't get out of the car, and colleagues help you back to the prefab. The doctor says your spine can't take any more shaking. You transfer to the institute's standards office and spend your days revising documents against the regulations. When a prototype drives past outside, you can hear which damper needs new shims."
+  },
+  "stages": [
+    "Your work is under the cars and out on the proving ground: stripping dampers with the veteran, changing shims and bushings, fixing accelerometers to the prototypes and running the wiring; mounting cars on the kinematics and compliance rig and setting the coordinates. On the proving ground you ride in the passenger seat scoring the evaluation sheet, then load the data into the computer to compare with the last version. You write down whatever the supervisor and test driver say; your scores on the sheet are for reference only.",
+    "An assembly is yours now, the rear suspension or the steering, from concept to samples to verification in the car. You agree valve stacks and bushing stiffness with suppliers' engineers, drive the subjective evaluations yourself on the proving ground, write the tuning reports and explain at project reviews why you changed what you changed. Your scores count now, and suppliers' samples need your signature before they go on a car.",
+    "You own a whole chassis system: how to match suspension, steering and brakes, whether to fit air suspension, how to pass the regulations, all from your proposals. You plan tests with a few engineers, hold coordination meetings with packaging, body and electrical, and negotiate prices and delivery with suppliers. On the winter campaign and the summer heat-and-altitude campaign, you lead the team.",
+    "You run the chassis for a whole platform: benchmarking competitors, setting the architecture, planning development, checking the progress of dozens of people every week. You argue milestones with the programme director, cost with purchasing and standards with quality, and you speak last at every review. You rarely strip a damper yourself now, but before every car goes into production, you drive a lap in it personally.",
+    "You set the technology roadmap: what suspension the next-generation platform uses, when by-wire chassis come in, what to build in-house and what to buy. You vote on the company's technical committee, speak at industry conferences, lead the drafting of standards and review every platform's proposals. When a young principal engineer can't make up his mind, he drives the prototype to the foot of your building and asks you to take a ride."
+  ],
+  "work": [
+    "The veteran has you bond strain gauges to the prototype's four dampers. When you finish he flicks them with a finger and says number three is crooked, the signal will drift. You peel it off and bond it again; the second time he nods.",
+    "Before a kinematics and compliance rig test you measure the prototype's wheel-centre coordinates one by one as the procedure says and enter them in the system. After the run you spend the afternoon comparing the roll stiffness curve with the design value: four percent off.",
+    "On the proving ground the test driver takes the speed bump three times running and asks whether the back goes thud or clunk. You say thud. He says then it's the bump stop; go back and check.",
+    "You fit three bushings of different hardness to the rear suspension and do twenty laps of the twist track on each. The second gives the best data, but driving it feels a little wooden to you, and in the end you choose the third.",
+    "The damper samples from the supplier show compression damping well above spec on the force-velocity plot. On the phone you read the curves out to their engineer one by one, and he says he'll retune the valving tomorrow.",
+    "At a project review you explain why the front anti-roll bar is two millimetres thicker. The packaging engineer asks whether it will hit the subframe. You turn to page twelve, where the clearance check is.",
+    "For the new car you compare two options, air suspension and conventional springs, with cost, weight and tuning time in one table. The programme director looks at it for a long time, chooses springs, and tells you to save air suspension for the next generation.",
+    "You lead the winter campaign: twelve people and six cars on the frozen lake for fifty days. On the last day you have everyone wash the cars before loading them up; you'll need them again next year.",
+    "A new braking regulation takes effect next year. With two engineers you check the current design against every clause, find two places that don't comply, and fix them six months ahead.",
+    "At the new platform's benchmarking session, three competitor cars are taken apart and their parts fill a whole workshop. You crouch for a long time in front of one rival's rear subframe and say: we can't copy this bushing layout; we'll have to think of our own.",
+    "Programme milestones clash with the test schedule, and the programme director wants to cut a round of durability testing. At the meeting you produce the complaint data from the last time a test was cut, and in the end only half of it goes.",
+    "A young system lead takes a team on the summer campaign for the first time and runs into brake fade from heat on the plateau. You listen to him on the phone for half an hour and ask only one question: how many minutes did you cool down, per the procedure?",
+    "At the technical committee someone argues for going fully by-wire on the next-generation platform. You say yes, but first run one car through a full two hundred thousand kilometres of durability, and only then roll it out.",
+    "You lead the redrafting of an industry standard on test methods for stability control on snow and ice. You lay out more than ten years of winter campaign data and go through it line by line with the drafting group.",
+    "A principal engineer drives a prototype to the institute and says he has tuned it for three months and something still feels off. You drive a lap, get out and say: the steering returns to centre too fast. It doesn't feel like this car."
+  ],
+  "past": [
+    "You went to middle school in Siping and spent every holiday at your grandfather's in Changchun. Your grandfather was a top-grade fitter at the carmaker, and once took you into the plant to see the final assembly line; you remembered the sound of the engine as a car drove off the line.",
+    "In high school you were hooked on racing games and spent your New Year money on a steering-wheel controller. Your father said better to learn this than play it, and bought you an old copy of a textbook on how cars are built.",
+    "Through the gaokao (college entrance exam) you got into vehicle engineering at a university in Changchun. On enrolment day your parents saw you off, and your mother said: that's three generations of our family working with cars.",
+    "In your third year you joined the university's Formula Student team, in charge of suspension. In competition a tie rod snapped as your car took a corner, and you crouched in the pit area welding for an hour.",
+    "You stayed on, exempt from the entrance exam, for a master's in vehicle engineering, modelling shock absorbers. You took apart dozens of dampers in the lab, and your supervisor said you'd taken apart more than you'd calculated.",
+    "At graduation you had two offers, from an upstart EV maker in Shanghai and the old carmaker in Changchun. You chose Changchun. Your father said nothing; your mother said he was happy all night."
+  ],
+  "late": {
+    "pension_note": "Estimate: as a state-owned carmaker's employee you pay into the urban employees' pension plus an enterprise annuity on full salary, never broken, so in retirement you will draw roughly 60% of final monthly pay.",
+    "scenes": [
+      "In your first winter of retirement you don't go to the frozen lake. On the day of the first heavy snow you stand at the window of the compound for a long time, watching how the cars outside pull away and brake.",
+      "Your old university's Formula Student team asks you to be an adviser. You go once a week and crouch under the car looking at the students' suspension, the way the veteran once looked at yours.",
+      "You drive your grandchild to Jingyuetan in a car you tuned years ago. Going over a speed bump, the child in the back says: this car doesn't bounce. You say nothing, and smile.",
+      "In your first year in the standards office you leave on time every day, and your back slowly stops hurting. Only, when you hear a prototype downstairs during a meeting, you go to the window to look.",
+      "A young engineer brings you a tuning report to sign. You read the data and have him help you downstairs for a ride. You don't drive; you sit in the passenger seat and say three sentences.",
+      "The factory's old staff compound is being renovated, and you help the neighbourhood office sort old photos. In one, your grandfather stands at the end of the final assembly line, a newly built car behind him.",
+      "For the first few months in the new place you still wake at ten to seven and reach for your work jacket, then remember there's no bus to catch.",
+      "Your old head of department invites you back to the institute for a review. You sit at the back, and when the young principal engineer finishes his proposal, he turns to look at you.",
+      "At a motor show you see the new generation of a car you once tuned. You get in and rock the steering wheel, and feel they have tuned it better.",
+      "Screening options, simulation, data analysis: AI does all of that now. When people talk about chassis engineers, they mean the person who can sit in a car and say what's wrong.",
+      "The old boiler house at the compound gate is pulled down and winter heating comes from a central plant now. Sometimes you still think of that white steam, and the morning bus packed with work jackets.",
+      "You don't drive any more. Riding in the car your child drives, over a rough stretch of road, you still tilt your head to listen to the rear suspension."
+    ],
+    "closing": {
+      "retire": "Many years later, one winter morning, heavy snow falls on Changchun. You stand at the window watching the first car ease out of the compound, its body sinking gently into the snow and springing steadily back. You nod.",
+      "burnout": "Many years later you walk slowly beside the lake at Jingyuetan, and a car passes you, rolling over a stone. Hearing that sound, you think of the old newspaper the veteran spread on the floor.",
+      "end": "Many years later, sorting a drawer, you find the veteran's old newspaper, folded into a neat square, the column of ballpoint figures faded. You make them out one by one: the thicknesses of the shims."
+    }
+  }
+}

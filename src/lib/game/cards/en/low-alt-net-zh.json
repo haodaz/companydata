@@ -1,0 +1,197 @@
+{
+ "id": "low-alt-net-zh",
+ "occupation": "Low-Altitude Smart Network System Administrator",
+ "role": "Low-Altitude Smart Network System Administrator",
+ "headline": "A communications engineering graduate who looked after cell towers for a carrier, then took a drone pilot's license into Zhuhai's low-altitude operations center, working shifts at the big screen: approving flight filings, handling airspace incursions, sending people out to fix base stations on the islands",
+ "unit": "The low-altitude operations center of a state-owned low-altitude operator in Zhuhai",
+ "unit_type": "City low-altitude operations platform (state-owned)",
+ "city": "Zhuhai",
+ "city_tier": "Second-tier city",
+ "education": "Bachelor's degree (communications engineering)",
+ "level": "You hold a visual-line-of-sight drone pilot's license and a communications network operations certificate, and can run a console on your own: reviewing flight filings, handling alerts, pushing out geofences. At airspace coordination meetings you still only sit in the back row taking notes.",
+ "intro": "You've worked two years of shifts at Zhuhai's low-altitude operations center, going from a duty operator watching alerts through the night to a system administrator who can run a console alone. On the big screen is the whole city's low-altitude airspace: delivery drones heading out to the islands, aerial photography over Lovers' Road, the red ring around the airport's clearance zone, and dozens of integrated sensing-and-communication base stations scattered across hilltops and islands. From today, which aircraft gets cleared and which gets stopped, it's your name signed in the handover book.",
+ "salary_note": "Estimate: the occupation library has no pay data for this trade, so each level's monthly pay is estimated from what low-altitude platforms and carriers commonly advertise for related posts. Pay at Zhuhai's state-owned platform is close to the national average, with shift and night allowances and full social insurance and housing fund contributions.",
+ "facts": [
+  { "label": "Low-Altitude Smart Network System Administrator (current level)", "value": "2-4 years, ¥8,000–13,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Low-Altitude Operations Monitoring Supervisor (4-7 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Going out to a base station that has dropped offline, finding the fault and bringing it back", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Working a shift: reviewing flight filings and monitoring operations", "source": "AI exposure" },
+  { "label": "Open positions", "value": "7 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Cycling to the center along Lovers' Road, fog rising off the sea. On your phone you go through the night shift's handover notes: two incursion alerts, both false alarms.",
+  "Shift handover. The night-shift colleague points at the big screen and says the base station on Guishan Island dropped out twice before dawn. You sign the handover book and take the console.",
+  "Reviewing flight filings: a logistics company with thirty sorties out to the Wanshan Islands, a wedding company wanting aerial footage on Yeli Island. You check each route, altitude and geofence one by one.",
+  "An alert: a target hovering at the edge of the airport clearance zone, and the system can't match it to any registration. You call the local police station, and ten minutes later they call back: an old man flying it, and they've talked him into bringing it down.",
+  "Boxed lunch in the duty room, eyes still on the big screen. The typhoon warning has gone up to blue, so you mark all of tomorrow's filings \"may be canceled\" in advance.",
+  "A notice comes in: a temporary no-fly zone near the border checkpoint next week. You convert the document into geofence data, check every point of the boundary with a colleague, and only then push it out.",
+  "The Guishan Island base station drops offline again. From the logs it looks like a power fault, and you arrange with maintenance to take the first ferry out tomorrow morning.",
+  "End of shift. You write the day into the handover book line by line, and the last line: Guishan Island base station, going out tomorrow morning, remember the spare power module."
+ ],
+ "ladder": [
+  { "title": "Low-Altitude Operations Duty Officer / Network Operations Technician", "stage": "Entry", "focus": "Watch the platform on shift, handle basic alerts, learn the regulations and airspace rules, and get your license." },
+  { "title": "Low-Altitude Smart Network System Administrator", "stage": "Junior", "focus": "Independently maintain the communications, navigation and surveillance systems and the regulatory platform, and handle abnormal flights." },
+  { "title": "Low-Altitude Operations Monitoring Supervisor", "stage": "Intermediate", "focus": "Coordinate airspace and emergency response, and manage the duty team." },
+  { "title": "Technical Lead, Low-Altitude Smart Network", "stage": "Senior", "focus": "Plan low-altitude infrastructure and platform upgrades." },
+  { "title": "Head of Low-Altitude Operations Center", "stage": "Lead", "focus": "Regional low-altitude operations management and liaison with government and business." }
+ ],
+ "ai_tasks": [
+  { "name": "Working a shift: reviewing flight filings and monitoring operations", "how": "AI can screen filings against deadlines and rules, automatically check for conflicts between airspace and routes, watch flight tracks and push alerts out by severity. A person handles filings with doubts or special circumstances, answers for what gets cleared, and makes the shift handover clear." },
+  { "name": "Handling an alert for a drone intruding into controlled airspace", "how": "AI can automatically pull up the target's registration, track and history, suggest who it is and what to do, and draft the notification. A person calls the operator, judges whether it's a false alarm or a deliberate intrusion, and decides whether to notify the police." },
+  { "name": "Going out to a base station that has dropped offline, finding the fault and bringing it back", "how": "From the alarm logs AI can judge whether it's likely a power or transmission fault and plan the inspection route and spare-parts list. Going to the site to look at the equipment, test the power, swap modules and restore the link still takes a person's hands." },
+  { "name": "Updating a batch of geofence data", "how": "AI can turn no-fly zone documents into properly formatted geofence data, check formats and boundary conflicts automatically, and generate a verification checklist for after it's pushed out. A person confirms the no-fly area and effective times match the notice, and signs off on what goes out." },
+  { "name": "Doing the monthly operations analysis and proposing improvements", "how": "AI can automatically compile route traffic, alerts and base station availability, produce charts and a draft analysis, and suggest leads on filling coverage gaps. A person only spot-checks how the data was counted and makes the final call on whether the suggestions are workable." },
+  { "name": "Organizing an emergency drill for an out-of-control drone", "how": "AI can help write the scenario script, set up the drill and organize the records afterwards. Getting several agencies on site, commanding on the ground, locating and dealing with the crash point and coordinating on the spot depend mainly on people." }
+ ],
+ "events": {
+  "e_first_case": "You handle your first real incursion on your own: a drone has flown into the airport clearance zone. You follow procedure, contacting the operator, notifying, logging, and it turns out to be a beginner pilot whose positioning drifted.",
+  "e_airshow": "During air show week, the skies over the whole city are under temporary control, with hundreds of drones flying in formation. You work seven days straight at the center, and when you get home your child doesn't recognize your stubble.",
+  "e_typhoon": "A typhoon passes through, three island base stations go offline, and that patch of sea on the big screen goes blank. You watch from the center all night, and the next day, as soon as the wind drops, you take the boat out with maintenance.",
+  "e_island_lunch": "The drone route delivering medicine and parcels to Wailingding Island opens. As the first one lands on the island's pier, you watch the little dot on the big screen come to a stop, and your coworkers start clapping.",
+  "e_birds": "Over twenty alerts in one night, and you check each one: all seabirds. At the morning handover your eyes are too dry to keep open.",
+  "e_ai_triage": "AI alert triage goes live. Seabirds, kites and balloons are filtered out first, and the false alarms that reach you drop by seventy percent. The night shift can finally breathe.",
+  "e_ai_miss": "The AI tags a target as \"a filed delivery drone\" and clears it. You take one more look at the track: the altitude is wrong, the speed is wrong. It's a different aircraft, unfiled. You pick up the phone.",
+  "e_auto_approve": "Routine flight filings are handed over to AI for automatic clearance, and each shift now looks only at the dozen or so with doubts. The consoles go from four to two, and the extra people are moved to base station maintenance.",
+  "e_nights": "The rota collides with a colleague's leave and you end up working three night shifts in a row. By day you can't sleep even with the curtains drawn; when the renovation drill starts up downstairs, you lie with your eyes open waiting for dark.",
+  "e_new_rules": "New regulations on drone flight management come out and the filing process is overhauled. You read the whole text overnight and write a one-page Q&A for pilots, which the center posts on its official account.",
+  "e_border": "An aerial photography drone drifts toward the no-fly zone by the border checkpoint. You call the pilot who filed it, he pulls the aircraft back within thirty seconds, and keeps apologizing down the line.",
+  "e_drill": "You organize an emergency drill for an out-of-control drone, with civil aviation, police, firefighters and the operator all there. In the drill the aircraft comes down on the designated lawn, and you call over the radio: done.",
+  "e_love": "A dispatcher at the logistics company is always the one on the phone with you whenever a filing raises questions. Once, finishing after midnight, they said they'd buy you a late-night snack next time, and later they really did: raw oysters in Wanzai.",
+  "e_wedding": "You hold your wedding in Zhuhai, and the wedding company wants to film it by drone. A colleague reviews the filing and posts in the group chat: approved, don't go over the ceiling.",
+  "e_baby": "The day your child is born you're on night shift, and only get to the hospital after handover. Standing outside the nursery looking at a row of little cots, what you're thinking about is one entry in the handover book you didn't finish.",
+  "e_house": "You buy a three-bedroom flat in Jinwan, the down payment pooled from both families, the balcony facing the airport runway. Whenever a plane takes off or lands, you can't help checking its altitude.",
+  "e_eyes": "Years of staring at the big screen, and your eyes give out first; the doctor says dry eye. Your drawer fills up with a row of artificial tears, three doses a shift.",
+  "e_parent": "A call from home: your father slipped by the fish pond and broke his leg. You swap two shifts and go back to Jiangmen, and at night in the hospital corridor you watch the center's alert group on your phone.",
+  "e_mentee": "A duty officer you trained handles a drone that went out of control mid-formation during air show week, bringing it down in the designated area of the sea. When he hands you the handover book at the end of the shift, his hands are still shaking.",
+  "e_award": "The project you led to fill coverage gaps across the islands passes acceptance, and the expert from the province says it's the map with the fewest blind spots they've ever seen.",
+  "e_young": "Every duty officer hired this year has a drone license, and some are aerial photography champions. They fly better than you, but the first time they take a call from the police station, they can barely get the words out."
+ },
+ "choices": {
+  "c_license": {
+   "title": "Get a beyond-visual-line-of-sight license, aiming for Operations Monitoring Supervisor",
+   "situation": "The center director says that to move up to Low-Altitude Operations Monitoring Supervisor you need to understand swarm control and coordinate airspace, and a beyond-visual-line-of-sight drone license and the senior communications network operations certificate would both help. The BVLOS course means a month's training at a base in Guangzhou, and someone would have to cover your shifts.",
+   "options": [
+    { "label": "Go for the BVLOS license", "result": "You flew for a month at the Guangzhou training ground, and for the first time used a ground station to fly an aircraft out of sight, round a mountain and back. The day you got the license you posted a screenshot of the flight track." },
+    { "label": "Not now, keep your console", "result": "You stayed at the center and didn't miss a single night shift, and your handover notes were the clearest in the center. The first person to sit in the front row at the airspace coordination meeting was the colleague who went for the license." }
+   ]
+  },
+  "c_shenzhen": {
+   "title": "Join a low-altitude platform company in Shenzhen",
+   "situation": "A Shenzhen company running a low-altitude logistics platform comes to poach people, offering a quarter more pay, thousands of sorties a day, rules and systems being built from nothing. But the pace is fast and the overtime heavy, and you'd have to leave Zhuhai's sea and islands behind.",
+   "options": [
+    { "label": "Go to Shenzhen", "result": "In the Shenzhen dispatch hall you saw more sorties in a day than Zhuhai has in a month. In your second year you helped write their alert-severity rules, and often spent weekends at the office." },
+    { "label": "Stay in Zhuhai", "result": "You stayed, still cycling to work along Lovers' Road. A colleague who went to Shenzhen sends a photo of the hall: a whole wall of screens, dense with flight tracks." }
+   ]
+  },
+  "c_logistics": {
+   "title": "Move to a logistics company as a drone pilot",
+   "situation": "The logistics company you often work through filings with needs a lead pilot to run its island routes: choosing landing points, scheduling sorties, going out yourself when something breaks. Pay is by the sortie and higher than now, no more night shifts, but you'd spend most of the year on boats and islands.",
+   "options": [
+    { "label": "Become a pilot", "result": "You handed over your console, took your license to the logistics company, and on the first day went out by boat to Guishan Island.", "end": "You stand on the landing pad by an island pier watching a delivery drone carry a box of medicine toward a more distant island. On the phone the duty officer at the center says: filing received, cleared. The voice is the new hire you once trained." },
+    { "label": "Stay at the center", "result": "You thanked them and said you still liked seeing the whole map. That afternoon on the big screen you watched their drones land one after another, without a single hitch." }
+   ]
+  },
+  "c_ai_flow": {
+   "title": "Design the human-machine shift workflow or not",
+   "situation": "With AI alert triage and automatic clearance in place, the center needs someone to redesign the shift workflow: what goes to AI, what a person must look at, how to catch it when AI gets it wrong. It means meetings by day and data by night, less shift allowance, and if it goes wrong and something happens, it's on you.",
+   "options": [
+    { "label": "Take on the design", "result": "You set one rule: any target near the airport clearance zone or the border checkpoint gets a human look, however confident the AI. Six months later, the center hadn't missed a single one." },
+    { "label": "No, keep your console", "result": "You stayed at your console and have seen every strange alert there is. Someone else set the new workflow, and you follow it, now and then writing a line in the handover book: the AI got this one wrong." }
+   ]
+  },
+  "c_supervisor": {
+   "title": "Apply for Low-Altitude Operations Monitoring Supervisor",
+   "situation": "The center is expanding to two duty teams and promoting a system administrator to Low-Altitude Operations Monitoring Supervisor, responsible for the rota, training new staff, attending airspace coordination meetings and commanding on site when something big happens. Applicants submit a revised emergency plan and run a tabletop exercise in front of management.",
+   "options": [
+    { "label": "Apply", "result": "You turned two years of incursions and loss-of-control cases into a revised emergency plan. During the exercise, management added a twist on the spot: a typhoon during the air show. You thought for ten seconds, then began, point by point." },
+    { "label": "Don't apply, just work good shifts", "result": "The new supervisor transferred in from a carrier, and in the first week called you in to ask why those island base stations kept dropping out." }
+   ]
+  },
+  "c_atc": {
+   "title": "Move to air traffic control as an operations coordinator",
+   "situation": "Civil aviation air traffic control is hiring operations coordinators who understand drones and the low-altitude network, to bridge the city's low-altitude platform and the airspace used by crewed aircraft. It's a different system, with stricter rules and slower promotion, but it's somewhere you've always wanted to see.",
+   "options": [
+    { "label": "Go to air traffic control", "result": "You passed the assessment, changed into a uniform, and on the first day spent the whole shift at the coordination desk listening to air-ground radio.", "end": "You sit at the coordination desk in air traffic control, flights on one side of the screen and the city's low-altitude network on the other. The low-altitude duty officer calls to report a delivery drone needing to cross, and you recognize whose voice it is." },
+    { "label": "Stay at the low-altitude center", "result": "You said you'd do a few more years. That weekend you spent an afternoon on your balcony in Jinwan watching planes take off and land, counting their altitudes one by one." }
+   ]
+  },
+  "c_tech": {
+   "title": "Apply for Technical Lead, Low-Altitude Smart Network",
+   "situation": "The city wants the low-altitude network extended from the urban core to every island and mountain area, and the center needs a Technical Lead for the Low-Altitude Smart Network to own base station planning, platform upgrades and acceptance. You're one of the candidates; the other is an engineer poached from an equipment maker, who knows radar but has never worked a single shift.",
+   "options": [
+    { "label": "Apply and write a plan", "result": "You turned years of base station outage records into a heat map of the whole city and put it on the first page of the plan. At the panel someone asked why. Because I've been out to those islands, you said." },
+    { "label": "Let the equipment maker's engineer have it", "result": "You go on leading your team. The new technical lead's first act is to take the boat out to Guishan Island with you." }
+   ]
+  },
+  "c_head": {
+   "title": "Apply for Head of Low-Altitude Operations Center",
+   "situation": "The old director is retiring, and the company is choosing a Head of Low-Altitude Operations Center to run low-altitude operations across the city and deal with the city government, civil aviation, police and businesses. This level needs more than technical skill; it needs the ability to win over a roomful of people in a meeting.",
+   "options": [
+    { "label": "Apply", "result": "You wrote a three-year operations plan whose last page held a single sentence: first make sure nothing goes wrong, then talk about how many more flights." },
+    { "label": "Don't apply, look after the technology", "result": "The new director was transferred in from another part of the company. The first time he came to the center he stood in front of the big screen for half an hour, and the first thing he asked you was: what do you fear most?" }
+   ]
+  },
+  "c_trainer": {
+   "title": "Stop working shifts and teach new staff at the training base",
+   "situation": "You're past fifty, a night shift takes three days to recover from, and you're putting in eye drops five times a day. The company says it could move you to the low-altitude training base as an instructor, teaching duty officers to review filings and handle alerts, no more shifts, and no allowance.",
+   "options": [
+    { "label": "Go to the training base", "result": "In the classroom you set up a big screen just like the center's and played new staff the alert recordings you'd collected over the years. What you said most was: altitude first, then speed." },
+    { "label": "Stay at the center", "result": "You stayed at the center, night shifts and all. The young ones call you \"Old Console,\" and whenever something strange pops up on the big screen, they turn round to look at you first." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last shift you didn't take a console; you stood behind the big screen watching the young ones work. At handover you wrote the last line in the book: nothing unusual today. When you stepped out it was just getting dark, and over Lovers' Road an aerial photography drone with its little light on was drifting slowly out toward the sea. You knew it had been filed.",
+  "burnout": "That year, after the air show, you came out of the center after a night shift with the world going dark in waves, and sat by the roadside for a long time. The doctor told you to rest, and the company moved you to the equipment ledger and base station inspection schedules. You leave on time every day, and now and then, passing the center's windows, you see the big screen inside still lit."
+ },
+ "stages": [
+  "You can run a console on your own now: reviewing flight filings, watching tracks and alerts, checking geofences, and when a base station drops offline, reading the logs first before sending someone out to the island. In your hands are the low-altitude regulatory platform, a big screen split into a dozen panels, a dedicated phone line and a handover book. You deal most with pilots, logistics companies' dispatchers and the local police stations: which aircraft gets cleared and which gets stopped, you're the one who signs.",
+  "You run a duty team: the rota, training new staff, reviewing the handover book. Before the air show, a typhoon or a major event, you go to the airspace coordination meetings and go through times and altitudes item by item with civil aviation, the police and the operators; when there's an incursion or a loss of control, you command on site and write the report afterwards. You rarely take a console yourself now, but every abnormal alert ends up needing your nod.",
+  "On your desk is the plan for the whole city's low-altitude network: where to add base stations, where the blind spots are, what the next platform version needs. You meet carriers, equipment makers and platform developers to review designs, set targets and run acceptance; before a new route opens, you take people out to islands and hilltops to test the signal. When something big and technical happens in the duty room, they still call you first.",
+  "The city's low-altitude operations are yours to run: several duty teams, dozens of base stations, over a thousand routes. You negotiate rules and partnerships with city departments, civil aviation, the police and businesses, and speak at meetings about how Zhuhai's low skies should be flown; the budget, the headcount, whether to open a new line of business, you sign off on in the end. Now and then, late at night, you go back to the center and stand in front of the big screen for a while."
+ ],
+ "work": [
+  "A logistics company has filed thirty sorties, and two of the routes graze the edge of a newly drawn no-fly zone. You call their dispatcher and have them raise the altitude and file again.",
+  "The Guishan Island base station has dropped out again. You take the early ferry out with maintenance, test the power at the foot of the tower, swap a power module, and the link comes back at 10:07.",
+  "The night-shift colleague says one alert was never closed. You replay the target's track three times and confirm it landed on the deck of a fishing boat.",
+  "At the airspace coordination meeting the week before the air show, you lay out the time slots for displays, deliveries and aerial filming in one table and go through it with civil aviation until ten at night.",
+  "A new duty officer is handling his first incursion, his voice shaking. You stand behind him without taking the phone, and just write on his notepad the next three questions he should ask.",
+  "A delivery drone loses contact over the sea. You pull up the last ten seconds of its track, work out where it came down, and get the maritime authority's boat out to look; two hours later they find it by the rocks.",
+  "You take a team out to the most distant of the Wanshan Islands to test the signal, carrying a test terminal across the hilltop all afternoon, and mark three blind spots.",
+  "The platform developer delivers a new version, and in acceptance testing you have it handle two hundred targets at once. At the hundred-and-sixtieth it freezes. You don't sign.",
+  "A carrier wants to put a base station on the roof of a primary school. You go and look at the site, and move it to the hillside next door.",
+  "At the city's meeting on the low-altitude economy you present a single page: how many sorties last year, how many alerts, how many handled, and not one incident.",
+  "A food delivery platform wants to start drone delivery in the old town. You agree to a trial of three routes, on condition that someone patrols beneath every one.",
+  "At year end you sign off the budget: twelve more base stations, six more duty officers, and one fewer big screen nobody would use."
+ ],
+ "past": [
+  "You went to high school in a county town in Jiangmen, Guangdong, and your family had a few fish ponds out in the countryside. You saved up for an entry-level camera drone, and at weekends flew it over the ponds to show your father which one's water had gone the wrong color.",
+  "After the gaokao (college entrance exam) you got into communications engineering at a university in Guangzhou. Your father said communications was good, you'd fix phone signals one day, and you smiled and didn't explain.",
+  "In your third year you got your visual-line-of-sight civil drone pilot's license and took aerial filming jobs at weddings and housing developments on weekends, earning your living costs and a lot of experience with flight filings.",
+  "After graduating you joined a carrier in Zhuhai doing network operations, looking after dozens of base stations. The tallest tower you climbed was sixty meters, and you kept watch over equipment rooms through typhoons.",
+  "Zhuhai set up a low-altitude operating company and was hiring operations duty officers. On the strength of your license and your base station experience you moved over, starting on night shifts watching alerts.",
+  "After two years of shifts you passed the console assessment and became a system administrator who could run a console alone. The first time you signed your own name in the handover book, you wrote it very slowly."
+ ],
+ "late": {
+  "pension_note": "Estimate: the state-owned platform pays the full contribution into Zhuhai's basic pension for enterprise employees, plus an enterprise annuity, so after retirement you get about half your final monthly pay.",
+  "scenes": [
+   "In your first month of retirement you still wake at half past seven and reach without thinking for your phone to check the alert group. You left the group long ago, so you get up and walk along Lovers' Road, looking up at the sky again and again.",
+   "The training base asks you back to teach a class. You play the new staff an alert recording from twenty years ago and ask them: seabird or aircraft?",
+   "Your pension and annuity give the two of you a comfortable life. You take the boat out to Guishan Island once, and stand a while beneath that tower. It's still there; the modules have been replaced several generations over.",
+   "Zhuhai's skies are full of drones now, delivering food, delivering medicine, patrolling the sea. From your balcony you watch them come and go, and not one collides with another.",
+   "You manage the equipment ledger and inspection schedules and leave on time every day, no more night shifts. Your eyes are a little better, but at eight every evening you still glance at the clock, as if for handover.",
+   "A young duty officer brings you an alert the AI can't classify. You glance at the track and say: altitude first, then speed, then call the police station.",
+   "At retirement age you do the paperwork. You go back to your hometown in Jiangmen for a while and use a drone to check the neighbors' fish ponds, and before flying, you still file on your phone first.",
+   "For the first year after leaving the center, whenever there's a typhoon warning your mind still goes to whether those island base stations will hold.",
+   "Now and then you pass the center's building, the duty room lights on all night. The security guard still recognizes you, and nods.",
+   "A duty officer you trained becomes head of the center, and says in a meeting: my first teacher always said, however confident the AI is, anything near the airport gets a human look.",
+   "Later, filing, triage and clearance were all handed to AI, and the alerts on the big screen fell by more than half. But when an island base station goes down in a typhoon, someone still has to take the first boat out.",
+   "Your grandson asks what you used to do. You say you watched the sky. He asks if you watched the stars. You say you watched the little lights that fly, and made sure they didn't bump into each other."
+  ],
+  "closing": {
+   "retire": "One evening many years later, you sit by the sea on Yeli Island, drone after drone with their little lights on flying out toward the islands. You check each one's altitude in turn. All correct, so you let yourself just look at the sea.",
+   "burnout": "Many years later, on your balcony, you fly a kite for your grandson. Halfway through letting out the string you stop and check for power lines and aircraft, and only then let it climb.",
+   "end": "Many years later, in a drawer, you come across your very first handover book, the first page carrying the name you wrote at twenty-five, stroke by careful stroke. You leaf through a few pages, then close it and put it back."
+  }
+ }
+}

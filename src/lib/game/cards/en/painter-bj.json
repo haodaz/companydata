@@ -1,0 +1,160 @@
+{
+ "id": "painter-bj",
+ "occupation": "Painter",
+ "role": "Young Oil Painter in Songzhuang",
+ "headline": "Came to an art-exam cram studio in Songzhuang at seventeen, got into an art academy's oil painting department, and after graduating came straight back to Songzhuang: a young oil painter in a rented farmhouse courtyard in Xiaobao village who stretches canvases, corrects art-exam students' drawings by day, and works at night on a series of paintings about the canal",
+ "unit": "A rented farmhouse courtyard studio in Xiaobao village, Songzhuang, Tongzhou, Beijing (independent work, plus teaching at an art-exam cram studio)",
+ "unit_type": "Freelance painter",
+ "city": "Beijing (Songzhuang, Tongzhou)",
+ "city_tier": "First-tier city",
+ "education": "Bachelor's degree in oil painting",
+ "level": "Your drawing and color are solid, and you can see at a glance what's wrong with an exam student's work. You've been in two group shows and sold a few small paintings. But your own painting hasn't yet found a look anyone would recognize as yours, the series of ten-plus canvases is only half done, and almost no gallery or collector knows your name.",
+ "intro": "At seventeen you came to an art-exam cram studio in Songzhuang for a winter of intensive training, sleeping in bunk beds in the studio, and learned for the first time that east of Beijing there was a whole village of painters. You got into an art academy, finished oil painting, and came back here, renting a farmhouse courtyard in Xiaobao village. As of today, while you correct the drawings of kids like the one you used to be, you're looking for a way to make the paintings on your walls something people will one day recognize as yours.",
+ "salary_note": "Estimate: a young painter in Songzhuang pieces income together from art-exam teaching by the hour, decorative commissions by the canvas and gallery sales split fifty-fifty. Averaged out, it's about the national estimate, but one month can be several times another: in a good month one painting covers half a year; in a bad one there's only teaching pay.",
+ "facts": [
+  {"label": "Young Painter / Grade 3 Artist (initial appointment at an academy or institute) (current level)", "value": "3-6 years, ¥6,000–12,000 a month (national average, estimated)", "source": "Industry norm"},
+  {"label": "Next level up", "value": "Professional Painter / Grade 2 Artist (6-12 years)", "source": "Industry norm"},
+  {"label": "What AI can't take", "value": "Taking an oil painting from conception to the last stroke", "source": "AI exposure"},
+  {"label": "Where AI is moving in", "value": "Submitting work to national or provincial art exhibitions", "source": "AI exposure"},
+  {"label": "Open positions", "value": "21 related listings nationwide, 5 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+ ],
+ "day": [
+  "The studio is still cold in March; since the village switched from coal to electric heating, the radiators only warm one room. You drag the electric heater over to the easel, make an instant coffee, and look at the canvas you got halfway through last night.",
+  "You stretch canvas: linen over the stretcher bars, the staple gun one staple at a time, the four corners folded. Three coats of primer, and while each dries you sketch the next painting in your notebook.",
+  "You work on your canal series, number six: a village already razed flat and one old locust tree that wasn't cut down. You scrape off yesterday's sky with a palette knife and mix the gray again.",
+  "Lunch is a bowl of zhajiang noodles at the place by the village entrance. The painter from the next courtyard says his work has gone into a gallery in the 798 art district. Everyone raises a glass, and nobody asks how much he sold.",
+  "You ride your e-bike to the art-exam studio to teach. Thirty high-school seniors are drawing plaster casts, and you walk past each one. On one girl's drawing you put in the turn of the jaw with a stroke of charcoal, and she says oh.",
+  "A message comes in from a decorator: the lobby of a property sales office needs three abstract paintings a meter and a half across, in blues, delivered in ten days. How much? You give a price, and they ask for cheaper.",
+  "Back at the studio you keep painting, the room thick with the smell of turpentine. The old painter next door comes in with a bottle of erguotou, stands in front of your canvas a long time, and says the sky is still too bright.",
+  "You climb up to the bed in the loft. Below, the painting on the easel is only an outline in the dark. You think about pressing the shadow of that locust tree a little darker tomorrow."
+ ],
+ "ladder": [
+  {"title": "Art Student / Studio Apprentice / Art Teacher Who Also Paints", "stage": "Entry", "focus": "Build the foundations, painting your own work while teaching art, illustrating or designing."},
+  {"title": "Young Painter / Grade 3 Artist (initial appointment at an academy or institute)", "stage": "Junior", "focus": "Develop a personal language, get into provincial and national exhibitions, and work toward membership of the artists' association."},
+  {"title": "Professional Painter / Grade 2 Artist", "stage": "Mid-level", "focus": "Have a steady gallery or commission channel, with work on the market and teaching or research alongside."},
+  {"title": "Renowned Painter / Grade 1 Artist", "stage": "Senior", "focus": "A Grade 1 artist at a national painting academy or arts research institute, or a painter with a steady circle of collectors in the market, curating and taking part in public projects."}
+ ],
+ "ai_tasks": [
+  {"name": "Submitting work to national or provincial art exhibitions", "how": "AI can help sort out the call's requirements, lay out the portfolio, polish the artist's statement and check the materials are complete. Which work to submit, how the work itself is painted, and whether to change direction for a submission are all the painter's decisions."},
+  {"name": "Taking on a commission", "how": "AI can produce composition sketches, color schemes and several reference images so the client can say more quickly what they want, and draft quotes and talking points. Actually putting brush to canvas, catching a sitter's expression, working through the details with the client again and again, and answering for the finished work are still the painter's."},
+  {"name": "Taking an oil painting from conception to the last stroke", "how": "AI can help find references and try out compositions and color sketches, but a physical oil painting from conception to finish depends on the hand, knowledge of materials and constant judgment at the easel. AI can't help with the main part; the painter has to do it."},
+  {"name": "Signing a representation or consignment agreement with a gallery", "how": "AI can help read the contract and flag things to watch, like the commission split and exclusivity clauses, and organize the inventory and price list. Negotiating terms, judging whether a gallery is reliable and deciding whether to sign depend on the face-to-face relationship and the painter's choices."},
+  {"name": "Teaching an art class or workshop", "how": "AI can help design the syllabus, prepare handouts and examples and outline feedback on students' work. Demonstrating, seeing the problem in a student's hand, teaching each student differently and keeping the room alive all need the teacher there."},
+  {"name": "Going out to paint from life and gather material", "how": "Painting from life means going there in person and feeling the light, the air and the place with your eyes and body before you paint it. AI can at most look up routes and weather and plan the trip; it can't replace the experience at the heart of it."},
+  {"name": "Hanging a group show and attending the opening", "how": "Hanging means being there to hang the work, adjust positions and set the lighting; an opening means meeting people, talking and building relationships. Both are in-person work that depends on people. AI can only help write the labels, introductions and invitations."},
+  {"name": "Painting a large mural and directing assistants", "how": "A large mural means laying out on site, working on scaffolding, dividing work among assistants and holding the whole effect together, with safety and responsibility involved. AI can help with renderings, scale calculations and the schedule, but directing and putting paint on the wall take people."}
+ ],
+ "events": {
+  "e_sold": "A gallery in 798 sells two of your paintings, to a collector from Shanghai, split fifty-fifty. The day the money arrives you buy ten rolls of linen and treat the people from the next courtyard to hot pot.",
+  "e_unsold": "A group show runs for a month, and none of your three paintings sell. On the last day you drive over in a borrowed van to collect them, wrapped in bubble wrap and propped on the passenger seat.",
+  "e_selected": "One of your paintings is selected for a national art exhibition. At the opening you stand beside it, and an old gentleman looks at it a long time and asks whether the tree is real or invented. You say it's real; it's by the canal.",
+  "e_rejected": "You're rejected from the provincial exhibition you entered, and the painter from the next courtyard gets in. You sit in the studio all afternoon, and in the evening you still ride over to the cram studio to teach.",
+  "e_rent": "Your landlady says next year's rent on the courtyard goes up by half, or she'll take it back and let it to someone else. You add up a year of teaching pay, grit your teeth and renew, and cut your food budget from fifty yuan a day to thirty.",
+  "e_cold": "In the coldest week of January the studio is down to four or five degrees and the paint stiffens in the tubes. You paint in your down jacket, fingers too cold to hold the brush, and end up with a heavy cold.",
+  "e_turpentine": "After weeks of rushing paintings in an unventilated room, you have terrible headaches. The doctor says you've been breathing too much solvent. You switch to an odorless thinner and fit an extractor fan in the window.",
+  "e_ai_decor": "The decorators who used to commission paintings from you now generate images with AI and have a factory print and frame them, a few hundred yuan apiece. Your commissions fall from over twenty a year to five or six, and the ones left are people who want an original with a signature.",
+  "e_ai_sketch": "A client commissioning a portrait can't say what he wants, so you use AI to make several compositions and color schemes for him to choose from. He picks the third. You start over from that, and the painting you finish is almost nothing like it. He likes it even more.",
+  "e_process": "A buyer asks how you can prove the painting was made by hand. You start filming the process of every painting, the drawing in, the first color, the scraping off and starting again, and hand the video over with the signature and date on the back of the canvas.",
+  "e_student": "A student you coached all winter gets into one of the top art academies. He comes to the studio to tell you, stands in front of your painting and says: teacher, I want to paint like this one day. You make him a cup of tea and say nothing.",
+  "e_collector": "An industrialist collector looks at your whole canal series and takes all of it, not splitting a single canvas from the set. He says he grew up in a village just like that. The money means two years without taking commissions.",
+  "e_copy": "Online you find someone selling prints of your locust tree painting, signature printed on too, eighty-eight yuan with free shipping. You file a complaint with the platform, and three weeks later it's taken down.",
+  "e_open_studio": "During the Songzhuang art festival the studios open to the public, and hundreds of strangers come through in a weekend. A little girl stands in front of your painting a long time. Her mother asks what she's looking at. She says the tree looks lonely.",
+  "e_sketch_trip": "You go painting from life in the Taihang Mountains for a month with a few painter friends, lodging with villagers and climbing every day with your paint box on your back. You come back tanned dark with more than forty small landscapes.",
+  "e_parents": "Home for New Year, your mother asks again when you'll get a proper job; the county middle school needs an art teacher, with a permanent state post. Your father smokes beside her and says let the kid decide.",
+  "e_mural": "You take on a large mural for a county cultural center in Hebei and spend a month on the scaffolding with two students: laying it out, painting it in sections, then pulling the color together. On the day it's finished, the director stands below with his head tipped back, looking for a long time.",
+  "e_auction": "A small painting you sold years ago turns up at an autumn auction and sells for more than ten times what you got for it. Not a yuan of it is yours, but after that day several galleries call you on their own.",
+  "e_wedding": "You get married, to a ceramicist working in Songzhuang. The wedding is held in your two courtyards, the walls hung with both your work, and half the guests are painters, still arguing past midnight about whose work is best.",
+  "e_child": "Your child is born. You clear a corner of the studio and lay down a play mat, and on the first day the baby can crawl, it crawls over to your palette and grabs a fistful of titanium white.",
+  "e_back": "Years of standing at the easel, and your back and shoulders start to ache. You scale your big canvases down one size and put a tall stool by the easel to sit on when you're tired.",
+  "e_eyes": "Your eyes start to go, and colors aren't as distinct as they were when you were young. So you paint looser, and a few old friends say your later paintings are better than the early ones."
+ },
+ "choices": {
+  "c_series": {"title": "A year shut away to finish the series, going for Professional Painter / Grade 2 Artist", "situation": "Your canal series is half done. To get onto a gallery's roster, enter national shows and be assessed as a Grade 2 artist, you need a complete series of ten or more. But a year shut away means turning down half your classes and every commission, and your savings will last eight months.", "options": [
+   {"label": "Shut yourself away and finish it", "result": "That year you hardly leave the village, and the last four months are on borrowed money. The night you finish the twelfth canvas, you line them all up against the walls and walk from one end to the other, again and again."},
+   {"label": "Teach and paint, slowly", "result": "You keep teaching three days a week and taking commissions, and the series grows by only three canvases a year. Your savings hold up, but every time you go to someone's solo show in 798 you stand at the door a while."}
+  ]},
+  "c_teach": {"title": "The cram studio wants you as full-time lead teacher", "situation": "The head of the art-exam studio wants you as a full-time lead teacher, running a class in drawing and color, at twice your hourly pay with social insurance paid. But the cram season runs from September to February, eight in the morning to ten at night every day, and dust will settle on your own easel.", "options": [
+   {"label": "Become lead teacher", "result": "That year eleven kids in your class make the cut for the top academies. For the first time your bank card has a balance, and in those six months your easel is touched twice."},
+   {"label": "Keep teaching part-time", "result": "You say you still want to paint more. The head keeps three afternoons a week for you. On winter nights you paint late in the studio, and go to class the next day with red eyes."}
+  ]},
+  "c_gallery": {"title": "Whether to sign exclusive representation with a gallery", "situation": "A gallery wants to sign you to a three-year exclusive deal: a show every year, help finding collectors and a monthly advance. But your paintings could sell only through them, at a fifty-fifty split, and selling even one privately would breach the contract.", "options": [
+   {"label": "Sign for three years", "result": "In the first year the gallery gives you a solo show and sells seven paintings. You no longer have to find buyers yourself. But when an old friend wants to buy a painting, you have to send him to the gallery to pay list price. He does, and doesn't come by again."},
+   {"label": "Don't sign; sell it yourself", "result": "You keep posting your work on social media and dealing with collectors yourself. Sales are scattered, but you know which home every painting hangs in."}
+  ]},
+  "c_decor": {"title": "A big batch of hotel paintings", "situation": "A hotel group needs decorative paintings for a dozen-odd new hotels and comes to you for two hundred, all in one style, delivered in three months, enough to cover two years' rent. But it's assembly-line work, one palette painted two hundred times, and for those three months you won't touch a single painting of your own.", "options": [
+   {"label": "Take it", "result": "You hire two recent graduates and set up twenty easels in the courtyard to lay in color all at once. On delivery day you look at two hundred identical blues and your wrist doesn't feel like your own."},
+   {"label": "Turn it down", "result": "You turn it down. In those three months you finish the two hardest paintings in the series. You borrow the rent from a friend and pay it back at the end of the year."}
+  ]},
+  "c_ai": {"title": "Whether to use AI and digital tools", "situation": "The painters around you have split into two camps: one uses AI for compositions and tablets for sketches, and handles commissions faster and communicates more easily; the other says the moment you touch it, there's none of you left in the painting. You could spend six months mastering these tools, or keep all your time for the canvas.", "options": [
+   {"label": "Learn them, as a sketchbook", "result": "You sketch on a tablet and try dozens of color schemes with AI, and all of it ends up back on canvas, redone stroke by stroke. Communicating with commission clients takes half the time, and what's on your canvas is still yours."},
+   {"label": "Don't touch them; only canvas", "result": "You leave your phone in another room, and the studio holds only paint and turpentine. Some people call you old-fashioned, and some collectors seek you out for exactly that."}
+  ]},
+  "c_dali": {"title": "Move to Dali", "situation": "Songzhuang rents rise every year, and several painter friends have moved to Dali in Yunnan, saying courtyards there are half the price, the sky is blue and you can paint ten months a year. But the galleries, collectors, exhibitions and your cram-studio classes are all in Beijing; going means drifting away from this world.", "options": [
+   {"label": "Move to Dali", "result": "You rent a courtyard with an open skylit well in a village by Erhai Lake, paint more than thirty canvases in the first year, and all the colors brighten. Only, every time there's a show in Beijing, you have a four-hour flight back."},
+   {"label": "Stay in Songzhuang", "result": "You don't go. Winter is still cold and the rent still rises, but take a turn around 798 at the weekend and you always run into a few people worth talking to."}
+  ]},
+  "c_master": {"title": "Apply to the artists' association, going for Renowned Painter / Grade 1 Artist", "situation": "You've been selected once for a national exhibition; one more selection and you can apply for membership of the national artists' association, and after that be assessed as a Grade 1 artist and join a painting academy as a contracted painter. But it means painting another set of large works the way exhibitions like them and writing research essays on your work, which isn't quite the kind of painting that has sold well for you in galleries these past years.", "options": [
+   {"label": "Paint for the exhibitions", "result": "You spend two years on a set of canvases three meters wide and write an essay on the canal villages. The day the membership card arrives in the mail, you put it in a drawer and go back to painting small canvases."},
+   {"label": "Paint what you want to paint", "result": "You don't go that way. You keep painting the kind of work that sells in galleries and that you love. Your name spreads among collectors, and never appears on the exhibition lists."}
+  ]},
+  "c_county": {"title": "Go home and teach art at the middle school", "situation": "The middle school in your home county is hiring an art teacher with a permanent state post. Your mother has asked around: if you go back and sit the exam, you're almost sure to get it. The pay isn't high, but it arrives on time every month, and you can paint in the winter and summer holidays. The Songzhuang courtyard, the galleries and the exhibitions would all be far away.", "options": [
+   {"label": "Go home and teach", "result": "You pack up your easel and dozens of canvases, hire a truck, and take a last look at the farmhouse courtyard.", "end": "You go home and teach art at the county middle school for many years, sending several kids on to art academies. In the winter and summer holidays you paint in a small room at home, and what you paint is still that canal, smaller and quieter the longer you go."},
+   {"label": "Stay in Songzhuang", "result": "On the phone you tell your mother to give you a few more years. When you hang up, you deepen the old locust tree on the canvas one more time."}
+  ]},
+  "c_school": {"title": "Open your own art-exam studio", "situation": "Your coaching of exam students has made you a name, and several parents have sent word asking if their children can study with you. Friends urge you to open your own studio: rent a building, hire a few teachers, and one cram season would bring in what ten years of selling paintings does. But that means running a school. You'd become a principal.", "options": [
+   {"label": "Open the studio", "result": "You rent a three-story building in Songzhuang and take on eighty students in the first year. On opening day you hang a wooden sign by the door, the characters in your own hand.", "end": "Your studio runs for many years, and class after class of kids goes from there into art academies. You paint less and less of your own work, but every year, on the night the cram season ends, you stay behind alone in an empty classroom and draw a plaster cast."},
+   {"label": "Don't; keep painting", "result": "You say you'd still rather be someone who paints. The parents go away disappointed, and you go back to the studio and finish the painting you've been working on for three months."}
+  ]}
+ },
+ "endings": {
+  "retire": "There's no single day you formally put down the brush; you just paint slower and smaller. That autumn you number, photograph and date the last batch of paintings in the courtyard and give a few to former students. In the evening you sit in the courtyard watching the sunset turn the old locust tree on the wall gold, and don't go to mix any more paint.",
+  "burnout": "That year your back and your headaches flare up together, and the doctor tells you to stop staying up at the easel. You give up the studio and move into a small flat in the county town, and don't touch paint for a long time. Sometimes in the park you see a beautiful tree and stop, tracing its outline in the air with a finger."
+ },
+ "stages": [
+  "Every day you go back and forth between the easel and the classroom: mornings stretching, priming and painting your series, afternoons at the cram studio correcting kids' drawings, evenings on decorative and portrait commissions. The people you deal with are the studio head, interior decorators and the occasional gallery assistant who comes to look. You submit to exhibitions, join group shows, post your work online, and your name is known on only a few streets of Songzhuang.",
+  "You have a regular gallery and a few collectors who keep coming back, a solo show every year, and your work has begun appearing at auction. You negotiate prices and splits with the gallery and drink tea with collectors, telling them how a painting came to be. You still teach, now the harder creative classes, and take only commissions you want to paint. People begin inviting you to judge shows and give talks, and people begin imitating you.",
+  "Your paintings are collected by art museums, a painting academy has made you a contracted artist, you have a steady circle of collectors, and you've begun curating and leading young painters on public projects. On review panels you score other people's work, and in catalog prefaces you write about other people. You paint less, but every canvas is slower and fiercer than before."
+ ],
+ "work": [
+  "A sales-office designer wants a painting the same color as the lobby carpet and mails you a fabric swatch. You mix the color six times and in the end add a touch of yellow ochre to the blue-gray. That's it, they say.",
+  "A boy in the cram studio, retaking the exam, keeps muddying his colors. You don't lecture him. You take his paint box, wash it clean and have him squeeze out only five colors at a time. Three weeks later his paintings brighten.",
+  "You start the seventh painting in the series, spending three afternoons sketching by the canal. Old Zheng, a villager, comes over to look and says that patch used to be his family's vegetable garden, so you paint him in too.",
+  "The gallery owner wants to double the price of one of your paintings. You won't agree and let him raise it thirty percent, saying let the people who love it still be able to buy it. That show sells eight in the end.",
+  "A collector wants a painting as big as his study wall. You spend an afternoon at his home watching the light, come back and throw out the original composition, and make it a vertical one.",
+  "A graduate student from an art academy comes to interview you and asks how you found your own style. You point at a pile of scraped-down, repainted canvases in the corner and say: it's all in there.",
+  "You curate a group show of young Songzhuang painters, choosing twelve from more than two hundred portfolios. The last one is someone you've never met, painting in the farthest row of courtyards in Xiaobao village.",
+  "An art museum comes to discuss acquiring your canal series and asks for an artist's statement. You write one page, and the last line is: they cut that tree down in the end.",
+  "At the painting academy's annual review, one young painter's technique is raw but the color is daring. You give the top score and write in your comments: don't let him change."
+ ],
+ "past": [
+  "You go to middle school in a county town in Linyi, Shandong. In art class you paint the old locust tree outside your front door, the teacher pins it up at the back of the classroom, and that whole year you go down to the river to paint after school.",
+  "In the winter of your second year of high school you come to an art-exam cram studio in Songzhuang, Beijing, sleeping in the studio's bunk beds and drawing plaster casts and heads twelve hours a day, charcoal dust in your hands that won't wash out.",
+  "You get into an art academy's oil painting department. When the admission letter arrives, your father keeps it under the TV set and takes it out to show everyone who visits.",
+  "On a second-year field trip you spend a month painting cave dwellings and flocks of sheep on the Loess Plateau, and learn for the first time that real colors aren't like the ones in books.",
+  "For your graduation work you paint three canvases of the river back home, and they're selected for the academy's graduation show. Half your classmates go to design firms and game studios, half go on to graduate school. You want to try being a painter.",
+  "You go back to Songzhuang and rent a farmhouse courtyard in Xiaobao village, teaching by day at the same cram studio where you once trained and painting at night. Your landlady asks whether these paintings can actually sell. You say they can.",
+  "Two of your paintings get into a group show in 798 for the first time. At the opening you wear the only shirt you own and stand beside them all afternoon, too shy to speak to anyone."
+ ],
+ "late": {
+  "pension_note": "Estimate: as a freelance painter you pay into the pension yourself as a flexibly employed person, on and off in the early years and on a low base. The basic pension comes to about thirty percent of your usual monthly income, and you live mainly on selling paintings, teaching and savings.",
+  "scenes": [
+   "In the first month without any classes or commissions, you still go into the studio a little after eight every morning, stretch a canvas, prime it, then sit and watch it dry.",
+   "A former student has a solo show in 798 and invites you to the opening. You go round once from the back of the crowd and write one line in the guest book: don't make the sky too bright.",
+   "You plant a little locust tree in the courtyard and paint it every spring, hanging the paintings in a row on the wall, as if measuring how tall it's grown.",
+   "Your grandchild comes to play in the courtyard and scribbles all over a scrap canvas with your brush. You watch a while, then sign his name and the date in the corner for him.",
+   "In your first months in the county town there's no smell of turpentine in the flat at all, and that's what keeps you from sleeping soundly. You wake at night, sniff the air, and lie back down.",
+   "Once your back is a little better you start taking a small sketchbook to the park, using only a pencil: old men playing chess, people walking dogs. When a drawing is done, you close the book.",
+   "An art museum writes to say it would like to acquire one of your early paintings. You go through several trunks before you find it, the Xiaobao village address still written on the back of the canvas.",
+   "In your first year away from Songzhuang, whenever you smell fresh paint from someone's renovation you stop and think of that room that was four or five degrees in winter.",
+   "You go back to Songzhuang once. Half of Xiaobao village's courtyards have been demolished, and your old one is now a cafe, printed pictures on its walls. You order a coffee and sit a while.",
+   "A student you taught has become a painter and sends you his first catalog. On the flyleaf he has written: for the teacher who washed my paint box clean.",
+   "The canal bank has been made into a park. You walk it once. The razed village is all grass now, and where the old locust tree stood there's a sign saying it lived more than a hundred years.",
+   "In an old trunk you find a plaster cast you drew at seventeen in the cram studio, the paper yellowed, the turn of the jaw drawn wrong. You look at it a long time, then pick up a stick of charcoal and lightly put it right."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you sit in the courtyard as the sunset lights up the row of little locust tree paintings on the wall, each brighter than the last. You don't get up for a brush. You just watch, as the light slowly leaves the paintings.",
+   "burnout": "Many years later, on a park bench, you leaf through the little sketchbook, page after page of strangers' backs. The last page is blank. You look at the tree in front of you for a long time, and don't draw it.",
+   "end": "Many years later, in a cupboard, you find the palette knife you wore down to a stub, a little dried blue-gray still stuck to the blade. You scrape at it with a fingernail. It won't come off, so you put the knife back where it was."
+  }
+ }
+}

@@ -1,0 +1,191 @@
+{
+ "id": "robot-trainer-bj",
+ "occupation": "Embodied AI Robot Trainer",
+ "role": "Embodied AI Robot Trainer",
+ "headline": "A robotics engineering graduate who spent a year as a data collector at a training ground in an old factory building in Beijing's Yizhuang, and now spends every day in a VR headset teaching a humanoid robot to fold clothes",
+ "unit": "The data collection and training center of an embodied AI robotics company in Yizhuang, Beijing",
+ "unit_type": "Embodied AI robotics company",
+ "city": "Beijing (Yizhuang)",
+ "city_tier": "First-tier city",
+ "education": "Bachelor's degree (robotics engineering)",
+ "level": "You're fluent in VR teleoperation, motion demonstration and behavior labeling, and can fill three task packages on your own: folding clothes, handing over objects, and picking from shelves. For multi-sensor synchronization and tuning the real robot, you still have to call operations and the algorithm team.",
+ "intro": "You spent a year as a data collector at the training ground of this Yizhuang robotics company, and last month became a trainer with a task package of your own. The training ground is a converted factory building, partitioned into scenes, a bedroom, a pharmacy, a car assembly line, supermarket shelves, and the robots stand inside them waiting for you to put on the headset and reach out their hands for them. From today, every movement it learns, you will have done hundreds of times.",
+ "salary_note": "Estimate: the occupation library has no pay data for this trade, so each level's monthly pay is estimated from what embodied AI companies' data centers commonly advertise. Companies in Yizhuang, Beijing, pay noticeably more than the national average, with performance pay based on hours of valid data, and bonuses in years when funding goes well.",
+ "facts": [
+  { "label": "Embodied AI Robot Trainer (current level)", "value": "1-2 years, ¥7,000–11,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Training Team Lead / Senior Trainer (2-4 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Dealing with a gripper damaged in a collision", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Starting to teach demonstrations after three to five days of training", "source": "AI exposure" },
+  { "label": "Open positions", "value": "5 related listings nationwide, 2 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Out of the Yizhuang Line subway, a ten-minute walk to the training ground. By the door of the old factory stands a retired two-legged prototype with a sign hung round its neck: No. 01.",
+  "You collect a VR headset and motion-capture gloves, and the team lead hands out tasks: today it's the bedroom scene, folding clothes, target six hours of valid data. First you press the emergency stop once to check the light goes off.",
+  "You put on the headset and the world becomes the robot's view; when your hands move, two robot arms move with them. Pinch the T-shirt by both shoulders, fold in half, fold again: ninety seconds a shirt.",
+  "Every twenty shirts you change a variable: a different color, a different fabric, the lights turned down, a sock tossed onto the bed. You tick them off one by one in the collection log.",
+  "The canteen. With the headset off, the lunch box in front of you still sways slightly. The man on your team used to drive for a ride-hailing app; this job, he says, tires the eyes, not the back.",
+  "The gripper closes on nothing three times running. You mark those clips as failures and write the reason: mercerized sleeve too slippery. Someone from the algorithm team wanders over with a coffee to watch the playback.",
+  "Data review. You go through clips others collected yesterday, and out of twenty pick out three with shaky hands and two where a body blocked the camera, and send them back to be redone.",
+  "Before leaving you check the dashboard: 5.4 hours of valid data today, just short. You rub your arms and take the subway back to your shared flat in Daxing."
+ ],
+ "ladder": [
+  { "title": "Data Collector / Training Assistant", "stage": "Entry", "focus": "Learn the equipment, safety and standard movements." },
+  { "title": "Embodied AI Robot Trainer", "stage": "Junior", "focus": "Demonstration, labeling, covering variables, and multimodal data collection." },
+  { "title": "Training Team Lead / Senior Trainer", "stage": "Intermediate", "focus": "Tuning the real robot, leading a team, working with the algorithm side." },
+  { "title": "Data Operations Lead / Deployment Support Engineer", "stage": "Senior", "focus": "Multi-scene projects and combined tasks such as SLAM navigation." },
+  { "title": "Head of Embodied AI Data Center", "stage": "Lead", "focus": "Running the whole data center." }
+ ],
+ "ai_tasks": [
+  { "name": "Starting to teach demonstrations after three to five days of training", "how": "AI can generate training materials, answer operating questions and automatically score whether movements meet the standard. Actually handling the equipment, walking new trainers through the pitfalls and judging whether their demonstration technique is right still take an experienced trainer on the floor." },
+  { "name": "Collecting several hundred valid hours for a clothes-folding task", "how": "AI can score clips for quality automatically, filter out failed and duplicate data and tally valid hours. A person has to perform the demonstrations themselves and judge which clips are worth keeping." },
+  { "name": "Dealing with a gripper damaged in a collision", "how": "A smashed gripper is a physical problem on the floor, and at most AI helps record it and search the logs. Stopping the machine, inspecting, replacing parts, recalibrating, and judging whether it was a demonstration error or a hardware fault all take a person's hands." },
+  { "name": "Designing variable coverage and setting up the pharmacy scene", "how": "AI can list variables from the algorithm team's needs (types of medicine, placement, lighting, occlusion) and generate a layout. Actually setting up the scene, and judging whether it looks like a real pharmacy, is a person's job." },
+  { "name": "Getting synchronized multimodal collection working", "how": "AI can help write timestamp-alignment scripts and check for sync delays and dropped frames. Wiring, calibrating the force sensors and verifying on the real robot that the sync can be trusted need a person to check." },
+  { "name": "Taking part in data review meetings to revise the rules", "how": "AI can compile data quality reports, find abnormal distributions and draft proposed rule changes. A person brings what it actually feels like to collect on the floor, argues the trade-offs with the algorithm team, and settles the rules." },
+  { "name": "Leading a training team of twenty or thirty to its quarterly targets", "how": "AI can help with scheduling, tracking progress and daily reports; but leading twenty or thirty people, keeping their spirits up, assigning work and answering for the quarter's targets depend mainly on a person's management and responsibility." },
+  { "name": "Mobile grasping tasks after SLAM mapping", "how": "AI and existing SLAM tools can handle most of the mapping and path planning automatically. A person sets up the environment on site, checks the map quality, and does the demonstrations and handles surprises during mobile grasping." }
+ ],
+ "events": {
+  "e_first_fold": "The clothes-folding task package passes a hundred hours of valid data. An algorithm engineer calls you over, and on the screen the robot folds a T-shirt by itself for the first time, a little crooked.",
+  "e_vr_sick": "You wear the headset all afternoon without a break, and when you take it off the ceiling is spinning; you go and throw up in the bathroom. The team lead gives you half a day off, and the next day you put it on as usual.",
+  "e_gripper": "Teleoperating, your hand moves a fraction too fast and the gripper hits the corner of the table, cracking a fingertip. Stop, dismantle, replace. The team lead doesn't shout; he just has you write up what happened.",
+  "e_estop": "During mobile grasping the robot suddenly turns and starts toward a coworker beside it. You slam the emergency stop, and it halts half a meter from her. That afternoon the whole team runs the drill again.",
+  "e_cups": "One single movement, \"put the cup in the cabinet,\" you do twelve hundred times, changing color, light and placement. For several nights afterwards you're still putting cups away in your dreams.",
+  "e_marathon": "Yizhuang holds a half marathon for humanoid robots, and your company's robot finishes the whole course. Squeezed in outside the finish line you watch it wobble toward you, and think of the hundreds of hours of gait data in it that you collected.",
+  "e_ai_score": "The company brings in automatic AI quality checks: each clip gets a quality score the moment it's collected, and failures and duplicates are filtered out on their own. No more watching playback clip by clip, and valid hours go up noticeably.",
+  "e_ai_wrong": "The AI filters out a batch of clips where the robot \"hesitated before grasping\" as failures, but that's exactly what the algorithm team wants. You fish them out of the recycle bin one by one and add a line to the rules.",
+  "e_sim": "More and more data is generated in simulation, and requests for real-robot collection drop by thirty percent. What's left for people is everything simulation can't handle: soft things, fragile things, shiny things.",
+  "e_funding": "The company closes a new funding round, gives everyone a month's bonus, and leases the two-thousand-square-meter building next door as a new training ground. You're sent to help draw up the scene layouts.",
+  "e_cut": "The next funding round keeps not arriving. The company cuts pay twenty percent and shuts half the training ground. The bedroom scene comes down, and the bed where you folded tens of thousands of shirts is loaded onto a truck.",
+  "e_demo": "Management is bringing visitors, and you spend the night resetting the pharmacy scene. The next day, in front of a roomful of people, the robot picks up the wrong box of medicine, and you smooth it over with a laugh.",
+  "e_eldercare": "Your robot goes into a care home on trial for the first time, handing an old man a cup of water. He takes the cup and says thank you to it, and behind the screen you go still for a moment.",
+  "e_love": "A young woman in operations is the one who comes to fix your equipment every time it breaks. One day after a repair she casually asks whether you eat at the luzhu stew place downstairs, and after that the two of you often go after work.",
+  "e_wedding": "You hold the wedding back home in Hebei, then treat your coworkers to a meal in Yizhuang. The team lead gives you a little robot figurine and says: this one you won't have to teach.",
+  "e_baby": "Your child is born. You learn to fold a diaper one-handed, square and neat the very first time, and your wife laughs watching you: occupational hazard, she says.",
+  "e_house": "You buy a small two-bedroom flat on the edge of Yizhuang, the down payment emptying both families' savings, the mortgage taking most of your pay. You start volunteering for weekend overtime.",
+  "e_shoulder": "Years of holding both arms up to teleoperate, and your shoulders go first; the doctor says rotator cuff strain. You add an arm-support frame to your station.",
+  "e_parent": "A call from home: your mother has had spine surgery. You take a week off and go back to Baoding, reviewing your team's data on your phone in the ward, peeling her an apple as you go.",
+  "e_mentee": "A trainer you brought up collects towel-folding data that the algorithm team rates the cleanest batch in the whole center. He used to deliver takeout, and the day he gets his certificate he talks to his mother on the phone for half an hour.",
+  "e_paper": "The algorithm team's paper is accepted at a major conference, with the training center thanked in the acknowledgments. It's printed and posted at the training ground door, and someone has circled your team's name in red.",
+  "e_young": "Half of this year's new trainers are middle-aged people changing careers: former truck drivers, takeout riders, men who tightened screws in factories. Four days of training and they're on the floor, with steadier hands than the graduates."
+ },
+ "choices": {
+  "c_cert": {
+   "title": "Sit the AI Trainer (Senior) exam, aiming for Training Team Lead",
+   "situation": "The team lead says that to become a Training Team Lead / Senior Trainer you need to tune the real robot and work with the algorithm side, and the AI Trainer (Senior) certificate would help. The training is at weekends, and you'd also have to pick up the basics of Python and ROS, when every day after work you can barely lift your arms already.",
+   "options": [
+    { "label": "Sign up and study at weekends", "result": "In your shared flat you wrote your first little Python script to align timestamps, and took a screenshot the day it ran. The practical exam was getting a multi-sensor synchronized collection working, and you finished with ten minutes to spare." },
+    { "label": "Not now, log more hours", "result": "For those two months your valid hours were first on the team and you got top performance pay. The first time the team sent someone to meet the algorithm group, it wasn't you." }
+   ]
+  },
+  "c_shenzhen": {
+   "title": "Jump to a humanoid robot company in Shenzhen",
+   "situation": "A Shenzhen humanoid robot company comes to poach people, offering twenty percent more and saying they're building a data center from scratch, so you'd be one of the first core team. But they've only just started: you'd have to work out the scenes, the equipment and the rules yourself, and leave everyone and everything in Beijing behind.",
+   "options": [
+    { "label": "Go to Shenzhen", "result": "In an empty building on a Shenzhen industrial park, you and three others built the training ground starting from running network cable. The day the first robot arrived, everyone spent the afternoon taking photos around it." },
+    { "label": "Stay in Beijing", "result": "You stayed, still commuting on the Yizhuang Line. Colleagues who went to Shenzhen sometimes send videos of their robots dancing, and you can tell whose steps it learned." }
+   ]
+  },
+  "c_ai_review": {
+   "title": "Take charge of reviewing AI auto-labeling or not",
+   "situation": "With AI now labeling and filtering data automatically, the center is picking trainers to review its output full time, set the filtering rules and design human-machine collection workflows. Doing it means barely collecting anymore, with performance measured not by valid hours but by how accurate the rules are.",
+   "options": [
+    { "label": "Go and review the AI", "result": "Every day you went through the clips the AI had filtered out, and in three months added more than forty lines to the rules. The algorithm side began saying your center's data had \"a human touch.\"" },
+    { "label": "No, stay at a collection station", "result": "You're still in the headset every day, your hands growing finer, and every hard-to-collect task comes to you. But you're not invited to the meetings where the rules are set." }
+   ]
+  },
+  "c_lead": {
+   "title": "Apply for Training Team Lead",
+   "situation": "The center is hiring and opening three new teams, and promoting trainers to Training Team Lead / Senior Trainer, each leading twenty or thirty people and answering for a quarterly data target. As a lead you'd manage schedules, morale and new hires, and spend far less time collecting yourself.",
+   "options": [
+    { "label": "Apply", "result": "At the selection meeting you presented the ten rules you'd built up over your thousand hours of folding clothes. When you finished, the center director asked: can you get thirty people to follow all ten?" },
+    { "label": "Don't apply, keep collecting", "result": "You stayed at your station, and the new lead came from the next team. When he hits a hard task, he often comes over to ask how you'd place your hands." }
+   ]
+  },
+  "c_deploy": {
+   "title": "Apply to be a deployment support engineer and go out to customer sites",
+   "situation": "The company has started selling robots into car plants and warehouses, and needs people on site to build maps, run navigation and tune mobile grasping: the road toward Data Operations Lead / Deployment Support Engineer. Going means twenty days a month in factories in other cities, living in budget hotels at the edge of industrial parks.",
+   "options": [
+    { "label": "Go to the sites", "result": "You spent a month living at an auto-parts plant's warehouse and built a complete SLAM map yourself for the first time. When you came back, your suitcase held a pair of safety boots." },
+    { "label": "Stay at the training ground", "result": "You stayed with your team. Colleagues back from sites say the light, the floors and the forklifts in customers' plants are a hundred times messier than the training ground. You write what they tell you into the next round of the variables list." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Pick up software and control, and become a robotics engineer",
+   "situation": "An engineer in the algorithm team says you have a better feel for the real robot than any of them, and if you filled in Python, ROS and control theory you could move over as a robotics engineer. First you'd have to do a part-time master's, evenings and weekends, and see where you are in two years.",
+   "options": [
+    { "label": "Study and switch to engineering", "result": "You got into a part-time master's, and two years later moved to the algorithm team, standing on the other side of the screen for the first time.", "end": "At your desk in the algorithm team you watch data from the training ground flow into the model clip by clip. One clothes-folding clip has especially steady hands; you click on the collector, and it's a new trainer you once mentored." },
+    { "label": "No, stay at the training ground", "result": "You said you still liked the feel of working in the headset. The engineer smiled, and whenever there's a new task, he still comes to you first to try it." }
+   ]
+  },
+  "c_factory": {
+   "title": "Join a car plant as a robot applications technician",
+   "situation": "During the pay cuts, the final assembly shop of a car plant in Tianjin is hiring embodied AI robot applications technicians to look after the dozen-odd robots already working there: maintenance, tuning, first in line when something goes wrong. It's state-owned, the pay isn't high but it's steady, and you'd never have to worry about the next funding round again.",
+   "options": [
+    { "label": "Go to the car plant", "result": "You were issued a set of overalls in the final assembly shop, and on your first day were called to deal with a tire-carrying robot that had jammed.", "end": "You stand beside the final assembly line watching the robots you maintain carry tires and hand over bolts, trip after trip. If one of them is half a beat slow at the wrist, you can see it at a glance." },
+    { "label": "Stay and ride it out", "result": "You stayed and worked most of a year on reduced pay. The day the next round came through, someone on the team played a song over the training ground speakers." }
+   ]
+  },
+  "c_center": {
+   "title": "Apply for Head of Embodied AI Data Center",
+   "situation": "The company is merging its training grounds into one data center and is recruiting a Head of Embodied AI Data Center to manage over a hundred trainers, the annual data budget and new-scene planning. You're one of the candidates; the other was poached from a big tech company's autonomous-driving data unit and has managed a labeling team of over a thousand.",
+   "options": [
+    { "label": "Apply and write a plan", "result": "You stayed up several nights on the plan; the first page was a table of which tasks simulation could replace and which still needed people, with the hours you'd collected yourself after every cell." },
+    { "label": "Let the outsider have it", "result": "You go on running your projects. In his first week the new head put on a headset himself and folded clothes all afternoon, then came out and talked with you for a long time." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you put the headset on once more and, in front of the bed that had been replaced many times, folded one T-shirt: ninety seconds, square and neat. When you took it off, dozens of young people were at their stations around the training ground, lifting, folding, setting down. You put the headset back in the cabinet; by the door, prototype No. 01 was still standing.",
+  "burnout": "That winter your shoulder would lift halfway and no further, and the doctor said rest and rehab. The center moved you to managing the equipment ledger and scheduling new-hire training. You leave on time every day, and passing the training ground's glass wall, you see the robot arms inside moving along with someone else's hands."
+ },
+ "stages": [
+  "You have your own collection station and task package. Every day, in a VR headset with the teleoperation controllers in your hands, you perform the same movement hundreds of times under different colors, lighting and placements; afterwards you label the clips, write down why failures failed, and fill in whatever variables the checklist says are still missing. You deal most with your team lead and the algorithm engineers: the lead watches your valid hours, the algorithm side watches how clean your data is.",
+  "You lead a collection team of twenty-odd people. Mornings you assign tasks and stations; during the day you walk the training ground, watching whose technique is off and whose equipment needs replacing, and when a robot plays up you're the first to tune it. Every week you sit in the data review with the algorithm team and speak for the floor: which movements a person can actually perform, and which variables simply can't be set up.",
+  "You run collection projects across several scenes, and the whole chain is yours to plan, from what data the algorithm team wants and how much to collect, to whether the model has been validated on the real robot. You also go often to customers' plants and warehouses to map for the robots, run navigation and tune mobile grasping, and come back to write the pitfalls from the site into the next round's collection checklist.",
+  "The whole data center is yours: several training grounds, more than a hundred trainers, hundreds of thousands of hours of data a year. You set the data roadmap with senior management, work out the cost per hour of data with finance, and negotiate space with the industrial park; whether to open a new scene, how to balance simulation and real robots, is your call. You rarely put on a headset now; when you do, your hands still remember."
+ ],
+ "work": [
+  "Three hundred shirts in, you notice you always grab the left shoulder first. You deliberately switch to grabbing the right first, and an algorithm engineer says this batch finally isn't skewed.",
+  "The pharmacy scene is short of flat medicine boxes. You go to the pharmacy downstairs and buy five brands, set the medicine aside, and stack the empty boxes in rows on the shelves.",
+  "The robot arm's force readings keep drifting. You stop collecting, call operations to swap a cable, then redo the half hour from that morning.",
+  "A new trainer is a forty-year-old former truck driver with steady hands who keeps forgetting to hit record. You stick a little note on his controller: press record first.",
+  "At the data review the algorithm team asks for \"randomly placed cups.\" You draw up the twelve positions you can actually set up on the training ground and hand them over.",
+  "The rubber on one robot's gripper fingertips has worn smooth, and it slips on everything. You dig out a spare, fit it yourself, and note it in the equipment ledger.",
+  "You're mapping for a robot in an auto-parts plant's warehouse, and with forklifts passing back and forth the map is full of ghosting. You wait until the shift ends at midnight and scan it again.",
+  "The mobile grasping success rate on a customer's site is only sixty percent. You crouch by the shelves for an afternoon and find that shiny plastic bags are dazzling the camera, and add them to the variables list back at base.",
+  "You line up three scenes' collection schedules against the algorithm team's training windows in one table, and cut a task the model has already learned.",
+  "Finance asks what an hour of valid data costs. You give a figure, then add: simulation is cheap, but soft things still need a person to collect them.",
+  "The industrial park wants to hold an open day at the training ground. You agree on one condition: a trainer beside every robot, hand on the emergency stop.",
+  "At the annual planning meeting you propose opening an eldercare scene, and write only one line of justification: this is where it will be needed most, and where it can least afford to get things wrong."
+ ],
+ "past": [
+  "You were at high school in Baoding, Hebei, and liked taking apart old radios at home, often finding a screw left over when you put them back together. You watched a video of a robot doing a backflip, over and over, all one night.",
+  "After the gaokao (college entrance exam) you got into robotics engineering at a university in your home province. Your family didn't quite understand, and asked only: so you'll be fixing machines?",
+  "In your final year you interned at a small company making industrial robot arms, and learned to teach them point by point with a teach pendant, thinking this was still a long way from \"intelligence.\"",
+  "After graduating you sent out dozens of résumés. The data center of an embodied AI company in Yizhuang was hiring data collectors, four days of training and then on the floor. You dragged your suitcase into a shared flat in Daxing.",
+  "You spent a year as a data collector, capturing hundreds of grasping and handover clips a day. A variable-coverage checklist you wrote was taken up by your team lead for the whole team, and at the end of the year you became a trainer."
+ ],
+ "late": {
+  "pension_note": "Estimate: the company pays into Beijing's basic pension for enterprise employees on your wages, with performance bonuses not fully covered, so after retirement you get a little over forty percent of your final monthly pay.",
+  "scenes": [
+   "In your first month of retirement you still wake at half past eight and lift a hand to reach for the headset. You go downstairs for a walk, and by the parcel lockers at the compound gate a delivery robot is waiting its turn.",
+   "A vocational college asks you to teach practicals in its robot trainer program, twice a week. You have the students fold a hundred shirts first, with their own hands.",
+   "Your pension arrives on time every month, enough for the two of you. You go back to Baoding for a while and rig up a little device in the old courtyard that waters the plants on its own.",
+   "At the community eldercare station where you go, a robot hands the old people their water every day. The way it reaches out looks familiar.",
+   "You manage the center's equipment ledger and schedules and leave on time every day. Your shoulder slowly gets a little better; only at night, asleep, your hands still sketch movements under the quilt.",
+   "A young trainer asks why his clothes-folding data is never clean. You tell him to smooth the sleeves out before grasping. He goes back and tries it, and that evening sends you a thumbs-up.",
+   "At retirement age you do the paperwork. When the robot vacuum at home gets stuck under the bed, you crouch down, pull it out, give it a pat, and say: slow down.",
+   "For the first year after leaving the training ground, whenever you see a robot on display in a shopping mall you stop to watch its hands, to see whether it hesitates before it grasps.",
+   "Now and then you go back to Yizhuang on some errand, and the old factory has become a bigger training ground. Prototype No. 01 is still by the door, with a new sign.",
+   "A trainer you once mentored becomes head of a data center, and says at an industry conference: behind every movement a robot learns, there's a person who did it hundreds of times.",
+   "Later, simulation grew ever more lifelike, and AI could filter its own data. But soft things, fragile things, shiny things still need someone to put on a headset and reach for them, again and again.",
+   "Your granddaughter asks what you used to do. You say you taught robots to fold clothes. She asks if they can do it now. Yes, you say, just not as well as your grandma."
+  ],
+  "closing": {
+   "retire": "One afternoon many years later, you sit by the window at the eldercare station, and a robot comes over carrying a cup of water, stops in front of you and holds it out to your hand. You take it and say thank you. It nods, and moves away.",
+   "burnout": "Many years later, you take in the washing on the balcony and fold it piece by piece: pinch both shoulders, fold in half, fold again. When the pile is done you look at your hands, and rest them on your knees.",
+   "end": "Many years later, in a cupboard, you come across an old pair of motion-capture gloves, one of the fingertip sensors missing. You put them on, make a fist, then take them off and put them back."
+  }
+ }
+}

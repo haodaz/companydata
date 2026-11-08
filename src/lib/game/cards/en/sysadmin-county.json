@@ -1,0 +1,206 @@
+{
+  "id": "sysadmin-county",
+  "occupation": "Systems Administrator",
+  "role": "Network administrator in a county hospital's IT department",
+  "headline": "A computer networking graduate from a Wuhan vocational college who came home to run the network at the county hospital's IT department, the on-call phone on day and night, the person everyone calls when any computer in the hospital won't start",
+  "unit": "The county people's hospital of a county under Huanggang, Hubei (Grade 2A, six hundred beds); the IT department is in the basement of the admin building",
+  "unit_type": "IT department of a county public hospital",
+  "city": "A county under Huanggang, Hubei",
+  "city_tier": "County town",
+  "education": "Associate degree, three-year vocational college (Computer Network Technology)",
+  "level": "You can crimp network cables, configure switches and install operating systems, and built a Linux server at college. The hospital's HIS, LIS and PACS are all new to you, and the only database command you know is select",
+  "intro": "The department head hands you an old phone: the IT department's on-call line, its number taped beside the screen of every computer in the hospital. He takes you down to the server room in the basement and pushes the door open on a blast of cold air: two rows of racks, lights blinking, the UPS humming in the corner. As of today, when the billing desk computer won't start at three in the morning, that call comes to you.",
+  "salary_note": "Estimate: a contract-staff network administrator in a county hospital's IT department takes home a little over ¥3,000; with performance pay and night-shift allowances it comes to about 60% of the national figure for systems administrators. In a hospital, IT counts as support staff, and its performance pay ranks behind the clinical departments.",
+  "facts": [
+    { "label": "Desktop Support / Network Administrator (current level)", "value": "0-2 years, ¥5,525–8,125 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
+    { "label": "Next level up", "value": "Systems Administrator (2-4 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥16,500 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Racking a server and connecting it to the network", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Handling a server alert and writing the post-incident review", "source": "AI exposure" },
+    { "label": "Open positions", "value": "326 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Outpatients open at eight; you're in at seven-thirty. First the temperature and humidity gauge and the UPS panel in the server room, then, on the monitoring page, the green lights for the three servers, HIS, LIS and PACS, checked one by one.",
+    "The on-call phone rings. The receipt printer at window three of the second-floor billing desk won't feed, with twenty-odd people queuing behind. You jog up: a paper jam. You pull it out and reload, and as you leave the woman at the window says: you lot are still the quickest.",
+    "A doctor in internal medicine wants you to install a plug-in for checking medical insurance on his computer. You say nothing can be installed on intranet machines without approval; he says the order came from above and it has to be done today. You go to the department head for the approval form.",
+    "You log today's jobs in the IT work-order book: three printers, one loose cable, a nurse locked out of her account. Beside you the department head is on the phone, arguing with the vendor about the medical insurance interface throwing errors again.",
+    "Halfway through a bowl of hot dry noodles in the canteen, radiology phones: scans won't load in PACS. You drop your chopsticks and run to the imaging building, trace it to a dead port on a switch, and move it to another.",
+    "In the afternoon you learn to query the database from the vendor's on-site engineer. He types one line of SQL and finds a billing record that had been stuck for two days; you copy it into your notebook letter by letter.",
+    "Before going home you swap two monitors in the inpatient building and blow the dust out of an old computer at the nurses' station. The head nurse slips you a mandarin and says that machine starts up like a tractor.",
+    "In bed, the on-call phone by your pillow. Just as you're falling asleep it lights up, a message from emergency: registration seems a bit slow. You get up and log in remotely to look."
+  ],
+  "ladder": [
+    { "title": "Desktop Support / Network Administrator", "stage": "Entry", "focus": "Maintain the office network, devices, user accounts and technical records." },
+    { "title": "Systems Administrator", "stage": "Junior", "focus": "Install and configure servers, databases and business systems; manage permissions, backups and monitoring." },
+    { "title": "Senior Systems Administrator / Operations Engineer", "stage": "Mid-level", "focus": "Automation, virtualization, security hardening and post-incident reviews." },
+    { "title": "Infrastructure Architect / IT Operations Manager", "stage": "Senior", "focus": "High-availability architecture, disaster recovery, team and process." },
+    { "title": "IT Manager / Director of Information Technology", "stage": "Head", "focus": "IT planning and team management." }
+  ],
+  "ai_tasks": [
+    { "name": "Racking a server and connecting it to the network", "how": "AI can generate configuration templates, check the IP and port plan and write the racking checklist. Installing the machine in the server room, plugging in cables, powering up and signing off on go-live still have to be done by a person's hands." },
+    { "name": "Handling a server alert and writing the post-incident review", "how": "AI can merge alerts, pinpoint likely causes, draft the commands to fix it and write a first draft of the review. A person judges how far the impact reaches, decides whether to run the fix, and answers for the result." },
+    { "name": "Making a system change (a patch or an upgrade)", "how": "AI can go through the patch notes, assess compatibility risks, and generate the change plan and rollback scripts. A person controls the go-live window, talks with the departments affected, deals with surprises on the spot and makes the call." },
+    { "name": "Supporting the cybersecurity classified-protection assessment and fixing the gaps", "how": "AI can run a gap analysis against the clauses of the classified-protection standard, gather the evidence and draft the remediation plan. A person deals with the assessment agency, carries out the fixes and confirms the hospital is really compliant." },
+    { "name": "Responding to a cybersecurity incident", "how": "AI can analyse logs, spot abnormal behaviour, piece together the attack chain and recommend isolation measures. A person assesses the situation on the ground, decides whether to cut the network or isolate machines, coordinates everyone and answers for the response." },
+    { "name": "Running the monthly backup-and-restore drill", "how": "AI can orchestrate the drill scripts, verify the restored data automatically and write the report. A person sets the scope of the drill, handles restores that fail unexpectedly, and confirms the services really work." },
+    { "name": "Automating the daily system checks with scripts", "how": "AI can write and revise the check scripts directly, run them on a schedule, collect the anomalies and produce reports. A person only needs to review the scripts' permissions and logic and spot-check the results." },
+    { "name": "Reviewing and tightening permissions in the business systems", "how": "AI can compare account lists, find permissions that are too broad and accounts left open after people leave, and produce a list of fixes. A person confirms with each department which permissions are justified and makes the call on revoking them." }
+  ],
+  "events": {
+    "e_first_night": "Your first night on call alone: at two in the morning the emergency registration computer blue-screens. You ride your e-bike to the hospital and have a spare machine in within fifteen minutes. The emergency nurse says thanks without looking up. You sit in the bike shed for a while before going home.",
+    "e_printer_king": "After a month, half your work orders are printers. You label all forty printers in the hospital with a number and model, photograph the usual jam points, and post the pictures in the hospital group chat.",
+    "e_fiber_cut": "Road works in the county town: a construction crew digs through the dedicated fibre line between the hospital and the medical insurance bureau, and outpatients can't use insurance cards all morning. You stand at the roadside with the telecom crew splicing it until noon; when you get back, the queue at billing reaches the main entrance.",
+    "e_his_down": "On a Monday morning the HIS database won't connect, the whole hospital stops for forty minutes, and doctors start writing prescriptions by hand. You and the vendor trace it together over the phone: the disk was full. That afternoon you write a script that reports disk space automatically every day.",
+    "e_lightning": "A summer thunderstorm knocks out a switch on the roof of the inpatient building and the whole sixth floor goes offline. You climb through the rain to the wiring closet on the roof and rewire it with a torch in your teeth.",
+    "e_doctor_thanks": "An old doctor can't get the hang of the new electronic medical records system, so for three days running you go to his consulting room at lunchtime and teach him button by button. On the fourth day he finishes a record on his own, shows it to you, a little pleased with himself.",
+    "e_insurance_switch": "The province's medical insurance system moves to a new platform, and on switchover night you stay up in the server room until morning, with over a hundred interface errors. Half an hour before outpatients open, the first insurance claim goes through, and the department head slaps the desk.",
+    "e_love": "In the lab department, where you often fix computers, there's a young lab technician who always pours you a glass of water. Then one day their computer isn't broken at all, and they phone you to come down anyway.",
+    "e_wedding": "The wedding banquet is at a restaurant in the county town, and the four people from IT fill a table. Halfway through the toasts your on-call phone rings; a colleague takes it from you and says: today you're off.",
+    "e_new_campus": "The hospital's new campus is finished, and in a month you move eight hundred computers, two hundred printers and every rack. In moving week you walk thirty thousand steps a day and your legs swell too much for your shoes. On the day the new server room opens, the hospital president comes to cut the ribbon.",
+    "e_child": "Your child is born in this hospital. Waiting in the corridor outside the delivery room, you fix a printer fault remotely on your phone, and when the nurse comes out calling your name you nearly miss it.",
+    "e_ransom_scare": "Word spreads through the chat groups that a hospital in the next county has been hit by ransomware and closed for two days. The county health commission sends out an overnight notice, you seal every USB port in the hospital, and the doctors curse you for a week.",
+    "e_neck": "Years of crawling under desks to run cables and crouching in front of racks to read lights have done in your neck and back. A colleague in rehab prescribes a course of physiotherapy and says you're the support staffer who comes most often.",
+    "e_ai_alert": "The hospital brings in an intelligent operations platform. Overnight alerts are now merged and assessed by it first, with suggested fixes, and only the ones that really need a person get to your phone. The on-call phone rings less than half as often in a month, and for the first time you sleep through several nights in a row.",
+    "e_ai_wrong": "Once the operations platform suggests restarting the PACS database to clear an alert, just as radiology is uploading a CT scan. You don't press Run, and wait until the upload finishes. Afterwards you add a rule: no automatic restarts of any imaging service during the day.",
+    "e_rating": "The hospital is going for a higher rating for its electronic medical records. On the day the expert panel inspects, you stay in the server room pulling up data for them screen by screen. The rating passes, and at the all-staff meeting the president names the IT department.",
+    "e_township": "The county is forming a medical consortium, and the systems of twenty-odd township health centres must be linked to the county hospital. You spend a month driving round the townships. At one health centre the server sits on a cardboard box in the pharmacy, beside an electric fan.",
+    "e_parent_ward": "Your father is admitted to cardiology in your own hospital. Every day after work you sit with him a while. When the nurses' station computer acts up you fix it in passing, and your father tells the man in the next bed: my kid runs all the computers in this hospital.",
+    "e_apprentice": "The department hires a young man fresh out of college. On his first night on call alone, he messages you at four in the morning: billing system is back up, I followed the page you wrote step by step.",
+    "e_ups_fail": "A widespread blackout hits the county town, the hospital's generator is a few minutes slow to start, and the server room's ageing UPS batteries hold out for only half the time they should. Two servers go down hard. You spend all night recovering data, and the next day you write a report on replacing the batteries; this time the president signs it on the spot.",
+    "e_old_chief": "The old department head who brought you into the job retires. On his last day he leaves you the tool bag he used for twenty years, with a crimping tool worn shiny inside.",
+    "e_ai_doctor": "Doctors start using AI to help write medical records and check prescriptions, and there isn't enough computing power; when outpatients get busy, the system lags. You write requests for money to expand the servers, and move non-urgent jobs into the small hours.",
+    "e_eyesight": "Reading the labels at the back of the racks gets harder; you have to switch on your phone torch and lean in close. The young ones scan QR codes with tablets to check the equipment register; you still prefer leafing through the handwritten one."
+  },
+  "choices": {
+    "c_bianzhi": {
+      "title": "Sitting the exam for a permanent post",
+      "situation": "This year the hospital is recruiting for one permanent state post in IT, with a written test and interview on computing basics and general public knowledge. You're contract staff; passing would mean a decent raise and a share in the year-end awards. But studying takes months, and the on-call shifts don't stop.",
+      "options": [
+        { "label": "On call by day, practice papers by night", "result": "You keep the general-knowledge book on the server room desk and read a couple of pages whenever the alerts go quiet. You come first, and on the day you take up the post your mother cooks a feast." },
+        { "label": "Skip it and get the technical skills solid first", "result": "You spend your evenings learning databases and Linux, installing and tearing down an old server in the server room again and again. The permanent post goes to a graduate student just back from another province." }
+      ]
+    },
+    "c_vendor": {
+      "title": "Who you learn the database from",
+      "situation": "Whenever the HIS system misbehaves, it's always the vendor's on-site engineer who goes into the database; the IT department only makes phone calls. The department head says that if you want, you can apply for read-only database access and learn alongside him. But then when something goes wrong with the data, you'll share the blame.",
+      "options": [
+        { "label": "Apply for access and learn", "result": "You spend six months watching slow queries and table locks with the on-site engineer. The first time you unstick a frozen inpatient billing record yourself, he says beside you: you're ready to work on your own." },
+        { "label": "Keep to the network and the desktops", "result": "You redraw the hospital's network map from scratch and label every switch. You still phone the vendor about the database, but now you know what to ask before you call." }
+      ]
+    },
+    "c_ransom": {
+      "title": "Do you cut the network",
+      "situation": "Wednesday morning, the busiest hour in outpatients, the security system raises an alarm: a computer on the intranet is calling out to a suspicious address, the way a virus looks for its kin. Cutting the whole outpatient building off is safest, but two hundred-odd patients are queuing to pay and collect medicine. Isolating just that one machine risks it having spread already. The department head is away at a meeting.",
+      "options": [
+        { "label": "Cut the outpatient building off now", "result": "The outpatient building is down for forty minutes, billing switches to handwritten records, and some patients shout at you. It turns out only two machines were infected and it hadn't spread. The president hears your report and says you were right to cut it; next time, tell me first." },
+        { "label": "Isolate that one and watch closely", "result": "You pull that computer's network cable and sit in front of the monitoring screen for two hours; nothing new appears. In the afternoon the department head comes back, reads the logs, and says you got lucky this time." }
+      ]
+    },
+    "c_soft_exam": {
+      "title": "The intermediate software exam, toward Systems Administrator",
+      "situation": "Both the hospital's professional title review and the competition for the Systems Administrator post look for the intermediate national qualification in computer technology and software. The exam runs twice a year with a low pass rate, and half its questions cover things you'll never use in a county hospital.",
+      "options": [
+        { "label": "Sign up", "result": "You sit it twice and pass the second time. When the certificate comes, someone in HR says you're the first support staffer in the hospital to hold one." },
+        { "label": "Skip it and let the work speak", "result": "You bind the year's work orders, incident reviews and check logs into three volumes and put them on the table at your interview for the post." }
+      ]
+    },
+    "c_wuhan": {
+      "title": "The vendor invites you to Wuhan",
+      "situation": "The HIS vendor's regional manager has his eye on you and wants you in Wuhan as an implementation engineer, travelling to hospitals all over the province to put systems in, at twice your current pay. But you'd be on the road two hundred days a year, leaving the county town and this server room you know better than any.",
+      "options": [
+        { "label": "Go to Wuhan as an implementation engineer", "result": "You drag a suitcase round every county hospital in Hubei, and at each one you look at their server room first and eat in the canteen with their network admin.", "end": "You went to the medical software company in Wuhan as an implementation engineer, later led an implementation team, and put systems into dozens of county hospitals. At each one, you still go down to the basement first and look at their server room." },
+        { "label": "Stay at the county hospital", "result": "You say you'd rather keep your own server room. The regional manager leaves a business card and says call him if you change your mind." }
+      ]
+    },
+    "c_ai_ops": {
+      "title": "How much power to give the operations agent",
+      "situation": "The intelligent operations platform can run its own checks, restart services itself and clear its own logs. The more power you give it, the better you sleep at night; but if it decides by itself to restart the HIS at the outpatient peak, the whole hospital stops. Someone has to write the rules, and if something goes wrong, that person signs.",
+      "options": [
+        { "label": "Write the rules yourself and hand over power step by step", "result": "You draw up a permissions table by system, time of day and action: at night it may restart print services on its own; touching the HIS by day needs a phone call. In six months it handles more than three hundred faults without a single mistake." },
+        { "label": "Let it alert only; people do the work", "result": "The platform only sends alerts and suggestions, and you type every command yourself. The on-call phone still rings several times a night, and you never miss one." }
+      ]
+    },
+    "c_dengbao": {
+      "title": "Leading the classified-protection assessment",
+      "situation": "The hospital must pass a Level 3 assessment under the national cybersecurity classified-protection scheme, and the president asks who in IT will lead it: checking hundreds of clauses for gaps, writing the remediation plan, and spending three days with the assessors. Done well, it gives you standing to move toward IT Operations Manager; done badly, it's the whole hospital's problem.",
+      "options": [
+        { "label": "Lead it", "result": "You set up a folding bed in the server room and in three months work through more than two hundred fixes one by one. The day it passes, you lock the stack of remediation records in a cabinet." },
+        { "label": "Let the vendor and the assessors run it", "result": "You only assist, fixing things from their lists. It passes, but costs half again over budget, and the president asks why twice." }
+      ]
+    },
+    "c_yigongti": {
+      "title": "Moving to the county consortium's IT centre",
+      "situation": "The county has set up an IT centre for its medical consortium, and wants someone from the county hospital to head it, responsible for the systems of twenty-odd township health centres and the village clinics. A higher rank and a bigger patch, but you'd be out in the countryside every day, and this server room would pass to someone else.",
+      "options": [
+        { "label": "Go to the IT centre", "result": "Township by township, you move servers off cardboard boxes into racks and set up remote consultation on village doctors' computers. One village doctor says a specialist in the county can now read an X-ray faster than he could cycle to the township." },
+        { "label": "Stay at the county hospital", "result": "You recommend the young man from your department and stay to run the server room. He comes back once a month to tell you what new trouble the township clinics have come up with." }
+      ]
+    },
+    "c_security": {
+      "title": "A cybersecurity firm comes calling",
+      "situation": "A company in Wuhan that does cybersecurity for healthcare is hiring, and having heard you handled a ransomware alert and led a classified-protection assessment, wants you as a security engineer running attack-and-defence drills and incident response for hospitals. More than double the pay, but you'd leave the hospital.",
+      "options": [
+        { "label": "Go into cybersecurity", "result": "For the first time you sit on the attacking side, and in half a day you're inside a hospital's test intranet. The first recommendation in your report is one your county hospital put in place ten years ago.", "end": "You joined a healthcare cybersecurity firm and led a team running attack-and-defence drills for hospitals across the country. Whenever you enter a server room, you still touch the UPS panel first and check what year the batteries were changed." },
+        { "label": "Stay at the hospital", "result": "You say the hospital can't do without someone. You hang up, and the on-call phone rings at once: the printer in paediatrics." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you hand the handwritten equipment register to the young department head, along with the old head's tool bag. You go down to the basement and push open the server room door: the same cold air, the lights blinking just the same. You lay the on-call phone on the desk, screen down. Out of the hospital gate, the outpatient building is lit floor by floor, and not one call comes.",
+    "burnout": "That winter you work several overnight shifts in a row, and one day, crouching in the server room to swap a hard drive, everything goes black as you stand up. The doctor tells you no more night shifts. You transfer to the hospital's equipment department, keeping the register of medical devices, working by day and sleeping at night. Someone else carries the on-call phone now; sometimes you wake in the night and still reach for the pillow beside you."
+  },
+  "stages": [
+    "Your work is in every corner of the hospital: the receipt printers at billing, the old computers at the nurses' stations, the switches in the outpatient building's wiring closets. When the on-call phone rings you run, and after each fix you log it in the work-order book; new doctors needing accounts and nurses who forget passwords come to you too. You number every device and build a register, and slowly the hospital's eight hundred computers become a map in your head.",
+    "The servers in the server room are yours now: database backups, patches and permissions for the HIS, LIS and PACS, starting each morning with the monitoring and backup logs. You put in new systems and change interfaces with the vendor's engineers, and whenever the medical insurance bureau issues a new notice you rework the configuration overnight. When doctors come to you, they've stopped saying the computer's broken and started saying the system's slow.",
+    "You start making machines do your work: scripts for automatic checks and backups, a dozen-odd servers moved onto a virtualization platform. When something fails, you lead the review, setting down the time, who did what and how to prevent it next time; you read the security alerts every day and push through patches, hardening and closed ports one by one. When the young ones on night shift hit trouble, yours is the first number they call.",
+    "You run the whole IT department's people and rules: on-call rotas, change procedures and emergency plans are yours to set, and every system upgrade needs your sign-off. You report the IT budget to the president, meet the assessors, the medical insurance bureau and the health commission, and negotiate the disaster-recovery room and active-active setup item by item for the hospital. You go into the server room less, but each time you do, you know which light shouldn't be on.",
+    "You are in charge of the hospital's whole information strategy: which systems to bring in over the next five years, how much to spend, what to protect first, all written into your plan and taken to the hospital board. You negotiate needs with every clinical department head and contracts with the vendors, and lead the whole department through ratings and inspections. You still go to the server room once a week, push open the door and stand a while, listening to the UPS."
+  ],
+  "work": [
+    "The pharmacy's queue-number screen has gone blank, and the pharmacist says patients are crowding the window. You climb a ladder for a look: the HDMI cable has been knocked loose. You push it in, the screen lights up, and a cheer goes up below.",
+    "Twenty new residents need HIS accounts, and you create them one by one from HR's list, setting permissions by department. One name has a rare character the system can't type, and you spend ages searching the font library.",
+    "In the sixth-floor wiring closet of the inpatient building you hunt for a broken network cable among seventy-odd tangled, unlabelled cables. You test them one by one with a cable tracer, and by the time you find it you've missed lunch.",
+    "At one in the morning the HIS database backup reports a failure. You log in remotely: the backup disk is full. You clear backups older than three months, rerun the job, and only go to sleep once the progress bar reaches a hundred percent.",
+    "The medical insurance bureau announces that from next month, settlement records must carry six more fields. You and the vendor's engineer spend three days on the interface documents and get the first record through in the test environment.",
+    "A department head demands access to every patient's test results across the hospital. By the rules you give him his own department only. He's very unhappy on the phone, and you send him the approval form.",
+    "You move twelve old servers onto a virtualization platform, choosing the small hours of a Sunday and switching them over one by one. When outpatients open at seven-thirty, not one person notices the systems have moved.",
+    "After the billing system goes down for twenty minutes, you lead the review: when it was noticed, who phoned, which step was slow. The last fix on the list is raising the billing desk's backup printers from one to three.",
+    "You automate the morning checks with scripts: disks, memory, backups, certificate expiry, a report in the department group chat at seven every day. The department head says that used to take two people a whole morning.",
+    "The HIS needs a major version upgrade. You set the change window for Saturday from ten at night to four in the morning and write twenty pages of rollback plan. At three the upgrade is done; you sign the release and send everyone home to bed.",
+    "The hospital is building a disaster-recovery room and the vendor offers two designs. You and your team do the sums for a week and choose the cheaper one, only changing the database replication from hourly to real time.",
+    "You write an emergency plan for the department and drill it every quarter. In the first drill you deliberately pull the main server's power to see how long it takes everyone to switch to the standby: eleven minutes.",
+    "At the hospital board you present the five-year information plan, and the president asks whether it could cost a little less. On your first slide are the news reports of three county hospitals shut down by ransomware.",
+    "The head of orthopaedics wants an imaging system to go with a surgical robot, needing its own network and large storage. You talk it through in his office all afternoon and in the end fit it into next year's budget.",
+    "The health commission comes to inspect data security, and you walk the inspectors from the server room to the records room, with a log for every item. As they leave, the team leader says it's the most complete county hospital he has seen this year."
+  ],
+  "past": [
+    "You went to middle school in the county town, where your family ran a small shop with an old computer on the counter for the accounts. Whenever it broke you took it apart, put it back, took it apart again; your father said one day there'd be nothing left of it.",
+    "In high school you were lopsided, good at maths, poor at Chinese. A month before the gaokao (college entrance exam), the old head of the county hospital's IT department came to your school to talk about computerization, and you remembered one thing he said: when the hospital's computers stop, the patients queue out of the front gate.",
+    "Your score was only enough for a vocational college, and you chose computer network technology at a school in Wuhan. The first time you got a switch working in the lab, you talked to your mother on the phone in the dorm corridor for half an hour.",
+    "In the summer of your second year you worked as the network admin at an internet cafe in Wuhan's Optics Valley: three hundred machines, and in one overnight shift you could handle twenty-odd it's frozen and the screen's gone black. The owner said you were quick, and asked whether you'd come back after graduating.",
+    "Your internship was with a medical software company in Wuhan, following an implementation engineer as he put a system into a district hospital. The first time you walked into a hospital server room, you thought the cold air smelled good.",
+    "At graduation your mother phoned to say the county hospital's IT department was hiring a network admin on contract, do that for now. You went home to the county town; the man who interviewed you was the old department head who had come to your school, and he no longer remembered you."
+  ],
+  "late": {
+    "pension_note": "Estimate: in your contract years the county hospital paid into the enterprise employees' pension; once you took up the permanent post it moved to the public-institution pension plus an occupational annuity, never broken, so in retirement you will draw a little over 50% of final monthly pay.",
+    "scenes": [
+      "In your first month of retirement you wake several times a night and reach for the pillow beside you, where the on-call phone no longer is. You lie back and listen to the rain outside for a while.",
+      "The old people in your estate all know you as the one who fixes computers, and they bring their phones to ask how to book appointments and check test results. You teach each one, and ask those who've learned to teach someone else.",
+      "You go to the county hospital as a patient and register at a self-service kiosk; the screen is much clearer than in your day. You stand beside the machine for a while, watching how other people use it.",
+      "In your first year in the equipment department you leave on time every day and can watch a whole TV drama in an evening. Only when you pass the stairwell down to the basement of the admin building do you still pause.",
+      "Your neck is a little better, and at weekends you take your child to fly kites by the river. When the lines tangle you sort them out strand by strand, the way you used to sort network cables in the wiring closets.",
+      "When the young network admin hits a problem he can't crack, he still comes to the equipment department to ask you. You don't touch the keyboard; you just tell him which log to look at first.",
+      "For the first few months in the new place, when someone's phone rings with the same tone as the old on-call phone, you still give a start.",
+      "Home for New Year, you look in at the county hospital. The IT department has moved up to the second floor, with windows now, and the young man you trained is deputy head.",
+      "At an industry conference you run into the HIS vendor's old on-site engineer, retired now. When you bring up that frozen inpatient billing record, you both laugh.",
+      "Checks, alerts, restarts, reports: the systems do all of that themselves now. When people talk about a hospital's network admin, they mean the person who knows when not to press Enter.",
+      "The old street in the county town is torn down, and your family's little shop with it. The old computer you took apart countless times sits on top of a cupboard at home to this day.",
+      "Your hands aren't so steady now, and it takes two or three tries to line up a network plug. When your grandchild's tablet won't connect, you're still the first person they call."
+    ],
+    "closing": {
+      "retire": "Many years later, one night, the county town loses power for a while. The room goes dark all at once and you sit on the sofa without moving, counting the seconds, until the fridge starts up again with a hum. You smile, get up, and pour yourself a glass of water.",
+      "burnout": "Many years later you walk slowly along the river embankment in the county town, the inpatient building of the hospital lit window by window in the distance. You look for a while, thinking about which floor's wiring closet you once cabled.",
+      "end": "Many years later, sorting a drawer, you find the crimping tool the old department head left you, half the paint worn off its handles. You squeeze it twice, click, click, still as tight as ever."
+    }
+  }
+}

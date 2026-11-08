@@ -1,0 +1,205 @@
+{
+  "id": "school-counselor-jx",
+  "occupation": "Mental Health Counselor",
+  "role": "Full-time mental health teacher at a county-town secondary school",
+  "headline": "A psychology graduate from a teachers' university who went home to a county town in southern Jiangxi, where you alone keep watch over two thousand-odd students and one eight-square-metre counseling room",
+  "unit": "A county-town secondary school under Ganzhou, Jiangxi (middle and high school, half the students board)",
+  "unit_type": "Public county-town secondary school",
+  "city": "A county under Ganzhou, Jiangxi",
+  "city_tier": "County town",
+  "education": "Bachelor's degree (Applied Psychology)",
+  "level": "You can administer and score the standard questionnaires, but you have only practised counseling techniques in class. You have not taken a single real case, and your supervised hours stand at zero",
+  "intro": "The principal shows you the counseling room: an eight-square-metre space at the turn of the stairs, one sofa, a box of sandplay figures, the words Heart Station pasted on the door, the glass half covered in coloured paper. Two thousand three hundred students, and you are the only counselor. As of today, the key to that door hangs on your key ring.",
+  "salary_note": "Estimate: a newly appointed teacher with a permanent state post at a county-town public school in southern Jiangxi takes home about ¥4,000; with performance pay and the year-end bonus it comes to roughly 50-60% of the national counseling figure. Counselors teach no core subject, so their performance pay often ranks near the bottom of the school.",
+  "facts": [
+    { "label": "Counseling Assistant (current level)", "value": "0-1 years, ¥4,000–7,000 a month (national average)", "source": "Career map" },
+    { "label": "Next level up", "value": "Junior Counselor (1-3 years)", "source": "Career map" },
+    { "label": "Monthly pay, first year in the field", "value": "¥11,200 (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Picking up risk signals at a first interview and making the crisis triage decision", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Building the case conceptualization and long-term plan for a client with severe personality-disorder traits from MMPI-2-RF results", "source": "AI exposure" },
+    { "label": "Open positions", "value": "10 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Mornings in the county town smell of rice noodles. You eat a bowl of mixed noodles at the school gate and watch the boarders file from the dorms to the canteen. A few walk with their heads down; you note the colour of their uniforms.",
+    "During morning reading you collect this week's duty roster from the student affairs office. The deputy director hands you a stack of forms: the start-of-term mental health screening for Year 7 and Year 10, results due Friday.",
+    "Class 7, Year 7, their one psychology lesson of the week. You have prepared a game called Getting to Know Myself. The homeroom teacher watches from the back door for ten minutes and, on the way out, says he'll be borrowing next week's slot to go over a maths paper.",
+    "Lunch break, two knocks on the counseling room door. A Year 8 girl stands there and says she's just come to look. She sits for twenty minutes, plays a little with the sandtray, and leaves without a word. You write down the time.",
+    "In the computer lab you switch the machines on one by one and have the Year 10 newcomers fill in the questionnaires. One boy answers never to every item, done in two minutes. You put a dot beside his name on the list.",
+    "A homeroom teacher asks whether the kid in his class who sleeps on his desk all day has a psychological problem. You say you need to meet him first. The teacher says then be quick, there's a monthly exam next month.",
+    "Evening study hall. You tidy today's notes in the counseling room. In the corridor a parent is on the phone asking for a child, in Hakka; you catch about half of it: both parents are in Dongguan and only come home at New Year.",
+    "Back in the teachers' temporary housing you open your university notes and read through the crisis assessment protocol once more, then take your phone off silent."
+  ],
+  "ladder": [
+    { "title": "Counseling Assistant", "stage": "Entry", "focus": "Help with intake interviews, sort questionnaires and open case files, and sit in on colleagues' work. You move up by completing the basic ethics and training assessments." },
+    { "title": "Junior Counselor", "stage": "Junior", "focus": "See clients with everyday problems (mild to moderate anxiety, conflicts with others) under weekly supervision. You move up by logging 300-500 case hours and completing case conceptualizations." },
+    { "title": "Counselor", "stage": "Mid-level", "focus": "Practise steadily on your own, handle complex cases and small groups, and build up technique in a particular school of therapy. You move up by earning registry certification or passing 1,500 case hours." },
+    { "title": "Senior Counselor", "stage": "Senior", "focus": "Develop your own specialism, work with severe, complex distress and early personality trauma, and take on quality control and training for the service. You move up on registered-psychologist standing and professional reputation." },
+    { "title": "Clinical Supervisor", "stage": "Expert", "focus": "Run individual and group supervision for colleagues, lead consultations on difficult cases and develop training courses; serve as a clinical director or open a practice of your own." }
+  ],
+  "ai_tasks": [
+    { "name": "Picking up risk signals at a first interview and making the crisis triage decision", "how": "AI can help organize intake notes and flag keywords and risk signals. But drawing ethical lines, judging a crisis and deciding where to refer someone is a person's responsibility, made from what they see in the room and the trust between them." },
+    { "name": "Building the case conceptualization and long-term plan for a client with severe personality-disorder traits from MMPI-2-RF results", "how": "AI can interpret the scale scores, sort out validity problems, and draft the case conceptualization and a 12-month plan outline. A person has to judge against the client's real history, choose and adjust the psychodynamic techniques, and answer for the plan." },
+    { "name": "Administering the PHQ-9 and GAD-7 together at intake and labelling the risk level", "how": "AI can guide the client through the questionnaires, score them automatically, assign a risk level by the standard criteria and produce an electronic label. A person only needs to spot-check, but must review every moderate, high-risk or urgent result." },
+    { "name": "Catching crisis moments live in an online session and taking over by hand", "how": "AI monitors for high-risk statements in real time, raises an alert at once and pushes a summary of the session. A person takes over within 90 seconds to review, calm the client, reassess the risk and start a referral, and these steps must be a person's responsibility." },
+    { "name": "Leading a group on growing in relationships and producing a progress profile for each member", "how": "AI can turn session notes and ratings into a radar chart of each member's abilities and a first draft of feedback. A person has to lead the twelve-member group in the room, handle the interactions and emotions between members, and check whether each profile is accurate and fit to show the member." },
+    { "name": "Making short educational videos on keeping the mind active for older people in the community, and signing off on compliance", "how": "AI can write the script, add subtitles, set it in large type, generate the visuals and run a first compliance check. A person has to judge whether it really speaks to older viewers, carry it through three rounds of review for content, ethics and technical quality, and answer for putting it online." }
+  ],
+  "events": {
+    "e_class_borrowed": "In the month before midterms, three homeroom teachers take turns borrowing your psychology lessons. You write borrowed beside those slots on the timetable; by week five you still haven't taught one.",
+    "e_first_knock": "The girl who only came to look comes a third time and finally speaks: her grandmother is in hospital, her parents can't get back from Guangdong, and every night after study hall she goes to sit by the bed. You agree to meet every Tuesday lunchtime.",
+    "e_screen_flag": "The screening flags more than forty students and you see them one by one. Most just slept badly before exams. Two you decide to follow every week, and you quietly rearrange their seating with the homeroom teachers.",
+    "e_parent_angry": "A parent phones the principal's office asking what right the school has to say his child is sick. You make a home visit and sit in his front room for an hour, turning the word alert into the words a little more care.",
+    "e_counselor_friend": "The teachers in your office find out you studied psychology, and over lunch they take turns telling you about mothers-in-law, children, insomnia. You learn to smile and say: let's talk about that properly in my room some time.",
+    "e_525": "For mental health week in late May you set up a row of game stalls on the sports field: a blind walk, trust falls, a wish wall. The most common wish on the wall is for Mum and Dad to come home for the Mid-Autumn Festival.",
+    "e_supervision_cry": "In an online supervision session you present the case of a left-behind child, a kid whose parents work in another province, and halfway through you stop. Your supervisor says: don't rush to rescue him. First look at yourself as a child.",
+    "e_room_moved": "The school is short of classrooms after adding classes, and the counseling room is moved to the far end of the top floor of the lab building. You carry the sandplay boxes up one by one, and the knocks on the door drop by half.",
+    "e_graduate_msg": "A student you saw for two years gets into a university in Nanchang. On the first day of term she sends you a photo from her dorm window: Teacher, the nights here are pretty quiet too.",
+    "e_blind_date": "The aunties of the county town start setting you up on blind dates, and the first question is always whether psychology counts as a core subject. On the fifth date, the person across the table actually listens for half an hour while you explain sandplay.",
+    "e_wedding": "The wedding banquet is at a restaurant in town, forty tables. Several former students chip in for a bouquet; the card is signed All the Visitors of the Heart Station.",
+    "e_child": "Your child is born. Back from parental leave, you pin a new opening-hours sheet on the counseling room door, with one more line in small print: Thursday afternoons, out collecting my kid.",
+    "e_ai_screen_false": "The whole county switches to an online screening platform, and overnight the system pushes an alert list to your phone. One boy is flagged high-risk. When you talk to him, he admits he answered at random to see whether anyone would come looking for him.",
+    "e_ai_chatbot": "You find that plenty of students spend their nights talking to an AI companion on their phones. One says it's easier to talk to than people. You don't tell him to delete it. You only ask: the part it doesn't know, would you tell me?",
+    "e_compassion_fatigue": "One term brings three crisis cases back to back. You start waking at one in the morning on the dot, the students' words running through your head. Your supervisor tells you to keep one evening a week when you don't answer the phone.",
+    "e_title_lag": "When professional titles come up for review, you learn that counselors have no subject group of their own and never make up the teaching-hours quota. You queue with the Chinese literature group, at the very back.",
+    "e_county_lecture": "The county education bureau asks you to spend a morning teaching all the county's new homeroom teachers how to spot a student's emotional signals. Some take notes, some mark homework. Afterwards seven of them add you on WeChat.",
+    "e_parent_school": "You start a Sunday-afternoon group at the parents' school, and most of those who come are grandparents. One grandmother says she used to think a child who wouldn't eat was just being fussy.",
+    "e_mother_ill": "Your mother is diagnosed with a chronic illness and needs regular check-ups in Ganzhou. You move your weekend supervision to the evening and drive her to the city early on Saturdays. On the road she keeps asking about your students.",
+    "e_new_teacher": "At last the school hires a second counselor, more than ten years younger than you. You get her a copy of the key and go through your case-record templates with her page by page.",
+    "e_former_student_psych": "The girl who only came to look finishes a master's in psychology and goes back to Ganzhou as a primary-school counselor. In her first term she phones to ask how you set up the sandtray.",
+    "e_ai_report": "The platform can now write the process reports for group sessions and a growth profile for each student. You edit every one. The line you delete most often is: the student is emotionally stable.",
+    "e_voice": "After twenty-odd years of teaching your voice starts to go hoarse; the throat specialist says it's chronic. You keep a thermos and a box of throat lozenges in the counseling room, and offer students one when they come in.",
+    "e_old_room": "The school's new mental health centre has relaxation chairs, an anger room and a group room with a one-way mirror. In the little room at the very back, you hang the old Heart Station sign on the inside of the door."
+  },
+  "choices": {
+    "c_training": {
+      "title": "Paying your own way through long-term training",
+      "situation": "What you learned at university is enough for questionnaires and lessons. A year-long training in cognitive behavioural therapy, with weekly online supervision, costs nearly half a year's pay. The school won't reimburse it: a counselor who can teach a class is enough, they say.",
+      "options": [
+        { "label": "Sign up and study online at weekends", "result": "Every weekend you practise verbatim transcripts in front of the screen; supervision costs ¥300 an hour. Your first case conceptualization comes back covered in red; the second, half as much." },
+        { "label": "Focus on teaching well first", "result": "You rewrite the plan for every psychology lesson, and a few fewer homeroom teachers borrow your slots. When a case comes in, you follow the book step by step." }
+      ]
+    },
+    "c_extra_post": {
+      "title": "The principal wants you to take on a homeroom class",
+      "situation": "The school is short-staffed. The principal says you're young; take a Year 7 homeroom, it'll put your training to use. Homeroom teachers get an allowance and it counts for promotion. But the students will know that the counselor is also the one who enforces discipline.",
+      "options": [
+        { "label": "Take it on", "result": "You are in the classroom by six-thirty every morning for reading, checking dorms, collecting phones, running parent meetings. The kids in your class never come to the counseling room, and fewer from other classes come too." },
+        { "label": "Decline and keep the counseling room", "result": "You spend a long time explaining dual relationships to the principal. He sighs and gives the class to a new PE teacher. At the end of the year your review says satisfactory." }
+      ]
+    },
+    "c_confidential": {
+      "title": "Do you give the alert list to the homeroom teachers",
+      "situation": "The student affairs office wants a list of priority students from the screening and counseling sent to every homeroom teacher, so they can keep an eye on them. Some of those kids told you things only because they trusted you. But if something happens, the homeroom teacher is the person closest to them.",
+      "options": [
+        { "label": "Tell only who needs to know, in person", "result": "You send no list. You find each homeroom teacher and tell them in person only what to watch for, never what the child said. It takes twenty-odd extra trips, and one teacher says you're being too fussy." },
+        { "label": "Send the list as asked", "result": "The list goes out. One homeroom teacher names a child in a class meeting and tells him to go and talk to the counselor more often. That child never comes again." }
+      ]
+    },
+    "c_registry": {
+      "title": "Applying to the registry as an assistant psychologist",
+      "situation": "To move up to Counselor, you need certification from the professional registry: you are still more than a hundred supervised hours and a pile of transcripts short. There is no supervisor in the county, so it means weekly online sessions with someone in Ganzhou or Nanchang, another ¥20,000-plus a year.",
+      "options": [
+        { "label": "Grind out the hours", "result": "You give every Wednesday evening to supervision and transcribe recordings until midnight. The day the certification comes through, you add a line in small print to the sign by the counseling room door." },
+        { "label": "Let it go; the students keep you busy enough", "result": "You spend the supervision money on a new set of sandplay figures and picture books, and the students come more often. The name on the certificate can wait." }
+      ]
+    },
+    "c_ai_platform": {
+      "title": "Becoming the screening platform's administrator",
+      "situation": "The county education bureau has bought an online screening and alert platform, and every school must name an administrator: set the alert thresholds, review the lists the system pushes, write the procedure for a person to take over. No extra pay, a lot of meetings.",
+      "options": [
+        { "label": "Take it on and set the rules properly", "result": "You go back through years of cases to tune the thresholds, and write one page on which alerts must be seen in person within twenty-four hours. Other schools end up using your page." },
+        { "label": "Let the IT teacher handle it", "result": "The IT teacher takes the platform. You see every student on the lists it sends, sometimes forty a week, most of them false alarms, and you get through them one by one." }
+      ]
+    },
+    "c_city_school": {
+      "title": "A school in Ganzhou city wants you",
+      "situation": "A new public school in the city of Ganzhou is hiring a counselor. It has its own mental health centre and three colleagues, better pay, and your child could go to school in the city. But the few students you are following in the county are in their most important year.",
+      "options": [
+        { "label": "Transfer to the city", "result": "Your counseling room has a one-way mirror and recording equipment, and there is a teaching seminar every week. You promise the students back in the county you'll come once a month, and keep it up for more than a year." },
+        { "label": "Stay in the county", "result": "You turn the transfer down. That June, a senior you have been seeing finishes his last exam and waves to you at the school gate." }
+      ]
+    },
+    "c_county_center": {
+      "title": "The county guidance centre needs someone senior",
+      "situation": "The county has set up a mental health education guidance centre for its schools, and the bureau wants to transfer you there to train the counselors of more than forty schools and run case consultations on crises. It is a road toward Senior Counselor. But you would leave the room where you see students every day.",
+      "options": [
+        { "label": "Go to the centre", "result": "You visit three or four township schools a week, helping new counselors set out sandtrays in village schoolrooms. When a crisis case comes up, the first call is to you." },
+        { "label": "Stay at the school and help on the side", "result": "You don't transfer; you only agree to run a monthly online case seminar for the county's counselors. The students still knock at lunchtime every day." }
+      ]
+    },
+    "c_hospital": {
+      "title": "Becoming a psychotherapist at a hospital",
+      "situation": "The psychiatric hospital in Ganzhou is hiring psychotherapists, which means passing the health system's psychotherapy qualification exam. There are doctors, wards and proper supervision, and everyone you see has a diagnosis. You would leave the school and give up your post for a different kind.",
+      "options": [
+        { "label": "Take the exam and go", "result": "You study for most of a year, pass the psychotherapist qualification and hand in your resignation. In your last psychology lesson you ask the students to write one sentence to themselves, fold the slips and put them in a tin box.", "end": "You became a psychotherapist at the psychiatric hospital in Ganzhou, walking every day between the outpatient clinic and the wards. When a child in school uniform comes in, you ask one extra question: which school?" },
+        { "label": "Stay at the school", "result": "You put the application form in a drawer. The next day at lunchtime, two knocks come at the door as usual." }
+      ]
+    },
+    "c_platform_job": {
+      "title": "A mental health platform in Shenzhen comes calling",
+      "situation": "A Shenzhen company that offers counseling online is building a product for teenagers and wants you to design its content and crisis procedures: to turn your years in a county-town school into courses, questionnaires and rules for AI conversations. The pay is more than double what you earn now.",
+      "options": [
+        { "label": "Go to Shenzhen", "result": "In a meeting room you tell a group of engineers that when a left-behind kid says I'm fine, nine times out of ten he isn't. They write that sentence into the system's prompt rules.", "end": "You went to a platform in Shenzhen to build products for teenagers, and the crisis takeover procedure you wrote runs on millions of phones. Now and then you still open the dashboard to see how many times I'm fine has handed a conversation to a person." },
+        { "label": "Stay", "result": "You say no, and agree to advise them online a few times. After the call you go to unlock the evening study hall; in the corridor someone is still on the phone, speaking Hakka." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "In your last term you hand the key to the counseling room to your young colleague, along with a duty log full to the last page. Before you leave you wipe every little figure in the sandtray, every house and bridge, and set them back in their compartments. You leave the opening-hours sheet on the door. Outside the gate, the noodle-shop owner asks whether you can sleep in tomorrow.",
+    "burnout": "That year you sleep badly for months on end, and your hand shakes when you answer the phone. Your supervisor says it's time to stop for a while. You ask to move to the school library and spend your days shelving books, taking no more cases. A new teacher opens the counseling room door now, and when you pass it, you soften your steps."
+  },
+  "stages": [
+    "Most of your work lives in spreadsheets: for the start-of-term screening you switch on the lab computers one by one, export the SCL-90 and PHQ-9 scores, and open a lifelong file for every flagged student. When the student affairs office calls, you go to the meeting; when a homeroom teacher comes with a list, you check the files before you answer. The ones you actually sit down with are the few who knock at lunchtime.",
+    "You take your own cases now: a few regular students each week, Tuesday and Thursday lunchtimes, fifty minutes a session, then the notes and the risk assessment form. Every Wednesday evening you have online supervision and read your transcripts aloud line by line. You learn to brief the homeroom teacher first and phone the parents second, and which sentences can be said and which must stay in this room.",
+    "You can take the hardest ones now: the kid who has refused school for three months, the one caught in a custody fight, the one who keeps saying he doesn't want to live. You teach every homeroom teacher how to read emotions, and run an eight-session relationships group for Year 7 with a whiteboard and a circle of chairs. When something happens at school, the principal calls you into his office first.",
+    "Your phone becomes the county's hotline: when a township school has a crisis case, they call you, and you drive out to sit at a table in a village school office with the principal, the parents and the homeroom teacher and agree a plan. You review new counselors' case notes and revise their group plans, and the platform's alert thresholds need your signature.",
+    "You rarely see students directly now; you see teachers. Twice a week you run online group supervision where a dozen counselors from across the city take turns presenting cases, and you listen, ask, and point out where someone crossed a line. You chair the consultations on difficult cases, sign off the county's psychology curriculum, and now and then spend an afternoon teaching trainees at the teachers' university."
+  ],
+  "work": [
+    "In the Year 10 screening results, one girl has answered nearly every day to question nine of the PHQ-9. That same afternoon you find her homeroom teacher and call her to the counseling room on the pretext of handing out workbooks.",
+    "The student affairs office wants a summary of this term's mental health education work, with photos. You search your phone and find only two: the empty counseling room, and the wish wall on the sports field.",
+    "A Year 7 boy is marched to the counseling room by his homeroom teacher and announces as he walks in that he isn't sick. You don't ask why he's here. You hand him a pen and ask him to draw a tree. He draws a very small tree, in a corner.",
+    "In your sixth session with a Year 8 boy who has stopped wanting to go to school, you use a thought record to take apart his line, I'm just stupid anyway. For the first time he writes down a counter-example himself: seventy-eight on last week's physics quiz.",
+    "Your supervisor listens to your recording and points out that around minute twenty-three you interrupted your client three times. You copy that stretch of transcript onto the first page of your notebook and read it before every session.",
+    "At ten at night a boarder's roommate knocks at your door in the teachers' housing: she has been crying under her quilt for an hour. Following the crisis protocol you notify the dorm supervisor and the homeroom teacher first, then put on your coat and walk to the dorm block.",
+    "You run an eight-session relationships group for Year 7, twelve kids in a circle. In the fourth session the boy who never speaks takes the talking stick and tells them about his father in Guangdong.",
+    "A senior has been at home on leave from school for three months, and his parents beg the school to do something. You visit four times in a row. On the fourth he comes out of his room and sits at the far end of the front room.",
+    "You teach the homeroom teachers to read emotional signals, using real moments from over the years with the names changed. Afterwards an old Year 11 teacher stays behind and says he's thinking of a kid in his class.",
+    "A township middle school reports a crisis case. You drive an hour to get there and, in the principal's office with the parents and the homeroom teacher, settle which hospital to refer to and the conditions for coming back to school. Back home you write three pages of consultation notes.",
+    "In one month the screening platform pushes more than eight hundred alerts across the county. You and the IT centre tune the thresholds against the data and lower the weight on the sleep item by a notch. The next month there are thirty percent fewer false alarms.",
+    "A new counselor hands in her first group plan, eight sessions packed tight with activities. You write one line in the margin: leave some blank space, let the kids do the talking.",
+    "At Thursday evening group supervision, a young counselor describes staying with a child until midnight. You don't praise her first. You ask: that night, who was staying with you?",
+    "The city is compiling a teaching guide for school psychology lessons, and you are given the chapter on left-behind children. You spread twenty years of moments, names changed, across a table and cut them down to five.",
+    "The teachers' university asks you to teach its trainees for an afternoon. A student asks whether a counselor at a county school is any use at all. You say: go and keep watch at that door for a year, then ask me again."
+  ],
+  "past": [
+    "The year you turned fourteen, your parents left for an electronics factory in Dongguan, and you stayed in the township with your grandmother. Half your class were like you, queueing every Sunday night at the school shop's phone to call Guangdong.",
+    "In your first year of high school, the girl who shared your desk suddenly stopped coming. The teachers only said there was trouble at home. You never found out what happened, and you carried it for years.",
+    "Your gaokao (college entrance exam) score cleared the line for first-tier universities by a little. You paused a long time over Applied Psychology on the form; on the phone your father asked what you'd do with that, tell fortunes? You chose it anyway, at a teachers' university in the province.",
+    "In your second year you did a placement at a school in Nanchang, shadowing its counselor for a term. She had a mental health centre with a sandplay room and three colleagues, and you drew a floor plan of it in your placement notebook.",
+    "In your third year you volunteered on the university counseling centre's hotline. One call came in the small hours; you worked through the questions just as you'd been trained, and after hanging up you sat in the corridor for a long time without getting up.",
+    "In your final year, agencies in Nanchang and Shenzhen both offered to keep you on after internships. In the end you sat the teacher recruitment exam back in your home county, where there was one opening for a mental health teacher, and came first in both the written test and the interview. Your mother said: good, come home, it's close."
+  ],
+  "late": {
+    "pension_note": "Estimate: a teacher with a permanent post at a county public school pays into the public-institution pension and an occupational annuity from the first day to the last without a break, and will draw roughly 60% of final monthly pay in retirement.",
+    "scenes": [
+      "On the first day of term after you retire, you wake early, walk as far as the school gate, turn back, and sit in the noodle shop until you have finished a bowl.",
+      "The neighbourhood committee asks you to come one afternoon a week and talk to the grandparents who pick up the grandchildren about how to talk with kids. Not many come, and each time it's the same few faces.",
+      "You pack a box of your lecture notes and lesson plans from over the years and donate it to the county guidance centre. The young director says they work better than anything online.",
+      "In your first year at the library you spend your days labelling books and shelving them. When a student borrows a psychology book, you look at him a moment longer and ask nothing.",
+      "You start seeing a counselor of your own again, once a week, an old man in Nanchang you have never met in person. This time, you are the one on this side of the screen.",
+      "A student you once saw recognizes you at the market, her own child in her arms, and asks if you remember her. You do. You even remember the jacket she wore that day.",
+      "For the first few months in the new job, at twelve-twenty every day you glance at the door without meaning to, as if someone is about to knock.",
+      "You go back to the county for a training session for counselors and sit in the audience while a young colleague talks about sandplay. Halfway through she spots you and says: that was my teacher.",
+      "Home for New Year, you pass your old school. The little room at the turn of the stairs has become a records room, but the outline of the Heart Station sign is still on the door.",
+      "Screening, scoring, writing reports: the system does all of that now. Every school in the county has a counselor, and when people talk about counselors, they mean the person who will sit down and stay with you.",
+      "Your grandmother's old house in the township is torn down. You go back to look, and in the lane outside a group of children are waiting for parents who come home at weekends.",
+      "Your hearing isn't what it was, and your grandson has to lean in close to talk to you. You still wait for him to finish before you speak."
+    ],
+    "closing": {
+      "retire": "Many years later, one afternoon, you are airing quilts on the balcony when the end-of-school bell rings below. You stop and wait for the sound of feet to pass before you go back to smoothing the quilt flat.",
+      "burnout": "Many years later you are walking slowly by the river in the county town. A child in school uniform sits alone on the steps. You sit down too, a few steps away, and watch the water for a while.",
+      "end": "Many years later, sorting through your things, you find the tin box of folded slips from your last psychology lesson. You don't open it. You put it back."
+    }
+  }
+}

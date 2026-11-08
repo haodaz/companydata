@@ -1,0 +1,201 @@
+{
+  "id": "ux-designer-gz",
+  "occupation": "UI/UX Designer",
+  "role": "UI/UX designer at a mobile game studio",
+  "headline": "An art-school graduate in visual communication who spent two years cutting image assets at a mobile game company in Guangzhou's Pazhou district, and has just been given a whole game system's interface and interaction to design on your own",
+  "unit": "A game company in Guangzhou's Pazhou district making anime-style mobile games (about seven hundred people, three project teams)",
+  "unit_type": "Game company",
+  "city": "Guangzhou",
+  "city_tier": "Tier 1",
+  "education": "Bachelor's degree (Visual Communication Design)",
+  "level": "Your icons, buttons and pop-ups are fast and reliable, and you know Figma components and assembling UI in Unity well. This is the first time you've set the interaction for a whole system from scratch, and you've only sat in on usability tests twice",
+  "intro": "On the day you're made permanent, the lead artist drags a requirements ticket into your name: the new version's guild system, fourteen screens, from the red notification dot on the entrance to the member list, interaction and visuals both yours. The game designer posts in the group chat, review next Wednesday, followed by three cupped-fist emojis. As of today, the person who stands up to present at review is you.",
+  "salary_note": "Estimate: Guangzhou game companies pay UI designers with two or three years' experience ¥12,000-15,000 a month, with a profit share when a game launches, about 40% above the national figure. When a project is cancelled the bonus goes to zero; in this business, income follows the project.",
+  "facts": [
+    { "label": "UI/UX Designer (current level)", "value": "2-4 years, ¥7,820–11,500 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
+    { "label": "Next level up", "value": "Senior UI/UX Designer (4-7 years)", "source": "Career map" },
+    { "label": "Pay after 10+ years", "value": "¥21,000 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Running a usability test", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Producing interaction drafts from a product requirements document", "source": "AI exposure" },
+    { "label": "Open positions", "value": "191 related job listings nationwide, 12 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You come out of the urban village at Kecun as the rice-roll shop in the lane lifts the lid on its first steamer. With a rice noodle roll and a soy milk in hand you squeeze onto Line 8, three stops to Pazhou.",
+    "You open Figma. Last night the game designer left twenty-three comments on your guild main screen; the first says can this feel a bit grander? You tag it to ask about.",
+    "Requirements review. Game designer, programmers, lead artist and QA fill the room, and you put the interaction flowchart up on the wall. A programmer glances at the member list and says a two-thousand-member guild will stutter when you scroll; it needs pages.",
+    "Lunch downstairs. A table is talking about how the team next door was cancelled last week, forty-odd people, half reassigned, half gone. Someone says AI can turn out two hundred icons in a night now.",
+    "In Unity you drop last version's shop screen in to check it. The nine-slice assets blur at the corners when they stretch; you go back and cut a new set, then go over the anchors with the programmer again.",
+    "Operations sends a screenshot of the data: eighteen percent of players drop out at step three of the tutorial. The lead artist asks what you think. You say the step-three button is half hidden behind an event pop-up.",
+    "Walkthrough before the build is locked. You compare design files with screenshots from real phones page by page and log eleven fidelity bugs in the tracker; the last is a gold outline missing one pixel.",
+    "Back at your rented room, the walls are beading with water again: the damp spring weather Guangzhou calls the return of the south wind. With the dehumidifier running you scroll the player forums, where someone is calling the last version's inventory screen inhuman. You read it for a long time."
+  ],
+  "ladder": [
+    { "title": "Assistant / Junior UI Designer", "stage": "Entry", "focus": "Execute interfaces to requirements; master the tools and the design standards." },
+    { "title": "UI/UX Designer", "stage": "Junior", "focus": "Own the interaction and interface of one product line on your own, and do user research." },
+    { "title": "Senior UI/UX Designer", "stage": "Mid-level", "focus": "Lead data-driven redesigns, and push requirements and the business forward." },
+    { "title": "Principal Designer / Design Expert, or Design Lead", "stage": "Senior", "focus": "On the specialist track, build methods and the experience across products; on the management track, lead a team." },
+    { "title": "Design Director", "stage": "Director", "focus": "Team management, project coordination and design direction." }
+  ],
+  "ai_tasks": [
+    { "name": "Producing interaction drafts from a product requirements document", "how": "From a requirements document AI can quickly generate flowcharts, page structures and several low-fidelity interaction drafts. A person has to judge which path really fits how users behave, fill in the edge cases the document never mentions, and agree the trade-offs with product and engineering." },
+    { "name": "Validating a redesign with data", "how": "AI can pull the data, run comparisons and write a first summary of what changed and possible reasons. A person has to decide which metrics to look at, rule out other influences such as events or channel changes, and conclude whether the redesign counts as a success." },
+    { "name": "Handling an interface problem that is driving users away after launch", "how": "AI can help locate the pages and steps with high drop-off, go through user feedback, compare old and new versions, list a few suspects and draft fixes. Under time pressure a person has to judge the real cause, decide whether to roll back or adjust, answer for the result, and get engineering to ship it fast." },
+    { "name": "Building screens to the design standards and handing them to engineering", "how": "Once the standards and component library are complete, AI can turn interaction drafts into visual designs to spec, apply components automatically, check spacing and colour, and export annotations and assets. A person only spot-checks the details and brand feel and confirms the build matches with engineering." },
+    { "name": "Building or updating the design system's component library", "how": "AI can scan every product line's interface for inconsistent styles and duplicate components and draft the component documentation and naming. A person has to decide what the standard is, which differences to keep, and get each product team to actually adopt it." },
+    { "name": "Running a usability test", "how": "AI can help write the test script, transcribe interview recordings and summarize the problems. But recruiting the right users, moderating in the room, noticing expressions and hesitation, asking why, and judging whether the findings can be trusted all rest mainly on people." },
+    { "name": "Running an accessibility self-check", "how": "AI can automatically check measurable issues such as contrast, font size, tap targets and screen-reader labels, and suggest fixes. A person has to judge against how real older or disabled users play whether it truly works, and decide which issues must be fixed before launch." }
+  ],
+  "events": {
+    "e_first_review": "At the guild system's first review, the producer cuts you off halfway: players have to tap five times to get to donations, cut it to two. You go back and redraw the whole flow, and the second review passes first time.",
+    "e_player_praise": "The new version launches, and a post on the player forum praises the new inventory screen: finally you can find things at a glance. Three hundred-odd replies. You screenshot it and make it your desktop.",
+    "e_crunch": "For two weeks before launch the team works until eleven every night, weekends too. You stuff a folding bed under your desk, and one night wake to find an unsaved file still open on the screen.",
+    "e_project_cut": "The project you've worked on for a year and a half tests badly and is cancelled. On the last day everyone eats takeaway in the meeting room, and the lead artist exports every screen anyone made and prints them as a book, one copy each.",
+    "e_ai_icons": "The company plugs in an image-generation tool, and item icons now come by the hundreds overnight. Your work becomes picking, fixing, and unifying light source and outline, and the concept art team loses three people.",
+    "e_usability": "You run your first usability test, inviting six players into the office to play the new version. The fourth player stops in front of one button for more than ten seconds. You say nothing and draw a circle in your notebook.",
+    "e_typhoon": "A typhoon makes landfall and the company tells everyone to work from home. In your rented room you fix designs on a video call while the rain outside falls sideways and the owner of the corner shop downstairs piles sandbags against his door.",
+    "e_love": "At a designers' meetup you meet someone who does motion graphics. On your first date you go to Haixinsha to look at the Pearl River, and spend ages picking holes in the colour scheme of the Canton Tower light show.",
+    "e_overseas": "The game is getting a Middle East release, and you flip the whole interface to run right to left. When you reach the shop you find the Arabic price labels are twice as long as the Chinese ones and burst out of the buttons.",
+    "e_wrist": "Years of gripping a stylus and a mouse give you tenosynovitis in your right wrist. You switch to a vertical mouse and learn to hit the shortcuts with your left hand.",
+    "e_wedding": "The wedding is back in Liuzhou. You design the invitations and table cards yourself, using a floral pattern and palette from your company's game. Your teammates ask whether you'll be paying royalties.",
+    "e_ai_interaction": "The game designer feeds a requirements document to AI, gets three low-fidelity interaction drafts in ten minutes, and posts them straight to the group asking you to pick one. You look them over. None of the three has thought about what happens when the player's inventory is full.",
+    "e_house": "You buy a small second-hand three-bedroom flat in Panyu, an hour and more from the office. Half the down payment comes from the profit share the year your game launched.",
+    "e_hit": "A game you worked on charges into the top ten of the top-grossing chart after launch. That year's bonus equals half a year's pay, and at the annual party the producer puts your main screen up on the big screen.",
+    "e_child": "Your child is born. Your mother comes from Liuzhou to help, and every night soothes the baby to sleep with a cushion from your company's game.",
+    "e_redesign_fail": "After a main-screen redesign you led goes live, paid conversion drops two points and players on the forum say they can't find where to top up. On the third day the version is rolled back, and you write the post-mortem.",
+    "e_mentor": "A new designer you are training presents at review on his own for the first time, gets stumped by a programmer halfway and glances back at you. You don't speak. He thinks for a few seconds and answers.",
+    "e_35": "Around thirty-five you notice that design job ads say senior less and less, and proficient with AI tools more and more. Half the portfolio work from the new graduates you interview is AI-generated.",
+    "e_accessibility": "You push for the game to get a colour-blind mode and a large-text mode. After launch a player writes on the forum that his father, in his sixties, cleared a dungeon on his own for the first time.",
+    "e_eyes": "After more than ten years of screens your eyes are going, and to see a one-pixel outline you zoom the canvas to four hundred percent. The young ones bump your system font up a size for you.",
+    "e_old_game": "The first game you worked on shuts its servers. The night before, you log in one last time to look at that guild screen; a dozen-odd players are still in the channel, saying goodbye to each other.",
+    "e_ai_design_system": "The component library is now maintained by AI itself: it scans every screen, flags inconsistencies and generates suggested fixes. You spend an afternoon a week reviewing them, and what you reject most often is its wish to make every button the same colour.",
+    "e_student": "Your old art school asks you back to judge graduation projects. One student has designed a game interface for blind players made entirely of sound and vibration. You give it the top mark."
+  },
+  "choices": {
+    "c_visual_or_ux": {
+      "title": "Visual design or interaction",
+      "situation": "The lead artist wants you to focus on visuals, saying your icons and colour work are the best on the team. The head of user research comes to ask whether you'd do interaction and usability testing with them, saying your flowcharts have ideas. Both sides are short of people, and for now you can only pick one.",
+      "options": [
+        { "label": "Do visuals with the lead artist", "result": "You start painting style frames for whole interfaces, layering metal textures, particles and outlines. The new main screen launches, and players on the forum say it finally feels like a big-budget game." },
+        { "label": "Go into interaction and research", "result": "You learn to write test scripts, recruit players, watch screen recordings and calculate conversion funnels. You draw less, and what you say at review carries more weight." }
+      ]
+    },
+    "c_ai_pipeline": {
+      "title": "Who builds the image-generation pipeline",
+      "situation": "The company wants to use AI to produce icons and event-page backgrounds in bulk, and needs a designer to set the rules: prompt templates, style constraints, what can be used as is and what must be fixed by hand, plus teaching the concept art team to use it. No raise for taking it on, and you know how the concept artists will see you.",
+      "options": [
+        { "label": "Take it on", "result": "You write thirty pages of generation guidelines that lock down light source, outline and perspective. A version's item icons go from two weeks to three days, and a veteran concept artist asks you privately what he ought to learn." },
+        { "label": "Decline and do your own screens well", "result": "A technical artist builds the pipeline, and the icons come out a little scattered in style; every version you spend two days making them consistent." }
+      ]
+    },
+    "c_shenzhen": {
+      "title": "A Shenzhen tech giant comes calling",
+      "situation": "A game studio at a big Shenzhen tech company offers you a Senior UI/UX Designer job: thirty percent more pay, a stable project, a good line on your CV. But you'd be clocking in late every day in an office tower in Nanshan, and buying a flat in Guangzhou would get harder.",
+      "options": [
+        { "label": "Go to Shenzhen", "result": "Your desk is in a forty-storey tower surrounded by people with ten years' experience. At your first review you're grilled until you sweat; from the third month, more and more of your designs pass first time." },
+        { "label": "Stay in Guangzhou", "result": "You turn it down. That night you go for a bowl of sweet soup and sit by the Pearl River for a while, feeling this city's pace is just right." }
+      ]
+    },
+    "c_cut_next": {
+      "title": "After the project is cancelled",
+      "situation": "With the project cancelled, the company gives you two options: move to an established game racing to ship, iterating version after version, lots of work and steady; or join a newly approved project and set its whole interface style from scratch, with three years before anyone knows if it works.",
+      "options": [
+        { "label": "Join the established game", "result": "Every two weeks you deliver a version's event screens, fast, and more and more like an assembly line. With the year-end profit share you buy your parents a massage chair." },
+        { "label": "Start fresh on the new project", "result": "You spend four months exploring styles and the producer overturns you three times. The day the fourth version is settled, the lead artist says: this one will be your signature work." }
+      ]
+    },
+    "c_lead": {
+      "title": "Principal Designer or Design Lead",
+      "situation": "The team is promoting one person: on the specialist track, Principal Designer / Design Expert, owning the whole studio's design standards and experience methods; or on the management track, Design Lead, with eight people, schedules, performance reviews and headcount battles with the producer. You qualify for both, and can choose only one.",
+      "options": [
+        { "label": "Take the management track as lead", "result": "Your calendar fills with meetings and Figma is open less and less. The first time you rate a report's performance, you sit in the meeting room a long while before you speak." },
+        { "label": "Take the specialist track", "result": "You write a cross-project experience standard, from button tap areas to pop-up layering, and all three project teams use it. You still draw every day yourself." }
+      ]
+    },
+    "c_liuzhou": {
+      "title": "Going back to Liuzhou",
+      "situation": "Your parents are getting old. A carmaker in Liuzhou is hiring designers for in-car dashboard screens at a little over half your current pay; housing is cheap and it's ten minutes from home. With in-car screens, what matters is whether a driver can read it in one second.",
+      "options": [
+        { "label": "Go back and design in-car screens", "result": "For the first time you sit in the driver's seat of a test car to try your own interface, and the engineer in the passenger seat says nobody could hit your air-con button while driving. You go back and make it twice as big." },
+        { "label": "Stay in Guangzhou", "result": "You hire a part-time helper for your parents in Liuzhou and video call every Saturday night. They always say they're fine; you can always hear when they're not." }
+      ]
+    },
+    "c_ai_feature": {
+      "title": "Designing the interaction for an AI character in the game",
+      "situation": "The company wants to add an AI character who can chat freely with players, and nobody knows how such an interaction should work: when it should speak, how a player interrupts it, what happens when it says something wrong. You could take this on, or leave it to a younger designer.",
+      "options": [
+        { "label": "Take it on", "result": "You draw dozens of versions of the dialogue box, and the one you settle on lets players press and hold the screen at any moment to tell the character to stop talking. After launch, it's the most-tapped button in the whole game." },
+        { "label": "Leave it to the young ones", "result": "You only give a few comments at review. The young designer does very well, and afterwards you tell him one thing: better than I imagined." }
+      ]
+    },
+    "c_pm": {
+      "title": "Moving into game design",
+      "situation": "The producer says you understand players better than many game designers, and asks whether you'd move over to systems design: setting the gameplay, writing the rules, balancing the numbers. You'd stop drawing, and you don't know whether you'd miss it.",
+      "options": [
+        { "label": "Become a game designer", "result": "Your first systems design document comes with twelve interaction sketches you drew yourself. The UI team says it's the clearest requirements ticket they've ever received.", "end": "You moved into game systems design and later became lead designer on a project. Every requirements ticket you sent to the UI team came with sketches you drew yourself." },
+        { "label": "Stay in design", "result": "You say you still like making things look good and work well. The producer nods and says, then the next version's tutorial is yours." }
+      ]
+    },
+    "c_indie": {
+      "title": "Leaving to make an indie game",
+      "situation": "Two old colleagues are quitting to make an indie game, one coding, one doing the art, and they need someone to own the interface and the experience. Three people, a flat in a residential block, eighteen months of savings: if it works it goes onto console platforms, if not everyone goes home.",
+      "options": [
+        { "label": "Go with them", "result": "You work in that flat for two years and the game finally ships. The first week's sales are poor; in the second month a foreign streamer plays it all night, and in the comments someone singles out the interface as quiet and clean.", "end": "You and your two old colleagues ran an indie game studio. You didn't make many games, and every interface was worked out by you pixel by pixel; the poster for your first game hangs by your door." },
+        { "label": "Stay", "result": "You say you still have a mortgage. On the day they leave you treat them to dim sum and tell them to let you know first if they finish it. Two years later, they do." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "On your last day you export every interface you ever made onto a portable drive, from that first guild system to the last experience standard. The young designers give you a cake with a back button drawn on it in icing. In Figma you hand your account permissions to your successor, and before shutting down you zoom in one more time on an icon's outline. Out of the Pazhou office tower, the lights on the river have just come on.",
+    "burnout": "That year brings three crunches in a row; your wrist hurts too much to hold chopsticks and you lie awake all night. You resign and rest at home for six months. Afterwards you find a teaching job at a vocational college, a few interface design classes a week. When students ask what a game company is like, you say: lively."
+  },
+  "stages": [
+    "A whole system's interface is yours now: you break the game designer's requirements document into a flowchart, draw interaction drafts and visual designs in Figma, and stand up at review to explain why it's laid out the way it is. In Unity you go over anchors and nine-slice assets with the programmers, and before each build is locked you walk through it page by page on real phones. Unlike your assistant days, when players on the forum call a screen inhuman, it's the one you drew.",
+    "You redesign the parts of the game that matter most: the main screen, the shop, the tutorial. Before changing anything you pull the analytics and read the funnel; afterwards you watch paid conversion and retention day by day. You meet the producer, operations and the lead programmer to agree requirements, moderate usability tests with players, and help one or two new designers revise their work. You've started saying the data shows instead of I think.",
+    "You run a team, or a method: the design standards and component library for several projects are yours to set, and at review the final call is yours. You revise newcomers' work, do performance reviews, argue for headcount with the producer, and align style with publishing, brand and outsourcing teams. You draw less and review more, and some days have six meetings.",
+    "The whole studio's design is yours: three or four projects, dozens of designers. You set the art and experience direction for each, and at greenlight meetings decide with the producer and the boss what a game will look like. You interview, set budgets, manage outsourcing, and fly abroad a few times a year to look at overseas publishing data. Now and then you still open Figma and fix a spacing nobody has noticed."
+  ],
+  "work": [
+    "The guild member list has to hold two thousand people, and the programmer says loading them at once will stutter. You group the list by online status with only the first fifty expanded by default. The programmer tries it and says: works.",
+    "QA files a bug: on small phones, the shop's Buy button is partly hidden by the bottom navigation bar. You recalculate the safe area and fix the anchors on three screens.",
+    "The game designer says the tutorial is too long and players skip it. You merge seven steps into four and replace a paragraph of instructions with an animation of a finger tapping. The next week the skip rate halves.",
+    "Before redesigning the shop you pull three months of analytics and find sixty percent of players only look at the first screen. You move the three most-bought items up, and conversion rises a point and a half.",
+    "You moderate a usability test with eight university students who have never played the game. The second spends forty seconds hunting for Back on the gacha screen, and you cut that stretch of recording to show at the weekly meeting.",
+    "A new designer hands in an event page with a lovely palette and text too small to read. You write one line beside it: look at it on the cheapest phone first.",
+    "Three project teams have seventeen different button styles. You spend a month reducing them to five, put them in the component library, and go team by team explaining why; the last team holds out for two versions before switching.",
+    "At year end you rate eight people's performance. One worked very hard all year with nothing to show for it. You write him a long review and talk with him for an hour.",
+    "The outsourcing team delivers a batch of event screens that have drifted off style. Instead of ordering a redo you hold a video call and go through three right ones and three wrong ones, one by one.",
+    "At a new project's greenlight meeting, the boss wants it to look like that old hit. You put up a comparison of interfaces from similar games over the past three years and say players are tired of that look. The meeting runs three hours.",
+    "You interview a new graduate whose portfolio is half AI-generated. You skip that half and ask him to draw the flow for an inventory screen on the whiteboard, there and then. He draws for twenty minutes.",
+    "Overseas publishing data shows players in Southeast Asia mostly use older phones. You have every project add a low-spec interface setting that cuts half the particle effects."
+  ],
+  "past": [
+    "You went to middle school in Liuzhou, the margins of your textbooks full of game characters. Your father, who worked at the car plant, said drawing wouldn't put food on the table; your mother secretly signed you up for weekend sketching classes.",
+    "After the provincial art exam and the gaokao (college entrance exam), you got into the visual communication programme at an art school in Guangzhou. The first time you stepped out of Guangzhou station, the heat hit you full in the face.",
+    "In your second year you took freelance jobs off campus, posters and social-media headers for small businesses at ¥50 apiece. One client asked for nineteen revisions and in the end used the first.",
+    "In a third-year design class the teacher had you redesign one page of an app you use every day. You chose the inventory in the mobile game you played daily. The teacher said: you aren't making it pretty, you're making it usable.",
+    "Before graduating you applied to twenty-odd game companies, with that inventory redesign in your portfolio. A company in Pazhou took you on as an intern, and in your first week you cut more than three hundred image assets.",
+    "After graduation you stayed on and spent two years as an assistant UI designer: icons, pop-ups, event pages, everything. At your review to be made permanent, the lead artist asked what you most wanted to do. You said: a whole system."
+  ],
+  "late": {
+    "pension_note": "Estimate: Guangzhou's urban employees' pension; game companies mostly contribute on base salary, with profit shares and bonuses outside the base, and the years back in Liuzhou or making indie games brought ups and downs, so in retirement you will draw roughly 40% of final monthly pay.",
+    "scenes": [
+      "For the first few months of retirement you go for dim sum downstairs every morning and draw useless buttons and icons on the paper napkins, throwing them away when you've finished your tea.",
+      "The neighbourhood committee asks you to help redesign its service guide for older residents. You set the type as large as it goes and give each page one thing only. The aunties at the committee say it's the first time they've understood it.",
+      "Your grandchild is playing a new game and you watch for a while, then point at the screen: that back button is in a bad place. The child looks up and asks how you know.",
+      "In the six months of rest you walk round the estate every day, watching how neighbours use the parcel lockers, at which step they stop and frown.",
+      "In your vocational college classes you make students draw interfaces with pen and paper, no computers allowed. One student draws a flowchart that covers a whole wall, and you take a photo of it.",
+      "The game you once worked on gets a remake. You download it from the app store, and the guild screen looks the way you drew it, only sharper.",
+      "For the first few months in your new trade you still catch yourself drawing flowcharts on other people's requirements tickets, and only afterwards remember it's no longer your job.",
+      "Your old lead artist asks you back to give the new hires a talk. You talk about that tutorial button half hidden behind a pop-up, and afterwards someone asks you for the post-mortem.",
+      "At a game expo you watch a young designer presenting their interface, very well, standing the way you used to at review. You stay in the audience until the end before you leave.",
+      "Interaction drafts, visual designs, cutting assets, walkthroughs: AI produces all of that now. When people talk about designers, they mean the person who knows at which step a player will stop.",
+      "The damp spring weather is back, water beading on the walls. Over the hum of the dehumidifier you take out the book your old project team printed, its pages a little damp now.",
+      "Your phone's text size is set to the largest. Looking at the big buttons on the screen, you think of the large-text mode you once pushed into a game."
+    ],
+    "closing": {
+      "retire": "Many years later, one evening, you sit by the Pearl River watching the office towers on the far bank light up window by window. You count: on the seventeenth floor of that tower in Pazhou, the lights are still on.",
+      "burnout": "Many years later you walk slowly along the river in Liuzhou, the willows hanging down to the water in rows. You take out your phone to photograph them, your hand trembles, and the picture comes out crooked. You don't delete it.",
+      "end": "Many years later, clearing an old computer, you find a folder holding the first guild main screen you ever drew, its layers named any old how. You open them one by one; the last layer is called final, really final."
+    }
+  }
+}

@@ -1,0 +1,197 @@
+{
+ "id": "fuel-cell-zjk",
+ "occupation": "Hydrogen Fuel Cell Manufacturing Technician",
+ "role": "Hydrogen Fuel Cell Stack Assembler",
+ "headline": "Watched the hydrogen buses roll down the street the year of the Winter Olympics, went through the fuel cell class at a local vocational college, and now spends every day in a cleanroom suit at a Zhangjiakou stack factory, assembling fuel cell stacks one cell at a time",
+ "unit": "A hydrogen fuel cell stack factory in Zhangjiakou, Hebei",
+ "unit_type": "Hydrogen fuel cell stack and system manufacturer",
+ "city": "Zhangjiakou",
+ "city_tier": "Third-tier city",
+ "education": "Associate degree (new energy vehicle technology)",
+ "level": "You've just passed certification at the stacking station. You can stack, press and leak-test a 120-cell stack on your own; you've only watched activation testing from the side, and you don't yet hold the authorization to operate hydrogen equipment.",
+ "intro": "You interned at this stack factory for six months, passed certification at the stacking station once you were taken on, and got an employee number of your own. Every day, in a cleanroom suit, you lay a bipolar plate, then a membrane electrode, onto the locating rods, a hundred and twenty cells pressed into one stack, to go into buses, heavy trucks and refrigerated vans running through Zhangjiakou winters at twenty below. From today, every stack that comes off your station carries your name in the MES.",
+ "salary_note": "Estimate: the occupation library has no pay data for this trade, so each level's monthly pay is estimated from what hydrogen stack factories commonly advertise. Wages in Zhangjiakou run below the national average; with shift, heat and hydrogen-handling allowances, take-home pay is about 85 percent of the national figure, with more overtime in years when orders are strong.",
+ "facts": [
+  { "label": "MEA Fabricator / Stack Assembler (current level)", "value": "1-3 years, ¥6,000–9,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Line System Test Technician / Senior Technician (3-5 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Carrying out the emergency response when the hydrogen alarm goes off in the test room", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Starting a shift with the first-article inspection on the coating line", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The factory bus pulls out of Qiaodong, and on the ridges outside the window the wind-turbine blades turn slowly. Leaning against the glass, you go back over yesterday's defect log on your phone.",
+  "Into the cleanroom suit, two pairs of gloves and a mask, through the air shower into the stacking room. The team leader reads out today's production order: three 120-cell stacks, for a bus company.",
+  "First article. Following the SOP you lay one bipolar plate, then one membrane electrode, onto the locating rods, checking alignment with a feeler gauge every ten cells; a few tenths of a millimeter out and you take it apart and start again.",
+  "The stack goes onto the press. The platen comes down little by little, the pressure curve on the screen climbs to the set point and holds. You watch the curve and exchange a glance with the process technician.",
+  "The canteen: oat-flour noodles and a bowl of mutton offal soup. An older woman on your team says the hydrogen alarm went off in the test room again yesterday; after a long search it turned out to be a drifting sensor.",
+  "Leak test. The stack is connected to the test rig and held under nitrogen; it only passes if the flow curve runs flat. The second one leaks. You and the team leader take it apart: one gasket was laid crooked.",
+  "Rework, re-press, retest, and the second one passes. Before the end of the shift you log the batch number, press force and hold data in the MES and sign it with your employee number.",
+  "In winter Zhangjiakou is pitch dark by five-thirty, a dozen degrees below zero. When you get home your mother asks how many stacks you built today. Three, you say; one needed rework."
+ ],
+ "ladder": [
+  { "title": "Fuel Cell Production Line Operator", "stage": "Entry", "focus": "Work to the SOP at the membrane electrode, bipolar plate or assembly stations, and handle equipment checks and 5S. Requires an associate degree or above in mechanical, electronics or other engineering fields." },
+  { "title": "MEA Fabricator / Stack Assembler", "stage": "Junior", "focus": "Operate coating, hot pressing, laser cutting or stacking and pressing on your own, with first-article inspections passing." },
+  { "title": "Line System Test Technician / Senior Technician", "stage": "Intermediate", "focus": "Handle system testing, stack activation and other hydrogen testing, and deal with anomalies." },
+  { "title": "Team Leader / Process Technician", "stage": "Senior", "focus": "Schedule production, train new hires, reduce the defect rate, and help optimize process parameters." },
+  { "title": "Production Supervisor / Process Engineer", "stage": "Lead", "focus": "Run an entire stack or system line and lead process improvements and capacity increases." }
+ ],
+ "ai_tasks": [
+  { "name": "Starting a shift with the first-article inspection on the coating line", "how": "AI can recommend slurry ratios and coating parameters from historical data, and record and judge thickness and loading automatically. Checking the equipment, mixing and loading the slurry and running the first article still need a person on site, who answers for whether the first article is released." },
+  { "name": "Stacking, pressing and leak-testing a 300-cell stack", "how": "The press curves, hold data and leak-test results can be collected and judged by the system. Laying and aligning the bipolar plates and membrane electrodes, and handling anomalies during pressing, still rest on a person's hands and experience." },
+  { "name": "Running activation testing on a newly assembled stack", "how": "The test rig runs activation and polarization curves automatically to a set program, and AI can do a first analysis of the curves and flag anomalies. Watching over the process on site, deciding whether it passes and dealing with performance deviations are a person's call." },
+  { "name": "Tracing the process cause when leak tests keep failing", "how": "AI can pull together leak data from many stacks, compare batches, equipment and materials, and rank the likely causes. Deciding to stop the line, going to look at the gaskets, the adhesive and the pressing, and verifying and carrying out the fix fall to a person." },
+  { "name": "Carrying out the emergency response when the hydrogen alarm goes off in the test room", "how": "When the hydrogen alarm sounds you have to shut off, depressurize, ventilate and evacuate at once. It involves personal safety and judgment on the spot, so a person must act immediately to the emergency plan and answer for it; at most AI helps raise the alarm and keep the record." },
+  { "name": "Leading a defect-reduction project for one process step", "how": "AI can analyze the defect data, find where the problems cluster by step and batch, and draft an improvement plan. Mapping the process on the floor, getting the team to carry out the change, coordinating everyone and owning the result are still a person's job." }
+ ],
+ "events": {
+  "e_first_pass": "A stack you stacked and pressed entirely yourself passes the leak test first time. The team leader writes in the handover book: first article passed, cleared to work the station alone.",
+  "e_tear": "A stack in the test room keeps losing voltage during activation. Taken apart, one membrane electrode has a tiny split at its edge, scratched by a fingernail during stacking. That stack takes two days of rework.",
+  "e_h2_alarm": "The hydrogen alarm sounds in the test room. Following the emergency plan you shut off the gas, start the fans and get out, and wait twenty minutes outside the door. The cause: a fitting not tightened all the way. Nobody is hurt.",
+  "e_eczema": "Eight hours a day in a cleanroom suit, stifling in summer, and eczema breaks out on both hands inside the gloves. After work you rub on cream, and the next day you wear two pairs of gloves as usual.",
+  "e_cold_start": "In the depths of winter, at twenty-odd below, a bus running on your stacks won't cold-start one morning. You go with after-sales and spend the night in the depot, watching the engineer read the data over and over; at dawn the bus drives out.",
+  "e_olympic_bus": "A batch of the hydrogen buses that ran during the Winter Olympics comes back to the factory for overhaul. You open up one of the stacks and find the membranes yellowed and brittle, and think of watching it go by from the roadside the year you were eighteen.",
+  "e_subsidy": "The subsidies for the fuel cell vehicle demonstration cities run out, and downstream orders fall by half. The line goes from two shifts to one, you take turns on unpaid leave, and your pay slip gets thinner.",
+  "e_trucks": "The factory lands a big order for hydrogen heavy trucks and the line goes to three shifts. For three months you rotate between days and nights, banking plenty of overtime and losing weight.",
+  "e_ai_vision": "The stacking station gets machine-vision inspection: a membrane electrode a tenth of a millimeter off and the system lights up red. You no longer check with the feeler gauge every ten cells; instead your eyes are fixed on the screen.",
+  "e_ai_curve": "AI reads the activation curves and flags a stack for \"suspected single-cell failure.\" You go and look: a clip on the cell-voltage monitoring harness has come loose, and once it's reconnected the curve flattens out. You mark it in the system as a false alarm.",
+  "e_auto_line": "The new automated stacking line goes live. A robot arm stacks the cells one by one, and a line needs only three people to watch it. Of the dozen-plus people in the old stacking room, half are moved to other stations.",
+  "e_contest": "The province holds a hydrogen industry skills contest with a timed round of stacking plus leak testing, and you take second prize. The factory hangs your photo on the noticeboard outside the canteen.",
+  "e_wind": "In spring a gale comes down off the Bashang plateau and the factory's steel cladding rattles all night. Riding your e-bike to work in the morning, a gust knocks you and the bike over at a junction.",
+  "e_love": "Someone from the membrane electrode workshop always takes an extra look at your log sheet when delivering materials to the stacking room. Later the two of you start driving up to the Bashang grasslands at weekends, and spend a whole night watching the stars.",
+  "e_wedding": "You hold the wedding in Zhangjiakou, the banquet one dish of oat noodles and roast mutton after another. Two tables of coworkers come from the factory, and the team leader gets drunk and insists on explaining why a stack needs a hundred and twenty cells.",
+  "e_baby": "The day your child is born you're on night shift, and phones aren't allowed in the cleanroom; when you come out there are a dozen missed calls. You run to the hospital without even changing out of your cleanroom shoes.",
+  "e_house": "You buy a two-bedroom flat in the high-tech zone, the down payment pooled from both families, the mortgage less than half your pay. From the balcony you can see the factory's tall exhaust stack.",
+  "e_back": "Years of standing to stack and bending to lift press plates, and your back goes first. The factory doctor tells you not to lift heavy things anymore, and every evening after work you walk two laps of the park downstairs.",
+  "e_parent": "Your father falls in the yard back home and spends two weeks in hospital. You work by day and sit with him at the hospital by night, and that month you don't dare take a single day off.",
+  "e_review": "Engineers from the R&D center in Beijing come for a process review, and you present your team's defect improvements for the year. As the meeting breaks up, one engineer says: your data here is cleaner than our pilot line's.",
+  "e_mentee": "A stack built entirely by a new hire you trained clocks ten thousand kilometers on a customer's heavy truck, and the data sent back shows no degradation at all. He posts the screenshot in the team group chat.",
+  "e_young": "Half of this year's interns from the college's fuel cell class come from other provinces. They ask how cold Zhangjiakou really gets in winter. Cold enough, you say, that the stacks you build have to learn to warm themselves up first."
+ },
+ "choices": {
+  "c_test": {
+   "title": "Get hydrogen operating authorization, aiming for Line System Test Technician",
+   "situation": "The test room is short of people. The team leader says if you get your authorization to operate hydrogen equipment and do three months on the test shift, you can move toward Line System Test Technician / Senior Technician. The test shift means nights, and you'd have to memorize the test procedures and the emergency plans.",
+   "options": [
+    { "label": "Sign up for the test shift", "result": "You worked three months of nights and learned the activation procedure and the hydrogen leak response by heart. On assessment day the examiner had you name the location of every valve with your eyes shut." },
+    { "label": "Stay in the stacking room", "result": "You stayed on day shift in the stacking room, your hands getting faster and faster, with the best first-article pass rate on the team. On the test-room list was a classmate who joined after you." }
+   ]
+  },
+  "c_beijing": {
+   "title": "Go to the pilot line in Yizhuang, Beijing",
+   "situation": "The company's R&D center in Yizhuang, Beijing, has a pilot line and wants a few practiced hands from the factory, at thirty percent more pay, working every day with engineers on new materials and processes. But rent in Beijing is expensive, you'd get back to Zhangjiakou once a month, and everything at home would have to wait.",
+   "options": [
+    { "label": "Go to Beijing", "result": "On the pilot line you stacked more than a dozen new kinds of membrane electrode; some cracked the moment they were pressed. The engineers started asking you: how does this version feel?" },
+    { "label": "Stay in Zhangjiakou", "result": "You stayed, and could go home for dinner after every shift. The classmate who went to Beijing sends photos; the pilot line's cleanroom is brighter than yours." }
+   ]
+  },
+  "c_lithium": {
+   "title": "Jump to a lithium battery factory in the south",
+   "situation": "During the stretch of thin orders and single shifts, an old classmate at a lithium battery factory in Changzhou says the coating and stacking work there is much like yours, the order book is full into next year, and the pay is twenty percent higher. Going means leaving hydrogen, and leaving Zhangjiakou.",
+   "options": [
+    { "label": "Go to the lithium plant", "result": "You packed one suitcase and got on a train south, and at the Changzhou plant you were soon on the electrode stacking station.", "end": "You stand beside the stacking machine at the lithium battery plant watching the robot arm lay down electrodes sheet by sheet, far faster than you once stacked fuel cells. Changzhou winters never reach twenty below, and now and then you think of the wind off Bashang." },
+    { "label": "Stay in hydrogen", "result": "You stayed, and during those months of rotating leave you got a forklift license. The day the line went back to two shifts, you were the first one into the cleanroom." }
+   ]
+  },
+  "c_plc": {
+   "title": "Learn equipment checks and PLCs for the automated line or not",
+   "situation": "The automated stacking line is coming, and the factory is picking people from the experienced workers to learn equipment inspection and PLC basics. From then on the robot arms, vision inspection and presses on the line will belong to this group. The six months of classes are after work, and if you don't pass, it's back to your old station.",
+   "options": [
+    { "label": "Sign up and learn", "result": "You learned to read the programs on the test rig and the press, and for the first time changed a press hold-time parameter yourself. When the robot arm jams on the line, the team leader calls you first." },
+    { "label": "No, keep to the craft", "result": "You stayed at the manual stacking station doing small batches and rework, and every tricky stack passes through your hands. But on anything to do with the line, you have nothing to add anymore." }
+   ]
+  },
+  "c_lead": {
+   "title": "Apply for Team Leader / Process Technician",
+   "situation": "The old team leader has moved to the new line, and the workshop wants to promote one of the test technicians and senior technicians to Team Leader / Process Technician, responsible for a shift of a dozen-plus people's scheduling, safety and defect rate. Applicants submit a defect-reduction plan and walk the workshop director through hydrogen safety.",
+   "options": [
+    { "label": "Apply", "result": "You sorted a year's leak-test failures by station and turned it into a three-page plan. When you finished, the workshop director asked only one thing: can you get the old hands to listen to you?" },
+    { "label": "Don't apply, stay at the test rig", "result": "You stayed in the test room, still working nights. The new team leader transferred in from the next shift, and when a curve leaves him unsure, he still brings it to you." }
+   ]
+  },
+  "c_electrolysis": {
+   "title": "Move to the electrolysis hydrogen plant",
+   "situation": "A new wind-powered electrolysis plant has been built up on Bashang and is hiring water electrolysis hydrogen operators. It runs on wind power and produces the very hydrogen your stacks burn. It's a bit farther from home, with shift work, but they say they're short of people who understand hydrogen safety, and the pay is about the same.",
+   "options": [
+    { "label": "Go to the hydrogen plant", "result": "You got your certification for the plant, and in a building beneath a field of wind turbines you saw an electrolyzer for the first time.", "end": "You keep watch over a row of electrolyzers while dozens of turbines turn slowly on the plateau outside. The hydrogen purity curve jumps; you walk over to look, and write the time in the log." },
+    { "label": "Stay at the stack factory", "result": "You said you'd do a few more years. That winter, half the hydrogen you used was trucked in from that plant." }
+   ]
+  },
+  "c_degree": {
+   "title": "Study for an adult bachelor's degree, aiming for Process Engineer",
+   "situation": "The workshop director says that to move up to Production Supervisor / Process Engineer, the factory usually wants a bachelor's degree. You could enroll in an adult-education materials program, with weekend classes in Shijiazhuang and the fees out of your own pocket, for two and a half years.",
+   "options": [
+    { "label": "Enroll", "result": "You memorized electrochemistry on weekend trains, and in class drew the membrane electrode you stack every day as a cross-section for the first time. Your thesis was on your own team's sealing improvements." },
+    { "label": "Don't study, rely on experience", "result": "You kept the weekends for your child. People in the workshop say a degree is a piece of paper, and reading a curve is what counts. You listen, and say nothing." }
+   ]
+  },
+  "c_head": {
+   "title": "Apply for Production Supervisor / Process Engineer",
+   "situation": "Headquarters is building another system line in Zhangjiakou and needs a Production Supervisor / Process Engineer to own capacity and process across the whole stack line. You're one of the candidates; the other is a master's graduate sent down from the Beijing R&D center, who knows materials but has never run a shift.",
+   "options": [
+    { "label": "Apply and write a plan", "result": "You stayed up several nights writing the plan, attaching five years of defect-rate curves with the improvements marked by hand, one by one. At the panel you didn't speak quickly, but every number checked out." },
+    { "label": "Let the master's graduate have it", "result": "You go on running your team. In his first month the new supervisor comes and stands in the stacking room every day, watching how you all do it." }
+   ]
+  },
+  "c_qc": {
+   "title": "Leave the cleanroom for quality inspection and training",
+   "situation": "You're past fifty, your back hurts whenever winter comes, and a day in the cleanroom suit leaves you short of breath. The workshop says it could move you to quality inspection and training new hires, off the line, without the shift allowance.",
+   "options": [
+    { "label": "Go to inspection and training", "result": "In the training room you set up a teaching stack, opened up, and walk new hires through it cell by cell. What you say most is: two pairs of gloves, and keep your nails short." },
+    { "label": "Stay in the cleanroom", "result": "You still go through the air shower every day. Behind your back the young ones call you \"Old Stack.\" You hear it, and smile." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last shift you didn't go into the cleanroom; you watched the young ones stack through the glass. At the end of the day you folded your cleanroom suit and handed it back at the changing room; your locker still had the photo from that skills contest taped inside. As you walked out of the gate a hydrogen bus went past, and a few drops of water fell from its tailpipe onto the frozen road.",
+  "burnout": "That winter you bent to lift a press plate at the press and suddenly couldn't straighten up. The factory doctor wrote you a note, and the workshop moved you to the warehouse to handle the comings and goings of membrane electrodes and gaskets. You leave on time every day, and when you see the young ones pushing material carts toward the stacking room, you still stand and watch a while."
+ },
+ "stages": [
+  "You have a station of your own in the stacking room. Every day, to the production order, you lay bipolar plates and membrane electrodes onto the locating rods cell by cell, check alignment with a feeler gauge, send the stack to the press, and watch the press curve and the hold data; before it comes off the line you leak-test it and log it in the MES. You deal most with the team leader and the process technician: the first article needs their signature, and when a curve looks wrong, you call them first.",
+  "You've moved into the test room, trading your wrench for the test rig's control computer. A new stack is connected to hydrogen and cooling water, and you run activation and sweep polarization curves to the test plan, watching the cell-voltage monitor and stopping to investigate when any cell runs low; every hydrogen step needs two people present, logged and signed. Whenever someone's stack on the line has a problem, you're the first to know.",
+  "You run a shift of a dozen-plus people. Mornings you schedule production, check equipment and give the safety briefing; during the day you shuttle between stacking and testing, watching the defect rate; you train new hires and sign their assessments. You've started adjusting parameters with the process engineer, how much more press force, how long to hold, and your improvement reports are written in data, not feelings.",
+  "The whole stack line is yours. Every week you run the production and sales meeting, reconciling capacity and delivery dates with planning, purchasing and quality; you lead process improvement projects, write change orders, approve validations and sign off mass production. When customers audit, headquarters reviews or a new line is planned, you're in the meeting room, and now and then you put on a cleanroom suit to go in and look at a curve."
+ ],
+ "work": [
+  "One membrane electrode has a pale crease along its frame. You hold it up to the light, put it in the reject box, and write the batch number on the log sheet.",
+  "At the sixtieth cell the locating rods feel a little sticky. You stop and recheck the previous ten with the feeler gauge; the third is two-tenths of a millimeter out.",
+  "A new operator reaches for a membrane electrode without his second pair of gloves on. You stop him and point to the first line of the SOP on the wall.",
+  "Three hours into activation, cell eighty-seven reads forty millivolts lower than its neighbors. You stop the rig, circle it on the monitoring log, and call the process technician.",
+  "At the morning handover in the test room, you and the night-shift colleague check the state of every hydrogen valve together, and both sign the handover book.",
+  "A stack returned from a bus needs degradation testing. You overlay its polarization curve on the one from when it left the factory three years ago, print it out and hand it to R&D.",
+  "The leak-test failure rate has been over the limit three days running. You sort data from thirty stacks by station: every problem comes from the same press on the afternoon shift.",
+  "You run a new hire's certification, having her stack ten cells in front of you. When she's done you say nothing, check them with the feeler gauge, and sign \"pass\" on the assessment sheet.",
+  "The improvement project closes: you changed the adhesive path on the bipolar plates from two loops to one and a half, and leak-test failures fell from three percent to one. Twenty curves are attached to the back of the report.",
+  "A heavy-truck customer audits the line and asks how many stacks you can deliver a month. You pull up six months of first-pass yield and give a figure twenty percent below what sales had promised.",
+  "New metal bipolar plates are coming into mass production, and you approve three rounds of validation, the third in the cold-start chamber at thirty below.",
+  "Headquarters wants another line in Zhangjiakou. You and the process technician draw three versions of the layout, and put the test room at the end farthest from the office building."
+ ],
+ "past": [
+  "You went to middle school in Qiaoxi District, Zhangjiakou, with middling grades. Winter afternoons after school, you and your classmates walked home into the wind blowing down off the plateau, faces bright red with cold.",
+  "The year of the Winter Olympics, from the roadside you saw the first hydrogen buses go by, and what dripped from their tailpipes was water. Your gaokao (college entrance exam) score was enough for a junior college, and you chose new energy vehicle technology at a local vocational college.",
+  "The college ran sponsored classes with hydrogen companies, and you signed up for the fuel cell class, learning basic electrochemistry and hydrogen safety, and in the training lab took apart a teaching stack for the first time.",
+  "Your work placement brought you into this stack factory as a production line operator: equipment checks, 5S, moving materials, assisting at the membrane electrode station, going through three pairs of gloves a day.",
+  "You were taken on after graduating and passed certification at the stacking station. The day you got your employee number, you stood a long time at the mirror by the cleanroom door looking at yourself in the suit."
+ ],
+ "late": {
+  "pension_note": "Estimate: the factory pays into Hebei's basic pension for enterprise employees on your wages, so after retirement you get a little over forty percent of your final monthly pay.",
+  "scenes": [
+   "In your first month of retirement you still wake at seven, and the first thing you do is rub your hands together, as if about to go through the air shower. You go downstairs for two youtiao and stand at the junction for a while, watching the buses go by.",
+   "The vocational college asks you to supervise practicals for the fuel cell class, two afternoons a week. The first thing you teach the students is to cut their nails short.",
+   "Your pension arrives on time every month, enough for the two of you. One summer you go up to Bashang for a month, and you stand beneath a wind turbine listening to the blades sweep past.",
+   "The city's buses all went hydrogen long ago. When you ride one you glance at the nameplate on the back, and once it carries the name of your old factory.",
+   "In the warehouse you look after membrane electrodes and gaskets, issuing materials against the slips each day. Your back has stopped hurting, but every morning at eight you still want to go through the air shower.",
+   "A young worker comes to collect materials and says a batch of gaskets keeps lifting no matter how he lays them. You glance at the batch number and say this batch caused trouble last year too: set it aside, don't use it.",
+   "At retirement age you do the paperwork. When the neighbor's e-bike won't start in winter, you take a look at the battery and tell him it's just too cold: bring it inside and warm it up first.",
+   "For the first year after leaving the stack factory, whenever hydrogen comes up in the news you take a second look, and only afterwards remember those stacks aren't yours to build anymore.",
+   "Now and then you go back to Zhangjiakou for New Year, and passing the factory, the exhaust stack is still there. The old man on the gate recognizes you and waves you in for a cup of hot water.",
+   "A new hire you trained becomes a team leader and wins first prize at the skills contest. He calls to tell you all he could think of during the contest was your line: two pairs of gloves.",
+   "Later, robot arms did the stacking and AI read the curves. But when the hydrogen alarm sounds in the test room, someone still has to be the first to rush over and close the valve.",
+   "Your grandson asks what you used to do. You say you built a kind of engine that doesn't smoke: it burns hydrogen and gives out water. He doesn't believe you, and insists you take him to look at the back of a bus."
+  ],
+  "closing": {
+   "retire": "One winter morning many years later, you stand at a bus stop at twenty below, your breath coming out in clouds. A hydrogen bus pulls in, and a single drop of water falls from its tail, freezing into a tiny bead on the ground.",
+   "burnout": "Many years later, on your balcony, you take apart your grandson's broken toy car, dropping the screws one by one into a little box, and when you put it back together, not a single one is left over.",
+   "end": "Many years later, in a drawer, you come across your first station certification. In the photo you're in a cleanroom suit and mask, only your eyes showing. You look at it a while, then put it back."
+  }
+ }
+}

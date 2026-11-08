@@ -1,0 +1,201 @@
+{
+ "id": "smart-furniture-fs",
+ "occupation": "Smart Furniture Installation and Commissioning Technician",
+ "role": "Smart Furniture Field Installer",
+ "headline": "A vocational-school electromechanics graduate who moved from a Shunde sofa assembly line to the smart-bed product line, now driving the company van to five or six homes a day across Foshan to install power beds and standing desks",
+ "unit": "After-sales installation department, a smart furniture factory in Shunde, Foshan",
+ "unit_type": "Smart furniture manufacturer",
+ "city": "Foshan",
+ "city_tier": "New first-tier city",
+ "education": "Secondary vocational school (electromechanical technology)",
+ "level": "You hold a low-voltage electrician's permit and can install and pair all three kinds of drive yourself: power beds, standing desks, recliner sofas. When it comes to a Zigbee hub or scene automations with someone else's platform, you still have to call R&D.",
+ "intro": "You have worked two years in a Shunde furniture factory, moving from the nail gun on the assembly line to the smart-bed line, and last month you started doing house calls on your own. Your supervisor gave you a van and a partner who has just joined, and you do five or six jobs a day, from Chancheng out to Nanhai and back to Shunde. From today, one home at a time, you have to set the bed down solid, get it on the network, teach the owner how to use it, and write down every fault that wouldn't go in right.",
+ "salary_note": "Estimate: field installers at Foshan furniture factories are paid a base wage plus a commission per job. In peak seasons (Singles' Day, the weeks before Lunar New Year) there are plenty of jobs and take-home pay runs a little above the national average; in slow seasons and in years when export orders fall, it drops back to the national average.",
+ "facts": [
+  { "label": "Smart Furniture Installer (current level)", "value": "1-3 years, ¥6,205–9,125 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
+  { "label": "Next level up", "value": "Installation Technician / After-Sales Technician (3-6 years)", "source": "Career map" },
+  { "label": "Pay after 3–5 years", "value": "¥9,100 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Installing a smart standing desk in a customer's home and teaching them to use it", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Assembling and commissioning a smart power bed", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Picking up stock at the factory warehouse. Bed bases, linear actuators, hand controllers: you count each one against the work order, load the van, and run through today's five addresses with your partner.",
+  "A new compound in Chancheng. Building management won't let large items go in the passenger lift and wants a deposit slip. You and your partner carry the frame up to the ninth floor in the freight lift; the customer is already waiting at the door.",
+  "Unbox, assemble the frame, mount the actuators, plug the motor leads and control box in one by one against the wiring diagram and cinch them with cable ties. The customer stands beside you and asks: can this thing leak electricity?",
+  "Lunch at the pork-knuckle rice stall outside the compound gate. Your supervisor pushes an urgent job to your phone: a recliner sofa in Nanhai has stopped working on one side.",
+  "Pairing. The customer's router has both bands merged into one, and the bed only talks to 2.4 GHz. You crouch by the bed and walk him through splitting the bands in the router's settings. Twenty minutes.",
+  "The sofa in Nanhai: the multimeter shows power at the adapter, power at the control box, nothing at the motor. In the end you find a length of cable under the sofa that a child has chewed through.",
+  "The last job is a standing desk. You run the overload and anti-pinch tests, tap through handover in the app, the customer signs the electronic work order, and you upload the photos.",
+  "Back at the factory you unload the returned parts and fill in the commissioning log. In the notes you write: this model's control box drops off a Zigbee hub. Third time now."
+ ],
+ "ladder": [
+  { "title": "Furniture Assembler / Installation Apprentice", "stage": "Entry", "focus": "Learn assembly, basic electrics and reading drawings." },
+  { "title": "Smart Furniture Installer", "stage": "Junior", "focus": "Install and commission drives and sensors on your own, connect them to the network, and run the inspection." },
+  { "title": "Installation Technician / After-Sales Technician", "stage": "Intermediate", "focus": "Troubleshooting, house-call installs, and trial assembly of new products." },
+  { "title": "Installation Team Leader / After-Sales Technical Supervisor", "stage": "Senior", "focus": "Running a crew, feeding back on process, and owning the pass rate." },
+  { "title": "Head of Smart Furniture Process / After-Sales", "stage": "Lead", "focus": "Installation process standards and the after-sales system." }
+ ],
+ "ai_tasks": [
+  { "name": "Assembling and commissioning a smart power bed", "how": "AI can help schedule production and generate wiring and pairing prompts for each model. Fitting the drives, doing the wiring, and pairing and tuning on site still take a person's hands." },
+  { "name": "Factory electrical safety and function inspection", "how": "Test rigs working with AI record the data automatically, judge pass or fail and generate the inspection sheet. A person handles the abnormal units, spot-checks the results, and signs off on safety before anything ships." },
+  { "name": "Burn-in testing new products and reporting back", "how": "The rigs run the endurance tests on their own, and AI sorts the data, finds patterns in the failures and drafts the report. A person builds the test fixtures, decides which faults are real, and explains the problem clearly to R&D." },
+  { "name": "Installing a smart standing desk in a customer's home and teaching them to use it", "how": "AI can only help book the visit and send instructions and demo videos. Going into the home, dealing with whatever goes wrong on site, and showing the customer hands-on how to use it still come down to a person." },
+  { "name": "Tracking down why a power sofa won't move", "how": "From the customer's description, photos and error codes, AI produces a checklist and likely causes. A person goes to the home, tests the power, the motor, the wiring and the remote pairing, finds the real fault and fixes it." },
+  { "name": "Checking the child lock on children's power furniture", "how": "At most AI provides a checklist. Whether both layers of protection really work has to be tested item by item on site by a person, who confirms it passes and answers for a child's safety." },
+  { "name": "Training and certifying new hires", "how": "AI can produce training materials, test questions and mock Q&A. A person demonstrates hands-on, watches whether the new hire works to standard, and makes the final call on whether they're ready." }
+ ],
+ "events": {
+  "e_stairs": "An old building with no lift. A 1.8-meter power-bed base weighs over forty kilos, and you and your partner carry it from the ground floor to the seventh, resting three times. The next morning, bending to put on your shoes, something in your back clicks.",
+  "e_grandma": "An old woman, once her power bed is in, presses \"back up\" by herself and says she won't need her husband to help her out of bed anymore. She insists on giving you a bag of sesame balls she fried herself. You can't refuse.",
+  "e_firmware": "A batch of control boxes has bad firmware: cut the power and they forget their travel limits. That month you go back to more than forty homes, plugging in the flashing tool one house at a time. No weekends.",
+  "e_ai_diag": "After-sales brings in AI diagnosis: the customer sends a video and the system lists likely causes and the parts to bring. Your tool bag gets lighter, and wasted trips drop by half.",
+  "e_ai_wrong": "The AI says the motor has died. You haul a new motor to the house, open it up, and find a loose plug. In the system you change the job to \"diagnosed by technician\" and write three lines in the notes.",
+  "e_review": "A customer says the standing desk you installed wobbles and posts a bad review online with a video. You go back, adjust the levelling feet and tighten the crossbar. He doesn't take the review down, only adds a line: the installer had a good attitude.",
+  "e_contest": "The district holds a skills contest for the home-furnishing trade, with a timed round to install and commission a smart bed. You take second prize. The factory hangs a banner outside the canteen, and the prize money is ¥2,000.",
+  "e_love": "Someone in the e-commerce customer service team sends you your work orders every day, and their notes are always more detailed than anyone's: which floor, whether there's a lift, whether there's a dog. Later the two of you start going out after work for double-skin milk pudding.",
+  "e_wedding": "You hold the wedding back home in western Guangdong, thirty tables in front of the village ancestral hall. The gift money pays off half your debts; the rest you save toward a down payment in Foshan.",
+  "e_baby": "The day your child is born you're installing a bed in Sanshui. The phone rings, and your partner says he'll finish up. You drive the van all the way to the hospital, an empty cardboard box still in the back.",
+  "e_house": "You buy a small three-bedroom in Beijiao, Shunde, with a down payment from the two of you plus what family could pull together. During the fit-out you install a staff-discount power bed in the main bedroom yourself.",
+  "e_export": "Export orders suddenly fall by half. The factory shuts two of its overseas lines and after-sales starts rotating days off. For a few months your pay slip is thinner, and you take a few private jobs on the side.",
+  "e_ota": "The new power beds can take updates remotely; faults that used to mean a house call are fixed with one click in the back office. Your house calls drop, and your follow-up phone calls multiply.",
+  "e_childlock": "On a follow-up visit to a family with small children, you find the adults have switched off the child lock on the standing desk. You spend ten minutes telling the parents about pinched fingers, switch the lock back on, and note it in the work order.",
+  "e_heat": "In August you install a bed in a just-handed-over bare-shell flat. No air conditioning, thirty-seven degrees. By the time the bed is done you could wring out your shirt, and that night your head aches until morning.",
+  "e_scrape": "Reversing the van down a narrow lane in an urban village, you scrape an e-bike. You pay ¥800, and your supervisor says from now on your partner gets out and guides you back.",
+  "e_rnd_adopt": "After half a year of you reporting that the control box drops off a Zigbee hub, R&D finally moves the antenna in the next version. For the first time, people in R&D know your name.",
+  "e_hotel": "The factory wins a smart-bed contract for three hundred rooms at a hotel in Zhuhai. You take four people on site for a month, ten beds a day, sleeping in the hotel's staff dormitory at night.",
+  "e_back": "Years of lifting bases and crawling under beds to wire them, and a scan shows a herniated disc. The doctor tells you to lift less. You buy a back brace and wear it under your work shirt.",
+  "e_father": "A call from home: your father got heatstroke in the fields and spent a week in hospital. You drive five hours back, and that month your job count is half what it should be.",
+  "e_apprentice": "An apprentice you trained finishes a full year of solo house calls with zero complaints. He takes you out for fried milk in Daliang and says his hands shook on his first job, and he only dared to start wiring because you were standing beside him.",
+  "e_young": "Many of this year's new hires came because they saw a short video about installers \"making over ten thousand a month.\" After one month, half of them are gone. Carrying beds up stairs was too much.",
+  "e_standard": "The industry association is drafting a service standard for in-home smart furniture installation and invites you to the meeting. After the clause on anti-pinch testing you add a sentence: in homes with children, it must be demonstrated in person before handover."
+ },
+ "choices": {
+  "c_cert": {
+   "title": "Sit the IoT Installer exam, aiming for Installation Technician",
+   "situation": "Your supervisor says that to move up to Installation Technician / After-Sales Technician you need to troubleshoot on your own and do trial assembly of new products, and the IoT Installation and Commissioning certificate (intermediate) would help. Night classes run three evenings a week, exactly when you'd fit in one more job.",
+   "options": [
+    { "label": "Enroll and sit the intermediate exam", "result": "In night class you finally drew the difference between Zigbee, Bluetooth and Wi-Fi as a single diagram, and taped it to the van's sun visor. On exam day you were the first to hand in your paper." },
+    { "label": "Skip it for now and take more jobs", "result": "Those months your job count was second in the department, and your pay slip looked good. When the list for new-product trial assembly came out, your name wasn't on it." }
+   ]
+  },
+  "c_gz": {
+   "title": "Jump to a whole-home smart company in Guangzhou",
+   "situation": "A whole-home smart integrator in Guangzhou comes to poach people. They install curtain motors, lighting, door locks and underfloor heating all linked together, you'd need to write scenes on the hub, and the commission per job beats the factory's. But the company is small; when projects dry up, base pay is only ¥2,500.",
+   "options": [
+    { "label": "Go to Guangzhou", "result": "You learned to write a \"coming home\" scene on the hub, and could spend a whole day tuning one villa. In your second year there were three months without a project, and you got through them on savings." },
+    { "label": "Stay at the factory", "result": "You stayed. Your social insurance never missed a month and the jobs kept coming. The colleague who went to Guangzhou sometimes posts light shows from villas on his feed." }
+   ]
+  },
+  "c_ai_kb": {
+   "title": "Help build the AI fault library or not",
+   "situation": "The after-sales AI keeps getting diagnoses wrong, and the company wants people from the field to organize real cases and tag fault videos, two days a week back at the factory with no house-call commission. Your supervisor says this is the work of the future. You do the sums: about a thousand less a month.",
+   "options": [
+    { "label": "Sign up and sort the cases", "result": "You went through customers' videos one by one and split \"strange noise\" into seven kinds. Six months later the AI was right more often, and fewer installers got sent out for nothing." },
+    { "label": "No, just keep doing jobs", "result": "You're still on the road every day and have seen every odd thing a home can hold. But when the company holds its fault-analysis meetings, it's the case-sorters who get invited." }
+   ]
+  },
+  "c_lead": {
+   "title": "Apply for Installation Team Leader / After-Sales Technical Supervisor",
+   "situation": "The old team leader is moving to open an outlet in another city, and the manager wants you to apply for Installation Team Leader / After-Sales Technical Supervisor: eight installers, two vans, and the whole district's rework rate. The base pay is a little higher, the commission disappears, and you'll be taking complaint calls at ten at night.",
+   "options": [
+    { "label": "Apply", "result": "At the selection meeting you presented the ten causes of rework you'd been collecting. When you finished, the manager asked only one thing: can you keep the old hands in line?" },
+    { "label": "Don't apply, stay in the field", "result": "You keep doing jobs with your partner and collecting commission at the end of the month. The new team leader joined a year after you, and is very polite when assigning you work." }
+   ]
+  },
+  "c_tester": {
+   "title": "Move over to furniture product testing",
+   "situation": "The factory has built a new test lab and is hiring furniture product testers to run endurance cycles and do anti-pinch and preliminary EMC checks. You'd sit in an air-conditioned room and never carry another bed upstairs. The pay is twenty percent less than house calls, and your supervisor says someone who has been in thousands of homes knows best where things break.",
+   "options": [
+    { "label": "Go to the lab", "result": "You took off the work shirt covered in sawdust and collected a white lab coat.", "end": "You keep watch over an actuator endurance rig as it rises and falls through its ten-thousandth cycle. In the report you write: after cycle seven thousand there is a noise, the same one you used to hear in people's homes." },
+    { "label": "Stay on house calls", "result": "You said you'd do a few more years. That night you sat in the van for a while with the radio on, in no hurry to get out." }
+   ]
+  },
+  "c_rnd": {
+   "title": "Go on loan to R&D for new-product trial assembly",
+   "situation": "R&D is developing a bed with sleep monitoring and asks for you by name for six months: trial assembly and process feedback, possibly turning into a post as power furniture R&D assistant. For those six months you'd sit in the factory, and your district's regular customers would go to someone else.",
+   "options": [
+    { "label": "Go to R&D", "result": "You took the prototype apart and put it back together over and over, and changed eleven steps in the assembly sequence. In meetings, the engineers began waiting for you to finish before deciding." },
+    { "label": "No, keep your district", "result": "Your regular customers still ask for you; some request you by name when they move house. When the new bed came out, a few steps in the assembly manual looked awkward to you." }
+   ]
+  },
+  "c_studio": {
+   "title": "Strike out and open your own installation studio",
+   "situation": "A few store managers at furniture malls know you well by now, and say if you opened your own installation studio they'd send you all their jobs. You'd have to buy a van, hire people and front the money, with payment terms of three months. If it works it beats working for someone else; if not, you're buried in debt.",
+   "options": [
+    { "label": "Go it alone", "result": "You registered a studio and stuck your own phone number on the van door.", "end": "You have three installers and two vans, taking jobs from a dozen furniture malls in Foshan and Guangzhou. At the end of every month you sit in an office made from a rented flat and check the settlement sheets one by one." },
+    { "label": "Stay at the factory", "result": "You took those store managers out for dim sum and said you'd wait a while. On the way back you spent a long time doing the sums, and in the end didn't finish them." }
+   ]
+  },
+  "c_head": {
+   "title": "Apply for Head of Smart Furniture Process / After-Sales",
+   "situation": "The company is rolling out service outlets nationwide and needs a Head of Smart Furniture Process / After-Sales to set installation standards and manage franchised installers in other cities. You're one of the internal candidates. The other was hired by headquarters and has built after-sales systems for an appliance maker.",
+   "options": [
+    { "label": "Apply and write a proposal", "result": "You stayed up three nights writing the proposal; the first page was five years of rework data you had compiled yourself. At the panel you didn't speak fast, but every number checked out." },
+    { "label": "Let the outsider have it", "result": "You go on running your district. In the new head's first week he comes looking for you and asks for that rework data." }
+   ]
+  },
+  "c_trainer": {
+   "title": "Leave house calls and become a trainer at the factory",
+   "situation": "You're past fifty and your back hurts whenever it rains. The manager says you could come back to the factory as an installation trainer, teaching new hires and running their certification, no more stairs. The commission would be gone.",
+   "options": [
+    { "label": "Become a trainer", "result": "You set up three sample beds in the training room and new hires came through in batches. The thing you said most was: read the manual first, then touch it." },
+    { "label": "Stay in the field", "result": "You still head out early. When customers open the door to an installer with gray hair, they speak a little more politely." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last day you didn't go out. At the factory you handed back what was in your tool bag one item at a time: the multimeter, the torque wrench, the flashing tool, half a roll of cable ties. The storekeeper signed the slip and said keep something to remember it by, and handed the wrench back to you. You drove home in your own car, past a new development where unopened cardboard boxes were still stacked on the balconies.",
+  "burnout": "That day you were kneeling under a bed doing the wiring, and when you got up your back simply gave out; you sat on the customer's floor for ten minutes. The doctor wrote you a note, and the manager moved you to the warehouse to look after parts. You leave on time every day, and when the vans drive out of the factory gate one after another, you still stand and watch for a while."
+ },
+ "stages": [
+  "You go out with your own work orders now. At the customer's home you check the model first, then unbox, assemble the frame, fit the actuators, wire and pair, run the anti-pinch and overload tests, and have the customer sign the electronic work order. In your hands are a multimeter, a torque wrench, the commissioning app on your phone and a roll of cable ties. You deal most with customers and the dispatchers, and when a customer asks something, you have to answer in words they understand.",
+  "The jobs sent your way aren't new installs anymore but the ones others couldn't fix: a sofa dead on one side, a creak when the backrest rises, pairing that keeps dropping. You take the flashing tool on house calls to reflash firmware, and back at base you write up a fault analysis in the after-sales system. When a new product comes out you're the first called in for trial assembly, and in the trial log you note which screw won't go in and which cable is too short, and hand it to R&D.",
+  "You run eight field installers and two vans. Mornings you dispatch, evenings you review follow-ups, and every week you report first-time install pass rates and rework rates to the manager. You rarely turn a screw yourself now; only for a customer complaint, a big job from a furniture mall, or a new hire's certification do you grab the tool bag and ride along. In meetings with R&D and quality, you speak for the field.",
+  "On your desk are the installation work instructions, the after-sales service standard, and a list of service outlets across the country. You set the trial-assembly process and training materials before each product launch, negotiate per-job rates with franchised installers in other cities, and sit in on industry association meetings about installation standards. You follow the field through weekly reports and bad reviews, and now and then go to a home yourself."
+ ],
+ "work": [
+  "Your partner wired an actuator with the polarity reversed, so the head of the bed goes down when you press up. You glance at the label on the control box, unplug and swap. Ten seconds.",
+  "Following the inspection procedure, you run the anti-pinch test with a wooden batten laid under the standing desk. The moment the desktop touches it, it springs back two centimeters. You tick pass on the work order.",
+  "The customer's smart speaker is another brand, and the bed won't join his platform. You dig through the compatibility list for ages, and in the end teach him to set up a shortcut on his phone.",
+  "A power sofa won't move on the left. You work down the line with the multimeter and finally find a flattened length of cable under the sofa. Cut, solder, heat-shrink.",
+  "Trial assembly of a new smart bed: the headboard wiring harness is five centimeters shorter than the frame, pulled taut once it's on. You take a photo and write in the trial log: lengthen harness to 1.2 m.",
+  "A batch of control boxes needs new firmware. At the factory you hook up the flashing tool, watch the progress bar run to the end on each one, then press the hand controller three times to confirm the upper and lower limits.",
+  "A new installer is up for certification, and you have him assemble a bed in front of you. When he's done you press \"zero gravity\" once, then point out the bed-leg screw he forgot to tighten.",
+  "This month's rework rate is two points higher than last month's. You go through forty rework tickets and find half of them come from the same compound, where the voltage is unstable.",
+  "A mall store manager wants three people this weekend to fit out a showroom. You look at the rota and agree to two; the third spot you fill yourself.",
+  "You revise the installation work instructions, changing \"pair first, then fit the headboard\" to \"fit the headboard first, then pair.\" The next month, rework across outlets nationwide drops noticeably.",
+  "A franchised installer from another city comes to negotiate rates and wants fifteen yuan more per job. You pull up their rework figures; in the end you give eight more, with deductions for jobs that exceed the rework limit.",
+  "R&D brings over a new bed with sleep monitoring and asks whether it'll be easy to install on house calls. You take two team leaders to the factory for an afternoon of trial assembly and write seven points of feedback."
+ ],
+ "past": [
+  "You finished middle school in a town in western Guangdong, some way below the cutoff for an academic high school. Your cousin had worked five years in a Shunde furniture factory and said come to Foshan for vocational school, and there'd be a factory waiting when you graduated.",
+  "You enrolled in electromechanical technology at a vocational school in Shunde, learning basic electrics and how to read circuit diagrams. In your first practical class you took apart an electric fan and put it back together with two screws left over.",
+  "At school you earned your low-voltage electrician's operating permit. Your work placement put you on the assembly line of a sofa factory in Longjiang, firing a nail gun, stapling foam, and fitting actuators into recliner sofas.",
+  "After graduating you stayed on at the sofa factory. The first time you wired a hand controller to a recliner, you pressed it and watched the backrest lower slowly, and then pressed it a few more times.",
+  "The factory opened a smart-bed line and wanted people from assembly who could do wiring. You signed up, and spent a year at the in-house commissioning station, pairing devices and running burn-in tests every day.",
+  "After-sales was short of people, and your supervisor sent you out on house calls. For the first month you rode along as an old hand's partner. He said: put on shoe covers before you go in. It's someone's home; keep your hands gentle."
+ ],
+ "late": {
+  "pension_note": "Estimate: the factory pays into Foshan's basic pension scheme for enterprise employees, with contributions based on your base wage and not fully on your commission. After retirement that comes to about forty percent of your final monthly pay.",
+  "scenes": [
+   "In your first month of retirement you still wake at seven. You go downstairs for breakfast and see a furniture factory van parked at the compound gate, an installer sliding a long cardboard box out the back.",
+   "A former apprentice has opened an installation studio and asks you to come in two days a week as an adviser. No house calls; you just stay in the shop helping young installers read wiring diagrams and work out faults.",
+   "Your pension arrives on time every month, enough for the two of you to eat. You go back to your hometown in western Guangdong for six months and install a power bed in the old house. The neighbors take turns coming over to press the buttons.",
+   "The staff-discount power bed at home has been in use for nearly twenty years, and an actuator has started to make a noise. You take it out and replace it yourself, and when it's in you press the button once. Still that same sound.",
+   "You look after parts in the warehouse, handing out actuators, control boxes and hand controllers against the slips. Your pay is less, your back no longer aches at night, and you sleep straight through.",
+   "A young installer comes to collect parts and says one customer's bed just won't pair. You ask a couple of questions and tell him to check whether the router has both bands merged into one.",
+   "When you reach retirement age you do the paperwork on time. You fix the electric clothes-drying racks for a few neighbors in the compound, and after that building management comes to you too when something breaks.",
+   "For the first year after you leave house calls, you still wake at half past seven and reach without thinking for the van keys in your pocket.",
+   "Now and then you go back to the factory on some errand, and the warehouse people still call you by your nickname. Nobody asks why you left, and you don't say much.",
+   "An apprentice you trained becomes an after-sales supervisor. The day he's named a model worker he calls you, and the first thing he says is: Shifu, I still put on shoe covers before I go in.",
+   "Later the new beds could update themselves and report their own faults, and there were fewer and fewer house calls. But someone still has to carry them up the stairs, and someone still has to crawl under the bed to connect the wires.",
+   "Your grandson presses every button on the power bed at your place, raising the head as high as it goes and laying it flat again. He asks who installed it. You say: Grandpa did."
+  ],
+  "closing": {
+   "retire": "One afternoon many years later, you walk slowly along the river in Shunde. The furniture mall by the road has a new sign. You stand outside the window for a while; inside, the display beds rise and fall without a sound.",
+   "burnout": "Many years later, sitting on your own balcony, you fix a remote-control car for the neighbor's child. You click the battery cover shut and flip the switch, and it spins a circle on the floor tiles.",
+   "end": "Many years later, in a drawer, you come across your low-voltage electrician's permit, its lamination gone yellow. In the photo you are eighteen. You look at it a while, then put it back."
+  }
+ }
+}
