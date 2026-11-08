@@ -6,8 +6,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { GameCard, PeerCard, Stat } from '@/lib/game/types';
 import { STATS } from '@/lib/game/types';
-import { YEAR0, autoChoose, choose, epilogue, newLife, pendingChoice, simulatePeer, step, type Life } from '@/lib/game/engine';
+import { YEAR0, autoChoose, choose, epilogue, newLife, pendingChoice, pinyinName, simulatePeer, step, type Life } from '@/lib/game/engine';
 import type { Lang } from '@/lib/game/i18n';
+import { encodeShare } from '@/lib/game/share';
 
 /** 这一页的语言（/game 中文、/game/en 英文 One Job, One Life）：GameApp 渲染时设定；整页一种语言，切换走整页跳转 */
 let LANG: Lang = 'zh';
@@ -32,7 +33,7 @@ const wan = (n: number) => (LANG === 'en' ? `¥${Math.round(n).toLocaleString('e
 const wanW = (x: number) => (LANG === 'en' ? `¥${Math.round(x * 10000).toLocaleString('en-US')}` : `${(Math.round(x * 10) / 10).toFixed(1)} 万`);
 const fx = (e?: Record<string, number | undefined>) => (e ? STATS.filter(s => e[s.k]).map(s => `${statL(s.k, s.label)} ${(e[s.k] as number) > 0 ? '+' : ''}${e[s.k]}`).concat(e.savings ? [`${tr('积蓄', 'Savings')} ${e.savings > 0 ? '+' : '−'}${wanW(Math.abs(e.savings))}`] : []) : []);
 
-export default function GameApp({ lang = 'zh' }: { lang?: Lang }) {
+export default function GameApp({ lang = 'zh', shared }: { lang?: Lang; shared?: { title: string; sub: string } }) {
   LANG = lang;
   const [phase, setPhase] = useState<'home' | 'past' | 'card' | 'day' | 'play' | 'late' | 'report'>('home');
   const [save, setSave] = useState<Save | null>(null);
@@ -45,7 +46,7 @@ export default function GameApp({ lang = 'zh' }: { lang?: Lang }) {
 
   useEffect(() => {
     // 第一次来、浏览器不是中文：中文页自动转英文版（选过语言就听人的）
-    try { if (LANG === 'zh' && !localStorage.getItem('game:lang') && !/^zh/i.test(navigator.language || '')) { location.replace(langHref('en')); return; } } catch { /* 读不到就留在中文 */ }
+    try { if (LANG === 'zh' && !shared && !localStorage.getItem('game:lang') && !/^zh/i.test(navigator.language || '')) { location.replace(langHref('en')); return; } } catch { /* 读不到就留在中文 */ }
     const s = read<Save>(key(SAVE));
     if (s?.life && !s.life.done && s.card) setResume(s);
     setArchive(read<Archive[]>(key(ARCHIVE)) || []);
@@ -62,9 +63,9 @@ export default function GameApp({ lang = 'zh' }: { lang?: Lang }) {
   const go = (p: typeof phase) => { setPhase(p); scrollTo(0, 0); };
 
   return (
-    <div className="g-root">
+    <div className={`g-root ${LANG}`}>
       <style>{CSS}</style>
-      {phase === 'home' && <Home busy={busy} err={err} onEnter={enter} resume={resume} onResume={() => { setSave(resume); go('play'); }} archive={archive} />}
+      {phase === 'home' && <Home busy={busy} err={err} onEnter={enter} resume={resume} onResume={() => { setSave(resume); go('play'); }} archive={archive} shared={shared} />}
       {phase === 'past' && save && <PastView card={save.card} name={save.life.name} onDone={() => go('card')} />}
       {phase === 'card' && save && <CardView s={save} onDay={() => go('day')} onStart={() => go('play')} onRedraw={enter} busy={busy} />}
       {phase === 'day' && save && <DayView card={save.card} onStart={() => go('play')} onBack={() => go(save.life.done ? 'report' : 'card')} back={save.life.done ? 'report' : 'card'} />}
@@ -89,7 +90,7 @@ function LangSwitch() {
 }
 
 // ───────────────────────── 首页 ─────────────────────────
-function Home({ busy, err, onEnter, resume, onResume, archive }: { busy: boolean; err: string; onEnter: () => void; resume: Save | null; onResume: () => void; archive: Archive[] }) {
+function Home({ busy, err, onEnter, resume, onResume, archive, shared }: { busy: boolean; err: string; onEnter: () => void; resume: Save | null; onResume: () => void; archive: Archive[]; shared?: { title: string; sub: string } }) {
   return (
     <main className="g-wrap g-home">
       <section className="g-hero">
@@ -97,6 +98,7 @@ function Home({ busy, err, onEnter, resume, onResume, archive }: { busy: boolean
         <img className="g-art g-art-hero" src="/game/art/hero.jpg" alt="" />
         <div className="g-eyebrow">{tr('1JOB1LIFE · 职业生涯模拟', '1JOB1LIFE · A CAREER SIMULATOR')}</div>
         <h1 className="g-title">{tr('入一行，过一生', 'One Job, One Life')}</h1>
+        {shared && <div className="g-shared"><b>{shared.title}</b><span>{shared.sub}</span><em>{tr('轮到你了：抽一张卡，过你自己的这一生。', 'Your turn: draw a card and live your own.')}</em></div>}
         <p className="g-lead">{tr('抽一张入职登记卡。城市、单位、资历都不由你选，就像真的入行一样。从这一天起，一年一年，把这段职业生涯过到退休。', 'Draw a random job card and live one working life in China, all the way to retirement.')}</p>
         <button className="g-deck" disabled={busy} onClick={onEnter} aria-label={tr('抽一张入职登记卡', 'Draw an employment card')}>
           <svg className="g-strap" viewBox="0 0 120 70" aria-hidden><path d="M20 0 L52 62 M100 0 L68 62" stroke="#1f3d6b" strokeWidth="10" /><path d="M20 0 L52 62 M100 0 L68 62" stroke="#f6f1e3" strokeWidth="1" strokeDasharray="3 4" /><rect x="48" y="56" width="24" height="12" rx="3" fill="#c9cfd8" stroke="#1f3d6b" /></svg>
@@ -149,7 +151,7 @@ function Badge({ busy, top }: { busy?: boolean; top?: boolean }) {
       </g>
       <text x="66" y="86" textAnchor="middle" fill={cream} fontSize="20" fontWeight="700" fontFamily="var(--font-serif-sc), serif">{busy ? '…' : '?'}</text>
       {/* 抬头和三条空白 */}
-      <text x="120" y="56" fill={cream} fontSize="19" fontWeight="900" letterSpacing="3" fontFamily="var(--font-serif-sc), serif">{tr('入职登记卡', 'EMPLOYEE CARD')}</text>
+      <text x="120" y="56" fill={cream} fontSize={tr('19', '17')} fontWeight="900" letterSpacing={tr('3', '2')} fontFamily="var(--font-serif-sc), serif">{tr('入职登记卡', 'STAFF CARD')}</text>
       <text x="121" y="70" fill={cream} fontSize="7" letterSpacing="2.2" opacity=".7">{tr('EMPLOYMENT  CARD · 1JOB1LIFE', '入职登记卡 · 1JOB1LIFE')}</text>
       {[tr('姓名', 'Name'), tr('单位', 'Employer'), tr('岗位', 'Position')].map((t, i) => <g key={t}><text x="121" y={96 + i * 20} fill={cream} fontSize="10" opacity=".85">{t}</text><line x1={LANG === 'en' ? 166 : 148} y1={98 + i * 20} x2="290" y2={98 + i * 20} stroke={cream} strokeWidth=".8" opacity=".6" /></g>)}
       {/* 底部祥云 */}
@@ -263,7 +265,7 @@ function CardView({ s, onDay, onStart, onRedraw, busy }: { s: Save; onDay: () =>
         <div className="g-note">{tr(`月薪按「${card.salary_note}」`, `Pay: ${card.salary_note}`)}</div>
       </section>
       <div className="g-actions sticky">
-        <button className="g-btn" onClick={onDay}>{tr('先看看这一天', 'A day first')}</button>
+        <button className="g-btn" onClick={onDay}>{tr('先看看这一天', 'Typical day')}</button>
         <button className="g-btn primary" onClick={onStart}>{tr('开启职业人生', 'Begin')}</button>
       </div>
       <button className="g-link" disabled={busy} onClick={onRedraw}>{tr('不想过这一生？换一张', 'Not this life? Draw another card')}</button>
@@ -318,7 +320,7 @@ function Play({ s, onChange, onDone }: { s: Save; onChange: () => void; onDone: 
         <div className="g-bar-r">
           <button className={`g-chip${paused ? ' on' : ''}`} onClick={() => setPaused(p => !p)}>{paused ? tr('▶ 继续', '▶ Play') : tr('❚❚ 暂停', '❚❚ Pause')}</button>
           {SPEEDS.map(x => <button key={x.k} className={`g-chip${speed === x.k && !paused ? ' on' : ''}`} onClick={() => { setSpeed(x.k); setPaused(false); }}>{x.t}</button>)}
-          <button className={`g-chip${auto ? ' on' : ''}`} onClick={() => setAuto(a => !a)} title={tr('抉择交给程序随机选', 'Let fate make the choices')}>{tr('自动抉择', 'Auto-choose')}</button>
+          <button className={`g-chip${auto ? ' on' : ''}`} onClick={() => setAuto(a => !a)} title={tr('抉择交给程序随机选', 'Let fate make the choices')}>{tr('自动抉择', 'Auto')}</button>
         </div>
         <div className="g-prog"><i style={{ width: `${Math.min(100, ((life.age - card.start.age) / Math.max(1, card.retire_age - card.start.age)) * 100)}%` }} /></div>
       </div>
@@ -381,6 +383,7 @@ function Report({ s, onAgain, onDay, busy }: { s: Save; onAgain: () => void; onD
       <h2 className="g-h2">{tr(`${life.name}的这一生`, `The working life of ${life.name}`)}</h2>
       <p className="g-sub">{tr(`${card.headline}。${life.age - life.y} 岁从这里开始，${life.age} 岁${how}。`, `${card.headline}. You started here at ${life.age - life.y}; at ${life.age}, ${how}.`)}</p>
       <blockquote className="g-quote">{life.endText}</blockquote>
+      <button className="g-link g-dayagain" onClick={onDay}>{tr('再看一眼那一天', 'See the typical day again')}</button>
       <div className="g-nums">
         <div><b>{life.y}</b><span>{tr('年', 'years')}</span></div>
         <div><b>{card.ladder[life.stage]?.title}</b><span>{tr('最后做到', 'Final position')}</span></div>
@@ -432,12 +435,27 @@ function Report({ s, onAgain, onDay, busy }: { s: Save; onAgain: () => void; onD
       </section>
 
       <div className="g-actions sticky">
-        <button className="g-btn" onClick={onDay}>{tr('再看一眼那一天', 'That day')}</button>
+        <ShareBtn s={s} />
         <button className="g-btn primary" disabled={busy} onClick={onAgain}>{busy ? tr('正在分配…', 'Assigning…') : tr('再入一行', 'New life')}</button>
       </div>
       <footer className="g-foot">{tr('数字是按职业库推演的估算，不是对任何真实的人的预测。', 'All numbers are estimates simulated from the occupation data — not a prediction about any real person.')}<Tip /></footer>
     </main>
   );
+}
+
+/** 分享这一生：链接卡片上显示「某某的一生：城市 · 身份」和起止，打开是首页加这一生的摘要 */
+function ShareBtn({ s }: { s: Save }) {
+  const [msg, setMsg] = useState('');
+  const share = async () => {
+    const { card, life } = s;
+    const code = encodeShare({ c: card.id, n: life.name, a: life.age - life.y, b: life.age, s: life.stage, d: life.done || 'retire', l: LANG });
+    const url = `${location.origin}${/1job1life/.test(location.host) ? '' : '/game'}/s/${code}`;
+    const title = `${pinyinName(life.name)}'s working life · One Job, One Life`;   // 分享一律英文（用户 11-07）
+    try { if (navigator.share) { await navigator.share({ title, url }); return; } } catch { /* 取消分享或不支持就复制链接 */ }
+    try { await navigator.clipboard.writeText(`${title} ${url}`); setMsg(tr('链接已复制', 'Link copied')); } catch { prompt(tr('复制这个链接', 'Copy this link'), url); }
+    setTimeout(() => setMsg(''), 2200);
+  };
+  return <button className="g-btn" onClick={share}>{msg || tr('分享这一生', 'Share')}</button>;
 }
 
 function Curve({ life, peers }: { life: Life; peers: Peer[] }) {
@@ -587,6 +605,10 @@ const CSS = `
 .g-track { height: 8px; background: #eee8dc; border-radius: 99px; overflow: hidden; }
 .g-track i { display: block; height: 100%; background: var(--acc); border-radius: 99px; transition: width .6s; }
 .g-track i.warn { background: var(--bad); }
+.g-root.en .g-stat { grid-template-columns: 62px 1fr 28px; }
+.g-shared { margin: 10px auto 4px; max-width: 460px; padding: 12px 16px; border: 1px solid var(--line, #e2dccf); border-left: 3px solid var(--acc); border-radius: 12px; background: #fffdf8; text-align: left; display: grid; gap: 4px; }
+.g-shared b { font-size: 16px; } .g-shared span { font-size: 14px; color: var(--ink2); } .g-shared em { font-style: normal; font-size: 13px; color: var(--acc); }
+.g-dayagain { display: block; margin: -6px 0 14px; }
 .g-stat b { text-align: right; font-weight: 600; color: var(--ink2); }
 .g-peer { display: grid; padding: 8px 0; border-top: 1px solid #efeadf; font-size: 13.5px; }
 .g-peer:first-of-type { border-top: 0; }

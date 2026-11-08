@@ -20,11 +20,13 @@
   "events": { "<事件 id>": "<text>" },
   "choices": { "<抉择 id>": { "title": "", "situation": "", "options": [ { "label": "", "result": "", "end": "<中文选项有 end 才写>" } ] } },
   "endings": { "retire": "", "burnout": "" },
+  "stages": [ "<stages[0].text>（中文卡有才写）" ],
+  "work": [ "<work[0].text>（中文卡有才写）" ],
   "past": [ "<past[0].text>" ],
   "late": { "pension_note": "", "scenes": [ "<late.scenes[0].text>" ], "closing": { "retire": "", "burnout": "", "end": "" } }
 }
 ```
-数组和中文卡**同序同数**（facts、day、ladder、ai_tasks、past、late.scenes），事件和抉择按 id 全覆盖。
+数组和中文卡**同序同数**（facts、day、ladder、ai_tasks、past、late.scenes、stages、work），事件和抉择按 id 全覆盖。
 3. 校验：`npx tsx scripts/game-card-en-check.mts <id> …`，全部 ✓（数量对、id 不缺、没有任何中文字符，包括「」，。这类标点）。
 4. 回报：完成的 id，各挑一两句你满意的译句。
 

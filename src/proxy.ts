@@ -60,6 +60,7 @@ export async function proxy(req: NextRequest) {
   if (/(^|\.)1job1life\.com$/.test(host)) {
     if (pathname === '/') return NextResponse.rewrite(new URL('/game', req.url));
     if (pathname === '/en') return NextResponse.rewrite(new URL('/game/en', req.url));   // 英文版 One Job, One Life
+    if (/^\/s\/[\w-]+$/.test(pathname)) return NextResponse.rewrite(new URL('/game' + pathname, req.url));   // 分享出去的「某某的一生」
     if (pathname === '/game' || pathname.startsWith('/game/') || pathname === '/favicon.ico') return NextResponse.next();
     if (pathname.startsWith('/api/game/') && req.method === 'GET') return NextResponse.next();
     if (pathname.startsWith('/api/')) return NextResponse.json({ ok: false, error: 'not found' }, { status: 404 });

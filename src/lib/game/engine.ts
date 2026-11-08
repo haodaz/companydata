@@ -32,6 +32,8 @@ const ANY = ['小满', '晨曦', '一凡', '子墨', '安然', '清和', '知远
 // 英文版的名字用拼音（姓在前，如 Wang Yiming）
 const PY_SUR: Record<string, string> = Object.fromEntries('王Wang 李Li 张Zhang 刘Liu 陈Chen 杨Yang 黄Huang 赵Zhao 吴Wu 周Zhou 徐Xu 孙Sun 马Ma 朱Zhu 胡Hu 郭Guo 何He 林Lin 罗Luo 高Gao 郑Zheng 梁Liang 谢Xie 宋Song 唐Tang 许Xu 韩Han 冯Feng 邓Deng 曹Cao 彭Peng 曾Zeng 萧Xiao 田Tian 董Dong 袁Yuan 潘Pan 蒋Jiang 蔡Cai 余Yu 杜Du 叶Ye 程Cheng 苏Su 魏Wei 吕Lyu 丁Ding 任Ren 沈Shen 姚Yao 卢Lu 姜Jiang 崔Cui 钟Zhong 谭Tan 陆Lu 汪Wang 范Fan 金Jin 石Shi 廖Liao 贾Jia 夏Xia 韦Wei 付Fu 方Fang 白Bai 邹Zou 孟Meng 熊Xiong 秦Qin 邱Qiu 江Jiang 尹Yin 薛Xue 闫Yan 段Duan 雷Lei 侯Hou 龙Long 史Shi 陶Tao 黎Li 贺He 顾Gu 毛Mao 郝Hao 龚Gong 邵Shao 万Wan 钱Qian 严Yan 覃Qin 武Wu 戴Dai 莫Mo 孔Kong 向Xiang 汤Tang'.split(' ').map(x => [x[0], x.slice(1)]));
 const PY_GIVEN: Record<string, string> = Object.fromEntries('一鸣Yiming 思远Siyuan 浩然Haoran 俊杰Junjie 晓东Xiaodong 宇航Yuhang 志强Zhiqiang 文博Wenbo 建国Jianguo 明轩Mingxuan 泽宇Zeyu 国栋Guodong 天佑Tianyou 家豪Jiahao 振华Zhenhua 立新Lixin 子轩Zixuan 海涛Haitao 永刚Yonggang 鹏飞Pengfei 子涵Zihan 雨桐Yutong 欣怡Xinyi 佳琪Jiaqi 静怡Jingyi 梦瑶Mengyao 雪梅Xuemei 诗雨Shiyu 晓燕Xiaoyan 婉清Wanqing 若溪Ruoxi 丽华Lihua 春燕Chunyan 可欣Kexin 晓雯Xiaowen 慧敏Huimin 秀英Xiuying 思琪Siqi 玉兰Yulan 嘉怡Jiayi 小满Xiaoman 晨曦Chenxi 一凡Yifan 子墨Zimo 安然Anran 清和Qinghe 知远Zhiyuan 睿Rui'.split(' ').map(x => { const i = x.search(/[A-Z]/); return [x.slice(0, i), x.slice(i)]; }));
+/** 中文名转拼音（分享卡片统一用英文）；不认识的字原样留着 */
+export const pinyinName = (n: string) => /^[A-Za-z\s]+$/.test(n) ? n : `${PY_SUR[n[0]] || n[0]} ${PY_GIVEN[n.slice(1)] || n.slice(1)}`;
 /** 名字按卡上的性别抽（卡里写了「丈夫」「她」这类，名字得对得上）；没标性别的男女名都可能；英文版给拼音 */
 export const randomName = (seed: number, gender?: 'f' | 'm', lang: 'zh' | 'en' = 'zh') => {
   const pool = gender === 'f' ? FEMALE : gender === 'm' ? MALE : [...MALE, ...FEMALE, ...ANY];
