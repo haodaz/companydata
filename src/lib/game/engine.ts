@@ -185,9 +185,9 @@ export function step(card: GameCard, l: Life): Life {
   l.savings = Math.round((l.savings + (l.salary * 12 * 0.22) / 10000) * 10) / 10;
 
   // 7. 结束：身心撑不住 / 到退休年龄
-  // 身心低了不一定当场倒下，但每年都可能走：身心越低、这份工作强度越高，越撑不下去
+  // 身心低了不一定当场倒下，但每年都可能走：身心越低、这份工作强度越高，越撑不下去（强度 0.45 及以下的不会这样倒下）
   const uo = (card as GameCard & { up_or_out?: UpOrOut }).up_or_out;
-  if (l.stats.health <= 6 || (l.stats.health < 60 && rand(l) < ((60 - l.stats.health) / 60) * Math.min(0.3, card.load * card.load) * 0.2)) finish(card, l, 'burnout');
+  if (l.stats.health <= 6 || (l.stats.health < 60 && rand(l) < ((60 - l.stats.health) / 60) * Math.max(0, card.load - 0.45) * 0.14)) finish(card, l, 'burnout');
   else if (uo && l.stage === uo.stage && l.inStage >= uo.years && !l.staying) finish(card, l, 'end', l.lang === 'en' ? uo.end_en : uo.end);
   else if (l.age >= card.retire_age) finish(card, l, 'retire');
   l.rows.push(row(l));
