@@ -250,7 +250,7 @@ function CardView({ s, onDay, onStart, onRedraw, busy }: { s: Save; onDay: () =>
         <div className="g-reg-b">
           <div className="g-stamp">{tr('欢迎入职', 'HIRED')}</div>
           <div className="g-cap">{tr('姓名', 'Name')}</div>
-          <div className="g-name">{fullName(s)}</div>
+          <div className="g-name">{life.name}{LANG === 'en' && <small className="g-hz">{hanzi(s)}</small>}</div>
           <div className="g-headline">{card.headline}</div>
           <dl className="g-grid">
             <div><dt>{tr('职业', 'Occupation')}</dt><dd>{card.occupation.name}</dd></div>
@@ -642,6 +642,7 @@ const CSS = `
 .g-shared { margin: 10px auto 4px; max-width: 460px; padding: 12px 16px; border: 1px solid var(--line, #e2dccf); border-left: 3px solid var(--acc); border-radius: 12px; background: #fffdf8; text-align: left; display: grid; gap: 4px; }
 .g-shared b { font-size: 16px; } .g-shared span { font-size: 14px; color: var(--ink2); } .g-shared em { font-style: normal; font-size: 13px; color: var(--acc); }
 .g-dayagain { display: block; margin: -6px 0 14px; }
+.g-hz { display: block; font-size: .5em; font-weight: 500; color: var(--ink3); letter-spacing: .1em; margin-top: 4px; }
 .g-usd { display: block; font-size: .62em; font-weight: 500; color: var(--ink3); margin-top: 2px; }
 .g-stat b { text-align: right; font-weight: 600; color: var(--ink2); }
 .g-peer { display: grid; padding: 8px 0; border-top: 1px solid #efeadf; font-size: 13.5px; }
