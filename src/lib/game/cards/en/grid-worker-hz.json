@@ -1,0 +1,161 @@
+{
+  "id": "grid-worker-hz",
+  "occupation": "Urban Management Grid Worker",
+  "role": "Full-time grid worker for a subdistrict",
+  "headline": "Three years answering messages in e-commerce customer service, then hired by a canal-side old-town subdistrict in Hangzhou: a full-time grid worker riding an e-bike all day, photographing problems on your phone and reporting them in",
+  "unit": "The grassroots governance center of an old-town subdistrict in Hangzhou",
+  "unit_type": "Subdistrict office (full-time, contract staff)",
+  "city": "Hangzhou",
+  "city_tier": "New first-tier city",
+  "education": "Associate degree (e-commerce)",
+  "level": "The governance app has only just been installed on your phone, and you've memorized half of the report categories. Your grid has thirty-odd buildings, and the only one you know is the one you rent in.",
+  "intro": "You spent three years in customer service at an e-commerce company, answering hundreds of messages a day on a screen. Last year the subdistrict advertised for full-time grid workers. You applied and passed the written test and interview. Your grid sits by the Grand Canal: an estate from the 1980s, thirty-odd six-story blocks, and a two-hundred-meter row of street-front shops. As of today, every broken street light and every e-bike jammed in a stairwell in this patch gets reported first through your phone.",
+  "salary_note": "Estimate: full-time grid workers in Hangzhou's subdistricts are paid on the community worker scale plus performance pay. Hangzhou pays at the high end for this kind of post nationally, about one and a half times the national figure.",
+  "facts": [
+    { "label": "Full-time Grid Worker (current level)", "value": "0–3 years, ¥4,000–5,500 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Grid Leader (3–7 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Checking for fire and public safety hazards", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Patrolling the grid for street-scape and sanitation problems", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Clock in at the subdistrict's governance center, collect a radio, open the governance app and check the three work orders the system sent you overnight: a loose manhole cover, an overflowing bin, a resident's noise complaint.",
+    "Onto the e-bike and into the grid. The first breakfast shop on the street has its steamer baskets out on the pavement again. You take a photo and ask the owner to pull back a meter; as he does, he presses a pork bun into your hand.",
+    "Checking stairwells. Two e-bikes parked in the stairwell of Block 3, Entrance 2, and an extension cord dangling from a second-floor window. You knock; the old woman says they're her grandson's. You explain the fire rules and help her wheel them to the charging shed.",
+    "Waste-sorting duty. Plastic bags have got into the food-waste bin, and you put on gloves and pick them out one by one. A woman watches for a while, then goes home and re-sorts her own bag.",
+    "Lunch at the community canteen, two meat dishes and one vegetable for fifteen yuan. Your grid leader says there's a typhoon warning this afternoon; you'll need to check every shop sign on the street.",
+    "Collecting resident information. A few tenants have just moved into one block, and you register each household. A young man who delivers food nearby asks you where on earth he's allowed to park his e-bike.",
+    "Pre-typhoon patrol. With the city management squad you photograph and report seven loose shop signs on the street, and cable-tie the worst one in place until the shop owner can deal with it.",
+    "Back at the center checking the twenty-three incidents you reported today. Two have been sent back by the command center: can't tell the location from the photo. You add the map pin in the system and a line of explanation."
+  ],
+  "ladder": [
+    { "title": "Full-time Grid Worker", "stage": "Entry", "focus": "Patrol the grid every day, photograph and report problems with the street-scape, public facilities and safety hazards, collect resident information and complaints. You move up by knowing your grid and handling things fast." },
+    { "title": "Grid Leader", "stage": "Patch lead", "focus": "You lead a few grid workers across several grids in one neighborhood: rotas, checking their reports, coordinating with property managers and shop owners. The difficult cases land with you." },
+    { "title": "Subdistrict Command Center Specialist", "stage": "Command center", "focus": "From the subdistrict's command center you watch the platform, review dispatched work orders, chase overdue ones, and liaise with city management, market regulation, the fire service and other departments." },
+    { "title": "Deputy Director, Subdistrict Grassroots Governance Center", "stage": "Management", "focus": "You run the day-to-day for the subdistrict's dozens of grid workers and its command center: setting patrol standards, assessing performance, chairing coordination meetings. Few people get this far." }
+  ],
+  "ai_tasks": [
+    { "name": "Patrolling the grid for street-scape and sanitation problems", "how": "Cameras, drones and image recognition can spot the common problems on their own, piled-up materials, trading on the pavement, overflowing bins, and raise an alert. The grid worker goes to confirm, and judges what needs a word on the spot and what needs reporting." },
+    { "name": "Checking street lights, manhole covers and other public facilities", "how": "Sensors and image recognition can catch some faults, a dark street light, a shifted manhole cover, and flag where they are. The grid worker looks at the thing itself, makes it safe for now, and works out what's actually wrong." },
+    { "name": "Checking for fire and public safety hazards", "how": "AI can help pick out some obvious images, like a blocked fire exit. But going into stairwells, spotting illegal wiring, judging the real risk among neighbors and shopkeepers takes a person on site, talking face to face, and a person answers for it if something goes wrong." },
+    { "name": "Collecting and reporting problems in the grid through the platform", "how": "AI can turn photos and voice notes into text, categorize them, fill in the location and problem type, and submit. The grid worker only spot-checks whether the reports are accurate and nothing's been missed." },
+    { "name": "Collecting and recording residents' requests and opinions", "how": "AI can turn residents' calls, messages and voice notes into structured records and merge duplicates. Only by visiting or listening in person can a grid worker hear the troubles and feelings people don't say out loud." },
+    { "name": "Publicizing city management rules and civic norms", "how": "AI can produce plain-language campaign copy, short-video scripts and talking points for different groups. Grid workers explain face to face and answer questions, so residents actually take it in and are willing to go along." },
+    { "name": "Coordinating departments on follow-up and checking that problems are fixed", "how": "AI can dispatch orders, flag deadlines, track progress and compare before-and-after photos. The grid worker deals with the departments, checks on site whether it's really fixed, and steps in when everyone is passing the buck." },
+    { "name": "Mediating neighbor disputes and helping residents", "how": "AI can only look up the rules and suggest some phrasing. Actually settling a dispute depends on the grid worker building trust on the spot, judging how far to push and calming people down. It's work made of relationships and goodwill." }
+  ],
+  "events": {
+    "e_master": "The veteran grid worker training you has worked this patch for ten years. Cycling past any building she can tell you who lives on which floor. First, she says, people have to remember your face. After that, what you say gets listened to.",
+    "e_rain_season": "The plum rain season brought more than twenty days of rain straight, and the old estate's basements flooded. You hauled sandbags and pumped water alongside the property staff, your trouser legs never once dry, until a rash of eczema came up on your feet.",
+    "e_typhoon": "The day the typhoon passed, you and your grid leader kept watch on the street all night. When a plane tree came down across the road you photographed and reported it, and city management and the parks people were there in twenty minutes. By morning every shop on the street opened as usual.",
+    "e_elder_found": "On patrol you noticed three days of milk uncollected outside the door of an old man who lives alone. You called the neighborhood committee and the property office; when the door was opened he'd fallen in the bathroom and couldn't get up. He was taken to hospital and was all right. His daughter rushed back from another city and held your hand and thanked you for a long time.",
+    "e_scolded": "You'd photographed one shopkeeper's pavement trading three times when he came out shouting and pointing at you: who are you, a temp, to tell me what to do. You didn't answer back. You posted the photos and the rules in the shop owners' group chat. Next day his tables were back inside, and he never greeted you again.",
+    "e_ebike_fire": "In an old block in the next subdistrict, a charging e-bike caught fire; luckily no one was hurt. The next day there was a district-wide meeting, and back on your grid you checked every stairwell door to door, and in a week talked forty-odd bikes out of them.",
+    "e_ai_camera": "Smart cameras went up along the street. Pavement trading, overflowing bins, badly parked share bikes: the system recognizes them and dispatches orders on its own. Your work orders went from a dozen-odd a day to more than fifty, and half of them were the cameras taking parked delivery vans for piled-up materials.",
+    "e_ai_report": "The app updated. Take a photo, say one sentence, and it categorizes the problem, pins the location, fills in the form and submits. Filling in reports used to take you an hour every evening; now you check them in ten minutes.",
+    "e_ai_merge": "Requests passed on from the city hotline now get merged by the system when they look like duplicates. Once it merged two households' leak from upstairs into one case. You went round and found two separate problems in two separate buildings.",
+    "e_neighbor_feud": "The ground floor and the first floor had been fighting for six months over an air-conditioner unit dripping, and the property office couldn't settle it. You found a length of drain hose, climbed a ladder yourself and ran it into the drain. Both families watched from below without a word. That evening the ground floor sent up a bowl of wontons.",
+    "e_dating": "On your grid you met a woman who runs a flower shop. She always had her flower buckets a little too far out, and every time you reminded her she laughed and pulled them in. One day she pushed a bunch of unsold sunflowers into your arms and said, stop photographing me.",
+    "e_wedding": "You got married. Several old residents from your grid came to the banquet, and one woman handed you a red envelope and said the whole building had chipped in.",
+    "e_baby": "Your child was born. You took paternity leave, and by the day you came back the whole grid knew. The breakfast shop owner gave you two extra pork buns, for the baby's mother, he said.",
+    "e_rent": "Your landlord sold the flat, and the three of you moved from your rental in the grid to a place forty minutes from the subdistrict. Every morning you ride your e-bike across half the district to work, and in winter your hands go red with cold.",
+    "e_low_pay": "Doing the sums at year's end, you found you'd earned less than in your customer service days. Your wife didn't say anything. You smoked a cigarette alone on the balcony.",
+    "e_commend": "At year's end you were named one of the district's outstanding grid workers, your name and photo printed on the certificate. You took it home, and your child carried it round showing everyone.",
+    "e_renovation": "The old estate began its renovation: lifts added, pipes relaid, stairwells painted white. You ran between the building sites and the residents every day. The ground-floor households opposed the lift, and you went with the designer to their doors five times.",
+    "e_knee": "After ten-odd years of climbing old stairwells your knees have started to hurt, and you hold the handrail going down. The doctor says climb less. You smile, and the next day go up building by building as usual.",
+    "e_parents": "Your father was in hospital back home, and you took a few days' leave. The work orders on your grid piled up day by day; a colleague covered a few of your rounds, and when you got back you bought him dinner.",
+    "e_apprentice": "The new grid worker, like you once, only knew the building he lived in. You took him round on your e-bikes, telling him about every block as you rode past.",
+    "e_kid_draw": "At kindergarten your child drew My Dad: a man on an e-bike holding up a phone, a row of houses behind him. The teacher asked what he does, and your child said, Dad is in charge of the whole street."
+  },
+  "choices": {
+    "c_ebike": { "title": "E-bikes in the stairwells", "situation": "The district wants every e-bike out of the stairwells within a month. Your grid has more than a hundred, many belonging to delivery riders, and the charging shed has thirty spaces. One way is to clear them with city management; the other is to talk to each household first, then push the property office for more space.", "options": [
+      { "label": "Talk to each household, then find space", "result": "You knock on every door and spend three weeks wearing down the property office until a second charging shed goes up in a corner of the estate. You miss the deadline and get named in a notice once, but the bikes never come back into the stairwells." },
+      { "label": "Clear them by the deadline", "result": "With the city management squad you move the bikes out of the buildings by the deadline. Task complete. For months afterward, a few riders turn their heads away when they see you." }
+    ] },
+    "c_cert": { "title": "Sit the social worker exam?", "situation": "The subdistrict encourages grid workers to get the national social worker qualification. Pass at Assistant Social Worker level and there's a monthly allowance, and it counts when grid leaders are chosen or grid workers move to community worker posts. You'd study in the evenings, and the exam is once a year.", "options": [
+      { "label": "Study at night, sit it this year", "result": "After work you do practice questions on the balcony, and you're still memorizing after the baby's asleep. The day the results come out, you send a red envelope round the grid group chat." },
+      { "label": "Get to know the grid first", "result": "You say there's enough going on in the grid already, and the books can wait. That year you visit several hundred more households." }
+    ] },
+    "c_ecom": { "title": "An old colleague's livestreaming company", "situation": "A former customer service colleague has started a livestream e-commerce company in Hangzhou and wants you back as customer service supervisor, at twice your pay. It means screens all day again, and all-nighters through Singles' Day.", "options": [
+      { "label": "Go back to e-commerce", "result": "You hand back your radio and return to an office full of screens. You pull three all-nighters for your first Singles' Day, but when the year-end bonus comes you buy the family a new washing machine.", "end": "You became customer service supervisor at a livestream e-commerce company, handling thousands of messages a day. With a difficult customer, you still let them finish what they're saying first." },
+      { "label": "Stay on the grid", "result": "You thank your old colleague. After work that day you stand by the canal a while, and think you still like being out on the street." }
+    ] },
+    "c_grid_lead": { "title": "Become grid leader?", "situation": "The neighborhood's grid leader has moved up to the subdistrict, and one of the grid workers has to fill in: leading five grid workers, setting rotas, checking reports, negotiating with property managers and shopkeepers. When the performance scores are bad, you're the first to take the blame.", "options": [
+      { "label": "Take it", "result": "You become grid leader. Every morning you post the rota in the group, every evening you review everyone's reports one by one, and the few you send back, you ride out to look at yourself." },
+      { "label": "Keep running your own grid", "result": "You say you like doing your own rounds and don't apply. The new grid leader started a year after you, and often comes to you with questions." }
+    ] },
+    "c_ai_trial": { "title": "Help calibrate the AI recognition?", "situation": "The district wants to pilot a new version of AI recognition and automatic dispatch in your subdistrict, and needs a few grid workers to flag everything the system gets wrong or sends to the wrong place, every day, and meet with the engineers. More work, no extra pay.", "options": [
+      { "label": "Volunteer", "result": "Every day you flag dozens: delivery vans taken for piled-up materials, clothes-drying racks taken for shop signs. Six months on, the system's false alarms are down by more than half, and the engineers mention you by name at a meeting." },
+      { "label": "Don't take it on", "result": "You say there's more on the grid than you can get through already. Once it's live you use it as told, and when it's wrong you tap not accurate on the work order, a dozen-odd taps a day." }
+    ] },
+    "c_exam": { "title": "The civil service exam, or a public institution post?", "situation": "You've always been contract staff. The district city management bureau is recruiting civil servants: pass and you leave the subdistrict for enforcement management at the bureau. A public institution under the subdistrict is also hiring: pass and you stay on this patch, only with a permanent state post. Both mean an exam.", "options": [
+      { "label": "The bureau's civil service exam", "result": "You study for most of a year and pass. On your last day you hand your grid to a newcomer, along with a notebook filled with what you know about thirty-odd buildings.", "end": "You became a civil servant at the district city management bureau, watching work orders from the whole district from an office. Now and then, when that familiar street comes up, you zoom in for a closer look." },
+      { "label": "The subdistrict's permanent post", "result": "You pass into a permanent post at a subdistrict public institution and stay on this patch, a little more pay and a lot more peace of mind." },
+      { "label": "Don't sit either", "result": "You do the sums: studying would take a year of evenings, and the child is small. You don't apply." }
+    ] },
+    "c_command": { "title": "Move to the subdistrict command center?", "situation": "The subdistrict's command center needs a specialist who knows the grids: watching the platform on the big screen, reviewing dispatches, chasing overdue orders, dealing with every department. Out of the sun and wind, but on the phone to other departments all day, chasing progress.", "options": [
+      { "label": "Move to the command center", "result": "You take your seat in front of the big screen. On your first day you find a work order that's been passed between three departments five times with no one taking it. You phone each in turn, and dispatch it before you go home." },
+      { "label": "Stay on the grid", "result": "You say you can't leave the street, and don't go. When the command center can't make sense of something, they often phone you: what's actually going on over there?" }
+    ] },
+    "c_vice": { "title": "Apply for deputy director of the governance center", "situation": "The deputy director of the subdistrict's grassroots governance center is retiring. The new deputy sets patrol standards and assessments for dozens of grid workers across the subdistrict, chairs coordination meetings and hosts inspections, and won't have time for a grid of their own.", "options": [
+      { "label": "Apply", "result": "You become deputy director. Every Monday you chair the grid workers' meeting, every Wednesday the coordination meeting with the departments. You revise the assessment form three times, and in the third version add a new item: residents know your name." },
+      { "label": "Don't apply", "result": "You say you're better suited to working on the ground. The new deputy is a grid worker you once trained, and often quotes you in meetings." }
+    ] },
+    "c_late": { "title": "Into the command center, or patrol to the end?", "situation": "Your knees keep getting worse, and the subdistrict asks if you'd move to the command center full-time to review dispatches, no more climbing stairs. When the old residents on your grid hear about it, several come to the subdistrict office specially to ask.", "options": [
+      { "label": "Into the command center", "result": "Every day you watch that familiar grid on the screen and review its work orders one by one. When an old resident phones, you still hear them out first." },
+      { "label": "Patrol to the end", "result": "You buy knee braces and move your stair-climbing to the mornings. The e-bike is on its third battery, and it's still parked in the charging shed every day." }
+    ] }
+  },
+  "endings": {
+    "retire": "On your last day you ride one final loop of your grid. The owner's son steams the buns at the breakfast shop now, the flower shop is still there, and the willows along the canal have grown taller again. You hand your radio back to the center and delete the governance app from your phone, leaving a gap on the screen. On the way home you pass Block 3. The stairwell is spotless.",
+    "burnout": "That year's medical put red marks by your knees and your back, and the subdistrict moved you to the support office: regular hours, no stairs. The first week you kept reaching for your phone to take photos; then you got used to it. One day passing your old grid, you saw the new grid worker crouched at the roadside photographing a loose manhole cover, and you didn't go over to interrupt."
+  },
+  "stages": [
+    "You ride your grid twice a day on the e-bike, photographing and reporting loose manhole covers, overflowing bins, e-bikes blocking stairwells; you register new tenants door to door and log residents' complaints in the app. Small things you sort out with a word on the spot. What you can't, you report to the command center, which dispatches it to city management, the property office or market regulation. You're not in charge of anyone yet, but everything on this patch passes through your phone first.",
+    "You lead five grid workers across several grids in one neighborhood. In the morning you post the rota in the group, during the day you go and look at the hardest patch, in the evening you review everyone's reports one by one; shopkeepers trading on the pavement, leaks between floors, whatever the property office can't settle, lands with you. You start taking the blame for your grid workers, and smoothing things over with shopkeepers on their behalf.",
+    "You sit in front of the big screen in the subdistrict's command center while incidents reported by cameras and grid workers come in one after another. You review them, classify them and dispatch them to the departments; when they're overdue you phone and chase, and when they get passed back and forth you call a meeting. You're rarely out on the street now, but you know what stairwell and what person sits behind each work order.",
+    "You run the day-to-day for the subdistrict's dozens of grid workers and its command center: setting patrol standards, revising the assessment form, drawing up the duty plans for typhoons and flood season. Every week you meet city management, the fire service and market regulation, and when inspectors come you give the briefing. The people you talk to have gone from residents to departments, but the examples you give in meetings are still those few buildings on your old grid."
+  ],
+  "work": [
+    "A manhole cover is half loose. After photographing it you stay put, take two traffic cones from the e-bike's back box to fence it off, and wait forty minutes beside it until the municipal crew comes to weld it.",
+    "A newly arrived tenant won't register, afraid his information will leak. You go through why each box on the form has to be filled in. When he's done he asks: so where can I park my e-bike?",
+    "You report an overflowing bin in the app and it's sent back: wrong category. The veteran grid worker takes your phone and shows you the difference between street-scape and environmental sanitation.",
+    "A barbecue restaurant's smoke has drawn complaints for six months. You get the owner, the residents upstairs and the market regulators together, measure the exhaust pipe's position outside the shop, and in the end the restaurant installs a purifier.",
+    "One of your grid workers reports forty incidents in a day, half of them duplicates. Instead of a telling-off, you ride a loop with him and show him which ones need reporting and which just need a word on the spot.",
+    "Before the typhoon you give each of your five grid workers a map marking the shop signs and big trees on their patch, and at ten that night confirm with each of them in the group: all checked.",
+    "A resident's complaint has bounced between city management and the property office three times. You pull both sides into one phone call, settle in ten minutes whose ground it is, and dispatch it the same day.",
+    "In one morning the cameras report sixty cases of piled-up materials. You open each one; forty-odd are delivery vans unloading. You write a note for the system's engineers.",
+    "On night duty in the command center during a rainstorm, you watch the water level at a low-lying junction on the big screen and warn the grid workers half an hour early to move the e-bikes there to higher ground.",
+    "You rewrite the assessment form for the subdistrict's grid workers, dropping at least twenty reports a day and replacing it with share of problems solved on the spot. The first month, there's uproar.",
+    "When the district comes to inspect grassroots governance, instead of the display boards you take them by bike into an old estate to watch a grid worker chatting with an old man who lives alone.",
+    "For a new intake of grid workers, the first lesson you give is to ride a loop of the whole subdistrict, then come back and each draw a map of their own grid."
+  ],
+  "past": [
+    "You went to middle school in a county town in Zhejiang, where your family ran a little hardware shop. Every morning your father set the stock out by the door. When an inspector came he pulled it in a bit, and when they'd gone he put it back out.",
+    "Your score on the gaokao (college entrance exam) wasn't high, so you went to a vocational college in Hangzhou to study e-commerce. The first time your bus passed West Lake, the city seemed almost too clean to be real.",
+    "In your second year you interned in customer service at an e-commerce company, answering hundreds of messages a day. You found that when customers were angry, if you just let them finish, the rest was easy.",
+    "After graduating you stayed on in customer service there. Three years, three Singles' Days of all-nighters, your eyesight two hundred degrees worse, and your pay rising very slowly.",
+    "The subdistrict advertised for full-time grid workers. The notice asked for someone who knows the neighborhood and communicates well, and you thought you could give it a try. You passed the written test and interview, and quit customer service."
+  ],
+  "late": {
+    "pension_note": "Estimate: full-time grid workers pay into the urban employees' pension scheme. With Hangzhou's middling contribution base, the pension comes to about half of final monthly pay.",
+    "scenes": [
+      "Your first month of retirement you still wake before eight and go down for a ride around the neighborhood. When you see a loose manhole cover, you still stop to look.",
+      "The neighborhood makes you building captain for the block you live in. Nobody wheels e-bikes into the stairwell anymore; people say it's because you sit downstairs all day.",
+      "You and your wife go back to your home county town. Your father's hardware shop closed long ago, and none of the shops on that street put anything out on the pavement now. You stand in the street a while, and smile.",
+      "Your first year in the support office, you leave on time and help your child with homework in the evenings. Your knees are a little better, and at weekends you start walking along the canal.",
+      "A grid worker you trained is a grid leader now. On typhoon days he phones to ask which shop sign on that street is most likely to come down.",
+      "One day at the gate of your estate you run into the flower-shop woman from your old grid. She's opened a second shop, its flower buckets lined up neatly, all inside the line.",
+      "In the first months of the new job you still checked, walking down the street, whether the lights were working and the manhole covers sat flat. Once you couldn't help calling the city hotline.",
+      "The new job pays a bit better, and you finally buy a small flat in Hangzhou. On moving day you take the charger for your old radio with you, though the radio itself went back long ago.",
+      "Once you pass your old grid, and the breakfast shop owner still knows you and pushes two pork buns on you. He says the young people who came after you are all fine, they just don't like buns.",
+      "The street cameras recognize problems and dispatch them on their own now, and one sentence into the app fills in the form. But when an old person in a stairwell hasn't come down for days, someone still has to go and knock.",
+      "You find an old photo: you at twenty-six on the e-bike, holding up your phone to photograph a manhole cover, the canal and a row of old blocks behind you. You make it your phone's lock screen."
+    ],
+    "closing": {
+      "retire": "Many years later, one evening, you sit on a bench by the canal watching the street lights come on one by one. Not one is out. When you've counted them all, you get up and walk slowly home.",
+      "burnout": "Many years later, in your estate, you teach your grandson the colors of the bins: grey, green, blue, red. He drops a banana skin in the green one and looks back at you, and you nod.",
+      "end": "Many years later, in a drawer, you find your old grid worker's vest, the reflective strips still bright. You fold it and put it back, the way you'd put away something you'll need again tomorrow."
+    }
+  }
+}

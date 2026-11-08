@@ -1,0 +1,166 @@
+{
+  "id": "traffic-police-sz",
+  "occupation": "Traffic Police Officer",
+  "role": "Road patrol officer, traffic police brigade (Police Officer, Grade 1)",
+  "headline": "Two years out of police college and into the Shenzhen force: a sworn traffic officer in a reflective vest, riding a patrol motorcycle and directing the morning rush at a junction in the tech park",
+  "unit": "The traffic police brigade of a Shenzhen district",
+  "unit_type": "Public security traffic management",
+  "city": "Shenzhen",
+  "city_tier": "First-tier city",
+  "education": "Bachelor's degree (traffic management engineering, police college)",
+  "level": "You've got the hand signals, the stop-and-check and the on-the-spot tickets down. You've just qualified for the motorcycle patrol. At crash scenes you're still the one following your mentor around, taking photos and drawing the diagram.",
+  "intro": "You studied traffic management at a police college, passed into the Shenzhen force, and were posted to a district traffic brigade. A year on the road taught you to stand for two hours on tarmac at 40 degrees, and to raise one hand and stop a whole line of cars. Last month you passed the motorcycle patrol test and were issued a white police bike. As of today, whenever this city jams, you go to where it's jammed.",
+  "salary_note": "Estimate: Shenzhen officers are paid on the civil service scale plus rank allowances and a traffic duty allowance. Shenzhen's regional allowances and bonuses are in the top bracket nationally, more than one and a half times the national figure.",
+  "facts": [
+    { "label": "Police Officer, Grade 1 (road patrol officer) (current level)", "value": "0–3 years, ¥6,000–9,000 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Police Sergeant, Grade 4 (motorcycle patrol / crash investigation officer) (3–7 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Stopping crimes and keeping order on the roads", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Gathering information widely to make sound decisions and set the rules of the road", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Kitting up at the squad: reflective vest, body camera, police handset, radio. The sleeve covers and sun mask you bought yourself. You crouch and thumb-check the tire pressure on the bike.",
+    "Morning rush at a big junction in the tech park. People and e-bikes pour out of the metro exit like a tide; one hand waves the straight-ahead traffic through, the other stops a delivery rider trying to beat the amber.",
+    "The radio reports a rear-ender on the expressway. You thread the bike between cars, set out cones, take photos and a location fix, and have both drivers file a quick settlement on their phones. Ten minutes later the cars are gone.",
+    "Back at the squad, a few mouthfuls of boxed lunch while you check the morning's tickets in the system one by one. One plate was photographed back to front; you phone the owner to explain, and he says, you lot are fairly reasonable.",
+    "Special enforcement: muck trucks. One truck's tarpaulin isn't tied down and it's been shedding sand all along the road. You pull it over; the driver leans out of the cab and says he's only working for someone too.",
+    "An afternoon cloudburst floods two tunnel mouths. You set up diversions in your raincoat; the water you tip out of your boots could water a garden.",
+    "School pickup: crossing duty outside a primary school. The children cross one by one, and a little girl salutes you, with the wrong hand.",
+    "Night drink-driving checks. Cones and reflective signs at the roadside; you hold out the breathalyzer car after car. Three hundred-odd drivers blow in a night. Two over the limit."
+  ],
+  "ladder": [
+    { "title": "Police Officer, Grade 1 (road patrol officer)", "stage": "On the road", "focus": "Posts, patrols, ticketing, minor crashes; confirmed in post after probation. You move up on road experience and clean enforcement." },
+    { "title": "Police Sergeant, Grade 4 (motorcycle patrol / crash investigation officer)", "stage": "Mainstay", "focus": "Rapid response on the patrol bike, investigating crashes and determining liability on your own. You first have to pass the intermediate law-enforcement qualification." },
+    { "title": "Police Sergeant, Grade 3 (deputy squad leader)", "stage": "Shift lead", "focus": "You lead a team: posting rotas, night checks and enforcement campaigns, and you review colleagues' liability findings." },
+    { "title": "Police Sergeant, Grade 2 (squad leader)", "stage": "Squad leader", "focus": "A squad of dozens of officers and auxiliaries and a whole patch of roads. When there's a big event or bad weather, the plan is yours." },
+    { "title": "Police Sergeant, Grade 1 (deputy brigade commander)", "stage": "Brigade", "focus": "You oversee traffic order or crash handling for the whole brigade, chairing coordination meetings and setting plans. Few people get this far." }
+  ],
+  "ai_tasks": [
+    { "name": "Gathering information widely to make sound decisions and set the rules of the road", "how": "AI can pull together traffic, crash and complaint data, simulate the effect of different rules and draft proposals. Setting a rule means weighing safety, public opinion and how enforceable it is; a person makes the call and answers for it." },
+    { "name": "Road safety education", "how": "AI can turn out campaign copy, short videos and case explainers by audience and situation, and push them to the right people. People choose what matters, make sure it's accurate, and go into neighborhoods, schools and workplaces to talk face to face." },
+    { "name": "Managing and coordinating traffic flow", "how": "AI can analyze traffic, optimize signal timing, predict jams and suggest deployments. People coordinate police and other departments, and adjust on the spot for big events and bad weather." },
+    { "name": "Preventing and penalizing traffic violations and crashes", "how": "Cameras and AI catch the common violations, running reds, speeding, no seat belt, and assemble the evidence and a first finding. Pulling drivers over, investigating crashes, determining liability, handling disputes and reviewing appeals is done by people." },
+    { "name": "Stopping crimes and keeping order on the roads", "how": "AI can cross-check leads and flag vehicles of interest. Stepping in, making arrests and handling confrontations carry physical risk and need legal authority and judgment in the moment; only officers can do it." }
+  ],
+  "events": {
+    "e_master": "Your mentor has been in traffic for twenty years; one look at a skid mark and he can give you the rough speed. He teaches you to draw crash diagrams: every line measured, no guessing.",
+    "e_heat": "In July the road surface tops 50 degrees. After one morning rush at your junction you can wring out the shirt under your vest. The squad hands out herbal heatstroke tonic, and you knock yours back in one.",
+    "e_typhoon": "The night the typhoon passed, the whole brigade was out. You and your colleagues cleared fallen trees from a main road while the street lights went out one by one, nothing left but voices on the radio. At dawn yours was the first road reopened.",
+    "e_helmet": "The city pushed helmets for e-bike riders, and for a month you stopped riders at your junction and talked to hundreds of them. At the end of the month a delivery rider pulled over just to show you: he'd stuck a little reflective sticker on his helmet.",
+    "e_viral": "You pushed a broken-down car to the curb in the rain, and a passerby's video of it went online with a caption so over the top it made you blush. The squad leader reposted it in the group with one line: stay safe.",
+    "e_complaint": "A driver who disputed his ticket posted online that you'd been rude. Your body camera showed you saying hello and may I see your license from start to finish, but the review and the written explanation still tied you up for two weeks.",
+    "e_rain": "A once-in-decades rainstorm left several junctions knee-deep. You stood in the water all night and carried an old man and a child out of a stalled car. Back at the squad your feet were white and wrinkled.",
+    "e_crash_scene": "A two-car collision before dawn. You were first on scene: stop the traffic, call the ambulance, set out cones, then an hour measuring the scene on your own. When you handed over in the morning, your mentor didn't change a word of your diagram.",
+    "e_spring_rush": "The rush home before Spring Festival backed up kilometers from the expressway on-ramps. You rode up and down outside the toll plaza keeping it moving, car after car crammed with New Year shopping. A child waved at you through the glass.",
+    "e_dating": "A colleague introduced you to a woman who's a product manager at a tech company. The first thing she asked was who actually sets the traffic lights. You explained all evening, and she listened to the end.",
+    "e_wedding": "You got married. The banquet was back in your hometown and you could only get five days' leave. The day you got back to Shenzhen, the squad had stuck a red double-happiness sign on your traffic booth. The wind took it the next day.",
+    "e_baby": "Your child was born while you were on duty. You got to the hospital still in your reflective vest, and the nurse thought you'd come about some accident.",
+    "e_housing": "Shenzhen house prices kept you looking for two years without buying. In the end you got a place in public housing, twenty minutes by patrol bike from the brigade. The day you signed, you stood a long time in the empty lot downstairs.",
+    "e_night": "That month you were rostered for night checks again and again, and still had the morning rush by day. Every time you closed your eyes you saw headlights, and you went through a whole bottle of eye drops.",
+    "e_ai_light": "Your junction got AI signal control: whichever direction is heaviest gets a longer green. The junction you'd stood at for years went from three cycles of jam in the morning rush to one, and for the first time you had time on post for a sip of water.",
+    "e_ai_camera": "The traffic cameras now spot unbuckled seat belts and phones at the wheel on their own, tens of thousands a day; the system makes a first call and passes them to you to review. One morning you checked eight hundred. In one of them, the front passenger was holding a white cat.",
+    "e_robotaxi": "A driverless taxi and an e-bike gave each other a light scrape. There was no driver in the car. At the scene you called the operator's remote support line and waited twenty minutes; in the end it was the car's own data that sorted out who was at fault.",
+    "e_commend": "At year's end you got an individual commendation. The certificate went home to Hubei, and your father framed it and hung it in the front room, and points it out to every visitor.",
+    "e_back": "After ten-odd years on the patrol bike you have a herniated disc. The doctor says ride less. You strap a back brace on under your vest and ride as before.",
+    "e_lungs": "Your medical says there's something small going on in your lungs, and the doctor asks if you spend years at the roadside. You say yes, and he tells you to wear a proper mask on duty.",
+    "e_parents": "Your mother had a fall back home and you took three days' leave. As you left she said, all those cars in Shenzhen, and you standing in the middle of the road; when she thinks of it she can't sleep.",
+    "e_apprentice": "Two new officers joined the squad, and you taught them to draw crash diagrams: every line measured, no guessing. Then you stopped for a second. Those were your mentor's exact words.",
+    "e_kid_ride": "On your child's school open day you rode in on the patrol bike and parked by the sports field. A crowd of kids circled the motorcycle; your son stood to one side, not saying a word, red in the face."
+  },
+  "choices": {
+    "c_tieqi": { "title": "Stay on the patrol bike, or move to crash investigation?", "situation": "The brigade is building up its crash investigation squad and asks if you'll move: shuttling between the office and the scene every day, investigating, determining liability, mediating, much more technical work. On the patrol bike it's wind and rain, but you're out on the road every day.", "options": [
+      { "label": "Move to crash investigation", "result": "Now your days are skid marks, camera footage and the people involved. You wrote your first liability finding three times; your mentor said, write it so both sides can understand it." },
+      { "label": "Stay on the bike", "result": "You keep the white motorcycle and go wherever it's jammed. By the end of the year you know every junction in the district where things tend to go wrong." }
+    ] },
+    "c_exam": { "title": "Sit the intermediate law-enforcement exam, aim for Police Sergeant, Grade 4", "situation": "Before you can be made Police Sergeant, Grade 4, you have to pass the intermediate law-enforcement qualification exam. Road shifts come one after another; the only time to study is after the night checks.", "options": [
+      { "label": "Study late, sit it this year", "result": "You come off night checks and work through practice questions in the dorm until dawn, then go and stand the morning rush. The day the results come out you can't stop grinning in your booth." },
+      { "label": "Next year", "result": "One enforcement campaign followed another that year, and the books stayed locked in the cupboard." }
+    ] },
+    "c_vice": { "title": "Apply for deputy squad leader (Police Sergeant, Grade 3)", "situation": "One of the squad's deputy leaders has transferred out. The job means leading a team, posting rotas, running night checks and enforcement campaigns, reviewing everyone's liability findings, and being the first one asked when anything goes wrong.", "options": [
+      { "label": "Apply", "result": "You become deputy squad leader, and from now on the rota is yours to draw up. Every time you schedule night checks, you write your own name in first." },
+      { "label": "Keep riding the road", "result": "You say you still like being out on the road, and don't apply. The new deputy, two years younger than you, comes in his first week to ask which junction is hardest to handle." }
+    ] },
+    "c_ai_trial": { "title": "Join the traffic data team?", "situation": "The detachment has set up a traffic big-data team that uses AI to time signals and analyze crash hotspots, and wants a few officers with road experience to help calibrate the system. You'd be in front of a screen, not out on the road, and promotion won't necessarily come faster.", "options": [
+      { "label": "Join the data team", "result": "You enter the junctions you've stood at for years into the system one by one, and tell the engineers which one always needs ten more seconds of green at 7:40 in the morning. Later the timings at several junctions across the district are changed the way you said." },
+      { "label": "Stay on the road", "result": "You say however clever the system gets, a junction still needs someone standing in it. You go out as usual, only now there's another voice on the radio: the system suggests where you should go." }
+    ] },
+    "c_hometown": { "title": "Transfer back to Hubei?", "situation": "The city police in your hometown are hiring experienced traffic officers. Your parents are getting old, housing there is cheap, and the pay is half. Your spouse has just been made team lead at work in Shenzhen.", "options": [
+      { "label": "Stay in Shenzhen", "result": "You stay. Every Spring Festival you're on duty, so you bring your parents down to Shenzhen for the New Year; they say winter here isn't really winter." },
+      { "label": "Transfer home", "result": "You transfer to the traffic detachment back home. Half the cars on the road, and after work you have time for a game of chess with your father." }
+    ] },
+    "c_insurance": { "title": "An offer from an insurance company", "situation": "The motor claims center of a big insurer wants you as a claims investigation supervisor. Looking at crashes, assessing damage, dealing with the traffic police: you know all of it. Better pay, and no more standing at junctions.", "options": [
+      { "label": "Resign and go", "result": "You hand in your uniform and badge number for a work vest, and drive the company car to crash scenes. The first time you stand at the roadside waiting for the traffic police to arrive, it feels strange.", "end": "You became a motor claims investigation supervisor at an insurance company. You still go to crash scenes every day, only now you stand on the other side of the tape." },
+      { "label": "Stay", "result": "You thank them. That night on drink-driving checks, holding out the breathalyzer car after car, you think someone still has to do this." }
+    ] },
+    "c_captain": { "title": "Apply for squad leader (Police Sergeant, Grade 2)", "situation": "The squad leader is moving up to detachment headquarters. The new leader runs dozens of officers and auxiliaries and a whole patch of roads, writes the plans for big events and typhoons, and sits through endless coordination meetings.", "options": [
+      { "label": "Apply", "result": "You become squad leader. The night before the typhoon you mark every big tree on your patch that's likely to come down on the map, until three in the morning." },
+      { "label": "Let someone else have it", "result": "You recommend your old partner from crash investigation and go on leading your team. Once he's in charge, he still gives you the hardest junctions." }
+    ] },
+    "c_autodrive": { "title": "A driverless car company comes recruiting", "situation": "A driverless vehicle company is expanding road testing in Shenzhen and wants a veteran traffic officer who knows the roads and crashes to run road-test safety: where the cars can run, and how to work with the traffic police when something happens. Double the pay.", "options": [
+      { "label": "Join the driverless company", "result": "You go. In the first month you take the engineers round every junction in the district and show them which ones have delivery riders who love to shoot out from the right.", "end": "You became head of road-test safety at a driverless vehicle company, watching cars with no one at the wheel drive through the junctions you used to stand in." },
+      { "label": "Stay with the brigade", "result": "You say you're used to standing at a junction. Later, when the company's cars have a mishap, the officer who handles the scene is often you." }
+    ] },
+    "c_inside": { "title": "Come off the road, or see it through?", "situation": "Your back keeps getting worse. The brigade asks if you'd move to the vehicle registry or the publicity section: regular hours, out of the sun and wind. At the old booth, the new officers still aren't quite steady.", "options": [
+      { "label": "Move to publicity", "result": "You start giving road safety talks at schools, building sites and delivery depots. You write the talks yourself, and every example is something you've seen at a junction." },
+      { "label": "Stay on the road", "result": "You say a few more years. You get a thicker back brace, and in the morning rush you still stand at that junction, raise your hand, and the cars stop." }
+    ] }
+  },
+  "endings": {
+    "retire": "On your last morning rush you're still at that junction in the tech park. The crowds out of the metro are as big as when you started; it's just that everyone on an e-bike wears a helmet now. When you come off post you hand your body camera back to the equipment room and give the keys of your patrol bike to an officer you trained. You take off your reflective vest, fold it, and leave it in the squad locker.",
+    "burnout": "That year's medical put red marks by your spine and your lungs, and the brigade moved you to the vehicle registry, issuing driving licenses at a counter. The first week it felt too quiet outside the window; then you got used to it. On your way home you pass a junction and watch the young officer on post raise a hand, and the cars stop."
+  },
+  "stages": [
+    "Your rota is a fixed junction and fixed hours: hand signals at the rush hours, patrolling and ticketing in between, writing on-the-spot tickets on the police handset. Minor crashes you handle yourself: photos, location, both sides file a quick settlement online. When someone is hurt, you stop traffic and set out cones and wait for your mentor to investigate. You start to know when the traffic on this patch rises and when it ebbs.",
+    "You respond on the patrol bike, gone the moment the radio calls, on scene within ten minutes. You investigate crashes yourself: measuring skid marks, pulling footage, taking statements, then back at the squad writing the liability finding, and walking anyone who disputes it through point by point. Unlike when you started, the finding you sign is the final word on what happened.",
+    "You lead a team, and the rotas, night-check plans and the muck-truck campaign are yours to set. You review everyone's liability findings first and send them back to the scene if something's off; when complaints come in, you're the one explaining, body-camera footage pulled up clip by clip. You're on the road less, and on the radio more.",
+    "You run a squad and a patch of roads. Every week there are coordination meetings with the subdistrict, schools, the metro and building sites: which junction gets a diversion, which school gate gets a crossing post, settled one by one over the district map. Before typhoons, rainstorms and big events, the plans are the ones you stayed up writing, and on the day you stand by the command vehicle. What you sign has gone from a ticket to a plan.",
+    "You oversee traffic order for the whole brigade. Every day you watch the district's congestion and crash heat maps on the platform, and meet the detachment and transport department to set signal timings and enforcement priorities. You approve the plans the squads send up, and take the pressure from above for them. Now and then you still get on a patrol bike and go stand one morning rush at the worst junction."
+  ],
+  "work": [
+    "An out-of-town driver has been round a flyover three times and can't get off it. You have him follow your bike through two junctions, and he honks thanks behind you the whole way.",
+    "Two cars scrape each other lightly at a junction and the drivers argue about waiting for the insurers. You take the photos and open the quick-settlement page on their phones for them. Ten minutes later the cars are moved and the junction is clear.",
+    "Investigating a crash, your mentor has you measure the skid marks with a tape. Three times you come out five centimeters apart. He says record the third one, and then tells you why.",
+    "A rear-ender: the front driver says he was hit, the rear driver says the front one braked hard. You pull the junction's footage from three angles, go through it frame by frame, and write down in the finding the exact second the front driver hit the brake.",
+    "In the morning rush a private car taking a patient to hospital is stuck on the expressway. You clear the way ahead on your bike all the way to the emergency entrance. When the driver gets out his hands are still shaking.",
+    "An e-bike rider disputes his ticket and argues at the roadside for half an hour. You never raise your voice; you pull up the regulation on the police handset and show him. In the end he signs, and says he won't run the light next time.",
+    "Planning night checks, you move the checkpoints from the main roads to the exits of a few late-night food streets. The first weekend you catch more drink drivers than in the whole of the month before.",
+    "A young officer on your team has a liability finding taken to review by one of the parties. You go back with him and re-measure the scene, find one road marking he misread, and have him explain it to the party himself.",
+    "Muck-truck campaign: you stand all morning at a building-site gate with the site owner, watching him tarp every truck and hose its wheels clean before you let it onto the road.",
+    "A primary school gate jams every morning. You meet the principal and the parents' committee, move drop-offs to a service road behind the school and keep the front gate for walkers only. By the second week the jam is gone.",
+    "The night before a typhoon you split the squad's dozens of people into twelve teams, each with a map of its stretch and a chainsaw, and from two in the morning you call the roll team by team on the radio.",
+    "A new metro line needs a main road fenced off for six months. After five meetings with the contractor you settle on night work, with two lanes' worth of hoarding taken down before every morning rush.",
+    "A year of the district's crash data on the table: with the data team you find a dozen-odd hotspot junctions, go and look at each one, and decide where to repaint the lines and where to add a signal.",
+    "The city is hosting a concert for tens of thousands, and you lead the traffic plan: which roads go one-way when it lets out, how many extra metro runs, where the ride-hailing cars wait. Seven drafts, start to finish.",
+    "A squad leader reports that complaints are up on his patch and he's short of people. Instead of a telling-off, you go and stand one morning rush at his junction, then come back and assign him four auxiliaries."
+  ],
+  "past": [
+    "You went to middle school in a county town in Hubei and cycled to school every day, through the town's only junction with traffic lights. A traffic officer stood there. In winter too.",
+    "Your score on the gaokao (college entrance exam) was middling, and you saw that a police college in Guangdong was recruiting in Hubei for traffic management. Your father said: a police officer, a job with the state. You applied.",
+    "First year at police college: marching drills, barracks inspections, unarmed combat, and memorizing traffic regulations after lights out. On your first internship in Shenzhen you stood at a junction watching the traffic and thought this city would never stop.",
+    "In your third year you studied crash investigation, staging scenes on the sports field with two scrapped cars. Your teacher used your diagram as the model answer.",
+    "In your graduating year you sat the joint police recruitment exam: fitness, written test, interview, background check, one after another. On your preferences you wrote Shenzhen. When the list came out you'd been posted to a district traffic brigade.",
+    "Back from induction training, you spent a year on road duty. You learned the traffic police's eight hand signals, and how to stand two hours in the blazing sun without shifting your feet. At the end of the year you signed up for the motorcycle patrol test."
+  ],
+  "late": {
+    "pension_note": "Estimate: police officers are covered by the pension scheme for government and public institutions plus an occupational annuity. With Shenzhen's high contribution base, it comes to a little over 60 percent of final monthly pay.",
+    "scenes": [
+      "Your first month of retirement you still wake at seven and go down to the junction to watch the morning rush for a while. The young officer on post recognizes you and nods across the road.",
+      "You and your spouse spend six months back home in Hubei. The county town's junction has a traffic camera now and nobody on post. You stand at the roadside a while, with a feeling you can't quite name.",
+      "Your estate asks you to volunteer for road safety, one morning a week on crossing duty at the school gate. As the children cross, some still salute you, still with the wrong hand.",
+      "At the brigade's gathering for retired officers you see your mentor. He's past eighty and speaks slowly, but at the words skid marks his eyes still light up.",
+      "Your first year at the vehicle registry you issue licenses at a counter and go home on time. Your back hurts less, and you start taking your child to the beach at weekends.",
+      "Two fewer red marks on the medical. Some evenings you take the long way home past the junction you used to stand in, and stop a while to watch the headlights come on row by row.",
+      "An officer you trained has become a squad leader. On a typhoon day he phones to ask which of the big trees on that road usually goes first.",
+      "In the first months of the new job, every time you drive through a junction you check the signal timing without thinking, counting the seconds under your breath.",
+      "The new job pays well, and you move to a bigger flat in Shenzhen. On moving day you put the old reflective vest at the very bottom of the wardrobe.",
+      "Once at a crash scene you run into an old colleague, him in uniform, you outside the tape. You chat for a minute across the cones, as if nothing had changed.",
+      "The signals are timed by AI now, violations are caught by cameras, and there are more and more driverless cars. But on a stormy night at a flooded junction, someone in a raincoat still has to stand there.",
+      "You find an old photo: you at twenty-four on that white patrol bike, helmet under your arm, a wall of glass towers in the tech park behind you. You make it your phone's lock screen."
+    ],
+    "closing": {
+      "retire": "Many years later, one morning, you stand on your balcony watching the cars at the junction below stop row by row and move off row by row, the lights going red and green. The tea in your hand is still warm.",
+      "burnout": "Many years later, at the gate of your estate, you teach your grandson to cross the road: look left, look right, wait for the green. He walks slowly, and you don't hurry him.",
+      "end": "Many years later, in a cupboard, you find your old patrol gloves, the palms worn shiny. You try them on; they still fit. You take them off and put them back."
+    }
+  }
+}

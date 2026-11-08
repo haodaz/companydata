@@ -1,0 +1,151 @@
+{
+  "id": "committee-head-tj",
+  "occupation": "Residents' Committee Director",
+  "role": "Residents' committee director for an old housing estate",
+  "headline": "Twelve years in community work, just elected director at the latest committee election: the woman everyone calls on, responsible for thirty-odd old blocks and more than four thousand residents in a 1980s workers' estate in Tianjin",
+  "unit": "A community residents' committee under an old-town subdistrict in Tianjin",
+  "unit_type": "Community residents' committee",
+  "city": "Tianjin",
+  "city_tier": "New first-tier city",
+  "education": "Associate degree (accounting, adult education)",
+  "level": "Who lives in which flat, whose parent is in hospital, whose ceiling has leaked for ten-odd years: you can tell anyone without stopping to think. It's just that you've only now become director, and the ledgers, the official seal and every hard problem in the neighborhood have landed in your hands at once.",
+  "intro": "Twelve years ago you quit your job at a department store and passed into community work, stamping papers at a service counter and registering households door to door. Later you became a committee member, then deputy director; last month, at the committee election, the residents voted you director. This is a workers' estate from the 1980s: thirty-odd six-story blocks with no lifts, and of its four thousand-odd residents, half are old. As of today the neighborhood's official seal is locked in your drawer, and everything that happens in these buildings, large or small, needs your nod.",
+  "salary_note": "Estimate: Tianjin's community workers are paid by grade on a professional scale, with a post allowance for directors; this is in the upper middle range for such posts nationally.",
+  "facts": [
+    { "label": "Residents' Committee Director (current level)", "value": "10–16 years, ¥5,500–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Community Party Secretary and Residents' Committee Director, both posts held by one person (16+ years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Going into the blocks to settle things between neighbors and get residents involved", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Passing on notices and keeping ledgers", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "On the way to the office you stop at the breakfast stall by the gate for a jianbing guozi, a Tianjin egg crepe, and eat it as you walk. The woman making them tells you old Li in Block 7 hasn't been down to walk his birds for two days.",
+    "The committee office opens and the first thing you do is read the duty log: two stairwell leaks last night, a complaint about a dog biting someone, and an old man who phoned at midnight to say his radiator was cold.",
+    "Weekly meeting, a dozen-odd community workers round a long table, and you hand out the jobs one by one: who goes to check on old Li, who calls the heating company, who sorts the paperwork for the low-income allowance review.",
+    "To Block 7. Old Li has a cold and is in bed, his pigeons cooing on the roof. You call the doctor from the community health station and get his daughter to come by after work tonight.",
+    "Lunch at the community's canteen for the elderly, twelve yuan a meal, at a table with the old residents. One old man says today's braised fish is too salty, and you make a note to tell the cook.",
+    "A meeting in the stairwell about adding a lift. Everyone from the first floor up has agreed; the ground-floor family won't sign. You sit on their sofa and listen for an hour while he explains why not.",
+    "Financial approvals. This month's activity budget, the receipts for stairwell light repairs: you check each one, sign, stamp, and pin the draft of the public accounts on the notice board.",
+    "Just before you leave, a call: an old couple are fighting and the wife wants to move out. You cycle over and sit in their flat until half past eight. When you go, the two of them see you down to the street together."
+  ],
+  "ladder": [
+    { "title": "Community Worker", "stage": "Entry", "focus": "Handling errands at the service counter, home visits, patrolling the grid, getting to know the residents and the rules." },
+    { "title": "Residents' Committee Member", "stage": "Portfolio", "focus": "Elected onto the committee by residents, you take charge of one area: civil affairs, health, or public order and mediation." },
+    { "title": "Deputy Director, Residents' Committee", "stage": "Deputy", "focus": "You help the director run the day-to-day and lead on a few of the hardest issues; you're one of the people residents come to most." },
+    { "title": "Residents' Committee Director", "stage": "Director", "focus": "Elected at the committee election, you run all of the committee's work: approving spending, chairing residents' deliberation, dealing with higher levels. Everything in the neighborhood is your responsibility." },
+    { "title": "Community Party Secretary and Residents' Committee Director (both posts held by one person)", "stage": "Both posts", "focus": "One person serves as both secretary and director, overseeing all the community's work and leading a team of a dozen-odd community workers. Few people get this far." }
+  ],
+  "ai_tasks": [
+    { "name": "Passing on notices and keeping ledgers", "how": "AI can boil down a notice from above into a few lines residents can understand, send it to every building's group chat, and file it in the ledger. People only check that it's right and nobody's been missed." },
+    { "name": "Gathering residents' requests and spotting hazards", "how": "AI can sort and total up calls, messages and hotline work orders and flag problems that keep coming back. Which to handle first and how to work it out in the building, someone has to go in and judge." },
+    { "name": "Community bookkeeping and public accounts", "how": "AI can do the reconciling, sort receipts, flag anomalies and draft the public accounts. Approving and signing, running the residents' oversight of the money, explaining every yuan to residents: a person has to answer for that." },
+    { "name": "Drafting reports and event plans", "how": "AI can draft reports, keep ledgers, and write event plans and publicity copy. What should be reported as it is, and how to put residents' difficulties across clearly, a person has to decide." },
+    { "name": "Going into the blocks to settle things between neighbors and get residents involved", "how": "Adding lifts, clearing stairwells, feuds between neighbors: someone has to talk to every household, sit on their sofa and talk it through. There's no substitute for that." }
+  ],
+  "events": {
+    "e_new_seal": "In your first month as director you went through every ledger the old director left you, and found three years of stairwell light repair records missing. You went building by building counting lights, wrote out a list, and the following month every one was replaced.",
+    "e_heating": "The heating came on on November 15, and several old people's radiators were stone cold. You took the heating company's fitter door to door bleeding radiators and checking pipes, forty-odd flats in a week. The day the last one warmed up, the old woman there wrapped up a box of dumplings for you.",
+    "e_rainstorm": "A rainstorm left the road outside the estate half a meter deep and flooded several ground-floor flats. You and the community workers didn't sleep all night, helping the old people on the ground floor up to neighbors' flats one by one. By dawn your shoes were ruined.",
+    "e_scolded": "One resident's low-income allowance review didn't go through, and he banged the table in the committee office and shouted that all you lot do is stamp things. You waited until he'd finished, explained the rules to him point by point, and then found out about another subsidy he could apply for.",
+    "e_pigeons": "Old Zhang, who keeps pigeons on the roof, had been fighting for years with the neighbor below who hangs out washing, over pigeon droppings on her sheets. You found an old tarpaulin and built a little canopy under the pigeon loft with old Zhang. The neighbor's sheets never got dirty again.",
+    "e_ai_notice": "The subdistrict gave the committee an AI assistant. It turns notices from above into a few plain sentences and sends them to the thirty-odd building group chats on its own. One notice used to take you all morning to send; now it's ten minutes. But some old people don't look at their phones, so you still have the building captains go door to door to tell them.",
+    "e_ai_calls": "The committee tried AI phone calls, ringing old people who live alone every day to ask how they're feeling. Once it reported that an old man had responded normally. Uneasy, you went round to look: he had a fever, and had just said I'm fine when he answered the phone.",
+    "e_ai_accounts": "The committee's books are checked by the system now: photograph a receipt and it's entered, and anything that doesn't add up turns red. Doing the accounts takes you less than half the time it used to each month, and you spend the extra going round the buildings a few more times.",
+    "e_canteen_full": "By its third year the canteen for the elderly was full every lunchtime. One old man came every day and afterward sat outside in the sun. He said it was the time of day he did the most talking.",
+    "e_overtime": "That month the inspections, the reporting and the events came one after another, and you worked three weekends running at the office. On the phone your husband said you were busier than when you stood behind a counter at the store.",
+    "e_dog_bite": "A dog off its lead on the estate frightened a child into a fall, and the two families ended up shouting downstairs. You brought both sides into the office and mediated all afternoon. The dog's owner promised to keep it on a lead from now on, and paid the child's doctor's bill.",
+    "e_daughter_wedding": "Your daughter got married. The old residents from the estate filled a table at the banquet, and several of the women insisted on going up and singing, songs from their factory days when they were young.",
+    "e_mother": "Your mother was in hospital, and you spent your days at the office and your nights sitting up with her. One day on the ward you got a call from a resident: a water pipe had burst in a stairwell. From her bed your mother said, go on, I'm fine here.",
+    "e_banner": "Work finally started on the lift in that block, and the old people in the building chipped in for a silk banner for the committee office, embroidered with doing real things for the people. You hung it on the wall, then after a while moved it somewhere more prominent.",
+    "e_young_worker": "The committee hired a new community worker straight from university. On her first home visit an old man shut the door on her. You went back with her, and the first thing you did inside was admire the old man's fish tank. He opened up and offered you both a seat.",
+    "e_knees": "Climbing six-story blocks with no lifts every day, your knees keep getting worse, and you go down the stairs sideways. The doctor at the community health station gives you medicated plasters and says climb less stairs. You say, then who's going to go?",
+    "e_old_man_passes": "Old Li in Block 7, the one with the pigeons, passed away. His daughter came to the office to do the paperwork and said that before he went, he asked for the pigeons to go to the committee, for the children to feed. You built a loft in the yard behind the office, and every evening the flock still circles once over the estate.",
+    "e_grandchild": "Your grandson was born. You walked up and down the hospital corridor with him in your arms while your phone rang five times, all committee business: baby in one arm, phone in the other.",
+    "e_hotline": "In one week the city hotline sent you twenty-odd work orders, half of them about the same thing: the morning market at the estate gate was too noisy. You got the subdistrict, city management and the stallholders together, and in the end the market's opening time moved back half an hour.",
+    "e_crosstalk": "The committee held a residents' party, and some retired factory workers got up and did a xiangsheng, a comic crosstalk routine. The room was in stitches. As people left, an old woman took your hand and said it hadn't been this lively in years.",
+    "e_commend": "At year's end the district named you an outstanding community worker, and your palms were sweating when you went up to collect it. Back at the office, a few old residents were already waiting at the door to see the certificate."
+  },
+  "choices": {
+    "c_elevator": { "title": "The lift the ground floor won't sign for", "situation": "Block 5 is adding a lift. Everyone from the first floor up has signed; only the ground-floor family refuses, worried about losing light, about noise, and figuring they'll never use it. The rules say the whole building has to agree. Upstairs live several people in their eighties who can no longer manage the stairs.", "options": [
+      { "label": "Keep at it, visit after visit", "result": "You go to the ground floor a dozen-odd times, sit with the designer through two revisions of the drawings, move the lift shaft half a meter, and get the upstairs residents to chip in for new windows for the ground floor. The following spring, the ground-floor family signs." },
+      { "label": "Leave it for now, do other blocks first", "result": "You push ahead with lifts in two other blocks first. The old people in Block 5 watch the work start next door, and some come to the office to ask you: when's our building?" }
+    ] },
+    "c_canteen": { "title": "Start a canteen for the elderly?", "situation": "The estate has lots of old people living alone, many of whom make do with whatever at lunchtime. The subdistrict has a program to support community canteens for the elderly, but you'd have to find the space, hire the cook, keep the accounts, and if it goes wrong, you're the one who'll get the blame.", "options": [
+      { "label": "Start it", "result": "You clear half of the ground-floor activity room in the office building and partner with an old-established restaurant. On the first day thirty-odd old people come for lunch, and you help each of them in at the door." },
+      { "label": "Arrange meal deliveries first", "result": "You agree with a nearby restaurant to deliver meals to old people who live alone, every day at half past eleven, the delivery boy knocking on each door. A bit less work, and the old people get a hot meal." }
+    ] },
+    "c_ai_trial": { "title": "Pilot the AI community assistant?", "situation": "The subdistrict wants to pilot an AI community assistant in two neighborhoods: sending notices, gathering requests, phoning old people who live alone, keeping ledgers. The committee needs someone to check every day whether it's getting things right, and meet with the engineers. You've got plenty on your hands already.", "options": [
+      { "label": "Run the trial yourself", "result": "You log every notice it sent wrong and every request it put in the wrong category, and meet the engineers once a week. In the version rolled out across the subdistrict six months later, there's a rule you suggested: every call to an old person living alone must be followed up by a real person." },
+      { "label": "Hand it to a young worker", "result": "You have the youngest community worker liaise with them. Once the system is live you use it too, but you still read the duty log yourself every day." }
+    ] },
+    "c_daughter_baby": { "title": "Help your daughter with the baby?", "situation": "Your daughter has had a baby. She and her husband both work, and they'd like you to help look after him. If you take long leave or step down as director, someone else will have to take on the neighborhood; if you don't help, they'll need a nanny, which will eat most of the young couple's pay.", "options": [
+      { "label": "Hire a nanny, keep working", "result": "The two families chip in for a nanny. Every day after work you drop by your daughter's to see the baby before going home. At weekends you push the pram round the estate, and residents gather to make faces at him." },
+      { "label": "Let your husband help first", "result": "Your husband has just retired, and he takes on looking after the baby. Every day he pushes the pram to the office gate to wait for you to finish work, and residents say the director's husband is busier than the director." }
+    ] },
+    "c_property": { "title": "An offer from a property company", "situation": "A big property management company has taken over several of the area's old estates after their renovation, and wants you as project manager: noticeably better pay, no more inspections and reporting from above, but every day spent collecting service fees from owners and handling complaints.", "options": [
+      { "label": "Join the property company", "result": "You step down as director and become project manager. In your first month you collect the fees for a whole block, because you know everyone in it.", "end": "You became a project manager at a property company, still walking the old blocks every day, only what's in your hand now is a bunch of keys instead of an official seal." },
+      { "label": "Stay with the committee", "result": "You thank them. That afternoon you go back to the ground-floor family to talk about the lift again." }
+    ] },
+    "c_care_home": { "title": "Director of a care center", "situation": "A new community elderly care center in the district is looking for a director: someone who understands old people, can manage staff and can deal with families. Someone has recommended you. A little more pay, thirty beds and twenty-odd care workers to run.", "options": [
+      { "label": "Become its director", "result": "You hand over your committee work and go to the care center. In the first week you visit every room and learn what each resident likes to eat and when they go to sleep.", "end": "You became director of a community elderly care center. Every morning you go room to room asking whether people slept well, just as you once did your home visits in the blocks." },
+      { "label": "Stay with the committee", "result": "You recommend a deputy director who used to be a nurse. On the day she leaves, you all have a meal together in the canteen for the elderly." }
+    ] },
+    "c_one_shoulder": { "title": "Take on both posts?", "situation": "The community Party secretary is retiring, and the subdistrict is considering having you hold both posts, secretary and director: overseeing all the community's work and leading a team of a dozen-odd community workers, with twice the meetings and twice the responsibility. You're nearly fifty this year, and your knees are bad.", "options": [
+      { "label": "Take it on", "result": "You accept. Every morning you arrive half an hour before the community workers and lay out the day's meetings and tasks on one sheet of paper, and only then go and get your jianbing." },
+      { "label": "Recommend someone younger", "result": "You recommend a deputy director in her thirties, saying she's better than you at dealing with higher levels. You carry on as director, and people in the blocks still bring their problems to you." }
+    ] },
+    "c_election": { "title": "The committee election: stand again?", "situation": "The residents' committee election has come round again. Residents ask whether you're standing. Your family would like you to take a rest, and a few young community workers are ready to take on more.", "options": [
+      { "label": "Stand for another term", "result": "You're re-elected with more votes than last time. As the ballots are read out, an old woman calls out from the audience: vote for her, she knows my cat." },
+      { "label": "Bring a young worker in with you", "result": "You get a young community worker elected onto the committee as a member, stay on as director yourself, and teach her hands-on how to keep the accounts and run residents' meetings." }
+    ] },
+    "c_last_years": { "title": "The last few years: how to hand over", "situation": "Retirement isn't far off. The subdistrict asks whether you want to stay director to your last day, or hand it to someone younger a year or two early and step back to committee member, taking charge only of mediation and the old people.", "options": [
+      { "label": "Stay to the last day", "result": "You say a few more years. You write up every ledger in the neighborhood and every difficult resident in a handover notebook, a little each year." },
+      { "label": "Hand over early, take on mediation", "result": "You hand the directorship to someone younger and sit in the mediation room, listening every day to people from the blocks. When your knees hurt you rest a while; no more climbing to the sixth floor." }
+    ] }
+  },
+  "endings": {
+    "retire": "On your last day you hand the official seal and the drawer key to the new director, and give her the handover notebook you've been writing for years. When you go downstairs the old people are having lunch in the canteen, and someone calls you over to sit down. You sit, and eat a bowl of braised fish. This time it isn't too salty.",
+    "burnout": "That year's medical put red marks by your knees and your blood pressure. You told the subdistrict you couldn't go on, and handed the directorship to someone younger. Back home, for the first time, you sat by the window on a weekday morning with a cup of tea. Someone was arguing downstairs. You listened for a while, and didn't go down."
+  },
+  "stages": [
+    "You run all of the committee's work: on Mondays you chair the meeting and hand out jobs to a dozen-odd community workers, once a month you chair a residents' deliberation meeting, and every yuan the neighborhood spends needs your signature, your stamp and a place on the public accounts board. You put the subdistrict's tasks in order, and talk residents' hard problems through household by household. Adding lifts, cold radiators, junk in the stairwells: the hardest few are in your hands. Unlike as deputy, when something goes wrong, you're the first person residents come to.",
+    "You hold both posts, secretary and director, and everything in the community ends up with you. Mornings are meetings, documents, and dealing with the subdistrict and local organizations; afternoons you still walk the blocks. You lead a dozen-odd community workers and teach the young ones how to do home visits, keep the accounts and run residents' meetings. Your words carry more weight now. In meetings you often speak last, and when you've spoken, everyone knows what to do."
+  ],
+  "work": [
+    "A low-income household's review is missing a medical record. Rather than sending him back to the hospital, you phone the community health station yourself, pull up his visit records, and the file is complete the next day.",
+    "At a residents' deliberation meeting a few old men start arguing over whether bicycles can be kept in the stairwell. You draw the stairwell on the blackboard, take the measurements, and settle on one bicycle per floor, against the wall.",
+    "At the month-end public accounts, a resident questions how much the fruit for an event cost. You post every receipt, then take him to the fruit shop to ask the price. After that he has nothing more to say.",
+    "The subdistrict sends down a new task. Instead of handing it straight out, you take two building captains round the blocks to ask people about it first, and come back and reshape it into something residents will accept.",
+    "A local company wants to do some volunteering. Instead of a photo opportunity, you ask them to send five electricians, who check every stairwell light in the estate's old blocks.",
+    "A young community worker you trained chairs her first residents' meeting and is too nervous to speak. You sit in the back row, and when she gets her first sentence out, you start the applause."
+  ],
+  "past": [
+    "You grew up on a workers' estate in Tianjin; both your parents worked at a textile mill. After middle school you went to a vocational high school to study accounting, because your mother said someone who can do sums will never go hungry.",
+    "After vocational school you became a cashier at a big department store, on your feet all day. You had a good memory, and could call the regulars by their surnames.",
+    "You married a technician at a machinery plant. Your daughter was born the next year, and you rented a flat in an old block not far from your parents.",
+    "While working you studied for an adult-education associate degree in accounting. The store did worse every year, the counters closing one by one, and you began to wonder what you'd do next.",
+    "The neighborhood advertised for community workers. You applied and passed the written test and the interview. On your first day you sat at the service counter stamping papers, and found the people coming in were exactly the kind of old people you'd always known.",
+    "You were elected onto the residents' committee as a member, and later became deputy director. You went from seeing the estate through a counter window to seeing it from the stairwells. You've knocked on every door."
+  ],
+  "late": {
+    "pension_note": "Estimate: community workers pay into the urban employees' pension scheme. With Tianjin's middling contribution base, the pension comes to a little over half of final monthly pay.",
+    "scenes": [
+      "Your first month of retirement you still go out a little after seven for your jianbing, and only at the office gate remember you don't have to go in. You stand at the gate a while, finish eating, and go home.",
+      "Every few days the new director phones to ask: what do I say to get that family in Block 5 to open the door? You coach her line by line, hang up, remember something else, and call back.",
+      "Your grandson has started primary school, and you pick him up from the gate every afternoon. On the way you keep running into old residents and stopping for a chat. When he gets impatient you tell him, these are Grandma's old neighbors.",
+      "In your first year without the directorship, you can't sit still at home. Every day you go down and walk the estate, and when you see junk in a stairwell you still can't help knocking on the door to mention it.",
+      "Physiotherapy on your knees, and they're a little better. You start going to the Haihe River with your old friends for square dancing, and afterward watch the old men who swim in winter wading in one by one.",
+      "The pigeons in the yard behind the office are still there, and a young community worker feeds them every day. Sometimes you pass by and stand at the loft a while. The pigeons don't know you anymore. You know them.",
+      "In the first months of the new job you always looked in at the committee office as you passed the gate, to see who was on duty and what was on the notice board.",
+      "The new job pays a little more. You buy the family a new fridge, and your mother a reclining chair to sit in the sun.",
+      "Once the committee invites you back to talk about the old days. You tell them about the year of the lift. The old couple from that ground-floor flat are in the audience, and when you finish, they start the applause.",
+      "Notices are sent by AI now, the ledgers keep themselves, and the old people living alone get a call every day. But when the ground-floor family won't sign, someone still has to go and sit on their sofa.",
+      "You find an old photo: you at thirty at the service counter, official seal in hand, hair permed into curls. You look at it a long time and laugh at how young you were."
+    ],
+    "closing": {
+      "retire": "Many years later, one winter, the heating comes on right on time. You sit at the window knitting, and someone downstairs calls your name. You open the window. It's the old building captain. Nothing's wrong, he says, I just wanted to see if you were in.",
+      "burnout": "Many years later, on a bench in the estate, you teach your grandson to count the blocks: one, two, three, all the way past thirty. He asks how you remember them all. You say, I've climbed every one.",
+      "end": "Many years later, in a drawer, you find an old community worker's ID card, the face in the photo still young. You wipe it on your sleeve and put it back."
+    }
+  }
+}

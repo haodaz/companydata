@@ -1,0 +1,169 @@
+{
+  "id": "police-cq",
+  "occupation": "Police Officer",
+  "role": "Community police officer at an old-town police station (Police Officer, Grade 1)",
+  "headline": "A police academy graduate in your second year on the force, just moved from the duty desk to community work: a community officer climbing up and down the stone stairways of old-town Chongqing, learning the residents one building at a time",
+  "unit": "A police station in Chongqing's old town",
+  "unit_type": "Public security police station",
+  "city": "Chongqing",
+  "city_tier": "New first-tier city",
+  "education": "Bachelor's degree (public order management, police academy)",
+  "level": "You've done a year on the duty roster: taking calls, going out on them, writing up statements. Of the hundred-odd buildings on your beat you know about twenty. The building captains know your name; you don't yet know theirs.",
+  "intro": "You spent four years at a police academy, passed the joint police recruitment exam, and were posted to a police station in Chongqing's old town, where you did a year on the duty desk. Last month the station chief said the community team was short, so you were going. Your beat is a single hillside, a hundred-odd old apartment blocks climbing from the riverbank to the ridge. In some of them the ground-floor door opens onto one street and the top-floor door opens onto another. As of today, whatever happens on this hillside, people call you first.",
+  "salary_note": "Estimate: police pay follows the civil service scale plus rank and duty allowances. Chongqing's regional allowance sits in the middle of the national range, so pay here is roughly in line with the national figure in the database.",
+  "facts": [
+    { "label": "Police Officer, Grade 1 (new officer) (current level)", "value": "0–3 years, ¥5,270–7,750 a month (national average, estimated from pay by experience)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Police Sergeant, Grade 4 (3–7 years)", "source": "Common in the trade" },
+    { "label": "Pay after 10+ years", "value": "¥11,200 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Mediating disputes between neighbors and within families", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Entering and checking records on residents and rental flats", "source": "AI exposure" },
+    { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "First thing at the station, you scroll through the police handset. The night shift left three calls, one on your beat: a burst pipe on the seventh floor, and the sixth-floor ceiling is dripping.",
+    "Morning roll call. The chief sets the week's priorities: anti-fraud talks in every building, and before flood season, one more round of checks on the old people living alone in the blocks along the river.",
+    "You climb the stone stairs. The noodle-shop owner calls from his doorway for you to stop for a bowl; a building captain squatting outside sorting vegetables asks whether the stairwell light you mentioned ever got fixed.",
+    "Registering rental flats. Two young men from out of town are livestreaming and selling goods from one room. You enter their residence details into the system and remind them not to carry e-bike batteries upstairs to charge.",
+    "Lunch is two liang of Chongqing noodles with a fried egg at the alley mouth; go easy on the chili and the owner takes it personally. Afterward ten minutes with your head down in the police post, the light-rail train rumbling past the window.",
+    "Up to the seventh floor. The families on six and seven are shouting at each other in the stairwell. First you get the property maintenance man to shut off the main valve, then you sit both families down and start with whose pipe it was.",
+    "A bank branch calls: a woman in her seventies is about to transfer 80,000 yuan to someone claiming to be an investigator. You run down three flights of stairs, sit down beside her, and stay with her until she hangs up.",
+    "Night duty. Two tables at a late-night beer stall are talking, then standing. You and an auxiliary officer get there with your body cameras on and talk each table, one at a time, back onto its stools."
+  ],
+  "ladder": [
+    { "title": "Police Officer, Grade 1 (new officer)", "stage": "Probation", "focus": "Walk the beat with your mentor, take calls, enter records; confirmed in post after probation. You move up by learning the people and buildings on your patch and enforcing the law without mistakes." },
+    { "title": "Police Sergeant, Grade 4", "stage": "Community officer", "focus": "A whole neighborhood is yours: home visits, mediation, managing resident and rental records. You first have to pass the intermediate law-enforcement qualification." },
+    { "title": "Police Sergeant, Grade 3", "stage": "Police post lead", "focus": "You run a neighborhood police post with two or three auxiliary officers. The hardest disputes and the problems nobody has solved in years land on your desk." },
+    { "title": "Police Sergeant, Grade 2", "stage": "Community policing team lead", "focus": "You schedule home visits and special campaigns for every community officer at the station, train new officers, and represent the station in meetings with the subdistrict and neighborhood committees." },
+    { "title": "Police Sergeant, Grade 1", "stage": "Veteran community officer", "focus": "One of the most senior community officers at the station: the most complicated beat, apprentices of your own. Few people get this far." }
+  ],
+  "ai_tasks": [
+    { "name": "Entering and checking records on residents and rental flats", "how": "AI can pull details straight from tenancy agreements and photos of ID cards and flag duplicate or out-of-date records. The officer only spot-checks, and knocks on the door when something doesn't match." },
+    { "name": "Writing up call logs and incident ledgers", "how": "AI can transcribe body-camera audio and draft the incident record and ledger. Which facts go in and how the incident is classified, the officer checks line by line and signs for." },
+    { "name": "Fraud alerts and talking people out of transfers", "how": "The system can flag suspicious transfers and scam calls and push out alert lists. Going to the door, getting on the phone, sitting down and talking someone round still falls to the police and the neighborhood staff." },
+    { "name": "Finding missing people in surveillance footage", "how": "AI can piece together the route of a lost elderly person or child from clothing and timestamps. Deciding where to look and going to look is still the officer's job." },
+    { "name": "Mediating disputes between neighbors and within families", "how": "AI can look up the law and offer a few suggested phrasings. Sitting between two families until they talk it through, and judging how hard to push, only a person can do." },
+    { "name": "Home visits and handling incidents on the spot", "how": "Climbing the stairs, knocking on doors, knowing faces, judging a situation on the spot and handling it lawfully: that takes an officer in person, and the responsibility is a person's." }
+  ],
+  "events": {
+    "e_master": "Your mentor walked the beat with you for a month. He's close to retiring and remembers every family's surname, who has children working away, even the names of the dogs. A community officer's skill, he says, is in his feet.",
+    "e_summer": "July and August: twenty days straight above 40 degrees in Chongqing. You climb more than twenty thousand steps a day; back at the station there's a ring of salt on the back of your uniform, and at night the soles of your feet ache too much to sleep.",
+    "e_lost_elder": "An old man with a failing memory wandered off from home. You pulled the camera footage and posted his photo in the neighborhood group chat. At nine that night you found him on a bench by the riverside path. He said he was waiting for the bus to work.",
+    "e_fraud_saved": "A woman was about to move 200,000 yuan of savings into a so-called safe account. You talked with her at the bank counter for an hour, until her daughter arrived and held her and cried. At New Year the daughter brought a crate of oranges to the police post.",
+    "e_fraud_lost": "You spent a month handing out anti-fraud leaflets door to door, and still a retired teacher on your beat lost more than a hundred thousand yuan to a scam. You sat with her while she gave her statement. She kept saying it was her own fault, and you didn't know what to say back.",
+    "e_complaint": "After you mediated a dispute between neighbors, one side decided you'd favored the other and filed a complaint. Your body-camera footage showed every word you said was fine, but points were still docked from your review that month.",
+    "e_flood": "In flood season the river rose fast, and several old blocks along the bank had to be evacuated. You knocked on every door and helped the old people with bad legs up the hill to the school, and stayed there two nights. When the water went down it left a yellow line along the stairwells.",
+    "e_teahouse": "There's an old teahouse on the hill: three yuan for a covered bowl of tea, and old men who sit from morning till night. You go and sit once a week and listen to them talk. You hear about a lot of what happens on your beat there first.",
+    "e_dating": "You were set up with a primary school teacher. First date was hotpot; the broth had just come to the boil when you were called out. She finished half a pot of tripe on her own. Later she said that was when she knew you were someone she could count on.",
+    "e_wedding": "You got married. On the day, colleagues from the station came in turns, ate a few bites, and went back to relieve the next shift. Your mentor had one drink and said he could hand over your beat with an easy mind.",
+    "e_baby": "Your child was born before dawn. You came out of the hospital at first light, bought a bowl of tofu pudding and rice, ate it at the roadside, and went to your beat. Every household you visited that day heard you'd become a father.",
+    "e_house": "Flats in the old town were out of reach, so you put a down payment on one in the new district and ride the light rail every day, fifty minutes each way. You always stand, watching the river go by the window one stretch at a time.",
+    "e_long_night": "That night on duty you took more than a dozen calls: arguments, drunks, a stolen e-bike, someone crying upstairs. You handed over at dawn and still had home visits to do. Halfway up the hill your legs went, and you held the railing for a while.",
+    "e_ankle": "Walking a man who'd had too much to drink back home, he flung out an arm and you missed two steps. You turned your ankle and spent two weeks on a crutch, sitting in the police post going through every ledger on your beat from the beginning.",
+    "e_ai_records": "The resident records system got an AI upgrade: photograph a tenancy agreement and it fills itself in. The forms that used to eat most of a week each month now take one afternoon to check. You spend the time saved on two more buildings.",
+    "e_ai_video": "A boy didn't come home from school. Within half an hour the video system had pieced together his route: an internet cafe by the river. When you got there he was in the middle of a game. He saw you and took off his headphones himself.",
+    "e_ai_false": "The fraud system pushed out an alert list and you phoned everyone on it. Half were business owners making ordinary transfers. A hardware-shop owner shouted at you for ten minutes. The next week he called you back: someone had phoned to say his son was in trouble. Was it real?",
+    "e_banner": "At year's end nothing serious had happened on your beat, and the station named you an outstanding community officer. The building captains chipped in for a silk banner for the police post wall, the characters brushed by a retired Chinese teacher.",
+    "e_parents": "Your mother went into hospital back in your home county. You took one day off, rode three hours, sat up with her one night and rode back. Your sister handled everything after that. On the phone she said, you get on with your work.",
+    "e_mate_leaves": "A classmate who joined the force the same year as you quit to work at a law firm, and took you out for hotpot before he left. He said you were suited to this and he wasn't. You thought about it all the way home and couldn't decide whether it was a compliment.",
+    "e_bigger_patch": "The station was short-handed; the officer for the next neighborhood was transferred, and his patch was folded into yours. A hundred-odd buildings became two hundred-odd, and you wore through a pair of leather shoes in six months.",
+    "e_knee": "After more than ten years of stone stairs, your knees start to hurt on every step down. The doctor tells you to climb less. You smile, and next day you go up the hill as usual, just holding the handrail a little tighter.",
+    "e_apprentice": "The station got a new officer who, like you once, couldn't put names to the building captains. You walked the beat with him for a month, telling him about every door as you passed it.",
+    "e_kid_school": "Your child's school invited parents to talk about their jobs. You went in uniform and talked about how not to get scammed. Afterward a crowd of kids asked whether you'd ever caught a bad guy. You said, mostly I help people find things."
+  },
+  "choices": {
+    "c_window": { "title": "Move to the household registration desk?", "situation": "The station's household registration office needs someone, and the chief asks if you'd like the post: sitting at a counter issuing ID cards and handling residence transfers, regular hours, out of the weather. But your beat would go to someone else.", "options": [
+      { "label": "Stay on the beat", "result": "You say you've only just got to know twenty-odd buildings and want to keep walking. The chief nods and gives the registration post to an officer just back from maternity leave." },
+      { "label": "Take the desk", "result": "Two years at the counter and you know the paperwork for every kind of residence transfer by heart. One day an old woman from your old beat comes in for an ID card and asks why you never come up to their building anymore." }
+    ] },
+    "c_exam": { "title": "Sit the intermediate law-enforcement exam, aim for Police Sergeant, Grade 4", "situation": "Before you can be made Police Sergeant, Grade 4, you have to pass the intermediate law-enforcement qualification exam for police officers: statutes and case analysis, held once a year. Your days on the beat are full, so studying has to happen at night.", "options": [
+      { "label": "Study late, sit it this year", "result": "For three months you work through practice questions until one in the morning, and in the exam you fill every page of the case analysis. The day the results come out, your mentor sends you a thumbs-up in the group chat." },
+      { "label": "Beat first, exam next year", "result": "Those months were the pre-flood-season checks, so your study books sat in the police post drawer until the following year." }
+    ] },
+    "c_unit": { "title": "A secondment to criminal investigation?", "situation": "The district's criminal investigation team is short of people and likes the way you find people in camera footage. They want to borrow you for six months. Long hours, fast learning, and it counts in your favor at your next grading. Meanwhile the building captains have only just started calling you first for everything.", "options": [
+      { "label": "Go for six months", "result": "You trade the uniform for plain clothes and put in six months alongside veteran detectives, learning how to pull one thread out of a heap of scraps. The day you come back to the beat, the old men at the teahouse say you've lost weight." },
+      { "label": "Stay on the beat", "result": "You say your beat can't spare you and don't go. Later, when the investigators are looking for someone, they sometimes phone you: do you know this person?" }
+    ] },
+    "c_ai_trial": { "title": "Trial the AI community policing assistant?", "situation": "The district is piloting an AI community policing assistant at two stations: it generates visit lists, pushes alerts, writes up ledgers. They need a community officer who knows a beat well to try it and log every false alarm and miss. It takes your days off and pays nothing extra.", "options": [
+      { "label": "Trial it and help fix it", "result": "You log every person it flagged wrongly and every building it missed, and argue with the engineers more than once. The visit lists the whole district ends up using are built the way you corrected them." },
+      { "label": "Leave it; your feet are reliable", "result": "Once the system goes live you use it as told, though not much. You still go up building by building with a notebook and a pen." }
+    ] },
+    "c_room": { "title": "Take charge of the new police post?", "situation": "The subdistrict has built a new neighborhood police post at the top of the hill and wants an officer stationed there full-time with two auxiliaries. It's the load that comes with Police Sergeant, Grade 3: everything on the beat, the auxiliaries' rotas, working with the neighborhood Party secretary, all yours.", "options": [
+      { "label": "Take it", "result": "You hang up the sign and put out a table, two chairs and a pot of tea by the door. In the first month more people come to sit than to report anything." },
+      { "label": "Recommend your partner", "result": "You put forward your partner, who joined two years before you. On his first day you help him carry desks, and he says he'll still be relying on you." }
+    ] },
+    "c_selection": { "title": "Sit the transfer exam for a government office?", "situation": "District government offices are recruiting by competitive transfer. Pass and you leave the station to write reports and do research, at a desk, with weekends off. Your spouse says the child is small; it would be good to have you home for dinner.", "options": [
+      { "label": "Sit it and leave the station", "result": "You pass. On your last day you hand the beat ledgers over one by one, then walk the hillside top to bottom once more on your own.", "end": "You became a cadre in a district government office. The reports you write often contain the words the grassroots, and when you write them, it's that hillside you're thinking of." },
+      { "label": "Stay on the beat", "result": "You don't apply. You tell your spouse that night; there's no reply, but next morning there's a bowl of sweet rice wine with egg waiting for you." }
+    ] },
+    "c_team_lead": { "title": "Apply for community policing team lead (Police Sergeant, Grade 2)", "situation": "The station's community team lead is retiring. The new lead schedules visits and campaigns for every community officer, trains new officers, and goes to subdistrict meetings for the station; and you'd keep your own beat as well.", "options": [
+      { "label": "Apply", "result": "You get it. Every Monday morning you assign work to seven community officers, on Wednesdays you go to the subdistrict meeting, and at weekends you still take a turn around your own beat." },
+      { "label": "Keep to your own patch", "result": "You say you still like walking the hill and don't apply. The new lead is someone you trained, and he always asks you first when he hands out work." }
+    ] },
+    "c_security": { "title": "An old classmate's security company", "situation": "An academy classmate who left the force now runs property management and security for a dozen commercial developments. He wants you as head of safety, at more than double your pay, with normal hours.", "options": [
+      { "label": "Resign and join him", "result": "You hand in your uniform and badge number and put on a suit. At your first week's meetings the thing you say most is: unblock the fire exits first.", "end": "You became head of safety at a property company, responsible for guards and cameras across a dozen developments. The phone still rings a lot at night; you just don't go out on calls anymore." },
+      { "label": "Stay", "result": "You thank him and say you'll do a few more years. That night on duty you stand outside the police post a long time as the lights go out one by one down the hill." }
+    ] },
+    "c_inside": { "title": "Back to a desk at the station, or keep the beat?", "situation": "Your knees keep getting worse. The chief asks if you'd come back inside to work on case review or registration, checking files and training new officers, no more climbing the hill every day. When the old people on your beat hear about it, some come to the station specially to ask.", "options": [
+      { "label": "Take the desk job", "result": "You move into an office and spend your days correcting new officers' write-ups word by word. Now and then an old resident comes to the station asking for you, and you still go downstairs to meet them." },
+      { "label": "Keep the beat", "result": "You say a few more years. You buy knee braces and split each day's visits into a morning and an afternoon. The hill is still the same hill." }
+    ] }
+  },
+  "endings": {
+    "retire": "On your last day you schedule no visits and walk slowly from the bottom of the hill to the top. The noodle shop is run by the owner's son now; the teahouse is still there. You hand your police handset and the beat ledgers to the young officer taking over, and tell him where the main valve is for the family on the seventh floor. On the way down someone calls your name from a window, and you look up and wave.",
+    "burnout": "That year's medical put red marks by your blood pressure and your knees, and the chief moved you back inside to a desk job. The day you handed over your beat, you copied out, one by one, the phone numbers you'd collected in your notebook over more than ten years. That evening at home, for the first time, you sat down to dinner before seven."
+  },
+  "stages": [
+    "You learn the buildings one by one behind your mentor: which ones have old people living alone, which are full of rentals, which families fight as a matter of course and which ones fighting should worry you. You check resident records household by household on the police handset and knock on doors where they don't match. When a call is assigned to you, you get there first and write it up after, and your mentor goes through your wording line by line.",
+    "The beat is yours now. At least two days a week you're inside the buildings: registering rentals, mediating over leaks and noise, sitting with the bank while an old person is talked out of a transfer. You have your own neighborhood group chat, and the building captains and grid workers call you first. Unlike on probation, it's your own name signing the record, and what you say counts.",
+    "You're stationed at the police post on the hilltop, rostering two auxiliaries on patrol. What fills the year is old problems: feuds between neighbors going back a decade, leaks no one can trace, a mahjong parlor that keeps getting reported. Once a month you sit down with the neighborhood Party secretary and the property manager, the ledger open on the table, and go through it item by item. You start taking complaints on behalf of your auxiliaries, and teaching them how to talk with a body camera running.",
+    "You assign the work for every community officer at the station: weekly visit lists, flood-season and pre-holiday campaigns, whose beat needs a change. On Wednesdays you go to the subdistrict meeting; on Fridays you take the new officers through the week's calls, stopping the body-camera footage clip by clip. You've kept your own beat, you just get there less, and when you do you stay the whole afternoon.",
+    "The station's hardest beat is yours, and the hardest people ask for you by name. You rarely do ledgers now; more often you're on someone's sofa, hearing them out, then reading the mediation agreement aloud to both families. Every new officer spends their first month walking with you. When the district holds a class on community policing, they often ask you to teach it."
+  ],
+  "work": [
+    "Your mentor has you mark every old person living alone on a map of the beat. You mark thirty-seven red dots. He glances at it, says you're two short, and takes you to knock on two more doors.",
+    "Your first time mediating a noise dispute between floors on your own: two pages of notes on what each side said, and an agreement that no chairs get dragged after ten at night. The family upstairs puts a thumbprint on it.",
+    "Registering rentals, you find a young man just arrived in Chongqing for work with an expired ID card. You look up the paperwork on the police handset and write it down for him on a slip of paper, down to which bus routes to take.",
+    "A building captain calls: the old woman on the third floor who lives alone hasn't been down for groceries in two days. No answer at the door. You bring the neighborhood staff and a locksmith, find her in bed with a fever, and carry her down five flights on your back.",
+    "A hotpot restaurant's exhaust duct points straight at residents' windows, and the people upstairs have complained for six months. You get the owner, the residents and the neighborhood Party secretary together in the restaurant, take measurements, and the duct gets rerouted over the roof.",
+    "You post an anti-fraud reminder in the neighborhood group, a voice message you recorded yourself in Chongqing dialect. Next day at the teahouse several old men play it back to you on their phones and say it sounds a bit like you.",
+    "A mahjong parlor that's been reported for years: instead of going straight in, you first check its business license and opening hours, then go with the neighborhood staff and agree a closing time with the owner, posted on the notice board.",
+    "A new auxiliary is afraid to talk to drunks. You have him stand beside you and just listen, body camera on, not saying a word, then play the footage back to him at the station.",
+    "Pre-flood checks: you and the neighborhood Party secretary go through the residents of seven old blocks along the river, checking phone numbers and emergency contacts household by household. The old people who'll need carrying get a star, and the list goes up on the police post wall.",
+    "At Monday's meeting you lay out the seven neighborhoods' calls building by building on one sheet and point at the riverside cluster: more signs of e-bike fires there this month, go there first.",
+    "A new officer's mediation record is too thin. You call him into the police post and send him back to knock on both doors again, and come back with what each family actually said, in their own words.",
+    "At the subdistrict's coordination meeting on renovating old housing estates, you bring three years of call records and point out which stairways are most dangerous at night. Afterward, those are the first to get street lights.",
+    "Two brothers have fought over an old house for ten years, and nobody has been able to settle it. You spend three afternoons in their home. On the third, the two of them finally sit at the same table and drink the tea you made.",
+    "The district asks you to teach new officers about community policing. You bring no slides, just a hand-drawn map of your beat, and talk your way from the bottom of the hill to the top, who lives behind every door.",
+    "The first time an apprentice of yours takes a beat on his own, you photocopy the phone book you've kept for more than ten years and give it to him, and tell him not to trust all of it, go and walk it himself."
+  ],
+  "past": [
+    "You went to middle school back in your home county, with a township police station right outside your door. One winter your family's ox went missing, and an old officer spent two days on his motorbike with your father looking for it. They found it in the next village.",
+    "In your last year of high school you were the fastest runner in PE, and your homeroom teacher said you might try the early-admission round for police academies. There was a medical, a fitness test and a background check, several more trips than anyone else had to make. You made them all.",
+    "Your score on the gaokao (college entrance exam) got you into a police academy to study public order management. The day the acceptance letter came, your father went into town and bought a string of firecrackers.",
+    "Academy life started with folding your quilt and marching drills, then unarmed combat, shooting and law classes, none of them optional. In the summer of your second year you interned at a police station, walking the beat with a community officer for a month and peeling from sunburn.",
+    "In your final year you sat the joint police recruitment exam, through the written test, interview and fitness test one by one, and were posted to a police station in Chongqing's old town. When you filled in your preferences you'd thought: more people in the city, more going on.",
+    "A few months of induction training, then back to the station and onto the duty roster. In a year you took hundreds of calls and learned how to speak, and how to stand, in front of a body camera."
+  ],
+  "late": {
+    "pension_note": "Estimate: police officers are covered by the pension scheme for government and public institutions plus an occupational annuity, which comes to about 70 percent of final monthly pay.",
+    "scenes": [
+      "Your first month of retirement, you still wake a little after seven and go downstairs for a walk, and the walk keeps ending up on the hill. The old men at the teahouse have saved you a seat.",
+      "The neighborhood asks you to volunteer as a mediator two half-days a week. You don't wear the uniform anymore, but when neighbors argue, they still say: let's wait for the officer.",
+      "Your child works in another city, and every year you and your spouse go and stay for a month. Walking through someone else's city, you still glance at the wiring in the stairwells to see if it's a mess.",
+      "At the station's gathering for retired officers you meet the mentor who trained you. He's past eighty and still remembers what every slope on your old beat is called.",
+      "Your first year back inside at a desk, you review case files, correct write-ups, and go home on time. One day, passing the bottom of the hill, you stand at the foot of the stairs for a long while and don't go up.",
+      "Physiotherapy on the knees, and your blood pressure is down. You start walking the riverside path with your spouse at weekends, and find out for the first time that the river turns gold at dusk.",
+      "The officer you trained calls: an old man on the beat is turning ninety and has asked for you by name. You go, sit in a corner, and eat a bowl of longevity noodles.",
+      "In the first few months at the new job, you'd wake at night and reach for your phone to check for calls. The phone was quiet, and you lay back down.",
+      "The new job lets you go home every day, and your child says you talk more now. You say all the talking used to stay on the beat.",
+      "Once you run into a building captain from your old beat in the street. He takes your hand and says several young officers have come since you left, all good, just none of them as good at drinking tea with people.",
+      "The station has new systems now: the visit lists are drawn up by AI, and the cameras find people on their own. But which doors on that hillside need an extra knock, someone still has to go and knock, one door at a time.",
+      "You come across an old photo: you at twenty-three on the stone stairs, uniform a size too big, the old blocks behind you not yet repainted. You tuck it into that old phone book."
+    ],
+    "closing": {
+      "retire": "Many years later, one evening, you sit in the teahouse at the top of the hill watching the light rail slide between the buildings. A young officer in uniform walks past the door, and you call him over to ask if he's eaten.",
+      "burnout": "Many years later, you teach the neighbors in your estate how to spot a scam call, slowly, one point at a time. When you finish, an old woman hands you a cup of hot tea.",
+      "end": "Many years later, at the back of a drawer, you find the old reflective vest, its yellow long faded. You fold it and put it back, the way you'd put away something you'll need again tomorrow."
+    }
+  }
+}

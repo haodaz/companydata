@@ -1,0 +1,166 @@
+{
+  "id": "veterans-sd",
+  "occupation": "Veterans Affairs Officer",
+  "role": "Officer at a township veterans' service station",
+  "headline": "Five years driving army trucks in the northwest, then home to the Yimeng Mountains and into the township's veterans' service station: the officer who registers old soldiers' details and carries merit citations to soldiers' families",
+  "unit": "The veterans' service station of a township in a county in Shandong's Yimeng Mountains",
+  "unit_type": "Township veterans' service station (permanent public institution post)",
+  "city": "A county under Linyi, Shandong",
+  "city_tier": "County town",
+  "education": "Associate degree (by self-study exams while in the army)",
+  "level": "The army taught you to drive and fix trucks, fold a quilt, and say things straight. You've got a rough grasp of the entitlement rules, and of all the veterans in the township, you know only the few from your own village.",
+  "intro": "You joined the army at nineteen and drove transport trucks in the northwest for five years, leaving as a sergeant. Back home in the Yimeng Mountains, the county happened to be running a dedicated recruitment for veterans, and you passed into the township's veterans' service station. It's on the ground floor of the township government compound: a sign by the door, two desks, a computer and a cabinet of files inside. As of today, the township's thousand-odd veterans and military families come to you first with whatever they need.",
+  "salary_note": "Estimate: staff at county and township public institutions are paid on the public institution scale plus a township allowance. Pay in Shandong's counties is middling among counties nationally, a little over 70 percent of the national figure.",
+  "facts": [
+    { "label": "Township Veterans' Service Station Officer (current level)", "value": "0–3 years, ¥4,000–5,500 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Caseworker, County Veterans' Service Center (3–7 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Taking up veterans' requests and coordinating to resolve problems with their entitlements", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Registering and updating records on veterans and entitled dependents", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "The station opens, and first you wipe down the sign by the door. The station chief, in his fifties and a veteran too, brews a cup of tea and reads you the day's jobs.",
+    "Entering records. A young man just out of the army comes to report in, and you enter his discharge certificate and file details into the system one by one and tell him when the transition training starts.",
+    "Out to a village with a merit citation. A soldier from the township has earned a third-class merit, and you and a township cadre carry the big red citation to his family. His father sets off a string of firecrackers in the yard, and lays out a table of jianbing pancakes rolled round scallions.",
+    "Lunch in the township canteen: steamed buns, cabbage stewed with tofu. The chief says this afternoon you'll visit a veteran who can't get about easily; his allowance papers need signing, so you'll take them to him.",
+    "Out to a village in the hills. The veteran is past eighty, worked on road building in his service years, and a faded photo of him in uniform hangs on the wall. You read the papers to him page by page, he presses his thumbprint, and then holds onto you for an hour of army stories.",
+    "Hanging honor plaques. At the doors of several families with sons newly enlisted, you stand on a stool and nail the Honored Family plaques up straight. One old woman pushes a bag of apples into your hands.",
+    "Back at the station answering calls. A veteran asks about jobs. You send him the list of companies at next month's county job fair, and ask whether he can drive a heavy truck.",
+    "Sorting the ledgers: visit records, citation logs, allowance applications, each filed away in the cabinet. The chief watches and says your cabinet is neater than an army quilt."
+  ],
+  "ladder": [
+    { "title": "Township Veterans' Service Station Officer", "stage": "Entry", "focus": "Registering and updating records on the township's veterans and entitled dependents, home visits, delivering merit citations, hanging honor plaques, helping people apply for their entitlements. You move up by knowing everyone and getting things done properly." },
+    { "title": "Caseworker, County Veterans' Service Center", "stage": "County", "focus": "At the county service center you handle the casework on jobs and business start-ups, skills training and entitlement review, liaising with the township stations and with employers." },
+    { "title": "Section Chief, County Veterans Affairs Bureau", "stage": "Section chief", "focus": "You run one section, entitlements or employment, reviewing payments across the county, setting how the rules are applied, and leading a few staff." },
+    { "title": "Deputy Director, County Veterans' Service Center", "stage": "Deputy director", "focus": "You help run the service center day to day, oversee how requests are handled and coordinate across departments, and lead the township stations." },
+    { "title": "Deputy Director, County Veterans Affairs Bureau", "stage": "Bureau", "focus": "You oversee one area of the bureau's work, chairing coordination meetings, setting plans and dealing with higher levels. Few people get this far." }
+  ],
+  "ai_tasks": [
+    { "name": "Registering and updating records on veterans and entitled dependents", "how": "AI can pull details from spreadsheets, photos of documents and old files and produce a list of updates. People only spot-check the key fields, and visit or phone when a case doesn't match." },
+    { "name": "Entering and checking data in the veterans' records system", "how": "AI can cross-check the system's data on its own, find duplicate, incomplete and contradictory records, and validate them in bulk. People spot-check, and guard access to data that touches privacy." },
+    { "name": "Publicizing and explaining the rules on veterans' entitlements and resettlement", "how": "AI can rewrite the regulations as plain Q&As, short-video scripts and leaflets, and answer questions automatically. People have to check it's the latest version, and explain in person to older people or those in particular difficulty." },
+    { "name": "Processing applications, review and payment of entitlements", "how": "AI can pre-check whether the papers are complete, make a first judgment on eligibility, calculate the amount and flag deadlines. People make the final review, handle borderline and special cases, and answer for what's paid out." },
+    { "name": "Advising veterans on jobs and starting a business", "how": "AI can build a skills profile from a service record, suggest jobs and start-up schemes, and draft a CV or business plan. People find out what the person really wants, their family situation and state of mind, give advice that fits, and follow up." },
+    { "name": "Arranging skills training and job referrals for veterans", "how": "AI can match training courses and jobs, send notices and count sign-ups. People build trust with training schools and employers, secure the places and the terms, and track how the training and jobs work out." },
+    { "name": "Taking up veterans' requests and coordinating to resolve problems with their entitlements", "how": "AI can help log, categorize and look up the relevant rules and similar cases. But listening, calming people, coordinating across departments, judging how the rules apply and taking responsibility for the outcome is mainly down to people." }
+  ],
+  "events": {
+    "e_master": "The station chief served more than ten years, then did ten more at the station. He took you to every village in the township, and at every door he asked about people's health before he asked about their business. Everyone who comes to us, he says, once wore that uniform. Treat them as comrades first.",
+    "e_info_campaign": "The county ran a records drive for veterans, and in one month you covered all forty-odd villages in the township. Some old soldiers' names on file differed by one character from their ID cards, and you checked them house by house. Your soles wore a layer thinner.",
+    "e_festival_visit": "Before Spring Festival you drove the station's minivan round on the holiday visits, delivering rice, flour and cooking oil to each entitled family by hand. The last stop was the old mother of a fallen soldier. She held your hand and wouldn't let go, and said you looked a little like her son.",
+    "e_qingming": "At Qingming, the tomb-sweeping festival, crowds of schoolchildren came to the county martyrs' cemetery. You helped direct them at the gate. One little boy asked: Uncle, were you a soldier too? You said yes. He saluted you, and you returned it.",
+    "e_hero_kin": "A request came from another province: a soldier who died in service was recorded as a native of this county, and his family had never been found in decades. You spent days in old files and went to three villages, and at last found his name in one family's genealogy book.",
+    "e_complaint": "A veteran's allowance application was turned down, and he banged the table at the station and said you people never do anything for soldiers. You waited until he'd finished, explained point by point the rule and the one document he was missing, then phoned around and found out where he could get it.",
+    "e_job_fair": "The county held a job fair just for veterans, and you brought in a dozen-odd companies. A truck driver who left the army the same year as you was signed on the spot by a logistics firm. Before he left he turned round and saluted you.",
+    "e_ai_extract": "The system got AI: photograph an old file and it pulls out the name, enlistment date and discharge date and generates an update list. What used to take you a week to enter, you now check in half a day. But on a few handwritten old files, it misread several characters.",
+    "e_ai_policy": "AI rewrote the new preferential treatment rules as questions and answers and sent them to every veterans' group chat in the county. The next day the station's phone rang half as much. The other half were old soldiers who couldn't read the small print on their phones.",
+    "e_ai_match": "The employment platform now recommends jobs automatically from a service record. It suggested a security guard post for a veteran who used to drive tanks. You added his maintenance experience, and the next day it came back with a repair technician's job at an agricultural machinery plant.",
+    "e_dating": "At a training course in the county town you met a primary school teacher from a military family, her brother still serving. The first time you met, you talked about nothing but her brother's branch of the army, and she said you could talk more than her brother.",
+    "e_wedding": "You got married. Your old army comrades came from other provinces, and one insisted on singing an army song at the banquet. Halfway through, the whole table was on its feet.",
+    "e_baby": "Your child was born. You walked the hospital corridor with him in your arms, and the nurse said you held a baby the way you'd carry a rifle.",
+    "e_house": "You bought a flat in the county town, part of the down payment from your discharge money. On moving day you folded your uniform onto the top shelf of the wardrobe. Your wife said, hang it up. You said, it's fine there.",
+    "e_overtime": "That month the reports from above came one after another, and you worked late at the station for two weeks straight. When you got home your child was already asleep.",
+    "e_old_soldier": "The veteran in his eighties you often visited went into hospital, and you went to see him. He could hardly recognize anyone by then, but when you said the number of his old unit, he raised his hand in something like a salute.",
+    "e_back": "The back injury from your army driving years has flared up again, and on the minivan's bumpy rides to the villages it hurts. The doctor tells you to drive less. You put a cushion on the seat and go to the villages as usual.",
+    "e_commend": "At year's end the county named you an outstanding veterans' service worker. You took the certificate home, and your father put it in the same box as your discharge certificate.",
+    "e_parents": "Your father hurt his back working in the village, and you took two days off to look after him. Early on the third day the station called: an old soldier's allowance had to be signed that day. You left your father in a neighbor's care.",
+    "e_new_veteran": "A young man just out of the army came to report in, standing ramrod straight and talking straight, just like you once did. You took him to the transition training, then helped him apply for a driver's job.",
+    "e_reunion": "Your old unit held a reunion and you went. The comrades you'd driven across the Gobi with for five years: some had put on weight, some had gone grey. By the end of the drinking, everyone was telling the story of the year the truck sank into the sand."
+  },
+  "choices": {
+    "c_study": { "title": "A part-time bachelor's degree?", "situation": "The county encourages station staff to upgrade their qualifications: an adult-education bachelor's in administration, weekend classes, two and a half years, part of the fees reimbursed. It counts later for moving to the county or becoming a section chief. It also means no weekends.", "options": [
+      { "label": "Enroll", "result": "For two and a half years of weekends you sit in a classroom in the county town, writing assignments after work at the station. The day you get your diploma, the chief pours you a cup of tea." },
+      { "label": "Get the station's work right first", "result": "You say first you want to know every veteran in the township. Over those two years you cover the forty-odd villages three times, and can tell anyone offhand how many former soldiers live in each family." }
+    ] },
+    "c_county": { "title": "Move to the county service center?", "situation": "The county veterans' service center needs a caseworker for jobs, start-ups and skills training, and wants someone from a township who knows the situation. It's closer to home, but you'd be learning a new line of work from scratch. Meanwhile the township station chief retires next year.", "options": [
+      { "label": "Move to the county", "result": "You transfer to the county service center and spend your days with employers and training schools. In your first month you run three job fairs." },
+      { "label": "Stay in the township", "result": "You say there'd be no one at the station when the chief retires, and stay. The next year you take over from him, and everything in the township lands on you alone." }
+    ] },
+    "c_ai_trial": { "title": "Pilot AI records checking?", "situation": "The city is piloting AI for cross-checking veterans' records and pre-reviewing entitlements in a few counties, and needs someone who knows the work to check every day whether its matches are right and report every error. It takes a lot of time, and there's no extra pay.", "options": [
+      { "label": "Pilot it", "result": "You log every old file it misread and every allowance it miscalculated, and report them to the city each month. A year later, the city's records-checking procedure gains a rule: handwritten files must be rechecked by a person." },
+      { "label": "Don't take it on", "result": "You say you've got enough on your hands. Once the system is live you use it as told, and check every list it produces against the files again." }
+    ] },
+    "c_comrade": { "title": "A call from an old comrade", "situation": "Your old squad leader from your driving days runs a logistics company in Qingdao with a fleet of thirty-odd trucks, and wants you as fleet manager at three times your pay. Your father says the village's farm machinery cooperative needs someone who knows vehicles to lead it.", "options": [
+      { "label": "Join the logistics company in Qingdao", "result": "You resign and go to Qingdao. On your first day you inspect every truck in the fleet, one by one, just as you did before a run in the army.", "end": "You became fleet manager at a Qingdao logistics company, leading thirty-odd drivers on routes across the country. Half of the fleet are veterans." },
+      { "label": "Go home and start the machinery cooperative", "result": "You resign, go back to the village and lead the new farm machinery cooperative. You buy a few combine harvesters, and at the wheat harvest you drive the first one into the field.", "end": "You became head of your village's farm machinery cooperative. At wheat harvest you cut field after field with the combine, and at night the headlights string together across the plain." },
+      { "label": "Stay at the station", "result": "You thank your old squad leader. That evening, working late on the files, you come across the registration form of a man from your area who enlisted the same year as you, and look at it a long time." }
+    ] },
+    "c_family": { "title": "Your wife wants a job in the city", "situation": "Your wife wants to sit the exam for a school in the city, so your child can go to a better school later. If she passes you'll live apart and see each other at weekends; if not, you all stay in the county town.", "options": [
+      { "label": "Back her to sit it", "result": "She passes into a primary school in the city and takes your child with her. Every Friday after work you drive an hour and a half there, and every Sunday night you drive back." },
+      { "label": "Stay in the county town together", "result": "You talk it over all evening and decide to stay. Your child starts at the county primary school, and you can pick him up after work every day." }
+    ] },
+    "c_section": { "title": "Become chief of the entitlements section?", "situation": "The chief of the county veterans affairs bureau's entitlements section has transferred out, and the bureau wants you to take over: the review and payment of entitlements for several thousand people across the county all pass through you, you set how the rules are applied, and when something goes wrong, it's on you.", "options": [
+      { "label": "Take it", "result": "You become section chief. Every month before payment you go through the county's whole list page by page. Once you find an old man's allowance calculated one band too high; you phone to check, and it turns out the system applied the wrong standard." },
+      { "label": "Two more years of casework", "result": "You say you'd like to spend more time at the grassroots, and don't take it. The bureau appoints an older colleague, who often comes to ask you when he's unsure." }
+    ] },
+    "c_deputy": { "title": "Become deputy director of the service center?", "situation": "The county service center's deputy director is retiring, and the bureau puts you forward: overseeing how requests are handled and coordination across departments, and leading the stations in a dozen-odd townships. Many more meetings, many fewer trips to the villages.", "options": [
+      { "label": "Take it", "result": "You become deputy director. Every Monday you hold a video meeting with the township stations, and the hardest few requests you chase down yourself." },
+      { "label": "Recommend someone younger", "result": "You recommend a young man you trained and keep running the entitlements section yourself. Once he's in post, he still comes to you first with the hard cases." }
+    ] },
+    "c_hard_request": { "title": "A request no one can untangle", "situation": "An old soldier reports that part of his service from decades ago is missing from his file, and it affects his entitlements. The file is in another province, the people who handled it retired long ago, and tracing it means going through several departments, possibly with nothing to show for a year or two.", "options": [
+      { "label": "Trace it department by department", "result": "You write a dozen-odd letters of inquiry and make more than a hundred phone calls. A year and a half later, a yellowed certificate arrives from the other province. The day the old soldier receives his back pay, he stands a long time outside the station." },
+      { "label": "Do what can be done under the rules first", "result": "You first get him the entitlements that can be processed, submit the missing period through the proper procedure, and phone for news every few months, letting him know each time." }
+    ] },
+    "c_cemetery": { "title": "The martyrs' cemetery, or work to the end?", "situation": "Your back injury keeps getting worse, and the bureau asks if you'd move to the county martyrs' cemetery office, looking after the grounds and guiding visitors, no more daily trips to the villages. You've done casework for twenty years, and many old soldiers will only deal with you.", "options": [
+      { "label": "Go to the cemetery", "result": "You move to the cemetery. Every day you sweep the steps and tell visiting schoolchildren about the names on the memorials. Over the Qingming days you tell it a dozen-odd times a day." },
+      { "label": "Work to the end", "result": "You say a few more years. You get a car with softer seats; the road to the villages is the same road, and when the old soldiers see you, they still ask first whether your back is any better." }
+    ] }
+  },
+  "endings": {
+    "retire": "On your last working day you hand the key of the file cabinet to a young colleague. The files inside are still one beside the next, as neat as an army quilt. You drive back once more to the township station where you started. The sign by the door is new, and inside sits a young man just out of the army, who stands up and salutes you. You return it.",
+    "burnout": "That year's medical put red marks by your spine and your blood pressure. You told the bureau you couldn't do the village trips anymore, and moved to an office post. Once you stopped jolting along mountain roads, your back got a little better. One night you dreamed you were still driving in the Gobi, the truck sinking into the sand, and woke just as the sky was getting light."
+  },
+  "stages": [
+    "You hold the fort at the township station. When someone comes home from the army, you enter their details in the system; when a soldier earns a merit, you and a township cadre take the citation to his family and hang the honor plaque; at every festival you drive the minivan round delivering rice, flour and oil to entitled families. You help people fill in allowance applications and collect their papers, and for old soldiers who can't get about, you take the forms to their homes to sign. You don't make the decisions, but everyone in the township who ever served comes to you first.",
+    "At the county service center you handle jobs, start-ups and skills training: negotiating jobs with employers and places with training schools, running several job fairs a year, putting veterans' service records forward one by one. Whatever the township stations send up, you review before passing it on. Unlike in the township, the people you deal with have gone from one township's residents to the whole county's employers and a dozen-odd stations.",
+    "You run the entitlements section: every month the review and payment for several thousand people across the county passes through you. When new rules come down, you master them first, then brief the township officers on how to apply them; for cases you're unsure of, you pull the files, call meetings, ask higher up, and settle them one by one. Behind every form you sign is money that has to reach someone's hands every month.",
+    "You help run the county service center: a video meeting with the township stations every week, tracking how requests are progressing, coordinating anything that crosses departments. You know everyone at human resources, medical insurance and civil affairs. When inspectors come you report; when there's a hard case below, you go and chase it. You rarely enter records yourself now, but you keep an account in your head of which old soldier in which township has what trouble.",
+    "As deputy director of the bureau, you oversee entitlements and the service center. You chair coordination meetings, set plans, and press the city and other departments for funding and places. For the Spring Festival and Army Day visits you draw up the county-wide list and take the most distant few households yourself. Your words carry weight now, but sitting on the edge of an old soldier's kang, the heated brick bed, you talk as straight as you ever did."
+  ],
+  "work": [
+    "An old soldier's enlistment date on his discharge certificate doesn't match his file. You go to the county armed forces department and find his name in an old roster, and correct the record.",
+    "You're hanging an honor plaque for a family with a newly enlisted son, and the old stone door frame won't take a nail. You borrow a drill from the station, make the holes, and hang the plaque dead straight.",
+    "A fallen soldier's old mother hasn't received her monthly pension. You search the system all afternoon and find she changed bank cards without registering it, and the next day you take her to the township bank to sort it out.",
+    "An agricultural machinery plant in the county needs repair workers. You pull up the list of everyone in the county who served in armored or transport units, phone them one by one, recommend six, and the plant keeps four.",
+    "You set up an electrician's course for veterans, but the training school has twenty places and more than forty sign up. You go to another school and get a second class added.",
+    "A young man back from the army wants to open a farm guesthouse and asks about a start-up loan. You help him rewrite his plan three times, then go with him to the bank, and the loan comes through.",
+    "When new preferential treatment rules come down, you gather the officers from a dozen-odd townships, go through how to apply them point by point, then have each of them try it out on a real case from their own township.",
+    "Before the month-end payment, you find three old people in the system whose allowance band doesn't match their age. You pull their files, check each one, and only sign off on payment once they're corrected.",
+    "A military family has fallen on hard times, and none of the available help quite meets the criteria. You take the papers to civil affairs and medical insurance, three trips, and piece together a way that works.",
+    "One request has bounced between three departments for months. You bring people from all three to the service center and, in front of the person who raised it, write down on paper what each department has to do.",
+    "Every township station keeps its ledgers in a different format. You set one template; the first month you send half of them back, and by the second month they're all in order.",
+    "You take a young officer on visits in the hills, and before you go in you tell him: ask about their health first, then their business, then whether there's anything they need, and speak slowly.",
+    "For the Spring Festival visits you keep the five most distant households in the county for yourself, more than two hundred kilometers of mountain road in a day. By the time you reach the last one it's dark, and the old man is waiting at his door.",
+    "When the city comes to look into veterans' employment, instead of reading a report you take them to the agricultural machinery plant and let the men you recommended years ago speak for themselves.",
+    "The county is restoring the martyrs' cemetery. You chair several coordination meetings and insist that every name on every memorial be repainted."
+  ],
+  "past": [
+    "You grew up in a village in the Yimeng Mountains. Your grandfather had been a soldier, and an old photo of him hung on the wall of the front room. After middle school you went to the county vocational school to study car repair.",
+    "The autumn you finished vocational school, you enlisted and were posted to a motor transport regiment in the northwest. The first time you saw the Gobi, you sat frozen in the truck for a long time.",
+    "You became a driver, running transport trucks across the Gobi and over mountain roads. Once the truck sank into the sand, and your whole squad pushed all night; it only came free at dawn.",
+    "You became a non-commissioned officer, and studied for an associate degree by self-study exams while in the army, reading by flashlight after lights out.",
+    "After five years' service you left the army as a sergeant. On the day you left, your whole company saw you to the barracks gate, and you turned and gave your last salute.",
+    "Back home, the county was running a dedicated recruitment of veterans for public institution posts. You applied and passed into the township's veterans' service station. On the day you reported, the station chief said: one of our own."
+  ],
+  "late": {
+    "pension_note": "Estimate: public institution staff are covered by the pension scheme for government and public institutions plus an occupational annuity, with years of military service counted in. It comes to a little over 60 percent of final monthly pay.",
+    "scenes": [
+      "Your first month of retirement you still get up at six, fold your quilt and go down for two laps of running. Only when you've finished do you remember you don't have to go to work.",
+      "The station asks you to volunteer, and whenever there's a merit citation to deliver, you go along. Seeing the big red citation pasted up in someone's front room, you're as happy as you ever were.",
+      "You and your old comrades arrange a trip back to your old unit in the northwest. The barracks have been rebuilt, but the Gobi is still there, and you all stand at the roadside looking at it a long time.",
+      "Your first year in the office post, you go home on time and your back gets a little better. At weekends you start taking your child up into the Yimeng Mountains, and at the top you tell him about your grandfather.",
+      "An officer you trained is chief of a township station now. During the Spring Festival visits he phones to ask whether you can still get a car up the road to that old soldier's house in the hills when it snows.",
+      "Sometimes you still dream you're driving in the Gobi, the headlights on the road ahead, never reaching the end. You wake to the familiar hills outside the window.",
+      "In the first months of the new job, you still looked twice at anyone in uniform. Once you met a young man just out of the army on the street, and asked him whether he'd found work yet.",
+      "The new job pays more, and you move your parents into a flat with heating in the county town. On moving day your father hangs your grandfather's old photo right in the middle of the living room wall.",
+      "Once the county holds a ceremony honoring veterans and invites you back to speak. You tell them how you once helped a fallen soldier be found by his family back home, and in the audience some people are wiping their eyes.",
+      "The station's records are entered by AI now, the rules are explained by a machine, and jobs are suggested by a platform. But reading papers aloud to an old soldier, sitting on the edge of his kang listening to his army stories, still takes a person going there.",
+      "You find an old photo: you at twenty in front of a transport truck, the Gobi stretching away behind you, your face burned dark red. You put it together with your grandfather's."
+    ],
+    "closing": {
+      "retire": "Many years later, on Army Day, August 1, you sit in the yard listening to army songs on the radio. Your grandson runs over and asks, Grandpa, were you a soldier too? You say you were, and he stands up straight and salutes you.",
+      "burnout": "Many years later, in the park in the county town, you teach your grandson to fold a quilt into a perfect square block, the army way. He asks what it's for. You say, nothing really. It just looks good.",
+      "end": "Many years later, on the top shelf of the wardrobe, you find your old uniform, its collar insignia faded. You shake it out and look at it, then fold it again and put it back."
+    }
+  }
+}

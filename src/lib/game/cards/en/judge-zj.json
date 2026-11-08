@@ -1,0 +1,166 @@
+{
+  "id": "judge-zj",
+  "occupation": "Judge",
+  "role": "Court clerk at a county court (newly hired civil servant)",
+  "headline": "Fresh from a law degree, the bar exam passed in your final year, and into a county court in Zhejiang: a clerk in the civil division, proofreading hearing transcripts and binding case files, waiting for the day you sit on the bench yourself",
+  "unit": "The people's court of a county in Zhejiang",
+  "unit_type": "Basic-level people's court",
+  "city": "A county in Zhejiang",
+  "city_tier": "County town",
+  "education": "Bachelor's degree (law; passed the national legal professional qualification exam)",
+  "level": "You know the statutes cold and your bar score was good. But you've never served a summons, have no idea how a litigant will swear at you on the phone, and have never bound a case file.",
+  "intro": "In your final year at university you passed the bar exam, then passed into a dedicated legal-track civil service post at the court of the county next to your hometown. On your first day the personnel office took you to the civil division, where the division head pointed at a desk piled with case files and said, that's yours. This county makes hardware and small appliances: lots of factories, lots of borrowing, lots of lawsuits. As of today you start as a court clerk. One day you'll sit on that bench yourself.",
+  "salary_note": "Estimate: court staff are paid on the civil service scale, with judges in the quota receiving an additional judicial grade salary. Civil servants in Zhejiang's counties earn more than in most counties nationally, about 80 to 90 percent of the national figure.",
+  "facts": [
+    { "label": "Court Clerk (current level)", "value": "0–2 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Judge's Assistant (2–6 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Presiding over hearings and panel deliberations", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Hearing transcripts and case file management", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "First thing, you check the docket in the case management system: two hearings this morning, a mediation this afternoon. You carry three case files out of the cabinet and lay them out in hearing order.",
+    "Calls to confirm tomorrow's litigants. One defendant says he's away buying stock and could it be postponed. You tell him it needs a written application, and he sighs down the line.",
+    "Hearing. A private loan dispute: the plaintiff runs a hardware shop, the defendant is his distant cousin. The judge asks a question, you type a line, the speech recognition puts up text behind you, and you fix its mistakes as you go.",
+    "When the hearing ends, both parties sign and thumbprint the transcript. The defendant flips through three pages and says one line isn't what he meant. You pull up the recording and play it for him.",
+    "Lunch in the court canteen. The judges talk over the morning's cases while they eat. You listen, and don't dare say a word.",
+    "The afternoon mediation is in the mediation room. A divorcing couple argue over child support, the judge's assistant works through the sums between them, and you take notes beside her. Half a pack of tissues goes.",
+    "Binding case files. Number the evidence pages in order, punch the holes, thread the cord, seal the back. One file takes nearly an hour, and the binding cord leaves marks across your fingers.",
+    "Still at your desk proofreading the morning's transcripts. Outside, the county town's night market has lit up. You call home to say you won't be back for dinner again."
+  ],
+  "ladder": [
+    { "title": "Court Clerk", "stage": "Entry", "focus": "Scheduling, serving documents, recording hearings, binding case files, and learning from the judge how a hearing is run. New hires start out here." },
+    { "title": "Judge's Assistant", "stage": "Assistant", "focus": "Reviewing complaints and evidence, running pre-trial mediation, drafting judgments, handling cases under a judge's guidance. You need enough years in post before you can apply for the judge quota." },
+    { "title": "Judge, Grade 4 (quota judge)", "stage": "In the quota", "focus": "Selected into the judge quota, you hear cases alone or on a panel, sign your name to judgments, and are accountable for every case for life." },
+    { "title": "Judge, Grade 3", "stage": "Presiding judge", "focus": "You preside over a panel, hear difficult and complex cases, and lead a trial team of judge's assistants and clerks." },
+    { "title": "Judge, Grade 2", "stage": "Senior judge", "focus": "One of the court's senior quota judges, often a division head or member of the adjudication committee, reviewing hard cases and training younger judges. Few people get this far." }
+  ],
+  "ai_tasks": [
+    { "name": "Hearing transcripts and case file management", "how": "Speech recognition turns hearings into transcripts in real time, and electronic case files are generated and indexed automatically as the case goes. Clerks only proofread the key passages and check signatures; most of the routine work has gone to the machine." },
+    { "name": "Reading the file, sorting evidence and issues in dispute", "how": "AI can read a whole file fast, list the evidence, and flag contradictions and missing material. Which evidence is credible, how the facts are found, whether more investigation is needed: the judge in charge decides and answers for it." },
+    { "name": "Finding similar cases and drafting judgments", "how": "AI can surface similar cases and statutes and draft a judgment from a template. How the reasoning is written and what the conclusion is, the judge revises sentence by sentence and signs." },
+    { "name": "Case triage and online mediation", "how": "The system can route simple cases to the fast track by cause of action and amount, and push disputes to online mediation. Whether a mediation succeeds depends on a person talking it through with the parties, line by line." },
+    { "name": "Presiding over hearings and panel deliberations", "how": "Controlling the pace in court, handling the unexpected, leading the panel's deliberation: it takes judgment in the room, authority and communication. AI can only help draw up an outline of the issues before the hearing." },
+    { "name": "Judging independently under the law, and keeping your integrity", "how": "Loyalty to the law and the facts, staying clean, stepping aside when you have a conflict: that is a judge's personal responsibility. At most, AI can flag possible connections in the system." }
+  ],
+  "events": {
+    "e_mentor": "The judge you clerk for has heard civil cases for twenty years. When she corrects your proofs of service, a single wrong date means filling it out again. In a court, she says, once a word is on paper, it's true.",
+    "e_service": "One defendant's phone was dead and his address led nowhere, so you rode out to his village with a bailiff to serve the summons, asking at three little shops before you found the house. His mother took the summons and asked if he was going to prison. You spent a long time explaining that it was about money owed.",
+    "e_overtime": "The year-end push to close cases: every desk in the division buried in files. For three weeks you didn't leave before ten at night. One evening you fell asleep at your desk and woke with binding cord printed on your cheek.",
+    "e_scolded": "A litigant who'd lost shouted at you in the lobby of the litigation service center that the court had taken the other side's money. You stood and heard him out, then walked him to the complaints window. Only back at your desk did you notice your hands were shaking.",
+    "e_ai_transcript": "The court installed new hearing speech recognition with a dialect model; even litigants speaking the local dialect come out mostly right. You no longer have to type flat out through every hearing, and you can look up and watch people's faces.",
+    "e_ai_draft": "The system can now draft a judgment from the hearing transcript. The first time you used it, it swapped the plaintiff's and defendant's names in one place and left a repayment out of the facts. You fixed it line by line, and it wasn't much faster than writing it yourself.",
+    "e_ai_similar": "The similar-case recommendations keep getting sharper. A case is barely filed before the system serves up a dozen-odd similar judgments from across the province. Reading them one by one, you found two that reasoned in exactly opposite directions, printed them out, and took them to the division for discussion.",
+    "e_village_trial": "The township tribunal held a circuit hearing in a village's cultural hall, over the boundary of a house plot, with half the village in the audience. Afterward the village Party secretary said that one session did more good than ten of his meetings.",
+    "e_mediation_success": "Two brothers took the old house their parents left them all the way to court, and you mediated four times. At the last session the elder brother gave way first. After signing the mediation agreement they walked out of the court together and shared a cigarette at the gate.",
+    "e_dating": "A friend introduced you to a programmer working in Hangzhou. He asked if judges bang the gavel every day; you said hardly ever. At weekends he drove two hours to the county town to see you, and you had a bowl of wontons at the night market.",
+    "e_wedding": "You got married. Before your wedding leave you handed over every file on your desk, and the division head signed the handover sheet, said congratulations, and back to work when you return.",
+    "e_baby": "Your child was born. During those months of maternity leave your colleagues split your cases between them. The day you came back there were flowers on your desk, and a fresh stack of case files.",
+    "e_house": "You bought a flat in the county town, half the down payment pooled from both sets of parents. The mortgage is over four thousand a month; you did the sums and figured it would get easier once you were in the quota.",
+    "e_case_load": "In the quota, you close more than three hundred cases a year. When the year-end figures came out you were third in the whole court, and the division head praised you in the meeting. What you were thinking about was the few judgments you hadn't finished writing.",
+    "e_appeal": "The higher court sent one of your cases back for retrial: a fact hadn't been properly established. You went through the file three times and found the bank transfer record you'd missed. You didn't sleep that night.",
+    "e_firm_closing": "A small-appliance factory that had run for twenty years in the county was insolvent and went into bankruptcy proceedings. You attended the creditors' meeting, dozens of suppliers and workers' representatives in the room. Afterward a worker asked how much of his wages he'd get back, and you told him honestly that it was still being worked out.",
+    "e_eyes": "Twelve-odd hours a day of case files and screens, and your eyes have started to go dry and red, your prescription up another hundred degrees. The doctor tells you to look out of the window for a bit every hour. You put a pothos plant on your desk.",
+    "e_kid_question": "Your child asked: Mama, are the people you judge all bad people? You thought for a while and said, mostly they're two people who each think they did nothing wrong. Your child said, that's hard. You said, yes.",
+    "e_thanks_letter": "A migrant worker who won work-injury compensation in a labor case wrote the court a thank-you letter before going home, in crooked handwriting, with one character of your name wrong. You tucked it into your notebook.",
+    "e_colleague_leaves": "The judge's assistant who joined the court the same year as you resigned to work at a law firm in Hangzhou. On his last day he left you a stack of handwritten case notes, saying he'd have no use for them at a firm.",
+    "e_parents": "Your father went into hospital for surgery. You took two days off to sit with him, and in the evenings revised judgments on your laptop in the ward. A nurse came by and said, still working at this hour?",
+    "e_teach": "The division got a new judge's assistant whose first draft judgment ran to a dozen-odd pages of looping reasoning. You struck out half of it in red and said, this is written for the parties to read, not for your professor."
+  },
+  "choices": {
+    "c_branch": { "title": "Go down to the township tribunal?", "situation": "The court has a people's tribunal in a mountain township that needs a clerk, and asks if you'll go for two years: an hour from the county town, cases mostly between neighbors, over marriages and land, with frequent circuit hearings in the villages. Staying at the main court's civil division means being close to home, and a wider mix of cases.", "options": [
+      { "label": "Go to the tribunal", "result": "You live two years in the dormitory upstairs at the tribunal and follow its head out to village hearings. You pick up some local dialect, and learn to read a mediation agreement aloud to two families on a threshing floor." },
+      { "label": "Stay at the main court", "result": "You stay in the civil division and sit through two hundred-odd hearings a year. You see every kind of case at least once." }
+    ] },
+    "c_master": { "title": "A part-time master's in law?", "situation": "A university of political science and law in the provincial capital runs a part-time Juris Master: weekend classes, three years, part of the fees paid by you. It counts for something when you apply for the judge quota or a higher court. It also means no weekends.", "options": [
+      { "label": "Enroll", "result": "For three years of weekends you take the early bus to the provincial capital for classes. Your thesis is on how interest is determined in private lending, and at your defense your supervisor says everything you wrote about is a real problem." },
+      { "label": "Get good at the cases first", "result": "You say you learn more in the division than from books. At weekends you catch up on sleep at home, and sometimes bring back a file you haven't finished." }
+    ] },
+    "c_selection": { "title": "Apply for selection as a quota judge (Judge, Grade 4)?", "situation": "The court has a few places in the judge quota this year, and any judge's assistant with enough years can apply. There's an exam and an assessment, and you have to submit judgments you drafted. In the quota you can hear cases on your own and sign judgments, and you're accountable for every one of them for life.", "options": [
+      { "label": "Apply", "result": "You dig out every document you've drafted in these years and pick the three you're proudest of. On exam day, one of the questions is a type of case you've handled." },
+      { "label": "Wait another year", "result": "You don't feel ready yet and leave the place to a colleague who arrived a few years before you. The division head says nothing, and gives you a few more complicated cases." }
+    ] },
+    "c_ai_trial": { "title": "Pilot AI-assisted case handling?", "situation": "The province is piloting AI-assisted case handling at a few county courts: automated file reading, similar-case recommendations, draft judgments. The court needs one trial team to try it and report every mistake the system makes. It will take a lot of extra time, and your closing numbers may drop.", "options": [
+      { "label": "Volunteer to pilot it", "result": "You log every piece of evidence the system missed and every similar case it misapplied in a spreadsheet, submitted monthly. Six months and several versions later, the whole court's judgment templates are based on your division's." },
+      { "label": "Stick with the old way", "result": "You go on reading the files and writing judgments yourself. When the system goes live you use it too, but you go over every sentence again yourself." }
+    ] },
+    "c_lawyer": { "title": "Law firms and companies come recruiting", "situation": "A partner at a Hangzhou law firm wants you as a litigation lawyer, at two or three times your pay; a listed small-appliance company in the county is looking for a head of legal. Competition for the judge quota keeps getting fiercer, and every year brings more cases.", "options": [
+      { "label": "Join the Hangzhou firm", "result": "You resign and go to Hangzhou to practice. The first time you sit at the plaintiff's table as counsel, it feels odd to see the bench from that angle.", "end": "You became a litigation lawyer at a Hangzhou firm. Sitting at the plaintiff's or defendant's table, you can nearly always guess what the judge opposite will ask next." },
+      { "label": "Go in-house", "result": "You join the small-appliance company and handle its contracts, its intellectual property, its disputes with suppliers. In your first year you rewrite every contract template the company has.", "end": "You became head of legal at a company in the county. Many disputes you stop in the contract itself, before they ever get as far as a court." },
+      { "label": "Stay at the court", "result": "You turn them both down. Working late on a judgment that night, you reach the reasoning and stop for a long time, and think that someone still has to do this." }
+    ] },
+    "c_husband_city": { "title": "Transfer to Hangzhou?", "situation": "Your husband works in Hangzhou and commutes back every weekend. A district court in Hangzhou is recruiting judge's assistants and judges from across the province. Pass, and the family is together, but you start over in a new place, with far more expensive housing.", "options": [
+      { "label": "Sit the exam for Hangzhou", "result": "You pass and transfer to a district court in Hangzhou. More cases, a faster pace, but in the evening the family sits down to dinner together." },
+      { "label": "Stay in the county", "result": "You agree to keep things as they are for now: you stay in the county, he comes back at weekends. Your child lives with you, and every Friday evening waits at the window for that car." }
+    ] },
+    "c_presiding": { "title": "Become a presiding judge (Judge, Grade 3)?", "situation": "The division is naming a new presiding judge to lead a team of two judge's assistants and two clerks, and to preside over the panel in difficult and complex cases. More weight on you: closing rates and reversal rates all go down against your name.", "options": [
+      { "label": "Take it on", "result": "You become presiding judge. Every Monday you hold a team meeting and hand out the new cases one by one, keeping the hardest for yourself." },
+      { "label": "Just handle your own cases", "result": "You say you'd like a few more years of hearing cases without managing people. The division head nods and gives the team to another judge, and you're still the last to leave every night." }
+    ] },
+    "c_hard_case": { "title": "A judgment that will make enemies", "situation": "You have a sales contract dispute between two companies. The defendant is one of the county's biggest taxpayers, with hundreds of workers. On the evidence, it owes a large sum. People from the company come to court with documents: orders are down this year and cash is tight, and they hope things can be slowed down.", "options": [
+      { "label": "Rule on the law, on time", "result": "You rule on the evidence, setting out in the judgment exactly how every sum was calculated. Later, at the enforcement stage, the company and the plaintiff agree on installments, and the workers' wages are paid as usual." },
+      { "label": "Try one more mediation first", "result": "You hold off on ruling and bring both sides in to mediate twice more. In the end they agree on installments, and a month later they sign a mediation agreement. The plaintiff says if he'd known it could be settled like this, he wouldn't have waited so long." }
+    ] },
+    "c_mediation_center": { "title": "Leave the quota, or judge to the end?", "situation": "The court has set up a pre-litigation mediation center in the litigation service center and wants a senior judge to leave the quota and lead it: no more judging, just training mediators and settling disputes before they're filed. Your eyes and neck have been getting worse for years.", "options": [
+      { "label": "Lead the mediation center", "result": "You take off the robe and sit across a table from the parties in the mediation room. In a year your center settles several hundred disputes; many people never have to write a complaint at all." },
+      { "label": "Judge to the end", "result": "You say you'd like a few more years on the bench. You swap your desk lamp for an eye-friendly one, and go on revising judgments word by word." }
+    ] }
+  },
+  "endings": {
+    "retire": "On your last working day you hand your case files one by one to a young judge, and the handover sheet runs to three pages. You fold your robe, and leave the gavel on the bench; in a whole year it was hardly ever struck. Walking out of the court, there's a litigant on the steps on the phone, talking in the local dialect, and you understand every word.",
+    "burnout": "That year's medical put red marks by your neck and your eyes. You applied to leave the quota and went to the litigation service center to mediate. Once you stopped writing judgments, you could finally get to bed early. One night you dreamed you were still binding case files, and woke with no marks on your fingers."
+  },
+  "stages": [
+    "You work for one judge and handle the logistics of every case on her docket: scheduling in the case management system, serving documents by phone and text, mailing summonses. At hearings you sit below the bench taking the record, and afterward have the parties sign page by page. Above all there are the files: number the evidence, punch, thread, bind, archive. You can't yet say a word about any case, but every sheet of paper passes through your hands.",
+    "Now you're touching the cases themselves. When a complaint comes in, you review the evidence first, set out the issues in dispute, and write the judge a trial report. Before hearings you run the exchange of evidence and the mediation, working through the sums in the mediation room; you draft the judgments too, and the judge marks them up in red and you revise again. Unlike as a clerk, the question you have to answer has gone from whether the papers are all there to what actually happened.",
+    "You're in the quota, and your name is printed on judgments. You hear simple civil cases alone and sit on panels for complex ones; every day is hearings, files, judgments, several hundred a year. You have your own judge's assistant and clerk: before hearings you check the outlines they prepare, afterward you revise the documents they draft. Every word you sign, you'll answer for from now on.",
+    "As presiding judge you lead panels on the hard cases: company bankruptcies, chains of loans, labor disputes with dozens of plaintiffs. Before a hearing you hold a team meeting to fix the issues; in deliberation you speak last. You manage your team's progress too: whose case is near its time limit, whose judgment was sent back, you need to know. Your name starts appearing on the list of those attending the adjudication committee.",
+    "You're one of the court's senior judges, usually a division head, and a member of the adjudication committee. Every hard case in the division passes through you, and what you say in meetings is often about how we'll decide this kind of case from now on. You train young judges, teach the whole court on case types, and discuss rulings on the phone with judges at the higher court. You still hear cases yourself, only the hardest few."
+  ],
+  "work": [
+    "A summons comes back marked no such person. You find the defendant's new mobile number in the system and get through on the fifth try. When he hears it's the court, the first thing he says is: I haven't broken any law.",
+    "A three-hour hearing with both sides speaking dialect, and the speech recognition gets whole stretches wrong. Back at the office you spend the evening against the recording, restoring every line to the words the parties actually said.",
+    "The judge asks you to renumber three hundred-odd pages of evidence in one case. You count it through twice and find a duplicated photocopy in the middle, and pull it out.",
+    "A sales contract dispute between a hardware factory and its supplier: you put forty-odd delivery notes and statements into one table and calculate the underpayment at 123,000 yuan, two thousand off what the plaintiff claimed.",
+    "Your first pre-trial mediation on your own: the plaintiff is a renovation worker chasing his wages. You take the boss into the corridor for a quarter of an hour; when you come back, they sign an agreement on the spot and the boss transfers the money by phone.",
+    "The judge rewrites a page and a half of the judgment you drafted, mostly the reasoning. In the margin she writes: make sure the side that loses understands why.",
+    "An old woman is suing her son for support, and he doesn't turn up to the hearing. You have your assistant phone him, hear the old woman out in court, and order a monthly sum. You keep the judgment short, so she can understand it.",
+    "In one morning you hold four summary hearings, all credit card disputes. You ask each defendant about their income and difficulties, and three of them settle on installment plans in court.",
+    "Your assistant drafts a judgment, and the system's similar cases point the other way from your reasoning. You have him write up both lines of reasoning, and the division discusses them that evening until nine.",
+    "In a company bankruptcy, you chair the panel's meeting with the administrator and go through the claims one by one. In the end you rule that the workers' wages are paid first, and explain the order and the basis for it at the meeting.",
+    "Thirty-odd workers sue the same factory for overtime pay. You join the cases and on the hearing day go through the attendance records one by one in the large courtroom, sitting until seven in the evening.",
+    "At the midyear team review you lay out every case that was sent back or reversed, point at one and say, we missed a piece of evidence here. From now on there's one more item on the file-reading checklist.",
+    "The adjudication committee discusses a new kind of online transaction dispute. You prepare the similar cases from across the province and three lines of reasoning; when you finish, the committee settles on the one you proposed.",
+    "You teach the court's young judges how to write a judgment, using the first one you ever wrote twenty years ago, still covered in your old mentor's red ink.",
+    "A judge at the higher court phones to ask how your county decides interest in private lending. You compile the last few years' judgments into a table and send it over, with a two-page note."
+  ],
+  "past": [
+    "You went to middle school in a county town in Zhejiang, where your family ran a little workshop making hardware fittings. One year a customer refused to pay 30,000 yuan for goods, and your father went to the court again and again. When he came back he said the woman judge was a good person.",
+    "In your second year of high school, when everyone chose sciences or humanities, you chose humanities. Your homeroom teacher asked what you wanted to study. You said law, and surprised yourself saying it.",
+    "Your score on the gaokao (college entrance exam) got you into law at a university in the provincial capital. On the first day your father walked you to the dormitory and said from now on, any lawsuit in the family, they'd come to you. You said you didn't know anything yet.",
+    "In the summer of your third year you interned in the civil division of your home county's court, serving documents and taking notes for a judge's assistant. On the last day you bound a case file on your own and cut your hand on the cord, and were very pleased with yourself.",
+    "In your final year you studied for the bar, sitting in the library from opening to closing every day. Two exams, objective and subjective. The day the results came out you went alone for a bowl of Hangzhou noodles with pickled greens and pork.",
+    "In your graduating year you sat the civil service exam for a dedicated legal-track post at the court in the next county: written test, interview, medical, background check, one after another. When the offer came, the post read: trial support."
+  ],
+  "late": {
+    "pension_note": "Estimate: court staff are covered by the pension scheme for government and public institutions plus an occupational annuity, which comes to about 70 percent of final monthly pay.",
+    "scenes": [
+      "Your first month of retirement you still wake at half past seven and reach, without thinking, for files in the cabinet. Later you start walking the old street in the county town every day. Someone at the market recognizes you and calls you judge.",
+      "The neighborhood asks you to be a people's mediator two half-days a week: leaks between flats, junk in stairwells. You don't write judgments anymore, but your mediation agreements are still short enough for anyone to understand at a glance.",
+      "Your child works in Hangzhou, and you go and stay a few months every year. You walk slowly round West Lake, and sometimes think of the hearings you held on threshing floors all those years ago.",
+      "Your first year at the litigation service center you mediate every day and leave on time. Your eyes are a little better, and you start reading paper books again; one novel takes you a week.",
+      "A judge's assistant you trained has made the quota. On the day of her first solo hearing, she sneaks a look from the bench toward where you're sitting.",
+      "Your neck still needs regular physiotherapy. The therapist is a young woman who hears you were a judge and asks about the hardest case you ever decided. You think for a long time and say: two brothers dividing a house.",
+      "In the first months after leaving the court, you always slowed down passing its gate, to see what kind of people were standing on the steps.",
+      "The new job pays well, and you move to a bigger flat. You bring along the stack of case notes from your court years, and put it on the top shelf of the bookcase.",
+      "Once in a hearing, the judge on the bench opposite is a clerk you trained, a judge now. When the hearing ends she comes down and calls you teacher.",
+      "In court now the transcripts are made by machine, the first drafts are written by the system, and similar cases arrive in a second. But someone still has to sit between two parties and hear them out to the end.",
+      "You find an old photo: you at twenty-three in the clerk's seat, an old computer and a stack of files in front of you, hair tied back tight. You look at it a long time, then tuck it into your old book of statutes."
+    ],
+    "closing": {
+      "retire": "Many years later, one afternoon in a teahouse on the old street, you listen to two people at the next table arguing over money. You say nothing. When they've finished arguing, you pour them each a cup of tea.",
+      "burnout": "Many years later, on the balcony, you try to tell your granddaughter what fairness is. She doesn't quite follow; she breaks a biscuit in two and asks, like this? You say, more or less like that.",
+      "end": "Many years later, on the top shelf, you find the stack of old case notes, the margins full of your pencil from back then. You turn a few pages, then put it back in its place, the way you'd put back a book you'll need again tomorrow."
+    }
+  }
+}

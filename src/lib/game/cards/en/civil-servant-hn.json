@@ -1,0 +1,166 @@
+{
+  "id": "civil-servant-hn",
+  "occupation": "Civil Servant",
+  "role": "Selected graduate civil servant at a township government (Clerk, Grade 1)",
+  "headline": "A master's graduate who passed Hunan's selective recruitment for young civil servants, posted to a township in a hill county and sent out to a village before your suitcase is even fully unpacked",
+  "unit": "The people's government of a township in a hill county in Hunan",
+  "unit_type": "Township people's government",
+  "city": "A county in Hunan",
+  "city_tier": "Township",
+  "education": "Master's degree (public administration)",
+  "level": "You've memorized the formats for official documents and did well on the essay exam. But you can't yet follow the local dialect, have no idea how many ledgers a village keeps, and have never walked the reservoir on a rainy night.",
+  "intro": "You finished a master's in public administration in Changsha and passed Hunan's selective recruitment for graduates bound for grassroots posts, and were assigned to a township in a hill county. On the day you reported, the township car fetched you from the county town, past harvested rice paddies and slope after slope of camellia oil trees. The township Party secretary talked with you for twenty minutes and finished: first go down to a village, and work two years alongside the village Party secretary. As of today, the first thing you have to do in this township is learn to understand what people here are saying.",
+  "salary_note": "Estimate: township civil servants are paid on the civil service scale plus a township work allowance. Pay in Hunan's counties is below the national average, about 60 to 70 percent of the national figure.",
+  "facts": [
+    { "label": "Clerk, Grade 1 (selected graduate) (current level)", "value": "0–2 years, ¥4,930–7,250 a month (national average, estimated from pay by experience)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Principal Staff Member, Grade 4 (head of the township general office) (2–5 years)", "source": "Common in the trade" },
+    { "label": "Pay after 10+ years", "value": "¥11,800 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Going into villages and homes, working with people face to face", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Filling in forms and keeping ledgers", "source": "AI exposure" },
+    { "label": "Open positions", "value": "45 related listings nationwide (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "The township staff dormitory is an old block behind the compound, and the canteen's blower downstairs wakes you. Breakfast is rice noodles with a spoonful of chopped chili. The cook asks if you can handle spice; you say you can.",
+    "Monday meeting: twenty-odd people in the meeting room while the secretary goes down the list, medical insurance collection, the ban on burning straw, the county's inspection of village living conditions next week. You sit in the back row taking notes, three full pages.",
+    "The township minivan drops you at the village. The village office is a small two-story building; the village Party secretary, in his fifties, hands you a cup of tea and says he'll walk you round first so you learn the way.",
+    "Home visits. An eighty-year-old woman lives alone, her son working in Guangdong. You check her old-age allowance details with her, but she can't really follow Mandarin, so the village secretary translates line by line into the local dialect.",
+    "Lunch at the village secretary's house: cured pork stir-fried with garlic shoots and a bowl of pounded chili. You're sweating from the heat, and his wife laughs and fills your rice bowl again.",
+    "Back at the village office filling in forms. The county's departments all want different formats, and you enter the same household's details four times. The village bookkeeper beside you shows you how to fill each box so it won't be sent back.",
+    "Rain. The township orders every village to check its ponds and small reservoirs. You put on a raincoat and go with the village cadres to look at two; the flashlight on the gauge shows the water well below the warning line.",
+    "Back in the dormitory you call home. Your mother asks if you're settling in. You say it's fine, you just can't understand what people say. After you hang up, you write the dialect words you learned today on the last page of your notebook."
+  ],
+  "ladder": [
+    { "title": "Clerk, Grade 1 (selected graduate)", "stage": "Probation / village posting", "focus": "A one-year probation, first posted to a village to work with the village cadres, then back at the township learning to write reports. You move up by being willing to go down to the villages and getting things done." },
+    { "title": "Principal Staff Member, Grade 4 (head of the township general office)", "stage": "Mainstay", "focus": "You run the township's documents, meetings, follow-up and liaison with higher levels, or head one of its service stations. Writing and coordinating are the core skills." },
+    { "title": "Deputy Township Head (deputy section-level post)", "stage": "Portfolio", "focus": "You're in charge of agriculture, work safety or public services, responsible for a few villages, and on the front line in flood and fire season." },
+    { "title": "Principal Staff Member, Grade 1 (head of a county department)", "stage": "Section level", "focus": "You head a county department, or run a whole township, responsible for an organization's people, work and accounts." },
+    { "title": "Researcher, Grade 4", "stage": "County", "focus": "A deputy division-level rank, doing research, review and coordination at the county. Few people get this far." }
+  ],
+  "ai_tasks": [
+    { "name": "Filling in forms and keeping ledgers", "how": "For the reports and ledgers every higher department wants, AI can pull together existing data, fill in the forms, and flag duplicates and gaps. People only spot-check whether the numbers are right and match reality." },
+    { "name": "Drafting official documents and work plans", "how": "AI can draft notices, reports and plans in the right format and write up meeting minutes. How to fit them to local reality, what should and shouldn't be said, a person revises line by line and signs off." },
+    { "name": "Carrying out instructions from above and tracking progress", "how": "AI can break down a directive, make a task list and flag deadlines. How it actually lands in a village, and how to work through the obstacles, still takes people going there and talking it out." },
+    { "name": "Questions and document pre-checks at the public service counter", "how": "AI can give directions, answer policy questions and pre-check documents, taking pressure off the counter. Older people and unusual cases still need someone to explain in person and help them through it." },
+    { "name": "Going into villages and homes, working with people face to face", "how": "Visiting homes, sitting in someone's front room explaining things, helping with their particular troubles: it needs a person there, and a person answering for it." },
+    { "name": "Emergency duty and response for floods and fires", "how": "Walking the reservoir on a rainy night, evacuating residents, fighting fire on the hillside: people have to judge and organize on the spot. AI can only stand by with water levels and forecasts." }
+  ],
+  "events": {
+    "e_dialect": "Three months in, for the first time you got through a whole conversation with an old man without the village secretary translating. He said you still had a Changsha accent. You said you'd keep learning.",
+    "e_insurance": "Year's end, collecting rural residents' medical insurance, and thirty-odd households in your group hadn't paid. You went door to door; some were working away, so you phoned them and added them on WeChat. The last household paid three days before New Year's Eve.",
+    "e_tables": "That month an unusual number of reports came down from above, and for a dozen-odd nights you sat in the dormitory checking figures and fixing formats. One form came back three times because the header was in the wrong font size.",
+    "e_flood": "In flood season a storm rained for two days and nights and the river came over a stretch of township road. You went door to door with the township cadres, moved several old people from the low ground to the village office, and kept watch there all night. At dawn the water went down.",
+    "e_fire": "Around Qingming, the tomb-sweeping festival, is the tightest time for forest fire prevention. For days you stood at a crossroads at the foot of the hill asking people visiting graves not to burn paper offerings or set off firecrackers. Some argued with you; some quietly put their firecrackers away.",
+    "e_toilet": "The village was replacing old latrines, and one old man refused outright to have his torn down. You went five times before you realized he was afraid the work would dig up the old pomelo tree behind his house. You got the builders to work around it, and he agreed the next day.",
+    "e_tea_oil": "You helped the village camellia oil cooperative open an online shop, taking the photos and writing the descriptions yourself. On Singles' Day it sold more than two hundred jin (over a hundred kilos) of oil, and the cooperative members had a photo taken at the village office door holding the printed orders.",
+    "e_inspection": "The county came to inspect village living conditions. The week before, you and the village cadres cleared every rubbish point and every ditch, and stayed up at night catching up on ledgers. As they left, the inspectors pointed out two things that weren't up to standard. You wrote them in your notebook and took people to fix them the following week.",
+    "e_dating": "A friend introduced you to a physics teacher at the county's No. 1 high school. The first time he took you to dinner, a call came that wind had torn the roof off a house in the village, and you left before you'd finished. Later he drove out to the village office to bring you a boxed meal.",
+    "e_wedding": "You got married. The banquet was in the county town; your township colleagues filled two tables, and the village secretary came too, bringing a tub of oil pressed from his own trees. That's the dowry, he said.",
+    "e_baby": "Your child was born. On the day your maternity leave ended, you left the baby with your mother-in-law and said nothing the whole minivan ride back to the township. Only at the compound gate did you dry your eyes.",
+    "e_house": "You bought a flat in the county town. On weekdays you live at the township, at weekends you go back. Every Friday evening, on the township bus to the county town, there are always a few cadres like you with bags in their laps.",
+    "e_ai_tables": "The county launched a grassroots data platform: enter a household's details once and every department can pull them. You worked out that it saved you dozens of forms a month, and you spent the extra time on three more village visits.",
+    "e_ai_draft": "The township started using AI to draft reports, an article in a few minutes. You read one through. Everything in it was correct, and not one line was about this township. You cut half and filled in the villages' figures and names one by one.",
+    "e_ai_elder": "Lots of services moved onto phones, and the old people in the village couldn't use them. You set up a table in the village office and every Wednesday afternoon taught them face verification and how to check their allowances. One old woman, once she'd learned, brought you a basket of free-range eggs.",
+    "e_weekend": "That month you were on duty three weekends running, and your daughter asked on the phone if you didn't want her anymore. After you hung up you stood a while at the dormitory window. The canteen lights downstairs were still on.",
+    "e_dispute": "Two families had been fighting for years over the line of a paddy-field bank, and you went with the township legal services office to mediate. You laid their old land deeds next to an aerial photo and matched them up bit by bit, and in the end hammered a row of wooden stakes into the bank.",
+    "e_back": "Years of riding the minivan to villages and nights hunched over reports, and your back has started to hurt; after sitting a long time you can hardly stand. The doctor at the township clinic gave you a few medicated plasters and said sit less, walk more.",
+    "e_classmate": "A classmate from your master's is a product manager at a big company in Changsha, her feed full of overtime, business trips and year-end bonuses. She messaged to ask if life in the countryside was hard. You sent back a photo of a hillside of camellia in flower, and nothing else.",
+    "e_praise": "You were rated excellent in the year-end review. The village secretary ran into the township secretary at a meeting and said that graduate knows the people in our village better than I do now. The township secretary repeated it, smiling, at the next meeting.",
+    "e_parents": "Your mother fell ill back home, and you took a few days off. By day you sat with her in the hospital, at night you revised reports on your phone in the ward corridor. A nurse asked what you did. You said you worked at a township.",
+    "e_new_xuandiao": "The township got another selected graduate who, like you once, couldn't follow the dialect. You took her to the village where you were posted. The village secretary's hair has gone white, and the first thing he did was hand over a cup of tea."
+  },
+  "choices": {
+    "c_live_village": { "title": "Live at the village office, or go back to the township every day?", "situation": "For these two village years, there's an empty room upstairs in the village office big enough for a bed. Live there, and you're on hand when something happens at night. Don't, and you ride back to the township every day: hot water in the dormitory, more colleagues, and a chance to learn report writing on the side.", "options": [
+      { "label": "Live at the village office", "result": "You put up a bed upstairs in the village office and fall asleep to frogs. Six months on, when villagers need something, the first thing they think of is to look for you there." },
+      { "label": "Go back to the township", "result": "Village by day, township by night, learning report writing from the general office staff. The first bulletin you write is picked up by the county's information platform." }
+    ] },
+    "c_office": { "title": "The general office, or a service station?", "situation": "When your village posting ends, the secretary asks where you want to go. The general office handles documents, meetings and follow-up, works alongside the secretary and township head every day, and puts in the most overtime. The agricultural service center handles grain subsidies and the camellia oil industry, goes out to the villages often, and stays close to ordinary people.", "options": [
+      { "label": "The general office", "result": "Now you write the secretary's speeches and the reports to the county, a dozen-odd a month. You learn to make one thing clear on a single page, and to be woken by the phone at eleven at night to change one number." },
+      { "label": "The service station", "result": "At the agricultural service center you handle camellia oil and grain subsidies and spend more than a hundred days a year in the villages. You know which village's camellia trees are bearing well this year." }
+    ] },
+    "c_ai_trial": { "title": "Trial the AI document assistant?", "situation": "The county is piloting an AI document assistant and a grassroots data platform in a few townships, and needs a young cadre who knows both report writing and village life to be liaison: log everything it writes or fills in wrong, and work with the county's technical staff. One more job on your plate, nothing extra in your pay.", "options": [
+      { "label": "Be the liaison", "result": "You log every place name it got wrong and every household count it filled in wrong, and send the sheet to the county each month. A year later, the report templates used by every township in the county are revised from your township's version." },
+      { "label": "Don't take it on", "result": "You say you've got enough on your hands. When the system goes live you use it as told, and still revise everything it writes line by line yourself." }
+    ] },
+    "c_vice_mayor": { "title": "Deputy head in a more remote township?", "situation": "The county organization department is assessing candidates. There's a deputy township head post (a deputy section-level leadership post) in the county's most remote mountain township, in charge of agriculture and work safety, an hour and a half from the county town. Your child has just started kindergarten.", "options": [
+      { "label": "Go", "result": "You go to the mountain township, in charge of agriculture and work safety, responsible for four villages. Every Friday night you catch the last bus back to the county town, and your child is already asleep." },
+      { "label": "Wait a while", "result": "You explain your family situation to the organization department and stay in your own township for now. The next assessment comes three years later." }
+    ] },
+    "c_leave": { "title": "Openings in Changsha", "situation": "Your master's supervisor asks if you'd come back for a PhD on rural governance, and go on to a university post. A classmate's big company in Changsha is also looking for someone who understands government affairs, at three times your pay. Selected graduates have a minimum service term; leaving now means a written request and going through the procedures by the rules.", "options": [
+      { "label": "Go back for a PhD", "result": "You complete the resignation procedures and go back to Changsha for your doctorate. Your dissertation is about ten years in one township, and your fieldwork site is the village where you were posted.", "end": "You became a university lecturer in rural governance. Every year you take students to the countryside for fieldwork, and the first stop is always that village office." },
+      { "label": "Join the company in Changsha", "result": "You resign and go to Changsha to work in government affairs. The first time you attend a county meeting on the company's behalf, you sit on the other side of the table, and it feels a little strange.", "end": "You became a government affairs manager at a Changsha company. Your reports still make one thing clear on a single page; only the name at the bottom is the company's now." },
+      { "label": "Stay", "result": "You thank your supervisor and your classmate. That night in the dormitory you leaf through your notebook from the village; the last page of dialect words is full." }
+    ] },
+    "c_county": { "title": "Move to the county town, or stay in the township?", "situation": "A county department is short-handed and wants to bring you up as a section chief: close to home, no more shuttling back and forth at weekends. The township secretary says that if you do a few more years in the township, more doors will open later.", "options": [
+      { "label": "Move to the county town", "result": "You transfer to a department in the county town and get home for dinner every night. You finally make it to one of your child's parent-teacher meetings." },
+      { "label": "Stay in the township", "result": "You say a few more years. You're still in the township dormitory, home to the county town at weekends, back on the first bus Monday morning." }
+    ] },
+    "c_reservoir": { "title": "The reservoir on a rainy night", "situation": "It has rained all night, and a small reservoir in the township is near its warning level. The forecast says the rain will ease before dawn. Downstream, two village groups have thirty-odd households, mostly old people. Evacuating means waking everyone; waiting means no upheaval.", "options": [
+      { "label": "Evacuate now", "result": "You and the village cadres knock on every door and carry the old people up to the primary school on higher ground. At dawn the rain eases and the water rises no further. One old man grumbles at you, and you bring him a bowl of hot congee." },
+      { "label": "Keep watch on the dam", "result": "You and the water station staff keep watch on the dam all night, reporting the level every half hour, with the evacuation list and vehicles ready. At dawn the rain stops and the water starts to fall." }
+    ] },
+    "c_department_head": { "title": "Head a county department?", "situation": "The head of a county department is retiring, and the organization wants you to take over (at the Principal Staff Member, Grade 1 level): dozens of staff, an organization's accounts and business, endless meetings. After ten-odd years in townships, you know village affairs better than government offices.", "options": [
+      { "label": "Take it", "result": "You go to the county and become head of the department. At your first all-staff meeting you don't read from a script; you talk about three things you saw in the villages." },
+      { "label": "Stay in the township", "result": "You say you'd like a few more years in the township. Your wishes are respected, and you go on looking after those few villages, wearing out one pair of shoes and getting another." }
+    ] },
+    "c_second_line": { "title": "Step back, or work to the end?", "situation": "You're getting older and your back is bad. You're asked whether you'd move to a research-focused post at the county, no longer handling day-to-day matters, with more time to yourself. Others say someone who knows the grassroots as well as you should stay on the front line keeping an eye on things.", "options": [
+      { "label": "Move to research", "result": "You start doing research, going township to township with a notebook, and the reports you write are full of particular people and numbers." },
+      { "label": "Work to the end", "result": "You say a few more years. You put a standing desk in your office and read documents on your feet, and your back hurts less." }
+    ] }
+  },
+  "endings": {
+    "retire": "On your last working day you hand in your office key, and all that's left in the drawer is the notebooks from your village years. You ride out once more to the village where you were posted. The village office has been renovated, the road outside paved, and the village secretary is a young man now. He hands you a cup of tea; you drink it and stand at the door a while, looking at the camellia trees.",
+    "burnout": "That year's medical put red marks by your spine and your blood pressure. You asked for a quieter post and started keeping regular hours. With no more village trips, at weekends you began walking by the river in the county town with your child. One night you dreamed you were still checking the reservoir in the rain, and woke to clear skies."
+  },
+  "stages": [
+    "You're the village secretary's assistant, going with him on home visits and mediations, collecting medical insurance, filling in forms. The old computer in the village office holds dozens of ledgers, and you sort them out one by one; in flood and fire season you keep watch at the ponds and the hill passes with the village cadres. Back at the township, you shadow the general office learning to write bulletins and minutes. What you say doesn't carry weight yet, but you've knocked on every door in the village.",
+    "You run the township's general office: the secretary's speeches, the reports to the county, the minutes and follow-up sheets from every weekly meeting all come out of your hands, and calls from every county department reach you first. You have to put a dozen-odd tasks from above in order, then hand them out to the service stations and villages. Unlike in the village, every number you write, someone will come and check.",
+    "As deputy township head you're in charge of agriculture and work safety, responsible for four villages. In spring you go to the fields to see the rice seedlings, in flood season you keep watch at the reservoir, in winter you lead checks on fireworks and bottled gas. In meetings you report; after meetings you go to the villages. You sign for more and more, and behind every signature is something you have to see through.",
+    "You head a county department, responsible for dozens of staff and its accounts. Every week you chair the office meeting, setting work and approving budgets; you go out to the townships to supervise and come back to write reports for the county. Some people come to you with complaints, some come asking for staff. You go to the villages less often now, but every time you do, you look at the fields and the village office first.",
+    "As Researcher, Grade 4 you do research and review at the county. When something gets stuck in a township, you spend a few days there and come back with a report of a few pages. The plans young cadres write, you read line by line and point out what doesn't fit reality. You say little in meetings, and most of what you say is about things you've seen in the villages."
+  ],
+  "work": [
+    "One low-income household's records haven't been updated in years. You and the village bookkeeper dig out three old ledgers and check them item by item against ID cards, and find the grandson grew up and left to work elsewhere long ago.",
+    "Your first time collecting medical insurance on your own, an old man says he paid last year and got nothing out of it, so he won't this year. You sit on his doorstep and work out the hospital reimbursement rates for him, and in the end he pays.",
+    "The village secretary has you write a profile of the village. You write five pages. He reads it and says, well written, only our village doesn't have the river you wrote about; that's the next village's.",
+    "A directive comes down from the county wanting a report within three days. You gather the heads of seven service stations, give each a section, and file it at five on the third afternoon. Ten minutes later and it would have been late.",
+    "The secretary is reporting to the county, and you revise the speech overnight, cutting every multi-pronged approach and putting in how many roads the villages built and how many jin of oil they sold. The secretary reads it and says, say it like this.",
+    "One item on the follow-up sheet has been stuck for two months. You ask at the service stations and find each department thought it was the other's job. You get both sides in a room and write down who does what, there and then.",
+    "Before spring planting you take an agricultural technician round several villages to look at seedlings, squat at the edge of one field for half an hour discussing this year's early rice variety with a big grain grower, and put it into the township's planting plan.",
+    "Checking fireworks before Spring Festival, you find a pile of unregistered stock in the back room of a little shop. Instead of a fine, you first have the owner move it somewhere safe, and the next day take him to do the paperwork.",
+    "A village road is being widened, and three families have to give up a strip of land. You sit an evening in one family's front room, laying out the compensation rates and the drawings one by one.",
+    "Your first job on taking over is to list everyone's work in one table. Three people are doing the same thing and two jobs belong to nobody; at the office meeting you reassign it all.",
+    "A project in one township has stalled. You stay three days, visit five villages, and come back with a three-page report setting out exactly the two reasons it's stuck.",
+    "Year-end accounts, and the budget is tight. You go through every expense, cut a few that weren't needed, and keep the money for village travel costs and meal allowances.",
+    "The county is drawing up a plan for rural industries. You take two young staff round a dozen-odd villages and attach a table to the plan setting out what each village can and can't do.",
+    "A young cadre's plan requires every village to set up a livestreaming studio within a month. In the margin you write one line: first ask how many young people are still living in the village.",
+    "New selected graduates ask you to talk about grassroots work. Instead of principles, you bring out the old notebook of dialect words and turn its pages for them."
+  ],
+  "past": [
+    "You went to middle school in a prefecture-level city in Hunan; both your parents were factory workers. In the summers you went back to the countryside with your grandmother and watched the village cadres going door to door with their notebooks, and thought they knew everything about everyone in the village.",
+    "Your score on the gaokao (college entrance exam) got you into public administration at a university in Changsha. When you filled in your choices your father said you could sit the civil service exam with that. You said you wanted to see the world first.",
+    "In the summer of your third year you joined your university's rural survey team and stayed two weeks in a village in western Hunan, handing out questionnaires house by house. The report you wrote won a prize in your school.",
+    "After your bachelor's you were recommended straight into a master's in public administration, under a supervisor who studied rural governance. You went with him to several counties and filled a few notebooks with field notes.",
+    "In your last year you applied for Hunan's selective recruitment of graduates for grassroots posts, through the written test, interview and assessment one by one. Under posting preference you wrote: will accept any assignment, willing to serve at the grassroots. You were assigned to a township in this hill county."
+  ],
+  "late": {
+    "pension_note": "Estimate: civil servants are covered by the pension scheme for government and public institutions plus an occupational annuity, which comes to about 70 percent of final monthly pay.",
+    "scenes": [
+      "Your first month of retirement you still wake at seven and reach, without thinking, for the work group chat on your phone. You've left it already. You go down to the market and buy a bunch of garlic shoots with the earth still on them.",
+      "The neighborhood asks you to volunteer two half-days a week, teaching old people to do their errands on their phones. You teach slowly, one step at a time, just as you did at that table in the village office.",
+      "You and your husband go back to the village where you were posted. The camellia groves are twice the size they were. Someone at the village office recognizes you and won't let you leave without a meal, and on the table is that same bowl of pounded chili.",
+      "Your first year in the quieter post, you leave on time every day and help your child with homework in the evenings. Your back is a little better, and you start taking slow walks by the river in the county town.",
+      "A selected graduate you trained is deputy township head now. In flood season she phones to ask which side of that small reservoir overflows first when the water rises.",
+      "Sometimes you still dream of the Monday meeting, the secretary going down the list; when he gets to your name you can never find your notebook. You wake to clear skies.",
+      "In the first months after leaving the township, whenever you saw the word rural you stopped to look twice, as if it were a letter addressed to you.",
+      "The new job let you settle in Changsha. Every year around Qingming you drive back to that county to see whether the camellia on the hills is in flower.",
+      "Once at a meeting you run into the township secretary from back then, retired now. He says that after you left, the township went on using the village profile you wrote for years.",
+      "The township's forms fill themselves in now, the reports are drafted by AI, and old people can do their errands on their phones. But walking the reservoir on a rainy night, sitting in a front room listening to someone, still needs a person to go.",
+      "You find the notebook of dialect words, its paper gone yellow. On the last page it says: mau de si, no matter. You look at it a long time, then put it back in the drawer."
+    ],
+    "closing": {
+      "retire": "Many years later, one spring, you sit on your balcony shelling freshly picked peas and listening to two old people below chatting in dialect. You understand every word they say.",
+      "burnout": "Many years later, by the river in the county town, you teach your granddaughter the crops: this is rice, that's rapeseed, the white flowers on the hillside are camellia. She learns them one by one, and when she gets one wrong you don't correct her.",
+      "end": "Many years later, on your bookshelf, you find those few notebooks of field notes, a dried camellia flower pressed inside. You slip it back where it was and close the book."
+    }
+  }
+}

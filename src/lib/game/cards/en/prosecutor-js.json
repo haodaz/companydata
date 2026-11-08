@@ -1,0 +1,168 @@
+{
+  "id": "prosecutor-js",
+  "occupation": "Prosecutor",
+  "role": "Prosecutor's assistant at a district procuratorate",
+  "headline": "A law master's graduate in your first year at a district procuratorate in southern Jiangsu: a prosecutor's assistant who spends the days reading case files page by page, writing review reports, and following a prosecutor into court",
+  "unit": "The people's procuratorate of a city district in Jiangsu",
+  "unit_type": "Basic-level people's procuratorate",
+  "city": "A city in Jiangsu",
+  "city_tier": "Prefecture-level city",
+  "education": "Master's degree (law; passed the national legal professional qualification exam)",
+  "level": "You know the criminal law and criminal procedure law inside out and passed the bar first time. But you've never written a full review report on your own, and the first time you sit at the prosecution table, your legs will shake.",
+  "intro": "You finished a master's in law, passed the bar first time, and passed into the procuratorate of a district in southern Jiangsu. On your first day you were assigned to the criminal prosecution department, under a woman prosecutor with more than ten years of cases behind her. She gave you an ID badge, a key to the file cabinet, and one sentence: first, learn to read a file to the end. As of today you are her assistant. One day you'll sign an indictment with your own name.",
+  "salary_note": "Estimate: procuratorate staff are paid on the civil service scale, with quota prosecutors receiving an additional prosecutorial grade salary. Pay in southern Jiangsu's districts is above the national average, but the database's pay-by-experience figures run high, so this uses 85 percent.",
+  "facts": [
+    { "label": "Prosecutor's Assistant (current level)", "value": "0–5 years, ¥7,000–10,000 a month (national average, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Prosecutor, Grade 4 (quota prosecutor) (5–9 years)", "source": "Common in the trade" },
+    { "label": "Pay after 10+ years", "value": "¥18,600 a month (national average)", "source": "Pay by experience" },
+    { "label": "What AI can't take", "value": "Appearing in court for the prosecution and responding on the spot", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Reading case files and sorting evidence in pre-indictment review", "source": "AI exposure" },
+    { "label": "Open positions", "value": "14 related listings nationwide (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You open the unified case system and check the new cases assigned to your team: two transferred for review for prosecution. The review deadline starts counting today, a countdown glowing at the top right of the screen.",
+    "Collecting files. One case runs to five volumes. You log each one, unseal it, lay them out in order on the desk, read the police's recommendation to prosecute first, then start on the evidence from page one.",
+    "Reading and taking notes. You type the key points of each statement into the review report and flag what doesn't match with yellow sticky notes. Eleven of them by noon.",
+    "Lunch in the canteen, going over the morning's questions with the prosecutor as you eat. She says three of your sticky notes are right, and you should look at the rest again.",
+    "A call to the investigating officer at the police, asking for a missing document. He says he's out on a call this afternoon and will bring it tomorrow. You note it in the system.",
+    "Into court with the prosecutor. You sit beside her at the prosecution table, handing her the evidence list, running the slides of exhibits, writing down every point defense counsel makes.",
+    "Back at the procuratorate revising the review report. The prosecutor reads your statement of facts, strikes out two paragraphs of adjectives, and says: write only what the evidence can prove.",
+    "A few lights still on in the office. You eat a bowl of little wontons from downstairs and go through tomorrow's case for discussion once more."
+  ],
+  "ladder": [
+    { "title": "Prosecutor's Assistant", "stage": "Assistant", "focus": "Under a prosecutor's guidance you read files, write review reports, verify evidence and assist in court. Only with enough years and good case quality can you apply for the prosecutor quota." },
+    { "title": "Prosecutor, Grade 4 (quota prosecutor)", "stage": "In the quota", "focus": "Selected into the quota, you handle cases on your own, decide whether to prosecute and sign for it, and appear in court for the prosecution." },
+    { "title": "Prosecutor, Grade 3", "stage": "Mainstay", "focus": "You handle difficult and complex cases, lead a case team of assistants and clerks, and sit on the joint prosecutors' meeting." },
+    { "title": "Prosecutor, Grade 2", "stage": "Department head", "focus": "Often head of an operational department: responsible for its case quality and its people, chairing the joint prosecutors' meeting and dealing with the police and the courts." },
+    { "title": "Prosecutor, Grade 1", "stage": "Senior", "focus": "One of the senior prosecutors at the procuratorate, often on its procuratorial committee, reviewing major and difficult cases and training young prosecutors. Few people get this far." }
+  ],
+  "ai_tasks": [
+    { "name": "Reading case files and sorting evidence in pre-indictment review", "how": "AI can read a whole file, list the evidence, compare statements for contradictions, and find similar cases and statutes. Whether the evidence is lawful, whether it's enough, whether the facts can be established, the prosecutor decides and signs for." },
+    { "name": "Drafting indictments and sentencing recommendations", "how": "AI can draft an indictment from a template and compile the sentencing factors and evidence list. Whether to prosecute, what the charge is, what sentence to recommend, the prosecutor decides and answers for." },
+    { "name": "Spotting procedural problems in a case", "how": "AI can pick out possible procedural flaws in the file, times that don't match, paperwork that's incomplete. Whether there's really a problem, and whether to issue a correction notice, the prosecutor judges, and then has to take it up with the investigating unit." },
+    { "name": "Case data entry and workflow management", "how": "In the unified case system, AI can generate and check most of the case records, document numbers and deadline reminders on its own. People only spot-check the key fields." },
+    { "name": "Appearing in court for the prosecution and responding on the spot", "how": "Listening, watching and judging in the courtroom, questioning, presenting evidence, arguing and raising objections on the spot: the prosecutor has to do it in person. AI can at most help prepare before the hearing." },
+    { "name": "Receiving the parties and members of the public", "how": "When victims or the families of the people involved come to the procuratorate, someone has to sit down, listen, explain and make things clear. That can't be handed off." }
+  ],
+  "events": {
+    "e_mentor": "The prosecutor you assist reads files astonishingly fast, and still reads every page. She teaches you to keep file notes: one line per page, the page number first, so whenever anyone asks where a sentence is, you can find it.",
+    "e_first_report": "The first review report you wrote entirely on your own ran to more than thirty pages, and the prosecutor sent it back three times. The fourth time she changed one punctuation mark and signed. You kept the first draft in your drawer.",
+    "e_overtime": "At year's end the cases pile up, deadlines one after another. For two weeks you didn't leave before ten, and spent weekends in the office reading files. One day you went downstairs and found it had snowed.",
+    "e_legs": "Your first time in court, the prosecutor had you read out a piece of evidence. You stood up and your voice came out smaller than you'd expected; only on the second page did it steady. Afterward she said, a bit louder next time.",
+    "e_public_interest": "The public interest litigation department borrowed you to help investigate pollution in a small river. You went to the bank to take water samples and photos and look at the outfall pipes, and came back to write a procuratorial recommendation. When you went back six months later, people were fishing there.",
+    "e_wage_support": "A dozen-odd migrant workers who couldn't get their wages came to the procuratorate for help. Your department supported them in suing, helping assemble the evidence and writing the statement of support. The day the money came through, the workers' spokesman stood at the gate a long time before he left.",
+    "e_complaint_visit": "A relative of one of the parties came to the 12309 procuratorial service center again and again, two hours each time. You sat across from her and listened, explaining over and over which stage the procedure had reached. The last time, she didn't argue. She only asked: you will look at it properly, won't you.",
+    "e_ai_reading": "The procuratorate brought in AI-assisted file reading. Five volumes in half an hour, out comes an evidence list with every contradiction marked in red. Checking it, you found it had taken two witnesses with the same name for one person, and noted it on the feedback form.",
+    "e_ai_case_card": "Case data entry has gone to the system. Each case used to mean filling in over a hundred fields; now you check a dozen-odd. With the time saved, you made a few more trips to the detention center to verify statements.",
+    "e_ai_evidence": "The key evidence in one case was a chat history from a phone and data from a platform. With the technical department you checked it line by line, how it had been extracted, whether it had been altered, and wrote five pages of review opinion.",
+    "e_dating": "A classmate introduced you to a woman who works in risk control at a bank. She asked whether reading case files all day got tiresome. You said yes, but every file is different. She said that's how she feels about spreadsheets.",
+    "e_wedding": "You got married. The day before the wedding you were still revising an indictment, until the prosecutor took it from you and said, I'll do the rest, go and try on your suit.",
+    "e_baby": "Your child was born. On paternity leave you walked up and down the ward with the baby in your arms, your head switching between formula stages and a case's review deadline.",
+    "e_house": "You bought a secondhand flat in the district, the down payment pooled from both families, the mortgage half your joint salaries. On moving day you put a box of law books on the shelves and felt the place was starting to look like a home.",
+    "e_acquittal_risk": "In a case you'd prosecuted, the court had doubts about a key fact after the hearing. You reread the file overnight and submitted a note on the evidence, and in the end the court accepted your view. You lost a kilo that week.",
+    "e_no_prosecute": "You decided not to prosecute a young first-time offender. On the day it was announced, his father bowed to you at the procuratorate gate. You hurried to hold him up, and said, go home and live well.",
+    "e_criticized": "In a case quality review, one of your cases turned out to be missing a document, and the department named you in its notice. You went through that case's file from beginning to end again and found nothing else wrong.",
+    "e_neck": "After ten-odd years bent over files, your neck has started to ache in waves, and sometimes your fingers go numb. You stacked old volumes of statutes on your desk and raised your screen ten centimeters.",
+    "e_colleague_leaves": "The assistant who joined the procuratorate the same year as you resigned for a law firm in Shanghai, saying one year there was worth three here. On his last day you helped him carry a box of books to his car.",
+    "e_parents": "Your father was in hospital back home in northern Jiangsu, and you took three days off to go back. Reception was bad on the ward, so you stood by the window at the end of the corridor discussing a sentencing recommendation with the prosecutor on your phone.",
+    "e_school_talk": "The procuratorate sent you to give a law class at a middle school. You skipped the big principles and talked about how to recognize fake online side jobs and how to say no when a stranger asks you to open a bank card for them. When the bell rang a few kids were still crowded round you with questions.",
+    "e_mentor_retire": "The prosecutor who trained you retired. On her last day she returned her file-cabinet key to the office and gave you her own book of file notes. On the first page it said: write only what the evidence can prove.",
+    "e_teach": "Your team got a new prosecutor's assistant, whose first review report ran to forty pages, full of adjectives. You struck out half of it in red, and said what your old mentor once said to you."
+  },
+  "choices": {
+    "c_dept": { "title": "Criminal prosecution, or public interest litigation?", "situation": "In an internal reshuffle you're asked whether you'd move from criminal prosecution to the public interest litigation department: pollution, food safety, protecting historic sites, often out in the field gathering evidence. Criminal prosecution means more cases and more court appearances, and when you apply for the quota, case numbers are a hard requirement.", "options": [
+      { "label": "Stay in criminal prosecution", "result": "You stay, and in a year help handle more than a hundred cases. Your file notes fill two whole cabinets." },
+      { "label": "Move to public interest", "result": "You start going out to riverbanks, food markets and old neighborhoods, taking samples, photographing, writing procuratorial recommendations. Your leather shoes become sneakers, and your face gets tanned." }
+    ] },
+    "c_trial": { "title": "Ask to argue a case yourself", "situation": "The prosecutor has a simple case with solid evidence and asks if you'd like to appear for the prosecution yourself under her guidance, with her sitting beside you. Questioning, presenting evidence, rebuttal, all you, and any mistake will be visible right there in court.", "options": [
+      { "label": "I'll do it", "result": "You prepare for three evenings, writing every question you might be asked on index cards. Defense counsel's second point is one you didn't foresee; you pause five seconds, then answer it. Afterward she says, not bad." },
+      { "label": "Follow a while longer", "result": "You say you'd like to watch a few more times. You sit beside her through another six months of hearings, writing down every rebuttal she makes." }
+    ] },
+    "c_quota": { "title": "Apply for selection as a quota prosecutor (Prosecutor, Grade 4)", "situation": "The procuratorate has opened a few quota places this year, and any assistant with enough years can apply. There's an exam and an assessment, and you have to submit cases and documents you've handled. In the quota you handle cases on your own and sign indictments, and you're accountable for every decision.", "options": [
+      { "label": "Apply", "result": "You pick three of the review reports you've written over the years, and write up your reasoning on a difficult case. At the interview, the question is about exactly the kind of case you've handled." },
+      { "label": "Wait another year", "result": "You feel you're not quite there and leave the chance to a colleague who arrived earlier. The department head gives you a few more complex cases and says, we'll see next year." }
+    ] },
+    "c_ai_trial": { "title": "Pilot AI-assisted review?", "situation": "The province is piloting AI-assisted review at a few basic-level procuratorates: automated file reading, contradiction flagging, similar-case recommendations, document drafting. Your procuratorate needs one case team to try it and log every error. It will take extra time, and your case numbers may drop.", "options": [
+      { "label": "Pilot it", "result": "You log every piece of evidence the system missed, every person it mixed up, every similar case it misapplied, and send the spreadsheet to the province every month. Half the file-reading checklist the whole procuratorate ends up using is revised from your sheet." },
+      { "label": "Stick with the old way", "result": "You go on reading every page yourself. Once the system goes live you use it too, but for every red flag it raises, you go back to the original file to look." }
+    ] },
+    "c_city": { "title": "Sit the transfer exam for the city procuratorate", "situation": "The city procuratorate is recruiting assistants and prosecutors from the districts by competitive transfer. A bigger platform, harder cases, and wider prospects later; but you start over, and it's half an hour further from home.", "options": [
+      { "label": "Sit it", "result": "You pass and transfer to the city procuratorate. Bigger, harder cases, more meetings; every morning you leave half an hour earlier." },
+      { "label": "Stay in the district", "result": "You say district cases are close to ordinary people, and you like that. The department head smiles and says, then do it well." }
+    ] },
+    "c_firm": { "title": "Offers from a law firm and a company", "situation": "A partner at a Shanghai law firm wants you for criminal practice, at two or three times your pay; a big manufacturer is looking for a head of compliance who understands criminal risk. Competition for the quota keeps getting fiercer, and every year brings more cases.", "options": [
+      { "label": "Join the firm", "result": "You resign and go to Shanghai. The first time you sit at the defense table, looking at the young prosecutor opposite, you think of yourself back then.", "end": "You became a criminal lawyer at a Shanghai firm. You still keep file notes one line a page with the page number first, and the prosecutors across the room often say your submissions are very solid." },
+      { "label": "Go in-house in compliance", "result": "You join the company and build a compliance review process, and in your first year stop several risky contracts in their tracks.", "end": "You became head of compliance at a large company. Your job is to make sure nobody in it ever has to deal with a procuratorate." },
+      { "label": "Stay", "result": "You turn them both down. That evening you sign your name on the last page of an indictment and think that someone still has to sign this." }
+    ] },
+    "c_hearing": { "title": "A non-prosecution you're unsure about", "situation": "You have a minor case: a first-time suspect who has admitted guilt, shown remorse and paid compensation, but the victim isn't happy about non-prosecution. You can make the decision yourself under the rules, or hold a public hearing and invite people's supervisors and all sides to listen and speak.", "options": [
+      { "label": "Hold a public hearing", "result": "The hearing runs two hours. The victim says everything he'd been holding in, and in the end agrees. You write twenty extra pages, but no one ever comes back to ask about this case." },
+      { "label": "Decide it yourself under the rules", "result": "You make the decision by the procedure, set out your reasons, and spend an afternoon explaining them to the victim in person. He says nothing as he leaves, but he signs the proof of service." }
+    ] },
+    "c_lead": { "title": "Become department head (Prosecutor, Grade 2)?", "situation": "The head of criminal prosecution is moving to another procuratorate, and they want you to take over: responsible for the case quality of a dozen-odd prosecutors and assistants, chairing the weekly joint prosecutors' meeting, holding coordination meetings with the police and the courts. Your own caseload stays the same; the meetings multiply.", "options": [
+      { "label": "Take it", "result": "You become department head. Every Monday morning you go through the department's deadline sheet and mark what's due soon; every Thursday you chair the joint meeting, and on the hardest case you speak last." },
+      { "label": "Just handle your own cases", "result": "You say you'd like a few more years of handling cases. The procuratorate nods and gives it to another prosecutor, who often drops into your office when he's unsure of something." }
+    ] },
+    "c_late": { "title": "Move to complaints and petitions, or handle cases to the end?", "situation": "Your neck keeps getting worse. The procuratorate asks if you'd move to the complaints and petitions department and run the 12309 service center: no more daily file reading, just receiving visitors and handling petitions. Others say a veteran like you belongs on the front line of cases.", "options": [
+      { "label": "Move to complaints and petitions", "result": "Now you spend your days in the reception room listening to people. Some talk for an hour, some for an afternoon. You note it all down line by line and answer each one." },
+      { "label": "Handle cases to the end", "result": "You say a few more years. You get an adjustable chair, and the files on your desk go on stacking up as before." }
+    ] }
+  },
+  "endings": {
+    "retire": "On your last working day you hand over every unfinished case, and the handover sheet runs to four pages. You leave your book of file notes to a young prosecutor you trained; the sentence on the first page is still there. Outside the procuratorate gate the ginkgo leaves have covered the ground, and you walk over them to the bus stop.",
+    "burnout": "That year's medical put red marks by your neck and your blood pressure. You asked to leave front-line casework and went to the case management department to monitor procedures. Once you stopped reading files, your fingers stopped going numb. One night you dreamed you were still hunting for the page number of a statement, and when you woke it took you a moment to remember that case was decided long ago."
+  },
+  "stages": [
+    "You assist a quota prosecutor. Most of the day is reading files: five, ten volumes page by page, keeping file notes, drafting the review report, flagging questions for the prosecutor. You phone the police to ask for missing paperwork, go with her to the detention center to verify statements, and in court sit beside her at the prosecution table handing up evidence and noting the defense's points. Her name goes on the report, but you've read every page in it first.",
+    "You're in the quota, and cases are assigned in your own name. You decide whether to prosecute and sign the indictment. In guilty-plea cases you sit down with defense counsel to settle the sentencing recommendation and watch the suspect sign the plea statement. In court you sit alone at the prosecution table. Unlike as an assistant, every decision has your name on it.",
+    "You lead a case team: an assistant and a clerk. The hardest cases come to you, the ones with scattered evidence, dozens of volumes, new kinds of offense. You sit on the joint prosecutors' meeting and offer ideas on other people's cases; your assistant's review reports you revise before signing. You start being invited to teach the police the rules of evidence gathering.",
+    "You're responsible for the case quality of a department of a dozen-odd people. Every week you check the department's deadline sheet and chair the joint meeting; in quality reviews you go through other people's files one by one. Outside, you hold coordination meetings with the police and the courts to agree standards for the same types of case. You still handle cases, often in the evenings. What you sign has gone from an indictment to a department's line.",
+    "You're one of the senior prosecutors, a member of the procuratorial committee. On major and difficult cases the committee wants to hear your view. You go into court with young prosecutors and sit one row behind them; when the higher procuratorate comes to look into things, they often ask you to describe how casework at the grassroots really is. You still handle cases yourself, only the hardest few."
+  ],
+  "work": [
+    "In one witness statement you find the time he says he saw something is forty minutes off from the surveillance footage. You photocopy the two pages side by side, circle them in red, and leave them on the prosecutor's desk.",
+    "The prosecutor has you reorder a case's evidence list, grouped by the fact each item proves. It takes you all day. When you're done she says, now the judge will understand it at a glance in court.",
+    "You make your third call to the investigating officer to ask for a seizure list. He says you people at the procuratorate want so much, and still it arrives the next day, with a note attached: will this do?",
+    "Your first time in court alone, defense counsel produces new evidence. You ask for a ten-minute recess, check it against the file in the corridor, and come back to answer in three clear points.",
+    "In a guilty-plea case you sit with the duty lawyer in the meeting room for an hour, setting out the basis for every item of the sentencing recommendation. When the suspect signs the plea statement, his hand is steady.",
+    "You send the police a correction notice pointing out a flaw in the paperwork. The investigating officer phones; you don't argue, you read him the provision over the phone, and he says he'll watch it next time.",
+    "A case involving more than twenty people, sixty-odd volumes of files. With your assistant you build a relationship chart that covers a whole office wall, and at the joint meeting everyone stands in front of it to discuss.",
+    "Your assistant gets a time wrong in an indictment. You circle it and have him check the original file himself. He comes back saying the error is in the statement, and you go together to verify it with the investigating officer.",
+    "The district police ask you to teach the rules for gathering electronic evidence. You bring three files you sent back for more investigation, and go through each one: what fell short, and how it should have been done.",
+    "Monthly quality review: you pull twenty cases from the whole department and read them one by one. Afterward you tell the meeting that in a review report, the words upon examination must always be followed by an evidence page number.",
+    "You hold coordination meetings with the head of the court's criminal division to align sentencing recommendations for one type of case. Three meetings, and in the end a two-page memo.",
+    "Two new prosecutors in your department are under a lot of pressure. Instead of a meeting, you take them to dinner downstairs and tell them about your legs shaking the first time you stood up in court.",
+    "The procuratorial committee discusses a new kind of case. You prepare the similar cases from across the province and two possible approaches; when you finish, the members ask you a dozen-odd questions, and you answer them one by one.",
+    "A young prosecutor argues his first big case and you sit in the back row. At the recess he turns to look at you, and you just nod.",
+    "The higher procuratorate comes to look into casework pressure at the grassroots. Instead of reading out a report, you bring out your twenty years of file notes and leaf through them to show how many pages you read in a year."
+  ],
+  "past": [
+    "You went to middle school in a county town in northern Jiangsu, where your father ran a car repair shop in the township. One year a neighbor's son got into trouble, and in the adults' talk you heard the word procuratorate for the first time.",
+    "Your score on the gaokao (college entrance exam) got you into law at a university in Nanjing. Your father asked what law was for. You said: learning how to reason things out.",
+    "In the summer of your third year you interned at a law firm, photocopying case files for the lawyers. The first time you saw a whole case file, it seemed to you that behind every page was a stretch of someone's life.",
+    "In your final year you got into the university's master's program in law, specializing in criminal law. The first book your supervisor had you read was on the law of evidence, and you read it three times.",
+    "In your first year of the master's you sat the bar, objective and subjective exams, and passed both first time. You phoned home, and your father announced loudly to everyone in the repair shop: my son passed.",
+    "In your second year you interned for three months at a district procuratorate, reading files and going to court with a prosecutor. The year you graduated, you sat the Jiangsu civil service exam for a prosecutor's assistant post at a district procuratorate in the south of the province, and got through every round."
+  ],
+  "late": {
+    "pension_note": "Estimate: procuratorate staff are covered by the pension scheme for government and public institutions plus an occupational annuity, which comes to about 70 percent of final monthly pay.",
+    "scenes": [
+      "Your first month of retirement you still wake at seven and want, without thinking, to check the deadlines in the system. Later you start walking in the park every day, and when you pass the procuratorate you look up at those windows.",
+      "The neighborhood asks you to talk to the old people about scams. You talk slowly, one point at a time. Afterward an old woman takes your arm and says you don't talk like other people, she can understand you.",
+      "You and your spouse spend six months back home in northern Jiangsu. Your father's repair shop closed long ago, but the tree outside it is still there. You sit under it for an afternoon.",
+      "Your first year in case management, you watch procedures, check deadlines, and go home on time. Your neck is a little better, and you start playing badminton with your child at weekends.",
+      "An assistant you trained has made the quota. The day of his first solo court appearance he messages you: legs didn't shake. You reply with one word: good.",
+      "Sometimes you still dream you're reading a file, turning page after page, and the last page is always blank. You wake to first light at the window and sleep a little longer.",
+      "In the first months after leaving the procuratorate, you still lay out documents in page order in your new office. A colleague asks what rule that is, and you say it's an old habit.",
+      "The new job pays well, and you move to a bigger flat. You bring your books of file notes from the procuratorate years and put them on the top shelf.",
+      "Once in a court corridor you run into the prosecutor who trained you, retired now and there to watch a hearing. The two of you sit on a bench and talk for a long time. She says you haven't changed a bit.",
+      "The files are all electronic now, AI can read dozens of volumes in a night, and every contradiction is marked clearly. But the signature on the last page of an indictment still has to be one person's.",
+      "You find an old photo: you at twenty-five behind a stack of files, only half your head showing, the desk covered in yellow sticky notes. You laugh, and tuck it into your book of file notes."
+    ],
+    "closing": {
+      "retire": "Many years later, one autumn, you sit on a park bench watching your grandson collect ginkgo leaves. He lays them out one by one and says they have to line up by size. Watching him, you think of all those files laid out in page order.",
+      "burnout": "Many years later, in your study, you make yourself a pot of tea, open a book you're reading for pleasure, and read it to the end, page by page, without taking a single note.",
+      "end": "Many years later, at the back of a drawer, you find the old file-cabinet key you always forgot to return. You hold it a while, then put it back where it was."
+    }
+  }
+}
