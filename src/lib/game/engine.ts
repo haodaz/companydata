@@ -108,8 +108,15 @@ export function step(card: GameCard, l: Life): Life {
 
   // 4. 重大抉择：窗口里的第一个，到窗口最后一年必出，平时一半概率出
   // 卡里写的抉择和规则推出来的晋升会撞：抉择说的那一级（如「评副主任医师」「考主治」）已经升上去了，这道题就不出了
-  const reached = card.ladder.slice(1, l.stage + 1).map(s => s.title.split(/[\s/（(]/)[0].replace(/(医师|护师|工程师|律师|教师|老师|师)$/, '')).filter(k => k.length >= 2);
-  for (const x of card.choices) if (!l.usedChoices.includes(x.id) && inWindow(l, x) && reached.some(k => `${x.title}${x.situation}`.includes(k)) && x.options.some(o => o.promote)) l.usedChoices.push(x.id);
+  // 匹配时：职业名里本来就有的短词不算（「咖啡师」截成「咖啡」、「测试工程师」截成「测试」会把整张卡的抉择都跳掉）；先把还没升到的级别名从题面里去掉（「馆员」别误伤「副研究馆员」）
+  const occ = `${card.occupation.name}${card.role}`;
+  const reached = card.ladder.slice(1, l.stage + 1).flatMap(s => { const full = s.title.split(/[\s/（(]/)[0]; return [full, full.replace(/(医师|护师|工程师|律师|教师|老师|师)$/, '')]; }).filter(k => k.length >= 2 && !occ.includes(k));
+  const higher = card.ladder.slice(l.stage + 1).map(s => s.title.split(/[\s/（(]/)[0]).sort((a, b) => b.length - a.length);
+  for (const x of card.choices) {
+    if (l.usedChoices.includes(x.id) || !inWindow(l, x) || !x.options.some(o => o.promote)) continue;
+    let text = `${x.title}${x.situation}`; for (const h of higher) text = text.split(h).join('');
+    if (reached.some(k => text.includes(k))) l.usedChoices.push(x.id);
+  }
   const c = card.choices.find(x => !l.usedChoices.includes(x.id) && inWindow(l, x));
   if (c && (l.y >= c.to || rand(l) < 0.45)) l.pending = c.id;
 

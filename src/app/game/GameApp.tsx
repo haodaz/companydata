@@ -67,6 +67,7 @@ function Home({ busy, err, onEnter, resume, onResume, archive }: { busy: boolean
   return (
     <main className="g-wrap g-home">
       <section className="g-hero">
+        <img className="g-art g-art-hero" src="/game/art/hero.jpg" alt="" />
         <div className="g-eyebrow">1JOB1LIFE · 职业生涯模拟</div>
         <h1 className="g-title">入一行，过一生</h1>
         <p className="g-lead">抽一张入职登记卡。城市、单位、资历都不由你选，就像真的入行一样。从这一天起，一年一年，把这段职业生涯过到退休。</p>
@@ -127,6 +128,7 @@ function PastView({ card, name, onDone }: { card: GameCard; name: string; onDone
   const done = n >= past.length;
   return (
     <main className="g-wrap g-past" onClick={() => !done && setN(past.length)}>
+      <img className="g-art" src="/game/art/past.jpg" alt="" />
       <div className="g-eyebrow">来路 · {name}</div>
       <h2 className="g-h2">你是怎么走到今天的</h2>
       <ol className="g-day g-path">{past.slice(0, n).map((p, i) => <li key={i} className="g-in"><time>{p.age} 岁</time><p>{p.text}</p></li>)}</ol>
@@ -148,6 +150,7 @@ function LateView({ s, onDone }: { s: Save; onDone: () => void }) {
   const how = ep.how === 'burnout' ? '离开一线' : ep.how === 'end' ? '转身离开这一行' : '退休';
   return (
     <main className="g-wrap g-past" onClick={() => !done && setN(scenes.length + 1)}>
+      <img className="g-art" src="/game/art/late.jpg" alt="" />
       <div className="g-eyebrow">后来 · {s.life.name}</div>
       <h2 className="g-h2">{s.life.age} 岁{how}之后</h2>
       {ep.pension != null && <p className="g-sub">每月大约 {wan(ep.pension)} 退休金<span className="g-mute">（{ep.note}）</span></p>}
@@ -307,6 +310,7 @@ function Report({ s, onAgain, onDay, busy }: { s: Save; onAgain: () => void; onD
   const late = useMemo(() => epilogue(card, life), [card, life]);
   return (
     <main className="g-wrap g-report">
+      <img className="g-art" src="/game/art/report.jpg" alt="" />
       <div className="g-eyebrow">职业档案 · {YEAR0} – {YEAR0 + life.y}</div>
       <h2 className="g-h2">{life.name}的这一生</h2>
       <p className="g-sub">{card.headline}。{life.age - life.y} 岁从这里开始，{life.age} 岁{how}。</p>
@@ -425,7 +429,9 @@ const CSS = `
 .g-tiplink { background: none; border: 0; padding: 0; color: var(--acc); text-decoration: underline; cursor: pointer; font-size: 12px; }
 .g-tip { text-align: center; }
 .g-codes { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin: 6px 0 14px; }
-.g-codes figure { margin: 0; } .g-codes img { width: 160px; height: 160px; object-fit: contain; border-radius: 12px; border: 1px solid var(--line); background: #fff; }
+.g-codes figure { margin: 0; } .g-codes img { width: 200px; max-height: 300px; height: auto; object-fit: contain; border-radius: 12px; border: 1px solid var(--line); background: #fff; }
+.g-art { display: block; width: 100%; aspect-ratio: 1440 / 800; object-fit: cover; border-radius: 16px; margin: 0 0 18px; box-shadow: 0 10px 30px rgba(31,61,107,.12); background: #e9eef5; }
+.g-art-hero { margin-bottom: 22px; }
 .g-codes figcaption { font-size: 12.5px; color: var(--ink3); margin-top: 4px; }
 .g-in { animation: g-in .6s ease-out both; }
 .g-path li.bad::before { border-color: var(--bad); } .g-path li.good::before { border-color: var(--good); }

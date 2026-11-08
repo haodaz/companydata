@@ -12,8 +12,19 @@ const ROOT = path.join(import.meta.dirname, '..');
 const DRAFTS = path.join(ROOT, 'scripts/game-drafts'), OUT = path.join(ROOT, 'src/lib/game/cards');
 const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 const YEARS: Record<string, string> = { year_0_2: '1 年以内', year_2_4: '1–3 年', year_4_6: '3–5 年', year_6_8: '5–10 年', year_8_10: '10 年以上' };
+/** 「5k-10k」「1.5万-3万」「8000-15000」→ [下限, 上限]（元 / 月）。库里有的级别写成一句话：
+ *  「2025 年基本工资基数 5100 元/月、人均薪酬约 14.8 万元/年」——年份不算（后面跟「年」、或 1900–2100 没单位的），年薪除以 12 */
 function parseSalary(s: string): [number, number] {
-  const nums = [...String(s || '').matchAll(/(\d+(?:\.\d+)?)\s*(万|w|W|k|K|千)?/g)].map(m => { const n = parseFloat(m[1]); const u = m[2] || ''; return /万|w/i.test(u) ? n * 10000 : /k|千/i.test(u) ? n * 1000 : n; }).filter(n => n > 0).map(n => (n < 300 ? n * 1000 : n));
+  const t = String(s || '');
+  const nums: number[] = [];
+  for (const m of t.matchAll(/(\d+(?:\.\d+)?)\s*(万|w|W|k|K|千)?\s*(元)?\s*(\/\s*(?:月|年)|每年|年薪)?/g)) {
+    const raw = parseFloat(m[1]), unit = m[2] || '', per = m[4] || '';
+    const after = t.slice((m.index || 0) + m[0].length, (m.index || 0) + m[0].length + 1);
+    if (!unit && !per && (after === '年' || (raw >= 1900 && raw <= 2100))) continue;   // 年份
+    let n = /万|w/i.test(unit) ? raw * 10000 : /k|千/i.test(unit) ? raw * 1000 : raw;
+    if (/年/.test(per) || /年薪/.test(t.slice(Math.max(0, (m.index || 0) - 3), m.index))) n /= 12;
+    if (n > 0) nums.push(n < 300 ? n * 1000 : n);
+  }
   return nums.length ? [Math.min(...nums), Math.max(...nums) * (nums.length === 1 ? 1.5 : 1)] : [0, 0];
 }
 const yuan = (n: number) => `${Math.round(n).toLocaleString()} 元`;
@@ -30,12 +41,19 @@ async function build(id: string) {
   const jd = (await db.from('jobs').select('id', { count: 'exact', head: true }).contains('related_career_ids', [o.key])).count || 0;
   const jdc = d.cityCode ? (await db.from('jobs').select('id', { count: 'exact', head: true }).contains('related_career_ids', [o.key]).eq('city', d.cityCode)).count || 0 : null;
   const ai = ex?.[0] || { tasks: [], new_tasks: [] };
+  let derived = false;
+  // 阶梯没填薪资的（库里是 undefined）：按年限薪资推每一级——取这一级起始年限对应的档，往后几级按 1.3 倍递增
+  if (ladder.some(l => !l.salary[1]) && sal?.length) {
+    const band = (y: number) => { const k = y < 1 ? 'year_0_2' : y < 3 ? 'year_2_4' : y < 5 ? 'year_4_6' : y < 10 ? 'year_6_8' : 'year_8_10'; const hit = sal.find((x: any) => x.year === k) || [...sal].sort((a: any, b: any) => b.year.localeCompare(a.year))[0]; return { v: +hit.salary, exact: hit.year === k }; };
+    let prev = 0; derived = true;
+    for (const l of ladder) if (!l.salary[1]) { const b0 = band(l.min); const base = Math.max(b0.v, prev * (b0.exact ? 1.15 : 1.3)); /* 越往上不能越少（第一级是城市口径、后面是全国年限薪资时会倒挂） */ l.salary = [Math.round(base * 0.85), Math.round(base * 1.25)]; prev = base; } else prev = l.salary[0];
+  }
   const st = Math.max(0, Math.min(ladder.length - 1, +d.start.stage || 0)), cur = ladder[st], nxt = ladder[st + 1];
   const top = (sal || []).sort((a: any, b: any) => a.year.localeCompare(b.year)).pop();
   const human = (ai.tasks || []).find((t: any) => t.kind === 'human'), soft = (ai.tasks || []).find((t: any) => t.kind !== 'human');
   // 登记卡上的数据：全由代码按库里的数写，人不写数字
   const facts = [
-    { label: `${cur.title}这一级`, value: `${cur.years}，月薪 ${yuan(cur.salary[0])}–${yuan(cur.salary[1])}（全国口径）`, source: '职业地图' },
+    { label: `${cur.title}这一级`, value: `${cur.years}，月薪 ${yuan(cur.salary[0])}–${yuan(cur.salary[1])}（全国口径${derived ? '，按年限薪资推算' : ''}）`, source: derived ? '年限薪资' : '职业地图' },
     ...(nxt ? [{ label: `往上一级`, value: `${nxt.title}（${nxt.years}）`, source: '职业地图' }] : []),
     ...(top ? [{ label: `入行${YEARS[top.year] || ''}月薪`, value: `${yuan(top.salary)}（全国口径）`, source: '年限薪资' }] : []),
     ...(human ? [{ label: 'AI 拿不走的', value: human.name, source: 'AI 替代性' }] : []),
