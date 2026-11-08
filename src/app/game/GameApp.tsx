@@ -6,7 +6,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { GameCard, PeerCard, Stat } from '@/lib/game/types';
 import { STATS } from '@/lib/game/types';
-import { YEAR0, autoChoose, choose, epilogue, newLife, pendingChoice, pinyinName, simulatePeer, step, type Life } from '@/lib/game/engine';
+import { YEAR0, autoChoose, choose, epilogue, newLife, pendingChoice, pinyinName, randomName, simulatePeer, step, type Life } from '@/lib/game/engine';
 import type { Lang } from '@/lib/game/i18n';
 import { encodeShare } from '@/lib/game/share';
 
@@ -66,7 +66,7 @@ export default function GameApp({ lang = 'zh', shared }: { lang?: Lang; shared?:
     <div className={`g-root ${LANG}`}>
       <style>{CSS}</style>
       {phase === 'home' && <Home busy={busy} err={err} onEnter={enter} resume={resume} onResume={() => { setSave(resume); go('play'); }} archive={archive} shared={shared} />}
-      {phase === 'past' && save && <PastView card={save.card} name={save.life.name} onDone={() => go('card')} />}
+      {phase === 'past' && save && <PastView card={save.card} name={fullName(save)} onDone={() => go('card')} />}
       {phase === 'card' && save && <CardView s={save} onDay={() => go('day')} onStart={() => go('play')} onRedraw={enter} busy={busy} />}
       {phase === 'day' && save && <DayView card={save.card} onStart={() => go('play')} onBack={() => go(save.life.done ? 'report' : 'card')} back={save.life.done ? 'report' : 'card'} />}
       {phase === 'play' && save && <Play s={save} onChange={() => { write(key(SAVE), save); rerender(); }} onDone={() => {
@@ -81,6 +81,9 @@ export default function GameApp({ lang = 'zh', shared }: { lang?: Lang; shared?:
 }
 
 /** 中英文切换的地址：1job1life.com 上是 / 和 /en，本站是 /game 和 /game/en */
+/** 英文版的姓名标题带上汉字名（用户 11-07）：Hao Siqi (郝思琪)；按钮里不带 */
+const hanzi = (s: Save) => randomName(s.life.seed, s.card.gender, 'zh');
+const fullName = (s: Save) => (LANG === 'en' ? `${s.life.name} (${hanzi(s)})` : s.life.name);
 function langHref(to: Lang) { const one = typeof location !== 'undefined' && /1job1life/.test(location.host); return to === 'en' ? (one ? '/en' : '/game/en') : (one ? '/' : '/game'); }
 function LangSwitch() {
   const to: Lang = LANG === 'en' ? 'zh' : 'en';
@@ -219,7 +222,7 @@ function LateView({ s, onDone }: { s: Save; onDone: () => void }) {
   return (
     <main className="g-wrap g-past" onClick={() => !done && setN(scenes.length + 1)}>
       <img className="g-art" src="/game/art/late.jpg" alt="" />
-      <div className="g-eyebrow">{tr('后来', 'Afterwards')} · {s.life.name}</div>
+      <div className="g-eyebrow">{tr('后来', 'Afterwards')} · {fullName(s)}</div>
       <h2 className="g-h2">{tr(`${s.life.age} 岁${how}之后`, `After you ${how} at ${s.life.age}`)}</h2>
       {ep.pension != null && <p className="g-sub">{tr(`每月大约 ${wan(ep.pension)} 退休金`, `A pension of about ${wan(ep.pension)} a month`)}<span className="g-mute">{tr('（', ' (')}{ep.note}{tr('）', ')')}</span></p>}
       <ol className="g-day g-path">{scenes.slice(0, n).map((x, i) => <li key={i} className={`g-in ${x.mood}`}><time>{ageT(x.age)}</time><p>{x.text}</p></li>)}</ol>
@@ -242,7 +245,7 @@ function CardView({ s, onDay, onStart, onRedraw, busy }: { s: Save; onDay: () =>
         <div className="g-reg-b">
           <div className="g-stamp">{tr('欢迎入职', 'HIRED')}</div>
           <div className="g-cap">{tr('姓名', 'Name')}</div>
-          <div className="g-name">{life.name}</div>
+          <div className="g-name">{fullName(s)}</div>
           <div className="g-headline">{card.headline}</div>
           <dl className="g-grid">
             <div><dt>{tr('职业', 'Occupation')}</dt><dd>{card.occupation.name}</dd></div>
@@ -316,7 +319,7 @@ function Play({ s, onChange, onDone }: { s: Save; onChange: () => void; onDone: 
   return (
     <main className="g-play">
       <div className="g-bar">
-        <div className="g-bar-l"><b>{tr(`${life.age} 岁`, `Age ${life.age}`)}</b><span>{tr(`${YEAR0 + life.y} 年`, String(YEAR0 + life.y))} · {life.name}</span></div>
+        <div className="g-bar-l"><b>{tr(`${life.age} 岁`, `Age ${life.age}`)}</b><span>{tr(`${YEAR0 + life.y} 年`, String(YEAR0 + life.y))} · {fullName(s)}</span></div>
         <div className="g-bar-r">
           <button className={`g-chip${paused ? ' on' : ''}`} onClick={() => setPaused(p => !p)}>{paused ? tr('▶ 继续', '▶ Play') : tr('❚❚ 暂停', '❚❚ Pause')}</button>
           {SPEEDS.map(x => <button key={x.k} className={`g-chip${speed === x.k && !paused ? ' on' : ''}`} onClick={() => { setSpeed(x.k); setPaused(false); }}>{x.t}</button>)}
@@ -380,7 +383,7 @@ function Report({ s, onAgain, onDay, busy }: { s: Save; onAgain: () => void; onD
     <main className="g-wrap g-report">
       <img className="g-art" src="/game/art/report.jpg" alt="" />
       <div className="g-eyebrow">{tr('职业档案', 'Career file')} · {YEAR0} – {YEAR0 + life.y}</div>
-      <h2 className="g-h2">{tr(`${life.name}的这一生`, `The working life of ${life.name}`)}</h2>
+      <h2 className="g-h2">{tr(`${life.name}的这一生`, `The working life of ${fullName(s)}`)}</h2>
       <p className="g-sub">{tr(`${card.headline}。${life.age - life.y} 岁从这里开始，${life.age} 岁${how}。`, `${card.headline}. You started here at ${life.age - life.y}; at ${life.age}, ${how}.`)}</p>
       <blockquote className="g-quote">{life.endText}</blockquote>
       <button className="g-link g-dayagain" onClick={onDay}>{tr('再看一眼那一天', 'See the typical day again')}</button>
@@ -448,9 +451,9 @@ function ShareBtn({ s }: { s: Save }) {
   const [msg, setMsg] = useState('');
   const share = async () => {
     const { card, life } = s;
-    const code = encodeShare({ c: card.id, n: life.name, a: life.age - life.y, b: life.age, s: life.stage, d: life.done || 'retire', l: LANG });
+    const code = encodeShare({ c: card.id, n: hanzi(s), a: life.age - life.y, b: life.age, s: life.stage, d: life.done || 'retire', l: LANG });
     const url = `${location.origin}${/1job1life/.test(location.host) ? '' : '/game'}/s/${code}`;
-    const title = `${pinyinName(life.name)}'s working life · One Job, One Life`;   // 分享一律英文（用户 11-07）
+    const title = `${pinyinName(hanzi(s))} (${hanzi(s)})'s working life · One Job, One Life`;   // 分享一律英文（用户 11-07）
     try { if (navigator.share) { await navigator.share({ title, url }); return; } } catch { /* 取消分享或不支持就复制链接 */ }
     try { await navigator.clipboard.writeText(`${title} ${url}`); setMsg(tr('链接已复制', 'Link copied')); } catch { prompt(tr('复制这个链接', 'Copy this link'), url); }
     setTimeout(() => setMsg(''), 2200);

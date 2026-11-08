@@ -168,6 +168,22 @@
     "retire": "For your last operation, you let your student lead and took the first assistant's place. Afterward you took out the surgical clogs you had worn for so many years, thought about it, and put them back. Leaving the inpatient building, you saw people already lining up at the registration window. You stood at the door a while, then walked toward the subway.",
     "burnout": "That day after the operation, your hands shook in the locker room for a long time. You told no one. The next day you went to the medical affairs office and took yourself off next month's operating schedule entirely. Later you moved to a post that kept you away from the table. Sometimes, when the phone rings at night, your hand still reaches for it without thinking."
   },
+  "stages": [
+    "You have your own care team now and two operating days a week; the case list, the pre-op conference and who first-assists are yours to decide. In specialist clinic you page through outside MRIs in the records system, and in the gaps you read films with residents and graduate students and stand in for the department head at quality meetings. From this level on, when something goes wrong, the first signature in the chart is yours.",
+    "You are an attending team lead now, with four or five doctors and some thirty beds under your name. You still operate, but more and more you scrub in for the hardest step and leave the rest to your associate chiefs. You make the call at the weekly difficult-case conference, and you are the one who goes to trial kickoff meetings and defends protocols before the ethics committee. At national meetings, you have begun to sit in the moderator's chair.",
+    "Half your week is in the operating room and half in conference rooms: the hospital's weekly meeting, the performance-pay meeting, beds with the medical affairs office, an intraoperative MRI suite with procurement. Each month you sign the department's performance sheets, and every adverse-event report. Who goes away for training, who serves as chief resident, which subspecialty gets the people: it is all in your notebook."
+  ],
+  "work": [
+    "At the pre-op conference an attending finishes presenting his approach. You rotate the 3D reconstruction on the navigation screen and ask: if you come in from this side, can you stay farther from that vein?",
+    "A patient comes to your clinic after another hospital told him to operate soon. You go through his films and three years of follow-up and write \"observe; repeat MRI in six months.\" He sits there for a long moment.",
+    "A graduate student brings you his follow-up spreadsheet. You look it over in SPSS, point to a column half empty, and say: you'll have to call every one of these back.",
+    "At a multi-center trial kickoff, investigators from eight hospitals argue all morning about inclusion criteria. You cross two lines off the case report form and say: first we enroll, then we perfect it.",
+    "An associate chief hits a point he isn't sure of, and a nurse comes for you. You scrub in, look through the microscope for two minutes, point him one way, and step back out.",
+    "Medical affairs forwards a complaint: your team didn't communicate after surgery. You pull that day's consultation notes and consent forms, call in the resident on the case, and go through it together from the start.",
+    "The performance-pay meeting runs to nine at night; the head nurse and the team leads each have their own math. You project the DRG settlement sheet on the wall and work through it line by line. At the end, your own team's share goes down a little.",
+    "Procurement asks whether to build an intraoperative MRI suite. You take two associate chiefs to see one at another hospital for a full day, then write a five-page case for it.",
+    "A new class of residents arrives, and you teach their first session. It isn't about surgery. It is about how to speak plainly to a family member who has just heard the diagnosis and hasn't taken it in yet."
+  ],
   "past": [
     "You went to a key high school in a prefecture-level city in Hebei, always near the top of your year. Your father was a fitter, and he said people with good hands should become surgeons.",
     "Your gaokao (college entrance exam) score got you into an eight-year medical program in Beijing. The day the admission letter came, your father bought dinner for his whole workshop.",

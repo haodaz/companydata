@@ -12,7 +12,7 @@ async function load(params: Promise<{ code: string }>) {
   const card = x && publicCard(x.c, x.l);
   if (!x || !card) return null;
   const en = publicCard(x.c, 'en') || card;   // 链接卡片一律英文（没译的卡退回中文）
-  return { x, lines: shareLines(x, card, x.l, x.n), og: shareLines(x, en, 'en', pinyinName(x.n)) };
+  return { x, lines: shareLines(x, card, x.l, x.l === 'en' ? `${pinyinName(x.n)} (${x.n})` : x.n), og: shareLines(x, en, 'en', `${pinyinName(x.n)} (${x.n})`) };   // 码里的名字是汉字
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ code: string }> }): Promise<Metadata> {
