@@ -99,20 +99,20 @@ function Home({ busy, err, onEnter, resume, onResume, archive }: { busy: boolean
 
 /** 横版工牌（入职登记卡）：深蓝底白线刻、米白双线框、底部祥云，和插画同一个刻印风格；字是真字 */
 function Badge({ busy, top }: { busy?: boolean; top?: boolean }) {
-  const cream = '#f6f1e3';
+  const cream = '#1f3d6b';   // 线条颜色（白底深蓝刻线；变量名沿用）
   const cloud = (x: number, y: number, k: number) => <g transform={`translate(${x} ${y}) scale(${k})`} key={`${x}-${y}`}>
     <path d="M0 10 C0 2 9 -2 14 4 C16 -3 27 -3 29 5 C35 2 41 7 38 13 C36 17 30 17 29 13 C28 9 33 8 33 11" />
     <path d="M14 4 C10 6 10 12 15 12 C19 12 19 7 16 7" /><path d="M0 10 C-3 15 3 18 6 15" /></g>;
   return (
     <svg viewBox="0 0 320 200" className="g-badge" aria-hidden={!top}>
       <defs>
-        <pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><line x1="0" y1="0" x2="0" y2="6" stroke={cream} strokeWidth=".6" opacity=".09" /></pattern>
+        <pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><line x1="0" y1="0" x2="0" y2="6" stroke={cream} strokeWidth=".6" opacity=".06" /></pattern>
       </defs>
-      <rect x="0" y="0" width="320" height="200" rx="16" fill="#153052" />
+      <rect x="0" y="0" width="320" height="200" rx="16" fill="#fdfaf2" />
       <rect x="0" y="0" width="320" height="200" rx="16" fill="url(#g-hatch)" />
       <rect x="9" y="9" width="302" height="182" rx="10" fill="none" stroke={cream} strokeWidth="1.6" opacity=".85" />
       <rect x="14" y="14" width="292" height="172" rx="7" fill="none" stroke={cream} strokeWidth=".6" opacity=".5" />
-      <rect x="140" y="18" width="40" height="8" rx="4" fill="#e9e3d3" />
+      <rect x="140" y="18" width="40" height="8" rx="4" fill="#e7e1d2" stroke={cream} strokeWidth=".8" />
       {/* 证件照：线刻人像剪影 */}
       <rect x="28" y="44" width="76" height="94" rx="4" fill="none" stroke={cream} strokeWidth="1.2" />
       <g stroke={cream} strokeWidth="1.2" fill="none" opacity=".9">
@@ -447,10 +447,11 @@ const CSS = `
 .g-deck { position: relative; display: block; width: min(300px, 82vw); aspect-ratio: 320 / 200; margin: 64px auto 30px; border: 0; background: none; padding: 0; cursor: pointer; }
 .g-deck:disabled { cursor: default; }
 .g-strap { position: absolute; left: 50%; top: -58px; width: 84px; transform: translateX(-50%); z-index: 4; pointer-events: none; animation: g-float 3.6s ease-in-out infinite; }
-.g-back { position: absolute; inset: 0; border-radius: 16px; box-shadow: 0 16px 36px rgba(21,48,82,.28); transition: transform .35s; }
+.g-back { position: absolute; inset: 0; border-radius: 16px; box-shadow: 0 12px 30px rgba(21,48,82,.16), 0 0 0 1px rgba(31,61,107,.12); transition: transform .35s; background: #fdfaf2; }
+.g-back.b3, .g-back.b2 { filter: saturate(.8); }
 .g-badge { display: block; width: 100%; height: 100%; }
-.g-back.b3 { transform: rotate(-7deg) translate(-18px, 14px); opacity: .55; }
-.g-back.b2 { transform: rotate(5deg) translate(16px, 10px); opacity: .75; }
+.g-back.b3 { transform: rotate(-7deg) translate(-18px, 14px); opacity: .7; }
+.g-back.b2 { transform: rotate(5deg) translate(16px, 10px); opacity: .85; }
 .g-back.b1 { z-index: 3; animation: g-float 3.6s ease-in-out infinite; }
 .g-deck:not(:disabled):hover .b1 { transform: translateY(-6px); }
 .g-deck:not(:disabled):hover .b3 { transform: rotate(-9deg) translate(-26px, 16px); }
