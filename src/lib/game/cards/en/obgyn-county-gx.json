@@ -12,11 +12,31 @@
  "intro": "You're one of the county's commitment-program medical students: five years of medicine and three years of residency in the city, and on the day you reported back to the county maternal and child health hospital, the old head of obstetrics handed you a well-worn notebook of labor charts. The hospital stands at the end of the county town's old street, three stories, the delivery room on the second floor, its light almost never off. From today your name is on the night rota, and you still owe six years of service.",
  "salary_note": "Estimate: pay and bonuses at a county maternal and child health hospital in Guangxi are both low, so pay is set at 0.55 times the national average; commitment-program doctors get a small rural allowance, and night shifts are paid per shift, not much.",
  "facts": [
-  { "label": "Resident Physician (current level)", "value": "0-5 years, ¥6,000–10,000 a month (national average, estimated)", "source": "Industry norm" },
-  { "label": "Next level up", "value": "Attending Physician (5-10 years)", "source": "Industry norm" },
-  { "label": "What AI can't take", "value": "Attending and delivering women in labor", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Diagnosing gynecological conditions and providing some surgical treatment", "source": "AI exposure" },
-  { "label": "Open positions", "value": "7 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Resident Physician (current level)",
+   "value": "0-5 years, ¥3,600–4,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Attending Physician (5-10 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Attending and delivering women in labor",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Diagnosing gynecological conditions and providing some surgical treatment",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "7 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You walk from your dorm in the county town to the hospital, buying a roll of rice noodle sheets on the way. The midwife on duty says three babies were born last night, one at four in the morning.",

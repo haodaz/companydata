@@ -12,12 +12,36 @@
   "intro": "On the day you report for work, the head of department takes you to the chassis test lab. A prototype wrapped in black-and-white camouflage film sits on a lift with all four wheels off, and a grey-haired veteran is stripping a shock absorber, its valve shims laid out one by one on an old newspaper spread on the floor. He looks up at you and says: first learn to listen to a car, then learn to change it. As of today, your name is on this car's test order.",
   "salary_note": "Estimate: Changchun's state-owned carmakers start vehicle engineering master's graduates at ¥7,000-8,000 take-home in their R&D institutes; with the housing fund and test allowances that is a little over 10% above the national figure. Raises at a state firm are slow and follow professional titles and seniority, with travel allowances for the winter and summer test campaigns.",
   "facts": [
-    { "label": "Assistant Engineer / Designer (current level)", "value": "0-2 years, ¥6,375–9,375 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
-    { "label": "Next level up", "value": "Engineer (vehicle design / testing / process) (2-5 years)", "source": "Career map" },
-    { "label": "Pay after 10+ years", "value": "¥21,500 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Running a full-vehicle frontal crash test for regulatory approval", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Planning and running a round of rig durability tests", "source": "AI exposure" },
-    { "label": "Open positions", "value": "196 related job listings nationwide, 3 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Assistant Engineer / Designer (current level)",
+      "value": "0-2 years, ¥6,375–9,375 a month (national average, estimated from pay by experience)",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "Next level up",
+      "value": "Engineer (vehicle design / testing / process) (2-5 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥31,300 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Running a full-vehicle frontal crash test for regulatory approval",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Planning and running a round of rig durability tests",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "196 related job listings nationwide, 3 in this city (the listings are mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "Minus twenty-something. You leave the factory's staff housing compound as the boiler house downstairs breathes white steam. On the commuter bus half the passengers wear the same work jacket; some sleep, some read yesterday's road test data on their phones.",

@@ -12,11 +12,31 @@
  "intro": "The museum is in the workshops of an old porcelain factory, under a sawtooth roof, with the chimney still standing. The director walks you around, then at the storeroom door hands you a stack of condition reports and says eighty objects are coming in this month. Every chip, hairline crack and bubble in the glaze must go down on paper. You spent seven years reading art history, and all the porcelain in those books was behind glass. Starting today, you put on gloves and lift it up.",
  "salary_note": "Estimate: public institution pay in Jingdezhen is below the national figure, and a small museum's exhibition budget leaves little for bonuses, so 0.75.",
  "facts": [
-  { "label": "Assistant Curator (current level)", "value": "0–4 years, ¥4,200–6,800 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Curator (4–10 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Choosing the work, and talking exhibitions through with artists and craftsmen", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Searching the literature and collating material on artists and kilns", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the database leans toward campus hires and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Curator (current level)",
+   "value": "0–4 years, ¥3,200–4,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Curator (4–10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Choosing the work, and talking exhibitions through with artists and craftsmen",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Searching the literature and collating material on artists and kilns",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the database leans toward campus hires and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You ride your electric bike through the old town. Three-wheeled carts go by loaded with boards of white unfired ware, and you give them room. In Jingdezhen, if you knock over someone's board of pots, you pay.",

@@ -12,12 +12,36 @@
   "intro": "You work at the township clinic in a hilly county in Sichuan. Out front is the old street that jams with three-wheelers on market day. There aren't many nurses here, so injections, dressings, vaccinations, village rounds, data entry: wherever there's a gap, you fill it. Your nursing-school diploma is in a drawer; the nursing license is still an exam away, and your supervisor says to get your hands steady first. As of today, you are this clinic's nurse.",
   "salary_note": "Estimate: a contract nurse outside the permanent staff at a Sichuan township clinic earns well below the national average, and bonuses swing with public-health inspections and patient volume.",
   "facts": [
-    { "label": "Starting rung", "value": "Nurse (junior), early adjustment stage, 0–2 years, ¥4,500–6,000 a month (national average)", "source": "Career map" },
-    { "label": "First-year monthly pay", "value": "¥6,963 (national average)", "source": "Pay by experience" },
-    { "label": "Entry requirement", "value": "A nurse practising license; no license, no clinical nursing", "source": "Career map" },
-    { "label": "Next level up", "value": "Senior Nurse, 2–5 years, ¥6,000–9,000 a month (national average)", "source": "Career map" },
-    { "label": "What AI can't take", "value": "Triage in a crowded emergency room and sorting mass casualties: who gets treated first, calming the families. A nurse has to make that call on the spot", "source": "AI exposure" },
-    { "label": "Open positions", "value": "4 related listings nationwide; no county-level figures, mostly campus hiring and internships", "source": "Job listings" }
+    {
+      "label": "Starting rung",
+      "value": "Nurse (junior), early adjustment stage, 0–2 years, ¥2,000–2,100 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "First-year monthly pay",
+      "value": "¥2,000 (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Entry requirement",
+      "value": "A nurse practising license; no license, no clinical nursing",
+      "source": "Career map"
+    },
+    {
+      "label": "Next level up",
+      "value": "Senior Nurse, 2–5 years, ¥2,700–4,800 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Triage in a crowded emergency room and sorting mass casualties: who gets treated first, calming the families. A nurse has to make that call on the spot",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "4 related listings nationwide; no county-level figures, mostly campus hiring and internships",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "You wake up in the staff dorm behind the clinic. Someone from the village is already knocking on the pharmacy window downstairs. It's market day.",

@@ -12,12 +12,36 @@
  "intro": "You came straight from technical school to this factory and worked your way up from loading parts to tuning a Swiss-type lathe on your own. The shop floor has more than twenty machines that never stop, and six of them are yours, one week on days, one week on nights. As of today, in the gaps between shifts, you are going to earn the CNC lathe technician certificate.",
  "salary_note": "Estimate: on alternating shifts at a Suzhou precision machining plant, with night-shift allowances and overtime, take-home pay runs 20-30% above the national figure. In months when orders are thin there is only base pay, and you drop back to the national figure.",
  "facts": [
-  { "label": "CNC Setup Technician (current level)", "value": "1-3 years, ¥7,000–11,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "CNC Programming Engineer (3-5 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥12,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Adjusting tool offsets from the CMM report and cutting the first article", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Hand-writing G-code from a 2D drawing to turn a simple shaft", "source": "AI exposure" },
-  { "label": "Open positions", "value": "22 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "CNC Setup Technician (current level)",
+   "value": "1-3 years, ¥12,500–18,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "CNC Programming Engineer (3-5 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥17,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Adjusting tool offsets from the CMM report and cutting the first article",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Hand-writing G-code from a 2D drawing to turn a simple shaft",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "22 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Shift change. The night-shift man from your home province runs through the six machines: the tool tip on number three is worn, and the bone screws on number five started drifting oversize in the small hours. You sign the handover book.",

@@ -12,12 +12,36 @@
  "intro": "You studied environmental design in Chengdu and joined this home renovation company after graduating, spending two years as a design assistant measuring flats, drawing and walking sites behind a veteran designer. This year you started taking clients of your own. Your desk is on the second floor of the High-Tech Zone showroom, with a few tile samples and a laser distance meter on it. As of today you walk into other people's homes one after another, learning to draw how a family lives into a few dozen square meters of plans.",
  "salary_note": "Estimate: home renovation companies in Chengdu pay designers a base below the national average, and most income comes from commission on signed contracts. In peak season you can sign several a month; in the off season and in years when the housing market is cold, commission drops and the base barely covers rent.",
  "facts": [
-  { "label": "Interior Designer (current level)", "value": "2-5 years, ¥6,000–10,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Senior Designer (5-10 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Briefing the crew on site and handling problems there", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Setting the design direction from the home and the family", "source": "AI exposure" },
-  { "label": "Open positions", "value": "6 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Interior Designer (current level)",
+   "value": "2-5 years, ¥6,000–10,000 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Designer (5-10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥11,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Briefing the crew on site and handling problems there",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Setting the design direction from the home and the family",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "6 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Below your rented room in Yulin you eat a bowl of sweet-sauce noodles, then take the metro to the showroom. At the morning meeting the manager reads out everyone's contracts signed this month, and your name falls in the middle.",

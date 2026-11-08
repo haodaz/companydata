@@ -12,12 +12,36 @@
  "intro": "You studied property management in Beijing and started out after graduation as an estate steward. Fourteen years in the trade, three of them as project manager of a two-thousand-household estate. This year the company moved you to this old community in Changping with over ten thousand households. The property service center is in a ground-floor shopfront under one of the buildings, and every morning there's a line at the door of people reporting repairs. As of today you are in charge of the heating, elevators, parking and quarrels of more than forty buildings, learning to catch every small thing in a community bigger than many county towns.",
  "salary_note": "Estimate: property project managers at large Beijing communities earn above the national average, with year-end bonuses tied to the fee collection rate and the complaint rate. In years when an old community's fees are low and hard to collect, the bonus shrinks.",
  "facts": [
-  { "label": "Property Project Manager (current level)", "value": "8-14 years, ¥9,000–13,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Regional Manager (14-20 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥10,200 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Handling emergencies and residents' urgent troubles", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Taking repair calls, dispatching work orders and following up", "source": "AI exposure" },
-  { "label": "Open positions", "value": "23 related listings nationwide, 1 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Property Project Manager (current level)",
+   "value": "8-14 years, ¥18,300–22,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Regional Manager (14-20 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥19,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Handling emergencies and residents' urgent troubles",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Taking repair calls, dispatching work orders and following up",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "23 related listings nationwide, 1 in this city (the job database is mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You take the first metro from your rented place in Huilongguan and buy a jianbing crepe at the breakfast stall by the community gate, reading your phone as you eat: overnight, the residents' group chats gained more than a hundred messages.",

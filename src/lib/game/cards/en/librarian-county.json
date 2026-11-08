@@ -12,11 +12,31 @@
  "intro": "The deputy director walks you round the new building: self-service machines and the children's reading room on the ground floor, adult lending on the first floor, the study area on the second already full of young people preparing for exams, and at the far end of the top floor a locked room labelled 'Local History Collection', holding several hundred genealogies of the county's families. She hands you the keys and says: Wednesday, you're on the van to the villages, don't be late. From today, some of the 300,000 books in this building are yours.",
  "salary_note": "Estimate: a newly appointed public-institution employee in a county town in southwestern Anhui takes home a little over ¥3,000; with performance pay and the year-end bonus it comes to just over 60% of the national figure for public library staff. In years when county finances are tight, performance pay waits until the following spring.",
  "facts": [
-  { "label": "Assistant Librarian (current level)", "value": "0-4 years, ¥5,500–7,500 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Librarian (4-10 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Watching the floor, keeping order and settling disputes in the library", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Looking up, tallying and maintaining reader and loan data", "source": "AI exposure" },
-  { "label": "Open positions", "value": "2 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Librarian (current level)",
+   "value": "0-4 years, ¥3,600–4,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Librarian (4-10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Watching the floor, keeping order and settling disputes in the library",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Looking up, tallying and maintaining reader and loan data",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "2 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Ten minutes before opening, three old people are already waiting at the door for today's papers. You unlock the glass door; the old man at the front says good morning and heads straight for the table by the window he has sat at for years.",

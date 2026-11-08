@@ -12,12 +12,36 @@
  "intro": "Your home is on an island in Zhoushan. Your father has run a fishing boat for half his life, and you grew up with the sound of the diesel in its engine room. The main engine on the ship you've joined is taller than your house. The chief engineer hands you the engine-room key ring and points towards the boiler: that corner is yours from today.",
  "salary_note": "Estimate: engineers with Zhoushan shipping companies are paid for the months on board, noticeably more than shore-based marine engineers with the same experience, with only a basic wage during leave. Taken at 1.3 times the national figure.",
  "facts": [
-  { "label": "Fourth Engineer (current level)", "value": "0–2 years, ¥7,000–11,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Third Engineer (2–5 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥18,600 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Hands-on overhauls and emergency repairs in the engine room", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Reading alarms and diagnosing faults", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Fourth Engineer (current level)",
+   "value": "0–2 years, ¥10,400–17,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Third Engineer (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥18,600 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Hands-on overhauls and emergency repairs in the engine room",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Reading alarms and diagnosing faults",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "After breakfast, down to the engine room. First you check the boiler's water gauge and the burner flame, then the purifier's outlet pressure, and write the first line in your notebook.",

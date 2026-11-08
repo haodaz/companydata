@@ -12,11 +12,31 @@
   "intro": "The company is in Nanshan's science park, on the twenty-third floor, with a corner of Shenzhen Bay out the window. Compliance sits next to Legal and one floor away from Sales, an arrangement everyone finds satisfactory. On your computer are the sanctions screening system, the contract ledger and a fifty-seven-page Global Anti-Corruption Policy. At three this afternoon, a Middle East salesperson needs a deal cleared and is waiting for your nod. From today, you are the person in this company who says \"hold on\" the most.",
   "salary_note": "Estimate: compliance posts at Shenzhen technology companies pay thirty to forty percent above the national average, with a little more for overseas business.",
   "facts": [
-    { "label": "Compliance Officer (current level)", "value": "0-2 years, ¥7,000–12,000 a month (national average, estimated)", "source": "Common in the trade" },
-    { "label": "Next level up", "value": "Senior Compliance Officer (2-5 years)", "source": "Common in the trade" },
-    { "label": "What AI can't take", "value": "Following up on compliance incidents and leads", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Tracking applicable laws and regulatory requirements", "source": "AI exposure" },
-    { "label": "Open positions", "value": "11 related listings nationwide, 2 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Compliance Officer (current level)",
+      "value": "0-2 years, ¥9,500–16,600 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Senior Compliance Officer (2-5 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Following up on compliance incidents and leads",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Tracking applicable laws and regulatory requirements",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "11 related listings nationwide, 2 in this city (mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "On subway Line 1, changing to Line 2, your phone holds an email a European colleague sent last night. Hanging on to the rail with one hand, you save the attachment with your thumb.",

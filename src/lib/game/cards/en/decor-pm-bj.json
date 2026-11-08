@@ -12,12 +12,36 @@
  "intro": "You've done renovation in Beijing for seventeen years: the first ten with a plane and a power saw, the rest with drawings and a phone. Right now you have eight sites, from cramped old walk-ups in Chaoyang to a villa in Shunyi, and eight client group chats that can scroll through hundreds of messages a day. As of today, you have to hand them over one by one on schedule, collect the money one payment at a time, and not miss a single call at night.",
  "salary_note": "Estimate: a Beijing home renovation project manager earns a base plus commission on each site. Running eight sites with payments coming in smoothly, take-home pay is about thirty percent above the national average. In years when the housing market is cold and fewer jobs start, the commission shrinks with it.",
  "facts": [
-  { "label": "Interior Construction Project Manager (current level)", "value": "3-5 years, ¥12,000–18,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Senior Interior Fit-out Project Manager (5-8 years)", "source": "Career map" },
-  { "label": "Pay after 5–10 years", "value": "¥21,529 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Running the pre-inspection of concealed plumbing and wiring, and handling a crisis right before handover", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Pre-sorting self-checks before the concealed plumbing and wiring inspection, and handling the crisis", "source": "AI exposure" },
-  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Interior Construction Project Manager (current level)",
+   "value": "3-5 years, ¥22,200–26,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Interior Fit-out Project Manager (5-8 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 5–10 years",
+   "value": "¥21,529 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Running the pre-inspection of concealed plumbing and wiring, and handling a crisis right before handover",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Pre-sorting self-checks before the concealed plumbing and wiring inspection, and handling the crisis",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You wake at home in Yanjiao and check your phone first: new messages in two client groups. One asks when the tiles will arrive; another has sent a photo of a wall corner followed by three question marks.",

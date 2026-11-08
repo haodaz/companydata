@@ -12,12 +12,36 @@
   "intro": "You finished a master's in law, passed the bar first time, and passed into the procuratorate of a district in southern Jiangsu. On your first day you were assigned to the criminal prosecution department, under a woman prosecutor with more than ten years of cases behind her. She gave you an ID badge, a key to the file cabinet, and one sentence: first, learn to read a file to the end. As of today you are her assistant. One day you'll sign an indictment with your own name.",
   "salary_note": "Estimate: procuratorate staff are paid on the civil service scale, with quota prosecutors receiving an additional prosecutorial grade salary. Pay in southern Jiangsu's districts is above the national average, but the database's pay-by-experience figures run high, so this uses 85 percent.",
   "facts": [
-    { "label": "Prosecutor's Assistant (current level)", "value": "0–5 years, ¥7,000–10,000 a month (national average, estimated)", "source": "Common in the trade" },
-    { "label": "Next level up", "value": "Prosecutor, Grade 4 (quota prosecutor) (5–9 years)", "source": "Common in the trade" },
-    { "label": "Pay after 10+ years", "value": "¥18,600 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Appearing in court for the prosecution and responding on the spot", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Reading case files and sorting evidence in pre-indictment review", "source": "AI exposure" },
-    { "label": "Open positions", "value": "14 related listings nationwide (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Prosecutor's Assistant (current level)",
+      "value": "0–5 years, ¥7,000–10,000 a month (national average, estimated)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Next level up",
+      "value": "Prosecutor, Grade 4 (quota prosecutor) (5–9 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥13,700 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Appearing in court for the prosecution and responding on the spot",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Reading case files and sorting evidence in pre-indictment review",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "14 related listings nationwide (the job database is mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "You open the unified case system and check the new cases assigned to your team: two transferred for review for prosecution. The review deadline starts counting today, a countdown glowing at the top right of the screen.",

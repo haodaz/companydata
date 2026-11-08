@@ -12,12 +12,36 @@
   "intro": "You sit high up in an office tower on Beijing's East Third Ring Road. Taped to your desk are the team phone list and a sheet of billing codes; on your screen, three virtual data rooms. You've passed the national bar exam, but you won't get your license until your traineeship is up and you've passed the bar association interview. Until then you can't sign a single legal opinion. This morning the partner posted one line in the group chat: \"New deal, first issues list due tomorrow morning.\" From today, every six minutes of yours goes on a timesheet.",
   "salary_note": "Estimate: a leading Beijing firm pays first-year associates with master's degrees from top schools well above the national figure. Stacking the premium for a Tier 1 city on the premium for a top firm gives roughly 2.1 times the national average.",
   "facts": [
-    { "label": "Trainee lawyer pay", "value": "¥4,000–15,000 a month (national average)", "source": "Career map" },
-    { "label": "Pay in the first year", "value": "¥11,424 a month (national average)", "source": "Pay by experience" },
-    { "label": "Pay at 5–10 years", "value": "¥33,730 a month (national average)", "source": "Pay by experience" },
-    { "label": "Equity partner pay", "value": "¥60,000–150,000 a month, 8+ years (national average)", "source": "Career map" },
-    { "label": "First-pass contract risk review", "value": "AI can take over the first draft; lawyers spot-check the key clauses", "source": "AI exposure" },
-    { "label": "Open positions", "value": "101 nationwide, 25 in Beijing, mostly campus hiring and internships", "source": "Job listings" }
+    {
+      "label": "Trainee lawyer pay",
+      "value": "¥14,200–32,500 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Pay in the first year",
+      "value": "¥11,424 a month (national average)",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "Pay at 5–10 years",
+      "value": "¥33,730 a month (national average)",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "Equity partner pay",
+      "value": "¥168,600–437,900 a month, 8+ years (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "First-pass contract risk review",
+      "value": "AI can take over the first draft; lawyers spot-check the key clauses",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "101 nationwide, 25 in Beijing, mostly campus hiring and internships",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "Out of the shared flat in Tuanjiehu and onto a packed Line 10 to Guomao. You buy a rice ball at the convenience store downstairs and, while you're at it, reply on your phone to the comments a senior associate sent at two in the morning.",

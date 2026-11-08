@@ -12,11 +12,31 @@
  "intro": "The grading suite has no window. The walls are painted neutral gray, and the only light comes from a calibrated monitor and a few small lamps on the grading panel. You're an assistant colorist at a post house in Shuangjing. Footage comes back from commercials, series and films flat and gray, in log, and only in this room does it get its warmth and coolness, its day and night. From today, the \"Assistant Colorist\" line on the delivery sheet carries your signature.",
  "salary_note": "Estimate: Beijing has a concentration of post-production houses, and color work pays about thirty percent above the national figure. Colorists earn commission by project and booking, senior ones quote a day rate, and assistants get base pay plus overtime.",
  "facts": [
-  { "label": "Assistant Colorist (current level)", "value": "0–2 years, ¥5,000–8,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Colorist (2–5 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Setting the look with the director and cinematographer", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Conforming, finding source media and technical conversions", "source": "AI exposure" },
-  { "label": "Open positions", "value": "60 related listings nationwide, 15 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Colorist (current level)",
+   "value": "0–2 years, ¥6,500–12,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Colorist (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Setting the look with the director and cinematographer",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Conforming, finding source media and technical conversions",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "60 related listings nationwide, 15 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Subway Line 10 to Shuangjing. The company is in an old factory converted into offices, and on the grading suite door is a sheet of paper: Grading in progress, please knock.",

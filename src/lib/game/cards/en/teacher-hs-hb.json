@@ -12,11 +12,31 @@
  "intro": "The dean of studies hands you a list: Class 14, Year One, sixty-two students, physics-chemistry-biology track, ninth in the year on entrance scores. The teaching building is the same one you sat in as a student; the countdown board in the corridor is an LED screen now. From today, what time these sixty-two children get up and what time they go to sleep is your business.",
  "salary_note": "Estimate: a newly appointed teacher with a permanent state post at a public county high school in southern Hebei takes home a little over ¥3,000 during the probation year; once graded, with performance pay, the homeroom allowance and the county's gaokao bonus, it comes to about 60% of the national secondary-teacher figure. County finances are tight, and performance pay arrives at year's end.",
  "facts": [
-  { "label": "Second-Grade Teacher (current level)", "value": "0-5 years, ¥5,500–8,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "First-Grade Teacher (5-10 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Teaching the subject in the classroom, using multimedia", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Studying the textbook and writing lesson plans to the syllabus", "source": "AI exposure" },
-  { "label": "Open positions", "value": "496 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Second-Grade Teacher (current level)",
+   "value": "0-5 years, ¥3,400–4,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "First-Grade Teacher (5-10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Teaching the subject in the classroom, using multimedia",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Studying the textbook and writing lesson plans to the syllabus",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "496 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Ten minutes after the wake-up whistle you are already standing under the floodlights on the sports ground. Your class comes past in formation and you shout the cadence with them while you count heads: sixty-one. One is still in bed in the dorm.",

@@ -12,12 +12,36 @@
  "intro": "You studied in a company-sponsored class at a power vocational college, signed with the Tieling power supply company the year you graduated, and were sent to this 220 kV substation on the edge of town. It sits in the middle of the corn fields: three main transformers, a dozen-odd outgoing lines, minus thirty in winter, and in summer, when the thunderstorms roll in, the alarms all go off at once. From today you work four crews on three shifts here with your mentor, and the first thing to learn is to read every line of a switching order clearly in front of high-voltage equipment.",
  "salary_note": "Estimate: prefecture-level power supply companies in northern Liaoning pay State Grid post salaries plus performance pay, with a night-shift allowance, a little under the national figure. Full social insurance plus housing fund and annuity, and a year-end bonus: in Tieling, an employer people envy.",
  "facts": [
-  { "label": "Substation Operator, Junior (current level)", "value": "0-2 years, ¥5,000–8,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Substation Operator, Intermediate (2-5 years)", "source": "Career map" },
-  { "label": "Pay after 3–5 years", "value": "¥9,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Testing for voltage and fitting earthing leads in a de-energized bay", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Diagnosing a line trip and filing the follow-up field report", "source": "AI exposure" },
-  { "label": "Open positions", "value": "23 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Substation Operator, Junior (current level)",
+   "value": "0-2 years, ¥5,000–8,000 a month (national average)",
+   "source": "Career map"
+  },
+  {
+   "label": "Next level up",
+   "value": "Substation Operator, Intermediate (2-5 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 3–5 years",
+   "value": "¥7,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Testing for voltage and fitting earthing leads in a de-energized bay",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Diagnosing a line trip and filing the follow-up field report",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "23 related listings nationwide, 0 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "The shift bus heads out of town between harvested corn fields, stalks stacked in bundles. In the distance, a line of pylons carries the conductors all the way into the substation.",

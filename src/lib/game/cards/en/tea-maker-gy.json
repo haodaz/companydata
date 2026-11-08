@@ -12,12 +12,36 @@
  "intro": "The shop is wedged between a few thirty-story office towers and a housing estate of tens of thousands, with a steep slope outside the door. It can rain three times a day here, and the delivery orders keep printing anyway. When your placement ended, the manager asked if you would stay, and you nodded. From today you stand at the third station of the bar with a measuring cup in your hand, and the first job is to learn the recipe sheet.",
  "salary_note": "Estimate: base pay plus commission at a Guiyang chain tea shop runs about 85 percent of the national figure, a little more in peak season and during delivery-app sales, less in the slow months.",
  "facts": [
-  { "label": "Trainee Beverage Mixologist (current level)", "value": "0–0.5 years, ¥3,500–5,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Senior Beverage Mixologist (0.5–1.5 years)", "source": "Career map" },
-  { "label": "Pay after 3–5 years", "value": "¥6,200 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Mixing and handing out several orders at once in the afternoon rush", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Morning equipment checks and pre-brewing the tea bases before opening", "source": "AI exposure" },
-  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Trainee Beverage Mixologist (current level)",
+   "value": "0–0.5 years, ¥3,500–5,000 a month (national average)",
+   "source": "Career map"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Beverage Mixologist (0.5–1.5 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 3–5 years",
+   "value": "¥3,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Mixing and handing out several orders at once in the afternoon rush",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Morning equipment checks and pre-brewing the tea bases before opening",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You roll up the shutter and the ground is still wet. First you check whether the ice machine is full, then you lift out the tea urn steeped last night and taste a spoonful. If it has gone bitter, it gets poured away.",

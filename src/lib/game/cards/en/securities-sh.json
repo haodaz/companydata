@@ -12,11 +12,31 @@
   "intro": "You interned at this institute for seven months. At your summer review, the chief asked you exactly one question: which way will polysilicon prices go next quarter? Once confirmed, you were assigned to the new energy team, four people: the chief, two analysts and you, covering twenty-odd companies in solar, lithium batteries and energy storage. As of today, the morning meeting notes due before seven every day are yours, and so is every roadshow deck in the run-up to the analyst rankings.",
   "salary_note": "Estimate: base pay at a leading Shanghai brokerage's research institute is well above the national average, estimated here at 1.4 times. The year-end bonus depends on the team's ranking and its broker votes and isn't counted here.",
   "facts": [
-    { "label": "Assistant Analyst (current level)", "value": "0–2 years, ¥10,000–18,000 a month (national average)", "source": "Career map" },
-    { "label": "Next level up", "value": "Sector Analyst (2–4 years)", "source": "Career map" },
-    { "label": "Pay after 5–10 years", "value": "¥37,007 a month (national average)", "source": "Pay by experience" },
-    { "label": "Where AI is moving in", "value": "Digging out a company's real profit before the morning meeting and laying out the risks", "source": "AI exposure" },
-    { "label": "Open positions", "value": "562 related listings nationwide, 167 in this city (the listings are mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Assistant Analyst (current level)",
+      "value": "0–2 years, ¥14,000–25,400 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Sector Analyst (2–4 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay after 5–10 years",
+      "value": "¥37,007 a month (national average)",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Digging out a company's real profit before the morning meeting and laying out the risks",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "562 related listings nationwide, 167 in this city (the listings are mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "The first trains on Metro Line 2 aren't crowded yet. In the carriage you get through overnight moves in US new energy stocks and three companies' evening announcements.",

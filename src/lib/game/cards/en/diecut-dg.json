@@ -12,12 +12,36 @@
  "intro": "Four years at this converting plant, and you've gone from picking out burrs under a magnifier at the inspection bench to owning a part number from sample to mass production on your own. The phone maker's autumn models are about to freeze their designs. Inside one phone are forty-odd pieces of tape, foam and graphite sheet, and a dozen of them are yours. As of today, when the customer's engineer calls, the samples have to be on his desk by the next morning.",
  "salary_note": "Estimate: engineers at Dongguan electronic converting plants earn a middling base, but overtime and project bonuses in peak season add up, putting pay about ten percent above the national average. In years when phone shipments are poor there's no overtime, and it falls back to the national average.",
  "facts": [
-  { "label": "Die-Cutting Process Engineer (current level)", "value": "2-5 years, ¥9,000–15,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Senior Die-Cutting Process Engineer (5-8 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥19,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Handling a die-cut burr defect on the line and closing it out with a release decision", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Writing the DFM report for a new project and getting the die design signed off", "source": "AI exposure" },
-  { "label": "Open positions", "value": "6 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Die-Cutting Process Engineer (current level)",
+   "value": "2-5 years, ¥15,100–25,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Die-Cutting Process Engineer (5-8 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥26,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Handling a die-cut burr defect on the line and closing it out with a release decision",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing the DFM report for a new project and getting the die design signed off",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "6 related listings nationwide, 0 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You come out of a tightly packed block of urban-village housing, where the steamer at the rice-roll stall downstairs is breathing white. The road through the industrial park is full of people on e-bikes, pouring toward the factory gates like a tide.",

@@ -12,12 +12,36 @@
   "intro": "You graduated in New Energy Vehicle Technology from a vocational college, and a school-company partnership sent you straight into the final assembly plant of this Hefei carmaker. The end-of-line test station has twelve people a shift, and every ninety seconds a new car rolls up. Your master told you just one thing: until the high voltage is fully down, keep your hands off. As of today your employee number is on the day-shift rota. Next week you rotate to nights.",
   "salary_note": "Estimate: base pay for front-line test technicians at Hefei carmakers isn't high, but with night-shift allowances on the rotating schedule and overtime at full production, take-home is roughly level with the national average. In months when output is cut, it drops by a chunk.",
   "facts": [
-    { "label": "EV Test Technician, apprentice / assistant (current level)", "value": "0–1 years, ¥6,375–9,375 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
-    { "label": "Next level up", "value": "EV Test Technician (1–3 years)", "source": "Career map" },
-    { "label": "Pay at 3–5 years", "value": "¥14,200 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Measuring a charging socket's insulation resistance and equipotential bonding by hand", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Charging safety inspection of an all-electric commercial vehicle", "source": "AI exposure" },
-    { "label": "Open positions", "value": "2 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "EV Test Technician, apprentice / assistant (current level)",
+      "value": "0–1 years, ¥6,375–9,375 a month (national average, estimated from pay by experience)",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "Next level up",
+      "value": "EV Test Technician (1–3 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay at 3–5 years",
+      "value": "¥8,800 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Measuring a charging socket's insulation resistance and equipotential bonding by hand",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Charging safety inspection of an all-electric commercial vehicle",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "2 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "Alarms go off one after another through the dorm. You pull on your antistatic overalls and insulated boots, buy two steamed buns from the breakfast cart at the plant gate, and squeeze onto the shuttle to final assembly.",

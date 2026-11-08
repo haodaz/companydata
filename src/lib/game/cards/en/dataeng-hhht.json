@@ -12,12 +12,36 @@
  "intro": "The roads in the new area are so wide they seem empty. Windowless gray buildings line up one after another, the wind comes down off the Daqing Mountains, and inside, the servers turn day and night for companies in the east. Your team lead sets up your account and says the overnight batch is yours to watch now, and don't mute the alerts. From today on, your job is to have ready the numbers that people two thousand kilometers away will want to see when they wake up.",
  "salary_note": "Estimate: data jobs in Hohhot pay about sixty percent of the national figure, which is mostly first-tier big tech, and living costs are far lower.",
  "facts": [
-  { "label": "Junior Data Developer (current level)", "value": "0–2 years, ¥9,000–16,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Data Developer (2–4 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥31,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Making the call and owning it when production breaks", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Writing routine ETL and data-pull SQL", "source": "AI exposure" },
-  { "label": "Open positions", "value": "228 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Junior Data Developer (current level)",
+   "value": "0–2 years, ¥5,400–8,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Data Developer (2–4 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥20,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Making the call and owning it when production breaks",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing routine ETL and data-pull SQL",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "228 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You board the company shuttle at the gate of your compound in town. Past the south second ring road the view empties out. Before you get off you check your phone: the overnight jobs are all green, the best news of the day.",

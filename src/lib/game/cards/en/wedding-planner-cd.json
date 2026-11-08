@@ -12,12 +12,36 @@
  "intro": "Three years at the wedding company, and you've gone from hauling table flowers and sticking up seating cards to signing clients yourself. The manager has given you six weddings in National Day Golden Week, and on one of those days you'll run from a morning bride-fetching to tearing down a set at midnight. As of today, you answer the couple's calls, the bride's mother's calls, and the hotel banquet manager's calls, all at once.",
  "salary_note": "Estimate: planners at Chengdu wedding companies earn a low base plus commission on contracts signed. In peak season commission pushes take-home pay above the national average; in the off season it's the base alone. Banquet prices are not high for a new first-tier city, so overall it comes out about level with the national average.",
  "facts": [
-  { "label": "Wedding Planner (current level)", "value": "2-5 years, ¥6,000–12,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Senior Wedding Planner / Creative Director (studio model) (5-8 years)", "source": "Career map" },
-  { "label": "Pay after 3-5 years", "value": "¥7,200 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Handling a last-minute crisis in the bridal suite and running the countdown", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "The in-depth needs interview with the couple, and drawing out their story, within 48 hours before signing", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Wedding Planner (current level)",
+   "value": "2-5 years, ¥9,700–18,400 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Wedding Planner / Creative Director (studio model) (5-8 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 3-5 years",
+   "value": "¥7,200 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Handling a last-minute crisis in the bridal suite and running the countdown",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "The in-depth needs interview with the couple, and drawing out their story, within 48 hours before signing",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "It's still dark. In your rented room you pull on the black work clothes, stuff the earpiece and walkie-talkie into your canvas bag and take a cab to the bride's home in the High-Tech Zone. On the way you go over the run sheets for all three weddings again.",

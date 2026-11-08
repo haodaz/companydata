@@ -12,12 +12,36 @@
   "intro": "On the day you're made permanent, the lead artist drags a requirements ticket into your name: the new version's guild system, fourteen screens, from the red notification dot on the entrance to the member list, interaction and visuals both yours. The game designer posts in the group chat, review next Wednesday, followed by three cupped-fist emojis. As of today, the person who stands up to present at review is you.",
   "salary_note": "Estimate: Guangzhou game companies pay UI designers with two or three years' experience ¥12,000-15,000 a month, with a profit share when a game launches, about 40% above the national figure. When a project is cancelled the bonus goes to zero; in this business, income follows the project.",
   "facts": [
-    { "label": "UI/UX Designer (current level)", "value": "2-4 years, ¥7,820–11,500 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
-    { "label": "Next level up", "value": "Senior UI/UX Designer (4-7 years)", "source": "Career map" },
-    { "label": "Pay after 10+ years", "value": "¥21,000 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Running a usability test", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Producing interaction drafts from a product requirements document", "source": "AI exposure" },
-    { "label": "Open positions", "value": "191 related job listings nationwide, 12 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "UI/UX Designer (current level)",
+      "value": "2-4 years, ¥10,900–16,300 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Senior UI/UX Designer (4-7 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥21,000 a month (national average)",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Running a usability test",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Producing interaction drafts from a product requirements document",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "191 related job listings nationwide, 12 in this city (the listings are mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "You come out of the urban village at Kecun as the rice-roll shop in the lane lifts the lid on its first steamer. With a rice noodle roll and a soy milk in hand you squeeze onto Line 8, three stops to Pazhou.",

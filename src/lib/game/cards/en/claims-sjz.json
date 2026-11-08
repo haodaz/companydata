@@ -12,11 +12,31 @@
   "intro": "You spent two years in a dealership service department and have taken off more bumpers than you have met customers. Now you put on a reflective vest printed with the company logo and are handed a phone loaded with the inspection app and a half-worn company car. From today, any collision on the south side of Shijiazhuang, once the call comes in, may land on you.",
   "salary_note": "Estimate: base pay at a Shijiazhuang branch is modest, and income follows claim volume and appraisals, at about 80% of the national average.",
   "facts": [
-    { "label": "Field Claims Adjuster (current level)", "value": "0-3 years, ¥5,270–7,750 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
-    { "label": "Next level up", "value": "Senior Damage Appraiser (3-6 years)", "source": "Common in the trade" },
-    { "label": "Pay after 10+ years", "value": "¥13,500 a month (national average)", "source": "Pay by experience" },
-    { "label": "Where AI is moving in", "value": "Investigating, then collecting, sorting and checking inspection and appraisal files", "source": "AI exposure" },
-    { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Field Claims Adjuster (current level)",
+      "value": "0-3 years, ¥5,270–7,750 a month (national average, derived from pay by experience)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Next level up",
+      "value": "Senior Damage Appraiser (3-6 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥9,900 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Investigating, then collecting, sorting and checking inspection and appraisal files",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "Rush hour isn't over and the app has already sent three jobs, all around Huai'an Road and Tiyu Street. You drop the tape measure and paint gauge in the basket on the passenger seat and start the car.",

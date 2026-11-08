@@ -12,11 +12,31 @@
  "intro": "The Yellow River water is split off at the dam in Qingtongxia and runs through the canals into the fields of Wuzhong, tens of kilometers along. The office director gives you a pair of rubber boots and a canal map and says that when spring irrigation opens, every turnout on this map will be calling you. From today on, you're in charge of where the water goes, when it arrives, and whose land it reaches.",
  "salary_note": "Estimate: at a city-level public water agency, pay follows title and post and runs below the national figure for similar work, but it is stable, with small duty allowances during spring irrigation.",
  "facts": [
-  { "label": "Assistant Engineer (current level)", "value": "0–4 years, ¥4,500–7,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Engineer (4–10 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Settling water disputes", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Operating instruments to observe water quality and silt content", "source": "AI exposure" },
-  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Engineer (current level)",
+   "value": "0–4 years, ¥3,400–4,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Engineer (4–10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Settling water disputes",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Operating instruments to observe water quality and silt content",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "First week of spring irrigation, and you reach your section before dawn. The canal is up a few centimeters from yesterday. You read the gauge by flashlight and write it in your notebook, your hand too cold to write straight.",

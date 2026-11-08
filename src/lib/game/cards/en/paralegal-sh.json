@@ -12,11 +12,31 @@
  "intro": "The day you passed the bar exam, you cried in your rented room. Now you sit on the twenty-second floor of an office tower in Jing'an, your desk holding the files for three cases, a binding machine and a stack of evidence labels not yet stuck on. As of today you're two years from a lawyer's practice license, and every page in those two years passes through your hands first.",
  "salary_note": "Estimate: paralegals and salaried associates at mid-sized Shanghai firms earn thirty to fifty percent above the national figure. Once you make partner, income depends on the clients you bring in, and a good year and a bad one can differ by double.",
  "facts": [
-  { "label": "Paralegal (current level)", "value": "0-1 years, ¥5,000–7,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Trainee Lawyer (1-2 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Running to courts and archives, and sitting in with the lawyer when clients come", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Sorting, naming and filing case materials", "source": "AI exposure" },
-  { "label": "Open positions", "value": "10 related listings nationwide, 1 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Paralegal (current level)",
+   "value": "0-1 years, ¥7,700–12,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Trainee Lawyer (1-2 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Running to courts and archives, and sitting in with the lawyer when clients come",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Sorting, naming and filing case materials",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "10 related listings nationwide, 1 in this city (the job database is mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Metro Line 7 to Line 2. On the train you read through the complaint you're filing today once more on your phone, checking the defendant's name three times.",

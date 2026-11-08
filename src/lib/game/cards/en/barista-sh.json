@@ -12,12 +12,36 @@
   "intro": "At the chain store in Nanchang you could turn out two hundred cups in a morning rush, all by pressing buttons on the machine. Now you stand behind the bar of a Shanghai cafe with twelve seats. The owner hands you a cloth and says: wash cups, learn the beans, and in three months we'll talk about the bar. As of today your name is on the bottom line of the rota.",
   "salary_note": "Estimate: during the trainee period a Shanghai specialty cafe pays a little over ¥5,000 take-home, 20-30% above the national figure. The shop is small; moving up depends on your craft and on running a shop, and there are few places above store manager.",
   "facts": [
-    { "label": "Trainee Barista (current level)", "value": "0-0.5 years, ¥3,500–5,000 a month (national average)", "source": "Career map" },
-    { "label": "Next level up", "value": "Barista (0.5-2 years)", "source": "Career map" },
-    { "label": "Monthly pay, 10+ years in the field", "value": "¥11,000 (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Catching a mixed-up milk order in the lunch rush and coordinating the remake", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Calibrating the grinder and espresso extraction settings before the rush", "source": "AI exposure" },
-    { "label": "Open positions", "value": "101 related job listings nationwide, 2 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Trainee Barista (current level)",
+      "value": "0-0.5 years, ¥3,500–5,000 a month (national average)",
+      "source": "Career map"
+    },
+    {
+      "label": "Next level up",
+      "value": "Barista (0.5-2 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Monthly pay, 10+ years in the field",
+      "value": "¥7,900 (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Catching a mixed-up milk order in the lunch rush and coordinating the remake",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Calibrating the grinder and espresso extraction settings before the rush",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "101 related job listings nationwide, 2 in this city (the listings are mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "You leave the second bedroom of a shared flat in Minhang and change metro lines twice. On the train you recite today's bean list: a washed Ethiopian, an anaerobic Colombian, and the house espresso blend.",

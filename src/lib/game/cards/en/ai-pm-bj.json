@@ -12,12 +12,36 @@
  "intro": "You studied computer science and couldn't out-code your classmates, so you moved into search products and spent two years as an associate product manager at this content-community company in Xierqi. Last month a reorganization left the app's AI Q&A assistant without an owner, and your boss named you in the group chat. From today on, when tens of millions of people type a question into the search box, how the AI answers, and whose fault it is when the answer is wrong, starts with you.",
  "salary_note": "Estimate: the pay-by-experience figures for AI product managers already lean toward the biggest tech firms. This mid-to-large Beijing internet company pays about ten percent below them, over fifteen months a year. The year-end bonus follows the product line's numbers, and the stock options wait on an IPO.",
  "facts": [
-  {"label": "AI Product Manager (current level)", "value": "2-4 years, ¥35,700–52,500 a month (national average, derived from pay by experience)", "source": "Industry norm"},
-  {"label": "Next level up", "value": "Senior AI Product Manager (4-7 years)", "source": "Industry norm"},
-  {"label": "Pay after 10+ years", "value": "¥92,000 a month (national average)", "source": "Pay by experience"},
-  {"label": "What AI can't take", "value": "Deciding whether an AI feature is ready to ship", "source": "AI exposure"},
-  {"label": "Where AI is moving in", "value": "Sorting user feedback and drafting PRDs", "source": "AI exposure"},
-  {"label": "Open positions", "value": "188 related listings nationwide, 59 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+  {
+   "label": "AI Product Manager (current level)",
+   "value": "2-4 years, ¥35,700–52,500 a month (national average, derived from pay by experience)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior AI Product Manager (4-7 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥66,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Deciding whether an AI feature is ready to ship",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Sorting user feedback and drafting PRDs",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "188 related listings nationwide, 59 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "The Changping Line from Shahe to Xierqi, packed so tight you can't lift your elbows. One-handed, you scroll last night's user feedback. One says: it told me the shop was open, I went all the way there, and it had closed long ago.",

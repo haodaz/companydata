@@ -12,12 +12,36 @@
   "intro": "When the e-commerce customer service job disappeared, you scooped your own cat's litter for three months and then signed up to be an in-home pet sitter. Your mentor handed you a pair of shoe covers and a chest camera and said the point of this trade isn't liking cats. The point is behaving, when someone isn't home, as if they were. As of today, your phone holds the codes to other people's front doors.",
   "salary_note": "Estimate: Chengdu's service-sector pay sits near the national average and you are paid by the job. Ordinary months are tight; over Spring Festival and long holidays the rate per visit can double.",
   "facts": [
-    { "label": "Trainee Pet Care Attendant (current level)", "value": "0-1 years, ¥3,000–5,000 a month (national average)", "source": "Career map" },
-    { "label": "Next level up", "value": "Pet Care Provider (1-2 years)", "source": "Career map" },
-    { "label": "Pay after 1–3 years", "value": "¥5,300 (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Spotting a cat's urinary trouble and preparing an emergency sample and vet trip", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Checking the home and logging every step of a visit", "source": "AI exposure" },
-    { "label": "Open positions", "value": "77 linked listings nationwide, 1 in this city (the job database is mostly campus and internship postings)", "source": "Job listings" }
+    {
+      "label": "Trainee Pet Care Attendant (current level)",
+      "value": "0-1 years, ¥3,000–5,000 a month (national average)",
+      "source": "Career map"
+    },
+    {
+      "label": "Next level up",
+      "value": "Pet Care Provider (1-2 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay after 1–3 years",
+      "value": "¥3,800 (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Spotting a cat's urinary trouble and preparing an emergency sample and vet trip",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Checking the home and logging every step of a visit",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "77 linked listings nationwide, 1 in this city (the job database is mostly campus and internship postings)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "In your shared flat off Jianshe Road, you open today's dispatch: nine homes, a loop around the west side. You group the neighbors and put the cat that needs medicine first.",

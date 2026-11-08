@@ -12,12 +12,36 @@
  "intro": "Your desk is in the second row of the forecast hall, with three screens: one showing the weather chart on the forecasting platform, one the province-wide radar mosaic, one the satellite cloud imagery over the South China Sea. On the desk: a duty log, a phone that dials straight through to every city and county weather bureau, and a thermos with goji berries steeping. From today you work night shifts beside the lead forecaster. Every cloud in the sky is yours to watch, but the pen that signs, for now, stays in the lead's hand.",
  "salary_note": "Estimate: the provincial observatory is run as a public institution, with base pay plus performance pay and extra allowances for night shifts and emergency duty. Taken at 95 percent of the national figure for Hainan. Pay only rises noticeably with professional rank and a chief forecaster post.",
  "facts": [
-  { "label": "Assistant Engineer (Second-desk Forecaster) (current level)", "value": "0–3 years, ¥6,000–8,500 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Engineer (Lead Forecaster) (3–8 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Issuing typhoon warnings and briefing the flood-control headquarters", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Forecasting typhoon track and intensity", "source": "AI exposure" },
-  { "label": "Open positions", "value": "5 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Engineer (Second-desk Forecaster) (current level)",
+   "value": "0–3 years, ¥6,000–8,500 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Engineer (Lead Forecaster) (3–8 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥11,400 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Issuing typhoon warnings and briefing the flood-control headquarters",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Forecasting typhoon track and intensity",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "5 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Shift handover. The night lead reads out the state of the tropical disturbance over the South China Sea point by point, and you log its center position and pressure.",

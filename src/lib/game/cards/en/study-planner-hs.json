@@ -12,12 +12,36 @@
   "intro": "The company is on the third floor of a mixed-use building on Hengshui's South Ring Road. The sign at the door was changed a few years back and now reads Advancement Planning Center. Your supervisor assigns you thirty-one students: gaokao (college entrance exam) repeaters, junior-college students trying for a bachelor's degree, working adults studying for grad school, and a few kids whose mothers came with them from the county to rent a room nearby. There's a stack of assessment forms under your elbow and an unopened box of red pens in the drawer. From today, every hour of their week passes through your spreadsheet first.",
   "salary_note": "Estimate: Hengshui is a fourth-tier city and a small company pays base plus renewal commission, about sixty percent of the national average.",
   "facts": [
-    { "label": "Assistant Academic Planner (current level)", "value": "0-1 years, ¥5,525–8,125 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
-    { "label": "Next level up", "value": "Academic Planner (1-3 years)", "source": "Common in the trade" },
-    { "label": "Pay after 3–5 years", "value": "¥12,000 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Hearing, face to face, what a student isn't saying", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "First drafts of study plans and subject balance", "source": "AI exposure" },
-    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Assistant Academic Planner (current level)",
+      "value": "0-1 years, ¥3,400–4,500 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Academic Planner (1-3 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Pay after 3–5 years",
+      "value": "¥4,300 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Hearing, face to face, what a student isn't saying",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "First drafts of study plans and subject balance",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "A breakfast stall on South Ring Road, a fried dough stick in one hand and your phone in the other. A mother who moved here to be near her son sent a fifty-nine-second voice message at eleven last night, asking if he might have a girlfriend.",

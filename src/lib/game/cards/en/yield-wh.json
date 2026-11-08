@@ -12,12 +12,36 @@
  "intro": "Your master's was on OLED device lifetime, and you signed with this flexible screen fab in Optics Valley, posted to yield improvement. Your screens go into a great many phones; they bend and they fold. A screen is built through hundreds of steps on a glass substrate, then peeled off the glass. How many in every hundred come out bad, and at which step, is the question your department answers every morning. From today, some of the red dots on that defect map are yours to chase.",
  "salary_note": "Estimate: the pay-by-experience figures for yield engineers lean toward chip fabs in Shanghai and Beijing; panel fabs in Wuhan pay about 20 percent less, master's graduates start a little higher, and there's a shift allowance (yield has to cover nights too) and a year-end bonus. In industry downturns the year-end bonus shrinks.",
  "facts": [
-  { "label": "Assistant Yield Engineer (current level)", "value": "0–2 years, ¥10,200–15,000 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Yield Engineer (2–5 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥32,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Planning yield ramps for new products and making the call across departments", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Monitoring daily yield reports and defect trends", "source": "AI exposure" },
-  { "label": "Open positions", "value": "8 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Yield Engineer (current level)",
+   "value": "0–2 years, ¥10,200–15,000 a month (national average, derived from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Yield Engineer (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥23,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Planning yield ramps for new products and making the call across departments",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Monitoring daily yield reports and defect trends",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "8 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You walk from your rented room in Guanshan to the metro, buying a bowl of reganmian, Wuhan's hot dry noodles, and mixing it as you go. September in Wuhan is still hot, and sesame paste ends up on your sleeve.",

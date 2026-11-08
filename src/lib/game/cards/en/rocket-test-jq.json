@@ -12,12 +12,36 @@
   "intro": "The commuter bus heads north out of Jiuquan; the asphalt gives out to gravel, and an hour and more later a grey steel tower rises out of the Gobi beside a row of white prefab huts. The engineer assigned to train you hands you a hard hat and a checklist and says: start by putting your hand on every pipe on this stand, and learn where each one comes from and where it goes. As of today your badge reads: Test Team.",
   "salary_note": "Estimate: private rocket companies pay well for propulsion master's graduates, and with the allowance for living on site in the Gobi, starting take-home pay is 20-30% above the national figure. The company lives on investment rounds, so raises and bonuses follow the progress of each rocket and each round of funding.",
   "facts": [
-    { "label": "Assistant Test Engineer (current level)", "value": "0-2 years, ¥9,000–16,000 a month (national average)", "source": "Career map" },
-    { "label": "Next level up", "value": "Rocket Engine Test Engineer (2-5 years)", "source": "Career map" },
-    { "label": "Pay after 10+ years", "value": "¥27,500 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Running the hot-fire sequence and handling shutdowns", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Checking the test stand's instrumentation status and clearing the engine for ignition", "source": "AI exposure" },
-    { "label": "Open positions", "value": "8 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Assistant Test Engineer (current level)",
+      "value": "0-2 years, ¥9,000–16,000 a month (national average)",
+      "source": "Career map"
+    },
+    {
+      "label": "Next level up",
+      "value": "Rocket Engine Test Engineer (2-5 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥48,700 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Running the hot-fire sequence and handling shutdowns",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Checking the test stand's instrumentation status and clearing the engine for ignition",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "8 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "The wind outside the prefab bangs the door against its frame. You drink a bowl of millet porridge in the canteen; through the window the peaks of the Qilian Mountains are still white, and the light is only just full.",

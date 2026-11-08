@@ -12,12 +12,36 @@
  "intro": "You spent ten years in an electronics factory in Suzhou, then went back to Fuyang and raised your grandson. Now he's in primary school, your husband has found work on a building site in Shanghai, and you've followed him; a woman from your home village got you into this tower in Lujiazui. The team leader handed you a gray uniform and an access card and said floors 28 to 30 are yours. As of today, at five every morning, the first person to swipe open those floors is you.",
  "salary_note": "Estimate: outsourced cleaning in a Lujiazui office tower pays about ¥4,500 a month take-home, with overtime and holidays extra, 30% above the national figure. Past retirement age, you are on a labor service agreement, and the company pays no social insurance.",
  "facts": [
-  { "label": "Cleaner (current level)", "value": "0-1 years, ¥3,000–4,500 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Cleaning Team Leader (1-3 years)", "source": "Career map" },
-  { "label": "Pay in the first year", "value": "¥3,600 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Dealing with an unidentified spill in a restroom and handing over", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Mist-dusting the low section of the atrium's glass curtain wall before the lunch rush", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Cleaner (current level)",
+   "value": "0-1 years, ¥3,900–6,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Cleaning Team Leader (1-3 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay in the first year",
+   "value": "¥3,600 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Dealing with an unidentified spill in a restroom and handing over",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Mist-dusting the low section of the atrium's glass curtain wall before the lunch rush",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "At 4:05 you get up in the single-story room you rent in Zhoupu; your husband is still snoring. You warm up last night's steamed bun and ride your e-bike toward Lujiazui along roads that aren't light yet. An hour.",

@@ -12,12 +12,36 @@
  "intro": "You rotated through this hospital's operating rooms for three years, and on the day of your residency exit exam the department head clapped you on the shoulder in the corridor and said: stay. The anesthesia and surgery center is on the fourth floor of the inpatient building, twenty-six operating rooms whose lights come on one by one from half past seven. From today one room on the schedule has only your name on it, and your phone can never be on silent.",
  "salary_note": "Estimate: anesthesiology at a Chengdu Grade 3A hospital means high surgical volume, many nights and one of the higher bonus coefficients in the hospital, so pay is set at 1.2 times the national average; base pay is low at the resident stage, and income comes mostly from bonuses and call pay.",
  "facts": [
-  { "label": "Resident Physician (current level)", "value": "0-4 years, ¥7,000–12,000 a month (national average, estimated)", "source": "Industry norm" },
-  { "label": "Next level up", "value": "Attending Physician (4-9 years)", "source": "Industry norm" },
-  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Intubation and managing difficult airways", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Writing pre-op assessments and anesthesia records", "source": "AI exposure" },
-  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Resident Physician (current level)",
+   "value": "0-4 years, ¥7,000–12,000 a month (national average, estimated)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Next level up",
+   "value": "Attending Physician (4-9 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥41,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Intubation and managing difficult airways",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing pre-op assessments and anesthesia records",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You get to the OR early, change into scrubs, and draw up drugs in the prep room: propofol, sufentanil, rocuronium, a label on every syringe.",

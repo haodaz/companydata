@@ -12,12 +12,36 @@
  "intro": "The company warehouse is on the edge of Chifeng. You have been given a van with more than two hundred thousand kilometers on it and a route: east along National Highway 305, seven townships, eighty-some small shops. Your mentor drove it with you for one week, then tore off the route map and handed it over. From today you go in alone. You straighten the shelf by the door first, and only then do you speak.",
  "salary_note": "Estimate: local distributors in Chifeng pay low base salaries with commission tied to collections, about 60 to 70 percent of the national sales figure; around the Spring Festival peak it can be a good deal more.",
  "facts": [
-  { "label": "Sales Representative (current level)", "value": "0–2 years, ¥5,270–7,750 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Senior Sales Representative (2–5 years)", "source": "Common in the trade" },
-  { "label": "Pay after 3–5 years", "value": "¥11,800 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Talking shelf space and stock with shop owners in person", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Planning visit routes and recommending reorder quantities", "source": "AI exposure" },
-  { "label": "Open positions", "value": "196 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Sales Representative (current level)",
+   "value": "0–2 years, ¥3,400–4,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Sales Representative (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 3–5 years",
+   "value": "¥4,400 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Talking shelf space and stock with shop owners in person",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Planning visit routes and recommending reorder quantities",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "196 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "It is still dark at the warehouse gate. You and the stock clerk check the sheet and load the van: instant noodles, ham sausage, bottled water, spicy strips. Heavy cases on the bottom, crushable ones on top.",

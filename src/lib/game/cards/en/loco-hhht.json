@@ -12,12 +12,36 @@
  "intro": "Your work pass says Trainee, and you carry a crew bag stamped with the railway emblem: a driver's logbook, a torch and a pair of white gloves inside. Your mentor is Master Wang, who has driven trains for over twenty years. His first words: sit on my right, keep your hands still and your mouth busy. From today, on coal train after coal train along the Beijing–Baotou line, you ride in the cab beside him.",
  "salary_note": "Estimate: locomotive crews at the Hohhot depot get a post wage plus performance pay by kilometres and trips, a bit more for night shifts and long runs. Taken at about 85 percent of the national figure.",
  "facts": [
-  { "label": "Trainee Driver (current level)", "value": "0–1 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Assistant Driver (1–4 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥16,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Handling abnormal situations on the line", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Driving the train", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Trainee Driver (current level)",
+   "value": "0–1 years, ¥4,500–6,500 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Assistant Driver (1–4 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥8,400 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Handling abnormal situations on the line",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Driving the train",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Eight hours before duty, you're in compulsory rest at the crew hostel. Outside the window is the depot's servicing yard, electric locomotives lit up one after another, and your sleep comes in fits and starts.",

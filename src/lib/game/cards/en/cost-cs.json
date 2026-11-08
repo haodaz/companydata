@@ -12,12 +12,36 @@
  "intro": "You studied construction cost engineering in Changsha. Interning at this consulting firm in your final year, your mentor had you recalculate a building's rebar from scratch; it took you a month, and your total came within half a tonne of hers. After graduation you stayed on, your desk on the fourteenth floor of an office tower in Yuelu District, drawings and final accounts piled half as high as a person on it. As of today you follow projects out to sites in the Meixi Lake area, learning to tell from a site instruction whether a cubic meter is real.",
  "salary_note": "Estimate: cost consulting firms in Changsha pay estimators a base below the national average, with commission tied to the amount cut in review and to project output. The months of year-end final account rushes pay a little more; in years when government projects pay slowly, commission slips into the following year.",
  "facts": [
-  { "label": "Cost Estimator (current level)", "value": "0-2 years, ¥5,000–7,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Grade 2 Cost Engineer (2-5 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥15,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Final accounts, audits and full-cycle cost consulting", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Preparing bills of quantities, tender ceiling prices, bid prices and contract price documents", "source": "AI exposure" },
-  { "label": "Open positions", "value": "82 related listings nationwide, 1 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Cost Estimator (current level)",
+   "value": "0-2 years, ¥5,000–7,000 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Grade 2 Cost Engineer (2-5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥10,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Final accounts, audits and full-cycle cost consulting",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Preparing bills of quantities, tender ceiling prices, bid prices and contract price documents",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "82 related listings nationwide, 1 in this city (the job database is mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "At the rice noodle shop below your rented room you slurp a bowl of shredded pork noodles with a spoonful of chopped chili, then hurry for the metro to the project office out by Meixi Lake.",

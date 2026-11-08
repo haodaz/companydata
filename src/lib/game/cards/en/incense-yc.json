@@ -12,11 +12,31 @@
  "intro": "Your family in Dapu has made incense for three generations; your grandfather's generation carried it on shoulder poles to the Chinese communities of Southeast Asia. You went to Fuzhou to study Chinese materia medica. Your classmates went into pharmaceutical plants and hospitals; you came home after graduating. As of today you work beside your father, starting from a bundle of bamboo splints and a basin of incense paste, taking the craft into your own hands bit by bit.",
  "salary_note": "Estimate: a family incense workshop in Yongchun earns by the order. The run-up to the Ghost Festival and to Spring Festival is high season; the rest of the year is slow. Family members take a share of profits rather than a wage, which works out to thirty or forty percent below the national average a month, and in a good year can double.",
  "facts": [
-  {"label": "Incense Maker (current level)", "value": "1-3 years, ¥4,500–7,000 a month (national average, estimated)", "source": "Industry norm"},
-  {"label": "Next level up", "value": "Incense Artisan (3-6 years)", "source": "Industry norm"},
-  {"label": "What AI can't take", "value": "Opening a batch from cellar aging and inspecting it", "source": "AI exposure"},
-  {"label": "Where AI is moving in", "value": "Grinding a batch of incense powder to a formula, mixing the paste and forming it", "source": "AI exposure"},
-  {"label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+  {
+   "label": "Incense Maker (current level)",
+   "value": "1-3 years, ¥3,000–4,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Incense Artisan (3-6 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Opening a batch from cellar aging and inspecting it",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Grinding a batch of incense powder to a formula, mixing the paste and forming it",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "It's barely light and your father is already in the courtyard reading the sky: no clouds in the east, wind coming down off the hills, a drying day. You pull on your old sleeve covers and pin up your hair.",

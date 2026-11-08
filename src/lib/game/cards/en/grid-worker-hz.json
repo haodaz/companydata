@@ -12,11 +12,31 @@
   "intro": "You spent three years in customer service at an e-commerce company, answering hundreds of messages a day on a screen. Last year the subdistrict advertised for full-time grid workers. You applied and passed the written test and interview. Your grid sits by the Grand Canal: an estate from the 1980s, thirty-odd six-story blocks, and a two-hundred-meter row of street-front shops. As of today, every broken street light and every e-bike jammed in a stairwell in this patch gets reported first through your phone.",
   "salary_note": "Estimate: full-time grid workers in Hangzhou's subdistricts are paid on the community worker scale plus performance pay. Hangzhou pays at the high end for this kind of post nationally, about one and a half times the national figure.",
   "facts": [
-    { "label": "Full-time Grid Worker (current level)", "value": "0–3 years, ¥4,000–5,500 a month (national average, estimated)", "source": "Common in the trade" },
-    { "label": "Next level up", "value": "Grid Leader (3–7 years)", "source": "Common in the trade" },
-    { "label": "What AI can't take", "value": "Checking for fire and public safety hazards", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Patrolling the grid for street-scape and sanitation problems", "source": "AI exposure" },
-    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Full-time Grid Worker (current level)",
+      "value": "0–3 years, ¥5,600–7,900 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Grid Leader (3–7 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Checking for fire and public safety hazards",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Patrolling the grid for street-scape and sanitation problems",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "Clock in at the subdistrict's governance center, collect a radio, open the governance app and check the three work orders the system sent you overnight: a loose manhole cover, an overflowing bin, a resident's noise complaint.",

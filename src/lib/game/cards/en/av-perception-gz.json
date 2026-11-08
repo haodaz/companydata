@@ -12,12 +12,36 @@
  "intro": "You studied vehicle engineering for your master's, with a thesis on fusing lidar and cameras, and after graduating joined this robotaxi company in Nansha. This is your third year on the perception team. Your company's few hundred cars drive the streets of Nansha and Huangpu with a safety driver in the front seat, and passengers can hail one from their phones. From today on, whether a car sees the person with an umbrella at the roadside on a rainy night is partly on you.",
  "salary_note": "Estimate: Guangzhou's leading autonomous driving companies pay perception engineers about thirty percent above the national average, plus options. The company lives on its fundraising; in bad fundraising years, raises and hiring both stop, and the options are only money on paper.",
  "facts": [
-  {"label": "Perception Engineer (current level)", "value": "2-4 years, ¥19,380–28,500 a month (national average, derived from pay by experience)", "source": "Industry norm"},
-  {"label": "Next level up", "value": "Senior Perception Engineer (4-7 years)", "source": "Industry norm"},
-  {"label": "Pay after 10+ years", "value": "¥41,000 a month (national average)", "source": "Pay by experience"},
-  {"label": "What AI can't take", "value": "Designing multi-sensor fusion and validating it on real rainy nights", "source": "AI exposure"},
-  {"label": "Where AI is moving in", "value": "Auto-labeling and mining long-tail clips", "source": "AI exposure"},
-  {"label": "Open positions", "value": "108 related listings nationwide, 3 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+  {
+   "label": "Perception Engineer (current level)",
+   "value": "2-4 years, ¥28,200–37,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Perception Engineer (4-7 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥41,000 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Designing multi-sensor fusion and validating it on real rainy nights",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Auto-labeling and mining long-tail clips",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "108 related listings nationwide, 3 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Driving from home in Panyu onto the Nansha Port Expressway, you run alongside one of your company's cars for a stretch. It's on your right, the lidar on its roof spinning, and without thinking you ease off a little.",

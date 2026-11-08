@@ -12,12 +12,36 @@
   "intro": "You've worked at a public kindergarten in a Hunan county town for ten years. You hold a permanent state post and lead the senior class, the five- and six-year-olds. There are thirty-five children in your class, and the people who drop them off and pick them up are mostly grandparents. Their parents are in Guangdong and Zhejiang and come home at New Year. Each year the youngest class is harder to fill; the classroom at the end of the corridor has been empty for a whole term. As of today, you have many more years to spend here.",
   "salary_note": "Estimate: a permanent post at a public kindergarten in a Hunan county town. Pay plus performance bonus is steady but low, roughly 60% of the national average.",
   "facts": [
-    { "label": "Current rung: Lead Teacher", "value": "Runs all care and teaching for one class on their own, ¥5,000–8,500 a month (national average)", "source": "Career map" },
-    { "label": "Next level up: Teaching-Research Lead / Year-Group Lead", "value": "¥7,500–12,000 a month (national average); requires a public demonstration lesson or research project at district level or above", "source": "Career map" },
-    { "label": "Pay after 10+ years", "value": "¥7,800 a month (national average; noticeably lower in county towns)", "source": "Pay by experience" },
-    { "label": "Open positions", "value": "478 related listings nationwide; no county-level figures, mostly campus hiring and internships", "source": "Job listings" },
-    { "label": "What AI can't take", "value": "Morning health checks at the gate, nap-time rounds, minor injuries at pickup: all of it needs a person there who's accountable", "source": "AI exposure" },
-    { "label": "New work AI brings", "value": "Reviewing AI-drafted activity plans and messages to parents, and keeping the human-plus-machine workflow for observation records running", "source": "AI exposure" }
+    {
+      "label": "Current rung: Lead Teacher",
+      "value": "Runs all care and teaching for one class on their own, ¥3,900–4,300 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up: Teaching-Research Lead / Year-Group Lead",
+      "value": "¥4,500–8,600 a month (at this employer, estimated); requires a public demonstration lesson or research project at district level or above",
+      "source": "Estimate"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥6,000 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Open positions",
+      "value": "478 related listings nationwide; no county-level figures, mostly campus hiring and internships",
+      "source": "Job listings"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Morning health checks at the gate, nap-time rounds, minor injuries at pickup: all of it needs a person there who's accountable",
+      "source": "AI exposure"
+    },
+    {
+      "label": "New work AI brings",
+      "value": "Reviewing AI-drafted activity plans and messages to parents, and keeping the human-plus-machine workflow for observation records running",
+      "source": "AI exposure"
+    }
   ],
   "day": [
     "Up. You do your own child's hair and tuck a steamed bun into her hand. Out the door on your e-bike, past the noodle shop, with no time to sit down for a bowl of rice noodles.",

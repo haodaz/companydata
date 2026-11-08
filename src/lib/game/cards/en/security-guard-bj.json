@@ -12,12 +12,36 @@
   "intro": "You spent more than ten years on building sites: rebar, scaffolding, formwork, all of it. The year before last you twisted your back climbing down from the scaffold, and after that the foreman stopped giving you work at height. A man from your home county got you a job as a guard at an upscale housing estate in Beijing, and the property company put all the new hires through the security guard license. You live in the staff dorm in the basement, eight to a room; the young man in the bunk above you is more than twenty years your junior. As of today your post for the year is the east gate, morning shift, on at seven.",
   "salary_note": "Estimate: a guard at an upscale Beijing estate earns about ¥5,000–6,000 a month, with a bed and one meal provided by the property company, roughly 20% above the national average. Squad leader and supervisor don't pay much more.",
   "facts": [
-    { "label": "Security Officer (current level)", "value": "0–1 years, ¥3,500–5,500 a month (national average)", "source": "Career map" },
-    { "label": "Next level up", "value": "Security Squad Leader (1–3 years)", "source": "Career map" },
-    { "label": "Pay after 10+ years", "value": "¥6,800 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Responding to a smoke alarm in the underground garage and handing it over", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Writing the quarterly security risk assessment for a big shopping complex's underground car park", "source": "AI exposure" },
-    { "label": "Open positions", "value": "2 related listings nationwide, 0 in this city (the listings are mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Security Officer (current level)",
+      "value": "0–1 years, ¥4,800–7,400 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Security Squad Leader (1–3 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥6,800 a month (national average)",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Responding to a smoke alarm in the underground garage and handing it over",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Writing the quarterly security risk assessment for a big shopping complex's underground car park",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "2 related listings nationwide, 0 in this city (the listings are mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "There are no windows in the basement. When the alarm goes, the young man in the top bunk rolls over. You wash your face at the sink at the end of the corridor, do up your uniform buttons one by one, and set your cap straight.",

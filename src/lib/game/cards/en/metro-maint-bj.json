@@ -12,11 +12,31 @@
  "intro": "Your badge carries the depot's name; in the photo your hair is cropped short. Your tool bag is workshop issue: an inspection hammer, a head torch, insulated gloves, a book of job cards. The team leader, Liu, takes you down into the pit on your first night and says: the train is over your head and you're underneath it, so your eyes get there before your hands. From today, the hours between the last train coming in and the first one going out in the morning are yours.",
  "salary_note": "Estimate: maintenance technicians at a Beijing metro operator get a post wage plus night-shift allowance and performance pay, taken at 1.35 times the national figure. The employer pays full social insurance and housing fund, and months with more nights pay a bit more.",
  "facts": [
-  { "label": "Maintenance Technician, Grade 5 / Junior (current level)", "value": "0–2 years, ¥5,500–7,500 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Maintenance Technician, Grade 4 / Intermediate (2–5 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Repairing and replacing worn or faulty parts", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Daily train checks and scheduled inspections", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Maintenance Technician, Grade 5 / Junior (current level)",
+   "value": "0–2 years, ¥7,400–10,200 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Maintenance Technician, Grade 4 / Intermediate (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Repairing and replacing worn or faulty parts",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Daily train checks and scheduled inspections",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You arrive at the depot, change into work clothes and draw your tools. At the pre-shift meeting the team leader reads out tonight's plan: twelve trains on daily checks, two on fortnightly checks, and a door alarm to chase on the train in shed three.",

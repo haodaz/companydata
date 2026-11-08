@@ -12,12 +12,36 @@
  "intro": "You studied electronic information engineering in Chengdu, and in your final year got an offer from this research institute in the western high-tech zone. You joined the signal processing lab to write FPGA designs under a mentor with twenty years in. The equipment you build goes into satellite ground stations and private-network base stations; signals coming down from the sky pass through a few thousand lines of your code first. Your probation is over, and from today on, part of what runs inside the chip on that board carries your name.",
  "salary_note": "Estimate: communications research institutes in Chengdu pay engineers a little over twenty percent below the national average, but contribute generously to the housing fund and occupational annuity, with a canteen, subsidized talent apartments, and project bonuses when a program milestone is passed. Raises follow professional titles, earned one rank at a time.",
  "facts": [
-  {"label": "Assistant Engineer (current level)", "value": "0-4 years, ¥10,200–15,000 a month (national average, derived from pay by experience)", "source": "Industry norm"},
-  {"label": "Next level up", "value": "Engineer (4-9 years)", "source": "Industry norm"},
-  {"label": "Pay after 10+ years", "value": "¥35,000 a month (national average)", "source": "Pay by experience"},
-  {"label": "What AI can't take", "value": "Joint debugging with the hardware, software and systems teams", "source": "AI exposure"},
-  {"label": "Where AI is moving in", "value": "Writing design documents, test reports and interface specs", "source": "AI exposure"},
-  {"label": "Open positions", "value": "36 related listings nationwide, 2 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+  {
+   "label": "Assistant Engineer (current level)",
+   "value": "0-4 years, ¥8,300–10,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Engineer (4-9 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥24,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Joint debugging with the hardware, software and systems teams",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing design documents, test reports and interface specs",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "36 related listings nationwide, 2 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Metro Line 2 to the western zone, then a shared bike from the station. The guard at the institute gate knows you and nods. You lock your phone in the phone cabinet at the lab building entrance and hang the key around your neck.",

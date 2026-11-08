@@ -12,12 +12,36 @@
  "intro": "Zhangye sits in the middle of the Hexi Corridor, with the snows of the Qilian Mountains to the south, the Gobi to the north, and between them an oasis watered by snowmelt. A good share of China's corn seed starts here. The company has assigned you to the base in Linze, with more than three thousand mu (about 500 acres) of parent lines. From today you walk this land every day, and first you have to learn which row is the father and which the mother.",
  "salary_note": "Estimate: technicians at seed bases in Zhangye earn a bit over 70 percent of the national figure, with field and travel allowances in the season and basic pay in the off months.",
  "facts": [
-  { "label": "Research Assistant / Trial Specialist / Technician (current level)", "value": "0–2 years, ¥4,420–6,500 a month (national average, derived from pay by experience)", "source": "Pay by experience" },
-  { "label": "Next level up", "value": "Assistant Agronomist / Assistant Breeder (1–4 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥12,600 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Training growers on varieties and cultivation at demonstration fields", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Field trait surveys and data entry", "source": "AI exposure" },
-  { "label": "Open positions", "value": "32 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Research Assistant / Trial Specialist / Technician (current level)",
+   "value": "0–2 years, ¥3,300–4,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Assistant Agronomist / Assistant Breeder (1–4 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥7,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Training growers on varieties and cultivation at demonstration fields",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Field trait surveys and data entry",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "32 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Just at first light you ride your motorcycle out to the fields. The wind off the Gobi is cool in the morning, and the dew on the corn soaks your trousers to the knee.",

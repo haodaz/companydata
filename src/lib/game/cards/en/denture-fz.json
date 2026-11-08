@@ -12,12 +12,36 @@
   "intro": "You spent two years pouring plaster in this factory's model room, and this year your mentor slid a loupe and a set of porcelain brushes across to you. A hundred people sit in rows with their heads down, the air purifiers hum, and in every little box on every bench are some stranger's teeth. From today, you make with your own hands the tooth in someone's mouth that shows the most.",
   "salary_note": "Estimate: Fuzhou dental labs pay base plus piece rate, generally below Tier-1 cities, at about 90% of the national average.",
   "facts": [
-    { "label": "Dental Technician (current level)", "value": "2-6 years, ¥6,000–9,000 a month (national average, estimated)", "source": "Common in the trade" },
-    { "label": "Next level up", "value": "Senior Dental Technician (6-12 years)", "source": "Common in the trade" },
-    { "label": "Pay after 10+ years", "value": "¥18,600 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Making complete and removable partial dentures", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Receiving and checking dentists' prescriptions, design orders and impressions", "source": "AI exposure" },
-    { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Dental Technician (current level)",
+      "value": "2-6 years, ¥6,000–9,000 a month (national average, estimated)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Next level up",
+      "value": "Senior Dental Technician (6-12 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥13,900 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Making complete and removable partial dentures",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Receiving and checking dentists' prescriptions, design orders and impressions",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "In Jinshan you eat a bowl of guobian rice-batter soup, walk through the factory gate and change into a white coat and shoe covers. On your bench is the stack of work orders you lined up before leaving yesterday.",

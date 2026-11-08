@@ -12,11 +12,31 @@
  "intro": "Around Jiubao, by day it's people pushing clothing racks across the road; by night it's the ring lights of livestream studios, window after window. You're an assistant designer at an online womenswear brand that launches new styles every week; the fastest a style goes from sketch to a live listing is fifteen days. From today, the \"Design\" line on the sample tags starts carrying your name.",
  "salary_note": "Estimate: Hangzhou is the capital of online womenswear, with more brands and faster launches than anywhere, so design jobs pay a little over twenty percent above the national figure. Sale seasons bring commission and bonuses, and a runaway hit earns a bestseller bonus; in a season when nothing sells, it's base pay only.",
  "facts": [
-  { "label": "Assistant Designer (current level)", "value": "0–2 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Fashion Designer (2–5 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Fitting samples and correcting them", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Drawing flats and prints", "source": "AI exposure" },
-  { "label": "Open positions", "value": "4 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Designer (current level)",
+   "value": "0–2 years, ¥6,300–11,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Fashion Designer (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Fitting samples and correcting them",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Drawing flats and prints",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "4 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Metro Line 1 to Jiubao. Outside the station is the wholesale clothing market, and tricycles hauling sacks of garments rattle past you.",

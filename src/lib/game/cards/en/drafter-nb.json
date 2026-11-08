@@ -12,12 +12,36 @@
  "intro": "For three months as an intern you traced hundreds of old drawings at the desk nearest the door in the engineering office. Today your supervisor handed you the 2D drawing package for a die-casting mold for a gearbox housing: the drawings go to the shop floor this afternoon, and the CNC machinists are waiting. As of today, the Drawn by box in the bottom right corner of the title block carries your name.",
  "salary_note": "Estimate: a drafter with a secondary vocational diploma at a Ningbo mold factory takes home ¥4,500–5,500 after probation, with a dorm bed but no meals, a little over 10% below the national figure. Moving up depends on being able to design a whole mold, and formal education is a hard ceiling.",
  "facts": [
-  { "label": "Assistant Mechanical Design Engineer (current level)", "value": "0-2 years, ¥5,000–8,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Mechanical Design Engineer (2-5 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥13,800 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Tracking down an interference on the first part on the shop floor and measuring the root cause in the tolerances", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Taking on a first drawing revision and confirming what the job is based on", "source": "AI exposure" },
-  { "label": "Open positions", "value": "266 related job listings nationwide, 9 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Mechanical Design Engineer (current level)",
+   "value": "0-2 years, ¥5,000–8,000 a month (national average)",
+   "source": "Career map"
+  },
+  {
+   "label": "Next level up",
+   "value": "Mechanical Design Engineer (2-5 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥21,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Tracking down an interference on the first part on the shop floor and measuring the root cause in the tolerances",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Taking on a first drawing revision and confirming what the job is based on",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "266 related job listings nationwide, 9 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "At 7:10 you come out of the four-bed factory dorm for a bowl of rice-cake soup with pickled greens in the canteen. The shop floor has already started up; through two walls you can hear the die-casting machine on a mold trial.",

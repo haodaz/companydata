@@ -12,12 +12,36 @@
   "intro": "You started as an intern on the floor, working the chat and the hype, and have moved through three streaming rooms at this company. Last month the supervisor who trained you left for a competitor, and the boss handed you a womenswear account that streams every day: two hosts, a floor controller, a console operator listing products and changing prices, on air at seven every evening. From today, every data sheet this room produces is yours to explain.",
   "salary_note": "Estimate: livestream operators in Hangzhou earn a base salary plus commission on gross sales, taken at 1.2 times the national figure. Commission rises and falls with the stream; a good month can pay double a bad one.",
   "facts": [
-    { "label": "Livestream Operations Specialist (current level)", "value": "1–3 years, ¥8,000–15,000 a month (national average)", "source": "Career map" },
-    { "label": "Next level up", "value": "Livestream Operations Supervisor (3–5 years)", "source": "Career map" },
-    { "label": "Pay at 1–3 years", "value": "¥11,500 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Emergency coordination when traffic floods in during a major sale, and keeping the room steady", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Pre-stream handover checks and lineup rehearsal", "source": "AI exposure" },
-    { "label": "Open positions", "value": "18 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Livestream Operations Specialist (current level)",
+      "value": "1–3 years, ¥11,700–20,000 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Livestream Operations Supervisor (3–5 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay at 1–3 years",
+      "value": "¥11,500 a month (national average)",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Emergency coordination when traffic floods in during a major sale, and keeping the room steady",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Pre-stream handover checks and lineup rehearsal",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "18 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "You wake in your rented room, and the first thing you do is open the dashboard for last night's numbers: average watch time down eight seconds, returns climbing on one jacket.",

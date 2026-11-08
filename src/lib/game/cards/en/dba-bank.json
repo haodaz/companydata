@@ -12,12 +12,36 @@
  "intro": "You spent two years as an outsourced contractor doing operations on site at a bank, switched to DBA work, and have now been three years at this bank's data center. The server halls run hundreds of databases, and the one that matters most is a twenty-year-old core accounting database, which is being moved, piece by piece, onto a Chinese-made distributed database. As of today, your name is on the Saturday-morning change window and the New Year's Eve duty roster.",
  "salary_note": "Estimate: a bank data center in Shanghai employs you as regular bank staff, with base pay plus a year-end bonus, and allowances for night changes and holiday duty on top. Take-home pay is twenty to thirty percent above the national DBA average. In years when the bank does badly, the year-end bonus is cut.",
  "facts": [
-  { "label": "Database Administrator (current level)", "value": "2-4 years, ¥13,000–22,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Senior Database Administrator (4-7 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Running the annual live failover drill to the remote disaster recovery site", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Running the full health check at 06:00 every day", "source": "AI exposure" },
-  { "label": "Open positions", "value": "30 related listings nationwide, 6 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Database Administrator (current level)",
+   "value": "2-4 years, ¥24,700–28,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Database Administrator (4-7 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥57,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Running the annual live failover drill to the remote disaster recovery site",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Running the full health check at 06:00 every day",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "30 related listings nationwide, 6 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Out of the metro at Zhangjiang, you ride a shared bike to the data center. At the door you swipe your badge, scan your fingerprint and lock your phone in a locker. Phones aren't allowed in the production area.",

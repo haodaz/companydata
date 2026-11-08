@@ -12,11 +12,31 @@
  "intro": "You rotated through this mental health center for three years, and on the day you completed residency the ward director put a ring of keys in your hand: the ward's main door, the doctors' office, the interview room, the medicine cabinet, seven keys in all. The ward is on the fourth floor of the inpatient building, the corridor long and bright, the windows opening only a hand's width. Of the twelve beds in your care, some patients arrived two days ago and some are nearly ready to go home. From today the keys hang at your waist at all times: open a door, turn, and lock it behind you.",
  "salary_note": "Estimate: a resident at a Shanghai municipal psychiatric hospital earns base salary plus performance pay, around twelve thousand yuan a month, about 1.3 times the national average; psychiatry has no surgical bonuses and pays noticeably less than surgery at the same grade, rising only with more night shifts and clinic volume.",
  "facts": [
-  { "label": "Resident Physician (current level)", "value": "0-5 years, ¥6,500–11,000 a month (national average, estimated)", "source": "Industry norm" },
-  { "label": "Next level up", "value": "Attending Physician (5-10 years)", "source": "Industry norm" },
-  { "label": "What AI can't take", "value": "The clinical interview and mental status exam", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Writing progress notes and discharge summaries", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Resident Physician (current level)",
+   "value": "0-5 years, ¥8,500–14,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Attending Physician (5-10 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "The clinical interview and mental status exam",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing progress notes and discharge summaries",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You unlock the ward's first door, turn and lock it behind you, then open the second. The nurses' station is already at handover: which bed didn't sleep, which bed skipped breakfast, which bed's family says they're coming today.",

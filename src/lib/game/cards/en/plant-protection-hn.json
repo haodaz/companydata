@@ -12,11 +12,31 @@
  "intro": "The plant protection station is a two-story building in the back courtyard of the county Agriculture Bureau, with a light trap on the roof and a pickup in the yard with half its paint gone. Over a million mu (about 165,000 acres) of wheat in this county, and when the aphids in a given field pass the treatment threshold, or which day a bulletin should go out, the word goes out from here. From today you have to learn to crouch down between the wheat rows and count, one plant at a time.",
  "salary_note": "Estimate: a permanent public-institution post in a county town in eastern Henan, base pay plus performance pay and a township work allowance, about 40 percent below the national figure. Pay rises slowly with professional title and grade; no commission, and little chance of being let go.",
  "facts": [
-  {"label": "Technician (Probation) (current level)", "value": "0–1 years, ¥5,000–7,000 a month (national average, estimated)", "source": "Common in the trade"},
-  {"label": "Next level up", "value": "Assistant Agronomist (1–5 years)", "source": "Common in the trade"},
-  {"label": "What AI can't take", "value": "Surveying the fields and deciding whether to spray", "source": "AI exposure"},
-  {"label": "Where AI is moving in", "value": "Light trap counts, spore identification, data aggregation", "source": "AI exposure"},
-  {"label": "Open positions", "value": "4 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings"}
+  {
+   "label": "Technician (Probation) (current level)",
+   "value": "0–1 years, ¥3,000–3,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Assistant Agronomist (1–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Surveying the fields and deciding whether to spray",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Light trap counts, spore identification, data aggregation",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "4 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "First you climb to the roof and tip last night's catch from the light trap into a white porcelain tray, then sort through it with tweezers: three armyworm moths, a heap of chafers. You log the count in the forecasting notebook.",

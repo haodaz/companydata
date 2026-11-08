@@ -12,12 +12,36 @@
  "intro": "At the ratings agency you scored thousands of companies, and never once saw a fund manager buy or sell a stock because of your score. Now you sit on the buy side, in the research department, with the steel analyst on your left and a fund manager running billions on your right. As of today, you have to make them believe that carbon emissions and boardrooms are things that belong in the price too.",
  "salary_note": "Estimate: an investment research job at a Shanghai mutual fund company, monthly pay plus the year-end bonus spread across the months, runs fifty to seventy percent above the national figure. In bad market years the bonus is halved, and non-core teams like ESG get cut first.",
  "facts": [
-  { "label": "Sustainable Investment Analyst (current level)", "value": "2-4 years, ¥10,030–14,750 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
-  { "label": "Next level up", "value": "Senior ESG Analyst / ESG Investment Manager (4-7 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "On-site due diligence and talking through what needs to improve", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Presenting the ESG view to the investment committee", "source": "AI exposure" },
-  { "label": "Open positions", "value": "1 related job listing nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Sustainable Investment Analyst (current level)",
+   "value": "2-4 years, ¥16,000–27,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior ESG Analyst / ESG Investment Manager (4-7 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥36,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "On-site due diligence and talking through what needs to improve",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Presenting the ESG view to the investment committee",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "1 related job listing nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Metro Line 2, packed all the way to Lujiazui. In the elevator you finish the overnight news: a chemical company fined by environmental authorities, a European disclosure rule postponed again.",

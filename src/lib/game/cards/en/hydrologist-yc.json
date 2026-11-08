@@ -12,12 +12,36 @@
  "intro": "In your locker: an orange life jacket, a pair of tall rubber boots, a survey logbook, a pencil and a stopwatch. The station house sits on the slope above the river. Out the window is a row of staff gauges marked with numbers, and below them the station's white survey boat. From today you go out on the boat with the survey crew. How deep the river runs each day, how fast, how much sand it carries away: some of those numbers will be written down by you.",
  "salary_note": "Estimate: a permanent post at a gauging station under the river basin authority, base pay plus performance pay, with extra allowances for fieldwork and flood-season duty. Taken at 95 percent of the national figure for Yichang. Pay only rises noticeably with skill grade and a station chief post.",
  "facts": [
-  { "label": "Hydrological Surveyor (Grade 4 / Intermediate) (current level)", "value": "0–3 years, ¥5,500–7,500 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Hydrological Surveyor (Grade 3 / Senior) (3–7 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥21,800 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Measuring floods in flood season", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Automatic water level and rainfall monitoring and reporting", "source": "AI exposure" },
-  { "label": "Open positions", "value": "6 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Hydrological Surveyor (Grade 4 / Intermediate) (current level)",
+   "value": "0–3 years, ¥5,500–7,500 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Hydrological Surveyor (Grade 3 / Senior) (3–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥11,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Measuring floods in flood season",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Automatic water level and rainfall monitoring and reporting",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "6 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You go down to the riverbank to read the staff gauge, then back to the station house to check it against the automatic station, and write in the logbook: water level, up two centimeters.",

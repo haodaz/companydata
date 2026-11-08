@@ -12,12 +12,36 @@
   "intro": "A year ago you were writing requirements documents in Beijing. Now at seven every morning you're hauling tanks on the pier. Your severance went almost entirely on certifications and gear. Last winter you got your instructor's license, and now you teach try-dives and certification courses at this dive shop in Sanya. As of today, on the shop's rota you're “Instructor”, no longer “the new one”.",
   "salary_note": "Estimate: dive instructors in Sanya earn a low base and live on hourly fees and commission. In the winter high season a month can bring ¥10,000–20,000; in the summer typhoon season it may be base pay only. Across the year, about 10-plus percent below the national average.",
   "facts": [
-    { "label": "Open Water Scuba Instructor (current level)", "value": "1–2 years, ¥6,000–12,000 a month (national average)", "source": "Career map" },
-    { "label": "Next level up", "value": "Master Scuba Diver Trainer (2–4 years)", "source": "Career map" },
-    { "label": "Pay at 5–10 years", "value": "¥26,169 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Handling a student on a reef dive whose mask floods and who bolts for the surface in panic", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Final pre-dive gear checks and safety screening", "source": "AI exposure" },
-    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Open Water Scuba Instructor (current level)",
+      "value": "1–2 years, ¥6,000–12,000 a month (national average)",
+      "source": "Career map"
+    },
+    {
+      "label": "Next level up",
+      "value": "Master Scuba Diver Trainer (2–4 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay at 5–10 years",
+      "value": "¥9,400 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Handling a student on a reef dive whose mask floods and who bolts for the surface in panic",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Final pre-dive gear checks and safety screening",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "You live in an urban village two streets back from the sea, and the chickens downstairs have already crowed. You ride your e-bike to the shop, checking sea conditions on your phone as you go: northeast wind, force three, half-meter swell. Boats can go out.",

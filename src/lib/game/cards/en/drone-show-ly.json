@@ -12,12 +12,36 @@
  "intro": "You've come back to Liuyang and joined a company that does drone light shows. Every family here knows someone who sets off fireworks, and now you'll be launching a different sort of thing. Your team leader has you memorize the serial numbers of three hundred batteries first. Aircraft don't lie, he says. What lies is you, not looking closely enough. From today on, your work is what happens after dark.",
  "salary_note": "Estimate: the national figure leans toward drone firms in Shenzhen and Shanghai. Base pay in Liuyang is low and depends on commissions per show, and income in the busy and slow seasons can differ by a factor of two.",
  "facts": [
-  { "label": "Assistant Flight Planner (current level)", "value": "0–2 years, ¥10,200–15,000 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Flight Planner (2–5 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥25,800 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Risk assessment and emergency response to high wind, lost communications and position drift", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Writing flight scripts for shows, inspection or logistics and drawing up flight plans", "source": "AI exposure" },
-  { "label": "Open positions", "value": "10 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Flight Planner (current level)",
+   "value": "0–2 years, ¥6,900–9,400 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Flight Planner (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥14,400 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Risk assessment and emergency response to high wind, lost communications and position drift",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing flight scripts for shows, inspection or logistics and drawing up flight plans",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "10 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "The company's warehouse is in an industrial park by the Liuyang River. You arrive early, open up last night's aircraft case by case and check the propellers for cracks.",

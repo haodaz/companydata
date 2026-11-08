@@ -12,11 +12,31 @@
  "intro": "Your desk is by the window in the data platform row, and on the edge of the monitor is a sticky note left by the person before you: “GMV: use Finance’s definition.” In your first week, seventeen data requests piled up in the ticket system. The top one, flagged red, came from the livestream team: “Why did conversion drop yesterday? Urgent.” As of today, that question is yours to answer.",
  "salary_note": "Estimate: a master’s-level graduate analyst at a Hangzhou e-commerce company makes around ¥15,000 a month, roughly 1.3–1.4 times the national figure; the year-end bonus is tied to how the sales festivals go, and a good year and a bad year can differ by several months’ pay.",
  "facts": [
-  { "label": "Junior Data Analyst (current level)", "value": "0-2 years, ¥8,000–15,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Data Analyst (2-4 years)", "source": "Career map" },
-  { "label": "Monthly pay, 10+ years in the field", "value": "¥23,000 (national average)", "source": "Pay by experience" },
-  { "label": "Where AI is moving in", "value": "The morning check of core business metrics and chasing down sudden swings", "source": "AI exposure" },
-  { "label": "Open positions", "value": "302 related job listings nationwide, 12 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Junior Data Analyst (current level)",
+   "value": "0-2 years, ¥10,800–20,400 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Data Analyst (2-4 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Monthly pay, 10+ years in the field",
+   "value": "¥44,500 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "The morning check of core business metrics and chasing down sudden swings",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "302 related job listings nationwide, 12 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You ride your e-bike from a shared flat in an old Binjiang housing estate to the office park, buy two scallion-pancake rolls at the breakfast stall, and check your phone at a red light: someone in the overnight metrics chat has already tagged you.",

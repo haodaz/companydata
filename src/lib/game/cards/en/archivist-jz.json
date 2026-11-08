@@ -12,11 +12,31 @@
   "intro": "The archives is on the third floor of the old building behind the county government. There are seven people on staff, and the stacks only open when two of them turn their keys together. You passed the exam for a permanent state post this year and were sent here, and on your first day someone asked you where the 1978 hiring forms were kept. From today, the year anyone in this county joined a factory, or married, has to be found again in the paper in your hands.",
   "salary_note": "Estimate: county public institutions pay on the local scale, below the national average. The appeal is stability, and the year-end bonus is small.",
   "facts": [
-    { "label": "Archives Clerk (current level)", "value": "0–3 years, ¥4,500–6,000 a month (national average, estimate)", "source": "Common in the trade" },
-    { "label": "Next level up", "value": "Assistant Archivist (3–8 years)", "source": "Common in the trade" },
-    { "label": "What AI can't take", "value": "Deciding whether old records can be opened, and who may read them", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Recognizing and cataloging old records after scanning", "source": "AI exposure" },
-    { "label": "Open positions", "value": "11 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Archives Clerk (current level)",
+      "value": "0–3 years, ¥2,900–3,600 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Assistant Archivist (3–8 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Deciding whether old records can be opened, and who may read them",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Recognizing and cataloging old records after scanning",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "11 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "Into the stacks first to read the thermo-hygrometer and write the numbers in the log, then to empty yesterday's half-bucket of water from the dehumidifier.",

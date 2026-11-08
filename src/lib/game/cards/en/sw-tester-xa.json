@@ -12,12 +12,36 @@
   "intro": "The company is on the eleventh floor of a glass tower in Software New Town. The testing department is thirty-odd people, seated next to the developers with a row of potted pothos between them. You are in your second year out of school, assigned to the wealth-management module of a mobile banking app, with more than four hundred automated test cases to your name. Yesterday your team lead forwarded an article to the group chat titled Testing Is the First Job AI Will Replace. No one replied. From today you go on watching the test cases that turn red in the pipeline.",
   "salary_note": "Estimate: starting pay for testers at Xi'an software companies is well below Beijing, Shanghai and Shenzhen. Companies doing bank projects are a little steadier than outsourcing shops, at about eighty percent of the national average.",
   "facts": [
-    { "label": "Software Test Engineer, Junior (current level)", "value": "0-2 years, ¥6,000–10,000 a month (national average)", "source": "Career map" },
-    { "label": "Next level up", "value": "Test Engineer / Automation Test Engineer (2-4 years)", "source": "Career map" },
-    { "label": "Pay after 10+ years", "value": "¥14,053 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Running a chaos-engineering random pod termination experiment and verifying that autoscaling actually works", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Tracking down a boundary bug in checkout discount pricing and filing a release-blocking bug report", "source": "AI exposure" },
-    { "label": "Open positions", "value": "947 related listings nationwide, 25 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Software Test Engineer, Junior (current level)",
+      "value": "0-2 years, ¥6,000–10,000 a month (national average)",
+      "source": "Career map"
+    },
+    {
+      "label": "Next level up",
+      "value": "Test Engineer / Automation Test Engineer (2-4 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥20,600 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Running a chaos-engineering random pod termination experiment and verifying that autoscaling actually works",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Tracking down a boundary bug in checkout discount pricing and filing a release-blocking bug report",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "947 related listings nationwide, 25 in this city (mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "You leave your shared flat in the urban village, buy a roujiamo, the Xi'an flatbread stuffed with braised pork, downstairs, and squeeze onto the subway to Software New Town. Half the car is carrying laptop bags. The other half is scrolling job apps.",

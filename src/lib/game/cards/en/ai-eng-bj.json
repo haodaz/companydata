@@ -12,12 +12,36 @@
   "intro": "On your first day you get a laptop, a cluster account and a newcomer's checklist full of acronyms. Your team lead adds you to a group chat called Post-training / Data, with three hundred-odd unread messages; the latest, from four in the morning, reads: node seven has lost another GPU. As of today, your name appears in the training job submission logs.",
   "salary_note": "Estimate: leading Beijing large-model companies pay new computer science master's graduates in algorithm roles ¥30,000-40,000 a month, plus stock options, around twice the national figure for AI engineers. The industry rises and falls fast, and what the options are worth depends on the next funding round.",
   "facts": [
-    { "label": "AI Assistant Engineer (current level)", "value": "0-2 years, ¥8,000–15,000 a month (national average)", "source": "Career map" },
-    { "label": "Next level up", "value": "AI Engineer (2-4 years)", "source": "Career map" },
-    { "label": "Pay after 10+ years", "value": "¥137,153 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Deciding whether a model ships, and making the call on safety and quality", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Cleaning and deduplicating training data, writing data-processing scripts", "source": "AI exposure" },
-    { "label": "Open positions", "value": "2239 related job listings nationwide, 624 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "AI Assistant Engineer (current level)",
+      "value": "0-2 years, ¥16,000–30,500 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "AI Engineer (2-4 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥71,900 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Deciding whether a model ships, and making the call on safety and quality",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Cleaning and deduplicating training data, writing data-processing scripts",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "2239 related job listings nationwide, 624 in this city (the listings are mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "You leave your shared flat in Qinghe and squeeze onto Line 13. Half the carriage is reading papers on their phones, and so are you: one posted online last night, about exactly what your team is working on.",

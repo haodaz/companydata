@@ -12,12 +12,36 @@
  "intro": "For your master's you built a small RISC-V core, and after graduating you signed with this Zhangjiang company making edge AI inference chips, writing RTL on the digital front-end team. Yours is one interface module on the on-chip bus. In three months the whole chip tapes out: tens of millions of yuan in mask costs, and if it fails, half a year lost. From today, every line of Verilog you write will be etched into silicon, past changing.",
  "salary_note": "Estimate: Zhangjiang design companies pay new master's graduates far above the national figure (the career map's junior band is conservative), and the gap narrows from intermediate level on. There are stock options, paper money until the company lists, and in years when the industry is cold the raises stop.",
  "facts": [
-  { "label": "Digital IC Design Engineer, Junior (current level)", "value": "0-2 years, ¥8,000–14,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Digital IC Design Engineer, Intermediate (2-5 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥65,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Reviewing code changes and handing constraint data over to the back end", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Taking an interface task and laying out the bus spec baseline", "source": "AI exposure" },
-  { "label": "Open positions", "value": "782 related listings nationwide, 195 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Digital IC Design Engineer, Junior (current level)",
+   "value": "0-2 years, ¥13,300–20,200 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Digital IC Design Engineer, Intermediate (2-5 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥65,000 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Reviewing code changes and handing constraint data over to the back end",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Taking an interface task and laying out the bus spec baseline",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "782 related listings nationwide, 195 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "From your shared flat in Tangzhen you ride a share bike to the tech park, past row after row of glass buildings. Outside them, people in windbreakers with laptop backpacks queue at the breakfast carts.",

@@ -12,12 +12,36 @@
  "intro": "Your master's was in statistics, your thesis on causal inference. The year you graduated, everyone was fighting for algorithm jobs, and you landed an offer from the home-feed recommendation team at this e-commerce platform in Hangzhou. You're responsible for a set of user-interest features in the fine-ranking model. Your mentor says what gets sold in every slot on the home page is, in the end, decided by the handful of models your team runs. From today on, what hundreds of millions of people see first when they open the app is, in some small part, something you calculated.",
  "salary_note": "Estimate: the leading e-commerce platforms in Hangzhou pay algorithm engineers about thirty percent more cash than the national average, over roughly sixteen months a year, plus stock. In big-sale years the bonus follows gross merchandise volume; in lean years for the industry, raises stop.",
  "facts": [
-  {"label": "Junior Recommender Systems Engineer (current level)", "value": "0-2 years, ¥15,300–22,500 a month (national average, derived from pay by experience)", "source": "Industry norm"},
-  {"label": "Next level up", "value": "Recommender Systems Engineer (2-4 years)", "source": "Industry norm"},
-  {"label": "Pay after 10+ years", "value": "¥55,000 a month (national average)", "source": "Pay by experience"},
-  {"label": "What AI can't take", "value": "Trading off conversion, diversity and how users feel", "source": "AI exposure"},
-  {"label": "Where AI is moving in", "value": "Reading papers, reproducing new models, writing baseline code", "source": "AI exposure"},
-  {"label": "Open positions", "value": "37 related listings nationwide, 1 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+  {
+   "label": "Junior Recommender Systems Engineer (current level)",
+   "value": "0-2 years, ¥19,900–29,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Recommender Systems Engineer (2-4 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥55,000 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Trading off conversion, diversity and how users feel",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Reading papers, reproducing new models, writing baseline code",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "37 related listings nationwide, 1 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You ride your e-bike from the rented room in Xianlin to the campus. West Wenyi Road is full of young people wearing staff badges. You buy a soy milk downstairs, badge in at the door, then scan your face.",

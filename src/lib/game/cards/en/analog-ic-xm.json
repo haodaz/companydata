@@ -12,12 +12,36 @@
  "intro": "Your master's was a low-noise bandgap reference, and you signed with this power-management chip company in Xiamen to draw analog circuits under a mentor with fifteen years in. Your chips go into phones, power banks, power tools and cars, turning battery power into the small, steady voltage a chip needs. From today on, whether that small slice of voltage holds steady in millions of chips depends partly on the few dozen transistors you draw.",
  "salary_note": "Estimate: the pay-by-experience figures for analog design lean toward the big firms of Shanghai and Shenzhen; analog chip companies in Xiamen pay a little over ten percent less, but housing prices and the pace are both gentler. In down years for the industry the bonus shrinks by half, and the options wait on an IPO.",
  "facts": [
-  {"label": "Junior Analog IC Design Engineer (current level)", "value": "0-2 years, ¥18,700–27,500 a month (national average, derived from pay by experience)", "source": "Industry norm"},
-  {"label": "Next level up", "value": "Analog IC Design Engineer (2-4 years)", "source": "Industry norm"},
-  {"label": "Pay after 10+ years", "value": "¥72,000 a month (national average)", "source": "Pay by experience"},
-  {"label": "What AI can't take", "value": "Bench work in the test lab: boards, curves, failure causes", "source": "AI exposure"},
-  {"label": "Where AI is moving in", "value": "Writing design documents, test reports and datasheets", "source": "AI exposure"},
-  {"label": "Open positions", "value": "65 related listings nationwide, 1 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+  {
+   "label": "Junior Analog IC Design Engineer (current level)",
+   "value": "0-2 years, ¥18,700–27,500 a month (national average, derived from pay by experience)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Next level up",
+   "value": "Analog IC Design Engineer (2-4 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥50,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Bench work in the test lab: boards, curves, failure causes",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing design documents, test reports and datasheets",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "65 related listings nationwide, 1 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "From your rented room in Jimei you take the BRT onto the island, the sea gray and hazy under the bridge. Downstairs at the software park you eat a bowl of satay noodles with an extra portion of intestines.",

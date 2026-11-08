@@ -12,12 +12,36 @@
  "intro": "Badge round your neck, radio clipped at the small of your back, the earpiece wire threaded out through your collar. You're an event coordinator at an esports events company in Chengdu, with more than a hundred match days a year: college tournaments in sports halls, city cups in shopping-mall atriums, league home games in an esports arena built inside an old factory on the east side of town. From today, the line in the run book that says \"floor control\" has your name on it.",
  "salary_note": "Estimate: Chengdu has plenty of esports venues and event companies, and pay runs a notch below Beijing, Shanghai and Shenzhen, taken at ninety percent of the national figure. Big events come with project bonuses; in the off season it's base pay only.",
  "facts": [
-  { "label": "Event Coordinator (current level)", "value": "0–2 years, ¥5,270–7,750 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Event Operations Supervisor (2–5 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥19,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Handling the unexpected and keeping everyone in step on match day", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Making posters, short videos and match highlights", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Event Coordinator (current level)",
+   "value": "0–2 years, ¥5,270–7,750 a month (national average, derived from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Event Operations Supervisor (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥12,400 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Handling the unexpected and keeping everyone in step on match day",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Making posters, short videos and match highlights",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Metro Line 1 to the high-tech zone. Nobody's in the office yet, so you go over tonight's schedule once more: four matches, two teams switching sides.",

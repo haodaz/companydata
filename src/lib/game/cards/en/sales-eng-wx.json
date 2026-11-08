@@ -12,12 +12,36 @@
  "intro": "Four years ago campus recruitment brought you into this energy storage inverter factory. You rotated through the production line and the test benches, spent two years following your mentor to customers, and last year took over Jiangsu and Anhui yourself. What you sell is the cabinet that turns the direct current in batteries into the alternating current of the grid, and the people who buy it are factories' energy departments, design institutes, general contractors and the grid. From today, ¥15 million in contracts has to be won by you, one project at a time.",
  "salary_note": "Estimate: sales engineers at Wuxi power electronics makers have a modest base wage and earn commission at year end on contract value and payments collected. In years when deals go well, take-home pay runs ten to twenty percent above the national average; in years of price wars, commission rates are cut and pay falls back near the national figure.",
  "facts": [
-  { "label": "Sales Engineer (current level)", "value": "2-4 years, ¥12,000–18,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Senior Sales Engineer (4-6 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥18,600 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "On-site retesting of a PCS's anti-islanding protection", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "First-pass screening of PCS technical requirements for a customer's storage project", "source": "AI exposure" },
-  { "label": "Open positions", "value": "12 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Sales Engineer (current level)",
+   "value": "2-4 years, ¥17,200–25,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Sales Engineer (4-6 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥25,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "On-site retesting of a PCS's anti-islanding protection",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "First-pass screening of PCS technical requirements for a customer's storage project",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "12 related listings nationwide, 0 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Wuxi East Station, the first bullet train to Hefei. In your seat you revise a technical proposal: commercial storage for an auto-parts plant, two megawatts, four megawatt-hours, one page on peak-valley price spreads, one on payback years.",

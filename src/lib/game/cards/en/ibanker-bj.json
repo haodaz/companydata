@@ -12,12 +12,36 @@
  "intro": "You finished a master's in finance in Beijing and joined the investment banking division of a brokerage on Financial Street. On your third day you were sent to a prefecture-level city in Jiangsu, where a precision parts factory wants to go public. The deal team has borrowed a meeting room at the plant, its table stacked with dozens of boxes of vouchers and contracts. From today you'll spend most of a year in that room, checking every yuan and every customer of the past three years, one by one, and writing it all into a prospectus several hundred pages long.",
  "salary_note": "Estimate: analyst pay at Beijing brokerages' investment banking divisions is about 10 percent above the national figure. In recent years the industry has cut pay and deferred bonuses, and only a deal that completes brings a decent bonus. If a deal is withdrawn or rejected, that year's bonus is thin.",
  "facts": [
-  { "label": "Investment Banking Analyst (current level)", "value": "0–2 years, ¥15,000–22,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Senior Associate (2–5 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥92,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "On-site due diligence, visiting customers and suppliers", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Drafting the prospectus and responses to regulators' inquiries", "source": "AI exposure" },
-  { "label": "Open positions", "value": "125 related listings nationwide, 32 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Investment Banking Analyst (current level)",
+   "value": "0–2 years, ¥15,000–22,000 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Associate (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥65,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "On-site due diligence, visiting customers and suppliers",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Drafting the prospectus and responses to regulators' inquiries",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "125 related listings nationwide, 32 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You wake in a budget hotel near the factory, where the deal team has booked six rooms. You eat a bowl of noodles downstairs and take a cab to the plant with a colleague, already answering email on the way.",

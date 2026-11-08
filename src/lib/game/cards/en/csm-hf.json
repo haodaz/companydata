@@ -12,12 +12,36 @@
  "intro": "You spent four years on the phones at this service center and two as a team leader, and last year you won the supervisor post: thirty people under you, the youngest twenty years old. The big screen on the wall never stops refreshing incoming volume, answer rate and queue length. As of today, when that row of numbers turns red, you are the first one on your feet.",
  "salary_note": "Estimate: the bank's service center in Hefei employs agents as regular bank staff, and base pay is higher than at ordinary local companies. Bonuses ride on answer rate, satisfaction and complaints, and a supervisor's take-home pay is about the national average. In years when the whole bank misses its targets, the bonus is cut.",
  "facts": [
-  { "label": "Customer Service Supervisor (current level)", "value": "2-4 years, ¥8,000–15,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Customer Service Manager (4-6 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥18,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Handling a sudden peak-hour call surge and diverting traffic up front", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Watching the call dashboard at shift start and deploying contingency staffing", "source": "AI exposure" },
-  { "label": "Open positions", "value": "502 related listings nationwide, 8 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Customer Service Supervisor (current level)",
+   "value": "2-4 years, ¥14,400–19,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Customer Service Manager (4-6 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥18,500 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Handling a sudden peak-hour call surge and diverting traffic up front",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Watching the call dashboard at shift start and deploying contingency staffing",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "502 related listings nationwide, 8 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Metro Line 1 to Binhu, then a ten-minute walk to the center. In the elevator you check last night's backlog on your phone: twenty-seven tickets, three of them escalated complaints.",

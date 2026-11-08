@@ -12,12 +12,36 @@
  "intro": "Driving west out of Xining, the trees slowly vanish from the mountains and your phone loses signal bar by bar, then fills up again at the next tower. The veteran training you tosses you a bottle of oxygen and a ring of keys and says these few dozen sites belong to the two of us from today. From now on, those few bars on someone else's phone are your work order.",
  "salary_note": "Estimate: contractors pay a low base, and with plateau and travel allowances it comes to around eighty-five percent of the national figure. Deductions and work-order penalties make a real difference.",
  "facts": [
-  { "label": "Maintenance Technician (current level)", "value": "0–3 years, ¥5,500–8,500 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Area Team Leader (3–8 years)", "source": "Common in the trade" },
-  { "label": "Pay after 5–10 years", "value": "¥17,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Going to the site to make repairs and splice fiber", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Sorting alarms and dispatching work orders automatically", "source": "AI exposure" },
-  { "label": "Open positions", "value": "18 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Maintenance Technician (current level)",
+   "value": "0–3 years, ¥5,500–8,500 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Area Team Leader (3–8 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 5–10 years",
+   "value": "¥7,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Going to the site to make repairs and splice fiber",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Sorting alarms and dispatching work orders automatically",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "18 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "The one-story house at your outpost is as cold as a refrigerator. You set your frozen bottle of water beside the stove. Noodles take over ten minutes in a pressure cooker, and without one they come out half raw.",

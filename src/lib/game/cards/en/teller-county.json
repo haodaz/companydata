@@ -12,12 +12,36 @@
  "intro": "You studied finance in Nanchang for four years, and the year you graduated you passed the exam for the rural commercial bank back in your home county. The bank assigned you to the town-center branch and gave you a cash box, a personal name seal and a key to the counter. From today you sit behind the bulletproof glass at window three, counting this county town's money for it, one transaction at a time.",
  "salary_note": "Estimate: in the county, a job at the rural commercial bank counts as respectable, and a teller takes home noticeably more than the county average, though a bit less than the national figure for tellers. Part of the pay is a year-end performance bonus and deposit-target bonus, docked if the target isn't met.",
  "facts": [
-  { "label": "Teller (current level)", "value": "0–3 years, ¥3,800–5,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Senior Teller (3–8 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥7,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Assessing damaged banknotes and exchanging them", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Handling cash deposits and withdrawals", "source": "AI exposure" },
-  { "label": "Open positions", "value": "38 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Teller (current level)",
+   "value": "0–3 years, ¥2,900–3,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Teller (3–8 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥7,000 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Assessing damaged banknotes and exchanging them",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Handling cash deposits and withdrawals",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "38 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "In your family's home on the county town's old street you eat the rice noodles your mother cooked, then ride your e-bike ten minutes to the branch. Two old people are already sitting on the steps waiting for it to open.",

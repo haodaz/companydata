@@ -12,11 +12,31 @@
  "intro": "One whole wall of the rehearsal hall is mirror, and the barre is wrapped round and round in old tape. You left your home in Hunan at eleven for a dance academy's affiliated school, trained for eleven years, and won a place at this song and dance theater in Guangzhou. Now you dance in the third row of the corps in an original dance drama, and the lead's section you've already quietly learned off your phone. From today your name is on the rehearsal schedule, on the last line.",
  "salary_note": "Estimate: performers at a city-run song and dance theater are paid on a public-institution or corporatized-company pay scale, plus performance allowances and a share of outside commercial shows. Guangzhou runs a little above the national figure, taken at 1.1 times.",
  "facts": [
-  { "label": "Grade 4 Performer (current level)", "value": "0–4 years, ¥4,500–7,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Grade 3 Performer (4–9 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Turning the choreographer's design into your own body", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Gathering dance history material and reference videos", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Grade 4 Performer (current level)",
+   "value": "0–4 years, ¥5,000–10,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Grade 3 Performer (4–9 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Turning the choreographer's design into your own body",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Gathering dance history material and reference videos",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "The metro to the theater, and you change into practice clothes. In the rehearsal hall someone is already stretching on the floor, and the air conditioning hasn't quite cooled the room yet.",

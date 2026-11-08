@@ -12,12 +12,36 @@
  "intro": "The firm has taken on a subdistrict's home-retrofit program. The first household on the list is at the end of a stone stairway; you climb more than two hundred steps to find the door number. The old woman who opens up pulls you into her kitchen and pours you water. Sit, child, she says, the threshold can wait. From today, how high a handrail goes in someone else's home is yours to measure.",
  "salary_note": "Estimate: pay at a small Chongqing design firm is about seventy-five percent of the national average. Government projects pay slowly, and private jobs carry commission.",
  "facts": [
-  { "label": "Interior Design Assistant / Aging-in-Place Assessor (current level)", "value": "0-2 years, ¥5,950–8,750 a month (national average, derived from pay by experience)", "source": "Pay by experience" },
-  { "label": "Next level up", "value": "Aging-in-Place Designer (1-4 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥15,600 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Briefing the builders and walking the site mid-job", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Completing a home assessment", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the database leans toward campus and intern roles)", "source": "Job listings" }
+  {
+   "label": "Interior Design Assistant / Aging-in-Place Assessor (current level)",
+   "value": "0-2 years, ¥4,500–6,200 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Aging-in-Place Designer (1-4 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥11,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Briefing the builders and walking the site mid-job",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Completing a home assessment",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the database leans toward campus and intern roles)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Two liang of Chongqing noodles with a fried egg at the stall. Fog has covered the hill and the towers across the way, and the light rail comes straight out of a building.",

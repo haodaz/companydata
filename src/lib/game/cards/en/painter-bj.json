@@ -12,11 +12,31 @@
  "intro": "At seventeen you came to an art-exam cram studio in Songzhuang for a winter of intensive training, sleeping in bunk beds in the studio, and learned for the first time that east of Beijing there was a whole village of painters. You got into an art academy, finished oil painting, and came back here, renting a farmhouse courtyard in Xiaobao village. As of today, while you correct the drawings of kids like the one you used to be, you're looking for a way to make the paintings on your walls something people will one day recognize as yours.",
  "salary_note": "Estimate: a young painter in Songzhuang pieces income together from art-exam teaching by the hour, decorative commissions by the canvas and gallery sales split fifty-fifty. Averaged out, it's about the national estimate, but one month can be several times another: in a good month one painting covers half a year; in a bad one there's only teaching pay.",
  "facts": [
-  {"label": "Young Painter / Grade 3 Artist (initial appointment at an academy or institute) (current level)", "value": "3-6 years, ¥6,000–12,000 a month (national average, estimated)", "source": "Industry norm"},
-  {"label": "Next level up", "value": "Professional Painter / Grade 2 Artist (6-12 years)", "source": "Industry norm"},
-  {"label": "What AI can't take", "value": "Taking an oil painting from conception to the last stroke", "source": "AI exposure"},
-  {"label": "Where AI is moving in", "value": "Submitting work to national or provincial art exhibitions", "source": "AI exposure"},
-  {"label": "Open positions", "value": "21 related listings nationwide, 5 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+  {
+   "label": "Young Painter / Grade 3 Artist (initial appointment at an academy or institute) (current level)",
+   "value": "3-6 years, ¥8,800–15,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Professional Painter / Grade 2 Artist (6-12 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Taking an oil painting from conception to the last stroke",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Submitting work to national or provincial art exhibitions",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "21 related listings nationwide, 5 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "The studio is still cold in March; since the village switched from coal to electric heating, the radiators only warm one room. You drag the electric heater over to the easel, make an instant coffee, and look at the canvas you got halfway through last night.",

@@ -12,12 +12,36 @@
   "intro": "You're in a bank's technology park on the south side of Chengdu. Your badge is outsourcing blue; you sit in the same row as the client's red badges but can't eat in the same canteen. The firm has forty people in all, most of them stationed year-round beside server rooms at banks and government service centers, and you're the youngest of this batch. Your team lead hands you an intranet computer that can't reach the outside internet and says start with this month's change requests. As of today, you write other people's systems.",
   "salary_note": "Estimate: Chengdu runs below the national average overall. A 40-person outsourcer lives on day rates with thin margins, so take-home pay for newcomers is noticeably low; estimated at 0.6 times the national figure.",
   "facts": [
-    { "label": "Junior Software Engineer pay (national average)", "value": "¥8,000–15,000 a month", "source": "Career map" },
-    { "label": "Pay in the first year (national average)", "value": "¥8,500 a month", "source": "Pay by experience" },
-    { "label": "Pay after 10+ years (national average)", "value": "¥32,800 a month", "source": "Pay by experience" },
-    { "label": "Time to reach Software Engineer (mid-level)", "value": "Usually 2–4 years", "source": "Career map" },
-    { "label": "Open positions (nationwide / this city)", "value": "485 nationwide, 13 in this city (mostly graduate hiring and internships)", "source": "Job listings" },
-    { "label": "Work already handed to AI", "value": "Analyzing the impact of yesterday's code changes before the daily stand-up", "source": "AI exposure" }
+    {
+      "label": "Junior Software Engineer pay",
+      "value": "¥5,400–11,100 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Pay in the first year (national average)",
+      "value": "¥8,500 a month",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "Pay after 10+ years (national average)",
+      "value": "¥32,800 a month",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "Time to reach Software Engineer (mid-level)",
+      "value": "Usually 2–4 years",
+      "source": "Career map"
+    },
+    {
+      "label": "Open positions (nationwide / this city)",
+      "value": "485 nationwide, 13 in this city (mostly graduate hiring and internships)",
+      "source": "Job listings"
+    },
+    {
+      "label": "Work already handed to AI",
+      "value": "Analyzing the impact of yesterday's code changes before the daily stand-up",
+      "source": "AI exposure"
+    }
   ],
   "day": [
     "Three flatmates, one bathroom. Downstairs you buy a guokui flatbread to eat on the walk, and squeeze onto the rush-hour subway.",

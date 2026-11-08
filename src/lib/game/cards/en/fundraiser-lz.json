@@ -12,12 +12,36 @@
   "intro": "The office is on the ninth floor of an old building in Qilihe District. Eleven people, and enough in the account for five months of salaries. Your job is to find money for libraries and teacher training at forty-odd village schools in the hills of Dingxi and Longnan. From today you must learn something nobody taught you at college: how to ask people to open their wallets, and how to leave them feeling it was worth it.",
   "salary_note": "Estimate: small nonprofits in the northwest generally pay low, about 70% of the national average, and annual fundraising decides whether there is any room for a raise.",
   "facts": [
-    { "label": "Fundraising Associate / Assistant (current level)", "value": "0-2 years, ¥4,420–6,500 a month (national average, derived from pay by experience)", "source": "Pay by experience" },
-    { "label": "Next level up", "value": "Fundraising Supervisor / Senior Fundraising Officer (2-4 years)", "source": "Career map" },
-    { "label": "Pay after 10+ years", "value": "¥15,000 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Planning and running a charity dinner", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Keeping donors and raising renewals", "source": "AI exposure" },
-    { "label": "Open positions", "value": "2 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Fundraising Associate / Assistant (current level)",
+      "value": "0-2 years, ¥3,100–4,200 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Fundraising Supervisor / Senior Fundraising Officer (2-4 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥7,200 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Planning and running a charity dinner",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Keeping donors and raising renewals",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "2 related listings nationwide, 0 in this city (mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "You carry a bowl of beef noodles upstairs and open the donor spreadsheet. Thirteen new monthly gifts came in yesterday. One is for ¥9.90, with a note: don't tell my mom.",

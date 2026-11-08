@@ -12,12 +12,36 @@
  "intro": "In your tool bag: a trowel worn half an inch shorter than new, two brushes, a bundle of bamboo picks, a roll of zip bags and a marker that's always running dry. Your lodging is a farmhouse in the village, and every morning the old woman who owns it steams a batch of buns. From today you're in charge of two squares in the east of the site. How deep to go and where to stop is half your call and half the site director's.",
  "salary_note": "Estimate: a permanent post at a provincial archaeology institute in Xi'an, base pay plus performance pay and field allowance, taken at 85 percent of the national figure. Field months bring more allowance; pay only rises noticeably with professional rank.",
  "facts": [
-  { "label": "Research Intern (current level)", "value": "0–2 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Assistant Research Fellow (2–7 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥12,600 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Taking part in academic conferences", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Doing research in the field", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Research Intern (current level)",
+   "value": "0–2 years, ¥4,500–6,500 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Assistant Research Fellow (2–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥8,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Taking part in academic conferences",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Doing research in the field",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "In the farmhouse yard, the landlady's buns are ready. You finish yesterday's trench diary and push label paper and a roll of zip bags into your tool bag.",

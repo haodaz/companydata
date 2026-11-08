@@ -12,11 +12,31 @@
  "intro": "The carpet in the training hall was laid the year you joined, patch on top of patch. You came into the children's squad at eight and were graded a professional at fifteen, and now you're the one thrown highest in the teeterboard act. Everyone calls you the flyer. From today your name is printed in the program: training twice a day, one or two shows, and the weight chart posted at the canteen door.",
  "salary_note": "Estimate: county troupe performers on permanent or contract posts, base pay plus performance allowances, taken at 60 percent of the national figure. Overseas tours and resident contracts pay a separate share, with the troupe taking a cut.",
  "facts": [
-  { "label": "Grade 4 Performer (current level)", "value": "0–4 years, ¥3,500–5,500 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Grade 3 Performer (4–9 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Rehearsing and drilling, solo or with partners or trained animals", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Analyzing the story, details and techniques of different kinds of acts, from easy to hard", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Grade 4 Performer (current level)",
+   "value": "0–4 years, ¥2,500–2,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Grade 3 Performer (4–9 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Rehearsing and drilling, solo or with partners or trained animals",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Analyzing the story, details and techniques of different kinds of acts, from easy to hard",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "The wake-up whistle. Leg stretches, backbends, three minutes in a handstand against the wall. The only sounds in the training hall are breathing and the coach's whistle.",

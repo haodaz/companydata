@@ -12,12 +12,36 @@
  "intro": "The head of collections takes you through three doors to Store One, two floors underground. At the entrance you sign in, change your shoes and hand in your phone. The head and you each hold a key; only with both keys turned together does the door open. Inside are rows of cabinets, and the thermo-hygrometer reads 20 degrees, 50 percent. The head says: from today, the four thousand-odd objects in this store must match in the ledger, on the cards and in the cabinets. If they don't, it's on you.",
  "salary_note": "Estimate: a newly appointed staff member at a state museum in Luoyang, with base pay, performance pay and the year-end bonus, averages a little over 70% of the national figure for museum workers. The conservation lab gets no extra craft allowance; courier trips with loans earn a travel allowance.",
  "facts": [
-  { "label": "Assistant Curator, Conservation (current level)", "value": "0-5 years, ¥5,000–7,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Curator, Conservation (5-10 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥12,500 (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Working on objects by hand at the conservation bench", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Entering collection data and producing catalogues and ledger reports", "source": "AI exposure" },
-  { "label": "Open positions", "value": "3 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Curator, Conservation (current level)",
+   "value": "0-5 years, ¥3,800–5,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Curator, Conservation (5-10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥6,800 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Working on objects by hand at the conservation bench",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Entering collection data and producing catalogues and ledger reports",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "3 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "First you check the store's temperature and humidity log. Overnight the humidity jumped to 58; you note the time, then check the dehumidifier's drain hose again.",

@@ -12,12 +12,36 @@
  "intro": "You started in September, spent a month in training on the standards and the audit software, and in November were put on the annual audit team for a listed company. The client is a cold-chain food group with factories and cold stores in Hebei and Shandong, and the report has to be out before April 30. From today, in the client's meeting room and in cold stores at minus eighteen, you will turn this company's books over one page at a time.",
  "salary_note": "Estimate: audit associates at large Beijing firms start twenty to thirty percent above the national figure. Busy season means heavy overtime that isn't paid by the hour, though taxis after ten at night can be expensed. In the first few years pay rises come with promotions, a jump at each grade.",
  "facts": [
-  { "label": "Junior Auditor (current level)", "value": "0-2 years, ¥6,000–12,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Senior Auditor (2-5 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥30,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Observing the count of cold-chain inventory and fixed assets on site", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Checking cash on site and reviewing the bank reconciliation", "source": "AI exposure" },
-  { "label": "Open positions", "value": "329 related listings nationwide, 43 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Junior Auditor (current level)",
+   "value": "0-2 years, ¥6,000–12,000 a month (national average)",
+   "source": "Career map"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Auditor (2-5 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥44,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Observing the count of cold-chain inventory and fixed assets on site",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Checking cash on site and reviewing the bank reconciliation",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "329 related listings nationwide, 43 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You wake in the second bedroom of a shared flat in Tuanjiehu. Your flatmate has already left. Two crowded subway stops to Guomao, and at the convenience store downstairs, a rice ball and an Americano.",

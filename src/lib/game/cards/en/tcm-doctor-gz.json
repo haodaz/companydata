@@ -12,11 +12,31 @@
  "intro": "You rotated through this TCM hospital's wards and clinics for three years, and the day you finished residency the department head said there was a place for you. The hospital is in the old city; the decoction room on the ground floor of the outpatient building smells of herbs all day, and the corridors are full of people who've come about their damp. From today six beds on the ward carry your name, and every Tuesday afternoon you sit beside the department's revered senior physician to copy out his prescriptions.",
  "salary_note": "Estimate: bonuses at a Guangzhou Grade 3A TCM hospital are high for the TCM system, so pay is set at 1.25 times the national average; it's a notch below doctors of the same rank at Western-medicine hospitals in the city, and the gap narrows once you have a well-known specialty clinic and premium appointments.",
  "facts": [
-  { "label": "TCM Resident Physician (current level)", "value": "0-4 years, ¥6,000–10,000 a month (national average, estimated)", "source": "Industry norm" },
-  { "label": "Next level up", "value": "TCM Attending Physician (4-9 years)", "source": "Industry norm" },
-  { "label": "What AI can't take", "value": "The four examinations: looking, listening and smelling, asking, feeling the pulse", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Writing outpatient and inpatient records", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "TCM Resident Physician (current level)",
+   "value": "0-4 years, ¥8,800–12,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "TCM Attending Physician (4-9 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "The four examinations: looking, listening and smelling, asking, feeling the pulse",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing outpatient and inpatient records",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "After handover you round with your attending. An old man with COPD has been wheezing all night; the attending takes his pulse, looks at his tongue, and says add a measure of descurainia seed. You note it on your tablet.",

@@ -12,12 +12,36 @@
  "intro": "You've joined a firm in Jinan that assesses organizations against China's Multi-Level Protection Scheme, the national security compliance standard, and also watches security operations for a few clients. Your mentor gives you a laptop full of tools and a checklist of more than two hundred items, and says tomorrow you are going to a hospital in Linyi. From today on, your job is to ask people item by item: this one, did you really do it?",
  "salary_note": "Estimate: the national figure leans toward security vendors and in-house teams in Beijing, Shanghai and Shenzhen, and an assessment firm in Jinan pays a good deal less. Travel brings allowances, and there are bonuses when the year-end projects pile up.",
  "facts": [
-  { "label": "Junior Security Analyst (current level)", "value": "0–2 years, ¥7,000–11,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Security Operations Engineer (2–4 years)", "source": "Career map" },
-  { "label": "Pay after 3–5 years", "value": "¥16,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Re-verification on site of remediation for a bank's core trading system at protection Level 3", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Aggregating, deduplicating and prioritizing the day's SIEM alerts before the midday peak", "source": "AI exposure" },
-  { "label": "Open positions", "value": "157 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Junior Security Analyst (current level)",
+   "value": "0–2 years, ¥5,000–7,400 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Security Operations Engineer (2–4 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 3–5 years",
+   "value": "¥6,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Re-verification on site of remediation for a bank's core trading system at protection Level 3",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Aggregating, deduplicating and prioritizing the day's SIEM alerts before the midday peak",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "157 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Jinan West Station with a jianbing crepe in your hand. You and your mentor are catching the earliest high-speed train to the client, with the printed on-site assessment authorization in your laptop bag.",

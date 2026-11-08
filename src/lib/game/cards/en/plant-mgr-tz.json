@@ -12,11 +12,31 @@
   "intro": "Twelve years ago you were carrying dies in this plant's die-casting shop, and you ground your way up through team leader and workshop head. Now your office window looks out on the workshop roofs, and the owner has handed you the keys to three workshops and a capacity ledger. From today, every part bound for the carmaker that runs an hour late is on you.",
   "salary_note": "Estimate: private Taizhou auto parts firms pay production managers decently, but on a slightly lower base than Tier-1 cities, about 95% of the national average.",
   "facts": [
-    { "label": "Production Manager (current level)", "value": "10-16 years, ¥16,000–25,000 a month (national average, estimated)", "source": "Common in the trade" },
-    { "label": "Next level up", "value": "Production Director (16-24 years)", "source": "Common in the trade" },
-    { "label": "Pay after 10+ years", "value": "¥19,500 a month (national average)", "source": "Pay by experience" },
-    { "label": "Where AI is moving in", "value": "Planning the department's annual work and setting quality and environmental targets", "source": "AI exposure" },
-    { "label": "Open positions", "value": "137 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Production Manager (current level)",
+      "value": "10-16 years, ¥16,000–25,000 a month (national average, estimated)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Next level up",
+      "value": "Production Director (16-24 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥27,900 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Planning the department's annual work and setting quality and environmental targets",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "137 related listings nationwide, 0 in this city (mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "Before it is fully light you drive in along Xuanmen Bay. The sea wind tastes of salt, and the night-shift leader's message about last night's output is on your phone. Line two is four hundred pieces short.",

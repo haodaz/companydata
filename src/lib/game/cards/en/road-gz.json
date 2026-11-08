@@ -12,12 +12,36 @@
  "intro": "The summer you graduated, you were posted to an expressway section in the mountains of southeast Guizhou. The project office is a row of blue-roofed prefabs halfway up a hillside. The section includes a bridge across a gorge, and its dozen-odd tall piers are still nothing more than pile caps. As of today you stand watch at the foot of those piers with an old site engineer, and watch them grow, one section at a time, into the clouds.",
  "salary_note": "Estimate: a trainee site engineer at a provincial road and bridge group earns about the national average in base pay. Mountain sections add a field allowance and milestone bonuses, so in rush years take-home pay runs slightly higher. Between the end of one project and the start of the next, it is base pay only.",
  "facts": [
-  { "label": "Site Engineer, Trainee/Assistant (current level)", "value": "0-1 years, ¥5,000–7,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Site Engineer, Lead (1-3 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥11,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Handling a supply break when trucks jam the haul road, and getting rolling back in sync", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Checking pre-shift work conditions and the stringline reference", "source": "AI exposure" },
-  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Site Engineer, Trainee/Assistant (current level)",
+   "value": "0-1 years, ¥5,000–7,000 a month (national average)",
+   "source": "Career map"
+  },
+  {
+   "label": "Next level up",
+   "value": "Site Engineer, Lead (1-3 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥16,400 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Handling a supply break when trucks jam the haul road, and getting rolling back in sync",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Checking pre-shift work conditions and the stringline reference",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "1 related listing nationwide, 0 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Fog outside the prefab. Only half the mountain opposite is visible. In the canteen you have a bowl of rice noodles with fermented chili floating in the broth. The rebar crew's foreman from Sichuan is already at the door on his second cigarette.",

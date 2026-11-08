@@ -12,12 +12,36 @@
  "intro": "You studied building construction technology in Nanning, and after graduating you followed someone from your hometown into this supervision company, spending your first year on a city road counting manhole covers and checking compaction. This year you were sent to the supervision office on a housing project in Wuxiang New Area, and your dorm is a prefab container cabin at the edge of the site. As of today, with a tape measure, a straightedge and a supervision log, you keep watch at the foot of buildings that haven't yet grown tall.",
  "salary_note": "Estimate: supervision companies in Nanning pay on-site supervisors below the national average, with an allowance for out-of-town projects. Supervision fees come in by installment under the contract, so in years when developers are short of cash, wages are paid late.",
  "facts": [
-  { "label": "Site Supervisor (current level)", "value": "0-3 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Specialist Supervision Engineer (3-6 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥13,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Making the contractor actually carry out its safety measures", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Checking the workers, materials and equipment coming on site and recording it", "source": "AI exposure" },
-  { "label": "Open positions", "value": "92 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Site Supervisor (current level)",
+   "value": "0-3 years, ¥5,000–7,500 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Specialist Supervision Engineer (3-6 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥8,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Making the contractor actually carry out its safety measures",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Checking the workers, materials and equipment coming on site and recording it",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "92 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "At the little shop by the cabins you slurp a bowl of Laoyou noodles, and the sour bamboo shoots jolt you awake. The sky is just getting light and the tower cranes are already turning.",

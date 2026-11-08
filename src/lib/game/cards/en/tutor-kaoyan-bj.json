@@ -12,12 +12,36 @@
  "intro": "The head of teaching sends your timetable to your phone: small classes in person on Tuesday and Thursday evenings, a big class all day Saturday, a livestream at eight on Sunday nights, two and a half hours a session. The bottom line reads: from October, national exam final push, double load. Two years ago you sat in one of the classrooms in this building yourself. From today, you stand on the other side of the lectern.",
  "salary_note": "Estimate: an instructor at a Beijing civil-service and graduate exam prep school earns a base salary plus per-session fees. In peak season, before the national and provincial civil service exams, a month's pay can double; in the off season it's the base alone. Averaged over the year, a little above the national figure for training-school instructors at the same experience.",
  "facts": [
-  { "label": "Junior Instructor (current level)", "value": "0-2 years, ¥7,225–10,625 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Intermediate Instructor, Three-Star (2-4 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥32,000 (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Teaching a big class from the lectern or in front of the camera", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Writing problem variants and building question banks", "source": "AI exposure" },
-  { "label": "Open positions", "value": "66 related job listings nationwide, 7 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Junior Instructor (current level)",
+   "value": "0-2 years, ¥7,225–10,625 a month (national average, derived from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Intermediate Instructor, Three-Star (2-4 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥24,000 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Teaching a big class from the lectern or in front of the camera",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing problem variants and building question banks",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "66 related job listings nationwide, 7 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "In the shared flat in Huilongguan you queue outside the bathroom to brush your teeth. Your flatmate is studying for the graduate entrance exam; the countdown taped to his door says 103 days.",

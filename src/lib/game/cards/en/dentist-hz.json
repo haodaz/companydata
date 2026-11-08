@@ -12,12 +12,36 @@
   "intro": "You spent three years at a private clinic in the prefecture-level city you grew up in, passed your medical licensing exam, and moved to this chain in Hangzhou. The branch sits on the fourth floor of a mall on the city's west side: six dental chairs, and a screen at the front desk that scrolls each dentist's bookings all day. As of today your name is on the door of Room 3, and the branch manager has set your first month's target: eight implants.",
   "salary_note": "Estimate: base pay at private dental chains in Hangzhou is modest; more than half of income is commission on treatments and implants. Estimated at 1.15 times the national average. The gap widens once you become a lead implant or orthodontics dentist.",
   "facts": [
-    { "label": "Dental Resident (current level)", "value": "1–3 years, ¥7,000–14,000 a month (national average)", "source": "Career map" },
-    { "label": "Next level up", "value": "Attending General Dentist (3–5 years)", "source": "Career map" },
-    { "label": "Pay after 10+ years", "value": "¥26,000 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Placing a resin filling for a first-visit patient, working four-handed with a dental nurse", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Leading the plan and surgical guide for a single back-tooth implant with immediate loading", "source": "AI exposure" },
-    { "label": "Open positions", "value": "6 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Dental Resident (current level)",
+      "value": "1–3 years, ¥12,100–16,600 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Attending General Dentist (3–5 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥37,100 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Placing a resin filling for a first-visit patient, working four-handed with a dental nurse",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Leading the plan and surgical guide for a single back-tooth implant with immediate loading",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "6 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "The mall isn't open yet. You take the staff corridor up to the fourth floor, change into scrubs and glance at the front-desk screen: fourteen appointments today, two new patients, one second-stage implant.",

@@ -12,12 +12,36 @@
  "intro": "You spent three years on distribution maintenance at a power station in Haikou, and last year won an internal posting to the microgrid operations station on this island. A few hundred permanent residents, a clinic, a primary school, a desalination plant, all running on solar panels on the rooftops and spare ground, a few shipping containers of batteries and two diesel generators, with not one cable to the mainland. From today you keep watch here for two months at a stretch, and not one light on the island is allowed to go out.",
  "salary_note": "Estimate: Hainan energy companies pay post salaries well below the career map's national figure (which leans on integrated energy companies in the Yangtze River Delta). The island allowance and remote-hardship pay make up part of it, coming to about eighty percent of the national figure; the month of rotation back in Haikou is paid at base salary only.",
  "facts": [
-  { "label": "Microgrid Operator (current level)", "value": "2-5 years, ¥12,000–20,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Senior Microgrid Operator (5-8 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥19,200 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Running a black start drill", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "A full monitoring check and inspection round after taking over the shift", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Microgrid Operator (current level)",
+   "value": "2-5 years, ¥12,000–20,000 a month (national average)",
+   "source": "Career map"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Microgrid Operator (5-8 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥14,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Running a black start drill",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "A full monitoring check and inspection round after taking over the shift",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Outside the dormitory window is the sea, and the sun is fierce as soon as it's light. You drink a cup of coffee brought from Haikou and check the forecast on your phone: sunny, showers this afternoon.",

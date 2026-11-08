@@ -12,12 +12,36 @@
  "intro": "You soaked in sports school pools for eight years and missed the provincial team by a whisker. The year you retired, you got your lifeguard certificate and joined the natatorium at this sports center. Now you sit on a lifeguard chair two meters up, below you fifty meters and eight lanes of water, and every day hundreds of heads bob up and down in it. As of today, how fast you swim no longer matters; what matters is how sharply you see.",
  "salary_note": "Estimate: lifeguards and safety attendants at a Qingdao municipal sports center earn base pay plus night-session and event allowances, a little below the national figure. Summer secondments to the bathing beaches pay extra; in winter, with fewer swimmers, the allowances shrink too.",
  "facts": [
-  { "label": "Venue Patroller / Pool Lifeguard (current level)", "value": "0-2 years, ¥4,420–6,500 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
-  { "label": "Next level up", "value": "Sports Venue Safety Attendant (1-4 years)", "source": "Career map" },
-  { "label": "Pay after 3–5 years", "value": "¥7,900 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Handling a swimmer's sudden cardiac arrest", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Doing a safety round before the venue opens", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Venue Patroller / Pool Lifeguard (current level)",
+   "value": "0-2 years, ¥4,420–6,500 a month (national average, estimated from pay by experience)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "Next level up",
+   "value": "Sports Venue Safety Attendant (1-4 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 3–5 years",
+   "value": "¥5,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Handling a swimmer's sudden cardiac arrest",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Doing a safety round before the venue opens",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Before opening you get in first and swim a lap along the bottom, checking for dropped objects and loose tiles. Out again, you test free chlorine and pH with the test kit and write them on the water quality board.",

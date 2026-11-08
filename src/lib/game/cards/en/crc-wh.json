@@ -12,12 +12,36 @@
   "intro": "You studied nursing, and during your internship you found you didn't want to work rotating shifts all your life. Now you carry a backpack every day into the oncology department of a top-tier (Grade 3A) hospital in Hankou, and the badge you wear doesn't carry the hospital's name. From today, when each participant in this trial is due, what blood is to be drawn and what they've signed are all yours to remember.",
   "salary_note": "Estimate: CRCs stationed in Wuhan by SMO companies earn less than in Beijing, Shanghai and Guangzhou, about 80% of the national average.",
   "facts": [
-    { "label": "Clinical Research Coordinator (current level)", "value": "0-2 years, ¥5,500–8,000 a month (national average, estimated)", "source": "Common in the trade" },
-    { "label": "Next level up", "value": "Senior Clinical Research Coordinator (2-5 years)", "source": "Common in the trade" },
-    { "label": "Pay after 10+ years", "value": "¥18,000 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Recruiting participants, informed consent and managing visits", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Ethics submissions and site filing before a trial starts", "source": "AI exposure" },
-    { "label": "Open positions", "value": "38 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Clinical Research Coordinator (current level)",
+      "value": "0-2 years, ¥5,500–8,000 a month (national average, estimated)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Next level up",
+      "value": "Senior Clinical Research Coordinator (2-5 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥11,500 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Recruiting participants, informed consent and managing visits",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Ethics submissions and site filing before a trial starts",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "38 related listings nationwide, 0 in this city (mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "At the metro exit you buy a bowl of hot dry noodles and eat as you walk. Two participants are coming today for their Cycle 3 Day 1 visits, and you check the visit windows on your phone once more.",

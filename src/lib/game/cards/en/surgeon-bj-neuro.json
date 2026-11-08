@@ -12,12 +12,36 @@
   "intro": "You work in neurosurgery at one of Beijing's leading top-tier hospitals. You have been an associate chief physician for several years now. Your operating list is full, and your clinic appointments are gone the moment they are released. To be promoted to chief physician you still need a General Program grant from the National Natural Science Foundation and a paper or two that count. Several associate chiefs in the department came up with you, and there are only so many slots. From today, every box on that form is yours to fill, year by year.",
   "salary_note": "Estimate: senior neurosurgeons at Beijing's leading top-tier hospitals earn well above the national average, here taken as about 1.5 times, not counting outside income such as fees for operating at other hospitals.",
   "facts": [
-    { "label": "Associate Chief Physician pay (national average)", "value": "¥22,000–40,000 a month", "source": "Career map" },
-    { "label": "Chief Physician pay (national average)", "value": "¥35,000–70,000 a month", "source": "Career map" },
-    { "label": "Pay after 10+ years (national average)", "value": "¥48,000 a month", "source": "Pay by experience" },
-    { "label": "What it takes to make full chief", "value": "Difficult Grade IV operations + leading an NSFC General Program grant + helping write clinical guidelines", "source": "Career map" },
-    { "label": "Can AI take the hands-on work", "value": "Debridement and opening the abdomen, AI can't take; post-op complication assessment is done by people and machines together", "source": "AI exposure" },
-    { "label": "Open positions", "value": "20 nationwide, 9 in Beijing (mostly campus hiring and internships; few experienced hires)", "source": "Job listings" }
+    {
+      "label": "Associate Chief Physician pay",
+      "value": "¥53,800–67,200 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Chief Physician pay",
+      "value": "¥55,400–120,600 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Pay after 10+ years (national average)",
+      "value": "¥48,000 a month",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "What it takes to make full chief",
+      "value": "Difficult Grade IV operations + leading an NSFC General Program grant + helping write clinical guidelines",
+      "source": "Career map"
+    },
+    {
+      "label": "Can AI take the hands-on work",
+      "value": "Debridement and opening the abdomen, AI can't take; post-op complication assessment is done by people and machines together",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "20 nationwide, 9 in Beijing (mostly campus hiring and internships; few experienced hires)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "You wake before the alarm. In the car, the navigation reads out where the Second Ring Road is jammed, and you answer two data questions from your graduate students on your phone.",

@@ -12,12 +12,36 @@
  "intro": "Your electric tricycle is secondhand, its cargo box reinforced with wire, and from the handlebar hangs a good-luck charm from a temple back home. The outlet is on a side street in Zhangjiang; when the roller shutter goes up, the room is full of parcels. From today the thirty-odd buildings on the route are yours: unloading starts at six thirty in the morning, and the day isn't over until the evening accounts are settled.",
  "salary_note": "Estimate: couriers at Shanghai franchise outlets are paid by the piece, delivery fees plus a cut of pickups, minus complaint fines, taken at 1.3 times the national figure. You earn noticeably more around Singles' Day and less in the slow season.",
  "facts": [
-  { "label": "Courier (current level)", "value": "0–2 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Senior Courier, route team leader (2–5 years)", "source": "Common in the trade" },
-  { "label": "Pay after 3–5 years", "value": "¥6,900 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Door-to-door delivery and handing over in person", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Pickups and entering waybills", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Courier (current level)",
+   "value": "0–2 years, ¥7,300–11,400 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Courier, route team leader (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 3–5 years",
+   "value": "¥9,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Door-to-door delivery and handing over in person",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Pickups and entering waybills",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "The outlet's roller shutter goes up and the trunk-line truck has arrived. You and a few colleagues jump into the back to unload, passing bag after bag onto the sorting line while the handheld scanners beep nonstop.",

@@ -12,11 +12,31 @@
   "intro": "You finished the tourism management program at a vocational college in Kunming, took the high-speed train to Lijiang, and caught your breath for a while after you got off. The hotel is on the edge of town; its guest rooms face the snow mountain, and the staff dormitory windows face the boiler room. From today you stand behind a two-meter wooden front desk, and every person who pushes open the door sees your face first.",
   "salary_note": "Estimate: Lijiang hotels pay below the national average, a bit over 70%, with room and board included, commission in high season, and unpaid leave common in low season.",
   "facts": [
-    { "label": "Front Desk Agent (current level)", "value": "0-3 years, ¥3,800–5,800 a month (national average, estimated)", "source": "Common in the trade" },
-    { "label": "Next level up", "value": "Front Desk Supervisor (3-6 years)", "source": "Common in the trade" },
-    { "label": "What AI can't take", "value": "Motivating and managing staff: people are what the work rests on, and their spirit decides the results", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Following hotel regulations and industry trends, and drawing up annual and half-year plans", "source": "AI exposure" },
-    { "label": "Open positions", "value": "12 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Front Desk Agent (current level)",
+      "value": "0-3 years, ¥2,900–4,100 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Front Desk Supervisor (3-6 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Motivating and managing staff: people are what the work rests on, and their spirit decides the results",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Following hotel regulations and industry trends, and drawing up annual and half-year plans",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "12 related listings nationwide, 0 in this city (mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "Morning handover. The night shift pushes a sticky note across to you: 305 has altitude sickness and needed oxygen in the night; 212 wants a seven o'clock call for the first cable car up the snow mountain.",

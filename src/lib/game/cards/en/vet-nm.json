@@ -12,16 +12,40 @@
  "intro": "The sumu veterinary station is a row of red-brick bungalows with a pickup out front, a cool box in its bed. On the wall hangs a map of the herding households across the sumu's eleven gachaa (herding villages); the farthest is eighty kilometers from the station. With you there are four people at the station, responsible for vaccinating more than two hundred thousand head of livestock. From today, when a ewe on the grassland can't deliver or a cow's belly blows up like a drum, the call comes to your phone.",
  "salary_note": "Estimate: a permanent public-institution post at a pastoral sumu station, base pay plus performance pay and a remote-area allowance, about 30 percent below the national figure for vets. Most of that national figure comes from urban pet clinics; pastoral vets' pay rises slowly but steadily.",
  "facts": [
-  {"label": "Veterinary Technician (Probation) (current level)", "value": "0–1 years, ¥4,930–7,250 a month (national average, derived from pay by experience)", "source": "Common in the trade"},
-  {"label": "Next level up", "value": "Assistant Veterinarian (1–4 years)", "source": "Common in the trade"},
-  {"label": "Pay after 10+ years", "value": "¥14,600 a month (national average)", "source": "Pay by experience"},
-  {"label": "What AI can't take", "value": "Difficult births, surgery and emergencies", "source": "AI exposure"},
-  {"label": "Where AI is moving in", "value": "Keeping vaccination records and scheduling vaccination and deworming reminders", "source": "AI exposure"},
-  {"label": "Open positions", "value": "197 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings"}
+  {
+   "label": "Veterinary Technician (Probation) (current level)",
+   "value": "0–1 years, ¥3,500–4,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Assistant Veterinarian (1–4 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥6,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Difficult births, surgery and emergencies",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Keeping vaccination records and scheduling vaccination and deworming reminders",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "197 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You take the vaccines out of the fridge and stack them box by box into the cool box, packing ice around them. Foot-and-mouth, peste des petits ruminants: three gachaa to the east today.",
-  "An hour of bouncing along wheel ruts across the grassland in the pickup to the first household. The husband has already penned the sheep. You greet him in Mongolian and he hands you a bowl of milk tea.",
+  "An hour of bouncing along wheel ruts across the grassland in the pickup to the first household. The husband has already penned the sheep. You greet him and he hands you a bowl of milk tea.",
   "You and the chief take one side each and work through the flock: an injection, an ear tag, a scan into the vaccination system, one sheep at a time. Over three hundred, and when you're done you can't lift your arm.",
   "At the second household the herding dog is chained by the door. You pry its jaws open, push the deworming tablet in, and write the dog's number and the date in the register. The wife says dogs are harder than sheep.",
   "Lunch with a herding family: boiled mutton eaten off the bone, which you carve with a small knife. The old grandfather asks whether this spring's white disaster, the killing snow, will come again.",
@@ -42,7 +66,7 @@
   {"name": "Watching videos remotely and advising herders on treatment", "how": "A herder films a short video and AI can list a few likely diseases and drug options. Whether it can be handled over the phone or needs a night drive, the vet decides after watching and asking, and answers for the prescription."},
   {"name": "Difficult births, surgery and emergencies", "how": "Reaching in to turn a lamb in a pen before dawn, a caesarean on a cow, letting the gas out of a bloated cow with a trocar: all need the vet there, hands-on, judging in the moment, and when it goes wrong, it's on the vet."},
   {"name": "Pre-sale quarantine inspection and certificates", "how": "The electronic certification system can check ear tags, vaccination records and outbreak zones automatically. Which sheep in a flock is lame, which one looks off, the vet has to see one by one at the camp before signing."},
-  {"name": "Visiting herding families and getting them to follow through", "how": "Getting an old herder to let you vaccinate his sheep, wear gloves during lambing and deworm his dog every month comes from tea first at the door, slow explanations in Mongolian, and trust built over years of visits."}
+  {"name": "Visiting herding families and getting them to follow through", "how": "Getting an old herder to let you vaccinate his sheep, wear gloves during lambing and deworm his dog every month comes from tea first at the door, slow explanations, and trust built over years of visits."}
  ],
  "events": {
   "e_lamb": "Before dawn one lambing season, in a household's pen, you delivered a pair of twins that were stuck, easing their positions straight bit by bit. By daybreak both lambs were standing and suckling.",
@@ -56,9 +80,9 @@
   "e_cesarean": "A first-calf heifer couldn't deliver and the calf wouldn't come out. In the herder's pen you did a caesarean while the chief held the flashlight. The moment the calf came out, the husband clapped you on the back.",
   "e_loss": "A household's sheep ate alfalfa still wet with dew. Two died of bloat; by the time you got there you could save only three. You didn't say a word all the way back.",
   "e_quarantine": "Autumn selling season, the buyers' trucks one after another. At the camps you inspected flock after flock and issued electronic quarantine certificates, more than forty in a day, and your phone battery didn't last past afternoon.",
-  "e_naadam": "In summer the sumu held its Naadam festival, and you were sent to check the racehorses before the race. You felt the legs of twenty-odd horses and looked at their teeth, and on the way back you watched a wrestling match.",
+  "e_naadam": "In summer the sumu held a horse race, and you were sent to check the racehorses before the race. You felt the legs of twenty-odd horses and looked at their teeth, and on the way back your hands still smelled of horse.",
   "e_love": "A doctor your age at the sumu clinic had also come back after studying in the regional capital. One winter night during a power cut, the two of you ate mutton noodles by candlelight in the sumu's only little restaurant.",
-  "e_wedding": "Your wedding was held at your family's herding camp, with two big gers (Mongolian yurts) put up and five sheep slaughtered. Your colleagues from the station sang long-song all night.",
+  "e_wedding": "Your wedding was held at a restaurant in the banner town, a dozen-odd tables. Your colleagues from the station drove two hours to get there and drank until midnight.",
   "e_house": "You bought a flat in the banner (county) town, because your child will go to school there. On weekdays you live in the sumu, and at weekends you drive two hours back.",
   "e_kid": "The baby was born in March, the busiest weeks of lambing. You stayed two days at the banner hospital. On the third the chief called, and you drove back to the sumu through the night.",
   "e_back": "Years of bouncing over wheel ruts and bending over in sheep pens to give injections, and you've herniated a disc. The banner hospital told you to rest a month. You rested two weeks and went back.",
@@ -93,7 +117,7 @@
    {"label": "Stay in the sumu", "result": "You said the camps couldn't do without people. The banner nodded, and when station equipment was upgraded later, yours was in the first batch."}
   ]},
   "c_clinic": {"title": "Opening a veterinary clinic in the pastoral area", "situation": "There's no decent vet pharmacy or clinic in the sumu, and herders have to go to the banner town for medicine. Someone urges you to give up your post and open a clinic with a pharmacy in the sumu: set your own prices, make your own house calls, earn more than your salary.", "options": [
-   {"label": "Resign and open the clinic", "result": "You rented two rooms on the sumu's main street, one for medicines and one for surgery, with a sign over the door in Mongolian and Chinese.", "end": "Your clinic has been open more than ten years, and when herders call in the middle of the night you still go out in that pickup. On the medicine cabinet is a sheet of paper listing which drugs can't be given together, in Mongolian and Chinese."},
+   {"label": "Resign and open the clinic", "result": "You rented two rooms on the sumu's main street, one for medicines and one for surgery, with a sign over the door you lettered yourself.", "end": "Your clinic has been open more than ten years, and when herders call in the middle of the night you still go out in that pickup. On the medicine cabinet is a sheet of paper listing which drugs can't be given together, in big handwriting."},
    {"label": "Stay at the station", "result": "You helped a vet pharmacy owner from the banner town open a branch in the sumu, and told him which drugs not to sell carelessly."}
   ]},
   "c_senior": {"title": "Applying for Senior Veterinarian", "situation": "Senior Veterinarian means a defense at the regional level, with papers, research projects and young vets you've trained. You carry the whole sumu's disease prevention, so the materials can only be prepared in winter.", "options": [
@@ -110,7 +134,7 @@
   "burnout": "That winter, bent over a sheep in the pen, your back suddenly wouldn't straighten, and the herder had to help you into the truck. After surgery the banner moved you to the disease control center to keep records. You sit in the office and listen to the pickups heading out to the grassland, one after another."
  },
  "stages": [
-  "You go round the camps with the station chief: vaccines in the cool box, flock after flock of injections, ear tags and scans into the system, deworming tablets for the dogs. When there's a difficult birth or a bloated cow, the chief does it and you assist. You deal most with the herding families: the husband pens the sheep, the wife pours tea, the old folk ask about the weather. You answer in Mongolian, slowly and clearly.",
+  "You go round the camps with the station chief: vaccines in the cool box, flock after flock of injections, ear tags and scans into the system, deworming tablets for the dogs. When there's a difficult birth or a bloated cow, the chief does it and you assist. You deal most with the herding families: the husband pens the sheep, the wife pours tea, the old folk ask about the weather. You answer one at a time, slowly and clearly.",
   "You have your own gachaa now. You write the prescriptions and sign the quarantine certificates, handle stuck lambs and bloated cows yourself, and the night calls come to you. For spring and autumn vaccination you plan the routes and divide the vaccines; in selling season you inspect flock after flock. You used to pass the instruments; now you make the call, and when a sheep dies, the herder asks you first.",
   "You're the station's mainstay, taking young vets round the whole sumu. Caesareans on cattle and difficult cases are yours; you draft the vaccination plan and compile the brucellosis and hydatid surveillance data for the banner. You've started meeting with gachaa heads and teaching herders. More meetings now, but in lambing season you still live out at the camps.",
   "You're chief of the sumu station, with a few staff and over two hundred thousand head of livestock to keep healthy. You set the year's vaccination plan, approve vaccines and drugs, sign the big quarantine batches, and go to the banner to argue for funding and staff. In an outbreak you direct things on the front line. Every case the young vets can't call ends up with you.",
@@ -135,10 +159,10 @@
  ],
  "past": [
   "Your family grazed over three hundred sheep on the grassland. The winter you were fifteen, one of your ewes couldn't deliver. The vet took two hours to drive out, and you held the flashlight while he pulled the lamb out.",
-  "Before the gaokao (college entrance exam) you boarded at the Mongolian-language high school in the banner town and went back to the camp at weekends to help with the sheep. You wrote an essay about that vet, and the teacher gave it a high mark.",
+  "Before the gaokao (college entrance exam) you boarded at the high school in the banner town and went back to the camp at weekends to help with the sheep. You wrote an essay about that vet, and the teacher gave it a high mark.",
   "Choosing majors after the gaokao, you put down Veterinary Medicine, a five-year program, at an agricultural university in the regional capital. Your father said being a vet is good; the grasslands are short of them.",
   "In your fourth-year clinical rotation you stood at the operating table for the first time, spaying a dog at the university animal hospital. You gripped the needle holder too hard and your palms were soaked.",
-  "In your final year you passed the banner's public institution exam and were assigned to this sumu, a hundred kilometers from home. At the interview the examiner asked you, in Mongolian, how to treat bloat in sheep."
+  "In your final year you passed the banner's public institution exam and were assigned to this sumu, a hundred kilometers from home. At the interview the examiner asked you how to treat bloat in sheep."
  ],
  "late": {
   "pension_note": "Estimate: the sumu station pays into the public-sector pension scheme plus an occupational annuity, with extra weighting for remote areas, which in retirement comes to roughly 60 percent of the final monthly pay.",
@@ -150,7 +174,7 @@
    "You keep records at the disease control center. The cabinets hold decades of vaccination records for the whole banner, and you put them in order, year by year.",
    "Once your back is a bit better, the banner asks you to speak at the spring vaccination training about how medicine got through in that white disaster.",
    "At the age, you retire. On your last day you clean the old set of obstetric instruments and give them to the young vets at the sumu station.",
-   "The first year after leaving the sumu, whenever you hear someone speaking Mongolian somewhere else, you think of the farthest household and that bowl of salty milk tea.",
+   "The first year after leaving the sumu, whenever you catch the smell of sheep somewhere else, you think of the farthest household and that bowl of salty milk tea.",
    "An old herding family calls: another ewe can't deliver and the young vets from the station aren't around. You talk him through it on the phone, step by step.",
    "On the news you see that every animal in Xilingol now wears a smart ear tag. In the footage a young vet is crouched in a sheep pen, drawing blood from a sheep.",
    "Later ear tags reported temperatures, and a phone video could get an animal seen remotely. But before dawn in lambing season, someone still had to reach in and feel for the lamb's position.",

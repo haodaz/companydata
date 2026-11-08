@@ -12,11 +12,31 @@
   "intro": "You studied traffic management at a police college, passed into the Shenzhen force, and were posted to a district traffic brigade. A year on the road taught you to stand for two hours on tarmac at 40 degrees, and to raise one hand and stop a whole line of cars. Last month you passed the motorcycle patrol test and were issued a white police bike. As of today, whenever this city jams, you go to where it's jammed.",
   "salary_note": "Estimate: Shenzhen officers are paid on the civil service scale plus rank allowances and a traffic duty allowance. Shenzhen's regional allowances and bonuses are in the top bracket nationally, more than one and a half times the national figure.",
   "facts": [
-    { "label": "Police Officer, Grade 1 (road patrol officer) (current level)", "value": "0–3 years, ¥6,000–9,000 a month (national average, estimated)", "source": "Common in the trade" },
-    { "label": "Next level up", "value": "Police Sergeant, Grade 4 (motorcycle patrol / crash investigation officer) (3–7 years)", "source": "Common in the trade" },
-    { "label": "What AI can't take", "value": "Stopping crimes and keeping order on the roads", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Gathering information widely to make sound decisions and set the rules of the road", "source": "AI exposure" },
-    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Police Officer, Grade 1 (road patrol officer) (current level)",
+      "value": "0–3 years, ¥10,800–14,700 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Police Sergeant, Grade 4 (motorcycle patrol / crash investigation officer) (3–7 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Stopping crimes and keeping order on the roads",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Gathering information widely to make sound decisions and set the rules of the road",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "Kitting up at the squad: reflective vest, body camera, police handset, radio. The sleeve covers and sun mask you bought yourself. You crouch and thumb-check the tire pressure on the bike.",

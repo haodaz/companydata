@@ -12,12 +12,36 @@
   "intro": "You spent three years as a project social worker at an agency, working in several street office districts, on contracts renewed one year at a time. This year you sat the district's unified recruitment for community workers and were assigned to a residents' committee in the old city. Your patch is twelve six-story blocks of old public housing with no lifts. Of the four-hundred-odd households, more than sixty are older people living alone. The list runs page after page, and now it is all yours. As of today, there is a desk for you in the committee's north-facing office.",
   "salary_note": "Estimate: Shanghai community workers are paid on the district's unified pay scale, averaging about ¥140,000–150,000 a year, far above the national figure (pay by experience starts at ¥3,800 a month). Estimated at 1.8 times the national figure.",
   "facts": [
-    { "label": "Full-time Community Worker, entry post (current level)", "value": "0-2 years, ¥5,100–12,333 a month (national average, derived from pay by experience)", "source": "Pay by experience" },
-    { "label": "Next level up", "value": "Community Worker, intermediate post / Area Lead (2-5 years)", "source": "Career map" },
-    { "label": "Monthly pay, 10+ years in the field", "value": "¥5,900 (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Mediating a dispute between neighbors over a leak from upstairs", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Doing the week's grid visits and entering them into the platform", "source": "AI exposure" },
-    { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Full-time Community Worker, entry post (current level)",
+      "value": "0-2 years, ¥9,200–22,700 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Community Worker, intermediate post / Area Lead (2-5 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Monthly pay, 10+ years in the field",
+      "value": "¥14,900 (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Mediating a dispute between neighbors over a leak from upstairs",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Doing the week's grid visits and entering them into the platform",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "You ride a shared bike through the lanes of the longtang and open up the residents' committee. Two aunties are already sitting at the door. One has come to ask about the old-age allowance; the other says the flat upstairs is leaking again.",

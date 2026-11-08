@@ -12,12 +12,36 @@
   "intro": "You work in the general ICU of a top-tier (Grade 3A) hospital in Shanghai: nursing level N2, three rotating shifts, two beds' worth of monitors and lines to watch every shift. Some of the nurses who started with you have moved to outpatients; some are preparing for specialist nurse training. Last week the head nurse asked what your plans were this year, and you didn't have an answer. From today you'll carry on with this work year after year, or find a different way to do it.",
   "salary_note": "Estimate: ICU nurses at Shanghai's top-tier hospitals get night-shift pay and a critical-care performance multiplier, and incomes in a Tier 1 city run well above the national figure. Taken at about 1.6 times.",
   "facts": [
-    { "label": "Pay at Senior Nurse level (national average)", "value": "¥6,000–9,000 a month", "source": "Career map" },
-    { "label": "Pay at 3–5 years (national average)", "value": "¥17,787 a month", "source": "Pay by experience" },
-    { "label": "Pay at 5–10 years (national average)", "value": "¥17,002 a month", "source": "Pay by experience" },
-    { "label": "Requirements to compete for head nurse", "value": "3 years as Senior Nurse + management training certificate + top 20% in performance reviews for the last 2 years", "source": "Career map" },
-    { "label": "Airway humidification and closed suctioning", "value": "AI can't take it; a nurse has to do it at the bedside", "source": "AI exposure" },
-    { "label": "Open positions", "value": "4 nationwide, 0 in Shanghai (mostly campus hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Pay at Senior Nurse level",
+      "value": "¥11,400–14,800 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Pay at 3–5 years (national average)",
+      "value": "¥17,787 a month",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "Pay at 5–10 years (national average)",
+      "value": "¥17,002 a month",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "Requirements to compete for head nurse",
+      "value": "3 years as Senior Nurse + management training certificate + top 20% in performance reviews for the last 2 years",
+      "source": "Career map"
+    },
+    {
+      "label": "Airway humidification and closed suctioning",
+      "value": "AI can't take it; a nurse has to do it at the bedside",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "4 nationwide, 0 in Shanghai (mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "You don't get up until the alarm's second ring. Your rented flat in an old walk-up is four subway stops from the hospital, and in the rush-hour crush you lean against the door and close your eyes for another five minutes.",

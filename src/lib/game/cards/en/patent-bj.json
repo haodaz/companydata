@@ -12,11 +12,31 @@
  "intro": "In grad school you plotted a great many channel simulation curves, and never imagined you'd one day use words to fence one in, tightly enough that nobody could get around it. Now there's a stack of invention disclosures on your desk, each one months of some engineer's work. As of today, every claim you write is something others will come at with a ruler.",
  "salary_note": "Estimate: Beijing patent agencies pay commission per case, twenty to forty percent above the national figure. Income peaks at year-end when companies rush to hit filing targets, and drops in years when clients push prices down.",
  "facts": [
-  { "label": "Patent Attorney (current level)", "value": "2-5 years, ¥9,000–15,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Senior Patent Attorney (5-8 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Talking with inventors to draw out the technical solution", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Drafting patent applications", "source": "AI exposure" },
-  { "label": "Open positions", "value": "13 related listings nationwide, 3 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Patent Attorney (current level)",
+   "value": "2-5 years, ¥11,700–19,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Patent Attorney (5-8 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Talking with inventors to draw out the technical solution",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Drafting patent applications",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "13 related listings nationwide, 3 in this city (the job database is mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Metro Line 10 to Xitucheng. On the train you finish reading an office action: the examiner holds that your first claim lacks inventive step, and attaches three prior-art references.",

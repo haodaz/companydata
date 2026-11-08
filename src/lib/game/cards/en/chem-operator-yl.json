@@ -12,12 +12,36 @@
  "intro": "The industrial zone sits at the edge of the Mu Us Desert, rows of plant standing among the sand ridges, its lights at night brighter than Yulin city. You spent three years out on the unit as a field operator, and this month you were moved into the control room as a board operator. From tonight's shift on you face six screens and a two-way radio, and the valves you have held in your hands have turned into numbers.",
  "salary_note": "Estimate: front-line shift income at Yulin's big coal-chemical companies runs well above the national figure, about 1.35 times once night pay and performance bonuses are counted.",
  "facts": [
-  { "label": "Board Operator (current level)", "value": "2–5 years, ¥5,355–7,875 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Lead Operator (5–8 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥9,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Field rounds on foot: looking, listening, smelling, touching", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Watching DCS trends and alarms", "source": "AI exposure" },
-  { "label": "Open positions", "value": "138 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Board Operator (current level)",
+   "value": "2–5 years, ¥8,100–10,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Lead Operator (5–8 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥15,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Field rounds on foot: looking, listening, smelling, touching",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Watching DCS trends and alarms",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "138 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You get in early. You change at the locker room door and put your phone and lighter in the locker, and the first breath you take in the control room is air conditioning and coffee.",

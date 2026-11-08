@@ -12,12 +12,36 @@
  "intro": "You have come home to Harbin and joined the heating branch of a thermal power group. Your mentor hands you an infrared thermometer and a hook for lifting manhole covers. Forty-some substations in this district, he says, and come winter the whole city will be looking for you. From today on, your year begins not on January 1 but on October 20, the day the heat goes on.",
  "salary_note": "Estimate: the national figure leans toward design institutes and HVAC jobs in the biggest cities. A local state firm in Harbin pays a good deal less, though social insurance is paid in full and winter brings heating allowances and on-call pay.",
  "facts": [
-  { "label": "Assistant Engineer (current level)", "value": "0–3 years, ¥8,415–12,375 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Engineer (3–8 years)", "source": "Common in the trade" },
-  { "label": "Pay after 3–5 years", "value": "¥15,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "On-site supervision of installation, commissioning, acceptance and performance checks", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "System design, load calculation, equipment selection and cost comparison for HVAC", "source": "AI exposure" },
-  { "label": "Open positions", "value": "50 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Engineer (current level)",
+   "value": "0–3 years, ¥5,200–6,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Engineer (3–8 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 3–5 years",
+   "value": "¥6,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "On-site supervision of installation, commissioning, acceptance and performance checks",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "System design, load calculation, equipment selection and cost comparison for HVAC",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "50 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "It is twenty-seven below. You pull on a padded cap and walk to the bus stop, and by the time you get there your eyelashes have frosted over. The ice on the bus window is too thick to see the streets of Daowai.",

@@ -12,12 +12,36 @@
  "intro": "You studied composite materials engineering in Wuhan, and your graduation internship was at a wind blade plant, where you watched a blade more than eighty meters long being lifted out of its mold. This composites plant in Wujin, Changzhou, offered you a job with a dorm bed, not too far from home. As of today, you learn under Old Qian on the shop floor, starting with one pultrusion line and one autoclave.",
  "salary_note": "Estimate: private composites plants in Wujin start graduate process engineers at roughly the national average, with housing and a night-shift allowance. In years of rush wind installations the bonus is big; in years when blade prices fall it shrinks.",
  "facts": [
-  {"label": "Junior Composites Process Engineer (current level)", "value": "0-2 years, ¥6,000–10,000 a month (national average)", "source": "Career map"},
-  {"label": "Next level up", "value": "Composites Process Engineer (2-5 years)", "source": "Career map"},
-  {"label": "Pay after 5–10 years", "value": "¥22,000 a month (national average)", "source": "Pay by experience"},
-  {"label": "What AI can't take", "value": "Leading real-time monitoring and intervention during the first-article RTM infusion of a fairing", "source": "AI exposure"},
-  {"label": "Where AI is moving in", "value": "Tracing whitish porosity defects in molded fairings and tuning the cure parameters", "source": "AI exposure"},
-  {"label": "Open positions", "value": "31 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings"}
+  {
+   "label": "Junior Composites Process Engineer (current level)",
+   "value": "0-2 years, ¥6,000–10,000 a month (national average)",
+   "source": "Career map"
+  },
+  {
+   "label": "Next level up",
+   "value": "Composites Process Engineer (2-5 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 5–10 years",
+   "value": "¥13,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Leading real-time monitoring and intervention during the first-article RTM infusion of a fairing",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Tracing whitish porosity defects in molded fairings and tuning the cure parameters",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "31 related listings nationwide, 0 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "In the locker room you pull on your coveralls, mask and nitrile gloves, and turn once in the air shower before entering the layup room. The gauge on the wall reads twenty-two degrees, fifty percent humidity.",

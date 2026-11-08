@@ -12,12 +12,36 @@
  "intro": "The mediation room is next to the justice office: one long table, an electric kettle, and chairs on either side that don't quite face each other. The old director set them that way. People won't open up face to face, he said. You have chased orders at a sock factory and kept the books in a village, and this year the justice office came to ask for you. The old director hands you an enamel mug and says what you need here is not talking but listening. Starting today, the fights this township can't finish will all come to this table.",
  "salary_note": "Estimate: township full-time mediators are mostly government-contracted positions paid under hiring contracts with a small per-case subsidy, below the national figure, so 0.68.",
  "facts": [
-  { "label": "Full-Time People's Mediator (current level)", "value": "0–5 years, ¥6,000–8,500 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Deputy Director of the Mediation Committee (5–12 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥14,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Mediating under the Ministry of Justice's rules on people's mediation: lawfully, voluntarily, with both sides on equal terms", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Signing agreements, stamping a personal seal on the key figures, and delivering copies to both parties", "source": "AI exposure" },
-  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the database leans toward campus hires and internships)", "source": "Job listings" }
+  {
+   "label": "Full-Time People's Mediator (current level)",
+   "value": "0–5 years, ¥4,700–5,400 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Deputy Director of the Mediation Committee (5–12 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥6,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Mediating under the Ministry of Justice's rules on people's mediation: lawfully, voluntarily, with both sides on equal terms",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Signing agreements, stamping a personal seal on the key figures, and delivering copies to both parties",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "1 related listing nationwide, 0 in this city (the database leans toward campus hires and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Boil water, wipe the table, set the two chairs. The kettle's switch has come loose, and you wind another turn of tape around it.",

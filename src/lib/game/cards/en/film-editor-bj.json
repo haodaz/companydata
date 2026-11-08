@@ -12,11 +12,31 @@
  "intro": "The edit suite has no window: two monitors, a pair of studio speakers, a row of labeled portable hard drives. You're an assistant editor at a Jiuxianqiao production house that makes commercials and short videos, and every frame on your timeline ends up as three seconds someone swipes past on a phone, or fifteen seconds they stop for. From today, the project-file naming convention includes your initials.",
  "salary_note": "Estimate: advertising and content production is concentrated in Beijing, and editors earn about thirty percent above the national figure. Busy months bring overtime and project bonuses; in the slow season it's base pay only. Freelance jobs on the side are extra.",
  "facts": [
-  { "label": "Assistant Editor (current level)", "value": "0–2 years, ¥5,000–8,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Editor (2–5 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Setting the rhythm, telling the story, choosing what to cut", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Transcribing subtitles and tagging footage", "source": "AI exposure" },
-  { "label": "Open positions", "value": "21 related listings nationwide, 6 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Editor (current level)",
+   "value": "0–2 years, ¥6,500–13,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Editor (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Setting the rhythm, telling the story, choosing what to cut",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Transcribing subtitles and tagging footage",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "21 related listings nationwide, 6 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "From Tongzhou, the Batong Line to Line 14 and on to Jiuxianqiao: an hour and a half. On the train you watch last night's rough cut once through on your phone.",

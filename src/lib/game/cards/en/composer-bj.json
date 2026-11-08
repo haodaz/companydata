@@ -12,11 +12,31 @@
  "intro": "The studio is on the second floor of an old factory compound in Tongzhou, with a piece of paper on the door: Recording, do not knock. Your senior hands you a hard drive holding a thirty-six-episode series. The director says the hospital scene in episode seven still needs music: sad, not too sad, by tonight. You have studied composition for seven years and written a string quartet, but you have never scored anyone's tears. Starting today, every note you write has to land on a timecode.",
  "salary_note": "Estimate: Beijing scoring studios pay by the project, starting low, with enormous differences once someone has a name, so 1.25.",
  "facts": [
-  { "label": "Scoring Assistant (current level)", "value": "0–3 years, ¥5,000–10,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Episode Composer (3–7 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Helping conductors, directors and singers understand and perform the work once it reaches rehearsal", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Studying music history, observing life, and distilling experience into musical ideas written down in notation", "source": "AI exposure" },
-  { "label": "Open positions", "value": "9 related listings nationwide, 1 in this city (the database leans toward campus hires and internships)", "source": "Job listings" }
+  {
+   "label": "Scoring Assistant (current level)",
+   "value": "0–3 years, ¥6,300–14,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Episode Composer (3–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Helping conductors, directors and singers understand and perform the work once it reaches rehearsal",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Studying music history, observing life, and distilling experience into musical ideas written down in notation",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "9 related listings nationwide, 1 in this city (the database leans toward campus hires and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "This trade gets up late. You walk from your rental in Tongzhou to the studio with last night's demo in your earphones, and decide the second chord is wrong again.",

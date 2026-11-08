@@ -12,12 +12,36 @@
  "intro": "You carried plates in a hotpot restaurant for two years, then came to this little bar to cut ice and wash glasses, and a year later you were behind the counter. The place has eight bar stools and four small tables, the owner is a middle-aged man who doesn't interfere much, and half the menu is already yours. As of today, in every drink before three in the morning, you're putting by the skill and the money for a place of your own.",
  "salary_note": "Estimate: a bartender at a small Chengdu bar gets ¥4,000–5,000 base, and with commission and tips takes home ¥6,000–7,000, about ninety percent of the national figure. The bars are small, and it's common to have no social insurance; peak and low seasons differ by a fair amount.",
  "facts": [
-  { "label": "Junior Bartender (current level)", "value": "1-2 years, ¥5,500–8,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Head Bartender (2-4 years)", "source": "Career map" },
-  { "label": "Pay after 5–10 years", "value": "¥20,271 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Preparing and organizing the bar's supplies before the evening opening", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Cold-bar prep and readying the bar before the evening service", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Junior Bartender (current level)",
+   "value": "1-2 years, ¥5,500–8,000 a month (national average)",
+   "source": "Career map"
+  },
+  {
+   "label": "Next level up",
+   "value": "Head Bartender (2-4 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 5–10 years",
+   "value": "¥7,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Preparing and organizing the bar's supplies before the evening opening",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Cold-bar prep and readying the bar before the evening service",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You get up. Outside the window of your rented room are the banyan-like huangjue trees of an old housing estate. You make a bowl of instant noodles and scroll through the new menus at other bars.",

@@ -12,12 +12,36 @@
  "intro": "A year ago a recruiting app showed you a day-rate gig: fold clothes wearing a camera, ¥30 an hour. You thought it was a scam; you went, and it was real, and half the people who went with you quit on the first day. You stayed. Now you're in a fake kitchen putting the same cup into the same dishwasher three hundred times a day, and every time has to be like the first. As of today, you're going to learn to direct a real robot with a pair of controllers.",
  "salary_note": "Estimate: an on-site collector at a Shanghai data collection factory, paid by valid hours and pass rate plus a night-shift allowance, earns about thirty percent above the national figure. In months between projects there are fewer hours, and pay drops back to the national figure.",
  "facts": [
-  { "label": "On-Site Data Collector / Teleoperator (current level)", "value": "6 months-2 years, ¥4,641–6,825 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
-  { "label": "Next level up", "value": "Collection Team Leader / Data QC (1-3 years)", "source": "Career map" },
-  { "label": "Pay in the first year", "value": "¥4,200 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Putting on the rig and doing a trial collection on your first day", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Teleoperating a real robot through grasping tasks on the night shift", "source": "AI exposure" },
-  { "label": "Open positions", "value": "3 related job listings nationwide, 1 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "On-Site Data Collector / Teleoperator (current level)",
+   "value": "6 months-2 years, ¥6,000–9,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Collection Team Leader / Data QC (1-3 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay in the first year",
+   "value": "¥4,200 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Putting on the rig and doing a trial collection on your first day",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Teleoperating a real robot through grasping tasks on the night shift",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "3 related job listings nationwide, 1 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Clock in, collect your gear. Head camera, two wrist cameras, a pair of motion-capture gloves: you put them on one by one and run a calibration on the tablet, and on screen your hands become a skeleton.",

@@ -12,12 +12,36 @@
  "intro": "In the cooperative's yard stand a dozen high-horsepower tractors, two grain dryers tower over the threshing floor, and the map on the wall cuts thirty thousand mu (about 5,000 acres) into dozens of numbered plots. The land comes from more than a hundred member households who pooled or leased it, and your own family's twenty mu is in there too. From today, which plot gets sown when and which one needs spraying, you'll have to carry in your head, one plot at a time.",
  "salary_note": "Estimate: managers at a Fujin cooperative get a monthly wage plus an autumn bonus tied to yield, and local pay runs a notch below the national figure. In a good year the year-end bonus adds several months' pay; in a disaster year there is only the base.",
  "facts": [
-  {"label": "Agricultural Manager, Level 4 (current level)", "value": "0–2 years, ¥5,270–7,750 a month (national average, derived from pay by experience)", "source": "Common in the trade"},
-  {"label": "Next level up", "value": "Work Zone Leader (Agricultural Manager, Level 3) (2–5 years)", "source": "Common in the trade"},
-  {"label": "Pay after 10+ years", "value": "¥15,000 a month (national average)", "source": "Pay by experience"},
-  {"label": "What AI can't take", "value": "Walking the fields and making the call at the field's edge", "source": "AI exposure"},
-  {"label": "Where AI is moving in", "value": "Gathering input prices, grain prices and weather and sending them to members", "source": "AI exposure"},
-  {"label": "Open positions", "value": "3 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings"}
+  {
+   "label": "Agricultural Manager, Level 4 (current level)",
+   "value": "0–2 years, ¥5,270–7,750 a month (national average, derived from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Work Zone Leader (Agricultural Manager, Level 3) (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥10,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Walking the fields and making the call at the field's edge",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Gathering input prices, grain prices and weather and sending them to members",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "3 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "In May the light comes early, and by half past four you're at the seedling greenhouse. You lift the plastic and look at the rice seedlings, drops of water on the leaf tips. The thermometer reads 22 degrees, and you open the vent another finger's width.",

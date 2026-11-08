@@ -12,12 +12,36 @@
   "intro": "You studied agronomy for four years, and the contract you signed before graduating says it plainly: at least five years of service back in your home county. The county extension center sits in a two-story building from the nineties. The extension section is five people, you included, and between you they look after the potatoes and corn of all eighteen townships. As of today the key to the station's old motorbike is yours. Tomorrow morning you ride out to check for late blight.",
   "salary_note": "Estimate: a new hire's pay at a county-level public institution in Gansu, plus the township work allowance, comes to a little over 70% of the national figure. Raises come slowly even as your professional title rises, and the farm manager and director salaries of the corporate track are out of reach in a county.",
   "facts": [
-    { "label": "Assistant Agricultural Technician (current level)", "value": "0-1 years, ¥4,000–6,000 a month (national average)", "source": "Career map" },
-    { "label": "Next level up", "value": "Agricultural Technician (1-3 years)", "source": "Career map" },
-    { "label": "Monthly pay, first year in the field", "value": "¥6,500 (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Taking emergency control of a greenhouse during a midday heat spike and directing the cooling", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Morning greenhouse sensor rounds and cross-checking readings from multiple sensors", "source": "AI exposure" },
-    { "label": "Open positions", "value": "90 related job listings nationwide (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Assistant Agricultural Technician (current level)",
+      "value": "0-1 years, ¥3,000–4,300 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Agricultural Technician (1-3 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Monthly pay, first year in the field",
+      "value": "¥3,000 (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Taking emergency control of a greenhouse during a midday heat spike and directing the cooling",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Morning greenhouse sensor rounds and cross-checking readings from multiple sensors",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "90 related job listings nationwide (the listings are mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "In the station's staff dorm you boil a kettle and brew a pot of guan guan tea, the strong clay-pot tea of these hills, then eat a bowl of sour jiangshui noodles at the little place by the gate. The owner asks which township it is today.",

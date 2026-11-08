@@ -12,12 +12,36 @@
  "intro": "The studio is on the third floor: a green screen, two lights, one desk, and behind you a “blue sky over the county town” keyed in by computer. You studied announcing for four years in the provincial capital. On your first day back, the veteran anchor sets a script in front of you, points at the first line and asks: how do you say this place name? You say Liu. She shakes her head. The Liu in Lu'an is pronounced Lu, here and nowhere else. Starting today, when people in this county turn on the TV at night, you are what they see.",
  "salary_note": "Estimate: county media pay on the public institution scale with very small bonuses, well below the national figure, so 0.6.",
  "facts": [
-  { "label": "Announcer, Grade 2 (current level)", "value": "0–4 years, ¥5,270–7,750 a month (national average, estimated from pay by experience)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Announcer, Grade 1 (4–10 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥18,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Reporting and interviewing on location", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Reading news, weather forecasts and other scripted copy", "source": "AI exposure" },
-  { "label": "Open positions", "value": "2 related listings nationwide, 0 in this city (the database leans toward campus hires and internships)", "source": "Job listings" }
+  {
+   "label": "Announcer, Grade 2 (current level)",
+   "value": "0–4 years, ¥3,400–4,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Announcer, Grade 1 (4–10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥6,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Reporting and interviewing on location",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Reading news, weather forecasts and other scripted copy",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "2 related listings nationwide, 0 in this city (the database leans toward campus hires and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Voice practice by the stream behind the building. You run through tongue twisters. The old man doing his morning exercises across the water nods at you, long used to it.",

@@ -12,12 +12,36 @@
  "intro": "You studied art therapy in Britain for two years and came back to Shanghai with your registration from there. The practice is on the second floor of an old garden villa in Xuhui; the therapy room floor is covered with a waterproof sheet, and the cupboards hold clay, gouache and a stack of old magazines. The receptionist asks what title to print on your business card. You think about it and say “Art Therapist,” even though China doesn’t have that certificate yet. As of today, the appointment book has its first name for you.",
  "salary_note": "Estimate: a Shanghai private practice pays an art therapist a base salary plus a cut per session, around ¥12,000 a month, about 1.4 times the national figure; caseloads are unsteady and can fall by a third in slow months, and supervision and personal therapy come out of your own pocket.",
  "facts": [
-  { "label": "Junior Art Therapist (current level)", "value": "1-3 years, ¥7,000–12,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Senior Art Therapist (3-6 years)", "source": "Career map" },
-  { "label": "Monthly pay, 5–10 years in the field", "value": "¥26,669 (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Leading a 45-minute community art therapy group and doing the process assessment", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Writing up the clinical notes after a first session and planning the next materials", "source": "AI exposure" },
-  { "label": "Open positions", "value": "3 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Junior Art Therapist (current level)",
+   "value": "1-3 years, ¥11,600–17,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Art Therapist (3-6 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Monthly pay, 5–10 years in the field",
+   "value": "¥16,800 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Leading a 45-minute community art therapy group and doing the process assessment",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing up the clinical notes after a first session and planning the next materials",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "3 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "The metro to Xuhui, then across two streets lined with plane trees. You buy a bottle of water at the convenience store and go over last night’s session notes once more outside the door.",

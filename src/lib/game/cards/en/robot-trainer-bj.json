@@ -12,11 +12,31 @@
  "intro": "You spent a year as a data collector at the training ground of this Yizhuang robotics company, and last month became a trainer with a task package of your own. The training ground is a converted factory building, partitioned into scenes, a bedroom, a pharmacy, a car assembly line, supermarket shelves, and the robots stand inside them waiting for you to put on the headset and reach out their hands for them. From today, every movement it learns, you will have done hundreds of times.",
  "salary_note": "Estimate: the occupation library has no pay data for this trade, so each level's monthly pay is estimated from what embodied AI companies' data centers commonly advertise. Companies in Yizhuang, Beijing, pay noticeably more than the national average, with performance pay based on hours of valid data, and bonuses in years when funding goes well.",
  "facts": [
-  { "label": "Embodied AI Robot Trainer (current level)", "value": "1-2 years, ¥7,000–11,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Training Team Lead / Senior Trainer (2-4 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Dealing with a gripper damaged in a collision", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Starting to teach demonstrations after three to five days of training", "source": "AI exposure" },
-  { "label": "Open positions", "value": "5 related listings nationwide, 2 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Embodied AI Robot Trainer (current level)",
+   "value": "1-2 years, ¥9,200–14,800 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Training Team Lead / Senior Trainer (2-4 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Dealing with a gripper damaged in a collision",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Starting to teach demonstrations after three to five days of training",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "5 related listings nationwide, 2 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Out of the Yizhuang Line subway, a ten-minute walk to the training ground. By the door of the old factory stands a retired two-legged prototype with a sign hung round its neck: No. 01.",

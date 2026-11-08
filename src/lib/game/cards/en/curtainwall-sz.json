@@ -12,11 +12,31 @@
  "intro": "You studied civil engineering in Guangzhou and joined this Shenzhen facade company after graduating, spending two years at the design institute drawing details and fabrication drawings before taking on a whole elevation yourself in your third. Your desk is in an old factory building in Nanshan converted into offices, and out the window you can see the Houhai towers whose glass is not yet closed in. As of today you are responsible for the unitized curtain wall on one of them, learning to make thousands of glass panels hold, every last one, through a typhoon.",
  "salary_note": "Estimate: facade companies in Shenzhen pay designers above the national average, with overtime and project bonuses in quarters racing to deadlines. In years with fewer property projects, bonuses shrink; overseas projects add a posting allowance.",
  "facts": [
-  { "label": "Curtain Wall Designer (current level)", "value": "2-5 years, ¥8,000–13,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Lead Curtain Wall Designer (Project Design Lead) (5-10 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Giving technical guidance on site and solving design problems there", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Studying the architectural design requirements and settling the curtain wall scheme", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Curtain Wall Designer (current level)",
+   "value": "2-5 years, ¥13,300–23,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Lead Curtain Wall Designer (Project Design Lead) (5-10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Giving technical guidance on site and solving design problems there",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Studying the architectural design requirements and settling the curtain wall scheme",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "Downstairs in the urban village you buy a plate of rice noodle rolls with egg and squeeze onto the metro, where half the carriage is looking at drawings on their phones.",

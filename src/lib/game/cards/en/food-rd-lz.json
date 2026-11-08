@@ -12,11 +12,31 @@
   "intro": "At your interview the boss didn't ask what you'd studied. He brought out a bowl of noodles and asked how many things you could taste. You said five, and he said eleven. As of today, you are trying to fit a flavor this sour, this rank and this addictive into a bag that can sit for half a year.",
   "salary_note": "Estimate: food factory pay in Liuzhou is well below the national R&D average, but housing and noodles are both cheap.",
   "facts": [
-    { "label": "Assistant R&D Engineer (current level)", "value": "0-2 years, ¥5,000–8,000 a month (national average, estimated)", "source": "Common in the trade" },
-    { "label": "Next level up", "value": "R&D Engineer (2-6 years)", "source": "Common in the trade" },
-    { "label": "What AI can't take", "value": "Working with other departments, including sales, production and purchasing", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Monitoring quality at key points in production and keeping workshop practice to standard", "source": "AI exposure" },
-    { "label": "Open positions", "value": "5 linked listings nationwide, 0 in this city (the job database is mostly campus and internship postings)", "source": "Job listings" }
+    {
+      "label": "Assistant R&D Engineer (current level)",
+      "value": "0-2 years, ¥3,600–5,100 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "R&D Engineer (2-6 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Working with other departments, including sales, production and purchasing",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Monitoring quality at key points in production and keeping workshop practice to standard",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "5 linked listings nationwide, 0 in this city (the job database is mostly campus and internship postings)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "A bowl of breakfast noodles at the stall by the factory gate. The stall's broth is different every day, and you've started to notice there's a little more chili oil than yesterday.",

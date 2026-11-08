@@ -12,12 +12,36 @@
   "intro": "Your first job came through your own account on Xiaohongshu, the lifestyle app: an old work-unit flat in Xuhui, sixty square metres, a family of three. The client sent nine photos in a private message; the last showed the balcony door blocked by clothes. You packed a tape measure, a laser measure, a label maker and a bag of velvet hangers, and took the metro. As of today, the bookings are yours, and so are the complaints.",
   "salary_note": "Estimate: Shanghai organizers charge per person per hour or per square metre. Working independently, a busy month can bring in over ¥10,000, a slow one half that; about 30% above the national figure, and it all depends on reputation and repeat clients.",
   "facts": [
-    { "label": "Professional Organizer (current level)", "value": "1-3 years, ¥8,000–15,000 a month (national average)", "source": "Career map" },
-    { "label": "Next level up", "value": "Space Planner (3-5 years)", "source": "Career map" },
-    { "label": "Monthly pay, 3-5 years in the field", "value": "¥16,000 (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Putting a main-bedroom wardrobe back to standard and folding everything upright", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Finishing and handing over a main-bedroom wardrobe in fine detail", "source": "AI exposure" },
-    { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Professional Organizer (current level)",
+      "value": "1-3 years, ¥12,700–21,900 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Space Planner (3-5 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Monthly pay, 3-5 years in the field",
+      "value": "¥16,000 (national average)",
+      "source": "Pay by experience"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Putting a main-bedroom wardrobe back to standard and folding everything upright",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Finishing and handing over a main-bedroom wardrobe in fine detail",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "You leave your rented room in Baoshan pulling a folding trolley: two boxes of hangers, a stack of storage boxes, knee pads. On the metro you zoom in once more on today's floor plan.",

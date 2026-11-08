@@ -12,11 +12,31 @@
  "intro": "You spent six years in HR at an internet company and handled a hundred-odd exit interviews; at thirty you went back for a part-time master's in applied psychology, and later joined this studio. It's on the twelfth floor of an old apartment block in Chaoyang: two counseling rooms, each with a loveseat, an armchair and a box of tissues, the clock on the wall hung where clients can't see it and you can with a glance. You've been seeing clients on your own for over a year, and from today, for the first time, your schedule is booked with twenty.",
  "salary_note": "Estimate: counselors at a Beijing studio are paid a share of each session. A ninety-minute couples session costs about a thousand yuan, of which the counselor keeps sixty percent, a little over ten thousand a month, about 1.4 times the national average. Supervision, training and personal therapy you pay for yourself, and caseloads aren't steady.",
  "facts": [
-  { "label": "Marriage and Family Counselor (current level)", "value": "2-6 years, ¥7,000–12,000 a month (national average, estimated)", "source": "Industry norm" },
-  { "label": "Next level up", "value": "Senior Marriage and Family Counselor (6-12 years)", "source": "Industry norm" },
-  { "label": "What AI can't take", "value": "Holding two people at once without taking sides", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Scheduling and organizing session notes", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Marriage and Family Counselor (current level)",
+   "value": "2-6 years, ¥11,600–19,400 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Marriage and Family Counselor (6-12 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Holding two people at once without taking sides",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Scheduling and organizing session notes",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "At the studio you open the windows to air the rooms, refill the tissues and warm water in both counseling rooms, and put the cushions back on the loveseat. When last night's final couple left, a cushion was sitting between them.",

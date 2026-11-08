@@ -12,12 +12,36 @@
  "intro": "You spent three years of residency training at a top-tier (Grade 3A) TCM hospital in the provincial capital, saw the hardest cases and studied under the best teachers. This year you've come back to the county TCM hospital. The acupuncture department is one treatment room with six beds, and the waiting bench is full of old people holding their backs. As of today they call you the young doctor, and it's your job to get them walking out on their own two feet.",
  "salary_note": "Estimate: base pay plus performance pay for a resident at a county TCM hospital in Shandong comes to about ¥5,000 take-home, around sixty percent of the national figure. Housing is cheap and living costs are low in the county, and performance pay follows clinic volume and insurance settlements.",
  "facts": [
-  { "label": "Acupuncture Resident Physician (current level)", "value": "1-3 years, ¥6,000–11,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Acupuncture Attending Physician (3-7 years)", "source": "Career map" },
-  { "label": "Pay in the first year", "value": "¥7,600 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Safe needling on the morning ward round, and handling a patient who faints under the needle", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Body-constitution assessment and seasonal moxibustion plans ahead of each solar term", "source": "AI exposure" },
-  { "label": "Open positions", "value": "2 related job listings nationwide (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Acupuncture Resident Physician (current level)",
+   "value": "1-3 years, ¥4,300–5,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Acupuncture Attending Physician (3-7 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay in the first year",
+   "value": "¥7,600 a month (national average)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Safe needling on the morning ward round, and handling a patient who faints under the needle",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Body-constitution assessment and seasonal moxibustion plans ahead of each solar term",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "2 related job listings nationwide (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You ride your e-bike through the county town's morning market. The woman selling jianbing, folded egg pancakes, recognizes you and says her mother-in-law is coming to see you for needles this afternoon.",

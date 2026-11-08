@@ -12,12 +12,36 @@
   "intro": "The department head hands you an old phone: the IT department's on-call line, its number taped beside the screen of every computer in the hospital. He takes you down to the server room in the basement and pushes the door open on a blast of cold air: two rows of racks, lights blinking, the UPS humming in the corner. As of today, when the billing desk computer won't start at three in the morning, that call comes to you.",
   "salary_note": "Estimate: a contract-staff network administrator in a county hospital's IT department takes home a little over ¥3,000; with performance pay and night-shift allowances it comes to about 60% of the national figure for systems administrators. In a hospital, IT counts as support staff, and its performance pay ranks behind the clinical departments.",
   "facts": [
-    { "label": "Desktop Support / Network Administrator (current level)", "value": "0-2 years, ¥5,525–8,125 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
-    { "label": "Next level up", "value": "Systems Administrator (2-4 years)", "source": "Career map" },
-    { "label": "Pay after 10+ years", "value": "¥16,500 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Racking a server and connecting it to the network", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Handling a server alert and writing the post-incident review", "source": "AI exposure" },
-    { "label": "Open positions", "value": "326 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Desktop Support / Network Administrator (current level)",
+      "value": "0-2 years, ¥3,300–4,800 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Systems Administrator (2-4 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥7,000 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Racking a server and connecting it to the network",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Handling a server alert and writing the post-incident review",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "326 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "Outpatients open at eight; you're in at seven-thirty. First the temperature and humidity gauge and the UPS panel in the server room, then, on the monitoring page, the green lights for the three servers, HIS, LIS and PACS, checked one by one.",

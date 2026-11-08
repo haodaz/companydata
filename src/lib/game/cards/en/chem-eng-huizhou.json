@@ -12,12 +12,36 @@
  "intro": "You finished your master's in chemical engineering in Guangzhou and signed with this refinery in Daya Bay. It took you three tries to pass the safety exam at induction. The plant put you on the hydrocracker and told you to work shifts for the first three years: day, night, off, off. As of today you sit in the control room, in front of dozens of screens, learning to read every line on them.",
  "salary_note": "Estimate: shift posts at an integrated refinery in Daya Bay carry a shift allowance, night pay and a year-end bonus tied to profits, so a new master's graduate starts thirty to forty percent above the national average. In years when refining margins are poor, the bonus shrinks.",
  "facts": [
-  { "label": "Assistant Chemical Engineer (current level)", "value": "0-2 years, ¥6,000–11,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Process Engineer (2-5 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥28,600 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Aligning and preheating the shell mold, then the precise vacuum tilt pour", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Knocking the shell off the blades, cutting the gates, and the first-article visual inspection", "source": "AI exposure" },
-  { "label": "Open positions", "value": "535 related listings nationwide, 15 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Chemical Engineer (current level)",
+   "value": "0-2 years, ¥8,100–15,200 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Process Engineer (2-5 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥45,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Aligning and preheating the shell mold, then the precise vacuum tilt pour",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Knocking the shell off the blades, cutting the gates, and the first-article visual inspection",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "535 related listings nationwide, 15 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "The alarm goes off in the shift dormitory. You pull on your anti-static coveralls and take the zone shuttle bus to the process area. The sea fog hasn't lifted yet, and far off, on top of the flare stack, there is a small flame.",

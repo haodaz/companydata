@@ -12,12 +12,36 @@
   "intro": "You served two years in the army, and the autumn you were discharged, the fire and rescue service happened to be recruiting from veterans. On the weighted stair climb you came first in your group. After three months of recruit training you were posted to the city's special service station, the unit for the hardest rescues. Your bunk is on the third floor, your turnout gear hangs at the head of the bed, your boots stand underneath it. As of today, when the alarm sounds, you have one minute to be sitting in the truck.",
   "salary_note": "Estimate: firefighters in the national comprehensive fire and rescue service are paid on national pay scales, veterans can be placed on the scale by years served, and Jiangsu adds local allowances. That comes to about 30 percent above the database figure, which is based on local full-time brigade hiring.",
   "facts": [
-    { "label": "Newly recruited firefighter, probationary (current level)", "value": "0–6 months, ¥4,500–6,750 a month (national average, estimated from pay by experience)", "source": "Pay by experience" },
-    { "label": "Next level up", "value": "Firefighter / Fire Rescue First Responder, Grade 1 Step 1 (6 months–3 years)", "source": "Career map" },
-    { "label": "Pay after 10+ years", "value": "¥9,100 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "First aid at a fire scene for casualties of smoke inhalation", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Daily equipment checks and restocking rescue gear", "source": "AI exposure" },
-    { "label": "Open positions", "value": "0 related listings nationwide (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Newly recruited firefighter, probationary (current level)",
+      "value": "0–6 months, ¥5,900–9,700 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Firefighter / Fire Rescue First Responder, Grade 1 Step 1 (6 months–3 years)",
+      "source": "Career map"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥12,200 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "First aid at a fire scene for casualties of smoke inhalation",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Daily equipment checks and restocking rescue gear",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "0 related listings nationwide (the job database is mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "Reveille. Fold the quilt, square away your bunk. The quilt has to have sharp edges, the same as in the army, except at the end of the corridor there's now a row of turnout gear hanging ready.",

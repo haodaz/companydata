@@ -12,12 +12,36 @@
  "intro": "You did two years of rehab at a care home, getting old people up for standing exercises every day; then you earned the assessor's certificate and moved to this third-party assessment agency. The office is on the sixth floor of an office building in Jinniu District, and along the wall a row of cabinets holds the assessment kits: a tablet, a blood pressure monitor, a stopwatch, a tape measure and a body camera like the ones police wear. The team leader pairs you with a partner who has been doing this for three years. From today, every day you'll be knocking on five or six strangers' doors.",
  "salary_note": "Estimate: a Chengdu third-party assessment agency pays base salary plus a fee per assessment, a little over five thousand a month, slightly below the national average; the work follows the application seasons for long-term care insurance and subsidies, busy and slack by turns.",
  "facts": [
-  { "label": "Elderly Ability Assessor (Level 3) (current level)", "value": "0-2 years, ¥4,420–6,500 a month (national average, derived from pay by experience)", "source": "Industry norm" },
-  { "label": "Next level up", "value": "Elderly Ability Assessor (Level 2) (2-5 years)", "source": "Industry norm" },
-  { "label": "Pay after 10+ years", "value": "¥12,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Watching an old person stand up, walk and dress in their own home", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Filing assessment records and reminding when reassessments are due", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Elderly Ability Assessor (Level 3) (current level)",
+   "value": "0-2 years, ¥4,420–6,500 a month (national average, derived from pay by experience)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Next level up",
+   "value": "Elderly Ability Assessor (Level 2) (2-5 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥9,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Watching an old person stand up, walk and dress in their own home",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Filing assessment records and reminding when reassessments are due",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You pick up your assignments at the agency. The system has given you six households today, five in Jinniu and one in Pidu; you and your partner plot a route on the map.",

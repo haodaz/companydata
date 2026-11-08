@@ -12,12 +12,36 @@
  "intro": "You studied telecom engineering, signed with this carrier's Guizhou branch at a campus job fair, and were posted to the data center campus in Gui'an New Area. These past few years one machine hall after another has gone up in the folds of the hills, computing power from the east has been moving here, and the metro network and egress bandwidth get expanded every year. From today, every cutover plan you write will be typed in, line by line, by you, in a machine room at one in the morning.",
  "salary_note": "Estimate: the carrier's Guizhou branch pays a post salary plus performance pay, ten to twenty percent below the national figure, which leans on equipment makers and cloud companies in first-tier cities. There is an allowance for night cutovers, benefits and housing fund are steady, and with Guiyang's low house prices life is roomier than for classmates in Shenzhen.",
  "facts": [
-  { "label": "Telecom Systems Engineer (current level)", "value": "2-5 years, ¥9,000–15,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Senior Network Systems Specialist (5-8 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥26,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Running the annual cutover on the provincial SPN backbone ring and verifying service end to end", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Forecasting BRAS session trends and preloading QoS policy before the midday peak", "source": "AI exposure" },
-  { "label": "Open positions", "value": "73 related listings nationwide, 0 in this city (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Telecom Systems Engineer (current level)",
+   "value": "2-5 years, ¥9,000–15,000 a month (national average)",
+   "source": "Career map"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Network Systems Specialist (5-8 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥15,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Running the annual cutover on the provincial SPN backbone ring and verifying service end to end",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Forecasting BRAS session trends and preloading QoS policy before the midday peak",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "73 related listings nationwide, 0 in this city (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "From your rented flat in Huaxi you take the campus shuttle into Gui'an. Fog the whole way, and in the folds of the hills machine halls one after another, gray-white, without windows.",

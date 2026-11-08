@@ -12,12 +12,36 @@
  "intro": "Last year you were still in a rented room typing code line by line from the documentation. You sent out more than two hundred resumes and only this company called back. Now you are responsible for every page of the sellers' admin dashboard; of twenty people, three write front-end. Every Monday meeting the CEO says the next round is close. As of today, half the commits in the code repository are yours.",
  "salary_note": "Estimate: a Shenzhen startup pays a self-taught front-end developer in their second year ¥11,000–13,000 a month, over 30% above the national figure. There are stock options, but until the funding lands your pay can be docked at any time.",
  "facts": [
-  { "label": "Junior Front-End Developer (current level)", "value": "0-2 years, ¥7,000–13,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Mid-level Front-End Developer (2-4 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥24,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Leading the rollout of a micro-frontend architecture and setting the onboarding procedure for sub-apps", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Running regression checks on homepage first-screen performance before the lunchtime peak", "source": "AI exposure" },
-  { "label": "Open positions", "value": "119 related job listings nationwide, 14 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Junior Front-End Developer (current level)",
+   "value": "0-2 years, ¥11,500–18,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Mid-level Front-End Developer (2-4 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥53,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Leading the rollout of a micro-frontend architecture and setting the onboarding procedure for sub-apps",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Running regression checks on homepage first-screen performance before the lunchtime peak",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "119 related job listings nationwide, 14 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "At 8:20 you leave a handshake building in an urban village in Xili, the blocks so close their windows almost touch, and get steamed rice rolls with egg downstairs. On the metro you scroll through last night's error monitoring: two sellers' pages went blank.",

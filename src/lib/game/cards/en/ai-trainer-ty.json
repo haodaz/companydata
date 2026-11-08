@@ -12,12 +12,36 @@
  "intro": "The center takes up the third floor of an office block, more than two hundred desks stretching out of sight, a screen and headphones each. The shift lead hands you a two-hundred-page rules document and says to first memorize 'more than half occluded doesn't count.' From today, anything a machine learns to recognize may be something you told it first.",
  "salary_note": "Estimate: the database's pay by experience leans toward big tech in first-tier cities. Piece-rate take-home at a Taiyuan labeling center is a bit over forty percent of the national figure, with performance pay once you're fast.",
  "facts": [
-  { "label": "Data Annotator (current level)", "value": "0-1 years, ¥10,200–15,000 a month (national average, derived from pay by experience)", "source": "Industry norm" },
-  { "label": "Next level up", "value": "Annotation Quality Inspector (1-3 years)", "source": "Industry norm" },
-  { "label": "Pay after 3–5 years", "value": "¥25,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Judging whether a model's answer is right and appropriate", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Boxing images and routine text classification", "source": "AI exposure" },
-  { "label": "Open positions", "value": "71 related listings nationwide, 0 in this city (the database leans toward campus and intern roles)", "source": "Job listings" }
+  {
+   "label": "Data Annotator (current level)",
+   "value": "0-1 years, ¥4,600–5,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Annotation Quality Inspector (1-3 years)",
+   "source": "Industry norm"
+  },
+  {
+   "label": "Pay after 3–5 years",
+   "value": "¥5,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Judging whether a model's answer is right and appropriate",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Boxing images and routine text classification",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "71 related listings nationwide, 0 in this city (the database leans toward campus and intern roles)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "A bowl of tofu pudding and a fried dough stick from the stall downstairs. The wind off the Fen River is a little cold. Everyone on the bus is scrolling; you're memorizing rules.",

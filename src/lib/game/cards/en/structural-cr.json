@@ -12,12 +12,36 @@
  "intro": "You signed with the bureau after graduating. Your first year was building a bridge on the plains; in your second you were sent into these mountains in Guizhou, to a six-kilometer expressway tunnel. The project office's prefab huts sit halfway up the slope, and at night you can see the string of lights at the tunnel portal. As of today, in the chief engineer's office, you calculate supports, check reinforcement and write technical briefings, and you go home only at Lunar New Year and National Day.",
  "salary_note": "Estimate: front-line projects at a central state-owned engineering bureau pay a field allowance, a tunneling subsidy and project bonuses, so a new graduate takes home over twenty percent more than the national average. In years when a project is winding down or halted, the bonus drops.",
  "facts": [
-  { "label": "Assistant Structural Engineer (current level)", "value": "0-2 years, ¥6,000–10,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Structural Engineer (2-5 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Locating, measuring and making a first call on the cause of diagonal cracks under the beams of a school building, on site", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Coordinating headroom over a basement car park's main aisle and checking the strength of openings through beam webs", "source": "AI exposure" },
-  { "label": "Open positions", "value": "6 related listings nationwide (mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Assistant Structural Engineer (current level)",
+   "value": "0-2 years, ¥8,800–14,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Structural Engineer (2-5 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥36,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Locating, measuring and making a first call on the cause of diagonal cracks under the beams of a school building, on site",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Coordinating headroom over a basement car park's main aisle and checking the strength of openings through beam webs",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "6 related listings nationwide (mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "The tin roofs of the huts are wet with dew. You brush your teeth at the sink at the end of the walkway; down the valley the fog hasn't lifted. In the canteen the cook is boiling potatoes, and the smell of sour soup fills the yard.",

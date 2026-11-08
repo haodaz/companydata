@@ -12,11 +12,31 @@
  "intro": "The ice on Houhai hasn't melted yet. You come out of the bar by Yinding Bridge with your guitar on your back, hurrying to the next set. You came to Beijing from Hohhot a year ago and live in a half-basement room near the Drum Tower, with a request list taped to the wall: three hundred songs, and you know them all. On your phone are twenty more you wrote yourself, none of them released. From today, the little chalkboard outside the bar has your name on it, and \"9 p.m.\"",
  "salary_note": "Estimate: resident singers around Houhai and Sanlitun are paid by the set, a few hundred yuan each, two or three sets a night, plus tips that customers send by scanning a QR code. In the slow season and the cold months there are fewer sets and income drops with them. Taken at 1.1 times the national figure.",
  "facts": [
-  { "label": "Resident Bar Singer (current level)", "value": "0–3 years, ¥4,000–8,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Band Frontperson (3–6 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Singing live", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Making backing tracks and arrangement demos", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Resident Bar Singer (current level)",
+   "value": "0–3 years, ¥5,500–10,200 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Band Frontperson (3–6 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Singing live",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Making backing tracks and arrangement demos",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You wake in the half-basement. The window shows only half the world, the feet of people passing. You brew a cup of malva nut tea and don't speak yet, letting your voice wake up.",

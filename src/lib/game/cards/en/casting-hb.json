@@ -12,12 +12,36 @@
  "intro": "You studied materials forming in the provincial capital and came back to this foundry park near your home in Cangzhou. In five years you've gone from an assistant running drawings to designing the process on your own, and of the two hundred-odd workers in the plant, you're the only one who understands simulation. This year the environmental rules are tightening again, and the boss says it's upgrade or close. As of today, every heat of iron in this plant carries your signature.",
  "salary_note": "Estimate: a process engineer at a private foundry in a Hebei county-level city earns ¥7,000–8,000 a month, about seventy percent of the national figure. In months of production cuts during autumn and winter smog, there is only base pay; in good years there's a profit share at year end.",
  "facts": [
-  { "label": "Casting Process Engineer (current level)", "value": "2-5 years, ¥10,000–18,000 a month (national average)", "source": "Career map" },
-  { "label": "Next level up", "value": "Senior Casting Process Engineer (5-8 years)", "source": "Career map" },
-  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Knocking out the shell and first visual inspection of the first casting", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Shift handover and checking conditions before the furnace is lit", "source": "AI exposure" },
-  { "label": "Open positions", "value": "11 related job listings nationwide (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Casting Process Engineer (current level)",
+   "value": "2-5 years, ¥10,000–18,000 a month (national average)",
+   "source": "Career map"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Casting Process Engineer (5-8 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥16,100 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Knocking out the shell and first visual inspection of the first casting",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Shift handover and checking conditions before the furnace is lit",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "11 related job listings nationwide (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "You leave home in the county town and drive twenty minutes to the foundry park. On both sides of the road are rows of sheds, and the air carries a faint smell of burnt sand. You've breathed it for five years and can't smell it anymore.",

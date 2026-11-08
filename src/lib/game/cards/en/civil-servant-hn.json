@@ -12,12 +12,36 @@
   "intro": "You finished a master's in public administration in Changsha and passed Hunan's selective recruitment for graduates bound for grassroots posts, and were assigned to a township in a hill county. On the day you reported, the township car fetched you from the county town, past harvested rice paddies and slope after slope of camellia oil trees. The township Party secretary talked with you for twenty minutes and finished: first go down to a village, and work two years alongside the village Party secretary. As of today, the first thing you have to do in this township is learn to understand what people here are saying.",
   "salary_note": "Estimate: township civil servants are paid on the civil service scale plus a township work allowance. Pay in Hunan's counties is below the national average, about 60 to 70 percent of the national figure.",
   "facts": [
-    { "label": "Clerk, Grade 1 (selected graduate) (current level)", "value": "0–2 years, ¥4,930–7,250 a month (national average, estimated from pay by experience)", "source": "Common in the trade" },
-    { "label": "Next level up", "value": "Principal Staff Member, Grade 4 (head of the township general office) (2–5 years)", "source": "Common in the trade" },
-    { "label": "Pay after 10+ years", "value": "¥11,800 a month (national average)", "source": "Pay by experience" },
-    { "label": "What AI can't take", "value": "Going into villages and homes, working with people face to face", "source": "AI exposure" },
-    { "label": "Where AI is moving in", "value": "Filling in forms and keeping ledgers", "source": "AI exposure" },
-    { "label": "Open positions", "value": "45 related listings nationwide (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+    {
+      "label": "Clerk, Grade 1 (selected graduate) (current level)",
+      "value": "0–2 years, ¥3,200–4,300 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Principal Staff Member, Grade 4 (head of the township general office) (2–5 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥6,200 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Going into villages and homes, working with people face to face",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Filling in forms and keeping ledgers",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "45 related listings nationwide (the job database is mostly graduate hiring and internships)",
+      "source": "Job listings"
+    }
   ],
   "day": [
     "The township staff dormitory is an old block behind the compound, and the canteen's blower downstairs wakes you. Breakfast is rice noodles with a spoonful of chopped chili. The cook asks if you can handle spice; you say you can.",

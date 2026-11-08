@@ -12,12 +12,36 @@
  "intro": "The head blender pushes a tulip glass toward you and says that from today, your blind-tasting scores count in your appraisal. The blending room's windows face north, hand cream isn't allowed inside, and since the day you came in you've given up chili. As of today, before every batch this distillery ships, one glass of it has to pass your nose.",
  "salary_note": "Estimate: at a mid-sized sauce-aroma distillery in Renhuai, technical staff in the blending room get base pay plus a year-end bonus, a notch below the national figure for liquor blenders. In good years the bonus is generous; in years when the sauce-aroma market cools, it shrinks.",
  "facts": [
-  { "label": "Junior Blender (current level)", "value": "0-3 years, ¥6,000–9,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Liquor Blender, Grade 3 (3-6 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥22,000 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Running full-scale blends (around fifty tonnes) and translating them into process parameters on the production floor", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Market research and analysis of consumer taste to set the target style of a blend", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Junior Blender (current level)",
+   "value": "0-3 years, ¥6,000–9,000 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Liquor Blender, Grade 3 (3-6 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥15,200 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Running full-scale blends (around fifty tonnes) and translating them into process parameters on the production floor",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Market research and analysis of consumer taste to set the target style of a blend",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related job listings nationwide, 0 in this city (the listings are mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "At the mutton noodle shop below the dorm, the owner sees you coming and leaves out the chili, giving you a bowl of clear broth. The workshop men at your table have bowls that are all red; they laugh at you, and you laugh too.",

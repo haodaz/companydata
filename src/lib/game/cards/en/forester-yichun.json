@@ -12,12 +12,36 @@
  "intro": "In your kit bag: a pair of tree calipers, a hypsometer, a patrol terminal, a roll of red flagging tape, a chainsaw key and an army canteen full of hot water. The farm headquarters sits by a river, a few rows of red-brick buildings, and behind them Korean pine and white birch as far as you can see. Your father logged these mountains when he was young. You've come back to watch them grow. From today you patrol these slopes behind the old ranger. Which valley, which stand: from now on, you're the one who has to remember.",
  "salary_note": "Estimate: a permanent post at a state forest farm in Yichun, base pay plus performance pay and a ranger allowance. Local wages are low, so taken at 75 percent of the national figure. Fire season and fieldwork bring extra allowances; pay only rises noticeably with professional rank.",
  "facts": [
-  { "label": "Forest Ranger / Forestry Technician (current level)", "value": "0–3 years, ¥3,800–5,500 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Assistant Engineer (Silviculture Technician) (3–7 years)", "source": "Common in the trade" },
-  { "label": "Pay after 10+ years", "value": "¥11,500 a month (national average)", "source": "Pay by experience" },
-  { "label": "What AI can't take", "value": "Patrolling the forest and stopping damage to it", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Forest fire monitoring", "source": "AI exposure" },
-  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Forest Ranger / Forestry Technician (current level)",
+   "value": "0–3 years, ¥2,900–3,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Assistant Engineer (Silviculture Technician) (3–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥5,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Patrolling the forest and stopping damage to it",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Forest fire monitoring",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "In the headquarters canteen, the cook is frying flatbread. You charge the patrol terminal and fill your canteen with boiling water. Outside it's minus twenty-eight.",

@@ -12,11 +12,31 @@
  "intro": "In college you copied a lot of classic slogans out of your textbooks. Now the words you write get printed on light boxes in metro stations and play on the screens in elevator lobbies, and get struck out one word at a time by clients in meeting rooms. As of today you're a copywriter at this 4A agency, and behind every brief there's something someone wants other people to remember.",
  "salary_note": "Estimate: creative jobs at foreign-owned 4A agencies in Shanghai pay twenty to forty percent above the national figure. The year-end bonus depends on whether the agency lost clients that year; years with lots of pitches mean lots of overtime, not necessarily more money.",
  "facts": [
-  { "label": "Copywriter (current level)", "value": "2-4 years, ¥9,000–14,000 a month (national average, estimated)", "source": "Common in the trade" },
-  { "label": "Next level up", "value": "Senior Copywriter (4-7 years)", "source": "Common in the trade" },
-  { "label": "What AI can't take", "value": "Taking part in team meetings and client pitches", "source": "AI exposure" },
-  { "label": "Where AI is moving in", "value": "Understanding what target consumers really think and want", "source": "AI exposure" },
-  { "label": "Open positions", "value": "4 related listings nationwide, 2 in this city (the job database is mostly graduate hiring and internships)", "source": "Job listings" }
+  {
+   "label": "Copywriter (current level)",
+   "value": "2-4 years, ¥11,700–18,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Copywriter (4-7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Taking part in team meetings and client pitches",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Understanding what target consumers really think and want",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "4 related listings nationwide, 2 in this city (the job database is mostly graduate hiring and internships)",
+   "source": "Job listings"
+  }
  ],
  "day": [
   "The creative department drifts in late. You sit down with your coffee, and account services forwards a new brief: a new yogurt from the dairy brand, target audience \"health-conscious urban white-collar workers aged 25 to 35.\" You draw a line under it.",
