@@ -1,0 +1,170 @@
+{
+ "id": "undertaker-cs",
+ "occupation": "Funeral Director / Mortician",
+ "role": "Mortuary Restorative Artist at a Funeral Home",
+ "headline": "A restorative artist in the preparation room of a Changsha funeral home, trained at a vocational school for funeral services and one year into working beside your mentor",
+ "unit": "The preparation room of a funeral home on the outskirts of Changsha",
+ "unit_type": "City-run funeral home",
+ "city": "Changsha",
+ "city_tier": "New first-tier city",
+ "education": "Vocational secondary school (Modern Funeral Technology and Management)",
+ "level": "You can wash, dress, groom and apply light makeup to the deceased on your own. Restoration work and difficult cases still need your mentor's hands, and you haven't sat the Level 4 certificate yet.",
+ "intro": "The preparation room is in the last building at the back of the funeral home, with a row of camphor trees outside the window. Your mentor has done this for twenty-six years and says very little. On your first day, the first thing he taught you was to bow before you walk through the door. From today your name is on the roster: early shift starts at seven, and when the transfer phone rings at night, it may be you who goes.",
+ "salary_note": "Estimate: a contract technician at a city-run funeral home in Changsha, base pay plus night-shift and special-post allowances, taken at 90 percent of the national figure. Each skill certificate moves the allowance up a notch.",
+ "facts": [
+  { "label": "Level 5 Restoration Assistant (current level)", "value": "0–2 years, ¥5,000–7,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Level 4 Restorative Artist (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥13,800 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Placing the deceased in refrigerated storage", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Transferring the deceased and logging the handover", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You change into work clothes and put on two pairs of gloves. The cold-room register shows three new arrivals overnight; you check each name, number and wristband tag, one line at a time.",
+  "The first farewell service is at nine. You do the hair of a woman in her eighties. In the photo her family brought, she wears it in a bun, so you put it in a bun.",
+  "Your mentor is restoring the face of a young man. You pass him tools and mix foundation shades beside him. He says: better a little too light than false.",
+  "Lunch in the canteen. Everyone eats fast. Nobody talks about the morning; they talk about whose kid has the high-school entrance exam, and whether Changsha will hit forty degrees again this summer.",
+  "The family comes in to see the makeup. The daughter says her mother never wore lipstick. You wipe it off bit by bit with a cotton pad and choose a shade close to her natural lip color. The daughter says: yes, that's her.",
+  "Disinfecting, checking the makeup kit, restocking supplies. The air conditioning in the preparation room is set to sixteen degrees all year, and your fingers are going stiff.",
+  "You take the metro home to your rented room, packed in shoulder to shoulder. In your classmates' group chat someone asks how the job is going. You reply: fine, it's quiet.",
+  "Your mother calls to ask if you've eaten. To this day she tells the relatives you work in the service industry in Changsha."
+ ],
+ "ladder": [
+  { "title": "Level 5 Restoration Assistant", "stage": "Entry", "focus": "Wash, dress, groom, apply light makeup and keep the cold-room register under your mentor; you need the Level 4 certificate before you can take restoration work on your own." },
+  { "title": "Level 4 Restorative Artist", "stage": "Independent", "focus": "Do the full preparation and simple restorations yourself, walk families through the viewing, and build up restoration cases for Level 3." },
+  { "title": "Level 3 Restorative Artist", "stage": "Core", "focus": "Take on difficult facial restoration and embalming, train newcomers, enter skills competitions, and write the technical report for technician rank." },
+  { "title": "Level 2 Technician", "stage": "Lead", "focus": "Set and sign off the plan for difficult restorations, train apprentices, write procedures, and teach courses across the civil affairs system." },
+  { "title": "Level 1 Senior Technician (Head of the Preparation Room)", "stage": "Final say", "focus": "Run the preparation room's people, equipment and procedures, serve as a certification examiner, and approve any new technology." }
+ ],
+ "ai_tasks": [
+  { "name": "Transferring the deceased and logging the handover", "how": "AI and software can handle electronic registration, cross-checking and audit trails, cutting down on handwriting errors. A person still does the transfer on site, confirms identity face to face with the family or the sending institution, and signs for it." },
+  { "name": "Placing the deceased in refrigerated storage", "how": "Moving the deceased into a cold-storage drawer is physical work done with care and by the rules. At most AI keeps track of drawer numbers and monitors temperature; the lifting and the confirming are done by people." },
+  { "name": "Examining and washing the deceased", "how": "Checking the condition of the body and washing it takes hands and eyes, area by area, and a constant respect for the dead. AI can at most help take photographs for the record." },
+  { "name": "Thawing and embalming", "how": "Equipment and software can help time the thaw and record the process. The embalming itself, and the judgments that depend on each person's condition, are done by people." },
+  { "name": "Dressing the deceased and arranging their appearance", "how": "Dressing and arranging the deceased is done by hand, in the room, with steady movements and a sense of propriety. AI can't help with that." },
+  { "name": "Using warm compresses, massage or softening agents to close the eyes and mouth", "how": "Warm compresses, massage and softening agents work by feel and experience, and every person is different. Only a person can do it." },
+  { "name": "Restoring the face with filler, adhesive or sutures", "how": "Restoring a face with filler, adhesive or stitching is fine handwork and the greatest test of experience. AI cannot replace it." },
+  { "name": "Applying and finishing makeup", "how": "AI can generate reference images of makeup and expression from a photo taken in life. The actual makeup, the color matching, the final touches and whether the family is satisfied are a person's responsibility." }
+ ],
+ "events": {
+  "e_first_solo": "For the first time you prepare an elderly man entirely on your own. Your mentor glances in from the doorway, says nothing, and puts the next form on your desk.",
+  "e_night_call": "A transfer call at two in the morning. You ride out to an old housing estate in the east of the city; the stairwell is narrow, and you carry the stretcher down six flights, landing by landing. It's nearly dawn when you get back. You doze for an hour in the duty room, then start the early shift.",
+  "e_blind_date": "On a blind date you say you work at a funeral home. Your date smiles and says that's nice, very stable. The bubble tea goes unfinished, and you never hear from them again.",
+  "e_thanks": "An old man's son stands in the farewell hall for a long time. Afterwards he finds his way to the preparation room, bows to you, and says his father looks as if he's asleep.",
+  "e_qingming": "Around Qingming, the tomb-sweeping festival, everyone at the funeral home works around the clock. The farewell halls run more than twenty services a day, and you eat your boxed lunch standing up.",
+  "e_family_conflict": "A family starts arguing at the door of the farewell hall over who should stand at the front, then finds fault with the makeup in several places. You fix each one, and keep fixing until nobody says anything more.",
+  "e_friend_leave": "The classmate who started here with you quits; her fiance's family couldn't accept the job. Before she leaves she gives you her set of makeup brushes, every bristle washed clean.",
+  "e_first_restore": "You do your first facial restoration on your own, from one in the afternoon until dark. The family holds your hand afterwards and can't find words. Back in the changing room, you find your gloves are wet with sweat inside.",
+  "e_ai_ledger": "Registration moves to an electronic ledger. Scan a wristband and the number, drawer and farewell time come up. The paper register you used to check three times a day goes into a cupboard.",
+  "e_ai_photo": "The funeral home installs an appearance-reference system: load a photo from life and it produces several versions of makeup and expression. You notice it always makes people too beautiful, so you only use it to check the hairstyle and the shape of the brows.",
+  "e_love": "You get together with someone from the funeral home's ceremony team. Your first date is at a rice-noodle shop on the way home from work; afterwards they walk you all the way to the metro entrance.",
+  "e_marry": "You get married. At the banquet a distant relative asks what you do, and you say: a funeral home. The table goes quiet for a few seconds. Later, during the toasts, that relative drinks one extra cup.",
+  "e_house": "You take out a mortgage on a small two-bedroom flat in Xingsha. Half the down payment is what you saved from years of night shifts.",
+  "e_child": "Your child is born. Waiting outside the delivery room, you think: every day you see people off, and this is the first time you've waited in a hospital for someone to arrive.",
+  "e_hard_case": "A young man who died in an accident. His family asks only one thing: that his mother can see him one more time. You spend the whole day in the preparation room, the service is pushed back two hours, and his mother stands by the coffin for a long time.",
+  "e_competition": "At the provincial skills competition for the funeral trade, you take second place in restorative art. The funeral home pastes a red notice by the canteen door, and you walk the long way round it for three days.",
+  "e_green_burial": "The city is promoting eco-burial, and the funeral home holds an information session for families on tree burial and river burial. You're asked to explain how the deceased are prepared and how the ceremony goes. Afterwards an old man stays behind to ask whether he could have it done that way himself one day.",
+  "e_reporter": "A documentary crew comes to the funeral home and asks whether you're afraid. You say you were at first; later what you feared was not doing it well. After it airs, strangers leave comments underneath saying thank you.",
+  "e_cold": "Years of standing bent over in a sixteen-degree room, and your neck and finger joints begin to ache. On winter mornings you soak your hands in hot water before you can hold a comb steady.",
+  "e_mentor_retire": "Your mentor retires. On his last day he gives you the horn comb he has used for more than twenty years and says: light hands, steady heart.",
+  "e_ai_makeup": "A family brings a photo retouched with an AI app and asks for makeup to match it. You talk it through with them and leave a few of the wrinkles in, saying that's how he'll look like himself.",
+  "e_teach": "Two vocational-school graduates in funeral services join the staff. On her first day one of them stands outside the cold room for a long time. You stand with her and wait until she says she's ready, then go in together.",
+  "e_parent": "Your father is in hospital. When a care worker on the ward hears you work in funerals, she quietly asks you all sorts of things. You answer each one patiently, then stand for a long time at the end of the corridor."
+ },
+ "choices": {
+  "c_cert": { "title": "Sit the Level 4 Restorative Artist exam", "situation": "Funeral home rules say you need the Level 4 vocational skill certificate in embalming and restoration before you can take restoration work on your own, and it moves your allowance up a notch. The theory part means memorizing funeral regulations and embalming formulas; the practical part is a full procedure performed in front of examiners. You pay for the training yourself.", "options": [
+   { "label": "Sit it this year", "result": "You study after night shifts and take a silicone model home to your rented room to practice. After the practical, the examiner asks just one thing: who trained you?" },
+   { "label": "Another year under your mentor", "result": "You watch dozens more of your mentor's restorations and sit the exam a year later. Your mentor says the hands matter more than the paper." }
+  ] },
+  "c_college": { "title": "Study for an adult-education college diploma?", "situation": "A provincial vocational college for civil affairs offers a part-time diploma in funeral services. It would count when you apply for technician rank or a management post. The cost is three years of weekends and several thousand yuan a semester.", "options": [
+   { "label": "Enroll", "result": "Classes on Saturdays, sleep on Sundays. Three years later you have the diploma. Your thesis is about how the old village funerals of Hunan became today's farewell services." },
+   { "label": "Skip it and sharpen your hands", "result": "You sleep in on weekends and sometimes go in to do an extra case or two. Your file still says vocational school, and you find that's enough." }
+  ] },
+  "c_private": { "title": "Join a private funeral company?", "situation": "A company offering full-service funerals across the city is poaching staff, offering thirty percent more than the funeral home. The work is house calls to prepare the deceased and running funerals in every county around. The funeral home is stable, but raises come slowly.", "options": [
+   { "label": "Go to the company", "result": "You drive the company van to every county around Changsha. Each funeral lasts three days. The money is better, and you are more tired." },
+   { "label": "Stay at the funeral home", "result": "You turn them down. The funeral home has its rules and your mentor, and you can still leave on time." }
+  ] },
+  "c_ai": { "title": "Learn digital restoration?", "situation": "The funeral home is piloting 3D scanning and printing for facial restoration, with AI-generated makeup references. It wants to send one person to the provincial capital for two months, then put them in charge of reviewing the reference images and keeping the restoration records. There's no extra pay, and if it goes wrong, it's on you.", "options": [
+   { "label": "Go and learn", "result": "You learn to adjust shapes on a scanned model, and to circle the places in the AI reference images that don't look like the person. The first digital restoration record the funeral home keeps is one you made." },
+   { "label": "Stay with your hands", "result": "You keep shaping with wax and filler, little by little. When the younger staff print models from the machine, you watch from beside them." }
+  ] },
+  "c_level3": { "title": "Sit the Level 3 Restorative Artist exam", "situation": "Level 3 requires five years on the job, a solid number of restoration cases, and a written technical report. Two people at the funeral home are applying this year, and there's only one recommendation slot.", "options": [
+   { "label": "Prepare all out", "result": "You dig out years of restoration records, pick a dozen or so and write them up, over more than a month of late nights. At the oral defense, every question the panel asks is about a case you did yourself." },
+   { "label": "Let your colleague go first", "result": "Your colleague gets through and takes you out for spicy crayfish. You're a year later, and everyone at the funeral home remembers it." }
+  ] },
+  "c_social": { "title": "Move to a hospital's palliative care ward?", "situation": "In your spare time you've passed the entry-level social worker exam. A hospital has opened a new palliative care ward and wants a social worker who understands funerals and can talk with families about arrangements. The pay is a little lower, and you'd never again walk into a sixteen-degree preparation room.", "options": [
+   { "label": "Go to the ward", "result": "You hand in your resignation and return your makeup kit and wristband scanner to the preparation room.", "end": "You leave the funeral home to work as a social worker on a hospital palliative care ward. Before, you prepared people after they were gone; now, before they go, you sit with them until they've said what they wanted to say." },
+   { "label": "Stay in the preparation room", "result": "You lock the social work certificate in a drawer. When you talk with families now, you're a better listener than before." }
+  ] },
+  "c_film": { "title": "Do special-effects makeup for film crews?", "situation": "A vocational-school classmate who does makeup on film sets has seen photos of your restorations. Her crews need people who can sculpt and match skin tones. The work is irregular but pays well, you'd travel all over the country, and your name would be in the end credits.", "options": [
+   { "label": "Join the crews", "result": "You carry your own makeup kit onto the coach to Hengdian, China's biggest film studio town.", "end": "You go into special-effects makeup for film and TV, doing wounds and aging for actors. The director says your old-age makeup is the most convincing he's seen. You don't tell him why." },
+   { "label": "Stay at the funeral home", "result": "You mail your classmate two boxes of Changsha's famous milk tea and say you'll visit her in Hengdian next time." }
+  ] },
+  "c_technician": { "title": "Apply for Level 2 Technician", "situation": "Level 2 Technician means a review panel and an oral defense, apprentices you have trained, and a technical improvement you can point to. If you get it, the plans for difficult restorations will be yours to set and sign.", "options": [
+   { "label": "Apply", "result": "You write up the layered filling method you've refined over the years as a technical report, and bring the work of two apprentices to the defense. One of the panel members is the examiner from your first certificate." },
+   { "label": "Stay at the table instead", "result": "You keep doing four or five cases a day, with hands among the best in the funeral home, and your rank stays where it is." }
+  ] },
+  "c_head": { "title": "Take over as head of the preparation room?", "situation": "The head of the preparation room is retiring, and the funeral home wants you to take over: rosters, supplies and equipment for a dozen-odd people, inspections and complaints, meetings at the civil affairs bureau. If you take it, you'll rarely work on anyone yourself again.", "options": [
+   { "label": "Take it", "result": "Your desk gains a phone and a stack of reports. Before a difficult case, your apprentices come to ask you first, and you always say: look at the photo first, then pick up your tools." },
+   { "label": "Stay at the table", "result": "You recommend a colleague who started two years before you, and you go on working and training apprentices until your fingers won't bend any more." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last shift you prepare three people, the same as on your first day. You wipe the makeup kit clean, straighten the horn comb, and hand it over to your apprentice. Camphor leaves cover the ground as you leave the preparation room. You stand at the door a moment and, as you did every day before going in, you bow.",
+  "burnout": "That winter your finger joints swell until you can't hold a comb, and you can't sleep at night; every time you close your eyes you hear the funeral music from the farewell hall. The funeral home moves you to the front office to handle paperwork. You sit behind the counter, and before anything else, you hand each family a cup of hot water."
+ },
+ "stages": [
+  "You don't have your Level 4 certificate yet, so restoration work doesn't come your way. Your days are washing, dressing, combing and light makeup, and checking the cold-room register against wristbands three times a day; when your mentor works, you pass tools and mix foundation. When families come to view, you stand behind him and learn how he opens his mouth, and how he stops and waits for people to finish crying.",
+  "Your certificate has come through, and you have your own station and makeup kit. You prepare four or five people a day, the whole process from start to finish yourself, simple restorations included. When families talk to you at the viewing, you have to judge for yourself which things are requests and which just need someone to listen.",
+  "The hard cases start coming to you: accidents, long illnesses, faces that need restoring. You plan from photos taken in life, mixing wax, filler and foundation layer by layer; sometimes one person takes a whole day. You begin training a newcomer and correcting her technique, and when other funeral homes visit or the province holds a competition, you're the one they send.",
+  "More and more you're the one standing to the side, watching. For difficult restorations you set the plan and decide whether it can be done, and you sign when it's finished. You're writing the preparation room's procedures and teaching training courses across the civil affairs system. When there's a hard conversation with a family, you're the one who goes in and explains exactly how far you can take it.",
+  "You run the rosters, supplies and equipment for a dozen-odd people in the preparation room: management meetings, inspections, complaints. Some months you only work on someone twice. The province asks you to examine for skills certification, and the new scanner and cold-storage system go into use only once you've nodded. What you say most is still your mentor's line: light hands, steady heart."
+ ],
+ "work": [
+  "An old woman's family brings a satin jacket that has been folded away in a chest for years, fastened with knotted cloth buttons. You study it for ten minutes, then fasten them one by one without creasing anything.",
+  "You shave an old man, the razor moving very slowly. Your mentor watches to the end and says only: with the grain, not against it.",
+  "Back from a night transfer, you fill in the handover form at the cold-room door. The hospital nurse checks the name and ID number with you three times before you both sign.",
+  "A retired teacher's daughter asks for makeup so light no one can see it. You use just one layer of powder and the faintest touch of color on the cheeks. She looks and says: that's exactly his color on an ordinary day.",
+  "Half an hour before the service, the family brings a pair of reading glasses he wore all his life. You put them on him, then comb the hair behind the earpieces again.",
+  "You lay a warm towel on an old man's face for twenty minutes and massage for a long time, until his expression eases. At the viewing the family notices nothing at all, and you think that's how it should be.",
+  "A young woman's mother brings a graduation photo. You remix the foundation five times against it, work on the restoration into the afternoon, and even follow the curve at the end of her brows.",
+  "Xiao Zhou, the new hire, does her first solo makeup and the blush is too heavy. You say nothing in front of the family; once they've gone, you take a cotton pad and do it over with her.",
+  "Three people come from a funeral home in another city to learn restoration. You demonstrate from start to finish on a silicone model, and when you explain how to adjust the firmness of the filler, they fill two pages of notes.",
+  "A plan for a difficult restoration lands on your desk; your apprentice wants to fill it in one piece. You change it to three layers, write your reasons on the plan sheet, and sign your name.",
+  "You teach appearance standards to a training course for the civil affairs system, more than sixty people in the room, the youngest eighteen. The first thing you teach is to bow before you walk through the door.",
+  "A family member is unhappy with the makeup and wants to file a complaint. You bring her into the reception room and listen for forty minutes. In the end she says she won't complain; she just wants to go in and see him once more.",
+  "The funeral home wants to buy a 3D scanner, and you spend twenty minutes at the review meeting explaining why. You end with one line: a machine can give you the shape, but not the spirit.",
+  "At the provincial skills certification you're an examiner. One candidate has excellent technique but doesn't bow on the way in, and you write a line in the remarks column of the score sheet.",
+  "You redo the night roster so the two colleagues with small children each do one shift fewer a month, and take the last Friday of every month yourself."
+ ],
+ "past": [
+  "You're in your last year of middle school in a small county town in western Hunan, a middling student. The year your grandmother dies, the person the village hires makes her up so red she doesn't look like herself, and in the mourning hall you quietly wipe some of it off with a tissue.",
+  "You don't get into the county high school. Leafing through vocational school brochures, you find a program called Modern Funeral Technology and Management, with job placement promised.",
+  "You enroll without telling your family. A month into term your mother finds out and cries on the phone, asking what you think you're doing. You can't really say; you only say you want to learn a trade.",
+  "Your first practical class in restorative art is on silicone models. The teacher says: everyone you work on from now on is someone another family couldn't bear to lose.",
+  "You do your placement at a funeral home in Changsha and walk into a real preparation room for the first time. That day you help your mentor with three people. Back in the dorm you wash your hands for a long time and barely sleep.",
+  "The placement ends and the funeral home keeps you on. The day you sign your contract, HR says half the people who stay don't last the first year. You say you'll give it a try."
+ ],
+ "late": {
+  "pension_note": "Estimate: contract staff at a funeral home draw the standard urban employee pension. With long contributions, that comes to about 55 percent of the final monthly salary.",
+  "scenes": [
+   "You don't want a farewell party when you retire. After the last case you wipe your makeup kit clean and leave it for your apprentice, and on your way out you bow once more at the preparation room door.",
+   "The neighborhood seniors' college asks you to give a talk on saying goodbye with dignity. More than forty old people come, and afterwards several gather around to ask how body donation and eco-burial work.",
+   "Your pension arrives on time every month. It isn't much, but it's enough for you and your spouse. You learn square dancing, standing in the back row, always half a beat behind.",
+   "Your apprentice becomes head of the preparation room and visits you at New Year with the funeral home's newly printed procedures manual. On the first page is one line: light hands, steady heart.",
+   "You move to the front office, helping families with paperwork, choosing farewell halls, explaining the process. You sit at work and leave on time, but in the air conditioning you still rub your hands together out of habit.",
+   "You go back to the hospital to have your neck checked. The doctor says it's an occupational injury and tells you to look up more. You plant a row of mint on the balcony and spend a few minutes each morning looking up at the sky.",
+   "One day an old woman comes into the front office and says she wants to choose her farewell hall in advance. You spend the afternoon showing her round. As she leaves she says: when the time comes, I'll be in your hands.",
+   "You change jobs, and for the first time you write plainly on social media what you do. Your old colleagues give it a like and say nothing.",
+   "When people at your new job learn you used to work at a funeral home, someone is always curious. You just say it was quiet there, and everyone spoke softly.",
+   "One year at Qingming you go back to the funeral home. There's a long queue outside the farewell halls. You stand under the camphor trees for a while and don't go in to disturb anyone.",
+   "Later the registration, the rosters and the reference images all went to software. But the washing, the dressing, the combing and the makeup were still done one pair of hands at a time.",
+   "You walk on Orange Isle in the middle of the Xiang River, the wind off the water strong. Someone is flying a kite, the line pulled straight, and you stand watching for a long time."
+  ],
+  "closing": {
+   "retire": "Many years later, one morning by the window, you comb your granddaughter's hair while she wriggles. You comb the way the hair grows, one stroke at a time, very lightly.",
+   "burnout": "Many years later you sit in the sun in the garden of your housing estate. The mint from the balcony has filled a whole pot. You pinch off a leaf, hold it in your palm, and breathe it in for a long time.",
+   "end": "Many years later, in a drawer, you find the old horn comb, its teeth worn round. You run it through your own hair, then gently put it back."
+  }
+ }
+}

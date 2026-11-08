@@ -1,0 +1,151 @@
+{
+ "id": "tea-shop-cs",
+ "occupation": "Food Service Manager",
+ "role": "Store manager at a new-style tea drinks chain",
+ "headline": "Shaking tea since the year you finished junior college and promoted from crew to store manager in four years, the manager of a new-style tea shop near Wuyi Square in Changsha, one of a dozen tea shops on the same street, who watches the cup count and the expiry labels every day",
+ "unit": "A company-run branch of a local new-style tea drinks chain near Wuyi Square, Changsha (twelve staff, open until midnight)",
+ "unit_type": "New-style tea chain store",
+ "city": "Changsha",
+ "city_tier": "New Tier 1",
+ "education": "Junior college (Marketing)",
+ "level": "You could make every drink on the menu with your eyes shut, and you know cup flow, rotas, ordering and closing checks. Six months into being store manager, you're still feeling your way through margins, hiring and keeping people, and dealing with mystery shoppers",
+ "intro": "Your first summer as store manager, three more tea shops opened on this street by Wuyi Square, the nearest right across the road from you. At half past eight in the morning you pull up the shutter, and the system has already pushed today's order list to your phone. As of today, every cup of tea this shop sells in a day goes down under your name.",
+ "salary_note": "Estimate: at a company-run new-style tea shop in Changsha, a store manager gets base pay plus store performance pay, about the national figure for restaurant managers or a little below. As a supervisor or city operations manager, a leading local brand pays upper-middle for Changsha.",
+ "facts": [
+  { "label": "Store Manager (current level)", "value": "2-6 years, ¥6,000–9,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Area Supervisor (6-10 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥13,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Training the crew and keeping people", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Ordering and forecasting supplies", "source": "AI exposure" },
+  { "label": "Open positions", "value": "356 related job listings nationwide, 10 in this city (the listings are mostly graduate hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "At the shop, phone first: yesterday's takings, cup count, one bad delivery review, and the system's order list has two extra crates of fresh milk. You change two to one and hit submit.",
+  "Opening. The tea brewer warms up and the first urn of tea is brewed to the second; a glance at the fridge thermometer, four degrees; lemons, fresh milk and cream topping each get a label with the time they were opened.",
+  "Doors open. Office workers scan in one by one to collect their tea, and the mini-app orders line up on the printer. You stand at the pass and look over every cup, checking the seal, giving it a shake before you push it out.",
+  "The lunch rush. Delivery riders stand in a row at the door, and the calls chasing orders come one after another. One cup has the wrong amount of ice; you have a crew member remake it and take the wrong one to apologize to the rider yourself.",
+  "The part-time students come in for their shift. You sit on the little stool in the back drawing up next week's rota, shifting squares around three people's class timetables. One says it's exam week.",
+  "The evening rush, plus tourists. The queue is out the door; someone's filming your cups on their phone, someone's asking if the place across the road is cheaper. You send a crew member out to hand out queue numbers.",
+  "Stocktake. Tea leaves, milk, cups, straws, counted one by one and checked against the system. Head office has sent a training video for a new drink; you and two crew make three cups following it and pour two away.",
+  "Closing. The leftover tea poured out, the brewer taken apart and washed, the floor mopped twice, a photo of every corner uploaded for the supervisor. When you pull down the shutter, the late-night food stalls over on Pozi Street are just getting busy."
+ ],
+ "ladder": [
+  { "title": "Crew (Tea Maker)", "stage": "Entry / shaking tea", "focus": "Take orders, brew, shake, seal, hand out, run the till and clean. You make shift supervisor on fast cups, recipes you never get wrong and few complaints." },
+  { "title": "Shift Supervisor", "stage": "Running a shift", "focus": "Run a shift of four or five: opening and closing, handovers, stocktakes, ordinary complaints. You move up on your shift's cup count, closing checks and training newcomers." },
+  { "title": "Store Manager", "stage": "Running a shop", "focus": "Own one shop's rota, ordering, food safety, takings and margin, hire and train, and handle the supervisor and the mystery shoppers. You move up on the shop's results, its inspection scores and the shift supervisors you bring on." },
+  { "title": "Area Supervisor", "stage": "Several shops", "focus": "Oversee six to eight shops in an area: inspections and scores, coaching managers, landing new drinks, escalated complaints and food safety problems. You move up on the area's results and its bench of store managers." },
+  { "title": "City Operations Manager", "stage": "A whole city", "focus": "Run openings, closures, marketing, staffing and targets for dozens of shops in a city, and settle budgets with head office. You hold the job on the city's revenue, profit and the brand's reputation." }
+ ],
+ "ai_tasks": [
+  { "name": "Ordering and forecasting supplies", "how": "The system works out the order from recent weeks' sales, the weather forecast, holidays and new-drink plans, so how much milk, lemon and tea is needed is plain at a glance. The manager only checks it and changes a few lines depending on whether there's an event tomorrow." },
+  { "name": "Mini-app orders, delivery orders and printing tickets", "how": "Customers order through the mini-app and the delivery platforms, and the tickets go straight to the printer in order of making. A person only deals with mistakes, missed orders, refunds and people phoning to chase." },
+  { "name": "Rotas", "how": "The system drafts a first rota from forecast footfall. Which days the part-time students have classes, who's feeling unwell, who can't be put on a shift together, the manager still changes one by one." },
+  { "name": "Food safety checks and expiry records", "how": "Cameras can spot a missing cap or gloves, and the system flags supplies close to expiry and a fridge at the wrong temperature. Whether to pour it out, how to correct it, and who's responsible when something goes wrong is the manager's business." },
+  { "name": "Training the crew and keeping people", "how": "Hiring, teaching newcomers to shake tea, noticing who's been low these last two days, talking someone out of leaving: it takes a manager standing in the shop with them every day." },
+  { "name": "Quality at the pass and complaints", "how": "Whether bitter tea gets poured away, how to apologize to a customer who found something in a drink, how to calm tourists tired of queuing: someone has to taste it and decide there and then." }
+ ],
+ "events": {
+  "e_opposite": "The new place across the road ran a month of ¥9.9 drinks, and your cup count fell by thirty percent. The supervisor came and sat in the shop for an afternoon and in the end said just one thing: hold on to your regulars.",
+  "e_viral": "A blogger shot a video outside your shop, and the handwriting on your cups went viral. That weekend the queue ran from your door to the corner; you and the crew made 1,800 cups in a day and could hardly lift your wrists.",
+  "e_mystery": "The mystery shopper came and none of you spotted them. The report docked two points: one cup too slow out of the pass, one crew member not wearing a cap. You read the report aloud at the morning briefing, and that crew member went red to the ears.",
+  "e_quit": "The shift supervisor you'd trained for a year said she was leaving to sit the civil service exam. You took her out for late-night food and couldn't talk her round, and in the end helped polish her CV.",
+  "e_hot_summer": "Changsha in summer: the slush machine runs a dozen hours a day and the ice maker can't keep up. Before dawn you went to the frozen goods market and hauled back two crates of ice, your shirt soaked and stuck to your back.",
+  "e_ai_order": "Head office switched to a new ordering system that orders automatically by weather and sales. For the first two weeks it ordered twice the lemons you needed, and you sliced lemons every day until your fingers went white; later it learned to read the weather forecast.",
+  "e_love": "A rider who picked up delivery orders every lunchtime once brought you a cup from the place across the road, saying you should taste the competition. You tasted it and said it wasn't as good as yours. He laughed, and came back the next day.",
+  "e_hair": "A customer posted online that she'd found a hair in her tea, with a photo. You pulled the security footage for that hour and went through it frame by frame, phoned to apologize and refund her, and held another food safety meeting for the whole shop.",
+  "e_new_product": "Head office launched a new drink you thought was too sweet, and you said so in the store managers' group chat. The next week's recipe card had five grams less syrup, with a note: adopted from store feedback.",
+  "e_new_year": "With Spring Festival tourists, the shop stays open. For the first time you didn't go home to Shaoyang for the New Year; after closing on New Year's Eve you cooked a pot of dumplings for the crew in the shop, and afterwards everyone video-called home.",
+  "e_cam": "The shop installed cameras that can recognize caps and gloves, pushing a notice to your phone whenever someone isn't wearing them. On the first day it pushed twenty-odd. The crew said it felt like being watched, and you changed the alerts to a daily summary.",
+  "e_wedding": "You got married, with the banquet back home in Shaoyang. The crew made you a three-layer tea with both your names written on the cup, and you couldn't bring yourself to drink a drop.",
+  "e_star_store": "At the year-end awards your shop came third out of every shop in the city, and the bonus was shared out to everyone. One of the part-time students said it was the first bonus he'd ever had from a job.",
+  "e_closing": "The company is pulling back, and two shops in your area are to close. You went to talk to the two managers; one cried, one said she'd guessed long ago. On the last day you helped load the tea brewer onto the van.",
+  "e_child": "Your child was born. When you came back from leave, the smell of brewing tea turned your stomach, and it was two months before it passed. The crew wouldn't let you near the tea brewer all that time.",
+  "e_dashboard": "Every morning head office's dashboard pushes out an area ranking: cup counts, repeat purchases, bad delivery reviews, inspection scores. You no longer run the weekly meeting on a hunch; you point at the dashboard and say which shop slipped last week.",
+  "e_house": "You put down a deposit on a flat in Xingsha, out east, and take the metro into town every day. Half the people on the metro are holding tea cups, and you check which shop each one is from.",
+  "e_old_staff": "The first shift supervisor you trained has become store manager in another city, and sends you a box of her shop's new drinks with a note: still doing it the way you taught me, a shake for every cup.",
+  "e_price_war": "The whole industry is in another price war, with a cup of tea going for ¥6.9. Head office's margin sheets are a sea of red, and every shop in your area is working out whether it can keep so many people.",
+  "e_wrist": "Shaking a thousand cups a day when you were young left your wrists damaged, and they ache when the seasons change. On a shop visit, seeing a crew member shake with the wrong grip, you can't help going over to adjust her wrist.",
+  "e_parents": "Your mother went into hospital in Shaoyang. You took a week off and, in the hospital corridor, watched the area dashboard on your phone while you phoned your store managers.",
+  "e_robot_arm": "The newest shops use machines that make the tea automatically: scan the ticket and the tea, syrup and ice go in one after another. A shop only needs four people now, but on opening day the longest queue was still at your old shop."
+ },
+ "choices": {
+  "c_night": { "title": "Stay open until two in the morning or not", "situation": "The delivery platforms are running a summer late-night promotion, and head office says stores can sign up to stay open until 2 a.m., with the night orders counting toward store performance. But you're short-staffed already, and the part-time students are scared to walk that road at night.", "options": [
+   { "label": "Sign up until two", "result": "You worked the night shift yourself all summer, and people coming off the late-night food stalls ordered a dozen cups at a time. That quarter your shop made the top ten in the city, and you lost three kilos." },
+   { "label": "Don't sign up", "result": "You still closed at midnight and left the night orders to the place across the road. The supervisor asked why you hadn't signed up; you said there weren't enough people, and he didn't ask again." } ] },
+  "c_data": { "title": "Learn head office's data dashboard or not", "situation": "Head office is running a data course for store managers: how to read repeat purchases, how to read dropped delivery orders, how to use the system for rotas. Classes are Monday evenings, with homework, and no extra pay.", "options": [
+   { "label": "Take the course", "result": "Every Monday after closing you sat at the computer for the class, and learned to pull the mini-app data and read it. You found the shop dropped the most orders between three and five in the afternoon, changed the rota, and put an extra person on for those hours." },
+   { "label": "Skip it", "result": "You said your eyes on the shop are enough. You get the gist of the numbers on the dashboard, and on Monday nights you get home a bit earlier." } ] },
+  "c_brand": { "title": "Another brand comes poaching", "situation": "A new brand from Shenzhen is opening twenty shops in Changsha and offers you thirty percent more to be a launch store manager, moving into city expansion later. But whether a new brand survives two years, nobody can say.", "options": [
+   { "label": "Jump ship", "result": "Starting from site selection, fit-out and hiring, you opened two shops in three months. The new brand's recipes taste too sweet to you, but both shops had queues out the door on opening day." },
+   { "label": "Stay", "result": "You turned it down. That night after closing you stood at the door watching the lights still on at the place across the road." } ] },
+  "c_supervisor": { "title": "Apply for Area Supervisor", "situation": "Your area's supervisor has been moved to Zhuzhou, and the company will pick a replacement from among the store managers. The assessment looks at three things: your shop's results and inspection scores this year, the people you've trained, and an improvement plan for the area.", "options": [
+   { "label": "Apply", "result": "You dug out the inspection reports for all eight shops in the area and wrote your plan through the night. At the panel, the operations manager asked what most often goes wrong when a shop does badly, and you said it can't keep its people." },
+   { "label": "Keep your shop two more years", "result": "A manager from another shop got it. You still pull up the shutter at half past eight every morning, and your shop stays in the area's top two." } ] },
+  "c_franchise": { "title": "Open a franchise of your own", "situation": "The company has opened up franchising, with discounts for long-serving staff. You've done the sums: franchise fee, fit-out and equipment come to over ¥500,000, and your family can raise half. You know what decides whether a shop makes money, and you also know how many on the street have closed.", "options": [
+   { "label": "Open a franchise", "result": "You picked a unit by the university town in Hexi, west of the river, and ran it yourself, night shifts included. The first six months lost money; by the second year the students all knew your cups.", "end": "You opened your own franchise by the university town in Changsha, with a dozen part-time students on the rota; every graduation season, someone always comes in for one last cup and a photo with you before they leave." },
+   { "label": "Don't invest", "result": "You put the money toward part of a deposit on a flat. Later three franchises opened on that street, and two closed." } ] },
+  "c_baby": { "title": "Transfer to a neighborhood shop", "situation": "Your child is still small, and the Wuyi Square shop stays open until midnight, so your child is long asleep when you get home. The company says it could move you to a neighborhood shop: fewer people, slower trade, closing at ten, and noticeably less performance pay.", "options": [
+   { "label": "Move to the neighborhood shop", "result": "The neighborhood customers all live in the flats upstairs and take a long time over a cup. You get home at half past ten and can still tell your child a story." },
+   { "label": "Stay at Wuyi Square", "result": "You kept this shop. At weekends your child comes in and sits on a tall stool by the pass, watching you shake every cup." } ] },
+  "c_rnd": { "title": "Go to head office to develop new drinks", "situation": "Head office's product team needs someone who knows the shops, and asks if you'll come. You'd spend every day in the lab testing recipes and visiting suppliers, no more rotas or closing up, but you'd also be leaving the shop you've kept for years.", "options": [
+   { "label": "Join the product team", "result": "In the lab you test a drink forty times over, logging the grams and seconds every time. The day your first drink launched, you went back to your old shop, queued once, and bought a cup." },
+   { "label": "Stay in the shops", "result": "You said you still like standing at the pass. From then on, every new drink the product team launched went to your shop first to try." } ] },
+  "c_city": { "title": "City Operations Manager or not", "situation": "The company is opening up Wuhan and asks if you'll go as city operations manager: site selection, hiring and marketing from nothing, fifty shops in three years. Your child is at primary school in Changsha, and your spouse's job is here too.", "options": [
+   { "label": "Go to Wuhan", "result": "Every Monday you take the high-speed train to Wuhan and come back on Friday, viewing shopfronts one by one and interviewing store managers one by one. The first year you opened eighteen, and in Wuhan you learned to eat hot dry noodles." },
+   { "label": "Stay in Changsha", "result": "You recommended someone else from the area. You still look after these shops in Changsha, and at weekends you can take your child to Orange Isle." } ] },
+  "c_home": { "title": "Back to Shaoyang", "situation": "Your parents are getting old, and several tea shops have opened in the county town back home in Shaoyang. Your cousin says not one of them is any good and wants to open one with you. Going back would halve your income and put you near home.", "options": [
+   { "label": "Go back and open a shop", "result": "You opened a little shop at the gate of the county middle school, with the writing on the cups in your own hand. When school lets out the door is packed with students, and you learn, one by one, how much sugar each of them wants.", "end": "You went back to Shaoyang and opened a little tea shop at the gate of the county middle school; your parents come and sit in the shop every afternoon and help you give the students their change." },
+   { "label": "Stay in Changsha", "result": "Every month you go home to Shaoyang once with a box of the shop's new drinks for your parents. They say it's too sweet, and drink it all every time." } ] }
+ },
+ "endings": {
+  "retire": "On your last day you went to the old shop, the one where you shook your first cup as crew. The store manager now is an apprentice of someone you trained. You stood at the pass for a while, picked up a cup, gave it a shake and pushed it out. At closing you helped them pull down the shutter.",
+  "burnout": "That summer you worked three months of night shifts in a row, and one day on a shop visit you fainted at the door; the crew helped you onto the little stool in the back. You only heard half of what the doctor said. You handed in your notice and went home and slept for a long time. Later, passing tea shops, you always glance in to see whether they shake the cups."
+ },
+ "stages": [
+  "The shop's twelve people are yours: the weekly rota, the daily order, the nightly stocktake, the takings and the margin sheet gone over with the supervisor each month. Half your day you stand at the pass, the other half you sit on the little stool in the back watching the system on your phone; hiring, teaching newcomers to shake tea, persuading people who want to leave to stay, is far harder than making tea. When the mystery shopper or the inspectors come, every point docked counts against you.",
+  "Eight shops in the area are yours to oversee. Every day you drive to two or three with the inspection sheet, from the fridges to the expiry labels, tasting each one's tea and sitting by the door for an hour watching cups go out; once a week you hold a store managers' meeting, going over the rankings and the bad reviews. Before a new drink launches you go to every shop to watch the first cup; which shop needs a new manager, which shop closes, you write the report and you have the conversation.",
+  "Dozens of shops across a city are yours now. Your time is spent in meeting rooms and on the road: settling budgets with head office, negotiating units with malls, planning a quarter's promotions with marketing, reading the city-wide dashboard every week. You're always there when a new shop opens, standing at the pass to shake the first cup; the decision to close one is also yours to sign, and every time you sign, you go and sit in that shop for a while."
+ ],
+ "work": [
+  "A new crew member's tea keeps coming out bitter. You stand beside her and watch three times, and see she holds the button ten seconds too long every time. You stick a note on the tea brewer: stop when it's time, don't wait for it to bubble.",
+  "The part-time students have exams next week, and none of the three can work. You move two of your own days off, borrow someone from the shop next door, and fill in the rota square by square.",
+  "An old woman asks if you have anything with no sugar and no ice. You recommend a drink and write on the cup: warm, sip it slowly. The next day she comes back with her husband.",
+  "One shop has had the most bad delivery reviews two weeks running. You spend an afternoon sitting there and see the pass is too far from the delivery shelf, so riders pick up the wrong orders. You have the shelf moved by the door.",
+  "On launch day for a new drink you taste the first cup at every shop, and at one the cream topping is overwhipped and cloying. You have the manager whip a fresh bowl on the spot and watch her try three times.",
+  "One store manager has done two months of night shifts in a row, and on your visit her eyes are red. You hand her night shifts to the area's floating manager and give her a week off.",
+  "The mall's leasing manager asks ¥800,000 a year, saying it's the best spot. You sit in that corridor from noon to night counting the people who pass in each hour, and talk the price down to ¥600,000.",
+  "At the quarterly meeting, marketing wants a citywide buy-one-get-one-free. You pull last year's margins and repeat purchases from a similar promotion and say a month of free drinks didn't add a single regular; in the end it becomes half price on the second cup.",
+  "A shop in the east of the city that has been open five years is closing, and you go to hold its last morning briefing with the crew. You don't explain the reasons; you just say that whichever shop each of them wants to go to, you'll arrange it."
+ ],
+ "past": [
+  "You grew up in a county town in Shaoyang, where your parents ran a rice noodle shop. After school you carried bowls and took money in the shop, remembering whether each regular wanted coriander and how many spoons of chili.",
+  "The year before the gaokao (college entrance exam), the county town got its first milk tea shop. You and your classmates went once a week, kept the cups afterwards and wrote on them.",
+  "Your gaokao score was enough for a junior college in Changsha, and you chose marketing; your father said that would let you go into business.",
+  "In the summer after your second year you worked casual shifts at a tea shop by Wuyi Square, shaking tens of thousands of cups in one summer with plasters on your wrists, and yet you thought the people in the queue looked good watching the cups in your hands.",
+  "The year you graduated, classmates went on to top-up degrees or into telesales companies, and you went to that shop as full-time crew. On the phone your mother asked: three years of school, and you're selling milk tea?",
+  "You made shift supervisor, and the first time you closed up alone the stocktake was twenty cups short. You searched the shop on your own until one in the morning and finally found them on the top shelf of the storeroom.",
+  "The old store manager was moved to another city and recommended you before she left. The supervisor asked if you were scared. You said yes, and he said that's right."
+ ],
+ "late": {
+  "pension_note": "Estimate: Changsha's urban employee pension scheme. The shop paid in on the minimum base for the first few years and on your actual wage later, so in retirement you get about 40% of your last monthly salary; running your own shop in the county town means paying in as self-employed, which comes to less.",
+  "scenes": [
+   "Your first week of retirement you wake at half past eight every morning and reach for your phone to check the takings without thinking; only when it's open do you remember the dashboard no longer has an account for you.",
+   "The company asks you back to teach new store managers once a quarter. You don't talk about targets; you talk about the people you kept in your years as a manager, and the ones you didn't.",
+   "You take your granddaughter round Wuyi Square. The tea shops on that street have turned over again and again. Your old shop is still there; its sign has changed color three times.",
+   "For the first few months after you left, the smell of brewing tea set you on edge, and you walked the long way round tea shops.",
+   "An old colleague has opened a little shop and asks you to come and take a look. You stand at the pass all afternoon and say just one thing: give every cup a shake before you push it out.",
+   "At home you make tea for yourself, no sugar, no milk, just a pot of green tea, and sit on the balcony drinking it slowly.",
+   "For the first month after leaving that shop, you'd still wake in the night thinking you hadn't uploaded today's closing photos.",
+   "The shift supervisor you trained has become an area supervisor and posts a photo of an inspection sheet captioned: my mentor said, check the expiry labels first.",
+   "The supermarket fridge holds bottled tea drinks with the name of your old brand printed on them. You buy one, take a sip, and say it's not as good as freshly shaken.",
+   "Lots of tea shops use machines that make the drinks themselves now, and the system works out ordering and rotas. But which crew member is off today, which customer is hesitating at the door, still needs someone standing in the shop watching.",
+   "Your wrists ache when the seasons change, from the thousand cups a day you shook when you were young. Your granddaughter copies you shaking a cup, and you tell her: loose wrist, don't use your arm.",
+   "Queuing outside a tea shop, the young people ahead of you complain about the wait. You glance at the pass and say: not long now, that crew member has steady hands."
+  ],
+  "closing": {
+   "retire": "One afternoon many years later, your granddaughter makes you a cup of tea at home. You take it, give it a shake out of habit, check whether the tea clings evenly to the sides of the cup, and only then drink.",
+   "burnout": "Many years later, you sit on the balcony; a new tea shop has opened downstairs, and in the evenings a queue forms. You listen to the sealing machine going click, click, and count each one, and at a hundred you go in to cook dinner.",
+   "end": "Many years later, sorting through old things, you find your first uniform from your crew days, a little name badge still pinned to the chest. You fold it neatly and put it back on the top shelf of the wardrobe."
+  }
+ }
+}

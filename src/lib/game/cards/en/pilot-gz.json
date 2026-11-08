@@ -1,0 +1,324 @@
+{
+ "id": "pilot-gz",
+ "occupation": "Airline Captain",
+ "role": "Airline First Officer",
+ "headline": "A cadet-program first officer on the A320, just released to fly the line at a major Guangzhou airline, still several thousand hours from the left seat",
+ "unit": "The flight operations department of a major airline in Guangzhou",
+ "unit_type": "Major airline",
+ "city": "Guangzhou",
+ "city_tier": "First-tier city",
+ "education": "Bachelor's degree in Flight Technology (airline-sponsored cadet program)",
+ "level": "Just released to the line. From the right seat you can work as pilot monitoring, talk to the tower and run the checklists, and when the captain hands you the controls you can fly a takeoff or a landing. Total flight time: a little over three hundred hours.",
+ "intro": "Your flight bag is new: a chart tablet, a headset, a flashlight and a logbook with only a few pages filled in. Your contract was signed the year you turned eighteen, and it runs until you retire. The captain usually sits on the left, you on the right, with the thrust levers between you. From today your name is on the roster: two or three sectors a day, and for the early flights you leave home at five.",
+ "salary_note": "Estimate: airline pilots in Guangzhou are paid mostly by the flight hour, plus base salary and allowances. A major airline already sits at the top of the national range, so it's taken at the national figure. The more you fly the more you earn, and first officers earn far less than captains.",
+ "facts": [
+  {
+   "label": "First Officer, F1 to F3 (current level)",
+   "value": "0–3 years, ¥15,000–28,000 a month (national average, estimated)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior First Officer, F4 to F5 (3–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Inspecting the aircraft and making sure the crew runs the checklists",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Reviewing weather, NOTAMs and the flight plan before departure",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "The alarm goes off. You were asleep by nine last night for the 7:20 to Chengdu. Before leaving you pat down your ID, medical certificate and license once more.",
+  "At the flight briefing room you blow into the breathalyzer and sign in. The captain, the purser and you sit round a table for the pre-flight briefing; your job is to read out the NOTAMs and the weather at the alternates.",
+  "The captain sends you to do the walk-around. Flashlight in hand, you circle the A320, checking the tires, the pitot tubes, and whether every static port cover has been removed.",
+  "Takeoff from Baiyun Airport. The captain is flying this sector and you're pilot monitoring: callouts, radio calls to the tower, checklists, your eyes moving between the instruments and the window.",
+  "Forty-five minutes on the ground in Chengdu. You eat a bread roll in the cockpit and check the load sheet and fuel for the return once more.",
+  "You fly the return. There's a crosswind on landing in Guangzhou and you put it down a little firmly. The captain says: not bad, pull the thrust back a bit earlier next time.",
+  "Back at the dorm you nap for an hour, then get up to memorize emergency procedures from the quick reference handbook. Next month is your six-monthly simulator check.",
+  "In your logbook you write today's four hours forty minutes. You still need several thousand hours before the left seat."
+ ],
+ "ladder": [
+  {
+   "title": "First Officer (F1 to F3)",
+   "stage": "Right seat",
+   "focus": "Sit in the right seat as pilot monitoring, make the callouts and radio calls, run the checklists, alternate flying sectors with the captain, build hours, and pass the six-monthly simulator check."
+  },
+  {
+   "title": "Senior First Officer (F4 to F5)",
+   "stage": "Candidate",
+   "focus": "Fly international routes, practice decision-making and lead briefings beside the captain, guide new first officers, and take the theory and simulator courses for command upgrade."
+  },
+  {
+   "title": "Captain",
+   "stage": "Left seat",
+   "focus": "Sit in the left seat and sign the dispatch release. Extra fuel, diversions, whether to go at all are your call, and you carry final responsibility for the whole aircraft."
+  },
+  {
+   "title": "Widebody Captain",
+   "stage": "Long-haul",
+   "focus": "Convert to widebody aircraft for intercontinental routes, run augmented crews, and manage fatigue across time zones and fuel decisions on long sectors."
+  },
+  {
+   "title": "Training Captain",
+   "stage": "Instructor",
+   "focus": "Train on the line and examine others in the simulator, sign off new captains and upgrades, and help revise the airline's flight procedures."
+  }
+ ],
+ "ai_tasks": [
+  {
+   "name": "Reviewing weather, NOTAMs and the flight plan before departure",
+   "how": "AI can pull together weather and NOTAMs and offer alternative routes and risk alerts. The captain judges which information actually matters for this flight and decides whether to accept or adjust."
+  },
+  {
+   "name": "Signing the dispatch release and confirming fuel and load",
+   "how": "AI can calculate fuel, load and center of gravity and cross-check the figures automatically. The captain decides, in light of the actual conditions, whether to carry extra fuel, and signs for it personally."
+  },
+  {
+   "name": "Leading the crew's pre-flight briefing",
+   "how": "AI can generate the briefing points and a list of things to watch. The captain has to lead the crew face to face, make the priorities clear, watch how everyone is doing and set the tone for communication."
+  },
+  {
+   "name": "Inspecting the aircraft and making sure the crew runs the checklists",
+   "how": "AI can supply checklists and system status data. Walking round the aircraft, judging anything abnormal on the spot and making sure the crew follows through still takes a person who is physically there."
+  },
+  {
+   "name": "Flying the takeoff, cruise and landing",
+   "how": "Autopilot and autoland can already handle most of the flying. The captain handles, monitors and takes over at the critical moments; windshear and strong crosswinds come down to hands-on skill."
+  },
+  {
+   "name": "Monitoring instruments and route and keeping in contact with air traffic control",
+   "how": "AI can watch the instruments and route deviations continuously and help pick out what's said on the radio. The captain has to understand what controllers intend, deal with ambiguous instructions and make the final call."
+  },
+  {
+   "name": "Handling failures and emergencies in flight",
+   "how": "AI can suggest what caused a failure and how to deal with it. The captain has to weigh the options with incomplete information and little time, direct the crew, and bear legal responsibility for the outcome."
+  },
+  {
+   "name": "Filling in post-flight records and leading the crew debrief",
+   "how": "AI can collect flight data automatically and generate the records and a first draft of the debrief. The captain only needs to check the key points and add the lessons worth discussing as a crew."
+  }
+ ],
+ "events": {
+  "e_first_landing": "For the first time on the line you land the aircraft as pilot flying. The training captain says nothing at all until you've taxied onto the stand, then: go back and think about that flare again.",
+  "e_redeye": "Three red-eye flights in a week. At three in the morning Baiyun Airport is lit up like day, and in the briefing room you drink your second coffee.",
+  "e_go_around": "A thunderstorm closes in just before landing, and the captain decides to go around and divert to the alternate. In the cabin the passengers complain; in the cockpit you work the fuel figures again and again. After landing the captain says: a decision like that, you never regret.",
+  "e_check_fail": "At the six-monthly simulator proficiency check you fail the single-engine go-around and need extra training and a retest. For a week you rehearse the procedure cards in your dorm room.",
+  "e_layover": "An overnight in Urumqi, and a few of the crew go out for hand-pulled lamb pilaf. The captain tells stories about landing at high-altitude airports when he was young, and you're spellbound.",
+  "e_ai_report": "Post-flight records and the first draft of the debrief are now generated automatically; the captain edits two lines and signs. You get off work half an hour earlier than before.",
+  "e_ai_brief": "The airline launches a smart flight-planning system: weather, NOTAMs, alternates and fuel recommendations laid out on a single page. You still like to take a pen and circle the key items yourself.",
+  "e_bird": "A bird strike in the climb after takeoff, very loud. You run the checks by the book and return to the airport. On the ground it turns out to be nothing but a shallow dent in the radome.",
+  "e_love": "On a long sector to Urumqi you talk for a long time with a flight attendant during the turnaround. After that, the two of you always try to get rostered on the same days.",
+  "e_marry": "You get married. The wedding fits into four days off you fought hard to get, and the honeymoon is a trip to Sanya on a plane someone else is flying.",
+  "e_house": "You take out a mortgage on a flat in Huadu, twenty minutes' drive from Baiyun Airport. To cover the monthly payment on the contract, you need to fly an extra twenty hours a month.",
+  "e_child": "The day your child is born you're on an overnight in Kunming. You take the first flight back the next morning and go straight from the airport to the hospital, still in uniform.",
+  "e_international": "You start flying international routes. The first time you see the aurora from the cockpit in the high-latitude night sky, the captain tells you to take a photo, and says he took one too, his first time.",
+  "e_medical": "At the annual Class 1 medical your blood lipids are a little high, and the doctor wants you back in three months. You give up late-night snacks and run five kilometers on the treadmill every day.",
+  "e_absent": "This year you miss your child's birthday, your parents' wedding anniversary and three parent-teacher meetings. Your spouse doesn't complain on the phone, only says the child has learned to find Guangzhou on the map.",
+  "e_medical_divert": "In the cruise a passenger falls suddenly ill, and the purser reports it to the cockpit. The crew decides to divert to the nearest airport. You spend twenty minutes coordinating with air traffic control and ground medical services, and when you land the ambulance is already waiting by the taxiway.",
+  "e_sleep": "Years of shift rosters and time zones, and you start being unable to sleep in the day or wake at night. The aviation doctor gives you a sleep schedule and no pills; pilots can't just take medication.",
+  "e_ai_manual": "The new fleet's autoland and decision support work better and better, and the airline responds by adding hours of manual flying to training: in case people forget how to fly the aircraft.",
+  "e_mentor": "The first officer you're training makes a beautiful crosswind landing beside you. You say nothing until you're on the stand, then: today's one, remember how it felt.",
+  "e_parent": "Your mother back home is in hospital, and you have to swap shifts twice to get there. On the ward you keep checking the roster on your phone, and she tells you to put it away and just sit with her a while."
+ },
+ "choices": {
+  "c_fo": {
+   "title": "Upgrade to Senior First Officer (F4)",
+   "situation": "You need enough logged hours and a pass in the theory, simulator and line checks to become a senior first officer, start flying international routes, and join the list of command candidates. Crew scheduling asks if you'll take on more night and extra flights. You'd build hours faster, and wear yourself out.",
+   "options": [
+    {
+     "label": "Take more flights",
+     "result": "You fly to the monthly limit and spend New Year in the air. On the day of your line check, the examiner says your callouts are steadier than many veteran first officers'."
+    },
+    {
+     "label": "Stick to the normal roster",
+     "result": "You fly at the usual pace and still get home for dinner at weekends. Your upgrade comes half a year later, and you're in no hurry."
+    }
+   ]
+  },
+  "c_cargo": {
+   "title": "Move to the cargo fleet?",
+   "situation": "The airline has set up a new cargo fleet and is short of first officers. The hourly rate is a step higher, and the queue for captain is shorter. The price is that nearly every flight is at night, and behind the cockpit there are no passengers, only crate after crate of cross-border e-commerce parcels.",
+   "options": [
+    {
+     "label": "Go cargo",
+     "result": "You start taking off from Baiyun in the small hours and landing in cities that aren't awake yet. More money, and your sleep is in pieces."
+    },
+    {
+     "label": "Stay with passengers",
+     "result": "You stay in the passenger fleet. On the morning flights the passengers say hello to you as they board, and you find you like that."
+    }
+   ]
+  },
+  "c_ai": {
+   "title": "Be a test pilot for the smart assistance system?",
+   "situation": "The airline is piloting a decision-support system that recommends routes, fuel and failure handling, and wants a few pilots to try it and write reports: which recommendations can be used, which must be overruled. It eats into your days off, and if your report is wrong, that's on you.",
+   "options": [
+    {
+     "label": "Sign up",
+     "result": "You log dozens of unreliable recommendations and write them up. Later the airline's manual gains a new section: when you must not listen to it."
+    },
+    {
+     "label": "Pass",
+     "result": "You use the new system by the manual and spend the time saved sleeping. A few times its advice seems wrong to you, but you don't say anything."
+    }
+   ]
+  },
+  "c_jump": {
+   "title": "Jump to another airline?",
+   "situation": "An expanding airline offers a higher hourly rate and will even pay the large compensation your current airline is owed for releasing you. The catch is that you'd queue again for captain and have to learn a new company's manuals and routes from scratch.",
+   "options": [
+    {
+     "label": "Make the jump",
+     "result": "You sign a new contract, with the new airline paying the compensation in yearly installments. You've never flown any of its routes, and you start memorizing everything from the beginning."
+    },
+    {
+     "label": "Stay",
+     "result": "You stay. The senior captains all know you, and your place in the upgrade queue hasn't moved."
+    }
+   ]
+  },
+  "c_upgrade": {
+   "title": "Command upgrade to Captain",
+   "situation": "This year's command upgrade slots have reached your name. You'll need to pass the theory, simulator and line checks, then fly dozens of sectors in the left seat with an instructor watching every one. Fail, and you wait another year.",
+   "options": [
+    {
+     "label": "Prepare all out",
+     "result": "You memorize the emergency procedures in the manual all over again and fly dozens of failure combinations in the simulator. At the end of your last line check, the examiner says: this aircraft is yours now."
+    },
+    {
+     "label": "Fly another year first",
+     "result": "You say you'd rather wait and watch a little longer how the captains make their decisions. The slot goes to someone who joined two years before you."
+    }
+   ]
+  },
+  "c_school": {
+   "title": "Go back to the flight school as an instructor?",
+   "situation": "The flight school where you learned to fly is short of instructors, and the principal calls to ask if you'd come back and teach circuits and instrument flying in light aircraft. You'd earn a great deal less, but you'd sleep at home every night.",
+   "options": [
+    {
+     "label": "Go back to the school",
+     "result": "You hand in your notice, settle the remaining compensation under your contract, and carry your flight bag back to the school.",
+     "end": "You go back to the flight school as an instructor, sitting in the right seat of a small plane while one student after another flies solo for the first time. Every time they land, you stand by the runway a little longer."
+    },
+    {
+     "label": "Stay with the airline",
+     "result": "You recommend an old classmate who wants to be home with his kids, and keep flying the line yourself."
+    }
+   ]
+  },
+  "c_regulator": {
+   "title": "Become a flight standards inspector for the regulator?",
+   "situation": "The regional office of the Civil Aviation Administration is hiring flight standards inspectors, pilots with airline experience to oversee training, checking and compliance at every airline. No more shift rosters, but no more flying passengers either.",
+   "options": [
+    {
+     "label": "Join the regulator",
+     "result": "You apply to come off flying, fill in the last page of your logbook, and hand it in.",
+     "end": "You become a flight standards inspector at the Civil Aviation Administration, watching other people fly in simulators and cockpits at every airline. The item you're always slowest to sign off is manual flying."
+    },
+    {
+     "label": "Keep flying",
+     "result": "You say you still want to fly. That afternoon you take a flight to Beijing, and on takeoff the sun is right off your right side."
+    }
+   ]
+  },
+  "c_widebody": {
+   "title": "Convert to Widebody Captain",
+   "situation": "The airline has taken delivery of new widebody aircraft for long-haul routes to Europe and Australia, and wants narrowbody captains to convert: two months of theory and simulator work, then dozens of sectors under supervision. Long-haul pays more and the jet lag is brutal; you'd be out of the country half of every month.",
+   "options": [
+    {
+     "label": "Convert",
+     "result": "You put the narrowbody manuals away in a cupboard and learn the widebody's systems from the beginning. The first time you watch the sun rise over the ocean from the left seat, you add an extra line to your logbook."
+    },
+    {
+     "label": "Stay on narrowbodies",
+     "result": "You say you still like a few sectors a day and home at night. You fly the narrowbody fleet for many more years."
+    }
+   ]
+  },
+  "c_instructor": {
+   "title": "Become a Training Captain?",
+   "situation": "Flight operations wants you to qualify as an instructor: half your time training on the line, half in the simulator examining others, and whether a new captain is released depends on your signature. Fewer sectors, one more layer of responsibility.",
+   "options": [
+    {
+     "label": "Qualify as instructor",
+     "result": "You start sitting at the instructor station behind the simulator, setting problems and watching others work through the failures you designed, again and again."
+    },
+    {
+     "label": "Just fly the line",
+     "result": "You say you still like flying two or three sectors a day. You fly from the left seat for many more years, through one generation of first officers after another."
+    }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "On your last flight you let the first officer fly and you monitor. The landing is very soft, and as you taxi onto the stand two fire engines arc a water salute over the aircraft. You shut down the engines, hand the dispatch release and the logbook to the first officer, and sit in your seat a little longer.",
+  "burnout": "At that year's Class 1 medical, one item on your ECG fails, and three retests don't change it. You're grounded and moved to a ground job in flight technical management, spending your days in an office looking at other people's flight data. When you leave work, you always look up at the sky over Baiyun Airport."
+ },
+ "stages": [
+  "You sit in the right seat. At first you're mostly pilot monitoring: callouts, radio calls to the tower, checklists, the logbook. Gradually you start alternating with the captain, two or three sectors a day, one for you and one for him. You prepare the weather and NOTAMs for the briefing, and after every sector the captain picks apart what you did; the six-monthly simulator check feels like an exam you could fail at any moment.",
+  "You're a command candidate now, flying international routes, and the right seat feels more and more like the left: the captain lets you make the decisions and lead the briefing while he watches. You talk to foreign controllers and fly approaches by foreign procedures, take the theory and simulator courses for upgrade, and show new first officers the routes. When something unusual happens, the captain asks you first: what do you think?",
+  "You've moved to the left seat, four stripes on your shoulders. The dispatch release carries your signature: whether to take more fuel, whether to divert, whether to go in bad weather, all your call. You lead every sector's crew debrief and watch how the first officer and the purser are doing; when something goes wrong, you're the one who writes the report and faces the investigation.",
+  "You've converted to widebodies and fly intercontinental sectors of more than ten hours. There are two crews rotating in the cockpit, and you decide who rests first and who lands. Across several time zones you watch everyone's fatigue, and over the ocean, in the hours with no suitable alternate, you keep the fuel figures absolutely clear. Engineers, ground staff and controllers abroad all act on your signature.",
+  "Half your time you're training on the line, half examining others in the simulator. New captains' line checks, first officers' upgrade checks, retraining after incidents: you set the problems and you sign. On the flight technical committee you debate whether procedures in the manual should change. What you say most often is: fly the aircraft first."
+ ],
+ "work": [
+  "On the walk-around you find a static port cover still in place. You photograph it and call the engineer. When you tell the captain, all he says is: that lap wasn't wasted.",
+  "The tower gives a taxi instruction you don't catch, and you press the button to ask them to repeat. Later the captain says: if you didn't hear it, ask; asking ten times beats taxiing wrong once.",
+  "At the briefing you present the weather at the alternate. The captain listens and raises the fuel from eleven tonnes to twelve, saying: in a Guangzhou summer, thunderstorms don't play fair.",
+  "In the simulator you practice engine failure, and the instructor throws three faults at you in a row. When you climb out, the back of your shirt is soaked. He says: better than last time.",
+  "Your first flight to Bangkok. The controller's accent is heavy, and you read back three times before you're sure of the runway. After landing the captain pats you on the shoulder.",
+  "The captain asks you to lead the pre-flight briefing. When you've covered weather, route and alternates, the purser asks when the turbulence is likely, and you give her a specific window.",
+  "A first officer just released to the line is flying his first sector, so nervous he rushes the callouts. In the cruise you chat with him about his hometown, and on the next sector his voice is steady.",
+  "Deviating around thunderstorms, the captain asks you: left or right? You look at the weather radar and the route and say twenty nautical miles right. He nods and does it.",
+  "Before departure the engineer reports an indicator light out, but under the minimum equipment list the aircraft can still be dispatched. You read the clause, ask two questions, and sign the release.",
+  "A flight is delayed three hours, and the passengers at the gate are angry. You pick up the cabin PA, explain the reasons one by one, and finish by saying sorry.",
+  "After landing you lead the crew debrief, and the first thing you say is that the first officer was right on the approach when he said: I think we're a bit high.",
+  "On a night flight to Sydney you set the rest order and send the first officer to sleep first. Four hours later he comes back to take over, and you hand him the fuel, the route and the cluster of convective cloud ahead, item by item.",
+  "On an intercontinental route there's no suitable alternate over the ocean. Before departure you add two tonnes to the fuel order. Dispatch calls to ask why; you give three reasons, and they don't ask again.",
+  "On an overnight abroad, the local engineer reports one tire worn to the edge of its limit. You look at the photos and decide to wait until it's changed. The flight leaves ninety minutes late.",
+  "In the simulator you give a new captain a combined hydraulic failure and crosswind. When he's dealt with it, you write in your assessment: fly the aircraft first, then handle the failure.",
+  "The flight technical committee is debating a new procedure. You bring three cases you've flown yourself and say this one has to change. The meeting runs until nine at night, and in the end it's changed.",
+  "A first officer fails his upgrade check and comes to find you. You don't try to console him. You fly with him in the simulator for two more evenings."
+ ],
+ "past": [
+  "You're in your last year of middle school in a county town in eastern Guangdong, and your home sits right under a flight path. Every afternoon at three a plane passes overhead, and you stop to watch it go.",
+  "In your second year of high school, an airline comes to recruit cadet pilots. Screening, rescreening, medicals, one after another; for the eyesight test, you gave up phone games six months in advance.",
+  "Your gaokao (college entrance exam) score clears the top-tier line, and you're admitted to the flight technology program at a civil aviation university as an airline-sponsored cadet. The term written in your contract runs all the way to your retirement.",
+  "After the theory, you go abroad to a flight school to learn to fly. On the day of your first solo, you shout out loud in the sky, and nobody hears you.",
+  "Back in China you train on high-performance aircraft and multi-crew operations, earning your commercial pilot license and instrument rating, and passing the aviation English test too.",
+  "You join the airline, do your A320 type rating in the simulator, then fly several hundred hours of line training with a training captain until at last you're released."
+ ],
+ "late": {
+  "pension_note": "Estimate: airline pilots draw the standard enterprise employee pension plus a company annuity. Contributions are capped, so compared with the high salary while flying, the pension comes to only a little over 30 percent of the final monthly salary.",
+  "scenes": [
+   "Your last flight lands, and the tower says on frequency: wishing you a happy retirement. You press the button and say thank you, your voice a little hoarse.",
+   "A flight school asks you to teach theory, two classes a week. You talk most about weather, and the students say nobody makes thunderstorms sound scarier.",
+   "You and your spouse fly abroad on holiday as passengers for the first time. The captain on the PA sounds very young, the landing is soft, and in your seat you give a little nod.",
+   "You set up a small telescope on the balcony to watch the approach path in the distance, one aircraft after another, like watching the lights of the one ahead from the cockpit.",
+   "Grounded, you work in flight technical management sorting flight data monitoring records, looking at other people's landing curves all day. You can tell at a glance whose flare was late.",
+   "You talk the new first officers through the problems in the data, in great detail. Someone asks if you still want to fly. You say yes, and carry on explaining.",
+   "You transfer to the operations control center, watching the tracks of hundreds of aircraft on the big screen. On night shifts you always look a moment longer toward where the storms are coming from.",
+   "For the first time you put your flight bag away on the top shelf of the wardrobe. Your family says you can finally be home for the holidays.",
+   "When your new colleagues learn you used to fly, they always ask you on flights whether the bumps are bad. You tell them bumps are normal; just keep your seatbelt fastened.",
+   "The route you used to fly gets a new aircraft type. At the airport you watch it take off, and keep watching until it disappears into the clouds.",
+   "Later the calculating, cross-checking and record-keeping in the cockpit all went to software. But for those few minutes of takeoff, landing and go-around, it was still a human hand on the controls.",
+   "You watch the sunset from Baiyun Mountain as aircraft pass overhead one after another. By the time you've counted the seventh, it's dark."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, you take your grandson to the viewing deck outside the airport to watch the planes. He asks why airplanes can fly. You crouch down and begin with the wind.",
+   "burnout": "Many years later you sit in the sun on the balcony while a white contrail stretches across the sky and slowly spreads. You watch until it's gone, then go inside and make a pot of tea.",
+   "end": "Many years later, on top of the wardrobe, you find the old flight bag, the logbook still inside. You turn to the first page and look at it a while, then close it."
+  }
+ }
+}

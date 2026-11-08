@@ -63,7 +63,8 @@ async function build(id: string) {
   if (ladder.some(l => !l.salary[1])) throw new Error(`${d.occ} 有的级没有薪资、库里也没有年限薪资：在 ladder_override 里写 salary [下限, 上限]（全国口径月薪，按行业常见估）`);
   const SRC = own ? '行业常见' : '职业地图';
   const st = Math.max(0, Math.min(ladder.length - 1, +d.start.stage || 0)), cur = ladder[st], nxt = ladder[st + 1];
-  const top = (sal || []).sort((a: any, b: any) => a.year.localeCompare(b.year)).pop();
+  const top0 = (sal || []).sort((a: any, b: any) => a.year.localeCompare(b.year)).pop();
+  const top = top0 && +top0.salary < 100000 ? top0 : undefined;   // 年限薪资里明显是年薪当月薪的（飞行员 year_8_10=208333，11-07）不上登记卡
   const human = (ai.tasks || []).find((t: any) => t.kind === 'human'), soft = (ai.tasks || []).find((t: any) => t.kind !== 'human');
   // 登记卡上的数据：全由代码按库里的数写，人不写数字
   const facts = [

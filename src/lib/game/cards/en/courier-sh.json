@@ -1,0 +1,156 @@
+{
+ "id": "courier-sh",
+ "occupation": "Courier",
+ "role": "Courier at a Delivery Outlet",
+ "headline": "A courier from northern Anhui, one year into the job at a franchise delivery outlet in Zhangjiang, Pudong, riding an electric tricycle through three hundred-odd parcels a day",
+ "unit": "A franchise outlet of a delivery company in Zhangjiang, Pudong, Shanghai",
+ "unit_type": "Franchise delivery outlet",
+ "city": "Shanghai",
+ "city_tier": "First-tier city",
+ "education": "Middle school",
+ "level": "You could find any of the thirty-odd buildings on your route with your eyes shut. You deliver around three hundred parcels a day and pick up forty or fifty, and you're still learning the tricks of the office towers and the old housing estates.",
+ "intro": "Your electric tricycle is secondhand, its cargo box reinforced with wire, and from the handlebar hangs a good-luck charm from a temple back home. The outlet is on a side street in Zhangjiang; when the roller shutter goes up, the room is full of parcels. From today the thirty-odd buildings on the route are yours: unloading starts at six thirty in the morning, and the day isn't over until the evening accounts are settled.",
+ "salary_note": "Estimate: couriers at Shanghai franchise outlets are paid by the piece, delivery fees plus a cut of pickups, minus complaint fines, taken at 1.3 times the national figure. You earn noticeably more around Singles' Day and less in the slow season.",
+ "facts": [
+  { "label": "Courier (current level)", "value": "0–2 years, ¥5,000–7,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Senior Courier, route team leader (2–5 years)", "source": "Common in the trade" },
+  { "label": "Pay after 3–5 years", "value": "¥6,900 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Door-to-door delivery and handing over in person", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Pickups and entering waybills", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The outlet's roller shutter goes up and the trunk-line truck has arrived. You and a few colleagues jump into the back to unload, passing bag after bag onto the sorting line while the handheld scanners beep nonstop.",
+  "Your route's parcels are piled at your feet, three hundred and twenty of them. You stack them into the tricycle by building and door number: big boxes at the bottom, fresh food on top.",
+  "The first old housing estate. The gatekeeper won't let the tricycle in, so you run armful after armful into the buildings. In the one with the broken lift, you climb seven floors.",
+  "Office-tower reception signs for everything in one go. The young receptionist takes in your parcels every day, and today you've brought her a cup of soy milk.",
+  "You eat a jianbing pancake sitting on the tricycle. A complaint pops up on your phone: someone says you marked a parcel delivered without bringing it to the door. You call to explain and they hang up.",
+  "Afternoon pickups. A small cross-border e-commerce company has more than thirty boxes to ship. You weigh, label and tape them, and your T-shirt is soaked through.",
+  "Back at the outlet to hand in parcels and settle up. Three hundred and seven delivered today and forty-odd picked up; minus one complaint fine, it comes to a little over two hundred yuan.",
+  "A shower in your shared flat, then a video call with your child back home. Your child asks how tall the buildings in Shanghai are. You say the tallest you've climbed is thirty-one floors."
+ ],
+ "ladder": [
+  { "title": "Courier", "stage": "On the route", "focus": "Unload, sort and load, deliver around three hundred parcels a day on one route, do pickups, and settle accounts at the outlet at night." },
+  { "title": "Senior Courier (Route Team Leader)", "stage": "Team", "focus": "Lead three or four people on a big route: plan the runs, cover absences, agree pickup times with building managers and receptionists, and take new couriers' complaints first." },
+  { "title": "Outlet Supervisor", "stage": "Outlet", "focus": "Watch volumes, delivery times, complaints and problem parcels, do the rosters and accounts, and deal with the regional manager and the trunk-line drivers." },
+  { "title": "Outlet Franchisee", "stage": "Owner", "focus": "Take on an outlet yourself: rent, vehicles, wages and social insurance for twenty-odd people, head-office targets and delivery fees are all on you." }
+ ],
+ "ai_tasks": [
+  { "name": "Pickups and entering waybills", "how": "Electronic waybills and smart address recognition can fill in the sender's details and work out the fee automatically. Weighing, inspecting, packing and confirming face to face what's being sent still has to be done by the courier on the spot." },
+  { "name": "Ordering deliveries and planning the route", "how": "The system sorts parcels into chutes by address and sets the delivery order, lighting up each stop on the handheld scanner. The courier only changes it from experience when a road is closed, an estate restricts access or a lift is broken." },
+  { "name": "Sorting at the outlet and scanning parcels into bags", "how": "An automated sorting line can scan parcels into their chutes. Loading the line, dealing with torn labels and unclear addresses, and keeping the machines from jamming still takes people." },
+  { "name": "Door-to-door delivery and handing over in person", "how": "Climbing stairs, knocking on doors, checking who's receiving, inspecting valuable parcels in front of the customer, and working out where to leave things when nobody's home: someone has to go there and do it." },
+  { "name": "Handling address changes, refusals, damage and complaints", "how": "AI customer service and automated calls can handle routine questions about progress and address changes. When a parcel is damaged or lost, or a customer is upset, the courier still has to talk it through in person and take responsibility." },
+  { "name": "Riding an electric tricycle safely on the road and in housing estates", "how": "The system can warn about speeding and violations, but watching traffic at junctions, avoiding people and children in the estates and controlling the bike in the rain all come down to the rider." }
+ ],
+ "events": {
+  "e_double11": "The week after Singles' Day, parcel volume triples and the outlet's lights stay on all night. Six days running you get back to your room at one in the morning; that month you earn three thousand extra.",
+  "e_typhoon": "Typhoon weather. You wrap the parcels in three layers of plastic sheeting. An old woman opens her door, sees you soaked to the skin, and presses an apple into your hand.",
+  "e_lost": "A parcel goes missing, the customer complains to head office, and the outlet makes you pay four hundred yuan up front. You go through three days of CCTV and finally find it in a parcel locker in the building next door.",
+  "e_old_man": "An old man who lives alone on your route waits for you every day; what he orders online are little things that cost a few yuan. One day he doesn't open the door. You call the residents' committee, and only later learn he's in hospital.",
+  "e_ai_route": "The company brings in smart dispatch, and the handheld scanner now shows the delivery order already worked out. For the first month you still ride your own way, until you notice it only takes a detour between two estates.",
+  "e_ai_cs": "Calls about address changes and delivery progress all go to AI customer service now, and your phone rings dozens of times fewer a day. The calls that still come through are the urgent ones and the angry ones.",
+  "e_station": "A parcel station opens at the entrance to an estate, and half the parcels on your route go straight there. No more climbing stairs, but fewer delivery fees too; you work it out at seven or eight hundred less a month.",
+  "e_crash": "Rushing through the rain, your tricycle skids at a junction and you go down. Your knee is swollen for a week. Not one parcel is damaged.",
+  "e_praise": "A pregnant resident praises you by name in the estate's group chat, saying you always leave her parcels on the shoe cabinet by her door. The supervisor reads it out at the morning meeting.",
+  "e_visit": "In the summer holidays your spouse brings your child to Shanghai for two weeks, the three of you squeezed into your ten-square-meter room. Your child rides along in the tricycle for a whole day of deliveries.",
+  "e_spring": "The outlet gives only seven days off for Spring Festival, and it takes you three days to grab a ticket home. Back home you sleep for two whole days, and when you get up your child asks when you're leaving again.",
+  "e_friend_leave": "A friend from your home village who started at the outlet with you switches to food delivery, saying the hours are freer. Before he goes, he sells you his spare tricycle battery cheap.",
+  "e_heat": "July in Shanghai, the asphalt soft in the sun. You drink six bottles of water in a day and still feel dizzy by afternoon, and sit for half an hour in a stairwell.",
+  "e_house": "You've saved enough for a down payment on a flat in your home county town. It's on the sixteenth floor, and you haven't spent a single night there.",
+  "e_grades": "Your child's grades back home are slipping, and the grandparents can't keep a handle on things. Your spouse calls and cries for a while; you crouch outside the outlet listening, and hardly manage to say anything.",
+  "e_robot": "Driverless delivery vehicles start running on your route, each carrying dozens of parcels to the parcel stations. You stand by the road watching one turn slowly, and the security guard beside you says: will you all be out of a job soon?",
+  "e_back": "Years of hauling parcels, and a slipped disc catches up with you. You add a cushion to the tricycle seat and grit your teeth when you carry heavy things like bottled water.",
+  "e_newbie": "A young man fresh out of school joins the outlet and on his first day is still delivering at ten at night. You ride the last twenty-odd parcels with him and tell him which gate to use at each estate.",
+  "e_parent": "Your mother back home is in hospital. You take a week off, a colleague covers your route, and you lose a month's full-attendance bonus.",
+  "e_regular_gift": "Before New Year, several households on your route hang a bag on their doors with a note: for the delivery guy. Inside are rice cakes, tangerines, and a pair of gloves."
+ },
+ "choices": {
+  "c_bigzone": { "title": "Take the big industrial-park route?", "situation": "The outlet has carved out a new route in an industrial park, with lots of parcels and big pickups, worth a hundred-odd yuan more a day. But it's far from the outlet: an extra hour of riding each way and two battery changes a day.", "options": [
+   { "label": "Take it", "result": "You ride thirty kilometers more every day and get to know the receptionists at dozens of companies in the park. More money, and at night you fall asleep the moment you lie down." },
+   { "label": "Keep your old route", "result": "You stay with your thirty-odd familiar buildings, where you know when everyone's home. A bit less money, and you finish a bit earlier." }
+  ] },
+  "c_lead": { "title": "Become route team leader (Senior Courier)", "situation": "The supervisor wants a team leader on your route: lead three or four people, plan the runs, cover absences, handle new couriers' complaints first, for a small monthly allowance. The condition is that this month your complaint rate has to be the lowest in the outlet.", "options": [
+   { "label": "Go for it", "result": "That month you deliver every parcel to the door and return every call, and you don't get a single complaint. When the supervisor announces it at the morning meeting, you scratch your head in the back row." },
+   { "label": "Let your fellow villager have it", "result": "You put forward your friend from home who started before you. He becomes team leader, and he always asks you first about the hard deliveries." }
+  ] },
+  "c_family": { "title": "Bring your child to school in Shanghai?", "situation": "Your child is about to start middle school. With a residence permit and enough points, a public school in Pudong is possible; without them, it's a private school at over ten thousand yuan a year. Bring them, and the family is together, but you'd have to swap your shared room for a one-bedroom flat.", "options": [
+   { "label": "Bring them to Shanghai", "result": "You rent a one-bedroom in Chuansha, and your child joins a class mid-year. Every morning you drop them at the school gate before going to unload at the outlet." },
+   { "label": "Leave them back home", "result": "Your child stays in school in the county town, and your spouse goes back to look after them. You send two thousand yuan more a month, and the video calls grow from ten minutes to half an hour." }
+  ] },
+  "c_ai": { "title": "Learn to run the parcel stations and driverless vehicles?", "situation": "The outlet is opening two parcel stations on your route and bringing in driverless delivery vehicles, and needs someone who knows the route to manage the last-mile handover: which parcels go by vehicle, which go to the door, how to trace mistakes. It means learning the system and haggling with station owners; less delivery income, a bit more allowance.", "options": [
+   { "label": "Learn it", "result": "You learn to adjust the vehicles' drop-off points in the back end, and to spot at a glance when the system has sent a building's parcels to the wrong station." },
+   { "label": "Keep riding", "result": "You keep taking door deliveries on your tricycle. When something goes wrong at the stations, people come to ask you where a building is." }
+  ] },
+  "c_delivery": { "title": "Switch to food delivery?", "situation": "Your friend says food delivery means freer hours and no unloading at dawn, and if you work hard you'd make a thousand more a month than now. But food delivery pays by the order, the platform assigns the jobs, and on rainy days there are even more riders competing.", "options": [
+   { "label": "Go deliver food", "result": "You hand your scanner back to the outlet and sell the tricycle to the new hire.", "end": "You put on a food delivery platform's helmet and keep riding the streets of Pudong. You still remember those thirty-odd buildings, and when you pass them on a delivery, you check whether the gate system has changed." },
+   { "label": "Stay at the outlet", "result": "You say you're used to working one route at a time, and you stay." }
+  ] },
+  "c_super": { "title": "Become outlet supervisor", "situation": "The old supervisor has moved to head office, and the franchise owner wants to promote one of the team leaders: watch volumes and complaints, do rosters and accounts, deal with head office and the drivers. Fixed pay plus commission and no more deliveries yourself, but whenever anything goes wrong at the outlet, it's your problem.", "options": [
+   { "label": "Take it", "result": "For the first time you sit at the outlet computer reading reports, and it takes you all evening to make sense of them. At the next morning meeting you hang your tricycle key on the wall." },
+   { "label": "Stay on the route", "result": "You say you can't sit still and would rather be out riding. Someone else becomes supervisor, and you keep leading your team on deliveries." }
+  ] },
+  "c_hometown": { "title": "Go home and open a parcel station in the county town?", "situation": "More and more parcels reach your home county, and the town still has no proper parcel station. Your spouse says: come home, let's be together. Open a station that handles sending too. Less money, but no more living alone so far away.", "options": [
+   { "label": "Go home", "result": "You hand your route to the hardest worker on your team and board the coach back to Anhui.", "end": "You open a parcel station in your home county town and spend your days among the shelves, scanning and stacking. Everyone who comes to collect is someone you know, and some of them sit down to chat for a while afterwards." },
+   { "label": "Stay in Shanghai", "result": "You say a few more years, until the mortgage is mostly paid off. That night your video call with your spouse runs half an hour longer." }
+  ] },
+  "c_contract": { "title": "Take over the outlet", "situation": "The franchise owner is getting on in years and going home, and asks if you'd become the outlet's franchisee and take it over: the transfer fee, the rent, the vehicles and the wages of twenty-odd people would all be on you, and so would head office's fines. Do it well and you're the boss; do it badly and you lose everything.", "options": [
+   { "label": "Take over the outlet", "result": "You mortgage the flat in your county town, borrow more from relatives, and press your thumbprint on the transfer contract." },
+   { "label": "Stay supervisor", "result": "You don't take it, and the outlet gets a new owner from out of town. On his first day he comes to ask you about every route." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day you deliver two hundred-odd parcels, fewer than on your first day, on roads you know far better. Back at the outlet you wipe your scanner clean and set it in the charger, and hand the tricycle key to the young man taking over your route. As the roller shutter comes down, you stand by the door and finish a cigarette.",
+  "burnout": "Your back gets worse each time, and that winter, carrying a case of water upstairs, you can't straighten up at the turn of the stairs for a long time. The doctor says no more heavy lifting. You hand over your route and go to work at the parcel station by the estate gate, sitting behind the counter scanning and shelving. You know everyone who comes to collect by name."
+ },
+ "stages": [
+  "Your job each day is one load of parcels: unloading, sorting, scanning and loading in the morning, delivering stop by stop in building order, picking up in the afternoon, and settling accounts at the outlet at night. The handheld scanner never leaves your hand, and the electric tricycle is like a second home. Customers, gatekeepers, parcel station owners, office receptionists: you have to remember every one of their tempers.",
+  "You lead three or four people on your route. In the morning you sort out their runs first, and when someone's off, you cover. The outlet gives you the toughest block of office towers, and you agree a fixed pickup time with the building managers and receptionists; when a new courier gets a complaint, the first call is to you.",
+  "You rarely deliver yourself now. Every day you watch the system for volumes, delivery times, complaint rates and problem parcels. Rosters at the morning meeting, accounts at night, a weekly meeting with the regional manager from head office, arguments with the trunk-line drivers over arrival times. Whoever's battery dies, whoever has trouble at home and needs leave, they all come to you.",
+  "The outlet is yours now: rent, vehicles, wages and social insurance for twenty-odd people, head-office targets and fines, all the accounts on your phone. You go to head office to negotiate delivery fees and routes, work your connections with the subdistrict office and the property managers, and at New Year you give every courier a red envelope. When the truck is unloaded at dawn, you're still standing by the tailgate."
+ ],
+ "work": [
+  "An estate puts in a new access gate and your tricycle can't get through. You crouch by the guard booth for twenty minutes until the property manager comes off shift, and get a temporary pass out of him.",
+  "A box marked fragile doesn't go in the cargo box; you keep it by your feet the whole way. The woman who receives it opens it: a tea set, not a single cup broken.",
+  "Settling up at night, the scanner shows one parcel not signed for. You go back to find it: an old man wasn't home, so you bring it back and put it on the outlet's shelf.",
+  "Xiao Liu, the new hire, is still delivering at nine on his first day and calls to say he can't find a building. You ride over and finish the last twenty-odd parcels with him.",
+  "You agree with an office tower's building management that reception will sign for everything at eleven each day. Back at the outlet you reorder your team's delivery sequence and save an hour.",
+  "A fresh-food parcel is late and the customer wants to complain. First you buy the same fruit and take it to the door, then go back to the outlet to file the claim.",
+  "At the morning meeting you read out last week's complaint slips one by one, naming no one, and say only: none of these again next week.",
+  "The trunk-line truck is two hours late. You set up shifts for unloading in batches in the group chat, then jump into the back yourself and carry the first bag.",
+  "At month's end, one courier's delivery fees are three hundred parcels short. You trace them line by line in the system, make up the difference, and file one more appeal with head office.",
+  "Head office wants to change delivery fees. You go to negotiate with three months of the outlet's volumes and costs, talk until evening, and win back five more fen per parcel.",
+  "You pay full social insurance for the outlet's twenty-odd people, tens of thousands of yuan more a year. You tell the accountant: keeping people costs less than anything else.",
+  "The subdistrict office holds a forum for delivery companies, and you sit in the back row. When it's your turn, you raise just one thing: could couriers use the lifts in the old estates first?"
+ ],
+ "past": [
+  "You're in your last year of middle school in a village in northern Anhui, where your family grows a dozen-odd mu of wheat. Your grades are ordinary, and your biggest wish is a pair of sneakers from the county town.",
+  "After middle school you follow a cousin to Suzhou and insert components on an electronics factory line, standing twelve hours a day.",
+  "You change factories a few times and learn to drive a forklift. Home for New Year, your family arranges a match for you.",
+  "You get married. The year your child is born, you're sorting at a logistics warehouse in Kunshan and getting home once a month.",
+  "The warehouse moves away. You spend half a year at home, then go with people from the village to do odd jobs on building sites in the county town.",
+  "A friend from home who delivers parcels in Shanghai says the outlets are short-handed and the more you work, the more you earn. You borrow three thousand yuan, buy a secondhand electric tricycle, and get on the coach to Shanghai."
+ ],
+ "late": {
+  "pension_note": "Estimate: couriers at franchise outlets mostly paid social insurance at the minimum base, with gaps in the early years, so the pension comes to only a little over 30 percent of the final monthly salary.",
+  "scenes": [
+   "On the day you retire you hand your scanner to the outlet's newest young courier and teach him one last thing: which estate's guard will only open the gate after the shift change.",
+   "You go back to Anhui and move into the sixteenth-floor flat in the county town. The lift goes up and down every day, and you never once take the stairs.",
+   "Your pension isn't much, but with the rent from leasing out your few mu of land back home, you get by. When your grandson finishes school, you ride the electric scooter to pick him up at the gate.",
+   "Parcels reach the village now too, delivered by a young man. When he leaves one at your door you always call him back and hand him a bottle of water.",
+   "You scan, shelve and hand out parcels behind the counter at the parcel station, sitting all day. Your back hurts a little less, but your hands still won't keep still.",
+   "At the station you know everyone who comes to collect: whose child got into university, whose parent is in hospital, you know it all.",
+   "You go back home and mind the bicycle shed by the market in town. You nod to everyone who rides in on a tricycle to deliver vegetables.",
+   "For the first few months in your new job, whenever your phone goes, your hand still reaches for the scanner at your hip.",
+   "You do well in your new place. Sometimes, passing your old route, you check whether those buildings have changed their gate systems.",
+   "Your old colleagues from the outlet start a group chat and send red envelopes at New Year. You scroll back to a photo from your first Singles' Day: a room full of parcels, a room full of people, all laughing.",
+   "Later the dispatching, route planning and customer service all went to software, and driverless vehicles pulled up at the parcel stations. But the last few dozen meters, knocking, waiting, putting it into someone's hands, were still run by a person.",
+   "You walk along the ridges between the fields back home, the wind moving through the wheat. A delivery van passes on the country road, and you watch it turn in at the village entrance."
+  ],
+  "closing": {
+   "retire": "Many years later, one evening, your grandson opens a parcel, a toy he bought online himself. He runs over to show you, and before you smile you glance at the name on the waybill.",
+   "burnout": "Many years later you sit in the sun on a bamboo chair outside your door back home. The delivery van stops at the corner, and a young man carries parcels your way. From a distance, you wave to him.",
+   "end": "Many years later, in the storeroom of the old house, you find the key to your old tricycle, the faded good-luck charm still hanging from it. You hang it on the back of the door."
+  }
+ }
+}

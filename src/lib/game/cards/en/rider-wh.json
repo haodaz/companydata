@@ -1,0 +1,161 @@
+{
+ "id": "rider-wh",
+ "occupation": "Platform Delivery Rider",
+ "role": "Food Delivery Rider (Freelance)",
+ "headline": "A food delivery rider in Wuhan's Optics Valley, two years freelancing on the platform since being laid off from an auto parts factory, now weighing a move to a full-time station",
+ "unit": "The delivery zones around Optics Valley, Wuhan (freelance, through a platform)",
+ "unit_type": "Freelance on a delivery platform",
+ "city": "Wuhan",
+ "city_tier": "New first-tier city",
+ "education": "Vocational secondary school (Auto Repair)",
+ "level": "You know every restaurant and building in a few of the Optics Valley zones. At peak you can do eight or nine orders an hour, around forty a day, but you still run whatever the system sends you.",
+ "intro": "On the footboard of your e-bike is a sticker your child drew, and the phone mount on the handlebar is held on with three rounds of cable ties. Two years ago the auto parts factory laid people off. You took the severance, downloaded an app, and were on the road the next day. From today you still decide what time you log on; the system decides where you go and how many minutes you have to get there.",
+ "salary_note": "Estimate: Wuhan riders are paid by the order, plus bonuses for hitting targets and bad-weather allowances, minus fines for late deliveries and bad reviews, roughly the national figure. The more you ride, the more you earn, and your body is your capital.",
+ "facts": [
+  { "label": "Freelance Rider (current level)", "value": "0–1 years, ¥4,500–7,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Dedicated Station Rider (1–3 years)", "source": "Common in the trade" },
+  { "label": "Pay after 3–5 years", "value": "¥6,700 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Obeying traffic laws and platform safety rules, keeping yourself and the goods safe on the road", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Taking orders dispatched by the platform, planning the best pickup and delivery route, delivering on time", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Breakfast downstairs: a bowl of hot dry noodles and a cup of egg wine, the Wuhan way. You swap in a full battery at the battery-swap cabinet, open the app, and tap Start taking orders.",
+  "Morning rush, breakfast orders for the office towers one after another. The system sends you three orders on one route, and you circle twice under an Optics Valley footbridge before you find the lift entrance.",
+  "Before the lunch rush you rest at the riders' spot behind a shopping mall: power bank, cooled boiled water. Beside you a station rider is on the phone asking his station manager for leave.",
+  "Lunch rush. Nine orders in an hour, and one restaurant is twelve minutes late with the food. You pace outside the door, and in the end you're docked two yuan for lateness anyway.",
+  "The lull. You ride to a tree by the river to eat a boxed lunch and check today's earnings: a little over a hundred and forty yuan.",
+  "It starts to rain in the evening rush, and the platform switches on its bad-weather allowance, one and a half yuan extra per order. You're in a raincoat with your phone in a plastic bag, the navigation voice muffled.",
+  "A customer opens the door, takes the food, and says: thanks for your trouble, ride safe. You stand frozen in the stairwell a moment before you remember to say thank you.",
+  "Home. Your child is already asleep, and your spouse warms you a bowl of pork rib and lotus root soup. In your phone's notes you record today's count: forty-one orders."
+ ],
+ "ladder": [
+  { "title": "Freelance Rider", "stage": "Free agent", "focus": "Decide your own hours and run whatever the system sends, paid per order, with no base pay and no roster." },
+  { "title": "Dedicated Station Rider", "stage": "Station", "focus": "Attach to a station with a roster, morning meetings and attendance; a fixed zone, steadier rates, and occupational injury cover." },
+  { "title": "Rider Team Captain", "stage": "Team", "focus": "Lead a dozen-odd riders, watch late deliveries and bad reviews, dispatch while riding at peak, write appeals for new riders and lend out batteries." },
+  { "title": "Station Manager", "stage": "Station boss", "focus": "Run a station of forty or fifty riders: rosters, hiring, accidents and complaints, negotiating with restaurants and property managers, and carrying the platform's targets." },
+  { "title": "Area Manager", "stage": "District", "focus": "Manage capacity and subsidies for seven or eight stations, negotiate rider access and pickup lockers with malls and office towers, and attend subdistrict meetings." }
+ ],
+ "ai_tasks": [
+  { "name": "Taking orders dispatched by the platform, planning the best pickup and delivery route, delivering on time", "how": "Platform algorithms already dispatch orders, calculate routes and estimate times automatically; AI has basically taken this over. The rider only adjusts from experience when the route is obviously wrong, such as a closed road or an estate that won't let bikes in." },
+  { "name": "Talking to restaurants and customers, checking orders, handling problems such as wrong addresses, unreachable customers or damaged goods", "how": "AI can correct addresses, make automated calls, run smart customer service and connect calls through virtual numbers, handling routine cases. Damaged goods, customers who can't be reached and upset customers still need the rider to talk it through face to face, adapt and take responsibility." },
+  { "name": "Obeying traffic laws and platform safety rules, keeping yourself and the goods safe on the road", "how": "AI can warn about speeding, fatigue and violations, but the person watching the road, avoiding pedestrians and vehicles and making the safety call is the rider, and if something happens, the rider answers for it." },
+  { "name": "Maintaining your gear (e-bike, insulated box, helmet) and doing daily cleaning and basic checks", "how": "Checking the bike, wiping the box, swapping batteries and putting on the helmet are all hands-on jobs. At most AI reminds you when maintenance is due; the actual work is yours." },
+  { "name": "Uploading location, delivery status and feedback in real time through the app, for the platform's service ratings", "how": "Location, delivery status and service scores are basically handled by the app automatically; the rider just taps confirm. Only when GPS drifts or a bad review is unfair does the rider need to step in and appeal." },
+  { "name": "Taking part in platform safety training, rule updates and emergency drills", "how": "AI can push short video lessons, run online quizzes and send personalized reminders, so the learning is automated. Emergency drills and hands-on procedures still take people being there to really learn them." }
+ ],
+ "events": {
+  "e_storm": "A downpour, the floodwater over your footboard. You push the bike for two kilometers, and the order does get there in the end; the customer turns around and orders you a hot milk tea.",
+  "e_fine": "The system gives an order eighteen minutes, but to get into that estate you have to go round to the next street. You're late, docked five yuan, and both your appeals are rejected.",
+  "e_crash": "You try to beat an amber light and clip a car turning right, and you're thrown off. Your arm is grazed and the food is all over the road. The first thing you do when you get up is call the customer.",
+  "e_insurance": "The station enrolls its riders in occupational injury cover. On the day you sign, the station manager says: if you get hurt, claim it, don't tough it out. You photograph the notice and save it on your phone.",
+  "e_ai_stack": "The platform's dispatching gets cleverer and cleverer, stacking three or four orders on you at once with the route already planned. You notice the time it gives you never includes waiting for the lift.",
+  "e_ai_voice": "The platform adds a voice assistant: say one word while riding and it takes the order, checks you in at the restaurant, makes the call. At red lights, you finally stop reaching for your phone.",
+  "e_guard": "Old Zhang, the security guard at an Optics Valley office tower, saves you a socket to charge at every lunchtime. At New Year you bring him a box of navel oranges from Zigui.",
+  "e_praise": "A customer writes a long review in the app saying you brought her mother's medicine through the rain. The station manager posts the screenshot in the group chat.",
+  "e_cold": "Wuhan's winter is damp and cold, the wind coming off the river. Even with two pairs of gloves, your hands are too frozen to grip the handlebars.",
+  "e_heat": "The dog days of summer, the pavement hot enough to fry an egg. You sit in a stairwell entrance and drink a whole bottle of water, and the back of your shirt dries to a ring of white salt.",
+  "e_sports_day": "Your child's school has a sports day, and you promised to go. That lunchtime the target bonus is doubled. You stand outside the playing field for ten minutes, then ride off.",
+  "e_new_bike": "Your e-bike's battery is worn out and needs swapping three times a day. You grit your teeth and buy a new bike, paid off over twelve months.",
+  "e_top_rider": "You're the station's top rider this month, two thousand one hundred orders, and win five hundred yuan and a new helmet.",
+  "e_new_year": "On New Year's Eve you're still running orders, and one of them is a family reunion dinner. The family insists you come in for dumplings, and you eat two standing in the doorway.",
+  "e_drone": "A few office towers start using drones and robots to carry food into pickup lockers. You just drop it in the locker downstairs; no more going up.",
+  "e_rest_stop": "The subdistrict builds a riders' rest stop by the road, with air conditioning, hot water, charging points and a microwave. For the first time on a summer noon, you sit down to a meal that isn't scalding.",
+  "e_house": "You and your spouse take out a mortgage on a small flat in an outer district. The down payment was ridden out of the city, one order at a time, over these years.",
+  "e_back": "Years on the bike, and your back and neck have started to ache. You add a soft pad to the seat, and after every rush you get off and walk a few steps.",
+  "e_newbie": "A rider fresh out of university joins the station and gets lost on his first day. You ride ahead of him all afternoon and show him which estates' back gates let e-bikes in.",
+  "e_parent": "Your father back home is in hospital, and you shuttle between the ward and Xiaogan. On the nights you stay with him, you take a few orders near the hospital gate."
+ },
+ "choices": {
+  "c_zhuansong": { "title": "Become a Dedicated Station Rider", "situation": "The station manager has seen how hard you work and asks if you'll go full-time: attached to a station with a roster, morning meetings and attendance, online for every lunch and dinner rush, leave by approval. The rates are steadier, there's occupational injury cover, and later you could make captain. Freelancing is free, and comes with nothing.", "options": [
+   { "label": "Go full-time", "result": "You collect the station's uniform and helmet and stand in line at a morning meeting for the first time. When the station manager calls your name, you answer: here." },
+   { "label": "Keep freelancing", "result": "You say you'd like to stay free a while longer; you still want to pick your child up from school yourself. You keep logging on whenever you like." }
+  ] },
+  "c_hours": { "title": "Twelve hours a day, or ten?", "situation": "Rent, your child's tutoring, medicine for your parents back home: every month it all weighs on you. Two more hours a day would bring in over a thousand more a month, but it's been weeks since you got home before ten at night.", "options": [
+   { "label": "Ride twelve hours", "result": "You take the late-night snack orders after the dinner rush too, and you're often home after midnight. Your monthly earnings go up a notch, and you talk a notch less." },
+   { "label": "Ride ten hours", "result": "You set yourself a rule: log off at ten. The thousand-odd you don't earn buys two bedtime stories a week with your child." }
+  ] },
+  "c_factory": { "title": "Go back to the factory?", "situation": "An old workmate calls to say the factory has switched to new-energy vehicles and is hiring for the battery pack line: full social insurance and housing fund, shift work, a bit less than you make on deliveries, but no more riding in the rain.", "options": [
+   { "label": "Go back", "result": "You leave the e-bike for your spouse's commute and report to the new plant on your first day, changing into an anti-static suit.", "end": "You go back to the factory, working shifts on a new-energy battery pack line. Every lunchtime at the factory gate you see a few riders waiting for orders, and you recognize the clothes they're wearing." },
+   { "label": "Don't go back", "result": "You say you're used to riding, to being your own boss. You hang up, look at the rain outside, and head out again." }
+  ] },
+  "c_captain": { "title": "Become rider team captain", "situation": "The station is choosing a captain to lead a dozen-odd riders: read out the numbers at the morning meeting, watch late deliveries and bad reviews, help new riders appeal, and dispatch while riding at peak. A few hundred yuan more a month; the station manager will look at your on-time rate last quarter.", "options": [
+   { "label": "Go for it", "result": "That quarter your on-time rate is the best in the station. At the morning meeting the station manager hands you the captain's armband and everyone yells at you to make a speech. You say: everyone fasten your helmets." },
+   { "label": "Don't compete", "result": "You put forward a veteran rider who started before you. He becomes captain, and when there's a hard run, he often asks you which way to go." }
+  ] },
+  "c_ai": { "title": "Be the station's dispatch reviewer?", "situation": "The platform wants one veteran rider at each station to review the algorithm's dispatching and routes: which estate gates are closed, which lifts mean a wait, which roads are shut at noon, all marked into the system. Fewer orders, a bit more allowance, and you'd have to learn the back end.", "options": [
+   { "label": "Take it", "result": "You mark the gates and lifts of dozens of Optics Valley estates into the system one by one. A few months later the station's late deliveries are down by a tenth, and the algorithm's routes actually make sense." },
+   { "label": "Pass, keep riding", "result": "You say you feel more at home on the road. When the system sends you the wrong way, you ride there, swear once, and go round." }
+  ] },
+  "c_station": { "title": "Apply for station manager", "situation": "The old station manager has moved to another district, and the station will pick one of its captains: rosters, hiring, accidents and complaints for forty or fifty riders, and the platform's on-time and online targets. Fixed pay plus commission instead of earning by the order, but whatever happens at the station is on you.", "options": [
+   { "label": "Apply", "result": "On the day you speak for ten minutes, all about which zones are short of riders at noon and which estates need talks with property management. The area manager listens and jots a few notes." },
+   { "label": "Keep riding", "result": "You say you can't sit in an office. The new station manager is transferred in from another district, and on his first day he comes to ask you about the zones." }
+  ] },
+  "c_shop": { "title": "Open your own breakfast shop?", "situation": "After all these years riding, you know which streets in Optics Valley are missing a decent breakfast place. Your spouse says: let's take on a little shopfront and sell hot dry noodles, doupi and mianwo. You know delivery, so you can build the online orders yourself.", "options": [
+   { "label": "Open the shop", "result": "You take over a shopfront of a dozen-odd square meters, and you hang your helmet on the wall inside.", "end": "You and your spouse open a breakfast shop in Optics Valley. Every morning when riders come to pick up, you always make their orders first, then serve yourself a bowl." },
+   { "label": "Keep going", "result": "You say wait a while, until your child starts middle school. That shopfront later becomes a milk tea shop, and you pick up orders there all the time." }
+  ] },
+  "c_region": { "title": "Become area manager?", "situation": "The platform's area manager is being transferred and wants to put a station manager forward to take over: capacity, subsidies and accidents across seven or eight stations, dealing with malls, office towers and the subdistrict, meetings every day. Take it, and you're further from the road than ever.", "options": [
+   { "label": "Take it", "result": "You move into an office in a tower, with a big screen on your desk where the whole district's riders are a swarm of little dots. Every day you still look first at where it's raining." },
+   { "label": "Stay with your station", "result": "You recommend the station manager next door and stay with your own station, until that batch of young riders have all become captains." }
+  ] }
+ },
+ "endings": {
+  "retire": "On the last evening rush before you retire, you get on the old e-bike again and ride a lap of Optics Valley behind the young riders. The last order goes to the same estate as your very first, and the customer opens the door and says thank you. On the way down you set the app to Resting, and never open it again.",
+  "burnout": "That winter a slipped disc presses on a nerve, and ten minutes on the bike leaves your legs numb. The doctor says keep riding and you'll need surgery. You park the e-bike in the garage, hang the helmet on the wall, and go to the repair room behind the station, where every day you swap batteries, patch tires and adjust brakes for the young riders."
+ },
+ "stages": [
+  "When you log on and how long you ride is all up to you; where you go, how many minutes you get and how much you're paid is all up to the system. Every day you watch the heat map for busy zones, wait for food outside restaurants, hunt for buildings at estate gates and wait for lifts, docked for lateness, appealing bad reviews. A battery, a helmet, an insulated box and a phone mount are everything you own for the job.",
+  "You're attached to a station now, with a roster, morning meetings and attendance. The station manager has given you a fixed zone, and you know every restaurant's speed and every building's gate; you have to be online for the lunch and dinner rushes, the rates are steadier, and if you fall, you're insured. There are more messages in the station group chat than in your family's.",
+  "You lead a dozen-odd riders. At the morning meeting you read out yesterday's late deliveries and bad reviews, and tell the new ones which roads jam at noon and which estates' back gates take bikes. At peak you ride and watch the back end at the same time; if someone's got too many orders stacked, you take two off them, and if someone's bike breaks down, you lend them your spare battery first.",
+  "You run a station of forty or fifty riders and rarely ride orders yourself. You watch the on-time rate, the bad-review rate and how many riders are online; you do rosters and hiring, handle complaints and accidents, negotiate with restaurants over prep times and with property managers over access. The platform's area manager comes once a week to go through the targets one by one. When the rain sends orders through the roof, you stand at the station door handing out raincoats.",
+  "You run seven or eight stations across Optics Valley and Wuchang, watching the district's rider capacity map from an office. You negotiate capacity and subsidies with the platform, pickup lockers and rider access with malls and office towers, and go to subdistrict meetings about where to put rest stops; station managers call you first when anything happens. Now and then you still take the old e-bike out of the garage for a spin."
+ ],
+ "work": [
+  "A restaurant is slow with the food and you wait fifteen minutes outside. The owner feels bad and pours you a cup of mung bean soup; you drink it in one go and get back on the bike.",
+  "The system sends you a long run to Hankou. Crossing the Second Yangtze River Bridge you glance at the water; the navigation says eight minutes left, and you twist the throttle.",
+  "The address says Building 3 of an estate, but that estate has two Building 3s. Two calls go unanswered, and you ask three security guards downstairs before you find it.",
+  "The station manager says a new university-town zone has opened, and you volunteer. Within a week you know the pickup point for every dormitory block.",
+  "A noodle shop you deliver for is always slow. You suggest to the owner: at peak, put the noodles on first and pour the broth after. From then on that shop's late orders drop by half.",
+  "Your battery dies halfway, two kilometers from the swap cabinet. You push the bike and call the customer to apologize. The customer says: no rush, take it easy.",
+  "A new rider gets a bad review and comes to you looking miserable. You go through the order's GPS track with him, find the location drifted, and help him write the appeal.",
+  "A rainstorm sends the orders through the roof and the back end is all red. You set out in the group chat who covers which zone, and take the farthest few orders yourself.",
+  "You draw a map of how to get into the dozen-odd old estates around the station, print it and pin it on the station wall. The new riders all take photos of it for their phones.",
+  "A rider falls on a delivery. You get to the hospital right away, file his occupational injury claim, and pay the restaurant for the lost order out of your own pocket first.",
+  "The platform is changing its peak-time dispatch rules, and the area manager comes to ask for input. You make three points, one of them: count the time spent waiting for lifts.",
+  "Hiring at month's end, you interview more than twenty people: ex-soldiers, laid-off factory workers, new graduates. The first thing you tell every one of them is: fasten your helmet.",
+  "A new mall opens in Optics Valley. After three rounds of talks with property management, you get riders a dedicated passage and a row of pickup lockers on the first basement level.",
+  "At a subdistrict meeting on where to put rider rest stops, you bring a map of the spots where the district's riders park most at noon, and spread it on the table.",
+  "At your year-end review with seven station managers, before any targets, you start with one thing: this year, not one rider in the district came to serious harm in the rain."
+ ],
+ "past": [
+  "You're in your last year of middle school in a town near Xiaogan, where your family runs a small shop. Your favorite thing is riding the family's old heavy bicycle into the county town to restock.",
+  "You study auto repair at vocational school and go straight into an auto parts factory in Hanyang, Wuhan, working the stamping line for years.",
+  "You meet your spouse at the factory. The year you marry, you rent a room in Hanyang from an old woman who loves her mahjong.",
+  "Your child is born. That year you work more overtime than ever and save a whole year's worth of formula money.",
+  "Orders at the factory dry up: first unpaid leave, then layoffs. You take the severance and spend two months at home; none of the resumes you send out get a reply.",
+  "An old classmate says delivery riding needs no interview, just download the app. You buy an e-bike, register as a freelance rider, and do eleven orders on your first day."
+ ],
+ "late": {
+  "pension_note": "Estimate: you paid employee social insurance at the factory in the early years, then topped it up yourself as a flexible worker during your riding years, at a low base with gaps, so the pension comes to about 40 percent of the final monthly salary.",
+  "scenes": [
+   "On the day you retire you hang your helmet on the garage wall, next to the key of your very first e-bike.",
+   "Every morning you have breakfast at the estate gate and watch the riders go by one after another. Sometimes you stop a young one to tell him the road ahead is being dug up.",
+   "Your pension, plus the years of factory social insurance, isn't much, but it's enough for you and your spouse. You take up fishing and sit by East Lake for whole mornings.",
+   "Your grandson asks what you used to do. You say: brought dinner to everyone in Wuhan. He doesn't believe you, so you find the old screenshot of your top-rider month on your phone and show him.",
+   "In the repair room behind the station you swap batteries and patch tires, and when young riders come in you always add one more word: don't try to beat the amber light in the rain.",
+   "You set up a bike repair stall at the estate gate: patching tires, swapping batteries, fixing brakes. Plenty of riders come, and you always charge five yuan less than the next stall.",
+   "You walk slowly in the park near home, lap after lap. When you're tired you sit on a bench and watch the e-bikes go by on the road, one after another.",
+   "You've stopped delivering, and for the first time you sit down at mealtime for a proper meal, your phone face down on the table, not one glance at it.",
+   "When your colleagues order food, you always go down to collect it, and say to the rider in passing: thanks for your trouble, ride safe.",
+   "The old station's rider group chat is still going, with red envelopes at New Year. You watch people change their profile pictures one by one; some are still riding, some have gone home.",
+   "Later dispatching, routing and customer service all went to algorithms, and drones flew up onto the roofs of office towers. But that stretch of road in the rain and those flights of stairs were still ridden and climbed by people.",
+   "You stand on the Yangtze River Bridge watching the water, the traffic on the bridge never stopping. A delivery e-bike passes you, comes off the bridge and turns into the lanes of the old city."
+  ],
+  "closing": {
+   "retire": "Many years later, one morning, you take your grandson out for breakfast. When the hot dry noodles come, he copies the way you mix them. You tell him: no rush, mix slowly, it only tastes right when it's all mixed in.",
+   "burnout": "Many years later you sit on a little stool beside your repair stall in the sun, Han opera playing on the radio. A young rider stops to pump up his tires, and you wave him off without taking any money.",
+   "end": "Many years later, in a storage box on the balcony, you find the old raincoat, the lettering on its cuff washed faint. You shake off the dust, fold it up, and put it back."
+  }
+ }
+}

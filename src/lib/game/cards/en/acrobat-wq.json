@@ -1,0 +1,157 @@
+{
+ "id": "acrobat-wq",
+ "occupation": "Acrobat",
+ "role": "Acrobat with a County Acrobatic Troupe",
+ "headline": "An acrobat who joined the county troupe in Wuqiao at eight, grew up in its training hall, and is now the flyer in its teeterboard act",
+ "unit": "A county acrobatic troupe in Wuqiao, Cangzhou, Hebei",
+ "unit_type": "County acrobatic troupe",
+ "city": "Wuqiao, Cangzhou",
+ "city_tier": "County town",
+ "education": "The troupe's children's training squad, then a vocational secondary school for acrobatic arts",
+ "level": "You're the flyer in the teeterboard act. You can land a double somersault on the shoulders of the third tier and hold it; the triple you're still practicing in the safety harness. You can fill any position in the group acts.",
+ "intro": "The carpet in the training hall was laid the year you joined, patch on top of patch. You came into the children's squad at eight and were graded a professional at fifteen, and now you're the one thrown highest in the teeterboard act. Everyone calls you the flyer. From today your name is printed in the program: training twice a day, one or two shows, and the weight chart posted at the canteen door.",
+ "salary_note": "Estimate: county troupe performers on permanent or contract posts, base pay plus performance allowances, taken at 60 percent of the national figure. Overseas tours and resident contracts pay a separate share, with the troupe taking a cut.",
+ "facts": [
+  { "label": "Grade 4 Performer (current level)", "value": "0–4 years, ¥3,500–5,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Grade 3 Performer (4–9 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Rehearsing and drilling, solo or with partners or trained animals", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Analyzing the story, details and techniques of different kinds of acts, from easy to hard", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "The wake-up whistle. Leg stretches, backbends, three minutes in a handstand against the wall. The only sounds in the training hall are breathing and the coach's whistle.",
+  "Breakfast: steamed buns, millet porridge, one boiled egg. The coach glances at your bowl and says the scale shows another half kilo this month.",
+  "Teeterboard rehearsal. The base stamps down on the far end of the board, you go up through a double somersault and land on the shoulders of the third tier. Seven jumps today; three times the safety harness caught you.",
+  "You help the coach stretch the youngest trainees. They're eight or nine and crying from the pain. You hold their knees down and remember being them.",
+  "The afternoon show at the theater, mostly tour groups in the seats. At the curtain call the applause is thin, and someone in the audience hasn't looked up from their phone.",
+  "The truck for the countryside show is loaded with prop crates. You sit next to the teeterboard and bounce all the way to a town in the next county, where you perform on the open ground in front of the town hall.",
+  "Back in the dorm, an ice pack on your ankle for a while. Your younger roommate is already asleep, still clutching a spinning plate.",
+  "A video call home. Your mother asks when you'll go abroad to perform again. Soon, you say, and stop watching our troupe's short videos all the time, it eats your data."
+ ],
+ "ladder": [
+  { "title": "Grade 4 Performer", "stage": "Company", "focus": "Fly in the teeterboard and group acts, train twice a day, do one or two shows, and tour the countryside and abroad." },
+  { "title": "Grade 3 Performer", "stage": "Lead", "focus": "Take the hardest position in the act, carry solo and duo acts, enter competitions, and start helping to train the children." },
+  { "title": "Grade 2 Performer", "stage": "Mainstay", "focus": "Step from the stage into the wings as rehearsal director and coach: rework moves, run a trainee class, and lead commercial tours abroad." },
+  { "title": "Grade 1 Performer", "stage": "Master", "focus": "The top professional rank: set the direction of new acts, judge competitions, teach at arts schools, and have the final say on the troupe's work." }
+ ],
+ "ai_tasks": [
+  { "name": "Rehearsing and drilling, solo or with partners or trained animals", "how": "Rehearsal is physical training, the unspoken timing between partners or with an animal, and adjusting in the moment. At most AI helps find problems through video playback; the real practice and the real teamwork have to be done by people." },
+  { "name": "Analyzing the story, details and techniques of different kinds of acts, from easy to hard", "how": "AI can break down video of moves, collect the techniques used in similar acts, and suggest options for story and choreography. People judge whether a body can actually do it, whether it's safe, whether the style is right, and decide how to change it and where to break new ground." },
+  { "name": "Bringing the act to the audience with artistry and skill", "how": "A live show means facing an audience, controlling the pace, handling the unexpected and being responsible for your own safety. All of that depends on the performer's own body and stage sense, and AI can't replace it." }
+ ],
+ "events": {
+  "e_top": "For the first time in a real show you do the highest set on the teeterboard. The moment you steady yourself on the shoulders of the third tier, the lights are so bright you can't see a single face, only hear the sound rising toward you.",
+  "e_weight": "You've grown, and put on three kilos in a year. The coach says sooner or later the flyer's spot will go to someone else. You start eating only half a steamed bun at dinner.",
+  "e_ankle": "One landing goes wrong and you sprain your ankle, a month to heal. Sitting at the edge of the training hall watching the others is harder than training yourself.",
+  "e_tour": "The troupe takes on a European tour, nine countries in three months. Backstage you learn to say thank you in five languages, and for the first time you see a town square in snow.",
+  "e_festival": "Your teeterboard act wins a prize at an international acrobatics festival. The day you fly home, the county hangs a red banner at the exit of the high-speed rail station.",
+  "e_village": "A show in the countryside, the stage a few boards laid side by side. Afterwards an old man takes your hand and says he trained too when he was a boy, then went off to farm.",
+  "e_partner_leave": "The base you've worked with for eight years leaves the troupe for a resident show at a theme park in the south. On his last day he gives you his wrist guards and says: whoever catches you next, make sure their hands are steady.",
+  "e_ai_video": "The coach films your jumps on a tablet, and AI marks the angle and height of your takeoff in every frame. For the first time you can see that you leave the board a fraction of a second late.",
+  "e_low_pay": "The troupe's performance allowance is two months late. A classmate who went off to a resident show says what he takes home in a month is three times yours.",
+  "e_short_video": "You post a short video of training and hundreds of thousands watch it overnight. In the comments someone asks if it's special effects, so you post another one, uncut.",
+  "e_love": "You get together with one of the troupe's aerial silk performers. Your eyes meet once in the big mirror in the training hall and neither of you says anything; after that you go to the canteen together every day.",
+  "e_marry": "You get married. At the banquet the troupe takes turns on the little stage: one balances bowls on their head, one spins plates, one throws a diabolo, and the waiters stop dead with their trays.",
+  "e_ai_choreo": "The choreographer uses AI to generate routines for a few new acts, and the transitions look smooth. You spend an afternoon trying them, and half of them are things no human body can do.",
+  "e_child": "Your child is born. The whole family keeps asking whether the child will train in acrobatics. You say it's up to the child.",
+  "e_mother": "Your mother sits in the front row of the theater to watch you for the first time. At the curtain call you see that she isn't clapping; both hands are over her mouth.",
+  "e_back": "The old injury in your back aches whenever the weather turns damp. The troupe doctor gives you medicated plasters; you wear them to train and peel them off after class.",
+  "e_new_theater": "The county builds a new acrobatics theater with a lift stage and proper rigging points for safety lines, and at last the old carpet in the training hall is replaced.",
+  "e_last_jump": "Your last time on the teeterboard. After the final set, you stay standing on the third tier's shoulders two seconds longer. From next month, you'll stand in the wings.",
+  "e_student": "A trainee of yours performs for the first time at the provincial children's acrobatics competition. Standing in the wings, you're more nervous than you ever were going on yourself.",
+  "e_parent": "Your father back home falls ill. You rush back from a tour, spend a week with him at the county hospital, then rush back to keep performing."
+ },
+ "choices": {
+  "c_contract": { "title": "A year's resident contract abroad?", "situation": "A circus show at a theme park in the Middle East wants to borrow a few performers from the troupe for a year. The pay is three times what you get here, with the troupe taking ten percent. But for a year you'd miss the coach's training, and the new teeterboard moves would have to wait.", "options": [
+   { "label": "Take the contract", "result": "Three shows a day in a theater at the edge of the desert. You save a good sum, and when you come back you find your junior can already do the set you never finished learning." },
+   { "label": "Stay and train", "result": "You stay and work the triple into the act with your coach. No money made, but one more page in your training notebook." }
+  ] },
+  "c_college": { "title": "Go to an arts vocational college?", "situation": "A provincial arts vocational college offers a diploma in acrobatics and magic performance. It would count for professional rank and for becoming a coach later. The cost is three years spent half at school, fewer shows with the troupe, and less allowance.", "options": [
+   { "label": "Go", "result": "For the first time you sit in a classroom for a whole day. You study art theory and stage design, and learn to write an act description on a computer." },
+   { "label": "Keep performing", "result": "You stay on stage and do more than three hundred shows a year. Your file still says vocational school; you figure the work of your hands doesn't lie." }
+  ] },
+  "c_level3": { "title": "Apply for Grade 3 Performer", "situation": "The troupe applies for professional ranks once a year. Grade 3 Performer looks at the number of shows, competition results, and a written summary of your creative work. Four people from the troupe are applying this year, and the province has two places.", "options": [
+   { "label": "Apply all out", "result": "You bind your programs and competition videos from the past few years into a folder and stay up late writing the summary. On review day, they play your teeterboard video twice." },
+   { "label": "Let your senior go first", "result": "Your senior gets through and treats you to donkey-meat buns, a Hebei specialty. You're a year later, and when you train he always stands beside you watching." }
+  ] },
+  "c_position": { "title": "Too big to fly: what position next?", "situation": "You've grown in height and weight, and the flyer's spot has to go to a smaller child. The coach gives you two paths: retrain as a base and learn from scratch how to catch, or switch to a solo act, spinning plates or the diabolo.", "options": [
+   { "label": "Retrain as a base", "result": "You go from being the one who is caught to the one who reaches out to catch. The first time you catch the twelve-year-old flyer cleanly, your hands won't stop shaking." },
+   { "label": "Switch to a solo act", "result": "You take up the diabolo and stand alone at center stage. There's no one below to catch you now, and no one who needs you to catch them." }
+  ] },
+  "c_ai": { "title": "Learn AI training review?", "situation": "The troupe has brought in a motion analysis system that splits every move into frames, marks the angles, and even suggests choreography. Someone needs to learn it, run training reviews for the whole troupe, and judge which suggestions no human body can do.", "options": [
+   { "label": "Learn it", "result": "After training each day you spend an hour on the footage and write one note for each person. Of the routines the system suggests, you strike out half." },
+   { "label": "Stick to your eyes", "result": "You keep standing at the edge of the mat, calling stop by feel. When the young coaches talk angles with a tablet, you listen from beside them." }
+  ] },
+  "c_abroad": { "title": "A long contract with a foreign circus", "situation": "An agent for a European circus saw your act at the festival and wants to sign you alone for five years, touring Europe with the big top, for several times what you earn now. If you sign, you leave the troupe.", "options": [
+   { "label": "Sign", "result": "You sign your name on the contract, go back to the dorm, fold your training clothes, and leave them for your junior.", "end": "You travel for many years with a European circus, from one town to the next. Wherever you stop, you find a patch of open ground and do a handstand first." },
+   { "label": "Don't sign", "result": "You turn it down. The troupe is rehearsing a new act next month, and the coach says it can't go on without you." }
+  ] },
+  "c_level2": { "title": "Apply for Grade 2 Performer", "situation": "Grade 2 Performer is an intermediate professional rank: you need acts you've led, prizes you've won, and the ability to create and direct. This year, for the first time, the provincial review board asks for a piece you've choreographed yourself.", "options": [
+   { "label": "Create a new act for it", "result": "With a few trainees you put together a short act that weaves the teeterboard and diabolo together, three months of work. When it ends, a reviewer asks: who choreographed this?" },
+   { "label": "Not this year", "result": "You give your time to the trainee class and the shows, and your rank stays where it is. Every morning the children still line up waiting for you to straighten their handstands." }
+  ] },
+  "c_school": { "title": "Open a children's acrobatics school back in town", "situation": "More and more parents in the county town are sending their children to learn acrobatics and physical training. An old classmate wants to open a children's acrobatics school with you: you bring the skill and the name, he brings the money and the space. It would pay more than the troupe, but you'd have no time left for the troupe's shows.", "options": [
+   { "label": "Open the school", "result": "You hand in your resignation and return your wrist guards and safety harness to the prop store.", "end": "You open a children's acrobatics school in the county town, teaching somersaults, handstands and plate spinning. The first thing you teach every new child is how to fall so it doesn't hurt." },
+   { "label": "Stay with the troupe", "result": "You recommend two seniors who've just retired from the stage, and stay on to run the trainee class." }
+  ] },
+  "c_level1": { "title": "Go for Grade 1 Performer", "situation": "Grade 1 Performer is the top professional rank, and there are only a handful in the whole province. You need original acts, prize-winning trainees and some national reputation, with the file submitted to the province. The troupe would love a Grade 1 Performer to its name, but it means a year of writing documents and chasing reviews.", "options": [
+   { "label": "Go for it", "result": "You put together every trainee you've taught, every act you've made and every prize you've won, and go to the provincial capital for three rounds of interviews." },
+   { "label": "Let it go and keep the training hall", "result": "You still arrive at five thirty every morning to straighten one upside-down child after another. Your rank stays where it is, and you don't much mind." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last morning of training, the trainees do handstands in a row, and you walk from one end to the other, straightening each one. When the whistle goes, you switch off the lights in the training hall and look back from the doorway at the strip of white tape on the floor.",
+  "burnout": "Your back gets worse every year, until one morning you bend down to tie your shoe and can't straighten up for a long time. The troupe doctor says no more stage, and no more morning training either. You fold your costume into the cupboard and go to the prop store, where every day you check each safety line and hang them in neat rows."
+ },
+ "stages": [
+  "You're the flyer in the teeterboard act, training twice a day and doing one or two shows. Mornings are handstands, stretches and rehearsal with the coach: the base stamps the board, you launch, tumble and land on shoulders, and someone below always holds your safety line. Afternoons and evenings are shows, mostly for tour groups. When the youngest trainees stretch, you help the coach hold their knees down.",
+  "You're now a lead in the act, in its hardest position. In rehearsal the choreographer asks you first whether something can be done; before competitions you and your partners polish a sequence down to fractions of a second; on tours abroad you count the prop crates and safety gear. The young trainees have started calling you teacher, and at morning training you lead their handstands.",
+  "Most of the time you're no longer on stage but in the wings. You direct rehearsals: watching every landing, reworking the transitions, deciding who goes on today and who stands by. You run a trainee class, starting with eight-year-olds. You lead the commercial tours abroad, settling stages and rigging points with foreign agents and theater crews.",
+  "You're the backbone of the troupe, your Grade 1 certificate on the office wall. New acts get their direction, their choreographer and their funding from you; you judge competitions for the province and teach at the arts school, and who leads an act or moves into coaching is your call more than anyone's. Every morning you still walk once around the training hall first."
+ ],
+ "work": [
+  "Before stamping the board, Old Zhou, your base, flashes you a hand signal: the board's a bit soft today. You hold your takeoff half a beat longer and land on the third tier's shoulders, rock steady.",
+  "Before the show you crouch at the edge of the stage checking every buckle on the safety harness, tugging each one. The old man in charge of props watches and says you're more careful than your teacher ever was.",
+  "The coach asks you to show the new trainees a handstand. You hold one against the wall for three minutes while the children count together, and they lose count at a hundred.",
+  "A week before the competition, you and your partners watch one sequence in slow motion thirty times on a phone, put a strip of white tape on the landing spot, and jump to it every day.",
+  "The stage of a European theater is shallower than the ones at home. After much gesturing with the stage manager, you move the teeterboard back forty centimeters and remeasure the landing.",
+  "One trainee keeps veering to one side on his forward roll. You crouch at the edge of the mat with a hand on his back and roll with him again and again until he can do it alone.",
+  "In rehearsal for a new act, the choreographer wants to add a triple. You watch the video three times and say this group's weights can't support it, and change it to a double with a twist.",
+  "At morning training one child cries that he misses home. You don't hurry him; you sit with him by the door for a while and show him a photo of yourself at eight.",
+  "Leading a commercial tour in the Middle East, you go over the rigging points with the theater's technicians. One load rating is written down wrong, and you have them correct it and sign a new copy.",
+  "You're a judge at the provincial acrobatics competition. One act is very difficult, but its final landing isn't clean, and before scoring you watch the video once more.",
+  "You go to the provincial capital to seek support funding for a new act, speak for ten minutes at the meeting, and finish with a video of the children doing handstands in the morning.",
+  "A performer who has been on stage for fifteen years wants to move into coaching and comes to talk it over. You hear him out and say: run a class first and see; if it doesn't work, come back and perform."
+ ],
+ "past": [
+  "You grow up in the countryside around Wuqiao, where every family has someone who can do a trick or two. At seven you're turning somersaults on the threshing ground when a coach from the troupe walks past and sees you.",
+  "At eight you join the county troupe's children's squad, twenty li from home. The first month you cry every night; by the second you've learned to wash your own training clothes.",
+  "At ten you go on stage for the first time, turning a single somersault in a group act before coming off. Your mother takes a blurry photo from the audience, and it's still on her phone.",
+  "At twelve you start on the teeterboard as the flyer. The coach says your bones are light and your nerve is good, but not one minute of the morning handstands can be skipped.",
+  "At fourteen you're training and taking academic classes at the acrobatics vocational school at the same time, and you fail math. The coach looks at your report card and says: get your somersaults right first.",
+  "At fifteen you graduate and are graded a professional performer. Your first month's pay is a little over a thousand yuan; you keep two hundred and send the rest home.",
+  "At sixteen you go abroad with the troupe for the first time. You don't sleep the whole flight, staring out at the clouds and wondering what they look like from above."
+ ],
+ "late": {
+  "pension_note": "Estimate: county troupe staff draw a public-sector or standard urban employee pension. Long service but a low base comes to about 55 percent of the final monthly salary.",
+  "scenes": [
+   "On the day you retire you sit in the training hall all morning, watching the trainees do handstands. Before you leave, you gently peel up the strip of white tape that has been on the floor for more than ten years.",
+   "The county primary school asks you to teach an after-school PE class. You teach the children somersaults, and the first thing you teach is how to fall so it doesn't hurt.",
+   "Your pension isn't much. You and your spouse live in the old house in the county town, with a grape trellis in the yard. Every morning you still do a few minutes of stretches.",
+   "A trainee you raised becomes the star of a circus abroad and sends you a poster at New Year. You put it up on the wall of the main room.",
+   "In the prop store you look after the safety lines, the teeterboard and the silks, logging each one. When young performers come to sign out gear, you always tug the buckles yourself.",
+   "Every week you go to the county hospital for physiotherapy. The nurse asks what you used to do, and you say you turned somersaults. She says she saw your shows as a child.",
+   "You open a little shop by your front door selling ice lollies and stationery. When school lets out the children crowd round the door, and there's always one turning somersaults on the open ground.",
+   "For the first few months after leaving the troupe, you still wake at five thirty every morning and lie there waiting for the wake-up whistle.",
+   "When people find out you're from Wuqiao, they always want you to show them something. You laugh, turn a somersault, they clap, and you dust off your hands.",
+   "The troupe marks its sixtieth anniversary and invites you back. Your old coach sits in the front row, his hair completely white. You go up on stage and bow to him.",
+   "Later the training hall got cameras and motion analysis, every frame marked with angles. But whether someone landed steady still depended on another person reaching up from below to catch them.",
+   "You walk along the Grand Canal and someone is flying a kite. Watching the line, you remember the one second of silence in the world when you were thrown to the very top."
+  ],
+  "closing": {
+   "retire": "Many years later, your grandson turns a wobbly somersault in the yard and looks back at you. You walk over and put your hand on his back to steady him.",
+   "burnout": "Many years later, one afternoon, you sit in the sun outside the little shop while the children on the open ground build a human pyramid. The one at the top holds steady, and you clap softly.",
+   "end": "Many years later, at the bottom of a trunk, you find an old wrist guard washed pale. You put it on, raise your hand and go through a movement, then take it off and fold it away."
+  }
+ }
+}

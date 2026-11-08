@@ -1,0 +1,165 @@
+{
+ "id": "bailiff-hf",
+ "occupation": "Court Police Officer (Bailiff)",
+ "role": "Court Police Officer at an Intermediate People's Court",
+ "headline": "A judicial police officer at an intermediate court in Hefei, recruited after leaving the Armed Police, just through six months of induction training, standing guard in courtrooms and escorting defendants every day",
+ "unit": "The Judicial Police Detachment of an Intermediate People's Court in Hefei",
+ "unit_type": "Intermediate People's Court",
+ "city": "Hefei",
+ "city_tier": "New first-tier city",
+ "education": "High school, plus five years' service in the People's Armed Police (induction training at a police academy)",
+ "level": "You can guard a courtroom and run the security checkpoint on your own. For escorts and enforcement support you still go with a senior officer, and you've only just passed the law enforcement qualification exam.",
+ "intro": "Behind the detachment's dormitory is the training ground, the paint worn off half the pull-up bar. You stood sentry for five years in the army, and only here did you learn that standing in a courtroom is different from standing at a post: you stand there so that everyone in the room can finish what they have to say. From today your badge number is on the roster. Courtroom duty, security, escorts: whatever comes up, you do.",
+ "salary_note": "Estimate: a dedicated judicial-system post at an intermediate court in Hefei. Salary plus police rank allowance, duty allowance and year-end bonus comes to about 10 percent above the national figure, rising slowly with grade and rank.",
+ "facts": [
+  { "label": "Police Officer, First Class (current level)", "value": "0–3 years, ¥5,000–7,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Police Sergeant, Fourth Grade (3–8 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥9,800 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Keeping order in court", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Security screening of everyone entering the trial area", "source": "AI exposure" },
+  { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Roll call at the detachment, then an equipment check: radio, body camera, handcuffs, extendable baton, each one signed out against the register.",
+  "Security at the entrance to the trial area. An old man has a fruit knife in his bag. You log it into storage and hand him the ticket, saying he can collect it after the hearing. He grumbles a little, then takes it.",
+  "Courtroom duty. You stand in your assigned spot behind and to the side of the dock. The hearing runs two and a half hours, and your feet never move.",
+  "Escorting defendants back to the detention center. You sit in the back of the police van. Old Zhang, the senior officer, leaves the radio off the whole way and says only one thing: when we get out, watch the door first.",
+  "Staggered lunch in the canteen: one meat dish, two vegetables, a bowl of soup. You eat very fast, a habit from the army.",
+  "You go with the enforcement bureau to serve papers at a housing estate. The person behind the door says nothing. The enforcement judge reads each line aloud, and you hold up the body camera the whole time.",
+  "Back at the detachment you write up the courtroom log, upload the body camera footage, and name each clip by case number.",
+  "Fitness training: three kilometers, pull-ups, shuttle runs. The floodlights come on over the training ground, and the towers over by Swan Lake light up too."
+ ],
+ "ladder": [
+  { "title": "Police Officer, First Class", "stage": "Entry", "focus": "Courtroom duty, security, escorts, serving papers and supporting enforcement; learn judgment from senior officers and pass the law enforcement qualification exam." },
+  { "title": "Police Sergeant, Fourth Grade", "stage": "Shift lead", "focus": "Lead a shift in court and on escorts, stand at the front during enforcement and judge when to step in and when to hold back, and train new officers." },
+  { "title": "Police Sergeant, Third Grade (Squad Leader)", "stage": "Squad", "focus": "Run a squad of a dozen-odd officers, their postings, training and assessments, and draw up deployment plans before major trials." },
+  { "title": "Police Sergeant, First Grade (Unit Commander)", "stage": "Unit", "focus": "Watch major trials from the command room, review deployment plans and body camera audits, and oversee new systems as they go live." },
+  { "title": "Senior Police Sergeant, Fourth Grade (Deputy Commander of the Detachment)", "stage": "Detachment", "focus": "Oversee the force and security in the trial area, sign off plans and budgets, and teach court police across the city." }
+ ],
+ "ai_tasks": [
+  { "name": "Keeping order in court", "how": "AI can use cameras and video to help spot anything unusual and record what happens in a hearing. But when someone loses control or parties clash in the courtroom, it takes an officer on the spot to judge, step in and handle it, and only a person can be accountable for that." },
+  { "name": "Security screening of everyone entering the trial area", "how": "Working with screening equipment and image recognition, AI can help identify prohibited items and check identities against appointment records. People recheck the alarms, do the pat-downs, handle disputes, and take responsibility for who gets through." },
+  { "name": "Supporting enforcement of legally binding judgments, using coercive measures where the law requires", "how": "AI can help sort enforcement documents, collect information on the person subject to enforcement and plan the operation. Actually being there, facing hostility, deciding whether coercive measures are needed and carrying them out lawfully all have to be done, and answered for, by people." },
+  { "name": "Helping with building security and emergencies involving litigation-related petitions", "how": "AI can help sort petition materials, flag signs of high emotional risk, surface past records of how cases were handled, and draft emergency plans. Calming people down, guiding them and dealing with sudden situations takes people, and people decide whether to act." },
+  { "name": "Helping carry out residential surveillance, detention and arrest, and the pursuit of fugitives", "how": "AI can help search for leads, trace movements and compile information for joint investigations. The actual arrest, custody and transport involve personal safety and legal procedure, and court police must do them in person and be responsible." }
+ ],
+ "events": {
+  "e_first_court": "Your first courtroom duty on your own, a hearing that runs four hours. At the recess your legs are numb. Coming down from the bench, the presiding judge gives you a nod.",
+  "e_thermos": "An old man who has come to watch a trial won't open his thermos and says you don't trust him. You step aside with him, open it, glance in, close it, and say thank you.",
+  "e_lobby": "In the case-filing hall, a litigant gets very upset and talks loudly for half an hour. You don't move in to pull him away. You stand two meters off and stay with him, and when he's worn himself out you hand him a bottle of water and walk him to the reception window.",
+  "e_long_escort": "An escort to another province. You leave at four in the morning, drive seven hours on the expressway, hand over, and drive straight back. It's dark by the time you reach Hefei.",
+  "e_fitness": "At the annual fitness test you run the three kilometers in under twelve minutes, and the detachment commander pins the results on the training-ground notice board.",
+  "e_ai_gate": "The entrance to the trial area gets smart screening: facial verification and appointment details pop up together, and prohibited items are flagged red automatically. Instead of counting heads all morning, you now watch for the few yellow alerts on the screen.",
+  "e_ai_false": "The courtroom monitoring system flags someone in the public gallery for abnormal emotion. You walk over and find a mother with her head down, wiping her eyes. You go back to your post and click False alarm.",
+  "e_factory": "You go with the enforcement bureau to seal equipment at a factory, and the owner blocks the gate at first. The enforcement judge talks for an hour while you stand beside him, the body camera running throughout. In the end the owner steps aside on his own.",
+  "e_love": "At a reunion of old army comrades you meet someone who teaches at a primary school. They say they like that you talk slowly and walk fast.",
+  "e_marry": "You get married. There's a big trial at court that day, and your colleagues take turns rushing over to toast you, then rushing back to change shifts.",
+  "e_house": "You take out a mortgage on a flat in Binhu, forty minutes by metro from the court. Part of the down payment is your discharge pay from the army.",
+  "e_child": "Your child is born. You stand bolt upright outside the delivery room holding the bundle, and a nurse laughs: relax, you're not on courtroom duty.",
+  "e_merit": "During a hearing someone suddenly leaves their seat and rushes toward the bench. You cross the floor in two strides and put yourself in between, and nobody gets hurt. At year's end you're awarded a personal Third-Class Merit.",
+  "e_comrade": "Your old squad leader calls from back home to say another of your comrades has passed the exam. You talk until midnight about running five kilometers on the training ground with rifles on your backs.",
+  "e_yearend": "The year-end rush to close cases: a dozen hearings a day, not enough officers in the detachment, and you go two weeks without a day off.",
+  "e_knee": "An old knee injury from the army flares up, and you need the handrail going downstairs. With hours of standing in court, you start wearing a knee brace under your uniform trousers.",
+  "e_ai_dispatch": "Escort vehicles, routes and personnel all move onto a dispatch system that does the scheduling and the reporting automatically. The first thing you do each morning is check whether the vans and people it has assigned actually match up.",
+  "e_essay": "Your child writes in a school essay: in my family there is a guardian of the courtroom door. The teacher draws a red star beside it.",
+  "e_parent": "Your father back home is in hospital, and you take a week off to sit with him at the county hospital. When the family of the man in the next bed hears you work at a court, they ask you about lawsuits all night. You tell them you keep order; you don't decide cases.",
+  "e_recruits": "Two new recruits join the detachment, both ex-soldiers. You drill them in courtroom positions, and after an hour on the first day they start to sway. You tell them: I swayed too, back then.",
+  "e_back": "Years of standing and driving, and your back starts to hurt as well. You photograph the arrows pointing up on your medical report and send it to your spouse, who replies with just one line: eat less salt."
+ },
+ "choices": {
+  "c_degree": { "title": "Study for a law degree?", "situation": "Fewer and fewer people in the detachment have only a high school education, and promotions to squad leader or unit commander look at degrees. A provincial university offers a part-time bachelor's in law: three years of evening and weekend classes, tuition paid by you.", "options": [
+   { "label": "Enroll", "result": "Every night in the dorm you grind through the general principles of criminal law. You fail the very first course and pass on the resit. Three years later you have your degree certificate, and you keep it with your discharge papers." },
+   { "label": "Skip it and stand your post well", "result": "You keep your weekends for the training ground and your family. Your file still says high school; you figure this job runs on legs and eyes." }
+  ] },
+  "c_rank": { "title": "Go for promotion to Police Sergeant, Fourth Grade", "situation": "With enough years in grade and a satisfactory annual review you can apply for promotion to Police Sergeant, Fourth Grade, but the detachment has only two slots this year, decided on courtroom performance, fitness scores and the law enforcement exam. Someone who joined a year before you is preparing too.", "options": [
+   { "label": "Prepare all out", "result": "You train an extra hour every day and work through the enforcement exam question bank three times. The day the list is posted, you run two extra laps of the training ground." },
+   { "label": "Carry on as usual, try next year", "result": "You leave the slot to the person who joined first. Later, when he's drawing up the roster, he always gives you the easier hearings first." }
+  ] },
+  "c_exec": { "title": "Move to the enforcement bureau?", "situation": "The enforcement bureau is short-staffed and wants to second a few officers from the detachment for long-term enforcement support: out every day, often traveling, dealing with debtors, banks and property registries. The regular rhythm of courtroom duty would be gone.", "options": [
+   { "label": "Go to enforcement", "result": "You follow the enforcement judges to every district and county around Hefei, learn every step of sealing and seizing property, and learn to wait a moment at the door first." },
+   { "label": "Stay with the detachment", "result": "You stay on courtroom duty and escorts. The roster is full, but you know what time you'll get home." }
+  ] },
+  "c_ai": { "title": "Take on the smart security work?", "situation": "The court has brought in smart screening and courtroom alert systems, with false alarms everywhere, and needs someone who knows the front line to lead: which alerts need a human check, how the video data is stored, who answers when something goes wrong. It doesn't count toward your record, and it means meetings with the tech company every day.", "options": [
+   { "label": "Take it", "result": "You and two others go through the footage alert by alert and write a procedure for human review. Later, court police detachments across the province ask for a copy." },
+   { "label": "Pass", "result": "You watch the screens by procedures someone else wrote and use the time saved for more courtroom duty. A few of the rules strike you as too loose." }
+  ] },
+  "c_lawfirm": { "title": "Pass the bar and join a law firm", "situation": "You finished your law degree and then passed the national legal qualification exam on your own. A partner at a Hefei law firm who has seen you in court asks whether you'd come as an assistant on criminal cases, starting from scratch. The starting pay isn't high, but once you're established you'd earn more than now.", "options": [
+   { "label": "Join the firm", "result": "You hand in your resignation and return your badge and equipment to the detachment.", "end": "You take off the uniform and start as a legal assistant. The first time you walk into a courtroom as a lawyer, your eyes go first, without thinking, to the spot where the court police stand." },
+   { "label": "Stay with the detachment", "result": "You put the bar certificate away in a drawer. You understand more of what's said in court now, and you stand as straight as ever." }
+  ] },
+  "c_level3": { "title": "Apply for Squad Leader (Police Sergeant, Third Grade)", "situation": "A squad leader post has opened up in the detachment: a speech, a staff evaluation vote, an interview with court leadership. If you get it, you run the postings, training and assessments for a dozen-odd officers, and someone has to cover holidays, usually you.", "options": [
+   { "label": "Apply", "result": "Your speech is only eight minutes long, all about rosters and training. On the day of the vote, you get the most support of anyone." },
+   { "label": "Don't apply", "result": "You recommend the colleague who joined a year before you and keep leading shifts. When the squad has a hard hearing to staff, he still comes to you first." }
+  ] },
+  "c_security": { "title": "Head security at a carmaker?", "situation": "The security department of an electric-vehicle maker in Hefei wants you to run security for one of its plants: hundreds of guards, access control, fire safety, visitors. The salary is more than double what you earn now, but you would no longer be a police officer.", "options": [
+   { "label": "Go to the carmaker", "result": "You fold your uniform and hand it in, and for the first time report to a new job in a suit.", "end": "You leave the court to run security at the carmaker. The plant is huge; every morning you walk from the east gate to the west gate, checking whether the person in each guard booth is standing up straight." },
+   { "label": "Stay at the court", "result": "You say thank you. There's a big trial that afternoon, and you take your usual place behind and to the side of the dock." }
+  ] },
+  "c_dadui": { "title": "Apply for Unit Commander (Police Sergeant, First Grade)", "situation": "The court police unit commander is being transferred, and the court wants to pick a successor from the squad leaders. The commander watches major trials from the command room, reviews deployment plans and runs the new systems, and spends more time in meetings than standing in court.", "options": [
+   { "label": "Apply", "result": "You dig out every deployment plan you've written for a major trial over the years, and at the interview you walk them through three." },
+   { "label": "Stay with your squad", "result": "You keep doing postings in the morning and training in the evening. The squad turns over again and again, and every one of them is someone you trained." }
+  ] },
+  "c_deputy": { "title": "Become deputy commander of the detachment?", "situation": "The court wants you to oversee the court police force and security in the trial area. Taking it means signing plans, approving budgets and hosting inspections, a year in the meeting room. Turning it down means you can still watch every trial from the command room.", "options": [
+   { "label": "Take it", "result": "There are more files on your desk, but your radio stays on. When young officers pass you in the corridor, they still call you Commander out of habit." },
+   { "label": "Turn it down", "result": "You recommend a younger unit commander and stay in the command room, watching right up to the last big trial before you retire." }
+  ] }
+ },
+ "endings": {
+  "retire": "On your last day of courtroom duty you stand in the same spot behind and to the side of the dock, for three hours straight. After the hearing you return the body camera to the equipment room and sign the register one last time. As you leave the trial area, the young officer at the security checkpoint salutes, and you return it with total precision.",
+  "burnout": "That year's medical check puts red flags on your knees and lower back, and the doctor says more long hours on your feet will mean surgery. The detachment takes you off the front line and puts you in charge of gear and vehicles in the equipment room. You still arrive at seven thirty every day, wipe every piece of equipment clean, and wait for people to come and sign it out."
+ },
+ "stages": [
+  "You're among the youngest in the detachment, rotating through courtroom duty, security and escorts. In court you stand behind and to the side of the dock for hours at a time; at the checkpoint you watch the metal detector and the X-ray screen and log each stored item properly. On escorts you sit in the back of the van while the senior officer runs through what to watch for, the whole way.",
+  "You're now qualified to lead a shift. You staff a courtroom yourself, checking the order of proceedings with the clerk and the transfer times with the detention center before each hearing. On enforcement you stand at the front with the body camera, deciding when to step forward and when to step back. When a new officer stands in the wrong spot, you walk over and tap him lightly on the shoulder.",
+  "You're a squad leader with a dozen-odd officers under you. Every morning you do the postings: how many for which courtroom, which van on escort, who goes out on enforcement. Before a big trial you sit down with the trial division and the detention center and write the plan out to every door and every stretch of corridor. At the end of the month you sign the fitness results.",
+  "More of your time is in the meeting room and the command room: reviewing deployment plans, body camera audit reports, the new screening and alert systems. You watch the big trials from the command room, and every call on the radio needs your answer. You teach courtroom procedure to the induction classes, and what you talk about most is judgment.",
+  "You oversee the detachment's people and the security of the trial area, signing plans, approving budgets, hosting inspections and reviews from above. Courts across the city ask you to teach their court police, and you give each newly appointed unit commander their first lesson. You rarely stand in a courtroom any more, but whenever you pass the entrance to the trial area you still glance at the light on the metal detector."
+ ],
+ "work": [
+  "An old man who has come to watch a trial is in the wrong courtroom and has circled the corridor twice. You look at the notice in his hand, walk him to the east end of the third floor, and push the door open for him.",
+  "In the van on the way back from an escort, Old Zhang asks you to report the battery and storage on your body camera. When you've done that he asks: where's the spare battery? You can't answer.",
+  "The checkpoint turns up a pair of nail clippers, and the litigant is in a hurry to get into court. You write the number on the storage log, hand over the ticket, and say he can collect them after the hearing.",
+  "Half an hour before the hearing you run through the order of proceedings with the clerk, then go to the holding room to check the defendant's identity again before signing the courtroom duty log.",
+  "Xiao Wang, the new officer, stands too far forward on courtroom duty and blocks the prosecutor's line of sight. At the recess you say nothing, just mark the right spot on the floor with your foot.",
+  "On an enforcement visit a door opens a crack. You don't push forward; you step half a pace back, behind and beside the enforcement judge, so the person inside can see clearly who has come.",
+  "Before a hearing with a big public gallery, you draw a deployment map of the trial area, a name on every door and every stretch of corridor, and make twenty copies.",
+  "At the end-of-month fitness test, one of your squad fails the three kilometers. You don't sign the results sheet; you run with him every morning for an extra two weeks instead.",
+  "You spend an afternoon with the detention center's officer going over next week's transfer plan: seven hearings, eleven people, every vehicle and time slot laid out in the spreadsheet.",
+  "On the command room screen, someone in the gallery of one courtroom stands up. You say one thing into the radio, Courtroom Three, heads up, and watch him sit back down.",
+  "The new courtroom alert system throws out more than thirty false alarms a week. You go through the footage with your squad leaders one alert at a time and hand in a single page of suggestions for adjusting the thresholds.",
+  "You spend an afternoon teaching courtroom procedure to the induction class. Your last line is: you stand there so that everyone can finish what they have to say.",
+  "The court is rebuilding the screening lane into the trial area. You walk the entrance three times with the plans and move the queue five meters inside, so people won't have to stand on the steps in the rain.",
+  "You sign the security plan for the year-end run of major trials, more than forty pages. Before signing, you check the officer list for every courtroom one more time.",
+  "When the city's annual court police review meeting breaks up, unit commanders from several county courts gather round to ask about training grounds, and you tell them how you got your pull-up bar all those years ago."
+ ],
+ "past": [
+  "You're in your last year of middle school in a county town in northern Anhui, shooting up fast. You never lose a race in PE, and your grades are ordinary.",
+  "Two months before the gaokao (college entrance exam), people from the local military office come to your school to recruit. You stare at the camouflage on the poster for a long time, then go home and tell your family you want to join up.",
+  "Your score falls short of a university place, and you put on a uniform and join the People's Armed Police. In your first month you throw up three times on the five-kilometer runs.",
+  "When your two years of compulsory service are up, you choose to stay on and are made a corporal. Your squad leader says you stand sentry the straightest, and puts you in charge of drilling the recruits.",
+  "The year you leave the army, the province opens court police posts reserved for veterans. You do odd jobs by day and study for the civil service aptitude and essay tests at night, and place third in the city.",
+  "You spend six months of induction training at a police academy, studying law, police equipment and courtroom etiquette. The first time you stand in front of a mirror in uniform, you come to attention without thinking."
+ ],
+ "late": {
+  "pension_note": "Estimate: court police in permanent posts draw the public-sector pension plus an occupational annuity, about 70 percent of the final monthly salary, not counting duty allowances.",
+  "scenes": [
+   "On the day you retire you fold your uniform and hand it in. As you pass the entrance to the trial area, the young officer beside the metal detector salutes, and you return it by the book.",
+   "The management office in your housing estate asks you to talk to their guards about standing post and access control. You talk all afternoon, and your last line is: don't get impatient with people; hear them out first.",
+   "You and your spouse join a seniors' tour group, and the first stop is the city where you served. The barracks have become a park, but the pull-up bar is still there.",
+   "You study calligraphy at the seniors' college. Your best piece is two characters, stand straight, and it hangs in the entrance hall of your child's home.",
+   "Your knees and back won't let you stand for long any more. In the equipment room you look after the gear, the vehicles and the charging cabinet for the body cameras, and log every item properly.",
+   "When young officers come to sign out gear, you always add one more reminder: take the battery, switch the camera on first. They laugh at you for nagging, and come back to ask you the next day.",
+   "You start swimming every day; the doctor says it's good for your back. You swim slowly, one length, then another, and you don't have to stand any more.",
+   "You take off the uniform and go to your new job. At your first meeting you still sit bolt upright with your hands on your knees, and your colleagues tease you about it for days.",
+   "Your new colleagues don't know what you used to do; they just notice you walk fast and say little. Once, when the building's metal detector breaks down, you stand beside it for the whole morning.",
+   "An old colleague from the detachment retires and invites you to dinner. The table talks over which hearing, which escort, all those years ago, and you still remember every one.",
+   "Later the court's screening, alerts and rosters were all handed to software. But someone still had to stand in the courtroom, watching, waiting, and stepping forward when it was needed.",
+   "You go fishing on Chaohu Lake and sit all morning without a bite. The man next to you asks if you're getting impatient. You say no; you used to stand all day."
+  ],
+  "closing": {
+   "retire": "Many years later, early one morning, you walk slowly along the path by Chaohu Lake while your grandson runs ahead. You call to him to slow down, and he stops and stands to attention, just the way you do.",
+   "burnout": "Many years later you sit on the bench at the gate of your housing estate in the sun, watching the guards change shift. The new one stands very straight, and you give him a nod.",
+   "end": "Many years later, deep in the wardrobe, you find your old uniform, the cuffs worn a little pale. You hang it up and smooth it out, then put it away again."
+  }
+ }
+}

@@ -1,0 +1,163 @@
+{
+ "id": "archaeologist-xa",
+ "occupation": "Archaeologist",
+ "role": "Field Archaeologist at a Provincial Archaeology Institute",
+ "headline": "A field archaeologist with a master's in archaeology, in your second year at a provincial institute in Shaanxi, living ten months of the year in a village lodging beside a dig on the Guanzhong plain",
+ "unit": "A provincial archaeology research institute in Shaanxi",
+ "unit_type": "Provincial archaeology institute",
+ "city": "Xi'an",
+ "city_tier": "New first-tier city",
+ "education": "Master's degree in Archaeology",
+ "level": "You can run one or two excavation squares on your own. Scraping, finding edges, reading soil color, drawing and keeping the trench diary are all second nature now, but judging how features relate to each other still needs the site director's call.",
+ "intro": "In your tool bag: a trowel worn half an inch shorter than new, two brushes, a bundle of bamboo picks, a roll of zip bags and a marker that's always running dry. Your lodging is a farmhouse in the village, and every morning the old woman who owns it steams a batch of buns. From today you're in charge of two squares in the east of the site. How deep to go and where to stop is half your call and half the site director's.",
+ "salary_note": "Estimate: a permanent post at a provincial archaeology institute in Xi'an, base pay plus performance pay and field allowance, taken at 85 percent of the national figure. Field months bring more allowance; pay only rises noticeably with professional rank.",
+ "facts": [
+  { "label": "Research Intern (current level)", "value": "0–2 years, ¥4,500–6,500 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Assistant Research Fellow (2–7 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥12,600 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Taking part in academic conferences", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Doing research in the field", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "In the farmhouse yard, the landlady's buns are ready. You finish yesterday's trench diary and push label paper and a roll of zip bags into your tool bag.",
+  "At the site. Twenty-odd workers hired from the nearby villages are already waiting by the squares. You go from square to square telling each of them how deep to dig today and what not to touch.",
+  "A strip of grayish soil shows in the east wall of T0305. You crouch and scrape it flat with your trowel, three times over, until you're sure it's the edge of a pit. You number it H17.",
+  "Points with the total station, photos from the drone. You survey each new feature outline into the plan, the sun so bright you can barely see the tablet screen.",
+  "A bowl of hot-oil noodles in the shed at the edge of the site. The construction project manager comes by again to ask whether you can hand the land over next month. The site director says: depends what's down there.",
+  "Half a pottery jar comes out of the pit. You photograph it, draw it, measure its depth and fill in the register before letting a worker lift it out and pack it in the finds crate.",
+  "End of the day. You check the day's finds one by one against the register and lock them in the storeroom at the lodging, with the key on a cord around your neck.",
+  "The trench diary: soil color, texture, inclusions, finds, line by line. The dog in the yard barks a few times. You write until eleven."
+ ],
+ "ladder": [
+  { "title": "Research Intern", "stage": "Entry", "focus": "Run one or two squares under the site director: scraping, finding edges, numbering and surveying features, keeping the trench diary, sorting finds over the winter." },
+  { "title": "Assistant Research Fellow", "stage": "Core", "focus": "Run an excavation area, produce the survey plans, deal with contractors and villagers, write chapters of the report, and apply for your first grant." },
+  { "title": "Associate Research Fellow (Excavation Director)", "stage": "Director", "focus": "Hold the license to direct excavations, run a dig, write the applications and reports, negotiate with developers and the heritage bureau, and supervise graduate students." },
+  { "title": "Research Fellow", "stage": "Projects", "focus": "Rotate through several sites, lead research projects, review reports, and sign off archaeology plans for major construction projects." },
+  { "title": "Senior Research Fellow, Grade 2 (Discipline Leader)", "stage": "Leader", "focus": "Decide where a field digs and what it asks for the next ten years, lead international projects, review grants and advise on major exhibitions." }
+ ],
+ "ai_tasks": [
+  { "name": "Doing research in the field", "how": "AI can help search the literature, compare images of artifacts, process remote sensing and survey data, and do preliminary classification and statistics. People have to go to the site, excavate, judge stratigraphy and how features relate, ask the research questions, and answer for the conclusions." },
+  { "name": "Writing up research results", "how": "AI can compile literature reviews, draft text, polish the language, lay out figures and check citation formats. People decide the argument, interpret the evidence, check facts and sources, and put their names to it." },
+  { "name": "Taking part in academic conferences", "how": "AI can help prepare conference materials, translate and take notes. People have to be there in person to present, defend their work and talk with colleagues; that part rests on trust between people." }
+ ],
+ "events": {
+  "e_first_edge": "For the first time you recognize the opening outline of a tomb on your own. The site director crouches and looks at it for a long time, then says: yes, go down from here.",
+  "e_rain": "Three days of downpour, and every square is full of water. You put up rain shelters and pump them out; you slip in the mud and the screen of your phone cracks.",
+  "e_heat": "July on the Guanzhong plain, forty degrees on site. One of the older workers gets heatstroke. You help him into the shed and stop work early that day.",
+  "e_find": "At the bottom of a pit, a complete pot comes out, incised with a sign no one has ever seen. The whole site gathers round to look, and your hands won't stop shaking.",
+  "e_developer": "The construction side is pushing to get the land back and sends someone to walk the site every day. The site director holds out for two more months, and you hear them talking outside the shed for a long time.",
+  "e_looted": "One tomb was disturbed by robbers long ago, and all that's left are a few broken sherds. On the record form you write: heavily disturbed. That night nobody at the lodging says much.",
+  "e_ai_sherd": "The institute brings in a sherd recognition system: take a photo and it suggests type and date. You find it's quite accurate on Guanzhong pottery and often guesses wildly on pottery from northern Shaanxi.",
+  "e_ai_lidar": "A drone lidar scan of a hillside, and AI traces what might be a city wall beneath the vegetation. You go out to core it, and the third hole hits rammed earth.",
+  "e_love": "In a mutton-and-bread soup shop in the county town you meet someone from a conservation team on the next site. They look at your hands and say: we've both got dirt under our fingernails.",
+  "e_far": "Ten months a year on site, and you see your partner twice a month. Once they drive three hours to visit while you're still drawing in a square, and they wait all afternoon in the shed.",
+  "e_marry": "You get married. The wedding is in Xi'an; the site director brings a few of the workers along, carrying a basket of apples from their own orchards.",
+  "e_house": "You take out a mortgage on a flat in the southern suburbs of Xi'an. Working it out, you spend fewer than two months a year living in it.",
+  "e_child": "Your child is born. You rush back from the site overnight, and only outside the delivery room do you notice the yellow earth still on the sides of your shoes.",
+  "e_report": "The excavation report for one site takes three years: artifact descriptions, line drawings, photos, section drawings, more than four hundred pages. On the day you submit it you switch off the computer and sit in the office for a long time.",
+  "e_paper": "Your first paper comes out in a professional journal, on the date of that incised sign. The reviewers raised eleven points, and the revisions took you seven months.",
+  "e_villager": "An old villager takes you to see tiles turned up in his field and says even his grandfather's generation knew there was something underneath. You record the location, and later it becomes a new registered site.",
+  "e_open_day": "The site opens to the public for a day and hundreds of parents and children come. A primary schoolboy asks you: who do the things you dig up belong to? You say: to everyone.",
+  "e_knees": "Years of crouching in the squares, and your knees and back are giving out. Once you're down, you have to hold the trench wall to get back up.",
+  "e_museum": "A group of objects from your excavation goes into a museum display case. On opening day you stand at the back of the crowd and hear the guide recite the very lines you wrote in your report.",
+  "e_students": "A university field school comes to your site. One student scrapes all day, then comes to you in the evening to ask: how do you actually see that the colors are different?",
+  "e_parent": "Your father is in hospital. You get the call on site and take a bus home overnight. The doctor asks what you do, you say you dig dirt, and he smiles."
+ },
+ "choices": {
+  "c_phd": { "title": "Do a PhD while working?", "situation": "Your supervisor calls to say there's one part-time PhD place left this year. With a doctorate, professional rank and grant applications come easier; but with ten months a year on site, you'd be writing your thesis under the lamp at the lodging, and five years is normal.", "options": [
+   { "label": "Do it", "result": "Squares by day, thesis by night at the lodging, and you defend in your fifth year. Your supervisor says your dissertation has more dirt on it than any he's seen." },
+   { "label": "Not now, do the site well", "result": "You keep your evenings for the trench diary and sleep. Your file says master's; you figure that's enough, since on site what counts is the trowel." }
+  ] },
+  "c_project": { "title": "Rescue archaeology or a research excavation?", "situation": "Two projects at the institute need people. One is rescue archaeology ahead of an industrial zone: many sites, tight deadlines, a good project allowance. The other is a research excavation of an early walled city: slow digging, deep questions, years before results.", "options": [
+   { "label": "Rescue archaeology", "result": "You work four sites in a year, see more tombs than others see in ten, and learn to bargain with contractors." },
+   { "label": "Research excavation", "result": "You stay three seasons on one walled city, asking each layer of earth when it was laid down. The report comes slowly." }
+  ] },
+  "c_ai": { "title": "Lead the digital archaeology work?", "situation": "The institute is building an archaeology data platform: 3D scanning, remote sensing and sherd recognition all in one system. It needs someone who knows field sites to set the standards and check what the AI identifies. It doesn't count as research output and will eat into the winter you'd spend writing reports.", "options": [
+   { "label": "Take it", "result": "You set a data format for every type of feature and correct the system's misidentified sherds one by one. Later, every site in the province submits data in your format." },
+   { "label": "Pass", "result": "You fill in data in a format someone else set and keep your winter for reports. When you see a sherd the system got wrong, you fix it in passing." }
+  ] },
+  "c_leader": { "title": "Apply for an excavation director's license", "situation": "To get an excavation director's license you need to have run a dig yourself, submitted reports, and passed an assessment by an expert panel; after that, your name goes on the excavation permit. The institute is recommending two people this year, and you and a colleague both qualify.", "options": [
+   { "label": "Apply", "result": "You bind years of trench diaries, survey plans and report chapters into a file. The stratigraphy question the panel asks is one you once spent a whole afternoon crouched over on site." },
+   { "label": "Let your colleague go first", "result": "Your colleague gets the license first and makes you his deputy on site. You do one more season under him and learn to think three times before signing an excavation permit." }
+  ] },
+  "c_silkroad": { "title": "Join a joint excavation in Central Asia?", "situation": "The institute is excavating an ancient city on the Silk Road with a Central Asian country and needs someone on site for a year. Tough conditions, a language you don't speak, family left to manage without you; but the material there is something you'd never touch at home in a lifetime.", "options": [
+   { "label": "Go to Central Asia", "result": "You dig for a year in a foreign desert, learn a few dozen words of the local language, and argue more than once through an interpreter with the local archaeologists over how to lay out the squares." },
+   { "label": "Stay in Guanzhong", "result": "You stay and finish the report you're working on. Your child starts primary school that year, and you're the one who does the school run." }
+  ] },
+  "c_museum": { "title": "Become a curator at a museum?", "situation": "A museum in Xi'an is hiring curators who know archaeology and can write exhibitions. No more fieldwork, regular hours, no more winters huddled by the stove at the lodging; but you'd never dig again yourself.", "options": [
+   { "label": "Go to the museum", "result": "You wipe the trowel from your tool bag clean and leave it in the institute's storeroom.", "end": "You become a museum curator, arranging what others have dug up in display cases and writing the labels line by line. On every label, you make sure it says which layer of earth the object came from." },
+   { "label": "Stay at the institute", "result": "You recommend a classmate who wants to move back to the city, and the next morning you're out on site again." }
+  ] },
+  "c_company": { "title": "Join an archaeological survey company?", "situation": "A company that does archaeological survey and heritage impact assessments wants to hire you at one and a half times your pay, doing preliminary surveys and reports for development projects. You'd still be working with the earth, but no longer doing research.", "options": [
+   { "label": "Join the company", "result": "You hand in your resignation and return your excavation records to the archive box by box.", "end": "You join an archaeological survey company and take its coring teams to every development zone on the Guanzhong plain. On the last page of every report you write one line: there may be something under here; please stop for a moment first." },
+   { "label": "Stay at the institute", "result": "You say no. The report isn't finished, and you still haven't worked out that incised sign." }
+  ] },
+  "c_full": { "title": "Apply for Research Fellow (full senior rank)", "situation": "Full senior rank requires major projects you've led, published reports and papers of real weight, and a review by provincial experts. The institute can put forward one or two people a year at most, and you'd have to lay out everything you've built up over the years.", "options": [
+   { "label": "Apply", "result": "You put two excavation reports and a dozen-odd papers into the file. At the interview you talk about the walled city: you've questioned it for ten years, and it has answered three of your questions." },
+   { "label": "Not this year", "result": "You say you'll give it another year and finish the report in hand. That year you write no applications and spend two extra months on site." }
+  ] },
+  "c_head": { "title": "Go for Senior Research Fellow and lead the discipline", "situation": "The institute wants you to lead a field of research: deciding where to dig and what to ask for the next ten years, leading the team, finding funding, reviewing grants and taking on international collaborations. If you accept, you'll get out to a site once a year at most.", "options": [
+   { "label": "Take it", "result": "Your calendar is all meetings, but at every planning session the first slide is a photo from the field." },
+   { "label": "Keep going to the field", "result": "You recommend a young research fellow to lead it and take two students out for several more seasons yourself." }
+  ] }
+ },
+ "endings": {
+  "retire": "Your last site is beside the Wei River. On the final day you wipe your trowel clean, slide it back into your tool bag, and stand at the edge of a square looking for a while at the bands of differently colored earth. Old Ma, one of the workers, asks if you'll be back next year. You say you'll come and have a look.",
+  "burnout": "That autumn on site you crouch down to scrape and can't get back up; a worker helps you out of the square. The doctor says your knees and spine need rest and no more fieldwork. Back at the institute you work in the storeroom, cataloguing objects in gloves every day, and outside the window is the road you used to take out to the sites when you were young."
+ },
+ "stages": [
+  "You run one or two squares under the site director. Each day you tell the workers how much to take down and where to stop, then crouch in the square yourself to scrape, find edges and read the soil, numbering features, drawing, photographing and filling in the register. Evenings are the trench diary; winters, back at the institute, you wash sherds and label them. One line from the director, scrape that edge a bit more, can take you a whole afternoon.",
+  "You run an excavation area now: a dozen-odd squares and twenty or thirty workers, scheduling in the morning and settling accounts at night, with the total station and drone plans coming from you. Dealing with contractors and the village gradually lands on you; in winter, back at the institute, you write report chapters, make line drawings and apply for your first small grant.",
+  "You hold a director's license now, and on site the final call is yours: where to lay out squares, which feature to clear first, when the land can be handed back. You write the excavation applications and interim reports and sit at one table with developers, the county heritage bureau and the village committee. The graduate students on site are yours to train, and you teach them to read the layers.",
+  "You rarely spend a whole season on one site now; you rotate between several. You lead research projects, supervise graduate students, review the excavation reports others write, attend conferences in Beijing, and sign off archaeology plans for major construction. At expert hearings, people wait for you to speak before deciding whether a piece of land gets another year of digging.",
+  "You lead the institute's work in your field, deciding where it digs and what it asks for the next ten years. You run international collaborations, review grants, and serve as academic adviser to major museum exhibitions. When young researchers send you their proposals, you read the first page first: is there a question? Every spring you still go out to a site, crouch down and scrape a surface."
+ ],
+ "work": [
+  "Old Ma says the soil here feels hollow. You crouch and tap it with the back of your trowel, and it does sound empty. You tell him to stop and switch to a small trowel, scraping down bit by bit.",
+  "You draw the section of a pit at a scale of one to twenty, three hours' work. The site director looks it over and moves one layer line two centimeters lower.",
+  "After work you wash sherds in the farmhouse yard, with a basin of clean water and an old toothbrush. Each one, once clean, gets its square number and layer written on the back.",
+  "The construction crew wants to move in early. You go over the excavation plan point by point with the project manager and end up releasing three cleared squares on the north side.",
+  "When the drone has taken its orthophotos, you stitch them on the computer all night, print the result the next morning and pin it up in the shed. The workers crowd round looking for their own squares.",
+  "Writing the report at the institute at year's end, you describe more than sixty pots: rim diameter, belly diameter, decoration, fabric color. You type sandy gray ware forty times.",
+  "In the excavation application you lay out the squares along the line of the site instead of due north. The reviewing expert asks why, and you reply with a full page.",
+  "The county heritage bureau, the developer and the village committee sit in the site shed all afternoon over whether a cemetery should be preserved in place. You spread the plan on the table and point it out to them, area by area.",
+  "Xiao Li, your graduate student, can't tell where one layer ends and the next begins. You have him take a handful of each, squeeze hard and let go. He stares a long time and says: one crumbled, one didn't.",
+  "An excavation report lands on your desk with its stratigraphy and artifact dates out of step. You circle three places in red and send the author back to the site to look at the section again.",
+  "A new metro line is set to cut through a Han dynasty cemetery. At the hearing you speak for twenty minutes and recommend moving the line eighty meters east. Afterwards the design institute comes to ask for your plans.",
+  "Your doctoral student is running a small site on his own for the first time and calls to ask whether to clear a pit completely. You say: you decide, and write the decision in the diary.",
+  "At a coordination meeting for the Central Asia project, you spend an afternoon debating the layout of the squares with the archaeologists on the other side, through an interpreter. In the end each side gives a little.",
+  "A major museum exhibition asks you to advise. The curator wants the most beautiful piece at the center; you recommend an unremarkable jar instead, saying it tells the story best.",
+  "You teach the institute's young researchers how to write grant applications, and make only one point: first be clear what you want to know, then decide where to dig."
+ ],
+ "past": [
+  "You're in your last year of middle school in a county town near Baoji. Every year when the wheat field by your house is ploughed it turns up tile fragments, and you've filled a whole tin with them.",
+  "On your gaokao (college entrance exam) application you put archaeology first. Your father asks: can you get a job with that? You say yes, though you aren't sure yourself.",
+  "Your first field school, in your third year, is at a site in Henan, three months that peel two layers of skin off you. The first time you scrape out the edge of a pit yourself, you sit in the square for a long time.",
+  "You go straight on to a master's after graduating, working on Zhou dynasty pottery with your supervisor, and spend half the year in storerooms piecing sherds together.",
+  "Your master's thesis is a chronology of the pottery from one site, with more than three hundred line drawings. After the defense your supervisor says: go to the institute, there's work there.",
+  "You pass the exam for a provincial archaeology institute in Shaanxi, and in your second week you're sent to a rescue dig on the banks of the Wei River."
+ ],
+ "late": {
+  "pension_note": "Estimate: permanent staff at a provincial institute draw the public-sector pension plus an occupational annuity, about 70 percent of the final monthly salary, not counting field allowance.",
+  "scenes": [
+   "On the day you retire you pack more than thirty years of trench diaries into two cardboard boxes for the archive. The archivist asks if you want to keep one. You choose the first.",
+   "The institute rehires you to sort a batch of excavation records from decades ago. Opening the boxes one by one in the storeroom, you find many of the labels in your old teacher's hand.",
+   "At the seniors' college you start a course called archaeology on your doorstep, taking the old students to see the site park at the foot of the city wall.",
+   "The site you dug becomes a heritage park. You go for walks there with your spouse and, standing by a reconstructed house floor, tell them where you scraped your first edge.",
+   "Your knees and back can't take the squares any more, and the institute moves you to the artifact store, where every day you catalogue, check and photograph objects.",
+   "The store is very quiet. You look at the objects one by one against the old registers, and some of the labels are in your own young handwriting.",
+   "You do tai chi in the park by your home. The old master who teaches it says your stance is unsteady. You laugh: I crouched too much, back then.",
+   "You've left the institute, and for the first time you spend a whole autumn at home. You discover the persimmon tree outside your window bears so much fruit.",
+   "When new colleagues learn you spent more than ten years digging, they always ask what treasures you found. You tell them mostly sherds, and every one of them was useful.",
+   "You go back near the old site, where a new estate has gone up. On the display board at the estate gate, you see the description of the site you once wrote.",
+   "Later the surveying, the photo stitching and the sorting of sherds all went to machines. But which edge to scrape and which layer to stop at still took a person crouched in the square, reading it with a trowel, stroke by stroke.",
+   "You walk on the loess terraces of Guanzhong while the wheat turns gold. A harvester in the distance throws up a cloud of earth, and without thinking you look that way."
+  ],
+  "closing": {
+   "retire": "Many years later, your granddaughter brings home a tile fragment she found at kindergarten and asks what it is. You put on your reading glasses and turn it over for a long time, then say: this? Someone made this a very long time ago.",
+   "burnout": "Many years later, one afternoon, you sit on the balcony watching the children below dig tunnels in the sandpit. One of them finds a stone and holds it up with a shout, and you laugh along.",
+   "end": "Many years later, at the bottom of the bookcase, you find your old trowel, its wooden handle polished by your hand. You weigh it in your palm, then put it back."
+  }
+ }
+}

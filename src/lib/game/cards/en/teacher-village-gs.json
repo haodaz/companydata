@@ -1,0 +1,161 @@
+{
+ "id": "teacher-village-gs",
+ "occupation": "Primary School Teacher",
+ "role": "Special-Post Teacher at a Village Primary School",
+ "headline": "A primary school teacher fresh from teacher's college, placed through the rural Special-Post Teacher program at a mountain village school in Dingxi, Gansu, teaching a whole class alone plus three extra subjects",
+ "unit": "A village primary school (grades one to four) in the mountains of Dingxi, Gansu",
+ "unit_type": "Village primary school",
+ "city": "Dingxi",
+ "city_tier": "Fourth-tier (rural mountain area)",
+ "education": "Bachelor's degree in Primary Education",
+ "level": "You can teach a whole class Chinese and math on your own. Your demonstration lessons are still too crowded with your own talking, and you're only beginning to learn about mixed-grade teaching and the children whose parents work far away.",
+ "intro": "The school sits below a ridge: a two-story classroom block, a dirt playground, and a poplar older than the school itself. Twenty-seven pupils and four teachers; the principal has taught here for thirty years. You live in a brick room behind the classroom block, and at the head of your bed is an army greatcoat left behind by the last special-post teacher. From today, third grade is yours: Chinese and math are both yours, and music and art come round to you too.",
+ "salary_note": "Estimate: special-post teachers at rural schools in Dingxi are paid by central and provincial funds, plus a living allowance for rural teachers, taken at 85 percent of the national figure. After three years you join the permanent staff on local teacher pay, which only rises noticeably with professional rank.",
+ "facts": [
+  { "label": "New Teacher, Special Post (current level)", "value": "0–3 years, ¥3,500–5,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Second-Grade Teacher (3–8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Keeping pupils safe at school, staying in touch with families and the community, and guiding pupils' moral development", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Delivering a well-rounded education, leading in the classroom and raising teaching quality", "source": "AI exposure" },
+  { "label": "Open positions", "value": "74 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "First you light the coal stove in the classroom. By the time smoke rises from the chimney, there are already children on the path over the ridge.",
+  "Morning reading. You lead your nine third-graders through the lesson text, and the first and second grades' voices come through the wall from next door, each side trying to be louder.",
+  "Morning break, and you hand out the free school nutrition meal: a carton of milk and an egg. A second-grade girl tucks her egg into her pocket and says she's taking it home for her grandmother.",
+  "At noon you and the principal take turns in the school kitchen heating lunch for the children who live far away. Stirring the pot, the principal tells you which families' children need an extra look.",
+  "Afternoon English is a dual-teacher class: a teacher at a primary school in the county town teaches from the screen, and at this end you lead the reading, keep order and hand out worksheets.",
+  "School's out. You walk the children part of the way and watch them go over the ridge in twos and threes, schoolbags bouncing on their backs.",
+  "A home visit. One pupil's parents work in another province, and the grandfather can't read. Sitting on the edge of the kang, the heated brick bed, you tell him the child writes good compositions; he can't stop smiling and fills a bag with potatoes for you.",
+  "Back in your room you mark homework, wrapped in the greatcoat against the cold. Your phone has one bar of signal, and you send home two words: all fine."
+ ],
+ "ladder": [
+  { "title": "New Teacher (Special Post)", "stage": "Special post", "focus": "Three years of service: teach a whole class, look after the meals and the stove, make home visits, then pass the review to join the permanent staff and receive a grade." },
+  { "title": "Second-Grade Teacher", "stage": "Settled", "focus": "Teach the upper grades, lead the school's Chinese teaching, run the dual-teacher classes, and start mentoring new special-post teachers." },
+  { "title": "First-Grade Teacher", "stage": "Core", "focus": "A well-known teacher in the township who teaches and reviews lessons at the central school, runs the school's academic affairs and records, and mentors new teachers." },
+  { "title": "Senior Teacher", "stage": "County core", "focus": "A key teacher and trainer in the county: lead a county research project, take demonstration lessons out to other townships, and help young teachers apply for promotion." },
+  { "title": "Professor-Level Senior Teacher", "stage": "Master teacher", "focus": "Run a city master teacher studio, coaching teachers from across the townships on lessons and papers, while still teaching at the village school." }
+ ],
+ "ai_tasks": [
+  { "name": "Delivering a well-rounded education, leading in the classroom and raising teaching quality", "how": "AI can help with lesson preparation, set exercises, mark basic homework, summarize how the class is doing and produce teaching materials, saving a great deal of repetitive work. How to teach, how to lead a classroom, which way a well-rounded education should go, and meeting the school's targets are still for the teacher to decide and answer for." },
+  { "name": "Teaching and educating pupils and supporting their all-round development", "how": "AI can push exercises at each child's pace, answer questions and keep learning records, helping to teach each child as an individual. How a child's character, habits, interests and feelings grow depends on the teacher's daily watching, company and example." },
+  { "name": "Keeping pupils safe at school, staying in touch with families and the community, and guiding pupils' moral development", "how": "At most AI can draft notices to families, suggest ways to phrase difficult conversations and compile safety reminders. Actually keeping an eye on the children, dealing with emergencies on the spot, talking face to face with parents and guiding the children all need someone present and accountable, and only a teacher can do that." }
+ ],
+ "events": {
+  "e_first_open": "Your first demonstration lesson, with the teaching supervisor from the township central school in the back row. Afterwards he says only one thing: you talk too much, let the children talk.",
+  "e_snow": "A heavy snowfall closes the mountain road, and half the children can't come in. You and the principal walk an hour through the snow, door to door, delivering exercise books.",
+  "e_stove": "The coal stove goes out in the night, and in the morning there's ice in the classroom water bucket. You get up an hour early to light it, and when the children come in, the room has just begun to warm.",
+  "e_quiet_boy": "A boy goes a week without speaking. Later you learn that his mother left after New Year and hasn't called since. You sit with him for ten minutes after school every day, and in the second month he starts writing about his dog in his compositions.",
+  "e_lonely": "At weekends you're the only one left at school, the mountains so quiet there's nothing but the wind. You call your university roommate for an hour; she works at a tutoring company in the city and says you sound like a volunteer on a rural teaching stint.",
+  "e_ai_prep": "The AI lesson-planning assistant on the education platform can write lesson plans, set exercises and mark mental arithmetic. You use it to make your tests, and spend the evenings it saves you reading storybooks to the children.",
+  "e_ai_accent": "You have the children practice reading aloud in standard Mandarin with an AI app on a tablet, and it keeps marking their Dingxi accent as wrong. You switch off the scoring and listen to them yourself, word by word.",
+  "e_exam": "Your class comes second in the township's Chinese exam. At the staff meeting the principal says: our village school is no worse than the central school.",
+  "e_midnight_call": "A parent working far away calls in the middle of the night to ask how the child is doing at school, and starts crying partway through. You hear them out and say: the child is doing well, don't worry.",
+  "e_love": "At a training session in the county town you meet a math teacher from the township central school, who rides out to the village on a motorbike to see you, bringing a bag of tangerines bought in town.",
+  "e_marry": "You get married. The wedding is held in the township, and every child in the school lines up to wish you well, each clutching a paper flower they folded themselves.",
+  "e_house": "You take out a mortgage on a flat in Dingxi city, and only go back at weekends. Working it out, you spend far fewer days there than in your room at school.",
+  "e_child": "Your child is born. When your leave ends, you leave the baby with the grandparents and go back to the village school. Standing in front of a room full of children on your first day back, you suddenly miss home very much.",
+  "e_merge": "The county reorganizes its schools, and the village school keeps only first and second grade; the older children go to board at the township central school. You stand in the emptied classroom, last year's cleaning roster still on the wall.",
+  "e_new_building": "The school gets a new classroom block with heating, a rubberized playground and a small reading corner. On the first day the children run around the playground for a whole lesson and won't stop.",
+  "e_flowers": "On Teachers' Day the children pick a big bunch of wild chrysanthemums on the mountainside, put them in a washed-out canning jar, and set it on your desk.",
+  "e_voice": "Years of walking mountain paths for home visits and standing to teach, and your knees and throat have both started to give you trouble. In winter, two lessons are enough to leave you hoarse.",
+  "e_pupil": "One of your very first pupils gets into a teachers' university. In the summer holidays she comes back to see you and says she wants to come back and teach too.",
+  "e_new_teacher": "A new special-post teacher arrives and spends her first weekend crying in her room. You bring her home for a bowl of jiangshui noodles, the local sour-broth kind, and tell her you were the same.",
+  "e_parent": "Your father back home is in hospital, and the school can't find anyone to cover your classes. You listen to the doctor on the phone, and after school you catch the last bus to the hospital."
+ },
+ "choices": {
+  "c_stay": { "title": "The special post ends: stay, or go?", "situation": "Your three years of service are nearly up. Pass the review and you join the permanent staff at this village school; or you can start over somewhere else, and your university roommate is urging you to take the graduate exam and move to a city. The principal doesn't try to persuade you. He only mentions that this year's new pupil list includes the younger brother of a child you once visited at home.", "options": [
+   { "label": "Stay and join the staff", "result": "You sign the form to join the permanent staff. That afternoon you walk the children a little further than usual." },
+   { "label": "Stay, but aim for the county town", "result": "You join the staff and start preparing for the transfer exam to a county town school. At weekends you study in your room; on weekdays you teach your class as always." },
+   { "label": "Take the graduate exam and leave", "result": "You hand your class to the new teacher and leave the army greatcoat at the head of the bed.", "end": "You pass the graduate exam and study education at a university in Lanzhou, writing your thesis on reading at village schools in the mountains. The first line of your acknowledgments is for those twenty-seven children." }
+  ] },
+  "c_degree": { "title": "Study for a part-time master's in education?", "situation": "A provincial teachers' university offers a part-time master's in education, with classes in the winter and summer holidays. It would count for professional rank and for a move to the county town. But the holidays are your only time to go home, and you'd pay the fees yourself.", "options": [
+   { "label": "Enroll", "result": "You spend three winter holidays and two summers at classes in Lanzhou, and write your thesis on mixed-grade teaching at village schools. At your defense your supervisor asks: what became of those children?" },
+   { "label": "Don't enroll", "result": "You keep the holidays for your family. When term starts you tell the children about the places you went, and their eyes light up." }
+  ] },
+  "c_ai": { "title": "Become a lead teacher for AI teaching?", "situation": "The county is rolling out an AI learning platform and dual-teacher classes in village schools, and wants one lead teacher in each township: learn it first, use it first, teach the other teachers, check whether the AI's questions and marking are right, and teach the children to use it safely. No extra pay, and weekend training in the county town.", "options": [
+   { "label": "Do it", "result": "You go through the AI's questions one by one and cut half of them as wrong for mountain children. The user guide you write is later used by every village school in the county." },
+   { "label": "Don't", "result": "You use the platform by someone else's guide and spend the time saved on a few more home visits. When the children are on the tablets, you watch from beside them." }
+  ] },
+  "c_first": { "title": "Apply for First-Grade Teacher", "situation": "You need five years of teaching, a demonstration lesson at township level or above, a decent paper, and a recommendation slot from the central school. The township has only two slots this year, and you and a teacher from the central school have both applied.", "options": [
+   { "label": "Apply all out", "result": "You put together years of lesson plans, recordings of your demonstration lessons and the children's compositions, and spend a month of late nights on your paper. On review day, they watch the recording of your lesson." },
+   { "label": "Let the central school's teacher go first", "result": "That teacher gets through and from then on always brings you along to teaching workshops. You're a year later, and the whole township remembers it." }
+  ] },
+  "c_principal": { "title": "Take over as principal of the village school?", "situation": "The old principal is retiring, and the central school wants you to take over: four teachers and dozens of children to keep fed, housed and safe, the nutrition meal records, building repairs, and every kind of inspection. You'd still teach your classes, with twice as much else to do.", "options": [
+   { "label": "Take it", "result": "The old principal hands you a big bunch of keys and tells you, one by one, which door each one opens. The last one is for the kitchen." },
+   { "label": "You just want to teach", "result": "You recommend a young teacher sent over by the central school and keep teaching your own class. Whenever the new principal has a problem, he comes to ask you first." }
+  ] },
+  "c_county": { "title": "Take the transfer exam for a county town school?", "situation": "A primary school in the county town is recruiting teachers by transfer exam. Pass, and you'd leave the mountains, your own child could go to school in town, and you'd be close to the flat you're paying for. But if you go, this village school is one teacher short again.", "options": [
+   { "label": "Go to the county town", "result": "You pass. On the day you leave, a few children run after the car for a stretch, and you don't dare look back." },
+   { "label": "Stay at the village school", "result": "You don't sit the exam. That summer you grow the school's reading corner from one bookshelf to three." }
+  ] },
+  "c_company": { "title": "Make education products in Lanzhou?", "situation": "Your university roommate does curriculum work at a company in Lanzhou that makes AI learning devices. She says they need someone who understands rural children, at twice your current pay, with no more stoves to light or mountain paths to walk. But you'd no longer stand in front of a class.", "options": [
+   { "label": "Go to Lanzhou", "result": "You hand in your resignation, copy out your class list, and slip it into the notebook you always carry.", "end": "You move to Lanzhou to design curriculum for education products, writing questions and recording lessons for learning devices. After every question you write, you stop and think: would that child in the mountains understand it?" },
+   { "label": "Stay", "result": "You say thank you. The next morning, as always, the first thing you do is light the stove." }
+  ] },
+  "c_senior": { "title": "Apply for Senior Teacher", "situation": "Teachers with enough years at rural schools get some extra weight in promotion reviews, but not one document can be left out: research projects, papers, demonstration lessons, teachers you've mentored. If you get it, you're a key teacher for the county and will take lessons out to other townships.", "options": [
+   { "label": "Apply", "result": "You put more than ten years of lesson plans, a project report and recordings of your mentees' lessons into the file. At the interview a panel member asks what your hardest lesson was. You say: the one after the children had gone." },
+   { "label": "Stop applying", "result": "You say you'll see the children in your hands through first. That year you write no applications and plant a row of sunflowers along the playground with the children." }
+  ] },
+  "c_top": { "title": "Go for Professor-Level Senior Teacher", "situation": "The city wants to put you forward for the top professional rank and have you run a master teacher studio. You'd need results, a team, lectures everywhere, and half the year away from the village school. No teacher at a rural school in the city has ever reached it.", "options": [
+   { "label": "Go for it", "result": "You set up the studio at the village school itself, so teachers from every township who come to watch your lessons have to walk a mountain path first." },
+   { "label": "Stay at the front of the class", "result": "You say you want a few more years of teaching. You recommend a teacher from the county town to lead it and go to the studio once a week yourself." }
+  ] }
+ },
+ "endings": {
+  "retire": "Your last lesson is a text about autumn, and outside the window the poplar leaves are falling. The bell rings and the children don't move. You say: class dismissed. You put the chalk back in its box, bank the stove, lock the classroom door, and hand the key to the new teacher.",
+  "burnout": "That winter your voice goes until you can't speak, and your knees swell too much for the mountain paths. The doctor tells you to rest. The central school moves you to its library. Every day you sit among the shelves logging loans, and when a child comes in, you tell them a story in a very quiet voice."
+ },
+ "stages": [
+  "You teach a whole class on your own: Chinese, math and moral education are all yours, and music and art come round to you too. Every day you plan, teach and mark; at break you watch the meals, the stove and whose shoes are wet; after school you make home visits and fill in forms. Once a month the central school's teaching supervisor sits in on a lesson, and your lesson plan book is covered in his red pen.",
+  "You've joined the permanent staff and found your feet at this village school. You teach fourth grade and lead the school's Chinese teaching, and you're first up for the township's demonstration lessons; the dual-teacher classes are yours to run, the county teacher teaching from there while you lead from here. Parents come to you first, and the new special-post teachers are yours to mentor.",
+  "You're a well-known Chinese teacher in the township, invited to teach and review lessons at the central school's workshops. You still teach at the village school and also run its academic affairs: the timetable, the student records system, inspections, the nutrition meal accounts. New teachers are yours to train, and you sit at the back for their first lesson.",
+  "You're on the county's list of key teachers and train rural teachers. Alongside your own teaching you lead a county research project on reading among mountain children, and when the county teaching office takes lessons out to the countryside, you go along to give demonstration lessons in other townships. Young teachers often bring you their promotion files to look over.",
+  "Your name is on the door of a city master teacher studio, with a dozen-odd teachers from townships across the area. You polish their lessons, revise their papers and take them to exchanges in the provincial capital, and you still teach a few lessons a week at the village school. When the province holds a conference on rural education, they ask you to describe what a mountain classroom is like."
+ ],
+ "work": [
+  "Xiao Hu in first grade keeps writing b and d backwards. You hold up both hands for him: the left hand is b, the right hand is d. The next day he comes to school holding up both hands.",
+  "You measure the whole class's height and weight for the nutrition meal records. Three children weigh less than last year, and you draw a circle beside the table.",
+  "On rainy days you put a plastic basin by the classroom door, and the children scrape the mud off their shoes as they come in. The last one in has walked from the farthest village.",
+  "In a dual-teacher class, the county teacher asks a question and no one at this end raises a hand. You go to the back row and say quietly: it's all right to get it wrong. Three hands go up.",
+  "You sit in on a new special-post teacher's lesson, and she talks for forty minutes without stopping. In your notebook you write one line: leave five minutes for the children.",
+  "At the end of term you write a comment for every child, thirty children over three evenings, each one different. One parent says it's the first time anyone has written about their child like that.",
+  "You rearrange the whole school's timetable and move PE to the third period of the morning, when the ice on the playground has just melted.",
+  "The county comes to inspect the nutrition meal records, and you stack three years of delivery and stock slips on the table. The inspector leafs through them for half an hour and says: yours are the clearest.",
+  "At a new teacher's first lesson you sit in the back row. Afterwards you tell her only one thing: that child who never raises a hand, ask him first next time.",
+  "Taking lessons out to the countryside, you teach a reading lesson at a village school in another township, using compositions written by that class's own children. Afterwards several children crowd round asking for your autograph.",
+  "Your county research project tracks how much more than a hundred children read over two years. On the last page of the final report you write: put the books where children can reach them.",
+  "A young teacher brings you the paper for his promotion file. You circle a passage copied from the internet and tell him to replace it with something from his own class.",
+  "Teachers from the studio come to the village school to watch your lesson. It's on a text about autumn rain, and outside the window it happens to be raining.",
+  "At the provincial conference on rural education you speak for twenty minutes without a single slide, just reading out three children's compositions.",
+  "You go through a township teacher's lesson plan with him for the seventh time. In the end he changes only the opening sentence, and the lesson comes alive."
+ ],
+ "past": [
+  "You're in your last year of middle school in a town near Tianshui. Your homeroom teacher came from the city on a rural teaching program, taught you for two years, then left; the whole class cried the day she went.",
+  "Your gaokao (college entrance exam) score is neither high nor low, and you choose primary education at a teachers' college. Your mother says teaching is a safe job.",
+  "In the summer after your second year you spend a month volunteering at a mountain village in Linxia. The children follow you up the hills to pick wildflowers, and for the first time you feel you could do this.",
+  "In your third year you earn your teaching certificate and a high grade in the standard Mandarin test, and do your teaching practice at a primary school in a county town. Your supervising teacher says your voice is too quiet, and you practice in front of a mirror for a month.",
+  "The year you graduate you sit the Special-Post Teacher exam and are placed at a mountain village primary school in Dingxi. The day the notice comes, you search the map for a long time to find the village's name."
+ ],
+ "late": {
+  "pension_note": "Estimate: rural teachers on the permanent staff draw the public-sector pension plus an occupational annuity, with the three special-post years counted as service, about 75 percent of the final monthly salary.",
+  "scenes": [
+   "On the day you retire, every child in the school lines up on the playground. You touch each one on the head, and at the school gate you look back; the old poplar is still there.",
+   "You move to Dingxi city. Once, at the market, a young man selling potatoes calls you teacher, and it takes you a long time to remember his name.",
+   "Your pension arrives every month, enough for you and your spouse and for books for your grandson. You start a weekend reading corner in your housing estate, and the neighbors' children all come.",
+   "The pupil who went to teachers' university comes back to your village school and later becomes its principal. She sends you a photo: the bookshelves in the classroom, completely full.",
+   "In the central school's library you log loans and mend worn books. Your voice gets its rest; your hands don't.",
+   "More and more children come to borrow books. You remember what each of them likes, and when new books arrive, you set them aside for them first.",
+   "You learn to make short videos on your phone, of the mountain scenery and your old classroom. In the comments people often write: teacher, I recognize it.",
+   "For the first term after leaving the village school, you always wake at seven, thinking of the stove that needs lighting.",
+   "Your new job goes well. Sometimes you open the class photo on your phone and count the children's names one by one.",
+   "You go back to the village once. The school has been merged away and the classroom is now the village activity room. The blackboard is still there, and on it someone has written: welcome home.",
+   "Later lesson planning, test-setting and marking were all handed to AI, and dual-teacher classes brought county teachers into the mountains. But the stove still needed a person to light it, the path a person to walk the children home, and when a child cried, someone had to crouch down.",
+   "You stand on the ridge looking at the terraced fields, layer upon layer, the potatoes in white flower. The wind comes up from the gully, and you remember the small figures going over the ridge to school."
+  ],
+  "closing": {
+   "retire": "Many years later, one winter night, your grandson is doing homework under the lamp and writes b and d backwards. You hold up both hands to show him.",
+   "burnout": "Many years later you sit in the sun on the balcony with an old Chinese textbook, its pages yellowed. You turn to a lesson and read it aloud softly, as if to a room full of children.",
+   "end": "Many years later, at the bottom of a trunk, you find a bunch of dried wild chrysanthemums pressed in an old lesson plan book. You breathe them in, and there's still a little of the mountainside in them."
+  }
+ }
+}
