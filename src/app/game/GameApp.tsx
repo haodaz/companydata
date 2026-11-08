@@ -72,8 +72,9 @@ function Home({ busy, err, onEnter, resume, onResume, archive }: { busy: boolean
         <h1 className="g-title">入一行，过一生</h1>
         <p className="g-lead">抽一张入职登记卡。城市、单位、资历都不由你选，就像真的入行一样。从这一天起，一年一年，把这段职业生涯过到退休。</p>
         <button className="g-deck" disabled={busy} onClick={onEnter} aria-label="抽一张入职登记卡">
-          <span className="g-back b3" /><span className="g-back b2" />
-          <span className="g-back b1"><i>入职登记卡</i><b>{busy ? '…' : '?'}</b><em>{busy ? '正在分配' : '点一下，入行'}</em></span>
+          <svg className="g-strap" viewBox="0 0 120 70" aria-hidden><path d="M20 0 L52 62 M100 0 L68 62" stroke="#1f3d6b" strokeWidth="10" /><path d="M20 0 L52 62 M100 0 L68 62" stroke="#f6f1e3" strokeWidth="1" strokeDasharray="3 4" /><rect x="48" y="56" width="24" height="12" rx="3" fill="#c9cfd8" stroke="#1f3d6b" /></svg>
+          <span className="g-back b3"><Badge /></span><span className="g-back b2"><Badge /></span>
+          <span className="g-back b1"><Badge busy={busy} top /></span>
         </button>
         <div className="g-actions center">
           <button className="g-btn primary big" disabled={busy} onClick={onEnter}>{busy ? '正在分配…' : resume ? '重开一行' : '入行'}</button>
@@ -93,6 +94,44 @@ function Home({ busy, err, onEnter, resume, onResume, archive }: { busy: boolean
       </section>}
       <footer className="g-foot">不用登录，存档只在这台设备上<Tip /></footer>
     </main>
+  );
+}
+
+/** 横版工牌（入职登记卡）：深蓝底白线刻、米白双线框、底部祥云，和插画同一个刻印风格；字是真字 */
+function Badge({ busy, top }: { busy?: boolean; top?: boolean }) {
+  const cream = '#f6f1e3';
+  const cloud = (x: number, y: number, k: number) => <g transform={`translate(${x} ${y}) scale(${k})`} key={`${x}-${y}`}>
+    <path d="M0 10 C0 2 9 -2 14 4 C16 -3 27 -3 29 5 C35 2 41 7 38 13 C36 17 30 17 29 13 C28 9 33 8 33 11" />
+    <path d="M14 4 C10 6 10 12 15 12 C19 12 19 7 16 7" /><path d="M0 10 C-3 15 3 18 6 15" /></g>;
+  return (
+    <svg viewBox="0 0 320 200" className="g-badge" aria-hidden={!top}>
+      <defs>
+        <pattern id="g-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><line x1="0" y1="0" x2="0" y2="6" stroke={cream} strokeWidth=".6" opacity=".09" /></pattern>
+      </defs>
+      <rect x="0" y="0" width="320" height="200" rx="16" fill="#153052" />
+      <rect x="0" y="0" width="320" height="200" rx="16" fill="url(#g-hatch)" />
+      <rect x="9" y="9" width="302" height="182" rx="10" fill="none" stroke={cream} strokeWidth="1.6" opacity=".85" />
+      <rect x="14" y="14" width="292" height="172" rx="7" fill="none" stroke={cream} strokeWidth=".6" opacity=".5" />
+      <rect x="140" y="18" width="40" height="8" rx="4" fill="#e9e3d3" />
+      {/* 证件照：线刻人像剪影 */}
+      <rect x="28" y="44" width="76" height="94" rx="4" fill="none" stroke={cream} strokeWidth="1.2" />
+      <g stroke={cream} strokeWidth="1.2" fill="none" opacity=".9">
+        <circle cx="66" cy="80" r="14" />
+        <path d="M40 132 C42 112 54 104 66 104 C78 104 90 112 92 132" />
+        {[0, 1, 2, 3, 4].map(i => <line key={i} x1={44 + i * 3} y1={126 - i * 3} x2={88 - i * 3} y2={126 - i * 3} opacity=".25" />)}
+      </g>
+      <text x="66" y="86" textAnchor="middle" fill={cream} fontSize="20" fontWeight="700" fontFamily="var(--font-serif-sc), serif">{busy ? '…' : '?'}</text>
+      {/* 抬头和三条空白 */}
+      <text x="120" y="56" fill={cream} fontSize="19" fontWeight="900" letterSpacing="3" fontFamily="var(--font-serif-sc), serif">入职登记卡</text>
+      <text x="121" y="70" fill={cream} fontSize="7" letterSpacing="2.2" opacity=".7">EMPLOYMENT  CARD · 1JOB1LIFE</text>
+      {['姓名', '单位', '岗位'].map((t, i) => <g key={t}><text x="121" y={96 + i * 20} fill={cream} fontSize="10" opacity=".85">{t}</text><line x1="148" y1={98 + i * 20} x2="290" y2={98 + i * 20} stroke={cream} strokeWidth=".8" opacity=".6" /></g>)}
+      {/* 底部祥云 */}
+      <g stroke={cream} strokeWidth="1.2" fill="none" opacity=".8">{cloud(20, 150, 1.45)}{cloud(84, 160, 1.05)}{cloud(132, 148, 1.35)}{cloud(190, 160, 1.1)}</g>
+      <path d="M18 178 C60 170 110 184 160 176 C190 171 214 178 232 176" stroke={cream} strokeWidth=".8" fill="none" opacity=".45" />
+      {/* 章：待分配 */}
+      <g transform="translate(262 152) rotate(-12)" opacity=".85"><circle r="22" fill="none" stroke={cream} strokeWidth="1.4" /><circle r="18" fill="none" stroke={cream} strokeWidth=".6" />
+        <text y="4" textAnchor="middle" fill={cream} fontSize="10" fontWeight="700" letterSpacing="1">{busy ? '分配中' : '待分配'}</text></g>
+    </svg>
   );
 }
 
@@ -405,19 +444,17 @@ const CSS = `
 .g-hero { text-align: center; padding-top: 18px; }
 .g-hero .g-lead { max-width: 520px; margin: 0 auto 8px; }
 .g-actions.center { justify-content: center; }
-.g-deck { position: relative; display: block; width: 190px; height: 266px; margin: 30px auto 22px; border: 0; background: none; padding: 0; cursor: pointer; }
+.g-deck { position: relative; display: block; width: min(300px, 82vw); aspect-ratio: 320 / 200; margin: 64px auto 30px; border: 0; background: none; padding: 0; cursor: pointer; }
 .g-deck:disabled { cursor: default; }
-.g-back { position: absolute; inset: 0; border-radius: 16px; background: linear-gradient(150deg, #2c5f9e, #1f3d6b 70%); box-shadow: 0 18px 40px rgba(31,61,107,.28); transition: transform .35s; }
-.g-back::before { content: ''; position: absolute; inset: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,.35); background: repeating-linear-gradient(45deg, rgba(255,255,255,.05) 0 8px, transparent 8px 16px); }
-.g-back.b3 { transform: rotate(-9deg) translate(-26px, 8px); opacity: .55; }
-.g-back.b2 { transform: rotate(7deg) translate(24px, 6px); opacity: .75; }
-.g-back.b1 { display: grid; align-content: center; justify-items: center; gap: 8px; color: #eef3fa; animation: g-float 3.6s ease-in-out infinite; }
-.g-back.b1 i { font-style: normal; font-size: 13px; letter-spacing: .3em; opacity: .85; position: relative; }
-.g-back.b1 b { font-family: var(--font-serif-sc), serif; font-size: 64px; line-height: 1; position: relative; }
-.g-back.b1 em { font-style: normal; font-size: 13px; opacity: .8; position: relative; }
-.g-deck:not(:disabled):hover .b1 { transform: translateY(-8px); }
-.g-deck:not(:disabled):hover .b3 { transform: rotate(-12deg) translate(-34px, 10px); }
-.g-deck:not(:disabled):hover .b2 { transform: rotate(10deg) translate(32px, 8px); }
+.g-strap { position: absolute; left: 50%; top: -58px; width: 84px; transform: translateX(-50%); z-index: 4; pointer-events: none; animation: g-float 3.6s ease-in-out infinite; }
+.g-back { position: absolute; inset: 0; border-radius: 16px; box-shadow: 0 16px 36px rgba(21,48,82,.28); transition: transform .35s; }
+.g-badge { display: block; width: 100%; height: 100%; }
+.g-back.b3 { transform: rotate(-7deg) translate(-18px, 14px); opacity: .55; }
+.g-back.b2 { transform: rotate(5deg) translate(16px, 10px); opacity: .75; }
+.g-back.b1 { z-index: 3; animation: g-float 3.6s ease-in-out infinite; }
+.g-deck:not(:disabled):hover .b1 { transform: translateY(-6px); }
+.g-deck:not(:disabled):hover .b3 { transform: rotate(-9deg) translate(-26px, 16px); }
+.g-deck:not(:disabled):hover .b2 { transform: rotate(7deg) translate(24px, 12px); }
 @keyframes g-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 .g-three { display: grid; gap: 12px; margin-top: 34px; }
 @media (min-width: 640px) { .g-three { grid-template-columns: repeat(3, 1fr); } }
