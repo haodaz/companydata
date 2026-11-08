@@ -1,0 +1,181 @@
+{
+ "id": "career-advisor-dl",
+ "occupation": "Career Advisor",
+ "role": "University Career Center Advisor",
+ "headline": "At an engineering university in Dalian, you edit seniors' resumes with one hand and with the other watch the employment-placement rate the school must report by the end of August",
+ "unit": "A provincial engineering-focused university in Dalian, 20,000 students, seven staff at the career center, on the new campus along Lüshun South Road",
+ "unit_type": "Provincial public university",
+ "city": "Dalian, Liaoning",
+ "city_tier": "Second-tier",
+ "education": "Master's (Applied Psychology)",
+ "level": "Fresh from your master's, fluent in counseling theory, but no student has yet sat in front of you and said, 'Teacher, I don't actually want to do anything'",
+ "intro": "The career center is on the second floor of the new campus's main building. The corridor is hung with old job-fair posters, and the counseling room holds just two chairs and a box of tissues. The first thing you are handed is the autumn recruitment schedule. The second is last year's placement rate, to two decimal places. The sea wind hums in the window frame, and the first campus recruiting talk of September is next Tuesday.",
+ "salary_note": "Estimate: support staff at a provincial university in Dalian, pay plus campus allowance, about 30% below the database's corporate-leaning figure.",
+ "facts": [
+  {
+   "label": "Career Guidance Teacher (current level)",
+   "value": "0–4 years, ¥3,800–5,200 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Career Development Lecturer (4–10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥7,500 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Listening one-on-one until a student can say where they really stand",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Editing resumes and running mock interviews",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "102 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "You catch the campus shuttle from around Xinghai Square and open your email on the bus. A shipbuilding supplier wants to move its recruiting talk up a day.",
+  "First appointment in the counseling room: a senior in mechanical engineering with a four-page resume. You cross out three pages and ask which class he liked best. He thinks for a long time and says metalworking practice.",
+  "Backstage at the auditorium you meet the HR people, test the projector, set up the banners. Half as many students show up as signed up. You go next door and recruit half a study hall.",
+  "In the online signing system, the company name on a three-party employment agreement doesn't match its seal. You call the student to have it fixed. He's on a ship for his internship, and the signal keeps cutting out.",
+  "You teach two first-year career planning classes on the Holland interest test. In the back row someone is grabbing courses online. Someone else is staring at their own result seriously for the first time.",
+  "The college's deputy Party secretary sends this week's placement tracker, with three majors in red. You reply 'received' and pull up the unplaced students in those three majors.",
+  "An evening session. A young woman says her family wants her to take the civil service exam and she wants to work at the software park. You give her no answer, only ask her to go home and make a list. You pass the tissue box across once."
+ ],
+ "ladder": [
+  { "title": "Career Guidance Teacher", "stage": "Seeing students", "focus": "One-on-one counseling, resume edits, scheduling recruiting talks, handling employment agreements; you rise on student word of mouth and counseling certificates" },
+  { "title": "Career Development Lecturer", "stage": "Courses and projects", "focus": "Teaching the required career planning course, leading the peer counseling team, working with key employers, going for the lecturer title" },
+  { "title": "Deputy Director of the Career Center", "stage": "Running a section", "focus": "Running campus recruiting or the data, assigning work to colleges, answering for the placement numbers" },
+  { "title": "Director of the Career Center", "stage": "The whole university", "focus": "The master account of employment for the university: dealing with the provincial education department and big employers, reporting to university leaders" }
+ ],
+ "ai_tasks": [
+  { "name": "Listening one-on-one until a student can say where they really stand", "how": "AI can give assessments and paths. The half-sentence a student can't get out, the pressure from home, the plan unspoken: those take a person to hear." },
+  { "name": "Editing resumes and running mock interviews", "how": "AI polishes a resume in seconds and generates interview questions. Whether this experience belongs on the page and whether the student is telling the truth still have to be asked in person." },
+  { "name": "Tallying graduate destinations and filing employment data", "how": "The system pulls together signed agreements and destination data, produces reports and warnings. People spot-check the definitions." },
+  { "name": "Interpreting assessments and teaching career planning", "how": "AI can prepare classes and interpret results in bulk. Bringing a classroom to life and helping students match results to themselves still takes a person." },
+  { "name": "Keeping up relations with employers and arranging campus recruiting", "how": "AI can match jobs and book rooms. Which HR contact is reliable and which company recruited last year and then reneged: that comes from years of dealing with them." }
+ ],
+ "events": {
+  "e_autumn": "September to November is autumn recruiting, eleven talks a week. Your voice goes hoarse and you lecture through a microphone. You buy throat lozenges by the box. Students tell you you sound different.",
+  "e_august": "August 31 is the reporting date. All summer the campus has no students, and you make calls one by one from the office. Someone is running a stall at the beach; someone says wait a little longer. You choose your words carefully in the remarks column.",
+  "e_soft": "A Japan-outsourcing company in the software park wants sixty computer science graduates with Japanese, all at once, and its campus session spills into the corridor. You write it onto your list of key employers.",
+  "e_softdown": "The yen falls, and that outsourcing company's hiring goes from sixty to six. You change one line on the key-employer list. Several students from the intensive Japanese class come to ask if they should keep going.",
+  "e_ship": "Orders are back at the shipyard, and your old acquaintance in its HR department drives onto campus to collect people. Room and board included, he says, and more than last year. Within a week the welding and marine engineering kids are all picked over.",
+  "e_renege": "After Spring Festival, one employer reneges on three signed agreements, after the students had already turned other offers down. You spend an afternoon on the phone with the agreements in hand. You recover a breach payment. The jobs you can't.",
+  "e_parent": "A mother comes from Wafangdian and sits in the counseling room demanding that you tell her why her child won't look for a job. You can say only what you can say. What a student tells you stays between these two chairs.",
+  "e_thank": "That boy with the four-page resume sends you a photo two years later. He's standing at a machine tool adjusting a spindle, and the caption is two words: right fit.",
+  "e_gcdf": "The university pays half and you go to Shenyang for eight days of career counselor training. During a practice session a classmate's questions make you cry. In your first week back, your questions get much shorter.",
+  "e_major": "The university stops admitting students to one major. It falls to you to tell the last few cohorts where they can go. The list of employers grows shorter each year, and the questions in the counseling room come to resemble one question.",
+  "e_throat": "Vocal nodules; you rest your voice for two weeks. For those two weeks you counsel entirely by typing, and you discover that some students say more that way than face to face.",
+  "e_winter": "January's job fair, and the wind cuts straight through the gymnasium. At the booths the HR people are hunched up. You hand out heat packs at the door and note which companies actually put the resumes in their bags.",
+  "e_review": "Officials come to verify graduate destinations, and the students selected will get a call. You make it clear to them beforehand: tell the truth; I won't tell you how to answer. All that afternoon your palms sweat with every ring.",
+  "e_ai1": "The university buys a smart resume service and students can generate one in seconds. This year's resumes are full of 'empower' and 'closed loop.' You start asking: which step of this did you do yourself?",
+  "e_ai2": "The employment system can now flag unplaced students and push job listings automatically. Your reporting work shrinks and your appointments stretch out three weeks: everyone has already seen the advice, and they want to ask a person whether it's true.",
+  "e_mentor": "The peer counseling team you lead wins a provincial prize. A student stands on stage presenting a mock case, and does it better than you did in your first year.",
+  "e_commute": "In winter the campus shuttle gets stuck twice in heavy snow on Lüshun South Road. Your child's kindergarten lets out at four-thirty, your talks start at five, and for a year the pickups are all done by the neighbor downstairs.",
+  "e_exam": "This year 60% of the class is sitting graduate entrance or civil service exams, and the library has a line by six in the morning. Students used to ask which company; now they ask whether to try for one more year. You turn your question list to a new page.",
+  "e_hr": "An HR manager at a recruiting company turns out to be your student from ten years ago. Going in the door she calls you Teacher, and going out she bargains down campus salaries. You settle the numbers on the way to the top floor in the elevator.",
+  "e_tired": "After years of hearing the same words, you notice you've started guessing the ending before a student opens their mouth. You close the counseling record and decide that this week you'll ask one more question first."
+ },
+ "choices": {
+  "c_hunter": { "title": "An HR director in the software park wants you", "situation": "An HR director you know from campus recruiting offers you a job heading up campus hiring, at double the pay, with a bonus based on results. The university gives you forty-five days of winter and summer break, but August is not among them.", "options": [
+   { "label": "Go to the software park", "result": "You complete your exit paperwork.", "end": "You went to the software park and stood on the other side of the job-fair table. The first time you came back to campus to recruit, you put the students' resumes in your bag." },
+   { "label": "Stay at the university", "result": "You thank the director, and give her company the prime Tuesday slot." }
+  ] },
+  "c_own": { "title": "Opening your own career studio", "situation": "Consulting fees for college-major choice and study abroad keep rising, and a friend wants you to open a studio in the high-tech zone at several thousand yuan a session. The university's pay is steady, but its students could never afford that.", "options": [
+   { "label": "Leave and open the studio", "result": "You rent a small office with a view of the sea.", "end": "You quit and opened your studio, and four months a year it filled up with anxious parents. There were still two chairs in the counseling room. This time you bought them yourself." },
+   { "label": "No, stay on campus", "result": "You put your friend's flyer back in your bag and go on editing resumes for kids who can't pay." }
+  ] },
+  "c_cert": { "title": "How to go for Career Development Lecturer", "situation": "To qualify as Career Development Lecturer you need publications and teaching hours. The colleges also need counselors, and if you skip research you could see two hundred more students a year.", "options": [
+   { "label": "Find time for a paper", "result": "You write a paper from three years of counseling data, with students' names changed to letters." },
+   { "label": "See the students first", "result": "Your counseling room is booked three weeks out, and the paper's box stays empty." }
+  ] },
+  "c_sign": { "title": "Two points short on the placement rate", "situation": "End of July, and one college is still two points short. The Party secretary asks whether a few students with nothing lined up could sign with a relative's company for now, and sort it out after the numbers are filed. The students are willing. The secretary is under pressure too.", "options": [
+   { "label": "Refuse to help with that", "result": "You say that agreement won't pass review. The secretary doesn't call again, and the college's number doesn't rise by the end of August." },
+   { "label": "Push them toward real jobs", "result": "You make forty calls to companies over the summer and find real work for half of them. The other half stay on the sheet." }
+  ] },
+  "c_ai": { "title": "Whether to learn the smart advising system", "situation": "The university is piloting a smart career adviser, so that each student talks to the system before coming to a teacher. The center asks who's willing to lead it. That person writes the question-and-answer rules and reviews what it says.", "options": [
+   { "label": "Lead it and learn", "result": "You write three hundred rules, including this one: when a student says they can't go on, hand them to a person immediately." },
+   { "label": "Keep doing one-on-one", "result": "Let the machine do its talking, you say, and leave your two chairs alone. Later every student asks the machine first, and you have to begin by hearing what it said." }
+  ] },
+  "c_kid": { "title": "Autumn recruiting collides with first grade", "situation": "Your child starts elementary school, and for all of September someone must do the pickups every day, just as autumn recruiting peaks. The center has only seven people.", "options": [
+   { "label": "Ask colleagues to cover and do the pickups", "result": "You swap talks for a weekend resume clinic, colleagues cover your evenings, and the year's merit award goes to someone else." },
+   { "label": "Bring the grandparents to Dalian for a year", "result": "The grandparents never adjust and complain endlessly about how hard the sea wind is. But the pickups are solved." }
+  ] },
+  "c_deputy": { "title": "Applying for Deputy Director of the Career Center", "situation": "The Deputy Director of the Career Center handles all the university's data and assesses the colleges; every call you make to a Party secretary from now on comes with a number. You would have to give up half your counseling.", "options": [
+   { "label": "Apply", "result": "You present a plan built on eight years of data. The last thing the panel asks is whether this year's rate can go up two points." },
+   { "label": "Stay in the counseling room", "result": "You put the application back in its folder. The two o'clock appointment is still waiting." }
+  ] },
+  "c_merge": { "title": "The center will be folded into Student Affairs", "situation": "In a reorganization, the career center is being merged into Student Affairs, keeping only a sign; staff will be scattered among the colleges. You can stay at headquarters doing administration or go down to a college as a full-time advisor.", "options": [
+   { "label": "Stay at headquarters", "result": "You move to another building. The counseling room has become a shared meeting room, bookable through the system." },
+   { "label": "Go to a college", "result": "Your office adjoins the machining lab, and you can hear metal cutting through the wall. A student who needs you only has to come down one floor." }
+  ] },
+  "c_director": { "title": "Applying for Director of the Career Center", "situation": "The old director has retired, and a university leader asks if you'll be Director of the Career Center. The job means meetings at the provincial department, dinners at large companies, and standing before an all-university assembly every June to read out numbers.", "options": [
+   { "label": "Take it", "result": "You learn to talk hiring needs over a banquet table, and to read decimal points aloud at assemblies." },
+   { "label": "Decline", "result": "You tell the leader that listening to people suits you better. He smiles, and the matter passes." }
+  ] }
+ },
+ "endings": {
+  "retire": "In autumn recruiting the year you turn sixty, the system schedules every talk without a slip, and you only help point people the way at the door. Your counseling records are archived and destroyed as required: more than twenty years, more than twenty thousand names, become one receipt. The counseling room on the second floor is now an online interview booth. The tissue box is still there. It holds charging cables.",
+  "burnout": "Your vocal cords fail for the third time, and all you have left is a breathy whisper. The university moves you to the archives, sorting the placement files of former graduates. No one needs you to speak there. You've read half the names on those folders aloud, and now you read them with your eyes."
+ },
+ "stages": [
+  "Each day you run between the counseling room and backstage at the auditorium. Mornings with a red pen, asking students what they actually did at that internship. Afternoons in the online signing system, going through employment agreements and confirming times with HR. The first thing the director teaches you: when a student says 'whatever,' don't take it as whatever.",
+  "You have stepped up to the lectern: the required career planning course, six classes a semester. You prepare with assessment data and past graduates' destinations, and after class you supervise a dozen peer counselors on their cases. You are no longer seeing one student at a time. You've begun to think about what a whole cohort needs.",
+  "In your hands are the university's destination data and progress sheets for twenty colleges. Mornings you talk numbers with Party secretaries, afternoons you walk employers around campus, and each week you give the vice president one page. Students used to look for you; now the colleges' phone calls do. You have to bring the numbers up without driving anyone to falsify them.",
+  "Half the year you are away: meetings at the provincial education department, signing ceremonies with big companies, banquets with the old shipyards. Back at the university you do the math on majors with its leaders and tell them which students won't be placed these next few years. What you say turns into closed programs and expanded ones."
+ ],
+ "work": [
+  "A senior has revised 'strong organizational skills' on her resume eight times. You ask what she has organized, and she says the dorm cleaning rota. You tell her to put the rota in, and to say how many fights it took.",
+  "The projector's adapter doesn't fit the HR rep's new laptop. You bike to the lab building to borrow one and get back just as the first slide opens.",
+  "One agreement has bounced three times in the system. The student's employer is a labor contractor for ships, and the seal is the head office's. It takes a call to a friend at the maritime bureau to sort out who it belongs to.",
+  "In the third week of the career course, you have the mechanical engineering boys spend five minutes writing what their parents most want them to do. Of the thirty-two slips, nineteen say civil service. You project that page onto the screen.",
+  "A peer counselor has turned a case into a pep talk. You have her listen to the recording again and count how many minutes she spoke and how many the other person did.",
+  "You write campus-recruiting feedback for an old machine tool plant's HR, telling them why students don't come: mostly, it's the commute. The following year they add a shuttle bus.",
+  "At the July progress meeting, the School of Materials has dropped three points. You name no one, project a three-year curve, and let the deputy secretary explain it. As he goes on, he brings up the factory that moved away.",
+  "A company wants a campus session and expects the school to provide the venue and send the notices. You bring up its breach record from two years ago and get the terms changed: the school provides the venue, the company pays an agreement deposit up front.",
+  "Reviewing a warning report on majors for university leaders, you change 'poor quality of employment' to three specific numbers, so that nobody can turn the page on it.",
+  "At a provincial forum you lay out ten years of hiring numbers in Japan outsourcing, a line going down. You speak evenly. A division chief asks you to send the table afterward.",
+  "The president's office meeting discusses opening a new major. You bring graduate destinations for the same major at five nearby universities. Someone says you're pouring cold water on it. You say this is just the temperature of the water.",
+  "An HR director from the shipbuilding group has dinner with you and wants fifty students trained to order. You work out internship pay and breach clauses on a napkin, and the next day send a draft contract to legal."
+ ],
+ "past": [
+  "You grow up in Zhuanghe, where your family raises sea cucumbers. Your parents say school is so you won't have to go down to the sea. A relative's kid graduates and can't find a job, and at the dinner table they talk of nothing else.",
+  "When you choose a major your parents have only heard of teaching and medicine. You pick psychology. Your homeroom teacher says it's a bad major for finding a job, and you remember that for a long time.",
+  "In your third year you work as an assistant at the campus counseling center, answering the phone and booking appointments, and notice that many who come are not asking about their minds. They're asking what happens after graduation.",
+  "You go to Shenyang for a master's in applied psychology. Your advisor's project is on college students' career decisions. You interview eighty graduates and transcribe the recordings until your wrist hurts.",
+  "Before graduating you apply to consultancies and universities. The consultancy wants you to make sales calls for three months first. The university interviewer asks what you'd do if a student cried. You say you'd wait until they had finished."
+ ],
+ "late": {
+  "pension_note": "Estimate: university pension plus occupational annuity at Dalian levels, a little higher than at a company.",
+  "scenes": [
+   "In your first half year of retirement you turn down part-time offers from three agencies. In the first week of every September you try not to read hiring news, which is harder than you thought.",
+   "The university's smart adviser now handles most sessions, and a human takes over only on transfer. The rule you wrote before retiring is still in there, though its wording has been made very pretty.",
+   "You've taken to listening to the master and apprentice bickering at the bike repair stand outside your compound, and privately doing a career analysis on the young one. It's an affliction. No one pays for it, and you don't charge.",
+   "Your voice grows ever huskier. The pension covers coffee at Xinghai Park. The sea wind is still hard, and on a bench you owe the pigeons not one word.",
+   "The days in the archives are long. You sort past students' placement papers by employer and find that in those years twice as many went to the shipyards as you remember.",
+   "Some of your voice returns. In the neighborhood you teach people to book hospital appointments on their phones. You go slowly, explaining each button three times. This time there's no placement rate.",
+   "For a while the very word 'planning' makes you want to change the channel. Later you watch only fishing shows, where nobody asks where you'll be in five years.",
+   "In the first August after leaving the university, you finally discover that summer break doesn't require phone calls. You take a walk on Bangchui Island, find it unbearably crowded, and come back.",
+   "You earn more out here than at the university, and you've met more anxious people. One parent pays ¥12,000 and wants you to guarantee that their child's major won't be obsolete for ten years. You give the money back.",
+   "The first students you worked with are in their forties now. Some have been laid off and come to ask you what to do. No appointment needed this time. You meet at a coffee shop by the sea.",
+   "Looking over other people's resumes has become a habit you can't break. A delivery rider's e-bike has a hiring notice on it, and the first thing you see is that one digit of the phone number is wrong.",
+   "Several of the professions you used to lecture about are gone, and you can't name all the new ones. You keep that interest hexagon in your head and now and then measure yourself against it."
+  ],
+  "closing": {
+   "retire": "September, and the banners are up on campus again. You walk around the gymnasium. Sea fog comes in from the south and slowly covers the flagpole.",
+   "burnout": "The folders are stacked neatly. You write down this box's archive number. The water by your hand has gone cold.",
+   "end": "Monday morning, and your calendar is full from nine. The sea is still gray, the same as it looked from the university."
+  }
+ }
+}

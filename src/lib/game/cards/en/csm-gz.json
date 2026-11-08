@@ -1,0 +1,175 @@
+{
+ "id": "csm-gz",
+ "occupation": "Customer Success Manager",
+ "role": "SaaS Customer Success Manager",
+ "headline": "A SaaS customer success manager in Guangzhou with sixty factory accounts, watching renewal dates every quarter and keeping clients through tickets and dim sum",
+ "unit": "A SaaS company of a hundred-odd people in Tianhe Software Park, Guangzhou, making order-management software for factories",
+ "unit_type": "SaaS company",
+ "city": "Guangzhou",
+ "city_tier": "First-tier",
+ "education": "Bachelor's (Information Management)",
+ "level": "Two years in implementation; you know the admin console better than the developers. You can work health scores, go-live milestones and renewal sheets, but you've never negotiated on your own for a deal about to be lost",
+ "intro": "You sit on the eleventh floor of a building in Tianhe Software Park with sixty factories in a column on your screen, each followed by a health score and a renewal date. Some factory owners will only take your calls. Some have never learned your name, but in the week before renewal they suddenly ask whether the invoice can read \"service fee.\"",
+ "salary_note": "Estimate: mid-sized Guangzhou SaaS companies pay about 20 percent below the leading firms in Beijing, Shanghai and Shenzhen. Bonuses track renewal rates, and they swing widely in quarters when contracts come due in bunches.",
+ "facts": [
+  {
+   "label": "Customer Success Manager (current level)",
+   "value": "2–5 years, ¥15,725–23,125 a month (national average, derived from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Customer Success Manager (5–10 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 5–10 years",
+   "value": "¥16,600 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Negotiating renewals with a client's senior people",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Monitoring usage data and assigning health scores",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "22 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Changing to Metro Line 5 at Zhujiang New Town, you go through the morning's alerts on your phone. Logins at a cosmetics factory in Baiyun have been falling for two straight weeks, and its health score has gone from green to yellow.",
+  "Stand-up. Engineering says last week's release has to roll back one feature. You do the sum: seven of your clients are using that feature.",
+  "A training session over video. The order clerk at a hardware factory in Panyu has the camera pointed at the ceiling. You teach her how to import customer orders anyway.",
+  "You drive to Baiyun. The smell of the filling line on the ground floor climbs the stairs. You squat beside the order supervisor's computer with her, working out why she would rather use Excel.",
+  "Nineteen tickets are waiting. Three say URGENT. One of those is a client whose printer is out of paper. You answer it all the same.",
+  "You go over the quarter's renewal list with sales. The ¥300,000 account, he says, relax about that one. You mark it yellow on the sheet.",
+  "In a living room sticky with the damp of the spring \"return-south\" weather, you write the slides for the quarterly business review. The client's boss will only look at page two, so page two takes three hours."
+ ],
+ "ladder": [
+  { "title": "Customer Success Associate", "stage": "Shadowing", "focus": "Take tickets, do training, follow go-lives, learn the product and how clients really use it" },
+  { "title": "Customer Success Manager", "stage": "Own accounts", "focus": "Run dozens of accounts through go-live, usage and renewal; answer for the renewal rate" },
+  { "title": "Senior Customer Success Manager", "stage": "Key accounts", "focus": "Handle large and difficult accounts, run quarterly business reviews, get client needs onto the product roadmap" },
+  { "title": "Head of Customer Success", "stage": "Team", "focus": "Lead the team, set health-score and tiering rules, answer to the boss for net revenue retention" }
+ ],
+ "ai_tasks": [
+  { "name": "Negotiating renewals with senior clients", "how": "AI can prepare the data and materials. What the owner is really worried about, who actually decides, whether this one can be saved: that has to be judged in person." },
+  { "name": "Monitoring usage and scoring health", "how": "AI watches logins and usage around the clock, scores and flags automatically; a person spot-checks whether the alerts are any good." },
+  { "name": "Answering common questions and sorting tickets", "how": "AI answers the common questions first, sorts tickets and drafts replies; a person handles the upset and the cross-department." },
+  { "name": "Writing training materials and go-live plans", "how": "AI can produce the materials and first drafts. Whether this factory's clerks can follow them and whether the plan will work takes a person." },
+  { "name": "Getting client needs onto the roadmap", "how": "AI can gather feedback and find what's common. Which need is worth fighting for, and how to fight, takes someone willing to argue." }
+ ],
+ "events": {
+  "e_xufei1": "Your first quarter carrying renewals alone: twelve due, eleven renewed. The owner of the one you lose says on the phone, \"There's nothing wrong with the system. You're too cheap, and I don't trust it.\"",
+  "e_champion": "The IT head at a furniture factory in Foshan leaves. He's the man who decided to buy your system. At the first meeting his replacement asks: who chose this thing?",
+  "e_yuecha": "A jewelry factory owner in Panyu will only discuss renewal over dim sum. You sit with a pot of tea and two baskets until eleven and not a word about the contract is spoken. As you leave he says: same as last year. You pay.",
+  "e_huinan": "It's the spring damp, when walls sweat. The server room at that factory in Baiyun has water on the walls and the router dies three times a day. The client blames your system. You bring two bags of desiccant and spend an afternoon squatting with their network guy.",
+  "e_gongdan": "After a release, tickets triple. For a week you're answering them past midnight. When the phone buzzes, your body tightens with it, and your wrist has begun to hurt.",
+  "e_nrr": "The process review you did for an old client leads it to buy two more modules. In the net revenue retention column for the quarter, your name is near the top for the first time.",
+  "e_daobi": "A Foshan lighting factory that ran for twenty years closes. You go into the console to mark the account as churned. The reason dropdown has no option for \"the owner gave up.\" You pick \"Other.\"",
+  "e_taifeng": "A typhoon stops work across the city, but the clients' delivery dates don't stop. From home, over remote desktop, you help a Dongguan factory reschedule three hundred orders one at a time.",
+  "e_yuyin": "You can finally follow the Cantonese on factory floors, including what the owners say to their accountants. At those moments you pretend you can't.",
+  "e_jiankang": "The AI health score goes live, watching usage all day and dispatching churn alerts to you. Of the first ten it sends, four are factories that have shut for the summer heat break.",
+  "e_duanyan": "A funding round falls through and half an engineering team is cut in one quarter. Three things you promised clients become, overnight, \"under evaluation\" on the roadmap.",
+  "e_erzhu": "Planes, trains and hard factory benches: your lower back finally objects. You keep a cushion in the trunk and walk two laps at every factory after you get out of the car.",
+  "e_bangong": "Your child starts primary school and pickups won't fit. You move all your Wednesday afternoon client visits online. No health scores change that afternoon. Nor does your child's homework.",
+  "e_xiaokehu": "Small accounts are handed to the AI service agent: common questions, training videos, renewal reminders, all automatic. Your book shrinks from sixty accounts to fifteen, and every one of them is difficult.",
+  "e_anli": "The case study you wrote about that factory in Baiyun goes up on the company site. The factory head sees it and rings to ask that his name be replaced with his wife's, because the factory is hers.",
+  "e_dakehu": "A group client is bought by a listed company whose systems are standardized, and your contract won't be renewed when it ends. Three years of work becomes one data export.",
+  "e_xiaotiao": "A young colleague uses AI to finish a set of training materials in an hour; it used to take you two days. You watch and ask him only this: can the client's order clerk follow page three?",
+  "e_xiatian": "A fifty-year-old in customer success still visiting factories: you're the only one at the company. A gatekeeper takes you for a debt collector. You don't explain, and you write \"visit\" in the log."
+ },
+ "choices": {
+  "c_jiafang": { "title": "A client invites you over", "situation": "The owner of that cosmetics factory in Baiyun says you've spent three years on their system, so why not come and run digitalization for the factory, at thirty percent more. You've seen life on the client side, and you've seen how their IT heads turn over twice a year.", "options": [
+   { "label": "Go to the client", "result": "You hand over your accounts. First on the sheet is this very factory, and the person taking over asks you if they're easy to deal with.", "end": "You go to the factory, with an office upstairs from the filling line. It takes two weeks to stop smelling it. From now on, every customer success manager who calls you calls you \"boss.\"" },
+   { "label": "Stay at the company", "result": "You thank him and promise to visit next quarter. Fine, he says, and let's bring this year's renewal price down a bit." }
+  ] },
+  "c_shishi": { "title": "Start your own implementation firm", "situation": "You've got a group of clients in Baiyun and Panyu who say the system needs someone on site and software companies come less and less. A former implementation colleague wants you as a partner in a service firm that does nothing but put systems into small factories.", "options": [
+   { "label": "Go out on your own", "result": "You rent two rooms in Shijing, next door to a leather hardware dealer.", "end": "Your implementation firm opens: six people, three cars. You don't look at health scores anymore. You look at whether the project money comes in by month's end." },
+   { "label": "Don't go", "result": "Your old colleague goes it alone and now and then passes you a referral. Neither of you mentions it again." }
+  ] },
+  "c_tingfu": { "title": "The product line is shutting down", "situation": "The company has been acquired and your old product line will shut down in two years, with every client moved to the new platform. A thousand factories' data, habits and tempers will need someone to help carry them across. Finish the migration, the company says, and there's a payout. Or you can stay.", "options": [
+   { "label": "Migrate, take the payout", "result": "You spend two years moving the hardest forty. On shutdown day, all the health scores in the console go gray.", "end": "The product line ends and you take the payout and leave this line of work. The sheet of sixty factories ends up existing only on your own computer." },
+   { "label": "Stay on the new platform", "result": "You learn the new console from scratch, surrounded by colleagues ten years younger." },
+   { "label": "Move to training content", "result": "You switch to training and case studies. No more renewal targets; just one appearance a year at the customer conference." }
+  ] },
+  "c_chengnuo": { "title": "The feature sales promised", "situation": "At signing, sales told a Dongguan factory \"it'll be in the next release.\" There's no such feature on the roadmap. At the go-live meeting the client projects the signing minutes onto the wall. Sales nudges you with a foot under the table.", "options": [
+   { "label": "Say plainly it's not scheduled", "result": "The room goes cold for ten minutes. The client says later it's the first honest thing your company has told him. Sales doesn't speak to you for a quarter." },
+   { "label": "Smooth it over, chase product later", "result": "You wear down the product manager for three months and half the feature gets built. The client pays half of what's still owed." }
+  ] },
+  "c_huangdeng": { "title": "The client under the green light", "situation": "An old client's health score looks wonderful, all green. But at the factory last week you saw purchasing trying out orders on someone else's system. The quarterly report is due and the boss likes green. Report this, and a big piece comes off the forecast.", "options": [
+   { "label": "Report it yellow", "result": "In the meeting the boss asks why you know more than the system. You say: I went there." },
+   { "label": "Don't report; save it yourself", "result": "You make five quiet trips and keep the client, and you also leave a quarter's worth of weekends in Baiyun." }
+  ] },
+  "c_gaoji": { "title": "Compete for Senior Customer Success Manager", "situation": "A Senior Customer Success Manager slot is open on the team. You have to submit a success plan for a key account and present a quarterly business review to the director. Your biggest account happens to be your ugliest.", "options": [
+   { "label": "Present the hard one", "result": "You include the two modules you lost. The director questions you closely, and remembers you." },
+   { "label": "Sit this one out", "result": "The slot goes to someone two years behind you. His slides are lovely." }
+  ] },
+  "c_qianfei": { "title": "Lock the account or not", "situation": "A hardware factory in Panyu is two payments behind and finance wants you to lock the account as the contract says. The owner's receivables are stuck with his own customers, and he sends a voice message: next month for sure. Lock it, and three hundred live orders go dark.", "options": [
+   { "label": "Lock it by the book", "result": "The account is locked. Half the money arrives the next day. From then on, the owner speaks to you only by email." },
+   { "label": "Cover for him one month", "result": "You write a guarantee and finance marks it against you. Next month the money comes. The month after, the factory is gone." }
+  ] },
+  "c_ai": { "title": "Configure the AI agent yourself?", "situation": "The company wants the customer success team to train its own AI service agent: feed in tickets and training scripts, and decide when it should hand off to a person. It's on no one's KPI. If it gets done, your job shrinks by one piece and gets harder by another.", "options": [
+   { "label": "Do it yourself", "result": "You write the handoff rule: when a client asks the same thing a second time, it goes to a person." },
+   { "label": "Leave it to operations", "result": "Operations sets the rules. Now and then you get a call from someone the AI has run in circles, and you begin by apologizing." }
+  ] },
+  "c_fuze": { "title": "Take over as Head of Customer Success", "situation": "The head has left, and the boss asks if you'd take over as Head of Customer Success. You would have to explain net revenue retention on the board's slides, and lay off a group of colleagues whose work has been average.", "options": [
+   { "label": "Take it", "result": "The first thing you do is change the weights on the health score. The second is sit down with six people." },
+   { "label": "Stay on key accounts", "result": "You let the seat go and drive out to Baiyun that afternoon as usual." }
+  ] }
+ },
+ "endings": {
+  "retire": "Before you retire you hand over your fifteen accounts, with eleven pages of notes. The new head says you needn't write what's in the system. What you've written isn't in the system: which owner doesn't take calls on Mondays, which order clerk is the one who really decides. That day the console is a sheet of green, and you no longer have to believe it.",
+  "burnout": "After three straight quarters of renewal pressure, you start waking at night to check if the phone has rung. Your checkup has more and more arrows on it. You ask for a transfer to internal training. You put the phone in airplane mode. The first night you wake anyway, and there's nothing to look at."
+ },
+ "stages": [
+  "You run sixty accounts through go-live, usage and renewal: mornings on health scores in the console, firefighting in the ticket system, afternoons out at factories. You deal mostly with clients' order clerks and IT people, and the trick is to teach them without letting them feel taught. Unlike when you were an associate, when you lose one, your name is on the sheet.",
+  "Only a dozen or so large accounts are left in your hands. Every quarter you run a business review and translate system data into money an owner understands. You spend half your time at clients and half fighting product managers for roadmap slots. You start to mentor two young people; their hard cases come to you, and you go to see the owner for them.",
+  "You no longer have accounts of your own. You have an entire net-revenue-retention table and a dozen people. Every week you argue priorities with sales and product; every quarter you explain to the boss why churn is what it is. The weights on the health score are yours to set, and so is who gets let go. Clients still ask for you by name now and then."
+ ],
+ "work": [
+  "An order clerk at a Panyu hardware factory says the system is slow. Half an hour over remote desktop and you find forty browser tabs open, each holding one order.",
+  "You're writing a success plan in the CRM for an old client and get to the third milestone when you ring the factory head: what scares you most this year? Not being able to hire, he says. You delete the plan and start again.",
+  "Two weeks before renewal you export last year's tickets and show the client's finance person: you asked us eight hundred questions, which saved you a person. Finance says: so can it be cheaper?",
+  "On page two of a quarterly review, you convert the system's on-time delivery rate into penalties avoided. The group's purchasing director puts down his phone for the first time.",
+  "At a product review you bring recordings from three key accounts and have the developers listen to how order clerks curse this button. It moves from next quarter to the next release.",
+  "A new hire is going to see an owner who likes to pound the table. You have her bring three photos of his factory and ask about the production line first, the system later.",
+  "You rewrite the churn reason dropdown, adding \"the owner gave up,\" \"acquired\" and \"decision-maker left.\" A month later someone reads the churn report to the end for the first time.",
+  "At the annual budget meeting the sales director wants the renewal commission moved back to his side. You bring out three years of renewal curves and lost accounts and go through them page by page. When you finish, neither side is very happy.",
+  "A direct report of five years has all green health scores this quarter and the highest churn. You meet him for coffee downstairs, lay the sheet face down on the table, and ask first how things are at home."
+ ],
+ "past": [
+  "You grow up in Zhanjiang, where your parents run a dried-seafood stall. When buyers owe money your father never calls them. He just sends their next load two days late.",
+  "You apply to study information management at a Guangzhou university. Your father thinks it's about managing archives.",
+  "You intern at a financial software company and go along on a factory go-live for the first time. You see a workshop supervisor use the training manual as a coaster.",
+  "After graduating you spend two years in implementation, all over the Pearl River Delta, as far as Zhaoqing. You notice that nobody's happy on go-live day, and that it's only six months later that anyone curses it. If they're cursing, they're using it.",
+  "Your company sets up a customer success department and you're in the first group moved over. The boss says the job came from America. The factory owners say: isn't that just after-sales?"
+ ],
+ "late": {
+  "pension_note": "Estimate: company social insurance is paid on a base, so retirement income falls well short of the bonus years; the cost of living in Guangzhou has to come from savings.",
+  "scenes": [
+   "You sort out the back end of the ordering system at the cha chaan teng downstairs. The owner wants to pay you. A year of milk tea, you say. The next year you ask to renew.",
+   "The app for your housing complex keeps failing to open. You post a list of issues in the residents' group, in priority order. The property manager blocks you for a month.",
+   "Of the sixty clients on the old list, eleven are still open; you've looked them up one by one on the map. The other addresses are now other factories.",
+   "You and your phone stay apart for two months, for the sake of your wrist. With nothing ringing at bedtime your body doesn't know what to do. In the first week you set the alarm for six in the middle of the night, then set it back.",
+   "You teach old people to use smartphones at a community school twice a week. Their questions are about the same as the order clerks' used to be, and you begin the same way, from step one.",
+   "You take blood pressure pills, and you keep a sheet on your phone recording pressure and dosage times. You set the health score algorithm yourself. Today green, yesterday yellow.",
+   "In the first quarter after you leave, your phone calendar is still sending renewal alerts. You delete them one at a time. Only at the thirtieth do you find out you can select them all.",
+   "Your new job has no renewal targets, but at every meeting you still silently score the person across from you: will they be here next quarter?",
+   "The company's name no longer turns up in a search. The system's login page had an address; you try it once, and the browser says the site can't be reached.",
+   "In any shop you first look for the handwritten sheet taped beside the register. If it's still there, the system hasn't taken hold, and you can guess which step it got stuck at.",
+   "New factory systems need no training now; they talk to the order clerks themselves. You couldn't say whether that's good. All you know is that downstairs in Baiyun, the parking spot you always used is gone."
+  ],
+  "closing": {
+   "retire": "Morning dim sum, still a pot of tea and two baskets. There's no contract to talk about this time. You pay for yourself, and take your time with the chicken feet.",
+   "burnout": "The spring damp is back, a film of water on the wall. You wipe it with a rag. Nobody is waiting for your reply.",
+   "end": "Your WeChat still holds dozens of factory groups where no one has spoken for a long time. You haven't left any of them."
+  }
+ }
+}

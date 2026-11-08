@@ -1,0 +1,188 @@
+{
+  "id": "bar-mgr-ls",
+  "occupation": "Bar and Club Manager",
+  "role": "Bar Manager",
+  "headline": "A bar manager in the old town of Lishui, running an eighty-seat room: scheduling, stocktaking, reconciling accounts, and wrestling with the landlord, while personally mixing maybe a handful of drinks a year",
+  "unit": "A mid-sized music bar in the old town of Lishui",
+  "unit_type": "Independently owned music bar",
+  "city": "Lishui",
+  "city_tier": "Fourth-tier city",
+  "education": "Associate degree (tourism management)",
+  "level": "You can draw up a shift schedule three different ways. You can work out the profit on the drinks list. The accounts of the bar as a whole you've never quite got to the bottom of.",
+  "intro": "You manage a music bar in the old town of Lishui, with eighty seats, one resident singer and nine staff. You don't really mix drinks anymore. What you hold is a shift schedule, a wastage sheet, and a sheaf of statements from liquor suppliers. The owner left for Hangzhou last month with one instruction: the place is yours to watch, just give me a number each month.",
+  "salary_note": "Estimate: a small-city bar in Lishui, base salary plus sales commission, with large swings between seasons, below the national figure over a full year.",
+  "facts": [
+    { "label": "Bar Manager (current level)", "value": "3–9 years, ¥7,000–11,000 a month (national figure, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Partner-Manager (9–16 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Dealing in person with drunk or complaining customers", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Nightly stocktaking and checking variances", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You get in and start with last night's till report. Sales look good. The theoretical pour on whisky and what's physically left are half a bottle apart, so you lay last night's roster beside it.",
+    "The liquor rep comes to reconcile. This month's beer rebate is two points short of what was agreed. He smiles and suggests you look again at clause four.",
+    "Going over the new menu with the head bartender. He wants a gin that costs over ¥300 a bottle. You take out your calculator and tell him when you've finished that this drink will have to sell at ¥88.",
+    "Pre-shift meeting. Ah Lei, a server, asks for Saturday off for a family matter. Saturday is the highest grossing night of the month. You pull up the schedule and stare at it for some time.",
+    "The singer does a sound check, and a resident upstairs has already posted a decibel meter screenshot in the building's chat. You go down and turn the bass back two notches.",
+    "A company outing is on its third round. You go over to say hello and count the empties on their table while you're at it. The other tables are calling for snacks.",
+    "A man who's had too much won't leave. You bring him warm water, open a designated-driver app on his phone, and hold on to his car keys until the driver is at the door.",
+    "Closing time. You check the liquor shelf, mark the bottles and seal the cases. On the way home the breakfast sellers are lighting their stoves. You buy a steamed bun, and the first bite is your dinner."
+  ],
+  "ladder": [
+    { "title": "Floor Supervisor", "stage": "Leading a shift", "focus": "Leading the servers, managing drinks and tables, learning stocktaking and scheduling" },
+    { "title": "Bar Manager", "stage": "Running the daily operation", "focus": "Scheduling, stocktaking, purchasing, wastage, events and complaints, answering for sales and profit" },
+    { "title": "Partner-Manager", "stage": "Part-owner", "focus": "Buying a stake and answering for rent, licenses, labor and payback on the investment" },
+    { "title": "Regional Operations Manager", "stage": "Running several venues", "focus": "Site selection, new openings, standards and performance across several venues" }
+  ],
+  "ai_tasks": [
+    { "name": "Dealing in person with drunk or complaining customers", "how": "When to bring water, when to call a driver, when there's nothing for it but the police: that takes a person standing right there, judging." },
+    { "name": "Nightly stocktaking and checking variances", "how": "The system can calculate theoretical use. How much is really left in the bottle, and whose hand the shortfall came from, someone has to find out." },
+    { "name": "Scheduling and forecasting orders", "how": "AI builds schedules and orders from past sales. It doesn't know whose family has trouble or which singer brings a crowd." },
+    { "name": "Compiling sales data and voucher redemptions", "how": "The till and the platforms reconcile themselves, and the daily report lands on your phone. People spot-check the differences." }
+  ],
+  "events": {
+    "e_overseas": "At the end of the lunar year, overseas Chinese home from Europe to Qingtian drive into Lishui for get-togethers, and whole tables order without looking at prices. These two weeks earn what three months of plum rains can't. You put everyone on, and they eat boxed meals squatting in the back alley, worn out.",
+    "e_plum": "The plum rains go on for more than twenty days, and on weeknights the bar often has only two tables. Even with the air conditioning on, the room is damp. Mold starts on some wine corks and you take the bottles down to wipe them one by one. The number you report to the owner this month won't look good.",
+    "e_stock_gap": "For three straight weeks the whisky won't reconcile. You check the cameras and see a server, before going off shift, pouring a little into a water bottle. You take him out to the back alley. He says it was for his girlfriend to try. He leaves, paid up to the day.",
+    "e_check": "A routine police check after dark. Every ID gets scanned and the music goes off for ten minutes. When it's done two tables have left. You take your business license and performance filing and return them one by one to the folder.",
+    "e_fire": "At the fire reinspection they say the booths narrow the evacuation route. Six seats have to go, and you lose some money every night. You redraw the seating plan three times, each version one table shorter than the last.",
+    "e_noise": "The resident upstairs has complained again. You take up two boxes of Qingtian waxberries, and the old lady has you sit. She says she liked to dance when she was young, and that the bass must go off after eleven. You go back and write that into the singer's contract.",
+    "e_singer": "Your singer, Young Lu, leaves in a hurry to audition for a festival stage in Hangzhou, and nobody's singing this weekend. You ask every singer in Liandu and finally bring in a wedding emcee. By the third song the customers have begun requesting their own.",
+    "e_group_buy": "Vouchers on the short video platform are selling out: two specialty cocktails and a fruit platter for ¥99. Every seat is full. Average spend has dropped forty percent, and half of them leave after the photos. You look at the redemption count on the back end and can't decide if you're pleased.",
+    "e_ai_order": "The system now predicts next week's drink volumes for you. It's accurate, except the one time it misses the new barbecue place on the corner opposite, and six cases of beer sit in your storeroom for that week.",
+    "e_ai_review": "AI now drafts replies to bad reviews, with a bedside manner like a hospital greeter's. One customer says a server had a bad attitude, and the AI's answer is deeply sincere. You ask the server on duty and learn the customer had tried to grab her hand.",
+    "e_stomach": "Years of eating your first meal at two in the afternoon, and of drinking with customers when you can neither really drink nor refuse, have left erosive gastritis on your endoscopy report. You begin to carry soda crackers in your pocket. What the manager drinks is mostly ice water.",
+    "e_ear": "You get home after closing with something still humming in your ears. The owner of the hardware store says something and you ask him to repeat it. Hearing test: down a notch in the high frequencies. The doctor asks whether you use earplugs.",
+    "e_debt": "A regular customer, a boss, has ¥8,000 on his tab, and at year's end says money is tight. He was among the first to support the place and has reposted it for you. You print out the bill and tuck it under everything else in the cash box.",
+    "e_birthday": "A kindergarten teacher who comes in often has her thirtieth birthday at the bar. When her friends have gone, she cuts the cake alone and shares it with the servers and the singer. The following year she marries, and invites the whole staff to the wedding.",
+    "e_staff": "After four years, Ah Lei is going home to Jinyun to help at her family's sesame cake shop. You write her a one-page reference and put what she does best on the first line: she can remember what eight tables ordered inside a minute.",
+    "e_tourism": "High-speed rail brings visitors from Hangzhou and Shanghai. Guests staying at guesthouses in Songyang pass through Lishui on their way back and want somewhere to sit. You add a specialty drink made with local torreya nuts to the front page of the menu. Customers photograph it faster than they order.",
+    "e_alc_decline": "Young customers drink less and less, and more of them order zero-proof specials. A sparkling water sells for ¥38, and they stay two hours. The margin is actually fine. It's just that your liquor shelf has started to look a little excessive.",
+    "e_awake": "Your spouse works days and you work nights, and in a week you share a table for less than four hours. A note goes up on the fridge and you answer with one of your own. This month you settled the matter of changing cars by notes.",
+    "e_night_eye": "Eating elsewhere, you sit down and start by counting heads, checking the bar's traffic flow and counting the trays in servers' hands, working out tonight's table turns. A friend asks if the food here is any good. You say they've put the kitchen pass in the wrong place."
+  },
+  "choices": {
+    "c_own": {
+      "title": "Take over a small place",
+      "situation": "A quiet bar in an alley of the old town is up for transfer. The rent is cheap, the fit-out is usable, and the key money is ¥250,000. Your savings cover half. All these years, every liquor supplier has come to know you. But once it's your own place, every yuan lost is your family's.",
+      "options": [
+        { "label": "Take it over", "result": "You borrow, you sign. The first night you take ¥1,200 and count it three times.", "end": "You open your own small place, thirty seats. You begin scheduling your own shifts, and whichever way you draw it up, nobody covers for you." },
+        { "label": "Keep minding the bar", "result": "You say no. The place later becomes a milk tea shop, and you buy one once while passing." }
+      ]
+    },
+    "c_supplier": {
+      "title": "Become regional manager for a liquor supplier",
+      "situation": "A liquor trading company in Hangzhou likes your customer relationships and wants you as regional manager for southwest Zhejiang, driving between bars and restaurants in Lishui, Quzhou and Jinhua. Daytime hours and double the money, but you'd have to walk up to other people's bars and ask them to buy from you.",
+      "options": [
+        { "label": "Go sell liquor", "result": "For the first time you see your new sales colleagues by daylight. Nobody looks quite at ease in the sun.", "end": "You've moved over to supply, driving cases of liquor to the bars of people you've known for years. The reconciliation sheets are still yours. You just sit on the other side of them now." },
+        { "label": "Stay at the bar", "result": "You say you'll pass. The rep says let's have a drink sometime. This month's beer rebate finally matches the contract." }
+      ]
+    },
+    "c_groupbuy": {
+      "title": "Do the discount vouchers or not",
+      "situation": "The owner wants to push the vouchers lower: busy tables are what passersby see. You've done the sums. At forty percent off, the drink margin barely pays the singer. But the place across the street already has half off posted, and on this street people comparison-shop on their phones.",
+      "options": [
+        { "label": "Match the discount", "result": "There are more people and more noise. Regulars say it's hard to get a seat lately, and once they do, they don't feel like staying." },
+        { "label": "Hold the price", "result": "Sales fall twenty percent for three months, and the owner sends two voice messages. In the fourth month, birthday bookings start to pick up." }
+      ]
+    },
+    "c_drunk": {
+      "title": "The VIP who drank too much",
+      "situation": "A big customer brings guests, gets drunk, and means to drive himself home. He's a friend of the owner's and brings in more than ¥100,000 a year. You have his keys. In front of his friends he tells you to give them back, and asks who you think you are.",
+      "options": [
+        { "label": "Keep keys, call a driver", "result": "He says on the spot he'll never come back. Two weeks later his assistant books a private room and doesn't mention it." },
+        { "label": "Call the owner in", "result": "You phone the owner, the owner phones him. The keys don't go back in the end, and the favor goes on the owner's account." }
+      ]
+    },
+    "c_ai": {
+      "title": "Learn the store management system?",
+      "situation": "The till system has been upgraded, with AI handling scheduling, ordering and reviews, and someone has to enter all these years of data. You don't think much of its optimal staffing, but the owner says all the Hangzhou venues are on it, and if you don't learn it you won't be able to explain why your place earns less.",
+      "options": [
+        { "label": "Sort out the data", "result": "You mark in all the typhoons, plum rains and college exam result days, and it begins to understand Lishui a little." },
+        { "label": "Stick to your spreadsheet", "result": "You carry on with your Excel. When the owner wants reports you paste the screenshots together and send those." }
+      ]
+    },
+    "c_rent": {
+      "title": "The five-year lease is up",
+      "situation": "The landlord wants a twenty-five percent increase and says the milk tea shop next door will pay that. The fit-out, the licenses and the regulars are all tied to this address. The owner tells you to negotiate, get what you can, and if it can't be done, move.",
+      "options": [
+        { "label": "Grit your teeth and renew", "result": "You have three rounds of tea with the landlord and get the increase down to eighteen percent. You rework the booths again and fit two more high tables." },
+        { "label": "Move to a new block", "result": "The new rent is lower and the fit-out costs ¥600,000. On opening day, half your regulars come. It's too far, the rest say." }
+      ]
+    },
+    "c_partner": {
+      "title": "Buy in as Partner-Manager",
+      "situation": "The owner is opening a second place in Hangzhou and asks if you'll put in ¥300,000 for a twenty percent stake and become Partner-Manager here. The dividends are real and so are the losses, and your name goes on the lease. That money is what you and your spouse saved for your child's schooling.",
+      "options": [
+        { "label": "Buy in", "result": "You sign the shareholder agreement and notice for the first time that this place's water bill is partly yours." },
+        { "label": "Stay on salary", "result": "You say this money can't be touched. The owner nods. You go on running the place, and dividends are never mentioned again." }
+      ]
+    },
+    "c_daytime": {
+      "title": "Coffee by day, bar by night",
+      "situation": "You're in your forties and your body can no longer take getting off at three. Your partner suggests turning the place into a coffee and light meals spot by day, leaving nights to a younger duty manager. You'd switch to days and earn fifteen percent less. For the first time in all these years you could have dinner with your family.",
+      "options": [
+        { "label": "Move to days", "result": "The first month you keep getting sleepy at seven. In the third, you begin to learn which side the Lishui morning sun comes from." },
+        { "label": "Hold on to nights", "result": "You say the night customers are this place. The stomach pills live on the second shelf of the bar, beside the soda water." }
+      ]
+    },
+    "c_region": {
+      "title": "Apply for Regional Operations Manager",
+      "situation": "The company has grown to five venues in Lishui, Quzhou and Jinhua and needs a Regional Operations Manager to travel among them, set standards and look at new sites. You've stood on one street for twenty years. Now you'd go read other people's numbers and discuss wastage with managers you don't know.",
+      "options": [
+        { "label": "Apply", "result": "You drive to five venues in four days. At each one you check the restroom first and the books after." },
+        { "label": "Keep this one", "result": "You say the only people you know are at this address. The later regional manager comes to inspect, and you save him a good seat." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "You sign over the rest of the lease years, and your till access is changed to read-only. The lights here have been replaced a few times, the sound system too, and a dozen generations of singers have passed through. You go to bed at ten now. Sometimes you still wake at three, and read the notes on the fridge over again.",
+    "burnout": "Your stomach and your ears come to collect together, and the doctor says no more night shifts. You hand over the accounts and keys item by item and leave the place behind the bar where you've spent so many years. In your second month out, you find you don't know where to go in the evening."
+  },
+  "stages": [
+    "In the afternoon you check the till report, then reconcile with suppliers and voucher platforms, and at night you stand in the middle of the room moving staff and handling complaints. What you usually have in hand is a radio and a handwritten wastage sheet. Unlike a floor supervisor, you aren't only responsible for running a good shift. Whether the place makes money this month is half down to you.",
+    "Your name is on the lease now. Every month you read the profit and loss, and take your turn dealing with landlord, fire inspectors, the subdistrict office and the culture bureau, working out labor share and payback period. Scheduling goes to the duty manager. More and more you decide who stays, what space goes, and how much longer the place can run.",
+    "Each week you drive among several venues, checking books, cleanliness and people. At a glance you can tell where a manager's report has been touched up. You pick sites, negotiate rents and set a common standard for the menu, and every manager believes his venue is the exception. It's been a long time since you were behind any bar at midnight."
+  ],
+  "work": [
+    "The new duty manager logged two bottles in as juice. You trace the month-end variance back through three layers, circle it on the stock slip, and have her find it herself.",
+    "Friday's singer wants another ¥2,000 per appearance. You pull last year's traffic figures for the same period and tell him that in his weeks the crowd was up twelve percent, and offer ¥1,500.",
+    "A female customer is being harassed by the next table. You go over, say this table's bill is on the house, and invite her to the bar. The man wants a scene. Old Ying from security moves one step behind him.",
+    "The subdistrict office sends notice of a crackdown on outdoor seating. You go to the meeting with a floor plan and measure with a ruler for the clerk: these three tables are not actually over the line.",
+    "The quarterly dividend only covers half a year's interest. You and two other shareholders go through the books in the office until dawn, and decide to turn the back row of booths into a small stage for a three-month trial.",
+    "Your head bartender wants to leave. You sit down with him for two hours and work it all out: his commission, equity, the rent in Hangzhou. In the end he says he'll give it one more year.",
+    "The Jinhua manager's reported wastage is too pretty. You spot-check three days of bottle-mark records and find that this venue's lines are all drawn at once on the weekend.",
+    "A new shopping center in Lishui offers three months' free rent to bring you in. You stand on the reserved unit and watch the foot traffic for a quarter of an hour, then tell the leasing manager that people only pass through this entrance.",
+    "As all the venues adopt a single menu, one manager insists on keeping the rice wine his local customers like. You run the numbers and let it stay on page three."
+  ],
+  "past": [
+    "You attend vocational high school in Lishui, and spend summers at a milk tea shop near Dashuimen. It's your first discovery that what a drink costs is a fifth of what it sells for.",
+    "You choose tourism management at junior college, thinking you might open a travel agency. Your internship is in a Hangzhou hotel ballroom, and you carry a tray more steadily than anyone.",
+    "After graduation you stay in Hangzhou as a server at a bar near the West Lake. Night work pays better than the hotel, and the owner talks more plainly than the hotel's managers did.",
+    "You become a floor supervisor and learn how to keep eight servers from fighting on a Saturday night. The subway has stopped by the time you leave, so you ride a share bike across the Qiantang River.",
+    "Your father's back gives out and you think of going home to Lishui. A friend's cousin has opened a bar there and needs someone to run it.",
+    "You move back to Lishui and work a year as a supervisor again before you're given this job. Your Hangzhou colleagues ask if you can bear to leave. You tell them rent's cheap in Lishui."
+  ],
+  "late": {
+    "pension_note": "Estimate: social insurance at a bar is paid at a low tier, with interruptions, so you mainly rely on savings and the family home.",
+    "scenes": [
+      "You begin to use the daytime. The market at seven in the morning and the sun at three in the afternoon are both strangers to you. You buy a wristwatch and set yourself a dinnertime.",
+      "At a neighborhood seniors' college you teach retirees to make zero-proof cocktails. You can work out the cost per glass to the fen. Nobody cares. They only care how it looks.",
+      "A new bar opens beside the Ou River under a retro banner. You go in, order a drink, and notice that the bar's opening faces exactly the way you had it changed all those years ago.",
+      "Your stomach only takes warm things now, and you don't touch a drop. At the wedding of a friend's child, people toast you and you answer with boiled water. Everyone knows you ran a bar, and nobody presses.",
+      "You keep the books at a staff canteen and get off at five thirty. In the first month, while packing up, you keep asking if there's anything left to count. Your coworkers laugh and say tomorrow's vegetables can wait for tomorrow.",
+      "You now need the TV at volume twenty-six to hear it. Your spouse says your voice is louder than before. You've put the hearing aid box next to the TV and haven't opened it yet.",
+      "You still can't sleep at night. The barbecue place downstairs closes at midnight, and listening to their shutter come down you work out their takings for the night. Halfway through, you get drowsy.",
+      "The second year's books look a little better than the first. You're still in the habit of checking wastage monthly, except that now you know every bottle's variance was either poured or given away by you.",
+      "These days you call the landlord big brother and the liquor rep little brother, and keep the tax officer's number on the first page. The most useful thing you learned all those years is never to discuss a price rise on a Friday night.",
+      "Old town redevelopment has changed every house number on that street. You drive over, work out the rents around here nowadays, and turn around. There's stock to count tonight.",
+      "At someone's home for dinner you look first at whether the fridge magnets are straight and then for water spots on the glasses. A friend says you make everything tiring for yourself. Yes, you say.",
+      "You hardly drink a few times a year now. Once at a wedding banquet you watch a server open a bottle of red and find yourself studying his wrist. Halfway through, you turn your head away."
+    ],
+    "closing": {
+      "retire": "You turn off the lamp at ten. The shutter at the end of the lane rattles down once, and with your eyes shut you count to the third rattle, and then there's no more.",
+      "burnout": "You put a box of soda crackers by the bed. When you wake at three you eat one and lie back down.",
+      "end": "Closing time. Alone, you turn off the lights one by one from the back to the front, leaving only the one at the door."
+    }
+  }
+}

@@ -1,0 +1,151 @@
+{
+ "id": "wealth-sx",
+ "occupation": "Personal Financial Advisor",
+ "role": "Bank Branch Wealth Manager",
+ "headline": "A wealth manager in Keqiao, Shaoxing: moved off the teller line, three hundred-odd households on a list, reading risk warnings to a recording camera every day",
+ "unit": "A branch of a national joint-stock bank in Keqiao, Shaoxing",
+ "unit_type": "Bank branch",
+ "city": "Shaoxing",
+ "city_tier": "Second-tier",
+ "education": "Bachelor's (Finance)",
+ "level": "You could work the teller screens with your eyes shut and your licenses are in order; across a desk from a client you still don't dare speak first, and when someone asks \"but is it safe?\" you look round for the branch head",
+ "intro": "You spent two years behind the counter at this Keqiao branch. Last month you were moved to the wealth room behind the lobby: one desk, two chairs and, overhead, the camera that records every sale. The fabric traders' wives come in asking if it's busy today and only then ask who you are. There are three hundred-odd households on your list, and every one of them has a number longer than the one on your pay card.",
+ "salary_note": "Estimate: Keqiao's private economy is lively and joint-stock branch bonuses beat ordinary Shaoxing jobs, but most of a wealth manager's income rides on targets, and a poor New Year sales push shows in the pay.",
+ "facts": [
+  { "label": "Junior Wealth Manager (current level)", "value": "0–3 years, ¥6,000–10,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Wealth Manager (3–8 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Sitting across from a client and drawing out what they haven't said", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Totting up a household's assets, debts and insurance gaps", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Morning meeting, standing. The retail supervisor reads out yesterday's progress and how far assets under management are from target. When your name comes up, a red percentage comes with it.",
+  "The system pops up today's maturities: eleven households. You call the shop owners first and the old ladies after. Old ladies buy groceries in the morning and have patience only in the afternoon.",
+  "A curtain-fabric trader comes in with a swatch and sits down cursing her freight company. You wait until she's done, then ask if she'll need this money before the year's out. Her supplier payment dates: you remember them better than she does.",
+  "The recording room. You read the risk warnings line by line into the camera while the client repeats \"I understand.\" One wrong word and the segment starts over.",
+  "You carry your bag over to the showrooms on Dongsheng Road in China Textile City. The owner listens while cutting cloth. When the electric shears run, you stop; when they stop, you pick up where you were.",
+  "Back to the risk questionnaires. Seven households have passed the one-year mark and the system has flagged them yellow. Yellow means they can buy nothing, and nobody is going to tell them that for you.",
+  "The traders don't look at WeChat until after eight at night. At home you enter the day's follow-ups in the client system, answering messages as you go, the compliance training video running on mute to log your hours."
+ ],
+ "ladder": [
+  { "title": "Junior Wealth Manager", "stage": "Shadowing", "focus": "Work the lobby, make maturity calls, do the recordings and risk tests, get to know every name on the list" },
+  { "title": "Wealth Manager", "stage": "Own book", "focus": "Run several hundred households yourself, carry the asset and fee targets, keep people through follow-ups and allocation advice" },
+  { "title": "Senior Wealth Manager", "stage": "Big clients", "focus": "Handle the branch's largest clients and the money that runs across business, family and generations; mentor younger managers" },
+  { "title": "Branch Deputy Head of Retail", "stage": "Team", "focus": "Run the branch's retail team, targets and compliance; every complaint ends up here" }
+ ],
+ "ai_tasks": [
+  { "name": "Drawing out what a client hasn't said", "how": "AI can sort statements and questionnaires. Who in this family controls the money, whether husband and wife agree, when this sum will really be needed: you have to sit across from them and listen." },
+  { "name": "Totting up household assets, debts and gaps", "how": "AI can pull accounts together, work out the ratios and list the gaps; a person only spot-checks the data sources." },
+  { "name": "Drafting allocation plans", "how": "AI can produce the frame and run scenarios. How to trade one goal against another, and who answers to the client, is still the wealth manager." },
+  { "name": "Tracking holdings and maturity reminders", "how": "The system watches maturities and drift and generates the call list; a person handles the few households whose lives have changed." },
+  { "name": "Calming clients in rough markets", "how": "AI can write a plain explanation. When a client is frightened and wants to see someone, a person has to pick up the phone and say it properly." }
+ ],
+ "events": {
+  "e_luzhi": "Your first recorded sale takes four tries. Halfway through the fourth, the client's phone rings, and you start again. She says later that getting a marriage certificate was easier.",
+  "e_mingpian": "A polyester trader slides your business card under the glass on her cash desk. Three shops next door come looking for you.",
+  "e_jimo": "On the last night of the quarter the branch lights burn until eleven. You're short of target, so you all ring round one by one, begging traders to leave their money in the account two more days, until the reporting date has passed.",
+  "e_jingzhi": "For the first time a fund's value slides for a stretch. A trader comes in and holds his phone up to your nose: \"Why has this number got smaller?\" You explain for forty minutes. All he retains is \"not guaranteed,\" words he read perfectly well when he signed.",
+  "e_wangji": "Autumn and winter are peak season for greige cloth. Payments come in one after another and the traders' accounts rise like a tide. You see more than twenty households in a week. Your voice goes; your numbers turn green.",
+  "e_kaimen": "The New Year sales push runs from before January 1 to March. Your child's winter-break craft for kindergarten gets made during your lunch hours outside the recording room: a rabbit with one crooked ear.",
+  "e_duanlian": "A dye works you've looked after for six years runs out of cash, and at year's end its accounts are frozen. The owner's wife comes to ask how much she can still withdraw. You answer by the rules. She nods, and leaves without her umbrella.",
+  "e_waihu": "The bank brings in automated calling, and the system now takes the first pass at your maturity list. The voice is very polite. Traders hang up after two seconds and then ask you: was that just your bank?",
+  "e_choujian": "Compliance pulls a recording and finds you saying, in idle chat, \"that's basically fine.\" You lose that month's bonus and write an explanation. After that, the word \"basically\" disappears from your mouth.",
+  "e_apo": "An old woman who spent her life making Shaoxing wine jars comes in once a month and buys nothing. She just wants you to read the mobile banking screen for her. You turn the font up as far as it will go. Good, she says, like the writing at the opera.",
+  "e_daizou": "The colleague at the next desk jumps to the bank across the street. Three months later your branch is down twenty-odd old clients. You go through her handover sheet. The notes are all in her own hand, down to what tea each one drinks.",
+  "e_jingzhui": "The neck X-ray comes back: fifth and sixth vertebrae. The desks in the wealth room are low and you nod two hundred times a day, all of them at clients.",
+  "e_xuji": "Continuing education for your financial planner credential has come due again. You get through fifteen hours on the high-speed train. In the sessions on tax and inheritance, you have more examples than the instructor.",
+  "e_erdai": "A trader's son comes back from England to take over. At your first meeting he asks for the fee breakdown and goes through it line by line. You're rather relieved. In all those years, his father only ever asked you one thing: whose child are you?",
+  "e_fenceng": "Clients are re-tiered, and the fifty wealthiest on your book go to the private banking center in the city. You sign the handover. The traders keep messaging you anyway, to ask if that person at private banking can be trusted.",
+  "e_wuren": "The branch is refitted: five teller windows become two, and a row of self-service machines fills the lobby. Half the tellers are retrained into jobs like yours. On their first maturity calls their voices shake the way yours did.",
+  "e_peilian": "Head office rolls out an AI training partner. New hires rehearse against it; it plays a difficult client, more difficult than you ever could. You try it once in secret. It takes off eight points because you failed to confirm the intended use of the funds.",
+  "e_daiban": "Your old clients have started coming in with their children. Powers of attorney, notarized papers, who may see the account: each step goes by the rules. Three grown children sit across from you, none looking at the others, all looking at you.",
+  "e_laohua": "Your eyes have gone long. You need client reports at two hundred percent to read them. A young colleague adjusts the font for you, exactly the way you once did for the old woman with the wine jars."
+ },
+ "choices": {
+  "c_insur": { "title": "The insurance team leader buys you tea", "situation": "A team leader from a life insurer meets you for tea beside Jian Lake. She doesn't talk base pay. She shows you the commission slips of three former bank colleagues on her team: come over and the clients are yours, no morning meeting, nobody reading out your percentage.", "options": [
+   { "label": "Resign and go", "result": "You hand in your notice, give the list back to the system, and start moving three hundred phone numbers out of your head.", "end": "You become a life insurance agent with a business card in a different color. The first two years run on the goodwill of old clients. After that, on policies you explained yourself, clause by clause." },
+   { "label": "Stay at the bank", "result": "You finish your tea and pay your share. Back at the branch, the morning meeting goes on and the percentage gets read out." }
+  ] },
+  "c_platform": { "title": "The offer from the Hangzhou wealth firm", "situation": "An independent wealth firm from Hangzhou is opening a Shaoxing office. The offer is more than double your pay and the terms are explicit: bring at least ¥20 million in client assets. You open your list. You know who to call, and you know nobody can say whether this firm will exist in a few years.", "options": [
+   { "label": "Take the clients and go", "result": "It isn't a graceful exit. Your old colleagues don't answer messages for a month.", "end": "You go to the wealth firm and get an office high up with a view of Kuaiji Mountain. Half your clients follow. The other half hear your name in follow-up calls from your old employer." },
+   { "label": "Don't go", "result": "You send a thank-you. Next morning the maturity alert pops up as usual: fourteen households." }
+  ] },
+  "c_merge": { "title": "Two branches are merging", "situation": "Two Keqiao branches are becoming one, and the retail team is four people over. HR offers three paths: move to a back-office job at the city branch, take early internal retirement, or stay and compete with someone else for a seat.", "options": [
+   { "label": "Take the package", "result": "You sign. There isn't much at your desk: a thermos, a box of throat lozenges.", "end": "You take internal retirement and leave that desk. From the second month on, nobody at 8:20 in the morning is reading out your name." },
+   { "label": "Stay and compete", "result": "You win the seat, and with it the silence of two people from the other branch." },
+   { "label": "Move to the back office", "result": "You go to the city branch to verify client documents. The office has no camera." }
+  ] },
+  "c_afp": { "title": "Sit the financial planner exam", "situation": "The bank encourages the financial planner credential. You front the fees yourself; it's four weekends' classes in Hangzhou over a year, plus a case exam. Pass and your card gains three letters and your promotion score goes up. The New Year push lands right around the exam.", "options": [
+   { "label": "Sign up", "result": "You memorize tax rates and orders of inheritance on the train. The first to notice the credential is the trader who asks too many questions: what do those three letters mean?" },
+   { "label": "Hit the targets first", "result": "You make four trips to the showrooms on your weekend. Next year for the exam, you say, and next year you say the same." }
+  ] },
+  "c_test": { "title": "One level short on the risk test", "situation": "An old woman wants to buy something one level above her risk score. She holds your hand and says all her friends next door have it. You're short of target this month. Your supervisor pats the back of your chair as he passes: go on, help auntie redo the test.", "options": [
+   { "label": "Don't redo it; explain", "result": "She leaves angry and goes to the bank next door. Your supervisor doesn't pat your chair again that month." },
+   { "label": "Sit with her and redo it", "result": "The second time she ticks two more high-scoring answers. You watch; the camera records; the signature is her own. You remember this sale for a long time." }
+  ] },
+  "c_fly": { "title": "A colleague passes you a form", "situation": "A colleague you know well slips you a form from an outside firm. Put a little of your clients' money in here, she says; the kickback is in cash and nothing shows up in the bank's system. She says it lightly. You know what this kind of thing is called.", "options": [
+   { "label": "Refuse, and keep quiet", "result": "She smiles and takes it back. Half a year later compliance spends a week at the branch, and her desk is empty." },
+   { "label": "Report it to compliance", "result": "The investigation is quick and she is dealt with. After that, people at the branch check whether you're in the room before they speak." }
+  ] },
+  "c_ai": { "title": "Learn the AI allocation assistant?", "situation": "Head office has launched an AI allocation assistant that reads a client's holdings and statements and produces a draft plan in seconds. Most veteran managers won't touch it; they say it doesn't talk like a person. But the city branch needs a few pilot users to find its faults and write its rules.", "options": [
+   { "label": "Be a pilot user", "result": "Every day you correct its drafts, and you write things like \"fabric traders' money comes back at year's end\" into its rules." },
+   { "label": "Stick with your spreadsheet", "result": "The Excel sheet you've used for eight years is still accurate. It's just that none of the new hires know how to open it." }
+  ] },
+  "c_fuhang": { "title": "Compete for Branch Deputy Head of Retail", "situation": "The post of branch deputy head of retail has come open. Win it and you stop handling your own clients and take on a dozen people's targets and every complaint, and each month you explain the shortfall at the city branch. Don't, and you get a few more years behind this desk, talking with these women who sell cloth.", "options": [
+   { "label": "Go for it", "result": "You prepare twelve pages. By page eight, the city branch president is looking at his watch." },
+   { "label": "Stay with the clients", "result": "You return the form to HR's desk. That afternoon the curtain trader comes in and asks if you've put on weight." }
+  ] }
+ },
+ "endings": {
+  "retire": "On the day you retire, the system divides your clients among three colleagues according to the rules, in under a minute. You turn off the maturity reminders on your phone, forty-seven in all. At 8:20 the next morning you are awake and find there is nothing to read out. Everything due has come due.",
+  "burnout": "Your voice gives out first, then your neck, and then on the first day of a New Year push you stop halfway through the warnings, facing the camera, and can't go on. You apply to leave client work and set the chair in the wealth room back to its old height. The person who sits in it next is a little shorter than you."
+ },
+ "stages": [
+  "Your work is making calls, taking calls and waiting for calls. The lobby staff bring clients over; you check their ID and give the risk test while your supervisor listens to you begin. You have a maturity list, a recording camera and a book of approved phrases. Unlike at the teller window, when you finish here, people come back to ask you about it.",
+  "The list now hangs under your name officially: several hundred households' assets and fee income, all counted as yours. You schedule four or five meetings a day, laying out each family's money by purpose on an allocation sheet, and answer WeChat at night. Your supervisor no longer sits beside you. If something goes wrong, only your voice is on the recording.",
+  "You look after the branch's few dozen largest clients, usually in the tearoom behind a showroom or an office at the factory. The talk isn't only where to put money but how to separate the company's accounts from the family's, and how much the son and the daughter each know. You have to be able to get product managers, private bankers and lawyers on the phone, and the younger managers send you their hard cases.",
+  "Your desk moves upstairs. What you hold now isn't clients but a dozen people's progress sheets and a complaint log. Each morning you read out other people's percentages; each week you explain the shortfall to the city branch; when compliance arrives, you stand at the front. The difference is this: when someone says the wrong thing on a recording, your signature is the one on it."
+ ],
+ "work": [
+  "The lobby staff bring over a client carrying a fabric sample. You go through the risk test question by question, and after each she asks, \"Which one's the good answer?\" You tell her these don't have good answers.",
+  "Your supervisor marks a maturity list in three colors and tells you to call the yellow ones first. It's the ninth call before anyone asks your name.",
+  "Playing back a recording, a quality checker points it out: you read the risk warnings twice as fast as you read the returns. You record it again, keeping time with a finger under the desk.",
+  "A greige-cloth trader hands you a stack of statements. On an allocation sheet you divide his money into stock, wages and his child's study abroad. He looks at it and says: so this is how poor I am.",
+  "A client wants to redeem early and the system shows a fee. You work the fee out to the yuan, send it to him and let him decide. In the middle of the night he replies with one word: fine.",
+  "A new lobby manager brings an old man to you by mistake; he only wants to replace a passbook. You replace it and note in the client system: hears better on the left.",
+  "A printing-mill owner's business and private money are all mixed up. You spend an afternoon with his bookkeeper, using a statement classification sheet to pick household spending out of supplier payments, entry by entry.",
+  "Two brothers are splitting a shop. A lawyer drafts the agreement and you check off each authorization on their accounts. The older one asks if his brother knows about a certain sum. You say: that I can't answer.",
+  "A young manager you're mentoring has a client lose his temper for the first time. You have her send the recording, listen to the first thirty seconds, and tell her the problem is how she addressed him in the first sentence.",
+  "A new entry in the complaint log: the client says the manager didn't explain things clearly. You pull the recording and watch it twice through, then ask the client to come to the branch that afternoon. You don't bring products. You bring the video.",
+  "At the monthly meeting of the city branch, the shortfall table is projected on the wall. In explaining it for your team, you gently talk one new hire's name out of the \"needs improvement\" column and into \"ramping up.\"",
+  "A new version of the suitability rules comes down. You keep a dozen people late, each drawing a recording at random to pick faults in someone else's. Whoever gets caught buys milk tea."
+ ],
+ "past": [
+  "You grow up in Huashe, just outside Keqiao, where your parents run a small weaving shop. The accounts are kept in a book stapled together from cigarette packets. You learn early that money you can't collect by year's end matters more than money you've earned.",
+  "When it's time to choose a major, your father says finance: \"So you won't have to stand next to a machine.\" You go to a finance college in the province.",
+  "Home for the summer, you help chase a debt for the shop. A customer is eight months behind. You sit in his showroom drinking tea all afternoon. You don't get the money. You do learn how to wait.",
+  "You join this joint-stock bank through campus hiring. They send you back to Keqiao because you can understand the traders' Shaoxing dialect.",
+  "You count cash and report lost cards at the counter, and in the meantime you pass the fund sales and insurance agent exams. A trader making a deposit asks if you'd like to go work in the room at the back: \"You explain things better than they do.\""
+ ],
+ "late": {
+  "pension_note": "Estimate: banks pay into social insurance on a decent base and there's a little enterprise annuity, but the bonus, which was most of the money, stops at retirement.",
+  "scenes": [
+   "You lay out the household's money by purpose on a single sheet and walk your spouse through it every New Year's Day. Every year your spouse interrupts at the second line to ask what's for dinner.",
+   "The neighborhood invites you to talk about scams at the seniors' college. You go into more detail than the police officer, because you know at which sentence the old people start to nod.",
+   "You go to the bank to update your ID. The wealth room is now called a wealth center and what's inside is a talking screen. It invites you to take a risk test. You come out Conservative, lower than most of the people you ever gave it to.",
+   "Vocal nodules, a month of silence. You carry a small whiteboard and write even at the market. The woman at the vegetable stall takes you for an out-of-towner.",
+   "You're moved to the back office to archive recordings, watching dozens of other people read risk warnings every day. Sometimes your own voice turns up. Back then you talked fast and had more hair.",
+   "You buy a physiotherapy card for your neck. First you read the contract, then circle the clause on automatic renewal and ask the clerk about it. The clerk goes to fetch the owner.",
+   "In the first year after you leave, you still open the maturity reminders at nine every morning, though there's nothing in them. You use that moment to boil water.",
+   "Some old clients followed you and some didn't. In time you stop counting. But when you send New Year greetings to the whole list, you still go in the old tier order.",
+   "You keep the books for a relative's fabric shop: payments, credit terms, who needs a nudge, all on one sheet. For the first time in all these years, you're counting the money of your own people, and there's no camera.",
+   "Whenever you enter someone's home you estimate the family's debts first: the parking space, the school uniform, the brands on the parcels by the door. A friend takes you to dinner and you work out what share of his monthly income this meal is. You can't stop.",
+   "Half the showrooms on Dongsheng Road have become livestream studios, young people shaking out cloth in front of phones. The payment codes are stuck up where the swatches used to hang. That money doesn't pass through your street anymore."
+  ],
+  "closing": {
+   "retire": "At the market you compare prices at three stalls and buy the most expensive bunch of greens. No accounting today.",
+   "burnout": "Your voice is a little better. You walk slowly beside Jian Lake and listen to other people talk. You don't have to answer.",
+   "end": "Your phone still holds three hundred-odd contacts with detailed notes. You haven't deleted them, and you haven't opened those notes again."
+  }
+ }
+}

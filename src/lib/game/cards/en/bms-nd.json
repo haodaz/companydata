@@ -1,0 +1,193 @@
+{
+ "id": "bms-nd",
+ "occupation": "BMS Engineer",
+ "role": "Assistant BMS Engineer",
+ "headline": "At a battery plant in Ningde you write the charge estimate: winters freezing cells in Heihe, summers baking them in Turpan, and the percentage on a car's dashboard is yours to answer for",
+ "unit": "BMS software department of a power-battery manufacturer in Ningde, Fujian",
+ "unit_type": "Large power-battery manufacturer",
+ "city": "Ningde, Fujian",
+ "city_tier": "Third-tier industrial city",
+ "education": "Master's (Electrical Engineering)",
+ "level": "You can read CAN traces in your sleep. How much charge a cell really has left at minus twenty, you have only calculated in papers.",
+ "intro": "The shuttle from Dongqiao to the plant takes twenty minutes, and everyone on the road is wearing the same work jacket. Your desk is on the fourth floor of the R&D building, already set with a slave board and a CAN cable. The engineer training you skips the welcome and slides a fault ticket across: a car up north shows thirty-one percent in the morning and nineteen by the time it leaves the compound. Twelve points are what the owner is complaining about. Go find out where they went.",
+ "salary_note": "Estimate: R&D pay around Ningde's battery giants runs well above the local norm and slightly above the national BMS figure. Plenty of overtime; the dorm and shuttle count as benefits.",
+ "facts": [
+  { "label": "Assistant BMS Engineer (current level)", "value": "0–2 years, ¥7,225–10,625 a month (national average, derived from pay by experience)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "BMS Engineer (2–6 years)", "source": "Common in the trade" },
+  { "label": "Pay after 10+ years", "value": "¥21,500 a month (national average)", "source": "Pay by experience" },
+  { "label": "What AI can't take", "value": "Reproducing battery faults on the test bench and in real cars", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Tuning SOC estimation and thermal management strategies", "source": "AI exposure" },
+  { "label": "Open positions", "value": "20 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "Waiting for the shuttle outside the Dongqiao dorm. The air is seawater and damp, and a work jacket hung out for two days is still limp.",
+  "Stand-up. The carmaker sent three more issues overnight. The team lead sorts them by severity and you get the one at the bottom.",
+  "In the test bay you hook up the host computer and watch traces from the BCU and twelve slave boards scroll past. One voltage channel jumps now and then.",
+  "The canteen line holds more people than a whole town back home. Still thinking about that channel, you get your food and find you forgot the soup.",
+  "You pull last night's discharge data into MATLAB and plot the SOC error. The low-temperature stretch looks as if something took a bite out of it.",
+  "Comparing OCV tables with the cell department. They say the table is fine, you say the cold end is off, and each side holds up its own data.",
+  "You change one filter coefficient, flash the board and start a cycle. It has to run until morning before you know anything.",
+  "Nobody talks on the last shuttle. Your phone says sixty-two percent, and you have begun to doubt it."
+ ],
+ "ladder": [
+  { "title": "Assistant BMS Engineer", "stage": "On the bench", "focus": "Tending the test bench, reading traces, patching small modules, learning this cell's temperament" },
+  { "title": "BMS Engineer", "stage": "Owning a module", "focus": "Owning SOC, balancing or thermal management, and integrating with the carmaker" },
+  { "title": "Senior BMS Engineer", "stage": "Signing off designs", "focus": "Owning the software design and functional safety of a platform, handling major production issues" },
+  { "title": "BMS System Lead", "stage": "Running a platform", "focus": "Answering for a generation's BMS roadmap, leading the team, facing the carmakers" }
+ ],
+ "ai_tasks": [
+  { "name": "Reproducing battery faults on the test bench and in real cars", "how": "Wiring up, sitting with the car, making the fault happen again: somebody has to be in the cold chamber and on the proving ground." },
+  { "name": "Tuning SOC estimation and thermal management strategies", "how": "AI can fit curves and write modules. What this batch of cells is really like, a person decides from measured data." },
+  { "name": "Writing embedded BMS code and unit tests", "how": "Drivers and boilerplate mostly generate themselves. People review the logic and answer for safety." },
+  { "name": "Drafting FMEAs and functional safety documents", "how": "Tables and traceability can be compiled automatically. Whether every failure mode was found takes a person's judgment and signature." },
+  { "name": "Sorting after-sales and production data in bulk", "how": "A model can pre-sort hundreds of thousands of fault records. People only look at the odd piles." }
+ ],
+ "events": {
+  "e_winter": "January in Heihe for winter calibration, minus thirty. The car freezes outside all night and first thing next morning you climb in and open the host computer. Your ears crack open. The low-temperature SOC error comes down from eight percent to four.",
+  "e_summer": "July in Turpan for hot-weather calibration, the ground soft enough to take your shoe soles. The cooling strategy changes three times a day. By the ninth day of instant noodles, the words braised beef alone turn your stomach.",
+  "e_sop": "The carmaker has set start of production for the end of the month, and every unfinished problem has piled into the last ten days. Their resident engineer sits in your meeting room and does not leave. The takeout boxes on the table change daily.",
+  "e_8d": "An insulation alarm across a batch of cars turns out to be false; the root cause is a sampling resistor from a new supplier. The 8D report reaches its sixth version, purchasing and your team copy each other's bosses, and the resistor is finally changed back.",
+  "e_typhoon": "Before the typhoon lands, the shuttles stop. You power down the benches and carry samples upstairs, and next morning the plant is carpeted in branches. Fish farms in Sandu Bay took a beating, and yellow croaker is dear all month.",
+  "e_ota": "An algorithm you tuned goes out over the air to tens of thousands of cars. That night the complaint curve on the dashboard drops a notch. Nobody claps. Someone orders a crate of orange soda.",
+  "e_audit": "The ASPICE assessor stays three days and wants you to trace one requirement down to a line of code. The chain breaks in two places. You rebuild the traceability table that night.",
+  "e_neck": "On the X-ray your fifth and sixth cervical vertebrae have moved closer together. Rehab tells you to get up every forty-five minutes. You set an alarm. It goes off in meetings and you silence it.",
+  "e_pricewar": "Carmakers go to war on price and the annual cuts land on the batteries: four yuan to be saved on every slave board. Hardware swaps a chip for a domestic substitute and you re-adapt every driver.",
+  "e_bonus": "In the hottest year the industry has seen, the year-end bonus comes to fourteen months' pay. The barbecue man outside the dorm asks whether your company is still hiring.",
+  "e_layoff": "Overcapacity has been rumored for half a year. Then more than twenty people on the next project are let go, their desks clear by morning. Your team doesn't mention it. People just leave later than usual.",
+  "e_chem": "Sodium-ion and semi-solid samples reach the bench with entirely different voltage plateaus, and your years of OCV experience are good only for reference. You are a student again, starting from the first charge curve.",
+  "e_ai_log": "A model sorts three hundred thousand after-sales records and points to a pattern nobody had noticed: faults cluster in cars fast-charged three or more times in a row. You check it on the bench. It was right.",
+  "e_ai_code": "A new graduate has AI write a balancing module in one afternoon, and every unit test passes. Around line two hundred you find he missed the case where a slave board drops off. The AI missed it too.",
+  "e_domain": "A major carmaker announces it will pull BMS algorithms into the vehicle domain controller, leaving the pack with sampling only. On that platform your software shrinks to a layer of drivers, and the stack of requirements loses half its thickness.",
+  "e_family": "Your spouse is in Fuzhou. Every Friday you catch the last high-speed train there and come back Sunday night. During production ramp you miss five weeks running. She changes the light bulbs herself.",
+  "e_patent": "Your low-temperature correction gets patented, with a two-thousand-yuan bonus. You are fourth on the list. The man listed first explains the principle wrongly at the review, and you make a note of it.",
+  "e_mentee": "The young people on the team have never been to Heihe, only run simulations. You slip one onto the next winter trip. He comes back with cracked ears and speaks much more carefully about cold-end data.",
+  "e_old": "The first generation of cars you worked on starts being scrapped in numbers, the packs going to a second-life warehouse. The recycler's report lists the state of health you calibrated all those years ago. It is four points off. Not bad."
+ },
+ "choices": {
+  "c_oem": {
+   "title": "That carmaker in Shanghai",
+   "situation": "A classmate does vehicle energy management at a Shanghai startup. They need people, the pay is forty percent higher, and you could leave the dorm and the shuttle behind. But their BMS team is brand new and bosses change there faster than bench setups.",
+   "options": [
+    { "label": "Go to Shanghai", "result": "You hand over your tickets cleanly and take with you a down jacket that has been to Heihe.", "end": "You went to Shanghai to work on whole vehicles. The company went through three heads of technology and you moved desks twice. You never had to calibrate in the cold yourself again, and your ears got much better." },
+    { "label": "Stay in Ningde", "result": "You keep learning the temperaments of cells. The cell department has started sending you its internal data." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Going for BMS Engineer",
+   "situation": "The department is holding reviews for BMS Engineer this year. You have to show what you have owned yourself. Your team lead says the low-temperature correction module can count as yours.",
+   "options": [
+    { "label": "Prepare properly", "result": "You rerun three years of data. The third follow-up question from the panel lands exactly on your backup slide." },
+    { "label": "Clear the tickets first", "result": "The slides are rushed, though the carmaker praises how quickly you respond." }
+   ]
+  },
+  "c_smooth": {
+   "title": "Smoothing the dashboard",
+   "situation": "The carmaker dislikes jumps in the charge display and wants the number to fall more gently in the cold. Smooth it and owners stop complaining, but the gap between shown and true charge gets hidden in the last few kilometers.",
+   "options": [
+    { "label": "Smooth it, keep a margin at low charge", "result": "Complaints fall. You add one more protection strategy. Neither side is delighted, and both can live with it." },
+    { "label": "Insist on a near-true display", "result": "You write a one-page explanation for the client. Their project manager copies your boss on the email. That page later becomes your standard line." }
+   ]
+  },
+  "c_iso": {
+   "title": "The functional safety certificate",
+   "situation": "The department needs someone to certify as an ISO 26262 functional safety engineer, and whoever does will review every FMEDA from then on. The company pays the fee. The study time you find yourself.",
+   "options": [
+    { "label": "Take it", "result": "You memorize the essentials of those thousands of pages on the train. Passing earns you one more job: signing other people's documents." },
+    { "label": "Leave it to someone who wants it", "result": "You go on tuning algorithms and spend the saved weekends eating seafood at Sandu Bay." }
+   ]
+  },
+  "c_storage": {
+   "title": "Moving to energy storage",
+   "situation": "The grid-storage division is expanding, shipping containers of batteries to the Middle East and Australia. Conditions are simpler, no Heihe, but you would be overseas for acceptance tests a month at a time.",
+   "options": [
+    { "label": "Go to storage", "result": "You learn to read grid dispatch curves beside a container in the desert, and your passport fills quickly." },
+    { "label": "Stay with cars", "result": "The car side keeps getting more cutthroat, but every cell you know is here." }
+   ]
+  },
+  "c_ai": {
+   "title": "The AI analysis line",
+   "situation": "The department wants a pipeline that uses AI to analyze data from the whole fleet, and it needs someone who understands batteries to lead it. You would be learning data engineering from scratch, with no fewer production problems on your desk.",
+   "options": [
+    { "label": "Take it on", "result": "For half a year you walk the data team through the reports and the electrochemistry piece by piece. Once it launches, other groups line up to see you." },
+    { "label": "Stick with the algorithms", "result": "You keep your attention on the bench and the cells. For now AI can't take that part." }
+   ]
+  },
+  "c_recycle": {
+   "title": "A battery recycler comes calling",
+   "situation": "A power-battery recycler is building a plant in Fuding and wants someone who knows state-of-health estimation as technical lead. The equity is generous, but recycled material follows the price of lithium carbonate, which has been falling hard.",
+   "options": [
+    { "label": "Go to Fuding", "result": "You begin to study batteries other people have worn out. Their histories are far more complicated than new cells'.", "end": "You went into recycling. Retired packs come in by the truckload and you decide whether they can do a few more years at a storage station. It is not so different from reading someone's medical report." },
+    { "label": "Decline", "result": "You still check the lithium carbonate price every week. You just don't lose sleep over it." }
+   ]
+  },
+  "c_senior": {
+   "title": "Applying for Senior BMS Engineer",
+   "situation": "There are two openings for Senior BMS Engineer this year, and the test is whether you can carry the software design for a whole platform. A more senior colleague on your team has also applied.",
+   "options": [
+    { "label": "Apply", "result": "At the review you talk about a production launch that failed. The director asks one question and doesn't need a second." },
+    { "label": "Step aside this time", "result": "The two of you have dinner. Once he is promoted he hands you a difficult client." }
+   ]
+  },
+  "c_lead": {
+   "title": "Going for BMS System Lead",
+   "situation": "The new platform needs a BMS System Lead, someone to fight the carmakers, fight the cell department and explain to the executive office why these two extra months matter. Headquarters says it could be you, or an outside hire.",
+   "options": [
+    { "label": "Go for it", "result": "You write a one-page judgment on the roadmap, without a single pretty chart." },
+    { "label": "Stay technical", "result": "The outside hire arrives. You spend half a day telling him about those cells' temperaments." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "You finish the paperwork, fold your work jacket and drop it in the recycling bin. The dorm has turned over many times, and the shuttle route has changed. The algorithms you tuned have been overwritten generation after generation, though a few thousand cars still on the road probably carry your low-temperature correction. Your phone says twenty-seven percent. You know it has a long way to go.",
+  "burnout": "After two production launches in a row, several lines on your medical report carry arrows. You ask to move to standards and documentation, away from the bench. The new desk is by a window with a little haze toward Sandu Bay, and nothing scrolls on your screen anymore."
+ },
+ "stages": [
+  "Your days are spent minding the bench and checking numbers: recording CAN traffic, comparing it with true values in MATLAB, circling the bad stretches for your team lead. Carmaker emails are not yours to answer. The cell department calls you the new kid. Your code goes into the main branch only after someone else reviews it.",
+  "A whole module, SOC or balancing, is now yours. Requirements come from the carmaker, cell data from the cell department, and you sit between them writing strategy, running HIL and cutting releases. The resident engineer starts coming straight to you, and your name appears in the owner column of the ticket.",
+  "You no longer tune coefficients yourself. You decide this generation's architecture, how ASIL levels decompose, which modules to reuse. At reviews you ask questions over the FMEDA. When something big goes wrong in production, the executive office calls you first, and you have to explain it and carry it.",
+  "You run more than thirty people and a technical roadmap: whether to go with sodium-ion, whether the algorithms live in the pack or in the domain controller, whether these two months are worth spending. Most of your time goes to meetings and flights to carmakers. You have not written code in a long while. You find out whether people have thought things through by the questions you ask."
+ ],
+ "work": [
+  "The engineer training you asks you to track down a jumpy voltage channel. You spend a night with an oscilloscope probe and find one wire running too close to a fan.",
+  "The cell department sends new samples. In the climate chamber you measure OCV step by step from minus twenty to fifty-five degrees, and the table runs to four thousand rows.",
+  "The end-of-line station reports a batch of calibration failures. Sent to the floor, you crouch by the industrial PC and find a barcode scanner misreading the lot number.",
+  "The resident engineer posts a trace in the group chat and asks why balancing never turns on. You work through the state machine to the third layer and find a less-than sign the wrong way round.",
+  "On the HIL bench you simulate slave boards dropping out, injecting faults one at a time. The test cases grow from eighty to two hundred, and your team lead removes only two.",
+  "After-sales returns a pack. You open it down to the third module and go through the cells one by one with an internal-resistance meter, finding the single cell dragging down the whole pack's health.",
+  "The carmaker's technical director says in a meeting that your thermal management is too conservative and wants fast charging eight minutes quicker. You put up a temperature-rise curve, say that can be done, and point to the cycle-life slide.",
+  "You review an FMEDA whose single-point fault metric is 0.3 percentage points short. The engineer wants to adjust an assumption. You have him add a redundant sampling channel.",
+  "The ASPICE assessor wants the change records. You go through them line by line with the new software lead and turn two verbal agreements from three years ago into formal reviews.",
+  "The executive office wants one page on software investment for the sodium-ion platform. You delete four pages of technical detail and leave one sentence: if we don't invest this year, in two years we will be buying someone else's algorithms.",
+  "You fly out to meet the carmaker's purchasing and engineering people: price cuts in the morning, the domain controller boundary in the afternoon, and at night in the hotel you reconcile the two sets of minutes.",
+  "Two senior engineers bring an architecture fight to your office. You have each of them write one page setting out the strongest case for the other's design, and then come back."
+ ],
+ "past": [
+  "You went to high school in Sanming. The family electric scooter kept dying halfway home while the gauge still showed two bars.",
+  "The year of college applications, new energy was all over the news. You chose electrical engineering. Your father said at least it dealt with electricity, so you wouldn't starve.",
+  "In a junior-year battery course you learned that charge is not something measured but something calculated. You drew a question mark in your notes.",
+  "You stayed on for a master's. Your advisor worked on SOC estimation, and you spent the whole summer swapping batteries beside a climate chamber.",
+  "In campus recruiting you got three offers. The one from Ningde paid the most, and classmates warned you that its overtime was as famous as its typhoons. You looked it up on the map. Only four hours from home."
+ ],
+ "late": {
+  "pension_note": "Estimate: large-manufacturer R&D staff contribute on a higher base, though the replacement rate is ordinary. Company annuity and savings make up the rest.",
+  "scenes": [
+   "You move back to Sanming and buy a small electric car, charging it only to eighty percent. When a neighbor asks why, you say it adds three years to its life. The neighbor starts stopping at eighty too.",
+   "E-bike batteries in the compound keep swelling, so you post a handwritten buying guide in the residents' group. The property office prints it and tapes it up in the elevator, in very large type.",
+   "Solid-state batteries finally reach the road in numbers; the news says range will double. You work out the low-temperature end, put down your phone and decide those people are still going to have to go to Heihe in winter.",
+   "Your neck has stayed with you all this time and flares up whenever the weather turns damp. You have learned to live with Sanming's wet springs, and set the dehumidifier to a number you worked out yourself.",
+   "These days you write company standards. One word can take two weeks. No alarms, no carmakers, forty minutes for lunch.",
+   "The rehab doctor asks what you used to do, and you say you calculated electricity. Then you should know, he says, a person shouldn't be run below twenty percent all the time either.",
+   "You have stopped reading new-energy news altogether. When friends ask about a new car, you say buy the cheap one, the cells are all about the same.",
+   "At the new place they hear you once calibrated in Heihe and ask you to tell them about it. By your second sentence you can see they would rather know what it paid.",
+   "Your old employer's share price rises and falls. You have worked out what you would have made by staying, and how many neck vertebrae you saved by leaving. The two sums come to no conclusion.",
+   "In your last years before retiring you only do reviews. However handsome someone's proposal, you turn to the low-temperature page first.",
+   "In a ride-hailing car you look at the charge on the center screen, then at the traffic, and calculate that the driver is going to swear once before you get home.",
+   "Your phone says one percent. It can hold out more than ten minutes, the kind of margin you used to write when you were young. You press the screen dark and wait for the bus."
+  ],
+  "closing": {
+   "retire": "On wet spring days the walls bead with water. The dehumidifier tank fills, you empty it, and the humidity goes back to fifty-five percent.",
+   "burnout": "The twelfth draft of the standard goes out. You close the laptop and go downstairs for a bag of tangerines.",
+   "end": "The afternoon review is at three. You top up your tea, open the materials and turn first to the low-temperature page."
+  }
+ }
+}

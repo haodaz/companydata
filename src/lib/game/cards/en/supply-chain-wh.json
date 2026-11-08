@@ -1,0 +1,182 @@
+{
+ "id": "supply-chain-wh",
+ "occupation": "Supply Chain Manager",
+ "role": "Automotive Parts Supply Chain Specialist",
+ "headline": "A Wuhan supply chain worker at a wire-harness plant in Zhuankou: delivering to the carmaker by the hour, every minute of line stoppage billed, and each year's end spent bargaining annual price cuts with the sub-suppliers",
+ "unit": "A wire-harness manufacturer in the Zhuankou development zone, Wuhan, with 1,200 employees",
+ "unit_type": "Automotive parts manufacturer",
+ "city": "Wuhan",
+ "city_tier": "New first-tier",
+ "education": "Bachelor's (Logistics Engineering)",
+ "level": "You can work the ERP materials module and Excel pivot tables; nobody has yet called you in the middle of the night about a terminal",
+ "intro": "On this road in Zhuankou there are more trucks than cars. You've spent a year in the planning office of a wire-harness plant, at a desk with a landline and two screens showing the carmaker's rolling orders, accurate to the hour. A single harness has hundreds of parts. If one terminal is missing, an assembly line stops; every minute it stands still, the bill arrives from across the river.",
+ "salary_note": "Estimate: parts makers in Zhuankou pay a little below the coast. Overtime and year-end bonuses depend on the carmaker's output, and they vary a lot in years when cars don't sell.",
+ "facts": [
+  {
+   "label": "Supply Chain Assistant / Specialist (current level)",
+   "value": "0–2 years, ¥6,800–10,000 a month (national average, derived from pay by experience)",
+   "source": "Pay by experience"
+  },
+  {
+   "label": "Next level up",
+   "value": "Supply Chain Management Specialist (rotation) (2–4 years)",
+   "source": "Career map"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥19,500 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Driving a supply chain digitalization project",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Organizing the annual warehouse stocktake",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "840 related listings nationwide, 18 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "The shuttle bus crosses Junshan Bridge. On your phone is the twelve-hour delivery plan the carmaker updated last night, forty sets more than the day before, another last-minute addition.",
+  "Morning meeting, standing at the warehouse door. The warehouse supervisor says only half of last night's terminals arrived. The production manager asks you. You say the die castings from Huangshi will be here by noon, because that's the sentence you have to say first.",
+  "You run MRP. The ERP spits out over a thousand lines of suggested orders. You weed out slow-moving stock and discontinued part numbers line by line and send the rest to suppliers.",
+  "The owner of a stamping plant in Xiaogan calls to say steel has gone up. You say the contract fixes the annual price. Then come see my place, he says.",
+  "You take the pallet list down to the line and count. The carmaker's delivery window is twenty minutes. Late means penalty points; early means they won't unload. The driver waits outside the gate, smoking.",
+  "Finance comes to reconcile. This batch of payments will go out as six-month bank acceptance bills. Before you tell the supplier, you've worked out the three things they will say.",
+  "You don't dare mute your phone. If it rings at this hour, either the carmaker has changed the plan or a truck is stuck on the expressway."
+ ],
+ "ladder": [
+  { "title": "Supply Chain Assistant / Specialist", "stage": "Entry", "focus": "Execute one link: purchasing, planning, warehousing or transport" },
+  { "title": "Supply Chain Management Specialist (rotation)", "stage": "Junior", "focus": "Rotate through several links and answer for reliable execution" },
+  { "title": "Supply Chain Planner / Supply Chain Manager", "stage": "Mid-level", "focus": "Coordinate overall operations: S&OP, performance, improvement" },
+  { "title": "Senior Supply Chain Planner / Senior Supply Chain Manager", "stage": "Senior", "focus": "Strategic planning, operating system design, digitalization" },
+  { "title": "Supply Chain Director", "stage": "Executive", "focus": "Supply chain strategy and managing multiple teams" }
+ ],
+ "ai_tasks": [
+  { "name": "Organizing the annual warehouse stocktake", "how": "AI can draw up the count plan, batch by risk, reconcile and flag the biggest gaps. A person has to count on site, find out why, and decide how to adjust the books." },
+  { "name": "Driving the SCM digitalization project", "how": "AI can help organize requirements, clean data and write training materials. But connecting planning, purchasing and warehousing takes cross-department coordination, reworked processes and someone to absorb the resistance." },
+  { "name": "Setting safety stock strategy", "how": "AI suggests safety stock levels from demand swings and lead times and finds the dead stock. A person sets the trade-off between service and cost, and dealing with dead stock means talking to sales and production." },
+  { "name": "Running MRP weekly and issuing purchase orders", "how": "The system plus AI runs MRP automatically and issues routine orders. A person only spot-checks exceptions, special materials and large orders." },
+  { "name": "Annual supplier evaluation and audit", "how": "AI gathers delivery, quality and price data, scores suppliers and drafts the report. A person has to audit on site, read what's behind the data, and decide rewards, penalties or removal." },
+  { "name": "Handling sudden supplier failures", "how": "AI can find alternatives fast and simulate the effect on production. A person has to make the calls, line up resources, decide which orders to save, and answer for the result." },
+  { "name": "Chairing the monthly S&OP meeting", "how": "AI produces forecasts, compares scenarios and writes up minutes and to-dos. A person chairs, balances the interests of sales and production, and makes the final call." },
+  { "name": "Optimizing routes to cut logistics cost", "how": "Routing, loading and rate-comparison algorithms are mature and AI can give the plan directly. A person sets the constraints, spot-checks exceptions and negotiates with carriers." }
+ ],
+ "events": {
+  "e_duanxian": "A terminal worth a few mao hasn't arrived, and the carmaker's line has two hours of stock left. You ride a truck to Xiaogan to escort it yourself, measuring your life by the kilometer markers.",
+  "e_chuanpai": "For the first time you take a shortage list down to zero. The warehouse supervisor offers you a cigarette, an unheard-of thing. You don't smoke, but you take it and wear it behind your ear all afternoon.",
+  "e_pandian": "Year-end stocktake, the whole plant shut for two days. You and finance crouch between the racks, weighing reels of terminals. Books and shelves are eight thousand-odd pieces apart, and you write the variance report until midnight.",
+  "e_xinpian": "Controller chips are short worldwide. The carmaker revises its schedule three times a day. Half your harnesses are already made and there are no cars to put them in. They pile up in temporary storage.",
+  "e_gaowen": "August heat. A plant upstream has its power rationed and the carmaker cancels its heat break at the last minute. Neither end is yours to decide. You fill your weekend with phone calls.",
+  "e_erji": "You go to Huangshi for the annual supplier audit. The die-casting plant's owner walks you onto the floor and what he shows you isn't quality records but his new shot-blasting machine, bought by putting up his house.",
+  "e_jiaoqi": "You bring the safety stock on a part from Shiyan down from seven days to four and save a good sum in tied-up cash over six months. The finance director reads your name out at a meeting, and gets one character wrong.",
+  "e_juanzi": "Your child starts kindergarten and needs picking up, and the carmaker's model changeover falls that very week. Your spouse takes three days off. On the fourth day, the pickup is done by the woman who sells breakfast downstairs.",
+  "e_mrp": "MRP is connected to AI forecasts and routine purchase orders go out automatically. Your office's order volume falls by half. What the system doesn't know is that the Xiaogan plant runs short of workers every year around Qingming.",
+  "e_guanzhi": "Your stomach starts acting up. Lunch is always interrupted by a call. You learn to eat and talk at once, and you learn to set down your chopsticks after two bites.",
+  "e_wuliu": "You work with a carrier to redraw the milk-run routes, stringing Xiaogan, Huangpi and Hannan into one line and saving ¥400,000 a year in freight. The carrier's boss says you know this road better than his drivers.",
+  "e_daozhi": "The carmaker halves output of a gasoline model and your warehouse is left with three million yuan of dead harnesses. You carry the list from meeting to meeting. Every department thinks this isn't its stock.",
+  "e_fukuan": "At year's end the owner of a small supplier comes to your office. He isn't there about the price. He just wants to ask if the acceptance bills can come half a month early. You can see the payroll sheet in his hand.",
+  "e_xinnengyuan": "The first order for high-voltage harnesses comes in, orange ones, new part numbers, new suppliers, new rules. You sit in a PPAP review with engineers ten years younger, and for the first time someone calls you teacher and asks: how does this part number go through the process?",
+  "e_eop": "The model you've worked on for twelve years goes out of production. The final batch of harnesses comes off the line and you've calculated the leftover material to the last wire. The station signs are taken down and leaned against the gatehouse. Nobody wants them.",
+  "e_duibiao": "AI compares the nation's freight rates for you and writes three inquiry emails for the buyers. What's left to you is this: when something goes wrong on the expressway, can you reach anyone at this cheapest carrier?",
+  "e_tuihua": "The carmaker re-tenders its harness business and half goes to a plant elsewhere. Lines are cut, warehouses merged, people moved. For the second time you sign a layoff list yourself. You can recite the first one.",
+  "e_gongying": "The owner of the Huangshi die-casting plant retires and his son takes over. On his first visit he brings slides on a digitalization program. His father used to bring a bag of Xiaogan rice wine."
+ },
+ "choices": {
+  "c_zhuji": { "title": "The carmaker's purchasing department is hiring", "situation": "The carmaker across the river is looking for a purchasing engineer, a job that consists of sitting on the customer's side and passing on to others what you've been taking. A friend over there says your résumé is just about right. Once you're gone, your plant's planners will have to phone you.", "options": [
+   { "label": "Go to the carmaker", "result": "Your badge changes color. On your first day, you find in the directory your plant's contact, and it's your old colleague.", "end": "You join the carmaker's purchasing department and become the person who phones to demand forty more sets. Every year at the price-cut negotiations, the person across the table is a planner you once trained." },
+   { "label": "Stay at the plant", "result": "You stay on this side of Junshan Bridge. The next day a change order arrives from the carmaker, twenty sets more than yesterday." }
+  ] },
+  "c_laoban": { "title": "A sub-supplier asks you to be general manager", "situation": "The Xiaogan stamping plant's owner is sixty-five and his son won't come back. He asks you to be general manager, with a small stake. You know every payment term this plant has, and you know its biggest customer is your current company.", "options": [
+   { "label": "Resign and go to Xiaogan", "result": "From one side of the purchasing desk to the other, in the space of a month.", "end": "You become general manager of a stamping plant, the sound of the presses coming up through your office floor. Now each year's end, it's your turn to carry the steel price sheet and ask someone whether their price cuts can be a bit smaller." },
+   { "label": "Stay on this side", "result": "You suggest two professional managers to the owner. He thinks they're too expensive and uses neither." }
+  ] },
+  "c_bingchang": { "title": "The plant is moving away", "situation": "The group has decided to consolidate Wuhan's capacity at a base in another province. The supply chain team can go along or take a payout. The commutes and contacts you've built up in Zhuankou won't count for anything there. There's a third option: stay in Wuhan to wind down and run after-sales spares.", "options": [
+   { "label": "Take the payout", "result": "You finish the transfer paperwork for the final batch of stock and pull the landline's cord out of the wall.", "end": "The Wuhan site closes and you take the payout and leave this line of work. There are a few fewer trucks on that road in Zhuankou now. When you pass by, you still look at where their plates are from." },
+   { "label": "Follow to the new base", "result": "You come back to Wuhan once a month. You spend your time on the high-speed train changing safety stock levels over there." },
+   { "label": "Stay and run spares", "result": "You mind a small warehouse, supplying harnesses for old cars still on the road. The phone rings much less." }
+  ] },
+  "c_scmp": { "title": "Sit the SCMP, or just keep rotating", "situation": "There's a slot to be promoted to Supply Chain Management Specialist (rotation), moving from planning to purchasing. There's also an SCMP class, weekends, with half the fees reimbursed. Do both and you won't have a whole weekend for a year.", "options": [
+   { "label": "Rotate and study", "result": "You write case analyses in a hotel on a Xiaogan trip. The curtains don't close properly." },
+   { "label": "Get solid in planning first", "result": "You become the plant's best hand at the materials module. The rotation slot goes to someone else." }
+  ] },
+  "c_niandian": { "title": "How far to push the price cut", "situation": "The carmaker demands three percent off this year, and your plant must pass half of that on to the sub-suppliers. On the list is a plant whose margin, as you know, is already less than three percent. Get them to three first, says the purchasing director, and we'll see if you can't.", "options": [
+   { "label": "Push as told", "result": "They sign. Then they ask if there'll be cuts next year too. You say: every year." },
+   { "label": "Find them another way", "result": "You change the packaging and delivery frequency and save half of it. The owner writes a letter of thanks, which you don't dare show the director." }
+  ] },
+  "c_duangong": { "title": "Whose orders to save first", "situation": "A core supplier's terminals suddenly stop coming, and what's in hand will cover only one carmaker. Both customers' buyers ring. One has volume and a foul temper; the other is small but is deciding on a new model next quarter. It's your call, says the production manager, and it's on you if it goes wrong.", "options": [
+   { "label": "Save the big customer", "result": "The big customer's line keeps running. The small customer's buyer now copies your boss on every email." },
+   { "label": "Save the new model", "result": "The big customer's line stops for two hours and the penalty slip reaches finance. The new model award does come through, a year later." }
+  ] },
+  "c_ai": { "title": "Who sets the AI replenishment rules", "situation": "The company has brought in AI forecasting and replenishment, and IT is looking for someone to write the rules: when the system can order on its own, when a person must review. No overtime pay for doing it, no one notices if it's done well, and if it goes wrong the line stoppage is on you.", "options": [
+   { "label": "I'll set them", "result": "Into the rules you write Qingming, the heat break, and the birthday of the Xiaogan plant owner's wife." },
+   { "label": "Leave it to IT", "result": "In its third month the system automatically reorders a batch of discontinued parts. You say nothing, and send over the list." }
+  ] },
+  "c_gaoji": { "title": "Compete for Supply Chain Director", "situation": "The Supply Chain Director is retiring and the boss asks if you'd like to try. The director has to make the call at the monthly S&OP in front of sales and production, and explain inventory and cash flow to the board. But the line in your own hands has only just started running smoothly.", "options": [
+   { "label": "Give it a try", "result": "You put together a three-year supply chain plan. Page one says how much money is sitting in the warehouse right now." },
+   { "label": "Don't fight for it", "result": "A new director parachutes in. In his first week he comes to ask you where Xiaogan is." }
+  ] }
+ },
+ "endings": {
+  "retire": "In your final month you hand over your part numbers, some four thousand of them; about three hundred no longer go in any car, but the system won't let them be deleted. For the first time you set your phone to silent and leave it beside the bed. The next morning, it doesn't ring. The trucks of Zhuankou roll on. The orders are somebody else's now.",
+  "burnout": "Your stomach, your blood pressure and the midnight calls all arrive together. You explain your open orders one by one and ask to move to warehouse procedures. Without line stoppages to manage you get a size lighter, though when you hear a truck's reversing beep, your heart still skips."
+ },
+ "stages": [
+  "You watch over the ERP materials module, running MRP, issuing releases and chasing deliveries, every purchase order checked against the carmaker's rolling plan. You deal with the warehouse supervisor and suppliers' order clerks; the talk is short and there's no room for mistakes. You don't decide anything yet. You're just the first to know when something's about to go wrong.",
+  "The company rotates you through planning, purchasing, warehousing and transport. You learn to read a supplier's cost breakdown. Mornings you count pallets on the line, afternoons you work out trips with carriers, evenings you catch up on 8D reports for quality. The difference now is that people start asking you which department a thing belongs to.",
+  "You start chairing the monthly S&OP, setting sales' optimism and production's pessimism on one supply-demand balance sheet, and then you decide. You negotiate price cuts at year's end and audit suppliers every quarter, and you're the one who goes to see the carmaker's buyers when something's wrong. You have six or seven people, whose mistakes pass through you first.",
+  "You run the entire chain across two plants: inventory turns, tied-up cash, the supplier map, and that SCM system that never quite finishes going live. You're on the line less and in the meeting room more, in front of the group's dashboards explaining why this number was missed. Whether a supplier stays or goes now needs your nod.",
+  "You speak to the boss now, and what you hold are the three-year plan, the capacity map for new-energy part numbers and the cash flow statement. You go in person to the few negotiations that matter most each year. Dozens of people's jobs sit in your budget, and it's been a long time since you touched a real terminal."
+ ],
+ "work": [
+  "A new driver delivers a pallet to the wrong gate. You chase it from Gate 3 to Gate 7 with the release in hand, and get the carmaker's receiving clerk to scan it five minutes before the window closes.",
+  "You look up a terminal's in-transit quantity in the ERP and find the ASN is still last week's. You have to phone the order clerk in Xiaogan and ask her to go count it on the floor.",
+  "A part number on the dead stock list hasn't moved in three years. You go to the warehouse to find it and discover it propping up a pallet, left over from a long-ago trial build.",
+  "When purchasing comes round, you take apart the supplier's cost breakdown and check copper, labor and yield item by item. Their order clerk says you calculate more closely than her boss.",
+  "You work out the empty-return rate with a carrier, pick seven empty runs a week out of GPS tracks and adjust the loading windows. Driver Huang says he can get home for dinner now.",
+  "At the quality 8D meeting, the loose-connector problem gets traced back to how the warehouse stacks things. You hold up a photo of the pallet and say something fair, and offend the warehouse.",
+  "At S&OP, the sales director says two thousand more cars next month; production says that's all the people the line has. You put the balance sheet on the wall and say: fifteen hundred more. That's the number.",
+  "You take your supplier quality engineer to Huangshi for an on-site audit and find every inspection record in one person's handwriting. The owner laughs. You don't call him on it, and write it on the audit form as an observation.",
+  "A direct report's email chasing a supplier is too harsh. You change three words, then have him phone and apologize himself.",
+  "The SCM project meeting reaches its ninth session and planning and warehousing are still arguing over who enters data first. You walk both supervisors down to the line and have them process a receipt with their own hands.",
+  "The group wants to see inventory turns. You split the three million in dead stock into three batches and argue each half of the blame with sales and finance. When it's over, each thinks it lost.",
+  "After a tender, a supplier of ten years must be dropped. You ride out to see the owner and tell him in person. You don't send an email.",
+  "At the annual strategy meeting you lay out the sub-suppliers for three battery harness lines on one chart, point to the one line with a single name on it and ask: if this one goes down, how many days do we stop?",
+  "You go to look at the new warehouse at the base in another province. Your people talk you through the automated racking and its throughput. You crouch down to check if the labels on the bins are straight."
+ ],
+ "past": [
+  "You grow up in Shiyan. Your father works at a plant making gearbox housings, and whenever the shop floor is about to shut for a break, your family knows first. As a child you think a car is something that takes weeks off.",
+  "You go to Wuhan to study logistics engineering. In the first class the teacher draws the curve of the bullwhip effect on the board. You don't get it, but you remember the picture.",
+  "You intern at a third-party logistics firm in Zhuankou, printing delivery notes. A truck driver teaches you how to tell a truck's real load by looking, which is more accurate than the textbook.",
+  "At campus hiring your classmates go to consumer goods and e-commerce. You go to the wire-harness plant because there's a direct bus to the gate. Later you learn this is called delivery reliability.",
+  "Helping out in the planning office, the first sentence you learn is \"this batch will be here by noon.\" The second is \"this afternoon, then.\""
+ ],
+ "late": {
+  "pension_note": "Estimate: manufacturing employers pay social insurance on time with a small enterprise annuity; retirement income is about half of working pay. Medical insurance is enough, and stomach medicine isn't expensive.",
+  "scenes": [
+   "Your refrigerator runs on a weekly demand cycle; eggs have a safety stock. Your spouse says you're not well. You take out a half-bottle of chili bean paste that hasn't moved and say this needs to be dealt with.",
+   "The neighborhood group-buying chat asks for help. You redo the pickup points, time windows and sorting routes. By the second week someone is saying you're too strict.",
+   "There are more and more electric cars on the road, with harnesses far longer and finer than in your day. You see a car waiting for roadside help and your first thought is which batch its controller came from.",
+   "You have an operation on your stomach and recover well. You begin eating on time, which turns out to be harder to schedule than you'd have guessed.",
+   "You're still writing revision notes for the warehouse procedures, one version every six months. Nobody actually reads them and you know it. You just don't want to see them wrong.",
+   "You stand in line at the community clinic frowning at the flow around the dispensing window. Nobody in line knows that in your head you've already closed Window 1.",
+   "In your first year you still check the carmaker's production news on Friday afternoons. Later you find you no longer need to know. It feels lighter than you expected.",
+   "People at your new job say you get a look on your face when discussing prices. Do I, you say, and turn to page two of their quotation and start asking from there.",
+   "The sign has changed at that plant beside Junshan Bridge. It makes battery boxes now. You drive past without slowing, just looking at where the trucks lined up at the gate are from.",
+   "In the supermarket you look at the shelves more than the goods. Which row is always empty, which brand restocks slowly: you can guess what material a small factory behind it is waiting on.",
+   "You hear that planners don't have to watch the orders anymore; the model adjusts itself. You ask, and when a terminal's short, who goes to Xiaogan? The answer comes back: where's Xiaogan?"
+  ],
+  "closing": {
+   "retire": "The evening wind is strong beside the Yangtze, cargo ships going downriver one after another. You don't work out their tonnage, and wouldn't tell anyone if you did.",
+   "burnout": "The pills go into three compartments for morning, noon and night. You fill them once a week and have never had a stock-out.",
+   "end": "You drive over the Zhuankou overpass. Below, a row of trucks waits to unload. Your car has no delivery window, and you go on slowly."
+  }
+ }
+}

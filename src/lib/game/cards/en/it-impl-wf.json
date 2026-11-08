@@ -1,0 +1,209 @@
+{
+ "id": "it-impl-wf",
+ "occupation": "IT Implementation Engineer",
+ "role": "ERP Implementation Assistant",
+ "headline": "Half a lifetime with a laptop on your back in the factory guesthouses around Weifang. Every go-live night is spent waiting for the warehouse books and the actual stock to agree, while the boss's wife trusts only her own ledger",
+ "unit": "An ERP implementation services company in Weifang, Shandong",
+ "unit_type": "Private software implementation firm",
+ "city": "Weifang, Shandong",
+ "city_tier": "Third-tier city",
+ "education": "Bachelor's (Information Management and Information Systems)",
+ "level": "Your SQL is good. Why the same screw has four names at the same factory, you don't yet understand.",
+ "intro": "Your first project is at a castings plant in Changle, and the company car drops you off and drives away. The guesthouse quilts smell of cigarette smoke, and a handwritten notice on the door says: during system go-live, the warehouse will not issue materials. Your project manager's assignment is to clean up this factory's materials list, more than nine thousand items, in which one screw has four names. What to call it you have to ask Old Wang, and Old Wang isn't in today.",
+ "salary_note": "Estimate: a private software firm in Weifang pays below the national implementation figure. Travel allowances and project commissions make up the rest, and commissions depend on whether final payments come in.",
+ "facts": [
+  {
+   "label": "ERP Implementation Assistant (current level)",
+   "value": "0–2 years, ¥3,800–5,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "ERP Implementation Engineer (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥6,500 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Driving go-live and cutover on the factory floor",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Researching requirements and uncovering what clients leave unsaid",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "70 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "A bowl of Weifang pot soup outside the guesthouse. The plant shuttle goes at 7:30 and you ride with the workers.",
+  "Old Wang the storekeeper walks among the racks with his tea mug. You follow with the materials list. The names he gives match nothing on the sheet.",
+  "Training team leaders on entering work orders in the shop office. Someone asks if this thing can help calculate wages. You say it can't.",
+  "Factory canteen, braised cabbage with tofu and steamed buns. The boss's wife sits across from you and asks if the system can let her see every storekeeper's comings and goings.",
+  "Configuring the system over VPN. The factory's network drops twice, so you turn on your phone hotspot and keep uploading.",
+  "Finance comes with accounts from two years ago. This is an opening-balance problem, you say, it has to be reconciled. That's what you people said last time, she says.",
+  "Running data validation. Of the nine thousand items, twelve hundred still don't match. Your project manager posts a progress chart in the group.",
+  "The guesthouse TV gets only three channels. As you watch, you think about how many items tomorrow will have to go through Old Wang."
+ ],
+ "ladder": [
+  { "title": "ERP Implementation Assistant", "stage": "On the project", "focus": "Cleaning base data, training users, staying on site, learning how a factory's books move" },
+  { "title": "ERP Implementation Engineer", "stage": "Owning a module", "focus": "Owning the supply-chain or production module, configuring, integrating and taking users live" },
+  { "title": "Senior Implementation Consultant", "stage": "Leading solutions", "focus": "Designing the overall solution and blueprint, negotiating scope with owners, leading a few implementers" },
+  { "title": "Implementation Project Director", "stage": "Running delivery", "focus": "Running the company's delivery and collections, rescuing failed projects, meeting owners" }
+ ],
+ "ai_tasks": [
+  { "name": "Driving go-live and cutover on the factory floor", "how": "Storekeepers who won't cooperate, owners who change their minds, books that don't match at midnight: someone has to be there to carry it." },
+  { "name": "Researching requirements and uncovering what clients leave unsaid", "how": "AI can organize interview notes. The real process in a factory is found by going to the shop and asking." },
+  { "name": "Configuring the system and migrating opening data", "how": "Scripts and mappings can be generated. Whether the data is right has to be checked with the storekeeper." },
+  { "name": "Training operators and storekeepers", "how": "Slides and a help bot can be produced automatically. Resistance has to be soothed by a person." },
+  { "name": "Writing manuals and acceptance documents", "how": "Generated automatically from the configuration. People spot-check against reality." }
+ ],
+ "events": {
+  "e_golive": "Cutover at month's end. Warehouse and finance count stock all night, and the books and the shelves differ by more than seven hundred thousand yuan. A roomful of people look at you. Just before dawn you find it: one batch was entered with the wrong unit, one ton as a thousand tons.",
+  "e_acceptance": "The client has been live three months and won't sign the acceptance form. Two more reports and I'll sign, says the owner. The final payment is ¥120,000, your commission is entirely on that sheet of paper, and you stay another two weeks.",
+  "e_paid": "A client a year behind finally pays. The owner's wife drives over with the check and a case of Shouguang cherry tomatoes, and asks you not to tell her husband about the system.",
+  "e_keeper": "Old Wang never wanted the system. You spend a week in the warehouse with him and write the rules in his handwritten ledger into the configuration, one by one. On go-live day he says this thing's all right.",
+  "e_stomach": "After all these years of factory canteens and roadside stalls, your gastroscopy report has two lines on it. The doctor asks whether you travel a lot for work. You can tell that from this?",
+  "e_scope": "The contract says purchase, sales and inventory. Now the client also wants payroll and door access connected. You lay the signed requirements on the table. The owner pushes it aside and says, we know each other so well by now.",
+  "e_kite": "During April's kite festival hotels all over the city raise their prices, and you can only stay at a guesthouse farther out. You rarely get an afternoon off, but that day you sit by the Bailang River watching other people fly kites.",
+  "e_commute": "The project is in Zhucheng, home is in Weifang, and you get back once a week. Your spouse says that at the parent meeting, under father's occupation, your child wrote: not at home.",
+  "e_plant": "A client in Qingzhou is acquired, and the group standardizes on one system. Three years of your configuration is out of use overnight. The only person who messages you is the storekeeper, to say the new system is no good.",
+  "e_cloud": "The vendor announces the old version will no longer be maintained and every client must move to the cloud. You phone them one by one to explain they'll have to pay more. Some owners hang up.",
+  "e_ai_doc": "AI can now produce operating manuals and acceptance documents with one click, hundreds of neat pages. At page thirty you see it has written that the client company has a warehouse that doesn't exist.",
+  "e_ai_bot": "You build a help bot for old clients, and the night calls drop by half. Old Wang won't use it. He still calls you directly and says that thing doesn't understand human speech.",
+  "e_soft": "The young woman on the project team cries for two days because her shop won't enter orders. You take her to eat with the workers, and the next day they start entering them. They may just be embarrassed.",
+  "e_tax": "The e-invoice rules change and all the company's clients need their interfaces adjusted. In one week you visit eleven factories. One finance clerk says you come round more often than her own son does.",
+  "e_car": "Company allowances don't cover high-speed rail, so you drive your own car to the counties, more than twenty thousand kilometers a year. In the trunk you keep a case of instant noodles and a network cable.",
+  "e_boss": "An old client's son comes back to take over and wants to switch you for a new brand. His father calls you into the office and says, don't go. I don't trust his way of doing things, keep an eye on it for me.",
+  "e_youth": "A new implementation engineer asks in his first week to be reimbursed for a hotel instead of the guesthouse. You think about it and approve it. You don't know what you've been holding out for all these years.",
+  "e_end": "The first factory you ever implemented has closed. The owner sold the machines, and the system's server too, and the ledger data ended up as one backup on your computer. You've kept it."
+ },
+ "choices": {
+  "c_client": {
+   "title": "The owner asks you to stay",
+   "situation": "The owner of a factory where go-live went smoothly wants you to stay as head of IT, no travel, about the same pay. You know very well that one factory's IT department is you and a printer.",
+   "options": [
+    { "label": "Stay at the factory", "result": "You bring your bags from the guesthouse to a rented flat, and for the first time see your own wardrobe full.", "end": "You stayed at the factory as the IT head who handles everything. When the printer breaks they come to you, and when the owner's phone can't get online they come to you too. It's a life you've found better than you expected." },
+    { "label": "Keep doing projects", "result": "You shoulder your laptop bag again. The next factory is in Shouguang, and the smell of greenhouses follows you all the way into the shop." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Moving up to ERP Implementation Engineer",
+   "situation": "The company's standard for ERP Implementation Engineer is taking a module live on your own. Nobody has been assigned yet to the next client's supply-chain module, and your project manager asks whether you dare hold down the site alone for three months.",
+   "options": [
+    { "label": "Go alone", "result": "You spend more than ninety days at the guesthouse. After that, every time she sees you, the owner's wife slips you an apple." },
+    { "label": "Follow one more project", "result": "You watch the whole process once more with the project manager, and feel surer of it." }
+   ]
+  },
+  "c_books": {
+   "title": "Whether to write off the difference",
+   "situation": "A count after go-live turns up a difference from years back. The owner's wife asks you to post an adjustment directly and smooth it away; old accounts don't need bringing up. The finance clerk quietly tells you she can't actually reconcile that amount.",
+   "options": [
+    { "label": "Have finance issue documents, adjust normally", "result": "The owner's wife doesn't look pleased, but the finance clerk takes you to dinner, and the matter slowly passes." },
+    { "label": "Do what the owner's wife says", "result": "The books balance and acceptance goes smoothly. You keep the record of this operation in a separate log." }
+   ]
+  },
+  "c_exam": {
+   "title": "The national exam for Information Systems Project Manager",
+   "situation": "The company says bids need several senior certificates. Passing the national software exam for Information Systems Project Manager is worth three hundred more a month. You spend more than two hundred days a year in factories and could only study in guesthouses.",
+   "options": [
+    { "label": "Take it", "result": "Over the sound of the guesthouse TV you memorize the ten knowledge areas. On the day you pass, the workers next door are still drinking." },
+    { "label": "Skip it", "result": "You let the certificate go. Getting Old Wang to use the system seems to you more useful than that piece of paper." }
+   ]
+  },
+  "c_qingdao": {
+   "title": "The solutions job in Qingdao",
+   "situation": "The vendor's regional company in Qingdao wants a solutions consultant who knows manufacturing, thirty percent more pay, no more living at factories, only pre-sales. You aren't so young anymore, and this is one road out of the guesthouses.",
+   "options": [
+    { "label": "Go to Qingdao", "result": "You change into a dress shirt. The first time you present to a client you ask, by slide three and out of habit: where's your warehouse?", "end": "You went to Qingdao for pre-sales. Your presentations got better and better and you went to warehouses less and less. Everyone talks about digital transformation these days. You still ask: how many names do your screws have?" },
+    { "label": "Stay in Weifang", "result": "You go on driving to the counties. You know these factory owners better than your own relatives." },
+    { "label": "Only take jobs near Weifang", "result": "You talk it over with the company and stop going far. The money is a bit less. You can make it to the parent meetings." }
+   ]
+  },
+  "c_ai": {
+   "title": "Rebuilding implementation with AI",
+   "situation": "The company wants AI to rewrite its implementation method, automating interviews, configuration and documents so one person can lead three projects. The boss wants you to lead it, which means helping prove the company doesn't need so many implementers.",
+   "options": [
+    { "label": "Lead it", "result": "You pull it off, and a project's person-days fall by thirty percent. Two people on the team leave in the second half of the year. You give them no explanation." },
+    { "label": "Just do your own projects", "result": "Someone else builds the new process. Your phone keeps ringing: the old clients want only you." }
+   ]
+  },
+  "c_senior": {
+   "title": "Moving up to Senior Implementation Consultant",
+   "situation": "The company is promoting a Senior Implementation Consultant to design overall business blueprints and tell owners what will not be built. Your greatest skill has been saying yes to clients. What you'd have to learn now is how to refuse.",
+   "options": [
+    { "label": "Give it a try", "result": "In your first blueprint, the chapter called not in this phase runs longer than any other." },
+    { "label": "Keep implementing", "result": "You'd like a few more years on site, and there's nothing wrong with that." }
+   ]
+  },
+  "c_director": {
+   "title": "Taking on Implementation Project Director",
+   "situation": "The company is choosing an Implementation Project Director over all delivery and collections. Failed projects would be yours, and so would owners behind on payment. Year-end targets come down hard. You could also choose to stay a technical expert.",
+   "options": [
+    { "label": "Take it", "result": "Your calls change from this factory's storekeeper to every factory's owner, and your capacity for drink has no choice but to improve." },
+    { "label": "Stay an expert", "result": "You leave the collection pressure to someone else, and still remember the road to the factories." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "The last project is an upgrade for an old client, and the acceptance form is signed by the owner's daughter, who grew up watching you people change the system. You empty your laptop bag: a few network cables, a yellowed materials list, half a pack of stomach pills. You still remember all those guesthouses. It's what's downstairs from your own home you can't quite recall.",
+  "burnout": "Years of go-live nights have used up your stomach and your sleep. You arrange a transfer to customer records and follow-up calls, and no longer go on site. In the first month of eating dinner at home, your spouse asks why you keep staring at the refrigerator. You say you're thinking about its item code."
+ },
+ "stages": [
+  "Your work is cleaning materials lists, entering base data and teaching team leaders to enter orders on the shop floor. The project manager talks to the boss and you talk to Old Wang. The guesthouse is your second home, and Excel is your other hand.",
+  "A module is yours, supply chain or production. You draw the process, configure parameters, integrate interfaces and walk users through a go-live rehearsal. On cutover night you sit waiting for the warehouse count, and users phone you directly. What you say has begun to count.",
+  "You write the client's overall blueprint: what this phase does, what next phase does, what will never be done. You spend longer and longer in the owner's office and have to learn not to respond while he is angry, and to wait for him to finish that cup of tea. You lead a few implementers, and their messes end up yours.",
+  "The company's delivery and collections hang on you, and each week you look at a table of red, yellow and green projects. You see owners about final payments and renewals, and tenders need your say. You rarely touch configuration now. Tell you how many kinds of screws a factory has, though, and you can still guess how long the project will take."
+ ],
+ "work": [
+  "Old Wang gives you a blue ledger and has you copy down the requisition rules. You spend three days and find that one of his rules says: depends.",
+  "Training seven team leaders in entering work orders, you find the third group fall asleep as soon as they arrive. You move the training to after lunch at the edge of the shop floor, and they listen.",
+  "Finance wants to verify opening data. You filter a pivot table all afternoon and find a batch of materials priced a hundred times over market.",
+  "The production module's bills of materials don't match. The process engineer says the drawings were revised. You measure on the shop floor and find they've been using the old version all along.",
+  "In the rehearsal before cutover, a purchase order gets stuck on its way to the warehouse. Going through the approval flow you find the owner's wife's account is set so high no one else can approve.",
+  "An old client's interface goes down. You drive to Qingzhou, and with one network cable and a kettle of hot water you stay in the server room until afternoon and fix it.",
+  "The owner wants forty reports. You pick out the three he actually looks at and tell him the other thirty-seven are for other people.",
+  "An implementer under you promised a client something the system can't do. You go to apologize, and take the opportunity to write it into next phase's contract.",
+  "A meat-processing plant wants costing down to each individual pig. You walk through the slaughter shop and say this can't be done; down to each batch, it can.",
+  "Year-end collections are ¥400,000 short. You rank the overdue clients on a sheet and take gifts to the first five yourself. By the third, they settle up.",
+  "A failed project comes to you, and the previous implementer left four pages of documents. You invite the old client out, and first listen to him swear at you for an hour.",
+  "The company wants to take on a big client from out of province. You work out headcount and travel, change the person-days on the quote, and tell the boss not to chase this one at a low price."
+ ],
+ "past": [
+  "You went to school in Anqiu, a county seat near Weifang. The family ran a small hardware store and kept everything in a ledger, and your father always said a few yuan were missing.",
+  "You got into a university in the province and put down information management. Your father asked what that was for. You couldn't quite say.",
+  "Studying databases in junior year, you turned the family store's accounts into a little program. Your father glanced at it and went on using the ledger.",
+  "You interned at a software company in Jinan, spending three months debugging interfaces in a server room without meeting a single real user.",
+  "A company back in Weifang was hiring implementers. The interviewer asked whether you could travel and you said yes. You did not yet know how many years that yes would turn out to be."
+ ],
+ "late": {
+  "pension_note": "Estimate: a small company paying on the minimum base for many years. The pension is on the low side, topped up by savings and occasional consulting.",
+  "scenes": [
+   "A tofu seller at the market keeps his accounts on a piece of cardboard. You make him a spreadsheet. He uses it for a week and gives it back. Cardboard is handier, he says.",
+   "A small neighborhood grocery asks for help with inventory and agrees to pay you two hundred a month. Half a year later your books balance, and the owner's wife says this month's two hundred can go together with next month's.",
+   "Your stomach can't take the pot soup anymore. You make millet porridge at home, checking it every so often, with the water level and heat all in your head.",
+   "They say factories now don't need anyone to enter orders, and Old Wang's ledger has long been unwanted. You think of those twelve hundred mismatched items and now and then feel a little proud.",
+   "You make follow-up calls, thirty a day, asking clients how the system is working. It's fine, they say, and then: is what's-his-name still there?",
+   "You've started eating at regular hours, and for the first time you've tried all the little restaurants around your own home. The owners ask if you've just moved in. Yes, you say.",
+   "You never want to hear the letters ERP again. When the bank teller says the system is being upgraded, you turn around and come back tomorrow.",
+   "Colleagues at the new place have no idea what a guesthouse quilt smells like. You don't mention it, and keep that to yourself.",
+   "Your old project manager calls you out for a drink. You talk about that night of the seven hundred thousand, and neither of you can remember who worked it out first.",
+   "You've calculated how many guesthouses you've stayed in, more than a hundred and forty, and you can recall which few had TVs with only three channels.",
+   "At any restaurant, you first see how many copies the order slip has, which goes to the kitchen and which to the cashier. By the end of the meal you know how this place's accounts leak.",
+   "At kite festival time you bring a little stool and watch the kites, not one line tangled. You know that's because the people flying them know each other."
+  ],
+  "closing": {
+   "retire": "The millet porridge is nearly done, the water level just right. You turn down the heat. No need to log this.",
+   "burnout": "Thirty calls done on today's follow-up sheet. You put a check in the last box and go downstairs to buy groceries.",
+   "end": "The new printer has jammed again. You walk over, lift the cover and pull out the paper."
+  }
+ }
+}

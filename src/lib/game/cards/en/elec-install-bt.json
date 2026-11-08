@@ -1,0 +1,219 @@
+{
+  "id": "elec-install-bt",
+  "occupation": "Electrical Equipment Installer and Commissioning Technician",
+  "role": "Apprentice Electrical Installer",
+  "headline": "An apprentice electrical installer with a Baotou contractor, moving between job sites across Inner Mongolia, going home in the winter shutdown to ask about back pay, and climbing into cable trenches when the ground thaws",
+  "unit": "A mechanical and electrical installation company in Baotou",
+  "unit_type": "Private M&E contractor",
+  "city": "Baotou",
+  "city_tier": "Third-tier city",
+  "education": "Vocational secondary school (electrical equipment operation and control)",
+  "level": "You can follow about half of a schematic. Whether a lug is crimped tight enough isn't settled until the foreman has pulled on it.",
+  "intro": "You are an apprentice at an installation contractor in Baotou. The company's work is in steel mill upgrades, aluminum plant switchrooms, and wind farm substations far out on the grassland. Each project means another set of prefab huts, and when it's energized, the crew breaks up again. A year in this trade runs from the spring thaw until the freeze in November.",
+  "salary_note": "Estimate: Baotou has plenty of industrial projects and away-from-home allowances are extra, but winter shutdown pay is much lower, leaving annual income a little below the national figure.",
+  "facts": [
+    {
+      "label": "Apprentice Installer (current level)",
+      "value": "0–2 years, ¥4,500–6,500 a month (national figure, estimated)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Next level up",
+      "value": "Electrical Installer, Intermediate Grade (2–5 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Pay after 3–5 years",
+      "value": "¥5,600 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Pulling cable, crimping and wiring on site",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Checking secondary circuits and live commissioning",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
+  ],
+  "day": [
+    "Toolbox talk outside the prefab huts. The safety officer reads out today's hazards and you sign the briefing sheet. The ballpoint has frozen, so you switch to a pencil.",
+    "You and two workmates haul a reel of cable from one end of the trench to the other, a hundred and twenty meters, calling the pull. The water at the bottom has come over the tops of your boots.",
+    "The foreman has you crimp lugs. When you're done he gives one a tug and it comes off. He points at the die in your crimping tool: this is a 95 lug and you've used the 120 die.",
+    "Halfway through your boxed lunch the site supervisor arrives and squats beside the cable tray to check the bracket spacing. The foreman leaves his half-eaten rice on an electrical box lid and hurries over.",
+    "Dressing wires inside a cabinet. They should run dead straight, with the wire numbers facing out. You're folded up in a waist-high cabinet with your knees against the door frame.",
+    "The foreman uses a megger to test the insulation on a cable and tells you to read it. The needle wavers twice and settles. You call out a number. He says that one won't need redoing tonight.",
+    "Tool count at knocking-off time. A wire stripper is missing and the whole crew goes back into the trench to look. By the time it's found, it's too dark to read the wire numbers.",
+    "In the hut with the heater on, you drill questions for your low-voltage electrician's card on your phone. Next door someone is asking over the phone whether the kid's shoes got bought."
+  ],
+  "ladder": [
+    { "title": "Apprentice Installer", "stage": "Fetching and carrying", "focus": "Pulling cable, hanging tray, crimping lugs, learning drawings and safety rules on crew, earning a low-voltage electrician's card" },
+    { "title": "Electrical Installer, Intermediate Grade", "stage": "Wiring alone", "focus": "Completing panels and wiring alone from drawings, making cable terminations, moving up by never needing a rework" },
+    { "title": "Commissioning Technician, Advanced Grade", "stage": "Energizing and testing", "focus": "Checking secondary circuits, testing protection and interlocks, setting parameters, taking equipment through trial runs" },
+    { "title": "Commissioning Team Lead, Technician Grade", "stage": "Leading a team", "focus": "Leading a team to the energization milestone, dealing with client, supervisor and vendor, signing the commissioning record" },
+    { "title": "Project Electrical Lead", "stage": "Running a project", "focus": "Answering for a whole project's electrical construction, schedule, documents and acceptance" }
+  ],
+  "ai_tasks": [
+    { "name": "Pulling cable, crimping and wiring on site", "how": "How wide the trench is and how the wires run inside a cabinet always differ a little from the drawing, and hands have to sort it out." },
+    { "name": "Checking secondary circuits and live commissioning", "how": "Software can compare drawings and wiring schedules. Whether a terminal is loose or a relay sounds right takes a person at the panel, listening and looking." },
+    { "name": "Setting drive and PLC parameters", "how": "AI can suggest a starting set of parameters. Tuning under a real load takes somebody watching the motor." },
+    { "name": "Compiling commissioning records and handover documents", "how": "Test reports and completion forms draft themselves. A person checks the data and signs." }
+  ],
+  "events": {
+    "e_winter_stop": "The ground freezes in November. Plastic-sheathed cable can't be laid below zero, so the site goes into winter shutdown. You spend four months at home on half your base pay, and the first thing you do in spring is ask the boss when last year's money is coming.",
+    "e_frost": "Rushing work at the end of October, your fingertips split. Wire insulation draws blood, and with tape on them you can't grip a screwdriver. In a wind of minus ten and worse, your workmates tuck their hands under their arms a moment, then go back to tightening.",
+    "e_low_cert": "Your low-voltage electrician's special operations card has arrived, a plastic card to be renewed every three years. The foreman says the point of the card is that when something happens and they ask you, you'll have something to say.",
+    "e_team_gone": "Once the project is energized the crew disbands on the spot. Men who spent ten months together in cable trenches head off to Bayannur or back to Hebei. The group chat is still called Substation Three, and nobody ever posts in it again.",
+    "e_wind_farm": "The company wins a wind farm substation out on the grassland, two hours from the nearest town. In summer the huts are full of mosquitoes, at night you can hear the turbines turning, and for a hundred-odd days you don't get one hot plate of green vegetables.",
+    "e_first_energize": "A panel you checked is energized for the first time. When the breaker closes nobody in the room speaks. The indicator lights come on one by one, the relays click crisply three times, and the client's representative signs the commissioning record.",
+    "e_vendor": "For this imported drive panel the manufacturer sends a commissioning engineer whose daily rate is more than your monthly pay. He plugs in his laptop. As you hand him wires, you write down every parameter he changes.",
+    "e_unpaid": "The main contractor's progress payment is stuck with the client, and your boss says to wait a bit longer. You wait until the twenty-fifth of the last lunar month. What reaches your card is thirty percent short, and the rest of the conversation will have to wait for spring.",
+    "e_knee": "After all those years squatting in cable trenches, your knees have started to creak on stairs. The X-ray says degenerative changes. The doctor asks what you do. Wiring, you say. He nods and writes you an extra box of plasters.",
+    "e_review": "Your special operations card is up for its three-year review. You take a day off to go to the test center and find most of the questions are the same as last time. The few that changed are about power tools and new energy.",
+    "e_handover": "The steel mill's maintenance outage gives you a seventy-two-hour window to replace a section of busbar and a set of protection. You work three shifts. At hour sixty-eight the breaker closes, and the furnace dispatcher answers over the radio with a single word: received.",
+    "e_drawing": "The design institute's drawings don't match the site, and the cable tray won't pass that beam. The supervisor says build to the drawing, the designer says wait for the change notice, and the schedule isn't waiting for anyone. You sketch something, and everyone signs around the edge.",
+    "e_ai_compare": "The company buys drawing-comparison software that checks wiring schedules automatically. On its first run it finds twelve mismatches. Nine are real. The other three are wires you changed on site that the as-built drawings never caught up with.",
+    "e_scan": "The client now wants a QR code on every terminal strip, so a scan shows who connected it and what day it was tested. The workmen curse out loud, and their wire numbers are neater than they've ever been.",
+    "e_home": "Your child's parent-teacher meeting takes place while you're in a hut four hundred kilometers away. The teacher sends a photo of the homework, and on the site Wi-Fi one page takes ten minutes to open. You ask how to do this problem. Your child tells you not to worry about it.",
+    "e_neighbor": "A neighbor's breaker keeps tripping and they ask you to look. You open the panel and find three wires clamped under one terminal and a breaker that doesn't match the feed. It takes all afternoon to fix. At dinner you're still asking who installed that box.",
+    "e_spring": "The spring dust comes early. Open any cabinet door and there's a coat of fine yellow soil inside. Before acceptance, the whole crew goes panel by panel with vacuums and brushes, blowing the dirt out of terminal gaps with compressed air.",
+    "e_praise": "The aluminum plant's client asks by name for your team on its next project. The reason, in the email, is one line: wire markings clear, documents need no changes. The boss posts a screenshot in the group chat and adds ¥2,000 this month.",
+    "e_contractor": "The company starts subcontracting wiring to crews from out of province, paid by the point. They work fast and their wire numbers go on fast, and when you commission you have to check everything again. Whose account the rework goes on becomes a fight."
+  },
+  "choices": {
+    "c_plant": {
+      "title": "Join a steel mill as a maintenance electrician",
+      "situation": "A steel mill is hiring inspection electricians, straight days plus call-outs, home every night, twenty percent less pay, and no chasing project money. Your father says that's what a job is. You work it out: your days at home in a year would go from ninety to three hundred.",
+      "options": [
+        { "label": "Join the mill", "result": "You roll up your bedding from the hut and bring it home, this time for good.", "end": "You become an inspection electrician at the mill, walking the same route every day with the same checklist. The equipment you know no longer changes, and it breaks down according to a pattern." },
+        { "label": "Stay on projects", "result": "You ask the foreman where the next job is. Xilingol, he says. All right, you say." }
+      ]
+    },
+    "c_boss": {
+      "title": "Start your own crew",
+      "situation": "A few workmates want you to front a labor company and take on small jobs. You know enough clients to fill three to five projects, but you'd have to carry the payroll yourself, and payment can run a year late. The cash for that would come out of your family's savings.",
+      "options": [
+        { "label": "Do it", "result": "You register the company and move your savings into the business account. The figure looks smaller there than in your passbook.", "end": "You run a small crew now, wiring by day and chasing money by night. You understand at last why the old boss always said to wait a bit longer, and now it's your turn to say it." },
+        { "label": "Keep the paycheck", "result": "You say you can't do this: chasing debts is harder than tracing circuits. A few workmates later go off with someone else." }
+      ]
+    },
+    "c_debug": {
+      "title": "Sit the Commissioning Technician exam",
+      "situation": "The company needs people who can commission on their own, and the Commissioning Technician, Advanced Grade, assessment comes once a year. It requires catching up on PLCs and relay protection, with training during winter shutdown and ¥4,000 out of your own pocket. You'd meant to spend this winter rewiring your family's kitchen and being at home.",
+      "options": [
+        { "label": "Pay and train", "result": "You spend the entire shutdown in a classroom and for the first time read a ladder diagram from start to finish." },
+        { "label": "Winter at home", "result": "You run the kitchen wiring dead straight and number every wire. Your family says you talked a bit more this winter." }
+      ]
+    },
+    "c_node": {
+      "title": "That cable before energization day",
+      "situation": "Energization is tomorrow and the client's milestone is tied to it. One spare circuit tests low on insulation, just over the minimum in the code, and it may be only damp. The main contractor says go ahead and deal with it later. Your name is on the test record.",
+      "options": [
+        { "label": "Record it, demand a retest", "result": "You dry it with hot air overnight and the next day the number comes up. The milestone slips six hours. The main contractor's project manager remembers your name." },
+        { "label": "Note it as damp, pass it", "result": "You write the note small, but you write it. Energization goes smoothly. You go back and test it the next day, and nobody knows." }
+      ]
+    },
+    "c_ai": {
+      "title": "Learn the vendor's commissioning platform?",
+      "situation": "New equipment comes with diagnostic platforms where AI produces parameters and locates faults. The company wants someone to learn it on days off, reading data curves. Old hands say curve readers are no match for needle readers, but the clause is already in the tender documents.",
+      "options": [
+        { "label": "Learn it", "result": "You learn to see that small step in the current curve. Later, when you hear a relay click, you can match it to the step in your mind." },
+        { "label": "Hands and meters", "result": "You keep using the old megger. You read the conclusions of the platform's reports and don't much read the rest." }
+      ]
+    },
+    "c_leader": {
+      "title": "Apply for Commissioning Team Lead",
+      "situation": "The company has a big new project and needs a Commissioning Team Lead, Technician Grade, to run five people. There are coordination meetings with the client, you sign for other people's mistakes, and you're the one who takes the shouting. The pay is ¥3,000 more, and your hands-on work goes to the young ones.",
+      "options": [
+        { "label": "Take it", "result": "At your first coordination meeting you're so nervous you forget the drawings. After that you keep them all on your phone." },
+        { "label": "Keep commissioning", "result": "You say you don't know how to lead. Give you panels and you'll do two in three days." }
+      ]
+    },
+    "c_arrears": {
+      "title": "Year-end wages",
+      "situation": "The main contractor's money hasn't come, and the boss says to pay seventy percent for now. Your out-of-town crew are waiting to go home, and one man has school fees due. The boss's trouble is real too: he has ¥2 million in material bills outstanding. You have his trust and your crew's.",
+      "options": [
+        { "label": "Fight for the crew", "result": "You sit in the boss's office until ten at night and get another ten percent. From then on he's much more polite with you." },
+        { "label": "Help calm everyone", "result": "You phone them one by one to explain. One man blocks you. Two fewer come back in spring than last year." }
+      ]
+    },
+    "c_field": {
+      "title": "Transfer to safety officer",
+      "situation": "Your knees can't climb cable tray anymore. The company needs a safety officer, and with your site experience all you'd need is a certification. Same pay, no more trenches, but you'd become the person walking around with a notebook finding fault with the crew every day.",
+      "options": [
+        { "label": "Become safety officer", "result": "The first man you fine is someone you once trained. He calls you foreman as he hands over the money." },
+        { "label": "Stay in commissioning", "result": "You buy a pair of knee braces, schedule cabinet climbing for the mornings, and spend afternoons at the commissioning laptop." }
+      ]
+    },
+    "c_pm": {
+      "title": "Apply for Project Electrical Lead",
+      "situation": "The next project needs a Project Electrical Lead answerable for the whole electrical system's schedule, documents and acceptance. You'd be the company's face. Banquets and progress meetings would take half your time, and you'd answer when the client calls at midnight.",
+      "options": [
+        { "label": "Apply", "result": "You stick the schedule on the hut wall and mark each cable's status in colored pen. Others call it old-fashioned. The client comes and takes a picture." },
+        { "label": "Let it go", "result": "You say to give it to someone younger. They can drink with clients, whereas you can only trace circuits with them." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "The handover documents for your final project are archived with your name on the cover as lead. Most of the wire you ever connected has gone under trench covers, and some of those workshops have been pulled down. On the day your special operations card expires, you don't go in for the review.",
+    "burnout": "Your knees and your back refuse together, and the doctor advises against any more trenches. The company moves you to the warehouse to look after cable and tools, and you count each reel to the last. In spring the others leave for the sites, and you stay in the yard."
+  },
+  "stages": [
+    "Half your day goes to pulling cable, hanging tray and carrying reels, the other half to following the foreman, crimping lugs and threading conduit. You see the drawings only from a distance, and instructions all come at a shout. Before knocking off you count every stripper and crimper back into the toolbox, because if one's missing nobody leaves.",
+    "You've started wiring panels on your own, checking the schedule one wire at a time, crimping, heat-shrinking terminations, numbering your own work. When the supervisor comes around to spot-check, it's your cabinet he opens, and your name on the rework slip. Compared with an apprentice, you have your own set of tools and a bit of responsibility for covering other people.",
+    "Finished wiring now has to get past you. You go through the secondary circuits with a multimeter, test protection and interlocks, and write parameters to the drives from your laptop. The client, the vendor and the supervisor all stand behind you. Saying ready to energize weighs more than a whole day's work.",
+    "You lead five or six people to the energization milestone, assigning people in the morning, in coordination meetings with client, design and supervisor in the afternoon, revising the commissioning plan in the hut at night. If someone's wiring is wrong, it's still your signature on the test record. You touch the panels less and less, and make more calls than you turn screws.",
+    "A project's electrical work is yours: reporting progress, approving materials, reconciling quantities with the main contractor, chasing as-built documents, living on site during acceptance. You have to know which items can be billed and which will be argued over. In your hand is the whole project's schedule, and the crew now call you manager."
+  ],
+  "work": [
+    "The foreman has you unreel a 240 cable and you try a shortcut, tying the cable in a hard knot. He looks at the knot and leaves you to undo it alone until dark.",
+    "For the first time you climb a six-meter cable tray to fix brackets, your harness clipped in twice. Your legs are shaking when you come down. A workmate holds out a cigarette and you take it and don't smoke it.",
+    "You mark two hundred wires with a marker pen. Your writing's ugly, and Old Xue has you redo them one by one. By the third pass your numbers are straighter than his.",
+    "You land more than three hundred wires in one control panel and check them twice yourself. The supervisor spot-checks five and all five are right. He closes the cabinet door gently when he goes.",
+    "You make a cold-shrink termination on a high-voltage cable, and your hand has the pressure just right when you strip back the semiconductor layer. The cut runs clean all the way around. The team lead circles it with a flashlight.",
+    "The wiring schedule and the equipment differ by one terminal number. You don't wire to the schedule and instead call the designer. That one call saves your crew from pulling a whole cabinet apart.",
+    "The conveyor interlock trips every time it's tested. You trace the circuit section by section with a meter and finally find a loose connection on a terminal strip. Beside you, the vendor's engineer closes his laptop.",
+    "After you load the drive parameters, the motor shudders a little on start. You change the acceleration time to twenty-two seconds, and the operator says it's like a new machine.",
+    "On protection test day, the relay tester's data is a little off from the settings sheet. You and the client's protection crew chief go through the code all afternoon and find a misprint on the sheet.",
+    "The main contractor's site engineer says this cable was never pulled. You send him dated site photos by chainage. He answers with one word, received, and the quantity is counted.",
+    "Young Jia on your team writes his first commissioning plan, with seven mistakes. You correct none of them. You underline them in pencil for him to find, and his second draft has only one.",
+    "The wind farm owner wants to connect to the grid ten days early. You work out cable delivery against the winter shutdown and bring two plans to the progress meeting, for him to pick which risk he wants.",
+    "The as-built documents fill half the hut, and the archive sends them back three times. You check the project title on the cover and find the contract and the drawings differ by one word."
+  ],
+  "past": [
+    "You grow up in Baotou's old factory district. Your grandfather's generation moved here from elsewhere with the plants. Every household in the building has a multimeter, and nobody pays to get a TV fixed.",
+    "Your high school entrance exam goes badly. Your father tells you to go to trade school. In Baotou, he says, if you can wire you won't go hungry. You choose electrical, because the older boys in welding always have black faces.",
+    "In practice class, the first star-delta starter circuit you wire trips as soon as power's on. The teacher has you redraw the circuit on paper in red and blue pencil.",
+    "Classmates go south to electronics factories, ¥7,000 a month on an assembly line. You go for three months too and come back saying they don't use their heads there, or their hands, only their fingers.",
+    "A relative gets you in at this installation company. The boss asks if you're afraid of the cold. You say you're from Baotou. He says people from Baotou are afraid of it too, come in tomorrow."
+  ],
+  "late": {
+    "pension_note": "Estimate: contributions at a private contractor were on a low base, with several years at the minimum tier, so the replacement rate is low.",
+    "scenes": [
+      "Spring comes and you still count the days to the thaw. There's no site to find this year. You hold on to the date you've worked out and find it's no different from any other.",
+      "The charging posts in your compound are wired in a mess. On your walks you count the places missing cover plates and report them to management. How careful of you, they say, and the wires stay as they are.",
+      "You hear the first substation you ever wired is being torn down and replaced. You work it out: those panels served thirty-four years, and that beats your knees.",
+      "The pension isn't much, so now and then you fix appliances for a bit of pocket money. You still number the wires when you're done. The old lady whose lamp you've repaired asks who that's meant for.",
+      "In the warehouse you scan every reel of cable into the system. A young guy picking up material asks if this size is enough. You ask where the panel is and how far it runs, and then you take one reel off his order.",
+      "When your back is bad you lie on the floor, looking up at the ceiling light and working out which conduit its wire runs through. Lying there a while, it counts as a pastime.",
+      "Your spouse says you talk less now. Really you don't have much to say. Most of what you've said in your life was said over a radio.",
+      "In the second year after you changed course, old workmates turn up for a free dinner and say panels now test themselves, and your way of doing things is on the way out. About time, you say. After that drink you ask what happened in the end with that spare circuit.",
+      "A site is dragging out your money, so you drive over. The gatekeeper says the boss isn't in. You eat a boxed lunch at the gate and park your truck on the road they use for deliveries.",
+      "You no longer go to job sites. Passing a new building, what you look at is which way the switchroom door opens and whether the road outside could take a crane.",
+      "At a restaurant there's a section of cable tray in the ceiling with no cover on. You spend the meal thinking about it. A friend asks whether the food's too salty. You say this place's electrician is no good.",
+      "Your hands still split at the first frost, no matter what you put on them. The wind outside is tight. You think that about now this year's cable trenches ought to be covered over."
+    ],
+    "closing": {
+      "retire": "Winter has come. You've opened the panel at home one more time: wire numbers facing out, breakers all on top. You close the cover.",
+      "burnout": "There's dirt in the spring wind. You replace the seal strip around the door. The dirt stays out, and the noise of the sites outside grows quieter.",
+      "end": "This project isn't yours. You walk past the hoarding and hear someone in there calling the pull on a cable, to the same old rhythm."
+    }
+  }
+}

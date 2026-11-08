@@ -1,0 +1,190 @@
+{
+ "id": "garden-sz",
+ "occupation": "Landscape Architecture Engineer",
+ "role": "Assistant Landscape Architecture Engineer",
+ "headline": "Restoring old gardens in Suzhou, where moving a Taihu rock five centimeters takes a report and a lattice window has to wait for the empty months of winter. The first thing you learn is not to touch anything",
+ "unit": "Engineering department of a garden and heritage restoration unit in Suzhou",
+ "unit_type": "State-controlled garden restoration unit",
+ "city": "Suzhou, Jiangsu",
+ "city_tier": "New first-tier city",
+ "education": "Bachelor's (Landscape Architecture)",
+ "level": "You are at home with CAD and renderings. Whether the soil beneath a patterned pebble path should be replaced, you haven't yet dared to say.",
+ "intro": "On your first day you bring your full kit of laser rangefinder and camera. The old engineer in a straw hat who takes you into the garden tells you to leave it all in the car. The two of you squat in front of a stretch of paving and he asks why it doesn't collect water. Slope, you say. He taps it with the toe of his shoe and says, look again. By the time the sun has moved to the west wall you understand that this stretch is two centimeters lower than the next, and the water leaves by way of the cracks between stones. It has been doing that for three hundred years.",
+ "salary_note": "Estimate: state restoration units in Suzhou pay about the national engineering norm, with a high housing fund. Steady rather than rich.",
+ "facts": [
+  { "label": "Assistant Landscape Architecture Engineer (current level)", "value": "0–2 years, ¥4,800–7,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Landscape Architecture Engineer (2–7 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Deciding in the garden what to repair and how far to go", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Drawing restoration plans and surveys of existing conditions", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You enter the garden before opening. The guard knows you. The tourists haven't come yet, and the mist on the pond is flatter than the water.",
+  "A circuit of the revetment to check the last few settlement points. The red paint marks are still there, and the water has dropped by a finger.",
+  "Tourists arrive. You take measurements behind the rockery with the rangefinder on your back, a tour group squeezes past, and the guide shouts not to touch that stone.",
+  "Crouched below a lattice window, you photograph and number the damage: cracking, salt decay, blistering, one sentence for each picture.",
+  "A bowl of first-broth noodles by Pingjiang Road. In the rainy season the braised pork comes a little saltier, and everyone on site speaks with a Suzhou lilt.",
+  "You discuss the placement of a rock with the rockery master. He doesn't look at your drawing. He squats and looks at the grain of the stone.",
+  "Back at the office you bring today's survey data into CAD. The restoration plan has to follow the heritage bureau's format, not a word more.",
+  "After work you go to see the three-hundred-year-old lacebark pine. The filler in its hollow looks dry. You make a note to bring people tomorrow."
+ ],
+ "ladder": [
+  { "title": "Assistant Landscape Architecture Engineer", "stage": "Survey and site", "focus": "Surveying, recording damage, following the work, learning the rules of old gardens" },
+  { "title": "Landscape Architecture Engineer", "stage": "Running sites", "focus": "Owning a restoration's plan and site, coordinating craftsmen and supervisors" },
+  { "title": "Senior Landscape Architecture Engineer", "stage": "Setting methods", "focus": "Deciding restoration methods, working with heritage authorities, reviewing and signing plans" },
+  { "title": "Professor-level Senior Engineer in Landscape Architecture", "stage": "Setting direction", "focus": "Leading major restorations and plans, sitting on expert panels, leading the team" }
+ ],
+ "ai_tasks": [
+  { "name": "Deciding in the garden what to repair and how far to go", "how": "The load in a rockery, the settlement in a revetment, how long an old tree can hold: someone has to be there looking." },
+  { "name": "Agreeing methods with heritage officials, supervisors and old craftsmen", "how": "The sense of proportion depends on relationships and judgment. AI can only keep the records." },
+  { "name": "Drawing restoration plans and surveys of existing conditions", "how": "AI can generate base drawings and labels from point clouds. Which marks are damage and which are history is for a person to decide." },
+  { "name": "Producing renderings and presentation material", "how": "Several versions come out in minutes. A person picks one and deletes the pavilions that shouldn't be there." }
+ ],
+ "events": {
+  "e_plum": "The plum rains go on for twenty-two days, and moss in the rockery cracks outgrows everything. Two wall footings begin to sweat. Your schedule creeps backward along with the moss.",
+  "e_termite": "An old column in the hall sounds hollow when tapped. A termite crew comes through with detectors. You write the date and number in the ledger, and from now on this column is yours to worry about.",
+  "e_winter": "December is the best window of the year, few tourists, room to work. For forty days straight you put up scaffolding and change tiles, your hands too cold to hold a tape, with everything due before spring.",
+  "e_typhoon": "A typhoon night brings down an old hackberry, and its roots lift half a section of revetment. You reach the site at dawn. The tree's registration tag is still attached, and heavy in your hand.",
+  "e_mason": "The rockery master turns one of the rocks on your drawing by thirty degrees. You are about to object. You step back five paces and look: the mountain's breath is finally connected. You quietly correct the drawing.",
+  "e_tender": "A low bidder wins the restoration contract with a crew pieced together for the job. As the client's representative you have them tear down ten meters of wrongly laid brick, and the foreman doesn't speak to you for three days.",
+  "e_monitor": "The annual heritage monitoring report is due. You enter a full year of settlement, crack and visitor data. One crack is 0.7 millimeters wider than last year, and you circle it in red.",
+  "e_knee": "After years climbing up and down rockeries, your left knee has begun to click on the stairs. The hospital says climb less. You consider the rockeries in those gardens, none of which has an elevator.",
+  "e_tourist": "Golden Week brings tens of thousands of people a day. You don't dare do any work and can only watch the stone path. With so many feet, two more spots break in that three-hundred-year-old paving, and repairs can't keep up.",
+  "e_tree": "The filler in the lacebark pine's hollow has been replaced with something that breathes but is slightly off in color. You tell your colleague from forestry that this is fine. People in the future will see it was repaired.",
+  "e_estate": "A developer's neo-Chinese show flat hires you as a consultant, one day's fee being more than a month's bonus. You offer two comments. The next day their rockery is done, in foam.",
+  "e_ai_render": "AI draws eight garden renderings in a minute, the pavilions and water halls all handsomely symmetrical. In the third one you notice the shadow of the tree is pointing the wrong way.",
+  "e_ai_scan": "Point-cloud scanning plus AI recognition produces in a day the condition drawings that used to take you a month. The old engineer pats the screen and says good. Then he asks whether it knows why that wall is crooked.",
+  "e_night": "A tourism company wants evening tours with light strips along the rockery. At the review you explain three times about color temperature and trees' dormancy. In the end a third of the lights are removed.",
+  "e_kid": "Someone has to fetch the child from school. The site is in the east of the city and you have to leave by half past four. During the winter window you can only ask the neighbors, and you send them a basket of Dongshan loquats.",
+  "e_craftsman": "The master who turned that rock thirty degrees can no longer do the work, and he has no young people under him. You record his method of building rockeries in video and diagrams. He watches it and says the stone didn't make it in.",
+  "e_estate_end": "Property goes cold and the neo-Chinese landscape firms close one after another. An old classmate asks whether your unit is hiring. Yes, you say, but you start by learning not to touch.",
+  "e_cert": "Your heritage engineering certificate is due for review, and new codes require forty more hours of continuing education. You answer questions on a screen. The right answers are much simpler than the site."
+ },
+ "choices": {
+  "c_estate": {
+   "title": "The property landscape firm in Shanghai",
+   "situation": "A classmate at a Shanghai firm designs neo-Chinese landscapes for luxury housing at twice your pay, with no shortage of impressive renderings. Here, repairing one wall can take half a year.",
+   "options": [
+    { "label": "Go to Shanghai", "result": "You save your base survey drawings. Go on, the old engineer says, Shanghai has gardens too, even fake ones count.", "end": "You drew neo-Chinese for ten years in Shanghai and moved to urban renewal when property cooled. The rockeries you later designed stood taller than Suzhou's, though each time you finished one, you looked again to see where the water went." },
+    { "label": "Stay and restore", "result": "One more winter on site. This year you can tell which tiles are from the Republican era." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Going for Landscape Architecture Engineer",
+   "situation": "The unit is appointing a Landscape Architecture Engineer this year and wants a restoration project you led yourself. The revetment in the east of the city was yours, but the old engineer set the plan. You aren't sure whether to include it.",
+   "options": [
+    { "label": "Include it and explain the process", "result": "You honestly write what you decided and what the old engineer changed. This, says the panel, is what a restoration record ought to look like." },
+    { "label": "Wait for a project of your own", "result": "Another year goes by, and the revetment is still standing there." }
+   ]
+  },
+  "c_stone": {
+   "title": "Whether to return this Taihu rock",
+   "situation": "The plan would return a Taihu rock moved during the Republican era to its Ming position, though the evidence is incomplete. The old master says return it, the heritage expert says leave it as it stands, and the plan is yours to write.",
+   "options": [
+    { "label": "Leave it, put the doubts on file", "result": "The rock stays put. You record the four possibilities in the archive for someone to decide in fifty years." },
+    { "label": "Return it according to the research", "result": "The master is delighted on the day. The review expert writes one phrase in his comments, calling for further caution, and you keep it." }
+   ]
+  },
+  "c_cert": {
+   "title": "Heritage engineering certificate",
+   "situation": "The unit needs someone to certify as a responsible engineer for heritage conservation projects, since plans will soon need a certificate holder's signature. It means a lot of architectural history and structures to catch up on. Pass, and the responsibility is in your name.",
+   "options": [
+    { "label": "Take it", "result": "Two winters of evenings catch you up on structural mechanics. The first time you sign a plan your hand shakes worse than in the exam." },
+    { "label": "Keep working on site", "result": "The certificate holders are in the office and you are on site, and everyone has their own hardships." }
+   ]
+  },
+  "c_abroad": {
+   "title": "Building a Chinese garden abroad",
+   "situation": "An overseas cultural project is building a Chinese garden in a European city and the unit will send someone for two years, with materials and craftsmen shipped from Suzhou. Your child is in middle school, and lime dries slower in their winters.",
+   "options": [
+    { "label": "Go for two years", "result": "For two years you gesture back and forth with local masons. The day the garden opens, an old woman sits in the pavilion reading a newspaper." },
+    { "label": "Stay in Suzhou", "result": "The winter window comes once a year here too, and you aren't exactly idle." }
+   ]
+  },
+  "c_ai": {
+   "title": "Building a damage database for the gardens",
+   "situation": "The monitoring center wants AI to connect each year's cracks, settlement and moss patterns, and needs someone who knows gardens to teach it what counts as damage and what is three hundred years of history. It won't count toward your performance review.",
+   "options": [
+    { "label": "Do it", "result": "You label twenty thousand photographs, telling it this crack is damage and that one is Ming. Six months later it can more or less tell them apart." },
+    { "label": "Leave it to the center", "result": "You go on working on site, measuring cracks with a tape." }
+   ]
+  },
+  "c_tour": {
+   "title": "Deputy general manager at the tourism group",
+   "situation": "The city's new tourism group is looking for someone who knows gardens to run its scenic areas. The pay is good, but the work is visitor numbers, events, co-branding and shop rents. Go, and that rock is no longer your concern.",
+   "options": [
+    { "label": "Join the tourism group", "result": "Your office overlooks the river and your calendar is all investment promotion.", "end": "You joined the tourism group and went on to run a very successful lantern festival. Passing the back gate of the old garden now and then, you think of going in to check the revetment, and the next call pulls you away." },
+    { "label": "Keep restoring gardens", "result": "You politely decline. The winter window opens in two months and the tiles have arrived." }
+   ]
+  },
+  "c_senior": {
+   "title": "Applying for Senior Landscape Architecture Engineer",
+   "situation": "Jiangsu's review for Senior Landscape Architecture Engineer wants papers and representative work. Your work is in the gardens, where tourists can't tell what you've done. That is the mark of good restoration and hard to write up.",
+   "options": [
+    { "label": "Write up what can't be seen", "result": "You set before-and-after sections side by side. The panel spends a long time on what lies under that stretch of paving." },
+    { "label": "Not this year", "result": "You keep the materials for later. The winter window is coming and you have no time to write." }
+   ]
+  },
+  "c_top": {
+   "title": "Applying for Professor-level Senior Engineer in Landscape Architecture",
+   "situation": "The old experts are retiring one by one, and your unit encourages you to apply for Professor-level Senior Engineer in Landscape Architecture. You would sit on the far side of the table at major reviews. What you say would be heard, and remembered.",
+   "options": [
+    { "label": "Apply", "result": "Your defense uses not a single slide. You bring only one old brick taken from a repair." },
+    { "label": "Stay on site", "result": "You still prefer the days with a tape in your hand." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "You walk the revetment one last time. The red paint marks have been redone several rounds over. Another name is on the responsibility line of the monitoring report, and that Taihu rock in the archive is still something no one dares move. As you leave the garden the tourists are pushing in, and not one of them knows why the stretch of path under their feet is two centimeters lower than the next.",
+  "burnout": "Your knees and back together let you know the rockeries are beyond you now. You move to the archive to organize restoration records, one file after another, each marked with a year and a handler's name. Outside the window there is an osmanthus, later to flower this year than most."
+ },
+ "stages": [
+  "You carry instruments around the garden, numbering and photographing every crack, blister and settlement point, and drawing them into CAD at night. You follow the old engineer around the site and look at what he looks at. The craftsmen call you little sir, meaning you would do best not to speak.",
+  "A restoration project is yours: survey, plan, submission to the heritage bureau, supervision. You begin checking quantities with supervisors and discussing lime ratios with craftsmen, and you have to get the scaffolding in on the days with the fewest tourists. Someone asks the basis for every stroke on your drawing.",
+  "You decide methods now: is this wall repaired or replaced, is this tree kept or moved. Your signature goes on the plan, and heritage experts question you item by item, so you need the archive and the object itself. When young engineers bring you plans, the thing you ask most is: would it be all right not to touch it?",
+  "You sit on the expert panel for major projects and lead conservation planning for the city. You often have to find a narrow road between the effect leaders want and the limit an old garden can bear. You seldom measure anything yourself now, but on site you still test the slope of the ground with your toe."
+ ],
+ "work": [
+  "The old engineer has you record the damage on a plaster wall. You write eight items. He crosses out five, saying those are years, not faults.",
+  "In a rockery cave taking measurements, you hit your head three times. A craftsman hands you an old hard hat with somebody's surname written on the brim, nobody knows when.",
+  "The supervisor wants proof of the stone's origin. You go out to an old quarry by Lake Tai and find a single elderly man who remembers.",
+  "Scaffolding has to go into a small courtyard whose door is eighty centimeters wide. You and the scaffolder sketch it out, and decide to pass every pole in from the alley behind the building.",
+  "The first lime mix is wrong, too white when dry. The bricklayer, old Ren, has you look at the shady side of the old wall, and you try seven more times.",
+  "You take visitor statistics to the management office and set the revetment work for Tuesdays and Wednesdays, the quietest days. They agree, on one condition: no muddying the water.",
+  "A heritage expert asks the basis for your method of splicing this column. You lay out photos and survey drawings of three examples from the same period.",
+  "A young engineer's plan would even out the whole pond edge. You take him to the pond and have him count how many stretches in four hundred years have been even. He goes back and changes it.",
+  "A contractor quietly switches to cement mortar. You tap the wall with a small hammer, the sound is wrong, and you have it all chipped out, adding twenty days.",
+  "Leaders want the old street to look brand-new by National Day. At the planning meeting you draw a chart of work windows and say that some jobs done in this season are simply wrong.",
+  "Reviewing a garden reconstruction elsewhere as an expert, you find the designers have made the rockery twelve meters tall. You ask just one question: will the soil here hold it?",
+  "Two senior engineers want to lead the same historic district. You have them walk the site together first, and then write what each of them saw on a single sheet."
+ ],
+ "past": [
+  "You grew up in Wujiang. When the old family house was demolished, your father hauled several stone slabs from the courtyard over to a relative's.",
+  "You put down landscape architecture, thinking it meant planting flowers. At college you found out it meant structures, hydraulics and architectural history.",
+  "In sophomore year a sketching class spent ten days in a garden. The teacher wouldn't let you draw what was pretty. He had you draw where the water went.",
+  "Over a summer at a design firm you drew thirty property renderings in a month, each with the same tree in it.",
+  "You had two offers, a design institute and the restoration unit; the first paid half as much again. You thought about it for a week and decided you wanted to know exactly where that water went."
+ ],
+ "late": {
+  "pension_note": "Estimate: a state unit with regular contributions on a decent Suzhou base. A senior engineer's retirement is upper-middle for the area.",
+  "scenes": [
+   "The property manager wants to move an old osmanthus from the compound. You write two pages listing the root zone and the transplanting season. It's only a tree, says the manager. Then go ahead and try, you say.",
+   "Traveling in other cities, you check the drainage first in every courtyard. The others are taking photos. You squat down and gauge the slope with your hand.",
+   "The teahouse you used to visit has moved away, and the small garden behind it has been sold to a boutique guesthouse. You've been in to see it. The rockery is real, the water comes from the tap.",
+   "You can no longer climb the rockeries, so you stand at the foot and see more clearly than before which stones were once turned.",
+   "The archive files smell of camphor. You sort them by year. Some handlers on the restoration records you knew, and some names you've only ever met on paper.",
+   "Your knees have taught you to walk on flat ground. You go slowly along Pingjiang Road with your thermos, going around the steps on the bridges whenever you can.",
+   "The old gardens of Suzhou have gained a few more designations, and you no longer read about them. You've begun growing a few pots of hydrangeas, watering each one through and leaving everything else alone.",
+   "At the new employer no one asks what you've restored; people look at your project billings. Now and then you look through the photos of that revetment on your phone.",
+   "Those neo-Chinese compounds you drew can't collect their management fees anymore, and the rockeries are overgrown with weeds. Passing by, you feel they look a little more like the real thing now.",
+   "After retiring you buy a ticket for an old Suzhou garden for the first time, eighty yuan, and stand in line with the out-of-towners. The lacebark pine is still there, shorter than you remember.",
+   "You've started helping relatives look at the yards of their new homes, and say only that this slope faces the wrong way, the rain will get in at the door. They agree to your face. The following year they come asking how to fix it.",
+   "Sitting indoors in the plum rains, you can hear whether the water is going along the gutter or dripping through the tiles. This can't be explained to anyone, and you don't plan to try."
+  ],
+  "closing": {
+   "retire": "Rain comes off the eaves and follows the slope you can no longer see, down into the cracks between the stones.",
+   "burnout": "Three hydrangeas have flowered this year. You turn the pot around to let the other side have some sun.",
+   "end": "The meeting ends early this afternoon. You walk a stretch along the river. The water runs east, as you thought it would."
+  }
+ }
+}

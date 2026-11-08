@@ -1,0 +1,186 @@
+{
+  "id": "biotech-ta",
+  "occupation": "Biological Technician",
+  "role": "Cell Culture Operator at a Veterinary Vaccine Plant",
+  "headline": "A cell culture operator at a veterinary vaccine company in Tai'an, changing clothes four times to enter the cleanroom, reading the faces of cells under a microscope, and working around the clock before the spring and autumn vaccination drives",
+  "unit": "A veterinary biologics company in Tai'an",
+  "unit_type": "Private biologics manufacturer",
+  "city": "Tai'an",
+  "city_tier": "Third-tier city",
+  "education": "Associate degree (biopharmaceutical technology)",
+  "level": "You can recite the steps of aseptic technique. Whether today's cells are hungry or simply old, you'll be able to say after you've looked at a few thousand flasks.",
+  "intro": "You work at a veterinary vaccine company in Tai'an. Getting into the cleanroom takes four changes of clothes, and once you're in it's three hours with no water and no phone. What you tend is cells, and they get looked at several times a day, more often than anyone at home. Before each spring and autumn vaccination drive, the whole company's days revolve around them.",
+  "salary_note": "Estimate: manufacturing pay in Tai'an is middling, with an allowance for cleanroom work, lower than comparable coastal jobs.",
+  "facts": [
+    { "label": "Cell Culture Operator (current level)", "value": "0–2 years, ¥4,000–5,800 a month (national figure, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Cell Culture Technician (2–6 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Thawing and passaging cells and judging their morphology", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Operating bioreactors and taking samples", "source": "AI exposure" },
+    { "label": "Open positions", "value": "1 related listing nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Clock in, take off your street clothes, wash, change into first and second gowns, mask and gloves, and go through the air shower. There's a red line on the mirror, and no hair may show outside it.",
+    "Into the Grade B area, into the cell room, and the roller bottles go under the microscope one at a time. The senior technician can tell which needs passaging at a glance. You're still comparing against the atlas for ages.",
+    "Preparing media. Powder weighed out, dissolved, passed through a 0.22-micron filter into a storage bag. The pressure gauge climbs slowly and you watch it, afraid of a blockage.",
+    "Out of the cleanroom for the toilet and water, your first sip of the day. Degowning and gowning again make this a twenty-five-minute trip.",
+    "Sampling the bioreactor. The valve gets sprayed again and again with alcohol, the sample bottle fills halfway, and it's sealed at once and handed to QC for viability.",
+    "Writing today's data in the batch record. A mistake must be struck through, with a reason, signature and date. No correction fluid, and no pencil.",
+    "Line clearance. You wipe down the work surface inch by inch, into the corners. QA comes with a checklist and runs a finger under the surface, and you hold your breath.",
+    "Off work. Your hands are washed white and cracking a little between the fingers. Outside the gate you catch some breeze off Mount Tai. At home you'll wash your hands once more."
+  ],
+  "ladder": [
+    { "title": "Cell Culture Operator", "stage": "Learning on shift", "focus": "Following the crew through media preparation, filtration, bottle washing and passaging, passing the aseptic assessment" },
+    { "title": "Cell Culture Technician", "stage": "On your own", "focus": "Independently responsible for thawing, expansion and routine bioreactor operation" },
+    { "title": "Senior Technician", "stage": "Leading a crew", "focus": "Leading a crew, handling deviations, reviewing records, training new hires" },
+    { "title": "Process Supervisor", "stage": "Owning the process", "focus": "Responsible for process validation and change control, facing veterinary GMP inspections" },
+    { "title": "Deputy Production Manager", "stage": "Running production", "focus": "Running plant scheduling, staffing, compliance and cost, coordinating with quality and sales" }
+  ],
+  "ai_tasks": [
+    { "name": "Thawing and passaging cells and judging their morphology", "how": "Whether they've attached well and whether the edges are bright needs someone at the microscope, and the touch has to be a person's too." },
+    { "name": "Operating bioreactors and taking samples", "how": "Inline sensors watch pH and dissolved oxygen. Whether to feed or whether the probe has drifted is a person's decision." },
+    { "name": "Filtering media and pretreatment", "how": "The system can calculate amounts and schedule batches. Building the filter train and clearing a blockage take hands." },
+    { "name": "Completing batch records and compiling data", "how": "Electronic batch records capture equipment data automatically. A person reviews the critical steps and signs." }
+  ],
+  "events": {
+    "e_first_cell": "You thaw your first vial on your own, out of liquid nitrogen and into a thirty-seven-degree bath for two minutes of gentle shaking. Next day there's a layer attached under the microscope. The senior technician says that'll do, and you write the flask's number down twice.",
+    "e_spring_rush": "The spring vaccination drive's orders come down and the whole plant goes into forty straight days of production. You work six days a week and come back at night to check the reactors. Distributors phone sales, sales phones production, and in the end it all turns into that curve in front of you.",
+    "e_contamination": "A batch of media grows bacteria and the entire lot must be scrapped, ¥200,000 of material autoclaved to procedure. The investigation lasts two weeks and everyone gets questioned. You write three pages on what you did that day.",
+    "e_ln2": "Topping up the liquid nitrogen tank, a drop lands on the back of your hand and leaves a white spot that takes two weeks to go away. Since then you've worn your cryo gloves and never once skipped them.",
+    "e_gmp": "The veterinary GMP inspection team comes for three days and pulls your training and batch records. In the clean corridor one old expert holds a finger up at the return air vent, and no one in the plant dares breathe. In the end he writes two recommendations.",
+    "e_summer_gown": "Cleanroom suits are suffocating in summer. Three hours and your underclothes come out wringing wet. You ask whether the air conditioning can go lower. The plant manager points to the temperature and humidity logger: those numbers are set for the cells, not for you.",
+    "e_hands": "Four glove changes a day and 75 percent alcohol over and over, and the skin on your hands has started peeling, cracking badly in winter. You've bought more than a dozen hand creams and found none works as well as not washing on weekends. And on weekends you wash your hands.",
+    "e_eye": "All those years at a microscope, and your eyes are drier and drier. The optometrist says your focusing ability is about that of a fifty-year-old. You change glasses, and now you can see cells clearly and looking at your phone has become tiring.",
+    "e_tender": "This year's government tender goes badly and the company loses a province. Second-half production falls thirty percent, the plant goes to four days on and three off, pay slips thin out, and people in the shop have time for small talk for the first time.",
+    "e_farm": "The company takes you to visit a customer's pig farm. For the first time you see your product go into a pig, which squeals once and walks away. The farmer says this batch is a good one. You want to ask which batch, and feel too shy.",
+    "e_ebr": "Electronic batch records go live and paper is retired. For the first two months everyone complains. In the third the inspectors come, and looking up data is ten times faster than before. The old hands fall quiet and begin to ask what that button on the tablet is for.",
+    "e_ai_alert": "The reactor's alarm system pushes a notification in the middle of the night: dissolved oxygen dropping. You rush back to the plant and the cells are fine. The probe needs calibrating. It's the fourth time this month. The fifth is real.",
+    "e_vision": "New automated cell counting and morphology equipment scans a plate in one minute. You compare its results with your own eyes for a month. Twice it says good and you say not. You keep those samples, and later it turns out you were right once and it was right once.",
+    "e_single_use": "The company brings in single-use reactor bags and two stainless tanks are shut down. The whole mess of cleaning validation has gone away. Two veterans on your crew have become materials handlers, each a few hundred yuan short every month.",
+    "e_commute": "At the hour your child gets out of school you're still in the cleanroom, phone locked in your gowning locker. The teacher has called three times. You get out an hour and a half later. After this your spouse changes jobs to handle pickups.",
+    "e_restaurant": "At a restaurant you look through the kitchen pass and see that people and rubbish use the same route, and raw and cooked sit side by side. You put down your chopsticks and tell your spouse not to come here again. Next time, your spouse says, you can cook.",
+    "e_best": "Six batches in a row come in at the top of the viability range, and your crew gets known around the plant as the steady crew. The company hands out a few thousand yuan in bonuses, and the crew climbs Mount Tai together, up in the middle of the night and down in the morning.",
+    "e_washhand": "Your spouse says you spend longer washing your hands than other people, going through half a bottle of soap. You think about it. It's true you don't skip any of the seven steps, or the nails.",
+    "e_autumn": "The autumn drive's peak season runs into the Mid-Autumn Festival, and on the schedule that day is a big red number. The whole plant is on shifts. You come out of the cleanroom to find a box of mooncakes at the door marked Take one, and there are three left."
+  },
+  "choices": {
+    "c_cdmo": {
+      "title": "Go to a human-drug contract plant in Suzhou",
+      "situation": "A contract antibody manufacturer in Suzhou is hiring cell culture operators, and steady hands like yours are just what it wants. Twice the pay, but on your own far from home, with 2,000-liter stainless tanks and a dorm room. Here in Tai'an you've gotten the hang of the work, and the spring drive is coming.",
+      "options": [
+        { "label": "Go to Suzhou", "result": "You stop at the foot of Mount Tai outside the gate to smoke a cigarette, and the next day you take a high-speed train south.", "end": "You go to Suzhou, where the cells cost a hundred times what they did in Tai'an, and the suits have one more layer. You discover that your judgment of cells carries over even when the species changes." },
+        { "label": "Stay in Tai'an", "result": "You say you can't get away right now. Your friend says they hire three times a year. You think it over, and it doesn't have to be this time." }
+      ]
+    },
+    "c_field": {
+      "title": "Move to farm technical service",
+      "situation": "Sales is hiring technical service staff to drive out to farms around Shandong and Henan, guiding vaccination schedules and reading antibody reports. High commission, no cleanroom, a rest for your hands and eyes. The downside is five days a week on the road, always smelling of pig farm, and no knowing what hog prices will do next year.",
+      "options": [
+        { "label": "Go to the field", "result": "You leave your cleanroom suit in the locker and take the keys to a company SUV.", "end": "You've moved to technical service at the farms, with boot covers always in the car. Farm owners hear half of what you say. They don't want a word of what you learned in the cell room. They only want to know whether the shot works." },
+        { "label": "Stay in the plant", "result": "You put the notice back on the board. The job goes to a young man who's been here three years." }
+      ]
+    },
+    "c_advanced": {
+      "title": "Sit the Senior Technician exam",
+      "situation": "The company is examining for Senior Technician: a case study of a process deviation, a practical, and a panel defense, and those who pass lead a crew. This year's spring drive comes first, so you'd have to write the case after hours, and you have to think through how honestly to write up that deviation.",
+      "options": [
+        { "label": "Honest, up all night", "result": "You turn the batch deviation into a three-layer fishbone diagram, and the chief examiner circles something in the second layer." },
+        { "label": "Not this time", "result": "When the drive ends you sleep for two days. On the third you take the family fishing at Huangqian Reservoir." }
+      ]
+    },
+    "c_deviation": {
+      "title": "That one point on the temperature log",
+      "situation": "In the middle of the night the incubator's temperature fell by 0.8 degrees and came back twenty minutes later, just past the edge of the permitted range. The cells look fine. Filing a deviation means an investigation, and this batch for the spring drive would ship three days late. Nobody has seen this entry and nobody will unless it's pulled up.",
+      "options": [
+        { "label": "File the deviation", "result": "The investigation takes five days. The QA manager says you wrote it up clearly. The plant manager doesn't speak to you for three days." },
+        { "label": "Watch it, don't file yet", "result": "The batch's viability is excellent, and it's released without a problem. Whenever you remember this afterward, you think about it for a while." }
+      ]
+    },
+    "c_ai": {
+      "title": "Learn the reactor prediction model?",
+      "situation": "The new reactor has a data platform, and someone must learn to clean years of batch data and feed it to a prediction model that will suggest feed times. This work is after hours and unpaid. The veterans in the cleanroom say that once it's learned, you'll have taught it how to take your rice bowl.",
+      "options": [
+        { "label": "Learn it", "result": "You tag every batch's data and make a separate category for the contaminated ones. The model starts to understand what wrong looks like." },
+        { "label": "Hands and eyes", "result": "You carry on at the microscope. It predicts a feed time, you glance at it, and then you go back to the microscope." }
+      ]
+    },
+    "c_shift": {
+      "title": "Take the night watch on the reactor?",
+      "situation": "The reactor must run for fourteen days continuously, so the company has scheduled night shifts paying ¥1,200 a month more. Your child's small and your spouse works days, so if you're not there at night, it's all on your spouse. Your back and eyes haven't been good lately, but that ¥1,200 is real.",
+      "options": [
+        { "label": "Take nights", "result": "At night there's only the sound of machines and you. You begin to be able to tell the small changes in the sound of the impeller." },
+        { "label": "No nights", "result": "You go home to sleep every night. The ¥1,200 goes to a young man on the next crew who's getting ready to marry." }
+      ]
+    },
+    "c_supervisor": {
+      "title": "Apply for Process Supervisor",
+      "situation": "The Process Supervisor owns process validation and change control, with each change filed and each inspection explained. Your work would turn from culture flasks into documents, in meetings with QA, regulatory and sales. And at your age you'd be starting over on how to write a validation protocol.",
+      "options": [
+        { "label": "Apply", "result": "You talk about the changeover from hand-mixed media to single-pass mixing bags, down to the temperature curves of the three validation batches." },
+        { "label": "Stay on the floor", "result": "You say your skill is mainly in your hands. Later supervisors, when they're not sure about some cells, still call you in to look." }
+      ]
+    },
+    "c_vp": {
+      "title": "Apply for Deputy Production Manager",
+      "situation": "The Deputy Production Manager handles scheduling, staffing and compliance. All distributors' calls for product end up here, with cost and quality both coming after you. Whoever holds this post gets into the cleanroom only a few times a year, though that layer of dry skin might have a chance of healing.",
+      "options": [
+        { "label": "Apply", "result": "You work up a table: each day of delayed release means how much more money stuck in the channel. The owner reads it and asks who made it." },
+        { "label": "Let it go", "result": "You say it should go to someone younger. You go on changing four times, and doing this until retirement won't feel like too short a time." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "You leave the cleanroom for the last time, dropping your suit into the recycling bin with a bit of water still on one glove. All these years of batch records are in the system, and those cells were passaged thousands of generations ago and don't remember you. You come home and wash your hands, all the way through to the seventh step.",
+    "burnout": "The skin on your hands and your eyes have both reached the point of needing rest, and the company moves you to the materials warehouse to manage media and filter lot numbers. You no longer change clothes four times, though at the end of the day you still stop at the sink."
+  },
+  "stages": [
+    "You spend more of your day changing clothes than working. You prepare media, filter, wash roller bottles, hand things to the senior technician, and watch her pick out cells under the microscope. Each step goes in the batch record, and when QA comes to check, your handwriting needs to be as steady as your hands.",
+    "The cells' route from liquid nitrogen to reactor is now yours. You thaw and expand them, look at the microscope twice a day, seed the bioreactor, and send samples to QC. Dissolved oxygen, pH and stir speed curves have to live in your head. Yours is the operator's name on the batch record, and when something goes wrong you're the first one questioned.",
+    "You lead a crew of five or six, assigning who goes into the cleanroom and who comes out for air. You help track down others' deviations and train new hires starting from hand disinfection. Batch records come to you for review, your pen has grown heavier than before, and one circle from it takes someone half a day to fix.",
+    "You write process validation protocols, assess changes, and go back and forth in meetings with QA, regulatory and suppliers. When a media supplier changes its formula, three validation batches are needed before it can go on the line. When inspectors come you sit at the table answering questions, and you read what's happening on the floor from reports and people's faces.",
+    "Production schedules, labor cost and distributors' rush orders all land on your desk. You decide how many tanks to run at once before the spring drive and how to arrange the nights, and you agree the rhythm of release with the head of quality. You go into the cleanroom only a few times a year, and each time someone has to watch your gowning. You don't say so, but it stings a little."
+  ],
+  "work": [
+    "The senior technician has you tilt a clear culture flask thirty degrees to draw off the liquid. Your hand trembles, you touch the flask wall, and she has you put it aside and open a new one.",
+    "The filter's pressure gauge reaches 1.5 and stops. You think it's blocked and call the crew leader, who tells you to check first that the vent valve is open.",
+    "The plate for your aseptic assessment spends three days in the incubator, and you check it daily. On the third it's perfectly clean, and the examiner marks it passed.",
+    "After thawing, this lot of cells attaches poorly. You go through the freezing date and serum lot one by one and end up suspecting the dry ice in transit. You have QC retain a sample.",
+    "On day four the dissolved oxygen in the fifty-liter reactor begins to fall. You raise the aeration a little and check every two hours, and the curve slowly returns to setpoint.",
+    "Old Qiu on the next crew tells you that when the culture medium's color goes yellow too quickly, it tells you it's time to feed before the sensors do.",
+    "New hire Young Lü goes to the work surface without disinfecting her gloves. You call her out at the door and have her read chapter four of the training again.",
+    "One batch's viability is five points low. You and the crew make a table of media preparation times and storage temperatures, and the trouble turns out to be the holding time.",
+    "QA returns three of your batch records. You call in the three people and go through them one at a time, having each explain the reason for that strike-through.",
+    "The media supplier gives notice that one raw material's origin has changed. You write a change plan, line up three comparison batches, find viability hardly differs, and file the report.",
+    "An inspector asks why this piece of equipment hasn't been revalidated. You hand him the previous validation cycle and the maintenance records. He leafs through them and has you talk for five minutes.",
+    "Sales wants two more batches before the spring drive. You work out filling line capacity and cell passage numbers and say one more is possible, while the second will have to be borrowed from the autumn drive.",
+    "The company wants overtime cut. You compare night shift headcount with alarm counts. Nights lose one person, and the rounds are moved to two in the morning."
+  ],
+  "past": [
+    "You grow up in Feicheng, in a family that grows peaches. Each spring your grandfather sprays the trees, measuring the mix in a chipped enamel mug, and for decades he's never been off.",
+    "In biology class you do the onion skin experiment and spend half the period hunting through the microscope until you see a row of orderly little squares. You think they're beautiful.",
+    "At college you pick biopharmaceutical technology, with slightly higher tuition. Your mother says it sounds like you could get into a drug factory, which beats growing peaches.",
+    "You intern at a company in Jinan working on strains. The moment you see a fermentation tank, it looks better than the picture in the textbook, and much bigger.",
+    "At graduation most classmates go south, and you want to be closer to home. This company's job ad in Tai'an asks for people willing to change clothes. You take it for a joke."
+  ],
+  "late": {
+    "pension_note": "Estimate: a standard enterprise pension, about average for Tai'an, with the replacement rate helped a little by higher pay in later years.",
+    "scenes": [
+      "After retiring your hands begin to grow back. It takes six months for the cracks between your fingers to close. You touch the back of your hand and it feels like someone else's.",
+      "You plant a few peach trees at home. When you spray, you wear gloves and a mask and mix to the drop. The neighbors tease you as if it were surgery. This is procedure, you say.",
+      "That line of yours has since gone over to cell factories and fully automatic loading, with three or four people standing in the plant. When you hear about it, you're changing the water for a potted pothos.",
+      "The eye doctor says your cataracts can be done now. On the day of the surgery the nurse settles your head and tells you to look at the light. It occurs to you this may be the first time in your life someone else has done the looking for you.",
+      "You count filters in the materials warehouse, matching each box's lot number and arrival date with care. People complain you're slow. Someday, you say, they'll know what's good about slow.",
+      "You don't eat much pork. It's not for any other reason. Thinking of all those spring drives, you wonder what this pig was vaccinated with.",
+      "After your eyes go bad you sit at the neighborhood card room, and people call you over to look at their hands. You study them seriously, and people ask how anyone can play so slowly.",
+      "Even in the new place that layer of dry skin is still on your hands. A new colleague asks what you used to do. Raised cells, you say. They ask what cells eat, and after thinking about it for a while you say, better than I do.",
+      "Your old company has been bought by another group and renamed. In a tender notice you see the new name, the same formula as back then, the price thirty percent cheaper than it was.",
+      "You don't think about this trade at all now. When someone brings up vaccines you just listen, and think that other people know more about it than you, and are more tired.",
+      "Walking into any shop you first look at the flow on the floor and where the rubbish bins are. Your daughter says someone like you shouldn't go to trendy restaurants. She's right, you say.",
+      "The seven steps of washing your hands: you still don't skip any. Winter tap water is cold and you still rub for a full twenty seconds, then slowly dry them on a towel."
+    ],
+    "closing": {
+      "retire": "In the evening Mount Tai looks lower than it is. You finish washing your hands and go out. Today nobody is asking you to change.",
+      "burnout": "The warehouse lights go off automatically on time. At the door you take off your gloves, put them in your pocket, and walk slowly back.",
+      "end": "The wind here smells of something else. You roll your sleeves down. The skin on your hands has finally stopped hurting."
+    }
+  }
+}

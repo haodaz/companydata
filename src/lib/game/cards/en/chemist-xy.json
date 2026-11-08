@@ -1,0 +1,220 @@
+{
+  "id": "chemist-xy",
+  "occupation": "Chemist",
+  "role": "Assistant Research Chemist at a Fine Chemicals R&D Center",
+  "headline": "An assistant research chemist back in Xinyang with a master's degree, at a fine chemicals company's R&D center, running columns, waiting on NMR results, and taking lab routes step by step up to the plant",
+  "unit": "The R&D center of a fine chemicals company in Xinyang",
+  "unit_type": "Private fine chemicals company",
+  "city": "Xinyang",
+  "city_tier": "Fourth-tier city",
+  "education": "Master's degree (organic chemistry)",
+  "level": "You read papers fast and your columns don't run clean enough yet. How far it is from one gram in a flask to one ton in a plant, this company will teach you.",
+  "intro": "You finished your master's out of province and came back to Xinyang, to the R&D center of a fine chemicals company. Two stories, six fume hoods, one HPLC, one GC, and any NMR has to be mailed to Wuhan. Five hundred meters behind the building is the plant, and the gram you make at this bench will sooner or later walk over there and become a ton.",
+  "salary_note": "Estimate: pay in Xinyang is below the national average. This company's R&D jobs are above local norms, and twenty to thirty percent below comparable coastal positions.",
+  "facts": [
+    {
+      "label": "Assistant Research Chemist (current level)",
+      "value": "0–2 years, ¥4,500–6,000 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "Next level up",
+      "value": "Research Chemist (2–6 years)",
+      "source": "Common in the trade"
+    },
+    {
+      "label": "Pay after 10+ years",
+      "value": "¥9,500 a month (at this employer, estimated)",
+      "source": "Estimate"
+    },
+    {
+      "label": "What AI can't take",
+      "value": "Running reactions, purifying and scaling up by hand",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Where AI is moving in",
+      "value": "Judging whether a synthetic route will work",
+      "source": "AI exposure"
+    },
+    {
+      "label": "Open positions",
+      "value": "93 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+      "source": "Job listings"
+    }
+  ],
+  "day": [
+    "First thing in the lab you feel last night's reaction flask. You spot a TLC plate, develop it, and under the UV lamp there's one more spot. Your supervisor at the door asks how much starting material is left.",
+    "Packing a column. The silica is as fine as flour. Slurry-packed, you press the top flat, and this column is going to take four hours.",
+    "Today's samples are boxed for Wuhan, to wait in line for NMR at a university testing center. You fill in the form, with the courier downstairs hurrying you.",
+    "The fume hood's airflow alarm lights up, and you take off the filter to find a wad of lint. The hour after lunch is the sleepiest, and the solvent smell makes it worse.",
+    "Rotary evaporation. Forty-degree water bath, the flask going around and around. Looking at the oil that has separated out, you work out the yield for this step.",
+    "The plant manager comes with last batch's data in hand. This addition time of yours will be three times as long in the reactor, he says. Have you worked that out?",
+    "Writing the experiment record. Who weighed the materials, when the stirrer started, how the color changed along the way, line by line in the electronic notebook. When a customer audits, all of this gets shown.",
+    "Biking home along the Shi River, where your family has bought some spring tea and left it on the table. You lift the cup and sniff and can't smell anything. Your nose hasn't recovered yet."
+  ],
+  "ladder": [
+    { "title": "Assistant Research Chemist", "stage": "Bench work", "focus": "Running bench-scale trials to plan, columns, samples, keeping proper records" },
+    { "title": "Research Chemist", "stage": "Own projects", "focus": "Designing routes alone, optimizing conditions, beginning to follow pilot runs" },
+    { "title": "Senior Research Chemist", "stage": "Owning scale-up", "focus": "Scaling processes up to the plant, leading process validation, handling customer audits" },
+    { "title": "R&D Group Leader", "stage": "Leading a project team", "focus": "Leading the project team, ranking project priorities, dealing with customers and patents" },
+    { "title": "Deputy Director, R&D Center", "stage": "Running the center", "focus": "Running the R&D center's direction, budget, qualifications and people" }
+  ],
+  "ai_tasks": [
+    { "name": "Running reactions, purifying and scaling up by hand", "how": "A wrong stirring sound, a color turning early, foam in the reactor: someone has to be standing there to judge and respond." },
+    { "name": "Judging whether a synthetic route will work", "how": "Models can propose routes and conditions. Whether the materials can be bought, or the plant's reactors can take it, is still for a person to decide." },
+    { "name": "Interpreting spectra and experimental data", "how": "Software can pre-assign peaks. Whether that extra small peak matters takes someone thinking about the sample and the route." },
+    { "name": "Organizing records and writing reports", "how": "Records, charts and first drafts of reports write themselves. People check key data and conclusions and sign." }
+  ],
+  "events": {
+    "e_column_fail": "A full day's column, and at the end you mislabel the bottles while pooling, mixing two fractions. Your supervisor doesn't shout. He only says to start over tomorrow. When you write up the yield for this step, you have to multiply it by two.",
+    "e_nmr": "The NMR comes back from Wuhan with one set of proton integrals that won't add up. You take the high-speed train an hour with the sample, make up a fresh tube in a junior labmate's lab, and wait by the machine till midnight. The trouble is residual solvent.",
+    "e_tongue_black": "NBS splashes on the back of your hand, and the yellow mark takes two weeks to fade. Your father visits the plant and stares at it for a while, then asks if the stuff is poisonous. It's fine once it's washed off, you say. He doesn't ask again. A tin of hand cream arrives by mail some time later.",
+    "e_first_batch": "Your first process has reached the plant. A two-ton reactor, sixteen hours of addition, and you watch it all night in the control room. As it gets light the color at the outlet is right. The plant manager holds out a cigarette. You don't smoke. You take it anyway.",
+    "e_audit": "A pharmaceutical company in Shanghai sends auditors for three days to go through suppliers. They read your batch records page by page, find one change with no reason written, and record an observation. The owner smiles throughout and treats them to dinner, and you stay at the plant all night writing up the explanations.",
+    "e_tax_season": "At year's end comes the super-deduction for R&D expenses, and finance asks every project to fill in its approval and time sheets. This week's main output is forms, on which you divide your own year across various projects.",
+    "e_client_cut": "The customer's candidate molecule has failed in the clinic. One email and the project is over, three years of process work unused. The intermediates left in the warehouse go out as hazardous waste. You write them into the ledger line by line, seventy-six kilograms in all.",
+    "e_inspection": "The chemical park braces for an environmental inspection and the plant shuts for a week. The R&D center has to report its waste item by item, and your used bags of silica enjoy for the first time the same treatment as finished goods: every bag numbered.",
+    "e_patent": "Your patent is granted, with you as second inventor. The certificate arrives and the owner puts it in the glass case at reception. It turns out to be handy for the high-tech enterprise review, and that matters later more than the patent itself.",
+    "e_ai_route": "The retrosynthesis software offers three routes. The first requires low temperature and butyllithium, which this plant's reactors can't do. You try the second, one step shorter than yours, with a somewhat lower yield. You talk about it at the weekly meeting.",
+    "e_ai_report": "Batch reports are drafted by AI now, a version in ten minutes, neatly formatted. Once it writes a 0.5 as 5 and it takes three readings to notice. Your supervisor says this is when you find out people still need to look.",
+    "e_nose": "Your nose grows less and less reliable. You can't smell food burning, or your spouse's perfume. You see someone about your rhinitis, and when the doctor asks what you're exposed to, you recite your usual solvents. He writes the words occupational exposure on the form.",
+    "e_back": "Fume hood heights are set for average height, and your back isn't average. Years of standing bent for hours at a stretch have pushed the fourth and fifth vertebrae out on your X-ray.",
+    "e_tea": "The Maojian tea picked before Qingming has come in, and the owner hands out two jin per department, which has become the most serious benefit at any company in Xinyang. In the R&D center's glass cups, the leaves stand more neatly than the lab's filter paper.",
+    "e_label": "At the supermarket you pick up a shampoo, read the third line of its ingredients and put it back. Your spouse asks what's wrong. The preservative system is out of date, you say. The salesclerk beside you takes a step back and says that one sells pretty well.",
+    "e_junior": "You've hired two master's graduates. One lasts eight months before leaving for Suzhou, and the other passes the civil service exam. You trained this batch carefully. You're beginning to understand that in a place like Xinyang, those who stay always have another reason.",
+    "e_order": "An Indian manufacturer has undercut an old product by thirty percent, and the owner wants another eight points out of cost. You go back through solvent recovery and find five points. The remaining three, the plant finds for itself on electricity.",
+    "e_child": "Your child has to write a composition about parents, and describes your job as making medicine. You spend a good while explaining that intermediates are not medicine. In the end your child writes works at a place where you can't smell anything.",
+    "e_review": "The high-tech enterprise qualification is up for its three-year review, and patents, staffing and R&D spending are gone through item by item. You turn what you've done in these years into a table, and it isn't quite the same thing as the years you remember."
+  },
+  "choices": {
+    "c_cro": {
+      "title": "Go to a contract research company in Suzhou",
+      "situation": "A former classmate at a pharmaceutical contract research firm in Suzhou says there are plenty of people like you who can do bench work, but not many with scale-up experience. Half again the pay, KPIs in compounds per week. Here the plant doesn't wait for anyone, and the owner eats boxed lunches with you, but your home and your parents are in Xinyang.",
+      "options": [
+        { "label": "Go to Suzhou", "result": "You hand back your experiment record account, and the owner signs your resignation form.", "end": "You go to the contract firm in Suzhou and turn in a few compounds a week. One month's output there is more flasks than you touched in a year in Xinyang. Where they end up, you don't really know." },
+        { "label": "Stay in Xinyang", "result": "You reply that you'll think about it. There's a batch in the plant this week whose outcome you've been waiting to see." }
+      ]
+    },
+    "c_teach": {
+      "title": "Teach chemistry at a vocational college",
+      "situation": "A local vocational college is hiring chemical engineering teachers with industry backgrounds: winter and summer breaks, slightly lower pay, professional rank to work toward. The owner says he understands, and also that the project you're on will start making money after another year. It's been several years since you slept without thinking about a reactor.",
+      "options": [
+        { "label": "Go to the college", "result": "You label every bottle in your fume hood, one at a time, and it takes a week.", "end": "You teach at the vocational college, covering unit operations, and the examples you use most often are the times you botched a scale-up. They listen more closely than they do to the textbook." },
+        { "label": "Finish the project", "result": "You swipe away the job notice. The project does eventually make money, and your share is less than you'd imagined." }
+      ]
+    },
+    "c_senior": {
+      "title": "Apply for Senior Research Chemist",
+      "situation": "The company is assessing for Senior Research Chemist this year, requiring a patent or a completed scale-up, plus a panel defense. Your process would do nicely, but to present it you'll have to go through three years of data, and it's up to you whether the failed batches go in.",
+      "options": [
+        { "label": "Put everything in", "result": "The panel asks why the third batch went wrong and you talk for ten minutes. Nobody asks anything else." },
+        { "label": "Only the successes", "result": "The panel goes smoothly and finishes in twenty minutes. You come out and have a sip of water, feeling a little hollow." }
+      ]
+    },
+    "c_scale": {
+      "title": "The plant says your process is no good",
+      "situation": "The plant's third batch has lost eight points of yield. The plant manager says your R&D wasn't thorough. You look at the batch records and think an operator added too fast. The owner tells the two of you to sort it out yourselves, with a customer due next week. Somebody has to own this.",
+      "options": [
+        { "label": "Investigate on the floor", "result": "You stand by the reactor for two shifts and find the jacket temperature probe has drifted. The plant manager says nothing, and from then on he listens when you talk." },
+        { "label": "Write a reasoned report", "result": "Your report's logic is rigorous. The plant manager reads one page and sets it down. In the end, nobody owns it." }
+      ]
+    },
+    "c_ai": {
+      "title": "Sort out the failures for the model",
+      "situation": "The company has put in a route prediction system, to be trained on ten years of experiment records. Failed reactions are the most valuable and the hardest to organize. It would take your evenings, no bonus. You have two projects going, and younger colleagues are already saying this thing will halve the number of research chemists.",
+      "options": [
+        { "label": "Do it", "result": "You sort all those failures into twelve categories by cause. Category three is called boss said try it." },
+        { "label": "Finish the projects first", "result": "The projects deliver early. When the system launches you use it too, and it doesn't know about the feel for things you never wrote down." }
+      ]
+    },
+    "c_name": {
+      "title": "The first inventor on the patent",
+      "situation": "The crystallization process you developed is going for a patent. The owner wants to list his nephew as first inventor, says it helps the company's talent program application, and says the inventor award will still go to you. The nephew really has run a lot of errands for this project. He has just never done an experiment.",
+      "options": [
+        { "label": "Argue for it", "result": "In the end you're first and the nephew is second. The owner never again asks you to lunch alone." },
+        { "label": "Let it go", "result": "You take the award. The certificate goes in the glass case at reception, and you don't much walk that way." }
+      ]
+    },
+    "c_lead": {
+      "title": "Apply for R&D Group Leader",
+      "situation": "The R&D Group Leader manages eight people, ranks project priorities and goes with sales to see customers. After this you'll only ever look at other people's TLC plates. It's ¥3,000 to ¥4,000 more a month, which isn't as solid as the feeling of waiting at the fume hood for a reaction to come out.",
+      "options": [
+        { "label": "Take it", "result": "The first time you rank priorities, you put your own favorite project fourth." },
+        { "label": "Keep doing experiments", "result": "You stay at the fume hood, and over these years you find that doing experiments is what you'd least want to trade away." }
+      ]
+    },
+    "c_sold": {
+      "title": "After the company is sold",
+      "situation": "The owner is getting old and has sold the company to a listed group. The group wants R&D centralized in Shanghai and only process support left in Xinyang. You could go to Shanghai, for somewhat more money and a dorm. Or you could stay in Xinyang, same job title, smaller job.",
+      "options": [
+        { "label": "Go to Shanghai", "result": "You get a fume hood of your own in a big lab in Xuhui. The airflow here never alarms." },
+        { "label": "Stay for process support", "result": "You're at the plant more each week. The process packages from Shanghai often need changes. Sometimes you write about it politely, and sometimes you don't write." }
+      ]
+    },
+    "c_deputy": {
+      "title": "Apply for Deputy Director, R&D Center",
+      "situation": "The Deputy Director of the R&D Center manages budget, qualifications and project approvals, deals with the city science and technology bureau, and sits in the front row at customer audits. Whoever takes it sees very few reaction flasks in a year.",
+      "options": [
+        { "label": "Apply", "result": "You redo the R&D center's budget by project, and at the panel you can explain every line." },
+        { "label": "Let it go", "result": "You say it's for someone who can write reports. You just want to run this crystallization one more time." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "Your experiment record account is archived and the spectra remain on the server. Some of the processes you made are still running in the plant, and others have long since been replaced by someone else's new route. You still read ingredient lists when you buy things, but only the first three lines. After that, you'd rather not know.",
+    "burnout": "Reports on your nose and back have piled up, and you apply for a transfer to the technical archive, in charge of batch records and spectra. You can no longer smell those bottles. Their numbers you still remember very clearly."
+  },
+  "stages": [
+    "You run bench trials on your supervisor's routes, spotting plates, running columns, stripping solvent, and in a day you can push three to five reactions forward a step. Weighing, charging and records all go into the electronic notebook, and your supervisor spot-checks. Spectra come from samples someone else mails out, and when asked what this peak is, you mostly can't answer.",
+    "Routes are yours to decide now: searching the literature, swapping solvents, adjusting ratios, with the HPLC queue under your care. For the first time you follow your work to the plant with your bench data, standing behind an operator as he opens a valve. What's different is that when this reaction won't go, nobody can think it through on your behalf.",
+    "You take a one-gram process up to a 500-liter and a 2,000-liter reactor, write the process instructions, and lead three validation batches. You often end up at the same table arguing with the plant manager, equipment people and EHS. At customer audits you sit to one side, and have to explain the full story of every deviation.",
+    "You lead seven or eight people, setting project priorities on Mondays, going to see customers with sales, reading more of other people's records than writing your own. When a project must stop, you're the one who says so. Patents, budget and hiring all land on your desk, and your fume hood has gone to someone else.",
+    "What the R&D center does and doesn't do in a year is mostly what you say to the owner. High-tech reviews, customer audits, science project applications all need you there. What you handle now is spreadsheets and budgets. When you visit the plant from time to time, the operators are so polite that you can't get used to it."
+  ],
+  "work": [
+    "Your supervisor has you switch this step's solvent from DCM to 2-MeTHF. You run four controls, and the third gives a byproduct you haven't seen before.",
+    "Weighing out, you pick up the wrong one of two similar chlorides, and catch it by checking the CAS number just before charging. From then on you write large on every cap.",
+    "Young Ge at the next bench teaches you to stain TLC plates in an iodine chamber. What UV doesn't show, he says, iodine will tell you.",
+    "This coupling is stuck at a 62% yield. You vary the palladium loading and ligand ratio across twelve sets, in a 96-well plate all at once, and the best comes in at 81%.",
+    "On your first pilot run at the plant, an operator named Old Wang points through the sight glass and says the color's gone dark. You check, and the exotherm is running a bit faster than at the bench.",
+    "The HPLC method's resolution isn't enough and two impurities are stuck together. You switch to a C18 column and tune the gradient for two hours, and slowly they come apart.",
+    "You revise the cooling rate for crystallization in the 500-liter vessel three times. At 0.2 degrees a minute you get the form the customer wants, and the XRD matches the reference.",
+    "An auditor asks why this in-process sampling point is two hours. You bring up the exotherm curves for the three batches, and when he's seen them he ticks his sheet.",
+    "EHS has you run reaction calorimetry, and the exotherm comes in larger than estimated. You change the addition from six hours to ten, and the plant manager sighs over the phone.",
+    "Two projects both need the 500-liter pilot reactor. You spend an hour in a meeting with sales and production and move the one with the later deadline to the front.",
+    "Young Jin's synthesis has gone half a year with no result. You and he spread out the data on a table and decide to stop on Friday. You write him a summary he can put on a resume.",
+    "The city science and technology bureau comes to accept your R&D platform and wants to see the equipment list. You have someone clean the old HPLC from the mail-out days and keep it on the list.",
+    "The owner wants to open up electronic chemicals as a new direction. You work out the cost of purification equipment and people, and at the board meeting turn it into a two-year plan starting with one trial line."
+  ],
+  "past": [
+    "You go to school in Gushi, in a family of small traders. In a lab class your chemistry teacher blows soap bubbles with hydrogen and lights them. A sharp pop, and you remember that smell.",
+    "When you fill in college applications, classmates all go for computer science. Your score won't reach that, so you put down chemistry and imagine a job at a drug factory. Your family thinks anyone in a white coat counts as a doctor.",
+    "Before finishing your bachelor's you intern at a drug company, where the line work doesn't call for knowing any reaction mechanisms. You decide on grad school, to become someone who can think up routes.",
+    "In your master's in organic synthesis you get a small scar on one hand, and your advisor's group runs dozens of columns a year. The third chapter of your thesis takes three months, all failures.",
+    "In recruiting season you apply to drug companies in the south, and Suzhou offers the most. Then your mother is found to be unwell, and you decide to go back to Henan first.",
+    "On the day of your interview the owner himself takes you to the plant and points to a 2,000-liter reactor. What I want, he says, is someone who can understand this, not someone who publishes papers."
+  ],
+  "late": {
+    "pension_note": "Estimate: enterprise R&D work with higher pay in later years, but Xinyang's contribution base is low, so the replacement rate is middling.",
+    "scenes": [
+      "You start to cook for yourself. There's a graduation in your hand when you add salt, and you watch the oil temperature. The exotherm in this wok is much easier to control than that reactor's. The saltiness is still a bit off.",
+      "You help your compound's management read the instructions on a mosquito spray and point out that its solvent doesn't sit well with their storeroom. The young woman thanks you, and the next day she moves the spray somewhere else.",
+      "After AI optimization your process has lost another step. A young person from the plant presents it at an industry meeting and mentions the early route in passing. The slide says the company's name, which is normal.",
+      "You and your spouse go for a walk at Nanwan Lake, with this year's Maojian in a cup. You still can't quite catch the aroma, so you watch the buds sink one by one. You could calculate that rate too.",
+      "You run the archive, shelving batch records by year. Sometimes you come across your own handwriting from when you were thirty. Every stroke was so hard on the page.",
+      "When your back's bad you eat standing up. Your spouse asks if it's hurting again. Standing is better than sitting, you say. You've had many years to practice this posture.",
+      "You don't read any ingredient lists now. Anything will do. In the supermarket you see a bottle of shampoo, think the color's nice, and take it.",
+      "The fume hoods at the new place are better than the old ones, with steady airflow. You find you're still in the habit of going to feel a flask at three in the afternoon. The flask's temperature tells you how far along it is.",
+      "Your old plant manager came to Wuhan for treatment and had a meal with you on the way. That process of yours is still in use, he says, though that jacket's been replaced. Afterward he wants to pay and the two of you argue for quite a while.",
+      "Someone asks if you'd go back as a consultant to that plant in Xinyang. You name a price and they never answer. You don't wait, either. Your sense of price has held up all these years.",
+      "Nobody in a lab spots plates by hand now. Robots run ninety-six reactions a day. You go to see it once. Those little vials are perfectly tidy, and none of them is yellow.",
+      "There's still that faint patch of pigment on the back of your hand. A nurse putting in a needle asks how you got it. A reaction, you say."
+    ],
+    "closing": {
+      "retire": "It's autumn. You label this year's tea canisters with the date and the grams, and line them up on the second shelf.",
+      "burnout": "The archive door shuts on time. You can't smell the osmanthus outside, but you see it has fallen all over the ground.",
+      "end": "You pass a chemical park and look through the car window at the towers and pipes. There's a southwest wind today. You roll the window up."
+    }
+  }
+}

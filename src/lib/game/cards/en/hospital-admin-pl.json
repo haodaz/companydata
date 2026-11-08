@@ -1,0 +1,177 @@
+{
+ "id": "hospital-admin-pl",
+ "occupation": "Hospital Administrator",
+ "role": "County Hospital Office Clerk",
+ "headline": "In a county hospital outside Pingliang, four hundred beds and five hundred staff: the seals are stamped by you, the messages pass through you, and anyone can shout 'hey, Hospital Office' down the corridor",
+ "unit": "President's Office, a county people's hospital near Pingliang, Gansu",
+ "unit_type": "County public hospital (Grade 2A)",
+ "city": "A county near Pingliang, Gansu",
+ "city_tier": "County town",
+ "education": "Bachelor's (Public Service Administration)",
+ "level": "Newly landed in a permanent state post; your notices read smoothly, but you can't yet tell when to file a request and when to file a report",
+ "intro": "The Hospital Office sits at the far end of the fourth floor of the outpatient building: two desks, a printer that keeps jamming, and an iron cabinet for the official seals. The day you report for work, the director doesn't look up. He tells you to forward three notices from the county health bureau to every department and to collect the receipts. Down one end of the corridor is the emergency room, down this end the red-headed documents, and your job lies between the two.",
+ "salary_note": "Estimate: administrative staff at a county public hospital are paid on the state pay scale, with bonuses a notch below clinical staff; a county town near Pingliang runs more than 40% under the national figure.",
+ "facts": [
+  {
+   "label": "Hospital Office Clerk (current level)",
+   "value": "0–5 years, ¥2,200–3,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Deputy Director of the Hospital Office (5–11 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Settling disputes and schedules between departments",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Drafting official documents, speeches and meeting minutes",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "5 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Upstairs, you open the office system first and route last night's documents from the health bureau to each vice president. The radiators burn to the touch, and the windowsill still wears a skin of yellow dust.",
+  "The weekly hospital meeting. You take notes from the back row. The heads of Internal Medicine and Surgery fight for seven minutes over ultrasound time; in the minutes you write, 'After discussion, to be coordinated by the Equipment Department.'",
+  "You carry the seal request form to the Party secretary, then the president, and come back to unlock the iron cabinet. The seal across the page join of a contract has to line up. Stamp it crooked and the whole thing gets reprinted.",
+  "A patient's relative from a village has come to the wrong floor and asks how much of the hospital bill insurance will cover. You walk him down to the insurance window on the ground floor. When you get back, the desk phone is on its eleventh ring.",
+  "You chase the medical record front-sheet data for the performance review. The IT office says the system won't export it, so you open Excel and match it line by line.",
+  "The city is sending inspectors next week. You number and label thirty-two binders by clause. The one that's missing, you tell the Nursing Department to fill in tonight.",
+  "The president adds one more report just before leaving. You go to the alley for two guokui flatbreads and chew through tomorrow's vehicle schedule in your head."
+ ],
+ "ladder": [
+  { "title": "Hospital Office Clerk", "stage": "Errands and drafts", "focus": "Sending and receiving documents, writing notices and minutes, running seal requests, preparing inspection files; you move up by making no mistakes" },
+  { "title": "Deputy Director of the Hospital Office", "stage": "Running a desk", "focus": "Leading two or three clerks, writing the weekly meeting papers, keeping the hospital grading binders, receiving complaints" },
+  { "title": "Director of the Hospital Office", "stage": "The whole hospital", "focus": "The president's first door: coordinating departments, dealing with the health bureau and the insurance bureau, answering for documents and follow-ups" },
+  { "title": "Vice President for Administration", "stage": "In the leadership", "focus": "In charge of administration, logistics and construction, answerable for budgets, procurement and the running of the hospital" }
+ ],
+ "ai_tasks": [
+  { "name": "Settling disputes and schedules between departments", "how": "AI can list every department's demands. Who gives way first, who should say it, whether the president can hear it today: that takes someone who has worked in this hospital." },
+  { "name": "Drafting official documents, speeches and meeting minutes", "how": "AI produces a first draft in seconds and turns recordings into minutes. Unit names, document numbers and which sentence must never go on paper still need a person, word by word." },
+  { "name": "Compiling binders for hospital grading and performance reviews", "how": "The system gathers data by clause and flags gaps. The definitions behind the numbers and what is really happening on the wards need a person to check, and whoever signs answers for it." },
+  { "name": "Routing documents and chasing deadlines", "how": "The office system distributes automatically, nags when things come due and counts receipts. People only handle the few that get stuck." },
+  { "name": "Receiving patients and families who come to complain", "how": "AI can log the complaint and look up the procedure. Sitting face to face and speaking concretely, without conceding anything on anyone's behalf, can only be done by a person." }
+ ],
+ "events": {
+  "e_review": "Forty days before the Grade 2A re-inspection, the hospital divides up the tasks clause by clause, and the Hospital Office coordinates. For three weeks you get home after eleven, and the binders stack higher than the desk. The day the inspectors leave, the canteen adds one more dish.",
+  "e_apple": "In October the apples come down off the hills and the wards suddenly empty by nearly half. After the first frost, everyone who wore themselves out at harvest and everyone with bad knees arrives at once, and beds appear in the corridors. The president tells you to write this curve into next year's staffing proposal.",
+  "e_heat": "A week before the heating season, the boiler room reports a leak in the inpatient pipes. You spend the day on the phone between the president, the General Affairs Department and the heating company, and by nightfall the obstetrics floor is warm first.",
+  "e_expert": "An expert team sent under the eastern provinces' assistance program stays for six months, and their meals, lodging, clinic schedules and publicity pieces all land on the Hospital Office. When they leave they praise the county's mutton, so you make one more trip to Guyuan Airport with a full trunk.",
+  "e_stamp": "A maintenance contract went out with the wrong seal. No one noticed until the year-end audit. You write a one-page explanation, and from then on two people must be present whenever the office uses a seal.",
+  "e_dispute": "A patient's relative keeps watch outside the president's door for two days, demanding an answer. You pour water, record the complaint, call the Medical Affairs Department and the mediation committee. You must speak concretely, and you must not concede anything for any department.",
+  "e_bonus": "The year-end bonus plan comes out: administration and logistics get a coefficient of 0.8. The clinical heads say that's still too high. This month your whole office walks the long way around Surgery.",
+  "e_newdean": "A new president arrives from the city and in his first week sends your annual report back eleven times. On the twelfth round he returns to the third draft and says this one's good.",
+  "e_spouse": "Your partner works at a township clinic and you meet once a week. When the county health network starts rotating staff, you finally eat lunch in the same corridor, though the canteen cards aren't interchangeable.",
+  "e_neck": "At the staff physical, your colleague in Radiology drags your X-ray to the middle of the screen: your neck has lost its curve. The next day you prop up your monitor with two volumes of the health statistics yearbook.",
+  "e_fire": "A surprise fire inspection finds an escape route on the third floor of the inpatient building blocked by the folding beds of family carers. You walk the rectification notice from floor to floor. Every bed owner has a reason not to move, and every one of them moves.",
+  "e_ai1": "The IT office installs a document assistant, and first drafts of notices and minutes appear in ten seconds. The first time, it turns the county health bureau into the provincial health commission. The second time, it cites a rule repealed three years ago. You keep reading word by word.",
+  "e_ai2": "Insurance settlement data is now pulled in automatically, and most of your manual reconciling disappears. You spend the extra time explaining to department heads why money was deducted this month.",
+  "e_audit": "The insurance bureau makes an unannounced inspection and carries off three hundred patient files. The Hospital Office is the liaison, and you stay with them for three days. In the stairwell you overhear a department head on the phone: 'We don't accept this deduction.' You leave that sentence out of the minutes.",
+  "e_village": "The county organizes a free clinic in the countryside and you ride along to a village at the foot of the Liupan Mountains, handing out forms, keeping order, taking photos and writing it up. On the way back the road has iced over, and fifty kilometers takes four hours.",
+  "e_kid": "School lets out two hours before you do. During inspection season your child does homework on the long sofa in the Hospital Office, and the characters learned in first grade now include 'inspection.'",
+  "e_prize": "Your summary of the county health network wins second prize in a citywide contest for hospital office work. The certificate sits on top of the iron cabinet. The prize is ¥400, and it buys the office milk tea.",
+  "e_merge": "The county creates a unified general hospital group, and the documents of a dozen township clinics now all pass through you. The paperwork doubles. The Hospital Office's headcount doesn't.",
+  "e_title": "Administrative staff compete for professional titles in one tiny track, with one slot a year. This year it goes to Finance. You wind the string back around your application folder and save it for next year.",
+  "e_note": "Fewer and fewer people in the hospital can write a statement of circumstances that makes the facts clear and offends nobody; in time there is only you. Department heads with a problem take a walk to the far end of the fourth floor first.",
+  "e_young": "A new clerk uses AI to write the president's opening speech for a training course. It begins, 'As the golden autumn brings cool breezes.' It is March. Halfway through, the president stops and turns his eyes to you in the front row."
+ },
+ "choices": {
+  "c_lz": { "title": "A private hospital in Lanzhou comes calling", "situation": "A private specialty hospital in Lanzhou needs an administrative supervisor who understands hospital grading. They offer twice what you make, with no permanent state post. Your father says never give up the post. Your partner says go and see.", "options": [
+   { "label": "Resign and go to Lanzhou", "result": "You hand your resignation to the personnel office.", "end": "You gave up the state post and went to Lanzhou as an administrative supervisor at a private hospital. On the day you left, the last entry in the seal register was your own resignation." },
+   { "label": "Stay in the county", "result": "You send them a very polite text, and the next day you go back to labeling binders." }
+  ] },
+  "c_bureau": { "title": "The health bureau wants to keep you", "situation": "The bureau borrowed you for half a year to write reports. Now the section chief says you could transfer for good: no more guarding the hospital phone, and no more contact with anything clinical. The president says he'll be sorry to lose you, but he won't stand in your way.", "options": [
+   { "label": "Transfer to the bureau", "result": "The transfer order comes through.", "end": "You moved to the county health bureau, to the end that sends documents out to hospitals. In your first month, a former colleague turned in a receipt in the format you had designed." },
+   { "label": "Go back to the hospital", "result": "You return the badge they lent you, and the next week you're back in your row at the weekly meeting." }
+  ] },
+  "c_cert": { "title": "Whether to sit for a health-management title", "situation": "To move up in administration you need a professional title in health management. You study on your own, the exam is in Lanzhou, and if it falls during an inspection you'll have to ask for leave.", "options": [
+   { "label": "Study at night and sit the exam", "result": "A stack of books appears next to the iron cabinet. Two years later you've passed." },
+   { "label": "Skip it, do the work well", "result": "You go hiking on Kongtong Mountain at the weekend, and the director says nothing about it." }
+  ] },
+  "c_deputy": { "title": "Applying for Deputy Director of the Hospital Office", "situation": "The Deputy Director of the Hospital Office post is open, and the woman who has shared your office for fifteen years wants it too. She taught you how to label binders. You write faster than she does.", "options": [
+   { "label": "Apply", "result": "Your speech goes steadily. She applauds. For the next two weeks you eat lunch separately." },
+   { "label": "Let her have it this time", "result": "You hand her a glass of water and the data she'll need. Later she takes a good many phone calls for you." }
+  ] },
+  "c_caliber": { "title": "Have another look at how this is counted", "situation": "One indicator in the performance review is just short, and the vice president asks you to 'have another look at how it's counted.' Under a different method of calculation, the number really does hold up. The filing deadline is Friday.", "options": [
+   { "label": "File it as originally counted", "result": "The score falls a fraction short, and the president doesn't mention you at the meeting. Your spreadsheet is spotless." },
+   { "label": "Use the other defensible method", "result": "The score goes up. You note the method in full in the remarks, in case anyone ever asks." }
+  ] },
+  "c_platform": { "title": "Who leads the unified platform", "situation": "The county health network is getting a unified office platform to bring the documents, seals and reports of a dozen township clinics online. The president asks if you'll take it on. That means two years of overtime. If you don't, IT will.", "options": [
+   { "label": "Take it and learn", "result": "You visit every clinic, teach fifty-something directors to sign on their phones, and learn to read back-end logs." },
+   { "label": "Let IT lead", "result": "You only list requirements, and on launch day you leave on time. Later, for some procedures, you have to ask the young ones where to click." }
+  ] },
+  "c_school": { "title": "Should your child go to middle school in the city", "situation": "The county's middle schools are well behind those in Pingliang proper. Going means shuttling back and forth every week, with the grandparents moving too. The Hospital Office phone doesn't observe weekends.", "options": [
+   { "label": "Commute to Pingliang at weekends", "result": "On the Friday bus you finish quite a few reports. Your back went bad in those years." },
+   { "label": "Stay at the county school", "result": "Your child goes to the county No. 1 Middle School and comes home for lunch. Now and then you start doing the math and stop halfway." }
+  ] },
+  "c_director": { "title": "Applying for Director of the Hospital Office", "situation": "The old director is close to retiring, and the president asks privately if you want to be Director of the Hospital Office. That phone has no closing time, and when anything goes wrong you'll be the first one asked.", "options": [
+   { "label": "Take it", "result": "You switch your phone to the setting where the ringer never goes off." },
+   { "label": "Wait a while", "result": "You tell the president you'd like two more years. He nods, and the next day another report appears on your desk." }
+  ] },
+  "c_vp": { "title": "Being vetted for Vice President for Administration", "situation": "The county is vetting candidates for Vice President for Administration, and you're on the list. That would put your signature on construction, procurement and tenders. You have seen how the last few spent their Spring Festivals.", "options": [
+   { "label": "Accept the vetting", "result": "The organization department spends two afternoons talking with you, and you describe these years in the plainest way." },
+   { "label": "Decline on health grounds", "result": "Your neck finally comes in useful." }
+  ] }
+ },
+ "endings": {
+  "retire": "The year you turn sixty, the minutes of the weekly meeting are transcribed by the system, and you only fix two typos. Your retirement goes through e-signature; you click confirm on a screen. The iron cabinet was sold for scrap long ago. The hospital has moved to a new campus, and the room at the far end of the fourth floor now holds IV stands.",
+  "burnout": "After that year's inspection, your neck takes half an arm numb along with it, and your fingers stop obeying halfway through a line. You ask for a transfer and go to the trade union, in charge of staff checkups and spring outings. Documents still pass through you, but far fewer. For the first time you leave at five-thirty, and you find the sun sets very late in a county town."
+ },
+ "stages": [
+  "Most of your day is spent on your feet: documents from the fourth floor to the first, forms from the Party secretary to the president, receipts from Internal Medicine to Logistics. In your hands are the office system, the seal register and a sheaf of labels numbered by clause. The director edits your drafts in red, and what he changes most is the word 'of' and the order in which people are named.",
+  "You've begun correcting other people's drafts. You write the weekly meeting papers, the master sheet of the grading binders is on your computer, and complaints reach you first to be sorted. The two clerks' mistakes are yours to cover. And with department heads you can no longer simply pass messages along; you have to work out what they'll say back first.",
+  "You have become the president's first door. Each day begins with the follow-up list: what he has to know today, and what can be settled on the fourth floor. Above you are section chiefs at the health and insurance bureaus, below you the heads of thirty-odd departments. The most important things in your hands are the hospital's calendar and your sense of proportion.",
+  "Your name begins to appear in the last box on contracts and tender documents. Mornings are construction meetings, afternoons procurement budgets, and evenings you work out which things the Equipment Department and Finance said were true. You no longer fix typos. You decide whether this money gets spent."
+ ],
+ "work": [
+  "The Nursing Department's clerk brings a seal request dated next week. You leave that line of the register blank and send her to get the vice president's signature before you unlock the iron cabinet.",
+  "The president wants hospital bed use explained on one page. You get twelve monthly reports from the statistics room, calculate three numbers, and set the font large enough for reading glasses.",
+  "An inspector from the city asks where the original records are for clause 14. You give the page number on the spot. The director, standing beside you with his mug, for once adds nothing.",
+  "Surgery and Anesthesiology send up two reports on weekend operating room shifts. You merge them into one page, keep only the three sentences both will accept, and put it first on the agenda.",
+  "A complaining relative comes for the third time. You lay out the records of the first two visits and tell him what's been done, what can't be done and who handles what can't. He leaves you his phone number.",
+  "An inspector finds an alteration in an infection-control record. You and the head nurse track down the original forms and explain for twenty minutes, and the inspector ticks the box.",
+  "The county announces an on-site meeting three days ahead. You map the route for visitors, clear the fourth-floor corridor, and write the president a five-hundred-character briefing. He reads only the first two paragraphs.",
+  "The document dividing work between two vice presidents is on its fourth draft, and they're fighting over the order of a single word. You replace the paragraphs with a table, splitting 'lead' and 'assist' into separate rows.",
+  "A section chief at the bureau calls to ask for a number, and you don't answer on the spot. You have the statistics room check it and call back half an hour later. Your figure differs from his by three cases, and he thanks you.",
+  "Three bids for the new campus elevators come in very close. You pull out the maintenance terms and run ten years of costs. At the evaluation meeting, for the first time, the finance director doesn't argue with you.",
+  "General Affairs submits a budget for overhauling the boilers. You drive out to see the site and bring a ¥3,000,000 plan down to ¥1,900,000, without losing a single radiator.",
+  "The young director of the Hospital Office brings you a statement of circumstances to look over. You change one phrase, 'not promptly' to 'not within the prescribed time limit,' and let him work out why."
+ ],
+ "past": [
+  "Your family lives on the loess tableland in the north of the county, with a few mu of apple trees. The year you finish junior high, your grandfather is admitted to the county hospital and you run the paperwork. It's the first you've heard that a hospital, besides doctors, has a place just for stamping things.",
+  "When it's time to choose a college major, your family wants clinical medicine. You faint at the sight of blood, so you pick Public Service Administration. Your father hears you can work in a hospital after graduation and decides that's close enough.",
+  "At college in Lanzhou you spend a summer interning in the records room of a top-tier (Grade 3A) hospital, shelving files one by one. You learn to read the front sheet of a medical record.",
+  "You graduate and go back to Pingliang. On your first public-institution exam you miss by half a point. You take a temporary job as a clerk at a township clinic for ¥1,900 a month, printer maintenance included.",
+  "The next year the county hospital is hiring for one administrative slot, and thirty-seven people sit the exam. At the interview you're asked your view of primary health care. You describe a printer that keeps jamming, and the examiners laugh."
+ ],
+ "late": {
+  "pension_note": "Estimate: public-institution pension plus occupational annuity; contribution bases are modest for county-town administrative staff, and the replacement rate is a little better than at a company.",
+  "scenes": [
+   "In your first month of retirement, the property office posts a notice about a water shutoff with the wrong year in the signature line. You circle it with a pen. The next day a new notice goes up. This time the month is wrong.",
+   "The county hospital has gone fully electronic. The Hospital Office has shrunk from five people to two and is now called the General Office. You go to the new campus for your medicine and find more self-service machines than people you know.",
+   "The seniors' college needs a charter, the neighborhood committee a summary, a relative's child a campaign speech. Your work has never stopped. None of it pays, and all of it takes three revisions.",
+   "Twice a year you go to the city for traction on your neck and back. Staff insurance covers most of it. You always check the item codes on the claim form first, and then do the math for whoever's in the next bed.",
+   "After you move to the union, you hand out rice and oil to retired staff. The ledgers are much thinner than the grading binders. You number them by clause anyway.",
+   "You take early retirement and go back to the tableland to help your brother with the orchard. Apples also have to be graded, labeled and tracked. You draw up an inspection sheet for the cooperative. The growers find it a nuisance; the buyers say it works.",
+   "The numbness comes and goes. You can now go a whole month without turning on a computer, which at thirty you would not have dared imagine.",
+   "For the first year after leaving the county hospital, on the fifth of every month you're still waiting for the bureau's reporting notice. That notice is no longer yours.",
+   "Only in a different place do you learn that the county hospital's statement of circumstances is a craft. The young people at your new job write reasoned, well-supported statements and offend everyone.",
+   "Now and then you still run the numbers on the state post: what your pension would have been if you'd stayed. When the answer comes up, you swipe the phone calculator away.",
+   "In any institution, you first look for the rules posted on the wall and the evacuation map, and count the typos. Banks, schools and restaurants alike. Restaurants have the fewest.",
+   "County kids with fevers now ask their phones first, and the hospital's binders all live in the cloud. When you tell young people about thirty-two binders covering a long table, they think you're telling them ancient history."
+  ],
+  "closing": {
+   "retire": "When the apple trees bloom, the tableland goes white, and one corner of the new hospital shows in the valley below. This year no one comes asking you for a receipt.",
+   "burnout": "At five-thirty in the afternoon, water runs into the orchard ditch. You walk along it with a shovel. The phone stays in the house.",
+   "end": "You spent the second half of your life somewhere else. Only when a form asks for 'former employer' do those few characters come out as upright as the seal once did."
+  }
+ }
+}

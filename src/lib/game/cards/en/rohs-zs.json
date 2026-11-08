@@ -1,0 +1,180 @@
+{
+ "id": "rohs-zs",
+ "occupation": "Electrical and Electronic Product Environmental Testing Technician",
+ "role": "Environmental Test Technician at a Third-Party Lab",
+ "headline": "At a third-party test lab in Zhongshan, you take apart chandeliers from Guzhen, door locks from Xiaolan and rice cookers from Nantou, dozens of small pieces each, and check every piece for lead",
+ "unit": "A third-party testing company in the Torch Development Zone, Zhongshan, eighty people, CNAS-accredited, with the environmental lab on the third floor",
+ "unit_type": "Private third-party testing company",
+ "city": "Zhongshan, Guangdong",
+ "city_tier": "Third-tier",
+ "education": "Bachelor's (Applied Chemistry)",
+ "level": "You can do a titration and prepare standard solutions, you have only seen an XRF in the manual, and you can't yet say what a homogeneous material is",
+ "intro": "Half the third-floor corridor smells of reagents and the other half of hot plastic. The lab director walks you past the sample room, where a crystal chandelier from Guzhen lies half dismantled on a tray with nineteen labels on it. In this trade, she says, we don't care whether a lamp lights up. We care what every little thing in the lamp is made of. Then she hands you a box cutter and a pair of nitrile gloves.",
+ "salary_note": "Estimate: third-party labs in Zhongshan pay a base somewhat below Shenzhen; peak-season overtime and report commissions are included.",
+ "facts": [
+  {
+   "label": "Environmental Test Technician (current level)",
+   "value": "0–3 years, ¥5,270–7,750 a month (national, derived from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Test Engineer (3–8 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥10,200 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Separating samples into homogeneous materials",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Interpreting spectra and unusual peaks",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "107 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Sample intake: a crate of chandelier parts, two rice cookers, four door locks. The client has only written 'test to RoHS' on the form, so you call to ask how many items they actually want.",
+  "You slit a power cord into outer jacket, insulation, copper core and tinned layer, four portions, each bagged and numbered. Your hand wobbles, two layers of plastic don't separate cleanly, and this segment starts over.",
+  "You put the small pieces in an XRF sample cup and a bromine peak stands up on the screen. You mark it red on the sheet; this piece goes to GC-MS for confirmation.",
+  "In goggles at the fume hood, you put samples and acid into the microwave digestion vessels, which can't be opened before the bell. Everyone waiting in the corridor can smell who's running a digestion.",
+  "The ICP standard curve isn't linear enough, so you change a sample tube and start again. The director, passing by, says don't rush. A curve won't wait for you, but it won't lie to you either.",
+  "A salesman comes up to push: the lighting factory's container leaves Friday, can the report be out Wednesday? You point at the trays lined up to the door. He hands you a bottle of iced tea.",
+  "You enter original records, checking each sample number against its weight line by line. Write one character wrong and you strike it through, sign and date it. You may not cover it up."
+ ],
+ "ladder": [
+  { "title": "Environmental Test Technician", "stage": "Dismantling and running", "focus": "Separating samples, XRF screening, sample preparation and running instruments; you rise on steady hands and clean records" },
+  { "title": "Test Engineer", "stage": "Judging data", "focus": "Responsible for ICP and GC-MS methods and for judging data, training new staff, handling anomalous results" },
+  { "title": "Authorized Signatory", "stage": "Signing reports", "focus": "Signing authority confirmed by CNAS, the last gate on every report, answerable for its conclusions" },
+  { "title": "Laboratory Technical Manager", "stage": "Carrying the system", "focus": "In charge of methods, equipment, proficiency testing and assessments; dealing with clients and assessors" }
+ ],
+ "ai_tasks": [
+  { "name": "Separating samples into homogeneous materials", "how": "Which piece to take apart, and whether a wire's jacket and insulation count as two materials, takes a person looking and judging at the bench. AI can't replace hands." },
+  { "name": "Interpreting spectra and unusual peaks", "how": "AI integrates automatically, compares against limits and offers a preliminary conclusion. Interfering peaks and matrix effects need human eyes, and whoever signs is responsible." },
+  { "name": "Drafting test reports", "how": "Data flows straight from instruments into the system, which generates the report and the pass-fail result. People spot-check the format and numbers." },
+  { "name": "Comparing client material declarations against regulatory lists", "how": "AI can match supplier declarations to the latest restricted lists and flag the risks. Where this material really comes from, a person has to ask." },
+  { "name": "Facing CNAS assessments and proficiency tests", "how": "Assessors watch you do it on site and ask you why. Proficiency samples must be tested by hand, and when results drift, you find the reason yourself." }
+ ],
+ "events": {
+  "e_xmas": "July and August are the peak for Christmas orders, and samples of light strings and ornaments pile up in the aisles. You slit more than two hundred wires a day, and by quitting time the callus in the web of your right hand has worn through.",
+  "e_canton": "Two weeks before the Canton Fair, every boss wants a fresh report to display at the booth. The sales department's blackboard is covered in RUSH, and the lights on the third floor burn until midnight.",
+  "e_cnas": "During a CNAS surveillance assessment, the assessor stands behind you for the entire sample preparation and asks why you bring the digest up to this particular volume. You answer. Your palms are soaked.",
+  "e_pt": "Proficiency test results come back with your cadmium data's Z-score in the questionable range. The whole group stops to look for the cause, and three days later finds a standard solution past its date.",
+  "e_phthalate": "Four phthalates are added to the restricted list, and all soft PVC now has to go through GC-MS. The instrument is booked into next week. Only now do the bosses learn that the plastic jacket on a wire is not cheap.",
+  "e_exempt": "The exemption for lead in copper alloys is about to expire. Hardware owners from Xiaolan come in with the copper cylinders of their locks, one after another, asking what it'll cost to switch materials. You can speak only to the standard. You can't speak to their books.",
+  "e_container": "A lighting factory's shipment is sampled in Europe and fails on lead, and the owner arrives with your report. A report covers only the sample received. You point him to that line of small print. His hand doesn't stop shaking.",
+  "e_nail": "A tiny hole in your glove and your index fingernail stays yellow for a month. You begin to watch the skin on your hands, and which solvent bottle in the corridor wasn't capped. Off the clock, your nose gets there before your eyes.",
+  "e_typhoon": "A typhoon cuts the power to the industrial park overnight, and the ICP's argon and cooling water have to be watched. You and the equipment technician sleep in the lab. The first job the next day is rerunning the calibration curves.",
+  "e_broken": "The ICP torch cracks, the replacement has to ship from out of town, and you can't run anything for three days. The backlog sends sales in circles. You take the chance to wipe down a fume hood that hasn't been cleaned in a year.",
+  "e_price": "Competitors have cut full RoHS testing to under ¥300, and the salesmen say without a price cut there'll be no orders. The boss says at a meeting that efficiency must improve. You know whose.",
+  "e_sqe": "A quality manager from a home appliance plant in Nantou keeps coming to collect reports. For two years the two of you move from talking about limits to weekends at Qijiang Park. Later, the wedding invitation lists two employers, one client and one contractor.",
+  "e_ai1": "The lab installs automatic spectrum interpretation, and nine samples in ten no longer need you to read them one by one. Once it calls a plasticizer's stray peak a positive, and a manufacturer's goods nearly get held. You're the one who enlarges the plot and sees it.",
+  "e_ai2": "The reporting system can now write its own conclusions page, and report turnaround goes from two days to two hours. The boss works this into the sales pitch, and next month's sample volume goes up another 10%.",
+  "e_bom": "A home appliance plant hands you a two-thousand-line bill of materials and wants to know what has to be tested. You sit in the meeting room and make purchasing go through each item: which supplier, has it changed. Halfway through, the buyer begins to sweat.",
+  "e_kid": "You take your child's squishy toy to the lab for a quick scan, clean for both bromine and lead. You tell your colleagues about it, and that evening they all dig something else out of their bags.",
+  "e_lamp": "Orders from Guzhen's lighting makers have fallen, and several regular clients have closed their factories and gone into livestreaming. The chandelier tray in the sample room sits empty for days, and the young woman at intake starts studying English.",
+  "e_eye": "The digits on the balance begin to double. You get reading glasses and wear them inside your safety goggles. The hand that weighs is steady as ever. Each reading just takes one more look.",
+  "e_scip": "Europe wants hazardous substance data reported to a database, and you pick up a new line of consulting work. Clients start paying you to tell them what this new rule has to do with their electric fan."
+ },
+ "choices": {
+  "c_factory": { "title": "A home appliance plant needs a compliance engineer", "situation": "A home appliance plant in Nantou is hiring an environmental compliance engineer. No more acid fumes, 30% more pay, and only this one company's materials and declarations. But your hands would never touch an instrument again.", "options": [
+   { "label": "Go in-house for compliance", "result": "You peel off your gloves for good and drop them in the hazardous waste bin.", "end": "You went to the appliance plant in compliance and began explaining limits for purchasing. When you once brought samples to your old lab, the third floor said you no longer smelled of acid." },
+   { "label": "Stay in the lab", "result": "You stay, and so does the callus on your hand." }
+  ] },
+  "c_merge": { "title": "The lab is moving to Dongguan", "situation": "The company has been bought by a testing group, and the environmental lab will merge into its large Dongguan base, leaving only a sample drop-off in Zhongshan. Those willing to move keep their grade. Your child's school and your elderly parents are in Zhongshan.", "options": [
+   { "label": "Don't move, leave the trade", "result": "You sign below the acquisition notice.", "end": "The lab moved. You were there the day the third-floor fume hoods were taken out. You left the trade with your severance, and never again heard the bell of a microwave digestion." },
+   { "label": "Follow it to Dongguan", "result": "You start commuting at weekends. The expressway toll booth becomes your front door." }
+  ] },
+  "c_change": { "title": "The boss would like this number changed", "situation": "A long-time client's wire is just over the limit. A salesman brings a carton of cigarettes and says retest it, take the sample from a different spot, the next batch will be fixed anyway. This client is worth ¥200,000 a year.", "options": [
+   { "label": "Report what you found", "result": "The report says nonconforming, the client moves its business the next month, and the salesman won't speak to you in the elevator." },
+   { "label": "Have the client resubmit a sample", "result": "You only say a sample may be resubmitted, and the new one passes. The report says 'as received.' You know what that means." }
+  ] },
+  "c_engineer": { "title": "Sitting for Test Engineer", "situation": "To become a Test Engineer you need the trade's skill-level certificate and must complete a full method validation on your own. These days you already get home after nine.", "options": [
+   { "label": "Read the standards at night", "result": "You read IEC 62321 until its spine cracks, and do the method validation seven times." },
+   { "label": "Wait another year", "result": "You first give yourself back your weekends, and go hiking up Wugui Mountain." }
+  ] },
+  "c_rush": { "title": "Whether to take rush jobs", "situation": "The boss sets a peak-season rule: staff get a 10% cut of rush jobs, provided they volunteer for weekend overtime. Your mortgage and your back are not on the same spreadsheet.", "options": [
+   { "label": "Take them", "result": "Your commissions grow faster than your salary this year, and your back begins to remind you." },
+   { "label": "Don't", "result": "Every Sunday you sleep until nine. Payday is always a little quieter for you than for the others." }
+  ] },
+  "c_ai": { "title": "Who validates the data interpretation system", "situation": "The group has installed an AI interpretation system, and someone needs to validate its accuracy and feed it thousands of spectra. Whoever does this will know it best in the lab, and will be teaching it to take their own job.", "options": [
+   { "label": "I'll validate it", "result": "In three months you pick out the seven kinds of peaks it gets wrong most often, and post one page of rules in the instrument room." },
+   { "label": "Leave it, keep your own methods", "result": "You go on reading spectra yourself. Everyone else is a little faster, and you haven't missed one." }
+  ] },
+  "c_sign": { "title": "Applying to be an Authorized Signatory", "situation": "The director tells you to apply to be an Authorized Signatory, which requires passing a CNAS evaluation. Once you sign, every report is your responsibility. If anything goes wrong, your name goes on the list alongside the legal representative's.", "options": [
+   { "label": "Apply", "result": "The assessor questions you for forty minutes. The first time you write your name on a report, your hand is steadier than when you weigh." },
+   { "label": "Stay at the bench", "result": "You say let someone else do the signing. The director smiles and pushes the next batch of samples your way." }
+  ] },
+  "c_method": { "title": "Leading a group standard", "situation": "A trade association wants a group standard for screening materials in light fixtures, and needs your lab to supply the method. There's no money and a lot of meetings. Your name could go seventh among the drafters.", "options": [
+   { "label": "Take it on", "result": "You spend two years shuttling to Guangzhou, and you are seventh in the list of drafters. The bosses in Guzhen don't understand it, and they don't need to." },
+   { "label": "Pass", "result": "The samples at the lab keep you busy enough. You mute the association's chat group." }
+  ] },
+  "c_techhead": { "title": "The Laboratory Technical Manager's post", "situation": "The old manager is leaving and the general manager asks if you'll be Laboratory Technical Manager. Equipment, methods, personnel, assessments: every nonconformity will be written up under your name.", "options": [
+   { "label": "Take it", "result": "The next time the assessors come, you're on the side of the room that answers the questions." },
+   { "label": "Don't", "result": "You say a few more years of signing will do. You like work that lets you go home." }
+  ] }
+ },
+ "endings": {
+  "retire": "The year you turn sixty, the new hires hardly ever slit a wire by hand. A dismantling machine swallows the wire and spits out bag after bag of granules. Your account is disabled in the system. More than twenty years of reports you signed can still be found by number, and as retention periods run out they'll be purged batch by batch. You put your goggles back in the cabinet, and on your way downstairs the corridor still smells of acid.",
+  "burnout": "After three years of recurring dermatitis, the smell of solvent sets off your cough. You move from the lab to the front desk, taking in samples, no more fume hoods and a long way from the data. When clients ask how long a report will take, you say three days if it's a rush. That's what you say most these days."
+ },
+ "stages": [
+  "Most of your day is spent taking things apart. Box cutter, tweezers, liquid nitrogen grinding: you reduce a lamp to dozens of numbered bags of granules and run them through XRF. Original records must be written in non-fading ink, and errors struck through and signed. You aren't yet qualified to judge a result. You're only qualified to pick up the right sample.",
+  "You no longer just run the instruments. You read the plots. ICP curves, GC-MS ion peaks, HPLC retention times, and every day a stack of anomalies waiting for you to explain. A client's quality manager calls to ask why this number, a new technician asks why this has to be redone. You answer these two questions in two different ways.",
+  "Your name starts appearing on the last page of reports. Each day you review more than forty, checking the data, the sampling and the grounds for judgment; sending one back costs more nerve than signing. Sales wants you fast, clients want you lenient, assessors want your reasons, and the pen you sign with lies in the most conspicuous place on the desk.",
+  "What you manage is the system: which instrument needs calibrating, which method needs updating, how many proficiency tests to enter this year, who answers at the next CNAS assessment. Mornings you read nonconformities, afternoons you work out equipment investment with the general manager. You spend less time at the bench. Sometimes you go in and take a sample apart with a knife, and it's the same pair of hands."
+ ],
+ "work": [
+  "A lamp holder has twelve test points. The plastic of the socket and its rivet won't come apart, so you freeze it brittle with liquid nitrogen. The director says that's right, and next time wear thicker gloves.",
+  "Changing the XRF calibration standard, you misread one digit of its serial number. The group leader has you rescreen that day's forty samples, and it isn't until the next day that the numbers square.",
+  "A door lock from Xiaolan yields a spring with plating too thin to scrape off. You learn to take a sample bit by bit with abrasive paper. On the balance it weighs just 0.05 grams, and the number flickers for a long time.",
+  "A batch of red PVC keeps testing high for lead. You change the digestion and run it again and find it's the pigment itself. You write the client three lines of explanation and attach the spectrum.",
+  "A new technician miscalculates a dilution factor. You don't scold her. You have her work out the entire standard curve by hand. The next day she writes the error into the deviation record herself.",
+  "A quality manager from an appliance plant brings a declaration that says this plastic part is bromine-free. You send over the GC-MS plot with one spot circled. The voice on the phone says: I'll ask the supplier.",
+  "The photo of a sample doesn't match its description, and the salesman says the wrong picture was taken, that's all. You send it back to be reshot, shipping slips a day, and he stands at the door calculating that day.",
+  "An assessor asks why you judged this report by an outdated standard. You pull up the client's order, which says to test to the old version, and which your remarks state. She nods.",
+  "Reviewing a report on light strings, you find lead sitting right at the limit. You have it retested by a different method and put both numbers side by side on page three.",
+  "The general manager wants a second ICP-MS. You build a table of three years of sample volumes and instrument hours showing it can wait until next year. He's displeased, but he puts the money into ventilation.",
+  "The new quality supervisor has turned internal audits into box-ticking. You give her one sample number and have her trace it from intake to report. On the fifth step she finds the problem herself.",
+  "A proficiency result comes back with a Z-score too pretty to be true. You pull up the original records and spend an afternoon making sure no one took any extra steps."
+ ],
+ "past": [
+  "Your family lives in Shaxi, Zhongshan, and all your relatives are in clothing or lighting. After school you help at the family workshop screwing lampshades together, forty to the yuan.",
+  "When you choose a major you pick Applied Chemistry. Your family asks what it's for. You say doing experiments; they assume you mean teaching and raise no objection.",
+  "In your second year, in the titration lab, your endpoint always lands a drop more accurately than anyone else's. The instructor praises your steady hands. For the first time you think these screw-turning hands might be good for something.",
+  "You spend a summer interning at an electroplating plant in Dongguan, testing bath concentrations in the lab. You learn to wear two layers of gloves and to take off your clothes at the door after work.",
+  "You go back to Zhongshan after graduating and send out resumes. The interviewer at a testing company hands you a wire and asks how many materials are in it. You say three. Think about it some more, she says, and she hires you anyway."
+ ],
+ "late": {
+  "pension_note": "Estimate: company pension in Zhongshan, with a mid-range contribution base at a private lab.",
+  "scenes": [
+   "When you buy a desk lamp after retiring, you flip it over and read the base plate and the print on the cord before you check whether it lights up. The salesperson says you must be an expert. You say you're a faultfinder.",
+   "Half of the environmental lab's business has been taken by rapid-testing devices that manufacturers run on their own factory floors. Former colleagues have gone to Dongguan, and some have moved into new-energy batteries.",
+   "At the secondhand market you help an old friend with a stall check his brass by eye and by weight: this one's high in lead, this one's fine. He treats you to a plate of laifen rice noodles, and that's your wages.",
+   "All these years, the skin on your hands splits each damp southern spring. You read the ingredient list on hand cream more closely than the instructions. There are two brands you won't buy, and you tell no one why.",
+   "In your first year out of the lab, you can smell plastic and solvent everywhere. A freshly decorated mall makes you take another way around.",
+   "You work as a substitute lab teacher at your child's school, teaching only titration and only up to junior-high level, and telling kids to check their gloves first.",
+   "The cough is much better. When an appliance at home breaks you just replace it. You've stopped wanting to open it up and see what it's made of.",
+   "After you leave the trade your hands slowly soften. The callus in the web of your hand peels away, and your nails are no longer yellow. Sometimes you look at those hands and think they belong to someone else.",
+   "In your new tools and procedures, no step requires striking through a line and signing. Once you write a wrong character and find yourself reaching for a pen.",
+   "You see someone post a test report online, and at first glance you can tell the sample description doesn't match the product. You don't comment. You close the page.",
+   "You never let the kids in your family touch unusually bright soft plastic toys. Your relatives say you're fussy. You yourself can't say how much is profession and how much is illness.",
+   "The rules have changed again over the years. Some of what was once restricted has been relaxed and some is stricter. When those familiar chemical names show up in the news, it's like hearing about old colleagues."
+  ],
+  "closing": {
+   "retire": "The damp spring has passed. Guzhen's lamps come on one street at a time, and through the car window you wonder who stripped the jackets on those wires.",
+   "burnout": "The light at the front desk switches itself off at closing. You square up the day's sample register and set it where no draft can reach.",
+   "end": "You wash your hands. No acid, no plastic. That's the best thing about your job now."
+  }
+ }
+}

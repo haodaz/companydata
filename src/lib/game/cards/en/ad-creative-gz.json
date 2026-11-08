@@ -1,0 +1,177 @@
+{
+ "id": "ad-creative-gz",
+ "occupation": "Advertising Creative Director",
+ "role": "Creative Lead at a Local Ad Agency",
+ "headline": "At a fourteen-person ad agency in Ganzhou, the navel orange gift boxes, the highway billboards for new housing and the civic-campaign hoardings are all yours to think up, and so is the phone call asking you to make the logo bigger",
+ "unit": "A local ad agency in Zhanggong District, Ganzhou, fourteen people on the sixth floor of an old office block, with large-format printing sent out to a workshop across the river",
+ "unit_type": "Small local ad agency",
+ "city": "Ganzhou, Jiangxi",
+ "city_tier": "Third-tier",
+ "education": "Associate degree (Visual Communication Design)",
+ "level": "You've followed jobs from pitch to proof and can win an argument about color with the print shop, but you haven't yet won a serious open pitch",
+ "intro": "One wall of the sixth-floor office is papered with rejected designs. You have three jobs this month: exhibition backdrops for a solid-wood bed maker in Nankang, a billboard for a housing development, and a navel orange gift box an orchard owner wants settled before October. The boss is named Zeng. The first thing he asks every day is whether the money has come in. The second is whether the artwork is done.",
+ "salary_note": "Estimate: at a small agency in Ganzhou, a creative lead takes home roughly a third of the big-city figure in the database, depending on what gets collected by year-end.",
+ "facts": [
+  {
+   "label": "Creative Supervisor (current level)",
+   "value": "3–9 years, ¥7,300–7,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Creative Director (9–16 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥7,800 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Hearing in person what the client's boss actually wants",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Coming up with creative directions and writing pitches",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "55 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "At the office you check WeChat first. A voice message from the client's wife arrived at eleven last night: this red isn't festive enough, can it be a little redder?",
+  "You work through directions for the orange gift box with the copywriter and designer. A hundred and twenty boxes out there all say 'sweet.' You cross the word out and send them to imagine the day a fruit goes from the tree to the delivery station.",
+  "You drive across the Zhang River to measure a booth at the furniture factory in Nankang. The owner shows you a new solid-wood bed and makes you jump on it twice.",
+  "At the print shop across the river, the first proof comes out too cyan. You hold a color card against it. The owner says the machine has its moods, and the two of you redo the CMYK in a room full of ink fumes.",
+  "You call to chase last quarter's balance. The client's accountant says the boss is out of town. Through the receiver you can hear the boss shouting for someone to pour tea.",
+  "The designer has enlarged the billboard headline three times and it still hasn't been approved. You go downstairs, back across the road, and hold up your phone to judge it from eighty meters.",
+  "After a plate of stir-fried fish you go back to fix the pitch. Page twenty-two is titled 'Why Not Gold.' You know the boss will want gold."
+ ],
+ "ladder": [
+  { "title": "Graphic Designer", "stage": "Making artwork", "focus": "Layout, retouching, collateral and proofs at the print shop; you rely on speed and accuracy" },
+  { "title": "Creative Supervisor", "stage": "Leading a team", "focus": "Leading three or four designers and writers, setting directions, writing pitches, seeing clients; taking every kind of job" },
+  { "title": "Creative Director", "stage": "Setting the tone", "focus": "Setting the company's standard for what goes out the door, leading pitches, dealing directly with client owners" },
+  { "title": "Agency Partner", "stage": "Carrying the books", "focus": "Putting in money and work, managing collections and payroll, deciding whether to take a job" }
+ ],
+ "ai_tasks": [
+  { "name": "Hearing in person what the client's boss actually wants", "how": "AI can compile the background and minutes. When the boss says 'grand' and means bigger than the furniture mall next door, you can only hear that sitting in his office." },
+  { "name": "Coming up with creative directions and writing pitches", "how": "In a minute AI will give you twenty directions and a draft pitch. Which of them will stand up in front of this particular boss in Ganzhou takes a person to decide." },
+  { "name": "Producing mockups and product pages", "how": "AI generates, masks and swaps scenes much faster than designers can. People only choose and fix." },
+  { "name": "Shooting and editing local short videos", "how": "AI can write the script, add subtitles and rough-cut. Who stands under the tree in the orchard and talks to the camera, and how to keep it from sounding fake, takes a person." },
+  { "name": "Collecting payment and negotiating terms", "how": "Software can age the receivables and send reminders. Going to sit at the boss's tea table on the twentieth of the twelfth lunar month is beyond AI." }
+ ],
+ "events": {
+  "e_orange": "In November the navel oranges come off the trees. Gift boxes, product pages, shipping labels and orchard livestream backdrops all pile into two weeks. You revise artwork in a shed beside the grove, with orange oil all over your hands.",
+  "e_debt": "On the twentieth of the twelfth lunar month, you and Zeng split up to go collecting. One furniture factory brings out two dining chairs and says take these for now. You load the chairs into the car. That year's company party is held on those two chairs.",
+  "e_house1": "Highway billboards, hoardings and sales-office dressing for a housing development go up in a row. The boss reads the development name you came up with three times. On opening day the line outside runs two hundred meters. Everyone gets double pay that year.",
+  "e_house2": "That developer's site has stopped work, and ¥1,300,000 in ad fees hangs on the books; the lawyer says you're behind the workers' wages. In the end they settle with two parking spaces. The spaces are on basement level two, and no one wants them.",
+  "e_civil": "The city's civilization campaign wants two kilometers of public-service hoardings, inspected in three days. You take the whole company out to measure along the road. The wind is strong, one corner of a freshly pasted panel lifts, and the next day you paste it again.",
+  "e_print": "Eight hundred gift boxes come back with the oranges printed a grayish color. The spot color was never proofed, because you let it through to save time. The company eats the batch, and you get no bonus for three months.",
+  "e_furniture": "Before the Nankang furniture fair, thirty booths all want backdrops at once. In the furniture mall you learn to separate this bed from the one next to it in a single line. Nobody reads 'solid wood' anymore.",
+  "e_highspeed": "The high-speed rail reaches Shenzhen, a little over two hours away. Your best designer takes Monday off for an interview and sends a resignation letter on Friday. Shenzhen companies begin riding the train up too, taking your local clients with better-looking slides.",
+  "e_eyes": "After too long at the screen, your left eye is too dry to open, and your shoulder catches halfway up. You keep eye drops beside the monitor and buy a card at the blind massage parlor by the river.",
+  "e_ai1": "A client's boss generates a navel orange poster on his phone with AI and sends it over: just adjust this, should be cheaper, right? The orange in the picture has seven segments facing outward. You take a screenshot and stick it on the wall.",
+  "e_ai2": "AI takes over the mockups, and the two junior designers have less and less to do. You start sending them on site to shoot real things. AI can't shoot real orchard farmers or real sawdust.",
+  "e_hakka": "On a film for Hakka rice wine, you have the owner's wife read the slogan in Hakka and reject the Mandarin voiceover. The film goes wild locally. Outsiders can't understand it, and the boss says that's just right.",
+  "e_bid": "A tourism project goes to open pitch and you spend three weeks on it. The lowest bidder wins. Your second draft turns up on a roadside board two months later with the typeface changed.",
+  "e_tear": "The city cracks down on outdoor advertising, and a crane takes down your billboards one by one. The contract had a year to run. And so ends the company's outdoor business.",
+  "e_family": "Your child's kindergarten wants a hand-drawn poster, and the whole class knows you work in advertising. You stay up until midnight on it. The teacher puts it right in the center. Your child comes home and says yours was too big.",
+  "e_print2": "The print shop owner across the river has sold his machine and now makes shop signs for group-buying deals. Before leaving he says one thing: that color card of yours, you won't need it anymore.",
+  "e_live": "An orchard owner wants to livestream himself, and you build him a set: one real tree, one old ladder, no LED. That month his orders exceed the two previous years combined. It's the least you've ever charged anyone.",
+  "e_nowork": "You write pitches faster this year, and the ideas feel tighter. You spend half an afternoon walking back and forth before the wall of rejects, and take down an idea that was killed five years ago.",
+  "e_youngclient": "The new client is a twenty-six-year-old brand manager who starts by asking how many followers your account has. For the first time, someone reads your resume all the way to page three before finding you.",
+  "e_award": "A design website features your orange box and calls it 'clear-eyed county branding.' The orchard owner doesn't know what clear-eyed means. He only asks if it can sell in Beijing."
+ },
+ "choices": {
+  "c_nankang": { "title": "The furniture boss wants you", "situation": "The bed maker in Nankang tells you to stop working at an agency for ten people and come be his brand director, at double the salary, with only this one brand to worry about. You know his relatives will have opinions about your designs.", "options": [
+   { "label": "Go in-house", "result": "You zip up all the fonts on your computer.", "end": "You went to Nankang as brand director and never chased another balance. At your first brand meeting, the boss's brother-in-law asked if the logo could be a little bigger." },
+   { "label": "Keep taking everything", "result": "You tell him: let me stay your outside agency instead. It's cheaper." }
+  ] },
+  "c_close": { "title": "Two months' payroll left in the account", "situation": "The property money isn't coming back and the short-video money is all going to the platforms. The company has enough for two more months of wages. Zeng asks if you'd like to close together and write off the bad debts.", "options": [
+   { "label": "Close it", "result": "You have dinner across the river and settle every account.", "end": "The company was dissolved, and the wall of rejected designs was painted white. You began taking odd jobs. The first was a sign for a neighborhood grocery." },
+   { "label": "Shrink to five and hold on", "result": "You give up half the floor, lay people off and sell whatever can be sold. The wall of rejects stays." }
+  ] },
+  "c_price": { "title": "Whether to bid low", "situation": "A government hoarding project has a very low price ceiling. You'd barely make money, but it would go on the company's case list. Zeng says bid. Your two designers have already been on overtime for a month.", "options": [
+   { "label": "Bid, the case matters", "result": "You win a certificate and a stack of inspection forms." },
+   { "label": "Don't bid, let them breathe", "result": "You send everyone home early on Friday, and someone goes to Tongtian Rock. No one invites you to the next pitch." }
+  ] },
+  "c_copy": { "title": "The client wants you to copy that ad", "situation": "A client brings an ad from a big brand elsewhere and says make it like this, just change a few words. He pays fast. This job would cover two people's wages.", "options": [
+   { "label": "Do it, there's next month to feed", "result": "The artwork goes out and the money comes in. That day you put this design in a corner of the wall no one can see." },
+   { "label": "Come up with a new version", "result": "The boss first gives you an earful, then says this one will do, make it bigger." }
+  ] },
+  "c_video": { "title": "Whether to learn short video", "situation": "Outdoor jobs dwindle every year, and clients ask if you can shoot short videos and use AI. Your hands are made for color cards, not gimbals. Learning means starting at zero.", "options": [
+   { "label": "Bring the team in on video and AI", "result": "You crash a drone in the orchard once, and for the first time a pitch of yours mentions completion rates." },
+   { "label": "Hold on to print and packaging", "result": "In gift boxes, no one in Ganzhou is steadier than you. The pool has gotten smaller." }
+  ] },
+  "c_director": { "title": "Zeng wants you to be Creative Director", "situation": "Zeng wants you to be Creative Director. New name cards, ¥800 more a month. From now on you lead every pitch, and when you lose, it's yours.", "options": [
+   { "label": "Take it", "result": "You buy a shirt fit for the stage, and the night before a pitch you rehearse to an empty meeting room." },
+   { "label": "Keep leading the team", "result": "You say wait a little, and go back to arguing directions by the wall with the young ones." }
+  ] },
+  "c_layoff": { "title": "Which of two designers to keep", "situation": "With AI doing the artwork, your team needs only one designer. One has been with you for six years and is slow. One came a year ago and knows the tools. Both have families to feed.", "options": [
+   { "label": "Keep the six-year veteran", "result": "You take on the tool work yourself. She's slow, but she has never once got a color wrong." },
+   { "label": "Keep the one who knows the tools", "result": "You take the veteran to dinner and give her three months' pay. Later she opens a print-and-copy shop, and she still says hello." }
+  ] },
+  "c_shenzhen": { "title": "Whether to take the Shenzhen project", "situation": "A Shenzhen brand firm wants to outsource its southern Jiangxi farm-produce project to you, at three times the local price, with a dozen rounds of revisions and Sunday evening meetings.", "options": [
+   { "label": "Take it, ride the rails", "result": "You learn to finish a draft in a two-hour train ride, and learn how pitches are done down there." },
+   { "label": "Stick to local work", "result": "On Sunday evenings you take a walk along the Zhang River. Every boss around here knows you." }
+  ] },
+  "c_partner": { "title": "Buying in as Agency Partner", "situation": "Zeng is getting on, and he asks if you'd put in ¥200,000 to become an Agency Partner. Once you buy in, your salary goes behind everyone else's.", "options": [
+   { "label": "Buy in", "result": "You sign the business registration change, and that month for the first time you pay yourself late." },
+   { "label": "Don't", "result": "You tell Zeng you'd rather keep the money for your child's schooling. He nods and goes off to ask someone else." }
+  ] }
+ },
+ "endings": {
+  "retire": "At sixty, your last batch of jobs is shop signs for a few old-name businesses and one annual report. The rejected designs come off the wall in three big bags. You sort them by year and have the scrap collector weigh them. On the big screen at the high-speed rail station, an orange ad made by AI runs very smoothly. You watch it through to the end while you wait for your train, and find the letter-spacing a little off.",
+  "burnout": "After three straight years of year-end collecting and revising, your shoulder won't lift and your chest tightens at midnight. You hand off the company's work and stop reading clients' messages. The masseur by the Zhang River says your shoulder is one notch looser than last year, the most accurate number you have heard in years."
+ },
+ "stages": [
+  "You lead three or four people, and every day begins with revisions. Mornings you argue directions in Illustrator with the copywriter, afternoons you see owners and proof at the print shop, always with a Pantone book in hand. Before, you only had to make one image good. Now you decide which image is fit to leave the building, and you stand between the young ones and the client's eighteenth round of changes.",
+  "Everything the company sends out passes through you first. You lead the pitches: the tourism bureau's reviewers in the morning, the furniture owner's wife in the afternoon, with two different ways of talking. Your tools have changed from Photoshop to a pitch deck and a sheet full of payment terms. You rarely draw anymore. You say this one's no good, and why.",
+  "Your pay comes last. In the morning you check the receivables and decide what fraction to pay this month, then go to see the bank and old clients. You work out whether this job loses money, whether this person stays, whether to keep renting this floor. You touch the creative work only now and then, and when you do everyone's afraid of you."
+ ],
+ "work": [
+  "The orchard owner finds the packaging too plain. You bring in a photo of the old wooden door of his family home and turn the door's peeling red paint into the box face. He looks at it for ages and asks if his father can be printed on it too.",
+  "An intern writes the housing ad as a poem. You send her to stand in the sales office for a day, and she comes back with one line: seven minutes' walk to school, no traffic lights.",
+  "At the venue, the exhibition backdrop is ten centimeters short. You trim the bottom edge with a box cutter and piece on a strip of matching foam board. Forty minutes before opening, the fitter irons the seam flat with a heat gun.",
+  "For the tourism bureau pitch, you cut twenty slides to eight. Slide three is a single photo of Zao'er Lane at dawn. Someone on the panel asks where that is, and that was what you were waiting for.",
+  "A designer brings you an AI-generated key visual that's too perfect. You have him paint the scar back onto the orange. Farmers recognize it, you say, and so do buyers.",
+  "A furniture mall client changes the prices in its brochure while it's already on press. You cross out three lines at the proofing table while the owner's wife reads numbers down the phone, and you check them one at a time.",
+  "The year-end receivables come up with ¥700,000 overdue. You sort clients into three columns: can collect, can't collect, mustn't collect. The third column bears the name of an old client.",
+  "Finance wants to know whether to move the office to the industrial park. You stand by the wall of rejects working out the rent, and end up renting half as much and keeping the wall.",
+  "You try to explain 'creative fees' to a bank loan officer, and he asks if there's collateral. You think of those two parking spaces on basement level two, and for the first time they seem useful."
+ ],
+ "past": [
+  "You grow up in a small town in Yudu, helping at your family's typing and copy shop after school, tracing wedding cards and longevity characters. You learn to set two characters side by side so they don't fight.",
+  "You take the art track and enroll in Visual Communication at a provincial vocational college. Your family asks what it's good for. You say making shop signs, and they're relieved.",
+  "After graduating you go to a small company in Guangzhou doing e-commerce product pages, eight a day for ¥3,200 a month. In a bed in an urban village you learn to use a drawing tablet.",
+  "Your mother needs an operation and you come home to Ganzhou and join this company as a graphic designer. Your first job is a flyer for a dental clinic. The boss demands teeth so white they glow.",
+  "An orange gift box you propose sells a client ten thousand more cases. Zeng puts a Creative Supervisor name card on your desk and raises your pay by ¥500."
+ ],
+ "late": {
+  "pension_note": "Estimate: small agencies mostly paid social insurance at the minimum base; a modest pension at Ganzhou levels, supplemented by earlier savings and those two parking spaces.",
+  "scenes": [
+   "After retiring, you read the packaging first in any supermarket: what year's red is this, and who enlarged that line of type. Your spouse says you take ten minutes longer than anyone to buy anything.",
+   "Every shopfront in Ganzhou now uses the same AI typeface. Overnight everyone's sign is handsome and everyone's sign is the same. You pass by across the river and find the print shop has turned into a pet store.",
+   "Those parking spaces on basement level two still have no buyers, and you pay management fees every year. It's the longest payment term of your career.",
+   "The neighborhood seniors' choir wants a printed program. You spend an afternoon on the layout, setting thirty names so they don't fight. No one notices. You think that's just right.",
+   "Your shoulder takes a year of rehab, and each time you lift your arm you have to wait for it. One by one you leave the clients' group chats, all the way to the forty-seventh.",
+   "You live in Yudu for two years, minding your relative's copy shop. All it does now is print exam tickets and photocopy IDs. Nobody wants longevity characters traced anymore.",
+   "You can now see a navel orange ad without thinking at all about who made it. That took you nearly ten years.",
+   "In your second year out of advertising, you get a payment reminder. It isn't for you; it's the receivables alert you set three years ago. You laugh and turn it off.",
+   "You now run a factory's brand, and someone asks whether you'd like to go back to creative work. You say whoever asks that has never chased a balance.",
+   "Sometimes you still wonder whether it would have been different if you had won that tourism pitch. The second-draft sign came down long ago. You can still recite the slogan.",
+   "You always want to redo restaurant menus. When the waiter hands one over, the first thing you see is that the category headings are too small. Only then do you see what the fish costs.",
+   "Dry eyes and a tight shoulder stay with you for the rest of your life. Each November when the navel oranges come in, you still choose one with a scar. It's just about as sweet."
+  ],
+  "closing": {
+   "retire": "Evening, a little mist on the Zhang River. The billboards on the far bank light up one after another, their type no longer large, and you can name the size of each.",
+   "burnout": "The fruit is still on the trees. An autumn wind comes through, and you don't have to think up a line for anyone.",
+   "end": "You pass a newly opened shop with beautifully spaced letters over the door, and you stop a few steps longer in front of it."
+  }
+ }
+}

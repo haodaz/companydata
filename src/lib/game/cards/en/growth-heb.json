@@ -1,0 +1,174 @@
+{
+ "id": "growth-heb",
+ "occupation": "User Growth Operator",
+ "role": "Local Services Platform Growth Operator",
+ "headline": "A growth operator at a Harbin local services platform who schedules campaigns by heating season and ice season, watches retention curves, and finds users' locations drifting south year by year",
+ "unit": "A Harbin local services platform for group deals and errand delivery, with 120 employees",
+ "unit_type": "Local internet services company",
+ "city": "Harbin",
+ "city_tier": "Second-tier",
+ "education": "Bachelor's (E-commerce)",
+ "level": "You can write basic SQL queries and you've run a campus social account; you don't yet know what a user is thinking in the second they open a push notification",
+ "intro": "The company is on the sixth floor of a building in Songbei. The heating runs so high that in winter you write proposals in short sleeves, and the barbecue place downstairs was among your first merchants. You sit in the corner of the growth team with a retention curve on your screen. Learn to read it, your team lead says, and you'll know how this city's year is going.",
+ "salary_note": "Estimate: Harbin internet jobs pay at least 30 percent below first-tier cities. The company is small and bonuses follow campaign results and funding; in good times it counts as high pay locally.",
+ "facts": [
+  {
+   "label": "Growth Operations Associate (current level)",
+   "value": "0–2 years, ¥5,100–6,900 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Growth Operator (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥10,000 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Winning a place on the product and engineering schedule",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Building and monitoring growth dashboards",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "33 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Before clocking in you look at yesterday's new users and next-day retention. It snowed all night, orders are twenty percent over forecast, and all of them are errand runs for groceries.",
+  "Monday meeting. Business development says the bakery on Central Street wants another round of coupons. Finance says this month's subsidy budget has already gone over the line.",
+  "Coupons in the back end: minimum spend, audience, expiry, nothing can be wrong. Last month a colleague left off a zero, and everyone shared the disciplinary notice.",
+  "A review with product to add a share button to the checkout page. Engineering says the schedule runs to the week after next. You revise the tracking document again.",
+  "You open the A/B test results. \"Instant discount\" beats \"red packet\" by three in a thousand. You work out the sample size and decide that three in a thousand doesn't count.",
+  "You go near the Shida night market to find merchants and shoot material. The grilled cold noodle seller asks: when do I get paid for that coupon of yours?",
+  "The scheduled push goes out on time and you watch the open rate on the commuter bus. Three thousand people open it. Eight hundred turn off notifications."
+ ],
+ "ladder": [
+  { "title": "Growth Operations Associate", "stage": "Campaigns", "focus": "Set up coupons, send pushes, pull data, build campaigns, learn to read retention" },
+  { "title": "Growth Operator", "stage": "Channels", "focus": "Run channels and new-user campaigns on your own, answer for acquisition cost and retention, run A/B tests" },
+  { "title": "Growth Manager", "stage": "Small team", "focus": "Lead a small team, set quarterly growth plans, get product and engineering time, fight finance for subsidy money" },
+  { "title": "Head of Growth", "stage": "Accountable", "focus": "Answer for the platform's user base and retention; decide in front of the boss where the money goes" }
+ ],
+ "ai_tasks": [
+  { "name": "Winning product and engineering time", "how": "AI can write requirements. Persuading product and engineering to put this first takes a person fighting for it." },
+  { "name": "Building and monitoring growth dashboards", "how": "AI can build dashboards automatically, watch daily actives and retention and draft attribution analysis; a person spot-checks definitions." },
+  { "name": "Generating ad creative and copy in bulk", "how": "AI can turn out material in quantity. Which line must not be used, and whether users will buy it, is up to a person." },
+  { "name": "Running user segments and A/B tests", "how": "AI can segment, calculate sample sizes and read results. What to test, and whether it's worth testing, takes judgment." },
+  { "name": "Studying rivals and setting the roadmap", "how": "AI can summarize what competitors do. Deciding what to do given the company's money and this particular city takes a person." }
+ ],
+ "events": {
+  "e_ling": "You leave out one condition while setting up a coupon, and two thousand ¥50 coupons are claimed in an hour. The whole team comes back to the office at midnight to block them. You write finance your first incident report.",
+  "e_kuoliang": "Your group-buy campaign pushes a Laodaowai guobaorou restaurant to number one on the local chart. The owner's wife sends four plates of the sweet-and-sour pork to the team and phones the front desk asking for \"the coupon one.\"",
+  "e_gongnuan": "October 20: the heat comes on and everyone stays in. You've put out delivery and errand coupons ahead of time, and that day's order curve warms up like a radiator.",
+  "e_mao": "Two hours after launch, risk control tells you that thirty percent of the new users are fake. You shut down the campaign while tallying the damage. Half the budget has landed in the phones of coupon farmers.",
+  "e_jiaban": "Ice season brings five rounds of campaigns, and all your weekends are at the office. Going out, your eyelashes frost over, and you try to remember the last day you walked in daylight.",
+  "e_houniao": "You notice a batch of users over fifty-five whose location moves to Sanya every November and comes back the next April. You give them their own segment and send coupons by the migratory calendar. Retention rises a notch.",
+  "e_quanguo": "A national platform arrives with big subsidies and your orders drop by a third in a week. The boss calls everyone to the meeting room with a rival's coupon on the projector. This month, he says, wages are paid half.",
+  "e_tuoli": "You do a churn analysis and find seventy percent of departing young users last appeared in Hangzhou, Chengdu or Shenzhen. You don't know who to address this quarter's retention plan to.",
+  "e_kouzhao": "AI generates six hundred pieces of ad creative and you go through them one by one. It writes more northeastern slang than you do. It just doesn't know \"gaga xiang,\" mighty tasty, can't be used on baby food.",
+  "e_jingzhi": "Years in front of a screen: dry eyes, stiff neck. The massage place downstairs is a partner merchant. When the masseur is done, he asks: are you still sending out those coupons?",
+  "e_erbin": "That winter, tourists from the south pack Central Street and the city trends nationwide overnight. In three weeks you put travel coupons, frozen pears and airport pickup online. Daily actives triple, and the whole team, in those big flowered padded jackets, shoots an internal video.",
+  "e_haizi": "On your child's winter break, an after-school club near the school has put up your platform's QR code. You look at the discount, work out that the owner is losing money, and don't scan it.",
+  "e_tuisong": "Regulators crack down on excessive push notifications and the back end gains a hard rule: no more than two a day. Your push team's numbers drop by a chunk that month. So do complaints.",
+  "e_budget": "The company stops burning cash and wants a return on every yuan of subsidy. You and finance sit over the lifetime value table for three days and cut three campaigns you built with your own hands.",
+  "e_ai_shuju": "AI now writes the post-mortem in a minute and suddenly the whole team's Friday afternoon is empty. You ask what people want to do with the time. Nobody can answer.",
+  "e_shanghu": "The son of one of your first barbecue merchants, ten years on, has taken over, and his first words are to ask for your API. The old man at the back, grilling skewers, raises a skewer at you.",
+  "e_35": "The new hires are fifteen years younger than you and you go home to look up the jargon from meetings. You tilt your monitor down a little so they won't see you searching.",
+  "e_jieshu": "The main app's daily actives have fallen below the mini-program's, and the two are merged. You write the migration notice for users, eleven drafts, putting the word \"upgrade\" right at the top."
+ },
+ "choices": {
+  "c_nan": { "title": "The call from Hangzhou", "situation": "A former colleague at a big Hangzhou company says his team needs someone for local services, at more than double your pay. Your parents live in Daoli and your father's just had surgery on his leg. Nobody needs a down coat there in winter, but nobody there knows where Harbin is, either.", "options": [
+   { "label": "Go south", "result": "You leave your padded coat at home and pack only light jackets. As the plane takes off, the Songhua River is frozen.", "end": "You join the big company in Hangzhou, a small cell on a much larger retention sheet. Each winter when you come home for New Year, your phone's location appears in that churn analysis." },
+   { "label": "Stay in Harbin", "result": "You send your thanks. That winter you run more campaigns than ever, and more snow falls than ever." }
+  ] },
+  "c_kaodian": { "title": "Sit a civil institution exam", "situation": "Your parents are getting old and keep asking what you'll do in operations at forty. A public institution in the city is hiring for new media, a permanent post at sixty percent of your pay. The age cutoff on the form is thirty-five, and you're not far from it.", "options": [
+   { "label": "Sit the exam", "result": "You spend two months of evenings on practice tests, treating logic questions as if they were A/B tests.", "end": "You pass. From now on no one checks data on your posts, and the leaders only look for typos. The heating is just as strong in winter, and your phone no longer rings at midnight." },
+   { "label": "A few more years", "result": "The notice goes into your bookmarks, alongside some thirty articles on growth methodology." }
+  ] },
+  "c_tingfu": { "title": "The platform is being acquired", "situation": "A national platform is acquiring you. The app shuts down in three months, users move over to them, and half the growth team stays. The migration plan is yours. The better you write it, the more cleanly this platform will disappear.", "options": [
+   { "label": "Finish and take the payout", "result": "You get migration to 87 percent. The boss sends a red packet in the group chat, then leaves the group.", "end": "The app shuts down, you take the payout, and you stop doing this work. The icon stays on your phone for some years. Open it and there's only gray." },
+   { "label": "Go with the new owner", "result": "You now look after a table called Northeast Region, in which Harbin has one row." },
+   { "label": "Move to local merchant services", "result": "You stay in Harbin helping merchants run their online stores. You walk the same old streets; you just don't look at daily actives." }
+  ] },
+  "c_shuju": { "title": "Learn SQL, or keep running campaigns", "situation": "To become a Growth Operator, your lead says, setting up campaigns isn't enough; you have to be able to run segments and experiments yourself. You could study after work, or you could visit more merchants. There are only so many evenings in a week.", "options": [
+   { "label": "Learn SQL and testing", "result": "Your first window function runs for twenty minutes and crashes the test database. Engineering makes you buy dinner." },
+   { "label": "Visit more merchants", "result": "The owners start calling you by name, and you know which shops are about to close before the data does." }
+  ] },
+  "c_tuijian": { "title": "The fine print on the red packet", "situation": "The boss wants this round of referral numbers to look good. Product proposes hiding the \"invite three friends before you can cash out\" condition on a second-level page. Conversion will definitely go up. You know users will only see it after they've brought people in, and those friends are mostly relatives.", "options": [
+   { "label": "Put it on the first screen", "result": "The numbers come in forty percent under. When the boss asks what happened, you say: this is the part that'll stay." },
+   { "label": "Do it product's way", "result": "The numbers look fine and so do the complaints. In the weekly report you only paste in the first." }
+  ] },
+  "c_budgetfight": { "title": "Money for new users or old ones", "situation": "The quarterly budget has been cut in half. New-user numbers are pretty and investors like them. Coupons for old users have no glamour, but they do buy things. You decide, says the boss, and then you go to the meeting.", "options": [
+   { "label": "Money to old users", "result": "New users fall and investors call more often. In the second half repeat purchases recover, by which time the calls have stopped." },
+   { "label": "Money to new users", "result": "The numbers go prettily into the slides for the next funding round. Six months later seventy percent of those people are gone." }
+  ] },
+  "c_ai": { "title": "Who sets the rules on the AI test platform", "situation": "The company has bought an AI growth platform that proposes hypotheses, makes creative and runs tests by itself. The boss wants to let it take over. You must decide which tests it can launch alone and which need a person. Data boundaries are also yours to write.", "options": [
+   { "label": "Write the rules yourself", "result": "Rule one: any test that touches older users, or minors, gets looked at by a person." },
+   { "label": "Hand it all to the platform", "result": "The weekly report gets very pretty. Now and then you can't make out what these tests actually did." }
+  ] },
+  "c_fuze": { "title": "Take over as Head of Growth", "situation": "The post of Head of Growth is empty. Whoever takes it answers for the whole platform's user base and retention and must lead the budget cuts and layoffs. Your name will be on the slides for the next funding round.", "options": [
+   { "label": "Take it", "result": "In your first month you cut twelve campaigns to four. Nobody in the department is happy." },
+   { "label": "Decline", "result": "The new head asks you which month the city's heating comes on. You tell him." }
+  ] }
+ },
+ "endings": {
+  "retire": "Sixty and still doing growth: there aren't many in the province, and you're one of them. By your last day your desk has become a shared one. The data platform sends you a final monthly report: one metric green, three yellow. You save it. Outside it's snowing, and orders should be up twenty percent.",
+  "burnout": "After several ice seasons in a row you start opening the live dashboard in the middle of the night, your finger tapping before you're awake. Neck and lipids both turn yellow on your checkup. You ask to move to content review and uninstall the data apps one by one. There's one you can never quite delete."
+ },
+ "stages": [
+  "In the back end you set up coupons and audiences and schedule pushes, click through every campaign before launch and watch the numbers after. Business development and design throw requests at you; engineering's time you have to beg for. You don't decide how the money gets spent yet, but get one character wrong and the money's spent.",
+  "You run acquisition for several channels on your own, with acquisition cost, next-day retention and A/B results in your hands. Half your time goes to writing SQL and half to fighting product and engineering for schedule. Unlike when you were an associate, if the month's numbers are bad, the boss looks at you in the weekly meeting.",
+  "You lead five or six people, set the quarterly growth plan and argue subsidies with finance one by one. You have to explain clearly to the boss and investors whether a number that rose means that real users came, or that coupons did. Your people's tests go past you first, and it's your job to say which get cut.",
+  "You run the entire table of the platform's user base and retention, and explain it to the boss and investors. Budget, risk control, compliance and data boundaries all go through you. You don't set up coupons anymore, but at every major promotion, while the curve climbs, everyone watches your face."
+ ],
+ "work": [
+  "A designer sends you a coupon image for the ice festival. You open the preview in the back end and find \"¥99 minimum\" breaks onto two lines on small phones.",
+  "Your lead asks you to look at next-day retention. You pull a sheet, grouping the weekends together. He asks: are Monday's users and Saturday's users the same people?",
+  "You move a push from eight o'clock to seven-thirty in the evening and the open rate goes up a bit. You post a screenshot in the group. Nobody responds.",
+  "You adjust bids in the search ad back end three times. \"Harbin errand delivery\" costs forty fen more per click than last week. You ring the agency to find out who's competing for it.",
+  "An A/B test comes back significant and product wants a full rollout. You run it one more week, and find out it's because the test group all happened to have snow.",
+  "Reviewing tracking with engineering, you find the share button's event name misspelled, and three weeks of data are void. You buy him grilled cold noodles. He does not give you back the data.",
+  "At the quarterly plan review, finance has drawn a red line through every row of the subsidy table. You bring out lifetime value by segment and tell her this row can't be cut, it's the migratory group.",
+  "A report's referral campaign numbers look too good. You have him pull the phone number origins and device distribution, and then leave him to look at them himself.",
+  "The product director won't give you schedule. You take the user churn path chart to his desk, point at step three, and say one thing: here. Two thousand people a day.",
+  "An investor asks why acquisition cost has risen. Your slides show a chart of people moving in and out of Harbin. The meeting room is quiet for a minute.",
+  "Compliance wants user tags sorted out. You go through them with legal one by one and change \"migratory seniors\" to \"users away for winter.\""
+ ],
+ "past": [
+  "You grow up in Qiqihar. Your cousin works at an internet cafe, and you first see someone earn money from faking orders. He spends all of it on barbecue skewers for you.",
+  "You go to Harbin to study e-commerce. The milk tea shop outside the gate sells only for delivery in winter. Your first research assignment is to count how many people fall on its frozen steps.",
+  "You start a secondhand book group at school and bring it to a thousand people through repost-and-win raffles. Then, inside a single semester, you watch it die.",
+  "You intern in summer at an e-commerce company in Hangzhou, in heat too thick to walk through. When you come back you feel you know what the world is like.",
+  "At campus hiring your classmates all head south. You take this local company's offer because the pay covers a room in Songbei, and your parents won't have to fly to see you."
+ ],
+ "late": {
+  "pension_note": "Estimate: internet companies pay social insurance on a base, and there are gaps from changing employers; Harbin's low cost of living makes this enough, but a long trip needs some thought.",
+  "scenes": [
+   "You help run the class group at the seniors' college. When someone forwards a red packet link, you produce an analysis within five minutes showing that it's fake. Nobody reads to the end. Everyone sends a thumbs-up.",
+   "In winter you go to Sanya too. Your phone's location follows you there, and a coupon arrives from Harbin, at exactly the right time. You don't know who set this calendar.",
+   "You can tell at a glance how much the supermarket downstairs is losing on its discount. You buy anyway, as a show of support for them, and for a curve nobody looks at anymore.",
+   "In your first week without the data apps, your fingers keep tapping out a refresh on the table. These hands haven't been told the company has changed hands.",
+   "You help people enroll in medical insurance at the neighborhood office, filling in forms page by page. You turn the common errors into a rhyme and tape it on the desk. That month a third fewer people come to ask.",
+   "You've taken lipid pills for years and set a reminder for each checkup. Whenever it goes off, you check its open rate. In this one case, you are the only user.",
+   "In your first year you still look at the platform's charts sometimes, and know the shops by name. Later on you've never eaten at the barbecue place at number one.",
+   "Your job now doesn't involve daily actives. All the same, when you see your pay slip at the start of the month, the first thing you look at is the change from last month.",
+   "You explain referral loops to relatives back home. Halfway through they've added you to three price-cutting groups. This time, you help tap too.",
+   "When you get any red packet, you work out the company's acquisition cost, and then you open it. You've seen right through it, but the coupons are still pretty cheap.",
+   "The Songbei office building has changed tenants several times, and that floor is now a livestream base. The heating runs in winter and young people in short sleeves work out another curve."
+  ],
+  "closing": {
+   "retire": "It snowed all night. You don't need to know today's orders. You shovel the little stretch of path by your door and go back in.",
+   "burnout": "The phone lies quiet at your bedside, with no notifications. You turn it face down and go back to sleep.",
+   "end": "On the plane you turn on your phone. The location hasn't refreshed yet; it still shows the city you left."
+  }
+ }
+}

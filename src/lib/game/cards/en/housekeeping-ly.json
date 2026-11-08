@@ -1,0 +1,177 @@
+{
+ "id": "housekeeping-ly",
+ "occupation": "Housekeeping Service Manager",
+ "role": "Service Manager at a Domestic Help Agency",
+ "headline": "At a domestic help agency in Linyi, your phone holds more than three hundred women from the Yimeng hills. One end connects to employers in Jinan and Shanghai, the other to village stoves, and whoever is wronged calls you first",
+ "unit": "A domestic help agency in Lanshan District, Linyi, four storefronts and one training room, about three hundred registered workers",
+ "unit_type": "Private domestic services company",
+ "city": "Linyi, Shandong",
+ "city_tier": "Third-tier",
+ "education": "Associate degree (Community Management and Services)",
+ "level": "Four years as a field supervisor; you can tell at a glance whether a woman has done this work, but you've never stood up to an employer calling the police",
+ "intro": "The shop sits on the corner of a wholesale street in Lanshan District: three desks, one training room, and a crib holding a rubber baby whose hands and feet have been worn shiny by years of practice. You look after more than three hundred domestic workers, half waiting for jobs in villages in Pingyi, Feixian and Yishui, half already living in homes in Jinan and Shanghai. Every pinned chat on your phone is some 'Big Sister,' and at this hour four are already unread.",
+ "salary_note": "Estimate: a domestic help agency in Linyi pays a base plus per-placement commission; the database figure leans big-city, so less than half of it is used here.",
+ "facts": [
+  {
+   "label": "Service Manager (current level)",
+   "value": "3–8 years, ¥4,700–5,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Branch General Manager (8–15 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥5,200 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Mediating disputes between employers and domestic workers",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Matching workers to employers",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Over a breakfast of jianbing you check the group chat: an employer in Shanghai says the helper washed a Yixing teapot with dish soap. You answer the employer first, then call the helper, and start by asking whether she has eaten.",
+  "You interview a woman from Yishui. You have her fold a diaper and wring out a cloth, and you look at where the calluses are on her hands, a better guide than any certificate.",
+  "In the training room you demonstrate burping on the rubber baby, a dozen women around you. One says she raised three of her own. You tell her this time it's someone else's child, and you go by someone else's rules.",
+  "You ride your e-bike to the northern new district to check on a postpartum nanny placement. The new mother and her mother-in-law each have their own way of feeding, the nanny's caught in between, and you spend forty minutes talking in their living room.",
+  "Three-party contracts, health certificate expiry dates, accident insurance renewals for five workers. The form for the credit platform is longer than the contract.",
+  "The dispatch system flashes red: a job in Jinan has gone two days with no taker. You make call after call, and the seventh woman says the wheat at home isn't in yet.",
+  "As you're lying down your phone rings. A helper, her voice low, says the employer has lost a gold bracelet and won't let her leave. You put your clothes back on."
+ ],
+ "ladder": [
+  { "title": "Field Supervisor", "stage": "Making rounds", "focus": "Home visits, following up placements, handling complaints, giving pre-job training to workers" },
+  { "title": "Service Manager", "stage": "People and placements", "focus": "Managing a group of workers and orders, setting training and service standards, mediating on both sides" },
+  { "title": "Branch General Manager", "stage": "Carrying a branch", "focus": "In charge of a branch's profit and loss, contracts, insurance and recruitment; dealing with commerce officials and trade associations" },
+  { "title": "Vice President of Operations", "stage": "Running the company", "focus": "Managing multiple branches, employee-based staffing and the training center; setting the company's course" }
+ ],
+ "ai_tasks": [
+  { "name": "Mediating disputes between employers and domestic workers", "how": "AI can log what happened. Whether this household looks down on her or something really is missing takes a person to listen on both sides and speak on both sides." },
+  { "name": "Matching workers to employers", "how": "AI matches by skill, location and rating. This woman is blunt and that old lady is picky: whether they'll suit takes someone who's met them." },
+  { "name": "Running pre-job training and skills certification", "how": "AI produces courseware and test questions. Teaching someone to hold a baby, turn a patient or clean a window still takes a person showing them by hand." },
+  { "name": "Compiling satisfaction and retention data", "how": "The system collects ratings, follow-ups and fulfillment rates and builds the dashboard. People only check the definitions." },
+  { "name": "Pushing employee-based staffing and social insurance", "how": "AI can do the math. Explaining to a fifty-year-old woman why insurance has to come out of her pay can only be done in person." }
+ ],
+ "events": {
+  "e_newyear": "After the Lantern Festival, only six in ten of last year's women come back. Employers in Jinan call three times a day: no one to watch the child, no way to get to work. You drive to Yishui and Mengyin and go village to village calling people in.",
+  "e_clean": "Window-cleaning jobs in the twelfth lunar month are booked up to the Little New Year, and the women's hands are all split with cold. You keep a case of hand cream at the shop, and you field seventeen complaints from temporary workers and nineteen hurry-ups from employers.",
+  "e_jaundice": "A postpartum nanny sees that a baby's yellow color isn't right and urges the family to go to the hospital. The grandmother thinks she's making a fuss. The next day the employer calls to say thank goodness for her. You forward that voice message to every training class.",
+  "e_bracelet": "The bracelet is found, in another of the employer's own jackets. The employer sends a red-envelope payment. The helper sends it back and says she's done. You ride the high-speed train home to Linyi with her, and the whole way she doesn't want to say a word.",
+  "e_husband": "One woman's bank card is held by her husband at home, so each month she has her wages paid to you first and has you split them in two. This isn't in your job description. You keep track of it in your phone's notes.",
+  "e_deposit": "A small agency next door runs off with employers' deposits, and word goes down the street that domestic agencies can't be trusted. Your new orders fall by a third that month. You print the company's license and insurance policy and post them on the door.",
+  "e_insure": "A worker wrenches her back cleaning windows. The insurance policy is finely worded. With contract and diagnosis in hand you make five trips to the claims office, and in the end get ¥8,000.",
+  "e_sh": "Employers in Shanghai ask specifically for women from the Yimeng hills: straight-talking, able to take hardship. You escort twelve of them by high-speed train to their placements, and at a compound gate as you part someone presses two jianbing into your hands.",
+  "e_old": "The average age of your registered workers has reached fifty-one. Young people have gone to delivery and electronics plants. Half the training room's chairs stand empty, and when you start visiting vocational schools the teachers tell you the parents won't agree.",
+  "e_care": "Live-in care for disabled seniors grows year by year, and postpartum work shrinks. You shift the crib in the training room and bring in a nursing bed.",
+  "e_waist": "After more than ten years making rounds on an e-bike, your back and right shoulder are in trouble, and the neck that holds the phone has tilted slightly. The blind masseur asks whether you have to say sorry many times a day.",
+  "e_ai1": "The company installs a dispatch system that matches by rating and distance. In the first month, Sister Wang, with her low score, doesn't get a single job. You check the back end. The low score came from one employer who said she doesn't talk enough.",
+  "e_ai2": "The smart customer service can now answer nine questions in ten, and midnight complaints are down by half. The remaining tenth, by the time they get to a person, have already had a fight with the machine.",
+  "e_platform": "A national platform comes to Linyi. An employer taps a phone, a worker takes the job directly, and the platform takes 20%. Several of your best people tell you they'd like to try it. You tell them to do the arithmetic for themselves.",
+  "e_subsidy": "The human resources bureau's skill-training subsidy comes through at a few hundred yuan a head, and the paperwork has to be perfect. You take thirty women to sit for certificates, and one of them writes her own name more carefully than she ever has.",
+  "e_ownkid": "Your child has a fever. You arrange a substitute for an employer in Jinan while waiting for your number to be called in a hospital corridor. As your phone is running out of battery, it occurs to you that your own home has no helper.",
+  "e_good": "A family in Jinan treats a helper of eight years like a relative, and when their child gets into college she's seated at the head table. She wears the clothes you gave her, and the photo goes up in the shop's group chat.",
+  "e_bad": "A bad review runs to six hundred characters and even brings in the helper's accent. You write the employer a long reply, delete it, and write a short one.",
+  "e_covid": "On the twenty-eighth of the twelfth lunar month, heavy snow closes the expressway, and more than thirty women are stuck on the bus home to Linyi. You check on each of them in the group chat and make a dozen calls to the service area to get them hot water.",
+  "e_son": "A helper's son has graduated from college and calls to say, don't let my mother work anymore. She hears him out and says she'll keep working until sixty. Hold next month's job for me."
+ },
+ "choices": {
+  "c_own": { "title": "Open your own place", "situation": "A dozen women you trained say they'll follow you if you open your own shop. A storefront by the Yi River is ¥30,000 a year, and your client information is all on your phone.", "options": [
+   { "label": "Open your own shop", "result": "You paste red paper on the door.", "end": "You left the company and opened a small agency of your own. There was no longer another boss. The midnight phone calls were still yours, and now the rent was too." },
+   { "label": "Don't take anyone with you", "result": "You tell the women that the company's people are the company's people. The boss hears about it and pays you ¥2,000 more at year-end." }
+  ] },
+  "c_sh": { "title": "A Shanghai platform wants you", "situation": "A big domestic services platform in Shanghai wants you to run the supply line for its workers from Shandong, at double the pay, with half of each year away. Your parents aren't in good health.", "options": [
+   { "label": "Go to Shanghai", "result": "You say goodbye to everyone at the shop, one by one.", "end": "You went to Shanghai. On your desk was a big screen with the country's domestic workers on it, all turned into numbers. Now and then you opened a Linyi number and didn't call." },
+   { "label": "Stay in Linyi", "result": "You thank them and redraw the weekend visit schedule." }
+  ] },
+  "c_cert": { "title": "Getting the housekeeping manager's certificate", "situation": "The government-registered manager training is twenty days in Jinan, full time, on contracts, labor practice and service standards, and the company pays half the fee. For those twenty days, who looks after your three hundred sisters?", "options": [
+   { "label": "Go and learn", "result": "You take fourteen calls in the classroom in Jinan, and you still get through every class." },
+   { "label": "Stay and mind the shop", "result": "Nothing goes wrong in those twenty days, and you still don't really understand the social insurance and labor provisions." }
+  ] },
+  "c_bracelet": { "title": "The employer wants to call the police", "situation": "Something is missing from the employer's home, and they insist that the helper stay and let them search her bag or they'll call the police. She's in tears on the phone. The contract says the company will cooperate. It says nothing of bag searches.", "options": [
+   { "label": "Stand with the helper first", "result": "You rush to the house and say call the police if you want, but no private bag searches. The employer complains about the company. The helper stays with you for another twelve years." },
+   { "label": "Calm the employer first", "result": "You ask the helper to let them look in her bag. It blows over, and the job is saved. She quits that month and never answers your messages again." }
+  ] },
+  "c_employee": { "title": "Whether to move to employee-based staffing", "situation": "The company wants to pilot an employee model: contracts, social insurance, centralized dispatch. Costs rise 30% for the company, take-home falls ¥200 for the women, and employers' fees go up. Everyone has a point, and no one is happy.", "options": [
+   { "label": "Lead the pilot", "result": "You go village by village explaining what a pension is. Some hear you out and sign. Some hear you out and go home." },
+   { "label": "Keep the agency model", "result": "The books are simple and people stay. It's just that when the women turn sixty, they have nothing." }
+  ] },
+  "c_old": { "title": "Whether to keep placing a 58-year-old", "situation": "Sister Wang is fifty-eight. Employers want under fifty, and the system has stopped sending her jobs. She comes to see you: her son hasn't bought a home, her hands and feet are fine, please think of something.", "options": [
+   { "label": "Place her by hand", "result": "You send her to an elderly couple's home at a slightly lower rate, with no heavy work agreed." },
+   { "label": "Follow the rule", "result": "You tell her the truth and help her find a cleaning job at a residential compound. She stands at the shop door, lifting her bag and setting it down." }
+  ] },
+  "c_ai": { "title": "Whether to learn the dispatch system", "situation": "Headquarters requires all client and worker data to be entered into the system, with ratings counting toward dispatch. The things you keep on your phone have no box in that system.", "options": [
+   { "label": "Learn it, turn experience into rules", "result": "You persuade the young tech guy to add a notes field, which says which women are afraid of dogs." },
+   { "label": "Keep going by memory and WeChat", "result": "You still match better than the system. It's just that when you take leave, the whole company falls apart." }
+  ] },
+  "c_gm": { "title": "Applying for Branch General Manager", "situation": "The boss is opening a second shop and wants you as Branch General Manager, responsible for profit and loss. Whatever goes wrong is yours to own, and the commission formula changes too.", "options": [
+   { "label": "Take it", "result": "You learn to read a profit-and-loss statement. The first month neither loses nor makes money, and you and the boss eat stir-fried chicken in the shop." },
+   { "label": "Keep managing people", "result": "You tell him you know better what the women need than what the rent is." }
+  ] },
+  "c_vp": { "title": "The boss wants you as Vice President of Operations", "situation": "The company is merging with two rivals and building a training center, and the boss wants you as Vice President of Operations over three shops. That means more dinners, more meetings and dealings with banks.", "options": [
+   { "label": "Accept", "result": "You step back from half the women's calls and start taking calls from bureau chiefs and banks." },
+   { "label": "Decline, go back to rounds", "result": "You tell the boss you have enough calls already." }
+  ] }
+ },
+ "endings": {
+  "retire": "On the day you retire at sixty, the dispatch system sends you a message: Thank you for your service. Of the women you trained, some have become grandmothers, some have gone back to their villages and some are still in Shanghai. You keep the notes beside more than three thousand contacts in your phone: this family's afraid of dogs, that family won't eat garlic.",
+  "burnout": "The trouble in your lower back means you can no longer ride the e-bike, and the hand that answers midnight calls has started to shake. You tell the boss you're done. You go home to Feixian. The first night, with the phone on silent, nothing happens at all, and you wake three times."
+ },
+ "stages": [
+  "You look after more than three hundred domestic workers, half your work on the phone and half on the road. Mornings you schedule placements and check contracts and health certificates, afternoons you make home visits, and at night you listen to grievances from both sides. You used to go to just one household. Now you decide which woman this family should get, and if you get it wrong, three months later it's still your problem.",
+  "You've begun to read profit-and-loss statements and insurance policies. Your day starts with rent, recruiting costs and training subsidies, moves on to officials at the commerce bureau and the association's secretary-general, and ends in meetings with your supervisors. Complaints still reach you, but only the hardest ones. You decide whether to keep this employer and whether to keep this woman.",
+  "You manage three shops and a training center. Mornings you read reports, afternoons you discuss loans with the bank, evenings you do the accounts with the shop managers. You seldom see the women now, and when you do they call you 'Boss,' which takes some getting used to. Every rule you set turns into the wages of several hundred people."
+ ],
+ "work": [
+  "You sit through the mother-in-law's ten minutes in the living room, then the nanny's five in the kitchen, and come back with three things written on a sheet of paper: who washes the bottles, who holds the baby at night, who decides about the air conditioning.",
+  "A woman from Yishui can't read, and her health certificate is about to expire. While she's giving her thumbprint you set an alarm on her phone, with her daughter's recorded voice as the ringtone.",
+  "A family in Jinan is on its fifth helper. On a visit you find the trouble's in the refrigerator: the owner keeps the place of everything in a spreadsheet. You bring the next helper a diagram.",
+  "You sort the women who've left by village and find that the most have gone from one in Pingyi. You go and take a look. A new biscuit factory has opened in that village, paid by the day, no need to leave home.",
+  "The association is picking a model shop, and the secretary-general asks you to speak about employee staffing. On stage you lay out the numbers, while your rivals in the audience keep their heads down working out their own.",
+  "A new supervisor has written up complaints as a running narrative. You have her redo it with only three things: who said it, who saw it, who does what next.",
+  "The training center's lease would run eight years. You show the boss the age breakdown of your workers and suggest only five, because in five years that bed may be a different kind of bed.",
+  "A bank relationship manager asks about the company's fixed assets. You say forty training beds and credit records for three thousand women. He asks how to value the second.",
+  "Three shops have different complaint standards, and one shop's women have had more docked as a result. You have the three managers bring their records, and in an afternoon you merge the deduction rules into one."
+ ],
+ "past": [
+  "You grow up in a mountain village in Pingyi, and each year after Spring Festival your mother leaves for Beijing to look after someone's child, gone for ten months. You learn early which employers are good and which aren't.",
+  "You don't get into a bachelor's program, and go to a vocational college in Linyi to study community management. A relative says that means learning to run an apartment complex. Close enough, you say.",
+  "You intern at a nursing home, reading the newspaper to residents and checking pill boxes. You learn how to stay with people who don't want to talk.",
+  "You work the front desk at a postpartum care center in Jinan for ¥2,800 a month, and see that the contract nannies have it hardest and know the most.",
+  "You go home to Linyi and join this company as a field supervisor. At the interview the boss has you assign rooms to three women, and when you finish no one's fighting."
+ ],
+ "late": {
+  "pension_note": "Estimate: small private company, low social insurance base at Linyi levels; the pension covers food and clothing, while medical bills come out of savings.",
+  "scenes": [
+   "Visiting anyone's home after you retire, you look first at the window tracks and the gap behind the stove, and second at how the household talks to its cleaner. When the host brings you water, you always want to stand up to take it.",
+   "Your mother needs looking after, and you hire a helper. For the first time you sit in the employer's chair, and you find that it's no easy chair either.",
+   "Young people won't do this work now. The ones who come to the shop are women in their fifties from other provinces and a few young men with robot vacuums. Sister Wang comes in on a cane and asks you to work out her pension.",
+   "When your back hurts you take calls lying on the floor, and still some woman will ring: Little Sister, how do you read this word in the contract? You always answer.",
+   "Your first year in your home village, the women still call out when they see you: any work? None now, you say, and they ask how your health is.",
+   "For a while you help the village cooperative manage the Sichuan pepper pickers: the name list, the wages, whose child has to leave early. This time there's no system to enter. One sheet of paper is enough.",
+   "Your back is good for a stretch and then bad again. Living alone, you've stopped answering unknown numbers. You answered too many in those years. Now you don't have to.",
+   "After you leave, you still wake early on the sixteenth of the first lunar month, waiting for somebody's call, and then remember that this year you don't have to go to Yishui and call anyone in.",
+   "You've worked it out: over a lifetime you matched more than ten thousand placements. Your own account hasn't got much more in it than it had back then. You've said this only once, to yourself.",
+   "The news about the domestic service industry talks about standardization again, in the same words as twenty years ago. You swipe past it and go back to your opera.",
+   "When someone tells you what a person is like, you ask first about her hands and her shoes. It's an accurate way of judging people, though not an especially endearing one.",
+   "The rubber baby you used in training is still in the storeroom, the people at the center tell you. You ask what it's called now. Training Aid Number 001, they say."
+  ],
+  "closing": {
+   "retire": "Early morning, and the Yi River lies flat. Your phone's on the table with no red dots today. You eat half a jianbing.",
+   "burnout": "You wipe down the stove at your old home with a cloth and clean the window tracks too. This time it's for yourself.",
+   "end": "At dusk a woman walks along the compound path with two bags of vegetables. You can hear the Feixian in her voice. You don't call out."
+  }
+ }
+}

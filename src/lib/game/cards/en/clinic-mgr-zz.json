@@ -1,0 +1,149 @@
+{
+ "id": "clinic-mgr-zz",
+ "occupation": "Medical and Health Services Manager",
+ "role": "Private Hospital Operations Associate",
+ "headline": "A hospital operations manager in Zhengzhou who checks bed occupancy first thing each morning, schedules around the wheat harvest and Spring Festival, and stands between an investor owner and an old specialist turned hospital president",
+ "unit": "A 300-bed private general hospital in Erqi District, Zhengzhou",
+ "unit_type": "Private general hospital",
+ "city": "Zhengzhou",
+ "city_tier": "New first-tier",
+ "education": "Bachelor's (Public Administration, health management track)",
+ "level": "You studied health administration and you're good at Excel; you can't tell a principal diagnosis from a secondary one on a discharge summary, and the department heads call you \"that kid\"",
+ "intro": "The hospital sits on a side street in Erqi District, and every day the buses at the gate bring patients from Zhoukou and Zhumadian. You have a desk by the door in the operations office. The president is a retired department chief from a top provincial hospital; the owner who put up the money made it in building materials. Both are polite to you, but they speak two different languages, and the first thing you do today is report last night's bed numbers to each of them.",
+ "salary_note": "Estimate: admin staff at Zhengzhou private hospitals earn less in total than peers at public hospitals, but pay rises faster and bonuses follow hospital-wide occupancy and insurance settlements.",
+ "facts": [
+  { "label": "Operations Associate (current level)", "value": "0–3 years, ¥5,000–8,000 a month (national average, estimated)", "source": "Common in the trade" },
+  { "label": "Next level up", "value": "Operations Supervisor (3–7 years)", "source": "Common in the trade" },
+  { "label": "What AI can't take", "value": "Mediating between department heads and the investor", "source": "AI exposure" },
+  { "label": "Where AI is moving in", "value": "Generating bed and revenue reports", "source": "AI exposure" },
+  { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+ ],
+ "day": [
+  "You export last night's inpatient count from the hospital information system and work out occupancy, one line per department. Orthopedics 92 percent, endocrinology 58. Those two lines are the ones the owner will read.",
+  "You stand behind the president at morning handover and write down words you don't know, to ask the head nurse afterward. You don't need to know that, the head nurse says, just don't get the rosters wrong.",
+  "The medical insurance office comes to reconcile. A dozen or so of last month's charts face deductions over coding. You take the list to medical records and ask about them one by one.",
+  "You walk the outpatient hall, counting who's waiting, seeing where the guides stand and whether the kiosks work. No one has asked you to. But unless you do, you don't know where the numbers on your sheet come from.",
+  "The head of endocrinology comes about bonuses, sure the scheme is unfair to his department. You lay out the calculation. He reads only the bottom line.",
+  "A meeting with customer service. Three complaints today: one about the wait, one about charges, one family who thought the doctor spoke too sharply. You have to work out which of them is a matter of the system.",
+  "Before leaving you check next week's specialist rota once more. If just one of the visiting doctors from the top hospitals cancels this weekend, Saturday's clinic will take the abuse."
+ ],
+ "ladder": [
+  { "title": "Operations Associate", "stage": "Data", "focus": "Produce bed and revenue reports, track insurance settlement and department bonuses, learn how a hospital runs" },
+  { "title": "Operations Supervisor", "stage": "Departments", "focus": "Work with several clinical departments on bonuses, clinic scheduling and equipment returns; handle complaints" },
+  { "title": "Director of Operations", "stage": "Hospital-wide", "focus": "Run hospital-wide operating metrics, insurance and accreditation; coordinate the president and the investor" },
+  { "title": "Vice President of Operations", "stage": "Accountable", "focus": "Run the hospital's money and people; answer to the investor and for the license on the wall" }
+ ],
+ "ai_tasks": [
+  { "name": "Mediating between department heads and the investor", "how": "AI can work out what every scheme costs. Who can give ground, and when to say what: that needs someone in the middle." },
+  { "name": "Generating bed and revenue reports", "how": "The system pulls hospital data into daily and weekly reports automatically; a person only checks definitions and anomalies." },
+  { "name": "Quality-checking discharge summaries", "how": "AI can flag doubtful codes and principal diagnoses. Which to change and how to raise it with the doctor is for a person to decide." },
+  { "name": "Clinic scheduling and triage", "how": "AI can schedule and triage from historical data. When a specialist cancels or an old person can't follow, somebody has to catch it." },
+  { "name": "Handling complaints and talking to families", "how": "AI can log and sort them. Sitting down and hearing a family out can only be done by a person." }
+ ],
+ "events": {
+  "e_ribao": "You get a formula wrong on one day's bed report. The owner thinks orthopedics has suddenly emptied by a tenth and rings the president on the spot. You learn to do the sum again before you send.",
+  "e_maishou": "June wheat harvest, and beds fall forty percent empty. The bus from Zhoukou arrives half full. If you work in this trade in Henan, the director tells you, you need to know first when the wheat is ripe.",
+  "e_nianguan": "After the twentieth of the last lunar month patients all want to be home for the New Year. Occupancy falls off a cliff, and still the owner wants to see the year's numbers. You rework the department rotas and fit the nurses' annual leave into the gap.",
+  "e_hushi": "Two nurses you've trained for three years pass the public hospital recruitment exam. The head nurse puts their resignation forms on your desk: the next group, we start again from scratch.",
+  "e_tousu": "A family member blocks your way in the lobby for two hours, wanting an explanation. By the end you find what he minds most is that the doctor didn't call his father by name. He called him by bed number.",
+  "e_erjia": "Three months before the Grade 2A reaccreditation, the whole hospital is filling in procedures and records and running drills. Your office printer burns out twice. When the reviewer leaves, he points at the handrail in the washroom.",
+  "e_jingjia": "The online advertising bill comes in. The owner wants to know why calls are up this month and admissions aren't. You match the calls one by one to admission numbers, work out the acquisition cost of each inpatient and show him. He's silent for the length of a cigarette.",
+  "e_tuanjian": "A checkup program for old people starts, with buses going to the villages. Many in the first group get off carrying eggs for the doctors. The guides don't know whether to accept them and come to ask you.",
+  "e_drg": "Diagnosis-based payment rolls out. After one settlement month the orthopedics accounts are suddenly ugly, and its chief pounds the table. You sit two weeks with the coders in medical records, listing the gain or loss of each group, page by page.",
+  "e_binganai": "The hospital adopts AI quality control for discharge summaries; in one night it can check a month's worth and flag doubtful codes and diagnoses. The old coder says: it checks me, but who checks it? You put her question in the project's weekly report.",
+  "e_feijian": "The medical insurance inspection team stays a week. You fetch charts for them in a small meeting room, box after box, on call. On leaving they remark that the records are fairly complete. You sit down on the stairs and take off your shoes.",
+  "e_weibing": "You walk more than twenty thousand steps a day, all inside this building. Your knees complain first. The orthopedics chief shows you the film and says you got this doing infection-control rounds, so it counts as a work injury.",
+  "e_jiazhang": "At your child's parents' meeting the teacher asks what the parents do. A hospital, you say, and the teacher's eyes light up: could you help get an appointment? At ours you don't need one, you say, and the eyes dim again.",
+  "e_zhuanjia": "A visiting specialist from the provincial capital's big hospital has been stopped from outside practice by his own employer, and all of Saturday's appointments must change. You make more than eighty calls in a morning and apologize more than eighty times.",
+  "e_paiban": "AI scheduling and triage go live and outpatient waits get shorter. An old woman tells the guide all the same that the machine doesn't get it, it doesn't know she needs the toilet first.",
+  "e_laoban": "The owner's son comes back to take charge, and at his first meeting wants to see output per square meter. The old president listens and then places the lid back on his teacup. The whole meeting room hears it.",
+  "e_kangfu": "Surgical clinics dwindle year after year, and you find turnover on geriatric rehab beds holding steady. Two floors of wards are converted to rehab and long-term care. Handrails line the corridors. A different crowd comes to morning meeting.",
+  "e_laoyuanzhang": "The old president, eighty now, comes to your hospital about his eyes. You take him through it yourself. He stops at the cashier's window and says: that window. I told you to change it back then, and it's still not changed."
+ },
+ "choices": {
+  "c_gongli": { "title": "A public hospital is hiring for its insurance office", "situation": "A public hospital in the province is openly recruiting for its medical insurance office, on an agency contract: stable, with starting pay twenty percent below yours now. Your experience with diagnosis-based payment is exactly right. If the owner finds out you sat the exam, forget about a year-end bonus.", "options": [
+   { "label": "Sit the exam", "result": "You use annual leave for the written test. The day the results come out, after work you eat a bowl of braised noodles, as a farewell.", "end": "You go to the public hospital's insurance office, and for the first time your badge bears the full name of the institution. There are more people at meetings and fewer who can decide, and you begin getting used to writing things up in three paragraphs." },
+   { "label": "Stay", "result": "You swipe the notice away. The sixth draft of the bonus scheme is waiting for you this afternoon." }
+  ] },
+  "c_qixie": { "title": "An offer from a device company", "situation": "A medical device company wants someone who knows how hospitals work to do regional marketing, at one and a half times your pay. Lots of travel, visiting every hospital. All those phone numbers you've gathered would be assets over there.", "options": [
+   { "label": "Join the device company", "result": "You put on a dark suit. Your first call is on your old hospital's equipment department.", "end": "You go to the device company, and you know the way to all the presidents' offices. You used to make people wait for your approval. Now you're the one in the corridor, waiting for someone to come out." },
+   { "label": "Don't go", "result": "You put the business card away and next morning, as always, look at the beds first." }
+  ] },
+  "c_zhuan": { "title": "A group wants to buy the hospital", "situation": "A healthcare group wants to buy the hospital and turn it into a specialist center for rehab and elder care. It will bring its own management, and you could stay on as number two or take a payout. The owner asks you to help negotiate. You know that if the deal goes through, your seat is probably gone.", "options": [
+   { "label": "Close the deal, take the payout", "result": "The handover list runs to sixty-seven pages. The last page is the repair number for the kiosk in the outpatient hall.", "end": "The hospital's sign changes and you take a payout and leave this line of work. When you pass, the buses are still at the gate. The words on them have changed." },
+   { "label": "Stay on as number two", "result": "The group's report formats run to forty more sheets than yours. You sit down and start learning from the first." },
+   { "label": "Go back to one department", "result": "You ask to do specialist operations for rehab. Your desk is next to the ward, where you can hear the walking drills being called out." }
+  ] },
+  "c_mpa": { "title": "A part-time master's, or master the coding", "situation": "The president suggests a part-time master's in health management, so that you can move up to Operations Supervisor. You'd pay the tuition and spend weekends at the university town. Don't listen to him, your director says: mastering the payment groups is worth more than anything.", "options": [
+   { "label": "Do the master's", "result": "Two years of weekends go to class and thesis. Your thesis topic is your own hospital's bed turnover." },
+   { "label": "Master the coding", "result": "You turn the coding manual into something you can read, and department heads across the hospital start coming to you with questions." }
+  ] },
+  "c_gaobian": { "title": "This group is just a little off", "situation": "It's settlement month. The president says a few of these cases are just short of a more suitable payment group, and asks you and the coder to take another look at the charts. The coder looks at you. This is a gray edge, and whether anyone leans toward it depends on a word from the person reading the chart.", "options": [
+   { "label": "Code only what's in the chart", "result": "This month's settlement comes up short. The president says nothing more, and never brings it up with you again." },
+   { "label": "Go over the chart with the doctor", "result": "You get the doctor to complete the histories. Two truly should change, one can't. The president nods, and you can't say whether you've helped him." }
+  ] },
+  "c_jixiao": { "title": "Whether to touch surgery's bonus", "situation": "The owner wants bonuses tilted toward outpatient volume. The chief of surgery comes to you with several senior doctors' resignation letters: do that and they go next door. The internists come too: for years the surgeons have had the meat. The scheme is yours to write.", "options": [
+   { "label": "Write it as the owner wants", "result": "The scheme passes. One senior surgeon leaves. The head of internal medicine says hello to you in the corridor for the first time." },
+   { "label": "Write a compromise and take the abuse", "result": "Both sides curse you, in equal measure. The scheme runs three years and nobody leaves." }
+  ] },
+  "c_ai": { "title": "Who leads the AI chart-checking project", "situation": "A vendor's AI quality control is to be piloted. Someone has to teach it the hospital's rules and the coders' experience one by one, and decide who rules on what it flags. IT doesn't want this. Medical records says it's stealing their jobs.", "options": [
+   { "label": "You lead it", "result": "You pull in the old coder to work with you. She teaches it three hundred rules and calls it \"that kid.\"" },
+   { "label": "Let IT lead", "result": "It goes in slowly. Medical records start using it half a year later, without much pleasure." }
+  ] },
+  "c_fuyuan": { "title": "Compete for Vice President of Operations", "situation": "The owner wants a Vice President of Operations to take over the hospital's money and people. Whoever takes it holds the first responsibility for accreditation and medical insurance, and must carry messages between the old president and the new owner. Decline, and they'll hire from outside and you'll be reporting to them.", "options": [
+   { "label": "Take it", "result": "You move up to the third floor. In this seat, the president says, you have to learn not to answer the phone. You don't learn." },
+   { "label": "Decline", "result": "In his second week the VP hired from outside comes to ask you what month the wheat harvest is." }
+  ] }
+ },
+ "endings": {
+  "retire": "When you retire you hand over the template for the daily bed report. It's been generating itself for years, but the new hires' formatting always needs a look from you. Your knees no longer walk twenty thousand steps a day and they haven't adjusted to that. The buses from Zhoukou still come, and the people getting off are much the same as back then. They just don't carry eggs anymore.",
+  "burnout": "After three straight years of settlement months and inspections, you start calculating beds that don't exist in the middle of the night. You step down from operations and go to help with checking in medical records. It's quiet there, a whole room smelling of paper. The old coder retired long ago, and her chair is somewhat low."
+ },
+ "stages": [
+  "You keep the reports from the hospital information system, working out beds, outpatient volume, revenue and settlement gaps. One sheet goes to five people, and each wants the numbers defined differently. When you go to a department for data, the head nurse says only, \"in a bit.\" You don't decide anything yet, but anyone about to decide something comes to you for the sheet.",
+  "You work with three or four departments. The chiefs argue bonuses with you and you argue beds and equipment with them. Two days a week you watch over outpatient scheduling. When there's a complaint you go see the family and sort out whether it's a matter of the system, the process or something the doctor said. Unlike when you were an associate, your name begins to go on the conclusions.",
+  "The hospital's operating metrics, its insurance settlements and accreditation are all yours. Mornings you run the weekly meeting and translate the owner's numbers for the president; afternoons you translate the president's words for the owner. Insurance, medical records and finance all report to you. When something goes wrong, you get there first and think about how to write it up afterward.",
+  "You run this hospital's money and people, and part of the responsibility for its practice license is yours. You see the owner twice a week and the health authorities once. Whether a major department chief stays or goes is your business. You don't do the sheets yourself anymore, but when a number is wrong, you can see at once which line went astray."
+ ],
+ "work": [
+  "The endocrinology head nurse asks for last month's bed count. You send it and she replies: why are there two more beds this month? You go count on the ward. Two of them are indeed extra beds.",
+  "The president has you study outpatient waits. You sit with a stopwatch outside internal medicine for three mornings. It's taken away once by a small child who wants to play.",
+  "A refund slip at the cashier doesn't reconcile. You trace it from the system to the paper stub and find two hospital stays by two patients with the same name.",
+  "The orthopedics chief wants a new arthroscope. You work out the payback on an equipment-return sheet and tell him four and a half years. Your method, he says, doesn't count the gratitude of patients.",
+  "A family complains in the log that the food is cold. You walk the elevator route with the meal cart and find the third-floor server always waits ten minutes for the lift.",
+  "A new customer service associate is meeting a family for the first time and her hands are trembling. You sit beside her, push a cup of water toward the family, and have her begin with \"take your time.\"",
+  "At the weekly meeting, one chart of payment-group losses silences cardiology and orthopedics at the same time. Over the next ten minutes you have to get them both talking.",
+  "The accreditation reviewer wants three years of adverse event records. You spend the night checking them with quality control. Where a meeting's sign-in sheet is missing you write down the reason. You don't add any signatures.",
+  "Your insurance office supervisor wants to quit. You take her to eat spicy soup downstairs and break her settlement pressure into three things that can be handed to others.",
+  "The owner wants to rent one ward floor to an outside checkup company. You lay out the infection-control and fire plans and tell him this floor can't be divided that way.",
+  "Provincial health officials come to inspect and you walk them round the whole hospital. In the rehab area a reviewer asks who decided the height of this handrail. You say it was the family of a patient in a wheelchair."
+ ],
+ "past": [
+  "You grow up in a county town in Zhoukou. Your mother works the cashier window at the township clinic and you do homework behind her. The first words you learn to read are \"self-paid\" and \"reimbursed.\"",
+  "You pick public administration at a medical college in the province. None of your classmates can explain what the major is for.",
+  "You intern in the medical records room of a county hospital. For the first time you see that one discharge summary passes through seven or eight pairs of hands, and that some handwriting no one can read.",
+  "Admin posts at public hospitals want graduate degrees. You apply to three and hear nothing. The recruiter at this private hospital says: you'd start right away. Can you be here next week?",
+  "On the day of the interview, the old president asks if you know Excel and the owner asks if you can work overtime. It's the last time the three of you agree."
+ ],
+ "late": {
+  "pension_note": "Estimate: private hospitals pay social insurance on a modest base, and a few years in deputy posts help a little; in retirement you understand your own medical care better than most, and think one layer further about it.",
+  "scenes": [
+   "You help sort out the procedures at the community health post back in your home county, two mornings a week. No need to be so detailed, says the head of the post. Just move this column on the registration book to the front, you say.",
+   "You go to a public hospital for your cataract, draw the patient flow in your head, and find three places that could save forty minutes. Nobody asks you, and you don't say.",
+   "Zhengzhou has more new hospitals now, with parking lots bigger than your whole building was. Your place stopped doing surgery long ago. Its outpatient block is mostly old people and wheelchairs.",
+   "There's little to do in the first year, and your body falls ill a few times. Using the codes in your own record, you work out whether this hospital stay made or lost money.",
+   "Medical records is quiet work. Just as you archive the final box of paper, the hospital announces everything is going digital. You had rather liked the smell of paper.",
+   "You start taking your blood pressure pills on schedule, boxes lined up on the sideboard. When they'll run out and when you must refill them, you've long since worked out.",
+   "In your first few months after leaving, you still wake at 7:45 wanting to know how many beds were filled last night. Later you get a dog, which needs walking at that hour.",
+   "People at your new workplace say you're always calculating something in meetings. Nothing, you say, while your pen writes three lines of long division on the paper.",
+   "You hear the group has sold the hospital on again. You think of the old bus routes. The young people from those villages are all in Zhengzhou now and patients no longer have to take a bus.",
+   "In any clinic you first count the waiting chairs and then check how many steps the guide desk is from the door. A friend takes you to see a dentist, and you find fault with the registration process there.",
+   "Triage and scheduling are all set by the system now and half the guides in the hall are gone. Families don't know who to shout at and so talk to the screen. The screen says: your feedback has been recorded."
+  ],
+  "closing": {
+   "retire": "At harvest time you go back to Zhoukou. There's hardly anyone in the fields. How many beds are empty this year isn't yours to count.",
+   "burnout": "The spicy soup tastes the same. You eat it slowly. There's no 8:30 morning meeting to rush for.",
+   "end": "The bus drives past you and you can't quite make out the words on its side. You don't try to follow it."
+  }
+ }
+}

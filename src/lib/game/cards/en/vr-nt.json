@@ -1,0 +1,208 @@
+{
+ "id": "vr-nt",
+ "occupation": "Virtual Reality Engineer",
+ "role": "VR Development Assistant",
+ "headline": "Making VR training for shipyard welders in Nantong: you climb through a virtual hull in a headset while an old welder, watching on a screen, tells you your hand is shaking the wrong way",
+ "unit": "A VR company making industrial training content in Nantong, Jiangsu",
+ "unit_type": "Small private software company",
+ "city": "Nantong, Jiangsu",
+ "city_tier": "Second-tier industrial city",
+ "education": "Bachelor's (Digital Media Technology)",
+ "level": "You know Unity well. Why someone wants to throw up when they turn around in a headset, you can only find out by trying it yourself.",
+ "intro": "The company is on the sixteenth floor of an office block in the Nantong development zone, and from the window you can see the Yangtze and the shipyard's gantry cranes. On your first day the boss has you put on a headset, enter a newly finished ship's hold and follow the prompts up to the third level to inspect a weld. Halfway up you take it off, white in the face. The boss holds out a plastic bag. It's fine, he says. The more you throw up, the less the client does.",
+ "salary_note": "Estimate: small Nantong software companies pay below the national VR figure. Bonuses come when projects bunch up at year-end, and cash flow is unsteady.",
+ "facts": [
+  {
+   "label": "VR Development Assistant (current level)",
+   "value": "0–2 years, ¥5,300–6,600 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "VR Development Engineer (2–5 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 10+ years",
+   "value": "¥9,200 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Deploying and tuning headsets and tracking base stations in the workshop",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Writing interaction logic and optimizing performance",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "24 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "You ride along the Hao River to work. The stall by the bridge sells Xiting crispy cakes, and a coworker says you're installing equipment at the shipyard this afternoon.",
+  "Running a scene in Unity. The frame rate drops to sixty, and the culprit is the model of that ship's ladder, too finely detailed. The modeler says the client asked for that detail.",
+  "You put on the headset and walk the third level. At the corner you feel a little dizzy. You note the spot and slow the movement there.",
+  "Lunch talk is about the next generation of headsets. This time it's really going to explode, somebody says, as people have been saying for five years.",
+  "You drive to the shipyard's training center and set up the tracking base stations. The workshop walls reflect, and the stations can't find their positions.",
+  "An old welder in a headset welds a virtual seam, puts down the torch and says the feel is wrong, the torch should be heavier.",
+  "The headset's foam pad reeks of sweat. You wipe them down with alcohol, one by one. That job is yours too.",
+  "Back at the office you fix today's problems and package a build. The hold on your screen is much cleaner than the real one."
+ ],
+ "ladder": [
+  { "title": "VR Development Assistant", "stage": "On the project", "focus": "Building scenes, tuning models, going on site, hunting problems in a headset" },
+  { "title": "VR Development Engineer", "stage": "Owning features", "focus": "Owning a training project's interaction work and on-site deployment" },
+  { "title": "Senior VR Engineer", "stage": "Leading designs", "focus": "Setting technical plans and performance standards, leading a small group, dealing with clients" },
+  { "title": "VR Technical Lead", "stage": "Running technology", "focus": "Running the company's technical roadmap and bids, judging which next-generation device to bet on" }
+ ],
+ "ai_tasks": [
+  { "name": "Deploying and tuning headsets and tracking base stations in the workshop", "how": "Reflections, occlusion and signal interference have to be tracked down one at a time by someone on site." },
+  { "name": "Judging comfort and motion sickness in a headset", "how": "Whether this step makes you dizzy, you only know by putting it on." },
+  { "name": "Writing interaction logic and optimizing performance", "how": "Scripts and boilerplate can be generated. Trade-offs and architecture are a person's responsibility." },
+  { "name": "Agreeing training content with clients", "how": "AI can organize process documents. Which movements the training has to drill, you work out with the veteran workers." },
+  { "name": "Making 3D models and materials", "how": "Text and photos can become models directly. People check polygon counts and standards." }
+ ],
+ "events": {
+  "e_sick": "After forty hours of VR testing this month, you've started getting carsick on the bus too. What you've figured out is to have some salted plums beforehand and drop the movement speed one notch.",
+  "e_tender": "Vocational colleges' training-base tenders come all at once at year-end. Budgets have to be spent by December, and every project's acceptance falls before New Year's Day. You work twenty straight days of overtime, and the version number on the server reaches 3.17.",
+  "e_welder": "You motion-capture the torch path of a welder with thirty years in. He watches the playback and says this fellow welds pretty well. You tell him that fellow is him.",
+  "e_meta": "In the year the metaverse is hottest, a fund comes to look you over, and the boss has the showroom wiped down three times. When the money comes the whole company gets headsets, thirty people are hired and you move to a bigger office.",
+  "e_meta_end": "The concept recedes even faster than it came, and the fund stops returning calls. The large office is given up, more than twenty of the thirty new hires leave, and the boxes left behind are full of unopened headsets.",
+  "e_vest": "A chemical park wants emergency drill training, and the client's safety director walks a real pipe corridor with you. He doesn't let you take pictures. You reconstruct every valve's position in the scene from memory.",
+  "e_acceptance": "At acceptance, the client's section chief puts on the headset, walks two steps and takes it off. A bit dizzy, he says, why don't you fix that first. The final payment on this project slips back another quarter.",
+  "e_eyes": "The eye doctor says your focusing ability is worse than others your age, and small print held up close stops resolving. You ask if it has to do with headsets. Hard to say, she says, wear them less.",
+  "e_hardware": "The headset's maker announces no more firmware updates for this generation, and the devices you delivered to six schools are orphaned at a stroke. You start buying up secondhand units of the same model to use for spares.",
+  "e_ai_model": "In one afternoon AI generates more ship's hold models than the modeling group makes in a week. Your modelers are excited at first. In the second month two are laid off. In the third, one goes off to get a welding license.",
+  "e_ai_code": "AI's interaction scripts are tidier than what you stay up nights writing, except a valve that takes four turns has become four button presses. You change that line and put the four turns back.",
+  "e_ship": "The shipyard takes a batch of LNG carrier orders and training demand shoots up. Invar welders are scarce, and every trainee must weld until their arms give out before taking up the job. Your system is treated as a necessity for the first time.",
+  "e_textile": "A home textile boss in Dieshiqiao wants buyers to feel the wrinkles in a bedding set through a headset. You make three versions. It's cheaper than the real thing, he says, but no one buys.",
+  "e_family": "Your parents come to Nantong and you have them put on a headset to tour the hold. Your mother keeps saying it's a little high. She takes it off and asks whether this job pays social insurance.",
+  "e_ar": "Clients have started asking for AR glasses that project process steps right onto the real part, and no longer want a whole virtual workshop. After ten years of making scenes, you start to wonder whether they have any use left.",
+  "e_cold": "Shipyard winters: the workshop is colder than outdoors, and the moment a headset goes in, its lenses fog. You figure out to leave them in the car for half an hour before going in, and this goes into the deployment manual.",
+  "e_old": "A client's old system is still in use and they ask if it can be fixed. That version's project opens only on your computer, and when it does you pause a moment. You lit this scene more than ten years ago.",
+  "e_youngs": "New engineers never get dizzy, and say they don't understand the fuss your generation makes. You demonstrate one turn for one of them, and in his chair his face changes color."
+ },
+ "choices": {
+  "c_game": {
+   "title": "That game company in Shanghai",
+   "situation": "A Shanghai game company is hiring Unity engineers for VR, double the pay, making beautiful things, no more setting up base stations at the shipyard. But projects get cut fast there too. A classmate has already changed teams twice.",
+   "options": [
+    { "label": "Go to Shanghai", "result": "You put the base stations and reflective tape in order. The boss gives you half a month's extra pay and says the door here stays open.", "end": "You went to Shanghai to make games, and when VR went nowhere you moved to mobile, and the headset went back in its box. The scenes you made were far more beautiful than a ship's hold. Now and then you wonder whether anyone climbing those stairs still has a shaking hand." },
+    { "label": "Stay in Nantong", "result": "You go on tuning the feel for welders. The old welder has started saying a little more." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Moving up to VR Development Engineer",
+   "situation": "The company's standard for VR Development Engineer is having owned a project yourself. The hold project is nearly done, but the core interaction was written by the colleague training you. The boss asks whether you dare take on the next chemical project alone.",
+   "options": [
+    { "label": "Take it alone", "result": "You rebuild the scene three times. On the day of acceptance the client asks one more question, and you can answer it." },
+    { "label": "Follow one more project", "result": "You follow along for another six months. Your hands get steadier, and your title stays the same." }
+   ]
+  },
+  "c_cert": {
+   "title": "The VR engineering certificate",
+   "situation": "The trade now has a national vocational certificate that earns points in bids, and the boss tells everyone to take it. The exam content is years behind the real work, but your name will be on the certificate.",
+   "options": [
+    { "label": "Take it", "result": "You pass, and put the certificate on page thirty-two of the bid. This is your biggest contribution of the year, the boss says, and you can't tell if he's joking." },
+    { "label": "Skip it", "result": "The next bid falls one point short, and the boss turns around and gets someone else to take it." }
+   ]
+  },
+  "c_score": {
+   "title": "Whether to adjust the pass rate",
+   "situation": "The shipyard's training supervisor wants a better-looking trainee pass rate to report upward and asks you to lower the threshold by two notches. But those two notches are the whole point of the assessment.",
+   "options": [
+    { "label": "Report the actual data", "result": "The supervisor isn't pleased, and trainees get one more week of practice. Later he admits in private that new hires do pick it up faster." },
+    { "label": "Lower it a little, add a retake", "result": "The numbers look better, and you add a retake prompt no one notices. It isn't quite wrong, and it isn't quite right." }
+   ]
+  },
+  "c_shipyard": {
+   "title": "Moving to the shipyard's training center",
+   "situation": "The shipyard's training center, a client for years, wants you to join as its in-house head of digital training. The pay is ten percent less but it's stable, with social insurance and a canteen. Your company's cash flow has looked bad two years running.",
+   "options": [
+    { "label": "Go to the shipyard", "result": "You move to the client's side. You could set up those base stations with your eyes closed.", "end": "You went to the shipyard's training center and in time took over training for the whole yard. Every time newly purchased headsets arrive, you put one on and walk through it first, and old suppliers no longer dare say in front of you that this one won't make you dizzy." },
+    { "label": "Stay at the company", "result": "The company still owes you two months' bonus. You look out at those distant gantry cranes and open the project again." }
+   ]
+  },
+  "c_ai": {
+   "title": "Handing modeling and content to AI",
+   "situation": "The boss wants to use AI to halve the cost of content and asks you to design the new workflow. If it works you'll be the company's most valuable person, and the two old friends in the modeling group most likely won't be staying.",
+   "options": [
+    { "label": "Do it", "result": "After the new process launches, a project's cycle falls from three months to three weeks. That evening you take the modeling group to dinner, and they order the most expensive things." },
+    { "label": "Only do the interaction part", "result": "The boss brings in an outside company. The modeling group stays, but everyone has started sending out résumés." }
+   ]
+  },
+  "c_senior": {
+   "title": "Applying for Senior VR Engineer",
+   "situation": "The company is naming a Senior VR Engineer who can set technical plans and performance standards. You and another colleague have both applied. He writes good proposals, and you're often on site.",
+   "options": [
+    { "label": "Apply", "result": "You tell them about warming headsets in the car for half an hour in the shipyard winter. The boss listens and only nods." },
+    { "label": "Not this time", "result": "He gets it, treats you to hotpot, and then hands you all the hardest on-site problems." }
+   ]
+  },
+  "c_lead": {
+   "title": "Taking on VR Technical Lead",
+   "situation": "The previous technical head has moved on, and the boss asks whether you'd be VR Technical Lead. Whatever next-generation device you bet on, the company bets with you. The last person who bet wrong is now clearing out headsets at a discount.",
+   "options": [
+    { "label": "Take it", "result": "You take over the bids and the device roadmap, and your first decision is to shut down a platform no one uses." },
+    { "label": "Keep writing code", "result": "You leave the roadmap to someone else, and stay on site setting up base stations." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "You finish the paperwork and put the firmware backup for the last old headset on a hard drive. This trade has changed its name several times, from virtual reality to the metaverse to spatial computing, and you are still teaching people to put on glasses and climb stairs. Leaving the office block you see those gantry cranes, and the angle at which you look up is the same one you once calibrated in a virtual shipyard.",
+  "burnout": "Your eyes and neck have given out together, and more than twenty minutes in a headset brings on a headache. You move to project records and after-sales calls, with no more walking around wearing it. From the sixteenth floor you can see the Yangtze, a reality you haven't looked at properly in a long time."
+ },
+ "stages": [
+  "You place models in Unity, adjust collisions, run frame rates, and spend half your time hunting problems in a headset. On site you set up base stations, run cables and wipe down foam pads. Clients don't speak to you directly, but the old welders like to. They think the torch you've made is too light.",
+  "A training project's interaction work is yours, from requirements to launch. You go over operating steps with the veteran workers and assessment sheets with the client's training supervisor, and break a process into hand motions you write into scripts. On site, people have begun waiting for you to say whether something can change.",
+  "You set plans and performance standards: how many polygons, how many frames, how to prevent dizziness on this step. You write the technical section of bids and walk clients through acceptance. You review young engineers' code and own their problems on site too, and you've begun having to count person-days and profit.",
+  "You run the company's technical roadmap: which next-generation device to back, how to keep people on an AI production line, whether this trade should still be called VR. Bids pass through your hands, and so do the boss's decisions. You seldom wear a headset now, only walking through before delivery to see where it still makes people dizzy."
+ ],
+ "work": [
+  "The colleague training you has you redo the collision on a ship's ladder. You compare it against the real one and change the step height by two centimeters, and sure enough, you stop tripping.",
+  "Base stations keep losing tracking in the workshop. You run black tape around the walls to cover the reflective places, and an old electrician laughs that you look like you're sealing window gaps.",
+  "A modeler gives you a valve with two hundred thousand polygons. While begging him to reduce it you bring him a milk tea.",
+  "A training supervisor at the chemical park sends a sixty-step procedure. Going through it with him, at step forty-two you find two steps written in the wrong order.",
+  "An old welder says the wrist has to pause when moving the torch. You record him twenty times and build that pause into the scoring.",
+  "A school's computer room loses its network. You install the content locally and set up each device by hand, and at nine in the evening the students still haven't left.",
+  "A tender says the frame rate must be at least ninety. You write that into the bid, and in a note on the technical roadmap you also write when it won't be reached.",
+  "A young engineer's scene is lovely but drops frames with every head turn. You have him put it on and spin thirty times. Nothing more needs saying, and he optimizes it that same day.",
+  "Project profit comes to four points. You pick through travel and on-site person-days line by line and merge the second site visit into the first.",
+  "The boss wants to back a new headset. You get a sample and wear it for two shifts in the workshop, and tell him welders with gloves on can't undo the strap buckle.",
+  "For a provincial training-base project you need to bid jointly. You and the partner put technical score and profit share on one sheet and go through it line by line until midnight.",
+  "The AI pipeline has nearly finished off the modeling group's work. You write new job descriptions for the two who remain: one reviews models, the other goes on site."
+ ],
+ "past": [
+  "You went to middle school in Rugao. The first game you secretly installed on your phone was about as crude as they come, and you wanted to know how it was made.",
+  "You applied for digital media technology. It sounded like studying painting. It turned out to be code.",
+  "The lab had a headset. You put it on and walked to the edge of a virtual cliff, and your legs really went weak. That was something you wanted to do a few more times.",
+  "The year you graduated, you spent six months making mobile games in Suzhou, changing the colors of event buttons every day.",
+  "This Nantong company said it was going to do industrial VR. The first thing the boss said was: can you take hardship? You thought he meant overtime. He meant vomiting."
+ ],
+ "late": {
+  "pension_note": "Estimate: a small company paying on a lower base, so the pension is not high. Savings and occasional technical consulting help.",
+  "scenes": [
+   "You volunteer at a nursing home, setting a headset to its slowest speed to show people who can't get around the highway outside. One of them asks you afterward: has that road been finished?",
+   "You enter any stairwell and think about its collision mesh. This handrail is the wrong height. This step, you can tell, was not made for human feet.",
+   "Your first-generation headset has gone into the local science museum, its label giving the year and the wrong resolution. You leave them a message.",
+   "You've had lens surgery and see clearly now. Walking the Hao River in your new glasses, you find the reflections on the water too bright, the sort of thing you would once have turned down.",
+   "These days you do only records and follow-up calls. The headset sits in the cabinet charging. You don't open it.",
+   "You have begun fishing along the Hao River. The float moves at a speed that makes no one dizzy. Best refresh rate you've had in years, you reckon.",
+   "What your child plays is more realistic than anything you ever made. She holds it out and says try it. You wave it off and say your eyes aren't up to it. The truth is you don't want to look anymore.",
+   "No one at the new place knows the story, and you've brought along the salted plum habit. People think you like snacks.",
+   "The old company's office lease is gone and the boss has moved on to selling EV chargers. He posts about it on his feed. You give it a like.",
+   "They say training can now use AI to generate a ship's hold in a day. You think of the two centimeters on that ladder, and wonder if it would come up with them.",
+   "In elevators you still want to pause a second before pressing the floor, a habit for preventing dizziness. The people who got in with you are waiting, and only then do you remember that nobody gets dizzy here.",
+   "The wind is strong on the Yangtze, and ships far off move very slowly. You work it out: at this speed no headset would ever make anyone dizzy. It would just be too dull."
+  ],
+  "closing": {
+   "retire": "The gantry crane moves very slowly, slower than in any version you ever built. You watch it. Nothing to adjust.",
+   "burnout": "The float dips a little. You don't lift the rod, and let it stay where it is.",
+   "end": "New equipment arrives this afternoon. You unpack it, smell the foam, and put one on to walk a lap first."
+  }
+ }
+}

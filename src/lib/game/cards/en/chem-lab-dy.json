@@ -1,0 +1,196 @@
+{
+  "id": "chem-lab-dy",
+  "occupation": "Chemical Technician",
+  "role": "Trainee Laboratory Analyst at a Refinery",
+  "headline": "A trainee analyst in the central laboratory of a refinery in Dongying, working a four-crew rotation, climbing the units with a sample can, and producing the numbers every outbound truck of fuel has to wait for",
+  "unit": "The central laboratory of a privately owned refinery in Dongying",
+  "unit_type": "Independent regional refinery",
+  "city": "Dongying",
+  "city_tier": "Third-tier city",
+  "education": "Associate degree (applied chemical technology)",
+  "level": "You can recite the national standards for distillation and flash point. How far to open a sample valve, and what a line of product ought to smell like, you will learn again up on the units.",
+  "intro": "You work in the central laboratory of a refinery in Dongying, on a four-crew rotation, and day shift or night shift you carry a sample can up onto the units. The plant sends out dozens of trucks a day, and every release slip needs a number from the lab. For now your name can go only in the Analyst column. The Reviewer column is still out of your reach.",
+  "salary_note": "Estimate: frontline lab work at a regional refinery in Dongying, with shift and summer heat allowances, a little above local averages and slightly above the national figure for the role.",
+  "facts": [
+    { "label": "Trainee Laboratory Analyst (current level)", "value": "0–2 years, ¥4,500–6,500 a month (national figure, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Laboratory Analyst, Intermediate Grade (2–6 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Taking samples on the units and in the tank farm", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Analyzing fuels with chromatographs and routine instruments", "source": "AI exposure" },
+    { "label": "Open positions", "value": "63 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "Shift change. The night crew leaves you a rack of unfinished samples and one sentence: the freezing point on number two diesel is wandering, keep an eye on it.",
+    "You sling the sample can, clip on the hydrogen sulfide alarm and go up to the crude unit. Drain the dead oil first, rinse the can three times with product, and stand on the upwind grating.",
+    "Back in the lab for a distillation, logging the initial boiling point one drop at a time. The flash point tester at the next bench chirps. The shift lead doesn't look up. The lid's not on properly, she says.",
+    "The blending unit calls about a number, so politely it makes you nervous. That tank is waiting on your sulfur result, and the tankers are already lined up past the gate.",
+    "Washing color tubes and distillation flasks, acetone creeping in under your gloves. You ask if a machine could do this. The shift lead says a machine can't get these tubes that clean.",
+    "The first time you inject a sample into the chromatograph yourself. The peak comes up a little later than the standard, and you stare at the screen with no idea whom to blame.",
+    "You enter the day's numbers into the system one by one. One decimal out of place means a rework slip. Behind each of your numbers is someone else's employee ID.",
+    "Off shift, back to the dorm, work clothes hung outside the door. The flare is burning to the north. People here read its color more closely than the weather forecast."
+  ],
+  "ladder": [
+    { "title": "Trainee Laboratory Analyst", "stage": "Learning the samples", "focus": "Following shifts to learn sampling and routine fuel analysis, passing the qualification test before reporting alone" },
+    { "title": "Laboratory Analyst, Intermediate Grade", "stage": "Running a shift solo", "focus": "Producing in-process and finished-product data alone, moving up by being steady and never needing a rerun" },
+    { "title": "Senior Laboratory Analyst, Advanced Grade", "stage": "Carrying the load", "focus": "Running the major instruments such as chromatographs, validating methods, doing proficiency testing, reviewing other people's numbers" },
+    { "title": "Lab Crew Chief, Technician Grade", "stage": "Leading a crew", "focus": "Scheduling, watching safety and data quality, explaining every number to production, blending and sales" },
+    { "title": "Laboratory Technical Supervisor", "stage": "Running the system", "focus": "Answering for the lab's quality system and reports, handling assessors and customer audits" }
+  ],
+  "ai_tasks": [
+    { "name": "Taking samples on the units and in the tank farm", "how": "Which valve to drain first, which way the wind is blowing, which grating to stand on: somebody has to climb up and deal with all that." },
+    { "name": "Analyzing fuels with chromatographs and routine instruments", "how": "Injection and integration are more and more automatic. Whether a tailing peak is the column's fault or the sample's still takes a person." },
+    { "name": "Deciding whether an abnormal number needs a retest", "how": "The system can flag numbers that break the trend. Whether it's the unit drifting or a badly washed bottle, someone has to go and check." },
+    { "name": "Entering lab reports and compiling daily summaries", "how": "Instrument data flows straight into the system and daily reports build themselves. People spot-check and sign." }
+  ],
+  "events": {
+    "e_first_sample": "Your first time sampling the catalytic cracker alone, the alarm on your chest beeps twice. You back off upwind as the procedure says and wait for it to read zero. Your legs are still weak when you get back. The shift lead asks only how many times you rinsed the can.",
+    "e_fingerprint": "All the acetone and petroleum ether have worn your fingertips smooth, and for three days the fingerprint reader at the gate refuses you. HR has you re-enroll. Afterward you still have to press twice.",
+    "e_turnaround": "The turnaround that comes every three years is here, a forty-odd-day window with the whole lab on call. Purging, inerting, hot-work tests, one form after another. Whether anybody may strike an arc depends on the flammable gas number in your hand.",
+    "e_winter": "The wind at the mouth of the Yellow River is hard in winter. The sample valve on the tank top has frozen, and you climb the ladder twice with a kettle of hot water. Back inside your fingers can't close on the pipette, the batch comes out twenty minutes late, and the blending unit calls twice.",
+    "e_proficiency": "This year's proficiency test results are back. Both of your blind samples fall in the satisfactory range, with z-scores well under one. The lab director pins the sheet on the balance room door and doesn't mention who ran them.",
+    "e_cnas": "The accreditation surveillance audit arrives. The assessor pulls one page of your raw records from two years ago and finds a changed figure with no strike-through or signature. Nonconformity issued. Everyone spends the next month catching up on ledgers.",
+    "e_lims": "The laboratory information system goes live. Data from the chromatographs and balances flows in directly, and handwritten reports are abolished. The older staff curse for a month. By the second month no one mentions it, having noticed they never again have to guess at someone's 7 or 1.",
+    "e_online": "An online analyzer goes in on the blending line, and daily gasoline samples drop by a third. The hours saved are assigned to you for calibrating it: once a week, you compare the lab's number with its number. When they differ, the first question is which of you to doubt.",
+    "e_ai_alert": "The new quality alarm throws five anomalies in one night and the unit calls you up at midnight. You chase them one by one. Three are sample bottles that weren't dry, one is somebody changing a column without logging it, and the last is real.",
+    "e_ev": "More and more electric cars are on the road. Gasoline isn't selling, and the plant is shifting toward chemical feedstocks like propylene and aromatics. You lead a crew through validating the new methods and, in your forties, memorize the finer points of melt flow index.",
+    "e_merge": "The small refineries around here are shutting and merging. Four people come over from the lab next door, all with more seniority than you, along with two of their balances. The duty roster suddenly has several names you have to speak to carefully.",
+    "e_gas_station": "Filling up the car, you catch something off the moment the nozzle goes in: the mercaptans are heavy. You drive off and use the next station instead. Your spouse asks what's wrong. Nothing, you say.",
+    "e_shoulder": "Years of bending over gauges and hauling cans up tanks have left you with the neck X-ray of a man in his fifties. The health check also shows one liver value running high, and occupational health wants you back in six months.",
+    "e_sleep": "On the day after a night shift, someone downstairs drills for an air conditioner for two hours. After all these years you sleep by blackout curtains and earplugs, and on your days off you still wake at two in the morning sharp.",
+    "e_pickup": "Your child has started kindergarten. One of you works rotating shifts and the other straight days. A four-crew calendar goes up on the fridge, and on the days circled in red, picking up your child means begging someone for a favor.",
+    "e_newyear": "The roster gives you the Lunar New Year's Eve night shift. Refineries don't get holidays. At midnight there are fireworks outside and you are measuring the density of a diesel sample. The canteen's dumplings arrive, already a little stuck together.",
+    "e_saved": "A sulfur retest feels wrong, so you chase it down to the bottom sample point of the blending tank and find a line cross-feeding. The release slip is pulled back and that truck never leaves. That afternoon the sales manager comes by with a crate of apples, sets it down and goes.",
+    "e_bonus": "A full year with no quality complaints, and the plant pays out a quality award. Your share is ¥8,000. It goes on a new water heater at home, the kind that's ready when you get off shift.",
+    "e_alkali": "The soil in Dongying sweats salt, and the wall at the foot of the lab building gets whiter each year. Maintenance has painted it twice and within six months it comes through again. Looking at that white crust, you wonder about its chloride content.",
+    "e_young": "The new college hire can script anything and won't climb a tank. You go up with her once and show her which stretch of the handrail runs hot. Afterward she writes you a little program that catches duplicate injections."
+  },
+  "choices": {
+    "c_thirdparty": {
+      "title": "A third-party testing company in Qingdao",
+      "situation": "A classmate at a third-party testing company in Qingdao says they're short of people who understand fuels. Straight days, no tank climbing, ¥1,500 less a month. But your shift allowance here is finally adding up to something, and all of your qualifications are tied to this plant.",
+      "options": [
+        { "label": "Go to Qingdao", "result": "You peel the four-crew calendar off the wall.", "end": "You move to Qingdao, work days, sleep nights, and run samples other people have mailed in. Where those samples come from is no longer your concern." },
+        { "label": "Stay on rotation", "result": "You mute your classmate's messages. Next month's shift allowance is ¥200 higher than last month's." }
+      ]
+    },
+    "c_trader": {
+      "title": "A fuel trader wants you as quality manager",
+      "situation": "A fuel trading company in Guangrao wants someone who knows the specs: inspecting cargo, checking tanks, arguing data with refineries. Double the pay, commission on top, banquets on top of that. The thing you've been building all these years turns out to be the pair of eyes they need.",
+      "options": [
+        { "label": "Join the trader", "result": "You resign. Before you leave you wipe down your rack of standards.", "end": "You start inspecting cargo for traders, standing beside other people's tanks and reading other people's slips. You know roughly how each number got there, and at the banquet table that is worth a lot." },
+        { "label": "Stay in the lab", "result": "You call back and say no. They say the door's open if you change your mind. You believe about half of that." }
+      ]
+    },
+    "c_senior": {
+      "title": "Sit the Senior Laboratory Analyst exam",
+      "situation": "Registration is open for the Senior Laboratory Analyst skills assessment, with a live chromatography quantitation and a theory book two inches thick. The exam comes right after a stretch of nights, and your spouse is counting on you to mind the child on your days off.",
+      "options": [
+        { "label": "Study after night shifts", "result": "In the exam room you replace the inlet septum, and the examiner makes a tick on his form." },
+        { "label": "Next year maybe", "result": "On your day off you take your child to the wetlands at the river mouth and watch birds all afternoon." }
+      ]
+    },
+    "c_border": {
+      "title": "The borderline tank of diesel",
+      "situation": "You've run a tank of diesel for freezing point twice. One pass is in spec, one misses by a degree, and both are within the method's repeatability. Sales says thirty trucks are waiting outside. Blending says another round costs a day of fuel. Averaged per the method, it passes. Your instinct says it may not hold up in the northeast come winter.",
+      "options": [
+        { "label": "Report per the method", "result": "You average it and sign. Procedurally there isn't a flaw in it. That winter you check the forecast rather more often." },
+        { "label": "Recommend another blend", "result": "You write your opinion in the remarks field. Blending doesn't speak to you for two days, and the tank costs an extra day of fuel." }
+      ]
+    },
+    "c_ai": {
+      "title": "Help build the alarm model?",
+      "situation": "The company is hooking a quality alarm model into the lab system and wants analysts who know the data to label ten years of past anomalies. It eats your days off and pays no overtime. The veterans say the thing will replace you all sooner or later. The young ones have already signed up.",
+      "options": [
+        { "label": "Sign up", "result": "You give every case of sample bottle trouble a category of its own. In the end that category turns out larger than unit upsets." },
+        { "label": "Stick to your work", "result": "The model launches and you use it too. When it's wrong, you can't say where it learned that." }
+      ]
+    },
+    "c_chief_shift": {
+      "title": "Apply for Lab Crew Chief",
+      "situation": "The crew chief is moving to the quality department and the post of Lab Crew Chief, Technician Grade, is open. It means scheduling, answering for safety metrics, and defending every number at the dispatch meeting, and you'd rarely touch an instrument again. The extra pay about covers the peace you'd lose.",
+      "options": [
+        { "label": "Apply", "result": "At the panel you talk about how the cross-feed was traced last time. Down in the seats, a few people look up." },
+        { "label": "Stay by the instruments", "result": "You go on looking after the two chromatographs, whose moods are easier to manage than people's." }
+      ]
+    },
+    "c_new_base": {
+      "title": "The new complex up on the peninsula",
+      "situation": "Several small units at the old plant are being phased out, and the company is hiring for a huge new refining complex up on the north of the peninsula. Lab pay is a fifth higher, with a dorm bed and a trip home to Dongying every two weeks. Your child is in middle school, and your parents are frailer each year.",
+      "options": [
+        { "label": "Go north", "result": "The new lab is big enough to need an electric cart, with balances in long rows. It takes half a year to learn all the sample points." },
+        { "label": "Stay at the old plant", "result": "Two more units at the old plant go cold, samples thin out, and people from your crew start learning the forklift." }
+      ]
+    },
+    "c_dayshift": {
+      "title": "Move to straight days in sample control",
+      "situation": "You've started waking up with your heart racing. The sample room needs someone on straight days to look after retained samples and reference materials. Without the shift allowance it pays ¥2,000 less. The director says let him know, and that plenty of others have their eye on it.",
+      "options": [
+        { "label": "Go to straight days", "result": "The first month you still wake at two. In the third month, for the first time, you sleep through to the alarm." },
+        { "label": "Keep rotating", "result": "You add another layer to the blackout curtains. In the last years before retirement, you don't want to give up a yuan of that allowance." }
+      ]
+    },
+    "c_supervisor": {
+      "title": "Apply for Laboratory Technical Supervisor",
+      "situation": "The technical supervisor is retiring. The post signs for every report in the lab, handles the assessors, and takes the front row in customer audits. The quality system's documents stand as tall as a person, and the company wants someone who can explain them and carry them.",
+      "options": [
+        { "label": "Apply", "result": "You read the system documents three times and mark on the contents page which clauses no one has ever really followed." },
+        { "label": "Leave it to the young", "result": "You say this is a job for people who can stay up writing documents. Your crew's handover remains five minutes shorter than anyone else's." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "Your employee ID is deactivated in the system, but the data stays, and when someone looks it up, there's a string of digits nobody recognizes. The fuel going out the gate has been through several generations of standards, and each truck's slip still has a column for the analyst. When you fill up now you look at the receipt and the grade, and nothing else.",
+    "burnout": "One occupational health recheck follows another. You apply for a transfer and end up in logistics, handing out protective gear. Nobody understands glove models the way you do, but you've stopped smelling anything on purpose. You're off the night roster, and now you don't know what to do with the middle of the night."
+  },
+  "stages": [
+    "You follow the shift lead around the crude unit, the cracker and the tank farm, learning how to open a sample valve and rinse a can, then come back and run distillations, flash points and densities. Every number you produce has someone else's reviewer ID behind it. You don't answer the unit's phone calls, and if you do, all you can say is I'll ask.",
+    "You're on your own shift now. A shift means dozens of in-process results, with the distillation unit, the sulfur analyzer and the flash tester turning over in sequence, and people from blending have started calling you by name for numbers. Once a number goes out it's yours. The biggest change from the last level is that nobody gives it a second look on your behalf.",
+    "Two gas chromatographs are yours to tend: changing columns, building calibration curves, validating new methods. Other people's numbers now come to you for review, and you have become the person who answers what is this peak. The director names you for the annual proficiency blinds.",
+    "You schedule the crew's four-crew rotation and keep track of whose certificates and which instruments are coming due. In the morning you defend a number at the dispatch meeting, in the afternoon you take a new hire out to the tank farm. Production, blending and sales all have reasons to push you, and you have to tell which ones really are urgent. You touch the instruments less and less.",
+    "Every report in the laboratory comes to rest on your authorized signature. You revise the quality system, receive assessors and customer auditors, and decide which numbers may go out and which must be chased. The most tiring days of the year are the ones spent with an auditor across from you, leafing through raw records."
+  ],
+  "work": [
+    "The shift lead has you run the same sample through distillation five times, and your five end points spread over three degrees. She turns your heating knob back a little and says you're rushing the climb.",
+    "You mislabel a sample from Tank 7 and catch it against the sampling sheet just before it's logged in. You peel off the label and hold it crumpled in your palm for a long while.",
+    "On the day of your qualification test the examiner hands you an unlabeled bottle of oil and asks for a flash point. On the sixth try, a blue flame runs briefly across the surface.",
+    "At two in the morning the cracker calls: end point's high, they want to change the operation. You rerun the distillation and send the number. The board operator on the line says all right, and that counts as getting to know each other.",
+    "The sulfur analyzer's baseline is drifting. You check three points with a standard and finally find that the argon cylinder is nearly empty. After changing it you write one new reminder on the equipment card.",
+    "The driver picking up a load asks through the window whether you could hurry. He has been waiting six hours. You tell him there's only the density left, and he leaves a bottle of mineral water on the sill.",
+    "For a new gasoline composition standard you run a seven-injection calibration and get stuck at a correlation coefficient of 0.998. Old Gong at the next bench says it's good enough. You redo the third injection anyway.",
+    "Sales brings in a customer's test report that reads 2 ppm above yours. You split one sample into two and exchange them, and the difference turns out to be the material of the sample bottles.",
+    "You fit a new capillary column on the chromatograph and condition it overnight. In the morning the baseline is as flat as a lake. You sign the instrument log and copy down the length of the old column too.",
+    "Young Bo on your crew has gone out of tolerance on two retests in a row. Instead of confronting her you walk through it with her from bottle-washing onward, and find she's been using a pipette with too large a range.",
+    "At the dispatch meeting production says the lab held up the startup. You read out the receipt times and report times of each sample in turn. Each side is forty minutes out.",
+    "A safety inspection catches someone on your crew washing bottles without goggles, and the fine comes to you. You pay it, and the next morning's meeting runs five minutes.",
+    "A customer's auditor asks for a calibration record from three years back. You have it fetched from the archive. He checks through to the fourth page, lays down his pen, and says that'll do.",
+    "You rewrite item twelve of the internal audit report three times, in words the auditors can follow and the crew chiefs won't take as a scolding."
+  ],
+  "past": [
+    "You go to middle school in Guangrao. Half your classmates have a father at a refinery or in the oil field. Yours drives a tanker and always carries a smell that won't wash out. You assume all fathers smell that way.",
+    "Your chemistry teacher has everyone test the pH of the well water at home with paper strips. Yours comes out a little alkaline and you're pleased for half a day. It's the first time you feel a number can say something.",
+    "On the day you fill in your college choices, your father says a local vocational college in chemicals will get you straight into a plant, no need to spend money elsewhere. You think it over and pick applied chemical technology.",
+    "Your internship is on the floor of a chemical plant, three months as a field operator, with summer work clothes you can wring out at the end of a day. You hear the lab needs people. What attracts you this time is the air conditioning.",
+    "You get your intermediate certificate as a chemical analyst. The practical is an acid-base titration, and it takes you a month of practice to hit the last half-drop at the end point."
+  ],
+  "late": {
+    "pension_note": "Estimate: a standard enterprise pension. Only part of the shift allowance counted toward contributions, so the replacement rate is middling.",
+    "scenes": [
+      "You begin learning to get up with the sun. For the first month, when shift change comes around, you lie in bed working out which crew is on today. You get it right, and it doesn't help.",
+      "Your compound is replacing its drinking water machines, and management posts a water test report. You circle the units in pen and go downstairs to ask whose stamp that is.",
+      "That stretch of the old plant has been torn down and listed as reserve land for the chemical park. You drive by. The air has no smell in it now, and you can no longer tell which way the wind is blowing.",
+      "That one liver value has always run a little high. You check it every six months, file the slips by date, and draw a trend line. The doctor says it looks stable. You say the line could use a few more points.",
+      "You hand out gloves in logistics. When someone comes for nitrile you ask what he's going to wash. He finds you talkative and next time comes on someone else's shift.",
+      "You can't stand the smell of acetone now, nor nail polish remover: when your spouse takes it off, you open the windows. That smell used to spend twelve hours a day on your hands.",
+      "You take up salting duck eggs the way they do at the river mouth, measuring the brine with a hydrometer and logging it vat by vat. The saltiness that comes out satisfies you more than any number you ever reported.",
+      "The new job's badge looks better than the old one. A year in, you realize that you used to have people chasing you for numbers, and now you chase people for numbers.",
+      "At an industry get-together someone says the old plant's lab has replaced a batch of machines and cut staff by half. Well, you say, that's normal. Those machines need calibrating, and that still takes a person. Just fewer.",
+      "You still can't abide a sloppy label. At the supermarket you pick up a bottle of loose-filled cooking oil, look at the rim, and put it back. Whether you earn more than you used to is a sum you haven't done for a long while.",
+      "The fuel standard goes up another notch and the news says sulfur has been cut again. You work it out: the number you were producing when you started couldn't get in the gate now.",
+      "Your fingerprints never did grow back. At the neighborhood office the reader won't take you, and the clerk asks you to press a few more times. Might as well try the other hand, you say."
+    ],
+    "closing": {
+      "retire": "The flare is still burning to the north, a cleaner color than it used to be. You check the wind and take in the quilts you had airing outside.",
+      "burnout": "It has been a long time since you smelled oil. The market this morning reeks of fish, and you walk home slowly with one in your hand.",
+      "end": "You no longer write your name in anyone's Analyst column. You unscrew a bottle of water and set the cap down on the clean side of the table."
+    }
+  }
+}

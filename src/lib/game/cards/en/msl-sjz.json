@@ -1,0 +1,174 @@
+{
+ "id": "msl-sjz",
+ "occupation": "Medical Science Liaison",
+ "role": "Pharmaceutical Medical Science Liaison (MSL)",
+ "headline": "A medical science liaison in Shijiazhuang carrying journal papers and adverse-event forms across Hebei, saying \"that's outside the approved indication\" thousands of times, forever on the far side of a compliance line from sales",
+ "unit": "The medical affairs department of an established Shijiazhuang drugmaker moving into innovative medicines",
+ "unit_type": "Pharmaceutical medical affairs department",
+ "city": "Shijiazhuang",
+ "city_tier": "Second-tier",
+ "education": "Master's (Clinical Medicine, Oncology)",
+ "level": "You can read the literature and present trial data; you aren't used to being called \"teacher\" and you don't yet know what three minutes of a department chief's time is worth",
+ "intro": "After your master's and a year of residency training, you decided to stop wearing the white coat. This old drugmaker is moving into new medicines, and its medical affairs department is in an industrial park on the east side of Shijiazhuang. Your suitcase gets more use than your desk. In your first week of training, someone from legal wrote a few words on the whiteboard: you are not here to sell drugs. That sentence has become the distance between you and everyone else.",
+ "salary_note": "Estimate: MSLs at domestic drugmakers in Shijiazhuang earn less than those at multinationals or in first-tier cities, but this counts as high income locally, with travel allowance on top.",
+ "facts": [
+  {
+   "label": "Medical Science Liaison (current level)",
+   "value": "0–3 years, ¥10,500–15,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Senior Medical Science Liaison (3–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 3–5 years",
+   "value": "¥14,400 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Building scientific trust with experts",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Summarizing literature and writing abstracts",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "18 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Shijiazhuang Station. The bullet train to Baoding takes under an hour. On board you run once more through the subgroup data for the study you'll present today: what was n, what was the control arm.",
+  "You have four minutes before the oncology chief's clinic starts. You ask him only whether he's seen any resistance lately, and then you listen.",
+  "A young doctor asks if this drug can be used beyond its label. You first make sure he asked of his own accord, then file a medical information inquiry through the process: reply in three working days.",
+  "The sales rep waits at a small restaurant by the hospital gate, hoping you'll mention hospital listing to the chief this afternoon. You lay down your chopsticks and say: that I can't bring up.",
+  "A department meeting: twelve doctors, one projector, twenty minutes on a paper. Someone asks about side effects. You give the data, then go over how adverse events get reported.",
+  "On the train home you write up visits. Every interaction in the CRM needs a topic and an outcome, and there can be no sales language anywhere.",
+  "A doctor mentioned an adverse reaction in passing today, and it must be reported within 24 hours. You sit on the couch, fill in the form, and hit send."
+ ],
+ "ladder": [
+  { "title": "Medical Science Liaison", "stage": "Field", "focus": "Visit doctors, present data, take inquiries, run department meetings, learn the compliance lines" },
+  { "title": "Senior Medical Science Liaison", "stage": "Regional", "focus": "Manage a province's key experts, support investigator-initiated studies, train sales" },
+  { "title": "Regional Medical Manager", "stage": "Team", "focus": "Lead MSLs across several provinces, set the scientific plan, coordinate with marketing, R&D and legal" },
+  { "title": "Director of Medical Affairs", "stage": "Strategy", "focus": "Set the company's medical strategy and answer for every piece of outgoing medical content" }
+ ],
+ "ai_tasks": [
+  { "name": "Building scientific trust with experts", "how": "AI can organize literature and talking points. Reading a doctor's real doubts and knowing what to ask next has to be done face to face." },
+  { "name": "Summarizing literature and writing abstracts", "how": "AI can quickly digest new papers and conference abstracts; a person spot-checks the originals and the subgroup conclusions." },
+  { "name": "Pre-reviewing outgoing medical materials", "how": "AI can flag off-label and risky phrasing. Whether a sentence is really compliant is for a person to decide." },
+  { "name": "Planning department meetings and scientific events", "how": "AI can draft agendas and invitations. Choosing the topic and the speakers takes knowing the place." },
+  { "name": "Organizing visit notes and clinical feedback", "how": "AI can sort records and draw out themes. Finding the need a doctor hasn't stated takes a person." }
+ ],
+ "events": {
+  "e_hegui": "It takes three tries to pass the compliance exam for new hires. Later on, every trap in those questions turns up for real in a hospital corridor.",
+  "e_chenhui": "An associate chief in Xingtai hears out your data and asks a question you can't answer. You spend two days looking it up and send him the result. He replies: you're the first one who actually came back.",
+  "e_chezhan": "Two hundred days a year on the road: Handan, Cangzhou, Tangshan, Hengshui. You know which exit at every station has taxis, and which seat your back starts hurting from.",
+  "e_ae": "On a Saturday at dinner a doctor mentions a reaction to the drug. You put down your glass and go outside to fill in the adverse-event form. Afterward he tells people you're a bit rigid.",
+  "e_beijing": "You find many patients in your province take the train to Beijing on Saturdays for follow-up, on treatment plans set by Beijing specialists. When they come home, the county hospital doctors have to carry on and often have no one to ask. You start writing these questions down, one by one.",
+  "e_xiansuo": "The day the company's first innovative drug is approved, the canteen hands out chicken legs. That afternoon the medical affairs department meets and hears one thing: from now on, somebody is recording every word you say.",
+  "e_jiehe": "Your child's parents' meeting collides with a regional scientific meeting. In a hotel corridor you listen by video to a teacher read out your child's math score. A chief passes by and says: that's not the data they want from you.",
+  "e_ai_wenxian": "AI can now condense a week of new literature into summaries, and quite accurately. One day it merges the subgroup results of two different studies. If you hadn't checked the originals once more, the slide would have gone out.",
+  "e_jianbao": "A new guideline comes out with your product among its recommendations. You make a one-page summary and send it to thirty-odd doctors across Hebei. Next day one replies: I know. He's one of the authors.",
+  "e_iit": "A chief in the provincial capital wants to run an investigator-initiated study. You go through the protocol with him three times. It takes seven months to get through the company. By the day it's approved, his student has graduated.",
+  "e_jiudian": "You can now tell a pillow at a certain Cangzhou hotel from a pillow at a certain Tangshan hotel. This is nothing to be happy about. Your sleep has begun to vary by city.",
+  "e_guotan": "The product wins a place on the national reimbursement list after price negotiations, at a far lower price. Sales calls go up, and so do doctors' questions, all about how to use it at the grassroots level. Your weekends are booked three months out.",
+  "e_xiaoshou": "At a sales training a rep asks if this data can be \"presented a bit more positively.\" You bring up the original chart and redraw the Y axis from zero. Nobody asks again.",
+  "e_jicai": "The older product goes into centralized procurement at a fraction of its old price. The whole line's medical team is merged, and two colleagues change industries. Nobody updates that product's literature library again.",
+  "e_ai_peixun": "An AI pre-review system goes live, and outgoing materials pass through the machine first to flag anything off-label. Legal says now they can take weekends off. You look at the first sentence it marks in red. You wrote it three years ago.",
+  "e_kol": "The old chief you've been visiting for over ten years retires, and his students take over. Half your expert map is obsolete at a stroke, a whole page of people to get to know again. They call you \"teacher,\" and this time they mean it.",
+  "e_zhuanli": "The company's first innovative drug nears the end of its patent, and generic filings come one after another. The medical affairs budget is cut and fewer new people are hired. You look at this timetable and work out your own.",
+  "e_yaotui": "Your lower back finally requires a long leave. When you return, your itinerary has been arranged by AI: no more county trips. County questions now get answered online."
+ },
+ "choices": {
+  "c_waiqi": { "title": "A post in Beijing at a multinational", "situation": "The Beijing team of a multinational is hiring an MSL: forty percent more pay, a mature product line, good training. You'd have to move to Beijing or commute every week. This innovative drug here has only just started, and the people you've got to know in Hebei won't count for anything over there.", "options": [
+   { "label": "Go to Beijing", "result": "You hand over all your Shijiazhuang visit notes. Each entry in the CRM is written by the book.", "end": "You join the multinational's Beijing team. Your card is in English, and so are the meetings. On the Friday afternoon train you look down without talking, just like everyone around you going home to Shijiazhuang." },
+   { "label": "Stay at the domestic company", "result": "You send your thanks. Next week's Handan trip is already booked." }
+  ] },
+  "c_shangban": { "title": "Back to clinic, or over to marketing", "situation": "You hear a Grade 3A hospital in the city is hiring for its drug trial office. It wants a clinical background, pays little, and would put you back in a hospital. At the same time your company's marketing department would like you as a product manager: more pay, but you would no longer speak as medical affairs.", "options": [
+   { "label": "Join the trial office", "result": "You put on the white coat again, though only for meetings.", "end": "You're back in a hospital, reviewing protocols at the clinical trial office. Whenever you see a drug company's MSL waiting in the corridor for a chief, you silently count how many minutes they have left." },
+   { "label": "Stay in medical affairs", "result": "You turn both down. This weekend you're giving a training for county doctors." }
+  ] },
+  "c_caijian": { "title": "Medical affairs cut in half", "situation": "With patent expiry approaching, the company will cut half of medical affairs. You aren't on the list; three people you lead are. HR says you can choose to leave with them at the top severance tier, or stay and take over the work of the three.", "options": [
+   { "label": "Leave with them", "result": "The four of you go out for a meal, and you pay.", "end": "You take the payout, leave the drug industry and stop doing this work. Your CRM account is deactivated. All those tens of thousands of visit records are archived in a folder no one will open." },
+   { "label": "Stay and take it on", "result": "You now handle three provinces alone and book weekend train tickets just as before." },
+   { "label": "Move to pharmacovigilance", "result": "You move to compiling adverse events and analyzing signals. No more running around; you sit at a computer." }
+  ] },
+  "c_shujuhua": { "title": "Study research methods or cover more cities", "situation": "Your statistics are middling and the company will pay for a part-time course on clinical research methods, on weekends. To make Senior Medical Science Liaison, running around isn't enough. But for six months now the cities on your list haven't all been covered.", "options": [
+   { "label": "Study methods", "result": "You can understand reviewers' comments now, and can begin to point out what's wrong with a good paper." },
+   { "label": "Cover the cities first", "result": "You hit eleven cities in a month. The chief in Hengshui starts making appointments with you." }
+  ] },
+  "c_baomi": { "title": "The slide sales wants", "situation": "The sales director says the product needs to get into a big hospital in the province. Would you talk to the chief privately and put a bit more weight on one subgroup's data? None of this is in any email. You know there really are patients at this hospital who could use the drug, and you know where the compliance line is.", "options": [
+   { "label": "Refuse; present the full data", "result": "You present the original chart. The hospital listing is delayed by half a year. From then on the sales director only nods when he sees you." },
+   { "label": "State the facts, skip the listing", "result": "When you're done the chief himself asks about the listing, and you pass him into the process. See, says the sales director, that worked. You aren't sure it did." }
+  ] },
+  "c_laowu": { "title": "The chief's speaking fee", "situation": "A chief you've worked with for years is speaking at a big meeting. The fee, calculated at the company's fair market value, is well below what he expected, and his student rings to hint at this. You have no button for adding money, but you could change the length of the talk, and the sum would come out right.", "options": [
+   { "label": "Go by the rules", "result": "The chief sends his student to speak. He's courteous to you afterward, courteous and somewhat distant." },
+   { "label": "Explain to the chief in person", "result": "You go to his office and explain, laying out how the company does the math. He says he understands. What he doesn't understand is why his student made that call." }
+  ] },
+  "c_ai": { "title": "Help train the medical Q&A tool?", "situation": "The company wants an AI medical Q&A tool to handle doctors' common inquiries. MSLs must calibrate the answers one by one and set when it must hand off to a person. There's no incentive and it's a lot of work, and mistakes will be blamed on medical affairs.", "options": [
+   { "label": "Calibrate it", "result": "You mark two thousand items. The first rule: any question about a specific patient goes to a person." },
+   { "label": "Stay out of it", "result": "Once it's live you have to correct it occasionally when doctors ask, and when you do, you first check who taught it." }
+  ] },
+  "c_zongjian": { "title": "Compete for Director of Medical Affairs", "situation": "The post of Director of Medical Affairs is changing hands. It answers for all outgoing medical content, means daily meetings with R&D, marketing and legal, and means defending the budget for the MSLs in the field. You haven't personally given a department meeting in several years.", "options": [
+   { "label": "Compete for it", "result": "You lay out five years of medical strategy on one page. The CEO asks which sentence on this page could go into the annual report." },
+   { "label": "Stay in the region", "result": "You go on leading the Hebei and Shanxi team, and next week you're off to Yuncheng." }
+  ] }
+ },
+ "endings": {
+  "retire": "When you retire, you hand your expert files to someone new in the region. In them are each chief's research interests and also who shouldn't be disturbed after three in the afternoon. Tens of thousands of visit records go into the archive. On your first morning of retirement you book no ticket, and you don't run through what n was on any train. A billboard outside advertises a health supplement. You read as far as the column for the control arm: none.",
+  "burnout": "Two hundred days a year of trains and hotels, and your back and your sleep give way one after the other. You ask to move indoors and write medical Q&A. In the days without people to see, you find that it's been some years since you ate dinner at home on a Tuesday. The itinerary sheet full of city names ends up leveling the dining table."
+ },
+ "stages": [
+  "You take an iPad and compliance-approved slides to see doctors, a few minutes each: present data, hear questions, take inquiries, go back and write the CRM. You don't go to sales dinners, and you don't answer doctors' questions beyond the label. What's different from your white-coat days is that somebody now reviews every sentence you say.",
+  "You manage a group of key experts in Hebei, help them assess study protocols, run roundtables and provincial meetings and give sales their medical training. You ask R&D for data and rewrite wording with legal. The difference is that doctors start asking you, before they decide: what do you make of these data?",
+  "You lead MSLs across several provinces and set the year's scientific plan and expert tiers, half the time at headquarters in meetings, half the time accompanying your people to see the hardest chiefs. You spot-check the team's visit notes, and if anyone crosses the line you know first. Arguing over budget with marketing is daily life.",
+  "You answer for every piece of medical content the company puts out, and the final signature on each document is yours. You talk pipeline with the CEO, post-marketing evidence with R&D and boundaries with legal. You hardly see doctors yourself anymore, but once a year you still go sit in on a county department meeting, to remind yourself who these data are for."
+ ],
+ "work": [
+  "A doctor in Cangzhou turns to page seven of your slides and points to the thin tail at the end of the survival curve: how many people are still in here? You give the number at risk.",
+  "You submit your first medical information inquiry in the CRM. The system makes you tick \"unsolicited.\" You look back at the doctor: you did ask first, didn't you?",
+  "On a train, the regional colleague showing you the ropes quizzes you on the data. \"What's the median progression-free survival?\" You get it right. She goes on: \"And how were the censored cases handled?\"",
+  "At a provincial roundtable two chiefs take opposite views of the same data. With agenda in hand you bring each back to the question in turn, and you never say who's right.",
+  "Teaching a new sales rep from one page of training slides, you spend an hour on what must not be said. In the final minute someone asks: so what can we say?",
+  "A young county hospital doctor sends a list of twenty-seven questions. You enter them one by one in the medical information system. Number twenty makes you call R&D.",
+  "A report's expert tier chart is full of titles. You have her redo it, writing only what each expert has really been working on in the past year.",
+  "Marketing's new slide draws the efficacy bars very tall. You open the medical review process and leave a comment on page three: where does the Y axis start?",
+  "A new MSL is too nervous to speak before her first meeting with a chief. You walk with her to the clinic door and tell her that today she only needs to ask one question.",
+  "At the budget review for post-marketing research, you explain to the head of R&D why another real-world study is needed at the county level. He asks what it's worth. Not getting caught without an answer, you say.",
+  "A medical document bound for the whole country sits in your approval queue. You read to the last page of references, find the seventh cites the wrong year, and send it back."
+ ],
+ "past": [
+  "You grow up in a county town near Baoding. Your mother is the dispenser at the township clinic's pharmacy, and you can hear her counting pills as you do homework.",
+  "You get into the clinical program at a medical college in Hebei. Your father is happy for a whole summer. Relatives start bringing you their lab results.",
+  "You study oncology for your master's and do a retrospective study for your thesis, and find out for the first time how much a conclusion can be changed by which cases you choose.",
+  "In your first year of residency training there are many night shifts. You find you would rather look up literature to answer colleagues' questions than stay on the ward until morning.",
+  "This drugmaker comes looking for MSLs. The recruiter asks why you stopped being a doctor. You tell half the truth. The other half, he says, you can tell the doctors later."
+ ],
+ "late": {
+  "pension_note": "Estimate: drugmakers pay social insurance on a high base and working pay was good, so there's some savings; what's owed to your back and neck you'll be paying off slowly in retirement.",
+  "scenes": [
+   "You've become the person in the housing complex who can be asked about test results. An old neighbor brings you a report. You tell him only what the paper says, never what he should take. It's a line you've held your whole life.",
+   "The seniors' college starts a course in health literacy and you go to explain how to read the research in ads. When you reach the control arm, an old woman says she's never had one in her whole life.",
+   "MSLs all come with AI assistants now, and answers to doctors' questions appear on the spot. You hear the county hospital near Baoding doesn't wait three working days anymore. That's a good thing, you say, and put the phone down.",
+   "In the first year you're still waiting for your back to get better. A rehab doctor writes you an order, and you check first which year's research it's based on.",
+   "You proofread manuscripts for a small medical translation firm, paid by the piece. Under no circumstances will you let a \"may\" in a study's conclusion become a \"can.\"",
+   "On days your back doesn't hurt you go down to buy vegetables, not quickly. You can eat dinner at home on a Tuesday now. Your spouse says we've eaten this dish for ten years. Only now do you taste the Sichuan pepper.",
+   "In the first year after leaving, when the train announcement comes on, your hand still goes to your chest for your badge. There's only a pocket there now.",
+   "No one at your new job asks what n was. Sometimes you still ask at meetings. Your colleagues find you rigorous, and a little odd.",
+   "The product you carried for so many years has made it onto the primary care list, and even township clinics can prescribe it now. In your mother's old dispensary, that box is on the shelf.",
+   "Reading the news you look for the sample size first. When you see \"research shows,\" your finger scrolls down by itself. If there's no source by the end, you don't believe it.",
+   "Hebei's high-speed stations have opened new exits, and the places you knew for taxis have all moved. You don't need to know this anymore, but when you travel, you still choose the car next to the stairs."
+  ],
+  "closing": {
+   "retire": "On a morning with no itinerary you finish an article that has nothing to do with work, and for the first time you skip its methods section.",
+   "burnout": "A plaster on your back, a book left open halfway. You put it down. There are no visit notes to write today.",
+   "end": "There's a whole page in your contacts where every name is followed by \"Chief.\" You don't bother them, and you haven't deleted them."
+  }
+ }
+}

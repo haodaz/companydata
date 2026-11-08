@@ -1,0 +1,207 @@
+{
+ "id": "smart-mfg-xy",
+ "occupation": "Intelligent Manufacturing Engineer",
+ "role": "Assistant Intelligent Manufacturing Engineer",
+ "headline": "At a gearbox-housing plant in Xiangyang you squeeze a line's cycle time from 62 seconds down to 55. The machines are what you change. The people you have to convince have run lathes for twenty years",
+ "unit": "Intelligent manufacturing section of an auto parts plant in Xiangyang, Hubei",
+ "unit_type": "Private auto parts maker (tier-two supplier)",
+ "city": "Xiangyang, Hubei",
+ "city_tier": "Third-tier industrial city",
+ "education": "Bachelor's (Mechatronics Engineering)",
+ "level": "You can read a PLC program. Why a line keeps stalling at station four, you still have to crouch beside it for a whole shift to see.",
+ "intro": "Mornings in Xiangyang begin with beef noodles and a mouthful of yellow rice wine. The shop director, bowl in hand, tells you college graduates who come here do not touch a keyboard for the first three months. You are led to Line 3 and given a stopwatch and a station chart. A housing takes sixty-two seconds to get from station one to station nine, and the carmaker wants fifty-five by the second half of the year. Where on this line those seven seconds are hiding is yours to find out.",
+ "salary_note": "Estimate: a tier-two supplier in Xiangyang pays below the national figure for this role. Social insurance is paid on the standard base; night shifts earn an allowance.",
+ "facts": [
+  {
+   "label": "Assistant Intelligent Manufacturing Engineer (current level)",
+   "value": "0–2 years, ¥3,600–5,000 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Intelligent Manufacturing Engineer (2–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Commissioning production-line equipment and processes",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Researching production needs and planning smart manufacturing schemes",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "68 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Outside a noodle shop in Fancheng, a few workers just off night shift are having their morning wine. You order yours without chili. The owner glances at you and adds chili oil anyway.",
+  "Shift handover. The board says last night's OEE was seventy-one percent. The team leader has written the cause as: other.",
+  "Stopwatch in hand at station four, you see the robot arm reach for the part 0.8 seconds before the fixture lets go. Pure waiting.",
+  "The washer alarms and stops the line. A maintenance man works at it with an Allen key for ages. You log the fifteen minutes in the MES as equipment failure. The team leader tells you to change it to material change.",
+  "On the phone with the integrator's commissioning engineer, who is at another site in Shiyan and tells you to send a screenshot of the alarm first.",
+  "Earplugs in, you check material in the die-casting area. When you take them out, people in the corridor sound as if they are underwater.",
+  "A process meeting: Line 3's cycle time calculation has to go into next month's capital request. The boss reads only the payback cell.",
+  "You stay for the first hour of night shift to watch the data. The machines behave better than in the day. The people are more tired."
+ ],
+ "ladder": [
+  { "title": "Assistant Intelligent Manufacturing Engineer", "stage": "On the line", "focus": "Crouching by the line, patching small PLC routines, maintaining MES reporting, learning why the line runs as it does" },
+  { "title": "Intelligent Manufacturing Engineer", "stage": "Changing a line", "focus": "Owning a line's automation and commissioning, dealing with team leaders and suppliers" },
+  { "title": "Senior Intelligent Manufacturing Engineer", "stage": "Planning the shop", "focus": "Planning a whole shop and its investment case, answering for the return" },
+  { "title": "Head of the Digital Factory", "stage": "Running the plant", "focus": "Running plant-wide automation and IT, arguing money with the boss and requirements with the carmaker" }
+ ],
+ "ai_tasks": [
+  { "name": "Researching production needs and planning smart manufacturing schemes", "how": "AI can compile industry material, summarize historical data and draft schemes and benefit estimates. People have to find the real pain points on the floor, agree budgets and priorities with each department, and answer for the choices." },
+  { "name": "Designing smart production lines and process layouts", "how": "AI can generate layout options, simulate takt and logistics, and check common design rules. People settle the final design around the site, the equipment, safety and the investment limit." },
+  { "name": "Integrating automation equipment and control systems", "how": "AI can draft PLC or interface code and check equipment and protocol matches. People handle incompatibility between brands, wire and commission on site, and answer for safety and stability." },
+  { "name": "Connecting production equipment to information systems", "how": "AI can write data mappings, interface scripts and cleaning rules, and help debug messages. People need to understand the business definitions, coordinate whoever owns each side, and verify that the data is trustworthy." },
+  { "name": "Commissioning production-line equipment and processes", "how": "AI can offer checklists and reference parameters. Real commissioning takes a person on site running each machine, watching its motion, fine-tuning, reacting to surprises and answering for the safe start of production." },
+  { "name": "Analyzing production data and optimizing processes", "how": "AI can clean data, run statistics, spot anomalies and propose parameter changes. People only spot-check against process logic and decide which changes are worth trying." },
+  { "name": "Diagnosing faults in smart equipment", "how": "AI can rank likely causes from alarm logs and past cases. People have to inspect the machine, take it apart and swap parts, and judge which faults demand a safety stop." },
+  { "name": "Writing technical documents and training operators", "how": "AI can quickly draft manuals, change records, training slides and FAQs. People confirm the content matches the floor, teach operators face to face and watch whether they can really do it." }
+ ],
+ "events": {
+  "e_spring": "The ten days of Spring Festival are the only line-down window of the year. Everyone else goes home; you strip Line 3 down to its anchor bolts. On the seventh morning you start it up, and station five is one signal wire short.",
+  "e_cycle": "You reorder the pickup and fixture motions. It costs nothing and takes 1.4 seconds off the cycle. The shop director borrows the stopwatch and clicks it three times, then has the canteen give you an extra portion of meat.",
+  "e_annual": "The carmaker's annual price-reduction letter has arrived: three percent this year. Purchasing meets all afternoon and the conclusion lands on you: take one more person off Line 3.",
+  "e_iatf": "An IATF 16949 auditor spot-checks and points at a parameter change in the MES: who approved this? You pull up the workflow. That one is missing a signature.",
+  "e_vision": "In its first week the vision inspection system rejects more than three hundred good parts. The workshop roof had new lights put in. You fit a hood over the camera, and the quality team leader laughs at you for three days.",
+  "e_ppap": "A new part's PPAP is due, and the cycle test has to run three hundred pieces without a fault. At piece two hundred eighty-seven the fixture jams. Everybody looks at you. Start again.",
+  "e_ear": "At your physical, the high-frequency range of your hearing has dropped a notch. The plant doctor says earplugs have to be worn properly. You think back over the years: whenever you had them in, you were on the phone.",
+  "e_foreman": "The old team leader on the third shift has spent nineteen years at station seven and can hear a tool about to chip half a shift before your vibration sensor. You record the sound he listens for and turn it into an alert.",
+  "e_data": "Equipment data and the MES disagree, each with an owner who says theirs is correct. You crouch on the floor for two days and find one worker whose scanner always fires early.",
+  "e_fund": "The boss gets a technical-upgrade subsidy and everyone receives a holiday payment. Your line goes into the company brochure. The workers in the photos are borrowed from the offices.",
+  "e_ev": "The carmaker cuts combustion gearbox orders by thirty percent and dust sheets begin to appear over Line 1. For the first time you hear someone in a meeting quietly working out what these lathes are still worth.",
+  "e_motor": "A new line for electric drive housings gets approved, with tolerances in another league. The carmaker's quality engineer comes to live on the line, and it takes you three months to understand what he means by coaxiality.",
+  "e_ai_schedule": "The scheduling system has AI rework next week's plan and it saves more changeover time than the planner did. The planner puts down his chart and says fine, I'll go see whether the material actually exists.",
+  "e_ai_param": "AI suggests raising the cutting parameters by six percent, and the process engineer comes to ask you before signing. You try ten pieces and tool life drops by twenty percent, an item missing from its accounts.",
+  "e_commute": "For the two months you follow the night shift, your spouse's shifts run the opposite way. The kindergarten pickup sheet is full of your mother-in-law's name. You see your child awake only on Sunday evenings.",
+  "e_flood": "When the Han River rises, the trenches in the old plant turn damp and the inverters alarm one after another. You raise the electrical cabinets by twenty centimeters, a height that later goes into the regulations.",
+  "e_youth": "The new graduates won't crouch by the line, and two leave within three months. You take the third to station four and hand him a stopwatch and say nothing else.",
+  "e_tax": "The line you rebuilt when you were young has reached the end of its depreciation. Accounting says it is worth zero on the books. It still turns out more than four hundred parts a day."
+ },
+ "choices": {
+  "c_si": {
+   "title": "A commissioning job at the integrator",
+   "situation": "The integrator who often comes to the plant asks if you would join them, commissioning projects for thirty percent more pay, living in hotels, moving from factory to factory across the country. Here you look after one line. There you would see a dozen a year.",
+   "options": [
+    { "label": "Join the integrator", "result": "You give the stopwatch back to the shop director. Keep it, he says, you'll be needing it.", "end": "You joined the integrator and stayed in budget hotels in every development zone there is. You fixed each line until it could be handed over and then left. You seldom saw any of them in their second year." },
+    { "label": "Stay in Xiangyang", "result": "You go on crouching beside Line 3, and have begun to be able to name its troubles in advance." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Going for Intelligent Manufacturing Engineer",
+   "situation": "The plant will appoint Intelligent Manufacturing Engineers in the second half, on the strength of a retrofit you led yourself. Line 3's cycle time was your work, though the proposal carries the integrator's name.",
+   "options": [
+    { "label": "Assemble the data and the process", "result": "You put two years of stopwatch records and OEE comparisons in your slides. An old process man on the panel asks: you crouched for this?" },
+    { "label": "Don't fight it, just do the work", "result": "You say nothing about the proposal. The shop floor is more willing to come to you." }
+   ]
+  },
+  "c_robots": {
+   "title": "Robot arms for three stations",
+   "situation": "The boss wants a plan for robot arms at stations five through seven, saving six people. Two of them are nearly fifty. You know their names, and you know the carmaker's annual cuts will show no mercy.",
+   "options": [
+    { "label": "Do it, and fight for transfers", "result": "Four people move to inspection and materials; two take severance and go. Before leaving, the old team leader from station seven tells you the trick of listening to a tool." },
+    { "label": "Replace only two stations, save half", "result": "The payback stretches by eight months and the boss circles something on the investment sheet. People on the floor nod to you more sincerely." }
+   ]
+  },
+  "c_award": {
+   "title": "The provincial smart-factory application",
+   "situation": "The plant is applying to be a provincial smart factory, and the form asks for an equipment connection rate and an automatic data collection rate. The real numbers fall well short. The boss tells you to use your judgment.",
+   "options": [
+    { "label": "Report the real figures with a plan", "result": "It fails the first year. The second year you have actually connected the missing part, and the review panel spends half an hour on the shop floor." },
+    { "label": "Count everything that can be counted", "result": "It passes and the plaque goes up in the lobby. You walk a little faster past the machines underneath that aren't connected." }
+   ]
+  },
+  "c_vn": {
+   "title": "Building a new plant in Thailand",
+   "situation": "The carmaker is moving some capacity to Thailand and the plant must follow. They need someone who can move a whole line, for two years at half again the pay. Your child has just started elementary school and your parents are getting on.",
+   "options": [
+    { "label": "Go for two years", "result": "You learn to teach workers to read alarm lights with gestures and English. The rain in Rayong is nothing like the rain in Xiangyang." },
+    { "label": "Stay in Xiangyang", "result": "A colleague from next door goes instead. You take over the work here and can still go see the river on weekends." },
+    { "label": "Quit for a new-energy plant in Shiyan", "result": "You have seen enough of this line. You want a factory with no old accounts.", "end": "You went to a new electric drive plant in Shiyan and started from the first anchor bolt. Everything there follows the new rules. Only the beef noodles in the canteen lack a mouthful of yellow rice wine." }
+   ]
+  },
+  "c_ai": {
+   "title": "The AI inspection and scheduling pilot",
+   "situation": "The plant is piloting AI inspection and scheduling. The software company's plan sounds right, but it needs someone who knows the floor to feed it real data and correct its rules. There would be a lot more to learn, and no less work on Line 3.",
+   "options": [
+    { "label": "Take it on", "result": "Over six months you turn the shop's unwritten rules into data and fields. The software company's engineers end up calling you teacher." },
+    { "label": "Let the software company handle it", "result": "The pilot neither fails nor shines. You put your energy into the machines, where you have some confidence." }
+   ]
+  },
+  "c_senior": {
+   "title": "Going for Senior Intelligent Manufacturing Engineer",
+   "situation": "The company is naming a Senior Intelligent Manufacturing Engineer this year, someone who can do shop-level planning and investment cases. You have only ever done single lines. The boss asks if you dare take on the plan for the electric drive shop.",
+   "options": [
+    { "label": "Take it", "result": "The plan reaches its ninth version, and the payback comes down from three and a half years to two years nine months." },
+    { "label": "Wait another year", "result": "You use the year to straighten out the old lines, which counts as laying firmer ground." }
+   ]
+  },
+  "c_head": {
+   "title": "Head of the Digital Factory",
+   "situation": "The boss wants to name a Head of the Digital Factory over automation and IT. It means fighting with the people who hold the money, the people who manage staff and the people who manage the carmaker. It also means no more commissioning on the line.",
+   "options": [
+    { "label": "Take it", "result": "You move to the third floor of the office building, and in your first week you shut the IT department and the equipment section in one meeting room." },
+    { "label": "Stay on the floor", "result": "The boss brings someone in from outside. He comes down once a week and you walk the line with him." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "The day you do your paperwork, Line 3's spot has already become an electric drive assembly line. The old equipment was auctioned to a repair shop and the anchor bolt holes have been filled with cement. You have a bowl of beef noodles at the gate and half an ounce of wine, and on the walk back you are still calculating the cycle time of the traffic lights.",
+  "burnout": "After several years of spending every line-down window on site, the moment you relax you fall ill. You transfer to looking after equipment records, no more shop floor, nothing in your ears. The archive room is very quiet, so quiet it takes some getting used to."
+ },
+ "stages": [
+  "Your tools are a stopwatch, a multimeter and an old laptop that can talk to the PLC. You spend your days on the line recording motions and chasing alarms, sorting MES stoppages logged as other. The team leader barely acknowledges you, the maintenance men sometimes have you pass a wrench, and the only code you may touch is the kind that doesn't matter.",
+  "One line's retrofit is yours: measuring cycle times, setting the plan, haggling with the integrator, bringing people in during the shutdown. You begin to discuss things with the team leader rather than listen to him. When the line goes wrong, your phone rings first. Process, equipment and quality all come to you for data.",
+  "You hold the layout of the entire shop and the investment model. You no longer go down to tune every line. You calculate logistics paths, equipment choices and payback, explain to the boss why the money should be spent and to the carmaker why the cycle time will hold. Make one wrong call and three years of depreciation sit there looking at you.",
+  "Plant-wide automation and IT are yours to decide and yours to carry. You set the budget at the start of the year, meet the carmaker's audits in the middle and settle up at the end. You rarely touch a PLC. A few engineers write the plans; you decide which line to change and which to let wind down."
+ ],
+ "work": [
+  "The integrator's engineer leaves behind a program without comments. You set breakpoints station by station, and in two weeks you have drawn the line's full timing diagram.",
+  "A third-shift team leader says the photocell at station two keeps misfiring. You spend a night blocking light with cardboard boxes: it is a forklift's headlight from across the shop.",
+  "MES reporting is seventeen pieces out from the real count. You follow the material handler around counting, and find one bin with two QR codes stuck on it.",
+  "On day three of the shutdown the new robot arm grips three millimeters off. You and the integrator's man lie under the fixture with feeler gauges through two box lunches.",
+  "A quality engineer brings you a batch of out-of-tolerance parts. You pull up the spindle load curve for those hours and show when the tool began to wear.",
+  "You build a poka-yoke fixture for station four, and the operator finds it annoying at first. You work a shift beside him and take out the one movement that bothers him.",
+  "The carmaker wants traceability down to each part's machining parameters. You and IT draw up a table dividing fourteen old machines into those that can be networked and those that can only take sensors.",
+  "The boss thinks the payback is too long, so you take him to the floor and time a changeover: forty minutes each. Back in the office he rubs out the red line on the budget.",
+  "You take a young engineer through a logistics simulation. The model says there are enough forklifts. You tell him to go stand on the floor at eight in the morning, and he comes back and changes the model.",
+  "The last combustion orders have fourteen months to run. You draw a table of which machines to convert, which to sell and which people go over to electric drive, checking the names one at a time.",
+  "The carmaker's audit team comes to assess digital maturity. You walk them down the line and speak only of what has been done; what hasn't, you put in the table too.",
+  "IT and the equipment section bring an interface fight to you. You call both section chiefs down to the floor and have them wait together to see how an alarm travels upward."
+ ],
+ "past": [
+  "Your father worked assembly at an auto parts plant in Xiangyang. During school breaks you brought him lunch, and the robot arms in the workshop held your attention for a long while.",
+  "You chose mechatronics because it sounded hard to make obsolete. Your father told you not to come back to the plant. You said all right.",
+  "In a sophomore PLC class you programmed a small conveyor that moved in jerks. The teacher made you redo it three times in the lab.",
+  "An internship at a big manufacturer in Wuhan: a gleaming shop where everything was excellent, except that you could look but not touch.",
+  "In campus recruiting, jobs in Wuhan and Suzhou paid well. You went back to Xiangyang anyway. Your father's back was bad."
+ ],
+ "late": {
+  "pension_note": "Estimate: a private supplier contributing at the local average base. Xiangyang is cheap enough to get by.",
+  "scenes": [
+   "The supermarket checkout line is badly arranged; the bottleneck is at the weighing step. You tell your spouse. It's not your job, your spouse says. I'm only saying, you say.",
+   "The neighborhood seniors' canteen asks you to look at its long lines. You time it on your phone for two days and split serving and paying into two spots, without spending a yuan.",
+   "The old plant's land is sold to a developer, and when the foundations are dug, the bases of those electrical cabinets you raised when you were young come to light. The excavator driver doesn't know what they are. You don't plan to tell him.",
+   "You have never turned the high end of your hearing aid up much. The sounds you most wanted to hear are gone anyway. The wind by the river comes through just fine.",
+   "The equipment histories in the file cabinets are in number order. You spend a little extra time on Line 3's stack. Your handwriting from those years is still on it.",
+   "In the neighborhood card room you meet an old electrician who doesn't ask what your rank was, only whether you have eaten lunch.",
+   "You have never gone back to a trade show. When your feed talks about lights-out factories you swipe on and check whether the neighbors' cured pork is drying well.",
+   "At the new place they call you teacher. All you know is that the equipment is ten years newer than in Xiangyang, and people's tempers are about the same.",
+   "A classmate forwards a tender notice from the old plant in Xiangyang: a batch of used machine tools for sale. You recognize the numbers on a few of them and don't forward it to anyone.",
+   "After retiring you go back to your hometown a few times. Line 3 is long gone. You don't feel it was a pity. You'd only like to know if anyone ever got those seven seconds back.",
+   "In line for a scenic spot on holiday, you work out that this gate passes fourteen people a minute, and tell your party there are thirty-five minutes to go. It turns out to be thirty-six.",
+   "You only drink half an ounce of morning wine now. The owner asks if it's still no chili. Add plenty, you say, in all these years I never could stop you."
+  ],
+  "closing": {
+   "retire": "The Han River has dropped and the sandbars are showing. You watch a sand barge come down from upstream and quietly calculate its speed.",
+   "burnout": "The fluorescent tube in the archive is just bright enough. You file the new equipment histories by number. Today's work is done.",
+   "end": "The factory shuttle leaves at 7:10. You get on at the usual time and sit in the usual seat."
+  }
+ }
+}

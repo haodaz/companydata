@@ -1,0 +1,181 @@
+{
+ "id": "lens-danyang",
+ "occupation": "Ophthalmic Laboratory Technician",
+ "role": "Resin Lens Factory Technician",
+ "headline": "At a three-hundred-person resin lens factory in Situ Town, Danyang, you watch over the casting line, the curing ovens and the coating machines. Others look at the world through the lens. You look at the white speck on it",
+ "unit": "A resin lens factory in Situ Town, Danyang, Jiangsu, three hundred people, grown from a family workshop, selling at home and abroad",
+ "unit_type": "Private lens manufacturer",
+ "city": "Danyang, Jiangsu",
+ "city_tier": "County-level city",
+ "education": "Associate degree (Optometry Technology)",
+ "level": "You know what a refractive index is and can use a lensmeter, and you've never yet seen a whole oven of lenses scrapped",
+ "intro": "A row of small trucks waiting for lenses stands at the factory gate in Situ Town. Inside, the air conditioning mixes with the sweet smell of monomer. The factory issues you a one-piece cleanroom suit and a pair of its own blue-light glasses. A man from the technical office walks you past the casting line and points at the temperature curve on a curing oven. This batch takes eighteen hours, he says. First learn when you must not open the door.",
+ "salary_note": "Estimate: lens factories in Danyang pay southern Jiangsu wages, peak-season overtime included, slightly below the national figure for similar work.",
+ "facts": [
+  {
+   "label": "Assistant Technician (current level)",
+   "value": "0–3 years, ¥4,420–6,500 a month (national, derived from pay by experience)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Next level up",
+   "value": "Process Technician (3–8 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "Pay after 3–5 years",
+   "value": "¥5,500 (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Diagnosing swings in yield on the shop floor",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Lamp inspection for lens defects",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "7 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "In your cleanroom suit you pass through the air shower and check last night's curing oven records. One curve shivered a little after four in the morning, and you circle that batch number.",
+  "On the casting line, glass molds are closed with tape and monomer slowly enters through a needle port. Not a single bubble is allowed. You crouch and watch half the line.",
+  "The oven opens. Three thousand lenses come free of their molds. You hold one up to the light and run a finger around its edge, feeling for internal stress.",
+  "Lamp inspection in the dark room. Under strong light, white specks, haze and scratches jump out one by one. After two hours your eyes are so dry you want to close them, and when you do you see only white specks.",
+  "The hard-coat solution is a little thick. You adjust the withdrawal speed, try a basket, rub it back and forth with steel wool, and check the coating under a magnifier.",
+  "The export department brings a complaint from an Indian client: watermarks on the 1.56 lenses. You pull up the batch and compare it with the coating machine's operating record.",
+  "Before the night shift ends you eat a bowl of pot-lid noodles near Eyeglass City. The stall owner asks you to take a look at the lenses he's just bought, and you turn one in the roadside light."
+ ],
+ "ladder": [
+  { "title": "Assistant Technician", "stage": "Following the line", "focus": "Following the shift through casting and curing, recording parameters, lamp inspection; you rely on eyes and care" },
+  { "title": "Process Technician", "stage": "Tuning the process", "focus": "Responsible for curing curves and for hard-coat and AR-coat parameters, tracing defects, trying new monomers" },
+  { "title": "Technical Supervisor", "stage": "The shop's technology", "focus": "Leading the technical group, setting process documents, answering for yield, working with export clients on standards" },
+  { "title": "Technical Plant Manager", "stage": "The whole plant", "focus": "Setting the product line and equipment investment, managing R&D and quality, doing the math with the owner" }
+ ],
+ "ai_tasks": [
+  { "name": "Diagnosing swings in yield on the shop floor", "how": "AI can plot temperature, humidity and parameters as curves. Whether a white speck is dust, monomer or the mold takes a person going through the shop process by process." },
+  { "name": "Lamp inspection for lens defects", "how": "Machine vision is faster than the human eye and never tires. There are fewer and fewer people in the dark room, and they only recheck." },
+  { "name": "Optimizing curing curves and coating formulas", "how": "AI can recommend parameters from past batches. The first oven of a new monomer or a new season takes a person to try, and a person to answer if it's ruined." },
+  { "name": "Interpreting client prescriptions and technical standards", "how": "AI can translate and compare standards documents. How much color difference this client will really accept takes having dealt with them." },
+  { "name": "Tuning and maintaining coating and curing equipment", "how": "The system can warn of abnormal vacuum. Opening the machine to change a target or clean the chamber takes human hands." }
+ ],
+ "events": {
+  "e_plum": "When the plum rains come, the workshop's humidity can't be held down, and basket after basket on the hard-coat line fogs up. You put the yield curve and the weather forecast side by side. The foreman says the chart is easier to understand than any report.",
+  "e_school": "At the end of August comes back-to-school season. Orders from Eyeglass City double, the workshop runs two shifts, and you go twelve days without a break. The takeout left outside your dorm door gets changed three times.",
+  "e_scrap": "An entire oven of three thousand lenses is scrapped, each with a layer of haze inside. Two days of checking trace it to a drum of monomer stored too warm. The owner reads the scrap report, scolds no one, and opens another drum that afternoon.",
+  "e_skin": "A red rash spreads on the back of your hand, and three brands of glove do nothing for it. You can no longer smell the monomer. Your skin still can.",
+  "e_eyes": "After too many years at the lamp, a drift of white specks floats in your vision after work. A classmate who's an ophthalmologist says it's not an illness. Your eyes just can't clock out.",
+  "e_mono": "Imported monomer goes up by tens of yuan a kilogram. The owner has you try a domestic material. You run seven ovens, and on the eighth the yellowness index finally drops under the line. The owner calls purchasing in on the spot.",
+  "e_coat": "The coating machine won't reach vacuum. You trace it until midnight to one aged seal. You replace it and start the machine, and the green reflection evens out little by little, the most satisfying thing you know.",
+  "e_export": "A Brazilian client comes to audit the factory with a magnifier, stands in the workshop all day and points out a burr none of you had noticed. When he signs, he cuts the price. When he leaves, he compliments your care.",
+  "e_mould": "A glass mold gets a small chip in its edge; this set has a hundred. The moldmaker says he can fix it. You look at the repaired one and make a note to use it last.",
+  "e_defocus": "Myopia-control defocus lenses become the new gold rush, and parents will pay ¥2,000 a pair. The owner clears out the next workshop and wants samples from you in a month. A lens carries hundreds of microlenses, and even the moldmakers have never done this.",
+  "e_ai1": "The factory installs machine-vision inspection, and the six women in the dark room are moved to packaging. In its first month the machine misses a batch with watermarks and you go in to recheck. When they look at you, you don't quite dare to meet their eyes.",
+  "e_ai2": "The system can now recommend curing curves based on temperature and humidity. Most of the time it's a little more cautious than you and a little more stable. At the first oven of the plum rains, you still move one point by hand.",
+  "e_price": "The price of 1.56 blanks falls again, and a pair earns only a few jiao. Several small factories in Situ close, their ovens sold by the pound. At the door of a scrap yard you recognize an old casting machine.",
+  "e_son": "The owner's son comes back from abroad to run the factory, and in his first week wants you to explain why curing takes eighteen hours. On your third explanation you discover that two of those hours have really just been habit.",
+  "e_child": "Your child is found to be nearsighted in third grade. You fit the child with the best batch your factory makes, and find the kid under the covers looking at a phone. You point out a tiny spot on the lens. Your child says there's nothing there.",
+  "e_inspect": "A provincial spot check finds a batch of your lenses just short on transmittance, passing only on retest. For days the whole factory pores over GB 10810, and the owner asks you for the first time how the standard should be read.",
+  "e_city": "Stalls at Eyeglass City begin livestreaming, and in one evening a host sells three thousand pairs of your factory's lenses. There are plenty of returns the next day saying the prescription's wrong. The prescription is right. It's the face that's wrong.",
+  "e_hot": "The workshop air conditioning breaks down. It's thirty-seven degrees. Sweat runs down your back inside the cleanroom suit, and when the oven door opens everyone takes a step back.",
+  "e_presbyopia": "You've gone farsighted with age, and for the first time you grind yourself a pair of progressives. The moment you put them on, there's a road to far and a road to near, and you know which curve calculated that road.",
+  "e_friend": "A good friend from your line jumps to the factory next door for ¥1,500 more. Drinking together at New Year, he asks if you're still using that eighteen-hour line. You both laugh and take it no further."
+ },
+ "choices": {
+  "c_self": { "title": "An Eyeglass City owner wants you in on a surfacing lab", "situation": "An owner at Eyeglass City wants to open a small surfacing lab on the edge of town for prescription lenses. He wants you to come in with the technology for a share. He'll buy the machines. You've seen plenty of small factories open, and plenty close.", "options": [
+   { "label": "Strike out on your own", "result": "You tell the factory owner, and for the first time he asks you to stay for a meal.", "end": "You left the lens factory and opened a small surfacing lab. In the first month the machine turned more slowly than your hands. After that you read only prescriptions and stopped watching the blank market." },
+   { "label": "Stay at the factory", "result": "You thank the man and go back to the workshop to watch tonight's first oven." }
+  ] },
+  "c_line": { "title": "The old line is shutting down", "situation": "The owner has decided to shut the old line of ordinary 1.56 lenses and move into high-end defocus and prescription lenses. The old equipment will be sold, and the old workers can change posts or go. Most of your craft is on this line.", "options": [
+   { "label": "Take the severance and go", "result": "You sign the record of the final batch of ovens.", "end": "The old line stopped, and you took your severance and left the factory. The curing curve that had run for twenty years was marked 'historical version' in the system." },
+   { "label": "Stay and learn the new line", "result": "You start over on nanoimprint parameters alongside twenty-somethings. They call you Teacher and learn faster than you." }
+  ] },
+  "c_cert": { "title": "Sitting for Process Technician", "situation": "To become a Process Technician you need the eyewear manufacturing skills certificate. The workshop schedule has no room, so you'll have to use your own time off to train in Nanjing.", "options": [
+   { "label": "Go and sit it", "result": "You work the optics problems three times. What the instructor teaches and what the workshop does are not the same, and you write both down." },
+   { "label": "Build experience on the line first", "result": "Skill doesn't come from exams, you say, and go fishing after work. The old hands in the workshop say that's true enough." }
+  ] },
+  "c_poach": { "title": "The factory next door wants to buy your curve", "situation": "The owner of the factory next door takes you to dinner and asks you to talk about your factory's 1.67 curing curve and hard-coat formula. He offers half a year of your wages. Everyone in town does this, he says. If you don't tell him, someone else will.", "options": [
+   { "label": "Don't sell", "result": "You pay your own half of the dinner. He laughs and says people like you lose out in the end." },
+   { "label": "Say a little of no importance", "result": "You tell him things everyone knows and take a carton of cigarettes. All the way home, something sits heavy." }
+  ] },
+  "c_yield": { "title": "Whether to rush the peak season", "situation": "Back-to-school orders are piling up, and the owner asks if the curing curve can be cut by two hours. It would make room for another oven. Yield might fall, or might not. It's your call.", "options": [
+   { "label": "Cut it and take the gamble", "result": "This season yields twenty thousand more lenses. In September a batch shows slight yellowing, and you file away the return slips." },
+   { "label": "Keep the original curve", "result": "The owner walks the workshop without a word. Three deliveries go out late this season, and the return rate is the year's lowest." }
+  ] },
+  "c_ai": { "title": "Who tunes the machine vision", "situation": "The new vision system needs someone to feed it tens of thousands of images of defective lenses and teach it white specks from dust. It's tedious work, and it's teaching a machine to replace your eyes.", "options": [
+   { "label": "I'll teach it", "result": "You label images for a month. In the end the machine's standard for white specks is about as picky as your eyes." },
+   { "label": "Let the young ones label", "result": "You go on with your eyes and hands. The young ones show you the back end, and you read it slowly." }
+  ] },
+  "c_night": { "title": "Whether to stay on nights", "situation": "Your child has started elementary school. The night shift pays ¥800 more a month, and a day-shift slot means waiting for an opening. You and your spouse work opposite shifts, and in a week you see each other for less than half a day.", "options": [
+   { "label": "Stay on nights", "result": "You save a bit more, and you never make it to a parents' meeting." },
+   { "label": "Apply for days", "result": "You earn ¥800 less, and when you get home at night you can see your child's homework." }
+  ] },
+  "c_super": { "title": "Applying for Technical Supervisor", "situation": "The Technical Supervisor is retiring, and the owner has you compete with a colleague on the next line. The job means answering for the whole plant's yield, fighting with the export department, and getting yelled at by clients.", "options": [
+   { "label": "Go for it", "result": "You present a three-year yield analysis. The owner flips to the last page and asks whether you can add two points this year." },
+   { "label": "Don't compete", "result": "You say you've got enough on your hands, and go back to adjusting the hard-coat solution that afternoon." }
+  ] },
+  "c_factorydir": { "title": "Will you be Technical Plant Manager", "situation": "The owner wants you as Technical Plant Manager. From now on you'll set the plant's product line, equipment and staffing, and you'll have to fight with his son and also answer for his son.", "options": [
+   { "label": "Take it", "result": "You move to an office on the second floor, and you still turn on the dark room's lamp once a week." },
+   { "label": "Decline", "result": "You say you aren't made for an office. The owner lights a cigarette and says you just don't want to fight with my son." }
+  ] }
+ },
+ "endings": {
+  "retire": "The year you turn sixty, you can barely find anyone in a cleanroom suit in the workshop. The automatic line closes the molds and injects them, machine vision removes the rejects, and the dark room has been turned into a sample room. The last job you do is to check one batch's inspection reports. You take off your hood. Your hair still carries the smell of monomer. You can't smell it, and other people can.",
+  "burnout": "The dermatitis on your hands keeps returning, and the white specks drifting across your sight at night grow thicker. You tell the owner you need a rest. Back home you sit in the yard without any glasses at all. The specks are still there. You just don't have to pick them out anymore."
+ },
+ "stages": [
+  "You follow your shift between the casting line and the curing ovens, holding a batch card, a lensmeter and a sheet of timings. You record parameters, spot-check center thickness and power, and pick out white specks in the dark room. Whatever the shift leader tells you to change, you change. It's not your turn yet to ask why this curve goes the way it does.",
+  "You've begun to answer for the curves. Mornings you pull up last night's curing records, afternoons you watch the hard-coat line adjusting withdrawal speed, trying new monomers, tracking where bubbles come from. You have to talk to the moldmakers and coating operators and argue with quality inspection. You used to just record problems. Now you have to say at which step the problem is.",
+  "The whole plant's yield is written on a sheet by your hand. With three or four technicians you set process documents, read client standards with the export department and go to clients to explain returns. You no longer crouch by the line to look for bubbles. You decide whether to buy a new coating machine this year and whether this batch of material gets released.",
+  "Beside your hand now are the equipment investment sheet and the product plan. Mornings you talk over whether to launch 1.74 with the owner and his son, afternoons you host provincial spot checks, and evenings you study whether new defocus patents can be worked around. The plant's yield and the wages of two hundred people all begin with your nod."
+ ],
+ "work": [
+  "The first time you record a curing curve on your own, the alarm lamp lights at three in the morning. You wake the shift leader. He slaps the gauge and the needle goes back. You write down that move.",
+  "At lamp inspection you find a point on a lens and look at it ten times without being able to tell dust from bubble. The shift leader gives it a wipe with an alcohol pad, and the point is gone.",
+  "You spot-check a hundred -4.00 lenses with the lensmeter and two are off by 0.125. The shift leader has you put them in the recheck basket and stick on a yellow tag.",
+  "A batch keeps showing thread-like haze at the edge. You eliminate the tape supplier, the assembler's technique and the curing start temperature one by one, and it turns out to be the newly switched tape. You call purchasing.",
+  "After coating, the green is a little off and export says the client won't accept it. You adjust the thickness of one layer and hold it under the lamp next to the standard lens, until the two colors finally meet.",
+  "An old hand in the workshop says never to start the third batch on a rainy morning. You turn his words into a spreadsheet and find rainy days really do run four points worse.",
+  "An Indian client's QC sends dozens of complaint photos. You separate them one by one into shipping or process, and join the export manager on a video call with the sorted table.",
+  "You write the rainy-season adjustment rules for the hard-coat line into the process document and have the shift leaders write feedback on the back. Seven notes come back and you change three things.",
+  "A new process engineer leaves a batch of samples on your desk. You rub one two hundred strokes with steel wool, point out the scratches, and have him try a different baking temperature that afternoon.",
+  "The owner wants a second defocus line. You bring the capacity sheets of three competitors, tell him these lenses may not be so expensive next year, and suggest he build half of it first.",
+  "A patent lawyer sends comparison drawings. You and the technical group enlarge the microlens layout and compare it point by point, and decide to send this design back to be redone.",
+  "The owner's son brings an automation plan to replace the people on half a line. You set the workers' seniority chart beside the equipment's payback period and let him do the arithmetic himself."
+ ],
+ "past": [
+  "Your family lives in Situ Town, where half the village works in eyewear. After school you help your mother screw frames together, fifty pairs a box, for the price of a popsicle.",
+  "When you choose a major you pick Optometry Technology. A relative says that for Danyang people it means graduating to a job on your own doorstep, no need to go far.",
+  "In college you learn optometry and optics for the first time. A teacher talks about refractive index with a lens in hand, and you learn this thing isn't done just because it has been ground.",
+  "On breaks you go back to work the counter at a shop in Eyeglass City, adjusting temples for customers. They only ask how much. No one asks how the lens is made.",
+  "Before graduating you intern at the factory. On your first day you stare at the lamp in the dark room for four hours and walk out into a blurry world. Still, you put this factory on the first line of your resume."
+ ],
+ "late": {
+  "pension_note": "Estimate: social insurance at a private company in southern Jiangsu at Danyang levels, a long working life, and a pension that's enough.",
+  "scenes": [
+   "After you retire, the moment the person across from you turns their head you see the coating color on their lenses: green, blue, purple, whose they are and roughly what they cost. You restrain yourself from telling them.",
+   "Factory after factory in Situ Town has gone to automatic lines. The young people who come to the workshop wear clean white coats, without a trace of that monomer smell.",
+   "The old folks in your compound all bring you their glasses to replace a nose pad or tighten a screw. Your little screwdriver has become the most-used thing in the house.",
+   "Your retinas need checking every year. In the hospital you can tell at a glance what year the automatic refractor dates from. After insurance, you pay very little.",
+   "In your first year at home, the dermatitis slowly fades and new skin grows between your fingers. You've become sensitive to light and wear a hat on sunny days.",
+   "For a few years you fit lenses at a relative's small optical shop, reading only the order and ignoring the market. When a customer wants the cheapest, you tell them this one's enough.",
+   "It has been a long time since you thought about a curing curve. When it rains, though, you still find yourself automatically working out today's humidity.",
+   "In your first year after leaving the factory, you discover the air outside has no sweetness. Sometimes, passing a newly renovated shop, you breathe in twice more.",
+   "Your friends in the trade have grown old, and some of the factories have been sold. You've worked out that if you had stayed you'd probably have got a nice share of the profits. Having worked it out, you go and water the vegetables.",
+   "You hear that the old line's ovens were sold to a small factory in the south, and that they are still running the eighteen-hour curve. You've never gone to look, and you don't intend to.",
+   "You always want to pick up other people's glasses and turn them to the light. At banquet tables this makes people a little uneasy, and most of the time you hold back.",
+   "The children now wear lenses you never saw in your day, and they're as nearsighted as ever. Sometimes you stand outside a school gate for a while, counting how many lenses on this street came from Danyang."
+  ],
+  "closing": {
+   "retire": "At dusk, the small trucks of the town fill with boxes again and drive off. The road is still warm. You take off your reading glasses and wipe them.",
+   "burnout": "The light in the yard slowly fades, and the white specks fade with it. You don't count them.",
+   "end": "You pick up a pair of glasses you've just mended, turn them once against the sky and put them back in the case."
+  }
+ }
+}

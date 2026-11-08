@@ -1,0 +1,190 @@
+{
+  "id": "ticket-hs",
+  "occupation": "Ticket Agent",
+  "role": "Scenic Area Ticket Clerk",
+  "headline": "A ticket clerk behind the glass at the transfer center at the foot of Mount Huangshan, saying ID please thirty thousand times a peak season, and watching the windows get replaced one by one by scan-to-enter gates",
+  "unit": "A ticketing services company at the Huangshan scenic area",
+  "unit_type": "State-owned scenic area ticketing company",
+  "city": "Huangshan",
+  "city_tier": "Fourth-tier city",
+  "education": "Vocational secondary school (tourism services and management)",
+  "level": "Your Mandarin is standard and your banknote counting is still slow. Telling a real student card from a fake takes a whole summer at the window.",
+  "intro": "You sell tickets at the transfer center at the foot of Huangshan, with admission, cable car and shuttle prices posted on the glass. The spring sea of clouds, the summer students, the long lines of October and the snow of January all pass by on the other side of it. Your ticket printer takes three seconds per ticket, and in those three seconds you have to finish checking the ID.",
+  "salary_note": "Estimate: frontline ticketing at the scenic area, with performance pay and overtime in peak season and rotating days off in low season, a little above the local service sector and below the national figure for the role.",
+  "facts": [
+    { "label": "Ticket Clerk (current level)", "value": "0–3 years, ¥3,000–4,500 a month (national figure, estimated)", "source": "Common in the trade" },
+    { "label": "Next level up", "value": "Ticket Crew Leader (3–9 years)", "source": "Common in the trade" },
+    { "label": "What AI can't take", "value": "Dealing face to face with changes, refunds and upset visitors", "source": "AI exposure" },
+    { "label": "Where AI is moving in", "value": "Checking discount eligibility documents", "source": "AI exposure" },
+    { "label": "Open positions", "value": "0 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)", "source": "Job listings" }
+  ],
+  "day": [
+    "You're at your post before daybreak, drawing the float from the safe, counting it stack by stack in front of a witness, and signing the slip. In peak season the first wave of visitors is already standing at the gates.",
+    "The window opens. The first thing you say is ID please. You'll say it more than two thousand times today, and it has to sound like the first time every time.",
+    "A college student hands over a student card for a half-price ticket. The photo is a bit blurry. You compare the face, check the registration stamp, and print the ticket.",
+    "A tour guide arrives with forty ID cards for a group ticket. One character on the list is wrong, and she's already been to three windows. You open a correction request in the system.",
+    "A coworker covers for you for fifteen minutes. You run to the toilet, come back and drink half a cup of water. Today your water intake is calculated by the distance to the toilet.",
+    "The loudspeaker says fog on the mountain and one cable car section suspended. People wanting refunds surge at the window. Some are crying and some swearing, and you process them one by one by the rules, fingers never stopping.",
+    "End-of-day reconciliation. The counting machine goes through it three times and today you're ¥20 short. You look through the transactions and can't find it, and you take out your own wallet.",
+    "Back at your dorm in Tangkou, you put throat lozenges by the pillow. The guesthouse owner downstairs asks how many tickets will be released tomorrow. Ask the system, you say."
+  ],
+  "ladder": [
+    { "title": "Ticket Clerk", "stage": "At the window", "focus": "Selling tickets at the window, checking IDs, handling changes and refunds, balancing the till every day" },
+    { "title": "Ticket Crew Leader", "stage": "Leading a crew", "focus": "Assigning windows, watching the cash, handling complaints, leading a crew through peak season" },
+    { "title": "Ticketing Supervisor", "stage": "Running ticketing", "focus": "Travel agency settlements, group tickets and the reservation system, coordinating with cable cars and transport" },
+    { "title": "Deputy Manager, Ticketing Center", "stage": "Running the center", "focus": "Staffing, budget, audits and peak season plans for the ticketing center" }
+  ],
+  "ai_tasks": [
+    { "name": "Dealing face to face with changes, refunds and upset visitors", "how": "A stopped cable car, an elderly person with no ID, a family all talking at once: someone has to listen and decide in person." },
+    { "name": "Counting cash, spotting counterfeits and closing the till", "how": "The counting machine only counts. Overages, shortages and the safe are for a person to sign for and carry." },
+    { "name": "Checking discount eligibility documents", "how": "The system can verify IDs and electronic student records. Paper documents and hard-to-explain cases still take judgment." },
+    { "name": "Timed reservations, ticket issue and refund rules", "how": "Online booking, face-scan entry and refunds are mostly automatic. People handle what the system flags." }
+  ],
+  "events": {
+    "e_fake": "The first counterfeit you've received: one ¥100 note mixed in with a stack, and the machine squeals. You confiscate it per the rules and write the visitor a slip, and he abuses you through the window for ten minutes. Your hand shakes holding the slip.",
+    "e_may": "In the seven days of the May holiday, the serpentine queue at the transfer center winds through eleven rows of railing. You're on your feet for twelve hours a day. At night your ankles carry the print of your shoes. This week's pay slip is ¥900 higher than usual.",
+    "e_voice": "So much talking has given you vocal cord nodules, and the doctor orders two weeks of quiet. Long leave is not allowed in peak season, so you hold up a sticky note at the window reading Please show ID, and the visitors all look down to read it.",
+    "e_snow": "January snow closes some mountain roads, and in the low season the snow photographers come. Shuttles are restricted. In one day you tell two hundred people there are no more buses this afternoon. Some have brought serious camera gear, and hold on to their tickets and refuse a refund.",
+    "e_old_couple": "An old couple from the northeast have forgotten their IDs and have only photocopies of their household register. Rules say no. You make three phone calls and find that they can be verified on site in the public security system. The day they go up is beautifully clear.",
+    "e_summer_exam": "In the summer after the college entrance exams, graduating students come in batches, with student cards issued this year and useless next year. You see a photo and a person thirty pounds apart and ask if it's really him. His friends laugh behind him.",
+    "e_system": "Real-name timed reservations are now universal, and the windows are changing to book online, verify in person. The cash business shrinks each year, and hands you trained for three years to count money get used a few times this month.",
+    "e_face": "Face recognition goes in at the gates and lines move twice as fast. The windows go from sixteen to nine. Coworkers are moved to the visitor center, the parking lots and the cable car stations, and when they leave, everyone takes their own calculator.",
+    "e_ai_kefu": "An AI customer service line takes eighty percent of the calls. What reaches you are the ones who can't explain and the ones who've started shouting. You answer fewer calls in a day and go home more tired.",
+    "e_guide_gift": "A guide you know brings you a box of Keemun black tea and says to help get her groups ahead next peak season. You send the tea back, and know that from now on she'll have less to say to you, and that her groups will wait at the back.",
+    "e_audit": "The ticket audit team makes a surprise check and takes away all of last quarter's voided tickets and refund slips. It takes them two weeks. They find a few refunds that don't reconcile against your coworker Old Fang. He's moved to another department, and afterward people don't much sit with him in the canteen.",
+    "e_varicose": "The veins in your legs have begun climbing up, an ailment of the trade. The company issues compression stockings, stifling in summer, warm in winter. You take the roster home and look for days you can swap to a window with a seat.",
+    "e_tongue": "Your English comes from the window, and so does your Korean. A Korean group leader says your Please show your passport is better than his new hires', and you blush and hand him a map he doesn't need.",
+    "e_family": "Your child's summer vacation is your busiest time. You leave the child with your mother-in-law in Tunxi and see them four times all summer. Over the phone your child asks how many tickets you sold today. The number you give is startling.",
+    "e_year_award": "A full year with no reconciliation errors. The company gives you a certificate, ¥2,000 and a case of Taiping Houkui tea dust. You take the certificate home and give the tea dust to the woman downstairs who sells tea eggs.",
+    "e_refund_wave": "A typhoon's outer bands bring three days of heavy rain, and the scenic area closes for half a day. The system auto-refunds more than ten thousand orders. Over three hundred can't be refunded, all travel agency combination tickets, and you pull each one out by hand and work two days of overtime.",
+    "e_wrong_day": "A young man has booked the wrong date and has already driven here. The window system says no refunds or changes. He pleads with you. You look at the family standing behind him, pull up the complaint review process, and have him apply as a special case.",
+    "e_other_park": "On vacation at Jiuzhaigou, standing in line, you work out how many people this railing moves per hour and watch the hands of the clerk ahead. Your friend takes scenery. Your camera roll has two photos of somebody else's turnstiles.",
+    "e_merged": "The company merges ticketing, visitor inquiries, complaints and announcements into one center, and your badges are renamed. Four separate groups are put in one room, and for the first month everyone argues about whose desk gets the window."
+  },
+  "choices": {
+    "c_agency": {
+      "title": "Become a travel agency planner",
+      "situation": "An agency in Tunxi wants you as a planner, arranging buses, booking rooms and scrambling for cable car tickets, for ¥1,500 more a month and commission in peak season. You know every crack in the ticketing system, which is why they want you. This non-permanent window job is steady, and you can see all the way to the end of it.",
+      "options": [
+        { "label": "Go to the agency", "result": "You hand in your resignation. The next day you start helping other people grab the tickets you were selling yesterday.", "end": "You've become a travel agency planner, hugging three phones and arranging buses and rooms all day. Other people are behind the glass now, and you're the one on the phone chasing tickets." },
+        { "label": "Stay at the window", "result": "You say you'll think about it. The agency's owner leaves you a business card, and it goes under everything in your till." }
+      ]
+    },
+    "c_bnb": {
+      "title": "Open a guesthouse back home in Yi County",
+      "situation": "The windows keep disappearing and you have some savings. Your family has an old house in Yi County and your cousin says you could partner up and turn it into six guest rooms. The guides and agencies you know could send guests. But once your money's in, whether it comes back depends on each year's weather and short videos.",
+      "options": [
+        { "label": "Open the guesthouse", "result": "You restore the courtyard skylight and hang an unnamed wooden sign at the door.", "end": "You open a guesthouse in Yi County. Guests ask how to buy tickets for Huangshan, and you explain the release times more clearly than the official account does." },
+        { "label": "Stay in ticketing", "result": "You hear your cousin out and say you'll give this a few more years. This year someone else repairs the old house's leak." }
+      ]
+    },
+    "c_short": {
+      "title": "The ¥200 shortage",
+      "situation": "At close you're ¥200 short, and an hour through the transactions doesn't find it. Reporting it means writing an explanation and losing this month's bonus. You could quietly make it up yourself and no one would know. The rules say to report shortages.",
+      "options": [
+        { "label": "Report it", "result": "You write the explanation and the bonus is gone. The crew leader says someone like you will be easy to manage." },
+        { "label": "Make it up yourself", "result": "You take out ¥200. From then on you count one extra time." }
+      ]
+    },
+    "c_monitor": {
+      "title": "Apply for Ticket Crew Leader",
+      "situation": "The crew leader's moving on, and the company wants applicants for Ticket Crew Leader. In peak season you'd assign windows and take every complaint, and if the float's short, you're the one covering. It's ¥800 more a month, and your view of that ¥800 isn't quite the same as other people's.",
+      "options": [
+        { "label": "Apply", "result": "You draw up a window rotation that swaps people who've been standing too long with those at windows with seats. Your crew remembers that." },
+        { "label": "Stay at the window", "result": "You say your voice isn't good enough for leadership. You go home half an hour earlier than the crew leader." }
+      ]
+    },
+    "c_student": {
+      "title": "This student card",
+      "situation": "A young man holds out a student card for half price. Its registration stamp is from two years ago, and by this summer he ought to have graduated. He says he's in grad school and the school hasn't stamped it yet. Forty people are lined up behind him. He doesn't have much money on him, and his backpack is falling apart.",
+      "options": [
+        { "label": "Charge full price", "result": "He pays and counts it twice. The next person steps up, and you say ID please." },
+        { "label": "Have him sign a note, half price", "result": "He writes one line and you file it with the audit slips. If the audit comes, you'll have this one to explain." }
+      ]
+    },
+    "c_online": {
+      "title": "Learn back-end ticket release",
+      "situation": "The company is pulling people from the windows to learn the reservation back end: timed release, weather forecasting, tuning the AI customer service scripts. There's a data course to pass, after hours. Your coworkers at the window say learning this makes you someone who helps remove the windows.",
+      "options": [
+        { "label": "Go learn it", "result": "For the first time you see a day's visitor curve in the back end. For all those years you stood on the crest of it, and only today do you see what it looks like." },
+        { "label": "Stay at the window", "result": "You stay seated. When the windows are down to seven, your number's still there." }
+      ]
+    },
+    "c_supervisor": {
+      "title": "Try for Ticketing Supervisor",
+      "situation": "The Ticketing Supervisor job is open to competition. The supervisor reconciles with travel agencies, settling tens of millions of yuan each month. Agency owners offer meals and tea, and you'd have to know which you can accept and which you can't even turn up for. Half your friends from all these years work at agencies.",
+      "options": [
+        { "label": "Compete for it", "result": "You move the agency owners on your phone from personal contacts to a work group, and you close your social feed to them." },
+        { "label": "Skip it", "result": "You say accounts are not your strength. Three supervisors come and go, and you go on having tea with the agency people." }
+      ]
+    },
+    "c_assign": {
+      "title": "Who gets the group tickets",
+      "situation": "It's the October holiday and cable car tickets are short. A small agency you've known for years says if it can't get tickets this year, this tour will lose money. By the rules it's first booked, first served, and the big agencies' systems grab tickets much faster than he can.",
+      "options": [
+        { "label": "Rules stay put", "result": "You send him a screenshot of the rules. He says understood, and later his New Year gifts arrive at your company's front desk." },
+        { "label": "Set aside some held tickets", "result": "You hold back twenty flexible tickets, write a note and follow the process. He hosts two tables to thank you. You don't go." }
+      ]
+    },
+    "c_deputy": {
+      "title": "Apply for Deputy Manager, Ticketing Center",
+      "situation": "Someone has to take on the Deputy Manager position at the ticketing center. Staffing, budget and audit would be in your hands, along with peak season plans and dealing with the scenic area authority. If there's a public relations problem, you write the statement. You've been in this center nearly twenty years, and you've wiped every pane of its glass.",
+      "options": [
+        { "label": "Apply", "result": "You talk about how you found a place for each of those people taken off the windows. Several in the audience look up." },
+        { "label": "Let it go", "result": "You say this is not for you. Your afternoons still begin at half past three with reconciliation." }
+      ]
+    }
+  },
+  "endings": {
+    "retire": "You hand back the float ledger, and the safe's combination is changed the very next day. The glass at the transfer center is down to two windows, for people who can't make themselves understood. The next time you come to Huangshan, you go in by scanning your face, and the gate says welcome.",
+    "burnout": "Your vocal cords and your legs give out together. You move to logistics to manage supplies and uniforms, logging sizes piece by piece. You no longer need to speak, though that ID please still comes out of you sometimes in a dream."
+  },
+  "stages": [
+    "You sit at the window, taking documents with one hand and typing with the other, checking person against ID in the three seconds it takes the printer to spit out a ticket. In peak season you issue two or three thousand a day. In low season you could get through half a novel. At day's end you count the cash, fill in the forms, turn in money and receipts, and write up any overage or shortage.",
+    "You assign windows and cover staff, working out how many to open today and who watches discount tickets. Complaints come to you, and you invite people out of line to talk at the side. You and a coworker share the float and the safe keys, and if a yuan goes missing two faces look bad together.",
+    "Every month you reconcile with dozens of travel agencies, across combination tickets, group tickets and cable car tickets, a spreadsheet thousands of lines long. Before peak season you meet with the cable cars, shuttle buses and reservation platform to settle release volumes. You no longer see visitors in person. What you hold are the rules behind everybody else's windows.",
+    "You manage headcount, budget and audits for a center of dozens, write peak season plans and take calls from the scenic area authority. Who transfers and who stays, you work out sitting with HR. When a public opinion problem comes up, you write the statement, and it mustn't have a word too many or too few."
+  ],
+  "work": [
+    "The older woman training you has you close your eyes and feel through a stack of hundreds, pulling any that feel a little off. You try it three times. On the second she nods.",
+    "An old man on crutches wants a concession ticket. His ID is with his son, and his son is in the parking lot. You have him sit to one side, and write a note for his son to bring it.",
+    "At noon in peak season the computer freezes, and you cover with handwritten receipts for twenty minutes, logging every number. By end of shift they're all entered, with not one missing.",
+    "Scheduling for October, you put the few people with kids just starting school on early shifts and single people on late. A single young man comes to ask if that's fair.",
+    "Two visitors get into it in the queue. You flip your window sign, come out and stand between them, and explain the positions in words they both understand.",
+    "New hire Young Gan is slow at counting. You have her lower her wrist and push with just a third of her thumb, and by her second month her close is quicker than yours.",
+    "An agency's statement is 372 tickets short of yours. You compare the system and their report by date all afternoon, and find it's a cross-month redemption.",
+    "The cable car's maintenance window is the second week of November. Forty days ahead you change the wording on the booking page and phone the big agencies to let them know.",
+    "Audit wants a list of voided tickets for the past three years. You export it from three systems, each with different field names, and take two evenings putting them together.",
+    "The authority asks for a five percent rise in peak ticket release. You bring last year's shuttle congestion periods and complaint log, and say five percent more means four more buses.",
+    "Eight more have to come off the windows. You talk to them one at a time: one has a mother in the hospital, one has a child taking the high school entrance exam. You redo the transfer timeline three times."
+  ],
+  "past": [
+    "Your family grows tea in She County. Spring picking wages are paid by the jin, and your hands are slow. At the family's accounts, you learn to do sums in your head.",
+    "After your middle school exams you go to a tourism school. The teacher says Huangshan's a rice bowl for life. In your first term you practice Mandarin, and it takes two months to fix your back-nasal sounds.",
+    "Your internship is checking tickets at a site in the old Huizhou town, standing eight hours at a time. The teacher in charge says swollen legs are normal and in time you stop noticing.",
+    "You sell tickets at the Tunxi bus station for a year and learn how to hear which bus someone wants through all the noise.",
+    "The scenic area is hiring ticket clerks, with a written test, interview and banknote counting. You finish a stack of a hundred, the examiner stops his watch, and he says you can come and give it a try."
+  ],
+  "late": {
+    "pension_note": "Estimate: a standard enterprise pension from a state-owned scenic area company, about average locally, enough to live on.",
+    "scenes": [
+      "You now say fewer than thirty sentences a day. At first it felt peaceful. Later you're at the market haggling with someone, going a few extra rounds, and find you rather enjoy it.",
+      "At the new supermarket in the county seat, a customer can't figure out the self-checkout. You step up and tap a couple of times for her. Someone behind you asks if this auntie works here.",
+      "For the first time you go up Huangshan as a visitor, and a face scan lets you in. At Bright Summit you're out of breath and wondering how many tickets should be released today with the crowds rising like this.",
+      "Your legs depend on compression stockings now, one blue and one gray, and it doesn't matter that they don't match. Your hands are the same pair, counting tea money for the farmer next door. A stack of cash goes through your fingers. Nobody uses cash now, she says, but you and me.",
+      "You log uniforms in the supply room, sizes in neat rows. Someone asks if this one's the company's new style. You nod, gesture a bit, and let him go pick.",
+      "After surgery on your vocal cords, your voice has dropped a note. At dinner at your child's place you only answer on the second call. You think that's all right too.",
+      "You start curing ham at home. A leg hangs for a year and needs turning every day. You talk to a leg alone, and it never asks whether it can have a refund.",
+      "After changing direction you're busier than before and earning a bit more. Every so often you log in to the scenic area's booking page to see if this year they've changed the release time again.",
+      "One year the scenic area goes entirely windowless and the transfer center's glass becomes an advertising wall. Passing by you touch it. The place where the till slot used to be has been sealed perfectly flat.",
+      "You've done the math: if you'd stayed you'd have seven more years of enterprise annuity. You did the sum twice. After that, if anyone asks, you say you can't remember.",
+      "Wherever you queue you stand closer to the railing, and watch the speed of the hands at the window ahead. You tell your child that this clerk has just mis-keyed for the second time today. Your child asks you to keep your voice down.",
+      "Young people these days have never seen a paper admission ticket. You've kept a void sample and show it to the neighbor's kid, who asks what it is. It's proof of that day, you say."
+    ],
+    "closing": {
+      "retire": "The clouds have risen on the mountain again. You boil a kettle of water and this time you drink it to the bottom, without thinking about where the toilet is.",
+      "burnout": "You haven't said much today. The tea's gone cold, and you move the cup to the windowsill to sit in the sun for a while.",
+      "end": "It's cleared up, a good day for releasing tickets. You think it over. This time it's not your turn."
+    }
+  }
+}

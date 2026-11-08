@@ -1,0 +1,211 @@
+{
+ "id": "electrical-bd",
+ "occupation": "Electrical Engineer",
+ "role": "Assistant Electrical Engineer",
+ "headline": "Calculating windings at a transformer plant in Baoding. Before a machine of dozens of tons leaves the factory it has to pass partial discharge, and the grid company's inspector sits in the test hall waiting for that curve alongside you",
+ "unit": "Technical department of a transformer manufacturer in Baoding, Hebei",
+ "unit_type": "Private power transmission equipment maker",
+ "city": "Baoding, Hebei",
+ "city_tier": "Third-tier industrial city",
+ "education": "Bachelor's (Electrical Engineering and Automation)",
+ "level": "You scored ninety in electrical machines. How much copper two extra degrees of temperature rise will cost, you have no idea yet.",
+ "intro": "By November Baoding has begun staggering production for the heating season, and the plant's chimneys haven't been smoking much. An old engineer in the technical department hands you an electromagnetic design sheet. You spend the morning checking it and find no mistakes. Don't get excited, he says, that sheet shows what this transformer looks like on paper. Then he leads you through the winding shop into the test hall, where something six meters tall squats with wires stuck all over it.",
+ "salary_note": "Estimate: private transformer makers in Baoding pay below the national figure for electrical engineers. Bonuses in bid season; housing fund is modest.",
+ "facts": [
+  {
+   "label": "Assistant Electrical Engineer (current level)",
+   "value": "0–2 years, ¥3,800–5,300 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Electrical Engineer (2–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Judging partial discharge and temperature-rise problems in the test hall",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Electromagnetic calculation and insulation design",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "101 related listings nationwide, 1 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "Donkey-meat buns at the plant gate cost five yuan each. The vendor can tell the technical department from the shop floor, because the shop floor orders two.",
+  "Morning meeting. Bidding wants a quote and design for a 110 kV unit by next Wednesday, and the schedule is built backward again.",
+  "You adjust the core window in the design software. Silicon steel went up this month, and so did copper, and the director says any savings are up to you.",
+  "The winding shop's team leader comes over with the drawing and says this transposition can't be done, fingers won't fit. The two of you squat by the coil and look.",
+  "Lunch talk is about winter production limits. When the environmental order comes, some processes have to stop, and the orders don't wait.",
+  "A partial discharge test in the hall. The big doors close, everyone retreats to the shielded room and watches the trace on the oscilloscope to see if it suddenly spikes.",
+  "You prepare files for the inspector to see tomorrow and stamp them one at a time. He is sent by the grid company and accepts only originals.",
+  "At night the shop runs vacuum drying; the core has to bake for seven days and nights. You walk over, hear the pumps and decide it's time to go home."
+ ],
+ "ladder": [
+  { "title": "Assistant Electrical Engineer", "stage": "Checks and shop", "focus": "Checking calculations, following the shop, going to the test hall, learning how this product is made" },
+  { "title": "Electrical Engineer", "stage": "Own designs", "focus": "Designing a voltage class on your own and solving process and test problems" },
+  { "title": "Senior Electrical Engineer", "stage": "Setting designs", "focus": "Owning bid designs and major products, handling clients and inspectors" },
+  { "title": "Chief Engineer", "stage": "Running technology", "focus": "Running the plant's product roadmap and technical decisions, signing the last word on quality" }
+ ],
+ "ai_tasks": [
+  { "name": "Judging partial discharge and temperature-rise problems in the test hall", "how": "When the trace looks wrong someone has to stay with it. What to take apart and whether to take the risk is a person's call." },
+  { "name": "Negotiating technical terms with inspectors and customers", "how": "Which clause can give and which can't comes down to experience and relationships. AI can only organize the clauses." },
+  { "name": "Electromagnetic calculation and insulation design", "how": "AI can run many designs and compare material use. How much margin to leave is for a person to decide and sign." },
+  { "name": "Scheduling production from orders and materials", "how": "Models can schedule and warn of shortages. Whether the silicon steel has really arrived, someone still has to go and see." },
+  { "name": "Compiling test reports and technical documents", "how": "Report templates mostly fill themselves in. People spot-check the key figures." }
+ ],
+ "events": {
+  "e_pd": "A 220 kV unit fails partial discharge. Everyone holds out in the shielded room into the small hours, then opens it up and finds that a lead's sharp corner wasn't rounded off. The spot you sand is smaller than a coin.",
+  "e_tender": "Three all-nighters before the deadline for the grid's centralized tender, and the technical volumes stand taller than a table leg. At the opening you come third, two percent behind. The boss studies the price sheet for a long while, then goes back to change the standard parts.",
+  "e_inspector": "The resident inspector demands that a coil be opened so he can see the transposition. The shop director turns white. You stand with him all day. When it is opened, the transposition is fine. The director takes him to dinner and he doesn't touch a drop.",
+  "e_winter": "A severe pollution alert shuts the drying ovens and painting for five days. Delivery dates in the contract don't wait on the weather. The boss tells you to reshuffle processes, and the shop ends up on three shifts.",
+  "e_hoist": "Spring maintenance takes you to a substation for an internal inspection with the transformer tank lifted, and the outage window is only forty-eight hours. You climb in with a flashlight and smell insulating oil. Your overalls take three washes at home.",
+  "e_export": "The first transformers for the Middle East ship out, traveling at night to Tianjin Port with an oversize permit for each stretch of the road. You did three versions of the technical documents' translation. The other side's engineer writes a thank-you letter.",
+  "e_newenergy": "Solar and wind send orders for box substations up several times over, and the shop is booked through year-end. At the annual party the boss says you caught the wave. You work out that this year's overtime has bought a month and a half of bonus.",
+  "e_ear": "After long exposure to the low hum of the test hall, you've started to think the fridge at home sounds wrong. Your spouse says it makes no sound at all. You put your ear against it.",
+  "e_waist": "A slightly herniated disc: the doctor says don't bend. In this trade, between checking cores and climbing tanks, if you don't bend you can't see a thing.",
+  "e_standard": "New energy-efficiency standards arrive, and the old series you've calculated for ten years no longer meets the no-load loss limit. Tooling in the shop is scrapped set by set, and you put those calculation handbooks on a high shelf.",
+  "e_xiongan": "Distribution network projects open for bid in Xiong'an, only a few dozen kilometers from the plant. You make a dozen-plus site visits and watch the new city in the drawings rise bit by bit out of the ground.",
+  "e_ai_calc": "The plant adopts AI design optimization, and overnight it runs two thousand options and picks one that saves four hundred kilos of copper. You look at the winding temperature, the margin thin as paper, and add two hundred kilos back.",
+  "e_ai_doc": "Technical documents and test reports now generate automatically, and the bid's technical volumes can be out in a day. The young woman in bidding says the only thing left to compete on now is price.",
+  "e_copper": "Copper goes up more than ten percent in a month, and the orders you've already won are all suddenly underwater. The boss asks if aluminum wire can be used. The contract says copper, you say.",
+  "e_home": "Your spouse asks whether you'll be home for Spring Festival. The utility's maintenance window falls right around then, you say, it depends on getting this unit accepted. She has already bought tickets. Two of them.",
+  "e_field": "A transformer retired after fifteen years comes back to the plant. Opened up, a structure you drew all those years ago proves sturdier than you expected. You write it into a note in the design rules, the kind no one reads.",
+  "e_young": "The young engineers calculate everything on computers and rarely go to the test hall. You schedule the factory test of one of their first units for a Saturday and have him spend the whole day in the shielded room.",
+  "e_merge": "Private plants begin merging, and your technical department is combined with the one next door. Two sets of drawing numbers must become one. You compare the naming rules line by line and find both sides have the same bad habits."
+ },
+ "choices": {
+  "c_inverter": {
+   "title": "The inverter company in Suzhou",
+   "situation": "A solar inverter maker in Suzhou is hiring electrical engineers at fifty percent more, and an old classmate there has already bought a car. It's power electronics, and only about half of your transformer experience would carry over.",
+   "options": [
+    { "label": "Go to Suzhou", "result": "You file your calculation sheets. The old engineer tells you they have transformers there too, just small ones.", "end": "You went to Suzhou for inverters, two product generations a year, a development cycle shorter than one large transformer in Baoding. When you see a grid tender notice you still click in to see whose price it is." },
+    { "label": "Stay in Baoding", "result": "You go on working in the test hall. You've begun to see what the oscilloscope in the shielded room is saying." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Going for Electrical Engineer",
+   "situation": "The company is appointing Electrical Engineers this year, on the strength of a voltage class you've designed yourself. The 35 kV unit you were responsible for passed its tests, but the old engineer made four changes on the drawing.",
+   "options": [
+    { "label": "Explain the design process", "result": "At the review you talk about those four changes too. An engineer like this is one you can trust, the director says." },
+    { "label": "Wait for one that's all yours", "result": "You spend the time on a second unit, and this one has just one mark in red." }
+   ]
+  },
+  "c_exam": {
+   "title": "The registered electrical engineer exam",
+   "situation": "The registered electrical engineer exam (power supply and distribution) is notoriously hard, two rounds of fundamentals and specialty. The days of renting out your certificate are over, but design firms' qualifications and bids need names. Your child is in elementary school, and those several hundred evenings would have to come out of the housework.",
+   "options": [
+    { "label": "Take it", "result": "It takes three years to pass. Everyone says you've lost weight. Your spouse says you just stopped washing your hair." },
+    { "label": "Forget it", "result": "You take over dinners at home. Electrical matters can stay at the plant." }
+   ]
+  },
+  "c_margin": {
+   "title": "Whether to trim this margin",
+   "situation": "To win the bid, the boss wants you to squeeze the short-circuit impedance margin and copper use on this main transformer. Performance would stay within standard, just less comfortably. The inspector can't tell. No one will know for twenty years.",
+   "options": [
+    { "label": "Trim to the standard line", "result": "The bid is won and this year's bonus is good. You keep a separate copy of this unit's calculations." },
+    { "label": "Trim only what you can, keep your margin", "result": "Second place. The boss smashes a cup. In the years after, you keep an eye on the similar units that did win." }
+   ]
+  },
+  "c_middle_east": {
+   "title": "Eighteen months in the Middle East",
+   "situation": "The exported transformers are entering commissioning, and an engineer must go to the site in Saudi Arabia for eighteen months. Pay is half again as much, summers reach fifty degrees, your spouse would raise the child alone and your aging mother is in Baoding.",
+   "options": [
+    { "label": "Go", "result": "You learn to say switch it off and wait a moment in Arabic and move the test equipment to the early morning." },
+    { "label": "Don't go", "result": "A younger colleague goes. You send him a list of issues every week." }
+   ]
+  },
+  "c_ai": {
+   "title": "Organizing the old product data",
+   "situation": "The company wants thirty years of electromagnetic calculations and test records organized into a database for AI to use in design. Most of it was written by hand by old engineers. There's no bonus, but when it's done, you'll be the person in the plant who knows all of it best.",
+   "options": [
+    { "label": "Take it on", "result": "In eight months you sort out tens of thousands of test records, and the AI's designs begin to look like something." },
+    { "label": "Keep doing products", "result": "The old records stay in the steel cabinet. That seems all right to you, since you remember them." }
+   ]
+  },
+  "c_utility": {
+   "title": "The provincial power design institute",
+   "situation": "The provincial power design institute is hiring a transformer specialist. You would be on the client's side from then on, steady and respectable, finding fault with other people's designs. It means leaving Baoding, with slightly better pay and a better employer.",
+   "options": [
+    { "label": "Go to the institute", "result": "The boss doesn't stop you and says he'll be counting on you when he bids. You smile. There's no good reply to that.", "end": "You went to the institute and began reading bids with the client's eye. Whenever a Baoding plant bids, you ask to recuse yourself. You know their faults too well." },
+    { "label": "Stay at the plant", "result": "You close the job posting and go back to this unit's calculations." }
+   ]
+  },
+  "c_senior": {
+   "title": "Applying for Senior Electrical Engineer",
+   "situation": "Hebei's review for Senior Electrical Engineer wants papers and projects led. You've led three products, but papers are something you've always put off.",
+   "options": [
+    { "label": "Write the paper", "result": "You write about tracking down a partial discharge fault. The editor asks if it can be more theoretical. This is the theory, you say." },
+    { "label": "Not this year", "result": "The second half is too busy with bids. You think you'll wait until next year." }
+   ]
+  },
+  "c_chief": {
+   "title": "Taking on Chief Engineer",
+   "situation": "The old chief is retiring and the boss asks whether you'd be Chief Engineer. Every unit leaving the plant would carry your final signature. The boss wants you to save money, the grid wants you to be safe, and the curve in the test hall doesn't care about either.",
+   "options": [
+    { "label": "Take it", "result": "You give up the desk you've had for many years. In the new office there's a slide rule left by the old chief." },
+    { "label": "Stay lead designer", "result": "You'd still rather do the calculations yourself. The plant brings in someone else." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "You sign the retirement form, having long since lost track of how many thousands of signatures that makes. Partial discharge is running in the test hall and you don't go in. Baoding's winter wind comes in from the direction of Baiyangdian Lake, and the plant's chimneys are not smoking again this week. The transformers you calculated are still standing in yards across the country, humming away.",
+  "burnout": "Your back and heart have begun to object. You transfer to technical archives, off the battlefields of bids and tests, and put decades of calculation sheets in order. The drying oven is still running. This time you can go home on schedule."
+ },
+ "stages": [
+  "You check the old engineers' calculation sheets, trace and revise drawings, run between the winding shop and the test hall. The team leader treats you as half an outsider and has to be asked several times to take a drawing from you. During factory tests you copy down numbers and connect leads.",
+  "A voltage class is yours, and you decide electromagnetic calculations, insulation structure and lead arrangement yourself. When a drawing reaches the shop the team leader comes to you for changes, and when tests go wrong you do the tracing. You begin to be able to talk to inspectors, and begin losing sleep over a drawing's margin.",
+  "You own bid designs and major products, going through tables line by line with the grid company's technical experts. When trouble appears in the test hall, you decide whether to open it up. Young people's designs pass through you, and once you've signed, you have to remember that unit for twenty years.",
+  "You run the plant's technical roadmap: where efficiency standards are heading next, whether to make products for offshore wind, whether this silicon steel can be substituted. Every outgoing file has to carry your name. You rarely draw now, but when you enter the test hall, people still make room for you."
+ ],
+ "work": [
+  "An old engineer has you check a 35 kV calculation sheet. You find a decimal point in the wrong place. He smiles and says that one was left for you to find.",
+  "You help with a temperature-rise test, copying the top-oil temperature every half hour into the small hours, your handwritten numbers getting larger as you go.",
+  "The winding team leader hands you a length of transposed conductor and has you feel with your own hand where the enamel breaks easiest. You find it on the third try.",
+  "A unit's load loss comes in four percent above the calculation. You and the tester recalculate the position of the stray-flux shielding and find the problem on the tank wall.",
+  "The inspector has doubts about a batch of insulating paper. You carry the certificates and retest reports from the storeroom and set them on his desk.",
+  "The shop says the leads are too long to lower in. You go and measure, shift the outlet position by four centimeters, and issue the revised drawing the same day.",
+  "A grid technical expert questions your short-circuit withstand capability. You put the prototype's short-circuit test report beside the calculated values and walk him through them item by item.",
+  "A young designer wants to squeeze the insulation distance by five more millimeters to save cost. You send him to look up ten years of repair records for this voltage class and to come back after.",
+  "Partial discharge trouble again, and everyone waits for you to decide about lifting the core. You weigh the schedule and the window, have the test run once more and change a high-voltage connector.",
+  "The boss wants to take a batch of offshore wind orders. You list seventeen requirements on corrosion and vibration and tell him this money isn't easy, though it's not impossible.",
+  "The draft of a new efficiency standard arrives. You and two senior engineers work out how many more years the old series can hold, and draw up a phase-out schedule.",
+  "Two shops bring a fight over a batch of copper wire to you. You check the ship dates and the penalty clauses, and give the wire to the shop that hasn't been making noise."
+ ],
+ "past": [
+  "You went to middle school in a county under Baoding. The transformer at the village entrance hummed all summer, and in an outage the whole village went to look at it.",
+  "You applied for electrical engineering. Relatives said it was an iron-rice-bowl major: graduate and join the grid.",
+  "Your junior-year summer internship was at a transformer plant in Baoding, where you first saw winders reach their hands into coils weighing several tons.",
+  "In senior year you reached the second round of the grid company's recruiting and fell just short. It wasn't quite regret. You just felt a little lost.",
+  "That transformer plant offered you a place. The pay wasn't high and it was near home. You thought you'd give it two years and see whether the grid was hiring next year."
+ ],
+ "late": {
+  "pension_note": "Estimate: a private firm contributing at the local average base. A senior engineer gets by in Baoding, with extra income from part-time consulting.",
+  "scenes": [
+   "The box substation is thirty meters from your home, and its hum is slightly louder than before. You mention in the property group that the load may be running high. How would you know, the property office asks.",
+   "A small plant asks you to look at new products, twice a month, and always takes you to the shop floor, where you feel more at ease than in the office.",
+   "Your old plant has been bought out and renamed, though the test hall is still where it was. The donkey-meat bun shop at the gate keeps its old name.",
+   "Your back can hardly bend at all now, but when the forecast says a cold snap, you still think about the oil level in those outdoor transformers.",
+   "The calculation sheets in the archive grow thinner as you sort them. Those handwritten figures read more clearly to you than today's printouts.",
+   "You've begun taking your medicine on time and walking at a fixed time in the park. The step count on your phone far exceeds the number of times you ever went into the test hall.",
+   "You no longer follow bid results. A colleague says the low bid won again this year. You ask him what's for dinner.",
+   "People here ask why you left Baoding. You think about it and say the winters there were too dry. That's true too.",
+   "An old colleague has made chief engineer, and at the new year sends you a greeting. You talk about the price of copper as if you had never parted.",
+   "After retiring you go back to Baoding once. The old plant is being torn down, and the steel frame of the test hall is smaller than you imagined. You buy a bun by the road, and it tastes blander than you remember.",
+   "When the train passes a substation you lean close to the window and count the outgoing circuits. On a two-hour trip, this can take care of twenty minutes.",
+   "The refrigerator has finally been replaced. This one doesn't make a noise, right? your spouse asks. You lean in to listen, nod and don't mention that the sound is still there a little."
+  ],
+  "closing": {
+   "retire": "Passing the box substation in the yard you lay your hand on its casing. Not hot today.",
+   "burnout": "Today's compartment in the pill box is empty. You walk an extra half lap in the park, about two thousand steps by your count.",
+   "end": "A new tender notice is out, and this one you don't have to write. You make some tea and draw the curtains halfway."
+  }
+ }
+}

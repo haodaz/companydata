@@ -1,0 +1,202 @@
+{
+ "id": "titanium-bj",
+ "occupation": "Materials Engineer",
+ "role": "Assistant Materials Engineer",
+ "headline": "At a titanium plant in Baoji you read micrographs. A bar goes through three meltings between sponge and a hospital's bone screw, and every heat number passes through your hands",
+ "unit": "Technical quality department of a titanium processor in Baoji, Shaanxi",
+ "unit_type": "Private titanium processor",
+ "city": "Baoji, Shaanxi",
+ "city_tier": "Third-tier industrial city",
+ "education": "Master's (Materials Processing Engineering)",
+ "level": "You can recite the phase diagrams. How much of that hard, brittle layer on a titanium plate has to come off before it counts as clean, you have never touched.",
+ "intro": "Along the roads of Baoji's high-tech zone, one titanium sign follows another, and offcuts dry outside the doors like a field of silver-gray cookies. The department director places a polished specimen under the microscope and asks what structure it is. You give three words. Fine, he says, all wrong. Then he takes you to see the vacuum furnace, three stories tall, and tells you one melt in there is worth more than a million yuan, so don't stand too close.",
+ "salary_note": "Estimate: private titanium firms in Baoji pay below the national figure for materials engineers. Technical staff earn performance bonuses, and good years and bad years differ a lot.",
+ "facts": [
+  {
+   "label": "Assistant Materials Engineer (current level)",
+   "value": "0–2 years, ¥3,500–4,700 a month (at this employer, estimated)",
+   "source": "Estimate"
+  },
+  {
+   "label": "Next level up",
+   "value": "Materials Engineer (2–7 years)",
+   "source": "Common in the trade"
+  },
+  {
+   "label": "What AI can't take",
+   "value": "Deciding on the shop floor whether a heat can be released",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Where AI is moving in",
+   "value": "Analyzing micrographs and fracture surfaces",
+   "source": "AI exposure"
+  },
+  {
+   "label": "Open positions",
+   "value": "482 related listings nationwide, 0 in this city (the job database is mostly campus hiring and internships)",
+   "source": "Job listings"
+  }
+ ],
+ "day": [
+  "The Wei River mist hasn't lifted as you ride your e-bike over the bridge. The truck ahead carries sponge titanium in drums marked with lot numbers.",
+  "The lab's hydrogen, oxygen and nitrogen results come in. Last night's heat is close to the upper limit on oxygen. You flag it yellow.",
+  "Polishing specimens, changing wet sandpaper grade by grade and then the polishing cloth, until your fingertips are pale and pruned and the grains under the microscope come clear.",
+  "In the forge they are breaking down an ingot. Titanium comes out of the furnace orange. The lead forgeman shouts at you to stand back, and the blow comes up through your feet.",
+  "Lunch is Qishan minced-pork noodles. Colleagues talk about how much sponge has gone up, in the tone people use for the weather.",
+  "Spark testing at the grinders. Titanium's sparks are bright white and forked, and you are beginning to be able to tell the grades apart.",
+  "A medical device maker wants a recheck report on its bar stock. You go through heat number, lot number and composition line by line. One wrong digit and you start over.",
+  "You stay on to polish one more specimen. The shift has gone home and the furnace is still running; the vacuum pumps never stop all night."
+ ],
+ "ladder": [
+  { "title": "Assistant Materials Engineer", "stage": "Reading slides", "focus": "Metallography, following melts, working in the lab, matching standards to real material" },
+  { "title": "Materials Engineer", "stage": "Owning grades", "focus": "Owning the process and complaints for one or two grades, on the floor and with customers" },
+  { "title": "Senior Materials Engineer", "stage": "Setting processes", "focus": "Setting routes for new grades, signing quality release, handling customer audits" },
+  { "title": "Chief Engineer", "stage": "Setting direction", "focus": "Running the plant's technical roadmap and product direction, judging the next market" }
+ ],
+ "ai_tasks": [
+  { "name": "Deciding on the shop floor whether a heat can be released", "how": "Segregation, oxygen content and where this lot came from: in the end a person looks at the material, signs and answers for it." },
+  { "name": "Analyzing micrographs and fracture surfaces", "how": "Models can identify structures and count grains. Why this slide looks the way it does, a person has to trace back through the process." },
+  { "name": "Comparing quotes for sponge titanium and additives", "how": "AI can compile prices and alternatives. Whether a material is usable, someone has to try at the furnace." },
+  { "name": "Compiling quality certificates and inspection ledgers", "how": "Heat numbers, composition and mechanical properties line up automatically. People spot-check key lots." }
+ ],
+ "events": {
+  "e_alpha": "A batch of plate you passed turns out, after the customer's pickling, not to have had its oxygen-rich surface fully removed. The director has you carry the returned plate through the plant, process by process.",
+  "e_sponge": "Sponge titanium is up twenty percent in a month. The boss calls you and purchasing in to ask whether more scrap can go into the melt. You go through three years of data on scrap ratio and properties.",
+  "e_furnace": "An ingot, once its skin is peeled, shows a band of segregation. More than a million yuan of material is downgraded and sold to a cup maker. You spend three days writing the cause in the melt record and can't get it exactly right.",
+  "e_audit": "A medical device customer's auditor comes to the lab, picks up a pair of tweezers and asks when these were last calibrated. Three days bring eleven findings. You close them one by one, late into the night.",
+  "e_glasses": "A small maker of eyeglass frames comes to buy two hundred kilos of wire. He puts a sample on his own face for you to admire and says your material is good, it's just your price that isn't.",
+  "e_chem": "A chlor-alkali plant's heat exchanger tubes have run for eight years, and they send back a section for you to examine for corrosion. Cut open, it is better than expected. The equipment chief places another order and buys you a drinking dinner.",
+  "e_phone": "Phone makers want titanium frames, and every plate order in town shoots up. The boss adds capacity overnight. That year Baoji's restaurants have lines, and the year-end bonus beats the last three years combined.",
+  "e_phone_end": "The phone makers go back to aluminum, and the orders vanish as fast as they came. The two new cold-rolling lines sit under plastic sheeting. The boss switches to a cheaper car.",
+  "e_eyes": "After a dozen-plus years at the microscope, your right eye has gone dry, and when you close it a grid of shadows remains. The ophthalmologist tells you to look less. You nod and go back to looking.",
+  "e_hearing": "After all these years in the forge you have started missing what your wife says from the next room. She thinks you're pretending. You don't correct her. Most of the time you are.",
+  "e_ebeam": "A neighboring plant installs an electron-beam cold hearth furnace, and its cost per melt is not in the same league as yours. The boss takes you to see it. On the drive back you both talk about the weather.",
+  "e_powder": "An additive manufacturing customer wants titanium powder, with new specs for sphericity and oxygen. You start from unfamiliar literature. The first batch ships and the reply is two words: usable.",
+  "e_ai_img": "The plant installs metallography software that counts a slide's grains in one second. You try it on one of your hard slides and it gets it wrong. It gets the second one right.",
+  "e_ai_cert": "Quality certificates now come out with one click, more in a day than in a month before. The clerk who did them transfers to sales, and before she goes she tells you where those templates are likeliest to go wrong.",
+  "e_paper": "Your joint paper with a university in Xi'an is published, with a student as first author and you as corresponding author. The director says this will make applications easier. You say that set of data still needed one more round.",
+  "e_mountain": "In autumn you go up into the Qinling. The fog is heavy. By the road you pick up a flattened piece of aluminum guardrail, flex it without thinking and silently assign it an alloy.",
+  "e_vendor": "A supplier wants you to go easy on an incoming material report and shows up at year's end with two boxes of apples. You share the apples around the lab. The report still says above limit.",
+  "e_furnace_old": "The vacuum furnace you looked up at on your first day has reached the end of its life. When they cut it up, there is a layer of dust inside the shell. The boss asks if you want to keep the nameplate. You say sure, but where would it go."
+ },
+ "choices": {
+  "c_suzhou": {
+   "title": "A consumer electronics plant in Suzhou",
+   "situation": "The phone-frame boom is on, and a precision parts maker in Suzhou is offering fifty percent more for someone who knows titanium. But they only use one material, and most of the grades you have learned would go to waste.",
+   "options": [
+    { "label": "Go to Suzhou", "result": "You say goodbye to the Wei River mist. The director asks no questions and only tells you to label the specimen rack clearly.", "end": "You went to Suzhou and spent your days with frames held to two hundredths of a millimeter. When phones went back to aluminum you moved to a medical company. Still titanium, only without the smell of the furnace." },
+    { "label": "Stay in Baoji", "result": "You go on learning the temperament of each heat. The lead forgeman has started calling you over before the second heating." }
+   ]
+  },
+  "c_engineer": {
+   "title": "Going for Materials Engineer",
+   "situation": "The company is appointing Materials Engineers this year and wants a complete process record for a grade you have owned. Your TC4 medical bar project is close to done, but the main data in the report were set by the director.",
+   "options": [
+    { "label": "Rewrite the whole project", "result": "You spend weekends pulling three years of melt records into one table. At the review the old chief engineer asks about the fourth heat, and you can answer." },
+    { "label": "Submit what exists", "result": "It is enough, though the score is low. The director says next year is soon enough." }
+   ]
+  },
+  "c_release": {
+   "title": "Whether to release this lot",
+   "situation": "A lot of chemical-grade plate is 0.3 points below the elongation minimum, and the recheck agrees. The customer is in a hurry. The boss says they will never need it to be that good, and the next lot can make up for it.",
+   "options": [
+    { "label": "Hold it, downgrade it", "result": "The boss looks grim for two days. The downgraded material goes to a cup maker, and the customer waits twenty more days." },
+    { "label": "Ask the customer to accept a concession", "result": "The customer's technician agrees in writing. You file that sheet separately and often think of it later." }
+   ]
+  },
+  "c_powder": {
+   "title": "The new titanium powder line",
+   "situation": "The boss wants a titanium powder line for additive manufacturing, a large investment with unsteady orders. You could take it over and learn a new field from scratch, or stay with bar and plate.",
+   "options": [
+    { "label": "Take it over", "result": "Everyone in the powder shop wears antistatic suits. You have never been this careful about dust." },
+    { "label": "Stay with the old trade", "result": "Margins on bar get thinner every year, but you know how every bar came to be." }
+   ]
+  },
+  "c_shop": {
+   "title": "Opening your own small titanium shop",
+   "situation": "A colleague wants you to leave with him, rent a small building in the high-tech zone and take orders for eyeglass frames, titanium cups and small chemical parts. Baoji has hundreds of shops like that. Some people get rich. Some put up their houses.",
+   "options": [
+    { "label": "Quit and join him", "result": "You hand over your work properly. Your first order is twenty titanium tubes.", "end": "Your little shop survived, with its ups and downs. You now handle both the metallography and the collections, and a customer's talent for delaying payment is harder to detect than any segregation." },
+    { "label": "Decline", "result": "At the dinner table you wish them great fortune, and you mean it." }
+   ]
+  },
+  "c_ai": {
+   "title": "Feeding thirty years of heat numbers to a model",
+   "situation": "The company wants to organize thirty years of melt data so a model can find patterns in the process. Some of the records are handwritten, some in Excel, and the units don't always match. No one wants this job, but once it's done, a lot of decisions will have evidence behind them.",
+   "options": [
+    { "label": "Lead it", "result": "You and two interns enter the old ledgers page by page, and for the first time you notice that oxygen content has been slowly climbing for thirty years." },
+    { "label": "Leave it to IT", "result": "The data is not organized all that well, but you still read your own micrographs." }
+   ]
+  },
+  "c_senior": {
+   "title": "Applying for Senior Materials Engineer",
+   "situation": "Shaanxi's review for Senior Materials Engineer is coming up, and it wants papers, patents and a clear record of achievement. Your achievements are all inside furnaces and will take some effort to write down.",
+   "options": [
+    { "label": "Write it up properly", "result": "You assemble ten years of follow-up data on that medical bar, and someone on the panel asks in particular about your scrap ratio." },
+    { "label": "Not this year", "result": "You spend the time on the floor. The director says he will remind you when next year's notice comes out." }
+   ]
+  },
+  "c_chief": {
+   "title": "The Chief Engineer's seat",
+   "situation": "The old chief is retiring and the company must name a new Chief Engineer, who will decide where the plant goes next: stay with chemicals and medical, or bet on the next boom. Get it wrong and several hundred jobs and the boss's mortgaged loans go with it.",
+   "options": [
+    { "label": "Take it", "result": "You move to the old chief's desk. He leaves that microscope where it stands." },
+    { "label": "Stay a specialist", "result": "You go on reading slides, and leave the signing to someone else." }
+   ]
+  }
+ },
+ "endings": {
+  "retire": "You sign your last release form with the same red pen. On the specimen rack your handwritten labels lie one layer over another. The vacuum pumps are still going, and only when you walk across the bridge over the Wei do you realize that this city's quiet begins in your ears.",
+  "burnout": "After years of rushing releases, your eyes and ears sound the alarm together. You move to standards and archives, facing paper rather than furnaces. This might be for the best, the director says. Yes, you say, and dim your screen."
+ },
+ "stages": [
+  "Your hours go to the lab and the metallography room: cutting specimens, mounting, polishing, photographing, copying heat numbers and results into the system. The lead forgeman calls you college kid. The director corrects your reports in red. Nobody on the floor listens to what you say, but everyone looks at your data.",
+  "One or two grades are yours, and everything from the furnace charge sheet to the finished quality certificate passes through your hands. Customer complaints reach you first. You walk the processes with a sample part, discuss with the forgeman how many heats to give it, and explain to sales why the delivery date can't be moved up.",
+  "You begin to set process routes and sign release forms, and if a lot you signed goes wrong years later, it's still yours. You lead customer audits, parry with auditors, draft trial plans for new grades. Of the young engineers' slides, you look only at the ones they aren't sure about.",
+  "On your desk are the plant's roadmap and inquiries from banks. You judge whether the next market is chemicals, medical or something new, decide whether to buy a new furnace, and meet the big customers with the boss. You still go to the metallography room now and then. Nobody dares let you polish your own slides anymore."
+ ],
+ "work": [
+  "An older woman in the lab has you recheck a hydrogen result. You burn three samples and all come out higher than the day before, and finally you find that your glove was off when you took them.",
+  "The director puts a difficult slide on your desk and asks you to find the closest image in the standard atlas. After an afternoon of comparing, all he says is: look at the edges again.",
+  "You follow the breakdown forging, calling out temperatures from an infrared gun. The forgeman thinks you're too slow, and by the second heat he has you stand where he can hear you.",
+  "A bone-screw maker complains that a lot of bars warped after turning. You walk the process backward and find the third thermocouple in the annealing furnace reading a dozen degrees below the rest.",
+  "Sales phones to press for delivery on a customer's behalf. You write the forging, annealing and inspection cycles on one sheet, send it over, and tell him none can be skipped.",
+  "Ultrasonic testing flags a suspected defect. You and the inspector discuss the waveform and cut the bar open: a tiny inclusion. This one is scrap.",
+  "The auditor wants the whole traceability chain for one heat. You have the new engineer pull the files on the spot. His hand starts to shake at the fourth file and you signal him not to rush.",
+  "Third trial of a new grade: the strength is there but ductility has dropped. You divide the annealing temperature into five groups, book a weekend with the shop, and run one group per melt.",
+  "You review a release report where all the figures are right, except the last digit of the heat number differs from the page before. The engineer says it's a typo. You send him to the shop to verify the actual material.",
+  "The boss wants a second electron-beam furnace, and the bank wants a technical feasibility opinion. You write one in which the section on risks runs longer than the one on returns.",
+  "A big customer's purchasing director comes to discuss a three-year framework agreement. You explain your floor on scrap ratio. He hears you out, laughs and says, about this price, let's keep talking.",
+  "Two people in the department want to go to titanium powder and there's one opening. You send each to the shop for a week and ask them to come back and tell you the line's biggest trouble."
+ ],
+ "past": [
+  "You went to high school in Baoji. The road outside your home was full of trucks hauling metal, and your father's bicycle had its frame replaced three times.",
+  "You applied for materials science because the admissions brochure said the field was short of people. Your uncle said in Baoji it was the easiest way to find work.",
+  "In a junior-year metallography lab you first saw titanium's equiaxed structure under the microscope. It looked to you like rice paddies and field paths.",
+  "During your master's you interned at a research institute in Xi'an. Its equipment shone almost painfully, and you kept wanting to see what a real production line looked like.",
+  "Before graduating you had chances in Xi'an and Suzhou. You came back to Baoji. Your father's health was poor around then, and the plants here needed people."
+ ],
+ "late": {
+  "pension_note": "Estimate: a private firm paying on the local average base, plus seniority pay for a senior engineer. Enough for Baoji; the savings from the good years are extra.",
+  "scenes": [
+   "The nonstick pan has lost a patch of coating after five years. You scratch at it with a fingernail, decide it is aluminum underneath and tell your wife it's time for a new one. Must you examine everything, she says.",
+   "An old man in the compound had a titanium alloy hip put in and comes to you with his inspection sheet to ask whether it's reliable. You read the grade carefully and tell him this one he need not worry about.",
+   "From a short length of bar you saved, you have a lathe-operator friend turn a tea scoop. It's light, cools fast and is worth nothing. It's just right for making tea.",
+   "The floaters in your right eye keep getting worse. You've stopped looking at micrographs and read fewer books, but a railing by the road can still tell you what year it was welded.",
+   "Every day you check standard numbers and correct commas and decimal points. Nobody chases you for a release, you leave at five sharp, and at first you hardly know where to put your hands.",
+   "Only after stepping back do you learn how much of what was said at home you missed in the years your hearing was bad. You begin wearing a hearing aid, and on the first day complain that the kitchen is too loud.",
+   "You've stopped caring what sponge titanium costs per ton. When someone brings it up you only say: I've seen it dear, and I've seen it cheap.",
+   "At the new place people ask where you're from and you say Baoji. Oh, the titanium valley, they say. Yes, you say. They go back to talking about price.",
+   "You've done the sums: you've earned about what your old colleagues at the plant have, only the worries were different, and there's not much hair left either way.",
+   "You close the accounts on the small business and sell the last batch of offcuts to a recycler at the scrap titanium price. It's a fairly good day in the market.",
+   "At a restaurant you pick up a pair of titanium chopsticks, weigh them, glance at the tips and tell your table they are plated. Can we send them back, someone asks. Just eat, you say.",
+   "On misty days you like to walk along the Wei. The fog is the very gray you used to see inside the vacuum furnace, a likeness only you would notice."
+  ],
+  "closing": {
+   "retire": "A very fine dew has settled on the tea scoop. You wipe it with your hand and it shines, more easily than any specimen you ever polished.",
+   "burnout": "The decimal point in clause seven is fixed. You close the folder, and outside the mist is just lifting.",
+   "end": "A batch of offcuts needs weighing this afternoon. You put on your reading glasses and write today's date on the receipt."
+  }
+ }
+}
