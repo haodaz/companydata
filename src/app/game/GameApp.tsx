@@ -31,6 +31,8 @@ const write = (k: string, v: any) => { try { localStorage.setItem(k, JSON.string
 /** 英文版的钱写人民币 + 大概的美元（用户 11-07；按 1 美元 ≈ 7.2 元估，取个整） */
 const usd = (rmb: number) => { const u = Math.abs(rmb) / 7.2, k = u >= 10000 ? 1000 : u >= 1000 ? 50 : 10; return `≈ ${rmb < 0 ? '-' : ''}$${(Math.round(u / k) * k).toLocaleString('en-US')}`; };
 const rmbEn = (n: number) => `RMB ${Math.round(n).toLocaleString('en-US')} (${usd(n)})`;
+/** 数字块里的钱：英文版人民币一行、大概的美元小字另起一行（不让「(≈ $…)」把数字折断） */
+const money = (n: number, savings = false): React.ReactNode => (LANG === 'en' ? <>RMB {Math.round(n).toLocaleString('en-US')}<small className="g-usd">{usd(n)}</small></> : savings ? wanW(n / 10000) : wan(n));
 const wan = (n: number) => (LANG === 'en' ? rmbEn(n) : n >= 10000 ? `${(n / 10000).toFixed(1)} 万` : `${n.toLocaleString()} 元`);
 /** 以「万元」存的数（积蓄、一生挣的） */
 const wanW = (x: number) => (LANG === 'en' ? rmbEn(x * 10000) : `${(Math.round(x * 10) / 10).toFixed(1)} 万`);
@@ -343,7 +345,7 @@ function Play({ s, onChange, onDone }: { s: Save; onChange: () => void; onDone: 
             <div className="g-cap">{card.unit} · {card.city}</div>
             <div className="g-now">{title}</div>
             <div className="g-ladder sm">{card.ladder.map((l, i) => <span key={i} className={i === life.stage ? 'on' : i < life.stage ? 'past' : ''}>{l.title}</span>)}</div>
-            <div className="g-money"><div><span>{tr('月薪', 'Monthly pay')}</span><b>{wan(life.salary)}</b></div><div><span>{tr('积蓄', 'Savings')}</span><b>{wanW(life.savings)}</b></div></div>
+            <div className="g-money"><div><span>{tr('月薪', 'Monthly pay')}</span><b>{money(life.salary)}</b></div><div><span>{tr('积蓄', 'Savings')}</span><b>{money(life.savings * 10000, true)}</b></div></div>
             <div className="g-stats">{STATS.map(x => <Bar key={x.k} label={statL(x.k, x.label)} hint={statH(x.k, x.hint)} v={life.stats[x.k as Stat]} warn={x.k === 'health' && life.stats.health < 25} />)}</div>
           </section>
           <section className="g-panel g-peers">
@@ -403,8 +405,8 @@ function Report({ s, onAgain, onDay, busy }: { s: Save; onAgain: () => void; onD
       <div className="g-nums">
         <div><b>{life.y}</b><span>{tr('年', 'years')}</span></div>
         <div><b>{card.ladder[life.stage]?.title}</b><span>{tr('最后做到', 'Final position')}</span></div>
-        <div><b>{wan(peak)}</b><span>{tr(`最高月薪 · ${peakRow.age} 岁`, `Peak monthly pay · age ${peakRow.age}`)}</span></div>
-        <div><b>{tr(`${Math.round(life.earned)} 万`, wanW(life.earned))}</b><span>{tr('一生挣了（估算）', 'Lifetime earnings (est.)')}</span></div>
+        <div><b>{money(peak)}</b><span>{tr(`最高月薪 · ${peakRow.age} 岁`, `Peak monthly pay · age ${peakRow.age}`)}</span></div>
+        <div><b>{LANG === 'en' ? money(life.earned * 10000) : `${Math.round(life.earned)} 万`}</b><span>{tr('一生挣了（估算）', 'Lifetime earnings (est.)')}</span></div>
       </div>
 
       {card.past?.length ? <details className="g-sec g-fold"><summary className="g-cap">{tr('来路 · 入行之前', 'The road here · before the job')}</summary>
@@ -640,6 +642,7 @@ const CSS = `
 .g-shared { margin: 10px auto 4px; max-width: 460px; padding: 12px 16px; border: 1px solid var(--line, #e2dccf); border-left: 3px solid var(--acc); border-radius: 12px; background: #fffdf8; text-align: left; display: grid; gap: 4px; }
 .g-shared b { font-size: 16px; } .g-shared span { font-size: 14px; color: var(--ink2); } .g-shared em { font-style: normal; font-size: 13px; color: var(--acc); }
 .g-dayagain { display: block; margin: -6px 0 14px; }
+.g-usd { display: block; font-size: .62em; font-weight: 500; color: var(--ink3); margin-top: 2px; }
 .g-stat b { text-align: right; font-weight: 600; color: var(--ink2); }
 .g-peer { display: grid; padding: 8px 0; border-top: 1px solid #efeadf; font-size: 13.5px; }
 .g-peer:first-of-type { border-top: 0; }
