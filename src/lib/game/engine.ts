@@ -26,14 +26,23 @@ const clamp = (n: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, n));
 export const YEAR0 = 2026;
 
 const SURNAMES = '王李张刘陈杨黄赵吴周徐孙马朱胡郭何林罗高郑梁谢宋唐许韩冯邓曹彭曾萧田董袁潘蒋蔡余杜叶程苏魏吕丁任沈姚卢姜崔钟谭陆汪范金石廖贾夏韦付方白邹孟熊秦邱江尹薛闫段雷侯龙史陶黎贺顾毛郝龚邵万钱严覃武戴莫孔向汤';
-const GIVEN = ['一鸣', '子涵', '思远', '雨桐', '浩然', '欣怡', '俊杰', '佳琪', '晓东', '静怡', '宇航', '梦瑶', '志强', '雪梅', '文博', '诗雨', '建国', '晓燕', '明轩', '婉清', '泽宇', '若溪', '国栋', '丽华', '天佑', '小满', '家豪', '春燕', '振华', '可欣', '立新', '晨曦'];
-export const randomName = (seed: number) => SURNAMES[seed % SURNAMES.length] + GIVEN[Math.floor(seed / SURNAMES.length) % GIVEN.length];
+const MALE = ['一鸣', '思远', '浩然', '俊杰', '晓东', '宇航', '志强', '文博', '建国', '明轩', '泽宇', '国栋', '天佑', '家豪', '振华', '立新', '子轩', '海涛', '永刚', '鹏飞'];
+const FEMALE = ['子涵', '雨桐', '欣怡', '佳琪', '静怡', '梦瑶', '雪梅', '诗雨', '晓燕', '婉清', '若溪', '丽华', '春燕', '可欣', '晓雯', '慧敏', '秀英', '思琪', '玉兰', '嘉怡'];
+const ANY = ['小满', '晨曦', '一凡', '子墨', '安然', '清和', '知远', '睿'];
+/** 名字按卡上的性别抽（卡里写了「丈夫」「她」这类，名字得对得上）；没标性别的男女名都可能 */
+export const randomName = (seed: number, gender?: 'f' | 'm') => {
+  const pool = gender === 'f' ? FEMALE : gender === 'm' ? MALE : [...MALE, ...FEMALE, ...ANY];
+  return SURNAMES[seed % SURNAMES.length] + pool[Math.floor(seed / SURNAMES.length) % pool.length];
+};
 
 /** 这一级、在这一级第几年的月薪（元） */
 function monthly(card: Pick<GameCard, 'ladder' | 'salary_factor'>, stage: number, inStage: number, mul: number, jitter: number) {
   const [lo, hi] = card.ladder[stage]?.salary || [0, 0];
-  const t = Math.min(1, inStage / 4);
-  return Math.round(((lo + (hi - lo) * t) * card.salary_factor * mul * jitter) / 100) * 100;
+  // 职业库的薪资区间是全国口径，越往上越接近一线大单位的水平：小单位（系数 < 1）在区间里取得更靠下，高级别再压一档（县城幼儿园当了园长也拿不到区间上限）
+  const sf = card.salary_factor, small = Math.max(0, 1 - sf);
+  const t = Math.min(1, inStage / 4) * (sf < 1 ? sf : 1);
+  const squeeze = 1 - small * 0.5 * (stage / Math.max(1, card.ladder.length - 1));
+  return Math.round(((lo + (hi - lo) * t) * sf * squeeze * mul * jitter) / 100) * 100;
 }
 /** 升到下一级要在这一级待几年（职业地图的年限差，至少 3 年） */
 const needYears = (card: Pick<GameCard, 'ladder'>, stage: number) => Math.max(3, (card.ladder[stage + 1]?.min ?? 99) - (card.ladder[stage]?.min ?? 0));
@@ -41,7 +50,7 @@ const needYears = (card: Pick<GameCard, 'ladder'>, stage: number) => Math.max(3,
 export function newLife(card: GameCard, seed: number): Life {
   const s = card.start;
   const l: Life = {
-    cardId: card.id, name: randomName(seed), seed, rng: seed,
+    cardId: card.id, name: randomName(seed, card.gender), seed, rng: seed,
     y: 0, age: s.age, stage: s.stage, inStage: Math.max(0, s.years_in_field - (card.ladder[s.stage]?.min ?? 0)),
     stats: { skill: clamp(30 + s.stage * 14 + s.years_in_field), rep: clamp(35 + s.stage * 10), health: clamp(88 - Math.max(0, s.age - 24) * 0.6), joy: 72 },
     salary: 0, salaryMul: 1, growthMul: 1, promoteBonus: 0, savings: 0, earned: 0,
@@ -140,7 +149,7 @@ export function choose(card: GameCard, l: Life, i: number): Life {
   l.usedChoices.push(c.id); l.pending = null;
   apply(l, o.effect);
   if (o.promote) l.promoteBonus += o.promote === (true as any) ? 0.45 : Number(o.promote) || 0;
-  if (o.salary) l.salaryMul = clamp(l.salaryMul * (Number(o.salary) || 1), 0.5, 1.8);
+  if (o.salary) l.salaryMul = clamp(l.salaryMul * (Number(o.salary) || 1), 0.5, 1.6);
   if (o.growth) l.growthMul = clamp(l.growthMul * (Number(o.growth) || 1), 0.6, 1.6);
   l.picks.push({ y: l.y, age: l.age, title: c.title, label: o.label, result: o.result });
   l.log.push({ y: l.y, age: l.age, kind: 'choice', mood: 'plain', source: c.source, text: `${c.title}：你选了「${o.label}」。${o.result}`, effect: o.effect });
@@ -162,4 +171,14 @@ export function simulatePeer(p: PeerCard, seed: number) {
   const l = newLife(card, seed);
   while (!l.done && l.y < 60) step(card, l);
   return { name: p.name, role: p.role, headline: p.headline, city: p.city, unit_type: p.unit_type, rows: l.rows, done: l.done, promos: l.promos, ladder: p.ladder.map(s => s.title) };
+}
+
+/** 晚年：按离开这一行的方式挑卡里写好的几幕（退休 / 离开一线 / 转身，加上都会有的），退休金按最后的月薪 × 比例估算（转身的不按这一行算） */
+export function epilogue(card: GameCard, l: Life) {
+  const how = l.done || 'retire';
+  const late = card.late;
+  if (!late) return null;
+  const scenes = late.scenes.filter(s => s.when === how || s.when === 'any').sort((a, b) => a.after - b.after).map(s => ({ ...s, age: l.age + s.after }));
+  const pension = how === 'end' ? null : Math.round((l.salary * late.pension_ratio) / 100) * 100;
+  return { how, scenes, pension, note: late.pension_note, closing: late.closing[how] || late.closing.retire };
 }

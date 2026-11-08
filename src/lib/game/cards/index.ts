@@ -1,4 +1,4 @@
-/** 卡池（scripts/game-cards.mts 生成，别手改；只在服务端 import） */
+/** 卡池（scripts/game-card-build.mts / game-cards.mts 生成，别手改；只在服务端 import） */
 import c0 from './dev-cd-outsource.json';
 import c1 from './dev-hz-bigco.json';
 import c2 from './lawyer-bj-firm.json';

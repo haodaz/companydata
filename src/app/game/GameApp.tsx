@@ -6,7 +6,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { GameCard, PeerCard, Stat } from '@/lib/game/types';
 import { STATS } from '@/lib/game/types';
-import { YEAR0, autoChoose, choose, newLife, pendingChoice, simulatePeer, step, type Life } from '@/lib/game/engine';
+import { YEAR0, autoChoose, choose, epilogue, newLife, pendingChoice, simulatePeer, step, type Life } from '@/lib/game/engine';
 
 type Peer = ReturnType<typeof simulatePeer>;
 type Save = { card: GameCard; life: Life; peers: PeerCard[] };
@@ -19,7 +19,7 @@ const wan = (n: number) => (n >= 10000 ? `${(n / 10000).toFixed(1)} 万` : `${n.
 const fx = (e?: Record<string, number | undefined>) => (e ? STATS.filter(s => e[s.k]).map(s => `${s.label} ${(e[s.k] as number) > 0 ? '+' : ''}${e[s.k]}`).concat(e.savings ? [`积蓄 ${e.savings > 0 ? '+' : ''}${e.savings} 万`] : []) : []);
 
 export default function GameApp() {
-  const [phase, setPhase] = useState<'home' | 'card' | 'day' | 'play' | 'report'>('home');
+  const [phase, setPhase] = useState<'home' | 'past' | 'card' | 'day' | 'play' | 'late' | 'report'>('home');
   const [save, setSave] = useState<Save | null>(null);
   const [resume, setResume] = useState<Save | null>(null);
   const [archive, setArchive] = useState<Archive[]>([]);
@@ -40,7 +40,7 @@ export default function GameApp() {
     setBusy(false);
     if (!j?.ok) { setErr('没抽成，网络好像断了，再试一次'); return; }
     const s: Save = { card: j.card, life: newLife(j.card, j.seed), peers: j.peers };
-    setSave(s); write(SAVE, s); setPhase('card'); scrollTo(0, 0);
+    setSave(s); write(SAVE, s); setPhase(j.card.past?.length ? 'past' : 'card'); scrollTo(0, 0);
   };
   const go = (p: typeof phase) => { setPhase(p); scrollTo(0, 0); };
 
@@ -48,13 +48,15 @@ export default function GameApp() {
     <div className="g-root">
       <style>{CSS}</style>
       {phase === 'home' && <Home busy={busy} err={err} onEnter={enter} resume={resume} onResume={() => { setSave(resume); go('play'); }} archive={archive} />}
+      {phase === 'past' && save && <PastView card={save.card} name={save.life.name} onDone={() => go('card')} />}
       {phase === 'card' && save && <CardView s={save} onDay={() => go('day')} onStart={() => go('play')} onRedraw={enter} busy={busy} />}
       {phase === 'day' && save && <DayView card={save.card} onStart={() => go('play')} onBack={() => go(save.life.done ? 'report' : 'card')} back={save.life.done ? '回到回顾' : '回到登记卡'} />}
       {phase === 'play' && save && <Play s={save} onChange={() => { write(SAVE, save); rerender(); }} onDone={() => {
         const l = save.life, card = save.card;
         const a: Archive = { at: new Date().toISOString(), name: l.name, role: card.role, headline: card.headline, title: card.ladder[l.stage]?.title || '', years: l.y, peak: Math.max(...l.rows.map(r => r.salary)), how: l.done || '', endText: l.endText };
-        const next = [a, ...archive].slice(0, 30); setArchive(next); write(ARCHIVE, next); write(SAVE, save); setResume(null); go('report');
+        const next = [a, ...archive].slice(0, 30); setArchive(next); write(ARCHIVE, next); write(SAVE, save); setResume(null); go(save.card.late ? 'late' : 'report');
       }} />}
+      {phase === 'late' && save && <LateView s={save} onDone={() => go('report')} />}
       {phase === 'report' && save && <Report s={save} onAgain={enter} onDay={() => go('day')} busy={busy} />}
     </div>
   );
@@ -64,24 +66,96 @@ export default function GameApp() {
 function Home({ busy, err, onEnter, resume, onResume, archive }: { busy: boolean; err: string; onEnter: () => void; resume: Save | null; onResume: () => void; archive: Archive[] }) {
   return (
     <main className="g-wrap g-home">
-      <div className="g-eyebrow">一个职业生涯模拟</div>
-      <h1 className="g-title">入一行，<br />过一生</h1>
-      <p className="g-lead">抽一张入职登记卡。城市、单位、资历，都不由你选——就像真的入行一样。<br />从这一天起，一年一年，把这段职业生涯过到退休。</p>
-      <div className="g-actions">
-        <button className="g-btn primary big" disabled={busy} onClick={onEnter}>{busy ? '正在分配…' : '入行'}</button>
-        {resume && <button className="g-btn big" onClick={onResume}>接着过 · {resume.life.name}，{resume.life.age} 岁</button>}
-      </div>
-      {err && <div className="g-err">{err}</div>}
-      <ul className="g-how">
-        <li><b>一年大约三秒</b>，遇到重大抉择会停下来等你。一局三四分钟。</li>
-        <li><b>每张卡都是一个具体的人</b>：北京三甲的副主任医师和县医院第一年的住院医师，是两种完全不同的一生。</li>
-        <li><b>数字是真的</b>：晋升阶梯、年限薪资、哪些活 AI 拿得走，来自职业库；每件事后面写着依据。</li>
-      </ul>
+      <section className="g-hero">
+        <div className="g-eyebrow">1JOB1LIFE · 职业生涯模拟</div>
+        <h1 className="g-title">入一行，过一生</h1>
+        <p className="g-lead">抽一张入职登记卡。城市、单位、资历都不由你选，就像真的入行一样。从这一天起，一年一年，把这段职业生涯过到退休。</p>
+        <button className="g-deck" disabled={busy} onClick={onEnter} aria-label="抽一张入职登记卡">
+          <span className="g-back b3" /><span className="g-back b2" />
+          <span className="g-back b1"><i>入职登记卡</i><b>{busy ? '…' : '?'}</b><em>{busy ? '正在分配' : '点一下，入行'}</em></span>
+        </button>
+        <div className="g-actions center">
+          <button className="g-btn primary big" disabled={busy} onClick={onEnter}>{busy ? '正在分配…' : '入行'}</button>
+          {resume && <button className="g-btn big" onClick={onResume}>接着过 · {resume.life.name}，{resume.life.age} 岁</button>}
+        </div>
+        {err && <div className="g-err">{err}</div>}
+      </section>
+      <section className="g-three">
+        <div><span>01</span><b>抽一张卡</b><p>先闪过你是怎么走到这里的，再看这个身份的一天。</p></div>
+        <div><span>02</span><b>一年一年过</b><p>一年大约三秒，晋升、跳槽、AI 来了，遇到重大抉择停下来等你。</p></div>
+        <div><span>03</span><b>看这一生</b><p>离开这一行之后的晚年，和一份写着你所有选择的回顾。</p></div>
+      </section>
+      <p className="g-data">晋升阶梯、年限薪资、哪些活 AI 拿得走，都来自职业库的真实数据，每件事后面写着依据。</p>
       {archive.length > 0 && <section className="g-arch">
         <div className="g-cap">你过过的 {archive.length} 生</div>
         {archive.slice(0, 6).map((a, i) => <div key={i} className="g-arch-row"><b>{a.name}</b><span>{a.headline}</span><span className="g-mute">{a.years} 年 · 最高做到{a.title} · {a.how === 'burnout' ? '离开一线' : a.how === 'end' ? '转身离开' : '退休'}</span></div>)}
       </section>}
-      <footer className="g-foot">平方创想 · 方略研究院 · 不用登录，存档只在这台设备上</footer>
+      <footer className="g-foot">不用登录，存档只在这台设备上<Tip /></footer>
+    </main>
+  );
+}
+
+/** 打赏作者：public/game/tip/ 下放了收款码（wechat.png / alipay.png）或设了 NEXT_PUBLIC_GAME_TIP_URL 才出现 */
+function Tip() {
+  const [codes, setCodes] = useState<{ k: string; t: string; src: string }[]>([]);
+  const [open, setOpen] = useState(false);
+  const url = process.env.NEXT_PUBLIC_GAME_TIP_URL || '';
+  useEffect(() => {
+    const all = [{ k: 'wechat', t: '微信', src: '/game/tip/wechat.png' }, { k: 'alipay', t: '支付宝', src: '/game/tip/alipay.png' }];
+    Promise.all(all.map(c => fetch(c.src, { method: 'HEAD' }).then(r => (r.ok && /image/.test(r.headers.get('content-type') || '') ? c : null)).catch(() => null))).then(x => setCodes(x.filter(Boolean) as any));
+  }, []);
+  if (!codes.length && !url) return null;
+  return (
+    <>
+      <span> · </span><button className="g-tiplink" onClick={() => (codes.length ? setOpen(true) : window.open(url, '_blank'))}>打赏作者</button>
+      {open && <div className="g-sheet-bg" onClick={() => setOpen(false)}><div className="g-sheet g-tip" onClick={e => e.stopPropagation()}>
+        <h3>请作者喝杯咖啡</h3>
+        <p>这个小游戏不收费，也不打广告。觉得有意思，可以随手打赏一点。</p>
+        <div className="g-codes">{codes.map(c => <figure key={c.k}><img src={c.src} alt={`${c.t}收款码`} /><figcaption>{c.t}扫一扫</figcaption></figure>)}</div>
+        {url && <a className="g-btn" href={url} target="_blank" rel="noreferrer">海外用户点这里</a>}
+        <button className="g-link" onClick={() => setOpen(false)}>关闭</button>
+      </div></div>}
+    </>
+  );
+}
+
+// ───────────────────────── 来路 ─────────────────────────
+function PastView({ card, name, onDone }: { card: GameCard; name: string; onDone: () => void }) {
+  const past = card.past || [];
+  const [n, setN] = useState(1);
+  useEffect(() => { if (n >= past.length) return; const t = setTimeout(() => setN(x => x + 1), 1900); return () => clearTimeout(t); }, [n, past.length]);
+  const done = n >= past.length;
+  return (
+    <main className="g-wrap g-past" onClick={() => !done && setN(past.length)}>
+      <div className="g-eyebrow">来路 · {name}</div>
+      <h2 className="g-h2">你是怎么走到今天的</h2>
+      <ol className="g-day g-path">{past.slice(0, n).map((p, i) => <li key={i} className="g-in"><time>{p.age} 岁</time><p>{p.text}</p></li>)}</ol>
+      <div className="g-actions sticky">
+        {done ? <button className="g-btn primary" onClick={onDone}>看看现在的你</button> : <button className="g-btn" onClick={e => { e.stopPropagation(); onDone(); }}>跳过</button>}
+      </div>
+    </main>
+  );
+}
+
+// ───────────────────────── 后来（晚年） ─────────────────────────
+function LateView({ s, onDone }: { s: Save; onDone: () => void }) {
+  const ep = useMemo(() => epilogue(s.card, s.life), [s]);
+  const scenes = ep?.scenes || [];
+  const [n, setN] = useState(1);
+  useEffect(() => { if (n > scenes.length) return; const t = setTimeout(() => setN(x => x + 1), 2200); return () => clearTimeout(t); }, [n, scenes.length]);
+  if (!ep) return null;
+  const done = n > scenes.length;
+  const how = ep.how === 'burnout' ? '离开一线' : ep.how === 'end' ? '转身离开这一行' : '退休';
+  return (
+    <main className="g-wrap g-past" onClick={() => !done && setN(scenes.length + 1)}>
+      <div className="g-eyebrow">后来 · {s.life.name}</div>
+      <h2 className="g-h2">{s.life.age} 岁{how}之后</h2>
+      {ep.pension != null && <p className="g-sub">每月大约 {wan(ep.pension)} 退休金<span className="g-mute">（{ep.note}）</span></p>}
+      <ol className="g-day g-path">{scenes.slice(0, n).map((x, i) => <li key={i} className={`g-in ${x.mood}`}><time>{x.age} 岁</time><p>{x.text}</p></li>)}</ol>
+      {done && <blockquote className="g-quote g-in">{ep.closing}</blockquote>}
+      <div className="g-actions sticky">
+        {done ? <button className="g-btn primary" onClick={onDone}>看这一生的回顾</button> : <button className="g-btn" onClick={e => { e.stopPropagation(); setN(scenes.length + 1); }}>都看完</button>}
+      </div>
     </main>
   );
 }
@@ -230,6 +304,7 @@ function Report({ s, onAgain, onDay, busy }: { s: Save; onAgain: () => void; onD
   const ai = life.log.filter(e => e.kind === 'ai');
   const human = card.ai.tasks.filter(t => t.kind === 'human');
   const how = life.done === 'burnout' ? '身心撑不住，离开了一线' : life.done === 'end' ? '在这里转身，去了别处' : '退休';
+  const late = useMemo(() => epilogue(card, life), [card, life]);
   return (
     <main className="g-wrap g-report">
       <div className="g-eyebrow">职业档案 · {YEAR0} – {YEAR0 + life.y}</div>
@@ -242,6 +317,10 @@ function Report({ s, onAgain, onDay, busy }: { s: Save; onAgain: () => void; onD
         <div><b>{wan(peak)}</b><span>最高月薪 · {peakRow.age} 岁</span></div>
         <div><b>{Math.round(life.earned)} 万</b><span>一生挣了（估算）</span></div>
       </div>
+
+      {card.past?.length ? <details className="g-sec g-fold"><summary className="g-cap">来路 · 入行之前</summary>
+        <ol className="g-steps">{card.past.map((p, i) => <li key={i}><time>{p.age} 岁</time>{p.text}</li>)}</ol>
+      </details> : null}
 
       <section className="g-sec"><div className="g-cap">走过的台阶</div>
         <ol className="g-steps">
@@ -271,6 +350,11 @@ function Report({ s, onAgain, onDay, busy }: { s: Save; onAgain: () => void; onD
         <div className="g-note">依据：职业库 · AI 替代性（这个职业的典型任务逐项判断）。</div>
       </section>
 
+      {late && <section className="g-sec"><div className="g-cap">后来{late.pension != null ? ` · 每月退休金约 ${wan(late.pension)}（估算）` : ''}</div>
+        {late.scenes.map((x, i) => <p key={i} className={`g-mem ${x.mood}`}><time>{x.age} 岁</time>{x.text}</p>)}
+        <blockquote className="g-quote" style={{ marginTop: 12 }}>{late.closing}</blockquote>
+      </section>}
+
       <section className="g-sec"><div className="g-cap">同一年入行的人后来</div>
         {peers.map((p, i) => { const last = p.rows[p.rows.length - 1]; const pk = Math.max(...p.rows.map(r => r.salary)); return (
           <div key={i} className="g-peer wide"><b>{p.name}</b><span>{p.headline}</span><em>做到{p.ladder[last.stage]} · 最高月薪 {wan(pk)} · {p.done === 'burnout' ? `${last.age} 岁离开一线` : `${last.age} 岁退休`}</em></div>
@@ -281,7 +365,7 @@ function Report({ s, onAgain, onDay, busy }: { s: Save; onAgain: () => void; onD
         <button className="g-btn" onClick={onDay}>再看一眼那一天</button>
         <button className="g-btn primary" disabled={busy} onClick={onAgain}>{busy ? '正在分配…' : '再入一行'}</button>
       </div>
-      <footer className="g-foot">数字是按职业库推演的估算，不是对任何真实的人的预测。</footer>
+      <footer className="g-foot">数字是按职业库推演的估算，不是对任何真实的人的预测。<Tip /></footer>
     </main>
   );
 }
@@ -313,7 +397,40 @@ const CSS = `
 .g-root button { font-family: inherit; }
 .g-wrap { max-width: 680px; margin: 0 auto; padding: 28px 16px 120px; }
 .g-eyebrow { font-size: 12px; letter-spacing: .24em; color: var(--ink3); }
-.g-title { font-family: var(--font-serif-sc), "Songti SC", serif; font-size: clamp(44px, 13vw, 76px); line-height: 1.12; font-weight: 900; margin: 14px 0 18px; letter-spacing: .02em; }
+.g-title { font-family: var(--font-serif-sc), "Songti SC", serif; font-size: clamp(34px, 10vw, 68px); line-height: 1.15; font-weight: 900; margin: 12px 0 16px; letter-spacing: .02em; white-space: nowrap; }
+.g-hero { text-align: center; padding-top: 18px; }
+.g-hero .g-lead { max-width: 520px; margin: 0 auto 8px; }
+.g-actions.center { justify-content: center; }
+.g-deck { position: relative; display: block; width: 190px; height: 266px; margin: 30px auto 22px; border: 0; background: none; padding: 0; cursor: pointer; }
+.g-deck:disabled { cursor: default; }
+.g-back { position: absolute; inset: 0; border-radius: 16px; background: linear-gradient(150deg, #2c5f9e, #1f3d6b 70%); box-shadow: 0 18px 40px rgba(31,61,107,.28); transition: transform .35s; }
+.g-back::before { content: ''; position: absolute; inset: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,.35); background: repeating-linear-gradient(45deg, rgba(255,255,255,.05) 0 8px, transparent 8px 16px); }
+.g-back.b3 { transform: rotate(-9deg) translate(-26px, 8px); opacity: .55; }
+.g-back.b2 { transform: rotate(7deg) translate(24px, 6px); opacity: .75; }
+.g-back.b1 { display: grid; align-content: center; justify-items: center; gap: 8px; color: #eef3fa; animation: g-float 3.6s ease-in-out infinite; }
+.g-back.b1 i { font-style: normal; font-size: 13px; letter-spacing: .3em; opacity: .85; position: relative; }
+.g-back.b1 b { font-family: var(--font-serif-sc), serif; font-size: 64px; line-height: 1; position: relative; }
+.g-back.b1 em { font-style: normal; font-size: 13px; opacity: .8; position: relative; }
+.g-deck:not(:disabled):hover .b1 { transform: translateY(-8px); }
+.g-deck:not(:disabled):hover .b3 { transform: rotate(-12deg) translate(-34px, 10px); }
+.g-deck:not(:disabled):hover .b2 { transform: rotate(10deg) translate(32px, 8px); }
+@keyframes g-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.g-three { display: grid; gap: 12px; margin-top: 34px; }
+@media (min-width: 640px) { .g-three { grid-template-columns: repeat(3, 1fr); } }
+.g-three div { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+.g-three span { font-family: ui-monospace, Menlo, monospace; color: var(--acc); font-size: 13px; font-weight: 700; }
+.g-three b { display: block; font-size: 17px; margin: 2px 0 4px; }
+.g-three p { margin: 0; color: var(--ink2); font-size: 14px; line-height: 1.7; }
+.g-data { text-align: center; color: var(--ink3); font-size: 13px; margin: 18px 0 0; }
+.g-tiplink { background: none; border: 0; padding: 0; color: var(--acc); text-decoration: underline; cursor: pointer; font-size: 12px; }
+.g-tip { text-align: center; }
+.g-codes { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin: 6px 0 14px; }
+.g-codes figure { margin: 0; } .g-codes img { width: 160px; height: 160px; object-fit: contain; border-radius: 12px; border: 1px solid var(--line); background: #fff; }
+.g-codes figcaption { font-size: 12.5px; color: var(--ink3); margin-top: 4px; }
+.g-in { animation: g-in .6s ease-out both; }
+.g-path li.bad::before { border-color: var(--bad); } .g-path li.good::before { border-color: var(--good); }
+.g-past { cursor: default; }
+.g-fold summary { cursor: pointer; list-style: none; } .g-fold summary::after { content: ' ▾'; } .g-fold[open] summary::after { content: ' ▴'; }
 .g-h2 { font-family: var(--font-serif-sc), "Songti SC", serif; font-size: clamp(24px, 6vw, 32px); line-height: 1.35; margin: 8px 0 14px; }
 .g-lead { font-size: 16.5px; color: var(--ink2); margin: 0 0 26px; }
 .g-sub { color: var(--ink2); margin: 0 0 14px; }

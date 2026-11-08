@@ -68,6 +68,8 @@ export interface GameCard {
   unit: string; unit_type: string;
   city: string; city_tier: string;
   education: string;
+  /** 卡里写死了性别的（丈夫 / 妻子、月嫂、空乘……）标上，名字按它抽；不标就男女都行 */
+  gender?: 'f' | 'm';
   start: { age: number; years_in_field: number; stage: number; level: string };
   /** 登记卡下面的开场：两三句，第二人称 */
   intro: string;
@@ -85,6 +87,10 @@ export interface GameCard {
   events: GameEvent[];
   choices: GameChoice[];
   endings: { retire: string; burnout: string };
+  /** 来路：从十五岁左右到开局，是怎么走到这里的（6–8 步，开局前快速闪过） */
+  past?: { age: number; text: string }[];
+  /** 晚年：离开这一行之后（退休 / 离开一线 / 转身）的几幕，按离开的方式挑；退休金按最后的月薪 × 比例估算 */
+  late?: { pension_ratio: number; pension_note: string; scenes: { after: number; when: 'retire' | 'burnout' | 'end' | 'any'; text: string; mood: 'good' | 'bad' | 'plain' }[]; closing: { retire: string; burnout: string; end: string } };
   /** 生成信息（不给玩家看） */
   meta?: { model: string; at: string; brief: string };
 }

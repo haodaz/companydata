@@ -55,12 +55,17 @@ export async function proxy(req: NextRequest) {
   if (pathname === '/' && /(^|\.)aisimjob\.com$/.test(host)) return NextResponse.rewrite(new URL('/lab', req.url));
   // AI 大学的独立域名 baiyecollege.com：根路径直接显示 /college（里面的链接本来就是 /college/…）
   if (pathname === '/' && /(^|\.)baiyecollege\.com$/.test(host)) return NextResponse.rewrite(new URL('/college', req.url));
-  // 「入一行，过一生」的独立域名 1job1life.com：只露游戏——根路径显示 /game，这里拦得到的其他页面和接口一律不给（回游戏首页 / 404）
+  // 「入一行，过一生」的独立域名 1job1life.com：只露游戏。根路径显示 /game；/game 和它的接口、图片放行；
+  // 其余任何地址（/work、/lab、/college、/admin……）一律回游戏首页，接口 404——别从这个域名摸到真活、百业、学院（用户 11-07）
   if (/(^|\.)1job1life\.com$/.test(host)) {
     if (pathname === '/') return NextResponse.rewrite(new URL('/game', req.url));
-    if (pathname.startsWith('/api/')) { if (!(pathname.startsWith('/api/game/') && req.method === 'GET')) return NextResponse.json({ ok: false, error: 'not found' }, { status: 404 }); }
-    else if (pathname !== '/favicon.ico') return NextResponse.redirect(new URL('/', req.url));
+    if (pathname === '/game' || pathname.startsWith('/game/') || pathname === '/favicon.ico') return NextResponse.next();
+    if (pathname.startsWith('/api/game/') && req.method === 'GET') return NextResponse.next();
+    if (pathname.startsWith('/api/')) return NextResponse.json({ ok: false, error: 'not found' }, { status: 404 });
+    return NextResponse.redirect(new URL('/', req.url));
   }
+  // 别的域名：只管原来那些路径（matcher 为了拦住 1job1life.com 的所有地址放宽成了全部页面，这里收回来，其余照旧直接放行）
+  if (!PROXIED.some(re => re.test(pathname))) return NextResponse.next();
   // 浏览器 / 分享卡片会直接要 /favicon.ico：大学域名给校徽
   if (pathname === '/favicon.ico' && /(^|\.)baiyecollege\.com$/.test(host)) return NextResponse.rewrite(new URL('/college/favicon.ico', req.url));
 
@@ -198,6 +203,10 @@ export async function proxy(req: NextRequest) {
   return NextResponse.next();
 }
 
+/** 原来 matcher 管的路径（别的域名只在这些路径上走 proxy 的规则） */
+const PROXIED = [/^\/admin(\/|$)/, /^\/office(\/|$)/, /^\/lab(\/|$)/, /^\/college\/admin(\/|$)/, /^\/college\/s\//, /^\/work\/mine$/, /^\/work\/new(\/|$)/, /^\/work\/admin$/, /^\/workspace$/, /^\/research$/, /^\/api\//, /^\/$/, /^\/favicon\.ico$/];
+
 export const config = {
-  matcher: ['/admin/:path*', '/office/:path*', '/office', '/lab/:path*', '/lab', '/college/admin', '/college/admin/:path*', '/college/s/:path*', '/work/mine', '/work/new', '/work/new/:path*', '/work/admin', '/workspace', '/research', '/api/:path*', '/', '/favicon.ico'],
+  // 全部页面都过 proxy（1job1life.com 要拦住所有二级地址）；Next 自己的静态资源不过
+  matcher: ['/((?!_next/static|_next/image|_next/webpack-hmr).*)'],
 };
